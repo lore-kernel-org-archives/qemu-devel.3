@@ -4,89 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56AE1EE3693
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 15:08:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D220EEE368C
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 15:12:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqYIT-0001Go-4F; Thu, 12 Feb 2026 10:08:01 -0500
+	id 1vqYMO-0003rw-13; Thu, 12 Feb 2026 10:12:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vqYIS-0001GG-4U
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 10:08:00 -0500
-Received: from mail-wm1-x344.google.com ([2a00:1450:4864:20::344])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vqYIO-0004et-TB
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 10:07:59 -0500
-Received: by mail-wm1-x344.google.com with SMTP id
- 5b1f17b1804b1-4836f363ad2so3200065e9.1
- for <qemu-devel@nongnu.org>; Thu, 12 Feb 2026 07:07:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770908875; x=1771513675; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=7PaFta+XUwMwTOBC6RtKYeGKSumlB4nhsDnQICCsYt8=;
- b=PcjNsIVjwzuVwGrH80TkJZXL101e3RyguWSH8g4gUVSnonX9SCNNW1w8x2A2tnXEXT
- fuo0/rmSEtHlu4vm5kuSWlsQ1CtzkKVNySskmFsIDpdwEDYTSu4+J2HkSqaYMCW8GS8n
- cWqwwHgM97kwOzVF2JiOI3Ky2w+e9LV+mbFKBBMLPa3qyp03U4xTNm9nDXrDiWu/gMT5
- 0pI0HRvs8y/NmVT18SENknG9hpkqhhaUbJg3tc/W07jEOb11aytXp5m3JLdXOVErYag2
- oL0yJ2MB/D7dPZcbqS4pIIgwUyGLuM4ndTqg1Y1T/UlbF+KTr5gE4QqA9RUfIU7xga6P
- d7HQ==
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1vqYMI-0003pK-J0
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 10:11:59 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1vqYMF-0005DM-WC
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 10:11:58 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1770909114;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=kED5riT/5oS+OfxnKqCYvLTgxzkHr6ekjx7QdiJnrbk=;
+ b=Nvtul7P7ANWM6V5jHcVRyw631dP6MhKCMz0AXVMyWxZ5TlD54TuqPC5ThiN0sUNSe2Zpy9
+ 8fcwuKsAcO6J91yOlbjG/lp+PtYGuQE0nGZ5pVQm0RyI/dvxEsqe208nRiRtdnhGoUfor/
+ ZhP4aR1CAr5GxVPgtFNk/nf6t3FwMlc=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-158-RIXXp23PMJ-T1-htJ6QSWw-1; Thu, 12 Feb 2026 10:11:52 -0500
+X-MC-Unique: RIXXp23PMJ-T1-htJ6QSWw-1
+X-Mimecast-MFC-AGG-ID: RIXXp23PMJ-T1-htJ6QSWw_1770909112
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-48071615686so28547015e9.1
+ for <qemu-devel@nongnu.org>; Thu, 12 Feb 2026 07:11:52 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770908875; x=1771513675;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20230601; t=1770909111; x=1771513911;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=7PaFta+XUwMwTOBC6RtKYeGKSumlB4nhsDnQICCsYt8=;
- b=LOZVYOtRAxdhw9Ed/1gh3Oqq8HfAooIIYG5agogMK1nnWTn7XGn15t9Gmyzl63k1b6
- 0LzdSJGpVFJl8tdtzzoeXqq3yW3Z2vSutrTL6SHiVo6N443ITmxKuCGdEztXPiNgATKi
- YDOwYm+mcmt2/nFvobCpeLQmAdtvzQZ/9wd7R1AYL1WsDxlpylgv4J6FZ/yCakSa4uPc
- 2zny3HbWRhuJUeusHexB8qY1LRYjEDOlI+Fs3ZUHBTnQNLvdRsGDL8UsoxXUaq9FXLGJ
- d1NjhGT+0yXcuzR+ZdAA+eOuLYFOQRaBknZiNWZEi5J02x0lSJrQNT5P78yvb1nSzqhl
- wRsw==
-X-Gm-Message-State: AOJu0YxCp7MaQnMnCElmDBOeidIXN4kZxCe3Ab6QwLZzlmaRM93tTuvy
- fbLYO70dvGHcIzLg8PUdWOglgY6ZEgrnynQPo4ndhOn7MTKWcXnNBkLL94h3jCNeBUwequ/dCjm
- AdiM1Lww=
-X-Gm-Gg: AZuq6aIfx/qzNmKAZ4+jMciqSFGwV7bKDORCvF7Aun2ATGow5jcdDd5g3Xal05U0gzX
- hyDl/rDR3Z/6tf8QAEvWZ06eHy1eK3KIEuMq4eLsBtth2+abwjIu9SAV39XK5thjGLk8wAYTD8o
- YttImTQU3U6NmqBICufE5HQIKIUAdbd/ry+dOnYDFgh51V2PUSu7BdLyvJA+zTj965irxDNcHfo
- f1IFwJVEJjlM2cD+d5KxrOi9CdLy6yvfS/KyJkgb8eImdWXE2UCWr7Rw46+HgfNJuy9L66XPeTS
- XNrFyI4oXAD8JWMSY83nXE7uEA0M8o838SFtiDk7jZhgo1NvG6UQo1JlUSC7S+d3lrXj9JBy78v
- PsOPfyMOjt8yEMWc3BPWeXhms679jwB95fVCiJoDXjJqk2GQ4Ly2xDzqrooW6SpQHc6pRSbEFpZ
- IFKMmqJdNYd2aR58kfwLMMHt2XtUhn5/aaCxXno/JIGfYolLBU4vPYyz+dC6D8pgZBSCbrf8PiZ
- lFGen0A2ih3HoA0uRdHnbydpFiPJnc=
-X-Received: by 2002:a05:600c:848d:b0:480:20f1:7abd with SMTP id
- 5b1f17b1804b1-48365715b6dmr49370635e9.31.1770908874965; 
- Thu, 12 Feb 2026 07:07:54 -0800 (PST)
-Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
+ bh=kED5riT/5oS+OfxnKqCYvLTgxzkHr6ekjx7QdiJnrbk=;
+ b=fHsBzq6+9cHONlsei2uhqAnc891pRgbRU9IC/hyoFCnCqIugcfLGTbLEwljahxJi+b
+ UUhoJirlwM3wJl2NCrbeUEUTVcCTAMsa+FlcBZfBQra2OKTE6IgID34uGOBen6wSwn3o
+ Llh53dAmidllV5X2Bblpc8G5+A2k1PvpNDa+EB6sfYuf1Wh/sdsXoMCbEAho0mIxz9gc
+ He7KBumWBTC+utgcL4y9E7UzQJO9rnkBWFxh1tmSHuhoErjb2VIMSfGDK91D7GgUc3lX
+ FM2c6moUE10rluk6S6qaSiC0l1K+COx1LIhTiW/si5hAMtviEqBxaxjj5VdBUYVQLu1T
+ i9yg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUyRjiyZnfM6Vk8aghQC2RL3aczrrq0dss2i9nFQ+IiDS70HmZm07h53oKqxwAfu1SqUN7B92VbrrY7@nongnu.org
+X-Gm-Message-State: AOJu0Yxj5cM9go23uC7Sm64hukNGlt7tTE41/xJY2IgUYhurt07yRwnL
+ Xbz/C4keeMwjxY3ErWl6qF8Q8L1d7ODA2sV1a1XgLPv6SNV7t5l86pyCYoa0vOWMgZn+RbCnJjM
+ JghCy1x9UCZ5bqI2vzMJgVI5sWzLxeoXcBe94bLk/sTBSk7Ih85Vae8fZ
+X-Gm-Gg: AZuq6aJM+W/qCRxiol9+WaV61KaFBIGeVAS5DiBXBiHiBSRAQ8r288wMkGJLdm0RWY7
+ +rniIivJHR7tsvPTXnXo7JLBzHJOzFb80AsIC9H5SZYymoUNfbND5bXk6oimby/MX374CIrbM1P
+ ccYOIZgBHv9L/Z4KE6wqLHICAGK0f/VT+CXIIt0VBKUs57vDLbYMamf10ELe8F5WibiDVtMsBHc
+ 2Oh3jVjNbk1U5DSYFx+E8U6Skrch6zrJM0EoVKdfscTS3DtrreF5BxoVfUnKbbgTpCT2LZS4XPK
+ qURgwQ0iGVQtFFe6Eg5lnj5IWTJsGMNV8e/liA/IhCSPKuX/F+RNoF5FIYmYJVRNZAhOChsXjnL
+ rJWW1INQiSVa2t+j2CScMvOEcvtxBzcwagPl8+CRLpadELXhe97h+3uNsb3Esw30EL53Ffg==
+X-Received: by 2002:a05:600d:486:10b0:483:6a8d:b2f9 with SMTP id
+ 5b1f17b1804b1-4836a8db4f0mr27682695e9.5.1770909111458; 
+ Thu, 12 Feb 2026 07:11:51 -0800 (PST)
+X-Received: by 2002:a05:600d:486:10b0:483:6a8d:b2f9 with SMTP id
+ 5b1f17b1804b1-4836a8db4f0mr27682155e9.5.1770909111054; 
+ Thu, 12 Feb 2026 07:11:51 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4835b9768c9sm84893545e9.2.2026.02.12.07.07.54
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 12 Feb 2026 07:07:54 -0800 (PST)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: qemu-ppc@nongnu.org, qemu-stable@nongnu.org,
- Nicholas Piggin <npiggin@gmail.com>, Chinmay Rath <rathc@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Glenn Miles <milesg@linux.ibm.com>
-Subject: [PATCH] target/ppc/translate: Fix TCG debug assert translating
- CLRBWIBC
-Date: Thu, 12 Feb 2026 15:07:53 +0000
-Message-ID: <20260212150753.1749448-1-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.43.0
+ 5b1f17b1804b1-4835d92267bsm170571175e9.0.2026.02.12.07.11.49
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 12 Feb 2026 07:11:50 -0800 (PST)
+Message-ID: <f07268f3-0e4b-480a-bc8a-cfa18cf753ed@redhat.com>
+Date: Thu, 12 Feb 2026 16:11:48 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::344;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x344.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 08/24] hw/arm/tegra241-cmdqv: Implement CMDQV init and
+ vIOMMU allocation
+Content-Language: en-US
+To: Shameer Kolothum <skolothumtho@nvidia.com>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org, clg@redhat.com, alex@shazbot.org,
+ nicolinc@nvidia.com, nathanc@nvidia.com, mochs@nvidia.com, jan@nvidia.com,
+ jgg@nvidia.com, jonathan.cameron@huawei.com, zhangfei.gao@linaro.org,
+ zhenzhong.duan@intel.com, kjaju@nvidia.com
+References: <20260206144823.80655-1-skolothumtho@nvidia.com>
+ <20260206144823.80655-9-skolothumtho@nvidia.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20260206144823.80655-9-skolothumtho@nvidia.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,95 +117,157 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The test case in the ppe42 functional test triggers a TCG debug
-assertion, which causes the test to fail in an --enable-debug
-build or when the sanitizers are enabled:
+Hi Shameer,
 
-#6  0x00007ffff4a3b517 in __assert_fail
-    (assertion=0x5555562e7589 "!temp_readonly(ots)", file=0x5555562e5b23 "../../tcg/tcg.c", line=4928, function=0x5555562e8900 <__PRETTY_FUNCTION__.23> "tcg_reg_alloc_mov") at ./assert/assert.c:105
-#7  0x0000555555cc2189 in tcg_reg_alloc_mov (s=0x7fff60000b70, op=0x7fff600126f8) at ../../tcg/tcg.c:4928
-#8  0x0000555555cc74e0 in tcg_gen_code (s=0x7fff60000b70, tb=0x7fffa802f540, pc_start=4294446080) at ../../tcg/tcg.c:6667
-#9  0x0000555555d02abe in setjmp_gen_code
-    (env=0x555556cbe610, tb=0x7fffa802f540, pc=4294446080, host_pc=0x7fffeea00c00, max_insns=0x7fffee9f9d74, ti=0x7fffee9f9d90)
-    at ../../accel/tcg/translate-all.c:257
-#10 0x0000555555d02d75 in tb_gen_code (cpu=0x555556cba590, s=...) at ../../accel/tcg/translate-all.c:325
-#11 0x0000555555cf5922 in cpu_exec_loop (cpu=0x555556cba590, sc=0x7fffee9f9ee0) at ../../accel/tcg/cpu-exec.c:970
-#12 0x0000555555cf5aae in cpu_exec_setjmp (cpu=0x555556cba590, sc=0x7fffee9f9ee0) at ../../accel/tcg/cpu-exec.c:1016
-#13 0x0000555555cf5b4b in cpu_exec (cpu=0x555556cba590) at ../../accel/tcg/cpu-exec.c:1042
-#14 0x0000555555d1e7ab in tcg_cpu_exec (cpu=0x555556cba590) at ../../accel/tcg/tcg-accel-ops.c:82
-#15 0x0000555555d1ff97 in rr_cpu_thread_fn (arg=0x555556cba590) at ../../accel/tcg/tcg-accel-ops-rr.c:285
-#16 0x00005555561586c9 in qemu_thread_start (args=0x555556ee3c90) at ../../util/qemu-thread-posix.c:393
-#17 0x00007ffff4a9caa4 in start_thread (arg=<optimized out>) at ./nptl/pthread_create.c:447
-#18 0x00007ffff4b29c6c in clone3 () at ../sysdeps/unix/sysv/linux/x86_64/clone3.S:78
+On 2/6/26 3:48 PM, Shameer Kolothum wrote:
+> From: Nicolin Chen <nicolinc@nvidia.com>
+>
+> Add initial Tegra241 CMDQV support by wiring up initialization and
+> IOMMUFD backed vIOMMU allocation. The CMDQV MMIO region and IRQ are
+> registered, while register handling remains a stub and will be completed
+> in subsequent patches.
 
-This can be reproduced "by hand":
+Explain what the MMIO region is made of (see below). Also describe what
+the interrupt is used for. what kind of interrupt is it? Also a work
+about the state (data)?
+>
+> Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
+> ---
+>  hw/arm/tegra241-cmdqv.c | 55 ++++++++++++++++++++++++++++++++++++++---
+>  hw/arm/tegra241-cmdqv.h | 19 ++++++++++++++
+>  2 files changed, 70 insertions(+), 4 deletions(-)
+>
+> diff --git a/hw/arm/tegra241-cmdqv.c b/hw/arm/tegra241-cmdqv.c
+> index 6f30ca035b..596b1c5595 100644
+> --- a/hw/arm/tegra241-cmdqv.c
+> +++ b/hw/arm/tegra241-cmdqv.c
+> @@ -13,6 +13,16 @@
+>  #include "smmuv3-accel.h"
+>  #include "tegra241-cmdqv.h"
+>  
+> +static uint64_t tegra241_cmdqv_read(void *opaque, hwaddr offset, unsigned size)
+> +{
+> +    return 0;
+> +}
+> +
+> +static void tegra241_cmdqv_write(void *opaque, hwaddr offset, uint64_t value,
+> +                                 unsigned size)
+> +{
+> +}
+> +
+>  static void tegra241_cmdqv_free_veventq(SMMUv3State *s)
+>  {
+>  }
+> @@ -25,24 +35,61 @@ static bool tegra241_cmdqv_alloc_veventq(SMMUv3State *s, Error **errp)
+>  
+>  static void tegra241_cmdqv_free_viommu(SMMUv3State *s)
+>  {
+> +    SMMUv3AccelState *accel = s->s_accel;
+> +    IOMMUFDViommu *viommu = accel->viommu;
+> +
+> +    if (!viommu) {
+> +        return;
+> +    }
+> +    iommufd_backend_free_id(viommu->iommufd, viommu->viommu_id);
+>  }
+>  
+>  static bool
+>  tegra241_cmdqv_alloc_viommu(SMMUv3State *s, HostIOMMUDeviceIOMMUFD *idev,
+>                              uint32_t *out_viommu_id, Error **errp)
+>  {
+> -    error_setg(errp, "NVIDIA Tegra241 CMDQV is unsupported");
+> -    return false;
+> +    Tegra241CMDQV *cmdqv = s->s_accel->cmdqv;
+> +
+> +    if (!iommufd_backend_alloc_viommu(idev->iommufd, idev->devid,
+> +                                      IOMMU_VIOMMU_TYPE_TEGRA241_CMDQV,
+> +                                      idev->hwpt_id, &cmdqv->cmdqv_data,
+> +                                      sizeof(cmdqv->cmdqv_data), out_viommu_id,
+> +                                      errp)) {
+> +        error_append_hint(errp, "Tegra241 CMDQV support unavailable");
+> +        return false;
+> +    }
+> +    return true;
+>  }
+>  
+>  static void tegra241_cmdqv_reset(SMMUv3State *s)
+>  {
+>  }
+>  
+> +static const MemoryRegionOps mmio_cmdqv_ops = {
+> +    .read = tegra241_cmdqv_read,
+> +    .write = tegra241_cmdqv_write,
+> +    .endianness = DEVICE_LITTLE_ENDIAN,
+> +};
+> +
+>  static bool tegra241_cmdqv_init(SMMUv3State *s, Error **errp)
+>  {
+> -    error_setg(errp, "NVIDIA Tegra241 CMDQV is unsupported");
+> -    return false;
+> +    SysBusDevice *sbd = SYS_BUS_DEVICE(OBJECT(s));
+> +    SMMUv3AccelState *accel = s->s_accel;
+> +    Tegra241CMDQV *cmdqv;
+> +
+> +    if (!accel) {
+> +        error_setg(errp, "Tegra241 CMDQV requires SMMUv3 acceleration");
+> +        return false;
+> +    }
+> +
+> +    cmdqv = g_new0(Tegra241CMDQV, 1);
+> +    memory_region_init_io(&cmdqv->mmio_cmdqv, OBJECT(s), &mmio_cmdqv_ops, cmdqv,
+> +                          "tegra241-cmdqv", TEGRA241_CMDQV_IO_LEN);
+> +    sysbus_init_mmio(sbd, &cmdqv->mmio_cmdqv);
+> +    sysbus_init_irq(sbd, &cmdqv->irq);
+> +    cmdqv->s_accel = accel;
+> +    accel->cmdqv = cmdqv;
+> +    return true;
+>  }
+>  
+>  static const SMMUv3AccelCmdqvOps tegra241_cmdqv_ops_impl = {
+> diff --git a/hw/arm/tegra241-cmdqv.h b/hw/arm/tegra241-cmdqv.h
+> index 81c9deb384..6ea0087f61 100644
+> --- a/hw/arm/tegra241-cmdqv.h
+> +++ b/hw/arm/tegra241-cmdqv.h
+> @@ -10,8 +10,27 @@
+>  #ifndef HW_TEGRA241_CMDQV_H
+>  #define HW_TEGRA241_CMDQV_H
+>  
+> +#include "smmuv3-accel.h"
+>  #include CONFIG_DEVICES
+>  
+> +/*
+> + * Tegra241 CMDQV MMIO layout (64KB pages):
+> + *
+> + * 0x00000: Global CMDQV registers
+I would use the spec terminology, something like
 
- ./build/clang/qemu-system-ppc -display none -vga none \
-    -machine ppe42_machine -serial stdio \
-    -device loader,file=$HOME/.cache/qemu/download/03c1ac0fb7f6c025102a02776a93b35101dae7c14b75e4eab36a337e39042ea8 \
-    -device loader,addr=0xfff80040,cpu-num=0
+TEGRA241_CMDQV_CFG TEGRA241_CMDQV_VCMDQ0
+TEGRA241_CMDQV_VCMDQ1 TEGRA241_CMDQV_VINTF0
+TEGRA241_CMDQV_VINTF1 Eric
 
-(assuming you have the image file from the functional test
-in your local cache).
 
-This happens for this input:
 
-IN:
-0xfff80c00:  07436004  .byte    0x07, 0x43, 0x60, 0x04
-
-which generates (among other things):
-
- not_i32 $0x80000,$0x80000
-
-which the TCG optimization pass turns into:
-
- mov_i32 $0x80000,$0xfff7ffff             dead: 1  pref=0xffff
-
-and where we then assert because we tried to write to a constant.
-
-This happens for the CLRBWIBC instruction which ends up in
-do_mask_branch() with rb_is_gpr false and invert true.  In this case
-we will generate code that sets mask to a tcg_constant_tl() but then
-uses it as the LHS in tcg_gen_not_tl().
-
-Fix the assertion by doing the invert in the translate time C code
-for the "mask is constant" case.
-
-Cc: qemu-stable@nongnu.org
-Fixes: f7ec91c23906 ("target/ppc: Add IBM PPE42 special instructions")
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- target/ppc/translate/ppe-impl.c.inc | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
-
-diff --git a/target/ppc/translate/ppe-impl.c.inc b/target/ppc/translate/ppe-impl.c.inc
-index 0a0590344e..1c27facb89 100644
---- a/target/ppc/translate/ppe-impl.c.inc
-+++ b/target/ppc/translate/ppe-impl.c.inc
-@@ -424,11 +424,15 @@ static bool do_mask_branch(DisasContext *ctx, arg_FCB * a, bool invert,
-         shift = tcg_temp_new();
-         tcg_gen_andi_tl(shift, cpu_gpr[a->rb], 0x1f);
-         tcg_gen_shr_tl(mask, tcg_constant_tl(0x80000000), shift);
-+        if (invert) {
-+            tcg_gen_not_tl(mask, mask);
-+        }
-     } else {
--        mask = tcg_constant_tl(PPC_BIT32(a->rb));
--    }
--    if (invert) {
--        tcg_gen_not_tl(mask, mask);
-+        target_ulong mask_const = PPC_BIT32(a->rb);
-+        if (invert) {
-+            mask_const = ~mask_const;
-+        }
-+        mask = tcg_constant_tl(mask_const);
-     }
- 
-     /* apply mask to ra */
--- 
-2.43.0
+> + * 0x10000: Global VCMDQ registers, page 0
+> + * 0x20000: Global VCMDQ registers, page 1
+> + * 0x30000: VINTF0 logical VCMDQ registers, page 0
+> + * 0x40000: VINTF0 logical VCMDQ registers, page 1
+> + */
+> +#define TEGRA241_CMDQV_IO_LEN 0x50000
+> +
+> +typedef struct Tegra241CMDQV {
+> +    struct iommu_viommu_tegra241_cmdqv cmdqv_data;
+> +    SMMUv3AccelState *s_accel;
+> +    MemoryRegion mmio_cmdqv;
+> +    qemu_irq irq;
+> +} Tegra241CMDQV;
+> +
+>  #ifdef CONFIG_TEGRA241_CMDQV
+>  const SMMUv3AccelCmdqvOps *tegra241_cmdqv_ops(void);
+>  #else
 
 
