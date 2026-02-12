@@ -4,69 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C568EB4911
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 11:41:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DAB0EB4912
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 11:48:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqV3x-0003LR-Uw; Thu, 12 Feb 2026 06:40:49 -0500
+	id 1vqVAo-0005YE-PB; Thu, 12 Feb 2026 06:47:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vqV3w-0003L2-Kh
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 06:40:49 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vqV3u-0004Yi-V8
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 06:40:48 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770896445;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Oug4MslfeAH/tyBcEoFRIRbppPNXoWQVSbJ87YKzmnw=;
- b=hpx0fkq6Qu5BUAkFs65LdKxZgf28qUFuy7VQbVhAdwDy/wuRIKhoANXlb63Z0NvkUKLTsS
- nTb+e9rBciCMoUw6ejNIpmFmtcZK/zajpDW767qPOuCv+idSzktJDwUYpCJ5j7QOlhyqg6
- 5zL+9jJbKiPyyI7VuOTrWRwHGj0r+wg=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-231-bIJ9GdXBN5e2hYsXGTTtnQ-1; Thu,
- 12 Feb 2026 06:40:42 -0500
-X-MC-Unique: bIJ9GdXBN5e2hYsXGTTtnQ-1
-X-Mimecast-MFC-AGG-ID: bIJ9GdXBN5e2hYsXGTTtnQ_1770896441
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5FAE819560B7; Thu, 12 Feb 2026 11:40:41 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.45.225.23])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 4039D1800464; Thu, 12 Feb 2026 11:40:38 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org,
-	John Snow <jsnow@redhat.com>
-Subject: [PULL v2 14/14] python: drop uses of pkg_resources
-Date: Thu, 12 Feb 2026 12:40:34 +0100
-Message-ID: <20260212114034.265498-2-thuth@redhat.com>
-In-Reply-To: <20260212114034.265498-1-thuth@redhat.com>
-References: <20260212114034.265498-1-thuth@redhat.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vqVAm-0005XZ-PY
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 06:47:52 -0500
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vqVAl-0001Ms-3r
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 06:47:52 -0500
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-436317c80f7so1204813f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 12 Feb 2026 03:47:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1770896869; x=1771501669; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=P7p285p4aWWD7iokggCSCaRg9DURJcUVTvGMhajVaMI=;
+ b=L2Cbi43zOii22ZdC7i3gVwogxo6bidmcynJB9xq9/fc7ZCAaoWq5mIgLnab4y1Xa/5
+ gt1oDduvUmGn5fEKz0thLTG1OurYuUZnmP1ZuRW75oimuw9wF8sPJ2Qa75vCGet+QULn
+ 4uwCHaYvGalJnnNDnG6XocdnvRl8W6kndYLfKqEanRS/o2PgnKMcHWNvOQvkjkHc42nh
+ zEfoFXyFdmBhAqwvVxMOnEBLpW9vyq4y0TN73S0gt0+r+GkxEAf1J89BlO/sf4lI6V90
+ FWeYXAZJ9Fo7jwKkt6nwYCU2IVlhClFqOCcB1dtJ8IR/AQAgKLtqUBZySs1iLT1KoeOy
+ IkYg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770896869; x=1771501669;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=P7p285p4aWWD7iokggCSCaRg9DURJcUVTvGMhajVaMI=;
+ b=TI8A5IGJZYbn5a/isOeGzAMrvM+vEP5TRHbp4176Tj+K+qWUkx0E3zmxtQZj/jIEex
+ 79UpBFqsDiWdr4EPdNxI3URTP6LadvDj2aStucAMU6Qk7EjQstAGkbypUTTEOg/8k2gc
+ MbqaM22IxucEVs4fyLr6ztKfS8tYp9CQ+IPJfjlfiln52yRSMnhyjGgIhQ/dNo9ZYmt/
+ q5FmIsfxvgbPpzYFKeDV3w+GDbYmJHKifpPMGMUutr6AXwtQLAMaKg1/JVrL4AaMmtMu
+ FkM4E3C7LIvs/wC53/Qlhnmx8mWPIPAQ2c/UskpqhhywV/chS/1upO7pJVFB815rrOm1
+ l15A==
+X-Gm-Message-State: AOJu0Yzk3GOe2JDXk+N8L2G57tVSC9XyuzWf6zPIqXkenD/KhoDOSze2
+ ojsSVBBna/Pd7cjOrxEtEZuItZX9AjUBYj56UviOPelBq75RtYN6fwb2vYAN9qVfU+HTjvK6/8O
+ xIpWu
+X-Gm-Gg: AZuq6aIOWxXjearoWHRx1q3TMMqSVMv7vp+0vOg69htzVSV0xg9KDR0FFtSP40mxOpq
+ IbnMw0Ja0fc1/bw3UnJAKsyoyHLj3/idtPU4na7gq4XT5UPLAm5f+V5VmsbmWX0Dpx3LT2HlmWi
+ 3Npj9WbfyaeR4y7Vq6Y2tiIN1m5ZAGr+yGTejUUC4+6X0wkl5gg7U3sbV+bewH+QvorzDjVWpGM
+ H53ZmzD1MgJ1tjmtHzWdml4X3pK6jv9lXKCWXTrtu+Zjbs7Wxo6HkOT/EbLo1oRkD4IzYzd0Fxm
+ 2xwvVlIbga5qUL30SbJ2tuwkZarbz6qgxnVXisLiA8uIhjZB0NakVDkJiST2ERuERPYe8TqKPqr
+ 0PVcNPRIofwwWDXY0a+6/nA0YpvVsHqhWrchIfdmI5OD0fya3VoXRE8neTtnDBadPlZgYbY08cm
+ CSuLLTlxL+TkQv9j/59Lw1DLfW1l0x2F8CCuF55/GeU/x3ynw6rTxw8wd8xrL8lrPVhNOeyW+4q
+ Nn+ALKvVzsKf62Nn/QbswCh4GeMDPQ=
+X-Received: by 2002:a05:600c:4747:b0:471:793:e795 with SMTP id
+ 5b1f17b1804b1-48365f7ef33mr32471725e9.0.1770896869131; 
+ Thu, 12 Feb 2026 03:47:49 -0800 (PST)
+Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4835dd0deeasm101768445e9.12.2026.02.12.03.47.48
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 12 Feb 2026 03:47:48 -0800 (PST)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org, Peter Xu <peterx@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>
+Subject: [PATCH] tests/qtest/migration/tls-tests.c: Don't use tls_psk end hook
+ for no_tls tests
+Date: Thu, 12 Feb 2026 11:47:47 +0000
+Message-ID: <20260212114747.1103466-1-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,45 +100,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: John Snow <jsnow@redhat.com>
+If you run the TLS tests under a clang undefined-behaviour sanitizer build
+it will fall over like this:
 
-pkg_resources has been fully dropped from modern pip/setuptools
-distributions and we should phase out its use. This patch is enough to,
-by itself, repair most GitLab CI tests upstream; with the exception of
-tox tests which are still making use of avocado - which will be dropped
-in a separate series to restore functionality there.
+../../tests/unit/crypto-tls-psk-helpers.c:53:12: runtime error: null pointer passed as argument 1, which is declared to never be null
+/usr/include/unistd.h:858:48: note: nonnull attribute specified here
+    #0 0x62bd810762ee in test_tls_psk_cleanup /home/pm215/qemu/build/clang/../../tests/unit/crypto-tls-psk-helpers.c:53:5
+    #1 0x62bd81073f89 in migrate_hook_end_tls_psk /home/pm215/qemu/build/clang/../../tests/qtest/migration/tls-tests.c:101:5
+    #2 0x62bd81062ef0 in test_precopy_common /home/pm215/qemu/build/clang/../../tests/qtest/migration/framework.c:947:9
 
-Signed-off-by: John Snow <jsnow@redhat.com>
-Suggested-by: Peter Maydell <peter.maydell@linaro.org>
-Message-ID: <20260211195804.135144-3-jsnow@redhat.com>
-Signed-off-by: Thomas Huth <thuth@redhat.com>
+This happens because test_precopy_tcp_no_tls() uses a custom start_hook
+that only sets a couple of parameters, but reuses the tsk_psk end_hook.
+However, the end_hook runs cleanup that assumes that the data was set
+up by migrate_hook_start_tls_psk_common(). In particular, it will
+unconditionally call test_tls_psk_cleanup(data->pskfile), and
+test_tls_psk_cleanup() will unconditionally unlink() the filename it
+is passed, which is undefined behaviour if you pass it a NULL pointer.
+
+Instead of creating a TestMigrateTLSPSKData struct which we never set
+any fields in and requiring the migrate_hook_end_tls_psk() hook to
+cope with that, don't allocate the struct in the start_hook. Then
+there is nothing we need to clean up, and we can set the end_hook
+to NULL (which the test framework will interpret as "don't call
+any end_hook").
+
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- python/setup.py | 4 ----
- 1 file changed, 4 deletions(-)
+Not sure when this would have appeared, so cc'ing stable as it
+seems safe enough to backport just in case.
+---
+ tests/qtest/migration/tls-tests.c | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
-diff --git a/python/setup.py b/python/setup.py
-index c5bc45919a4..789fa39b0ff 100755
---- a/python/setup.py
-+++ b/python/setup.py
-@@ -7,7 +7,6 @@
- import setuptools
- from setuptools.command import bdist_egg
- import sys
--import pkg_resources
+diff --git a/tests/qtest/migration/tls-tests.c b/tests/qtest/migration/tls-tests.c
+index bf0bb06a29..4ce7f6c676 100644
+--- a/tests/qtest/migration/tls-tests.c
++++ b/tests/qtest/migration/tls-tests.c
+@@ -488,20 +488,18 @@ static void test_precopy_tcp_tls_psk_mismatch(char *name, MigrateCommon *args)
  
- 
- class bdist_egg_guard(bdist_egg.bdist_egg):
-@@ -30,9 +29,6 @@ def main():
-     QEMU tooling installer
-     """
- 
--    # https://medium.com/@daveshawley/safely-using-setup-cfg-for-metadata-1babbe54c108
--    pkg_resources.require('setuptools>=39.2')
+ static void *migrate_hook_start_no_tls(QTestState *from, QTestState *to)
+ {
+-    struct TestMigrateTLSPSKData *data =
+-        g_new0(struct TestMigrateTLSPSKData, 1);
 -
-     setuptools.setup(cmdclass={'bdist_egg': bdist_egg_guard})
+     migrate_set_parameter_null(from, "tls-creds");
+     migrate_set_parameter_null(to, "tls-creds");
  
+-    return data;
++    return NULL;
+ }
  
+ static void test_precopy_tcp_no_tls(char *name, MigrateCommon *args)
+ {
+     args->listen_uri = "tcp:127.0.0.1:0";
+     args->start_hook = migrate_hook_start_no_tls;
+-    args->end_hook = migrate_hook_end_tls_psk;
++    /* the no_tls start hook requires no cleanup actions */
++    args->end_hook = NULL;
+ 
+     test_precopy_common(args);
+ }
 -- 
-2.53.0
+2.43.0
 
 
