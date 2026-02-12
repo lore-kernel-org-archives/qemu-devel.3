@@ -4,84 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56F08EE3683
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 14:12:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5C0AEE3688
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 14:12:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqXO3-0000iX-Ga; Thu, 12 Feb 2026 09:09:43 -0500
+	id 1vqXNt-0000hD-Ni; Thu, 12 Feb 2026 09:09:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vqXNp-0000gN-Gj
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 09:09:29 -0500
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ id 1vqXNm-0000fw-6S
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 09:09:27 -0500
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vqXNn-0006QK-VN
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 09:09:29 -0500
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-4806dffc64cso69380395e9.1
- for <qemu-devel@nongnu.org>; Thu, 12 Feb 2026 06:09:27 -0800 (PST)
+ id 1vqXNj-0006Pt-BO
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 09:09:24 -0500
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-48334ee0aeaso30010775e9.1
+ for <qemu-devel@nongnu.org>; Thu, 12 Feb 2026 06:09:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770905366; x=1771510166; darn=nongnu.org;
+ d=linaro.org; s=google; t=1770905362; x=1771510162; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=w7/HOOx+I4w67JP8F45Y9oVZsaYEEhfC+iicHDh+kCk=;
- b=t+cJ19PHe34CB2lXOxf7cAlhABsUJhyBQudJyWVWG4+3XwXRabRJLjKph8o5aE6J2R
- fox8v0HuK92U0r6dmwSnN/OVbXWpmPY8btTIFTF16dZ8qxpwJNcKIT/ZfZASLmD3m4fh
- zmCGGuP0p5MpxOC7GLpT+2kh2ArBTIBeBdB1JJksfD+xwsm8PQSB7J53eNDL/3EJqQ6t
- Pyg6m7dtQ8PvyEGLhXKMlfWbG1vUBDxdQ/b52LsPMSeN4F70m5cA8deS/48MOFbbvxWo
- /plOFRDbV4qbGqtWf/ODsVdu2NMiL/IaGSogAS7lrF/rtJcOzNyVCA8reDbbOk57eTUi
- QEuQ==
+ bh=2/c4UhHWbCQRd4FJDg3uOEjFMuAnPkaZruMWzUtSXGU=;
+ b=lMqRprPcCVcRvDP9x8ucLSh6a6213H1EpsQUCLiSyeWTcRPUR0Oem2aa6/WtdSLDgn
+ BS55wmL6dOaN2Ugedc+XWcm6Vg29cG1kCBdO8gc0eKesAukPyhjKR0HnMVKShu8yc0V5
+ QxBYGrYKcJv/RpntPHy7kBq65y1lCKu0+Jndg0H08BQlryOoCkFM0FmdZL36IfBXL72X
+ wfmy0qn14gMTrXrvoSYog7kFCnrW/znSSruoxB4N+BZqog93qS4i0fD4mnRCkcgEyq4h
+ YDBBUU9jcMSTOYNWPU0fd9MlCLqVpcIJ8cJiV+gs6nlZn927lsWX+A85z5fQZXcCLEMD
+ 2FEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770905366; x=1771510166;
+ d=1e100.net; s=20230601; t=1770905362; x=1771510162;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=w7/HOOx+I4w67JP8F45Y9oVZsaYEEhfC+iicHDh+kCk=;
- b=orADnXY2Hd6rK1tgbgbNMHSNoJ9b+EzFlONN1wcNoGISfz9a/xuN2ERirFHkKlGTSp
- 5qkrljMMr6GWCztSc66GCFETtjd0POKQuz195scqNwnlgqNmxw/jSgFLvkjRL+EalNdU
- zF5uVX9kyqdSHYezmxVe5sNAVxq9cCgFM4CxZUCjJCFlIYg/bLlUxWocgS4r9eps04Hz
- F0NwMofEN02mE0xecCzLRJ5Dr7R+QwXOTHTf/drlKnfQM4KW2LvW01GZuxi/X+9tByVC
- QWWSnq/o1EZ2OQG/i7SDDTissoKwn9UnhBogH1oEh6+dwSHkZNiFp83qD9S+NH/vSYR5
- +DQA==
-X-Gm-Message-State: AOJu0Yz8KpLQ7tBrKYVlZrkgPw3AKptPJP3nCC6GM7N8UXNKdb06O2lH
- xEct5rbUHu3SiITmxjKETd01nLgLElybkCkfGbMEdIk5QiccMu3WB3WhD2/uEtU9FVWaA6hIZZ7
- kHrAu
-X-Gm-Gg: AZuq6aLyONfw2WEa5QeZzxRqidESyIDvPuOiVCYt1T1S2+DQBAOn6uRy7WkudiOM7kS
- 6V49Gfo94B9G7jrDMHFLpXFsAgDS+Un7JLjW5fIUEukxJHkKgDUcSnGofDHOq7cpnYUOek9ywnL
- sBRtgGQx7LEJPjbiFV7B3fznNECCFaFeuZ8ebGey3tWNrR1pIjymoltQq8CqR5zrCthmigTI3Ia
- 9LhR8310r0LO6uVArCllgMLniwGeid5accF5bkGKS1DccCHA0yhswuT5eL3vZWYAKbbTMdAlrq9
- dP71ryYw39u/HAzXda4f1Q39xqQ0tBx6aecGwe3l/9SsDXGa/mZhmHIV38eJv7f7h0D8kTtWRTK
- AlgRzGcHO5u1c1QcAMlE/iuwnHoh6DIJ7p/0ab852h15BzXEdSmqvlyXDn/hXYMkL7gvYSBMzn0
- 0sAVOY0pHXEs3A2ASr3nc2cmqADdxg+TkhS6/rusBFVjwMrERs7Hnk86xnGgQmgtGFjon3hEY0H
- h47ht/JvZlDHH6inaFyQ8dIEZF+IkM=
-X-Received: by 2002:a05:600c:8b64:b0:480:1e40:3d2 with SMTP id
- 5b1f17b1804b1-483657181edmr36506925e9.29.1770905365699; 
- Thu, 12 Feb 2026 06:09:25 -0800 (PST)
+ bh=2/c4UhHWbCQRd4FJDg3uOEjFMuAnPkaZruMWzUtSXGU=;
+ b=sUxIWbvlisolpmBgElGCenq5NUIFwUMTVFWuOS0S8DKkdOA9sk4OvtZ1NGJGT6oNd3
+ ZK8dBkAQXD6h2cRVnNHUEZLbymOZjzMn/RI4XJwK73mXCDIlBOSCpb/tFTb40l295+Ob
+ /jrqRuhcjKLOxQTMm/+hJTkxnmGzN2Rtk/P2JCBuHfnAjTXHkJWTI3PSrOomm+ocXzz7
+ +g6/ODaScSawXMG+ogKy1ZPmlOfRuMg9thxx/kP7kjVTcNz0dVp4er2TUJ7/A370zADp
+ HKSTgPeSvkNOOyOS1qQqIPObF6aebhvrKGj1PwW46ktjTEquo/XvTS+ejP5CowN5V5rz
+ AYQw==
+X-Gm-Message-State: AOJu0YxgWHmlILo4/r8CLfeDU7yMvQSP6Y3Jf4WvRiSAN5pVK+W7+uIC
+ LXwG4ZKZ6KeKPK+Vw+vqDgcfz4Lp5zgxPQ65q7G+zCtaMbb//KnfX0W61FC7Ij0jKjKqY98mPKm
+ B5m5F
+X-Gm-Gg: AZuq6aJ6/Kpc3cq81wkALJa3LPxZhM2IkVFJLWl6T1q8mhq5Pq1VL9XYcxt7Lh2365A
+ RgQCKnQrDljcyw8EXNKSH08t3gDFgLeuMr41oy53+hwO/HPMnssrNDNdQ+auog0NdxEYlz7DZfA
+ 6RCWDuQZzQ6xBXdkXo3i+SU5qgGgI8jN1Jyqrd6vVjd595ZrdChGYbZ1hgzaQ7oV7umOOG2Wbd5
+ X9ZQnxD6VhaGrFV72+CzCxr+sfcN826Q1EZZdAS23L153OnVJLnn3nks8fcZVB5m2ODg9KUvswZ
+ CFTdh6WP3csZtDKaL4YOzbpR0weiDX+2fJljr7hH3LGpwwNgb4sjraaoole/iMdYsklUWPTbqiM
+ fX5ahbPzdKFMsuFQvuxsKSVtsgBvry8pEemeYIFjZusWgga8UHQePH2SP4AHEArBv1+XZfUlKkl
+ /CttAsr2a92+E+r8W8EpQELyE/gHO8rJEdctrwOnSZUd+YaenR9eaDcKvbfQ841SZFxcZiUSbSK
+ rg85Jy2IMXaRhDfnu4O4y7EP3IQ+2A=
+X-Received: by 2002:a05:600c:4f41:b0:483:6f7c:19f4 with SMTP id
+ 5b1f17b1804b1-4836f7c1ab9mr7020955e9.30.1770905361788; 
+ Thu, 12 Feb 2026 06:09:21 -0800 (PST)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4835dd0e327sm123266885e9.14.2026.02.12.06.09.24
+ 5b1f17b1804b1-4835dd0e327sm123266885e9.14.2026.02.12.06.09.19
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 12 Feb 2026 06:09:24 -0800 (PST)
+ Thu, 12 Feb 2026 06:09:20 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Jiri Pirko <jiri@resnulli.us>, Jason Wang <jasowang@redhat.com>,
  Dmitry Fleytman <dmitry.fleytman@gmail.com>,
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
  Patrick Venture <venture@google.com>
-Subject: [PATCH 4/5] net: mark struct udp_header as QEMU_PACKED
-Date: Thu, 12 Feb 2026 14:09:16 +0000
-Message-ID: <20260212140917.1443253-5-peter.maydell@linaro.org>
+Subject: [PATCH 1/5] hw/net/rocker: Don't keep pointer to h_proto as uint16_t*
+ in OfDpaFlowPktFields
+Date: Thu, 12 Feb 2026 14:09:13 +0000
+Message-ID: <20260212140917.1443253-2-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260212140917.1443253-1-peter.maydell@linaro.org>
 References: <20260212140917.1443253-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,44 +105,106 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The eth_header is not actually guaranteed to be aligned.  We attempt
-to deal with this in some places such as net_checksum_calculate() by
-using lduw_be_p() and so on to access the fields, but this is not
-sufficient to be correct, because even accessing a byte member within
-a misaligned struct is undefined behaviour.  The clang sanitizer will
-emit an error like this if you run the sifive_u_mmc functional test
-with sanitizers enabled:
+In rocker_of_dpa.c we assume that the h_proto field in an eth_header
+struct is aligned, and we copy its address into a uint16_t* in the
+OfDpaFlowPktFields struct which we then dereference later.  This
+isn't a safe assumption; it will also result in compilation failures
+with gcc if we mark the eth_header struct as QEMU_PACKED because gcc
+will not let you take the address of an unaligned struct field.
 
-../../net/checksum.c:168:24: runtime error: member access within misaligned address 0x5b7a7f829033 for type 'udp_header' (aka 'struct udp_header'), which requires 2 byte alignment
-0x5b7a7f829033: note: pointer points here
- ff  ff ff ff 00 44 00 43 01  34 58 54 01 01 06 00 85  95 80 60 00 00 00 00 00  00 00 00 00 00 00 00
-              ^
-    #0 0x5b7a71a5887e in net_checksum_calculate /home/pm215/qemu/build/clang/../../net/checksum.c:168:24
-    #1 0x5b7a7156819a in gem_transmit /home/pm215/qemu/build/clang/../../hw/net/cadence_gem.c:1386:21
-    #2 0x5b7a71566201 in gem_write /home/pm215/qemu/build/clang/../../hw/net/cadence_gem.c:1650:13
+Make the h_proto field in OfDpaFlowPktFields a void*, and make all
+the places where we previously read through that pointer instead use
+a new accessor function which allows for the possible lack of
+alignment.
 
-Fix this by marking the udp_header struct as QEMU_PACKED,
-so that the compiler knows it might be unaligned and will
-generate the right code for accessing fields.
+(Compare commit 5814c084679
+"hw/net/virtio-net.c: Don't assume IP length field is aligned"
+which fixed a similar problem elsewhere for an ip_header field.)
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- include/net/eth.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/net/rocker/rocker_of_dpa.c | 19 ++++++++++++-------
+ 1 file changed, 12 insertions(+), 7 deletions(-)
 
-diff --git a/include/net/eth.h b/include/net/eth.h
-index 63f598d7cd..df90ff0837 100644
---- a/include/net/eth.h
-+++ b/include/net/eth.h
-@@ -85,7 +85,7 @@ typedef struct udp_header {
-     uint16_t uh_dport; /* destination port */
-     uint16_t uh_ulen;  /* udp length */
-     uint16_t uh_sum;   /* udp checksum */
--} udp_header;
-+} QEMU_PACKED udp_header;
+diff --git a/hw/net/rocker/rocker_of_dpa.c b/hw/net/rocker/rocker_of_dpa.c
+index 16b9bc7a4b..814f19afc5 100644
+--- a/hw/net/rocker/rocker_of_dpa.c
++++ b/hw/net/rocker/rocker_of_dpa.c
+@@ -143,7 +143,7 @@ typedef struct of_dpa_flow {
+ typedef struct of_dpa_flow_pkt_fields {
+     uint32_t tunnel_id;
+     struct eth_header *ethhdr;
+-    uint16_t *h_proto;
++    void *h_proto; /* pointer to unaligned uint16_t data */
+     struct vlan_header *vlanhdr;
+     struct ip_header *ipv4hdr;
+     struct ip6_header *ipv6hdr;
+@@ -196,6 +196,11 @@ typedef struct of_dpa_group {
+     };
+ } OfDpaGroup;
  
- typedef struct ip_pseudo_header {
-     uint32_t ip_src;
++static uint16_t of_dpa_flow_pkt_h_proto(const OfDpaFlowPktFields *fields)
++{
++    return lduw_he_p(fields->h_proto);
++}
++
+ static int of_dpa_mask2prefix(uint32_t mask)
+ {
+     return 32 - ctz32(ntohl(mask));
+@@ -395,7 +400,7 @@ static void of_dpa_flow_pkt_parse(OfDpaFlowContext *fc,
+     fields->ethhdr = iov->iov_base;
+     fields->h_proto = &fields->ethhdr->h_proto;
+ 
+-    if (ntohs(*fields->h_proto) == ETH_P_VLAN) {
++    if (ntohs(of_dpa_flow_pkt_h_proto(fields) == ETH_P_VLAN)) {
+         sofar += sizeof(struct vlan_header);
+         if (iov->iov_len < sofar) {
+             DPRINTF("flow_pkt_parse underrun on vlan_header\n");
+@@ -405,7 +410,7 @@ static void of_dpa_flow_pkt_parse(OfDpaFlowContext *fc,
+         fields->h_proto = &fields->vlanhdr->h_proto;
+     }
+ 
+-    switch (ntohs(*fields->h_proto)) {
++    switch (ntohs(of_dpa_flow_pkt_h_proto(fields))) {
+     case ETH_P_IP:
+         sofar += sizeof(struct ip_header);
+         if (iov->iov_len < sofar) {
+@@ -547,7 +552,7 @@ static void of_dpa_term_mac_build_match(OfDpaFlowContext *fc,
+ {
+     match->value.tbl_id = ROCKER_OF_DPA_TABLE_ID_TERMINATION_MAC;
+     match->value.in_pport = fc->in_pport;
+-    match->value.eth.type = *fc->fields.h_proto;
++    match->value.eth.type = of_dpa_flow_pkt_h_proto(&fc->fields);
+     match->value.eth.vlan_id = fc->fields.vlanhdr->h_tci;
+     memcpy(match->value.eth.dst.a, fc->fields.ethhdr->h_dest,
+            sizeof(match->value.eth.dst.a));
+@@ -643,7 +648,7 @@ static void of_dpa_unicast_routing_build_match(OfDpaFlowContext *fc,
+                                                OfDpaFlowMatch *match)
+ {
+     match->value.tbl_id = ROCKER_OF_DPA_TABLE_ID_UNICAST_ROUTING;
+-    match->value.eth.type = *fc->fields.h_proto;
++    match->value.eth.type = of_dpa_flow_pkt_h_proto(&fc->fields);
+     if (fc->fields.ipv4hdr) {
+         match->value.ipv4.addr.dst = fc->fields.ipv4hdr->ip_dst;
+     }
+@@ -672,7 +677,7 @@ of_dpa_multicast_routing_build_match(OfDpaFlowContext *fc,
+                                      OfDpaFlowMatch *match)
+ {
+     match->value.tbl_id = ROCKER_OF_DPA_TABLE_ID_MULTICAST_ROUTING;
+-    match->value.eth.type = *fc->fields.h_proto;
++    match->value.eth.type = of_dpa_flow_pkt_h_proto(&fc->fields);
+     match->value.eth.vlan_id = fc->fields.vlanhdr->h_tci;
+     if (fc->fields.ipv4hdr) {
+         match->value.ipv4.addr.src = fc->fields.ipv4hdr->ip_src;
+@@ -713,7 +718,7 @@ static void of_dpa_acl_build_match(OfDpaFlowContext *fc,
+            sizeof(match->value.eth.src.a));
+     memcpy(match->value.eth.dst.a, fc->fields.ethhdr->h_dest,
+            sizeof(match->value.eth.dst.a));
+-    match->value.eth.type = *fc->fields.h_proto;
++    match->value.eth.type = of_dpa_flow_pkt_h_proto(&fc->fields);
+     match->value.eth.vlan_id = fc->fields.vlanhdr->h_tci;
+     match->value.width = FLOW_KEY_WIDTH(eth.type);
+     if (fc->fields.ipv4hdr) {
 -- 
 2.43.0
 
