@@ -4,91 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FE01EE368B
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 14:13:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04644EE368D
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 14:27:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqXNv-0000hY-PV; Thu, 12 Feb 2026 09:09:36 -0500
+	id 1vqXes-0001eM-8k; Thu, 12 Feb 2026 09:27:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vqXNo-0000gC-6V
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 09:09:29 -0500
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vqXNm-0006QC-Eo
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 09:09:27 -0500
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-4801c2fae63so65897575e9.2
- for <qemu-devel@nongnu.org>; Thu, 12 Feb 2026 06:09:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770905365; x=1771510165; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=R3cLi2JyUm8wKd97bhkRBOBT0oLXAVRHi0iTXd33KdY=;
- b=ZweqdSaxwMnuxbs0GxNbZdZeGUI8d6h/xXdSFqsC6s93XzXckb59j4BJ/IsR6+84lb
- oVac8Fkcjp8Y2mzrRnZnHrj7DwEXzyO2sgSeUz42Gs8sdEAKEN+3tcpfEghFkKqu25+1
- v77FdKmfoqSQQyuG5o8ZrGeKs3qAapzPf+Pkb2OxETFifMsjBgq99ANX6oyLFoZZq54f
- EVPQHvbz8+UiAT6lIlv7Jo5vi/Xlg7TYCS/wujAuqjCE6TVOFc2DOfxx0lUTLSV3P8kI
- arYKFJfKKRyv95lOz2wj95ZzF8caRdRS9R4pQrl5n1PwUWn2KlH1BjmskhpJc60hiVHv
- 7dmQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770905365; x=1771510165;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=R3cLi2JyUm8wKd97bhkRBOBT0oLXAVRHi0iTXd33KdY=;
- b=wF6EutAqcJjvRykIxTUqVLxdgPECGFdsEHolLA1AGiO7zb/7CadF0oatLiT2FTNCyH
- XcbegAgbKqULCc9D8dUWo53ssJ5bg9yD2pfqNt+fAhP08r8hlhZqvevWe1Bd9/plv2V0
- xx00+JKzcXMn+vazeKa0MpHJfOx3zmZUyni6EpKIaPxhqG+DhpFdZ+KhiBOSMvJCEfLy
- +gRhpL5GbywHgfvpyBt7YXZefE0b8Rk2hiV2SPSH9Yn9/+WQhx3w2jDYcanQlru0HQYD
- dTs4PCITjuMsiab62drwqORdJPmsjnphYNARDBMiB5yTDZJ2xDrTQoar9fdfXsM03GPR
- b5WQ==
-X-Gm-Message-State: AOJu0YylwVma2ObcXvpy2fp/rv5DgE34GXBp+UAtugVrovVDnwrWhNcI
- P+y+La6R8KcPNkk7OMBXPTAfk6xX1Wl91hSZ/ZYZNs5rB8VDjcIowjAHQ0v14f4te21nhNZzlwd
- /j/8w
-X-Gm-Gg: AZuq6aK1ju8tnEAEvcHI6lMfggD+2Ud4tj1VYQ0XSPZK6bLpUbpbGkwrC4+3N6n7YUy
- fWqMwEQIR6jp6Kih01xwHkLVD1ngT0gQbJNSSQthPsE6E8cTAVnz7pp4H7rISLYVjnWbgb6tXcj
- ACK5C9r3d6T1lFrhTbXcYvPHssvtNssMnDfZKOZasjLE2/YWTiMTeWBWqeJfeMb41tVZx1JFb5p
- 1fI+jebhBwe79/Ru4OlmpUkXjwQ+MyAk0StyQfDz0B3MwP4KIeNMnrC01mszUs0FdIdpjP8d76Q
- 8sMdEiRUTr75zZFB7Oc63j5LlMbuvewDpbxv4RtX0eHEuIWUParULLyHBsaWbCgVcbrZK+67gIt
- 0eshipP/jqs5xLaFf+tQ84WatfobDqPMB4X0q8Ha2RIBd9dCIkgtrUB0M4Msetdr0K9Ib8z0YvJ
- ZPJeQyLG71+wfUSWgrPjBCKJaFrgivD/UcZZeIQElptLPn8YwLvTuQ5OM6EhzGW44SNn2/jbmSL
- JoOUsPh7zQ7OUI5cZvdrXtWmxsO9Mw=
-X-Received: by 2002:a05:600c:8b2e:b0:471:14af:c715 with SMTP id
- 5b1f17b1804b1-483656ae449mr37134725e9.3.1770905364554; 
- Thu, 12 Feb 2026 06:09:24 -0800 (PST)
-Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4835dd0e327sm123266885e9.14.2026.02.12.06.09.23
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 12 Feb 2026 06:09:23 -0800 (PST)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Jiri Pirko <jiri@resnulli.us>, Jason Wang <jasowang@redhat.com>,
- Dmitry Fleytman <dmitry.fleytman@gmail.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Patrick Venture <venture@google.com>
-Subject: [PATCH 3/5] net: mark struct eth_header as QEMU_PACKED
-Date: Thu, 12 Feb 2026 14:09:15 +0000
-Message-ID: <20260212140917.1443253-4-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260212140917.1443253-1-peter.maydell@linaro.org>
-References: <20260212140917.1443253-1-peter.maydell@linaro.org>
+ (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
+ id 1vqXep-0001e7-Kl
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 09:27:03 -0500
+Received: from frasgout.his.huawei.com ([185.176.79.56])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
+ id 1vqXek-0001nY-VU
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 09:27:03 -0500
+Received: from mail.maildlp.com (unknown [172.18.224.150])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4fBcyy4htXzHnH7t;
+ Thu, 12 Feb 2026 22:25:30 +0800 (CST)
+Received: from dubpeml500005.china.huawei.com (unknown [7.214.145.207])
+ by mail.maildlp.com (Postfix) with ESMTPS id 0E34B40539;
+ Thu, 12 Feb 2026 22:25:47 +0800 (CST)
+Received: from localhost (10.47.28.143) by dubpeml500005.china.huawei.com
+ (7.214.145.207) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.11; Thu, 12 Feb
+ 2026 14:25:46 +0000
+Date: Thu, 12 Feb 2026 14:25:36 +0000
+To: "Zhijian Li (Fujitsu)" <lizhijian@fujitsu.com>
+CC: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, "linuxarm@huawei.com"
+ <linuxarm@huawei.com>, "jonathan.cameron@huawei.com"
+ <jonathan.cameron@huawei.com>, "nifan.cxl@gmail.com" <nifan.cxl@gmail.com>,
+ "anisa.su887@gmail.com" <anisa.su887@gmail.com>, "mst@redhat.com"
+ <mst@redhat.com>, "armbru@redhat.com" <armbru@redhat.com>,
+ "ppbonzini@redhat.com" <ppbonzini@redhat.com>, "peterx@redhat.com"
+ <peterx@redhat.com>, "philmd@linaro.org" <philmd@linaro.org>,
+ "david@kernel.org" <david@kernel.org>, "imammedo@redhat.com"
+ <imammedo@redhat.com>, "xiaoguangrong.eric@gmail.com"
+ <xiaoguangrong.eric@gmail.com>, "venkataravis@micron.com"
+ <venkataravis@micron.com>, "gourry@gourry.net" <gourry@gourry.net>
+Subject: Re: [PATCH v2 2/2] hw/cxl: Add a performant (and correct) path for
+ the non interleaved cases
+Message-ID: <20260212142536.00004dcb.alireza.sanaee@huawei.com>
+In-Reply-To: <ae9d737c-6c2d-4ad1-b40e-62ea0e466696@fujitsu.com>
+References: <20260204150002.669-1-alireza.sanaee@huawei.com>
+ <20260204150002.669-3-alireza.sanaee@huawei.com>
+ <ae9d737c-6c2d-4ad1-b40e-62ea0e466696@fujitsu.com>
+Organization: Huawei
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.47.28.143]
+X-ClientProxiedBy: lhrpeml100012.china.huawei.com (7.191.174.184) To
+ dubpeml500005.china.huawei.com (7.214.145.207)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=alireza.sanaee@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,58 +79,163 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Alireza Sanaee <alireza.sanaee@huawei.com>
+From:  Alireza Sanaee via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The eth_header is not actually guaranteed to be aligned.  We attempt
-to deal with this in some places such as net_checksum_calculate() by
-using lduw_be_p() and so on to access the fields, but this is not
-sufficient to be correct, because even accessing a byte member within
-a misaligned struct is undefined behaviour.  The clang sanitizer will
-emit an error like this if you run the sifive_u_mmc functional test
-with sanitizers enabled:
+On Mon, 9 Feb 2026 03:06:00 +0000
+"Zhijian Li (Fujitsu)" <lizhijian@fujitsu.com> wrote:
 
-../../net/checksum.c:78:47: runtime error: member access within misaligned address 0x561f52f35011 for type 'struct eth_header', which requires 2 byte alignment
-0x561f52f35011: note: pointer points here
- 00 00 00  00 33 33 00 00 00 16 52  54 00 12 34 56 86 dd 60  00 00 00 00 24 00 01 00  00 00 00 00 00
-              ^
-    #0 0x561f20608459 in net_checksum_calculate /home/pm215/qemu/build/clang/../../net/checksum.c:78:47
-    #1 0x561f20117bfa in gem_transmit /home/pm215/qemu/build/clang/../../hw/net/cadence_gem.c:1386:21
-    #2 0x561f20115c61 in gem_write /home/pm215/qemu/build/clang/../../hw/net/cadence_gem.c:1650:13
+Hi Zhijian,
 
-SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior ../../net/checksum.c:78:47
+I forgot to address the other feedback you shared. This is another attempt.
 
-Fix this by marking the eth_header struct as QEMU_PACKED, so that the
-compiler knows it might be unaligned and will generate the right code
-for accessing fields.
+> On 04/02/2026 23:00, Alireza Sanaee wrote:
+> > The CXL address to device decoding logic is complex because of the need
+> > to correctly decode fine grained interleave. The current implementation
+> > prevents use with KVM where executed instructions may reside in that
+> > memory and gives very slow performance even in TCG.  
+> 
+> 
+> Do you mean KVM will work after this patch in 1-way case
+> 
 
-This is similar to commit f8b94b4c520 ("net: mark struct ip_header as
-QEMU_PACKED") where we fixed this for a different struct defined in
-this file.
+Yes.
 
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
-This came up back at the beginning of last year:
-https://lore.kernel.org/qemu-devel/CAFEAcA-gyMTz-KpmamyXcKX9QOL=yYHDMPRF2Xji_uJbG02WpA@mail.gmail.com/
-but we never got around to making the fix.
----
- include/net/eth.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> > 
+> > In many real cases non interleaved memory configurations are useful and
+> > for those we can use a more conventional memory region alias allowing
+> > similar performance to other memory in the system.  
+> 
+> 
+> Do you have any benchmark data to demonstrate the performance improvement?
 
-diff --git a/include/net/eth.h b/include/net/eth.h
-index 14c34f530f..63f598d7cd 100644
---- a/include/net/eth.h
-+++ b/include/net/eth.h
-@@ -39,7 +39,7 @@ struct eth_header {
-     uint8_t  h_dest[ETH_ALEN];   /* destination eth addr */
-     uint8_t  h_source[ETH_ALEN]; /* source ether addr    */
-     uint16_t h_proto;            /* packet type ID field */
--};
-+} QEMU_PACKED;
- 
- struct vlan_header {
-     uint16_t  h_tci;     /* priority and VLAN ID  */
--- 
-2.43.0
+Yes, simple experiments with this code snippet. Compilation instructions are in the gist itself.
 
+https://gist.github.com/sarsanaee/8791a4d32351b31228764ce7c2c4bb9c
+
+> 
+> 
+> 
+> > 
+> > Co-developed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+> > Signed-off-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+> > Signed-off-by: Alireza Sanaee <alireza.sanaee@huawei.com>
+> > ---
+> >   hw/cxl/cxl-component-utils.c |   8 ++
+> >   hw/cxl/cxl-host.c            | 197 ++++++++++++++++++++++++++++++++++-
+> >   hw/mem/cxl_type3.c           |   4 +
+> >   include/hw/cxl/cxl.h         |   1 +
+> >   include/hw/cxl/cxl_device.h  |   1 +
+> >   5 files changed, 206 insertions(+), 5 deletions(-)
+> > 
+> > diff --git a/hw/cxl/cxl-component-utils.c b/hw/cxl/cxl-component-utils.c
+> > index d36162e91b..d459d04b6d 100644
+> > --- a/hw/cxl/cxl-component-utils.c
+> > +++ b/hw/cxl/cxl-component-utils.c
+> > @@ -142,6 +142,14 @@ static void dumb_hdm_handler(CXLComponentState *cxl_cstate, hwaddr offset,
+> >           value = FIELD_DP32(value, CXL_HDM_DECODER0_CTRL, COMMITTED, 0);
+> >       }
+> >       stl_le_p((uint8_t *)cache_mem + offset, value);
+> > +
+> > +    if (should_commit) {
+> > +        cfmws_update_non_interleaved(true);
+> > +    }
+> > +
+> > +    if (should_uncommit) {
+> > +        cfmws_update_non_interleaved(false);
+> > +    }  
+> 
+> 
+> This might be slightly better as an if-else block, since should_commit and should_uncommit are mutually exclusive:
+> 
+> 
+> if (should_commit) {
+> 	cfmws_update_non_interleaved(true);;
+> } else if (should_uncommit) {
+> 	cfmws_update_non_interleaved(false);
+> }
+I agree, this can be changed.
+> 
+> 
+> >   }
+> >   
+> >   static void bi_handler(CXLComponentState *cxl_cstate, hwaddr offset,
+> > diff --git a/hw/cxl/cxl-host.c b/hw/cxl/cxl-host.c
+> > index 9633b01abf..1fcfe01164 100644
+> > --- a/hw/cxl/cxl-host.c
+> > +++ b/hw/cxl/cxl-host.c
+> > @@ -104,7 +104,7 @@ void cxl_fmws_link_targets(Error **errp)
+> >   }
+> >   
+> >   static bool cxl_hdm_find_target(uint32_t *cache_mem, hwaddr addr,
+> > -                                uint8_t *target)
+> > +                                uint8_t *target, bool *interleaved)
+> >   {
+> >       int hdm_inc = R_CXL_HDM_DECODER1_BASE_LO - R_CXL_HDM_DECODER0_BASE_LO;
+> >       unsigned int hdm_count;
+> > @@ -138,6 +138,11 @@ static bool cxl_hdm_find_target(uint32_t *cache_mem, hwaddr addr,
+> >           found = true;
+> >           ig_enc = FIELD_EX32(ctrl, CXL_HDM_DECODER0_CTRL, IG);
+> >           iw_enc = FIELD_EX32(ctrl, CXL_HDM_DECODER0_CTRL, IW);
+> > +
+> > +        if (interleaved) {
+> > +            *interleaved = iw_enc != 0;
+> > +        }
+> > +
+> >           target_idx = (addr / cxl_decode_ig(ig_enc)) % (1 << iw_enc);
+> >   
+> >           if (target_idx < 4) {
+> > @@ -157,7 +162,8 @@ static bool cxl_hdm_find_target(uint32_t *cache_mem, hwaddr addr,
+> >       return found;  
+> 
+> [...]
+> 
+> > +
+> > +static int update_non_interleaved(Object *obj, void *opaque)
+> > +{
+> > +    const int hdm_inc = R_CXL_HDM_DECODER1_BASE_LO - R_CXL_HDM_DECODER0_BASE_LO;
+> > +    bool commit = *(bool *)opaque;
+> > +    CXLType3Dev *ct3d;
+> > +    uint32_t *cache_mem;
+> > +    unsigned int hdm_count, i;
+> > +    uint32_t cap;
+> > +    uint64_t dpa_base = 0;
+> > +
+> > +    if (!object_dynamic_cast(obj, TYPE_CXL_TYPE3)) {
+> > +        return 0;
+> > +    }
+> > +
+> > +    ct3d = CXL_TYPE3(obj);
+> > +    cache_mem = ct3d->cxl_cstate.crb.cache_mem_registers;
+> > +    cap = ldl_le_p(cache_mem + R_CXL_HDM_DECODER_CAPABILITY);
+> > +    hdm_count = cxl_decoder_count_dec(FIELD_EX32(cap,
+> > +                                                 CXL_HDM_DECODER_CAPABILITY,
+> > +                                                 DECODER_COUNT));
+> > +    /*
+> > +     * Walk the decoders and find any committed with iw set to 0
+> > +     * (non interleaved).
+> > +     */
+> > +    for (i = 0; i < hdm_count; i++) {
+> > +        uint64_t decoder_base, decoder_size, skip;
+> > +        uint32_t hdm_ctrl, low, high;
+> > +        int iw, committed;
+> > +
+> > +        hdm_ctrl = ldl_le_p(cache_mem + R_CXL_HDM_DECODER0_CTRL + i * hdm_inc);
+> > +        committed = FIELD_EX32(hdm_ctrl, CXL_HDM_DECODER0_CTRL, COMMITTED);
+> > +        if (commit ^ committed) {  
+> 
+> 
+> Is there any specific reason for using ^ here instead of '==' ?
+
+This was only there to make sure, the status must be commit ON and uncommit OFF and the other way around.
+
+It is not valid to map anything or walk down the for loop if the states are anything other than those.
+> 
+> 
+> 
+> Thanks
+> Zhijian
 
