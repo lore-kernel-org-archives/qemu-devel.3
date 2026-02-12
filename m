@@ -4,108 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D654EE3691
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBD55EE3694
 	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 14:49:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqXvT-00061y-Lu; Thu, 12 Feb 2026 09:44:15 -0500
+	id 1vqXw7-0007Tt-Fp; Thu, 12 Feb 2026 09:44:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vqXvH-0005lH-Lc
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 09:44:03 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1vqXva-0006Yp-OE
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 09:44:24 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vqXvF-0006Es-UU
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 09:44:03 -0500
+ id 1vqXvY-0006IE-DE
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 09:44:22 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770907441;
+ s=mimecast20190719; t=1770907459;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=bcpWkpn50Ck93z02v0fM6JJavzwotApdJbS9F2TxzKM=;
- b=MQswgGd2vXI1eTqvdvOuRRsUBq8HvcvOYn1D765KHvzzCZfcZQ2F5ktDaOOd4Y2v+Gam4Z
- aOOc1Jf1jN964nUzj+ykzMkAWbqhF9F86kwA4qpUCqfKjJ3mpSujEzBQviTJ0lV02htk+v
- YpFNG7rV2w+GGlFtEUPDcv2OiYvvTZk=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=ODhn/b5AvptlCuVZKL5lyPwHbvz25VOUzIhw6xuP1GI=;
+ b=f1wWxqKLoa0jdtV+ZVp4xG6WiC2qJQPaHf6wGAfk8ubCBgmDHlCzngII2R6IdtGXYaZqLD
+ 8YjuSwlIh0ajish7TdLMQ5LRuomRTeY+61QARPkGmAeul1YgU8BNh+SbPxWIuM4oo9nduq
+ Vc5kL0XbOxbpQmx71ACfvXGs+o82rvc=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-287-JVrkV2LkPUKX7hABqGz3_Q-1; Thu, 12 Feb 2026 09:43:59 -0500
-X-MC-Unique: JVrkV2LkPUKX7hABqGz3_Q-1
-X-Mimecast-MFC-AGG-ID: JVrkV2LkPUKX7hABqGz3_Q_1770907439
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4836cd6dfe6so4553225e9.2
- for <qemu-devel@nongnu.org>; Thu, 12 Feb 2026 06:43:59 -0800 (PST)
+ us-mta-648-qtX18ST1PV2qGUZBIWarHg-1; Thu, 12 Feb 2026 09:44:18 -0500
+X-MC-Unique: qtX18ST1PV2qGUZBIWarHg-1
+X-Mimecast-MFC-AGG-ID: qtX18ST1PV2qGUZBIWarHg_1770907457
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4831192e66aso70119045e9.2
+ for <qemu-devel@nongnu.org>; Thu, 12 Feb 2026 06:44:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1770907438; x=1771512238; darn=nongnu.org;
+ d=redhat.com; s=google; t=1770907457; x=1771512257; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=bcpWkpn50Ck93z02v0fM6JJavzwotApdJbS9F2TxzKM=;
- b=Cku+KMlf6UOQlSzDhjac61psCgb+CQbMWZGGyUtJjAYri1ZcNy69D2xMCW8Dg6k/X5
- J+pgYUx53Lbc4TIPggthm0JiqCLxB1JZ7C7ZRtCnjQYFGUqsPS7YLsbB1kibZBwg2g/y
- t25VNdHNjYkDDQZ8L6WNEAuJkR1/DNCf5ZzyXpKPguvKQhejOauMaMxzwmFJgsF8VPdB
- mliwBD+W9+Hw2bqkQSPgT0TOARLQepeR/8Cz5/ls5rE+iaX7bEUDY56zQ5DHmtxG8PeB
- iJly2EcOq4dseTpwAXdxtwo5S7pgw75goX24foooFYo0z2ZxncMRfzH485yGPzEyHNKt
- ernQ==
+ bh=ODhn/b5AvptlCuVZKL5lyPwHbvz25VOUzIhw6xuP1GI=;
+ b=FtBjML2KSMMk9Bh/rmQetk4NyyVAY1VGgt41rpHtqsGmXW95jseLKXInW7Ax9ZXFgS
+ pi/CxNHIryRS9NLW5z4NIkvWMtrd9kt+wD1I4rKl0b4k+iAj8dngxxvUgeFG0DqIfaKH
+ d5rUcd4h+CuMhLvdxPCHb4kVqn8pUB923GGYieYqFZ8UkZFwvZFGYdwLbgStjCYosB5U
+ VI/HkkEjGHXMjIMnzLthRZxZI94GNYCkkmZz7EoZZYrIJuDA/DsDcX0PQRCfjUfdgGeq
+ pabd8P/mmXfS5iUga5T5Q/Bo+hNHfPf8xCVv7xIXGeN09egSFHc96ThkYXNWF6gqvj2g
+ xzSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770907438; x=1771512238;
+ d=1e100.net; s=20230601; t=1770907457; x=1771512257;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=bcpWkpn50Ck93z02v0fM6JJavzwotApdJbS9F2TxzKM=;
- b=aBK2UB9rvKUh7n71QcDN4lKyJMMmx77dfERksrzoyEoylap3NjAm5qhqjFOYuX+ju6
- ViiUnlHzW+n9SG7HWiZWS4q66mvSFxMhzcR3hV+XPPRaO8psOIpQGn/HB8NQQJc1QKK5
- ls7AYcp05NSGksHwk1369eqUrO2op4mpbgv8lTNxDXgj8638lr7i/YKOdpTvgb4vtGI5
- cHvtnvBJa3LIPFqLfOxjMuLbkt+GSuXITckM+KwJo6ojhf8xWGSmN2kAlx/6URtaGYAA
- oGLVGa4d7h/tbq5bvWmpBPXW2GFSIG88/N4l3lXUmURfNWcygzGCqUUZ0mnU9is/nVhQ
- oPDQ==
-X-Gm-Message-State: AOJu0Yz4t7onxeVrgjrt01hG8aqVbsLOSdyf05UW9eVdZkAgG6FvJEMJ
- s949QCp6X2SqB1dEs6eUnMQ7RMKcUJezZWi3b8nPOXY1R90cSI4SXjWWddt8VAzUJk2+oVoYtoe
- 6igUr5xedCfXeuaaa11Ey9yiITySEtLnluREfG72NtTRT9pnKLTthWHN6FcmCik+TSVu6wGbUPh
- a8LNIiVSir6qOdUcPBG9lRICftseezrdGHe4X/4NEU
-X-Gm-Gg: AZuq6aJDmCeymyK7noCoKFLJYhBGcMcdxUEyFB424ehDRnD66CIJ4uLJ7mvLo+vKAJ/
- ZdHSCF1ZMNPCICQVIFUdV3CxdTB05nVEXRfltYsPuASxAK9FjkmfV/2eCEGC/W58zaQJKAOY1EA
- 8nk1jhpZcOwDo3Et7oY/JPkhMp4howoiXGzZfoivl0y10cEQ7Lmimv4jTf1S8oghSFvuKQBUmp9
- GN0bqDdXb/Tkp5BSDSc2+fkmvXqj4UbIKJC1FlRZCeeoZRodmSlZWfH6dLTXxsFwz5H6YhHNAa+
- RQuLKitStN15cLQjXARO8OT4hDPWeauf9Z51RnTaO4nB6P/chi/2lSszqGdYg2tJxNZXsIUtnnm
- W5xo/LypJKD7kp5ZfUD0TWGuEKVNyJBTMLCUyS67SJBfKciGc9B2NAr4RGq8MeZ58ebg1lSvgq9
- +/O160uSLDndPFDHdOnWY9rP2nBWusQQuj4+7U7H04/ljFJazf0OA=
-X-Received: by 2002:a05:600c:3f1b:b0:482:ef72:5787 with SMTP id
- 5b1f17b1804b1-483656ae605mr38410175e9.1.1770907437668; 
- Thu, 12 Feb 2026 06:43:57 -0800 (PST)
-X-Received: by 2002:a05:600c:3f1b:b0:482:ef72:5787 with SMTP id
- 5b1f17b1804b1-483656ae605mr38409695e9.1.1770907437101; 
- Thu, 12 Feb 2026 06:43:57 -0800 (PST)
+ bh=ODhn/b5AvptlCuVZKL5lyPwHbvz25VOUzIhw6xuP1GI=;
+ b=TAKyCfqcNDsyfXyVnMD0egVqVUXzC9dPNnDhcC01BDRwG1G2zVI59jAxUPEWg3u6/y
+ GKLbAkPwj61XGgdy0Yx0Ea8oyofwKOMaitXNvI36uWAvr5YPQGZ5Bgg9xHIo8NoJrMDA
+ 7HFndvYpW/a3XPJ0vcyIABPBKYe5TgbvOauSCPLag6Cmzqhi8foZKu82QQfEv8HV5u/o
+ efIKB8hIlTskKlUpdqQPpuYW+Pz9dtJBE4ZInuNJUWKBCY23dgjTg87EBjfOHNEUJjHa
+ dUYMNJ8SRCvpN4+ZJk5GImj8l16ybVVS/n+xPxB6aE63qRYW+pNLzCZ63ZLy2DY3LwfW
+ oMkw==
+X-Gm-Message-State: AOJu0Yyn14nYQB1VZpPj5S3VQrcD6RYHr5SCfIOniKB4DYks0/gSiT5M
+ iuSdTH7ZZGG6mMRAeBz9xnGAmmHF0+7pVtVcsbA+GMLAKt+lsDqfd01kna1V3/9CzCGpiNCcjfm
+ XL1ytKsWwq4NizWQCFmLEfNlgIeEv6eoW+Kw9vRKW0a2gGgMtmS1g9jFqzBsOo5G2X9OA2vzZ5g
+ lEeVKp3sOnlryMco/ycnOMIHyL4GHAw4otUMVESzYd
+X-Gm-Gg: AZuq6aK9hKcCnaFPco8NXx6uuZnaBYuKnCWj5tr0niaCOGNFqcmCaN4LvnNfB4KSsys
+ IrrS9zkzc+KHxeHzACS2d5D/wJIhYBK1hfyqSVq78eqasLgfoMYO2kBBVfoNVK+Kj8BW+hgTuGU
+ xKIsvE5h5h5JC7g1C8wuR1wT9zOKsWYWefMwqSqyCruhInoLf6WyM6FQFkv+FKX3o55dn4MDtYQ
+ j9tg1CNx9KAUsWp6JAMNE0FHU4JkY5QPl03IC49qXBNPWBHWIHPHSA1lUBmhJh+QHnqJZku1Avo
+ GbtLsTpBjcG8lQSf7sxG53W/vU3jauM8p2ATx4RbnMKooQNSa+yfROoJYnbFteVjTXyZpzUBdhY
+ ZZppvX7qvvIr9G/U47zDUOFzriiuT7h82xJeeL+zqlWn+0zCX48wAP7rjJphWrODdFcZL9XGkl9
+ d+48pjoY5lpinlbLZpohKV9KaTCEuC8BuBdVyi990B8q2LZ/nyUw8=
+X-Received: by 2002:a05:600c:4e14:b0:480:1e8f:d15f with SMTP id
+ 5b1f17b1804b1-483656ae432mr41831755e9.2.1770907456879; 
+ Thu, 12 Feb 2026 06:44:16 -0800 (PST)
+X-Received: by 2002:a05:600c:4e14:b0:480:1e8f:d15f with SMTP id
+ 5b1f17b1804b1-483656ae432mr41831305e9.2.1770907456373; 
+ Thu, 12 Feb 2026 06:44:16 -0800 (PST)
 Received: from [10.60.241.123] (nat-pool-mxp-t.redhat.com. [149.6.153.186])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4834d82a4c4sm353885065e9.10.2026.02.12.06.43.54
+ 5b1f17b1804b1-4835a66fcf7sm56255795e9.7.2026.02.12.06.44.14
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 12 Feb 2026 06:43:54 -0800 (PST)
+ Thu, 12 Feb 2026 06:44:14 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Dongli Zhang <dongli.zhang@oracle.com>, Zhao Liu <zhao1.liu@intel.com>,
- Dapeng Mi <dapeng1.mi@linux.intel.com>, Zide Chen <zide.chen@intel.com>
-Subject: [PULL 31/41] target/i386/kvm: extract unrelated code out of
- kvm_x86_build_cpuid()
-Date: Thu, 12 Feb 2026 15:42:33 +0100
-Message-ID: <20260212144244.22579-32-pbonzini@redhat.com>
+Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Stefan Berger <stefanb@linux.ibm.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>
+Subject: [PULL 39/41] tests: add /qdev/free-properties test
+Date: Thu, 12 Feb 2026 15:42:41 +0100
+Message-ID: <20260212144244.22579-40-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260212144244.22579-1-pbonzini@redhat.com>
 References: <20260212144244.22579-1-pbonzini@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -123,115 +124,137 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Dongli Zhang <dongli.zhang@oracle.com>
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-The initialization of 'has_architectural_pmu_version',
-'num_architectural_pmu_gp_counters', and
-'num_architectural_pmu_fixed_counters' is unrelated to the process of
-building the CPUID.
+Add a simple qdev test to check that allocated properties get freed with
+the object. This test exhibited array leaks before the fixes.
 
-Extract them out of kvm_x86_build_cpuid().
-
-In addition, use cpuid_find_entry() instead of cpu_x86_cpuid(), because
-CPUID has already been filled at this stage.
-
-Signed-off-by: Dongli Zhang <dongli.zhang@oracle.com>
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-Reviewed-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
-Reviewed-by: Zide Chen <zide.chen@intel.com>
-Link: https://lore.kernel.org/r/20260109075508.113097-3-dongli.zhang@oracle.com
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Reviewed-by: Stefan Berger <stefanb@linux.ibm.com>
+Link: https://lore.kernel.org/r/20250429140306.190384-6-marcandre.lureau@redhat.com
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+Link: https://lore.kernel.org/r/20260108230311.584141-6-csomani@redhat.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/kvm/kvm.c | 62 ++++++++++++++++++++++++-------------------
- 1 file changed, 35 insertions(+), 27 deletions(-)
+ tests/unit/test-qdev.c | 96 ++++++++++++++++++++++++++++++++++++++++++
+ tests/unit/meson.build |  1 +
+ 2 files changed, 97 insertions(+)
+ create mode 100644 tests/unit/test-qdev.c
 
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index 69748420fd6..31e8ef87aab 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -1985,33 +1985,6 @@ uint32_t kvm_x86_build_cpuid(CPUX86State *env, struct kvm_cpuid_entry2 *entries,
-         }
-     }
- 
--    if (limit >= 0x0a) {
--        uint32_t eax, edx;
--
--        cpu_x86_cpuid(env, 0x0a, 0, &eax, &unused, &unused, &edx);
--
--        has_architectural_pmu_version = eax & 0xff;
--        if (has_architectural_pmu_version > 0) {
--            num_architectural_pmu_gp_counters = (eax & 0xff00) >> 8;
--
--            /* Shouldn't be more than 32, since that's the number of bits
--             * available in EBX to tell us _which_ counters are available.
--             * Play it safe.
--             */
--            if (num_architectural_pmu_gp_counters > MAX_GP_COUNTERS) {
--                num_architectural_pmu_gp_counters = MAX_GP_COUNTERS;
--            }
--
--            if (has_architectural_pmu_version > 1) {
--                num_architectural_pmu_fixed_counters = edx & 0x1f;
--
--                if (num_architectural_pmu_fixed_counters > MAX_FIXED_COUNTERS) {
--                    num_architectural_pmu_fixed_counters = MAX_FIXED_COUNTERS;
--                }
--            }
--        }
--    }
--
-     cpu_x86_cpuid(env, 0x80000000, 0, &limit, &unused, &unused, &unused);
- 
-     for (i = 0x80000000; i <= limit; i++) {
-@@ -2115,6 +2088,39 @@ int kvm_arch_pre_create_vcpu(CPUState *cpu, Error **errp)
-     return 0;
- }
- 
-+static void kvm_init_pmu_info(struct kvm_cpuid2 *cpuid)
+diff --git a/tests/unit/test-qdev.c b/tests/unit/test-qdev.c
+new file mode 100644
+index 00000000000..20eae38e03f
+--- /dev/null
++++ b/tests/unit/test-qdev.c
+@@ -0,0 +1,96 @@
++#include "qemu/osdep.h"
++#include "hw/core/qdev-properties.h"
++#include "qom/object.h"
++#include "qapi/error.h"
++#include "qapi/visitor.h"
++
++
++#define TYPE_MY_DEV "my-dev"
++typedef struct MyDev MyDev;
++DECLARE_INSTANCE_CHECKER(MyDev, STATIC_TYPE,
++                         TYPE_MY_DEV)
++
++struct MyDev {
++    DeviceState parent_obj;
++
++    uint32_t prop_u32;
++    char *prop_string;
++    uint32_t *prop_array_u32;
++    uint32_t prop_array_u32_nb;
++};
++
++static const Property my_dev_props[] = {
++    DEFINE_PROP_UINT32("u32", MyDev, prop_u32, 100),
++    DEFINE_PROP_STRING("string", MyDev, prop_string),
++    DEFINE_PROP_ARRAY("array-u32", MyDev, prop_array_u32_nb, prop_array_u32,
++                     qdev_prop_uint32, uint32_t),
++};
++
++static void my_dev_class_init(ObjectClass *oc, const void *data)
 +{
-+    struct kvm_cpuid_entry2 *c;
++    DeviceClass *dc = DEVICE_CLASS(oc);
 +
-+    c = cpuid_find_entry(cpuid, 0xa, 0);
-+
-+    if (!c) {
-+        return;
-+    }
-+
-+    has_architectural_pmu_version = c->eax & 0xff;
-+    if (has_architectural_pmu_version > 0) {
-+        num_architectural_pmu_gp_counters = (c->eax & 0xff00) >> 8;
-+
-+        /*
-+         * Shouldn't be more than 32, since that's the number of bits
-+         * available in EBX to tell us _which_ counters are available.
-+         * Play it safe.
-+         */
-+        if (num_architectural_pmu_gp_counters > MAX_GP_COUNTERS) {
-+            num_architectural_pmu_gp_counters = MAX_GP_COUNTERS;
-+        }
-+
-+        if (has_architectural_pmu_version > 1) {
-+            num_architectural_pmu_fixed_counters = c->edx & 0x1f;
-+
-+            if (num_architectural_pmu_fixed_counters > MAX_FIXED_COUNTERS) {
-+                num_architectural_pmu_fixed_counters = MAX_FIXED_COUNTERS;
-+            }
-+        }
-+    }
++    dc->realize = NULL;
++    device_class_set_props(dc, my_dev_props);
 +}
 +
- int kvm_arch_init_vcpu(CPUState *cs)
- {
-     struct {
-@@ -2305,6 +2311,8 @@ int kvm_arch_init_vcpu(CPUState *cs)
-     cpuid_i = kvm_x86_build_cpuid(env, cpuid_data.entries, cpuid_i);
-     cpuid_data.cpuid.nent = cpuid_i;
- 
-+    kvm_init_pmu_info(&cpuid_data.cpuid);
++static const TypeInfo my_dev_type_info = {
++    .name = TYPE_MY_DEV,
++    .parent = TYPE_DEVICE,
++    .instance_size = sizeof(MyDev),
++    .class_init = my_dev_class_init,
++};
 +
-     if (x86_cpu_family(env->cpuid_version) >= 6
-         && (env->features[FEAT_1_EDX] & (CPUID_MCE | CPUID_MCA)) ==
-            (CPUID_MCE | CPUID_MCA)) {
++/*
++ * Initialize a fake machine, being prepared for future tests.
++ *
++ * Realization of anonymous qdev (with no parent object) requires both
++ * the machine object and its "unattached" container to be at least present.
++ */
++static void test_init_machine(void)
++{
++    /* This is a fake machine - it doesn't need to be a machine object */
++    Object *machine = object_property_add_new_container(
++        object_get_root(), "machine");
++
++    /* This container must exist for anonymous qdevs to realize() */
++    object_property_add_new_container(machine, "unattached");
++}
++
++static void test_qdev_free_properties(void)
++{
++    MyDev *mt;
++
++    mt = STATIC_TYPE(object_new(TYPE_MY_DEV));
++    object_set_props(OBJECT(mt), &error_fatal,
++                     "string", "something",
++                     "array-u32", "12,13",
++                     NULL);
++    qdev_realize(DEVICE(mt), NULL, &error_fatal);
++
++    g_assert_cmpuint(mt->prop_u32, ==, 100);
++    g_assert_cmpstr(mt->prop_string, ==, "something");
++    g_assert_cmpuint(mt->prop_array_u32_nb, ==, 2);
++    g_assert_cmpuint(mt->prop_array_u32[0], ==, 12);
++    g_assert_cmpuint(mt->prop_array_u32[1], ==, 13);
++
++    object_unparent(OBJECT(mt));
++    object_unref(mt);
++}
++
++
++int main(int argc, char **argv)
++{
++    g_test_init(&argc, &argv, NULL);
++
++    module_call_init(MODULE_INIT_QOM);
++    type_register_static(&my_dev_type_info);
++    test_init_machine();
++
++    g_test_add_func("/qdev/free-properties",
++                    test_qdev_free_properties);
++
++    g_test_run();
++
++    return 0;
++}
+diff --git a/tests/unit/meson.build b/tests/unit/meson.build
+index bd580290601..41e8b06c339 100644
+--- a/tests/unit/meson.build
++++ b/tests/unit/meson.build
+@@ -156,6 +156,7 @@ if have_system
+       'test-qdev-global-props': [qom, hwcore]
+     }
+   endif
++  tests += {'test-qdev': [qom, hwcore]}
+ endif
+ 
+ if have_ga and host_os == 'linux'
 -- 
 2.52.0
 
