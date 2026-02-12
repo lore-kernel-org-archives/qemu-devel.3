@@ -4,107 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DF07EEA84B
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 19:11:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8AD4EEA84C
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 19:26:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqc53-0006tm-HK; Thu, 12 Feb 2026 14:10:25 -0500
+	id 1vqcJe-0003yI-GI; Thu, 12 Feb 2026 14:25:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vqc51-0006sm-Ef
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 14:10:23 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <pasic@linux.ibm.com>)
+ id 1vqcJc-0003xC-94; Thu, 12 Feb 2026 14:25:28 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vqc4z-0007uT-LW
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 14:10:23 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770923419;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=e1zYFmLS1aUHuGRVXmgf6THOuV7zOuTW85hBywRILGk=;
- b=VuScMPxzGBiOaoNdgk9prd4zC3+NpXXrPYAp5lI1Q6FUjCMKRvQDOTJEydv4HKU4zdarjr
- mCNf4GwyiEBQ8A1qtVwebf+bSxoAC2FAVS8PpUzteITdqfCmoQKivfkTTQeW6D4DdjQ3kG
- 1A7IbdvJGY+mX73ii2AQwkOtqRkyWwI=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-684-qBHiKb0eMSSEjlLvKWEy5A-1; Thu, 12 Feb 2026 14:10:17 -0500
-X-MC-Unique: qBHiKb0eMSSEjlLvKWEy5A-1
-X-Mimecast-MFC-AGG-ID: qBHiKb0eMSSEjlLvKWEy5A_1770923417
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4831192e66aso1257325e9.2
- for <qemu-devel@nongnu.org>; Thu, 12 Feb 2026 11:10:17 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770923416; x=1771528216;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=e1zYFmLS1aUHuGRVXmgf6THOuV7zOuTW85hBywRILGk=;
- b=mfMyCzHU1gAydbFeo+AAqXfUb5B+FAFYhb1+oDB/s7mSEDEnTncSu7V/AXLIWO9UxJ
- zvwEkb3QrH0iq3iPPSN7OCHBJsZr/0EgL1NFUwSkVxJLOwhAVC4pto677PKlpiyCL+nj
- nHrMScyQz8dxN6qR7uiaiR1+EkA411WjHAlSzBBR9DyQT6jIp8gOAn5hFRKIdHGfGUC2
- VADVVIve5UdP3O58ZSMYRDI2/dHJwkWIRzc9mtZ8ZqfZsrKpg0HhzyAuMc2vh+++938O
- /kKGQJrX+NZFHl/VaU86lqx/CdTWFoVXMXZunYsaIiRtlioJppbk7EvB8LFmpKLyFJls
- EE9A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUZ1xW+JSppIrD13091579flauft09fZDKpWSY9VrSchrUmDYmtq0Omd2NxC5SX4emIQUFxpXPujEVw@nongnu.org
-X-Gm-Message-State: AOJu0Yx6nEcy8da9kpamg6YqUYMid1AJXNOxA2jXuHim3LU6jBmMa7ad
- kOP1n5idCASYn2a0fKNIbYxkpCfOTjVyIFA8h86jDCk/UKRbTod6fk3ZHmp8PXPvJlR5MmkwJtN
- wxxxUysMukDwWs5RB0my0B6JewvW973bs6p9HPAlcQ7tqOljFVrVROdsy
-X-Gm-Gg: AZuq6aL8JMcSeXbATSj7SaV78VTIyEHDX28qMliFrdMIx0JTm5J6SbE5wRy8iOHGgpF
- uLHAmsxMFrCmlZiqcUhWl7wh20ey9vb+Q8fFZKxMKjsSI0zS4oPNiuKx8tLw5fNVm9FtIlvGOz+
- ZweyTcRocWNtlyLtFsgIc3t252JxrYSfiYQoc+j3kR54iJFUfgqG2us0ii3ta/gXeFWent7Q5ah
- KmgvTifutmhcwzCAH1rImj5uwuPXyaE0uoPhAHiff5/gmwHMI4hOL6xJsjzcLJZTyZrkk2Mr/Ja
- RaoJ8BqT0XdB0gQQLJH6bO3FDh6+BOLTT97O9uEOIV1fqT002kbrFW0D/+yEKZ1NxtGcPJm5RA1
- eluQrcxajLuwd7OHmSEt0N2yDUm0cHw8LgN87AtqU0FxRgo/IrdlPLksr79JEZcqdsoXPQQ==
-X-Received: by 2002:a05:600c:4e8e:b0:477:a21c:2066 with SMTP id
- 5b1f17b1804b1-48371043b42mr2649405e9.5.1770923416414; 
- Thu, 12 Feb 2026 11:10:16 -0800 (PST)
-X-Received: by 2002:a05:600c:4e8e:b0:477:a21c:2066 with SMTP id
- 5b1f17b1804b1-48371043b42mr2648855e9.5.1770923415938; 
- Thu, 12 Feb 2026 11:10:15 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4835d99e194sm108878625e9.8.2026.02.12.11.10.14
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 12 Feb 2026 11:10:15 -0800 (PST)
-Message-ID: <b627633a-db93-41a1-ab7c-befef619c51b@redhat.com>
-Date: Thu, 12 Feb 2026 20:10:13 +0100
+ (Exim 4.90_1) (envelope-from <pasic@linux.ibm.com>)
+ id 1vqcJa-0001nt-IR; Thu, 12 Feb 2026 14:25:27 -0500
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 61CISlMo130324; Thu, 12 Feb 2026 19:25:24 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=rghqQH
+ c3SfNncOSkVQMPbOT0lQhJ1o8LwJCpEhk3SVc=; b=plNtmmzQSKV9vwTlPxFgbx
+ xNU6BQ3MPPRJj724xNHj/wkKU6Zjah/bD0PnNuyeLo5B54Oixb04NdFm2N3ZVcBX
+ 0eSnxwBis1dC+BuKv95D6uEX7+xm5yQBoVYJGPVKnD5Go9i2juA+lwDJEK05w4ar
+ iUWkVU+GpIEdn2qjSPDA0BDRrWlGG6FQcVZp03Wnns8OMjyyQATa3fO3kR3V370g
+ J0yI1SPacXaEFVyNmjeI5dByq8ndmpeF0o5wCfJ/GKNdvqGSYZik8hdhSSTIf2/F
+ BtXqd58zSVEdgfWI1WviDZy6KfiUY7CZevC1ceL7UAtUMPytxS2QULpmWy2Ahijw
+ ==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4c696v535k-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 12 Feb 2026 19:25:24 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 61CIC5Hp001825;
+ Thu, 12 Feb 2026 19:25:23 GMT
+Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4c6je2bn04-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 12 Feb 2026 19:25:23 +0000
+Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
+ [10.20.54.100])
+ by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 61CJPILp42467830
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 12 Feb 2026 19:25:18 GMT
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 3966220043;
+ Thu, 12 Feb 2026 19:25:18 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 87ECB20040;
+ Thu, 12 Feb 2026 19:25:17 +0000 (GMT)
+Received: from li-ce58cfcc-320b-11b2-a85c-85e19b5285e0 (unknown [9.111.43.40])
+ by smtpav01.fra02v.mail.ibm.com (Postfix) with SMTP;
+ Thu, 12 Feb 2026 19:25:17 +0000 (GMT)
+Date: Thu, 12 Feb 2026 20:25:15 +0100
+From: Halil Pasic <pasic@linux.ibm.com>
+To: Matthew Rosato <mjrosato@linux.ibm.com>
+Cc: Aby Sam Ross <abysamross@ibm.com>, qemu-s390x@nongnu.org,
+ qemu-devel@nongnu.org, farman@linux.ibm.com, alifm@linux.ibm.com, Halil
+ Pasic <pasic@linux.ibm.com>
+Subject: Re: [PATCH v2] s390x/pci: prevent null pointer dereference during
+ zpci hot unplug
+Message-ID: <20260212202515.3ffa2a80.pasic@linux.ibm.com>
+In-Reply-To: <5fa0684d-5127-4db5-937c-d9be9fc4508d@linux.ibm.com>
+References: <192dc45c-5bc2-4bfa-8e6f-8a140e23d88a@linux.ibm.com>
+ <8e983aa64ebeaad9897496199ca80cfb7e0bf003.1770877629.git.abysamross@ibm.com>
+ <20260212165029.206ae722.pasic@linux.ibm.com>
+ <5fa0684d-5127-4db5-937c-d9be9fc4508d@linux.ibm.com>
+Organization: IBM
+X-Mailer: Claws Mail 3.17.8 (GTK+ 2.24.32; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 23/24] hw/arm/virt-acpi: Advertise Tegra241 CMDQV nodes
- in DSDT
-Content-Language: en-US
-To: Shameer Kolothum <skolothumtho@nvidia.com>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org, clg@redhat.com, alex@shazbot.org,
- nicolinc@nvidia.com, nathanc@nvidia.com, mochs@nvidia.com, jan@nvidia.com,
- jgg@nvidia.com, jonathan.cameron@huawei.com, zhangfei.gao@linaro.org,
- zhenzhong.duan@intel.com, kjaju@nvidia.com
-References: <20260206144823.80655-1-skolothumtho@nvidia.com>
- <20260206144823.80655-24-skolothumtho@nvidia.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20260206144823.80655-24-skolothumtho@nvidia.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjEyMDE0OSBTYWx0ZWRfX2bDxMSMq5r63
+ RWYhKdtbVlztKhKWqMIkEJ+jQl9K2kq4G+s08/fG1MD2uyoHjhLfxgpTm11Q4deWSo0WQ+UCbze
+ w5JZILkdetmki8N0+tWCtrG25hsEbf28UHXTc4hODgVZO6+g3srrFvIQQg8+gy0BUoiNZ2BQLk8
+ E8pDapUjDrQl+RNaWVwvy6c8tFD4zh2TUp4PJjvEodxq4Qj+9edaZojdVtaqQAjOA55k6bokair
+ m1qjJbbqoC96b0itQ/suGBTAPbf+sr1cUk7HACUo5aAG1L9Mkqe+JO+rGnbgj3Vq/zZUa/t97cM
+ ausrTgyC2zdm9KA34qSY5oJ7m7hiF6Ib81ivNmcy4YH7VO3a2/8sY92qgbkyhp3FdHeAMDkIDId
+ NTo2hc69hGyo4kvTCT1pt3VhLdKFq3tMqyIzlEMBZ1kZcQqxAObjD4ADSGsktQRJjBfq+N083Up
+ yoJZrRunId2H1VUm/hw==
+X-Proofpoint-ORIG-GUID: LmfMZShnfXSQqD_5jdpsotuM25hxQl7I
+X-Proofpoint-GUID: LmfMZShnfXSQqD_5jdpsotuM25hxQl7I
+X-Authority-Analysis: v=2.4 cv=O+Y0fR9W c=1 sm=1 tr=0 ts=698e2924 cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=kj9zAlcOel0A:10 a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22 a=VnNF1IyMAAAA:8
+ a=4FL5sxqK8EKuwWEkRwoA:9 a=CjuIK1q_8ugA:10
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-02-12_05,2026-02-12_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 priorityscore=1501 phishscore=0 adultscore=0
+ malwarescore=0 impostorscore=0 bulkscore=0 clxscore=1015 spamscore=0
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
+ definitions=main-2602120149
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=pasic@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,160 +124,43 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Thu, 12 Feb 2026 11:55:15 -0500
+Matthew Rosato <mjrosato@linux.ibm.com> wrote:
 
+> > 
+> > Maybe add a word or two why the other dereferences of pbdev->iommu
+> > not guarded by a null check are safe.
+> > 
+> > I think we have:
+> > * s390_pci_sclp_deconfigure
+> > * s390_pci_msix_init
+> > * s390_pcihost_reset
+> > * s390_pci_device_reset
+> > * mpcifc_service_call
+> > * stpcifc_service_call
+> > * s390_pci_read_base
+> > 
+> > and more. My guess is that the device never gets into a state where
+> > these operations are permissible, and the code makes sure
+> > those functions won't be called on a device that has
+> > pbdev->iommu == NULL. But that is just my guess.
+> > 
+> > DISCLAIMER: I didn't look at this properly, just asking based
+> > on a quick look. Some of these may contain explicit or implicit
+> > checking...  
+> 
+> I mentioned in response to v1 as part of my review that I did look through all references of pbdev->iommu, as I was also concerned about whether we needed additional NULL checks.  But so far I'm not seeing it - it is largely implicit, but we don't drive the routines until the device is plugged, not in reserved|standby and iommu is associated.
+> 
+> This particular case is because we reach unplug (which also has to happen after plug of course) but the swizzle is we are reaching unplug exactly because we are giving up without actually having -successfully- plugged both the zpci and pci device.
+> 
+> But anyway, yes, I do think it would be good to add a small blurb to the commit message. 
 
-On 2/6/26 3:48 PM, Shameer Kolothum wrote:
-> From: Nicolin Chen <nicolinc@nvidia.com>
->
-> Add ACPI DSDT support for Tegra241 CMDQV when the SMMUv3 instance is
-> created with tegra241-cmdqv.
->
-> The SMMUv3 device identifier is used as the ACPI _UID. This matches
-> the Identifier field of the corresponding SMMUv3 IORT node, allowing
-> the CMDQV DSDT device to be correctly associated with its SMMU.
->
-> Because virt-acpi-build.c now includes CONFIG_DEVICES via the Tegra241
-> CMDQV header, the Meson file entry is updated to build it as part of
-> arm_ss instead of arm_common_ss
->
-> Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
-> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
-> ---
->  hw/arm/meson.build       |  2 +-
->  hw/arm/trace-events      |  1 +
->  hw/arm/virt-acpi-build.c | 73 ++++++++++++++++++++++++++++++++++++++++
->  3 files changed, 75 insertions(+), 1 deletion(-)
->
-> diff --git a/hw/arm/meson.build b/hw/arm/meson.build
-> index 4ec91db50a..af0b516df1 100644
-> --- a/hw/arm/meson.build
-> +++ b/hw/arm/meson.build
-> @@ -1,7 +1,7 @@
->  arm_ss = ss.source_set()
->  arm_common_ss = ss.source_set()
->  arm_common_ss.add(when: 'CONFIG_ARM_VIRT', if_true: files('virt.c'))
-> -arm_common_ss.add(when: 'CONFIG_ACPI', if_true: files('virt-acpi-build.c'))
-> +arm_ss.add(when: 'CONFIG_ACPI', if_true: files('virt-acpi-build.c'))
->  arm_common_ss.add(when: 'CONFIG_DIGIC', if_true: files('digic_boards.c'))
->  arm_common_ss.add(when: 'CONFIG_EMCRAFT_SF2', if_true: files('msf2-som.c'))
->  arm_common_ss.add(when: 'CONFIG_HIGHBANK', if_true: files('highbank.c'))
-> diff --git a/hw/arm/trace-events b/hw/arm/trace-events
-> index ef495c040c..e7e3ccfe9f 100644
-> --- a/hw/arm/trace-events
-> +++ b/hw/arm/trace-events
-> @@ -9,6 +9,7 @@ omap1_lpg_led(const char *onoff) "omap1 LPG: LED is %s"
->  
->  # virt-acpi-build.c
->  virt_acpi_setup(void) "No fw cfg or ACPI disabled. Bailing out."
-> +virt_acpi_dsdt_tegra241_cmdqv(int smmu_id, uint64_t base, uint32_t irq) "DSDT: add cmdqv node for (id=%d), base=0x%" PRIx64 ", irq=%d"
->  
->  # smmu-common.c
->  smmu_add_mr(const char *name) "%s"
-> diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
-> index 046e930ca5..fe2925baaf 100644
-> --- a/hw/arm/virt-acpi-build.c
-> +++ b/hw/arm/virt-acpi-build.c
-> @@ -65,6 +65,8 @@
->  #include "target/arm/cpu.h"
->  #include "target/arm/multiprocessing.h"
->  
-> +#include "tegra241-cmdqv.h"
-> +
->  #define ARM_SPI_BASE 32
->  
->  #define ACPI_BUILD_TABLE_SIZE             0x20000
-> @@ -1121,6 +1123,75 @@ static void build_fadt_rev6(GArray *table_data, BIOSLinker *linker,
->      build_fadt(table_data, linker, &fadt, vms->oem_id, vms->oem_table_id);
->  }
->  
-> +static int smmuv3_cmdqv_devices(Object *obj, void *opaque)
-> +{
-> +    VirtMachineState *vms = VIRT_MACHINE(qdev_get_machine());
-> +    GArray *sdev_blob = opaque;
-> +    PlatformBusDevice *pbus;
-> +    AcpiSMMUv3Dev sdev;
-> +    SysBusDevice *sbdev;
-> +
-> +    if (!object_dynamic_cast(obj, TYPE_ARM_SMMUV3)) {
-> +        return 0;
-> +    }
-> +
-> +    if (!object_property_get_bool(obj, "tegra241-cmdqv", NULL)) {
-> +        return 0;
-> +    }
-> +
-> +    sdev.id = object_property_get_uint(obj, "identifier", &error_abort);
-> +    pbus = PLATFORM_BUS_DEVICE(vms->platform_bus_dev);
-> +    sbdev = SYS_BUS_DEVICE(obj);
-> +    sdev.base = platform_bus_get_mmio_addr(pbus, sbdev, 1);
-> +    sdev.base += vms->memmap[VIRT_PLATFORM_BUS].base;
-> +    sdev.irq = platform_bus_get_irqn(pbus, sbdev, NUM_SMMU_IRQS);
-> +    sdev.irq += vms->irqmap[VIRT_PLATFORM_BUS];
-> +    sdev.irq += ARM_SPI_BASE;
-> +    g_array_append_val(sdev_blob, sdev);
-> +    return 0;
-> +}
-> +
-> +static void acpi_dsdt_add_tegra241_cmdqv(Aml *scope, VirtMachineState *vms)
-> +{
-> +    GArray *smmuv3_devs = g_array_new(false, true, sizeof(AcpiSMMUv3Dev));
-wonder if it wouldn't be possible to compute and store the blob in vms
-once and reuse that for both iort and dsdt?
+Thanks! I have also assumed that I'm not the first one having this
+thought.
 
-Eric
-> +    int i;
-> +
-> +    if (vms->legacy_smmuv3_present) {
-> +        return;
-> +    }
-> +
-> +    object_child_foreach_recursive(object_get_root(), smmuv3_cmdqv_devices,
-> +                                   smmuv3_devs);
-> +
-> +    for (i = 0; i < smmuv3_devs->len; i++) {
-> +        AcpiSMMUv3Dev *sdev;
-> +        Aml *dev, *crs, *addr;
-> +
-> +        sdev = &g_array_index(smmuv3_devs, AcpiSMMUv3Dev, i);
-> +
-> +        dev = aml_device("CV%.02u", sdev->id);
-> +        aml_append(dev, aml_name_decl("_HID", aml_string("NVDA200C")));
-> +        aml_append(dev, aml_name_decl("_UID", aml_int(sdev->id)));
-> +        aml_append(dev, aml_name_decl("_CCA", aml_int(1)));
-> +
-> +        crs = aml_resource_template();
-> +        addr = aml_qword_memory(AML_POS_DECODE, AML_MIN_FIXED, AML_MAX_FIXED,
-> +                                AML_CACHEABLE, AML_READ_WRITE, 0x0, sdev->base,
-> +                                sdev->base + TEGRA241_CMDQV_IO_LEN - 0x1, 0x0,
-> +                                TEGRA241_CMDQV_IO_LEN);
-> +        aml_append(crs, addr);
-> +        aml_append(crs, aml_interrupt(AML_CONSUMER, AML_EDGE,
-> +                                      AML_ACTIVE_HIGH, AML_EXCLUSIVE,
-> +                                      (uint32_t *)&sdev->irq, 1));
-> +        aml_append(dev, aml_name_decl("_CRS", crs));
-> +
-> +        aml_append(scope, dev);
-> +
-> +        trace_virt_acpi_dsdt_tegra241_cmdqv(sdev->id, sdev->base, sdev->irq);
-> +    }
-> +    g_array_free(smmuv3_devs, true);
-> +}
-> +
->  /* DSDT */
->  static void
->  build_dsdt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
-> @@ -1185,6 +1256,8 @@ build_dsdt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
->      acpi_dsdt_add_tpm(scope, vms);
->  #endif
->  
-> +    acpi_dsdt_add_tegra241_cmdqv(scope, vms);
-> +
->      aml_append(dsdt, scope);
->  
->      pci0_scope = aml_scope("\\_SB.PCI0");
-
+Regards,
+Halil
 
