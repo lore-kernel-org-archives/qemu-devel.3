@@ -4,114 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8AD4EEA84C
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 19:26:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AE2EEEA845
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 20:02:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqcJe-0003yI-GI; Thu, 12 Feb 2026 14:25:30 -0500
+	id 1vqcsV-00014i-Mm; Thu, 12 Feb 2026 15:01:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pasic@linux.ibm.com>)
- id 1vqcJc-0003xC-94; Thu, 12 Feb 2026 14:25:28 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pasic@linux.ibm.com>)
- id 1vqcJa-0001nt-IR; Thu, 12 Feb 2026 14:25:27 -0500
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 61CISlMo130324; Thu, 12 Feb 2026 19:25:24 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=rghqQH
- c3SfNncOSkVQMPbOT0lQhJ1o8LwJCpEhk3SVc=; b=plNtmmzQSKV9vwTlPxFgbx
- xNU6BQ3MPPRJj724xNHj/wkKU6Zjah/bD0PnNuyeLo5B54Oixb04NdFm2N3ZVcBX
- 0eSnxwBis1dC+BuKv95D6uEX7+xm5yQBoVYJGPVKnD5Go9i2juA+lwDJEK05w4ar
- iUWkVU+GpIEdn2qjSPDA0BDRrWlGG6FQcVZp03Wnns8OMjyyQATa3fO3kR3V370g
- J0yI1SPacXaEFVyNmjeI5dByq8ndmpeF0o5wCfJ/GKNdvqGSYZik8hdhSSTIf2/F
- BtXqd58zSVEdgfWI1WviDZy6KfiUY7CZevC1ceL7UAtUMPytxS2QULpmWy2Ahijw
- ==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4c696v535k-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 12 Feb 2026 19:25:24 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 61CIC5Hp001825;
- Thu, 12 Feb 2026 19:25:23 GMT
-Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4c6je2bn04-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 12 Feb 2026 19:25:23 +0000
-Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
- [10.20.54.100])
- by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 61CJPILp42467830
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 12 Feb 2026 19:25:18 GMT
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 3966220043;
- Thu, 12 Feb 2026 19:25:18 +0000 (GMT)
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 87ECB20040;
- Thu, 12 Feb 2026 19:25:17 +0000 (GMT)
-Received: from li-ce58cfcc-320b-11b2-a85c-85e19b5285e0 (unknown [9.111.43.40])
- by smtpav01.fra02v.mail.ibm.com (Postfix) with SMTP;
- Thu, 12 Feb 2026 19:25:17 +0000 (GMT)
-Date: Thu, 12 Feb 2026 20:25:15 +0100
-From: Halil Pasic <pasic@linux.ibm.com>
-To: Matthew Rosato <mjrosato@linux.ibm.com>
-Cc: Aby Sam Ross <abysamross@ibm.com>, qemu-s390x@nongnu.org,
- qemu-devel@nongnu.org, farman@linux.ibm.com, alifm@linux.ibm.com, Halil
- Pasic <pasic@linux.ibm.com>
-Subject: Re: [PATCH v2] s390x/pci: prevent null pointer dereference during
- zpci hot unplug
-Message-ID: <20260212202515.3ffa2a80.pasic@linux.ibm.com>
-In-Reply-To: <5fa0684d-5127-4db5-937c-d9be9fc4508d@linux.ibm.com>
-References: <192dc45c-5bc2-4bfa-8e6f-8a140e23d88a@linux.ibm.com>
- <8e983aa64ebeaad9897496199ca80cfb7e0bf003.1770877629.git.abysamross@ibm.com>
- <20260212165029.206ae722.pasic@linux.ibm.com>
- <5fa0684d-5127-4db5-937c-d9be9fc4508d@linux.ibm.com>
-Organization: IBM
-X-Mailer: Claws Mail 3.17.8 (GTK+ 2.24.32; x86_64-redhat-linux-gnu)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vqcs8-0000q1-HI
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 15:01:22 -0500
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vqcs4-0004RN-K3
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 15:01:08 -0500
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-4359a16a400so216648f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 12 Feb 2026 12:01:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1770926462; x=1771531262; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=+Qgto1mMxevqHypEtfXdXGaroJl/oKxVVPaWgRyjJsQ=;
+ b=LALD2HXjha00Mj43fQekkptQoqqAHtkjvqtob13J2LKknEOmKdJRWLE8NsvUJY2TcB
+ JZIbpSYqZQwjmnGqvgpwUS8rfbJTfB3DA2FM7DSpLbqDNywUmQcHml3ZNqARq8PMTvMm
+ 5HODLND9nxJxtlYFF4Ytz9yvnKE06Vl3NZT9J5QdD5wC7SYkGrQ1NC4d4pUhj5xz6Zha
+ 3HA+tepqlSJ8Apma5LJqVTB496LruoWFlP9VFg+pU/pNdXNZovjviU8wHhJYy187repL
+ zL/wwPsgsYpG1IVLogN8lkwkLfXdkWfXbpvp4EPpsjW+bX273H49rtf7U3NolKWd3f/B
+ W0bw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770926462; x=1771531262;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=+Qgto1mMxevqHypEtfXdXGaroJl/oKxVVPaWgRyjJsQ=;
+ b=ZLHjuO61LprbQTGRo3ZTvoyk1P9Mzoxixulu55t1o5J42yApEslZ3+/jOZDHYPNFL1
+ K1VxRPSUhszFM+neNUGnOUSt8XES5RYkl40A8maSlfxd5XdjkFm9G6A4QppbIAIf5yZO
+ yqfb6Fa3do/ZHaEPagRp0L0bCqXiAWP6gK4G8FXcp1Jcw0Dq1DgI/CvX8tL6lXebmHO2
+ SkAytX2wUiBWtUm6b8EdBKfW0vt7uQ2Qso65lGs0lb+rF+mhYR4nje16K8zfitVjeAkI
+ pSTVFSSR1Zl2j3qUsRrngj6zto1AQm9S0U2XRxZ5uXH3Mv7IVgEYEnkKV9b25tOXcmgB
+ Uc9Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVwj7F5Wbp8rleCxALr1/HwiaeYJVJQIkuLZTm8xoHEDtXRUlxs3h7K/etANeZem+FnwDxdaVBG8yyf@nongnu.org
+X-Gm-Message-State: AOJu0YzJpor4txlJjoGRpCrfY67cGf5/iN0+YiTYiprG6WQKm/Ah9Osk
+ b/0Q/j6oGLvrctnrRzq0J3tOCtozkc5IwOrRhzNpFmFLVwWsyv++U3h/QSPERWaqF6w=
+X-Gm-Gg: AZuq6aKAiV1sbDhCx+TixsWU7JjVFpE+YtlKy7tbKCKG0llm/ZWAVitMREF0pWAuGt5
+ 8qc9c30fGX6lH/8Qm9ZdxfBevGc2P9mu8yCWsi4ZpT9mVpk/WNzVXvCAp43G8pqTZ3cH7BZviFh
+ VUky1JOipvG3QhbodYhHr1EAB3LPuh9c9xG72mhIyaXab7lZppm7wxwfFAfsobU+Zv8wVLDniqX
+ QCDUTZKkI5txW2/mcVPTAPxVbYK+PCzEkw+n/Uwc6nr2RYzU7cgPQI30/V4M8XAj3ypoyJS8Ier
+ LpRQmNKzgsFtca+2xm9h+ztQEgG9lJf1jLUimeFk9vl5B4tQcLdMEvlAqZ+qraGQZR8ryg6B1dE
+ /Bo8rIemgPButsOMJaKHEVEouskwoOnH12ZP+urs4XOA7+ewwVQaNW2320Z2+hhAeVCi12ijcT4
+ QyiPgY64CH7uaO5rTZ94iF+Y+V/QbCe7yyVqxROmsMaGzePA/y/Ho9HGawgHwQgXFXGg==
+X-Received: by 2002:a05:6000:310f:b0:436:307c:b762 with SMTP id
+ ffacd0b85a97d-43796af049cmr156490f8f.60.1770926462297; 
+ Thu, 12 Feb 2026 12:01:02 -0800 (PST)
+Received: from [192.168.69.228] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-43796ac8d82sm241406f8f.31.2026.02.12.12.00.59
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 12 Feb 2026 12:01:00 -0800 (PST)
+Message-ID: <14ee1f39-a8b5-44e4-b9f4-1eb08244c9cc@linaro.org>
+Date: Thu, 12 Feb 2026 21:00:58 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 4/4] contrib/plugins/uftrace: add riscv64 support
+Content-Language: en-US
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>, alistair.francis@wdc.com,
+ Mahmoud Mandour <ma.mandourr@gmail.com>, manos.pitsidianakis@linaro.org,
+ anjo@rev.ng, brian.cain@oss.qualcomm.com
+References: <20260210201344.1403613-1-pierrick.bouvier@linaro.org>
+ <20260210201344.1403613-5-pierrick.bouvier@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260210201344.1403613-5-pierrick.bouvier@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjEyMDE0OSBTYWx0ZWRfX2bDxMSMq5r63
- RWYhKdtbVlztKhKWqMIkEJ+jQl9K2kq4G+s08/fG1MD2uyoHjhLfxgpTm11Q4deWSo0WQ+UCbze
- w5JZILkdetmki8N0+tWCtrG25hsEbf28UHXTc4hODgVZO6+g3srrFvIQQg8+gy0BUoiNZ2BQLk8
- E8pDapUjDrQl+RNaWVwvy6c8tFD4zh2TUp4PJjvEodxq4Qj+9edaZojdVtaqQAjOA55k6bokair
- m1qjJbbqoC96b0itQ/suGBTAPbf+sr1cUk7HACUo5aAG1L9Mkqe+JO+rGnbgj3Vq/zZUa/t97cM
- ausrTgyC2zdm9KA34qSY5oJ7m7hiF6Ib81ivNmcy4YH7VO3a2/8sY92qgbkyhp3FdHeAMDkIDId
- NTo2hc69hGyo4kvTCT1pt3VhLdKFq3tMqyIzlEMBZ1kZcQqxAObjD4ADSGsktQRJjBfq+N083Up
- yoJZrRunId2H1VUm/hw==
-X-Proofpoint-ORIG-GUID: LmfMZShnfXSQqD_5jdpsotuM25hxQl7I
-X-Proofpoint-GUID: LmfMZShnfXSQqD_5jdpsotuM25hxQl7I
-X-Authority-Analysis: v=2.4 cv=O+Y0fR9W c=1 sm=1 tr=0 ts=698e2924 cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=kj9zAlcOel0A:10 a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22 a=VnNF1IyMAAAA:8
- a=4FL5sxqK8EKuwWEkRwoA:9 a=CjuIK1q_8ugA:10
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-02-12_05,2026-02-12_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 priorityscore=1501 phishscore=0 adultscore=0
- malwarescore=0 impostorscore=0 bulkscore=0 clxscore=1015 spamscore=0
- suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
- definitions=main-2602120149
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=pasic@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,40 +106,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 12 Feb 2026 11:55:15 -0500
-Matthew Rosato <mjrosato@linux.ibm.com> wrote:
+On 10/2/26 21:13, Pierrick Bouvier wrote:
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> ---
+>   docs/about/emulation.rst  | 10 +++--
+>   contrib/plugins/uftrace.c | 87 +++++++++++++++++++++++++++++++++++++++
+>   2 files changed, 94 insertions(+), 3 deletions(-)
 
-> > 
-> > Maybe add a word or two why the other dereferences of pbdev->iommu
-> > not guarded by a null check are safe.
-> > 
-> > I think we have:
-> > * s390_pci_sclp_deconfigure
-> > * s390_pci_msix_init
-> > * s390_pcihost_reset
-> > * s390_pci_device_reset
-> > * mpcifc_service_call
-> > * stpcifc_service_call
-> > * s390_pci_read_base
-> > 
-> > and more. My guess is that the device never gets into a state where
-> > these operations are permissible, and the code makes sure
-> > those functions won't be called on a device that has
-> > pbdev->iommu == NULL. But that is just my guess.
-> > 
-> > DISCLAIMER: I didn't look at this properly, just asking based
-> > on a quick look. Some of these may contain explicit or implicit
-> > checking...  
-> 
-> I mentioned in response to v1 as part of my review that I did look through all references of pbdev->iommu, as I was also concerned about whether we needed additional NULL checks.  But so far I'm not seeing it - it is largely implicit, but we don't drive the routines until the device is plugged, not in reserved|standby and iommu is associated.
-> 
-> This particular case is because we reach unplug (which also has to happen after plug of course) but the swizzle is we are reaching unplug exactly because we are giving up without actually having -successfully- plugged both the zpci and pci device.
-> 
-> But anyway, yes, I do think it would be good to add a small blurb to the commit message. 
 
-Thanks! I have also assumed that I'm not the first one having this
-thought.
+> +typedef enum {
+> +    RISCV64_USER,
+> +    RISCV64_SUPERVISOR,
+> +    RISCV64_RESERVED,
+> +    RISCV64_MACHINE,
+> +    RISCV64_PRIVILEGE_LEVEL_MAX,
 
-Regards,
-Halil
+Dropping the superfluous trailing comma:
+
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
+> +} Riscv64PrivilegeLevel;
+
 
