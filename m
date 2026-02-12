@@ -4,90 +4,169 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F17EAEE3698
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 16:29:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 000AAEE3695
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 16:29:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqZYZ-0001eO-M1; Thu, 12 Feb 2026 11:28:43 -0500
+	id 1vqZZ0-0002FP-Dd; Thu, 12 Feb 2026 11:29:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adamhet@scaleway.com>)
- id 1vqZY9-0001Q3-AU
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 11:28:17 -0500
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <adamhet@scaleway.com>)
- id 1vqZY3-0007jc-Nf
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 11:28:17 -0500
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-4836f363ad2so266635e9.1
- for <qemu-devel@nongnu.org>; Thu, 12 Feb 2026 08:28:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=scaleway.com; s=google; t=1770913689; x=1771518489; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=R8Mg3xLx5AR9QnULNPfNm28Oi0tteTYNIGto3Ebs6+s=;
- b=F1zvCAAwSSoenJNkzD6tOQzdoK0wSTyEZLJQkqxMolH5ZC6cVvFN53NWVvt79gMaqk
- B/kXfN1/3O/j1WxBK8oey3t2gK3dDjN9wOdgNn0p5tU9PK7NWBcLcriDw9vBAWtfDLAR
- ClO+tR0HFKzwWGUnuFY+gX09KyoB42Pc5IYfXZRwbh+OsAraPALr5WwRZ1wD+19Pxb22
- BueDy5Ke5755Wotwv14n3xTITP5vTauO5wuzdcRnZdhu4zptRKzObwDt/tbZhLP1mxxK
- NXb1NVlz5kI2J/Q65a27tn7eZkN/yjPHFhjZhCy9pkkYoKgW7NcjW4XH6N4vz9xtM7RE
- SKEA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770913689; x=1771518489;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=R8Mg3xLx5AR9QnULNPfNm28Oi0tteTYNIGto3Ebs6+s=;
- b=STHd+cmjQUbo2zYZlKRyOcku+MUoBpqLoCpSojPOCB0934QrYhEpNaFznLd1wqIfk7
- h5xJ4aFsmrqYMvgeCwWOOfz4J6JvDJZJv1sGtNA4apd+kS07GeuWhRMmMczscSSx+1Q3
- gaJhDRaQTtEIPCR1K6NCf6vtbolQolnDTy9OkJCGsHBIDYuMtFjrDlsyt7bN7EujvTX8
- htvhEvemr7pI/9adw8HHihDISuNR0W/RFjf4uNe2/JJVLbn35Jzu1tlZZv21AEXJdV4X
- 0f4lKMbYEfwY99k9DXxgLVIhroL17yzcehHtWvZmNkTnYRNBL9Y3OOEJOoBoPnll+eYj
- CeWQ==
-X-Gm-Message-State: AOJu0Yz75YA09QKTjS0dZbQqoA9RQ8uuP7zNRbtUpYor30u/KNe/NNTp
- FX1kvEwimwxWil6YFFmNeAC86/3Fvc+uakpJwC9U+HRl9HFXvcC3SN+Fo/uqw6IHweO0RxRPtTG
- caqd+
-X-Gm-Gg: AZuq6aI010WwowMP8sk7gnXZk8tqtm0Wp/qaX5OPvyIwxFPDNjTlcki7+U4opP4Ie4V
- 25e9wTHcvsJQ9WHz+pi8Rjuo1kIZDn2mBvauUjZcTulbJ7CbXEYPxjcICswLVzAlLCD7zDuQlmS
- bqDtxj+d9hDCu2wlDa2QyYJiMYl53Ll4X0QEgLfDiFf4dLYcpwvIhHFFkB/PHlAjilT/t08WzUk
- cwr45/oHPLHLijDnBemL+/BqysXfTGWi5HXQgtmwTHxIPDBvnMYtMilyWajOAV6Ckd11Dy1tlb7
- JrwkabiVj1R/GH8xSUnoYLDO/SBGuIvJT6fC2XDES2YlhcdKcBHrv+AG7kFuTML2o45cE/iT57F
- ti09eNp7wLxZ7yapbymA3WCcoIGfeoY6t2gcZA3AC+t1IgXHz41oBWbtAwNumebyNa6YOv4PsDa
- WJWx1DzqFQnqCgMzZ4Fujx7NfSXSWy3oPRZ8qcrjYzdOG/6o6X
-X-Received: by 2002:a05:600c:3b85:b0:483:6ff1:18b with SMTP id
- 5b1f17b1804b1-4836ff103a7mr4975605e9.0.1770913689197; 
- Thu, 12 Feb 2026 08:28:09 -0800 (PST)
-Received: from localhost (710304585.box.freepro.com. [130.180.219.188])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4835b958b6csm140710445e9.1.2026.02.12.08.28.08
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 12 Feb 2026 08:28:08 -0800 (PST)
-From: Antoine Damhet <adamhet@scaleway.com>
-To: qemu-devel@nongnu.org
-Cc: Antoine Damhet <adamhet@scaleway.com>, qemu-block@nongnu.org,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>
-Subject: [PATCH 2/2] block/curl: add support for S3 presigned URLs
-Date: Thu, 12 Feb 2026 17:27:25 +0100
-Message-ID: <20260212162730.440855-3-adamhet@scaleway.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260212162730.440855-1-adamhet@scaleway.com>
-References: <20260212162730.440855-1-adamhet@scaleway.com>
+ (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
+ id 1vqZYj-0001rC-NI; Thu, 12 Feb 2026 11:28:56 -0500
+Received: from mail-westus2azlp170100005.outbound.protection.outlook.com
+ ([2a01:111:f403:c005::5] helo=CO1PR03CU002.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
+ id 1vqZYi-0007og-2N; Thu, 12 Feb 2026 11:28:53 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=ZIje0LMztF1CRlVhG8jDTe9LhAVJ6yvC4h6HcNGnhTsFSErsL+2Nsw2gZBZUWVYvlmHpsBLtc+52ean6ucup8e01uprX7XsNimsdNmmkXoxMZLs9N4oTyfnhD15i2Y/D6FFkPJgHQ3Ono/AIEQC18Z/RTL1Lgcb/sRV2F63/qO5cFIhMBgVQouqCnn3mcdz2ewIYO1dYRhD1F2R/xnJGzvIXzP0DVn/PMvhjjSMrZ9UoD6ySE3C+XCI8tKVD/mTPunjMyWTqOOlhSyIGehEJyyaIiA8jpweFttptSmqYoo6tyWGeJcWD9p/9eAVmDx7TKpGfXImF+d8f4Jfw1mnhmQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=T2T8twujZmcilYQTCHpimowCOTICNltKSi4yCmZretk=;
+ b=EF0l8R1+ZUnaqcEhPDN20lFH7hlS32P/FkP0glXWMJ3If/a8SXPqFnsFlfFqpEZ1N0Pl6SVbdkPiuhRUr6YRtTTr5pjnWK7/ie/O1qqvVrsydmomezDN7cbyz2l5MKCtWTmeFLJXnCtBb5drhdPNWyx+TUY85EP4bdUT+btmvN3v5Y5ZE7tWYUpda6bF9uY0Phm+YpEw9PWJ6oD69D4ZyrVJz38dzyND0V3OjDtsTTsXGcnWZQYYRPRo/P0hRDp/2I+V8X8npRJtytTq4QjUtsG8w+w60cqAxpPBtluYACbr9bhdjr/Jj99m/5hfL1I1Wv8ZTeVhKnkXmsbOfpdurw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=T2T8twujZmcilYQTCHpimowCOTICNltKSi4yCmZretk=;
+ b=VOl7+qXvkm0qwbovnvIsrtLwtZxF4X5pdQaaUf8IT5j0tYlrr/S2q4T6GmQJJl9I2ytZYBf5sgcuRX/8GNcvKsZmq6DrKTVGF5kOQu+BhoxyWZ8qFjED97gcjfmFMvb5JD5Gpym1wjO723AXBIP6q3/jJMZQJuKWOlXSCn8cG7FOKXwbTtIr0d7H0FckYs4FmF/F5Y+0ipKzCd7X/NGAP7P8BtnC5k4qj9oP4YQacnXcjRbK2keUUoq8CsJLmVERi8EFyhjmvHbAQH22vOZeVcNGL62OwGm0CVvUiHeekMYDKcd4PRwlb1RIdnN/BAwevaHK7mNGQOOEvyBBwlyG6Q==
+Received: from CH3PR12MB7548.namprd12.prod.outlook.com (2603:10b6:610:144::12)
+ by SJ2PR12MB8874.namprd12.prod.outlook.com (2603:10b6:a03:540::11)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9611.10; Thu, 12 Feb
+ 2026 16:28:44 +0000
+Received: from CH3PR12MB7548.namprd12.prod.outlook.com
+ ([fe80::b710:d6a1:ab16:76de]) by CH3PR12MB7548.namprd12.prod.outlook.com
+ ([fe80::b710:d6a1:ab16:76de%5]) with mapi id 15.20.9611.008; Thu, 12 Feb 2026
+ 16:28:44 +0000
+From: Shameer Kolothum Thodi <skolothumtho@nvidia.com>
+To: Nicolin Chen <nicolinc@nvidia.com>, Eric Auger <eric.auger@redhat.com>
+CC: "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>, "peter.maydell@linaro.org"
+ <peter.maydell@linaro.org>, Nathan Chen <nathanc@nvidia.com>, Matt Ochs
+ <mochs@nvidia.com>, Jiandi An <jan@nvidia.com>, Jason Gunthorpe
+ <jgg@nvidia.com>, "jonathan.cameron@huawei.com"
+ <jonathan.cameron@huawei.com>, "zhangfei.gao@linaro.org"
+ <zhangfei.gao@linaro.org>, "zhenzhong.duan@intel.com"
+ <zhenzhong.duan@intel.com>, Krishnakant Jaju <kjaju@nvidia.com>
+Subject: RE: [PATCH v5 3/5] hw/arm/smmuv3-accel: Allocate vEVENTQ for
+ accelerated SMMUv3 devices
+Thread-Topic: [PATCH v5 3/5] hw/arm/smmuv3-accel: Allocate vEVENTQ for
+ accelerated SMMUv3 devices
+Thread-Index: AQHcmzFk1Etk+2u8DkWzxKPQ5vkZXLV9zEoAgAAB5gCAAALtAIAAA6kQgAAIBQCAAMFggIAAA8GAgACf5JA=
+Date: Thu, 12 Feb 2026 16:28:44 +0000
+Message-ID: <CH3PR12MB75482F20A549CD3D480226E4AB60A@CH3PR12MB7548.namprd12.prod.outlook.com>
+References: <20260211083415.133534-1-skolothumtho@nvidia.com>
+ <20260211083415.133534-4-skolothumtho@nvidia.com>
+ <aYzFeMh1szhJlJJk@Asurada-Nvidia>
+ <e66e82d6-0953-49f0-9d84-bf2776e8f3ce@redhat.com>
+ <aYzJhEFg/zxtrJ8z@Asurada-Nvidia>
+ <CH3PR12MB754855AE35A087B900B0C311AB63A@CH3PR12MB7548.namprd12.prod.outlook.com>
+ <aYzTUDmTzIZZCwnW@Asurada-Nvidia>
+ <39acf072-3227-442b-acfe-658829071917@redhat.com>
+ <aY14rcVQuLs3ugll@Asurada-Nvidia>
+In-Reply-To: <aY14rcVQuLs3ugll@Asurada-Nvidia>
+Accept-Language: en-US, en-GB
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: CH3PR12MB7548:EE_|SJ2PR12MB8874:EE_
+x-ms-office365-filtering-correlation-id: c89c3afc-6d72-4e1b-5301-08de6a53ca59
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0; ARA:13230040|366016|376014|1800799024|38070700021;
+x-microsoft-antispam-message-info: =?us-ascii?Q?Rviqi/nCWA2h6ovcz7hvrl+gjDwy/+Ls9oYBYcCN4CBJS8GVtP9TPaJkszle?=
+ =?us-ascii?Q?pFC1MjzRXXmcGjIUtS+j7hL2v8V9n2hxjtRWr8c3lcJ1ALYYeR8plJ2GNbvv?=
+ =?us-ascii?Q?UrnQ3FGJPdBDPrehnJRq7SYrdckCn8PK9OQHOhn6oMDQB8j5v05GlAhEwx6O?=
+ =?us-ascii?Q?M1FALKZCQ+GUfweRdFpBmWsg8pk5fhWf1Z9B/MiQ8pMtsFnNgioQ/8Yzypu7?=
+ =?us-ascii?Q?CvVmdkiiBuLC0wGbk++i0XqxPAz8tn1cLfzHYWYvYBOsptm6dveNpf3CAn99?=
+ =?us-ascii?Q?RkXZx68YCPj3SYEOfoya4VesMsRZSboim3Nqxf7LuevSECnEbDmEztpd7xWc?=
+ =?us-ascii?Q?lFo35pIUPYM8GOT8M0kqBA4fNYuiYMNsX3fcwAU1buRtbzhIH3UNPZl2dQ1b?=
+ =?us-ascii?Q?tQ2e7ie9GhyUIft3BVPl2Pub5ZDPm4gwD/4RInFUZ16WVU6v9W53dOgrWD/E?=
+ =?us-ascii?Q?zDcl/wr7EieapoXSlv08FZWIn22hroGha3HIzVPnCjTwAQ8/VqVy7t4xWdkr?=
+ =?us-ascii?Q?LWDgXCi2dLs2/QSjrLHUg3hrg5qJVzvLuZOFxLl3BKxwSTK53vKDbUs35r6s?=
+ =?us-ascii?Q?wYNgNKnsXROE/iWDuygInGc0GOyWrgyVShFNLa+EyzsBN0dPeBQwhqJ0TGng?=
+ =?us-ascii?Q?2y+8dBX2KM90Ek4CEb5tGzNuZE4oBlXgeqPBsW9/pLT2F+2g5AOAXBzcmlWq?=
+ =?us-ascii?Q?G+oWAG75pLjqbANupfqYgxKB3wUnUaqGeaio9fejq3RFO+A2cWUakhNK/elV?=
+ =?us-ascii?Q?8FPXzAby88QjTMbaVYF2SOiL1AvkuNXQTDwurVV48sERqOAybywA2G2J5Udr?=
+ =?us-ascii?Q?6n62qw+URrEwdEk58llLqPez2a+bOEhAA3GjhV9BvxUpFF8LDZKz5DFspcw6?=
+ =?us-ascii?Q?SUQ1/WeZX13eK1yfRQTi5HZXIUqhcQyFx+thoCiwFRiB1N/eqUIESg1gwnN9?=
+ =?us-ascii?Q?xe9/GsaNFuzniZTAR7+tl2y7cNYnUYOzMgTrD8QYsrIYLpLlgxDAYJF2aPvO?=
+ =?us-ascii?Q?Dd744h3hxkVVKhtVUwJu49i25YqKAafPVVPBUU7eY3QbA+GHiqUehJGZesk6?=
+ =?us-ascii?Q?1vd5Q/VVKEiViL245pptdhLFlRBDfCVa3eGyM70db7aELFtjp+AYXibTA2uP?=
+ =?us-ascii?Q?tpsHo8x9mYclDRZtRVv+EONlFnYWv+vPCWseTzqVI03XOprD/7ekaLMW6811?=
+ =?us-ascii?Q?AIfdwgz44GWakjsGEBkzWa88fY+eHi1/0YEFMDAunVmAUwCG6o2A6TMj/QLv?=
+ =?us-ascii?Q?7xk8VMZZuUObTVO0ipRGqfLFhyiDiEBioKbER/PkaWJP6JKDLoPTXrpLnOFi?=
+ =?us-ascii?Q?zfnF2dhOQL1uUEOHW1xBKjQz/3WPUVL0Y74v1AWh4r4kBGD7J+EejSGeJSfg?=
+ =?us-ascii?Q?70lj5Noy26ccf51/kzHc2oRVQ+4sd/MtyhxNQAhJ4yGxojO8jM1i5NQlb/OP?=
+ =?us-ascii?Q?f4qXiZjE2z/IlNVeTopbXD0a0nEcxWDi7+8hVpSJ1+1tAqhSXFAIStNL0fZr?=
+ =?us-ascii?Q?jHTgcvURTxJNiKWxAJGYb6YF/WR1lBcvYbYLZzpSwxKNdT/E+wOQ6MKCwQrt?=
+ =?us-ascii?Q?agQUdSaIwbkkgSo6ehsm4/YvT4UKE6UMIIxNHi/KrYewC/qd6g0Nv13Ja1aJ?=
+ =?us-ascii?Q?GbEZLiweqxAk9Jn99lWVtcI=3D?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:CH3PR12MB7548.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(376014)(1800799024)(38070700021); DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?YBXkBOJZOsPSpZjN4b5o6e/P/QB5swTdy/mU/SNpvDx3xtD7gIKTum3px9aC?=
+ =?us-ascii?Q?B+qp6qkImjeKHAovTXojlDcCqEqUS66UmovONk4llDWsWLliM5RmmEl/YfXc?=
+ =?us-ascii?Q?LG4ealBf3l9quyqNgTqVa6ULI11mosbZrZ5K3WFK/Pm9ukavzQmREMg9XMGY?=
+ =?us-ascii?Q?ZQvK6SVOK3Df/j0cmfxh1g0N9juP2kNYsefoJFx6j/gjpfB+vuatwO2Rud24?=
+ =?us-ascii?Q?4ZQT/Ef8MJCH4+TMqohw5qJjOx8+efI1bcrc3HfejllfF5033+H4CpM1Yzq1?=
+ =?us-ascii?Q?buUsIa1Wi9OlY2MiOUSQx4i540ufcMyb96IokiF1t7a/F6jivIjVvZy4kUue?=
+ =?us-ascii?Q?VQcYpMZ56C7HxruRmLHEMZTDz3J447QB9O8+SWEljVelP7ctcSA7LnutxfDH?=
+ =?us-ascii?Q?2TYAAmZ0w13GC7Y8JQiurN7VB5FCq4/VT6+cGFof2p5jZNLjONckjj5E8cRg?=
+ =?us-ascii?Q?Hp7yKuvLp5p9YheMQU8RZ2bV8Y9OFcQUSPLl46Cm1ZuSFHFRwpxuht5ovvPn?=
+ =?us-ascii?Q?n4KO8MVyUlUdhNi3J49lAWx82VijtTshqfKEU0OxgWSNErOVxVuHweXM5t+S?=
+ =?us-ascii?Q?RgCg0ZiwixOklHxMxqxxS0TSIaUqdGP08feGKoMWDX0+DT1zE+VQjeMZTQXD?=
+ =?us-ascii?Q?dJa8JqqXIspGxgSniuZkWXM3/g4c1SfN1Mgfbj58xIsBn7anmngkMKX7bs2E?=
+ =?us-ascii?Q?uyVRrqFnS6kKnFEv3IiTreMzw37s87eDfBNhWJeVT6Pm417eWukz7/kB1Pg9?=
+ =?us-ascii?Q?/GnXjN1mdJatp9LcILNww4gCrHR9FQ8zu8zKV7XhIMxabHqd7vgou3OrKrp0?=
+ =?us-ascii?Q?rrq92qM7xnyy3hAR8q28rHMTQuexioRbhZXtwsmQROYVNNtg7IWBlVp9IbsC?=
+ =?us-ascii?Q?0DuOIO67zwjjm88kt7WShZIuKLHqqUey5IQwiLvon1MJaIy9b3LZi5zkq2z0?=
+ =?us-ascii?Q?SxW5kuuuRKP+Wr+cI7Vne16EXBEcoHUS1F7KsxuXI0tyqXRZjMpjAmDTp5YP?=
+ =?us-ascii?Q?J1wgMQ4eLiN7Et6O9UAKQDzlLQhaW9iaeoL4UxLH/ibgwcwov2vZY0Y892ZU?=
+ =?us-ascii?Q?ifFvbYSj54ifDDBRZpjRBe7GeiKPExSjdZN8MK51SYk6gALK5bXcaF59uZkD?=
+ =?us-ascii?Q?PeVeIiwZMrp2HUJv5O+OMWLDwOoqOH78zOaFda3qTJ2woONN7YwBLJD9xwFi?=
+ =?us-ascii?Q?2+mdBhl/+yvos+eEwoWb/1G0o+d6ckFLXN69QIFTSD/ACi6U3HKDt/XI2Dsh?=
+ =?us-ascii?Q?wcRLPn+6xGi7dnA87NcBVpnBdzy/NpSnKNIRllRNk7b/qPQe0kDvMu7eAWwo?=
+ =?us-ascii?Q?cZckXdIgy4PTcNlMF6aWewq9i/91mwvfvLoct3dLmyUHH8h8xftnH5qUBUh9?=
+ =?us-ascii?Q?h8zhRQ6g2/a7eQZ4zmCrFJ6ew87For/MuG6Cd240PGuFYJ7K1Y0rhzyZ2p7q?=
+ =?us-ascii?Q?BP+4moFZutgE0rPVyPAfaEuPo9ByjSkp+Ljj55yYHxwKYJkXPtNCJnOHV6Gr?=
+ =?us-ascii?Q?hPgokS9wtrSZ8qqmCDL74w4cCM1q/GQBglcJQFzFWbsigHI7zaJEMBmv3Yq5?=
+ =?us-ascii?Q?5ZIFuVKace7159ST0Ge3SnHalKmpKGrGgG0c9THmtjoIIabNb/taQEjcT5Wv?=
+ =?us-ascii?Q?15omj7iz35xZby0/TVEJXX+mnNlToVkKoSfbxDFi4X8cJtHQBYGGFIepXlcr?=
+ =?us-ascii?Q?mAzhO8ZLe31Srv7viRtSb5s2qiEley9HJHjsU9BRfOD+/zl3IOiS8cjugyMR?=
+ =?us-ascii?Q?2fyJWWZ+GQ=3D=3D?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=adamhet@scaleway.com; helo=mail-wm1-x329.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB7548.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: c89c3afc-6d72-4e1b-5301-08de6a53ca59
+X-MS-Exchange-CrossTenant-originalarrivaltime: 12 Feb 2026 16:28:44.2432 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: hMn56a7nvZGBfHV2lhq4baMW8Hh2WDW6rTRKsN3jq8IPnkq2gytSBvTCz9IqTsJacx6UBfI9TUmmZrKx9LhFXw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ2PR12MB8874
+Received-SPF: permerror client-ip=2a01:111:f403:c005::5;
+ envelope-from=skolothumtho@nvidia.com;
+ helo=CO1PR03CU002.outbound.protection.outlook.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FORGED_SPF_HELO=1, SPF_HELO_PASS=-0.001,
+ SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,278 +182,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-S3 presigned URLs are signed for a specific HTTP method (typically GET
-for our use cases). The curl block driver currently issues a HEAD
-request to discover the backend features and the file size, which fails
-with 403.
 
-Add a 'force-range' option that skips the HEAD request and instead
-issues a minimal GET request (querying 1 byte from the server) to
-extract the file size from the 'Content-Range' response header. To
-achieve this the 'curl_header_cb' is redesigned to generically parse
-HTTP headers.
 
-$ $QEMU -drive driver=http,\
-             'url=https://s3.example.com/some.img?X-Amz-Security-Token=XXX',
-             force-range=true
+> -----Original Message-----
+> From: Nicolin Chen <nicolinc@nvidia.com>
+> Sent: 12 February 2026 06:52
+> To: Eric Auger <eric.auger@redhat.com>
+> Cc: Shameer Kolothum Thodi <skolothumtho@nvidia.com>; qemu-
+> arm@nongnu.org; qemu-devel@nongnu.org; peter.maydell@linaro.org;
+> Nathan Chen <nathanc@nvidia.com>; Matt Ochs <mochs@nvidia.com>;
+> Jiandi An <jan@nvidia.com>; Jason Gunthorpe <jgg@nvidia.com>;
+> jonathan.cameron@huawei.com; zhangfei.gao@linaro.org;
+> zhenzhong.duan@intel.com; Krishnakant Jaju <kjaju@nvidia.com>
+> Subject: Re: [PATCH v5 3/5] hw/arm/smmuv3-accel: Allocate vEVENTQ for
+> accelerated SMMUv3 devices
+>=20
+...
+> > Usually error_append_hint() is used to append a user friendly msg that
+> > helps the user to fix the problem.
+> > In qapi/error.h there is an example that relates to "Receive and
+> > accumulate multiple errors (first one wins):" by using
+> > error_propagate()
+>=20
+> I didn't look very closely but just run a grep for "append" :)
+>=20
+> Yea, I think error_propagate() should work better.
 
-Enabling the 'force-range' option without the backend supporting it is
-undefined behavior and untested but the libcurl should ignore the body
-and stop reading after the HTTP headers then we would fail with the
-expected `Server does not support 'range' (byte ranges).` error.
+I am not sure error_propagate makes things better though.
 
-Signed-off-by: Antoine Damhet <adamhet@scaleway.com>
----
- block/curl.c                          | 104 ++++++++++++++++++--------
- block/trace-events                    |   1 +
- docs/system/device-url-syntax.rst.inc |   6 ++
- qapi/block-core.json                  |  14 +++-
- 4 files changed, 90 insertions(+), 35 deletions(-)
+If I am not wrong, this is how the change will look like,
 
-diff --git a/block/curl.c b/block/curl.c
-index 6dccf002564e..66aecfb20ec6 100644
---- a/block/curl.c
-+++ b/block/curl.c
-@@ -62,10 +62,12 @@
- #define CURL_BLOCK_OPT_PASSWORD_SECRET "password-secret"
- #define CURL_BLOCK_OPT_PROXY_USERNAME "proxy-username"
- #define CURL_BLOCK_OPT_PROXY_PASSWORD_SECRET "proxy-password-secret"
-+#define CURL_BLOCK_OPT_FORCE_RANGE "force-range"
- 
- #define CURL_BLOCK_OPT_READAHEAD_DEFAULT (256 * 1024)
- #define CURL_BLOCK_OPT_SSLVERIFY_DEFAULT true
- #define CURL_BLOCK_OPT_TIMEOUT_DEFAULT 5
-+#define CURL_BLOCK_OPT_FORCE_RANGE_DEFAULT false
- 
- struct BDRVCURLState;
- struct CURLState;
-@@ -206,27 +208,33 @@ static size_t curl_header_cb(void *ptr, size_t size, size_t nmemb, void *opaque)
+static MemTxResult smmu_writel(SMMUv3State *s, hwaddr offset,
+                                uint64_t data, MemTxAttrs attrs)
  {
-     BDRVCURLState *s = opaque;
-     size_t realsize = size * nmemb;
--    const char *p = ptr;
--    const char *end = p + realsize;
--    const char *t = "accept-ranges : bytes "; /* A lowercase template */
-+    g_autofree char *header = g_strstrip(g_strndup(ptr, realsize));
-+    char *val = strchr(header, ':');
- 
--    /* check if header matches the "t" template */
--    for (;;) {
--        if (*t == ' ') { /* space in t matches any amount of isspace in p */
--            if (p < end && g_ascii_isspace(*p)) {
--                ++p;
--            } else {
--                ++t;
--            }
--        } else if (*t && p < end && *t == g_ascii_tolower(*p)) {
--            ++p, ++t;
--        } else {
--            break;
--        }
-+    if (!val) {
-+        return realsize;
-     }
- 
--    if (!*t && p == end) { /* if we managed to reach ends of both strings */
--        s->accept_range = true;
-+    *val++ = '\0';
-+    g_strchomp(header);
-+    while (g_ascii_isspace(*val)) {
-+        ++val;
-+    }
-+
-+    trace_curl_header_cb(header, val);
-+
-+    if (!g_ascii_strcasecmp(header, "accept-ranges")) {
-+        if (!g_ascii_strcasecmp(val, "bytes")) {
-+            s->accept_range = true;
-+        }
-+    } else if (!g_ascii_strcasecmp(header, "Content-Range")) {
-+        /* Content-Range fmt is `bytes begin-end/full_size` */
-+        val = strchr(val, '/');
-+        if (val) {
-+            if (qemu_strtou64(val + 1, NULL, 10, &s->len) < 0) {
-+                s->len = UINT64_MAX;
-+            }
-+        }
-     }
- 
-     return realsize;
-@@ -668,6 +676,11 @@ static QemuOptsList runtime_opts = {
-             .type = QEMU_OPT_STRING,
-             .help = "ID of secret used as password for HTTP proxy auth",
-         },
-+        {
-+            .name = CURL_BLOCK_OPT_FORCE_RANGE,
-+            .type = QEMU_OPT_BOOL,
-+            .help = "Assume HTTP range requests are supported",
-+        },
-         { /* end of list */ }
-     },
- };
-@@ -690,6 +703,7 @@ static int curl_open(BlockDriverState *bs, QDict *options, int flags,
- #endif
-     const char *secretid;
-     const char *protocol_delimiter;
-+    bool force_range;
-     int ret;
- 
-     bdrv_graph_rdlock_main_loop();
-@@ -807,35 +821,56 @@ static int curl_open(BlockDriverState *bs, QDict *options, int flags,
-     }
- 
-     s->accept_range = false;
-+    s->len = UINT64_MAX;
-+    force_range = qemu_opt_get_bool(opts, CURL_BLOCK_OPT_FORCE_RANGE,
-+                                    CURL_BLOCK_OPT_FORCE_RANGE_DEFAULT);
-+    /*
-+     * When minimal CURL will be bumped to `7.83`, the header callback + manual
-+     * parsing can be replaced by `curl_easy_header` calls
-+     */
-     if (curl_easy_setopt(state->curl, CURLOPT_NOBODY, 1L) ||
-         curl_easy_setopt(state->curl, CURLOPT_HEADERFUNCTION, curl_header_cb) ||
-         curl_easy_setopt(state->curl, CURLOPT_HEADERDATA, s)) {
--        pstrcpy(state->errmsg, CURL_ERROR_SIZE,
--                "curl library initialization failed.");
--        goto out;
-+        goto out_init;
-+    }
-+    if (force_range) {
-+        if (curl_easy_setopt(state->curl, CURLOPT_CUSTOMREQUEST, "GET") ||
-+            curl_easy_setopt(state->curl, CURLOPT_RANGE, "0-0")) {
-+            goto out_init;
-+        }
-     }
-+
-     if (curl_easy_perform(state->curl))
-         goto out;
--    /* CURL 7.55.0 deprecates CURLINFO_CONTENT_LENGTH_DOWNLOAD in favour of
--     * the *_T version which returns a more sensible type for content length.
--     */
-+
-+    if (!force_range) {
-+        /*
-+         * CURL 7.55.0 deprecates CURLINFO_CONTENT_LENGTH_DOWNLOAD in favour of
-+         * the *_T version which returns a more sensible type for content
-+         * length.
-+         */
- #if LIBCURL_VERSION_NUM >= 0x073700
--    if (curl_easy_getinfo(state->curl, CURLINFO_CONTENT_LENGTH_DOWNLOAD_T, &cl)) {
--        goto out;
--    }
-+        if (curl_easy_getinfo(state->curl, CURLINFO_CONTENT_LENGTH_DOWNLOAD_T,
-+                              &cl)) {
-+            goto out;
-+        }
- #else
--    if (curl_easy_getinfo(state->curl, CURLINFO_CONTENT_LENGTH_DOWNLOAD, &cl)) {
--        goto out;
--    }
-+        if (curl_easy_getinfo(state->curl, CURLINFO_CONTENT_LENGTH_DOWNLOAD,
-+                              &cl)) {
-+            goto out;
-+        }
- #endif
--    if (cl < 0) {
-+        if (cl >= 0) {
-+            s->len = cl;
-+        }
-+    }
-+
-+    if (s->len == UINT64_MAX) {
-         pstrcpy(state->errmsg, CURL_ERROR_SIZE,
-                 "Server didn't report file size.");
-         goto out;
-     }
- 
--    s->len = cl;
--
-     if ((!strncasecmp(s->url, "http://", strlen("http://"))
-         || !strncasecmp(s->url, "https://", strlen("https://")))
-         && !s->accept_range) {
-@@ -856,6 +891,9 @@ static int curl_open(BlockDriverState *bs, QDict *options, int flags,
-     qemu_opts_del(opts);
-     return 0;
- 
-+out_init:
-+    pstrcpy(state->errmsg, CURL_ERROR_SIZE,
-+            "curl library initialization failed.");
- out:
-     error_setg(errp, "CURL: Error opening file: %s", state->errmsg);
-     curl_easy_cleanup(state->curl);
-diff --git a/block/trace-events b/block/trace-events
-index c9b4736ff884..d170fc96f15f 100644
---- a/block/trace-events
-+++ b/block/trace-events
-@@ -191,6 +191,7 @@ ssh_server_status(int status) "server status=%d"
- curl_timer_cb(long timeout_ms) "timer callback timeout_ms %ld"
- curl_sock_cb(int action, int fd) "sock action %d on fd %d"
- curl_read_cb(size_t realsize) "just reading %zu bytes"
-+curl_header_cb(const char *key, const char *val) "looking at %s: %s"
- curl_open(const char *file) "opening %s"
- curl_open_size(uint64_t size) "size = %" PRIu64
- curl_setup_preadv(uint64_t bytes, uint64_t start, const char *range) "reading %" PRIu64 " at %" PRIu64 " (%s)"
-diff --git a/docs/system/device-url-syntax.rst.inc b/docs/system/device-url-syntax.rst.inc
-index aae65d138c00..e77032e9e4b6 100644
---- a/docs/system/device-url-syntax.rst.inc
-+++ b/docs/system/device-url-syntax.rst.inc
-@@ -179,6 +179,12 @@ These are specified using a special URL syntax.
-       get the size of the image to be downloaded. If not set, the
-       default timeout of 5 seconds is used.
- 
-+   ``force-range``
-+      Assume the HTTP backend supports range requests and avoid doing
-+      a HTTP HEAD request to discover the feature. Typically S3
-+      presigned URLs will only support one method and refuse other
-+      requests types.
-+
-    Note that when passing options to qemu explicitly, ``driver`` is the
-    value of <protocol>.
- 
-diff --git a/qapi/block-core.json b/qapi/block-core.json
-index b82af7425614..ff018c2d6bfb 100644
---- a/qapi/block-core.json
-+++ b/qapi/block-core.json
-@@ -4582,12 +4582,17 @@
- # @cookie-secret: ID of a QCryptoSecret object providing the cookie
- #     data in a secure way.  See @cookie for the format.  (since 2.10)
- #
-+# @force-range: Don't issue a HEAD HTTP request to discover if the
-+#     backend supports range requests and rely only on GET requests.
-+#     This is especially useful for S3 presigned URLs.  (since 11.0)
-+#
- # Since: 2.9
- ##
- { 'struct': 'BlockdevOptionsCurlHttp',
-   'base': 'BlockdevOptionsCurlBase',
-   'data': { '*cookie': 'str',
--            '*cookie-secret': 'str'} }
-+            '*cookie-secret': 'str',
-+            '*force-range': 'bool'} }
- 
- ##
- # @BlockdevOptionsCurlHttps:
-@@ -4605,13 +4610,18 @@
- # @cookie-secret: ID of a QCryptoSecret object providing the cookie
- #     data in a secure way.  See @cookie for the format.  (since 2.10)
- #
-+# @force-range: Don't issue a HEAD HTTP request to discover if the
-+#     backend supports range requests and rely only on GET requests.
-+#     This is especially useful for S3 presigned URLs.  (since 11.0)
-+#
- # Since: 2.9
- ##
- { 'struct': 'BlockdevOptionsCurlHttps',
-   'base': 'BlockdevOptionsCurlBase',
-   'data': { '*cookie': 'str',
-             '*sslverify': 'bool',
--            '*cookie-secret': 'str'} }
-+            '*cookie-secret': 'str',
-+            '*force-range': 'bool'} }
- 
- ##
- # @BlockdevOptionsCurlFtp:
--- 
-2.53.0
++    Error *err =3D NULL;
+     Error *local_err =3D NULL;
 
+     switch (offset) {
+@@ -1614,9 +1616,15 @@ static MemTxResult smmu_writel(SMMUv3State *s, hwadd=
+r offset,
+         s->cr0ack =3D data & ~SMMU_CR0_RESERVED;
+         /* in case the command queue has been enabled */
+         smmuv3_cmdq_consume(s, &local_err);
++        if (local_err) {
++            error_propagate(&err, local_err);
++            local_err =3D NULL;
++        }
+         /* Allocate vEVENTQ if EventQ is enabled and a vIOMMU is available=
+ */
+-        if (local_err =3D=3D NULL) {
+-            smmuv3_accel_alloc_veventq(s, &local_err);
++        smmuv3_accel_alloc_veventq(s, &local_err);
++        if (local_err) {
++            error_propagate(&err, local_err);
++            local_err =3D NULL;
+         }
+         break;
+     case A_CR1:
+@@ -1724,8 +1732,8 @@ static MemTxResult smmu_writel(SMMUv3State *s, hwaddr=
+ offset,
+         break;
+     }
+
+-    if (local_err) {
+-        error_report_err(local_err);
++    if (err) {
++        error_report_err(err);
+     }
+     return MEMTX_OK;
+ }
+
+And error_propagate() only will keep the first error.
+
+Instead, if we do below:
+
+@@ -1614,10 +1615,12 @@ static MemTxResult smmu_writel(SMMUv3State *s, hwad=
+dr offset,
+         s->cr0ack =3D data & ~SMMU_CR0_RESERVED;
+         /* in case the command queue has been enabled */
+         smmuv3_cmdq_consume(s, &local_err);
+-        /* Allocate vEVENTQ if EventQ is enabled and a vIOMMU is available=
+ */
+-        if (local_err =3D=3D NULL) {
+-            smmuv3_accel_alloc_veventq(s, &local_err);
++        if (local_err) {
++            error_report_err(local_err);
++            local_err =3D NULL;
+         }
++        /* Allocate vEVENTQ if EventQ is enabled and a vIOMMU is available=
+ */
++        smmuv3_accel_alloc_veventq(s, &local_err);
+         break;
+
+This will report errors from both paths.
+
+Please let me know if there is a better way.
+
+Thanks,
+Shameer
 
