@@ -4,100 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2C90EE3695
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 14:44:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C26F4EE3693
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 14:44:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqXvJ-0005p4-83; Thu, 12 Feb 2026 09:44:05 -0500
+	id 1vqXvP-0005vf-I6; Thu, 12 Feb 2026 09:44:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vqXvE-0005fK-A2
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 09:44:00 -0500
+ id 1vqXvA-0005VX-MB
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 09:43:58 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vqXvC-0006DU-HD
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 09:44:00 -0500
+ id 1vqXv8-0006D1-W5
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 09:43:56 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770907437;
+ s=mimecast20190719; t=1770907434;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=UnAQ+JDnymETfg+WiYDLUt8ZapEKgk2VtyvzlE9mJ/M=;
- b=GfxJDlvXiiDdjh6da8kaO5RqC6bLu4cGzPyhS8UNtDNcI34L5fOPBST4nWcaazHgt5PXDC
- QnUEhQJ7Ay3EvNHDaC0XkrE1hmOd7cTm2/iES/pvtWsIUe0YqDW5uJS9RP8D7D4U6RQdGg
- SRDhutCHq/Q+frxauYEcaS2N198mCe0=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=wId+UDYcV0D4KMt0YhRwB30s7Fni+NsfRnUa5cYhF0Y=;
+ b=L/CkcMaiudFBXbMKlRNdmXOsLMuZEIuQWb9w3622DPPOHXmi//aK32Am958+qqltAHFdng
+ ZpfIupRAGYQyrd8lauNJbBrW5JSkzgVABQGAKXPkMfE2TP/FHpsSyYPMdJ+nYSKBDokcVQ
+ Dc7I6fHx1SAGEM4xzQ6eRWoVfV6T818=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-532-jst3qz-oOKGw_bwysf0dJA-1; Thu, 12 Feb 2026 09:43:56 -0500
-X-MC-Unique: jst3qz-oOKGw_bwysf0dJA-1
-X-Mimecast-MFC-AGG-ID: jst3qz-oOKGw_bwysf0dJA_1770907435
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-480711d09f1so43114625e9.0
- for <qemu-devel@nongnu.org>; Thu, 12 Feb 2026 06:43:56 -0800 (PST)
+ us-mta-270-nXN_KXaCMuGbz_aU9G6ApA-1; Thu, 12 Feb 2026 09:43:52 -0500
+X-MC-Unique: nXN_KXaCMuGbz_aU9G6ApA-1
+X-Mimecast-MFC-AGG-ID: nXN_KXaCMuGbz_aU9G6ApA_1770907432
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4806b12ad3fso78384675e9.0
+ for <qemu-devel@nongnu.org>; Thu, 12 Feb 2026 06:43:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1770907434; x=1771512234; darn=nongnu.org;
+ d=redhat.com; s=google; t=1770907431; x=1771512231; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=UnAQ+JDnymETfg+WiYDLUt8ZapEKgk2VtyvzlE9mJ/M=;
- b=bdNBEG/kXgO40HW8vMhekRQcvp4ayMokgxXxml/uZGiC/m8iVBQLkuV93oT7VltmNX
- M6xQR+D2roEbucQUMYNmPuMF5PBuoD4/PHGYxu49dDffFfVt6fgDxuwiKaZ7crTbdBHm
- VgWr3FX8GfAxD4JJVy5eXKuZm3+y82Zj2WilkPIkxmt9ge9TXpphY4j6oCBSsBh2CgFR
- DJ6hPQZ3M4ZCHiwpVLhbZKp/mm02NJWI2+Krtf3uLVhRMAYRwxFHiAblMH0we5pVt1vU
- XyGE6X87m0Tc0sYjYnJ0s0VOGrq8gVT9YVgPOXWLPdb4qkwLextNtuDJvt2EV4eGtKDj
- 2K+w==
+ bh=wId+UDYcV0D4KMt0YhRwB30s7Fni+NsfRnUa5cYhF0Y=;
+ b=pvwstBm41znt1iFQacCrsmyecCX3B2Eac8Tmr+MCG0xdNH7VDZMPbFZQVH/rHHpiFE
+ 6ib2SU14mUhsU2HotJo+BhQqCERJHnkPgRp4vwBP+fwCcQlkzff9NX7RTmGG0sf0qriF
+ PuH5ixD4HoPl4HB5USmRbBeyqYsU+4RhPPPq2kJOFoJbkUS4GfE5hfZA/unsfF7gB8kk
+ E0YmuVP7REazScRDj4XC/P+0lBnyBhksWbuSeEZJkIYGFZGzrLE3BFAa0j8GpM6tSS4C
+ vUSx96/0o4AhiykJBzYxEtR1S/0O6b5TlLntyDr0r+1CvejbKgNyH7PgCjWjRi0oNAgQ
+ 6Ixg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770907434; x=1771512234;
+ d=1e100.net; s=20230601; t=1770907431; x=1771512231;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=UnAQ+JDnymETfg+WiYDLUt8ZapEKgk2VtyvzlE9mJ/M=;
- b=ZDDsjMS/5sLCFIp+oOoeFMCillV7Z9cxj7cj4HWAszuNeYTLddvZ6DwFGUnEKPFLqa
- H8BOHjoGdKv66Cms22wkyJ9Mtoc3NPgf8oUtLV1x5/kh/TjzCWSftSWOWreClOtdUMq5
- KB4MuYRS+mbzXO9S5eGd1xsWhCwyXH8g5/Dl9dhnuvDrxX16YgsHevrh8o9sfKKoAVOT
- SJi626FQ+XnfVDnqGG2V+3uVab1Deg08GJp+62KvSJ3iNQoddkzTxxxvWZPIB+nwAKRH
- zU3WGNxEzTxNDto71xUCg5iYjeSdfT59JG08s2q5isYC7EQUIVsjlSwhdPtdyGCcT0gS
- 5blQ==
-X-Gm-Message-State: AOJu0YyUL9Xs1YHLMqLAmf5Z4IK7krO1VJbBdeVopopYg/0uJhOGsEm8
- jhRQqKs5KLFJSY92cN5Q4wgvJNpqpYcf6Kpvy+3s/gZB6OhWbn8f5vjxWfmk+thksBXoKxKBx+F
- JD+Ibi3EfYyjq9DBlWWznExVB8ALG7GtlIuIBHogLZ2CY/7BkRXTJ+I8+Xi01NB23DdkqQ3w1lT
- I6IaZNIbVb+EiK/mcA4yiVC3VYwgjhdj4xQCTM/+Nd
-X-Gm-Gg: AZuq6aKG1a13BbN0jOuobyXOFMmMbW7nOI6wU7GnKRHGzIbVbMNq9UEA4iEg3qQArga
- xXSiH9e62xqVhYaQteEYRGG/vtrFJTnrU/zryOtgTaoK5lcJ5HppLX/P1n4GwwUc/ePCZRT2hDO
- WbRUa5Cv8v4czTKNdAXaWU+xQuHxKvqBR7bBWEudiIGLKKGtRbfrO4WKAx9VtMLOEMAypwRNKR3
- v9ZwCh2QoIwyIsYydo9nW34MVynLr9CzSL8sMeDGjow5JuMcqRX5DWNO3SUVAqtIBW+LqdgDf1r
- 3nxdI4XPl/zfybCCYioSXcdVOqRT9feArkCHBtkzwBiURnYB+Wzx8lFAjEfqFqoO7ItLn++AB3x
- zIHZWT1P0//X9TQ53qNNR4UmYW0w9+Sq5YyPfJs8mM4oZ0mkd4ga3wKR11yCWBYLE1DqLXlUIsp
- lTyabKo9NIvBBb7HQwpgiZgDPVpQYAWEs4dxdaNO8f5CZ9euAb+ow=
-X-Received: by 2002:a05:600c:350f:b0:483:4807:210c with SMTP id
- 5b1f17b1804b1-4836715a2bcmr39802635e9.24.1770907434206; 
- Thu, 12 Feb 2026 06:43:54 -0800 (PST)
-X-Received: by 2002:a05:600c:350f:b0:483:4807:210c with SMTP id
- 5b1f17b1804b1-4836715a2bcmr39802065e9.24.1770907433753; 
- Thu, 12 Feb 2026 06:43:53 -0800 (PST)
+ bh=wId+UDYcV0D4KMt0YhRwB30s7Fni+NsfRnUa5cYhF0Y=;
+ b=NHvH6tkCtF9kZMzqLR8jjXqEdvE45ArIESv6K4eV2aU727HfFDw8NXNsftclT7wTxr
+ QH+W0/o1TIN71wbiW+hVn855qXCHRJadSmvcdNDDZpVy3dMVY1KqjNr+qxG7pQrfyaRp
+ PQTuxBMMpT/S5oSRlr7Yuk9KrSx4ExA9ZmSSY9UDOVEmseCG9Q7r5JWc5H3Jsq3/8B/K
+ 1IrvMe5xFbJkhU4cX/ruOthdIf9UeUvFJfxyhO2xhpCEUq4xKABPAbOiyqCQ3gTMj71b
+ jkdOZp3cbKTviTCVFA3MZNk85MkKpTsuiAEuLUiLOdmBr96jagRyVhY6QwxJgkMedEFp
+ eCzQ==
+X-Gm-Message-State: AOJu0YxUuyg5WFC5IZr7DryrLvEcsJ1le0VtemVubFiJN+vsnOY9Jf9p
+ FOch6a/M8I7mbgGa/hNh6IUaSLEkfvYDrjTRLLsDAo5kekGuiQXl4lOGxN70p+2OGZ5r924AByy
+ EAlEcyuYRKAzh3Lx+5XtpyP40GIvaCGQSgam3wewCMS1uNpY0tgKLdC+6RPM2URPRaxChEdrq7E
+ 26warjwMZVRxy9fZN9T61ilV6rOvxE1bboE27Uowg6
+X-Gm-Gg: AZuq6aLV+W9haeYV0++U695wWcwiX2b16pnqBMZtrSZSEg5rfPDP8lj/V+hsR6Pjigw
+ 5GtFgzYS8GoxaAbMyAic3O72S1WKcfJbY6arlB6wVPTkHWeoS8x7SrfYfPqxCfKnDiTwzJg5Crl
+ TbQPnPDpT2XxGyA/qC7jl6VZlpLJ6mDgSJrChmsrKm8/EdPJsnIivY4Eb12HCQdovb0za7dVP6t
+ vwE2nTixlUXUTobpbqKVaYk8R2t+JPCYyw4n3K8J4dxWge74/SZWpO6XAAFABKbwMymWouhBIsd
+ cQGUuVGlFwMkiccddDp7mJX/ax7c9Uj4Efuru3qvvjsFEzzBImopMlAv78BwqAcXb6IZn4ytfhr
+ c7kxpXQpeXfrBUOJJ3BnsaXW/ZcZXWcc3kObSgSf69BpQmht7YEfeFmD7Z1cO/GyXba/cX4OLg6
+ ZUZ4/d3/XdqTKkd8p6HAwERwqx1NR5e0AbNXlVlcJc0Mtc0bj/Odg=
+X-Received: by 2002:a05:600c:c0c3:20b0:482:eec4:772 with SMTP id
+ 5b1f17b1804b1-48365716447mr32737855e9.32.1770907430668; 
+ Thu, 12 Feb 2026 06:43:50 -0800 (PST)
+X-Received: by 2002:a05:600c:c0c3:20b0:482:eec4:772 with SMTP id
+ 5b1f17b1804b1-48365716447mr32737335e9.32.1770907430103; 
+ Thu, 12 Feb 2026 06:43:50 -0800 (PST)
 Received: from [10.60.241.123] (nat-pool-mxp-t.redhat.com. [149.6.153.186])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4835a60ee40sm99570605e9.1.2026.02.12.06.43.53
+ 5b1f17b1804b1-4835bc8736esm44919385e9.19.2026.02.12.06.43.47
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 12 Feb 2026 06:43:53 -0800 (PST)
+ Thu, 12 Feb 2026 06:43:47 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Dongli Zhang <dongli.zhang@oracle.com>, Xiaoyao Li <xiaoyao.li@intel.com>,
- Zhao Liu <zhao1.liu@intel.com>, Dapeng Mi <dapeng1.mi@linux.intel.com>,
- Zide Chen <zide.chen@intel.com>
-Subject: [PULL 30/41] target/i386/kvm: set KVM_PMU_CAP_DISABLE if "-pmu" is
- configured
-Date: Thu, 12 Feb 2026 15:42:32 +0100
-Message-ID: <20260212144244.22579-31-pbonzini@redhat.com>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Mark Cave-Ayland <mark.caveayland@nutanix.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Igor Mammedov <imammedo@redhat.com>
+Subject: [PULL 28/41] hw/char/virtio-serial: Do not expose the
+ 'emergency-write' property
+Date: Thu, 12 Feb 2026 15:42:30 +0100
+Message-ID: <20260212144244.22579-29-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260212144244.22579-1-pbonzini@redhat.com>
 References: <20260212144244.22579-1-pbonzini@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -124,94 +125,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Dongli Zhang <dongli.zhang@oracle.com>
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Although AMD PERFCORE and PerfMonV2 are removed when "-pmu" is configured,
-there is no way to fully disable KVM AMD PMU virtualization. Neither
-"-cpu host,-pmu" nor "-cpu EPYC" achieves this.
+The VIRTIO_CONSOLE_F_EMERG_WRITE feature bit was only set
+in the hw_compat_2_7[] array, via the 'emergency-write=off'
+property. We removed all machines using that array, lets remove
+that property. All instances have this feature bit set and
+it can not be disabled. VirtIOSerial::host_features mask is
+now unused, remove it.
 
-As a result, the following message still appears in the VM dmesg:
-
-[    0.263615] Performance Events: AMD PMU driver.
-
-However, the expected output should be:
-
-[    0.596381] Performance Events: PMU not available due to virtualization, using software events only.
-[    0.600972] NMI watchdog: Perf NMI watchdog permanently disabled
-
-This occurs because AMD does not use any CPUID bit to indicate PMU
-availability.
-
-To address this, KVM_CAP_PMU_CAPABILITY is used to set KVM_PMU_CAP_DISABLE
-when "-pmu" is configured.
-
-Signed-off-by: Dongli Zhang <dongli.zhang@oracle.com>
-Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-Reviewed-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
-Reviewed-by: Zide Chen <zide.chen@intel.com>
-Link: https://lore.kernel.org/r/20260109075508.113097-2-dongli.zhang@oracle.com
+Reviewed-by: Igor Mammedov <imammedo@redhat.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+Link: https://lore.kernel.org/r/20260108033051.777361-28-zhao1.liu@intel.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/kvm/kvm.c | 31 +++++++++++++++++++++++++++++++
- 1 file changed, 31 insertions(+)
+ include/hw/virtio/virtio-serial.h | 2 --
+ hw/char/virtio-serial-bus.c       | 9 +++------
+ 2 files changed, 3 insertions(+), 8 deletions(-)
 
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index 0c940d4b640..69748420fd6 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -178,6 +178,8 @@ static int has_triple_fault_event;
+diff --git a/include/hw/virtio/virtio-serial.h b/include/hw/virtio/virtio-serial.h
+index 60641860bf8..da0c91e1a40 100644
+--- a/include/hw/virtio/virtio-serial.h
++++ b/include/hw/virtio/virtio-serial.h
+@@ -186,8 +186,6 @@ struct VirtIOSerial {
+     struct VirtIOSerialPostLoad *post_load;
  
- static bool has_msr_mcg_ext_ctl;
+     virtio_serial_conf serial;
+-
+-    uint64_t host_features;
+ };
  
-+static int pmu_cap;
-+
- static struct kvm_cpuid2 *cpuid_cache;
- static struct kvm_cpuid2 *hv_cpuid_cache;
- static struct kvm_msr_list *kvm_feature_msrs;
-@@ -2079,6 +2081,33 @@ full:
+ /* Interface to the virtio-serial bus */
+diff --git a/hw/char/virtio-serial-bus.c b/hw/char/virtio-serial-bus.c
+index 5ec5f5313b2..b7c57ea9678 100644
+--- a/hw/char/virtio-serial-bus.c
++++ b/hw/char/virtio-serial-bus.c
+@@ -557,7 +557,7 @@ static uint64_t get_features(VirtIODevice *vdev, uint64_t features,
  
- int kvm_arch_pre_create_vcpu(CPUState *cpu, Error **errp)
- {
-+    static bool first = true;
-+    int ret;
-+
-+    if (first) {
-+        first = false;
-+
-+        /*
-+         * Since Linux v5.18, KVM provides a VM-level capability to easily
-+         * disable PMUs; however, QEMU has been providing PMU property per
-+         * CPU since v1.6. In order to accommodate both, have to configure
-+         * the VM-level capability here.
-+         *
-+         * KVM_PMU_CAP_DISABLE doesn't change the PMU
-+         * behavior on Intel platform because current "pmu" property works
-+         * as expected.
-+         */
-+        if ((pmu_cap & KVM_PMU_CAP_DISABLE) && !X86_CPU(cpu)->enable_pmu) {
-+            ret = kvm_vm_enable_cap(kvm_state, KVM_CAP_PMU_CAPABILITY, 0,
-+                                    KVM_PMU_CAP_DISABLE);
-+            if (ret < 0) {
-+                error_setg_errno(errp, -ret,
-+                                 "Failed to set KVM_PMU_CAP_DISABLE");
-+                return ret;
-+            }
-+        }
-+    }
-+
-     if (is_tdx_vm()) {
-         return tdx_pre_create_vcpu(cpu, errp);
+     vser = VIRTIO_SERIAL(vdev);
+ 
+-    features |= vser->host_features;
++    features |= BIT_ULL(VIRTIO_CONSOLE_F_EMERG_WRITE);
+     if (vser->bus.max_nr_ports > 1) {
+         virtio_add_feature(&features, VIRTIO_CONSOLE_F_MULTIPORT);
      }
-@@ -3390,6 +3419,8 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
-         }
+@@ -587,8 +587,7 @@ static void set_config(VirtIODevice *vdev, const uint8_t *config_data)
+     VirtIOSerialPortClass *vsc;
+     uint8_t emerg_wr_lo;
+ 
+-    if (!virtio_has_feature(vser->host_features,
+-        VIRTIO_CONSOLE_F_EMERG_WRITE) || !config->emerg_wr) {
++    if (!config->emerg_wr) {
+         return;
      }
  
-+    pmu_cap = kvm_check_extension(s, KVM_CAP_PMU_CAPABILITY);
-+
-     return 0;
- }
+@@ -1040,7 +1039,7 @@ static void virtio_serial_device_realize(DeviceState *dev, Error **errp)
+         return;
+     }
  
+-    if (!virtio_has_feature(vser->host_features,
++    if (!virtio_has_feature(vdev->host_features,
+                             VIRTIO_CONSOLE_F_EMERG_WRITE)) {
+         config_size = offsetof(struct virtio_console_config, emerg_wr);
+     }
+@@ -1156,8 +1155,6 @@ static const VMStateDescription vmstate_virtio_console = {
+ static const Property virtio_serial_properties[] = {
+     DEFINE_PROP_UINT32("max_ports", VirtIOSerial, serial.max_virtserial_ports,
+                                                   31),
+-    DEFINE_PROP_BIT64("emergency-write", VirtIOSerial, host_features,
+-                      VIRTIO_CONSOLE_F_EMERG_WRITE, true),
+ };
+ 
+ static void virtio_serial_class_init(ObjectClass *klass, const void *data)
 -- 
 2.52.0
 
