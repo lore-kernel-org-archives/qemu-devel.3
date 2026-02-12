@@ -4,58 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0D9AEE36AE
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 17:38:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 422FCEE3698
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 17:38:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqadB-0006c1-J3; Thu, 12 Feb 2026 12:37:33 -0500
+	id 1vqadg-0006hV-Ob; Thu, 12 Feb 2026 12:38:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vqadA-0006bo-An
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 12:37:32 -0500
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1vqade-0006h3-JW
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 12:38:02 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vqad6-0000nk-SH
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 12:37:32 -0500
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id D4FE85969F0;
- Thu, 12 Feb 2026 18:37:24 +0100 (CET)
-X-Virus-Scanned: amavis at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id 0zWBmbooAaDa; Thu, 12 Feb 2026 18:37:22 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 4D20B597383; Thu, 12 Feb 2026 18:37:22 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 4B005597382;
- Thu, 12 Feb 2026 18:37:22 +0100 (CET)
-Date: Thu, 12 Feb 2026 18:37:22 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Peter Xu <peterx@redhat.com>
-cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel <qemu-devel@nongnu.org>, 
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, 
- Gerd Hoffmann <kraxel@redhat.com>, Max Filippov <jcmvbkbc@gmail.com>, 
- Peter Maydell <peter.maydell@linaro.org>, 
- =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
-Subject: Re: [PATCH v3 0/6] Implement memory_region_new_* functions
-In-Reply-To: <aYyTtz1B2Qz3aQWA@x1.local>
-Message-ID: <e3fdbd4f-df7b-0adc-06ff-4c5a25ab80cc@eik.bme.hu>
-References: <cover.1770753117.git.balaton@eik.bme.hu>
- <CABgObfYpW0YMofv4O8gf4p-aWVxfvQ+BCMPsm2w+5MtD8-9s0Q@mail.gmail.com>
- <42233b06-f058-152d-645e-e16528a1640d@eik.bme.hu> <aYyTtz1B2Qz3aQWA@x1.local>
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1vqadb-0000qJ-F3
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 12:38:02 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1770917877;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=14XJ4PawqPeQcZyHiAcCxoTlphXk9DItdZb30C4HsPE=;
+ b=SeNhGkEWuzYPaDNLobaEJlXWoZ5RsvbkyQu04PHSP3dmFozeB+0vfYRb8qwoztNGGfsCrR
+ ECk2+KsbMaefGXX7tfUDdD/wG3HXwoov6jX0gc/PfsYNkMHZithv/lGtig9C3xCvSurMxV
+ BtHTi+154ab+2wtaHhI6ic/T672UNnY=
+Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
+ [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-70-7WvXGp8GP6WOC0vkLHBuig-1; Thu, 12 Feb 2026 12:37:56 -0500
+X-MC-Unique: 7WvXGp8GP6WOC0vkLHBuig-1
+X-Mimecast-MFC-AGG-ID: 7WvXGp8GP6WOC0vkLHBuig_1770917875
+Received: by mail-ej1-f70.google.com with SMTP id
+ a640c23a62f3a-b8f9046d343so125766b.3
+ for <qemu-devel@nongnu.org>; Thu, 12 Feb 2026 09:37:56 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770917875; x=1771522675;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=14XJ4PawqPeQcZyHiAcCxoTlphXk9DItdZb30C4HsPE=;
+ b=YejP4f5d7EWJm5RoklJzFs12Ypv5NXrvl1EZTCMm4ewX1yaJ+wT5Rfw6yTZy6ZFOvO
+ cXXwY7uc1bpC9hsMd99xfbDK3L4JHzKe2B6N8viZOgx/PY2mZyxoBDrFhMZ9egAM8GZJ
+ rjoh5nygimmWQgdnptecqLNeX8rPKXtF4VNJ6nrppKfEnXbhvZjp7Mn+J0Wu9Os/9szs
+ k30oo1fyCdAAzUxp2avSB4McXcZLITvDfPT1Q+BLv9+J1wqnDd82OhowsE/uIu+ZDSEA
+ C6SttkJAf0I/5A60XKynJXUmghl4ye3FV+kUa94125W7/v5rXELmnAYlZAgbFFYko2YC
+ UIsA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXcYhJd/lD8f9TmAnHbpC3++L4wlmCLs0tbO7vmQBWQlCtr5KSnlk1/mcynylnD8KBKijFOo083hTc/@nongnu.org
+X-Gm-Message-State: AOJu0Yyqx6+FCu2CyJ5yQcTAmLHCnbtYvdr0JPnGNyqZAXerplfnssdg
+ NC8xD3s9v6gUfJAoyQkslqVfl4w5iFyNQHFdAdZJA2vvqUk/pDbTXkI0IsdC4BvIdjyr9mlcRKH
+ suCUiYL9QgCy6POWwtsRiT+qqXtx+Fri/1ZNWCOtNerfBg0K8FCARDdo8
+X-Gm-Gg: AZuq6aKj91GqPFMl84qFHCM4lczfmG6/MO40BjKudQ0vcTi8P975M6qPO2uxl5eTz9C
+ BwZatIIbHoE1vc+Gt9TONn6BimwxhQwxL6I2Yjb1KLENjBIKKIOZ1u2QQOUWtBVnUQ5exJp1mXK
+ UcaXO72G6WKU866Wq9T1tO0ZnpY/2iH4SH6rVu9wVGAkVZKWOqlSTfYebtYaCLKLAw2u0V3t9/9
+ uwRRpcAU3TuaQcQUkxbIP0NGUw0+UW1N6Ffif7ZBnSGu7QgBblyQ7s72/JmFxdr4bqTukAghcyt
+ oAeHCjvep90gTrt1AgnkEMGvWEkiSPZNLLU3nOHz16SSxaLUYJq95A7aNoHrpxIUhQlwSpbwXc/
+ AumL5TIDCQVsxPygzSuw9csmatj/nkI01uTDy2pr2kYGw+1+/bOwTC0D+IZYY4JDlvNfxfw==
+X-Received: by 2002:a17:906:fe08:b0:b73:7b97:5bfb with SMTP id
+ a640c23a62f3a-b8faa4208f0mr6671966b.33.1770917874680; 
+ Thu, 12 Feb 2026 09:37:54 -0800 (PST)
+X-Received: by 2002:a17:906:fe08:b0:b73:7b97:5bfb with SMTP id
+ a640c23a62f3a-b8faa4208f0mr6669466b.33.1770917874055; 
+ Thu, 12 Feb 2026 09:37:54 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-b8f6e99af3bsm178251666b.18.2026.02.12.09.37.52
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 12 Feb 2026 09:37:53 -0800 (PST)
+Message-ID: <407ed2cd-aac3-4738-ac5d-8069ec42a611@redhat.com>
+Date: Thu, 12 Feb 2026 18:37:51 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: -2
-X-Spam_score: -0.3
-X-Spam_bar: /
-X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, URIBL_SBL=1.623 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 07/24] hw/arm/smmuv3-accel: Wire CMDQV ops into accel
+ lifecycle
+Content-Language: en-US
+To: Shameer Kolothum <skolothumtho@nvidia.com>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org, clg@redhat.com, alex@shazbot.org,
+ nicolinc@nvidia.com, nathanc@nvidia.com, mochs@nvidia.com, jan@nvidia.com,
+ jgg@nvidia.com, jonathan.cameron@huawei.com, zhangfei.gao@linaro.org,
+ zhenzhong.duan@intel.com, kjaju@nvidia.com
+References: <20260206144823.80655-1-skolothumtho@nvidia.com>
+ <20260206144823.80655-8-skolothumtho@nvidia.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20260206144823.80655-8-skolothumtho@nvidia.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -68,173 +117,217 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 11 Feb 2026, Peter Xu wrote:
-> On Wed, Feb 11, 2026 at 12:47:53PM +0100, BALATON Zoltan wrote:
->> On Wed, 11 Feb 2026, Paolo Bonzini wrote:
->>> Il mar 10 feb 2026, 21:02 BALATON Zoltan <balaton@eik.bme.hu> ha scritto:
->>>
->>>> Our documentation says that memory regions are automatically freed
->>>> when the owner dies and the reference counting to do this is also
->>>> implemented. However this relies on the QOM free funtion that can only
->>>> be set by creating objects with object_new but memory API only
->>>> provides constructors that call object_initialize which clears the
->>>> free function that prevents QOM to manage the memory region lifetime.
->>>> Implement corresponding memory_region_new_* functions that do the same
->>>> as the memory_region_init_* functions but create the memory region
->>>> with object_new so the lifetime can be automatically managed by QOM as
->>>> documented. The memory_region_init functions are kept because they are
->>>> useful for memory regions embedded in other object or managed
->>>> externally and not by QOM for some reason.
->>>>
->>>
->>> I think there was pretty much agreement *not* to do this?
->>
->> Who agreed on that? So far I got concerns that this was too big (that's why
->> I split it from the clean ups to show it's not that big change, less than
->> 200 lines plus the docs but the clean ups removed as many lines as the doc
->> comments add) and others saying this should replace memory_region_init
->> altogether (that's way too much churn and not needed IMO) but no clear
->> explanation of why this was *not* needed. You as maintainer can say no but
->> then please give a justification for why and some solution to the problems
->> this tries to fix.
+Hi Shameer,
+
+On 2/6/26 3:48 PM, Shameer Kolothum wrote:
+> Integrate CMDQV ops support into the accelerated SMMUv3 path. When CMDQV
+> is enabled, the backend ops are used to initialize CMDQV state and to
+> allocate the vIOMMU instance. The current implementation connects the
+> Tegra241 CMDQV backend, but does not enable functional support yet.
 >
-> I didn't participate much on this discussion, because I don't think I know
-> well on this topic.. especially on the Rust implications, comparing to most
-> of others who should be more familiar with.
+> No functional changes intended.
 >
-> However, IMHO, what we really need here is a justification on "why this is
-> needed", instead of requesting maintainer to say "why it's not needed"..
+> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
+> ---
+>  hw/arm/smmuv3-accel.c   | 65 ++++++++++++++++++++++++++++++++++++-----
+>  hw/arm/smmuv3-accel.h   |  5 ++++
+>  hw/arm/smmuv3.c         |  1 +
+>  include/hw/arm/smmuv3.h |  2 ++
+>  4 files changed, 66 insertions(+), 7 deletions(-)
 >
-> The rational should be simple to me: by default, we change nothing.  We fix
-> bugs, but that justifies itself.  If we change something else, we need to
-> justify the change worthwhile (by the author of the proposal).  If we
-> change a lot of things, we need serious and strong justifications.
+> diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c
+> index 9036b14601..b1a8ab79b5 100644
+> --- a/hw/arm/smmuv3-accel.c
+> +++ b/hw/arm/smmuv3-accel.c
+> @@ -18,6 +18,7 @@
+>  
+>  #include "smmuv3-internal.h"
+>  #include "smmuv3-accel.h"
+> +#include "tegra241-cmdqv.h"
+>  
+>  /*
+>   * The root region aliases the global system memory, and shared_as_sysmem
+> @@ -520,6 +521,7 @@ smmuv3_accel_alloc_viommu(SMMUv3State *s, HostIOMMUDeviceIOMMUFD *idev,
+>                            Error **errp)
+>  {
+>      SMMUv3AccelState *accel = s->s_accel;
+> +    const SMMUv3AccelCmdqvOps *cmdqv_ops = accel->cmdqv_ops;
+>      struct iommu_hwpt_arm_smmuv3 bypass_data = {
+>          .ste = { SMMU_STE_CFG_BYPASS | SMMU_STE_VALID, 0x0ULL },
+>      };
+> @@ -530,12 +532,24 @@ smmuv3_accel_alloc_viommu(SMMUv3State *s, HostIOMMUDeviceIOMMUFD *idev,
+>      uint32_t viommu_id, hwpt_id;
+>      IOMMUFDViommu *viommu;
+>  
+> -    if (!iommufd_backend_alloc_viommu(idev->iommufd, idev->devid,
+> -                                      IOMMU_VIOMMU_TYPE_ARM_SMMUV3, s2_hwpt_id,
+> -                                      NULL, 0, &viommu_id, errp)) {
+> +    if (cmdqv_ops && (!cmdqv_ops->alloc_viommu || !cmdqv_ops->alloc_veventq)) {
+> +        error_setg(errp, "CMDQV vIOMMU allocation not supported");
+>          return false;
+>      }
+>  
+> +    if (cmdqv_ops) {
+> +        if (!cmdqv_ops->alloc_viommu(s, idev, &viommu_id, errp)) {
+> +            return false;
+> +        }
+> +    } else {
+> +        if (!iommufd_backend_alloc_viommu(idev->iommufd, idev->devid,
+> +                                          IOMMU_VIOMMU_TYPE_ARM_SMMUV3,
+> +                                          s2_hwpt_id, NULL, 0, &viommu_id,
+> +                                          errp)) {
+this is not add-on code but rather a switch. Depending on the cmdq type, 
 
-When somebody submits a patch, the cover letter and commit messages 
-describe what and why is prpoposed to be changed. I tried to do that and 
-also replied to review comments trying to explain why I think the change 
-would help. So I think I gave justification. If I get a reply saying that 
-the proposed change is broken, won't work or breaks something then it's 
-clear why it's not a good idea. If I get a reply that this would work but 
-I don't think it's a good idea then I'd like to also get some explanation 
-on why it's not a good idea and if there's a better solution for the 
-problems that the poropsed patch tries to fix. That's where the maintainer 
-should say why it's not needed.
+sizeof(cmdqv->cmdqv_data) varies. Wondering if ops does not makes sense here either.
 
-I try to summarise the problem again briefly as it seems I did not manage 
-to explain it in previous messages (or I wrote too much and people did not 
-even read it). This again got a bit long but I don't know how to explain 
-it better with less words.
+> +            return false;
+> +        }
+> +    }
+> +
+>      viommu = g_new0(IOMMUFDViommu, 1);
+>      viommu->viommu_id = viommu_id;
+>      viommu->s2_hwpt_id = s2_hwpt_id;
+> @@ -565,13 +579,21 @@ smmuv3_accel_alloc_viommu(SMMUv3State *s, HostIOMMUDeviceIOMMUFD *idev,
+>          goto free_bypass_hwpt;
+>      }
+>  
+> +    if (cmdqv_ops && !cmdqv_ops->alloc_veventq(s, errp)) {
+> +        goto free_veventq;
+> +    }
+> +
+>      /* Attach a HWPT based on SMMUv3 GBPA.ABORT value */
+>      hwpt_id = smmuv3_accel_gbpa_hwpt(s, accel);
+>      if (!host_iommu_device_iommufd_attach_hwpt(idev, hwpt_id, errp)) {
+> -        goto free_veventq;
+> +        goto free_cmdqv_veventq;
+>      }
+>      return true;
+>  
+> +free_cmdqv_veventq:
+> +    if (cmdqv_ops && cmdqv_ops->free_veventq) {
+> +        cmdqv_ops->free_veventq(s);
+> +    }
+>  free_veventq:
+>      smmuv3_accel_free_veventq(accel);
+>  free_bypass_hwpt:
+> @@ -579,7 +601,11 @@ free_bypass_hwpt:
+>  free_abort_hwpt:
+>      iommufd_backend_free_id(idev->iommufd, accel->abort_hwpt_id);
+>  free_viommu:
+> -    iommufd_backend_free_id(idev->iommufd, viommu->viommu_id);
+> +    if (cmdqv_ops && cmdqv_ops->free_viommu) {
+> +        cmdqv_ops->free_viommu(s);
+> +    } else {
+> +        iommufd_backend_free_id(idev->iommufd, viommu->viommu_id);
+> +    }
+>      g_free(viommu);
+>      accel->viommu = NULL;
+>      return false;
+> @@ -865,8 +891,17 @@ bool smmuv3_accel_attach_gbpa_hwpt(SMMUv3State *s, Error **errp)
+>  
+>  void smmuv3_accel_reset(SMMUv3State *s)
+>  {
+> -     /* Attach a HWPT based on GBPA reset value */
+> -     smmuv3_accel_attach_gbpa_hwpt(s, NULL);
+> +    SMMUv3AccelState *accel = s->s_accel;
+> +
+> +    if (!accel) {
+> +        return;
+> +    }
+> +    /* Attach a HWPT based on GBPA reset value */
+> +    smmuv3_accel_attach_gbpa_hwpt(s, NULL);
+> +
+> +    if (accel->cmdqv_ops && accel->cmdqv_ops->reset) {
+> +        accel->cmdqv_ops->reset(s);
+> +    }
+>  }
+>  
+>  static void smmuv3_accel_as_init(SMMUv3State *s)
+> @@ -886,6 +921,22 @@ static void smmuv3_accel_as_init(SMMUv3State *s)
+>      address_space_init(shared_as_sysmem, &root, "smmuv3-accel-as-sysmem");
+>  }
+>  
+> +bool smmuv3_accel_cmdqv_init(SMMUv3State *s, Error **errp)
+> +{
+> +    SMMUv3AccelState *accel = s->s_accel;
+> +
+> +    if (!accel || !s->tegra241_cmdqv) {
+isn't tegra241_cmdqv also only accelerated. Why do we need to have both
+checks?
+> +        return true;
+> +    }
+> +
+> +    accel->cmdqv_ops = tegra241_cmdqv_ops();
+> +    if (!accel->cmdqv_ops || !accel->cmdqv_ops->init) {
+> +        error_setg(errp, "CMDQV support not available");
+> +        return false;
+> +    }
+> +    return accel->cmdqv_ops->init(s, errp);
+> +}
+> +
+>  void smmuv3_accel_init(SMMUv3State *s)
+>  {
+>      SMMUState *bs = ARM_SMMU(s);
+> diff --git a/hw/arm/smmuv3-accel.h b/hw/arm/smmuv3-accel.h
+> index ca087240e5..33da37bfc1 100644
+> --- a/hw/arm/smmuv3-accel.h
+> +++ b/hw/arm/smmuv3-accel.h
+> @@ -74,6 +74,7 @@ bool smmuv3_accel_issue_inv_cmd(SMMUv3State *s, void *cmd, SMMUDevice *sdev,
+>  void smmuv3_accel_idr_override(SMMUv3State *s);
+>  bool smmuv3_accel_alloc_veventq(SMMUv3State *s, Error **errp);
+>  void smmuv3_accel_reset(SMMUv3State *s);
+> +bool smmuv3_accel_cmdqv_init(SMMUv3State *s, Error **errp);
+>  #else
+>  static inline void smmuv3_accel_init(SMMUv3State *s)
+>  {
+> @@ -110,6 +111,10 @@ static inline bool smmuv3_accel_alloc_veventq(SMMUv3State *s, Error **errp)
+>  static inline void smmuv3_accel_reset(SMMUv3State *s)
+>  {
+>  }
+> +static bool smmuv3_accel_cmdqv_init(SMMUv3State *s, Error **errp)
+> +{
+> +    return true;
+> +}
+>  #endif
+>  
+>  #endif /* HW_ARM_SMMUV3_ACCEL_H */
+> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
+> index 148af80efd..7858bf2c33 100644
+> --- a/hw/arm/smmuv3.c
+> +++ b/hw/arm/smmuv3.c
+> @@ -2034,6 +2034,7 @@ static void smmu_realize(DeviceState *d, Error **errp)
+>  
+>      smmu_init_irq(s, dev);
+>      smmuv3_init_id_regs(s);
+> +    smmuv3_accel_cmdqv_init(s, errp);
+>  }
+>  
+>  static const VMStateDescription vmstate_smmuv3_queue = {
+> diff --git a/include/hw/arm/smmuv3.h b/include/hw/arm/smmuv3.h
+> index 26b2fc42fd..87926f8cb3 100644
+> --- a/include/hw/arm/smmuv3.h
+> +++ b/include/hw/arm/smmuv3.h
+> @@ -73,6 +73,8 @@ struct SMMUv3State {
+>      bool ats;
+>      uint8_t oas;
+>      uint8_t ssidsize;
+> +    /* Support for NVIDIA Tegra241 SMMU CMDQV extension */
+> +    bool tegra241_cmdqv;
+so I really advocate for auto detection and I think in that context I
+still think a selection of ops depending on the type of the cmdqv may be
+more future proof.
+Also to me this should be within struct SMMUv3AccelState if cmdqv only
+works with accel. Or does emulation of cmdqv make sense?
 
-Memory regions are registered as a child with an owner and when the owner 
-is destroyed it unparents the memory region which decreases its ref count 
-so it would be freed if there are no other uses of the memory region. This 
-is implemented and documented like that but there's currently no way to 
-actually create a memory region that would be managed and freed by QOM 
-that way and a memory region created with memory_region_init would never 
-be freed and the code to manage memory region lifecycle is effectively 
-dead. Because of this we have all sorts of hacks to solve problems that 
-arise from this such as memory_region_ref/unref not using the ref count of 
-the memory region itself but the ref count of the owner and we embed 
-memory regions in devices to avoid leaking them.
+Thanks
 
-My immediate motivation was trying to keep device models simple and avoid 
-any additional state or boiler plate code as much as possible because I 
-think simple device models are easier to write and easier to find bugs in 
-if boiler plate code is not obscuring the actual device functionality. 
-Therefore the less additional lines we have to add to a device model is 
-the better. A typical example is a memory region of a sysbus or PCI device 
-where this would be created with the device and registered via 
-sysbus_init_mmio or pci_register_bar. The SysBusDevice state has 
-mmio[QDEV_MAX_MMIO] with a MemoryRegion *memory pointer in it and 
-PCIDevice has PCIIORegion io_regions[PCI_NUM_REGIONS] where PCIIORegion 
-has MemoryRegion *memory so the subclass should not need to store or embed 
-these memory regions as QOM should be able to store and manage it. All 
-that should be needed in the device model is to define memory ops, create 
-the memory region and register it with the superclass and forget about it. 
-Reading the documentation of memory regions I was under the impression it 
-also works like that but when trying to create such memory regions I was 
-told this would leak. Then I looked at why.
+Eric
+>  };
+>  
+>  typedef enum {
 
-I've found that QOM lifecycle management relies on a free function that is 
-set by object_new so anything not created with object_new won't be freed. 
-QOM has two ways to create objects: object_new and object_initialize 
-(latter of which zeroes the free function so this will never be freed by 
-QOM) and there's no way to set a free function any other way. The 
-memory_region_init* functions call object_initialze so they cannot create 
-regions that QOM will manage. To understand this better look at: 
-system/memory.c::memory_region_init(), qom/object.c::object_finalize(), 
-qom/object.c::object_new() and qom/object.c::object_initialize_with_type() 
-(note the memset in object_initialize_with_type).
-
-There are two possible ways to fix this: remove object_initialize from 
-memory_region_init so callers could do object_new; memory_region_init or 
-object_initialize; memory_region_init or add corresponding 
-memory_region_new functions. The latter seems to be less churn and more 
-convenient to use so that's what this series does.
-
-With this series we can have
-
-struct SiI3112PCIState {
-     PCIIDEState i;
-
-     SiI3112Regs regs[2];
-};
-
-instead of
-
-struct SiI3112PCIState {
-     PCIIDEState i;
-
-     MemoryRegion mmio;
-     MemoryRegion bar0;
-     MemoryRegion bar1;
-     MemoryRegion bar2;
-     MemoryRegion bar3;
-     MemoryRegion bar4;
-     SiI3112Regs regs[2];
-};
-
-or drop an unneeded field from PCIHostState as proposed here:
-
-https://patchew.org/QEMU/cover.1761232472.git.balaton@eik.bme.hu/797587b52159d2db79ed924b4962be7e7ba84207.1761232472.git.balaton@eik.bme.hu/
-
-and several similar simplifications in a lot of devices, that would be 
-done as follow up patches not all in this series.
-
-We may also be able to untangle memory_region_ref/unref and just use 
-object_ref/unref with memory regions that would be more regular QOM usage 
-and may be simpler to follow than the current way of piggy-backing on the 
-owner which recently was also found to have some issues.
-
-> At least I didn't see any Rust mentioned in this cover letter explaining
-> why we need this change.  I also don't know if the "documentation" issue is
-> a major flaw to introduce these whole set of new APIs.  For example, could
-> we fix the doc instead if it is flawed?
-
-I don't know if this helps Rust or not, that wasn't brought up by me but I 
-guess making memory regions normally managed QOM objects would fit more 
-with what Rust expects or can handle than the current way of embedding or 
-strangely ref counting regions. As described above the main motivation is 
-not to fix documentation but to make it possible to use memory regions as 
-documented and intended to avoid some hacks that I think arise from not 
-being able to create normal ref counted memory regions that would be freed 
-by QOM.
-
-If you think the above is not a problem or this is not the right solution 
-for it then I'd like to see a justification on why and what would be a 
-better solution. So far I got that it might be that people did not get why 
-it is a problem and it works good enough as it is so best not touch it but 
-I think the porposed change is simple enough and would allow removing some 
-hacks so allow simplifying code and as it does not touch existing 
-memory_region_init functions it would also not break anything. Again if 
-this was not clear above the series does not add any new way of managing 
-memory regions, that's already implemented and always was, this just adds 
-the functions that allow it to be used.
-
-Regards,
-BALATON Zoltan
 
