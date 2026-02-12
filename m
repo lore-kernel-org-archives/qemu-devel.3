@@ -4,95 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B2FFEEA84E
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 21:58:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38BEEEEA86D
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 22:53:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqeg0-0003zk-TQ; Thu, 12 Feb 2026 16:56:44 -0500
+	id 1vqfY3-0003a9-Nm; Thu, 12 Feb 2026 17:52:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vqefY-0003wF-1j
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 16:56:16 -0500
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vqfY2-0003ZZ-0g
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 17:52:34 -0500
 Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vqefW-0004G1-Ag
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 16:56:15 -0500
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vqfY0-0008EM-9T
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 17:52:33 -0500
 Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-4801c2fae63so2321075e9.2
- for <qemu-devel@nongnu.org>; Thu, 12 Feb 2026 13:56:13 -0800 (PST)
+ 5b1f17b1804b1-48069a48629so2858005e9.0
+ for <qemu-devel@nongnu.org>; Thu, 12 Feb 2026 14:52:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770933371; x=1771538171; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=t8WBGiN4/DVAiL0Eh6Dae5nCGHyAaujcJb6LH0LxG+U=;
- b=bvz9giTXLLncdpoz5adxJfTW+jZigeh75E2LqdYo8V3YW21h1sMzbxTa9E5F5eJXUk
- /9yGdbM2WudziGqbad8Q38JlI0XzSwET7MYUSJ3FEgiWV4pou3oCBRqD2YXGcYQOJE26
- u4Fl713JdK4VOLLv7RDto2ydFqtssbUczzQM9bTV7Fsy3e1PnKP2+7LfVm2ie35Hb9bj
- 4zHYxppyPZxlRwhdz5kPKpwyPFkkQsEKVmFZs4GsxOfx/yNIDCLG5rH46iKPsbwbO8Mk
- ZIMviomEBpmdNYA2pKMGJ1WYSeUWO7DDL2TghlQ1yEL5C6BLvvA4y3I1uuxbUi6yKnhZ
- vYWw==
+ d=gmail.com; s=20230601; t=1770936750; x=1771541550; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=DbXcYxrj3BrGFXbpy+bSldzKZuSVVSUmgcL5W0fpdzw=;
+ b=HI/HMAf/HxLBMpeKUiOp7dmmOrwTqcVRzDg353ZxcmlcEkZHbLYCLqpVG2jS+tsLeU
+ +ooSzzeZatchP4CM3rDZQC8FUZAwFfX2hjxeHyfInH9SsX5Hk9JV0cIifBBMryLr/Asw
+ f1qGhKO6t2UmOF0PDemM9gLwqubmuRZO196eY03Hc9Klb47imLDOiCvualpILL3NKk/c
+ M7fwduGI1J6KK2bh7uxGHygT4BsLuhZUBtmdCr5egM5PB86v05h3i90qO9lMRwg6ABiR
+ PIbCmWXwjXHr9OrK5JHKVx0WML0AqNyJ0Y6lziVSmLoNFloaBIBbcaEsglg/nUyDvTK/
+ Fddg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770933371; x=1771538171;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=t8WBGiN4/DVAiL0Eh6Dae5nCGHyAaujcJb6LH0LxG+U=;
- b=EwylGJUO58zf7Mi8yAeDAEhS4sTgWkwDP3E0qzc5EYtIwjhQjGn3ELveQ04k+xOCgU
- YX+CxRtgPKKt5x5jxBraH/dBTFS2c1jcgKfJDyOFhvfOnyiTLFZ9I7BiCPpdMUiCcL8V
- fY6g3hcfWRtn7MZzYv7gBptOeN6Nzprpsk6tMKwSPMb76Ib1qigbYU9zd2x0VPsQR1+i
- Clgs6UDPVHid+M5/Uf5Q0CDctx4hLJZF5QqL6TxxSQCcRQ2TEtMneZMH3DwESaFy5nnw
- HCJbIEriJr2GhsZeRwUW0qDUbs/i/rFUqDmS6xwSGxfuD1UcUSdI2FNZEl8uZdX8fx+f
- +J+A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVV3lWJKHyUNZBoSWH/24bemh8dnHP4jM+bGf4HrnMhfZkBsSU9TmxoLAbZv7t05U616cU7EJnjMkyu@nongnu.org
-X-Gm-Message-State: AOJu0YySf+8hVtnW+NuWaRKarRKd1thvkUv+wghvF4RjYFRaorpFBoX5
- BoBu4UK8sveeb+yB9GOfcKM5y04havwN1qmfdC09Wi1EIIWVdPX3lZX/RmH54OqCnaQ=
-X-Gm-Gg: AZuq6aJNHtd6RrMkaDmHAThy0z639Do5WgrNGf4T1PfHoFS/OK+EIbLi1csMw0y0OGK
- 15jQsPT5v2lPv1+aKHuCtku1jzYIZTQdU49RPzHeZrUMmrKwNB9nsk3fjb/VCH6I2Ydp4+h+6po
- iSdaE7kYd2acPxfvIgOWukdt940MMpTVZu/hLOuWtwktAjuC6uqAGmKvMSU1wqkzL3OEsJ5wPEX
- 89Rlotfr86JC6V3fiGK9q68PldVbrspxFRuPENd4YwGyE2b/v2kD4Sc+328zpn30EwY1zMaScI5
- o+2LcU9Ug0QMy3KpZteQTO/TRGpMw+Nmtd7gFiItycEItwgoBM6mFKN1l/RDhOQJ02rTfMAV9d/
- KHUSAKXd591L9LXaAcIcRd5FZtBSoE2Pp4Zn9RFu4HYf9Z/BZ1U2qqvNfITBHuKu2BQPj4cZnt9
- PtYqYDWfsVhXOvsf9E7ggTVmBpx0OmC0BDqslxwbam2C95/EimQn6uj3rRPTZ8XVQ31Ulha2HaI
- RNx
-X-Received: by 2002:a05:600c:468d:b0:47e:e20e:bbb4 with SMTP id
- 5b1f17b1804b1-4837108fcf1mr9628085e9.26.1770933371468; 
- Thu, 12 Feb 2026 13:56:11 -0800 (PST)
-Received: from [192.168.69.225] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4834d5ebd1bsm246005785e9.6.2026.02.12.13.56.10
+ d=1e100.net; s=20230601; t=1770936750; x=1771541550;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=DbXcYxrj3BrGFXbpy+bSldzKZuSVVSUmgcL5W0fpdzw=;
+ b=tw211hrtAxJ4B+8t5eXWLE31oB1YYK+i6u8XCmbYsNkMt9WLMTofnXTQIgw7bXi+lG
+ eK0UwZMjrJ9kt8ojyfhKdzXBGCabV0oujSPTRBhtIRw2QhbL47ugiT3Xt8KX3pGnrIYi
+ 04LBaOoLIHKuYF9RnwmbjhIHp2wHTdcAZH78eNUfO/ZrgJ87X05EIYtXvYeWipTF/HHT
+ uiAV3lBHYxVcheWAEZNgrNXVUkab92mDPHpv7zXXAkC94GC5KlZE74hK9xJHnLMRq+sX
+ bXyQpoRVSafG5FabV7VIo4ZDucJbvLAsg0vC8Br0VTnp1e0vNfIGtKzWENKZuKE5FfZP
+ ygLg==
+X-Gm-Message-State: AOJu0Yw2Y0LvmBoexCtZkj/J7JXeGNTio9vmaSuaEZ8X9C/Vo2TTaQHW
+ w2dHhBnvLn5Z7/yGbl17r5YJuAEK3cx+Ndjm/wmFqVQndgkId8g+raUU3JX80w==
+X-Gm-Gg: AZuq6aI0/IPWX3PzFGEHPEoNAKg4L8F2SaylslXwY8zH+qC/80wWCSZJajI23uoM8D6
+ RVt1BH43L+gtMLYXBMwiL2iIq46FzPPcYNy6ES3mcmZ/R843aB7UrhAZoxNVybFvAeTB2EK2RJA
+ MI/1a/t73lbXfIFG1DFPiDHhv9SGkxRiCNvpP8nedZWAvalxbG7L8U1WQKxvwW/C3G2cM5mTXA8
+ m9oAkaNzoJCzLd21Ps1g7QDeGdbXYT1UouHkd9ZqrNg0YRAaeB0ad5Kx+WElqkvTgnznBuiA6gY
+ Ko1rDR9rpbWFvdQKsHReHWppFJ9lAsfT9ZkRHakS5yOBlcu8yAawUStraiI643t9bWF1oZiq+d1
+ SF8sTyCd0HCjSxjqHkwVjAiiYZFWKPAio60/mFAiLTsqnKUFp7HU6GgJ2COURxoDA0amEbLnbAE
+ e5PKHjIZgZTIJ2NzCeCgBbNe4X6MjX+52h9WkPBZlL8s70isiwNUHH+I4f+0g16kvHpQPseF+rl
+ NUShehmRjCfa9mkgFgGqR5j5CZ8uGc/SkGDaY9Chu6QhVI=
+X-Received: by 2002:a05:600c:8219:b0:480:4b59:932e with SMTP id
+ 5b1f17b1804b1-48370e235a0mr10827165e9.11.1770936749710; 
+ Thu, 12 Feb 2026 14:52:29 -0800 (PST)
+Received: from ehlo.thunderbird.net
+ (dynamic-2a02-3100-1982-5d00-f009-a6c9-39e7-d8fe.310.pool.telefonica.de.
+ [2a02:3100:1982:5d00:f009:a6c9:39e7:d8fe])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4834d835f6bsm200561535e9.14.2026.02.12.14.52.28
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 12 Feb 2026 13:56:10 -0800 (PST)
-Message-ID: <320f3ce8-5df0-4f70-b9a2-9823ce0545bf@linaro.org>
-Date: Thu, 12 Feb 2026 22:56:09 +0100
+ Thu, 12 Feb 2026 14:52:29 -0800 (PST)
+Date: Thu, 12 Feb 2026 22:52:26 +0000
+From: Bernhard Beschow <shentey@gmail.com>
+To: qemu-devel@nongnu.org, Mohamed Mediouni <mohamed@unpredictable.fr>
+CC: Phil Dennis-Jordan <phil@philjordan.eu>, Wei Liu <wei.liu@kernel.org>,
+ Roman Bolshakov <rbolshakov@ddn.com>, Pedro Barbuda <pbarbuda@microsoft.com>, 
+ =?ISO-8859-1?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>,
+ Cameron Esfahani <dirty@apple.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>,
+ =?ISO-8859-1?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>,
+ Magnus Kulke <magnus.kulke@linux.microsoft.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH 0/7] whpx: x86 updates (2026-02)
+In-Reply-To: <20260211055356.44664-1-mohamed@unpredictable.fr>
+References: <20260211055356.44664-1-mohamed@unpredictable.fr>
+Message-ID: <90285696-0769-4934-9861-886179CC74D6@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/5] hw/net/rocker: Don't keep pointer to h_proto as
- uint16_t* in OfDpaFlowPktFields
-Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-Cc: Jiri Pirko <jiri@resnulli.us>, Jason Wang <jasowang@redhat.com>,
- Dmitry Fleytman <dmitry.fleytman@gmail.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Patrick Venture <venture@google.com>
-References: <20260212140917.1443253-1-peter.maydell@linaro.org>
- <20260212140917.1443253-2-peter.maydell@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260212140917.1443253-2-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+ envelope-from=shentey@gmail.com; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,27 +109,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/2/26 15:09, Peter Maydell wrote:
-> In rocker_of_dpa.c we assume that the h_proto field in an eth_header
-> struct is aligned, and we copy its address into a uint16_t* in the
-> OfDpaFlowPktFields struct which we then dereference later.  This
-> isn't a safe assumption; it will also result in compilation failures
-> with gcc if we mark the eth_header struct as QEMU_PACKED because gcc
-> will not let you take the address of an unaligned struct field.
-> 
-> Make the h_proto field in OfDpaFlowPktFields a void*, and make all
-> the places where we previously read through that pointer instead use
-> a new accessor function which allows for the possible lack of
-> alignment.
-> 
-> (Compare commit 5814c084679
-> "hw/net/virtio-net.c: Don't assume IP length field is aligned"
-> which fixed a similar problem elsewhere for an ip_header field.)
-> 
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
->   hw/net/rocker/rocker_of_dpa.c | 19 ++++++++++++-------
->   1 file changed, 12 insertions(+), 7 deletions(-)
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
+Am 11=2E Februar 2026 05:53:45 UTC schrieb Mohamed Mediouni <mohamed@unpre=
+dictable=2Efr>:
+>x86_64 WHPX updates:
+>
+>- fixing debug support, which was broken since around: "gdbstub: move gue=
+st debug support check to ops"
+>a48e7d9e52f8fe8b47f4c74f3e99d9d677b87fe5
+>- switch over from winhvemulation to common x86 VM exit emulation code
+>- remove some log lines
+
+Hi Mohamed,
+
+I really like this series because it replaces proprietary code with alread=
+y existing open-source one=2E So I gave it a spin=2E Unfortunately I have t=
+o report that I noticed some problematic performance regressions when booti=
+ng x86_64 Linux with Grub: Before this series it takes ~20 seconds until th=
+e first Linux output is visible, and with this series applied it takes a bi=
+t more than 2 minutes, i=2Ee=2E about 6 times as slow=2E Also, when using a=
+ GUI, mouse button presses easily take a second until reaction which is rat=
+her unusable=2E So I think this series needs more work and I'm happy to hel=
+p with testing=2E
+
+Best regards,
+Bernhard
+
+>
+>Mohamed Mediouni (7):
+>  whpx: re-enable guest debug support on x86
+>  whpx: preparatory changes before switching over from winhvemulation
+>  whpx: refactor whpx_destroy_vcpu to arch-specific function
+>  whpx: move whpx_get_reg/whpx_set_reg to generic code
+>  whpx: x86: switch over from winhvemulation to target/i386/emulate
+>  whpx: remove remaining winhvemulation support code
+>  whpx: x86: remove messages
+>
+> accel/whpx/whpx-accel-ops=2Ec     |   8 +
+> accel/whpx/whpx-common=2Ec        |  62 ++++---
+> include/system/whpx-all=2Eh       |   5 +
+> include/system/whpx-common=2Eh    |   6 +-
+> include/system/whpx-internal=2Eh  |  16 --
+> meson=2Ebuild                     |   3 +-
+> target/arm/whpx/whpx-all=2Ec      |  33 +---
+> target/i386/cpu=2Eh               |   2 +-
+> target/i386/emulate/meson=2Ebuild |   1 +
+> target/i386/mshv/meson=2Ebuild    |   4 +
+> target/i386/whpx/whpx-all=2Ec     | 308 ++++++++++++++++++++------------
+> 11 files changed, 252 insertions(+), 196 deletions(-)
+>
 
