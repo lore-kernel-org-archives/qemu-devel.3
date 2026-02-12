@@ -4,99 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 194D8EE369C
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 15:51:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 899DFEE369C
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 15:51:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqYyJ-0002tI-8o; Thu, 12 Feb 2026 10:51:15 -0500
+	id 1vqYxo-0001Ya-03; Thu, 12 Feb 2026 10:50:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vqYyG-0002iN-Mh
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 10:51:12 -0500
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vqYyE-0006B1-R3
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 10:51:12 -0500
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-43621bf67ceso4304f8f.2
- for <qemu-devel@nongnu.org>; Thu, 12 Feb 2026 07:51:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770911469; x=1771516269; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=S6DdUmC0yDgG8PTtWksYKxgeG5Jhbp3uDT3klUdQR4A=;
- b=m4w3UsWpc1IyTibmX99p/mJOXtsA2NmpYO4J0iclRR3jggwDcJ2ltpsE4jnCcKB+Ra
- 5PLhtV5RMGCbR/nIsw3EyVMaTKYFbQN8zF3n4rrA7U78Yq20rKJfLdAhup/ZmI+9CEfD
- 4Y316sWL78Q76hYyPSouUwyYfDGILXZkt4RnOMRlah46f+dTYUs0fVPtoqUcS+GzKGmS
- hwEIoZJu+Y3ACpE3yC/vLpVNuDMx5Wiyaz07yJBo4MZRauG8VvcbXSdJSRgWgre4nomp
- Am0c/aon5hJ1WZhAPm8KEVPxG+5MR3Y+v3LRMe44vLlQsjf/OmDiy2ON/QDP2DWBVLmN
- G1OQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770911469; x=1771516269;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=S6DdUmC0yDgG8PTtWksYKxgeG5Jhbp3uDT3klUdQR4A=;
- b=dU7T3bxFm39J62QPzNlerpJVBWnh/n9soWXKqrMR1gGP4jlXEXBCpqC07/cqIEWovg
- L7jkOd9QsM7V0yhlL1CLQRDWUiiWh/V3eoCe0yCpt/3wjGrbDnkjUID6Gzja/jW7Pg67
- mzd40NeLCPapAqPmIfEVQ4uDzUFDiDdE7EDFcnvnplb637dQyS7V96q/Zg0BdIA1iVsX
- A6ZnI0IqrJnjVSPPJYQJty5mArdSe2o5VW0VOPqEzTmlGK319x/p44/uNiqolbYx7b33
- mMckXk0KeusFkt7AcRH5bMXX/wyV3yWjtANTtTC+Alsj4KKhvStonArDwkAj3/dCjPY7
- IcKA==
-X-Gm-Message-State: AOJu0Yz5F3/Twy1twE9MMhZ4tw/5ysVmi5Gw/vqAv5/fMJj/uv6pw0HC
- hKZTjnr8uWSAk+OmRsndGmJm8PBbJn1q7N13eA5K+Ih/Tsyti0OK5otKE+niJvP/TJwMalSy/sY
- dUsYRgnk=
-X-Gm-Gg: AZuq6aJrOXLOKegiWu7fu5xqNZ2VBbPAsxoUqFFFdkDY/lcCy76itWkOLsZ/O+Edoel
- bbulJMFaa9ENLEDSJYaP+A1OT+L6WY8edWAqe+yTQpLQ9IgTjHAVyQChd52gqWmPGZDayJ7sCK9
- AlPAGfYnVQRt2O44EWSxAN6GU4en/9UeMJfFFb2uJ0ThS9bYidSk6jZ2zVOltYIpMbQuR6HMMIY
- yi3MgorwCePrW53hQDambJgnSIgHYCI7bNdSy5EueljyKr9gBSt9w2iUf9EczMLpH1m1TMQglTW
- lD2M/QzntRHgegRcnBnDoA/GB1msPOLfKBy3cMbuScEBFK85qMbdDrfz2PfU0GW0lsueqo6vqGi
- 4+sn3AGR6lg5z8VuOKFRt5YvrdHnN5d7k1xLePehCI8kR7lD1b/k0wRIGxLN+oVexx3TxDSvxEy
- mKOgaXlOq0qrwURIwJnOtBCh5sbIAltR/9H+JqO69Dsvq355i0kfVYkeS52ZguPa+X4A==
-X-Received: by 2002:a05:6000:2307:b0:437:7168:af4f with SMTP id
- ffacd0b85a97d-4378aa14dcemr6584168f8f.27.1770911468906; 
- Thu, 12 Feb 2026 07:51:08 -0800 (PST)
-Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43783e3b829sm12879014f8f.27.2026.02.12.07.51.07
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 12 Feb 2026 07:51:08 -0800 (PST)
-Message-ID: <16c45b70-23cd-4522-8ece-1c268fb72a73@linaro.org>
-Date: Thu, 12 Feb 2026 16:51:07 +0100
+ (Exim 4.90_1) (envelope-from <pasic@linux.ibm.com>)
+ id 1vqYxm-0001Y5-Gz; Thu, 12 Feb 2026 10:50:42 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pasic@linux.ibm.com>)
+ id 1vqYxk-00062b-Uz; Thu, 12 Feb 2026 10:50:42 -0500
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 61C8QuVM2503229; Thu, 12 Feb 2026 15:50:38 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=cwcWni
+ R+Pa23FFE+okaIuPHFM/39WxVe2NKjb+AzdWw=; b=nzReZ7dz4McDu/CerlZpeN
+ 6FwdM2qGpVFAr/M+sGtNuTV+7sPFMIs/tUrXrqdv2woda0oM4w5hsgDEl48znWqv
+ rLwqMk1FvWkamc4SYKnCr/N8NdVpg79imQm0kV9dMfrdpJbKLRuvvWhXPG1dnQC0
+ O3542OmNS5t8lL20kl8G/YiMCmU5xH7cFUSpCVdBUNrwKC9T2KglDPbsgSPyAw11
+ RN4nQlDKl9QBpWCEowL95hUKjU3NcurKykScu9m7qEPzQo3Llh7Yf8BYd48bOQ4r
+ 7pQcHFys+Vij4V9wiuL4IftzysJRy9wexqVK/cO0Llr+PMVvor5NuQt5MvKj1yPA
+ ==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4c696vc3nu-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 12 Feb 2026 15:50:37 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 61CE2H9S012626;
+ Thu, 12 Feb 2026 15:50:37 GMT
+Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4c6h7kjygt-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 12 Feb 2026 15:50:37 +0000
+Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
+ [10.20.54.102])
+ by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 61CFoV5857606576
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 12 Feb 2026 15:50:31 GMT
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 4235920040;
+ Thu, 12 Feb 2026 15:50:31 +0000 (GMT)
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 1D2B320043;
+ Thu, 12 Feb 2026 15:50:31 +0000 (GMT)
+Received: from li-ce58cfcc-320b-11b2-a85c-85e19b5285e0 (unknown [9.52.198.210])
+ by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 12 Feb 2026 15:50:31 +0000 (GMT)
+Date: Thu, 12 Feb 2026 16:50:29 +0100
+From: Halil Pasic <pasic@linux.ibm.com>
+To: Aby Sam Ross <abysamross@ibm.com>
+Cc: qemu-s390x@nongnu.org, qemu-devel@nongnu.org, farman@linux.ibm.com,
+ alifm@linux.ibm.com, Matthew Rosato <mjrosato@linux.ibm.com>, Halil Pasic
+ <pasic@linux.ibm.com>
+Subject: Re: [PATCH v2] s390x/pci: prevent null pointer dereference during
+ zpci hot unplug
+Message-ID: <20260212165029.206ae722.pasic@linux.ibm.com>
+In-Reply-To: <8e983aa64ebeaad9897496199ca80cfb7e0bf003.1770877629.git.abysamross@ibm.com>
+References: <192dc45c-5bc2-4bfa-8e6f-8a140e23d88a@linux.ibm.com>
+ <8e983aa64ebeaad9897496199ca80cfb7e0bf003.1770877629.git.abysamross@ibm.com>
+Organization: IBM
+X-Mailer: Claws Mail 3.17.8 (GTK+ 2.24.32; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/riscv/kvm: implement SBI debug console (DBCN) calls
-Content-Language: en-US
-To: qemu-devel@nongnu.org,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-References: <20240425155012.581366-1-dbarboza@ventanamicro.com>
- <eb6bd3d7-c66b-4300-9573-c29830a3aff4@linaro.org>
- <102e2e67-4c4d-4912-a892-20f5136f241a@ventanamicro.com>
- <47327da2-be3c-4aaa-ab3d-36e8d0c25185@linaro.org>
- <0eb5bcf9-bc2e-46c6-9f54-1514039557e0@ventanamicro.com>
- <37e6fecd-948a-4840-9189-918d44c0be72@linaro.org>
- <c2b0fb25-8b17-4a69-a128-2f8cc9bbba76@ventanamicro.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <c2b0fb25-8b17-4a69-a128-2f8cc9bbba76@ventanamicro.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: dIw7LU5c3TjQYXUVWAQ1e7uqYVavBPQC
+X-Proofpoint-ORIG-GUID: dIw7LU5c3TjQYXUVWAQ1e7uqYVavBPQC
+X-Authority-Analysis: v=2.4 cv=JdWxbEKV c=1 sm=1 tr=0 ts=698df6cd cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=kj9zAlcOel0A:10 a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22 a=VnNF1IyMAAAA:8
+ a=bKdKHDsPvUGMU6Y6MEAA:9 a=NqO74GWdXPXpGKcKHaDJD/ajO6k=:19 a=CjuIK1q_8ugA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjEyMDEyMSBTYWx0ZWRfX1xgT2rQfCNZN
+ ma72ecoAx1oap7JX2qihkdkq5y+FrjfaMwagNKIaO+v2Nsrm8d96eS6lgaZEhv/AZGmjgEm/6AG
+ I4UyuQP+bGyNInZ+p83mSh6v6dbGc8RAQEia514fC3pPc7WtnPZLYmUcHqlk3N3Yy44rjOarJwa
+ CmB0LsH6W00KpcyU0NEo99DUvvsnFluVPBRtp2I4Kjlx1Vt97SRMVAhxD747IiuwVRQstDFATYe
+ VfFnMGsZzQsnnj3C0x6mDcChcGIoiyONniQs0U6S3qjC5E0Nl0ij2rTA88cB3ntFSmCoI8blHHW
+ T8MaS5GtZPNJzwcTnZZYLddfQasJyk3aTYUGIa54CnA5Bq6Fs7o1FHfrqEvGXIIAa7DBKVZKeiQ
+ 2zEMjx/4QqHuJcAChvmGyR9uga+a5gpk/QQ8YvQuo3rUv6xizGN5sXyp9zsMZ/K/NaUjtCJwpOx
+ HUlKPtqSwIRpmKzu5/Q==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-02-12_04,2026-02-12_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 clxscore=1015 impostorscore=0 bulkscore=0
+ lowpriorityscore=0 suspectscore=0 adultscore=0 spamscore=0 malwarescore=0
+ phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
+ definitions=main-2602120121
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=pasic@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,145 +125,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Daniel,
+On Thu, 12 Feb 2026 06:47:36 -0500
+Aby Sam Ross <abysamross@ibm.com> wrote:
 
-On 4/6/25 12:54, Daniel Henrique Barboza wrote:
+> vfio-pci hostdev realize during zpci hot plug fails (in `vfio_pci_realize()`)
+> if the vfio group file in `/dev/vfio/` lacks appropriate permissions and the
+> hostdev[/properties] addition doesn't reach the point where it could be
+> associated with previously added zpci device (in `s390_pcihost_plug()`).
+> As a result, zpci iommu pointer remains null. The zpci hot unplug following the
+> failed hostdev addition assumes zpci iommu pointer was assigned and tries to
+> make use of it to end the dma count resulting in a null pointer dereference.
+> In the non-hotplug scenario, `qdev_unplug()` for the zpci device is not called
+> after hostdev addition failure and this issue is not encountered.
+
+
+Maybe add a word or two why the other dereferences of pbdev->iommu
+not guarded by a null check are safe.
+
+I think we have:
+* s390_pci_sclp_deconfigure
+* s390_pci_msix_init
+* s390_pcihost_reset
+* s390_pci_device_reset
+* mpcifc_service_call
+* stpcifc_service_call
+* s390_pci_read_base
+
+and more. My guess is that the device never gets into a state where
+these operations are permissible, and the code makes sure
+those functions won't be called on a device that has
+pbdev->iommu == NULL. But that is just my guess.
+
+DISCLAIMER: I didn't look at this properly, just asking based
+on a quick look. Some of these may contain explicit or implicit
+checking...
+
+Regards,
+Halil
+
 > 
+> Fixes: 37fa32de7073 ("s390x/pci: Honor DMA limits set by vfio")
 > 
-> On 6/4/25 6:38 AM, Philippe Mathieu-Daudé wrote:
->> (+Marc-André and Paolo who I forgot to Cc first)
->>
->> On 4/6/25 11:17, Daniel Henrique Barboza wrote:
->>>
->>>
->>> On 6/4/25 4:32 AM, Philippe Mathieu-Daudé wrote:
->>>> On 3/6/25 20:04, Daniel Henrique Barboza wrote:
->>>>>
->>>>>
->>>>> On 6/3/25 10:19 AM, Philippe Mathieu-Daudé wrote:
->>>>>> Hi Daniel,
->>>>>>
->>>>>> (now merged as commit a6b53378f537)
->>>>>>
->>>>>> On 25/4/24 17:50, Daniel Henrique Barboza wrote:
->>>>>>> SBI defines a Debug Console extension "DBCN" that will, in time, 
->>>>>>> replace
->>>>>>> the legacy console putchar and getchar SBI extensions.
->>>>>>>
->>>>>>> The appeal of the DBCN extension is that it allows multiple bytes 
->>>>>>> to be
->>>>>>> read/written in the SBI console in a single SBI call.
->>>>>>>
->>>>>>> As far as KVM goes, the DBCN calls are forwarded by an in-kernel KVM
->>>>>>> module to userspace. But this will only happens if the KVM module
->>>>>>> actually supports this SBI extension and we activate it.
->>>>>>>
->>>>>>> We'll check for DBCN support during init time, checking if get- 
->>>>>>> reg- list
->>>>>>> is advertising KVM_RISCV_SBI_EXT_DBCN. In that case, we'll enable 
->>>>>>> it via
->>>>>>> kvm_set_one_reg() during kvm_arch_init_vcpu().
->>>>>>>
->>>>>>> Finally, change kvm_riscv_handle_sbi() to handle the incoming 
->>>>>>> calls for
->>>>>>> SBI_EXT_DBCN, reading and writing as required.
->>>>>>>
->>>>>>> A simple KVM guest with 'earlycon=sbi', running in an emulated 
->>>>>>> RISC-V
->>>>>>> host, takes around 20 seconds to boot without using DBCN. With this
->>>>>>> patch we're taking around 14 seconds to boot due to the speed-up 
->>>>>>> in the
->>>>>>> terminal output.  There's no change in boot time if the guest isn't
->>>>>>> using earlycon.
->>>>>>>
->>>>>>> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
->>>>>>> ---
->>>>>>>   target/riscv/kvm/kvm-cpu.c         | 111 ++++++++++++++++++++++ 
->>>>>>> ++ +++++
->>>>>>>   target/riscv/sbi_ecall_interface.h |  17 +++++
->>>>>>>   2 files changed, 128 insertions(+)
->>>>>>
->>>>>>
->>>>>>> +static void kvm_riscv_handle_sbi_dbcn(CPUState *cs, struct 
->>>>>>> kvm_run *run)
->>>>>>> +{
->>>>>>> +    g_autofree uint8_t *buf = NULL;
->>>>>>> +    RISCVCPU *cpu = RISCV_CPU(cs);
->>>>>>> +    target_ulong num_bytes;
->>>>>>> +    uint64_t addr;
->>>>>>> +    unsigned char ch;
->>>>>>> +    int ret;
->>>>>>> +
->>>>>>> +    switch (run->riscv_sbi.function_id) {
->>>>>>> +    case SBI_EXT_DBCN_CONSOLE_READ:
->>>>>>> +    case SBI_EXT_DBCN_CONSOLE_WRITE:
->>>>>>> +        num_bytes = run->riscv_sbi.args[0];
->>>>>>> +
->>>>>>> +        if (num_bytes == 0) {
->>>>>>> +            run->riscv_sbi.ret[0] = SBI_SUCCESS;
->>>>>>> +            run->riscv_sbi.ret[1] = 0;
->>>>>>> +            break;
->>>>>>> +        }
->>>>>>> +
->>>>>>> +        addr = run->riscv_sbi.args[1];
->>>>>>> +
->>>>>>> +        /*
->>>>>>> +         * Handle the case where a 32 bit CPU is running in a
->>>>>>> +         * 64 bit addressing env.
->>>>>>> +         */
->>>>>>> +        if (riscv_cpu_mxl(&cpu->env) == MXL_RV32) {
->>>>>>> +            addr |= (uint64_t)run->riscv_sbi.args[2] << 32;
->>>>>>> +        }
->>>>>>> +
->>>>>>> +        buf = g_malloc0(num_bytes);
->>>>>>> +
->>>>>>> +        if (run->riscv_sbi.function_id == 
->>>>>>> SBI_EXT_DBCN_CONSOLE_READ) {
->>>>>>> +            ret = qemu_chr_fe_read_all(serial_hd(0)->be, buf, 
->>>>>>> num_bytes);
-
-
-Still following up on that patch :) Do we have one SBI debug console
-per system / soc / cluster / hart? Instead of calling serial_hd(0)
-each time we should set it once when realizing the vcpu IMO. If it is
-per hart we would add this property:
-
-   DEFINE_PROP_CHR("sbi-chardev", RISCVCPU, sbi_console),
-
-WDYT?
-
->>>>>>> +            if (ret < 0) {
->>>>>>> +                error_report("SBI_EXT_DBCN_CONSOLE_READ: error 
->>>>>>> when "
->>>>>>> +                             "reading chardev");
->>>>>>> +                exit(1);
->>>>>>> +            }
->>>>>>> +
->>>>>>> +            cpu_physical_memory_write(addr, buf, ret);
->>>>>>> +        } else {
->>>>>>> +            cpu_physical_memory_read(addr, buf, num_bytes);
->>>>>>> +
->>>>>>> +            ret = qemu_chr_fe_write_all(serial_hd(0)->be, buf, 
->>>>>>> num_bytes);
->>>>>>> +            if (ret < 0) {
->>>>>>> +                error_report("SBI_EXT_DBCN_CONSOLE_WRITE: error 
->>>>>>> when "
->>>>>>> +                             "writing chardev");
->>>>>>> +                exit(1);
->>>>>>> +            }
->>>>>>> +        }
->>>>>>> +
->>>>>>> +        run->riscv_sbi.ret[0] = SBI_SUCCESS;
->>>>>>> +        run->riscv_sbi.ret[1] = ret;
->>>>>>> +        break;
->>>>>>> +    case SBI_EXT_DBCN_CONSOLE_WRITE_BYTE:
->>>>>>> +        ch = run->riscv_sbi.args[0];
->>>>>>> +        ret = qemu_chr_fe_write(serial_hd(0)->be, &ch, sizeof(ch));
->>>>>>> +
->>>>>>> +        if (ret < 0) {
->>>>>>> +            error_report("SBI_EXT_DBCN_CONSOLE_WRITE_BYTE: error 
->>>>>>> when "
->>>>>>> +                         "writing chardev");
->>>>>>> +            exit(1);
->>>>>>> +        }
+> Signed-off-by: Aby Sam Ross <abysamross@ibm.com>
+> Acked-by: Eric Farman <farman@linux.ibm.com>
+> Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
+> Reviewed-by: Farhan Ali <alifm@linux.ibm.com>
 
