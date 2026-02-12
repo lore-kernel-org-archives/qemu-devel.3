@@ -4,98 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76B7BEDF04A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB53EEDF04C
 	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 06:27:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqQ9v-000895-OQ; Thu, 12 Feb 2026 01:26:39 -0500
+	id 1vqQ95-0007Yq-HN; Thu, 12 Feb 2026 01:25:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1vqQ9q-0007qm-46
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 01:26:34 -0500
+ id 1vqQ92-0007YF-SR
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 01:25:45 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1vqQ9o-0005HI-PC
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 01:26:33 -0500
+ id 1vqQ8z-0005BT-5l
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 01:25:44 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770877592;
+ s=mimecast20190719; t=1770877538;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=8zpSCPimmyA0e0qP7Kcivb9yeJXq4znZSTQUpfrxyiE=;
- b=UABHAlq0PpfeQMQHoTOolnwfzXaiTB3q7/d4YlrM1xa8U0Tv1nM/uULPoT3K/JAe5zbCzk
- OgwdRfUsqUDZEvb4ifhNu9cPHGDNE07NjL6bQitUvZ8Qcy3e+dHY2VdkouMDXPKIx191cE
- wLMNjHxQjaTNr5rHNEsuKR60pq3uomE=
-Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
- [209.85.216.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-transfer-encoding:content-transfer-encoding;
+ bh=M/zIKHy/JLp58WzuFBf64VPZGmrfg1O41eyasP7iQqY=;
+ b=dUlBt4XBhmWkvhJbn2X3NpOXP3IYJRbtVFuFMv/kyIAR9O2RRTFqKB6uzGZubfyHGZcbQS
+ M4dL72zsY8oiIurPqBmB/FrgePBB2B6qYlMjfT6l9py2odAdGnZCWU9GzZuoXVVQyrxCYd
+ 26XMNrrCgwCcTFDHjKdggdzYHPFnz/0=
+Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com
+ [209.85.214.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-223-e_VCarWfNDSnPbfqHNC5Dw-1; Thu, 12 Feb 2026 01:26:29 -0500
-X-MC-Unique: e_VCarWfNDSnPbfqHNC5Dw-1
-X-Mimecast-MFC-AGG-ID: e_VCarWfNDSnPbfqHNC5Dw_1770877588
-Received: by mail-pj1-f72.google.com with SMTP id
- 98e67ed59e1d1-354c44bf176so5391282a91.0
- for <qemu-devel@nongnu.org>; Wed, 11 Feb 2026 22:26:29 -0800 (PST)
+ us-mta-533-6DSHxJMGNbmJOUNSo8Jhyg-1; Thu, 12 Feb 2026 01:25:37 -0500
+X-MC-Unique: 6DSHxJMGNbmJOUNSo8Jhyg-1
+X-Mimecast-MFC-AGG-ID: 6DSHxJMGNbmJOUNSo8Jhyg_1770877536
+Received: by mail-pl1-f200.google.com with SMTP id
+ d9443c01a7336-2aaeafeadbcso45912885ad.1
+ for <qemu-devel@nongnu.org>; Wed, 11 Feb 2026 22:25:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1770877588; x=1771482388; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=8zpSCPimmyA0e0qP7Kcivb9yeJXq4znZSTQUpfrxyiE=;
- b=GTqX+k7T75a2wPzxcLtZVBrJA/OMlqExTYG3gk6c8dhgzC8VSfPSgKFJv+7xik05v8
- BR22StZFY67C+JGRJ9YVxfQJpk/AluVumHSO0qwWi9CxhIT+UXLrRfWheQk1iWrkGQ4j
- OO3zpYzboBkcVpkSCGPtJE6HpEbaKoGCTLgqLHdFLOoJogQeAxkDhN6LMB2O1MM7m2kX
- WLMTfpOPIcEmqt2p63G7Ko0JV6f1NMbwoehOaKTSNnvp06JzAvQeUJOGfUEJ9f6L0T2J
- vN/MP6sgCm8cDmWJpLAMDnh+qBWQqEdaHkid/fqLduUi02jknmj5uNiPomyl9H+yv3Bv
- SnSw==
+ d=redhat.com; s=google; t=1770877536; x=1771482336; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=M/zIKHy/JLp58WzuFBf64VPZGmrfg1O41eyasP7iQqY=;
+ b=WLgTgC39HbIjy01zvdXs12q8Kuy1xWkNXwgRHicnZWPH5O5wFPOb5SJDizwn8rL4cG
+ kSiB9hgDvehyg9pMv294o1ViOVWuYQKBaC9S4FpP/1URFOo3wXgtLRvR0/AandoRd1Av
+ 9leijtlxZgDz9WbaUya/XephUwoUIXa1oVU58JTzzAZoIMLQLNvwjBU6ylPgbDaramA4
+ JGPoLBYw+j6u15UuXPyxMwYsigg8d+hDr6LQBNLjMTqter05WS+7ZWXz0DrmT51QSv86
+ Ywv4V+rQx66NSEPmbw2BuLLrUaKMX3f2G7yq+cDEKwnBaLfN7LDFMvCMaWT3aS9fc/jA
+ 8OOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770877588; x=1771482388;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=8zpSCPimmyA0e0qP7Kcivb9yeJXq4znZSTQUpfrxyiE=;
- b=gVClAPTiMOwkdJ07i9Ccxq589X4gf8kXX2rQqWfgjptL9K8+zPHk3KF3mU+eKg0B13
- G7zr5Uc/Im2UUT+72TyMoo8KlXV43OWVBrNAF+sJOkRPSOV18doQSSGxNt9gsSb0XjyL
- hvoAAy7+/rTFV+DbJX4iripWL1VL+IFD6NTQoScbNhm9JDgTOVoI5Rm3ijaQ8stRDDH+
- 54tF2ZlUDEg1jBuRgEWEK8XRvZoplBBGY1Ou0Q7kYMFTYQk3qc8dPKDK4Q7ZMvMf4Y3Z
- OvepJfuGLfR1V/891j0vr2rKEt7RdV+AGSJrzS1d93+vVubbwIhiiWQo1MycylBRcU8V
- GhpQ==
+ d=1e100.net; s=20230601; t=1770877536; x=1771482336;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=M/zIKHy/JLp58WzuFBf64VPZGmrfg1O41eyasP7iQqY=;
+ b=wMbUqmGVLBK1HL8033gT7x+qJPDhikUfxn2ySd+bVnGicrw94wilE8ad26IUGKOwOQ
+ Ahr7jygRlcPvPaa45113ybftCee5i8N/HpvLIK5VQiQZjXzkbz+fGy3U6iBH2iVQbBB0
+ 88WDqt+Qi+YYrybPuFucbA1kVDLMul/IuF6UoSCwlOfEkmfqTOzViLidQm2/0fBA9OZn
+ KgATZE50BFfFJvOVU+axwjFxnwgFIt4UuK7Yg2d+ODjTQ0Dx9ytUnYZ23niCuPKgioxw
+ MrKiwNJLf7V1/NEySxg2DLV1cckAGkKaxN5NNd/88H8yL/qwALMxquoU/UgzhGAlhPTq
+ qqqg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVkJ7Q+i6Hc8HyRRgaqipNmPX2WA5SPYeNV7+pPZhCjSu9psM8VG9Mi3nihuiLRitCD0l0u35yBo6Nq@nongnu.org
-X-Gm-Message-State: AOJu0YzfU24ACV4QwUsSafU//DxtrmHdSvSw/781AuoaFAE8IBgSB6ks
- A5OdgdTa4nUPtl++M36KZlxO1Y5LTG2IC9YnD9TQPudf0vKxkvNct076WpyDZctYxmP4vQaEg4/
- 0BquMZ2vN87XnRGheEPK8X6VquOlnFGaBJYPyU5NMm2gmh79igudlAkXV
-X-Gm-Gg: AZuq6aLrSoIfCt8VAAR/XAS1eKXMYj+jaGNO41/X42gSAtAByMiY8wZfY0x9haLPpyl
- ntkZxcpWCTztX8ExrhksjYe6tYq4lVsHAyDJdrLTadFk8fu7p4/rgKBZ0O99oVkFbprNsZiI2cu
- vILae5kC34DgOxmaczAXsmPAPfn69+4LGf+wEqMrYlsM/TWokVvSx9tARzAaOICPqMz/8D8Ar4j
- NY6B08wigX2epYI+SUnEh70DPnaqdWHTM/HI4murhale0cdT4RmkUm+M/4JalkHRvT/zZKl7ww6
- 1bJ4ToSuVdyJoNkl7HxpRfIw2NoVNXkDq+kz4bpTpzglW0fy+oB8Nx+zAb/PI5VlfSaoDFnGJXt
- 0ZP9jW8W6VNETFwvCR2MKRgAV2qShityVmI4gcIH1Z0ZpcWxfa5/VlDI=
-X-Received: by 2002:a17:90b:3503:b0:352:c995:808a with SMTP id
- 98e67ed59e1d1-3568f327382mr1457960a91.14.1770877588516; 
- Wed, 11 Feb 2026 22:26:28 -0800 (PST)
-X-Received: by 2002:a17:90b:3503:b0:352:c995:808a with SMTP id
- 98e67ed59e1d1-3568f327382mr1457945a91.14.1770877588157; 
- Wed, 11 Feb 2026 22:26:28 -0800 (PST)
+ AJvYcCWLC8Q6uo3LkkUBcB9iqBKoaD+mTKWOUAEBtuevCA6moE+QAywOwWDtbkhkcMW4Fnk3iLgecxxd9jm3@nongnu.org
+X-Gm-Message-State: AOJu0YwFZ2aKww8GRdxlX/L/PemBvZj/vqrnTSAIZginmgx5zm2IQ+D/
+ e5rV27bQkfJDzL1XWy5O3c7CvM53TQOYyCgRZtEpfCHOW2pi3GKGejqMndkdUrnLsLmkQ2wB9Vn
+ sXuiAxjK+H4dYy+L/sIyPbaxTPHPU3S2ecPN0GFHxn+Gs9TAqX7wlV6lo
+X-Gm-Gg: AZuq6aJwumegWm7rLXIBeGhRI9oKOyUYdv/XZgDclylJ/2xAoFV0PEutsBFL7guv1If
+ STn7EX06VSGTx/CWihEkzDb9WWvhSCdwF8Z7TFCtWuEGns8aVDf+TxjOndMjS5OMgMXwxlYMGjg
+ sOXDKqXFpVtncTyFNz85+M0OoW7glMfkE4UGE47BHEfYCedJEQRmlLXgg5k/VSjB13Vox4bhlSK
+ KKxxXsTbiknjeA6L19mi2pDuxeD8OE1NCjbQ5/pQ4avWSadmt4KO/VgXM5pOkuYxL9viGIOkcKM
+ xrYoKsDIVUJjT8/Hk83wUffsT17klYPXQGD2lUoXMukrDvRl0n9akUtcoPFLTFMdLqJu703lWC4
+ 6FajAkycXHc5vnqpEg2PJRIxVfxbZlu0vbix+k0MkGsI0ufavlpkBqAQ=
+X-Received: by 2002:a05:6a20:cf8a:b0:394:2fbb:bc6b with SMTP id
+ adf61e73a8af0-39448803ac0mr1506227637.46.1770877535933; 
+ Wed, 11 Feb 2026 22:25:35 -0800 (PST)
+X-Received: by 2002:a05:6a20:cf8a:b0:394:2fbb:bc6b with SMTP id
+ adf61e73a8af0-39448803ac0mr1506203637.46.1770877535496; 
+ Wed, 11 Feb 2026 22:25:35 -0800 (PST)
 Received: from rhel9-box.lan ([122.164.27.113])
  by smtp.googlemail.com with ESMTPSA id
- 98e67ed59e1d1-3567e7d95d8sm4894122a91.2.2026.02.11.22.26.25
+ 98e67ed59e1d1-3567e7d95d8sm4894122a91.2.2026.02.11.22.25.32
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 11 Feb 2026 22:26:27 -0800 (PST)
+ Wed, 11 Feb 2026 22:25:35 -0800 (PST)
 From: Ani Sinha <anisinha@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>,
- Zhao Liu <zhao1.liu@intel.com>
-Cc: kraxel@redhat.com, Ani Sinha <anisinha@redhat.com>, kvm@vger.kernel.org,
- qemu-devel@nongnu.org
-Subject: [PATCH v4 17/31] i386/sev: add migration blockers only once
-Date: Thu, 12 Feb 2026 11:55:01 +0530
-Message-ID: <20260212062522.99565-18-anisinha@redhat.com>
+To: 
+Cc: kraxel@redhat.com, Ani Sinha <anisinha@redhat.com>, qemu-devel@nongnu.org,
+ pbonzini@redhat.com, vkuznets@redhat.com, graf@amazon.com
+Subject: [PATCH v4 00/31] Introduce support for confidential guest reset (x86)
+Date: Thu, 12 Feb 2026 11:54:44 +0530
+Message-ID: <20260212062522.99565-1-anisinha@redhat.com>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20260212062522.99565-1-anisinha@redhat.com>
-References: <20260212062522.99565-1-anisinha@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=anisinha@redhat.com;
@@ -123,70 +118,182 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-sev_launch_finish() and sev_snp_launch_finish() could be called multiple times
-when the confidential guest is being reset/rebooted. The migration
-blockers should not be added multiple times, once per invocation. This change
-makes sure that the migration blockers are added only one time by adding the
-migration blockers to the vm state change handler when the vm transitions to
-the running state. Subsequent reboots do not change the state of the vm.
+This change introduces support for confidential guests
+(SEV-ES, SEV-SNP and TDX) to reset/reboot just like other non-confidential
+guests. Currently, a reboot intiated from the confidential guest results
+in termination of the QEMU hypervisor as the CPUs are not resettable. As the
+initial state of the guest including private memory is locked and encrypted,
+the contents of that memory will not be accessible post reset. Hence a new
+KVM file descriptor must be opened to create a new confidential VM context
+closing the old one. All KVM VM specific ioctls must be called again. New
+VCPU file descriptors must be created against the new KVM fd and most VCPU
+ioctls must be called again as well.
 
-Signed-off-by: Ani Sinha <anisinha@redhat.com>
----
- target/i386/sev.c | 20 +++++---------------
- 1 file changed, 5 insertions(+), 15 deletions(-)
+This change perfoms closing of the old KVM fd and creating a new one. After
+the new KVM fd is opened, all generic and architecture specific ioctl calls
+are issued again. Notifiers are added to notify subsystems that:
+- The KVM file fd is about to be changed to state sync-ing from KVM to QEMU
+  should be done if required.
+- The KVM file fd has changed, so ioctl calls to the new KVM fd has to be
+  performed again.
+- That new VCPU fds are created so that VCPU ioctl calls must be called again
+  where required.
 
-diff --git a/target/i386/sev.c b/target/i386/sev.c
-index 66e38ca32e..260d8ef88b 100644
---- a/target/i386/sev.c
-+++ b/target/i386/sev.c
-@@ -1421,11 +1421,6 @@ sev_launch_finish(SevCommonState *sev_common)
-     }
- 
-     sev_set_guest_state(sev_common, SEV_STATE_RUNNING);
--
--    /* add migration blocker */
--    error_setg(&sev_mig_blocker,
--               "SEV: Migration is not implemented");
--    migrate_add_blocker(&sev_mig_blocker, &error_fatal);
- }
- 
- static int snp_launch_update_data(uint64_t gpa, void *hva, size_t len,
-@@ -1608,7 +1603,6 @@ static void
- sev_snp_launch_finish(SevCommonState *sev_common)
- {
-     int ret, error;
--    Error *local_err = NULL;
-     OvmfSevMetadata *metadata;
-     SevLaunchUpdateData *data;
-     SevSnpGuestState *sev_snp = SEV_SNP_GUEST(sev_common);
-@@ -1655,15 +1649,6 @@ sev_snp_launch_finish(SevCommonState *sev_common)
- 
-     kvm_mark_guest_state_protected();
-     sev_set_guest_state(sev_common, SEV_STATE_RUNNING);
--
--    /* add migration blocker */
--    error_setg(&sev_mig_blocker,
--               "SEV-SNP: Migration is not implemented");
--    ret = migrate_add_blocker(&sev_mig_blocker, &local_err);
--    if (local_err) {
--        error_report_err(local_err);
--        exit(1);
--    }
- }
- 
- 
-@@ -1676,6 +1661,11 @@ sev_vm_state_change(void *opaque, bool running, RunState state)
-     if (running) {
-         if (!sev_check_state(sev_common, SEV_STATE_RUNNING)) {
-             klass->launch_finish(sev_common);
-+
-+            /* add migration blocker */
-+            error_setg(&sev_mig_blocker,
-+                       "SEV: Migration is not implemented");
-+            migrate_add_blocker(&sev_mig_blocker, &error_fatal);
-         }
-     }
- }
+Specific subsystems use these notifiers to re-issue ioctl calls where required.
+
+Changes are made to SEV and TDX modules to reinitialize the confidential guest
+state and seal it again. Along the way, some bug fixes are made so that some
+initialization functions can be called again. Some refactoring of existing
+code is done so that both init and reset paths can use them.
+
+Tested on TDX, SEV-ES and SEV-SNP. Tested on non-coco hardware. Tested with Xen
+emulation enabled.
+
+CI pipeline passes (one failure is unrelated):
+https://gitlab.com/anisinha/qemu/-/pipelines/2320974514
+
+Added functional test passed:
+
+$ ./build/run tests/functional/x86_64/test_vmfd_change_reboot.py 
+TAP version 13
+ok 1 test_vmfd_change_reboot.KVMGuest.test_reset_console
+ok 2 test_vmfd_change_reboot.KVMGuest.test_reset_hyperv_vmbus
+ok 3 test_vmfd_change_reboot.KVMGuest.test_reset_kvmpit
+ok 4 test_vmfd_change_reboot.KVMGuest.test_reset_qmp
+ok 5 test_vmfd_change_reboot.KVMGuest.test_reset_xen_emulation
+1..5
+
+Please review and test.
+
+CC: qemu-devel@nongnu.org
+CC: pbonzini@redhat.com
+CC: kraxel@redhat.com
+CC: vkuznets@redhat.com
+CC: graf@amazon.com
+
+Changelog:
+
+v4:
+ - Fixed reset on non-coco with qmp "system_reset" command.
+ - Numerious misc fixes.
+ - addressed review comments from v3.
+ - dropped three patches that are not required.
+ - Added more functional tests including one vmbus test.
+ - added noop callbacks to stubs/kvm removing them from arch specific headers.
+ - Tags added.
+ - Rebased.
+
+v3:
+ - Combined pre and post vmfd change notifier into one.
+ - rename kvm_arch_vmfd_change_ops() -> kvm_arch_on_vmfd_change()
+ - reuse kvm_arch_init() code in kvm_arch_on_vmfd_change()
+ - moved around migration blockers and notifers to more appropriate place.
+ - fixed Xen emulation.
+ - fixed SEV-ES reset.
+ - fixed/reorganized reset code in system/runstate.c
+ - can_rebuild_guest_state is now a boolean not a callback.
+ - misc fixes.
+ - added a functional test for Xen emulation with vmfd change.
+ - rebased.
+
+v2:
+ - Bugfixes.
+ - Added a new machine option so that we can exercize most of the non-coco changes
+   related to reboot on non-coco platforms.
+ - added a new functional test. Currently its skipped on CI pipeline as KVM is not
+   enabled (no /dev/kvm on the container)for QEMU CI tests. It can be run manually and it
+   passes on those systems where KVM is enabled.
+ - Addressed comments from v1 with regards to refactoring of code, code simplication by
+   removal of redundant stuff, moved around code
+   so that notifiers, migration blockers are added only on one place.
+ - Added some tracepoints for future debugging on newly added functions.
+ - Rebased.
+
+
+Ani Sinha (31):
+  i386/kvm: avoid installing duplicate msr entries in msr_handlers
+  accel/kvm: add confidential class member to indicate guest rebuild
+    capability
+  hw/accel: add a per-accelerator callback to change VM accelerator
+    handle
+  system/physmem: add helper to reattach existing memory after KVM VM fd
+    change
+  accel/kvm: add changes required to support KVM VM file descriptor
+    change
+  accel/kvm: add a notifier to indicate KVM VM file descriptor has
+    changed
+  accel/kvm: notify when KVM VM file fd is about to be changed
+  i386/kvm: unregister smram listeners prior to vm file descriptor
+    change
+  kvm/i386: implement architecture support for kvm file descriptor
+    change
+  hw/i386: refactor x86_bios_rom_init for reuse in confidential guest
+    reset
+  hw/i386: export a new function x86_bios_rom_reload
+  kvm/i386: reload firmware for confidential guest reset
+  accel/kvm: rebind current VCPUs to the new KVM VM file descriptor upon
+    reset
+  i386/tdx: refactor TDX firmware memory initialization code into a new
+    function
+  i386/tdx: finalize TDX guest state upon reset
+  i386/tdx: add a pre-vmfd change notifier to reset tdx state
+  i386/sev: add migration blockers only once
+  i386/sev: add notifiers only once
+  i386/sev: free existing launch update data and kernel hashes data on
+    init
+  i386/sev: add support for confidential guest reset
+  hw/vfio: generate new file fd for pseudo device and rebind existing
+    descriptors
+  kvm/i8254: refactor pit initialization into a helper
+  kvm/i8254: add support for confidential guest reset
+  kvm/hyperv: add synic feature to CPU only if its not enabled
+  hw/hyperv/vmbus: add support for confidential guest reset
+  kvm/xen-emu: re-initialize capabilities during confidential guest
+    reset
+  ppc/openpic: create a new openpic device and reattach mem region on
+    coco reset
+  kvm/vcpu: add notifiers to inform vcpu file descriptor change
+  kvm/clock: add support for confidential guest reset
+  hw/machine: introduce machine specific option 'x-change-vmfd-on-reset'
+  tests/functional/x86_64: add functional test to exercise vm fd change
+    on reset
+
+ MAINTAINERS                                   |   7 +
+ accel/kvm/kvm-all.c                           | 360 +++++++++++++++---
+ accel/kvm/trace-events                        |   2 +
+ accel/stubs/kvm-stub.c                        |  18 +
+ hw/core/machine.c                             |  22 ++
+ hw/hyperv/trace-events                        |   1 +
+ hw/hyperv/vmbus.c                             |  37 ++
+ hw/i386/kvm/clock.c                           |  59 +++
+ hw/i386/kvm/i8254.c                           |  91 +++--
+ hw/i386/kvm/trace-events                      |   1 +
+ hw/i386/x86-common.c                          |  71 +++-
+ hw/intc/openpic_kvm.c                         | 112 ++++--
+ hw/vfio/helpers.c                             |  94 +++++
+ include/accel/accel-ops.h                     |   1 +
+ include/hw/core/boards.h                      |   6 +
+ include/hw/i386/x86.h                         |   1 +
+ include/system/confidential-guest-support.h   |  20 +
+ include/system/kvm.h                          |  43 +++
+ include/system/physmem.h                      |   1 +
+ stubs/kvm.c                                   |  22 ++
+ stubs/meson.build                             |   1 +
+ system/physmem.c                              |  28 ++
+ system/runstate.c                             |  43 ++-
+ target/i386/kvm/kvm.c                         | 139 +++++--
+ target/i386/kvm/tdx.c                         | 141 +++++--
+ target/i386/kvm/tdx.h                         |   1 +
+ target/i386/kvm/trace-events                  |   4 +
+ target/i386/kvm/xen-emu.c                     |  50 ++-
+ target/i386/sev.c                             | 127 ++++--
+ target/i386/trace-events                      |   1 +
+ tests/functional/x86_64/meson.build           |   1 +
+ .../x86_64/test_vmfd_change_reboot.py         | 135 +++++++
+ 32 files changed, 1422 insertions(+), 218 deletions(-)
+ create mode 100644 stubs/kvm.c
+ create mode 100755 tests/functional/x86_64/test_vmfd_change_reboot.py
+
 -- 
 2.42.0
 
