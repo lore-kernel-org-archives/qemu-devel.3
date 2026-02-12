@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F617EDF021
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55BDCEDF026
 	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 03:35:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqNTe-0007lG-2x; Wed, 11 Feb 2026 22:34:50 -0500
+	id 1vqNTa-0007id-Mh; Wed, 11 Feb 2026 22:34:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1vqNTc-0007jH-Oi
- for qemu-devel@nongnu.org; Wed, 11 Feb 2026 22:34:48 -0500
-Received: from mail-oi1-x22f.google.com ([2607:f8b0:4864:20::22f])
+ id 1vqNTY-0007hU-A1
+ for qemu-devel@nongnu.org; Wed, 11 Feb 2026 22:34:44 -0500
+Received: from mail-ot1-x334.google.com ([2607:f8b0:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1vqNTa-0008Hx-Uk
- for qemu-devel@nongnu.org; Wed, 11 Feb 2026 22:34:48 -0500
-Received: by mail-oi1-x22f.google.com with SMTP id
- 5614622812f47-45f004e7d71so1040187b6e.1
- for <qemu-devel@nongnu.org>; Wed, 11 Feb 2026 19:34:46 -0800 (PST)
+ id 1vqNTW-0008HA-SY
+ for qemu-devel@nongnu.org; Wed, 11 Feb 2026 22:34:44 -0500
+Received: by mail-ot1-x334.google.com with SMTP id
+ 46e09a7af769-7d18cf89e72so2017169a34.1
+ for <qemu-devel@nongnu.org>; Wed, 11 Feb 2026 19:34:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1770867285; x=1771472085; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1770867281; x=1771472081; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=1vV/gFCM2s8n0DXOgCi7/aaN4xg+tYlUyC1onltEOpg=;
- b=mvI3c4OMYZ5M4M0wrmXmv4aipIQszeJ8b3xXjLG13JcuhXT2GdBLS/MEdSBD/cH2Nm
- V03eleCzMIAg3eLuctpSLFKqy4k4ZytmjAnut2b5r/iCPrvjkAKiCqa0QtQruf8hKkVJ
- Si4JngSX+dEBnAAf2mWPeaTVCwQsX/i1EnFmjXoEOqAhNqhQOczQ6zgZPc7amEAtk5sw
- tGalGIp3A0muZfphRD3MGN8/D/bJV6r3RYEqUEmc2xy6MaYA1AEqWBUeZieU9pfVvn10
- lIsFGrJqxPCzbllBkv3obqdgnhbONuRv6RUm2NdY0wkv93Fbq5deyfo29sm7B3+v4nHB
- P80Q==
+ bh=VY+khrWva4TQzXBdBU/u3tJFGnrI2ZRRl79vbOIZYRo=;
+ b=jmEZZxNwqp9/VCYl9LQwbo8rcvkddOg2d49GI50VcHkQb3Gj30dMckuIT/CrjcLIUH
+ /H3p39t04ftc0yKROTKIqNTcKElE3QScb1siMNkK2bAYM5A6nZiu2smvTaDAjmdJExtQ
+ +VBxJ5XgbIR89jLg4aH/flYTCz2OwymAFANf0dZQErJ0PMcM0B8xlWc8tQ0LUa/GHIxB
+ Pti6z9dt1FsMbjxS+kyq9uDOyV2J0zo/3qUY72VTHKFNmtMll1AUcQrI4dcZWLSGKk9C
+ iBZw0GTDbldpfUFdLJ9m6vD/oqZeVSFwxEHExF59slioIxyDyMI0OnsAUHe9YSeqb0hM
+ hs1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770867285; x=1771472085;
+ d=1e100.net; s=20230601; t=1770867281; x=1771472081;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=1vV/gFCM2s8n0DXOgCi7/aaN4xg+tYlUyC1onltEOpg=;
- b=D7vIJXFML6HbakHtN6n/Q0jltgHtg2Sp2Sd6AccudxTa7M/z9+x3O9ju8k15+C9mLl
- q79DIbHqjLijAhI1eERx7kqISeesFPXJEmHXPdhCIt5CRS7wnJ6S17DAIMttZOr/INfL
- HFblzj4ao0bHFM/YUHtK9pQHJiRUd6YhOGqUh16VjY5veYtHURHRp05CPau+VXGHVyus
- SZ6SM01cTB2SKa+G2Xes9NZc0/dji1PuT7bepgHux9RaXY96eQ8HN00JPCMrX2W51kDU
- 4i9UIgoAkp372bhtuWprBBb0xMBHLIAsZ2sIzh/fKowA5n+cKb+Ta1iAzvQV0XHbyMYd
- Qd0Q==
-X-Gm-Message-State: AOJu0YxacakMsLGWe3+2FPfrgarUsM+zg9/hP9m6fznMopyoYahHV3DD
- YtYm1KVoLYDLrGz8rWkKv/7ehj0TNiBuyVZ6Le0f5diW/5B9YgL+T+qtZy0JBQ==
-X-Gm-Gg: AZuq6aLjoINX+S3R7HsRQXhxgFKRTKWwrLgQwX5qIQY6HWa5E/1gxqNrpIJxSWuK36U
- Oz1PhCxJm2lTUe6GfBBJ0Rel4HxZmMa2DBfDkS4etXnEZ8X8DP+/CR9l4WV2mTIH6KJDLIl2v4U
- 7Qnq+mFSeIxaIvPgEJAWBGb8kFRtM9szbIpkayE5TshBQ49CyR+AODBLRjD4u6x6SWBZHjIIVzN
- dDB5PkzJydft3Ray+pZIF8idsKVSQSaaNKDqfPD15R2JvCB/Sq/HisVgmzNtT90AfvlvXc8V/ZY
- G8kH96YTKfmhFFZAXLiX0SSg6Fe1SrRFP2akRzYCKKKNnhHV6MWjzGppGiM6cUi5dmSuPGqOOLU
- Edf/BPABudBPI1jdoqrUSzQGp5GzzHbYccDe26bnX58DmKq91N4TeWnb8tmD3h7a8jtrR1MxR/4
- P+2JGg06amRwCONo9LKkxjZGZdTD92lzY4HY+b7jaVI2TY8K8gakFM7qHSuc0dcgEtmHwVY6UQt
- nqGE4mbORPETIwW
-X-Received: by 2002:a05:6808:4fca:b0:43b:7b80:5cf2 with SMTP id
- 5614622812f47-4637dbbb583mr786348b6e.11.1770867285460; 
- Wed, 11 Feb 2026 19:34:45 -0800 (PST)
+ bh=VY+khrWva4TQzXBdBU/u3tJFGnrI2ZRRl79vbOIZYRo=;
+ b=pBnckva68Phqo1NExxrGypGPog82QaQCVibFEhvo/EC7+G7SLzrhjbTYLPP8X18C+w
+ XtXy94lVs/b1YVtTzrMoOfcf2Wp3LJKH3m2NwoJm2I4oZr6trEpjs2pl1YkJ19cStr4r
+ UV+7mOQDgfnY3EBNGueB5f8M8FhbemnUx7by4J1yvX3Dvbqy1vpyJ4eWmvTuLloVQRrk
+ wZI9pmqIA4j0Ig/WC++jCGNvWUDxieWfxXUpHpfT9kMXUlthuTDd8IC82AHgMiNtYxfc
+ MteCZ95FADy0+2GUNLwFOpmKAUOjNZzt4io2ENrrw5Vv3UNi9PNbdd1VPNCzoXtlK0IA
+ Y0Bg==
+X-Gm-Message-State: AOJu0YybaFenqEtOT5o7B9Vepq7kny7DB9IE0swSOGfu+NDlNVNyPgpI
+ Y11QTbaqZnwWNzNIiBhP8sZrI7GziqMR/k4xc4UrRofFgzHj3WUeAU3YU3BdsA==
+X-Gm-Gg: AZuq6aJ+ss3njJvT23r+AIwXewiF6RyI4L43kDmX8fQpdST2kYtwM/8KKnWtIadSbMD
+ 1IMYTGYHZtdBkZarH5Us7Msa6iDjys9GjV1O+VvzlXe/MT9f5ABBRRIal+OUTQLZnSL+W1ug5M6
+ pPOrfndwh+cT8K0Fmaglxv/DJVIBRdmLaM4Te6+4ZMS4BOpvk5eZMuv1/MwX56cnPkwOG5+/vD/
+ RXZLUwx/0K2dHClFmQuLj+qih82cG+VoCiz2e5ZqlN0bEozKhlkq9bXRxqrtd7O7Q5CQmvOy75t
+ RNqKViDzB6Bx0Q3YuE1Mklh3WJ9M0SFSbSZYCYS8zA7k40W3zGDrObmPKUheg9PM5nY5y9p4Vy4
+ WKjqGCj/MZSYUy+FGiqqEGTV6pkXgWkJPTWSB0Xl4qS2ot2i0/4ZisZLDGF2rYuqO2Vj06/q29p
+ iRL6TQy9VNQJH/QeHtdPG6SxUw8A0Eo40hUU1qxgl5t822udhZlMXGCWbTCvEVo84ybsayvFrPF
+ khIwVJUM+LoQpIG
+X-Received: by 2002:a05:6830:490c:b0:7cf:e32f:de72 with SMTP id
+ 46e09a7af769-7d4b3ff6d3amr633310a34.6.1770867281482; 
+ Wed, 11 Feb 2026 19:34:41 -0800 (PST)
 Received: from taylor-ubuntu.. (c-67-172-136-152.hsd1.co.comcast.net.
  [67.172.136.152]) by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-7d4a76e1b0csm2682858a34.14.2026.02.11.19.34.44
+ 46e09a7af769-7d4a76e1b0csm2682858a34.14.2026.02.11.19.34.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 11 Feb 2026 19:34:45 -0800 (PST)
+ Wed, 11 Feb 2026 19:34:41 -0800 (PST)
 From: Taylor Simpson <ltaylorsimpson@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: brian.cain@oss.qualcomm.com, matheus.bernardino@oss.qualcomm.com,
  sid.manning@oss.qualcomm.com, marco.liebel@oss.qualcomm.com,
  richard.henderson@linaro.org, philmd@linaro.org, ale@rev.ng, anjo@rev.ng,
  ltaylorsimpson@gmail.com
-Subject: [PATCH 6/8] Hexagon (linux-user/hexagon) Convert INVALID_PACKET into
- SIGILL
-Date: Wed, 11 Feb 2026 20:34:33 -0700
-Message-ID: <20260212033435.3598-7-ltaylorsimpson@gmail.com>
+Subject: [PATCH 2/8] Hexagon (linux-user/hexagon) Identify Hexagon version in
+ ELF file
+Date: Wed, 11 Feb 2026 20:34:29 -0700
+Message-ID: <20260212033435.3598-3-ltaylorsimpson@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260212033435.3598-1-ltaylorsimpson@gmail.com>
 References: <20260212033435.3598-1-ltaylorsimpson@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::22f;
- envelope-from=ltaylorsimpson@gmail.com; helo=mail-oi1-x22f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::334;
+ envelope-from=ltaylorsimpson@gmail.com; helo=mail-ot1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,196 +105,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Brian Cain <brian.cain@oss.qualcomm.com>
-
-tests/tcg/hexagon: Handle SIGILL internally in invalid-slots test
-
-Rewrite invalid-slots.c to catch and verify SIGILL using a sigaction
-handler that modifies the ucontext, matching the pattern used by
-invalid-encoding.c.
+Return proper Hexagon CPU version from get_elf_cpu_model
 
 Co-authored-by: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
-Co-authored-by: Taylor Simpson <ltaylorsimpson@gmail.com>
-Reviewed-by: Taylor Simpson <ltaylorsimpson@gmail.com>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+Co-authored-by: Brian Cain <brian.cain@oss.qualcomm.com>
 Signed-off-by: Taylor Simpson <ltaylorsimpson@gmail.com>
 ---
- linux-user/hexagon/cpu_loop.c     |  4 ++
- target/hexagon/translate.c        | 19 +++++++-
- tests/tcg/hexagon/invalid-slots.c | 76 ++++++++++++++++++++++++-------
- tests/tcg/hexagon/Makefile.target |  6 ---
- 4 files changed, 80 insertions(+), 25 deletions(-)
+ linux-user/hexagon/elfload.c | 43 ++++++++++++++++++++++--------------
+ 1 file changed, 26 insertions(+), 17 deletions(-)
 
-diff --git a/linux-user/hexagon/cpu_loop.c b/linux-user/hexagon/cpu_loop.c
-index 1941f4c9c1..c0e1098e3f 100644
---- a/linux-user/hexagon/cpu_loop.c
-+++ b/linux-user/hexagon/cpu_loop.c
-@@ -64,6 +64,10 @@ void cpu_loop(CPUHexagonState *env)
-             force_sig_fault(TARGET_SIGBUS, TARGET_BUS_ADRALN,
-                             env->gpr[HEX_REG_R31]);
-             break;
-+        case HEX_CAUSE_INVALID_PACKET:
-+            force_sig_fault(TARGET_SIGILL, TARGET_ILL_ILLOPC,
-+                            env->gpr[HEX_REG_PC]);
-+            break;
-         case EXCP_ATOMIC:
-             cpu_exec_step_atomic(cs);
-             break;
-diff --git a/target/hexagon/translate.c b/target/hexagon/translate.c
-index 9498cd4502..78e0d6c219 100644
---- a/target/hexagon/translate.c
-+++ b/target/hexagon/translate.c
-@@ -198,6 +198,21 @@ static void gen_exception_end_tb(DisasContext *ctx, int excp)
+diff --git a/linux-user/hexagon/elfload.c b/linux-user/hexagon/elfload.c
+index d8b545032a..39b0201814 100644
+--- a/linux-user/hexagon/elfload.c
++++ b/linux-user/hexagon/elfload.c
+@@ -10,23 +10,32 @@ const char *get_elf_cpu_model(uint32_t eflags)
+     static char buf[32];
+     int err;
  
- }
- 
-+/*
-+ * Generate exception for decode failures. Unlike gen_exception_end_tb,
-+ * this is used when decode fails before ctx->next_PC is initialized.
-+ */
-+static void gen_exception_decode_fail(DisasContext *ctx, int nwords, int excp)
-+{
-+    target_ulong fail_pc = ctx->base.pc_next + nwords * sizeof(uint32_t);
-+
-+    gen_exec_counters(ctx);
-+    tcg_gen_movi_tl(hex_gpr[HEX_REG_PC], fail_pc);
-+    gen_exception_raw(excp);
-+    ctx->base.is_jmp = DISAS_NORETURN;
-+    ctx->base.pc_next = fail_pc;
-+}
-+
- static int read_packet_words(CPUHexagonState *env, DisasContext *ctx,
-                              uint32_t words[])
- {
-@@ -935,7 +950,7 @@ static void decode_and_translate_packet(CPUHexagonState *env, DisasContext *ctx)
- 
-     nwords = read_packet_words(env, ctx, words);
-     if (!nwords) {
--        gen_exception_end_tb(ctx, HEX_CAUSE_INVALID_PACKET);
-+        gen_exception_decode_fail(ctx, 0, HEX_CAUSE_INVALID_PACKET);
-         return;
+-    /* For now, treat anything newer than v5 as a v73 */
+-    /* FIXME - Disable instructions that are newer than the specified arch */
+-    if (eflags == 0x04 ||    /* v5  */
+-        eflags == 0x05 ||    /* v55 */
+-        eflags == 0x60 ||    /* v60 */
+-        eflags == 0x61 ||    /* v61 */
+-        eflags == 0x62 ||    /* v62 */
+-        eflags == 0x65 ||    /* v65 */
+-        eflags == 0x66 ||    /* v66 */
+-        eflags == 0x67 ||    /* v67 */
+-        eflags == 0x8067 ||  /* v67t */
+-        eflags == 0x68 ||    /* v68 */
+-        eflags == 0x69 ||    /* v69 */
+-        eflags == 0x71 ||    /* v71 */
+-        eflags == 0x8071 ||  /* v71t */
+-        eflags == 0x73       /* v73 */
+-       ) {
++    switch (eflags) {
++    case 0x04:
++        return "v5";
++    case 0x05:
++        return "v55";
++    case 0x60:
++        return "v60";
++    case 0x61:
++        return "v61";
++    case 0x62:
++        return "v62";
++    case 0x65:
++        return "v65";
++    case 0x66:
++        return "v66";
++    case 0x67:
++    case 0x8067:        /* v67t */
++        return "v67";
++    case 0x68:
++        return "v68";
++    case 0x69:
++        return "v69";
++    case 0x71:
++    case 0x8071:        /* v71t */
++        return "v71";
++    case 0x73:
+         return "v73";
      }
  
-@@ -950,7 +965,7 @@ static void decode_and_translate_packet(CPUHexagonState *env, DisasContext *ctx)
-         gen_commit_packet(ctx);
-         ctx->base.pc_next += pkt.encod_pkt_size_in_bytes;
-     } else {
--        gen_exception_end_tb(ctx, HEX_CAUSE_INVALID_PACKET);
-+        gen_exception_decode_fail(ctx, nwords, HEX_CAUSE_INVALID_PACKET);
-     }
- }
- 
-diff --git a/tests/tcg/hexagon/invalid-slots.c b/tests/tcg/hexagon/invalid-slots.c
-index 366ce4f42f..607027f314 100644
---- a/tests/tcg/hexagon/invalid-slots.c
-+++ b/tests/tcg/hexagon/invalid-slots.c
-@@ -1,29 +1,71 @@
- /*
-- *  Copyright(c) 2023 Qualcomm Innovation Center, Inc. All Rights Reserved.
-+ * Test that invalid slot assignments are properly rejected.
-  *
-- *  This program is free software; you can redistribute it and/or modify
-- *  it under the terms of the GNU General Public License as published by
-- *  the Free Software Foundation; either version 2 of the License, or
-- *  (at your option) any later version.
-- *
-- *  This program is distributed in the hope that it will be useful,
-- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-- *  GNU General Public License for more details.
-- *
-- *  You should have received a copy of the GNU General Public License
-- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
-+ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-  */
- 
-+#include <assert.h>
-+#include <signal.h>
-+#include <stdio.h>
-+#include <stdlib.h>
-+#include <string.h>
-+#include <unistd.h>
-+
-+static void *resume_pc;
-+
-+static void handle_sigill(int sig, siginfo_t *info, void *puc)
-+{
-+    ucontext_t *uc = (ucontext_t *)puc;
-+
-+    if (sig != SIGILL) {
-+        _exit(EXIT_FAILURE);
-+    }
-+
-+    uc->uc_mcontext.r0 = SIGILL;
-+    uc->uc_mcontext.pc = (unsigned long)resume_pc;
-+}
-+
- char mem[8] __attribute__((aligned(8)));
- 
--int main()
-+/*
-+ * Invalid packet with 2 instructions at slot 0:
-+ * - Word 0: 0xa1804100 = memw(r0) = r1
-+ * - Word 1: 0x28032804 = { r3 = #0; r4 = #0 }
-+ *
-+ * This should raise SIGILL due to the invalid slot assignment.
-+ */
-+static int test_invalid_slots(void)
- {
-+    int sig;
-+
-     asm volatile(
-+        "r0 = #0\n"
-+        "r1 = ##1f\n"
-+        "memw(%1) = r1\n"
-         "r0 = #mem\n"
--        /* Invalid packet (2 instructions at slot 0): */
-         ".word 0xa1804100\n" /* { memw(r0) = r1;      */
-         ".word 0x28032804\n" /*   r3 = #0; r4 = #0 }  */
--        : : : "r0", "r3", "r4", "memory");
--    return 0;
-+        "1:\n"
-+        "%0 = r0\n"
-+        : "=r"(sig)
-+        : "r"(&resume_pc)
-+        : "r0", "r1", "r3", "r4", "memory");
-+
-+    return sig;
-+}
-+
-+int main()
-+{
-+    struct sigaction act;
-+
-+    memset(&act, 0, sizeof(act));
-+    act.sa_sigaction = handle_sigill;
-+    act.sa_flags = SA_SIGINFO;
-+    assert(sigaction(SIGILL, &act, NULL) == 0);
-+
-+    assert(test_invalid_slots() == SIGILL);
-+
-+    puts("PASS");
-+    return EXIT_SUCCESS;
- }
-diff --git a/tests/tcg/hexagon/Makefile.target b/tests/tcg/hexagon/Makefile.target
-index e5182c01d8..8c9d48fc4d 100644
---- a/tests/tcg/hexagon/Makefile.target
-+++ b/tests/tcg/hexagon/Makefile.target
-@@ -53,12 +53,6 @@ HEX_TESTS += hvx_histogram
- HEX_TESTS += invalid-slots
- HEX_TESTS += unaligned_pc
- 
--run-and-check-exception = $(call run-test,$2,$3 2>$2.stderr; \
--	test $$? -eq 1 && grep -q "exception $(strip $1)" $2.stderr)
--
--run-invalid-slots: invalid-slots
--	$(call run-and-check-exception, 0x15, $@, $(QEMU) $(QEMU_OPTS) $<)
--
- HEX_TESTS += test_abs
- HEX_TESTS += test_bitcnt
- HEX_TESTS += test_bitsplit
 -- 
 2.43.0
 
