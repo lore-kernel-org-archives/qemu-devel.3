@@ -4,98 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A329DEE36B7
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 17:59:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FFDCEE36B8
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 18:03:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqaxs-0006tI-Pz; Thu, 12 Feb 2026 12:58:57 -0500
+	id 1vqb2I-0000ND-VL; Thu, 12 Feb 2026 13:03:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vqaxo-0006r6-U4; Thu, 12 Feb 2026 12:58:52 -0500
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1vqb2F-0000J0-DC
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 13:03:27 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vqaxl-0006L3-Rj; Thu, 12 Feb 2026 12:58:52 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id DC1B1188A24;
- Thu, 12 Feb 2026 20:58:31 +0300 (MSK)
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id E0726363558;
- Thu, 12 Feb 2026 20:58:33 +0300 (MSK)
-Message-ID: <95e61064-c8e8-4c36-9371-cbd28ab737c8@tls.msk.ru>
-Date: Thu, 12 Feb 2026 20:58:33 +0300
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1vqb2D-0007L1-2f
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 13:03:27 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1770919403;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Nb798t5II4q+7FZcVBNVmqsGNZmfk7fAxkAlqZXdi1A=;
+ b=fpJKZEUD0iKcoIeU8VA5xmbAODVgfpmUONclZzOtATPZAAhbr3plyJlY7bcizP9xAoBs53
+ 1OQ9Y9XU1hCldUWQil18X6eF6JXgrEGPMxhdApSjgUvFpDV5jUf8tjZcIfNwD30ju8t37D
+ xRGJ4Ho0xAV45Kn8Qhtz47m1VSAbigI=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-202-cMV-7ozoM5q6phsaGTeSKA-1; Thu, 12 Feb 2026 13:03:22 -0500
+X-MC-Unique: cMV-7ozoM5q6phsaGTeSKA-1
+X-Mimecast-MFC-AGG-ID: cMV-7ozoM5q6phsaGTeSKA_1770919401
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4803b4e3b9eso745205e9.3
+ for <qemu-devel@nongnu.org>; Thu, 12 Feb 2026 10:03:22 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770919401; x=1771524201;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Nb798t5II4q+7FZcVBNVmqsGNZmfk7fAxkAlqZXdi1A=;
+ b=N/6UahjKZfexKvQ3LfCoNgF6zcKN7V3LCZMVw5+8j+2AW1KKEsLliViJ3DjzyXwLc4
+ HtQMoVjY/4H25iLaVHVgDB8aV+TwseHAM20F3uaqewHGG0e81CrugQFnaubqYi7iaVLi
+ E2ARcm/91iO57p8fjd4HHTaPgRTPIkyN30sLu91+d4WMH6jpx9D78khviKr11yf9mg3Z
+ aPtnnxXmAUK95cLi7YGolxJq8ScqsOoOgec37aXTxfA8ACzY/UOGtgj8oc1WLj/pj5H0
+ kt2Sh2OzgAi1sL8/2eULmB5KtFfEQGKXGikXyTpf6Ms1xL+mnOsNk/URLFpDkRhPnrFL
+ 5KEg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW4yJo6IeXxWdQPOvxyA3H2c6OSeyax8v0UzrrI5kAk9XaX4f5W/sSaZ9X1IcgUdmG4/J0nBgUb1EgA@nongnu.org
+X-Gm-Message-State: AOJu0YyWR+JB4tFQNnfeV0o8Ksix1sXG61U3QySk78dRdBg/oFyK910A
+ eCZc2nscO4BrmvjzYtlGXMb7FP+Rd+dARBIpSZIjtvicgqYX+KKFR64nCcQpRAP6ziCPToK7MlW
+ zKiNsupdRttfMo/nNTjdqfX90Ha7pcJL0LHFGj0jE6ZsGMTbDGL0XjKY2
+X-Gm-Gg: AZuq6aLYd48YkzLHlnSdcPFzIrvFDX3TwMVyy/hJddLlwhy5kHrIDUvQddnNv/JSdLL
+ Sbx2AzJse71L/xYhISH3pQGLJb/js0NrSZcR84Kj/Zz2nRsc6Q4Eo7GbJQl6hWLhB9ds8qpK/X6
+ I+Ah3fWksAJvDA8p+leUlVvRnelB+TH/v2cLhpoxXSBD5+C80otYBwmJ8L/O+OIkbiqAetZsiea
+ 9aD/vl/t77D1KjrBkJ9m+do5eysJve7drrg6d698hX+SOzK6G0z3/8wzVyK7a1wyuaizdmInhqh
+ h31czmNMydIdgZqUABgzOtx4jfAX9zef2BrSfTs05OumP8k3xVOaPRmRNtpjyhBWed+7g06L3f+
+ Blm00MCxw6GiJap55anRZSsFyhd5IoDhr53nEqfVxbf4LJrReoplhoOsgBgC2i+M8VRbEzw==
+X-Received: by 2002:a05:600c:1d86:b0:47a:814c:eea1 with SMTP id
+ 5b1f17b1804b1-4836571faf9mr57287315e9.35.1770919400929; 
+ Thu, 12 Feb 2026 10:03:20 -0800 (PST)
+X-Received: by 2002:a05:600c:1d86:b0:47a:814c:eea1 with SMTP id
+ 5b1f17b1804b1-4836571faf9mr57286525e9.35.1770919400398; 
+ Thu, 12 Feb 2026 10:03:20 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-483709f7da8sm658005e9.12.2026.02.12.10.03.14
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 12 Feb 2026 10:03:19 -0800 (PST)
+Message-ID: <b96ecd22-192e-4414-9d2b-b5a010fe006d@redhat.com>
+Date: Thu, 12 Feb 2026 19:03:09 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 00/10] chardev: Improve @docstring and clarify
- qemu_chr_write() uses
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+Subject: Re: [PATCH v2 21/24] virt-acpi-build: Rename AcpiIortSMMUv3Dev to
+ AcpiSMMUv3Dev
+Content-Language: en-US
+To: Shameer Kolothum <skolothumtho@nvidia.com>, qemu-arm@nongnu.org,
  qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- qemu-stable <qemu-stable@nongnu.org>
-References: <20251112134143.27194-1-philmd@linaro.org>
- <0faef1dc-6fde-41b1-bf1e-8ecfe49033f7@tls.msk.ru>
- <a50b8ccb-4d13-431b-836e-b08e5add71bd@linaro.org>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <a50b8ccb-4d13-431b-836e-b08e5add71bd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Cc: peter.maydell@linaro.org, clg@redhat.com, alex@shazbot.org,
+ nicolinc@nvidia.com, nathanc@nvidia.com, mochs@nvidia.com, jan@nvidia.com,
+ jgg@nvidia.com, jonathan.cameron@huawei.com, zhangfei.gao@linaro.org,
+ zhenzhong.duan@intel.com, kjaju@nvidia.com
+References: <20260206144823.80655-1-skolothumtho@nvidia.com>
+ <20260206144823.80655-22-skolothumtho@nvidia.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20260206144823.80655-22-skolothumtho@nvidia.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,39 +117,179 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/26/25 10:45, Philippe Mathieu-Daudé wrote:
-> On 26/11/25 07:56, Michael Tokarev wrote:
->> On 11/12/25 16:41, Philippe Mathieu-Daudé wrote:
->>> v3:
->>> - Addressed Marc-André & Daniel comments
->>> - Document qemu_chr_fe_write()
->>> - Rename replay arguments
-> 
-> 
->> Hi!
->>
->>  From this patchset, 1 change has now found its way to the master
->> branch:
->>
->>   chardev/char-pty: Do not ignore chr_write() failures
->>
->> Besides it, the following 2 changes were marked for-stable:
->>
->>   chardev/char: Allow partial writes in qemu_chr_write()
->>   chardev/char: Preserve %errno in qemu_chr_write()
->>
->> Are other changes (including the above 2) not needed anymore?
-> 
-> They are, I need to reply to Marc-André and respin a v4...
-> 
-> Old bugs so can wait 11.0 :S
+Hi Shameer,
 
-Found an old(ish) thread...  ping? :))
+On 2/6/26 3:48 PM, Shameer Kolothum wrote:
+> Rename struct AcpiIortSMMUv3Dev to AcpiSMMUv3Dev so that it is not
+> specific to IORT. Subsequent Tegra241 CMDQV support patch will use the
+> same struct to build CMDQV DSDT support as well.
+>
+> No functional changes intended.
+>
+> Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
+> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
+> ---
+>  hw/arm/virt-acpi-build.c | 44 ++++++++++++++++++++++------------------
+>  1 file changed, 24 insertions(+), 20 deletions(-)
+>
+> diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
+> index c145678185..ae3b4aac52 100644
+> --- a/hw/arm/virt-acpi-build.c
+> +++ b/hw/arm/virt-acpi-build.c
+> @@ -339,24 +339,28 @@ static int iort_idmap_compare(gconstpointer a, gconstpointer b)
+>      return idmap_a->input_base - idmap_b->input_base;
+>  }
+>  
+> -typedef struct AcpiIortSMMUv3Dev {
+> +typedef struct AcpiSMMUv3Dev {
+>      int irq;
+>      hwaddr base;
+> +
+> +    /*
+> +     * IORT-only fields.
+> +     * These are used when building IORT SMMUv3 nodes.
+> +     */
+>      GArray *rc_smmu_idmaps;
+> -    /* Offset of the SMMUv3 IORT Node relative to the start of the IORT */
+> -    size_t offset;
+> +    size_t offset; /* Offset of the SMMUv3 node within the IORT table */
+>      bool accel;
+>      bool ats;
+accel and ats seem to be only used by IORT too. So it is a bit weird to
+have a so-called generic datatype which is half iort specific. Why don't
+use keepAcpiIortSMMUv3Dev and flat encapsulate another object inside
+with irq and base and id? Eric
+> -} AcpiIortSMMUv3Dev;
+> +} AcpiSMMUv3Dev;
+>  
+>  /*
+> - * Populate the struct AcpiIortSMMUv3Dev for the legacy SMMUv3 and
+> + * Populate the struct AcpiSMMUv3Dev for the legacy SMMUv3 and
+>   * return the total number of associated idmaps.
+>   */
+>  static int populate_smmuv3_legacy_dev(GArray *sdev_blob)
+>  {
+>      VirtMachineState *vms = VIRT_MACHINE(qdev_get_machine());
+> -    AcpiIortSMMUv3Dev sdev = {0};
+> +    AcpiSMMUv3Dev sdev = {0};
+>  
+>      sdev.rc_smmu_idmaps = g_array_new(false, true, sizeof(AcpiIortIdMapping));
+>      object_child_foreach_recursive(object_get_root(), iort_host_bridges,
+> @@ -376,8 +380,8 @@ static int populate_smmuv3_legacy_dev(GArray *sdev_blob)
+>  
+>  static int smmuv3_dev_idmap_compare(gconstpointer a, gconstpointer b)
+>  {
+> -    AcpiIortSMMUv3Dev *sdev_a = (AcpiIortSMMUv3Dev *)a;
+> -    AcpiIortSMMUv3Dev *sdev_b = (AcpiIortSMMUv3Dev *)b;
+> +    AcpiSMMUv3Dev *sdev_a = (AcpiSMMUv3Dev *)a;
+> +    AcpiSMMUv3Dev *sdev_b = (AcpiSMMUv3Dev *)b;
+>      AcpiIortIdMapping *map_a = &g_array_index(sdev_a->rc_smmu_idmaps,
+>                                                AcpiIortIdMapping, 0);
+>      AcpiIortIdMapping *map_b = &g_array_index(sdev_b->rc_smmu_idmaps,
+> @@ -388,7 +392,7 @@ static int smmuv3_dev_idmap_compare(gconstpointer a, gconstpointer b)
+>  static int iort_smmuv3_devices(Object *obj, void *opaque)
+>  {
+>      VirtMachineState *vms = VIRT_MACHINE(qdev_get_machine());
+> -    AcpiIortSMMUv3Dev sdev = {0};
+> +    AcpiSMMUv3Dev sdev = {0};
+>      GArray *sdev_blob = opaque;
+>      AcpiIortIdMapping idmap;
+>      PlatformBusDevice *pbus;
+> @@ -421,7 +425,7 @@ static int iort_smmuv3_devices(Object *obj, void *opaque)
+>  }
+>  
+>  /*
+> - * Populate the struct AcpiIortSMMUv3Dev for all SMMUv3 devices and
+> + * Populate the struct AcpiSMMUv3Dev for all SMMUv3 devices and
+>   * return the total number of idmaps.
+>   */
+>  static int populate_smmuv3_dev(GArray *sdev_blob)
+> @@ -442,10 +446,10 @@ static void create_rc_its_idmaps(GArray *its_idmaps, GArray *smmuv3_devs)
+>  {
+>      AcpiIortIdMapping *idmap;
+>      AcpiIortIdMapping next_range = {0};
+> -    AcpiIortSMMUv3Dev *sdev;
+> +    AcpiSMMUv3Dev *sdev;
+>  
+>      for (int i = 0; i < smmuv3_devs->len; i++) {
+> -        sdev = &g_array_index(smmuv3_devs, AcpiIortSMMUv3Dev, i);
+> +        sdev = &g_array_index(smmuv3_devs, AcpiSMMUv3Dev, i);
+>          /*
+>           * Based on the RID ranges that are directed to the SMMU, determine the
+>           * bypassed RID ranges, i.e., the ones that are directed to the ITS
+> @@ -479,7 +483,7 @@ static void create_rc_its_idmaps(GArray *its_idmaps, GArray *smmuv3_devs)
+>  static void
+>  build_iort_rmr_nodes(GArray *table_data, GArray *smmuv3_devices, uint32_t *id)
+>  {
+> -    AcpiIortSMMUv3Dev *sdev;
+> +    AcpiSMMUv3Dev *sdev;
+>      AcpiIortIdMapping *idmap;
+>      int i;
+>  
+> @@ -487,7 +491,7 @@ build_iort_rmr_nodes(GArray *table_data, GArray *smmuv3_devices, uint32_t *id)
+>          uint16_t rmr_len;
+>          int bdf;
+>  
+> -        sdev = &g_array_index(smmuv3_devices, AcpiIortSMMUv3Dev, i);
+> +        sdev = &g_array_index(smmuv3_devices, AcpiSMMUv3Dev, i);
+>          if (!sdev->accel) {
+>              continue;
+>          }
+> @@ -544,13 +548,13 @@ static void
+>  build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+>  {
+>      int i, nb_nodes, rc_mapping_count;
+> -    AcpiIortSMMUv3Dev *sdev;
+> +    AcpiSMMUv3Dev *sdev;
+>      size_t node_size;
+>      bool ats_needed = false;
+>      int num_smmus = 0;
+>      uint32_t id = 0;
+>      int rc_smmu_idmaps_len = 0;
+> -    GArray *smmuv3_devs = g_array_new(false, true, sizeof(AcpiIortSMMUv3Dev));
+> +    GArray *smmuv3_devs = g_array_new(false, true, sizeof(AcpiSMMUv3Dev));
+>      GArray *rc_its_idmaps = g_array_new(false, true, sizeof(AcpiIortIdMapping));
+>  
+>      AcpiTable table = { .sig = "IORT", .rev = 5, .oem_id = vms->oem_id,
+> @@ -581,7 +585,7 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+>          }
+>          /* Calculate RMR nodes required. One per SMMUv3 with accelerated mode */
+>          for (i = 0; i < num_smmus; i++) {
+> -            sdev = &g_array_index(smmuv3_devs, AcpiIortSMMUv3Dev, i);
+> +            sdev = &g_array_index(smmuv3_devs, AcpiSMMUv3Dev, i);
+>              if (sdev->ats) {
+>                  ats_needed = true;
+>              }
+> @@ -620,7 +624,7 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+>      }
+>  
+>      for (i = 0; i < num_smmus; i++) {
+> -        sdev = &g_array_index(smmuv3_devs, AcpiIortSMMUv3Dev, i);
+> +        sdev = &g_array_index(smmuv3_devs, AcpiSMMUv3Dev, i);
+>          int smmu_mapping_count, offset_to_id_array;
+>          int irq = sdev->irq;
+>  
+> @@ -699,7 +703,7 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+>          AcpiIortIdMapping *range;
+>  
+>          for (i = 0; i < num_smmus; i++) {
+> -            sdev = &g_array_index(smmuv3_devs, AcpiIortSMMUv3Dev, i);
+> +            sdev = &g_array_index(smmuv3_devs, AcpiSMMUv3Dev, i);
+>  
+>              /*
+>               * Map RIDs (input) from RC to SMMUv3 nodes: RC -> SMMUv3.
+> @@ -742,7 +746,7 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+>      acpi_table_end(linker, &table);
+>      g_array_free(rc_its_idmaps, true);
+>      for (i = 0; i < num_smmus; i++) {
+> -        sdev = &g_array_index(smmuv3_devs, AcpiIortSMMUv3Dev, i);
+> +        sdev = &g_array_index(smmuv3_devs, AcpiSMMUv3Dev, i);
+>          g_array_free(sdev->rc_smmu_idmaps, true);
+>      }
+>      g_array_free(smmuv3_devs, true);
 
-Thanks,
-
-/mjt
 
