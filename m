@@ -4,103 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62C88EE3693
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 14:44:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38C1AEE3694
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 14:44:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqXvE-0005h3-KK; Thu, 12 Feb 2026 09:44:00 -0500
+	id 1vqXvT-00061O-7B; Thu, 12 Feb 2026 09:44:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vqXul-0005Kn-Jn
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 09:43:35 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1vqXvR-0005y1-J0
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 09:44:13 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vqXu6-0005fK-Qo
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 09:43:29 -0500
+ id 1vqXvP-0006Gb-3H
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 09:44:13 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770907369;
+ s=mimecast20190719; t=1770907450;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=LKcK4OiOnyFjtkFnUQVwTEazTMvuvfBeQzpgEdtx3RQ=;
- b=E07rouhbQvv/jLWL7Mu6VZPlQHgUbxJT/3bJTxwFVN8m085jjCJQ5PDQ3PYzhMXCOB9sqC
- THhtoqZNilNAGq/jH7YORQH1xbOO8XVzipBsP1m+ltHsCiLecZ6ei6UMZlavfU7Wv5Jnss
- df3A3EdkvsbkWpokRrsnwW6uAXZ1hEM=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=mBrt5ee4/fiILW9JEjenLshWan4+h+vd2E487X6J0ps=;
+ b=FbD1yivwWp7n7p1jAmDKjcKRwWjBmSdq1DJfEja2GvU1Nn8qma0cB+z54uq5ylEf3/BHfn
+ e9AGrMZhvpKKUoslNtIS40NEWydTZuLUPU1l4Cweln0LNDENomaBFQZGC8lCfpqCoV0kRq
+ /Ih+/glolwNFuaSAi/aeFDjXwLx1b14=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-400-Vb2Fx__pMPW-HWBUJ6NRIA-1; Thu, 12 Feb 2026 09:42:47 -0500
-X-MC-Unique: Vb2Fx__pMPW-HWBUJ6NRIA-1
-X-Mimecast-MFC-AGG-ID: Vb2Fx__pMPW-HWBUJ6NRIA_1770907367
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-43771113b3bso2194565f8f.0
- for <qemu-devel@nongnu.org>; Thu, 12 Feb 2026 06:42:47 -0800 (PST)
+ us-mta-19-2HZLG-fwMYW90vlFMMeXdA-1; Thu, 12 Feb 2026 09:44:09 -0500
+X-MC-Unique: 2HZLG-fwMYW90vlFMMeXdA-1
+X-Mimecast-MFC-AGG-ID: 2HZLG-fwMYW90vlFMMeXdA_1770907447
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-4831192e66aso70117455e9.2
+ for <qemu-devel@nongnu.org>; Thu, 12 Feb 2026 06:44:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1770907366; x=1771512166; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=LKcK4OiOnyFjtkFnUQVwTEazTMvuvfBeQzpgEdtx3RQ=;
- b=sBxOw3ci1gOvC8cnFI2F08UhVnA6zgtuJw88NMM2gQVaeKx9vCFdN9U8N3e8a0ZFXB
- IDe3+7w5oeYoNDevOUWd3U+XN9659ttmEVjZY9anUCZAxYQvEwqZ7iA5i5YY6UTNkWwd
- C/uutpqgZoUFsw6+jFLkfUV2snDMFmfggMhzV1YYZycSdnCbd8HTCDmFXxr3JK4REZ+3
- ZMeKinVt6jvzTaVgj7NtILwu/apsGph9MX7skMo6BA9l3QFKt1gZ90gTjdQ1/0i5csCL
- Sc/cSu2C/FoDZpwKNPxn6pdkYsPt0+eGm/CknVq9rhJ+vYX/5lrCAtacOQK6fXDzJsw/
- aWAQ==
+ d=redhat.com; s=google; t=1770907446; x=1771512246; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=mBrt5ee4/fiILW9JEjenLshWan4+h+vd2E487X6J0ps=;
+ b=LrvL3CvLgN5tUXXHB2BG0MfNlBHcSOaWj3fYBVHsY0kXN3jICX3eYlKPLAL+4Jday1
+ M15GuS2KK336KEZPo1QpvYDIrEGyKGBW7yj30z2IjP8dp6MsOkZV2xwCgpcSHXlB+n9f
+ sJlHG2eBfuJMoc+JOsyVk+J0PrWry0/+g7xTpQxW58UnEo/7TkteTPCWpjCwRD31WB5y
+ FwcMGZZJrVxEKS0cw3b2Ll6CVqcFEFpn5U8DeOoLqsAtW5hu56BLZbiBlRH0YhVSsswO
+ WkrNL6nysqHENgu0C3q7nBbP9xxXGkRwSoG7G51fv0RbjaBmmUEaFIoqVofBa33VA1Kj
+ GdJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770907366; x=1771512166;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=LKcK4OiOnyFjtkFnUQVwTEazTMvuvfBeQzpgEdtx3RQ=;
- b=Fo3n26IZ+qlkNCkrVZJa5vjLVnwGFzvQz1jxYO0B3I8yty+o45RG7+QcIyOCTY+Cu2
- G8+Ef2NOMLq0kgH78RDSovTdkMD6qknWX+BSbxhHs05dumpUWXthsYlYP6/sozSoWvUw
- UIh1cj67WbKiBzI3NS5pyE7OyejjeHCbtcGdNWXyu4h3XVnon8Yqz5Fq7YJb/UFBPp+v
- SfIstG4xUUbgACZ5G6SWzjSkhCPWpPRbncDwQCHhLrWYL5geIFcxyEMjhmO1A84yX5Og
- g9xFYc+5qDRbST6CVj3oyp/ZETli1DCKv/yLRxlXEcmLDgkKshBaTYDXnqpoGvMCLYoC
- pNag==
-X-Gm-Message-State: AOJu0YyIeDo4SkNpPShb9hdgp8z8TQXupw2lBfK3HWS39uNAXxAuCix5
- sE4zmg+oDOVtiA4TknZW7dtUoJjNJX35C0BRwSEqEELUQH5Bl14Zerj+6rSyeGm8CxuGpyRdall
- yRYy8NhTnKHTdVpD4VAth9wlgBnpAgch+3WPDaacaBBPV6MjLt3x4zxHjnTpy4yiSbVYEsCVGU5
- Cq363gJs5M2M3CnGmilc7rBHQi5WempZqapDoPq42f
-X-Gm-Gg: AZuq6aJwG7ueyNYH66FSX8nRtJdGEEGU24s4Viiw66vA4UOhQYw14xNiC1USxzZsky9
- oQd8eM6DDEKuNxgmhKegCiTsDfWbELmd31WiEzosIqdDmnt54re4ewpC1GfcRVLYwO/qntj0ISx
- 7PzU1s/af5Z4d7YsE2F61bFtRUVWZ3jG7+0YuKUZVjeMm0vO3oH3lfp6EiE0s53yuET/WC45FWz
- I1M6h2sfxSd0jpr7CQt1n/jKCPpoNWgdMqMhr1XcV8IbCDuBE7AyhSkBSoOXzCpcp+eFTb0ltDW
- oxMdFBKCF/CVyKhtPEq4dr3xbyFap2qV5KFL72EClvUmUwbnFI+9WUPIeLmGH8+bufnLjt6m8S8
- pHJM5Co5jR3DNpbArudHMYEN/szkTpgysDGoVX8uzDg5vFNqEy7tot03CnCXTVnD2q1o7QYCBWL
- lKClzUG9i9nIfGL8UowVjd+XlutB9M+45LNCO9aNDB5S3mVRu52uI=
-X-Received: by 2002:a5d:5888:0:b0:435:a3b9:9b8 with SMTP id
- ffacd0b85a97d-4378f11ef6fmr4046523f8f.24.1770907365963; 
- Thu, 12 Feb 2026 06:42:45 -0800 (PST)
-X-Received: by 2002:a5d:5888:0:b0:435:a3b9:9b8 with SMTP id
- ffacd0b85a97d-4378f11ef6fmr4046436f8f.24.1770907365143; 
- Thu, 12 Feb 2026 06:42:45 -0800 (PST)
+ d=1e100.net; s=20230601; t=1770907446; x=1771512246;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=mBrt5ee4/fiILW9JEjenLshWan4+h+vd2E487X6J0ps=;
+ b=YfQlcItsUAfO0IGg9fBjtpEJ1RMY0ASWSyhlNDzVg6gEFBHDA8evMffsfT9rIZTOCu
+ mfDWrqkMBIUENynL6YvMgovle77PmuTfcKiIquq64m87X96JJSXk1f6iA+7EOe2Gs/jI
+ DR3HWZi1mceQiIiSEw4Yi97Eis0T3gZwQp29X7nVz33fQm8f+L1UcT7dcZJlbg/Rni6g
+ TAUOjPOia1yry3fgB5fcCB0xkdON5hNshK1iw7Qtx/mm59YsDr5azP2k2uZ1TXJl5wYW
+ o1oUORSMS95jQPwbTEj6ph2XuxLMwBeF6eZkS0AoArVE87PLA9Y864c6nccLXHDWv1d8
+ KYJA==
+X-Gm-Message-State: AOJu0YwvKDGiA4O/jcmsWylFEuXAglhXM2b/Lg2+EN2UDfpn2lxQVKtr
+ HIQl0zxMm1QWLxUZ6iiZVnUjU0jR9b8+/cW7kl7Yq3bj/60C82X6LfPiBI6zyZcd55DcY6c6Ao3
+ t9xigAvpcO6pGbC591udKaab+yVQHtVpkS3k6XeO2t4ppabjJq2CoTDnBAMRUDBCCNn77+6uO4s
+ WhgJkMtcPGPmz2V9P4GODjWzkwdulHHCZ3lVmZy/7k
+X-Gm-Gg: AZuq6aIlBh00ZzgYirbdnFV5/pBxWMttxgkM0cFEa89/gFYbkmDQ/cid+MbjsRFalzE
+ xALA4D3U/M7Na0Kclk3C7FMiiH79FOeN4K83NO/pcB3jqO18WpVqZ98QETBWwhlNOHlxHdrx5ka
+ jBMyOi4kPGjHDW4OyxanB0veWGAXRhUSgxWcXfny693T8nZK5m2iFVj/ffuFK3H8Wkt7SiIDryJ
+ C6RyXjn/VGDarxUobu9eywmf397Jo8ljim7SCu65gePooL9SUHf0leTnasrY6pEVjB4sFjhdq1W
+ ElogmlnQ2gqf6TTFz/4uYiA5+IFnk8E+Uh1Xy9THnl/tAraB+3VmmCmeq/xpymHK5VNqJRtPFN7
+ gJmZtHXBauwi1LrW3Df95QSKbplsg5nupIZ5IkB9sOocMFAb0wSsY3eKy81x/N2mxjX25Zpnvd7
+ XJzNFmGnjj9rGoqMjnJy/V+L0fY0CtJqdOTnxnx8mKq8sw4GcWS6E=
+X-Received: by 2002:a05:600c:19c6:b0:480:1d0b:2d15 with SMTP id
+ 5b1f17b1804b1-48365715e72mr47458615e9.27.1770907445698; 
+ Thu, 12 Feb 2026 06:44:05 -0800 (PST)
+X-Received: by 2002:a05:600c:19c6:b0:480:1d0b:2d15 with SMTP id
+ 5b1f17b1804b1-48365715e72mr47457955e9.27.1770907445116; 
+ Thu, 12 Feb 2026 06:44:05 -0800 (PST)
 Received: from [10.60.241.123] (nat-pool-mxp-t.redhat.com. [149.6.153.186])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43783e5c92fsm13283323f8f.38.2026.02.12.06.42.44
- for <qemu-devel@nongnu.org>
+ ffacd0b85a97d-43783dfc2b0sm11941539f8f.21.2026.02.12.06.44.04
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 12 Feb 2026 06:42:44 -0800 (PST)
+ Thu, 12 Feb 2026 06:44:04 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 00/41] QOM, target/i386 patches for 2026-02-12
-Date: Thu, 12 Feb 2026 15:42:02 +0100
-Message-ID: <20260212144244.22579-1-pbonzini@redhat.com>
+Cc: Chandan Somani <csomani@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>
+Subject: [PULL 35/41] qdev: Free property array on release
+Date: Thu, 12 Feb 2026 15:42:37 +0100
+Message-ID: <20260212144244.22579-36-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20260212144244.22579-1-pbonzini@redhat.com>
+References: <20260212144244.22579-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -118,214 +121,298 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit cd5a79dc98e3087e7658e643bdbbb0baec77ac8a:
+From: Chandan Somani <csomani@redhat.com>
 
-  Merge tag 'for_upstream' of https://git.kernel.org/pub/scm/virt/kvm/mst/qemu into staging (2026-02-05 13:54:50 +0000)
+Before this patch, users of the property array would free the
+array themselves in their cleanup functions. This causes
+inconsistencies where some users leak the array and some free them.
 
-are available in the Git repository at:
+This patch makes it so that the property array's release function
+frees the property array (instead of just its elements). It fixes any
+leaks and requires less code.
 
-  https://gitlab.com/bonzini/qemu.git tags/for-upstream
+DEFINE_PROP_ARRAY leakers that are fixed in this patch:
+ebpf-rss_fds in hw/net/virtio-net.c
+rnmi_irqvec, rnmi_excpvec in hw/riscv/riscv_hart.c
+common.display_modes in hw/display/apple-gfx-mmio.m
+common.display_modes in hw/display/apple-gfx-pci.m
 
-for you to fetch changes up to 28a29efe4342055b4631de96ba71fd577ae83e07:
+Signed-off-by: Chandan Somani <csomani@redhat.com>
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+Link: https://lore.kernel.org/r/20260108230311.584141-2-csomani@redhat.com
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ block/accounting.c                |  1 -
+ hw/core/qdev-properties.c         | 21 ++++++++++-----------
+ hw/input/stellaris_gamepad.c      |  8 --------
+ hw/intc/arm_gicv3_common.c        |  8 --------
+ hw/intc/rx_icu.c                  |  8 --------
+ hw/misc/arm_sysctl.c              |  2 --
+ hw/misc/mps2-scc.c                |  8 --------
+ hw/net/rocker/rocker.c            |  1 -
+ hw/nvram/xlnx-efuse.c             |  8 --------
+ hw/nvram/xlnx-versal-efuse-ctrl.c |  8 --------
+ hw/virtio/virtio-iommu-pci.c      |  8 --------
+ 11 files changed, 10 insertions(+), 71 deletions(-)
 
-  target/i386/mshv: remove unused optimization of gva=>gpa translation (2026-02-10 14:41:08 +0100)
-
-----------------------------------------------------------------
-* hw/i386: Remove deprecated PC 2.6 and 2.7 machines
-* i386/cpu: Fix incorrect initializer in Diamond Rapids definition
-* qom: Clean up property release
-* target/i386/kvm: set KVM_PMU_CAP_DISABLE if "-pmu" is configured
-* target/i386/kvm: reset AMD and perfmon-v2 PMU registers during VM reset
-* mshv: Cleanup
-* target/i386: convert SEV-ES termination requests to guest panic events
-
-----------------------------------------------------------------
-Aidan Khoury (1):
-      i386/cpu: Fix incorrect initializer in Diamond Rapids definition
-
-Chandan Somani (1):
-      qdev: Free property array on release
-
-Dongli Zhang (5):
-      target/i386/kvm: set KVM_PMU_CAP_DISABLE if "-pmu" is configured
-      target/i386/kvm: extract unrelated code out of kvm_x86_build_cpuid()
-      target/i386/kvm: rename architectural PMU variables
-      target/i386/kvm: reset AMD PMU registers during VM reset
-      target/i386/kvm: support perfmon-v2 for reset
-
-Igor Mammedov (1):
-      tests/acpi: Allow DSDT table change for x86 machines
-
-Magnus Kulke (2):
-      accel/mshv: Remove remap overlapping mappings code
-      target/i386/mshv: remove unused optimization of gva=>gpa translation
-
-Marc-André Lureau (4):
-      qdev: make release_string() idempotent
-      qdev: make release_drive() idempotent
-      qdev: make release_tpm() idempotent
-      tests: add /qdev/free-properties test
-
-Paolo Bonzini (1):
-      target/i386: convert SEV-ES termination requests to guest panic events
-
-Philippe Mathieu-Daudé (22):
-      hw/i386/pc: Remove deprecated pc-q35-2.6 and pc-i440fx-2.6 machines
-      hw/i386/pc: Remove PCMachineClass::legacy_cpu_hotplug field
-      hw/nvram/fw_cfg: Rename fw_cfg_init_mem() with '_nodma' suffix
-      hw/mips/loongson3_virt: Prefer using fw_cfg_init_mem_nodma()
-      hw/nvram/fw_cfg: Factor fw_cfg_init_mem_internal() out
-      hw/nvram/fw_cfg: Rename fw_cfg_init_mem_wide() -> fw_cfg_init_mem_dma()
-      hw/i386/x86: Remove X86MachineClass::fwcfg_dma_enabled field
-      hw/i386/pc: Remove multiboot.bin
-      hw/i386: Assume fw_cfg DMA is always enabled
-      hw/i386: Remove linuxboot.bin
-      hw/i386/pc: Remove pc_compat_2_6[] array
-      hw/intc/apic: Remove APICCommonState::legacy_instance_id field
-      hw/core/machine: Remove hw_compat_2_6[] array
-      hw/virtio/virtio-mmio: Remove VirtIOMMIOProxy::format_transport_address field
-      hw/i386/pc: Remove deprecated pc-q35-2.7 and pc-i440fx-2.7 machines
-      hw/i386/pc: Remove pc_compat_2_7[] array
-      target/i386/cpu: Remove CPUX86State::full_cpuid_auto_level field
-      hw/audio/pcspk: Remove PCSpkState::migrate field
-      hw/core/machine: Remove hw_compat_2_7[] array
-      hw/i386/intel_iommu: Remove IntelIOMMUState::buggy_eim field
-      hw/virtio/virtio-pci: Remove VirtIOPCIProxy::ignore_backend_features field
-      hw/char/virtio-serial: Do not expose the 'emergency-write' property
-
-Zhao Liu (4):
-      pc: Start with modern CPU hotplug interface by default
-      acpi: Remove legacy cpu hotplug utilities
-      docs/specs/acpi_cpu_hotplug: Remove legacy cpu hotplug descriptions
-      tests/acpi: Update DSDT tables for pc & q35 machines
-
- docs/specs/acpi_cpu_hotplug.rst                   |  28 +-
- qapi/run-state.json                               |  23 +-
- include/hw/acpi/cpu.h                             |   1 -
- include/hw/acpi/ich9.h                            |   4 +-
- include/hw/acpi/piix4.h                           |   4 +-
- include/hw/core/boards.h                          |   6 -
- include/hw/i386/apic_internal.h                   |   1 -
- include/hw/i386/intel_iommu.h                     |   1 -
- include/hw/i386/pc.h                              |   9 -
- include/hw/i386/x86.h                             |   2 -
- include/hw/nvram/fw_cfg.h                         |   9 +-
- include/hw/virtio/virtio-mmio.h                   |   1 -
- include/hw/virtio/virtio-pci.h                    |   1 -
- include/hw/virtio/virtio-serial.h                 |   2 -
- include/system/mshv_int.h                         |  22 +-
- pc-bios/optionrom/optionrom.h                     |   4 -
- target/i386/cpu.h                                 |  19 +-
- accel/kvm/kvm-all.c                               |   1 +
- accel/mshv/mem.c                                  | 406 ++--------------------
- accel/mshv/mshv-all.c                             |   2 -
- backends/tpm/tpm_util.c                           |   1 +
- block/accounting.c                                |   1 -
- hw/acpi/acpi-cpu-hotplug-stub.c                   |  19 +-
- hw/acpi/cpu.c                                     |  10 -
- hw/acpi/cpu_hotplug.c                             | 348 -------------------
- hw/acpi/generic_event_device.c                    |   1 +
- hw/acpi/ich9.c                                    |  61 +---
- hw/acpi/piix4.c                                   |  61 +---
- hw/arm/virt.c                                     |   2 +-
- hw/audio/pcspk.c                                  |  10 -
- hw/char/virtio-serial-bus.c                       |   9 +-
- hw/core/machine.c                                 |  17 -
- hw/core/qdev-properties-system.c                  |   1 +
- hw/core/qdev-properties.c                         |  24 +-
- hw/hppa/machine.c                                 |   2 +-
- hw/i386/acpi-build.c                              |   7 +-
- hw/i386/fw_cfg.c                                  |  16 +-
- hw/i386/intel_iommu.c                             |   5 +-
- hw/i386/microvm.c                                 |   3 -
- hw/i386/multiboot.c                               |   7 +-
- hw/i386/pc.c                                      |  25 +-
- hw/i386/pc_piix.c                                 |  23 --
- hw/i386/pc_q35.c                                  |  24 --
- hw/i386/x86-common.c                              |   8 +-
- hw/i386/x86.c                                     |   2 -
- hw/input/stellaris_gamepad.c                      |   8 -
- hw/intc/apic_common.c                             |   5 -
- hw/intc/arm_gicv3_common.c                        |   8 -
- hw/intc/rx_icu.c                                  |   8 -
- hw/loongarch/fw_cfg.c                             |   4 +-
- hw/loongarch/virt-acpi-build.c                    |   1 -
- hw/mips/loongson3_virt.c                          |   2 +-
- hw/misc/arm_sysctl.c                              |   2 -
- hw/misc/mps2-scc.c                                |   8 -
- hw/net/rocker/rocker.c                            |   1 -
- hw/nvram/fw_cfg.c                                 |  22 +-
- hw/nvram/xlnx-efuse.c                             |   8 -
- hw/nvram/xlnx-versal-efuse-ctrl.c                 |   8 -
- hw/riscv/virt.c                                   |   4 +-
- hw/virtio/virtio-iommu-pci.c                      |   8 -
- hw/virtio/virtio-mmio.c                           |  15 -
- hw/virtio/virtio-pci.c                            |   5 +-
- system/runstate.c                                 |   4 +
- target/i386/cpu-system.c                          |  22 ++
- target/i386/cpu.c                                 | 119 ++++---
- target/i386/kvm/kvm.c                             | 314 ++++++++++++++---
- target/i386/mshv/mshv-cpu.c                       |  63 +---
- tests/qtest/test-x86-cpuid-compat.c               |  11 -
- tests/unit/test-qdev.c                            |  96 +++++
- accel/mshv/trace-events                           |   5 -
- hw/acpi/meson.build                               |   2 +-
- pc-bios/meson.build                               |   2 -
- pc-bios/multiboot.bin                             | Bin 1024 -> 0 bytes
- pc-bios/optionrom/Makefile                        |   2 +-
- pc-bios/optionrom/linuxboot.S                     | 195 -----------
- pc-bios/optionrom/multiboot.S                     | 232 -------------
- pc-bios/optionrom/multiboot_dma.S                 | 234 ++++++++++++-
- roms/seabios-hppa                                 |   2 +-
- tests/data/acpi/x86/pc/DSDT                       | Bin 8611 -> 8598 bytes
- tests/data/acpi/x86/pc/DSDT.acpierst              | Bin 8522 -> 8509 bytes
- tests/data/acpi/x86/pc/DSDT.acpihmat              | Bin 9936 -> 9923 bytes
- tests/data/acpi/x86/pc/DSDT.bridge                | Bin 15482 -> 15469 bytes
- tests/data/acpi/x86/pc/DSDT.cphp                  | Bin 9075 -> 9062 bytes
- tests/data/acpi/x86/pc/DSDT.dimmpxm               | Bin 10265 -> 10252 bytes
- tests/data/acpi/x86/pc/DSDT.hpbridge              | Bin 8562 -> 8549 bytes
- tests/data/acpi/x86/pc/DSDT.hpbrroot              | Bin 5100 -> 5087 bytes
- tests/data/acpi/x86/pc/DSDT.ipmikcs               | Bin 8683 -> 8670 bytes
- tests/data/acpi/x86/pc/DSDT.memhp                 | Bin 9970 -> 9957 bytes
- tests/data/acpi/x86/pc/DSDT.nohpet                | Bin 8469 -> 8456 bytes
- tests/data/acpi/x86/pc/DSDT.numamem               | Bin 8617 -> 8604 bytes
- tests/data/acpi/x86/pc/DSDT.roothp                | Bin 12404 -> 12391 bytes
- tests/data/acpi/x86/q35/DSDT                      | Bin 8440 -> 8427 bytes
- tests/data/acpi/x86/q35/DSDT.acpierst             | Bin 8457 -> 8444 bytes
- tests/data/acpi/x86/q35/DSDT.acpihmat             | Bin 9765 -> 9752 bytes
- tests/data/acpi/x86/q35/DSDT.acpihmat-generic-x   | Bin 12650 -> 12637 bytes
- tests/data/acpi/x86/q35/DSDT.acpihmat-noinitiator | Bin 8719 -> 8706 bytes
- tests/data/acpi/x86/q35/DSDT.applesmc             | Bin 8486 -> 8473 bytes
- tests/data/acpi/x86/q35/DSDT.bridge               | Bin 12053 -> 12040 bytes
- tests/data/acpi/x86/q35/DSDT.core-count           | Bin 12998 -> 12985 bytes
- tests/data/acpi/x86/q35/DSDT.core-count2          | Bin 33855 -> 33842 bytes
- tests/data/acpi/x86/q35/DSDT.cphp                 | Bin 8904 -> 8891 bytes
- tests/data/acpi/x86/q35/DSDT.cxl                  | Bin 13231 -> 13218 bytes
- tests/data/acpi/x86/q35/DSDT.dimmpxm              | Bin 10094 -> 10081 bytes
- tests/data/acpi/x86/q35/DSDT.ipmibt               | Bin 8515 -> 8502 bytes
- tests/data/acpi/x86/q35/DSDT.ipmismbus            | Bin 8528 -> 8515 bytes
- tests/data/acpi/x86/q35/DSDT.ivrs                 | Bin 8457 -> 8444 bytes
- tests/data/acpi/x86/q35/DSDT.memhp                | Bin 9799 -> 9786 bytes
- tests/data/acpi/x86/q35/DSDT.mmio64               | Bin 9570 -> 9557 bytes
- tests/data/acpi/x86/q35/DSDT.multi-bridge         | Bin 13293 -> 13280 bytes
- tests/data/acpi/x86/q35/DSDT.noacpihp             | Bin 8302 -> 8289 bytes
- tests/data/acpi/x86/q35/DSDT.nohpet               | Bin 8298 -> 8285 bytes
- tests/data/acpi/x86/q35/DSDT.numamem              | Bin 8446 -> 8433 bytes
- tests/data/acpi/x86/q35/DSDT.pvpanic-isa          | Bin 8541 -> 8528 bytes
- tests/data/acpi/x86/q35/DSDT.thread-count         | Bin 12998 -> 12985 bytes
- tests/data/acpi/x86/q35/DSDT.thread-count2        | Bin 33855 -> 33842 bytes
- tests/data/acpi/x86/q35/DSDT.tis.tpm12            | Bin 9046 -> 9033 bytes
- tests/data/acpi/x86/q35/DSDT.tis.tpm2             | Bin 9072 -> 9059 bytes
- tests/data/acpi/x86/q35/DSDT.type4-count          | Bin 18674 -> 18661 bytes
- tests/data/acpi/x86/q35/DSDT.viot                 | Bin 14697 -> 14684 bytes
- tests/data/acpi/x86/q35/DSDT.xapic                | Bin 35803 -> 35790 bytes
- tests/unit/meson.build                            |   1 +
- 121 files changed, 852 insertions(+), 1802 deletions(-)
- delete mode 100644 hw/acpi/cpu_hotplug.c
- create mode 100644 tests/unit/test-qdev.c
- delete mode 100644 pc-bios/multiboot.bin
- delete mode 100644 pc-bios/optionrom/linuxboot.S
- delete mode 100644 pc-bios/optionrom/multiboot.S
+diff --git a/block/accounting.c b/block/accounting.c
+index 0933c61f3a2..5cf51f029b1 100644
+--- a/block/accounting.c
++++ b/block/accounting.c
+@@ -73,7 +73,6 @@ bool block_acct_setup(BlockAcctStats *stats, enum OnOffAuto account_invalid,
+             }
+             block_acct_add_interval(stats, stats_intervals[i]);
+         }
+-        g_free(stats_intervals);
+     }
+     return true;
+ }
+diff --git a/hw/core/qdev-properties.c b/hw/core/qdev-properties.c
+index c96ccfb2635..c2e3f0543fd 100644
+--- a/hw/core/qdev-properties.c
++++ b/hw/core/qdev-properties.c
+@@ -673,10 +673,8 @@ static Property array_elem_prop(Object *obj, const Property *parent_prop,
+ 
+ /*
+  * Object property release callback for array properties: We call the
+- * underlying element's property release hook for each element.
+- *
+- * Note that it is the responsibility of the individual device's deinit
+- * to free the array proper.
++ * underlying element's property release hook for each element and free the
++ * property array.
+  */
+ static void release_prop_array(Object *obj, const char *name, void *opaque)
+ {
+@@ -686,15 +684,16 @@ static void release_prop_array(Object *obj, const char *name, void *opaque)
+     char *elem = *arrayptr;
+     int i;
+ 
+-    if (!prop->arrayinfo->release) {
+-        return;
++    if (prop->arrayinfo->release) {
++        for (i = 0; i < *alenptr; i++) {
++            Property elem_prop = array_elem_prop(obj, prop, name, elem);
++            prop->arrayinfo->release(obj, NULL, &elem_prop);
++            elem += prop->arrayfieldsize;
++        }
+     }
+ 
+-    for (i = 0; i < *alenptr; i++) {
+-        Property elem_prop = array_elem_prop(obj, prop, name, elem);
+-        prop->arrayinfo->release(obj, NULL, &elem_prop);
+-        elem += prop->arrayfieldsize;
+-    }
++    g_clear_pointer(arrayptr, g_free);
++    *alenptr = 0;
+ }
+ 
+ /*
+diff --git a/hw/input/stellaris_gamepad.c b/hw/input/stellaris_gamepad.c
+index f64f5ea9ce3..42d43f9af51 100644
+--- a/hw/input/stellaris_gamepad.c
++++ b/hw/input/stellaris_gamepad.c
+@@ -63,13 +63,6 @@ static void stellaris_gamepad_realize(DeviceState *dev, Error **errp)
+     qemu_input_handler_register(dev, &stellaris_gamepad_handler);
+ }
+ 
+-static void stellaris_gamepad_finalize(Object *obj)
+-{
+-    StellarisGamepad *s = STELLARIS_GAMEPAD(obj);
+-
+-    g_free(s->keycodes);
+-}
+-
+ static void stellaris_gamepad_reset_enter(Object *obj, ResetType type)
+ {
+     StellarisGamepad *s = STELLARIS_GAMEPAD(obj);
+@@ -98,7 +91,6 @@ static const TypeInfo stellaris_gamepad_info[] = {
+         .name = TYPE_STELLARIS_GAMEPAD,
+         .parent = TYPE_SYS_BUS_DEVICE,
+         .instance_size = sizeof(StellarisGamepad),
+-        .instance_finalize = stellaris_gamepad_finalize,
+         .class_init = stellaris_gamepad_class_init,
+     },
+ };
+diff --git a/hw/intc/arm_gicv3_common.c b/hw/intc/arm_gicv3_common.c
+index 0a2e5a3e2fc..e5f3c3c4473 100644
+--- a/hw/intc/arm_gicv3_common.c
++++ b/hw/intc/arm_gicv3_common.c
+@@ -488,13 +488,6 @@ static void arm_gicv3_common_realize(DeviceState *dev, Error **errp)
+     s->itslist = g_ptr_array_new();
+ }
+ 
+-static void arm_gicv3_finalize(Object *obj)
+-{
+-    GICv3State *s = ARM_GICV3_COMMON(obj);
+-
+-    g_free(s->redist_region_count);
+-}
+-
+ static void arm_gicv3_common_reset_hold(Object *obj, ResetType type)
+ {
+     GICv3State *s = ARM_GICV3_COMMON(obj);
+@@ -644,7 +637,6 @@ static const TypeInfo arm_gicv3_common_type = {
+     .instance_size = sizeof(GICv3State),
+     .class_size = sizeof(ARMGICv3CommonClass),
+     .class_init = arm_gicv3_common_class_init,
+-    .instance_finalize = arm_gicv3_finalize,
+     .abstract = true,
+     .interfaces = (const InterfaceInfo[]) {
+         { TYPE_ARM_LINUX_BOOT_IF },
+diff --git a/hw/intc/rx_icu.c b/hw/intc/rx_icu.c
+index 87cdc6cbdef..992b069ae24 100644
+--- a/hw/intc/rx_icu.c
++++ b/hw/intc/rx_icu.c
+@@ -334,13 +334,6 @@ static void rxicu_init(Object *obj)
+     sysbus_init_irq(d, &icu->_swi);
+ }
+ 
+-static void rxicu_fini(Object *obj)
+-{
+-    RXICUState *icu = RX_ICU(obj);
+-    g_free(icu->map);
+-    g_free(icu->init_sense);
+-}
+-
+ static const VMStateDescription vmstate_rxicu = {
+     .name = "rx-icu",
+     .version_id = 1,
+@@ -382,7 +375,6 @@ static const TypeInfo rxicu_info = {
+     .parent = TYPE_SYS_BUS_DEVICE,
+     .instance_size = sizeof(RXICUState),
+     .instance_init = rxicu_init,
+-    .instance_finalize = rxicu_fini,
+     .class_init = rxicu_class_init,
+ };
+ 
+diff --git a/hw/misc/arm_sysctl.c b/hw/misc/arm_sysctl.c
+index 2a317ac7f5b..7b320f89c1f 100644
+--- a/hw/misc/arm_sysctl.c
++++ b/hw/misc/arm_sysctl.c
+@@ -618,9 +618,7 @@ static void arm_sysctl_finalize(Object *obj)
+ {
+     arm_sysctl_state *s = ARM_SYSCTL(obj);
+ 
+-    g_free(s->db_voltage);
+     g_free(s->db_clock);
+-    g_free(s->db_clock_reset);
+ }
+ 
+ static const Property arm_sysctl_properties[] = {
+diff --git a/hw/misc/mps2-scc.c b/hw/misc/mps2-scc.c
+index 350bba3dab8..7877b31479c 100644
+--- a/hw/misc/mps2-scc.c
++++ b/hw/misc/mps2-scc.c
+@@ -405,13 +405,6 @@ static void mps2_scc_realize(DeviceState *dev, Error **errp)
+     s->oscclk = g_new0(uint32_t, s->num_oscclk);
+ }
+ 
+-static void mps2_scc_finalize(Object *obj)
+-{
+-    MPS2SCC *s = MPS2_SCC(obj);
+-
+-    g_free(s->oscclk_reset);
+-}
+-
+ static bool cfg7_needed(void *opaque)
+ {
+     MPS2SCC *s = opaque;
+@@ -489,7 +482,6 @@ static const TypeInfo mps2_scc_info = {
+     .parent = TYPE_SYS_BUS_DEVICE,
+     .instance_size = sizeof(MPS2SCC),
+     .instance_init = mps2_scc_init,
+-    .instance_finalize = mps2_scc_finalize,
+     .class_init = mps2_scc_class_init,
+ };
+ 
+diff --git a/hw/net/rocker/rocker.c b/hw/net/rocker/rocker.c
+index 3eb7b445113..4a7056bd45e 100644
+--- a/hw/net/rocker/rocker.c
++++ b/hw/net/rocker/rocker.c
+@@ -1429,7 +1429,6 @@ static void pci_rocker_uninit(PCIDevice *dev)
+             world_free(r->worlds[i]);
+         }
+     }
+-    g_free(r->fp_ports_peers);
+ }
+ 
+ static void rocker_reset(DeviceState *dev)
+diff --git a/hw/nvram/xlnx-efuse.c b/hw/nvram/xlnx-efuse.c
+index 34436705dde..1a9650ba128 100644
+--- a/hw/nvram/xlnx-efuse.c
++++ b/hw/nvram/xlnx-efuse.c
+@@ -225,13 +225,6 @@ static void efuse_realize(DeviceState *dev, Error **errp)
+     }
+ }
+ 
+-static void efuse_finalize(Object *obj)
+-{
+-    XlnxEFuse *s = XLNX_EFUSE(obj);
+-
+-    g_free(s->ro_bits);
+-}
+-
+ static void efuse_prop_set_drive(Object *obj, Visitor *v, const char *name,
+                                  void *opaque, Error **errp)
+ {
+@@ -289,7 +282,6 @@ static const TypeInfo efuse_info = {
+     .name          = TYPE_XLNX_EFUSE,
+     .parent        = TYPE_DEVICE,
+     .instance_size = sizeof(XlnxEFuse),
+-    .instance_finalize = efuse_finalize,
+     .class_init    = efuse_class_init,
+ };
+ 
+diff --git a/hw/nvram/xlnx-versal-efuse-ctrl.c b/hw/nvram/xlnx-versal-efuse-ctrl.c
+index b7dc0e49e5f..69acdfa3047 100644
+--- a/hw/nvram/xlnx-versal-efuse-ctrl.c
++++ b/hw/nvram/xlnx-versal-efuse-ctrl.c
+@@ -724,13 +724,6 @@ static void efuse_ctrl_init(Object *obj)
+     sysbus_init_irq(sbd, &s->irq_efuse_imr);
+ }
+ 
+-static void efuse_ctrl_finalize(Object *obj)
+-{
+-    XlnxVersalEFuseCtrl *s = XLNX_VERSAL_EFUSE_CTRL(obj);
+-
+-    g_free(s->extra_pg0_lock_spec);
+-}
+-
+ static const VMStateDescription vmstate_efuse_ctrl = {
+     .name = TYPE_XLNX_VERSAL_EFUSE_CTRL,
+     .version_id = 1,
+@@ -767,7 +760,6 @@ static const TypeInfo efuse_ctrl_info = {
+     .instance_size = sizeof(XlnxVersalEFuseCtrl),
+     .class_init    = efuse_ctrl_class_init,
+     .instance_init = efuse_ctrl_init,
+-    .instance_finalize = efuse_ctrl_finalize,
+ };
+ 
+ static void efuse_ctrl_register_types(void)
+diff --git a/hw/virtio/virtio-iommu-pci.c b/hw/virtio/virtio-iommu-pci.c
+index f5f6ce7359d..7b5ffddc1e9 100644
+--- a/hw/virtio/virtio-iommu-pci.c
++++ b/hw/virtio/virtio-iommu-pci.c
+@@ -94,18 +94,10 @@ static void virtio_iommu_pci_instance_init(Object *obj)
+                                 TYPE_VIRTIO_IOMMU);
+ }
+ 
+-static void virtio_iommu_pci_instance_finalize(Object *obj)
+-{
+-    VirtIOIOMMUPCI *dev = VIRTIO_IOMMU_PCI(obj);
+-
+-    g_free(dev->vdev.prop_resv_regions);
+-}
+-
+ static const VirtioPCIDeviceTypeInfo virtio_iommu_pci_info = {
+     .generic_name  = TYPE_VIRTIO_IOMMU_PCI,
+     .instance_size = sizeof(VirtIOIOMMUPCI),
+     .instance_init = virtio_iommu_pci_instance_init,
+-    .instance_finalize = virtio_iommu_pci_instance_finalize,
+     .class_init    = virtio_iommu_pci_class_init,
+ };
+ 
 -- 
 2.52.0
 
