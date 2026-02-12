@@ -4,86 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AE2EEEA845
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 20:02:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80ABFEEA84E
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 20:13:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqcsV-00014i-Mm; Thu, 12 Feb 2026 15:01:33 -0500
+	id 1vqd3y-00069t-VQ; Thu, 12 Feb 2026 15:13:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vqcs8-0000q1-HI
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 15:01:22 -0500
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vqd3x-00069K-5W
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 15:13:21 -0500
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vqcs4-0004RN-K3
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 15:01:08 -0500
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-4359a16a400so216648f8f.1
- for <qemu-devel@nongnu.org>; Thu, 12 Feb 2026 12:01:03 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vqd3u-000858-HT
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 15:13:20 -0500
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-483487335c2so1795185e9.2
+ for <qemu-devel@nongnu.org>; Thu, 12 Feb 2026 12:13:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770926462; x=1771531262; darn=nongnu.org;
+ d=linaro.org; s=google; t=1770927197; x=1771531997; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=+Qgto1mMxevqHypEtfXdXGaroJl/oKxVVPaWgRyjJsQ=;
- b=LALD2HXjha00Mj43fQekkptQoqqAHtkjvqtob13J2LKknEOmKdJRWLE8NsvUJY2TcB
- JZIbpSYqZQwjmnGqvgpwUS8rfbJTfB3DA2FM7DSpLbqDNywUmQcHml3ZNqARq8PMTvMm
- 5HODLND9nxJxtlYFF4Ytz9yvnKE06Vl3NZT9J5QdD5wC7SYkGrQ1NC4d4pUhj5xz6Zha
- 3HA+tepqlSJ8Apma5LJqVTB496LruoWFlP9VFg+pU/pNdXNZovjviU8wHhJYy187repL
- zL/wwPsgsYpG1IVLogN8lkwkLfXdkWfXbpvp4EPpsjW+bX273H49rtf7U3NolKWd3f/B
- W0bw==
+ bh=/UXXIMdZQ1yEF6XH7tYw6k1RBttw9Ak7PjAOFBjs++c=;
+ b=XkU04p9uZVivtE6aqbpOsq87XBlA7YCPfQge5ROfiDu0eu87OHzKNX9SkiV7M4VZah
+ GJaukJ0bJtMO3BndQiiO45rXvzRG96jRQIF/fkcARWWNDTQdum25I+rYtdsqh5TinE+n
+ kLCYV4Jzz1kwDMBAevdiEVxmGyJVeknH6t7OivyiyrvrbtD9PfX24xJ4HBSdvOTIXddu
+ WfdmdtmpviTvUB7m/AEaRbZxgPLurXp3o4c3ZYHXyOmGLnT+2bAObjgplvrYK3ynnAAl
+ MWyrAI53fk5aX9MxwYQrbp2286NEWGnTgdnj5HTpcPbUHQ8uJDHvJ/VB3lDE36sC329h
+ 4Obw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770926462; x=1771531262;
+ d=1e100.net; s=20230601; t=1770927197; x=1771531997;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=+Qgto1mMxevqHypEtfXdXGaroJl/oKxVVPaWgRyjJsQ=;
- b=ZLHjuO61LprbQTGRo3ZTvoyk1P9Mzoxixulu55t1o5J42yApEslZ3+/jOZDHYPNFL1
- K1VxRPSUhszFM+neNUGnOUSt8XES5RYkl40A8maSlfxd5XdjkFm9G6A4QppbIAIf5yZO
- yqfb6Fa3do/ZHaEPagRp0L0bCqXiAWP6gK4G8FXcp1Jcw0Dq1DgI/CvX8tL6lXebmHO2
- SkAytX2wUiBWtUm6b8EdBKfW0vt7uQ2Qso65lGs0lb+rF+mhYR4nje16K8zfitVjeAkI
- pSTVFSSR1Zl2j3qUsRrngj6zto1AQm9S0U2XRxZ5uXH3Mv7IVgEYEnkKV9b25tOXcmgB
- Uc9Q==
+ bh=/UXXIMdZQ1yEF6XH7tYw6k1RBttw9Ak7PjAOFBjs++c=;
+ b=qvrV0w+gEHyjERe6L3NvavN5YhIAB/7gXTdjsYfgxjPLF78agGaLiygP4JL91R1rEx
+ 9lCbDz52Ks6ofxgVJL6n6tCQKsi7QNmh3QqX04KDkVaEf069eos+UdIgGjj6kmlvOShu
+ K0z8OeGiRUOPFBES2tNaecgFtJiHbdA8bzsqqhlBW/nH1HMVWKC6kFQGAFbZK9dO482+
+ /4h/tG1XL3wHGgkM1bdH9o/Z/cry1xwKzYeumXVulPuKo486bMdDfutDcmFZi9y1oThD
+ oCfsTG4SvZPSNntMMq8Cl3BjAvSSIKx787S2AOyuM4xgslzY9iicL/Bld1fRPY2Otkpy
+ rTfA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVwj7F5Wbp8rleCxALr1/HwiaeYJVJQIkuLZTm8xoHEDtXRUlxs3h7K/etANeZem+FnwDxdaVBG8yyf@nongnu.org
-X-Gm-Message-State: AOJu0YzJpor4txlJjoGRpCrfY67cGf5/iN0+YiTYiprG6WQKm/Ah9Osk
- b/0Q/j6oGLvrctnrRzq0J3tOCtozkc5IwOrRhzNpFmFLVwWsyv++U3h/QSPERWaqF6w=
-X-Gm-Gg: AZuq6aKAiV1sbDhCx+TixsWU7JjVFpE+YtlKy7tbKCKG0llm/ZWAVitMREF0pWAuGt5
- 8qc9c30fGX6lH/8Qm9ZdxfBevGc2P9mu8yCWsi4ZpT9mVpk/WNzVXvCAp43G8pqTZ3cH7BZviFh
- VUky1JOipvG3QhbodYhHr1EAB3LPuh9c9xG72mhIyaXab7lZppm7wxwfFAfsobU+Zv8wVLDniqX
- QCDUTZKkI5txW2/mcVPTAPxVbYK+PCzEkw+n/Uwc6nr2RYzU7cgPQI30/V4M8XAj3ypoyJS8Ier
- LpRQmNKzgsFtca+2xm9h+ztQEgG9lJf1jLUimeFk9vl5B4tQcLdMEvlAqZ+qraGQZR8ryg6B1dE
- /Bo8rIemgPButsOMJaKHEVEouskwoOnH12ZP+urs4XOA7+ewwVQaNW2320Z2+hhAeVCi12ijcT4
- QyiPgY64CH7uaO5rTZ94iF+Y+V/QbCe7yyVqxROmsMaGzePA/y/Ho9HGawgHwQgXFXGg==
-X-Received: by 2002:a05:6000:310f:b0:436:307c:b762 with SMTP id
- ffacd0b85a97d-43796af049cmr156490f8f.60.1770926462297; 
- Thu, 12 Feb 2026 12:01:02 -0800 (PST)
+ AJvYcCWZglFFzp7QyzcoGWGXwrVOrbn4++tfscEiXEeTlWwACL00yapZuCxxhLLBRzC8UY6mF0iYhTol//fJ@nongnu.org
+X-Gm-Message-State: AOJu0Yy8PWcMRqhC6hQFDtAWvR+TwaaRyKUBN/HvNMqoYkg7PBFiPs52
+ iAWlTjHMMCgt0nYbXbqidvCIRyHN7ySDy7qBcsN1T07uVV/pnxU/CV85SvOZfaWJd4I=
+X-Gm-Gg: AZuq6aIS73zGmxoLO4ULqBfiP+Pn5R2MzcwtaiI0ek0QwPkfblWAdzKt6LZMX+2yStx
+ XgmZClLUooKGP08t8ThLsQ9I6XrC+X4xC1eAN4H1casGW+fExnBaSDnLOKEm4iQaQHM71IF2ij6
+ WdJFqySsOi9oJ2olVQLTrG6GG/KNMMkY70yCXn/5bi6HCp29gK8gWsjrLF9ikW+3ctvtBvdKEJp
+ FFVQpX/WgAu0GHWnNAUjX7t6oxg1wGacFlb6m4yDwuGbxN5x9Rm0hCx0FXXrxcSgD4jubxmC4uV
+ PdO61p/GHnR4K0t3IwNN+1aKexXswZsoPmk1oq1RqxN1TNFPNt8x7MRI2f/JXy0mf5Hj4xBFIPq
+ vjcTMysZpnEziJ7r92ReOfrvSD10MBaXqDAQUFXRb0nJfkdBjRMYuZmmWeI8F9Q+aY39cd0j6vy
+ QVUIwWUknAy0qxAmrakw3u6CBG877A6gBO1dPN4gajFFKl5SKiCZQgfreyzdJYYYsFrw==
+X-Received: by 2002:a05:600c:8b08:b0:477:89d5:fdb2 with SMTP id
+ 5b1f17b1804b1-48370e237c9mr5102315e9.14.1770927196736; 
+ Thu, 12 Feb 2026 12:13:16 -0800 (PST)
 Received: from [192.168.69.228] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43796ac8d82sm241406f8f.31.2026.02.12.12.00.59
+ 5b1f17b1804b1-4834d5d78cfsm299090885e9.1.2026.02.12.12.13.15
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 12 Feb 2026 12:01:00 -0800 (PST)
-Message-ID: <14ee1f39-a8b5-44e4-b9f4-1eb08244c9cc@linaro.org>
-Date: Thu, 12 Feb 2026 21:00:58 +0100
+ Thu, 12 Feb 2026 12:13:16 -0800 (PST)
+Message-ID: <17f7b53d-dbb7-4090-a6ac-671c85dd611d@linaro.org>
+Date: Thu, 12 Feb 2026 21:13:14 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/4] contrib/plugins/uftrace: add riscv64 support
+Subject: Re: [PATCH v3 00/10] chardev: Improve @docstring and clarify
+ qemu_chr_write() uses
 Content-Language: en-US
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>, alistair.francis@wdc.com,
- Mahmoud Mandour <ma.mandourr@gmail.com>, manos.pitsidianakis@linaro.org,
- anjo@rev.ng, brian.cain@oss.qualcomm.com
-References: <20260210201344.1403613-1-pierrick.bouvier@linaro.org>
- <20260210201344.1403613-5-pierrick.bouvier@linaro.org>
+To: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ qemu-stable <qemu-stable@nongnu.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+References: <20251112134143.27194-1-philmd@linaro.org>
+ <0faef1dc-6fde-41b1-bf1e-8ecfe49033f7@tls.msk.ru>
+ <a50b8ccb-4d13-431b-836e-b08e5add71bd@linaro.org>
+ <95e61064-c8e8-4c36-9371-cbd28ab737c8@tls.msk.ru>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260210201344.1403613-5-pierrick.bouvier@linaro.org>
+In-Reply-To: <95e61064-c8e8-4c36-9371-cbd28ab737c8@tls.msk.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,25 +111,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/2/26 21:13, Pierrick Bouvier wrote:
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> ---
->   docs/about/emulation.rst  | 10 +++--
->   contrib/plugins/uftrace.c | 87 +++++++++++++++++++++++++++++++++++++++
->   2 files changed, 94 insertions(+), 3 deletions(-)
+On 12/2/26 18:58, Michael Tokarev wrote:
+> On 11/26/25 10:45, Philippe Mathieu-Daudé wrote:
+>> On 26/11/25 07:56, Michael Tokarev wrote:
+>>> On 11/12/25 16:41, Philippe Mathieu-Daudé wrote:
+>>>> v3:
+>>>> - Addressed Marc-André & Daniel comments
+>>>> - Document qemu_chr_fe_write()
+>>>> - Rename replay arguments
+>>
+>>
+>>> Hi!
+>>>
+>>>  From this patchset, 1 change has now found its way to the master
+>>> branch:
+>>>
+>>>   chardev/char-pty: Do not ignore chr_write() failures
+>>>
+>>> Besides it, the following 2 changes were marked for-stable:
+>>>
+>>>   chardev/char: Allow partial writes in qemu_chr_write()
+>>>   chardev/char: Preserve %errno in qemu_chr_write()
+>>>
+>>> Are other changes (including the above 2) not needed anymore?
+>>
+>> They are, I need to reply to Marc-André and respin a v4...
+>>
+>> Old bugs so can wait 11.0 :S
+> 
+> Found an old(ish) thread...  ping? :))
 
-
-> +typedef enum {
-> +    RISCV64_USER,
-> +    RISCV64_SUPERVISOR,
-> +    RISCV64_RESERVED,
-> +    RISCV64_MACHINE,
-> +    RISCV64_PRIVILEGE_LEVEL_MAX,
-
-Dropping the superfluous trailing comma:
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
-> +} Riscv64PrivilegeLevel;
+Cc'ing new docs/ maintainer :P
 
 
