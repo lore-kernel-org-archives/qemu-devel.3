@@ -4,72 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DFBCEEA855
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 21:41:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD541EEA855
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 21:41:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqeQQ-0008MZ-KM; Thu, 12 Feb 2026 16:40:38 -0500
+	id 1vqeQ4-00088Y-9M; Thu, 12 Feb 2026 16:40:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vqeQN-0008L0-Uq
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 16:40:35 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vqeQ1-00086o-IM
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 16:40:13 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vqeQM-0006CD-GR
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 16:40:35 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vqePz-00064o-Mj
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 16:40:13 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770932433;
+ s=mimecast20190719; t=1770932410;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=TKYz2OOq/Yo22Lz/U0vqNR0yCFTqQBKR1flNZGBJoNM=;
- b=GoCICgEFZxxakSSII6BIJuJ+alNiUhSkEQXTBjY2FzkFTAAi3kC8P8iXQM1yiGJ6LJDD6s
- m/OuDiSqkEcyuLkn06QxBkEBAxbXkL56mug+WOH5mJGPrxVcEMgP6eTf4JthVw6VWgUfV1
- 0jxW2QnW4XEKr6+T//JWtx0kCBplSUs=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=3GcbYNXwH/aSDIPjFZUN1LesZNNucAAzu2noFJMuvG4=;
+ b=ZOeNRHnMRKCRFVEUGfhpVSFvn9f+CWxYtyEVn6L26op1PvXLYm+fzyiRmP1mglz5aAaB/W
+ SdGvVaypaSrxjsY6Z6dy2aGsdhVPuMQ1CZPG2boClfbDcnF5FigBb6fBI/PsxuRxEuHk7X
+ XDq28xNZEG1eXuIG1NtEzV9IsAAbyAo=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-91-a1cCpMhgNfeWcidFkTOfXw-1; Thu,
- 12 Feb 2026 16:40:30 -0500
-X-MC-Unique: a1cCpMhgNfeWcidFkTOfXw-1
-X-Mimecast-MFC-AGG-ID: a1cCpMhgNfeWcidFkTOfXw_1770932429
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-348-68JmIHm2O7mbCyF_KKpyNA-1; Thu,
+ 12 Feb 2026 16:40:07 -0500
+X-MC-Unique: 68JmIHm2O7mbCyF_KKpyNA-1
+X-Mimecast-MFC-AGG-ID: 68JmIHm2O7mbCyF_KKpyNA_1770932406
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 79C8C1955D76; Thu, 12 Feb 2026 21:40:29 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4205B195605B; Thu, 12 Feb 2026 21:40:06 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.45.224.55])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id EE95E180035A; Thu, 12 Feb 2026 21:40:27 +0000 (UTC)
+ id 8636B180066E; Thu, 12 Feb 2026 21:40:04 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
 Cc: Jamin Lin <jamin_lin@aspeedtech.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 14/16] hw/arm/aspeed_ast27x0-fc: Switch AST2700 FC machine to
- A2 SoC
-Date: Thu, 12 Feb 2026 22:39:53 +0100
-Message-ID: <20260212213955.2225662-15-clg@redhat.com>
+Subject: [PULL 03/16] hw/i2c/aspeed_i2c: Fix out-of-bounds read in I2C MMIO
+ handlers
+Date: Thu, 12 Feb 2026 22:39:42 +0100
+Message-ID: <20260212213955.2225662-4-clg@redhat.com>
 In-Reply-To: <20260212213955.2225662-1-clg@redhat.com>
 References: <20260212213955.2225662-1-clg@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,79 +87,131 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Jamin Lin <jamin_lin@aspeedtech.com>
 
-Update the AST2700 FC machine to use the AST2700 A2 SoC model instead of
-the A1-specific variant.
+The ASPEED I2C controller exposes a per-bus MMIO window of 0x80 bytes on
+AST2600/AST1030/AST2700, but the backing regs[] array was sized for only
+28 dwords (0x70 bytes). This allows guest reads in the range [0x70..0x7f]
+to index past the end of regs[].
 
-This change removes A1-specific naming and definitions from the FC
-machine and aligns it with the newer AST2700 A2 silicon.
+Fix this by:
+- Sizing ASPEED_I2C_NEW_NUM_REG to match the 0x80-byte window
+  (0x80 >> 2 = 32 dwords).
+- Avoiding an unconditional pre-read from regs[] in the legacy/new read
+  handlers. Initialize the return value to -1 and only read regs[] for
+  offsets that are explicitly handled/valid, leaving invalid offsets to
+  return -1 with a guest error log.
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3290
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20260211021527.119674-10-jamin_lin@aspeedtech.com
+Link: https://lore.kernel.org/qemu-devel/20260210024331.3984696-2-jamin_lin@aspeedtech.com
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/arm/aspeed_ast27x0-fc.c | 13 ++++++-------
- 1 file changed, 6 insertions(+), 7 deletions(-)
+ include/hw/i2c/aspeed_i2c.h |  3 +--
+ hw/i2c/aspeed_i2c.c         | 22 ++++++++++------------
+ 2 files changed, 11 insertions(+), 14 deletions(-)
 
-diff --git a/hw/arm/aspeed_ast27x0-fc.c b/hw/arm/aspeed_ast27x0-fc.c
-index 0502a137f3d9..9b9bb2df7580 100644
---- a/hw/arm/aspeed_ast27x0-fc.c
-+++ b/hw/arm/aspeed_ast27x0-fc.c
-@@ -24,8 +24,8 @@
- #include "hw/arm/aspeed_coprocessor.h"
- #include "hw/arm/machines-qom.h"
+diff --git a/include/hw/i2c/aspeed_i2c.h b/include/hw/i2c/aspeed_i2c.h
+index 68bd13802601..1ba0112cef6b 100644
+--- a/include/hw/i2c/aspeed_i2c.h
++++ b/include/hw/i2c/aspeed_i2c.h
+@@ -36,8 +36,7 @@ OBJECT_DECLARE_TYPE(AspeedI2CState, AspeedI2CClass, ASPEED_I2C)
+ #define ASPEED_I2C_NR_BUSSES 16
+ #define ASPEED_I2C_SHARE_POOL_SIZE 0x800
+ #define ASPEED_I2C_BUS_POOL_SIZE 0x20
+-#define ASPEED_I2C_OLD_NUM_REG 11
+-#define ASPEED_I2C_NEW_NUM_REG 28
++#define ASPEED_I2C_NEW_NUM_REG (0x80 >> 2)
  
--#define TYPE_AST2700A1FC MACHINE_TYPE_NAME("ast2700fc")
--OBJECT_DECLARE_SIMPLE_TYPE(Ast2700FCState, AST2700A1FC);
-+#define TYPE_AST2700FC MACHINE_TYPE_NAME("ast2700fc")
-+OBJECT_DECLARE_SIMPLE_TYPE(Ast2700FCState, AST2700FC);
- 
- static struct arm_boot_info ast2700fc_board_info = {
-     .board_id = -1, /* device-tree-only board */
-@@ -49,7 +49,6 @@ struct Ast2700FCState {
- };
- 
- #define AST2700FC_BMC_RAM_SIZE (1 * GiB)
--#define AST2700FC_CM4_DRAM_SIZE (32 * MiB)
- 
- #define AST2700FC_HW_STRAP1 0x000000C0
- #define AST2700FC_HW_STRAP2 0x00000003
-@@ -58,7 +57,7 @@ struct Ast2700FCState {
- 
- static bool ast2700fc_ca35_init(MachineState *machine, Error **errp)
+ #define A_I2CD_M_STOP_CMD       BIT(5)
+ #define A_I2CD_M_RX_CMD         BIT(3)
+diff --git a/hw/i2c/aspeed_i2c.c b/hw/i2c/aspeed_i2c.c
+index fb3d6a560018..741c7a7297f5 100644
+--- a/hw/i2c/aspeed_i2c.c
++++ b/hw/i2c/aspeed_i2c.c
+@@ -94,7 +94,7 @@ static uint64_t aspeed_i2c_bus_old_read(AspeedI2CBus *bus, hwaddr offset,
+                                         unsigned size)
  {
--    Ast2700FCState *s = AST2700A1FC(machine);
-+    Ast2700FCState *s = AST2700FC(machine);
-     AspeedSoCState *soc;
-     AspeedSoCClass *sc;
-     const char *bios_name = NULL;
-@@ -66,7 +65,7 @@ static bool ast2700fc_ca35_init(MachineState *machine, Error **errp)
-     DeviceState *dev = NULL;
-     uint64_t rom_size;
+     AspeedI2CClass *aic = ASPEED_I2C_GET_CLASS(bus->controller);
+-    uint64_t value = bus->regs[offset / sizeof(*bus->regs)];
++    uint64_t value = -1;
  
--    object_initialize_child(OBJECT(s), "ca35", &s->ca35, "ast2700-a1");
-+    object_initialize_child(OBJECT(s), "ca35", &s->ca35, "ast2700-a2");
-     soc = ASPEED_SOC(&s->ca35);
-     sc = ASPEED_SOC_GET_CLASS(soc);
+     switch (offset) {
+     case A_I2CD_FUN_CTRL:
+@@ -105,7 +105,7 @@ static uint64_t aspeed_i2c_bus_old_read(AspeedI2CBus *bus, hwaddr offset,
+     case A_I2CD_DEV_ADDR:
+     case A_I2CD_POOL_CTRL:
+     case A_I2CD_BYTE_BUF:
+-        /* Value is already set, don't do anything. */
++        value = bus->regs[offset / sizeof(*bus->regs)];
+         break;
+     case A_I2CD_CMD:
+         value = SHARED_FIELD_DP32(value, BUS_BUSY_STS, i2c_bus_busy(bus->bus));
+@@ -113,21 +113,20 @@ static uint64_t aspeed_i2c_bus_old_read(AspeedI2CBus *bus, hwaddr offset,
+     case A_I2CD_DMA_ADDR:
+         if (!aic->has_dma) {
+             qemu_log_mask(LOG_GUEST_ERROR, "%s: No DMA support\n",  __func__);
+-            value = -1;
+             break;
+         }
++        value = bus->regs[offset / sizeof(*bus->regs)];
+         break;
+     case A_I2CD_DMA_LEN:
+         if (!aic->has_dma) {
+             qemu_log_mask(LOG_GUEST_ERROR, "%s: No DMA support\n",  __func__);
+-            value = -1;
++            break;
+         }
++        value = bus->regs[offset / sizeof(*bus->regs)];
+         break;
+-
+     default:
+         qemu_log_mask(LOG_GUEST_ERROR,
+                       "%s: Bad offset 0x%" HWADDR_PRIx "\n", __func__, offset);
+-        value = -1;
+         break;
+     }
  
-@@ -135,7 +134,7 @@ static bool ast2700fc_ca35_init(MachineState *machine, Error **errp)
- 
- static bool ast2700fc_ssp_init(MachineState *machine, Error **errp)
+@@ -139,7 +138,7 @@ static uint64_t aspeed_i2c_bus_new_read(AspeedI2CBus *bus, hwaddr offset,
+                                         unsigned size)
  {
--    Ast2700FCState *s = AST2700A1FC(machine);
-+    Ast2700FCState *s = AST2700FC(machine);
-     AspeedSoCState *psp = ASPEED_SOC(&s->ca35);
+     AspeedI2CClass *aic = ASPEED_I2C_GET_CLASS(bus->controller);
+-    uint64_t value = bus->regs[offset / sizeof(*bus->regs)];
++    uint64_t value = -1;
  
-     s->ssp_sysclk = clock_new(OBJECT(s), "SSP_SYSCLK");
-@@ -167,7 +166,7 @@ static bool ast2700fc_ssp_init(MachineState *machine, Error **errp)
+     switch (offset) {
+     case A_I2CC_FUN_CTRL:
+@@ -159,13 +158,12 @@ static uint64_t aspeed_i2c_bus_new_read(AspeedI2CBus *bus, hwaddr offset,
+     case A_I2CS_CMD:
+     case A_I2CS_INTR_CTRL:
+     case A_I2CS_DMA_LEN_STS:
+-        /* Value is already set, don't do anything. */
++    case A_I2CS_INTR_STS:
++        value = bus->regs[offset / sizeof(*bus->regs)];
+         break;
+     case A_I2CC_DMA_ADDR:
+         value = extract64(bus->dma_dram_offset, 0, 32);
+         break;
+-    case A_I2CS_INTR_STS:
+-        break;
+     case A_I2CM_CMD:
+         value = SHARED_FIELD_DP32(value, BUS_BUSY_STS, i2c_bus_busy(bus->bus));
+         break;
+@@ -176,13 +174,13 @@ static uint64_t aspeed_i2c_bus_new_read(AspeedI2CBus *bus, hwaddr offset,
+         if (!aic->has_dma64) {
+             qemu_log_mask(LOG_GUEST_ERROR, "%s: No DMA 64 bits support\n",
+             __func__);
+-            value = -1;
++            break;
+         }
++        value = bus->regs[offset / sizeof(*bus->regs)];
+         break;
+     default:
+         qemu_log_mask(LOG_GUEST_ERROR,
+                       "%s: Bad offset 0x%" HWADDR_PRIx "\n", __func__, offset);
+-        value = -1;
+         break;
+     }
  
- static bool ast2700fc_tsp_init(MachineState *machine, Error **errp)
- {
--    Ast2700FCState *s = AST2700A1FC(machine);
-+    Ast2700FCState *s = AST2700FC(machine);
-     AspeedSoCState *psp = ASPEED_SOC(&s->ca35);
- 
-     s->tsp_sysclk = clock_new(OBJECT(s), "TSP_SYSCLK");
 -- 
 2.53.0
 
