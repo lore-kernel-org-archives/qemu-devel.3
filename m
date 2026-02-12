@@ -4,100 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A04B1EB48EE
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 09:44:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55ED7EB48F0
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 09:55:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqTED-0001ey-3p; Thu, 12 Feb 2026 04:43:17 -0500
+	id 1vqTPZ-0005TL-HT; Thu, 12 Feb 2026 04:55:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1vqTEB-0001eX-29
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 04:43:15 -0500
-Received: from mail-qt1-x830.google.com ([2607:f8b0:4864:20::830])
+ (Exim 4.90_1) (envelope-from <frank.chang@sifive.com>)
+ id 1vqTPY-0005Px-LC
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 04:55:00 -0500
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1vqTE9-0003Uk-GZ
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 04:43:14 -0500
-Received: by mail-qt1-x830.google.com with SMTP id
- d75a77b69052e-505e2e4c35fso26390441cf.3
- for <qemu-devel@nongnu.org>; Thu, 12 Feb 2026 01:43:13 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1770889392; cv=none;
- d=google.com; s=arc-20240605;
- b=ghs1v2SCwFevOfxONjNSWgUFZjbjF0jfbtpcCrOlfTXUzHKfg16CKdgXdswmffluu1
- +I3xoVrx/yFtudq9KNtWAubShQ5Xz91kuwtZdOim+Jz5V1jXKM90NJXeUznKvImsQExm
- 67+LwnhOMJrxmLCHO1tcpTV79pg3EdCiiyxZdU+bFy/aFrTIsp1XAlJQyON/5Rg625mi
- AII/P9r+vKqNJcHu8cdbIuozAu/zlHJ8tUFwwdIOa3xeKoRQsf3b8RTrpvtF66HL7Tgx
- NCE6KohTVeGstIfFRU6cKcithSnE9xbZQzCMBuJ1C2QyAvv5VmWuX8ws74G/Zhsu5TT/
- K1yg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=psDClz7Euq9+MVJGiY5hhb/jKlxZuTXnyN8tFgjflTM=;
- fh=B0D6QSst0PSJ4741IRuZ8XVJLDah5uslvRzvvwIgTqY=;
- b=GsmtxIo+OtXHQt9w74t3tL8p56fSVOwAwIZ0yQW3qd4+fRPa1Ufk24PiEQvECaGmUy
- AY6HF8i7wtYMrZSNdk5tD/6OpfpcnjBHetOf39zEiFUeVN+fDx9M1Ij7wAc9AB3bGzg/
- vPSuK7qOhJfmN/Z5vhfQjKgBtq/8+1A3NESkk15JLzSQ/ZFmJ91zJfN2KjNKP8hCVKkO
- q3xIDHcS+oBndEAlYt10Ot1EFzQJ2pPg0VocwbnrRzDwX6I+Kqz9WYwXjf9Kkc2MdrWy
- VbhX05enRYff1BGe80M52nLr6MmAEpJ76so8fzc3liStiXOsZ7pbVIk3cNXVPh6rgixO
- C/KQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <frank.chang@sifive.com>)
+ id 1vqTPX-0005ZE-3O
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 04:55:00 -0500
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-4801bc32725so47221795e9.0
+ for <qemu-devel@nongnu.org>; Thu, 12 Feb 2026 01:54:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1770889392; x=1771494192; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=psDClz7Euq9+MVJGiY5hhb/jKlxZuTXnyN8tFgjflTM=;
- b=GSmDeRtdZqifRy+pw3FjDes9KlTrXhAWYzY0BCbW1M9ZbQWJKyTV9C/OPG4p2GGQ8B
- hnFezaCWjYaZmuDB8WpgbJTBTqIOhzSfPR1MfYmfDo/TI88dL+1DwDZgSBdlHETXXOin
- 8cPf0ELQrusXS72aVdR9s+aQKK5XajL9pMlXJmPBIMiGmGfcIIv6XxqcOs1CylTlvU0Y
- IxzylGjC71jUXElqjPSCWhMDphdEcDaOB7hddsSP/STXSE8jREypO8PZTQoykQKU6IXx
- v7S9iwsVT3W6GtOVZzXwaul2FL6L/Nh5czymvhmnH31CSgU9CfQweNjadnIVn6Dj8Die
- UrHQ==
+ d=sifive.com; s=google; t=1770890097; x=1771494897; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=IK1mfHcvv/SU6XTFHR2FsHEAD+gPrVDgCiTX9YDKd/c=;
+ b=MAqoUp/UrZOtzzpLjd14k8zfOFo5s6dNENvx+XIcwjwPim2ubK9o8yGkA4K6RoTagZ
+ 5spomiNkLTwwf7OkVWlNpwhmOnyUMP6HFhO5rtZDPC62GIUplomKOBt3ibXTwYgrG+kq
+ uAE057zCcMYjel3C6UNVw0Qpzck64fRhxsIjZJsSqd170HuV9AL52g8hp419Oj/z8tPk
+ MaxN3eUEbVj6OtCAGcI036496Slu35IT61e/Lfxhb9ltqy3oNPhBzWLdW/cW7lJT1no1
+ kqkU+/+ZcOhS66m8JiB+U0Iwt0gyoRBVA4VWUFlXDA4dNs7fmLbkAOl/PtG//4WRSVx8
+ u95A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770889392; x=1771494192;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=psDClz7Euq9+MVJGiY5hhb/jKlxZuTXnyN8tFgjflTM=;
- b=ZbKDfA0WGuKK0SpfOCgXAOfqI1Gmw45rSFMlTAcPtjudnIPm6RqjqGODgPjpC+WjX0
- KKceQwLnRc0i6qY3GvzDukC3ZUvayOa1qaQuVr9zJH7YyeZyjYrnc0gqHNpbblcNyKaJ
- kr1z9zXkn3q/O6pr3Y6gggRuQYi4HBuNeY4dox0OSxeeYjCJMJvPPGTPlY0ddES1KbjB
- bJAAqVaX37g0xZfQZV/CY9DNVMoHswJcvQNPJVYdLqeJZ80mek9FSJLLePQJPmM/v/5j
- 0Ha6kDpEf574m1hg5do8C4wXeC89OP48hJiDfmzif+eQBHhoHSsWFKNTc7djfp0E+vNx
- eThg==
-X-Gm-Message-State: AOJu0Yx/BgMcnwe/StZpguHQRH9k7u/BQ7a0tBRs5i76434+FBS3MIFd
- eksrEs5fZip/FB/Zrqsg2/I/7SP1WdoeIPBq4HaUQfzs3YT+laKeCFvh2YBB2GzMkI0WhVKtaDk
- wJCBzOhaQlw6dY/bHJ+TXk/NkTkrO374=
-X-Gm-Gg: AZuq6aI6VvpuDX3yzbbj1OvQZk0gQUsjsEUw0qkD/DEE9zR0uTDH6VZ2hkNQO22be9T
- 9WasOjjBXr4k44OcglLiH1rk2vwckCuINq/vvyiv201WIWjEPgqnfJZvhUTKfbrbQKYUGMcOIHg
- Gf3Ns5yssvE4dpivHP4ObicZIOd+Ig2+/s9bHZcqCmgHUkQOmLspEC3YZ8QXW/FuXvpnIPu2B1N
- jFBYcaJVcz6eSMwZ0ojS2DSCakLqidGAoLcFBVuZg7fY7moF9KI3x8u0LzSYKOZSQ5zDNbc9w4a
- sSZ+w/P816PpCrqHhWHG4W1Y1LEqCyRm5F6kgS4b
-X-Received: by 2002:a05:622a:18a0:b0:4f4:ee07:91b9 with SMTP id
- d75a77b69052e-50694b99588mr15549421cf.47.1770889392260; Thu, 12 Feb 2026
- 01:43:12 -0800 (PST)
+ d=1e100.net; s=20230601; t=1770890097; x=1771494897;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=IK1mfHcvv/SU6XTFHR2FsHEAD+gPrVDgCiTX9YDKd/c=;
+ b=NttcBrDcvsOkkBz4ex/WJmaDTrP49omSY+FFCqaS3+01LAtqaI2595F9DD1KgvYM6c
+ BxZ/RlklK/AU2AsBnTFVZgrvfP5AWlQ3mBNq7AID5B1DA70SH0ICzVPnxo6uSleMisiZ
+ ITCgpZVh86iCB6dK2gPD3lLfy2h7nlYtA0Mxt3TTnYFFvZUyWzOhf5mMofuvOt2N4eka
+ 9wTGQg9pv5FI8+m0L6aaUMnUROWjSZGWa3PAEMhd8XB9vGjY7gqIpLZSc/F6F2gv9rlw
+ KdSNMY47BcN7FvZHBUTxeX/ohEGM7019vRURjUENg4eY4J2+kwdDpqyRliabSu66jdJt
+ gmlA==
+X-Gm-Message-State: AOJu0YzzXd1IGO/GJsIYKQX/5esWJ71qbtqGglv5BPriWb1e8Yv0macs
+ BroFfL+M2tmUQhnEPho8FLjBuo/OzDm6uKM/bbgaU660Wto4fgFNYa3Y7CLZ1d4XmUIQIR1CXed
+ USBf5o/+AFpyxnRahFyW7nic1s21Pcmx0WF1AJ6SoXrUrq7un/N+PnO/easAn5kJiPXAFzfkdZT
+ ZkgjyfOr9bJbQiGqHPD9ZNb4eVjS6fxiNUF9GyUh+SA6HbqA==
+X-Gm-Gg: AZuq6aLfAF+6rPlDkSzAW1V35pAP9lG2YyLwte5eW5xeOzCjw6IE/3eErDQ+5oVg3TK
+ kPopgq0Xcam9Om+RZuIYMC+lfxwW03vmcFxxLE+qmds1zKyjZ6Yuh6RlxABOa2f37U5G3AijHvO
+ c4QSJU4HNpGc4rbYc/Fd+vjoFC8H8FZE3JMC4JkKIaSLrUYgMeLTgPcYMq6UvQuSaxh6XwvfBP0
+ D2ynQK9cmJ4TW6b5Ac0XilDCI175nma81ASqgSOH2KuclkviY3HhPGefuSD0FMAM7LxlArT4/Da
+ /Trw61i75HdR4tujPQBNG95NbAMawoWtjN1CBE+KM/3MJ2h9ZMKI4r2PAX4155+QFmI3/4bYed/
+ oCFjIApJJoAyWVAsz0CXplDgw22dIvYcL9jkAMRTskuOsDR2jNKXgdXFbhQ1EcQAvi0AgWAjaaG
+ jVkIAELYAJVwFBUXKzKmXuotNdVuBzYLQKVEpz00wq7ZVMCGKv+g==
+X-Received: by 2002:a05:600c:5391:b0:45d:f81d:eae7 with SMTP id
+ 5b1f17b1804b1-48365716ac1mr26321415e9.28.1770890096594; 
+ Thu, 12 Feb 2026 01:54:56 -0800 (PST)
+Received: from hsinchu16.internal.sifive.com ([210.176.154.34])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-43783d36f86sm10181526f8f.7.2026.02.12.01.54.54
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 12 Feb 2026 01:54:56 -0800 (PST)
+From: frank.chang@sifive.com
+To: qemu-devel@nongnu.org
+Cc: Laurent Vivier <laurent@vivier.eu>,
+	Frank Chang <frank.chang@sifive.com>
+Subject: [PATCH] linux-user: Check if RESOLVE_CACHED flag is defined before
+ using it
+Date: Thu, 12 Feb 2026 17:54:49 +0800
+Message-ID: <20260212095449.683135-1-frank.chang@sifive.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-References: <20260211204445.4124071-1-samuel.thibault@ens-lyon.org>
-In-Reply-To: <20260211204445.4124071-1-samuel.thibault@ens-lyon.org>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Thu, 12 Feb 2026 13:43:01 +0400
-X-Gm-Features: AZwV_Qi0xtlvcPIhcCGp_WjxydcfmGufP5BxeNpKLvyyQPA9u6huXCx2Pzj22fU
-Message-ID: <CAJ+F1CKZUz6QDDYj9g2NeyKimOrcXDN-ZYG12CYg2pJn9s4Hjw@mail.gmail.com>
-Subject: Re: [PATCH] baum: Add copy/paste bindings
-To: Samuel Thibault <samuel.thibault@ens-lyon.org>
-Cc: qemu-devel@nongnu.org, pbonzini@redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::830;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x830.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=frank.chang@sifive.com; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -115,90 +100,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
+From: Frank Chang <frank.chang@sifive.com>
 
-On Wed, Feb 11, 2026 at 9:46=E2=80=AFPM Samuel Thibault
-<samuel.thibault@ens-lyon.org> wrote:
->
+openat2.h was introduced in Linux kernel 5.6. However, RESOLVE_CACHED
+flag was only added in kernel 5.12 and later. Therefore, we need to check
+if RESOLVE_CACHED flag is defined before using it.
 
-Can you write a summary of how this work, where the protocol is
-documented. Also higher-level doc for changelog would be nice.
+Signed-off-by: Frank Chang <frank.chang@sifive.com>
+---
+ linux-user/strace.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-> Signed-off-by: Samuel Thibault <samuel.thibault@ens-lyon.org>
-> ---
->  chardev/baum.c | 30 +++++++++++++++++++++++++++++-
->  1 file changed, 29 insertions(+), 1 deletion(-)
->
-> diff --git a/chardev/baum.c b/chardev/baum.c
-> index 157f8b9519..57fe60fe18 100644
-> --- a/chardev/baum.c
-> +++ b/chardev/baum.c
-> @@ -1,7 +1,7 @@
->  /*
->   * QEMU Baum Braille Device
->   *
-> - * Copyright (c) 2008, 2010-2011, 2016-2017 Samuel Thibault
-> + * Copyright (c) 2008, 2010-2011, 2016-2017, 2026 Samuel Thibault
->   *
->   * Permission is hereby granted, free of charge, to any person obtaining=
- a copy
->   * of this software and associated documentation files (the "Software"),=
- to deal
-> @@ -564,6 +564,30 @@ static void baum_chr_read(void *opaque)
->                  baum_send_key(baum, BAUM_RSP_RoutingKey, (code & BRLAPI_=
-KEY_CMD_ARG_MASK)+1);
->                  baum_send_key(baum, BAUM_RSP_RoutingKey, 0);
->                  break;
-> +            case BRLAPI_KEY_CMD_CLIP_NEW:
-> +                baum_send_key(baum, BAUM_RSP_TopKeys, BAUM_TL1);
-> +                baum_send_key(baum, BAUM_RSP_RoutingKey, (code & BRLAPI_=
-KEY_CMD_ARG_MASK)+1);
-> +                baum_send_key(baum, BAUM_RSP_RoutingKey, 0);
-> +                baum_send_key(baum, BAUM_RSP_TopKeys, 0);
-> +                break;
-> +            case BRLAPI_KEY_CMD_CLIP_ADD: the dependency
-> +                baum_send_key(baum, BAUM_RSP_TopKeys, BAUM_TL2);
-> +                baum_send_key(baum, BAUM_RSP_RoutingKey, (code & BRLAPI_=
-KEY_CMD_ARG_MASK)+1);
-> +                baum_send_key(baum, BAUM_RSP_RoutingKey, 0);
-> +                baum_send_key(baum, BAUM_RSP_TopKeys, 0);
-> +                break;
-> +            case BRLAPI_KEY_CMD_COPY_LINE:
-> +                baum_send_key(baum, BAUM_RSP_TopKeys, BAUM_TR1);
-> +                baum_send_key(baum, BAUM_RSP_RoutingKey, (code & BRLAPI_=
-KEY_CMD_ARG_MASK)+1);
-> +                baum_send_key(baum, BAUM_RSP_RoutingKey, 0);
-> +                baum_send_key(baum, BAUM_RSP_TopKeys, 0);
-> +                break;
-> +            case BRLAPI_KEY_CMD_COPY_RECT:
-> +                baum_send_key(baum, BAUM_RSP_TopKeys, BAUM_TR2);
-> +                baum_send_key(baum, BAUM_RSP_RoutingKey, (code & BRLAPI_=
-KEY_CMD_ARG_MASK)+1);
-> +                baum_send_key(baum, BAUM_RSP_RoutingKey, 0);
-> +                baum_send_key(baum, BAUM_RSP_TopKeys, 0);
-> +                break;
->              case 0:
->                  switch (code & BRLAPI_KEY_CMD_ARG_MASK) {
->                  case BRLAPI_KEY_CMD_FWINLT:
-> @@ -606,6 +630,10 @@ static void baum_chr_read(void *opaque)
->                      baum_send_key(baum, BAUM_RSP_TopKeys, BAUM_TL1|BAUM_=
-TL3|BAUM_TR1);
->                      baum_send_key(baum, BAUM_RSP_TopKeys, 0);
->                      break;
-> +                case BRLAPI_KEY_CMD_PASTE:
-> +                    baum_send_key(baum, BAUM_RSP_TopKeys, BAUM_TL1|BAUM_=
-TL2|BAUM_TL3|BAUM_TR1);
-> +                    baum_send_key(baum, BAUM_RSP_TopKeys, 0);
-> +                    break;
->                  }
->              }
->              break;
-> --
+diff --git a/linux-user/strace.c b/linux-user/strace.c
+index 758c5d32b6c..a903b414fd2 100644
+--- a/linux-user/strace.c
++++ b/linux-user/strace.c
+@@ -1125,7 +1125,9 @@ UNUSED static const struct flags openat2_resolve_flags[] = {
+     FLAG_GENERIC(RESOLVE_NO_SYMLINKS),
+     FLAG_GENERIC(RESOLVE_BENEATH),
+     FLAG_GENERIC(RESOLVE_IN_ROOT),
++#ifdef RESOLVE_CACHED
+     FLAG_GENERIC(RESOLVE_CACHED),
++#endif
+ #endif
+     FLAG_END,
+ };
+-- 
+2.43.0
 
-Those commands date back from brltty 4.4 (June 7, 2012). I suggest we
-add a version check to the brlapi dependency.
-
-
---=20
-Marc-Andr=C3=A9 Lureau
 
