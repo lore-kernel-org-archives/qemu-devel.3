@@ -4,52 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C22A9EEA845
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 18:46:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E183EEA845
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 18:49:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqbgk-0000UY-AQ; Thu, 12 Feb 2026 13:45:18 -0500
+	id 1vqbkh-0001vu-DQ; Thu, 12 Feb 2026 13:49:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vqbgi-0000UH-U2
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 13:45:16 -0500
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1vqbkf-0001vT-RP
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 13:49:21 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vqbgg-0002Hi-Hu
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 13:45:16 -0500
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 68473596A29;
- Thu, 12 Feb 2026 19:45:10 +0100 (CET)
-X-Virus-Scanned: amavis at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id LOBMRQKmUj0T; Thu, 12 Feb 2026 19:45:08 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 603BC596A0B; Thu, 12 Feb 2026 19:45:08 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 5E2065969F0;
- Thu, 12 Feb 2026 19:45:08 +0100 (CET)
-Date: Thu, 12 Feb 2026 19:45:08 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: qemu-devel@nongnu.org
-cc: Jason Wang <jasowang@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
- =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
-Subject: Re: [PATCH] rtl8139: Remove ineffective parameter
-In-Reply-To: <20260127173849.588F25969F0@zero.eik.bme.hu>
-Message-ID: <597883bc-c6a3-cd7f-42dc-1ee7fb8e213c@eik.bme.hu>
-References: <20260127173849.588F25969F0@zero.eik.bme.hu>
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1vqbkY-0002ft-WA
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 13:49:21 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1770922151;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=S6N520W3Q1fRnhdfCL74Yg5xWPz9v0Vp0DazZJcBcic=;
+ b=I2Oiym6JsI0qQj5n32KcLdL7pgfkXVVGysZU9dIKfLjC5zpW1PagZjfFg/LjgkuJR+el/8
+ O2F328yPHKKvnh1sUfSOVnV1X2OgNVGz5lPQFy0q9BgP+OjiZqSvqMaxiJl6VZiWLwCVnU
+ ub18KSoKFzFZ+cj6kk5/Svf5pOkxh14=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-86-Y8cWQNx8M2y7N2fRtsB3YA-1; Thu, 12 Feb 2026 13:49:10 -0500
+X-MC-Unique: Y8cWQNx8M2y7N2fRtsB3YA-1
+X-Mimecast-MFC-AGG-ID: Y8cWQNx8M2y7N2fRtsB3YA_1770922149
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4832c4621c2so1483685e9.3
+ for <qemu-devel@nongnu.org>; Thu, 12 Feb 2026 10:49:10 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770922149; x=1771526949;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=S6N520W3Q1fRnhdfCL74Yg5xWPz9v0Vp0DazZJcBcic=;
+ b=G8RStR/YS9l032/svEOSmP9op8DyMXCQuCbLhZh2FhCZzAMkjr61Rrmqz10oGETaMw
+ xRbiiMfz1TnVoPSShEv7/N8Igs7owgpIrnUMGr6wjhGnN9HBV3KlEuOdWi+fiLclznbS
+ MXvsqT7JuqCoaEhVO6QpwzvEtN2Utim3PnmZUn46zYoFwBQVDEg+at6dl/bmqxgT3RJs
+ qI2AubGi5K4FSPPUihGEmBWQHLfC1NqQ7UGAdIDopt7eK/DvAE6JCMYFyRDrLpK1qSW3
+ yhjH1/OgdvfO+CrPC/4Uo1/CMftoO6hvhJaoybsbh+S2v/t1wuD8ANQNy8gxxLsC3V9d
+ +eZw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV98HfKE/7aBTNl0H4EhzmWr89+HLm44jLWzHFuop5C9ysUoGI9f7K7+MzQzg/8uP4GLLaRG4FwWWPy@nongnu.org
+X-Gm-Message-State: AOJu0YzI/D/Zsk9P9CD3cdPr4xYS7G8SArlD4a2Xd87L8Fp1XsbEavDd
+ kMirP67sy9w90j7PxGZe5R8iNwVMnK59YQq8JfB2syuCnDWAnL7evbYhpcI7tmUkapt8emt28+F
+ 2N2Kf/TTN90+FQgTsl96f37ygHG14/Pr6U5avkMaAvIB6M3NvjWmG++dt
+X-Gm-Gg: AZuq6aIwRy6YaNSVE3IEsq4Ej5eDxnZos8qsSFuMVaUkCtCOj6aLUT3OWaZxoivTY47
+ sxM/hqnzOQRNIvMNuI+a2BvEYTiF4RcOvZuNiItOgdPLmBSOTilcVXt+Wc3n5wW0WwN76r/5GI8
+ zt9b8zaE7UmIje+uhrs+pQVjcg1NLqmm6F7Iktr4cTeiSzZw9ui4Ujyxc9BiLRjoqv5q6SNRP0M
+ 8Xo0TMSzsFIan24QwLStGy9QUNX43vMBSenS0sKyY8i0u0431blYmv9jzmQpyglJcm8yU09R5z8
+ lOfeuXCF//lasZqB+iBpnKTWSD4sXf1ANcSNOh4HvlLMsnSQhEndt7sHr3qAdKx7Ph4kJxZf6Qu
+ bIjGNlPoInqIu8eHAXwmtkiUiXt1AbhZ+t0cSBtEQo04FwKxmRj/LhMcGxrxwv951vlF11g==
+X-Received: by 2002:a05:600c:46d3:b0:47e:e414:b915 with SMTP id
+ 5b1f17b1804b1-48370e18901mr2142145e9.2.1770922148927; 
+ Thu, 12 Feb 2026 10:49:08 -0800 (PST)
+X-Received: by 2002:a05:600c:46d3:b0:47e:e414:b915 with SMTP id
+ 5b1f17b1804b1-48370e18901mr2141735e9.2.1770922148431; 
+ Thu, 12 Feb 2026 10:49:08 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-48370a4e62dsm1032345e9.4.2026.02.12.10.49.07
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 12 Feb 2026 10:49:08 -0800 (PST)
+Message-ID: <e4589c56-6628-4aa2-811a-c03ce17b5cf5@redhat.com>
+Date: Thu, 12 Feb 2026 19:49:06 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 22/24] hw/arm/smmuv3: Add per-device identifier
+ poroperty
+Content-Language: en-US
+To: Shameer Kolothum <skolothumtho@nvidia.com>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org, clg@redhat.com, alex@shazbot.org,
+ nicolinc@nvidia.com, nathanc@nvidia.com, mochs@nvidia.com, jan@nvidia.com,
+ jgg@nvidia.com, jonathan.cameron@huawei.com, zhangfei.gao@linaro.org,
+ zhenzhong.duan@intel.com, kjaju@nvidia.com
+References: <20260206144823.80655-1-skolothumtho@nvidia.com>
+ <20260206144823.80655-23-skolothumtho@nvidia.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20260206144823.80655-23-skolothumtho@nvidia.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -62,98 +117,105 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 27 Jan 2026, BALATON Zoltan wrote:
-> The do_interrupt parameter for rtl8139_do_receive was originally added
-> in commit 6cadb320c7 to avoid generating interrupt when receiving in
-> loopback mode. Later commit 5311fb805a changed this so that this
-> parameter became ineffective and now this parameter is unused and
-> always 1. If this turns out to be a problem maybe there's a better way
-> to fix this so remove the do_interrupt parameter for now to simplify
-> code.
 
-Ping?
 
-> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+On 2/6/26 3:48 PM, Shameer Kolothum wrote:
+> Add an "identifier" property to the SMMUv3 device and use it when
+> building the ACPI IORT SMMUv3 node Identifier field.
+>
+> This avoids relying on enumeration order and provides a stable
+> per-device identifier. This is useful when we add support for
+> Tegra241 CMDQV DSDT in subsequent patch.
+>
+> No functional change intended.
+>
+> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
 > ---
-> hw/net/rtl8139.c | 24 ++++++++----------------
-> 1 file changed, 8 insertions(+), 16 deletions(-)
+>  hw/arm/smmuv3.c          | 1 +
+>  hw/arm/virt-acpi-build.c | 4 +++-
+>  hw/arm/virt.c            | 3 +++
+>  include/hw/arm/smmuv3.h  | 1 +
+>  4 files changed, 8 insertions(+), 1 deletion(-)
 >
-> diff --git a/hw/net/rtl8139.c b/hw/net/rtl8139.c
-> index 9fd00574d2..2ad6338ebe 100644
-> --- a/hw/net/rtl8139.c
-> +++ b/hw/net/rtl8139.c
-> @@ -815,7 +815,8 @@ static bool rtl8139_can_receive(NetClientState *nc)
->     return avail == 0 || avail >= 1514 || (s->IntrMask & RxOverflow);
-> }
->
-> -static ssize_t rtl8139_do_receive(NetClientState *nc, const uint8_t *buf, size_t size_, int do_interrupt)
-> +static ssize_t rtl8139_receive(NetClientState *nc,
-> +                               const uint8_t *buf, size_t size_)
-> {
->     RTL8139State *s = qemu_get_nic_opaque(nc);
->     PCIDevice *d = PCI_DEVICE(s);
-> @@ -1173,20 +1174,11 @@ static ssize_t rtl8139_do_receive(NetClientState *nc, const uint8_t *buf, size_t
->     }
->
->     s->IntrStatus |= RxOK;
-> -
-> -    if (do_interrupt)
-> -    {
-> -        rtl8139_update_irq(s);
-> -    }
-> +    rtl8139_update_irq(s);
->
->     return size_;
-> }
->
-> -static ssize_t rtl8139_receive(NetClientState *nc, const uint8_t *buf, size_t size)
-> -{
-> -    return rtl8139_do_receive(nc, buf, size, 1);
-> -}
-> -
-> static void rtl8139_reset_rxring(RTL8139State *s, uint32_t bufferSize)
-> {
->     s->RxBufferSize = bufferSize;
-> @@ -1745,7 +1737,7 @@ static uint32_t rtl8139_RxConfig_read(RTL8139State *s)
-> }
->
-> static void rtl8139_transfer_frame(RTL8139State *s, uint8_t *buf, int size,
-> -    int do_interrupt, const uint8_t *dot1q_buf)
-> +                                   const uint8_t *dot1q_buf)
-> {
->     struct iovec *iov = NULL;
->     struct iovec vlan_iov[3];
-> @@ -1828,7 +1820,7 @@ static int rtl8139_transmit_one(RTL8139State *s, int descriptor)
->     s->TxStatus[descriptor] |= TxHostOwns;
->     s->TxStatus[descriptor] |= TxStatOK;
->
-> -    rtl8139_transfer_frame(s, txbuffer, txsize, 0, NULL);
-> +    rtl8139_transfer_frame(s, txbuffer, txsize, NULL);
->
->     DPRINTF("+++ transmitted %d bytes from descriptor %d\n", txsize,
->         descriptor);
-> @@ -2246,7 +2238,7 @@ static int rtl8139_cplus_transmit_one(RTL8139State *s)
->                     DPRINTF("+++ C+ mode TSO transferring packet size "
->                         "%d\n", tso_send_size);
->                     rtl8139_transfer_frame(s, saved_buffer, tso_send_size,
-> -                        0, (uint8_t *) dot1q_buffer);
-> +                                           (uint8_t *)dot1q_buffer);
->
->                     /* add transferred count to TCP sequence number */
->                     stl_be_p(&p_tcp_hdr->th_seq,
-> @@ -2323,8 +2315,8 @@ skip_offload:
->
->         DPRINTF("+++ C+ mode transmitting %d bytes packet\n", saved_size);
->
-> -        rtl8139_transfer_frame(s, saved_buffer, saved_size, 1,
-> -            (uint8_t *) dot1q_buffer);
-> +        rtl8139_transfer_frame(s, saved_buffer, saved_size,
-> +                               (uint8_t *)dot1q_buffer);
->
->         /* restore card space if there was no recursion and reset offset */
->         if (!s->cplus_txbuffer)
->
+> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
+> index 7858bf2c33..7f84c87a46 100644
+> --- a/hw/arm/smmuv3.c
+> +++ b/hw/arm/smmuv3.c
+> @@ -2114,6 +2114,7 @@ static const Property smmuv3_properties[] = {
+>       * Defaults to stage 1
+>       */
+>      DEFINE_PROP_STRING("stage", SMMUv3State, stage),
+> +    DEFINE_PROP_UINT8("identifier", SMMUv3State, identifier, 0),
+>      DEFINE_PROP_BOOL("accel", SMMUv3State, accel, false),
+>      /* GPA of MSI doorbell, for SMMUv3 accel use. */
+>      DEFINE_PROP_UINT64("msi-gpa", SMMUv3State, msi_gpa, 0),
+> diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
+> index ae3b4aac52..046e930ca5 100644
+> --- a/hw/arm/virt-acpi-build.c
+> +++ b/hw/arm/virt-acpi-build.c
+> @@ -342,6 +342,7 @@ static int iort_idmap_compare(gconstpointer a, gconstpointer b)
+>  typedef struct AcpiSMMUv3Dev {
+>      int irq;
+>      hwaddr base;
+> +    uint8_t id;
+>  
+>      /*
+>       * IORT-only fields.
+> @@ -407,6 +408,7 @@ static int iort_smmuv3_devices(Object *obj, void *opaque)
+>      bus = PCI_BUS(object_property_get_link(obj, "primary-bus", &error_abort));
+>      sdev.accel = object_property_get_bool(obj, "accel", &error_abort);
+>      sdev.ats = object_property_get_bool(obj, "ats", &error_abort);
+> +    sdev.id = object_property_get_uint(obj, "identifier", &error_abort);
+>      pbus = PLATFORM_BUS_DEVICE(vms->platform_bus_dev);
+>      sbdev = SYS_BUS_DEVICE(obj);
+>      sdev.base = platform_bus_get_mmio_addr(pbus, sbdev, 0);
+> @@ -642,7 +644,7 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+>                       (ID_MAPPING_ENTRY_SIZE * smmu_mapping_count);
+>          build_append_int_noprefix(table_data, node_size, 2); /* Length */
+>          build_append_int_noprefix(table_data, 4, 1); /* Revision */
+> -        build_append_int_noprefix(table_data, id++, 4); /* Identifier */
+> +        build_append_int_noprefix(table_data, sdev->id, 4); /* Identifier */
+Would that keep the same ordering for existing qtests?
+
+Eric
+>          /* Number of ID mappings */
+>          build_append_int_noprefix(table_data, smmu_mapping_count, 4);
+>          /* Reference to ID Array */
+> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+> index 390845c503..22ee5c4a41 100644
+> --- a/hw/arm/virt.c
+> +++ b/hw/arm/virt.c
+> @@ -3059,12 +3059,15 @@ static void virt_machine_device_pre_plug_cb(HotplugHandler *hotplug_dev,
+>                         (vms->legacy_smmuv3_present) ?
+>                         "iommu=smmuv3" : "virtio-iommu");
+>          } else if (vms->iommu == VIRT_IOMMU_NONE) {
+> +            static uint8_t id;
+> +
+>              /* The new SMMUv3 device is specific to the PCI bus */
+>              object_property_set_bool(OBJECT(dev), "smmu_per_bus", true, NULL);
+>              object_property_set_link(OBJECT(dev), "memory",
+>                                       OBJECT(vms->sysmem), NULL);
+>              object_property_set_link(OBJECT(dev), "secure-memory",
+>                                       OBJECT(vms->secure_sysmem), NULL);
+> +            object_property_set_uint(OBJECT(dev), "identifier", id++, NULL);
+>          }
+>          if (object_property_get_bool(OBJECT(dev), "accel", &error_abort)) {
+>              hwaddr db_start = 0;
+> diff --git a/include/hw/arm/smmuv3.h b/include/hw/arm/smmuv3.h
+> index 87926f8cb3..39cb43506e 100644
+> --- a/include/hw/arm/smmuv3.h
+> +++ b/include/hw/arm/smmuv3.h
+> @@ -63,6 +63,7 @@ struct SMMUv3State {
+>      qemu_irq     irq[4];
+>      QemuMutex mutex;
+>      char *stage;
+> +    uint8_t identifier;
+>  
+>      /* SMMU has HW accelerator support for nested S1 + s2 */
+>      bool accel;
+
 
