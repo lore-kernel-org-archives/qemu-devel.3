@@ -4,117 +4,201 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF829EDF045
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 06:39:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B3E5EDF04C
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 06:46:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqQM9-0004ka-J7; Thu, 12 Feb 2026 01:39:17 -0500
+	id 1vqQS8-0006EU-0d; Thu, 12 Feb 2026 01:45:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vqQM5-0004jh-NT
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 01:39:15 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clement.mathieu--drif@eviden.com>)
+ id 1vqQS3-0006E0-Gq
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 01:45:25 -0500
+Received: from smarthost2.eviden.com ([80.78.11.83])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vqQM3-00080m-M6
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 01:39:13 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770878349;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=ySDl3nW9Li55DERBDgoMljj1NloJNEsBQnU+H+anTHg=;
- b=Bs659RUc5DuMq+q/xYb/IPVPdf34L9E6HwTMkP6XfCz+xdQx1om5LCVOyR8FZ9A+RuutwC
- Z2tod8OzSOj+w+HxsM6B8/dfOf/PC+lv9KPSf0lD6sMW/mCEdCK9WIRDpo9mBpNJFsdEK3
- +vnQ7RClcyUQ3aK1nVokrovn+/rbh4A=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-107-l2pf37_QPU-RMKecEajXQg-1; Thu, 12 Feb 2026 01:39:07 -0500
-X-MC-Unique: l2pf37_QPU-RMKecEajXQg-1
-X-Mimecast-MFC-AGG-ID: l2pf37_QPU-RMKecEajXQg_1770878346
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4803e8b6007so24822365e9.0
- for <qemu-devel@nongnu.org>; Wed, 11 Feb 2026 22:39:07 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770878346; x=1771483146;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ySDl3nW9Li55DERBDgoMljj1NloJNEsBQnU+H+anTHg=;
- b=W8+qyMJjjHBo6ux511Z3jbNMkCeZIGfMjaTJTU2L1ZjWpGrD00t685KT1LpfIleF2n
- adPJ9E9yZ1OGE36RFq1FgQKnpeg6HYdAWb2E+v0HV2YViH7LWx8G/YvyVM2iwt3PTRU8
- YQjb4oeIjp2hZrhGcFkq9NoeUQILBb+yk4CEAFdqcL5mkqBGe6TImepWCk784imQZ0d5
- /Bgu5H441oRDH/OtooMqrGG6jrB4Yns4tTvDe5Ux90RJTxvXY881k0RpMrt+WPvRVIxc
- /uhhVT2B0AvPiOtIc/bJ8ryw0oBax2XJeetU5T2hHsNlc7xKnnijWXQ9beQh79kK4MMo
- /Siw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW6cNySkdRzXo1z4Bc4TvQEIrvaS7Hrs8uZ9HirSLTe02sAD9iAEV+9SdgmHgdoqAXUuWrFO+zs3V0k@nongnu.org
-X-Gm-Message-State: AOJu0YxYJRGLT/NcwIIb9te5tc70YvceYiqlCl7S0sHcLSnrzpwutysY
- fcLvaYa5C8n0j9E86csRU9IsizUcsmmVAPzmkElZ68gn/HSE4HWSQdDS95s56H+PYSsj1kjI5Qs
- Aol5bqZfR1ZSuYeoYj3oAHvCam81F9BYU1AWoTJ/3BuAVm//q8gxjuh6E
-X-Gm-Gg: AZuq6aJ7rp8SPhp03wl1HLFyaefIFtMTr5tS3KU9i68zzTUxJzGSTO5AMdP6A5zR+Sp
- pt+9HWDwjC6bs5Y57FYZZO75cQweC+LgL8ULJ5DbJcf320LGb7xhWqb8hzX21rL45o5q/8MD1n9
- 4FWIfqHmkCHGod721ANjIl0UFl8vT7vghcgPbq0MZsxoM5Y5Tg5irWj1lYWzT+4GT5X7qOzWdE3
- d2XpQWGywX3k+Jar6gl8TSD2BlzmvoA0eoBwQFQe2Ixba/xR62+VxJq46FNKajhAG8WiIaMVWbZ
- afVYAYuzKkRrSav5rGuYiu6LU/zD5BPhRtiFJF3HQ/OMBjRsV45cdcY1As2egDYEkQKDbIPp3Mo
- Yb2wDDHNX+wKoEtNvDz+78LyP5Ebi6KlckodW+CXA9SVHVUkvTMeBYmArUhtXhF2AViO6Tw==
-X-Received: by 2002:a05:600c:c174:b0:483:3380:ca11 with SMTP id
- 5b1f17b1804b1-4836717eba9mr13080505e9.33.1770878346316; 
- Wed, 11 Feb 2026 22:39:06 -0800 (PST)
-X-Received: by 2002:a05:600c:c174:b0:483:3380:ca11 with SMTP id
- 5b1f17b1804b1-4836717eba9mr13080255e9.33.1770878345944; 
- Wed, 11 Feb 2026 22:39:05 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4835ba3024asm56922495e9.5.2026.02.11.22.39.04
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 11 Feb 2026 22:39:05 -0800 (PST)
-Message-ID: <39acf072-3227-442b-acfe-658829071917@redhat.com>
-Date: Thu, 12 Feb 2026 07:39:03 +0100
+ (Exim 4.90_1) (envelope-from <clement.mathieu--drif@eviden.com>)
+ id 1vqQRz-0000bn-5L
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 01:45:22 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=eviden.com; i=@eviden.com; q=dns/txt; s=mail;
+ t=1770878719; x=1802414719;
+ h=from:to:cc:subject:date:message-id:references:
+ in-reply-to:mime-version;
+ bh=ldpleQ3hg4W5vsxwABdolrEq8dliWhKjIkvwn7/iUzY=;
+ b=fDG9hEBoU52HXnec4ajCApOI2RnElQRtLZlcQV0+NtMOnBCyKiIRZZoj
+ kYNZMaFF6AfAxhn00Vsphj+UdTEXoJrt1quUZX1TZLVQ3MWUMFW7cdkNb
+ I3KFyWCa9Vy2MSrvodFmNB90JzzLxWye1tqQRDiI5qt+F13DaBHppxezu
+ nqnLc0yQHPWjFT/tOTKXrg/0GBwiwNPgE7fy8WDMrlH20QguMtGAMRpeO
+ k/638rscdF32oe6eS04+RI2vQ1Og5N54Qc17sYXsCds9NDU4vWesu+WJC
+ +2UrJj70AW7dgEQ2l36Wr0cuMPk4hZbbclPGIgZG+RWow99KBvIufNKEO A==;
+X-CSE-ConnectionGUID: TSJ+aulqSuOfxvA9k09++w==
+X-CSE-MsgGUID: J2luSwE3R+KvpWKbeyfALA==
+X-IronPort-AV: E=Sophos;i="6.21,286,1763420400"; d="scan'208,217";a="46389269"
+X-MGA-submission: =?us-ascii?q?MDE8EwqinxJCaDw1cpHtGkfH9AFo5GXMBUK5vs?=
+ =?us-ascii?q?YSoewUhtVeZdOUy+R2wRohL/eP0GCWcrMWgCp7cUm+UsFiyIPP5IuLZ4?=
+ =?us-ascii?q?kUDpPwr84SWaZQ6vgD8UKcz1EHP6oUEfUAe4LOf79UST6al2kFdV+H+I?=
+ =?us-ascii?q?U/2lPFbJ4eRBUHmxCABJ5A6A=3D=3D?=
+Received: from mail-francesouthazon11011019.outbound.protection.outlook.com
+ (HELO MRWPR03CU001.outbound.protection.outlook.com) ([40.107.130.19])
+ by smarthost2.eviden.com with ESMTP/TLS/TLS_AES_256_GCM_SHA384;
+ 12 Feb 2026 07:45:12 +0100
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=o1C/jzKdjey5ggtYMSMobZicob0Sr8hoFSJ4SMeWhYnXIfUlivu/csKBx07t+59IT5f1gH16swi0ecKJTEjH4tz9QMIdr/rIlMk0pY1xeXgdST/coSSoeB1X/f/xe/L8b7KNAgkAw2B2drLn3xTYGy6Kb/ryHqEvoUHrJpgsUYCtZsLVY2oyFwP8R+pQ82ZT6oALLJWH4DpNaLgyI/iXgEQOGryqFySPeD5Axg2yksQCAAMk63siJwZVaGu8+2e9yFPj4eQ6+HO+TuftgSY384eq4/BU/rJVElplj6rLfL0DcLQhm9heRnabyrH9xuelmybVM7yfuvnkdxgJLHUSsQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=z/vmA79wxI8Ix9rnNyyHmJCWQ3RLcr4cRX1EhD2C9gU=;
+ b=EiH25TivnLnjMhAlhF0tKPXvd5eTNGDx3Wpro0e1UM0F+pWG976/rPNJMdP84K4L6sLJyuelknDhAnsEetoG+cNS/Lvr9qOOZK3UUqKXststCuxayWnsmW2OPY8jNSwU68XYQqPmc3M2rWzD6Lnd0jkwRssAsMEgWtglCsrWtJkRSuVaskWjkve0BG77IHyoUTbrVPHyXybA3dvqamKTetESzjupMbLCjhbzcnDWrmoO81AWSPiSR/7vSz9DUi7X2XRV9BXKkwqEIdNMRcRUKQ7BJT+WEcmunDWF2VAmBUZ17QsZayBKy+Jl0gnGv65YpuoL03f5oKtXxkUsCo5i/g==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=eviden.com; dmarc=pass action=none header.from=eviden.com;
+ dkim=pass header.d=eviden.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Eviden.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=z/vmA79wxI8Ix9rnNyyHmJCWQ3RLcr4cRX1EhD2C9gU=;
+ b=ivSjGN7PRbGnba5btuwZo7urYUjGKUooloJQy/hYkRfMmAfxC+jBlL3f/kMTeLO3ahJ8IXYx8eJduhhQgy03oxEvEj1mMRiMy1+p7ObE/2CRpAmar4rGFYtCbhPSxA9CTaB+scaJNOfAOlQUtG38PPSE89NLFhK/OPu2yJCFWrAQK26PwakdTMMvDeREZ2CE7IrYRibiIyfHjbwap85bC39CbHaEIT5skxeYvEx8ubrDN3MZrfPLE0WBIpBzGKkVmMc2gA5aqKyrVAbOz6IQ6JLx+sTtrCT6THh/u/VxX6v1cUgbVCOGEvDecY2uQJ9gNRnrVSKLLtsaZPPgQmKx1A==
+Received: from PA4PR07MB7613.eurprd07.prod.outlook.com (2603:10a6:102:c0::19)
+ by GV4PR07MB11617.eurprd07.prod.outlook.com (2603:10a6:150:2e7::10)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9611.10; Thu, 12 Feb
+ 2026 06:45:07 +0000
+Received: from PA4PR07MB7613.eurprd07.prod.outlook.com
+ ([fe80::5df5:6816:4d46:4648]) by PA4PR07MB7613.eurprd07.prod.outlook.com
+ ([fe80::5df5:6816:4d46:4648%3]) with mapi id 15.20.9587.017; Thu, 12 Feb 2026
+ 06:45:07 +0000
+From: CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>
+To: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>, Nicolin Chen
+ <nicolinc@nvidia.com>, Shameer Kolothum Thodi <skolothumtho@nvidia.com>
+CC: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, "alex@shazbot.org"
+ <alex@shazbot.org>, "clg@redhat.com" <clg@redhat.com>,
+ "eric.auger@redhat.com" <eric.auger@redhat.com>, "mst@redhat.com"
+ <mst@redhat.com>, "jasowang@redhat.com" <jasowang@redhat.com>, Jason
+ Gunthorpe <jgg@nvidia.com>, "joao.m.martins@oracle.com"
+ <joao.m.martins@oracle.com>, "Tian, Kevin" <kevin.tian@intel.com>, "Liu, Yi
+ L" <yi.l.liu@intel.com>, "Hao, Xudong" <xudong.hao@intel.com>
+Subject: Re: [RFC PATCH 01/14] backends/iommufd: Add pasid attach/detach
+ callbacks
+Thread-Topic: [RFC PATCH 01/14] backends/iommufd: Add pasid attach/detach
+ callbacks
+Thread-Index: AQHclk1A0jbRvwQcXUyYvASyugR2rrV9OhEggAAecgCAAG5A0IAABmgAgACZG4CAAEMx7g==
+Date: Thu, 12 Feb 2026 06:45:07 +0000
+Message-ID: <PA4PR07MB761339215913CDD1C65547718660A@PA4PR07MB7613.eurprd07.prod.outlook.com>
+References: <20260205031133.74357-1-zhenzhong.duan@intel.com>
+ <20260205031133.74357-2-zhenzhong.duan@intel.com>
+ <CH3PR12MB754856C12CAD98891555C791AB63A@CH3PR12MB7548.namprd12.prod.outlook.com>
+ <IA3PR11MB91367D6A321018EE989FA1899263A@IA3PR11MB9136.namprd11.prod.outlook.com>
+ <CH3PR12MB75482AF23DD73B2D37742AFDAB63A@CH3PR12MB7548.namprd12.prod.outlook.com>
+ <aYy+AENRSGdWh0Ij@Asurada-Nvidia>
+ <IA3PR11MB91362AA3967AD60A6B27F95A9260A@IA3PR11MB9136.namprd11.prod.outlook.com>
+In-Reply-To: <IA3PR11MB91362AA3967AD60A6B27F95A9260A@IA3PR11MB9136.namprd11.prod.outlook.com>
+Accept-Language: en-GB, fr-FR, en-US
+Content-Language: en-GB
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+msip_labels: MSIP_Label_ecb69475-382c-4c7a-b21d-8ca64eeef1bd_Enabled=True;
+ MSIP_Label_ecb69475-382c-4c7a-b21d-8ca64eeef1bd_SiteId=7d1c7785-2d8a-437d-b842-1ed5d8fbe00a;
+ MSIP_Label_ecb69475-382c-4c7a-b21d-8ca64eeef1bd_SetDate=2026-02-12T06:44:46.296Z;
+ MSIP_Label_ecb69475-382c-4c7a-b21d-8ca64eeef1bd_Name=Eviden
+ For Internal Use - All
+ Employees; MSIP_Label_ecb69475-382c-4c7a-b21d-8ca64eeef1bd_ContentBits=1;
+ MSIP_Label_ecb69475-382c-4c7a-b21d-8ca64eeef1bd_Method=Standard; 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=eviden.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: PA4PR07MB7613:EE_|GV4PR07MB11617:EE_
+x-ms-office365-filtering-correlation-id: 9726e263-3085-494e-87c8-08de6a024285
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|1800799024|366016|7416014|376014|38070700021|8096899003|7053199007;
+x-microsoft-antispam-message-info: =?iso-8859-1?Q?7RYiBWTH3FlG5IzcpxF05ECmaGM4biC5eEkdtsrMkCwKwfnHvPDqeuejnK?=
+ =?iso-8859-1?Q?ZZEKAyM+Z0Js2Hr91njAjkf5R3DDLHjglZ/KVIobh9FV06r9Pcgu0Rms1t?=
+ =?iso-8859-1?Q?zRYxPhcSMPhAp8AyHKYi80Q+3vw3szfeaioZsSRu7SzRG5RRXBa0O1omx0?=
+ =?iso-8859-1?Q?mtiZNIwZUn1Yx9Ae54z6q3yS8f3QqxBRfrf1iMHqxmKtRdsdiEIKrzsFbT?=
+ =?iso-8859-1?Q?sk14cJITEzEaQ3SQ9TcBrbGQKzGq7e1t581pl2Qmnq15vvZXorq9HnxvDp?=
+ =?iso-8859-1?Q?8FbxFnuccIIBOpbkD1VuF/glBuiWdCflmuXcbDQOlwGztknEcRhAMjgC1S?=
+ =?iso-8859-1?Q?VAzH12yh8HtoVRR+bMrlGCt0AqS2KlkDyHUXpuCfx89CziuAHNIcauS8mn?=
+ =?iso-8859-1?Q?i5epz7SfONh0VzUZo51Q6YMfKj3n00NoOxfUfNTEgPAM2+Fp+Bjbrg4DyM?=
+ =?iso-8859-1?Q?VueoGXia8v09zxY7OiCZRHrgBxagtvXMMTJgkZXrzAPt4yYRmEYE/PGp1r?=
+ =?iso-8859-1?Q?5HqjyQcUqRG7K9U0dfwE+qWiE2FJOS3QaQMZnWIIddqwKj5WlDItXixEKi?=
+ =?iso-8859-1?Q?hDu3KkkF4GZkaXf38pHMCGxzRNjXqVg7SxvX9XcZsreeXVP8+xc8WoVkvU?=
+ =?iso-8859-1?Q?2cbZKKSv10QV3UZOQ/eT3ZGAPZVmNAbwEN5Mx7IlFhu7kwwbUpDj2N4cDP?=
+ =?iso-8859-1?Q?DfovxvnAuthezN3GOjKHBoN0upAhZb4admC/aydF0CAlVtYJ53UpZ5p6Tn?=
+ =?iso-8859-1?Q?lA17jpyI61z+O04xcHp/XLXqBOq+WMZ4uDXpKn5uUX24wqg7ORypPRa+CU?=
+ =?iso-8859-1?Q?QcjYMGZtfhCY3xbZNmTCHwGNG1WoMxPHjB3cNHCGnQ+InvqA4H0bwr2ThM?=
+ =?iso-8859-1?Q?hvS7kXL1TKcpTBykw+cSHnqQ2FPGYdwFhEqAoFrRrSYYA+yDsHFORFNkrd?=
+ =?iso-8859-1?Q?2flhK3SqruKN4IFzNWHX2qHDPcPhbCiBcfUVKotbt3FarkHuJd7jEWyV1l?=
+ =?iso-8859-1?Q?fuDxiczRFzP4JV7ylQNGlW07GC5UvBNDp3nj4cjB3m1SipNXEjl44WNNum?=
+ =?iso-8859-1?Q?BgDHYp+j+kOpAgYUEzc/HZ7KH1hFfDWdlHP1x+Bvi3TocQHwnGlolrLduy?=
+ =?iso-8859-1?Q?OqWW4JZfPF0AUQgKOJ7P1BUPCSInsfgM2n5cMtdKhHudsRssp4C4G574fi?=
+ =?iso-8859-1?Q?QB3mHd7RbX7fV+prwVMh9DivcrII0W+JEerMYoyGtCvfgUnzCMrstIV+s2?=
+ =?iso-8859-1?Q?fdLQJ2v6/yVg5ydTca2LBdFnxq7rLgnT8iMlE9OYrRvaHMELuJF/OS0gJT?=
+ =?iso-8859-1?Q?8nS82BMoUs7mTBmfMVXxK0zjj49zNr5o1DtWSb0k6xTlVjbZ5iNn4dKByf?=
+ =?iso-8859-1?Q?GTAqmvCYikSUqKRngZDORcNhpiCCmQpACC81f3PU1Oii/++lIfQ2JDvOr8?=
+ =?iso-8859-1?Q?5RpQJbhWunXWjUyfn7uxcOYDHzSSL47oNS5IFN1HM1mRPAdjkmWKDt0/Tw?=
+ =?iso-8859-1?Q?2qFqL4a4d4Klj+Al+nmzojP5Aljg7tL2LmMq9K9ZWkMzlZROPkdpsYrZGE?=
+ =?iso-8859-1?Q?BCwhYdl3bDbCCBRBhfoS7g4oSRM4u9BPSbt8V1z249spwgwtVcoV3qqkdm?=
+ =?iso-8859-1?Q?dzW0P4/TjUwAKD2dM5qLBheiUJiQk/GzRsgkcL7uLTJMTHzAGdjR1+XaOV?=
+ =?iso-8859-1?Q?DjJ0ozOfYenWUEGXS5c=3D?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:PA4PR07MB7613.eurprd07.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(366016)(7416014)(376014)(38070700021)(8096899003)(7053199007);
+ DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?mUh/u6edfD+obC1IMjQn3P62YwD+OfcM/SdWtRlGXG6C5PDBTwf2HQnDzm?=
+ =?iso-8859-1?Q?xRd9SKJ1Km8eFWOxo9+kaBYIoFrWjpI8Oak3ecJr46Y3q2xTpTln/3rCsI?=
+ =?iso-8859-1?Q?d4Vuq8d852htGYo84HKu6osgq6ioUv2oSKYPqoyX0YUJRv2hBFGzrjzA03?=
+ =?iso-8859-1?Q?A6Ecr724vl02pB40cRnAmgnzJKHBKju8Mc6vrP1AhDxZzAbhXZZWS9If3o?=
+ =?iso-8859-1?Q?AMChaWvWD4je9RXsrWKggwBHK8pvuadsVsNWktlSYer40E0wOZyeQit7fJ?=
+ =?iso-8859-1?Q?bQl/6owCW9vcjnz5tuHUuZHJwB738GNWQP3QGvM+mzgcQZMnFh1u/GUaWB?=
+ =?iso-8859-1?Q?RSUAPwGttRd5apkl6Mc3VSNqSyO4djUpkHwocBAqOnkFjarhnJYPGMQicP?=
+ =?iso-8859-1?Q?vV2SvqwBkQBAfjbQGbcfc2wr+qDWPF9xxM1BwBDZh/jPiY9g7jQT+CbXba?=
+ =?iso-8859-1?Q?KmQhratCWrjc+7bAh2tlXiea+e3WUzdrIFCQd5kYo9mUQTWSE+JUWvECiI?=
+ =?iso-8859-1?Q?QPfLXQZkYePgi5qSgHCSD8duv+gdyjqPYbGGJ6Esu7vM1/JJi/MKhQfUDt?=
+ =?iso-8859-1?Q?kyc/vTBQwnI0qPRcZJnNZh16mpIHSMRMiLUOfGqBbpDCECLYR+LB0UOAK5?=
+ =?iso-8859-1?Q?nfb2TKhUcq8lcx+NXxKcD/Mk80Wsu51mJnjVVnKTUA4IODZ2tyoVbjxrvt?=
+ =?iso-8859-1?Q?sFGraT+L7yYXw0zgMoyOsdmIJe3PEfFtQaaeS2zIgoNZHOr5e0ayFNNnTI?=
+ =?iso-8859-1?Q?BTc22iwKMOrK5vWD2DTKa2+GjwsM4+6FzpzZs1VvZuweBJViefVk3G28A9?=
+ =?iso-8859-1?Q?79lwsm5ZfMkBp2QPYNiAmGCaCzXVv9JNpEIsEEqjAIxRJJJN81WiSajuBp?=
+ =?iso-8859-1?Q?ah9mHK0hV1tPqv7f9My5ID9YPd/YqfztTIC0eL9QmOlVk5pudSTtmcG55Y?=
+ =?iso-8859-1?Q?ODPncxyLFT/li8Cui0+8aRbtluZt9tSUTDHKGqPNBaAHsxM29/YYSoCwM6?=
+ =?iso-8859-1?Q?TtnxVm3Vj28WU8eyvkffyxqgW07cgTbqcuZrppEPFzRc+Rx4Wy6XhKrsoN?=
+ =?iso-8859-1?Q?OlQWO8ftfi2kSe6Jxl7Hsm+pewYwYDjgLqTnkkmcm95+H5osCYep+jFz05?=
+ =?iso-8859-1?Q?srqmQLg9+y2jioeGVZaaHVBC87MpyfMCoEXrwbBelQevt+vYEmPgcYCVLN?=
+ =?iso-8859-1?Q?oA7tMNTrL0hJvVUStJo9PABcGUWZ/JJSQjLt+WcZFNNetQldz38YTJqSgU?=
+ =?iso-8859-1?Q?AClIGCu3To4pWFiAASxdfO0VtOd+LClckC8YsNGoDbUYbhq6vsdMB6lP7k?=
+ =?iso-8859-1?Q?P4PJVwIISWvKMPLfADz9stK2T+LQn53zifGIjRYP/1+jNt55745ysGhbSs?=
+ =?iso-8859-1?Q?dW7x++VVt/luxX1lhA1xGcn2ZDqU44tPoM1URka19dWudo++FmNgST6yVT?=
+ =?iso-8859-1?Q?s3ExswMo9y3hL81o5bdqRb4IiLkuJViNa9ZHXNQ23D3h6W8K6KJ2YmG8Vv?=
+ =?iso-8859-1?Q?bIhhRqfvlFqDLngzN4E/rIdUO24qimn3kDacT86EAvcxp0sf1gYjHsYwGP?=
+ =?iso-8859-1?Q?QpWht0UhOAL8WJjWiY95CW1NOxxBgXL3RxSFdBOJmN3ODFNgk9VPwjRv6D?=
+ =?iso-8859-1?Q?MeTWC4EO5xE44wKpNZPuT8zilsG7dR6RCI4I6fOiTBw8F3+6iy6LWJzI1M?=
+ =?iso-8859-1?Q?ExtqtSdb8GapIfjNloGGYT4SN0KuAJYJs7+jmZf9LphJFQ4ZMZ1p1t/9Nf?=
+ =?iso-8859-1?Q?GYABTDSHg/nlgsbu2A0J4bOxsjDTvXiHOGFHV5l2qfMn1/vn+qLaETDi58?=
+ =?iso-8859-1?Q?8ttAN8+dKQnNCC5g5xFMlvitljT3ui0=3D?=
+Content-Type: multipart/alternative;
+ boundary="_000_PA4PR07MB761339215913CDD1C65547718660APA4PR07MB7613eurp_"
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 3/5] hw/arm/smmuv3-accel: Allocate vEVENTQ for
- accelerated SMMUv3 devices
-To: Nicolin Chen <nicolinc@nvidia.com>,
- Shameer Kolothum Thodi <skolothumtho@nvidia.com>
-Cc: "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
- Nathan Chen <nathanc@nvidia.com>, Matt Ochs <mochs@nvidia.com>,
- Jiandi An <jan@nvidia.com>, Jason Gunthorpe <jgg@nvidia.com>,
- "jonathan.cameron@huawei.com" <jonathan.cameron@huawei.com>,
- "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>,
- "zhenzhong.duan@intel.com" <zhenzhong.duan@intel.com>,
- Krishnakant Jaju <kjaju@nvidia.com>
-References: <20260211083415.133534-1-skolothumtho@nvidia.com>
- <20260211083415.133534-4-skolothumtho@nvidia.com>
- <aYzFeMh1szhJlJJk@Asurada-Nvidia>
- <e66e82d6-0953-49f0-9d84-bf2776e8f3ce@redhat.com>
- <aYzJhEFg/zxtrJ8z@Asurada-Nvidia>
- <CH3PR12MB754855AE35A087B900B0C311AB63A@CH3PR12MB7548.namprd12.prod.outlook.com>
- <aYzTUDmTzIZZCwnW@Asurada-Nvidia>
-Content-Language: en-US
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <aYzTUDmTzIZZCwnW@Asurada-Nvidia>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-OriginatorOrg: eviden.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: PA4PR07MB7613.eurprd07.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 9726e263-3085-494e-87c8-08de6a024285
+X-MS-Exchange-CrossTenant-originalarrivaltime: 12 Feb 2026 06:45:07.1699 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 7d1c7785-2d8a-437d-b842-1ed5d8fbe00a
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: BsIU9bNnZwrdDBKNvgIZNfTLyWFOV8+VLGwAei3oJ5phhekUHgUF/yWpDg9TplX3TO3ySSajwoZPEo5i9gANhLGNmP0/ve1JmRkhXn8QiCv/h2bNRZ3wGNZkFUExL46H
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: GV4PR07MB11617
+Received-SPF: pass client-ip=80.78.11.83;
+ envelope-from=clement.mathieu--drif@eviden.com; helo=smarthost2.eviden.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,57 +211,173 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Nicolin,
+--_000_PA4PR07MB761339215913CDD1C65547718660APA4PR07MB7613eurp_
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 
-On 2/11/26 8:06 PM, Nicolin Chen wrote:
-> On Wed, Feb 11, 2026 at 10:43:04AM -0800, Shameer Kolothum Thodi wrote:
->>> On Wed, Feb 11, 2026 at 07:14:40PM +0100, Eric Auger wrote:
->>>> On 2/11/26 7:07 PM, Nicolin Chen wrote:
->>>>> On Wed, Feb 11, 2026 at 08:34:13AM +0000, Shameer Kolothum wrote:
->>>>>> +        if (local_err == NULL) {
->>>>> Does eventq need to rely on !local_err from cmdq?
->>>> if local_err is NULL we can safely use it, no? Or maybe I miss your
->>>> point. maybe test !local_err directly?
->>> Point is: if local_err isn't NULL, why can't we allocate vEVENTQ?
->> Technically nothing prevents that I guess.
+What about PCI_NO_PASID?
+
+________________________________
+From: Duan, Zhenzhong <zhenzhong.duan@intel.com>
+Sent: 12 February 2026 03:43
+To: Nicolin Chen <nicolinc@nvidia.com>; Shameer Kolothum Thodi <skolothumth=
+o@nvidia.com>
+Cc: qemu-devel@nongnu.org <qemu-devel@nongnu.org>; alex@shazbot.org <alex@s=
+hazbot.org>; clg@redhat.com <clg@redhat.com>; eric.auger@redhat.com <eric.a=
+uger@redhat.com>; mst@redhat.com <mst@redhat.com>; jasowang@redhat.com <jas=
+owang@redhat.com>; Jason Gunthorpe <jgg@nvidia.com>; joao.m.martins@oracle.=
+com <joao.m.martins@oracle.com>; CLEMENT MATHIEU--DRIF <clement.mathieu--dr=
+if@eviden.com>; Tian, Kevin <kevin.tian@intel.com>; Liu, Yi L <yi.l.liu@int=
+el.com>; Hao, Xudong <xudong.hao@intel.com>
+Subject: RE: [RFC PATCH 01/14] backends/iommufd: Add pasid attach/detach ca=
+llbacks
+
+Caution: External email. Do not open attachments or click links, unless thi=
+s email comes from a known sender and you know the content is safe.
+
+
+>-----Original Message-----
+>From: Nicolin Chen <nicolinc@nvidia.com>
+>Subject: Re: [RFC PATCH 01/14] backends/iommufd: Add pasid attach/detach
+>callbacks
+>
+>On Wed, Feb 11, 2026 at 09:14:33AM -0800, Shameer Kolothum Thodi wrote:
+>> > > Have you considered extending attach_hwpt() to
+>> > >take a PASID instead of introducing a separate callback?
+>> >
+>> > Yes, I did. To extending attach/detach_hwpt(), we need to add two
+>> > parameters, "bool has_pasid, uint32_t pasid". E.g.,
+>> >
+>> >     bool (*attach_hwpt)(HostIOMMUDeviceIOMMUFD *idev,
+>> >                                          bool has_pasid, uint32_t pasi=
+d,
+>> >                                          uint32_t hwpt_id, Error **err=
+p);
+>
+>The RID attach/detach could be just pasid=3DIOMMU_NO_PASID without
+>that "has_pasid"?
+
+After further thinking, yes, we could.
+
+IOMMU_NO_PASID isn't export as UAPI, we need to define it in QEMU.
+
+>
+>> > and refactor iommufd_cdev_attach/detach_ioas_hwpt() a bit.
+>> >
+>> > I'm fine either way, two separate callbacks just look cleaner for me.
+>> > Let me know if extending is preferred.
 >>
->> The only thing is we have to call error_report_err() if local_err != NULL
->> and then set local_err == NULL before calling  alloc_veventq().
-> Or should we use:
+>> Since PASID attach/detach is essentially an extension of the existing
+>> attach/detach flow, I would prefer extending the current callbacks.
+>> I think that keeps the interface simpler and avoids code duplication.
 >
-> include/qapi/error.h-402-/*
-> include/qapi/error.h-403- * Append a printf-style human-readable explanation to an existing error.
-> include/qapi/error.h-404- * If the error is later reported to a human user with
-> include/qapi/error.h-405- * error_report_err() or warn_report_err(), the hints will be shown,
-> include/qapi/error.h-406- * too.  If it's reported via QMP, the hints will be ignored.
-> include/qapi/error.h-407- * Intended use is adding helpful hints on the human user interface,
-> include/qapi/error.h-408- * e.g. a list of valid values.  It's not for clarifying a confusing
-> include/qapi/error.h-409- * error message.
-> include/qapi/error.h-410- * @errp may be NULL, but not &error_fatal or &error_abort.
-> include/qapi/error.h-411- * Trivially the case if you call it only after error_setg() or
-> include/qapi/error.h-412- * error_propagate().
-> include/qapi/error.h-413- * May be called multiple times.  The resulting hint should end with a
-> include/qapi/error.h-414- * newline.
-> include/qapi/error.h-415- */
-> include/qapi/error.h:416:void error_append_hint(Error *const *errp, const char *fmt, ...)
-> include/qapi/error.h-417-    G_GNUC_PRINTF(2, 3);
+>+1
+
+Ok, wll extend attach/detach_hwpt(). Thanks all.
+
+--_000_PA4PR07MB761339215913CDD1C65547718660APA4PR07MB7613eurp_
+Content-Type: text/html; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+
+<html>
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Diso-8859-=
+1">
+<style type=3D"text/css" style=3D"display:none;"> P {margin-top:0;margin-bo=
+ttom:0;} </style>
+</head>
+<body dir=3D"ltr">
+<div style=3D"font-family: Aptos, Aptos_EmbeddedFont, Aptos_MSFontService, =
+Calibri, Helvetica, sans-serif; font-size: 12pt; color: rgb(0, 0, 0);" clas=
+s=3D"elementToProof">
+What about PCI_NO_PASID?</div>
+<div style=3D"font-family: Aptos, Aptos_EmbeddedFont, Aptos_MSFontService, =
+Calibri, Helvetica, sans-serif; font-size: 12pt; color: rgb(0, 0, 0);">
+<br>
+</div>
+<hr style=3D"display: inline-block; width: 98%;">
+<div id=3D"divRplyFwdMsg">
+<div style=3D"direction: ltr; font-family: Calibri, sans-serif; font-size: =
+11pt; color: rgb(0, 0, 0);">
+<b>From:</b>&nbsp;Duan, Zhenzhong &lt;zhenzhong.duan@intel.com&gt;<br>
+<b>Sent:</b>&nbsp;12 February 2026 03:43<br>
+<b>To:</b>&nbsp;Nicolin Chen &lt;nicolinc@nvidia.com&gt;; Shameer Kolothum =
+Thodi &lt;skolothumtho@nvidia.com&gt;<br>
+<b>Cc:</b>&nbsp;qemu-devel@nongnu.org &lt;qemu-devel@nongnu.org&gt;; alex@s=
+hazbot.org &lt;alex@shazbot.org&gt;; clg@redhat.com &lt;clg@redhat.com&gt;;=
+ eric.auger@redhat.com &lt;eric.auger@redhat.com&gt;; mst@redhat.com &lt;ms=
+t@redhat.com&gt;; jasowang@redhat.com &lt;jasowang@redhat.com&gt;; Jason
+ Gunthorpe &lt;jgg@nvidia.com&gt;; joao.m.martins@oracle.com &lt;joao.m.mar=
+tins@oracle.com&gt;; CLEMENT MATHIEU--DRIF &lt;clement.mathieu--drif@eviden=
+.com&gt;; Tian, Kevin &lt;kevin.tian@intel.com&gt;; Liu, Yi L &lt;yi.l.liu@=
+intel.com&gt;; Hao, Xudong &lt;xudong.hao@intel.com&gt;<br>
+<b>Subject:</b>&nbsp;RE: [RFC PATCH 01/14] backends/iommufd: Add pasid atta=
+ch/detach callbacks</div>
+<div style=3D"direction: ltr;">&nbsp;</div>
+</div>
+<div style=3D"font-size: 11pt;">Caution: External email. Do not open attach=
+ments or click links, unless this email comes from a known sender and you k=
+now the content is safe.<br>
+<br>
+<br>
+&gt;-----Original Message-----<br>
+&gt;From: Nicolin Chen &lt;nicolinc@nvidia.com&gt;<br>
+&gt;Subject: Re: [RFC PATCH 01/14] backends/iommufd: Add pasid attach/detac=
+h<br>
+&gt;callbacks<br>
+&gt;<br>
+&gt;On Wed, Feb 11, 2026 at 09:14:33AM -0800, Shameer Kolothum Thodi wrote:=
+<br>
+&gt;&gt; &gt; &gt; Have you considered extending attach_hwpt() to<br>
+&gt;&gt; &gt; &gt;take a PASID instead of introducing a separate callback?<=
+br>
+&gt;&gt; &gt;<br>
+&gt;&gt; &gt; Yes, I did. To extending attach/detach_hwpt(), we need to add=
+ two<br>
+&gt;&gt; &gt; parameters, &quot;bool has_pasid, uint32_t pasid&quot;. E.g.,=
+<br>
+&gt;&gt; &gt;<br>
+&gt;&gt; &gt;&nbsp;&nbsp;&nbsp;&nbsp; bool (*attach_hwpt)(HostIOMMUDeviceIO=
+MMUFD *idev,<br>
+&gt;&gt; &gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n=
+bsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp=
+;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n=
+bsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; bool has_pasid, uint32_t pasid,<br>
+&gt;&gt; &gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n=
+bsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp=
+;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n=
+bsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; uint32_t hwpt_id, Error **errp);<br>
+&gt;<br>
+&gt;The RID attach/detach could be just pasid=3DIOMMU_NO_PASID without<br>
+&gt;that &quot;has_pasid&quot;?<br>
+<br>
+After further thinking, yes, we could.<br>
+<br>
+IOMMU_NO_PASID isn't export as UAPI, we need to define it in QEMU.<br>
+<br>
+&gt;<br>
+&gt;&gt; &gt; and refactor iommufd_cdev_attach/detach_ioas_hwpt() a bit.<br=
 >
-> ?
+&gt;&gt; &gt;<br>
+&gt;&gt; &gt; I'm fine either way, two separate callbacks just look cleaner=
+ for me.<br>
+&gt;&gt; &gt; Let me know if extending is preferred.<br>
+&gt;&gt;<br>
+&gt;&gt; Since PASID attach/detach is essentially an extension of the exist=
+ing<br>
+&gt;&gt; attach/detach flow, I would prefer extending the current callbacks=
+.<br>
+&gt;&gt; I think that keeps the interface simpler and avoids code duplicati=
+on.<br>
+&gt;<br>
+&gt;+1<br>
+<br>
+Ok, wll extend attach/detach_hwpt(). Thanks all.</div>
+</body>
+</html>
 
-Usually error_append_hint() is used to append a user friendly msg that
-helps the user to fix the problem.
-In qapi/error.h there is an example that relates to "Receive and
-accumulate multiple errors (first one wins):" by using error_propagate()
-
-Thanks
-
-Eric
->
-> Nicolin
->
-
+--_000_PA4PR07MB761339215913CDD1C65547718660APA4PR07MB7613eurp_--
 
