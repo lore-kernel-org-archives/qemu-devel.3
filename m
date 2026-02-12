@@ -4,93 +4,121 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BDADEE3695
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 16:27:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8343EE3695
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 16:27:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqZWn-0008K4-9s; Thu, 12 Feb 2026 11:26:53 -0500
+	id 1vqZWt-0008N3-08; Thu, 12 Feb 2026 11:26:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vqZWl-0008HH-Ly
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 11:26:51 -0500
-Received: from mail-yw1-x112d.google.com ([2607:f8b0:4864:20::112d])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vqZWr-0008Ml-Q4
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 11:26:57 -0500
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vqZWk-0007Yn-2n
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 11:26:51 -0500
-Received: by mail-yw1-x112d.google.com with SMTP id
- 00721157ae682-794fe698e36so523307b3.2
- for <qemu-devel@nongnu.org>; Thu, 12 Feb 2026 08:26:49 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1770913609; cv=none;
- d=google.com; s=arc-20240605;
- b=ba5hlrT72iRPKrrzOQm4NRB576roxmrq5gERThu8gAehU1pTuEof/ukpPwzlkaMMmn
- L/nK8lB6iMviy1ZDk7PWmQd8t3ei2W5bPN2m5Wp804xZ6sFrPyKsj6oMcw/f6zhYu5Q6
- 8qB9ak+NH0Dxy1+pq8/cOJZ4/cmLGx/mPN+NA9Bp0L04UWu9r5qmQl382HdHHCP9lz7g
- JakGUANsG2K5vnRXxHuZKBcxNzrRm37YJmf8T8lZvUgCes/RT/2JW2Rj48GghuFYBrcl
- ovRqSjx7mxsmya+m5+wPuiFDfM5EizYJ0Rl2GP+opMqa0r0h8xdMNJkFnDZMIuN5/Q2t
- qJsQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=9CUC5suL8eO4VYya72tWpNlbL0nqIu8CchiksuGKmz0=;
- fh=B22JtR9ZUsXUrdiOg5Iw9LSBCcKra7oUC9BuSyZP/90=;
- b=JibXm4TknD5NrwgWiXOalq7g61DjghErRL56lYGJlrCJ6o1wutIZqWirEy3E7nhp8I
- Zw9VvRfgv+z6q8xiEpMaC0WJhFeXDpRcqAbXi+gSPdk+VjpUrbDPSvZLExBoHYbqdhft
- Cnmcwb75FEsCB7cAYHGZxkS3a+2jDVcPTV8OKqHdbdNqTaNVFlwzS09KjE2R4HzIolK7
- KwBo0l0/jfbcdsmkDi0nqDkF2IZv5iujnuNYMcyGiAxLMNo0m6Alr8tjS7TsLPhe/s2S
- wenzZJwb1wlnSKu/F3DWAbRF9ogeoHyKJ/1QTP2xROKd0FXl5dTjaXFkIvF+jKOsz+jJ
- SsyA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vqZWq-0007Zg-A1
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 11:26:57 -0500
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-2ab46931cf1so2451175ad.0
+ for <qemu-devel@nongnu.org>; Thu, 12 Feb 2026 08:26:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770913609; x=1771518409; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=9CUC5suL8eO4VYya72tWpNlbL0nqIu8CchiksuGKmz0=;
- b=gmp/NqKmUeNg1iZQ1NVP2xJyVRP7lrgjfiFyJ3wZHKtqXUpywl2qHDBDwZIdzCi3G7
- 9CtF1q3ZorBzw3w2Rs3JKKRrdpNSf50vIOgiZHSEGzifOZuT8UAikRGmFAaKkdQ1Yhls
- r7A9zRMzEFaxqjKrXjTFpt/8xDwXzE6RFbpiGsbgAX3dqU8qcJCweR+OU+iotmgU6o6R
- bV+HFPoEo6PX3S7iifUxvmSujSy8pGfAh3D2kCU7DUlmGSntAwXR8hIFPOja/wmcq3A7
- /CqWXzQotjvNxp+PvrG9E3zdnXf8fiDsaFDImjGz3fSsHF+qaW/71/+ATlRw/kbtajDA
- KDTw==
+ d=linaro.org; s=google; t=1770913614; x=1771518414; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=60oIabqW2E0633q7tT64MAUWtuRGVW1IbMR/gWDJ6ys=;
+ b=jYAaNzigBNU45GJaCpQ42nfyTy+TUg8KiW/Vdk3bUZNUoUfFTIsEbcZQwfsq2+hkYt
+ KcJ9PzlhGfgqHmZmOYEUnyCGWQvqxzhFOL7VEijn9cuButkNlWehsPhLRFD7i8FGfsFA
+ yrcDQZb0B+nGASzYvug6TjFGcEdlWXPyY+HZtn6kWWs8RH8LahmQAzth41AMKuaYGcmq
+ HMezvd9P97lB5rjFAvoiz2PB7Okc6YiWdngyvJ7x4uO5R8phkx8OugSWVKkyImoSapBj
+ uMHNtNMtDbGL5TpreXE+8TcIgwTWib1xE2gcqe/oMNln47uG0JRrYpOhFD91Yubmq4I+
+ 1vOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770913609; x=1771518409;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=9CUC5suL8eO4VYya72tWpNlbL0nqIu8CchiksuGKmz0=;
- b=aqvZfTlyatDmv5qkeTzKf7HGNhaaHh6DjDn7SEPyDxG8EPzR8HUk8odQ0Pwg6yYk3O
- 4GPkI3u9n5e9avNvtDHH74BjD6fA1/UT4GZZBJeL07JOE0s+Kv0ykUUjMZFFiCfpFjaW
- 0um/a7zojxNiZKD3Gc2y0oZQDIT5Ei5V4KguxyKsJ2LqgoblAUC327GoosYoqfAL5y/M
- O4/eHSETuTImAbDIj6c7zLYTCmfxc4YWgF4xdkQBoa6kQngfxc6o+UGhJPNnV6rhl9+B
- ZsvVUKZmVMraMS4S40NKY3oe0+SaazWejRBDTsDv8qyuwpmx8UQTdl5wSwZG3uyxK75B
- MXog==
-X-Gm-Message-State: AOJu0YwbCgUjd1YtTPBh4vgP20EDExfG8npBCiVzfMKp0ryU/9js2+Ds
- bqEYdlnaEwBO602u+qm4TO5VV2IUWQ1t/rzUJLkhMUikgBZW/yVnz8J9a+DaA/s32DpTpuk4upa
- HumssqdsQvRCT3Oi1pWnppeUVTQSITddn2PQGO5acyOoahqIGWRLj
-X-Gm-Gg: AZuq6aKGRIU1RB+n0NjOe9WwaSn9uGKlyF1Y0LnGnLx6qPEZNS2AKVJoEgViGdtSy+u
- Bvk4Xbs+jJEWEMmAegKiHswT7pdkldTCfPPEjcg+rUsEygnHLVcue7PqGqVdsCrYKoKtoIije/m
- 9KSLZWYPVT+3Tvbftc5+h1Gdi6ePyes2PS8jnFHsrUhwxLz9/hVd6JpoTvtfhPcKjbZFq4LgbgL
- O6DrKzbUSwQsxvgOjGA3/VPCZNmR5UeKYy4cMJyLeqfClNseL6Wac/Llinj2rKjT8mW7e8ivumO
- naed4TplmtWJyrN0dFw4Tk39yUTOZNu8pBZMbwu4/NU0fobWS4xjOsTLYpld64e72ao=
-X-Received: by 2002:a05:690c:c224:b0:793:c8ab:8bc5 with SMTP id
- 00721157ae682-797931f8fafmr17155167b3.46.1770913608608; Thu, 12 Feb 2026
- 08:26:48 -0800 (PST)
+ d=1e100.net; s=20230601; t=1770913614; x=1771518414;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=60oIabqW2E0633q7tT64MAUWtuRGVW1IbMR/gWDJ6ys=;
+ b=ZAeQY4LqnXSwEUg8djIH5IYQudi9o9bVUBcwr++Yu+54XQuVa+Ik9WkGA6D0O5eLd2
+ z7L5HXkscOu+Wbl12gOZJuGnWAqaeP4Hck/Z0z73ag25WVycmIfHhiIaQoc6qbMAeGQq
+ UnTIHrmucPNdAxYnbgFMqXf9D01uIblsefCXsYv0p8FT/mXzPU+lXL5Ib6tjQhxciLeY
+ +868GjyLO1Gm/29o4Px4RlTOCjFoQ1UcZccH+hKF7iG9xULME5CdNguEWJSzw1i0P2Vl
+ vkc3u9AkxQaBbyTz1/Jpero1S4OCOPvvzhZEXlPQojkEJIylXNmoVf8aA8PU71pl9CIY
+ 41aw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW+cnuXI5TN4DbgSOu6siHLV5CGHLORSWkKtdm/ZO4AeFR/wbdzbDmqB2NpwGhcEgnU3ufTSkJg2mAT@nongnu.org
+X-Gm-Message-State: AOJu0YyVQwW3w4PbA8Ahj5VF9QTMV+CTuweWXkPiiMufMO+FpDCYNAef
+ Q/BtKXGsmIeoqerY5Yr4WeqxedfyR3Pm3hLbhTEC8V8EVXMpAtCrN8/YZZwRRF5j1+4=
+X-Gm-Gg: AZuq6aIsnmAikdtK63Zejutc7fG1VDW+wjmIjcgsZknayW8twfmp5hdNfwB9N7RBKng
+ uYrqNsLrqDuu8vJXbqEfYxsGH3P3VzJoZM/qKMFxsqEUfvCICxvmS6VHx85zQgeB2kwg8DKsqMM
+ TaUF0Z6bZeK09IVBwVICz3SeX9Nn+RMizbtqWlkT9x3TBbRCF12+tfDQ2eYCx9j7a9LMeCVlMqm
+ 8S2mj9kxErr/xBpcH5vudrdifFsJ2ACdD1dNNj08UOmaQQjPVt9HGAz/XQD2Q0AE6CvuVUAeYjz
+ fJyecp5cKrh5m2cPhicVEXTsGmV/dvX6o5q/PUCYIRewEvvQNVJKeYjStyE2W741xOpttyAgCFb
+ U/6v3XxhkD6EUyxBQrgTNrR49+ArwT2efKt3DTyVLejmFsKYAPG95LaakYHt/FQC7HHJZ19iwBO
+ ssyaTPKFYeConBXYh+H1O+/5EDUBxyDiU6eGO/7O6SR7+lVfCr6YYrpaeUrdxcD7cZ6Zkm3mHYx
+ vuvqRA=
+X-Received: by 2002:a17:903:8c3:b0:2a7:90f2:2ded with SMTP id
+ d9443c01a7336-2ab3aa8ed80mr34772995ad.16.1770913614331; 
+ Thu, 12 Feb 2026 08:26:54 -0800 (PST)
+Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2ab29979b13sm53843185ad.61.2026.02.12.08.26.53
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 12 Feb 2026 08:26:54 -0800 (PST)
+Message-ID: <0cf3e5a2-73d2-44a8-b4d0-cdaef67294be@linaro.org>
+Date: Thu, 12 Feb 2026 08:26:53 -0800
 MIME-Version: 1.0
-References: <20260212144244.22579-1-pbonzini@redhat.com>
-In-Reply-To: <20260212144244.22579-1-pbonzini@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 12 Feb 2026 16:26:37 +0000
-X-Gm-Features: AZwV_Qg0q0ORSQYkvpMLsIKqIPqlLJGLcJI_ID5TviJVsnTCp84UIqA64sqGLzE
-Message-ID: <CAFEAcA8s4p7QbVcQXWX_-HyKLyhoQwYz1b6rkazLN5uWzjXv9w@mail.gmail.com>
-Subject: Re: [PULL 00/41] QOM, target/i386 patches for 2026-02-12
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112d;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112d.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/1] plugins: fix cross-build using LLVM for Windows
+ targets
+Content-Language: en-US
+To: Mohamed Mediouni <mohamed@unpredictable.fr>, qemu-devel@nongnu.org
+Cc: Alexandre Iooss <erdnaxe@crans.org>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, Mahmoud Mandour <ma.mandourr@gmail.com>
+References: <20260210040722.11375-1-mohamed@unpredictable.fr>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
+ 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
+ ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
+In-Reply-To: <20260210040722.11375-1-mohamed@unpredictable.fr>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -113,45 +141,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 12 Feb 2026 at 14:44, Paolo Bonzini <pbonzini@redhat.com> wrote:
->
-> The following changes since commit cd5a79dc98e3087e7658e643bdbbb0baec77ac8a:
->
->   Merge tag 'for_upstream' of https://git.kernel.org/pub/scm/virt/kvm/mst/qemu into staging (2026-02-05 13:54:50 +0000)
->
-> are available in the Git repository at:
->
->   https://gitlab.com/bonzini/qemu.git tags/for-upstream
->
-> for you to fetch changes up to 28a29efe4342055b4631de96ba71fd577ae83e07:
->
->   target/i386/mshv: remove unused optimization of gva=>gpa translation (2026-02-10 14:41:08 +0100)
->
-> ----------------------------------------------------------------
-> * hw/i386: Remove deprecated PC 2.6 and 2.7 machines
-> * i386/cpu: Fix incorrect initializer in Diamond Rapids definition
-> * qom: Clean up property release
-> * target/i386/kvm: set KVM_PMU_CAP_DISABLE if "-pmu" is configured
-> * target/i386/kvm: reset AMD and perfmon-v2 PMU registers during VM reset
-> * mshv: Cleanup
-> * target/i386: convert SEV-ES termination requests to guest panic events
->
-> ----------------------------------------------------------------
+On 2/9/26 8:07 PM, Mohamed Mediouni wrote:
+> llvm-dlltool assumes that it's by default targeting the host architecture
+> it's running on. That assumption doesn't hold true when cross-compiling.
+> 
+> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+> ---
+>   plugins/meson.build | 9 ++++++++-
+>   1 file changed, 8 insertions(+), 1 deletion(-)
+> 
+> diff --git a/plugins/meson.build b/plugins/meson.build
+> index 34643e2cea..9899f166ee 100644
+> --- a/plugins/meson.build
+> +++ b/plugins/meson.build
+> @@ -41,9 +41,16 @@ if host_os == 'windows'
+>     # to find missing symbols in current program.
+>     win32_qemu_plugin_api_link_flags = ['-Lplugins', '-lqemu_plugin_api']
+>     if meson.get_compiler('c').get_id() == 'clang'
+> +    if host_machine.cpu() == 'x86_64'
+> +      dlltool_target = 'i386:x86-64'
+> +    elif host_machine.cpu() == 'aarch64'
+> +      dlltool_target = 'arm64'
+> +    else
+> +      error('Unknown machine')
+> +    endif
+>       # With LLVM/lld, delaylib is specified at link time (-delayload)
+>       dlltool = find_program('llvm-dlltool', required: true)
+> -    dlltool_cmd = [dlltool, '-d', '@INPUT@', '-l', '@OUTPUT@', '-D', 'qemu.exe']
+> +    dlltool_cmd = [dlltool, '-m', dlltool_target,'-d', '@INPUT@', '-l', '@OUTPUT@', '-D', 'qemu.exe']
+>       win32_qemu_plugin_api_link_flags += ['-Wl,-delayload=qemu.exe']
+>     else
+>       # With gcc/ld, delay lib is built with a specific delay parameter.
 
-Hi; the commit for this patch:
 
-> Aidan Khoury (1):
->       i386/cpu: Fix incorrect initializer in Diamond Rapids definition
+This was merged into master (c848bce26151c21d785bcd60acff6e746852060d).
+Thank you for your contribution!
 
-includes this change to the roms/seabios-hppa submodule:
-
->  roms/seabios-hppa                                 |   2 +-
-
-which is not mentioned in the commit message and is not
-related to the change. This seems likely to have been introduced
-by accident during a patchseries rebase: could you remove it
-from the commit and resend, please ?
-
-thanks
--- PMM
+Regards,
+Pierrick
 
