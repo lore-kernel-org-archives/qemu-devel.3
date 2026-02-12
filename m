@@ -4,95 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E00EEDF04A
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 06:29:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D369FEDF04B
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 06:29:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqQ9h-0007pR-Ge; Thu, 12 Feb 2026 01:26:25 -0500
+	id 1vqQAp-0000wo-T0; Thu, 12 Feb 2026 01:27:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1vqQ9g-0007of-0V
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 01:26:24 -0500
+ id 1vqQAb-0000Sg-9W
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 01:27:27 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1vqQ9e-0005GJ-Jd
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 01:26:23 -0500
+ id 1vqQAX-0005MJ-0h
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 01:27:18 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770877582;
+ s=mimecast20190719; t=1770877636;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=r0oM0RRyjLelkT0G5RoaNy8SGcq/Mnkz7KKwnwr3WCA=;
- b=fGRnX71GZoCIBlz6/VE0TQ4CLRcX++ecFB5Sw5Lh8QDYjBgDPtk+hS04UiTKr5vIvPGB1m
- afbP0qEfczZ6Sp3fsf9B/ueO/LUZZbuU908ClhEGknCOxftXS8s2c00jzTccs7BqoVJAqj
- qPJGCIgIgWgrDPt2ld/5bdrGsOjsT6o=
-Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com
- [209.85.215.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=bSI26ec30q+LRwqH4eGYpPIQO82uWHXpsee53xL/4Nc=;
+ b=b/ARzrE7l+46ak0fmlFtevNCNnlnXFrUGmL/vJKg3U+i7nqm4EhaSjxvQgD0s2pKkmlpsG
+ CNpAyj9uvTMoJRkgcHOhKChzRy6JlFE6hqCT4lG82ubAO3uvsPiQEh45k7LylTYr6wHm1O
+ aO6ap2v5GxrpvITK8VteyaDU1RU6L0U=
+Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com
+ [209.85.214.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-404-FzaEgHZUM0S_ONheAyyv-A-1; Thu, 12 Feb 2026 01:26:20 -0500
-X-MC-Unique: FzaEgHZUM0S_ONheAyyv-A-1
-X-Mimecast-MFC-AGG-ID: FzaEgHZUM0S_ONheAyyv-A_1770877579
-Received: by mail-pg1-f197.google.com with SMTP id
- 41be03b00d2f7-c6df833e1efso6933432a12.2
- for <qemu-devel@nongnu.org>; Wed, 11 Feb 2026 22:26:20 -0800 (PST)
+ us-mta-594-bJRNQtlPOy6jLNPszDNqMw-1; Thu, 12 Feb 2026 01:27:14 -0500
+X-MC-Unique: bJRNQtlPOy6jLNPszDNqMw-1
+X-Mimecast-MFC-AGG-ID: bJRNQtlPOy6jLNPszDNqMw_1770877634
+Received: by mail-pl1-f198.google.com with SMTP id
+ d9443c01a7336-2a863be8508so78266305ad.2
+ for <qemu-devel@nongnu.org>; Wed, 11 Feb 2026 22:27:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1770877579; x=1771482379; darn=nongnu.org;
+ d=redhat.com; s=google; t=1770877633; x=1771482433; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=r0oM0RRyjLelkT0G5RoaNy8SGcq/Mnkz7KKwnwr3WCA=;
- b=exVYpTtFNzpsX8XvIeRXRqEO5+bqRnQFiJh+7xWbq/tz7QRZf5lwzH1+te3gGpGAhz
- xkWLlDHuq4GL9sl/ZjOmlJG365AYdfn8AMoMVC73oU5qMgATKNp8dOac423/pzyX2RSJ
- P53+QfpXS5tmsHLQ+VI7XzsGtzlQpTUgX+HdW53qk5iVi51l/0VN+Z0ioBGwkFrkC0uA
- WK6/1OSrErosWbDHYAQl4A3r3qLNIsSSPD/y1tcAmQbW6zf1kHJ9qS/UlpmAyLAh6LCL
- j7Fn4bm4hQfAb98iKwY1/OLK3O/Wnx1niN4eeaJI6ElNccRSVqnsM0se8kSGHPoad0BC
- Ajew==
+ bh=bSI26ec30q+LRwqH4eGYpPIQO82uWHXpsee53xL/4Nc=;
+ b=LuPjpmT67Hv8r/EBhzfQEa1EVsuIBvXSDSUqU4r6GosgYTVMxiIkhVsx+Z5GMzjD+z
+ TUrdytJWiQ5QZCmHZJH34jzXX3wmPJs9We07SZE9F64E35Zc07nkYDBGI5Si0+Amw3j5
+ E5pLVYcQ7mRaIy8MwZ3kfx/BvX0iyGRUsUXuLTDfPGACvyaT+d8Mgv41l0K8KsiQcFFG
+ q5+K5Mm0aIGN2vFwV3U4BzZRlAq6jCNJvXqyzIQRcMXOHjVoYhbNQaQJ7v6vAeBxeBJW
+ 7ALy6aJVpEiYiZyQrpocBcWB1LV4kPkyrd71qwqxE/tuCZJWaymC9Oi2sL7SYjNBX8P7
+ yTxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770877579; x=1771482379;
+ d=1e100.net; s=20230601; t=1770877633; x=1771482433;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=r0oM0RRyjLelkT0G5RoaNy8SGcq/Mnkz7KKwnwr3WCA=;
- b=h8qv1rxKMv6No0VLQZwS/hac5y1L/SVFKeDx+lgPp/XGxmgJ2Uagmq6zSshGsQFeKW
- 7zoD/v5OPwYeidgNuKIL7hGANAADzyvA9bSB6kvePgK6dL5P7YJUGBk7bM6lKwg945fe
- qMaEkPEPfd1JHdjQHE1MEjGfsHj/t51sLITNRN3pPLOxot7vH4N/H063IZlEOF6BSYl1
- 27qyJN45sWTxBAv4s2VNFByUeUA3Ear3P8NNMARlYTYwDQMzuE4bO2kUVERb1NW4s+Bu
- DZRNMbkZ04o9nFL+nH5W9pbBj7KHCSB7651x2NMXodrTAhokMqXOYK7KlpBGrVUZidbb
- 1N3g==
+ bh=bSI26ec30q+LRwqH4eGYpPIQO82uWHXpsee53xL/4Nc=;
+ b=TmkyOGDIMELGkVaVmrU3JtRtPpqqvWJDY/Y9YzFpWoeSHPMMFsHRgUWQG1Gu582n8B
+ O22tuzfysLkqlq95f51tspIw4usgxc31Vp+PF0vsvHlyshzfCgVHP2u0n2qHTOzzP4oz
+ Qr/zPsXj4pVIlLaTtiAlj9XPLSqwOdRZ+xdP85dP0MjEn1QZGHv+7TjtahzpHDb2IcIp
+ 5zuSffe/wki3qoBT3UK+j+8vifgHXT5qu7fYINoAyN6SPaYMGVtwPbbAZIUk/D1fBmv2
+ OJeIhrHfcrZ/eUf5sTW+dxljBQ8PWXod5+FahBfSlR07F38v7vy2/l+Z1QqKiZooaPzv
+ MelA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVRMTuEhTrITKc8I1FYxHMnsuSrFO0vrqFpYFA5RzKDRaNSRZEYaMJaHRdFPAz0ksfp5IiKWZt1UyHk@nongnu.org
-X-Gm-Message-State: AOJu0YxtKZoiOe7cUylF5tXeR4uHt1A7CCC0puz1r+SqJXu62rBKtt/s
- +knpbUYLOfCQADVFBAq8PkmUMLRXIB32LXK/4NcjJnKYeoI+ghgmtDL80txra4bjEPHzgkHQQ80
- mZVxsltiotmW6oR6K7e4WKx2/hMtoAeXl9WGxV00UgjP2q+PS9Y8rR/4C
-X-Gm-Gg: AZuq6aJIgt5EU3hhmhtNChyMECvEi8Hv878bULIMKGvr6vdJT/rucgdvDnYaF1nn+XT
- gT2D5+UUDD4WzpTsrjA6MTKvDy+KXN8FFcxcgzqVU1uDv+8wBiOKoPL0lie1xrHKLoOeB1lqlsB
- ORxlVEL3KLvUbFBaps4zxN3jdAdkAsxyKZB9beTWUo89s3eRe0V6aPFWgg+yTVpBuCaYol10UMl
- KR5ErXk7I3eOUqeTCRzGf1u5E6QnpeRn4ZhekQvmvZ5wGu/UKhYzF0K8OkBsfQKJr2PaufJG4AN
- CN+iwh7IH8LK4ekAxt52SfdwMT0lgPmuPVAkkXxvejjRF7+0qoLgfY3r2LqOZQaXtk1tVVBrq64
- 5CWUVaVAXpT24r2uDr4SYKk0QZgwIprjx3BcY6Ud6gOdJX+Fy3/0z9as=
-X-Received: by 2002:a05:6a20:430c:b0:394:426b:6791 with SMTP id
- adf61e73a8af0-3944897ea20mr1572075637.79.1770877579384; 
- Wed, 11 Feb 2026 22:26:19 -0800 (PST)
-X-Received: by 2002:a05:6a20:430c:b0:394:426b:6791 with SMTP id
- adf61e73a8af0-3944897ea20mr1572056637.79.1770877579043; 
- Wed, 11 Feb 2026 22:26:19 -0800 (PST)
+ AJvYcCVBDn799CCYmzEIJxwQRFiqVtZxARrNodi/M67tUUgubp1+DqijCnAInif9Nh9pF5R2xso9amr7OAo4@nongnu.org
+X-Gm-Message-State: AOJu0YyHROF/uIaAiY7wAsnzKbs+8GRrWc1NOsjigQ6sX/ALr1Q94hZl
+ KJ/U8aUIELVOBPmnADy7nDAL8kRJow2ck05wVV6w3AQBDD55bKmyjp10VcMzQsCSJKng+PpAUm8
+ n9m+AZORXhx/QokYl4NDyQAIL0mWrOvnXHMypgIfCoqI6WsgyaxAivm5L
+X-Gm-Gg: AZuq6aKl5T+JqnRbIZp2t1kokPoC4V/fh/B42ozcXPAf5jFhNUzZX8UJsByrwN1zwOO
+ 5X4pj3bHQFz5+CduJmVXC7hri0ZDRZcMmVKBMBXkr/pqxcgSdnisz5MgJFW0YDf3kod+o7f8Spm
+ esexZlAc7K9POQDY1xqzs+CZMqg1+oojCkD6NRjK28N6/xV7/fMOStxJIKPYUyFgflc9DlTB/GJ
+ Ob27Yn1zzAIYmKx1LG79RvCINTeaRabg4jpH70t6UIbbGr/fllgXnlNdlJOjyVMVjFJC0Io2PXW
+ RkYWaaFswYcD1O/4znRJ9bOzKdmYxiqsp1+qX7tfZPBWzs1MzuWFVXd12r+bWXDXVPAjCCcj0BM
+ l0b0UOL5JwpSXNp8M9KY9NPZtMkZ7lMkWhoXIVi5Sf0oh/RvYjMjtSMM=
+X-Received: by 2002:a05:6a20:a103:b0:38f:df47:87b2 with SMTP id
+ adf61e73a8af0-3944883cb87mr1895470637.53.1770877633583; 
+ Wed, 11 Feb 2026 22:27:13 -0800 (PST)
+X-Received: by 2002:a05:6a20:a103:b0:38f:df47:87b2 with SMTP id
+ adf61e73a8af0-3944883cb87mr1895445637.53.1770877633122; 
+ Wed, 11 Feb 2026 22:27:13 -0800 (PST)
 Received: from rhel9-box.lan ([122.164.27.113])
  by smtp.googlemail.com with ESMTPSA id
- 98e67ed59e1d1-3567e7d95d8sm4894122a91.2.2026.02.11.22.26.16
+ 98e67ed59e1d1-3567e7d95d8sm4894122a91.2.2026.02.11.22.27.10
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 11 Feb 2026 22:26:18 -0800 (PST)
+ Wed, 11 Feb 2026 22:27:12 -0800 (PST)
 From: Ani Sinha <anisinha@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>
-Cc: kraxel@redhat.com, Ani Sinha <anisinha@redhat.com>, kvm@vger.kernel.org,
+To: Bernhard Beschow <shentey@gmail.com>
+Cc: kraxel@redhat.com, Ani Sinha <anisinha@redhat.com>, qemu-ppc@nongnu.org,
  qemu-devel@nongnu.org
-Subject: [PATCH v4 14/31] i386/tdx: refactor TDX firmware memory
- initialization code into a new function
-Date: Thu, 12 Feb 2026 11:54:58 +0530
-Message-ID: <20260212062522.99565-15-anisinha@redhat.com>
+Subject: [PATCH v4 27/31] ppc/openpic: create a new openpic device and
+ reattach mem region on coco reset
+Date: Thu, 12 Feb 2026 11:55:11 +0530
+Message-ID: <20260212062522.99565-28-anisinha@redhat.com>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20260212062522.99565-1-anisinha@redhat.com>
 References: <20260212062522.99565-1-anisinha@redhat.com>
@@ -123,111 +123,171 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-A new helper function is introduced that refactors all firmware memory
-initialization code into a separate function. No functional change.
+For confidential guests during the reset process, the old KVM VM file
+descriptor is closed and a new one is created. When a new file descriptor is
+created, a new openpic device needs to be created against this new KVM VM file
+descriptor as well. Additionally, existing memory region needs to be reattached
+to this new openpic device and proper CPU attributes set associating new file
+descriptor. This change makes this happen with the help of a callback handler
+that gets called when the KVM VM file descriptor changes as a part of the
+confidential guest reset process.
 
+Reviewed-by: Bernhard Beschow <shentey@gmail.com>
 Signed-off-by: Ani Sinha <anisinha@redhat.com>
 ---
- target/i386/kvm/tdx.c | 73 ++++++++++++++++++++++++-------------------
- 1 file changed, 40 insertions(+), 33 deletions(-)
+ hw/intc/openpic_kvm.c | 112 +++++++++++++++++++++++++++++++++---------
+ 1 file changed, 88 insertions(+), 24 deletions(-)
 
-diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
-index a3e81e1c0c..fd8e3de969 100644
---- a/target/i386/kvm/tdx.c
-+++ b/target/i386/kvm/tdx.c
-@@ -295,14 +295,51 @@ static void tdx_post_init_vcpus(void)
-     }
- }
+diff --git a/hw/intc/openpic_kvm.c b/hw/intc/openpic_kvm.c
+index fbf0bdbe07..b099da20eb 100644
+--- a/hw/intc/openpic_kvm.c
++++ b/hw/intc/openpic_kvm.c
+@@ -49,6 +49,7 @@ struct KVMOpenPICState {
+     uint32_t fd;
+     uint32_t model;
+     hwaddr mapped;
++    NotifierWithReturn vmfd_change_notifier;
+ };
  
--static void tdx_finalize_vm(Notifier *notifier, void *unused)
-+static void tdx_init_fw_mem_region(void)
- {
-     TdxFirmware *tdvf = &tdx_guest->tdvf;
-     TdxFirmwareEntry *entry;
--    RAMBlock *ram_block;
-     Error *local_err = NULL;
-     int r;
+ static void kvm_openpic_set_irq(void *opaque, int n_IRQ, int level)
+@@ -114,6 +115,88 @@ static const MemoryRegionOps kvm_openpic_mem_ops = {
+     },
+ };
  
-+    for_each_tdx_fw_entry(tdvf, entry) {
-+        struct kvm_tdx_init_mem_region region;
-+        uint32_t flags;
++static int kvm_openpic_setup(KVMOpenPICState *opp, Error **errp)
++{
++    int kvm_openpic_model;
++    struct kvm_create_device cd = {0};
++    KVMState *s = kvm_state;
++    int ret;
 +
-+        region = (struct kvm_tdx_init_mem_region) {
-+            .source_addr = (uintptr_t)entry->mem_ptr,
-+            .gpa = entry->address,
-+            .nr_pages = entry->size >> 12,
-+        };
++    switch (opp->model) {
++    case OPENPIC_MODEL_FSL_MPIC_20:
++        kvm_openpic_model = KVM_DEV_TYPE_FSL_MPIC_20;
++        break;
 +
-+        flags = entry->attributes & TDVF_SECTION_ATTRIBUTES_MR_EXTEND ?
-+                KVM_TDX_MEASURE_MEMORY_REGION : 0;
++    case OPENPIC_MODEL_FSL_MPIC_42:
++        kvm_openpic_model = KVM_DEV_TYPE_FSL_MPIC_42;
++        break;
 +
-+        do {
-+            error_free(local_err);
-+            local_err = NULL;
-+            r = tdx_vcpu_ioctl(first_cpu, KVM_TDX_INIT_MEM_REGION, flags,
-+                               &region, &local_err);
-+        } while (r == -EAGAIN || r == -EINTR);
-+        if (r < 0) {
-+            error_report_err(local_err);
-+            exit(1);
-+        }
-+
-+        if (entry->type == TDVF_SECTION_TYPE_TD_HOB ||
-+            entry->type == TDVF_SECTION_TYPE_TEMP_MEM) {
-+            qemu_ram_munmap(-1, entry->mem_ptr, entry->size);
-+            entry->mem_ptr = NULL;
-+        }
++    default:
++        error_setg(errp, "Unsupported OpenPIC model %" PRIu32, opp->model);
++        return -1;
 +    }
++
++    cd.type = kvm_openpic_model;
++    ret = kvm_vm_ioctl(s, KVM_CREATE_DEVICE, &cd);
++    if (ret < 0) {
++        error_setg(errp, "Can't create device %d: %s",
++                   cd.type, strerror(errno));
++        return -1;
++    }
++    opp->fd = cd.fd;
++
++    return 0;
 +}
 +
-+static void tdx_finalize_vm(Notifier *notifier, void *unused)
++static int kvm_openpic_handle_vmfd_change(NotifierWithReturn *notifier,
++                                          void *data, Error **errp)
 +{
-+    TdxFirmware *tdvf = &tdx_guest->tdvf;
-+    TdxFirmwareEntry *entry;
-+    RAMBlock *ram_block;
++    KVMOpenPICState *opp = container_of(notifier, KVMOpenPICState,
++                                        vmfd_change_notifier);
++    uint64_t reg_base;
++    struct kvm_device_attr attr;
++    CPUState *cs;
++    int ret;
 +
-     tdx_init_ram_entries();
++    /* we are not interested in pre vmfd change notification */
++    if (((VmfdChangeNotifier *)data)->pre) {
++        return 0;
++    }
++
++    /* close the old descriptor */
++    close(opp->fd);
++
++    if (kvm_openpic_setup(opp, errp) < 0) {
++        return -1;
++    }
++
++    if (!opp->mapped) {
++        return 0;
++    }
++
++    reg_base = opp->mapped;
++    attr.group = KVM_DEV_MPIC_GRP_MISC;
++    attr.attr = KVM_DEV_MPIC_BASE_ADDR;
++    attr.addr = (uint64_t)(unsigned long)&reg_base;
++
++    ret = ioctl(opp->fd, KVM_SET_DEVICE_ATTR, &attr);
++    if (ret < 0) {
++        error_setg(errp, "%s: %s %" PRIx64, __func__,
++                   strerror(errno), reg_base);
++        return -1;
++    }
++
++    CPU_FOREACH(cs) {
++        ret = kvm_vcpu_enable_cap(cs, KVM_CAP_IRQ_MPIC, 0, opp->fd,
++                                   kvm_arch_vcpu_id(cs));
++        if (ret < 0) {
++            return ret;
++        }
++    }
++
++    return 0;
++}
++
+ static void kvm_openpic_region_add(MemoryListener *listener,
+                                    MemoryRegionSection *section)
+ {
+@@ -197,36 +280,14 @@ static void kvm_openpic_realize(DeviceState *dev, Error **errp)
+     SysBusDevice *d = SYS_BUS_DEVICE(dev);
+     KVMOpenPICState *opp = KVM_OPENPIC(dev);
+     KVMState *s = kvm_state;
+-    int kvm_openpic_model;
+-    struct kvm_create_device cd = {0};
+-    int ret, i;
++    int i;
  
-     for_each_tdx_fw_entry(tdvf, entry) {
-@@ -339,37 +376,7 @@ static void tdx_finalize_vm(Notifier *notifier, void *unused)
-     tdvf_hob_create(tdx_guest, tdx_get_hob_entry(tdx_guest));
+     if (!kvm_check_extension(s, KVM_CAP_DEVICE_CTRL)) {
+         error_setg(errp, "Kernel is lacking Device Control API");
+         return;
+     }
  
-     tdx_post_init_vcpus();
+-    switch (opp->model) {
+-    case OPENPIC_MODEL_FSL_MPIC_20:
+-        kvm_openpic_model = KVM_DEV_TYPE_FSL_MPIC_20;
+-        break;
 -
--    for_each_tdx_fw_entry(tdvf, entry) {
--        struct kvm_tdx_init_mem_region region;
--        uint32_t flags;
+-    case OPENPIC_MODEL_FSL_MPIC_42:
+-        kvm_openpic_model = KVM_DEV_TYPE_FSL_MPIC_42;
+-        break;
 -
--        region = (struct kvm_tdx_init_mem_region) {
--            .source_addr = (uintptr_t)entry->mem_ptr,
--            .gpa = entry->address,
--            .nr_pages = entry->size >> 12,
--        };
--
--        flags = entry->attributes & TDVF_SECTION_ATTRIBUTES_MR_EXTEND ?
--                KVM_TDX_MEASURE_MEMORY_REGION : 0;
--
--        do {
--            error_free(local_err);
--            local_err = NULL;
--            r = tdx_vcpu_ioctl(first_cpu, KVM_TDX_INIT_MEM_REGION, flags,
--                               &region, &local_err);
--        } while (r == -EAGAIN || r == -EINTR);
--        if (r < 0) {
--            error_report_err(local_err);
--            exit(1);
--        }
--
--        if (entry->type == TDVF_SECTION_TYPE_TD_HOB ||
--            entry->type == TDVF_SECTION_TYPE_TEMP_MEM) {
--            qemu_ram_munmap(-1, entry->mem_ptr, entry->size);
--            entry->mem_ptr = NULL;
--        }
+-    default:
+-        error_setg(errp, "Unsupported OpenPIC model %" PRIu32, opp->model);
+-        return;
 -    }
-+    tdx_init_fw_mem_region();
+-
+-    cd.type = kvm_openpic_model;
+-    ret = kvm_vm_ioctl(s, KVM_CREATE_DEVICE, &cd);
+-    if (ret < 0) {
+-        error_setg_errno(errp, errno, "Can't create device %d", cd.type);
+-        return;
+-    }
+-    opp->fd = cd.fd;
++    kvm_openpic_setup(opp, errp);
  
-     /*
-      * TDVF image has been copied into private region above via
+     sysbus_init_mmio(d, &opp->mem);
+     qdev_init_gpio_in(dev, kvm_openpic_set_irq, OPENPIC_MAX_IRQ);
+@@ -235,6 +296,9 @@ static void kvm_openpic_realize(DeviceState *dev, Error **errp)
+     opp->mem_listener.region_del = kvm_openpic_region_del;
+     opp->mem_listener.name = "openpic-kvm";
+     memory_listener_register(&opp->mem_listener, &address_space_memory);
++    opp->vmfd_change_notifier.notify =
++        kvm_openpic_handle_vmfd_change;
++    kvm_vmfd_add_change_notifier(&opp->vmfd_change_notifier);
+ 
+     /* indicate pic capabilities */
+     msi_nonbroken = true;
 -- 
 2.42.0
 
