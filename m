@@ -4,51 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3D98E63F2A
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 03:38:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6AD6EE63F2A
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 03:39:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vrpRT-0000z9-1O; Sun, 15 Feb 2026 22:38:35 -0500
+	id 1vrpRN-0000yW-8k; Sun, 15 Feb 2026 22:38:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <arpit1.kumar@samsung.com>)
- id 1vrpRF-0000xV-GW
- for qemu-devel@nongnu.org; Sun, 15 Feb 2026 22:38:21 -0500
-Received: from mailout4.samsung.com ([203.254.224.34])
+ id 1vrpRC-0000xD-9g
+ for qemu-devel@nongnu.org; Sun, 15 Feb 2026 22:38:18 -0500
+Received: from mailout3.samsung.com ([203.254.224.33])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <arpit1.kumar@samsung.com>)
- id 1vrpR8-0001F8-7S
- for qemu-devel@nongnu.org; Sun, 15 Feb 2026 22:38:21 -0500
-Received: from epcas5p3.samsung.com (unknown [182.195.41.41])
- by mailout4.samsung.com (KnoxPortal) with ESMTP id
- 20260216033803epoutp04f6bfa518fe3e254f309316e17d5b213f~UnOpJe1Uu1393713937epoutp04k
+ id 1vrpR7-0001F9-QH
+ for qemu-devel@nongnu.org; Sun, 15 Feb 2026 22:38:17 -0500
+Received: from epcas5p4.samsung.com (unknown [182.195.41.42])
+ by mailout3.samsung.com (KnoxPortal) with ESMTP id
+ 20260216033803epoutp03e6cb27a92b0d385e4f0d025e16a37fcc~UnOpQhJL-0938909389epoutp032
  for <qemu-devel@nongnu.org>; Mon, 16 Feb 2026 03:38:03 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout4.samsung.com
- 20260216033803epoutp04f6bfa518fe3e254f309316e17d5b213f~UnOpJe1Uu1393713937epoutp04k
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout3.samsung.com
+ 20260216033803epoutp03e6cb27a92b0d385e4f0d025e16a37fcc~UnOpQhJL-0938909389epoutp032
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
  s=mail20170921; t=1771213083;
- bh=pe9N10QZ1PgdodPdS9MuiyL7sz4CczU1cVJ7wS2DTBQ=;
+ bh=uKS3ZjwCAeZALlQxtmh2UH0cstUqJgCmy1WJqNXpiO8=;
  h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
- b=DFRG3zb+ApDjiELTqdE+podN/WZp1vOEC+Sc3rnA9Csv9XA/ICOaxY07RPMeDJ4sS
- y584sGqP7TNcBaC7zm9oyvAjMhZSE1+uC4yIr+xm9A6T93FsVusNdpq036snx31+Rq
- Xm1k2dUfoAhWkqRaSBsS0n+B/0CGWNrO1yeSYybs=
+ b=Ghmk4uxoSMFNoq0TL3TzIsT64OBJ/Cqdtwd/Fg6qXm6YiJJW2zPp69O29sp34sPF4
+ r/gJoXwt9LHx1kClD20DmshKdjo1d/7PJt5tgkg/XhfNXCQbUBHx7cEGJGFLYUshbU
+ 2aOA2RgF2C2W0AaibCz+TnO81f1vknxz1OvW36D4=
 Received: from epsnrtp03.localdomain (unknown [182.195.42.155]) by
  epcas5p1.samsung.com (KnoxPortal) with ESMTPS id
- 20260216033802epcas5p14c2bb6d81cbb45aa6c1a8e94537d7080~UnOoXnMl02067920679epcas5p1I;
- Mon, 16 Feb 2026 03:38:02 +0000 (GMT)
+ 20260216033803epcas5p194036e94f18aa3b381d5398664750046~UnOoz779-2067920679epcas5p1L;
+ Mon, 16 Feb 2026 03:38:03 +0000 (GMT)
 Received: from epcpadp2new (unknown [182.195.40.142]) by
- epsnrtp03.localdomain (Postfix) with ESMTP id 4fDpQ24hXfz3hhT7; Mon, 16 Feb
- 2026 03:38:02 +0000 (GMT)
+ epsnrtp03.localdomain (Postfix) with ESMTP id 4fDpQ30zBfz3hhT3; Mon, 16 Feb
+ 2026 03:38:03 +0000 (GMT)
 Received: from epsmtip2.samsung.com (unknown [182.195.34.31]) by
- epcas5p2.samsung.com (KnoxPortal) with ESMTPA id
- 20260212151259epcas5p2364104fe9a48c7673863df040dacbfef~TiIQ6K-bF0346603466epcas5p2K;
- Thu, 12 Feb 2026 15:12:59 +0000 (GMT)
+ epcas5p1.samsung.com (KnoxPortal) with ESMTPA id
+ 20260212152250epcas5p1d68095a3e829d839587ee10a09f16935~TiQ3JktZp0152301523epcas5p1X;
+ Thu, 12 Feb 2026 15:22:50 +0000 (GMT)
 Received: from test-PowerEdge-R740xd (unknown [107.99.41.79]) by
  epsmtip2.samsung.com (KnoxPortal) with ESMTPA id
- 20260212151258epsmtip29706fcaa531403086d5f8b2e2e56080a~TiIPkR8-T1642816428epsmtip27;
- Thu, 12 Feb 2026 15:12:58 +0000 (GMT)
-Date: Thu, 12 Feb 2026 20:42:48 +0530
+ 20260212152249epsmtip21f7b94afb98f90e6233367a3a3881ec6~TiQ12Tv_B2335723357epsmtip2k;
+ Thu, 12 Feb 2026 15:22:49 +0000 (GMT)
+Date: Thu, 12 Feb 2026 20:52:34 +0530
 From: Arpit Kumar <arpit1.kumar@samsung.com>
 To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Cc: Michael Tsirkin <mst@redhat.com>, qemu-devel@nongnu.org,
@@ -56,29 +56,30 @@ Cc: Michael Tsirkin <mst@redhat.com>, qemu-devel@nongnu.org,
  <venkataravis@micron.com>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Michael Roth <michael.roth@amd.com>, Arpit Kumar <arpit.sysdev@gmail.com>,
  cpgs@samsung.com
-Subject: Re: [PATCH qemu v5 0/3] hw/cxl: FM-API Physical Switch Command Set
- Support.
-Message-ID: <1983025922.01771213082649.JavaMail.epsvc@epcpadp2new>
+Subject: Re: [PATCH qemu v5 1/3] hw/cxl: Physical Port Info FMAPI - update
+ to current spec and add defines.
+Message-ID: <1296674576.21771213083134.JavaMail.epsvc@epcpadp2new>
 MIME-Version: 1.0
-In-Reply-To: <20260204173223.44122-1-Jonathan.Cameron@huawei.com>
-X-CMS-MailID: 20260212151259epcas5p2364104fe9a48c7673863df040dacbfef
+In-Reply-To: <20260204173223.44122-2-Jonathan.Cameron@huawei.com>
+X-CMS-MailID: 20260212152250epcas5p1d68095a3e829d839587ee10a09f16935
 X-Msg-Generator: CA
 Content-Type: multipart/mixed;
- boundary="----f7ViTShqWaH4cwb2QsCnImCOZYtOsWzJ0r_VhhicrZgGstIh=_1e05f_"
+ boundary="----f7ViTShqWaH4cwb2QsCnImCOZYtOsWzJ0r_VhhicrZgGstIh=_1e096_"
 CMS-TYPE: 105P
 X-CPGSPASS: Y
 X-Hop-Count: 3
-X-CMS-RootMailID: 20260212151259epcas5p2364104fe9a48c7673863df040dacbfef
+X-CMS-RootMailID: 20260212152250epcas5p1d68095a3e829d839587ee10a09f16935
 References: <20260204173223.44122-1-Jonathan.Cameron@huawei.com>
- <CGME20260212151259epcas5p2364104fe9a48c7673863df040dacbfef@epcas5p2.samsung.com>
-Received-SPF: pass client-ip=203.254.224.34;
- envelope-from=arpit1.kumar@samsung.com; helo=mailout4.samsung.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ <20260204173223.44122-2-Jonathan.Cameron@huawei.com>
+ <CGME20260212152250epcas5p1d68095a3e829d839587ee10a09f16935@epcas5p1.samsung.com>
+Received-SPF: pass client-ip=203.254.224.33;
+ envelope-from=arpit1.kumar@samsung.com; helo=mailout3.samsung.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -96,135 +97,187 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-------f7ViTShqWaH4cwb2QsCnImCOZYtOsWzJ0r_VhhicrZgGstIh=_1e05f_
+------f7ViTShqWaH4cwb2QsCnImCOZYtOsWzJ0r_VhhicrZgGstIh=_1e096_
 Content-Type: text/plain; charset="utf-8"; format="flowed"
 Content-Disposition: inline
 
 On 04/02/26 05:32PM, Jonathan Cameron wrote:
->Changes since v4:
->https://lore.kernel.org/qemu-devel/20250916080736.1266083-1-arpit1.kumar@samsung.com/
->- Dropped initial refactor. Reason being that it is not static enough
->  for caching at boot to be appropriate.  Kept the spec update part
->  of this.
->- Added a patch to make sure the new flip mode stuff is reported in
->  the Get Physical Port State command.
->- Rebased Arpit's Physical Control Control FMAPI Command given drop
->  of the major refactor from v4 patch 1.
+>From: Arpit Kumar <arpit1.kumar@samsung.com>
 >
->I had taken this into my cxl staging tree thinking it only needed a few
->minor tweaks.  Then whilst testing I realized it didn't work with hotplug
->and that made me consider if Arpit's original approach made sense.
+>Add a new cxl/cxl_ports.h header for field definitions related only to port
+>commands. Bring field naming up to date with spec as 'version' bitmasks
+>have been replaced with bitmasks of the specific features.
 >
->So this is my proposal on how to take this forwards. Note that this is
->not ready for merge (probably) just yet as I'd like Arpit to take a
->look at the changes.  I went through a version that had major refactors
->to push the logic of building the records to the ports themselves, but
->in the end don't think that brings enough benefits for the complexity.
+>Fix a small issue where a reserved value for USP was set to 2 rather
+>than 0.
 >
+>Signed-off-by: Arpit Kumar <arpit1.kumar@samsung.com>
+>Co-developed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+>Signed-off-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+>
+>---
+>This is effectively lifted out of Arpit's orginal rework.
+>Arpit please confirm you are fine with keeping authorship on this one.
+>---
 
 Hi Jonathan,
-Thanks for the patch series. I have reviewed the changes in detail, and
-the approach looks good to me. Thanks for the rework and keeping me in
-the loop.
+I'm fine with keeping the authorship on this patch and the split looks
+good to me. I only noticed a minor extra line, but nothing functional.
 
->Based on:
->https://lore.kernel.org/qemu-devel/20260204170936.43959-1-Jonathan.Cameron@huawei.com/T/#t
->(with all it's precursors, though hopefully they will all be in Michael's
->next pull request)
+Thanks,
+Arpit
+
+> include/hw/cxl/cxl_port.h  | 53 ++++++++++++++++++++++++++++++++++++++
+> hw/cxl/cxl-mailbox-utils.c | 31 ++++++++++++++--------
+> 2 files changed, 73 insertions(+), 11 deletions(-)
 >
->I'll note this is an enormous foot gun as it lets you effectively trigger
->surprise device resets.  However, it's only accessible if you are using
->a configuration with the fabric management parts of the CXL emulation.
->For now that is a switch-cci (MCTP over USB support is near the top
->of my list of things to get ready for upstram.  I tested this with a
->custom driver and if nothing else it exposed some gaps in Linux's
->ability to rescan PCI buses after a perst event (even with drivers
->unbound etc to make it safe).
+>diff --git a/include/hw/cxl/cxl_port.h b/include/hw/cxl/cxl_port.h
+>new file mode 100644
+>index 000000000000..04db60f7bc23
+>--- /dev/null
+>+++ b/include/hw/cxl/cxl_port.h
+>@@ -0,0 +1,53 @@
+>+/* SPDX-License-Identifier: GPL-2.0-or-later */
+>+
+>+#ifndef CXL_PORT_H
+>+#define CXL_PORT_H
+>+
+>+/* CXL r3.2 Table 7-19: Get Physical Port State Port Information Block Format */
+>+#define CXL_PORT_CONFIG_STATE_DISABLED           0x0
+>+#define CXL_PORT_CONFIG_STATE_BIND_IN_PROGRESS   0x1
+>+#define CXL_PORT_CONFIG_STATE_UNBIND_IN_PROGRESS 0x2
+>+#define CXL_PORT_CONFIG_STATE_DSP                0x3
+>+#define CXL_PORT_CONFIG_STATE_USP                0x4
+>+#define CXL_PORT_CONFIG_STATE_FABRIC_PORT        0x5
+>+#define CXL_PORT_CONFIG_STATE_INVALID_PORT_ID    0xF
+>+
+>+#define CXL_PORT_CONNECTED_DEV_MODE_NOT_CXL_OR_DISCONN 0x00
+>+#define CXL_PORT_CONNECTED_DEV_MODE_RCD                0x01
+>+#define CXL_PORT_CONNECTED_DEV_MODE_68B_VH             0x02
+>+#define CXL_PORT_CONNECTED_DEV_MODE_256B               0x03
+>+#define CXL_PORT_CONNECTED_DEV_MODE_LO_256B            0x04
+>+#define CXL_PORT_CONNECTED_DEV_MODE_PBR                0x05
+>+
+>+#define CXL_PORT_CONNECTED_DEV_TYPE_NONE            0x00
+>+#define CXL_PORT_CONNECTED_DEV_TYPE_PCIE            0x01
+>+#define CXL_PORT_CONNECTED_DEV_TYPE_1               0x02
+>+#define CXL_PORT_CONNECTED_DEV_TYPE_2_OR_HBR_SWITCH 0x03
+>+#define CXL_PORT_CONNECTED_DEV_TYPE_3_SLD           0x04
+>+#define CXL_PORT_CONNECTED_DEV_TYPE_3_MLD           0x05
+>+#define CXL_PORT_CONNECTED_DEV_PBR_COMPONENT        0x06
+>+
+>+#define CXL_PORT_SUPPORTS_RCD        BIT(0)
+>+#define CXL_PORT_SUPPORTS_68B_VH     BIT(1)
+>+#define CXL_PORT_SUPPORTS_256B       BIT(2)
+>+#define CXL_PORT_SUPPORTS_LO_256B    BIT(3)
+>+#define CXL_PORT_SUPPORTS_PBR        BIT(4)
+>+
+>+#define CXL_PORT_LTSSM_DETECT        0x00
+>+#define CXL_PORT_LTSSM_POLLING       0x01
+>+#define CXL_PORT_LTSSM_CONFIGURATION 0x02
+>+#define CXL_PORT_LTSSM_RECOVERY      0x03
+>+#define CXL_PORT_LTSSM_L0            0x04
+>+#define CXL_PORT_LTSSM_L0S           0x05
+>+#define CXL_PORT_LTSSM_L1            0x06
+>+#define CXL_PORT_LTSSM_L2            0x07
+>+#define CXL_PORT_LTSSM_DISABLED      0x08
+>+#define CXL_PORT_LTSSM_LOOPBACK      0x09
+>+#define CXL_PORT_LTSSM_HOT_RESET     0x0A
+>+
+>+#define CXL_PORT_LINK_STATE_FLAG_LANE_REVERSED    BIT(0)
+>+#define CXL_PORT_LINK_STATE_FLAG_PERST_ASSERTED   BIT(1)
+>+#define CXL_PORT_LINK_STATE_FLAG_PRSNT            BIT(2)
+>+#define CXL_PORT_LINK_STATE_FLAG_POWER_OFF        BIT(3)
+>+
+>+#endif /* CXL_PORT_H */
+>diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
+>index 2f449980cdc0..1c8cbe0f682d 100644
+>--- a/hw/cxl/cxl-mailbox-utils.c
+>+++ b/hw/cxl/cxl-mailbox-utils.c
+>@@ -15,6 +15,7 @@
+> #include "hw/cxl/cxl.h"
+> #include "hw/cxl/cxl_events.h"
+> #include "hw/cxl/cxl_mailbox.h"
+>+#include "hw/cxl/cxl_port.h"
+> #include "hw/pci/pci.h"
+> #include "hw/pci-bridge/cxl_upstream_port.h"
+> #include "qemu/cutils.h"
+>@@ -565,16 +566,16 @@ static CXLRetCode cmd_get_physical_port_state(const struct cxl_cmd *cmd,
+>     } QEMU_PACKED *in;
 >
->Original cover letter:
+>     /*
+>-     * CXL r3.1 Table 7-19: Get Physical Port State Port Information Block
+>+     * CXL r3.2 Table 7-19: Get Physical Port State Port Information Block
+>      * Format
+>      */
+>     struct cxl_fmapi_port_state_info_block {
+>         uint8_t port_id;
+>         uint8_t config_state;
+>-        uint8_t connected_device_cxl_version;
+>+        uint8_t connected_device_mode;
+>         uint8_t rsv1;
+>         uint8_t connected_device_type;
+>-        uint8_t port_cxl_version_bitmask;
+>+        uint8_t supported_cxl_mode_bitmask;
+>         uint8_t max_link_width;
+>         uint8_t negotiated_link_width;
+>         uint8_t supported_link_speeds_vector;
+>@@ -623,21 +624,30 @@ static CXLRetCode cmd_get_physical_port_state(const struct cxl_cmd *cmd,
+>         if (port_dev) { /* DSP */
+>             PCIDevice *ds_dev = pci_bridge_get_sec_bus(PCI_BRIDGE(port_dev))
+>                 ->devices[0];
+>-            port->config_state = 3;
+>+            port->config_state = CXL_PORT_CONFIG_STATE_DSP;
+>             if (ds_dev) {
+>                 if (object_dynamic_cast(OBJECT(ds_dev), TYPE_CXL_TYPE3)) {
+>-                    port->connected_device_type = 5; /* Assume MLD for now */
+>+                    /* Assume MLD for now */
+>+                    port->connected_device_type =
+>+                        CXL_PORT_CONNECTED_DEV_TYPE_3_MLD;
+>                 } else {
+>-                    port->connected_device_type = 1;
+>+                    port->connected_device_type =
+>+                        CXL_PORT_CONNECTED_DEV_TYPE_PCIE;
+>+                    port->connected_device_mode =
+>+                        CXL_PORT_CONNECTED_DEV_MODE_NOT_CXL_OR_DISCONN;
+>+
+I believe this extra line can be removed here.
+>                 }
+>             } else {
+>-                port->connected_device_type = 0;
+>+                port->connected_device_type = CXL_PORT_CONNECTED_DEV_TYPE_NONE;
+>+                port->connected_device_mode =
+>+                    CXL_PORT_CONNECTED_DEV_MODE_NOT_CXL_OR_DISCONN;
+>             }
+>             port->supported_ld_count = 3;
+>         } else if (usp->port == in->ports[i]) { /* USP */
+>             port_dev = PCI_DEVICE(usp);
+>-            port->config_state = 4;
+>-            port->connected_device_type = 0;
+>+            port->config_state = CXL_PORT_CONFIG_STATE_USP;
+>+            port->connected_device_type = 0; /* Reserved for USP */
+>+            port->connected_device_mode = 0; /* Reserved for USP */
+>         } else {
+>             return CXL_MBOX_INVALID_INPUT;
+>         }
+>@@ -667,8 +677,7 @@ static CXLRetCode cmd_get_physical_port_state(const struct cxl_cmd *cmd,
+>         port->ltssm_state = 0x7;
+>         port->first_lane_num = 0;
+>         port->link_state = 0;
+>-        port->port_cxl_version_bitmask = 0x2;
+>-        port->connected_device_cxl_version = 0x2;
+>+        port->supported_cxl_mode_bitmask = CXL_PORT_SUPPORTS_68B_VH;
+>     }
 >
->This patch series refactor existing support for Identify Switch Device
->and Get Physical Port State by utilizing physical ports (USP & DSP)
->information stored during enumeration.
->
->Additionally, it introduces new support for Physical Port Control
->of Physical Switch Command Set as per CXL spec r3.2 Section 7.6.7.1.3.
->It primarily constitutes two logic:
->    -Assert-Deassert PERST: Assert PERST involves physical port to be in
->     hold reset phase for minimum 100ms. No other physical port control
->     request are entertained until Deassert PERST command for the given
->     port is issued.
->    -Reset PPB: cold reset of physical port (completing enter->hold->exit
->     phases).
->
->Tested using libcxl-mi interface[1]:
->All active ports and all opcodes per active port is tested. Also, tested
->against possible edge cases manually since the interface currently dosen't
->support run time input.
->
->Typical Qemu topology
->(1 USP + 3 DSP's in a switch with 2 CXLType3 devices connected to the 2 DSP's):
->FM="-object memory-backend-file,id=cxl-mem1,mem-path=$TMP_DIR/t3_cxl1.raw,size=256M \
->    -object memory-backend-file,id=cxl-lsa1,mem-path=$TMP_DIR/t3_lsa1.raw,size=1M \
->    -object memory-backend-file,id=cxl-mem2,mem-path=$TMP_DIR/t3_cxl2.raw,size=512M \
->    -object memory-backend-file,id=cxl-lsa2,mem-path=$TMP_DIR/t3_lsa2.raw,size=512M \
->    -device pxb-cxl,bus_nr=12,bus=pcie.0,id=cxl.1,hdm_for_passthrough=true \
->    -device cxl-rp,port=0,bus=cxl.1,id=cxl_rp_port0,chassis=0,slot=2 \
->    -device cxl-upstream,port=2,sn=1234,bus=cxl_rp_port0,id=us0,addr=0.0,multifunction=on, \
->    -device cxl-switch-mailbox-cci,bus=cxl_rp_port0,addr=0.1,target=us0 \
->    -device cxl-downstream,port=0,bus=us0,id=swport0,chassis=0,slot=4 \
->    -device cxl-downstream,port=1,bus=us0,id=swport1,chassis=0,slot=5 \
->    -device cxl-downstream,port=3,bus=us0,id=swport2,chassis=0,slot=6 \
->    -device cxl-type3,bus=swport0,memdev=cxl-mem1,id=cxl-pmem1,lsa=cxl-lsa1,sn=3 \
->    -device cxl-type3,bus=swport2,memdev=cxl-mem2,id=cxl-pmem2,lsa=cxl-lsa2,sn=4 \
->    -machine cxl-fmw.0.targets.0=cxl.1,cxl-fmw.0.size=4G,cxl-fmw.0.interleave-granularity=1k \
->    -device i2c_mctp_cxl,bus=aspeed.i2c.bus.0,address=4,target=us0 \
->    -device i2c_mctp_cxl,bus=aspeed.i2c.bus.0,address=5,target=cxl-pmem1 \
->    -device i2c_mctp_cxl,bus=aspeed.i2c.bus.0,address=6,target=cxl-pmem2 \
->    -device virtio-rng-pci,bus=swport1"
->
->Tested multiple Qemu topologies:
->        -without any devices connected to downstream ports.
->        -with virtio-rng-pci devices connected to downstream ports.
->        -with CXLType3 devices connected to downstream ports.
->        -with different unique values of ports (both upstream and downstream).
->
->Changes from v3 (https://lore.kernel.org/qemu-devel/20250909160316.00000190@huawei.com/T/):
->        -Namespaced the defines with cleaner prefix for Get Physical Port State
->         Port Information Block members.
->        -switch CCI implementation instead of switch FM interface as per
->         Jonathan's review comments, hence moved perst members initializations
->         from: cxl_initialize_usp_mctpcci() -> cxl_initialize_mailbox_swcci().
->
->[1] https://github.com/computexpresslink/libcxlmi/commit/35fe68bd9a31469f832a87694d7b18d2d50be5b8
->
->
->Arpit Kumar (2):
->  hw/cxl: Physical Port Info FMAPI - update to current spec and add
->    defines.
->  hw/cxl: Add Physical Port Control FMAPI Command (Opcode 5102h)
->
->Jonathan Cameron (1):
->  hw/cxl: Get Physical Port State - update for PCIe flit mode
->
-> include/hw/cxl/cxl_port.h                   |  73 ++++++++
-> include/hw/pci-bridge/cxl_downstream_port.h |  12 ++
-> include/hw/pci-bridge/cxl_upstream_port.h   |   2 +
-> hw/cxl/cxl-mailbox-utils.c                  | 183 ++++++++++++++++++--
-> hw/pci-bridge/cxl_downstream.c              |   9 +
-> hw/pci-bridge/cxl_upstream.c                |   1 +
-> 6 files changed, 268 insertions(+), 12 deletions(-)
-> create mode 100644 include/hw/cxl/cxl_port.h
-> create mode 100644 include/hw/pci-bridge/cxl_downstream_port.h
->
+>     pl_size = sizeof(*out) + sizeof(*out->ports) * in->num_ports;
 >-- 
 >2.51.0
 >
 
-------f7ViTShqWaH4cwb2QsCnImCOZYtOsWzJ0r_VhhicrZgGstIh=_1e05f_
+------f7ViTShqWaH4cwb2QsCnImCOZYtOsWzJ0r_VhhicrZgGstIh=_1e096_
 Content-Type: text/plain; charset="utf-8"
 
 
-------f7ViTShqWaH4cwb2QsCnImCOZYtOsWzJ0r_VhhicrZgGstIh=_1e05f_--
+------f7ViTShqWaH4cwb2QsCnImCOZYtOsWzJ0r_VhhicrZgGstIh=_1e096_--
 
 
