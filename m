@@ -4,110 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9B4FEDF04A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48BFFEDF04B
 	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 06:26:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqQ94-0007YW-Ml; Thu, 12 Feb 2026 01:25:46 -0500
+	id 1vqQ9S-0007bU-Kn; Thu, 12 Feb 2026 01:26:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1vqQ92-0007Y5-G0
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 01:25:44 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vqQ9J-0007aa-Re
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 01:26:02 -0500
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1vqQ8z-0005Bc-QN
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 01:25:44 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770877541;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=u8BwHOpnoiGVi9W+T3Y/yleQ5+CcGtx7LvYvltU6aAQ=;
- b=DVBc2Yw1wk57S8yw5G26E8Dqz1ygHBIdy9eM6+YRQYPX04/HhkXKjVS9Qk9QAzctwra5RE
- NtSpeAgp1YcaP7dUimKyiSNKzTERbEGvymi1mbYTJ/yCcQHqpqqIE903hBRFRyBENnHU1v
- aPbG6U/wNj+OC8SWVD4fpkNeD9mMZA4=
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
- [209.85.216.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-612-a-SPFk0TN4q3fjUzxCdhfg-1; Thu, 12 Feb 2026 01:25:39 -0500
-X-MC-Unique: a-SPFk0TN4q3fjUzxCdhfg-1
-X-Mimecast-MFC-AGG-ID: a-SPFk0TN4q3fjUzxCdhfg_1770877539
-Received: by mail-pj1-f70.google.com with SMTP id
- 98e67ed59e1d1-354c0eb08ceso7659257a91.1
- for <qemu-devel@nongnu.org>; Wed, 11 Feb 2026 22:25:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1770877539; x=1771482339; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=u8BwHOpnoiGVi9W+T3Y/yleQ5+CcGtx7LvYvltU6aAQ=;
- b=UAN+zQY+JfLio09uoKgcWMP1I6QNJO05c6gB0920/WPeRKqJeJiNQAw06o0d6PJD3C
- uPjFTk7dCjxz/3RPeJvu6yVVviA2P8xoJpfkrmerOA9ruS3FL/i5mHI1F7htzDKbjmVg
- Dhu2NNGMeMw4ZlsGmMYf2UL5dXULiC2EHFa8ty2cJubH3nqQ5s6C0JqkJwtr6YyHFw95
- WQ0Wcdy5Uwy2gGOC53TwSkCaNWw0yTYhQ3uNT1Mjtay/gN2W1nKumr+I1LiViJuffii9
- W3RoyJB3wpGsf96qnE0EMeCqccJIt9oC4HRtomOtS+gyAbI+RO9P2ppgr3gO1LvHnM6r
- GhSA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770877539; x=1771482339;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=u8BwHOpnoiGVi9W+T3Y/yleQ5+CcGtx7LvYvltU6aAQ=;
- b=qekuvFdgkstYxK7kjaw99LGFwO4CMH8oNlLmhTOCUZEv/2lcK6H38wOzz1LIHn2B2A
- rEkLO4W/iPg3poMCAYS2uk2g0RqsI3urjgDNXBijsUgiOlKumhx+F5x14hvSZOYe42gi
- FEQTWmUS1xJ3NZrDtBJ57WOMcVbPw9fT/1gtBcCxC+PlhgNDSeSZ8vxHNMe94Caw4ny8
- ROkkfwT2XqzCMyGzoeFTHGNNSBLryMHLoPsvfwDG6voj8xnK6tEYaYOn026l7+MvY4O/
- J43sEpA2uZNmh0Uyp5Nd1EvZLQoHne7rS6UUDOcFhMnaxY3eZK5bh2u4N0gaeLAPPsfJ
- dycw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXAJbo5tt1W+82An/0osGrO9TMsxp2Hxw9wB8nM80+FLvmIH6D8gbVocCmMNY89FDVLOevHXTkgmXvQ@nongnu.org
-X-Gm-Message-State: AOJu0YyWzo8WS1VbM6S4tlUNIKvBXGs4Xocfk3nxeTPZlcGe5LsCbGYD
- sB8b4vfRRV/YFWWQat4CTHo2+3RcKX3K0NNWoDQ+elTV1nxIbeuqGWjJQ8vPTwNIAdZiFOGzFnt
- NKjf4wYecKnvX+5ylH5/a2O4A0ATh8Bx4+0UCeBGtkqSq9MfpkwpYNWyU
-X-Gm-Gg: AZuq6aJrO4jGhfvOljUdHoXPn2jJY/rUeVZ0wUP55i5UZ+s4F0zhAo8X0usNZbJbQlF
- F3N+T+qWUY9KaaumKuNB138L3ghvlPOuhmj4n6O9mkGdiMqudo7dJBOKg4QZ9lAj44HTgjzz4J2
- CEdtVZyzSURz2d5JEKCSW+O0Ah/xsn5LY/l5gWVzaAFy04IM861r9RJRovF7/GBCIwjF77M9Mc6
- jWLhxL2QnIuNth+qWVuEGdg1wlML8AhvLPkybjZqYXw5fb6ftO9PTUCcNelTdhWn7N+UbKMb2b3
- KsYCdP3Ebh3IHqwEyebtqrLcaaR5TpquxoBKPw7BVqNQbDw7Nq4pyNos4Q6uRdTOtRjNs4UBW84
- HnTakxG0mXnj/4PrVzTvOmuSEFVbUNvXFhhV+EIw08KoeaxB2EFYeckY=
-X-Received: by 2002:a17:90b:1f8b:b0:356:41c2:897d with SMTP id
- 98e67ed59e1d1-35693cbd055mr1186994a91.8.1770877538770; 
- Wed, 11 Feb 2026 22:25:38 -0800 (PST)
-X-Received: by 2002:a17:90b:1f8b:b0:356:41c2:897d with SMTP id
- 98e67ed59e1d1-35693cbd055mr1186983a91.8.1770877538479; 
- Wed, 11 Feb 2026 22:25:38 -0800 (PST)
-Received: from rhel9-box.lan ([122.164.27.113])
- by smtp.googlemail.com with ESMTPSA id
- 98e67ed59e1d1-3567e7d95d8sm4894122a91.2.2026.02.11.22.25.35
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 11 Feb 2026 22:25:38 -0800 (PST)
-From: Ani Sinha <anisinha@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>
-Cc: kraxel@redhat.com, Ani Sinha <anisinha@redhat.com>, kvm@vger.kernel.org,
- qemu-devel@nongnu.org
-Subject: [PATCH v4 01/31] i386/kvm: avoid installing duplicate msr entries in
- msr_handlers
-Date: Thu, 12 Feb 2026 11:54:45 +0530
-Message-ID: <20260212062522.99565-2-anisinha@redhat.com>
-X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20260212062522.99565-1-anisinha@redhat.com>
-References: <20260212062522.99565-1-anisinha@redhat.com>
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vqQ9D-0005Bb-Fs
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 01:26:01 -0500
+Received: from [157.82.207.189] ([157.82.207.189]) (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 61C6PUR4050667
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Thu, 12 Feb 2026 15:25:39 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=l8PdWOPa9JUBXk5nsOrDrU0aAbkamhjuaYpl4bhsHOE=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=Message-ID:Date:Subject:To:From;
+ s=rs20250326; t=1770877539; v=1;
+ b=BzWVehW0ul94aF7wZi1AD3k4YasLw72dx839PH+8KIoSu96vVIcYi04wd2290HbR
+ K58VfzcAWXXtfJGjriw65yJ/0aW9APU5JS/dEE2b0QNx49VTi/rPQTwzdoTO6yhb
+ WR7dY8B6YjOONGBuW63wPbyFftOrTnoy9ws0vIvH+s55pqwu+AGQBBatzNRH4Xaf
+ eW2nZMyMip2KEzb4lrUg+UfxwxDf48laOnHJ78H0PNA/LsNaiS9acyBMhrXZIDaZ
+ TX0YUY0RCDf2x24kvGAb5nvIZJJESqHUBEsMXd2Dq+KFtK3CDw8CwE816nwlofk5
+ 75OaojHxmoWHg3iFDojafw==
+Message-ID: <a7b64dbd-9535-4927-bf36-e579b8bec4ca@rsg.ci.i.u-tokyo.ac.jp>
+Date: Thu, 12 Feb 2026 15:25:30 +0900
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 11/11] virtio-gpu-dmabuf: Create dmabuf for blobs
+ associated with VFIO devices
+To: "Kasireddy, Vivek" <vivek.kasireddy@intel.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Alex Williamson <alex@shazbot.org>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@redhat.com>
+References: <20260210070155.1176081-1-vivek.kasireddy@intel.com>
+ <20260210070155.1176081-12-vivek.kasireddy@intel.com>
+ <c7c03384-4815-4032-89bd-de1ef90bb949@rsg.ci.i.u-tokyo.ac.jp>
+ <IA0PR11MB71856CAA4507A8EFD5AF5F45F863A@IA0PR11MB7185.namprd11.prod.outlook.com>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <IA0PR11MB71856CAA4507A8EFD5AF5F45F863A@IA0PR11MB7185.namprd11.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=anisinha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,65 +81,190 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-kvm_filter_msr() does not check if an msr entry is already present in the
-msr_handlers table and installs a new handler unconditionally. If the function
-is called again with the same MSR, it will result in duplicate entries in the
-table and multiple such calls will fill up the table needlessly. Fix that.
+On 2026/02/11 15:30, Kasireddy, Vivek wrote:
+> Hi Akihiko,
+> 
+>> Subject: Re: [PATCH v6 11/11] virtio-gpu-dmabuf: Create dmabuf for
+>> blobs associated with VFIO devices
+>>
+>> On 2026/02/10 15:59, Vivek Kasireddy wrote:
+>>> In addition to memfd, a blob resource can also have its backing
+>>> storage in a VFIO device region. Since, there is no effective way
+>>> to determine where the backing storage is located, we first try to
+>>> create a dmabuf assuming it is in memfd. If that fails, we try to
+>>> create a dmabuf assuming it is in VFIO device region.
+>>>
+>>> So, we first call virtio_gpu_create_udmabuf() to check if the blob's
+>>> backing storage is located in a memfd or not. If it is not, we invoke
+>>> the vfio_device_create_dmabuf() API which identifies the right VFIO
+>>> device and eventually creates a dmabuf fd.
+>>>
+>>> Note that in virtio_gpu_remap_dmabuf(), we first try to test if
+>>> the VFIO dmabuf exporter supports mmap or not. If it doesn't, we
+>>> fall back to the vfio_device_mmap_dmabuf() API to get a mapping
+>>> created for the dmabuf.
+>>>
+>>> Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
+>>> Cc: Alex Bennée <alex.bennee@linaro.org>
+>>> Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+>>> Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+>>> Cc: Alex Williamson <alex@shazbot.org>
+>>> Cc: Cédric Le Goater <clg@redhat.com>
+>>> Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
+>>> ---
+>>>    hw/display/Kconfig             |  5 ++++
+>>>    hw/display/virtio-gpu-dmabuf.c | 50
+>> ++++++++++++++++++++++++++++------
+>>>    2 files changed, 47 insertions(+), 8 deletions(-)
+>>>
+>>> diff --git a/hw/display/Kconfig b/hw/display/Kconfig
+>>> index 1e95ab28ef..0d090f25f5 100644
+>>> --- a/hw/display/Kconfig
+>>> +++ b/hw/display/Kconfig
+>>> @@ -106,6 +106,11 @@ config VIRTIO_VGA
+>>>        depends on VIRTIO_PCI
+>>>        select VGA
+>>>
+>>> +config VIRTIO_GPU_VFIO_BLOB
+>>> +    bool
+>>> +    default y
+>>> +    depends on VFIO
+>>> +
+>>>    config VHOST_USER_GPU
+>>>        bool
+>>>        default y
+>>> diff --git a/hw/display/virtio-gpu-dmabuf.c b/hw/display/virtio-gpu-
+>> dmabuf.c
+>>> index d9b2ecaf31..54d010b995 100644
+>>> --- a/hw/display/virtio-gpu-dmabuf.c
+>>> +++ b/hw/display/virtio-gpu-dmabuf.c
+>>> @@ -18,6 +18,7 @@
+>>>    #include "ui/console.h"
+>>>    #include "hw/virtio/virtio-gpu.h"
+>>>    #include "hw/virtio/virtio-gpu-pixman.h"
+>>> +#include "hw/vfio/vfio-device.h"
+>>>    #include "trace.h"
+>>>    #include "system/ramblock.h"
+>>>    #include "system/hostmem.h"
+>>> @@ -27,6 +28,27 @@
+>>>    #include "standard-headers/linux/udmabuf.h"
+>>>    #include "standard-headers/drm/drm_fourcc.h"
+>>>
+>>> +static bool virtio_gpu_create_vfio_dmabuf(struct
+>> virtio_gpu_simple_resource *r,
+>>> +                                          Error **errp)
+>>> +{
+>>> +    bool ret = false;
+>>> +#if defined(CONFIG_VIRTIO_GPU_VFIO_BLOB)
+>>> +    Error *local_err = NULL;
+>>> +    int fd;
+>>> +
+>>> +    if (!vfio_device_create_dmabuf(r->iov, r->iov_cnt, &fd, &local_err))
+>> {
+>>> +        error_report_err(*errp);
+>>> +        *errp = NULL;
+>>> +        error_propagate(errp, local_err);
+>>> +        return false;
+>>> +    }
+>>> +
+>>> +    ret = true;
+>>> +    r->dmabuf_fd = fd;
+>>> +#endif
+>>> +    return ret;
+>>> +}
+>>> +
+>>>    static bool virtio_gpu_create_udmabuf(struct
+>> virtio_gpu_simple_resource *res,
+>>>                                          Error **errp)
+>>>    {
+>>> @@ -73,16 +95,28 @@ static bool virtio_gpu_create_udmabuf(struct
+>> virtio_gpu_simple_resource *res,
+>>>    static bool virtio_gpu_remap_dmabuf(struct
+>> virtio_gpu_simple_resource *res,
+>>>                                        Error **errp)
+>>>    {
+>>> +    Error *local_err = NULL;
+>>> +    bool ret = true;
+>>>        void *map;
+>>>
+>>>        map = mmap(NULL, res->blob_size, PROT_READ, MAP_SHARED,
+>> res->dmabuf_fd, 0);
+>>>        if (map == MAP_FAILED) {
+>>>            error_setg_errno(errp, errno, "dmabuf mmap failed");
+>>> -        res->remapped = NULL;
+>>> -        return false;
+>>> +        map = NULL;
+>>> +        ret = false;
+>>> +#if defined(CONFIG_VIRTIO_GPU_VFIO_BLOB)
+>>> +        if (vfio_device_mmap_dmabuf(res->iov, res->iov_cnt, &map,
+>>> +                                    res->blob_size, &local_err)) {
+>>> +            ret = true;
+>>> +        } else {
+>>> +            error_report_err(*errp);
+>>> +            *errp = NULL;
+>>> +        }
+>>> +#endif
+>>> +        error_propagate(errp, local_err);
+>>>        }
+>>>        res->remapped = map;
+>>> -    return true;
+>>> +    return ret;
+>>>    }
+>>>
+>>>    static void virtio_gpu_destroy_dmabuf(struct
+>> virtio_gpu_simple_resource *res)
+>>> @@ -145,8 +179,10 @@ void virtio_gpu_init_dmabuf(struct
+>> virtio_gpu_simple_resource *res)
+>>>            pdata = res->iov[0].iov_base;
+>>>        } else {
+>>>            if (!virtio_gpu_create_udmabuf(res, &local_err)) {
+>>
+>> virtio_gpu_create_udmabuf() will log "Could not find valid ramblock"
+>> even for VFIO, which shouldn't happen.
+> AFAICS, it won't log a failure here because rb->fd is valid in the VFIO case
+> especially after 8cfaf22668 ("Create dmabuf for PCI BAR per region").
+> The failure would occur in UDMABUF_CREATE_LIST IOCTL most likely
+> because rb->fd is not memfd in this case.
 
-Signed-off-by: Ani Sinha <anisinha@redhat.com>
----
- target/i386/kvm/kvm.c | 26 ++++++++++++++++----------
- 1 file changed, 16 insertions(+), 10 deletions(-)
+It is still nice to ensure that the log will never be emitted in the 
+VFIO case without relying on the internal behavior of the VFIO device code.
 
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index 0c940d4b64..da1ed3b62a 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -6042,27 +6042,33 @@ static int kvm_install_msr_filters(KVMState *s)
- static int kvm_filter_msr(KVMState *s, uint32_t msr, QEMURDMSRHandler *rdmsr,
-                           QEMUWRMSRHandler *wrmsr)
- {
--    int i, ret;
-+    int i, ret = 0;
- 
-     for (i = 0; i < ARRAY_SIZE(msr_handlers); i++) {
--        if (!msr_handlers[i].msr) {
-+        if (msr_handlers[i].msr == msr) {
-+            break;
-+        } else if (!msr_handlers[i].msr) {
-             msr_handlers[i] = (KVMMSRHandlers) {
-                 .msr = msr,
-                 .rdmsr = rdmsr,
-                 .wrmsr = wrmsr,
-             };
-+            break;
-+        }
-+    }
- 
--            ret = kvm_install_msr_filters(s);
--            if (ret) {
--                msr_handlers[i] = (KVMMSRHandlers) { };
--                return ret;
--            }
-+    if (i == ARRAY_SIZE(msr_handlers)) {
-+        ret = -EINVAL;
-+        goto end;
-+    }
- 
--            return 0;
--        }
-+    ret = kvm_install_msr_filters(s);
-+    if (ret) {
-+        msr_handlers[i] = (KVMMSRHandlers) { };
-     }
- 
--    return -EINVAL;
-+ end:
-+    return ret;
- }
- 
- static int kvm_handle_rdmsr(X86CPU *cpu, struct kvm_run *run)
--- 
-2.42.0
+> 
+>>
+>> This logic should look like as follows:
+>>
+>> virtio_gpu_create_udmabuf(res);
+>> if (it turned out the memory is incompatible with udmabuf) {
+>>       virtio_gpu_create_vfio_dmabuf(res);
+>>       if (it turned out the memory is not backed by VFIO) {
+>>           qemu_log_mask(LOG_GUEST_ERROR, "incompatible\n");
+>>           return;
+> I think this is mostly how I have it right now except that I am using
+> error_report_err() instead of qemu_log_mask(). Do you want me
+> to only use qemu_log_mask() when we cannot create a dmabuf via
+> udmabuf and vfio?
 
+More precisely, use LOG_GUEST_ERROR if and only if creating a DMA-BUF 
+failed:
+- in *both* virtio_gpu_create_udmabuf() and
+   virtio_gpu_create_vfio_dmabuf()
+- and it is due to a guest's fault.
+
+> As you can see, I am using a mix of error_report_err() and qemu_log_mask()
+> after Cedric suggested to improve error handling by using 'Error *'.
+> 
+> On a slightly different note, do you (or Cedric/anyone) know how to
+> properly include CONFIG_DEVICES header to fix the following error:
+> ../hw/display/virtio-gpu-dmabuf.c: In function 'virtio_gpu_create_vfio_dmabuf':
+> ../hw/display/virtio-gpu-dmabuf.c:35:13: error: attempt to use poisoned 'CONFIG_VIRTIO_GPU_VFIO_BLOB'
+>     35 | #if defined(CONFIG_VIRTIO_GPU_VFIO_BLOB)
+> 
+> Looks like I am missing some key detail as I have tried different things but
+> have not been able to fix this compilation error.
+
+I think you are supposed to add stubs. See hw/vfio/iommufd-stubs.c for 
+example.
+
+Regards,
+Akihiko Odaki
 
