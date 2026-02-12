@@ -4,164 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9CDFEE36AF
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 17:25:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0D9AEE36AE
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 17:38:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqaQV-0000qH-Tz; Thu, 12 Feb 2026 12:24:27 -0500
+	id 1vqadB-0006c1-J3; Thu, 12 Feb 2026 12:37:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1vqaQ4-0000lw-PU; Thu, 12 Feb 2026 12:24:01 -0500
-Received: from mail-eastusazlp17011000f.outbound.protection.outlook.com
- ([2a01:111:f403:c100::f] helo=BL2PR02CU003.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vqadA-0006bo-An
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 12:37:32 -0500
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1vqaQ2-00042d-12; Thu, 12 Feb 2026 12:24:00 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=xb6follFAnu1oMsQEj97rZXBMrWlOtQFOdWfFZVCVtLZnB9awB6d5Q8iFSntw/yuF8gLF9R4aamEO/ZF5TKiVmXJCnlay2Ga9KPGjbqY4hGdzjd48J/hjO0diB87ELMw25xsAmudAJ7oK0ym5TpRajlryfqp+xMmw0B123xlTDo8GS8F/3Ov23TJJUGJbsqtQ4uxJqhey2CNtpujA9/4+ZGNJcaJBHcQu6cNUpGMXxuVO2Wap5iG5Ojay+ulhWHNHRt2tIQIOwH5UwKY53MBFyWvIfGt8DjUerzjL0bEQKr/dUA1Je0F4DUEPmVFcbgfsQDAWx0aO/elcgAEsl8qXw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=67BBM20Sse6xclU/B9033k/NWrF8c6XrJpKSQkZTx6U=;
- b=s/oaLdPA9IMk4jcIvm+rOmDrSGg+02UJPcuapxZYYm3Fd8nspBhYNSFtDZPvQRjK+TI36iUyKyqaAparaf5QoCCIf7tpt8WXSUGcIxNZXc+qi0jIeJm5+OtIlCoeENR8VbEDOACU/YfK7iBfXuZoEJzBHoLXLrow9XRYzRPr8blbPvQ0ixOMRQeatWChha024yjjonlOpL98oNVmULAIwQ3cMEvcoNEYdpXM6hcTnWSL0mCEurZCw4gEG9E+K34LgHOKW3aYnwdY/PRNRcVTc35mMjI1/JsBlkMqdK3HIvQfbu4zs3VwJ8mjxulzUf7tLiXXxIk84ui0B7wR5KmAiA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.160) smtp.rcpttodomain=redhat.com smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=67BBM20Sse6xclU/B9033k/NWrF8c6XrJpKSQkZTx6U=;
- b=bMDO9mFrgCBTRYfXVgyPfqKc4AWueAqAw+dIP21nP7rDOTzMmLsssXE1xE9tKesMcnF8vlH6YQzR+KYqxcHqgWSgQq+C0ofToYZOvSxraDRd4fW2+l1d6rWQ1Qq1d9TqR9CUgLzk6Au22rZdwiL7dQgV8ig1iCMkj3/w6mXeNHf5/AFAa8fRrns2uTH99EA6HXwn9gpM9VxJtEFlLbCvr8BqSE2ggsjjwkRTu4S6ID73WsfZzbOc/nqcdfk8EOm6jz+62/bqmIRqdGmeBw41M9+Ky1OWtchwgl2tLlYN3kYw25ixTD34xy7jWl+kB4uRLMs5a3fJhBhrb3t/gDh0PQ==
-Received: from SA1PR02CA0019.namprd02.prod.outlook.com (2603:10b6:806:2cf::12)
- by SN7PR12MB7856.namprd12.prod.outlook.com (2603:10b6:806:340::16)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9611.10; Thu, 12 Feb
- 2026 17:23:48 +0000
-Received: from SA2PEPF00001505.namprd04.prod.outlook.com
- (2603:10b6:806:2cf:cafe::42) by SA1PR02CA0019.outlook.office365.com
- (2603:10b6:806:2cf::12) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9611.12 via Frontend Transport; Thu,
- 12 Feb 2026 17:23:45 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
- smtp.mailfrom=nvidia.com;
- dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.160) by
- SA2PEPF00001505.mail.protection.outlook.com (10.167.242.37) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9611.8 via Frontend Transport; Thu, 12 Feb 2026 17:23:48 +0000
-Received: from rnnvmail203.nvidia.com (10.129.68.9) by mail.nvidia.com
- (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Thu, 12 Feb
- 2026 09:23:30 -0800
-Received: from rnnvmail201.nvidia.com (10.129.68.8) by rnnvmail203.nvidia.com
- (10.129.68.9) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Thu, 12 Feb
- 2026 09:23:29 -0800
-Received: from Asurada-Nvidia (10.127.8.11) by mail.nvidia.com (10.129.68.8)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20 via Frontend
- Transport; Thu, 12 Feb 2026 09:23:28 -0800
-Date: Thu, 12 Feb 2026 09:23:27 -0800
-To: Eric Auger <eric.auger@redhat.com>
-CC: Shameer Kolothum Thodi <skolothumtho@nvidia.com>, "qemu-arm@nongnu.org"
- <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>, "clg@redhat.com"
- <clg@redhat.com>, "alex@shazbot.org" <alex@shazbot.org>, Nathan Chen
- <nathanc@nvidia.com>, Matt Ochs <mochs@nvidia.com>, Jiandi An
- <jan@nvidia.com>, Jason Gunthorpe <jgg@nvidia.com>,
- "jonathan.cameron@huawei.com" <jonathan.cameron@huawei.com>,
- "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>,
- "zhenzhong.duan@intel.com" <zhenzhong.duan@intel.com>, Krishnakant Jaju
- <kjaju@nvidia.com>
-Subject: Re: [PATCH v2 05/24] hw/arm/smmuv3-accel: Introduce CMDQV ops
- interface
-Message-ID: <aY4Mj5GvO8X+tO51@Asurada-Nvidia>
-References: <20260206144823.80655-6-skolothumtho@nvidia.com>
- <aYo4n4N3dW1OLzTk@Asurada-Nvidia>
- <CH3PR12MB75483C2BA4EDC24CA0F78A4CAB62A@CH3PR12MB7548.namprd12.prod.outlook.com>
- <46d3b859-6e05-4c03-8e77-0aa76629f772@redhat.com>
- <CH3PR12MB7548F06A2BB9C009FD2043F2AB60A@CH3PR12MB7548.namprd12.prod.outlook.com>
- <dcde8f24-7523-4e2c-8ce6-4048d3ca9c7c@redhat.com>
- <CH3PR12MB7548A87A5BC62C6D90501947AB60A@CH3PR12MB7548.namprd12.prod.outlook.com>
- <ef13c99e-29b3-47cf-a090-811294e723e0@redhat.com>
- <CH3PR12MB75481019FE5FEB62BCE96D58AB60A@CH3PR12MB7548.namprd12.prod.outlook.com>
- <7af8156e-4874-4cab-b71a-c39c56aa59c0@redhat.com>
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vqad6-0000nk-SH
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 12:37:32 -0500
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id D4FE85969F0;
+ Thu, 12 Feb 2026 18:37:24 +0100 (CET)
+X-Virus-Scanned: amavis at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
+ id 0zWBmbooAaDa; Thu, 12 Feb 2026 18:37:22 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 4D20B597383; Thu, 12 Feb 2026 18:37:22 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 4B005597382;
+ Thu, 12 Feb 2026 18:37:22 +0100 (CET)
+Date: Thu, 12 Feb 2026 18:37:22 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: Peter Xu <peterx@redhat.com>
+cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel <qemu-devel@nongnu.org>, 
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, 
+ Gerd Hoffmann <kraxel@redhat.com>, Max Filippov <jcmvbkbc@gmail.com>, 
+ Peter Maydell <peter.maydell@linaro.org>, 
+ =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
+Subject: Re: [PATCH v3 0/6] Implement memory_region_new_* functions
+In-Reply-To: <aYyTtz1B2Qz3aQWA@x1.local>
+Message-ID: <e3fdbd4f-df7b-0adc-06ff-4c5a25ab80cc@eik.bme.hu>
+References: <cover.1770753117.git.balaton@eik.bme.hu>
+ <CABgObfYpW0YMofv4O8gf4p-aWVxfvQ+BCMPsm2w+5MtD8-9s0Q@mail.gmail.com>
+ <42233b06-f058-152d-645e-e16528a1640d@eik.bme.hu> <aYyTtz1B2Qz3aQWA@x1.local>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <7af8156e-4874-4cab-b71a-c39c56aa59c0@redhat.com>
-X-NV-OnPremToCloud: ExternallySecured
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SA2PEPF00001505:EE_|SN7PR12MB7856:EE_
-X-MS-Office365-Filtering-Correlation-Id: c9436ab4-de70-47ee-89cf-08de6a5b7b9a
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|36860700013|82310400026|1800799024|376014; 
-X-Microsoft-Antispam-Message-Info: =?iso-8859-1?Q?R/VqzchlwUOOlaDv5jIMeT4p2Jo+xdZyLg3D4q3f2Uh9wuTfbPMKrvWt24?=
- =?iso-8859-1?Q?j9JFG4mIq8MLubFKvKsL4i1k8P4PcGnBP0HCyvrkpfGUHB5AzPtbIQj/Zm?=
- =?iso-8859-1?Q?+vKZX8i4ClumI0irt+hsq33IqtaxdnIPsGZKxJ/mUN3RXUIDOA01CKkFEf?=
- =?iso-8859-1?Q?rYYTg77ufi14c2xrLrqRj9MhT2ffhSP24eJBCIQelfXmHeicNlxZqzxqyy?=
- =?iso-8859-1?Q?9BeWiuwsocf2+zNdFaKMOgAHxBdTtxz5PYczAuuD5ArjD7fEUx2pl1+9IJ?=
- =?iso-8859-1?Q?gEzixdv+FqL3rXqZ4tlzyd4NazrndACsKPCNqtEPfbrjqAdUoNr93nJx+W?=
- =?iso-8859-1?Q?k1CN60j6YJBT4X0IhRJX6UWMmWgcTpWrwmEqKzTFY6EzDD9H8e5dYixUHX?=
- =?iso-8859-1?Q?ki+iyRBt4ChuEEpfPxPW5C1Fmj0Mw9tdQ376CXQnS7zmeLLG3hzf+F9t9N?=
- =?iso-8859-1?Q?R1E4/TajmVxDuU1eUkicfp1mooFrn+dkFPO1iABj7kylIU4KrmJW/mQCe5?=
- =?iso-8859-1?Q?srn7RFgawTogz7r3WmtQ7vapsY4c9KXM/qzhuIt/08sJdJWr83Imy00R7z?=
- =?iso-8859-1?Q?r+c0MxTXJroOHTLng8+R/TpXW/DzFqQAG0heX0DGkp3+I2NrYhX/pA3dGW?=
- =?iso-8859-1?Q?Ek2BEj2+juF+8K7LoiRkjoNiEYuCCTFPs+gIS98mL2y/bVoOjn0wrm/QIM?=
- =?iso-8859-1?Q?kG72VT3491RJXDUgFLOV4imrAKroyZJwYi77ZtAlc5WJZ+EbjzpB6OB8ox?=
- =?iso-8859-1?Q?okwza2T0klPjdmtqO+PI0EuX+gLqTiIEz0E7u7KUA1kf8H92/kN+t/tNsS?=
- =?iso-8859-1?Q?2tdnIidtr/9PhxaoaBhogi5I669mfJPqALS8BgWDKiMbuvNeuAnYPjwRPM?=
- =?iso-8859-1?Q?5tYjlJjK4ji0m0BDAR3QiGuia+AnvJUGgfJX0tSd2peeSvxC620odbppfQ?=
- =?iso-8859-1?Q?Mk8Q/iyvcioCfbOBTnfkJ4CezGGaDy0LGJMliW3KKtRQUHUjdJ3poiXzAt?=
- =?iso-8859-1?Q?iBLG1zXWy1+h4KkdcZvL5fw9Uj77bxnwpvieofeqZUt2hNhQEYc6qfYcL6?=
- =?iso-8859-1?Q?rXDiWZ4bKXIVAArNJrWOQeikzomeGJNMzJ/5JiPC9FM8yVm1mM+RcV92ZA?=
- =?iso-8859-1?Q?HHGsHDQsXiCje3iFP3jBS/EOjnAfMQDTrVpKocN+bMzqBp7w8YJR0GlL4H?=
- =?iso-8859-1?Q?NCGiImQyWJTu2DTBO60GimX9RRAS8Ghe9vg1G7Jzka2nm2upxfcM1/kUDi?=
- =?iso-8859-1?Q?liPlI97YA2I79zi4Wiy4ajrABx4PMtKZBO9StIjtWiS8PtwJ+ETR+a92qt?=
- =?iso-8859-1?Q?m7bouccRDsdsjsPCmr7ozkfyDXfSG45cUKfXpQIUR+En3UeDyKpR21oKR2?=
- =?iso-8859-1?Q?PUNNQK+nIwzELVD1DurGOYzRYsUnnIDDKAKIds438kHRC4h069oXMyj9u6?=
- =?iso-8859-1?Q?hVCYGtQWwJo+hZG/TOPbo2tSI9vZ9YAWIoOsufz4MyQNnFs5OvEJAyM9nE?=
- =?iso-8859-1?Q?RPvZ1JeaDYkKdt+Z1pYU7pflR/8mgTt+pcMeWGYbjeXEY02Vv+zOBMOuPd?=
- =?iso-8859-1?Q?vsectEAtMx/DkPQMMzpzqP7tuKnxlxnydl2qBvsr26JgWgixzH9tPKGv5L?=
- =?iso-8859-1?Q?u/mQVNPrAJCPoIeZuytDM2hNBSqe8k9XzcdijhoEWyP0vRhBDC97p2BqBF?=
- =?iso-8859-1?Q?AZWNmK4tFLpzkkhGNfAPwcYoZHmt/dX/ThCjKg1wMCkMZD+15E3jAIUUPq?=
- =?iso-8859-1?Q?BTFg=3D=3D?=
-X-Forefront-Antispam-Report: CIP:216.228.117.160; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge1.nvidia.com; CAT:NONE;
- SFS:(13230040)(36860700013)(82310400026)(1800799024)(376014); DIR:OUT;
- SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: YHcnbuYLYnMjMZW+8MJ+VbeIj6iJEJ9dh/Kczm4Z80Pm9S6VdP0wvoXRNwUfF4Dr06s1LfgJACjLWKowSzwlgM46P2YM6ehJFWwGBZnSKC3+vwZkLikjiwteheliA6fZNHkafccY6B/uiYbCXTqffFhZdwGFliqCboQ9P0aO1fJgNnHmzrKuN3VgU5L6edYz8RKZ97F9A5Rd+uZOso8nM6Zv0oqF0w4J1ICUt+BFMAGtvWU83qzuf6Z2N3puvGmeep9opouGvrlIAbCE1xJD/uJt7AR56DTcd+I49qrih+vZdQ27pQEW8xWGKT+ZriiHrlLmZwbD3S55VCQYyyZGBtwtx8i9t+Qcg+WUKiH7dGvnoY2v5+OtFWh3zzsI4GeeaaWYmQiqVbKXtvH2PpuNkbdyPxYgpyQRP0MvH+gO31w1y2V1e8GUwEsRELrSRXte
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Feb 2026 17:23:48.0100 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: c9436ab4-de70-47ee-89cf-08de6a5b7b9a
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.160];
- Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: SA2PEPF00001505.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR12MB7856
-Received-SPF: permerror client-ip=2a01:111:f403:c100::f;
- envelope-from=nicolinc@nvidia.com;
- helo=BL2PR02CU003.outbound.protection.outlook.com
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
 X-Spam_score_int: -2
 X-Spam_score: -0.3
 X-Spam_bar: /
-X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, FORGED_SPF_HELO=1, KHOP_HELO_FCRDNS=0.4, SPF_HELO_PASS=-0.001,
- SPF_NONE=0.001 autolearn=no autolearn_force=no
+X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, URIBL_SBL=1.623 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -174,42 +68,173 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Nicolin Chen <nicolinc@nvidia.com>
-From:  Nicolin Chen via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Feb 12, 2026 at 06:05:58PM +0100, Eric Auger wrote:
-> >>> The vCMDQ path does not replace the normal accelerated SMMU init/reset.
-> >>> Instead, it requires additional init/reset steps on top of the regular accel flow.
-> >>>
-> >>> if (accel)
-> >>>     accel_init();
-> >>>
-> >>> if (accel && cmdqv)
-> >>>     cmdqv_init();
-> >>>
-> >>> So the vCMDQ logic is an extension of the accelerated mode, not a fallback
-> >>> or alternative implementation.
+On Wed, 11 Feb 2026, Peter Xu wrote:
+> On Wed, Feb 11, 2026 at 12:47:53PM +0100, BALATON Zoltan wrote:
+>> On Wed, 11 Feb 2026, Paolo Bonzini wrote:
+>>> Il mar 10 feb 2026, 21:02 BALATON Zoltan <balaton@eik.bme.hu> ha scritto:
+>>>
+>>>> Our documentation says that memory regions are automatically freed
+>>>> when the owner dies and the reference counting to do this is also
+>>>> implemented. However this relies on the QOM free funtion that can only
+>>>> be set by creating objects with object_new but memory API only
+>>>> provides constructors that call object_initialize which clears the
+>>>> free function that prevents QOM to manage the memory region lifetime.
+>>>> Implement corresponding memory_region_new_* functions that do the same
+>>>> as the memory_region_init_* functions but create the memory region
+>>>> with object_new so the lifetime can be automatically managed by QOM as
+>>>> documented. The memory_region_init functions are kept because they are
+>>>> useful for memory regions embedded in other object or managed
+>>>> externally and not by QOM for some reason.
+>>>>
+>>>
+>>> I think there was pretty much agreement *not* to do this?
+>>
+>> Who agreed on that? So far I got concerns that this was too big (that's why
+>> I split it from the clean ups to show it's not that big change, less than
+>> 200 lines plus the docs but the clean ups removed as many lines as the doc
+>> comments add) and others saying this should replace memory_region_init
+>> altogether (that's way too much churn and not needed IMO) but no clear
+>> explanation of why this was *not* needed. You as maintainer can say no but
+>> then please give a justification for why and some solution to the problems
+>> this tries to fix.
+>
+> I didn't participate much on this discussion, because I don't think I know
+> well on this topic.. especially on the Rust implications, comparing to most
+> of others who should be more familiar with.
+>
+> However, IMHO, what we really need here is a justification on "why this is
+> needed", instead of requesting maintainer to say "why it's not needed"..
+>
+> The rational should be simple to me: by default, we change nothing.  We fix
+> bugs, but that justifies itself.  If we change something else, we need to
+> justify the change worthwhile (by the author of the proposal).  If we
+> change a lot of things, we need serious and strong justifications.
 
-Yes. And I think it makes more sense by moving cmdqv_init() into
-accel_init(), completely transparent to the common smmuv3 module
-maybe?
+When somebody submits a patch, the cover letter and commit messages 
+describe what and why is prpoposed to be changed. I tried to do that and 
+also replied to review comments trying to explain why I think the change 
+would help. So I think I gave justification. If I get a reply saying that 
+the proposed change is broken, won't work or breaks something then it's 
+clear why it's not a good idea. If I get a reply that this would work but 
+I don't think it's a good idea then I'd like to also get some explanation 
+on why it's not a good idea and if there's a better solution for the 
+problems that the poropsed patch tries to fix. That's where the maintainer 
+should say why it's not needed.
 
-> >>> I think the later patches in the series make this clearer.
-> >>> Please let me know if you still feel the ops necessary.
-> >> do we have any way to introspect from the kernel what cmdq type we have,
-> >> so that we could have a cmdqv option with ON/OFF/AUTO value instead of
-> >> duplication cmdq option for each vendor?
-> > Looking at it again, I think we can, by calling IOMMU_GET_HW_INFO with all supported 
-> > CMDQ types and check which one succeeds.
-> 
-> then I think we should endeavour doing that. Regarding the ops, if you
-> feel that reset/init can be managed through a simple add-on code I am
-> fine with it. Maybe Cédric or Peter will have another opinion though ;-)
+I try to summarise the problem again briefly as it seems I did not manage 
+to explain it in previous messages (or I wrote too much and people did not 
+even read it). This again got a bit long but I don't know how to explain 
+it better with less words.
 
-I like that on/off/auto depending on the IOMMU_GET_HW_INFO return.
+Memory regions are registered as a child with an owner and when the owner 
+is destroyed it unparents the memory region which decreases its ref count 
+so it would be freed if there are no other uses of the memory region. This 
+is implemented and documented like that but there's currently no way to 
+actually create a memory region that would be managed and freed by QOM 
+that way and a memory region created with memory_region_init would never 
+be freed and the code to manage memory region lifecycle is effectively 
+dead. Because of this we have all sorts of hacks to solve problems that 
+arise from this such as memory_region_ref/unref not using the ref count of 
+the memory region itself but the ref count of the owner and we embed 
+memory regions in devices to avoid leaking them.
 
-Thanks
-Nicolin
+My immediate motivation was trying to keep device models simple and avoid 
+any additional state or boiler plate code as much as possible because I 
+think simple device models are easier to write and easier to find bugs in 
+if boiler plate code is not obscuring the actual device functionality. 
+Therefore the less additional lines we have to add to a device model is 
+the better. A typical example is a memory region of a sysbus or PCI device 
+where this would be created with the device and registered via 
+sysbus_init_mmio or pci_register_bar. The SysBusDevice state has 
+mmio[QDEV_MAX_MMIO] with a MemoryRegion *memory pointer in it and 
+PCIDevice has PCIIORegion io_regions[PCI_NUM_REGIONS] where PCIIORegion 
+has MemoryRegion *memory so the subclass should not need to store or embed 
+these memory regions as QOM should be able to store and manage it. All 
+that should be needed in the device model is to define memory ops, create 
+the memory region and register it with the superclass and forget about it. 
+Reading the documentation of memory regions I was under the impression it 
+also works like that but when trying to create such memory regions I was 
+told this would leak. Then I looked at why.
+
+I've found that QOM lifecycle management relies on a free function that is 
+set by object_new so anything not created with object_new won't be freed. 
+QOM has two ways to create objects: object_new and object_initialize 
+(latter of which zeroes the free function so this will never be freed by 
+QOM) and there's no way to set a free function any other way. The 
+memory_region_init* functions call object_initialze so they cannot create 
+regions that QOM will manage. To understand this better look at: 
+system/memory.c::memory_region_init(), qom/object.c::object_finalize(), 
+qom/object.c::object_new() and qom/object.c::object_initialize_with_type() 
+(note the memset in object_initialize_with_type).
+
+There are two possible ways to fix this: remove object_initialize from 
+memory_region_init so callers could do object_new; memory_region_init or 
+object_initialize; memory_region_init or add corresponding 
+memory_region_new functions. The latter seems to be less churn and more 
+convenient to use so that's what this series does.
+
+With this series we can have
+
+struct SiI3112PCIState {
+     PCIIDEState i;
+
+     SiI3112Regs regs[2];
+};
+
+instead of
+
+struct SiI3112PCIState {
+     PCIIDEState i;
+
+     MemoryRegion mmio;
+     MemoryRegion bar0;
+     MemoryRegion bar1;
+     MemoryRegion bar2;
+     MemoryRegion bar3;
+     MemoryRegion bar4;
+     SiI3112Regs regs[2];
+};
+
+or drop an unneeded field from PCIHostState as proposed here:
+
+https://patchew.org/QEMU/cover.1761232472.git.balaton@eik.bme.hu/797587b52159d2db79ed924b4962be7e7ba84207.1761232472.git.balaton@eik.bme.hu/
+
+and several similar simplifications in a lot of devices, that would be 
+done as follow up patches not all in this series.
+
+We may also be able to untangle memory_region_ref/unref and just use 
+object_ref/unref with memory regions that would be more regular QOM usage 
+and may be simpler to follow than the current way of piggy-backing on the 
+owner which recently was also found to have some issues.
+
+> At least I didn't see any Rust mentioned in this cover letter explaining
+> why we need this change.  I also don't know if the "documentation" issue is
+> a major flaw to introduce these whole set of new APIs.  For example, could
+> we fix the doc instead if it is flawed?
+
+I don't know if this helps Rust or not, that wasn't brought up by me but I 
+guess making memory regions normally managed QOM objects would fit more 
+with what Rust expects or can handle than the current way of embedding or 
+strangely ref counting regions. As described above the main motivation is 
+not to fix documentation but to make it possible to use memory regions as 
+documented and intended to avoid some hacks that I think arise from not 
+being able to create normal ref counted memory regions that would be freed 
+by QOM.
+
+If you think the above is not a problem or this is not the right solution 
+for it then I'd like to see a justification on why and what would be a 
+better solution. So far I got that it might be that people did not get why 
+it is a problem and it works good enough as it is so best not touch it but 
+I think the porposed change is simple enough and would allow removing some 
+hacks so allow simplifying code and as it does not touch existing 
+memory_region_init functions it would also not break anything. Again if 
+this was not clear above the series does not add any new way of managing 
+memory regions, that's already implemented and always was, this just adds 
+the functions that allow it to be used.
+
+Regards,
+BALATON Zoltan
 
