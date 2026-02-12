@@ -4,112 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 014ACEDF05C
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 08:37:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50EFDECD6F0
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 08:41:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqSC8-00070r-T6; Thu, 12 Feb 2026 03:37:04 -0500
+	id 1vqSFS-00088f-Af; Thu, 12 Feb 2026 03:40:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1vqSC7-00070T-6H
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 03:37:03 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vqSFR-00088N-JY
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 03:40:29 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1vqSC5-0006py-DX
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 03:37:02 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vqSFP-0007fu-Um
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 03:40:29 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770885418;
+ s=mimecast20190719; t=1770885626;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=8S28mvsxUwXYzebAuxeqnovFXr3Jd2l2hZVxQKKrLYk=;
- b=Z5DVxpTGkp7oEWSVlZFf8ZDF+9vU3nDBY3d0QtEjR/8f3Pj70ZnA1VDta/FGggDe0HDFZg
- 4cK2YY5Fo6Ra2a9TkDOQ4VJCuTopauAgkDu8YBBS8xOW1cgfTfg0pwNIKpMEsQGPTGh/01
- xYsV1M/ryD8HN0b+YmHdmbPk8oM+nCU=
-Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com
- [209.85.215.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-414-wxx7wmONPFuYrkzXaRfrrQ-1; Thu, 12 Feb 2026 03:36:56 -0500
-X-MC-Unique: wxx7wmONPFuYrkzXaRfrrQ-1
-X-Mimecast-MFC-AGG-ID: wxx7wmONPFuYrkzXaRfrrQ_1770885416
-Received: by mail-pg1-f197.google.com with SMTP id
- 41be03b00d2f7-c65d08b623aso1179721a12.0
- for <qemu-devel@nongnu.org>; Thu, 12 Feb 2026 00:36:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1770885416; x=1771490216; darn=nongnu.org;
- h=to:references:message-id:content-transfer-encoding:cc:date
- :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=8S28mvsxUwXYzebAuxeqnovFXr3Jd2l2hZVxQKKrLYk=;
- b=qoc630giEk2jSPjIxLW35BDDsIxVeCjes7eB7+S5iTVq65xKkkziO1vMXi/+2NEAir
- T282zxPKsfYMG9WmHyzq9t5iOvVrHP547ZhRBGH7NO7NYiv+oejsleAHom0vsURiq3x1
- TpFuuQrLA8fyurPwEZQVfruG2hnINmxLjEDcCjAIlmVzNhGe6P5gKYlpsZIBNTszE4VR
- Ym81USDidRrlGrinVAg5SPmp09IRRW8dTdoT2IWg1m6whHeEGZkNoofIjZ8+RzBSsg5n
- ABvO1LOArUFJ5ebRJtnDWKjfEyUYbFuX00XmGJylO3RZfZRG24Dg/k+JPTVFtx5jXLUf
- +dbw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770885416; x=1771490216;
- h=to:references:message-id:content-transfer-encoding:cc:date
- :in-reply-to:from:subject:mime-version:x-gm-gg:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=8S28mvsxUwXYzebAuxeqnovFXr3Jd2l2hZVxQKKrLYk=;
- b=QSmzR+O9u38aVeG2ERvuFCcLS4mnP5DyXTeZe0u9fOkBXVcqjc6sIlB5HTAkyWmqs3
- w5j82/zGeZF2ZJJr/s3Vco6fCmWmBcTHZiebOa9HMc51QAX194IuFrvuSWN2LFHhWS4p
- BijmnIAuq15nBUWM6GembvSSzyAkxhe/gDKgSiArd3tAa4S6cA+hGoeI6M5nFLxxhv7e
- h2kcN9exF/Us+uaaCGDv2eUMppVgyzJ/3WjO+TvKh5WQbmpce3F/v3RGG1XIRyD81o0C
- MkgxuJZsW8cPQHqE4MH709YUQsbNh9PGRhD3Tmu5KktnnRWyIV5+V3qrGX9N77KefYqF
- JJHg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUozIv/C9h8iCVl88yMo2BvqdQfmmWikOhc34n5wD+GUBqsVgZfkZBqH67GofKOp40MXYVG+yxkNb+Q@nongnu.org
-X-Gm-Message-State: AOJu0YylYgvrs44FixOn/lcaMbar5/XQdqmwCI6QN1siHHY9aNEl65XP
- JeCaLd+DwPX4QARaiYX+RsUv57e3qyn3BrXzobkeDWebGCJMbPliTWY3TOWPDK2yUoQaJD8g7SY
- TGsPxx10yfq0mB6+/XVViqPqsEkVl1zNJ5jn8Sd7Zdjs5GUOQi/LG46g6
-X-Gm-Gg: AZuq6aL8Ri+VFdSqLX/szqJQ/O4JabyzQZ1a3N75Cf+SRnZ/zZbYNQodf17fXMPMapJ
- xUkYWSpTm/6l7XX8igLS9fBE9AarneAuSbq7+N+Nv6Jm01XvBR23ZQge/fRqNs4WotEaBBiET2V
- ng8z9jEK1k+jvSv1Jfx9r7FwruDl18cqzm3bDUEE7urc5PRdTlW3c0ZRUNEonpHn47ZYoBFvrqS
- LlCbkvYJXNZ96ZFoPS3wn/2JRU4cKjtQxN+NgRfKRulap+QEd5xEFhyxO2G0JDHxHDcN1Hsz1ZB
- eraG67O+kpYJ1SyayM4xZf+K8V7ze1LrveyEs0VJU6zTNwlFVAX53r5Errep1wiTuUh2Ls0VblK
- AX1xIw3F7EH3QvefhQrrlzSnIDgE/gySeS39UtYZXlQIOYi92jq+gJzUQqQJ/mCrnnIRL2w==
-X-Received: by 2002:a05:6a20:c90e:b0:371:8e6d:27f9 with SMTP id
- adf61e73a8af0-3944a70c127mr1558733637.33.1770885415675; 
- Thu, 12 Feb 2026 00:36:55 -0800 (PST)
-X-Received: by 2002:a05:6a20:c90e:b0:371:8e6d:27f9 with SMTP id
- adf61e73a8af0-3944a70c127mr1558716637.33.1770885415279; 
- Thu, 12 Feb 2026 00:36:55 -0800 (PST)
-Received: from smtpclient.apple ([122.164.27.113])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c6e1967ca7esm4180279a12.3.2026.02.12.00.36.52
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Thu, 12 Feb 2026 00:36:54 -0800 (PST)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81.1.4\))
-Subject: Re: [PATCH v4 17/31] i386/sev: add migration blockers only once
-From: Ani Sinha <anisinha@redhat.com>
-In-Reply-To: <CAE8KmOwa1M_F9Qfs-XXRhaJZx7jiwQDfwDk7U2shJi8SLa+y9Q@mail.gmail.com>
-Date: Thu, 12 Feb 2026 14:06:39 +0530
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>,
- Zhao Liu <zhao1.liu@intel.com>, Gerd Hoffmann <kraxel@redhat.com>,
- kvm@vger.kernel.org, qemu-devel <qemu-devel@nongnu.org>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <6C39045F-DF1E-4E9A-8ECB-AE24C766F002@redhat.com>
-References: <20260212062522.99565-1-anisinha@redhat.com>
- <20260212062522.99565-18-anisinha@redhat.com>
- <CAE8KmOwa1M_F9Qfs-XXRhaJZx7jiwQDfwDk7U2shJi8SLa+y9Q@mail.gmail.com>
-To: Prasad Pandit <ppandit@redhat.com>
-X-Mailer: Apple Mail (2.3826.700.81.1.4)
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=anisinha@redhat.com;
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=aDxs7cQ8w3K+TJUeo45duMk9r5KFB48ux2XzTJa6dWc=;
+ b=OAXFfrZ50nwQHPpgbUp4CzSR/8FWvShFKVTUiPZH7qqpTWmqoBEnv+/welCjuXqPAbFdl4
+ l7hRjYOWHAJXAjQNXxx5Ayyaxc7A7BI7TeJr3fhWpvrQ2Ugazyti6omwHofadiYPm4NOi5
+ B+IyagSBUAouB9vry5X2YwQ1zMxSPrM=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-5-9UCs40ppMmGhyvP50IsatQ-1; Thu,
+ 12 Feb 2026 03:40:23 -0500
+X-MC-Unique: 9UCs40ppMmGhyvP50IsatQ-1
+X-Mimecast-MFC-AGG-ID: 9UCs40ppMmGhyvP50IsatQ_1770885622
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8A91D18005A9; Thu, 12 Feb 2026 08:40:21 +0000 (UTC)
+Received: from [10.45.225.23] (unknown [10.45.225.23])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 2044130001B9; Thu, 12 Feb 2026 08:40:18 +0000 (UTC)
+Message-ID: <5a41fda5-e70d-4d1b-9838-f012344506ac@redhat.com>
+Date: Thu, 12 Feb 2026 09:40:16 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 3/5] fpu: Restrict parts_round_to_int_normal to target
+ precision
+To: Ilya Leoshkevich <iii@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Cc: David Hildenbrand <david@kernel.org>, qemu-s390x@nongnu.org,
+ qemu-devel@nongnu.org
+References: <20260210214044.1174699-1-iii@linux.ibm.com>
+ <20260210214044.1174699-4-iii@linux.ibm.com>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20260210214044.1174699-4-iii@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -127,123 +130,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-> On 12 Feb 2026, at 1:20=E2=80=AFPM, Prasad Pandit <ppandit@redhat.com> =
-wrote:
->=20
-> On Thu, 12 Feb 2026 at 11:58, Ani Sinha <anisinha@redhat.com> wrote:
->> sev_launch_finish() and sev_snp_launch_finish() could be called =
-multiple times
->> when the confidential guest is being reset/rebooted. The migration
->> blockers should not be added multiple times, once per invocation. =
-This change
->> makes sure that the migration blockers are added only one time by =
-adding the
->> migration blockers to the vm state change handler when the vm =
-transitions to
->> the running state. Subsequent reboots do not change the state of the =
-vm.
->>=20
->> Signed-off-by: Ani Sinha <anisinha@redhat.com>
->> ---
->> target/i386/sev.c | 20 +++++---------------
->> 1 file changed, 5 insertions(+), 15 deletions(-)
->>=20
->> diff --git a/target/i386/sev.c b/target/i386/sev.c
->> index 66e38ca32e..260d8ef88b 100644
->> --- a/target/i386/sev.c
->> +++ b/target/i386/sev.c
->> @@ -1421,11 +1421,6 @@ sev_launch_finish(SevCommonState *sev_common)
->>     }
->>=20
->>     sev_set_guest_state(sev_common, SEV_STATE_RUNNING);
->> -
->> -    /* add migration blocker */
->> -    error_setg(&sev_mig_blocker,
->> -               "SEV: Migration is not implemented");
->> -    migrate_add_blocker(&sev_mig_blocker, &error_fatal);
->> }
->>=20
->> static int snp_launch_update_data(uint64_t gpa, void *hva, size_t =
-len,
->> @@ -1608,7 +1603,6 @@ static void
->> sev_snp_launch_finish(SevCommonState *sev_common)
->> {
->>     int ret, error;
->> -    Error *local_err =3D NULL;
->>     OvmfSevMetadata *metadata;
->>     SevLaunchUpdateData *data;
->>     SevSnpGuestState *sev_snp =3D SEV_SNP_GUEST(sev_common);
->> @@ -1655,15 +1649,6 @@ sev_snp_launch_finish(SevCommonState =
-*sev_common)
->>=20
->>     kvm_mark_guest_state_protected();
->>     sev_set_guest_state(sev_common, SEV_STATE_RUNNING);
->> -
->> -    /* add migration blocker */
->> -    error_setg(&sev_mig_blocker,
->> -               "SEV-SNP: Migration is not implemented");
->> -    ret =3D migrate_add_blocker(&sev_mig_blocker, &local_err);
->> -    if (local_err) {
->> -        error_report_err(local_err);
->> -        exit(1);
->> -    }
->> }
->>=20
->>=20
->> @@ -1676,6 +1661,11 @@ sev_vm_state_change(void *opaque, bool =
-running, RunState state)
->>     if (running) {
->>         if (!sev_check_state(sev_common, SEV_STATE_RUNNING)) {
->>             klass->launch_finish(sev_common);
->> +
->> +            /* add migration blocker */
->> +            error_setg(&sev_mig_blocker,
->> +                       "SEV: Migration is not implemented");
->> +            migrate_add_blocker(&sev_mig_blocker, &error_fatal);
->>         }
->>     }
->> }
->> --
->=20
-> * 'sev_mig_blocker' is a global static variable, so it's the same
-> blocker (address) added each time, maybe add_blocker() should do a
-> check to avoid duplicates.
-
-Maybe we could do something like this (I have not tested it) but perhaps =
-outside the scope of this change set:
-
-diff --git a/migration/migration.c b/migration/migration.c
-index b103a82fc0..7d85821315 100644
---- a/migration/migration.c
-+++ b/migration/migration.c
-@@ -1696,8 +1696,11 @@ static int add_blockers(Error **reasonp, unsigned =
-modes, Error **errp)
- {
-     for (MigMode mode =3D 0; mode < MIG_MODE__MAX; mode++) {
-         if (modes & BIT(mode)) {
--            migration_blockers[mode] =3D =
-g_slist_prepend(migration_blockers[mode],
--                                                       *reasonp);
-+            if (g_slist_index(migration_blockers[mode],
-+                                 *reasonp) =3D=3D -1) {
-+                migration_blockers[mode] =3D =
-g_slist_prepend(migration_blockers[mode],
-+                                                           *reasonp);
-+            }
-         }
-     }
-     return 0;
-
-
->=20
-> * Otherwise it looks okay.
-> Reviewed-by: Prasad Pandit <pjp@fedoraproject.org>
->=20
-> Thank you.
+On 10/02/2026 22.39, Ilya Leoshkevich wrote:
+> Currently parts_round_to_int_normal() assumes that its input has just
+> been unpacked and therefore doesn't expect non-zero fraction bits past
+> target precision.
+> 
+> The upcoming DIVIDE TO INTEGER use cases needs it to support
+> calculations on intermediate values that utilize all fraction bits,
+> while at the same time restricting the result's precision to frac_size.
+> 
+> Delete the "All integral" check, because even though really large
+> values are always integer, their low fraction bits still need to be
+> truncated. For the same reason, make sure rnd_mask covers at least
+> fraction bits past target precision.
+> 
+> Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
 > ---
->  - Prasad
->=20
+>   fpu/softfloat-parts.c.inc | 12 ++++++------
+>   1 file changed, 6 insertions(+), 6 deletions(-)
+> 
+> diff --git a/fpu/softfloat-parts.c.inc b/fpu/softfloat-parts.c.inc
+> index 5e0438fc0b7..79b56014ab9 100644
+> --- a/fpu/softfloat-parts.c.inc
+> +++ b/fpu/softfloat-parts.c.inc
+> @@ -1118,11 +1118,6 @@ static bool partsN(round_to_int_normal)(FloatPartsN *a, FloatRoundMode rmode,
+>           return true;
+>       }
+>   
+> -    if (a->exp >= frac_size) {
+> -        /* All integral */
+> -        return false;
+> -    }
+> -
+>       if (N > 64 && a->exp < N - 64) {
+>           /*
+>            * Rounding is not in the low word -- shift lsb to bit 2,
+> @@ -1132,8 +1127,13 @@ static bool partsN(round_to_int_normal)(FloatPartsN *a, FloatRoundMode rmode,
+>           frac_shrjam(a, shift_adj);
+>           frac_lsb = 1 << 2;
+>       } else {
+> +        /*
+> +         * Rounding is in the low word -- compute the lsb offset for rounding
+> +         * and for clamping to the target precision, then map it to an offset
+> +         * within frac_lo.
+> +         */
+>           shift_adj = 0;
+> -        frac_lsb = DECOMPOSED_IMPLICIT_BIT >> (a->exp & 63);
+> +        frac_lsb = DECOMPOSED_IMPLICIT_BIT >> (MIN(a->exp, frac_size) & 63);
+>       }
+>   
+>       frac_lsbm1 = frac_lsb >> 1;
+
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
