@@ -4,113 +4,169 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C958AEE3698
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 14:54:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9783AEE3691
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 14:54:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqXvI-0005ms-4H; Thu, 12 Feb 2026 09:44:04 -0500
+	id 1vqY21-00026Q-Ew; Thu, 12 Feb 2026 09:51:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vqXv0-0005OI-K0
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 09:43:48 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
+ id 1vqY1z-00025T-Et; Thu, 12 Feb 2026 09:50:59 -0500
+Received: from mail-westusazlp170120002.outbound.protection.outlook.com
+ ([2a01:111:f403:c001::2] helo=SJ2PR03CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vqXuv-000672-3c
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 09:43:46 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770907417;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=JGOT1h5ESN0Qld+a/yHoOKPmD7wsqNv5O1QINCuR2Ao=;
- b=AEycS5IC0jhGM4enDd7z26IW78K7ew+UiDiujWtvlLxV61xNBlznjv9YYY6Ro/bTWIwOSJ
- ZsAVt0qw5wy/ZnCM4GhO4yVo2wux1gj3mjpHk/H4Ah80LzofwezjfgW+PbS0lpIFMz+751
- VpKFx0u37ABT3Jbbq+o3xMlG52m+Ly4=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-573-_6xVKlXaN8GRzVcnZdoZ5Q-1; Thu, 12 Feb 2026 09:43:36 -0500
-X-MC-Unique: _6xVKlXaN8GRzVcnZdoZ5Q-1
-X-Mimecast-MFC-AGG-ID: _6xVKlXaN8GRzVcnZdoZ5Q_1770907415
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4831192e66aso70114355e9.2
- for <qemu-devel@nongnu.org>; Thu, 12 Feb 2026 06:43:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1770907414; x=1771512214; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=JGOT1h5ESN0Qld+a/yHoOKPmD7wsqNv5O1QINCuR2Ao=;
- b=O7FZGCv3h3932NIxmf1WDcAUkz8xVHQIBvuz/5htS77Og9750OJDevJwcI6rBhfp1D
- 4rMT1y4IkXyfkdTQiDLtAVB1fkMuu81oEyxvJbMrlFOnNOnzMFqv1I2WHHPq/TCE/Qi3
- rBvA99Opqdox8V4WZRhmlEEtHFAbUPBKZm+J5ctdGN+weJpi2i9E/dzoV3PhL1IZdwAf
- 61hJ/yCd9q62FmI2VwG1JWpcfmPcZ8KuLpmGRHR3KiCuJKGecJnVWKqEZxPmZGuYNAD5
- ZYQ8SszQP2YB5ftx4P0hAFnVrgCUMO7sj/ydF9Wz9JaruDG/aFJKNxz6nYTCafiHVt0U
- //Qg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770907414; x=1771512214;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=JGOT1h5ESN0Qld+a/yHoOKPmD7wsqNv5O1QINCuR2Ao=;
- b=pzKr8pPW58XNUP5nwcjemvCTXlRVzN2GH+TKNluRSLq2Xp9W0P2xEz/sybS6yk5gCW
- e1xIGItPH26Y+fbNU0SgepSr4ug9WXtGNgjIvo2ScBc9f7Ksdcn1fXiQnxbrOyBviBMz
- 5paPLild4gzv5QFcbAKVIzTJW7rRHtfXDXNNUdqom28ubR1Be+69W1dOtNLUHWvUSsH/
- Zs1GPRwJsRqGavEdMehacmf6lSp+YYJieswsA9AYW45lPM5CsawJnNT88ec/GfH8OD00
- NpmNtFTBBOeIgfLsXI0sKbFpEU/GNwU8S7qXI7QSHLv06/PFOPmaGAeeck0+PR35vicZ
- sUyw==
-X-Gm-Message-State: AOJu0YwNPJ2OsDZgscYIS/QTVsOA+gEBrVDRRTev4r/cvy/Tl3RyAhR3
- tOzzUFXho7mAcp1I0CamZQ79j5Gfzf01pKr51FBEhGRMUJ3a+ycLeNXugIxRAG64dyikzmfc9IN
- nBBmFwbUMkeStwcXwUEN1JfiOefb2WvZzZiRFZRL8B/kidTi7t61O628DpClpJpr4sCBC5XT8kn
- FWVPBV4sFeYjpy4gvdepDhFTfffXzVoW/zcc0h5hHB
-X-Gm-Gg: AZuq6aKcimJyOlGwgx5MmvX9CThN6IdTObwv2DNYL43bebnesCpZ6TDOmYeE89W7vhL
- Nt5LrION2SGiSPV7Xsfcjkl4uUPv+YmuruCfZ/LxDLNofY+rBgIcYOw8BKjkbHOn8kVgbDQpHNd
- RaRj9tlnTJGOS/FDhH6Ofc+8hatA+RW9ZjKGIK+kG0eEYsiFWzFZLDNpiVl/ZERzfbhI3X67KyO
- 2UiwBXtUJlmDl7u4XKfMr9aSyqQHGINn6NVr/2Kgjh5aCYQ4u4SbI7JneaCwaHdbKc3U/wyqSQS
- A7MA6dD+PKlA7FoN1QPQQia6jBHaTDGCR+CkC5ot5uNt5i5ayVx46Ilmp4iuJeXcSA1ln+XnDSk
- noOfeFIgSJ6AvQ1fkFFzl9e9KmqHu53B2s8mZSHpxCn1+J/zcq4j+vIFldRVCzxWiQduOFYPgfL
- 7AQqO6z3/GbLSfpGBuPwOXzI9oXJ8zgSf1F3z2pRmHlrwrUas+quE=
-X-Received: by 2002:a05:600c:8411:b0:477:9dc1:b706 with SMTP id
- 5b1f17b1804b1-4836570df2fmr36711235e9.19.1770907414414; 
- Thu, 12 Feb 2026 06:43:34 -0800 (PST)
-X-Received: by 2002:a05:600c:8411:b0:477:9dc1:b706 with SMTP id
- 5b1f17b1804b1-4836570df2fmr36710765e9.19.1770907413870; 
- Thu, 12 Feb 2026 06:43:33 -0800 (PST)
-Received: from [10.60.241.123] (nat-pool-mxp-t.redhat.com. [149.6.153.186])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4835d9946dcsm106794215e9.5.2026.02.12.06.43.32
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 12 Feb 2026 06:43:32 -0800 (PST)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Mark Cave-Ayland <mark.caveayland@nutanix.com>,
- Thomas Huth <thuth@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
- Igor Mammedov <imammedo@redhat.com>
-Subject: [PULL 21/41] hw/i386/pc: Remove deprecated pc-q35-2.7 and
- pc-i440fx-2.7 machines
-Date: Thu, 12 Feb 2026 15:42:23 +0100
-Message-ID: <20260212144244.22579-22-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260212144244.22579-1-pbonzini@redhat.com>
-References: <20260212144244.22579-1-pbonzini@redhat.com>
+ (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
+ id 1vqY1x-0000IG-HK; Thu, 12 Feb 2026 09:50:59 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=X1iSEooNKroZIwmx++GZatE5XFqUUPxgjveBHibEwEXAeQqCBVuwpYeng+925ruXFBxG7A+IfAOiL9h2Xeba0E+u4XrUhcfqx4Wg4reeF+kdWc03XT4YYf4FsdaIK6WkbLmspm2TNCKaRAlzwlWRgvoi2mlfx+RgRR/KtcNT3BBk3XomjwjTTfSw3o32171WzB1wRiSX56ZD3DPh1DbB7Q2GOvRqzRR8P/yp49VognNGNfftngL7aKlohWkBTqcK/INmYUhfYk/4L0ADjDEUdK+QjA93WDqxnjkwD8188NJwCrabxInm9lLwCGwXw0S/cC2ye9PESvFfsl25PPes7w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=bs8K9V5ze+op3AJsDSGSKG8BUfuW/hF8VlJJAolBz7k=;
+ b=Cq7wIn5mTQnsx247Cz4gPrM2Obbvr/4sq491zzotUWZlWqMjbIrW0ch3J2/ZLQpk8q7VXIuiQHA5ntfrbUmVUMDAl+7TMMNkkrDouQAIT+E2twGc6Oiy/zoihvsDf3v1kQXDQcLse8O1ESa0efaqWRuwnHJb8U07HFc7Pa/AdM7NUlDnnGUc6b7kGnVY8+8EmkYTQnx2dPauQg3x8g++rBTfBw9KwoWneb0Ge4p+S7Q+XII95O6sR72OAdVhRNvFlpR/FDsADK5IU1FM5oZHnGR9wXu1FJGV+p67vzj2GUZ1rY0YqXHTyNOqAOmqjmVlWsKXonhySvbqqeqaDlbdzg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=bs8K9V5ze+op3AJsDSGSKG8BUfuW/hF8VlJJAolBz7k=;
+ b=p66aYCtfOKly8duXL0iiJX244EtFxbz4FkEqTW9buFAg9INqd8Q1zAKyJqLflzuIzc0ttyKdddbB9RaFvo5whM7hZhcjuVfrNbo4WbgdWF9meSmi7iHKAUCnpxNlbBy46chVeIstHSPVXNrK6v4krIC7Aiw5460+iHEfIkeu3GKK9LewSAX8Ux8if2YTgEcl6lohyp18jOy5m5pb4Zsuakgz+MD7tyDfaJ56H2xt7CZAJQUa4SdqgwDHkeCxGsBQnf1QBio+3WvQjRLMAbHrqEfWy61C3gJv+VpFRe9tMq9OeKIGPif/oqrLBpaoAFO/qi9LvSvM6MlfXj9C5jEk1Q==
+Received: from CH3PR12MB7548.namprd12.prod.outlook.com (2603:10b6:610:144::12)
+ by BN7PPFEE0F400A9.namprd12.prod.outlook.com
+ (2603:10b6:40f:fc02::6e9) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9611.10; Thu, 12 Feb
+ 2026 14:50:49 +0000
+Received: from CH3PR12MB7548.namprd12.prod.outlook.com
+ ([fe80::b710:d6a1:ab16:76de]) by CH3PR12MB7548.namprd12.prod.outlook.com
+ ([fe80::b710:d6a1:ab16:76de%5]) with mapi id 15.20.9611.008; Thu, 12 Feb 2026
+ 14:50:49 +0000
+From: Shameer Kolothum Thodi <skolothumtho@nvidia.com>
+To: "eric.auger@redhat.com" <eric.auger@redhat.com>, Nicolin Chen
+ <nicolinc@nvidia.com>
+CC: "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>, "peter.maydell@linaro.org"
+ <peter.maydell@linaro.org>, "clg@redhat.com" <clg@redhat.com>,
+ "alex@shazbot.org" <alex@shazbot.org>, Nathan Chen <nathanc@nvidia.com>, Matt
+ Ochs <mochs@nvidia.com>, Jiandi An <jan@nvidia.com>, Jason Gunthorpe
+ <jgg@nvidia.com>, "jonathan.cameron@huawei.com"
+ <jonathan.cameron@huawei.com>, "zhangfei.gao@linaro.org"
+ <zhangfei.gao@linaro.org>, "zhenzhong.duan@intel.com"
+ <zhenzhong.duan@intel.com>, Krishnakant Jaju <kjaju@nvidia.com>
+Subject: RE: [PATCH v2 05/24] hw/arm/smmuv3-accel: Introduce CMDQV ops
+ interface
+Thread-Topic: [PATCH v2 05/24] hw/arm/smmuv3-accel: Introduce CMDQV ops
+ interface
+Thread-Index: AQHcl3fclJVY+/1eUEyrJW1egg4NVbV6yXyAgADQx/CAA5IqgIAAAY3g
+Date: Thu, 12 Feb 2026 14:50:49 +0000
+Message-ID: <CH3PR12MB7548F06A2BB9C009FD2043F2AB60A@CH3PR12MB7548.namprd12.prod.outlook.com>
+References: <20260206144823.80655-1-skolothumtho@nvidia.com>
+ <20260206144823.80655-6-skolothumtho@nvidia.com>
+ <aYo4n4N3dW1OLzTk@Asurada-Nvidia>
+ <CH3PR12MB75483C2BA4EDC24CA0F78A4CAB62A@CH3PR12MB7548.namprd12.prod.outlook.com>
+ <46d3b859-6e05-4c03-8e77-0aa76629f772@redhat.com>
+In-Reply-To: <46d3b859-6e05-4c03-8e77-0aa76629f772@redhat.com>
+Accept-Language: en-US, en-GB
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: CH3PR12MB7548:EE_|BN7PPFEE0F400A9:EE_
+x-ms-office365-filtering-correlation-id: 56553eeb-027b-4968-990e-08de6a461c86
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|366016|1800799024|376014|38070700021|7053199007; 
+x-microsoft-antispam-message-info: =?us-ascii?Q?jwdhDxSh5O9jTMza5LX1nCr8OV0ntypXwu5GSrizOZdxNUtxiibcecUDnFLi?=
+ =?us-ascii?Q?+DH9rpOq9aukNpi1gmfs2IhALjmhirqlY4W1BXMwNkY3/q1QuXo7+Xeskuyv?=
+ =?us-ascii?Q?Ev3bl4fFDB1itWwk79KF8jjJ4i7z2Oh4sWp3G9mkHaCQsCRiijsrE1Dh5YXj?=
+ =?us-ascii?Q?m7iCRiEpzDv6Dog8Ke5V+lHxNzbwAB23Pms+/ala35NEeTtWPAVZl2qAjCtP?=
+ =?us-ascii?Q?27nAEGDGpEWa6YUwDlEx5/Zgjv1sEs87o9aDNQfx8CIVY+ZezJedQjFHJ3DB?=
+ =?us-ascii?Q?rAE+ITaiD7mAxiE48t+ryYdf+PdPgMnQMXpSYVpDrIMx3JTEqd8BqNu4HXUc?=
+ =?us-ascii?Q?qoACVN9Gcthvs0Qga/N91DqqgoGuon4hv3DpUfw7/pTttpoBganQCSBRkDwp?=
+ =?us-ascii?Q?jdj28wPZ4psI9UoF4g5EtTj6meabc20yHUlybd+8z3hDMlc0VzXhDwFvSeeV?=
+ =?us-ascii?Q?xsvWaahjrKXsrM2yZhWNR+yUFZkgQ1TZMUNMnTWAZyscRlEJUh1KvY+/VBXg?=
+ =?us-ascii?Q?Z5i0h4TMlrEOfV+89wTR9R78BroD9RlsyOmYDc97yYENVd80Fnv1tENyyDOS?=
+ =?us-ascii?Q?PF02Sj1IT7pxtdj3q88/KeUZuBq0+l1SGiJasKnf1a3jx0UPf6njlV19U4In?=
+ =?us-ascii?Q?L9+QXrYJoSM5j6JZqduq1SRmhYcZqnEZcH6UieoyTFPDP6/0NokVmjigaF29?=
+ =?us-ascii?Q?dV3zX6kvgc6H7BHOgzW/TiF/CVGahP93aZZ5h+T4FefsdohGXWb2juBJl+Su?=
+ =?us-ascii?Q?EEj+4LEKbSjcbDgqrSO7sqRV0SNZNZuoHTy1FP5eoc86XYYhJ9qpPY0R1/iP?=
+ =?us-ascii?Q?KBx8bd+jPSV+vaNkbsSXDiSFhF2WaoNV2B9Ae9riEX+Uw7E02TYi9lWGuDYA?=
+ =?us-ascii?Q?J4AfxEVT6ThagyFqMxoEE+FHRX7KqEMo7Quix6/Wm4yihKr6mpbWl+nTZdS9?=
+ =?us-ascii?Q?UNGDAQ+nyuf31XQdQCDaqGJU/nmPbu6we3Yhr51O4t/LMM+4pgJuZGBtPF7r?=
+ =?us-ascii?Q?6Qw0vtgTVD57/kuIVHlv8LTMDhQ6J+iJTHP/sbjP1FQkJ69DpHLnO6vLqgQ2?=
+ =?us-ascii?Q?WA0HadNEgyx0R7IQXmCfBsv3DBoMFt4ElbmoZtcdtuvYYgr539Pk2cpvavue?=
+ =?us-ascii?Q?Zvj5lv9aIjVqTuMHTdGWz5y7YfBcQDMb1xmHnaVD+QewzHBr3NYO3qcSATYs?=
+ =?us-ascii?Q?95B6egsjVZhCtXTk7I1FoZ4YcY0rFhS4r9KgC0Zcn26+d7gpwu5I7gx1NwC9?=
+ =?us-ascii?Q?pthf9G1S6qMXbKRXX2zxsL6eS0vl+XCHwAZE/fhk+hSSUmuvDRo74+vMDgOy?=
+ =?us-ascii?Q?XdTefiPDLBfLlw6a40cQB8lYOhh5mcwIXpPpUgEfvpM1MPO5Ch5jy83Zo1M4?=
+ =?us-ascii?Q?YUzi5Q991JDWKz+81Giq1fbOW1jwrs2L4ilL3FQXC44KD7djSfHMWaHy7nie?=
+ =?us-ascii?Q?MIjvQXYehKDCfMa/KDtJseZbh8JPtCN5Etmj0WmDi5NTWUW9KaVscqAcCMdc?=
+ =?us-ascii?Q?Tlsbeae+bhr+QXfRh2p8m6JvQkZTmU9nCRODv1XMnzdAqq5Q2CcRstoG7Zsl?=
+ =?us-ascii?Q?6bVdHL4fJ6F55SprFOmkuT8H3vmTlvR709QTUDkfN9VyfUOFrBNMw+VP5s3M?=
+ =?us-ascii?Q?j2eWz1gtlLx4auPKle0YmT0=3D?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:CH3PR12MB7548.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(1800799024)(376014)(38070700021)(7053199007); DIR:OUT;
+ SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?PAtQPGGqeo5ZANwFeFwYODdN938c19KZLV6yfGgxJvD8ojFkujudqrZ35JUS?=
+ =?us-ascii?Q?XMgf1ufl2Z0aLr+lKqwUoHiz8iTligfbgogYrQyednsJL9BemdetIROrfIY9?=
+ =?us-ascii?Q?4/frf27R7Qtz2hs4FasMykO3OSdZZOwVzzCQuX5/quD/DWhQZJ75+8KBkv1R?=
+ =?us-ascii?Q?VRQx+hnK7Q2e42Am4xV8nBMSvFHkfKo0Mh3zxlxYQ+usnwv4fyonX2Ka4cEe?=
+ =?us-ascii?Q?AnFH8UziyHcL8D6Qf+Zu10rIWGdyS4ieQqEPOmbaqgh5yuk5KD6xHuwTxX20?=
+ =?us-ascii?Q?1BoQnJ0yo1iTnkyp0W2KpjBXDa4p+b+FaVpLfSBJ7Y8wQm2Q81ZGQWWdf5KZ?=
+ =?us-ascii?Q?9tsusgHmB67gmDcGeNU63ogcLqXuqdRQ6uD4Ss4VYpAx1IVduKJaReWdM8O1?=
+ =?us-ascii?Q?JOb5ocQAzphhXMDEk+McnoiTZp+Zna44Q9C3JfJRAJHsTZ7d8QKx5yCWbzpw?=
+ =?us-ascii?Q?eGaAlBSEgudRdg6U7AabEaJA1OuKl667DG8IhWuJ/dD6kco6hmdvRip8Yo0L?=
+ =?us-ascii?Q?WLHM7HmJfqH1acOCo5qQn6pb7ShvB6pK87p7s2X3o+qVgfrfRFh4Q40y7bwu?=
+ =?us-ascii?Q?LlBveStF2JCtW9dAQyIGEO0cGu9B5ayW7Y0LIoQ57x3EFUnHzB01p5RK1zCp?=
+ =?us-ascii?Q?PMfq+KKbaOXgl/3PZC8HD5F/QRf5vFYv/L99/5vROavrB8kJqRA8tCC4gTiq?=
+ =?us-ascii?Q?cOWfBr8b2UKykh5lVW0X4rYYQZy38jULz2xCbeHU3bPzcdwkGzk39BiV4dUr?=
+ =?us-ascii?Q?+UYj2OhHt+sShPT0AmDqJqpU+FJnU8c2ZeHtNK+Cn4K3f/kM97NFu5TpEd3T?=
+ =?us-ascii?Q?pTELzTHeGHCNr7Mt7wn87nqAtMYGrkl9L3pPCue02fZP1OsQuMh3NyPF9VGI?=
+ =?us-ascii?Q?b1oDWYI+XyL1IcL2eu4WJzZ6yt43eyNa5Ti4MHcYQmKPUy4pYoxAawHCPfV8?=
+ =?us-ascii?Q?xH2emETbK498DvGWg7osRs7aNA1+eF11lW6svqt8YaQu5Phgx9uDGytgNOpg?=
+ =?us-ascii?Q?bg0e8wb+z+v0epOx341evhIkZoJLu/1v9l75t1qH3xiWo8Fl6E+YatL7tw5Q?=
+ =?us-ascii?Q?Jju3mPL6XJ3Ht+BgBAqYDw3TZzadYSg7VZSODX3RMURPuKpMCKXEbxWLTT6E?=
+ =?us-ascii?Q?v5MMR7zL8v3qxSaUflaLpb1iTaTpwAZf5/kraU87G1diCXY2+cYAJUP0FsV7?=
+ =?us-ascii?Q?q3s/i65vy+E1lCcjQuRFFWtqq1Um7vpUsqHsS5GrynRtxQRf9pLEKqO2joix?=
+ =?us-ascii?Q?rrOUzRKaztrXnijJFUhGqie5af1XX9Cc4P40KAnPxeGRtExeGpsP9j15Ugy0?=
+ =?us-ascii?Q?UAHn8muOhgoHpmLBdbPlPMVEADIDlGbTljCRyyQ3uQWrnkwXHG1crg1TB3/n?=
+ =?us-ascii?Q?oy7pzMrWAcLFAsAl0QwO3FfMamL3hvuzylHXd2atgzSsK0QABgCKB4AcGoRh?=
+ =?us-ascii?Q?UX6nNzm5LINoDpERPUDx3xVn0XKJzqaid5xA+EJM4818r5bYCaoQApjoiURT?=
+ =?us-ascii?Q?yEy9gNt5Ni0RWGNI0VRwZ3EpJKvQ6hTtquo9okBvhU5qRkyjhqB6S1G6V+dL?=
+ =?us-ascii?Q?ueKvRaZtyfHMT7CBDSJK655wNN3hzMai4x17m3BIr4muiWYK+sf7aNR6zz3w?=
+ =?us-ascii?Q?aU0NIt4c6y5Cn0QLBxB/U+mpTdN+TxSdJQIRlaiFleGCwHVk9cAX3DaNh6hY?=
+ =?us-ascii?Q?JDgu1nD7j5UVe7QD6yNB6ZbSoCuBWKfe9A7RtVq35I4JbW1ClLwtjnSp5DFY?=
+ =?us-ascii?Q?Hl+XGXTamQ=3D=3D?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB7548.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 56553eeb-027b-4968-990e-08de6a461c86
+X-MS-Exchange-CrossTenant-originalarrivaltime: 12 Feb 2026 14:50:49.1928 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: vNUm4KnhxeprWgaqqpXypihIE2ex4fdw8iz+Ui8RqcMvEg9mD996dNBnAa4tCc1dPd9qOquoiUjti2pqDnTLcg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN7PPFEE0F400A9
+Received-SPF: permerror client-ip=2a01:111:f403:c001::2;
+ envelope-from=skolothumtho@nvidia.com;
+ helo=SJ2PR03CU001.outbound.protection.outlook.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,89 +182,118 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+Hi Eric,
 
-These machines has been supported for a period of more than 6 years.
-According to our versioned machine support policy (see commit
-ce80c4fa6ff "docs: document special exception for machine type
-deprecation & removal") they can now be removed.  Remove the qtest
-in test-x86-cpuid-compat.c file.
+> -----Original Message-----
+> From: Eric Auger <eric.auger@redhat.com>
+> Sent: 12 February 2026 14:42
+> To: Shameer Kolothum Thodi <skolothumtho@nvidia.com>; Nicolin Chen
+> <nicolinc@nvidia.com>
+> Cc: qemu-arm@nongnu.org; qemu-devel@nongnu.org;
+> peter.maydell@linaro.org; clg@redhat.com; alex@shazbot.org; Nathan Chen
+> <nathanc@nvidia.com>; Matt Ochs <mochs@nvidia.com>; Jiandi An
+> <jan@nvidia.com>; Jason Gunthorpe <jgg@nvidia.com>;
+> jonathan.cameron@huawei.com; zhangfei.gao@linaro.org;
+> zhenzhong.duan@intel.com; Krishnakant Jaju <kjaju@nvidia.com>
+> Subject: Re: [PATCH v2 05/24] hw/arm/smmuv3-accel: Introduce CMDQV ops
+> interface
+>=20
+> External email: Use caution opening links or attachments
+>=20
+>=20
+> On 2/10/26 9:46 AM, Shameer Kolothum Thodi wrote:
+> >
+> >> -----Original Message-----
+> >> From: Nicolin Chen <nicolinc@nvidia.com>
+> >> Sent: 09 February 2026 19:42
+> >> To: Shameer Kolothum Thodi <skolothumtho@nvidia.com>
+> >> Cc: qemu-arm@nongnu.org; qemu-devel@nongnu.org;
+> >> eric.auger@redhat.com; peter.maydell@linaro.org; clg@redhat.com;
+> >> alex@shazbot.org; Nathan Chen <nathanc@nvidia.com>; Matt Ochs
+> >> <mochs@nvidia.com>; Jiandi An <jan@nvidia.com>; Jason Gunthorpe
+> >> <jgg@nvidia.com>; jonathan.cameron@huawei.com;
+> >> zhangfei.gao@linaro.org; zhenzhong.duan@intel.com; Krishnakant Jaju
+> >> <kjaju@nvidia.com>
+> >> Subject: Re: [PATCH v2 05/24] hw/arm/smmuv3-accel: Introduce CMDQV
+> ops
+> >> interface
+> >>
+> >> On Fri, Feb 06, 2026 at 02:48:04PM +0000, Shameer Kolothum wrote:
+> >>> CMDQ-Virtualization (CMDQV) is a hardware extension to SMMUv3 that
+> >> enables
+> >>> virtualization of multiple command queues (VCMDQs).
+> >> Let's mention "NVIDIA", noting it's a non-standard extension.
+> > The idea of this ops based callback is to make it more generic and not
+> > NVIDIA specific to start with. This leaves room in case ARM introduces
+> > a standardised version of something similar in the future, or if anothe=
+r
+> > vendor provides a similar extension.
+> >
+> >>> CMDQV support is a specialization of the IOMMUFD backed accelerated
+> >>> SMMUv3 path. Introduce an ops interface to factor CMDQV specific
+> >>> initialization and CMDQV vIOMMU/vEVENTQ allocation behavior out of
+> >>> the base implementation. The ops pointer and associated state are
+> >>> stored in the accelerated SMMUv3 state.
+> >>>
+> >>> No functional change
+> >>>
+> >>> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
+> >>> ---
+> >>>  hw/arm/smmuv3-accel.h | 19 +++++++++++++++++++
+> >>>  1 file changed, 19 insertions(+)
+> >>>
+> >>> diff --git a/hw/arm/smmuv3-accel.h b/hw/arm/smmuv3-accel.h
+> >>> index c9c10e55c3..ca087240e5 100644
+> >>> --- a/hw/arm/smmuv3-accel.h
+> >>> +++ b/hw/arm/smmuv3-accel.h
+> >>> @@ -16,6 +16,23 @@
+> >>>  #endif
+> >>>  #include CONFIG_DEVICES
+> >>>
+> >>> +/*
+> >>> + * CMDQ-Virtualization (CMDQV) hardware support, extends the
+> SMMUv3
+> >> to
+> >>> + * support multiple VCMDQs with virtualization capabilities.
+> >> Ditto
+> >>
+> >>> + * CMDQV specific behavior is factored behind this ops interface.
+> >>> + */
+> >>> +typedef struct SMMUv3AccelCmdqvOps {
+> >>> +    bool (*init)(SMMUv3State *s, Error **errp);
+> >>> +    bool (*alloc_viommu)(SMMUv3State *s,
+> >>> +                         HostIOMMUDeviceIOMMUFD *idev,
+> >>> +                         uint32_t *out_viommu_id,
+> >>> +                         Error **errp);
+> >>> +    void (*free_viommu)(SMMUv3State *s);
+> >> I don't see much value of having alloc/free_viommu..
+> >>
+> >> Type and data structure are the only difference from the standard
+> >> viommu routine, and both are already in the uAPI header.
+> > That is right. But again, this is mainly to keep the interface generic.
+> > IIUC, Eric had suggested, using an ops or object style abstraction
+> > to separate extension specific behaviour from the core code.
+>=20
+> My initial thought was callbacks to specialize implementation for accel
+> smmu without vcmdq versus accel smmu with vcmdqs. Effectively we could
+> later imagine to have other implementations with vcmdqs but it is
+> difficult to guess the specialization needs at that stage. I think in
+> the original series you already add the first kind of differentiation.
+>=20
+> At least reset and init need to be specialized.
+>=20
+> Maybe alloc_viommu does not need to because the differentiation only
+> happens on the type arg. But originally you where also turning off
+>=20
+> s->tegra241_cmdqv if IOMMU_VIOMMU_TYPE_TEGRA241_CMDQV failed so
+> I had
+> the impression you reverted to a fallback impl. If there is
+> specialization, I still think ops are relevant. Eric
 
-Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-Reviewed-by: Igor Mammedov <imammedo@redhat.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-Link: https://lore.kernel.org/r/20260108033051.777361-21-zhao1.liu@intel.com
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- hw/i386/pc_piix.c                   |  9 ---------
- hw/i386/pc_q35.c                    | 10 ----------
- tests/qtest/test-x86-cpuid-compat.c | 11 -----------
- 3 files changed, 30 deletions(-)
+There is no fallback implementation. So just to confirm, you are suggesting
+to remove the ops completely or just keep the ops for reset/init only?
 
-diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
-index 9efb42ad055..f9e0bca9743 100644
---- a/hw/i386/pc_piix.c
-+++ b/hw/i386/pc_piix.c
-@@ -723,15 +723,6 @@ static void pc_i440fx_machine_2_8_options(MachineClass *m)
- 
- DEFINE_I440FX_MACHINE(2, 8);
- 
--static void pc_i440fx_machine_2_7_options(MachineClass *m)
--{
--    pc_i440fx_machine_2_8_options(m);
--    compat_props_add(m->compat_props, hw_compat_2_7, hw_compat_2_7_len);
--    compat_props_add(m->compat_props, pc_compat_2_7, pc_compat_2_7_len);
--}
--
--DEFINE_I440FX_MACHINE(2, 7);
--
- #ifdef CONFIG_XEN
- static void xenfv_machine_4_2_options(MachineClass *m)
- {
-diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
-index 6dd1120c004..9158631f761 100644
---- a/hw/i386/pc_q35.c
-+++ b/hw/i386/pc_q35.c
-@@ -670,13 +670,3 @@ static void pc_q35_machine_2_8_options(MachineClass *m)
- }
- 
- DEFINE_Q35_MACHINE(2, 8);
--
--static void pc_q35_machine_2_7_options(MachineClass *m)
--{
--    pc_q35_machine_2_8_options(m);
--    m->max_cpus = 255;
--    compat_props_add(m->compat_props, hw_compat_2_7, hw_compat_2_7_len);
--    compat_props_add(m->compat_props, pc_compat_2_7, pc_compat_2_7_len);
--}
--
--DEFINE_Q35_MACHINE(2, 7);
-diff --git a/tests/qtest/test-x86-cpuid-compat.c b/tests/qtest/test-x86-cpuid-compat.c
-index 456e2af6657..5e0547e81b7 100644
---- a/tests/qtest/test-x86-cpuid-compat.c
-+++ b/tests/qtest/test-x86-cpuid-compat.c
-@@ -345,17 +345,6 @@ int main(int argc, char **argv)
- 
-     /* Check compatibility of old machine-types that didn't
-      * auto-increase level/xlevel/xlevel2: */
--    if (qtest_has_machine("pc-i440fx-2.7")) {
--        add_cpuid_test("x86/cpuid/auto-level/pc-2.7",
--                       "486", "arat=on,avx512vbmi=on,xsaveopt=on",
--                       "pc-i440fx-2.7", "level", 1);
--        add_cpuid_test("x86/cpuid/auto-xlevel/pc-2.7",
--                       "486", "3dnow=on,sse4a=on,invtsc=on,npt=on,svm=on",
--                       "pc-i440fx-2.7", "xlevel", 0);
--        add_cpuid_test("x86/cpuid/auto-xlevel2/pc-2.7",
--                       "486", "xstore=on", "pc-i440fx-2.7",
--                       "xlevel2", 0);
--    }
-     if (qtest_has_machine("pc-i440fx-2.9")) {
-         add_cpuid_test("x86/cpuid/auto-level7/pc-i440fx-2.9/off",
-                        "Conroe", NULL, "pc-i440fx-2.9",
--- 
-2.52.0
+Thanks,
+Shameer
 
 
