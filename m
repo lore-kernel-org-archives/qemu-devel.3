@@ -4,95 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 786D1EE3696
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C958AEE3698
 	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 14:54:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqXvs-00077S-Av; Thu, 12 Feb 2026 09:44:40 -0500
+	id 1vqXvI-0005ms-4H; Thu, 12 Feb 2026 09:44:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vqXvW-0006GE-7m
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 09:44:18 -0500
+ id 1vqXv0-0005OI-K0
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 09:43:48 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vqXvT-0006HG-Q0
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 09:44:17 -0500
+ id 1vqXuv-000672-3c
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 09:43:46 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770907455;
+ s=mimecast20190719; t=1770907417;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=fQVJ9LSUskFrc7hUqy6BdTg9X2ZnsHe1rHSqlbLzkvM=;
- b=hJJvu666UVQEZXo5D76R4Oy1fDbEbZ7mAn2X7opZthMYAJgymxjGME9xM7ptzNIbAKy6EV
- erxlgNi3avKVJtRQlgbtriwsQaOLvehLPR+JZT8psQqQAdoiVmVu394oi1xUrSm7FPyLjZ
- /aAOObt6Rmn0oEgVQmJ/iXxYlLSJV4o=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=JGOT1h5ESN0Qld+a/yHoOKPmD7wsqNv5O1QINCuR2Ao=;
+ b=AEycS5IC0jhGM4enDd7z26IW78K7ew+UiDiujWtvlLxV61xNBlznjv9YYY6Ro/bTWIwOSJ
+ ZsAVt0qw5wy/ZnCM4GhO4yVo2wux1gj3mjpHk/H4Ah80LzofwezjfgW+PbS0lpIFMz+751
+ VpKFx0u37ABT3Jbbq+o3xMlG52m+Ly4=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-113-AJoXVwE5Ol-QfL5vU7IsNQ-1; Thu, 12 Feb 2026 09:44:13 -0500
-X-MC-Unique: AJoXVwE5Ol-QfL5vU7IsNQ-1
-X-Mimecast-MFC-AGG-ID: AJoXVwE5Ol-QfL5vU7IsNQ_1770907452
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-43591aacca2so2610104f8f.1
- for <qemu-devel@nongnu.org>; Thu, 12 Feb 2026 06:44:13 -0800 (PST)
+ us-mta-573-_6xVKlXaN8GRzVcnZdoZ5Q-1; Thu, 12 Feb 2026 09:43:36 -0500
+X-MC-Unique: _6xVKlXaN8GRzVcnZdoZ5Q-1
+X-Mimecast-MFC-AGG-ID: _6xVKlXaN8GRzVcnZdoZ5Q_1770907415
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4831192e66aso70114355e9.2
+ for <qemu-devel@nongnu.org>; Thu, 12 Feb 2026 06:43:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1770907450; x=1771512250; darn=nongnu.org;
+ d=redhat.com; s=google; t=1770907414; x=1771512214; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=fQVJ9LSUskFrc7hUqy6BdTg9X2ZnsHe1rHSqlbLzkvM=;
- b=aB+gWfBg4jlW19ff8r4iU31BXmnu73Dqryhv1myK0ue66nosrDx0ZDrd0b31sMc1b0
- 88HNj1UA2VtHnBsQUGOXqECjpWq8kXYjSqWlCEK8jrxh3TTwDQ4blg8fE6SVAf32HW4r
- R6lrWwt1IsqoeaTLM9x7bu69mAMFslI2aNh20MyGgk3qPdB/STN4h+bXB34PZEergisZ
- j/8wDfaEi0+yXrl1+sPHhJv+kNLwS5/F7/ruvLB1iOoVyrYqEN9+86wI5oPkto8zoZan
- ThaNsAa/4T7hL55FGSR2+T9UYsp6DivFjxPuMaQGbKuzw+eyWq7oJanTW9jE8oNCWFZJ
- rBZA==
+ bh=JGOT1h5ESN0Qld+a/yHoOKPmD7wsqNv5O1QINCuR2Ao=;
+ b=O7FZGCv3h3932NIxmf1WDcAUkz8xVHQIBvuz/5htS77Og9750OJDevJwcI6rBhfp1D
+ 4rMT1y4IkXyfkdTQiDLtAVB1fkMuu81oEyxvJbMrlFOnNOnzMFqv1I2WHHPq/TCE/Qi3
+ rBvA99Opqdox8V4WZRhmlEEtHFAbUPBKZm+J5ctdGN+weJpi2i9E/dzoV3PhL1IZdwAf
+ 61hJ/yCd9q62FmI2VwG1JWpcfmPcZ8KuLpmGRHR3KiCuJKGecJnVWKqEZxPmZGuYNAD5
+ ZYQ8SszQP2YB5ftx4P0hAFnVrgCUMO7sj/ydF9Wz9JaruDG/aFJKNxz6nYTCafiHVt0U
+ //Qg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770907450; x=1771512250;
+ d=1e100.net; s=20230601; t=1770907414; x=1771512214;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=fQVJ9LSUskFrc7hUqy6BdTg9X2ZnsHe1rHSqlbLzkvM=;
- b=dI/RqV1EnOunml7itKwGnnEoPnPoxxIt7PxrxIrjT8OA+LCcirEI57M3YbizmOBNNT
- E6P0ze3vtviQl6e66AxOq4GScAsCnorCZ87QwnTRDP7w/9MhYAHzFcnt5eQq9RZpj30G
- P1gev8vWXF3JFuloVz54c5Q1bVbkPWDTMzWKywhB606btqnNAbE8HMcR5E9QN7Z5HsV0
- lcLxcJrsGqwRtmuzFu2jMHYZSCmpP77WBXXh2ntk37qHnRLETo+0rnRCqmERWjDl1YV4
- 10V6Jq7dhKMdj6aP4CHRYykorusxZIFBbMDGTOcWJZn/VMZvMwwD2tJS3fNEasd4DUGF
- /l/w==
-X-Gm-Message-State: AOJu0YyV4CBwOW1vWoqow2sWd+jWvN7fb3w24usZUQ/fOVjEiXpUo378
- EOtR76ykqnddpYbyUWfy58awM8OT5iEoUF2ExFTng9o1ufq/oZ0uz9l8wGyq5WRQJCloFiPA7Bb
- lB8/g3y53CmGZRLbkZqgNR5I7PuMsiSUrdCTTqxxknDKiDMVsyiNkJNcc5H7JAE0YwdnqQX6DAh
- koqIxk766eS2ae7ZNpcMLHK9qpR79CZVDInm1unKd9
-X-Gm-Gg: AZuq6aIMiFyHX3DCUpdgdzOxFPj+PEUrDtbyEEJlfZYawzKBKfG9EAZeQ3DkICukV17
- rbmTZYn4V+u218vDM9aP3cl0PpFfKnY/IC6NsVh6ui8T9Dkz9FcZh/1L7Tirw4WAWUx+NFRdCnF
- bKVPuUSnlF81avvm7tihEdt0ruyJsZ0qe10ZYxsNVn/6zRyv+acRSLFLJaa8WOTUtdi73aGmHAz
- rn9efNhlUt8CIKVW3L7J8J9MG2Egd2kN6NDpU/56EVM//nEDWWdcsDYV+HdP/BPtKwI1r6EBT6Q
- if2sL5FJOvEv2rYKl1EtM4L2hlIys5KQzu06tONatPRNSeMZSoTg6AKy/Ki57L5Bf3Qi+n61VGF
- TD1rxbsoGBXdTNseNZ3O7vkzB/hXp8mPGZFaETCAcTbOXsbWE7v2ds2Oy7Y3lP1Pfv/BjtSOw5X
- DylESTfLTVZuY+A8TRPIcmGY9iMJEB/aZ6lIZ2Oyl9Z2BHaj9qCEY=
-X-Received: by 2002:a05:6000:2311:b0:436:2356:47c4 with SMTP id
- ffacd0b85a97d-4378f178dccmr4336204f8f.35.1770907450233; 
- Thu, 12 Feb 2026 06:44:10 -0800 (PST)
-X-Received: by 2002:a05:6000:2311:b0:436:2356:47c4 with SMTP id
- ffacd0b85a97d-4378f178dccmr4336149f8f.35.1770907449716; 
- Thu, 12 Feb 2026 06:44:09 -0800 (PST)
+ bh=JGOT1h5ESN0Qld+a/yHoOKPmD7wsqNv5O1QINCuR2Ao=;
+ b=pzKr8pPW58XNUP5nwcjemvCTXlRVzN2GH+TKNluRSLq2Xp9W0P2xEz/sybS6yk5gCW
+ e1xIGItPH26Y+fbNU0SgepSr4ug9WXtGNgjIvo2ScBc9f7Ksdcn1fXiQnxbrOyBviBMz
+ 5paPLild4gzv5QFcbAKVIzTJW7rRHtfXDXNNUdqom28ubR1Be+69W1dOtNLUHWvUSsH/
+ Zs1GPRwJsRqGavEdMehacmf6lSp+YYJieswsA9AYW45lPM5CsawJnNT88ec/GfH8OD00
+ NpmNtFTBBOeIgfLsXI0sKbFpEU/GNwU8S7qXI7QSHLv06/PFOPmaGAeeck0+PR35vicZ
+ sUyw==
+X-Gm-Message-State: AOJu0YwNPJ2OsDZgscYIS/QTVsOA+gEBrVDRRTev4r/cvy/Tl3RyAhR3
+ tOzzUFXho7mAcp1I0CamZQ79j5Gfzf01pKr51FBEhGRMUJ3a+ycLeNXugIxRAG64dyikzmfc9IN
+ nBBmFwbUMkeStwcXwUEN1JfiOefb2WvZzZiRFZRL8B/kidTi7t61O628DpClpJpr4sCBC5XT8kn
+ FWVPBV4sFeYjpy4gvdepDhFTfffXzVoW/zcc0h5hHB
+X-Gm-Gg: AZuq6aKcimJyOlGwgx5MmvX9CThN6IdTObwv2DNYL43bebnesCpZ6TDOmYeE89W7vhL
+ Nt5LrION2SGiSPV7Xsfcjkl4uUPv+YmuruCfZ/LxDLNofY+rBgIcYOw8BKjkbHOn8kVgbDQpHNd
+ RaRj9tlnTJGOS/FDhH6Ofc+8hatA+RW9ZjKGIK+kG0eEYsiFWzFZLDNpiVl/ZERzfbhI3X67KyO
+ 2UiwBXtUJlmDl7u4XKfMr9aSyqQHGINn6NVr/2Kgjh5aCYQ4u4SbI7JneaCwaHdbKc3U/wyqSQS
+ A7MA6dD+PKlA7FoN1QPQQia6jBHaTDGCR+CkC5ot5uNt5i5ayVx46Ilmp4iuJeXcSA1ln+XnDSk
+ noOfeFIgSJ6AvQ1fkFFzl9e9KmqHu53B2s8mZSHpxCn1+J/zcq4j+vIFldRVCzxWiQduOFYPgfL
+ 7AQqO6z3/GbLSfpGBuPwOXzI9oXJ8zgSf1F3z2pRmHlrwrUas+quE=
+X-Received: by 2002:a05:600c:8411:b0:477:9dc1:b706 with SMTP id
+ 5b1f17b1804b1-4836570df2fmr36711235e9.19.1770907414414; 
+ Thu, 12 Feb 2026 06:43:34 -0800 (PST)
+X-Received: by 2002:a05:600c:8411:b0:477:9dc1:b706 with SMTP id
+ 5b1f17b1804b1-4836570df2fmr36710765e9.19.1770907413870; 
+ Thu, 12 Feb 2026 06:43:33 -0800 (PST)
 Received: from [10.60.241.123] (nat-pool-mxp-t.redhat.com. [149.6.153.186])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43783d34657sm14576178f8f.6.2026.02.12.06.44.09
+ 5b1f17b1804b1-4835d9946dcsm106794215e9.5.2026.02.12.06.43.32
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 12 Feb 2026 06:44:09 -0800 (PST)
+ Thu, 12 Feb 2026 06:43:32 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Stefan Berger <stefanb@linux.ibm.com>,
- Stefan Hajnoczi <stefanha@redhat.com>
-Subject: [PULL 37/41] qdev: make release_drive() idempotent
-Date: Thu, 12 Feb 2026 15:42:39 +0100
-Message-ID: <20260212144244.22579-38-pbonzini@redhat.com>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Mark Cave-Ayland <mark.caveayland@nutanix.com>,
+ Thomas Huth <thuth@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Igor Mammedov <imammedo@redhat.com>
+Subject: [PULL 21/41] hw/i386/pc: Remove deprecated pc-q35-2.7 and
+ pc-i440fx-2.7 machines
+Date: Thu, 12 Feb 2026 15:42:23 +0100
+Message-ID: <20260212144244.22579-22-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260212144244.22579-1-pbonzini@redhat.com>
 References: <20260212144244.22579-1-pbonzini@redhat.com>
@@ -124,32 +126,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-So it can eventually be called multiple times safely.
+These machines has been supported for a period of more than 6 years.
+According to our versioned machine support policy (see commit
+ce80c4fa6ff "docs: document special exception for machine type
+deprecation & removal") they can now be removed.  Remove the qtest
+in test-x86-cpuid-compat.c file.
 
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Reviewed-by: Stefan Berger <stefanb@linux.ibm.com>
-Link: https://lore.kernel.org/r/20250429140306.190384-3-marcandre.lureau@redhat.com
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-Link: https://lore.kernel.org/r/20260108230311.584141-4-csomani@redhat.com
+Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Reviewed-by: Igor Mammedov <imammedo@redhat.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+Link: https://lore.kernel.org/r/20260108033051.777361-21-zhao1.liu@intel.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- hw/core/qdev-properties-system.c | 1 +
- 1 file changed, 1 insertion(+)
+ hw/i386/pc_piix.c                   |  9 ---------
+ hw/i386/pc_q35.c                    | 10 ----------
+ tests/qtest/test-x86-cpuid-compat.c | 11 -----------
+ 3 files changed, 30 deletions(-)
 
-diff --git a/hw/core/qdev-properties-system.c b/hw/core/qdev-properties-system.c
-index fe5464c7da1..a402321f42c 100644
---- a/hw/core/qdev-properties-system.c
-+++ b/hw/core/qdev-properties-system.c
-@@ -232,6 +232,7 @@ static void release_drive(Object *obj, const char *name, void *opaque)
-     if (*ptr) {
-         blockdev_auto_del(*ptr);
-         blk_detach_dev(*ptr, dev);
-+        *ptr = NULL;
-     }
+diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
+index 9efb42ad055..f9e0bca9743 100644
+--- a/hw/i386/pc_piix.c
++++ b/hw/i386/pc_piix.c
+@@ -723,15 +723,6 @@ static void pc_i440fx_machine_2_8_options(MachineClass *m)
+ 
+ DEFINE_I440FX_MACHINE(2, 8);
+ 
+-static void pc_i440fx_machine_2_7_options(MachineClass *m)
+-{
+-    pc_i440fx_machine_2_8_options(m);
+-    compat_props_add(m->compat_props, hw_compat_2_7, hw_compat_2_7_len);
+-    compat_props_add(m->compat_props, pc_compat_2_7, pc_compat_2_7_len);
+-}
+-
+-DEFINE_I440FX_MACHINE(2, 7);
+-
+ #ifdef CONFIG_XEN
+ static void xenfv_machine_4_2_options(MachineClass *m)
+ {
+diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
+index 6dd1120c004..9158631f761 100644
+--- a/hw/i386/pc_q35.c
++++ b/hw/i386/pc_q35.c
+@@ -670,13 +670,3 @@ static void pc_q35_machine_2_8_options(MachineClass *m)
  }
  
+ DEFINE_Q35_MACHINE(2, 8);
+-
+-static void pc_q35_machine_2_7_options(MachineClass *m)
+-{
+-    pc_q35_machine_2_8_options(m);
+-    m->max_cpus = 255;
+-    compat_props_add(m->compat_props, hw_compat_2_7, hw_compat_2_7_len);
+-    compat_props_add(m->compat_props, pc_compat_2_7, pc_compat_2_7_len);
+-}
+-
+-DEFINE_Q35_MACHINE(2, 7);
+diff --git a/tests/qtest/test-x86-cpuid-compat.c b/tests/qtest/test-x86-cpuid-compat.c
+index 456e2af6657..5e0547e81b7 100644
+--- a/tests/qtest/test-x86-cpuid-compat.c
++++ b/tests/qtest/test-x86-cpuid-compat.c
+@@ -345,17 +345,6 @@ int main(int argc, char **argv)
+ 
+     /* Check compatibility of old machine-types that didn't
+      * auto-increase level/xlevel/xlevel2: */
+-    if (qtest_has_machine("pc-i440fx-2.7")) {
+-        add_cpuid_test("x86/cpuid/auto-level/pc-2.7",
+-                       "486", "arat=on,avx512vbmi=on,xsaveopt=on",
+-                       "pc-i440fx-2.7", "level", 1);
+-        add_cpuid_test("x86/cpuid/auto-xlevel/pc-2.7",
+-                       "486", "3dnow=on,sse4a=on,invtsc=on,npt=on,svm=on",
+-                       "pc-i440fx-2.7", "xlevel", 0);
+-        add_cpuid_test("x86/cpuid/auto-xlevel2/pc-2.7",
+-                       "486", "xstore=on", "pc-i440fx-2.7",
+-                       "xlevel2", 0);
+-    }
+     if (qtest_has_machine("pc-i440fx-2.9")) {
+         add_cpuid_test("x86/cpuid/auto-level7/pc-i440fx-2.9/off",
+                        "Conroe", NULL, "pc-i440fx-2.9",
 -- 
 2.52.0
 
