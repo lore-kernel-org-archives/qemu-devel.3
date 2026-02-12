@@ -4,93 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C321EE3698
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 16:56:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E5F6EE3698
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 16:58:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqZyn-0003sl-Rc; Thu, 12 Feb 2026 11:55:50 -0500
+	id 1vqa17-00053H-CM; Thu, 12 Feb 2026 11:58:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vqZyi-0003qI-Qa
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 11:55:46 -0500
-Received: from mail-wr1-x441.google.com ([2a00:1450:4864:20::441])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vqZyf-0006Sg-GA
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 11:55:43 -0500
-Received: by mail-wr1-x441.google.com with SMTP id
- ffacd0b85a97d-4362507f0bcso30648f8f.0
- for <qemu-devel@nongnu.org>; Thu, 12 Feb 2026 08:55:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770915340; x=1771520140; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=MXtJ2DprC7k7IvH08sMnquAvKkQNmWqEzT6RShD3v1w=;
- b=xiU/iYX6GiztqfAVl7iK1/QhUQnZaRG3Q0BC04RIm51XkxlqNP/7+pxbFPKnd0m+jl
- 3/gYSDzF1HzX9ypwzcPooSJPFY6mF6aERW7U0lCjjoAHSZwpXPA8TPNa343N6lRB1yCt
- J1fTrheMbeoMQRoOm0h9C9fc+FtAaJkhXPcehqk8CYLeWtgCiMeziqgOKdMW9q2EhHsD
- Bz5pc1KjwcIZfqVI+8IbaC8ZcOBwl/L/nuxFu5sxWD5ufuRHA+pKbQSkF8MCDiq5/hgF
- YfVF/aSvm2S0xPie0MaByRLGbJXUZlZ3VQInC9wLIO/PaZjIHnn3KqEdg5MuVsHkt/2z
- BmUQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770915340; x=1771520140;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=MXtJ2DprC7k7IvH08sMnquAvKkQNmWqEzT6RShD3v1w=;
- b=QiayiMMFH3YF2RgJRQWrTGLVoZfhYluN/46Y+VP4Lqi7aKQEDGrpTSpha6Uxn8qC0S
- dmOIMSxoD/Lpr4CGcfUS93W8Y36XHIxbVWLo5TeXYi9+lCbG2bY5B+1Tc7CiVn6pC0ge
- D72v1x+euH2trDey2derMo8Q6Nf2Y1x0PlG4R5KEJ92y0qcs7KTrnVGqeAZS0bVdS7D2
- c6CgAoIRy6MoPybXuJvTr8/BluvCdsf3dd3pnh2gJtQQsIiWVUqvaYnJGttjA1a3dK8h
- DTub5n2PmkD6HmkpgyolX6wodBvTU98xg2rgReU2oqApayNSt75ijt0z+MP4YiwR946B
- Roxg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUS7cWtFweMFbTKKAX94CWEHd2a7mtZeE3MNKek+2j9go8Rxors31T5xb2rw2L2+OTh7EDq7BDPMqkI@nongnu.org
-X-Gm-Message-State: AOJu0YzaUdiCSmMNkngmunmsOo46xhZgIm5kYgIdhPY8rtYhDU974cae
- E8fnnYTEvYwlpQL20FZnOjRHvOJhBDujbu0hUNna1Wj4AhKAOZYhNsWCCEyYwvIrXNk=
-X-Gm-Gg: AZuq6aKskzn43WrmrIEUWlUgRQcoDolcpUManGyh+FbVn+WGqAsqjGALt+Go4RulVsf
- /2hlARTKWeXLY2Bpa3QCEj+PU4onrZHsE8E9B0i5chDKxcc2aAOgxHR7PKww+eoc0pQ/QG9+1L/
- ptxaV+7WFZ/7A/Y0xBgSWwdmXASk8e0f7md8lj2+BkvJyWAD8bFgVI1vQkPvtp7XrDD3jWt2BDN
- 5TG6RodTZEKTJ6WFip5IzP6F8fW3QzqOejCBtP5PTgGoVwE6+qIBu68udQrV5ETLFuM2JZBmn6V
- VDsq8AzWYbDT0Zo2ZjZGdM44Wfa316t745qRYnLsw7Z+1L4yFjh/e865fDQFiFdLHoI7dS2vr1a
- LZX6cU3AVMeiRykF0PDswPAwKIUyj6363KrCY06BuHdVQbCane8GqfNe8WY0BvYDUkgvZ51gXV5
- alHwk5jaMdWSiqBAcWIDOhSQ93BZISx2HB0PnkB0aN+Qr4pFcz30gR2cJXxIjQ0TYqAA==
-X-Received: by 2002:a05:6000:400f:b0:430:fd0e:a502 with SMTP id
- ffacd0b85a97d-4378e72c023mr5623912f8f.22.1770915339698; 
- Thu, 12 Feb 2026 08:55:39 -0800 (PST)
-Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43783e39c6asm12811055f8f.28.2026.02.12.08.55.38
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 12 Feb 2026 08:55:39 -0800 (PST)
-Message-ID: <c0b9a373-ee95-43e9-9af4-428f19c54667@linaro.org>
-Date: Thu, 12 Feb 2026 17:55:38 +0100
+ (Exim 4.90_1) (envelope-from <alex@shazbot.org>) id 1vqa15-00052e-Tz
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 11:58:11 -0500
+Received: from fhigh-b4-smtp.messagingengine.com ([202.12.124.155])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <alex@shazbot.org>) id 1vqa14-0006kJ-1G
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 11:58:11 -0500
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+ by mailfhigh.stl.internal (Postfix) with ESMTP id 417FE7A0198;
+ Thu, 12 Feb 2026 11:58:07 -0500 (EST)
+Received: from phl-frontend-03 ([10.202.2.162])
+ by phl-compute-05.internal (MEProxy); Thu, 12 Feb 2026 11:58:07 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=shazbot.org; h=
+ cc:cc:content-transfer-encoding:content-type:content-type:date
+ :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to; s=fm2; t=1770915486;
+ x=1771001886; bh=vQtupsz5sio9uXnM1SoKDK1XGlMxNo176e885mIcJSU=; b=
+ BCaQU9oTMvPXTQeBVHZHmuDyYzfo+TKryCLwzlPeT6+6zC5w7JefBA9soC0QeAjH
+ XSegXTLPISEmuOE/BI26PgdRnZ0Gb3iJsEPban17aQApw/asbxvvWv5TSGFTlUSR
+ eV2IOC9aW9Jqr55jIFTGmFInQei/qs8YodNzjImIBUNSacu7xqHxjjZ+lGEyuqtl
+ MMBa8dloAcaUszYPExrGLnzzk8gBKXmGZirr9egWMwBflL14fWQsv/xyiUCwfYgb
+ y/OxwjRYZCJcJEaEKGKmnU1DaK5OLl56I99lWUIXVLM8+GZ7UeUdqc+tyzfuwE9u
+ LIlvrncb3XVLUF962zLOog==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-transfer-encoding
+ :content-type:content-type:date:date:feedback-id:feedback-id
+ :from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1770915486; x=
+ 1771001886; bh=vQtupsz5sio9uXnM1SoKDK1XGlMxNo176e885mIcJSU=; b=b
+ xjeOCnDl4gp8VeA1tg6KxkAD9uVuzhfvZDW8Pmj1Xkb8xhogc6YMj/YyFO/mK7KU
+ 0lBHDTaqM091Qypdp0LbdiRrf1NT1yMJX5Srlnarzse01tUgShrXQfdHdOoEzr33
+ fcQqpq3iD54sxC3cRT0/JgeHTgk+gitKcW0pwrfM0B3aPn6RpaUJmzDfy0UB7SEH
+ Q1v74+p2RozpRsuODECBQMOrT85CUeuU/xDP1zUf+TevlnZ0qCrCpZO3Z/2bYvB6
+ DNAd4O9O9VNwZP7EN1HYAHHTcWaLIYqED0EThNSu5NNIjbkyy4xCzUogSudaa/9v
+ 5bwE8ejsdT8/3iCKdaPsg==
+X-ME-Sender: <xms:ngaOaahFRMGHBoVY0l_PS3jOv1Hb9wmccL23lF-JaTIqtASZITL_uQ>
+ <xme:ngaOaRA4GmAJa5O-QCdYuyDcS52U2is3xz077OP_yncGybf3jyARvXgXuN6qaYR-H
+ jSm-eHIuNIYD8Uw0b3YSY2hEb3-7S8mT9MUAC8wtP-3uHdgJ5OH-w>
+X-ME-Received: <xmr:ngaOafs0kTx4ybSxSHj0-dlUVi2WvucHaRoLfDBER0O0g7QKmKXd6a6_bK8>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvtdehleduucetufdoteggodetrf
+ dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+ rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+ gurhepfffhvfevuffkjghfofggtgfgsehtjeertdertddvnecuhfhrohhmpeetlhgvgicu
+ hghilhhlihgrmhhsohhnuceorghlvgigsehshhgriigsohhtrdhorhhgqeenucggtffrrg
+ htthgvrhhnpedvkeefjeekvdduhfduhfetkedugfduieettedvueekvdehtedvkefgudeg
+ veeuueenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
+ grlhgvgiesshhhrgiisghothdrohhrghdpnhgspghrtghpthhtohepvddpmhhouggvpehs
+ mhhtphhouhhtpdhrtghpthhtoheprghkrhhofihirghksehlihhnuhigrdhisghmrdgtoh
+ hmpdhrtghpthhtohepqhgvmhhuqdguvghvvghlsehnohhnghhnuhdrohhrgh
+X-ME-Proxy: <xmx:ngaOaeZZq-gH-CucdW6SrbHCxuljQd_HqBu2Zk9Ne1FX8oZYhaOW_Q>
+ <xmx:ngaOaaVoiEFX4eYwNFsBdZ065uHX14nSGX9FcuHgfiBjY0rFwp5D8Q>
+ <xmx:ngaOaa63zKBO8_-z7dVb_4zZefMUyZLt7QKOPLLpt1kYkiB7CeDI_g>
+ <xmx:ngaOadg7LXiMekJcd_8Ll4Zs8Yt5nQP8Rart-3fSBlTW3Iea269rhw>
+ <xmx:ngaOaTH1_y4hD_QTKPpW3RnwXHP7e4HRa9QnU9V91iYO1eAE24P19ZC8>
+Feedback-ID: i03f14258:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 12 Feb 2026 11:58:06 -0500 (EST)
+Date: Thu, 12 Feb 2026 09:58:04 -0700
+From: Alex Williamson <alex@shazbot.org>
+To: Anthony Krowiak <akrowiak@linux.ibm.com>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [RFC] hw/vfio: What is the best way to detect start of vfio
+ device migration
+Message-ID: <20260212095804.3ad5b4a4@shazbot.org>
+In-Reply-To: <72283828-6d7e-4c80-ba24-8c114c8d052d@linux.ibm.com>
+References: <72283828-6d7e-4c80-ba24-8c114c8d052d@linux.ibm.com>
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.51; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/5] hw/net/rocker: Don't assume h_proto is aligned in
- eth_strip_vlan_ex()
-Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-Cc: Jiri Pirko <jiri@resnulli.us>, Jason Wang <jasowang@redhat.com>,
- Dmitry Fleytman <dmitry.fleytman@gmail.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Patrick Venture <venture@google.com>
-References: <20260212140917.1443253-1-peter.maydell@linaro.org>
- <20260212140917.1443253-3-peter.maydell@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260212140917.1443253-3-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::441;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x441.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=202.12.124.155; envelope-from=alex@shazbot.org;
+ helo=fhigh-b4-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -107,22 +107,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/2/26 15:09, Peter Maydell wrote:
-> In eth_strip_vlan_ex() we take a pointer to the eth_header h_proto
-> field into a local uint16_t* variable, and then later in the function
-> we dereference that pointer.  This isn't safe, because the eth_header
-> struct may not be aligned, and if we mark the struct as QEMU_PACKED
-> then gcc will complain about taking the address of a field in a
-> packed struct.
-> 
-> Instead, make the local variable be a void* and use the appropriate
-> functions for accessing 16 bits of possibly unaligned data through
-> it.
-> 
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
->   net/eth.c | 6 +++---
->   1 file changed, 3 insertions(+), 3 deletions(-)
+On Thu, 12 Feb 2026 10:45:47 -0500
+Anthony Krowiak <akrowiak@linux.ibm.com> wrote:
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> I created a sysfs attribute for a mediated device to enable/block migration
+> of the associated VFIODevice in QEMU. When the sysfs attribute is changed,
+> an eventfd is signaled to QEMU to enable or block migration. In response,
+> QEMU adds a migration blocker to the VFIODevice object and sets it's
+> 'enable_migration' field to 'ON_OFF_AUTO_OFF'.
+
+If some userspace entity has an inclination to block migration, why
+wouldn't it just coordinate with the VM orchestration tools rather than
+take this inherently racy and vfio specific path of the device
+signaling up through QEMU?  Thanks,
+
+Alex
 
