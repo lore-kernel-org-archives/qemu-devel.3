@@ -4,94 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A4DBEE3691
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 14:49:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87FFEEE368C
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 14:49:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqXvG-0005jV-2O; Thu, 12 Feb 2026 09:44:02 -0500
+	id 1vqXvS-00061B-Qg; Thu, 12 Feb 2026 09:44:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vqXum-0005Ku-Dy
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 09:43:36 -0500
+ id 1vqXvQ-0005wP-10
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 09:44:12 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vqXuB-0005k6-Qz
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 09:43:31 -0500
+ id 1vqXvM-0006GE-Qj
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 09:44:11 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770907375;
+ s=mimecast20190719; t=1770907447;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=5emFdi1nSDHv0zg/73xkIggYL3JZlaBDKu/OyPg2etI=;
- b=aKSmWj9US5yD/n8CprSZUBA6Q36Z+ojNv79eOz5MZeE7vv5gFbPbRGtF9lXWJeIU2dn8A+
- +V34C/38slCiyyalBTQQydCs+Ps70ncGmHNRk/ebDqrPga5Mc5d+Fo2+oUX09rD2bzcld8
- GNQeB4HcnlamXrFS3ZqNcdVavjSPwEE=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=7MAK39Fchg9SvJj6pNbo856+vTQzOZL0gnweEU9gzss=;
+ b=TockhLh80z38E9LfW+3TRcsnZVt6s5HTKpZBUllP7vRC9B2bTWhACld3nB14/DP3KF4ND4
+ 9H0kyIG31+pVFAqYNboDVTP6JFkHeoPM09nGrv984e1k98L6Cum2wuvrSo6BM3AhALgz1c
+ pZ4V1ja9d4xP/i7ovvnEBDH/09ZHGaA=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-684-EknjrV1VMZe0cngKj0avsA-1; Thu, 12 Feb 2026 09:42:54 -0500
-X-MC-Unique: EknjrV1VMZe0cngKj0avsA-1
-X-Mimecast-MFC-AGG-ID: EknjrV1VMZe0cngKj0avsA_1770907372
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4806b12ad3fso78377315e9.0
- for <qemu-devel@nongnu.org>; Thu, 12 Feb 2026 06:42:52 -0800 (PST)
+ us-mta-674-n_WQBHmqO4-JgALnoIZP_A-1; Thu, 12 Feb 2026 09:44:06 -0500
+X-MC-Unique: n_WQBHmqO4-JgALnoIZP_A-1
+X-Mimecast-MFC-AGG-ID: n_WQBHmqO4-JgALnoIZP_A_1770907446
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-4831192e66aso70117345e9.2
+ for <qemu-devel@nongnu.org>; Thu, 12 Feb 2026 06:44:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1770907371; x=1771512171; darn=nongnu.org;
+ d=redhat.com; s=google; t=1770907445; x=1771512245; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=5emFdi1nSDHv0zg/73xkIggYL3JZlaBDKu/OyPg2etI=;
- b=MpQ0EnBSGhL58TuyMjqDg9fn7YMVk+RqH/lWLp90wGApcIsHdED5S71544SOtxiFDk
- JDo+du9GW3KH/CILjCSAjQab6Ow5PUW77ezGE6hqAvnyoVexIw4WrkbBGheDjDyPSQ6u
- UTc+t5aT8ZIEvMIy3edrelYCPxZYdhAaCbmRfgHu8CTEK0kOCllWLlITLSS1UU1ARlWs
- BHIbgG1W73N6ygwvQti6ZxPXFhVwq7RL52v4IABikMDy4w2CfIZ/mWFwpq9/NL1XskpC
- yXH+QWv2WwgZuHKBjIVnjhh4o2OsCdf4HNvcIegSQEDH9hp7cboL8J9fQwLJ4/JB8v+g
- d8Vw==
+ bh=7MAK39Fchg9SvJj6pNbo856+vTQzOZL0gnweEU9gzss=;
+ b=Kz9LV1NkkOwrORs/o1dBmb6JUDxPAotCCbHO6mZ24DJrX8Xqfr5AdxkhRvM8YRmKHq
+ mPCkU+0osP1RgrsdKVh4niHpRjnQshAiwOrEc+bPHDzNjOGJJvdO2iuutIVuWkW9OQqJ
+ jWZOa7O3/W9mh+3/27sFMZQ+txpA9/HcDZRh3Ji+5T2p42XxlhoAwbWe60P6VYSthTX/
+ L4yZ48APnBqXLdenDfOuq4PrWs8lXr6ssPPdhoDMRcBIIAUanMrlD94FAIgi2QNDKLNg
+ SM0FVigCW0AIMhJGNmvQqbzrN3sXTxrKbUYph4QCPdBOKNVyfgsGwzhmRhIdYd+wiCJm
+ Z21A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770907371; x=1771512171;
+ d=1e100.net; s=20230601; t=1770907445; x=1771512245;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=5emFdi1nSDHv0zg/73xkIggYL3JZlaBDKu/OyPg2etI=;
- b=DfpDxS8qGSrmK6WV8SbJI6v5N+d5J9RGNKu/+DCR3Dvii/blzyYnosugo/+gUPKQUK
- AVOVzRVkp/f4HoDm0pkua7Sf04J9gzuXLrNuNafTJOOgR0p4MNjNFIkqkuL1h+HxTl7N
- Ag8fqLMTSXVByFs5jmeasU6FO3HlyA74ehoz4F0BK8jACBLZLqFnTnZOJj9FeJ4Timcm
- tVOoZW1cCIFUTNwYslSdMrHrHs2q+dev6KO8saK7UElmzhNFBH9zUs06f6hWuuP8FaPP
- TkbIDiofGjmbSSRW+mHrxd9ZWCcVyTbfeYHBFYnJ7ndCr5o5Chd011mi6qyYgaDCrAfx
- Rzdw==
-X-Gm-Message-State: AOJu0YyUGFmJJZlUEYvC8wACp85CoggwAQoG3plDXtMeaxE+CL/X1UR0
- nrrDWu/02qsm+GHx5tyxJruOkom3a90l/kEGxeK4waeY8HcPNNKM87Go4f+ZpgeFClk6qItrOgm
- H9DpPEzhZ8+TnlVT66FETN9wzDsQx5PC3s1vOlARxhV3coLc3d6LOkrJx5qfU/9GXiGsah4qqL7
- zuhQ+bwByxfNR7SVo54FDuxXDIbJ0M/ZJs6CxLysUo
-X-Gm-Gg: AZuq6aJj3mNYbfCsya7Jk2tHvb2yPbPjMHGFBzxdh5CFZSG+O4y2V8Yt9FLiAPuufG1
- bzjC5sx1H5qo2EFf6nGXngLFeeBDUqQac0lHPdMtFt7bNHOFCARPS8kP5bcNz5cj8pT+1+RZEFk
- +gM+vBBFAmaOhgNJudOcf3O2AfZejdlD2QMbjpftgBZwbCyZ7cIZjKGH+M00ZH7QhY4DsK/z/dZ
- 1fqQXWdZAfLoW7049POS5MIgypNj8EOSmxOJNDO2Z5F30euEa5mzthNhcIxufV0hj9hxtP3ZS68
- sA+baU25IkNC+5MDAJ5TT56ijWzGMvwV0Pqm6vY7dRlmspJFHXNwjCC5CQoqCqJPZxOjKmmQijo
- Sd99KZAZqYHXF7EhQxmX+3zEn5y81I+PRnQT9DfECzEswqKqL3tdXAp6s2hzyDpem7bRV9IjFNB
- AypZNpNEN6or2LyFoyosm8EGzHORYfgMGKo/uvRTVZGOkYvBQa5p0=
-X-Received: by 2002:a05:600c:8411:b0:477:9dc1:b706 with SMTP id
- 5b1f17b1804b1-4836570df2fmr36677875e9.19.1770907370970; 
- Thu, 12 Feb 2026 06:42:50 -0800 (PST)
-X-Received: by 2002:a05:600c:8411:b0:477:9dc1:b706 with SMTP id
- 5b1f17b1804b1-4836570df2fmr36677535e9.19.1770907370406; 
- Thu, 12 Feb 2026 06:42:50 -0800 (PST)
+ bh=7MAK39Fchg9SvJj6pNbo856+vTQzOZL0gnweEU9gzss=;
+ b=HttJBcK3yHV5I76PO1OLBALjKC1J8lb0qAKCJNitYvK73rc5i/sSF1Uy+nuJBRSFC6
+ PZsyIncLjApCLSTbJUxQOwxRDOk4NGhJwLZoUBuL/bI0mS0JADfYxGX3jWfv+WkWi33a
+ 8tjoKuCVer7yVRiuKRLC8vIdB8Hgm7GDtiLi3ee9iq6EJ+UAj1zUmPpHMdySoW3wutmy
+ OPpUL7lXazCPJqLwSqak8BwzUh859zb1MqeOyJwl2yihRd1R9ZJDwU2vsYjoT41ynQ1o
+ tA8p/tFWq3o5DzSbrCn9iyvJvudda0D7abIqf310O22R992DrdZXKo9tsLiYKyAkKL6Z
+ Y2xg==
+X-Gm-Message-State: AOJu0YzAAihGA3ecUQa6sEFE4zetKvKW7CGZmO1uJ0VEBigjofw5DADE
+ mxQRC15OWLrpaySJpRytdRdWGknMqkK2FllcHSvL8QMSolDJl3Dk5YLReg6FPWrUsK/mdpzp66T
+ 94feBvnh4KZ6Mce13C8ck4qE8E+jFsenDlZY870bmcL5HZ1HazvCT0zJXYxa2P5pqiQ2XBwaUT5
+ BuW30NnsR7qbAUOuyjJo0p5Xs/TWThRto6unnYstGn
+X-Gm-Gg: AZuq6aJ41jr1sZe4Uw1yV3PKewoUUf8s8GKUgj3SLdNWB7ZbQ4Yp+l78ahCp2j7TET1
+ xJtzqLQWtFY2AJDbcPiKf0OMfKjNP0Uq0aSTyqQXaRmcUsbm0m4UjJSQJSBhK+JWkI+I1ukCkvm
+ tsYbwC3XU3tjLDlqCTvg0fVuKnJgXjuajd0QasB8Q+6Z/4OOlQXMqiqFJDhaN2yR0Mcy5cDzsEK
+ 2H98GTtuEJB+2NSXAO/rl4f1t/tWVYIJji553osk4WT8AzVPkrgw9ehoMXlotz4ZBpNOVzIGjzT
+ L9SttXryG8xa71N4ZXMcVUGFk+D2ZOoUQHi9A6HZhXZymujmGfxcJlGKw0PQe0JBttFu5u75q6U
+ wx2/GkZXHNqgiwUYzsN0I7ArJRKW941qF6SG8K9tOp1mqE4hvvEbJMLPoYZfNbplzKnOAKzktHv
+ LsZtQKk23Gs5RdXQFbpHtffhQTfMggcl26PQqKiOTFV1y3iALPo7c=
+X-Received: by 2002:a05:600c:4e91:b0:483:ea6:8767 with SMTP id
+ 5b1f17b1804b1-4836571fe86mr47862555e9.36.1770907444544; 
+ Thu, 12 Feb 2026 06:44:04 -0800 (PST)
+X-Received: by 2002:a05:600c:4e91:b0:483:ea6:8767 with SMTP id
+ 5b1f17b1804b1-4836571fe86mr47861925e9.36.1770907443879; 
+ Thu, 12 Feb 2026 06:44:03 -0800 (PST)
 Received: from [10.60.241.123] (nat-pool-mxp-t.redhat.com. [149.6.153.186])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4835ba1670fsm77334905e9.4.2026.02.12.06.42.49
+ 5b1f17b1804b1-4835a5bf1efsm93529385e9.0.2026.02.12.06.44.01
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 12 Feb 2026 06:42:49 -0800 (PST)
+ Thu, 12 Feb 2026 06:44:01 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Igor Mammedov <imammedo@redhat.com>,
-	Zhao Liu <zhao1.liu@intel.com>
-Subject: [PULL 03/41] tests/acpi: Allow DSDT table change for x86 machines
-Date: Thu, 12 Feb 2026 15:42:05 +0100
-Message-ID: <20260212144244.22579-4-pbonzini@redhat.com>
+Cc: Dongli Zhang <dongli.zhang@oracle.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Sandipan Das <sandipan.das@amd.com>, Zide Chen <zide.chen@intel.com>
+Subject: [PULL 34/41] target/i386/kvm: support perfmon-v2 for reset
+Date: Thu, 12 Feb 2026 15:42:36 +0100
+Message-ID: <20260212144244.22579-35-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260212144244.22579-1-pbonzini@redhat.com>
 References: <20260212144244.22579-1-pbonzini@redhat.com>
@@ -122,67 +122,154 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Igor Mammedov <imammedo@redhat.com>
+From: Dongli Zhang <dongli.zhang@oracle.com>
 
-Before dropping legacy CPU hotplug code, mark and allow the affected
-ACPI tables, to avoid breaking ACPI table testing.
+Since perfmon-v2, the AMD PMU supports additional registers. This update
+includes get/put functionality for these extra registers.
 
-Signed-off-by: Igor Mammedov <imammedo@redhat.com>
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-Link: https://lore.kernel.org/r/20260108033051.777361-3-zhao1.liu@intel.com
+Similar to the implementation in KVM:
+
+- MSR_CORE_PERF_GLOBAL_STATUS and MSR_AMD64_PERF_CNTR_GLOBAL_STATUS both
+use env->msr_global_status.
+- MSR_CORE_PERF_GLOBAL_CTRL and MSR_AMD64_PERF_CNTR_GLOBAL_CTL both use
+env->msr_global_ctrl.
+- MSR_CORE_PERF_GLOBAL_OVF_CTRL and MSR_AMD64_PERF_CNTR_GLOBAL_STATUS_CLR
+both use env->msr_global_ovf_ctrl.
+
+No changes are needed for vmstate_msr_architectural_pmu or
+pmu_enable_needed().
+
+Signed-off-by: Dongli Zhang <dongli.zhang@oracle.com>
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Reviewed-by: Sandipan Das <sandipan.das@amd.com>
+Reviewed-by: Zide Chen <zide.chen@intel.com>
+Link: https://lore.kernel.org/r/20260109075508.113097-6-dongli.zhang@oracle.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- tests/qtest/bios-tables-test-allowed-diff.h | 42 +++++++++++++++++++++
- 1 file changed, 42 insertions(+)
+ target/i386/cpu.h     |  4 ++++
+ target/i386/kvm/kvm.c | 48 +++++++++++++++++++++++++++++++++++--------
+ 2 files changed, 43 insertions(+), 9 deletions(-)
 
-diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
-index dfb8523c8bf..eed8ded6933 100644
---- a/tests/qtest/bios-tables-test-allowed-diff.h
-+++ b/tests/qtest/bios-tables-test-allowed-diff.h
-@@ -1 +1,43 @@
- /* List of comma-separated changed AML files to ignore */
-+"tests/data/acpi/x86/pc/DSDT",
-+"tests/data/acpi/x86/pc/DSDT.bridge",
-+"tests/data/acpi/x86/pc/DSDT.ipmikcs",
-+"tests/data/acpi/x86/pc/DSDT.cphp",
-+"tests/data/acpi/x86/pc/DSDT.numamem",
-+"tests/data/acpi/x86/pc/DSDT.nohpet",
-+"tests/data/acpi/x86/pc/DSDT.memhp",
-+"tests/data/acpi/x86/pc/DSDT.dimmpxm",
-+"tests/data/acpi/x86/pc/DSDT.acpihmat",
-+"tests/data/acpi/x86/pc/DSDT.acpierst",
-+"tests/data/acpi/x86/pc/DSDT.roothp",
-+"tests/data/acpi/x86/pc/DSDT.hpbridge",
-+"tests/data/acpi/x86/pc/DSDT.hpbrroot",
-+"tests/data/acpi/x86/q35/DSDT",
-+"tests/data/acpi/x86/q35/DSDT.tis.tpm2",
-+"tests/data/acpi/x86/q35/DSDT.tis.tpm12",
-+"tests/data/acpi/x86/q35/DSDT.bridge",
-+"tests/data/acpi/x86/q35/DSDT.noacpihp",
-+"tests/data/acpi/x86/q35/DSDT.multi-bridge",
-+"tests/data/acpi/x86/q35/DSDT.ipmibt",
-+"tests/data/acpi/x86/q35/DSDT.cphp",
-+"tests/data/acpi/x86/q35/DSDT.numamem",
-+"tests/data/acpi/x86/q35/DSDT.nohpet",
-+"tests/data/acpi/x86/q35/DSDT.acpihmat-noinitiator",
-+"tests/data/acpi/x86/q35/DSDT.acpihmat-generic-x",
-+"tests/data/acpi/x86/q35/DSDT.memhp",
-+"tests/data/acpi/x86/q35/DSDT.dimmpxm",
-+"tests/data/acpi/x86/q35/DSDT.acpihmat",
-+"tests/data/acpi/x86/q35/DSDT.mmio64",
-+"tests/data/acpi/x86/q35/DSDT.acpierst",
-+"tests/data/acpi/x86/q35/DSDT.applesmc",
-+"tests/data/acpi/x86/q35/DSDT.pvpanic-isa",
-+"tests/data/acpi/x86/q35/DSDT.ivrs",
-+"tests/data/acpi/x86/q35/DSDT.type4-count",
-+"tests/data/acpi/x86/q35/DSDT.core-count",
-+"tests/data/acpi/x86/q35/DSDT.core-count2",
-+"tests/data/acpi/x86/q35/DSDT.thread-count",
-+"tests/data/acpi/x86/q35/DSDT.thread-count2",
-+"tests/data/acpi/x86/q35/DSDT.viot",
-+"tests/data/acpi/x86/q35/DSDT.cxl",
-+"tests/data/acpi/x86/q35/DSDT.ipmismbus",
-+"tests/data/acpi/x86/q35/DSDT.xapic",
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index cf02472fc79..9f222a0c9fe 100644
+--- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -506,6 +506,10 @@ typedef enum X86Seg {
+ #define MSR_CORE_PERF_GLOBAL_CTRL       0x38f
+ #define MSR_CORE_PERF_GLOBAL_OVF_CTRL   0x390
+ 
++#define MSR_AMD64_PERF_CNTR_GLOBAL_STATUS       0xc0000300
++#define MSR_AMD64_PERF_CNTR_GLOBAL_CTL          0xc0000301
++#define MSR_AMD64_PERF_CNTR_GLOBAL_STATUS_CLR   0xc0000302
++
+ #define MSR_K7_EVNTSEL0                 0xc0010000
+ #define MSR_K7_PERFCTR0                 0xc0010004
+ #define MSR_F15H_PERF_CTL0              0xc0010200
+diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+index 7ebb96c66f2..9f1a4d4cbb2 100644
+--- a/target/i386/kvm/kvm.c
++++ b/target/i386/kvm/kvm.c
+@@ -2157,6 +2157,16 @@ static void kvm_init_pmu_info_amd(struct kvm_cpuid2 *cpuid, X86CPU *cpu)
+     }
+ 
+     num_pmu_gp_counters = AMD64_NUM_COUNTERS_CORE;
++
++    c = cpuid_find_entry(cpuid, 0x80000022, 0);
++    if (c && (c->eax & CPUID_8000_0022_EAX_PERFMON_V2)) {
++        pmu_version = 2;
++        num_pmu_gp_counters = c->ebx & 0xf;
++
++        if (num_pmu_gp_counters > MAX_GP_COUNTERS) {
++            num_pmu_gp_counters = MAX_GP_COUNTERS;
++        }
++    }
+ }
+ 
+ static bool is_host_compat_vendor(CPUX86State *env)
+@@ -4219,13 +4229,14 @@ static int kvm_put_msrs(X86CPU *cpu, KvmPutState level)
+             uint32_t step = 1;
+ 
+             /*
+-             * When PERFCORE is enabled, AMD PMU uses a separate set of
+-             * addresses for the selector and counter registers.
+-             * Additionally, the address of the next selector or counter
+-             * register is determined by incrementing the address of the
+-             * current register by two.
++             * When PERFCORE or PerfMonV2 is enabled, AMD PMU uses a
++             * separate set of addresses for the selector and counter
++             * registers. Additionally, the address of the next selector or
++             * counter register is determined by incrementing the address
++             * of the current register by two.
+              */
+-            if (num_pmu_gp_counters == AMD64_NUM_COUNTERS_CORE) {
++            if (num_pmu_gp_counters == AMD64_NUM_COUNTERS_CORE ||
++                pmu_version > 1) {
+                 sel_base = MSR_F15H_PERF_CTL0;
+                 ctr_base = MSR_F15H_PERF_CTR0;
+                 step = 2;
+@@ -4237,6 +4248,15 @@ static int kvm_put_msrs(X86CPU *cpu, KvmPutState level)
+                 kvm_msr_entry_add(cpu, sel_base + i * step,
+                                   env->msr_gp_evtsel[i]);
+             }
++
++            if (pmu_version > 1) {
++                kvm_msr_entry_add(cpu, MSR_AMD64_PERF_CNTR_GLOBAL_STATUS,
++                                  env->msr_global_status);
++                kvm_msr_entry_add(cpu, MSR_AMD64_PERF_CNTR_GLOBAL_STATUS_CLR,
++                                  env->msr_global_ovf_ctrl);
++                kvm_msr_entry_add(cpu, MSR_AMD64_PERF_CNTR_GLOBAL_CTL,
++                                  env->msr_global_ctrl);
++            }
+         }
+ 
+         /*
+@@ -4771,13 +4791,14 @@ static int kvm_get_msrs(X86CPU *cpu)
+         uint32_t step = 1;
+ 
+         /*
+-         * When PERFCORE is enabled, AMD PMU uses a separate set of
+-         * addresses for the selector and counter registers.
++         * When PERFCORE or PerfMonV2 is enabled, AMD PMU uses a separate
++         * set of addresses for the selector and counter registers.
+          * Additionally, the address of the next selector or counter
+          * register is determined by incrementing the address of the
+          * current register by two.
+          */
+-        if (num_pmu_gp_counters == AMD64_NUM_COUNTERS_CORE) {
++        if (num_pmu_gp_counters == AMD64_NUM_COUNTERS_CORE ||
++            pmu_version > 1) {
+             sel_base = MSR_F15H_PERF_CTL0;
+             ctr_base = MSR_F15H_PERF_CTR0;
+             step = 2;
+@@ -4787,6 +4808,12 @@ static int kvm_get_msrs(X86CPU *cpu)
+             kvm_msr_entry_add(cpu, ctr_base + i * step, 0);
+             kvm_msr_entry_add(cpu, sel_base + i * step, 0);
+         }
++
++        if (pmu_version > 1) {
++            kvm_msr_entry_add(cpu, MSR_AMD64_PERF_CNTR_GLOBAL_CTL, 0);
++            kvm_msr_entry_add(cpu, MSR_AMD64_PERF_CNTR_GLOBAL_STATUS, 0);
++            kvm_msr_entry_add(cpu, MSR_AMD64_PERF_CNTR_GLOBAL_STATUS_CLR, 0);
++        }
+     }
+ 
+     if (env->mcg_cap) {
+@@ -5102,12 +5129,15 @@ static int kvm_get_msrs(X86CPU *cpu)
+             env->msr_fixed_ctr_ctrl = msrs[i].data;
+             break;
+         case MSR_CORE_PERF_GLOBAL_CTRL:
++        case MSR_AMD64_PERF_CNTR_GLOBAL_CTL:
+             env->msr_global_ctrl = msrs[i].data;
+             break;
+         case MSR_CORE_PERF_GLOBAL_STATUS:
++        case MSR_AMD64_PERF_CNTR_GLOBAL_STATUS:
+             env->msr_global_status = msrs[i].data;
+             break;
+         case MSR_CORE_PERF_GLOBAL_OVF_CTRL:
++        case MSR_AMD64_PERF_CNTR_GLOBAL_STATUS_CLR:
+             env->msr_global_ovf_ctrl = msrs[i].data;
+             break;
+         case MSR_CORE_PERF_FIXED_CTR0 ... MSR_CORE_PERF_FIXED_CTR0 + MAX_FIXED_COUNTERS - 1:
 -- 
 2.52.0
 
