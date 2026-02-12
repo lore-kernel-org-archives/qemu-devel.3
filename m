@@ -4,108 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AE3EEB4917
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 12:47:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3AE49EB491D
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 12:58:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqW5V-0002fI-My; Thu, 12 Feb 2026 07:46:29 -0500
+	id 1vqWGO-0004wx-Dd; Thu, 12 Feb 2026 07:57:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vqW5Q-0002eX-QF
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 07:46:26 -0500
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vqW5P-0004JY-6y
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 07:46:24 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id AE78C5BD9B;
- Thu, 12 Feb 2026 12:46:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1770900379; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=j0bX4jdpdGzLJ/a34OtGooFkPfvDTfhUjrtlGaUgqak=;
- b=gZEjYwz3mn3h/ePJaAsvEf52hsLal2kGTYYAdThmpfZLIM2B7mfgfgpxDFbHWFQ3K5J3xl
- 3jZ4/9oJOj7K/yURIWsvOMI+u6o+bd6tRnmKKiJo82xXaGjA1A+3Rxp8FD9JrIuxqOWFgM
- QNkhriYiLseWaJk6837frbPCeDvMVzs=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1770900379;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=j0bX4jdpdGzLJ/a34OtGooFkPfvDTfhUjrtlGaUgqak=;
- b=fIuqVT9VIE5BUcpYZgFXbh3POJ7pbz9MBGvs0V3s9FAaawK7qED0/HjXK6AkOLQKwwYNrw
- q30xbIZvO5d82nDw==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=gZEjYwz3;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=fIuqVT9V
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1770900379; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=j0bX4jdpdGzLJ/a34OtGooFkPfvDTfhUjrtlGaUgqak=;
- b=gZEjYwz3mn3h/ePJaAsvEf52hsLal2kGTYYAdThmpfZLIM2B7mfgfgpxDFbHWFQ3K5J3xl
- 3jZ4/9oJOj7K/yURIWsvOMI+u6o+bd6tRnmKKiJo82xXaGjA1A+3Rxp8FD9JrIuxqOWFgM
- QNkhriYiLseWaJk6837frbPCeDvMVzs=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1770900379;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=j0bX4jdpdGzLJ/a34OtGooFkPfvDTfhUjrtlGaUgqak=;
- b=fIuqVT9VIE5BUcpYZgFXbh3POJ7pbz9MBGvs0V3s9FAaawK7qED0/HjXK6AkOLQKwwYNrw
- q30xbIZvO5d82nDw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 259783EA62;
- Thu, 12 Feb 2026 12:46:18 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id egwXNprLjWkwVAAAD6G6ig
- (envelope-from <farosas@suse.de>); Thu, 12 Feb 2026 12:46:18 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Xu <peterx@redhat.com>
-Subject: Re: [PATCH] tests/qtest/migration/tls-tests.c: Don't use tls_psk
- end hook for no_tls tests
-In-Reply-To: <20260212114747.1103466-1-peter.maydell@linaro.org>
-References: <20260212114747.1103466-1-peter.maydell@linaro.org>
-Date: Thu, 12 Feb 2026 09:46:16 -0300
-Message-ID: <87v7g2m8o7.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <nsg@linux.ibm.com>)
+ id 1vqWGG-0004wD-T5; Thu, 12 Feb 2026 07:57:38 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <nsg@linux.ibm.com>)
+ id 1vqWGE-0005iN-SQ; Thu, 12 Feb 2026 07:57:36 -0500
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 61C6R4cO247099; Thu, 12 Feb 2026 12:57:29 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=vKuHTD
+ Mti6zpEL3rYV0DdCMF4N/d093St4ruRMzCJdc=; b=Ox+m0vZqgjH7hLbJJ6BE4N
+ hFQl0KGEA3XA5pVjuJ+OzopAZ7F5brH9AGklRWHOd0K3ZI/9PQr6o+5nAuu2h+uS
+ k4kRUW1KwmlHlBbrT1uHcP8Sx96UIOvNCJN2AZMWJB9MXf4zeQaBD7NifVBSbkSq
+ 9iQ5am9TIFmGm9V1pGPkjv/JtjcYG+30EwQBXLCXLWW8UkYncvTM/zrEAmKQpxTZ
+ wJ6v832xbae42lVaryX58jkQ54ls5GFWrQz9Icm6teLA5d+l8K8ARHf9uf3aVgOO
+ ntO4GJ2xiKe99xOBKPIH4KIUfAv+UA7q9Wv2jotE9yRtkt/4x7VhPBSR7YomGEUg
+ ==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4c696v3fhv-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 12 Feb 2026 12:57:29 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 61CAFKHE001847;
+ Thu, 12 Feb 2026 12:57:28 GMT
+Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4c6je2a5xw-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 12 Feb 2026 12:57:28 +0000
+Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
+ [10.20.54.104])
+ by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 61CCvOYC51642872
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 12 Feb 2026 12:57:24 GMT
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 821CD20043;
+ Thu, 12 Feb 2026 12:57:24 +0000 (GMT)
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 9F12B20040;
+ Thu, 12 Feb 2026 12:57:23 +0000 (GMT)
+Received: from li-978a334c-2cba-11b2-a85c-a0743a31b510.ibm.com (unknown
+ [9.111.78.249]) by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 12 Feb 2026 12:57:23 +0000 (GMT)
+Message-ID: <210594e4dcac9d0adaa1a49c16af7b73075bc1b8.camel@linux.ibm.com>
+Subject: Re: [PATCH] s390x/kvm: Add ASTFLE facility 2 for nested virtualization
+From: Nina Schoetterl-Glausch <nsg@linux.ibm.com>
+To: Christoph Schlameuss <schlameuss@linux.ibm.com>, qemu-devel@nongnu.org
+Cc: Halil Pasic <pasic@linux.ibm.com>, Christian Borntraeger	
+ <borntraeger@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>, Matthew
+ Rosato	 <mjrosato@linux.ibm.com>, Richard Henderson
+ <richard.henderson@linaro.org>, Ilya Leoshkevich	 <iii@linux.ibm.com>,
+ David Hildenbrand <david@kernel.org>, Thomas Huth	 <thuth@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Cornelia Huck	 <cohuck@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Hendrik Brueckner	
+ <brueckner@linux.ibm.com>, qemu-s390x@nongnu.org, kvm@vger.kernel.org
+Date: Thu, 12 Feb 2026 13:57:41 +0100
+In-Reply-To: <20260211-astfleie2-v1-1-cfa11f422fd8@linux.ibm.com>
+References: <20260211-astfleie2-v1-1-cfa11f422fd8@linux.ibm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.56.2 (3.56.2-2.fc42) 
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FUZZY_RATELIMITED(0.00)[rspamd.com]; ARC_NA(0.00)[];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; MIME_TRACE(0.00)[0:+];
- FROM_HAS_DN(0.00)[]; DKIM_TRACE(0.00)[suse.de:+];
- TO_DN_SOME(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- FROM_EQ_ENVFROM(0.00)[]; RCVD_TLS_ALL(0.00)[];
- MID_RHS_MATCH_FROM(0.00)[]; MISSING_XM_UA(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[]; RCPT_COUNT_THREE(0.00)[4];
- DBL_BLOCKED_OPENRESOLVER(0.00)[linaro.org:email, suse.de:dkim, suse.de:mid,
- suse.de:email]
-X-Rspamd-Action: no action
-X-Rspamd-Queue-Id: AE78C5BD9B
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjEyMDA5NiBTYWx0ZWRfX/GSdhVx35i3w
+ YGpaOgwPS/OT7SWQJFZCqB3yklB04xGwPp18XrQG5V1lOVNT8/wWvJFva0SezKNKDbHJdXE4gAH
+ BywfNwQZ35KHDJrkiFhzsTSmUI1V54SJD0Dw12CnGk9I+580TowiBiYb3NfRi5XlM3CFp4KTnLs
+ gVUK8xguziuvbBBGQJNKFOJr11+IDlUqhee/QoFa8rKpCGFLxw7pCFxUefAZDQsy9PpW/vnW2fQ
+ L60ilzTLk/BDP68yCP6lBotzc+YfF3hyamr/8AgWMv7kr0EYH/mqaCRVXxsvBwGZ7K0/Y5UT6id
+ C6GIX0KUlSIucIyzTb/JOoalI1FXY6m+ALH+9i7KhW4sN2whV7A6c6HfiKGXV76+XIGOmnFzGwK
+ VQSQRaDnf7oj2TANhY3FDBBGewrhx2CmPjFnsZbsQEjkrWFOlN6FTj23ztEbL3KgZidkjMC3UW4
+ 5LJkr9rk95HGhVmA0sg==
+X-Proofpoint-ORIG-GUID: rwa0Ng6_72RHzpFKq1WMuEFNjSmLJMlY
+X-Proofpoint-GUID: rwa0Ng6_72RHzpFKq1WMuEFNjSmLJMlY
+X-Authority-Analysis: v=2.4 cv=O+Y0fR9W c=1 sm=1 tr=0 ts=698dce39 cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=IkcTkHD0fZMA:10 a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22 a=VnNF1IyMAAAA:8
+ a=jluB_lIlwI9kuYLZUVYA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-02-12_03,2026-02-12_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 priorityscore=1501 phishscore=0 adultscore=0
+ malwarescore=0 impostorscore=0 bulkscore=0 clxscore=1011 spamscore=0
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
+ definitions=main-2602120096
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=nsg@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,45 +127,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Maydell <peter.maydell@linaro.org> writes:
+On Wed, 2026-02-11 at 15:56 +0100, Christoph Schlameuss wrote:
+> Allow propagation of the ASTFLEIE2 feature bit.
+>=20
+> If the host does have the ASTFLE Interpretive Execution Facility 2 the
+> guest can enable the ASTFLE format 2 for its guests.
+>=20
+> Signed-off-by: Christoph Schlameuss <schlameuss@linux.ibm.com>
 
-> If you run the TLS tests under a clang undefined-behaviour sanitizer build
-> it will fall over like this:
->
-> ../../tests/unit/crypto-tls-psk-helpers.c:53:12: runtime error: null pointer passed as argument 1, which is declared to never be null
-> /usr/include/unistd.h:858:48: note: nonnull attribute specified here
->     #0 0x62bd810762ee in test_tls_psk_cleanup /home/pm215/qemu/build/clang/../../tests/unit/crypto-tls-psk-helpers.c:53:5
->     #1 0x62bd81073f89 in migrate_hook_end_tls_psk /home/pm215/qemu/build/clang/../../tests/qtest/migration/tls-tests.c:101:5
->     #2 0x62bd81062ef0 in test_precopy_common /home/pm215/qemu/build/clang/../../tests/qtest/migration/framework.c:947:9
->
-> This happens because test_precopy_tcp_no_tls() uses a custom start_hook
-> that only sets a couple of parameters, but reuses the tsk_psk end_hook.
-> However, the end_hook runs cleanup that assumes that the data was set
-> up by migrate_hook_start_tls_psk_common(). In particular, it will
-> unconditionally call test_tls_psk_cleanup(data->pskfile), and
-> test_tls_psk_cleanup() will unconditionally unlink() the filename it
-> is passed, which is undefined behaviour if you pass it a NULL pointer.
->
-> Instead of creating a TestMigrateTLSPSKData struct which we never set
-> any fields in and requiring the migrate_hook_end_tls_psk() hook to
-> cope with that, don't allocate the struct in the start_hook. Then
-> there is nothing we need to clean up, and we can set the end_hook
-> to NULL (which the test framework will interpret as "don't call
-> any end_hook").
->
+Reviewed-by: Nina Schoetterl-Glausch <nsg@linux.ibm.com>
 
-Thanks! My pull-request script should have caught this. I recently
-excluded the TLS tests because they break ASAN in weird ways.
-
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
-
-> Cc: qemu-stable@nongnu.org
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
-> Not sure when this would have appeared, so cc'ing stable as it
-> seems safe enough to backport just in case.
-
-It's from this devel cycle.
-
-
+--=20
+IBM Deutschland Research & Development GmbH
+Vorsitzender des Aufsichtsrats: Wolfgang Wendt
+Gesch=C3=A4ftsf=C3=BChrung: David Faller
+Sitz der Gesellschaft: Ehningen / Registergericht: Amtsgericht Stuttgart, H=
+RB 243294
 
