@@ -4,115 +4,119 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BB34EE3699
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 15:25:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56360EE3697
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 15:29:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqYYR-0002Uv-Os; Thu, 12 Feb 2026 10:24:31 -0500
+	id 1vqYdQ-0007lq-Op; Thu, 12 Feb 2026 10:29:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vqYYQ-0002UD-Lx
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 10:24:30 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1vqYdP-0007ky-52
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 10:29:39 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vqYYO-000870-V7
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 10:24:30 -0500
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1vqYdM-0000wc-PQ
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 10:29:38 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770909867;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1770910174;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=+JXbp54JfIAgwtQZV70HpPRDBg1mCr8KZihx+0HYIp4=;
- b=ZAFzmk/gJcijlSsSftMNaQq9AZCxNzMG1xz3mYrmCcVTTRyG5r3+moIi4d6TT1y5/W7+WJ
- fKrypq47xqkcaA/ftJ8s1lLnWXMCbarE2V4ATranR5optescBKkZdrjHbuiIvtYwLhvGQS
- MrBlwEhcV1P/1XajuBmqJNKxpdh6PPs=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-220-_40YcR9pMlimWtsRFm2clw-1; Thu,
- 12 Feb 2026 10:24:26 -0500
-X-MC-Unique: _40YcR9pMlimWtsRFm2clw-1
-X-Mimecast-MFC-AGG-ID: _40YcR9pMlimWtsRFm2clw_1770909865
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0BACF1800367; Thu, 12 Feb 2026 15:24:25 +0000 (UTC)
-Received: from [10.45.225.23] (unknown [10.45.225.23])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 35AA4180066A; Thu, 12 Feb 2026 15:24:22 +0000 (UTC)
-Message-ID: <327cf588-ba87-4bf6-a2d1-15362c77345d@redhat.com>
-Date: Thu, 12 Feb 2026 16:24:21 +0100
+ in-reply-to:in-reply-to:references:references;
+ bh=7d0bws1k/lRL4L21yPFxA5JhKetr6tv4SA7mi55GBB0=;
+ b=ZqwjHO/8lcZbkhs2C5rbld6A7xCJLvy8d85q/uolie/O/1ytIj2MA+A73qTc8V1D/I9NPg
+ T8BtdOGtBQ6/SLDqYvsY6dUELUwxyllNb4NBpr95Dmuouonkg9e8dsxw72A0SDPf+6gHey
+ Hlvw4mbEq73xl488LOMBF1eG0/NeKn4=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-353-jdfSuQHAPQ-l8MoOKYpdVA-1; Thu, 12 Feb 2026 10:29:32 -0500
+X-MC-Unique: jdfSuQHAPQ-l8MoOKYpdVA-1
+X-Mimecast-MFC-AGG-ID: jdfSuQHAPQ-l8MoOKYpdVA_1770910172
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-4836bf1a920so8677555e9.3
+ for <qemu-devel@nongnu.org>; Thu, 12 Feb 2026 07:29:32 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770910171; x=1771514971;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=7d0bws1k/lRL4L21yPFxA5JhKetr6tv4SA7mi55GBB0=;
+ b=EBbcTuqMrblYlYa8DxeNOVD2yv73T/JAdh4o8VlwYtZ9qddYmFp/12t8dQ2vNIc4vI
+ GPlOahrdZ/uYH8dduHMqm3I+KeNa9BuDmWIKaQ9Zzfsv2yCxoTLevgsVJC0gJJGJC5bN
+ nJMsMzAtU5HIskrYnf5672d5lYDCoMU/7fZD4LhNCHX3L0KPpSs1HdS0l5CQd+PvP+t/
+ alzrizuD9yswaOzHBUXFyhForWDePD5kpdHhym3zQZcJNI/dryaDl1Vg8t3IkDhFKLyI
+ vuY14QcjWXZCB7pif+hhvZxzHnZT1Gwc8IGCKKU7Rw6SaTsItx+jK/YZg6p1wieMNwrE
+ 4drg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXWJW9yCS7hNWX+r4UZ17d4mRKIBTFZJ4Af5CvcZBHSVU1WwlFBTR2JW7iNH8gJ8mGSu4mvX5dat22J@nongnu.org
+X-Gm-Message-State: AOJu0YwGovt6ZxW5icM8UDZ6kSwGohVV2AmAzsbcPE/Ig4g4k9HgyKAx
+ n1BcvggtkxpRrKbdna/OWqTX3HSvhxY940htycTbqP6yYJaHSh7ZxkXhi17tBNfUEVscIW91Qnp
+ VHS8Q2aFk2P8BTEKkQnDoAEYhWVXDzNzIfHKGRqh9kgA87rYmHdHzEgR9
+X-Gm-Gg: AZuq6aJNmG68g0m3UwoOA9amyIpKI62z0kO5VlV/qXvbfXaV+ppIW7WeW/Dnw+pszrG
+ 0VBnWouvvd1LKMX4lR9/1MnFkwtPNfjmqlkwZmu5H4C+KtFckMgokMcwWD7r4iWP9ks31M26V5S
+ gL1WFdrOGuIJy4H4NIt7gr2MAoDIqvM7627tpYrt9ghr1m3f60riS6sOnTZw3rrzkHkwjHOHPvU
+ ndPNWp9LgzYmyJ3D0/c45KLRTQ8pVWgNPTIY2Ga8/g4IkrjXNaMndvsuAYQx2mHbjJvO16zec5c
+ qFdcnJjroK4WJLFXElPPlxJVtNTNCfdXCc2LD2ts6HSAX03jewdXEdEZncNwrTlqutCLAqIpt6p
+ gYv6iHrFyyclcuMEvTSv440y7v1F10wtzFUGf3rQ/yHgstjFeheSe7Jts1oKig0Bf+zpB1A==
+X-Received: by 2002:a05:600c:348d:b0:47d:3ead:7440 with SMTP id
+ 5b1f17b1804b1-4836571680emr47009815e9.32.1770910171603; 
+ Thu, 12 Feb 2026 07:29:31 -0800 (PST)
+X-Received: by 2002:a05:600c:348d:b0:47d:3ead:7440 with SMTP id
+ 5b1f17b1804b1-4836571680emr47009145e9.32.1770910171008; 
+ Thu, 12 Feb 2026 07:29:31 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4378e122df9sm5741507f8f.15.2026.02.12.07.29.29
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 12 Feb 2026 07:29:30 -0800 (PST)
+Message-ID: <c9f728a3-1bd9-48c8-93e3-463fba94e130@redhat.com>
+Date: Thu, 12 Feb 2026 16:29:28 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tests/functional: Make sure test case .py files are
- executable
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-References: <20260212151258.1750268-1-peter.maydell@linaro.org>
-From: Thomas Huth <thuth@redhat.com>
+Subject: Re: [PATCH v2 05/24] hw/arm/smmuv3-accel: Introduce CMDQV ops
+ interface
 Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20260212151258.1750268-1-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To: Shameer Kolothum Thodi <skolothumtho@nvidia.com>,
+ Nicolin Chen <nicolinc@nvidia.com>
+Cc: "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
+ "clg@redhat.com" <clg@redhat.com>, "alex@shazbot.org" <alex@shazbot.org>,
+ Nathan Chen <nathanc@nvidia.com>, Matt Ochs <mochs@nvidia.com>,
+ Jiandi An <jan@nvidia.com>, Jason Gunthorpe <jgg@nvidia.com>,
+ "jonathan.cameron@huawei.com" <jonathan.cameron@huawei.com>,
+ "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>,
+ "zhenzhong.duan@intel.com" <zhenzhong.duan@intel.com>,
+ Krishnakant Jaju <kjaju@nvidia.com>
+References: <20260206144823.80655-1-skolothumtho@nvidia.com>
+ <20260206144823.80655-6-skolothumtho@nvidia.com>
+ <aYo4n4N3dW1OLzTk@Asurada-Nvidia>
+ <CH3PR12MB75483C2BA4EDC24CA0F78A4CAB62A@CH3PR12MB7548.namprd12.prod.outlook.com>
+ <46d3b859-6e05-4c03-8e77-0aa76629f772@redhat.com>
+ <CH3PR12MB7548F06A2BB9C009FD2043F2AB60A@CH3PR12MB7548.namprd12.prod.outlook.com>
+ <dcde8f24-7523-4e2c-8ce6-4048d3ca9c7c@redhat.com>
+ <CH3PR12MB7548A87A5BC62C6D90501947AB60A@CH3PR12MB7548.namprd12.prod.outlook.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <CH3PR12MB7548A87A5BC62C6D90501947AB60A@CH3PR12MB7548.namprd12.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,34 +129,62 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/02/2026 16.12, Peter Maydell wrote:
-> The top-level test python scripts in tests/functional are supposed to
-> be marked executable; "make check-functional" doesn't care about
-> this, but it allows them to be run as standalone executables to
-> exercise a single test, as docs/devel/testing/functional.rst
-> describes.
-> 
-> A couple of files have got into the tree without the executable
-> bit set: fix them.
-> 
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
->   tests/functional/arm/test_aspeed_ast1060.py | 0
->   tests/functional/ppc/test_ppe42.py          | 0
->   2 files changed, 0 insertions(+), 0 deletions(-)
->   mode change 100644 => 100755 tests/functional/arm/test_aspeed_ast1060.py
->   mode change 100644 => 100755 tests/functional/ppc/test_ppe42.py
-> 
-> diff --git a/tests/functional/arm/test_aspeed_ast1060.py b/tests/functional/arm/test_aspeed_ast1060.py
-> old mode 100644
-> new mode 100755
-> diff --git a/tests/functional/ppc/test_ppe42.py b/tests/functional/ppc/test_ppe42.py
-> old mode 100644
-> new mode 100755
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+
+On 2/12/26 4:05 PM, Shameer Kolothum Thodi wrote:
+>
+>> -----Original Message-----
+>> From: Eric Auger <eric.auger@redhat.com>
+>> Sent: 12 February 2026 14:57
+>> To: Shameer Kolothum Thodi <skolothumtho@nvidia.com>; Nicolin Chen
+>> <nicolinc@nvidia.com>
+>> Cc: qemu-arm@nongnu.org; qemu-devel@nongnu.org;
+>> peter.maydell@linaro.org; clg@redhat.com; alex@shazbot.org; Nathan Chen
+>> <nathanc@nvidia.com>; Matt Ochs <mochs@nvidia.com>; Jiandi An
+>> <jan@nvidia.com>; Jason Gunthorpe <jgg@nvidia.com>;
+>> jonathan.cameron@huawei.com; zhangfei.gao@linaro.org;
+>> zhenzhong.duan@intel.com; Krishnakant Jaju <kjaju@nvidia.com>
+>> Subject: Re: [PATCH v2 05/24] hw/arm/smmuv3-accel: Introduce CMDQV ops
+>> interface
+>>>> I had
+>>>> the impression you reverted to a fallback impl. If there is
+>>>> specialization, I still think ops are relevant. Eric
+>>> There is no fallback implementation. So just to confirm, you are suggesting
+>>> to remove the ops completely or just keep the ops for reset/init only?
+>> Depends on the code to come next. If your reset and init really differs
+>> between normal accel SMMU and vcmdq enhanced accel SMMU, to me it is
+>> still relevant to have separate implementations in different callbacks.
+> It is not an either/or case.
+>
+> The vCMDQ path does not replace the normal accelerated SMMU init/reset.
+> Instead, it requires additional init/reset steps on top of the regular accel flow.
+>
+> if (accel)
+>     accel_init();
+>
+> if (accel && cmdqv)
+>     cmdqv_init();   
+>  
+> So the vCMDQ logic is an extension of the accelerated mode, not a fallback
+> or alternative implementation.
+>
+> I think the later patches in the series make this clearer.
+> Please let me know if you still feel the ops necessary.
+
+Well I am concerned by the lack of scalability overall. Until now this
+was more or less generic. Now we may have several implementors coming
+with their own implementations of even a vendor will come with several
+generations: today it is tegra241_cmdq, tomorrow we will have
+tegraxxx_cmdq, arm_cmdq, ... How to get prepared for this mess? Will we
+have a property for each one?
+
+Eric
+>
+> Thanks,
+> Shameer
 
 
