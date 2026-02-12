@@ -4,90 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3587EE369C
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 15:52:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F364FEE369D
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 15:56:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqYzc-0004Zh-L5; Thu, 12 Feb 2026 10:52:36 -0500
+	id 1vqZ37-0005eB-DC; Thu, 12 Feb 2026 10:56:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vqYzY-0004Yc-00
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 10:52:32 -0500
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vqYzW-0006ss-B9
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 10:52:31 -0500
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-4362507f0bcso1625343f8f.0
- for <qemu-devel@nongnu.org>; Thu, 12 Feb 2026 07:52:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770911548; x=1771516348; darn=nongnu.org;
- h=content-transfer-encoding:subject:cc:to:content-language:from
- :user-agent:mime-version:date:message-id:from:to:cc:subject:date
- :message-id:reply-to;
- bh=TGhkGI8Vl59Dy+KK4a/9B8/ZMFaZxjQ08Mnnjpu6cOk=;
- b=czDRNsnVj658GKgAVNY9QaeIM+WsLxsRfcxo2Yyf7iDnN0gdt/fLf+/VU1/RAG0u3J
- zWfRzwAkDy635SiUJHRRcGyuTLkvCejUC9z+3eLfji/kImfknNyWymS2rPXYvIWMZUls
- tE/0RacSkLwN75a3Bd/2LfA9L8BMtxRuLwY/nGjmiCeov1ritviAbCmsnqLnIppIfCDd
- GfSaDKJOrGBSyUV8Qs3SQaoyrUs54h1QsDGQXkvUKEP75t0UUDQPhDolaJe9ybQv343G
- efWCt67Y3YMlLZpL6WRkyX/rPan4mh51McVP9pRYvH4RfDnPeIthVBlYsJ5XqY1ueMWo
- BIEw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770911548; x=1771516348;
- h=content-transfer-encoding:subject:cc:to:content-language:from
- :user-agent:mime-version:date:message-id:x-gm-gg:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=TGhkGI8Vl59Dy+KK4a/9B8/ZMFaZxjQ08Mnnjpu6cOk=;
- b=ngsV3iaqljo84asqelTi0TTMRCtwUwC+0rbrtsdj7HFB7PgPvT8Y2XH7N3VhGq+0oe
- mieIp2gNyzkj8YZgBt9OUf/rEprypx3t4gozzauAxNXJ1tm6UfOqWw0YjIIm8+pQK8Ke
- 3xL/NXyvAPdzucjmkug8fnD8zcaIGY/WJLMXy4giL/hr2iVmYTDzFWBjvTxOYZz/8Yvy
- qlmXAOB6xbWYzgDkTsOWUBPJ2dsFmcgbSN1hBC46J0QJIHUGVDullXebJ/XZkleP5G9X
- h30WcnxFXGY8lNh+hfE3R/FWYK8fcjNbwZnA0wKyNB4O/mGU2bmr/v4tJ7xQJqlWHjpW
- P1/Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXZGpyHtT5DBdwVkSx9VQqA2IaNqfXbQ2ISmryBZR9+v+dOCw4USBEY3zRALxYNrJCKnOwAY7ZQ6uCv@nongnu.org
-X-Gm-Message-State: AOJu0YyYONiyEO70gy8ygw9csS6oWxJoCpWMMcPg7+GlfZAL1Y4f1h9/
- 1a54ZO7aBZ64rRwrlGFoAUaeMVT6+dKf4ESnAY9OP9FYSznn+SMiceDUTHB+MkOVpUg=
-X-Gm-Gg: AZuq6aIrBYvIpYJL5GPiAT0PBGXk5PGv3pO1xpQash8LkHljCp/i1NQqNZnCgrenUzG
- /taDkZtg9BYWsaAEpiZi/Q0R9DVwbtPix6OI37O+qmx8RS0lQGDJiUFE1kKYbslyAlWEDbxJLfI
- QnRCq6Kw5mI7IhFhYCDavrS/QWouPq5DGUqtTvKoHePpYNBDCEsCApdrlwSSlyM6L0Q2u2AhMCZ
- eFbbtee9Kwbn0YXFxj+1x0QSigI5iXGQA3XDZBmhWsvqSq9+yARrAiFVnJD8ovrS5TGwYTuDG+V
- Y1jW4cZzVUf5eD7rbYEM+jP+PRTWtENFVV3SUCEOu0+sKiXKn7fzjZiEIydNSdx9W4plQWaoats
- gP71irAyluP0IL3PE0WBGT4v1SPlpW6wHuj2sghfomJj93r/ux/pUg+J16SGhXAalrWXHHl7yxO
- YzfwGrXQHCOjXQh4UUqAw/KRoqDeLwah1tYuXDi7LdlZCX3InqpUy5xTJmrS88nGG/Ew==
-X-Received: by 2002:a5d:5f84:0:b0:437:6b6e:d108 with SMTP id
- ffacd0b85a97d-4378e6d48edmr5002570f8f.8.1770911548251; 
- Thu, 12 Feb 2026 07:52:28 -0800 (PST)
-Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43783d325f7sm13139161f8f.8.2026.02.12.07.52.27
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 12 Feb 2026 07:52:27 -0800 (PST)
-Message-ID: <7f6a6958-b72a-41fb-923d-09ed4ab3ab1c@linaro.org>
-Date: Thu, 12 Feb 2026 16:52:26 +0100
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vqZ35-0005dU-O0
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 10:56:11 -0500
+Received: from zero.eik.bme.hu ([152.66.115.2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vqZ33-0007vo-7P
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 10:56:11 -0500
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 79112596A0B;
+ Thu, 12 Feb 2026 16:56:05 +0100 (CET)
+X-Virus-Scanned: amavis at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
+ id 9Y8NtiR0Q00T; Thu, 12 Feb 2026 16:56:03 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 626B95969F6; Thu, 12 Feb 2026 16:56:03 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 602885969F0;
+ Thu, 12 Feb 2026 16:56:03 +0100 (CET)
+Date: Thu, 12 Feb 2026 16:56:03 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: Zhao Liu <zhao1.liu@intel.com>
+cc: =?UTF-8?Q?Daniel_P=2E_Berrang=EF=BF=BD?= <berrange@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>, 
+ Markus Armbruster <armbru@redhat.com>, Thomas Huth <thuth@redhat.com>, 
+ Igor Mammedov <imammedo@redhat.com>, 
+ =?UTF-8?Q?Philippe_Mathieu-Daud=EF=BF=BD?= <philmd@linaro.org>, 
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Peter Maydell <peter.maydell@linaro.org>, 
+ "Michael S . Tsirkin" <mst@redhat.com>, 
+ Mark Cave-Ayland <mark.caveayland@nutanix.com>, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
+ Zide Chen <zide.chen@intel.com>, Dapeng Mi <dapeng1.mi@linux.intel.com>, 
+ qemu-devel@nongnu.org, devel@lists.libvirt.org
+Subject: Re: [PATCH v2 00/21] qom: introduce property flags to track external
+ user input
+In-Reply-To: <aY3yNPRh2qw0tt3q@intel.com>
+Message-ID: <e761bbc7-7778-67d3-f5ce-a74f1ace3a73@eik.bme.hu>
+References: <20260210032348.987549-1-zhao1.liu@intel.com>
+ <aYsElqDoGXQ_xMBD@redhat.com> <aYtOh9guoiQocdjk@intel.com>
+ <0193cb6f-7b73-43c1-ac89-93b426d3983e@eik.bme.hu>
+ <aYwuxfPyExb3Hv8y@intel.com>
+ <cefd333c-9893-47b7-9c1b-1ebd218b734d@eik.bme.hu>
+ <aY3yNPRh2qw0tt3q@intel.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>
-Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- QEMU Developers <qemu-devel@nongnu.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: exec: On migration_legacy_page_bits() & TARGET_PAGE_BITS_LEGACY
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,54 +82,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+On Thu, 12 Feb 2026, Zhao Liu wrote:
+> On Wed, Feb 11, 2026 at 12:28:13PM +0100, BALATON Zoltan wrote:
+>> Date: Wed, 11 Feb 2026 12:28:13 +0100
+>> From: BALATON Zoltan <balaton@eik.bme.hu>
+>> Subject: Re: [PATCH v2 00/21] qom: introduce property flags to track
+>>  external user input
+>>
+>> On Wed, 11 Feb 2026, Zhao Liu wrote:
+>>>> So another way could be to not use properties for internal settings but add
+>>>> another set of internal properties for those. These could be set the same
+>>>> way but stored in a different hash table and not get mixed with
+>>>> introspectable and user changable properties. But maybe that would be too
+>>>> much refactoring.
+>>>
+>>> Yes, it may require adding interfaces similar to object_property_add/get/
+>>> set, which would need significant changes.
+>>
+>> Maybe not that part needs significant changes as you could still use a flag
+>> the same way adding a parameter to object_property_add/get/set to tell it
+>> should put the propery in the internal hash but then you need to add the
+>> other hash and maybe related changes. I don't know how much would those be
+>> but no new interface is needed just extending existing one as you did
+>> already.
+>
+> Yes, you're right, the flag-related interfaces in this series provide
+> enough support. But I haven't quite figured out what the advantages of
+> using an independent hash table would be, or what problems it could
+> address... I feel like I need to think about it more :).
 
-TARGET_PAGE_BITS_LEGACY (previously named TARGET_PAGE_BITS_MIN)
-was introduced in commit 59811a320d6 ("migration/savevm.c: migrate
-non-default page size"), released for v2.8.0.
+Storing internal properties in another hash could avoid needing INTERNAL 
+and USER_SET flags as then there would be no way to set internal 
+properties other than from code and may save some checks as then you would 
+not need to special case internal properties in the user 
+inspectable/settable properties handling. But I don't know how much other 
+infrastructure it would need and if that would end up simpler than your 
+approach or not. I think it may be simpler by avoiding the special cases 
+and flags and clearly separating properties but as you say that would need 
+more thinking and I did not try to think further just throwing the idea at 
+you :-). The part creating, setting and storing internal properties should 
+be simple but I don't know if the usage of these would have a problem when 
+getting properties use the same interface for both external and internal 
+properties. But if all these internal properties just set device state 
+fields then all that's needed might be changing the property definition to 
+use internal property and the compat props to set such properties (but 
+compat may use some user settable properties too so this may make those a 
+bit more complex).
 
-Consequent commit e97da98f117 ("target-arm: Make page size a runtime
-setting"), also released for v2.8.0, enabled TARGET_PAGE_BITS_VARY
-for ARM system targets.
-
-Last up-to-v2.8.0 versioned ARM machine has been removed in commit
-f54854f9841 ("hw/arm/virt: Remove deprecated virt-2.8 machine").
-
-As of today (v10.2.0), only ARM system targets:
-- define TARGET_PAGE_BITS_VARY
-- define TARGET_PAGE_BITS_LEGACY
-- have vmstate_target_page_bits_needed() return %true
-
-(See migration/savevm.c:)
-
-   static bool vmstate_target_page_bits_needed(void *opaque)
-   {
-       return qemu_target_page_bits() > migration_legacy_page_bits();
-   }
-
-Thus as of today (for migration, which is system emulation) ARM
-targets have a target-page-bits subsection, and all other targets don't.
-
-So IIUC we can remove the configuration_pre_load() hook:
-
-   static int configuration_pre_load(void *opaque)
-   {
-       SaveState *state = opaque;
-
-       /* If there is no target-page-bits subsection it means the source
-        * predates the variable-target-page-bits support and is using the
-        * minimum possible value for this CPU.
-        */
-       state->target_page_bits = migration_legacy_page_bits();
-       return 0;
-   }
-
-Then remove migration_legacy_page_bits(), having
-vmstate_target_page_bits_needed() simply call target_page_bits_vary().
-
-Does that sound right (or in the correct path)?
-
-Thanks,
-
-Phil.
+Regards,
+BALATON Zoltan
 
