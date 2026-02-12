@@ -4,114 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3AE49EB491D
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 12:58:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABDB4EB491F
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 12:58:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqWGO-0004wx-Dd; Thu, 12 Feb 2026 07:57:44 -0500
+	id 1vqWGz-00052L-VC; Thu, 12 Feb 2026 07:58:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nsg@linux.ibm.com>)
- id 1vqWGG-0004wD-T5; Thu, 12 Feb 2026 07:57:38 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <clement.mathieu--drif@eviden.com>)
+ id 1vqWGy-00052B-Jj
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 07:58:20 -0500
+Received: from smtppost.atos.net ([193.56.114.177] helo=smarthost2.atos.net)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nsg@linux.ibm.com>)
- id 1vqWGE-0005iN-SQ; Thu, 12 Feb 2026 07:57:36 -0500
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 61C6R4cO247099; Thu, 12 Feb 2026 12:57:29 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=vKuHTD
- Mti6zpEL3rYV0DdCMF4N/d093St4ruRMzCJdc=; b=Ox+m0vZqgjH7hLbJJ6BE4N
- hFQl0KGEA3XA5pVjuJ+OzopAZ7F5brH9AGklRWHOd0K3ZI/9PQr6o+5nAuu2h+uS
- k4kRUW1KwmlHlBbrT1uHcP8Sx96UIOvNCJN2AZMWJB9MXf4zeQaBD7NifVBSbkSq
- 9iQ5am9TIFmGm9V1pGPkjv/JtjcYG+30EwQBXLCXLWW8UkYncvTM/zrEAmKQpxTZ
- wJ6v832xbae42lVaryX58jkQ54ls5GFWrQz9Icm6teLA5d+l8K8ARHf9uf3aVgOO
- ntO4GJ2xiKe99xOBKPIH4KIUfAv+UA7q9Wv2jotE9yRtkt/4x7VhPBSR7YomGEUg
- ==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4c696v3fhv-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 12 Feb 2026 12:57:29 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 61CAFKHE001847;
- Thu, 12 Feb 2026 12:57:28 GMT
-Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4c6je2a5xw-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 12 Feb 2026 12:57:28 +0000
-Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
- [10.20.54.104])
- by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 61CCvOYC51642872
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 12 Feb 2026 12:57:24 GMT
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 821CD20043;
- Thu, 12 Feb 2026 12:57:24 +0000 (GMT)
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9F12B20040;
- Thu, 12 Feb 2026 12:57:23 +0000 (GMT)
-Received: from li-978a334c-2cba-11b2-a85c-a0743a31b510.ibm.com (unknown
- [9.111.78.249]) by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 12 Feb 2026 12:57:23 +0000 (GMT)
-Message-ID: <210594e4dcac9d0adaa1a49c16af7b73075bc1b8.camel@linux.ibm.com>
-Subject: Re: [PATCH] s390x/kvm: Add ASTFLE facility 2 for nested virtualization
-From: Nina Schoetterl-Glausch <nsg@linux.ibm.com>
-To: Christoph Schlameuss <schlameuss@linux.ibm.com>, qemu-devel@nongnu.org
-Cc: Halil Pasic <pasic@linux.ibm.com>, Christian Borntraeger	
- <borntraeger@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>, Matthew
- Rosato	 <mjrosato@linux.ibm.com>, Richard Henderson
- <richard.henderson@linaro.org>, Ilya Leoshkevich	 <iii@linux.ibm.com>,
- David Hildenbrand <david@kernel.org>, Thomas Huth	 <thuth@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Cornelia Huck	 <cohuck@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Hendrik Brueckner	
- <brueckner@linux.ibm.com>, qemu-s390x@nongnu.org, kvm@vger.kernel.org
-Date: Thu, 12 Feb 2026 13:57:41 +0100
-In-Reply-To: <20260211-astfleie2-v1-1-cfa11f422fd8@linux.ibm.com>
-References: <20260211-astfleie2-v1-1-cfa11f422fd8@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <clement.mathieu--drif@eviden.com>)
+ id 1vqWGv-0005pr-Ca
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 07:58:20 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=eviden.com; i=@eviden.com; q=dns/txt; s=mail;
+ t=1770901098; x=1802437098;
+ h=message-id:subject:from:to:cc:date:in-reply-to:
+ references:content-transfer-encoding:mime-version;
+ bh=ecmtEfN/OaF+oLKDzcjn422npJeMagJvuqY0Mp47CeI=;
+ b=sadQFlN2H63xuPOUDHcEsUictxRAURJE99OFGaXpD5S3691nyHJYuF8f
+ sXbYC+R7htVKMQVolKEUUk95FKH+KE5iO9s5rhHiS87mjhE7PUzSw6I1F
+ z5QyGzplZIUnKzQSAKqGoWyTHWnsUkTVBQz0tB+4RhJudBslXCg7aUPLI
+ G9GQBjGUCJiay0svHubbptLglF5aIaaZv09jgDjf5sfXXRNS1DQNGwHx4
+ VJkqpGXHupnOACwZZ4qIsuU7YozPUoxuorcCXCz+0e+1rEMIGlJ6qpPiv
+ GztLxWUHUA8kRaJLBF5BThmWrMfOuR63dKYWyTKrpwf/sjW38UBIa5WnQ g==;
+X-CSE-ConnectionGUID: LdJkjBRwQO6gdUhdbGhABg==
+X-CSE-MsgGUID: /zSMIyGSTIqsL9TFK+pXmA==
+X-IronPort-AV: E=Sophos;i="6.21,286,1763420400"; d="scan'208";a="826733865"
+X-MGA-submission: =?us-ascii?q?MDHgC+lYIpAdESypIBP4+2UHKbBdJGn6gB1Br3?=
+ =?us-ascii?q?tJOQIsUVzhzICybbHdTYnu109d0H5dhAirsLOxxtvZWAIbceQsom82S2?=
+ =?us-ascii?q?yn7ix4itcyT5ddmd5tF0FVwlHwy726gzhAgy41Ji5fs1kMNtJ2SSumXY?=
+ =?us-ascii?q?v5?=
+Received: from smtp1.atos-infogerance.fr ([193.56.241.17])
+ by smarthost2.atos.net with ESMTP/TLS/TLS_AES_256_GCM_SHA384;
+ 12 Feb 2026 13:58:15 +0100
+Received: from smtp-hub.atos-infogerance.fr (smtp-hub.atos-infogerance.fr
+ [193.56.47.18])
+ by smtp1.atos-infogerance.fr (8.15.2/8.15.2) with ESMTPS id 61CCwDfb006356
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO);
+ Thu, 12 Feb 2026 13:58:13 +0100
+Received: from rocky.hd2c.dom ([129.181.244.14])
+ by smtp-hub.atos-infogerance.fr (envelope-from
+ clement.mathieu--drif@eviden.com) (8.15.2/8.15.2) with ESMTP id
+ 61CCwDGm025604; Thu, 12 Feb 2026 13:58:13 +0100
+Received: from openbmc (unknown [10.22.85.22])
+ by rocky.hd2c.dom (Postfix) with ESMTP id E72AA256CA5;
+ Thu, 12 Feb 2026 13:58:12 +0100 (CET)
+Received: from [127.0.0.1] (host.containers.internal [10.88.0.1])
+ by openbmc (Postfix) with ESMTP id 107A6248987;
+ Thu, 12 Feb 2026 12:58:12 +0000 (UTC)
+Message-ID: <efa471d513bb227e41ba466fb0e9f7e46fe491d7.camel@eviden.com>
+Subject: Re: [RFC PATCH 04/14] intel_iommu: Create the nested hwpt with
+ IOMMU_HWPT_ALLOC_PASID flag
+From: Clement Mathieu--Drif <clement.mathieu--drif@eviden.com>
+To: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>
+Cc: "alex@shazbot.org" <alex@shazbot.org>, "clg@redhat.com" <clg@redhat.com>,
+ "eric.auger@redhat.com"	 <eric.auger@redhat.com>,
+ "mst@redhat.com" <mst@redhat.com>, "jasowang@redhat.com"	
+ <jasowang@redhat.com>, "jgg@nvidia.com" <jgg@nvidia.com>,
+ "nicolinc@nvidia.com"	 <nicolinc@nvidia.com>, "skolothumtho@nvidia.com"
+ <skolothumtho@nvidia.com>, "joao.m.martins@oracle.com"	
+ <joao.m.martins@oracle.com>, "Tian, Kevin" <kevin.tian@intel.com>, "Liu, Yi
+ L"	 <yi.l.liu@intel.com>, "Hao, Xudong" <xudong.hao@intel.com>
+Date: Thu, 12 Feb 2026 13:57:51 +0100
+In-Reply-To: <IA3PR11MB9136CD500D64456273F3202B9260A@IA3PR11MB9136.namprd11.prod.outlook.com>
+References: <20260205031133.74357-1-zhenzhong.duan@intel.com>
+ <20260205031133.74357-5-zhenzhong.duan@intel.com>
+ <669e9b9b6fe10f797d8d9571c7327c8a5617ae3f.camel@eviden.com>
+ <IA3PR11MB9136CD500D64456273F3202B9260A@IA3PR11MB9136.namprd11.prod.outlook.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.56.2 (3.56.2-2.fc42) 
+User-Agent: Evolution 3.58.2 (3.58.2-1.fc43) 
 MIME-Version: 1.0
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjEyMDA5NiBTYWx0ZWRfX/GSdhVx35i3w
- YGpaOgwPS/OT7SWQJFZCqB3yklB04xGwPp18XrQG5V1lOVNT8/wWvJFva0SezKNKDbHJdXE4gAH
- BywfNwQZ35KHDJrkiFhzsTSmUI1V54SJD0Dw12CnGk9I+580TowiBiYb3NfRi5XlM3CFp4KTnLs
- gVUK8xguziuvbBBGQJNKFOJr11+IDlUqhee/QoFa8rKpCGFLxw7pCFxUefAZDQsy9PpW/vnW2fQ
- L60ilzTLk/BDP68yCP6lBotzc+YfF3hyamr/8AgWMv7kr0EYH/mqaCRVXxsvBwGZ7K0/Y5UT6id
- C6GIX0KUlSIucIyzTb/JOoalI1FXY6m+ALH+9i7KhW4sN2whV7A6c6HfiKGXV76+XIGOmnFzGwK
- VQSQRaDnf7oj2TANhY3FDBBGewrhx2CmPjFnsZbsQEjkrWFOlN6FTj23ztEbL3KgZidkjMC3UW4
- 5LJkr9rk95HGhVmA0sg==
-X-Proofpoint-ORIG-GUID: rwa0Ng6_72RHzpFKq1WMuEFNjSmLJMlY
-X-Proofpoint-GUID: rwa0Ng6_72RHzpFKq1WMuEFNjSmLJMlY
-X-Authority-Analysis: v=2.4 cv=O+Y0fR9W c=1 sm=1 tr=0 ts=698dce39 cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=IkcTkHD0fZMA:10 a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22 a=VnNF1IyMAAAA:8
- a=jluB_lIlwI9kuYLZUVYA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-02-12_03,2026-02-12_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 priorityscore=1501 phishscore=0 adultscore=0
- malwarescore=0 impostorscore=0 bulkscore=0 clxscore=1011 spamscore=0
- suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
- definitions=main-2602120096
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=nsg@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=193.56.114.177;
+ envelope-from=clement.mathieu--drif@eviden.com; helo=smarthost2.atos.net
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,20 +106,148 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 2026-02-11 at 15:56 +0100, Christoph Schlameuss wrote:
-> Allow propagation of the ASTFLEIE2 feature bit.
->=20
-> If the host does have the ASTFLE Interpretive Execution Facility 2 the
-> guest can enable the ASTFLE format 2 for its guests.
->=20
-> Signed-off-by: Christoph Schlameuss <schlameuss@linux.ibm.com>
 
-Reviewed-by: Nina Schoetterl-Glausch <nsg@linux.ibm.com>
+On Thu, 2026-02-12 at 08:33 +0000, Duan, Zhenzhong wrote:
+>=20
+>=20
+>=20
+> > -----Original Message-----
+> > From: Clement Mathieu--Drif <[clement.mathieu--drif@eviden.com](mailto:=
+clement.mathieu--drif@eviden.com)>
+> > Subject: Re: [RFC PATCH 04/14] intel_iommu: Create the nested hwpt with
+> > IOMMU_HWPT_ALLOC_PASID flag
+> >=20
+> >=20
+> > On Wed, 2026-02-04 at 22:11 -0500, Zhenzhong Duan wrote:
+> >=20
+> > > When pasid is enabled, any hwpt attached to non-PASID or PASID should=
+ be
+> > > IOMMU_HWPT_ALLOC_PASID flagged, or else attachment fails.
+> > >=20
+> > > Signed-off-by: Zhenzhong Duan
+> >=20
+> > <[[zhenzhong.duan@intel.com](mailto:zhenzhong.duan@intel.com)](mailto:[=
+zhenzhong.duan@intel.com](mailto:zhenzhong.duan@intel.com))>
+> >=20
+> > > ---
+> > > =C2=A0hw/i386/intel_iommu_accel.c | 10 ++++++----
+> > > =C2=A01 file changed, 6 insertions(+), 4 deletions(-)
+> > >=20
+> > > diff --git a/hw/i386/intel_iommu_accel.c b/hw/i386/intel_iommu_accel.=
+c
+> > > index 67d54849f2..d61cfec1e6 100644
+> > > --- a/hw/i386/intel_iommu_accel.c
+> > > +++ b/hw/i386/intel_iommu_accel.c
+> > > @@ -69,11 +69,13 @@ VTDHostIOMMUDevice
+> >=20
+> > *vtd_find_hiod_iommufd(VTDAddressSpace *as)
+> >=20
+> > > =C2=A0=C2=A0=C2=A0=C2=A0 return NULL;
+> > > =C2=A0}
+> > >=20
+> > > -static bool vtd_create_fs_hwpt(HostIOMMUDeviceIOMMUFD *idev,
+> > > +static bool vtd_create_fs_hwpt(VTDHostIOMMUDevice *vtd_hiod,
+> >=20
+> >=20
+> > Does this change break naming consistency?
+>=20
+>=20
+> Yes, because we need to check vtd_hiod->iommu_state->pasid in vtd_create_=
+fs_hwpt() but not in vtd_destroy_old_fs_hwpt().
+>=20
+> We can change vtd_destroy_old_fs_hwpt() to also pass vtd_hiod or add a ne=
+w =20
+> parameter 'iommu_state *s' to vtd_create_fs_hwpt().
 
---=20
-IBM Deutschland Research & Development GmbH
-Vorsitzender des Aufsichtsrats: Wolfgang Wendt
-Gesch=C3=A4ftsf=C3=BChrung: David Faller
-Sitz der Gesellschaft: Ehningen / Registergericht: Amtsgericht Stuttgart, H=
-RB 243294
+First solution lgtm
+
+>=20
+>=20
+>=20
+> > Other functions use use idev for HostIOMMUDeviceIOMMUFD structures
+>=20
+>=20
+> Do you see others except vtd_destroy_old_fs_hwpt()?
+
+I don't think so
+
+Thanks !
+
+>=20
+> Thanks =20
+> Zhenzhong
+>=20
+>=20
+>=20
+> >=20
+> > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 VTDPASIDEntry *pe, uint32_t *fs_=
+hwpt_id,
+> > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 Error **errp)
+> > > =C2=A0{
+> > > +=C2=A0=C2=A0=C2=A0 HostIOMMUDeviceIOMMUFD *idev =3D
+> >=20
+> > HOST_IOMMU_DEVICE_IOMMUFD(vtd_hiod->hiod);
+> >=20
+> > > =C2=A0=C2=A0=C2=A0=C2=A0 struct iommu_hwpt_vtd_s1 vtd =3D {};
+> > > +=C2=A0=C2=A0=C2=A0 uint32_t flags =3D vtd_hiod->iommu_state->pasid ?
+> >=20
+> > IOMMU_HWPT_ALLOC_PASID : 0;
+> >=20
+> > >=20
+> > > =C2=A0=C2=A0=C2=A0=C2=A0 vtd.flags =3D (VTD_SM_PASID_ENTRY_SRE(pe) ? =
+IOMMU_VTD_S1_SRE : 0) |
+> > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0 (VTD_SM_PASID_ENTRY_WPE(pe) ? IOMMU_VTD_S1_WPE =
+: 0) |
+> > > @@ -82,8 +84,8 @@ static bool
+> >=20
+> > vtd_create_fs_hwpt(HostIOMMUDeviceIOMMUFD *idev,
+> >=20
+> > > =C2=A0=C2=A0=C2=A0=C2=A0 vtd.pgtbl_addr =3D (uint64_t)vtd_pe_get_fspt=
+_base(pe);
+> > >=20
+> > > =C2=A0=C2=A0=C2=A0=C2=A0 return iommufd_backend_alloc_hwpt(idev->iomm=
+ufd, idev->devid, idev-
+> > > hwpt_id,
+> > > -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0 0, IOMMU_HWPT_DATA_VTD_S1, sizeof(vtd),
+> > > -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0 &vtd, fs_hwpt_id, errp);
+> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0 flags, IOMMU_HWPT_DATA_VTD_S1,
+> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0 sizeof(vtd), &vtd, fs_hwpt_id, errp);
+> > > =C2=A0}
+> > >=20
+> > > =C2=A0static void vtd_destroy_old_fs_hwpt(HostIOMMUDeviceIOMMUFD *ide=
+v,
+> > > @@ -116,7 +118,7 @@ static bool
+> >=20
+> > vtd_device_attach_iommufd(VTDHostIOMMUDevice *vtd_hiod,
+> >=20
+> > > =C2=A0=C2=A0=C2=A0=C2=A0 }
+> > >=20
+> > > =C2=A0=C2=A0=C2=A0=C2=A0 if (vtd_pe_pgtt_is_fst(pe)) {
+> > > -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (!vtd_create_fs_hwpt(i=
+dev, pe, &hwpt_id, errp)) {
+> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (!vtd_create_fs_hwpt(v=
+td_hiod, pe, &hwpt_id, errp)) {
+> > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0 return false;
+> > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
+> > > =C2=A0=C2=A0=C2=A0=C2=A0 }
+> >
+>=20
 
