@@ -4,117 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65D26EDF04C
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 08:11:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09C79EDF053
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 08:15:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqRnL-0007HQ-3Q; Thu, 12 Feb 2026 03:11:27 -0500
+	id 1vqRqt-0000Ns-83; Thu, 12 Feb 2026 03:15:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <schlameuss@linux.ibm.com>)
- id 1vqRnG-000724-Ja; Thu, 12 Feb 2026 03:11:22 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1vqRqr-0000MA-Dc
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 03:15:05 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <schlameuss@linux.ibm.com>)
- id 1vqRn9-0001f2-70; Thu, 12 Feb 2026 03:11:18 -0500
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 61C741Se473751; Thu, 12 Feb 2026 08:11:07 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=yjfa6u
- v49QtMRaF3SlKO3vrCze1iA8OBjO2iYItTUR0=; b=IVoQ9exyhWuBraoYxvuLAW
- 2UoB7WMNJDZPoHRkTU5U8ir7YIccUYAb231nkSIR+LmGsbVdjeDL0o/zj1ziwUfT
- oNJcrn/05YCJTBB/8S6Zhjo521hLhOsjGUFr10BtFD9e7eItpOp/qhkOubiqEZtG
- j63R7tG4aVDmnAxLt3oS/3aS3jZDsQKPcU2RcjXubyoX8LcYuWP3cAI6mkKUNuzN
- BC8xWFJFLucc4P8PAYlL8qTADuMXlkeUFUHUUcDtHei6q9ygsvBM5nN3sC9miNzv
- k3uN6L/0U95Jdzm5W0UpBB/F3m3sKa61RRIc9vrMSC2K5VfltlqesKQaByW16JQg
- ==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4c696x2g0v-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 12 Feb 2026 08:11:07 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 61C5JLXD001825;
- Thu, 12 Feb 2026 08:11:06 GMT
-Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4c6je2970p-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 12 Feb 2026 08:11:06 +0000
-Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
- [10.20.54.105])
- by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 61C8B25m56623386
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 12 Feb 2026 08:11:02 GMT
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9DE632004D;
- Thu, 12 Feb 2026 08:11:02 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7134920040;
- Thu, 12 Feb 2026 08:11:02 +0000 (GMT)
-Received: from darkmoore (unknown [9.111.23.205])
- by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 12 Feb 2026 08:11:02 +0000 (GMT)
-Mime-Version: 1.0
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1vqRqo-0001q6-UE
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 03:15:04 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1770884101;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=CB0PMT4NRuvpGKKz3avwzSPLWaKso1o681RmSvGxl7M=;
+ b=WRM4TMqWo2hoISrlbJ/1Pp8OIAcHCkc1KLp6GZu63nEfk7b6p2CTyiAUCVDNBfM14yvGj8
+ i3SMNia7LQ+C/9IvGslbd+88szqZ9BYFbacxhuCNEdOWFLUKtTZExMluRfEKhf6hgKRsTk
+ 5SAa7y4U9hjPvjMp6O5RCEY9nsaPfgA=
+Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com
+ [209.85.214.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-48-CL0CJvtNOHaDYztP_ObPaQ-1; Thu, 12 Feb 2026 03:14:59 -0500
+X-MC-Unique: CL0CJvtNOHaDYztP_ObPaQ-1
+X-Mimecast-MFC-AGG-ID: CL0CJvtNOHaDYztP_ObPaQ_1770884099
+Received: by mail-pl1-f199.google.com with SMTP id
+ d9443c01a7336-2a7b7f04a11so82543675ad.3
+ for <qemu-devel@nongnu.org>; Thu, 12 Feb 2026 00:14:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1770884098; x=1771488898; darn=nongnu.org;
+ h=to:references:message-id:content-transfer-encoding:cc:date
+ :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=CB0PMT4NRuvpGKKz3avwzSPLWaKso1o681RmSvGxl7M=;
+ b=Y7V5TMwDfi52bRuF4eBM1C3w2m8vzZlqpdT9JPfS1HD8+gIE/C26B8TbvERD1/s1Ys
+ r0CxtDRbtJOC/mXtWyahymAJQnmO/MFs4gkG2WWCA/AuBcX/1QmPbA7hbr3TrFxFfbsF
+ Vevu/2MccrcMv+Izi5wp/qLTGPMAH9fEpLPstregtbGcMzL8S8UMP0mtboqMV0CoaO/P
+ QZut4QcHf1TBOxbuf0mmbjXlcb7gQp9quZQDK0rTC7ae2PrixU6GmE8Aw+HZjwRcBuui
+ yPF1Rf5vcq8YRy1RenA7kZ3390exkIlC+/OkECS7UA1PJ4Zk0NFZ+15INgq+7CW0emO5
+ DLvg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770884098; x=1771488898;
+ h=to:references:message-id:content-transfer-encoding:cc:date
+ :in-reply-to:from:subject:mime-version:x-gm-gg:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=CB0PMT4NRuvpGKKz3avwzSPLWaKso1o681RmSvGxl7M=;
+ b=nniw2/M5tNrzXvnb9WR0FMDZfzIIdCUIVBcnqhsItgIdTVXkpb0OjSoawKwwInJVf+
+ g7C4rlu+3dGfZ4Z3VWsnTCH19ayf1C8ZbCbDV3de0L7ceney1NdzitrSNqDm3oeLy8Ge
+ b4EC4QqgsZfEvyK+g2FAAWBI/gQ0kgd+oaYd0HjPFvjTmPeubHEdRuPDXChaBy+e7Y7a
+ 1cYoDPsxM2ASrjqk/w3uWD36vo9sJaKTKqqTMr+lGd+kilOObA+knlQtzN3YLbj0FiM5
+ iK0yFAfY0V1KWIl24qpEsMQv709SoBP9ilAAplq6OsumtY1sEKGFz4H2V7Rz6G5Ve9Ld
+ W/SA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU+DVK1ooE1DnuJ7s/elBlB2svu8oXdwo3VGa8/LNjjRX1wYWEBi5yEvbyN/LCsIeZn5J0CDRDF+7O5@nongnu.org
+X-Gm-Message-State: AOJu0YyzvU356p5HsOT5AYvalSSY9FpCux6CT0fBXY+9C+iDDFB22SdE
+ N8VKunE2pICavH4V9Jv38fP2B7vKHCg4n4vRcLiklbXbDFBY7oHDogV5OqygpjP7D1eiUka8E/H
+ 1e5s/YvHC0xr4cgdpRuwsUxfjep85/SjAGlKp7COCcAHREFP1qKqPta70
+X-Gm-Gg: AZuq6aLnD1eS8Pdf7Yw0feRUnoQKL2tXKqIKKXvuOTruhLPVzreqk167lqDuF2f0pe1
+ u39R1O4KQNYC4/Vcu2FjTWPDmsrW1enrxCjZ1eU6ZSsb6ouzHLQ+NdwCVUG718bMau3GWbzpfqr
+ 9e8RNZDE2tdjZx5KbAR4jSD+6LzhRPQTG7dpSvFEg2X3+40BdGYbhl4fsIf7vf6cvnQ2XguNY/V
+ sVnQHwzT7cxl4GUJb6aItOOPFUh8UxjFDusp+9dWFxybJ38AXNCiw/tKHDiaiAjL62fqhRNA3dD
+ tVWMr2aK91EP6C5cz4Y+szbSwS7/UUm3phELeNjW9RWt6uOyCp/w3xN8jtgtLaXnvp1P2pwE7O4
+ 1Ymvys1bgfi8sUBoUDVDY2mqiI7hqbFDO8ggfO4VCL64yPpBZ85dKsnmhMQUeTmvCTe7w/Q==
+X-Received: by 2002:a17:902:d586:b0:2ab:24fa:f7a0 with SMTP id
+ d9443c01a7336-2ab3b185785mr17059625ad.11.1770884098648; 
+ Thu, 12 Feb 2026 00:14:58 -0800 (PST)
+X-Received: by 2002:a17:902:d586:b0:2ab:24fa:f7a0 with SMTP id
+ d9443c01a7336-2ab3b185785mr17059415ad.11.1770884098282; 
+ Thu, 12 Feb 2026 00:14:58 -0800 (PST)
+Received: from smtpclient.apple ([122.164.27.113])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2ab2984ab2fsm41622275ad.17.2026.02.12.00.14.55
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Thu, 12 Feb 2026 00:14:57 -0800 (PST)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81.1.4\))
+Subject: Re: [PATCH v4 00/31] Introduce support for confidential guest reset
+ (x86)
+From: Ani Sinha <anisinha@redhat.com>
+In-Reply-To: <aY2K_9mEj2oT_I0l@redhat.com>
+Date: Thu, 12 Feb 2026 13:44:43 +0530
+Cc: Gerd Hoffmann <kraxel@redhat.com>, qemu-devel <qemu-devel@nongnu.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Vitaly Kuznetsov <vkuznets@redhat.com>, Alexander Graf <graf@amazon.com>
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Thu, 12 Feb 2026 09:11:14 +0100
-Message-Id: <DGCTXWV8JGW1.25EN8P8FZ4GP9@linux.ibm.com>
-From: "Christoph Schlameuss" <schlameuss@linux.ibm.com>
-Cc: "Halil Pasic" <pasic@linux.ibm.com>, "Christian Borntraeger"
- <borntraeger@linux.ibm.com>, "Eric Farman" <farman@linux.ibm.com>, "Matthew
- Rosato" <mjrosato@linux.ibm.com>, "Richard Henderson"
- <richard.henderson@linaro.org>, "Ilya Leoshkevich" <iii@linux.ibm.com>,
- "David Hildenbrand" <david@kernel.org>, "Michael S. Tsirkin"
- <mst@redhat.com>, "Cornelia Huck" <cohuck@redhat.com>, "Paolo Bonzini"
- <pbonzini@redhat.com>, "Hendrik Brueckner" <brueckner@linux.ibm.com>, "Nina
- Schoetterl-Glausch" <nsg@linux.ibm.com>,
- <qemu-s390x@nongnu.org>, <kvm@vger.kernel.org>
-To: "Thomas Huth" <thuth@redhat.com>, "Christoph Schlameuss"
- <schlameuss@linux.ibm.com>, <qemu-devel@nongnu.org>
-Subject: Re: [PATCH] s390x/kvm: Add ASTFLE facility 2 for nested virtualization
-X-Mailer: aerc 0.21.0
-References: <20260211-astfleie2-v1-1-cfa11f422fd8@linux.ibm.com>
- <696de68c-6422-4a1f-a462-808a891c4aca@redhat.com>
-In-Reply-To: <696de68c-6422-4a1f-a462-808a891c4aca@redhat.com>
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=WZYBqkhX c=1 sm=1 tr=0 ts=698d8b1b cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=IkcTkHD0fZMA:10 a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22 a=VnNF1IyMAAAA:8
- a=cK_2QuFJinR_CRx2KsQA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: WJCBRCKt3L2kH-hCL8TeQGU8IbcQ45aF
-X-Proofpoint-ORIG-GUID: WJCBRCKt3L2kH-hCL8TeQGU8IbcQ45aF
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjEyMDA1NiBTYWx0ZWRfXw0/s+OHLtEnH
- y7xJQQ4+EGXfx77zFygpSegqIyBkf+5XYPxI3OhJqP9u8lc8EK7ddD+PFsm5zlbke64RtyVW/TS
- /gXXV33YN+9Vy7JQvGaICa/El4WKKDVNgFnUr10+yL6v7ruSyybtH2zMCE+BhXk4YF8rAzL+C0a
- 1SGgMWuhfcReF59P39Qi6YXNAW8xmgFS/JjuRkSZ2xqYoLj13VD7KWeiChoRqMZLoRXFu1wBx7y
- CLt3ImvXjV6L1Nh7aX12Pl9WlDqhhnGHCsdmTFRAzMNOnxDIAc3k/KWGkUd+Op4OyaLQLupEyiX
- 4PxgLAUlTvtFNkZuKjBcHBV5KaKsrIkAzXSb+6bDB2SZn9NgLujBKrK0mjg8yeIgd6nzkCz29+B
- 9RkIGm1sohxwGbC4wl2//QhpOiwjhmPzbnJDhENeKr7hsRc9qbCY1ywZvHG2M1tnH5Dproge0/H
- uyc7nbfLeNU95w+qS9Q==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-02-12_02,2026-02-11_04,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 clxscore=1015 phishscore=0 bulkscore=0 adultscore=0
- priorityscore=1501 lowpriorityscore=0 suspectscore=0 impostorscore=0
- malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
- definitions=main-2602120056
-Received-SPF: pass client-ip=148.163.158.5;
- envelope-from=schlameuss@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Message-Id: <820317C2-F452-4985-BC4F-26F7D29B4787@redhat.com>
+References: <20260212062522.99565-1-anisinha@redhat.com>
+ <aY2K_9mEj2oT_I0l@redhat.com>
+To: Daniel Berrange <berrange@redhat.com>
+X-Mailer: Apple Mail (2.3826.700.81.1.4)
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=anisinha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -130,40 +127,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed Feb 11, 2026 at 5:00 PM CET, Thomas Huth wrote:
-> On 11/02/2026 15.56, Christoph Schlameuss wrote:
->> Allow propagation of the ASTFLEIE2 feature bit.
->>=20
->> If the host does have the ASTFLE Interpretive Execution Facility 2 the
->> guest can enable the ASTFLE format 2 for its guests.
->>=20
->> Signed-off-by: Christoph Schlameuss <schlameuss@linux.ibm.com>
->> ---
-> ...
->> diff --git a/linux-headers/asm-s390/kvm.h b/linux-headers/asm-s390/kvm.h
->> index ab5a6bce590c722452dac5aeb476bd1969d2235b..45a6d0a7406a3f1b71026c49=
-e00ac25a6fc620ef 100644
->> --- a/linux-headers/asm-s390/kvm.h
->> +++ b/linux-headers/asm-s390/kvm.h
->> @@ -444,6 +444,7 @@ struct kvm_s390_vm_cpu_machine {
->>   #define KVM_S390_VM_CPU_FEAT_PFMFI	11
->>   #define KVM_S390_VM_CPU_FEAT_SIGPIF	12
->>   #define KVM_S390_VM_CPU_FEAT_KSS	13
->> +#define KVM_S390_VM_CPU_FEAT_ASTFLEIE2	14
->>   struct kvm_s390_vm_cpu_feat {
->>   	__u64 feat[16];
->>   };
->   Hi!
->
-> Please don't send updates to linux-headers/ embedded in patches, such=20
-> updates should go via a separate patch instead that has been created by t=
-he=20
-> scripts/update-linux-headers.sh script.
->
->   Thanks,
->    Thomas
 
-Ah, yes, thank you for the headsup.
-I will split this up then into two proper commits for the next series
-version. I will just wait for some more feedback before sending that out.
+
+> On 12 Feb 2026, at 1:40=E2=80=AFPM, Daniel P. Berrang=C3=A9 =
+<berrange@redhat.com> wrote:
+>=20
+> On Thu, Feb 12, 2026 at 11:54:44AM +0530, Ani Sinha wrote:
+>> This change introduces support for confidential guests
+>> (SEV-ES, SEV-SNP and TDX) to reset/reboot just like other =
+non-confidential
+>> guests. Currently, a reboot intiated from the confidential guest =
+results
+>> in termination of the QEMU hypervisor as the CPUs are not resettable. =
+As the
+>> initial state of the guest including private memory is locked and =
+encrypted,
+>> the contents of that memory will not be accessible post reset. Hence =
+a new
+>> KVM file descriptor must be opened to create a new confidential VM =
+context
+>> closing the old one. All KVM VM specific ioctls must be called again. =
+New
+>> VCPU file descriptors must be created against the new KVM fd and most =
+VCPU
+>> ioctls must be called again as well.
+>>=20
+>> This change perfoms closing of the old KVM fd and creating a new one. =
+After
+>> the new KVM fd is opened, all generic and architecture specific ioctl =
+calls
+>> are issued again. Notifiers are added to notify subsystems that:
+>> - The KVM file fd is about to be changed to state sync-ing from KVM =
+to QEMU
+>>  should be done if required.
+>> - The KVM file fd has changed, so ioctl calls to the new KVM fd has =
+to be
+>>  performed again.
+>> - That new VCPU fds are created so that VCPU ioctl calls must be =
+called again
+>>  where required.
+>>=20
+>> Specific subsystems use these notifiers to re-issue ioctl calls where =
+required.
+>>=20
+>> Changes are made to SEV and TDX modules to reinitialize the =
+confidential guest
+>> state and seal it again. Along the way, some bug fixes are made so =
+that some
+>> initialization functions can be called again. Some refactoring of =
+existing
+>> code is done so that both init and reset paths can use them.
+>>=20
+>> Tested on TDX, SEV-ES and SEV-SNP. Tested on non-coco hardware. =
+Tested with Xen
+>> emulation enabled.
+>=20
+> I see no QOM changes here, so is there any way for a mgmt app to
+> detect that QEMU is now capable of guest reset with TDX/SEV/SNP,
+> compared to the current behaviour ?
+
+The thought did not occur to me. So other than the availability of =
+'x-change-vmfd-on-reset=E2=80=99 machine property there is nothing else.
+
 
