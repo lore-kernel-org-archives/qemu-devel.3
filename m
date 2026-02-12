@@ -4,72 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5D24EEA85A
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 21:44:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B2FFEEA84E
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 21:58:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqeQ8-00089w-0h; Thu, 12 Feb 2026 16:40:20 -0500
+	id 1vqeg0-0003zk-TQ; Thu, 12 Feb 2026 16:56:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vqeQ3-000881-EZ
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 16:40:15 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vqeQ1-00065G-JM
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 16:40:15 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770932412;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=2Mkkkhk2UiUGTwPLfktE4GWh3o9J6sQJBwTAwIgfVlk=;
- b=ZV/YcwXtpLD5wzOTZHlflAZNcUDVXNbv6nqCi/yTbZnO4T2Jy2kcVG+1Ro05zSUQixo1p6
- fXLAbYKhECVLiGi19QwlXtxfxD4kd/1dHKaS7zGJCXuIWNeVG4hhj+qAI8gCijrXIIryeW
- 1BFc3kRnT7Avm5xsVYriYH5qxT+vNAU=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-99-cwbQ-_4fPd2MK4kkKSTB7g-1; Thu,
- 12 Feb 2026 16:40:09 -0500
-X-MC-Unique: cwbQ-_4fPd2MK4kkKSTB7g-1
-X-Mimecast-MFC-AGG-ID: cwbQ-_4fPd2MK4kkKSTB7g_1770932408
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 77778195606E; Thu, 12 Feb 2026 21:40:08 +0000 (UTC)
-Received: from corto.redhat.com (unknown [10.45.224.55])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id B60E4180035A; Thu, 12 Feb 2026 21:40:06 +0000 (UTC)
-From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-To: qemu-arm@nongnu.org,
-	qemu-devel@nongnu.org
-Cc: Jamin Lin <jamin_lin@aspeedtech.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 04/16] hw/i2c/aspeed_i2c: Increase I2C device register size to
- 0xA0
-Date: Thu, 12 Feb 2026 22:39:43 +0100
-Message-ID: <20260212213955.2225662-5-clg@redhat.com>
-In-Reply-To: <20260212213955.2225662-1-clg@redhat.com>
-References: <20260212213955.2225662-1-clg@redhat.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vqefY-0003wF-1j
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 16:56:16 -0500
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vqefW-0004G1-Ag
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 16:56:15 -0500
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-4801c2fae63so2321075e9.2
+ for <qemu-devel@nongnu.org>; Thu, 12 Feb 2026 13:56:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1770933371; x=1771538171; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=t8WBGiN4/DVAiL0Eh6Dae5nCGHyAaujcJb6LH0LxG+U=;
+ b=bvz9giTXLLncdpoz5adxJfTW+jZigeh75E2LqdYo8V3YW21h1sMzbxTa9E5F5eJXUk
+ /9yGdbM2WudziGqbad8Q38JlI0XzSwET7MYUSJ3FEgiWV4pou3oCBRqD2YXGcYQOJE26
+ u4Fl713JdK4VOLLv7RDto2ydFqtssbUczzQM9bTV7Fsy3e1PnKP2+7LfVm2ie35Hb9bj
+ 4zHYxppyPZxlRwhdz5kPKpwyPFkkQsEKVmFZs4GsxOfx/yNIDCLG5rH46iKPsbwbO8Mk
+ ZIMviomEBpmdNYA2pKMGJ1WYSeUWO7DDL2TghlQ1yEL5C6BLvvA4y3I1uuxbUi6yKnhZ
+ vYWw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770933371; x=1771538171;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=t8WBGiN4/DVAiL0Eh6Dae5nCGHyAaujcJb6LH0LxG+U=;
+ b=EwylGJUO58zf7Mi8yAeDAEhS4sTgWkwDP3E0qzc5EYtIwjhQjGn3ELveQ04k+xOCgU
+ YX+CxRtgPKKt5x5jxBraH/dBTFS2c1jcgKfJDyOFhvfOnyiTLFZ9I7BiCPpdMUiCcL8V
+ fY6g3hcfWRtn7MZzYv7gBptOeN6Nzprpsk6tMKwSPMb76Ib1qigbYU9zd2x0VPsQR1+i
+ Clgs6UDPVHid+M5/Uf5Q0CDctx4hLJZF5QqL6TxxSQCcRQ2TEtMneZMH3DwESaFy5nnw
+ HCJbIEriJr2GhsZeRwUW0qDUbs/i/rFUqDmS6xwSGxfuD1UcUSdI2FNZEl8uZdX8fx+f
+ +J+A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVV3lWJKHyUNZBoSWH/24bemh8dnHP4jM+bGf4HrnMhfZkBsSU9TmxoLAbZv7t05U616cU7EJnjMkyu@nongnu.org
+X-Gm-Message-State: AOJu0YySf+8hVtnW+NuWaRKarRKd1thvkUv+wghvF4RjYFRaorpFBoX5
+ BoBu4UK8sveeb+yB9GOfcKM5y04havwN1qmfdC09Wi1EIIWVdPX3lZX/RmH54OqCnaQ=
+X-Gm-Gg: AZuq6aJNHtd6RrMkaDmHAThy0z639Do5WgrNGf4T1PfHoFS/OK+EIbLi1csMw0y0OGK
+ 15jQsPT5v2lPv1+aKHuCtku1jzYIZTQdU49RPzHeZrUMmrKwNB9nsk3fjb/VCH6I2Ydp4+h+6po
+ iSdaE7kYd2acPxfvIgOWukdt940MMpTVZu/hLOuWtwktAjuC6uqAGmKvMSU1wqkzL3OEsJ5wPEX
+ 89Rlotfr86JC6V3fiGK9q68PldVbrspxFRuPENd4YwGyE2b/v2kD4Sc+328zpn30EwY1zMaScI5
+ o+2LcU9Ug0QMy3KpZteQTO/TRGpMw+Nmtd7gFiItycEItwgoBM6mFKN1l/RDhOQJ02rTfMAV9d/
+ KHUSAKXd591L9LXaAcIcRd5FZtBSoE2Pp4Zn9RFu4HYf9Z/BZ1U2qqvNfITBHuKu2BQPj4cZnt9
+ PtYqYDWfsVhXOvsf9E7ggTVmBpx0OmC0BDqslxwbam2C95/EimQn6uj3rRPTZ8XVQ31Ulha2HaI
+ RNx
+X-Received: by 2002:a05:600c:468d:b0:47e:e20e:bbb4 with SMTP id
+ 5b1f17b1804b1-4837108fcf1mr9628085e9.26.1770933371468; 
+ Thu, 12 Feb 2026 13:56:11 -0800 (PST)
+Received: from [192.168.69.225] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4834d5ebd1bsm246005785e9.6.2026.02.12.13.56.10
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 12 Feb 2026 13:56:10 -0800 (PST)
+Message-ID: <320f3ce8-5df0-4f70-b9a2-9823ce0545bf@linaro.org>
+Date: Thu, 12 Feb 2026 22:56:09 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/5] hw/net/rocker: Don't keep pointer to h_proto as
+ uint16_t* in OfDpaFlowPktFields
+Content-Language: en-US
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Cc: Jiri Pirko <jiri@resnulli.us>, Jason Wang <jasowang@redhat.com>,
+ Dmitry Fleytman <dmitry.fleytman@gmail.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Patrick Venture <venture@google.com>
+References: <20260212140917.1443253-1-peter.maydell@linaro.org>
+ <20260212140917.1443253-2-peter.maydell@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260212140917.1443253-2-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,108 +108,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jamin Lin <jamin_lin@aspeedtech.com>
+On 12/2/26 15:09, Peter Maydell wrote:
+> In rocker_of_dpa.c we assume that the h_proto field in an eth_header
+> struct is aligned, and we copy its address into a uint16_t* in the
+> OfDpaFlowPktFields struct which we then dereference later.  This
+> isn't a safe assumption; it will also result in compilation failures
+> with gcc if we mark the eth_header struct as QEMU_PACKED because gcc
+> will not let you take the address of an unaligned struct field.
+> 
+> Make the h_proto field in OfDpaFlowPktFields a void*, and make all
+> the places where we previously read through that pointer instead use
+> a new accessor function which allows for the possible lack of
+> alignment.
+> 
+> (Compare commit 5814c084679
+> "hw/net/virtio-net.c: Don't assume IP length field is aligned"
+> which fixed a similar problem elsewhere for an ip_header field.)
+> 
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+>   hw/net/rocker/rocker_of_dpa.c | 19 ++++++++++++-------
+>   1 file changed, 12 insertions(+), 7 deletions(-)
 
-According to the AST2700 A1 datasheet, the register space for each I2C
-device instance has been expanded from 0x80 bytes to 0xA0 bytes.
-
-Update the AST2700 I2C controller configuration to reflect the new
-register layout by increasing the per-device register size to 0xA0
-and adjusting the register gap size accordingly.
-
-Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-Fixes: 4f53de2f103d6dfb5ad0498995d91a9694f40dd2 ("hw/arm/aspeed_ast27x0: Remove ast2700-a0 SOC")
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20260210024331.3984696-3-jamin_lin@aspeedtech.com
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
----
- include/hw/i2c/aspeed_i2c.h |  2 +-
- hw/i2c/aspeed_i2c.c         | 36 ++++++++++++++++++------------------
- 2 files changed, 19 insertions(+), 19 deletions(-)
-
-diff --git a/include/hw/i2c/aspeed_i2c.h b/include/hw/i2c/aspeed_i2c.h
-index 1ba0112cef6b..53a9dba71b07 100644
---- a/include/hw/i2c/aspeed_i2c.h
-+++ b/include/hw/i2c/aspeed_i2c.h
-@@ -36,7 +36,7 @@ OBJECT_DECLARE_TYPE(AspeedI2CState, AspeedI2CClass, ASPEED_I2C)
- #define ASPEED_I2C_NR_BUSSES 16
- #define ASPEED_I2C_SHARE_POOL_SIZE 0x800
- #define ASPEED_I2C_BUS_POOL_SIZE 0x20
--#define ASPEED_I2C_NEW_NUM_REG (0x80 >> 2)
-+#define ASPEED_I2C_NEW_NUM_REG (0xa0 >> 2)
- 
- #define A_I2CD_M_STOP_CMD       BIT(5)
- #define A_I2CD_M_RX_CMD         BIT(3)
-diff --git a/hw/i2c/aspeed_i2c.c b/hw/i2c/aspeed_i2c.c
-index 741c7a7297f5..122bfdd63dca 100644
---- a/hw/i2c/aspeed_i2c.c
-+++ b/hw/i2c/aspeed_i2c.c
-@@ -1205,37 +1205,37 @@ static void aspeed_i2c_instance_init(Object *obj)
-  *
-  * Address Definitions (AST2700)
-  *   0x000 ... 0x0FF: Global Register
-- *   0x100 ... 0x17F: Device 0
-+ *   0x100 ... 0x19F: Device 0
-  *   0x1A0 ... 0x1BF: Device 0 buffer
-- *   0x200 ... 0x27F: Device 1
-+ *   0x200 ... 0x29F: Device 1
-  *   0x2A0 ... 0x2BF: Device 1 buffer
-- *   0x300 ... 0x37F: Device 2
-+ *   0x300 ... 0x39F: Device 2
-  *   0x3A0 ... 0x3BF: Device 2 buffer
-- *   0x400 ... 0x47F: Device 3
-+ *   0x400 ... 0x49F: Device 3
-  *   0x4A0 ... 0x4BF: Device 3 buffer
-- *   0x500 ... 0x57F: Device 4
-+ *   0x500 ... 0x59F: Device 4
-  *   0x5A0 ... 0x5BF: Device 4 buffer
-- *   0x600 ... 0x67F: Device 5
-+ *   0x600 ... 0x69F: Device 5
-  *   0x6A0 ... 0x6BF: Device 5 buffer
-- *   0x700 ... 0x77F: Device 6
-+ *   0x700 ... 0x79F: Device 6
-  *   0x7A0 ... 0x7BF: Device 6 buffer
-- *   0x800 ... 0x87F: Device 7
-+ *   0x800 ... 0x89F: Device 7
-  *   0x8A0 ... 0x8BF: Device 7 buffer
-- *   0x900 ... 0x97F: Device 8
-+ *   0x900 ... 0x99F: Device 8
-  *   0x9A0 ... 0x9BF: Device 8 buffer
-- *   0xA00 ... 0xA7F: Device 9
-+ *   0xA00 ... 0xA9F: Device 9
-  *   0xAA0 ... 0xABF: Device 9 buffer
-- *   0xB00 ... 0xB7F: Device 10
-+ *   0xB00 ... 0xB9F: Device 10
-  *   0xBA0 ... 0xBBF: Device 10 buffer
-- *   0xC00 ... 0xC7F: Device 11
-+ *   0xC00 ... 0xC9F: Device 11
-  *   0xCA0 ... 0xCBF: Device 11 buffer
-- *   0xD00 ... 0xD7F: Device 12
-+ *   0xD00 ... 0xD9F: Device 12
-  *   0xDA0 ... 0xDBF: Device 12 buffer
-- *   0xE00 ... 0xE7F: Device 13
-+ *   0xE00 ... 0xE9F: Device 13
-  *   0xEA0 ... 0xEBF: Device 13 buffer
-- *   0xF00 ... 0xF7F: Device 14
-+ *   0xF00 ... 0xF9F: Device 14
-  *   0xFA0 ... 0xFBF: Device 14 buffer
-- *   0x1000 ... 0x107F: Device 15
-+ *   0x1000 ... 0x109F: Device 15
-  *   0x10A0 ... 0x10BF: Device 15 buffer
-  */
- static void aspeed_i2c_realize(DeviceState *dev, Error **errp)
-@@ -1658,8 +1658,8 @@ static void aspeed_2700_i2c_class_init(ObjectClass *klass, const void *data)
-     dc->desc = "ASPEED 2700 I2C Controller";
- 
-     aic->num_busses = 16;
--    aic->reg_size = 0x80;
--    aic->reg_gap_size = 0x80;
-+    aic->reg_size = 0xa0;
-+    aic->reg_gap_size = 0x60;
-     aic->gap = -1; /* no gap */
-     aic->bus_get_irq = aspeed_2600_i2c_bus_get_irq;
-     aic->pool_size = 0x20;
--- 
-2.53.0
-
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
