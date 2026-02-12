@@ -4,112 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 899DFEE369C
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 15:51:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF158EE3698
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 15:51:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqYxo-0001Ya-03; Thu, 12 Feb 2026 10:50:44 -0500
+	id 1vqYxs-0001aa-Sd; Thu, 12 Feb 2026 10:50:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pasic@linux.ibm.com>)
- id 1vqYxm-0001Y5-Gz; Thu, 12 Feb 2026 10:50:42 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pasic@linux.ibm.com>)
- id 1vqYxk-00062b-Uz; Thu, 12 Feb 2026 10:50:42 -0500
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 61C8QuVM2503229; Thu, 12 Feb 2026 15:50:38 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=cwcWni
- R+Pa23FFE+okaIuPHFM/39WxVe2NKjb+AzdWw=; b=nzReZ7dz4McDu/CerlZpeN
- 6FwdM2qGpVFAr/M+sGtNuTV+7sPFMIs/tUrXrqdv2woda0oM4w5hsgDEl48znWqv
- rLwqMk1FvWkamc4SYKnCr/N8NdVpg79imQm0kV9dMfrdpJbKLRuvvWhXPG1dnQC0
- O3542OmNS5t8lL20kl8G/YiMCmU5xH7cFUSpCVdBUNrwKC9T2KglDPbsgSPyAw11
- RN4nQlDKl9QBpWCEowL95hUKjU3NcurKykScu9m7qEPzQo3Llh7Yf8BYd48bOQ4r
- 7pQcHFys+Vij4V9wiuL4IftzysJRy9wexqVK/cO0Llr+PMVvor5NuQt5MvKj1yPA
- ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4c696vc3nu-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 12 Feb 2026 15:50:37 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 61CE2H9S012626;
- Thu, 12 Feb 2026 15:50:37 GMT
-Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4c6h7kjygt-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 12 Feb 2026 15:50:37 +0000
-Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
- [10.20.54.102])
- by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 61CFoV5857606576
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 12 Feb 2026 15:50:31 GMT
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 4235920040;
- Thu, 12 Feb 2026 15:50:31 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1D2B320043;
- Thu, 12 Feb 2026 15:50:31 +0000 (GMT)
-Received: from li-ce58cfcc-320b-11b2-a85c-85e19b5285e0 (unknown [9.52.198.210])
- by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 12 Feb 2026 15:50:31 +0000 (GMT)
-Date: Thu, 12 Feb 2026 16:50:29 +0100
-From: Halil Pasic <pasic@linux.ibm.com>
-To: Aby Sam Ross <abysamross@ibm.com>
-Cc: qemu-s390x@nongnu.org, qemu-devel@nongnu.org, farman@linux.ibm.com,
- alifm@linux.ibm.com, Matthew Rosato <mjrosato@linux.ibm.com>, Halil Pasic
- <pasic@linux.ibm.com>
-Subject: Re: [PATCH v2] s390x/pci: prevent null pointer dereference during
- zpci hot unplug
-Message-ID: <20260212165029.206ae722.pasic@linux.ibm.com>
-In-Reply-To: <8e983aa64ebeaad9897496199ca80cfb7e0bf003.1770877629.git.abysamross@ibm.com>
-References: <192dc45c-5bc2-4bfa-8e6f-8a140e23d88a@linux.ibm.com>
- <8e983aa64ebeaad9897496199ca80cfb7e0bf003.1770877629.git.abysamross@ibm.com>
-Organization: IBM
-X-Mailer: Claws Mail 3.17.8 (GTK+ 2.24.32; x86_64-redhat-linux-gnu)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vqYxq-0001Zi-13
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 10:50:46 -0500
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vqYxo-00063I-Dq
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 10:50:45 -0500
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-47f5c2283b6so29015475e9.1
+ for <qemu-devel@nongnu.org>; Thu, 12 Feb 2026 07:50:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1770911443; x=1771516243; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=dbc+ejlhexKqJRXXRcE7/vYNbCti6eE+TrxcRanXq1k=;
+ b=z5Ioq1GXMs02ZqagIhNcjT/MSzCf8Ec9tHgnLK71eMCMEGJ+2tRc69K5PVxU/m/nWI
+ ytbn0Y4NyNXMPqlGHU+qIYrcI4bf8HH3+PwlXyxkdYY75nsX2rWVIeeUGd46C7HjFcTi
+ 3ULlPpl2r3wEsyNmRzq0FE4nm5UUSaV+b0FxxPz9VBTCWPyYQepvjNClGT/JnX1ne2hu
+ 0tn5qor2Cl9ruBow6EcAhoQsu1VzkcArxRoJspZ5oAjcT2CNvTekG5DprVoBMCaAeipr
+ qkCO6K0xSKpKj4XE7J5fN6XlmPMGi7cBZMXg6KgFnJxYtGdFwsnb1jqyuKpHxgLOm+UB
+ W6tg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770911443; x=1771516243;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=dbc+ejlhexKqJRXXRcE7/vYNbCti6eE+TrxcRanXq1k=;
+ b=WO5vjYKsUPrbp/g3e4cgTzWE5cc9BXRyAoHomc+vK/2x+oqzx5Ng0g696Vl+Grzd3L
+ T8XNGrtLbAf811rYIEI5e62FqDoReKLlqK/JLi5tZhEI6bJNg+MMGyo3A5dO0/+0VKt9
+ CcvVn9Kd8MfgBPL/7xVTYrHh/ttA/WMBCCbbt9lS2PvTHDjsH1zFDmFs1iTXRtG3yO5l
+ sZQaf03J+sflA2LhIrtExUnfKRyw5jQmoCryAXvrktdC6HWjgOZHXd4DD2rZtOmex2kQ
+ k0JL0nLN5/6JL81pDOfkOTpyQU296HqzjQigESZ0jiDNeZoacxaAR1iEhG1ZRF2AsJGj
+ exmA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUyyRvfZVTTELfn1L00Zoe8kY6WWk7sl9+Efvsw69VZ52B/1p6zuXPmJAgCE6njogNQ+k23ZDmHsWB6@nongnu.org
+X-Gm-Message-State: AOJu0Yzx2i3lnH/5vnooOHpfuopWgiQAve33CU+/AdWIDMMO6pnZKc3i
+ WSOxvOJu1PD4vj+RiyekhAFOCsmYSKnvh9fzRtfCeFy+EtNu/kkNrf0M72XegwJ8zZg=
+X-Gm-Gg: AZuq6aL6G2nM3QV5P7gAkAnJoxHDSehFLSMzszibN6NXrAOT6DGbyNaIQRqbHN/JJak
+ PwlHhrABYMqmWj4SS69FIXp5/5mQFP/NNwf3V3DM7OW0aGJ7t73+D0RBFQOvSILU3OlEX+B4FY0
+ qe4mkItvtlADMtJBi6sTSzMJHlnzfSjAMX3ItpQ/xRhMHM8l7T3C55s8MykV3jfO2g+muTwM7oU
+ SqbFPl6EAVv7Boy1H+xQB/Ia1RovwvrWIq49DjtdJNRCwUTrH/IMwb707rsErWn/UnnLzFlTRcR
+ foFVBcCkWSxuCS/0oVv2wV69+ql8PNCzT7IndgQgAjYW4vVyNFOmhxlIFYOsQGHIMyJQNE6eKWo
+ hwyOThvDCl5G2z1X9y1OYfIkFKn4nc4cioc1wuHG0MnYz5ecCkV0W5YxZGjAmA9/yDD3OUjI3M5
+ X7s7wHypcJ1MLDaroL/UUBl/wrfEm/yozfyoFmnWZyKMSlhuODyQw2k3uSyPLA8GOTKg==
+X-Received: by 2002:a05:600c:19d2:b0:480:4a90:1afe with SMTP id
+ 5b1f17b1804b1-4836716c6ffmr45408115e9.34.1770911442619; 
+ Thu, 12 Feb 2026 07:50:42 -0800 (PST)
+Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4835d994670sm104358755e9.4.2026.02.12.07.50.41
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 12 Feb 2026 07:50:41 -0800 (PST)
+Message-ID: <79df010b-e4fd-4311-a4c7-5c6ca53e78b2@linaro.org>
+Date: Thu, 12 Feb 2026 16:50:41 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 4/5] net: mark struct udp_header as QEMU_PACKED
+Content-Language: en-US
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Cc: Jiri Pirko <jiri@resnulli.us>, Jason Wang <jasowang@redhat.com>,
+ Dmitry Fleytman <dmitry.fleytman@gmail.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Patrick Venture <venture@google.com>
+References: <20260212140917.1443253-1-peter.maydell@linaro.org>
+ <20260212140917.1443253-5-peter.maydell@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260212140917.1443253-5-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: dIw7LU5c3TjQYXUVWAQ1e7uqYVavBPQC
-X-Proofpoint-ORIG-GUID: dIw7LU5c3TjQYXUVWAQ1e7uqYVavBPQC
-X-Authority-Analysis: v=2.4 cv=JdWxbEKV c=1 sm=1 tr=0 ts=698df6cd cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=kj9zAlcOel0A:10 a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22 a=VnNF1IyMAAAA:8
- a=bKdKHDsPvUGMU6Y6MEAA:9 a=NqO74GWdXPXpGKcKHaDJD/ajO6k=:19 a=CjuIK1q_8ugA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjEyMDEyMSBTYWx0ZWRfX1xgT2rQfCNZN
- ma72ecoAx1oap7JX2qihkdkq5y+FrjfaMwagNKIaO+v2Nsrm8d96eS6lgaZEhv/AZGmjgEm/6AG
- I4UyuQP+bGyNInZ+p83mSh6v6dbGc8RAQEia514fC3pPc7WtnPZLYmUcHqlk3N3Yy44rjOarJwa
- CmB0LsH6W00KpcyU0NEo99DUvvsnFluVPBRtp2I4Kjlx1Vt97SRMVAhxD747IiuwVRQstDFATYe
- VfFnMGsZzQsnnj3C0x6mDcChcGIoiyONniQs0U6S3qjC5E0Nl0ij2rTA88cB3ntFSmCoI8blHHW
- T8MaS5GtZPNJzwcTnZZYLddfQasJyk3aTYUGIa54CnA5Bq6Fs7o1FHfrqEvGXIIAa7DBKVZKeiQ
- 2zEMjx/4QqHuJcAChvmGyR9uga+a5gpk/QQ8YvQuo3rUv6xizGN5sXyp9zsMZ/K/NaUjtCJwpOx
- HUlKPtqSwIRpmKzu5/Q==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-02-12_04,2026-02-12_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 clxscore=1015 impostorscore=0 bulkscore=0
- lowpriorityscore=0 suspectscore=0 adultscore=0 spamscore=0 malwarescore=0
- phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
- definitions=main-2602120121
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=pasic@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,49 +106,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 12 Feb 2026 06:47:36 -0500
-Aby Sam Ross <abysamross@ibm.com> wrote:
-
-> vfio-pci hostdev realize during zpci hot plug fails (in `vfio_pci_realize()`)
-> if the vfio group file in `/dev/vfio/` lacks appropriate permissions and the
-> hostdev[/properties] addition doesn't reach the point where it could be
-> associated with previously added zpci device (in `s390_pcihost_plug()`).
-> As a result, zpci iommu pointer remains null. The zpci hot unplug following the
-> failed hostdev addition assumes zpci iommu pointer was assigned and tries to
-> make use of it to end the dma count resulting in a null pointer dereference.
-> In the non-hotplug scenario, `qdev_unplug()` for the zpci device is not called
-> after hostdev addition failure and this issue is not encountered.
-
-
-Maybe add a word or two why the other dereferences of pbdev->iommu
-not guarded by a null check are safe.
-
-I think we have:
-* s390_pci_sclp_deconfigure
-* s390_pci_msix_init
-* s390_pcihost_reset
-* s390_pci_device_reset
-* mpcifc_service_call
-* stpcifc_service_call
-* s390_pci_read_base
-
-and more. My guess is that the device never gets into a state where
-these operations are permissible, and the code makes sure
-those functions won't be called on a device that has
-pbdev->iommu == NULL. But that is just my guess.
-
-DISCLAIMER: I didn't look at this properly, just asking based
-on a quick look. Some of these may contain explicit or implicit
-checking...
-
-Regards,
-Halil
-
+On 12/2/26 15:09, Peter Maydell wrote:
+> The eth_header is not actually guaranteed to be aligned.  We attempt
+> to deal with this in some places such as net_checksum_calculate() by
+> using lduw_be_p() and so on to access the fields, but this is not
+> sufficient to be correct, because even accessing a byte member within
+> a misaligned struct is undefined behaviour.  The clang sanitizer will
+> emit an error like this if you run the sifive_u_mmc functional test
+> with sanitizers enabled:
 > 
-> Fixes: 37fa32de7073 ("s390x/pci: Honor DMA limits set by vfio")
+> ../../net/checksum.c:168:24: runtime error: member access within misaligned address 0x5b7a7f829033 for type 'udp_header' (aka 'struct udp_header'), which requires 2 byte alignment
+> 0x5b7a7f829033: note: pointer points here
+>   ff  ff ff ff 00 44 00 43 01  34 58 54 01 01 06 00 85  95 80 60 00 00 00 00 00  00 00 00 00 00 00 00
+>                ^
+>      #0 0x5b7a71a5887e in net_checksum_calculate /home/pm215/qemu/build/clang/../../net/checksum.c:168:24
+>      #1 0x5b7a7156819a in gem_transmit /home/pm215/qemu/build/clang/../../hw/net/cadence_gem.c:1386:21
+>      #2 0x5b7a71566201 in gem_write /home/pm215/qemu/build/clang/../../hw/net/cadence_gem.c:1650:13
 > 
-> Signed-off-by: Aby Sam Ross <abysamross@ibm.com>
-> Acked-by: Eric Farman <farman@linux.ibm.com>
-> Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-> Reviewed-by: Farhan Ali <alifm@linux.ibm.com>
+> Fix this by marking the udp_header struct as QEMU_PACKED,
+> so that the compiler knows it might be unaligned and will
+> generate the right code for accessing fields.
+> 
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+>   include/net/eth.h | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
