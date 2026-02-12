@@ -4,103 +4,120 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC769EE36AC
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 17:06:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 826EDEE36AE
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 17:12:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqa8U-0001Ou-9G; Thu, 12 Feb 2026 12:05:50 -0500
+	id 1vqaEe-00059o-Fz; Thu, 12 Feb 2026 12:12:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vqa8S-0001OH-Ld
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 12:05:48 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1vqaEc-000590-Hi
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 12:12:10 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vqa8Q-0008KE-V7
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 12:05:48 -0500
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1vqaEa-0001Lj-I1
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 12:12:10 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770915945;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1770916327;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=gXEfTu58Iy5OOvLPRCDi2+eb0Xvt8YCk50Cuao7YiUU=;
- b=NW0/pJfMUDb1ElAEe2msta3sgfu7H/EhyyIDY8otBt7bN8NSFSN7Z4+NrE7Df0rG0lNkm7
- VYSA1V4B5i9QHirzNbpEVQk2Fu7DtklQ7L54QA0tCO3H1M7ryQI4TrB4el8KvkuQGPn0Du
- 935oYcgFMQR7dlXLEOA/eB9Kz+xu+s8=
-Received: from mail-ua1-f72.google.com (mail-ua1-f72.google.com
- [209.85.222.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=PzN1WE3GD0GND6zNm9NxG5NxpCZo4KC1G3L4q0sgVp4=;
+ b=H3yhk803S+3mKVbpsN6DHwDNwrj9Czf8twzhVVS1OhfBSh+uBrmovkaHb+rx6tlaK+PW5r
+ 37oWbFq+IY4z0jsJyqRD+3GEsNTRr9LRUYQUfnHYQBTqZ19g163z8szJqeQ8ElUSGumyH7
+ 5Szyi/D/AnwCZoa6JBVCRepRMon9IWA=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-465-DYOn2ojnMpq5kP8UxGJMMQ-1; Thu, 12 Feb 2026 12:05:43 -0500
-X-MC-Unique: DYOn2ojnMpq5kP8UxGJMMQ-1
-X-Mimecast-MFC-AGG-ID: DYOn2ojnMpq5kP8UxGJMMQ_1770915942
-Received: by mail-ua1-f72.google.com with SMTP id
- a1e0cc1a2514c-948357563a1so53346241.1
- for <qemu-devel@nongnu.org>; Thu, 12 Feb 2026 09:05:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1770915942; x=1771520742; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=gXEfTu58Iy5OOvLPRCDi2+eb0Xvt8YCk50Cuao7YiUU=;
- b=No4NMBcGSzPzZPKaWP0TyIwXJrJWuzMnVGWo+lBg3d8+6ciS8BdwNsFwRV0CSWH7su
- iNY4PnYIFTY11ShbdfwuIyU/+kX3OKT/Nr/8xrzOyWdkfgL7ji47vwN8WCROIXbvF9vb
- RtSpVFH0Xmm4eOjCiTYbgkWKB1RkLX2GA/qjSjOZi9wkukAcjWWxMMM2LgI9Ol0jduEN
- kcFjTemR1MsbaM0LteK7x9ZCkJNkdi3zMW973CcqtNGwXkyjQElhuk/pZo+tr/9Gb1Wv
- tNrJ5ntnXZ54oRixPKp9tUbIicV1uAna1j1dH4LPCV6BK8/M6eq62LWAbDzF0rikD5sQ
- zADw==
+ us-mta-584-gl3t41miOr-DDGCDgUhcgg-1; Thu, 12 Feb 2026 12:12:06 -0500
+X-MC-Unique: gl3t41miOr-DDGCDgUhcgg-1
+X-Mimecast-MFC-AGG-ID: gl3t41miOr-DDGCDgUhcgg_1770916325
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-435add03f12so59193f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 12 Feb 2026 09:12:06 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770915942; x=1771520742;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=gXEfTu58Iy5OOvLPRCDi2+eb0Xvt8YCk50Cuao7YiUU=;
- b=RzQXlofywIE+9ZL/j3lPDZvYsmZgPZYg2+deNiZ6r6++bfnozQHQgBWBKYo+455M7j
- KPifDMgI/xSNNSGGF3XFwviCGnNNtTE8cKa3Uli0e+mlX7HGiBhjmmqDdwA6ueMwtLEt
- bpP01/cNA9YdAAlJSWHOD3vTEHf4NmtDtdkmmpFu4jDrs+1p5wQ6A4WkzB28btBmAmuv
- qRkmLx0n1Gh4TgdMueWZmJzL9yJrb3yKW4/ScEJQAFf8WYUZ3cniOv+AW+WAOHbzJYOq
- NpNYrkn7JgFmLPeMB35HaPbuhWhIXJWzJcrU492VWuKefzf792Rg5jcy2iwhF0VZq515
- SDuw==
-X-Gm-Message-State: AOJu0Yy9BS93F5hdQVRdFBAJrlrb7PklGx8qBbIac5JXrmDovTzQW/iy
- V2tGWS5I6rc9sQ9HGWOX3HBm8PSPqnlL9mPR+pjpl9zpiyfpP67bfmthojo+i/mbSsZ4FIILxEa
- wJ8Zw0G+N43Z1+2ml0xBXG/nDStHHWIXriztvEAbs2wCY1HpH+dvVtynt
-X-Gm-Gg: AZuq6aLgmtDjTIxwJoqhrTx9TovgcIZHpWOEAvUlr2Q32O3IlEzOhkhMx//xustybsm
- eYAZyBvMvYPOysyVdDBvHXPhCvN1mpFm1nrVMcBczJREwB1LwOqrADs+hqirQGSQDl8s3269UU6
- 3IPTiKN/3lsDoSSH+MbtYBqFEUDBDApg4kRsWS5vZ31OnCTa9XL3TMEPkdvZrRzBrkwUgPYikpU
- jg1ERUvVUAShYC9r0yD2HumPZaHfJDH819D6S/pMhVSQkQ2sPm0m12F4htAFjKQuAgbqRYG13Fv
- 3pY6t9yf4CpDoSjoiUDlrPB8sk2qVMV2pWGyH6HscccyTavp224+6uv6vSkFyiYmeX7mgEEgpjT
- I1zE5EVAc/6TLsg==
-X-Received: by 2002:a05:6102:3f07:b0:5f1:70fe:3027 with SMTP id
- ada2fe7eead31-5fdfbb95275mr945914137.24.1770915942175; 
- Thu, 12 Feb 2026 09:05:42 -0800 (PST)
-X-Received: by 2002:a05:6102:3f07:b0:5f1:70fe:3027 with SMTP id
- ada2fe7eead31-5fdfbb95275mr945873137.24.1770915941659; 
- Thu, 12 Feb 2026 09:05:41 -0800 (PST)
-Received: from x1.local ([174.91.117.149]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-8971cd8a5ccsm42770476d6.25.2026.02.12.09.05.40
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 12 Feb 2026 09:05:41 -0800 (PST)
-Date: Thu, 12 Feb 2026 12:05:30 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-stable@nongnu.org,
- Fabiano Rosas <farosas@suse.de>
-Subject: Re: [PATCH] tests/qtest/migration/tls-tests.c: Don't use tls_psk end
- hook for no_tls tests
-Message-ID: <aY4IWncKW_itrxDg@x1.local>
-References: <20260212114747.1103466-1-peter.maydell@linaro.org>
+ d=1e100.net; s=20230601; t=1770916325; x=1771521125;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=PzN1WE3GD0GND6zNm9NxG5NxpCZo4KC1G3L4q0sgVp4=;
+ b=hxSf4iSiueQdqyCoXljOTR9syEhg1yaePI/XxV+xDy7nfRwvrZN/YRVKSQtqrQV2st
+ +Pb6GRYoVPORinaREermxoyePsNnfjfrw/kUW8IVNlN9iChpJ+AOFq+bKoQLrjy+Mpiw
+ fjCw2qa4/JTzTwm1q1CqdiGt5B6wz0RpgqmxGC7QvBK86qbUIMmmhNad0A9KGiwKHhmS
+ ScHjRoW2hG31vHRcniKZkV0wcMx4CCI8R+LGqwWeMhLqoLFVecTjX1NBb6C0Dsiag4Rp
+ IOThyeTGsdPHwGVoLNxbdoA8xuiILWMOROgu4ZkoJ19DPhfzOweYLf5aDZSgZ0yS0xDX
+ gSMA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXv0TQsmq6I0dIYXPRWjvuG6kRu4REsOA9iwv24KQv1ZROjxcOr5isj8D1MmatIZDEk3JzoHGOR7oSd@nongnu.org
+X-Gm-Message-State: AOJu0YyBCvRjOO/X+qvSsglAaeKCrJ2LHotNYBhdXFL7qspHmswkpXyV
+ s/OIBjbEEpHlvux5eUZk1rkhm1llYKDW2lsprVi4p9eT7ltKXOE/JmqZzRgvmHhdYv+LMAad7nr
+ 1OysDzrNVzN0oaBngrTKG9WmDLCP7ytpBAoffjdW9iGwJ2/5uVpxMq5gi
+X-Gm-Gg: AZuq6aJcRwZYVqPFGXTjqP+supt3k/+cPGnmBSkjI/jC82EygVjDOhDOBMIYHZcXfTC
+ SGIQF+shEw++ky9chD6Mz4Xl17+asEI7iX62FqA4chR+fmKwGRTpN54oLizDmhjACbLk/9irc6J
+ ypkb4BSLUGuo2ZJSALNs3WW2Z1H+PAdYNhnz9c5oLXmKd2al2rkw6Cn3c94DlJAJrwjhp4Hg4Pc
+ O23bsQWYQTBntGv7wNR6nN3wjNCS2dNSQeXWHMeZuwvxxVwMeusiXBU+lXYk7/7KfS94IUV42yy
+ NAwikfvKjIEOKHoWyryXObCRpzdsy9z5faXBtJghEMAHXsZNAD5S1f1LfPyhpO7OUKGsTdhLOZE
+ 2K1wQZdBLF0nBmc1hnPDNkL4EmDM8kExItvxA4Sp0EPpXCKsPcPlc1uVvxMiQja2TJsn60Q==
+X-Received: by 2002:a05:6000:2901:b0:435:b7ca:7521 with SMTP id
+ ffacd0b85a97d-4378aa0cd4fmr6499198f8f.15.1770916324870; 
+ Thu, 12 Feb 2026 09:12:04 -0800 (PST)
+X-Received: by 2002:a05:6000:2901:b0:435:b7ca:7521 with SMTP id
+ ffacd0b85a97d-4378aa0cd4fmr6499147f8f.15.1770916324440; 
+ Thu, 12 Feb 2026 09:12:04 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-43783d46ec6sm13514876f8f.9.2026.02.12.09.12.03
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 12 Feb 2026 09:12:03 -0800 (PST)
+Message-ID: <db4a1b89-aae2-4328-98b1-5233283e9351@redhat.com>
+Date: Thu, 12 Feb 2026 18:12:02 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260212114747.1103466-1-peter.maydell@linaro.org>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 3/5] hw/arm/smmuv3-accel: Allocate vEVENTQ for
+ accelerated SMMUv3 devices
+Content-Language: en-US
+To: Shameer Kolothum Thodi <skolothumtho@nvidia.com>,
+ Nicolin Chen <nicolinc@nvidia.com>
+Cc: "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
+ Nathan Chen <nathanc@nvidia.com>, Matt Ochs <mochs@nvidia.com>,
+ Jiandi An <jan@nvidia.com>, Jason Gunthorpe <jgg@nvidia.com>,
+ "jonathan.cameron@huawei.com" <jonathan.cameron@huawei.com>,
+ "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>,
+ "zhenzhong.duan@intel.com" <zhenzhong.duan@intel.com>,
+ Krishnakant Jaju <kjaju@nvidia.com>
+References: <20260211083415.133534-1-skolothumtho@nvidia.com>
+ <20260211083415.133534-4-skolothumtho@nvidia.com>
+ <aYzFeMh1szhJlJJk@Asurada-Nvidia>
+ <e66e82d6-0953-49f0-9d84-bf2776e8f3ce@redhat.com>
+ <aYzJhEFg/zxtrJ8z@Asurada-Nvidia>
+ <CH3PR12MB754855AE35A087B900B0C311AB63A@CH3PR12MB7548.namprd12.prod.outlook.com>
+ <aYzTUDmTzIZZCwnW@Asurada-Nvidia>
+ <39acf072-3227-442b-acfe-658829071917@redhat.com>
+ <aY14rcVQuLs3ugll@Asurada-Nvidia>
+ <CH3PR12MB75482F20A549CD3D480226E4AB60A@CH3PR12MB7548.namprd12.prod.outlook.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <CH3PR12MB75482F20A549CD3D480226E4AB60A@CH3PR12MB7548.namprd12.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,40 +130,116 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Feb 12, 2026 at 11:47:47AM +0000, Peter Maydell wrote:
-> If you run the TLS tests under a clang undefined-behaviour sanitizer build
-> it will fall over like this:
-> 
-> ../../tests/unit/crypto-tls-psk-helpers.c:53:12: runtime error: null pointer passed as argument 1, which is declared to never be null
-> /usr/include/unistd.h:858:48: note: nonnull attribute specified here
->     #0 0x62bd810762ee in test_tls_psk_cleanup /home/pm215/qemu/build/clang/../../tests/unit/crypto-tls-psk-helpers.c:53:5
->     #1 0x62bd81073f89 in migrate_hook_end_tls_psk /home/pm215/qemu/build/clang/../../tests/qtest/migration/tls-tests.c:101:5
->     #2 0x62bd81062ef0 in test_precopy_common /home/pm215/qemu/build/clang/../../tests/qtest/migration/framework.c:947:9
-> 
-> This happens because test_precopy_tcp_no_tls() uses a custom start_hook
-> that only sets a couple of parameters, but reuses the tsk_psk end_hook.
-> However, the end_hook runs cleanup that assumes that the data was set
-> up by migrate_hook_start_tls_psk_common(). In particular, it will
-> unconditionally call test_tls_psk_cleanup(data->pskfile), and
-> test_tls_psk_cleanup() will unconditionally unlink() the filename it
-> is passed, which is undefined behaviour if you pass it a NULL pointer.
-> 
-> Instead of creating a TestMigrateTLSPSKData struct which we never set
-> any fields in and requiring the migrate_hook_end_tls_psk() hook to
-> cope with that, don't allocate the struct in the start_hook. Then
-> there is nothing we need to clean up, and we can set the end_hook
-> to NULL (which the test framework will interpret as "don't call
-> any end_hook").
-> 
-> Cc: qemu-stable@nongnu.org
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 
-Reviewed-by: Peter Xu <peterx@redhat.com>
 
--- 
-Peter Xu
+On 2/12/26 5:28 PM, Shameer Kolothum Thodi wrote:
+>
+>> -----Original Message-----
+>> From: Nicolin Chen <nicolinc@nvidia.com>
+>> Sent: 12 February 2026 06:52
+>> To: Eric Auger <eric.auger@redhat.com>
+>> Cc: Shameer Kolothum Thodi <skolothumtho@nvidia.com>; qemu-
+>> arm@nongnu.org; qemu-devel@nongnu.org; peter.maydell@linaro.org;
+>> Nathan Chen <nathanc@nvidia.com>; Matt Ochs <mochs@nvidia.com>;
+>> Jiandi An <jan@nvidia.com>; Jason Gunthorpe <jgg@nvidia.com>;
+>> jonathan.cameron@huawei.com; zhangfei.gao@linaro.org;
+>> zhenzhong.duan@intel.com; Krishnakant Jaju <kjaju@nvidia.com>
+>> Subject: Re: [PATCH v5 3/5] hw/arm/smmuv3-accel: Allocate vEVENTQ for
+>> accelerated SMMUv3 devices
+>>
+> ...
+>>> Usually error_append_hint() is used to append a user friendly msg that
+>>> helps the user to fix the problem.
+>>> In qapi/error.h there is an example that relates to "Receive and
+>>> accumulate multiple errors (first one wins):" by using
+>>> error_propagate()
+>> I didn't look very closely but just run a grep for "append" :)
+>>
+>> Yea, I think error_propagate() should work better.
+> I am not sure error_propagate makes things better though.
+>
+> If I am not wrong, this is how the change will look like,
+>
+> static MemTxResult smmu_writel(SMMUv3State *s, hwaddr offset,
+>                                 uint64_t data, MemTxAttrs attrs)
+>  {
+> +    Error *err = NULL;
+>      Error *local_err = NULL;
+>
+>      switch (offset) {
+> @@ -1614,9 +1616,15 @@ static MemTxResult smmu_writel(SMMUv3State *s, hwaddr offset,
+>          s->cr0ack = data & ~SMMU_CR0_RESERVED;
+>          /* in case the command queue has been enabled */
+>          smmuv3_cmdq_consume(s, &local_err);
+> +        if (local_err) {
+> +            error_propagate(&err, local_err);
+> +            local_err = NULL;
+> +        }
+>          /* Allocate vEVENTQ if EventQ is enabled and a vIOMMU is available */
+> -        if (local_err == NULL) {
+> -            smmuv3_accel_alloc_veventq(s, &local_err);
+> +        smmuv3_accel_alloc_veventq(s, &local_err);
+> +        if (local_err) {
+> +            error_propagate(&err, local_err);
+> +            local_err = NULL;
+>          }
+>          break;
+>      case A_CR1:
+> @@ -1724,8 +1732,8 @@ static MemTxResult smmu_writel(SMMUv3State *s, hwaddr offset,
+>          break;
+>      }
+>
+> -    if (local_err) {
+> -        error_report_err(local_err);
+> +    if (err) {
+> +        error_report_err(err);
+>      }
+>      return MEMTX_OK;
+>  }
+>
+> And error_propagate() only will keep the first error.
+>
+> Instead, if we do below:
+>
+> @@ -1614,10 +1615,12 @@ static MemTxResult smmu_writel(SMMUv3State *s, hwaddr offset,
+>          s->cr0ack = data & ~SMMU_CR0_RESERVED;
+>          /* in case the command queue has been enabled */
+>          smmuv3_cmdq_consume(s, &local_err);
+> -        /* Allocate vEVENTQ if EventQ is enabled and a vIOMMU is available */
+> -        if (local_err == NULL) {
+> -            smmuv3_accel_alloc_veventq(s, &local_err);
+> +        if (local_err) {
+> +            error_report_err(local_err);
+> +            local_err = NULL;
+>          }
+> +        /* Allocate vEVENTQ if EventQ is enabled and a vIOMMU is available */
+> +        smmuv3_accel_alloc_veventq(s, &local_err);
+>          break;
+
+If you want to accumulate, why don't you use the example in qapi/error.h:
+
+ * Receive and accumulate multiple errors (first one wins):
+ *     Error *err = NULL, *local_err = NULL;
+ *     foo(arg, &err);
+ *     bar(arg, &local_err);
+ *     error_propagate(&err, local_err);
+ *     if (err) {
+ *         handle the error...
+ *     }
+ *
+ 
+Eric
+>
+> This will report errors from both paths.
+>
+> Please let me know if there is a better way.
+>
+> Thanks,
+> Shameer
+>
 
 
