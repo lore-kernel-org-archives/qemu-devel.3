@@ -4,100 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F7ADEE3692
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 14:44:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59C6CEE3693
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 14:44:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqXvG-0005kT-Ke; Thu, 12 Feb 2026 09:44:02 -0500
+	id 1vqXvE-0005h2-KI; Thu, 12 Feb 2026 09:44:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vqXuz-0005O1-BA
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 09:43:48 -0500
+ id 1vqXut-0005NE-RO
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 09:43:45 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vqXug-000641-6u
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 09:43:44 -0500
+ id 1vqXuF-0005mx-1c
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 09:43:33 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770907405;
+ s=mimecast20190719; t=1770907377;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=j2J5S69ujIyTT8+25co0N6GqgCEdVM5HCv9XrkCpJ+g=;
- b=OlqI07OPWC49zi79SiC2ahIxr7EBgBmi5cwJpnFp7r7zIwMp3qRkYUPiZWInspiICClmKy
- yIt/7yFaEmgnWjvamHKGdeuE2MtlHVWAyrQm0WovI3z+2vn8sQWuh/zm8gDtmMrDhIOAUe
- zbHgqMousRJzNIJ/flaiFN3f66G8OuM=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=BdxcduUlG5JK7yqtdX81R2qI0Off0b1Jl2z54JAiMCo=;
+ b=C14o+jXm8Q9TqQ3TKuPoWHo3Tpz2XLHtsfqK3PisHgNHmaVmC9dSRVyHRNLeiatQBvBEv7
+ YTbrxtn8JgygFDKoljr5UWoMmx21acQgqyQy+4grq8hTTrkMYd+04OJGGLTZeMiL4gurkn
+ WeVZnVsOa5ATxZGDucfWfDJ5/38ZdyM=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-1-9LnXJA8yMOOVQEivW69VQg-1; Thu, 12 Feb 2026 09:43:21 -0500
-X-MC-Unique: 9LnXJA8yMOOVQEivW69VQg-1
-X-Mimecast-MFC-AGG-ID: 9LnXJA8yMOOVQEivW69VQg_1770907400
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-47ee3dd7fc8so60700775e9.3
- for <qemu-devel@nongnu.org>; Thu, 12 Feb 2026 06:43:21 -0800 (PST)
+ us-mta-475-5ygL2gusPaWR6neiaqGj_Q-1; Thu, 12 Feb 2026 09:42:56 -0500
+X-MC-Unique: 5ygL2gusPaWR6neiaqGj_Q-1
+X-Mimecast-MFC-AGG-ID: 5ygL2gusPaWR6neiaqGj_Q_1770907375
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-43771113b3bso2194633f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 12 Feb 2026 06:42:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1770907399; x=1771512199; darn=nongnu.org;
+ d=redhat.com; s=google; t=1770907374; x=1771512174; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=j2J5S69ujIyTT8+25co0N6GqgCEdVM5HCv9XrkCpJ+g=;
- b=gq6EdOVGDqU7o4DZrtaCTWCXVhiWp3f5Ih0UcGSEvuhuAO6RO0WBXh7bLE8JknAYEG
- EmX9CAs18UeR+afBmawOehAaIi59iOJBsrVwvv05S/f/XToURo8veCw6pSU8tYQ/xTit
- AyUfsvsJAjTw2BBZL/cP8+d6B3PR60QnxFd+2+xK6OVRqB8K6d0KSdwoatIEPJC2p0vF
- 4tM8fFYFF5P1AR27U2z+m+xE0zM6aSWpVFl6r8gMWQxanv/AKIvVOxnLp77ax87yKh0O
- 3FlhGKeRy8u+vg5u9iAHc0kOUkbuLywZ2Wu6R/S6iRVEq/LUD/O2bV/7rhhNNuQNDkEU
- Ofjw==
+ bh=BdxcduUlG5JK7yqtdX81R2qI0Off0b1Jl2z54JAiMCo=;
+ b=mi2seGNSCNkplXagQTQnddhBps3wsjM+TveEPtWsQI/X5HSI1rs9aGdYABWTiAwdNk
+ 5Vr+z89JbfswE2HLyyl+N4aZhZe8Fr2WvcDrDeYdBoNgbuswhcK4hJLj1LXZ4b6pQlWM
+ AXXG1o/YdeWboeVeI0kZAqvPZSP8qQl6AZeIVmdAN4VIxVsYcN0pwT+MMZM7SZTl/wss
+ gUtMlr6oaCs/bJiVd5fgchxqxNAR5HlU9sp/boOF8L+6nmG4fhtLIYbKbFUn1jj8yUWQ
+ KmBSgiD7CYCkh0nD2YklpcPyiuhkbCa24XShEowKSY+9ZseWWHAYmvVG0EVbBZTtxLMY
+ uN6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770907399; x=1771512199;
+ d=1e100.net; s=20230601; t=1770907374; x=1771512174;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=j2J5S69ujIyTT8+25co0N6GqgCEdVM5HCv9XrkCpJ+g=;
- b=U6E2DFqSnaoSspGl0caB5PHGOsLne02s82UT6hLEV2gRlgyCWm8KwU/NHYcINgxpT+
- cqhZytipMceU23v2jWbkMEUfOLUvo36GyC6TPB/AAgYylmYnl+7BrIDSXGQu8ejI5Ujw
- gTvbxfk6KNmY3MAHEaW6EcOMgYG8hxvtclMUrXHUb+KvMDT5HuCDCIdZNz5/DdmmYTcB
- 31HBBsYPLi8zQUXsZ2cs/7hIT2+Oj4oXLXXA+cp9FxlqroBYLuVDtABj7ALD307GlMvl
- W7QTGKmMYWcFjJtAUgeoRg4pZnUj5MA4bzEIDYsJ1i4/zCCLCcHfrU1GSK6qQ/DeW/qM
- m22A==
-X-Gm-Message-State: AOJu0YyNKHNqQ43aCb85nMvsE9nZfP48nVF755jKYkJgcIlkeadTYRRJ
- 74+XR6LqWMiubb5RBlYnAfRwNR8C4PwuSJIUHiC652s1EyFs6ZCOAEo3ER+huJwQxDqndOR0UKW
- bop4cK1Ru2Cxoxah/PzF6jGO5i7sdduAxYQ0IUpJVK/eU1lL/NdfPAYBuko5twSxNzPU1s/8wfF
- s4ejuLjmoHhzML2ZwraczV4pqz+EYkFLkD0ivKZATx
-X-Gm-Gg: AZuq6aJAH/+MyZO2gbBCtiBoKwR22PiUlm1DpEJHwoaDY++VxVOzXILvyW78nl/IVsh
- oCSu18IU9/A80mfLU6db64AfgpQqWO8ajoIkY2FVbSOnprN8xpXhXPwObJraQ8XtbCWPV3CYCfQ
- LggbXwp3yenEDucrLD6B5u1/EDEUbB+rrz93WaibMt8G5oyf0a2VznEFgPeBdO8vX4KbvZd8/2J
- taYAJGlxnLVigkw5x/m2QW8PmGZo9R6yLIL8TaKMP5UHPWdulN+tyEDTXZpf9SgKv2KAtbtHJZj
- bGBm1RXQu1gKpNzu/UjMzjaI5d+0ltyK07dfYpk0nX1BuG6WzOpZnqshhvQap0nD2lk9pY4VWCU
- QjjOqyBZJISTN/U6wBk7VrYSHoU51gXppR+geJAsuchYeIvKZklD70KTJjqZJAY62IXfREm6nyZ
- 1FrFhZ+hHnbu8kV+TfklYj/XjVo32eQknrVtA2mOk1SA2ZnI80pWo=
-X-Received: by 2002:a05:600c:458c:b0:477:55ce:f3c2 with SMTP id
- 5b1f17b1804b1-483656c608cmr38197945e9.14.1770907398870; 
- Thu, 12 Feb 2026 06:43:18 -0800 (PST)
-X-Received: by 2002:a05:600c:458c:b0:477:55ce:f3c2 with SMTP id
- 5b1f17b1804b1-483656c608cmr38197175e9.14.1770907398144; 
- Thu, 12 Feb 2026 06:43:18 -0800 (PST)
+ bh=BdxcduUlG5JK7yqtdX81R2qI0Off0b1Jl2z54JAiMCo=;
+ b=o0nNNLqMr7LOij4+Ezmb28+6bUFYuCDPFrhH3lq9b2hly3HCHXhQtTOwdELY75IN96
+ kejERbn1sMQVc5tolJBwuaINnDxe/5nd4rBcYOtiUmovgTcJs9kx6fC/162V21V8mB4s
+ 8HEbf3ymTaxLY7e0KkqEZpqEt1+jIPH4fM2fSZ54salRzW0yhdjuNSL6xYBroSNMmDBa
+ KxaaOYqibr6C43MWnNQi2hYn+4NITEBicuCiJGJTd2oYRMq8e+PLhv0W/6XGggP4uQkc
+ A1TN/cg0/YYGDEFjy6WQhoyQ75Yqmip0RlnBnoOBBDEQEyTu+syYTCN+6U/5x6Kp4+cM
+ +Rsg==
+X-Gm-Message-State: AOJu0YzVY6iNXpWClFLLNnYIyJLxG6oM+FR5Q+PWDOoRPZUGmTlEjW1G
+ NAJHJ9UQecWulyalqHOHWjTUF46en5MsOpXLZzY+xBLhq7ekgyexzC6j19GKpYtrNQBH5nnu/c+
+ HxyqpZIAWtrDtA01iexT64RWNa6ao2NAp2jgsyiSERBGvVyt1cGX6gPO5gZtdDY4NjEi5l5/LM3
+ 8gN6SKh92DFcNr8SxPjdxUnNNXtDO4F8dhjHVLznna
+X-Gm-Gg: AZuq6aJNzVJn5NFxlmKGkGPPMmieOBIUcZl1EJ0f+1xfgOtUxhEsFZkX1pr4ZH1A6kt
+ uOkd3Ww/zdxLMKlvMqcEYHRQh7PL5UEExMR8VSVSMKqQI+lYJKkEhyNdJNvjvtTICyJ63ikl58R
+ kzMnSZU+S0yS44q6d61V9fGJXi94zC9f8zUurlu4pAL8hcT8SbRBxkyjsAmugGOUvfU/AmfKFWD
+ bTZWcP56LCY7GfjWmjtxXzL9s1w1LJxWGHdKOCmUc611OULSKw39smuZI/bPOI8MKHwkFp7fQ/p
+ +rGV55dCINmwJLYd7NSMufJMEzeIWH6CRTHRh1x1IIQ75GBZDXfMC15mEL+zmUDd1b7NWnAHWgJ
+ 81BoToQB6dv+mkRzGn4K9dLwF2MleHzmJklunNK02akEzKpTjRUsSuzPVxlo44gCSAM1jzx7u49
+ vgtIy+66JGV9Z8yr5usQRF2z2xYz0cgZhA1nafyDiGQMUuD2q4wHI=
+X-Received: by 2002:a5d:5f54:0:b0:435:a2f8:1534 with SMTP id
+ ffacd0b85a97d-4378f16db5cmr4189212f8f.49.1770907373762; 
+ Thu, 12 Feb 2026 06:42:53 -0800 (PST)
+X-Received: by 2002:a5d:5f54:0:b0:435:a2f8:1534 with SMTP id
+ ffacd0b85a97d-4378f16db5cmr4189146f8f.49.1770907373177; 
+ Thu, 12 Feb 2026 06:42:53 -0800 (PST)
 Received: from [10.60.241.123] (nat-pool-mxp-t.redhat.com. [149.6.153.186])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4835a627c96sm71706275e9.2.2026.02.12.06.43.16
+ ffacd0b85a97d-43783dfc54csm11978563f8f.25.2026.02.12.06.42.50
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 12 Feb 2026 06:43:16 -0800 (PST)
+ Thu, 12 Feb 2026 06:42:51 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
- Igor Mammedov <imammedo@redhat.com>
-Subject: [PULL 14/41] hw/i386/pc: Remove multiboot.bin
-Date: Thu, 12 Feb 2026 15:42:16 +0100
-Message-ID: <20260212144244.22579-15-pbonzini@redhat.com>
+Cc: Zhao Liu <zhao1.liu@intel.com>,
+	Igor Mammedov <imammedo@redhat.com>
+Subject: [PULL 04/41] pc: Start with modern CPU hotplug interface by default
+Date: Thu, 12 Feb 2026 15:42:06 +0100
+Message-ID: <20260212144244.22579-5-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260212144244.22579-1-pbonzini@redhat.com>
 References: <20260212144244.22579-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -124,585 +122,202 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+From: Zhao Liu <zhao1.liu@intel.com>
 
-All PC machines now use the multiboot_dma.bin binary,
-we can remove the non-DMA version (multiboot.bin).
+For compatibility reasons PC/Q35 will start with legacy CPU hotplug
+interface by default but with new CPU hotplug AML code since 2.7
+machine type (in commit 679dd1a957df ("pc: use new CPU hotplug interface
+since 2.7 machine type")). In that way, legacy firmware that doesn't use
+QEMU generated ACPI tables was able to continue using legacy CPU hotplug
+interface.
 
-This doesn't change multiboot_dma binary file.
+While later machine types, with firmware supporting QEMU provided ACPI
+tables, generate new CPU hotplug AML, which will switch to new CPU
+hotplug interface when guest OS executes its _INI method on ACPI tables
+loading.
 
-Suggested-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-Reviewed-by: Igor Mammedov <imammedo@redhat.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Since 2.6 machine type is now gone, and consider that the legacy BIOS
+(based on QEMU ACPI prior to v2.7) should be no longer in use, previous
+compatibility requirements are no longer necessary. So initialize
+'modern' hotplug directly from the very beginning for PC/Q35 machines
+with cpu_hotplug_hw_init(), and drop _INIT method.
+
+Additionally, remove the checks and settings around cpu_hotplug_legacy
+in cpuhp VMState (for piix4 & ich9), to eliminate the risk of
+segmentation faults, as gpe_cpu no longer has the opportunity to be
+initialized. This is safe because all hotplug now start with the modern
+way, and it's impossible to switch to legacy way at runtime (even the
+"cpu-hotplug-legacy" properties does not allow it either).
+
+Signed-off-by: Igor Mammedov <imammedo@redhat.com>
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-Link: https://lore.kernel.org/r/20260108033051.777361-14-zhao1.liu@intel.com
+Acked-by: Igor Mammedov <imammedo@redhat.com>
+Link: https://lore.kernel.org/r/20260108033051.777361-4-zhao1.liu@intel.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- pc-bios/optionrom/optionrom.h     |   4 -
- hw/i386/pc.c                      |   1 -
- pc-bios/meson.build               |   1 -
- pc-bios/multiboot.bin             | Bin 1024 -> 0 bytes
- pc-bios/optionrom/Makefile        |   2 +-
- pc-bios/optionrom/multiboot.S     | 232 -----------------------------
- pc-bios/optionrom/multiboot_dma.S | 234 +++++++++++++++++++++++++++++-
- 7 files changed, 233 insertions(+), 241 deletions(-)
- delete mode 100644 pc-bios/multiboot.bin
- delete mode 100644 pc-bios/optionrom/multiboot.S
+ include/hw/acpi/cpu.h          |  1 -
+ hw/acpi/cpu.c                  | 10 ----------
+ hw/acpi/ich9.c                 | 22 +++-------------------
+ hw/acpi/piix4.c                | 21 +++------------------
+ hw/i386/acpi-build.c           |  2 +-
+ hw/loongarch/virt-acpi-build.c |  1 -
+ 6 files changed, 7 insertions(+), 50 deletions(-)
 
-diff --git a/pc-bios/optionrom/optionrom.h b/pc-bios/optionrom/optionrom.h
-index 7bcdf0eeb24..2e6e2493f83 100644
---- a/pc-bios/optionrom/optionrom.h
-+++ b/pc-bios/optionrom/optionrom.h
-@@ -117,16 +117,12 @@
-  *
-  * Clobbers: %eax, %edx, %es, %ecx, %edi and adresses %esp-20 to %esp
-  */
--#ifdef USE_FW_CFG_DMA
- #define read_fw_blob_dma(var)                           \
-         read_fw         var ## _SIZE;                   \
-         mov             %eax, %ecx;                     \
-         read_fw         var ## _ADDR;                   \
-         mov             %eax, %edi ;                    \
-         read_fw_dma     var ## _DATA, %ecx, %edi
--#else
--#define read_fw_blob_dma(var) read_fw_blob(var)
--#endif
+diff --git a/include/hw/acpi/cpu.h b/include/hw/acpi/cpu.h
+index 557219d2c63..2809dd8a911 100644
+--- a/include/hw/acpi/cpu.h
++++ b/include/hw/acpi/cpu.h
+@@ -54,7 +54,6 @@ void cpu_hotplug_hw_init(MemoryRegion *as, Object *owner,
  
- #define read_fw_blob_pre(var)                           \
-         read_fw         var ## _SIZE;                   \
-diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-index 716962f24fc..b033fc67cf9 100644
---- a/hw/i386/pc.c
-+++ b/hw/i386/pc.c
-@@ -672,7 +672,6 @@ void xen_load_linux(PCMachineState *pcms)
-         assert(!strcmp(option_rom[i].name, "linuxboot.bin") ||
-                !strcmp(option_rom[i].name, "linuxboot_dma.bin") ||
-                !strcmp(option_rom[i].name, "pvh.bin") ||
--               !strcmp(option_rom[i].name, "multiboot.bin") ||
-                !strcmp(option_rom[i].name, "multiboot_dma.bin"));
-         rom_add_option(option_rom[i].name, option_rom[i].bootindex);
+ typedef struct CPUHotplugFeatures {
+     bool acpi_1_compatible;
+-    bool has_legacy_cphp;
+     bool fw_unplugs_cpu;
+     const char *smi_path;
+ } CPUHotplugFeatures;
+diff --git a/hw/acpi/cpu.c b/hw/acpi/cpu.c
+index 6f1ae79edbf..d63ca83c1bc 100644
+--- a/hw/acpi/cpu.c
++++ b/hw/acpi/cpu.c
+@@ -408,16 +408,6 @@ void build_cpus_aml(Aml *table, MachineState *machine, CPUHotplugFeatures opts,
+         aml_append(field, aml_reserved_field(4 * 8));
+         aml_append(field, aml_named_field(CPU_DATA, 32));
+         aml_append(cpu_ctrl_dev, field);
+-
+-        if (opts.has_legacy_cphp) {
+-            method = aml_method("_INI", 0, AML_SERIALIZED);
+-            /* switch off legacy CPU hotplug HW and use new one,
+-             * on reboot system is in new mode and writing 0
+-             * in CPU_SELECTOR selects BSP, which is NOP at
+-             * the time _INI is called */
+-            aml_append(method, aml_store(zero, aml_name(CPU_SELECTOR)));
+-            aml_append(cpu_ctrl_dev, method);
+-        }
      }
-diff --git a/pc-bios/meson.build b/pc-bios/meson.build
-index 9260aaad78e..efe45c16705 100644
---- a/pc-bios/meson.build
-+++ b/pc-bios/meson.build
-@@ -62,7 +62,6 @@ blobs = [
-   'efi-e1000e.rom',
-   'efi-vmxnet3.rom',
-   'qemu-nsis.bmp',
--  'multiboot.bin',
-   'multiboot_dma.bin',
-   'linuxboot.bin',
-   'linuxboot_dma.bin',
-diff --git a/pc-bios/multiboot.bin b/pc-bios/multiboot.bin
-deleted file mode 100644
-index e772713c95749bee82c20002b50ec6d05b2d4987..0000000000000000000000000000000000000000
-GIT binary patch
-literal 0
-HcmV?d00001
-
-literal 1024
-zcmeHFF=!KE7=3rWv_~9rsoFv02vW|$BE3Z@O2HvxF(Tbn?w$(KKupFCa&$N@9Fjpq
-zK@c}VaQwY4cgc{Tlqxt>x}>-yZJ|RqIXJnrkq&Z`qYu9S`*@G<!T0!A-^*X{S6sw=
-z<w-@7C*lkF^`H61m~8d^?O!oleMSR?t#6EW6}mqu{h%`{(K%RTG*bK#J^ijsscX~K
-zfejV5t1IyI=d$hU)1arfC$b8fp&yDo0xfqK6mtiR2I}dj(5KrIXEOCj%z}ZI15%6l
-zsG98;4HbW|Im?$8-zl*8b`fJPq`5;gae4|rodZBo8UhR|H&^a#p0A%Z9?-oNQ`)lJ
-z<ppqkr}^DX7yufq>&pvhTyuJgL1#^qn)3#|vcmPSdBLEU<5H(yG&ogOxzu?&L$_ll
-z`=1R?t;PFYKHEz@813aPx^pUQ7NogpP)Gm@mqMG#RX}I}{ICADANm7-NHH@$nuknt
-zOJkc<q3`x6)C@VID5jAD$LsM?l|sv2$Y;o1A%FaECE3M>1gMiQ1RzNOyxKbM?UVlI
-lgl_|v@lXbCmseKtxLIvHx?ig`O4Zsu%dVet`Hz2u_&3=y3J?GQ
-
-diff --git a/pc-bios/optionrom/Makefile b/pc-bios/optionrom/Makefile
-index e6674a76e73..963a77a3298 100644
---- a/pc-bios/optionrom/Makefile
-+++ b/pc-bios/optionrom/Makefile
-@@ -2,7 +2,7 @@ include config.mak
- SRC_DIR := $(TOPSRC_DIR)/pc-bios/optionrom
- VPATH = $(SRC_DIR)
+     aml_append(sb_scope, cpu_ctrl_dev);
  
--all: multiboot.bin multiboot_dma.bin linuxboot.bin linuxboot_dma.bin kvmvapic.bin pvh.bin
-+all: multiboot_dma.bin linuxboot.bin linuxboot_dma.bin kvmvapic.bin pvh.bin
- # Dummy command so that make thinks it has done something
- 	@true
+diff --git a/hw/acpi/ich9.c b/hw/acpi/ich9.c
+index 2b3b493c014..54590129c69 100644
+--- a/hw/acpi/ich9.c
++++ b/hw/acpi/ich9.c
+@@ -183,26 +183,10 @@ static const VMStateDescription vmstate_tco_io_state = {
+     }
+ };
  
-diff --git a/pc-bios/optionrom/multiboot.S b/pc-bios/optionrom/multiboot.S
-deleted file mode 100644
-index c95e35c9cb6..00000000000
---- a/pc-bios/optionrom/multiboot.S
-+++ /dev/null
-@@ -1,232 +0,0 @@
--/*
-- * Multiboot Option ROM
-- *
-- * This program is free software; you can redistribute it and/or modify
-- * it under the terms of the GNU General Public License as published by
-- * the Free Software Foundation; either version 2 of the License, or
-- * (at your option) any later version.
-- *
-- * This program is distributed in the hope that it will be useful,
-- * but WITHOUT ANY WARRANTY; without even the implied warranty of
-- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-- * GNU General Public License for more details.
-- *
-- * You should have received a copy of the GNU General Public License
-- * along with this program; if not, see <http://www.gnu.org/licenses/>.
-- *
-- * Copyright Novell Inc, 2009
-- *   Authors: Alexander Graf <agraf@suse.de>
-- */
+-static bool vmstate_test_use_cpuhp(void *opaque)
+-{
+-    ICH9LPCPMRegs *s = opaque;
+-    return !s->cpu_hotplug_legacy;
+-}
 -
--#include "optionrom.h"
+-static int vmstate_cpuhp_pre_load(void *opaque)
+-{
+-    ICH9LPCPMRegs *s = opaque;
+-    Object *obj = OBJECT(s->gpe_cpu.device);
+-    object_property_set_bool(obj, "cpu-hotplug-legacy", false, &error_abort);
+-    return 0;
+-}
 -
--#define BOOT_ROM_PRODUCT "multiboot loader"
+ static const VMStateDescription vmstate_cpuhp_state = {
+     .name = "ich9_pm/cpuhp",
+     .version_id = 1,
+     .minimum_version_id = 1,
+-    .needed = vmstate_test_use_cpuhp,
+-    .pre_load = vmstate_cpuhp_pre_load,
+     .fields = (const VMStateField[]) {
+         VMSTATE_CPU_HOTPLUG(cpuhp_state, ICH9LPCPMRegs),
+         VMSTATE_END_OF_LIST()
+@@ -338,8 +322,8 @@ void ich9_pm_init(PCIDevice *lpc_pci, ICH9LPCPMRegs *pm, qemu_irq sci_irq)
+     pm->powerdown_notifier.notify = pm_powerdown_req;
+     qemu_register_powerdown_notifier(&pm->powerdown_notifier);
+ 
+-    legacy_acpi_cpu_hotplug_init(pci_address_space_io(lpc_pci),
+-        OBJECT(lpc_pci), &pm->gpe_cpu, ICH9_CPU_HOTPLUG_IO_BASE);
++    cpu_hotplug_hw_init(pci_address_space_io(lpc_pci),
++        OBJECT(lpc_pci), &pm->cpuhp_state, ICH9_CPU_HOTPLUG_IO_BASE);
+ 
+     acpi_memory_hotplug_init(pci_address_space_io(lpc_pci), OBJECT(lpc_pci),
+                              &pm->acpi_memory_hotplug,
+@@ -419,7 +403,7 @@ void ich9_pm_add_properties(Object *obj, ICH9LPCPMRegs *pm)
+ {
+     static const uint32_t gpe0_len = ICH9_PMIO_GPE0_LEN;
+     pm->acpi_memory_hotplug.is_enabled = true;
+-    pm->cpu_hotplug_legacy = true;
++    pm->cpu_hotplug_legacy = false;
+     pm->disable_s3 = 0;
+     pm->disable_s4 = 0;
+     pm->s4_val = 2;
+diff --git a/hw/acpi/piix4.c b/hw/acpi/piix4.c
+index 19d4d4be932..0eda692084d 100644
+--- a/hw/acpi/piix4.c
++++ b/hw/acpi/piix4.c
+@@ -195,25 +195,10 @@ static const VMStateDescription vmstate_memhp_state = {
+     }
+ };
+ 
+-static bool vmstate_test_use_cpuhp(void *opaque)
+-{
+-    PIIX4PMState *s = opaque;
+-    return !s->cpu_hotplug_legacy;
+-}
 -
--#define MULTIBOOT_MAGIC		0x2badb002
+-static int vmstate_cpuhp_pre_load(void *opaque)
+-{
+-    Object *obj = OBJECT(opaque);
+-    object_property_set_bool(obj, "cpu-hotplug-legacy", false, &error_abort);
+-    return 0;
+-}
 -
--#define GS_PROT_JUMP		0
--#define GS_GDT_DESC		6
--
--
--BOOT_ROM_START
--
--run_multiboot:
--
--	cli
--	cld
--
--	mov		%cs, %eax
--	shl		$0x4, %eax
--
--	/* set up a long jump descriptor that is PC relative */
--
--	/* move stack memory to %gs */
--	mov		%ss, %ecx
--	shl		$0x4, %ecx
--	mov		%esp, %ebx
--	add		%ebx, %ecx
--	sub		$0x20, %ecx
--	sub		$0x30, %esp
--	shr		$0x4, %ecx
--	mov		%cx, %gs
--
--	/* now push the indirect jump descriptor there */
--	mov		(prot_jump), %ebx
--	add		%eax, %ebx
--	movl		%ebx, %gs:GS_PROT_JUMP
--	mov		$8, %bx
--	movw		%bx, %gs:GS_PROT_JUMP + 4
--
--	/* fix the gdt descriptor to be PC relative */
--	movw		(gdt_desc), %bx
--	movw		%bx, %gs:GS_GDT_DESC
--	movl		(gdt_desc+2), %ebx
--	add		%eax, %ebx
--	movl		%ebx, %gs:GS_GDT_DESC + 2
--
--	xor		%eax, %eax
--	mov		%eax, %es
--
--	/* Read the bootinfo struct into RAM */
--	read_fw_blob_dma(FW_CFG_INITRD)
--
--	/* FS = bootinfo_struct */
--	read_fw		FW_CFG_INITRD_ADDR
--	shr		$4, %eax
--	mov		%ax, %fs
--
--	/* Account for the EBDA in the multiboot structure's e801
--	 * map.
--	 */
--	int		$0x12
--	cwtl
--	movl		%eax, %fs:4
--
--	/* ES = mmap_addr */
--	mov 		%fs:48, %eax
--	shr		$4, %eax
--	mov		%ax, %es
--
--	/* Initialize multiboot mmap structs using int 0x15(e820) */
--	xor		%ebx, %ebx
--	/* Start storing mmap data at %es:0 */
--	xor		%edi, %edi
--
--mmap_loop:
--	/* The multiboot entry size has offset -4, so leave some space */
--	add		$4, %di
--	/* entry size (mmap struct) & max buffer size (int15) */
--	movl		$20, %ecx
--	/* e820 */
--	movl		$0x0000e820, %eax
--	/* 'SMAP' magic */
--	movl		$0x534d4150, %edx
--	int		$0x15
--
--mmap_check_entry:
--	/* Error or last entry already done? */
--	jb		mmap_done
--
--mmap_store_entry:
--	/* store entry size */
--	/* old as(1) doesn't like this insn so emit the bytes instead:
--	movl		%ecx, %es:-4(%edi)
--	*/
--	.dc.b		0x26,0x67,0x66,0x89,0x4f,0xfc
--
--	/* %edi += entry_size, store as mbs_mmap_length */
--	add		%ecx, %edi
--	movw		%di, %fs:0x2c
--
--	/* Continuation value 0 means last entry */
--	test		%ebx, %ebx
--	jnz		mmap_loop
--
--mmap_done:
--	/* Calculate upper_mem field: The amount of memory between 1 MB and
--	   the first upper memory hole. Get it from the mmap. */
--	xor		%di, %di
--	mov		$0x100000, %edx
--upper_mem_entry:
--	cmp		%fs:0x2c, %di
--	je		upper_mem_done
--	add		$4, %di
--
--	/* Skip if type != 1 */
--	cmpl		$1, %es:16(%di)
--	jne		upper_mem_next
--
--	/* Skip if > 4 GB */
--	movl		%es:4(%di), %eax
--	test		%eax, %eax
--	jnz		upper_mem_next
--
--	/* Check for contiguous extension (base <= %edx < base + length) */
--	movl		%es:(%di), %eax
--	cmp		%eax, %edx
--	jb		upper_mem_next
--	addl		%es:8(%di), %eax
--	cmp		%eax, %edx
--	jae		upper_mem_next
--
--	/* If so, update %edx, and restart the search (mmap isn't ordered) */
--	mov		%eax, %edx
--	xor		%di, %di
--	jmp		upper_mem_entry
--
--upper_mem_next:
--	addl		%es:-4(%di), %edi
--	jmp		upper_mem_entry
--
--upper_mem_done:
--	sub		$0x100000, %edx
--	shr		$10, %edx
--	mov		%edx, %fs:0x8
--
--real_to_prot:
--	/* Load the GDT before going into protected mode */
--lgdt:
--	data32 lgdt	%gs:GS_GDT_DESC
--
--	/* get us to protected mode now */
--	movl		$1, %eax
--	movl		%eax, %cr0
--
--	/* the LJMP sets CS for us and gets us to 32-bit */
--ljmp:
--	data32 ljmp	*%gs:GS_PROT_JUMP
--
--prot_mode:
--.code32
--
--	/* initialize all other segments */
--	movl		$0x10, %eax
--	movl		%eax, %ss
--	movl		%eax, %ds
--	movl		%eax, %es
--	movl		%eax, %fs
--	movl		%eax, %gs
--
--	/* Read the kernel and modules into RAM */
--	read_fw_blob_dma(FW_CFG_KERNEL)
--
--	/* Jump off to the kernel */
--	read_fw		FW_CFG_KERNEL_ENTRY
--	mov		%eax, %ecx
--
--	/* EBX contains a pointer to the bootinfo struct */
--	read_fw		FW_CFG_INITRD_ADDR
--	movl		%eax, %ebx
--
--	/* EAX has to contain the magic */
--	movl		$MULTIBOOT_MAGIC, %eax
--ljmp2:
--	jmp		*%ecx
--
--/* Variables */
--.align 4, 0
--prot_jump:	.long prot_mode
--		.short 8
--
--.align 8, 0
--gdt:
--	/* 0x00 */
--.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
--
--	/* 0x08: code segment (base=0, limit=0xfffff, type=32bit code exec/read, DPL=0, 4k) */
--.byte	0xff, 0xff, 0x00, 0x00, 0x00, 0x9a, 0xcf, 0x00
--
--	/* 0x10: data segment (base=0, limit=0xfffff, type=32bit data read/write, DPL=0, 4k) */
--.byte	0xff, 0xff, 0x00, 0x00, 0x00, 0x92, 0xcf, 0x00
--
--	/* 0x18: code segment (base=0, limit=0x0ffff, type=16bit code exec/read/conf, DPL=0, 1b) */
--.byte	0xff, 0xff, 0x00, 0x00, 0x00, 0x9e, 0x00, 0x00
--
--	/* 0x20: data segment (base=0, limit=0x0ffff, type=16bit data read/write, DPL=0, 1b) */
--.byte	0xff, 0xff, 0x00, 0x00, 0x00, 0x92, 0x00, 0x00
--
--gdt_desc:
--.short	(5 * 8) - 1
--.long	gdt
--
--BOOT_ROM_END
-diff --git a/pc-bios/optionrom/multiboot_dma.S b/pc-bios/optionrom/multiboot_dma.S
-index d809af3e23f..c95e35c9cb6 100644
---- a/pc-bios/optionrom/multiboot_dma.S
-+++ b/pc-bios/optionrom/multiboot_dma.S
-@@ -1,2 +1,232 @@
--#define USE_FW_CFG_DMA 1
--#include "multiboot.S"
-+/*
-+ * Multiboot Option ROM
-+ *
-+ * This program is free software; you can redistribute it and/or modify
-+ * it under the terms of the GNU General Public License as published by
-+ * the Free Software Foundation; either version 2 of the License, or
-+ * (at your option) any later version.
-+ *
-+ * This program is distributed in the hope that it will be useful,
-+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
-+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-+ * GNU General Public License for more details.
-+ *
-+ * You should have received a copy of the GNU General Public License
-+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
-+ *
-+ * Copyright Novell Inc, 2009
-+ *   Authors: Alexander Graf <agraf@suse.de>
-+ */
-+
-+#include "optionrom.h"
-+
-+#define BOOT_ROM_PRODUCT "multiboot loader"
-+
-+#define MULTIBOOT_MAGIC		0x2badb002
-+
-+#define GS_PROT_JUMP		0
-+#define GS_GDT_DESC		6
-+
-+
-+BOOT_ROM_START
-+
-+run_multiboot:
-+
-+	cli
-+	cld
-+
-+	mov		%cs, %eax
-+	shl		$0x4, %eax
-+
-+	/* set up a long jump descriptor that is PC relative */
-+
-+	/* move stack memory to %gs */
-+	mov		%ss, %ecx
-+	shl		$0x4, %ecx
-+	mov		%esp, %ebx
-+	add		%ebx, %ecx
-+	sub		$0x20, %ecx
-+	sub		$0x30, %esp
-+	shr		$0x4, %ecx
-+	mov		%cx, %gs
-+
-+	/* now push the indirect jump descriptor there */
-+	mov		(prot_jump), %ebx
-+	add		%eax, %ebx
-+	movl		%ebx, %gs:GS_PROT_JUMP
-+	mov		$8, %bx
-+	movw		%bx, %gs:GS_PROT_JUMP + 4
-+
-+	/* fix the gdt descriptor to be PC relative */
-+	movw		(gdt_desc), %bx
-+	movw		%bx, %gs:GS_GDT_DESC
-+	movl		(gdt_desc+2), %ebx
-+	add		%eax, %ebx
-+	movl		%ebx, %gs:GS_GDT_DESC + 2
-+
-+	xor		%eax, %eax
-+	mov		%eax, %es
-+
-+	/* Read the bootinfo struct into RAM */
-+	read_fw_blob_dma(FW_CFG_INITRD)
-+
-+	/* FS = bootinfo_struct */
-+	read_fw		FW_CFG_INITRD_ADDR
-+	shr		$4, %eax
-+	mov		%ax, %fs
-+
-+	/* Account for the EBDA in the multiboot structure's e801
-+	 * map.
-+	 */
-+	int		$0x12
-+	cwtl
-+	movl		%eax, %fs:4
-+
-+	/* ES = mmap_addr */
-+	mov 		%fs:48, %eax
-+	shr		$4, %eax
-+	mov		%ax, %es
-+
-+	/* Initialize multiboot mmap structs using int 0x15(e820) */
-+	xor		%ebx, %ebx
-+	/* Start storing mmap data at %es:0 */
-+	xor		%edi, %edi
-+
-+mmap_loop:
-+	/* The multiboot entry size has offset -4, so leave some space */
-+	add		$4, %di
-+	/* entry size (mmap struct) & max buffer size (int15) */
-+	movl		$20, %ecx
-+	/* e820 */
-+	movl		$0x0000e820, %eax
-+	/* 'SMAP' magic */
-+	movl		$0x534d4150, %edx
-+	int		$0x15
-+
-+mmap_check_entry:
-+	/* Error or last entry already done? */
-+	jb		mmap_done
-+
-+mmap_store_entry:
-+	/* store entry size */
-+	/* old as(1) doesn't like this insn so emit the bytes instead:
-+	movl		%ecx, %es:-4(%edi)
-+	*/
-+	.dc.b		0x26,0x67,0x66,0x89,0x4f,0xfc
-+
-+	/* %edi += entry_size, store as mbs_mmap_length */
-+	add		%ecx, %edi
-+	movw		%di, %fs:0x2c
-+
-+	/* Continuation value 0 means last entry */
-+	test		%ebx, %ebx
-+	jnz		mmap_loop
-+
-+mmap_done:
-+	/* Calculate upper_mem field: The amount of memory between 1 MB and
-+	   the first upper memory hole. Get it from the mmap. */
-+	xor		%di, %di
-+	mov		$0x100000, %edx
-+upper_mem_entry:
-+	cmp		%fs:0x2c, %di
-+	je		upper_mem_done
-+	add		$4, %di
-+
-+	/* Skip if type != 1 */
-+	cmpl		$1, %es:16(%di)
-+	jne		upper_mem_next
-+
-+	/* Skip if > 4 GB */
-+	movl		%es:4(%di), %eax
-+	test		%eax, %eax
-+	jnz		upper_mem_next
-+
-+	/* Check for contiguous extension (base <= %edx < base + length) */
-+	movl		%es:(%di), %eax
-+	cmp		%eax, %edx
-+	jb		upper_mem_next
-+	addl		%es:8(%di), %eax
-+	cmp		%eax, %edx
-+	jae		upper_mem_next
-+
-+	/* If so, update %edx, and restart the search (mmap isn't ordered) */
-+	mov		%eax, %edx
-+	xor		%di, %di
-+	jmp		upper_mem_entry
-+
-+upper_mem_next:
-+	addl		%es:-4(%di), %edi
-+	jmp		upper_mem_entry
-+
-+upper_mem_done:
-+	sub		$0x100000, %edx
-+	shr		$10, %edx
-+	mov		%edx, %fs:0x8
-+
-+real_to_prot:
-+	/* Load the GDT before going into protected mode */
-+lgdt:
-+	data32 lgdt	%gs:GS_GDT_DESC
-+
-+	/* get us to protected mode now */
-+	movl		$1, %eax
-+	movl		%eax, %cr0
-+
-+	/* the LJMP sets CS for us and gets us to 32-bit */
-+ljmp:
-+	data32 ljmp	*%gs:GS_PROT_JUMP
-+
-+prot_mode:
-+.code32
-+
-+	/* initialize all other segments */
-+	movl		$0x10, %eax
-+	movl		%eax, %ss
-+	movl		%eax, %ds
-+	movl		%eax, %es
-+	movl		%eax, %fs
-+	movl		%eax, %gs
-+
-+	/* Read the kernel and modules into RAM */
-+	read_fw_blob_dma(FW_CFG_KERNEL)
-+
-+	/* Jump off to the kernel */
-+	read_fw		FW_CFG_KERNEL_ENTRY
-+	mov		%eax, %ecx
-+
-+	/* EBX contains a pointer to the bootinfo struct */
-+	read_fw		FW_CFG_INITRD_ADDR
-+	movl		%eax, %ebx
-+
-+	/* EAX has to contain the magic */
-+	movl		$MULTIBOOT_MAGIC, %eax
-+ljmp2:
-+	jmp		*%ecx
-+
-+/* Variables */
-+.align 4, 0
-+prot_jump:	.long prot_mode
-+		.short 8
-+
-+.align 8, 0
-+gdt:
-+	/* 0x00 */
-+.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-+
-+	/* 0x08: code segment (base=0, limit=0xfffff, type=32bit code exec/read, DPL=0, 4k) */
-+.byte	0xff, 0xff, 0x00, 0x00, 0x00, 0x9a, 0xcf, 0x00
-+
-+	/* 0x10: data segment (base=0, limit=0xfffff, type=32bit data read/write, DPL=0, 4k) */
-+.byte	0xff, 0xff, 0x00, 0x00, 0x00, 0x92, 0xcf, 0x00
-+
-+	/* 0x18: code segment (base=0, limit=0x0ffff, type=16bit code exec/read/conf, DPL=0, 1b) */
-+.byte	0xff, 0xff, 0x00, 0x00, 0x00, 0x9e, 0x00, 0x00
-+
-+	/* 0x20: data segment (base=0, limit=0x0ffff, type=16bit data read/write, DPL=0, 1b) */
-+.byte	0xff, 0xff, 0x00, 0x00, 0x00, 0x92, 0x00, 0x00
-+
-+gdt_desc:
-+.short	(5 * 8) - 1
-+.long	gdt
-+
-+BOOT_ROM_END
+ static const VMStateDescription vmstate_cpuhp_state = {
+     .name = "piix4_pm/cpuhp",
+     .version_id = 1,
+     .minimum_version_id = 1,
+-    .needed = vmstate_test_use_cpuhp,
+-    .pre_load = vmstate_cpuhp_pre_load,
+     .fields = (const VMStateField[]) {
+         VMSTATE_CPU_HOTPLUG(cpuhp_state, PIIX4PMState),
+         VMSTATE_END_OF_LIST()
+@@ -573,12 +558,12 @@ static void piix4_acpi_system_hot_add_init(MemoryRegion *parent,
+         qbus_set_hotplug_handler(BUS(pci_get_bus(PCI_DEVICE(s))), OBJECT(s));
+     }
+ 
+-    s->cpu_hotplug_legacy = true;
++    s->cpu_hotplug_legacy = false;
+     object_property_add_bool(OBJECT(s), "cpu-hotplug-legacy",
+                              piix4_get_cpu_hotplug_legacy,
+                              piix4_set_cpu_hotplug_legacy);
+-    legacy_acpi_cpu_hotplug_init(parent, OBJECT(s), &s->gpe_cpu,
+-                                 PIIX4_CPU_HOTPLUG_IO_BASE);
++    cpu_hotplug_hw_init(parent, OBJECT(s), &s->cpuhp_state,
++                        PIIX4_CPU_HOTPLUG_IO_BASE);
+ 
+     if (s->acpi_memory_hotplug.is_enabled) {
+         acpi_memory_hotplug_init(parent, OBJECT(s), &s->acpi_memory_hotplug,
+diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
+index 19c62362e31..cdd72cbcaa0 100644
+--- a/hw/i386/acpi-build.c
++++ b/hw/i386/acpi-build.c
+@@ -964,7 +964,7 @@ build_dsdt(GArray *table_data, BIOSLinker *linker,
+         build_legacy_cpu_hotplug_aml(dsdt, machine, pm->cpu_hp_io_base);
+     } else {
+         CPUHotplugFeatures opts = {
+-            .acpi_1_compatible = true, .has_legacy_cphp = true,
++            .acpi_1_compatible = true,
+             .smi_path = pm->smi_on_cpuhp ? "\\_SB.PCI0.SMI0.SMIC" : NULL,
+             .fw_unplugs_cpu = pm->smi_on_cpu_unplug,
+         };
+diff --git a/hw/loongarch/virt-acpi-build.c b/hw/loongarch/virt-acpi-build.c
+index 54ac94e17d3..3e34bedcd6f 100644
+--- a/hw/loongarch/virt-acpi-build.c
++++ b/hw/loongarch/virt-acpi-build.c
+@@ -369,7 +369,6 @@ build_la_ged_aml(Aml *dsdt, MachineState *machine)
+ 
+     if (event & ACPI_GED_CPU_HOTPLUG_EVT) {
+         opts.acpi_1_compatible = false;
+-        opts.has_legacy_cphp = false;
+         opts.fw_unplugs_cpu = false;
+         opts.smi_path = NULL;
+ 
 -- 
 2.52.0
 
