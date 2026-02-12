@@ -4,69 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04644EE368D
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 14:27:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D271FEE368C
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 14:28:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqXes-0001eM-8k; Thu, 12 Feb 2026 09:27:06 -0500
+	id 1vqXfS-0001hx-Np; Thu, 12 Feb 2026 09:27:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
- id 1vqXep-0001e7-Kl
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 09:27:03 -0500
-Received: from frasgout.his.huawei.com ([185.176.79.56])
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1vqXfR-0001hk-6b
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 09:27:41 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
- id 1vqXek-0001nY-VU
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 09:27:03 -0500
-Received: from mail.maildlp.com (unknown [172.18.224.150])
- by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4fBcyy4htXzHnH7t;
- Thu, 12 Feb 2026 22:25:30 +0800 (CST)
-Received: from dubpeml500005.china.huawei.com (unknown [7.214.145.207])
- by mail.maildlp.com (Postfix) with ESMTPS id 0E34B40539;
- Thu, 12 Feb 2026 22:25:47 +0800 (CST)
-Received: from localhost (10.47.28.143) by dubpeml500005.china.huawei.com
- (7.214.145.207) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.11; Thu, 12 Feb
- 2026 14:25:46 +0000
-Date: Thu, 12 Feb 2026 14:25:36 +0000
-To: "Zhijian Li (Fujitsu)" <lizhijian@fujitsu.com>
-CC: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, "linuxarm@huawei.com"
- <linuxarm@huawei.com>, "jonathan.cameron@huawei.com"
- <jonathan.cameron@huawei.com>, "nifan.cxl@gmail.com" <nifan.cxl@gmail.com>,
- "anisa.su887@gmail.com" <anisa.su887@gmail.com>, "mst@redhat.com"
- <mst@redhat.com>, "armbru@redhat.com" <armbru@redhat.com>,
- "ppbonzini@redhat.com" <ppbonzini@redhat.com>, "peterx@redhat.com"
- <peterx@redhat.com>, "philmd@linaro.org" <philmd@linaro.org>,
- "david@kernel.org" <david@kernel.org>, "imammedo@redhat.com"
- <imammedo@redhat.com>, "xiaoguangrong.eric@gmail.com"
- <xiaoguangrong.eric@gmail.com>, "venkataravis@micron.com"
- <venkataravis@micron.com>, "gourry@gourry.net" <gourry@gourry.net>
-Subject: Re: [PATCH v2 2/2] hw/cxl: Add a performant (and correct) path for
- the non interleaved cases
-Message-ID: <20260212142536.00004dcb.alireza.sanaee@huawei.com>
-In-Reply-To: <ae9d737c-6c2d-4ad1-b40e-62ea0e466696@fujitsu.com>
-References: <20260204150002.669-1-alireza.sanaee@huawei.com>
- <20260204150002.669-3-alireza.sanaee@huawei.com>
- <ae9d737c-6c2d-4ad1-b40e-62ea0e466696@fujitsu.com>
-Organization: Huawei
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1vqXfO-00020k-Mq
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 09:27:40 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1770906457;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=0oZt3CPgTlaglxzNcDmSSF0hYIldVkDAkiG1wJ2e+60=;
+ b=AVIoO2JY++FKJP9NcVdy2pcDXBcbZEBjv2/rrdCa4h3F0kMP5RAKK6jMVk9SkYSOTgVtjD
+ hXDUcSbiVCwPiNU2+KFTAV7x+Y54HF5LMdXgBmCdO8Qo6NcxjxuAfUmZ1FssLWCWwa5Q8S
+ pEZ4dcqB7JvZsCKvj4d6xQ96I69t6DM=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-635-TTJwOcZKOX-Fh7Wo23ocfA-1; Thu, 12 Feb 2026 09:27:35 -0500
+X-MC-Unique: TTJwOcZKOX-Fh7Wo23ocfA-1
+X-Mimecast-MFC-AGG-ID: TTJwOcZKOX-Fh7Wo23ocfA_1770906455
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-4836cf00787so4298755e9.1
+ for <qemu-devel@nongnu.org>; Thu, 12 Feb 2026 06:27:35 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770906454; x=1771511254;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=0oZt3CPgTlaglxzNcDmSSF0hYIldVkDAkiG1wJ2e+60=;
+ b=naKVOOHBeB+3wzVoOI87eFn5RTMZFwEu1La/RK2QWgoxuwHUIJ+OAr/KnrWBT2vmUB
+ 28o9dz9o7FoKV6tkkEbG7DyTtqQqyDXayY+d9iYvlDW07RzTmCKhKYeumGVpP0GfK70h
+ /3chmM15WgXZXyGc6lRFy6e4nEATZsf+q3bFCrY52bKF9nZmwenWoid4Y+aAAOtinl0D
+ mPmcpXMY6wKgT4k8LuoqwpHXG+a+HlFcQSYJf3z6WdJfaB45CiNm6/j1V2AbCNUrd+yy
+ b9Ps0wbBKS+2cs666SYKTZcs5Ze/5CjK+AkqQib0Iiz/d6LDZ3Djmc+3bA62k+Fictn9
+ droQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWPmYRUQjXIZQjZcX9MNTOeMcBNTGJEhzwz0GPi08h4C4zg5rI0cKRYAWh8aPL0JfXCE1YCt3NPA4Xq@nongnu.org
+X-Gm-Message-State: AOJu0YyNn3JBUpWdpHQqk/0d+Pw25zAIUsnsmWfGbtmrv2dMq1CXoItp
+ 2Ng/z7VurYtkmmvhaOLlG5uVpaIf5maMSLMFUaXPFO/9CMEX4XDGiFT1PNaEXD97xwI58baHtww
+ IWv1/FE6IJVPC4MHtXKii1H4pSvXDVNzgDaqkXJ2CaQv5uIejIPIZXQ86
+X-Gm-Gg: AZuq6aJs7A2ZEEbI41s0pVxeXMHJycFM7B/HLtDBAsdYARQw7bnpqR6oDypblYaeJVb
+ vpHGLKqUtZU/CgKnvZ0lg/FmNSBdSRoDvOpxboA02JUMwUCAfk7+jMcKPhQa+92yEfqkXILOtZg
+ WqJh/4IvZTXeY3L/+QKEEhbBy4TkTfZiJEln2uypUDh7WjsXTu1bI4DE3Nik1udU17Sxl67gPoE
+ knorGgbTPKSgIQA1dhvp2qiserjk7tRSb3IRAYlQERK0lHJ8HKkwQfvD9BUmF7J56e21jWIaAsV
+ dVS3wMTUR5ls77yl08KsjVnQvW/CuQG8KwMU25SzxD7NRRITreq+PMUFo5jhXEt1929/3Lfp2+0
+ wUnzqmmGkpnwT3dtdojGWCVOjNQwwLH6DGt9B0ogZ/5F4TuhdFDluaN9RB9fdGeSkkaEFbg==
+X-Received: by 2002:a05:600d:6405:10b0:481:a662:b3f3 with SMTP id
+ 5b1f17b1804b1-48366000be0mr28920215e9.7.1770906454524; 
+ Thu, 12 Feb 2026 06:27:34 -0800 (PST)
+X-Received: by 2002:a05:600d:6405:10b0:481:a662:b3f3 with SMTP id
+ 5b1f17b1804b1-48366000be0mr28919645e9.7.1770906454108; 
+ Thu, 12 Feb 2026 06:27:34 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4835dd20519sm207781085e9.15.2026.02.12.06.27.32
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 12 Feb 2026 06:27:33 -0800 (PST)
+Message-ID: <0cd3bc01-7213-4cc5-996f-e8a518ffd0a3@redhat.com>
+Date: Thu, 12 Feb 2026 15:27:31 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 06/24] hw/arm/tegra241-cmdqv: Add Tegra241 CMDQV ops
+ backend stub
+Content-Language: en-US
+To: Shameer Kolothum <skolothumtho@nvidia.com>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org, clg@redhat.com, alex@shazbot.org,
+ nicolinc@nvidia.com, nathanc@nvidia.com, mochs@nvidia.com, jan@nvidia.com,
+ jgg@nvidia.com, jonathan.cameron@huawei.com, zhangfei.gao@linaro.org,
+ zhenzhong.duan@intel.com, kjaju@nvidia.com
+References: <20260206144823.80655-1-skolothumtho@nvidia.com>
+ <20260206144823.80655-7-skolothumtho@nvidia.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20260206144823.80655-7-skolothumtho@nvidia.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.47.28.143]
-X-ClientProxiedBy: lhrpeml100012.china.huawei.com (7.191.174.184) To
- dubpeml500005.china.huawei.com (7.214.145.207)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=alireza.sanaee@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -79,163 +117,162 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Alireza Sanaee <alireza.sanaee@huawei.com>
-From:  Alireza Sanaee via qemu development <qemu-devel@nongnu.org>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 9 Feb 2026 03:06:00 +0000
-"Zhijian Li (Fujitsu)" <lizhijian@fujitsu.com> wrote:
+Hi Shameer,
 
-Hi Zhijian,
+On 2/6/26 3:48 PM, Shameer Kolothum wrote:
+> Introduce a Tegra241 CMDQV backend that plugs into the SMMUv3 accelerated
+> CMDQV ops interface.
+>
+> This patch wires up the Tegra241 CMDQV backend and provides a stub
+> implementation for CMDQV initialization, vIOMMU/vEVENTQ allocation
+> and reset handling.
+>
+> Functional CMDQV support is added in follow-up patches.
+>
+> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
+> ---
+>  hw/arm/Kconfig          |  5 ++++
+>  hw/arm/meson.build      |  1 +
+>  hw/arm/tegra241-cmdqv.c | 60 +++++++++++++++++++++++++++++++++++++++++
+>  hw/arm/tegra241-cmdqv.h | 23 ++++++++++++++++
+>  4 files changed, 89 insertions(+)
+>  create mode 100644 hw/arm/tegra241-cmdqv.c
+>  create mode 100644 hw/arm/tegra241-cmdqv.h
+>
+> diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
+> index c66c452737..3305c6e76e 100644
+> --- a/hw/arm/Kconfig
+> +++ b/hw/arm/Kconfig
+> @@ -626,6 +626,10 @@ config FSL_IMX8MP_EVK
+>      depends on TCG
+>      select FSL_IMX8MP
+>  
+> +config TEGRA241_CMDQV
+> +    bool
+> +    depends on ARM_SMMUV3_ACCEL
+> +
+>  config ARM_SMMUV3_ACCEL
+>      bool
+>      depends on ARM_SMMUV3
+> @@ -633,6 +637,7 @@ config ARM_SMMUV3_ACCEL
+>  config ARM_SMMUV3
+>      bool
+>      select ARM_SMMUV3_ACCEL if IOMMUFD
+> +    imply TEGRA241_CMDQV
+>  
+>  config FSL_IMX6UL
+>      bool
+> diff --git a/hw/arm/meson.build b/hw/arm/meson.build
+> index c250487e64..4ec91db50a 100644
+> --- a/hw/arm/meson.build
+> +++ b/hw/arm/meson.build
+> @@ -86,6 +86,7 @@ arm_common_ss.add(when: 'CONFIG_FSL_IMX8MP', if_true: files('fsl-imx8mp.c'))
+>  arm_common_ss.add(when: 'CONFIG_FSL_IMX8MP_EVK', if_true: files('imx8mp-evk.c'))
+>  arm_ss.add(when: 'CONFIG_ARM_SMMUV3', if_true: files('smmuv3.c'))
+>  arm_ss.add(when: 'CONFIG_ARM_SMMUV3_ACCEL', if_true: files('smmuv3-accel.c'))
+> +arm_ss.add(when: 'CONFIG_TEGRA241_CMDQV', if_true: files('tegra241-cmdqv.c'))
+>  arm_common_ss.add(when: 'CONFIG_FSL_IMX6UL', if_true: files('fsl-imx6ul.c', 'mcimx6ul-evk.c'))
+>  arm_common_ss.add(when: 'CONFIG_NRF51_SOC', if_true: files('nrf51_soc.c'))
+>  arm_common_ss.add(when: 'CONFIG_XEN', if_true: files(
+> diff --git a/hw/arm/tegra241-cmdqv.c b/hw/arm/tegra241-cmdqv.c
+> new file mode 100644
+> index 0000000000..6f30ca035b
+> --- /dev/null
+> +++ b/hw/arm/tegra241-cmdqv.c
+> @@ -0,0 +1,60 @@
+> +/*
+> + * Copyright (C) 2025, NVIDIA CORPORATION
+> + * NVIDIA Tegra241 CMDQ-Virtualization extension for SMMUv3
+> + *
+> + * Written by Nicolin Chen, Shameer Kolothum
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +
+> +#include "hw/arm/smmuv3.h"
+> +#include "smmuv3-accel.h"
+> +#include "tegra241-cmdqv.h"
+> +
+> +static void tegra241_cmdqv_free_veventq(SMMUv3State *s)
+> +{
+> +}
+> +
+> +static bool tegra241_cmdqv_alloc_veventq(SMMUv3State *s, Error **errp)
+> +{
+> +    error_setg(errp, "NVIDIA Tegra241 CMDQV is unsupported");
+> +    return false;
+> +}
+> +
+> +static void tegra241_cmdqv_free_viommu(SMMUv3State *s)
+> +{
+> +}
+> +
+> +static bool
+> +tegra241_cmdqv_alloc_viommu(SMMUv3State *s, HostIOMMUDeviceIOMMUFD *idev,
+> +                            uint32_t *out_viommu_id, Error **errp)
+> +{
+> +    error_setg(errp, "NVIDIA Tegra241 CMDQV is unsupported");
+> +    return false;
+> +}
+> +
+> +static void tegra241_cmdqv_reset(SMMUv3State *s)
+> +{
+> +}
+> +
+> +static bool tegra241_cmdqv_init(SMMUv3State *s, Error **errp)
+> +{
+> +    error_setg(errp, "NVIDIA Tegra241 CMDQV is unsupported");
+> +    return false;
+> +}
+> +
+> +static const SMMUv3AccelCmdqvOps tegra241_cmdqv_ops_impl = {
+> +    .init = tegra241_cmdqv_init,
+> +    .alloc_viommu = tegra241_cmdqv_alloc_viommu,
+> +    .free_viommu = tegra241_cmdqv_free_viommu,
+> +    .alloc_veventq = tegra241_cmdqv_alloc_veventq,
+> +    .free_veventq = tegra241_cmdqv_free_veventq,
+> +    .reset = tegra241_cmdqv_reset,
+> +};
+> +
+> +const SMMUv3AccelCmdqvOps *tegra241_cmdqv_ops(void)
+> +{
+> +    return &tegra241_cmdqv_ops_impl;
+> +}
+> diff --git a/hw/arm/tegra241-cmdqv.h b/hw/arm/tegra241-cmdqv.h
+> new file mode 100644
+> index 0000000000..81c9deb384
+> --- /dev/null
+> +++ b/hw/arm/tegra241-cmdqv.h
+> @@ -0,0 +1,23 @@
+> +/*
+> + * Copyright (C) 2025, NVIDIA CORPORATION
+> + * NVIDIA Tegra241 CMDQ-Virtualiisation extension for SMMUv3
+> + *
+> + * Written by Nicolin Chen, Shameer Kolothum
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#ifndef HW_TEGRA241_CMDQV_H
+nit: to match existing pattern this should be HW_ARM_TEGRA241_CMDQV_H
+> +#define HW_TEGRA241_CMDQV_H
+> +
+> +#include CONFIG_DEVICES
+> +
+> +#ifdef CONFIG_TEGRA241_CMDQV
+> +const SMMUv3AccelCmdqvOps *tegra241_cmdqv_ops(void);
+> +#else
+> +static inline const SMMUv3AccelCmdqvOps *tegra241_cmdqv_ops(void)
+> +{
+> +    return NULL;
+> +}
+> +#endif
+> +#endif /* HW_TEGRA241_CMDQV_H */
 
-I forgot to address the other feedback you shared. This is another attempt.
-
-> On 04/02/2026 23:00, Alireza Sanaee wrote:
-> > The CXL address to device decoding logic is complex because of the need
-> > to correctly decode fine grained interleave. The current implementation
-> > prevents use with KVM where executed instructions may reside in that
-> > memory and gives very slow performance even in TCG.  
-> 
-> 
-> Do you mean KVM will work after this patch in 1-way case
-> 
-
-Yes.
-
-> 
-> > 
-> > In many real cases non interleaved memory configurations are useful and
-> > for those we can use a more conventional memory region alias allowing
-> > similar performance to other memory in the system.  
-> 
-> 
-> Do you have any benchmark data to demonstrate the performance improvement?
-
-Yes, simple experiments with this code snippet. Compilation instructions are in the gist itself.
-
-https://gist.github.com/sarsanaee/8791a4d32351b31228764ce7c2c4bb9c
-
-> 
-> 
-> 
-> > 
-> > Co-developed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
-> > Signed-off-by: Jonathan Cameron <jonathan.cameron@huawei.com>
-> > Signed-off-by: Alireza Sanaee <alireza.sanaee@huawei.com>
-> > ---
-> >   hw/cxl/cxl-component-utils.c |   8 ++
-> >   hw/cxl/cxl-host.c            | 197 ++++++++++++++++++++++++++++++++++-
-> >   hw/mem/cxl_type3.c           |   4 +
-> >   include/hw/cxl/cxl.h         |   1 +
-> >   include/hw/cxl/cxl_device.h  |   1 +
-> >   5 files changed, 206 insertions(+), 5 deletions(-)
-> > 
-> > diff --git a/hw/cxl/cxl-component-utils.c b/hw/cxl/cxl-component-utils.c
-> > index d36162e91b..d459d04b6d 100644
-> > --- a/hw/cxl/cxl-component-utils.c
-> > +++ b/hw/cxl/cxl-component-utils.c
-> > @@ -142,6 +142,14 @@ static void dumb_hdm_handler(CXLComponentState *cxl_cstate, hwaddr offset,
-> >           value = FIELD_DP32(value, CXL_HDM_DECODER0_CTRL, COMMITTED, 0);
-> >       }
-> >       stl_le_p((uint8_t *)cache_mem + offset, value);
-> > +
-> > +    if (should_commit) {
-> > +        cfmws_update_non_interleaved(true);
-> > +    }
-> > +
-> > +    if (should_uncommit) {
-> > +        cfmws_update_non_interleaved(false);
-> > +    }  
-> 
-> 
-> This might be slightly better as an if-else block, since should_commit and should_uncommit are mutually exclusive:
-> 
-> 
-> if (should_commit) {
-> 	cfmws_update_non_interleaved(true);;
-> } else if (should_uncommit) {
-> 	cfmws_update_non_interleaved(false);
-> }
-I agree, this can be changed.
-> 
-> 
-> >   }
-> >   
-> >   static void bi_handler(CXLComponentState *cxl_cstate, hwaddr offset,
-> > diff --git a/hw/cxl/cxl-host.c b/hw/cxl/cxl-host.c
-> > index 9633b01abf..1fcfe01164 100644
-> > --- a/hw/cxl/cxl-host.c
-> > +++ b/hw/cxl/cxl-host.c
-> > @@ -104,7 +104,7 @@ void cxl_fmws_link_targets(Error **errp)
-> >   }
-> >   
-> >   static bool cxl_hdm_find_target(uint32_t *cache_mem, hwaddr addr,
-> > -                                uint8_t *target)
-> > +                                uint8_t *target, bool *interleaved)
-> >   {
-> >       int hdm_inc = R_CXL_HDM_DECODER1_BASE_LO - R_CXL_HDM_DECODER0_BASE_LO;
-> >       unsigned int hdm_count;
-> > @@ -138,6 +138,11 @@ static bool cxl_hdm_find_target(uint32_t *cache_mem, hwaddr addr,
-> >           found = true;
-> >           ig_enc = FIELD_EX32(ctrl, CXL_HDM_DECODER0_CTRL, IG);
-> >           iw_enc = FIELD_EX32(ctrl, CXL_HDM_DECODER0_CTRL, IW);
-> > +
-> > +        if (interleaved) {
-> > +            *interleaved = iw_enc != 0;
-> > +        }
-> > +
-> >           target_idx = (addr / cxl_decode_ig(ig_enc)) % (1 << iw_enc);
-> >   
-> >           if (target_idx < 4) {
-> > @@ -157,7 +162,8 @@ static bool cxl_hdm_find_target(uint32_t *cache_mem, hwaddr addr,
-> >       return found;  
-> 
-> [...]
-> 
-> > +
-> > +static int update_non_interleaved(Object *obj, void *opaque)
-> > +{
-> > +    const int hdm_inc = R_CXL_HDM_DECODER1_BASE_LO - R_CXL_HDM_DECODER0_BASE_LO;
-> > +    bool commit = *(bool *)opaque;
-> > +    CXLType3Dev *ct3d;
-> > +    uint32_t *cache_mem;
-> > +    unsigned int hdm_count, i;
-> > +    uint32_t cap;
-> > +    uint64_t dpa_base = 0;
-> > +
-> > +    if (!object_dynamic_cast(obj, TYPE_CXL_TYPE3)) {
-> > +        return 0;
-> > +    }
-> > +
-> > +    ct3d = CXL_TYPE3(obj);
-> > +    cache_mem = ct3d->cxl_cstate.crb.cache_mem_registers;
-> > +    cap = ldl_le_p(cache_mem + R_CXL_HDM_DECODER_CAPABILITY);
-> > +    hdm_count = cxl_decoder_count_dec(FIELD_EX32(cap,
-> > +                                                 CXL_HDM_DECODER_CAPABILITY,
-> > +                                                 DECODER_COUNT));
-> > +    /*
-> > +     * Walk the decoders and find any committed with iw set to 0
-> > +     * (non interleaved).
-> > +     */
-> > +    for (i = 0; i < hdm_count; i++) {
-> > +        uint64_t decoder_base, decoder_size, skip;
-> > +        uint32_t hdm_ctrl, low, high;
-> > +        int iw, committed;
-> > +
-> > +        hdm_ctrl = ldl_le_p(cache_mem + R_CXL_HDM_DECODER0_CTRL + i * hdm_inc);
-> > +        committed = FIELD_EX32(hdm_ctrl, CXL_HDM_DECODER0_CTRL, COMMITTED);
-> > +        if (commit ^ committed) {  
-> 
-> 
-> Is there any specific reason for using ^ here instead of '==' ?
-
-This was only there to make sure, the status must be commit ON and uncommit OFF and the other way around.
-
-It is not valid to map anything or walk down the for loop if the states are anything other than those.
-> 
-> 
-> 
-> Thanks
-> Zhijian
 
