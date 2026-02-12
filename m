@@ -4,96 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADD4BEE3695
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 16:36:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E26CEE36A9
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 16:53:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqZfH-00063o-Gz; Thu, 12 Feb 2026 11:35:39 -0500
+	id 1vqZwJ-0002kL-2V; Thu, 12 Feb 2026 11:53:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vqZfG-00063Y-4z
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 11:35:38 -0500
-Received: from mail-yw1-x1132.google.com ([2607:f8b0:4864:20::1132])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vqZwC-0002jX-I9
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 11:53:09 -0500
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vqZfE-0001DA-Ml
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 11:35:37 -0500
-Received: by mail-yw1-x1132.google.com with SMTP id
- 00721157ae682-7945838691aso30586767b3.0
- for <qemu-devel@nongnu.org>; Thu, 12 Feb 2026 08:35:36 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1770914135; cv=none;
- d=google.com; s=arc-20240605;
- b=G/y4+4lNAsZVV4JwmTAbq7kcTzCHe+3O1MTm19gz3xviUcepnaQ4rspVDfCNUN8tSy
- jTh69g0QAVTnLdBR4EoMsYia4YBt6HJTtRFNbAxvtkuf51mY+WYbUy5aD7JMp50rvxW9
- 2MFF53sPtEkBqkOsbawU49doJ/RWvDs3EcilC2L4v1Ehbkd3lCHVfnoI7CKPbsLSbZ8s
- JpUXvxoifeOJD8kXpvWSUbob1i3IatUaPEova78IvmZPV5bDHBQw5ff4OgJzDZwYCT5v
- 74zqYlKAE8Gay9bXajosKSJCy3lLQbJbRh/gqK44PKdTfSoev3HG6vYp1ZF/RegvLxDa
- IC1g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=VXJCvP5gYwAnr0dk0cMgRmrk4HFRwkvVmDtevyMIoGE=;
- fh=PyOPoNBoQFM3aCBquwILiqFzLPoaTRIJM+NDP7vsKXo=;
- b=YT+jH0ifRvTHljiBZzJzBbDD+mrtDlanKAl2xbku0uzb/Cl93v0Ht+CUGfof+BG9tV
- qWIl/IElNMPiOv4Vqq6SNJykzPHgzn/QRjpJV0uXXqjiMSmYToS4Tu7eU7TuHfTu2Cqb
- Ldbk9k6Qi+5CMXtZIUEwEqivwsl9LAYdH82atQZnDeb7Cgc3MqUEt6707DG9la5Bmnch
- N0b8EIjHSZqMbmpTggSzLWP0lrYcJvw9Df6C9OZrezA9EvjlrcwmgelX8x/X88eJe4Uf
- 32mNSS/EzPaw9BWaQ7drDksMVFaDbuNQ1dcvq+8J42HV+kG7gl+YzwPt4wKUjO557oQr
- UxQQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vqZwA-0005xV-QT
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 11:53:08 -0500
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-4806bf39419so15843455e9.1
+ for <qemu-devel@nongnu.org>; Thu, 12 Feb 2026 08:53:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770914135; x=1771518935; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=VXJCvP5gYwAnr0dk0cMgRmrk4HFRwkvVmDtevyMIoGE=;
- b=T5iI/YRojViVxVVMjA3vEIDNj0lfrC4ERQTx9LSGhMDqp3kisK+BSkrqbnWXAK1DaU
- Ipan9nbfRMsGoVWaR83THKeo+6+d8oXEgRrvPdJ5v7E7iyrqaSyIDLDVmHHUVwe6dtJm
- A579LIVqgs/w6xLucRxhWjP5dc8TgT34medEX52ITG5X7+p8hUdt31whTm5Y5BMif2bB
- IBylReTck8wiz7qo2stVUQX4MMXb9rW4b1UyiXJp4gF1nQV3ghCJncoGz+2WzdzeIs+9
- KUho1DyrI6KX73hW0eVJM5dpeHXHsGOCLDSOvR0R/zhJq+iIDTa1GRgUxvZMv1teXFqg
- 3Ong==
+ d=linaro.org; s=google; t=1770915185; x=1771519985; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=RniBsc2Xbq85WI7J4jNKYo1JqkqyD7JEHQQIAnWE9EA=;
+ b=Kuc0ccjF/fL9NfKS6mC47PgRVVE0Vh/0k1aCqUX0Q5/CbgMKCkfalJ7q8RZndl9We6
+ maOfhGKSLSA1kNvvItUKkSR9f6aQsWmIvkWsNa6iZlfskID5XexKCs0AJ01xnkxe/t6L
+ bH4C9cz89YOwS84vsFkVU0NjDEy47jmm75o0b987Y4GUdSysNNPMLoCYrXmBsV5bHOAx
+ rVMN3uhITuznI5F9PorPb6ZFQgnMAQUOC+ym5ptOBIEu5LnGGcGiS0P7FO6cNRKNmd8O
+ ovv5fG2puKrysz5ddYghDC9osPdX3WKZjKQv8kFQBzU2tI0HeimkPzooTA94aUFXlL2+
+ /B/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770914135; x=1771518935;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=VXJCvP5gYwAnr0dk0cMgRmrk4HFRwkvVmDtevyMIoGE=;
- b=VEeZ7p7zhWF1le8C/vgc85D//o7EbMWDnmvlNGgYRU9i2bgUK/dD91qPJA41iL3LZm
- YojlMSnpg3+zeJvAy6wcTG1u1cWR0rtMCNZEvA5+c+lgIRmY5HHug5jl0wm6hel3qmI/
- BU6qNOr6VUJW6EkVJOzMla+LQ/T97BEHdv2Au2Kb8tCHLxIMLMa0jFVWdLR6OnH/uL5k
- CIpyfnvplFEjcTCn8y0GSl9NkTY4eworFiEfTIxd5+JqtjqGe8G803kBFcFyIyWihrGJ
- ncy3Kry+ej5mcc0WkQzYIiUkkBiewZrcS8bMcNC+f9aVLmdOv9BGliCZU1K0GruPhpbW
- AyqA==
-X-Gm-Message-State: AOJu0YwiVlx2SKDj32j3wzEX3doMxzZq9FW3RC85XuaR/X6+j3mPDmen
- du0ooQkafaejtAF39QRr+Da2h+kH7XYPYAgdippp8S3kFzXMhDv5K4XiP+DbpXJ1piOrT6v9u4W
- hB+uD2OZxlfB3E/jVuTAc8H5wrpQStYcAvaeE6awKEw==
-X-Gm-Gg: AZuq6aIjvLb6I1yPYat69jvIDIcxUYSbGmxR2Ko+CZhR86zOBPhcEU+emLkJUysvTR2
- 5A0GyAFk48/Y4/PTajKaeN2xngRo5yXXcBWRL7OetwxxMpn3xW3XHE/RR1XfBtsgjWtBCX2c6Ks
- xI623QW4/0EathoZxE3EekUBOHDJa8mdcFUGeUSpD/5BZ3x9lrc6y/Rjwe/pYYxZ1KOARBhKtle
- +bnV+/PfDomCUcnf7YieS1s3mhawZWW03MbAlyaJcCuvotNfIS7/PZ0DZhxpoOzExPB8/E3zY1G
- RENyG2MXmkRcGADjv5YElcRnptOeotZ6zI6IvMSm0s8iVv5rhHSwFIHafBRa4s7cVBY=
-X-Received: by 2002:a05:690e:4286:20b0:649:3875:9200 with SMTP id
- 956f58d0204a3-64bdf2f94ebmr1957095d50.1.1770914135172; Thu, 12 Feb 2026
- 08:35:35 -0800 (PST)
+ d=1e100.net; s=20230601; t=1770915185; x=1771519985;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=RniBsc2Xbq85WI7J4jNKYo1JqkqyD7JEHQQIAnWE9EA=;
+ b=is8pBsOfdPLEZOqphnMgUdfN76TLHmfoyMxig8bDZquhSxUMK8zhXXrBWk8HjiqcKa
+ 9YrjF/nufbWe7c7p6l2x+lw6wnm72vSAPN8gAQeMsMffvlaTa7FkhAG2zIvQH/br5L2r
+ TgKZBSDF3TJorUAP5fDQOTBn8YjaZBlU2h5xJvjx0h2QmPMnWAsasprorjhvt+Iy/iPI
+ ZOa+0FfqOd8rVqagXU6JmxLlrKgbHZFuUlKg4BeozvWiDGec614FMjNexQKPjMoo4Nuu
+ ku1rQ+I3+0Ttxlu8QnCq0IHIrdv5CtqiCpqR26OegcPZRRaAx8D5roP1lvOXCE9O9zX6
+ dCjg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUgX+jQtZLER2RAyRx7UIHrrKnE1N/oasq6YQxfDdH7bdIQHBaX4oYcrKvwQPaMCBPp+fta68AYMyd0@nongnu.org
+X-Gm-Message-State: AOJu0Yy7lzAPDk666uFcaSeu8O0dkMFz8OjSwgp00tw1VN4Up/rETAA9
+ JmnGvGxcdTCsWgUFCTfR1lWQoA+YREWCIM5zEZ5OMjn4qw+PFh0eiDr7p2JXhGE6UTxpDZsvCTr
+ ibiNmZ5w=
+X-Gm-Gg: AZuq6aJILY5iG8V4OzPcTiO61r/aKKyS0WYsOL6llI7slVJ2X0Rs6X12dapaxjDOsnr
+ 8iqtFE+vkNffvDKmNO9BJGZaIUE/MkTRy3h2thJclIW6bAN2GY3wUR8Bpz8Y5J0asGGyAW2KByl
+ CmAHltYlzSro1BILl5fZFdhySkbmMyR4EHzg3DZnyAfZs9W6Ic5raazQTznsqAPAqpMOTEErQaN
+ LrSdLfwVlOHLu9S5BN2nDtp3KOr9T1DHg2QFTGO8CiRv7LjNEvUCVmHEfJZ9qBh1UDhEw4DTSEM
+ rT6toxrjAzKIzh5/tr7GhdxVff4Xo0rdhz2YA9JSKItOnBL6zNFxlbDtkglzdJaYY6jgcW4J+Ff
+ 8YDbMfdNswlVVm2f5FvgicoySESVUdz21TDQcXULINS6QOhRyBgd/E9PO1kNZ9hJz3EIqU6Lw7l
+ h9nppPqnnovGhgKoBQoDhk24VUOOFxjbnX0rSG02tXcStLFsb8YfwiJOE0IApeMAdeMg==
+X-Received: by 2002:a05:600c:4f91:b0:47d:403a:277 with SMTP id
+ 5b1f17b1804b1-48365fec543mr50874815e9.4.1770915184801; 
+ Thu, 12 Feb 2026 08:53:04 -0800 (PST)
+Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4834d7e50casm198594775e9.8.2026.02.12.08.53.03
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 12 Feb 2026 08:53:04 -0800 (PST)
+Message-ID: <0d4b92f6-1220-4301-bf38-6b15e910aa47@linaro.org>
+Date: Thu, 12 Feb 2026 17:53:03 +0100
 MIME-Version: 1.0
-References: <20260206174755.3190469-1-corey@minyard.net>
-In-Reply-To: <20260206174755.3190469-1-corey@minyard.net>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 12 Feb 2026 16:35:23 +0000
-X-Gm-Features: AZwV_Qg_PhP0oZoNlqnQUPVnzYOA4EwPDZm0KKIze11-fMNAU838t-bBtLYDBuE
-Message-ID: <CAFEAcA9LRXwaJz+5YwCAwJNdX7jFw3eruMkiHzP6_uOFda8iXQ@mail.gmail.com>
-Subject: Re: [PULL 0/2] Add a fake IPMI LAN channel
-To: Corey Minyard <corey@minyard.net>
-Cc: QEMU Developers <qemu-devel@nongnu.org>,
- Yunpeng Yang <yunpeng.yang@nutanix.com>, 
- Mark Cave-Ayland <mark.caveayland@nutanix.com>,
- Jonathan Davies <jond@nutanix.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1132;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1132.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 03/31] hw/accel: add a per-accelerator callback to
+ change VM accelerator handle
+Content-Language: en-US
+To: Ani Sinha <anisinha@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Cc: kraxel@redhat.com, qemu-devel@nongnu.org,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Igor Mammedov <imammedo@redhat.com>
+References: <20260212062522.99565-1-anisinha@redhat.com>
+ <20260212062522.99565-4-anisinha@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260212062522.99565-4-anisinha@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -116,21 +109,118 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 6 Feb 2026 at 17:48, Corey Minyard <corey@minyard.net> wrote:
->
-> LAN functionality that is not implemented in the device, but being able
-> to set the parameters can be handy for testing.
->
+Hi Ani,
 
-Hi -- somebody just pointed me at this email on IRC. Something
-has gone wrong with your pull-request email creation process,
-because this cover letter does not contain the usual verbiage
-that causes it to be filtered out as a pull request for me
-to process, and it doesn't have the URL and tag to pull that
-I would need to process it...
+On 12/2/26 07:24, Ani Sinha wrote:
+> When a confidential virtual machine is reset, a new guest context in the
+> accelerator must be generated post reset. Therefore, the old accelerator guest
+> file handle must be closed and a new one created. To this end, a per-accelerator
+> callback, "reset_vmfd" is introduced that would get called when a confidential
+> guest is reset. Subsequent patches will introduce specific implementation of
+> this callback for KVM accelerator.
+> 
+> Signed-off-by: Ani Sinha <anisinha@redhat.com>
+> ---
+>   include/accel/accel-ops.h |  1 +
+>   system/runstate.c         | 37 ++++++++++++++++++++++++++++++++++++-
+>   2 files changed, 37 insertions(+), 1 deletion(-)
+> 
+> diff --git a/include/accel/accel-ops.h b/include/accel/accel-ops.h
+> index 23a8c246e1..998a95ca69 100644
+> --- a/include/accel/accel-ops.h
+> +++ b/include/accel/accel-ops.h
+> @@ -23,6 +23,7 @@ struct AccelClass {
+>       AccelOpsClass *ops;
+>   
+>       int (*init_machine)(AccelState *as, MachineState *ms);
+> +    int (*reset_vmfd)(MachineState *ms);
 
-It's probably easiest if you resend the pullreq in the correct format.
+So far 'vmfd' is a KVM concept. Can we use a more generic name?
 
-thanks
--- PMM
+Please add a @docstring description for this handler.
+
+>       bool (*cpu_common_realize)(CPUState *cpu, Error **errp);
+>       void (*cpu_common_unrealize)(CPUState *cpu);
+>       /* get_stats: Append statistics to @buf */
+> diff --git a/system/runstate.c b/system/runstate.c
+> index 5d58260ed5..0a74e3ade5 100644
+> --- a/system/runstate.c
+> +++ b/system/runstate.c
+> @@ -42,6 +42,7 @@
+>   #include "qapi/qapi-commands-run-state.h"
+>   #include "qapi/qapi-events-run-state.h"
+>   #include "qemu/accel.h"
+> +#include "accel/accel-ops.h"
+>   #include "qemu/error-report.h"
+>   #include "qemu/job.h"
+>   #include "qemu/log.h"
+> @@ -509,6 +510,9 @@ void qemu_system_reset(ShutdownCause reason)
+>   {
+>       MachineClass *mc;
+>       ResetType type;
+> +    AccelClass *ac = ACCEL_GET_CLASS(current_accel());
+> +    bool vmfd_reset = false;
+> +    int ret;
+>   
+>       mc = current_machine ? MACHINE_GET_CLASS(current_machine) : NULL;
+>   
+> @@ -521,6 +525,29 @@ void qemu_system_reset(ShutdownCause reason)
+>       default:
+>           type = RESET_TYPE_COLD;
+>       }
+> +
+> +    /*
+> +     * different accelerators implement how to close the old file handle of
+> +     * the accelerator descriptor and create a new one here. Resetting
+> +     * file handle is necessary to create a new confidential VM context post
+> +     * VM reset.
+> +     */
+> +    if (!cpus_are_resettable() &&
+> +        (reason == SHUTDOWN_CAUSE_GUEST_RESET ||
+> +         reason == SHUTDOWN_CAUSE_HOST_QMP_SYSTEM_RESET)) {
+> +        if (ac->reset_vmfd) {
+> +            ret = ac->reset_vmfd(current_machine);
+> +            if (ret < 0) {
+> +                error_report("unable to reset vmfd: %s(%d)",
+> +                             strerror(-ret), ret);
+> +                vm_stop(RUN_STATE_INTERNAL_ERROR);
+> +            }
+> +            vmfd_reset = true;
+
+If we need a such flag, please rename it generically.
+
+> +        } else {
+> +            error_report("accelerator does not support reset");
+> +        }
+> +    }
+> +
+>       if (mc && mc->reset) {
+>           mc->reset(current_machine, type);
+>       } else {
+> @@ -543,7 +570,15 @@ void qemu_system_reset(ShutdownCause reason)
+>        * it does _more_  than cpu_synchronize_all_post_reset().
+>        */
+>       if (cpus_are_resettable()) {
+> -        cpu_synchronize_all_post_reset();
+> +        if (vmfd_reset) {
+> +            /*
+> +             * If vmfd has changed, then vcpufds have also changed.
+> +             * Need to sync full cpu state for non confidential guests.
+> +             */
+> +            cpu_synchronize_all_post_init();
+
+Calling post_init() in reset() is dubious. It might work with KVM by
+chance (because only KVM implements .reset_vmfd), but by design I
+don't expect it to work on other accelerators. If you really think
+this is the only solution, then you'll need to document cpu_sync*
+methods very carefully.
+
+> +        } else {
+> +            cpu_synchronize_all_post_reset();
+> +        }
+>       }
+>   
+>       vm_set_suspended(false);
+
+Isn't the confidential_guest_kvm_reset() API more appropriate here?
 
