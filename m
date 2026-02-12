@@ -4,97 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24091EE368C
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 14:50:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1579EEE3691
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 14:50:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqXvG-0005jm-89; Thu, 12 Feb 2026 09:44:02 -0500
+	id 1vqXvS-0005yp-MW; Thu, 12 Feb 2026 09:44:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vqXuz-0005O5-FJ
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 09:43:48 -0500
+ id 1vqXv8-0005VB-9A
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 09:43:58 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vqXum-000651-4Y
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 09:43:44 -0500
+ id 1vqXv6-0006CR-HQ
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 09:43:54 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770907410;
+ s=mimecast20190719; t=1770907431;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=VMvh1T7VSlWdNvOAnSK+e5XNAASrexQ0cLNtJxfMpMI=;
- b=AC7c7RvP+uFL3XB4N5gx+42vHBJQVr9NfaFUCS7zq1Q9QsFoXm7zy52jDjPQ2/mt7Qo/bk
- yj4EAevj4RW+yEa7SxBG/suTQlRS48isHCcAB/1JjjGkdWb19GEPI4+JIF154TSxKcPNBh
- 4APLf2DrUOxyM7fp14hC7Jp2E6QQux8=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=+kngmgvEBoYtSag4vTJFF8aM743+lT79utmLBi9cYQA=;
+ b=apg5tju1p/9Mu8/8LW+H8cjLo8utkTpxCGdkZiiroiB/8rGCkmxMM9REmBoxdn/LprO6YY
+ caPGxCi59colw/oKuyoXwBYAqKj+NNbhJi5GEE2NT1bgr01bWtvIFaFTeoZchE4b26ztOX
+ hFsYnxTOapYjT6Qso7Uruherd+1NLzU=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-613-PHNLb-qYPbyf94BUN4bywA-1; Thu, 12 Feb 2026 09:43:29 -0500
-X-MC-Unique: PHNLb-qYPbyf94BUN4bywA-1
-X-Mimecast-MFC-AGG-ID: PHNLb-qYPbyf94BUN4bywA_1770907408
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4836b7fbf4fso5777185e9.2
- for <qemu-devel@nongnu.org>; Thu, 12 Feb 2026 06:43:28 -0800 (PST)
+ us-mta-375--Bu183f8NY60BoDVSbq0WA-1; Thu, 12 Feb 2026 09:43:50 -0500
+X-MC-Unique: -Bu183f8NY60BoDVSbq0WA-1
+X-Mimecast-MFC-AGG-ID: -Bu183f8NY60BoDVSbq0WA_1770907429
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-4804157a3c9so57189765e9.1
+ for <qemu-devel@nongnu.org>; Thu, 12 Feb 2026 06:43:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1770907407; x=1771512207; darn=nongnu.org;
+ d=redhat.com; s=google; t=1770907428; x=1771512228; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=VMvh1T7VSlWdNvOAnSK+e5XNAASrexQ0cLNtJxfMpMI=;
- b=PU5gYeC9X3107F2S11cHQP65nXQMqct+6ypm4RwHhnQ9/3POTgX/TWE1cszqcFuvUm
- j/Sbsh58oR3rmx9aQDJ1bmnkgMW/7exQz+NVZ6xFPCoGY7ISOntav3AH3N51z93KIM+D
- oTAUmJZmph0HEeDzZacWnI9+N0pv+9DB6O3tSM84KTxkVLPplCu8fHWpnVMtVJQKTz1k
- DL7de6QabJADAnlM7LIJ19OYYcruPK+i64tkHT2ywk9fER6sEb/8xUr4pIrWZo+s6h1i
- Ds434ZQsSLv4iZt+b6Fu1+rs4JnUppoxHt0zAUZ3cmJZqNss8FVyLdv0FpVEpGVivgPM
- kaVQ==
+ bh=+kngmgvEBoYtSag4vTJFF8aM743+lT79utmLBi9cYQA=;
+ b=RbQ81Yz1aBAiKextZDeeFn1k8+26g4fJF8asE66Pc2u6+Mjs/yl/wml1+Bp0l0Exoi
+ AxOk1a/tj7oCcxFN0TEBZfD3SqbvoO/y41TQHY1dCTIb8ZPX94965RrcRT+0OR8K5fsq
+ HeRvYg4vEgpxXBmkfQOBBSJTPCyuHCv4F1vPB9R+vnOgPQet0EHP7kbCg2KE7yM3E7Ac
+ SlbpR/AlEzJwUijfaFPXCTYKbtf4X0TTnipUwFfP0aekjcS05P5ijsxiUEgjdSGTbEvv
+ dk9uJRuRtzKzzf87cOVyohivbV3gT9Pc+qo34QwsxWNFDMW6CHner1PeY2c/+HQErxbA
+ Fs3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770907407; x=1771512207;
+ d=1e100.net; s=20230601; t=1770907428; x=1771512228;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=VMvh1T7VSlWdNvOAnSK+e5XNAASrexQ0cLNtJxfMpMI=;
- b=rt3IvVOjAifg4Cl8I1dtTrJeyXfPVd3Qz2eLtKHWuYgF63sMqhd8TevDJE1YnO60rF
- C7HE6vo3sH+irva+Pgs5DaD3uyGNjL0/Y8Fv7WL3My13W5qM9vk1/QuEpr+uPi2oE7mH
- jiFz1xcEKC2WfznAQjKJYlCGqt9X5kCkSmz0tHr/CkVfgmS1sTnGnZTAZJALOA560ITt
- FhcnAgEfyoduV9uUZtIb2TFv9Lab99riZT8TXuvYrLkzVLkIGFyhDI9MGf8FGOeYWn2S
- f0A+qqWsF1n08iyuM5Nt87r/bmXh31TEaX3XV6m4JE8Bqj5rAeYUxBRlwgDDckFNdMP0
- a7nQ==
-X-Gm-Message-State: AOJu0YwjQp+Q6z3T6H/qEW8NlPOMdtH1B3aYPm9aN8MdtVRriHr5tj56
- CE8xzJ0afRiH1Ibxxwese0gMHeydalbQph3ZKEM9f1c/2dx5KNFy4dptRnqd6PEpg7a5/8c5oEE
- LJLjZCl+w1oLTYFkjAtEKq+gJ9ttF0s+RyVsEQVxlAf+Df2f1dvJZY3LwcOEGxZvSpAq1ZyqYDN
- 5MwJDP7iUXKYwllg3/9GkzZsEh9mOBa1yHTFkpAt/p
-X-Gm-Gg: AZuq6aIbqNlqo6dFxv4P+P+uKeNgiILRY3Uzf3nv/MWXBcyxZynQHAdYWj6oNCEPWUD
- pdCKAOH3q/9h4PdK3UVMaob6OHDmH/dqLwbMumZ2n31q1d4nWyRGFegUREJS/QLOj1UI6nvZv57
- 82S31FlBh73Kw/RncDp5z0ZyRYtWiElOJ46EVViu8bOic/beQm/SkhcOfGs1tb3qcVJxSBMkmDT
- 5MeMznmFKwDnIzGHHttPqH2hRqagy4EYk2ptIf4+Wo1fEcEm0ktQayblzWcJNFR+E9NVaxN7oTJ
- KEoVUatdUYDhy6lfVv5N7UPv+fCEsv3T1PSa3ZYLSo+5TCh/NhcwDh4uUeZ13I6e/WHKbUSwfbm
- 7VH6Z27S/t1xtOQCBqFTMfwuJG9xoGdrdHxrbDES3sIBTudoCH0IDobOooHqWtAOi0zJPo3uUSO
- 2SN2aQvi+eQnngT9W3pxWdsUG5RpFmiHxk6xxocUyTKKTOTUJiIfQ=
-X-Received: by 2002:a05:600c:6095:b0:477:89d5:fdb2 with SMTP id
- 5b1f17b1804b1-483656cb1b1mr39478525e9.14.1770907406995; 
- Thu, 12 Feb 2026 06:43:26 -0800 (PST)
-X-Received: by 2002:a05:600c:6095:b0:477:89d5:fdb2 with SMTP id
- 5b1f17b1804b1-483656cb1b1mr39477915e9.14.1770907406494; 
- Thu, 12 Feb 2026 06:43:26 -0800 (PST)
+ bh=+kngmgvEBoYtSag4vTJFF8aM743+lT79utmLBi9cYQA=;
+ b=EJwITgy2eyygk0z1/hkuRfGnnIRHZfZM3Nxube7sKlSkMUzqr72t8WOezJzN+MC0Bc
+ H8rSasLxqh2Sr9NZXeH/Kd3CB+rwPL4dsLU2eOx4yh/Eo/qa23ugsaBnYvbguE339dvD
+ X8wNJRRUwEknTXoq3Hyt3Qjfoh4lZHslA0+4k5kvQwbl9lYG4A1aJxX+f0t4nlkMSvsA
+ dhg/0UKQmQ88d3MjFGDbtq8UIiqepsnooK0HWNRimX3gxbmzqtXwTFAxDNSaTuvqru7W
+ P4MQBIsMRLXqFRpGXj1UmVMm6aiUKIL4lNQf0fmJ0wKi3P/hz9O5pqUvg/VwO9OYwCwY
+ JG+w==
+X-Gm-Message-State: AOJu0YyOsDL1ghe8fw7vwlNCVajRUeRyMLb/pijWfEBzo35XGz5UTgo5
+ 4Hf79dpXh2xkzdYb0qQKh4Fwu7KkYSG9Vsrfib5223vE85LObFfkZdriZRGRfjjKotBa/tLtlIk
+ Y+w0B0RPoRWRb0PztgZNDWU5GIxvjDwcd+kLdxgb3u7w6Yj/sXV6SfawEBeZWMUdx9pwYGh9Wrb
+ K5Wj5OY55F0rEtZ9EnwOELls5aAV+vViIOMNL08raP
+X-Gm-Gg: AZuq6aKINjEpekAqI6tSD+Wa0o6pvHSmuiESFXwp5xrXNW78aYFeanMnaTxTirCU8pE
+ pJX1ux7DQp3eLaMLu4UvOFe1uETMY/JfgTLgIxAWyMbQBLAh4es22vwxn+/5HX163hAvDMfW/b8
+ cm0H9sVciHWHmCxNigci1dB2H1a2KXR8uH9zxjAYQ/zHTjudGc/iWSTXyfrv/R57ni9tJLOHl4o
+ yAH1YII8S3OC0lcNMiu4RrHtcmdl3hU15hm9NJEDf9bG8WkHgVJWBxTYAROEri3FmZuoJ5g+tJK
+ r1rix0aJk1dmBGFkBQdWznge+OoLytjHjxzWKn/K2trC/TjSUuN3xsub2RQEbeH1yWTpvDYbY/r
+ vC7Je4HNh470+RMnwJjE2HjIU2xOKfkuMfMRs0GBgjgrDMYoG4jqoWrqFw/3ZXs3jfUd2TfQvkH
+ PFd7IR027GTLtBE3z5xyLlxHzwHu9EA9C0aqh0uJL3bAEIhNRYrvM=
+X-Received: by 2002:a05:600c:8b2f:b0:47e:e48b:506d with SMTP id
+ 5b1f17b1804b1-483656da45cmr49457505e9.16.1770907427603; 
+ Thu, 12 Feb 2026 06:43:47 -0800 (PST)
+X-Received: by 2002:a05:600c:8b2f:b0:47e:e48b:506d with SMTP id
+ 5b1f17b1804b1-483656da45cmr49456565e9.16.1770907426867; 
+ Thu, 12 Feb 2026 06:43:46 -0800 (PST)
 Received: from [10.60.241.123] (nat-pool-mxp-t.redhat.com. [149.6.153.186])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4835dd0e327sm125281235e9.14.2026.02.12.06.43.24
+ ffacd0b85a97d-43783e5c550sm13671917f8f.36.2026.02.12.06.43.46
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 12 Feb 2026 06:43:24 -0800 (PST)
+ Thu, 12 Feb 2026 06:43:46 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Mark Cave-Ayland <mark.caveayland@nutanix.com>,
- Thomas Huth <thuth@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- Zhao Liu <zhao1.liu@intel.com>
-Subject: [PULL 18/41] hw/intc/apic: Remove APICCommonState::legacy_instance_id
- field
-Date: Thu, 12 Feb 2026 15:42:20 +0100
-Message-ID: <20260212144244.22579-19-pbonzini@redhat.com>
+ Igor Mammedov <imammedo@redhat.com>, Zhao Liu <zhao1.liu@intel.com>
+Subject: [PULL 27/41] hw/virtio/virtio-pci: Remove
+ VirtIOPCIProxy::ignore_backend_features field
+Date: Thu, 12 Feb 2026 15:42:29 +0100
+Message-ID: <20260212144244.22579-28-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260212144244.22579-1-pbonzini@redhat.com>
 References: <20260212144244.22579-1-pbonzini@redhat.com>
@@ -128,62 +127,58 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-The APICCommonState::legacy_instance_id boolean was only set
-in the pc_compat_2_6[] array, via the 'legacy-instance-id=on'
+The VirtIOPCIProxy::ignore_backend_features boolean was only set
+in the hw_compat_2_7[] array, via the 'x-ignore-backend-features=on'
 property. We removed all machines using that array, lets remove
-that property, simplifying apic_common_realize().
-
-Because instance_id is initialized as initial_apic_id, we can
-not register vmstate_apic_common directly via dc->vmsd.
+that property, simplify by only using the default version.
 
 Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
 Reviewed-by: Igor Mammedov <imammedo@redhat.com>
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-Link: https://lore.kernel.org/r/20260108033051.777361-18-zhao1.liu@intel.com
+Link: https://lore.kernel.org/r/20260108033051.777361-27-zhao1.liu@intel.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- include/hw/i386/apic_internal.h | 1 -
- hw/intc/apic_common.c           | 5 -----
- 2 files changed, 6 deletions(-)
+ include/hw/virtio/virtio-pci.h | 1 -
+ hw/virtio/virtio-pci.c         | 5 +----
+ 2 files changed, 1 insertion(+), 5 deletions(-)
 
-diff --git a/include/hw/i386/apic_internal.h b/include/hw/i386/apic_internal.h
-index 4a62fdceb4e..0cb06bbc76c 100644
---- a/include/hw/i386/apic_internal.h
-+++ b/include/hw/i386/apic_internal.h
-@@ -187,7 +187,6 @@ struct APICCommonState {
-     uint32_t vapic_control;
-     DeviceState *vapic;
-     hwaddr vapic_paddr; /* note: persistence via kvmvapic */
--    bool legacy_instance_id;
-     uint32_t extended_log_dest;
- };
+diff --git a/include/hw/virtio/virtio-pci.h b/include/hw/virtio/virtio-pci.h
+index 639752977ee..581bb830b79 100644
+--- a/include/hw/virtio/virtio-pci.h
++++ b/include/hw/virtio/virtio-pci.h
+@@ -150,7 +150,6 @@ struct VirtIOPCIProxy {
+     uint16_t last_pcie_cap_offset;
+     uint32_t flags;
+     bool disable_modern;
+-    bool ignore_backend_features;
+     OnOffAuto disable_legacy;
+     /* Transitional device id */
+     uint16_t trans_devid;
+diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
+index 1e8f90df34e..fe13a7a9503 100644
+--- a/hw/virtio/virtio-pci.c
++++ b/hw/virtio/virtio-pci.c
+@@ -2040,8 +2040,7 @@ static void virtio_pci_device_plugged(DeviceState *d, Error **errp)
+      * Virtio capabilities present without
+      * VIRTIO_F_VERSION_1 confuses guests
+      */
+-    if (!proxy->ignore_backend_features &&
+-            !virtio_has_feature(vdev->host_features, VIRTIO_F_VERSION_1)) {
++    if (!virtio_has_feature(vdev->host_features, VIRTIO_F_VERSION_1)) {
+         virtio_pci_disable_modern(proxy);
  
-diff --git a/hw/intc/apic_common.c b/hw/intc/apic_common.c
-index 4e9e3089945..bf4abc21d7b 100644
---- a/hw/intc/apic_common.c
-+++ b/hw/intc/apic_common.c
-@@ -276,9 +276,6 @@ static void apic_common_realize(DeviceState *dev, Error **errp)
-         info->enable_tpr_reporting(s, true);
-     }
- 
--    if (s->legacy_instance_id) {
--        instance_id = VMSTATE_INSTANCE_ID_ANY;
--    }
-     vmstate_register_with_alias_id(NULL, instance_id, &vmstate_apic_common,
-                                    s, -1, 0, NULL);
- 
-@@ -395,8 +392,6 @@ static const Property apic_properties_common[] = {
-     DEFINE_PROP_UINT8("version", APICCommonState, version, 0x14),
-     DEFINE_PROP_BIT("vapic", APICCommonState, vapic_control, VAPIC_ENABLE_BIT,
-                     true),
--    DEFINE_PROP_BOOL("legacy-instance-id", APICCommonState, legacy_instance_id,
--                     false),
- };
- 
- static void apic_common_get_id(Object *obj, Visitor *v, const char *name,
+         if (!legacy) {
+@@ -2443,8 +2442,6 @@ static const Property virtio_pci_properties[] = {
+                     VIRTIO_PCI_FLAG_MODERN_PIO_NOTIFY_BIT, false),
+     DEFINE_PROP_BIT("page-per-vq", VirtIOPCIProxy, flags,
+                     VIRTIO_PCI_FLAG_PAGE_PER_VQ_BIT, false),
+-    DEFINE_PROP_BOOL("x-ignore-backend-features", VirtIOPCIProxy,
+-                     ignore_backend_features, false),
+     DEFINE_PROP_BIT("ats", VirtIOPCIProxy, flags,
+                     VIRTIO_PCI_FLAG_ATS_BIT, false),
+     DEFINE_PROP_BIT("x-ats-page-aligned", VirtIOPCIProxy, flags,
 -- 
 2.52.0
 
