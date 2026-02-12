@@ -4,100 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94AEFEE3692
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2C90EE3695
 	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 14:44:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqXvD-0005cX-Pe; Thu, 12 Feb 2026 09:43:59 -0500
+	id 1vqXvJ-0005p4-83; Thu, 12 Feb 2026 09:44:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vqXv1-0005OM-87
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 09:43:50 -0500
+ id 1vqXvE-0005fK-A2
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 09:44:00 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vqXux-00068k-MW
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 09:43:46 -0500
+ id 1vqXvC-0006DU-HD
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 09:44:00 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770907422;
+ s=mimecast20190719; t=1770907437;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=BNVw9azJMhrqoIvHRfT5WOQ0fbhJsvRuSAkYrSswDgA=;
- b=AnTi/Pqo9rgo/MsgIEpZaHCwd1HQDhBLNpUarSKC/SEKTRNDhEXaqh1VNNU1NMw+/PlVkc
- Ap+zTb70Fxyt+WsGKeqnFuE9G21OUJh7POXj6FEEAFk4GbtgdeC6d3Bby4Xxk82/ABRBW9
- IYRJU8FKhl9anAso1gx37KMgJ1nId3o=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=UnAQ+JDnymETfg+WiYDLUt8ZapEKgk2VtyvzlE9mJ/M=;
+ b=GfxJDlvXiiDdjh6da8kaO5RqC6bLu4cGzPyhS8UNtDNcI34L5fOPBST4nWcaazHgt5PXDC
+ QnUEhQJ7Ay3EvNHDaC0XkrE1hmOd7cTm2/iES/pvtWsIUe0YqDW5uJS9RP8D7D4U6RQdGg
+ SRDhutCHq/Q+frxauYEcaS2N198mCe0=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-644-sDaBLJLJPyiQV86rH7lr_w-1; Thu, 12 Feb 2026 09:43:41 -0500
-X-MC-Unique: sDaBLJLJPyiQV86rH7lr_w-1
-X-Mimecast-MFC-AGG-ID: sDaBLJLJPyiQV86rH7lr_w_1770907420
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4836b7c302fso4826505e9.1
- for <qemu-devel@nongnu.org>; Thu, 12 Feb 2026 06:43:41 -0800 (PST)
+ us-mta-532-jst3qz-oOKGw_bwysf0dJA-1; Thu, 12 Feb 2026 09:43:56 -0500
+X-MC-Unique: jst3qz-oOKGw_bwysf0dJA-1
+X-Mimecast-MFC-AGG-ID: jst3qz-oOKGw_bwysf0dJA_1770907435
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-480711d09f1so43114625e9.0
+ for <qemu-devel@nongnu.org>; Thu, 12 Feb 2026 06:43:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1770907420; x=1771512220; darn=nongnu.org;
+ d=redhat.com; s=google; t=1770907434; x=1771512234; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=BNVw9azJMhrqoIvHRfT5WOQ0fbhJsvRuSAkYrSswDgA=;
- b=B77kbc419vvSBqss/Ih2BX/v5gGw/R42W1V6qGhHmX4xEWL/CJVKHHmVcjQkey878M
- G/x/Zx3jwOtSShU0YpD//r2EMpgvJ4nS+JzC21lUu3+xTENGuQw3dGnWripfGwHKU+gM
- 6aQBBTDNMnMT494+9gJWde08hinTY1sNufZrD3L3cGm6oYFU2HvNiuU/gaod6cwxJjGU
- nHQtPr8CduOvsIDnqXXPYLUbeq1VIpA443fCpIuF87K7Jzp5X48kLnGMUEDJouiNM3I8
- S9/0cDDc+9zSNEu47fOlDBBwa2NEYYxoEqaCOAWBZ4MWVuqy6ScXloGktryCOUB2dRR4
- A3BA==
+ bh=UnAQ+JDnymETfg+WiYDLUt8ZapEKgk2VtyvzlE9mJ/M=;
+ b=bdNBEG/kXgO40HW8vMhekRQcvp4ayMokgxXxml/uZGiC/m8iVBQLkuV93oT7VltmNX
+ M6xQR+D2roEbucQUMYNmPuMF5PBuoD4/PHGYxu49dDffFfVt6fgDxuwiKaZ7crTbdBHm
+ VgWr3FX8GfAxD4JJVy5eXKuZm3+y82Zj2WilkPIkxmt9ge9TXpphY4j6oCBSsBh2CgFR
+ DJ6hPQZ3M4ZCHiwpVLhbZKp/mm02NJWI2+Krtf3uLVhRMAYRwxFHiAblMH0we5pVt1vU
+ XyGE6X87m0Tc0sYjYnJ0s0VOGrq8gVT9YVgPOXWLPdb4qkwLextNtuDJvt2EV4eGtKDj
+ 2K+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770907420; x=1771512220;
+ d=1e100.net; s=20230601; t=1770907434; x=1771512234;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=BNVw9azJMhrqoIvHRfT5WOQ0fbhJsvRuSAkYrSswDgA=;
- b=OHhtr8lGVQJfV39cup46DBrZcUlxosStNo0c9FGqj+L837PVNm0bTUKJnE5tB6bOVK
- GDyNOGoSb7AI+VU36iIi0B2KlImk0Wa32hRFGLZxr1Ox/Ej9YtKzeogG0a2IznWZjk1s
- QB3sTbr63asqnDw43kaXjEhT5HxvCd5RKqNpV29H3rE35gFJZCUx0/qt2I6i38sojpBj
- FoULqxWhCTSn2dw+/rR5Wj+tTNW6sNFbpg6/6dU61S50FhRkkqFG1V577+XjTQClbuS1
- ljLvlU5oUBcnBOrCPkABmD0TsakbpmO1Xn6R+u6/B0csrtq24AWBQZyIiFQ9i0ZDbYOJ
- RUCQ==
-X-Gm-Message-State: AOJu0YwwfBMW1NQsG7ukY7KDxdlTre6sc0GKOcQvbWr3IktXvjYwau8m
- jSJR8tsdSky+lPUnKKu/5BP8/pMMO9n2Pv0BVxWX3C/Uh9wQNQOLAFkcv51AkSNWxSGwffy0R0w
- mpiR9Yf2UwSmsAe1fvGWddaWp4IESFm+HNcG833OP0AH5NirPH9Oe8QCEox7oH1q6yHSJhYqcGw
- zwh8MHiwiSsE/H/UZxkxRGoWolGd0cQTRqv5Y5z2VW
-X-Gm-Gg: AZuq6aJcB1M5XaQCpSERbVrZikbL8YuhN64H9jLxzb5VRaqQiFFpTG0Vw1TaotBWD1e
- 5WuThcojn72uO/EBGO0jC9UtNDvImU8i5PW6Qro82QKCuB8XYwc1D9FQiu7CamYB29JKvlpjHt3
- Dhvac2D5P978/ZmOelkcI+edCUTSbgfEHsO1MlYCg3eUKqLyqiLu0kVDvhO2CxKIuEQMhI1XXWu
- KsGuzQ0zLIba545e+yYaIBRz30Vg6w1YQIw4jY8/+cvHzUs69/N92ysu8XLFhWGD+5awDURf/Nn
- 4YBSWpVq3hEjDPo9itftf9u+jNo1cGJPgy+Kw3tYwrDUBqjdiC71aN30DwDBTce3P4Gb7gDeGuJ
- G/5LLKo0bUeE1vEAHU297f51szg0LO3LpEckOC4XJgKCMVZYZ5l8t5dxkYwwYwG4FkvhcEl+By4
- yocEPb7pdf41IClEO0DX1YeiBLrYygALcz/5g+9nctQ9Qy3TNKV2I=
-X-Received: by 2002:a05:600c:848d:b0:479:35e7:a0e3 with SMTP id
- 5b1f17b1804b1-48365716033mr43890335e9.30.1770907419890; 
- Thu, 12 Feb 2026 06:43:39 -0800 (PST)
-X-Received: by 2002:a05:600c:848d:b0:479:35e7:a0e3 with SMTP id
- 5b1f17b1804b1-48365716033mr43889675e9.30.1770907419296; 
- Thu, 12 Feb 2026 06:43:39 -0800 (PST)
+ bh=UnAQ+JDnymETfg+WiYDLUt8ZapEKgk2VtyvzlE9mJ/M=;
+ b=ZDDsjMS/5sLCFIp+oOoeFMCillV7Z9cxj7cj4HWAszuNeYTLddvZ6DwFGUnEKPFLqa
+ H8BOHjoGdKv66Cms22wkyJ9Mtoc3NPgf8oUtLV1x5/kh/TjzCWSftSWOWreClOtdUMq5
+ KB4MuYRS+mbzXO9S5eGd1xsWhCwyXH8g5/Dl9dhnuvDrxX16YgsHevrh8o9sfKKoAVOT
+ SJi626FQ+XnfVDnqGG2V+3uVab1Deg08GJp+62KvSJ3iNQoddkzTxxxvWZPIB+nwAKRH
+ zU3WGNxEzTxNDto71xUCg5iYjeSdfT59JG08s2q5isYC7EQUIVsjlSwhdPtdyGCcT0gS
+ 5blQ==
+X-Gm-Message-State: AOJu0YyUL9Xs1YHLMqLAmf5Z4IK7krO1VJbBdeVopopYg/0uJhOGsEm8
+ jhRQqKs5KLFJSY92cN5Q4wgvJNpqpYcf6Kpvy+3s/gZB6OhWbn8f5vjxWfmk+thksBXoKxKBx+F
+ JD+Ibi3EfYyjq9DBlWWznExVB8ALG7GtlIuIBHogLZ2CY/7BkRXTJ+I8+Xi01NB23DdkqQ3w1lT
+ I6IaZNIbVb+EiK/mcA4yiVC3VYwgjhdj4xQCTM/+Nd
+X-Gm-Gg: AZuq6aKG1a13BbN0jOuobyXOFMmMbW7nOI6wU7GnKRHGzIbVbMNq9UEA4iEg3qQArga
+ xXSiH9e62xqVhYaQteEYRGG/vtrFJTnrU/zryOtgTaoK5lcJ5HppLX/P1n4GwwUc/ePCZRT2hDO
+ WbRUa5Cv8v4czTKNdAXaWU+xQuHxKvqBR7bBWEudiIGLKKGtRbfrO4WKAx9VtMLOEMAypwRNKR3
+ v9ZwCh2QoIwyIsYydo9nW34MVynLr9CzSL8sMeDGjow5JuMcqRX5DWNO3SUVAqtIBW+LqdgDf1r
+ 3nxdI4XPl/zfybCCYioSXcdVOqRT9feArkCHBtkzwBiURnYB+Wzx8lFAjEfqFqoO7ItLn++AB3x
+ zIHZWT1P0//X9TQ53qNNR4UmYW0w9+Sq5YyPfJs8mM4oZ0mkd4ga3wKR11yCWBYLE1DqLXlUIsp
+ lTyabKo9NIvBBb7HQwpgiZgDPVpQYAWEs4dxdaNO8f5CZ9euAb+ow=
+X-Received: by 2002:a05:600c:350f:b0:483:4807:210c with SMTP id
+ 5b1f17b1804b1-4836715a2bcmr39802635e9.24.1770907434206; 
+ Thu, 12 Feb 2026 06:43:54 -0800 (PST)
+X-Received: by 2002:a05:600c:350f:b0:483:4807:210c with SMTP id
+ 5b1f17b1804b1-4836715a2bcmr39802065e9.24.1770907433753; 
+ Thu, 12 Feb 2026 06:43:53 -0800 (PST)
 Received: from [10.60.241.123] (nat-pool-mxp-t.redhat.com. [149.6.153.186])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4835dd0e15bsm103388505e9.13.2026.02.12.06.43.37
+ 5b1f17b1804b1-4835a60ee40sm99570605e9.1.2026.02.12.06.43.53
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 12 Feb 2026 06:43:37 -0800 (PST)
+ Thu, 12 Feb 2026 06:43:53 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>, Igor Mammedov <imammedo@redhat.com>
-Subject: [PULL 23/41] target/i386/cpu: Remove
- CPUX86State::full_cpuid_auto_level field
-Date: Thu, 12 Feb 2026 15:42:25 +0100
-Message-ID: <20260212144244.22579-24-pbonzini@redhat.com>
+Cc: Dongli Zhang <dongli.zhang@oracle.com>, Xiaoyao Li <xiaoyao.li@intel.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Dapeng Mi <dapeng1.mi@linux.intel.com>,
+ Zide Chen <zide.chen@intel.com>
+Subject: [PULL 30/41] target/i386/kvm: set KVM_PMU_CAP_DISABLE if "-pmu" is
+ configured
+Date: Thu, 12 Feb 2026 15:42:32 +0100
+Message-ID: <20260212144244.22579-31-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260212144244.22579-1-pbonzini@redhat.com>
 References: <20260212144244.22579-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -124,182 +124,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+From: Dongli Zhang <dongli.zhang@oracle.com>
 
-The CPUX86State::full_cpuid_auto_level boolean was only
-disabled for the pc-q35-2.7 and pc-i440fx-2.7 machines,
-which got removed. Being now always %true, we can remove
-it and simplify x86_cpu_expand_features().
+Although AMD PERFCORE and PerfMonV2 are removed when "-pmu" is configured,
+there is no way to fully disable KVM AMD PMU virtualization. Neither
+"-cpu host,-pmu" nor "-cpu EPYC" achieves this.
 
+As a result, the following message still appears in the VM dmesg:
+
+[    0.263615] Performance Events: AMD PMU driver.
+
+However, the expected output should be:
+
+[    0.596381] Performance Events: PMU not available due to virtualization, using software events only.
+[    0.600972] NMI watchdog: Perf NMI watchdog permanently disabled
+
+This occurs because AMD does not use any CPUID bit to indicate PMU
+availability.
+
+To address this, KVM_CAP_PMU_CAPABILITY is used to set KVM_PMU_CAP_DISABLE
+when "-pmu" is configured.
+
+Signed-off-by: Dongli Zhang <dongli.zhang@oracle.com>
+Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-Reviewed-by: Igor Mammedov <imammedo@redhat.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-Link: https://lore.kernel.org/r/20260108033051.777361-23-zhao1.liu@intel.com
+Reviewed-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
+Reviewed-by: Zide Chen <zide.chen@intel.com>
+Link: https://lore.kernel.org/r/20260109075508.113097-2-dongli.zhang@oracle.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/cpu.h |   3 --
- target/i386/cpu.c | 117 ++++++++++++++++++++++------------------------
- 2 files changed, 57 insertions(+), 63 deletions(-)
+ target/i386/kvm/kvm.c | 31 +++++++++++++++++++++++++++++++
+ 1 file changed, 31 insertions(+)
 
-diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index da5161fc1a5..f2be42d7f65 100644
---- a/target/i386/cpu.h
-+++ b/target/i386/cpu.h
-@@ -2425,9 +2425,6 @@ struct ArchCPU {
-     /* Force to enable cpuid 0x1f */
-     bool force_cpuid_0x1f;
+diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+index 0c940d4b640..69748420fd6 100644
+--- a/target/i386/kvm/kvm.c
++++ b/target/i386/kvm/kvm.c
+@@ -178,6 +178,8 @@ static int has_triple_fault_event;
  
--    /* Enable auto level-increase for all CPUID leaves */
--    bool full_cpuid_auto_level;
--
-     /*
-      * Compatibility bits for old machine types (PC machine v6.0 and older).
-      * Only advertise CPUID leaves defined by the vendor.
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 0a7b884528e..201c5d5c210 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -9508,74 +9508,72 @@ void x86_cpu_expand_features(X86CPU *cpu, Error **errp)
+ static bool has_msr_mcg_ext_ctl;
  
-     /* CPUID[EAX=7,ECX=0].EBX always increased level automatically: */
-     x86_cpu_adjust_feat_level(cpu, FEAT_7_0_EBX);
--    if (cpu->full_cpuid_auto_level) {
--        x86_cpu_adjust_feat_level(cpu, FEAT_1_EDX);
--        x86_cpu_adjust_feat_level(cpu, FEAT_1_ECX);
--        x86_cpu_adjust_feat_level(cpu, FEAT_6_EAX);
--        x86_cpu_adjust_feat_level(cpu, FEAT_7_0_ECX);
--        x86_cpu_adjust_feat_level(cpu, FEAT_7_1_EAX);
--        x86_cpu_adjust_feat_level(cpu, FEAT_7_1_ECX);
--        x86_cpu_adjust_feat_level(cpu, FEAT_7_1_EDX);
--        x86_cpu_adjust_feat_level(cpu, FEAT_7_2_EDX);
--        x86_cpu_adjust_feat_level(cpu, FEAT_8000_0001_EDX);
--        x86_cpu_adjust_feat_level(cpu, FEAT_8000_0001_ECX);
--        x86_cpu_adjust_feat_level(cpu, FEAT_8000_0007_EDX);
--        x86_cpu_adjust_feat_level(cpu, FEAT_8000_0008_EBX);
--        x86_cpu_adjust_feat_level(cpu, FEAT_C000_0001_EDX);
--        x86_cpu_adjust_feat_level(cpu, FEAT_SVM);
--        x86_cpu_adjust_feat_level(cpu, FEAT_XSAVE);
-+    x86_cpu_adjust_feat_level(cpu, FEAT_1_EDX);
-+    x86_cpu_adjust_feat_level(cpu, FEAT_1_ECX);
-+    x86_cpu_adjust_feat_level(cpu, FEAT_6_EAX);
-+    x86_cpu_adjust_feat_level(cpu, FEAT_7_0_ECX);
-+    x86_cpu_adjust_feat_level(cpu, FEAT_7_1_EAX);
-+    x86_cpu_adjust_feat_level(cpu, FEAT_7_1_ECX);
-+    x86_cpu_adjust_feat_level(cpu, FEAT_7_1_EDX);
-+    x86_cpu_adjust_feat_level(cpu, FEAT_7_2_EDX);
-+    x86_cpu_adjust_feat_level(cpu, FEAT_8000_0001_EDX);
-+    x86_cpu_adjust_feat_level(cpu, FEAT_8000_0001_ECX);
-+    x86_cpu_adjust_feat_level(cpu, FEAT_8000_0007_EDX);
-+    x86_cpu_adjust_feat_level(cpu, FEAT_8000_0008_EBX);
-+    x86_cpu_adjust_feat_level(cpu, FEAT_C000_0001_EDX);
-+    x86_cpu_adjust_feat_level(cpu, FEAT_SVM);
-+    x86_cpu_adjust_feat_level(cpu, FEAT_XSAVE);
++static int pmu_cap;
++
+ static struct kvm_cpuid2 *cpuid_cache;
+ static struct kvm_cpuid2 *hv_cpuid_cache;
+ static struct kvm_msr_list *kvm_feature_msrs;
+@@ -2079,6 +2081,33 @@ full:
  
--        /* Intel Processor Trace requires CPUID[0x14] */
--        if ((env->features[FEAT_7_0_EBX] & CPUID_7_0_EBX_INTEL_PT)) {
--            if (cpu->intel_pt_auto_level) {
--                x86_cpu_adjust_level(cpu, &cpu->env.cpuid_min_level, 0x14);
--            } else if (cpu->env.cpuid_min_level < 0x14) {
--                mark_unavailable_features(cpu, FEAT_7_0_EBX,
--                    CPUID_7_0_EBX_INTEL_PT,
--                    "Intel PT need CPUID leaf 0x14, please set by \"-cpu ...,intel-pt=on,min-level=0x14\"");
--            }
-+    /* Intel Processor Trace requires CPUID[0x14] */
-+    if ((env->features[FEAT_7_0_EBX] & CPUID_7_0_EBX_INTEL_PT)) {
-+        if (cpu->intel_pt_auto_level) {
-+            x86_cpu_adjust_level(cpu, &cpu->env.cpuid_min_level, 0x14);
-+        } else if (cpu->env.cpuid_min_level < 0x14) {
-+            mark_unavailable_features(cpu, FEAT_7_0_EBX,
-+                CPUID_7_0_EBX_INTEL_PT,
-+                "Intel PT need CPUID leaf 0x14, please set by \"-cpu ...,intel-pt=on,min-level=0x14\"");
+ int kvm_arch_pre_create_vcpu(CPUState *cpu, Error **errp)
+ {
++    static bool first = true;
++    int ret;
++
++    if (first) {
++        first = false;
++
++        /*
++         * Since Linux v5.18, KVM provides a VM-level capability to easily
++         * disable PMUs; however, QEMU has been providing PMU property per
++         * CPU since v1.6. In order to accommodate both, have to configure
++         * the VM-level capability here.
++         *
++         * KVM_PMU_CAP_DISABLE doesn't change the PMU
++         * behavior on Intel platform because current "pmu" property works
++         * as expected.
++         */
++        if ((pmu_cap & KVM_PMU_CAP_DISABLE) && !X86_CPU(cpu)->enable_pmu) {
++            ret = kvm_vm_enable_cap(kvm_state, KVM_CAP_PMU_CAPABILITY, 0,
++                                    KVM_PMU_CAP_DISABLE);
++            if (ret < 0) {
++                error_setg_errno(errp, -ret,
++                                 "Failed to set KVM_PMU_CAP_DISABLE");
++                return ret;
++            }
++        }
++    }
++
+     if (is_tdx_vm()) {
+         return tdx_pre_create_vcpu(cpu, errp);
+     }
+@@ -3390,6 +3419,8 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
          }
-+    }
- 
--        /*
--         * Intel CPU topology with multi-dies support requires CPUID[0x1F].
--         * For AMD Rome/Milan, cpuid level is 0x10, and guest OS should detect
--         * extended toplogy by leaf 0xB. Only adjust it for Intel CPU, unless
--         * cpu->vendor_cpuid_only has been unset for compatibility with older
--         * machine types.
--         */
--        if (x86_has_cpuid_0x1f(cpu) &&
--            (IS_INTEL_CPU(env) || !cpu->vendor_cpuid_only)) {
--            x86_cpu_adjust_level(cpu, &env->cpuid_min_level, 0x1F);
--        }
-+    /*
-+     * Intel CPU topology with multi-dies support requires CPUID[0x1F].
-+     * For AMD Rome/Milan, cpuid level is 0x10, and guest OS should detect
-+     * extended toplogy by leaf 0xB. Only adjust it for Intel CPU, unless
-+     * cpu->vendor_cpuid_only has been unset for compatibility with older
-+     * machine types.
-+     */
-+    if (x86_has_cpuid_0x1f(cpu) &&
-+        (IS_INTEL_CPU(env) || !cpu->vendor_cpuid_only)) {
-+        x86_cpu_adjust_level(cpu, &env->cpuid_min_level, 0x1F);
-+    }
- 
--        /* Advanced Vector Extensions 10 (AVX10) requires CPUID[0x24] */
--        if (env->features[FEAT_7_1_EDX] & CPUID_7_1_EDX_AVX10) {
--            x86_cpu_adjust_level(cpu, &env->cpuid_min_level, 0x24);
--        }
-+    /* Advanced Vector Extensions 10 (AVX10) requires CPUID[0x24] */
-+    if (env->features[FEAT_7_1_EDX] & CPUID_7_1_EDX_AVX10) {
-+        x86_cpu_adjust_level(cpu, &env->cpuid_min_level, 0x24);
-+    }
- 
--        /* Advanced Performance Extensions (APX) requires CPUID[0x29] */
--        if (env->features[FEAT_7_1_EDX] & CPUID_7_1_EDX_APXF) {
--            x86_cpu_adjust_level(cpu, &env->cpuid_min_level, 0x29);
--        }
-+    /* Advanced Performance Extensions (APX) requires CPUID[0x29] */
-+    if (env->features[FEAT_7_1_EDX] & CPUID_7_1_EDX_APXF) {
-+        x86_cpu_adjust_level(cpu, &env->cpuid_min_level, 0x29);
-+    }
- 
--        /* SVM requires CPUID[0x8000000A] */
--        if (env->features[FEAT_8000_0001_ECX] & CPUID_EXT3_SVM) {
--            x86_cpu_adjust_level(cpu, &env->cpuid_min_xlevel, 0x8000000A);
--        }
-+    /* SVM requires CPUID[0x8000000A] */
-+    if (env->features[FEAT_8000_0001_ECX] & CPUID_EXT3_SVM) {
-+        x86_cpu_adjust_level(cpu, &env->cpuid_min_xlevel, 0x8000000A);
-+    }
- 
--        /* SEV requires CPUID[0x8000001F] */
--        if (sev_enabled()) {
--            x86_cpu_adjust_level(cpu, &env->cpuid_min_xlevel, 0x8000001F);
--        }
-+    /* SEV requires CPUID[0x8000001F] */
-+    if (sev_enabled()) {
-+        x86_cpu_adjust_level(cpu, &env->cpuid_min_xlevel, 0x8000001F);
-+    }
- 
--        if (env->features[FEAT_8000_0021_EAX]) {
--            x86_cpu_adjust_level(cpu, &env->cpuid_min_xlevel, 0x80000021);
--        }
-+    if (env->features[FEAT_8000_0021_EAX]) {
-+        x86_cpu_adjust_level(cpu, &env->cpuid_min_xlevel, 0x80000021);
-+    }
- 
--        /* SGX requires CPUID[0x12] for EPC enumeration */
--        if (env->features[FEAT_7_0_EBX] & CPUID_7_0_EBX_SGX) {
--            x86_cpu_adjust_level(cpu, &env->cpuid_min_level, 0x12);
--        }
-+    /* SGX requires CPUID[0x12] for EPC enumeration */
-+    if (env->features[FEAT_7_0_EBX] & CPUID_7_0_EBX_SGX) {
-+        x86_cpu_adjust_level(cpu, &env->cpuid_min_level, 0x12);
      }
  
-     /* Set cpuid_*level* based on cpuid_min_*level, if not explicitly set */
-@@ -10520,7 +10518,6 @@ static const Property x86_cpu_properties[] = {
-     DEFINE_PROP_UINT32("min-xlevel", X86CPU, env.cpuid_min_xlevel, 0),
-     DEFINE_PROP_UINT32("min-xlevel2", X86CPU, env.cpuid_min_xlevel2, 0),
-     DEFINE_PROP_UINT64("ucode-rev", X86CPU, ucode_rev, 0),
--    DEFINE_PROP_BOOL("full-cpuid-auto-level", X86CPU, full_cpuid_auto_level, true),
-     DEFINE_PROP_STRING("hv-vendor-id", X86CPU, hyperv_vendor),
-     DEFINE_PROP_BOOL("cpuid-0xb", X86CPU, enable_cpuid_0xb, true),
-     DEFINE_PROP_BOOL("x-vendor-cpuid-only", X86CPU, vendor_cpuid_only, true),
++    pmu_cap = kvm_check_extension(s, KVM_CAP_PMU_CAPABILITY);
++
+     return 0;
+ }
+ 
 -- 
 2.52.0
 
