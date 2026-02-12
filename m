@@ -4,101 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8A1BEE3692
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 14:50:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B05A8EE3691
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 14:51:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqXyB-0001W2-Tu; Thu, 12 Feb 2026 09:47:04 -0500
+	id 1vqXy8-0001TZ-OA; Thu, 12 Feb 2026 09:47:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vqXxt-00019D-6Q
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 09:46:45 -0500
-Received: from mail-dl1-x1232.google.com ([2607:f8b0:4864:20::1232])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vqXxG-00072S-0S
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 09:46:07 -0500
-Received: by mail-dl1-x1232.google.com with SMTP id
- a92af1059eb24-1233b953bebso152050c88.1
- for <qemu-devel@nongnu.org>; Thu, 12 Feb 2026 06:46:05 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1770907564; cv=none;
- d=google.com; s=arc-20240605;
- b=eo1fOC+30hgpup45lB7FUSQjIoKt4bB0yeyDKFMcs4QiGzO0tcEGpQk8x6Ryw8Lr8J
- mqL7TTG+suI6NRSTV98E1yK3gQ6f54kWlfjZwUVsePog8oauyaJnWe83rjZkHLto1JIx
- IHJy0Y/uM4Ji11cVIqx8bPseHxhsM/28Py7Y8oDzb9tTMd5d+FfpvCq5q3E5Mf+NfO7V
- KJ5mzgBuaz2cb04FXRowHsYwaPsr4gBfuCJO4fWBEN0dVWkh5PWocJ7NKPV1yCwAv8ZC
- lt6jhLjBzKO3HSAiTtgRwKg0Y1J5vyy+TEpgL9cTiTOi8RiXRUQ2Gs9sE0oWk0zhuAhP
- WUfw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=49yGY8Kvw3pmX0Y1mSe2Sq8qMs8/xpjDPD6EpkNjRkc=;
- fh=gffcMCOUXtBOrrjZQMiDLavK++hmBvO7zO0yh09tQqI=;
- b=H2uFoPQwx71PftVFefBYUlmmWlBQx3C1DusfktT2WPwHgrgtaJNT2JE68d9y7x14VT
- oWGS/GvkOfq3bg/U4aUiUvFDJIzX8RHl7rMhOVJlLxLhOaNfyzIzfTVCn0qJimwVsYxh
- zEIA0DCcZvZIPyfSZZDIWf5qYXPB+t5Ej0HYMEFDZxTRdLGw8mic0YOG2/66VpCPvT4n
- q3yeMtA9Xe8oGXi10AHVIfwEPBBs3THVN9cNg/bk683LrEIwdIXRX8/p3ETjwEy41L8Q
- IzTglvNxnKnIeVlKuc5qtyuay/k1xIx8J5mw5R8eiCSdXLdWITh2TkZpq0Jv05i4E5ba
- O2JQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770907564; x=1771512364; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=49yGY8Kvw3pmX0Y1mSe2Sq8qMs8/xpjDPD6EpkNjRkc=;
- b=fYE3Krd92hY4JWJX6N3zxO3bB/YL4XEVVJWtHs5wHEQjpH3ujnHiF0Xe7YCwc2Cmjk
- kSVpIHsaitXv1K8w4ZBj8GItqdPloT5NvPx6CtuHyioeADlYbf3rgNzQtk1mfB+ltQ+Q
- 1uGd0LpHJlNZgPURYhXDAuRfhThj/3jFwU4YbLndWO33aYEn/1ZfGuwM59tTnwjZ1s7u
- 7HHbO16e+BX+3ukr4Pxqp+kZZRDr/pJWBxy5HmTzNXmQN6BZdtZ2EKCoqjp5IfpJbsIF
- ZacnGPzX3TiUbYOyPakya1jLLowziCWEmzdD4t6SXJyhjhshHQbnCsyVIFGucUjKpIJZ
- IpIA==
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1vqXy2-0001DD-Ip
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 09:46:55 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1vqXxk-0007ad-3f
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 09:46:37 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1770907595;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=/R6tb149s2l7xGGa+oOLe18sITBXQfTR4Ufb7OLpAFk=;
+ b=HyocsixJrQ+R9KSzhu/f/+9626su+hZaxVPXVPuPu5234P4HikAlI4TYXJy8DN2aht+/uo
+ MCKkAKZSxL5V6c8DSqvaqpbqfNL/d79Sc9SEfTMKPzrxoN5V9AahSaMZGcg3fUhqBXqChL
+ dU7AiY0FB5ByKGl4sHqK36XTEhgWegw=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-60-EoYZ8zvvMNe6gjEdWxc-kA-1; Thu, 12 Feb 2026 09:46:34 -0500
+X-MC-Unique: EoYZ8zvvMNe6gjEdWxc-kA-1
+X-Mimecast-MFC-AGG-ID: EoYZ8zvvMNe6gjEdWxc-kA_1770907593
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-4836abfc742so4302175e9.0
+ for <qemu-devel@nongnu.org>; Thu, 12 Feb 2026 06:46:33 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770907564; x=1771512364;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20230601; t=1770907593; x=1771512393;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=49yGY8Kvw3pmX0Y1mSe2Sq8qMs8/xpjDPD6EpkNjRkc=;
- b=XLxFpmGHHp+NRdrmpWzfKr/VDaLy/uBOjf6rL8PgivptrOXMAvzEoaIrWfLa4M2qP1
- ZljcI4beHX0728MR1AQMF+0aKfKFajrL/c2aBDgvNNUSw1Jt7KjtCSga8QzMlSqfhOeF
- 3eznK+sHUaJicREGrTSh1its88sjA6G7IB2PJgOpfZPPOTOo4p5Y4CRMSRHtjAjNHSko
- M05LJzrjRRGuy2dNeqbqdDXZUxUviTgXhIyjKCCTeZINTEutVJFHKa3IY2tdK1m3p9Vb
- iTWdPukUZBuehkxOzlsuvryq987r2is0uIXH8jADjE5bFF1GC2YuayIk5DUIF34t4bM8
- WugQ==
-X-Gm-Message-State: AOJu0Yzbzzry+dYlBLAHQbxjL9UgR2vSM9x1DTcYBEzNN4E6g3CBHWY6
- /UlCU/fk6CNM93KdkiDlKqn6On6i/WyuJjzTo97I5wNf018cpU6KRZWtjxKLDfhQI4z4+lNXZjb
- VR3x0n2lyvn8FBb1xJCUFxW9mFoBOrKRZh12LCAF37X00R4jNe3jz
-X-Gm-Gg: AZuq6aLe/3+pbxu2Q5VpWsf/TsqGy2zueXJvhLHtJMFjutiRWI/3dvbbZl57/jKUXDs
- AssDBlY02s+PsjzE8kRKrOnBITrMnmoCWZnUqt6/hZ54JBVlyU2O+YnZbnwCMSxd4OO3+Wh8/BA
- B0h+vHchXKpM6uf0euCT2WvaYswO8ga35EGs6vmZ9YwY3lHLwKJqMuzhCfxF2bhADmGhKmun0mv
- nrjObqxbZKCoEAjyReOBCAF8zenG7jnlnTxbX0cdjfkZvjJkWucx/A7D4eL0zpR8OwNa2d39Jpe
- u7JBvQ3mtM4kdTxpSMRK1Yjve+bvLJ+g/pxojSkz6iHfyQ5ZmNlrhfNARJrQnuIRIezzXvXUw5A
- 31Q==
-X-Received: by 2002:a05:690c:6610:b0:794:ed66:86a8 with SMTP id
- 00721157ae682-797931989femr43665947b3.35.1770906853595; Thu, 12 Feb 2026
- 06:34:13 -0800 (PST)
+ bh=/R6tb149s2l7xGGa+oOLe18sITBXQfTR4Ufb7OLpAFk=;
+ b=vxWkrFKSL9W8cv6xQR70ahCySrrEKqrWtOPPCfxUvLlwAzBtBeXLNFiJngkkhm8FLj
+ wXXBWWMSMQShI2uxCspcFNIZDx3IciWOm9i7jngZmeCLFafUeaUUv1YT/IdrwuPt7sVZ
+ 0/O302vHHbb37knGoPuWvg2y7/yLf9zR/PCaFgBTfLHDVPEjZWVBF+MK3LGREhL7roBE
+ URkanennEyAv6LovNM6jBBP/tgkOjuFcH9NlVrw3UxRi5dcVd3jbPAgrM08eJairU41D
+ dd1r7HKB2AczRyiLnxBakGQ4UbPUeSl9OM9B65On38R03vLOkGTbA4h1kT3Gaxqj65I/
+ 76Gg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWynP45NwMQ7mK5MEsaUlPntvONQ5ie156OuhPVMg/0M9yR8LZzWP+ytz0IfIqgesdNbMdNz6kVxXis@nongnu.org
+X-Gm-Message-State: AOJu0YxTFsFPgiQUylfInYG5JWGXImQwmSeC4eXtjw3Szqzjb3xgZNfi
+ BNRY4hMBsg3UKbNEBeP3Q6BP7iC48W+y12rbpqybTkjRjY9XGKIBMZnHzhiXyo7FuncnodlgFuV
+ S9ZjFdAXJghA1zvKh6zp5mfga0HC9c7LUltT0DBbKu3XhiNGrASudEcJS
+X-Gm-Gg: AZuq6aJyBedQEs85QS7qUNV+xVtjLFNGqcwZ2opPFzcQIWF03SKrl/+iQ9ApBgKQSEg
+ /nVJ5bA6ry+HVTHW40axjT2qTq6/90Hq8TFxkDNQfplsszSp/0m5ecSINBC7FV29iQef8ygfFAN
+ cgiIks3oy1COZ3fL81TLs69lIuMbDFrFxdGdeCe/z1VHkNH03ZiJAqODeyxlqRUJVm4ulcK/VJy
+ ea0X+OfQCy87Be1sVqwBFEJoKmgeZzHF584tHd06mC+NbVddz/ztSUkyMH8AL/uajcTCpAyrQam
+ ixhjrqm+Ju2BzStwK1ha80yZ8UKppGqN4eGea2tCA0VDSRjdx6MbcWimYsd9xHpNK22HS5+qN/m
+ YTonK3vd6ab/U8i6r5hi+EBnsN/xX9m3bQUp23MtOcxcVAJifzDZJWjHQp/rOKU+OBIVGWA==
+X-Received: by 2002:a05:600c:348f:b0:480:1dc6:2686 with SMTP id
+ 5b1f17b1804b1-483656c571fmr48741615e9.13.1770907592840; 
+ Thu, 12 Feb 2026 06:46:32 -0800 (PST)
+X-Received: by 2002:a05:600c:348f:b0:480:1dc6:2686 with SMTP id
+ 5b1f17b1804b1-483656c571fmr48741155e9.13.1770907592352; 
+ Thu, 12 Feb 2026 06:46:32 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-43783e5c635sm13350787f8f.37.2026.02.12.06.46.31
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 12 Feb 2026 06:46:31 -0800 (PST)
+Message-ID: <7ddafa8d-5510-4202-827e-9c0dc186c5e2@redhat.com>
+Date: Thu, 12 Feb 2026 15:46:30 +0100
 MIME-Version: 1.0
-References: <20260212114034.265498-1-thuth@redhat.com>
-In-Reply-To: <20260212114034.265498-1-thuth@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 12 Feb 2026 14:33:59 +0000
-X-Gm-Features: AZwV_QiuN4dCCS579aW6JSRI9jvlT4AeQKotxgf-MYQmqcdB_iJsRv4e9IyXzCQ
-Message-ID: <CAFEAcA-v1yWyzW5fTw_ypo7XfvOur=tLuAJ_-=cbru=8Ukhqbw@mail.gmail.com>
-Subject: Re: [PULL v2 00/14] Misc patches (s390x, tests, python, docs, ...)
-To: Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1232;
- envelope-from=peter.maydell@linaro.org; helo=mail-dl1-x1232.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 05/24] hw/arm/smmuv3-accel: Introduce CMDQV ops
+ interface
+Content-Language: en-US
+To: Nicolin Chen <nicolinc@nvidia.com>,
+ Shameer Kolothum Thodi <skolothumtho@nvidia.com>
+Cc: "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
+ "clg@redhat.com" <clg@redhat.com>, "alex@shazbot.org" <alex@shazbot.org>,
+ Nathan Chen <nathanc@nvidia.com>, Matt Ochs <mochs@nvidia.com>,
+ Jiandi An <jan@nvidia.com>, Jason Gunthorpe <jgg@nvidia.com>,
+ "jonathan.cameron@huawei.com" <jonathan.cameron@huawei.com>,
+ "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>,
+ "zhenzhong.duan@intel.com" <zhenzhong.duan@intel.com>,
+ Krishnakant Jaju <kjaju@nvidia.com>
+References: <20260206144823.80655-1-skolothumtho@nvidia.com>
+ <20260206144823.80655-6-skolothumtho@nvidia.com>
+ <aYo4n4N3dW1OLzTk@Asurada-Nvidia>
+ <CH3PR12MB75483C2BA4EDC24CA0F78A4CAB62A@CH3PR12MB7548.namprd12.prod.outlook.com>
+ <aYtozzSV4UYOjJcK@Asurada-Nvidia>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <aYtozzSV4UYOjJcK@Asurada-Nvidia>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,38 +126,50 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 12 Feb 2026 at 11:40, Thomas Huth <thuth@redhat.com> wrote:
->
->  Hi Peter!
->
-> The following changes since commit 0b91040d23dc8820724a60c811223b777f3bc6b7:
->
->   Merge tag 'pull-loongarch-20260210' of https://github.com/gaosong715/qemu into staging (2026-02-10 09:12:38 +0000)
->
-> are available in the Git repository at:
->
->   https://gitlab.com/thuth/qemu.git tags/pull-request-2026-02-12v2
->
-> for you to fetch changes up to e44a26ba940214824b61976324058e73d9f41658:
->
->   python: drop uses of pkg_resources (2026-02-12 12:34:00 +0100)
->
-> ----------------------------------------------------------------
-> * Updates to MAINTAINERS file
-> * Fix CI (broken pkg_resources in python, revert RCU change to fix alpha test)
-> * Fix endianness issue in PCI code on s390x
-> * Implement DIVIDE TO INTEGER instruction for s390x TCG emulation
-> * Bitesized documentation updates (run-tcg-tests target and fd-bootchk property)
->
 
 
-Applied, thanks (and this does indeed bring our CI back to all green!)
+On 2/10/26 6:20 PM, Nicolin Chen wrote:
+> On Tue, Feb 10, 2026 at 12:46:01AM -0800, Shameer Kolothum Thodi wrote:
+>>> On Fri, Feb 06, 2026 at 02:48:04PM +0000, Shameer Kolothum wrote:
+>>>> CMDQ-Virtualization (CMDQV) is a hardware extension to SMMUv3 that
+>>> enables
+>>>> virtualization of multiple command queues (VCMDQs).
+>>> Let's mention "NVIDIA", noting it's a non-standard extension.
+>> The idea of this ops based callback is to make it more generic and not
+>> NVIDIA specific to start with. This leaves room in case ARM introduces
+>> a standardised version of something similar in the future, or if another
+>> vendor provides a similar extension.
+> That might be a different naming which we have no idea about yet :-/
+>
+>>>> +    void (*reset)(SMMUv3State *s);
+>>>> +} SMMUv3AccelCmdqvOps;
+>>> Overall, an ops structure feels unnecessary to me. Maybe init and
+>>> reset are somewhat plausible. But nobody else would reuse this ops
+>>> structure that is exclusive to Tegra241CMDQV?
+>> That's true for now, as there is only one implementation today. If this
+>> abstraction feels over engineered at this stage, we can simplify or defer
+>> it (and fall back to calling the tegra241-specific functions directly, as in
+>> the RFC) and revisit once there is a clearer need.
+>>
+>> I'm open to suggestions, and let's wait to hear from others as well.
+> Well, I'll vote for adding that when someday there is second CMDQV.
+> There are only a couple of CMDQ-V functions required to export for
+> SMMUv3 code to call at this moment, which isn't so bad.
+>
+> Having and naming a structure exclusively for NVIDIA CMDQ-V doesn't
+> make a lot of sense to me. And if we really want an abstraction ops
+> maybe "secondary_cmdq" in the kernel driver could be a good choice?
+As mentionned earlier mu syggestion was mainly to address specialization
+with known implementations: accel smmu with vcmdq versus without. And i
+think we already have some implementation override in that matter.
 
-Please update the changelog at https://wiki.qemu.org/ChangeLog/11.0
-for any user-visible changes.
+Eric
+>
+> Nicolin
+>
 
--- PMM
 
