@@ -4,85 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41E53EE3695
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 16:28:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A6E5EE3695
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 16:29:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqZYG-0001SF-QG; Thu, 12 Feb 2026 11:28:26 -0500
+	id 1vqZYT-0001Z4-5K; Thu, 12 Feb 2026 11:28:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <adamhet@scaleway.com>)
- id 1vqZY7-0001P6-Cs
+ id 1vqZY9-0001Pb-3t
  for qemu-devel@nongnu.org; Thu, 12 Feb 2026 11:28:17 -0500
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <adamhet@scaleway.com>)
- id 1vqZY3-0007jA-99
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 11:28:14 -0500
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-4833115090dso80575e9.3
- for <qemu-devel@nongnu.org>; Thu, 12 Feb 2026 08:28:07 -0800 (PST)
+ id 1vqZY5-0007jN-Qa
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 11:28:16 -0500
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-481188b7760so299295e9.0
+ for <qemu-devel@nongnu.org>; Thu, 12 Feb 2026 08:28:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=scaleway.com; s=google; t=1770913686; x=1771518486; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=Z8aOSQznK0wRSj7jtceoYwT//BOFye86Z3vfSaQ7H8M=;
- b=ft1vsDiFcYHmPym8MCkCN8ZrSdixBGFkV8TRINfB4Q7WkXCBox90V2ipnCMx1t4anh
- NnXN9SpSLTIZ7rc0sZcOKwiNhT9xXEzFuegl09k/8uCkWbmTlEARoQCxcA0N9ARXVWAX
- vU99qRHmhmEJG3ZzyNG8IMz73h7tKhYyLBL3IDg2pQDPqic9j8GV1bdYsBMMAi9dE1BR
- YO0LnIyGYbnCXYZf4+BsAIP6dcTdpJo3bCqOAYq5c3DT9WCyaRrZx0Dy6JkiwVAMgwN0
- nEbFomHMfZPlpC7b4ilG3I5ooeypPMfSzMEHTkRoRz9oihkRvZRLegzroo/ICZmwwg9j
- eH7A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770913686; x=1771518486;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=scaleway.com; s=google; t=1770913688; x=1771518488; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Z8aOSQznK0wRSj7jtceoYwT//BOFye86Z3vfSaQ7H8M=;
- b=U63vp+5H+crAuIwins9QdCWbKk8DWh0W/bKd2H3zd65myrsrRhHP7jG4Nz6po88I59
- O32FAuvM/OAnmxd9P+vAZblqRZj946qwZ9kU2mx7jKmZ547TNhrgByxOl5gNgfWnLnGi
- Z8YsUXUcxvmUsx/VnWZatmqU29ayLpyPYObNYIhSdBtE6h4AgKNPKhVAxC/OiXB6roKi
- xZpHJothSU3BEWGJgvope1VvfgoTkW4wj8RSGR/rlWT6xuSYFG1ddAq5Dg0yH0N/h8k5
- 4z9GT5Q4+qke3cTkUWCBbIGCpWv6rtFu78aDelGLyTeE3GKsELOy6r8I8HgF2DuILRSH
- DRSQ==
-X-Gm-Message-State: AOJu0YzzwigQJjhNccT1YqYZOrlk/+UAvTYsbKjX5zs1TmfPJl1XDxxK
- KRotGFpAJJ4DxFpeg9UZO/atmqbE7VwnduA3WKnp2s+QpCdEBv0eYP4ZbjqyAtU+osPWddJ9gfp
- SWVKz
-X-Gm-Gg: AZuq6aI7YSAEfFZkdRA4X0HzKw2LhptwUs9kn2mZsESREu0gBgVdmUBUOZ18kZAbQqQ
- FOnLdLZ2R4agYBZoV9bvOZmtob3LNOMzvHzgmrZam67ll4EagZJdXzB/AWwuSDeJsHGwu8Cczb+
- YkY9cK1ntnRIFNfVKbe6tLjnOEXPaxf6M3+fWJOOLjqinCff9cC6x4CXbTG4yF444GfNEryxYmD
- g2o/wcrnUrYHsHLeQBKyWEQc8WMHMqyEqaZdp4Cj7YkM8eU+zJUd9FUZ6YvaruqXLWcwnX/3zWi
- SueO9WtlHMwMFEb4H9fwPO1nT6hH4yUiBI+kxmCdKoJYeH0S3p/UVH8QnmMBazj12fzTSYrSe50
- txI8TMQck4+cq338CDA+1b84t2KG1jtdpq6lL1zKjdbXJYZXa3MTeW5fPn5aAql3JQwgJqFGx7j
- fR7KL4NwNUz1rLU40qvUubUKsZjPZTuI379kA+PRSz7oP9+3qg
-X-Received: by 2002:a05:600c:3b12:b0:477:9814:6882 with SMTP id
- 5b1f17b1804b1-483670fac0fmr43839005e9.5.1770913686453; 
- Thu, 12 Feb 2026 08:28:06 -0800 (PST)
+ bh=l7WdD2zHkBagt+yCXYN+euTN8kOLoPQP3BR3Isyndvk=;
+ b=R8zw03sH7C+rHDXJo22KP+vXFQOZls9Ntkd8iL4V/lSYoJXUJBJdD46snXO+m/mm4b
+ lvlpeSEgWQR6PidhVzvtJz49yZHNsh5iSChQOiBxGrXKtC+SJgzx/8xLl9oUVB1eidRC
+ +8ciufWIS1QoLBD09XGTc2FOPRvS7ul76sb46fDZNxMwfZalpI7K2HPu5myAd6VpsEqM
+ clSdnUPf0ZHNFAn8Merocy+o/MXLo9G67DWsVPy7kUju1G2CItpDsblmgnoMafcZR8ts
+ 8VmJdIt4mARN8h5/3WyZmi022WxnuC1k95txYSVpoeNwjA217dCluwtdkIGuqEfbZMLS
+ cbUQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770913688; x=1771518488;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=l7WdD2zHkBagt+yCXYN+euTN8kOLoPQP3BR3Isyndvk=;
+ b=fJ99Lqxud/NTq6I0YGOe1eLCtfaCr38Qh3eVnSyhNKgUzdk1MiMrHsatOktoWL3lkD
+ XWx/3Q1N6yKftCv+AGzEqQQJfbx/WJ5PsmLRMjM43w5bW+xkz4rnz/lR7mMEqeT2NAul
+ NeEdBwvNno2RDyPJQbLrd9v8mrWI5fiODDzBzmDT45szOSjsAgFoH1NX7xOElVrp0Zwg
+ EcEkegGeRcCGtmnf3+CObo02dt1XeozNeNWut5a2nmIuBNKKaCH+dQt0E8/eBASJfBng
+ FbmNFi2AJqTQEQEitxVjQ77Q0z+8Hm5jqKWLVOcph0jspGvTrLU5wW3y9flSMMVv7ZYY
+ CODQ==
+X-Gm-Message-State: AOJu0YwwuG9+v7ksTmFyN9p+BNKfqacPBtixTst/qP282wNYGSyd8vMm
+ p8FU+lLroLFGvrm69vYg22Qtz+DI+45+LQZKKUWDkeVLH7/u2493UMA+Ihfq734iQwm0rffKv3+
+ ylfeT
+X-Gm-Gg: AZuq6aKW2k/pu8xTqZ5TpuD6h0z3Rkr4a6ZACfjhnpVAPJ5qeS53RFMi2U0VyTk4QuZ
+ KKn0sRUrOggwWIWNfrzfF2sO3KeKi6IbTq1IEMefe5hUZ55hXYFIAea1cwTcIiB/BoMqO9oNkXr
+ StgyHoOYB0uc2mY1xCFGf9VG+cHOHn0XoD3HuhXqNmsXG7MY36shCmMsZM8zlPY0XGkkceH9Q0B
+ qM8qdEzz6FBvIdbiYb70LdeEB5lG1uAM80iRJR1L0hRsIA2XaPjkuV3vTvcJXfCF0y2Ci4PbqVD
+ NsX1PDB40ZhyurWNVbeZL8UKkDne5+1Yu0kigMnrD0R5HLwfghfJQkA+4NaWjVAW5aQ6uyP8zZA
+ uawVBCI0S0WrtbN/Y1hK2FqZdepaNdoqwj2MBlOHpRv+y63Rdk9Z+X2BRrf5r7zM6mItiQNwOVg
+ y3Xp4GrDNnudwK62Rg/yYduZmAldgKa/AqKJ1iDMByTx/NnTG3
+X-Received: by 2002:a05:600c:354c:b0:480:3230:6c89 with SMTP id
+ 5b1f17b1804b1-483656c8246mr51006065e9.12.1770913687845; 
+ Thu, 12 Feb 2026 08:28:07 -0800 (PST)
 Received: from localhost (710304585.box.freepro.com. [130.180.219.188])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4835a66c544sm59616405e9.6.2026.02.12.08.28.05
+ 5b1f17b1804b1-4836131d484sm33198425e9.27.2026.02.12.08.28.07
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 12 Feb 2026 08:28:06 -0800 (PST)
+ Thu, 12 Feb 2026 08:28:07 -0800 (PST)
 From: Antoine Damhet <adamhet@scaleway.com>
 To: qemu-devel@nongnu.org
 Cc: Antoine Damhet <adamhet@scaleway.com>, qemu-block@nongnu.org,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>
-Subject: [PATCH 0/2] block/curl: fix S3 presigned URL support
-Date: Thu, 12 Feb 2026 17:27:23 +0100
-Message-ID: <20260212162730.440855-1-adamhet@scaleway.com>
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ qemu-stable@nongnu.org
+Subject: [PATCH 1/2] block/curl: fix concurrent completion handling
+Date: Thu, 12 Feb 2026 17:27:24 +0100
+Message-ID: <20260212162730.440855-2-adamhet@scaleway.com>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260212162730.440855-1-adamhet@scaleway.com>
+References: <20260212162730.440855-1-adamhet@scaleway.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=adamhet@scaleway.com; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=adamhet@scaleway.com; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,36 +102,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+curl_multi_check_completion would bail upon the first completed
+transfer even if more completion messages were available thus leaving
+some in flight IOs stuck.
 
-This series adds the support for S3 presigned URLs that only allow HTTP
-GET requests. While working on this I also stumbled upon a deadlock with
-concurrent I/O and slipped the fix here. Over the years there was
-already an attempt to support these kind of URLs[1] and at least one
-report of a user in need of the feature[2].
+Rework a bit the loop to make the iterations clearer and drop the breaks.
 
-Unfortunately S3 only allows a presigned URL to live up to 7 days so we
-can't really put an example with a stable URL on the commit message but
-here is a presigned URL for the archlinux cloud image[3] that will
-expire in ~7 days.
+The original hang can be somewhat reproduced with the following command:
 
-Cheers,
-Antoine
+$ qemu-img convert -p -m 16 -O qcow2 -c --image-opts \
+  'file.driver=https,file.url=https://scaleway.testdebit.info/10G.iso,file.readahead=1M' \
+  /tmp/test.qcow2
 
-[1]: https://lore.kernel.org/qemu-devel/110120539.4133.de5ac8a5-69d1-4f59-9540-4a679771a547.open-xchange@ox.pcextreme.nl/
-[2]: https://lore.kernel.org/qemu-devel/7b37cc65-1314-29f4-006f-70836bdfb4b4@linaro.org/
-[3]: https://test-presigned.s3.fr-par.scw.cloud/Arch-Linux-x86_64-cloudimg.qcow2?AWSAccessKeyId=SCWDHE3XBQGZFV282QKG&Expires=1771517864&Signature=9Jy5hOW%2FeHlpqQNQtKxg5AjVv9E%3D
+Fixes: 1f2cead32443 ("curl: Ensure all informationals are checked for completion")
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Antoine Damhet <adamhet@scaleway.com>
+---
+ block/curl.c | 11 ++---------
+ 1 file changed, 2 insertions(+), 9 deletions(-)
 
-Antoine Damhet (2):
-  block/curl: fix concurrent completion handling
-  block/curl: add support for S3 presigned URLs
-
- block/curl.c                          | 115 ++++++++++++++++----------
- block/trace-events                    |   1 +
- docs/system/device-url-syntax.rst.inc |   6 ++
- qapi/block-core.json                  |  14 +++-
- 4 files changed, 92 insertions(+), 44 deletions(-)
-
+diff --git a/block/curl.c b/block/curl.c
+index 4e77c93b46e6..6dccf002564e 100644
+--- a/block/curl.c
++++ b/block/curl.c
+@@ -324,17 +324,11 @@ curl_find_buf(BDRVCURLState *s, uint64_t start, uint64_t len, CURLAIOCB *acb)
+ static void curl_multi_check_completion(BDRVCURLState *s)
+ {
+     int msgs_in_queue;
++    CURLMsg *msg;
+ 
+     /* Try to find done transfers, so we can free the easy
+      * handle again. */
+-    for (;;) {
+-        CURLMsg *msg;
+-        msg = curl_multi_info_read(s->multi, &msgs_in_queue);
+-
+-        /* Quit when there are no more completions */
+-        if (!msg)
+-            break;
+-
++    while ((msg = curl_multi_info_read(s->multi, &msgs_in_queue))) {
+         if (msg->msg == CURLMSG_DONE) {
+             int i;
+             CURLState *state = NULL;
+@@ -397,7 +391,6 @@ static void curl_multi_check_completion(BDRVCURLState *s)
+             }
+ 
+             curl_clean_state(state);
+-            break;
+         }
+     }
+ }
 -- 
 2.53.0
 
