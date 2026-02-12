@@ -4,102 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 354A1EE368C
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 14:52:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3739CEE368C
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 14:53:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqXvU-00064v-7G; Thu, 12 Feb 2026 09:44:16 -0500
+	id 1vqXwE-0007yD-Gz; Thu, 12 Feb 2026 09:45:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vqXvK-0005rC-7o
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 09:44:06 -0500
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1vqXvv-0007MG-6V
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 09:44:46 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vqXvI-0006Fd-Er
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 09:44:05 -0500
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1vqXvr-0006MY-Iw
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 09:44:42 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770907443;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ s=mimecast20190719; t=1770907478;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Oyw3iN4RWS1l74BvVt0dka4bgQPOIP1RWCHgcmGGEsI=;
- b=TLD1nKhIKpoQiJJzz+dVY6ZBXWEhYACVUsgkGA897mBFaFIN/fW8Ot7euMGLwSYsNcuM+H
- Ytc7+AQQSR9w7WJdKpW648yKMBCjNGUhd4jCm6JnMlIHL8YJSlSGLgUWYRYaBk2Ymru0mL
- bYocyvUii1QGzI0sqr0GqVGtYTMel18=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=54SHBBPNFsC0ZFulw8wmW3134g9+RXDqPlgB8aDRbaw=;
+ b=YnKV7ozVPHY+29nHq6pnd1qfJy1padhwwH64L4Nkut6vqwnF7sm+rHGBMd0P/butNW8Xgr
+ Zgm/y6XWI6B0AzcW54MB34gDNFDw4Nkv693wCV9JJHLLsgTfRyHtT1aUyBq+m9lrVrbvag
+ Zp7vH10KCpOSW18xqQvKOmwjMQ5X4CQ=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-473-Noa7-BAwNUijNRC2-rdDOw-1; Thu, 12 Feb 2026 09:44:02 -0500
-X-MC-Unique: Noa7-BAwNUijNRC2-rdDOw-1
-X-Mimecast-MFC-AGG-ID: Noa7-BAwNUijNRC2-rdDOw_1770907441
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-48070c21420so15036885e9.0
- for <qemu-devel@nongnu.org>; Thu, 12 Feb 2026 06:44:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1770907440; x=1771512240; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Oyw3iN4RWS1l74BvVt0dka4bgQPOIP1RWCHgcmGGEsI=;
- b=PONsv9bj8DwgwmgHnXhnFiJ7Je9zGQFzFdnq8HGZeVF9ijV7Q6tV5O7o8s5VrM7HHi
- +KE7/CNTpjaUib6reW5EPPKeWyEIAW44ts2NFmyn2vWzZxAqRC5BEXYh2tTdmvJtMq9R
- 5Hm9fKyug21usBrsldZ9dwQINfXBW5fozIGcOcYk2urcdjCU96jDL4RQyGynFsOLsitD
- QKY39bLR78oA/wtuLzQeC9oCGinpStrMzceEcQUWGx8LCY9aslBHjtDFuf+2SZH/+CAd
- xbPCBe2CRq7uTs99FENU82QteYUhieFWhSIJ88eQ4E8LLIkPfFTXICyNaHTakgPX6o+w
- r7UQ==
+ us-mta-661-xS4l8PpcNSOEOhkqxCKS5w-1; Thu, 12 Feb 2026 09:44:37 -0500
+X-MC-Unique: xS4l8PpcNSOEOhkqxCKS5w-1
+X-Mimecast-MFC-AGG-ID: xS4l8PpcNSOEOhkqxCKS5w_1770907476
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-4836cf00787so4467295e9.1
+ for <qemu-devel@nongnu.org>; Thu, 12 Feb 2026 06:44:37 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770907440; x=1771512240;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=Oyw3iN4RWS1l74BvVt0dka4bgQPOIP1RWCHgcmGGEsI=;
- b=DjYoog4CTfnrLdgSaFxuFmBUSYX4Ui/7YGY8pTDka/KxMaK+Ewa79bE06QF4He3jGI
- 3IBMa+2WR/xbwtiW4TLh2+XptF/swQgYa6ww11pzcJ431rM9/0QyciKDIMJUWkUD6di1
- 3CIYA7+/MNAZ4wEgi+p/ysWBL1NpMHC3tOVq8E1rcNlfoElJQi4l8b9yAkEEn7UaHNCY
- lIFb2bUlIlqhDSFgQMEcxm9XCMpXABpmNH6+qGJv2syzuxcpGlcWxtJT+FT+iM2PzKMA
- 4fgQoINDulLrcr2SWGS4lVObE+VPENNCmIS2+NQTlCxo1odhxOOtMk6a/rmyoGl6jFEx
- jq3Q==
-X-Gm-Message-State: AOJu0Yx5jqzRDeHHTUX3djyb97yUR/nHDhIv4s1+7kgnqOsjVMvXazwe
- mL/kinOZDvzerDyKAIelE4BJalkoayu59a10rGlzCmD6u0J7q0C9ojrbhw0W4hULLp6KJ0YivDf
- z6tSV2XSRDR7aIqUHTYhbWBeEPPfsSx+sOVi19ypBKuKzQ0KkytTSpADdDnb3ul9Mfvsow3l4FR
- uSlRxKq6KQq9zu2ZVYwQ0gwlkeprP8EiGvgTGWQRrt
-X-Gm-Gg: AZuq6aIUiVFS3DZl5v3EJzIZNQDTnhhG8vs9xhVUAT1L2c10NlzePIw69MiaSufGggV
- 34lxqYmzExWPa05jbiHIri9VTzhhYnI9eTic0U7FZr37qv2PgfGe3E98HNvkqri8sD7sSKio4K/
- VZ9WpXfbp5fZyfMuAUcpRZ+7wWD9f1l2qtGiYO/7ajGlkE+5SJu3By6dAv83gyvDdj59OhsMhdr
- /M0TkHeNSsI22cOZElpVhLTxv+xeWu43bw/63KSEjvVKbLahbZQHg9cCUFpktanaibhNb5zm30K
- 0zSvWHCFZYtifrhu/7puSahXrrKlNkm2ji6nTPTjoZ6Fs+oXayKwtWeD3jFPEYWWxBEs7e+mTWk
- Wo9Pfc693iMXO4elnj3W/SYRRTiTJQb4hFWWh6w2iXpuyZ28P7mIsCEIRICpfknsBRvbNjplbm6
- tlxY3hisY+Yc9fGNsXX1fcUhVbGyAxQUvM1CJffXYNZ9TaJNzOCdg=
-X-Received: by 2002:a05:600c:896:b0:47e:e051:79ee with SMTP id
- 5b1f17b1804b1-48365fdec0dmr29466305e9.3.1770907439915; 
- Thu, 12 Feb 2026 06:43:59 -0800 (PST)
-X-Received: by 2002:a05:600c:896:b0:47e:e051:79ee with SMTP id
- 5b1f17b1804b1-48365fdec0dmr29465795e9.3.1770907439327; 
- Thu, 12 Feb 2026 06:43:59 -0800 (PST)
-Received: from [10.60.241.123] (nat-pool-mxp-t.redhat.com. [149.6.153.186])
+ d=1e100.net; s=20230601; t=1770907476; x=1771512276;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=54SHBBPNFsC0ZFulw8wmW3134g9+RXDqPlgB8aDRbaw=;
+ b=tiuRAzboUHMqpPLwKJQWFJMupKzFkzd9fDxEZtEQ+ChNi2ncEgpi/NPKxt2JmdMwYT
+ dAwLozJ1a/zNajZ2Jm+gtdbsWDC3WxgYGze8BlYKguErMcVpeVdhDZQF8UCON2Zp+9Wl
+ 4ZoSEvXGCmnPiM1yxxcElm9B/2rnM/n+JzYPGzTljvAUCBp5+wj2drwEfDzvSzXPN0CW
+ Qjxb8k1LeG5bNmppqacEA5IlcZ9h4LtbN0uOUUabb8hyHTyQBNHcy7qX88CMAlX9t44B
+ +0OB1fQOo8xeyft4pYFBiJIVFL/jNrrj/TeFO5rJxG/EKkmcIFLvCg001cXP+xmgs11k
+ l6vQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWuNph/3O51Z5tU/EDhrJ9z9C2a0FI6rVq5miK3gKkS8tUn35ds95E34Vdo9JeryHq6XRh78b473SUz@nongnu.org
+X-Gm-Message-State: AOJu0YyvHyrjv/fGcufI7j1edKr2oVzmuiQb6dxf2fHsb+Hz6XgJhgDZ
+ P31knFd/HZZ1Us9S3Xu7nWhOfOTJ4R3EpZg72OptVtOQX0DLMphRPe23hL6kWnCI2dXnur9JQ/Y
+ WqrokSS8eNGOFSPNQbdjvbtlt7rvu46R2iyJ1mL8AGvm0JpHddYeV3hx+
+X-Gm-Gg: AZuq6aK6j/2yR0Fr2df1CL4jRgFRP92/sNDaRdtC3vL0aeHmcG+0OEGJV2Cvyt2X+bq
+ toYcGOrf9GfztSh5wTQKShB4gkhp8MVYDsn4/+IHoAYPPFlE2ZEpSN4R5FyeG2CiF8wKMmBsnXD
+ mC4c5uCQ6WXg2PkAUrOgI1bQ+yVGxn5qjHGRwtoawJcLDsRjpw9TBe6dPtF7LSOdZocSk+5dN+X
+ EhmAzH2vKUj64mxWTflGXRLd+l+Sv7iNNrlLDnmGlRgmGWcFnezuTaJSBsXLKYPEOGmjgRRH94k
+ /wj8wkTdnXJHjgfYC32TL1o2bmw4jyFyJQELJBVwHqmy3nLVH9qGWt+fWZ5Hn3Am9c9ZeFghvrY
+ q1E+EIIxvczABVv4wTgTIe3RmLpJM9TRHgaf5LC5PDIbTowVgGpAZpY/uO+UAyczsWjcRYQ==
+X-Received: by 2002:a05:600c:8010:b0:483:14ec:5925 with SMTP id
+ 5b1f17b1804b1-48365febeaemr41532495e9.2.1770907476152; 
+ Thu, 12 Feb 2026 06:44:36 -0800 (PST)
+X-Received: by 2002:a05:600c:8010:b0:483:14ec:5925 with SMTP id
+ 5b1f17b1804b1-48365febeaemr41531675e9.2.1770907475634; 
+ Thu, 12 Feb 2026 06:44:35 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4835b958b6csm134434425e9.1.2026.02.12.06.43.57
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 12 Feb 2026 06:43:57 -0800 (PST)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Dongli Zhang <dongli.zhang@oracle.com>,
- Dapeng Mi <dapeng1.mi@linux.intel.com>, Zhao Liu <zhao1.liu@intel.com>,
- Sandipan Das <sandipan.das@amd.com>, Zide Chen <zide.chen@intel.com>
-Subject: [PULL 32/41] target/i386/kvm: rename architectural PMU variables
-Date: Thu, 12 Feb 2026 15:42:34 +0100
-Message-ID: <20260212144244.22579-33-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260212144244.22579-1-pbonzini@redhat.com>
-References: <20260212144244.22579-1-pbonzini@redhat.com>
+ 5b1f17b1804b1-4835bc7b986sm42324555e9.17.2026.02.12.06.44.34
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 12 Feb 2026 06:44:35 -0800 (PST)
+Message-ID: <d33ee89b-0f75-4c6c-8331-b422840c85ba@redhat.com>
+Date: Thu, 12 Feb 2026 15:44:33 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 05/24] hw/arm/smmuv3-accel: Introduce CMDQV ops
+ interface
+Content-Language: en-US
+To: Shameer Kolothum <skolothumtho@nvidia.com>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org, clg@redhat.com, alex@shazbot.org,
+ nicolinc@nvidia.com, nathanc@nvidia.com, mochs@nvidia.com, jan@nvidia.com,
+ jgg@nvidia.com, jonathan.cameron@huawei.com, zhangfei.gao@linaro.org,
+ zhenzhong.duan@intel.com, kjaju@nvidia.com
+References: <20260206144823.80655-1-skolothumtho@nvidia.com>
+ <20260206144823.80655-6-skolothumtho@nvidia.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20260206144823.80655-6-skolothumtho@nvidia.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,7 +104,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,149 +117,68 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Dongli Zhang <dongli.zhang@oracle.com>
 
-AMD does not have what is commonly referred to as an architectural PMU.
-Therefore, we need to rename the following variables to be applicable for
-both Intel and AMD:
 
-- has_architectural_pmu_version
-- num_architectural_pmu_gp_counters
-- num_architectural_pmu_fixed_counters
+On 2/6/26 3:48 PM, Shameer Kolothum wrote:
+> CMDQ-Virtualization (CMDQV) is a hardware extension to SMMUv3 that enables
+> virtualization of multiple command queues (VCMDQs).
+>
+> CMDQV support is a specialization of the IOMMUFD backed accelerated
+> SMMUv3 path. Introduce an ops interface to factor CMDQV specific
+> initialization and CMDQV vIOMMU/vEVENTQ allocation behavior out of
+> the base implementation. The ops pointer and associated state are
+> stored in the accelerated SMMUv3 state.
+>
+> No functional change
+>
+> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
+> ---
+>  hw/arm/smmuv3-accel.h | 19 +++++++++++++++++++
+>  1 file changed, 19 insertions(+)
+>
+> diff --git a/hw/arm/smmuv3-accel.h b/hw/arm/smmuv3-accel.h
+> index c9c10e55c3..ca087240e5 100644
+> --- a/hw/arm/smmuv3-accel.h
+> +++ b/hw/arm/smmuv3-accel.h
+> @@ -16,6 +16,23 @@
+>  #endif
+>  #include CONFIG_DEVICES
+>  
+> +/*
+> + * CMDQ-Virtualization (CMDQV) hardware support, extends the SMMUv3 to
+> + * support multiple VCMDQs with virtualization capabilities.
+> + * CMDQV specific behavior is factored behind this ops interface.
+> + */
+> +typedef struct SMMUv3AccelCmdqvOps {
+> +    bool (*init)(SMMUv3State *s, Error **errp);
+> +    bool (*alloc_viommu)(SMMUv3State *s,
+> +                         HostIOMMUDeviceIOMMUFD *idev,
+> +                         uint32_t *out_viommu_id,
+> +                         Error **errp);
+> +    void (*free_viommu)(SMMUv3State *s);
+> +    bool (*alloc_veventq)(SMMUv3State *s,  Error **errp);
+> +    void (*free_veventq)(SMMUv3State *s);
+> +    void (*reset)(SMMUv3State *s);
+> +} SMMUv3AccelCmdqvOps;
+> +
+>  /*
+>   * Represents an accelerated SMMU instance backed by an iommufd vIOMMU object.
+>   * Holds bypass and abort proxy HWPT IDs used for device attachment.
+> @@ -28,6 +45,8 @@ typedef struct SMMUv3AccelState {
+>      uint32_t bypass_hwpt_id;
+>      uint32_t abort_hwpt_id;
+>      QLIST_HEAD(, SMMUv3AccelDevice) device_list;
+> +    const SMMUv3AccelCmdqvOps *cmdqv_ops;
+> +    void *cmdqv;
+effectively looks duplucate, check !cmdqv_ops ?
 
-For Intel processors, the meaning of pmu_version remains unchanged.
-
-For AMD processors:
-
-pmu_version == 1 corresponds to versions before AMD PerfMonV2.
-pmu_version == 2 corresponds to AMD PerfMonV2.
-
-Signed-off-by: Dongli Zhang <dongli.zhang@oracle.com>
-Reviewed-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-Reviewed-by: Sandipan Das <sandipan.das@amd.com>
-Reviewed-by: Zide Chen <zide.chen@intel.com>
-Link: https://lore.kernel.org/r/20260109075508.113097-4-dongli.zhang@oracle.com
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- target/i386/kvm/kvm.c | 49 ++++++++++++++++++++++++-------------------
- 1 file changed, 28 insertions(+), 21 deletions(-)
-
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index 31e8ef87aab..8faba7e471e 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -166,9 +166,16 @@ static bool has_msr_perf_capabs;
- static bool has_msr_pkrs;
- static bool has_msr_hwcr;
- 
--static uint32_t has_architectural_pmu_version;
--static uint32_t num_architectural_pmu_gp_counters;
--static uint32_t num_architectural_pmu_fixed_counters;
-+/*
-+ * For Intel processors, the meaning is the architectural PMU version
-+ * number.
-+ *
-+ * For AMD processors: 1 corresponds to the prior versions, and 2
-+ * corresponds to AMD PerfMonV2.
-+ */
-+static uint32_t pmu_version;
-+static uint32_t num_pmu_gp_counters;
-+static uint32_t num_pmu_fixed_counters;
- 
- static int has_xsave2;
- static int has_xcrs;
-@@ -2098,24 +2105,24 @@ static void kvm_init_pmu_info(struct kvm_cpuid2 *cpuid)
-         return;
-     }
- 
--    has_architectural_pmu_version = c->eax & 0xff;
--    if (has_architectural_pmu_version > 0) {
--        num_architectural_pmu_gp_counters = (c->eax & 0xff00) >> 8;
-+    pmu_version = c->eax & 0xff;
-+    if (pmu_version > 0) {
-+        num_pmu_gp_counters = (c->eax & 0xff00) >> 8;
- 
-         /*
-          * Shouldn't be more than 32, since that's the number of bits
-          * available in EBX to tell us _which_ counters are available.
-          * Play it safe.
-          */
--        if (num_architectural_pmu_gp_counters > MAX_GP_COUNTERS) {
--            num_architectural_pmu_gp_counters = MAX_GP_COUNTERS;
-+        if (num_pmu_gp_counters > MAX_GP_COUNTERS) {
-+            num_pmu_gp_counters = MAX_GP_COUNTERS;
-         }
- 
--        if (has_architectural_pmu_version > 1) {
--            num_architectural_pmu_fixed_counters = c->edx & 0x1f;
-+        if (pmu_version > 1) {
-+            num_pmu_fixed_counters = c->edx & 0x1f;
- 
--            if (num_architectural_pmu_fixed_counters > MAX_FIXED_COUNTERS) {
--                num_architectural_pmu_fixed_counters = MAX_FIXED_COUNTERS;
-+            if (num_pmu_fixed_counters > MAX_FIXED_COUNTERS) {
-+                num_pmu_fixed_counters = MAX_FIXED_COUNTERS;
-             }
-         }
-     }
-@@ -4086,25 +4093,25 @@ static int kvm_put_msrs(X86CPU *cpu, KvmPutState level)
-             kvm_msr_entry_add(cpu, MSR_KVM_POLL_CONTROL, env->poll_control_msr);
-         }
- 
--        if (has_architectural_pmu_version > 0) {
--            if (has_architectural_pmu_version > 1) {
-+        if (pmu_version > 0) {
-+            if (pmu_version > 1) {
-                 /* Stop the counter.  */
-                 kvm_msr_entry_add(cpu, MSR_CORE_PERF_FIXED_CTR_CTRL, 0);
-                 kvm_msr_entry_add(cpu, MSR_CORE_PERF_GLOBAL_CTRL, 0);
-             }
- 
-             /* Set the counter values.  */
--            for (i = 0; i < num_architectural_pmu_fixed_counters; i++) {
-+            for (i = 0; i < num_pmu_fixed_counters; i++) {
-                 kvm_msr_entry_add(cpu, MSR_CORE_PERF_FIXED_CTR0 + i,
-                                   env->msr_fixed_counters[i]);
-             }
--            for (i = 0; i < num_architectural_pmu_gp_counters; i++) {
-+            for (i = 0; i < num_pmu_gp_counters; i++) {
-                 kvm_msr_entry_add(cpu, MSR_P6_PERFCTR0 + i,
-                                   env->msr_gp_counters[i]);
-                 kvm_msr_entry_add(cpu, MSR_P6_EVNTSEL0 + i,
-                                   env->msr_gp_evtsel[i]);
-             }
--            if (has_architectural_pmu_version > 1) {
-+            if (pmu_version > 1) {
-                 kvm_msr_entry_add(cpu, MSR_CORE_PERF_GLOBAL_STATUS,
-                                   env->msr_global_status);
-                 kvm_msr_entry_add(cpu, MSR_CORE_PERF_GLOBAL_OVF_CTRL,
-@@ -4621,17 +4628,17 @@ static int kvm_get_msrs(X86CPU *cpu)
-     if (env->features[FEAT_KVM] & CPUID_KVM_POLL_CONTROL) {
-         kvm_msr_entry_add(cpu, MSR_KVM_POLL_CONTROL, 1);
-     }
--    if (has_architectural_pmu_version > 0) {
--        if (has_architectural_pmu_version > 1) {
-+    if (pmu_version > 0) {
-+        if (pmu_version > 1) {
-             kvm_msr_entry_add(cpu, MSR_CORE_PERF_FIXED_CTR_CTRL, 0);
-             kvm_msr_entry_add(cpu, MSR_CORE_PERF_GLOBAL_CTRL, 0);
-             kvm_msr_entry_add(cpu, MSR_CORE_PERF_GLOBAL_STATUS, 0);
-             kvm_msr_entry_add(cpu, MSR_CORE_PERF_GLOBAL_OVF_CTRL, 0);
-         }
--        for (i = 0; i < num_architectural_pmu_fixed_counters; i++) {
-+        for (i = 0; i < num_pmu_fixed_counters; i++) {
-             kvm_msr_entry_add(cpu, MSR_CORE_PERF_FIXED_CTR0 + i, 0);
-         }
--        for (i = 0; i < num_architectural_pmu_gp_counters; i++) {
-+        for (i = 0; i < num_pmu_gp_counters; i++) {
-             kvm_msr_entry_add(cpu, MSR_P6_PERFCTR0 + i, 0);
-             kvm_msr_entry_add(cpu, MSR_P6_EVNTSEL0 + i, 0);
-         }
--- 
-2.52.0
+Eric
+>  } SMMUv3AccelState;
+>  
+>  typedef struct SMMUS1Hwpt {
 
 
