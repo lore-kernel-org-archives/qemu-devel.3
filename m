@@ -4,103 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE63CEE3698
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 16:22:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BDADEE3695
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 16:27:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqZRw-0006CO-UB; Thu, 12 Feb 2026 11:21:54 -0500
+	id 1vqZWn-0008K4-9s; Thu, 12 Feb 2026 11:26:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vqZRr-00068U-So
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 11:21:47 -0500
-Received: from mail-yw1-x1133.google.com ([2607:f8b0:4864:20::1133])
+ id 1vqZWl-0008HH-Ly
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 11:26:51 -0500
+Received: from mail-yw1-x112d.google.com ([2607:f8b0:4864:20::112d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vqZRp-0006Tz-Fa
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 11:21:46 -0500
-Received: by mail-yw1-x1133.google.com with SMTP id
- 00721157ae682-794719afcd4so608107b3.1
- for <qemu-devel@nongnu.org>; Thu, 12 Feb 2026 08:21:44 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1770913303; cv=none;
+ id 1vqZWk-0007Yn-2n
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 11:26:51 -0500
+Received: by mail-yw1-x112d.google.com with SMTP id
+ 00721157ae682-794fe698e36so523307b3.2
+ for <qemu-devel@nongnu.org>; Thu, 12 Feb 2026 08:26:49 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770913609; cv=none;
  d=google.com; s=arc-20240605;
- b=LnghXHLFfkcqzFp1xEqMd8cUDYrwvsAfdQNaBojspr9UNkpuTZkdj5CrT9/C7hDGuZ
- L7aBH9+3KTlsd3hBRVDbavdXzpjmcfaGt8r/CZa5UgESq7axjY+Bm30GWNrOt9lxwtUr
- IgpoS8qtTM92J0PrXDnrVPjW1FxCQFVacRN5JIxpf0eEZMwVtOMbohwBu6CPeb+P832X
- f7KrRwkR6t7O1HgEGh4ZItmakp9UHMHpiV3cYEHAv4TnsH3g+EnOWbRD3JIh/kppVPkK
- cpdM5m9+zfXql2IyYDCvdRHjfTbpKBYssKWMN8StjT11+5rhJngiHoytboMkLxNr7sN3
- M1+w==
+ b=ba5hlrT72iRPKrrzOQm4NRB576roxmrq5gERThu8gAehU1pTuEof/ukpPwzlkaMMmn
+ L/nK8lB6iMviy1ZDk7PWmQd8t3ei2W5bPN2m5Wp804xZ6sFrPyKsj6oMcw/f6zhYu5Q6
+ 8qB9ak+NH0Dxy1+pq8/cOJZ4/cmLGx/mPN+NA9Bp0L04UWu9r5qmQl382HdHHCP9lz7g
+ JakGUANsG2K5vnRXxHuZKBcxNzrRm37YJmf8T8lZvUgCes/RT/2JW2Rj48GghuFYBrcl
+ ovRqSjx7mxsmya+m5+wPuiFDfM5EizYJ0Rl2GP+opMqa0r0h8xdMNJkFnDZMIuN5/Q2t
+ qJsQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=mgarlAJOBzurn+yDKDZLhTu0ROIu9bFNkW/pSU+kR+A=;
- fh=fMHLqPn6sHt1evO6ktPVA/Z1oe8ouQosjaUfpEeU4SM=;
- b=PYw1etx464GfSar/q32Ud+4W7CP+sqN6RdlwgalLnhynnejxtJZHJ7uIjIW2V+XhPt
- bkcYfTszUWaI/UdS+W4phPmtwyEx474DEJAZJjH+FUxttfeEReDZH2n3oD4Wphs7hbGW
- z7J55Qes428SA6Bz/5FVXcwCo0hStn6OnwZb2ioRGUvGrNPE+vS5Y1GgnJM2sBN8Vf8U
- r1YuxLlIhlNgBlr1wxlyMA/2t7/DjbjGMVZTgfFga+GhwJ6mvDe4qtNaWthJjPcX+lF3
- MCcBFtbuomeTiEDv9tj6KGyj51zpsdoyDx0lfWWIkQGGJ3Xv/i5/cQZUqYE9Rqxzw/K9
- X8Iw==; darn=nongnu.org
+ bh=9CUC5suL8eO4VYya72tWpNlbL0nqIu8CchiksuGKmz0=;
+ fh=B22JtR9ZUsXUrdiOg5Iw9LSBCcKra7oUC9BuSyZP/90=;
+ b=JibXm4TknD5NrwgWiXOalq7g61DjghErRL56lYGJlrCJ6o1wutIZqWirEy3E7nhp8I
+ Zw9VvRfgv+z6q8xiEpMaC0WJhFeXDpRcqAbXi+gSPdk+VjpUrbDPSvZLExBoHYbqdhft
+ Cnmcwb75FEsCB7cAYHGZxkS3a+2jDVcPTV8OKqHdbdNqTaNVFlwzS09KjE2R4HzIolK7
+ KwBo0l0/jfbcdsmkDi0nqDkF2IZv5iujnuNYMcyGiAxLMNo0m6Alr8tjS7TsLPhe/s2S
+ wenzZJwb1wlnSKu/F3DWAbRF9ogeoHyKJ/1QTP2xROKd0FXl5dTjaXFkIvF+jKOsz+jJ
+ SsyA==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770913303; x=1771518103; darn=nongnu.org;
+ d=linaro.org; s=google; t=1770913609; x=1771518409; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=mgarlAJOBzurn+yDKDZLhTu0ROIu9bFNkW/pSU+kR+A=;
- b=auLH4hTIn4KOunzEiSbEQ/XzuOKWi+w06OHNiluWmmjZY6UqqKAyyUiJfKNMM15cpC
- JsZia2Es9rqIn/ceqlolLV+DWrnNTADAuJIxa2xVP6HXKe/puTnv593aopocKJNT1Uk5
- 3ccB88LpKndZOca6s9NZncMBJgCl+ilsuUOWGEiAeLB8rhBi9+FiDcWJhamhhkPLPgr6
- gUynvW1k38UkFgOFkOCv8VKPblq9kjsI6BAnlLN7UeOChnjAzVSPSITD8p2FCJZTR1nv
- St2s82wiag8PZfIRbZ3wyMXO5DgCmxoBFn5Jy00WpovV2TIBepslxr6t78F17yt81Zpv
- GIRw==
+ bh=9CUC5suL8eO4VYya72tWpNlbL0nqIu8CchiksuGKmz0=;
+ b=gmp/NqKmUeNg1iZQ1NVP2xJyVRP7lrgjfiFyJ3wZHKtqXUpywl2qHDBDwZIdzCi3G7
+ 9CtF1q3ZorBzw3w2Rs3JKKRrdpNSf50vIOgiZHSEGzifOZuT8UAikRGmFAaKkdQ1Yhls
+ r7A9zRMzEFaxqjKrXjTFpt/8xDwXzE6RFbpiGsbgAX3dqU8qcJCweR+OU+iotmgU6o6R
+ bV+HFPoEo6PX3S7iifUxvmSujSy8pGfAh3D2kCU7DUlmGSntAwXR8hIFPOja/wmcq3A7
+ /CqWXzQotjvNxp+PvrG9E3zdnXf8fiDsaFDImjGz3fSsHF+qaW/71/+ATlRw/kbtajDA
+ KDTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770913303; x=1771518103;
+ d=1e100.net; s=20230601; t=1770913609; x=1771518409;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=mgarlAJOBzurn+yDKDZLhTu0ROIu9bFNkW/pSU+kR+A=;
- b=TpsZ41VFstXVpvYrRyBGUKnwZDInQvTzSeTCid5AAZxM2BDs0MgMwTbgbp3QsocwoH
- 05mU+5UH2BTaEd1Jw4ZBeeca+vsMkEnshDeGubYW/UE5dnDPwPJacO5U42k0zsKVWifA
- RrK50rCaiZZzyMk5nCqf8sQpJ5KAqeJO2CKNl880kOZ5URpbqwUKKCDHPU9Cia0zLJzo
- KWNIUHmswYt3ZiOgvwq3SA9geH6rWjCBEJAWh3TMF9UqAQU7eBy3INYylJFzIjTAZwmf
- sMNMdud5XknC017OQrd55R+sE7KJcBIA4QUciel1jtK9QzzO9ZNKOQJvTxFqGal27VJ4
- KYKQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXOPGvCDBmcMijdZP/94LH63FOuUuLwntb7JMAzIC3pCkPMOph24p7SSQgCpgbkXActCMAZeNjuSJ3Y@nongnu.org
-X-Gm-Message-State: AOJu0YxERtPeWBUqR3Mnkwek89AtKzf5rJnzhtw4rPOWuUn28g6qStNx
- rQtiR1u1c+baaSM3WwKoCXrElU4naUvkrnWqp1+JJ3PgznTWlp4M72AhIEO44LD0GL0o62ah7SN
- CYjZGLvAlKX7uHvftSDAWPsfu0NQrXw+irqTd6Df0KA==
-X-Gm-Gg: AZuq6aLOcBYb0Edc5U4GOdkcIobgNk5KQac4oKC0stgsg6xapBYjR9CDWRYw+g9rNvz
- kDiOarsZlI2hAEngV3E5FMS3cfkcTlKKCrf6pNx3/LxXD/udVaszqTabuHe5FhdaHqpL4HDZgJf
- SQL9KZSMdpAtz4bxq0ObuRgIZhe/bdv5BgwuEt3CqI1xl6AYtA3smyKJ3jxDg5ER9De9D0t09p9
- Xo+xhNYQ3PnS5/2D+VeHrzC434ueYT8o+mD7XCgDFf7VcWu6xj/jLIYSl+bh12grVHIQE6dhr1C
- NyBMthckzBiMIk6WtKQ0Dq1UDn2duDgR85q6NTJ5QyFtRWwXiJAB0ldVFQybAukzkzU=
-X-Received: by 2002:a05:690c:dd6:b0:796:2ee6:3f8a with SMTP id
- 00721157ae682-797376fc365mr32285907b3.69.1770913303210; Thu, 12 Feb 2026
- 08:21:43 -0800 (PST)
+ bh=9CUC5suL8eO4VYya72tWpNlbL0nqIu8CchiksuGKmz0=;
+ b=aqvZfTlyatDmv5qkeTzKf7HGNhaaHh6DjDn7SEPyDxG8EPzR8HUk8odQ0Pwg6yYk3O
+ 4GPkI3u9n5e9avNvtDHH74BjD6fA1/UT4GZZBJeL07JOE0s+Kv0ykUUjMZFFiCfpFjaW
+ 0um/a7zojxNiZKD3Gc2y0oZQDIT5Ei5V4KguxyKsJ2LqgoblAUC327GoosYoqfAL5y/M
+ O4/eHSETuTImAbDIj6c7zLYTCmfxc4YWgF4xdkQBoa6kQngfxc6o+UGhJPNnV6rhl9+B
+ ZsvVUKZmVMraMS4S40NKY3oe0+SaazWejRBDTsDv8qyuwpmx8UQTdl5wSwZG3uyxK75B
+ MXog==
+X-Gm-Message-State: AOJu0YwbCgUjd1YtTPBh4vgP20EDExfG8npBCiVzfMKp0ryU/9js2+Ds
+ bqEYdlnaEwBO602u+qm4TO5VV2IUWQ1t/rzUJLkhMUikgBZW/yVnz8J9a+DaA/s32DpTpuk4upa
+ HumssqdsQvRCT3Oi1pWnppeUVTQSITddn2PQGO5acyOoahqIGWRLj
+X-Gm-Gg: AZuq6aKGRIU1RB+n0NjOe9WwaSn9uGKlyF1Y0LnGnLx6qPEZNS2AKVJoEgViGdtSy+u
+ Bvk4Xbs+jJEWEMmAegKiHswT7pdkldTCfPPEjcg+rUsEygnHLVcue7PqGqVdsCrYKoKtoIije/m
+ 9KSLZWYPVT+3Tvbftc5+h1Gdi6ePyes2PS8jnFHsrUhwxLz9/hVd6JpoTvtfhPcKjbZFq4LgbgL
+ O6DrKzbUSwQsxvgOjGA3/VPCZNmR5UeKYy4cMJyLeqfClNseL6Wac/Llinj2rKjT8mW7e8ivumO
+ naed4TplmtWJyrN0dFw4Tk39yUTOZNu8pBZMbwu4/NU0fobWS4xjOsTLYpld64e72ao=
+X-Received: by 2002:a05:690c:c224:b0:793:c8ab:8bc5 with SMTP id
+ 00721157ae682-797931f8fafmr17155167b3.46.1770913608608; Thu, 12 Feb 2026
+ 08:26:48 -0800 (PST)
 MIME-Version: 1.0
-References: <20260212090801.999731-1-vsementsov@yandex-team.ru>
-In-Reply-To: <20260212090801.999731-1-vsementsov@yandex-team.ru>
+References: <20260212144244.22579-1-pbonzini@redhat.com>
+In-Reply-To: <20260212144244.22579-1-pbonzini@redhat.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 12 Feb 2026 16:21:31 +0000
-X-Gm-Features: AZwV_Qjp4DWp6uhJwDNBCGVbK_GzRfRFLSilf0jRGi89bkcsuAAjEdk9mznjOII
-Message-ID: <CAFEAcA9oX5EGB5yQvrqVXvnDKcOtT4caXzvMa8OC5PudLKfvag@mail.gmail.com>
-Subject: Re: [PULL 0/2] Block jobs patches
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: qemu-block@nongnu.org, kwolf@redhat.com, hreitz@redhat.com, 
- jsnow@redhat.com, qemu-devel@nongnu.org
+Date: Thu, 12 Feb 2026 16:26:37 +0000
+X-Gm-Features: AZwV_Qg0q0ORSQYkvpMLsIKqIPqlLJGLcJI_ID5TviJVsnTCp84UIqA64sqGLzE
+Message-ID: <CAFEAcA8s4p7QbVcQXWX_-HyKLyhoQwYz1b6rkazLN5uWzjXv9w@mail.gmail.com>
+Subject: Re: [PULL 00/41] QOM, target/i386 patches for 2026-02-12
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1133;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1133.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,40 +113,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 12 Feb 2026 at 09:08, Vladimir Sementsov-Ogievskiy
-<vsementsov@yandex-team.ru> wrote:
+On Thu, 12 Feb 2026 at 14:44, Paolo Bonzini <pbonzini@redhat.com> wrote:
 >
-> The following changes since commit 44dba5a0c86fff68fdd013c29bba81d5a1e32825:
+> The following changes since commit cd5a79dc98e3087e7658e643bdbbb0baec77ac8a:
 >
->   Merge tag 'pull-tpm-2026-02-10-1' of https://github.com/stefanberger/qemu-tpm into staging (2026-02-11 15:12:50 +0000)
+>   Merge tag 'for_upstream' of https://git.kernel.org/pub/scm/virt/kvm/mst/qemu into staging (2026-02-05 13:54:50 +0000)
 >
 > are available in the Git repository at:
 >
->   https://gitlab.com/vsementsov/qemu.git tags/pull-block-jobs-2026-02-12
+>   https://gitlab.com/bonzini/qemu.git tags/for-upstream
 >
-> for you to fetch changes up to 267d7ae99a1d3b5be9d3421db3bdf651cc18c7ab:
+> for you to fetch changes up to 28a29efe4342055b4631de96ba71fd577ae83e07:
 >
->   iotests: test active mirror with unaligned, small write zeroes op (2026-02-12 11:38:18 +0300)
->
-> ----------------------------------------------------------------
-> block: mirror: fix zero bitmap handling
+>   target/i386/mshv: remove unused optimization of gva=>gpa translation (2026-02-10 14:41:08 +0100)
 >
 > ----------------------------------------------------------------
-> Fiona Ebner (2):
->       block/mirror: check range when setting zero bitmap for sync write
->       iotests: test active mirror with unaligned, small write zeroes op
+> * hw/i386: Remove deprecated PC 2.6 and 2.7 machines
+> * i386/cpu: Fix incorrect initializer in Diamond Rapids definition
+> * qom: Clean up property release
+> * target/i386/kvm: set KVM_PMU_CAP_DISABLE if "-pmu" is configured
+> * target/i386/kvm: reset AMD and perfmon-v2 PMU registers during VM reset
+> * mshv: Cleanup
+> * target/i386: convert SEV-ES termination requests to guest panic events
 >
->  block/mirror.c             |  9 ++++++---
->  tests/qemu-iotests/151     | 20 ++++++++++++++++++++
->  tests/qemu-iotests/151.out |  4 ++--
->  3 files changed, 28 insertions(+), 5 deletions(-)
+> ----------------------------------------------------------------
 
+Hi; the commit for this patch:
 
+> Aidan Khoury (1):
+>       i386/cpu: Fix incorrect initializer in Diamond Rapids definition
 
-Applied, thanks.
+includes this change to the roms/seabios-hppa submodule:
 
-Please update the changelog at https://wiki.qemu.org/ChangeLog/11.0
-for any user-visible changes.
+>  roms/seabios-hppa                                 |   2 +-
 
+which is not mentioned in the commit message and is not
+related to the change. This seems likely to have been introduced
+by accident during a patchseries rebase: could you remove it
+from the commit and resend, please ?
+
+thanks
 -- PMM
 
