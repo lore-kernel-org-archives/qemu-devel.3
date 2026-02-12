@@ -4,189 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECABBEE36B2
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 18:07:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 689C9EEA846
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 18:31:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqb5n-0002xl-I6; Thu, 12 Feb 2026 13:07:07 -0500
+	id 1vqbRx-0003d8-3H; Thu, 12 Feb 2026 13:30:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
- id 1vqb5l-0002xD-Gl; Thu, 12 Feb 2026 13:07:05 -0500
-Received: from mail-westus3azlp170110003.outbound.protection.outlook.com
- ([2a01:111:f403:c107::3] helo=PH0PR06CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1vqbRv-0003cP-Rp
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 13:29:59 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
- id 1vqb5j-0008IS-Lx; Thu, 12 Feb 2026 13:07:05 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=pi/50B30xu5hTZgFRt9hTPN3dyAvLq7QGYA5MTk5EZft0YGemJ3P0Tglk7rnT8htTg3uGr8++iLkvITv/9jH5cYH1HvV1STSfRr6yHC69e5zQNn6MdM1hrGkckuw6/0voIdUq/cwsLOjuUWhxhgZXmG7VN5947lyji8R3Q1cMF0eAPlGRr67TPla3AMuATFYv1BfQOSUbRYoml3HiaK41RS7HnY2vFPUqb2hJQ8NlCKcN4lnbEOiqFvVrf9qUbp/JuXhxc4RJCTwLMSLXnFNiFzyYvGJVvw0Path8u6Jiep8ZUfcQFqNkQ/q+0t05+SM5Q61WFLzb9u9/3dvrBbLLw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=sFckBGr6ptH4IbNRmy8KBOVmDd9dH9UFCEUVgTFu6DM=;
- b=u+VKojcOxaQ6flVKthgpcDJriJpAzz7YXAJtSeDEtRYkq3nTtuVPGB1uZbUtulhpDuQ/7KeITOrFhY6nVwCJaNoIiWcwcfGDpAGHtin2FyKiT9fnfz5k2U7lOF01XIL9wDltomwi7hmWXcKF6s99ui4K1f8YtCGv64Y0i1yFtnTsR81o6vgPC14ocgj0Bvn+HPRalBvUe77CT80eBjMoZTWgFUlbOHTtDpAlOFGHcvK1fmBMV4Vu8KqKIIw1gI2Sw+oWfLwIrjGEcCCraFI+tL6gAukmPnxz5kLvLhGdfsgvvDOk/52hZKxwueQXpDOKvJbUagBmTCSd5hSDlkNyYA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=sFckBGr6ptH4IbNRmy8KBOVmDd9dH9UFCEUVgTFu6DM=;
- b=kU2J7VosM0b4eQgNi1g6l1kdWDee5unP1pApYLk0lW8+kmpQnmglz+6K+jIEHsD80Z4449gNm9GM+P8LKT5CtTjvyPBDZjTlz/asqC3Ce/Xr7+D0ze9YWlwAwiEUTRiBhUsCKHp6hQaQk1E6AZaIPUsiXUz5mW/1S3kD8ORGZ8lmeApuJq1msRp6f8a5V0xWbCe7772JEq28hMbYm/J1Zu/+iusEiyqegw/hZwrInwVFUENF/vFuuXQJsZIHfELE/zjGnoFqzBrnrArFyef4W+pFQvRqkPW13Sc8DhNVuHLKTXx+O6fPr+qwDFcjM+mPBAp2IL0AtwQUFtPPHqXY3w==
-Received: from CH3PR12MB7548.namprd12.prod.outlook.com (2603:10b6:610:144::12)
- by DM4PR12MB6470.namprd12.prod.outlook.com (2603:10b6:8:b8::12) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9611.10; Thu, 12 Feb
- 2026 18:06:56 +0000
-Received: from CH3PR12MB7548.namprd12.prod.outlook.com
- ([fe80::b710:d6a1:ab16:76de]) by CH3PR12MB7548.namprd12.prod.outlook.com
- ([fe80::b710:d6a1:ab16:76de%5]) with mapi id 15.20.9611.008; Thu, 12 Feb 2026
- 18:06:56 +0000
-From: Shameer Kolothum Thodi <skolothumtho@nvidia.com>
-To: "eric.auger@redhat.com" <eric.auger@redhat.com>, Nicolin Chen
- <nicolinc@nvidia.com>
-CC: "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>, "peter.maydell@linaro.org"
- <peter.maydell@linaro.org>, Nathan Chen <nathanc@nvidia.com>, Matt Ochs
- <mochs@nvidia.com>, Jiandi An <jan@nvidia.com>, Jason Gunthorpe
- <jgg@nvidia.com>, "jonathan.cameron@huawei.com"
- <jonathan.cameron@huawei.com>, "zhangfei.gao@linaro.org"
- <zhangfei.gao@linaro.org>, "zhenzhong.duan@intel.com"
- <zhenzhong.duan@intel.com>, Krishnakant Jaju <kjaju@nvidia.com>
-Subject: RE: [PATCH v5 3/5] hw/arm/smmuv3-accel: Allocate vEVENTQ for
- accelerated SMMUv3 devices
-Thread-Topic: [PATCH v5 3/5] hw/arm/smmuv3-accel: Allocate vEVENTQ for
- accelerated SMMUv3 devices
-Thread-Index: AQHcmzFk1Etk+2u8DkWzxKPQ5vkZXLV9zEoAgAAB5gCAAALtAIAAA6kQgAAIBQCAAMFggIAAA8GAgACf5JCAAA01AIAADPkA
-Date: Thu, 12 Feb 2026 18:06:56 +0000
-Message-ID: <CH3PR12MB7548C15908608231158777B9AB60A@CH3PR12MB7548.namprd12.prod.outlook.com>
-References: <20260211083415.133534-1-skolothumtho@nvidia.com>
- <20260211083415.133534-4-skolothumtho@nvidia.com>
- <aYzFeMh1szhJlJJk@Asurada-Nvidia>
- <e66e82d6-0953-49f0-9d84-bf2776e8f3ce@redhat.com>
- <aYzJhEFg/zxtrJ8z@Asurada-Nvidia>
- <CH3PR12MB754855AE35A087B900B0C311AB63A@CH3PR12MB7548.namprd12.prod.outlook.com>
- <aYzTUDmTzIZZCwnW@Asurada-Nvidia>
- <39acf072-3227-442b-acfe-658829071917@redhat.com>
- <aY14rcVQuLs3ugll@Asurada-Nvidia>
- <CH3PR12MB75482F20A549CD3D480226E4AB60A@CH3PR12MB7548.namprd12.prod.outlook.com>
- <db4a1b89-aae2-4328-98b1-5233283e9351@redhat.com>
-In-Reply-To: <db4a1b89-aae2-4328-98b1-5233283e9351@redhat.com>
-Accept-Language: en-US, en-GB
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: CH3PR12MB7548:EE_|DM4PR12MB6470:EE_
-x-ms-office365-filtering-correlation-id: 47365c40-d61b-480b-6bf3-08de6a61824d
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0; ARA:13230040|366016|1800799024|376014|38070700021;
-x-microsoft-antispam-message-info: =?utf-8?B?T1lqUE1FQkp0VWlCc0JGUmlXWnFqTHN4M1JoSENtc25VS3EyTHFiZFRPOHQ1?=
- =?utf-8?B?b1oxR25jNDYvNGN0TUNjdUluS0pwZDRnSHpkYllXMjBBbGxlM1pnTml2a0F0?=
- =?utf-8?B?ZzByemZzRU1oN0ZrZkJTcWFwbXBzMis1NmVNcmI0SFhQZVVUdEoySFN2Q0x5?=
- =?utf-8?B?WFg0NTd5bno2QVB6TjJBaFNsSThQZzdFbTMrVzlsdVFEdVQ4VjFpdEJ3ekFW?=
- =?utf-8?B?YkFUMEtvb0Q0UjRTOVd3YmxLTWtXREg5TnV6TzRSbHNnamFzM0RuY1BQUXo2?=
- =?utf-8?B?c3d6MXFodHZYZ3IzRmtjVDZYUnJyaGhzMFkrbDFZL0xaalJ2THROcFFFUUdJ?=
- =?utf-8?B?RVhqYmFURGgxVTFOVkwvaVZmVEJFZllGNnMvOHRIbkZRd2pzQ1RnN04wYld2?=
- =?utf-8?B?d1RubmVyMmNrb0hXR3dSWE0vWStiU1pUMGJiaHdiVG4zb3l2QzQxTFA3ajhx?=
- =?utf-8?B?M1M2aFZaK3h6VjcxL1dqc0xJS0YwdjloQnh4QVdHVS9VSlRJK2tDZWs3cWdP?=
- =?utf-8?B?eEJPVDh1TjAyS2lUS0lNYkRJbkU1VDNqWm1VbFNOZTFCUk9UZGRSd2FJQS9x?=
- =?utf-8?B?eG1nV3VQSWdwY01GMXJkZk5VVE5Sck8xVERSWlhHY3pBUHZJQ2Z2VjhVWHJX?=
- =?utf-8?B?SGZQZTQ2YWpXeUhmSUhLNUY3TjVldjdrRTVIVWh0YjBMajZxKzRvcUhHTlVS?=
- =?utf-8?B?ZElpaytzWUljamFBL3AzTFI2MFREKzYvWlp5dXFoN09zVjN2a05Palk0QTFS?=
- =?utf-8?B?YTVqYUhERmFERmpBSFRFQjRwblM0amN0c05ocXlid2tnbkgvZGhwSVpMdHNK?=
- =?utf-8?B?OVQ3dWpveGQ4SGd4U01mVkFrUVNXUmpIdmwzS2ltaGt1SFZnampteUljcDB4?=
- =?utf-8?B?eW1ET0dhS1hLZXdjWS8zSVJuNE1YWWp6elRNTFBEMUpnWWN0RDl1NmdKcnRQ?=
- =?utf-8?B?M1dBSjFnTU5URFMzSVNNa0RsQXNEM2c3RWhiL0lZakMxdEQ0VnpRaE8xZW1a?=
- =?utf-8?B?V1kvOUJrdndodEFlSnpGdzBtTFFGRFc3VTZtcGwyWWpZS2l2bVBCNmU1Mi80?=
- =?utf-8?B?cTAydnRRaDlwUUZLMW16ZXluZlFRZ2NZbC9hNERvL1NCWHZ1UXlET295YXdL?=
- =?utf-8?B?RlhmZ2ZaYThvQlJMUUF2WWpPZEdsa0ZpRm9rYmZZMkQyVWsxbk0wejRQc2tF?=
- =?utf-8?B?WHowdFJTeXg2UWw3bFNKMVgvbHZDYW92RmdKemxmVHFxOWRtWjJ2STdyZFpt?=
- =?utf-8?B?SzlMSTluaTFtZjFIdjBqSXI4ZUViS1VKWUNjL1BaQ0p3TjlSdlF2VG5ncFI1?=
- =?utf-8?B?QThOMVFCTWpSUzFLQjVGMzQ5MllPSUNuYTVTQlBBYzhoWmgwZzdWNEdtbThK?=
- =?utf-8?B?a0c2YW9NSm10dVJmdHVXQWNhbFJoVGx3MVhFcTNBQkRBT0F3cTY0dllmcFFk?=
- =?utf-8?B?YnBZVVRrNmdCZ0xBK0RSL3VrZ1F6cFlwbzc3UXB0WllNcUNNM0VxblBSdkJK?=
- =?utf-8?B?bkV0RlhCbnBwQ1MwTm1HeTgzb3lyOFhCMkh1eElzdEVEZjFmM0d1Vjkzckx4?=
- =?utf-8?B?Vkw2cFViRXhNQVlLRHRnOWU2V0tkT3o4TG4wbVRKVmg0NnBlQXF4WmdHTFl4?=
- =?utf-8?B?M0JEckdURTc2TVh5UVhKUUpqQmpFQ05ZejRJY3lnMWw2SUkyQW9pSytxSG1y?=
- =?utf-8?B?QU81bHFlRFlaeUI4T1NLb2ZMS0Y3ZzUrMkdZVmNuc3I0RVpFUFZpMmwvY3B4?=
- =?utf-8?B?QzlNeXd4VTdKbFppSjZYVEhkUDMwdGtwaHVtWkR6czNmaFRGdG9DYlpjTlR2?=
- =?utf-8?B?SGFjNDI5bzRHdVV4ZXJPNWorU3dEVWVVWnc0ajd0VGN1QndsYjZERXBrODRN?=
- =?utf-8?B?TW85MDZDQ3loZmxMNXRweWNXZ1pyd2UwRVZWQnA1SkJvazFMbEMydVNtbHVy?=
- =?utf-8?B?Q2s4cmtlYTd0c3ZYNzVlZlVDVWxGbXlyRHFXL0E4UTR0OExsK1dPVGxvOGhk?=
- =?utf-8?B?cWVyaVVKNWtUUlBrc3VVRGk4MEVHUlVlYjBvTGhTa3NwWDV6SVZnNWlkb2JQ?=
- =?utf-8?B?QzJjeVBnbjJqZzBJakRDaG1KeTFuUzN6Y0g4bnVTZngxNndpZGp6WDFueVNv?=
- =?utf-8?B?TTFkS0hhM00yd3hhMFZlUHRaTmlEREJGelNZdW5IV2MzRlcrV3R2Tzc4V2pJ?=
- =?utf-8?Q?qvixmTz+VjwSOEt7Qx0OdoY=3D?=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:CH3PR12MB7548.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(1800799024)(376014)(38070700021); DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?UkxWK3B5dkRUT1NaaTM3ZVZWZUY3alh4S25VNzl5d1lMOGRJRENIUllDYUo0?=
- =?utf-8?B?L1hmTjY4eXlrci9ESG1qRFU2clJLQlI3Mm1wTnZ6RVNtc2d3NmY4ZTFVN1p5?=
- =?utf-8?B?M01KVGtDaHVhc3FYa3VNVmw2UlN6S1hMTzZPdUs4TjlCNS9GeFVndXI4TGcv?=
- =?utf-8?B?bUxsK1pjZ0RXVWgxcXkxL1hCWGdsTWdadVhDdlhCSWgrWHdjSVdDbmRmOXZx?=
- =?utf-8?B?Q3pKdkdMMzExTEszWC9ickJMVXgyWFFHUS92TWVQZ1hMalplTTlidzl0K2FJ?=
- =?utf-8?B?eUNwSGJDbWRyZWFZSUQ5MXVZR1FlcFNIMHZkOXYzT2NlNHBmeE80MURvOFZy?=
- =?utf-8?B?WElBbFJkeGhFMmJQUzl0d3Q5QXVia3huUW1yN0x2Sm1iUityUkhWZ3lsMGpU?=
- =?utf-8?B?Sk4xbjhDWjdjR213c3duNUcwVGF0TjFhYkxPc1p2OWZBbGJzenRTUWZBMWwx?=
- =?utf-8?B?RlV0QVE1aU1OQjZyM0lLd0JjSXpLdVVGNWJ1Rmo4dDZMNkorLzJlM3RBNkc0?=
- =?utf-8?B?dUZMbjJJUzJ6VnVvS0NsQWVJaGhUQ0xsd20wNTZ5VHNic1ozci9kZlNLOEhk?=
- =?utf-8?B?d3F5WmFzbFJxQ2Y5L0V5a3NldnlqTTJuTEIyNVFJQ243K3d5bU9IQUZSVzZ6?=
- =?utf-8?B?VEZDVWpVQWpONnFKeUNFc2MyMVJFMU4yWVNVT3Ayc2FuNnQ2dFM5T0FtcFFD?=
- =?utf-8?B?VTBWZXVodFROWVI0RFRpUkJJYmovS0ZNNzZaV0hsSjhXMytsWFowWW9KTElB?=
- =?utf-8?B?TDY3aDZRanNrNnJlSWVGUXZ3Qk91dU9Pd2RoanlxK0JyOHNKQi9DS3JyZHNr?=
- =?utf-8?B?UmNTWVlqSE8xa21iU3JCSzRxbUlrRzEwYWpCQjh0QlBwVEJQV1E3WFo0Zno5?=
- =?utf-8?B?Q0VyZlkrR3JnYXZkMXdINk5IOTRsTWgrMlZuUDZuMEU0aXZlRlAraUZBUW1X?=
- =?utf-8?B?WlphMVo0Y2tXWjljM0RCbFM1RzhRa0VvaWtyRDlSK2h4cE9RNUZWTHVoYldV?=
- =?utf-8?B?a0thSEJabVlyenFGM3JSUVY3UFc2ZkRRODJSZ1ZXSXVhNXpWelpBTmFIejA5?=
- =?utf-8?B?eW5qKzV2RTRiR0xVZ01ocnNYZ1lVaUluZGN3bkh2elA3STF0WVV5ZU9UZXFE?=
- =?utf-8?B?ck1hN2c4VzM3TVllSUtCYW5pckkxaVhicGtOd3UvenlnU3A3cW03b1A2QzNy?=
- =?utf-8?B?TlExRmhVTVJYV2ZDcFNMazE3V1h0NjVaajdYN2ZJVmlPQkFQU2VIWmd5Y1k5?=
- =?utf-8?B?a3JMUmEySm1XaDllcjV3VzVGellaL3lSMmNYZlh6amppYXhYcUQ4UXlqc21v?=
- =?utf-8?B?dmxSMiswcHY2V2FuU01haUg3NTFGRXhzaVVFWW0wT2d3VkN6amJjN3hnQ213?=
- =?utf-8?B?UUF6WW03ZU1TYkd6V0lGWG54WU13eTg4eHp0YTk2emk1NGwzUUMyL1Fac2V6?=
- =?utf-8?B?RVdmZFdpOGtsRmVpbUdIbDBSYTdYdmpvci93RUtFQVYxVVl0bzVZQ3NRNm0y?=
- =?utf-8?B?MytSd2NOdVNHQmlWaHU3MmVPSXNHRGhZcitONE02SFVaUUNaSHFJRkFZNmpr?=
- =?utf-8?B?MTltL2hGdUJhU28wK0xNbHdMRXpJdDNGWGtqRE9VeTVRMm9lWjFUeWxPcFlt?=
- =?utf-8?B?ck1kbnBnSUxUWnEyMDljekhuSVR0RzY0OCtKUHJqV1NpQ2dGSDh3U3k1OXBS?=
- =?utf-8?B?VXFiNHVZTWM5dWFEb0FiVFh6eXdNV1JySWJXajRNUnE5R3p5Wm5Od3ljaDh5?=
- =?utf-8?B?Ny9XRG1oMFNkNEVxQXZOUFR0ZE9yOHFWS2VLT2NQNVR2QUN0WURuSVJ6Qnhh?=
- =?utf-8?B?bThuYmFpRENKc00zdnlqandObW1sbWhqNHFYRnpWWVZyL2JNcTJrcmhLVzU1?=
- =?utf-8?B?TFJxVUlYdHh0NHBTR2czZXlBRFpyVm52dmxoWmVlWDdHeXYxL3M4QVhQTFdz?=
- =?utf-8?B?TDlJa0x0bkJpSUhNbDFsRzFCNlFyMk16NWd6a0xvMHFrZzBUMVRyQi9KQm9o?=
- =?utf-8?B?Wjc5Y2VBVUY3YzBVL0ZUNGNVa3BqT1VObVIwbU1Pd0dUbHEzZFRpS09QeVJ3?=
- =?utf-8?B?M0YzZjBsNWZVZGJMRVVFcnF3MGtWUjBqOGU1bUR6Z3U3RDFyM2ZkL0Z5U1lQ?=
- =?utf-8?B?NVFVb1hQeWVkREdVWEhEc3RjUVpCREhDcVhuRVZWb2tKMGIyb3Z2WEJMdXpa?=
- =?utf-8?B?Um9Zb2hIdlR0clB3Si84R0FJcHFXeElOMGxlSm0wZCtNVFozWnVsNS9GVCtv?=
- =?utf-8?B?eGhrc0xSTzRPbG5PZlhyQTBJSC9zYmE2U2JaeXdXMWx6MHpKbHdmbElPbEdD?=
- =?utf-8?B?Q1kzQ2ViRG5CamQ5MUdlbGxwS21INnlUTElrOWROakNrQXJWeUdWdz09?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1vqbRt-0005sw-Ij
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 13:29:59 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1770920996;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=q+yjv/Cp6W5b0BAAzHQNN/vBafaSHrxuTXQHFMcnRAU=;
+ b=PRDb0c+IX0HHC9iglT1KGpckAZSO14p2bVa8klw+WGAefa11p7r0MnqQQTDRxNisUF3u1J
+ rdofILg8JQeoF2tVnSi15sDvDR+t8pkaiDEe9oiSe2A0N/UGp4NXN1JMyHvH9S0O6P7MDo
+ KmYAZnPWvGyxY4OvZMYiwlBbhzzhOvE=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-610-n0Nxm_FLO6OIGHCqmEE_8A-1; Thu, 12 Feb 2026 13:29:54 -0500
+X-MC-Unique: n0Nxm_FLO6OIGHCqmEE_8A-1
+X-Mimecast-MFC-AGG-ID: n0Nxm_FLO6OIGHCqmEE_8A_1770920993
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-4806b12ad3fso1149605e9.0
+ for <qemu-devel@nongnu.org>; Thu, 12 Feb 2026 10:29:54 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770920993; x=1771525793;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=q+yjv/Cp6W5b0BAAzHQNN/vBafaSHrxuTXQHFMcnRAU=;
+ b=G1X7MPCC3hHrWJhA0eMj7nUBuiOoYKB2RqI0bJ4JHt4BTpq/9yOSBGWOtzcP2Rbsjn
+ m1TMk4h0GGWAlH5mr9w8ivgOrdzhYl8rcostV1Hgy520xELV1oz9CRn/VrWbVtAk3Hqi
+ lwNZXVtoFhfqXbv4863lVeoFwSsbK9zvE2i3tA6hixxF0KJqY/haGGtixZIMvWTS5VMO
+ sBsVmkm11y3G0SzO6yXibK44vuhD2V0cG5GRH/MJKVh8FaPb7aWzszEiKg6oJWAQnLoW
+ DJm+8PDak6t6z8lD3MaxfVkEc/h6UsidpGzlWraKnFAjlmTvwOVnIFLcEVn5Y0uWXngS
+ G/HQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXrbb4xy8UpovU+Nzm7Sceiyk7b1XniVn/Fo7JVmL1YEzae1Dv52Z4l3lzNTEHtgtC6dNuInZMJvOnj@nongnu.org
+X-Gm-Message-State: AOJu0YwNk5yiDJLkfh69tg2b+ecsSfC+A+O+4wbj8+TtQ8741OLI2oCH
+ kF+qR7ffaJwa++SAu59QizEEjLfG8wHlSnilJaX+y66xFT5EwAMoRdFVLcU3r3RfIMhwUoSyo2W
+ momv0fkbDxvVTSlw0q0pJ8F2Bx3lbs57w6nM2OVmtYgMG2WihZOoPuiE7
+X-Gm-Gg: AZuq6aLSqaY2zJgIjywiJ9yl5Muq2QZuqCt0kGecJorA4Mtmb0oek6UqflVkeIUTear
+ X/lgPZdrEYCop7NBVRuI5ISgIcgDknjlMRkic+NKcy4HiU+ySArsumaGWHL1OlgMET23NYiy2pz
+ IL90MF5Lr9Azin1xZA3EEXYAIJllvwzPBmj+UYfFsKTnFo4hg8rDeOaPn1ActlSZ/mRQdEAXGH4
+ jZKQmwQ747uW+THWg/Gv9HhrXqCAiJIwsANwupkVBkWUXEnq9BU/j0rtBCu2X337YHflGQ4H2Nu
+ 4YlPOugSO3j1PpOK+YmvhF2+w3mEAL+z4C0xGQBBO1JUXCMIBMlbcqTc8Hh9UOuuN8065FCzTaj
+ KaHx2CuWFvMEIRFhvJL4k0UkT+/3/3hySeeuDyGPNiPeAL+bqGtAY4duOqtGtFn9OR7+6gA==
+X-Received: by 2002:a05:600c:1da1:b0:47e:e8de:7420 with SMTP id
+ 5b1f17b1804b1-48371085905mr234515e9.22.1770920993118; 
+ Thu, 12 Feb 2026 10:29:53 -0800 (PST)
+X-Received: by 2002:a05:600c:1da1:b0:47e:e8de:7420 with SMTP id
+ 5b1f17b1804b1-48371085905mr234055e9.22.1770920992646; 
+ Thu, 12 Feb 2026 10:29:52 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-48370a63881sm708675e9.21.2026.02.12.10.29.51
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 12 Feb 2026 10:29:52 -0800 (PST)
+Message-ID: <6c4468e1-85e5-4d3e-9b4d-6710aac202a2@redhat.com>
+Date: Thu, 12 Feb 2026 19:29:49 +0100
 MIME-Version: 1.0
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB7548.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 47365c40-d61b-480b-6bf3-08de6a61824d
-X-MS-Exchange-CrossTenant-originalarrivaltime: 12 Feb 2026 18:06:56.2721 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: svZHiNLpZ6ZGjmE11jXJ1HGN1OP7GSTd4hOr59FYWp79V7zA1tbJZks0LaCl8fqxNmxlg+1JODPqYj9aB83Quw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR12MB6470
-Received-SPF: permerror client-ip=2a01:111:f403:c107::3;
- envelope-from=skolothumtho@nvidia.com;
- helo=PH0PR06CU001.outbound.protection.outlook.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 22/24] hw/arm/smmuv3: Add per-device identifier
+ poroperty
+Content-Language: en-US
+To: Shameer Kolothum <skolothumtho@nvidia.com>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org, clg@redhat.com, alex@shazbot.org,
+ nicolinc@nvidia.com, nathanc@nvidia.com, mochs@nvidia.com, jan@nvidia.com,
+ jgg@nvidia.com, jonathan.cameron@huawei.com, zhangfei.gao@linaro.org,
+ zhenzhong.duan@intel.com, kjaju@nvidia.com
+References: <20260206144823.80655-1-skolothumtho@nvidia.com>
+ <20260206144823.80655-23-skolothumtho@nvidia.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20260206144823.80655-23-skolothumtho@nvidia.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -199,95 +117,113 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-DQoNCj4gLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCj4gRnJvbTogRXJpYyBBdWdlciA8ZXJp
-Yy5hdWdlckByZWRoYXQuY29tPg0KPiBTZW50OiAxMiBGZWJydWFyeSAyMDI2IDE3OjEyDQo+IFRv
-OiBTaGFtZWVyIEtvbG90aHVtIFRob2RpIDxza29sb3RodW10aG9AbnZpZGlhLmNvbT47IE5pY29s
-aW4gQ2hlbg0KPiA8bmljb2xpbmNAbnZpZGlhLmNvbT4NCj4gQ2M6IHFlbXUtYXJtQG5vbmdudS5v
-cmc7IHFlbXUtZGV2ZWxAbm9uZ251Lm9yZzsNCj4gcGV0ZXIubWF5ZGVsbEBsaW5hcm8ub3JnOyBO
-YXRoYW4gQ2hlbiA8bmF0aGFuY0BudmlkaWEuY29tPjsgTWF0dCBPY2hzDQo+IDxtb2Noc0Budmlk
-aWEuY29tPjsgSmlhbmRpIEFuIDxqYW5AbnZpZGlhLmNvbT47IEphc29uIEd1bnRob3JwZQ0KPiA8
-amdnQG52aWRpYS5jb20+OyBqb25hdGhhbi5jYW1lcm9uQGh1YXdlaS5jb207DQo+IHpoYW5nZmVp
-Lmdhb0BsaW5hcm8ub3JnOyB6aGVuemhvbmcuZHVhbkBpbnRlbC5jb207IEtyaXNobmFrYW50IEph
-anUNCj4gPGtqYWp1QG52aWRpYS5jb20+DQo+IFN1YmplY3Q6IFJlOiBbUEFUQ0ggdjUgMy81XSBo
-dy9hcm0vc21tdXYzLWFjY2VsOiBBbGxvY2F0ZSB2RVZFTlRRIGZvcg0KPiBhY2NlbGVyYXRlZCBT
-TU1VdjMgZGV2aWNlcw0KPiANCj4gRXh0ZXJuYWwgZW1haWw6IFVzZSBjYXV0aW9uIG9wZW5pbmcg
-bGlua3Mgb3IgYXR0YWNobWVudHMNCj4gDQo+IA0KPiBPbiAyLzEyLzI2IDU6MjggUE0sIFNoYW1l
-ZXIgS29sb3RodW0gVGhvZGkgd3JvdGU6DQo+ID4NCj4gPj4gLS0tLS1PcmlnaW5hbCBNZXNzYWdl
-LS0tLS0NCj4gPj4gRnJvbTogTmljb2xpbiBDaGVuIDxuaWNvbGluY0BudmlkaWEuY29tPg0KPiA+
-PiBTZW50OiAxMiBGZWJydWFyeSAyMDI2IDA2OjUyDQo+ID4+IFRvOiBFcmljIEF1Z2VyIDxlcmlj
-LmF1Z2VyQHJlZGhhdC5jb20+DQo+ID4+IENjOiBTaGFtZWVyIEtvbG90aHVtIFRob2RpIDxza29s
-b3RodW10aG9AbnZpZGlhLmNvbT47IHFlbXUtDQo+ID4+IGFybUBub25nbnUub3JnOyBxZW11LWRl
-dmVsQG5vbmdudS5vcmc7IHBldGVyLm1heWRlbGxAbGluYXJvLm9yZzsNCj4gPj4gTmF0aGFuIENo
-ZW4gPG5hdGhhbmNAbnZpZGlhLmNvbT47IE1hdHQgT2NocyA8bW9jaHNAbnZpZGlhLmNvbT47DQo+
-ID4+IEppYW5kaSBBbiA8amFuQG52aWRpYS5jb20+OyBKYXNvbiBHdW50aG9ycGUgPGpnZ0Budmlk
-aWEuY29tPjsNCj4gPj4gam9uYXRoYW4uY2FtZXJvbkBodWF3ZWkuY29tOyB6aGFuZ2ZlaS5nYW9A
-bGluYXJvLm9yZzsNCj4gPj4gemhlbnpob25nLmR1YW5AaW50ZWwuY29tOyBLcmlzaG5ha2FudCBK
-YWp1IDxramFqdUBudmlkaWEuY29tPg0KPiA+PiBTdWJqZWN0OiBSZTogW1BBVENIIHY1IDMvNV0g
-aHcvYXJtL3NtbXV2My1hY2NlbDogQWxsb2NhdGUgdkVWRU5UUSBmb3INCj4gPj4gYWNjZWxlcmF0
-ZWQgU01NVXYzIGRldmljZXMNCj4gPj4NCj4gPiAuLi4NCj4gPj4+IFVzdWFsbHkgZXJyb3JfYXBw
-ZW5kX2hpbnQoKSBpcyB1c2VkIHRvIGFwcGVuZCBhIHVzZXIgZnJpZW5kbHkgbXNnIHRoYXQNCj4g
-Pj4+IGhlbHBzIHRoZSB1c2VyIHRvIGZpeCB0aGUgcHJvYmxlbS4NCj4gPj4+IEluIHFhcGkvZXJy
-b3IuaCB0aGVyZSBpcyBhbiBleGFtcGxlIHRoYXQgcmVsYXRlcyB0byAiUmVjZWl2ZSBhbmQNCj4g
-Pj4+IGFjY3VtdWxhdGUgbXVsdGlwbGUgZXJyb3JzIChmaXJzdCBvbmUgd2lucyk6IiBieSB1c2lu
-Zw0KPiA+Pj4gZXJyb3JfcHJvcGFnYXRlKCkNCj4gPj4gSSBkaWRuJ3QgbG9vayB2ZXJ5IGNsb3Nl
-bHkgYnV0IGp1c3QgcnVuIGEgZ3JlcCBmb3IgImFwcGVuZCIgOikNCj4gPj4NCj4gPj4gWWVhLCBJ
-IHRoaW5rIGVycm9yX3Byb3BhZ2F0ZSgpIHNob3VsZCB3b3JrIGJldHRlci4NCj4gPiBJIGFtIG5v
-dCBzdXJlIGVycm9yX3Byb3BhZ2F0ZSBtYWtlcyB0aGluZ3MgYmV0dGVyIHRob3VnaC4NCj4gPg0K
-PiA+IElmIEkgYW0gbm90IHdyb25nLCB0aGlzIGlzIGhvdyB0aGUgY2hhbmdlIHdpbGwgbG9vayBs
-aWtlLA0KPiA+DQo+ID4gc3RhdGljIE1lbVR4UmVzdWx0IHNtbXVfd3JpdGVsKFNNTVV2M1N0YXRl
-ICpzLCBod2FkZHIgb2Zmc2V0LA0KPiA+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-dWludDY0X3QgZGF0YSwgTWVtVHhBdHRycyBhdHRycykNCj4gPiAgew0KPiA+ICsgICAgRXJyb3Ig
-KmVyciA9IE5VTEw7DQo+ID4gICAgICBFcnJvciAqbG9jYWxfZXJyID0gTlVMTDsNCj4gPg0KPiA+
-ICAgICAgc3dpdGNoIChvZmZzZXQpIHsNCj4gPiBAQCAtMTYxNCw5ICsxNjE2LDE1IEBAIHN0YXRp
-YyBNZW1UeFJlc3VsdA0KPiBzbW11X3dyaXRlbChTTU1VdjNTdGF0ZSAqcywgaHdhZGRyIG9mZnNl
-dCwNCj4gPiAgICAgICAgICBzLT5jcjBhY2sgPSBkYXRhICYgflNNTVVfQ1IwX1JFU0VSVkVEOw0K
-PiA+ICAgICAgICAgIC8qIGluIGNhc2UgdGhlIGNvbW1hbmQgcXVldWUgaGFzIGJlZW4gZW5hYmxl
-ZCAqLw0KPiA+ICAgICAgICAgIHNtbXV2M19jbWRxX2NvbnN1bWUocywgJmxvY2FsX2Vycik7DQo+
-ID4gKyAgICAgICAgaWYgKGxvY2FsX2Vycikgew0KPiA+ICsgICAgICAgICAgICBlcnJvcl9wcm9w
-YWdhdGUoJmVyciwgbG9jYWxfZXJyKTsNCj4gPiArICAgICAgICAgICAgbG9jYWxfZXJyID0gTlVM
-TDsNCj4gPiArICAgICAgICB9DQo+ID4gICAgICAgICAgLyogQWxsb2NhdGUgdkVWRU5UUSBpZiBF
-dmVudFEgaXMgZW5hYmxlZCBhbmQgYSB2SU9NTVUgaXMgYXZhaWxhYmxlICovDQo+ID4gLSAgICAg
-ICAgaWYgKGxvY2FsX2VyciA9PSBOVUxMKSB7DQo+ID4gLSAgICAgICAgICAgIHNtbXV2M19hY2Nl
-bF9hbGxvY192ZXZlbnRxKHMsICZsb2NhbF9lcnIpOw0KPiA+ICsgICAgICAgIHNtbXV2M19hY2Nl
-bF9hbGxvY192ZXZlbnRxKHMsICZsb2NhbF9lcnIpOw0KPiA+ICsgICAgICAgIGlmIChsb2NhbF9l
-cnIpIHsNCj4gPiArICAgICAgICAgICAgZXJyb3JfcHJvcGFnYXRlKCZlcnIsIGxvY2FsX2Vycik7
-DQo+ID4gKyAgICAgICAgICAgIGxvY2FsX2VyciA9IE5VTEw7DQo+ID4gICAgICAgICAgfQ0KPiA+
-ICAgICAgICAgIGJyZWFrOw0KPiA+ICAgICAgY2FzZSBBX0NSMToNCj4gPiBAQCAtMTcyNCw4ICsx
-NzMyLDggQEAgc3RhdGljIE1lbVR4UmVzdWx0IHNtbXVfd3JpdGVsKFNNTVV2M1N0YXRlDQo+ICpz
-LCBod2FkZHIgb2Zmc2V0LA0KPiA+ICAgICAgICAgIGJyZWFrOw0KPiA+ICAgICAgfQ0KPiA+DQo+
-ID4gLSAgICBpZiAobG9jYWxfZXJyKSB7DQo+ID4gLSAgICAgICAgZXJyb3JfcmVwb3J0X2Vycihs
-b2NhbF9lcnIpOw0KPiA+ICsgICAgaWYgKGVycikgew0KPiA+ICsgICAgICAgIGVycm9yX3JlcG9y
-dF9lcnIoZXJyKTsNCj4gPiAgICAgIH0NCj4gPiAgICAgIHJldHVybiBNRU1UWF9PSzsNCj4gPiAg
-fQ0KPiA+DQo+ID4gQW5kIGVycm9yX3Byb3BhZ2F0ZSgpIG9ubHkgd2lsbCBrZWVwIHRoZSBmaXJz
-dCBlcnJvci4NCj4gPg0KPiA+IEluc3RlYWQsIGlmIHdlIGRvIGJlbG93Og0KPiA+DQo+ID4gQEAg
-LTE2MTQsMTAgKzE2MTUsMTIgQEAgc3RhdGljIE1lbVR4UmVzdWx0DQo+IHNtbXVfd3JpdGVsKFNN
-TVV2M1N0YXRlICpzLCBod2FkZHIgb2Zmc2V0LA0KPiA+ICAgICAgICAgIHMtPmNyMGFjayA9IGRh
-dGEgJiB+U01NVV9DUjBfUkVTRVJWRUQ7DQo+ID4gICAgICAgICAgLyogaW4gY2FzZSB0aGUgY29t
-bWFuZCBxdWV1ZSBoYXMgYmVlbiBlbmFibGVkICovDQo+ID4gICAgICAgICAgc21tdXYzX2NtZHFf
-Y29uc3VtZShzLCAmbG9jYWxfZXJyKTsNCj4gPiAtICAgICAgICAvKiBBbGxvY2F0ZSB2RVZFTlRR
-IGlmIEV2ZW50USBpcyBlbmFibGVkIGFuZCBhIHZJT01NVSBpcyBhdmFpbGFibGUgKi8NCj4gPiAt
-ICAgICAgICBpZiAobG9jYWxfZXJyID09IE5VTEwpIHsNCj4gPiAtICAgICAgICAgICAgc21tdXYz
-X2FjY2VsX2FsbG9jX3ZldmVudHEocywgJmxvY2FsX2Vycik7DQo+ID4gKyAgICAgICAgaWYgKGxv
-Y2FsX2Vycikgew0KPiA+ICsgICAgICAgICAgICBlcnJvcl9yZXBvcnRfZXJyKGxvY2FsX2Vycik7
-DQo+ID4gKyAgICAgICAgICAgIGxvY2FsX2VyciA9IE5VTEw7DQo+ID4gICAgICAgICAgfQ0KPiA+
-ICsgICAgICAgIC8qIEFsbG9jYXRlIHZFVkVOVFEgaWYgRXZlbnRRIGlzIGVuYWJsZWQgYW5kIGEg
-dklPTU1VIGlzIGF2YWlsYWJsZSAqLw0KPiA+ICsgICAgICAgIHNtbXV2M19hY2NlbF9hbGxvY192
-ZXZlbnRxKHMsICZsb2NhbF9lcnIpOw0KPiA+ICAgICAgICAgIGJyZWFrOw0KPiANCj4gSWYgeW91
-IHdhbnQgdG8gYWNjdW11bGF0ZSwgd2h5IGRvbid0IHlvdSB1c2UgdGhlIGV4YW1wbGUgaW4gcWFw
-aS9lcnJvci5oOg0KPiANCj4gICogUmVjZWl2ZSBhbmQgYWNjdW11bGF0ZSBtdWx0aXBsZSBlcnJv
-cnMgKGZpcnN0IG9uZSB3aW5zKToNCj4gICogICAgIEVycm9yICplcnIgPSBOVUxMLCAqbG9jYWxf
-ZXJyID0gTlVMTDsNCj4gICogICAgIGZvbyhhcmcsICZlcnIpOw0KPiAgKiAgICAgYmFyKGFyZywg
-JmxvY2FsX2Vycik7DQo+ICAqICAgICBlcnJvcl9wcm9wYWdhdGUoJmVyciwgbG9jYWxfZXJyKTsN
-Cj4gICogICAgIGlmIChlcnIpIHsNCj4gICogICAgICAgICBoYW5kbGUgdGhlIGVycm9yLi4uDQo+
-ICAqICAgICB9DQo+ICAqDQoNClRoaXMgaXMgdGhlIG9uZSBtb3JlIG9yIGxlc3MgSSBhdHRlbXB0
-ZWQgaW4gZmlyc3QgYWJvdmUuIEl0IHdpbGwgYWNjdW11bGF0ZSBidXQNCm9ubHkgdGhlIGZpcnN0
-IGVycm9yIGlzIGtlcHQuIFNpbmNlIHdlIGFyZSB0cmVhdGluZyBib3RoIHNtbXV2M19jbWRxX2Nv
-bnN1bWUoKQ0KYW5kIHNtbXV2M19hY2NlbF9hbGxvY192ZXZlbnRxKCkgcGF0aHMgYXMgaW5kZXBl
-bmRlbnQsIEkgdGhvdWdodCBpdCB3b3VsZA0KYmUgYmV0dGVyIHRvIHJlcG9ydCBib3RoIGVycm9y
-cyBpbmRlcGVuZGVudGx5IGlmIGl0IGhhcHBlbnMuICBNYXkgYmUgaXQgZG9lc24ndA0KbWF0dGVy
-IHRoYXQgbXVjaC4gSSB3aWxsIHN3aXRjaCB0byBlcnJvcl9wcm9wYWdhdGUoKSB0aGVuLg0KDQpU
-aGFua3MsDQpTaGFtZWVyDQoNCg0K
+
+
+On 2/6/26 3:48 PM, Shameer Kolothum wrote:
+> Add an "identifier" property to the SMMUv3 device and use it when
+> building the ACPI IORT SMMUv3 node Identifier field.
+>
+> This avoids relying on enumeration order and provides a stable
+> per-device identifier. This is useful when we add support for
+> Tegra241 CMDQV DSDT in subsequent patch.
+>
+> No functional change intended.
+I think an important info which is missing here is you need the id used
+in IORT and DSDT to be the same, is that correct
+
+By the way why can't you reuse the QOM id. I think Dan said there is one
+for all QOM objects.
+
+Thanks
+
+Eric
+    
+
+>
+> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
+> ---
+>  hw/arm/smmuv3.c          | 1 +
+>  hw/arm/virt-acpi-build.c | 4 +++-
+>  hw/arm/virt.c            | 3 +++
+>  include/hw/arm/smmuv3.h  | 1 +
+>  4 files changed, 8 insertions(+), 1 deletion(-)
+>
+> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
+> index 7858bf2c33..7f84c87a46 100644
+> --- a/hw/arm/smmuv3.c
+> +++ b/hw/arm/smmuv3.c
+> @@ -2114,6 +2114,7 @@ static const Property smmuv3_properties[] = {
+>       * Defaults to stage 1
+>       */
+>      DEFINE_PROP_STRING("stage", SMMUv3State, stage),
+> +    DEFINE_PROP_UINT8("identifier", SMMUv3State, identifier, 0),
+>      DEFINE_PROP_BOOL("accel", SMMUv3State, accel, false),
+>      /* GPA of MSI doorbell, for SMMUv3 accel use. */
+>      DEFINE_PROP_UINT64("msi-gpa", SMMUv3State, msi_gpa, 0),
+> diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
+> index ae3b4aac52..046e930ca5 100644
+> --- a/hw/arm/virt-acpi-build.c
+> +++ b/hw/arm/virt-acpi-build.c
+> @@ -342,6 +342,7 @@ static int iort_idmap_compare(gconstpointer a, gconstpointer b)
+>  typedef struct AcpiSMMUv3Dev {
+>      int irq;
+>      hwaddr base;
+> +    uint8_t id;
+>  
+>      /*
+>       * IORT-only fields.
+> @@ -407,6 +408,7 @@ static int iort_smmuv3_devices(Object *obj, void *opaque)
+>      bus = PCI_BUS(object_property_get_link(obj, "primary-bus", &error_abort));
+>      sdev.accel = object_property_get_bool(obj, "accel", &error_abort);
+>      sdev.ats = object_property_get_bool(obj, "ats", &error_abort);
+> +    sdev.id = object_property_get_uint(obj, "identifier", &error_abort);
+>      pbus = PLATFORM_BUS_DEVICE(vms->platform_bus_dev);
+>      sbdev = SYS_BUS_DEVICE(obj);
+>      sdev.base = platform_bus_get_mmio_addr(pbus, sbdev, 0);
+> @@ -642,7 +644,7 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+>                       (ID_MAPPING_ENTRY_SIZE * smmu_mapping_count);
+>          build_append_int_noprefix(table_data, node_size, 2); /* Length */
+>          build_append_int_noprefix(table_data, 4, 1); /* Revision */
+> -        build_append_int_noprefix(table_data, id++, 4); /* Identifier */
+> +        build_append_int_noprefix(table_data, sdev->id, 4); /* Identifier */
+>          /* Number of ID mappings */
+>          build_append_int_noprefix(table_data, smmu_mapping_count, 4);
+>          /* Reference to ID Array */
+> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+> index 390845c503..22ee5c4a41 100644
+> --- a/hw/arm/virt.c
+> +++ b/hw/arm/virt.c
+> @@ -3059,12 +3059,15 @@ static void virt_machine_device_pre_plug_cb(HotplugHandler *hotplug_dev,
+>                         (vms->legacy_smmuv3_present) ?
+>                         "iommu=smmuv3" : "virtio-iommu");
+>          } else if (vms->iommu == VIRT_IOMMU_NONE) {
+> +            static uint8_t id;
+> +
+>              /* The new SMMUv3 device is specific to the PCI bus */
+>              object_property_set_bool(OBJECT(dev), "smmu_per_bus", true, NULL);
+>              object_property_set_link(OBJECT(dev), "memory",
+>                                       OBJECT(vms->sysmem), NULL);
+>              object_property_set_link(OBJECT(dev), "secure-memory",
+>                                       OBJECT(vms->secure_sysmem), NULL);
+> +            object_property_set_uint(OBJECT(dev), "identifier", id++, NULL);
+>          }
+>          if (object_property_get_bool(OBJECT(dev), "accel", &error_abort)) {
+>              hwaddr db_start = 0;
+> diff --git a/include/hw/arm/smmuv3.h b/include/hw/arm/smmuv3.h
+> index 87926f8cb3..39cb43506e 100644
+> --- a/include/hw/arm/smmuv3.h
+> +++ b/include/hw/arm/smmuv3.h
+> @@ -63,6 +63,7 @@ struct SMMUv3State {
+>      qemu_irq     irq[4];
+>      QemuMutex mutex;
+>      char *stage;
+> +    uint8_t identifier;
+>  
+>      /* SMMU has HW accelerator support for nested S1 + s2 */
+>      bool accel;
+
 
