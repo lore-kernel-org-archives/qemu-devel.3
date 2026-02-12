@@ -4,107 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CD57EE368C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 940C8EE3692
 	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 14:48:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqXvT-00061M-4i; Thu, 12 Feb 2026 09:44:15 -0500
+	id 1vqXvQ-0005wY-AT; Thu, 12 Feb 2026 09:44:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vqXvD-0005df-Va
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 09:44:00 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1vqXux-0005Nn-RQ
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 09:43:48 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vqXvA-0006DI-R8
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 09:43:59 -0500
+ id 1vqXuf-00063s-0p
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 09:43:43 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770907436;
+ s=mimecast20190719; t=1770907404;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=F5C5V9mlyEYrUFXjVMKVGDiElN7K/7aJObqEFirrLrY=;
- b=OoeVw73P4FtSkO7Ocr5s3N7jffOplCltEqJrhNcXco7Q12Ibfg2DvVoduu2byEaQezBQKt
- h35UsTiPvsUNUb5Ypg4H8jgXGTKpFZLMIAI9DiH2fRo2v7AumAZ3DI+0BdE7OmC9nnD3MF
- cjmo1jLw9zALWna85EWo8g+rSRLqeoI=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=jeyKAy+Sk16BZBcLEdZFiLIsmU/3OCDrP03DNwve1oA=;
+ b=G8cyH3QGF4cGIS6hOF/3ugHPIFrjSvFbg2ZPgTmUsv7pjK5AKPzfb6jCriMJBIJiNqgDH5
+ TDAF2JB4WlVWsf22FKnSI/byT6qE8YI1mDyUJEbtW8Z+X4l1Ul98RMDR2YQ91cI/IL5I/5
+ LLXnXDofyX4+DTnqa5see1qy+7BvOV8=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-22-eNIfxoBIPUyySskhtKw3-w-1; Thu, 12 Feb 2026 09:43:55 -0500
-X-MC-Unique: eNIfxoBIPUyySskhtKw3-w-1
-X-Mimecast-MFC-AGG-ID: eNIfxoBIPUyySskhtKw3-w_1770907434
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-482d8e6e13aso58790365e9.3
- for <qemu-devel@nongnu.org>; Thu, 12 Feb 2026 06:43:54 -0800 (PST)
+ us-mta-491-b-qTDgxeMXK405QVihxjWg-1; Thu, 12 Feb 2026 09:43:22 -0500
+X-MC-Unique: b-qTDgxeMXK405QVihxjWg-1
+X-Mimecast-MFC-AGG-ID: b-qTDgxeMXK405QVihxjWg_1770907401
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-482eec44485so24801975e9.3
+ for <qemu-devel@nongnu.org>; Thu, 12 Feb 2026 06:43:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1770907433; x=1771512233; darn=nongnu.org;
+ d=redhat.com; s=google; t=1770907401; x=1771512201; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=F5C5V9mlyEYrUFXjVMKVGDiElN7K/7aJObqEFirrLrY=;
- b=fuLGuZ4d6sjrU+ZxN2RrUoOFjneAOFTyjBIOJikoE8LQkC9SylW1Fat3HAFWZaeWj/
- xpoNFHGpfL1MdDFOE/+mlFWQc6v2aVKeOaTCmWPHUf3oqa9eWZ1vA2KuCWWmuYG4pW/h
- YYV3xVy9Xbg8VMMSeGd1ac/3rYNXZ1qBWVEcgfwdAAPzUtekkct5jnEtpbzadCSQ8CVO
- UnnJcFfj3H2tnjm+bx/fmhnsBc5WPR8zcFe8G5hKcq5U1Mm3JqH4e+cXx4a2nn3iZudi
- draQ3DNC4Ia7fBlCA3RQsxO2MaAvZtL7HB09/9MZIN/co8/XnwawB6F/NcqwWwLy5tdF
- SfRg==
+ bh=jeyKAy+Sk16BZBcLEdZFiLIsmU/3OCDrP03DNwve1oA=;
+ b=brufwcFodL5mfg2u4lh/GjsxbzqSHABfVKKBQy9uJrZbvVEwYu32l1EFHCx26qqXTp
+ 9gR7kmdlUpd6h3mAbfdx1TuHL9bCr315bbb4UtAX/wFwhhmvU6taTLCcd1Uf4b371RlG
+ orLgU7MQ2XtArYpML4KYWx1XUxTqJIslYJIVMUXgTAaC9kkz9qeJCs0WvWj4nKlF/4Es
+ BwbZQ+RAw193xiyEdlE6/JHY3/mXJpn29CsD1TJMddnB+oL1DjgB2MV0aLTkneDFgHjh
+ Wvuzx42mvRP9NnZ4NDxiJzyIFgutnV2wzxPeT9zDW2/073VjEAlnMIkW+dD/tREGiKX3
+ +UQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770907433; x=1771512233;
+ d=1e100.net; s=20230601; t=1770907401; x=1771512201;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=F5C5V9mlyEYrUFXjVMKVGDiElN7K/7aJObqEFirrLrY=;
- b=oqaCMId94dNFwnUdg5KVm0pAQZPa5nWeeexI3ucb8dZVmXSmxnrrzC4H4JPB7sGE3p
- tcfgHE2GxWi3vzPJSDOKZ5snA1YjBfGx6Vx8pnhSGXTfeR6/1vMv7FgT+JNw8SGk+WWZ
- 7x4uG6ElfMHkU7ZKrDfwt5VBwEbpOl6qaD1tNIcv+iAilXlcjllVXaBdtTGUuXOz7//8
- k/brpxKbeFijBK4ouwZML8UXwh0ynuvjywgibbvo7zFQAUze7N182q5+tvdk7p7yCZzp
- 1QpVvtzpjdxBBobgL9hlQzXVlkFOzZt6f3mXoB7Nfpl1Ye8CXOqpW/tMv1ytgjdLdW3Q
- rykw==
-X-Gm-Message-State: AOJu0YzjHpzCRBue+hi40+8H9gfJcD6MgijNRe1JCbpGCCXL8brdowJH
- IfcT/5rOp1YYcJlmkNufovkEGIHGiWzrpkqBn7y/XuyLCsIbzZqOHahQE0743vZWNiVI0KDXVWN
- dW8Gcy8atOB1D2lDHrh43VWyzJT9KUkv1gaK+6kXL/Q7ycQJKKA4/qbSFr0tXD2ViiGdR1Hc/ZV
- x9Vb0uRuDSPaWLSY2OMe1zs13RzPYI0qEOVDzjXEyI
-X-Gm-Gg: AZuq6aLbQeDnxrJur1r54+OHmuJ9LI76iUhgMS+MFvCKND1BpINoBR2AeU7NU+CxT8p
- a3WiI8Vro9BitCc81EY0thSp+17cutRjIM2M5wGh0g4pfL2tNJZ7aHklR/qpNKLPE5RMsEIuqpK
- JAxc8b7Irv1qsPpPgAY8h0mp9s8zikDXF1KQKM4wf7gjnEYALe0vowVihHL+DtVlI0B5b/YpZ0R
- 8ZuGX4mL12RCOJmCdQuu1Sg7mJCoKukaquei/p/Xbv6rXeiIt9SATsBnq0s4UiFhURcVCcSJw+C
- Hnb5j+qtrjBQv++pgO7ibGBkOHn+mqHoeVFHc7i5AIs04FBcQv/qOcXO23/JqVLfX/tGqxZZZpD
- kjF6ru4G2FdGP6T0eX/fvZNo0dA401Tg8AiGXhrb+2QIjv6ixdj4nOFiwyASU9IJ6R15EF9IrNZ
- XSHkWW/R6MU5rfSG/Tcfw3get1/a+q5WAcWSJyuoRrpB8wBnCvFzk=
-X-Received: by 2002:a05:600c:a0c:b0:480:3a71:92b2 with SMTP id
- 5b1f17b1804b1-48365717d44mr41443555e9.26.1770907432943; 
- Thu, 12 Feb 2026 06:43:52 -0800 (PST)
-X-Received: by 2002:a05:600c:a0c:b0:480:3a71:92b2 with SMTP id
- 5b1f17b1804b1-48365717d44mr41442975e9.26.1770907432400; 
- Thu, 12 Feb 2026 06:43:52 -0800 (PST)
+ bh=jeyKAy+Sk16BZBcLEdZFiLIsmU/3OCDrP03DNwve1oA=;
+ b=XJ6GMsrWtaDo0uc7xA30Zl1sd117kUC8JRCdgynIF0bd8BHAl3+AnixUggL6OG08EY
+ zHH+MPLLdu9zlrg+ATpnyO/MbCMfKuKEwd1Og4NrXtLEajapIPJtZ1I502yVgLdCrNEC
+ KbxIJF4WS9eNkSwffGl3MYXsBBZ1l5U8DeUcg2VhuKnObMco6ys9Kp2uHbA/5TnwmnDn
+ 3Fopa+JtuEIAAAUtoK58/tkgJee6+q3MFa0aLF1tMCQih0C6H+rhUDQOTqsTnHg+iSAo
+ 7s4bHzgo0SidwmtOrvIyqexcxvOHBeKjJo1PLwlQ6GYqmb2Za5o8nn3hLRp9UOdiykDN
+ Yfjw==
+X-Gm-Message-State: AOJu0YxVDQH7FXQJb/xGupIpQ75I3PV2d+qx0i6AifsvFq3Bzv1OP8pn
+ brQ6Rof27+L5vA+zYXSM6DA4DGLWSDlE0BxBIDblL0LZB5fR4Y1tEprbqpbVE2HVahkN12Y6ih3
+ CsngmRBxq7Hykb8hcCu2S87cS+jgDePvWwGJHuxm/L0IcnOP+v6RHZMkiw8rltACxXAh7v7ntUT
+ HUvN9YBTUxi6l3AX3D/TYpB+aqP87yV5fItRQkpWbu
+X-Gm-Gg: AZuq6aKDDCHj/NqyGT9mGf3hLG5SHTVKsOQIajcdgN6Xlo9DEkfauXSJ2JvF740XMq9
+ LWiwgNeORUN+oke3OAI8urUn8EiK1K35N5Q8RDyQPbBJ6awGgoyFoFSW7/vWSsON3XWgnrZ3xZU
+ kE9s7ITL0W4nZtEA9vMQ2j10lnMG4XF7cHntWdDBLhdEwnuYTdfrAiL79/fbFGHlf92xv/qp0GZ
+ YyjrhgjZTyyDuKH6A6IK8QkPbB9yTo8V9i7AeHRUFwUpPBLvXXTw23U3AHPFe0NaEzB6wr6FNPc
+ rOP7CvoqA8jKOSFlRL2Q0tgzaVQ09YcMUz5q/vbvINZ8kc7y1Kg8SsJG10HgoUO3zyJOrHM5IvD
+ 5DOhHiB3bLbY187hkEgc1VD5QcRsK4ZcZ154jxKfqJUsPMkMU5UckrVCRLPRvndw9lcxbh4ero3
+ TVQsZoaKtnlz2Yc5qsyirr62MweuIufH02TyeooPECcUcOjkIddDw=
+X-Received: by 2002:a05:600c:5489:b0:47e:e076:c7a5 with SMTP id
+ 5b1f17b1804b1-483671146f6mr31599625e9.11.1770907400511; 
+ Thu, 12 Feb 2026 06:43:20 -0800 (PST)
+X-Received: by 2002:a05:600c:5489:b0:47e:e076:c7a5 with SMTP id
+ 5b1f17b1804b1-483671146f6mr31599085e9.11.1770907399918; 
+ Thu, 12 Feb 2026 06:43:19 -0800 (PST)
 Received: from [10.60.241.123] (nat-pool-mxp-t.redhat.com. [149.6.153.186])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4835d989165sm157738145e9.2.2026.02.12.06.43.50
+ 5b1f17b1804b1-4835ba3e4b5sm69694995e9.5.2026.02.12.06.43.18
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 12 Feb 2026 06:43:50 -0800 (PST)
+ Thu, 12 Feb 2026 06:43:18 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Aidan Khoury <aidan@aktech.ai>
-Subject: [PULL 29/41] i386/cpu: Fix incorrect initializer in Diamond Rapids
- definition
-Date: Thu, 12 Feb 2026 15:42:31 +0100
-Message-ID: <20260212144244.22579-30-pbonzini@redhat.com>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>, Igor Mammedov <imammedo@redhat.com>,
+ Thomas Huth <thuth@redhat.com>
+Subject: [PULL 15/41] hw/i386: Assume fw_cfg DMA is always enabled
+Date: Thu, 12 Feb 2026 15:42:17 +0100
+Message-ID: <20260212144244.22579-16-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260212144244.22579-1-pbonzini@redhat.com>
 References: <20260212144244.22579-1-pbonzini@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -122,44 +124,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Aidan Khoury <aidan@aktech.ai>
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-The new Diamond Rapids x86 cpu model definition that was added in 7a6dd8bde1
-has an unexpected comma in the `.features[FEAT_VMX_EXIT_CTLS]` subobject
-initializer, causing the prior initialization to be overridden.  For this
-reason `VMX_VM_EXIT_SAVE_DEBUG_CONTROLS | VMX_VM_EXIT_HOST_ADDR_SPACE_SIZE`
-is not included.
+Now all calls of x86 machines to fw_cfg_init_io_dma() pass DMA
+arguments, so the FWCfgState (FWCfgIoState) created by x86 machines
+enables DMA by default.
 
-Fix this by replacing the comma with the missing bitwise OR to properly
-combine all the flags into a single bitmask value.
+Although other callers of fw_cfg_init_io_dma() besides x86 also pass
+DMA arguments to create DMA-enabled FwCfgIoState, the "dma_enabled"
+property of FwCfgIoState cannot yet be removed, because Sun4u and Sun4v
+still create DMA-disabled FwCfgIoState (bypass fw_cfg_init_io_dma()) in
+sun4uv_init() (hw/sparc64/sun4u.c).
 
-Fixes: 7a6dd8bde159 ("i386/cpu: Add CPU model for Diamond Rapids")
-Signed-off-by: Aidan Khoury <aidan@aktech.ai>
+Maybe reusing fw_cfg_init_io_dma() for them would be a better choice, or
+adding fw_cfg_init_io_nodma(). However, before that, first simplify the
+handling of FwCfgState in x86.
+
+Considering that FwCfgIoState in x86 enables DMA by default, remove the
+handling for DMA-disabled cases and replace DMA checks with assertions
+to ensure that the default DMA-enabled setting is not broken.
+
+Then 'linuxboot.bin' isn't used anymore, and it will be removed in the
+next commit.
+
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+Acked-by: Igor Mammedov <imammedo@redhat.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Link: https://lore.kernel.org/r/20260108033051.777361-15-zhao1.liu@intel.com
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/cpu.c | 2 +-
- roms/seabios-hppa | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ hw/i386/fw_cfg.c     | 16 ++++++++--------
+ hw/i386/x86-common.c |  6 ++----
+ 2 files changed, 10 insertions(+), 12 deletions(-)
 
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 201c5d5c210..eaa01438c1b 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -5579,7 +5579,7 @@ static const X86CPUDefinition builtin_x86_defs[] = {
-             MSR_VMX_EPT_INVVPID_ALL_CONTEXT |
-             MSR_VMX_EPT_INVVPID_SINGLE_CONTEXT_NOGLOBALS,
-         .features[FEAT_VMX_EXIT_CTLS] =
--            VMX_VM_EXIT_SAVE_DEBUG_CONTROLS | VMX_VM_EXIT_HOST_ADDR_SPACE_SIZE,
-+            VMX_VM_EXIT_SAVE_DEBUG_CONTROLS | VMX_VM_EXIT_HOST_ADDR_SPACE_SIZE |
-             VMX_VM_EXIT_LOAD_IA32_PERF_GLOBAL_CTRL |
-             VMX_VM_EXIT_ACK_INTR_ON_EXIT | VMX_VM_EXIT_SAVE_IA32_PAT |
-             VMX_VM_EXIT_LOAD_IA32_PAT | VMX_VM_EXIT_SAVE_IA32_EFER |
-diff --git a/roms/seabios-hppa b/roms/seabios-hppa
-index b876684ec39..3391c580960 160000
---- a/roms/seabios-hppa
-+++ b/roms/seabios-hppa
-@@ -1 +1 @@
--Subproject commit b876684ec394856a8cc2523c57b3dc784dc119d4
-+Subproject commit 3391c580960febcb9fa8f686f9666adaa462c349
+diff --git a/hw/i386/fw_cfg.c b/hw/i386/fw_cfg.c
+index 5c0bcd5f8a9..5670e8553ea 100644
+--- a/hw/i386/fw_cfg.c
++++ b/hw/i386/fw_cfg.c
+@@ -215,18 +215,18 @@ void fw_cfg_build_feature_control(MachineState *ms, FWCfgState *fw_cfg)
+ #ifdef CONFIG_ACPI
+ void fw_cfg_add_acpi_dsdt(Aml *scope, FWCfgState *fw_cfg)
+ {
++    uint8_t io_size;
++    Aml *dev = aml_device("FWCF");
++    Aml *crs = aml_resource_template();
++
+     /*
+      * when using port i/o, the 8-bit data register *always* overlaps
+      * with half of the 16-bit control register. Hence, the total size
+-     * of the i/o region used is FW_CFG_CTL_SIZE; when using DMA, the
+-     * DMA control register is located at FW_CFG_DMA_IO_BASE + 4
++     * of the i/o region used is FW_CFG_CTL_SIZE; And the DMA control
++     * register is located at FW_CFG_DMA_IO_BASE + 4
+      */
+-    Object *obj = OBJECT(fw_cfg);
+-    uint8_t io_size = object_property_get_bool(obj, "dma_enabled", NULL) ?
+-        ROUND_UP(FW_CFG_CTL_SIZE, 4) + sizeof(dma_addr_t) :
+-        FW_CFG_CTL_SIZE;
+-    Aml *dev = aml_device("FWCF");
+-    Aml *crs = aml_resource_template();
++    assert(fw_cfg_dma_enabled(fw_cfg));
++    io_size = ROUND_UP(FW_CFG_CTL_SIZE, 4) + sizeof(dma_addr_t);
+ 
+     aml_append(dev, aml_name_decl("_HID", aml_string("QEMU0002")));
+ 
+diff --git a/hw/i386/x86-common.c b/hw/i386/x86-common.c
+index 192e91042f2..de4cd7650a4 100644
+--- a/hw/i386/x86-common.c
++++ b/hw/i386/x86-common.c
+@@ -1002,10 +1002,8 @@ void x86_load_linux(X86MachineState *x86ms,
+     }
+ 
+     option_rom[nb_option_roms].bootindex = 0;
+-    option_rom[nb_option_roms].name = "linuxboot.bin";
+-    if (fw_cfg_dma_enabled(fw_cfg)) {
+-        option_rom[nb_option_roms].name = "linuxboot_dma.bin";
+-    }
++    assert(fw_cfg_dma_enabled(fw_cfg));
++    option_rom[nb_option_roms].name = "linuxboot_dma.bin";
+     nb_option_roms++;
+ }
+ 
 -- 
 2.52.0
 
