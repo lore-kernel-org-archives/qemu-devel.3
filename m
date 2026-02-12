@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A99EEDF052
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 07:44:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6145EDF04C
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 07:48:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqRMw-00020y-5z; Thu, 12 Feb 2026 02:44:10 -0500
+	id 1vqRQy-0003JF-Jc; Thu, 12 Feb 2026 02:48:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <clement.mathieu--drif@eviden.com>)
- id 1vqRMt-00020T-QH
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 02:44:07 -0500
-Received: from smtppost.atos.net ([193.56.114.177] helo=smarthost4.atos.net)
+ id 1vqRQu-0003Hi-T6
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 02:48:17 -0500
+Received: from smtppost.atos.net ([193.56.114.177] helo=smarthost2.atos.net)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <clement.mathieu--drif@eviden.com>)
- id 1vqRMr-0005Fw-3x
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 02:44:07 -0500
+ id 1vqRQs-0005eU-Qe
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 02:48:16 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=eviden.com; i=@eviden.com; q=dns/txt; s=mail;
- t=1770882245; x=1802418245;
+ t=1770882495; x=1802418495;
  h=message-id:subject:from:to:cc:date:in-reply-to:
  references:content-transfer-encoding:mime-version;
- bh=s3rTPHBPJNdZpesE6SpmN08sfwQIa3T7hMDE9/8Sk3U=;
- b=dsJnrxE0grEMHO/u3sIaIe98KftW/c/CyE3bOwTL5TUbXl8DKU2cKATh
- NqLiwIx7X1j3jdo/7llA34gxGaHMaqkAqWIRe1DySsWeAWW54AnMYlOsQ
- bK1NE+OLbIfDr6EQXIRX2cp+fprDKD5mkKZPQp35b5Y6W4sgBQiE/GaZn
- hfpc3a7AUlRYydH+94I6AWhxTZTnKZDKRUvN1T7ed9rWnDMrpppbyY82O
- is6YpFYTqRCXZGPW6BabhdTlTV3UoEVRyivR5J49x93L4dM40e/t8Ira6
- n/GPl2XaRSifnMzkOtzz+GxJcXz/pubnUBTm8geWucOEO/YbZzY+PHEEn Q==;
-X-CSE-ConnectionGUID: i4cK12JUTyaVzge8q80Xpg==
-X-CSE-MsgGUID: 3kpPCJu2T1yTxK9KErN4cg==
-X-IronPort-AV: E=Sophos;i="6.21,286,1763420400"; d="scan'208";a="825722408"
-X-MGA-submission: =?us-ascii?q?MDH7N1a44JDa6CvSJ+huGrZr7Sf8EEGFbmWR+f?=
- =?us-ascii?q?VfvT+zMwbGlJbCAxMjPg8W0vcrqdizdcUkLDWNfkCnoIt9/Z3m+L1v6X?=
- =?us-ascii?q?+ducFUJ1aHRSogaiIyQ1I63+yqbjU5TiArgfJMzFSGdiFLraXo/AP3ma?=
- =?us-ascii?q?A5?=
+ bh=YZpqoQZYKUj1fzFZDV4/iwb1f0KnaO0vAyLx/fr3N4A=;
+ b=hnRAY07NsvUDSHgVtVGhRkf96+fsqTEkdAGg7yb+Y28yQL85oofx50iJ
+ bSPofpPh3hvC8fmAaoNDGXe5mzI7q7k2oM1LzeL+8NihzKFKqPbEF+Qfx
+ ZDXutLFtnXt2+9jtLJAjt1ljLFrKSAR2WYs7AF0L9/SRu03HYy3g89Vq1
+ Y139Ya8oL/fLVM2LDfBkKAf03Nfo2qydo7C/f/m2E14ByTYfQX2uLfMCO
+ D9JwZ02ym27iWAdMqw68CG7ZuKFeFg3wrS9dYexQM1XPRqFQ9JGsdoGTm
+ JLvZp2Bk2JyLo3AYTEwMOB8OXwYtMDCO5eoxSeUaXEG1wHeDIc7a3mJgp A==;
+X-CSE-ConnectionGUID: /jnEhS8eRQSm15sOZTykDg==
+X-CSE-MsgGUID: RqGu5D42Rqm7tUu+jjoufg==
+X-IronPort-AV: E=Sophos;i="6.21,286,1763420400"; d="scan'208";a="826654235"
+X-MGA-submission: =?us-ascii?q?MDFbfwqP3bZbX44YZINiWFw5xwsTK4kikQcf5o?=
+ =?us-ascii?q?OiMA4SphJlmCH8vRxz1ww6XRH5SUp3bloXKCRJ1cFZ+9OyaEJkaFl88K?=
+ =?us-ascii?q?vxwNCLM1A/auCOM0wu22SRlAfem8cs2FaH5cpPjc4zhJm2zWY6VE5dQH?=
+ =?us-ascii?q?OF?=
 Received: from smtp1.atos-infogerance.fr ([193.56.241.17])
- by smarthost4.atos.net with ESMTP/TLS/TLS_AES_256_GCM_SHA384;
- 12 Feb 2026 08:44:00 +0100
+ by smarthost2.atos.net with ESMTP/TLS/TLS_AES_256_GCM_SHA384;
+ 12 Feb 2026 08:48:14 +0100
 Received: from smtp-hub.atos-infogerance.fr (smtp-hub.atos-infogerance.fr
  [193.56.47.18])
- by smtp1.atos-infogerance.fr (8.15.2/8.15.2) with ESMTPS id 61C7hx5Y026715
+ by smtp1.atos-infogerance.fr (8.15.2/8.15.2) with ESMTPS id 61C7mDKL027029
  (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO);
- Thu, 12 Feb 2026 08:43:59 +0100
+ Thu, 12 Feb 2026 08:48:13 +0100
 Received: from rocky.hd2c.dom ([129.181.244.14])
  by smtp-hub.atos-infogerance.fr (envelope-from
  clement.mathieu--drif@eviden.com) (8.15.2/8.15.2) with ESMTP id
- 61C7hxJY038576; Thu, 12 Feb 2026 08:43:59 +0100
+ 61C7mDQ3039045; Thu, 12 Feb 2026 08:48:13 +0100
 Received: from openbmc (unknown [10.22.85.22])
- by rocky.hd2c.dom (Postfix) with ESMTP id 3A908256CA5;
- Thu, 12 Feb 2026 08:43:59 +0100 (CET)
+ by rocky.hd2c.dom (Postfix) with ESMTP id CE67D256CA5;
+ Thu, 12 Feb 2026 08:48:12 +0100 (CET)
 Received: from [127.0.0.1] (host.containers.internal [10.88.0.1])
- by openbmc (Postfix) with ESMTP id 745E98104811;
- Thu, 12 Feb 2026 07:43:58 +0000 (UTC)
-Message-ID: <669e9b9b6fe10f797d8d9571c7327c8a5617ae3f.camel@eviden.com>
-Subject: Re: [RFC PATCH 04/14] intel_iommu: Create the nested hwpt with
- IOMMU_HWPT_ALLOC_PASID flag
+ by openbmc (Postfix) with ESMTP id 191E18104811;
+ Thu, 12 Feb 2026 07:48:12 +0000 (UTC)
+Message-ID: <4ecdbe5bb0b3a945b3534e8535186280aa8f4f66.camel@eviden.com>
+Subject: Re: [RFC PATCH 05/14] intel_iommu: Change pasid property from bool
+ to uint8
 From: Clement Mathieu--Drif <clement.mathieu--drif@eviden.com>
 To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
 Cc: alex@shazbot.org, clg@redhat.com, eric.auger@redhat.com, mst@redhat.com,
  jasowang@redhat.com, jgg@nvidia.com, nicolinc@nvidia.com,
  skolothumtho@nvidia.com, joao.m.martins@oracle.com,
  kevin.tian@intel.com, yi.l.liu@intel.com, xudong.hao@intel.com
-Date: Thu, 12 Feb 2026 08:43:37 +0100
-In-Reply-To: <20260205031133.74357-5-zhenzhong.duan@intel.com>
+Date: Thu, 12 Feb 2026 08:47:51 +0100
+In-Reply-To: <20260205031133.74357-6-zhenzhong.duan@intel.com>
 References: <20260205031133.74357-1-zhenzhong.duan@intel.com>
- <20260205031133.74357-5-zhenzhong.duan@intel.com>
+ <20260205031133.74357-6-zhenzhong.duan@intel.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: base64
+Content-Transfer-Encoding: quoted-printable
 User-Agent: Evolution 3.58.2 (3.58.2-1.fc43) 
 MIME-Version: 1.0
 Received-SPF: pass client-ip=193.56.114.177;
- envelope-from=clement.mathieu--drif@eviden.com; helo=smarthost4.atos.net
+ envelope-from=clement.mathieu--drif@eviden.com; helo=smarthost2.atos.net
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -99,54 +99,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Ck9uIFdlZCwgMjAyNi0wMi0wNCBhdCAyMjoxMSAtMDUwMCwgWmhlbnpob25nIER1YW4gd3JvdGU6
-Cj4gV2hlbiBwYXNpZCBpcyBlbmFibGVkLCBhbnkgaHdwdCBhdHRhY2hlZCB0byBub24tUEFTSUQg
-b3IgUEFTSUQgc2hvdWxkIGJlICAKPiBJT01NVV9IV1BUX0FMTE9DX1BBU0lEIGZsYWdnZWQsIG9y
-IGVsc2UgYXR0YWNobWVudCBmYWlscy4KPiAKPiBTaWduZWQtb2ZmLWJ5OiBaaGVuemhvbmcgRHVh
-biA8W3poZW56aG9uZy5kdWFuQGludGVsLmNvbV0obWFpbHRvOnpoZW56aG9uZy5kdWFuQGludGVs
-LmNvbSk+ICAKPiAtLS0gIAo+IMKgaHcvaTM4Ni9pbnRlbF9pb21tdV9hY2NlbC5jIHwgMTAgKysr
-KysrLS0tLSAgCj4gwqAxIGZpbGUgY2hhbmdlZCwgNiBpbnNlcnRpb25zKCspLCA0IGRlbGV0aW9u
-cygtKQo+IAo+IGRpZmYgLS1naXQgYS9ody9pMzg2L2ludGVsX2lvbW11X2FjY2VsLmMgYi9ody9p
-Mzg2L2ludGVsX2lvbW11X2FjY2VsLmMgIAo+IGluZGV4IDY3ZDU0ODQ5ZjIuLmQ2MWNmZWMxZTYg
-MTAwNjQ0ICAKPiAtLS0gYS9ody9pMzg2L2ludGVsX2lvbW11X2FjY2VsLmMgIAo+ICsrKyBiL2h3
-L2kzODYvaW50ZWxfaW9tbXVfYWNjZWwuYyAgCj4gQEAgLTY5LDExICs2OSwxMyBAQCBWVERIb3N0
-SU9NTVVEZXZpY2UgKnZ0ZF9maW5kX2hpb2RfaW9tbXVmZChWVERBZGRyZXNzU3BhY2UgKmFzKSAg
-Cj4gwqDCoMKgwqAgcmV0dXJuIE5VTEw7ICAKPiDCoH0gIAo+IMKgICAKPiAtc3RhdGljIGJvb2wg
-dnRkX2NyZWF0ZV9mc19od3B0KEhvc3RJT01NVURldmljZUlPTU1VRkQgKmlkZXYsICAKPiArc3Rh
-dGljIGJvb2wgdnRkX2NyZWF0ZV9mc19od3B0KFZUREhvc3RJT01NVURldmljZSAqdnRkX2hpb2Qs
-ICAKCkRvZXMgdGhpcyBjaGFuZ2UgYnJlYWsgbmFtaW5nIGNvbnNpc3RlbmN5PwoKT3RoZXIgZnVu
-Y3Rpb25zIHVzZSB1c2UgaWRldiBmb3IgSG9zdElPTU1VRGV2aWNlSU9NTVVGRCBzdHJ1Y3R1cmVz
-Cgo+IMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgIFZURFBBU0lERW50cnkgKnBlLCB1aW50MzJfdCAqZnNfaHdwdF9pZCwgIAo+IMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgIEVycm9yICoqZXJycCkgIAo+IMKgeyAgCj4gK8KgwqDCoCBIb3N0SU9NTVVEZXZpY2VJT01N
-VUZEICppZGV2ID0gSE9TVF9JT01NVV9ERVZJQ0VfSU9NTVVGRCh2dGRfaGlvZC0+aGlvZCk7ICAK
-PiDCoMKgwqDCoCBzdHJ1Y3QgaW9tbXVfaHdwdF92dGRfczEgdnRkID0ge307ICAKPiArwqDCoMKg
-IHVpbnQzMl90IGZsYWdzID0gdnRkX2hpb2QtPmlvbW11X3N0YXRlLT5wYXNpZCA/IElPTU1VX0hX
-UFRfQUxMT0NfUEFTSUQgOiAwOyAgCj4gwqAgIAo+IMKgwqDCoMKgIHZ0ZC5mbGFncyA9IChWVERf
-U01fUEFTSURfRU5UUllfU1JFKHBlKSA/IElPTU1VX1ZURF9TMV9TUkUgOiAwKSB8ICAKPiDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCAoVlREX1NNX1BBU0lEX0VOVFJZX1dQRShwZSkg
-PyBJT01NVV9WVERfUzFfV1BFIDogMCkgfCAgCj4gQEAgLTgyLDggKzg0LDggQEAgc3RhdGljIGJv
-b2wgdnRkX2NyZWF0ZV9mc19od3B0KEhvc3RJT01NVURldmljZUlPTU1VRkQgKmlkZXYsICAKPiDC
-oMKgwqDCoCB2dGQucGd0YmxfYWRkciA9ICh1aW50NjRfdCl2dGRfcGVfZ2V0X2ZzcHRfYmFzZShw
-ZSk7ICAKPiDCoCAgCj4gwqDCoMKgwqAgcmV0dXJuIGlvbW11ZmRfYmFja2VuZF9hbGxvY19od3B0
-KGlkZXYtPmlvbW11ZmQsIGlkZXYtPmRldmlkLCBpZGV2LT5od3B0X2lkLCAgCj4gLcKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgIDAsIElPTU1VX0hXUFRfREFUQV9WVERfUzEsIHNpemVvZih2dGQpLCAgCj4gLcKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgICZ2dGQsIGZzX2h3cHRfaWQsIGVycnApOyAgCj4gK8KgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgIGZsYWdzLCBJT01NVV9IV1BUX0RBVEFfVlREX1MxLCAgCj4gK8KgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgIHNpemVvZih2dGQpLCAmdnRkLCBmc19od3B0X2lkLCBlcnJwKTsgIAo+IMKgfSAgCj4gwqAg
-IAo+IMKgc3RhdGljIHZvaWQgdnRkX2Rlc3Ryb3lfb2xkX2ZzX2h3cHQoSG9zdElPTU1VRGV2aWNl
-SU9NTVVGRCAqaWRldiwgIAo+IEBAIC0xMTYsNyArMTE4LDcgQEAgc3RhdGljIGJvb2wgdnRkX2Rl
-dmljZV9hdHRhY2hfaW9tbXVmZChWVERIb3N0SU9NTVVEZXZpY2UgKnZ0ZF9oaW9kLCAgCj4gwqDC
-oMKgwqAgfSAgCj4gwqAgIAo+IMKgwqDCoMKgIGlmICh2dGRfcGVfcGd0dF9pc19mc3QocGUpKSB7
-ICAKPiAtwqDCoMKgwqDCoMKgwqAgaWYgKCF2dGRfY3JlYXRlX2ZzX2h3cHQoaWRldiwgcGUsICZo
-d3B0X2lkLCBlcnJwKSkgeyAgCj4gK8KgwqDCoMKgwqDCoMKgIGlmICghdnRkX2NyZWF0ZV9mc19o
-d3B0KHZ0ZF9oaW9kLCBwZSwgJmh3cHRfaWQsIGVycnApKSB7ICAKPiDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqAgcmV0dXJuIGZhbHNlOyAgCj4gwqDCoMKgwqDCoMKgwqDCoCB9ICAKPiDCoMKgwqDC
-oCB9Cg==
 
+On Wed, 2026-02-04 at 22:11 -0500, Zhenzhong Duan wrote:
+> 'x-pasid-mode' is a bool property, we need an extra 'pss' property to =
+=20
+> represent PASID size supported. Because there is no any device in QEMU =
+=20
+> supporting pasid capability yet, no guest could use the pasid feature =
+=20
+> until now, 'x-pasid-mode' takes no effect.
+>=20
+> So instead of an extra 'pss' property we can use a single 'pasid' =20
+> property of uint8 type to represent if pasid is supported and the PASID =
+=20
+> bits size. A value of N > 0 means pasid is supported and N - 1 is the =
+=20
+> value in PSS field in ECAP register.
+>=20
+> Signed-off-by: Zhenzhong Duan <[zhenzhong.duan@intel.com](mailto:zhenzhon=
+g.duan@intel.com)> =20
+> --- =20
+> =C2=A0hw/i386/intel_iommu_internal.h | 1 - =20
+> =C2=A0include/hw/i386/intel_iommu.h=C2=A0 | 2 +- =20
+> =C2=A0hw/i386/intel_iommu.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0 | 4 ++-- =20
+> =C2=A03 files changed, 3 insertions(+), 4 deletions(-)
+>=20
+> diff --git a/hw/i386/intel_iommu_internal.h b/hw/i386/intel_iommu_interna=
+l.h =20
+> index a2ca79f925..71cb3b662e 100644 =20
+> --- a/hw/i386/intel_iommu_internal.h =20
+> +++ b/hw/i386/intel_iommu_internal.h =20
+> @@ -194,7 +194,6 @@ =20
+> =C2=A0#define VTD_ECAP_PRS=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 (1ULL << 29) =20
+> =C2=A0#define VTD_ECAP_MHMV=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 (15ULL << 20) =20
+> =C2=A0#define VTD_ECAP_SRS=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 (1ULL << 31) =20
+> -#define VTD_ECAP_PSS=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 (7ULL << 35) /* limit: MemTxAttrs::=
+pid */ =20
+> =C2=A0#define VTD_ECAP_PASID=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 (1ULL << 40) =20
+> =C2=A0#define VTD_ECAP_SMTS=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 (1ULL << 43) =20
+> =C2=A0#define VTD_ECAP_SSTS=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 (1ULL << 46) =20
+> diff --git a/include/hw/i386/intel_iommu.h b/include/hw/i386/intel_iommu.=
+h =20
+> index 6c61fd39c7..5e5779e460 100644 =20
+> --- a/include/hw/i386/intel_iommu.h =20
+> +++ b/include/hw/i386/intel_iommu.h =20
+> @@ -315,7 +315,7 @@ struct IntelIOMMUState { =20
+> =C2=A0=C2=A0=C2=A0=C2=A0 bool buggy_eim;=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 /* Force bu=
+ggy EIM unless eim=3Doff */ =20
+> =C2=A0=C2=A0=C2=A0=C2=A0 uint8_t aw_bits;=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 /* Host/IOVA a=
+ddress width (in bits) */ =20
+> =C2=A0=C2=A0=C2=A0=C2=A0 bool dma_drain;=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 /* Whether =
+DMA r/w draining enabled */ =20
+> -=C2=A0=C2=A0=C2=A0 bool pasid;=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0 /* Whether to support PASID */ =20
+> +=C2=A0=C2=A0=C2=A0 uint8_t pasid;=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 /* PASID su=
+pported in bits, 0 if not */ =20
+> =C2=A0=C2=A0=C2=A0=C2=A0 bool fs1gp;=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0 /* First Stage 1-GByte Page Support */ =20
+> =C2=A0 =20
+> =C2=A0=C2=A0=C2=A0=C2=A0 /* Transient Mapping, Reserved(0) since VTD spec=
+ revision 3.2 */ =20
+> diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c =20
+> index e8a6f50a5a..916eb0af5a 100644 =20
+> --- a/hw/i386/intel_iommu.c =20
+> +++ b/hw/i386/intel_iommu.c =20
+> @@ -4151,7 +4151,7 @@ static const Property vtd_properties[] =3D { =20
+> =C2=A0=C2=A0=C2=A0=C2=A0 DEFINE_PROP_BOOL("x-scalable-mode", IntelIOMMUSt=
+ate, scalable_mode, FALSE), =20
+> =C2=A0=C2=A0=C2=A0=C2=A0 DEFINE_PROP_BOOL("x-flts", IntelIOMMUState, fsts=
+, FALSE), =20
+> =C2=A0=C2=A0=C2=A0=C2=A0 DEFINE_PROP_BOOL("snoop-control", IntelIOMMUStat=
+e, snoop_control, false), =20
+> -=C2=A0=C2=A0=C2=A0 DEFINE_PROP_BOOL("x-pasid-mode", IntelIOMMUState, pas=
+id, false), =20
+> +=C2=A0=C2=A0=C2=A0 DEFINE_PROP_UINT8("pasid", IntelIOMMUState, pasid, 0)=
+, =20
+> =C2=A0=C2=A0=C2=A0=C2=A0 DEFINE_PROP_BOOL("dma-drain", IntelIOMMUState, d=
+ma_drain, true), =20
+> =C2=A0=C2=A0=C2=A0=C2=A0 DEFINE_PROP_BOOL("stale-tm", IntelIOMMUState, st=
+ale_tm, false), =20
+> =C2=A0=C2=A0=C2=A0=C2=A0 DEFINE_PROP_BOOL("fs1gp", IntelIOMMUState, fs1gp=
+, true), =20
+> @@ -4981,7 +4981,7 @@ static void vtd_cap_init(IntelIOMMUState *s) =20
+> =C2=A0=C2=A0=C2=A0=C2=A0 } =20
+> =C2=A0 =20
+> =C2=A0=C2=A0=C2=A0=C2=A0 if (s->pasid) { =20
+> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 s->ecap |=3D VTD_ECAP_PASID |=
+ VTD_ECAP_PSS; =20
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 s->ecap =3D VTD_ECAP_PASID | =
+deposit64(s->ecap, 35, 5, s->pasid - 1); =20
+
+I think this is a bit dangerous, the MemTxAttrs only allow up to 8 bits. =
+=20
+We have a comment next to the definition of VTD_ECAP_PSS about this.
+
+> =C2=A0=C2=A0=C2=A0=C2=A0 } =20
+> =C2=A0} =20
+> =C2=A0
 
