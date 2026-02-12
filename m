@@ -4,91 +4,173 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE39BEE36B0
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 17:42:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97FEDEE36AF
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Feb 2026 17:53:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqahG-00087l-Ow; Thu, 12 Feb 2026 12:41:46 -0500
+	id 1vqarO-00039t-MM; Thu, 12 Feb 2026 12:52:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <corey@minyard.net>) id 1vqahF-00086v-02
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 12:41:45 -0500
-Received: from mail-oa1-x2d.google.com ([2001:4860:4864:20::2d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <corey@minyard.net>) id 1vqahC-0002Xa-SR
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 12:41:44 -0500
-Received: by mail-oa1-x2d.google.com with SMTP id
- 586e51a60fabf-408199852c5so50857fac.0
- for <qemu-devel@nongnu.org>; Thu, 12 Feb 2026 09:41:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=minyard.net; s=google; t=1770918100; x=1771522900; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=yDTi7HslrZikJ1EUQBDRsEFUZ77CfEi18p0+zH03j1s=;
- b=BnXpnmYTmbTeKxsVMw+N2DHADtgb4qlDeb+wPgX09itJ2CAkIm0td9gc30AkIU5DCy
- eCM4eKFel5o0rlDfa1tdsN3w7nntFL/ApzxWeQIo3aOhmYqHO94SM6h73QxDkcXQDu2/
- XQh0rMQbIMBCS+hecKMixOL9A4XZjAzMIN45yskBSt9SuFPUtbjTz/Y8dtleR9K8tlrn
- bVDbbvWkg/Td9mmrIfwP2Lc21NGPa8p619wLonSnogU+xSJz8bOLVMQpt2gN2/LFHDox
- q3s1wF7fdCSu1iAinAXrwuFku9saDbiqwV2ucCFIR3yjGeJ4aSH4nBw2IOLssWoSCawg
- IT5g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770918100; x=1771522900;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=yDTi7HslrZikJ1EUQBDRsEFUZ77CfEi18p0+zH03j1s=;
- b=oenoGzuG9cWjNLMVlf4AGVVr5wM2x7FH+FpRnGLCNbZfpt5DyLjWC3qNLAhFP/AMlS
- Xgg/HIn91jAJ2z6DLGw4BqgJq+OH20Ni207gLn4/kWIro4z0Bqb3nBx3bn3pysrsJsy/
- pI2FOp2P1Kf6TvY/QcB2NwDZkRWOHj+lfUZtpk6rc+zwZG91UxtB9vvuyDjSyWFlXfJk
- QldbMfES0HAO6aeA7GnoEzArQ3sONQzDB5bVs3yEuKqJwn1xmi7g0+1NGyEHg0c1n2s/
- sD8Oj+f/rYsACbk73Vo3u/+8eQ5sEoihzMMxMPFSFZb0K7leDMJ4lllirYA79iX39fcm
- /nkg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVwkjkICwWYCLqOtF7examEitUjq66wOVHjt5K7sp/apsHObtH6sJ5q0nUTQM3pXwGyTjKw5jD3754U@nongnu.org
-X-Gm-Message-State: AOJu0YyZ3URHBsmou8zHED8cfSDPV6v+KK9q5GmtFNtH7HDEbfbXuNYV
- HgYGawPXxpObgHO5qzKnQwnYLKY346oyoFI6YY3kkH53jcEcVjqXekxncivGQrxNXBM=
-X-Gm-Gg: AZuq6aJ/V0q1FJQqg3GWIkfDpondWGH+l2Dn7IkcOfLjdtW7i8pnNh6qtX2ajSbw5QI
- LylGuyBt7LyIcv2b3qMsvvHTH+wCZ9Wrae89/GzWuvSXzdD2rj6V5l4fPY4T3nWNINAXbu0UHmh
- UfEhmOZmAVP2cyphUe54bYf0xwppYq13fHvo/dpvLNVCPHufp5LrkTjeiVIKaMzjcjP4mzhd0nn
- /0Nmb/bb7YNHoSzbPMsLUyOoAl1nuZNl8xiKV0GEcRvYpJ47GmrjgYUJxxTha6f7jQKKkqzIset
- UyMZcg4ftMxAbOClkzCR3mEbEcFNQobVK0/Fn+rZZBVE+GC9QnZqT4KZ0kc1oULEpH/EiFC5nZP
- P8PZ9g3Lb/IyIm0k0n8A5m81vhE6LhBi6ocUlwzNB4Vh+u94+wRRMSZ9M1MrqDF831Bp3dqXZi0
- J8IZ2NT+GgxEj2e8Djk8J3F/FI2U5aDClxay5MAANTOG8H80KNi5t25+xNOcBOUgBsgtHAEkudb
- InzPA==
-X-Received: by 2002:a05:6871:2ea8:b0:3d4:6fba:31ff with SMTP id
- 586e51a60fabf-40ec9fc322fmr1340835fac.1.1770918100191; 
- Thu, 12 Feb 2026 09:41:40 -0800 (PST)
-Received: from localhost ([2001:470:b8f6:1b:ac4f:9c7a:97e9:f745])
- by smtp.gmail.com with UTF8SMTPSA id
- 586e51a60fabf-40ee90ba325sm148055fac.8.2026.02.12.09.41.39
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 12 Feb 2026 09:41:39 -0800 (PST)
-From: Corey Minyard <corey@minyard.net>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Yunpeng Yang <yunpeng.yang@nutanix.com>,
- QEMU Developers <qemu-devel@nongnu.org>,
- Mark Cave-Ayland <mark.caveayland@nutanix.com>,
- Jonathan Davies <jond@nutanix.com>, Corey Minyard <corey@minyard.net>
-Subject: [PULL 2/2] hw/ipmi/ipmi_bmc_sim: Support setting fake LAN channel
- config
-Date: Thu, 12 Feb 2026 11:40:50 -0600
-Message-ID: <20260212174103.504520-3-corey@minyard.net>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260212174103.504520-1-corey@minyard.net>
-References: <20260212174103.504520-1-corey@minyard.net>
+ (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
+ id 1vqarN-00039W-JA; Thu, 12 Feb 2026 12:52:13 -0500
+Received: from mail-westus3azlp170120001.outbound.protection.outlook.com
+ ([2a01:111:f403:c107::1] helo=PH8PR06CU001.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
+ id 1vqarM-0005Qy-16; Thu, 12 Feb 2026 12:52:13 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=bRsVbhqVLAGSeDng2+J92arlMqr74+k5nH5nj2qMbpID8FPaU0aqD62l05wGibn+lDKy+oxa952sxO0zcUt2RRNcplZ8hpVKXJqz6ELp5BcWmJ3aFtTD0LIBnFu0b1HNcK98Sbbf6G0sLbkHtZq/nT5KJGOSWXLYa/6gjc2M24czslzlSRTSeCfraJObYIJhXgf0WZeYGkLUKOSZD2oK5WNFInZ7KMZNDWqRiQfyEDtuBXB6ZbFP4OujV8+Zx4CFGp3gHd2P/xQcooxxxBBBwh58h1kyai2OHKaYPv++4YRhrq19vktw7byf7ypUv8FVRNAKamA2qcr+Va7CTfPHGg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=H7J2vlIL3o3fW/pOt9cR67wYt6U/qk6524H0243Gj/g=;
+ b=zS68KVjc2nlbQNq2cnopaOzWM/VrF5336/ao2xUFaC2oFPag+BZbTzGyA3kxr8vVQg9V/c3PSwBcVGbRn3ET5sGvQBzKsC8zamtV6MBcHvFTedl+uhzV+bL0t18MGP3FUfS6xVsZsbloFIWBYikMl3mYh+6OC9aevnzUG14DG7phm/5sSPjJswsS/q2sLzcLP1SWuTBudOg0/okj4fbdoA9qUnShiozDCpa73RKLUGSWeWXoekzeJUg637u+NPEE5zNCBHehLY4iMdhvltY2c4YlCblat9+Sma0uOFmpKx7fOi58xP+yl0ST9L3Bd1+eA59SKWreJFcz8xbdGhJfew==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=H7J2vlIL3o3fW/pOt9cR67wYt6U/qk6524H0243Gj/g=;
+ b=HSzLoVSy2SsVYHZI5bFbaiDQXUSNYYUWG1o0ANiOqngLBGMImH76AnThTn8q0iYJSJy55Uwb9UT/UiXnNneB8N5ydo23tz5vpenYWtiKZOUG6y2bMAS4WZUZOXbxCeihed5EJLmXuz98n1um/wR7S3An9sece//U0INC4jESXBQre0z6/Q/j/Vbgu8VNvNjkEDOUvG160Qxox767Sh6plaQVir9sNSjZEH7lygO8rPuVhaXikNq5wmstxDpoxOS7fvIgduF6m/hXLkgLohDLtqCqdO5E+FzH7Dv3PyXVWh6DB4b7Ja8cZXR8mHvyMOlPoK1ZnklOQCFYmG3jQgxjDw==
+Received: from CH3PR12MB7548.namprd12.prod.outlook.com (2603:10b6:610:144::12)
+ by IA1PR12MB7733.namprd12.prod.outlook.com (2603:10b6:208:423::17)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9611.12; Thu, 12 Feb
+ 2026 17:52:06 +0000
+Received: from CH3PR12MB7548.namprd12.prod.outlook.com
+ ([fe80::b710:d6a1:ab16:76de]) by CH3PR12MB7548.namprd12.prod.outlook.com
+ ([fe80::b710:d6a1:ab16:76de%5]) with mapi id 15.20.9611.008; Thu, 12 Feb 2026
+ 17:52:06 +0000
+From: Shameer Kolothum Thodi <skolothumtho@nvidia.com>
+To: Nicolin Chen <nicolinc@nvidia.com>, Eric Auger <eric.auger@redhat.com>
+CC: "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>, "peter.maydell@linaro.org"
+ <peter.maydell@linaro.org>, "clg@redhat.com" <clg@redhat.com>,
+ "alex@shazbot.org" <alex@shazbot.org>, Nathan Chen <nathanc@nvidia.com>, Matt
+ Ochs <mochs@nvidia.com>, Jiandi An <jan@nvidia.com>, Jason Gunthorpe
+ <jgg@nvidia.com>, "jonathan.cameron@huawei.com"
+ <jonathan.cameron@huawei.com>, "zhangfei.gao@linaro.org"
+ <zhangfei.gao@linaro.org>, "zhenzhong.duan@intel.com"
+ <zhenzhong.duan@intel.com>, Krishnakant Jaju <kjaju@nvidia.com>
+Subject: RE: [PATCH v2 05/24] hw/arm/smmuv3-accel: Introduce CMDQV ops
+ interface
+Thread-Topic: [PATCH v2 05/24] hw/arm/smmuv3-accel: Introduce CMDQV ops
+ interface
+Thread-Index: AQHcl3fclJVY+/1eUEyrJW1egg4NVbV6yXyAgADQx/CAA5IqgIAAAY3ggAACz4CAAABycIAACieAgAAB29CAABeJAIAABOOAgAAGwCA=
+Date: Thu, 12 Feb 2026 17:52:06 +0000
+Message-ID: <CH3PR12MB75484A150D6DCD9D3C3C66F3AB60A@CH3PR12MB7548.namprd12.prod.outlook.com>
+References: <20260206144823.80655-6-skolothumtho@nvidia.com>
+ <aYo4n4N3dW1OLzTk@Asurada-Nvidia>
+ <CH3PR12MB75483C2BA4EDC24CA0F78A4CAB62A@CH3PR12MB7548.namprd12.prod.outlook.com>
+ <46d3b859-6e05-4c03-8e77-0aa76629f772@redhat.com>
+ <CH3PR12MB7548F06A2BB9C009FD2043F2AB60A@CH3PR12MB7548.namprd12.prod.outlook.com>
+ <dcde8f24-7523-4e2c-8ce6-4048d3ca9c7c@redhat.com>
+ <CH3PR12MB7548A87A5BC62C6D90501947AB60A@CH3PR12MB7548.namprd12.prod.outlook.com>
+ <ef13c99e-29b3-47cf-a090-811294e723e0@redhat.com>
+ <CH3PR12MB75481019FE5FEB62BCE96D58AB60A@CH3PR12MB7548.namprd12.prod.outlook.com>
+ <7af8156e-4874-4cab-b71a-c39c56aa59c0@redhat.com>
+ <aY4Mj5GvO8X+tO51@Asurada-Nvidia>
+In-Reply-To: <aY4Mj5GvO8X+tO51@Asurada-Nvidia>
+Accept-Language: en-US, en-GB
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: CH3PR12MB7548:EE_|IA1PR12MB7733:EE_
+x-ms-office365-filtering-correlation-id: b8747143-3c50-4d37-2922-08de6a5f6fe3
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0; ARA:13230040|376014|366016|1800799024|38070700021;
+x-microsoft-antispam-message-info: =?iso-8859-1?Q?F2+DObc6xyh0km6M1xW61xQvSOrclpY19l72PN3UESt5wQG5mvKSOtY4Ny?=
+ =?iso-8859-1?Q?gWhX2vDgeEmVzIPguOBrB91C9nJAzFQJ7gkBHtmorUXkcCVmFTTfa9sv4/?=
+ =?iso-8859-1?Q?ewWCaWx78qnLWW24B3lvXi8L00bnDp8I0PLuC2HM7rv+fy3RUixDrUYJh7?=
+ =?iso-8859-1?Q?DFT2QV67diVePtvem/fVzFWK0W4OYvyLqjAzOvax6mY6+7d9NVWKUiZsUt?=
+ =?iso-8859-1?Q?KXTqOV89PkkTYs8pZ4UOm8kGU5n/3JeTMVILnCeHaK+1U3i8+9+beff1JR?=
+ =?iso-8859-1?Q?MdLbXpJz+lXDvZ6mLHK/mRv/Rys4JMKqlb3LAhW6ucuVJ3HFdmkPD3D1RZ?=
+ =?iso-8859-1?Q?dnGBH6TTJM8R4kWGfkUj2JA0uOZ4v25e05iTZV1XBeo7CAPoZysnkJJviI?=
+ =?iso-8859-1?Q?7rV3lPYmF89thDkl+qotwOFCAm+s2NLmFjP/onj1kzUzOO9AIYSRzbGI+X?=
+ =?iso-8859-1?Q?fbxsoHUrdh6xu6fzHPi0+uR7k+A2F6+VjrQxRMe/IYytuKeATnS0nlPGtp?=
+ =?iso-8859-1?Q?s6f98JGHS03Dq+xanByiE8pmmQJycTxBfqp+7OdgG8kh8GjgfOUvjEiKMf?=
+ =?iso-8859-1?Q?dTAWSC+6cJHA0pppO146xdcNhAnQFiGtZ9JcpnW34pJtjbv5A9vDa/0hIr?=
+ =?iso-8859-1?Q?Dhx601lXiT7r2q0FdJPgFJ+whT0HMppCbh87VWEd6zr4g2DAaQQNHHF9pG?=
+ =?iso-8859-1?Q?Mkn44k0/1N8tRJ4aeb3lOz6rTe3VWhKuGKIjtr/At++4QyujhkoVRhtM/n?=
+ =?iso-8859-1?Q?xOLVKz9ljegFHHdcTFPplmrZefVKZ0LS1A7C/XESCiACulh5UgxliYxXDS?=
+ =?iso-8859-1?Q?NdxyL81KkyiSu+Wi8LA57zJl4BwXjSF16zeVFkI17+x+mNXHzzc0E69ryv?=
+ =?iso-8859-1?Q?QXJsRyWvFLDL3KH15SlD+ffGz3x5bGxUzRl3UA9PlG0U5C3rZSlr32Zq82?=
+ =?iso-8859-1?Q?Q9wTkachBNn8s8cfhqS75ICn++zNQosUq70GesgSZVeydr1wUzMzOA/2W7?=
+ =?iso-8859-1?Q?LTrLL7BFVzvZJC8bhdiJvqn7DnhTxUZxzTJTjNF46lLa/Mkyhg8WXWstBk?=
+ =?iso-8859-1?Q?1HufbdtCP+NaY1RHvNiT+pG9qHJxNQ6HP/EOapUebF4YLA1hH+ZFxr4wcR?=
+ =?iso-8859-1?Q?gOTnvVEnfmquxDNTKw0rzp91kLlLC1FaizLpa5P4MViInn62UTCM5pbT1k?=
+ =?iso-8859-1?Q?l837W3tUIlhk0JfjsrUWMI4hHUQoPRI8ADVdGUasp6ORlqJBoRAPPK6ldf?=
+ =?iso-8859-1?Q?cHS9+OznrTikogNXviD1+WUEhR+f97Ce3gdo7BWqIXrvB1HVg/O9xLbQh0?=
+ =?iso-8859-1?Q?E/FfW1hTYA8/SY8ZUt+zgfpPzIIm3nIjAadLMblUoFfZvcKH8g5xMgCRtm?=
+ =?iso-8859-1?Q?zLAo1aA4K7oeYxOyTfxVeWjmYfHqHa2icY+G0ZZwjGpMTHDSVkAOA22qRK?=
+ =?iso-8859-1?Q?Ian0o9DP66uUZIMS0Ma3moc6db/k39nNUruxB9r0OEzuM5cSRQpP9TrF97?=
+ =?iso-8859-1?Q?bg6dTeUtaMBu71pYM62NnEe10YjBEm5UgQEOSHFU/BWnVpSYZcSfWsbU49?=
+ =?iso-8859-1?Q?ntEG98TuNpCUmEhzJXyrVLCYz8wT9udpsY5xu9ElNMQmyMVbSscZUfXbpg?=
+ =?iso-8859-1?Q?aNEloQzegs2rDAgDmI9/l1tzrUJfzz/ZllmsSM1Of6d/q0wDhw5BWCoxxG?=
+ =?iso-8859-1?Q?YNWSrtrRdpNp1PxICQM=3D?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:CH3PR12MB7548.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(366016)(1800799024)(38070700021); DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?klekbkiP6OEzBwlItU0M29qdz05XHubzEjdrc3UyAKsUYrr3d7FMuGds3P?=
+ =?iso-8859-1?Q?ggRLqeNJRy37LbfryOviU68vRHIv1Lp9uMw2ZDh+k+RYHnFRDuWH9M9rnJ?=
+ =?iso-8859-1?Q?h+CnPiWKvpcY5qjiQkWvjRDJ5MVrB9SyokRH9FAKIFbkOUvXT+pcbfJvfm?=
+ =?iso-8859-1?Q?WmkwXwkPCrEvCYrD+pzso6nhAlrRPq5KrCPzJKA/DkscFBnFRO1fw57YJm?=
+ =?iso-8859-1?Q?NJOPDRmbpAf5Mph1tRuSpI1NtCUA8NVciQauByuzb+qgGs+Myn4REeT0ay?=
+ =?iso-8859-1?Q?73iICV49ObKV6KiygppYS/rIBs1zEbX7I/F5dt7SppQolvdyT0sMhBPHSm?=
+ =?iso-8859-1?Q?vaN9SwediLwC1EjV+0Lqztkl4aS//ALXXdH3B4yfM7DQ7o0EokOYJu4pCF?=
+ =?iso-8859-1?Q?KoJ5VAj9xKnACjIUc/XV+SxiJ4wqb+mY2ILJSNSJus2amjGuZVna+OfuiV?=
+ =?iso-8859-1?Q?YcTPwZXQLpqVK9MF/vWe0xFYiar4ZAGaKlMjHnEkT+EPzENK/dZvqSS861?=
+ =?iso-8859-1?Q?DxdOt4VHA3Y2SQGYDS5MCZRObCJlH/UuEPi+JSBK0SfcnMgkilxPHUVAuj?=
+ =?iso-8859-1?Q?X57dNeH+SfGRtUPsZsJkWdz4n1pzVFJFpIxQ7Fd6Iqfwd9kPw72ZMA5+Nv?=
+ =?iso-8859-1?Q?13yoDZHW12rHh54QxS05aGK5MTBjRIh0l+nrbr7Qh0LO3g1kka94jXcqGo?=
+ =?iso-8859-1?Q?+EJ9m0UvhmsYU+M9LayLNa3Jh13aBdx5vNf141LwLWKH13viO+hvvH/7B0?=
+ =?iso-8859-1?Q?/MdGNfTWZoxIFA+/5fTvT11P/Fml/EbSo0NsApHFjI1eN3nQd4JgtGGhOo?=
+ =?iso-8859-1?Q?ptouwyKGS56UEsihlgHMCrRRzpV0IBj0RgI6wZTIHiYLBtQtWq8QObkOow?=
+ =?iso-8859-1?Q?CxoYqM+QcBRFKkGS0xxIZMx+y/DwHRDZq/j1eE95DoCqugWCVnGrFjJA8p?=
+ =?iso-8859-1?Q?UJT9S1n2QDAuDFq4t11pt0TtzReVwX+CU20oiuYOhEIM2nb2B8N3FpYOwc?=
+ =?iso-8859-1?Q?Nkb7UfI8S26mDUUh8+ILgw+xQZjv2YzIFV5NHW3bo8s/JsF9vxBpsIVDaP?=
+ =?iso-8859-1?Q?Xr+fhW5q9P9BiQaFyt8noqioeruMlzA+Xq/+DKk8I3QuHIzfTvgxMjFqlv?=
+ =?iso-8859-1?Q?mrraUSTlQb4cVMwA22Ae5qhhv6M79pwL3FG4q6XRa/QTtWqIc6wkr4trXt?=
+ =?iso-8859-1?Q?gizk7YNfju510l8WrW1II+itJP3yiz2/ZikUiOxFxGInnf3A6l8fyRAtMc?=
+ =?iso-8859-1?Q?6leFnk7qcVFlmfAruebFLwOATLvaXW7Rfk/w3/ZNsCCItljuMzzFl/C0yW?=
+ =?iso-8859-1?Q?oGQm+tOrA+zxCf7ZX42KqbgmtQzd9DjRXBkc+bfaM0/17Kn24ATTfKDOjy?=
+ =?iso-8859-1?Q?K6ydsT4Eil4bXLNgsZXZe6UhZ29f+fRm6nQHb9GqiJ+/qb59gLdoO2jAku?=
+ =?iso-8859-1?Q?5vKiK+44v0nFX0eTMFiRbO8QHkbqlT/1yK07+xE8FQ94prQ0PWTbh6gWqZ?=
+ =?iso-8859-1?Q?1RJfk4NFlRdybJ4zBuHc1iOanEHu4+nS9LOIGu/oDuWzLA9Fs+6rhxWgo/?=
+ =?iso-8859-1?Q?qJUjf2pomf4PQt8RMfN1mmXdAOsDOMFQHhnMx6Yt/ekXnn1zcmB8HFdfRd?=
+ =?iso-8859-1?Q?GXU2jKB0LEAeXF9ADdH7AXHAI/AQnYDp+7YhML9DYPDhrERIQbL4zhzdsR?=
+ =?iso-8859-1?Q?7+H8GeVsKvzPZUVa7kQwnFHGBdOixHLf6d4qTZfMlZ3jAlLDsppogTnQDM?=
+ =?iso-8859-1?Q?ZKwiakXl76s7NYh1nNTI+DTAJMbUzjmsrSo1rf2/jkReeK2uUxHabfKXX3?=
+ =?iso-8859-1?Q?5duP1nulxw=3D=3D?=
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2001:4860:4864:20::2d;
- envelope-from=corey@minyard.net; helo=mail-oa1-x2d.google.com
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB7548.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: b8747143-3c50-4d37-2922-08de6a5f6fe3
+X-MS-Exchange-CrossTenant-originalarrivaltime: 12 Feb 2026 17:52:06.3725 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: zdHT+rRVqdoXBVWghNVRe7F47sfQaf8D8W1YKmWkL3bQ3HR0/497NzwKcHYDZpkVN+uRjCPY/Z1Q84yoC3On8Q==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR12MB7733
+Received-SPF: permerror client-ip=2a01:111:f403:c107::1;
+ envelope-from=skolothumtho@nvidia.com;
+ helo=PH8PR06CU001.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,332 +186,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Yunpeng Yang <yunpeng.yang@nutanix.com>
 
-The "Set LAN Configuration Parameters" IPMI command is added to the
-`ipmi_bmc_sim` device to support dynamically setting fake LAN channel
-configurations. With the fake LAN channel enabled, inside the guest OS,
-tools such as `ipmitool` can be used to modify the configurations.
 
-Signed-off-by: Yunpeng Yang <yunpeng.yang@nutanix.com>
-Message-ID: <20260105155648.1037077-3-yunpeng.yang@nutanix.com>
-Signed-off-by: Corey Minyard <corey@minyard.net>
----
- hw/ipmi/ipmi_bmc_sim.c      | 110 +++++++++++++++++++++++++++
- tests/qtest/ipmi-kcs-test.c | 143 ++++++++++++++++++++++++++++++++++++
- 2 files changed, 253 insertions(+)
+> -----Original Message-----
+> From: Nicolin Chen <nicolinc@nvidia.com>
+> Sent: 12 February 2026 17:23
+> To: Eric Auger <eric.auger@redhat.com>
+> Cc: Shameer Kolothum Thodi <skolothumtho@nvidia.com>; qemu-
+> arm@nongnu.org; qemu-devel@nongnu.org; peter.maydell@linaro.org;
+> clg@redhat.com; alex@shazbot.org; Nathan Chen <nathanc@nvidia.com>;
+> Matt Ochs <mochs@nvidia.com>; Jiandi An <jan@nvidia.com>; Jason
+> Gunthorpe <jgg@nvidia.com>; jonathan.cameron@huawei.com;
+> zhangfei.gao@linaro.org; zhenzhong.duan@intel.com; Krishnakant Jaju
+> <kjaju@nvidia.com>
+> Subject: Re: [PATCH v2 05/24] hw/arm/smmuv3-accel: Introduce CMDQV ops
+> interface
+>=20
+> On Thu, Feb 12, 2026 at 06:05:58PM +0100, Eric Auger wrote:
+> > >>> The vCMDQ path does not replace the normal accelerated SMMU
+> init/reset.
+> > >>> Instead, it requires additional init/reset steps on top of the regu=
+lar accel
+> flow.
+> > >>>
+> > >>> if (accel)
+> > >>>     accel_init();
+> > >>>
+> > >>> if (accel && cmdqv)
+> > >>>     cmdqv_init();
+> > >>>
+> > >>> So the vCMDQ logic is an extension of the accelerated mode, not a
+> fallback
+> > >>> or alternative implementation.
+>=20
+> Yes. And I think it makes more sense by moving cmdqv_init() into
+> accel_init(), completely transparent to the common smmuv3 module
+> maybe?
 
-diff --git a/hw/ipmi/ipmi_bmc_sim.c b/hw/ipmi/ipmi_bmc_sim.c
-index d88aa22b72..012e2ee4fe 100644
---- a/hw/ipmi/ipmi_bmc_sim.c
-+++ b/hw/ipmi/ipmi_bmc_sim.c
-@@ -106,6 +106,7 @@
- 
- #define IPMI_NETFN_TRANSPORT          0x0c
- 
-+#define IPMI_CMD_SET_LAN_CONFIG           0x01
- #define IPMI_CMD_GET_LAN_CONFIG           0x02
- 
- 
-@@ -300,6 +301,7 @@ struct IPMIBmcSim {
-     ((ibs)->lan.channel != 0 && (ibs)->lan.channel == (c))
- 
- #define IPMI_BMC_LAN_CFG_CC_PARAM_NOT_SUPPORTED    0x80
-+#define IPMI_BMC_LAN_CFG_CC_PARAM_READONLY         0x82
- 
- #define IPMI_BMC_LAN_CFG_PARAM_SET_IN_PROGRESS        0x00
- #define IPMI_BMC_LAN_CFG_PARAM_AUTH_TYPE_SUPPORT      0x01
-@@ -2126,6 +2128,113 @@ static inline bool is_ipv4_netmask_valid(const void *buf)
-     return netmask != 0 && clo32(netmask) + ctz32(netmask) == 32;
- }
- 
-+/*
-+ * Request data (from cmd[2] on):
-+ * bytes   meaning
-+ *    1    [bits 3:0] channel number
-+ *    2    parameter selector
-+ * [3:N]   configuration parameter data (from cmd[4] on)
-+ */
-+static void set_lan_config(IPMIBmcSim *ibs,
-+                           uint8_t *cmd, unsigned int cmd_len,
-+                           RspBuffer *rsp)
-+{
-+    uint8_t channel;
-+    uint8_t *param;  /* pointer to configuration parameter data */
-+    unsigned int param_len;
-+
-+    if (ibs->lan.channel == 0) {
-+        /* LAN channel disabled. Fail as if this command were not defined. */
-+        rsp_buffer_set_error(rsp, IPMI_CC_INVALID_CMD);
-+        return;
-+    }
-+    if (cmd_len < 5) {
-+        rsp_buffer_set_error(rsp, IPMI_CC_REQUEST_DATA_LENGTH_INVALID);
-+        return;
-+    }
-+    channel = cmd[2] & 0xf;
-+    param = cmd + 4;
-+    param_len = cmd_len - 4;
-+
-+    if (!IPMI_BMC_CHANNEL_IS_LAN(ibs, channel)) {
-+        rsp_buffer_set_error(rsp, IPMI_CC_INVALID_DATA_FIELD);
-+        return;
-+    }
-+
-+    switch (cmd[3]) {
-+    case IPMI_BMC_LAN_CFG_PARAM_IP_ADDR:
-+        if (param_len < NBYTES_IP) {
-+            rsp_buffer_set_error(rsp, IPMI_CC_REQUEST_DATA_LENGTH_INVALID);
-+            return;
-+        }
-+        memcpy(ibs->lan.ipaddr, param, NBYTES_IP);
-+        break;
-+
-+    case IPMI_BMC_LAN_CFG_PARAM_IP_ADDR_SOURCE:
-+        if (param_len < 1) {
-+            rsp_buffer_set_error(rsp, IPMI_CC_REQUEST_DATA_LENGTH_INVALID);
-+            return;
-+        }
-+        if (!IPMI_BMC_LAN_CFG_IS_VALID_IP_SOURCE(*param)) {
-+            rsp_buffer_set_error(rsp, IPMI_CC_INVALID_DATA_FIELD);
-+            return;
-+        }
-+        ibs->lan.ipsrc = *param;
-+        break;
-+
-+    case IPMI_BMC_LAN_CFG_PARAM_MAC_ADDR:
-+        if (param_len < NBYTES_MAC) {
-+            rsp_buffer_set_error(rsp, IPMI_CC_REQUEST_DATA_LENGTH_INVALID);
-+            return;
-+        }
-+        memcpy(ibs->lan.macaddr.a, param, NBYTES_MAC);
-+        break;
-+
-+    case IPMI_BMC_LAN_CFG_PARAM_SUBNET_MASK:
-+        if (param_len < NBYTES_IP) {
-+            rsp_buffer_set_error(rsp, IPMI_CC_REQUEST_DATA_LENGTH_INVALID);
-+            return;
-+        }
-+        if (!is_ipv4_netmask_valid(param)) {
-+            rsp_buffer_set_error(rsp, IPMI_CC_INVALID_DATA_FIELD);
-+            return;
-+        }
-+        memcpy(ibs->lan.netmask, param, NBYTES_IP);
-+        break;
-+
-+    case IPMI_BMC_LAN_CFG_PARAM_DEFAULT_GW_IP_ADDR:
-+        if (param_len < NBYTES_IP) {
-+            rsp_buffer_set_error(rsp, IPMI_CC_REQUEST_DATA_LENGTH_INVALID);
-+            return;
-+        }
-+        memcpy(ibs->lan.defgw_ipaddr, param, NBYTES_IP);
-+        break;
-+
-+    case IPMI_BMC_LAN_CFG_PARAM_DEFAULT_GW_MAC_ADDR:
-+        if (param_len < NBYTES_MAC) {
-+            rsp_buffer_set_error(rsp, IPMI_CC_REQUEST_DATA_LENGTH_INVALID);
-+            return;
-+        }
-+        memcpy(ibs->lan.defgw_macaddr.a, param, NBYTES_MAC);
-+        break;
-+
-+    case IPMI_BMC_LAN_CFG_PARAM_SET_IN_PROGRESS:
-+    case IPMI_BMC_LAN_CFG_PARAM_AUTH_TYPE_SUPPORT:
-+    case IPMI_BMC_LAN_CFG_PARAM_AUTH_TYPE_ENABLES:
-+    case IPMI_BMC_LAN_CFG_PARAM_IPV4_HDR_PARAMS:
-+    case IPMI_BMC_LAN_CFG_PARAM_BACKUP_GW_ADDR:
-+    case IPMI_BMC_LAN_CFG_PARAM_BACKUP_GW_MAC_ADDR:
-+    case IPMI_BMC_LAN_CFG_PARAM_COMMUNITY_STRING:
-+    case IPMI_BMC_LAN_CFG_PARAM_NUM_DESTINATIONS:
-+        rsp_buffer_set_error(rsp, IPMI_BMC_LAN_CFG_CC_PARAM_READONLY);
-+        return;
-+
-+    default:
-+        rsp_buffer_set_error(rsp, IPMI_BMC_LAN_CFG_CC_PARAM_NOT_SUPPORTED);
-+        return;
-+    }
-+}
-+
- /*
-  * Request data (from cmd[2] to cmd[5] inclusive):
-  * bytes   meaning
-@@ -2324,6 +2433,7 @@ static const IPMINetfn storage_netfn = {
- };
- 
- static const IPMICmdHandler transport_cmds[] = {
-+    [IPMI_CMD_SET_LAN_CONFIG] = { set_lan_config },
-     [IPMI_CMD_GET_LAN_CONFIG] = { get_lan_config },
- };
- static const IPMINetfn transport_netfn = {
-diff --git a/tests/qtest/ipmi-kcs-test.c b/tests/qtest/ipmi-kcs-test.c
-index 3186c6ad64..9bab0d84ad 100644
---- a/tests/qtest/ipmi-kcs-test.c
-+++ b/tests/qtest/ipmi-kcs-test.c
-@@ -262,6 +262,144 @@ static void test_enable_irq(void)
-     kcs_ints_enabled = 1;
- }
- 
-+
-+static uint8_t get_channel_access_cmd[] = { 0x18, 0x41, 0x01, 0x40 };
-+static uint8_t get_channel_access_rsp[] = { 0x1c, 0x41, 0x00, 0x3a, 0x04 };
-+
-+/*
-+ * Get channel access
-+ */
-+static void test_kcs_channel_access(void)
-+{
-+    uint8_t rsp[20];
-+    unsigned int rsplen = sizeof(rsp);
-+
-+    kcs_cmd(get_channel_access_cmd, sizeof(get_channel_access_cmd),
-+            rsp, &rsplen);
-+    g_assert(rsplen == sizeof(get_channel_access_rsp));
-+    g_assert(memcmp(get_channel_access_rsp, rsp, rsplen) == 0);
-+}
-+
-+
-+static uint8_t get_channel_info_cmd[] = { 0x18, 0x42, 0x01 };
-+static uint8_t get_channel_info_rsp[] = { 0x1c, 0x42, 0x00, 0x01, 0x04, 0x01,
-+                                          0x00, 0xf2, 0x1b, 0x00, 0x00, 0x00 };
-+
-+/*
-+ * Get channel info
-+ */
-+static void test_kcs_channel_info(void)
-+{
-+    uint8_t rsp[20];
-+    unsigned int rsplen = sizeof(rsp);
-+
-+    kcs_cmd(get_channel_info_cmd, sizeof(get_channel_info_cmd), rsp, &rsplen);
-+    g_assert(rsplen == sizeof(get_channel_info_rsp));
-+    g_assert(memcmp(get_channel_info_rsp, rsp, rsplen) == 0);
-+}
-+
-+
-+/* get ip address (specified in cmdline): 10.0.0.2 */
-+static uint8_t get_ipaddr_cmd[] = { 0x30, 0x02, 0x01, 0x03, 0x00, 0x00 };
-+static uint8_t get_ipaddr_rsp[] = { 0x34, 0x02, 0x00, 0x11,
-+                                    0x0a, 0x00, 0x00, 0x02 };
-+
-+/*
-+ * Get LAN configurations
-+ */
-+static void test_kcs_lan_get(void)
-+{
-+    uint8_t rsp[20];
-+    unsigned int rsplen = sizeof(rsp);
-+
-+    kcs_cmd(get_ipaddr_cmd, sizeof(get_ipaddr_cmd), rsp, &rsplen);
-+    g_assert(rsplen == sizeof(get_ipaddr_rsp));
-+    g_assert(memcmp(get_ipaddr_rsp, rsp, rsplen) == 0);
-+}
-+
-+
-+/* set/get ip address: 192.0.2.2 */
-+static uint8_t lan_set_ipaddr_cmd[] = { 0x30, 0x01, 0x01, 0x03,
-+                                        0xc0, 0x00, 0x02, 0x02 };
-+static uint8_t lan_set_ipaddr_rsp[] = { 0x34, 0x01, 0x00 };
-+static uint8_t lan_get_ipaddr_cmd[] = { 0x30, 0x02, 0x01, 0x03, 0x00, 0x00 };
-+static uint8_t lan_get_ipaddr_rsp[] = { 0x34, 0x02, 0x00, 0x11,
-+                                        0xc0, 0x00, 0x02, 0x02 };
-+/* set ip address source: static */
-+static uint8_t lan_set_ipsrc_cmd[] = { 0x30, 0x01, 0x01, 0x04, 0x01 };
-+static uint8_t lan_set_ipsrc_rsp[] = { 0x34, 0x01, 0x00 };
-+
-+/* set/get subnet mask: 255.255.255.0 */
-+static uint8_t lan_set_netmask_cmd[] = { 0x30, 0x01, 0x01, 0x06,
-+                                         0xff, 0xff, 0xff, 0x00 };
-+static uint8_t lan_set_netmask_rsp[] = { 0x34, 0x01, 0x00 };
-+static uint8_t lan_get_netmask_cmd[] = { 0x30, 0x02, 0x01, 0x06, 0x00, 0x00 };
-+static uint8_t lan_get_netmask_rsp[] = { 0x34, 0x02, 0x00, 0x11,
-+                                         0xff, 0xff, 0xff, 0x00 };
-+
-+/* set/get default gateway ip address: 192.0.2.1 */
-+static uint8_t lan_set_defgw_ipaddr_cmd[] = { 0x30, 0x01, 0x01, 0x0c,
-+                                              0xc0, 0x00, 0x02, 0x01 };
-+static uint8_t lan_set_defgw_ipaddr_rsp[] = { 0x34, 0x01, 0x00 };
-+static uint8_t lan_get_defgw_ipaddr_cmd[] = { 0x30, 0x02, 0x01, 0x0c,
-+                                              0x00, 0x00 };
-+static uint8_t lan_get_defgw_ipaddr_rsp[] = { 0x34, 0x02, 0x00, 0x11,
-+                                              0xc0, 0x00, 0x02, 0x01 };
-+
-+/*
-+ * Set and then get LAN configurations
-+ */
-+static void test_kcs_lan_set_get(void)
-+{
-+    uint8_t rsp[20];
-+    unsigned int rsplen = 0;
-+
-+    /* set ip address */
-+    rsplen = sizeof(rsp);
-+    kcs_cmd(lan_set_ipaddr_cmd, sizeof(lan_set_ipaddr_cmd), rsp, &rsplen);
-+    g_assert(rsplen == sizeof(lan_set_ipaddr_rsp));
-+    g_assert(memcmp(lan_set_ipaddr_rsp, rsp, rsplen) == 0);
-+
-+    /* get ip address */
-+    rsplen = sizeof(rsp);
-+    kcs_cmd(lan_get_ipaddr_cmd, sizeof(lan_get_ipaddr_cmd), rsp, &rsplen);
-+    g_assert(rsplen == sizeof(lan_get_ipaddr_rsp));
-+    g_assert(memcmp(lan_get_ipaddr_rsp, rsp, rsplen) == 0);
-+
-+    /* set ip address source */
-+    rsplen = sizeof(rsp);
-+    kcs_cmd(lan_set_ipsrc_cmd, sizeof(lan_set_ipsrc_cmd), rsp, &rsplen);
-+    g_assert(rsplen == sizeof(lan_set_ipsrc_rsp));
-+    g_assert(memcmp(lan_set_ipsrc_rsp, rsp, rsplen) == 0);
-+
-+    /* set subnet mask */
-+    rsplen = sizeof(rsp);
-+    kcs_cmd(lan_set_netmask_cmd, sizeof(lan_set_netmask_cmd), rsp, &rsplen);
-+    g_assert(rsplen == sizeof(lan_set_netmask_rsp));
-+    g_assert(memcmp(lan_set_netmask_rsp, rsp, rsplen) == 0);
-+
-+    /* get subnet mask */
-+    rsplen = sizeof(rsp);
-+    kcs_cmd(lan_get_netmask_cmd, sizeof(lan_get_netmask_cmd), rsp, &rsplen);
-+    g_assert(rsplen == sizeof(lan_get_netmask_rsp));
-+    g_assert(memcmp(lan_get_netmask_rsp, rsp, rsplen) == 0);
-+
-+    /* set default gateway ip address */
-+    rsplen = sizeof(rsp);
-+    kcs_cmd(lan_set_defgw_ipaddr_cmd, sizeof(lan_set_defgw_ipaddr_cmd),
-+            rsp, &rsplen);
-+    g_assert(rsplen == sizeof(lan_set_defgw_ipaddr_rsp));
-+    g_assert(memcmp(lan_set_defgw_ipaddr_rsp, rsp, rsplen) == 0);
-+
-+    /* get default gateway ip address */
-+    rsplen = sizeof(rsp);
-+    kcs_cmd(lan_get_defgw_ipaddr_cmd, sizeof(lan_get_defgw_ipaddr_cmd),
-+            rsp, &rsplen);
-+    g_assert(rsplen == sizeof(lan_get_defgw_ipaddr_rsp));
-+    g_assert(memcmp(lan_get_defgw_ipaddr_rsp, rsp, rsplen) == 0);
-+}
-+
-+
- int main(int argc, char **argv)
- {
-     char *cmdline;
-@@ -271,6 +409,7 @@ int main(int argc, char **argv)
-     g_test_init(&argc, &argv, NULL);
- 
-     cmdline = g_strdup_printf("-device ipmi-bmc-sim,id=bmc0"
-+                                       ",lan.channel=1,lan.ipaddr=10.0.0.2"
-                               " -device isa-ipmi-kcs,bmc=bmc0");
-     qtest_start(cmdline);
-     g_free(cmdline);
-@@ -280,6 +419,10 @@ int main(int argc, char **argv)
-     qtest_add_func("/ipmi/local/kcs_enable_irq", test_enable_irq);
-     qtest_add_func("/ipmi/local/kcs_base_irq", test_kcs_base);
-     qtest_add_func("/ipmi/local/kcs_abort_irq", test_kcs_abort);
-+    qtest_add_func("/ipmi/local/kcs_channel_access", test_kcs_channel_access);
-+    qtest_add_func("/ipmi/local/kcs_channel_info", test_kcs_channel_info);
-+    qtest_add_func("/ipmi/local/kcs_lan_get", test_kcs_lan_get);
-+    qtest_add_func("/ipmi/local/kcs_lan_set_get", test_kcs_lan_set_get);
-     ret = g_test_run();
-     qtest_quit(global_qtest);
- 
--- 
-2.43.0
+I have attempted that, IIRC. There is a catch there that the pci iommu_ops
+needs to be set earlier(before smu_common realize) and we can only call
+cmdqv_init() after the base  SMMUv3 sysbus_init_mmio() and smmu_init_irq().=
+=20
 
+I need to take another if we can make that work or not.
+
+>=20
+> > >>> I think the later patches in the series make this clearer.
+> > >>> Please let me know if you still feel the ops necessary.
+> > >> do we have any way to introspect from the kernel what cmdq type we
+> have,
+> > >> so that we could have a cmdqv option with ON/OFF/AUTO value instead
+> of
+> > >> duplication cmdq option for each vendor?
+> > > Looking at it again, I think we can, by calling IOMMU_GET_HW_INFO wit=
+h
+> all supported
+> > > CMDQ types and check which one succeeds.
+> >
+> > then I think we should endeavour doing that. Regarding the ops, if you
+> > feel that reset/init can be managed through a simple add-on code I am
+> > fine with it. Maybe C=E9dric or Peter will have another opinion though =
+;-)
+>=20
+> I like that on/off/auto depending on the IOMMU_GET_HW_INFO return.
+
+Yeah. We need to do this.
+
+Thanks,
+Shameer
 
