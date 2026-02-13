@@ -4,84 +4,149 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60D05EDF15B
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Feb 2026 14:33:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6ECCEDF16E
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Feb 2026 14:44:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vquDv-0003iq-Lz; Fri, 13 Feb 2026 09:32:47 -0500
+	id 1vquOT-0006Fh-J3; Fri, 13 Feb 2026 09:43:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <axboe@kernel.dk>) id 1vquDj-0003gW-H9
- for qemu-devel@nongnu.org; Fri, 13 Feb 2026 09:32:35 -0500
-Received: from mail-ot1-x335.google.com ([2607:f8b0:4864:20::335])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <axboe@kernel.dk>) id 1vquDg-0006bX-2x
- for qemu-devel@nongnu.org; Fri, 13 Feb 2026 09:32:35 -0500
-Received: by mail-ot1-x335.google.com with SMTP id
- 46e09a7af769-7d18c654458so392564a34.3
- for <qemu-devel@nongnu.org>; Fri, 13 Feb 2026 06:32:31 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alxndr@bu.edu>) id 1vquOR-0006Ey-Ko
+ for qemu-devel@nongnu.org; Fri, 13 Feb 2026 09:43:40 -0500
+Received: from esa16.hc2706-39.iphmx.com ([216.71.140.205])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <alxndr@bu.edu>) id 1vquON-0008A6-8h
+ for qemu-devel@nongnu.org; Fri, 13 Feb 2026 09:43:39 -0500
+X-CSE-ConnectionGUID: PSMFr80ZTAeM/xRCN9DEdg==
+X-CSE-MsgGUID: P8zuKbNtTvmidxIwcB92nQ==
+Authentication-Results: ob1.hc2706-39.iphmx.com;
+ dkim=pass (signature verified) header.i=@bu.edu;
+ spf=SoftFail smtp.mailfrom=alxndr@bu.edu;
+ dmarc=pass (p=quarantine dis=none) d=bu.edu
+X-IronPort-RemoteIP: 209.85.222.69
+X-IronPort-MID: 110790868
+X-IronPort-Reputation: None
+X-IronPort-Listener: OutgoingMail
+X-IronPort-SenderGroup: RELAY_GSUITE
+X-IronPort-MailFlowPolicy: $RELAYED
+IronPort-Data: A9a23:yDqBlq6ND8NGjdP6QUtxvAxRtG/GchMFZxGqfqrLsTDasY5as4F+v
+ mJOXGGGa/+IM2ajet10bo6xpxxQu5Hcxt9nTwZorXw3Eysa+MHIO4+lIxarNUt+DCFioGGLT
+ Sk6QoOdRCzhZiaE/n9BCpC48z8kk/3OHuOiYAL9EngZbRd+Tys8gg5Ulec8g4p56fC0GArIs
+ t7pyyHlEAbNNwVcbCROsspvlDs15K6s4GlB5QRnDRx2lAS2e0c9Xcp3yZ6ZciOQrrl8RoaSW
+ +vFxbelyWLVlz9FIs+liLvybnoRSbfUOwWU4lIOM0R1qkEfzsCa+v9T2Ms0MC+7uR3Q9zxC4
+ IwlWaiLdOscFvakdNLx8fVvO3oW0aVuoNcrKJUk2CCZ5xSun3DEmp2CAKyqVGGxFyke7Wxmr
+ JQlxD4xgh+rv9mT7qjrEttQr8kGa9nRF6VOllxswmSMZRomacirr6Ti4NZZ2HItj5kLE6iPI
+ cUebjVrYVLLZBgn1lU/Uspv2rf1wCOlKXsG+Tp5poJui4TX5AV1wL7hKvLfZ5qHSdg9ckOw/
+ zueoDWhUk9KXDCZ4QLV4G+PjMnToT3+WY4CNaKz3K8whmTGkwT/DzVTDzNXu8KRk0O7RpdTJ
+ lIZ/gIoqq498lHtScPyNyBUu1aBtx8YHsdZSqg0tlDLxa3T7AKUQGMDS1atdeAbiSP/fhRzv
+ nehlc6vCDBy2IB5g1rBnltIhVte4RQoEFI=
+IronPort-HdrOrdr: A9a23:nmPMpqhelGh4wNXG/6sjtRuw0XBQXtkji2hC6mlwRA09TyX4ra
+ CTdZEguCMc5wxxZJhNo6HmBED4ewK5yXct2/hyAV7AZniEhILLFu9fBOLZqlWNJ8SZzJ866U
+ 4JScND4bbLfD1HZKjBjzVQQ+xL/OW6
+X-Talos-CUID: 9a23:yqx4tGCuOKs3/3z6ExFc0WAOSpgXTlTQ6TDAGWSeWEpERLLAHA==
+X-Talos-MUID: 9a23:E3H1IAljoakg14lkCBRAdnpaZNV1wK6IFHwTlJQKq+ibPgYhYTGk2WE=
+Received: from mail-ua1-f69.google.com ([209.85.222.69])
+ by ob1.hc2706-39.iphmx.com with ESMTP/TLS/TLS_AES_256_GCM_SHA384;
+ 13 Feb 2026 09:43:29 -0500
+Received: by mail-ua1-f69.google.com with SMTP id
+ a1e0cc1a2514c-94ac387f2f7so5916562241.1
+ for <qemu-devel@nongnu.org>; Fri, 13 Feb 2026 06:43:29 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770993808; cv=none;
+ d=google.com; s=arc-20240605;
+ b=GokUblYHP1p2TgNEmRhJWuofwknglIZKkR2fysuNyaqrRsyJEK5qAEjZGORjSoLo4s
+ KHPAs+s+oePU7z1elMF7AzuLBcxuuvDPnnE5l/Mv+lh8NDPg9BIiiIWpUm9P/dcv7Npz
+ uuWtmiHVY/05CeLWwm5xEZu6/lRyrebrWrZYM/gG2tjQjckb9EN67LWX/ynwT7IAv2o1
+ IKaazBmfitKPKttl7TFFIDUSvWgZqJynZ2s8zPL+G0DnFbnci1TQhvn1RygxUDiz1hmp
+ ZWUbxZ7m9jRZVu9GtydcQyMLEVm8ODOA6jcOOdtbh2vNspdZWiO3qlCAfsC/HZ/Z8vnW
+ fQQw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:in-reply-to
+ :mime-version:references:from:dkim-signature;
+ bh=tqR3WBcbY2vKrgGkPQ+0BOV5WgCQfupO7zAPofXrdJE=;
+ fh=8Cczb83X8JMJP/WaFei4HwemATeKsczlaGX9mrfU4T4=;
+ b=AinTIz7ECF43sA8b8yf0B/SYNtqYSbVih2dZq5qhaFq4PAkB7ifIeGjv65eULPZJps
+ ArGKcN9dG5XH6HpWDYfvG4z9muQ520Y0TmnZBFvqgRnIhOQ0UOjXtqrbtXWpMFem4io5
+ GUlx4YQ34swSRNdWtNaqZDgRyaLV4QIJuPk0aTaeO6Fg3MqZYr6VxptzQh2tft6HEAcW
+ +UHMbRcUKFbrnobqkC0LZ01EDfCX1L0m5Y/IgnCUXMxvAq9Mh2jfsHMr8CY7Du80rA/1
+ wpCnjllrmInNs85OpyVtQziGa50sbXvsk3u0MF1eCDR70/ivp8INAMr9ULiHJI7IxnGN
+ iVJQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=kernel-dk.20230601.gappssmtp.com; s=20230601; t=1770993151; x=1771597951;
- darn=nongnu.org; 
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=hqBOMzl28DKqqn/5ITt53IZh3OcJ6ZgKOh+W57xkrRk=;
- b=rb/06dDg0/hiXFvkdOelzBvz49TIY9xnimWOU2EtOwkML7YbqYyvrUWuVn/TAXnvuh
- WdiQep9Mpggf00OqULtW7G9rXGcpgb9U5PU4TDpZiTEKjiFXCn5VRq3vkYA/2temCkQ+
- PtGoDB+AplNsgbrtCF49sC8nXNeMDUDUbLjRjlMVnaHYI3PulOaRD/fjHH5sAj8BkZ5f
- 4+HQ5Nb4e2ohNr17l9qBEPEu2DWCuqym24EGXF6/w6i7JOd1/Fd8nYfW4a88l06dKtsA
- RpxyqG1FRmfpadnJQmruJhCmpxlGwYHopZQhLWhKpe5QETydxJ786OPxlVZpAhFzhns6
- zo2A==
+ d=bu.edu; s=s1gsbu; t=1770993808; x=1771598608; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:in-reply-to
+ :mime-version:references:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=tqR3WBcbY2vKrgGkPQ+0BOV5WgCQfupO7zAPofXrdJE=;
+ b=iA56ovsGGAEz1mkx/rS1PaC2Qu2yNNKhEN2yt9miX9cgebowoIKkApNOnMiNBqdrrF
+ bAah5T2MsDlJvJ3ODYwmHTpruGUySfy7W8tMMrREK6F9VVtSDqo+CgjFJkHeVejMKABu
+ uYebcOAucgsCqIBJ41J36OE3Tzz/Dfyd3jZBTTUcnwAl793X3oIZqQaYzGnIfmYdcWwQ
+ EDK2suxu6NzxFIdB+ZAqcfElR+zNXycRL5+/1x2JdZFN9D7/2vbe9J/EAfXpDMb/O9Q1
+ 7rEdzbQSqKOMqbQRCkXhIq+kLhDJ07SGP4ARxLlWNSYysBOoh3ZvTb/+p7rFaVmvCbVc
+ 9Vqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770993151; x=1771597951;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=hqBOMzl28DKqqn/5ITt53IZh3OcJ6ZgKOh+W57xkrRk=;
- b=BKRzbQ+aBvAPZGlTaEvzFqJdkLVBbj6H8peTuB4cKma/eZ0gaDtBN6ipUb6oE+d4Up
- Zz39n+CInM3uNb4AYk2dM7M7PmhFcbALZKIG96fj3bhtLHd/pah5yM0TPp0zaRviAtS2
- oyDmduHfbxY5vCSuP1Wn1PoTlrWsI3Jr/C2qa5lNwupppxoefzqa6R3stj2b0nM+wtoA
- Azk8QgWccQe5aSgYauHDKdkSiqnrnKEqdANEkG1DrVkMTVO1YGu5bV6D4NYdmtl4soQo
- IgHLEE34VwoApQ2J63WJMqrktLaodjfGbSt3P3mXwAyAQxY8/+KLVIynQYxEA2fFq6js
- DzeQ==
-X-Gm-Message-State: AOJu0YzGL016uq6FFc1djJqnWy4LS03R7fsuroj73qf+ws/Jp6SUpMox
- gN88qLAn+nTOi9i+xMnoYrbWuHUBdY7FLWuKMXZWhpdehGQFCqrOAPlyBJD+aOo5vtk=
-X-Gm-Gg: AZuq6aKzsNYvrSGM6eraHxBwCzMKDedT4jFr8Comr7+ZAK1gQgOLCiGiQ9aFfPJPHkp
- ocGcgUfc7ZFAEeUfnt9q98KPNkPwswaLVOP97UQYKrUD/jGBSAtC0MfkRO0vyBBROSK1QXOzeSL
- QHax5wg2so9YFHxIwfLrleTXG7FYYPNthtE+1Egbj+Le4Vc1uSr6ECVstxbpYuDx9ItfG9l1q7u
- lU+PImqImUMqTRsIdDaK3gk5hOEseIt2jlPfGowd5d6pXq30Ls2wyOkeH6S+5ICtNG7bKNc9O6z
- PUuw7qaSxxkIdQPtpU2knN4Fc1F0+EXaQTUV8PBrPgPxAkjNdbOa93OEiRITUjS2O4IgAla7KN0
- C6tTibM6NeYdgUQr5q6JNi1wMrTu5hN5NF6CM6Ei8JJEnVIkMpMtrrVd/bsLA6hNwHTNh4eU5WS
- PMb+fjxnOWNq00rQnpSI0xR79wf/WGlngTVUyvwN/aX8VI5AbrGVD7yPCtkIg5LMc+Hh7s
-X-Received: by 2002:a05:6830:648a:b0:7c7:6d15:6ac2 with SMTP id
- 46e09a7af769-7d4c4a0b773mr1094809a34.3.1770993150635; 
- Fri, 13 Feb 2026 06:32:30 -0800 (PST)
-Received: from m2max ([198.8.77.157]) by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-7d4a733f033sm6564377a34.0.2026.02.13.06.32.29
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 13 Feb 2026 06:32:29 -0800 (PST)
-From: Jens Axboe <axboe@kernel.dk>
-To: qemu-block@nongnu.org
-Cc: qemu-devel@nongnu.org, fam@euphon.net, stefanha@redhat.com,
- Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 1/2] fdmon-io_uring: notify main loop when SQEs are queued
-Date: Fri, 13 Feb 2026 07:26:36 -0700
-Message-ID: <20260213143225.161043-2-axboe@kernel.dk>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20260213143225.161043-1-axboe@kernel.dk>
-References: <20260213143225.161043-1-axboe@kernel.dk>
+ d=1e100.net; s=20230601; t=1770993808; x=1771598608;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:in-reply-to
+ :mime-version:references:from:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=tqR3WBcbY2vKrgGkPQ+0BOV5WgCQfupO7zAPofXrdJE=;
+ b=iDQxfI+3h5r0Gw7OnsDw40MkdHGoudARsuVLzW5STYwXifiBHw0u6zdsOX4z1poAl0
+ 0E9wtR1FhxASUGC3EFQUfgZwFdfEi65doYT79BQH792BMvKetH2xmMZHwuoh7UPu540q
+ EBE1aEnzCWDWSDvhKyHZ4lB0j2nXAc0VsWB/2zmuNbxTjlCP0o4JRo+4ChgS4v/tCGM8
+ 1pYONI5+IUB23mHDzzvGehZcZKmy2Kb3LBB4+OnMYuNQsnC+aPWHIVibDtPciteje9VC
+ eBb9CaJdgzo/tk8uirR6a/vtO/rJx6laGaWoZKWbciSaA+fUv2YRL3PPKxTZCY7UqD2N
+ TsoQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVVPb0BEwE0xff9jEMHYH2UFZkohU6MCw5CU8aoE8QDMksZeCFm9EYFyYsl/4xG7Tyt0kLZJlIg8ajS@nongnu.org
+X-Gm-Message-State: AOJu0YyHPPkKnFecF9t1Wx4fRqula+HfDertd3JAQUXHhIPW+u3uoQgy
+ 0NlbGtSZ4A5ifGLjRS0cCWFNc1IMant9SMvbgN/1b0Y34hlvz8POf8P9xU7CgFKKQBy1XpRwu8x
+ Ed1TRKx3Ity2dmssNFZAf9aCKWz7AO4Jf5nGnj5zCxf7tuXwbWurG9SKYYEZla3Xu9h0L2YxuXX
+ gQwKr5eAiUg98Be73xxzg/px39Gv5Ewe+X9M3+LqCq3nME
+X-Gm-Gg: AZuq6aJsueqiLPh9DGEb9WgaeJBZBqxZ2nv/kRqibIbv/tE0p5TRzH91TqCvl9h/iwF
+ swJwwaebYZFMKuilv4O+4+pHgRtXqTCClpPn1KdqZ0aKkV/+0Q1oesYDTNf3n6/UW5PYo0rHHyX
+ Uxi4wAxdhgimDCKGO0XXWI0WD4mS5dRqgbnIJqUqCULa2DtEKcRUN39NTZcY5IasQGox2rQ6f9i
+ CAQTLVFIe/ikhrVbu2h0xYymXaXEr0WJLZdDQ0CPgyDle9NMggY+3NKr/Jo7uL0UIw=
+X-Received: by 2002:a05:6102:26ce:b0:5db:fddb:3155 with SMTP id
+ ada2fe7eead31-5fe1ace40fcmr738749137.17.1770993808692; 
+ Fri, 13 Feb 2026 06:43:28 -0800 (PST)
+X-Received: by 2002:a05:6102:26ce:b0:5db:fddb:3155 with SMTP id
+ ada2fe7eead31-5fe1ace40fcmr738731137.17.1770993808264; Fri, 13 Feb 2026
+ 06:43:28 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 13 Feb 2026 08:43:26 -0600
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 13 Feb 2026 08:43:26 -0600
+From: Alexander Bulekov <alxndr@bu.edu>
+References: <20221107221236.47841-1-philmd@linaro.org>
+ <20221107221236.47841-2-philmd@linaro.org>
+ <7d7bc83f-d14b-43b5-a637-517a51266a19@tls.msk.ru>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::335;
- envelope-from=axboe@kernel.dk; helo=mail-ot1-x335.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
+In-Reply-To: <7d7bc83f-d14b-43b5-a637-517a51266a19@tls.msk.ru>
+Date: Fri, 13 Feb 2026 08:43:26 -0600
+X-Gm-Features: AZwV_Qia8-XHU12EgzlW9FHWr9itz5y3BxNwYR-tXg99znIatiXu9Wpecue6P84
+Message-ID: <CAHUE=o_fL=Ni2xGgWbBs-ucamRSubHavLX928C7TRMPi=N94ag@mail.gmail.com>
+Subject: Re: [PATCH-for-7.2 1/2] hw/sd/sdhci: Do not set Buf Wr Ena before
+ writing block (CVE-2022-3872)
+To: Michael Tokarev <mjt@tls.msk.ru>
+Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ qemu-devel@nongnu.org, Sai Pavan Boddu <saipava@xilinx.com>, 
+ Peter Maydell <peter.maydell@linaro.org>, qemu-block@nongnu.org, 
+ Bin Meng <bin.meng@windriver.com>, Mauro Matteo Cascella <mcascell@redhat.com>,
+ Andrey Smirnov <andrew.smirnov@gmail.com>, RivenDell <XRivenDell@outlook.com>, 
+ Siqi Chen <coc.cyqh@gmail.com>, ningqiang <ningqiang1@huawei.com>, 
+ qemu-stable <qemu-stable@nongnu.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=216.71.140.205; envelope-from=alxndr@bu.edu;
+ helo=esa16.hc2706-39.iphmx.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.999, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,106 +162,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When a vCPU thread handles MMIO (holding BQL), aio_co_enter() runs the
-block I/O coroutine inline on the vCPU thread because
-qemu_get_current_aio_context() returns the main AioContext when BQL is
-held. The coroutine calls luring_co_submit() which queues an SQE via
-fdmon_io_uring_add_sqe(), but the actual io_uring_submit() only happens
-in gsource_prepare() on the main loop thread.
+On 260213 1205, Michael Tokarev wrote:
+> Ping once again?
+>
 
-Since the coroutine ran inline (not via aio_co_schedule()), no BH is
-scheduled and aio_notify() is never called. The main loop remains asleep
-in ppoll() with up to a 499ms timeout, leaving the SQE unsubmitted until
-the next timer fires.
+FWIW, none of the reproducers in the thread work for me anymore and
+OSS-Fuzz claims the issue was fixed sometime in April 2024:
+https://issues.oss-fuzz.com/issues/42524205#comment5
+-Alex
 
-Fix this by calling aio_notify() after queuing the SQE. This wakes the
-main loop via the eventfd so it can run gsource_prepare() and submit the
-pending SQE promptly.
-
-This is a generic fix that benefits all devices using aio=io_uring.
-Without it, AHCI/SATA devices see MUCH worse I/O latency since they use
-MMIO (not ioeventfd like virtio) and have no other mechanism to wake the
-main loop after queuing block I/O.
-
-This is usually a bit hard to detect, as it also relies on the ppoll
-loop not waking up for other activity, and micro benchmarks tend not to
-see it because they don't have any real processing time. With a
-synthetic test case that has a few usleep() to simulate processing of
-read data, it's very noticeable. The below example reads 128MB with
-O_DIRECT in 128KB chunks in batches of 16, and has a 1ms delay before
-each batch submit, and a 1ms delay after processing each completion.
-Running it on /dev/sda yields:
-
-time sudo ./iotest /dev/sda
-
-________________________________________________________
-Executed in   25.76 secs      fish           external
-   usr time    6.19 millis  783.00 micros    5.41 millis
-   sys time   12.43 millis  642.00 micros   11.79 millis
-
-while on a virtio-blk or NVMe device we get:
-
-time sudo ./iotest /dev/vdb
-
-________________________________________________________
-Executed in    1.25 secs      fish           external
-   usr time    1.40 millis    0.30 millis    1.10 millis
-   sys time   17.61 millis    1.43 millis   16.18 millis
-
-time sudo ./iotest /dev/nvme0n1
-
-________________________________________________________
-Executed in    1.26 secs      fish           external
-   usr time    6.11 millis    0.52 millis    5.59 millis
-   sys time   13.94 millis    1.50 millis   12.43 millis
-
-where the latter are consistent. If we run the same test but keep the
-socket for the ssh connection active by having activity there, then
-the sda test looks as follows:
-
-time sudo ./iotest /dev/sda
-
-________________________________________________________
-Executed in    1.23 secs      fish           external
-   usr time    2.70 millis   39.00 micros    2.66 millis
-   sys time    4.97 millis  977.00 micros    3.99 millis
-
-as now the ppoll loop is woken all the time anyway.
-
-After this fix, on an idle system:
-
-time sudo ./iotest /dev/sda
-
-________________________________________________________
-Executed in    1.30 secs      fish           external
-   usr time    2.14 millis    0.14 millis    2.00 millis
-   sys time   16.93 millis    1.16 millis   15.76 millis
-
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
----
- util/fdmon-io_uring.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
-
-diff --git a/util/fdmon-io_uring.c b/util/fdmon-io_uring.c
-index d0b56127c670..96392876b490 100644
---- a/util/fdmon-io_uring.c
-+++ b/util/fdmon-io_uring.c
-@@ -181,6 +181,14 @@ static void fdmon_io_uring_add_sqe(AioContext *ctx,
- 
-     trace_fdmon_io_uring_add_sqe(ctx, opaque, sqe->opcode, sqe->fd, sqe->off,
-                                  cqe_handler);
-+
-+    /*
-+     * Wake the main loop if it is sleeping in ppoll().  When a vCPU thread
-+     * runs a coroutine inline (holding BQL), it queues SQEs here but the
-+     * actual io_uring_submit() only happens in gsource_prepare().  Without
-+     * this notify, ppoll() can sleep up to 499ms before submitting.
-+     */
-+    aio_notify(ctx);
- }
- 
- static void fdmon_special_cqe_handler(CqeHandler *cqe_handler)
--- 
-2.51.0
-
+> Thanks,
+>
+> /mjt
+>
+> On 11/8/22 01:12, Philippe Mathieu-Daud=C3=A9 wrote:
+> > When sdhci_write_block_to_card() is called to transfer data from
+> > the FIFO to the SD bus, the data is already present in the buffer
+> > and we have to consume it directly.
+> >
+> > See the description of the 'Buffer Write Enable' bit from the
+> > 'Present State' register (prnsts::SDHC_SPACE_AVAILABLE) in Table
+> > 2.14 from the SDHCI spec v2:
+> >
+> >    Buffer Write Enable
+> >
+> >    This status is used for non-DMA write transfers.
+> >
+> >    The Host Controller can implement multiple buffers to transfer
+> >    data efficiently. This read only flag indicates if space is
+> >    available for write data. If this bit is 1, data can be written
+> >    to the buffer. A change of this bit from 1 to 0 occurs when all
+> >    the block data is written to the buffer. A change of this bit
+> >    from 0 to 1 occurs when top of block data can be written to the
+> >    buffer and generates the Buffer Write Ready interrupt.
+> >
+> > In our case, we do not want to overwrite the buffer, so we want
+> > this bit to be 0, then set it to 1 once the data is written onto
+> > the bus.
+> >
+> > This is probably a copy/paste error from commit d7dfca0807
+> > ("hw/sdhci: introduce standard SD host controller").
+> >
+> > Reproducer:
+> > https://lore.kernel.org/qemu-devel/CAA8xKjXrmS0fkr28AKvNNpyAtM0y0B+5Fic=
+hpsrhD+mUgnuyKg@mail.gmail.com/
+> >
+> > Fixes: CVE-2022-3872
+> > Reported-by: RivenDell <XRivenDell@outlook.com>
+> > Reported-by: Siqi Chen <coc.cyqh@gmail.com>
+> > Reported-by: ningqiang <ningqiang1@huawei.com>
+> > Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> > Tested-by: Mauro Matteo Cascella <mcascell@redhat.com>
+> > ---
+> >   hw/sd/sdhci.c | 2 +-
+> >   1 file changed, 1 insertion(+), 1 deletion(-)
+> >
+> > diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
+> > index 306070c872..f230e7475f 100644
+> > --- a/hw/sd/sdhci.c
+> > +++ b/hw/sd/sdhci.c
+> > @@ -954,7 +954,7 @@ static void sdhci_data_transfer(void *opaque)
+> >               sdhci_read_block_from_card(s);
+> >           } else {
+> >               s->prnsts |=3D SDHC_DOING_WRITE | SDHC_DAT_LINE_ACTIVE |
+> > -                    SDHC_SPACE_AVAILABLE | SDHC_DATA_INHIBIT;
+> > +                                           SDHC_DATA_INHIBIT;
+> >               sdhci_write_block_to_card(s);
+> >           }
+> >       }
+>
 
