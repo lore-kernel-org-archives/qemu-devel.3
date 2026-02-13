@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46B32EE36A0
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Feb 2026 09:51:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47B9BEEA870
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Feb 2026 09:52:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqpon-0007Hf-Rb; Fri, 13 Feb 2026 04:50:33 -0500
+	id 1vqpor-0007ZX-OE; Fri, 13 Feb 2026 04:50:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vqpoh-000778-Oo
+ id 1vqpok-0007Ac-Hi
  for qemu-devel@nongnu.org; Fri, 13 Feb 2026 04:50:31 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vqpoa-0007Jk-QU
- for qemu-devel@nongnu.org; Fri, 13 Feb 2026 04:50:24 -0500
+ id 1vqpoj-0007M3-2C
+ for qemu-devel@nongnu.org; Fri, 13 Feb 2026 04:50:30 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770976218;
+ s=mimecast20190719; t=1770976227;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=47+h7KsUk4pIeVRSrl5x3R/+mYPfTcUJPXIJdzZh/Nw=;
- b=aa+EvjJgK72yvHS/IfReGs5UMsxA4xfmmGi3+PH+w3iaQ64WWd+OF87QB33x0rzBLDYSE+
- hMY2i2F8DzAM5Bvq4A2LveB6cXYRhq/17+XQxL3wO2EvUguMFBPblgOyfGx6wJ/b2+rU6E
- SPl3ftO0R04O0SNbNXW+IaRW6jJsepU=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=tpYjeot8p53E9hbudpSJPO+xYO8RwO13MoSHQweyb84=;
+ b=UGL0BMUpQY0p2uLOWlT++rrV1YlR7tV5enVVHdjUxL+iGy7NlIXoWO4rFCRDmxSOPkXd3n
+ 9TfgxijYt5+SbRtiQgcqnTRz3j89kBxNv7ykBRyhGyFUeJ+qcjR89jAciJX5LB9tj9l/Kq
+ AcUWQuqUJpVavCgs+oJ1ClWatZmz3c0=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-36-txG-vcI2NLC0ek1FXKCV6A-1; Fri,
- 13 Feb 2026 04:50:15 -0500
-X-MC-Unique: txG-vcI2NLC0ek1FXKCV6A-1
-X-Mimecast-MFC-AGG-ID: txG-vcI2NLC0ek1FXKCV6A_1770976213
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-524-qJo4xogmOe6TKqmwW-010Q-1; Fri,
+ 13 Feb 2026 04:50:23 -0500
+X-MC-Unique: qJo4xogmOe6TKqmwW-010Q-1
+X-Mimecast-MFC-AGG-ID: qJo4xogmOe6TKqmwW-010Q_1770976221
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4D33B18ADBC0; Fri, 13 Feb 2026 09:50:10 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 230C2196C402; Fri, 13 Feb 2026 09:50:21 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.41])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 51E2419560B9; Fri, 13 Feb 2026 09:50:09 +0000 (UTC)
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 4F8FC180067C; Fri, 13 Feb 2026 09:50:20 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -61,15 +61,15 @@ Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  xen-devel@lists.xenproject.org,
  Samuel Thibault <samuel.thibault@ens-lyon.org>,
  Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Subject: [PULL v2 08/15] chardev/char-pty: store pty_name into PtyChardev state
-Date: Fri, 13 Feb 2026 10:49:27 +0100
-Message-ID: <20260213094938.4074478-9-marcandre.lureau@redhat.com>
+Subject: [PULL v2 12/15] char: qemu_chr_write_log() use qemu_write_full()
+Date: Fri, 13 Feb 2026 10:49:31 +0100
+Message-ID: <20260213094938.4074478-13-marcandre.lureau@redhat.com>
 In-Reply-To: <20260213094938.4074478-1-marcandre.lureau@redhat.com>
 References: <20260213094938.4074478-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -98,87 +98,55 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 
-We'll use it in following commit.
-
-Note the bonus: stop use blind strcpy().
+logfd is blocking, so we don't need to care about EAGAIN.
+Let's simply use qemu_write_full().
 
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-Id: <20260115144606.233252-8-vsementsov@yandex-team.ru>
+Message-ID: <20260201173633.413934-2-vsementsov@yandex-team.ru>
 ---
- chardev/char-pty.c | 19 +++++++++----------
- 1 file changed, 9 insertions(+), 10 deletions(-)
+ chardev/char.c | 22 +++++-----------------
+ 1 file changed, 5 insertions(+), 17 deletions(-)
 
-diff --git a/chardev/char-pty.c b/chardev/char-pty.c
-index 9e26e97baf5..a582aa7bc73 100644
---- a/chardev/char-pty.c
-+++ b/chardev/char-pty.c
-@@ -43,6 +43,7 @@ struct PtyChardev {
-     int connected;
-     GSource *timer_src;
-     char *path;
-+    char *pty_name;
- };
- typedef struct PtyChardev PtyChardev;
- 
-@@ -303,7 +304,7 @@ static void cfmakeraw (struct termios *termios_p)
- #endif
- 
- /* like openpty() but also makes it raw; return master fd */
--static int qemu_openpty_raw(int *aslave, char *pty_name)
-+static int qemu_openpty_raw(int *aslave, char **pty_name)
- {
-     int amaster;
-     struct termios tty;
-@@ -324,9 +325,7 @@ static int qemu_openpty_raw(int *aslave, char *pty_name)
-     cfmakeraw(&tty);
-     tcsetattr(*aslave, TCSAFLUSH, &tty);
- 
--    if (pty_name) {
--        strcpy(pty_name, q_ptsname(amaster));
--    }
-+    *pty_name = g_strdup(q_ptsname(amaster));
- 
-     return amaster;
+diff --git a/chardev/char.c b/chardev/char.c
+index 5d00cac2f31..4b285baf029 100644
+--- a/chardev/char.c
++++ b/chardev/char.c
+@@ -82,29 +82,17 @@ void qemu_chr_be_event(Chardev *s, QEMUChrEvent event)
+     CHARDEV_GET_CLASS(s)->chr_be_event(s, event);
  }
-@@ -335,11 +334,12 @@ static bool pty_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
- {
-     PtyChardev *s;
-     int master_fd, slave_fd;
--    char pty_name[PATH_MAX];
-     char *name;
-     char *path = backend->u.pty.data->path;
  
--    master_fd = qemu_openpty_raw(&slave_fd, pty_name);
-+    s = PTY_CHARDEV(chr);
-+
-+    master_fd = qemu_openpty_raw(&slave_fd, &s->pty_name);
-     if (master_fd < 0) {
-         error_setg_errno(errp, errno, "Failed to create PTY");
-         return false;
-@@ -351,11 +351,10 @@ static bool pty_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
-         return false;
+-/* Not reporting errors from writing to logfile, as logs are
+- * defined to be "best effort" only */
+ static void qemu_chr_write_log(Chardev *s, const uint8_t *buf, size_t len)
+ {
+-    size_t done = 0;
+-    ssize_t ret;
+-
+     if (s->logfd < 0) {
+         return;
      }
  
--    chr->filename = g_strdup_printf("pty:%s", pty_name);
-+    chr->filename = g_strdup_printf("pty:%s", s->pty_name);
-     qemu_printf("char device redirected to %s (label %s)\n",
--                pty_name, chr->label);
-+                s->pty_name, chr->label);
+-    while (done < len) {
+-    retry:
+-        ret = write(s->logfd, buf + done, len - done);
+-        if (ret == -1 && errno == EAGAIN) {
+-            g_usleep(100);
+-            goto retry;
+-        }
+-
+-        if (ret <= 0) {
+-            return;
+-        }
+-        done += ret;
++    if (qemu_write_full(s->logfd, buf, len) < len) {
++        /*
++         * qemu_write_full() is defined with G_GNUC_WARN_UNUSED_RESULT,
++         * but logging is best‑effort, we do ignore errors.
++         */
+     }
+ }
  
--    s = PTY_CHARDEV(chr);
-     s->ioc = QIO_CHANNEL(qio_channel_file_new_fd(master_fd));
-     name = g_strdup_printf("chardev-pty-%s", chr->label);
-     qio_channel_set_name(s->ioc, name);
-@@ -364,7 +363,7 @@ static bool pty_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
- 
-     /* create symbolic link */
-     if (path) {
--        int res = symlink(pty_name, path);
-+        int res = symlink(s->pty_name, path);
- 
-         if (res != 0) {
-             error_setg_errno(errp, errno, "Failed to create PTY symlink");
 -- 
 2.52.0
 
