@@ -4,80 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3BBAEF99C4
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Feb 2026 18:28:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F39FEF99C6
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Feb 2026 18:28:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqxsx-0007Bv-4I; Fri, 13 Feb 2026 13:27:23 -0500
+	id 1vqxt6-0007Cs-4h; Fri, 13 Feb 2026 13:27:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vqxsu-0007Bg-9t
- for qemu-devel@nongnu.org; Fri, 13 Feb 2026 13:27:20 -0500
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vqxt2-0007Ca-5v
+ for qemu-devel@nongnu.org; Fri, 13 Feb 2026 13:27:28 -0500
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vqxss-00060s-CR
- for qemu-devel@nongnu.org; Fri, 13 Feb 2026 13:27:20 -0500
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-4362507f0bcso988572f8f.0
- for <qemu-devel@nongnu.org>; Fri, 13 Feb 2026 10:27:17 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vqxt0-00061w-Az
+ for qemu-devel@nongnu.org; Fri, 13 Feb 2026 13:27:27 -0500
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-48069a48629so11263565e9.0
+ for <qemu-devel@nongnu.org>; Fri, 13 Feb 2026 10:27:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771007235; x=1771612035; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=9vafi0T2GAlTsHHxivHQyehFiV4lWmUNEpHUiK5qusY=;
- b=pMLOq3vj9e6ifRnWzO9f42Cgp6+u02/36OrDIXY3eQ7waKFj4tybnIzNOCs7ZKkWBI
- RUjm3jliwpn7rdKROMOZlBVlUzvOrYJSCBTxnhzNZo8SGHFbZZadzYu4FmEyr8Jz5ORe
- Nhicx3kLsQq15Oxp1Rv58UoK4S9g70mP9rnfDA2/ryBrbStQHlW+ovaLmayDnDp3v5I+
- GoNWbtu6O8WTzoD83CTAZLh9LBzml3px/a70ssCxBcHsQWVBbef9TwL/B8JCTrczXxOa
- f6geeyIrHPyq40NUk6xKeHofxCuxgRxBk0aZaDfnhQAZS72JC8NX4v4LWZoRL13hbdSX
- 77sA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771007235; x=1771612035;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1771007242; x=1771612042; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=9vafi0T2GAlTsHHxivHQyehFiV4lWmUNEpHUiK5qusY=;
- b=VjMC+SrsXjLaUoftFISXKq/C+M2mHGCtYWQykqOS1PcuKBj1JamcgTNZPCFv+5wApy
- 4wTWw+FVqC5hY/IJ9Hn6YPescLKuvTF+NI6OoArAuoT6dluvpfLW1ATpirJDU/4kKUGX
- 881doNispxpRAn6+uRqlNEklFDCQ9nCT7ElE/DvgEK6kUM0PmDLFk4cCsbWh8wvr2WsC
- yZfjHPPC57G3DC1k9/6DERd6zjBgXxNwh1wBQNo4GPhrKDZtNJ2xF0RXtxH27cjQ9mRi
- shsU0pN6LyJLcKb1j9On33LlfueepYSRfLqMsRs6wcDNOtKKQGECSze0Msd7Xl/dkxXa
- peQQ==
-X-Gm-Message-State: AOJu0Yy3bRQm6KGAe916mTPoLZGdkBiYRHPfHLkEMg/TdjmSfD6ugqqs
- m07YQEdZwhXUGXao+UvDIc0HulvY8F43lMxwH6PbB0o6MrQ0Ngkh3jA5Z3FxucXgPuweAUnMRTu
- KR9jEUUQ=
-X-Gm-Gg: AZuq6aLniPmDQxs56YstoBNufLAfEWh+mmpvTrQkYLkTr0Vaw1NdMf0V+bT1FReK2ye
- EE44eCMO1MuIwZH5IsrEQaUzY9vZABQRivLvENGEH6ILCoAbJSdgdFND4km7HSr7wgHGnGS7Hje
- 7wswwD64VcjrF2x4WrS5zkuRCGgjf4e262lQBW9IMfIdxS6lbv4LUB5/DffSbGtE5fydo3+duke
- lommgbqfskKe0nKn9GN0t598VvelPCW6Ov7CzmNoAR/Stu0lIw+M3AB90hB47iyHO1covXX5M6q
- yKYahjPCAEsR71EhYORaqIKscazE0lRKgmJQg8bVj/IHII1DoJOOYNdSWBnFHAMcdDBW2yMKl04
- tgjuS1BNJ0cWqvdFdXd805GDgDlZJvVj/QsV+dWSDQfMDLNWuS35UvY8F8dyalW8ZSFUINl8jcL
- opwt5RKJ0nQw2HYtRywAMxLJQgWNq7jbshdr8SCthPbR2deT9FjPh1B0Z+Dnnuy7A8EHls+jOI
-X-Received: by 2002:a05:6000:230b:b0:436:1597:7c7c with SMTP id
- ffacd0b85a97d-4379d5eb3d7mr2243792f8f.13.1771007235492; 
- Fri, 13 Feb 2026 10:27:15 -0800 (PST)
+ bh=77qp8FLiJwBN5TF68fSF77CWuEI2EM/pcGaKg31STP8=;
+ b=S/xx7x+E4deaRLuPLQINzTCP7nez7THKOohO1EgwTyA3MA+o90AWZo6qeIODT6zh6n
+ u2roywvLV53JD56qUhbDJR4/vXK1kuRkIET2pY2J+Vn5Elm3Gwsmby4TUBi5GMyh61F1
+ ZQNWLEHv2wMoOAam4qVrfnn7ZGU1veVUILJRC+xH5g3E1UsCFbTJKmFJ0rsMJSNG0BFY
+ +Yyj/Ka8O/Awrj4rMUrehvw8s5v6P4Fw7re74pn/207Q1I+We1G39nxgrOAlbiX2giFM
+ UymGeNJwf5LOk3NVq8KScAcmRD5d/fr1YSQeP4zaZne7tHXKAgOAlqSb/YV2MJZRUjnZ
+ qvzw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1771007242; x=1771612042;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=77qp8FLiJwBN5TF68fSF77CWuEI2EM/pcGaKg31STP8=;
+ b=AlJTP2VvBIgF/vwcYo3j+uo2fpkAUBl/MOW8nWWYre2/4K9FBxwzB7S1raY/Nm/ibo
+ Zfpj8ZYeWYi/D8ZF9niYPDtVj66BUl5+7E3pqihiDfwm9yKCTTa6dPjzfzHBJi3RpGa2
+ Jh2Gm8lGOxcIbM9xqZDyhumHalxqEhQlI0rfCWvZwed64vZzKdhabSiF8fVjG2a/uZ5k
+ l/hOKQcDZsjhw3mCRp2kAlXhuoQpSC1H6YrFJlLKjM2wCikQOHF1bLoFefUkYd0b0thx
+ phccRF8VaOp4KU9WhknvKZ5sxLgWbUncbx3iDkI/IlQF7O93FbHwZJhCp2P8H8y8TxXM
+ zQ6A==
+X-Gm-Message-State: AOJu0YxXAFvtODTlTGBRVnxf8/RvuwLZA8fF6aD7/na+Kca5hmEsmqs5
+ JQCTZTf+/yqYSTwO5UaHzkDJ3tOW1pdNaL/sYIQioBoKgM4+Zuy79P/+LoDcYOxGhJrfaWR7peH
+ QIRXNBvQ=
+X-Gm-Gg: AZuq6aL0qBf4ZET1J8ANOujWb9IsSCYXb6D96XyFwTTAZe0ifVgCw95T/keHa6jKEKv
+ XqT24P1bmPpvma2a83CHTh2b3YjCQ1owFzpQ1YIRYk4kgjDsQKSw5KRPCb9VUIQnTtn+GB7/jfJ
+ yivjWBb6FMzdjQ/nY4YyL9zQlBHd43/PCWhscCt11E7nn70f21cGg59bXhBsw9K7Vtvf6M1hji6
+ Ls405khqotTH0YWG3cJ0tuFoTjLYhjTB4oxquqeOgVySdKCibvl5FGbh5lNBEJInOeAqnd8N9GO
+ 9Q29FFa7rU0zLz2WNYPj1CeeAPf/bhm2fsUJmaNNizBxs5kSR/NQRri+4wyN3f1wBD25AtSmRae
+ MRMYmwNUnUTb8tlAOLaaAN3xhuiV6GsKtMvJmuC1IS0RJmOET8t84o4IEpIMazO2+5PmOxkQldI
+ VE1AFQbkEN1y0OY0FWr5L1GpAQgvxqJ2YXMghits5Y7KR1dDx2KPIGP/JCY9yrG5BGHjGAMVs3
+X-Received: by 2002:a05:600c:6808:b0:483:2c98:4368 with SMTP id
+ 5b1f17b1804b1-48373a3e755mr46236355e9.18.1771007242394; 
+ Fri, 13 Feb 2026 10:27:22 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43796ad0166sm7172724f8f.35.2026.02.13.10.27.14
+ 5b1f17b1804b1-48370a53c51sm22991145e9.6.2026.02.13.10.27.21
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 13 Feb 2026 10:27:14 -0800 (PST)
+ Fri, 13 Feb 2026 10:27:21 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 0/5] page-vary: Build set_preferred_target_page_bits() as
- common code
-Date: Fri, 13 Feb 2026 19:27:08 +0100
-Message-ID: <20260213182713.44924-1-philmd@linaro.org>
+Subject: [PATCH 1/5] qemu/target_info: Add target_page_bits_vary() helper
+Date: Fri, 13 Feb 2026 19:27:09 +0100
+Message-ID: <20260213182713.44924-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20260213182713.44924-1-philmd@linaro.org>
+References: <20260213182713.44924-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,29 +102,106 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Allow common code check TARGET_PAGE_BITS_VARY at runtime
-via the target_page_bits_vary() helper, then use that
-in set_preferred_target_page_bits() in order to build this
-method once as common code.
+Add a helper returning whether a target support variable
+page sizes (only ARM targets so far).
 
-Philippe Mathieu-Daudé (5):
-  qemu/target_info: Add target_page_bits_vary() helper
-  page-vary: Expose TARGET_PAGE_BITS_MIN definition
-  page-vary: Use target_page_bits_vary in set_preferred_target_page_bits
-  page-vary: Build set_preferred_target_page_bits() as common code
-  page-vary: Inline set_preferred_target_page_bits_common()
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ include/qemu/target-info-impl.h   | 2 ++
+ include/qemu/target-info.h        | 7 +++++++
+ configs/targets/aarch64-softmmu.c | 1 +
+ configs/targets/arm-softmmu.c     | 1 +
+ target-info-stub.c                | 5 +++++
+ target-info.c                     | 5 +++++
+ 6 files changed, 21 insertions(+)
 
- include/exec/page-vary.h          | 15 ++++++++++++++-
- include/qemu/target-info-impl.h   |  2 ++
- include/qemu/target-info.h        |  7 +++++++
- configs/targets/aarch64-softmmu.c |  1 +
- configs/targets/arm-softmmu.c     |  1 +
- page-vary-common.c                | 29 ++++++++++++++++++-----------
- page-vary-target.c                | 25 -------------------------
- target-info-stub.c                |  5 +++++
- target-info.c                     |  5 +++++
- 9 files changed, 53 insertions(+), 37 deletions(-)
-
+diff --git a/include/qemu/target-info-impl.h b/include/qemu/target-info-impl.h
+index e446585bf53..537aad04fa8 100644
+--- a/include/qemu/target-info-impl.h
++++ b/include/qemu/target-info-impl.h
+@@ -19,6 +19,8 @@ typedef struct TargetInfo {
+     SysEmuTarget target_arch;
+     /* runtime equivalent of TARGET_LONG_BITS definition */
+     unsigned long_bits;
++    /* runtime equivalent of TARGET_PAGE_BITS_VARY definition */
++    bool page_bits_vary;
+     /* runtime equivalent of CPU_RESOLVING_TYPE definition */
+     const char *cpu_type;
+     /* QOM typename machines for this binary must implement */
+diff --git a/include/qemu/target-info.h b/include/qemu/target-info.h
+index e3287334304..0d2269e0401 100644
+--- a/include/qemu/target-info.h
++++ b/include/qemu/target-info.h
+@@ -23,6 +23,13 @@ const char *target_name(void);
+  */
+ unsigned target_long_bits(void);
+ 
++/**
++ * target_page_bits_vary:
++ *
++ * Returns: whether the target support variable page sizes
++ */
++bool target_page_bits_vary(void);
++
+ /**
+  * target_machine_typename:
+  *
+diff --git a/configs/targets/aarch64-softmmu.c b/configs/targets/aarch64-softmmu.c
+index 4e1e2f64da1..f9fb73a41c6 100644
+--- a/configs/targets/aarch64-softmmu.c
++++ b/configs/targets/aarch64-softmmu.c
+@@ -15,6 +15,7 @@ static const TargetInfo target_info_aarch64_system = {
+     .target_name = "aarch64",
+     .target_arch = SYS_EMU_TARGET_AARCH64,
+     .long_bits = 64,
++    .page_bits_vary = true,
+     .cpu_type = TYPE_ARM_CPU,
+     .machine_typename = TYPE_TARGET_AARCH64_MACHINE,
+     .endianness = ENDIAN_MODE_LITTLE,
+diff --git a/configs/targets/arm-softmmu.c b/configs/targets/arm-softmmu.c
+index 9b3fdd2854a..a3bca3c9f0d 100644
+--- a/configs/targets/arm-softmmu.c
++++ b/configs/targets/arm-softmmu.c
+@@ -15,6 +15,7 @@ static const TargetInfo target_info_arm_system = {
+     .target_name = "arm",
+     .target_arch = SYS_EMU_TARGET_ARM,
+     .long_bits = 32,
++    .page_bits_vary = true,
+     .cpu_type = TYPE_ARM_CPU,
+     .machine_typename = TYPE_TARGET_ARM_MACHINE,
+     .endianness = ENDIAN_MODE_LITTLE,
+diff --git a/target-info-stub.c b/target-info-stub.c
+index 65220cc7820..a6a080295f0 100644
+--- a/target-info-stub.c
++++ b/target-info-stub.c
+@@ -20,6 +20,11 @@ static const TargetInfo target_info_stub = {
+     .target_name = TARGET_NAME,
+     .target_arch = glue(SYS_EMU_TARGET_, TARGET_ARCH),
+     .long_bits = TARGET_LONG_BITS,
++#ifdef TARGET_PAGE_BITS_VARY
++    .page_bits_vary = true,
++#else
++    .page_bits_vary = false,
++#endif
+     .cpu_type = CPU_RESOLVING_TYPE,
+     .machine_typename = TYPE_MACHINE,
+     .endianness = TARGET_BIG_ENDIAN ? ENDIAN_MODE_BIG : ENDIAN_MODE_LITTLE,
+diff --git a/target-info.c b/target-info.c
+index a26532f660f..06bf329de72 100644
+--- a/target-info.c
++++ b/target-info.c
+@@ -22,6 +22,11 @@ unsigned target_long_bits(void)
+     return target_info()->long_bits;
+ }
+ 
++bool target_page_bits_vary(void)
++{
++    return target_info()->page_bits_vary;
++}
++
+ SysEmuTarget target_arch(void)
+ {
+     return target_info()->target_arch;
 -- 
 2.52.0
 
