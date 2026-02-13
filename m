@@ -4,197 +4,196 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BAE7DEDF142
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Feb 2026 10:00:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80F33EDF142
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Feb 2026 10:02:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqpyG-0006hn-Vf; Fri, 13 Feb 2026 05:00:21 -0500
+	id 1vqq0S-0007OA-B4; Fri, 13 Feb 2026 05:02:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
- id 1vqpyF-0006h9-Hm
- for qemu-devel@nongnu.org; Fri, 13 Feb 2026 05:00:19 -0500
+ id 1vqq0P-0007Nv-K4
+ for qemu-devel@nongnu.org; Fri, 13 Feb 2026 05:02:33 -0500
 Received: from mx0a-002c1b01.pphosted.com ([148.163.151.68])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
- id 1vqpyD-0001Sk-2O
- for qemu-devel@nongnu.org; Fri, 13 Feb 2026 05:00:19 -0500
-Received: from pps.filterd (m0127839.ppops.net [127.0.0.1])
+ id 1vqq0K-0001xt-9M
+ for qemu-devel@nongnu.org; Fri, 13 Feb 2026 05:02:33 -0500
+Received: from pps.filterd (m0127837.ppops.net [127.0.0.1])
  by mx0a-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 61D2YbdL070772; Fri, 13 Feb 2026 02:00:13 -0800
+ 61D9PfHS754250; Fri, 13 Feb 2026 02:02:25 -0800
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=
- proofpoint20171006; bh=Hks7krn6TBTxzkhMQ2girwqLRv09569W2f1cVaGsf
- Pg=; b=JMtQsEAn91lp28XP0cvbgYKZ/HntYsFv8aX2UHYxBe2YsP1F/6SedCILS
- 9vFoCVQtc4Iey3C+RX81E7wZOwnPyXE+pVEnhCbNDKkKn9zgrEjEw2Ockm3OTRum
- T13P//e2W1rx13W7BlOqGN0QrlI2x91x8sayl1dUjF5rWAcP89zZuJ2J1NrgPyfp
- suE1NbcqvUvsSD7rKn+HBce0/hrRqCtem8vCER5XL6aTwuG1jiPHE7lYoaq2GiSi
- I1k5BBzStw2Jj6P0LMDNVpodzQ6WnvCZubfHLoHQdlqwQRKQXXoOmgDrb/u7Jn0L
- HGeHOGc64IX9/JzrwAMlBXwUcLgKw==
-Received: from ch5pr02cu005.outbound.protection.outlook.com
- (mail-northcentralusazon11022135.outbound.protection.outlook.com
- [40.107.200.135])
- by mx0a-002c1b01.pphosted.com (PPS) with ESMTPS id 4c9u9f8wtd-1
+ proofpoint20171006; bh=VIpn9sqDdKZw4qHsxMb4RM/t/9e/8NRm03dLYKB8L
+ Iw=; b=LkrIkljW9kZlQQ860DPsYFyjuffGnVO236IlxuJk3er3ABRsfAXI8eH2k
+ HRztsUu4oPGG+skdC+b8ZIN7jjhaZNirvgA/9nVpTUcvYARQRzn+Yw4SygEr25vg
+ heD32Mm1ST9k0/nStTibgggnU8Absv4mHGhUBK9TMc07QzY2c3wl6vcNfRwC8AZc
+ PqSUBWACYPyLnhHX3/rR1wNx+1umVIhgezrVd+oF8wDs7NdZErk/+QAc5MtiZx+8
+ XIRuIk7b5/knZavnyyI9KGiFj/CnEuCDFc67ct/iRR3VKzhpxGlJxJzhhSOLpIt+
+ 2ry54hdUVWf36UDp7M5Gy5e+wZMSg==
+Received: from ph8pr06cu001.outbound.protection.outlook.com
+ (mail-westus3azon11022105.outbound.protection.outlook.com [40.107.209.105])
+ by mx0a-002c1b01.pphosted.com (PPS) with ESMTPS id 4c8ctc8k47-1
  (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Fri, 13 Feb 2026 02:00:13 -0800 (PST)
+ Fri, 13 Feb 2026 02:02:25 -0800 (PST)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=mDiCbKM4vhZ+3whZN92BX508mx4TAZ9QFAolQRyRuuxl73WYgIdyjjtN51GXXowiQojbrpjJENkHsjzfaLvBRBoRRD/Lf5fD7OC+f6v+pd2457aMmdUbp8dzgeem5gLuq9DpuHo5nni3VxTLVVRTtWClP227t9vux1yme9QH4AXAlYoFq4dcG3A7qWnFpFpvirIG5Jg+wMVXB1ryxYkq9rHBpWpUoVOZA0Mz4NICZQSxlodfbc2An9cV6clG6CRz83dGu13BTZQ29jit2mEaPVl+lQvHnfvyx/PfuW/YRW23q3+D5+vbzkCq0wnW82eUGEpkwQZqv/uT4j6nyaAfmw==
+ b=UgQ7b8ndnoS+YbQUunsGvnWGdBt72WqttDcWXmlTvmdi1BtH7fyaxemr7s0g8tSVdjrXU5dlrSAcVryZAIbQi4sbdu5OYb8kutQWjYGSan3BY/gZcsijaNHIRGHsxRoUN006yWT8xueO8uzBfZmHYMZRI9Gb3ZEQ0rl9F0peQlIaNXXzSLCRtRDq7sahzlu8+gihfEdVv0sdhsaFpnwr0HxOma1lr9cmDxAzK7aeHL042e7A7ZSVmuJnRx4TSmRBlXksKSXVbiJcTqIJlLyPs2/ql7swba54M9o1vORO2VZYt37NTLZ6tLgYHP+AiVpdyPD3lX229fRE0koiLQ8dBw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Hks7krn6TBTxzkhMQ2girwqLRv09569W2f1cVaGsfPg=;
- b=tx7atYo755Wl8yHrtpQRMO1L1mJvpjnrWNskHvn2XDQ2g2ma9BpX8hu0eryXYrv9a9np2I+G5pADmgWKx0kLTv0ZIUthFkJfkhJRoyVDsgDRVxN0nq4MIPFPKgHpr1ovfxzNKKi+vX4CPE5tMvCWLdALAbNDyKzV/GVMphOWJJ/OgSEIYH4NHb5FEkCbcoaUH6VptnLFhkBczrMg2zCugdPQnacUn58Nw1LKsti7yOAim8+y1qBpqxzSDXAieXtRucChtQ4lHiJ/FVxJEn7DlVihTzKH5EDD8WCr3m+JbCCBZOwI+Ir7BK1U7bqy0dV1F6Z8RSQmhR3QmX3ovzwPJw==
+ bh=VIpn9sqDdKZw4qHsxMb4RM/t/9e/8NRm03dLYKB8LIw=;
+ b=VDAsott2+WUjUEKCFBEMZemi1T1gMviVRGdYCjRembj6zFTojIBrVb1tzGr4ZasRml+oUo443v8/DVqBEwRV3cKyMUGnzKtxLfSvodFyX6/6sX4NzlxH3YH4BmskCKIUTjsv+BoaEu4C5bEP11Nw43sb95upJkjM3mxk2nM5yPfrKXphiovaaRGDK9eq2nF3xN5I1+S13VKR2qqvV+JvCK4h28wrOhK5qU4GViJx6+mjBqxDGUf4KEXEeXhNsPxyoZfL2OTi8J7XT8Wan0svpGXrbDifyfQEVxbltVMsRHnRRIB3/pgpcQX1TXBFYHNoCizjdv+OWSdKcokOUsQ+fQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
  dkim=pass header.d=nutanix.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Hks7krn6TBTxzkhMQ2girwqLRv09569W2f1cVaGsfPg=;
- b=tWcGAzVYKpK4BCGN58yvbF0fqXli8jZv/cO5/QSfAjzK4sJYDLU7B+to5r9KOoSlPfDVLtsk3QB0XS9vQeBR8i8ufKybmXPw/RLkl4l4qGp/pWa3OAy1gbZKEHdRL6wJOVB8EGoIRyGudcqL7l4juX3eFpGMHNAsJFSzl6awQ3l7tckTytC3Esr6Jn8QY2/PxHlYYJEDujoV1k/S9MLv4TSu1x9fOnXBvfX4g+Uf8SYCVvmMpL/hR6SycE82Xag93h3BZPxCBn9bP3ruUU/rg4huvBIrrQaubSUVUL5/cpJ/Vbjxz9ZyNPm7N4HN1wR7VdUAkn9fR5V83otxHQhdvA==
+ bh=VIpn9sqDdKZw4qHsxMb4RM/t/9e/8NRm03dLYKB8LIw=;
+ b=edHZOErkZH1fZ7aPM/ss2slyTl5C4RRuoOtoBnjauqa/oJ3Gy4ABPBWLNzJzhh8ePo9MPRvyZHmgLHVi46VZ5CDq5cgNtN8t7jCyrV7x3nYToLG6suqMqpArAnQzYTb9Qu85jAu05gul/zvmB9u0PUVCQjH0/d8XfXB7rs7CtzGPUQbOJYMF0pj9pBkukER6/HhkOzkaCVCRrdbQ3RfEwsLp20E1++FMUEm+z1VvIEQz5J9SGd2odtuB1BFMu0SfHOrCkoytST+flCefK11JkXAZWHZNCi8gaNrhcqwgWAIkuUn69iGc2cKzlCsQctIB7Sqr1BReJM3YYuJGgawInQ==
 Received: from PH0PR02MB7159.namprd02.prod.outlook.com (2603:10b6:510:16::8)
  by MN2PR02MB6848.namprd02.prod.outlook.com (2603:10b6:208:1d6::12) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9611.14; Fri, 13 Feb
- 2026 10:00:11 +0000
+ 2026 10:02:23 +0000
 Received: from PH0PR02MB7159.namprd02.prod.outlook.com
  ([fe80::8e97:bc32:822c:b250]) by PH0PR02MB7159.namprd02.prod.outlook.com
  ([fe80::8e97:bc32:822c:b250%7]) with mapi id 15.20.9611.012; Fri, 13 Feb 2026
- 10:00:11 +0000
-Message-ID: <b459cdf5-f03e-4ebb-bdec-e08443ea03fb@nutanix.com>
-Date: Fri, 13 Feb 2026 10:00:07 +0000
+ 10:02:23 +0000
+Message-ID: <0d777b9b-779e-4566-8651-fc6eecc5babc@nutanix.com>
+Date: Fri, 13 Feb 2026 10:02:19 +0000
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 07/43] audio/pa: convert to QOM lifecycle methods
+Subject: Re: [PATCH 08/43] audio/sdl: convert to QOM lifecycle methods
 To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>
+ Gerd Hoffmann <kraxel@redhat.com>, Thomas Huth <huth@tuxfamily.org>
 References: <20260127182516.289834-1-marcandre.lureau@redhat.com>
- <20260127182516.289834-8-marcandre.lureau@redhat.com>
+ <20260127182516.289834-9-marcandre.lureau@redhat.com>
 Content-Language: en-US
 From: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-In-Reply-To: <20260127182516.289834-8-marcandre.lureau@redhat.com>
+In-Reply-To: <20260127182516.289834-9-marcandre.lureau@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: LO2P265CA0250.GBRP265.PROD.OUTLOOK.COM
- (2603:10a6:600:8a::22) To PH0PR02MB7159.namprd02.prod.outlook.com
+X-ClientProxiedBy: LO4P123CA0415.GBRP123.PROD.OUTLOOK.COM
+ (2603:10a6:600:18b::6) To PH0PR02MB7159.namprd02.prod.outlook.com
  (2603:10b6:510:16::8)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: PH0PR02MB7159:EE_|MN2PR02MB6848:EE_
-X-MS-Office365-Filtering-Correlation-Id: 0978e0f4-184e-4848-e64f-08de6ae6ad43
+X-MS-Office365-Filtering-Correlation-Id: e99e779d-ef1a-47fc-6a1f-08de6ae6fbef
 x-proofpoint-crosstenant: true
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|366016|376014|7053199007;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?aG9lUXFyeFZxekQrZ2phY0NHa01OckNCV01OSU95UW0ybjlmcHkybDdzZGwr?=
- =?utf-8?B?RG9qN1NNalpiZFJVTHlDaE1RK1puRGRuSC8yK3dzRm5TUVprak5ka2w4ck9q?=
- =?utf-8?B?Nm1LU0t6NkpxOFhja0FqNU54N08xQk9kaXJnc0xqS3pGLzlvaWpjcVFIUkcw?=
- =?utf-8?B?R0VrN0ZSNWNBQ3NLaDljdjFCcUpobThPMXBMa0Y4SGhnY3p2cFRNb2IxUklp?=
- =?utf-8?B?VnVkazB5T0pudFpENmRHMEY0enBNODJWZ1d4WjB2SmYzUlNwMVEzNXhjczdL?=
- =?utf-8?B?SVg5UTZKcE51blpJSkdUTnpBdGxYeDljQnF0ZDFoSUY5ZWluSEhyMnNUUlBR?=
- =?utf-8?B?R2FaMWVkanRpbTdLRWxCZkkrbGxZV0tFVEFmNXc2VXdvSFl0SjFtOTdkR0RO?=
- =?utf-8?B?NW8xUW9QOEZ0ejNsdm9uampTNXlzNG5TUEN5NnkwYVlEN3hJV0h2VGQxTFZt?=
- =?utf-8?B?QXJJNW9WT2NBSklMQm9sU2g3NDJKU0IvTGFxcWZMZVBZN2dqQUF4emhkSzIv?=
- =?utf-8?B?cjdvVkw3Y0VRVEZUeGhhcTNNR1N4TzJZcEEzTytSNDRybkl3bnZxM25uMnR1?=
- =?utf-8?B?citoTFVITGszSW9jbHE1VFh0L29ZSFp2VXFPTDBVMWo1ZUU3MEJtb3lxZnlv?=
- =?utf-8?B?aHkvMllOYXUrUVUrOUR3M0dWblNkcDkyMERJdGlJdzhjRlpiaGRFYUVBWnFs?=
- =?utf-8?B?eFl0NGhIT2FYd0RITGRncDI2ZDdnYURMM3R3eVltSFpwZzZoZXB3d3hvYi9S?=
- =?utf-8?B?cFpOUlBiRUIxT2ZKYUFJTldvV1NBVkI5Q3o2SWRteWhaTkhqZTd2TDMwMHd3?=
- =?utf-8?B?TFRiMHp4WWc3d3lpcXZtWkRiYWRoOE5XMjF6VUY2bWNNYy9DUmpMNlF3SXdM?=
- =?utf-8?B?SjlLc0I5OTg1eSs1V0tOOEdqRDdKYloxRkUrZHhwMlRVUkNzdDY1UUZRblpE?=
- =?utf-8?B?Nmc3RzZ3T0pyN05jdjZteHdaLzdoTURBRWliMDZLS0lQcmcvbUxmd08wSE94?=
- =?utf-8?B?VUJVanQwZVRUTTVXbEdEV1FpUjlMTHBHRSsrbFdYQ21JbWJiV2l3U3JJL1li?=
- =?utf-8?B?eHl4ZURxV1NQNktMdEtGZlJjV2NTdExJTm85Rk4xSE8rVkg4TkthUmxnbGFB?=
- =?utf-8?B?NVZXSy8rQjZyaFgzdU80NEUxd2x1TUc2OVdJM1hDS0tMT3piRUVobm5odndE?=
- =?utf-8?B?a2E1NGFyeEdOa3JuOUlZMTFHSitMTFc5TE5EWFNROFFSbk5FM2xla1pUa3Q2?=
- =?utf-8?B?aGVMUHh2b2QyL2ZDTDYyRytLSTNhaHoyeFF1NE9XY3pjZzRMZXRaV1o3NFVI?=
- =?utf-8?B?UDFjVFhJQU9PTlBpTko1b0JtWmVjNHg5KzdzdEh3RVhYZ1dCSmU0TThPU2dJ?=
- =?utf-8?B?RWllZ0NXZXZSUUtKWkxuMFJaVU5ack1uRTRiT1hkVzN1UDQ0T1JncFRMUXJO?=
- =?utf-8?B?b0UvUTFreWN2OXZ4Ykp2MGppbkROdGZrOUxmdWIzYlNPN0FuaG5QKzRBRzg3?=
- =?utf-8?B?ZXFKKzQ4RHFYMTVIdEVBSjVyS1lSdnN2M0xlVldMVjN5RmVQaFBYM3VFNkdN?=
- =?utf-8?B?QnVBcHJCQk5tMXcxZkNrQmxIMkMxcE5sUlFWL0dPZVQ1RjhCeHB3UVdTdnAr?=
- =?utf-8?B?d0l6YmdMZFNzSjZDZDVscnl0RU12VnBlcFRsWjY2V0Z2NXZZd1RYalRZcENt?=
- =?utf-8?B?M3ZKMUtyZ2NMem1BMFBnSVBqd1FsT2lyT1Rkd2djT3I1NTRMaS9lanFCRW5C?=
- =?utf-8?B?QzNsODZQUmd1WC9aYVVoeWMwL0NvempKQzgzRTRTMU1EbFRlRWZUdTFrRWJQ?=
- =?utf-8?B?M042Q3VvdFhZM0JKeFhsMnV0RDFjZHdzaTlqUGZ1bFVKMlJjd1Y3YlJHVmZU?=
- =?utf-8?B?MWg1enN5WlM3dW9SUE1sUnozakoyVmpqak55Z0k5TWN1czk1Q2NlUGpwa1Nm?=
- =?utf-8?B?THM1eDJyRlB0YytmNFJFSDRNZzVkZHpHZ2dsTFhTSkJSNVpGd3lDL0pTSEww?=
- =?utf-8?B?eXNibS9ReCtVcCthVmdESTdsV1NIVnRJbCs1anV2RGVTeGRHVU8raE5Raytx?=
- =?utf-8?B?YjV1TmxVVlJFTzdDano2Sm9OMlJGVWxEamNGWEd6TmMwNkw1c3l5Y0lwMFh0?=
- =?utf-8?Q?DOMA=3D?=
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?OEJhZzFraS96L0FJTm5BS2ZTdUNzNmJ6eWFHWE9VSkdZaE51RWZYYTZ0emVr?=
+ =?utf-8?B?MkdyZk9IZzIzRU9EaFd0VkhxSDJIU3hqVnRta0s2bm5YVTU3a0ZGU1VoUFU2?=
+ =?utf-8?B?QnpiZitNa1JCT210elZuWGhROExxcHVrUmZFSi9NK0o4ckR0TnVlYnRvQUtH?=
+ =?utf-8?B?OXJoRFU0WDEzTC83VVJoRS9tdDB2KzlXdFVVb21QQ1g5UG92cWtwd3dUalh3?=
+ =?utf-8?B?em9kMWJQT1NKSFpsT0JyeSsyUTlrVCtaamxiVlpZT1lPekxTMXo0R2ZWcnpV?=
+ =?utf-8?B?eWlrSm53djliMHJoZk9xQUtQRjdyNXQ1S2dYd2M1ZFhYOGk4Y1VYbmJSalZn?=
+ =?utf-8?B?REd6bXNsQnJrVERCMng0RG1JWVMrZUhsaEN4NnIvMVNuOXk2NUZoY08ydWx6?=
+ =?utf-8?B?UE1ZMkd1em8zUFlrMVhnRWpaMkorQ0RJNXBGRjBkWk1UbzlTeXlUOERTZ2xU?=
+ =?utf-8?B?WFp6OFkxWnRIN2JEUlQ1WVhEYUYvNGpNaWF3UTJtdnpsQ1dRV1FhQ2JRQkdj?=
+ =?utf-8?B?N3lZbVA0YmwzUXZXeWsrSlhlVzc5NEE0b2JQd1VOaFpUSnJnbVVYaStYUnBS?=
+ =?utf-8?B?L1VReUhzTyticnBJNUVNSmFaSHV0anBXSkpQbm1ML1JHS2ppdVVId3lrRkJr?=
+ =?utf-8?B?NGQ3aVZTbTI4YXMzVEhaRmtIYjhUVHBFcnIxYVN2Rmc0U0xYay92NVBHZ1ps?=
+ =?utf-8?B?UVBhNmRLMVViQzYrT3owTVkxb2JhUlNLTGJ2S2xQSEhGWW94QTRUdHBwR1k2?=
+ =?utf-8?B?NHRXMEtCMW1jRE5KbjRCWUFCMzh0by9EYlR3SGducmNXT0FsclAvWFFpTEN2?=
+ =?utf-8?B?akxwRlVPRHZnb1VxSWlMSVYrWWk1OEE3N0N5Vm1McDluSlJPQzhwcUkyMFZJ?=
+ =?utf-8?B?ejZUVWhFSFEwT2xFSjdKSGZqNEN5b2lwdXQxQWpqM2xXQm9lMUxDSnd2Q2Vm?=
+ =?utf-8?B?Z1BVZDZxc1dzZXgvVGNiSStvK3dhM2dsQlZEaEJwM3ZPTFVDa2U1Y3d2K2Zl?=
+ =?utf-8?B?MUhBeUhSUmYxSDFYN2hGWDhyNWt6bmZ3WmFIeWdUNys4dFFlWlhLY0RVMytT?=
+ =?utf-8?B?Y2FhSDB3bFc2d05vWWIzMmg0Um1ySkVZWURhaE5MUnJQY2N4Uk5adFRnVmNU?=
+ =?utf-8?B?WUZSZ3JxVjZnbVEvTjZRTTZ4cUtyZVBmU1FxbTlNOWpURnJHc0dtVkg5Tjhw?=
+ =?utf-8?B?QWpaZG5PbWIxU1B3bUVoQzhTM2dxdWZvaDErd256Z0tJYkQ1dlBKR0tncHRt?=
+ =?utf-8?B?WGdPWXNHSktRZzJVLzhza0RuUEExdlZWTmFuUytFY1JWZytpbVlPek9mMzlo?=
+ =?utf-8?B?eHIrOHBzcFlaTEJldGxrdFJhVjlXNi9mRmlCbjhuYUdpaHYwUTNNTEg2SnRt?=
+ =?utf-8?B?QzJ2d3VxaHQxdHo5U0JhVGJZRi9xdENsVzlCeUNGcXc3M2duTERhN2s3aEdK?=
+ =?utf-8?B?ZkFobTR3cWowcU9CeE1wOW9iMmYxTnBxV1B4ZFJDVndJcWN2REFmWHltME5H?=
+ =?utf-8?B?ZTBJZ3AzRDhvanVhd1pUTUhmMnpUa2JQaExCbWRFWmpNVkI5cXFwbzRHbUVG?=
+ =?utf-8?B?ZVlRSjF0WHlSTGUzVUJ2ZGUvUk9jcVV5dEF4c0RLS21pdVp5ZkwvMHdwalVC?=
+ =?utf-8?B?dE90NThVbmYrTFZVNEJLR0FISzFvWE9COWpFWk5ZV1NVQUhvZDk2UXRaNWFI?=
+ =?utf-8?B?TjJiRllLNGVkdkhubGhMVmhiME0vT0pEeGxka0k1T3l1M0xLdG02YURmY01O?=
+ =?utf-8?B?QlN2SXpzcGw0SXkvVWFuQ3hmaEZOQVN5V3UzQmJaQ0JidGI0UjFLQU12YjVU?=
+ =?utf-8?B?WEJ1N0dmRUdvdDF3WGtoVHY2eWhNMlVOa2w5TlZnNW0vbU85dmVmMzVsekd4?=
+ =?utf-8?B?MVFWNHBzMHMzczl1ZHNWZzhnV3JNNi9SZThMY3VoQXFtNEhpa2RDWENJLy9U?=
+ =?utf-8?B?amFobFRZQktqRHFZYVRML215TjJQayt0ekw0YzRGTngrclAzQUs4Vi9GRkl2?=
+ =?utf-8?B?WW1aazZwMEhTOHd6QWJDdk9ZUlA4S0E3ckhIb3lOangrNDlaeFNybHJnUDdD?=
+ =?utf-8?B?RUN5M0RzYWNUNUpYMXJ6bUo4R0pteWZQSmZ1Vlc5ZjZLRDkwdlhyWVZsRnhl?=
+ =?utf-8?Q?w2BE=3D?=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:PH0PR02MB7159.namprd02.prod.outlook.com; PTR:; CAT:NONE;
  SFS:(13230040)(1800799024)(366016)(376014)(7053199007); DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?ckpGczh0YVRkZTlKbWVlajNsbHRwRHFZejVqckc4SVJLVUJ5MTRJRnlUMEVk?=
- =?utf-8?B?M1VZWDUrRVNKVFg3Z3Jwd241aGlWZnV4eE9Ec0tCUXkzOGxwVVBrUFVMR2lj?=
- =?utf-8?B?RWFsV3J3RU1ZZTVINXZrRUgzdGlNZUpqNlltVUdUVnl4OE5IeWVKdjY5MWUx?=
- =?utf-8?B?SUQ2bE5iaWEzR01waVZUKytUaCtsUHJIbnMzNW41VWplNlFzbDBaS256MWJj?=
- =?utf-8?B?eWF6b295THJDK0RVTW5temw1T0VpZXJvWWJ1eDJVTklybmsrTkV4MHlheklj?=
- =?utf-8?B?V2REVjYycUNqb0N0UHFlVlZZT3NURHZxZ3BDVzJGQ2lDS3dQWDI3OVV4Vk8x?=
- =?utf-8?B?V1I0aW1lMnZ4RDAvci9jYUVHeDJkdjJZZ215dkV4RWMvdm05THhoL2xLY3J3?=
- =?utf-8?B?YmJtcmt1U2lGQzJqaE5hdHlhVWM1VmNVN0I0dXFDdWxwSmN5NW1FcGVVSmxQ?=
- =?utf-8?B?MEtOREJIWTRVU1paaDBCRkxtaldQU2VMTWRvZ0dibXJvOThyODlyVnBlSVBV?=
- =?utf-8?B?VFc3cHJycHdvdUsybjdPdnFnNFdpT1E3d09GZEZDYi9LR0RjSEFrRXFWeDlY?=
- =?utf-8?B?V1p0NW1BSUN5RWpaNXgydlRlL0g1aWdlaS96LzdkM2UrREYxUlZoMUdKdUZB?=
- =?utf-8?B?VmRvREI4ODdkOEVjaHJpWkRuQjdaZ1VBem1LMlg1MFdaR2o0UU5TdzYwVUph?=
- =?utf-8?B?dXUzckNDYkxEUXJ1OTJHYWZPTkg5U0l4eFhia1M0ejk5c0lnMGFnek1USmRG?=
- =?utf-8?B?SzhDR0xnLy81Q29HQ3BYL0tSNnVyQnRQZXZpaE1XcFdoZm9Lai9nc1MzTVQ3?=
- =?utf-8?B?NXdwWEltVTJlb2hLQWwxbGl0VTY1ODJzc3N0YkpHcC9LM3dHY1pTd2QwS3hI?=
- =?utf-8?B?NXJvUlhLa2J2M1lNejFNcVU0WDY1Y3liNytjWHdRWWlkZWhjM3FlaU45Uk9W?=
- =?utf-8?B?UGRJeiszSEY3bzh5TVQ3dmxrY1RvWUV5ci8wVVJYajhHY09FZGpHdEZTMm1t?=
- =?utf-8?B?SjNHREowTFFCYzViY0VtM2R2NnVKNTZjVmgweEFVVmdiWlMyZ3YzREVvUzV4?=
- =?utf-8?B?SHZoMnZnNmRPQjdNZENXSkQxNldmSlVXSzdwWnR3d3hwMEYwTDB1UXpXWDJ2?=
- =?utf-8?B?SW11clNRNmw0dy9wR1FKWW5uNHFrSmNkdC9PTWxmeFFTUlZaSERNMDNUVGdp?=
- =?utf-8?B?RlMreVBJT2VFdUY0QXFUd3NsS2ZneHRIVVlsQjRWMllVS3FYaVpZR3RtZlNX?=
- =?utf-8?B?d21DcUpETlEvSnE3YVAzVDBsTGpzc0JaY2NNSzZqdm9RMER3ZWQvUnozd3dq?=
- =?utf-8?B?c1RyV1NHMUdwSDFHYWVFcGlteU5WMHcvTXVITHlMOVYzWlVDUFdjQTNYUnVQ?=
- =?utf-8?B?SzFrek8yNmdzZjdqUFNEMUdwMXNFbDVCai9Pc2RGeFhmZVFudEF6S0NzeHVO?=
- =?utf-8?B?V0VEL1MrUGJDc0FKRG9hWHFyd0lkd3Jzdmo5dW9qY0RPMUx4aFNwTjhSb0tX?=
- =?utf-8?B?MXRYU0t2YmpKSHNCQWpZdytsbmtFb1dRK0ZPK2RKMDVRczhlUGNadys1Y3Yx?=
- =?utf-8?B?V0FqUUpMYWU3QWVIbTNXcW44MlJrR29pOUhjaHZKMjNUc3FKYVJzcDAyczN1?=
- =?utf-8?B?MFZ4cUU5T0pScXFtRDgram5qYmFaZHV0enhKUjJrVW9iRTR3WlU2enA2WnYr?=
- =?utf-8?B?d2lKQ0kvL1Q3TkFMSzR1aTNQZ2Zkc0ErbVhqOUdBc1Y1ZTNSdURpQzBMOEph?=
- =?utf-8?B?VURyaHpSZ3h3QUtDNHczM0pOUnQyWVlhdzRDeU1qcVJlSjBjcmhNM2daem54?=
- =?utf-8?B?ZkxhV2xZK2Z4dGtzclRsT2xBYlZsT1NQOG8vTFpRRXpyY09VcTF0NmNIVFNE?=
- =?utf-8?B?ZEhKaHN6bjQ1bXhtbUJJZkhtTldjaE44N1VsUTJjOERTUytyQXIreEpRY0tm?=
- =?utf-8?B?ajRKZ1NYa1hMTGtzN3ZGQ3BwYTJORWw1RnNYQ3NTR05FODBvTUhGaUJnbm5O?=
- =?utf-8?B?UDR5aXhjaEtjZk54TDFQb2dEUUUvQUVjSUwrREJPY3U1YlJLcGlyR3M0M3NN?=
- =?utf-8?B?L0tyZklicVVDQ3RUZjgzbU1WUTlDWWV0WXR5Sy9UdzFVNUVXSWIvd2k1NEl0?=
- =?utf-8?B?QlZQK0RWLzNZVGhFUWFsSTZiQUhKU0szY2UxSUJ0cmdRSG1LOFBaQmtacmx5?=
- =?utf-8?B?ejBlQXpMR0IwbytNVGpwUGhBeG5tVEhCYVRJNWh0aHJONkxTU1YyQnl6NE0w?=
- =?utf-8?B?NjhEcUFuZW1Pak1sZWRpSDJQVkgwUDlDRllJN1hsNnJxVnhPMHRnMkd4UEZl?=
- =?utf-8?B?MzJzK2hmL3ZkM25jS3F3TDg2WmNMK2UzSzBMUGNDUmI3T2VXeDU5SlBiWE9H?=
- =?utf-8?Q?+Gjgzff5frEsM9oI=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?RlY1ODVPaVNHVzhUa3Fsb21hUDhVaGU0bFVoWjU0U0cxeEFaTTduQUtuS08y?=
+ =?utf-8?B?RXY1c05IOXVyQnc0U1FyM1RoTjlnSVk0NUVoWWVnSUdUdzhucFd1bkl0RnVu?=
+ =?utf-8?B?VC84WUNYcWZwcERRekg3cFo0NWc3WmtvRmdXYmJQQXdLK2ZhZU5PWVBzYWM3?=
+ =?utf-8?B?c01hZjNXSEZ0eWROUWpydkttd3dlNXpmVHQwV2Y2bzRKbmRNdjNJbXlXMGhK?=
+ =?utf-8?B?NGlMcFBxK2NDa2FsT0YrcTE2Sm5VK3F2VUhZV0tzaXpPdXlhaUNOL0lPYUpX?=
+ =?utf-8?B?dG5uQjFEVER2bzV0bjUrelYwWS9nVUMxWjhFc21lNXBCb0hOeGpGS0FGRGcw?=
+ =?utf-8?B?MFV4ZVJzQWxTSlIvMjNzSWVQS0MwcGc4YTVOdm5QR2lBVnpIbDZwOTc3S3JQ?=
+ =?utf-8?B?bWN5bEwzTW04b0lQN1Q2TE9IT1lnck40Z3hoVHF3d0pSYStKZTZtcG5zWnNs?=
+ =?utf-8?B?dDJmbVp2eXZMdW11RUl3cVpiK1R4K2RCSFBqRmZwWFk0WVFKT1JnMGpKODFO?=
+ =?utf-8?B?NUV0cHF2SHVVVG9RZFRLS2pxSlFGeStwcXRESitQUkZkRlpYOVpwV05tZ01z?=
+ =?utf-8?B?Umlxd2l1SWxOcEJyT3B4Z1ZFcmxhTVpkVTgvSGUwa21JRS92RnhWTU9XOUdJ?=
+ =?utf-8?B?ZmhjNGQ0c0JDb1FuT3dOUHI3cFJSN3dKQWNmUlFFZTdNbWhqSnB2elpCaW45?=
+ =?utf-8?B?U0N4d0h5Zm1VZnlNZEMxTHFZSG8ySlkrS2ltTTRvY2ZIY1BDVWhZOThNY3ND?=
+ =?utf-8?B?aW5yZ1grYzVEbk10SDBPb0lLZzhHS2pHNnN4Q2VwdmtuT2wyQ2tGcFJ6eEph?=
+ =?utf-8?B?dWR5TSszakszbWZkRm5SRjNaZUxJcGZ6Z25zTnI0dk9uRDNZdkFKRjRLMm4x?=
+ =?utf-8?B?NGRtb2dWZHZoajY5amR0YytjVEFnSytaNTNVS0oydWcwb1JoZjFHaGxyNGJp?=
+ =?utf-8?B?QXhVL2tWYWxsOGxpa2pSSGtQaHdzNk9YTTgzdkFNOEI1R3plejdJaDRCNGxz?=
+ =?utf-8?B?aGJaQSthWWpEc2RvdHdDNHo1Z3hveVljbDd2NEhORVoyY0ZORjhoeFI3VzdR?=
+ =?utf-8?B?RWFYYjRmUHFaeVE5WmRxckZlQmwrQ3VONG5lbnVIQzVMdkxnOW1nbkJIZndJ?=
+ =?utf-8?B?T2p0WGRYR0FlbDUvbmZXdUJyTTJPOWZjL29hSm5oM0dUTHBSaEV3b3o3R1Rv?=
+ =?utf-8?B?alhTYVdiMXVZSkY2N0QyZWI0anFESk8rZ01OaWdxWjlpa3g0MHZqZlY1ZWV0?=
+ =?utf-8?B?SHJzK1NreHFwOGNwR2ZHcVJ1T0cvVmJSZHd4dzVNVTV0MXdwNXFwcHRJUEVn?=
+ =?utf-8?B?cHZIVEZhVWw2VkYxQ2lqWFVEVUMyMmxZRk1BT1dkRC9kSHV3ZEJGQmNPbzhV?=
+ =?utf-8?B?ZkdsQUg2MUNoK2lkTDhPOUJ1L1Y1S2pHenVHNVA2QytyYU5nZEVRYW83NE1I?=
+ =?utf-8?B?RW1KVjR2aG9hSWIyU1E4cGlxYzV1R0JOcnRsOG5hMjhFS1d5SWtyaktocUNl?=
+ =?utf-8?B?S255K0RWS0Y2eDE4d09SVFM3amkyVFQvNXdqeGJDd3hwaDJSRUZqaEFjcFEz?=
+ =?utf-8?B?V3lPL3pMRzhtUEpGemp2UHVVdm10YzhLQ0ZHUUk4NVczSEJlRzEyTDA3TGEr?=
+ =?utf-8?B?NjdicER1WXBMUnVYVTFMd1lUTmRXemlEWGhET3AvT0RyakhqOFMzYmplNzhV?=
+ =?utf-8?B?bXNlYlZXd253Y21uQVMyUC8reEQ2VlBVcEI1ZmE5bDJ5WnpuRmk0ZWsxUVlz?=
+ =?utf-8?B?S3BKdVd2ZGtFTkFyRXVTWmUyMjFNYWtObllCSkhsRndCSE5ZZCs2ZzFUeEta?=
+ =?utf-8?B?K1lsZnlWRzNDMWNtb1FJeit0SGVHNVVGemxuaG42NDJ2U05ZRGM2ZnR3UWpw?=
+ =?utf-8?B?T05UYXprWUw5TjdNWDg0SVR1MFM3cDBRUFNTNUdhRWxwaUFtRVdjNFoxZWJ3?=
+ =?utf-8?B?MVJURDY1RnJJcXBZRXpid2FFZllZOGhKTk1KWFZzMThvajU5SHF0dU5BcU1o?=
+ =?utf-8?B?eEV2N0VJMG1jeDBwalZ1MW0yV1lEb0RndHY2VUE2dDNYY25SWWhSMm9uMVlC?=
+ =?utf-8?B?dnRKT2lKQUF2Uk1CTjVTRkNJby83b1FLZWlSeG84TEdUNjhXWnh1SHNiUHNE?=
+ =?utf-8?B?SDBFRHNkS3hFWU1mbnVDYjYrVnlaSWN4KzU3MEZ1Wml1b1Z5UWdRZm40bEVa?=
+ =?utf-8?B?Zi9rMnU5a05sZzlLWTVHU0pmaTJOblRmbSs5UDdXaGpnb2xOTlYrcXlqS1VC?=
+ =?utf-8?B?SHhoYjdiT25yNE5QQUUzTG43Y0oxcjNkaFRWTnRIK3JLVGpLeER2bmR5Vnd3?=
+ =?utf-8?B?QXlKWE9EZjdvWk50YlNQZmtId045VFFoZDJGa0diRmlpRjRmRWExNlFKalZp?=
+ =?utf-8?Q?9OjZ8ajmvzUrGKO4=3D?=
 X-OriginatorOrg: nutanix.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 0978e0f4-184e-4848-e64f-08de6ae6ad43
+X-MS-Exchange-CrossTenant-Network-Message-Id: e99e779d-ef1a-47fc-6a1f-08de6ae6fbef
 X-MS-Exchange-CrossTenant-AuthSource: PH0PR02MB7159.namprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Feb 2026 10:00:11.6111 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Feb 2026 10:02:23.6018 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: cQvkLOWDKPRf05EN2q0lsb0qU/9WhCvEDNua+cA7JkFGM4HMDGn5hY+bxjEj1JyBiIXXHaJCp+GFThmqQGVJb7iKY3tkJOuU3yPdsYVjePA=
+X-MS-Exchange-CrossTenant-UserPrincipalName: bZ3j0QD8PP4ekrKn2gH4Ht9jdZ6gzhgTSijOzauthAzXR6rgHLpRBIqh5v6ngCF1TmdTq/o5SavYTW3QNj1DZcGLCX5dzzwOEAcEP3wQA1E=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN2PR02MB6848
-X-Authority-Analysis: v=2.4 cv=OuBCCi/t c=1 sm=1 tr=0 ts=698ef62d cx=c_pps
- a=qA2lyNeKfuBKxbHetcl1Mg==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
+X-Authority-Analysis: v=2.4 cv=Yd+wJgRf c=1 sm=1 tr=0 ts=698ef6b1 cx=c_pps
+ a=5fNYnt3/gC+uMcP5UkWVcQ==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
  a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
  a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10 a=HzLeVaNsDn8A:10 a=0kUYKlekyDsA:10
  a=VkNPw1HP01LnGYTKEx00:22 a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22
- a=20KFwNOVAAAA:8 a=64Cc0HZtAAAA:8 a=8o11-kSyLMeeCoeMEp0A:9 a=3ZKOabzyN94A:10
+ a=20KFwNOVAAAA:8 a=64Cc0HZtAAAA:8 a=BfMGIashPQeTL7_EzHoA:9 a=3ZKOabzyN94A:10
  a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: 3Dt491dmGKV3CBUs7VFd36I0aDP05Sqe
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjEzMDA3NiBTYWx0ZWRfX9YbSW7KQ1hSs
- WvFQoc2ha8wQrIZ64zwJhAQwS8kNR7rV1num71ubKfT2156H1LaOlQC7nuQG2P90PZjKcum03jU
- IhoAEldUDsN1qPOfQaZs/I5jIRaB2fYkGmC71PttR1Rc2itwDv3angT5MbPlNv72Wbd/Dj7oDKF
- CcA49pFuwiLxMNBBxJvYBPPYXTndqS41543Yuqg6960APTziHwT8hQv9tUf5IgXQLI/IHbi4poL
- JqbF9WMY3KJGZHw6GlEJ5FTBA4yK12+1JrrmOS88/OUK2ufUhQMgl4R7xHJhxadPjF+dfo1WN4b
- 9vvxLYQm2p5MEY7LQsSbh0ERNPGDLrUA/71OkDHv06l/gd5wWXTcFzJOjeY1f5H/AwHeG6pUHQZ
- qr11UdrvJnmWzIWavreVYejtoq8EdT6qRx/Hv3yZ7TZtiPaXzI0zS/KAwv6Xf7/8cuQ239ehB+c
- Uk/pS0YIMLU5PW83iWA==
-X-Proofpoint-ORIG-GUID: 3Dt491dmGKV3CBUs7VFd36I0aDP05Sqe
+X-Proofpoint-ORIG-GUID: utU62OOgaTjoI4J6bpBat3XeXUoKS7on
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjEzMDA3NiBTYWx0ZWRfX3sjau8dWUnJ1
+ RwanPiZIU+N+iVqnV2DmOgKvveFmH0hq6pctSwarHtfJFDMm2AsWaS/+qb4zh8fZ6RhGanLUKfN
+ +5panLSNIHlD/jDKPkuFl7L6ETUG9r1foAPnRFinUahqLydUXYDgU2JdjtsV00aYK+m8jaUbMN/
+ aDls8VJvr1W/lODw1KDxQnyeeYC8lUiHZJyn/o3KTQy/TcvtXDfPZAQMuSvshKsfnQld3Cpp8xS
+ 4CnqG6WfFYqUOMS40qOK0N59Zf1hVzUgZLn5yKwh8Q6sX139rxxrIMFqEykcttXod5j47oexUw/
+ BfGkdfPzwfvrY6ECZlouh8BqRYt82ZIr/i74+oRuSDOMlNXXl2KEPdXafhDzBd+FcRanMj3/n5u
+ ft+6QXD+pLf19/y0OmlUpLxfs5bh3Ziu0a39CXD0aXLahQi/mpPRmbjDodKeulUQkdsoF3OOf/S
+ ttJ2K7Lt5bABdsF9MbA==
+X-Proofpoint-GUID: utU62OOgaTjoI4J6bpBat3XeXUoKS7on
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-02-13_01,2026-02-12_03,2025-10-01_01
@@ -228,292 +227,126 @@ On 27/01/2026 18:24, marcandre.lureau@redhat.com wrote:
 
 > From: Marc-André Lureau <marcandre.lureau@redhat.com>
 > 
-> Migrate the PulseAudio backend from the legacy driver init/fini
+> Migrate the SDL audio backend from the legacy driver init/fini
 > callbacks to proper QOM realize and finalize methods.
 > 
-> The paaudio struct fields are now embedded directly in the AudioPa
-> QOM object instead of being allocated separately as drv_opaque. This
-> allows accessing the backend state through proper QOM type casting
-> with AUDIO_PA() rather than casting drv_opaque pointers.
+> The sdl_audio_init() function is replaced with audio_sdl_realize(),
+> which initializes the SDL audio subsystem before delegating to the
+> parent class realize method. The sdl_audio_fini() is replaced with
+> audio_sdl_finalize() to properly clean up the SDL audio subsystem.
 > 
-> The PulseAudio connection is now managed through the QOM lifecycle,
-> with the connection reference acquired in realize and released in
-> finalize.
+> Access to the Audiodev is now through hw->s->dev instead of the
+> drv_opaque pointer.
 > 
 > Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 > ---
->   audio/paaudio.c | 109 +++++++++++++++++++++++++-----------------------
->   1 file changed, 57 insertions(+), 52 deletions(-)
+>   audio/sdlaudio.c | 40 +++++++++++++++++++++++-----------------
+>   1 file changed, 23 insertions(+), 17 deletions(-)
 > 
-> diff --git a/audio/paaudio.c b/audio/paaudio.c
-> index 941f75f25e8..8191b54468e 100644
-> --- a/audio/paaudio.c
-> +++ b/audio/paaudio.c
-> @@ -14,19 +14,10 @@
->   #define TYPE_AUDIO_PA "audio-pa"
->   OBJECT_DECLARE_SIMPLE_TYPE(AudioPa, AUDIO_PA)
+> diff --git a/audio/sdlaudio.c b/audio/sdlaudio.c
+> index 1a5e3f8a969..aa3c0922199 100644
+> --- a/audio/sdlaudio.c
+> +++ b/audio/sdlaudio.c
+> @@ -44,19 +44,14 @@
+>   #define TYPE_AUDIO_SDL "audio-sdl"
+>   OBJECT_DECLARE_SIMPLE_TYPE(AudioSdl, AUDIO_SDL)
 >   
-> -struct AudioPa {
-> -    AudioMixengBackend parent;
-> -};
-> +static AudioBackendClass *audio_pa_parent_class;
+> +static AudioBackendClass *audio_sdl_parent_class;
+> +
+>   struct AudioSdl {
+>       AudioMixengBackend parent;
+>   };
 >   
->   static struct audio_driver pa_audio_driver;
+>   static struct audio_driver sdl_audio_driver;
 >   
-> -static void audio_pa_class_init(ObjectClass *klass, const void *data)
+> -static void audio_sdl_class_init(ObjectClass *klass, const void *data)
 > -{
 > -    AudioMixengBackendClass *k = AUDIO_MIXENG_BACKEND_CLASS(klass);
 > -
-> -    k->driver = &pa_audio_driver;
+> -    k->driver = &sdl_audio_driver;
 > -}
 > -
->   typedef struct PAConnection {
->       char *server;
->       int refcount;
-> @@ -36,18 +27,19 @@ typedef struct PAConnection {
->       pa_context *context;
->   } PAConnection;
->   
-> -static QTAILQ_HEAD(PAConnectionHead, PAConnection) pa_conns =
-> -    QTAILQ_HEAD_INITIALIZER(pa_conns);
-> +struct AudioPa {
-> +    AudioMixengBackend parent;
->   
-> -typedef struct {
-> -    Audiodev *dev;
->       PAConnection *conn;
-> -} paaudio;
-> +};
-> +
-> +static QTAILQ_HEAD(PAConnectionHead, PAConnection) pa_conns =
-> +    QTAILQ_HEAD_INITIALIZER(pa_conns);
->   
->   typedef struct {
+>   typedef struct SDLVoiceOut {
 >       HWVoiceOut hw;
->       pa_stream *stream;
-> -    paaudio *g;
-> +    AudioPa *g;
->   } PAVoiceOut;
+>       int exit;
+> @@ -356,7 +351,7 @@ static int sdl_init_out(HWVoiceOut *hw, struct audsettings *as,
+>       SDLVoiceOut *sdl = (SDLVoiceOut *)hw;
+>       SDL_AudioSpec req, obt;
+>       int err;
+> -    Audiodev *dev = drv_opaque;
+> +    Audiodev *dev = hw->s->dev;
+>       AudiodevSdlPerDirectionOptions *spdo = dev->u.sdl.out;
+>       struct audsettings obt_as;
 >   
->   typedef struct {
-> @@ -55,7 +47,7 @@ typedef struct {
->       pa_stream *stream;
->       const void *read_data;
->       size_t read_length;
-> -    paaudio *g;
-> +    AudioPa *g;
->   } PAVoiceIn;
+> @@ -412,7 +407,7 @@ static int sdl_init_in(HWVoiceIn *hw, audsettings *as, void *drv_opaque)
+>       SDLVoiceIn *sdl = (SDLVoiceIn *)hw;
+>       SDL_AudioSpec req, obt;
+>       int err;
+> -    Audiodev *dev = drv_opaque;
+> +    Audiodev *dev = hw->s->dev;
+>       AudiodevSdlPerDirectionOptions *spdo = dev->u.sdl.in;
+>       struct audsettings obt_as;
 >   
->   static void qpa_conn_fini(PAConnection *c);
-> @@ -529,23 +521,25 @@ fail:
->   static int qpa_init_out(HWVoiceOut *hw, struct audsettings *as,
->                           void *drv_opaque)
->   {
-> +    AudioMixengBackend *amb = hw->s;
-> +    AudioPa *apa = AUDIO_PA(amb);
->       int error;
->       pa_sample_spec ss;
->       pa_buffer_attr ba;
->       struct audsettings obt_as = *as;
->       PAVoiceOut *pa = (PAVoiceOut *) hw;
-> -    paaudio *g = pa->g = drv_opaque;
-> -    AudiodevPaOptions *popts = &g->dev->u.pa;
-> +    AudiodevPaOptions *popts = &amb->dev->u.pa;
->       AudiodevPaPerDirectionOptions *ppdo = popts->out;
-> -    PAConnection *c = g->conn;
-> +    PAConnection *c = apa->conn;
->   
-> +    pa->g = apa;
->       ss.format = audfmt_to_pa (as->fmt, as->endianness);
->       ss.channels = as->nchannels;
->       ss.rate = as->freq;
->   
->       ba.tlength = pa_usec_to_bytes(ppdo->latency, &ss);
->       ba.minreq = pa_usec_to_bytes(MIN(ppdo->latency >> 2,
-> -                                     (g->dev->timer_period >> 2) * 3), &ss);
-> +                                     (amb->dev->timer_period >> 2) * 3), &ss);
->       ba.maxlength = -1;
->       ba.prebuf = -1;
->   
-> @@ -553,7 +547,7 @@ static int qpa_init_out(HWVoiceOut *hw, struct audsettings *as,
->   
->       pa->stream = qpa_simple_new (
->           c,
-> -        ppdo->stream_name ?: g->dev->id,
-> +        ppdo->stream_name ?: amb->dev->id,
->           PA_STREAM_PLAYBACK,
->           ppdo->name,
->           &ss,
-> @@ -578,23 +572,25 @@ static int qpa_init_out(HWVoiceOut *hw, struct audsettings *as,
->   
->   static int qpa_init_in(HWVoiceIn *hw, struct audsettings *as, void *drv_opaque)
->   {
-> +    AudioMixengBackend *amb = hw->s;
-> +    AudioPa *apa = AUDIO_PA(amb);
->       int error;
->       pa_sample_spec ss;
->       pa_buffer_attr ba;
->       struct audsettings obt_as = *as;
->       PAVoiceIn *pa = (PAVoiceIn *) hw;
-> -    paaudio *g = pa->g = drv_opaque;
-> -    AudiodevPaOptions *popts = &g->dev->u.pa;
-> +    AudiodevPaOptions *popts = &amb->dev->u.pa;
->       AudiodevPaPerDirectionOptions *ppdo = popts->in;
-> -    PAConnection *c = g->conn;
-> +    PAConnection *c = apa->conn;
->   
-> +    pa->g = apa;
->       ss.format = audfmt_to_pa (as->fmt, as->endianness);
->       ss.channels = as->nchannels;
->       ss.rate = as->freq;
->   
-> -    ba.fragsize = pa_usec_to_bytes((g->dev->timer_period >> 1) * 3, &ss);
-> +    ba.fragsize = pa_usec_to_bytes((amb->dev->timer_period >> 1) * 3, &ss);
->       ba.maxlength = pa_usec_to_bytes(
-> -        MAX(ppdo->latency, g->dev->timer_period * 3), &ss);
-> +        MAX(ppdo->latency, amb->dev->timer_period * 3), &ss);
->       ba.minreq = -1;
->       ba.prebuf = -1;
->   
-> @@ -602,7 +598,7 @@ static int qpa_init_in(HWVoiceIn *hw, struct audsettings *as, void *drv_opaque)
->   
->       pa->stream = qpa_simple_new (
->           c,
-> -        ppdo->stream_name ?: g->dev->id,
-> +        ppdo->stream_name ?: amb->dev->id,
->           PA_STREAM_RECORD,
->           ppdo->name,
->           &ss,
-> @@ -834,15 +830,20 @@ fail:
->       return NULL;
+> @@ -459,19 +454,20 @@ static void sdl_enable_in(HWVoiceIn *hw, bool enable)
+>       SDL_PauseAudioDevice(sdl->devid, !enable);
 >   }
 >   
-> -static void *qpa_audio_init(Audiodev *dev, Error **errp)
-> +static bool
-> +audio_pa_realize(AudioBackend *abe, Audiodev *dev, Error **errp)
+> -static void *sdl_audio_init(Audiodev *dev, Error **errp)
+> +static bool audio_sdl_realize(AudioBackend *abe, Audiodev *dev, Error **errp)
 >   {
-> -    paaudio *g;
-> +    AudioPa *apa = AUDIO_PA(abe);
->       AudiodevPaOptions *popts = &dev->u.pa;
->       const char *server;
->       PAConnection *c;
->   
->       assert(dev->driver == AUDIODEV_DRIVER_PA);
->   
-> +    if (!audio_pa_parent_class->realize(abe, dev, errp)) {
-> +        return false;
-> +    }
-> +
->       if (!popts->server) {
->           char pidfile[64];
->           char *runtime;
-> @@ -851,42 +852,38 @@ static void *qpa_audio_init(Audiodev *dev, Error **errp)
->           runtime = getenv("XDG_RUNTIME_DIR");
->           if (!runtime) {
->               error_setg(errp, "XDG_RUNTIME_DIR not set");
-> -            return NULL;
-> +            return false;
->           }
->           snprintf(pidfile, sizeof(pidfile), "%s/pulse/pid", runtime);
->           if (stat(pidfile, &st) != 0) {
->               error_setg_errno(errp, errno, "could not stat pidfile %s", pidfile);
-> -            return NULL;
-> +            return false;
->           }
->       }
->   
->       qpa_validate_per_direction_opts(dev, popts->in);
->       qpa_validate_per_direction_opts(dev, popts->out);
->   
-> -    g = g_new0(paaudio, 1);
->       server = popts->server;
-> -
-> -    g->dev = dev;
-> -
->       QTAILQ_FOREACH(c, &pa_conns, list) {
->           if (server == NULL || c->server == NULL ?
->               server == c->server :
->               strcmp(server, c->server) == 0) {
-> -            g->conn = c;
-> +            apa->conn = c;
->               break;
->           }
->       }
-> -    if (!g->conn) {
-> -        g->conn = qpa_conn_init(server);
-> +    if (!apa->conn) {
-> +        apa->conn = qpa_conn_init(server);
->       }
-> -    if (!g->conn) {
-> -        g_free(g);
-> +    if (!apa->conn) {
->           error_setg(errp, "could not connect to PulseAudio server");
+> -    if (SDL_InitSubSystem (SDL_INIT_AUDIO)) {
+> +    if (SDL_InitSubSystem(SDL_INIT_AUDIO)) {
+>           error_setg(errp, "SDL failed to initialize audio subsystem");
 > -        return NULL;
+> +        qapi_free_Audiodev(dev);
 > +        return false;
 >       }
 >   
-> -    ++g->conn->refcount;
-> -    return g;
-> +    ++apa->conn->refcount;
-> +
-> +    return true;
+> -    return dev;
+> +    return audio_sdl_parent_class->realize(abe, dev, errp);
 >   }
 >   
->   static void qpa_conn_fini(PAConnection *c)
-> @@ -908,16 +905,14 @@ static void qpa_conn_fini(PAConnection *c)
->       g_free(c);
->   }
->   
-> -static void qpa_audio_fini (void *opaque)
-> +static void audio_pa_finalize(Object *obj)
+> -static void sdl_audio_fini (void *opaque)
+> +static void audio_sdl_finalize(Object *obj)
 >   {
-> -    paaudio *g = opaque;
-> -    PAConnection *c = g->conn;
-> +    AudioPa *apa = AUDIO_PA(obj);
-> +    PAConnection *c = apa->conn;
->   
-> -    if (--c->refcount == 0) {
-> +    if (c && --c->refcount == 0) {
->           qpa_conn_fini(c);
->       }
-> -
-> -    g_free(g);
+> -    SDL_QuitSubSystem (SDL_INIT_AUDIO);
+> +    SDL_QuitSubSystem(SDL_INIT_AUDIO);
 >   }
 >   
->   static struct audio_pcm_ops qpa_pcm_ops = {
-> @@ -939,8 +934,6 @@ static struct audio_pcm_ops qpa_pcm_ops = {
+>   static struct audio_pcm_ops sdl_pcm_ops = {
+> @@ -499,8 +495,6 @@ static struct audio_pcm_ops sdl_pcm_ops = {
 >   
->   static struct audio_driver pa_audio_driver = {
->       .name           = "pa",
-> -    .init           = qpa_audio_init,
-> -    .fini           = qpa_audio_fini,
->       .pcm_ops        = &qpa_pcm_ops,
+>   static struct audio_driver sdl_audio_driver = {
+>       .name           = "sdl",
+> -    .init           = sdl_audio_init,
+> -    .fini           = sdl_audio_fini,
+>       .pcm_ops        = &sdl_pcm_ops,
 >       .max_voices_out = INT_MAX,
 >       .max_voices_in  = INT_MAX,
-> @@ -948,11 +941,23 @@ static struct audio_driver pa_audio_driver = {
->       .voice_size_in  = sizeof (PAVoiceIn),
+> @@ -508,11 +502,23 @@ static struct audio_driver sdl_audio_driver = {
+>       .voice_size_in  = sizeof(SDLVoiceIn),
 >   };
 >   
-> +static void audio_pa_class_init(ObjectClass *klass, const void *data)
+> +static void audio_sdl_class_init(ObjectClass *klass, const void *data)
 > +{
 > +    AudioBackendClass *b = AUDIO_BACKEND_CLASS(klass);
 > +    AudioMixengBackendClass *k = AUDIO_MIXENG_BACKEND_CLASS(klass);
 > +
-> +    audio_pa_parent_class = AUDIO_BACKEND_CLASS(object_class_get_parent(klass));
+> +    audio_sdl_parent_class = AUDIO_BACKEND_CLASS(object_class_get_parent(klass));
 > +
-> +    b->realize = audio_pa_realize;
-> +    k->driver = &pa_audio_driver;
+> +    b->realize = audio_sdl_realize;
+> +    k->driver = &sdl_audio_driver;
 > +}
 > +
->   static const TypeInfo audio_pa_info = {
->       .name = TYPE_AUDIO_PA,
+>   static const TypeInfo audio_sdl_info = {
+>       .name = TYPE_AUDIO_SDL,
 >       .parent = TYPE_AUDIO_MIXENG_BACKEND,
->       .instance_size = sizeof(AudioPa),
->       .class_init = audio_pa_class_init,
-> +    .instance_finalize = audio_pa_finalize,
+>       .instance_size = sizeof(AudioSdl),
+>       .class_init = audio_sdl_class_init,
+> +    .instance_finalize = audio_sdl_finalize,
 >   };
 >   
->   static void register_audio_pa(void)
+>   static void register_audio_sdl(void)
 
 Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
 
