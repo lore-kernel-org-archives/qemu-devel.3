@@ -4,83 +4,211 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE92FEE36A0
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Feb 2026 09:52:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A233EE36A0
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Feb 2026 09:52:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqpor-0007b0-Ug; Fri, 13 Feb 2026 04:50:37 -0500
+	id 1vqpqV-0002xY-Rg; Fri, 13 Feb 2026 04:52:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vqpoh-000777-O1
- for qemu-devel@nongnu.org; Fri, 13 Feb 2026 04:50:31 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
+ id 1vqpqI-0002Kp-P4
+ for qemu-devel@nongnu.org; Fri, 13 Feb 2026 04:52:07 -0500
+Received: from mx0b-002c1b01.pphosted.com ([148.163.155.12])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vqpoY-0007IS-Sl
- for qemu-devel@nongnu.org; Fri, 13 Feb 2026 04:50:25 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770976217;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=EkOuQwE7r/+vSW05dfY0N0e0q7f2IkqD8VkbkpDWQVE=;
- b=XVppd7MxhpuVWlIVBTlGGdn5080P3qAy6/Adly38HdfVZMxLYw45Get7XjqJ1RuWTxx6u2
- Ip07UR0J1vrGawcJdIkC7QFIrsao6QWxAR/okwlFq/o/Ss+xhT71DwNSJFMrLpv2/7mNBH
- E/5qT3Ii/ddYWIyra9PL3c+dx8Qtp4I=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-416-lSjxDuI5MUSzo8WKgT3dYw-1; Fri,
- 13 Feb 2026 04:50:13 -0500
-X-MC-Unique: lSjxDuI5MUSzo8WKgT3dYw-1
-X-Mimecast-MFC-AGG-ID: lSjxDuI5MUSzo8WKgT3dYw_1770976211
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7593218003F5; Fri, 13 Feb 2026 09:50:07 +0000 (UTC)
-Received: from localhost (unknown [10.44.22.41])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id A2ABB30001B9; Fri, 13 Feb 2026 09:50:06 +0000 (UTC)
-From: marcandre.lureau@redhat.com
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Paul Durrant <paul@xen.org>, Anthony PERARD <anthony@xenproject.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Stefano Stabellini <sstabellini@kernel.org>,
- xen-devel@lists.xenproject.org,
- Samuel Thibault <samuel.thibault@ens-lyon.org>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Subject: [PULL v2 07/15] chardev: .chr_open(): add boolean return value
-Date: Fri, 13 Feb 2026 10:49:26 +0100
-Message-ID: <20260213094938.4074478-8-marcandre.lureau@redhat.com>
-In-Reply-To: <20260213094938.4074478-1-marcandre.lureau@redhat.com>
-References: <20260213094938.4074478-1-marcandre.lureau@redhat.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+ (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
+ id 1vqpqG-0007hk-N0
+ for qemu-devel@nongnu.org; Fri, 13 Feb 2026 04:52:06 -0500
+Received: from pps.filterd (m0127843.ppops.net [127.0.0.1])
+ by mx0b-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 61CM0nvc1341809; Fri, 13 Feb 2026 01:52:00 -0800
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=
+ proofpoint20171006; bh=7Uua99UXufoHB1EBd2Lu4LrCFARN16jDJZ6ZQAJSE
+ ts=; b=UxsxG6Ssu17+p/b/ymykI0S/Xe+tAC8H830WD6TUzooY5yLwTWKmEiWSX
+ ytt9PrHGbofJALDzqWw+0LICs31ZCBbH8p+8xbZpP4N3GGrURaIXY5LZJQXOpkIt
+ KiffNe3okgrz1YJ6w+ruRF2bn32E5E9j1qIl95Fy5puLcTmr2xJVAOWYU/4TnrgI
+ cDUz95gizSULYzq5Owh9P27Jw9sFDLp4WrWQkZdGZVbqQK/XETZHfQyvCfwlRwdF
+ w7UP2OuQ5VPElpXSCQcJ/7QNeuo0Y8nqdN98rTVFqBQY11FUdUvpCxoie6vkY7Z+
+ t4X1oP1It9WT8tiB6w9JTr/A3Bw9A==
+Received: from co1pr03cu002.outbound.protection.outlook.com
+ (mail-westus2azon11020078.outbound.protection.outlook.com [52.101.46.78])
+ by mx0b-002c1b01.pphosted.com (PPS) with ESMTPS id 4c8k9s7jr2-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Fri, 13 Feb 2026 01:52:00 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=OxIc/21Ysdk/Qpga3KUoYG+Y+Kfs+3pW/Mlo1WPkyCmszNISu26N+/DZfLkVI+pQRraChdP9oiY/1cqkp+b6DhWP7US/FZQNm44dGWAI7nGR8m/oo3UxD/cxOqDsiNzxHSrWwKKtjxs4ew/uwLrs62ZqpR/nW1frSjbAJai/cKX0mfqwo7Gq4269Zd7ioPjK/6OTDTxzwplAK9hAbYMbzCCizWNvgG3+Jlq78sG7Yi1oRw4dNtBZThBcIboACP+BnMjAUnN2fuoAqULK85dyiPbSnM0cXDV6Fxgh8dXsf6JFrXcdnC35/kajiqz7I0VaVD9fxfW2vux4+oyEPnfJ+w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=7Uua99UXufoHB1EBd2Lu4LrCFARN16jDJZ6ZQAJSEts=;
+ b=Pw4f1G+SwhcNtGc+YGCX3AeYgG3xgVc7pvj9I9EQ54jJmn972Itm0DG6WMrzNMSFdhw8y/sqoQjCJA2Xhvf8MMnh7jNed1arxPYISmUqFfYa07NbTAcsBF4Ijsr4zxeYHEXJFM4FWvTbhnHaNTeoEZujgESSZFupOjU5tmQQsOhT0CIRgAI1PzyLTq8EbXetr0nfoqlWFe/YNcoHZtLmkocGUsPca6QuU6ltinXAZgEKRZ5MEEXMXb26Ec4Dye35Q8bacMXwsTOl8jIX1yEWxt7nWL1ESzS7OX8gVeuMYnSCJcorm6HnKsDluWGZtrUQhEG3ZbBYz4Z0nbfcTbM7+Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
+ dkim=pass header.d=nutanix.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=7Uua99UXufoHB1EBd2Lu4LrCFARN16jDJZ6ZQAJSEts=;
+ b=bcH6Sh4caHjSgjR8WU7GK1gngyo5EV6u7z30HgC+BQ28RYPJmpv12R3vH+s9debHjzX4nuWLmBjN7EUVAut/YE6+ZQv+UbOQXHM+Zodg6QJWGSDsQqRSQUCe/qK8T8WvvzDAEfkNtFtQXsVoikWUVqNcoiHTE6SLSqn2H5hzMzgveKHGWPerkdo8aU0dcxrD5N1JcsDJHWsyDPeXIOETO5GmSB7Nv4w7afvcut3K0smArnE3Bd5vgA6aoysmDH24H25D3k6e9w86YbnPD7edWR/hHogVHvTmZQJm0wsil+Q8DkBmtfGMNzhaf28MiskqtS+dXO5zvR+jJVNjYCL+eQ==
+Received: from PH0PR02MB7159.namprd02.prod.outlook.com (2603:10b6:510:16::8)
+ by SA1PR02MB8852.namprd02.prod.outlook.com (2603:10b6:806:1f3::15) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9611.13; Fri, 13 Feb
+ 2026 09:51:58 +0000
+Received: from PH0PR02MB7159.namprd02.prod.outlook.com
+ ([fe80::8e97:bc32:822c:b250]) by PH0PR02MB7159.namprd02.prod.outlook.com
+ ([fe80::8e97:bc32:822c:b250%7]) with mapi id 15.20.9611.012; Fri, 13 Feb 2026
+ 09:51:58 +0000
+Message-ID: <57df9bb6-a504-45b4-a04d-bdb1732eed4c@nutanix.com>
+Date: Fri, 13 Feb 2026 09:51:53 +0000
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 05/43] audio/alsa: convert to QOM lifecycle methods
+To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>,
+ Christian Schoenebeck <qemu_oss@crudebyte.com>
+References: <20260127182516.289834-1-marcandre.lureau@redhat.com>
+ <20260127182516.289834-6-marcandre.lureau@redhat.com>
+Content-Language: en-US
+From: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+In-Reply-To: <20260127182516.289834-6-marcandre.lureau@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=marcandre.lureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+X-ClientProxiedBy: LO2P123CA0084.GBRP123.PROD.OUTLOOK.COM
+ (2603:10a6:600:138::17) To PH0PR02MB7159.namprd02.prod.outlook.com
+ (2603:10b6:510:16::8)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PH0PR02MB7159:EE_|SA1PR02MB8852:EE_
+X-MS-Office365-Filtering-Correlation-Id: f95e7ce7-d970-4496-f43a-08de6ae5871d
+x-proofpoint-crosstenant: true
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|366016|376014|7053199007;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?UllGVkd1SjRqMTBNZEpZNyt1N2lpSlRSN2c5ZkdsclJIVTZZeXgxYWxXSy9q?=
+ =?utf-8?B?MmgyUWQ1dnFEejFUUUxwcHZ2RVh0RWNUVDNSSGxseEFTR1pzRDdCUTVZY2JE?=
+ =?utf-8?B?NGIxS3pWTi9xUGExS0NYTFVxZkNINkErdm9SQ3FnZ0RJbmVyVDQ3eldzTmly?=
+ =?utf-8?B?di9hUnJ5b3RXa2hZNk91WGhiL1N5Nmprc21FeHE4cndEZXczTEtzMjVyT3lE?=
+ =?utf-8?B?R2VBd2JhcXJsZzR3T0lQcm5QcTAvMjEzbHVMTjV3dncxOWxwOGw0YkFiNnAv?=
+ =?utf-8?B?eEZES3g2N0dJZC92SWs4eVNIdFRPT0Jpdjk2bThzMjl0QlVxRnVMVDVoZmhi?=
+ =?utf-8?B?ZkNEZmpmRHpEeFVSZHRDbU54NFlFaDFPSHpxSHNITWg3TzhNTWNsOWU5UG5x?=
+ =?utf-8?B?dlQ4NXh5S2JSQUl2YlpWa3ZMVkJuaUdFYlBHZHNtZ0hZZDgyNXRtYWd4dVFE?=
+ =?utf-8?B?QnR2c2FrVXd0TTA3bmt0UG9kRXBlbHVyK0JBblphVFdkOVhyQWw1am1WSXVF?=
+ =?utf-8?B?dm82SmFUTWE4bzJ5RVUzN3FYU3VyZndzRHpvajdFSVYrTFVyRnBNcTV2U2M1?=
+ =?utf-8?B?VHNrWWx4YkE2WHlhcXlvbkxNbUFRV1B1Ump6b3ZNNFNIMFp6Rm9CbVF4NW1V?=
+ =?utf-8?B?THJZa3RWMzcya1N4QmNCN29BNkgvYVR3SFUwRXArNytYb0RVNHJGeVFuSWFw?=
+ =?utf-8?B?QWc3U0hzYXJXSWlXNUc3dnZXOVhoUTVZdE5PN2VzUEpIc2VDSXdsZk9MZ1ps?=
+ =?utf-8?B?UHN5bFNLWlM3OVBXVUtLOHBFSlF0emQzaExqRGMzZ3pVSWlNTWN3djVhL29p?=
+ =?utf-8?B?QVptUDlxWnZ3VThwbDhmKzJtcjM4V0l3cnpFYW1hM1BxT2NmcVlDakNVZnJF?=
+ =?utf-8?B?T0R5UVR1aUdsRnprdE9jYlpmQVZJYys0eXZsbDJuR2JXTGFSazhkbmZUZXhF?=
+ =?utf-8?B?anN2MG1CdDNyQS9lbE9lNU9OMlNQRDhiNmRydjFjM21nWGhHMEdyemtlaWFQ?=
+ =?utf-8?B?bVJFeHloM3RucXhnNXdrSXlsOXFYRUU1UWVSTWZPbW40UWs2QTJPeUp1elZt?=
+ =?utf-8?B?SFVqeDZuZkU0OUp6cjBFdk5iUHh1eFc0L3pNWXpubHhPTjZjVzBKMm9VRW9J?=
+ =?utf-8?B?SWVpWkpES09EaVpndHp3c2ZzQ0JuTGs5c2pKTysrSkcrcGxMbDhzSFo1M1hv?=
+ =?utf-8?B?cnhiUzJueTVGTUJZVUZZaElQclRpQmphVjE2SEJXUzY2dXJEQUFKQ1VYb3pT?=
+ =?utf-8?B?d2ZjRHN4bDFSVlExeWYvRDdZS0t2R1dLVDB2Z3FvSUQ0K3Era2o5dytQLzBn?=
+ =?utf-8?B?S2xVV1JQekZEY3JnM0haMmhHM3JkdXdWWFlES2JhZWxVaG1RQUExdjUvZDk0?=
+ =?utf-8?B?dVFkQy9kTVVBYUd2WDdvQXdxM1d2aTcrd21SdnJYV3dJd0RKQnNOQ1d6MWdz?=
+ =?utf-8?B?MjEzNkE5ZW1RdXp0dW92bERDTmszdjRnRklDeUlIcElPTnNvS1RreTdDK05i?=
+ =?utf-8?B?V2JNYmZYc21ZWTNvSSsxQ1JRaXdJU2orcW5Vc1lxRndZTXpjellNanBlV2hJ?=
+ =?utf-8?B?OTc0TlovZWF2WHdncmNJNmpxWDU5WVhUNkdmZ21nclNNQzhtRlgyN1RPUW9S?=
+ =?utf-8?B?amNrdHN2MDFRUXRBODVXOTdyK2pZM0JIZUwxd3phQlA5UjdUWE5XUWFEV3p3?=
+ =?utf-8?B?Yk9DdVJQbkpqTisvTER3NWZuRDVGZ2NqV2lLdWxmbVNKV3cyZTdBNEpJdlVO?=
+ =?utf-8?B?V2g2dGwwUzRpZ21HeC85azg0UE5ZcEgxczFiMUdpUDBhQUNnaVdVcCtjN0RU?=
+ =?utf-8?B?a1RRZGJwM1NxZkluLzBZS2Fua2JSd21FMnhkV0MySUpOL3dTMGNLSG4yUTRK?=
+ =?utf-8?B?Rmw0eStCLzVtek12SU9aRW44RlhWYWRocEhGdnhEaWNrbUhRdHI3cDMreDls?=
+ =?utf-8?B?VWF0MTR4eG9jcjdpbnYyVkRINjluTTUxMThoWXNYZXh6bXBvV3JJVkVpSUd4?=
+ =?utf-8?B?MFZRaVY0SmpVcHpmYlVvRGtyY2pJTEp4TlcwQlM5cHNpVkw4OG42RzQzTDJK?=
+ =?utf-8?B?Umt1V0RuTjJ4RGoxOXRxVDNEajJPTWwvaE5ZcXVvUlVuNHY2cWZNbWpNSEhs?=
+ =?utf-8?Q?n5FM=3D?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:PH0PR02MB7159.namprd02.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(366016)(376014)(7053199007); DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?ckpUNEpZSUVjeDVvRFQ2a0srcEwxVzJWQVV5K05kVndPZGNXZnFNRzhYTmgv?=
+ =?utf-8?B?SkJ2ZytEV1MvNHNmaWcyNXY4aXlQUVh4amtzUzJ2T05xWHZyM3ZkZUJURlB1?=
+ =?utf-8?B?dnA0emJEU0VFaXc5eDZrZTR6ZG9tL0tFVzVVaS9tb0diczA3Vlk0eUo0MHBw?=
+ =?utf-8?B?YXpWcEIvdGFQNGZtamJzblpWWTBjVjYrMktjS3BlNUtNVFEwNDlaTTczNlAx?=
+ =?utf-8?B?WjdlNVhObUZBMkN6aDhKZm4vNDZ5dlRidnE3TEk3VmNnZHV4T2ZiQ293aHp5?=
+ =?utf-8?B?ZXp5L2ZkL2FjTm1BaG5LU2xTc2FDZVZINWJ1QTVaUldzWTY4RDRJNDhIUTg0?=
+ =?utf-8?B?OUVLTzA2QjVhN1Jrc29Obk5aR3FsWmtkSmxXWWd3Y2V4Uy9uVFRIQ1d6Qlhj?=
+ =?utf-8?B?S2czb2o2RjM4cU82Szd1b1cyZ1BHcmhrZWsxa1J5Rk02UGFCRzZ0L2VKVEZi?=
+ =?utf-8?B?dWoxMGhEamtIdHJDaVlqbGdtNUlIUWNCeUhpMzFGL0E2Y3lQcHdnQlp5RVJT?=
+ =?utf-8?B?YWNERHJQQzAyYWpnRDZjMUhlbjRjOGdleUo1c09TRGNXdTVhQW1OTEhrazVG?=
+ =?utf-8?B?VmZHL2EraW51emdSby9yaDlBQjVlcmx6TDBwK1lLeUdUUkhNdkJ1R2FDeWRq?=
+ =?utf-8?B?L1p2SHJERFN6c3pVamI3MG9uV2xmL010bW5mTmpoOGFqNTlzTm1HZVNOZmpS?=
+ =?utf-8?B?Qlkvd0FyV1BuVEdqL0M5VVNPT254bDEzZURqZWp6Z1pJSnI3RTIyUGlMQm1D?=
+ =?utf-8?B?VXhaQk9hV2p5UGNPU2o0ZURzYlZzRTBVaXVvNXdpbW9pNlB0bXFudS9OUkVa?=
+ =?utf-8?B?TWM1TXJrbG5mRVJMSzhGRmFwVmVPcGRlV1YvZlovcG94UkV1UGVDRlBkd3Bt?=
+ =?utf-8?B?Q1UrYjlpRHluQmhzY0loRkM4UFVtckorTjNIMzZqN3U4MGpyMldvUEluVk5R?=
+ =?utf-8?B?YzUxT1V3SHd0L2kxVFR5UXROT2NBbnkvWmhPeGxpdHBUZGlmY0RlKzRZY204?=
+ =?utf-8?B?WCtjZUVCMFg5Vm4yZHFLOFBBbDk2YW5WZ3l6L3BXQ2o2Wm1XUWQ0UWE4RnFx?=
+ =?utf-8?B?eEliV213MVNDZVl1UENMSmdnOU9pYUZzbWx6WUJtaFp0YjFvOVVZNllZZlVF?=
+ =?utf-8?B?aEgxNng2aXZQeml3S1hRY3dBbzVIeHFoMjBGN2kzYnJGb3J0YXo5N1pXWFVi?=
+ =?utf-8?B?N0pYU0pCcERYaG93dmt0MjlTWlJlSkI2YUJBVFAzWmJBdmVmSE5qeVh0SHpi?=
+ =?utf-8?B?S2JyNUFLc3pLUFJLOVBZS1JJSFpVZUk2UDQzV0QveXhpVXdlanlqUmlRUlAy?=
+ =?utf-8?B?K2JXVlI2UURqR1JMdzJCRDI3Z3A1SVZFSjBhYzJUeWJLek56YnN3SUhmVVhR?=
+ =?utf-8?B?c1ZhTFpkV0ZtaFUzSDZINmZlYnFMYWxQVzVhYXhiZGx1RTdNbDlyMkk4cDZk?=
+ =?utf-8?B?dkduYVNDcGNpbjFNaGZac3NZVUNWcVY4T0E2M25QY1g2MmU1Vko3WERCNDFP?=
+ =?utf-8?B?S1lXeHJwd2dDN0hnU0t1eStpWWRGd3ZaRjB1TFVvT1JSVG5FM1RyWWd4b2p4?=
+ =?utf-8?B?SkJLZXBtd3lCbDZFbXlmN3UzOTQrK3ViZWwvQ2FiNzJaSEpKdWlnenN3UHNW?=
+ =?utf-8?B?dTdadmZoSm1JekFzQ3dyeVhBR1BTWVNNa1ZBcWVrSnlEYW9nTTB2ekpjU2ZZ?=
+ =?utf-8?B?L0pSV2pGanJheDJIbmdZak80NHNaQ1JnZ1lZZU9teEx1YUQxY3FPUWErTWxL?=
+ =?utf-8?B?UGRqc1N4Rkp0VUhKeVVjcmFjTUhNM0ZSS3RZYkp3U3MvbnVzWEhJUk5YQ3JK?=
+ =?utf-8?B?ZFp0RHh2U3RBNzZGN3dPYWJQS25BZHRGWDIweUJyY3hMT2JuMXBkQ0E4NlhJ?=
+ =?utf-8?B?RTdTM0R2SzJOYjdHUHRoNUVpUnFmWFRUSm1VbHd6NmFMV3dmcC9ETnRMVzZI?=
+ =?utf-8?B?L2tpaUlSRnErclMxeGZZYXlScVcvOWJZd2E3bUFUbFlLbjVnU1owZzF0c3BX?=
+ =?utf-8?B?dXdHZW9uRlVRZ2NFQWUzSncxaGZDSkwrc2hnSm8yUGdIbjVkOHM2UWplK3Vz?=
+ =?utf-8?B?dlZxZ3hVaU5rbi83bzZFL0lSdEFWbGJzQkx5c3k3a242ODhVOTJkbllGc1Rv?=
+ =?utf-8?B?Mk9RZmNic2FFSk9pK2VWWHBJc09FSXc5WitnWVpLaTU1dVl6NTFMTDU0bXRF?=
+ =?utf-8?B?a1VZOFVZVm5kWWJuWXhzOUg2SGttZXdaZWovZ3ptL1RLQ1A3VlVISEllOUtB?=
+ =?utf-8?B?eXZ6dFdycDQ5Qm1tTzBpUFZSWW5ZaHhkNkR5UlZiakhEUWdqMFBjcE00TGlV?=
+ =?utf-8?B?amw4T0c3NjJqRU9MaWRUekFaU1luTmRreWc2RnFqRWtEVHZINWVKL1hyTlYx?=
+ =?utf-8?Q?AFwynwUo7duuVMqY=3D?=
+X-OriginatorOrg: nutanix.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: f95e7ce7-d970-4496-f43a-08de6ae5871d
+X-MS-Exchange-CrossTenant-AuthSource: PH0PR02MB7159.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Feb 2026 09:51:58.2224 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: gmWugPuo7nQWZ9QRWbPT+kasA/qFNqv9sHkU+x7AQaKkTAnUxtibGNR379ZGmVmSjVdHGmNCvcGJj73s6C2iMkqOGt1TZso/EUFokZDQQsY=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR02MB8852
+X-Proofpoint-GUID: rK3Yolf1JcD2mXbIHbML7LxG7pdvBAAs
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjEzMDA3NSBTYWx0ZWRfX4p1StbgGPb9D
+ qlfdAWtAHSICOj3UWdcSEpU1TkNsi8KkkMccCWzmDTKYIbIbyJzUjqDqBG7tDIM9wa58X7GlGmg
+ BE7YHJJ/aLxWg9sm30Zjkhanez9FZpTlqH39GKWiPQpiqrxzJhVgF8//DDsq1ErcVUiGmRUzLq8
+ muGraOlpqIhZoZUsppapdT1TyYTvadT3UmnVJzmeD4sQ96Lhp+GOtfC594Jz8xNSd3uyKxanEzQ
+ MRrpjxNiXNSloWU6W+JjC8rGdODddkilDoL/liHYFuuy+FC3yaETOCzPdYq9dxsZACwfH81rUL2
+ ba3YwxW40bXOb3ecopoXaeMNbcA2/c/+CglYNL8xxVbCpBl3jWXLFr+HeGFaUOzcpqF6CfCE5JX
+ 6JqkKtWfNVNltXdAlQxgzyQgcNcouqb6e+HCtpmKWje1Dno5mNBWqQ8gm1Jc+y200wTPEtEpS9m
+ yORcccCiCNkOh5+WChA==
+X-Proofpoint-ORIG-GUID: rK3Yolf1JcD2mXbIHbML7LxG7pdvBAAs
+X-Authority-Analysis: v=2.4 cv=DrxbOW/+ c=1 sm=1 tr=0 ts=698ef440 cx=c_pps
+ a=x8fXg9NzY3hbHNzXWQS9+Q==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
+ a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
+ a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10 a=HzLeVaNsDn8A:10 a=0kUYKlekyDsA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22
+ a=20KFwNOVAAAA:8 a=64Cc0HZtAAAA:8 a=OqkfTW9lKEOJ6iQ_K2AA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-02-13_01,2026-02-12_03,2025-10-01_01
+X-Proofpoint-Spam-Reason: safe
+Received-SPF: pass client-ip=148.163.155.12;
+ envelope-from=mark.caveayland@nutanix.com; helo=mx0b-002c1b01.pphosted.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,987 +224,175 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+On 27/01/2026 18:24, marcandre.lureau@redhat.com wrote:
 
-Add boolean return value to follow common recommendations for functions
-with errrp in include/qapi/error.h
+> From: Marc-André Lureau <marcandre.lureau@redhat.com>
+> 
+> Migrate the ALSA audio backend from the legacy driver init/fini
+> callbacks to proper QOM realize method.
+> 
+> The alsa_audio_init() function is replaced with audio_alsa_realize(),
+> which performs the same ALSA option initialization before delegating
+> to the parent class realize method. The empty alsa_audio_fini() is
+> removed.
+> 
+> The Audiodev pointer stored in ALSAVoiceOut and ALSAVoiceIn is removed
+> as it can now be accessed through hw->s->dev.
+> 
+> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+> ---
+>   audio/alsaaudio.c | 43 ++++++++++++++++++++-----------------------
+>   1 file changed, 20 insertions(+), 23 deletions(-)
+> 
+> diff --git a/audio/alsaaudio.c b/audio/alsaaudio.c
+> index e8541e1a2a3..42bfea2515d 100644
+> --- a/audio/alsaaudio.c
+> +++ b/audio/alsaaudio.c
+> @@ -40,19 +40,14 @@
+>   #define TYPE_AUDIO_ALSA "audio-alsa"
+>   OBJECT_DECLARE_SIMPLE_TYPE(AudioALSA, AUDIO_ALSA)
+>   
+> +static AudioBackendClass *audio_alsa_parent_class;
+> +
+>   struct AudioALSA {
+>       AudioMixengBackend parent;
+>   };
+>   
+>   static struct audio_driver alsa_audio_driver;
+>   
+> -static void audio_alsa_class_init(ObjectClass *klass, const void *data)
+> -{
+> -    AudioMixengBackendClass *k = AUDIO_MIXENG_BACKEND_CLASS(klass);
+> -
+> -    k->driver = &alsa_audio_driver;
+> -}
+> -
+>   struct pollhlp {
+>       snd_pcm_t *handle;
+>       struct pollfd *pfds;
+> @@ -65,14 +60,12 @@ typedef struct ALSAVoiceOut {
+>       HWVoiceOut hw;
+>       snd_pcm_t *handle;
+>       struct pollhlp pollhlp;
+> -    Audiodev *dev;
+>   } ALSAVoiceOut;
+>   
+>   typedef struct ALSAVoiceIn {
+>       HWVoiceIn hw;
+>       snd_pcm_t *handle;
+>       struct pollhlp pollhlp;
+> -    Audiodev *dev;
+>   } ALSAVoiceIn;
+>   
+>   struct alsa_params_req {
+> @@ -707,7 +700,7 @@ static int alsa_init_out(HWVoiceOut *hw, struct audsettings *as,
+>       struct alsa_params_obt obt;
+>       snd_pcm_t *handle;
+>       struct audsettings obt_as;
+> -    Audiodev *dev = drv_opaque;
+> +    Audiodev *dev = hw->s->dev;
+>   
+>       req.fmt = aud_to_alsafmt (as->fmt, as->endianness);
+>       req.freq = as->freq;
+> @@ -727,7 +720,6 @@ static int alsa_init_out(HWVoiceOut *hw, struct audsettings *as,
+>   
+>       alsa->pollhlp.s = hw->s;
+>       alsa->handle = handle;
+> -    alsa->dev = dev;
+>       return 0;
+>   }
+>   
+> @@ -766,7 +758,7 @@ static int alsa_voice_ctl (snd_pcm_t *handle, const char *typ, int ctl)
+>   static void alsa_enable_out(HWVoiceOut *hw, bool enable)
+>   {
+>       ALSAVoiceOut *alsa = (ALSAVoiceOut *) hw;
+> -    AudiodevAlsaPerDirectionOptions *apdo = alsa->dev->u.alsa.out;
+> +    AudiodevAlsaPerDirectionOptions *apdo = hw->s->dev->u.alsa.out;
+>   
+>       if (enable) {
+>           bool poll_mode = apdo->try_poll;
+> @@ -794,7 +786,7 @@ static int alsa_init_in(HWVoiceIn *hw, struct audsettings *as, void *drv_opaque)
+>       struct alsa_params_obt obt;
+>       snd_pcm_t *handle;
+>       struct audsettings obt_as;
+> -    Audiodev *dev = drv_opaque;
+> +    Audiodev *dev = hw->s->dev;
+>   
+>       req.fmt = aud_to_alsafmt (as->fmt, as->endianness);
+>       req.freq = as->freq;
+> @@ -814,7 +806,6 @@ static int alsa_init_in(HWVoiceIn *hw, struct audsettings *as, void *drv_opaque)
+>   
+>       alsa->pollhlp.s = hw->s;
+>       alsa->handle = handle;
+> -    alsa->dev = dev;
+>       return 0;
+>   }
+>   
+> @@ -871,7 +862,7 @@ static size_t alsa_read(HWVoiceIn *hw, void *buf, size_t len)
+>   static void alsa_enable_in(HWVoiceIn *hw, bool enable)
+>   {
+>       ALSAVoiceIn *alsa = (ALSAVoiceIn *) hw;
+> -    AudiodevAlsaPerDirectionOptions *apdo = alsa->dev->u.alsa.in;
+> +    AudiodevAlsaPerDirectionOptions *apdo = hw->s->dev->u.alsa.in;
+>   
+>       if (enable) {
+>           bool poll_mode = apdo->try_poll;
+> @@ -901,7 +892,8 @@ static void alsa_init_per_direction(AudiodevAlsaPerDirectionOptions *apdo)
+>       }
+>   }
+>   
+> -static void *alsa_audio_init(Audiodev *dev, Error **errp)
+> +static bool
+> +audio_alsa_realize(AudioBackend *abe, Audiodev *dev, Error **errp)
+>   {
+>       AudiodevAlsaOptions *aopts;
+>       assert(dev->driver == AUDIODEV_DRIVER_ALSA);
+> @@ -929,11 +921,7 @@ static void *alsa_audio_init(Audiodev *dev, Error **errp)
+>           dev->u.alsa.in->buffer_length = 92880;
+>       }
+>   
+> -    return dev;
+> -}
+> -
+> -static void alsa_audio_fini (void *opaque)
+> -{
+> +    return audio_alsa_parent_class->realize(abe, dev, errp);
+>   }
+>   
+>   static struct audio_pcm_ops alsa_pcm_ops = {
+> @@ -953,8 +941,6 @@ static struct audio_pcm_ops alsa_pcm_ops = {
+>   
+>   static struct audio_driver alsa_audio_driver = {
+>       .name           = "alsa",
+> -    .init           = alsa_audio_init,
+> -    .fini           = alsa_audio_fini,
+>       .pcm_ops        = &alsa_pcm_ops,
+>       .max_voices_out = INT_MAX,
+>       .max_voices_in  = INT_MAX,
+> @@ -962,6 +948,17 @@ static struct audio_driver alsa_audio_driver = {
+>       .voice_size_in  = sizeof (ALSAVoiceIn)
+>   };
+>   
+> +static void audio_alsa_class_init(ObjectClass *klass, const void *data)
+> +{
+> +    AudioBackendClass *b = AUDIO_BACKEND_CLASS(klass);
+> +    AudioMixengBackendClass *k = AUDIO_MIXENG_BACKEND_CLASS(klass);
+> +
+> +    audio_alsa_parent_class = AUDIO_BACKEND_CLASS(object_class_get_parent(klass));
+> +
+> +    b->realize = audio_alsa_realize;
+> +    k->driver = &alsa_audio_driver;
+> +}
+> +
+>   static const TypeInfo audio_alsa_info = {
+>       .name = TYPE_AUDIO_ALSA,
+>       .parent = TYPE_AUDIO_MIXENG_BACKEND,
 
-Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-Id: <20260115144606.233252-7-vsementsov@yandex-team.ru>
----
- include/chardev/char.h   |  2 +-
- chardev/baum.c           |  5 +++--
- chardev/char-console.c   |  3 ++-
- chardev/char-file.c      | 13 +++++++------
- chardev/char-hub.c       | 11 ++++++-----
- chardev/char-mux.c       |  8 +++++---
- chardev/char-null.c      |  4 ++--
- chardev/char-parallel.c  | 14 ++++++++------
- chardev/char-pipe.c      | 12 +++++++-----
- chardev/char-pty.c       |  9 ++++++---
- chardev/char-ringbuf.c   |  5 +++--
- chardev/char-serial.c    | 15 +++++++++------
- chardev/char-socket.c    | 17 +++++++++--------
- chardev/char-stdio.c     | 11 ++++++-----
- chardev/char-udp.c       |  5 +++--
- chardev/char-win-stdio.c |  7 ++++---
- chardev/msmouse.c        |  3 ++-
- chardev/spice.c          | 12 +++++++-----
- chardev/wctablet.c       |  3 ++-
- gdbstub/system.c         |  3 ++-
- ui/console-vc.c          |  3 ++-
- ui/dbus-chardev.c        |  6 +++---
- ui/gtk.c                 |  5 +++--
- ui/spice-app.c           | 10 ++++++----
- ui/vdagent.c             | 10 +++++-----
- 25 files changed, 113 insertions(+), 83 deletions(-)
+Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
 
-diff --git a/include/chardev/char.h b/include/chardev/char.h
-index aa42e01b8a3..e1bf97222b8 100644
---- a/include/chardev/char.h
-+++ b/include/chardev/char.h
-@@ -260,7 +260,7 @@ struct ChardevClass {
-     void (*chr_parse)(QemuOpts *opts, ChardevBackend *backend, Error **errp);
- 
-     /* called after construction, open/starts the backend */
--    void (*chr_open)(Chardev *chr, ChardevBackend *backend, Error **errp);
-+    bool (*chr_open)(Chardev *chr, ChardevBackend *backend, Error **errp);
- 
-     /* write buf to the backend */
-     int (*chr_write)(Chardev *s, const uint8_t *buf, int len);
-diff --git a/chardev/baum.c b/chardev/baum.c
-index 4b97d630ffb..1219963656b 100644
---- a/chardev/baum.c
-+++ b/chardev/baum.c
-@@ -642,7 +642,7 @@ static void char_braille_finalize(Object *obj)
-     }
- }
- 
--static void baum_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
-+static bool baum_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
- {
-     BaumChardev *baum = BAUM_CHARDEV(chr);
-     brlapi_handle_t *handle;
-@@ -656,7 +656,7 @@ static void baum_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
-                    brlapi_strerror(brlapi_error_location()));
-         g_free(handle);
-         baum->brlapi = NULL;
--        return;
-+        return false;
-     }
-     baum->deferred_init = 0;
- 
-@@ -669,6 +669,7 @@ static void baum_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
-     qemu_set_fd_handler(baum->brlapi_fd, baum_chr_read, NULL, baum);
- 
-     qemu_chr_be_event(chr, CHR_EVENT_OPENED);
-+    return true;
- }
- 
- static void char_braille_class_init(ObjectClass *oc, const void *data)
-diff --git a/chardev/char-console.c b/chardev/char-console.c
-index 423f0f4cc4e..0739c9c94a3 100644
---- a/chardev/char-console.c
-+++ b/chardev/char-console.c
-@@ -26,11 +26,12 @@
- #include "chardev/char-win.h"
- #include "qemu/module.h"
- 
--static void console_chr_open(Chardev *chr, ChardevBackend *backend,
-+static bool console_chr_open(Chardev *chr, ChardevBackend *backend,
-                              Error **errp)
- {
-     win_chr_set_file(chr, GetStdHandle(STD_OUTPUT_HANDLE), true);
-     qemu_chr_be_event(chr, CHR_EVENT_OPENED);
-+    return true;
- }
- 
- static void char_console_class_init(ObjectClass *oc, const void *data)
-diff --git a/chardev/char-file.c b/chardev/char-file.c
-index 34ef386abc5..b0dd9d5f870 100644
---- a/chardev/char-file.c
-+++ b/chardev/char-file.c
-@@ -34,7 +34,7 @@
- #include "chardev/char-fd.h"
- #endif
- 
--static void file_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
-+static bool file_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
- {
-     ChardevFile *file = backend->u.file.data;
- #ifdef _WIN32
-@@ -44,7 +44,7 @@ static void file_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
- 
-     if (file->in) {
-         error_setg(errp, "input file not supported");
--        return;
-+        return false;
-     }
- 
-     if (file->has_append && file->append) {
-@@ -61,7 +61,7 @@ static void file_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
-                      FILE_ATTRIBUTE_NORMAL, NULL);
-     if (out == INVALID_HANDLE_VALUE) {
-         error_setg(errp, "open %s failed", file->out);
--        return;
-+        return false;
-     }
- 
-     win_chr_set_file(chr, out, false);
-@@ -77,7 +77,7 @@ static void file_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
- 
-     out = qmp_chardev_open_file_source(file->out, flags, errp);
-     if (out < 0) {
--        return;
-+        return false;
-     }
- 
-     if (file->in) {
-@@ -85,7 +85,7 @@ static void file_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
-         in = qmp_chardev_open_file_source(file->in, flags, errp);
-         if (in < 0) {
-             qemu_close(out);
--            return;
-+            return false;
-         }
-     }
- 
-@@ -94,11 +94,12 @@ static void file_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
-         if (in >= 0) {
-             qemu_close(in);
-         }
--        return;
-+        return false;
-     }
- #endif
- 
-     qemu_chr_be_event(chr, CHR_EVENT_OPENED);
-+    return true;
- }
- 
- static void file_chr_parse(QemuOpts *opts, ChardevBackend *backend,
-diff --git a/chardev/char-hub.c b/chardev/char-hub.c
-index aa6058c2f6f..05cf722b5b0 100644
---- a/chardev/char-hub.c
-+++ b/chardev/char-hub.c
-@@ -203,7 +203,7 @@ static void hub_chr_update_read_handlers(Chardev *chr)
-     }
- }
- 
--static void hub_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
-+static bool hub_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
- {
-     ChardevHub *hub = backend->u.hub.data;
-     HubChardev *d = HUB_CHARDEV(chr);
-@@ -213,7 +213,7 @@ static void hub_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
- 
-     if (list == NULL) {
-         error_setg(errp, "hub: 'chardevs' list is not defined");
--        return;
-+        return false;
-     }
- 
-     while (list) {
-@@ -223,17 +223,17 @@ static void hub_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
-         if (s == NULL) {
-             error_setg(errp, "hub: chardev can't be found by id '%s'",
-                        list->value);
--            return;
-+            return false;
-         }
-         if (CHARDEV_IS_HUB(s) || CHARDEV_IS_MUX(s)) {
-             error_setg(errp, "hub: multiplexers and hub devices can't be "
-                        "stacked, check chardev '%s', chardev should not "
-                        "be a hub device or have 'mux=on' enabled",
-                        list->value);
--            return;
-+            return false;
-         }
-         if (!hub_chr_attach_chardev(d, s, errp)) {
--            return;
-+            return false;
-         }
-         list = list->next;
-     }
-@@ -242,6 +242,7 @@ static void hub_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
-      * Closed until an explicit event from backend, so we don't
-      * send CHR_EVENT_OPENED now.
-      */
-+    return true;
- }
- 
- static void hub_chr_parse(QemuOpts *opts, ChardevBackend *backend, Error **errp)
-diff --git a/chardev/char-mux.c b/chardev/char-mux.c
-index 7210df431fc..881443d869d 100644
---- a/chardev/char-mux.c
-+++ b/chardev/char-mux.c
-@@ -361,7 +361,7 @@ void mux_set_focus(Chardev *chr, unsigned int focus)
-     mux_chr_send_event(d, d->focus, CHR_EVENT_MUX_IN);
- }
- 
--static void mux_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
-+static bool mux_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
- {
-     ChardevMux *mux = backend->u.mux.data;
-     Chardev *drv;
-@@ -370,12 +370,12 @@ static void mux_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
-     drv = qemu_chr_find(mux->chardev);
-     if (drv == NULL) {
-         error_setg(errp, "mux: base chardev %s not found", mux->chardev);
--        return;
-+        return false;
-     }
- 
-     d->focus = -1;
-     if (!qemu_chr_fe_init(&d->chr, drv, errp)) {
--        return;
-+        return false;
-     }
- 
-     /*
-@@ -385,6 +385,8 @@ static void mux_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
-     if (muxes_opened) {
-         qemu_chr_be_event(chr, CHR_EVENT_OPENED);
-     }
-+
-+    return true;
- }
- 
- static void mux_chr_parse(QemuOpts *opts, ChardevBackend *backend, Error **errp)
-diff --git a/chardev/char-null.c b/chardev/char-null.c
-index 900b5febb6c..d5a101178bb 100644
---- a/chardev/char-null.c
-+++ b/chardev/char-null.c
-@@ -26,9 +26,9 @@
- #include "chardev/char.h"
- #include "qemu/module.h"
- 
--static void null_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
-+static bool null_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
- {
--    /* do not send CHR_EVENT_OPENED */
-+    return true;
- }
- 
- static void char_null_class_init(ObjectClass *oc, const void *data)
-diff --git a/chardev/char-parallel.c b/chardev/char-parallel.c
-index 359efa3c9c8..cbf87e660da 100644
---- a/chardev/char-parallel.c
-+++ b/chardev/char-parallel.c
-@@ -157,7 +157,7 @@ static int parallel_chr_ioctl(Chardev *chr, int cmd, void *arg)
-     return 0;
- }
- 
--static void parallel_chr_open_fd(Chardev *chr, int fd, Error **errp)
-+static bool parallel_chr_open_fd(Chardev *chr, int fd, Error **errp)
- {
-     ParallelChardev *drv = PARALLEL_CHARDEV(chr);
- 
-@@ -165,11 +165,12 @@ static void parallel_chr_open_fd(Chardev *chr, int fd, Error **errp)
- 
-     if (ioctl(fd, PPCLAIM) < 0) {
-         error_setg_errno(errp, errno, "not a parallel port");
--        return;
-+        return false;
-     }
- 
-     drv->mode = IEEE1284_MODE_COMPAT;
-     qemu_chr_be_event(chr, CHR_EVENT_OPENED);
-+    return true;
- }
- #endif /* __linux__ */
- 
-@@ -225,15 +226,16 @@ static int parallel_chr_ioctl(Chardev *chr, int cmd, void *arg)
-     return 0;
- }
- 
--static void parallel_chr_open_fd(Chardev *chr, int fd, Error **errp)
-+static bool parallel_chr_open_fd(Chardev *chr, int fd, Error **errp)
- {
-     ParallelChardev *drv = PARALLEL_CHARDEV(chr);
-     drv->fd = fd;
-+    return true;
- }
- #endif
- 
- #ifdef HAVE_CHARDEV_PARALLEL
--static void parallel_chr_open(Chardev *chr,
-+static bool parallel_chr_open(Chardev *chr,
-                               ChardevBackend *backend,
-                               Error **errp)
- {
-@@ -242,9 +244,9 @@ static void parallel_chr_open(Chardev *chr,
- 
-     fd = qmp_chardev_open_file_source(parallel->device, O_RDWR, errp);
-     if (fd < 0) {
--        return;
-+        return false;
-     }
--    parallel_chr_open_fd(chr, fd, errp);
-+    return parallel_chr_open_fd(chr, fd, errp);
- }
- 
- static void parallel_chr_parse(QemuOpts *opts, ChardevBackend *backend,
-diff --git a/chardev/char-pipe.c b/chardev/char-pipe.c
-index 2f26372dfc9..472b3e0801f 100644
---- a/chardev/char-pipe.c
-+++ b/chardev/char-pipe.c
-@@ -103,21 +103,22 @@ static int win_chr_pipe_init(Chardev *chr, const char *filename,
-     return -1;
- }
- 
--static void pipe_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
-+static bool pipe_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
- {
-     ChardevHostdev *opts = backend->u.pipe.data;
-     const char *filename = opts->device;
- 
-     if (win_chr_pipe_init(chr, filename, errp) < 0) {
--        return;
-+        return false;
-     }
- 
-     qemu_chr_be_event(chr, CHR_EVENT_OPENED);
-+    return true;
- }
- 
- #else
- 
--static void pipe_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
-+static bool pipe_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
- {
-     ChardevHostdev *opts = backend->u.pipe.data;
-     int fd_in, fd_out;
-@@ -143,7 +144,7 @@ static void pipe_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
-         );
-         if (fd_in < 0) {
-             error_setg_file_open(errp, errno, filename);
--            return;
-+            return false;
-         }
-     }
- 
-@@ -152,10 +153,11 @@ static void pipe_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
-         if (fd_out != fd_in) {
-             close(fd_out);
-         }
--        return;
-+        return false;
-     }
- 
-     qemu_chr_be_event(chr, CHR_EVENT_OPENED);
-+    return true;
- }
- 
- #endif /* !_WIN32 */
-diff --git a/chardev/char-pty.c b/chardev/char-pty.c
-index d4d69a29a95..9e26e97baf5 100644
---- a/chardev/char-pty.c
-+++ b/chardev/char-pty.c
-@@ -331,7 +331,7 @@ static int qemu_openpty_raw(int *aslave, char *pty_name)
-     return amaster;
- }
- 
--static void pty_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
-+static bool pty_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
- {
-     PtyChardev *s;
-     int master_fd, slave_fd;
-@@ -342,13 +342,13 @@ static void pty_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
-     master_fd = qemu_openpty_raw(&slave_fd, pty_name);
-     if (master_fd < 0) {
-         error_setg_errno(errp, errno, "Failed to create PTY");
--        return;
-+        return false;
-     }
- 
-     close(slave_fd);
-     if (!qemu_set_blocking(master_fd, false, errp)) {
-         close(master_fd);
--        return;
-+        return false;
-     }
- 
-     chr->filename = g_strdup_printf("pty:%s", pty_name);
-@@ -368,10 +368,13 @@ static void pty_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
- 
-         if (res != 0) {
-             error_setg_errno(errp, errno, "Failed to create PTY symlink");
-+            return false;
-         } else {
-             s->path = g_strdup(path);
-         }
-     }
-+
-+    return true;
- }
- 
- static void pty_chr_parse(QemuOpts *opts, ChardevBackend *backend, Error **errp)
-diff --git a/chardev/char-ringbuf.c b/chardev/char-ringbuf.c
-index 30b17a96d3a..8f998d26a49 100644
---- a/chardev/char-ringbuf.c
-+++ b/chardev/char-ringbuf.c
-@@ -92,7 +92,7 @@ static void char_ringbuf_finalize(Object *obj)
-     g_free(d->cbuf);
- }
- 
--static void ringbuf_chr_open(Chardev *chr,
-+static bool ringbuf_chr_open(Chardev *chr,
-                              ChardevBackend *backend,
-                              Error **errp)
- {
-@@ -104,7 +104,7 @@ static void ringbuf_chr_open(Chardev *chr,
-     /* The size must be power of 2 */
-     if (d->size & (d->size - 1)) {
-         error_setg(errp, "size of ringbuf chardev must be power of two");
--        return;
-+        return false;
-     }
- 
-     d->prod = 0;
-@@ -112,6 +112,7 @@ static void ringbuf_chr_open(Chardev *chr,
-     d->cbuf = g_malloc0(d->size);
- 
-     qemu_chr_be_event(chr, CHR_EVENT_OPENED);
-+    return true;
- }
- 
- void qmp_ringbuf_write(const char *device, const char *data,
-diff --git a/chardev/char-serial.c b/chardev/char-serial.c
-index 9995f184258..0c73bafc545 100644
---- a/chardev/char-serial.c
-+++ b/chardev/char-serial.c
-@@ -41,15 +41,17 @@
- 
- #ifdef _WIN32
- 
--static void serial_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
-+static bool serial_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
- {
-     ChardevHostdev *serial = backend->u.serial.data;
-     int ret = win_chr_serial_init(chr, serial->device, errp);
-     if (ret < 0) {
--        return;
-+        return false;
-     }
- 
-     qemu_chr_be_event(chr, CHR_EVENT_OPENED);
-+
-+    return true;
- }
- 
- #elif defined(__linux__) || defined(__sun__) || defined(__FreeBSD__)      \
-@@ -259,7 +261,7 @@ static int serial_chr_ioctl(Chardev *chr, int cmd, void *arg)
-     return 0;
- }
- 
--static void serial_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
-+static bool serial_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
- {
-     ChardevHostdev *serial = backend->u.serial.data;
-     int fd;
-@@ -267,20 +269,21 @@ static void serial_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
-     fd = qmp_chardev_open_file_source(serial->device, O_RDWR | O_NONBLOCK,
-                                       errp);
-     if (fd < 0) {
--        return;
-+        return false;
-     }
-     if (!qemu_set_blocking(fd, false, errp)) {
-         close(fd);
--        return;
-+        return false;
-     }
-     tty_serial_init(fd, 115200, 'N', 8, 1);
- 
-     if (!qemu_chr_open_fd(chr, fd, fd, errp)) {
-         close(fd);
--        return;
-+        return false;
-     }
- 
-     qemu_chr_be_event(chr, CHR_EVENT_OPENED);
-+    return true;
- }
- #endif /* __linux__ || __sun__ */
- 
-diff --git a/chardev/char-socket.c b/chardev/char-socket.c
-index 2951b2ec9be..908bbdbc124 100644
---- a/chardev/char-socket.c
-+++ b/chardev/char-socket.c
-@@ -1365,7 +1365,7 @@ static bool qmp_chardev_validate_socket(ChardevSocket *sock,
- }
- 
- 
--static void tcp_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
-+static bool tcp_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
- {
-     SocketChardev *s = SOCKET_CHARDEV(chr);
-     ChardevSocket *sock = backend->u.socket.data;
-@@ -1390,7 +1390,7 @@ static void tcp_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
-         if (!creds) {
-             error_setg(errp, "No TLS credentials with id '%s'",
-                        sock->tls_creds);
--            return;
-+            return false;
-         }
-         s->tls_creds = (QCryptoTLSCreds *)
-             object_dynamic_cast(creds,
-@@ -1398,7 +1398,7 @@ static void tcp_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
-         if (!s->tls_creds) {
-             error_setg(errp, "Object with id '%s' is not TLS credentials",
-                        sock->tls_creds);
--            return;
-+            return false;
-         }
-         object_ref(OBJECT(s->tls_creds));
-         if (!qcrypto_tls_creds_check_endpoint(s->tls_creds,
-@@ -1406,7 +1406,7 @@ static void tcp_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
-                                           ? QCRYPTO_TLS_CREDS_ENDPOINT_SERVER
-                                           : QCRYPTO_TLS_CREDS_ENDPOINT_CLIENT,
-                                           errp)) {
--            return;
-+            return false;
-         }
-     }
-     s->tls_authz = g_strdup(sock->tls_authz);
-@@ -1414,7 +1414,7 @@ static void tcp_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
-     s->addr = addr = socket_address_flatten(sock->addr);
- 
-     if (!qmp_chardev_validate_socket(sock, addr, errp)) {
--        return;
-+        return false;
-     }
- 
-     qemu_chr_set_feature(chr, QEMU_CHAR_FEATURE_RECONNECTABLE);
-@@ -1431,7 +1431,7 @@ static void tcp_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
-      */
-     if (!chr->handover_yank_instance) {
-         if (!yank_register_instance(CHARDEV_YANK_INSTANCE(chr->label), errp)) {
--            return;
-+            return false;
-         }
-     }
-     s->registered_yank = true;
-@@ -1441,15 +1441,16 @@ static void tcp_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
-     if (s->is_listen) {
-         if (qmp_chardev_open_socket_server(chr, is_telnet || is_tn3270,
-                                            is_waitconnect, errp) < 0) {
--            return;
-+            return false;
-         }
-     } else {
-         if (qmp_chardev_open_socket_client(chr, reconnect_ms, errp) < 0) {
--            return;
-+            return false;
-         }
-     }
- 
-     /* be isn't opened until we get a connection */
-+    return true;
- }
- 
- static void tcp_chr_parse(QemuOpts *opts, ChardevBackend *backend, Error **errp)
-diff --git a/chardev/char-stdio.c b/chardev/char-stdio.c
-index 534f6ed5658..fe1cbb2d880 100644
---- a/chardev/char-stdio.c
-+++ b/chardev/char-stdio.c
-@@ -85,19 +85,19 @@ static void term_stdio_handler(int sig)
-     stdio_chr_set_echo(NULL, stdio_echo_state);
- }
- 
--static void stdio_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
-+static bool stdio_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
- {
-     ChardevStdio *opts = backend->u.stdio.data;
-     struct sigaction act;
- 
-     if (is_daemonized()) {
-         error_setg(errp, "cannot use stdio with -daemonize");
--        return;
-+        return false;
-     }
- 
-     if (stdio_in_use) {
-         error_setg(errp, "cannot use stdio by multiple character devices");
--        return;
-+        return false;
-     }
- 
-     stdio_in_use = true;
-@@ -105,11 +105,11 @@ static void stdio_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
-     old_fd1_flags = fcntl(1, F_GETFL);
-     tcgetattr(0, &oldtty);
-     if (!qemu_set_blocking(0, false, errp)) {
--        return;
-+        return false;
-     }
- 
-     if (!qemu_chr_open_fd(chr, 0, 1, errp)) {
--        return;
-+        return false;
-     }
- 
-     atexit(term_exit);
-@@ -122,6 +122,7 @@ static void stdio_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
-     stdio_chr_set_echo(chr, false);
- 
-     qemu_chr_be_event(chr, CHR_EVENT_OPENED);
-+    return true;
- }
- #endif
- 
-diff --git a/chardev/char-udp.c b/chardev/char-udp.c
-index 4c81c95e656..423000832ff 100644
---- a/chardev/char-udp.c
-+++ b/chardev/char-udp.c
-@@ -188,7 +188,7 @@ static void udp_chr_parse(QemuOpts *opts, ChardevBackend *backend, Error **errp)
-     }
- }
- 
--static void upd_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
-+static bool upd_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
- {
-     ChardevUdp *udp = backend->u.udp.data;
-     SocketAddress *local_addr = socket_address_flatten(udp->local);
-@@ -203,7 +203,7 @@ static void upd_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
-     qapi_free_SocketAddress(remote_addr);
-     if (ret < 0) {
-         object_unref(OBJECT(sioc));
--        return;
-+        return false;
-     }
- 
-     name = g_strdup_printf("chardev-udp-%s", chr->label);
-@@ -212,6 +212,7 @@ static void upd_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
- 
-     s->ioc = QIO_CHANNEL(sioc);
-     qemu_chr_be_event(chr, CHR_EVENT_OPENED);
-+    return true;
- }
- 
- static void char_udp_class_init(ObjectClass *oc, const void *data)
-diff --git a/chardev/char-win-stdio.c b/chardev/char-win-stdio.c
-index 0535960ff1b..bb9c195a8b1 100644
---- a/chardev/char-win-stdio.c
-+++ b/chardev/char-win-stdio.c
-@@ -142,7 +142,7 @@ static void win_stiod_chr_set_echo(Chardev *chr, bool echo)
-     }
- }
- 
--static void win_stdio_chr_open(Chardev *chr,
-+static bool win_stdio_chr_open(Chardev *chr,
-                                ChardevBackend *backend,
-                                Error **errp)
- {
-@@ -155,7 +155,7 @@ static void win_stdio_chr_open(Chardev *chr,
-     stdio->hStdIn = GetStdHandle(STD_INPUT_HANDLE);
-     if (stdio->hStdIn == INVALID_HANDLE_VALUE) {
-         error_setg(errp, "cannot open stdio: invalid handle");
--        return;
-+        return false;
-     }
- 
-     is_console = GetConsoleMode(stdio->hStdIn, &dwMode) != 0;
-@@ -208,7 +208,7 @@ static void win_stdio_chr_open(Chardev *chr,
-     win_stiod_chr_set_echo(chr, false);
- 
-     qemu_chr_be_event(chr, CHR_EVENT_OPENED);
--    return;
-+    return true;
- 
- err3:
-     qemu_del_wait_object(stdio->hInputReadyEvent, NULL, NULL);
-@@ -217,6 +217,7 @@ err2:
-     CloseHandle(stdio->hInputDoneEvent);
- err1:
-     qemu_del_wait_object(stdio->hStdIn, NULL, NULL);
-+    return false;
- }
- 
- static void char_win_stdio_finalize(Object *obj)
-diff --git a/chardev/msmouse.c b/chardev/msmouse.c
-index 9dc04e3b3ec..365f04546e9 100644
---- a/chardev/msmouse.c
-+++ b/chardev/msmouse.c
-@@ -253,7 +253,7 @@ static void char_msmouse_finalize(Object *obj)
-     fifo8_destroy(&mouse->outbuf);
- }
- 
--static void msmouse_chr_open(Chardev *chr,
-+static bool msmouse_chr_open(Chardev *chr,
-                              ChardevBackend *backend,
-                              Error **errp)
- {
-@@ -265,6 +265,7 @@ static void msmouse_chr_open(Chardev *chr,
-     fifo8_create(&mouse->outbuf, MSMOUSE_BUF_SZ);
- 
-     /* Never send CHR_EVENT_OPENED */
-+    return true;
- }
- 
- static void char_msmouse_class_init(ObjectClass *oc, const void *data)
-diff --git a/chardev/spice.c b/chardev/spice.c
-index f5b1f585eb1..ad97d98ac6b 100644
---- a/chardev/spice.c
-+++ b/chardev/spice.c
-@@ -251,7 +251,7 @@ static void chr_open(Chardev *chr, const char *subtype)
-     s->sin.subtype = g_strdup(subtype);
- }
- 
--static void spice_vmc_chr_open(Chardev *chr, ChardevBackend *backend,
-+static bool spice_vmc_chr_open(Chardev *chr, ChardevBackend *backend,
-                                Error **errp)
- {
-     ChardevSpiceChannel *spicevmc = backend->u.spicevmc.data;
-@@ -272,13 +272,14 @@ static void spice_vmc_chr_open(Chardev *chr, ChardevBackend *backend,
-                           subtypes);
- 
-         g_free(subtypes);
--        return;
-+        return false;
-     }
- 
-     chr_open(chr, type);
-+    return true;
- }
- 
--static void spice_port_chr_open(Chardev *chr, ChardevBackend *backend,
-+static bool spice_port_chr_open(Chardev *chr, ChardevBackend *backend,
-                                 Error **errp)
- {
-     ChardevSpicePort *spiceport = backend->u.spiceport.data;
-@@ -287,12 +288,12 @@ static void spice_port_chr_open(Chardev *chr, ChardevBackend *backend,
- 
-     if (name == NULL) {
-         error_setg(errp, "missing name parameter");
--        return;
-+        return false;
-     }
- 
-     if (!using_spice) {
-         error_setg(errp, "spice not enabled");
--        return;
-+        return false;
-     }
- 
-     chr_open(chr, "port");
-@@ -301,6 +302,7 @@ static void spice_port_chr_open(Chardev *chr, ChardevBackend *backend,
-     s->sin.portname = g_strdup(name);
- 
-     vmc_register_interface(s);
-+    return true;
- }
- 
- static void spice_vmc_chr_parse(QemuOpts *opts, ChardevBackend *backend,
-diff --git a/chardev/wctablet.c b/chardev/wctablet.c
-index 65b2ceb58c9..214d5ca2e28 100644
---- a/chardev/wctablet.c
-+++ b/chardev/wctablet.c
-@@ -324,7 +324,7 @@ static void wctablet_chr_finalize(Object *obj)
-     }
- }
- 
--static void wctablet_chr_open(Chardev *chr,
-+static bool wctablet_chr_open(Chardev *chr,
-                               ChardevBackend *backend,
-                               Error **errp)
- {
-@@ -339,6 +339,7 @@ static void wctablet_chr_open(Chardev *chr,
-                                              &wctablet_handler);
- 
-     qemu_chr_be_event(chr, CHR_EVENT_OPENED);
-+    return true;
- }
- 
- static void wctablet_chr_class_init(ObjectClass *oc, const void *data)
-diff --git a/gdbstub/system.c b/gdbstub/system.c
-index 982857f314a..e86c5870abc 100644
---- a/gdbstub/system.c
-+++ b/gdbstub/system.c
-@@ -233,9 +233,10 @@ static int gdb_chr_write(Chardev *chr, const uint8_t *buf, int len)
-     return len;
- }
- 
--static void gdb_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
-+static bool gdb_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
- {
-     /* Never send CHR_EVENT_OPENED */
-+    return true;
- }
- 
- static void char_gdb_class_init(ObjectClass *oc, const void *data)
-diff --git a/ui/console-vc.c b/ui/console-vc.c
-index 4c8ea4c1485..f22806fed79 100644
---- a/ui/console-vc.c
-+++ b/ui/console-vc.c
-@@ -1093,7 +1093,7 @@ void qemu_text_console_update_size(QemuTextConsole *c)
-     dpy_text_resize(QEMU_CONSOLE(c), c->width, c->height);
- }
- 
--static void vc_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
-+static bool vc_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
- {
-     ChardevVC *vc = backend->u.vc.data;
-     VCChardev *drv = VC_CHARDEV(chr);
-@@ -1142,6 +1142,7 @@ static void vc_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
-     }
- 
-     qemu_chr_be_event(chr, CHR_EVENT_OPENED);
-+    return true;
- }
- 
- static void vc_chr_parse(QemuOpts *opts, ChardevBackend *backend, Error **errp)
-diff --git a/ui/dbus-chardev.c b/ui/dbus-chardev.c
-index 3e471f84cd8..9442b475517 100644
---- a/ui/dbus-chardev.c
-+++ b/ui/dbus-chardev.c
-@@ -176,7 +176,7 @@ dbus_chr_send_break(
-     return DBUS_METHOD_INVOCATION_HANDLED;
- }
- 
--static void dbus_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
-+static bool dbus_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
- {
-     ERRP_GUARD();
- 
-@@ -206,9 +206,9 @@ static void dbus_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
-     CHARDEV_CLASS(object_class_by_name(TYPE_CHARDEV_SOCKET))->chr_parse(
-         opts, be, errp);
-     if (*errp) {
--        return;
-+        return false;
-     }
--    CHARDEV_CLASS(object_class_by_name(TYPE_CHARDEV_SOCKET))->chr_open(
-+    return CHARDEV_CLASS(object_class_by_name(TYPE_CHARDEV_SOCKET))->chr_open(
-         chr, be, errp);
- }
- 
-diff --git a/ui/gtk.c b/ui/gtk.c
-index 44b2b868ec9..9ebe7e8df0d 100644
---- a/ui/gtk.c
-+++ b/ui/gtk.c
-@@ -1963,11 +1963,11 @@ static void gd_vc_chr_set_echo(Chardev *chr, bool echo)
- 
- static int nb_vcs;
- static Chardev *vcs[MAX_VCS];
--static void gd_vc_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
-+static bool gd_vc_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
- {
-     if (nb_vcs == MAX_VCS) {
-         error_setg(errp, "Maximum number of consoles reached");
--        return;
-+        return false;
-     }
- 
-     vcs[nb_vcs++] = chr;
-@@ -1976,6 +1976,7 @@ static void gd_vc_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
-      * console/chardev init sometimes completes elsewhere in a 2nd
-      * stage, so defer OPENED events until they are fully initialized
-      */
-+    return true;
- }
- 
- static void char_gd_vc_class_init(ObjectClass *oc, const void *data)
-diff --git a/ui/spice-app.c b/ui/spice-app.c
-index 7ac9ae4e78d..9e55f273715 100644
---- a/ui/spice-app.c
-+++ b/ui/spice-app.c
-@@ -49,7 +49,7 @@ struct VCChardev {
- 
- struct VCChardevClass {
-     ChardevClass parent;
--    void (*parent_open)(Chardev *chr, ChardevBackend *backend, Error **errp);
-+    bool (*parent_init)(Chardev *chr, ChardevBackend *backend, Error **errp);
- };
- 
- #define TYPE_CHARDEV_VC "chardev-vc"
-@@ -66,11 +66,12 @@ chr_spice_backend_new(void)
-     return be;
- }
- 
--static void vc_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
-+static bool vc_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
- {
-     VCChardevClass *vc = CHARDEV_VC_GET_CLASS(chr);
-     ChardevBackend *be;
-     const char *fqdn = NULL;
-+    bool ok;
- 
-     if (strstart(chr->label, "serial", NULL)) {
-         fqdn = "org.qemu.console.serial.0";
-@@ -83,8 +84,9 @@ static void vc_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
-     be = chr_spice_backend_new();
-     be->u.spiceport.data->fqdn = fqdn ?
-         g_strdup(fqdn) : g_strdup_printf("org.qemu.console.%s", chr->label);
--    vc->parent_open(chr, be, errp);
-+    ok = vc->parent_init(chr, be, errp);
-     qapi_free_ChardevBackend(be);
-+    return ok;
- }
- 
- static void vc_chr_set_echo(Chardev *chr, bool echo)
-@@ -102,7 +104,7 @@ static void char_vc_class_init(ObjectClass *oc, const void *data)
-     VCChardevClass *vc = CHARDEV_VC_CLASS(oc);
-     ChardevClass *cc = CHARDEV_CLASS(oc);
- 
--    vc->parent_open = cc->chr_open;
-+    vc->parent_init = cc->chr_open;
- 
-     cc->chr_parse = vc_chr_parse;
-     cc->chr_open = vc_chr_open;
-diff --git a/ui/vdagent.c b/ui/vdagent.c
-index 644e9acaaeb..7ff0861f3e9 100644
---- a/ui/vdagent.c
-+++ b/ui/vdagent.c
-@@ -660,8 +660,7 @@ static void vdagent_chr_recv_clipboard(VDAgentChardev *vd, VDAgentMessage *msg)
- /* ------------------------------------------------------------------ */
- /* chardev backend                                                    */
- 
--static void vdagent_chr_open(Chardev *chr,
--                             ChardevBackend *backend,
-+static bool vdagent_chr_open(Chardev *chr, ChardevBackend *backend,
-                              Error **errp)
- {
-     VDAgentChardev *vd = QEMU_VDAGENT_CHARDEV(chr);
-@@ -673,7 +672,7 @@ static void vdagent_chr_open(Chardev *chr,
-      * so we have to byteswap everything on BE hosts.
-      */
-     error_setg(errp, "vdagent is not supported on bigendian hosts");
--    return;
-+    return false;
- #endif
- 
-     vd->mouse = VDAGENT_MOUSE_DEFAULT;
-@@ -692,6 +691,7 @@ static void vdagent_chr_open(Chardev *chr,
-     }
- 
-     qemu_chr_be_event(chr, CHR_EVENT_OPENED);
-+    return true;
- }
- 
- static void vdagent_clipboard_peer_register(VDAgentChardev *vd)
-@@ -1074,7 +1074,7 @@ static const VMStateDescription vmstate_vdagent = {
-     }
- };
- 
--static void vdagent_chr_init(Object *obj)
-+static void vdagent_chr_instance_init(Object *obj)
- {
-     VDAgentChardev *vd = QEMU_VDAGENT_CHARDEV(obj);
- 
-@@ -1097,7 +1097,7 @@ static const TypeInfo vdagent_chr_type_info = {
-     .name = TYPE_CHARDEV_QEMU_VDAGENT,
-     .parent = TYPE_CHARDEV,
-     .instance_size = sizeof(VDAgentChardev),
--    .instance_init = vdagent_chr_init,
-+    .instance_init = vdagent_chr_instance_init,
-     .instance_finalize = vdagent_chr_fini,
-     .class_init = vdagent_chr_class_init,
- };
--- 
-2.52.0
+
+ATB,
+
+Mark.
 
 
