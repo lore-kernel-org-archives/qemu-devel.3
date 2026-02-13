@@ -4,159 +4,124 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D18D2EDF15B
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Feb 2026 13:10:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6133EDF15D
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Feb 2026 13:16:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqswM-0000h0-3c; Fri, 13 Feb 2026 08:10:34 -0500
+	id 1vqt13-0001iB-4r; Fri, 13 Feb 2026 08:15:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vqswL-0000gZ-13
- for qemu-devel@nongnu.org; Fri, 13 Feb 2026 08:10:33 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vqt0y-0001hT-Tp
+ for qemu-devel@nongnu.org; Fri, 13 Feb 2026 08:15:23 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vqswI-0002Pz-Sw
- for qemu-devel@nongnu.org; Fri, 13 Feb 2026 08:10:32 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vqt0w-0003Dh-HI
+ for qemu-devel@nongnu.org; Fri, 13 Feb 2026 08:15:20 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770988229;
+ s=mimecast20190719; t=1770988517;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=2izo8+HfCoGNLlV2CgxE///uOs4gMOFxG3si4/NeRQE=;
- b=HfFK5KNz1zKCf2gjH7nzwATLEOa8ehPXAKJ3H0CIpB1vmOoB23ZkAN6+BC/FQ2j/5opHs4
- Rj5dMONrWiSNtGLApbfHfFkmMFSxxiduZxMOV++pH31F4qKd2v1/JFXPc1NeltFtqbqulV
- XxoFuzUI+uRd1BC6EejQ5xnBfXif86o=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-372-hCMH1v5tOGG6jncN1KjsjQ-1; Fri, 13 Feb 2026 08:10:27 -0500
-X-MC-Unique: hCMH1v5tOGG6jncN1KjsjQ-1
-X-Mimecast-MFC-AGG-ID: hCMH1v5tOGG6jncN1KjsjQ_1770988226
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-4359e322f30so887958f8f.2
- for <qemu-devel@nongnu.org>; Fri, 13 Feb 2026 05:10:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1770988226; x=1771593026; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=2izo8+HfCoGNLlV2CgxE///uOs4gMOFxG3si4/NeRQE=;
- b=M84FqRb1vLvxeooBkSDoa9DaZnFWk0RQaEKhYFLMycf5S72QR5ZlldjJ6ZOykYlUw7
- Tb0LiAjOqKnfUXEV2HVxfSjqgjc86/Fa3vfmRwNhzJve+88KMonq1jTNz/HZ7ZwiUblY
- jqA6eR0eu/oKYau7YJx8MUMWhPP0+1rtPACMPfPi1d0Cygl0HUmRt1KzCo1U8VrN8eGr
- 7UbG6OWzcBy2XJBA29DYFZs/uBw8fHY82FD65z0+1f7x1jnVyG24K1HkmPfyOOyw1FYO
- h2Uceek7KABNLuVkHBqkW58A2+GM9tBJU+OdZcHp7ao0l35D+oIkj6QU0v72pNv9UZt2
- JOQw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770988226; x=1771593026;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=2izo8+HfCoGNLlV2CgxE///uOs4gMOFxG3si4/NeRQE=;
- b=hDIUROZeyN4fmQua79tQuT6/6XmiLhFxK9UIIJbcOlRUSx5olG4ZoKYx8dH7prKhg8
- Ry3jmWFgOvBbAfkr8ngs4yMIp6tXjzzh105Z7IFQwGltPzC81eyfSyJ18I3vIMqBES13
- ufDbwhEV3oUTaKJDqqK86pA27WWqeGEx6UQjQHi/EC4mlOf245dLl4nYEQknf8mUYK9e
- 4WgsMt3sYhIT8TWo6BEIWjbGz7z70zgF9AyLSYuaI2E566TA8+M2LNQq3MJCPNKQQg1f
- dd4YOFT54oIlBC9c4AUKmCVy2lklSFBaqgLnDWPu9WWbi/Jh2X0Au63NjUQLs1PVuH2b
- gaEA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWV18X4Ctjt7veNtwgpvuQfU3sxs7SfqYpVbP/Am1kXA8uPQCHmQMlfXHGvAvreCh7EZaAPZIt8zcm/@nongnu.org
-X-Gm-Message-State: AOJu0YxQHl7PU3pMKiumZUCO2lZzn5Ldt5LPgxXX/DMZESVBKhOWHJ4C
- wAcQzO4021/NCh8iv/Rs3sGZ788Ebbm1dhlO8bhIHYMfLdHamHJFmdxpS9wbcEkx4F1/gmkKPfn
- /yJVB3S04yP3PBLzwYkJNa1DjY8dOPoU7s5BihrwNV4tTIP8Iea7JuNHS
-X-Gm-Gg: AZuq6aL9Ncyf7gw99wgdhUAOmfDi2jkuTBheN8nno/rBX5jNhqiD4UMP1jox4rkBwZk
- WFKSqgDIXHPt9042mZG6UQSi7AArBq3k7j9KWT2n1zom+cL+k2M60NccCbN2GQCu1dlImola4Ns
- hvuv7pZ7LC26KmH3WjiZc3n4dD0mhtnwAMUkH1Z+07sEcf7/f+FZQ7cCi4yr+6IztxNUeZfcAxg
- JcPHf6ViffXupWUPxchKBOW1BbfSkVE6BgbZNXqArFszYu5GLftSLDf0vHWi6SIPZXpclvab2Vv
- cW19roBf9fbErT1whD7sDu5w5+JoETsPc+DzE6Fjt1IKI4IVQtQRohrWAyv5/XN07fJ5EDwW9ZX
- faTBaDZCl5jSD+3fwVlQkZkKNUcptRPjNNXyeT+r/uBJQFWpLbPqZrP7+kyBi
-X-Received: by 2002:a05:6000:603:b0:432:84f9:8bea with SMTP id
- ffacd0b85a97d-4379791cfedmr3287587f8f.51.1770988226307; 
- Fri, 13 Feb 2026 05:10:26 -0800 (PST)
-X-Received: by 2002:a05:6000:603:b0:432:84f9:8bea with SMTP id
- ffacd0b85a97d-4379791cfedmr3287539f8f.51.1770988225819; 
- Fri, 13 Feb 2026 05:10:25 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43796ad009bsm5520262f8f.39.2026.02.13.05.10.24
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 13 Feb 2026 05:10:25 -0800 (PST)
-Message-ID: <87309142-6457-447b-ac04-8bd51b983a80@redhat.com>
-Date: Fri, 13 Feb 2026 14:10:24 +0100
+ bh=UT/E/DKAFVgF/zZPMlgG6LXfS2yfl3EKx6MC5P78s+8=;
+ b=ccBvtq4m2ycOnQAUt861fo4hK/COI9+deIu6vxHfxywoCvMPFClL/AN4cLGzWqXL/OdsuU
+ 1EDimIiG70dKWcObO9CJAox5rPIlIcECI4GzfiuqDvzU2sRmyzP2juJ4B2FKH4ftnLA6EF
+ jpdBueQ1BF+gHKO9WHaWBqOQyF32qxU=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-465-5n3q3dcnOJizwAG3HDttAA-1; Fri,
+ 13 Feb 2026 08:15:13 -0500
+X-MC-Unique: 5n3q3dcnOJizwAG3HDttAA-1
+X-Mimecast-MFC-AGG-ID: 5n3q3dcnOJizwAG3HDttAA_1770988511
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7D3CD1956067; Fri, 13 Feb 2026 13:15:10 +0000 (UTC)
+Received: from [10.45.224.181] (unknown [10.45.224.181])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 7BE0D30001B9; Fri, 13 Feb 2026 13:15:03 +0000 (UTC)
+Message-ID: <f0439e08-326f-407f-91b4-0b49c33e1d1d@redhat.com>
+Date: Fri, 13 Feb 2026 14:15:01 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 03/14] vfio/iommufd: Create nesting parent hwpt with
- IOMMU_HWPT_ALLOC_PASID flag
-To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
-Cc: alex@shazbot.org, eric.auger@redhat.com, mst@redhat.com,
- jasowang@redhat.com, jgg@nvidia.com, nicolinc@nvidia.com,
- skolothumtho@nvidia.com, joao.m.martins@oracle.com,
- clement.mathieu--drif@eviden.com, kevin.tian@intel.com, yi.l.liu@intel.com,
- xudong.hao@intel.com
-References: <20260205031133.74357-1-zhenzhong.duan@intel.com>
- <20260205031133.74357-4-zhenzhong.duan@intel.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260205031133.74357-4-zhenzhong.duan@intel.com>
+Subject: Re: [PATCH 32/43] audio: replace int endianness with bool big_endian
+ in audsettings
+To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>,
+ Christian Schoenebeck <qemu_oss@crudebyte.com>,
+ Thomas Huth <huth@tuxfamily.org>, Alexandre Ratchov <alex@caoua.org>,
+ Laurent Vivier <laurent@vivier.eu>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Alistair Francis <alistair@alistair23.me>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ "open list:Xilinx ZynqMP and..." <qemu-arm@nongnu.org>
+References: <20260127182516.289834-1-marcandre.lureau@redhat.com>
+ <20260127182516.289834-33-marcandre.lureau@redhat.com>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20260127182516.289834-33-marcandre.lureau@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -172,98 +137,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/5/26 04:11, Zhenzhong Duan wrote:
-> When both host device and vIOMMU have PASID enabled, then guest may
-> setup pasid attached translation.
+On 27/01/2026 19.24, marcandre.lureau@redhat.com wrote:
+> From: Marc-André Lureau <marcandre.lureau@redhat.com>
 > 
-> We need to create the nesting parent hwpt with IOMMU_HWPT_ALLOC_PASID
-> flag because according to uAPI, any domain attached to the non-PASID
-> part of the device must also be flagged, otherwise attaching a PASID
-> will blocked.
+> The endianness field used an int to represent a boolean concept, with
+> 0 meaning little-endian and 1 meaning big-endian. This required runtime
+> validation to reject invalid values and made the code less readable.
 > 
-> Introduce a vfio_device_get_viommu_flags_pasid_supported() helper to
-> facilitate this implementation.
+> Replace with a bool big_endian field that is self-documenting and
+> type-safe. The compiler now enforces valid values, eliminating the
+> need for the validation check in audio_validate_settings().
 > 
-> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 > ---
->   include/hw/vfio/vfio-device.h |  1 +
->   hw/vfio/device.c              | 11 +++++++++++
->   hw/vfio/iommufd.c             |  8 +++++++-
->   3 files changed, 19 insertions(+), 1 deletion(-)
-> 
-> diff --git a/include/hw/vfio/vfio-device.h b/include/hw/vfio/vfio-device.h
-> index 35a5ec6d92..983eb0ecce 100644
-> --- a/include/hw/vfio/vfio-device.h
-> +++ b/include/hw/vfio/vfio-device.h
-> @@ -268,6 +268,7 @@ void vfio_device_prepare(VFIODevice *vbasedev, VFIOContainer *bcontainer,
->   void vfio_device_unprepare(VFIODevice *vbasedev);
->   
->   bool vfio_device_get_viommu_flags_want_nesting(VFIODevice *vbasedev);
-> +bool vfio_device_get_viommu_flags_pasid_supported(VFIODevice *vbasedev);
->   bool vfio_device_get_host_iommu_quirk_bypass_ro(VFIODevice *vbasedev,
->                                                   uint32_t type, void *caps,
->                                                   uint32_t size);
-> diff --git a/hw/vfio/device.c b/hw/vfio/device.c
-> index 973fc35b59..b15ca6ef0a 100644
-> --- a/hw/vfio/device.c
-> +++ b/hw/vfio/device.c
-> @@ -533,6 +533,17 @@ bool vfio_device_get_viommu_flags_want_nesting(VFIODevice *vbasedev)
->       return false;
->   }
->   
-> +bool vfio_device_get_viommu_flags_pasid_supported(VFIODevice *vbasedev)
-> +{
-> +    VFIOPCIDevice *vdev = vfio_pci_from_vfio_device(vbasedev);
-> +
-> +    if (vdev) {
-> +        return !!(pci_device_get_viommu_flags(PCI_DEVICE(vdev)) &
-> +                  VIOMMU_FLAG_PASID_SUPPORTED);
-> +    }
-> +    return false;
-> +}
-> +
->   bool vfio_device_get_host_iommu_quirk_bypass_ro(VFIODevice *vbasedev,
->                                                   uint32_t type, void *caps,
->                                                   uint32_t size)
-> diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
-> index 96735f1fc8..9605bf73b7 100644
-> --- a/hw/vfio/iommufd.c
-> +++ b/hw/vfio/iommufd.c
-> @@ -354,6 +354,7 @@ static bool iommufd_cdev_autodomains_get(VFIODevice *vbasedev,
->       VendorCaps caps;
->       VFIOIOASHwpt *hwpt;
->       uint32_t hwpt_id;
-> +    uint8_t max_pasid_log2;
-
-I think this should be initialized to some default value.
-
->       int ret;
->   
->       /* Try to find a domain */
-> @@ -398,7 +399,7 @@ static bool iommufd_cdev_autodomains_get(VFIODevice *vbasedev,
->        */
->       if (!iommufd_backend_get_device_info(vbasedev->iommufd, vbasedev->devid,
->                                            &type, &caps, sizeof(caps), &hw_caps,
-> -                                         NULL, errp)) {
-> +                                         &max_pasid_log2, errp)) {
->           return false;
+...
+> diff --git a/audio/sndioaudio.c b/audio/sndioaudio.c
+> index be491895532..69fa9d8ba54 100644
+> --- a/audio/sndioaudio.c
+> +++ b/audio/sndioaudio.c
+> @@ -387,7 +387,7 @@ static int sndio_init(SndioVoice *self,
 >       }
 >   
-> @@ -420,6 +421,11 @@ static bool iommufd_cdev_autodomains_get(VFIODevice *vbasedev,
->           }
+>       if (req.bits > 8) {
+> -        req.le = as->endianness ? 0 : 1;
+> +        req.le = as->big_endian ? 0 : 1;
 >       }
->   
-> +    if (max_pasid_log2 &&
-> +        vfio_device_get_viommu_flags_pasid_supported(vbasedev)) {
+You could change it to:
 
-Can an IOMMU backend not support PASID while the vIOMMU device does ?
-That would be a problem no ?
+	req.le = !as->big_endian;
 
-> +        flags |= IOMMU_HWPT_ALLOC_PASID;
-> +    }
-> +
->       if (cpr_is_incoming()) {
->           hwpt_id = vbasedev->cpr.hwpt_id;
->           goto skip_alloc;
+... but it's just a nit, so:
+
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
