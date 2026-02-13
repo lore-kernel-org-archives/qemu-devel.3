@@ -4,114 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3635EEA870
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Feb 2026 00:02:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34849EEA870
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Feb 2026 00:06:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqgcy-0001Wo-Ud; Thu, 12 Feb 2026 19:01:44 -0500
+	id 1vqghA-0002Mm-Oq; Thu, 12 Feb 2026 19:06:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vqgcx-0001Wd-DL
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 19:01:43 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from
+ <SRS0=laZO=AR=ens-lyon.org=samuel.thibault@bounce.ens-lyon.org>)
+ id 1vqgh6-0002MS-BP
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 19:06:01 -0500
+Received: from sonata.ens-lyon.org ([140.77.166.138])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vqgcv-0008Aa-3m
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 19:01:43 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770940899;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=gyxfQwQo34PfUJtKLKu1rbKEh66N9E1v9mhKHW719Wg=;
- b=Ewxlt4TU1O/7iUWEesM01ke4B8/TaSXNa8rwWkmDBI/L6Ngy3zvkzkQ2kUNPD88WYpIkGt
- aSyoEC/UqTvphdpfBdD643FAUHFfbH+zhOv0ZekrfIunIcgilhSdX0BKKUhSgZGToUmgB7
- vD3iiVZEfjoqd5WNVo5TS0YJp4JF9d8=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-212-hDLC6DpUOxm8bfZiz7mCYQ-1; Thu, 12 Feb 2026 19:01:38 -0500
-X-MC-Unique: hDLC6DpUOxm8bfZiz7mCYQ-1
-X-Mimecast-MFC-AGG-ID: hDLC6DpUOxm8bfZiz7mCYQ_1770940897
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-47ee3dd7fc8so2549755e9.3
- for <qemu-devel@nongnu.org>; Thu, 12 Feb 2026 16:01:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1770940897; x=1771545697; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=gyxfQwQo34PfUJtKLKu1rbKEh66N9E1v9mhKHW719Wg=;
- b=s8p+iNHQDBx1qswsD8HWdeBLt3LT3oj6wL2UKiJjHvm4Pxbq80V6n+3gcUomnbJEtn
- oxodLEKLgid9W52aPii6Om7qYZk55vN7V1LHbLpFD6cjxnyjZlDMvNoBEPeRDWwSSuJk
- dO/8kYyRhzepnWeP5rtUPs4JhTzjqeSZiEbpsa3qwB0f6yhUiiaS1s1Yx4E/TPsLMhzP
- vhSCyFxXkQ42FJp+SnL3L/O1A1B4Ybjy+4jMM/Sp2W7ZRFWuEqaKMqLTdbRIhyv+Jgs/
- +O1eVOR+LhG5e/tqF2HsO1bghsBvoVnG1hsjB+UbAAUeC3rl9P2GEkJ19cPdTHwUQXve
- L81Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770940897; x=1771545697;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=gyxfQwQo34PfUJtKLKu1rbKEh66N9E1v9mhKHW719Wg=;
- b=vpHHivTyjN14gKYRgJi/v2N4iLPRbfdAeVsjLKDwE9OJQBEs/G9FZtSEgWvM17hFJ+
- YZdwBN9Pl+uts7SZVn46bR8fyfBJHfvPHTEDQ0YGHZhLMidsT9q9uuOMDN8kIgYnas/k
- +yZb+tdv3nOJ/3HWv1+kkAqTCA1mX7I9YrF7Ca1uJD3+5V5/8yjYqRFy7tFq3x9b3Plb
- bKyDrUNFVFW6eTC1Xyq0RUVABNiD+6i2ZzXTqlkeFoOuhiX1EyxsTCq1ImriJpzvCjje
- dtWkUM/wnqb3xrmHVlT1BxcrS3sMuR2d8sijMxm1ChbFyhRxwqs1i6Q/zdBiWY0MCS7B
- 2bPQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWY4pFMMX6L0p2ssFeItTtsL+pgRoylHllfGakH/zJo0Em7MqTfMJ8mu/C8lUkxTmWlqLhtcK76B8kF@nongnu.org
-X-Gm-Message-State: AOJu0Yz1RcXax8d9iyokdm7qJKRD27zD4A6NlwJeDgCl0c9uiU47vvkR
- o8ZkZtQIJyOdMFr8MO3UBrMZus6KbXus4vYQ/T6J6OAWW5FJf5sB4G0O+RVXhkL0P1tDHIjydl8
- 0EvgULCM6AGbk49C8wLRfq4orJDGfWVLDaSZTXcNXSBnnX6nEBikDR5F1
-X-Gm-Gg: AZuq6aKlwN9+nkjn3alCNwWwnSaEscJUX6/zQ0TFsEfXPWzmC5AjFVlvAwFZxOpwAf2
- fu0qvkzUE4vv2tbwtC2ipVxZMhoJBa4k3cnUEnVPkP926u86mYIUP03uNeh7tZLShqq8fba50rJ
- S6dJPmyQb/JAq4OEGHOSfITz2yRIOkXqc9Wu8Xb3R2TyGSg4TERp16GZ4uMw8p+nyxfU9cbCerk
- zWQZpoWjZieMIjM9pDHG02SVeANBDmOWldor2obivEjHa7dFgqH17xSzg4mHjXijIMnBEpARHHw
- 0CpaZ6dvps3htSAe268IjtnT3IX6rrIq8zbtRaQdLyOE5hZA9siMsrfmhZxW7Iq+CnK+bGnEZvS
- cKBqLaYQAOrXGpaI7C7M+OtVsL1YCGV+QdFHEX2blT5vVwQ==
-X-Received: by 2002:a05:600c:5391:b0:45d:f81d:eae7 with SMTP id
- 5b1f17b1804b1-48371040392mr13094465e9.28.1770940896704; 
- Thu, 12 Feb 2026 16:01:36 -0800 (PST)
-X-Received: by 2002:a05:600c:5391:b0:45d:f81d:eae7 with SMTP id
- 5b1f17b1804b1-48371040392mr13094085e9.28.1770940896219; 
- Thu, 12 Feb 2026 16:01:36 -0800 (PST)
-Received: from redhat.com (IGLD-80-230-34-155.inter.net.il. [80.230.34.155])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4834d834ebesm223715585e9.13.2026.02.12.16.01.34
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 12 Feb 2026 16:01:35 -0800 (PST)
-Date: Thu, 12 Feb 2026 19:01:33 -0500
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Joelle van Dyne <j@getutm.app>
-Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>
-Subject: Re: [PULL 41/51] virtio-gpu-virgl: correct parent for blob memory
- region
-Message-ID: <20260212190108-mutt-send-email-mst@kernel.org>
-References: <cover.1770231744.git.mst@redhat.com>
- <81cb15cf3774140da7c17341018a3852f920acb5.1770231744.git.mst@redhat.com>
- <4eb93d7a-1fa9-4b3c-8ad7-a2eb64f025a0@collabora.com>
- <CA+E+eSDta5wSBs+=iuPm9yzFnxRihrOmeXrDSVJYoAAiYNQ9fA@mail.gmail.com>
- <68223045-effa-4319-817b-1a31f227c081@collabora.com>
- <20260212020117-mutt-send-email-mst@kernel.org>
- <f6d75a31-a72c-48da-a195-0a74b75b8596@collabora.com>
- <CA+E+eSCu93wwd_7EZ3ekjDj+URoNT+3YBJvPARfwB3xnj04EQQ@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from
+ <SRS0=laZO=AR=ens-lyon.org=samuel.thibault@bounce.ens-lyon.org>)
+ id 1vqgh3-0000bD-Qk
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 19:06:00 -0500
+Received: from localhost (localhost [127.0.0.1])
+ by sonata.ens-lyon.org (Postfix) with ESMTP id C9C30A20EC;
+ Fri, 13 Feb 2026 01:05:53 +0100 (CET)
+Received: from sonata.ens-lyon.org ([127.0.0.1])
+ by localhost (sonata.ens-lyon.org [127.0.0.1]) (amavisd-new, port 10024)
+ with ESMTP id cNEOfth1pPVT; Fri, 13 Feb 2026 01:05:53 +0100 (CET)
+Received: from end (aamiens-653-1-40-48.w83-192.abo.wanadoo.fr [83.192.199.48])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange ECDHE (P-256) server-signature RSA-PSS (4096 bits) server-digest
+ SHA256) (No client certificate requested)
+ by sonata.ens-lyon.org (Postfix) with ESMTPSA id AD8D0A1BDB;
+ Fri, 13 Feb 2026 01:05:53 +0100 (CET)
+Received: from samy by end with local (Exim 4.99.1)
+ (envelope-from <samuel.thibault@ens-lyon.org>)
+ id 1vqggz-0000000AGWM-14kA; Fri, 13 Feb 2026 01:05:53 +0100
+From: Samuel Thibault <samuel.thibault@ens-lyon.org>
+To: qemu-devel@nongnu.org
+Cc: Samuel Thibault <samuel.thibault@ens-lyon.org>,
+ marcandre.lureau@redhat.com, pbonzini@redhat.com
+Subject: [PATCHv2] baum: Add copy/paste bindings
+Date: Fri, 13 Feb 2026 01:05:51 +0100
+Message-ID: <20260213000551.2446777-1-samuel.thibault@ens-lyon.org>
+X-Mailer: git-send-email 2.51.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CA+E+eSCu93wwd_7EZ3ekjDj+URoNT+3YBJvPARfwB3xnj04EQQ@mail.gmail.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=140.77.166.138;
+ envelope-from=SRS0=laZO=AR=ens-lyon.org=samuel.thibault@bounce.ens-lyon.org;
+ helo=sonata.ens-lyon.org
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -129,19 +71,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Feb 12, 2026 at 03:57:04PM -0800, Joelle van Dyne wrote:
-> > Joelle, are you aware of this problem with the version that got applied
-> > to the qemu/staging tree? If yes, could you please send patch fixing it?
-> Unfortunately, this means that the patch should not have been back
-> ported. It is possible that the crash which this patch was addressing
-> was introduced as a result of changes elsewhere. For example
-> https://lore.kernel.org/all/20250924-use-v4-0-07c6c598f53d@rsg.ci.i.u-tokyo.ac.jp/
-> changed some internal mechanics of finalize. I didn't raise any
-> objection to the back port because it seemed like the original code
-> where the object was its own parent was wrong but I guess it was
-> working fine somehow. I think in the meantime the best course of
-> action is to revert the patch in the stable branches.
+Brltty interprets
 
-wait a sec the crash is on stable? not master?
+- TL1 (i.e. Display1) + routing as clip new
+- TL2 (i.e. Display2) + routing as clip add
+- TR1 (i.e. Display4) + routing as copy line
+- TR2 (i.e. Display5) + routing as copy rect
+
+https://github.com/brltty/brltty/blob/master/Tables/Input/bm/routing6.kti
+
+- BAUM_TL1+BAUM_TL2+BAUM_TL3+BAUM_TR1 (i.e.
+Display1+Display2+Display3+Display4) as paste
+
+https://github.com/brltty/brltty/blob/master/Tables/Input/bm/d6.kti
+
+Signed-off-by: Samuel Thibault <samuel.thibault@ens-lyon.org>
+---
+ chardev/baum.c | 30 +++++++++++++++++++++++++++++-
+ 1 file changed, 29 insertions(+), 1 deletion(-)
+
+diff --git a/chardev/baum.c b/chardev/baum.c
+index 157f8b9519..57fe60fe18 100644
+--- a/chardev/baum.c
++++ b/chardev/baum.c
+@@ -1,7 +1,7 @@
+ /*
+  * QEMU Baum Braille Device
+  *
+- * Copyright (c) 2008, 2010-2011, 2016-2017 Samuel Thibault
++ * Copyright (c) 2008, 2010-2011, 2016-2017, 2026 Samuel Thibault
+  *
+  * Permission is hereby granted, free of charge, to any person obtaining a copy
+  * of this software and associated documentation files (the "Software"), to deal
+@@ -564,6 +564,30 @@ static void baum_chr_read(void *opaque)
+                 baum_send_key(baum, BAUM_RSP_RoutingKey, (code & BRLAPI_KEY_CMD_ARG_MASK)+1);
+                 baum_send_key(baum, BAUM_RSP_RoutingKey, 0);
+                 break;
++            case BRLAPI_KEY_CMD_CLIP_NEW:
++                baum_send_key(baum, BAUM_RSP_TopKeys, BAUM_TL1);
++                baum_send_key(baum, BAUM_RSP_RoutingKey, (code & BRLAPI_KEY_CMD_ARG_MASK)+1);
++                baum_send_key(baum, BAUM_RSP_RoutingKey, 0);
++                baum_send_key(baum, BAUM_RSP_TopKeys, 0);
++                break;
++            case BRLAPI_KEY_CMD_CLIP_ADD:
++                baum_send_key(baum, BAUM_RSP_TopKeys, BAUM_TL2);
++                baum_send_key(baum, BAUM_RSP_RoutingKey, (code & BRLAPI_KEY_CMD_ARG_MASK)+1);
++                baum_send_key(baum, BAUM_RSP_RoutingKey, 0);
++                baum_send_key(baum, BAUM_RSP_TopKeys, 0);
++                break;
++            case BRLAPI_KEY_CMD_COPY_LINE:
++                baum_send_key(baum, BAUM_RSP_TopKeys, BAUM_TR1);
++                baum_send_key(baum, BAUM_RSP_RoutingKey, (code & BRLAPI_KEY_CMD_ARG_MASK)+1);
++                baum_send_key(baum, BAUM_RSP_RoutingKey, 0);
++                baum_send_key(baum, BAUM_RSP_TopKeys, 0);
++                break;
++            case BRLAPI_KEY_CMD_COPY_RECT:
++                baum_send_key(baum, BAUM_RSP_TopKeys, BAUM_TR2);
++                baum_send_key(baum, BAUM_RSP_RoutingKey, (code & BRLAPI_KEY_CMD_ARG_MASK)+1);
++                baum_send_key(baum, BAUM_RSP_RoutingKey, 0);
++                baum_send_key(baum, BAUM_RSP_TopKeys, 0);
++                break;
+             case 0:
+                 switch (code & BRLAPI_KEY_CMD_ARG_MASK) {
+                 case BRLAPI_KEY_CMD_FWINLT:
+@@ -606,6 +630,10 @@ static void baum_chr_read(void *opaque)
+                     baum_send_key(baum, BAUM_RSP_TopKeys, BAUM_TL1|BAUM_TL3|BAUM_TR1);
+                     baum_send_key(baum, BAUM_RSP_TopKeys, 0);
+                     break;
++                case BRLAPI_KEY_CMD_PASTE:
++                    baum_send_key(baum, BAUM_RSP_TopKeys, BAUM_TL1|BAUM_TL2|BAUM_TL3|BAUM_TR1);
++                    baum_send_key(baum, BAUM_RSP_TopKeys, 0);
++                    break;
+                 }
+             }
+             break;
+-- 
+2.51.0
 
 
