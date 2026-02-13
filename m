@@ -4,91 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC8F6EF99E0
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Feb 2026 21:54:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33ABEEF99DD
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Feb 2026 21:58:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vr16k-0008I4-Pm; Fri, 13 Feb 2026 16:53:50 -0500
+	id 1vr1Aw-0000oB-Km; Fri, 13 Feb 2026 16:58:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <language.lawyer@gmail.com>)
- id 1vr16j-0008HO-8n
- for qemu-devel@nongnu.org; Fri, 13 Feb 2026 16:53:49 -0500
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <language.lawyer@gmail.com>)
- id 1vr16h-0000Mm-QV
- for qemu-devel@nongnu.org; Fri, 13 Feb 2026 16:53:49 -0500
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-435f177a8f7so1469084f8f.1
- for <qemu-devel@nongnu.org>; Fri, 13 Feb 2026 13:53:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1771019626; x=1771624426; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=vmJi/JuvAklFCjQHtQcZC95MV3mRFS6Hn4IqCnOoJmo=;
- b=L64Ga6VSbgVh/mnm8LcpPHChNblIRKe4sK6biLaYl5IX2rLvuPYOhOn5bjIIDHbIYq
- 2eDmOq7fMYxxUn5ybfdcXVRXwCu2UaE2uvLKFJ7mQCtp521q5gpGv3MP7+u4P58L+Zdm
- kX+giJY7TJxJCgsWcGLzKqP09ccxmHZqcLcrWOfxShCLZvLnhoiVplvwlJpgZzWPO3ue
- xgKepjn8pKGuJl/hAMSzaK/pPFj6UxMF+uzHcTXkCV9ZePcY5DFkn71FPfOCENQf9eot
- vF4qjv0cDwijW06WpsCWCQLv9cJSoVi94Z5370Lpxd9n8aSZRBZNtMwf1qsXz+Z4N6WB
- p5Pw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771019626; x=1771624426;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=vmJi/JuvAklFCjQHtQcZC95MV3mRFS6Hn4IqCnOoJmo=;
- b=KUJO3OJO6pxQA5Rq8K6utvEML2iKOYe9kluHmRlQGDtpPOh6Gnhzb3ug/lNWO88Fq3
- m0ScAFwpZQhgG9TRKQ3nSDCyPTQP+zFCjJCr9wtLlpVLOmRRUB0oMQf3GRomVaTF2QeA
- NjIuA7y9agJsruDhdS7Da03QlG/7YTywEcHg+/K1F11r8vozWLKsc82VK3BdFUuRUl8/
- Mkzg6YF5mgiSxYsFfH4zxDwOZpYpnWx9SA8zbDSlwmE+MkMTgtT7HDF1pd1YmKbqBXho
- zqIA62z2RixWJqc+dPFvqBzuux6Nj18ENPEyyQARGJiuyz5q/BnepuDFa3QxcM6Ce8DT
- cZhA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUnsqv0GfG5y+9hcVU93mkA4qH9/sKLRL3r+jWX86n2iX5zJzPam9nkT6o0nt0SDcprnWw6mBPDL2yp@nongnu.org
-X-Gm-Message-State: AOJu0YxIr2hnoykx5ztdIQzar7wcnU9OxPlxdIjCI8KDbaU7s55YuPlA
- U8nM7oZxxvT8K3bAoffguWov7mdxgQJrF6xwjBQp3X/+cBR+ddQQzDVY
-X-Gm-Gg: AZuq6aIcUWVzX6cE6w3nAv+4+vFYuujb6d/vMNQX+nmoyQbcXXTUtTIJSXn3ZaJCzjq
- 4XOIJydAgAKPXmD/rAm2XtnNFgoBDeocJM7NQw7Pr5l7fg0MK5kTAC2VHcIlOnt6IaNqrKrPrsX
- U0N9g5Ud1k/ViLvSnAC7PjPmaT8OBZec8vKnZMOMRxrzR6ICkbdXQUppv6cssRkY8yrqmn0Jek0
- /cv4BwVnv6hG2ivr2AneW/xyNclSbgpx3x6nNXUNLpr2+xJyK76KSjU7s0BohRoQuxCFLSge3hg
- 9zs0uMjkWYjqGqNAlwRBgq+RC1L/bpLLxLgvvdim3oiiFluz/gdS0ihD9axhOkp705vwB0hTF7J
- 9djX/dJKffPBFMEDzT24qPlKmRru4vR766/h48Ybd2ic3+BaX8nl5M0yr6zPwHrr4BLdVX/7fZr
- S1olobGzzjKA8Gml31L/K6/5+j+tEdiDP1OlWk8AwAFXTP
-X-Received: by 2002:a05:6000:1844:b0:434:32cc:6c86 with SMTP id
- ffacd0b85a97d-4379db61567mr1647492f8f.14.1771019625452; 
- Fri, 13 Feb 2026 13:53:45 -0800 (PST)
-Received: from [192.168.88.253] ([82.215.83.93])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43796abd259sm8412691f8f.24.2026.02.13.13.53.44
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 13 Feb 2026 13:53:45 -0800 (PST)
-Message-ID: <45a6e2d7-8909-401b-9c99-3ad3da4fd982@gmail.com>
-Date: Sat, 14 Feb 2026 02:53:40 +0500
+ (Exim 4.90_1) (envelope-from <crichez@pm.me>) id 1vr1At-0000nn-Ce
+ for qemu-devel@nongnu.org; Fri, 13 Feb 2026 16:58:07 -0500
+Received: from mail-05.mail-europe.com ([85.9.206.169])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <crichez@pm.me>) id 1vr1Ar-0001JK-2a
+ for qemu-devel@nongnu.org; Fri, 13 Feb 2026 16:58:07 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me;
+ s=protonmail3; t=1771019872; x=1771279072;
+ bh=46PDkYIs1PJ0gevHFfEmkZMBRlQ4IZCSlCTfA41mf7k=;
+ h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
+ Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
+ b=K7yuXvRGZEPYemeEMQuIAOF9Gr5pY8/Gaim2D6PrnCtVmT3yc4HXv3VYbg+f9We2j
+ OoSst1eZVbGnleS/m+bZ9kSscj8U8tFgTmycbP71x5mfHmeCebHb55a92e4QA+a7pb
+ ySIfzYliP2e8SsIdDXpBtN+plDVaCQfL5ONUdUShZK8vYTJZq9/G/i1HZQUUxCWHGN
+ M9QSLTc/5ae70jbc7J53XZ87Z8x3iSs+winQCPCARByHE5IffEkMQzpKdD9A/Y+fhJ
+ cbkjHAvKY77Kncqp2MrZImH4CM+y3cPRKCJ/UjrAAgv0aSOY2Ug5Wj0JTN900qXJOC
+ aZTNn7/WMwRpw==
+Date: Fri, 13 Feb 2026 21:57:47 +0000
+To: qemu-devel@nongnu.org, qemu-trivial@nongnu.org
+From: Christopher Palmer-Richez <crichez@pm.me>
+Cc: Samuel Thibault <samuel.thibault@ens-lyon.org>,
+ Jason Wang <jasowang@redhat.com>, Christopher Palmer-Richez <crichez@pm.me>
+Subject: [PATCH] net/slirp: allow hostfwd socket paths with dashes
+Message-ID: <20260213-fix-hostfwd-unix-dash-v1-1-9e26fc2b63d6@pm.me>
+Feedback-ID: 5960063:user:proton
+X-Pm-Message-ID: eede0d838983f5b687a7d53726dd6a73156f882e
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH] virtfs: 9p: local: add default uid and gid options
-To: Christian Schoenebeck <qemu_oss@crudebyte.com>, qemu-devel@nongnu.org
-References: <fe7665bc-5ff6-4f78-82b7-1bea853583e3@gmail.com>
- <5961971.DvuYhMxLoT@weasel> <5e904364-240a-4853-ad28-b2e3c5ac8f83@gmail.com>
- <12835278.O9o76ZdvQC@weasel>
-Content-Language: en-US
-From: Andrey Erokhin <language.lawyer@gmail.com>
-In-Reply-To: <12835278.O9o76ZdvQC@weasel>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=language.lawyer@gmail.com; helo=mail-wr1-x42d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=85.9.206.169; envelope-from=crichez@pm.me;
+ helo=mail-05.mail-europe.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -105,10 +66,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/02/2026 19:07, Christian Schoenebeck wrote:
-> On Tuesday, 10 February 2026 10:45:09 CET Andrey Erokhin wrote:
->> (BTW, is it OK that there is no fmode/dmode processing in system/vl.c?)
-> 
-> You mean error handling of these options. Well, earlier error handling on one hand might be more desirable, but OTOH it might also be more complicated to be handled in vl.c than either in 9p.c or 9p-local.c I guess.
-I mean dmode/fmode do not reach 9p-local.c, at least when used in `-virtfs local,...`
+Adds get_last_str_sep, a variant of get_str_sep that checks for the last
+occurence of a separator. Updates slirp_hostfwd to parse unix domain
+socket paths with dashes.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/347
+Signed-off-by: Christopher Palmer-Richez <crichez@pm.me>
+---
+QEMU added support for `-netdev user,hostfwd=3Dunix:/tmp/vm-:22` last year.
+The implementation detects the first dash, and interprets the right side
+of it as the guest address (or lack thereof). If the host socket path
+contains a dash, the invocation fails with "Bad guest address."
+
+This tiny patch adds a variant of the `get_str_sep` method previously
+used by `slirp_hostfwd`, but that detects the last occurence of a
+separator instead: `get_last_str_sep`. The only difference is the use of
+`strrchr` instead of `strchr`. `slirp_hostfwd` now uses it. It ignores
+dashes up to the last occurence, which allows unix domain socket paths
+with dashes.
+---
+ net/slirp.c | 22 +++++++++++++++++++++-
+ 1 file changed, 21 insertions(+), 1 deletion(-)
+
+diff --git a/net/slirp.c b/net/slirp.c
+index 04925f3318..968be9cc99 100644
+--- a/net/slirp.c
++++ b/net/slirp.c
+@@ -69,6 +69,26 @@ static int get_str_sep(char *buf, int buf_size, const ch=
+ar **pp, int sep)
+     return 0;
+ }
+=20
++static int get_last_str_sep(char *buf, int buf_size, const char **pp, int =
+sep)
++{
++    const char *p, *p1;
++    int len;
++    p =3D *pp;
++    p1 =3D strrchr(p, sep);
++    if (!p1)
++        return -1;
++    len =3D p1 - p;
++    p1++;
++    if (buf_size > 0) {
++        if (len > buf_size - 1)
++            len =3D buf_size - 1;
++        memcpy(buf, p, len);
++        buf[len] =3D '\0';
++    }
++    *pp =3D p1;
++    return 0;
++}
++
+ /* slirp network adapter */
+=20
+ #define SLIRP_CFG_HOSTFWD 1
+@@ -848,7 +868,7 @@ static int slirp_hostfwd(SlirpState *s, const char *red=
+ir_str, Error **errp)
+=20
+ #if !defined(WIN32) && SLIRP_CHECK_VERSION(4, 7, 0)
+     if (is_unix) {
+-        if (get_str_sep(buf, sizeof(buf), &p, '-') < 0) {
++        if (get_last_str_sep(buf, sizeof(buf), &p, '-') < 0) {
+             fail_reason =3D "Missing - separator";
+             goto fail_syntax;
+         }
+
+---
+base-commit: ece408818d27f745ef1b05fb3cc99a1e7a5bf580
+change-id: 20260213-fix-hostfwd-unix-dash-b3fe7b49a362
+
+Best regards,
+--=20
+Christopher Palmer-Richez <crichez@pm.me>
+
+
 
