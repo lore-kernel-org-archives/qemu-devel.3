@@ -4,96 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9545EDF14F
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Feb 2026 10:29:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 901B1EDF151
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Feb 2026 10:29:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqqPh-000062-5l; Fri, 13 Feb 2026 05:28:41 -0500
+	id 1vqqQF-0000XI-3S; Fri, 13 Feb 2026 05:29:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vqqPg-00005J-3G
- for qemu-devel@nongnu.org; Fri, 13 Feb 2026 05:28:40 -0500
-Received: from mail-yx1-xb12c.google.com ([2607:f8b0:4864:20::b12c])
+ id 1vqqQD-0000Wl-Dj
+ for qemu-devel@nongnu.org; Fri, 13 Feb 2026 05:29:13 -0500
+Received: from mail-yw1-x1129.google.com ([2607:f8b0:4864:20::1129])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vqqPe-0000LJ-7U
- for qemu-devel@nongnu.org; Fri, 13 Feb 2026 05:28:39 -0500
-Received: by mail-yx1-xb12c.google.com with SMTP id
- 956f58d0204a3-64ada2c30a1so717629d50.0
- for <qemu-devel@nongnu.org>; Fri, 13 Feb 2026 02:28:37 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1770978516; cv=none;
+ id 1vqqQB-0000N3-WF
+ for qemu-devel@nongnu.org; Fri, 13 Feb 2026 05:29:13 -0500
+Received: by mail-yw1-x1129.google.com with SMTP id
+ 00721157ae682-794911acb04so9222197b3.0
+ for <qemu-devel@nongnu.org>; Fri, 13 Feb 2026 02:29:11 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770978551; cv=none;
  d=google.com; s=arc-20240605;
- b=kw1WaCNCcx82J/6aydlj15j0oSoX21hHh1llYxHJx42JJ1Eho520sD7Ovdm/4nUTNi
- kwjxWycSLwhE9qtUij1DQLB+Fjlt7yXIAyFWdRTmT38eoZ7hG7jtBxfDCbnP3WmGNOqi
- GCpqg65lsIhSV8HPYuV94H8W+1d+WGmrlmfk3iZp29pLMCC6keB7KRuaa0nOKsShe2Ks
- s5tTMlZBd4VZ89welCJtVLpYvO/9fYIzG770f5QpXWw8KTUvNPGAVUAX+hnzUAvWPJRA
- 5BBaLmKC23Z+Z9gK4HcxRI34v5Jgor/5UzTpc9He/BiaNKYwO6e7NL/geT1nelN9RfiF
- wmFA==
+ b=DFiz9TuPzXrhFO1nv2wPEQJH4s1TNADliuWEHmdQqn4RD+AVXqOnD7K15SR+jfNI1n
+ F5uEr2BJJAVZu2Msy5FX5KWy65lVQcOOn5YCrnIzXzYk08IGRsR9nmY2TW/TSMBjX44A
+ 5rZh8p3tNGBhGQbCh6CJOv4pEwPYDGkFXqlipCSN3yZ197ys1Owb7HbYOiCCgQ2WCxWF
+ m11k6T1P8cBXj1xDhK2TaFyTq44WJXNjkOiCJykVkZP9SQksTXo9loPJckS6PO2RpL+8
+ RDpb81ixXfs7E8DJ0PjK1Dp6Vgvp70rVbGctEce33ih7O7JZJZeam3jEY9y7ZWZ+F5He
+ 5Bgw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=rCjLomqP9LAD6D1qxXR3cwScjETQfo1yjO0XeRDdrlA=;
- fh=PyOPoNBoQFM3aCBquwILiqFzLPoaTRIJM+NDP7vsKXo=;
- b=WBS16WKUXsVkMC8DLIA/S0npo7Lp2RpJ0V/wmh2hTCRvM5hN2fYKgDDuAMsmXcbvAu
- 7+8kzg2KkwEsfYaaBNvG4YixoZJ7Ca1/KvGAjklnwKvVp69aRpvpq7kHt/SIJFX+E1Oo
- qI6ZWMYzWimCHLabGT6PAvAaX5Ao+kSGAiTH5WXr0MizrrnzZS3KUJBsR8cKsZlJBZHr
- X14qCE8H6k46qOhPPyiYRZ2xCdnpnOSE1jy7SGxVfI9YpoASnHWG87IaHgZvkulSWCE4
- pbTvFuJYxzCgboWdBXr8NKf3MNIU6C+rlLwx89Av6CY9JPzrKQg8wDloh5RRbq4ETHsU
- 04fQ==; darn=nongnu.org
+ bh=Hj3NtxKyIISkqE1VuvTOWMDO1iZPqMrZ6MbKQP1LWFY=;
+ fh=Ka5Fm2uGNoMN6LvftSCwVWZ6LDxGZumgYDW+5kU6bEI=;
+ b=BySIhpIr35HeGW4y3r97XYLbl1fKqYH28AbSPJ1D42kR0I27Etq3hnB7scAexiIOxF
+ QpsDZ2GTirG2/6jo6s8lHshAsqZ6agWFK6iHnKwGzrXcaJ9NopfAmdf8h0ufK+gFdk+U
+ /4HKKwpVoVPG2MGA1e4r3bpM7C/HKaHw2b0UsrDeMkBTMwfRajeYspXrxH6HI175ogy/
+ ZrnccjvpcWFfCbLNLtM35b/3HsALCgQGKnjyjcJmHywYOFQwSputc6Jbmfju5IBsLeez
+ rDYNUF4fyTv/DGc9zWry6MsfuWLZsbKFxMYQE5HUphIwQRckCnbpoHxL5puqvUUACpp+
+ ZupQ==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770978516; x=1771583316; darn=nongnu.org;
+ d=linaro.org; s=google; t=1770978551; x=1771583351; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=rCjLomqP9LAD6D1qxXR3cwScjETQfo1yjO0XeRDdrlA=;
- b=Fd9azK6HAFBFJIBopA87AcWskUK444BHECtABl+mrPq128z9giqbJJM5bEzq0olvjp
- zpai07rBwc80xE/Xa5RwyOqvtxO8OSWqoWAaO2ekKW0coanQGG02FzI7G1IP04kfMgm/
- onNys0hgWan6CqzecFlzYlgIVxKWgvHGQC5nNmfb8QyQhbeRJR6htxuXpmbg5AqYQn6m
- QpLCIa1IaHMRPgK5hvGdmTYPxZTVIHt9M3IaQeTv/CxhbZcr272nx9E5FThuO+csi3se
- jI3xPa1ypfapK/J6RcH/NYDAqEsys+4zok6IrSOIDINsZzJKCCnzN8vpRv5MPOGv4VJF
- xzbw==
+ bh=Hj3NtxKyIISkqE1VuvTOWMDO1iZPqMrZ6MbKQP1LWFY=;
+ b=U7rIFiUeU5myPAZ6fCXWyr2Yxd9oC4vRjHGhI2OkBEEQbSwypSMy0I8hxILsNDPBD0
+ uIn5IWFowAZGnQKdJc0w4DV37+z3v3pr5vSKXjIzuGvuvPRfJwXdQfXw1fi+PaGE4C/k
+ sVk37Q6FBYDcwAemoncc6qNqNl02byfFoom28r8Pk3tscOuiyvmOdapGECNzw/S7ppeV
+ 1Nf0YiTRRSX8LhyQ4QSCFrmFCiTcitIbXUZkwwD8gnEhLecvdPnMWohcYfmtThEips9O
+ Kk6DKvF0D1YFbQ56jiMXPUtu1yWVg+7B3a9j0oKVudUPSSD1tcCT3a1dqZgc+EIXpUX7
+ j0Cw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770978516; x=1771583316;
+ d=1e100.net; s=20230601; t=1770978551; x=1771583351;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=rCjLomqP9LAD6D1qxXR3cwScjETQfo1yjO0XeRDdrlA=;
- b=SB29+1QUjFpOLb+NSB3vqHoccleC/bUa5pJrluexcDJECm+5KlkTxaDXlDPsAndHO4
- FwvsDALqztVohl/dkzCbBsOSnLqT1Dspfy6DQDzLt3pDjp7oWnsz3E8JsQ70wDENsZ05
- SMBEZyBds9r7RQFeLB2x8RZyxMUoP+4vXYDlPI0V601NIbbxYMPBa/M+NwZO+qyfYaJP
- Z+gNpqO3bpyMVzPLPzRLknb1z8cTWgmZG+dvJzepTg4rG/YYWe6CwMUrleTr2rJZU0Qo
- smgmW6UOYYoE/kwpa9TCBUCKmzXu8AuW3JzYz6EOxIzDpXWFyAt12MB/Wn7dA8i5qWbx
- 12PQ==
-X-Gm-Message-State: AOJu0Yz4nv24BDlLda+NWgIteLxQkJhOlHKuHqGguVpunLQLlx2klR8D
- QaF4uKmpVv1wMH6XgfOaa8069nawqvgMtkEbzNhpF6EUcyvVrWYCXbjJhD8gyYKttFIqB5HfPeQ
- fVhb3QmMmHHI6rokcrSU+fJ+LOEXX5JJzwIKs8c9xgw==
-X-Gm-Gg: AZuq6aKNP392KpiKI//hp12u82YYu60F7gGy9N/Se5h7oceScINE2Txvj8fAF9LIefa
- skq2wUx5EhCHkb1PmqMuGQk/bcjAIBY9wq3Ay9nH36nVXb4Mx0tMdljG9gzCfVEe7a8IgcdZTIN
- 4SUrsn0vZrPiwLtvZZ3gvH5xpcK4vxVJ2w+oLRYUEZ5uxUAxpIiZ8olTKcUF2nmqrUPn4o9bLzc
- HiswXMD+0fAYLWR5mJM74MRB7IC+w8MamN5CO/mrm1IuS29D7L9WEC+UsT4zEFuOY096kni740Q
- 7tfLbz2NQo+rSkOF82QpnlLYoLhpbzIjlm+x3A1Y/0tb6+/mGQYe/AU6Ylgb2oJBz+o=
-X-Received: by 2002:a05:690e:d07:b0:64a:c9f7:9fbb with SMTP id
- 956f58d0204a3-64c19b66443mr806026d50.89.1770978516184; Fri, 13 Feb 2026
- 02:28:36 -0800 (PST)
+ bh=Hj3NtxKyIISkqE1VuvTOWMDO1iZPqMrZ6MbKQP1LWFY=;
+ b=fYXajSRswXrh4ToiMz198WxRz7239Mi72++bk+jzbSG2ZNxTe09K5of2PpqPIfW/8Y
+ avFCKSUj4z72HbOUoHNfaWW9j4vi/Ms8O8ayu2VKYcjvN1zUJI4+6k0y9T8Ip6F/G0f1
+ bJeq+2KLoMzABFf+qfurjmWFrE1ul+QbM+QxLT63UFx+NAsG5oiTp4gTeHuBzUF0g97R
+ QGVE5frO9ecPK1es/iMLtNJP1S2ehlJvqW5OyuWav/jS0CaDVG4/qKwdTVswvhrIfqGA
+ /namQGyvRuJhQlqp4fls7a5iMGTr9URRcFT9VdcSUqYo3fAbDzcCt1r3ftr4A1QiBsPi
+ pGWA==
+X-Gm-Message-State: AOJu0YwEkIh7CFd5I/G1mmzXqVrpdhm9dlr0qTY+LOGN0fMO9yfUmSiP
+ 2tAWtwY9n8XGRM8Kkx9CoPoC9aMgYywZ/2wSRDwnVDn5Ta/H2fjgFL7DiPaVoGqwSDqzpNaDbT8
+ irBrKONNba9rqPuXiX7K4TDyC+5eCcVGrOg9DXwKxGw==
+X-Gm-Gg: AZuq6aLC/iGmcV6IEaZzXx2x0iLDnlOhmCHiq3Z046NrdaLXq8nMcGlYoGKPsb0fyQ2
+ MUyRbLL2X9RaUTUXYExEpDBhMtLNoELcK88dHR+mfpZ2f0EWkxIS7m5KjSWJUuCO7WfrrbYC4sX
+ /b/qV0qg+diQKlPP1fGQhjZ9vMuSYXLqKNzWKd8A/WXfNkk7nasmf6a1W72W5DdbsuSFL13gUVX
+ xcdHnMRGIjd+EtokV88acZuCgsS6DFHUd4C1K6kgS3xRu8DZcSFPjomR5RKILwwks1xDBZ/eqxD
+ vK2tp7TyzSjr1IcMxD3hDyB3FLhuKKVdsSnHR+eXUhz0eIcnjX15uw7vSw9vnT3X50o=
+X-Received: by 2002:a53:ac89:0:b0:64a:e7e0:a70d with SMTP id
+ 956f58d0204a3-64c197a3676mr910394d50.3.1770978550628; Fri, 13 Feb 2026
+ 02:29:10 -0800 (PST)
 MIME-Version: 1.0
-References: <20260212174103.504520-1-corey@minyard.net>
-In-Reply-To: <20260212174103.504520-1-corey@minyard.net>
+References: <20260213004254.493059-1-pierrick.bouvier@linaro.org>
+In-Reply-To: <20260213004254.493059-1-pierrick.bouvier@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 13 Feb 2026 10:28:24 +0000
-X-Gm-Features: AZwV_Qj2BVBViOKNAVXOt9iaAUFSoOZ68Htf3m0GqQbRX7O5s-lI1JbuQ2LSNPQ
-Message-ID: <CAFEAcA_de8ff_sBK0r0VX867A6D86mw4+c-SfNDbLXUCukLs2g@mail.gmail.com>
-Subject: Re: [PULL 0/2] Add a fake IPMI LAN channel
-To: Corey Minyard <corey@minyard.net>
-Cc: QEMU Developers <qemu-devel@nongnu.org>,
- Yunpeng Yang <yunpeng.yang@nutanix.com>, 
- Mark Cave-Ayland <mark.caveayland@nutanix.com>,
- Jonathan Davies <jond@nutanix.com>
+Date: Fri, 13 Feb 2026 10:28:59 +0000
+X-Gm-Features: AZwV_QjsER107kMBzPsp4P-ehe7YUAcU3Iz8VnVxT2BAx09znD9J0J07a-psmmE
+Message-ID: <CAFEAcA8mNEseopAdCm2_t=xdwn0jF+savDkQRBGwZp_w864Brw@mail.gmail.com>
+Subject: Re: [PULL 0/4] Plugins patches for 2026-02-12
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: qemu-devel@nongnu.org, richard.henderson@linaro.org, pbonzini@redhat.com, 
+ stefanha@redhat.com
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12c;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1129;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1129.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -116,34 +114,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 12 Feb 2026 at 17:41, Corey Minyard <corey@minyard.net> wrote:
+On Fri, 13 Feb 2026 at 00:43, Pierrick Bouvier
+<pierrick.bouvier@linaro.org> wrote:
 >
-> Apologies for not sending this in the right format.  Hopefully this is
-> correct.
+> The following changes since commit 4ed6a7f2fdc09d9fc3411e83e278da0085122016:
 >
-> The following changes since commit 159107e390609f71b78268a4888563dcdce6ac65:
->
->   Merge tag 'pull-hex-20260102' of https://github.com/quic/qemu into staging (2026-01-05 07:35:40 +1100)
+>   Merge tag 'pull-block-jobs-2026-02-12' of https://gitlab.com/vsementsov/qemu into staging (2026-02-12 14:35:18 +0000)
 >
 > are available in the Git repository at:
 >
->   https://github.com/cminyard/qemu.git tags/ipmi-add-fake-lan-config
+>   https://gitlab.com/pbo-linaro/qemu tags/pr-plugins-20260212
 >
-> for you to fetch changes up to 75c15651af1b2553ff292553545f7a6a56c32932:
+> for you to fetch changes up to e82d8af3da05e5315a11d0841e40ff0ed0ce53c8:
 >
->   hw/ipmi/ipmi_bmc_sim: Support setting fake LAN channel config (2026-01-05 13:07:23 -0600)
->
-> ----------------------------------------------------------------
-> Add a fake LAN config operation for testing
->
-> Just add the commands, the proper data that can be set, and some tests.
->
-> Submitter ran migration test.
+>   contrib/plugins/uftrace: add riscv64 support (2026-02-12 15:59:48 -0800)
 >
 > ----------------------------------------------------------------
-> Yunpeng Yang (2):
->       hw/ipmi/ipmi_bmc_sim: Support getting fake LAN channel config
->       hw/ipmi/ipmi_bmc_sim: Support setting fake LAN channel config
+> Changes:
+> - contrib/plugins/uftrace: add riscv64 support (Pierrick Bouvier <pierrick.bouvier@linaro.org>)
+>
+> ----------------------------------------------------------------
 
 
 
