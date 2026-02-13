@@ -4,92 +4,130 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2693AEF48CC
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Feb 2026 06:30:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2BEEEF48D8
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Feb 2026 06:41:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqmhR-0001JI-15; Fri, 13 Feb 2026 01:30:46 -0500
+	id 1vqmre-0004NQ-M9; Fri, 13 Feb 2026 01:41:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clement.mathieu--drif@eviden.com>)
- id 1vqmhG-0001Hx-5K
- for qemu-devel@nongnu.org; Fri, 13 Feb 2026 01:30:34 -0500
-Received: from smtppost.atos.net ([193.56.114.177] helo=smarthost4.atos.net)
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1vqmrZ-0004Mr-BK
+ for qemu-devel@nongnu.org; Fri, 13 Feb 2026 01:41:15 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clement.mathieu--drif@eviden.com>)
- id 1vqmhD-0006ac-QW
- for qemu-devel@nongnu.org; Fri, 13 Feb 2026 01:30:33 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=eviden.com; i=@eviden.com; q=dns/txt; s=mail;
- t=1770964231; x=1802500231;
- h=message-id:subject:from:to:cc:date:in-reply-to:
- references:content-transfer-encoding:mime-version;
- bh=+1qEqeeSfvG6DQCH3igjheXtqTXILXiHn3HxN4ceIes=;
- b=TpdXoxHuiHDgzJTnov/4LzYL8QXZ1Z9zH1guR0VAzMyx/QnkhWyJpZDi
- KM3cUDlh5GFJPhlryjZ1cQ6zH7+zUTYO3c8nZ7F9DK38C5PucBx+zb84G
- Jy4IKvEDgbJ9cuOGYyrCSUceJt13PzbFB39AfpXM2Oy6SfMzH1mn+B70H
- 2w1+fJyvCdBE1jpXu8ie5X8OGdu+3DpqXHS1RcSBmMCkpcxHCJp6jh2ey
- cOGYAgfH/Y+KQlqwh4CMdAx+hVUG5/WWgHkVedQ/PmBx0nJkf9/1YbDrR
- 4cJIdSz4YruUGBKv8DP+YcG43X9YOGzMfwOaGQWN8DE5ioL7WKqQ4uiEF A==;
-X-CSE-ConnectionGUID: G+v3CuvpTSqaPWI1CpnPdQ==
-X-CSE-MsgGUID: C62hLlDTQb6rTZYoMVjxPw==
-X-IronPort-AV: E=Sophos;i="6.21,288,1763420400"; d="scan'208";a="825972463"
-X-MGA-submission: =?us-ascii?q?MDHYp7A5UEQCYCtyvn+kWicAx00maAvZXyns4d?=
- =?us-ascii?q?UwjvWEyRSJtZYPKsAx7EcaPnZgwPVhGhYQmjcfucF6CGXuFPcaNcC/YK?=
- =?us-ascii?q?ZhxATMCSlPx5cFYOl5V3JI8ZNCDHkvvk/O7vCj1mldA/o7awtBmVExaI?=
- =?us-ascii?q?SP?=
-Received: from smtp0.atos-infogerance.fr ([193.56.241.18])
- by smarthost4.atos.net with ESMTP/TLS/TLS_AES_256_GCM_SHA384;
- 13 Feb 2026 07:30:30 +0100
-Received: from smtp-hub.atos-infogerance.fr (smtp-hub.atos-infogerance.fr
- [193.56.47.18])
- by smtp0.atos-infogerance.fr (8.15.2/8.15.2) with ESMTPS id 61D6UTTr015396
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO);
- Fri, 13 Feb 2026 07:30:29 +0100
-Received: from rocky.hd2c.dom ([129.181.244.14])
- by smtp-hub.atos-infogerance.fr (envelope-from
- clement.mathieu--drif@eviden.com) (8.15.2/8.15.2) with ESMTP id
- 61D6UTFG030650; Fri, 13 Feb 2026 07:30:29 +0100
-Received: from openbmc (unknown [10.22.85.22])
- by rocky.hd2c.dom (Postfix) with ESMTP id 7E2D5256CA5;
- Fri, 13 Feb 2026 07:30:28 +0100 (CET)
-Received: from [127.0.0.1] (host.containers.internal [10.88.0.1])
- by openbmc (Postfix) with ESMTP id 7D819C3018EE;
- Fri, 13 Feb 2026 06:30:27 +0000 (UTC)
-Message-ID: <1536f34084f3d82a9a3129f3ca1207fff74b9c26.camel@eviden.com>
-Subject: Re: [RFC PATCH 06/14] intel_iommu: Export some functions
-From: Clement Mathieu--Drif <clement.mathieu--drif@eviden.com>
-To: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>
-Cc: "alex@shazbot.org" <alex@shazbot.org>, "clg@redhat.com" <clg@redhat.com>,
- "eric.auger@redhat.com"	 <eric.auger@redhat.com>,
- "mst@redhat.com" <mst@redhat.com>, "jasowang@redhat.com"	
- <jasowang@redhat.com>, "jgg@nvidia.com" <jgg@nvidia.com>,
- "nicolinc@nvidia.com"	 <nicolinc@nvidia.com>, "skolothumtho@nvidia.com"
- <skolothumtho@nvidia.com>, "joao.m.martins@oracle.com"	
- <joao.m.martins@oracle.com>, "Tian, Kevin" <kevin.tian@intel.com>, "Liu, Yi
- L"	 <yi.l.liu@intel.com>, "Hao, Xudong" <xudong.hao@intel.com>
-Date: Fri, 13 Feb 2026 07:30:06 +0100
-In-Reply-To: <DS4PPF93A1BBECD17B215CE8E6F9999CA059261A@DS4PPF93A1BBECD.namprd11.prod.outlook.com>
-References: <20260205031133.74357-1-zhenzhong.duan@intel.com>
- <20260205031133.74357-7-zhenzhong.duan@intel.com>
- <1d7e53d3f80772a06878a87f0be637421070e2d9.camel@eviden.com>
- <DS4PPF93A1BBECD17B215CE8E6F9999CA059261A@DS4PPF93A1BBECD.namprd11.prod.outlook.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: base64
-User-Agent: Evolution 3.58.2 (3.58.2-1.fc43) 
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1vqmrV-000130-AD
+ for qemu-devel@nongnu.org; Fri, 13 Feb 2026 01:41:11 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1770964867;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=ICkz2I2+7nS58wlFL1VxbYknJR0IOdnxsbWhFfX640k=;
+ b=heKcpAuKLu0rqj/x+LYvkrwtZaG/jL+K5BXtc6+rX3RGW0oHVY12bc6/OfFBBrtK4QBGxU
+ RsSKkzwo63b1svpgGR9wCImebE066yZpnufMl5zfH3eau6eJTi23WDuWuow3J9kzz0RPDM
+ vpLnKxN8tYlcxP+pb9kVUN824lR3hjI=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-475-owLskUrBO2mD7OIX1leHWQ-1; Fri, 13 Feb 2026 01:41:06 -0500
+X-MC-Unique: owLskUrBO2mD7OIX1leHWQ-1
+X-Mimecast-MFC-AGG-ID: owLskUrBO2mD7OIX1leHWQ_1770964865
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-88fcbe2e351so89370636d6.1
+ for <qemu-devel@nongnu.org>; Thu, 12 Feb 2026 22:41:05 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770964865; cv=none;
+ d=google.com; s=arc-20240605;
+ b=dZ/DsE8CP4PucRmwKY9ZwVShlMkTZ2BUFsCons7R68ig8HfVjeyWGbRfCDOmhp3sbR
+ w9f0Filml4zqXkMLSv33S2Nljy5O4DSIdiRM3w3FMNIHim3cODIEccx/8GuPp+Y/W0ij
+ sXTQeW9r574KNr1MBg0j4uZuQEYhssKtJSp/Tf+I1b3Gm8CXamzv5eaMeh9HwMqmyAQv
+ 08+emgzbEHNlzWUqKCFHxUjyBHaGffYKFxcuGe/fLXQFnw+nXAOVPDfhq+AeVjw9ZJK3
+ 9cXcRgISDWt6DgkRfQ2RmNMX0qhIXu97i53aKjEa4YOGztEsn8YI0uejJiBNq/ifyb9P
+ rclA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=ICkz2I2+7nS58wlFL1VxbYknJR0IOdnxsbWhFfX640k=;
+ fh=WyDWYkqeA2Xdad0b478+7jKRhK1+GzKZQr8SMT8E00k=;
+ b=R7Cvsg57Jso8asjLRfSYWNBhIwS8sWnvRWsqNYsYuBBqy9kW8aSGIxg+zKnGCwG7LJ
+ wE5KZQLQKK0y7WPwl/JoH+YG4PDG96mHv7qQpcPuAyjK6BHDj+4owDJTTLNPk8h2aUTE
+ wRSohIri+t6jVoESaE40JOWwZTQy7ZTKQ2DK0rI8b2rSH+31FpfwOt1QKsI0hWmwtIuP
+ g3edosk+C/sefAdz7bOreytEFNM2BwRzuiUvuHHIEs+HUdh6vR4/G3zujlgCux8pv3F0
+ dUEql/U2UfsbDqB8CQkilfwyHClpQSlOppkSzPIDZyIKWZXkmjrw7WHzhTrf1nRFljWD
+ cVAg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1770964865; x=1771569665; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ICkz2I2+7nS58wlFL1VxbYknJR0IOdnxsbWhFfX640k=;
+ b=txp9Gc8igeuVX69ukBKKQ8RHvckEoQiIce7Y3NMzby3nweK0LJEWhsttqPtHcM01rB
+ OKLNoTzqo1bBfkDtU4dmA4OMX4EGZD5xAwFCY4O8+BKlQ0nvpKwUJPNMIWGF+l4zt4Oy
+ eK+p+H/1/uy65iZ/e+pnqKiqWApI/ay8OI1BxOieKPEv6kNEjrmlkGYJTd5oQBneCyt8
+ m1Lpl15oBUA1kTl0LQJzUPC1SwTd5tTS320gCIYEebDu3M23JvivgE+lmE2w2LNkSVGt
+ W/IbzdPYDhVWULeoRORJrP+8jwlsy3wV63QKmveoVchHzV5pzLlZ4F1Yjmk9I7Y+t8cr
+ RDqw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770964865; x=1771569665;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=ICkz2I2+7nS58wlFL1VxbYknJR0IOdnxsbWhFfX640k=;
+ b=eviclNbPRuagi+ejDbxD1OCjdwpyr9qm0ykdiGkMMkFQ/1Lax5Jq7EMbFcxUvWsa5A
+ DIqdhjvSu9vyy2YQmGroYHgjUX6U9G4h4hncVySNrg6gOqJEa63Fwq3RDGt2+RROdUQQ
+ DlngDq8bL5ek9AuPvCsVITuFvPRLcVpJ4KImpeKkALv48/welvsS63rSb5OPmboedChf
+ bqkscsulD+ENB5Lo39yWnfwGqa+uFR0clzVkiZQrbwxjVE6g9ca5tZCTfqS4ZQ+SzpJz
+ XO8Wfxwv94Wg/ANmIly6o3/VAHN7sN5Q67XYek+XL9+TvOLHhE6ujJPcqdLsbo3Dif+z
+ 1lOA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU0IrxX4PZiXjcIzw1gGBcK8eX0lwXz4xfUzRKkVUNlekDITJkiiShOJBUUKNXtrE9N77G2v3BVuOIM@nongnu.org
+X-Gm-Message-State: AOJu0Yw1I4qu7l+LRPmpRbZHSkJY/tiBJc1faYCGmgKUDFEpoMyYsktF
+ thqcpmZF2nBO4Sbrp/TtdtfNqv1NFAHZmYTCEf50n0L5yEKuPgIedXA5dqhyWSiHYZdXSU5CtXp
+ 65LpnHwzgN8yqFXe4/JM2OaJu+6rnsXYInk90VtT83zna3bHm/5UFo4B+7eAE/Xy5P5BktmgdhX
+ LWdHT5BRpOlU6ZVpMEGDTO9b6BRvBKjys=
+X-Gm-Gg: AZuq6aLZLdoHtW8PPxjnYJfEU1b5OTLXHoL/lIphCVZsxMEYTT4H7Qjgr3JYppNHUPP
+ K2h6jEMGt8Pxn5Z35kLvqhsTCe167zIPAVmFUdjhrvHG2ZotujXn54sn1sICu11NkbM8I7C88Er
+ igdu9WHsi4aLnJw8wEDSqt6WDsGWJRilX37PyjuS0ArGWhc2WLHMIrLsUICsLh1jyiLXGb/AS9J
+ Co4kgU8HBflxddrNtddh0WPIkciPpK6khZGnPI=
+X-Received: by 2002:a05:6214:c28:b0:88a:2ed6:252 with SMTP id
+ 6a1803df08f44-897360dc89dmr10364046d6.5.1770964865416; 
+ Thu, 12 Feb 2026 22:41:05 -0800 (PST)
+X-Received: by 2002:a05:6214:c28:b0:88a:2ed6:252 with SMTP id
+ 6a1803df08f44-897360dc89dmr10363876d6.5.1770964865006; Thu, 12 Feb 2026
+ 22:41:05 -0800 (PST)
 MIME-Version: 1.0
-Received-SPF: pass client-ip=193.56.114.177;
- envelope-from=clement.mathieu--drif@eviden.com; helo=smarthost4.atos.net
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20260212062522.99565-1-anisinha@redhat.com>
+ <20260212062522.99565-4-anisinha@redhat.com>
+ <0d4b92f6-1220-4301-bf38-6b15e910aa47@linaro.org>
+In-Reply-To: <0d4b92f6-1220-4301-bf38-6b15e910aa47@linaro.org>
+From: Ani Sinha <anisinha@redhat.com>
+Date: Fri, 13 Feb 2026 12:10:54 +0530
+X-Gm-Features: AZwV_QgS-VFjUN-UUl7-AJRwkqo51x6a2ZSyWL2dFGaXTsCrDvl31C-6zzZ4xEM
+Message-ID: <CAK3XEhOh1m2Mu1LKMYQjHfF9Yiu8Dj2uWoeF8wNq3wK7v06AiQ@mail.gmail.com>
+Subject: Re: [PATCH v4 03/31] hw/accel: add a per-accelerator callback to
+ change VM accelerator handle
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, kraxel@redhat.com, 
+ qemu-devel@nongnu.org, =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Igor Mammedov <imammedo@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=anisinha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,153 +143,145 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Ck9uIEZyaSwgMjAyNi0wMi0xMyBhdCAwNjoxNyArMDAwMCwgRHVhbiwgWmhlbnpob25nIHdyb3Rl
-Ogo+IEhpIENsZW1lbnQsCj4gCj4gQ291bGQgSSB0YWtlIGl0IGFzIGEgZm9ybWFsICJSZXZpZXdl
-ZC1ieTogQ2xlbWVudCBNYXRoaWV1LS1EcmlmIDxbY2xlbWVudC5tYXRoaWV1LS1kcmlmQGV2aWRl
-bi5jb21dKG1haWx0bzpjbGVtZW50Lm1hdGhpZXUtLWRyaWZAZXZpZGVuLmNvbSk+IiBvciBub3Q/
-CgpzdXJlCgpSZXZpZXdlZC1ieTogQ2xlbWVudCBNYXRoaWV1LS1EcmlmIDxjbGVtZW50Lm1hdGhp
-ZXUtLWRyaWZAZXZpZGVuLmNvbT4KCj4gCj4gVGhhbmtzICAKPiBaaGVuemhvbmcKPiAKPiAKPiA+
-IC0tLS0tT3JpZ2luYWwgTWVzc2FnZS0tLS0tCj4gPiBGcm9tOiBDbGVtZW50IE1hdGhpZXUtLURy
-aWYgPFtjbGVtZW50Lm1hdGhpZXUtLWRyaWZAZXZpZGVuLmNvbV0obWFpbHRvOmNsZW1lbnQubWF0
-aGlldS0tZHJpZkBldmlkZW4uY29tKT4KPiA+IFN1YmplY3Q6IFJlOiBbUkZDIFBBVENIIDA2LzE0
-XSBpbnRlbF9pb21tdTogRXhwb3J0IHNvbWUgZnVuY3Rpb25zCj4gPiAKPiA+IGxndG0KPiA+IAo+
-ID4gT24gV2VkLCAyMDI2LTAyLTA0IGF0IDIyOjExIC0wNTAwLCBaaGVuemhvbmcgRHVhbiB3cm90
-ZToKPiA+IAo+ID4gPiBFeHBvcnQgc29tZSBmdW5jdGlvbnMgZm9yIGFjY2VsIGNvZGUgdXNhZ2Vz
-LiBJbmxpbmUgZnVuY3Rpb25zIGFuZCBNQUNST3MKPiA+ID4gYXJlIG1vdmVkIHRvIGludGVybmFs
-IGhlYWRlciBmaWxlcy4gVGhlbiBhY2NlbCBjb2RlIGluIGZvbGxvd2luZyBwYXRjaGVzCj4gPiA+
-IGNvdWxkIGFjY2VzcyB0aGVtLgo+ID4gPiAKPiA+ID4gU2lnbmVkLW9mZi1ieTogWmhlbnpob25n
-IER1YW4KPiA+IAo+ID4gPFtbemhlbnpob25nLmR1YW5AaW50ZWwuY29tXShtYWlsdG86emhlbnpo
-b25nLmR1YW5AaW50ZWwuY29tKV0obWFpbHRvOlt6aGVuemhvbmcuZHVhbkBpbnRlbC5jb21dKG1h
-aWx0bzp6aGVuemhvbmcuZHVhbkBpbnRlbC5jb20pKT4KPiA+IAo+ID4gPiAtLS0KPiA+ID4gwqBo
-dy9pMzg2L2ludGVsX2lvbW11X2ludGVybmFsLmggfCAzMSArKysrKysrKysrKysrKysrKysrKysr
-KysrCj4gPiA+IMKgaHcvaTM4Ni9pbnRlbF9pb21tdS5jwqDCoMKgwqDCoMKgwqDCoMKgIHwgNDIg
-KysrKysrKystLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQo+ID4gPiDCoDIgZmlsZXMgY2hhbmdl
-ZCwgNDAgaW5zZXJ0aW9ucygrKSwgMzMgZGVsZXRpb25zKC0pCj4gPiA+IAo+ID4gPiBkaWZmIC0t
-Z2l0IGEvaHcvaTM4Ni9pbnRlbF9pb21tdV9pbnRlcm5hbC5oIGIvaHcvaTM4Ni9pbnRlbF9pb21t
-dV9pbnRlcm5hbC5oCj4gPiA+IGluZGV4IDcxY2IzYjY2MmUuLjY3NTNhMjBjYTQgMTAwNjQ0Cj4g
-PiA+IC0tLSBhL2h3L2kzODYvaW50ZWxfaW9tbXVfaW50ZXJuYWwuaAo+ID4gPiArKysgYi9ody9p
-Mzg2L2ludGVsX2lvbW11X2ludGVybmFsLmgKPiA+ID4gQEAgLTYxNSw2ICs2MTUsMTIgQEAgdHlw
-ZWRlZiBzdHJ1Y3QgVlREUm9vdEVudHJ5IFZURFJvb3RFbnRyeTsKPiA+ID4gwqAjZGVmaW5lIFZU
-RF9TTV9DT05URVhUX0VOVFJZX1JTVkRfVkFMMcKgwqDCoMKgwqAgMHhmZmZmZmZmZmZmZTAwMDAw
-VUxMCj4gPiA+IMKgI2RlZmluZSBWVERfU01fQ09OVEVYVF9FTlRSWV9QUkXCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgIDB4MTBVTEwKPiA+ID4gCj4gPiA+ICsvKiBjb250ZXh0IGVudHJ5IG9wZXJhdGlv
-bnMgKi8KPiA+ID4gKyNkZWZpbmUgVlREX0NFX0dFVF9QQVNJRF9ESVJfVEFCTEUoY2UpIFwKPiA+
-ID4gK8KgwqDCoCAoKGNlKS0+dmFsWzBdICYgVlREX1BBU0lEX0RJUl9CQVNFX0FERFJfTUFTSykK
-PiA+ID4gKyNkZWZpbmUgVlREX0NFX0dFVF9QUkUoY2UpIFwKPiA+ID4gK8KgwqDCoCAoKGNlKS0+
-dmFsWzBdICYgVlREX1NNX0NPTlRFWFRfRU5UUllfUFJFKQo+ID4gPiArCj4gPiA+IMKgdHlwZWRl
-ZiBzdHJ1Y3QgVlREUEFTSURDYWNoZUluZm8gewo+ID4gPiDCoMKgwqDCoCB1aW50OF90IHR5cGU7
-Cj4gPiA+IMKgwqDCoMKgIHVpbnQxNl90IGRpZDsKPiA+ID4gQEAgLTczMyw0ICs3MzksMjkgQEAg
-c3RhdGljIGlubGluZSBib29sIHZ0ZF9wZV9wZ3R0X2lzX2ZzdChWVERQQVNJREVudHJ5Cj4gPiAK
-PiA+ICpwZSkKPiA+IAo+ID4gPiDCoHsKPiA+ID4gwqDCoMKgwqAgcmV0dXJuIChWVERfU01fUEFT
-SURfRU5UUllfUEdUVChwZSkgPT0gVlREX1NNX1BBU0lEX0VOVFJZX0ZTVCk7Cj4gPiA+IMKgfQo+
-ID4gPiArCj4gPiA+ICtzdGF0aWMgaW5saW5lIGJvb2wgdnRkX3BkaXJlX3ByZXNlbnQoVlREUEFT
-SUREaXJFbnRyeSAqcGRpcmUpCj4gPiA+ICt7Cj4gPiA+ICvCoMKgwqAgcmV0dXJuIHBkaXJlLT52
-YWwgJiAxOwo+ID4gPiArfQo+ID4gPiArCj4gPiA+ICtzdGF0aWMgaW5saW5lIGJvb2wgdnRkX3Bl
-X3ByZXNlbnQoVlREUEFTSURFbnRyeSAqcGUpCj4gPiA+ICt7Cj4gPiA+ICvCoMKgwqAgcmV0dXJu
-IHBlLT52YWxbMF0gJiBWVERfUEFTSURfRU5UUllfUDsKPiA+ID4gK30KPiA+ID4gKwo+ID4gPiAr
-c3RhdGljIGlubGluZSBpbnQgdnRkX3Bhc2lkX2VudHJ5X2NvbXBhcmUoVlREUEFTSURFbnRyeSAq
-cDEsIFZURFBBU0lERW50cnkKPiA+IAo+ID4gKnAyKQo+ID4gCj4gPiA+ICt7Cj4gPiA+ICvCoMKg
-wqAgcmV0dXJuIG1lbWNtcChwMSwgcDIsIHNpemVvZigqcDEpKTsKPiA+ID4gK30KPiA+ID4gKwo+
-ID4gPiAraW50IHZ0ZF9nZXRfcGRpcmVfZnJvbV9wZGlyX3RhYmxlKGRtYV9hZGRyX3QgcGFzaWRf
-ZGlyX2Jhc2UsIHVpbnQzMl90IHBhc2lkLAo+ID4gPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIFZURFBBU0lERGlyRW50
-cnkgKnBkaXJlKTsKPiA+ID4gK2ludCB2dGRfZ2V0X3BlX2luX3Bhc2lkX2xlYWZfdGFibGUoSW50
-ZWxJT01NVVN0YXRlICpzLCB1aW50MzJfdCBwYXNpZCwKPiA+ID4gK8KgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIGRtYV9h
-ZGRyX3QgYWRkciwgVlREUEFTSURFbnRyeSAqcGUpOwo+ID4gPiAraW50IHZ0ZF9kZXZfdG9fY29u
-dGV4dF9lbnRyeShJbnRlbElPTU1VU3RhdGUgKnMsIHVpbnQ4X3QgYnVzX251bSwKPiA+ID4gK8Kg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHVp
-bnQ4X3QgZGV2Zm4sIFZURENvbnRleHRFbnRyeSAqY2UpOwo+ID4gPiAraW50IHZ0ZF9jZV9nZXRf
-cGFzaWRfZW50cnkoSW50ZWxJT01NVVN0YXRlICpzLCBWVERDb250ZXh0RW50cnkgKmNlLAo+ID4g
-PiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBW
-VERQQVNJREVudHJ5ICpwZSwgdWludDMyX3QgcGFzaWQpOwo+ID4gPiArVlREQWRkcmVzc1NwYWNl
-ICp2dGRfZ2V0X2FzX2J5X3NpZChJbnRlbElPTU1VU3RhdGUgKnMsIHVpbnQxNl90IHNpZCk7Cj4g
-PiA+IMKgI2VuZGlmCj4gPiA+IGRpZmYgLS1naXQgYS9ody9pMzg2L2ludGVsX2lvbW11LmMgYi9o
-dy9pMzg2L2ludGVsX2lvbW11LmMKPiA+ID4gaW5kZXggOTE2ZWIwYWY1YS4uYWI1MmE2ODhjNSAx
-MDA2NDQKPiA+ID4gLS0tIGEvaHcvaTM4Ni9pbnRlbF9pb21tdS5jCj4gPiA+ICsrKyBiL2h3L2kz
-ODYvaW50ZWxfaW9tbXUuYwo+ID4gPiBAQCAtNDIsMTIgKzQyLDYgQEAKPiA+ID4gwqAjaW5jbHVk
-ZSAibWlncmF0aW9uL3Ztc3RhdGUuaCIKPiA+ID4gwqAjaW5jbHVkZSAidHJhY2UuaCIKPiA+ID4g
-Cj4gPiA+IC0vKiBjb250ZXh0IGVudHJ5IG9wZXJhdGlvbnMgKi8KPiA+ID4gLSNkZWZpbmUgVlRE
-X0NFX0dFVF9QQVNJRF9ESVJfVEFCTEUoY2UpIFwKPiA+ID4gLcKgwqDCoCAoKGNlKS0+dmFsWzBd
-ICYgVlREX1BBU0lEX0RJUl9CQVNFX0FERFJfTUFTSykKPiA+ID4gLSNkZWZpbmUgVlREX0NFX0dF
-VF9QUkUoY2UpIFwKPiA+ID4gLcKgwqDCoCAoKGNlKS0+dmFsWzBdICYgVlREX1NNX0NPTlRFWFRf
-RU5UUllfUFJFKQo+ID4gPiAtCj4gPiA+IMKgLyoKPiA+ID4gwqAgKiBQYWdpbmcgbW9kZSBmb3Ig
-Zmlyc3Qtc3RhZ2UgdHJhbnNsYXRpb24gKFZURCBzcGVjIEZpZ3VyZSA5LTYpCj4gPiA+IMKgICog
-MDA6IDQtbGV2ZWwgcGFnaW5nLCAwMTogNS1sZXZlbCBwYWdpbmcKPiA+ID4gQEAgLTgzMSwxOCAr
-ODI1LDEyIEBAIHN0YXRpYyBpbmxpbmUgYm9vbAo+ID4gCj4gPiB2dGRfcGVfdHlwZV9jaGVjayhJ
-bnRlbElPTU1VU3RhdGUgKnMsIFZURFBBU0lERW50cnkgKnBlKQo+ID4gCj4gPiA+IMKgwqDCoMKg
-IH0KPiA+ID4gwqB9Cj4gPiA+IAo+ID4gPiAtc3RhdGljIGlubGluZSBib29sIHZ0ZF9wZGlyZV9w
-cmVzZW50KFZURFBBU0lERGlyRW50cnkgKnBkaXJlKQo+ID4gPiAtewo+ID4gPiAtwqDCoMKgIHJl
-dHVybiBwZGlyZS0+dmFsICYgMTsKPiA+ID4gLX0KPiA+ID4gLQo+ID4gPiDCoC8qKgo+ID4gPiDC
-oCAqIENhbGxlciBvZiB0aGlzIGZ1bmN0aW9uIHNob3VsZCBjaGVjayBwcmVzZW50IGJpdCBpZiB3
-YW50cwo+ID4gPiDCoCAqIHRvIHVzZSBwZGlyIGVudHJ5IGZvciBmdXJ0aGVyIHVzYWdlIGV4Y2Vw
-dCBmb3IgZnBkIGJpdCBjaGVjay4KPiA+ID4gwqAgKi8KPiA+ID4gLXN0YXRpYyBpbnQgdnRkX2dl
-dF9wZGlyZV9mcm9tX3BkaXJfdGFibGUoZG1hX2FkZHJfdCBwYXNpZF9kaXJfYmFzZSwKPiA+ID4g
-LcKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHVpbnQzMl90IHBhc2lkLAo+ID4gPiAtwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqAgVlREUEFTSUREaXJFbnRyeSAqcGRpcmUpCj4gPiA+ICtpbnQgdnRkX2dl
-dF9wZGlyZV9mcm9tX3BkaXJfdGFibGUoZG1hX2FkZHJfdCBwYXNpZF9kaXJfYmFzZSwgdWludDMy
-X3QgcGFzaWQsCj4gPiA+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgVlREUEFTSUREaXJFbnRyeSAqcGRpcmUpCj4gPiA+
-IMKgewo+ID4gPiDCoMKgwqDCoCB1aW50MzJfdCBpbmRleDsKPiA+ID4gwqDCoMKgwqAgZG1hX2Fk
-ZHJfdCBhZGRyLCBlbnRyeV9zaXplOwo+ID4gPiBAQCAtODYwLDE1ICs4NDgsOCBAQCBzdGF0aWMg
-aW50IHZ0ZF9nZXRfcGRpcmVfZnJvbV9wZGlyX3RhYmxlKGRtYV9hZGRyX3QKPiA+IAo+ID4gcGFz
-aWRfZGlyX2Jhc2UsCj4gPiAKPiA+ID4gwqDCoMKgwqAgcmV0dXJuIDA7Cj4gPiA+IMKgfQo+ID4g
-PiAKPiA+ID4gLXN0YXRpYyBpbmxpbmUgYm9vbCB2dGRfcGVfcHJlc2VudChWVERQQVNJREVudHJ5
-ICpwZSkKPiA+ID4gLXsKPiA+ID4gLcKgwqDCoCByZXR1cm4gcGUtPnZhbFswXSAmIFZURF9QQVNJ
-RF9FTlRSWV9QOwo+ID4gPiAtfQo+ID4gPiAtCj4gPiA+IC1zdGF0aWMgaW50IHZ0ZF9nZXRfcGVf
-aW5fcGFzaWRfbGVhZl90YWJsZShJbnRlbElPTU1VU3RhdGUgKnMsCj4gPiA+IC3CoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgIHVpbnQzMl90IHBhc2lkLAo+ID4gPiAtwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoCBkbWFfYWRkcl90IGFkZHIsCj4gPiA+IC3CoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-IFZURFBBU0lERW50cnkgKnBlKQo+ID4gPiAraW50IHZ0ZF9nZXRfcGVfaW5fcGFzaWRfbGVhZl90
-YWJsZShJbnRlbElPTU1VU3RhdGUgKnMsIHVpbnQzMl90IHBhc2lkLAo+ID4gPiArwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqAgZG1hX2FkZHJfdCBhZGRyLCBWVERQQVNJREVudHJ5ICpwZSkKPiA+ID4gwqB7Cj4gPiA+IMKg
-wqDCoMKgIHVpbnQ4X3QgcGd0dDsKPiA+ID4gwqDCoMKgwqAgdWludDMyX3QgaW5kZXg7Cj4gPiA+
-IEBAIC05NTQsOCArOTM1LDggQEAgc3RhdGljIGludAo+ID4gCj4gPiB2dGRfZ2V0X3BlX2Zyb21f
-cGFzaWRfdGFibGUoSW50ZWxJT01NVVN0YXRlICpzLAo+ID4gCj4gPiA+IMKgwqDCoMKgIHJldHVy
-biAwOwo+ID4gPiDCoH0KPiA+ID4gCj4gPiA+IC1zdGF0aWMgaW50IHZ0ZF9jZV9nZXRfcGFzaWRf
-ZW50cnkoSW50ZWxJT01NVVN0YXRlICpzLCBWVERDb250ZXh0RW50cnkgKmNlLAo+ID4gPiAtwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgIFZURFBBU0lERW50cnkgKnBlLCB1aW50MzJfdCBwYXNpZCkKPiA+ID4gK2ludCB2dGRf
-Y2VfZ2V0X3Bhc2lkX2VudHJ5KEludGVsSU9NTVVTdGF0ZSAqcywgVlREQ29udGV4dEVudHJ5ICpj
-ZSwKPiA+ID4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqAgVlREUEFTSURFbnRyeSAqcGUsIHVpbnQzMl90IHBhc2lkKQo+ID4gPiDCoHsKPiA+ID4g
-wqDCoMKgwqAgZG1hX2FkZHJfdCBwYXNpZF9kaXJfYmFzZTsKPiA+ID4gCj4gPiA+IEBAIC0xNTMx
-LDggKzE1MTIsOCBAQCBzdGF0aWMgaW50IHZ0ZF9jZV9wYXNpZF8wX2NoZWNrKEludGVsSU9NTVVT
-dGF0ZSAqcywKPiA+IAo+ID4gVlREQ29udGV4dEVudHJ5ICpjZSkKPiA+IAo+ID4gPiDCoH0KPiA+
-ID4gCj4gPiA+IMKgLyogTWFwIGEgZGV2aWNlIHRvIGl0cyBjb3JyZXNwb25kaW5nIGRvbWFpbiAo
-Y29udGV4dC1lbnRyeSkgKi8KPiA+ID4gLXN0YXRpYyBpbnQgdnRkX2Rldl90b19jb250ZXh0X2Vu
-dHJ5KEludGVsSU9NTVVTdGF0ZSAqcywgdWludDhfdCBidXNfbnVtLAo+ID4gPiAtwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoCB1aW50OF90IGRldmZuLCBWVERDb250ZXh0RW50cnkgKmNlKQo+ID4gPiAraW50IHZ0ZF9k
-ZXZfdG9fY29udGV4dF9lbnRyeShJbnRlbElPTU1VU3RhdGUgKnMsIHVpbnQ4X3QgYnVzX251bSwK
-PiA+ID4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgIHVpbnQ4X3QgZGV2Zm4sIFZURENvbnRleHRFbnRyeSAqY2UpCj4gPiA+IMKgewo+ID4g
-PiDCoMKgwqDCoCBWVERSb290RW50cnkgcmU7Cj4gPiA+IMKgwqDCoMKgIGludCByZXRfZnI7Cj4g
-PiA+IEBAIC0xODk0LDcgKzE4NzUsNyBAQCBzdGF0aWMgVlREQWRkcmVzc1NwYWNlCj4gPiAKPiA+
-ICp2dGRfZ2V0X2FzX2J5X3NpZF9hbmRfcGFzaWQoSW50ZWxJT01NVVN0YXRlICpzLAo+ID4gCj4g
-PiA+IMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqAgdnRkX2ZpbmRfYXNfYnlfc2lkX2FuZF9wYXNpZCwgJmtleSk7Cj4gPiA+IMKgfQo+ID4g
-PiAKPiA+ID4gLXN0YXRpYyBWVERBZGRyZXNzU3BhY2UgKnZ0ZF9nZXRfYXNfYnlfc2lkKEludGVs
-SU9NTVVTdGF0ZSAqcywgdWludDE2X3Qgc2lkKQo+ID4gPiArVlREQWRkcmVzc1NwYWNlICp2dGRf
-Z2V0X2FzX2J5X3NpZChJbnRlbElPTU1VU3RhdGUgKnMsIHVpbnQxNl90IHNpZCkKPiA+ID4gwqB7
-Cj4gPiA+IMKgwqDCoMKgIHJldHVybiB2dGRfZ2V0X2FzX2J5X3NpZF9hbmRfcGFzaWQocywgc2lk
-LCBQQ0lfTk9fUEFTSUQpOwo+ID4gPiDCoH0KPiA+ID4gQEAgLTMxMTIsMTEgKzMwOTMsNiBAQCBz
-dGF0aWMgaW5saW5lIGludAo+ID4gCj4gPiB2dGRfZGV2X2dldF9wZV9mcm9tX3Bhc2lkKFZUREFk
-ZHJlc3NTcGFjZSAqdnRkX2FzLAo+ID4gCj4gPiA+IMKgwqDCoMKgIHJldHVybiB2dGRfY2VfZ2V0
-X3Bhc2lkX2VudHJ5KHMsICZjZSwgcGUsIHZ0ZF9hcy0+cGFzaWQpOwo+ID4gPiDCoH0KPiA+ID4g
-Cj4gPiA+IC1zdGF0aWMgaW50IHZ0ZF9wYXNpZF9lbnRyeV9jb21wYXJlKFZURFBBU0lERW50cnkg
-KnAxLCBWVERQQVNJREVudHJ5ICpwMikKPiA+ID4gLXsKPiA+ID4gLcKgwqDCoCByZXR1cm4gbWVt
-Y21wKHAxLCBwMiwgc2l6ZW9mKCpwMSkpOwo+ID4gPiAtfQo+ID4gPiAtCj4gPiA+IMKgLyogVXBk
-YXRlIG9yIGludmFsaWRhdGUgcGFzaWQgY2FjaGUgYmFzZWQgb24gdGhlIHBhc2lkIGVudHJ5IGlu
-IGd1ZXN0IG1lbW9yeS4KPiA+IAo+ID4gKi8KPiA+IAo+ID4gPiDCoHN0YXRpYyB2b2lkIHZ0ZF9w
-YXNpZF9jYWNoZV9zeW5jX2xvY2tlZChncG9pbnRlciBrZXksIGdwb2ludGVyIHZhbHVlLAo+ID4g
-PiDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBncG9pbnRlciB1c2VyX2RhdGEpCj4gPgo+IAo=
+On Thu, Feb 12, 2026 at 10:23=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
+<philmd@linaro.org> wrote:
+>
+> Hi Ani,
+>
+> On 12/2/26 07:24, Ani Sinha wrote:
+> > When a confidential virtual machine is reset, a new guest context in th=
+e
+> > accelerator must be generated post reset. Therefore, the old accelerato=
+r guest
+> > file handle must be closed and a new one created. To this end, a per-ac=
+celerator
+> > callback, "reset_vmfd" is introduced that would get called when a confi=
+dential
+> > guest is reset. Subsequent patches will introduce specific implementati=
+on of
+> > this callback for KVM accelerator.
+> >
+> > Signed-off-by: Ani Sinha <anisinha@redhat.com>
+> > ---
+> >   include/accel/accel-ops.h |  1 +
+> >   system/runstate.c         | 37 ++++++++++++++++++++++++++++++++++++-
+> >   2 files changed, 37 insertions(+), 1 deletion(-)
+> >
+> > diff --git a/include/accel/accel-ops.h b/include/accel/accel-ops.h
+> > index 23a8c246e1..998a95ca69 100644
+> > --- a/include/accel/accel-ops.h
+> > +++ b/include/accel/accel-ops.h
+> > @@ -23,6 +23,7 @@ struct AccelClass {
+> >       AccelOpsClass *ops;
+> >
+> >       int (*init_machine)(AccelState *as, MachineState *ms);
+> > +    int (*reset_vmfd)(MachineState *ms);
+>
+> So far 'vmfd' is a KVM concept. Can we use a more generic name?
+>
+> Please add a @docstring description for this handler.
+>
+> >       bool (*cpu_common_realize)(CPUState *cpu, Error **errp);
+> >       void (*cpu_common_unrealize)(CPUState *cpu);
+> >       /* get_stats: Append statistics to @buf */
+> > diff --git a/system/runstate.c b/system/runstate.c
+> > index 5d58260ed5..0a74e3ade5 100644
+> > --- a/system/runstate.c
+> > +++ b/system/runstate.c
+> > @@ -42,6 +42,7 @@
+> >   #include "qapi/qapi-commands-run-state.h"
+> >   #include "qapi/qapi-events-run-state.h"
+> >   #include "qemu/accel.h"
+> > +#include "accel/accel-ops.h"
+> >   #include "qemu/error-report.h"
+> >   #include "qemu/job.h"
+> >   #include "qemu/log.h"
+> > @@ -509,6 +510,9 @@ void qemu_system_reset(ShutdownCause reason)
+> >   {
+> >       MachineClass *mc;
+> >       ResetType type;
+> > +    AccelClass *ac =3D ACCEL_GET_CLASS(current_accel());
+> > +    bool vmfd_reset =3D false;
+> > +    int ret;
+> >
+> >       mc =3D current_machine ? MACHINE_GET_CLASS(current_machine) : NUL=
+L;
+> >
+> > @@ -521,6 +525,29 @@ void qemu_system_reset(ShutdownCause reason)
+> >       default:
+> >           type =3D RESET_TYPE_COLD;
+> >       }
+> > +
+> > +    /*
+> > +     * different accelerators implement how to close the old file hand=
+le of
+> > +     * the accelerator descriptor and create a new one here. Resetting
+> > +     * file handle is necessary to create a new confidential VM contex=
+t post
+> > +     * VM reset.
+> > +     */
+> > +    if (!cpus_are_resettable() &&
+> > +        (reason =3D=3D SHUTDOWN_CAUSE_GUEST_RESET ||
+> > +         reason =3D=3D SHUTDOWN_CAUSE_HOST_QMP_SYSTEM_RESET)) {
+> > +        if (ac->reset_vmfd) {
+> > +            ret =3D ac->reset_vmfd(current_machine);
+> > +            if (ret < 0) {
+> > +                error_report("unable to reset vmfd: %s(%d)",
+> > +                             strerror(-ret), ret);
+> > +                vm_stop(RUN_STATE_INTERNAL_ERROR);
+> > +            }
+> > +            vmfd_reset =3D true;
+>
+> If we need a such flag, please rename it generically.
+>
+> > +        } else {
+> > +            error_report("accelerator does not support reset");
+> > +        }
+> > +    }
+> > +
+> >       if (mc && mc->reset) {
+> >           mc->reset(current_machine, type);
+> >       } else {
+> > @@ -543,7 +570,15 @@ void qemu_system_reset(ShutdownCause reason)
+> >        * it does _more_  than cpu_synchronize_all_post_reset().
+> >        */
+> >       if (cpus_are_resettable()) {
+> > -        cpu_synchronize_all_post_reset();
+> > +        if (vmfd_reset) {
+> > +            /*
+> > +             * If vmfd has changed, then vcpufds have also changed.
+> > +             * Need to sync full cpu state for non confidential guests=
+.
+> > +             */
+> > +            cpu_synchronize_all_post_init();
+>
+> Calling post_init() in reset() is dubious. It might work with KVM by
+> chance (because only KVM implements .reset_vmfd), but by design I
+> don't expect it to work on other accelerators. If you really think
+> this is the only solution, then you'll need to document cpu_sync*
+> methods very carefully.
+>
+> > +        } else {
+> > +            cpu_synchronize_all_post_reset();
+> > +        }
+> >       }
+> >
+> >       vm_set_suspended(false);
+>
+> Isn't the confidential_guest_kvm_reset() API more appropriate here?
+
+This above hunk I did, calling post_init() to do a full
+put_registers() etc is required only for non-coco case in KVM after
+CPU reset when we are enabling vm file descriptor change. In the coco
+case, the call is a noop as the guest state is protected.
+This part I am not very familiar with and used my best judgement. To
+address your concern that other accelerators might implement
+reset_vmfd() but does not like to call
+cpu_synchronize_all_post_init(), we can wrap it inside another
+accelerator callback like ac->cpu_synchronize_all_post_vmfd_change()
+or some such.
+
+Paolo has some context as I was debugging this area with his help. I
+am curious also for his inputs on this.
 
 
