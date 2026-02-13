@@ -4,90 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B7E3EEA853
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Feb 2026 00:44:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C3DBEEA849
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Feb 2026 01:20:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqhH1-0003ne-TA; Thu, 12 Feb 2026 19:43:09 -0500
+	id 1vqhqi-0003A9-HI; Thu, 12 Feb 2026 20:20:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vqhGz-0003ms-K5
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 19:43:05 -0500
-Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vqhGx-0000qa-Nm
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 19:43:05 -0500
-Received: by mail-pf1-x430.google.com with SMTP id
- d2e1a72fcca58-824484dba4dso415017b3a.0
- for <qemu-devel@nongnu.org>; Thu, 12 Feb 2026 16:43:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770943382; x=1771548182; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=sbsBM3kE23XRKko7Z/Dni4MLoWdVDjlTC1rdXg1+3EM=;
- b=X1ZdWvan0EL+kVNiyxCxyrGKq7lk/wNkHZnOdXzykxP9HC7oKaDzJLQvYIXMexfysb
- AfIefdnUURbUVN/sJtmfLaPxjK2lj8aEV+TuJCqmX7CpRzkwUEZIjS3aRgyqbGR5ruG7
- coEDv+AyoJTKf4GBYWjq/klb0qWkindYflLTenX+q23XRamXRXTogN3s48iEgrjG8unZ
- jUe9ULBdjQa8zbZ256PeRDxUFSWa01gqJ6Ipbngn9zCuI+TJoi6kCMLasIkLhY4JwpvW
- 5EmlUZQ3lR3cX4WrbuACoXlVkEcajXojTgQ7s+b4gu8sLzti4cCy37ABGBSHcoYFDoJo
- D34w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770943382; x=1771548182;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=sbsBM3kE23XRKko7Z/Dni4MLoWdVDjlTC1rdXg1+3EM=;
- b=C4/ln9/04mNuaxC5+pTn2Pqb3n/2aCCQGmg1BCQ9aJjmzWY5sMpg+T9NnCbaIauWgU
- yLFZaKw+16K3C3vIcTBqf+aX8uoH44OeJwRi7QF3xLDu4G6m2jc06UxAiY6intxpozlY
- hd4iHmxD21jpJhQ9cNS4mcaoKpjmtFmMATyHmdDSLtWNEmUT7xisgfmpAHeJuxh+SI5b
- QEyEnvODuGumdEY0OK/6jw6ewopR64MAW9BWWFJpsPXZCikufTqUAhwRLepLVgX/UDZ8
- sH/XVFnbdmJEndrh5CdjZ8OJfWP9X7HY3BiqNZUguyI187xqXxq069/MIhWS31F9/hKE
- m86w==
-X-Gm-Message-State: AOJu0Yz8w22Ngyj4CiA6YHlt3+13twYhLpk5wF0tRfXLX9/NJlpf1DQg
- 062F2clJCd4Rc1hR25wqEkC4jR1QIDAUJoRao2PNpU3zw8w+P9r7f9oEgFBmlh0giaZUJTOktSA
- HtfQY
-X-Gm-Gg: AZuq6aLxu+JoBaP0ZZcv8n/OrY5qdFvspOh+8jP4AD2WX20SDBr2nE0JNqG59TlIxmz
- BuoYM60Ox82iL+KYwWsnKtX80rHvw44xPDndxSyLVfUJ+p/S/At8uAEMGoRoBgpk071fA8M9GnI
- DE3/KqwiRBHrwn6ZvfI2ofQX/d8Ltgmy0ihdgMN03i/CEJ15U4N5bOjMrytvEiqeoXPN3Os0YRr
- wxfVUKTNs5KQyjoTGbgapcVqlDGeqf308opXGVVagOzxdvum5CM+Yb5zllToCFO28zUgWkr8CuD
- Ti8pnpURcoocwG04w2fqf9huQATFYD6MmZPK0UjWBnezE8tmHtEucfAxGgDGStIxU3UHEbkEuKV
- xZFJizDEJ18yS+YoMki8KAY6A2ol1Hh8tYXbZD4zc+GrXue5i19JucOh238fJv+ycIUFpcRh015
- WJ/iDh1fAfI+eJzQ7LKYAJenH9vVB4O0h/x/6pnKRn0aZoGI2psKk65I7J2UsSCz2FSvK/fMtDo
- 9Xt
-X-Received: by 2002:a05:6a00:4f87:b0:823:9c6:1985 with SMTP id
- d2e1a72fcca58-824c948163bmr265064b3a.16.1770943382230; 
- Thu, 12 Feb 2026 16:43:02 -0800 (PST)
-Received: from pc.taild8403c.ts.net (216-71-219-44.dyn.novuscom.net.
- [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-824c6a431f2sm504326b3a.22.2026.02.12.16.43.01
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 12 Feb 2026 16:43:01 -0800 (PST)
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-To: qemu-devel@nongnu.org, peter.maydell@linaro.org,
- richard.henderson@linaro.org, pbonzini@redhat.com, stefanha@redhat.com
-Cc: pierrick.bouvier@linaro.org
-Subject: [PULL 3/4] docs/about/emulation/uftrace: add info about automatic
- tracing
-Date: Thu, 12 Feb 2026 16:42:53 -0800
-Message-ID: <20260213004254.493059-4-pierrick.bouvier@linaro.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260213004254.493059-1-pierrick.bouvier@linaro.org>
-References: <20260213004254.493059-1-pierrick.bouvier@linaro.org>
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vqhqf-00039r-H1; Thu, 12 Feb 2026 20:19:57 -0500
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vqhqc-00018d-SG; Thu, 12 Feb 2026 20:19:57 -0500
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id E08C75969F6;
+ Fri, 13 Feb 2026 02:19:48 +0100 (CET)
+X-Virus-Scanned: amavis at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
+ id GtrPMCm6K5am; Fri, 13 Feb 2026 02:19:46 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id C3085596A0B; Fri, 13 Feb 2026 02:19:46 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id C0BC35969F0;
+ Fri, 13 Feb 2026 02:19:46 +0100 (CET)
+Date: Fri, 13 Feb 2026 02:19:46 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, 
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, 
+ Stefano Garzarella <sgarzare@redhat.com>, Jason Wang <jasowang@redhat.com>, 
+ Nicholas Piggin <npiggin@gmail.com>, stefanha@redhat.com, 
+ richard.henderson@linaro.org, "Michael S. Tsirkin" <mst@redhat.com>, 
+ =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
+Subject: Re: [PATCH 1/3] hw/virtio: add virtio_vdev_is_{modern, legacy}
+In-Reply-To: <20260212234602.338131-2-pierrick.bouvier@linaro.org>
+Message-ID: <2b9d7a72-0245-35db-094c-48925081d5c1@eik.bme.hu>
+References: <20260212234602.338131-1-pierrick.bouvier@linaro.org>
+ <20260212234602.338131-2-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x430.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -104,52 +68,183 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Link: https://lore.kernel.org/qemu-devel/20260210201344.1403613-4-pierrick.bouvier@linaro.org
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
----
- docs/about/emulation.rst | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+On Thu, 12 Feb 2026, Pierrick Bouvier wrote:
+> This simplifies code compared to having
+> virtio_vdev_has_feature(vdev, VIRTIO_F_VERSION_1) or
+> !virtio_vdev_has_feature(vdev, VIRTIO_F_VERSION_1).
+>
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> ---
+> include/hw/virtio/virtio-access.h |  3 +--
+> include/hw/virtio/virtio.h        | 12 +++++++++++-
+> hw/net/virtio-net.c               |  2 +-
+> hw/virtio/vhost.c                 |  2 +-
+> hw/virtio/virtio-pci.c            |  2 +-
+> hw/virtio/virtio.c                | 16 ++++++++--------
+> 6 files changed, 23 insertions(+), 14 deletions(-)
 
-diff --git a/docs/about/emulation.rst b/docs/about/emulation.rst
-index e8793b0f9ce..f547e118eef 100644
---- a/docs/about/emulation.rst
-+++ b/docs/about/emulation.rst
-@@ -849,7 +849,7 @@ Symbols must be present in ELF binaries.
- It tracks the call stack (based on frame pointer analysis). Thus, your program
- and its dependencies must be compiled using ``-fno-omit-frame-pointer
- -mno-omit-leaf-frame-pointer``. In 2024, `Ubuntu and Fedora enabled it by
--default again on x64
-+default again on 64-bit platforms
- <https://www.brendangregg.com/blog/2024-03-17/the-return-of-the-frame-pointers.html>`_.
- On aarch64, this is less of a problem, as they are usually part of the ABI,
- except for leaf functions. That's true for user space applications, but not
-@@ -976,7 +976,7 @@ You can follow the exact same instructions for a x64 system, combining edk2,
- Linux, and Ubuntu, simply by switching to
- `x86_64 <https://github.com/pbo-linaro/qemu-linux-stack/tree/x86_64>`_ branch.
- 
--To build the system::
-+To build and run the system::
- 
-     # Install dependencies
-     $ sudo apt install -y podman qemu-user-static
-@@ -988,7 +988,14 @@ To build the system::
-     # system can be started using:
-     $ ./run.sh /path/to/qemu-system-aarch64
- 
--To generate a uftrace for a system boot from that::
-+    # generate a uftrace for execution (collect symbols automatically)
-+    $ ./trace.sh /path/to/qemu-system-aarch64
-+    # show output log to read timestamps
-+    $ cat uftrace.data/exec.log
-+    # generate final trace (compressed) for perfetto
-+    $ ./perfetto.sh <start_timestamp> <end_timestamp> ~/trace.gz
-+
-+To generate manually the same trace::
- 
-     # run true and poweroff the system
-     $ env INIT=true ./run.sh path/to/qemu-system-aarch64 \
--- 
-2.47.3
+It's longer than before with two more functions to look up when reading 
+the code to understand it so I would not say it's simpler. Maybe more 
+readable for some but I don't think it adds much more clarity and so patch 
+could just be dropped. But I don't care so if others don't mind or think 
+it's better then I don't mind.
 
+Regards,
+BALATON Zoltan
+
+> diff --git a/include/hw/virtio/virtio-access.h b/include/hw/virtio/virtio-access.h
+> index cd17d0c87eb..324ba907e93 100644
+> --- a/include/hw/virtio/virtio-access.h
+> +++ b/include/hw/virtio/virtio-access.h
+> @@ -30,8 +30,7 @@ static inline bool virtio_access_is_big_endian(VirtIODevice *vdev)
+> #if defined(LEGACY_VIRTIO_IS_BIENDIAN)
+>     return virtio_is_big_endian(vdev);
+> #elif TARGET_BIG_ENDIAN
+> -    if (virtio_vdev_has_feature(vdev, VIRTIO_F_VERSION_1)) {
+> -        /* Devices conforming to VIRTIO 1.0 or later are always LE. */
+> +    if (virtio_vdev_is_modern(vdev)) {
+>         return false;
+>     }
+>     return true;
+> diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
+> index 27cd98d2fe1..8f1e4323599 100644
+> --- a/include/hw/virtio/virtio.h
+> +++ b/include/hw/virtio/virtio.h
+> @@ -468,9 +468,19 @@ static inline bool virtio_host_has_feature(VirtIODevice *vdev,
+>     return virtio_has_feature(vdev->host_features, fbit);
+> }
+>
+> +static inline bool virtio_vdev_is_modern(const VirtIODevice *vdev)
+> +{
+> +    return virtio_vdev_has_feature(vdev, VIRTIO_F_VERSION_1);
+> +}
+> +
+> +static inline bool virtio_vdev_is_legacy(const VirtIODevice *vdev)
+> +{
+> +    return !virtio_vdev_is_modern(vdev);
+> +}
+> +
+> static inline bool virtio_is_big_endian(VirtIODevice *vdev)
+> {
+> -    if (!virtio_vdev_has_feature(vdev, VIRTIO_F_VERSION_1)) {
+> +    if (virtio_vdev_is_legacy(vdev)) {
+>         assert(vdev->device_endian != VIRTIO_DEVICE_ENDIAN_UNKNOWN);
+>         return vdev->device_endian == VIRTIO_DEVICE_ENDIAN_BIG;
+>     }
+> diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+> index 512a7c02c93..313d3b88400 100644
+> --- a/hw/net/virtio-net.c
+> +++ b/hw/net/virtio-net.c
+> @@ -217,7 +217,7 @@ static void virtio_net_set_config(VirtIODevice *vdev, const uint8_t *config)
+>     memcpy(&netcfg, config, n->config_size);
+>
+>     if (!virtio_vdev_has_feature(vdev, VIRTIO_NET_F_CTRL_MAC_ADDR) &&
+> -        !virtio_vdev_has_feature(vdev, VIRTIO_F_VERSION_1) &&
+> +        virtio_vdev_is_legacy(vdev) &&
+>         memcmp(netcfg.mac, n->mac, ETH_ALEN)) {
+>         memcpy(n->mac, netcfg.mac, ETH_ALEN);
+>         qemu_format_nic_info_str(qemu_get_queue(n->nic), n->mac);
+> diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+> index 52801c1796b..70a112242b0 100644
+> --- a/hw/virtio/vhost.c
+> +++ b/hw/virtio/vhost.c
+> @@ -1168,7 +1168,7 @@ static void vhost_log_stop(MemoryListener *listener,
+>  */
+> static inline bool vhost_needs_vring_endian(VirtIODevice *vdev)
+> {
+> -    if (virtio_vdev_has_feature(vdev, VIRTIO_F_VERSION_1)) {
+> +    if (virtio_vdev_is_modern(vdev)) {
+>         return false;
+>     }
+> #if HOST_BIG_ENDIAN
+> diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
+> index 1e8f90df34e..6126187a164 100644
+> --- a/hw/virtio/virtio-pci.c
+> +++ b/hw/virtio/virtio-pci.c
+> @@ -1449,7 +1449,7 @@ static bool virtio_pci_queue_enabled(DeviceState *d, int n)
+>     VirtIOPCIProxy *proxy = VIRTIO_PCI(d);
+>     VirtIODevice *vdev = virtio_bus_get_device(&proxy->bus);
+>
+> -    if (virtio_vdev_has_feature(vdev, VIRTIO_F_VERSION_1)) {
+> +    if (virtio_vdev_is_modern(vdev)) {
+>         return proxy->vqs[n].enabled;
+>     }
+>
+> diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+> index 77ca54e5206..b0987e66d5b 100644
+> --- a/hw/virtio/virtio.c
+> +++ b/hw/virtio/virtio.c
+> @@ -2279,7 +2279,7 @@ int virtio_set_status(VirtIODevice *vdev, uint8_t val)
+>     trace_virtio_set_status(vdev, val);
+>     int ret = 0;
+>
+> -    if (virtio_vdev_has_feature(vdev, VIRTIO_F_VERSION_1)) {
+> +    if (virtio_vdev_is_modern(vdev)) {
+>         if (!(vdev->status & VIRTIO_CONFIG_S_FEATURES_OK) &&
+>             val & VIRTIO_CONFIG_S_FEATURES_OK) {
+>             ret = virtio_validate_features(vdev);
+> @@ -2365,7 +2365,7 @@ void virtio_queue_enable(VirtIODevice *vdev, uint32_t queue_index)
+>      * be re-enabled for new machine types only, and also after
+>      * being converted to LOG_GUEST_ERROR.
+>      *
+> -    if (!virtio_vdev_has_feature(vdev, VIRTIO_F_VERSION_1)) {
+> +    if (virtio_vdev_is_legacy(vdev)) {
+>         error_report("queue_enable is only supported in devices of virtio "
+>                      "1.0 or later.");
+>     }
+> @@ -2454,7 +2454,7 @@ void virtio_queue_set_align(VirtIODevice *vdev, int n, int align)
+>     VirtioBusClass *k = VIRTIO_BUS_GET_CLASS(qbus);
+>
+>     /* virtio-1 compliant devices cannot change the alignment */
+> -    if (virtio_vdev_has_feature(vdev, VIRTIO_F_VERSION_1)) {
+> +    if (virtio_vdev_is_modern(vdev)) {
+>         error_report("tried to modify queue alignment for virtio-1 device");
+>         return;
+>     }
+> @@ -2753,7 +2753,7 @@ static bool virtio_device_endian_needed(void *opaque)
+>     VirtIODevice *vdev = opaque;
+>
+>     assert(vdev->device_endian != VIRTIO_DEVICE_ENDIAN_UNKNOWN);
+> -    if (!virtio_vdev_has_feature(vdev, VIRTIO_F_VERSION_1)) {
+> +    if (virtio_vdev_is_legacy(vdev)) {
+>         return vdev->device_endian != virtio_default_endian();
+>     }
+>     /* Devices conforming to VIRTIO 1.0 or later are always LE. */
+> @@ -3228,7 +3228,7 @@ int virtio_set_features_ex(VirtIODevice *vdev, const uint64_t *features)
+>     }
+>     if (!ret) {
+>         if (!virtio_device_started(vdev, vdev->status) &&
+> -            !virtio_vdev_has_feature(vdev, VIRTIO_F_VERSION_1)) {
+> +            virtio_vdev_is_legacy(vdev)) {
+>             vdev->start_on_kick = true;
+>         }
+>     }
+> @@ -3446,7 +3446,7 @@ virtio_load(VirtIODevice *vdev, QEMUFile *f, int version_id)
+>     }
+>
+>     if (!virtio_device_started(vdev, vdev->status) &&
+> -        !virtio_vdev_has_feature(vdev, VIRTIO_F_VERSION_1)) {
+> +        virtio_vdev_is_legacy(vdev)) {
+>         vdev->start_on_kick = true;
+>     }
+>
+> @@ -3461,7 +3461,7 @@ virtio_load(VirtIODevice *vdev, QEMUFile *f, int version_id)
+>              * to calculate used and avail ring addresses based on the desc
+>              * address.
+>              */
+> -            if (virtio_vdev_has_feature(vdev, VIRTIO_F_VERSION_1)) {
+> +            if (virtio_vdev_is_modern(vdev)) {
+>                 virtio_init_region_cache(vdev, i);
+>             } else {
+>                 virtio_queue_update_rings(vdev, i);
+> @@ -4019,7 +4019,7 @@ void G_GNUC_PRINTF(2, 3) virtio_error(VirtIODevice *vdev, const char *fmt, ...)
+>     error_vreport(fmt, ap);
+>     va_end(ap);
+>
+> -    if (virtio_vdev_has_feature(vdev, VIRTIO_F_VERSION_1)) {
+> +    if (virtio_vdev_is_modern(vdev)) {
+>         vdev->status = vdev->status | VIRTIO_CONFIG_S_NEEDS_RESET;
+>         virtio_notify_config(vdev);
+>     }
+>
 
