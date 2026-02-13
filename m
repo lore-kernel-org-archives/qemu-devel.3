@@ -4,80 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95EBCEEA86E
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Feb 2026 00:43:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74A56EEA853
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Feb 2026 00:43:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqhGy-0003mE-AO; Thu, 12 Feb 2026 19:43:04 -0500
+	id 1vqhH0-0003nD-6h; Thu, 12 Feb 2026 19:43:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vqhGx-0003m4-9m
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 19:43:03 -0500
-Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
+ id 1vqhGy-0003mC-4e
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 19:43:04 -0500
+Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vqhGv-0000qK-Mp
+ id 1vqhGw-0000qO-CR
  for qemu-devel@nongnu.org; Thu, 12 Feb 2026 19:43:03 -0500
-Received: by mail-pf1-x42f.google.com with SMTP id
- d2e1a72fcca58-823210d1d8eso228092b3a.1
+Received: by mail-pf1-x431.google.com with SMTP id
+ d2e1a72fcca58-82491fbf02cso233182b3a.1
  for <qemu-devel@nongnu.org>; Thu, 12 Feb 2026 16:43:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1770943380; x=1771548180; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=1MUqKIJei4eEL5uhQtFC/eJ9jdXXDBn0WYzNdWXQ0cg=;
- b=qJ4Kf1PPiu0TqL2MpgCuVlOOBqA/PT57f2VVom6eNR2BccSqpmZbUOlHyjX1+eymrl
- seBPdM8PRUFzeDr94oFtLT5hYcgboyx6CPKWsInZfFkeanDvO4tb5m2pnKgBLKPfrHuD
- jfqGo4DLC7fRdHUkL+wFP2OSfhAiZsG8ocsW1zVRPhcFLz5vBypOA0O9QBWli2MQ69EK
- Zie5gU3AihMWj+bIGjArgQrl9YJJaXfGni7ZFGG++mqtjy/TdLQfCGqVUvem5dnsZjud
- fPqiTgbBXm1jmMujACizxp0ZDrJbh4eBd3numkd5csnzwAwPi78JRiM05jNAyYqRDcHk
- gYsg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770943380; x=1771548180;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1770943381; x=1771548181; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=1MUqKIJei4eEL5uhQtFC/eJ9jdXXDBn0WYzNdWXQ0cg=;
- b=MOr9uftitYAQAVku7TcnuHmDeGgV9Wsez0ivRBNVKJkxXipqZjcQKJthmHWTZf9n/Z
- vavih3SAUPrBPd41dUFbGO1BEnR1E+ZrAR2fj6hCHr+ulhTYmtbzdQAe1Hqc/QNwsXSQ
- S0coCejd6Is1wDtAC4wKdET8f0mG0xAftDSyMdXN6GQkTFxAFn/4ZjVofHDyuJmpHDsf
- 6Khv3V4yS57rhHFqHw6ABr00Ud26pCSGgrbyUVbdQ+aEcEd8bf8hn6dw+nF6taknXa/7
- rVJU5rcqanHd28VWJivYBsIniZDBU2NT8//YxYDuWeL/3Q3rBEcQKmGvtuHhX3fgQbGv
- AYZQ==
-X-Gm-Message-State: AOJu0YxbOjZ+mohIw2NUgGJbcgnVsvnGGGui+doDuFEji+NMRfvU3Yyw
- 5SOflL/LtJyFSCZr5+SWcECfaTeHL9d0ZRjKOxPmgOyvQswIFLyCg+KVvXpp2AeFkfqS6ebmgPH
- jz9cx
-X-Gm-Gg: AZuq6aIa7la12HP2CTvW/LZtXvqZ/ZvOz0ctexZsyA08iMPAb2lAOBaykv9iCR5zEjJ
- 0nl+06AZRgyzC1Iwb4NV+WDpGeoH2L4COcEj+v9/dui/AcWkHx0U97T5GLnG1jzK0iuOFZY7a/9
- PlVjiNGKCh2rHWaYMET1XgtIehC3wl83zWK5OPNpuhh5Biu5ZADPoxtcH5lHsWEf9VwfsudwFMe
- F6yiUzt33CAI07PjRmaz0ZeGh386g5iymrDQUf4YNMCaNBnFmyToP6inBeYEThLGL4oSvlfjDhm
- DXrO2tZRciSx4vkXeC+y+YtHZMp9oevxvgR9cWgLgmTAdx3m7s6S33xRXBTmhcmsYNu/at+d/UW
- qSHWLuK1473ExdNNHgk1+fCbmOBqqm8yDlUOFzyTqcRZNCb+BQafucdV+DAUXpKeIjlh8JNVRUX
- Oxol3DJFgh0PyNOSqwmwTWKOth7zQ4tJtxhnrcZ8oKN6YiZGR8keXkktAxm9DKuD0wuTF6kolBr
- +sK
-X-Received: by 2002:a05:6a00:2da4:b0:81f:5acb:55e5 with SMTP id
- d2e1a72fcca58-824c944f15cmr252572b3a.2.1770943379833; 
- Thu, 12 Feb 2026 16:42:59 -0800 (PST)
+ bh=Qc+ukIsOiKgzsRkLbscq45ZmsrUzNjBvF9i+XTW1u7g=;
+ b=Ny6j6GIN20839aWicWJy9zRpQdIocQzNKXdPTfjUoNvrP+H5NxcgwyXJn5J2GWBOEG
+ mc5N31Qxsj+jEmXEYz7Be+GYEkZiNoo2gsr/Rkvc/vfGG6FqO9SeiWb0h+bm/FBntdyT
+ N7wG2/5/WED8o1HqKSgO6Zh32F17+cjRdEtFlEaUtMXNXagru1UqPA/5BX9af6cGnjKE
+ jwQxbH/WzxXeH9PEb8bTtfHmpvGx5vgr4lv8Ndkj8UBAc3U47Exzqoyox/UaOpEyq6ZT
+ nafOXILFCGxwdnAyB9FQth+le2FPYQve4R7zjZaN+XeEH4FRnDVbKAmeXgNFXhJpnDyB
+ 6Z7w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770943381; x=1771548181;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=Qc+ukIsOiKgzsRkLbscq45ZmsrUzNjBvF9i+XTW1u7g=;
+ b=op7jkYR58oEcYFMO/Z0q5NM08R5ECI8fUYvXItGQg8tIHiQMev037ub0alcggTJHeO
+ 4D/UU6GWOirxcRobSP13995hqA/q2Zh1Ml3etnyXVTEP2ZJp2ScoL5DNyFPkYos1CcRQ
+ 0g5RZQeXLFQgECAyZxuRvPQMwUAw0DDqYMTQH98Kb1CXhNha+NXjCvbJqzFP8vqoFi0/
+ Ti7DM3J6k5h2iOALu1XIMSM3Py97fxJUPgQa8SYDd2m7VpdKUgczx4eICp4I8EA5EwDl
+ bFbO6c9atUhVIpHoCsIq6yH+uW4oYyBKzAaYtgfLysicsotXzugLlKaWncHZZ/Jdx3K6
+ T/EA==
+X-Gm-Message-State: AOJu0YyfVJyQx0GUEztAgdQIPTRKQmMlBrK3CxuSDOAb6qONg0omasfY
+ 1sLDSwt+5m3z5m6U2XpcnzDMcC8+BRekk94SM5xwQhLeyz8zm7vgDN7uK7F6yNXW/GRD7FcueoW
+ PgioN
+X-Gm-Gg: AZuq6aLziFwonuX190HKU/rHLmvCy85TtywK6dUOiylqg2j+irrnXvHn4rw8UkydYwi
+ nwWHkp6P/ubZN/+HVSepbrTCJ9FMwl0xdC0ocY+pZBGvSspwPcBc2F4qdxJc/nqTzjYcS7Q+C9z
+ FeEirB+5Dg3xCrbKOlHjQyx5Af9EoLFzqGokjSIoGeCGGW3cIs+JjmwtOUX8TcsMOVcK3B4F+V4
+ Gxe4ASGIxswMdFCSoaUrV/EwlGgjepAMYO/1cmFJGt+7u9kdEmlbsSFormXt9Ho/niZW4NsdqlC
+ 4VBAU9pYDKNYkp355DlB6uqUpPiAdBbyQyzMQAzUpAxGnOjgW/con1ICx5VxW6BFKTIiUSJ7yqp
+ 5Vwmm/zj+hVXIutGZRBl2xaBk4y4g0jUB+5VT3chn4VOklQPJa7ccNv7/5sd9OnKmuqNk0nVP7G
+ AAP51PYqffaDINhkqE+Ikbf4PYY94w/TPyrnU7AXFmdNmSMqJLBZVrBlgfOa+s+go1vVvkqlt2E
+ KEe
+X-Received: by 2002:a05:6a00:1706:b0:824:3eb9:11e2 with SMTP id
+ d2e1a72fcca58-824c95d5ae5mr230697b3a.46.1770943380796; 
+ Thu, 12 Feb 2026 16:43:00 -0800 (PST)
 Received: from pc.taild8403c.ts.net (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-824c6a431f2sm504326b3a.22.2026.02.12.16.42.59
+ d2e1a72fcca58-824c6a431f2sm504326b3a.22.2026.02.12.16.43.00
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 12 Feb 2026 16:42:59 -0800 (PST)
+ Thu, 12 Feb 2026 16:43:00 -0800 (PST)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org, peter.maydell@linaro.org,
  richard.henderson@linaro.org, pbonzini@redhat.com, stefanha@redhat.com
 Cc: pierrick.bouvier@linaro.org
-Subject: [PULL 0/4] Plugins patches for 2026-02-12
-Date: Thu, 12 Feb 2026 16:42:50 -0800
-Message-ID: <20260213004254.493059-1-pierrick.bouvier@linaro.org>
+Subject: [PULL 1/4] contrib/plugins/uftrace: fix infinite stack unwind
+ detection
+Date: Thu, 12 Feb 2026 16:42:51 -0800
+Message-ID: <20260213004254.493059-2-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260213004254.493059-1-pierrick.bouvier@linaro.org>
+References: <20260213004254.493059-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,30 +104,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 4ed6a7f2fdc09d9fc3411e83e278da0085122016:
+So far, we were detecting infinite stacks but not stopping unwinding
+since break only exited inner loop.
 
-  Merge tag 'pull-block-jobs-2026-02-12' of https://gitlab.com/vsementsov/qemu into staging (2026-02-12 14:35:18 +0000)
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Link: https://lore.kernel.org/qemu-devel/20260210201344.1403613-2-pierrick.bouvier@linaro.org
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+---
+ contrib/plugins/uftrace.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-are available in the Git repository at:
+diff --git a/contrib/plugins/uftrace.c b/contrib/plugins/uftrace.c
+index a7e21b5b87a..1ed982999ed 100644
+--- a/contrib/plugins/uftrace.c
++++ b/contrib/plugins/uftrace.c
+@@ -443,7 +443,7 @@ static void cpu_unwind_stack(Cpu *cpu, uint64_t frame_pointer, uint64_t pc)
+         /* check we don't have an infinite stack */
+         for (size_t i = 0; i < depth; ++i) {
+             if (frame_pointer == unwind[i].frame_pointer) {
+-                break;
++                goto after_unwind;
+             }
+         }
+         CallstackEntry e = {.frame_pointer = frame_pointer, .pc = pc};
+@@ -456,6 +456,7 @@ static void cpu_unwind_stack(Cpu *cpu, uint64_t frame_pointer, uint64_t pc)
+     } while (frame_pointer && pc && depth < UNWIND_STACK_MAX_DEPTH);
+     #undef UNWIND_STACK_MAX_DEPTH
+ 
++after_unwind:
+     /* push it from bottom to top */
+     while (depth) {
+         callstack_push(cpu->cs, unwind[depth - 1]);
+-- 
+2.47.3
 
-  https://gitlab.com/pbo-linaro/qemu tags/pr-plugins-20260212
-
-for you to fetch changes up to e82d8af3da05e5315a11d0841e40ff0ed0ce53c8:
-
-  contrib/plugins/uftrace: add riscv64 support (2026-02-12 15:59:48 -0800)
-
-----------------------------------------------------------------
-Changes:
-- contrib/plugins/uftrace: add riscv64 support (Pierrick Bouvier <pierrick.bouvier@linaro.org>)
-
-----------------------------------------------------------------
-Pierrick Bouvier (4):
-      contrib/plugins/uftrace: fix infinite stack unwind detection
-      contrib/plugins/uftrace: add ops for walking frame pointers chain
-      docs/about/emulation/uftrace: add info about automatic tracing
-      contrib/plugins/uftrace: add riscv64 support
-
- docs/about/emulation.rst  |  23 ++++++---
- contrib/plugins/uftrace.c | 128 +++++++++++++++++++++++++++++++++++++++++++---
- 2 files changed, 138 insertions(+), 13 deletions(-)
 
