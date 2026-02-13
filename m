@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D31DDEF99C8
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Feb 2026 18:37:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E188EF99C5
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Feb 2026 18:38:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqy1f-0002CX-7K; Fri, 13 Feb 2026 13:36:23 -0500
+	id 1vqy3D-0002hA-2U; Fri, 13 Feb 2026 13:37:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vqy1c-0002C3-MB
- for qemu-devel@nongnu.org; Fri, 13 Feb 2026 13:36:20 -0500
-Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ id 1vqy3B-0002gm-6o
+ for qemu-devel@nongnu.org; Fri, 13 Feb 2026 13:37:57 -0500
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vqy1a-000185-65
- for qemu-devel@nongnu.org; Fri, 13 Feb 2026 13:36:20 -0500
-Received: by mail-pl1-x632.google.com with SMTP id
- d9443c01a7336-2ab39b111b9so5747005ad.1
- for <qemu-devel@nongnu.org>; Fri, 13 Feb 2026 10:36:16 -0800 (PST)
+ id 1vqy39-0001Ti-Lr
+ for qemu-devel@nongnu.org; Fri, 13 Feb 2026 13:37:56 -0500
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-2aad9b03745so6472715ad.0
+ for <qemu-devel@nongnu.org>; Fri, 13 Feb 2026 10:37:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771007775; x=1771612575; darn=nongnu.org;
+ d=linaro.org; s=google; t=1771007874; x=1771612674; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=mUXOv6WCOIKTDSjUv7qJelSyBMJw7DhHaS8ostDtpKI=;
- b=qaELCHYejygMjtlA2V2UAzWlyYt5lZEbS38LTAhv25zrR6O87wV8dshyQiL945Pts7
- /PrFrF490WXky5XT3TVDh21B7YhjAjG+xwfqmDJfN3s8ORAjXRRcSQKnciOhbe2tE6Gf
- hB9q2Nv93FmHoEg8hcJTAUcfR7WDHQxwY9+aq2FJv3zE9p/t0bd6U1jP9bywZCMMFDse
- 4mB+f7+6lbDgVEagcXROQMJdVbwTpTcPvGptOAdEj5/a2/MmdnPaHM+sLDSijMELBNLM
- wuw8OUoWY1VrDwOhD382Cb8xI6PLTzLOr8ziT9WmMtlGDpjzP+SRvNKORd6trWD+ohTT
- Hb/Q==
+ bh=R4fqLm3wB6WLIRUTDAfDHLIq8ohv18bj70Glhmn3kYc=;
+ b=Vduhat7oybniwlvn8QbMIV/AmI1DEmOGlb/qZw/qFtOlVLgd0LxheavzgsXyNhI749
+ B6EhNwCJyM3CtV7ltN748Ryc6DaCHqd2l3P3jWG68pTkF3hE6B4P9yIPTZImdHpvXMXI
+ +W+rcHhoiBbkDdcUqGVguvxByd0f0ZaGrNa4pHNuil6VWbqxY13QgL8XpIOG98xry4Vd
+ fwiXDGypi4/UnYtB/O2ettfPKDGov9z93q5h5AqY7B7tPBpJt7+dMeQsSJp41QUUCbNV
+ 6E2y10h1rIyIl8q6m+c89B4x8DArxKu44dYZnSL/W986OBMe7UcvtEnQGiR6gRN0S4DE
+ g08A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771007775; x=1771612575;
+ d=1e100.net; s=20230601; t=1771007874; x=1771612674;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=mUXOv6WCOIKTDSjUv7qJelSyBMJw7DhHaS8ostDtpKI=;
- b=RN6IdsGVd2mISHeB37q2G5tKFp8uK0E/lOgoJGwJ0qV1A8N0jc+uJ7J8sGfEysgMN1
- zSCVNT08EfQRNprCshTbPy6JJi22PPRmWa85lxswx0aMbEOVJIuzJKdOlawMnUDiBf36
- MgSYJzWm+jkLbwd/8iw3t34VOagwcASH+aiU3GwDWES91vTwqiMr9WNhPH3k5woUflGj
- FpsBk702CUnkMElTboJHBh/Gq+DTeXqQBTO92ApCqiHy6dLoToM7V4q/W9sxAL/kVBWj
- JC/dPXszWK3BupBXJdIC9D4+Q8DCIeapWvc1Gk0Ap7tp/F/E+pdg5lcUEQHR3Ek64l6V
- c3ug==
-X-Gm-Message-State: AOJu0YzIeDonQjOgN5aCCWy0JAGxWfuHPKPN6BBR/oXmxgyaFuyrFhSL
- e0ZTrVjR1sM8dd/V67h7x+6VJLleTzKSQGH9tf1d+4TX4PkzIDoM4+yJC3QGpHTt2ZQ=
-X-Gm-Gg: AZuq6aL5tqr1JXm+W5qKPDYIsE26IBoTG+mbQrkGot6+y0uRqlUiD/6RcxRmyU+Dpp3
- XHkIICbCF4jf7/jzKv4RtzgBUKF3ManDsYqd197mltZyNmI4nbRvIwCSP8HE3/U9mmpUS2Hurp3
- 4/1LZ5AeYd96nSeOsD8b9isy9+iWrK7VDvSKrwQgEY/jDVbB7na0R1T60NeldLCXfWmQvQctIy/
- NgMEUZHPoc0O1nJ63pyQjRLtYcjo67soJ5vW5P/YUr3KGcicCIW32Lxte1yZndA81my50qX2RFb
- GFbflGtd7lhU4hKhaSNHxVK8bVpmC7vaGrdEiduBv5iME4L+KWfiYdJhr8YBlBcD0p+/h4KCVGc
- IbaY7gtWet8Un1jPqSlmVEpMZCLVTGCA/1XAIeLw5E8Vj1IRggPlkc88uNFUQwAjZDfVjjMNzw9
- yCzHNARIu7H/P8EF0dSDVLafhIurID74LJ7Y0e4g3KVMiciW7EWpV8rXfDPBtEt7kGePnstnvZZ
- vju02I=
-X-Received: by 2002:a17:902:ec82:b0:295:ceaf:8d76 with SMTP id
- d9443c01a7336-2ad1752516amr2879345ad.47.1771007774954; 
- Fri, 13 Feb 2026 10:36:14 -0800 (PST)
+ bh=R4fqLm3wB6WLIRUTDAfDHLIq8ohv18bj70Glhmn3kYc=;
+ b=OFtGTvDbgvF7WDRfDyNKNem2dmRRjD1VtuN5El0raoa/uwmjkT0ffM36S9D2bGhNZ5
+ YycWI+qmlCKvd8isLislgf2it/Z5NoELO4bVzB2A5iYHRcIBRYIuqzqSumekBTWhPHuA
+ fndcyaewnB60B9STrsoW7vQJsOitrLuRUVcwjjkr/qNyJpV197YqzNdo+u7pOZ/ZR5B+
+ aBsKOYe/LXctRAy/xix9OSwTq4KhvLZ9BS1Jbvm/Nfz3sHdD1o9rtrtMRhTYcaXVxw8r
+ VYvXW5jVk5FrEohwyoYRj+kI0qYyNkvXKQrHfIrjvhnbWsZkz3RAu0zhDrH3MaHT5DgF
+ tf7w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXJjkS4hXcbLQD+UEUttmmHLoMT78FDmVXQ5XhSszL7P7fYs5i9jXH3KOzZgwamsJOyEQ6fUQ5VP8qK@nongnu.org
+X-Gm-Message-State: AOJu0YwHMzL2QiyFMPoZJmxDyj3v4Zx14Kjhz5/Wh0UELCbAx/tEB+hF
+ ceugLExl9LEx5TbdYQrPKqDXR7C7P1izpOyYNHDAsozF6fOMIjqEMM9Sz+9vgaiWjRc=
+X-Gm-Gg: AZuq6aKFvp+HtAMC1J1g1s5LKblQTnB2GFphg1GANtEhMOrAVQFGj4pLmD847axfzJe
+ zy7nh+wRtLQXzRVtzkOtiCzQfiDbjtQyDFjNSrU+MwpXSjZUzT7MeirrpTTn7V03PtUVMqhmHeL
+ n6x92D9NrfJwY1N2NTow4BBt3DJWXqy0GD9f1ERFNEs4K516VbV63K/EZu5UmVMZHQ8BctuZ2yy
+ FarRO90jBaKVL125mOf+Z85soUJMUfyUyPZuH4swlVh9siysvnHFAEZRkaXlGfDmKi/X5gbtC0G
+ 3a21cGBsqVAw68qydKkuspnN1Nn6MaDquuI8JI+YaWDBmnPCoShVnyA/12v0rW7s3/0uT5qlyOh
+ jxvsAwyALpTGvSBe/orK2NOIOH67gSlcUxlUI1IOZuAn2w0z+gA0SJlvX1XoyahqHoFNnJPqcWD
+ xm7lsT3HJ821/wE9H+KKIE1wJKEdPefzKVB0MS0RHRU8+ovI6ie6qgazROXQDs4SgrCGYV
+X-Received: by 2002:a17:902:d484:b0:2a0:c92e:a378 with SMTP id
+ d9443c01a7336-2ac97426f62mr10227155ad.7.1771007874098; 
+ Fri, 13 Feb 2026 10:37:54 -0800 (PST)
 Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2ab2997b3d8sm91374755ad.68.2026.02.13.10.36.14
+ d9443c01a7336-2ab2997ac92sm86159805ad.69.2026.02.13.10.37.53
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 13 Feb 2026 10:36:14 -0800 (PST)
-Message-ID: <7137a1e3-9f07-4a6b-8507-35bbfa5324e7@linaro.org>
-Date: Fri, 13 Feb 2026 10:36:14 -0800
+ Fri, 13 Feb 2026 10:37:53 -0800 (PST)
+Message-ID: <e0edcf60-c331-4856-80ad-6394b1d5ab96@linaro.org>
+Date: Fri, 13 Feb 2026 10:37:53 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/5] plugins: add read-only property for registers
+Subject: Re: [PATCH 1/5] qemu/target_info: Add target_page_bits_vary() helper
 Content-Language: en-US
-To: Florian Hofhammer <florian.hofhammer@epfl.ch>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, richard.henderson@linaro.org, laurent@vivier.eu,
- imp@bsdimp.com, berrange@redhat.com
-References: <ef60bfbb-cc12-4411-acc1-8c131726f22e@epfl.ch>
- <8b36b6c1-83bd-462b-a346-f240dd17746d@epfl.ch>
- <871pjcdt5q.fsf@draig.linaro.org> <87pl6wcda9.fsf@draig.linaro.org>
- <878883e5-7100-48b7-bb44-e0728c93ae72@epfl.ch>
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>
+References: <20260213182713.44924-1-philmd@linaro.org>
+ <20260213182713.44924-2-philmd@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  xsDNBGK9dgwBDACYuRpR31LD+BnJ0M4b5YnPZKbj+gyu82IDN0MeMf2PGf1sux+1O2ryzmnA
@@ -115,11 +114,11 @@ Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  5SYuJaKzCAgNeAy3gUVUUPrUsul1oe2PeWMFUhWKrqko0/Qo4HkwTZY6S16drTMncoUahSAl
  X4Z3BbSPXPq0v1JJBYNBL9qmjULEX+NbtRd3v0OfB5L49sSAC2zIO8S9Cufiibqx3mxZTaJ1
  ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <878883e5-7100-48b7-bb44-e0728c93ae72@epfl.ch>
+In-Reply-To: <20260213182713.44924-2-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x632.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x636.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -142,124 +141,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/13/26 5:38 AM, Florian Hofhammer wrote:
-> On 26/01/2026 21:46, Alex Bennée wrote:> Alex Bennée <alex.bennee@linaro.org> writes:
->>
->>> Florian Hofhammer <florian.hofhammer@epfl.ch> writes:
->>>
->>>> Some registers should be marked as read-only from a plugin API
->>>> perspective, as writing to them via qemu_plugin_write_register has no
->>>> effect. This includes the program counter, and we expose this fact to
->>>> the plugins with this patch.
->>>>
->>>> Signed-off-by: Florian Hofhammer <florian.hofhammer@epfl.ch>
->>>> ---
->>>>   include/qemu/qemu-plugin.h |  2 ++
->>>>   plugins/api.c              | 17 +++++++++++++++++
->>>>   2 files changed, 19 insertions(+)
->>>>
->>>> diff --git a/include/qemu/qemu-plugin.h b/include/qemu/qemu-plugin.h
->>>> index f976b62030..1f25fb2b40 100644
->>>> --- a/include/qemu/qemu-plugin.h
->>>> +++ b/include/qemu/qemu-plugin.h
->>>> @@ -942,11 +942,13 @@ struct qemu_plugin_register;
->>>>    *          writing value with qemu_plugin_write_register
->>>>    * @name: register name
->>>>    * @feature: optional feature descriptor, can be NULL
->>>> + * @is_readonly: true if the register cannot be written via qemu_plugin_write_register
->>>>    */
->>>>   typedef struct {
->>>>       struct qemu_plugin_register *handle;
->>>>       const char *name;
->>>>       const char *feature;
->>>> +    bool is_readonly;
->>>>   } qemu_plugin_reg_descriptor;
->>>>   
->>>>   /**
->>>> diff --git a/plugins/api.c b/plugins/api.c
->>>> index fc19bdb40b..de8c32db50 100644
->>>> --- a/plugins/api.c
->>>> +++ b/plugins/api.c
->>>> @@ -403,6 +403,12 @@ bool qemu_plugin_bool_parse(const char *name, const char *value, bool *ret)
->>>>    * ancillary data the plugin might find useful.
->>>>    */
->>>>   
->>>> +static const char pc_str[] = "pc"; // generic name for program counter
->>>> +static const char eip_str[] = "eip"; // x86 specific name for program counter
->>>> +static const char rip_str[] = "rip"; // x86_64 specific name for program counter
->>>> +static const char pswa_str[] = "pswa"; // s390x specific name for program counter
->>>> +static const char iaoq_str[] = "iaoq"; // HP/PA specific name for program counter
->>>> +static const char rpc_str[] = "rpc"; // microblaze specific name for
->>>> program counter
->>>
->>> It's ugly but I can't think of anything better as you say in the commit message.
->>>
->>>>   static GArray *create_register_handles(GArray *gdbstub_regs)
->>>>   {
->>>>       GArray *find_data = g_array_new(true, true,
->>>> @@ -417,9 +423,20 @@ static GArray *create_register_handles(GArray *gdbstub_regs)
->>>>               continue;
->>>>           }
->>>>   
->>>> +        gint plugin_ro_bit = 0;
->>>>           /* Create a record for the plugin */
->>>>           desc.handle = GINT_TO_POINTER(grd->gdb_reg + 1);
->>>>           desc.name = g_intern_string(grd->name);
->>>
->>> Lets just set desc.is_readonly to false here.
->>>
->>>> +        if (!strcmp(desc.name, pc_str)
->>>> +            || !strcmp(desc.name, eip_str)
->>>> +            || !strcmp(desc.name, rip_str)
->>>> +            || !strcmp(desc.name, pswa_str)
->>>> +            || !strcmp(desc.name, iaoq_str)
->>>> +            || !strcmp(desc.name, rpc_str)
->>>> +           ) {
->>>> +            plugin_ro_bit = 1;
->>>> +        }
->>>> +        desc.is_readonly = plugin_ro_bit == 1 ? true : false;
->>>
->>> And fold setting it to true into the if statement. I have a marginal
->>> preference for g_strcmp0(desc.name, eip_str) == 0 style tests.
->>
->> The option of course would be to skip the register all together. Do we
->> have code which will have multiple vaddr's for the same TB where using
->> the TB data wouldn't be sufficient?
+On 2/13/26 10:27 AM, Philippe Mathieu-Daudé wrote:
+> Add a helper returning whether a target support variable
+> page sizes (only ARM targets so far).
 > 
-> Skipping the register altogether would basically make it invisible to
-> plugins and therefore remove functionality. A plugin might want to get a
-> list of all registers (which would not be complete anymore), or get the
-> current PC value. If I didn't miss anything, the latter might not
-> necessarily be possible anymore, as a callback (especially the simple
-> callback type) doesn't have access to the current TB data and can't
-> necessarily pass userdata to the callback, so it wouldn't be able to get
-> the PC from there anymore.
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   include/qemu/target-info-impl.h   | 2 ++
+>   include/qemu/target-info.h        | 7 +++++++
+>   configs/targets/aarch64-softmmu.c | 1 +
+>   configs/targets/arm-softmmu.c     | 1 +
+>   target-info-stub.c                | 5 +++++
+>   target-info.c                     | 5 +++++
+>   6 files changed, 21 insertions(+)
 > 
->>>
->>>>           desc.feature = g_intern_string(grd->feature_name);
->>>>           g_array_append_val(find_data, desc);
->>>>       }
->>>
->>> Otherwise:
->>>
->>> Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
 
-Seeing there are some questions around this, I have another one.
-
-Does it really matter if a user can read/write pc register?
-
-It seems to bring a lot of complexity to prevent this (especially the 
-string per arch approach, even though that's the best we can do), and 
-I'm not sure what's the actual benefit. If someone tries something QEMU 
-plugins don't support in general, they can always send a bug report, or 
-even a patch.
-I'm not really sure to why someone would have a bad idea mixing register 
-writes and pc diversion. And if they do, it would not be surprising it 
-breaks things.
-
-So maybe we can just extend API with PC diversion, and not overthink too 
-much about potential consequences on registers.
-
-Regards,
-Pierrick
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
