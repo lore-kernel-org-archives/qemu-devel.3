@@ -4,152 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BBF2EF48C4
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Feb 2026 03:19:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B515FEF48C8
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Feb 2026 03:46:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqjhm-00042J-9a; Thu, 12 Feb 2026 22:18:54 -0500
+	id 1vqk8H-0008Et-A7; Thu, 12 Feb 2026 22:46:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nutty.liu@hotmail.com>)
- id 1vqjhl-00041s-4i; Thu, 12 Feb 2026 22:18:53 -0500
-Received: from mail-japanwestazolkn190120001.outbound.protection.outlook.com
- ([2a01:111:f403:d406::1] helo=OS8PR02CU002.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1vqk8E-0008E7-Vk
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 22:46:14 -0500
+Received: from p-west1-cluster5-host1-snip4-1.eps.apple.com ([57.103.66.172]
+ helo=outbound.pv.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nutty.liu@hotmail.com>)
- id 1vqjhj-0006km-M7; Thu, 12 Feb 2026 22:18:52 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=aGhI7u7y9mwguUqR51Fezv4fmJV3ewzF55ZE3N7sxBENGeSCmAsdt6rYtQtpw44Edzt1jeYgzMK/hFLzcCcf4N2ZEn/PBspw6IYHXmxdZRGj6IOzFh093bkx7Ag5FxCpW5V3xwkPPXBgvdlHvC5uWfmiiMrEl7S7jbdmjVrYYT05WIAtj4/v29z92zUok49Smc7YcB6kOfC+k0DR2Bi8aDelI50kEC1s+7K42Ccx4uT8FBmwKCty6eU1bypzKCeMcLrOOlKjzdsc/Qjwd7HxaRfN6x8+yqbq6eNpdSgYWSAuRdAf/7x6mE7uBRpaEQhgwp9x1BfrQ+LNJoz7qzlU2g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=5sXSFSuPKGldiId8R/bJUEmYZDQeJQa9MC+4ihZd/+w=;
- b=dwIOVLF0c6wUejBMOk2AOkbFWC9BYkJh+8WykJ/KXILUTQC3sfToWaK0lAzs2T+GZpZFZvCjP6PjaMmzzsi4StX8F29XxyGEve8smX5GeRd72RynqAb+m56YkvEnACzZCb7y/EHQf9JFm9d7DQRdZCNq7krLv/QSrk7mR/q2+Iziz6TZI2mE3heHdU0N9VcFh8nNCZCMy0IiuJQyyg6KBlIkP4of73/4oirUcwlj8L5OGworaO5dIVCaRsewBF3COZhExZ5sWq/NYnHHb22My7nHEwkNJOo3Kw0L1Tc4s/D3oRBdjQHsp+UF3yGvB+6CTtbmjXk3EY9RnHfBfoYlRA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hotmail.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=5sXSFSuPKGldiId8R/bJUEmYZDQeJQa9MC+4ihZd/+w=;
- b=SvgHCtgXZtRQe9JkYEwYBqXs+05daJFQL12MlKteY8igMRdHWoEXcARhOu6AQsbaAJNk65IZrWDJDF82YFg53/QHUcCmqaOR5ra6L+SQru7vzG8ZDoRVnIz/8APms7YF4Jz7yloJ+A93FoxyNzWzgXdcbm1Pm30sTPDlg1JlekJw2Se4Oya3SC5DsVVjOd/vLdXok+iBFrF8NniP8Cp0Na2fdO8OWnwOwxDkQYxXd6ucyjAYL8jJe+r/QAA3ZJNQAgpX43KDbR2IoW3x7JN7CilGkn+tRtMSpfSZSv77nIZG4NDXawan6izWIVTFp000bAxA2Pga3+FIbCugEEln2A==
-Received: from SE3PR04MB8922.apcprd04.prod.outlook.com (2603:1096:101:2e9::7)
- by OSQPR04MB8858.apcprd04.prod.outlook.com (2603:1096:604:428::10)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9611.13; Fri, 13 Feb
- 2026 03:18:42 +0000
-Received: from SE3PR04MB8922.apcprd04.prod.outlook.com
- ([fe80::3450:f139:5238:8f58]) by SE3PR04MB8922.apcprd04.prod.outlook.com
- ([fe80::3450:f139:5238:8f58%6]) with mapi id 15.20.9611.008; Fri, 13 Feb 2026
- 03:18:41 +0000
-Message-ID: <SE3PR04MB8922CBB7CC00B32968527B44F361A@SE3PR04MB8922.apcprd04.prod.outlook.com>
-Date: Fri, 13 Feb 2026 11:18:35 +0800
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/9] target/riscv: Add the Zvfbfa extension implied rule
-To: Max Chou <max.chou@sifive.com>, qemu-devel@nongnu.org,
- qemu-riscv@nongnu.org
-Cc: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
- <liwei1518@gmail.com>, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-References: <20260127014227.406653-1-max.chou@sifive.com>
- <20260127014227.406653-3-max.chou@sifive.com>
-Content-Language: en-US
-From: "Nutty.Liu" <nutty.liu@hotmail.com>
-In-Reply-To: <20260127014227.406653-3-max.chou@sifive.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: TY4PR01CA0095.jpnprd01.prod.outlook.com
- (2603:1096:405:37d::6) To SE3PR04MB8922.apcprd04.prod.outlook.com
- (2603:1096:101:2e9::7)
-X-Microsoft-Original-Message-ID: <a10e718a-d5d9-4bf7-9c31-1383091af784@hotmail.com>
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1vqk8C-0005A8-Tk
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 22:46:14 -0500
+Received: from outbound.pv.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-west-1a-60-percent-11 (Postfix) with ESMTPS id
+ E149518002D3; Fri, 13 Feb 2026 03:46:04 +0000 (UTC)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; t=1770954368; x=1773546368;
+ bh=5/IltRImc6gegLCsNoWDi+eINUGJYWBjLLMmPMJ7ibM=;
+ h=From:To:Subject:Date:Message-ID:Content-Type:MIME-Version:x-icloud-hme;
+ b=d6fo7RBwXYh75+EKvs6HoLb9vmeXYWUcB3EjkWrCgUyJwwGDBpqWQfSqBKDbyo2d1sVgHQCsEHuQze6m0FhpytHRuC/ek46E/8RmefVaxhB+5iNEQEgiwnKCgmvtWtgICfJkobpskf0rGKGpyZ/cC3FJhsrIhq5F8wUeM1JbWa4z15FcubEV3ZICGTn0Ctq98MmNczXOg33BRS1JlfwDq+XiRY9xZTGrS9gKKu0ENmxC8D14/7V6a06gJ+ewri+/5HV0m54C3wf4Qp91V5bUzM8ngeUC2gclXT4jFF3cOxiIL3qr3oVgcyTkl+h4aCjK1UkYBS7BAnUvSg3N/0ddCA==
+mail-alias-created-date: 1752046281608
+Received: from localhost.localdomain (unknown [17.56.9.36])
+ by p00-icloudmta-asmtp-us-west-1a-60-percent-11 (Postfix) with ESMTPSA id
+ B7DAB18002D0; Fri, 13 Feb 2026 03:46:00 +0000 (UTC)
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Magnus Kulke <magnuskulke@linux.microsoft.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Bernhard Beschow <shentey@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Mohamed Mediouni <mohamed@unpredictable.fr>, Wei Liu <wei.liu@kernel.org>,
+ Pedro Barbuda <pbarbuda@microsoft.com>, Cameron Esfahani <dirty@apple.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Phil Dennis-Jordan <phil@philjordan.eu>, Zhao Liu <zhao1.liu@intel.com>,
+ Roman Bolshakov <rbolshakov@ddn.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH v2 00/10] whpx: x86 updates (2026-02)
+Date: Fri, 13 Feb 2026 04:45:43 +0100
+Message-ID: <20260213034556.13471-1-mohamed@unpredictable.fr>
+X-Mailer: git-send-email 2.50.1
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SE3PR04MB8922:EE_|OSQPR04MB8858:EE_
-X-MS-Office365-Filtering-Correlation-Id: 222ff997-ca22-41da-b928-08de6aae95cd
-X-Microsoft-Antispam: BCL:0;
- ARA:14566002|23021999003|7042599007|5072599009|461199028|15080799012|19110799012|8060799015|51005399006|6090799003|3412199025|440099028|40105399003;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?OFh4UzNJV2habGNSemszSWNuNUpaSXlPYUprWmwrWkZZZ2dnODdmSGoxbjhN?=
- =?utf-8?B?d0dxUGNCU2hvSW9ha0VZcFBwWnRsOFBUYW8vRks4N2lvbEVadkdya3VJRWZl?=
- =?utf-8?B?ZVV0TjVCMFNTeUVYZ3p5aVp4OEFmY01ld0Q2TURKN1hSODUreldNM0pHTzAy?=
- =?utf-8?B?RDFGczBYK05kSGI1MlZzQ1ZuY1dLc2NGOWdLZlFMUklORDN5R09acU12VlNy?=
- =?utf-8?B?bG5YWUxaN1Y3OExPYk8vYlIyQXpmOWVTVWg5WW44VDZEZDRFY0JNbHQvZTlV?=
- =?utf-8?B?M0tjczhyLzNnTmRkT1BWUHpHZjBRYlZnVkFoUCtFdHBidlp4a3FTV2lKU0k2?=
- =?utf-8?B?SnJweFdJVUlTbmpURUl0b1I5RFNoK3JoTjNBQWhSR1dLaEtKRTJRRzN3WGFy?=
- =?utf-8?B?VFp3S0V6VXhaSWRlcEhyMzd5SGR3ejFYSEh4aTVKMXVFNWsveVlvU0p0MlhF?=
- =?utf-8?B?dk8vMDRQTnR0VDRDbFR3NlJSemdwdExsMWQ4Y0NIcDBYTHZvajMvUjFEOU01?=
- =?utf-8?B?TG12OGdlVVFFZDUzVnN3YllDb1BIUVdDc3Z2ZnF1K0VZVTVFL0lObnk2alUw?=
- =?utf-8?B?MVU2cDJVMXhqaXJCQktTTnJyQ3Z4eExYREtrek1YZm1TeEVZblNldU01c3Mz?=
- =?utf-8?B?UmxHSlYrclNyTTl4aU1OMzZBM0huMURmb28vRTNFcTFGc1Z2Yi9uOTVRNi9r?=
- =?utf-8?B?MUpSdDVRWXJwdzRqUlVrYytYYTFXY0JVQkh0RTlaZklHSHVrN1ZXNlBuMVpT?=
- =?utf-8?B?U2ZYQk9ISk4wVk54b1oyaTRxdEFDcXNwenZRcllpTlVlUElkVitzVDVFeTZt?=
- =?utf-8?B?R0xzaXh2aUIwMEt4M3FkQzNFM2VvRU9Rbkc5NUhTSm1sSVIyZWc0ek1XNEM5?=
- =?utf-8?B?cE1xdzZmVDNubkpGSEIvZGVEM0pFOWJCL1dNQmFGaWQ4bnBTN250djdmNWpw?=
- =?utf-8?B?ZUR3WlRUcVJ4aUpsYXQ5RWc3MnlCdGRwWHRZNGFUVGJQY0MxcmlRZlpjTEtB?=
- =?utf-8?B?NUFmclJZK0QxMTdBaWVuQVVYQkk5dG1hZnhHTWJKblpEemFvTXFiY21TcExz?=
- =?utf-8?B?ZVpXYkRiM2VMMGdWMlRRdFRxanl6eTl2ckN2akNtYzE0NTRlZFVXOUJNT3Nm?=
- =?utf-8?B?Qmp0Rnd3VVJSQytUVTg0aXZ0K2g0MmJtbkJsVGpqblhiVTNmM1NkaVJwRjFy?=
- =?utf-8?B?bEtlYWFRMlBESUQxdnRScm5WN3I2RFlPSEdsVkd1dXViQ2ZXelFTN3RlUDF1?=
- =?utf-8?B?TmFxOFJKOE1XaXd3Z3NnTzB5UVpBbVpyb1dwa3F4eDhYUVhlZHIxNXU4T3px?=
- =?utf-8?B?d3NiQk15NWlVdWl6bkc2dmk1aWgwWHBpYUhyZmdEdkhETnZia2FQclk5ZWll?=
- =?utf-8?B?c0kzRlF1YXNONEN0YWYwSHVHY2tFTVBDVGlHZUZ2Vy9HWmRtNGZoUWliczlQ?=
- =?utf-8?B?dHgvZFZhaTNQWXlOUnBybVQ5WnJ1dWpHRktUQnlTRXZiM3pKQndNRDVVVXp4?=
- =?utf-8?B?L0VuK0p0K05vU2QxUkZINEFNTWFiY095N3pUTjF1MWkxdEYzMHk2dHJlRlBJ?=
- =?utf-8?B?Nlpoc0FUTWFCS0RwdlRDcGgrSGRnbEpweHViM3B1QmNtdWx1NmliWUY1emZY?=
- =?utf-8?Q?Y8mmwX32GF1yt8YBkKuL4DKv7NR2jne6Te5Uvlt+LdtM=3D?=
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?S1hZc2tqcndCb1NOL0FzME9vM2dqeUlLYXRQblhCT0pZR090UHRGcVJWTnhn?=
- =?utf-8?B?Vzh4WDFKS3lRNW5DeENDMWNhK2R5WUZOTUZTSjd6Y0YzbHZGc1IrbEV4OVhX?=
- =?utf-8?B?U1N1K3MyN1BTbG5GV2ZlYm5wb3lYVXc5NGFNT2ZuWVRXN0QrczF2QW52MzhZ?=
- =?utf-8?B?VTFQeFBtdHJIMDVNVEo5NkNTL2JVUEl0NU1ZZTVDdjJ2dXRZT1ZxeEcwdjNH?=
- =?utf-8?B?NXRJbU02bkNjanNXUVRpdWx4YTNWNDFGV0x1OXRHRWQ0Qyt0THdER0E2ZXhp?=
- =?utf-8?B?eUs5VmNjR1hQTG1ra3VycWxuQkpSQWtSc2taeWpvbURMby9KTHpnWk5RRFQ0?=
- =?utf-8?B?empSZWpRanJlL0lvRDJEaXdoc1dtTGp5UGF1dVpvL2FNQWJkemRRQVBETVFK?=
- =?utf-8?B?VEZtN2hCejJXcWJYS3hRUE9wbkdQN3NkbFRkTUoxTHF3T2g2UkJTTlMxTlNx?=
- =?utf-8?B?a0VUN1k2RDRFN1ZoSkR6dTZyZ0h3T05MZXdiOFpnTlBZSk9kaUxKd1d3YUtw?=
- =?utf-8?B?cWJEaGNlWXYzMVJJc0Y4RmVid09XUzhkUWY0NmlBMDY0V3RBeWtnVEgvREFj?=
- =?utf-8?B?NGFPYXd6NTNEQWtTaWlhdXpXdFFVa2w5V1JvdlB0OGpNbGRhbDFURlE4T3Y1?=
- =?utf-8?B?UFhrQmRjYUJFZW0vV1dZa200U0dPTG1xTHRMb0hKeWh6S2RoL0dqOFdFM2dD?=
- =?utf-8?B?d2lxWkFHZjBOY2hMYktvTjljUzV1U0tJQjM0bWo5NVpldXhwUW8xRXlZMlVa?=
- =?utf-8?B?Uk5nZzROenhFN1dIMXpsZ284OGRDYUY1UUZyeU11b01PdVlvVHR0eFlmc3lI?=
- =?utf-8?B?ZDJHOWxiYXJydTlxSnF0b3VETTlIL3p0aVVrZHl4UGgycVkrWEI5N0NKR1FR?=
- =?utf-8?B?VkRzQjcrelpSY1pDSFFYbmphNEN3WWlnL2hhZzRmbEp3SEQrcFhwZVZJendk?=
- =?utf-8?B?UXA3UjMxUVRvZWdVc0hYd3hoRTFvZnRnQUFjZnIrYnV0TkN4Y3V0RGk0RnN4?=
- =?utf-8?B?VDQxQ2tJVVJEMDIzbEJIdzgzRUlSWGQ2K1JhVWFUYnNuckZVSGFsRlRvcnNP?=
- =?utf-8?B?blRnR3R4T0I5TWMyZVlQK1g0WkNObXN2TXlDUTZvNXNrVWQvdDJhY0t5clhl?=
- =?utf-8?B?R0dSTW9haTlCUG15bmFIOGhiSFA0aisrMHJIS1RTNVh4UTE3SExkdDlWK1pn?=
- =?utf-8?B?eUprdDl5S1RkNFdqN2lBK1V6c1JGMzc3ejVBd0NCNDFnc0U0TjhVdUJRTFJB?=
- =?utf-8?B?VTFFQ1JmbThtRVJSZTBoanFiZzRBTzQwR1hZY01GL253R3RnQzJXMis0ZVlu?=
- =?utf-8?B?ZFN1T1VRRFJWZW85bVMvcTNoeXROVWdQWUUzbFBYNTgremVuZ1Y1MlZqK2Qy?=
- =?utf-8?B?NjhvSW5Zc3BRWm1INkxDZzlucCtlN0JZaVZGU1JQSWc5MUo5VkJOc3ZYZ2Q5?=
- =?utf-8?B?YkQ4THBpeHR2SDdSNWJoS1BOd1l6VjkyK2NxOGNHT3JRQnV6MWFWcG12bEpr?=
- =?utf-8?B?NjgxWGRhZHYwY2p6UVRxK0tpcHZWdDliTGdrKythUXFNM1BCODdsZkc1aU5Y?=
- =?utf-8?B?THZLMGhKQnBkWkFDRjVqTFY5ZjVEVVJjWUpFZmpCM3J2U1Z5Mm9sWG1zS21Y?=
- =?utf-8?B?WVlQTmN3cXcwWkJNU0ZRQ21ZcDd3RGNNZzJWdTdqUnd6RFp2Q2Fvb01iMWxm?=
- =?utf-8?B?RGpTeDFoZUVONUpEZENuMnJiS1JkNTdXY0c1TElyK3pYTFZnaGRkM1FKejBl?=
- =?utf-8?B?M24xYWRLVGdZRkVWVHFIdDFrZGdNREFaaE9DV3Q0ajZBSU9wY1JwamNKOVQx?=
- =?utf-8?B?Zmt0NVBQSzVPemFUN29HUEM3RU9wc0pLSzVoZWZLWG5KbjBGUk5ReXBSRndr?=
- =?utf-8?Q?ieKN6ovWH3gLx?=
-X-OriginatorOrg: sct-15-20-9412-4-msonline-outlook-515b2.templateTenant
-X-MS-Exchange-CrossTenant-Network-Message-Id: 222ff997-ca22-41da-b928-08de6aae95cd
-X-MS-Exchange-CrossTenant-AuthSource: SE3PR04MB8922.apcprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Feb 2026 03:18:41.2474 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: OSQPR04MB8858
-Received-SPF: pass client-ip=2a01:111:f403:d406::1;
- envelope-from=nutty.liu@hotmail.com;
- helo=OS8PR02CU002.outbound.protection.outlook.com
+Content-Transfer-Encoding: 8bit
+X-Authority-Info-Out: v=2.4 cv=Y8z1cxeN c=1 sm=1 tr=0 ts=698e9e7e
+ cx=c_apl:c_apl_out:c_pps a=azHRBMxVc17uSn+fyuI/eg==:117
+ a=azHRBMxVc17uSn+fyuI/eg==:17 a=IkcTkHD0fZMA:10 a=HzLeVaNsDn8A:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22
+ a=UNKDkAC45PISUlO_G4wA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: P4t30khYDSCHnMQalhgXYqmz1AzJ0MYZ
+X-Proofpoint-GUID: P4t30khYDSCHnMQalhgXYqmz1AzJ0MYZ
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjEzMDAyNSBTYWx0ZWRfXzJKe4S5GVVz2
+ Hdf7bWTAd8bqYoQuB/ckLYduhwZko++XfPbXC1/CnKXVUVTeUoFIdbCM6UEOFR6U9swbK+B30ii
+ drV47UK9XoF2KcGLPhAdSMaWjaDAFWVjxgf0Z24o4UvPjBa1NXxDPjnszITqm7wvyE87YAxmBjw
+ ZMneeuK7XzxxqeRn7oW70ckHVS5zT95cG2w8FAPteZS8qRq5PZbsdvClVDvXyqkgCyd1xIvSZ+6
+ Nxf3adkLwlxXdhCZI/1RjDhFGbNtGf6SPsV9DrdkYwn4RJcQ3zXJgdplHf8nrAEcED1Tb4lm5Tq
+ KrB0H0vjRjVA/VziNXcNy1Oighhi8wU89o2eKwqexHv4pK5PLhXFX0Gf3C7/9g=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-02-12_05,2026-02-12_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0
+ bulkscore=0 clxscore=1030 spamscore=0 mlxscore=0
+ suspectscore=0 phishscore=0
+ mlxlogscore=758 adultscore=0 lowpriorityscore=0 classifier=spam authscore=0
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
+ definitions=main-2602130025
+X-JNJ: AAAAAAABj0daTcSe3R04s8iOe90v9/LyFxoslOge9hAtEhJYAEn+v/sQKo+nLUcqb+Su2PgC34sgLj+zJZgituQ51gpM6YZKhAvpjraqOtj0mEu2Xbdzr3nAbfMtA02sw4KuU+D9p87PHLH6nD5jz6ly5yFYkHz/gtKE+2X8qWFItvFdKv3m7eyUySQPo4Yb6aEVk0Nhg/SjwpLG3OZm9p3Rj3ok/KAn0hOdBI+ulKlkbnmhJEwpijykkhCFoM8n09y5YWKjE0/nj7+flf2DXLgfcpDModD85ejdpqN9sj/WDt264kKAsRCU3bu6laOhqlxpzxOVN0eOnko0b0HO35yW7SqeNOHN5eknLNgb76hsQez9p5KBsZyfDSgsx+2rbPH10kH7NU6K35Y20xI9ikObYY39XsMkB3Vp8bNR33HD6II3ETF/mf/d9TMJJaMmMUornanVo9Esp+cVjyX6BWei/AfSmxcn8ZZj5IkhjuQ0sfohUF7juzLXHGVxCg9ITMi1HkkUTgocfCOLpZ8QtHxETfZkpRiS+5Kyx9zPQZK7JW+ojmsiTLIDHmpYtrb6jtLfUIAyHebwEsQH6kgq4yam20PcUZ764o1w/zuMvkNL9IffVp+urkVSI05Ue+gps21TAHi3Vhb/ekQvn8QCRstQbtiBhFAtlok9tPQ4PLsAoUfmiyWHKo2CigLCJWyZz2e6pj9nR7C7Yu4bQ8iCsPASUqlxbrMKyJ9xp7iLASrw5/4EV716CuOx0Lzoa8DoCsfRUs5qe1C4QtpK2+9mYXmZehqCsxVc7HwbyzF/6Glr4fwWY7RK
+Received-SPF: pass client-ip=57.103.66.172;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.pv.icloud.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UPPERCASE_50_75=0.008 autolearn=no autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -165,48 +99,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+x86_64 WHPX updates:
 
-On 1/27/2026 9:42 AM, Max Chou wrote:
-> Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-> Signed-off-by: Max Chou <max.chou@sifive.com>
-> ---
->   target/riscv/cpu.c | 13 +++++++++++--
->   1 file changed, 11 insertions(+), 2 deletions(-)
-Would it be better to add the patch description ?
-Otherwise,
-Reviewed-by: Nutty Liu <nutty.liu@hotmail.com>
+- move HVF x86_mmu code to common code
+- fixing debug support, which was broken since around: "gdbstub: move guest debug support check to ops"
+a48e7d9e52f8fe8b47f4c74f3e99d9d677b87fe5
+- switch over from winhvemulation to common x86 VM exit emulation code
+- remove some log lines
+- Remove WHPX CPUID traps as they're currently quite broken
 
-Thanks,
-Nutty
-> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index cf237305c5..01cb62bde4 100644
-> --- a/target/riscv/cpu.c
-> +++ b/target/riscv/cpu.c
-> @@ -2618,6 +2618,15 @@ static RISCVCPUImpliedExtsRule SSCTR_IMPLIED = {
->       },
->   };
->   
-> +static RISCVCPUImpliedExtsRule ZVFBFA_IMPLIED = {
-> +    .ext = CPU_CFG_OFFSET(ext_zvfbfa),
-> +    .implied_multi_exts = {
-> +        CPU_CFG_OFFSET(ext_zve32f), CPU_CFG_OFFSET(ext_zfbfmin),
-> +
-> +        RISCV_IMPLIED_EXTS_RULE_END
-> +    },
-> +};
-> +
->   RISCVCPUImpliedExtsRule *riscv_misa_ext_implied_rules[] = {
->       &RVA_IMPLIED, &RVD_IMPLIED, &RVF_IMPLIED,
->       &RVM_IMPLIED, &RVV_IMPLIED, NULL
-> @@ -2631,8 +2640,8 @@ RISCVCPUImpliedExtsRule *riscv_multi_ext_implied_rules[] = {
->       &ZHINX_IMPLIED, &ZHINXMIN_IMPLIED, &ZICNTR_IMPLIED,
->       &ZIHPM_IMPLIED, &ZK_IMPLIED, &ZKN_IMPLIED,
->       &ZKS_IMPLIED, &ZVBB_IMPLIED, &ZVE32F_IMPLIED,
-> -    &ZVE32X_IMPLIED, &ZVE64D_IMPLIED, &ZVE64F_IMPLIED,
-> -    &ZVE64X_IMPLIED, &ZVFBFMIN_IMPLIED, &ZVFBFWMA_IMPLIED,
-> +    &ZVE32X_IMPLIED, &ZVE64D_IMPLIED, &ZVE64F_IMPLIED, &ZVE64X_IMPLIED,
-> +    &ZVFBFA_IMPLIED, &ZVFBFMIN_IMPLIED, &ZVFBFWMA_IMPLIED,
->       &ZVFH_IMPLIED, &ZVFHMIN_IMPLIED, &ZVKN_IMPLIED,
->       &ZVKNC_IMPLIED, &ZVKNG_IMPLIED, &ZVKNHB_IMPLIED,
->       &ZVKS_IMPLIED,  &ZVKSC_IMPLIED, &ZVKSG_IMPLIED, &SSCFG_IMPLIED,
+Changes added since v1:
+- move HVF x86_mmu code to common code
+- Use x86_mmu in WHPX MMIO exits
+- Remove WHPX CPUID traps as they're currently quite broken
+- Optimise MMIO vmexits by not restoring the full state
+
+Mohamed Mediouni (10):
+  target/i386: emulate, hvf: move x86_mmu to common code
+  whpx: re-enable guest debug support on x86
+  whpx: preparatory changes before switching over from winhvemulation
+  whpx: refactor whpx_destroy_vcpu to arch-specific function
+  whpx: move whpx_get_reg/whpx_set_reg to generic code
+  whpx: x86: switch over from winhvemulation to target/i386/emulate
+  whpx: remove remaining winhvemulation support code
+  whpx: x86: remove messages
+  whpx: i386: remove CPUID trapping
+  whpx: x86: optimise MMIO vmexit by only restoring needed registers
+
+ accel/whpx/whpx-accel-ops.c            |   8 +
+ accel/whpx/whpx-common.c               |  62 ++--
+ include/system/whpx-accel-ops.h        |   8 +-
+ include/system/whpx-all.h              |   5 +
+ include/system/whpx-common.h           |   6 +-
+ include/system/whpx-internal.h         |  16 --
+ meson.build                            |   3 +-
+ target/arm/whpx/whpx-all.c             |  33 +--
+ target/i386/cpu.h                      |   2 +-
+ target/i386/emulate/meson.build        |   2 +
+ target/i386/{hvf => emulate}/x86_mmu.c |  14 +-
+ target/i386/{hvf => emulate}/x86_mmu.h |   0
+ target/i386/hvf/hvf.c                  |   6 +-
+ target/i386/hvf/meson.build            |   1 -
+ target/i386/hvf/x86.c                  |   2 +-
+ target/i386/hvf/x86_task.c             |   2 +-
+ target/i386/mshv/meson.build           |   4 +
+ target/i386/whpx/whpx-all.c            | 373 +++++++++----------------
+ 18 files changed, 217 insertions(+), 330 deletions(-)
+ rename target/i386/{hvf => emulate}/x86_mmu.c (95%)
+ rename target/i386/{hvf => emulate}/x86_mmu.h (100%)
+
+-- 
+2.50.1 (Apple Git-155)
+
 
