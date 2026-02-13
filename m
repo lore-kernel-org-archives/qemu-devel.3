@@ -4,86 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E31CEDF176
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Feb 2026 15:44:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F782EDF176
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Feb 2026 15:49:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqvLV-0000mj-NL; Fri, 13 Feb 2026 10:44:41 -0500
+	id 1vqvPt-0001u4-1P; Fri, 13 Feb 2026 10:49:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <phrdina@redhat.com>)
- id 1vqvLR-0000m8-U6
- for qemu-devel@nongnu.org; Fri, 13 Feb 2026 10:44:38 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <phrdina@redhat.com>)
- id 1vqvLN-0006Ym-Oo
- for qemu-devel@nongnu.org; Fri, 13 Feb 2026 10:44:35 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770997471;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=sDtU67X8wI5oiArjRWjTIJ9AGqL5uiXw5++B/vg06bw=;
- b=FcGi6TmAKSBVYsSkuS3LeGxMLjeIbEeHnnuwYWLlGc6TPQ8PwKN6cd3Kts0Qn0Gk/kGvt9
- DHQCY5ZrK3nlMBItlMCx8W48gsEMdW5LrslUDhZ/vQVQYe5bJ9spg/ZYy85O6e2wxx3ikR
- 9VBGSkowVMwacPSDtMCh9h9nfTIk71g=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-427-MKm97Ru-MNSbbhpErMNfqQ-1; Fri,
- 13 Feb 2026 10:44:27 -0500
-X-MC-Unique: MKm97Ru-MNSbbhpErMNfqQ-1
-X-Mimecast-MFC-AGG-ID: MKm97Ru-MNSbbhpErMNfqQ_1770997465
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 950FD1956066; Fri, 13 Feb 2026 15:44:24 +0000 (UTC)
-Received: from antique-laptop (unknown [10.44.22.34])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0C4D91955D85; Fri, 13 Feb 2026 15:44:18 +0000 (UTC)
-Date: Fri, 13 Feb 2026 16:44:15 +0100
-From: Pavel Hrdina <phrdina@redhat.com>
-To: Shameer Kolothum Thodi <skolothumtho@nvidia.com>
-Cc: "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "eric.auger@redhat.com" <eric.auger@redhat.com>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
- "clg@redhat.com" <clg@redhat.com>, "alex@shazbot.org" <alex@shazbot.org>,
- Nicolin Chen <nicolinc@nvidia.com>,
- Nathan Chen <nathanc@nvidia.com>, Matt Ochs <mochs@nvidia.com>,
- Jiandi An <jan@nvidia.com>, Jason Gunthorpe <jgg@nvidia.com>,
- "jonathan.cameron@huawei.com" <jonathan.cameron@huawei.com>,
- "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>,
- "zhenzhong.duan@intel.com" <zhenzhong.duan@intel.com>,
- Krishnakant Jaju <kjaju@nvidia.com>
-Subject: Re: [PATCH v2 24/24] hw/arm/smmuv3: Add tegra241-cmdqv property for
- SMMUv3 device
-Message-ID: <aY9GzzllxyiW-zs6@antique-laptop>
-References: <20260206144823.80655-1-skolothumtho@nvidia.com>
- <20260206144823.80655-25-skolothumtho@nvidia.com>
- <aY8RIXzUVqcTiCkd@antique-laptop>
- <IA0PR12MB7555AD8A591B65CE1F0081ADAB61A@IA0PR12MB7555.namprd12.prod.outlook.com>
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vqvPo-0001qi-R3
+ for qemu-devel@nongnu.org; Fri, 13 Feb 2026 10:49:08 -0500
+Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vqvPl-0007ws-Nu
+ for qemu-devel@nongnu.org; Fri, 13 Feb 2026 10:49:08 -0500
+Received: by mail-ej1-x629.google.com with SMTP id
+ a640c23a62f3a-b8860d6251bso133660766b.3
+ for <qemu-devel@nongnu.org>; Fri, 13 Feb 2026 07:49:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1770997744; x=1771602544; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=24mz/v1MryEIxNWCR/SjfC1f2r6mmgOqZAjVK6z4IWw=;
+ b=TOJt8/MynDP/hOiKooIplh2YrgHBPChrSX40y6HM6gV7BQNe8b5VpVcSiPP5cbG147
+ /DO+PzxPEc2EWcXVkex//oOWAehZrOGJluUlLazdmdziasXI6cHqWvo5E7LI9iSnGNt0
+ xNo2Wubhc0exSCmLJvfTdAZy9MHayj90ippWuDT/3C9OIwQ96ilZpuMyse8yxD+C65OX
+ 3bBGqQUg4akgg4fA+WovC2+fAjhhUIZ6zWWbdnHnycWTKE8+Toq+976VHUXMiP6HQfvc
+ 4yoiyM/uiKvHn353utIgxFrSZiNSA/Z4cXqcDdtUJ1wG6DqD58Ga7Ff9hnkuvrARvKBb
+ sW6w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770997744; x=1771602544;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=24mz/v1MryEIxNWCR/SjfC1f2r6mmgOqZAjVK6z4IWw=;
+ b=m0+a0A6IvXyIEGlOc0kL43p40yq48I3jIkAcBnRd6jRBoRBwKdY602fadLH4VuJ2Ak
+ zviFRtuFR/R/dLWE/HlATGUPaPUqlgBPunOHdHfH9TzrOytdsrZgjqJwcDzQUcfT4/Si
+ S0snHN2Q8Vg0U2aFw7tyPttqPnAclkj9OSl3k4FxScW0xPnM9CIcImtX8nx69KHT1lE2
+ AZD4uh1ITVqj/gKSJ2f4zBWsgPV3/gyQgyOZVOrpCzsua2KakV64dEfAh+75m/3eZnQp
+ HEQVQAyauqy4xxJH5foZDNjYtWjXTY9IlVzCPz/ncRMdTMym3Y0EStDpXVAEVOXofe7i
+ chjQ==
+X-Gm-Message-State: AOJu0Yydk8AvfoVo+spr4fYZBIsNLjK7GtDO6jnBTffpsYh7R6l+oJ1P
+ 4m1M0IvGls9xNQLRd5pklQ9RL9D35yDa+xTPGGQlA6j+MzNxU4RmUT1GihE/vflwOSI=
+X-Gm-Gg: AZuq6aJwKqpuvY2nGXg6VVeGe5ubq0r8imah9nStguJIVRKgI8dz8vb9WZ7Anw4gMkR
+ 5zUgNK6Gy9guxGbidH96s6vWunFutHXql//ZM28g2wsQ7xtL03n7hVhXUsUJkUCl66jA5P6BHLB
+ F4/uhubqbAv8ExJJivJdbkDJS3ZKT/tPN0IWWFHyUvuuEn+NTPDNONzZFGpEjK3VKj9YeucAz6K
+ a/V9blBqDjE4bSGgaNvp/XvES4ta2t0xnlCVIEpb9IJaG9J3gMw5u3RdpujrB6pW1YiyQF2X9vh
+ Vx6MwFvwBtiwdYSZe7SSkeyBAIe7geH0uG59g/IzPPGJ2yOYjx2lIuQRtzEDJYbKoakXLHHs/HF
+ q/LQSj7jXq/Ncf6Y3NXgyVAV98MqOqX9yxW9uCUG3VzBnTmV3WcGJJDyqIE32qmFdrX/L99bCWE
+ OICCVQRzuYHZPF4NHmn/agMKw=
+X-Received: by 2002:a17:907:720f:b0:b73:8639:cd96 with SMTP id
+ a640c23a62f3a-b8fb42258eamr124000566b.24.1770997744267; 
+ Fri, 13 Feb 2026 07:49:04 -0800 (PST)
+Received: from draig.lan ([185.124.0.126]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-b8fbe2dd709sm24104266b.36.2026.02.13.07.49.00
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 13 Feb 2026 07:49:01 -0800 (PST)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 26A7B5FC7A;
+ Fri, 13 Feb 2026 15:49:00 +0000 (GMT)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Brad Smith <brad@comstyle.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Warner Losh <imp@bsdimp.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, Kyle Evans <kevans@freebsd.org>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org
+Subject: [PATCH 3/6] tests/vm: remove unused import
+Date: Fri, 13 Feb 2026 15:48:56 +0000
+Message-ID: <20260213154859.1551283-4-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260213154859.1551283-1-alex.bennee@linaro.org>
+References: <20260213154859.1551283-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="rTL7UEISyZsy4M/9"
-Content-Disposition: inline
-In-Reply-To: <IA0PR12MB7555AD8A591B65CE1F0081ADAB61A@IA0PR12MB7555.namprd12.prod.outlook.com>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=phrdina@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::629;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,80 +107,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+---
+ tests/vm/openbsd | 1 -
+ 1 file changed, 1 deletion(-)
 
---rTL7UEISyZsy4M/9
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Fri, Feb 13, 2026 at 01:39:50PM +0000, Shameer Kolothum Thodi wrote:
->=20
->=20
-> > -----Original Message-----
-> > From: Pavel Hrdina <phrdina@redhat.com>
-> > Sent: 13 February 2026 11:55
-> > To: Shameer Kolothum Thodi <skolothumtho@nvidia.com>
-> > Cc: qemu-arm@nongnu.org; qemu-devel@nongnu.org;
-> > eric.auger@redhat.com; peter.maydell@linaro.org; clg@redhat.com;
-> > alex@shazbot.org; Nicolin Chen <nicolinc@nvidia.com>; Nathan Chen
-> > <nathanc@nvidia.com>; Matt Ochs <mochs@nvidia.com>; Jiandi An
-> > <jan@nvidia.com>; Jason Gunthorpe <jgg@nvidia.com>;
-> > jonathan.cameron@huawei.com; zhangfei.gao@linaro.org;
-> > zhenzhong.duan@intel.com; Krishnakant Jaju <kjaju@nvidia.com>
-> > Subject: Re: [PATCH v2 24/24] hw/arm/smmuv3: Add tegra241-cmdqv
-> > property for SMMUv3 device
-> >=20
-> > On Fri, Feb 06, 2026 at 02:48:23PM +0000, Shameer Kolothum wrote:
-> > > Introduce a =E2=80=9Ctegra241-cmdqv=E2=80=9D property to enable Tegra=
-241 CMDQV
-> > > support. This is only enabled for accelerated SMMUv3 devices.
-> >=20
-> > Hi, do we expect that in the future there will be some other option
-> > named `{newplatform}-cmdqv`?
-> >=20
-> > I'm asking mainly from libvirt PoV where current RFC patch exports this
-> > option only as `cmdqv`.
->=20
-> Yes, with the current design each implementation would expose its own
-> xxx-cmdqv property.
->=20
-> However, please see the discussion:
-> https://lore.kernel.org/qemu-devel/CH3PR12MB75484A150D6DCD9D3C3C66F3AB60A=
-@CH3PR12MB7548.namprd12.prod.outlook.com/
->=20
-> I am looking into whether we can instead have a single cmdqv property
-> and probe the kernel to determine the specific implementation type.
-
-Thanks for the details, yeah that looks better.
-
-I was also thinking about using cmdqv=3Dtegra241 in addition to 'off' and
-'auto' if it would be possible for host to support multiple
-implementations at the same time. Libvirt would probably prefer setting
-specific implementation instead of using 'auto' to make sure that the VM
-will not change.
-
-Pavel
-
---rTL7UEISyZsy4M/9
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCgAdFiEEcbzs91ho/coWWY7aUi1kczAH4YwFAmmPRs8ACgkQUi1kczAH
-4YzUGA/6Ag628m2V8Lqp0Q+aUoXk/iLI9rMh8oorQbDI4GXw9J4jYOMNVs6xRfEN
-hVZIS4E/loP9NQO+Kl8eu8XyR9Y1GiWTqctb6ua8CQraG0FMDNM1Xsy7Z/f21Tdt
-dwXXMJcFXpTd5jCdZ/Jl0i4i/EnWGwVX5F9ZhHE+eEaWqpyquXf7y77oMx45ZnBY
-wXhmM3qiZ9MQAyxd3u67OC0CGiXHMYjGiB+foM01HjLuoGIZAtxQIPqufZvdNAYM
-sAzji3KmQv4hm+5pm6OvEj+6d/M3Yem+vz8iY3tkSdIhmjqxGyA2pqnvyS4av1Jv
-BomFThrujRKMRaJmpmJSUMzUZ/6/CDuIpAWXYNUJZ5SJWzn2DxX3uESP/hA6WB/2
-6aSZXQ9iIo9qll22axzakHJ+dgZrTPVsBW2QBpV2ZfFry/XL/EvIc+nW9ppvslI2
-RhOyN27itXzZaVZeeFTr43fJ2EdRhpu/1c57u5PN0esOx650NB4ySU7fEACmnPNP
-ak/gMNSblWb03h++rQw1tbKnXMYNzHBlDWOJeVw8SllWeDyyoKCDTH/hj4YrzdBI
-PtWmuuYTK4KKj9olvErBNse0HI/tfLEMsHQDQ93UnVyuvq6JLvGuP3EJcLz5K9Hv
-P6C2Zu6vyR48oGPMfTFNQ1OamKAd00vhzM4bKdgNxB1rL1H4QbQ=
-=ejf4
------END PGP SIGNATURE-----
-
---rTL7UEISyZsy4M/9--
+diff --git a/tests/vm/openbsd b/tests/vm/openbsd
+index 88b31dd9b59..52565208965 100755
+--- a/tests/vm/openbsd
++++ b/tests/vm/openbsd
+@@ -14,7 +14,6 @@
+ 
+ import os
+ import sys
+-import socket
+ import subprocess
+ import basevm
+ 
+-- 
+2.47.3
 
 
