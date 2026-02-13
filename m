@@ -4,62 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06401EDF176
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Feb 2026 16:23:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A57FEDF17D
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Feb 2026 16:36:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqvwc-0005Mz-WE; Fri, 13 Feb 2026 11:23:03 -0500
+	id 1vqw98-0007T4-Cn; Fri, 13 Feb 2026 11:35:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vqvwb-0005MC-8J
- for qemu-devel@nongnu.org; Fri, 13 Feb 2026 11:23:01 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vqw95-0007Sn-CQ
+ for qemu-devel@nongnu.org; Fri, 13 Feb 2026 11:35:55 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vqvwZ-0001SV-Hu
- for qemu-devel@nongnu.org; Fri, 13 Feb 2026 11:23:00 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vqw92-0003Wh-Tr
+ for qemu-devel@nongnu.org; Fri, 13 Feb 2026 11:35:54 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770999778;
+ s=mimecast20190719; t=1771000550;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=FjY//L9hwpADQt5NJ30vnChu+jutG9LiVXECY1Bgbco=;
- b=SfNhL4GYzWg8TNg6r9GKtHOxgg2x7NQO4VfVZWU04xPv1ZqPcS4/qP/HuV+99VQ2eDmfdP
- ARiZa7wArkMAqUnWoH86UbGibzpsv1UPVidnuELTxkTz0lqBpAgzzcswbq8k9vrhicDppp
- rQMFkfZushatNjDIfsp4NqEZN2IFRhE=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-327-8R8_tbjVMIeiRkZX-V5NIA-1; Fri,
- 13 Feb 2026 11:22:54 -0500
-X-MC-Unique: 8R8_tbjVMIeiRkZX-V5NIA-1
-X-Mimecast-MFC-AGG-ID: 8R8_tbjVMIeiRkZX-V5NIA_1770999773
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3DCD01800630; Fri, 13 Feb 2026 16:22:52 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.32.253])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DE2DA1800465; Fri, 13 Feb 2026 16:22:49 +0000 (UTC)
-Date: Fri, 13 Feb 2026 17:22:47 +0100
-From: Kevin Wolf <kwolf@redhat.com>
-To: Jens Axboe <axboe@kernel.dk>
-Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, fam@euphon.net,
- stefanha@redhat.com
-Subject: Re: [PATCH 2/2] fdmon-io_uring: check CQ ring directly in
- gsource_check
-Message-ID: <aY9P1zxBngbVcO3i@redhat.com>
-References: <20260213143225.161043-1-axboe@kernel.dk>
- <20260213143225.161043-3-axboe@kernel.dk>
+ bh=RvQG+w3q/EtKBb2VPD3fL8W3e3E0DPOn6yLlTsL4iDY=;
+ b=X/aCteVKR0dWU/9letuGinFUIiOn1dlH0ryKzXuKJsbZY+oLjISeUs8KBul1KSzRx5lJa4
+ CXjUSyJHvJJ7kNqEdG3fxYehT7DZ/5PFjGr41JBvmkC8kv5i6TBpJphlt3yRYkl6oPGuk3
+ +fXkJi9j1c0sTt2+MXzkDuM+u9Jjhdo=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-655-axgRLeHhOem14UQwoRjiBA-1; Fri, 13 Feb 2026 11:35:49 -0500
+X-MC-Unique: axgRLeHhOem14UQwoRjiBA-1
+X-Mimecast-MFC-AGG-ID: axgRLeHhOem14UQwoRjiBA_1771000549
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-896fb2fb9d5so52814556d6.1
+ for <qemu-devel@nongnu.org>; Fri, 13 Feb 2026 08:35:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1771000549; x=1771605349; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=RvQG+w3q/EtKBb2VPD3fL8W3e3E0DPOn6yLlTsL4iDY=;
+ b=eWiTq+IFHZKOI1/dO8I1i4dVGKxlnKsKcTe+S1PgryL6UDIWdP4BAyYYQYv1u8c++J
+ LG63IeRV3U4IN+Mv1sA2RQqufgNpDaCuiEE6TX6um3ZLXGFP0bReQnBPuRxaeEKKRkmO
+ AWVDmkhEZVyQa9DDCUQZD5WlnvZeg1B2WMMjvuso+YCVnUYdTZzidxl5njWSkmihxHpa
+ 6TU2n/DbW4AdILXYdtmRXITsLDHR+5MwEfqQ8kn8J9ubjl5RHoWZQnRT9SL1ZTXmLglW
+ zrcGyFIsGrheeAXgJUGKWfNQFu3I2DU68H8NbXjE5zYEeYoehCcg2ahDC+GxuSTs5X/5
+ x6TQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1771000549; x=1771605349;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=RvQG+w3q/EtKBb2VPD3fL8W3e3E0DPOn6yLlTsL4iDY=;
+ b=bo/UjgF5U8Buy9yApK4ZL+jn7Rz9kmwmccxZeeCud8nJ/vfLEda6k/SAQov8gEgVr8
+ tb49WfXLnTLBdRu5BYKZP5EBLiGGMZ/PiTlR439mM3XRd14Dtum2jmpIcT4qtI2n5gfb
+ hWDAljsY5dLXp+1VfLNaCMeT3oHJbsjgeDBQ7zUzuCLYkAUUPihhZtM1W/YZL9K4/jfx
+ gwdv6KwjO9x0buVKgar8GB8CWR8gkbnqTai8ZP3gV6BjyA8AuPuqX8JRsp9Icf81ktX2
+ LAKZGvhiNGMGiRMnfXwHD+fWFANnslWTUMdzv6X1wVP8tYoQ317xjWt+luJC6qjkvJNe
+ 1CzA==
+X-Gm-Message-State: AOJu0YxQ6hhCaP9qN2O9a0f3zWQyj0S8S19GLHpio4sk+4fpoHfMW5TQ
+ /ZJOr1m1YU52RV3lPXABut2iSMfviq/mYkygu8qCLG8o7j2+AMoo4yZTcbaJVYqF472LYIKkYvN
+ 0Uc3QbYP65Mi8qoVCJJm9Pj+beHwuHzj4VVKtjytdPw8MtNw0IaEqGc4F
+X-Gm-Gg: AZuq6aJUIvaapNVCFS7CPzVOavlc0SmY3wZ7ypxyrXusgiycUT5Ts1m5iR8id9eGMBw
+ aT+2tIMVW0L2nsbFdQ3rD8mgCCMjRHW8Ig3xrnkUwC/ZbsVOj4hNittJ/VXPHOQkDApWg6Yh6/v
+ a/egxzN51H499UkD+amjvF1Mt+HLIBLryQPUwYmpAOQw1TmkVX6lsaYZhJc/TwPrOSMJ/KLUXh1
+ s3/wlfPKHUURRBFU7b+gwxPV/fdmOtbGfP7jDxE9aNczvNKSZ3dl7LhpLtbSBm+Pbn8g0cQNFqj
+ ggPr/YgZkAKCQPfLLe5nWGJVa0LDDxBpfaXJM/mSLe5J/F0uHpRqklarcHtLyu6LIAzW7bvL4VN
+ oiqi9XAm/XW78cA==
+X-Received: by 2002:a05:6214:248d:b0:88a:277d:100 with SMTP id
+ 6a1803df08f44-897362e3671mr34545906d6.62.1771000548924; 
+ Fri, 13 Feb 2026 08:35:48 -0800 (PST)
+X-Received: by 2002:a05:6214:248d:b0:88a:277d:100 with SMTP id
+ 6a1803df08f44-897362e3671mr34545176d6.62.1771000548099; 
+ Fri, 13 Feb 2026 08:35:48 -0800 (PST)
+Received: from x1.local ([174.91.117.149]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-8971cd8d8c7sm77539606d6.26.2026.02.13.08.35.47
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 13 Feb 2026 08:35:47 -0800 (PST)
+Date: Fri, 13 Feb 2026 11:35:36 -0500
+From: Peter Xu <peterx@redhat.com>
+To: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ Mark Kanda <mark.kanda@oracle.com>, Ben Chaney <bchaney@akamai.com>
+Subject: Re: [PATCH] migration/cpr: Include vfio-cpr.h instead of vfio-device.h
+Message-ID: <aY9S2EIjP6tqPss0@x1.local>
+References: <20260211171532.1556719-1-clg@redhat.com>
+ <aYzTTrgqWTlY76m_@x1.local>
+ <4689305f-84bb-4423-8b7a-d66e6f77f6c0@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260213143225.161043-3-axboe@kernel.dk>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <4689305f-84bb-4423-8b7a-d66e6f77f6c0@redhat.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -84,19 +120,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 13.02.2026 um 15:26 hat Jens Axboe geschrieben:
-> gsource_check() only looks at the ppoll revents for the io_uring fd,
-> but CQEs can be posted during gsource_prepare()'s io_uring_submit()
-> call via kernel task_work processing on syscall exit. These completions
-> are already sitting in the CQ ring but the ring fd may not be signaled
-> yet, causing gsource_check() to return false.
+On Fri, Feb 13, 2026 at 10:05:06AM +0100, Cédric Le Goater wrote:
+> On 2/11/26 20:06, Peter Xu wrote:
+> > On Wed, Feb 11, 2026 at 06:15:32PM +0100, Cédric Le Goater wrote:
+> > > The file migration/cpr.c uses vmstate_cpr_vfio_devices which is
+> > > declared in hw/vfio/vfio-cpr.h, not in hw/vfio/vfio-device.h.
+> > > 
+> > > Replace the include with the correct header file to avoid pulling in
+> > > unnecessary VFIO device declarations.
+> > > 
+> > > Signed-off-by: Cédric Le Goater <clg@redhat.com>
+> > > ---
+> > >   migration/cpr.c | 2 +-
+> > >   1 file changed, 1 insertion(+), 1 deletion(-)
+> > > 
+> > > diff --git a/migration/cpr.c b/migration/cpr.c
+> > > index adee2a919a364244867ef190fdf29bd1fe7e20e2..a0b37007f55d6dac32bd6220ffe65d32c4e6b52e 100644
+> > > --- a/migration/cpr.c
+> > > +++ b/migration/cpr.c
+> > > @@ -9,7 +9,7 @@
+> > >   #include "qemu/error-report.h"
+> > >   #include "qapi/error.h"
+> > >   #include "qemu/error-report.h"
+> > > -#include "hw/vfio/vfio-device.h"
+> > > +#include "hw/vfio/vfio-cpr.h"
+> > >   #include "migration/cpr.h"
+> > >   #include "migration/misc.h"
+> > >   #include "migration/options.h"
+> > > -- 
+> > > 2.53.0
+> > > 
+> > 
+> > This should be better as a standalone change, thanks.
+> > 
+> > Reviewed-by: Peter Xu <peterx@redhat.com>
+> > 
+> > Some thoughts beyond this patch alone.
+> > 
+> > When looking at this, it's a layer violation.  Logically migration/cpr.c
+> > shouldn't include a vfio header, otherwise it means when new devices added
+> > to support cpr then migration needs to include headers to every single of
+> > these devices..
+> > 
+> > Logically it should be the other way round where migration/cpr.c should
+> > provide a helper allowing devices to opt-in for cpr-states to register
+> > instead.
 > 
-> Add a fallback io_uring_cq_ready() check so completions that arrive
-> during submission are dispatched immediately rather than waiting for
-> the next ppoll() cycle.
-> 
-> Signed-off-by: Jens Axboe <axboe@kernel.dk>
+> with vmstate_un/register() ?
 
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+Likely not, because the vmstate_register() API only put things onto the
+global default savevm_state.handlers.  Those are "normal" VMSDs that will
+be migrated within the normal migration framework / channel, not the CPR
+special channel at earlier stage.
+
+CPR channel currently saves only the special VMSD, which is currently
+vmstate_cpr_state.  That should also be why the vfio early sub-section is
+attached.
+
+Logically it can be another similar vmstate_register_cpr(), then that'll
+put the VFIO speical VMSD to be one of the subsections registered to the
+CPR vmstate_cpr_state global VMSD.  Here subsections can be a good API
+between CPR core and CPR submodules (like VFIO) because when we send a
+subsection the dest QEMU will be able to lookup the subsections based on
+the name of subsection.
+
+Then I believe it means when there're >1 consumers we don't need to worry
+on which got registered first, so the order of subsections to be registered
+shouldn't be part of ABI, however the name of the subsection VMSD will (see
+vmstate_get_subsection() on how we do the lookup when loadvm, that applies
+too when loading CPR state).
+
+I don't know any existing use case of such dynamically registering
+subsections, but I think it sounds doable and maybe one simple solution for
+CPR's use to make registrations dynamic.
+
+> > Now it's also awkward that vmstate_cpr_state always have a subsection
+> > called vmstate_cpr_vfio_devices.. it means we will migrate this subsection
+> > even if there's no vfio device..  that's also another point that I think it
+> > should be done the other way round..
+> > 
+> > I do not know whether we must persist CPR ABI now.. if we need, we can't
+> > change this anymore without a machine type compat entry (as we will expect
+> > vmstate_cpr_vfio_devices to come from an older binary that does a cpr
+> > migration).  But that'll be sad..
+> 
+> vmstate_cpr_state was introduced in 10.0
+> vmstate_cpr_vfio_devices in 10.1
+> 
+> commit a6f2f9c42f3a ("migration: vfio cpr state hook") already
+> broke migration compatibility. May be this is something we can
+> still fix without a machine compat.
+> 
+> I have no idea how cpr is used today, in which product ? Can the
+> maintainers tell us more ?
+
+Yep.
+
+I didn't pay much attention when reading the series when being reviewed,
+but IMHO we could have marked cpr features unstable from the start until
+it's relatively solid and in serious production deployments.
+
+Thanks,
+
+-- 
+Peter Xu
 
 
