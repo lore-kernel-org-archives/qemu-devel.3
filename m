@@ -4,106 +4,212 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E5D7EDF150
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Feb 2026 10:23:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 138ECEDF14F
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Feb 2026 10:27:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqqKd-0006o7-PL; Fri, 13 Feb 2026 05:23:33 -0500
+	id 1vqqNl-0007du-D6; Fri, 13 Feb 2026 05:26:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vqqKX-0006nc-Sk
- for qemu-devel@nongnu.org; Fri, 13 Feb 2026 05:23:22 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
+ id 1vqqNj-0007d3-7s
+ for qemu-devel@nongnu.org; Fri, 13 Feb 2026 05:26:39 -0500
+Received: from mx0a-002c1b01.pphosted.com ([148.163.151.68])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vqqKW-00067g-79
- for qemu-devel@nongnu.org; Fri, 13 Feb 2026 05:23:21 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770978199;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=mhbkgIVTODtdM/8vqOpF+twX5FJAdT3VVoEh9Hw27vo=;
- b=GlcdRHEo9tLIW0QPovVkRYHPhf/MHbgMj0Xd3UmrHX2zOMD3d9+5C0/g+LOOgRdA6KRelM
- jgkLuBH65hwY2na6btgcNWLh0PuoqMHRPSqY9bM7WFiAStrpajKELxR/18SEnULMS4IvFO
- mnZvR4umPRhZStpuV/1rAx24UFXWHAU=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-184-EnH9aiCKOZ6kjYUgoZqMlA-1; Fri, 13 Feb 2026 05:23:18 -0500
-X-MC-Unique: EnH9aiCKOZ6kjYUgoZqMlA-1
-X-Mimecast-MFC-AGG-ID: EnH9aiCKOZ6kjYUgoZqMlA_1770978197
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4802bb29400so7619495e9.0
- for <qemu-devel@nongnu.org>; Fri, 13 Feb 2026 02:23:17 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770978197; x=1771582997;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=mhbkgIVTODtdM/8vqOpF+twX5FJAdT3VVoEh9Hw27vo=;
- b=EBfSvfSFCtvkOQjGXAZ29pDph3y2g1MKEkFur+I+IkhLWyQ40TDFlrxTXJLJ0I2gpO
- v0/69oMu1KTXTni2md0/TeWkn6Deb0jFhpWHVka1uE5uFB047IGABccN0u7NiNnXkBxl
- 0Da3cD4V1bufXQsghkvaJBea1mRa5Dl2XbYCBXJZG6LKn26SZ2g0NaHvdxdsvHxBEfYH
- O/6PYe/O9q7yuaiIMxgm9SPuRAU8+VMsR+Oqsf3YtopOnEQuL++PD2ZxvvF/9RPsLLig
- VCGUpbQSxssWaESrkPxUTTrnUx1yZvHYloSRMOjxsEBSjUtQH78wI7K7uVtyJl9USP8Z
- BLvQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU4betTtyoL4rxU5unEwnRVUSzmDR27SpVeyET7x1Mxqy16X3IwLXTe9GfS8rurhzLcEEMNSb2Jn5m+@nongnu.org
-X-Gm-Message-State: AOJu0Yxuu6UEt5L4QJ4YPQTA/TC9+vZu6O3liKkz5Lrm+TrdPQZmkoNf
- WIFYlwccVl6C0N2jPcIQT7ei1S+tdSPIcpENi4FcocAUth2YUjgaPqEsvQJ19T7yI3N3nZPJqc2
- VhYynjM7qJ4CcBCO0ZgnXo3Zaue6051XvlLdQDfWvlOMny4QsZTt1mpTT
-X-Gm-Gg: AZuq6aKi8U41vo5TnfxVKVuGDdexLBmMLYs1bQa0LP24vvtIjusr4Pr4BLe2jdrIUrG
- FmbsJf/5WO/dI56GC0wvh2mNOnuertABTdsUZPz1CJPCpEjJ4tRI9p9i8rbRAzArxKF88eCICEy
- Rfa6fWa+8E9gTyOAKPle0DT8aYtlNWJzQ/RLyOkFs7jNBDm6Ao7yMsXGiR1pRpbuSTxxC2PSC/5
- lMTrhMKfMjsjEwO/cYqdOI3meYnudRqogxBEzuh4YgsQsR5IQLcuncFkbbPOjnBxHk3FYfyVVub
- HbdojeDInZjpAM48Q1XDqCKhUXa0dHGNBuL5ZI5D99WAktCorg9a8s6NwFfgf6p0WKbSt5TWsuV
- 9IhjCZQsudojA3y0SU5g1SteXAA2BZbVGLZpMD7GmD4Xxu3OMEN5ggXsfJ6IokgWscjlZew==
-X-Received: by 2002:a05:600c:34c6:b0:483:6ff1:18b with SMTP id
- 5b1f17b1804b1-483737bde90mr19102675e9.0.1770978196779; 
- Fri, 13 Feb 2026 02:23:16 -0800 (PST)
-X-Received: by 2002:a05:600c:34c6:b0:483:6ff1:18b with SMTP id
- 5b1f17b1804b1-483737bde90mr19102325e9.0.1770978196396; 
- Fri, 13 Feb 2026 02:23:16 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-483740be167sm22660625e9.15.2026.02.13.02.23.15
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 13 Feb 2026 02:23:15 -0800 (PST)
-Message-ID: <3168c3ad-81e1-4749-a168-1ca3d059a464@redhat.com>
-Date: Fri, 13 Feb 2026 11:23:14 +0100
-MIME-Version: 1.0
+ (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
+ id 1vqqNg-00076K-On
+ for qemu-devel@nongnu.org; Fri, 13 Feb 2026 05:26:38 -0500
+Received: from pps.filterd (m0127837.ppops.net [127.0.0.1])
+ by mx0a-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 61CMRIUT752466; Fri, 13 Feb 2026 02:26:31 -0800
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=
+ proofpoint20171006; bh=c5oduhT3Opj5S82hKaw5f+sbs8z0NpGQz66Uf0RnN
+ /g=; b=zblS4/kr5lNpsU/duYT8gB5PTqt2hr08qCOOf2dGZEr1D7qvAzjn9GXUO
+ gdH4L+LkJhLFEIwmtpYnoQF0g6tFTXkP67MDVvQqBqUVAT0pawj+3ZlC4nKhFAf7
+ e3CARqWFboULsQ0v/YZLxWobf89ElbvmabLc/0TBAe6uv/UwyNm1Vs9lEfjzuQ9s
+ bmrGUHgv46eyZNyq/+3ZMAzgZ1bleX49GoKHahLj3Th8K5RvHsZlMw/7gFGyDw2a
+ JCLxNB8z3645zB5BG+FCXFsrG1WoYQJBflYiswdtcakQhkx8CsO/R84VKcPN5wNS
+ SwsipyaxMAUBeyGMAxiBRSWL/B5UQ==
+Received: from sn4pr2101cu001.outbound.protection.outlook.com
+ (mail-southcentralusazon11022086.outbound.protection.outlook.com
+ [40.93.195.86])
+ by mx0a-002c1b01.pphosted.com (PPS) with ESMTPS id 4c8ctc8nap-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Fri, 13 Feb 2026 02:26:30 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=n2gQD/OAZKEf/cTrqdfYO7cXxBgvwZA47IdJIcmSiDzh4GTF5R5ueKKh8P6W9FbICpJ5ZHSyze95sOr2U3ixAG66Sr76aDZyTKrdlBNKOrAhhzMZi+q3gdoXxkFdWil4O5i0POa1rDU6TdEf8F6g99Bgisj87bldRgQV7NIB7zGdkvK4PU+xSKdpEjYokwX17xAda+5ExIt1v9K4965v15rdW51PTP2p9YrpgeDuj1xd9mv3w/OU0SUZsOSw39ZnQOG/WNuITte+7Mc2txwR7slbOVSCHBYkX2fkx/Z06MzwllJCygJ8FOEyMYTU2bgfRKNWB03/acCGbsSSzLtPYg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=c5oduhT3Opj5S82hKaw5f+sbs8z0NpGQz66Uf0RnN/g=;
+ b=k/TNm99FKUadn+71mBU2Ok9+9/a+9dFabxBDCWFGUqicU0K/kp7ETZ+zYKbZjhLxmpnjWrpqxa2srK5DUVKVTv8VHgaE5YLtnBQoDQapVaboARWDMZV8ZqlTFXmsKxusM4xtYU6Vt0MNYaumf07yFcZMhs9YYERNuMKPxQBHIubBcqG34LjiDXRUgI4zpqQFVuSkdUjRempso1eitWTsJEEVHtTq4B2Celv5GNkyxKmxeprISGFBcxzkwWDa3Tq63bC4RueyIMCI0Mm+AiFx6bOjjpDpmHmDKjGmYuHvp0tHNH5/W7fuUKbfek+ABf5iX8r51Q7jkY4nGznXYFssow==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
+ dkim=pass header.d=nutanix.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=c5oduhT3Opj5S82hKaw5f+sbs8z0NpGQz66Uf0RnN/g=;
+ b=goTc2jOWUAFIDrjmnLmXkI6PHk/UlXfp6Y7J8ngruzqFKSPx1t+o/fkVhQFd09H8T75G4CLO1MK1i3+ZkA1mFPZN1TCZOzyP/H4AOEzA6US5GTDGnF4gckOLWi0f3ZvYj09Uhm96FfMtyP8XVSnBe06cKDWnm2I9wlcYo58D3SFCkwW7DkCnpXmUP/MLNJltkbeInkWEW9098qJdPmTNUpnJ5Dodt8bGdwJQUt8YTtytvyfShWrmX/lgBDClZ93xSjwpsRRcc03oyA+0lFzOsu3L9kjddYmQVf04psOwSq6gVOJGdXt011Yw9g1RmTvYRmbiHnQ8+DnH5Qr1j8oxxA==
+Received: from PH0PR02MB7159.namprd02.prod.outlook.com (2603:10b6:510:16::8)
+ by BL0PR02MB6548.namprd02.prod.outlook.com (2603:10b6:208:1c5::10) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9611.13; Fri, 13 Feb
+ 2026 10:26:29 +0000
+Received: from PH0PR02MB7159.namprd02.prod.outlook.com
+ ([fe80::8e97:bc32:822c:b250]) by PH0PR02MB7159.namprd02.prod.outlook.com
+ ([fe80::8e97:bc32:822c:b250%7]) with mapi id 15.20.9611.012; Fri, 13 Feb 2026
+ 10:26:29 +0000
+Message-ID: <b237b995-7813-4634-a8c3-9e3df588ffec@nutanix.com>
+Date: Fri, 13 Feb 2026 10:26:25 +0000
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 13/24] system/physmem: Add address_space_is_ram() helper
+Subject: Re: [PATCH 10/43] audio/jack: convert to QOM lifecycle methods
+To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>,
+ Christian Schoenebeck <qemu_oss@crudebyte.com>
+References: <20260127182516.289834-1-marcandre.lureau@redhat.com>
+ <20260127182516.289834-11-marcandre.lureau@redhat.com>
 Content-Language: en-US
-To: Shameer Kolothum <skolothumtho@nvidia.com>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org, clg@redhat.com, alex@shazbot.org,
- nicolinc@nvidia.com, nathanc@nvidia.com, mochs@nvidia.com, jan@nvidia.com,
- jgg@nvidia.com, jonathan.cameron@huawei.com, zhangfei.gao@linaro.org,
- zhenzhong.duan@intel.com, kjaju@nvidia.com
-References: <20260206144823.80655-1-skolothumtho@nvidia.com>
- <20260206144823.80655-14-skolothumtho@nvidia.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20260206144823.80655-14-skolothumtho@nvidia.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+From: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+In-Reply-To: <20260127182516.289834-11-marcandre.lureau@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: LO4P123CA0264.GBRP123.PROD.OUTLOOK.COM
+ (2603:10a6:600:194::17) To PH0PR02MB7159.namprd02.prod.outlook.com
+ (2603:10b6:510:16::8)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PH0PR02MB7159:EE_|BL0PR02MB6548:EE_
+X-MS-Office365-Filtering-Correlation-Id: 5fce94a3-e112-45d4-9ca6-08de6aea598e
+x-proofpoint-crosstenant: true
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|376014|1800799024|7053199007;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?dHJmdUF3OEJnWk0wNVRValJPeGZRamEzZU0rOXZmK0I5TEt4OHlpRyt5cyth?=
+ =?utf-8?B?TUhYMExRVmJQSnYrcUhlU21XWFZ1NTEwb3pJNmRDb0d1WkZIQnVUb0wvQmJY?=
+ =?utf-8?B?THhhNHZkbkIycWZIV2tTbTNQd2VRamdhc0UzWDZDZDJwMGxBQWU4N3JXNHMw?=
+ =?utf-8?B?SDh5cnJPTDZXRVM4NHlZenRJNFQvY1ZySXJpR0cxRXdUZHIwKzhWMDBCSm9v?=
+ =?utf-8?B?VnBlVnlVdWk0SkFzU0Y3SEV3Sng0allFcE5BdHhvR1BFVFRXVE00TVM5cklp?=
+ =?utf-8?B?U3JHL1VyVW5sTE9TUUk2NjBKY2UvVE5Pc0dKT2FHTG4wVCtBYnMxU2c3cTds?=
+ =?utf-8?B?MWZDMjR6Vk9pV1FlNUg3UzgyTXlPR0hqbC8yWHVldEIvS29OdHdqc1Z0OWlp?=
+ =?utf-8?B?NTA4WUhLOEVqeFVzNGJXSlU4TFh4N3EvQjZxVGxjclJmTnBmME8rNXNNdEdR?=
+ =?utf-8?B?NUlVSHFXUnVndHduQ2laK3lCMTg0Wm04Z29KTnN6VnRESStHamFSbEpsLzNZ?=
+ =?utf-8?B?VkhMYWN2VEwzeHRYMnJiR1luYTRFNEdUTlRoSTVoTUMvd1RZSDEycktma09M?=
+ =?utf-8?B?UGN2eWZGcm8zbHBOYUVJaXlRUEVkUjBEMUc4SDk5WTdZSmsra2lFTXZNd1hR?=
+ =?utf-8?B?NFQxMTZ5KzRPOHhlK0ZhRTQ0emZyL09HOWxsNzFoQlNtd09uTHIvKzVrRXd5?=
+ =?utf-8?B?TUVVbjNqMVJycG90eWZLTjRhWDlWZythRmNvWXcyaGtJZWJ3bmJ4Y29wQW5Y?=
+ =?utf-8?B?TWo2OU8xa3RMcFFOV0hFUituTkxXMzFmb2dpYzlpUjRvNk9qMUFwTEx5L3BK?=
+ =?utf-8?B?Nm9OUVRZUDB4WlhjWGRFY3pIWVllLzU4UXdUUzNOQUpSRWFwRHZ4RUlhSjYr?=
+ =?utf-8?B?Ni9jVnZXWDkzUXc3QzFha2dsMHAwRG1JNmF3aVFiaTRyc2MydzJlajQvMjlV?=
+ =?utf-8?B?NllDOGlWVE1oeDdhZnlYbzlqbG5lem1sU1NBdkFUNVdXemorMWtCZkY3OEV0?=
+ =?utf-8?B?cy91bzUydWJuektUOUY5MUlHRzUvZldqcGtmcENVbHBmVG51dVZqUHhHOVNt?=
+ =?utf-8?B?d0dUQllUUjg4SzdlUFVjRzZXM0pvRE1SUWVnQzQ2WktKK29aN0J2Qy9IMVlx?=
+ =?utf-8?B?KzVCalJBWDF0SVlzL1ZQbEI1UURodDZLZTB4SklmZEhyMXM2QmlYKzZ3THc4?=
+ =?utf-8?B?ejlHUFdoVXRHQlFuNktjdm5zaUIzSGRxbHFqTnl4cGpJenVaZWVvZVJPYmVF?=
+ =?utf-8?B?dnVVZC9wSTdGd3hwSEM0K2RRaEtjanVlRTNTSThmYmpRYjJ0NHRuRjV6QlVr?=
+ =?utf-8?B?U094cTFsenJjZDY4eUY2Y3R3Q0duL1ltZU5jMW00NitZcERua2NqbEkyb28w?=
+ =?utf-8?B?eHFqRzFreGJOV1JaM1VEbC9oVlkwUmdBd1AvbnVCQmdsVzF4aUFYS0wrdFlj?=
+ =?utf-8?B?RFkvZzh0SUt3VzNLMjB6aTF0RFJ6ZXVaVFhTS1hOZ2ZDa2lqeHhNbVB4eXpo?=
+ =?utf-8?B?bmE1ZUpVZ2RlS0t0QjA3S0gvWFpEUzlHUWxsU1FqQ21yV2p1eEwwRGRrTjdL?=
+ =?utf-8?B?K0dpVVhGZFVvdzZzc3BYcFJua01TRjRPbHNrYmIzZEJpVmhIc21qY1R3MlNN?=
+ =?utf-8?B?MjI5bmZZVXpEZE0wWUM2RU5NMkJMU2k4NVBpeTRKZE94NlpQb2srak9zYnZH?=
+ =?utf-8?B?OGh0dnVNcTEwSm03UVcvdDEycnp2TXNwRFhRbnNReW0vWEtHUTFzY1V6czZi?=
+ =?utf-8?B?cWNxVVd1VGxHVUhqUU1xc0VKclh3QSsyOTRzazU0RVU4aXVLUGkyZEhKdkIx?=
+ =?utf-8?B?Q3Q4am41aVJSdnJVaWVCdXg2YkUxOFN2NXNSWUx2V0VQUjNaVi9nbEpDUXRl?=
+ =?utf-8?B?K1lyTkFmc2RnVmQ1aDlJelhWZzNmNXlDVm1SV09iZW9lMmRDYXRjc1BJN01Y?=
+ =?utf-8?B?ZEt2SlZJYVZ6OUJhcHpUQVdMVDNBMXlxM2JQaityc1pJYmlsdStyNHp1eW1B?=
+ =?utf-8?B?THhMNS9PZ1BJTktOQW04Z0tmclNSSkhwbkN4T05ZRGRWa1FRcE96TW9QeWZG?=
+ =?utf-8?B?Q3JDd3YxN3Y4REVvSVZvVnR2VnVWeW92Q3BQU2Q5KzIrNHFiVkR1RlRnNmJE?=
+ =?utf-8?Q?28gY=3D?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:PH0PR02MB7159.namprd02.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(376014)(1800799024)(7053199007); DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?eXJDZTdDaHNKdFJVSnZ3dXVyU2RyMWNtTzhMOHVRYzI4T2NoMWN5NUc4K0dw?=
+ =?utf-8?B?Z080ajFkUGwvWlhuNVBnYy9xTDAydEE2akhwNmdaOGFsOFk0bzIwaW9mc1or?=
+ =?utf-8?B?YUNkNUFxUkRkRjg2WkY5VWhiRTBxcWF2cFYwUy9aV1FvYkNGOG9qNC9PZ2FO?=
+ =?utf-8?B?cndMZWZXQXdnSjA3Q3VOQ1o4UG45MnZieDFXOEVHYzdnSFlvZ29jMnRwUThh?=
+ =?utf-8?B?MVNBcjhtc0k4NEJWQXBNVW1PUkxXNS82OEdYVEdWeEJKQVdhWUxTMmlzSzF2?=
+ =?utf-8?B?UFdsNnR1M09PalZmR0FnNVBrMkhLbmtBaFl0L3AvcGlGYXE3L0l2ekRIc2l6?=
+ =?utf-8?B?SFVFOVpFQ3NJYnhTSVo3RVV6N3g0aTlUUE9SeXBJUktuVUpIY3BnS2lXOVdX?=
+ =?utf-8?B?OS9WdEFSOUxlbFVQbDkxT2N2MkpINVFUdlFSSmd4c0hFcS9zWXhBeUNZM3VL?=
+ =?utf-8?B?MTJTbE5ObHJESmtiWmxQbGJMZmFqZlVHeDNnbE4vNE1qbG9vTExlQUJMZDkv?=
+ =?utf-8?B?QkxXSjdqRFZEVDQ3U0tXQ3MrRWRMektxajFBczJsTG5hSGZSNWpDdDFNcXRN?=
+ =?utf-8?B?SU13Tlg5MmhVN012RG8rTzRIN1lEc2hQWE01eVNreE01RVlScTI4UHB2cmZ2?=
+ =?utf-8?B?eXowakI4QkN6ek91NzNHclo0Nk5BR29ROFdkdjVsUjJXK2hzTUJ2QlJRZ3ZB?=
+ =?utf-8?B?bCtqSU9iYXFrSWtEQkVORlZsRG56dVJIOWF6NzVPTnFZb1R2UHBjYmF1R3d2?=
+ =?utf-8?B?RndkTVlpRHhwc0FiSFNJSUI1WDZyY3BtOTREVmJpc1J5alBab2tCZTIxZlc5?=
+ =?utf-8?B?S21Qc3d1SllYUHZ5YW5vaGtwMmNub2VpbU5TbnBMVkw4SGRHOU41aFNtSmI2?=
+ =?utf-8?B?YS8xMVMvZTVxVWdVUGFqcG9NMXNVYW5ZRktXYmFPQnplWkc0SkQ5bi9mRDlh?=
+ =?utf-8?B?Wm1seC9RTStkeGhiM3JwaW5ETm1TbnNIakVkOGwzMzc5TjV1eGw4NVl0UXdS?=
+ =?utf-8?B?YU9jVnBlaW1LYkFtSEd6MGpBekhBM054ZHlrNGh0K3VZMjJYOUdEVmxlbGJk?=
+ =?utf-8?B?WnRWVVkvWis4UUtqOVI4M01iNlVQTEJiN3ZoQkpuZ1dFOFhvYmZ6dEFvK0kv?=
+ =?utf-8?B?Wk9XKy9yZ0tZVWxUU2lCRUk0KzhGRExrR2V2RGkzdFM1NEFBRWdLbWgzWjlZ?=
+ =?utf-8?B?Ylk2SE15bmUwVHI2NExiNnJBMEN2RmgxVjFSak1CVVRHTVE1b3BIcmtQeEtJ?=
+ =?utf-8?B?NzFMNGR0QjF4OG9uRzFzT0tkdFgxR1dEY2J6WjVUaXhiTHRDMkhOejVSc2k4?=
+ =?utf-8?B?ZFdlTkcyOXpNYmlOZUc4TTlqaGh6SjR5QXR2ZTJRMGZGZWdYWlFJWW5UcGxF?=
+ =?utf-8?B?akJLRGx1S0pBUlBUMTUzZDl3d2ZidmlScnh2SldWRkxrUmpDYzlKWU9NRTQy?=
+ =?utf-8?B?aFBQUXNhYlBwdjZybUY0MEhBY2dJZ0tJbHZSZlFHbmNtcGMwM0tJbW85dWRx?=
+ =?utf-8?B?RjlpalVTUEU4ZjF0MnlpdlAvYzYwNDNPS3JLcEdGcEhnWmhIL1VwTm8wM1U0?=
+ =?utf-8?B?SnBQeFlZMTVUd0t5bU9wbUU1UEFqTTVBMG84bDJ4VzVhc25Fb2RiaUhCTmhM?=
+ =?utf-8?B?TTBnaTh2ZXFFRUxjK2tMZGZHVTc1ODdrajREblc5Zkw3Qy9nZjlDQ2gvbFN3?=
+ =?utf-8?B?RThwVlNOVzM1aUtJZXZFR1Z3ZkpiSTBvbER1QmkzdEJYTyt4czJzQ1JHc1J3?=
+ =?utf-8?B?UFJyS2FMOVhpZnBDakNyU0RiSS8ySEtROC81MmRNbThLZ2RzTTNZUm1xRWRI?=
+ =?utf-8?B?TlBtRGhEUTVQVG9wV3RhT2N5QmJYUndkRDVWMEdJcEpJb0JPSG1jVnYvMmhE?=
+ =?utf-8?B?ZmI5c24veVZYUGt6MkZpVFNUanpSNEJHMy9TbE9jd2JMU0J3ckJ2aWVjTXZL?=
+ =?utf-8?B?YlVReVZMMXd6SUNEbmU4TTBGc0MxWEI2dG41UXFEL1dMc3JWNWhoR2p1R0Y1?=
+ =?utf-8?B?aUZmRG5HR1F6QXdqcHczMEZyWDZZcE5UanJnZEFyVVJhOXhrOWRobGFnK2hS?=
+ =?utf-8?B?WUt5Y1hRL3RXMklIcHBmR093NlBnTWxLb2x0eHFxWnYwUU9kT0tmYkQ5dGRy?=
+ =?utf-8?B?c2JaaDc3eXRuOE9hMzkycGhaWVl1a1l5dkxybU1CYzRUSExRUVlyS1ZhWU1V?=
+ =?utf-8?B?QldSeTA1cFV3WWhlS2txQkZwOXA2Z1pyM0Ewc21SU3dSZXJUbFFsa0xmWUtv?=
+ =?utf-8?B?VHBZYUIwelI2Y0kxU0cxOFYxTXhFcU5CNGhVSXlGNjNEM1BLRFo1WHBtcWNo?=
+ =?utf-8?B?OUxacm5YUzdRQjZ2K0gxSWp6RDF2QXA1N3NzeDcxTnlkTDhEVit2c2N1MHpP?=
+ =?utf-8?Q?5R/6GimL8Yf3H8Lg=3D?=
+X-OriginatorOrg: nutanix.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 5fce94a3-e112-45d4-9ca6-08de6aea598e
+X-MS-Exchange-CrossTenant-AuthSource: PH0PR02MB7159.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Feb 2026 10:26:29.2663 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: DktZdEDb912pNwqiT0UibiRupQh0EPW2InkRzGnRtCGWLfQFdNCalwxsYOOTD2RKGSZQb6CMKp4W/YVAY+Zhu5JfXcC29/NHURkqv4Q/1sI=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL0PR02MB6548
+X-Authority-Analysis: v=2.4 cv=Yd+wJgRf c=1 sm=1 tr=0 ts=698efc56 cx=c_pps
+ a=N8kEk6x4ntq5/8uFt7L4kA==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
+ a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
+ a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10 a=HzLeVaNsDn8A:10 a=0kUYKlekyDsA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22
+ a=20KFwNOVAAAA:8 a=64Cc0HZtAAAA:8 a=mcfIx8YYz8mIsyAnrtEA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: NDJG4Z7iD5MQ1TbPO-3SV41PJukB124o
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjEzMDA4MCBTYWx0ZWRfXwfhGVpGK8+Zr
+ hYm0Y2h8A3cYrvTt2A1hs/WvNkB16SLdTjRqwLZFgWBWzZVOaUbUSbmaTwbbC1feSUkEy/MbbdD
+ fh7X4ymwyYmrGrZjF+lRIgqBUzY3Q9TjM0E50li6rX7wQQ8v/utAnOfULw90kc6XfYJkGVpwD9b
+ TySsqRWUSOvHQp0RMBmUNs1npebCiAxgNrrSj5Lnh3r5JS4V41u6jhdoIxG/4oHOf1rsMyMKqwd
+ cEv1ue9bZAftzDQj4RDepr0gYDDmobBlN+X476A30rASNTWchXJybvUx9piwgzxKksjIvHQ8hQy
+ AHN7hIxUhyDq5Ekn5980UTi7/bmxL1apv6dFsSWekXZ7uB42r/DYqeeyKbGPTGrrO4amVs6fbJK
+ b11UH5BKb5MW6iYCBvdaWHyX8PgrZgmkiDdgQcgsCOZ/JvQK50t78nvXcqxqlTwjSfKupwgmudV
+ 0xoRCXxfASsQp7u9zmQ==
+X-Proofpoint-GUID: NDJG4Z7iD5MQ1TbPO-3SV41PJukB124o
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-02-13_01,2026-02-12_03,2025-10-01_01
+X-Proofpoint-Spam-Reason: safe
+Received-SPF: pass client-ip=148.163.151.68;
+ envelope-from=mark.caveayland@nutanix.com; helo=mx0a-002c1b01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,68 +222,106 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 27/01/2026 18:24, marcandre.lureau@redhat.com wrote:
 
-
-On 2/6/26 3:48 PM, Shameer Kolothum wrote:
-> Introduce address_space_is_ram(), a helper to determine whether
-> a guest physical address resolves to a RAM-backed MemoryRegion within
-> an AddressSpace.
->
-> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
-
-Eric
+> From: Marc-André Lureau <marcandre.lureau@redhat.com>
+> 
+> Remove the legacy driver init/fini callbacks from the JACK audio backend.
+> 
+> Both qjack_init() and qjack_fini() were no-ops that performed no real
+> initialization or cleanup work. Access to the Audiodev is now through
+> hw->s->dev instead of the drv_opaque pointer.
+> 
+> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 > ---
->  include/system/memory.h | 10 ++++++++++
->  system/physmem.c        | 11 +++++++++++
->  2 files changed, 21 insertions(+)
->
-> diff --git a/include/system/memory.h b/include/system/memory.h
-> index 0562af3136..02b2e83fd7 100644
-> --- a/include/system/memory.h
-> +++ b/include/system/memory.h
-> @@ -2900,6 +2900,16 @@ bool address_space_access_valid(AddressSpace *as, hwaddr addr, hwaddr len,
->   */
->  bool address_space_is_io(AddressSpace *as, hwaddr addr);
->  
-> +/**
-> + * address_space_is_ram: check whether a guest physical address whithin
-> + *                       an address space is RAM.
-> + *
-> + * @as: #AddressSpace to be accessed
-> + * @addr: address within that address space
-> + */
-> +
-> +bool address_space_is_ram(AddressSpace *as, hwaddr addr);
-> +
->  /* address_space_map: map a physical memory region into a host virtual address
->   *
->   * May map a subset of the requested range, given by and returned in @plen.
-> diff --git a/system/physmem.c b/system/physmem.c
-> index 2fb0c25c93..ddcf921311 100644
-> --- a/system/physmem.c
-> +++ b/system/physmem.c
-> @@ -3646,6 +3646,17 @@ bool address_space_is_io(AddressSpace *as, hwaddr addr)
->      return !(memory_region_is_ram(mr) || memory_region_is_romd(mr));
->  }
->  
-> +bool address_space_is_ram(AddressSpace *as, hwaddr addr)
+>   audio/jackaudio.c | 30 +++++++++---------------------
+>   1 file changed, 9 insertions(+), 21 deletions(-)
+> 
+> diff --git a/audio/jackaudio.c b/audio/jackaudio.c
+> index dc86724d28f..7fbc37ef4f2 100644
+> --- a/audio/jackaudio.c
+> +++ b/audio/jackaudio.c
+> @@ -44,13 +44,6 @@ struct AudioJack {
+>   
+>   static struct audio_driver jack_driver;
+>   
+> -static void audio_jack_class_init(ObjectClass *klass, const void *data)
+> -{
+> -    AudioMixengBackendClass *k = AUDIO_MIXENG_BACKEND_CLASS(klass);
+> -
+> -    k->driver = &jack_driver;
+> -}
+> -
+>   struct QJack;
+>   
+>   typedef enum QJackState {
+> @@ -518,7 +511,7 @@ static int qjack_init_out(HWVoiceOut *hw, struct audsettings *as,
+>       void *drv_opaque)
+>   {
+>       QJackOut *jo  = (QJackOut *)hw;
+> -    Audiodev *dev = (Audiodev *)drv_opaque;
+> +    Audiodev *dev = hw->s->dev;
+>   
+>       jo->c.out       = true;
+>       jo->c.enabled   = false;
+> @@ -555,7 +548,7 @@ static int qjack_init_in(HWVoiceIn *hw, struct audsettings *as,
+>       void *drv_opaque)
+>   {
+>       QJackIn  *ji  = (QJackIn *)hw;
+> -    Audiodev *dev = (Audiodev *)drv_opaque;
+> +    Audiodev *dev = hw->s->dev;
+>   
+>       ji->c.out       = false;
+>       ji->c.enabled   = false;
+> @@ -662,16 +655,6 @@ static int qjack_thread_creator(jack_native_thread_t *thread,
+>   }
+>   #endif
+>   
+> -static void *qjack_init(Audiodev *dev, Error **errp)
+> -{
+> -    assert(dev->driver == AUDIODEV_DRIVER_JACK);
+> -    return dev;
+> -}
+> -
+> -static void qjack_fini(void *opaque)
+> -{
+> -}
+> -
+>   static struct audio_pcm_ops jack_pcm_ops = {
+>       .init_out       = qjack_init_out,
+>       .fini_out       = qjack_fini_out,
+> @@ -689,8 +672,6 @@ static struct audio_pcm_ops jack_pcm_ops = {
+>   
+>   static struct audio_driver jack_driver = {
+>       .name           = "jack",
+> -    .init           = qjack_init,
+> -    .fini           = qjack_fini,
+>       .pcm_ops        = &jack_pcm_ops,
+>       .max_voices_out = INT_MAX,
+>       .max_voices_in  = INT_MAX,
+> @@ -708,6 +689,13 @@ static void qjack_info(const char *msg)
+>       dolog("I: %s\n", msg);
+>   }
+>   
+> +static void audio_jack_class_init(ObjectClass *klass, const void *data)
 > +{
-> +    MemoryRegion *mr;
+> +    AudioMixengBackendClass *k = AUDIO_MIXENG_BACKEND_CLASS(klass);
 > +
-> +    RCU_READ_LOCK_GUARD();
-> +    mr = address_space_translate(as, addr, &addr, NULL, false,
-> +                                 MEMTXATTRS_UNSPECIFIED);
-> +
-> +    return memory_region_is_ram(mr);
+> +    k->driver = &jack_driver;
 > +}
 > +
->  static hwaddr
->  flatview_extend_translation(FlatView *fv, hwaddr addr,
->                              hwaddr target_len,
+>   static const TypeInfo audio_jack_info = {
+>       .name = TYPE_AUDIO_JACK,
+>       .parent = TYPE_AUDIO_MIXENG_BACKEND,
+
+Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+
+
+ATB,
+
+Mark.
 
 
