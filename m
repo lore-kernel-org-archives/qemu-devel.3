@@ -4,77 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD8C0EDF156
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Feb 2026 11:56:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52DCBEDF158
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Feb 2026 12:14:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqrn2-0006zD-UK; Fri, 13 Feb 2026 06:56:52 -0500
+	id 1vqs3b-0002hB-Gt; Fri, 13 Feb 2026 07:13:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <phrdina@redhat.com>)
- id 1vqrn0-0006yd-VD
- for qemu-devel@nongnu.org; Fri, 13 Feb 2026 06:56:50 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <phrdina@redhat.com>)
- id 1vqrmz-0007zk-Dj
- for qemu-devel@nongnu.org; Fri, 13 Feb 2026 06:56:50 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770983808;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=xtti+Vx55/bmLfGmi4sKDGkfYPrA1F7rnsHJ9kExjbs=;
- b=fXpQPO904cEbGDjFq54BizbjPMXwmG3TMXipOcMQF9v2BZZUVEMpfXAOdvlDTfb9N9zXZb
- lCNSjJkitxgWrl/+MdG9rTbqs48jdj6pfh7s/Myi3xbvwWzB49U2SUcDUuQi+yj2XemEe6
- /yf+rVWzHx/A2OeyEZV+XMjbL68x09c=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-264-pocs15bDNueHAG4ZIIdRxw-1; Fri,
- 13 Feb 2026 06:55:24 -0500
-X-MC-Unique: pocs15bDNueHAG4ZIIdRxw-1
-X-Mimecast-MFC-AGG-ID: pocs15bDNueHAG4ZIIdRxw_1770983722
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vqs3a-0002gq-BQ
+ for qemu-devel@nongnu.org; Fri, 13 Feb 2026 07:13:58 -0500
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vqs3Y-0003Fc-Dg
+ for qemu-devel@nongnu.org; Fri, 13 Feb 2026 07:13:58 -0500
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A0CAF1800365; Fri, 13 Feb 2026 11:55:21 +0000 (UTC)
-Received: from antique-laptop (unknown [10.44.22.34])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 813151800668; Fri, 13 Feb 2026 11:55:16 +0000 (UTC)
-Date: Fri, 13 Feb 2026 12:55:13 +0100
-From: Pavel Hrdina <phrdina@redhat.com>
-To: Shameer Kolothum <skolothumtho@nvidia.com>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, eric.auger@redhat.com,
- peter.maydell@linaro.org, clg@redhat.com, alex@shazbot.org,
- nicolinc@nvidia.com, nathanc@nvidia.com, mochs@nvidia.com,
- jan@nvidia.com, jgg@nvidia.com, jonathan.cameron@huawei.com,
- zhangfei.gao@linaro.org, zhenzhong.duan@intel.com, kjaju@nvidia.com
-Subject: Re: [PATCH v2 24/24] hw/arm/smmuv3: Add tegra241-cmdqv property for
- SMMUv3 device
-Message-ID: <aY8RIXzUVqcTiCkd@antique-laptop>
-References: <20260206144823.80655-1-skolothumtho@nvidia.com>
- <20260206144823.80655-25-skolothumtho@nvidia.com>
+ by smtp-out2.suse.de (Postfix) with ESMTPS id B41585BCE1;
+ Fri, 13 Feb 2026 12:13:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1770984832; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type;
+ bh=LK/P/msDC/kMLalaCLOtAV8tYWiBC7TxMNweimv3SHg=;
+ b=xu/oSYMw1c3U2ZHky2Jll5d2igIszbIXZjASFcEmoDTSqZmnSf+0rwehKy/tCI3Rt+PGAm
+ +OFQX9T3e+/VVMEtWYETetQjwwd/JKn8bOIKHMcZt+jEvwdZx5N5V0n3oEFvsgOHFuSH8b
+ k4C9uddwtOJ/YBp5pTT6aGVlXINZW/w=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1770984832;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type;
+ bh=LK/P/msDC/kMLalaCLOtAV8tYWiBC7TxMNweimv3SHg=;
+ b=kvSy1LPRmxuG9x+1Vg/iEhrQ2NiSqjqOrX6HSoAqww3ECgVfaX3R5FOImxLypKBvtPXA2B
+ AyiSF0RuqStZj4AA==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1770984832; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type;
+ bh=LK/P/msDC/kMLalaCLOtAV8tYWiBC7TxMNweimv3SHg=;
+ b=xu/oSYMw1c3U2ZHky2Jll5d2igIszbIXZjASFcEmoDTSqZmnSf+0rwehKy/tCI3Rt+PGAm
+ +OFQX9T3e+/VVMEtWYETetQjwwd/JKn8bOIKHMcZt+jEvwdZx5N5V0n3oEFvsgOHFuSH8b
+ k4C9uddwtOJ/YBp5pTT6aGVlXINZW/w=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1770984832;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type;
+ bh=LK/P/msDC/kMLalaCLOtAV8tYWiBC7TxMNweimv3SHg=;
+ b=kvSy1LPRmxuG9x+1Vg/iEhrQ2NiSqjqOrX6HSoAqww3ECgVfaX3R5FOImxLypKBvtPXA2B
+ AyiSF0RuqStZj4AA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 279313EA62;
+ Fri, 13 Feb 2026 12:13:51 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id RqWlNn8Vj2mmFwAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 13 Feb 2026 12:13:51 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Lukas Straub <lukasstraub2@web.de>, qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>, Zhang Chen <zhangckid@gmail.com>, Hailiang
+ Zhang <zhanghailiang@xfusion.com>, Li Zhijian <lizhijian@fujitsu.com>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>, stefanha@redhat.com
+Subject: COLO concurrency issues
+Date: Fri, 13 Feb 2026 09:13:49 -0300
+Message-ID: <87ms1cn8n6.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="rFthhvOpjXrkCOot"
-Content-Disposition: inline
-In-Reply-To: <20260206144823.80655-25-skolothumtho@nvidia.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=phrdina@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ FUZZY_RATELIMITED(0.00)[rspamd.com]; RCVD_TLS_ALL(0.00)[];
+ FREEMAIL_ENVRCPT(0.00)[gmail.com,web.de]; ARC_NA(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; MISSING_XM_UA(0.00)[];
+ TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+];
+ FREEMAIL_TO(0.00)[web.de,nongnu.org];
+ MID_RHS_MATCH_FROM(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_HAS_DN(0.00)[];
+ FREEMAIL_CC(0.00)[redhat.com,gmail.com,xfusion.com,fujitsu.com,treblig.org];
+ RCPT_COUNT_SEVEN(0.00)[8]; FROM_EQ_ENVFROM(0.00)[];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ URIBL_BLOCKED(0.00)[entry:email,suse.de:mid,imap1.dmz-prg2.suse.org:helo];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,imap1.dmz-prg2.suse.org:helo]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,45 +112,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi, I've been following the qemu-colo.rst steps to test COLO and
+encountered a couple of issues. Unfortunately, I don't have cycles to
+investigate further. Happens with QEMU master (also tested some versions
+back until the COLO fix 0b5bf4ea76).
 
---rFthhvOpjXrkCOot
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+1) Deadlock at fdmon_io_uring_wait:
 
-On Fri, Feb 06, 2026 at 02:48:23PM +0000, Shameer Kolothum wrote:
-> Introduce a =E2=80=9Ctegra241-cmdqv=E2=80=9D property to enable Tegra241 =
-CMDQV
-> support. This is only enabled for accelerated SMMUv3 devices.
+(steps from qemu-colo.rst)
+- Secondary Failover
+- Secondary resume replication
+- Start the new Secondary
+- Sync
+- Wait until disk is synced, then:
 
-Hi, do we expect that in the future there will be some other option
-named `{newplatform}-cmdqv`?
+    {"execute": "stop"}
+    {"execute": "block-job-cancel", "arguments":{ "device": "resync" } }
 
-I'm asking mainly from libvirt PoV where current RFC patch exports this
-option only as `cmdqv`.
+The above results in the old secondary hanging indefinitely at:
 
-Pavel
+    do {
+        ret = io_uring_submit_and_wait(&ctx->fdmon_io_uring, wait_nr);
+    } while (ret == -EINTR);
 
---rFthhvOpjXrkCOot
-Content-Type: application/pgp-signature; name=signature.asc
+(gdb) bt                                                                                                                                                                      
+#0  syscall () at ../sysdeps/unix/sysv/linux/x86_64/syscall.S:38
+#1  0x00007f5519e0204e in ??? () at //usr/lib64/liburing.so.2
+#2  0x00007f5519e01b00 in ??? () at //usr/lib64/liburing.so.2
+#3  0x0000563c2dc06cc9 in fdmon_io_uring_wait (ctx=0x563c30411b00, ready_list=0x7ffd0bad8f58, timeout=575708467831) at ../util/fdmon-io_uring.c:416
+#4  0x0000563c2dc00976 in aio_poll (ctx=0x563c30411b00, blocking=true) at ../util/aio-posix.c:699
+#5  0x0000563c2daa01c6 in bdrv_drain_all_begin () at ../block/io.c:529
+#6  0x0000563c2daa03d8 in bdrv_drain_all () at ../block/io.c:574
+#7  0x0000563c2d764aae in do_vm_stop (state=RUN_STATE_PAUSED, send_stop=true) at ../system/cpus.c:312
+#8  0x0000563c2d765964 in vm_stop (state=RUN_STATE_PAUSED) at ../system/cpus.c:754
+#9  0x0000563c2d7f3378 in qmp_stop (errp=0x7ffd0bad9080) at ../monitor/qmp-cmds.c:62
+#10 0x0000563c2dba7a72 in qmp_marshal_stop (args=0x563c306ac070, ret=0x7f5518dffda8, errp=0x7f5518dffda0) at qapi/qapi-commands-misc.c:197
+#11 0x0000563c2dbf1316 in do_qmp_dispatch_bh (opaque=0x7f5518dffe40) at ../qapi/qmp-dispatch.c:128
+#12 0x0000563c2dc1de48 in aio_bh_call (bh=0x563c3040fef0) at ../util/async.c:173
+#13 0x0000563c2dc1df64 in aio_bh_poll (ctx=0x563c3040c070) at ../util/async.c:220
+#14 0x0000563c2dbffff0 in aio_dispatch (ctx=0x563c3040c070) at ../util/aio-posix.c:389
+#15 0x0000563c2dc1e3cd in aio_ctx_dispatch (source=0x563c3040c070, callback=0x0, user_data=0x0) at ../util/async.c:365
+#16 0x00007f551b114f4c in g_main_dispatch (context=0x563c304120f0) at ../glib/gmain.c:3476
+#17 g_main_context_dispatch_unlocked (context=context@entry=0x563c304120f0) at ../glib/gmain.c:4284
+#18 0x00007f551b1170c9 in g_main_context_dispatch (context=0x563c304120f0) at ../glib/gmain.c:4272
+#19 0x0000563c2dc1fa0b in glib_pollfds_poll () at ../util/main-loop.c:290
+#20 0x0000563c2dc1fa85 in os_host_main_loop_wait (timeout=0) at ../util/main-loop.c:313
+#21 0x0000563c2dc1fb8a in main_loop_wait (nonblocking=0) at ../util/main-loop.c:592
+#22 0x0000563c2d78eb60 in qemu_main_loop () at ../system/runstate.c:903
+#23 0x0000563c2db412fc in qemu_default_main (opaque=0x0) at ../system/main.c:50
+#24 0x0000563c2db413ab in main (argc=40, argv=0x7ffd0bad94d8) at ../system/main.c:93
 
------BEGIN PGP SIGNATURE-----
+---
 
-iQIzBAEBCgAdFiEEcbzs91ho/coWWY7aUi1kczAH4YwFAmmPESEACgkQUi1kczAH
-4YwXJxAAzxLGTFEk8AYToDcWpSfGXAMyAky90wsZlLkzOjm5vQh4BZn9MrPXlSdK
-DcpwAScqeCb5NJ4GaC8K65xorog6zWg71E/chdhe1kXJpnxSWF/DvwbKHHdEDoiH
-87gSNDgoU2NIPri5TpD1nd4rK1JBFkjnSU+DlSR8u+Lp5jJgqCDBUZWQLHdEPFnu
-TmQQJRvDDV3uSILRuB5KfhP20kPwMbFduWOa/KF4cA1PzCn0Ef715xeJeOGf6tfr
-muolvlgO8178IMHpS/2z0JibeRwPchxVcywSDiIv2nQxLj2CYXG0F4V4X0955ZIc
-zSyWq2O2ZcRxI2L+v/DUF6p2ObRITq5NdLaPvcevaQ2xyUoTzZLRs0MX1NESDxii
-zpgg+XrMrw4+rlkFEyK85BKMxVUh7U0V3YYn77qm4fFRITRH0EhAAM/JVagaPZ4V
-RgQ4Hc0T5mOIz2Be7r9e+3D2Fwr2Gnq8JuOAmGGeDsZAfrOz2mFjItGUQXPUpDKO
-rvbLvnfPhUspy/iETSJfYw/CbYCOeKVPG1lvntFnEnNDLwSLPLKm2OV2ObjjDle/
-48NbxKZrksmSRnZjd/NuwVX+9GUIafjR72wAZdi4UjGX6yDG9kVwQhgxpdGeiNsx
-3U4j8wz20mYCYpvjlHMJH8Q8BL8FIi/yqzpJJJa8YrIUfHc64qE=
-=tuQI
------END PGP SIGNATURE-----
+2) Race at colo_process_checkpoint
 
---rFthhvOpjXrkCOot--
+The following pattern seems to be inherently racy, whether the switch
+statement sees the state as COMPLETED or not varies:
+
+colo_process_checkpoint()
+{
+    ...
+out:
+    ...
+    /*
+     * There are only two reasons we can get here, some error happened
+     * or the user triggered failover.
+     */
+--> switch (failover_get_state()) {
+    case FAILOVER_STATUS_COMPLETED:
+        qapi_event_send_colo_exit(COLO_MODE_PRIMARY,
+                                  COLO_EXIT_REASON_REQUEST);
+        break;
+    default:
+        qapi_event_send_colo_exit(COLO_MODE_PRIMARY,
+                                  COLO_EXIT_REASON_ERROR);
+    }
+
+    /* Hope this not to be too long to wait here */
+--> qemu_event_wait(&s->colo_exit_event);
+    ...
+}
+
+This results in what seems like a spurious:
+
+{"timestamp": {"seconds": 1770984655, "microseconds": 216464}, "event":
+"COLO_EXIT", "data": {"mode": "primary", "reason": "error"}}
+
+I'm not sure if the intention is to just ignore it, but it seems moving
+the qemu_event_wait before checking the state would eliminate the race.
 
 
