@@ -4,94 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64D63EF48ED
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Feb 2026 09:04:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55B3FEF48EE
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Feb 2026 09:04:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqp5o-0004Hi-2h; Fri, 13 Feb 2026 04:04:04 -0500
+	id 1vqp65-0004Jp-UU; Fri, 13 Feb 2026 04:04:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hibriansong@gmail.com>)
- id 1vqp5m-0004HI-My
- for qemu-devel@nongnu.org; Fri, 13 Feb 2026 04:04:02 -0500
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <hibriansong@gmail.com>)
- id 1vqp5j-0004wT-VH
- for qemu-devel@nongnu.org; Fri, 13 Feb 2026 04:04:02 -0500
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-2aadc18f230so4966355ad.3
- for <qemu-devel@nongnu.org>; Fri, 13 Feb 2026 01:03:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1770973438; x=1771578238; darn=nongnu.org;
- h=to:references:message-id:content-transfer-encoding:cc:date
- :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=sqF69bYdGyQE2o5rbNrFzroUhHngMZU0JTCZonaReQA=;
- b=gozQUT5frBpMkC+k2aNJJD151GqmZXv30YSWHYu2/XJarJrJjvfm8Sc24snJKvE6hS
- 6kF/iODnce86WfnRpdGwAGNWwXfmvLTVFtLjN8+l82SM7bWOuE2bPKkWdhEb+wyIiQtp
- cgME0nWw6WTzODJ0PttqILI2/TLsGsbPF3xZT0I3luGX/XLiJiHZzB/R2v8j5rdisuv7
- HcOkuR09msetcb54T66UbL++gwrBfuDGN1JhOrD4DA74FznzKWLUYBvm64yXI5IU+nQ0
- fKl6NfVU0jlBRAPQ5PNT89RCGXbEai5y7r99nrkdR4Vjmm4L4361U9vuPZ4QHQhaNog5
- fcLw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770973438; x=1771578238;
- h=to:references:message-id:content-transfer-encoding:cc:date
- :in-reply-to:from:subject:mime-version:x-gm-gg:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=sqF69bYdGyQE2o5rbNrFzroUhHngMZU0JTCZonaReQA=;
- b=Yurht6IlsUBUOXJLoyNXC+caCUdkiRkeWUmeErVWZ3RzRR+4KxZHIFMSqMurRjwXbX
- HF7Z57K9/iGaQpWcM/tBQIgS56N+0cd+6U0vNOCa5nkg7BzQ6Q/RGHBuCNiBsPt7rWeW
- LmtvZ+BsTIpkmYIWko1p8PGvHu5cLJ6I5DVp13/UzCzgpVCSNvgfib8MeIRsLA93Tiyh
- tuRYft0XuqK+gwIKBfjgsKBQlSSPeFOZ68/Mq+MY2e/DEoh4ePXSdG7iQ0EtMijjjYGe
- ek282vyUbtqzpCQX6juj0gupA07Y6ksdMN7UPR9pFnTOry6yzPKUrZIJaA84LT6tqEhb
- Nshg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWr27Tnw6ecCQbLks9Wa1bauJEa02T698cPmhV9etmbb/m5qJ9XudIqnScuTNLnAfKsuuvCalsh1Kye@nongnu.org
-X-Gm-Message-State: AOJu0Yzt+FdaF/+D7E7yEG4BXGrqi6/512SN0/jACymb9xcN8o/enZE5
- USng2XateyCgz5zxAF1q7FtK0sYWB10LlVbpHepgndap/S/C+9V4akGk
-X-Gm-Gg: AZuq6aJvECz+VuFm84vv51fnSSCZ4AwxoAOtPb88ebsaXhGA5GeHl/xncH6d5fZa6fp
- SoGuFBBhAJr1xUhvZPr5ON6LXXK5nnPeXfyYZcvG3GM3AZQ/VLBwQWc4JaMtWGopCP6pZwy0yvy
- Vc1ToSolJw02NtmxiR1npKbrMJ/OndH46GTSNUxaaS3obJCFN4IoWa2ry4ZxdlSLZlrHkuKYGcF
- QESTgM1wztDFYRGuJRPO5jHyRoQsZ9FbdES1iz7kvr64PK5FlS94aDqyi6TkwXMoJJrP1xy/LcI
- FzsYpIzfwtaEfJFGt5blVQWi9nfdmD84Og7pOg9uipGheLJr4qnK+V4sG4nDTppAfOkHU+ce5lm
- p81rlHXrDK7uM/n08GM0p8zVA0RvUfOGSzeKt9/GjIF4lJi5k3BgU2S2LrE0eoS2Ws7QIO77oSj
- 1bwgnvp4fyOgN/GWT7JPUkc2UZIElkuqghKIvRkhooPCh7gxnw/FroGCm+p9cd
-X-Received: by 2002:a17:903:1109:b0:2aa:fad8:7478 with SMTP id
- d9443c01a7336-2ab5051a141mr12445855ad.10.1770973438109; 
- Fri, 13 Feb 2026 01:03:58 -0800 (PST)
-Received: from smtpclient.apple (n058152022160.netvigator.com. [58.152.22.160])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2ab29966d91sm81576095ad.45.2026.02.13.01.03.55
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Fri, 13 Feb 2026 01:03:57 -0800 (PST)
-Content-Type: text/plain;
-	charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81.1.4\))
-Subject: Re: [Patch v4 2/7] fuse: io_uring mode init
-From: Brian Song <hibriansong@gmail.com>
-In-Reply-To: <20260211205611.GB234157@fedora>
-Date: Fri, 13 Feb 2026 17:03:23 +0800
-Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, hreitz@redhat.com,
- kwolf@redhat.com, eblake@redhat.com, armbru@redhat.com, fam@euphon.net,
- bernd@bsbernd.com
+ (Exim 4.90_1) (envelope-from <clement.mathieu--drif@eviden.com>)
+ id 1vqp64-0004JY-L4
+ for qemu-devel@nongnu.org; Fri, 13 Feb 2026 04:04:20 -0500
+Received: from smtppost.atos.net ([193.56.114.176] helo=smarthost3.atos.net)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clement.mathieu--drif@eviden.com>)
+ id 1vqp61-0004xG-MZ
+ for qemu-devel@nongnu.org; Fri, 13 Feb 2026 04:04:20 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=eviden.com; i=@eviden.com; q=dns/txt; s=mail;
+ t=1770973458; x=1802509458;
+ h=message-id:subject:from:to:cc:date:in-reply-to:
+ references:content-transfer-encoding:mime-version;
+ bh=ZQCLXgcX0pHewAFeNwaZT6B3YWY8cU7vhDXlVI1Na0M=;
+ b=kGZPCt9KtfwT6Zb9SiRrerMuBlKWPOgSf8/uVQTyOeRUrG3hHnA7bQXv
+ c/oLIOJ7KYLyzauSSqlW9jDvdCQF70LgREKq0sDbHaEBnmxveT0hmIft6
+ AIHpAzSh67wq2gXpZf1pJ5Z3Gyl/KkbRIai5q1uZe9GYesqOud9oPNcCp
+ /XdbeJmeFNGPJu17MvC0nhGkebZhPZP0ffsilszdr6srEZOybuhOPe238
+ RElndtBjpyf3ZvdCiyWofjSqBTSBqf0IW9STZVh+mUbwfeFsabyKC7AN0
+ 2Of9wpVDey6cT0ENGxXZUIyzqhWUwRu4zbzXuMDmEqUIwQxVMyUhWSLN3 w==;
+X-CSE-ConnectionGUID: XJEiAFVSR5CfcDQarOFFVw==
+X-CSE-MsgGUID: vtWNUrNcTeaI5tlQcDH8WA==
+X-IronPort-AV: E=Sophos;i="6.21,288,1763420400"; d="scan'208";a="818970348"
+X-MGA-submission: =?us-ascii?q?MDFAhbScLL0i1Ligl9WVFHX8MuStndc0DGp4f/?=
+ =?us-ascii?q?89eZ2M0GB2U1zHqcTGrn3vvfc3GZb2LjKOpgqXg28RCxZBXAuK5IwpC5?=
+ =?us-ascii?q?FMd6XaM54heeVKjnyC9HEWCsFN3CgIWCO4CwrjVuzXcnxknpBgu5+LXK?=
+ =?us-ascii?q?ON?=
+Received: from smtp1.atos-infogerance.fr ([193.56.241.17])
+ by smarthost3.atos.net with ESMTP/TLS/TLS_AES_256_GCM_SHA384;
+ 13 Feb 2026 10:04:11 +0100
+Received: from smtp-hub.atos-infogerance.fr (smtp-hub.atos-infogerance.fr
+ [193.56.47.18])
+ by smtp1.atos-infogerance.fr (8.15.2/8.15.2) with ESMTPS id 61D94AlJ043298
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO);
+ Fri, 13 Feb 2026 10:04:10 +0100
+Received: from rocky.hd2c.dom ([129.181.244.14])
+ by smtp-hub.atos-infogerance.fr (envelope-from
+ clement.mathieu--drif@eviden.com) (8.15.2/8.15.2) with ESMTP id
+ 61D94AoY002355; Fri, 13 Feb 2026 10:04:10 +0100
+Received: from openbmc (unknown [10.22.85.22])
+ by rocky.hd2c.dom (Postfix) with ESMTP id 7BB8B256CA5;
+ Fri, 13 Feb 2026 10:04:10 +0100 (CET)
+Received: from [127.0.0.1] (host.containers.internal [10.88.0.1])
+ by openbmc (Postfix) with ESMTP id 815CAC3018EE;
+ Fri, 13 Feb 2026 09:04:09 +0000 (UTC)
+Message-ID: <5bf58858f3e5abfacd655c50f686893e610a6d39.camel@eviden.com>
+Subject: Re: [RFC PATCH 05/14] intel_iommu: Change pasid property from bool
+ to uint8
+From: Clement Mathieu--Drif <clement.mathieu--drif@eviden.com>
+To: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>
+Cc: "alex@shazbot.org" <alex@shazbot.org>, "clg@redhat.com" <clg@redhat.com>,
+ "eric.auger@redhat.com"	 <eric.auger@redhat.com>,
+ "mst@redhat.com" <mst@redhat.com>, "jasowang@redhat.com"	
+ <jasowang@redhat.com>, "jgg@nvidia.com" <jgg@nvidia.com>,
+ "nicolinc@nvidia.com"	 <nicolinc@nvidia.com>, "skolothumtho@nvidia.com"
+ <skolothumtho@nvidia.com>, "joao.m.martins@oracle.com"	
+ <joao.m.martins@oracle.com>, "Tian, Kevin" <kevin.tian@intel.com>, "Liu, Yi
+ L"	 <yi.l.liu@intel.com>, "Hao, Xudong" <xudong.hao@intel.com>
+Date: Fri, 13 Feb 2026 10:03:48 +0100
+In-Reply-To: <ee91038b24246edfd3a208f83e55b95107a94ca8.camel@eviden.com>
+References: <20260205031133.74357-1-zhenzhong.duan@intel.com>
+ <20260205031133.74357-6-zhenzhong.duan@intel.com>
+ <4ecdbe5bb0b3a945b3534e8535186280aa8f4f66.camel@eviden.com>
+ <IA3PR11MB913635BBC7B506CD40FADD779260A@IA3PR11MB9136.namprd11.prod.outlook.com>
+ <02bb4c9d859caec478e36d3c6cde6561ba3032ca.camel@eviden.com>
+ <IA3PR11MB9136315AB6D784819ECF18C89261A@IA3PR11MB9136.namprd11.prod.outlook.com>
+ <eaebbfc58b626db6f946615a6e1d4ba13d6c5b84.camel@eviden.com>
+ <IA3PR11MB9136B8106B0070F03CF9C32B9261A@IA3PR11MB9136.namprd11.prod.outlook.com>
+ <ee91038b24246edfd3a208f83e55b95107a94ca8.camel@eviden.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <C001D79E-6269-4DC7-ABD3-AE86B8122909@gmail.com>
-References: <20260207120901.17222-1-hibriansong@gmail.com>
- <20260207120901.17222-3-hibriansong@gmail.com>
- <20260211205611.GB234157@fedora>
-To: Stefan Hajnoczi <stefanha@redhat.com>
-X-Mailer: Apple Mail (2.3826.700.81.1.4)
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=hibriansong@gmail.com; helo=mail-pl1-x634.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+User-Agent: Evolution 3.58.2 (3.58.2-1.fc43) 
+MIME-Version: 1.0
+Received-SPF: pass client-ip=193.56.114.176;
+ envelope-from=clement.mathieu--drif@eviden.com; helo=smarthost3.atos.net
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,106 +111,665 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-> On Feb 12, 2026, at 04:56, Stefan Hajnoczi <stefanha@redhat.com> =
-wrote:
+Shouldn't we check that the user never asks for more than 20 bits on the cl=
+i btw?
+On Fri, 2026-02-13 at 09:59 +0100, Clement Mathieu--Drif wrote:
 >=20
-> On Sat, Feb 07, 2026 at 08:08:56PM +0800, Brian Song wrote:
->> +typedef struct FuseUringEnt {
->> +    /* back pointer */
->> +    FuseUringQueue *rq;
->> +
->> +    /* commit id of a fuse request */
->> +    uint64_t req_commit_id;
-
-[...]
-
->> +
->> +/**
->> + * Distribute uring queues across FUSE queues in the round-robin =
-manner.
->> + * This ensures even distribution of kernel uring queues across =
-user-specified
->> + * FUSE queues.
->> + *
->> + * num_uring_queues > num_fuse_queues: Each IOThread manages =
-multiple uring
->> + * queues (multi-queue mapping).
->> + * num_uring_queues < num_fuse_queues: Excess IOThreads remain idle =
-with no
->> + * assigned uring queues.
->> + */
->> +static void fuse_uring_setup_queues(FuseExport *exp, size_t bufsize)
->> +{
->> +    int num_uring_queues =3D get_nprocs_conf();
->> +
->> +    exp->num_uring_queues =3D num_uring_queues;
->> +    exp->uring_queues =3D g_new(FuseUringQueue, num_uring_queues);
->> +
->> +    for (int i =3D 0; i < num_uring_queues; i++) {
->> +        FuseUringQueue *rq =3D &exp->uring_queues[i];
->> +        rq->rqid =3D i;
->> +        rq->ent =3D g_new(FuseUringEnt, exp->uring_queue_depth);
->> +
->> +        for (int j =3D 0; j < exp->uring_queue_depth; j++) {
->> +            FuseUringEnt *ent =3D &rq->ent[j];
->> +            ent->rq =3D rq;
->> +            ent->req_payload_sz =3D bufsize - =
-FUSE_BUFFER_HEADER_SIZE;
->> +            ent->req_payload =3D g_malloc0(ent->req_payload_sz);
+> On Fri, 2026-02-13 at 08:43 +0000, Duan, Zhenzhong wrote:
 >=20
-> I don't see a corresponding g_free() in this patch? Exports can be
-> deleted at runtime, so this memory must be freed.
 >=20
-
-ent->req_payload is deleted in fuse_export_delete_uring() in a later =
-patch.
-Should we merge patch 5 into this one?
-
->> +
->> +            ent->iov[0] =3D (struct iovec) {
->> +                &ent->req_header,
->> +                sizeof(struct fuse_uring_req_header)
->> +            };
->> +            ent->iov[1] =3D (struct iovec) {
->> +                ent->req_payload,
->> +                ent->req_payload_sz
->> +            };
->> +
->> +            ent->fuse_cqe_handler.cb =3D fuse_uring_cqe_handler;
->> +        }
->> +
->> +        /* Distribute uring queues across FUSE queues */
->> +        rq->q =3D &exp->queues[i % exp->num_fuse_queues];
->> +        QLIST_INSERT_HEAD(&(rq->q->uring_queue_list), rq, next);
->> +    }
->> +}
->> +
->> +static void
->> +fuse_schedule_ring_queue_registrations(FuseExport *exp)
->> +{
->> +    for (int i =3D 0; i < exp->num_fuse_queues; i++) {
->> +        FuseQueue *q =3D &exp->queues[i];
->> +        FuseUringQueue *rq;
->> +
->> +        QLIST_FOREACH(rq, &q->uring_queue_list, next) {
->> +            aio_bh_schedule_oneshot(q->ctx, =
-fuse_uring_submit_register, rq);
->> +        }
->> +    }
->> +}
->> +
->> +static void fuse_uring_start(FuseExport *exp, struct fuse_init_out =
-*out)
->> +{
->> +    assert(!exp->uring_started);
->> +    exp->uring_started =3D true;
->> +
->> +    /*
->> +     * Since we dont't enable the FUSE_MAX_PAGES feature, the value =
-of
+> >=20
+> >=20
+> >=20
+> > > -----Original Message-----
+> > > From: Clement Mathieu--Drif <[[clement.mathieu--drif@eviden.com](mail=
+to:clement.mathieu--drif@eviden.com)](mailto:[clement.mathieu--drif@eviden.=
+com](mailto:clement.mathieu--drif@eviden.com))>
+> > > Subject: Re: [RFC PATCH 05/14] intel_iommu: Change pasid property fro=
+m bool to
+> > > uint8
+> > >=20
+> > >=20
+> > > On Fri, 2026-02-13 at 01:21 +0000, Duan, Zhenzhong wrote:
+> > >=20
+> > >=20
+> > > >=20
+> > > >=20
+> > > >=20
+> > > >=20
+> > > >=20
+> > > > > -----Original Message-----
+> > > > > From: Clement Mathieu--Drif <[clement.mathieu--
+> > > >=20
+> > > >=20
+> > >=20
+> > >=20
+> > > [[drif@eviden.com](mailto:drif@eviden.com)](mailto:[drif@eviden.com](=
+mailto:drif@eviden.com))](mailto:[[clement.mathieu--drif@eviden.com](mailto=
+:clement.mathieu--drif@eviden.com)](mailto:[clement.mathieu--drif@eviden.co=
+m](mailto:clement.mathieu--drif@eviden.com)))>
+> > >=20
+> > >=20
+> > > >=20
+> > > >=20
+> > > > > Subject: Re: [RFC PATCH 05/14] intel_iommu: Change pasid property=
+ from bool
+> > > >=20
+> > > >=20
+> > >=20
+> > >=20
+> > > to
+> > >=20
+> > >=20
+> > > >=20
+> > > >=20
+> > > > > uint8
+> > > > >=20
+> > > > >=20
+> > > > > On Thu, 2026-02-12 at 08:16 +0000, Duan, Zhenzhong wrote:
+> > > > >=20
+> > > > >=20
+> > > > >=20
+> > > > > >=20
+> > > > > >=20
+> > > > > >=20
+> > > > > >=20
+> > > > > >=20
+> > > > > >=20
+> > > > > > > -----Original Message-----
+> > > > > > > From: Clement Mathieu--Drif <[clement.mathieu--
+> > > > > >=20
+> > > > > >=20
+> > > > > >=20
+> > > > >=20
+> > > > >=20
+> > > > >=20
+> > > > > [[[drif@eviden.com](mailto:drif@eviden.com)](mailto:[drif@eviden.=
+com](mailto:drif@eviden.com))](mailto:[[drif@eviden.com](mailto:drif@eviden=
+.com)](mailto:[drif@eviden.com](mailto:drif@eviden.com)))](mailto:[clement.=
+mathieu--
+> > > >=20
+> > > >=20
+> > >=20
+> > >=20
+> > > [[drif@eviden.com](mailto:drif@eviden.com)](mailto:[drif@eviden.com](=
+mailto:drif@eviden.com))](mailto:[[clement.mathieu--drif@eviden.com](mailto=
+:clement.mathieu--drif@eviden.com)](mailto:[clement.mathieu--drif@eviden.co=
+m](mailto:clement.mathieu--drif@eviden.com))))>
+> > >=20
+> > >=20
+> > > >=20
+> > > >=20
+> > > > >=20
+> > > > >=20
+> > > > >=20
+> > > > > >=20
+> > > > > >=20
+> > > > > >=20
+> > > > > > > Subject: Re: [RFC PATCH 05/14] intel_iommu: Change pasid prop=
+erty from
+> > > > > >=20
+> > > > > >=20
+> > > > >=20
+> > > > >=20
+> > > >=20
+> > > >=20
+> > >=20
+> > >=20
+> > > bool
+> > >=20
+> > >=20
+> > > >=20
+> > > >=20
+> > > > >=20
+> > > > >=20
+> > > > > >=20
+> > > > >=20
+> > > > >=20
+> > > > >=20
+> > > > > to
+> > > > >=20
+> > > > >=20
+> > > > >=20
+> > > > > >=20
+> > > > > >=20
+> > > > > >=20
+> > > > > > > uint8
+> > > > > > >=20
+> > > > > > >=20
+> > > > > > > On Wed, 2026-02-04 at 22:11 -0500, Zhenzhong Duan wrote:
+> > > > > > >=20
+> > > > > > >=20
+> > > > > > >=20
+> > > > > > >=20
+> > > > > > > > 'x-pasid-mode' is a bool property, we need an extra 'pss' p=
+roperty to
+> > > > > > > > represent PASID size supported. Because there is no any dev=
+ice in QEMU
+> > > > > > > > supporting pasid capability yet, no guest could use the pas=
+id feature
+> > > > > > > > until now, 'x-pasid-mode' takes no effect.
+> > > > > > > >=20
+> > > > > > > > So instead of an extra 'pss' property we can use a single '=
+pasid'
+> > > > > > > > property of uint8 type to represent if pasid is supported a=
+nd the PASID
+> > > > > > > > bits size. A value of N > 0 means pasid is supported and N =
+- 1 is the
+> > > > > > > > value in PSS field in ECAP register.
+> > > > > > > >=20
+> > > > > > > > Signed-off-by: Zhenzhong Duan
+> > > > > > >=20
+> > > > > > >=20
+> > > > > > >=20
+> > > > > > >=20
+> > > > > > >=20
+> > > > > >=20
+> > > > > >=20
+> > > > > >=20
+> > > > >=20
+> > > > >=20
+> > > > >=20
+> > > > >=20
+> > > >=20
+> > > >=20
+> > >=20
+> > >=20
+> > > <[[[[[zhenzhong.duan@intel.com](mailto:zhenzhong.duan@intel.com)](mai=
+lto:[zhenzhong.duan@intel.com](mailto:zhenzhong.duan@intel.com))](mailto:[[=
+zhenzhong.duan@intel.com](mailto:zhenzhong.duan@intel.com)](mailto:[zhenzho=
+ng.duan@intel.com](mailto:zhenzhong.duan@intel.com)))](mailto:[zhen
+> > > [[zhong.duan@intel.com](mailto:zhong.duan@intel.com)](mailto:[zhong.d=
+uan@intel.com](mailto:zhong.duan@intel.com))](mailto:[[zhenzhong.duan@intel=
+.com](mailto:zhenzhong.duan@intel.com)](mailto:[zhenzhong.duan@intel.com](m=
+ailto:zhenzhong.duan@intel.com))))](mailto:[zhen
+> > >=20
+> > >=20
+> > > >=20
+> > > >=20
+> > > > >=20
+> > > >=20
+> > > >=20
+> > >=20
+> > >=20
+> > > [[[zhong.duan@intel.com](mailto:zhong.duan@intel.com)](mailto:[zhong.=
+duan@intel.com](mailto:zhong.duan@intel.com))](mailto:[[zhong.duan@intel.co=
+m](mailto:zhong.duan@intel.com)](mailto:[zhong.duan@intel.com](mailto:zhong=
+.duan@intel.com)))](mailto:[zhenzhong.duan
+> > > @intel.com](mailto:[[zhenzhong.duan@intel.com](mailto:zhenzhong.duan@=
+intel.com)](mailto:[zhenzhong.duan@intel.com](mailto:zhenzhong.duan@intel.c=
+om)))))>
+> > >=20
+> > >=20
+> > > >=20
+> > > >=20
+> > > > >=20
+> > > > >=20
+> > > > >=20
+> > > > > >=20
+> > > > > >=20
+> > > > > >=20
+> > > > > > >=20
+> > > > > > >=20
+> > > > > > >=20
+> > > > > > >=20
+> > > > > > > > ---
+> > > > > > > > =C2=A0hw/i386/intel_iommu_internal.h | 1 -
+> > > > > > > > =C2=A0include/hw/i386/intel_iommu.h=C2=A0 | 2 +-
+> > > > > > > > =C2=A0hw/i386/intel_iommu.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0 | 4 ++--
+> > > > > > > > =C2=A03 files changed, 3 insertions(+), 4 deletions(-)
+> > > > > > > >=20
+> > > > > > > > diff --git a/hw/i386/intel_iommu_internal.h
+> > > > > > >=20
+> > > > > > >=20
+> > > > > > >=20
+> > > > > >=20
+> > > > > >=20
+> > > > > >=20
+> > > > >=20
+> > > > >=20
+> > > > >=20
+> > > > > b/hw/i386/intel_iommu_internal.h
+> > > > >=20
+> > > > >=20
+> > > > >=20
+> > > > > >=20
+> > > > > >=20
+> > > > > >=20
+> > > > > > >=20
+> > > > > > >=20
+> > > > > > >=20
+> > > > > > > > index a2ca79f925..71cb3b662e 100644
+> > > > > > > > --- a/hw/i386/intel_iommu_internal.h
+> > > > > > > > +++ b/hw/i386/intel_iommu_internal.h
+> > > > > > > > @@ -194,7 +194,6 @@
+> > > > > > > > =C2=A0#define VTD_ECAP_PRS=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 (1ULL << 29)
+> > > > > > > > =C2=A0#define VTD_ECAP_MHMV=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 (15ULL << 20)
+> > > > > > > > =C2=A0#define VTD_ECAP_SRS=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 (1ULL << 31)
+> > > > > > > > -#define VTD_ECAP_PSS=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 (7ULL << 35) /* limi=
+t: MemTxAttrs::pid
+> > > > > > >=20
+> > > > > > >=20
+> > > > > >=20
+> > > > > >=20
+> > > > >=20
+> > > > >=20
+> > > >=20
+> > > >=20
+> > >=20
+> > >=20
+> > > */
+> > >=20
+> > >=20
+> > > >=20
+> > > >=20
+> > > > >=20
+> > > > >=20
+> > > > > >=20
+> > > > > >=20
+> > > > > > >=20
+> > > > > > >=20
+> > > > > > > > =C2=A0#define VTD_ECAP_PASID=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 (1ULL << 40)
+> > > > > > > > =C2=A0#define VTD_ECAP_SMTS=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 (1ULL << 43)
+> > > > > > > > =C2=A0#define VTD_ECAP_SSTS=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 (1ULL << 46)
+> > > > > > > > diff --git a/include/hw/i386/intel_iommu.h
+> > > > > > >=20
+> > > > > > >=20
+> > > > > > >=20
+> > > > > >=20
+> > > > > >=20
+> > > > > >=20
+> > > > >=20
+> > > > >=20
+> > > > >=20
+> > > > > b/include/hw/i386/intel_iommu.h
+> > > > >=20
+> > > > >=20
+> > > > >=20
+> > > > > >=20
+> > > > > >=20
+> > > > > >=20
+> > > > > > >=20
+> > > > > > >=20
+> > > > > > >=20
+> > > > > > > > index 6c61fd39c7..5e5779e460 100644
+> > > > > > > > --- a/include/hw/i386/intel_iommu.h
+> > > > > > > > +++ b/include/hw/i386/intel_iommu.h
+> > > > > > > > @@ -315,7 +315,7 @@ struct IntelIOMMUState {
+> > > > > > > > =C2=A0=C2=A0=C2=A0=C2=A0 bool buggy_eim;=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0 /* Force buggy EIM unless eim=3Doff */
+> > > > > > > > =C2=A0=C2=A0=C2=A0=C2=A0 uint8_t aw_bits;=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 /*=
+ Host/IOVA address width (in bits) */
+> > > > > > > > =C2=A0=C2=A0=C2=A0=C2=A0 bool dma_drain;=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0 /* Whether DMA r/w draining enabled */
+> > > > > > > > -=C2=A0=C2=A0=C2=A0 bool pasid;=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0 /* Whether to support PASID */
+> > > > > > > > +=C2=A0=C2=A0=C2=A0 uint8_t pasid;=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0 /* PASID supported in bits, 0 if not */
+> > > > > > > > =C2=A0=C2=A0=C2=A0=C2=A0 bool fs1gp;=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0 /* First Stage 1-GByte Page Support */
+> > > > > > > >=20
+> > > > > > > > =C2=A0=C2=A0=C2=A0=C2=A0 /* Transient Mapping, Reserved(0) =
+since VTD spec revision 3.2 */
+> > > > > > > > diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
+> > > > > > > > index e8a6f50a5a..916eb0af5a 100644
+> > > > > > > > --- a/hw/i386/intel_iommu.c
+> > > > > > > > +++ b/hw/i386/intel_iommu.c
+> > > > > > > > @@ -4151,7 +4151,7 @@ static const Property vtd_properties[=
+] =3D {
+> > > > > > > > =C2=A0=C2=A0=C2=A0=C2=A0 DEFINE_PROP_BOOL("x-scalable-mode"=
+, IntelIOMMUState,
+> > > > > > >=20
+> > > > > > >=20
+> > > > > > >=20
+> > > > > >=20
+> > > > > >=20
+> > > > > >=20
+> > > > >=20
+> > > > >=20
+> > > > >=20
+> > > > > scalable_mode,
+> > > > >=20
+> > > > >=20
+> > > > >=20
+> > > > > >=20
+> > > > > >=20
+> > > > > >=20
+> > > > > > >=20
+> > > > > > > FALSE),
+> > > > > > >=20
+> > > > > > >=20
+> > > > > > >=20
+> > > > > > >=20
+> > > > > > > > =C2=A0=C2=A0=C2=A0=C2=A0 DEFINE_PROP_BOOL("x-flts", IntelIO=
+MMUState, fsts, FALSE),
+> > > > > > > > =C2=A0=C2=A0=C2=A0=C2=A0 DEFINE_PROP_BOOL("snoop-control", =
+IntelIOMMUState,
+> > > > > > >=20
+> > > > > > >=20
+> > > > > >=20
+> > > > > >=20
+> > > > >=20
+> > > > >=20
+> > > >=20
+> > > >=20
+> > >=20
+> > >=20
+> > > snoop_control,
+> > >=20
+> > >=20
+> > > >=20
+> > > >=20
+> > > > >=20
+> > > > >=20
+> > > > > >=20
+> > > > > >=20
+> > > > > > >=20
+> > > > > > >=20
+> > > > > > > false),
+> > > > > > >=20
+> > > > > > >=20
+> > > > > > >=20
+> > > > > > >=20
+> > > > > > > > -=C2=A0=C2=A0=C2=A0 DEFINE_PROP_BOOL("x-pasid-mode", IntelI=
+OMMUState, pasid, false),
+> > > > > > > > +=C2=A0=C2=A0=C2=A0 DEFINE_PROP_UINT8("pasid", IntelIOMMUSt=
+ate, pasid, 0),
+> > > > > > > > =C2=A0=C2=A0=C2=A0=C2=A0 DEFINE_PROP_BOOL("dma-drain", Inte=
+lIOMMUState, dma_drain,
+> > > > > > >=20
+> > > > > > >=20
+> > > > > >=20
+> > > > > >=20
+> > > > >=20
+> > > > >=20
+> > > >=20
+> > > >=20
+> > >=20
+> > >=20
+> > > true),
+> > >=20
+> > >=20
+> > > >=20
+> > > >=20
+> > > > >=20
+> > > > >=20
+> > > > > >=20
+> > > > > >=20
+> > > > > > >=20
+> > > > > > >=20
+> > > > > > > > =C2=A0=C2=A0=C2=A0=C2=A0 DEFINE_PROP_BOOL("stale-tm", Intel=
+IOMMUState, stale_tm, false),
+> > > > > > > > =C2=A0=C2=A0=C2=A0=C2=A0 DEFINE_PROP_BOOL("fs1gp", IntelIOM=
+MUState, fs1gp, true),
+> > > > > > > > @@ -4981,7 +4981,7 @@ static void vtd_cap_init(IntelIOMMUSt=
+ate *s)
+> > > > > > > > =C2=A0=C2=A0=C2=A0=C2=A0 }
+> > > > > > > >=20
+> > > > > > > > =C2=A0=C2=A0=C2=A0=C2=A0 if (s->pasid) {
+> > > > > > > > -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 s->ecap |=3D VT=
+D_ECAP_PASID | VTD_ECAP_PSS;
+> > > > > > > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 s->ecap =3D VTD=
+_ECAP_PASID | deposit64(s->ecap, 35, 5, s->pasid -
+> > > > > > >=20
+> > > > > > >=20
+> > > > > >=20
+> > > > > >=20
+> > > > >=20
+> > > > >=20
+> > > >=20
+> > > >=20
+> > >=20
+> > >=20
+> > > 1);
+> > >=20
+> > >=20
+> > > >=20
+> > > >=20
+> > > > >=20
+> > > > >=20
+> > > > > >=20
+> > > > > >=20
+> > > > > > >=20
+> > > > > > >=20
+> > > > > > >=20
+> > > > > > > I think this is a bit dangerous, the MemTxAttrs only allow up=
+ to 8 bits.
+> > > > > > > We have a comment next to the definition of VTD_ECAP_PSS abou=
+t this.
+> > > > > >=20
+> > > > > >=20
+> > > > > >=20
+> > > > > >=20
+> > > > > >=20
+> > > > > > Could you elaborate what dangerous do you see if s->pasid > 8?
+> > > > > > MemTxAttrs only allow up to 8bits, then Max PASID Width in emul=
+ated
+> > > > >=20
+> > > > >=20
+> > > >=20
+> > > >=20
+> > >=20
+> > >=20
+> > > device's
+> > >=20
+> > >=20
+> > > >=20
+> > > >=20
+> > > > >=20
+> > > > >=20
+> > > > > > PASID capability Register is no more than 8. Emulated device sh=
+ould never
+> > > > >=20
+> > > > >=20
+> > > >=20
+> > > >=20
+> > >=20
+> > >=20
+> > > send
+> > >=20
+> > >=20
+> > > >=20
+> > > >=20
+> > > > >=20
+> > > > >=20
+> > > > > > a Request-with-pasid with pasid > 255.
+> > > > > >=20
+> > > > > > Hard code VTD_ECAP_PSS to 8 bits will make us not able to utili=
+ze the full
+> > > > >=20
+> > > > >=20
+> > > >=20
+> > > >=20
+> > >=20
+> > >=20
+> > > pasid
+> > >=20
+> > >=20
+> > > >=20
+> > > >=20
+> > > > >=20
+> > > > >=20
+> > > > > > space of passthrough device if it has larger Max PASID Width va=
+lue in pasid
+> > > > >=20
+> > > > >=20
+> > > > >=20
+> > > > > capability.
+> > > > >=20
+> > > > >=20
+> > > > >=20
+> > > > > >=20
+> > > > >=20
+> > > > >=20
+> > > > >=20
+> > > > >=20
+> > > > > The previous approach was to make sure that the kernel never allo=
+cates a too
+> > > > > large pasid
+> > > > > by limiting the width in the iommu instead of doint it in the dev=
+ices. Your patch
+> > > > > seems to
+> > > > > reverse the problem. Is it something we are ready to accept?
+> > > >=20
+> > > >=20
+> > > >=20
+> > > >=20
+> > > > Not get your concern. Define a hard coded limit looks an overkill.
+> > > > How you define too large here, larger than MIN(iommu.VTD_ECAP_PSS, =
+device's
+> > >=20
+> > >=20
+> > > Max PASID Width)?
+> > >=20
+> > > Oh yep, you are righ, my "too large" is not very explicit.
+> > > I mean too large to be passed from an emulated device, all the way do=
+wn to the
+> > > iommu, through MemTxAttrs.
+> > >=20
+> > >=20
+> > >=20
+> > > >=20
+> > > > IIUC, kernel should take MIN(iommu.VTD_ECAP_PSS, device's Max PASID=
+ Width)
+> > >=20
+> > >=20
+> > > as the upper limit
+> > >=20
+> > >=20
+> > > > of pasid range.
+> > >=20
+> > >=20
+> > >=20
+> > > Yes, that's true.
+> > > Our current implementation makes sure that this MIN is always smaller=
+ than what
+> > > fits in MemTxAttrs.
+> > > This is always the case as pss is small enough.
+> > >=20
+> > > Increasing pss means that it's now up to devices to know that the att=
+rs cannot
+> > > carry a full-width pasid
+> > > and expose a lower pasid size to make sure the kernel never allocates=
+ an out-of-
+> > > range pasid.
+> >=20
+> >=20
+> >=20
+> > I see your concern.=C2=A0=20
+> > Looked into RISC-V emulation series [[https://lore.kernel.org/qemu-deve=
+l/20241004155721.2154626-4-dbarboza@ventanamicro.com/](https://lore.kernel.=
+org/qemu-devel/20241004155721.2154626-4-dbarboza@ventanamicro.com/)](https:=
+//lore.kernel.org/qemu-devel/20241004155721.2154626-4-dbarboza@ventanamicro=
+.com/](https://lore.kernel.org/qemu-devel/20241004155721.2154626-4-dbarboza=
+@ventanamicro.com/))=C2=A0=20
+> > which introduced MemTxAttrs.pid, it looks MemTxAttrs.pid is only used b=
+y RISC-V,=C2=A0=20
+> > E.g., only riscv_iommu_memory_region_index() returns attrs.pid and pass=
+ it to imrc->translate().
+> >=20
+> > For VTD and other vIOMMUs, we create different AddressSpace for differe=
+nt pasid,=C2=A0=20
+> > When call imrc->translate() callback, it's enough to go ahead with Addr=
+essSpace,=C2=A0=20
+> > we don't pass in pasid through iommu_idx parameter.
+> >=20
+> >=20
+> >=20
+> >=20
+> > > This a bit more dagerous for device implementors but I don't see any =
+other way to
+> > > make accel work without this change. I just wanted to make sure that =
+you noticed
+> > > the design shift behind your patch.
+> >=20
+> >=20
+> >=20
+> > I think it's not an issue with VTD as explained above.
+> >=20
+> >=20
+> >=20
+> >=20
+> > > btw, why do we need to pass the actual value on the command line? Cou=
+ldn't we
+> > > fetch the pss supported by
+> > > the underlying hardware and use the same value?
+> >=20
+> >=20
+> >=20
+> > Because we can have heterogeneous IOMMUs on host, PSS can be different =
+between them.=C2=A0=20
+> > Meanwhile, take migration into consideration, it needs to be configurab=
+le by user.
 >=20
-> s/dont't/don't/
-
+>=20
+> right
+>=20
+> Thanks=C2=A0 =20
+> cmd
+>=20
+>=20
+>=20
+> > Thanks=C2=A0=20
+> > Zhenzhong
+> >=20
+> >=20
+> >=20
+> >=20
+> > > Thanks!
+> > > cmd
+> > >=20
+> > >=20
+> > >=20
+> > > >=20
+> > > > We also have patch12 to ensure vIOMMU's pasid upper limit not bigge=
+r than
+> > >=20
+> > >=20
+> > > host side:
+> > >=20
+> > >=20
+> > > >=20
+> > > > @@ -64,6 +65,13 @@ bool vtd_check_hiod_accel(IntelIOMMUState *s,
+> > >=20
+> > >=20
+> > > VTDHostIOMMUDevice *vtd_hiod,
+> > >=20
+> > >=20
+> > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return false;
+> > > > =C2=A0=C2=A0=C2=A0=C2=A0 }
+> > > >=20
+> > > > +=C2=A0=C2=A0=C2=A0 /* Only do the check when host device support P=
+ASIDs */
+> > > > +=C2=A0=C2=A0=C2=A0 if (caps->max_pasid_log2 && s->pasid > hpasid) =
+{
+> > > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 error_setg(errp, "PASID=
+ bits size %d > host IOMMU PASID bits size %d",
+> > > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 s->pasid, hpasid);
+> > > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return false;
+> > > > +=C2=A0=C2=A0=C2=A0 }
+> > > >=20
+> > > > Thanks
+> > > > Zhenzhong
+> > >=20
+> > >=20
+> >=20
+> >
+>=20
+>=20
 
