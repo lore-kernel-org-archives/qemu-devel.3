@@ -4,126 +4,151 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 643FDEF99E7
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Feb 2026 23:03:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4C93EF99E5
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Feb 2026 23:07:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vr2BW-0003t5-Io; Fri, 13 Feb 2026 18:02:50 -0500
+	id 1vr2Fl-0004n2-C5; Fri, 13 Feb 2026 18:07:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1vr2BV-0003sx-59
- for qemu-devel@nongnu.org; Fri, 13 Feb 2026 18:02:49 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
+ id 1vr2Fi-0004mC-VX; Fri, 13 Feb 2026 18:07:10 -0500
+Received: from mail-westcentralusazlp170130007.outbound.protection.outlook.com
+ ([2a01:111:f403:c112::7] helo=CY3PR05CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1vr2BR-0003Ae-JL
- for qemu-devel@nongnu.org; Fri, 13 Feb 2026 18:02:48 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771023763;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=jaN9tx/t6Howl++DEgqc/NZnXQKF6QnO8xAWyLsvs3M=;
- b=FZNe6DS0GQ+9XQG/Qkr0E+KI8a6sVPoVIEReOqjCXHaI+y81iOiDGWkhvFEzInOl4OpzUu
- Y8WRnGrAIsh9ISro9qXO52ELDUSMzzt6OHyKX8s2HwaLHTeCMXDGb8jmCBWCj/HF3X632K
- Hp2CH9o1JSkuxEwDkQ+Cwpv+dLKyJ+w=
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
- [209.85.216.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-407-Z6UF4WrRNISvGS3-IPl9Jw-1; Fri, 13 Feb 2026 18:02:41 -0500
-X-MC-Unique: Z6UF4WrRNISvGS3-IPl9Jw-1
-X-Mimecast-MFC-AGG-ID: Z6UF4WrRNISvGS3-IPl9Jw_1771023761
-Received: by mail-pj1-f70.google.com with SMTP id
- 98e67ed59e1d1-356236ae3c1so1265952a91.1
- for <qemu-devel@nongnu.org>; Fri, 13 Feb 2026 15:02:41 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1771023760; cv=none;
- d=google.com; s=arc-20240605;
- b=Yi7EOa+eZ3Jsgja84OhJb+ki/lgMLbQx5Yn5sc9Tn4pXT+HVKrIiSgEk1fZd9Osz0I
- cEHjPvrQZIi9/LbBRxGhjGcOmSh0ax9IltbtSKn2SpkZsFGgktcN9fRy15PMjRis8oK9
- YyyLnQd4xWruYmn2ozzJCmgNa1gMwKkR2XEWCNZQONKVo7FQFZ97cPo1dJ+cK07OBdmk
- GwEl4xCWuLtbSknhUZxJ64AHhl0+Qpw8eupIM8iRHjYBTsk5AILQeUS4VQpNzRpp7diA
- WUky99/M02VPObUc2NnKhnDkaq2ORigwVsw6N3FK0FNYtOx3L7hibrbmK1MmMMm/dmks
- Pitw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=jaN9tx/t6Howl++DEgqc/NZnXQKF6QnO8xAWyLsvs3M=;
- fh=7YH/6k/j25NNwwt5Z0aNR+l5vsUJilkY+EqN5Ef/xhY=;
- b=g8lRv1xnNgROYUx83PL31heVMtvV0sKYCrKmc7JFwq0esgf8Q62qUuUQHYSXnX1YM+
- o2Plb4jkwlufCKw3q2VHtmcn1FWgAESX8/yQL/YvkJFEyljVpyZe0fyuFgPzajnR7j7r
- K3ieYcRqthPcnNMGBd+2L4yYa7waYCW0OLUT8eGeItHQc7iEYyEwd9NLKIyj5RxfMg8X
- GWnr1FHInXVQhbeQwERegmPrQvDz6bXFkL5az4mx5KuBjbdYDQQn/r/e/ynmPqIZKabO
- 0DTYFsDR6X2r2HwH694A76A3q/IjHZD45LFk4/656ZFto77KPONYzU2xBhye/RwVNZT8
- 8EaQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1771023760; x=1771628560; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=jaN9tx/t6Howl++DEgqc/NZnXQKF6QnO8xAWyLsvs3M=;
- b=J6OnuVrvsfTCr1e3DOPaRlPomotyekAIZH3PQO64nqdEXO1Bh5PCV6fqw1DKJqdPL1
- bpbnEHhzT4/eYxjrpbE23sFs5Eg7XE2QdbMh9XkiBYSFmDowtf3Wo/DbshgixV+NRzf1
- pkV4L5mQ0ZgsCtaKpE/f4+1JkhW+pLLrnkDT7SQ3MJGjRb+NAKNEDHF9UTD1cDXcSgWE
- b75fQza+8ILHp8hzo43O94+9GLfrFZyWD/p090MyZXakHRDla/xh/Q41jwwc64HjoFUk
- Rv8aCmRt+qOG7L1Y4VdZrd/WZNkf9IC7tzFxkAw7kHjxxtRK/f9/hz9UtHej3Fhff4B2
- R8cg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771023760; x=1771628560;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=jaN9tx/t6Howl++DEgqc/NZnXQKF6QnO8xAWyLsvs3M=;
- b=YTr20JzhdOCfHB5v8KZSmtJVCiXJ5GMB1MiZAsXRrsd/OfYo5enEPMIKmUypi0BZTg
- V0hZjsWfdgkH4aGBlH/9eV6TTQ3bi6YqA6qukO2B5u4Mkw3hf5MbmyWzROp/qkq1G46s
- yTJDxNUc9uWJcV3fLyYE7jP5hiQW7bHJhuV+wD6jzT2CQZfdgYpw7Lq3azP//89PGXER
- LXqmGRNSRyBH+sKjbZ4z5zz/FO66fSos4bXo+fxO7efpxqjR/dRwVRwnRD1eqndYiEse
- gtZ7KWC/bES1JOQIJn5YvLsCVp49Yi2jehhgdKdqgu6oO8y5/LSckacIjUfP6KVa2vFY
- CCFg==
-X-Gm-Message-State: AOJu0YzlGicSYEoBmRz9PPDoqMzjJvzOhKYkp9ecbiZVY8dN6/tKEUSN
- P0qUdaftQj3ceFQpKUtKrJjnSSP0i5TLWg4dS9qdHxIWpZOh5VEArdlKDbOBj+Y31pZNBV94WlB
- wsrFPcBoDuJH3LBqWk7onPvL786eICNt9mTdg4Uy/Zwj5759TL2XErDqg2UnXzZkS9sI48dl8JF
- Jh3SMxqV/yOvTsswmLr4KDcQ9pj3vDG5g=
-X-Gm-Gg: AZuq6aLMbjvJoiwHo5XOfyKTgwqX90EbqQmCwfOzQ+Nd7kiTIsMg0dN5OI3srtc2Yjd
- 78j2O5tWJ53hg54LjGQGCtMjP4ox3GqaJQROhY3HENCbIPyUcxYwEr7uKgge5u2Xi9AfClxUwiM
- 38szbQc0i83AS8iyYT2AtZGV8DecbrEAeUvymLdrB+bU/V90AjmGofNq0SoLbivaYUQPIAfPSSd
- F0nnzd72SjPNRlo3tRSgKDFAJR4SiVMIck56g==
-X-Received: by 2002:a17:90b:53cf:b0:354:7e46:4a8e with SMTP id
- 98e67ed59e1d1-357b50e2d6dmr1194896a91.7.1771023760531; 
- Fri, 13 Feb 2026 15:02:40 -0800 (PST)
-X-Received: by 2002:a17:90b:53cf:b0:354:7e46:4a8e with SMTP id
- 98e67ed59e1d1-357b50e2d6dmr1194880a91.7.1771023760000; Fri, 13 Feb 2026
- 15:02:40 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
+ id 1vr2Fh-0003bR-6i; Fri, 13 Feb 2026 18:07:10 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=ixKCFfZ7XklGkq9AzStAMuIljX0d0HZUED+mKpfgxu1T/Cz6EqECkj01Q/0tNw3C9pDoo3lolEUMoSlKy0H9HbHd/txTopnclnMrkYJWLpINl6xex0HRhKpbl2iljR5Ra1zR8QGewkth6uhae5HIVGm88xQD+WPdfiI2AP6S2OoQsi0+Ns6KSlHGBcBFY51YWl8xq50jJ4l1gn9x67jdXq/0vq24K2E40iJydZqwAPh1we8JuRgwmon3ZSAlHrE36OVzxA+7ih9gGxFJH28rcb8mXUhA7GOb4vMywLK+aUNZptjSi+K43OPA/ZB0shNPMyQnpRmWp9UBUr5WCTDIfw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=OR5EBklqxxnUAaMLLH8soFE2RLQz13v7gTJAewWXhSw=;
+ b=tBCe2bKHmRjV0dkfCGYuT02dfpRfVBuZ7ReS7h11xxVzVBOy+ZC+TEUppVkesEjD641xUNqSu2/8kOmFBmNr6C5OOVuEKY4KIw1BZtrt+smPDx56bRMndOXAV48dr0nXeEXsMVQv3Jv98Cp3PjWNcp6zRvX0XgmgsR/W5ALRT4D3BIuwZLg4+t0WG1rV0YD2Hk0mD/bl6XFQaUZne3ddEeC787GN5cORE29VQz3D9FR7iXrlQuKB393bC5xYbzQ+gKgnH/wMYPCIqMQDYjM4M0N4JQYpTXp94vn6lTii7/KnahFmgKbneudMlTTJDNoxfof/DeJUTEoQOMHAfgeV4w==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.117.160) smtp.rcpttodomain=nongnu.org smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=OR5EBklqxxnUAaMLLH8soFE2RLQz13v7gTJAewWXhSw=;
+ b=m1KQ750XWwCy4YX9RzvpI3gOQcv/fSActlbi015F1Cww88mPYC2Vr+FtcfJBWBMwjmwvvFXvY+O2+6Xxvg+X45ZaD+YzvLtg35cwoctrLZ99n1eDRkEHTkxgbCJ06Mxuz5pyJqUZd4qMthz/udTAPjIyfTMwrZvZAY62OIkR9YKEVDZVRSa2ReyKfojANoRawgMcTYH/aLQWuv3UnSag8RC5cjD1Am7czSspMSnloOvqk6tS7X0T9J9rfdOgfRbVbWqMu3BePk9f1014WYa+/B3S3NykdNeSslWr7hyjOpOPktLBBP6EE6GN2RuBQBrjJ4SpjDxeSQ2r+/Gues6SiA==
+Received: from BY5PR03CA0029.namprd03.prod.outlook.com (2603:10b6:a03:1e0::39)
+ by DS0PR12MB9039.namprd12.prod.outlook.com (2603:10b6:8:de::21) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9611.14; Fri, 13 Feb
+ 2026 23:06:56 +0000
+Received: from SJ1PEPF00001CE1.namprd05.prod.outlook.com
+ (2603:10b6:a03:1e0:cafe::c4) by BY5PR03CA0029.outlook.office365.com
+ (2603:10b6:a03:1e0::39) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9611.11 via Frontend Transport; Fri,
+ 13 Feb 2026 23:06:49 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
+ smtp.mailfrom=nvidia.com;
+ dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.160) by
+ SJ1PEPF00001CE1.mail.protection.outlook.com (10.167.242.9) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9611.8 via Frontend Transport; Fri, 13 Feb 2026 23:06:55 +0000
+Received: from rnnvmail202.nvidia.com (10.129.68.7) by mail.nvidia.com
+ (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Fri, 13 Feb
+ 2026 15:06:40 -0800
+Received: from rnnvmail205.nvidia.com (10.129.68.10) by rnnvmail202.nvidia.com
+ (10.129.68.7) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Fri, 13 Feb
+ 2026 15:06:39 -0800
+Received: from nvidia.com (10.127.8.11) by mail.nvidia.com (10.129.68.10) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20 via Frontend
+ Transport; Fri, 13 Feb 2026 15:06:38 -0800
+Date: Fri, 13 Feb 2026 15:06:37 -0800
+From: Nicolin Chen <nicolinc@nvidia.com>
+To: Shameer Kolothum <skolothumtho@nvidia.com>
+CC: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>, <eric.auger@redhat.com>,
+ <peter.maydell@linaro.org>, <clg@redhat.com>, <alex@shazbot.org>,
+ <nathanc@nvidia.com>, <mochs@nvidia.com>, <jan@nvidia.com>, <jgg@nvidia.com>, 
+ <jonathan.cameron@huawei.com>, <zhangfei.gao@linaro.org>,
+ <zhenzhong.duan@intel.com>, <kjaju@nvidia.com>
+Subject: Re: [PATCH v2 15/24] hw/arm/tegra241-cmdqv: map VINTF page0 MMIO
+ region
+Message-ID: <aY+ufT8pR/N+c8q8@nvidia.com>
+References: <20260206144823.80655-1-skolothumtho@nvidia.com>
+ <20260206144823.80655-16-skolothumtho@nvidia.com>
 MIME-Version: 1.0
-References: <20260127182516.289834-1-marcandre.lureau@redhat.com>
- <20260127182516.289834-10-marcandre.lureau@redhat.com>
- <1e10cb81-5168-4907-8bc5-4223f1494bc8@nutanix.com>
-In-Reply-To: <1e10cb81-5168-4907-8bc5-4223f1494bc8@nutanix.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Sat, 14 Feb 2026 03:02:28 +0400
-X-Gm-Features: AZwV_QjLtvOW2zG7aIzb08CGCuzGsWGNjbUTBrEJNnRny1QOIYZbZoM2wFJWw1g
-Message-ID: <CAMxuvawemXRX5xwvc3ES33VCaSzdK6XtaMO6KYO8-aOCTSLNtw@mail.gmail.com>
-Subject: Re: [PATCH 09/43] audio/pw: convert to QOM lifecycle methods
-To: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Gerd Hoffmann <kraxel@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mlureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <20260206144823.80655-16-skolothumtho@nvidia.com>
+X-NV-OnPremToCloud: ExternallySecured
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SJ1PEPF00001CE1:EE_|DS0PR12MB9039:EE_
+X-MS-Office365-Filtering-Correlation-Id: 52d45f76-7557-46d9-4116-08de6b549514
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|376014|36860700013|82310400026|1800799024; 
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?T+PFUicpLojYgr1PcYOdtma3ZCRVy/kr8bwjl9NdsvzxKehudjbuACrzrubu?=
+ =?us-ascii?Q?iHgP5X0xb0oBK0+k6gy1nsNsCI3Lun14Jy78mqbSPJQ2FdtK7OsugbcFe8Qe?=
+ =?us-ascii?Q?UujepFR83A/bvreAGt4zE8VXtKYfu5ALQeYLq7yWI1NAANv8uOi1fFjZIpzb?=
+ =?us-ascii?Q?MG0vwacFPm0CDCHfXBztd1wwLvOie5Q3uaYBQMkixJGgekW/8CpanmK9d9sa?=
+ =?us-ascii?Q?0es4DdindJbMBfpYHrNMsTJVoPmMDbw/ShccN5OWiu3H5MJ43Ale+fCWgnJ4?=
+ =?us-ascii?Q?o/+lqtY2HIlUddD+5T14PKTeWaLQF6IVYmTadqcskpbnfSE79pCa2MVObP3b?=
+ =?us-ascii?Q?aHHEKKujo+q8Am8z26trc24Feui7qbZAhCCv/BjMteW/eNNYLqHMiFqjDL7j?=
+ =?us-ascii?Q?qLoX9wAw92ioQontvkw8xxaA1SP+lRTEUVE0SVVJzH6epZTCmNqJrXAI6f6A?=
+ =?us-ascii?Q?4VXo2W18MmVicXYAefrD7D1q+3HM1MDLv+XZeyQo2YFGINcwrvOrsXUAjXYv?=
+ =?us-ascii?Q?BWELjVH2msEQSuvywNvJSYnVCpRo/+tY5TN2ZnDQohWIa9DvJIQAfj+nPhir?=
+ =?us-ascii?Q?f4Dds+6thA669kF7py7a17vUllxKnKSk+ES031ylARgLQ42zpG6uG9+XviOb?=
+ =?us-ascii?Q?tdq9m1jKVSUyTXT83175ruguEI9SLDKkm5zB9NMmobd0O0JURBmaxlOdpm+i?=
+ =?us-ascii?Q?Qc6C59VcRQGzvVC0/BmjTax97kOCFljtCi+NnI18nlBPPozi2H2VQOzJbdCb?=
+ =?us-ascii?Q?ldbMPFbQiTcQYNnkYWl6p21j7rU4sg08Tzt8wb+mpVCsPm1xtrT2IAUSIgv0?=
+ =?us-ascii?Q?D12Pha8Yu/88nMuk652OaHYDUYvFqk/8z2jKTpyc5Akwe8Gqyk8xc0fbz2gi?=
+ =?us-ascii?Q?yBIFPu6GE2mUvLqntJnHjzY0FwBdSppZMSHRKPpAtFg/2rQGKWkc6YlWt3YK?=
+ =?us-ascii?Q?ekSRT+7IB88O5WC/kD8GxBAFPlrd1xrxqqHseJWwBM9067qmV9NO7l7usWNX?=
+ =?us-ascii?Q?vQGBoiOOnaCQLxRuYV6ooN74sWMmeCNQ4cKQmGmklBD6CC50+iONwqhifb66?=
+ =?us-ascii?Q?R1tzt1nY5dRyqeTmsfy1L+vrsf5z428kmI4m8vZkQs7FdQeB+ErsbULXqRye?=
+ =?us-ascii?Q?gA/HBjR87motWWUoZkPWlq0y+3Re+8KxEovVGJT25QzktI60g22ULffUGWtq?=
+ =?us-ascii?Q?OQtcDujajufT/feAzLbQjB2cfQeRhmGoyZqU6XG1BlbFmZtRCrWBHYRaYPJc?=
+ =?us-ascii?Q?FV2hbyqPTjnv+Wgre2nrCm4GmFyZCJoe+qOoe7FpEnrBZt/HJry8VTpsdrB/?=
+ =?us-ascii?Q?cJ82chwByclMDCPPWJ3x8Sv3l9H7h4O1yIU5XRznm6f3krlb12vSKFy2rBUt?=
+ =?us-ascii?Q?S5iZR56nucUl0Q5i/NS/nqjJtYyLki1VESi1C+bERSnPxvvNx5e+OXCXDqE/?=
+ =?us-ascii?Q?n26GXKvEZmIRLOWeWXkIQKVrXUZUoRWn+Iu40KLVAapQ/1nbwvAw/U0EGUlN?=
+ =?us-ascii?Q?co39btTtw37KR8UVbo5a3GxSlvZhMZeYT2fPoQ/MslLifbsEsVl7AFmjVpb+?=
+ =?us-ascii?Q?8xIXT7p+tXh+6NEwNIzmhN3ahIaSGOn+26Ki8e76cmy8hYKxSzK6vINootfB?=
+ =?us-ascii?Q?MZ/4p4VQDKV5xE/ADAYs4gQPRQpA0h5lwjMIYli2XxNZGJG7w3aTXPTZU8gS?=
+ =?us-ascii?Q?7XHtQw=3D=3D?=
+X-Forefront-Antispam-Report: CIP:216.228.117.160; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge1.nvidia.com; CAT:NONE;
+ SFS:(13230040)(376014)(36860700013)(82310400026)(1800799024); DIR:OUT;
+ SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: ELUNinqc/aBjUWMXQ0nBWGnuSg5UZy21oJlRM+/Mv24gl33/2V/wG5QWPLhyBzqZaVKnhEJPTUHEZ8x05pSCAaf5dbMuxVTmoibz9BM7gkmqNnUqWstpe7tIDr+XBjJlxBJmneG9VqKdLzp2gsefm0u51kkyJd+3wyeSRcLOrXcMn/v8SpbZAdydQhVj2ulMMYrcc7fealDiDtuQCgiHPuSt4qD0X7ojpSqOx3V1GDmqbYy3BSm8vs00TlJ2VwO8NLPgCpPwM5YsjbfkwsnnVU7fLXSnuoHAjntaemGvCAk4TOlVvIuRVUVOoaieOR/o9MJK/aXjZM5SiXVFjbO7LKrLcXIvxRsXSRbZSoWAQkZK9OsaXEJBFs92VN06OC3Q2h/qlH/WHd+CXFVk11QYlqCxtFn6Tl0lsT2rS53oIDcfHiwtelvRgzLqNRrp2oiE
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Feb 2026 23:06:55.4363 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 52d45f76-7557-46d9-4116-08de6b549514
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.160];
+ Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource: SJ1PEPF00001CE1.namprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR12MB9039
+Received-SPF: permerror client-ip=2a01:111:f403:c112::7;
+ envelope-from=nicolinc@nvidia.com;
+ helo=CY3PR05CU001.outbound.protection.outlook.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -139,430 +164,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
+On Fri, Feb 06, 2026 at 02:48:14PM +0000, Shameer Kolothum wrote:
+> +static void tegra241_cmdqv_map_vintf_page0(Tegra241CMDQV *cmdqv)
+> +{
+> +    char *name;
+> +
+> +    if (cmdqv->vintf_page0_mapped) {
+> +        return;
+> +    }
+> +
+> +    name = g_strdup_printf("%s vintf-page0",
+> +                           memory_region_name(&cmdqv->mmio_cmdqv));
+> +    memory_region_init_ram_device_ptr(&cmdqv->mmio_vintf_page0,
+> +                                      memory_region_owner(&cmdqv->mmio_cmdqv),
+> +                                      name, VINTF_REG_PAGE_SIZE,
+> +                                      cmdqv->vintf_page0);
+> +    memory_region_add_subregion_overlap(&cmdqv->mmio_cmdqv, 0x30000,
+> +                                        &cmdqv->mmio_vintf_page0, 1);
 
-On Fri, Feb 13, 2026 at 11:17=E2=80=AFAM Mark Cave-Ayland
-<mark.caveayland@nutanix.com> wrote:
->
-> On 27/01/2026 18:24, marcandre.lureau@redhat.com wrote:
->
-> > From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> >
-> > Migrate the PipeWire audio backend from the legacy driver init/fini
-> > callbacks to proper QOM realize and finalize methods.
-> >
-> > The pwaudio struct fields are now embedded directly in the AudioPw
-> > QOM object instead of being allocated separately as drv_opaque. This
-> > allows accessing the backend state through proper QOM type casting
-> > with AUDIO_PW() rather than casting drv_opaque pointers.
-> >
-> > The PipeWire thread loop and context are now managed through the QOM
-> > lifecycle, with initialization in realize and cleanup in finalize.
-> >
-> > Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> > ---
-> >   audio/pwaudio.c | 119 +++++++++++++++++++++++------------------------=
--
-> >   1 file changed, 58 insertions(+), 61 deletions(-)
-> >
-> > diff --git a/audio/pwaudio.c b/audio/pwaudio.c
-> > index ed48a9754fe..ddf5f2c70f7 100644
-> > --- a/audio/pwaudio.c
-> > +++ b/audio/pwaudio.c
-> > @@ -31,36 +31,27 @@
-> >   #define TYPE_AUDIO_PW "audio-pipewire"
-> >   OBJECT_DECLARE_SIMPLE_TYPE(AudioPw, AUDIO_PW)
-> >
-> > +static AudioBackendClass *audio_pw_parent_class;
-> > +
-> >   struct AudioPw {
-> >       AudioMixengBackend parent;
-> > -};
-> >
-> > -static struct audio_driver pw_audio_driver;
-> > +    struct pw_thread_loop *thread_loop;
-> > +    struct pw_context *context;
-> >
-> > -static void audio_pw_class_init(ObjectClass *klass, const void *data)
-> > -{
-> > -    AudioMixengBackendClass *k =3D AUDIO_MIXENG_BACKEND_CLASS(klass);
-> > +    struct pw_core *core;
-> > +    struct spa_hook core_listener;
-> > +    int last_seq, pending_seq, error;
-> > +};
-> >
-> > -    k->driver =3D &pw_audio_driver;
-> > -}
-> > +static struct audio_driver pw_audio_driver;
-> >
-> >   typedef struct pwvolume {
-> >       uint32_t channels;
-> >       float values[SPA_AUDIO_MAX_CHANNELS];
-> >   } pwvolume;
-> >
-> > -typedef struct pwaudio {
-> > -    Audiodev *dev;
-> > -    struct pw_thread_loop *thread_loop;
-> > -    struct pw_context *context;
-> > -
-> > -    struct pw_core *core;
-> > -    struct spa_hook core_listener;
-> > -    int last_seq, pending_seq, error;
-> > -} pwaudio;
-> > -
-> >   typedef struct PWVoice {
-> > -    pwaudio *g;
-> >       struct pw_stream *stream;
-> >       struct spa_hook stream_listener;
-> >       struct spa_audio_info_raw info;
-> > @@ -236,9 +227,9 @@ static const struct pw_stream_events playback_strea=
-m_events =3D {
-> >   static size_t
-> >   qpw_read(HWVoiceIn *hw, void *data, size_t len)
-> >   {
-> > +    AudioPw *c =3D AUDIO_PW(hw->s);
-> >       PWVoiceIn *pw =3D (PWVoiceIn *) hw;
-> >       PWVoice *v =3D &pw->v;
-> > -    pwaudio *c =3D v->g;
-> >       const char *error =3D NULL;
-> >       size_t l;
-> >       int32_t avail;
-> > @@ -273,9 +264,9 @@ done_unlock:
-> >
-> >   static size_t qpw_buffer_get_free(HWVoiceOut *hw)
-> >   {
-> > +    AudioPw *c =3D AUDIO_PW(hw->s);
-> >       PWVoiceOut *pw =3D (PWVoiceOut *)hw;
-> >       PWVoice *v =3D &pw->v;
-> > -    pwaudio *c =3D v->g;
-> >       const char *error =3D NULL;
-> >       int32_t filled, avail;
-> >       uint32_t index;
-> > @@ -298,9 +289,9 @@ done_unlock:
-> >   static size_t
-> >   qpw_write(HWVoiceOut *hw, void *data, size_t len)
-> >   {
-> > +    AudioPw *c =3D AUDIO_PW(hw->s);
-> >       PWVoiceOut *pw =3D (PWVoiceOut *) hw;
-> >       PWVoice *v =3D &pw->v;
-> > -    pwaudio *c =3D v->g;
-> >       const char *error =3D NULL;
-> >       int32_t filled, avail;
-> >       uint32_t index;
-> > @@ -434,7 +425,7 @@ pw_to_audfmt(enum spa_audio_format fmt, int *endian=
-ness,
-> >   }
-> >
-> >   static int
-> > -qpw_stream_new(pwaudio *c, PWVoice *v, const char *stream_name,
-> > +qpw_stream_new(AudioPw *c, PWVoice *v, const char *stream_name,
-> >                  const char *name, enum spa_direction dir)
-> >   {
-> >       int res;
-> > @@ -452,8 +443,8 @@ qpw_stream_new(pwaudio *c, PWVoice *v, const char *=
-stream_name,
-> >       }
-> >
-> >       /* 75% of the timer period for faster updates */
-> > -    buf_samples =3D (uint64_t)v->g->dev->timer_period * v->info.rate
-> > -                    * 3 / 4 / 1000000;
-> > +    buf_samples =3D (uint64_t)AUDIO_MIXENG_BACKEND(c)->dev->timer_peri=
-od
-> > +        * v->info.rate * 3 / 4 / 1000000;
-> >       pw_properties_setf(props, PW_KEY_NODE_LATENCY, "%" PRIu64 "/%u",
-> >                          buf_samples, v->info.rate);
-> >
-> > @@ -535,11 +526,11 @@ qpw_set_position(uint32_t channels, uint32_t posi=
-tion[SPA_AUDIO_MAX_CHANNELS])
-> >   static int
-> >   qpw_init_out(HWVoiceOut *hw, struct audsettings *as, void *drv_opaque=
-)
-> >   {
-> > +    AudioPw *c =3D AUDIO_PW(hw->s);
-> >       PWVoiceOut *pw =3D (PWVoiceOut *) hw;
-> >       PWVoice *v =3D &pw->v;
-> >       struct audsettings obt_as =3D *as;
-> > -    pwaudio *c =3D v->g =3D drv_opaque;
-> > -    AudiodevPipewireOptions *popts =3D &c->dev->u.pipewire;
-> > +    AudiodevPipewireOptions *popts =3D &AUDIO_MIXENG_BACKEND(c)->dev->=
-u.pipewire;
-> >       AudiodevPipewirePerDirectionOptions *ppdo =3D popts->out;
-> >       int r;
-> >
-> > @@ -554,11 +545,11 @@ qpw_init_out(HWVoiceOut *hw, struct audsettings *=
-as, void *drv_opaque)
-> >           pw_to_audfmt(v->info.format, &obt_as.endianness, &v->frame_si=
-ze);
-> >       v->frame_size *=3D as->nchannels;
-> >
-> > -    v->req =3D (uint64_t)c->dev->timer_period * v->info.rate
-> > +    v->req =3D (uint64_t)AUDIO_MIXENG_BACKEND(c)->dev->timer_period * =
-v->info.rate
-> >           * 1 / 2 / 1000000 * v->frame_size;
-> >
-> >       /* call the function that creates a new stream for playback */
-> > -    r =3D qpw_stream_new(c, v, ppdo->stream_name ? : c->dev->id,
-> > +    r =3D qpw_stream_new(c, v, ppdo->stream_name ?: AUDIO_MIXENG_BACKE=
-ND(c)->dev->id,
-> >                          ppdo->name, SPA_DIRECTION_OUTPUT);
-> >       if (r < 0) {
-> >           pw_thread_loop_unlock(c->thread_loop);
-> > @@ -582,11 +573,11 @@ qpw_init_out(HWVoiceOut *hw, struct audsettings *=
-as, void *drv_opaque)
-> >   static int
-> >   qpw_init_in(HWVoiceIn *hw, struct audsettings *as, void *drv_opaque)
-> >   {
-> > +    AudioPw *c =3D AUDIO_PW(hw->s);
-> >       PWVoiceIn *pw =3D (PWVoiceIn *) hw;
-> >       PWVoice *v =3D &pw->v;
-> >       struct audsettings obt_as =3D *as;
-> > -    pwaudio *c =3D v->g =3D drv_opaque;
-> > -    AudiodevPipewireOptions *popts =3D &c->dev->u.pipewire;
-> > +    AudiodevPipewireOptions *popts =3D &AUDIO_MIXENG_BACKEND(c)->dev->=
-u.pipewire;
-> >       AudiodevPipewirePerDirectionOptions *ppdo =3D popts->in;
-> >       int r;
-> >
-> > @@ -602,7 +593,7 @@ qpw_init_in(HWVoiceIn *hw, struct audsettings *as, =
-void *drv_opaque)
-> >       v->frame_size *=3D as->nchannels;
-> >
-> >       /* call the function that creates a new stream for recording */
-> > -    r =3D qpw_stream_new(c, v, ppdo->stream_name ? : c->dev->id,
-> > +    r =3D qpw_stream_new(c, v, ppdo->stream_name ? : AUDIO_MIXENG_BACK=
-END(c)->dev->id,
-> >                          ppdo->name, SPA_DIRECTION_INPUT);
-> >       if (r < 0) {
-> >           pw_thread_loop_unlock(c->thread_loop);
-> > @@ -621,10 +612,8 @@ qpw_init_in(HWVoiceIn *hw, struct audsettings *as,=
- void *drv_opaque)
-> >   }
-> >
-> >   static void
-> > -qpw_voice_fini(PWVoice *v)
-> > +qpw_voice_fini(AudioPw *c, PWVoice *v)
-> >   {
-> > -    pwaudio *c =3D v->g;
-> > -
-> >       if (!v->stream) {
-> >           return;
-> >       }
-> > @@ -637,19 +626,18 @@ qpw_voice_fini(PWVoice *v)
-> >   static void
-> >   qpw_fini_out(HWVoiceOut *hw)
-> >   {
-> > -    qpw_voice_fini(&PW_VOICE_OUT(hw)->v);
-> > +    qpw_voice_fini(AUDIO_PW(hw->s), &PW_VOICE_OUT(hw)->v);
-> >   }
-> >
-> >   static void
-> >   qpw_fini_in(HWVoiceIn *hw)
-> >   {
-> > -    qpw_voice_fini(&PW_VOICE_IN(hw)->v);
-> > +    qpw_voice_fini(AUDIO_PW(hw->s), &PW_VOICE_IN(hw)->v);
-> >   }
-> >
-> >   static void
-> > -qpw_voice_set_enabled(PWVoice *v, bool enable)
-> > +qpw_voice_set_enabled(AudioPw *c, PWVoice *v, bool enable)
-> >   {
-> > -    pwaudio *c =3D v->g;
-> >       pw_thread_loop_lock(c->thread_loop);
-> >       pw_stream_set_active(v->stream, enable);
-> >       pw_thread_loop_unlock(c->thread_loop);
-> > @@ -658,19 +646,18 @@ qpw_voice_set_enabled(PWVoice *v, bool enable)
-> >   static void
-> >   qpw_enable_out(HWVoiceOut *hw, bool enable)
-> >   {
-> > -    qpw_voice_set_enabled(&PW_VOICE_OUT(hw)->v, enable);
-> > +    qpw_voice_set_enabled(AUDIO_PW(hw->s), &PW_VOICE_OUT(hw)->v, enabl=
-e);
-> >   }
-> >
-> >   static void
-> >   qpw_enable_in(HWVoiceIn *hw, bool enable)
-> >   {
-> > -    qpw_voice_set_enabled(&PW_VOICE_IN(hw)->v, enable);
-> > +    qpw_voice_set_enabled(AUDIO_PW(hw->s), &PW_VOICE_IN(hw)->v, enable=
-);
-> >   }
-> >
-> >   static void
-> > -qpw_voice_set_volume(PWVoice *v, Volume *vol)
-> > +qpw_voice_set_volume(AudioPw *c, PWVoice *v, Volume *vol)
-> >   {
-> > -    pwaudio *c =3D v->g;
-> >       int i, ret;
-> >
-> >       pw_thread_loop_lock(c->thread_loop);
-> > @@ -693,16 +680,16 @@ qpw_voice_set_volume(PWVoice *v, Volume *vol)
-> >   static void
-> >   qpw_volume_out(HWVoiceOut *hw, Volume *vol)
-> >   {
-> > -    qpw_voice_set_volume(&PW_VOICE_OUT(hw)->v, vol);
-> > +    qpw_voice_set_volume(AUDIO_PW(hw->s), &PW_VOICE_OUT(hw)->v, vol);
-> >   }
-> >
-> >   static void
-> >   qpw_volume_in(HWVoiceIn *hw, Volume *vol)
-> >   {
-> > -    qpw_voice_set_volume(&PW_VOICE_IN(hw)->v, vol);
-> > +    qpw_voice_set_volume(AUDIO_PW(hw->s), &PW_VOICE_IN(hw)->v, vol);
-> >   }
-> >
-> > -static int wait_resync(pwaudio *pw)
-> > +static int wait_resync(AudioPw *pw)
-> >   {
-> >       int res;
-> >       pw->pending_seq =3D pw_core_sync(pw->core, PW_ID_CORE, pw->pendin=
-g_seq);
-> > @@ -725,7 +712,7 @@ static int wait_resync(pwaudio *pw)
-> >   static void
-> >   on_core_error(void *data, uint32_t id, int seq, int res, const char *=
-message)
-> >   {
-> > -    pwaudio *pw =3D data;
-> > +    AudioPw *pw =3D data;
-> >
-> >       error_report("error id:%u seq:%d res:%d (%s): %s",
-> >                   id, seq, res, spa_strerror(res), message);
-> > @@ -737,7 +724,7 @@ on_core_error(void *data, uint32_t id, int seq, int=
- res, const char *message)
-> >   static void
-> >   on_core_done(void *data, uint32_t id, int seq)
-> >   {
-> > -    pwaudio *pw =3D data;
-> > +    AudioPw *pw =3D data;
-> >       assert(id =3D=3D PW_ID_CORE);
-> >       pw->last_seq =3D seq;
-> >       if (pw->pending_seq =3D=3D seq) {
-> > @@ -752,17 +739,20 @@ static const struct pw_core_events core_events =
-=3D {
-> >       .error =3D on_core_error,
-> >   };
-> >
-> > -static void *
-> > -qpw_audio_init(Audiodev *dev, Error **errp)
-> > +static bool
-> > +audio_pw_realize(AudioBackend *abe, Audiodev *dev, Error **errp)
-> >   {
-> > -    g_autofree pwaudio *pw =3D g_new0(pwaudio, 1);
-> > +    AudioPw *pw =3D AUDIO_PW(abe);
-> >
-> >       assert(dev->driver =3D=3D AUDIODEV_DRIVER_PIPEWIRE);
-> >       trace_pw_audio_init();
-> >
-> > +    if (!audio_pw_parent_class->realize(abe, dev, errp)) {
-> > +        return false;
-> > +    }
-> > +
-> >       pw_init(NULL, NULL);
-> >
-> > -    pw->dev =3D dev;
-> >       pw->thread_loop =3D pw_thread_loop_new("PipeWire thread loop", NU=
-LL);
-> >       if (pw->thread_loop =3D=3D NULL) {
-> >           error_setg_errno(errp, errno, "Could not create PipeWire loop=
-");
-> > @@ -801,8 +791,7 @@ qpw_audio_init(Audiodev *dev, Error **errp)
-> >       }
-> >
-> >       pw_thread_loop_unlock(pw->thread_loop);
-> > -
-> > -    return g_steal_pointer(&pw);
-> > +    return true;
->
-> Unrelated to this patch directly, however when viewing the file at this
-> commit I see the end of audio_pw_realize() looks like this:
->
->      if (wait_resync(pw) < 0) {
->          pw_thread_loop_unlock(pw->thread_loop);
->      }
->
->      pw_thread_loop_unlock(pw->thread_loop);
->      return true;
->
-> If pw_thread_loop_unlock() is always called regardless, why do we need
-> the wait_resync() logic? Is there a refcounted mutex involved?
->
-> >   fail:
-> >       if (pw->thread_loop) {
-> > @@ -810,13 +799,13 @@ fail:
-> >       }
-> >       g_clear_pointer(&pw->context, pw_context_destroy);
-> >       g_clear_pointer(&pw->thread_loop, pw_thread_loop_destroy);
-> > -    return NULL;
-> > +    return false;
-> >   }
-> >
-> >   static void
-> > -qpw_audio_fini(void *opaque)
-> > +audio_pw_finalize(Object *obj)
-> >   {
-> > -    pwaudio *pw =3D opaque;
-> > +    AudioPw *pw =3D AUDIO_PW(obj);
-> >
-> >       if (pw->thread_loop) {
-> >           pw_thread_loop_stop(pw->thread_loop);
-> > @@ -831,9 +820,7 @@ qpw_audio_fini(void *opaque)
-> >       if (pw->context) {
-> >           pw_context_destroy(pw->context);
-> >       }
-> > -    pw_thread_loop_destroy(pw->thread_loop);
-> > -
-> > -    g_free(pw);
-> > +    g_clear_pointer(&pw->thread_loop, pw_thread_loop_destroy);
-> >   }
->
-> Is there any way that pw->thread_loop can be locked when _finalize() is
-> invoked given that there is no explicit unlock here? Or is this done by
-> one of the other functions?
->
+I wonder if you see this:
 
-All functions taking the lock are releasing it, afaict, and finalize
-isn't called with lock taken.
+[    0.853123] arm-smmu-v3 arm-smmu-v3.0.auto: allocated 524288 entries for vcmdq0
+[    0.854739] arm-smmu-v3 arm-smmu-v3.0.auto: allocated 524288 entries for vcmdq1
+iommufd_backend_alloc_vdev  iommufd=142 dev_id=1 viommu_id=4 virt_id=0x200 vdev_id=8 (0)
+iommufd_cdev_attach_ioas_hwpt  [iommufd=142] Successfully attached device 0009:01:00.0 (143) to id=6
+smmuv3_accel_install_ste vSID=0x200 ste type=bypass hwpt_id=0x6
+iommufd_viommu_alloc_eventq  iommufd=142 viommu_id=4 type=1 veventq_id=9 veventq_fd=153 (0)
+iommufd_backend_alloc_hw_queue  iommufd=142 viommu_id=4 queue_type=1 index=0 addr=0xe2000000 size=0x800000 queue_id=10 (0)
+vfio_listener_region_add_ram region_add [ram] 0xc0b0000 - 0xc0bffff [0xfffff7f00000]
+iommufd_backend_map_dma  iommufd=142 ioas=2 iova=0xc0b0000 size=0x10000 addr=0xfffff7f00000 readonly=0 (-1)
+qemu-system-aarch64: warning: IOMMU_IOAS_MAP failed: Bad address, PCI BAR?
+[Switching to Thread 0xffffdd7aee80 (LWP 52426)]
 
-> >   static struct audio_pcm_ops qpw_pcm_ops =3D {
-> > @@ -855,8 +842,6 @@ static struct audio_pcm_ops qpw_pcm_ops =3D {
-> >
-> >   static struct audio_driver pw_audio_driver =3D {
-> >       .name =3D "pipewire",
-> > -    .init =3D qpw_audio_init,
-> > -    .fini =3D qpw_audio_fini,
-> >       .pcm_ops =3D &qpw_pcm_ops,
-> >       .max_voices_out =3D INT_MAX,
-> >       .max_voices_in =3D INT_MAX,
-> > @@ -864,11 +849,23 @@ static struct audio_driver pw_audio_driver =3D {
-> >       .voice_size_in =3D sizeof(PWVoiceIn),
-> >   };
-> >
-> > +static void audio_pw_class_init(ObjectClass *klass, const void *data)
-> > +{
-> > +    AudioBackendClass *b =3D AUDIO_BACKEND_CLASS(klass);
-> > +    AudioMixengBackendClass *k =3D AUDIO_MIXENG_BACKEND_CLASS(klass);
-> > +
-> > +    audio_pw_parent_class =3D AUDIO_BACKEND_CLASS(object_class_get_par=
-ent(klass));
-> > +
-> > +    b->realize =3D audio_pw_realize;
-> > +    k->driver =3D &pw_audio_driver;
-> > +}
-> > +
-> >   static const TypeInfo audio_pw_info =3D {
-> >       .name =3D TYPE_AUDIO_PW,
-> >       .parent =3D TYPE_AUDIO_MIXENG_BACKEND,
-> >       .instance_size =3D sizeof(AudioPw),
-> >       .class_init =3D audio_pw_class_init,
-> > +    .instance_finalize =3D audio_pw_finalize,
-> >   };
-> >
-> >   static void
->
-> Regardless:
->
-> Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
->
+Thread 38 "qemu-system-aar" hit Breakpoint 2, vfio_container_region_add (bcontainer=0xaaaaaf1220a0, section=0xffffdd7ade00, cpr_remap=false) at ../hw/vfio/listener.c:620
+620             error_setg(&err, "vfio_container_dma_map(%p, 0x%"HWADDR_PRIx", "
+(gdb) bt
+#0  vfio_container_region_add (bcontainer=0xaaaaaf1220a0, section=0xffffdd7ade00, cpr_remap=false) at ../hw/vfio/listener.c:620
+#1  0x0000aaaaab8a9290 in vfio_listener_region_add (listener=0xaaaaaf1220d0, section=0xffffdd7ade00) at ../hw/vfio/listener.c:492
+#2  0x0000aaaaab3035f8 in address_space_update_topology_pass (as=0xaaaaaefa6de0, old_view=0xffffec5171b0, new_view=0xffffc8001410, adding=true) at ../system/memory.c:1030
+#3  0x0000aaaaab303974 in address_space_set_flatview (as=0xaaaaaefa6de0) at ../system/memory.c:1106
+#4  0x0000aaaaab303bd4 in memory_region_transaction_commit () at ../system/memory.c:1158
+#5  0x0000aaaaab3084e0 in memory_region_update_container_subregions (subregion=0xaaaaaefa7b00) at ../system/memory.c:2653
+#6  0x0000aaaaab3085a0 in memory_region_add_subregion_common (mr=0xaaaaaefa79e0, offset=196608, subregion=0xaaaaaefa7b00) at ../system/memory.c:2668
+#7  0x0000aaaaab308644 in memory_region_add_subregion_overlap (mr=0xaaaaaefa79e0, offset=196608, subregion=0xaaaaaefa7b00, priority=1) at ../system/memory.c:2685
+#8  0x0000aaaaab570f68 in tegra241_cmdqv_map_vintf_page0 (cmdqv=0xaaaaaefa79c0) at ../hw/arm/tegra241-cmdqv.c:275
+#9  0x0000aaaaab571188 in tegra241_cmdqv_setup_vcmdq (cmdqv=0xaaaaaefa79c0, index=0, errp=0xffffdd7ae0e8) at ../hw/arm/tegra241-cmdqv.c:317
+#10 0x0000aaaaab571550 in tegra241_cmdqv_write_vcmdq (cmdqv=0xaaaaaefa79c0, offset0=131072, index=0, value=3791650835, size=4, errp=0xffffdd7ae0e8) at ../hw/arm/tegra241-cmdqv.c:378
+#11 0x0000aaaaab571a60 in tegra241_cmdqv_write (opaque=0xaaaaaefa79c0, offset=131072, value=3791650835, size=4) at ../hw/arm/tegra241-cmdqv.c:484
 
-thanks
-
+Nicolin
 
