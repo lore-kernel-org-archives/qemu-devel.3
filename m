@@ -4,79 +4,159 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F27E1EDF15B
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Feb 2026 13:08:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D18D2EDF15B
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Feb 2026 13:10:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqstg-00081v-K1; Fri, 13 Feb 2026 08:07:48 -0500
+	id 1vqswM-0000h0-3c; Fri, 13 Feb 2026 08:10:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1vqstf-00081f-Lm
- for qemu-devel@nongnu.org; Fri, 13 Feb 2026 08:07:47 -0500
-Received: from sender4-pp-g122.zoho.com ([136.143.188.122])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vqswL-0000gZ-13
+ for qemu-devel@nongnu.org; Fri, 13 Feb 2026 08:10:33 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1vqstd-0001h6-Ey
- for qemu-devel@nongnu.org; Fri, 13 Feb 2026 08:07:47 -0500
-ARC-Seal: i=1; a=rsa-sha256; t=1770988051; cv=none; 
- d=zohomail.com; s=zohoarc; 
- b=P9ZWrHnW1T+qycZQMpbvxxMG1R/w6/d82qeXY+OZUutgwibZZrGCDT7p1VfsKrwPOjcJfqa6/O/pXgBO+R5GK7HW/vda8m+avLe2c1xmTVvd0PSCbHxndK+QIWAZbMJdHgrMfZZ3E9YdAAvtT0xGvvhf57HCUKGLPyQCLYITGZA=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1770988051;
- h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=BzcHuxXSlVCCDlOd5H9r5pmv819HDy4wD4n4TYjZENU=; 
- b=iSx2ij5T92q8R45ft/JRcDDvygGZumnYjZF9wJ73DQ09ocC5Br65ZW+numy/zg0/3y0VLgZ4gIvvRN5JXOCPoyexjcQM2busv2yAYnk0f+o5lgZBgxJyXyy8b1uN4QBb+AH+rh6L83SxZ/OpJqE4vqC3qy+QKKB53J+aucOq7zA=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
- dkim=pass  header.i=collabora.com;
- spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
- dmarc=pass header.from=<dmitry.osipenko@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1770988051; 
- s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
- h=Message-ID:Date:Date:MIME-Version:Subject:Subject:To:To:Cc:Cc:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
- bh=BzcHuxXSlVCCDlOd5H9r5pmv819HDy4wD4n4TYjZENU=;
- b=hmh+U0f74F5P9x7c4hE5+6OcA46Vewqttkba1YyvsrBMCjLp6BIx3RgtvTODUUqU
- yVsLP+PWAkuEonxz8tfCSO4OglfcjQRgqAYz/q0fWuI18biEz3Y5jXsDe9yHRBhAgrK
- mzsSFe/mU5sHymYQRDy8gJcDn8QMnlSbOg5DKnxo=
-Received: by mx.zohomail.com with SMTPS id 1770988048950870.0447570321581;
- Fri, 13 Feb 2026 05:07:28 -0800 (PST)
-Message-ID: <c5f46ee3-f1fc-44d4-8388-47a55f45eee8@collabora.com>
-Date: Fri, 13 Feb 2026 16:07:25 +0300
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vqswI-0002Pz-Sw
+ for qemu-devel@nongnu.org; Fri, 13 Feb 2026 08:10:32 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1770988229;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=2izo8+HfCoGNLlV2CgxE///uOs4gMOFxG3si4/NeRQE=;
+ b=HfFK5KNz1zKCf2gjH7nzwATLEOa8ehPXAKJ3H0CIpB1vmOoB23ZkAN6+BC/FQ2j/5opHs4
+ Rj5dMONrWiSNtGLApbfHfFkmMFSxxiduZxMOV++pH31F4qKd2v1/JFXPc1NeltFtqbqulV
+ XxoFuzUI+uRd1BC6EejQ5xnBfXif86o=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-372-hCMH1v5tOGG6jncN1KjsjQ-1; Fri, 13 Feb 2026 08:10:27 -0500
+X-MC-Unique: hCMH1v5tOGG6jncN1KjsjQ-1
+X-Mimecast-MFC-AGG-ID: hCMH1v5tOGG6jncN1KjsjQ_1770988226
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-4359e322f30so887958f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 13 Feb 2026 05:10:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1770988226; x=1771593026; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=2izo8+HfCoGNLlV2CgxE///uOs4gMOFxG3si4/NeRQE=;
+ b=M84FqRb1vLvxeooBkSDoa9DaZnFWk0RQaEKhYFLMycf5S72QR5ZlldjJ6ZOykYlUw7
+ Tb0LiAjOqKnfUXEV2HVxfSjqgjc86/Fa3vfmRwNhzJve+88KMonq1jTNz/HZ7ZwiUblY
+ jqA6eR0eu/oKYau7YJx8MUMWhPP0+1rtPACMPfPi1d0Cygl0HUmRt1KzCo1U8VrN8eGr
+ 7UbG6OWzcBy2XJBA29DYFZs/uBw8fHY82FD65z0+1f7x1jnVyG24K1HkmPfyOOyw1FYO
+ h2Uceek7KABNLuVkHBqkW58A2+GM9tBJU+OdZcHp7ao0l35D+oIkj6QU0v72pNv9UZt2
+ JOQw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770988226; x=1771593026;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=2izo8+HfCoGNLlV2CgxE///uOs4gMOFxG3si4/NeRQE=;
+ b=hDIUROZeyN4fmQua79tQuT6/6XmiLhFxK9UIIJbcOlRUSx5olG4ZoKYx8dH7prKhg8
+ Ry3jmWFgOvBbAfkr8ngs4yMIp6tXjzzh105Z7IFQwGltPzC81eyfSyJ18I3vIMqBES13
+ ufDbwhEV3oUTaKJDqqK86pA27WWqeGEx6UQjQHi/EC4mlOf245dLl4nYEQknf8mUYK9e
+ 4WgsMt3sYhIT8TWo6BEIWjbGz7z70zgF9AyLSYuaI2E566TA8+M2LNQq3MJCPNKQQg1f
+ dd4YOFT54oIlBC9c4AUKmCVy2lklSFBaqgLnDWPu9WWbi/Jh2X0Au63NjUQLs1PVuH2b
+ gaEA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWV18X4Ctjt7veNtwgpvuQfU3sxs7SfqYpVbP/Am1kXA8uPQCHmQMlfXHGvAvreCh7EZaAPZIt8zcm/@nongnu.org
+X-Gm-Message-State: AOJu0YxQHl7PU3pMKiumZUCO2lZzn5Ldt5LPgxXX/DMZESVBKhOWHJ4C
+ wAcQzO4021/NCh8iv/Rs3sGZ788Ebbm1dhlO8bhIHYMfLdHamHJFmdxpS9wbcEkx4F1/gmkKPfn
+ /yJVB3S04yP3PBLzwYkJNa1DjY8dOPoU7s5BihrwNV4tTIP8Iea7JuNHS
+X-Gm-Gg: AZuq6aL9Ncyf7gw99wgdhUAOmfDi2jkuTBheN8nno/rBX5jNhqiD4UMP1jox4rkBwZk
+ WFKSqgDIXHPt9042mZG6UQSi7AArBq3k7j9KWT2n1zom+cL+k2M60NccCbN2GQCu1dlImola4Ns
+ hvuv7pZ7LC26KmH3WjiZc3n4dD0mhtnwAMUkH1Z+07sEcf7/f+FZQ7cCi4yr+6IztxNUeZfcAxg
+ JcPHf6ViffXupWUPxchKBOW1BbfSkVE6BgbZNXqArFszYu5GLftSLDf0vHWi6SIPZXpclvab2Vv
+ cW19roBf9fbErT1whD7sDu5w5+JoETsPc+DzE6Fjt1IKI4IVQtQRohrWAyv5/XN07fJ5EDwW9ZX
+ faTBaDZCl5jSD+3fwVlQkZkKNUcptRPjNNXyeT+r/uBJQFWpLbPqZrP7+kyBi
+X-Received: by 2002:a05:6000:603:b0:432:84f9:8bea with SMTP id
+ ffacd0b85a97d-4379791cfedmr3287587f8f.51.1770988226307; 
+ Fri, 13 Feb 2026 05:10:26 -0800 (PST)
+X-Received: by 2002:a05:6000:603:b0:432:84f9:8bea with SMTP id
+ ffacd0b85a97d-4379791cfedmr3287539f8f.51.1770988225819; 
+ Fri, 13 Feb 2026 05:10:25 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-43796ad009bsm5520262f8f.39.2026.02.13.05.10.24
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 13 Feb 2026 05:10:25 -0800 (PST)
+Message-ID: <87309142-6457-447b-ac04-8bd51b983a80@redhat.com>
+Date: Fri, 13 Feb 2026 14:10:24 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 41/51] virtio-gpu-virgl: correct parent for blob memory
- region
-To: "Michael S. Tsirkin" <mst@redhat.com>, Joelle van Dyne <j@getutm.app>
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-References: <cover.1770231744.git.mst@redhat.com>
- <81cb15cf3774140da7c17341018a3852f920acb5.1770231744.git.mst@redhat.com>
- <4eb93d7a-1fa9-4b3c-8ad7-a2eb64f025a0@collabora.com>
- <CA+E+eSDta5wSBs+=iuPm9yzFnxRihrOmeXrDSVJYoAAiYNQ9fA@mail.gmail.com>
- <68223045-effa-4319-817b-1a31f227c081@collabora.com>
- <20260212020117-mutt-send-email-mst@kernel.org>
- <f6d75a31-a72c-48da-a195-0a74b75b8596@collabora.com>
- <CA+E+eSCu93wwd_7EZ3ekjDj+URoNT+3YBJvPARfwB3xnj04EQQ@mail.gmail.com>
- <20260212190108-mutt-send-email-mst@kernel.org>
-Content-Language: en-US
-From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-In-Reply-To: <20260212190108-mutt-send-email-mst@kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Subject: Re: [RFC PATCH 03/14] vfio/iommufd: Create nesting parent hwpt with
+ IOMMU_HWPT_ALLOC_PASID flag
+To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
+Cc: alex@shazbot.org, eric.auger@redhat.com, mst@redhat.com,
+ jasowang@redhat.com, jgg@nvidia.com, nicolinc@nvidia.com,
+ skolothumtho@nvidia.com, joao.m.martins@oracle.com,
+ clement.mathieu--drif@eviden.com, kevin.tian@intel.com, yi.l.liu@intel.com,
+ xudong.hao@intel.com
+References: <20260205031133.74357-1-zhenzhong.duan@intel.com>
+ <20260205031133.74357-4-zhenzhong.duan@intel.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <20260205031133.74357-4-zhenzhong.duan@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ZohoMailClient: External
-Received-SPF: pass client-ip=136.143.188.122;
- envelope-from=dmitry.osipenko@collabora.com; helo=sender4-pp-g122.zoho.com
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,31 +172,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/13/26 03:01, Michael S. Tsirkin wrote:
-> On Thu, Feb 12, 2026 at 03:57:04PM -0800, Joelle van Dyne wrote:
->>> Joelle, are you aware of this problem with the version that got applied
->>> to the qemu/staging tree? If yes, could you please send patch fixing it?
->> Unfortunately, this means that the patch should not have been back
->> ported. It is possible that the crash which this patch was addressing
->> was introduced as a result of changes elsewhere. For example
->> https://lore.kernel.org/all/20250924-use-v4-0-07c6c598f53d@rsg.ci.i.u-tokyo.ac.jp/
->> changed some internal mechanics of finalize. I didn't raise any
->> objection to the back port because it seemed like the original code
->> where the object was its own parent was wrong but I guess it was
->> working fine somehow. I think in the meantime the best course of
->> action is to revert the patch in the stable branches.
+On 2/5/26 04:11, Zhenzhong Duan wrote:
+> When both host device and vIOMMU have PASID enabled, then guest may
+> setup pasid attached translation.
 > 
-> wait a sec the crash is on stable? not master?
+> We need to create the nesting parent hwpt with IOMMU_HWPT_ALLOC_PASID
+> flag because according to uAPI, any domain attached to the non-PASID
+> part of the device must also be flagged, otherwise attaching a PASID
+> will blocked.
+> 
+> Introduce a vfio_device_get_viommu_flags_pasid_supported() helper to
+> facilitate this implementation.
+> 
+> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+> ---
+>   include/hw/vfio/vfio-device.h |  1 +
+>   hw/vfio/device.c              | 11 +++++++++++
+>   hw/vfio/iommufd.c             |  8 +++++++-
+>   3 files changed, 19 insertions(+), 1 deletion(-)
+> 
+> diff --git a/include/hw/vfio/vfio-device.h b/include/hw/vfio/vfio-device.h
+> index 35a5ec6d92..983eb0ecce 100644
+> --- a/include/hw/vfio/vfio-device.h
+> +++ b/include/hw/vfio/vfio-device.h
+> @@ -268,6 +268,7 @@ void vfio_device_prepare(VFIODevice *vbasedev, VFIOContainer *bcontainer,
+>   void vfio_device_unprepare(VFIODevice *vbasedev);
+>   
+>   bool vfio_device_get_viommu_flags_want_nesting(VFIODevice *vbasedev);
+> +bool vfio_device_get_viommu_flags_pasid_supported(VFIODevice *vbasedev);
+>   bool vfio_device_get_host_iommu_quirk_bypass_ro(VFIODevice *vbasedev,
+>                                                   uint32_t type, void *caps,
+>                                                   uint32_t size);
+> diff --git a/hw/vfio/device.c b/hw/vfio/device.c
+> index 973fc35b59..b15ca6ef0a 100644
+> --- a/hw/vfio/device.c
+> +++ b/hw/vfio/device.c
+> @@ -533,6 +533,17 @@ bool vfio_device_get_viommu_flags_want_nesting(VFIODevice *vbasedev)
+>       return false;
+>   }
+>   
+> +bool vfio_device_get_viommu_flags_pasid_supported(VFIODevice *vbasedev)
+> +{
+> +    VFIOPCIDevice *vdev = vfio_pci_from_vfio_device(vbasedev);
+> +
+> +    if (vdev) {
+> +        return !!(pci_device_get_viommu_flags(PCI_DEVICE(vdev)) &
+> +                  VIOMMU_FLAG_PASID_SUPPORTED);
+> +    }
+> +    return false;
+> +}
+> +
+>   bool vfio_device_get_host_iommu_quirk_bypass_ro(VFIODevice *vbasedev,
+>                                                   uint32_t type, void *caps,
+>                                                   uint32_t size)
+> diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
+> index 96735f1fc8..9605bf73b7 100644
+> --- a/hw/vfio/iommufd.c
+> +++ b/hw/vfio/iommufd.c
+> @@ -354,6 +354,7 @@ static bool iommufd_cdev_autodomains_get(VFIODevice *vbasedev,
+>       VendorCaps caps;
+>       VFIOIOASHwpt *hwpt;
+>       uint32_t hwpt_id;
+> +    uint8_t max_pasid_log2;
 
-Joelle, please clarify which QEMU version has the problem you're fixing
-and how to reproduce it.
+I think this should be initialized to some default value.
 
-I only tested latest staging branch so far. There was a report in the
-past about potentially wrong mem region refcounting, but it was reported
-for a very unstable WIP code and I couldn't reproduce the problem. We
-can always revert patch and try again later if you're short on time.
+>       int ret;
+>   
+>       /* Try to find a domain */
+> @@ -398,7 +399,7 @@ static bool iommufd_cdev_autodomains_get(VFIODevice *vbasedev,
+>        */
+>       if (!iommufd_backend_get_device_info(vbasedev->iommufd, vbasedev->devid,
+>                                            &type, &caps, sizeof(caps), &hw_caps,
+> -                                         NULL, errp)) {
+> +                                         &max_pasid_log2, errp)) {
+>           return false;
+>       }
+>   
+> @@ -420,6 +421,11 @@ static bool iommufd_cdev_autodomains_get(VFIODevice *vbasedev,
+>           }
+>       }
+>   
+> +    if (max_pasid_log2 &&
+> +        vfio_device_get_viommu_flags_pasid_supported(vbasedev)) {
 
--- 
-Best regards,
-Dmitry
+Can an IOMMU backend not support PASID while the vIOMMU device does ?
+That would be a problem no ?
+
+> +        flags |= IOMMU_HWPT_ALLOC_PASID;
+> +    }
+> +
+>       if (cpr_is_incoming()) {
+>           hwpt_id = vbasedev->cpr.hwpt_id;
+>           goto skip_alloc;
+
 
