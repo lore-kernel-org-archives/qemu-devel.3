@@ -4,112 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 022CAEDF176
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Feb 2026 15:43:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E31CEDF176
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Feb 2026 15:44:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqvK3-0000E1-5h; Fri, 13 Feb 2026 10:43:11 -0500
+	id 1vqvLV-0000mj-NL; Fri, 13 Feb 2026 10:44:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akrowiak@linux.ibm.com>)
- id 1vqvK1-0000Df-3T
- for qemu-devel@nongnu.org; Fri, 13 Feb 2026 10:43:09 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <phrdina@redhat.com>)
+ id 1vqvLR-0000m8-U6
+ for qemu-devel@nongnu.org; Fri, 13 Feb 2026 10:44:38 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akrowiak@linux.ibm.com>)
- id 1vqvJz-0006Mz-Er
- for qemu-devel@nongnu.org; Fri, 13 Feb 2026 10:43:08 -0500
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 61DEPef72420123; Fri, 13 Feb 2026 15:43:05 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=huUTJg
- KQrTabGo88SZghjmv0RFQENjGKTNvEdWLlNA8=; b=RxGZjC2LnLgsUxib2pC6Lr
- 5U1EwA/Nw02uVshZXIZeb3yc9i2s2LD5K9SGPtSO5OeS1MspntzBtA68M2yT/pJj
- 9AlSn3OPGSmlW7pplSvOW7QJ+8HEyd5sWrOSiHV9bKXU6utg2HRJAj87wQtIqg3x
- m7e8756gV6eOjaVK/MgSOphET17vjs/BotHnUyTd37R4/ViN7uVk+VWV2BjJbNCc
- AbUH+cpGmS7AtuXiIXQ/81eKUmtymE+bk9ger5Ysw0C9WON9mDhW4A3ggf8zgLH1
- TWLFEQao2Mg5O6IbQrCRnkzxwn9zHhcVl8C0q3RiMqXmNyAod+l4aXqNU6nYeGDg
- ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4c696wkpxj-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 13 Feb 2026 15:43:05 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 61DE3SFI013013;
- Fri, 13 Feb 2026 15:43:04 GMT
-Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4c6h7kq7rd-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 13 Feb 2026 15:43:04 +0000
-Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
- [10.241.53.105])
- by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 61DFghnN56164748
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 13 Feb 2026 15:42:43 GMT
-Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id AF5A35805E;
- Fri, 13 Feb 2026 15:43:03 +0000 (GMT)
-Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 77A4558055;
- Fri, 13 Feb 2026 15:43:03 +0000 (GMT)
-Received: from [9.61.24.3] (unknown [9.61.24.3])
- by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 13 Feb 2026 15:43:03 +0000 (GMT)
-Message-ID: <92e37f70-a2b3-465e-8712-36034fc12dce@linux.ibm.com>
-Date: Fri, 13 Feb 2026 10:43:03 -0500
+ (Exim 4.90_1) (envelope-from <phrdina@redhat.com>)
+ id 1vqvLN-0006Ym-Oo
+ for qemu-devel@nongnu.org; Fri, 13 Feb 2026 10:44:35 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1770997471;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=sDtU67X8wI5oiArjRWjTIJ9AGqL5uiXw5++B/vg06bw=;
+ b=FcGi6TmAKSBVYsSkuS3LeGxMLjeIbEeHnnuwYWLlGc6TPQ8PwKN6cd3Kts0Qn0Gk/kGvt9
+ DHQCY5ZrK3nlMBItlMCx8W48gsEMdW5LrslUDhZ/vQVQYe5bJ9spg/ZYy85O6e2wxx3ikR
+ 9VBGSkowVMwacPSDtMCh9h9nfTIk71g=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-427-MKm97Ru-MNSbbhpErMNfqQ-1; Fri,
+ 13 Feb 2026 10:44:27 -0500
+X-MC-Unique: MKm97Ru-MNSbbhpErMNfqQ-1
+X-Mimecast-MFC-AGG-ID: MKm97Ru-MNSbbhpErMNfqQ_1770997465
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 950FD1956066; Fri, 13 Feb 2026 15:44:24 +0000 (UTC)
+Received: from antique-laptop (unknown [10.44.22.34])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0C4D91955D85; Fri, 13 Feb 2026 15:44:18 +0000 (UTC)
+Date: Fri, 13 Feb 2026 16:44:15 +0100
+From: Pavel Hrdina <phrdina@redhat.com>
+To: Shameer Kolothum Thodi <skolothumtho@nvidia.com>
+Cc: "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "eric.auger@redhat.com" <eric.auger@redhat.com>,
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
+ "clg@redhat.com" <clg@redhat.com>, "alex@shazbot.org" <alex@shazbot.org>,
+ Nicolin Chen <nicolinc@nvidia.com>,
+ Nathan Chen <nathanc@nvidia.com>, Matt Ochs <mochs@nvidia.com>,
+ Jiandi An <jan@nvidia.com>, Jason Gunthorpe <jgg@nvidia.com>,
+ "jonathan.cameron@huawei.com" <jonathan.cameron@huawei.com>,
+ "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>,
+ "zhenzhong.duan@intel.com" <zhenzhong.duan@intel.com>,
+ Krishnakant Jaju <kjaju@nvidia.com>
+Subject: Re: [PATCH v2 24/24] hw/arm/smmuv3: Add tegra241-cmdqv property for
+ SMMUv3 device
+Message-ID: <aY9GzzllxyiW-zs6@antique-laptop>
+References: <20260206144823.80655-1-skolothumtho@nvidia.com>
+ <20260206144823.80655-25-skolothumtho@nvidia.com>
+ <aY8RIXzUVqcTiCkd@antique-laptop>
+ <IA0PR12MB7555AD8A591B65CE1F0081ADAB61A@IA0PR12MB7555.namprd12.prod.outlook.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC] hw/vfio: What is the best way to detect start of vfio
- device migration
-To: Alex Williamson <alex@shazbot.org>
-Cc: qemu-devel@nongnu.org
-References: <72283828-6d7e-4c80-ba24-8c114c8d052d@linux.ibm.com>
- <20260212095804.3ad5b4a4@shazbot.org>
-Content-Language: en-US
-From: Anthony Krowiak <akrowiak@linux.ibm.com>
-In-Reply-To: <20260212095804.3ad5b4a4@shazbot.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=YeCwJgRf c=1 sm=1 tr=0 ts=698f4689 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=n4C5IOH4TsmGSRh6:21 a=IkcTkHD0fZMA:10 a=HzLeVaNsDn8A:10
- a=VkNPw1HP01LnGYTKEx00:22 a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22
- a=VnNF1IyMAAAA:8 a=xpTFYaawLdgd9gg7ORIA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: j7k3FaJZ4IJ5HWUuxuGUXiw_VQBk85jT
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjEzMDExOSBTYWx0ZWRfX0AJzJK2Hcgeh
- fjSQIyqwxv0gIO3iFzY7rOeko90/ONVCvS5NGnn21DQcpkMbPFMGu+PET4n84irWy+NmuLYY88G
- zc8OExPjnucCanPyZctCSfhkE1CsJa7UCoD7cbiCGw/NZBxcriAGGSkdRnWLZr9ZBR38t2CUJLC
- j8ziCtwFYRIFh4/jNQwSaRA8jzFwji1NPd51654wQey9AbIycyLsc/tEoL+CogIpGw/WsO2i6Bl
- 6v7m6VQJFErs2Fx3RJWCmHjZroOz03DUs3/R8cN7z1CS5sBjfKmPHjIRzjuVJk6m0QlMOYoAIxD
- TCScY61Hpv8jEOAQVcCiLy98lCp+hzYtUVSSL8YSWNuyWDf+luoW0bPJjHKC7qOj6lPT7y6HgIU
- 9DKu0GhGuaRojMXViJpeEsP4cREXEADYqj6vQGZXjyQbm2BMyLNZgTeCTttWkW9QoakJ7q+X91y
- 2KlXlDX4Z+/6gDP94xw==
-X-Proofpoint-ORIG-GUID: j7k3FaJZ4IJ5HWUuxuGUXiw_VQBk85jT
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-02-13_03,2026-02-12_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 adultscore=0 bulkscore=0 malwarescore=0 phishscore=0
- priorityscore=1501 lowpriorityscore=0 clxscore=1011 impostorscore=0
- spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
- definitions=main-2602130119
-Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=akrowiak@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="rTL7UEISyZsy4M/9"
+Content-Disposition: inline
+In-Reply-To: <IA0PR12MB7555AD8A591B65CE1F0081ADAB61A@IA0PR12MB7555.namprd12.prod.outlook.com>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=phrdina@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,32 +100,79 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
+--rTL7UEISyZsy4M/9
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On 2/12/26 11:58 AM, Alex Williamson wrote:
-> On Thu, 12 Feb 2026 10:45:47 -0500
-> Anthony Krowiak <akrowiak@linux.ibm.com> wrote:
->
->> I created a sysfs attribute for a mediated device to enable/block migration
->> of the associated VFIODevice in QEMU. When the sysfs attribute is changed,
->> an eventfd is signaled to QEMU to enable or block migration. In response,
->> QEMU adds a migration blocker to the VFIODevice object and sets it's
->> 'enable_migration' field to 'ON_OFF_AUTO_OFF'.
-> If some userspace entity has an inclination to block migration, why
-> wouldn't it just coordinate with the VM orchestration tools rather than
-> take this inherently racy and vfio specific path of the device
-> signaling up through QEMU?  Thanks,
->
-> Alex
+On Fri, Feb 13, 2026 at 01:39:50PM +0000, Shameer Kolothum Thodi wrote:
+>=20
+>=20
+> > -----Original Message-----
+> > From: Pavel Hrdina <phrdina@redhat.com>
+> > Sent: 13 February 2026 11:55
+> > To: Shameer Kolothum Thodi <skolothumtho@nvidia.com>
+> > Cc: qemu-arm@nongnu.org; qemu-devel@nongnu.org;
+> > eric.auger@redhat.com; peter.maydell@linaro.org; clg@redhat.com;
+> > alex@shazbot.org; Nicolin Chen <nicolinc@nvidia.com>; Nathan Chen
+> > <nathanc@nvidia.com>; Matt Ochs <mochs@nvidia.com>; Jiandi An
+> > <jan@nvidia.com>; Jason Gunthorpe <jgg@nvidia.com>;
+> > jonathan.cameron@huawei.com; zhangfei.gao@linaro.org;
+> > zhenzhong.duan@intel.com; Krishnakant Jaju <kjaju@nvidia.com>
+> > Subject: Re: [PATCH v2 24/24] hw/arm/smmuv3: Add tegra241-cmdqv
+> > property for SMMUv3 device
+> >=20
+> > On Fri, Feb 06, 2026 at 02:48:23PM +0000, Shameer Kolothum wrote:
+> > > Introduce a =E2=80=9Ctegra241-cmdqv=E2=80=9D property to enable Tegra=
+241 CMDQV
+> > > support. This is only enabled for accelerated SMMUv3 devices.
+> >=20
+> > Hi, do we expect that in the future there will be some other option
+> > named `{newplatform}-cmdqv`?
+> >=20
+> > I'm asking mainly from libvirt PoV where current RFC patch exports this
+> > option only as `cmdqv`.
+>=20
+> Yes, with the current design each implementation would expose its own
+> xxx-cmdqv property.
+>=20
+> However, please see the discussion:
+> https://lore.kernel.org/qemu-devel/CH3PR12MB75484A150D6DCD9D3C3C66F3AB60A=
+@CH3PR12MB7548.namprd12.prod.outlook.com/
+>=20
+> I am looking into whether we can instead have a single cmdqv property
+> and probe the kernel to determine the specific implementation type.
 
-Hi Alex, thanks for the response. I have never used a VM orchestration
-tool, so I have no idea how this would, or even if it would accomplish
-what I need. What I need is to prevent migration while changes to
-the source and destination devices passed through to the guest
-are made, without having to terminate the guests. These changes
-can only be made while the devices are online and must be
-synchronized, so they cannot occur during a migration, so I need
-a way for a sysadmin to dynamically prevent migration while this
-synchronization is completed.
+Thanks for the details, yeah that looks better.
 
+I was also thinking about using cmdqv=3Dtegra241 in addition to 'off' and
+'auto' if it would be possible for host to support multiple
+implementations at the same time. Libvirt would probably prefer setting
+specific implementation instead of using 'auto' to make sure that the VM
+will not change.
+
+Pavel
+
+--rTL7UEISyZsy4M/9
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCgAdFiEEcbzs91ho/coWWY7aUi1kczAH4YwFAmmPRs8ACgkQUi1kczAH
+4YzUGA/6Ag628m2V8Lqp0Q+aUoXk/iLI9rMh8oorQbDI4GXw9J4jYOMNVs6xRfEN
+hVZIS4E/loP9NQO+Kl8eu8XyR9Y1GiWTqctb6ua8CQraG0FMDNM1Xsy7Z/f21Tdt
+dwXXMJcFXpTd5jCdZ/Jl0i4i/EnWGwVX5F9ZhHE+eEaWqpyquXf7y77oMx45ZnBY
+wXhmM3qiZ9MQAyxd3u67OC0CGiXHMYjGiB+foM01HjLuoGIZAtxQIPqufZvdNAYM
+sAzji3KmQv4hm+5pm6OvEj+6d/M3Yem+vz8iY3tkSdIhmjqxGyA2pqnvyS4av1Jv
+BomFThrujRKMRaJmpmJSUMzUZ/6/CDuIpAWXYNUJZ5SJWzn2DxX3uESP/hA6WB/2
+6aSZXQ9iIo9qll22axzakHJ+dgZrTPVsBW2QBpV2ZfFry/XL/EvIc+nW9ppvslI2
+RhOyN27itXzZaVZeeFTr43fJ2EdRhpu/1c57u5PN0esOx650NB4ySU7fEACmnPNP
+ak/gMNSblWb03h++rQw1tbKnXMYNzHBlDWOJeVw8SllWeDyyoKCDTH/hj4YrzdBI
+PtWmuuYTK4KKj9olvErBNse0HI/tfLEMsHQDQ93UnVyuvq6JLvGuP3EJcLz5K9Hv
+P6C2Zu6vyR48oGPMfTFNQ1OamKAd00vhzM4bKdgNxB1rL1H4QbQ=
+=ejf4
+-----END PGP SIGNATURE-----
+
+--rTL7UEISyZsy4M/9--
 
 
