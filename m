@@ -4,42 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89CD3EEA870
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Feb 2026 00:08:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 085AAEEA870
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Feb 2026 00:10:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqgjh-0002z6-DD; Thu, 12 Feb 2026 19:08:41 -0500
+	id 1vqgl3-0003Qm-1v; Thu, 12 Feb 2026 19:10:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <samuel.thibault@gnu.org>)
- id 1vqgjf-0002yh-Dw
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 19:08:39 -0500
+ id 1vqgl1-0003QV-57
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 19:10:03 -0500
 Received: from fencepost.gnu.org ([2001:470:142:3::e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <samuel.thibault@gnu.org>)
- id 1vqgjf-0000qK-06; Thu, 12 Feb 2026 19:08:39 -0500
+ id 1vqgl0-0000tO-QM; Thu, 12 Feb 2026 19:10:02 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=gnu.org;
  s=fencepost-gnu-org; h=In-Reply-To:MIME-Version:References:Subject:To:From:
- Date; bh=h3t1Eg6m4CNnE3QdS3RpPjB7Os+umo7BhNuhtNp4C/Y=; b=B776le3Qkm8InDadODmp
- i+857TNuly8qHe18kRoT3mq6g408X2nTeG68JlJcuTeeHdxa4GaitcOS8o6tNBxnUlSaob/tBHuFW
- 2+Ry117RxhKyt3PjqvXowQty5H4L9ooypEaXNOZphFWLZrn3s1mVaZPFf6q7PF6VBr7+9oXLsp5ou
- 4sSklc4iiIieHF6bwdG62BPcTCNH7g63TF2qWe+4p940LZ3fH/rCC9JYgHFs9FNlVpPa/jpVWG0La
- s90+IaeYSRqXsvRa58On+iTWYiw4+/V3lE5qplDngHyKBfUlsUQEO6tXF8X4NqcPJdhs0VvTp051I
- /s0la4UjhtKQTg==;
-Date: Fri, 13 Feb 2026 01:08:33 +0100
+ Date; bh=WB0gWfLcKZu/8tj9zy7agXpdcY8BJIMMzBf89KI33gs=; b=UOaMB3y9eXMjkgUoGIRA
+ XO13RvGgBn5soTKHQNVp2Ngo0dGZ9X4YdWG5cLdPSsowoSusB6HsqqMrPyLkg+4Aoop99QUPYWr5H
+ kG+kqmWKVAFwVyha4p7UpnGhVsS3eqA+P4Yyy8z2NhhnLNWdvCkgvH3EO9wL7dVH6AM/HfES1jMFH
+ f0pKvt7jLKV/3fkT8oQFIMQ67Pt24vVTxpIcJhT9fWKWDqSnjoAWjxal4LYy4WLi7zx3fZKIq345U
+ 3eKbz/rpQa8EbpFl9ZBkxh00qUUTWw3QBzypbjE6/b5Lzg+TMpzWpNbk/3rdCIn5CGEWRjq3tss27
+ pVfc2GFxfwxioA==;
+Date: Fri, 13 Feb 2026 01:09:58 +0100
 From: Samuel Thibault <samuel.thibault@gnu.org>
-To: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@gmail.com>
-Cc: qemu-devel@nongnu.org, pbonzini@redhat.com
+To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@gmail.com>,
+ qemu-devel@nongnu.org, pbonzini@redhat.com
 Subject: Re: [PATCH] baum: Add copy/paste bindings
-Message-ID: <aY5rgfbOQvtc5ECm@end>
+Message-ID: <aY5r1gI1t-uOnmbU@end>
 References: <20260211204445.4124071-1-samuel.thibault@ens-lyon.org>
  <CAJ+F1CKZUz6QDDYj9g2NeyKimOrcXDN-ZYG12CYg2pJn9s4Hjw@mail.gmail.com>
+ <CAFEAcA-hvi0=eCr=Bs+sYBJCgAQNsi6kSyo7=xFHq8AG0MNyZw@mail.gmail.com>
+ <aY2zQ6X3qxuZR7Jl@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAJ+F1CKZUz6QDDYj9g2NeyKimOrcXDN-ZYG12CYg2pJn9s4Hjw@mail.gmail.com>
+In-Reply-To: <aY2zQ6X3qxuZR7Jl@redhat.com>
 Organization: I am not organized
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -55,40 +59,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Marc-André Lureau, le jeu. 12 févr. 2026 13:43:01 +0400, a ecrit:
-> On Wed, Feb 11, 2026 at 9:46 PM Samuel Thibault
-> <samuel.thibault@ens-lyon.org> wrote:
+Daniel P. Berrangé, le jeu. 12 févr. 2026 11:02:27 +0000, a ecrit:
+> On Thu, Feb 12, 2026 at 10:33:26AM +0000, Peter Maydell wrote:
+> > On Thu, 12 Feb 2026 at 09:44, Marc-André Lureau
+> > <marcandre.lureau@gmail.com> wrote:
+> > >
+> > > Those commands date back from brltty 4.4 (June 7, 2012). I suggest we
+> > > add a version check to the brlapi dependency.
+> > 
+> > Does any distro version in our support policy still ship such
+> > an old brltty version that it doesn't have them? If not, we
+> > don't need to actively check the version here, I think.
 > 
-> Can you write a summary of how this work,
+> The brlapi is a bit wierd in that it ships a pkg-config file,
 
-I have added comments.
+? Does it?
 
-> where the protocol is documented.
+Upstream doesn't.
 
-Braille protocols are essentially never documented publicly. All that is
-publicly available. is from the free brltty driver implementation
+> We currently detect brltty by looking for the header file manually.
 
-> Also higher-level doc for changelog would be nice.
-
-I'm not sure what more would be useful: it's mere addition key binding.
-
-> > Signed-off-by: Samuel Thibault <samuel.thibault@ens-lyon.org>
-> > ---
-> >  chardev/baum.c | 30 +++++++++++++++++++++++++++++-
-> >  1 file changed, 29 insertions(+), 1 deletion(-)
-> >
-> > +            case BRLAPI_KEY_CMD_CLIP_NEW:
-> > +                baum_send_key(baum, BAUM_RSP_TopKeys, BAUM_TL1);
-> > +                baum_send_key(baum, BAUM_RSP_RoutingKey, (code & BRLAPI_KEY_CMD_ARG_MASK)+1);
-> > +                baum_send_key(baum, BAUM_RSP_RoutingKey, 0);
-> > +                baum_send_key(baum, BAUM_RSP_TopKeys, 0);
-> > +                break;
-> > --
-> 
-> Those commands date back from brltty 4.4 (June 7, 2012). I suggest we
-> add a version check to the brlapi dependency.
-
-That is so old that I didn't even remember that they had changed.
+Yes, there has never been anything more than that.
 
 Samuel
 
