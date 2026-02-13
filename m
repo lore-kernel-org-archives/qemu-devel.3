@@ -4,64 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B692EF99C3
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Feb 2026 17:51:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F17CEF99C0
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Feb 2026 17:51:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqxJQ-0006IL-FX; Fri, 13 Feb 2026 12:50:40 -0500
+	id 1vqxJl-0006OX-0r; Fri, 13 Feb 2026 12:51:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vqxJO-0006Hk-Sc
- for qemu-devel@nongnu.org; Fri, 13 Feb 2026 12:50:38 -0500
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vqxJj-0006Nd-Hi
+ for qemu-devel@nongnu.org; Fri, 13 Feb 2026 12:50:59 -0500
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vqxJN-00065j-Dg
- for qemu-devel@nongnu.org; Fri, 13 Feb 2026 12:50:38 -0500
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-4806e0f6b69so9651085e9.3
- for <qemu-devel@nongnu.org>; Fri, 13 Feb 2026 09:50:36 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vqxJi-0006QO-4f
+ for qemu-devel@nongnu.org; Fri, 13 Feb 2026 12:50:59 -0500
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-481188b7760so10569925e9.0
+ for <qemu-devel@nongnu.org>; Fri, 13 Feb 2026 09:50:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771005035; x=1771609835; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=5AlmTMgCyk+2AUmH7VML5lKoAxWR5LTdLAyVu7t5Yig=;
- b=QM2Gabh7zrL0VslcafAOUah+dxybF7wLof/bjvn6BZ6lLDZDu7ZOJAY4Imj/YRApTm
- ulkfkYAm0ZwIixEJGo0TdtLLP/2VeG9zqv0QEbDVL6OCLnDJAo6KUgl6efq+zP8tXiZ2
- ArGYglFsFpReRZTrCibMbi5pLNlyq/+oUoArLqp0jhcUeAbGTsjeRozyTPX8EY5/K8DE
- nGhmUvdEpL7CY0ape2cFJuKjM/uNzHVit37m09Jd8eimHmZZ0dRtY31m9KLaQJZt5x9T
- a1zjBReIsH3nq/1arv8FhNyK0GPfLgMgQHHdtJMk2tPUc+8FnpQ+Nt0Q7ADKGqUqvCF0
- WZuw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771005035; x=1771609835;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1771005056; x=1771609856; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=5AlmTMgCyk+2AUmH7VML5lKoAxWR5LTdLAyVu7t5Yig=;
- b=B2aWJcFIY0Br3UvH9IoHm9nXpdXq+pOg4NzEyGEuoSJZl2tDY89nOnp9VUCN8N1uXL
- Vw9rF/67kWErcfZj4nTmiXRVINxAVTG20sHGiDNVphOnrw3hXaRPkp6XnfsN/oTdi6Hx
- B5ojxt/BUyBOrpDkKgzNkVnuyXUgzSUJUk0y647LS1mYNlJX4aSqoaqVNtrJvFi2E78F
- KFJ1RCdalpr6FyMqxqwPD9Ob3rrcpDQN4y1aLbPndDm+7y4NMYHHhFWXyFWDCHSpbqqh
- P8GFWEchLH1yLniYpRScy0JH9GIDtdHJOgop7WT789t73YI2wAon07S8GGR+V+IYFnhn
- X+cA==
-X-Gm-Message-State: AOJu0YwSBJ21ZyGFGb04Kt6+ohp08/bpv4oq1WmfdFQUQsoFnkellMKD
- U1EgwzzkBOOXvmWP2nNIXoFTG6ndh+3mEafv18a9vvDOyFi9GeW00vGnnBdzknDzt9U7hrbOgsP
- 3SGsY8U4=
-X-Gm-Gg: AZuq6aI6guSwE6kQUgnTmRBjGrWV/QAPbRm5GEus8PyD0RhQaxeWU7FEOEq+eXMGsio
- A+vNEaVpoSJCw45AtWNzL6hsOOQGHUO9l7SRnxlVgKvqEf1L/mOhdRQLaA10xXxhiCcB3k7+UET
- QgydFCl7v+zvb3USTCsox+Y5gcc1EMALXJQXfGjpdvfFSf541xdBGzdZVVRE3BLe6fA+uqPcm6p
- D3Xv+8oBfA7bL0fVhPbAUJt6wcerwj1lIyil9JrpaOS3aCtMjtxrqJBflyRATJH0Ib92URhbeg/
- yW34CR3/RcKUNyv2vDi7KGR5+TWctUpjL7juFqzqtIqpniicc8o3jEfb8EGZ75K79Bc316uJpBR
- 3q1PxepRJLh2jVmsxMVU4OjtBNXvz9ohj6bXax9j++VX3ikoKudXtJWdJ5CNhl5MYq/6QSkzDWF
- OR4s7m+Va0JMD+jnDFNUt9jyLcN92lEUQvfmm+YYX+PBHpFgwkLNxmwQOz7RRPSkWJaOqAda/Q
-X-Received: by 2002:a05:600c:c16b:b0:47e:e20e:bb9c with SMTP id
- 5b1f17b1804b1-48371042fb1mr57129795e9.8.1771005034699; 
- Fri, 13 Feb 2026 09:50:34 -0800 (PST)
+ bh=KcZbPZ7aXNry3pyWmbw3A/aeb+iNzKBFCO2e4WrCYSc=;
+ b=RTaO7rzJVW0QYiTBdaXLYno4VzP2DEOBYsva2LLpuCtwN17RaSZjtpRPwQfcbxFmgk
+ EOKz0eqNBAuRg8+Q1l/4Xu8P4Bia8N978Nh3cwLmpwNPSws+fkIdCXAqxt9h76IQmJkd
+ ee0PCBKiomQRAxf2M7jWiLD4WCmqWqpqiGaDM79YM3fZG1r/Kh3ybsNw0NfnQR4QyaOl
+ t/2nfZbZkqDRnanMk8mcB5JxleqYmzNyGHfkDvjuCepJm4tcvoyzqYBq+WBD0YOKSvmY
+ /UThDjmpuX+vN+0r6MhcTvEVbwo54nnQqo/2WT8FOO/EGwvOB7Nyn3Vhnd2deUHB6q7G
+ 34QQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1771005056; x=1771609856;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=KcZbPZ7aXNry3pyWmbw3A/aeb+iNzKBFCO2e4WrCYSc=;
+ b=e9XgkXeMXvylfL2CwgfvHY1Tt54F1EQiPK7H08a79Xf4MrlSTdr+0WyFMoVvaZubea
+ WP0ZAPEZijeUVCywCLR5b5vjFN68yySjrjF0J7xAV6EMPw3tmzD2FVHe4MOp+DTI1nMT
+ Y2/agvqoEoPCULi+w5w3o3Q4LLonAwc7NvZ5K2VMuwfAtTgF2anNl5iIyAnosHqgkgml
+ VnhTCGuxap71ECe/FyikVCvjnlp4OxvYnztA8oIbt8z15MJYj3SET/Qm2oxTw0d52NqB
+ QPq/l7vk3VdkDztbRVbdq25O60XJJE3wz6mEX8GBXMm+4x0LaunAD+0qOQ/yzsezUG3S
+ HtZQ==
+X-Gm-Message-State: AOJu0YxHZr3sOuep3NiPOjU65/GoZByGPyNwBksiQ3Y08mjhUq84aXO0
+ XsA8gAqUn7hJXFJ9qjW7VLyrNZYHOFJhUTEdXlFyeQovmNMWiFZyidU3sfAE7h98r3r3Fm0rdSI
+ PwrLaPVA=
+X-Gm-Gg: AZuq6aIVHqspq007iKmBig7R+bUSoJlI48ymr957Xm6ffM1cfy7BNJLWrRNthRtqmo1
+ UQbQDa5zihjLnI4pC2S7gLNEurI/e3/3f19j2qVRgk4jFrxlR55M62NKG7LMyo58nl3uX3pPk30
+ 4biTnazh9C++LsvJ7bA3iBA0sI3U0OWz+hT3cGuSSage251vIj9bqiO4IRoqSKq9aibnzS5r7Nn
+ FkwZhHK8R2VTkvYK1xSulNQeYWKV+XtSNY9PQR4dxWNNfS8lu0rOYsANotxzoGu85Tuc+r3+2Xn
+ dL9PF+CITqT4Bzr47reI19LbESEMJpriDQuB7SYDoAHxoH7EQW5oAcefUtihTyTlwvKCP1EZrEK
+ hGdUrso23C1r1dQ7hWhwLxvdp8RPCnhkvnT72HLzGXrtJY4SCxV2tKvUVuGTX17Qxn6PYvEpGLL
+ JogcjFQ74gjDC5Tz959YYJNDZL5SmIlUq/SekyPFPSx2ztKWXJNZYSR59KehtSOqCWqrHK+rWj
+X-Received: by 2002:a05:600d:6413:20b0:483:79ad:f3b9 with SMTP id
+ 5b1f17b1804b1-48379adf60amr2241305e9.28.1771005056213; 
+ Fri, 13 Feb 2026 09:50:56 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4835dcfafcdsm359844685e9.9.2026.02.13.09.50.33
+ 5b1f17b1804b1-4835dcfafcdsm359920885e9.9.2026.02.13.09.50.55
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 13 Feb 2026 09:50:34 -0800 (PST)
+ Fri, 13 Feb 2026 09:50:55 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Markus Armbruster <armbru@redhat.com>, qemu-s390x@nongnu.org,
@@ -71,15 +72,18 @@ Cc: Markus Armbruster <armbru@redhat.com>, qemu-s390x@nongnu.org,
  Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Subject: [PATCH v4 0/5] system: Make qemu_arch_available() common code
-Date: Fri, 13 Feb 2026 18:50:27 +0100
-Message-ID: <20260213175032.32121-1-philmd@linaro.org>
+Subject: [PATCH v4 3/5] hw/scsi/disk: Prefer target_s390x() over
+ qemu_arch_available()
+Date: Fri, 13 Feb 2026 18:50:30 +0100
+Message-ID: <20260213175032.32121-4-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20260213175032.32121-1-philmd@linaro.org>
+References: <20260213175032.32121-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,36 +106,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-- Avoid qemu_arch_available() in hw/
-- Document qemu_arch_available(),
-- define QEMU_ARCH_* based on SYS_EMU_TARGET_*, allowing
-  (via with TargetInfo API) to compile arch_init.c as common,
-- restrict qemu_arch_available() scope to system/ sub-directory.
+qemu_arch_available() is used to check if a broadly available
+feature should be exposed to a particular set of target
+architectures. Here we only want to check something that is
+specific to s390x: the target_s390x() helper is more adapted.
+Besides, it will allow to reduce qemu_arch_available() scope.
 
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
-v4: New approach
-v3: Return directly within switch
-v2: Prefer switch over array (pbo)
+ hw/scsi/scsi-disk.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-Philippe Mathieu-Daudé (5):
-  qemu: Document qemu_arch_available() method
-  qemu/target_info: Add target_s390x() helper
-  hw/scsi/disk: Prefer target_s390x() over qemu_arch_available()
-  system: Make qemu_arch_available() common code
-  system: Reduce 'arch_init.h' scope
-
- meson.build                |  2 --
- include/qemu/target-info.h |  7 ++++++
- include/system/arch_init.h | 30 -----------------------
- system/arch_init.h         | 50 ++++++++++++++++++++++++++++++++++++++
- hw/scsi/scsi-disk.c        |  4 +--
- system/arch_init.c         |  6 +++--
- target-info.c              |  5 ++++
- system/meson.build         |  2 +-
- 8 files changed, 69 insertions(+), 37 deletions(-)
- delete mode 100644 include/system/arch_init.h
- create mode 100644 system/arch_init.h
-
+diff --git a/hw/scsi/scsi-disk.c b/hw/scsi/scsi-disk.c
+index 877ad21579f..68eb65fbf4a 100644
+--- a/hw/scsi/scsi-disk.c
++++ b/hw/scsi/scsi-disk.c
+@@ -27,13 +27,13 @@
+ #include "qemu/module.h"
+ #include "qemu/hw-version.h"
+ #include "qemu/memalign.h"
++#include "qemu/target-info.h"
+ #include "hw/scsi/scsi.h"
+ #include "migration/misc.h"
+ #include "migration/qemu-file-types.h"
+ #include "migration/vmstate.h"
+ #include "hw/scsi/emulation.h"
+ #include "scsi/constants.h"
+-#include "system/arch_init.h"
+ #include "system/block-backend.h"
+ #include "system/blockdev.h"
+ #include "hw/block/block.h"
+@@ -3180,7 +3180,7 @@ static void scsi_property_add_specifics(DeviceClass *dc)
+     ObjectClass *oc = OBJECT_CLASS(dc);
+ 
+     /* The loadparm property is only supported on s390x */
+-    if (qemu_arch_available(QEMU_ARCH_S390X)) {
++    if (target_s390x()) {
+         object_class_property_add_str(oc, "loadparm",
+                                       scsi_property_get_loadparm,
+                                       scsi_property_set_loadparm);
 -- 
 2.52.0
 
