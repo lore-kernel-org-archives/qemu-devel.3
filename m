@@ -4,103 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21287EEA853
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Feb 2026 00:14:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DD9CEEA853
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Feb 2026 00:43:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqgpI-0004tW-16; Thu, 12 Feb 2026 19:14:28 -0500
+	id 1vqhGz-0003nA-Uk; Thu, 12 Feb 2026 19:43:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1vqgpG-0004tO-Mo
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 19:14:26 -0500
-Received: from mail-pj1-x1036.google.com ([2607:f8b0:4864:20::1036])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vqhGy-0003me-OF
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 19:43:04 -0500
+Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1vqgpF-0001wf-5n
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 19:14:26 -0500
-Received: by mail-pj1-x1036.google.com with SMTP id
- 98e67ed59e1d1-354a18c48b5so308316a91.1
- for <qemu-devel@nongnu.org>; Thu, 12 Feb 2026 16:14:24 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1770941663; cv=none;
- d=google.com; s=arc-20240605;
- b=eWpd8MDgn0OWpC83O3hPfYcPr8cS9RzQhJGx4E7+CguBFyuhrF0Dm6Of/sUQUx/JyB
- J93PiWTL+z9edZhDkf4NdUIVfGCHCz7TbiteG2hsCZXm+o6A51WFnKxShSYWKQFP/8D1
- vz56SiR/XbREQ5Vza2o+7El9ANvkoPy8kysDf6Xvi3GdZVG6l7q5wWcYp70AvCnnhscg
- moerxgYatUfaDJhbk4FtKXqWi7dGYNakj+MKtAu9jlgpGqtK2Q6aYLaIlMHbtN1HWXPo
- ASbaYxwL63ETCEa93iCioGAnizFpwTvsJjjXYxr1Q4mkNMLiFJ4qS+bq5+oZocfOv7+j
- h/tw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=iHEueidKqqFKDAE5TPNC5mROpyAXuvgIUaghldWGZC4=;
- fh=+xTFvPcXpKGNIxGuDO2FBnnaNlKzlt6Je4MiFNde8Gk=;
- b=N/t/6iGHr3EDphlaxz4oLGMfw1rWclBSadvTL2ofesbM5s0lpGz6ZXaWv5wSBFeGYf
- oqWDuf5EhdV3+I4N858dSY4GxKYaGjvtL9zQSRrJ6wZ72zjSMR+vVxJAT4hNtcvFqh3o
- OQwPRrP08WFNK4j2OcSwYoWBi8Y53ABkr2Gq7sMzL+spnwUuvXhdpAkhDPzeyOiMCh9q
- vAoiUPpZuLwIZNhR1ggE6wVGu8b9KEQt/DHqsiKeILA70nTjgMnUxJHuEiaowr5JM3CY
- 2PvBTH0Hg+VoCZFMdIr5IvIqT+f/+egEsH+dJDfrLLqmV9DMlCsWFXuQk0B6xsUspCF7
- c/mw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vqhGw-0000qR-TW
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 19:43:04 -0500
+Received: by mail-pf1-x434.google.com with SMTP id
+ d2e1a72fcca58-82318b640beso222246b3a.0
+ for <qemu-devel@nongnu.org>; Thu, 12 Feb 2026 16:43:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1770941663; x=1771546463; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=iHEueidKqqFKDAE5TPNC5mROpyAXuvgIUaghldWGZC4=;
- b=dmH2Ptq/6umcdO9UEvtC+5ZIXxy8NldmJtSiJENquxtv2bxcN9ejdUiyiO38ulKGS3
- k6YPl88CSMZcbhpimX1vbqlHe6PWgYW8n6IRB2EiA0VYAY8vm+6MuyBkj0bNv3yqCPVd
- eI+t5T0w/q5VnthNm5ueyJo21Lcl9nJ1vmq4b0kXhz7DANhN5hjzYiOxg2OpLAC0sg56
- kC0q8J+13iG9wMA6dCnd6Yf8OyZZdVZLV25ZAJvuLxKNRF5gzIVB+iJWGeDir9gmBQHm
- TkWR8sFCHtyIQu4F/0aa7PvViGVhFqc1EQ1xG12zLydpRbVldxFn4FsW8oUzZPZWXmwb
- 3TQg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770941663; x=1771546463;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1770943381; x=1771548181; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=iHEueidKqqFKDAE5TPNC5mROpyAXuvgIUaghldWGZC4=;
- b=kxV/cP3HNQUUiS7MtGMOfmiCcb1txt2ETf6+AlbKqxArz1nVLqvHsKhHgG1tC4FNcs
- EWCz8FyGpGgdhsJRRKbQUO/w9FYKxSEhtDfsMk1OHBbV/g99gZFVhI/xxTOpwduCX921
- Ge9sPtNlrXqZojVYNqsvNIJnpUyXOAAZtsTtXgkUqJL1ctw45SVUMEMkgMBDEVYhSbbL
- c1KyKs0/S4AMCh2xBaSoqmJbHiBJFuEZhBc7g542uWY8A/dmX/Aptyv3TwQju6wUXDK7
- tK/3Y5/u3E5VrCQVD/tz0Cob9rYn7h2YILlTJP76IR+ML/15Xull/ZzjZB+Kqi71RUKv
- tkjQ==
-X-Gm-Message-State: AOJu0Yx/VhH5cCf4mVXkxJLTr346hHibfNorF4G7pUbGrib4P2omv6R6
- 1AcyN23I1HuaE1+S3LN5/I1u12M0No0daNAnHwp5pMpZhXkXPwcFt9vaOFMqxqZsULdOvDnUw1Y
- ONnOgxLtT2M0DYcgK4vyod4L9MuxNPds=
-X-Gm-Gg: AZuq6aIL5JNjC9KA9QJQv+KAW7FfPc7+g5PMFzi2TvwGnx69IHXOd960FesTXtmTVRx
- 0zIlWqz+bH90M8sMehijd4hqf6NnYVUoC6x50+qU+H5X6IsMOis2y9GhIzsygsKQYtnXufaA/Lo
- iNoZrdEtGCX7JUOp5trt2zGEc23gRYJmdlm+XfF4G1QwkIbnCnXQqrhOQE2OR05vvYDcrSt3PF7
- yMranglYrE8yvhg4f0/UyayDaYnKZ93OomwK2+9DJQhlJuRp6/IYdo0tY8JrkWEAtYb10AY3X/U
- Y/KGZ9oBJmgO/F0oR2DaldgYwM0i3wlMKwhGHeQ=
-X-Received: by 2002:a17:90b:5703:b0:343:6d82:9278 with SMTP id
- 98e67ed59e1d1-356a7a8b5d9mr774795a91.30.1770941663328; Thu, 12 Feb 2026
- 16:14:23 -0800 (PST)
+ bh=MhP9UxZvtyw4qXts11XqOhuLW6bLHIrLsrfSheQGMKU=;
+ b=yd0wJ6m0ompvTeVoSrf+WzlEeLF1ViV76VeY+dK2+9CSjDiwCz6iKb2mrHkPKop9Ju
+ rLbMcdA86jLyStttx9hWEiwF2+QmnHgeh9oDhbEaR/j8CDufB23BPVgFyZLLT2jREAv/
+ MOwQpnpsPj6ixJaG35xu3400INEix3MzKrGAxES3I2p3Gw0RbEv6Q2YDmXPKU4UpISIH
+ z/H9mG1t7/5Fg+vP0bW2wBoGykzrZHYFrzVsi4ob7DUSU5FCCnuMIKb4mNeEQGAqGhsS
+ EmUfunSlD4Lc+Y5v+E6cmIcK6F6+61CKSID3eFpdUOT1iaXfsZhudKm/h7N8568nT9yf
+ K58A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1770943381; x=1771548181;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=MhP9UxZvtyw4qXts11XqOhuLW6bLHIrLsrfSheQGMKU=;
+ b=s3D0fw75kIOqcEY6K/nBqalCeWM36Crt5GqJCNpb0xpoc7xMudQsO2KJ/nrEixNzDC
+ qtRRNF7e9cTDRtX9JutOqSRKmuu04rV8Exx5FEkfmxWNwvqaCfTHpnzXVwUMjPOUBeKd
+ zicVoGRCodIwqG9VMe3XcuO6E15EpWpgAFvGBr0rf6zdqsYYlUT2IbuAeILDFXfBBQmK
+ JYEE5agqrIEq1ZTSoqAM5g5i+TUDKYYIA/xbed43njDEif5zeONo/+6h75etYM4bjjB4
+ UlL4RiRD+0/ri6Wnd/JWyKqfUIaV/dSpfm2oMTyfhzFNYcGtRszDnCqAE5THkInI7jCq
+ gkxw==
+X-Gm-Message-State: AOJu0YzaJRwtC5gH+lXBfDBg5lwXYtQXLmrs6nTs1mJW/fBrUYFi9BQl
+ pYo8OWqfNIRq64piWbAeW8qqcUQcqU3xzZvPz6nge2MEbrafLGRangDqHlY3BXOIyXB7/rY4zfL
+ gj3LP
+X-Gm-Gg: AZuq6aLOB0/84bQQQr/p7UeOEpjYmT5hg5SvTDvXzObNSOEtxXmwZMgdkscCfvjUeUz
+ rAFOfVOPUUMvv28L3FVZKfOo/2m+LWH4/X4MfpD7y+d+UVsEIN5OlqlVjf/kNHjp0nJ2VEfnl8t
+ p9wDZm+Y2PM9c8PevLdifZLPegBK+N0+kJjWi7Q4LF816I4WvdHGPZzhrxycx0DXDY7emA8YAkP
+ vIbzMs4C0h5LMDIfpSk6MJqctHKcUFTAmdlwwJNzp/JeI7/3/ChEXkXb3N/XhZSxhxKeFsf1LsO
+ ox6gXZgvf7oEUb37Tq+XaLsgVfNw9W5VRec1GqJ64gbfeYw7ZtLc9vJ4yYOyMxTV5VIdpR4QpJ6
+ y8+3c51T2CzNMRZGH61y5UriOSAMSNWkxdH1NbTd2nCqLeJ0H6Jl2elx3q0z9PxASr7ytKVW18s
+ 9MCFaGrQ2ulArC0T9szmCarCLsXfU9VK0eSevjx/oVb2NH3Nm3hWLOfTOxbsMjC/A4smMhHaXRV
+ 54/
+X-Received: by 2002:a05:6a00:4515:b0:821:8ebc:2899 with SMTP id
+ d2e1a72fcca58-824c9446cf7mr284157b3a.7.1770943381452; 
+ Thu, 12 Feb 2026 16:43:01 -0800 (PST)
+Received: from pc.taild8403c.ts.net (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-824c6a431f2sm504326b3a.22.2026.02.12.16.43.00
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 12 Feb 2026 16:43:01 -0800 (PST)
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+To: qemu-devel@nongnu.org, peter.maydell@linaro.org,
+ richard.henderson@linaro.org, pbonzini@redhat.com, stefanha@redhat.com
+Cc: pierrick.bouvier@linaro.org
+Subject: [PULL 2/4] contrib/plugins/uftrace: add ops for walking frame
+ pointers chain
+Date: Thu, 12 Feb 2026 16:42:52 -0800
+Message-ID: <20260213004254.493059-3-pierrick.bouvier@linaro.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260213004254.493059-1-pierrick.bouvier@linaro.org>
+References: <20260213004254.493059-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
-References: <20260212033435.3598-1-ltaylorsimpson@gmail.com>
- <20260212033435.3598-5-ltaylorsimpson@gmail.com>
- <998e5fe3-9f13-416c-927f-f037eacbc0b7@linaro.org>
-In-Reply-To: <998e5fe3-9f13-416c-927f-f037eacbc0b7@linaro.org>
-From: Taylor Simpson <ltaylorsimpson@gmail.com>
-Date: Thu, 12 Feb 2026 17:14:12 -0700
-X-Gm-Features: AZwV_Qj6rK5KgEK4k05tm682Fw9VJsypNv3399H8jYQumXeb20kr4GFx3NyCWZE
-Message-ID: <CAATN3NqWDWSj4nyi9w42bYTCvm3mnYcKKECqVsGH87gqF6d4XQ@mail.gmail.com>
-Subject: Re: [PATCH 4/8] Hexagon (target/hexagon) Introduce tag_rev_info.c.inc
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, brian.cain@oss.qualcomm.com, 
- matheus.bernardino@oss.qualcomm.com, sid.manning@oss.qualcomm.com, 
- marco.liebel@oss.qualcomm.com, philmd@linaro.org, ale@rev.ng, anjo@rev.ng
-Content-Type: multipart/alternative; boundary="000000000000c2bbe4064aa97c6c"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1036;
- envelope-from=ltaylorsimpson@gmail.com; helo=mail-pj1-x1036.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -117,124 +104,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000c2bbe4064aa97c6c
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+x86_64 and aarch64 use same stack layout. However, other architectures
+might use different offset for return address and next frame pointer.
 
-On Thu, Feb 12, 2026 at 4:52=E2=80=AFPM Richard Henderson <
-richard.henderson@linaro.org> wrote:
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Link: https://lore.kernel.org/qemu-devel/20260210201344.1403613-3-pierrick.bouvier@linaro.org
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+---
+ contrib/plugins/uftrace.c | 38 ++++++++++++++++++++++++++++++++------
+ 1 file changed, 32 insertions(+), 6 deletions(-)
 
-> On 2/12/26 13:34, Taylor Simpson wrote:
-> > From: Matheus Tavares Bernardino<matheus.bernardino@oss.qualcomm.com>
-> >
-> > Table that records which CPU revision introduced or removed each opcode
-> >
-> > Co-authored-by: Brian Cain<brian.cain@oss.qualcomm.com>
-> > Co-authored-by: Taylor Simpson<ltaylorsimpson@gmail.com>
-> > Signed-off-by: Brian Cain<brian.cain@oss.qualcomm.com>
-> > Signed-off-by: Taylor Simpson<ltaylorsimpson@gmail.com>
-> > ---
-> >   target/hexagon/tag_rev_info.c.inc | 61 ++++++++++++++++++++++++++++++=
+diff --git a/contrib/plugins/uftrace.c b/contrib/plugins/uftrace.c
+index 1ed982999ed..21ac1402047 100644
+--- a/contrib/plugins/uftrace.c
++++ b/contrib/plugins/uftrace.c
+@@ -46,6 +46,8 @@ typedef struct {
+     void (*init)(Cpu *cpu);
+     void (*end)(Cpu *cpu);
+     uint64_t (*get_frame_pointer)(Cpu *cpu);
++    uint64_t (*get_next_frame_pointer)(Cpu *cpu, uint64_t fp);
++    uint64_t (*get_next_return_address)(Cpu *cpu, uint64_t fp);
+     uint8_t (*get_privilege_level)(Cpu *cpu);
+     uint8_t (*num_privilege_levels)(void);
+     const char *(*get_privilege_level_name)(uint8_t pl);
+@@ -421,7 +423,9 @@ static uint32_t cpu_read_register32(Cpu *cpu, struct qemu_plugin_register *reg)
+ 
+ static uint64_t cpu_read_memory64(Cpu *cpu, uint64_t addr)
+ {
+-    g_assert(addr);
++    if (!addr) {
++        return 0;
++    }
+     GByteArray *buf = cpu->buf;
+     g_byte_array_set_size(buf, 0);
+     bool read = qemu_plugin_read_memory_vaddr(addr, buf, 8);
+@@ -449,10 +453,8 @@ static void cpu_unwind_stack(Cpu *cpu, uint64_t frame_pointer, uint64_t pc)
+         CallstackEntry e = {.frame_pointer = frame_pointer, .pc = pc};
+         unwind[depth] = e;
+         depth++;
+-        if (frame_pointer) {
+-            frame_pointer = cpu_read_memory64(cpu, frame_pointer);
+-        }
+-        pc = cpu_read_memory64(cpu, frame_pointer + 8); /* read previous lr */
++        frame_pointer = cpu->ops.get_next_frame_pointer(cpu, frame_pointer);
++        pc = cpu->ops.get_next_return_address(cpu, frame_pointer);
+     } while (frame_pointer && pc && depth < UNWIND_STACK_MAX_DEPTH);
+     #undef UNWIND_STACK_MAX_DEPTH
+ 
+@@ -545,6 +547,16 @@ static uint64_t aarch64_get_frame_pointer(Cpu *cpu_)
+     return cpu_read_register64(cpu_, cpu->reg_fp);
+ }
+ 
++static uint64_t aarch64_get_next_frame_pointer(Cpu *cpu_, uint64_t fp)
++{
++    return cpu_read_memory64(cpu_, fp);
++}
 +
-> >   1 file changed, 61 insertions(+)
-> >   create mode 100644 target/hexagon/tag_rev_info.c.inc
-> >
-> > diff --git a/target/hexagon/tag_rev_info.c.inc
-> b/target/hexagon/tag_rev_info.c.inc
-> > new file mode 100644
-> > index 0000000000..ed7fb68aaf
-> > --- /dev/null
-> > +++ b/target/hexagon/tag_rev_info.c.inc
-> > @@ -0,0 +1,61 @@
-> > +/*
-> > + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-> > + * SPDX-License-Identifier: GPL-2.0-or-later
-> > + */
-> > +
-> > +#ifndef HEXAGON_TAG_ARCH_TABLE_H
-> > +#define HEXAGON_TAG_ARCH_TABLE_H
-> > +
-> > +struct tag_rev_info { int introduced, removed; };
-> > +
-> > +static const struct tag_rev_info tag_rev_info[XX_LAST_OPCODE] =3D {
-> > +    [A7_clip] =3D { .introduced =3D 0x67, .removed =3D 0x0 },
-> > +    [A7_croundd_ri] =3D { .introduced =3D 0x67, .removed =3D 0x0 },
-> > +    [A7_croundd_rr] =3D { .introduced =3D 0x67, .removed =3D 0x0 },
->
-> Any reason not to use enum HexagonVersion?
->
-> r~
->
++static uint64_t aarch64_get_next_return_address(Cpu *cpu_, uint64_t fp)
++{
++    return cpu_read_memory64(cpu_, fp + 8);
++}
++
+ static void aarch64_init(Cpu *cpu_)
+ {
+     Aarch64Cpu *cpu = g_new0(Aarch64Cpu, 1);
+@@ -580,6 +592,8 @@ static CpuOps aarch64_ops = {
+     .init = aarch64_init,
+     .end = aarch64_end,
+     .get_frame_pointer = aarch64_get_frame_pointer,
++    .get_next_frame_pointer = aarch64_get_next_frame_pointer,
++    .get_next_return_address = aarch64_get_next_return_address,
+     .get_privilege_level = aarch64_get_privilege_level,
+     .num_privilege_levels = aarch64_num_privilege_levels,
+     .get_privilege_level_name = aarch64_get_privilege_level_name,
+@@ -623,6 +637,16 @@ static uint64_t x64_get_frame_pointer(Cpu *cpu_)
+     return cpu_read_register64(cpu_, cpu->reg_rbp);
+ }
+ 
++static uint64_t x64_get_next_frame_pointer(Cpu *cpu_, uint64_t fp)
++{
++    return cpu_read_memory64(cpu_, fp);
++}
++
++static uint64_t x64_get_next_return_address(Cpu *cpu_, uint64_t fp)
++{
++    return cpu_read_memory64(cpu_, fp + 8);
++}
++
+ static void x64_init(Cpu *cpu_)
+ {
+     X64Cpu *cpu = g_new0(X64Cpu, 1);
+@@ -649,6 +673,8 @@ static CpuOps x64_ops = {
+     .init = x64_init,
+     .end = x64_end,
+     .get_frame_pointer = x64_get_frame_pointer,
++    .get_next_frame_pointer = x64_get_next_frame_pointer,
++    .get_next_return_address = x64_get_next_return_address,
+     .get_privilege_level = x64_get_privilege_level,
+     .num_privilege_levels = x64_num_privilege_levels,
+     .get_privilege_level_name = x64_get_privilege_level_name,
+@@ -710,7 +736,7 @@ static void track_callstack(unsigned int cpu_index, void *udata)
+         return;
+     }
+ 
+-    uint64_t caller_fp = fp ? cpu_read_memory64(cpu, fp) : 0;
++    uint64_t caller_fp = cpu->ops.get_next_frame_pointer(cpu, fp);
+     if (caller_fp == top.frame_pointer) {
+         /* call */
+         callstack_push(cs, (CallstackEntry){.frame_pointer = fp, .pc = pc});
+-- 
+2.47.3
 
-Good call.  I will change this.
-
-Thanks,
-Taylor
-
---000000000000c2bbe4064aa97c6c
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
-mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Thu, Feb 12,=
- 2026 at 4:52=E2=80=AFPM Richard Henderson &lt;<a href=3D"mailto:richard.he=
-nderson@linaro.org">richard.henderson@linaro.org</a>&gt; wrote:<br></div><b=
-lockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-le=
-ft:1px solid rgb(204,204,204);padding-left:1ex">On 2/12/26 13:34, Taylor Si=
-mpson wrote:<br>
-&gt; From: Matheus Tavares Bernardino&lt;<a href=3D"mailto:matheus.bernardi=
-no@oss.qualcomm.com" target=3D"_blank">matheus.bernardino@oss.qualcomm.com<=
-/a>&gt;<br>
-&gt; <br>
-&gt; Table that records which CPU revision introduced or removed each opcod=
-e<br>
-&gt; <br>
-&gt; Co-authored-by: Brian Cain&lt;<a href=3D"mailto:brian.cain@oss.qualcom=
-m.com" target=3D"_blank">brian.cain@oss.qualcomm.com</a>&gt;<br>
-&gt; Co-authored-by: Taylor Simpson&lt;<a href=3D"mailto:ltaylorsimpson@gma=
-il.com" target=3D"_blank">ltaylorsimpson@gmail.com</a>&gt;<br>
-&gt; Signed-off-by: Brian Cain&lt;<a href=3D"mailto:brian.cain@oss.qualcomm=
-.com" target=3D"_blank">brian.cain@oss.qualcomm.com</a>&gt;<br>
-&gt; Signed-off-by: Taylor Simpson&lt;<a href=3D"mailto:ltaylorsimpson@gmai=
-l.com" target=3D"_blank">ltaylorsimpson@gmail.com</a>&gt;<br>
-&gt; ---<br>
-&gt;=C2=A0 =C2=A0target/hexagon/tag_rev_info.c.inc | 61 +++++++++++++++++++=
-++++++++++++<br>
-&gt;=C2=A0 =C2=A01 file changed, 61 insertions(+)<br>
-&gt;=C2=A0 =C2=A0create mode 100644 target/hexagon/tag_rev_info.c.inc<br>
-&gt; <br>
-&gt; diff --git a/target/hexagon/tag_rev_info.c.inc b/target/hexagon/tag_re=
-v_info.c.inc<br>
-&gt; new file mode 100644<br>
-&gt; index 0000000000..ed7fb68aaf<br>
-&gt; --- /dev/null<br>
-&gt; +++ b/target/hexagon/tag_rev_info.c.inc<br>
-&gt; @@ -0,0 +1,61 @@<br>
-&gt; +/*<br>
-&gt; + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.=
-<br>
-&gt; + * SPDX-License-Identifier: GPL-2.0-or-later<br>
-&gt; + */<br>
-&gt; +<br>
-&gt; +#ifndef HEXAGON_TAG_ARCH_TABLE_H<br>
-&gt; +#define HEXAGON_TAG_ARCH_TABLE_H<br>
-&gt; +<br>
-&gt; +struct tag_rev_info { int introduced, removed; };<br>
-&gt; +<br>
-&gt; +static const struct tag_rev_info tag_rev_info[XX_LAST_OPCODE] =3D {<b=
-r>
-&gt; +=C2=A0 =C2=A0 [A7_clip] =3D { .introduced =3D 0x67, .removed =3D 0x0 =
-},<br>
-&gt; +=C2=A0 =C2=A0 [A7_croundd_ri] =3D { .introduced =3D 0x67, .removed =
-=3D 0x0 },<br>
-&gt; +=C2=A0 =C2=A0 [A7_croundd_rr] =3D { .introduced =3D 0x67, .removed =
-=3D 0x0 },<br>
-<br>
-Any reason not to use enum HexagonVersion?<br>
-<br>
-r~<br></blockquote><div><br></div><div>Good call.=C2=A0 I will change this.=
-</div><div><br></div><div>Thanks,</div><div>Taylor</div><div>=C2=A0</div></=
-div></div>
-
---000000000000c2bbe4064aa97c6c--
 
