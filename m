@@ -4,63 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72FB6EF48CA
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Feb 2026 06:04:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3333FEF48CA
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Feb 2026 06:06:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqmHk-0002y1-3I; Fri, 13 Feb 2026 01:04:12 -0500
+	id 1vqmK0-0003xY-R5; Fri, 13 Feb 2026 01:06:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cuichao1753@phytium.com.cn>)
- id 1vqmHh-0002xc-Vu
- for qemu-devel@nongnu.org; Fri, 13 Feb 2026 01:04:09 -0500
-Received: from sgoci-sdnproxy-4.icoremail.net ([129.150.39.64])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <cuichao1753@phytium.com.cn>) id 1vqmHf-0000ud-0m
- for qemu-devel@nongnu.org; Fri, 13 Feb 2026 01:04:09 -0500
-Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
- by hzbj-icmmx-6 (Coremail) with SMTP id AQAAfwC3jETNvo5ptlZNAA--.56725S2;
- Fri, 13 Feb 2026 14:03:57 +0800 (CST)
-Received: from localhost.localdomain (unknown [218.76.62.144])
- by mail (Coremail) with SMTP id AQAAfwAHXuvEvo5pWw0bAA--.32545S3;
- Fri, 13 Feb 2026 14:03:49 +0800 (CST)
-From: Cui Chao <cuichao1753@phytium.com.cn>
-To: Andrew Morton <akpm@linux-foundation.org>
-Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
- Mike Rapoport <rppt@kernel.org>, Wang Yinfeng <wangyinfeng@phytium.com.cn>,
- dan.j.williams@intel.com,
- Pratyush Brahma <pratyush.brahma@oss.qualcomm.com>,
- Gregory Price <gourry@gourry.net>, David Hildenbrand <david@kernel.org>,
- linux-cxl@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-mm@kvack.org, qemu-devel@nongnu.org, stable@vger.kernel.org,
- Jonathan Cameron <jonathan.cameron@huawei.com>
-Subject: [PATCH v4 1/1] mm: numa_memblks: Identify the accurate NUMA ID of CFMW
-Date: Fri, 13 Feb 2026 14:03:47 +0800
-Message-Id: <20260213060347.2389818-2-cuichao1753@phytium.com.cn>
-X-Mailer: git-send-email 2.33.0
-In-Reply-To: <20260213060347.2389818-1-cuichao1753@phytium.com.cn>
-References: <20260213060347.2389818-1-cuichao1753@phytium.com.cn>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1vqmJp-0003qH-4J; Fri, 13 Feb 2026 01:06:23 -0500
+Received: from isrv.corpit.ru ([212.248.84.144])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1vqmJl-0001KT-6z; Fri, 13 Feb 2026 01:06:20 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 36C08188BF7;
+ Fri, 13 Feb 2026 09:06:11 +0300 (MSK)
+Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 392A7363992;
+ Fri, 13 Feb 2026 09:06:14 +0300 (MSK)
+From: Michael Tokarev <mjt@tls.msk.ru>
+To: qemu-devel@nongnu.org
+Cc: Michael Tokarev <mjt@tls.msk.ru>,
+	qemu-stable@nongnu.org
+Subject: [ANNOUNCE] QEMU 10.2.1 Stable released
+Date: Fri, 13 Feb 2026 09:05:58 +0300
+Message-ID: <20260213060607.200695-1-mjt@tls.msk.ru>
+X-Mailer: git-send-email 2.47.3
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAfwAHXuvEvo5pWw0bAA--.32545S3
-X-CM-SenderInfo: pfxlux1drrlkut6sx5pwlxzhxfrphubq/1tbiAQAFAGmONAkAtAAEsu
-Authentication-Results: hzbj-icmmx-6; spf=neutral smtp.mail=cuichao175
- 3@phytium.com.cn;
-X-Coremail-Antispam: 1Uk129KBjvJXoWxCr4rGryDtrWxuFyDAw43ZFb_yoW5CFW5pa
- 1agFZYgF4kJryxGFs7u3WUAw1IqFnYkF45GFZrCwnxZa1Ygw1Uuryavr1FvFn7tryfCF1r
- XF4qy3WYvw1UZaDanT9S1TB71UUUUj7qnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
- DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
- UUUUU
-Received-SPF: pass client-ip=129.150.39.64;
- envelope-from=cuichao1753@phytium.com.cn; helo=sgoci-sdnproxy-4.icoremail.net
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_MSPIKE_H3=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -76,80 +58,187 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In some physical memory layout designs, the address space of CFMW (CXL
-Fixed Memory Window) resides between multiple segments of system memory
-belonging to the same NUMA node. In numa_cleanup_meminfo, these multiple
-segments of system memory are merged into a larger numa_memblk. When
-identifying which NUMA node the CFMW belongs to, it may be incorrectly
-assigned to the NUMA node of the merged system memory.
+Hi everyone,
 
-When a CXL RAM region is created in userspace, the memory capacity of
-the newly created region is not added to the CFMW-dedicated NUMA node.
-Instead, it is accumulated into an existing NUMA node (e.g., NUMA0
-containing RAM). This makes it impossible to clearly distinguish
-between the two types of memory, which may affect memory-tiering
-applications.
+The QEMU v10.2.1 stable release is now available.
 
-Example memory layout:
+You can grab the tarball from our download page here:
 
-Physical address space:
-    0x00000000 - 0x1FFFFFFF  System RAM (node0)
-    0x20000000 - 0x2FFFFFFF  CXL CFMW (node2)
-    0x40000000 - 0x5FFFFFFF  System RAM (node0)
-    0x60000000 - 0x7FFFFFFF  System RAM (node1)
+  https://www.qemu.org/download/#source
 
-After numa_cleanup_meminfo, the two node0 segments are merged into one:
-    0x00000000 - 0x5FFFFFFF  System RAM (node0) // CFMW is inside the range
-    0x60000000 - 0x7FFFFFFF  System RAM (node1)
+  https://download.qemu.org/qemu-10.2.1.tar.xz
+  https://download.qemu.org/qemu-10.2.1.tar.xz.sig (signature)
 
-So the CFMW (0x20000000-0x2FFFFFFF) will be incorrectly assigned to node0.
+v10.2.1 is now tagged in the official qemu.git repository, and the
+stable-10.2 branch has been updated accordingly:
 
-To address this scenario, accurately identifying the correct NUMA node
-can be achieved by checking whether the region belongs to both
-numa_meminfo and numa_reserved_meminfo.
+  https://gitlab.com/qemu-project/qemu/-/commits/stable-10.2
 
-While this issue is only observed in a QEMU configuration, and no known
-end users are impacted by this problem, it is likely that some firmware
-implementation is leaving memory map holes in a CXL Fixed Memory Window.
-CXL hotplug depends on mapping free window capacity, and it seems to be
-only a coincidence to have not hit this problem yet.
+There are 78 changes since the previous v10.2.0 release.
 
-Fixes: 779dd20cfb56 ("cxl/region: Add region creation support")
-Signed-off-by: Cui Chao <cuichao1753@phytium.com.cn>
-Cc: <stable@vger.kernel.org>
-Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
-Reviewed-by: Gregory Price <gourry@gourry.net>
-Reviewed-by: Dan Williams <dan.j.williams@intel.com>
----
- mm/numa_memblks.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+Thank you everyone who has been involved and helped with the stable series!
 
-diff --git a/mm/numa_memblks.c b/mm/numa_memblks.c
-index 5b009a9cd8b4..0892d532908c 100644
---- a/mm/numa_memblks.c
-+++ b/mm/numa_memblks.c
-@@ -568,15 +568,16 @@ static int meminfo_to_nid(struct numa_meminfo *mi, u64 start)
- int phys_to_target_node(u64 start)
- {
- 	int nid = meminfo_to_nid(&numa_meminfo, start);
-+	int reserved_nid = meminfo_to_nid(&numa_reserved_meminfo, start);
- 
- 	/*
--	 * Prefer online nodes, but if reserved memory might be
--	 * hot-added continue the search with reserved ranges.
-+	 * Prefer online nodes unless the address is also described
-+	 * by reserved ranges, in which case use the reserved nid.
- 	 */
--	if (nid != NUMA_NO_NODE)
-+	if (nid != NUMA_NO_NODE && reserved_nid == NUMA_NO_NODE)
- 		return nid;
- 
--	return meminfo_to_nid(&numa_reserved_meminfo, start);
-+	return reserved_nid;
- }
- EXPORT_SYMBOL_GPL(phys_to_target_node);
- 
--- 
-2.33.0
+/mjt
+
+Changelog (stable-10.2-hash master-hash Author Name: Commmit-Subject):
+
+2d3df8abca Michael Tokarev:
+ Update version for 10.2.1 release
+63a76e0123 80c97930a9 Andrey Drobyshev:
+ scripts/qemugdb: timers: Fix KeyError in 'qemu timers' command
+b5ce6809b4 251a3d4ca3 Paolo Bonzini:
+ Revert "tcg/user: do not set exit_request gratuitously"
+1af5215667 d22e9aec57 Aleksandr Sergeev:
+ linux-user/syscall.c: Prevent acquiring clone_lock while fork()
+ba31a6fca7 25465c0e1f Jonathan Cameron:
+ hw/cxl: Take into account how many media operations are requested for param check
+fd0abbb386 87f8e5a71d Jonathan Cameron:
+ hw/cxl: Check for overflow on santize media as both base and offset 64bit.
+e5628119e1 3560b51979 Honglei Huang:
+ virtio-gpu: fix error handling in virgl_cmd_resource_create_blob
+cfc706b38e efd581a8cd Li Chen:
+ virtio-pmem: ignore empty queue notifications
+be88ad424c e27194e087 Joelle van Dyne:
+ virtio-gpu-virgl: correct parent for blob memory region
+51514aa3c2 7b913094c7 zhenwei pi:
+ cryptodev-builtin: Limit the maximum size
+2ac11c1d93 91c6438caf zhenwei pi:
+ hw/virtio/virtio-crypto: verify asym request size
+080b623ed4 66cf169e29 Igor Mammedov:
+ q35: Fix migration of SMRAM state
+8c65f73b31 f73e5ed9bc Kevin Wolf:
+ pcie_sriov: Fix PCI_SRIOV_* accesses in pcie_sriov_pf_exit()
+a440980876 623db85647 Kevin Wolf:
+ virtio: Fix crash when sriov-pf is set for non-PCI-Express device
+ab67c542a9 fff77cfb84 Dorinda Bassey:
+ virtio-dmabuf: Ensure UUID persistence for hash table insertion
+ad2c2ef5e5 fd3a2c601a Wafer Xie:
+ vdpa: fix vhost-vdpa suspended state not be shared
+0b1ddf19d0 efea7ddb46 Jamin Lin:
+ hw/i2c/aspeed_i2c: Fix DMA moving data into incorrect address
+a66c02ea9d 9cbd8ee7f6 Jamin Lin:
+ hw/i2c/aspeed: Fix wrong I2CC_DMA_LEN when I2CM_DMA_TX/RX_ADDR set first
+146214796c 7d64f04863 Jamin Lin:
+ hw/arm/aspeed_ast27x0: Fix EHCI3/4 IRQ routing to GIC
+2f46d99451 0a1d477067 Nabih Estefan:
+ hw/i2c/aspeed_i2c.c: Add a check for dma_read
+d4c6c60993 4c6521296d Cédric Le Goater:
+ hw/adc: Fix out-of-bounds write in Aspeed ADC model
+8bf4744182 46dee71a94 Gerd Hoffmann:
+ hw/uefi: fix size negotiation
+89f7d4fb13 eda9baa17a Akihiko Odaki:
+ hw/nvme: Fix bootindex suffix use-after-free
+a2fbfefbb7 587f4a1805 John Snow:
+ python: fix msys64 wheel directory specification
+0c2fd08dc8 94e72135d4 Ilia Levi:
+ tests/qtest/ufs-test: Add test for mcq completion queue wraparound
+ad5f6ffcd0 f78762a3cc Ilia Levi:
+ hw/ufs: Fix mcq completion queue wraparound
+88ef8726ff ed621cc8e2 Jeuk Kim:
+ hw/ufs: fix CQE endianness and UPIU length
+cce96e6052 289e6a3edf Jeuk Kim:
+ hw/ufs: Ensure DBC of PRDT uses only lower 18 bits
+92e6f27829 d9ca273f8f Alex Bennée:
+ tests/functional: migrate sbsa_ref test images
+49d3f1381d e4f1a9b1da Thomas Huth:
+ pc-bios/optionrom: Use 32-bit linker emulation for the optionroms
+8aee37581e 815567b4ea Daniel P. Berrangé:
+ gitlab: preserve base rules for container template
+f48aaf926e 2eb8d97343 Paolo Bonzini:
+ target/i386/tcg: fix a few instructions that do not support VEX.L=1
+d0be1b581c d68f0e2e90 Icenowy Zheng:
+ linux-user: fixup termios2 related things on PowerPC
+1e762859ce 4f22fcb5c6 Vivian Wang:
+ linux-user: Add missing termios baud rates
+22a55fc7df 947b971cad Luca Bonissi:
+ linux-user: Add termios2 support to sparc target
+c1fac5fbfe afbe0ff81c Luca Bonissi:
+ linux-user: Add termios2 support to sh4 target
+ce78d40265 edf9184f4f Luca Bonissi:
+ linux-user: Add termios2 support to mips target
+06cfe78536 edc741710a Luca Bonissi:
+ linux-user: Add termios2 support to hppa target
+20b93df8d7 8d8c6aeee8 Luca Bonissi:
+ linux-user: Add termios2 support to alpha target
+5380228f7f e9a8a10e84 Luca Bonissi:
+ linux-user: Add termios2 support
+ba3581de79 cf10273aff Alex Bennée:
+ hw/intc: avoid byte swap fiddling in gicv3 its path
+9707eaa47b f0de58ccf6 Pierrick Bouvier:
+ bsd-user/syscall_defs.h: define STAT_TIME_T_EXT only for 32 bits
+ff338c6f78 369c1ba2b7 Richard Henderson:
+ bsd-user: Fix __i386__ test for TARGET_HAS_STAT_TIME_T_EXT
+769d19221e 214f79fdfb Bernhard Beschow:
+ hw/sd/sdhci: Fix TYPE_IMX_USDHC to implement sd-spec-version 3 by default
+6f54455c10 83017c4aaa Pierrick Bouvier:
+ linux-user/aarch64/target_fcntl.h: add missing TARGET_O_LARGEFILE definition
+4131a1d83c 7be4256281 Philippe Mathieu-Daudé:
+ accel/nvmm: Fix 'cpu' typo in nvmm_init_vcpu()
+6bcd958030 b67a35622f Peter Maydell:
+ target/arm: Correctly trap HCR.TID1 registers in v7A
+5ead00ce11 205ca535ab Peter Maydell:
+ target/arm: Correctly honour HCR.TID3 for v7A cores
+bcc7fc8f81 8da52b8401 Peter Maydell:
+ target/arm: Don't specify ID_PFR1 accessfn twice
+35abae4511 7cf096d609 Alex Bennée:
+ tests/functional: migrate aspeed_rainier image
+d9dd5dad31 c5712ad83f Philippe Mathieu-Daudé:
+ hw/arm: Re-enable the MAX78000FTHR machine in qemu-system-arm/aarch64
+1a1ebc90cd 49ee001a5b Yao Zi:
+ hw/loongarch/virt: Don't abort on access to unimplemented IOCSR
+0b92a8a130 a7be2e0a3f Song Gao:
+ target/loongarch: Fix exception ADEF/ADEM missing to update CSR_BADV
+7d662d328d e4f0ef58d5 Song Gao:
+ target/loongarch: Fix exception BCE missing to update CSR_BADV
+b8456254d0 70cf9b7bf7 Song Gao:
+ target/loongach: Fix some exceptions failure in updating CSR_BADV
+21af0baf9a ff54394eed Xianglai Li:
+ hw/loongarch/virt: Fix irq allocation failure with pci device from fdt
+e12259821c 47de28a0b7 Xianglai Li:
+ hw/loongarch/virt: Modify the interrupt trigger type in fdt table
+058e1774d6 c7504ba2a5 Vulnerability Report:
+ hw/i386/kvm: fix PIRQ bounds check in xen_physdev_map_pirq()
+11e286fb93 ed88bdcfbd Paolo Bonzini:
+ target/i386/tcg: allow VEX in 16-bit protected mode
+6594e50e7e 5e3572ef2e Paolo Bonzini:
+ target/i386/tcg: mask addresses for VSIB
+51bc24d427 73dd6e4a36 Paolo Bonzini:
+ target/i386/tcg: do not mark all SSE instructions as unaligned
+359076c8a0 11dac41f2e Laurent Vivier:
+ m68k: fix CAS2 writeback when Dc1=�2
+920634e411 894c8bd56f Paolo Bonzini:
+ configs: use default prefix for Windows compilation
+639ffcbd64 628bda1ab7 Fabiano Rosas:
+ target/ppc: Fix env->quiesced migration
+4cc64bd6c4 9290c10ae9 Matthew Lugg:
+ tests: add tcg coverage for fixed mremap bugs
+860f8f3f53 81ceab3049 Matthew Lugg:
+ linux-user: fix reserved_va page leak in do_munmap
+5ac0811f40 2422884ec5 Matthew Lugg:
+ linux-user: fix mremap errors for invalid ranges
+a8adf882fd aaed9ca179 Matthew Lugg:
+ linux-user: fix mremap unmapping adjacent region
+86ce6e0773 c333f9c4ee Jim MacArthur:
+ linux-user/elfload.c: Correction to HWCAP2 accessor
+e71e02caa7 82ae60c8b5 Jean-Christian CÎRSTEA:
+ linux-user: allow null `pathname` for statx()/fstatat()
+f34c0eb054 af6db3b713 Richard Henderson:
+ tcg/riscv: Fix TCG_REG_TMP0 clobber in tcg_gen_dup{m,i}
+a53ba65fff 23b53ec3a8 Paolo Bonzini:
+ tcg/optimize: Do use affected bits
+b276b2ca22 08b12bfb8f Richard Henderson:
+ tcg/optimize: Fix a_mask computation for orc
+682e043b17 7d2d577de0 Richard Henderson:
+ tcg/optimize: Save o_mask in fold_masks_zosa_int
+d6b9de8f9e e714f1a3d4 Jie Song:
+ monitor/qmp: cleanup SocketChardev listener sources early to avoid fd handling race
+a7383751c2 75bcfb98a1 Cédric Le Goater:
+ tests/functional: Fix URL of gb200nvl-bmc image
+2af81f1251 3fbadbb392 Alano Song:
+ hw/i2c/imx: Fix trace func name error
+59c9137156 0db1b556e4 Paolo Bonzini:
+ target/i386/tcg: ignore V3 in 32-bit mode
+b33a563281 60efba3c1b Andrew Cooper:
+ target/i386: Fix #GP error code for INT instructions
 
 
