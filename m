@@ -4,182 +4,213 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7148DEDF150
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Feb 2026 10:55:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24CB7EDF150
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Feb 2026 10:57:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqqpE-0005pg-44; Fri, 13 Feb 2026 05:55:04 -0500
+	id 1vqqrA-0007Q8-Gt; Fri, 13 Feb 2026 05:57:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
- id 1vqqpD-0005n2-0K; Fri, 13 Feb 2026 05:55:03 -0500
-Received: from mail-northcentralusazlp170120005.outbound.protection.outlook.com
- ([2a01:111:f403:c105::5] helo=CH5PR02CU005.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
+ id 1vqqr7-0007Nn-FF
+ for qemu-devel@nongnu.org; Fri, 13 Feb 2026 05:57:01 -0500
+Received: from mx0a-002c1b01.pphosted.com ([148.163.151.68])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
- id 1vqqpB-0001kH-5N; Fri, 13 Feb 2026 05:55:02 -0500
+ (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
+ id 1vqqr4-0002As-HP
+ for qemu-devel@nongnu.org; Fri, 13 Feb 2026 05:57:01 -0500
+Received: from pps.filterd (m0127838.ppops.net [127.0.0.1])
+ by mx0a-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 61D9F7Hw3534700; Fri, 13 Feb 2026 02:56:48 -0800
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=
+ proofpoint20171006; bh=hYYrkuBuUgT9TWInM9bgYYOF3q8V/Mj4yQEcUOhqr
+ /E=; b=O2rrExCfboVLYfN8rA4S59S65sfHIpMRY81ChWur9nORKX8wIlroGDffv
+ +fR7XQg1AGFe+2PbUdVVGrcq6spd3br6QLt86DcO1PS367cdZhQ9smgpLj8SNT/2
+ ejRWTQ+heVMKWToM+WjxH0WREFonD+t0pkxYkaiIemmY2ox37pwLEjId+G01BqKR
+ /9PN/lCSbPld3cFuBE9hu8098GH6f4Ib1ySggbelgEmkEY4A2mBPFyU/9jpAH7sg
+ jNupHGYnweEjAVPiJ5+K92nH7nn70S9+7aYDPZJgShYnuBFk/zBfQQ0eJH+rlHu7
+ iETKK0SGB+lZn1KLgV4/Rpvc34Hvw==
+Received: from ph7pr06cu001.outbound.protection.outlook.com
+ (mail-westus3azon11020125.outbound.protection.outlook.com [52.101.201.125])
+ by mx0a-002c1b01.pphosted.com (PPS) with ESMTPS id 4c8q4d73bc-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Fri, 13 Feb 2026 02:56:48 -0800 (PST)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=mSaUxftGO/sHE+v/jyHvNaw58QgH1i3nWA7NqJsL/xGjpYTLEwvTFdQm+42o17ajMajcLEQ6OlMSz97DwPnW26VsKrQOCzhM3X/+KfEBwpLwyLoTN3hZEYlwnxOrlexlM8kndNsDY7hetcxLmmbQSSwEgnZ42YWPqS9He8qOHUUCcK8X6iAh6GNDY74AmJws8EI0S9STW6XCJTf+IPN9DbS2Tpt/9rTCkXtlvPqT0LavOc/AAFGUIclgZNASv7Ta1uyitvcK6YOeg0iumG7BRw+19dzvx5/oTAxVQQQnj0+QCS/4275Fovfyqa2jF6ebPbx6NwlgGxF+A+nUTIYMbw==
+ b=DpTU/0y078xrmZU16GJq6U414ZTAc6os/gJMJkThBZui2kEhftZ36AEENuf5uHpoZr92M1b+4FyYUxAmCPFd517EbDfw1yUsOLKRGrOPagbYxDsKi0M19O5MbodI3HzC1TFxrNVuvhTuNa6hTnYzSGpu1h3mDZPgMVpUUPecbNMY2NWhpLEggkuJ/dwl5SoCnluY5swESiCEyvn16LgxWVdzrktmF0woL7C3/cbbtfY1/u/OO0VJBCyL4P3CAYnJ6r7UrLETDtL9vAGQWFmvHOi3kzQ551rNYWKeGQLJ0ny3guu7KS4c3bQkciBMgvDE712TyQvdJ9ZqceHqLoWJEw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=GyUfPvcOhP7RPThcHFHyVu1DQvbNbodc9erDyVkyEiE=;
- b=AdcFHO602bv70r9bwgiojTxNzRwdxt48a1kK0C1jN9Iovxz2JBdjbp71FvdgruV1wjp2YDePvUzJizEMo8KRXXdZ/HCLDQDV7Q31V7V1YltQSM5ddn6t/ZL87qvA5thCbe/A7RHWwE6V/xcTJ+bpdRzSqH+TSQTFIGMebXXINP0uKemD4xtNnuIXCWYjTprK8YpeVqIbMLTW4vC3lXYyKvU5mlkbF1F8KOR+pFBJHlJQGsfMwAOKKwBXa8/O1O7XTZ9F7w8VPT7+W/lwTue4D96qiT5TJ7Up1h2H14nMTu8tP5ZndLpZlQWwWOSelyFDntmZ/gBKeP1CLxjrsuLrKA==
+ bh=hYYrkuBuUgT9TWInM9bgYYOF3q8V/Mj4yQEcUOhqr/E=;
+ b=R1R27QfiIznP4fBgJxPJhD8++wBzYMRcoOHsEM+nPb5I5PrCeEhjwKZAC2WLNPypaHyrn83RLfIvMq3sU4Q0T9KBGK3M7O3mO1F8aMffgcL62rhRdUy/dF9ec/asFHbp9qOHySjEJYKN8dgw5ghH7w+ICTVFvQWoJt1eTlvfJWSi/I2Vvi6JFAjY4tZlEbXqp5UIX+fgGuaRvGI7sboG+16JT8Pzoar8fE1xKMa1K6WCeMZJbcj9s5QbzGMD6Vsf93hbYWAbQ0V/9H0Gn1oAsimruuJFtEQCiokmKHs9liL0XjarLUqges5pNpU9xU4mGqjfbEM/MZao6igsNm/M8A==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
+ smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
+ dkim=pass header.d=nutanix.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
+ s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=GyUfPvcOhP7RPThcHFHyVu1DQvbNbodc9erDyVkyEiE=;
- b=jy56dtgariQY/NBXa/29FTWLo+abWfKeUInXUDjLCb+qi1mq2NFgmGc7c9AiC0xNVNilp74BBkPZswbVHNqgM7P4BAvaC1UBQ540iVAQlWPlxq+b9GoB3Y/6RNHW6lr2ECo8AqioYyWWgCi59lAiVEw/H9DA0+EtQKYgNZIw7uDFYqX8KpC7EiDZ04+qemSBh6kqpoqyyxvr+bj4J5o0XRkydQe7O8go0mEKbLdz60SD4VHh63+qu0QjN9WTlY+tpIedw2NgAmz0r7oyyfCvTkOELxHpreE3PccS9GqP+++UaNkhBr4EvrQu9ECgQgu2jkFaQRunPkhRbYo8H4eyZA==
-Received: from CH3PR12MB7548.namprd12.prod.outlook.com (2603:10b6:610:144::12)
- by CY5PR12MB6106.namprd12.prod.outlook.com (2603:10b6:930:29::7) with
+ bh=hYYrkuBuUgT9TWInM9bgYYOF3q8V/Mj4yQEcUOhqr/E=;
+ b=wE+jXjE+vMdtabX76ol8qgZIhW1GQbzoIhNQ3ZoIAoK/Lx1JgENpEjZKst3Ze/7MI+4NfW+jPua7YnW+BLRkxkytxt0L8/19eji0F3+TT/MYeIdZlDGYjtp7yt/ivZKVu99v9tVgPUq2w5u31al+bZJAQrxqEK5PJiK+Y8nFCi11COpYfXLo7GlF5xLfSS0ANVZ+38yRWCTvde0THYYwLJz24kVwDIfj1oc6chOHxtO1huDzgUf3za1itYoKI9Hr2sfoRsxH1pNXiluxqyg8VHmKiCYfqWGvUjaD69ggNwpg/XQDkUPDKyL2Si2IKfpw4Hiu3mKKlngNapwHrVO0yg==
+Received: from PH0PR02MB7159.namprd02.prod.outlook.com (2603:10b6:510:16::8)
+ by DS0PR02MB11162.namprd02.prod.outlook.com (2603:10b6:8:2f5::22) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9611.13; Fri, 13 Feb
- 2026 10:54:54 +0000
-Received: from CH3PR12MB7548.namprd12.prod.outlook.com
- ([fe80::b710:d6a1:ab16:76de]) by CH3PR12MB7548.namprd12.prod.outlook.com
- ([fe80::b710:d6a1:ab16:76de%5]) with mapi id 15.20.9611.012; Fri, 13 Feb 2026
- 10:54:54 +0000
-From: Shameer Kolothum Thodi <skolothumtho@nvidia.com>
-To: "eric.auger@redhat.com" <eric.auger@redhat.com>, "qemu-arm@nongnu.org"
- <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-CC: "peter.maydell@linaro.org" <peter.maydell@linaro.org>, "clg@redhat.com"
- <clg@redhat.com>, "alex@shazbot.org" <alex@shazbot.org>, Nicolin Chen
- <nicolinc@nvidia.com>, Nathan Chen <nathanc@nvidia.com>, Matt Ochs
- <mochs@nvidia.com>, Jiandi An <jan@nvidia.com>, Jason Gunthorpe
- <jgg@nvidia.com>, "jonathan.cameron@huawei.com"
- <jonathan.cameron@huawei.com>, "zhangfei.gao@linaro.org"
- <zhangfei.gao@linaro.org>, "zhenzhong.duan@intel.com"
- <zhenzhong.duan@intel.com>, Krishnakant Jaju <kjaju@nvidia.com>
-Subject: RE: [PATCH v2 04/24] backends/iommufd: Introduce
- iommufd_backend_viommu_mmap
-Thread-Topic: [PATCH v2 04/24] backends/iommufd: Introduce
- iommufd_backend_viommu_mmap
-Thread-Index: AQHcl3fVlY09rKo4ak2D2nldd+nqlbWAdXoAgAAJyMA=
-Date: Fri, 13 Feb 2026 10:54:54 +0000
-Message-ID: <CH3PR12MB75486220E099645ED622EC71AB61A@CH3PR12MB7548.namprd12.prod.outlook.com>
-References: <20260206144823.80655-1-skolothumtho@nvidia.com>
- <20260206144823.80655-5-skolothumtho@nvidia.com>
- <cf34ad79-1914-428c-8999-8a4faf337a15@redhat.com>
-In-Reply-To: <cf34ad79-1914-428c-8999-8a4faf337a15@redhat.com>
-Accept-Language: en-US, en-GB
+ 2026 10:56:46 +0000
+Received: from PH0PR02MB7159.namprd02.prod.outlook.com
+ ([fe80::8e97:bc32:822c:b250]) by PH0PR02MB7159.namprd02.prod.outlook.com
+ ([fe80::8e97:bc32:822c:b250%7]) with mapi id 15.20.9611.012; Fri, 13 Feb 2026
+ 10:56:46 +0000
+Message-ID: <9fbdc0ff-4f81-4f4f-919e-4fac56d4dd4d@nutanix.com>
+Date: Fri, 13 Feb 2026 10:56:42 +0000
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 19/43] audio/coreaudio: replace custom logging with
+ error_report
+To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>,
+ Christian Schoenebeck <qemu_oss@crudebyte.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+References: <20260127182516.289834-1-marcandre.lureau@redhat.com>
+ <20260127182516.289834-20-marcandre.lureau@redhat.com>
 Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: CH3PR12MB7548:EE_|CY5PR12MB6106:EE_
-x-ms-office365-filtering-correlation-id: 094774f3-b371-4e86-6d49-08de6aee520b
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0; ARA:13230040|1800799024|366016|376014|38070700021;
-x-microsoft-antispam-message-info: =?utf-8?B?RExiWlpLclR1YmJUTDNiL0RZdHIyTFNMVGVMaGNCREFtelM3TVEvUG9SN0Jm?=
- =?utf-8?B?VXdjMkwzd1lEZXpzb1o3R1JDeHJIaldSNFlBbW5KOVQvRGdRSzg2bGhBckJ0?=
- =?utf-8?B?TXRxSWFIZmpwV1dwalFIUjJLQU5lb0RWQ25DSkc5Ym80ZTFUM2N0N3R2c1V3?=
- =?utf-8?B?Y0pKQnRPb0N6M3RZMERCcXNUVlFQRkZDN2laVkdQR3lKc3o2YXlhWm9YWmlF?=
- =?utf-8?B?QVZZM0FKK3YzR1pCUjgzMU1zSHJKQ1JVSnhUUm16WnJzZi9IeEZZUzlEcFhm?=
- =?utf-8?B?Y0RZZVRzTk1OOTBJSXkxTU0zbVB2NTRZNmtlNHI5VWVWMERlMXZVWUdGU0Zy?=
- =?utf-8?B?MStqRHJLcThIQ1JNUFIxU1R6Ym0ydURaYk1Gb3hDWERKMEZ5Z1RINWY2WFA0?=
- =?utf-8?B?NkpLWVRRSTZhOWNTejJpSnJ1WkNzd2pHdVpTY1FDbHZNS0hDU3Q0WCtQM0lK?=
- =?utf-8?B?djZTWEV4QkdwVjBhSnFKYXhPRm9yNU1vL2cwdEF1N01uaU04aTZiUlliOTdE?=
- =?utf-8?B?TEZTaTBrY1E5WXpVa0RJakhDMEQ5c1BiRjFlSDVaejh4Z0xyN2Fuam5tV1A5?=
- =?utf-8?B?ZmxVYm1XVndTNFJEamxETGU5Q0loRUlJV285ZjY3a0lKZE1wREVEUzhsZGxv?=
- =?utf-8?B?VU4xTnNyc2RKMVVqc3k4cnRTeWtqOHA1MDZsRjZiRTVaNUV4WFlidk4zSEo3?=
- =?utf-8?B?UFhPdFVhaFVaOHd6RXU1MW5iZ3ZBN3VsTUdFSW85TzAzQXEzS2hVbGkzakR6?=
- =?utf-8?B?SVRqYkNEWUdhdDA2aGQ2MEZaRVhqY3E2N3ZFdlNMWXRGdWUzRXdTNW1WRTd0?=
- =?utf-8?B?SWJzQ2pTWnNWMGZIT2VtVXhlbXVCbFRtZWQ2d1NheGFJQU1IWlg0MXhpemMr?=
- =?utf-8?B?M0hzTndxY2RmWTZ2Nzc5MFV0K3pPMU9oLzRoZEhmR1FLSWdLbHNCYTRBNzVO?=
- =?utf-8?B?Mm9TZkg1a2ljdjJCbkVVSkFlTU9ZcEtRdm1Td3prTHBGaTMrL3dqdW56MEor?=
- =?utf-8?B?WkN2UU1keGVoNVNyQ1BYVVhKd0l3dEsxaFIzS2RuZ3N0VjEvRSt6WWhBYklR?=
- =?utf-8?B?NkQyRzU4SzQwV3hCQkMzRWRnTmRWWjJON1lhSjNHanRJSGtyRjVDc3V6cXVr?=
- =?utf-8?B?SDI2YWp3MmNDNk9RSThRbmVHYzQ4aTBVVTRxaDJmTndQbUlsN3hZb3ZRMXY3?=
- =?utf-8?B?c08vUHdwaGl0MUJtUm9wQ242YzQ1bE9sL0QvVU5BSkdSQ2V5UDBYeUNEK0ta?=
- =?utf-8?B?S0dhRkxrMlZ1M2JoZ0NLWE5VV0pLaXdURHVscGVYVlF5NzR3cTFXUXlEOUkx?=
- =?utf-8?B?djNyQmM2bzBINW41aVA0aWMxT1lyWDgxL01YNzV5Y1BKc0g1bGVzWFJxclRB?=
- =?utf-8?B?ZUMzc083NEUrdy9mRWlOQ21ieTRFZUJXYmZkODFYcVlRRStzWVRXQkxRL2ZX?=
- =?utf-8?B?UkE0cVNuMDBIL1EySkdtRS9yWkVmNVhNb3JQYU1kd1JjTXdZbU9qNEVSTGt3?=
- =?utf-8?B?b25ra05vOTZEMWlPSEFvT2dkS2VWbHk1VmkxTXc2WXFDN2lZb3FEcjdKU3pK?=
- =?utf-8?B?Y3lnRVBNTVplZmZyRkJ0engwMVdWTE93Vy8zclVWL0lueWtTSUxrbXFsdGsz?=
- =?utf-8?B?Q1JSUnBqYmRhM1BVNTVRbWFmZkoxb0NySTJ2NlV6T2owYndxWXZMdXhtVmJl?=
- =?utf-8?B?MUxROUxGSk9UTGkvVkpNL0ZVVVFzVDFDMGpzSnNNYnNYejV5Zmo2cm1IZWRQ?=
- =?utf-8?B?bXkrdjBnYStod0RqMzlLeGNhcDBrVzh4Y2RZaDA1Tzl2ZmZPT3RNT2NEMHRl?=
- =?utf-8?B?NW4xcFlpZHl2Qy9nUXJWaDNtblEraXpzWC91WjEzRTBRUVVGWTlSdmxVb1JJ?=
- =?utf-8?B?b2lQTFZrSFdSVTFTemgySzI0dFh3d3VqcWV0OFdlM1lqVVhscXJoZ1N2T0xs?=
- =?utf-8?B?Q0ZJQTNrbFJMNXphR216ODVHbkZINVJsVnJmaUY5YzNkS3Z2ZGl1OW9VaEd6?=
- =?utf-8?B?aTVUK1NZa0ZYNXk5UUFQTlJaNUpSc3VXZHpIK1NOVThiRGs0ZDd6TEkxNUNV?=
- =?utf-8?B?STJ3U0JwVTZCYUNJRWxURm9UTEw1L1BGbzV3M0V2eEpQa3BJQ05pZm5zNjRo?=
- =?utf-8?B?UkZrVWI1U2hqY0JlMHgvMytXcExPREl6WXJyV0FQMnhBb09KTWcvZkpQL3BJ?=
- =?utf-8?Q?j0JJ6XHWQYxlY0H7VAfz4Z4=3D?=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:CH3PR12MB7548.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(366016)(376014)(38070700021); DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?R3RqOWJQRTFQeGxhZnB3cWt1RGxGNWJOK3dmcDlnV0xKUGYxMlR4Y3RxN1ZO?=
- =?utf-8?B?SWdhK2dLb2lpVGl0SW0yK3l0M0dsTzlFc3R6b2d3RkhGdktwTXlTVXB3ZFVq?=
- =?utf-8?B?V1pTNGdCYlhQUXdHMFhpUFY4UXByRUpUVTB0Ynl4VVJNNUdlZUFmUHBXUjZK?=
- =?utf-8?B?eGZ2ejNWK2xTNSt6eHVaSlZENmU5Qlp3YnAyVlJGNW55Y2Z2elAwVXhjR2tM?=
- =?utf-8?B?dm9tMHFCNExRMDNuSVdobk5NUGZxcFpiQ3dFbXR6OXBTYkY1aGRneVdtNGk2?=
- =?utf-8?B?Y090NlYycGl4Ynl6enQvOGNrZkhNTWh1VVBpK2UyOEtSK1pRTnh6aTlkWDk4?=
- =?utf-8?B?elg3Y1psU0ZYMVQ4LytONzJ2Q1hCMVlueWVvZmd1MHc1UkpGbEQ5WGU3M3RC?=
- =?utf-8?B?bURFWE1GNnJMVFVOeC9xR2IrYzhaU0tQcitCMVBvZ29pTGRXbkZ3a1J4MkdN?=
- =?utf-8?B?Wnd3dnhYbTRGdjF4S0Z6eWRnOGZoQUd3b3Q2YkVTUklROXhnQlJaMDF1UTgy?=
- =?utf-8?B?SUN4YXI0ckhqdEhqdG9XN1J0Vk1aV1prM0ZiNHhua0hxWVNjZTFSamEvMTF6?=
- =?utf-8?B?NG9oTll6NTZoQjF3QkxZRzNrM0pXRmlkT2hMUjlRQnFpbkdMUVNIRkFoNVhI?=
- =?utf-8?B?b2JDQjUvSTBPOFhyRFQrZVVYREtIV3I3WlpPN0pzT3dabGt0LzZ1a0dLaXNm?=
- =?utf-8?B?bml3ZkZ6UGJjR09DRXRwc1lKMy9DWnlSNkwxZTFmeG1adTNXYjBtTWVHNm91?=
- =?utf-8?B?ZHRzR0lRVUNlalBhU3BpYnNjWFZQeGNrKzJnQi9ON085c1lWSzRXYmpnTTA5?=
- =?utf-8?B?eURSaU5MWWV2bmE2TFNpOVd1eGNYZHY5bXBWYXkrM2ZRNm9nOUZFNVBtb0tX?=
- =?utf-8?B?RXJmUXU2bUd0R2ZGNWFmU0NwK3hpZFhpOGs5SlNJRlZMekljT1Y4cVRrckNT?=
- =?utf-8?B?VW5PN3RYSDl2SmZGNWxFQ2NwdytXZDVIM3l5SGpEVmVXQjJkZUo0TVk5SkFX?=
- =?utf-8?B?UU83Qk81QnZOUmJPd3NsOVM1N1lRNy8wNmp1dWpwS0lQek9kVDRxdndBTjlt?=
- =?utf-8?B?bHNUN2RablZpcnRqeXBEa1kvVUliRnJLam1YNS9ib0FuYVRESEt6YWZTVVN2?=
- =?utf-8?B?WVZBUWI0d2ZWVDlFQ2NEWndVbG5ONTVYNU5LeVplejdaNDhWWlVtYXc0NnJS?=
- =?utf-8?B?YkhRMGJLa1pud25ERDZGQW1YM21KYSswVGtkOFVpZ0hSeUtreTF2TGNZclJH?=
- =?utf-8?B?WG5MN3RIRlpVUDUycEttLzI2Y3ZGU0J2c3lZbEQ5UHFEVm5HTUZaMnA4Zm9X?=
- =?utf-8?B?KzYxa0R4ZnNxRmQ0VnJpcTIwbHZtT2czY2x0RG05NDdoTzU0WUxoc1JZeWpm?=
- =?utf-8?B?cnJuNEYrMVpKcjU4dkVtSzk2dy9ENXVMYkppVzBXTjRRVXp6blBJYjBvazhT?=
- =?utf-8?B?Z0tENzVpa2U0Z1VndDhBYStQaWMwc0VrVHdOSUJTa1NJRW9aNW1WdmpHam96?=
- =?utf-8?B?RmJFY1E0WEw5bGFBM1AxWEZjZ1dYLzdmdlY2ZVpIVGxNdFB1UmV4amRkemRO?=
- =?utf-8?B?ZXhQRkNPbWVkRGdOL2svNjRsczhaVWxoRUU4YlYvSUt5eTIxMFA5cTRSbWM2?=
- =?utf-8?B?SzRDOUdaTnQycXg0V2NTdXgvOWNnc1BWMFRub2ZUNkZUQnQ5dDdTKzZmbGsr?=
- =?utf-8?B?N2kwL2htZXliRFNlV1lxdUtQMXlsRnFjQmppZm5zeUtxZDhWdzB4aDVEdE1L?=
- =?utf-8?B?dXpha2JJNGxlY1NyTVBmTVJ1dHVLMFdjaEUrREl6MU1LenNGdVNGTmhUYWUr?=
- =?utf-8?B?QVhRZUxxN0x5VjFJc0Q0TkpIdGl3MkUvTk94T1BndDlJT3JwZ0NjSDBodHBB?=
- =?utf-8?B?b3dSVHdvd0tPbWpqN3hZSnNUTkZUT1ZRb1ZrQ0Z1aThpSmdSa1piY1YwaDQx?=
- =?utf-8?B?YmJsQjJhRkZvMnFwb25pdjV3d1E0bDc5U2dmbFR6QVdTWnp3U0NVc25NQW9v?=
- =?utf-8?B?NktKK1ZOcUJFQjhLWlIvSlJQUzhFUERHUFA2M2lVaTBKbldHSzV5TDlYU2Uz?=
- =?utf-8?B?SGJCWkNpQUdxeFQwN0JSTHZSY3g3Y1lJNnFvQVlzY0p2WklFMzZua29UajBB?=
- =?utf-8?B?c0hBaXNwd0JpNVdOcmNJZjd1UVhlK3VrUjNjZG9zRUJzbzQwakNDS05weHI5?=
- =?utf-8?B?YWFjckpDMFZGYnVYZlptSGZ2QmY3MkhxSEVwMUREU29CQXVObmF4YVVoMHRW?=
- =?utf-8?B?NFkxblBOcnlIM0FNZEVVS3F5dk9lSWFSMnovUExhT3dUSFVqbHpOdXhNVVIz?=
- =?utf-8?B?cDl6UjhES3Q3VWpNdGcxV0FSdlR5REVCV05uLzBHSHI1OFFZNk44QT09?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+From: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+In-Reply-To: <20260127182516.289834-20-marcandre.lureau@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: LO4P123CA0390.GBRP123.PROD.OUTLOOK.COM
+ (2603:10a6:600:18f::17) To PH0PR02MB7159.namprd02.prod.outlook.com
+ (2603:10b6:510:16::8)
 MIME-Version: 1.0
-X-OriginatorOrg: Nvidia.com
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PH0PR02MB7159:EE_|DS0PR02MB11162:EE_
+X-MS-Office365-Filtering-Correlation-Id: 5304be99-3e77-49dc-cb88-08de6aee94f1
+x-proofpoint-crosstenant: true
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|366016|1800799024|7053199007;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?V2FsTzM4eXZlVGxXbldkMXNpM2pUeGxZa2lhQnhCb0NhVUhoMnVNK3FmRDVy?=
+ =?utf-8?B?R2VKN0tQTGNabTQ4RER0cWcxNXZQZlNlaGZVekhBWGNjT2V1bTlJTWtDcHJp?=
+ =?utf-8?B?dnVaZUY3emhEVDd1cjhnVHdyN0Y0WjFYcnNOUGVPcHNzWkhtcDdzdkdGbnRr?=
+ =?utf-8?B?OUsyc3VVUVljVE1TNHBZdGtKNVBrd3ZVYnNhUDRObzdLaDR5Nis1dG1rUVM5?=
+ =?utf-8?B?NnZvRVVJNEF6T1prRitHeDQveFhwYTRjNUZ0TFJnWURIekJ6NXhsT2E3ckhw?=
+ =?utf-8?B?Tk5uQ2FGbG5nQmFScVozdm9UaURPUUxEanZueEFjYUtuRnRESWVlKy9ucEcv?=
+ =?utf-8?B?RllCYTFhV3dTOFBsVGFqemFxK0c1amZBY2dhSzF2TmVFc2ZVTFpDRjNpK0J2?=
+ =?utf-8?B?dUQ0K2wyU01xQzlOZGNYSVJUZ1NFdXAwcEsxM2tZN1VxYytMZFE1MU04cmdL?=
+ =?utf-8?B?RFBFSTE0cy8xWGIzTit5WWxVUi9icDZwY0p1VmhTT2x4TmlydXRJbHV2bGRn?=
+ =?utf-8?B?QmlZMEJJRFhqVHhxb3ZYYlRJWllrb1RySE1DV2ZGbDZaOUZGbnlPMzRPalVX?=
+ =?utf-8?B?NUF2QXFnbDZ0WUpybS9DVkdMbzl1STR1clRWZ0M4TXJKbS92bTQxZVgyaW0r?=
+ =?utf-8?B?K3Jwa0Z1dnZOYjd1dzhSSjdnbUt2cGE4bGZ0T3c3cUpMMFJ5ZHNvekNJdFAr?=
+ =?utf-8?B?VkFxQzBBUUF2TmlQSk1Ec09SN3cvU3RjS2lMQU1xK2N4NmNjMHpjVzZoYU92?=
+ =?utf-8?B?V3BXNk1kT0VsN2VwL1RkVUpkOFA1ckZpb2N1R2p0SnNKNldIUVBtV2xqbzhn?=
+ =?utf-8?B?WjlDUEg4VXR2Sm5DOE56VDFsdnNITldudWRCQ2FpN2NSbmFHTlg0SjB6aG9J?=
+ =?utf-8?B?UXZ6REJVNGQ1QVgwdkwycWFVOGhyZHFuaUozZXBPVTFqVnEvU1lNcnJZNUVa?=
+ =?utf-8?B?dVM2d0RvZUE2M3ZQUlh2QjRjdWtvNStJaXorVUFSUmJLUy9Zc1o5MzhUbWJK?=
+ =?utf-8?B?QzlQeWo1SHZzM05ja0l6NUUxcCtidzR0aVZBS0ZmR0lPUnFOcG1GK3QrdGdK?=
+ =?utf-8?B?Z1UvWXdwV1RHTWtWUTMzZHlFWkJrVWxJTmovSytvTUdyZE1BU2lUMjB2blVC?=
+ =?utf-8?B?cmpCeFdhU2RMeWt1S0xGNjgxdW1OOENNNGtOWmdjalRhbjlKMUV1aklaN3px?=
+ =?utf-8?B?dmJ6ZndBeWZNTFgyVjVzTTRCOE82dHpES2ZhUytNaWhBL2pFbWU3a1lQZEtP?=
+ =?utf-8?B?aEtuMEJ5MWNneUZzcU96eFhVTjlRMGx6czRUV21uYXJGbjFZWkNRYnQ0eEtT?=
+ =?utf-8?B?Sms3RkdvOHE3bTNtTjBUNVk1ZGtPbzBCYzVCMkNWMkR6Vm1nWFlaWVRBMmZF?=
+ =?utf-8?B?VmoydVYzamtzK242ZHFxKzIzV2JCajMxM2dqQUJIWnZscFo5R1dNdVN2TDRH?=
+ =?utf-8?B?ZlMzUTJhUUpkbUNFSm1YNkJ5QzVkUjRVaHdpY2ZkTW0xMnA2V2p2VGVDZXhO?=
+ =?utf-8?B?by9EdlZqS3MyWS9oYzN0R2RiT3RZWkVTM2ZIWUR6Zm10NXUzKzN6UGJZWUNp?=
+ =?utf-8?B?YnFFVDhvWTNVVzFuY3VaTXFXeTNmdEZnbWlOb3Vvbk9FS3REYXFaRmpqV05l?=
+ =?utf-8?B?cjhwS3k1T2NKcGZ3SGZrMDhqWDB3UXZRelZCV0VLVWdjSUtkT0VvVy9aWklP?=
+ =?utf-8?B?NVpHZ3Q3ckE3TE1OU3FzRzcyclN5eTNlR09kN05WTVZlUVJpWjVyQ1Axb05B?=
+ =?utf-8?B?cnh5RHNKenY2S2diTEhrSFIvQ280TnUwNVRTLzI2aHFRdExmaVcwbVJuZkpS?=
+ =?utf-8?B?V3piWXAxekN0QW9pUFkxcVJqL2U2Q3ZXNjBUWmQwek9HZjFMN3NjS0pZZVI3?=
+ =?utf-8?B?YlRBRFFKaTU1QWxmb21JMFY1UzFuRzJXZjhPMlBzUEdlaDZ6anRVZy91RFpB?=
+ =?utf-8?B?czN3VmtacllPSytjUU9PWCtYRzVKZCtWeU9KRjNsb29DNzRqVjdTZXRUUkFs?=
+ =?utf-8?B?bFdvakw4YW5rSk9nY21NUWU2dkU5cFJhTVlObldsZXA0Y3d1QjNiaW93Tzg5?=
+ =?utf-8?B?SHpXZGU0SzJ4OC9kQUUvUXh2eW4yUHFvUXpHb24vZzc3SUduTFZBVFcrejZz?=
+ =?utf-8?Q?NG68=3D?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:PH0PR02MB7159.namprd02.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(366016)(1800799024)(7053199007); DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?ZHJkNUJucEMwMW5rQjlLTk1aMmxsKzVPTkkxYmZ5cjJRdUhPcTYwbE8zUWhI?=
+ =?utf-8?B?VElrODFSNWVhSG10TU5MazhCUjFZUjNRMWRxa0hNYXFRRXpGNFhDVmdlQmNF?=
+ =?utf-8?B?a01hc1JQalQzYmd2azMycXFuS29sUmpkQVJKOUZ5SENQZEl4REFHWFlEV25J?=
+ =?utf-8?B?VDE0d21UcG53Rk5MeGV0L0V6SjdETzNEWjJSVk50NlNTQkxnaEJJZlN5OTh1?=
+ =?utf-8?B?V3cxMTUzVFZDQ1l2enE1eG9ZT2FPSHlITzhmaXcxYytubUplY1RwTG9hc1ZJ?=
+ =?utf-8?B?TnhlZmd4YWtpcjBSVG10OUN6QVAwWm4rK3h2QWFvN1doUmtZYTNDckJ2akZ4?=
+ =?utf-8?B?UTRtb0ZYTXBoT3lORkoydEhhNWVkUHRqUndEVHl6aWY4Ky9ETVlJbEdzK0pa?=
+ =?utf-8?B?Z29XZDIxS2YvSThSTnJDZU5DY3VBQ1I1alZ0WXFrdjhSanRrQWZpRFRPZ2Vj?=
+ =?utf-8?B?RGlHdldmWDhCcTk0cTBHQkc4M0VTeUZtYzZDUDUyTzFoenBYS0JsRzRKVkVw?=
+ =?utf-8?B?dXpsejNwUDJZZ0J4YSs0Q1kvaVprRVBxT3NUd2FxNmVsMk1wRmk0Y21BNk5T?=
+ =?utf-8?B?SkZZSjlRUUNzcWo4SEgwQVNId0g1ZE91Um5wK1ljb3dHS091bHo4eG5jY1Nx?=
+ =?utf-8?B?cFcvS1JmaWxMRlhFQjYrcnlxOXZmZ3pFNFQxdUdGNnJpTkE1ajdYeVNzNDQv?=
+ =?utf-8?B?MnBCSmw0eXFCMUpkUXJSVzVJRVRTMWJBZmx6UllHZWVETDV4dlZhaXJEbEw4?=
+ =?utf-8?B?aklhKy9NY0c1UWs2bllkTWF2RE9HM2VYQXNyUlRkMHM5NVd3dlJTUWNwVE9u?=
+ =?utf-8?B?RTlaemI5NWxzY1RmbVlYS2JFaUYrMGladHVkeUVycUxSQmloMjFTRTdIMEJt?=
+ =?utf-8?B?QXZkMDdrdmNSUW1FMDhteWFmcHBLcTlhRzZMTTNGbXVOdTE5Mis2cTRteGRE?=
+ =?utf-8?B?SE5oL2czM2NMNmdVTm5CZlEyNktrb2c2Y0lPVEU0ZzRwK0dNQWpkcDNaNk42?=
+ =?utf-8?B?d29WYXUxQUpheGNFbGhGTjNSb2Q5SGJRUlExdmNqYTZhTTFadlV6NHYxcVFK?=
+ =?utf-8?B?cEh2Y0E2MEw1MGQvNzlRR2V0MlBqNHo1VHJ6Q0h6T2w5b2p6K3ZBVmlEZUUv?=
+ =?utf-8?B?UWQ3SlJYS3J2U1Zna0s5NzlGOG1VQUVyNlhudGpnSGdXQjExYzByTHNydHl4?=
+ =?utf-8?B?Z2l4Vm5CT2hBSXNSaC9QaFVRZEhJNXYyQWhXRW9BNHhNeVB6dmpXak1zNmYv?=
+ =?utf-8?B?UTAvVlBKQ1hSenBpamxZN28rQzBuelV6MDdTRGxaOXFIZ3VUUFU1ejBBblR2?=
+ =?utf-8?B?WlpFTnRvRnB1VVpTaW95dGxtdC91UnF1TWtsb25jMlM3cFBIZEZGaUg1cGN5?=
+ =?utf-8?B?ejRUeEhSMDdpb1hMejBZZ2xMeTVoTXduM0hQb2tRdUhINSt3a2g3M2pNVDdY?=
+ =?utf-8?B?WlYzbFdIbkMzQ1dQK3MxVkRTbnBZUjNNTEo2Ukl6bnNWT0hpa0FTV3dzKzc0?=
+ =?utf-8?B?VXhHWmpYTkMyanNBRFh2TGRBbUY3MmdHVEF6WGxBM1N6MTA4eHpPdldidHJz?=
+ =?utf-8?B?cURlMGQ3Sm5ZMW4zTW9UcVBRN1hLbUtlaGNtU0ljQU1wRXR3bzh5NEEreTVM?=
+ =?utf-8?B?SnA1bnBTVXVYMnBMb3RPRUtTV05SZ2FiNUhEREEvOUdSTlBEM3lGeWQxdTRG?=
+ =?utf-8?B?YldMa0JjVHR1ZFBUUGpZZ1picXZXaTlZK2hxdG1sc25YeHd3cnZXZ2xVaUlx?=
+ =?utf-8?B?bEJ2all6QlZtQnlTTkJxbFlRVVFRa1ZqT1NTU2ZyUW82blY1STFYYWN3UUVr?=
+ =?utf-8?B?R3EvWDV5Q0RMckU4K2QrYkkvNmpNcTduam8wYmIzTGNHVks5ZUswL2RTbWE4?=
+ =?utf-8?B?NjMxWnoxTkhReWF0aXkybHhvQ2V0Z0VLaW0yUUt6UWVUd3NZcExkc3ZwSFJv?=
+ =?utf-8?B?ZHZnSFltWjVTclB5TmNjTHRHR2xPTWNDank4SVZsejU5ZUowY2R0MmhrQ2h1?=
+ =?utf-8?B?OUJBZXJqWnhFTDZKclpQVW1NaExTOUtkMnNRcGVKV3dRVHNtdXRFZk4xNXVw?=
+ =?utf-8?B?RDNtK3pFNU91cWdFMXpmMWV3eDBNN292QmdobmxEaXpaODk3cUI3WGxTSXhu?=
+ =?utf-8?B?RHlHT21LWmx3NjlleWx1Y1g1QklMZGp0bmE0NmVmN1ptdHo5QTZlY0x1TjlO?=
+ =?utf-8?B?N0dlTEV5WnVuLzd5YW9wdCs1dUpCcDFRQm8wQW4ycG5vM2JrMUNJRS9rOW4v?=
+ =?utf-8?B?aFVtV3JjT053YStDL01sTHBCTUFrTGE3QW9DQUErb1dCQXMwTTd3SUx6WXJt?=
+ =?utf-8?B?UnZmMjJPNEQrSE9UTHBPcDIxUXh1MlVtTlBrVXVNUHJHWGIyRXZOd21XaUZQ?=
+ =?utf-8?Q?1F9SdgR2IktoQhLE=3D?=
+X-OriginatorOrg: nutanix.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 5304be99-3e77-49dc-cb88-08de6aee94f1
+X-MS-Exchange-CrossTenant-AuthSource: PH0PR02MB7159.namprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB7548.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 094774f3-b371-4e86-6d49-08de6aee520b
-X-MS-Exchange-CrossTenant-originalarrivaltime: 13 Feb 2026 10:54:54.3684 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: f2BROelwXU/hJK5wMObcCLxLm9kJdAMiV+tRx4ArYuP87lW5ZJhbzSR3W16ZVY4aJxYejjliImcCjzcIQN5GKw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY5PR12MB6106
-Received-SPF: permerror client-ip=2a01:111:f403:c105::5;
- envelope-from=skolothumtho@nvidia.com;
- helo=CH5PR02CU005.outbound.protection.outlook.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Feb 2026 10:56:46.7914 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: Ck1+O+/XA1FqFPSe60LLfIVQf/snQojm3dxb9TsvRtXLA7Gr3jz6IW8USR51ni2JOanKbHqPFoAs6Ms3I04X7wQZBeyFpOO9Zg8d5K8Dvek=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR02MB11162
+X-Proofpoint-ORIG-GUID: bFkf5_XkpjiCixmLsmUDoP25LtEfwU6U
+X-Proofpoint-GUID: bFkf5_XkpjiCixmLsmUDoP25LtEfwU6U
+X-Authority-Analysis: v=2.4 cv=PaLyRyhd c=1 sm=1 tr=0 ts=698f0370 cx=c_pps
+ a=kB/eTyLYv2HckPafvHZuPw==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
+ a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
+ a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10 a=HzLeVaNsDn8A:10 a=0kUYKlekyDsA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22
+ a=20KFwNOVAAAA:8 a=64Cc0HZtAAAA:8 a=njkWeBufDIUr-Q0t-jwA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjEzMDA4NCBTYWx0ZWRfXwFYQBrxCCpGW
+ sgK4L/6jR55D//yInIYGj3MPoNbJfYLGlCF5nbbYEMBANaNbZdgHimFKxj36mE6spdCjkCTR22y
+ k+1Gc+aiXCx0hM2wNWYGVNJ0uikMiXZa2TFYnNaI7q77QFiWFtj8IO07EJTcx/4Fkdn4Bk5lH40
+ IAfSDk+V+F4Iq0aHLYDFIr2cKfqoh1EzAhQ0tezRwPTXn5IL1qBqegl0iDDOF2RbAlV+ml4bN4Y
+ Afzzj9AxFts3Dp2CDL+/q8Es/8Ss4HeoVYY4VdCsOf2dI5URYpYM8BMC0itqH04xD9eCN3l/20A
+ 0nT9kd7897eG8Wo6jz59ahCvx1z6G3Kr1qUvTz0PV4K9I0K5flc5r3036QWMhpy7nMHNO5UOQlW
+ QTqgJtnsgOo6Cpc2o3+Hxdiy29oh8YaZETHp/i/hEffrbfRU3m+Sw1oEm0nQIZna0yikzS2foja
+ RVUXc3hfeewbyBODhOQ==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-02-13_01,2026-02-12_03,2025-10-01_01
+X-Proofpoint-Spam-Reason: safe
+Received-SPF: pass client-ip=148.163.151.68;
+ envelope-from=mark.caveayland@nutanix.com; helo=mx0a-002c1b01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
- SPF_NONE=0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -195,100 +226,340 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-DQoNCj4gLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCj4gRnJvbTogRXJpYyBBdWdlciA8ZXJp
-Yy5hdWdlckByZWRoYXQuY29tPg0KPiBTZW50OiAxMyBGZWJydWFyeSAyMDI2IDEwOjE5DQo+IFRv
-OiBTaGFtZWVyIEtvbG90aHVtIFRob2RpIDxza29sb3RodW10aG9AbnZpZGlhLmNvbT47IHFlbXUt
-DQo+IGFybUBub25nbnUub3JnOyBxZW11LWRldmVsQG5vbmdudS5vcmcNCj4gQ2M6IHBldGVyLm1h
-eWRlbGxAbGluYXJvLm9yZzsgY2xnQHJlZGhhdC5jb207IGFsZXhAc2hhemJvdC5vcmc7IE5pY29s
-aW4NCj4gQ2hlbiA8bmljb2xpbmNAbnZpZGlhLmNvbT47IE5hdGhhbiBDaGVuIDxuYXRoYW5jQG52
-aWRpYS5jb20+OyBNYXR0DQo+IE9jaHMgPG1vY2hzQG52aWRpYS5jb20+OyBKaWFuZGkgQW4gPGph
-bkBudmlkaWEuY29tPjsgSmFzb24gR3VudGhvcnBlDQo+IDxqZ2dAbnZpZGlhLmNvbT47IGpvbmF0
-aGFuLmNhbWVyb25AaHVhd2VpLmNvbTsNCj4gemhhbmdmZWkuZ2FvQGxpbmFyby5vcmc7IHpoZW56
-aG9uZy5kdWFuQGludGVsLmNvbTsgS3Jpc2huYWthbnQgSmFqdQ0KPiA8a2phanVAbnZpZGlhLmNv
-bT4NCj4gU3ViamVjdDogUmU6IFtQQVRDSCB2MiAwNC8yNF0gYmFja2VuZHMvaW9tbXVmZDogSW50
-cm9kdWNlDQo+IGlvbW11ZmRfYmFja2VuZF92aW9tbXVfbW1hcA0KPiANCj4gRXh0ZXJuYWwgZW1h
-aWw6IFVzZSBjYXV0aW9uIG9wZW5pbmcgbGlua3Mgb3IgYXR0YWNobWVudHMNCj4gDQo+IA0KPiBP
-biAyLzYvMjYgMzo0OCBQTSwgU2hhbWVlciBLb2xvdGh1bSB3cm90ZToNCj4gPiBGcm9tOiBOaWNv
-bGluIENoZW4gPG5pY29saW5jQG52aWRpYS5jb20+DQo+ID4NCj4gPiBBZGQgYSBiYWNrZW5kIGhl
-bHBlciB0byBtbWFwIGhhcmR3YXJlIE1NSU8gcmVnaW9ucyBleHBvc2VkIHZpYQ0KPiBpb21tdWZk
-IGZvcg0KPiA+IGEgdklPTU1VIGluc3RhbmNlLiBUaGlzIGFsbG93cyB1c2VyIHNwYWNlIHRvIGFj
-Y2VzcyBIVy1hY2NlbGVyYXRlZCBNTUlPDQo+ID4gcGFnZXMgcHJvdmlkZWQgYnkgdGhlIHZJT01N
-VS4NCj4gPg0KPiA+IFRoZSBjYWxsZXIgaXMgcmVzcG9uc2libGUgZm9yIHVubWFwcGluZyB0aGUg
-cmV0dXJuZWQgcmVnaW9uLg0KPiA+DQo+ID4gU2lnbmVkLW9mZi1ieTogTmljb2xpbiBDaGVuIDxu
-aWNvbGluY0BudmlkaWEuY29tPg0KPiA+IFJldmlld2VkLWJ5OiBFcmljIEF1Z2VyIDxlcmljLmF1
-Z2VyQHJlZGhhdC5jb20+DQo+ID4gU2lnbmVkLW9mZi1ieTogU2hhbWVlciBLb2xvdGh1bSA8c2tv
-bG90aHVtdGhvQG52aWRpYS5jb20+DQo+ID4gLS0tDQo+ID4gIGJhY2tlbmRzL2lvbW11ZmQuYyAg
-ICAgICB8IDIyICsrKysrKysrKysrKysrKysrKysrKysNCj4gPiAgYmFja2VuZHMvdHJhY2UtZXZl
-bnRzICAgIHwgIDEgKw0KPiA+ICBpbmNsdWRlL3N5c3RlbS9pb21tdWZkLmggfCAgNCArKysrDQo+
-ID4gIDMgZmlsZXMgY2hhbmdlZCwgMjcgaW5zZXJ0aW9ucygrKQ0KPiA+DQo+ID4gZGlmZiAtLWdp
-dCBhL2JhY2tlbmRzL2lvbW11ZmQuYyBiL2JhY2tlbmRzL2lvbW11ZmQuYw0KPiA+IGluZGV4IGM2
-Yjc5ZGEwZDQuLjllMzA1MDFkMzggMTAwNjQ0DQo+ID4gLS0tIGEvYmFja2VuZHMvaW9tbXVmZC5j
-DQo+ID4gKysrIGIvYmFja2VuZHMvaW9tbXVmZC5jDQo+ID4gQEAgLTU3OCw2ICs1NzgsMjggQEAg
-Ym9vbA0KPiBpb21tdWZkX2JhY2tlbmRfYWxsb2NfaHdfcXVldWUoSU9NTVVGREJhY2tlbmQgKmJl
-LCB1aW50MzJfdA0KPiB2aW9tbXVfaWQsDQo+ID4gICAgICByZXR1cm4gdHJ1ZTsNCj4gPiAgfQ0K
-PiA+DQo+ID4gKy8qDQo+ID4gKyAqIEhlbHBlciB0byBtbWFwIEhXIE1NSU8gcmVnaW9ucyBleHBv
-c2VkIHZpYSBpb21tdWZkIGZvciBhIHZJT01NVQ0KPiBpbnN0YW5jZS4NCj4gPiArICogVGhlIGNh
-bGxlciBpcyByZXNwb25zaWJsZSBmb3IgdW5tYXBwaW5nIHRoZSBtYXBwZWQgcmVnaW9uLg0KPiA+
-ICsgKi8NCj4gPiArYm9vbCBpb21tdWZkX2JhY2tlbmRfdmlvbW11X21tYXAoSU9NTVVGREJhY2tl
-bmQgKmJlLCB1aW50MzJfdA0KPiB2aW9tbXVfaWQsDQo+ID4gKyAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgIHVpbnQ2NF90IHNpemUsIG9mZl90IG9mZnNldCwgdm9pZCAqKm91dF9wdHIs
-DQo+ID4gKyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIEVycm9yICoqZXJycCkNCj4g
-TG9va2luZyBhdCB0aGlzIGFnYWluLCB0aGVyZSBpcyBub3RoaW5nIHJlYWxseSByZWxhdGVkIHRv
-IGlvbW11ZmQuIFRoaXMNCj4gY291bGQgc2ltcGx5IGVuZCB1cCBhcyBhIHN0YXRpYyBoZWxwZXIg
-aW4gdGVncmEyNDEtY21kcXYuYw0KDQpJIGhhZCB0aGF0IHRob3VnaHQgYXMgd2VsbC4gSG93ZXZl
-ciwgdGhpcyBvcGVyYXRlcyBvbiB0aGUNCklPTU1VRkRCYWNrZW5kIGZkIGFuZCBpcyBub3QgdGVn
-cmEgc3BlY2lmaWMuIEl0IHBlcmZvcm1zDQphbiBtbWFwIG9uIHRoZSBiYWNrZW5kIGZkIGFzc29j
-aWF0ZWQgd2l0aCBhIHZJT01NVSBpbnN0YW5jZSwNCndoaWNoIGNvdWxkIHBvdGVudGlhbGx5IGJl
-IHJldXNlZCBieSBvdGhlcnMuDQoNCktlZXBpbmcgaXQgaW4gYmFja2VuZHMvaW9tbXVmZC5jIGFs
-c28gY2VudHJhbGl6ZXMgZmQgcmVsYXRlZA0Kb3BlcmF0aW9ucyAoaW5jbHVkaW5nIHRyYWNpbmcp
-IGZvciB0aGUgSU9NTVVGRCBiYWNrZW5kLg0KDQpUaGFua3MsDQpTaGFtZWVyDQoNCj4gPiArew0K
-PiA+ICsgICAgZ19hc3NlcnQodmlvbW11X2lkKTsNCj4gPiArICAgIGdfYXNzZXJ0KG91dF9wdHIp
-Ow0KPiA+ICsNCj4gPiArICAgICpvdXRfcHRyID0gbW1hcChOVUxMLCBzaXplLCBQUk9UX1JFQUQg
-fCBQUk9UX1dSSVRFLCBNQVBfU0hBUkVELA0KPiBiZS0+ZmQsDQo+ID4gKyAgICAgICAgICAgICAg
-ICAgICBvZmZzZXQpOw0KPiA+ICsgICAgdHJhY2VfaW9tbXVmZF9iYWNrZW5kX3Zpb21tdV9tbWFw
-KGJlLT5mZCwgdmlvbW11X2lkLCBzaXplLA0KPiBvZmZzZXQpOw0KPiA+ICsgICAgaWYgKCpvdXRf
-cHRyID09IE1BUF9GQUlMRUQpIHsNCj4gPiArICAgICAgICBlcnJvcl9zZXRnX2Vycm5vKGVycnAs
-IGVycm5vLCAiSU9NTVVGRCB2SU9NTVUgbW1hcCBmYWlsZWQiKTsNCj4gPiArICAgICAgICByZXR1
-cm4gZmFsc2U7DQo+ID4gKyAgICB9DQo+ID4gKw0KPiA+ICsgICAgcmV0dXJuIHRydWU7DQo+ID4g
-K30NCj4gPiArDQo+ID4gIGJvb2wNCj4gaG9zdF9pb21tdV9kZXZpY2VfaW9tbXVmZF9hdHRhY2hf
-aHdwdChIb3N0SU9NTVVEZXZpY2VJT01NVUZEDQo+ICppZGV2LA0KPiA+ICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgdWludDMyX3QgaHdwdF9pZCwgRXJyb3IgKipl
-cnJwKQ0KPiA+ICB7DQo+ID4gZGlmZiAtLWdpdCBhL2JhY2tlbmRzL3RyYWNlLWV2ZW50cyBiL2Jh
-Y2tlbmRzL3RyYWNlLWV2ZW50cw0KPiA+IGluZGV4IDNlNzAzMzg3NTAuLmY4MjRhOGQxOTcgMTAw
-NjQ0DQo+ID4gLS0tIGEvYmFja2VuZHMvdHJhY2UtZXZlbnRzDQo+ID4gKysrIGIvYmFja2VuZHMv
-dHJhY2UtZXZlbnRzDQo+ID4gQEAgLTI1LDYgKzI1LDcgQEAgaW9tbXVmZF9iYWNrZW5kX2FsbG9j
-X3Zpb21tdShpbnQgaW9tbXVmZCwNCj4gdWludDMyX3QgZGV2X2lkLCB1aW50MzJfdCB0eXBlLCB1
-aW50MzINCj4gPiAgaW9tbXVmZF9iYWNrZW5kX2FsbG9jX3ZkZXYoaW50IGlvbW11ZmQsIHVpbnQz
-Ml90IGRldl9pZCwgdWludDMyX3QNCj4gdmlvbW11X2lkLCB1aW50NjRfdCB2aXJ0X2lkLCB1aW50
-MzJfdCB2ZGV2X2lkLCBpbnQgcmV0KSAiIGlvbW11ZmQ9JWQNCj4gZGV2X2lkPSV1IHZpb21tdV9p
-ZD0ldSB2aXJ0X2lkPTB4JSJQUkl4NjQiIHZkZXZfaWQ9JXUgKCVkKSINCj4gPiAgaW9tbXVmZF92
-aW9tbXVfYWxsb2NfZXZlbnRxKGludCBpb21tdWZkLCB1aW50MzJfdCB2aW9tbXVfaWQsDQo+IHVp
-bnQzMl90IHR5cGUsIHVpbnQzMl90IHZldmVudHFfaWQsIHVpbnQzMl90IHZldmVudHFfZmQsIGlu
-dCByZXQpICINCj4gaW9tbXVmZD0lZCB2aW9tbXVfaWQ9JXUgdHlwZT0ldSB2ZXZlbnRxX2lkPSV1
-IHZldmVudHFfZmQ9JXUgKCVkKSINCj4gPiAgaW9tbXVmZF9iYWNrZW5kX2FsbG9jX2h3X3F1ZXVl
-KGludCBpb21tdWZkLCB1aW50MzJfdCB2aW9tbXVfaWQsDQo+IHVpbnQzMl90IHF1ZXVlX3R5cGUs
-IHVpbnQzMl90IGluZGV4LCB1aW50NjRfdCBhZGRyLCB1aW50NjRfdCBzaXplLCB1aW50MzJfdA0K
-PiBxdWV1ZV9pZCwgaW50IHJldCkgIiBpb21tdWZkPSVkIHZpb21tdV9pZD0ldSBxdWV1ZV90eXBl
-PSV1IGluZGV4PSV1DQo+IGFkZHI9MHglIlBSSXg2NCIgc2l6ZT0weCUiUFJJeDY0IiBxdWV1ZV9p
-ZD0ldSAoJWQpIg0KPiA+ICtpb21tdWZkX2JhY2tlbmRfdmlvbW11X21tYXAoaW50IGlvbW11ZmQs
-IHVpbnQzMl90IHZpb21tdV9pZCwNCj4gdWludDY0X3Qgc2l6ZSwgdWludDY0X3Qgb2Zmc2V0KSAi
-IGlvbW11ZmQ9JWQgdmlvbW11X2lkPSV1DQo+IHNpemU9MHglIlBSSXg2NCIgb2Zmc2V0PTB4JSJQ
-Ukl4NjQNCj4gPg0KPiA+ICAjIGlndm0tY2ZnLmMNCj4gPiAgaWd2bV9yZXNldF9lbnRlcihpbnQg
-dHlwZSkgInR5cGU9JXUiDQo+ID4gZGlmZiAtLWdpdCBhL2luY2x1ZGUvc3lzdGVtL2lvbW11ZmQu
-aCBiL2luY2x1ZGUvc3lzdGVtL2lvbW11ZmQuaA0KPiA+IGluZGV4IGY3MmFkNTQ1ZjguLjg3ZGRj
-MzkwNDEgMTAwNjQ0DQo+ID4gLS0tIGEvaW5jbHVkZS9zeXN0ZW0vaW9tbXVmZC5oDQo+ID4gKysr
-IGIvaW5jbHVkZS9zeXN0ZW0vaW9tbXVmZC5oDQo+ID4gQEAgLTExMSw2ICsxMTEsMTAgQEAgYm9v
-bA0KPiBpb21tdWZkX2JhY2tlbmRfYWxsb2NfaHdfcXVldWUoSU9NTVVGREJhY2tlbmQgKmJlLCB1
-aW50MzJfdA0KPiB2aW9tbXVfaWQsDQo+ID4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgIHVpbnQ2NF90IGxlbmd0aCwgdWludDMyX3QgKm91dF9od19xdWV1ZV9pZCwNCj4gPiAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgRXJyb3IgKiplcnJwKTsNCj4gPg0K
-PiA+ICtib29sIGlvbW11ZmRfYmFja2VuZF92aW9tbXVfbW1hcChJT01NVUZEQmFja2VuZCAqYmUs
-IHVpbnQzMl90DQo+IHZpb21tdV9pZCwNCj4gPiArICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgdWludDY0X3Qgc2l6ZSwgb2ZmX3Qgb2Zmc2V0LCB2b2lkICoqb3V0X3B0ciwNCj4gPiAr
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgRXJyb3IgKiplcnJwKTsNCj4gPiArDQo+
-ID4gIGJvb2wgaW9tbXVmZF9iYWNrZW5kX3NldF9kaXJ0eV90cmFja2luZyhJT01NVUZEQmFja2Vu
-ZCAqYmUsDQo+IHVpbnQzMl90IGh3cHRfaWQsDQo+ID4gICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICBib29sIHN0YXJ0LCBFcnJvciAqKmVycnApOw0KPiA+ICBib29sIGlv
-bW11ZmRfYmFja2VuZF9nZXRfZGlydHlfYml0bWFwKElPTU1VRkRCYWNrZW5kICpiZSwNCj4gdWlu
-dDMyX3QgaHdwdF9pZCwNCg0K
+On 27/01/2026 18:24, marcandre.lureau@redhat.com wrote:
+
+> From: Marc-André Lureau <marcandre.lureau@redhat.com>
+> 
+> The CoreAudio backend uses its own logging infrastructure (AUD_log,
+> AUD_vlog, dolog) and the AUDIO_CAP macro. This approach is inconsistent
+> with the rest of QEMU and makes the output harder to filter and
+> configure.
+> 
+> Replace the custom logging with standard QEMU error reporting:
+> - Use error_report() / error_printf() for errors
+> - Use warn_report() for non-fatal warnings (buffer frame size
+>    adjustments)
+> 
+> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+> ---
+>   audio/coreaudio.m | 124 ++++++++++++++++++++++------------------------
+>   1 file changed, 60 insertions(+), 64 deletions(-)
+> 
+> diff --git a/audio/coreaudio.m b/audio/coreaudio.m
+> index af614144bd1..40d7986b1d7 100644
+> --- a/audio/coreaudio.m
+> +++ b/audio/coreaudio.m
+> @@ -28,10 +28,9 @@
+>   
+>   #include "qemu/main-loop.h"
+>   #include "qemu/module.h"
+> +#include "qemu/error-report.h"
+>   #include "qemu/audio.h"
+>   #include "qom/object.h"
+> -
+> -#define AUDIO_CAP "coreaudio"
+>   #include "audio_int.h"
+>   
+>   #define TYPE_AUDIO_COREAUDIO "audio-coreaudio"
+> @@ -157,7 +156,7 @@ static OSStatus coreaudio_get_isrunning(AudioDeviceID id, UInt32 *result)
+>                                         result);
+>   }
+>   
+> -static void coreaudio_logstatus (OSStatus status)
+> +static void coreaudio_logstatus(OSStatus status)
+>   {
+>       const char *str = "BUG";
+>   
+> @@ -207,70 +206,64 @@ static void coreaudio_logstatus (OSStatus status)
+>           break;
+>   
+>       default:
+> -        AUD_log (AUDIO_CAP, "Reason: status code %" PRId32 "\n", (int32_t)status);
+> +        error_printf(" Reason: status code %" PRId32, (int32_t)status);
+>           return;
+>       }
+>   
+> -    AUD_log (AUDIO_CAP, "Reason: %s\n", str);
+> +    error_printf(" Reason: %s", str);
+>   }
+>   
+> -static void G_GNUC_PRINTF (2, 3) coreaudio_logerr (
+> -    OSStatus status,
+> -    const char *fmt,
+> -    ...
+> -    )
+> +static void G_GNUC_PRINTF(2, 3) coreaudio_logerr(OSStatus status,
+> +                                                const char *fmt, ...)
+>   {
+>       va_list ap;
+>   
+> -    va_start (ap, fmt);
+> -    AUD_log (AUDIO_CAP, fmt, ap);
+> -    va_end (ap);
+> -
+> -    coreaudio_logstatus (status);
+> +    error_printf("coreaudio: ");
+> +    va_start(ap, fmt);
+> +    error_vprintf(fmt, ap);
+> +    va_end(ap);
+> +    coreaudio_logstatus(status);
+> +    error_printf("\n");
+>   }
+>   
+> -static void G_GNUC_PRINTF (3, 4) coreaudio_logerr2 (
+> -    OSStatus status,
+> -    const char *typ,
+> -    const char *fmt,
+> -    ...
+> -    )
+> +static void G_GNUC_PRINTF(3, 4) coreaudio_logerr2(OSStatus status,
+> +                                                  const char *typ,
+> +                                                  const char *fmt, ...)
+>   {
+>       va_list ap;
+>   
+> -    AUD_log (AUDIO_CAP, "Could not initialize %s\n", typ);
+> -
+> -    va_start (ap, fmt);
+> -    AUD_vlog (AUDIO_CAP, fmt, ap);
+> -    va_end (ap);
+> -
+> -    coreaudio_logstatus (status);
+> +    error_printf("coreaudio: Could not initialize %s: ", typ);
+> +    va_start(ap, fmt);
+> +    error_vprintf(fmt, ap);
+> +    va_end(ap);
+> +    coreaudio_logstatus(status);
+> +    error_printf("\n");
+>   }
+>   
+>   #define coreaudio_playback_logerr(status, ...) \
+>       coreaudio_logerr2(status, "playback", __VA_ARGS__)
+>   
+> -static int coreaudio_buf_lock (coreaudioVoiceOut *core, const char *fn_name)
+> +static int coreaudio_buf_lock(coreaudioVoiceOut *core, const char *fn_name)
+>   {
+>       int err;
+>   
+> -    err = pthread_mutex_lock (&core->buf_mutex);
+> +    err = pthread_mutex_lock(&core->buf_mutex);
+>       if (err) {
+> -        dolog ("Could not lock voice for %s\nReason: %s\n",
+> -               fn_name, strerror (err));
+> +        error_report("coreaudio: Could not lock voice for %s: %s",
+> +                     fn_name, strerror(err));
+>           return -1;
+>       }
+>       return 0;
+>   }
+>   
+> -static int coreaudio_buf_unlock (coreaudioVoiceOut *core, const char *fn_name)
+> +static int coreaudio_buf_unlock(coreaudioVoiceOut *core, const char *fn_name)
+>   {
+>       int err;
+>   
+> -    err = pthread_mutex_unlock (&core->buf_mutex);
+> +    err = pthread_mutex_unlock(&core->buf_mutex);
+>       if (err) {
+> -        dolog ("Could not unlock voice for %s\nReason: %s\n",
+> -               fn_name, strerror (err));
+> +        error_report("coreaudio: Could not unlock voice for %s: %s",
+> +                     fn_name, strerror(err));
+>           return -1;
+>       }
+>       return 0;
+> @@ -378,12 +371,13 @@ static OSStatus init_out_device(coreaudioVoiceOut *core)
+>   
+>       status = coreaudio_get_voice(&core->outputDeviceID);
+>       if (status != kAudioHardwareNoError) {
+> -        coreaudio_playback_logerr (status,
+> -                                   "Could not get default output Device\n");
+> +        coreaudio_playback_logerr(status,
+> +                                  "Could not get default output device");
+>           return status;
+>       }
+>       if (core->outputDeviceID == kAudioDeviceUnknown) {
+> -        dolog ("Could not initialize playback - Unknown Audiodevice\n");
+> +        error_report("coreaudio: Could not initialize playback: "
+> +                     "Unknown audio device");
+>           return status;
+>       }
+>   
+> @@ -394,17 +388,19 @@ static OSStatus init_out_device(coreaudioVoiceOut *core)
+>           return 0;
+>       }
+>       if (status != kAudioHardwareNoError) {
+> -        coreaudio_playback_logerr (status,
+> -                                    "Could not get device buffer frame range\n");
+> +        coreaudio_playback_logerr(status,
+> +                                  "Could not get device buffer frame range");
+>           return status;
+>       }
+>   
+>       if (frameRange.mMinimum > core->frameSizeSetting) {
+>           core->audioDevicePropertyBufferFrameSize = (UInt32) frameRange.mMinimum;
+> -        dolog ("warning: Upsizing Buffer Frames to %f\n", frameRange.mMinimum);
+> +        warn_report("coreaudio: Upsizing buffer frames to %f",
+> +                    frameRange.mMinimum);
+>       } else if (frameRange.mMaximum < core->frameSizeSetting) {
+>           core->audioDevicePropertyBufferFrameSize = (UInt32) frameRange.mMaximum;
+> -        dolog ("warning: Downsizing Buffer Frames to %f\n", frameRange.mMaximum);
+> +        warn_report("coreaudio: Downsizing buffer frames to %f",
+> +                    frameRange.mMaximum);
+>       } else {
+>           core->audioDevicePropertyBufferFrameSize = core->frameSizeSetting;
+>       }
+> @@ -416,9 +412,9 @@ static OSStatus init_out_device(coreaudioVoiceOut *core)
+>           return 0;
+>       }
+>       if (status != kAudioHardwareNoError) {
+> -        coreaudio_playback_logerr (status,
+> -                                    "Could not set device buffer frame size %" PRIu32 "\n",
+> -                                    (uint32_t)core->audioDevicePropertyBufferFrameSize);
+> +        coreaudio_playback_logerr(status,
+> +                                  "Could not set device buffer frame size %" PRIu32,
+> +                                  (uint32_t)core->audioDevicePropertyBufferFrameSize);
+>           return status;
+>       }
+>   
+> @@ -429,8 +425,8 @@ static OSStatus init_out_device(coreaudioVoiceOut *core)
+>           return 0;
+>       }
+>       if (status != kAudioHardwareNoError) {
+> -        coreaudio_playback_logerr (status,
+> -                                    "Could not get device buffer frame size\n");
+> +        coreaudio_playback_logerr(status,
+> +                                  "Could not get device buffer frame size");
+>           return status;
+>       }
+>       core->hw.samples = core->bufferCount * core->audioDevicePropertyBufferFrameSize;
+> @@ -442,9 +438,9 @@ static OSStatus init_out_device(coreaudioVoiceOut *core)
+>           return 0;
+>       }
+>       if (status != kAudioHardwareNoError) {
+> -        coreaudio_playback_logerr (status,
+> -                                   "Could not set samplerate %lf\n",
+> -                                   streamBasicDescription.mSampleRate);
+> +        coreaudio_playback_logerr(status,
+> +                                  "Could not set samplerate %lf",
+> +                                  streamBasicDescription.mSampleRate);
+>           core->outputDeviceID = kAudioDeviceUnknown;
+>           return status;
+>       }
+> @@ -468,7 +464,7 @@ static OSStatus init_out_device(coreaudioVoiceOut *core)
+>           return 0;
+>       }
+>       if (status != kAudioHardwareNoError || core->ioprocid == NULL) {
+> -        coreaudio_playback_logerr (status, "Could not set IOProc\n");
+> +        coreaudio_playback_logerr(status, "Could not set IOProc");
+>           core->outputDeviceID = kAudioDeviceUnknown;
+>           return status;
+>       }
+> @@ -486,13 +482,13 @@ static void fini_out_device(coreaudioVoiceOut *core)
+>       if (status != kAudioHardwareBadObjectError) {
+>           if (status != kAudioHardwareNoError) {
+>               coreaudio_logerr(status,
+> -                             "Could not determine whether Device is playing\n");
+> +                             "Could not determine whether device is playing");
+>           }
+>   
+>           if (isrunning) {
+>               status = AudioDeviceStop(core->outputDeviceID, core->ioprocid);
+>               if (status != kAudioHardwareBadDeviceError && status != kAudioHardwareNoError) {
+> -                coreaudio_logerr(status, "Could not stop playback\n");
+> +                coreaudio_logerr(status, "Could not stop playback");
+>               }
+>           }
+>       }
+> @@ -501,7 +497,7 @@ static void fini_out_device(coreaudioVoiceOut *core)
+>       status = AudioDeviceDestroyIOProcID(core->outputDeviceID,
+>                                           core->ioprocid);
+>       if (status != kAudioHardwareBadDeviceError && status != kAudioHardwareNoError) {
+> -        coreaudio_logerr(status, "Could not remove IOProc\n");
+> +        coreaudio_logerr(status, "Could not remove IOProc");
+>       }
+>       core->outputDeviceID = kAudioDeviceUnknown;
+>   }
+> @@ -515,7 +511,7 @@ static void update_device_playback_state(coreaudioVoiceOut *core)
+>       if (status != kAudioHardwareNoError) {
+>           if (status != kAudioHardwareBadObjectError) {
+>               coreaudio_logerr(status,
+> -                             "Could not determine whether Device is playing\n");
+> +                             "Could not determine whether device is playing");
+>           }
+>   
+>           return;
+> @@ -526,7 +522,7 @@ static void update_device_playback_state(coreaudioVoiceOut *core)
+>           if (!isrunning) {
+>               status = AudioDeviceStart(core->outputDeviceID, core->ioprocid);
+>               if (status != kAudioHardwareBadDeviceError && status != kAudioHardwareNoError) {
+> -                coreaudio_logerr (status, "Could not resume playback\n");
+> +                coreaudio_logerr(status, "Could not resume playback");
+>               }
+>           }
+>       } else {
+> @@ -535,7 +531,7 @@ static void update_device_playback_state(coreaudioVoiceOut *core)
+>               status = AudioDeviceStop(core->outputDeviceID,
+>                                        core->ioprocid);
+>               if (status != kAudioHardwareBadDeviceError && status != kAudioHardwareNoError) {
+> -                coreaudio_logerr(status, "Could not pause playback\n");
+> +                coreaudio_logerr(status, "Could not pause playback");
+>               }
+>           }
+>       }
+> @@ -576,7 +572,7 @@ static int coreaudio_init_out(HWVoiceOut *hw, struct audsettings *as)
+>       /* create mutex */
+>       err = pthread_mutex_init(&core->buf_mutex, NULL);
+>       if (err) {
+> -        dolog("Could not create mutex\nReason: %s\n", strerror (err));
+> +        error_report("coreaudio: Could not create mutex: %s", strerror(err));
+>           return -1;
+>       }
+>   
+> @@ -594,8 +590,8 @@ static int coreaudio_init_out(HWVoiceOut *hw, struct audsettings *as)
+>                                               &voice_addr, handle_voice_change,
+>                                               core);
+>       if (status != kAudioHardwareNoError) {
+> -        coreaudio_playback_logerr (status,
+> -                                   "Could not listen to voice property change\n");
+> +        coreaudio_playback_logerr(status,
+> +                                  "Could not listen to voice property change");
+>           return -1;
+>       }
+>   
+> @@ -606,7 +602,7 @@ static int coreaudio_init_out(HWVoiceOut *hw, struct audsettings *as)
+>                                                      core);
+>           if (status != kAudioHardwareNoError) {
+>               coreaudio_playback_logerr(status,
+> -                                      "Could not remove voice property change listener\n");
+> +                                      "Could not remove voice property change listener");
+>           }
+>   
+>           return -1;
+> @@ -626,7 +622,7 @@ static void coreaudio_fini_out (HWVoiceOut *hw)
+>                                                  handle_voice_change,
+>                                                  core);
+>       if (status != kAudioHardwareNoError) {
+> -        coreaudio_logerr(status, "Could not remove voice property change listener\n");
+> +        coreaudio_logerr(status, "Could not remove voice property change listener");
+>       }
+>   
+>       fini_out_device(core);
+> @@ -634,7 +630,7 @@ static void coreaudio_fini_out (HWVoiceOut *hw)
+>       /* destroy mutex */
+>       err = pthread_mutex_destroy(&core->buf_mutex);
+>       if (err) {
+> -        dolog("Could not destroy mutex\nReason: %s\n", strerror (err));
+> +        error_report("coreaudio: Could not destroy mutex: %s", strerror(err));
+>       }
+>   }
+>   
+
+Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+
+
+ATB,
+
+Mark.
+
 
