@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34662EE36A0
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10362EEA860
 	for <qemu-devel@archiver.kernel.org>; Fri, 13 Feb 2026 09:51:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqpoq-0007SA-AG; Fri, 13 Feb 2026 04:50:36 -0500
+	id 1vqpon-0007H8-LN; Fri, 13 Feb 2026 04:50:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vqpoj-00078y-D8
- for qemu-devel@nongnu.org; Fri, 13 Feb 2026 04:50:31 -0500
+ id 1vqpod-00073S-Cz
+ for qemu-devel@nongnu.org; Fri, 13 Feb 2026 04:50:23 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vqpoh-0007Lp-Gw
- for qemu-devel@nongnu.org; Fri, 13 Feb 2026 04:50:28 -0500
+ id 1vqpoY-0007IG-SP
+ for qemu-devel@nongnu.org; Fri, 13 Feb 2026 04:50:22 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770976224;
+ s=mimecast20190719; t=1770976217;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=4feRG+PIqLPyCpVStJ7uIxka6xWW9klU080X9xA3hKo=;
- b=ZtYvv9lRqrfvms3O2pnTmSTd3GaLHIMimzX4B+mycX+G/DG48o95urPreWUOxEJ3SodZrz
- CnCYZdz1C+aKFjj1KXSFE4FdczXVaWwQ2qGSUNnJDAPGoI/w6GvJC3FVn6GxDGWAXaXL+4
- UnLEVdwuLBWRVrG+dExu52ittsePetQ=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ bh=F4BORkMGuDDVLyTEyiaLb3JWHa0y/2ix01bD3RCQTgw=;
+ b=cokcXWVYSa3hLdPdu0lSUyu8zQzjjofJH1wB/SwwVtyNLzFMC6T9zJJKvJn132sKiM7DeO
+ n3FMcOHB/ihW8B+/efx/D3OUhQ5eusjP5ZlYgQ0pgK6EXbRfHa0Bdq1GF4q+dFNkeP1h0J
+ ESoxIQMO/jLdSGn+BFjCKCcifr1hkTE=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-124-v2J-xh5zMnCpIbMpJcyfKg-1; Fri,
- 13 Feb 2026 04:50:21 -0500
-X-MC-Unique: v2J-xh5zMnCpIbMpJcyfKg-1
-X-Mimecast-MFC-AGG-ID: v2J-xh5zMnCpIbMpJcyfKg_1770976218
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-6-E-7BdYCROJiGwt4vzl-fbA-1; Fri,
+ 13 Feb 2026 04:50:14 -0500
+X-MC-Unique: E-7BdYCROJiGwt4vzl-fbA-1
+X-Mimecast-MFC-AGG-ID: E-7BdYCROJiGwt4vzl-fbA_1770976213
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 757F1180057E; Fri, 13 Feb 2026 09:50:18 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2FB631800464; Fri, 13 Feb 2026 09:50:13 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.41])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id E00863000225; Fri, 13 Feb 2026 09:50:17 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 6388D1955D85; Fri, 13 Feb 2026 09:50:12 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -61,15 +61,15 @@ Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  xen-devel@lists.xenproject.org,
  Samuel Thibault <samuel.thibault@ens-lyon.org>,
  Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Subject: [PULL v2 11/15] chardev/char: qemu_char_open(): add return value
-Date: Fri, 13 Feb 2026 10:49:30 +0100
-Message-ID: <20260213094938.4074478-12-marcandre.lureau@redhat.com>
+Subject: [PULL v2 09/15] chardev: introduce .chr_get_pty_name() handler
+Date: Fri, 13 Feb 2026 10:49:28 +0100
+Message-ID: <20260213094938.4074478-10-marcandre.lureau@redhat.com>
 In-Reply-To: <20260213094938.4074478-1-marcandre.lureau@redhat.com>
 References: <20260213094938.4074478-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -98,68 +98,149 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 
-Accordingly with recommendations in include/qapi/error.h accompany
-errp by boolean return value and get rid of error propagation.
+Currently we do two wrong things:
+
+1. Abuse s->filename to get pty_name from it
+
+2. Violate layering with help of CHARDEV_IS_PTY()
+
+Let's get rid of both, and introduce correct way to get pty name in
+generic code, if available.
 
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-Id: <20260115144606.233252-11-vsementsov@yandex-team.ru>
+Message-Id: <20260115144606.233252-9-vsementsov@yandex-team.ru>
 ---
- chardev/char.c | 15 +++++++--------
- 1 file changed, 7 insertions(+), 8 deletions(-)
+ include/chardev/char.h |  7 +++++--
+ chardev/char-pty.c     |  7 +++++++
+ chardev/char.c         | 19 +++++++++++++------
+ hw/char/xen_console.c  |  7 ++++---
+ 4 files changed, 29 insertions(+), 11 deletions(-)
 
+diff --git a/include/chardev/char.h b/include/chardev/char.h
+index e1bf97222b8..ada5529fa6c 100644
+--- a/include/chardev/char.h
++++ b/include/chardev/char.h
+@@ -247,8 +247,6 @@ OBJECT_DECLARE_TYPE(Chardev, ChardevClass, CHARDEV)
+ 
+ #define CHARDEV_IS_RINGBUF(chr) \
+     object_dynamic_cast(OBJECT(chr), TYPE_CHARDEV_RINGBUF)
+-#define CHARDEV_IS_PTY(chr) \
+-    object_dynamic_cast(OBJECT(chr), TYPE_CHARDEV_PTY)
+ 
+ struct ChardevClass {
+     ObjectClass parent_class;
+@@ -308,6 +306,9 @@ struct ChardevClass {
+     void (*chr_be_event)(Chardev *s, QEMUChrEvent event);
+ 
+     void (*chr_listener_cleanup)(Chardev *chr);
++
++    /* return PTY name if available */
++    char *(*chr_get_pty_name)(Chardev *s);
+ };
+ 
+ Chardev *qemu_chardev_new(const char *id, const char *typename,
+@@ -322,4 +323,6 @@ GSource *qemu_chr_timeout_add_ms(Chardev *chr, guint ms,
+ void suspend_mux_open(void);
+ void resume_mux_open(void);
+ 
++char *qemu_chr_get_pty_name(Chardev *chr);
++
+ #endif
+diff --git a/chardev/char-pty.c b/chardev/char-pty.c
+index a582aa7bc73..047aade09e5 100644
+--- a/chardev/char-pty.c
++++ b/chardev/char-pty.c
+@@ -387,6 +387,12 @@ static void pty_chr_parse(QemuOpts *opts, ChardevBackend *backend, Error **errp)
+     pty->path = g_strdup(path);
+ }
+ 
++static char *pty_chr_get_pty_name(Chardev *chr)
++{
++    PtyChardev *s = PTY_CHARDEV(chr);
++    return g_strdup(s->pty_name);
++}
++
+ static void char_pty_class_init(ObjectClass *oc, const void *data)
+ {
+     ChardevClass *cc = CHARDEV_CLASS(oc);
+@@ -396,6 +402,7 @@ static void char_pty_class_init(ObjectClass *oc, const void *data)
+     cc->chr_write = pty_chr_write;
+     cc->chr_update_read_handler = pty_chr_update_read_handler;
+     cc->chr_add_watch = pty_chr_add_watch;
++    cc->chr_get_pty_name = pty_chr_get_pty_name;
+ }
+ 
+ static const TypeInfo char_pty_type_info = {
 diff --git a/chardev/char.c b/chardev/char.c
-index 3373c9b61f8..5d00cac2f31 100644
+index 44bfed36272..0dc792b88f7 100644
 --- a/chardev/char.c
 +++ b/chardev/char.c
-@@ -246,7 +246,7 @@ int qemu_chr_add_client(Chardev *s, int fd)
-         CHARDEV_GET_CLASS(s)->chr_add_client(s, fd) : -1;
+@@ -1090,9 +1090,7 @@ ChardevReturn *qmp_chardev_add(const char *id, ChardevBackend *backend,
+     }
+ 
+     ret = g_new0(ChardevReturn, 1);
+-    if (CHARDEV_IS_PTY(chr)) {
+-        ret->pty = g_strdup(chr->filename + 4);
+-    }
++    ret->pty = qemu_chr_get_pty_name(chr);
+ 
+     return ret;
+ 
+@@ -1101,6 +1099,17 @@ err:
+     return NULL;
  }
  
--static void qemu_char_open(Chardev *chr, ChardevBackend *backend, Error **errp)
-+static bool qemu_char_open(Chardev *chr, ChardevBackend *backend, Error **errp)
- {
-     ChardevClass *cc = CHARDEV_GET_CLASS(chr);
-     /* Any ChardevCommon member would work */
-@@ -262,13 +262,15 @@ static void qemu_char_open(Chardev *chr, ChardevBackend *backend, Error **errp)
-         }
-         chr->logfd = qemu_create(common->logfile, flags, 0666, errp);
-         if (chr->logfd < 0) {
--            return;
-+            return false;
-         }
-     }
- 
--    if (cc->chr_open) {
--        cc->chr_open(chr, backend, errp);
-+    if (!cc->chr_open) {
-+        return true;
-     }
++char *qemu_chr_get_pty_name(Chardev *chr)
++{
++    ChardevClass *cc = CHARDEV_GET_CLASS(chr);
 +
-+    return cc->chr_open(chr, backend, errp);
- }
- 
- static void char_init(Object *obj)
-@@ -1006,7 +1008,6 @@ static Chardev *chardev_new(const char *id, const char *typename,
++    if (cc->chr_get_pty_name) {
++        return cc->chr_get_pty_name(chr);
++    }
++
++    return NULL;
++}
++
+ ChardevReturn *qmp_chardev_change(const char *id, ChardevBackend *backend,
+                                   Error **errp)
  {
-     Object *obj;
-     Chardev *chr = NULL;
--    Error *local_err = NULL;
+@@ -1192,9 +1201,7 @@ ChardevReturn *qmp_chardev_change(const char *id, ChardevBackend *backend,
+     object_unref(OBJECT(chr_new));
  
-     assert(g_str_has_prefix(typename, "chardev-"));
-     assert(id);
-@@ -1017,9 +1018,7 @@ static Chardev *chardev_new(const char *id, const char *typename,
-     chr->label = g_strdup(id);
-     chr->gcontext = gcontext;
+     ret = g_new0(ChardevReturn, 1);
+-    if (CHARDEV_IS_PTY(chr_new)) {
+-        ret->pty = g_strdup(chr_new->filename + 4);
+-    }
++    ret->pty = qemu_chr_get_pty_name(chr_new);
  
--    qemu_char_open(chr, backend, &local_err);
--    if (local_err) {
--        error_propagate(errp, local_err);
-+    if (!qemu_char_open(chr, backend, errp)) {
-         object_unref(obj);
-         return NULL;
+     return ret;
+ }
+diff --git a/hw/char/xen_console.c b/hw/char/xen_console.c
+index 8ee098d9ad4..bdeb76dc870 100644
+--- a/hw/char/xen_console.c
++++ b/hw/char/xen_console.c
+@@ -418,6 +418,7 @@ static void xen_console_realize(XenDevice *xendev, Error **errp)
+     XenConsole *con = XEN_CONSOLE_DEVICE(xendev);
+     Chardev *cs = qemu_chr_fe_get_driver(&con->chr);
+     unsigned int u;
++    g_autofree char *pty_name = NULL;
+ 
+     if (!cs) {
+         error_setg(errp, "no backing character device");
+@@ -450,9 +451,9 @@ static void xen_console_realize(XenDevice *xendev, Error **errp)
+ 
+     trace_xen_console_realize(con->dev, object_get_typename(OBJECT(cs)));
+ 
+-    if (CHARDEV_IS_PTY(cs)) {
+-        /* Strip the leading 'pty:' */
+-        xen_device_frontend_printf(xendev, "tty", "%s", cs->filename + 4);
++    pty_name = qemu_chr_get_pty_name(cs);
++    if (pty_name) {
++        xen_device_frontend_printf(xendev, "tty", "%s", pty_name);
      }
+ 
+     /* No normal PV driver initialization for the primary console under Xen */
 -- 
 2.52.0
 
