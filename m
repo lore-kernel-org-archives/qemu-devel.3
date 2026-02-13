@@ -4,97 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2510EDF154
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Feb 2026 12:16:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90530EDF159
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Feb 2026 12:26:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqs5r-0003O1-SV; Fri, 13 Feb 2026 07:16:20 -0500
+	id 1vqsFN-0005EX-Cl; Fri, 13 Feb 2026 07:26:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vqs5R-0003Lf-I6; Fri, 13 Feb 2026 07:16:04 -0500
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
+ id 1vqsFJ-0005E8-0J
+ for qemu-devel@nongnu.org; Fri, 13 Feb 2026 07:26:05 -0500
+Received: from kylie.crudebyte.com ([5.189.157.229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vqs5M-0003bS-Br; Fri, 13 Feb 2026 07:15:52 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 853B018929B;
- Fri, 13 Feb 2026 15:15:28 +0300 (MSK)
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id E204D364217;
- Fri, 13 Feb 2026 15:15:31 +0300 (MSK)
-Message-ID: <434485a8-4fef-472b-bac2-4b470de0d31e@tls.msk.ru>
-Date: Fri, 13 Feb 2026 15:15:31 +0300
+ (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
+ id 1vqsFH-0007yQ-5g
+ for qemu-devel@nongnu.org; Fri, 13 Feb 2026 07:26:04 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=crudebyte.com; s=kylie; h=Content-Type:Content-Transfer-Encoding:
+ MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:
+ Content-ID:Content-Description;
+ bh=tpyY72F8yUzq0aKtZb+oo5/R8xdMgMelH4fHoPkLbVg=; b=QXCDsMwYQ1GnwnbX7mwgCRTQdk
+ 3NR8l/LHf2jIF6O4wiUUBd3uSnPi+BvOs9OpkfczkCSVvL3MHty3VF/MeXHCscdF5zTjc5nsgvxdG
+ ygZRw/yNisoTa95kzCN+pVPwV/fz/D42nSH/41MBuPTXWKV0ioMETZTFPvHM42YLqUFvGerqSaA0E
+ EPoGdoaLqLFZolN5xDBQ0aAfb/FPJayHnuFu9pEpwCXjA2j5lmVDBDqSfpdT4ThyY0QA7fgKGdNRi
+ fbadXBgewv9mP7qwnuZHP/FeoQL14U0vlYW28sudHqO4VPi882HcvrJ7bOsCvXGAYbVjlOx9ENtSK
+ ipzuP//2P43aJoNOurTTc3P99z6A/uVNGXPFM97Z0E71IesVs/v5PQBNnCXlXIZFlHAukLCUUVJ97
+ Xe8h6zwLttG9x28UVrWMZAvwqoVjKne3kiXrk3Oq+51u9YXZXIxRB6WrTyG2wtd2GQSaTVZP54xiX
+ g6oQctlUwX20kjZVE8A/2WZRtTXqr2/vnAvxZSUPgE/KGBSiDIoo8c1IitKkQttjPZdRdJYEigQ4E
+ Ff//XoHvA2DIXQj1xYlRa8D1FsLJcelnXiaqByk+D02Z2bwLV+K+wGN6UFbK0wvHVLTKNKqHJ1plC
+ ugC/NOWmdg+gOofa0DP8GtZFQYjXtUo5UACs7xFkY=;
+From: Christian Schoenebeck <qemu_oss@crudebyte.com>
+To: qemu-devel@nongnu.org, Oliver Chang <ochang@google.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+Cc: Alexander Bulekov <alxndr@bu.edu>,
+ Mauro Matteo Cascella <mcascell@redhat.com>, Greg Kurz <groug@kaod.org>
+Subject: A.I. generated patch (was: [PATCH] hw/9pfs: fix heap-buffer-overflow
+ in v9fs_complete_rename)
+Date: Fri, 13 Feb 2026 13:25:57 +0100
+Message-ID: <3030453.e9J7NaK4W3@weasel>
+In-Reply-To: <E1vqq09-000FBe-2m@kylie.crudebyte.com>
+References: <E1vqq09-000FBe-2m@kylie.crudebyte.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/2] hw/i2c/aspeed_i2c: Fix out-of-bounds read in I2C
- MMIO
-To: Jamin Lin <jamin_lin@aspeedtech.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
- <clg@kaod.org>, Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-Cc: Troy Lee <troy_lee@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>, 
- qemu-stable <qemu-stable@nongnu.org>
-References: <20260210024331.3984696-1-jamin_lin@aspeedtech.com>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- xsFNBGYpLkcBEACsajkUXU2lngbm6RyZuCljo19q/XjZTMikctzMoJnBGVSmFV66kylUghxs
- HDQQF2YZJbnhSVt/mP6+V7gG6MKR5gYXYxLmypgu2lJdqelrtGf1XtMrobG6kuKFiD8OqV6l
- 2M5iyOZT3ydIFOUX0WB/B9Lz9WcQ6zYO9Ohm92tiWWORCqhAnwZy4ua/nMZW3RgO7bM6GZKt
- /SFIorK9rVqzv40D6KNnSyeWfqf4WN3EvEOozMfWrXbEqA7kvd6ShjJoe1FzCEQ71Fj9dQHL
- DZG+44QXvN650DqEtQ4RW9ozFk3Du9u8lbrXC5cqaCIO4dx4E3zxIddqf6xFfu4Oa5cotCM6
- /4dgxDoF9udvmC36qYta+zuDsnAXrYSrut5RBb0moez/AR8HD/cs/dS360CLMrl67dpmA+XD
- 7KKF+6g0RH46CD4cbj9c2egfoBOc+N5XYyr+6ejzeZNf40yjMZ9SFLrcWp4yQ7cpLsSz08lk
- a0RBKTpNWJdblviPQaLW5gair3tyJR+J1ER1UWRmKErm+Uq0VgLDBDQoFd9eqfJjCwuWZECp
- z2JUO+zBuGoKDzrDIZH2ErdcPx3oSlVC2VYOk6H4cH1CWr9Ri8i91ClivRAyVTbs67ha295B
- y4XnxIVaZU+jJzNgLvrXrkI1fTg4FJSQfN4W5BLCxT4sq8BDtwARAQABzSBNaWNoYWVsIFRv
- a2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLBlAQTAQoAPhYhBJ2L4U4/Kp3XkZko8WGtPZjs3yyO
- BQJmKS5HAhsDBQkSzAMABQsJCAcCBhUKCQgLAgQWAgMBAh4BAheAAAoJEGGtPZjs3yyOZSAP
- /ibilK1gbHqEI2zR2J59Dc0tjtbByVmQ8IMh0SYU3j1jeUoku2UCgdnGKpwvLXtwZINgdl6Q
- cEaDBRX6drHLJFAi/sdgwVgdnDxaWVJO/ZIN/uJI0Tx7+FSAk8CWSa4IWUOzPNmtrDfb4z6v
- G36rppY8bTNKbX6nWFXuv2LXQr7g6+kKnbwv4QFpD+UFF1CrLm3byMq4ikdBXpZx030qBL61
- b7PrfXcBLao0357kWGH6C2Zu4wBnDUJwGi68pI5rzSRAFyAQsE89sjLdR1yFoBH8NiFnAQXP
- LA8Am9FMsC7D/bi/kwKTJdcZvzdGU1HG6tJvXLWC+nqGpJNBzRdDpjqtxNuL76vVd/JbsFMS
- JchLN+01fNQ5FHglvkd6md7vO+ULq+r9An5hMiDoRbYVUOBN8uiYNk+qKbdgSfbhsgPURqHi
- 1bXkgMeMasqWbGMe7iBW/YH2ePfZ6HuKLNQDCkiWZYPQZvyXHvQHjuJJ5+US81tkqM+Q6Snq
- 0L/O/LD0qLlbinHrcx0abg06VXBoYmGICJpf/3hhWQM4f+B/5w4vpl8q0B6Osz01pBUBfYak
- CiYCNHMWWVZkW9ZnY7FWiiPOu8iE1s5oPYqBljk3FNUk04SDKMF5TxL87I2nMBnVnvp0ZAuY
- k9ojiLqlhaKnZ1+zwmwmPmXzFSwlyMczPUMSzsFNBGYpLkcBEAC0mxV2j5M1x7GiXqxNVyWy
- OnlWqJkbkoyMlWFSErf+RUYlC9qVGwUihgsgEhQMg0nJiSISmU3vsNEx5j0T13pTEyWXWBdS
- XtZpNEW1lZ2DptoGg+6unpvxd2wn+dqzJqlpr4AY3vc95q4Za/NptWtSCsyJebZ7DxCCkzET
- tzbbnCjW1souCETrMy+G916w1gJkz4V1jLlRMEEoJHLrr1XKDdJRk/34AqXPKOzILlWRFK6s
- zOWa80/FNQV5cvjc2eN1HsTMFY5hjG3zOZb60WqwTisJwArjQbWKF49NLHp/6MpiSXIxF/FU
- jcVYrEk9sKHN+pERnLqIjHA8023whDWvJide7f1V9lrVcFt0zRIhZOp0IAE86E3stSJhZRhY
- xyIAx4dpDrw7EURLOhu+IXLeEJbtW89tp2Ydm7TVAt5iqBubpHpGTWV7hwPRQX2w2MBq1hCn
- K5Xx79omukJisbLqG5xUCR1RZBUfBlYnArssIZSOpdJ9wWMK+fl5gn54cs+yziUYU3Tgk0fJ
- t0DzQsgfd2JkxOEzJACjJWti2Gh3szmdgdoPEJH1Og7KeqbOu2mVCJm+2PrNlzCybOZuHOV5
- +vSarkb69qg9nU+4ZGX1m+EFLDqVUt1g0SjY6QmM5yjGBA46G3dwTEV0/u5Wh7idNT0mRg8R
- eP/62iTL55AM6QARAQABwsF8BBgBCgAmFiEEnYvhTj8qndeRmSjxYa09mOzfLI4FAmYpLkcC
- GwwFCRLMAwAACgkQYa09mOzfLI53ag/+ITb3WW9iqvbjDueV1ZHwUXYvebUEyQV7BFofaJbJ
- Sr7ek46iYdV4Jdosvq1FW+mzuzrhT+QzadEfYmLKrQV4EK7oYTyQ5hcch55eX00o+hyBHqM2
- RR/B5HGLYsuyQNv7a08dAUmmi9eAktQ29IfJi+2Y+S1okAEkWFxCUs4EE8YinCrVergB/MG5
- S7lN3XxITIaW00faKbqGtNqij3vNxua7UenN8NHNXTkrCgA+65clqYI3MGwpqkPnXIpTLGl+
- wBI5S540sIjhgrmWB0trjtUNxe9QcTGHoHtLeGX9QV5KgzNKoUNZsyqh++CPXHyvcN3OFJXm
- VUNRs/O3/b1capLdrVu+LPd6Zi7KAyWUqByPkK18+kwNUZvGsAt8WuVQF5telJ6TutfO8xqT
- FUzuTAHE+IaRU8DEnBpqv0LJ4wqqQ2MeEtodT1icXQ/5EDtM7OTH231lJCR5JxXOnWPuG6el
- YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
- ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
- 3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20260210024331.3984696-1-jamin_lin@aspeedtech.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="utf-8"
+Received-SPF: pass client-ip=5.189.157.229;
+ envelope-from=qemu_oss@crudebyte.com; helo=kylie.crudebyte.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,26 +72,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/10/26 05:43, Jamin Lin wrote:
-> v1:
->   1. Fix Out-of-Bounds access by using dynamic register array
+On Friday, 13 February 2026 10:56:05 CET Christian Schoenebeck wrote:
+> From: Oliver Chang <ochang@google.com>
 > 
-> v2:
->   1. Fix Out-of-Bounds access by increasing static array size
->   2. Increase I2C device register size to 0xA0 for AST2700 A1
+> When `v9fs_complete_rename` is called with `newdirfid == -1`, it attempts to
+> derive the directory name from `fidp->path.data` using
+> `g_path_get_dirname`. This logic assumes that `fidp->path.data` always
+> contains a null-terminated string representing a pathname.
 > 
-> Jamin Lin (2):
->    hw/i2c/aspeed_i2c: Fix out-of-bounds read in I2C MMIO handlers
->    hw/i2c/aspeed_i2c: Increase I2C device register size to 0xA0
+> While this assumption holds for the 'local' backend, the 'synth' backend
+> stores a `V9fsSynthNode *` pointer directly in the `V9fsPath.data` buffer.
+> When using 'synth', `g_path_get_dirname` treats this pointer as a string,
+> often resulting in a short string like ".".
 > 
->   include/hw/i2c/aspeed_i2c.h |  3 +-
->   hw/i2c/aspeed_i2c.c         | 58 ++++++++++++++++++-------------------
->   2 files changed, 29 insertions(+), 32 deletions(-)
+> The subsequent call to `v9fs_co_name_to_path` invokes `synth_name_to_path`,
+> which expects `dir_path.data` to contain a `V9fsSynthNode *`. It attempts to
+> read 8 bytes (on 64-bit) from the buffer. If `g_path_get_dirname` returned
+> a short string, this results in a heap-buffer-overflow read.
+> 
+> Fix this by checking for the `V9FS_PATHNAME_FSCONTEXT` flag in the export
+> flags. This flag indicates that the backend supports string-based pathnames.
+> If it is not set (as in the 'synth' backend), return `-EOPNOTSUPP` to
+> prevent invalid memory access.
+> 
+> Co-authored-by: CodeMender <codemender-patching@google.com>
+> Fixes: https://issues.oss-fuzz.com/issues/477990727
+> ---
 
-I'm picking this up for current qemu-stable releases.
-Please let me know if I shoudln't.
+Oliver, IIUIC your patch was auto generated by A.I. and AFAICS QEMU's current
+policies forbid any A.I. generated contributions in general:
 
-Thanks,
+https://www.qemu.org/docs/master/devel/code-provenance.html#use-of-ai-generated-content
 
-/mjt
+It is also missing a Signed-off-by: tag BTW.
+
+Technically the patch should better be generalized anyway, at least by moving
+the V9FS_PATHNAME_FSCONTEXT check to the beginning of the function, as
+renaming is only possible with pathname-based fs drivers.
+
+Peter, would that be sane enough or would such a v2 patch considered as
+"derived from A.I content" as well?
+
+/Christian
+
+>  hw/9pfs/9p.c | 9 ++++++++-
+>  1 file changed, 8 insertions(+), 1 deletion(-)
+> 
+> diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
+> index 6fbe604ce8..546e70f75c 100644
+> --- a/hw/9pfs/9p.c
+> +++ b/hw/9pfs/9p.c
+> @@ -3310,9 +3310,16 @@ static int coroutine_fn v9fs_complete_rename(V9fsPDU
+> *pdu, V9fsFidState *fidp, goto out;
+>          }
+>      } else {
+> -        char *dir_name = g_path_get_dirname(fidp->path.data);
+> +        char *dir_name;
+>          V9fsPath dir_path;
+> 
+> +        if (!(s->ctx.export_flags & V9FS_PATHNAME_FSCONTEXT)) {
+> +            /* path renaming is only supported for path based fid */
+> +            err = -EOPNOTSUPP;
+> +            goto out;
+> +        }
+> +
+> +        dir_name = g_path_get_dirname(fidp->path.data);
+>          v9fs_path_init(&dir_path);
+>          v9fs_path_sprintf(&dir_path, "%s", dir_name);
+>          g_free(dir_name);
+
+
+
+
 
