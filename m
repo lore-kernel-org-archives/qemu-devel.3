@@ -4,58 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E086EF48DB
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Feb 2026 07:12:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4E5BEF48DC
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Feb 2026 07:12:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqnL2-0002k7-0T; Fri, 13 Feb 2026 02:11:40 -0500
+	id 1vqnKQ-0002Zs-Nn; Fri, 13 Feb 2026 02:11:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lulu@redhat.com>) id 1vqnKy-0002jb-2G
- for qemu-devel@nongnu.org; Fri, 13 Feb 2026 02:11:36 -0500
+ (Exim 4.90_1) (envelope-from <lulu@redhat.com>) id 1vqnKO-0002ZR-GZ
+ for qemu-devel@nongnu.org; Fri, 13 Feb 2026 02:11:00 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lulu@redhat.com>) id 1vqnKv-0005eC-PB
- for qemu-devel@nongnu.org; Fri, 13 Feb 2026 02:11:35 -0500
+ (Exim 4.90_1) (envelope-from <lulu@redhat.com>) id 1vqnKM-0005bC-Kl
+ for qemu-devel@nongnu.org; Fri, 13 Feb 2026 02:11:00 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770966693;
+ s=mimecast20190719; t=1770966656;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=HfmaBTP49ifwDZty9C9MLcDDDX6UwWiMdcZezZPYKs0=;
- b=BCgWYEQKnImQpGsDAP94XN9e62koCQUo53WXDXqE0mtN5BLV99bQmkGaerXgIvSqYKzJIG
- Ii9tV5SOIhWjIJ4HA7nshg2d5sLeoHv7aIjtDXorV+pySp6bzxe6GAtBiwzebopQyyWWjw
- VgSjJ5zAvt/wP9jbU3ZlX9KgBhGCw7E=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ content-transfer-encoding:content-transfer-encoding;
+ bh=aAeo8Qp29w58NpL2Ar0gIFc3G/2b+aZ7G1Yo/rVw+Uk=;
+ b=CXuzVTXsEhjoaqVLA5NnDn00BYoGd4wkg0PQXgSRCn1G7fNyZa5SUUtNljKx2eHedHPMuG
+ mt3qTzyxPTaL4pgEMqm1bIhHewytGrSnV35S4icmiNvnKhnxeR3Qo8pm1u53y4cxJDTO8W
+ BwhRy+NPy4Se9HHLEdSnN9z52WFkTqI=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-176-3GPXCd5hOvuvtV6Qi5_0cA-1; Fri,
- 13 Feb 2026 02:11:29 -0500
-X-MC-Unique: 3GPXCd5hOvuvtV6Qi5_0cA-1
-X-Mimecast-MFC-AGG-ID: 3GPXCd5hOvuvtV6Qi5_0cA_1770966688
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-68-Wq8vh4GPPTy-4gSJFhrtcA-1; Fri,
+ 13 Feb 2026 02:10:51 -0500
+X-MC-Unique: Wq8vh4GPPTy-4gSJFhrtcA-1
+X-Mimecast-MFC-AGG-ID: Wq8vh4GPPTy-4gSJFhrtcA_1770966650
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 343651955D8F; Fri, 13 Feb 2026 07:11:28 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 40A061956094; Fri, 13 Feb 2026 07:10:50 +0000 (UTC)
 Received: from S2.redhat.com (unknown [10.72.112.33])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id E09801800464; Fri, 13 Feb 2026 07:11:24 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id B753B30001BE; Fri, 13 Feb 2026 07:10:46 +0000 (UTC)
 From: Cindy Lu <lulu@redhat.com>
 To: lulu@redhat.com, mst@redhat.com, jasowang@redhat.com, zhangckid@gmail.com,
  lizhijian@fujitsu.com, qemu-devel@nongnu.org
-Subject: [RFC 4/5] net/filter-redirector: add AF_PACKET redirect datapath
-Date: Fri, 13 Feb 2026 15:08:04 +0800
-Message-ID: <20260213071042.3733239-5-lulu@redhat.com>
-In-Reply-To: <20260213071042.3733239-1-lulu@redhat.com>
-References: <20260213071042.3733239-1-lulu@redhat.com>
+Subject: [RFC 0/5] net/filter-redirector: Add AF_PACKET support for vhost-net
+Date: Fri, 13 Feb 2026 15:08:00 +0800
+Message-ID: <20260213071042.3733239-1-lulu@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=lulu@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -81,271 +78,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Complete the AF_PACKET based packet forwarding implementation for
-filter-redirector:
+This series extends filter-redirector to support vhost-net backends by
+introducing AF_PACKET based packet capture and injection.
 
-1. filter_redirector_send_netdev_packet(): Send packets via AF_PACKET
-   socket to out_netdev. Updates netdev_tx statistics.
+TODO
+========
+This series introduces basic support for filter-redirector, enabling
+simple mirroring of VM1's ingress traffic to VM2's mirror port. 
+Additional functionality including filter_buffer and other filter features
+will be added in following versions.
 
-2. filter_redirector_recv_from_chardev(): Handle packets received from
-   chardev indev. Can forward to either chardev outdev, AF_PACKET
-   out_netdev, or inject into the netfilter chain.
+Example Usage
+=============
+Primary VM (mirror incoming packets to secondary via chardev socket):
 
-3. filter_redirector_recv_from_netdev(): Handle packets received from
-   AF_PACKET in_netdev. Can forward to chardev outdev or inject into
-   the netfilter chain.
+  -netdev tap,id=net0,vhost=on,...
+  -chardev socket,id=mirror0,host=...,port=...,server=on,wait=off
+  -object filter-redirector,id=vm1redir,netdev=net0,in_netdev=net0,outdev=mirror0
 
-4. Updated filter_redirector_receive_iov() to support out_netdev as
-   an output endpoint. Added logic to skip netdev path consumption
-   when redirector has an input endpoint (indev/in_netdev) to prevent
-   packet loops.
+Secondary VM (receive mirrored packets):
 
-5. Added netdev_rx and netdev_tx counters to query-netfilter-stats
-   output for monitoring AF_PACKET datapath activity.
+  -chardev socket,id=red0,host=...,port=...,reconnect-ms=1000
+  -object filter-redirector,id=vm2redir,netdev=net0,indev=red0,out_netdev=net0
 
-Signed-off-by: Cindy Lu <lulu@redhat.com>
----
- net/filter-mirror.c | 177 ++++++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 171 insertions(+), 6 deletions(-)
+Testing
+=======
+- Tested with vhost=on/off TAP netdev on x86_64
 
-diff --git a/net/filter-mirror.c b/net/filter-mirror.c
-index f8001612ec..d9e8fcba59 100644
---- a/net/filter-mirror.c
-+++ b/net/filter-mirror.c
-@@ -65,6 +65,11 @@ struct MirrorState {
-     uint64_t indev_bytes;
-     uint64_t outdev_packets;
-     uint64_t outdev_bytes;
-+    /* netdev replay/capture statistics for filter-redirector */
-+    uint64_t netdev_rx_packets;
-+    uint64_t netdev_rx_bytes;
-+    uint64_t netdev_tx_packets;
-+    uint64_t netdev_tx_bytes;
- };
- 
- typedef struct FilterSendCo {
-@@ -158,6 +163,59 @@ static int filter_send(MirrorState *s,
-     return data.ret;
- }
- 
-+static ssize_t filter_redirector_send_netdev_packet(MirrorState *s,
-+                                                    const struct iovec *iov,
-+                                                    int iovcnt)
-+{
-+    ssize_t size = iov_size(iov, iovcnt);
-+    g_autofree uint8_t *buf = NULL;
-+
-+    if (s->out_netfd < 0) {
-+        return -ENODEV;
-+    }
-+    if (size > NET_BUFSIZE) {
-+        return -EINVAL;
-+    }
-+
-+    buf = g_malloc(size);
-+    iov_to_buf(iov, iovcnt, 0, buf, size);
-+
-+    ssize_t ret = send(s->out_netfd, buf, size, 0);
-+    if (ret < 0) {
-+        return -errno;
-+    }
-+    if (ret > 0) {
-+        s->netdev_tx_packets++;
-+        s->netdev_tx_bytes += ret;
-+    }
-+    return ret;
-+}
-+static ssize_t filter_redirector_send_chardev_iov(MirrorState *s,
-+                                                  const struct iovec *iov,
-+                                                  int iovcnt)
-+{
-+    if (!s->outdev) {
-+        return -ENODEV;
-+    }
-+
-+    if (!qemu_chr_fe_backend_connected(&s->chr_out)) {
-+        return 0;
-+    }
-+
-+    return filter_send(s, iov, iovcnt);
-+}
-+
-+static ssize_t filter_redirector_send_netdev_iov(MirrorState *s,
-+                                                 const struct iovec *iov,
-+                                                 int iovcnt)
-+{
-+    if (!s->out_netdev) {
-+        return -ENODEV;
-+    }
-+
-+    return filter_redirector_send_netdev_packet(s, iov, iovcnt);
-+}
-+
- static void redirector_to_filter(NetFilterState *nf,
-                                  const uint8_t *buf,
-                                  int len)
-@@ -230,6 +288,75 @@ static void redirector_chr_event(void *opaque, QEMUChrEvent event)
-     }
- }
- 
-+static void filter_redirector_recv_from_chardev(NetFilterState *nf,
-+                                                        const uint8_t *buf,
-+                                                        int len)
-+{
-+    MirrorState *s = FILTER_REDIRECTOR(nf);
-+    ssize_t ret;
-+    struct iovec iov = {
-+        .iov_base = (void *)buf,
-+        .iov_len = len,
-+    };
-+
-+    if (len <= 0) {
-+        return;
-+    }
-+
-+    /* chardev indev */
-+    s->indev_packets++;
-+    s->indev_bytes += len;
-+
-+    if (s->out_netdev) {
-+        ret = filter_redirector_send_netdev_iov(s, &iov, 1);
-+        if (ret < 0) {
-+            error_report("filter redirector send failed(%s)", strerror(-ret));
-+        }
-+        return;
-+    }
-+
-+    if (s->outdev) {
-+        ret = filter_redirector_send_chardev_iov(s, &iov, 1);
-+        if (ret < 0) {
-+            error_report("filter redirector send failed(%s)", strerror(-ret));
-+        } else if (ret > 0) {
-+            s->outdev_packets++;
-+            s->outdev_bytes += ret;
-+        }
-+        return;
-+    }
-+
-+    redirector_to_filter(nf, buf, len);
-+}
-+
-+static bool filter_redirector_recv_from_netdev(NetFilterState *nf,
-+                                                          const uint8_t *buf,
-+                                                          int len)
-+{
-+    MirrorState *s = FILTER_REDIRECTOR(nf);
-+    ssize_t ret;
-+    struct iovec iov = {
-+        .iov_base = (void *)buf,
-+        .iov_len = len,
-+    };
-+
-+    if (len <= 0) {
-+        return false;
-+    }
-+    if (s->outdev) {
-+        ret = filter_redirector_send_chardev_iov(s, &iov, 1);
-+    } else {
-+        redirector_to_filter(nf, buf, len);
-+        return true;
-+    }
-+
-+    if (ret < 0) {
-+        error_report("filter redirector send failed(%s)", strerror(-ret));
-+        return false;
-+    }
-+    return true;
-+}
-+
- static void filter_redirector_netdev_read(void *opaque)
- {
-     NetFilterState *nf = opaque;
-@@ -254,7 +381,9 @@ static void filter_redirector_netdev_read(void *opaque)
-             continue;
-         }
- 
--        redirector_to_filter(nf, s->in_netbuf, len);
-+        s->netdev_rx_packets++;
-+        s->netdev_rx_bytes += len;
-+        filter_redirector_recv_from_netdev(nf, s->in_netbuf, len);
-     }
- 
-     if (len < 0 && errno != EAGAIN && errno != EWOULDBLOCK &&
-@@ -296,19 +425,33 @@ static ssize_t filter_redirector_receive_iov(NetFilterState *nf,
-     MirrorState *s = FILTER_REDIRECTOR(nf);
-     int ret;
- 
--    if (qemu_chr_fe_backend_connected(&s->chr_out)) {
--        ret = filter_send(s, iov, iovcnt);
-+    /*
-+     * If this redirector has an explicit input endpoint (indev/in_netdev),
-+     * it acts as an injector for that endpoint and must not consume packets
-+     * from the regular netdev data path. Consuming here can create loops when
-+     * out_netdev points back to the same TAP netdev.
-+     */
-+    if (s->indev || s->in_netdev) {
-+        return 0;
-+    }
-+
-+    if (s->out_netdev || s->outdev) {
-+        if (s->out_netdev) {
-+            ret = filter_redirector_send_netdev_iov(s, iov, iovcnt);
-+        } else {
-+            ret = filter_redirector_send_chardev_iov(s, iov, iovcnt);
-+        }
-         if (ret < 0) {
-             error_report("filter redirector send failed(%s)", strerror(-ret));
--        } else if (ret > 0) {
-+        } else if (ret > 0 && !s->out_netdev) {
-             /* Update outdev statistics on successful send */
-             s->outdev_packets++;
-             s->outdev_bytes += ret;
-         }
-         return iov_size(iov, iovcnt);
--    } else {
--        return 0;
-     }
-+
-+    return 0;
- }
- 
- static void filter_mirror_cleanup(NetFilterState *nf)
-@@ -369,6 +512,16 @@ static void redirector_rs_finalize(SocketReadState *rs)
-     MirrorState *s = container_of(rs, MirrorState, rs);
-     NetFilterState *nf = NETFILTER(s);
- 
-+    /*
-+     * If redirector has an explicit output endpoint, keep the redirect path
-+     * (e.g. indev=red0 -> out_netdev=net0).
-+     * Fallback to direct netfilter injection only when no output is set.
-+     */
-+    if (s->outdev || s->out_netdev) {
-+        filter_redirector_recv_from_chardev(nf, rs->buf, rs->packet_len);
-+        return;
-+    }
-+
-     /* Update indev statistics */
-     s->indev_packets++;
-     s->indev_bytes += rs->packet_len;
-@@ -826,6 +979,18 @@ static GList *filter_redirector_get_stats(NetFilterState *nf)
-     counter->bytes = s->outdev_bytes;
-     list = g_list_append(list, counter);
- 
-+    counter = g_new0(NetFilterCounter, 1);
-+    counter->name = g_strdup("netdev_rx");
-+    counter->packets = s->netdev_rx_packets;
-+    counter->bytes = s->netdev_rx_bytes;
-+    list = g_list_append(list, counter);
-+
-+    counter = g_new0(NetFilterCounter, 1);
-+    counter->name = g_strdup("netdev_tx");
-+    counter->packets = s->netdev_tx_packets;
-+    counter->bytes = s->netdev_tx_bytes;
-+    list = g_list_append(list, counter);
-+
-     return list;
- }
- 
+Cindy Lu (5):
+  net/filter: Allow redirector on vhost backends
+  net/filter-redirector: add in/out_netdev properties
+  net/filter-redirector: Add AF_PACKET sockets initialization
+  net/filter-redirector: add AF_PACKET redirect datapath
+  qapi: add in/out_netdev to filter-redirector
+
+ net/filter-mirror.c | 460 +++++++++++++++++++++++++++++++++++++++++---
+ net/filter.c        |   6 +-
+ qapi/qom.json       |  19 +-
+ 3 files changed, 459 insertions(+), 26 deletions(-)
+
 -- 
 2.52.0
 
