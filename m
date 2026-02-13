@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4158EEF48C6
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Feb 2026 03:47:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 751D3EF48C2
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Feb 2026 03:48:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqk8L-0008Fp-SY; Thu, 12 Feb 2026 22:46:21 -0500
+	id 1vqk8c-0008Lt-3v; Thu, 12 Feb 2026 22:46:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vqk8J-0008Fc-Rs
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 22:46:19 -0500
-Received: from p-west1-cluster5-host8-snip4-4.eps.apple.com ([57.103.66.245]
+ id 1vqk8a-0008K4-78
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 22:46:36 -0500
+Received: from p-west1-cluster4-host12-snip4-10.eps.apple.com ([57.103.65.231]
  helo=outbound.pv.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vqk8I-0005Am-6p
- for qemu-devel@nongnu.org; Thu, 12 Feb 2026 22:46:19 -0500
+ id 1vqk8Y-0005li-Ml
+ for qemu-devel@nongnu.org; Thu, 12 Feb 2026 22:46:35 -0500
 Received: from outbound.pv.icloud.com (unknown [127.0.0.2])
  by p00-icloudmta-asmtp-us-west-1a-60-percent-11 (Postfix) with ESMTPS id
- EFFEB18002C2; Fri, 13 Feb 2026 03:46:14 +0000 (UTC)
+ 7721718002E1; Fri, 13 Feb 2026 03:46:32 +0000 (UTC)
 Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1770954376; x=1773546376;
- bh=GNA62UqBDb6s1109taCPLp874JlS1AA37xrsDtsBC38=;
+ s=sig1; t=1770954393; x=1773546393;
+ bh=NfP9NhkIXfWFxsOWMzbJrX5g2XsAZ34OoMJgPQ5NTe0=;
  h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
- b=J5iDv1YSeXFRcw8de+X/JHZIQLcG8xtWPxayWcrs9wHcxrA8343vQ+lF3lPQFYE+MopdK+Eyi6HP6II4EdGQ+BlK9W+E10un1BVLl77mQtRow3Lpt0PK5+PUq1s4xplk+C8bylev246gdgAO/crhAgD/jZt8lqjZyb7DF1enjracmMmcJqG/xT6Md32W3zDaaWn/V/je3bF6nFjxtcbtXSsUYr+wBN9tiXMnD9FKdwPOsXZ4MwJI3xbNZ8iYoWUqIl3kF70hhsiW9Kfb5IZSoHVObx6G6qAHKvq25IOTcCjVX7j77gOqEvv6DRfrImuU5loYK51oeZLFkOSuwCnWdQ==
+ b=H9a5iMY71RX8nke4tNoqqG3Q/pL+PICs5af4Ke4e6MNEG2482Lhp89XjNw2DDq2Dd8VVpBmEMVBfQZ9LZMe9OyTgqHWdTwYVbMjeePf15a7gML/TdWqfWAcUw85ffzufzUrf37XlnvgPYgETxhbdv7DxNqElqBZRGOIP7ledZNN0II2XICiEY+onXdaG4KcljIyqUdpImYcqrL/hMWKO6j3ceLbI7DwkaV6XE5L8hfckIEoBVT23cgjdOhbAd0zlQ6gqg2M6E6gJGzO9CsCuCqpDM0SA3IyjkKZ5eRVKzcaTNbwlQ3ibSJUNB11S8PMgCPnRUPZt6wKaj1T60xFNaw==
 mail-alias-created-date: 1752046281608
 Received: from localhost.localdomain (unknown [17.56.9.36])
  by p00-icloudmta-asmtp-us-west-1a-60-percent-11 (Postfix) with ESMTPSA id
- 745CC1800108; Fri, 13 Feb 2026 03:46:11 +0000 (UTC)
+ 2DB1318002E6; Fri, 13 Feb 2026 03:46:28 +0000 (UTC)
 From: Mohamed Mediouni <mohamed@unpredictable.fr>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
@@ -45,43 +45,44 @@ Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Phil Dennis-Jordan <phil@philjordan.eu>, Zhao Liu <zhao1.liu@intel.com>,
  Roman Bolshakov <rbolshakov@ddn.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v2 03/10] whpx: preparatory changes before switching over from
- winhvemulation
-Date: Fri, 13 Feb 2026 04:45:46 +0100
-Message-ID: <20260213034556.13471-4-mohamed@unpredictable.fr>
+Subject: [PATCH v2 08/10] whpx: x86: remove messages
+Date: Fri, 13 Feb 2026 04:45:51 +0100
+Message-ID: <20260213034556.13471-9-mohamed@unpredictable.fr>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20260213034556.13471-1-mohamed@unpredictable.fr>
 References: <20260213034556.13471-1-mohamed@unpredictable.fr>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: isyCgmPFDcY_YExf8hfh1cIL9sdmMrtI
-X-Authority-Info-Out: v=2.4 cv=DMGCIiNb c=1 sm=1 tr=0 ts=698e9e87
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjEzMDAyNSBTYWx0ZWRfXxxXhtvuYNTnL
+ UdM2+5cRYuk1lWA8VHvuV6Jx3wjk5q58fcopufBOe+itAq3nee28uqboE0bziGbqXStcYLgpgs4
+ QcwzpeaWBlp8xKnzdCvGksVxoXYFHLP76JJytCyedW6LzHHfVCuuQOlTzUBWYup0nzZPedswOJb
+ azcAg9vmCH5pzijuX5QrUhCbxy6jCLaSw77n6p/1dHcoPGPTYfQE2cMw29TZo4QsCwBgVo/1dqj
+ hv7zVS9wbRISWZWQCx4T72V41Wns7RcnXH6n7Z+v//zO7gHq6MHVI0meh3SNzrI8Uk7qar21Faw
+ bVcar5sTFNcpa/75gTUUp/5ULV7DQaOki6qzBvf8u8aowNfDvcUp+JAbLAcbIs=
+X-Proofpoint-ORIG-GUID: Mv84W_wcXPJsbF8_GxSK-vcXkZFYcZ7u
+X-Authority-Info-Out: v=2.4 cv=WLxyn3sR c=1 sm=1 tr=0 ts=698e9e98
  cx=c_apl:c_apl_out:c_pps a=azHRBMxVc17uSn+fyuI/eg==:117
  a=azHRBMxVc17uSn+fyuI/eg==:17 a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22 a=qtJoQR36IQ-qKrO0xoYA:9
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjEzMDAyNSBTYWx0ZWRfXz+Kgd5PWV7ao
- 1uO2xFWDtvqcm87wjaBRSRDh8O5Sr0tIzk0OFGhxAU88x30yjDvCJDEVblRP2akXsV/cUNqozLc
- Uy9wcRjFidONmJYjtqC2j66iltAvu85FlhSJCruUEd9v2CT2VkbOyJvg0V6O6pFDAlPDM5ijdCv
- Dmh3S7AjyraGUqCHR0aNbCSA8HHeAVVEtw79zz5Tg0Kd44aOyVQEuO73wMZX9TYFrUj2zjeztJr
- 6KM1XiZY2b1E1Q03kY6/coi9i51psrkrsCohCCmkmXySuQ1SqKGX4Kruq2MdH7bbJfEpkY2SVjU
- s8tFv/fpGQ9S9p8kaQXM12ag95xWy40kDhIyYkCRrUn3+2KTK1Szd8XXL3KXIQ=
-X-Proofpoint-GUID: isyCgmPFDcY_YExf8hfh1cIL9sdmMrtI
+ a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22 a=tHCKdM3VofH7q6B9RbgA:9
+X-Proofpoint-GUID: Mv84W_wcXPJsbF8_GxSK-vcXkZFYcZ7u
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-02-12_05,2026-02-12_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxscore=0
- adultscore=0 malwarescore=0 spamscore=0 phishscore=0 lowpriorityscore=0
- clxscore=1030 suspectscore=0 mlxlogscore=944 bulkscore=0 classifier=spam
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0
+ malwarescore=0 lowpriorityscore=0 phishscore=0
+ bulkscore=0 clxscore=1030
+ mlxlogscore=999 adultscore=0 spamscore=0 mlxscore=0 classifier=spam
  authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
  definitions=main-2602130025
-X-JNJ: AAAAAAABJug8stYcPSOwBELLNAJdG26T/GzzjVD200pfmTB8WEu1FBe2eoNGGZ6O5Vzq2x+O1VTecTrx7Twhb1NE2VR8Jo/8SEynK3UFlV/ryGuXnzissIcyCfrSrggmilxCVI29zkWvKzTDGFRtl0uWN72afpE4RYuFFoJL7jeKN4UgRI9nYiOG1ouP6cU/jiD7vodAenxkpu2wncF8qCF28Bzn0dzzFeMnwP9WALMwt3OANi69CL7RVdGHnC9RPUcjJma5zk7hVfY4X/GPhjfiBOnSvLrI0d/GaECSzU31+igMs4kQUau2ZjLw2aVaYLIiZTHXhmL4tN6sEj74Dr9zfggfyteMqM9gDF2C3ouXL1y9iuA9KqxlEVUi0Y32Ne468axW0OxEAVEQ6xGym3dWZT3NbS0MVWTICH1Uh8hw393695OVA2TrEMRMNDOxezgQpWODXyMPL8fwyHT//mVrGxvLp7jKo7uBYadXVmDqTdsPBQm2QGwX3urS8JyFDMtS0qhKM+HrIT0HELjvtKVXRvVeOK0RVq6//IiGB0+P0XPjQmqGYc6J+LaqJbyyJWhFm8ypOoFcrkB60/dO3bcCsDYLqEQ3RWnnN9CZU7LqBis1lelkZnJlL4UlUh0XrJwRqYoZJz+Ugm/x3pI7000XMPIPUSDkGiUqtriZubMXs+PTrvDz96teWHTdJsoYPokDL0PyAtDQ4PHxiPFhygBfw1xvIcYHiy7Exy+finyDBR1WbDUJV6xCppebtAAAL3VvxHK5wbaWmQUPC20XPHVNrwztUwEr/w2Za7Xd7g==
-Received-SPF: pass client-ip=57.103.66.245;
+X-JNJ: AAAAAAABU0/eBXE/FGf69TnZTYe+Td827Os1ZoyZrXFmOle0owSDEkGUePj4LpXmQHkp+ULIxCzSnl4ld0dZ6jQxSIBI6wshbKxlAZQgqbqJYLEPIIam/Q06EDBvI/58jfkkN7p9PPHBnN5CEl2X6kI1F9w3dXvsAsV0hUla2/gOQxADH9uxE8WltTZNandeXJiDYkpbrQSqrMajKbYxouQP1Y/MEojDnh5N4xzBdFk56GLxFe/AI2sHKJlzJV53/sVsQmlOgLe+JOH1yCOAZYav6PbskeDpv1wwG7R3IBpLtL/unwNko7zSnYGslMCXJF0ZF4VYg5RbtSmJGQgiVtCsr4cVvThzB431iC4xdo0BW6RaIPmj3Qk3LYsfMaBMGFF9BucH2Cv9ubkDCA1zNXB9B+BE163aflTZnZKCHShCT7Rj8TstrhjHC9EbBRLXpaq9pwe3ZNOu+mwyIzHA56tBuCZ4t8jl9iNB/V/H005maVvvHYVKp2zoc9z/L+iWpP2sm3dCaJJG3GQw9gJ11P3mlbh1Rm1DOz4dEtdaMQ3+K5VtyStLVbBVjQJ26oof6k6/CoBPUZh/klxTFfYz1OpPynx0Lk8eJd7oDgJ7j7mCZiQaTXjnRZYNEnxS7OndOJfBCgDobIMKV6iPVloe3ruAlr5HepiUsfkdHq4elsQ229uD7OHipoz/oTEErC/szvO+I+kybSdSUD5IpuJ71LTD3wMpMf4D0aMbki/ONlfxaSnOp4T6uD0DByxLGlvtM3IwV87A7ToddASvnAo8dpGENye+hjv73tuFpjbZ
+Received-SPF: pass client-ip=57.103.65.231;
  envelope-from=mohamed@unpredictable.fr; helo=outbound.pv.icloud.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -99,47 +100,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Remove some messages printed by the WHPX backend that don't
+have an equivalent elsewhere and don't convey an error.
+
 Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
 ---
- target/i386/cpu.h               | 2 +-
- target/i386/emulate/meson.build | 1 +
- target/i386/mshv/meson.build    | 4 ++++
- 3 files changed, 6 insertions(+), 1 deletion(-)
+ target/i386/whpx/whpx-all.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index da5161fc1a..2f92ee9d48 100644
---- a/target/i386/cpu.h
-+++ b/target/i386/cpu.h
-@@ -2270,7 +2270,7 @@ typedef struct CPUArchState {
-     QEMUTimer *xen_periodic_timer;
-     QemuMutex xen_timers_lock;
- #endif
--#if defined(CONFIG_HVF) || defined(CONFIG_MSHV)
-+#if defined(CONFIG_HVF) || defined(CONFIG_MSHV) || defined(CONFIG_WHPX)
-     void *emu_mmio_buf;
- #endif
+diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
+index eabb0ef913..e815ca9bfa 100644
+--- a/target/i386/whpx/whpx-all.c
++++ b/target/i386/whpx/whpx-all.c
+@@ -2161,7 +2161,6 @@ int whpx_accel_init(AccelState *as, MachineState *ms)
+         whp_dispatch.WHvSetVirtualProcessorInterruptControllerState2) {
+         WHV_X64_LOCAL_APIC_EMULATION_MODE mode =
+             WHvX64LocalApicEmulationModeXApic;
+-        printf("WHPX: setting APIC emulation mode in the hypervisor\n");
+         hr = whp_dispatch.WHvSetPartitionProperty(
+             whpx->partition,
+             WHvPartitionPropertyCodeLocalApicEmulationMode,
+@@ -2235,7 +2234,6 @@ int whpx_accel_init(AccelState *as, MachineState *ms)
+     whpx_memory_init();
+     whpx_init_emu();
  
-diff --git a/target/i386/emulate/meson.build b/target/i386/emulate/meson.build
-index dd047c424a..1bb3516249 100644
---- a/target/i386/emulate/meson.build
-+++ b/target/i386/emulate/meson.build
-@@ -7,3 +7,4 @@ emulator_files = files(
+-    printf("Windows Hypervisor Platform accelerator is operational\n");
+     return 0;
  
- i386_system_ss.add(when: [hvf, 'CONFIG_HVF'], if_true: emulator_files)
- i386_system_ss.add(when: 'CONFIG_MSHV', if_true: emulator_files)
-+i386_system_ss.add(when: 'CONFIG_WHPX', if_true: emulator_files)
-diff --git a/target/i386/mshv/meson.build b/target/i386/mshv/meson.build
-index 647e5dafb7..3fadd4598a 100644
---- a/target/i386/mshv/meson.build
-+++ b/target/i386/mshv/meson.build
-@@ -6,3 +6,7 @@ i386_mshv_ss.add(files(
- ))
- 
- i386_system_ss.add_all(when: 'CONFIG_MSHV', if_true: i386_mshv_ss)
-+
-+i386_system_ss.add(when: 'CONFIG_WHPX', if_true: files(
-+  'x86.c',
-+))
+ error:
 -- 
 2.50.1 (Apple Git-155)
 
