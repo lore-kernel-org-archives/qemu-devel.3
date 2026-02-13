@@ -4,62 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1F09EF48D3
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Feb 2026 06:29:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2693AEF48CC
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Feb 2026 06:30:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqmfe-0000he-Sx; Fri, 13 Feb 2026 01:28:57 -0500
+	id 1vqmhR-0001JI-15; Fri, 13 Feb 2026 01:30:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <clement.mathieu--drif@eviden.com>)
- id 1vqmfY-0000hK-Ct
- for qemu-devel@nongnu.org; Fri, 13 Feb 2026 01:28:48 -0500
-Received: from smtppost.atos.net ([193.56.114.176] helo=smarthost3.atos.net)
+ id 1vqmhG-0001Hx-5K
+ for qemu-devel@nongnu.org; Fri, 13 Feb 2026 01:30:34 -0500
+Received: from smtppost.atos.net ([193.56.114.177] helo=smarthost4.atos.net)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <clement.mathieu--drif@eviden.com>)
- id 1vqmfV-0006JI-3H
- for qemu-devel@nongnu.org; Fri, 13 Feb 2026 01:28:48 -0500
+ id 1vqmhD-0006ac-QW
+ for qemu-devel@nongnu.org; Fri, 13 Feb 2026 01:30:33 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=eviden.com; i=@eviden.com; q=dns/txt; s=mail;
- t=1770964125; x=1802500125;
+ t=1770964231; x=1802500231;
  h=message-id:subject:from:to:cc:date:in-reply-to:
  references:content-transfer-encoding:mime-version;
- bh=/BIz1MWfdTSCntxjxA/Wr8vEz4UIVphieZGiBToffxg=;
- b=DYZoRIPCduNbkTfQOQbl6Jozxm5w+pup+Y6e0BehAXHTc3Jf/3zbWdIY
- hZcQ9056oPeMVg1DE0ey/bBR5FtrymI9ybzsO2t6Ebo1lSYJBO3RF4fE1
- PgRZj6ClliuWDh629mpfWfeOaVCvgNlJTMsCVm/WCv+TnDpzpj4X4Cr6K
- WlOUsUrPRJP3e5F8mbcHXOeBC1Xw6eQwibdwER8gKK+8RG7thlGZCQVVG
- 65ak09FcbgHzEOaqEvwSifGrc6V6DYpMq/XZJoXdWSkrh+YGVVMSkxWNW
- 7IsZgJZmXR6Y6U6CNyUvsKRPPxEF2jNt9ew8He7dqjfo+1OtYjN6u97iK g==;
-X-CSE-ConnectionGUID: wKBMKylNQ4OyzwgumZ53TQ==
-X-CSE-MsgGUID: hLrRevtCQx2A6GS/uBjeiA==
-X-IronPort-AV: E=Sophos;i="6.21,288,1763420400"; d="scan'208";a="818912006"
-X-MGA-submission: =?us-ascii?q?MDGa6lZkPItXSdqVHXx6ht5MdjJYVxGWxaTotH?=
- =?us-ascii?q?wP9W/KTqR/AyV60XfD7e+FpQ/cewjSvmjqFEC2WfxyyNE1vR9nUM3bfx?=
- =?us-ascii?q?DpwqN9RN9wAA7jLsvWsDvhm5ffrJwURPiYPETw2ckpkQ+3/ewuBM2p7A?=
- =?us-ascii?q?n/?=
-Received: from smtp1.atos-infogerance.fr ([193.56.241.17])
- by smarthost3.atos.net with ESMTP/TLS/TLS_AES_256_GCM_SHA384;
- 13 Feb 2026 07:28:42 +0100
+ bh=+1qEqeeSfvG6DQCH3igjheXtqTXILXiHn3HxN4ceIes=;
+ b=TpdXoxHuiHDgzJTnov/4LzYL8QXZ1Z9zH1guR0VAzMyx/QnkhWyJpZDi
+ KM3cUDlh5GFJPhlryjZ1cQ6zH7+zUTYO3c8nZ7F9DK38C5PucBx+zb84G
+ Jy4IKvEDgbJ9cuOGYyrCSUceJt13PzbFB39AfpXM2Oy6SfMzH1mn+B70H
+ 2w1+fJyvCdBE1jpXu8ie5X8OGdu+3DpqXHS1RcSBmMCkpcxHCJp6jh2ey
+ cOGYAgfH/Y+KQlqwh4CMdAx+hVUG5/WWgHkVedQ/PmBx0nJkf9/1YbDrR
+ 4cJIdSz4YruUGBKv8DP+YcG43X9YOGzMfwOaGQWN8DE5ioL7WKqQ4uiEF A==;
+X-CSE-ConnectionGUID: G+v3CuvpTSqaPWI1CpnPdQ==
+X-CSE-MsgGUID: C62hLlDTQb6rTZYoMVjxPw==
+X-IronPort-AV: E=Sophos;i="6.21,288,1763420400"; d="scan'208";a="825972463"
+X-MGA-submission: =?us-ascii?q?MDHYp7A5UEQCYCtyvn+kWicAx00maAvZXyns4d?=
+ =?us-ascii?q?UwjvWEyRSJtZYPKsAx7EcaPnZgwPVhGhYQmjcfucF6CGXuFPcaNcC/YK?=
+ =?us-ascii?q?ZhxATMCSlPx5cFYOl5V3JI8ZNCDHkvvk/O7vCj1mldA/o7awtBmVExaI?=
+ =?us-ascii?q?SP?=
+Received: from smtp0.atos-infogerance.fr ([193.56.241.18])
+ by smarthost4.atos.net with ESMTP/TLS/TLS_AES_256_GCM_SHA384;
+ 13 Feb 2026 07:30:30 +0100
 Received: from smtp-hub.atos-infogerance.fr (smtp-hub.atos-infogerance.fr
  [193.56.47.18])
- by smtp1.atos-infogerance.fr (8.15.2/8.15.2) with ESMTPS id 61D6SeP5029519
+ by smtp0.atos-infogerance.fr (8.15.2/8.15.2) with ESMTPS id 61D6UTTr015396
  (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO);
- Fri, 13 Feb 2026 07:28:41 +0100
+ Fri, 13 Feb 2026 07:30:29 +0100
 Received: from rocky.hd2c.dom ([129.181.244.14])
  by smtp-hub.atos-infogerance.fr (envelope-from
  clement.mathieu--drif@eviden.com) (8.15.2/8.15.2) with ESMTP id
- 61D6Se2a030449; Fri, 13 Feb 2026 07:28:40 +0100
+ 61D6UTFG030650; Fri, 13 Feb 2026 07:30:29 +0100
 Received: from openbmc (unknown [10.22.85.22])
- by rocky.hd2c.dom (Postfix) with ESMTP id 33E36256CA5;
- Fri, 13 Feb 2026 07:28:41 +0100 (CET)
+ by rocky.hd2c.dom (Postfix) with ESMTP id 7E2D5256CA5;
+ Fri, 13 Feb 2026 07:30:28 +0100 (CET)
 Received: from [127.0.0.1] (host.containers.internal [10.88.0.1])
- by openbmc (Postfix) with ESMTP id 30F2CC3018EE;
- Fri, 13 Feb 2026 06:28:40 +0000 (UTC)
-Message-ID: <eaebbfc58b626db6f946615a6e1d4ba13d6c5b84.camel@eviden.com>
-Subject: Re: [RFC PATCH 05/14] intel_iommu: Change pasid property from bool
- to uint8
+ by openbmc (Postfix) with ESMTP id 7D819C3018EE;
+ Fri, 13 Feb 2026 06:30:27 +0000 (UTC)
+Message-ID: <1536f34084f3d82a9a3129f3ca1207fff74b9c26.camel@eviden.com>
+Subject: Re: [RFC PATCH 06/14] intel_iommu: Export some functions
 From: Clement Mathieu--Drif <clement.mathieu--drif@eviden.com>
 To: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>, "qemu-devel@nongnu.org"
  <qemu-devel@nongnu.org>
@@ -71,20 +70,18 @@ Cc: "alex@shazbot.org" <alex@shazbot.org>, "clg@redhat.com" <clg@redhat.com>,
  <skolothumtho@nvidia.com>, "joao.m.martins@oracle.com"	
  <joao.m.martins@oracle.com>, "Tian, Kevin" <kevin.tian@intel.com>, "Liu, Yi
  L"	 <yi.l.liu@intel.com>, "Hao, Xudong" <xudong.hao@intel.com>
-Date: Fri, 13 Feb 2026 07:28:18 +0100
-In-Reply-To: <IA3PR11MB9136315AB6D784819ECF18C89261A@IA3PR11MB9136.namprd11.prod.outlook.com>
+Date: Fri, 13 Feb 2026 07:30:06 +0100
+In-Reply-To: <DS4PPF93A1BBECD17B215CE8E6F9999CA059261A@DS4PPF93A1BBECD.namprd11.prod.outlook.com>
 References: <20260205031133.74357-1-zhenzhong.duan@intel.com>
- <20260205031133.74357-6-zhenzhong.duan@intel.com>
- <4ecdbe5bb0b3a945b3534e8535186280aa8f4f66.camel@eviden.com>
- <IA3PR11MB913635BBC7B506CD40FADD779260A@IA3PR11MB9136.namprd11.prod.outlook.com>
- <02bb4c9d859caec478e36d3c6cde6561ba3032ca.camel@eviden.com>
- <IA3PR11MB9136315AB6D784819ECF18C89261A@IA3PR11MB9136.namprd11.prod.outlook.com>
+ <20260205031133.74357-7-zhenzhong.duan@intel.com>
+ <1d7e53d3f80772a06878a87f0be637421070e2d9.camel@eviden.com>
+ <DS4PPF93A1BBECD17B215CE8E6F9999CA059261A@DS4PPF93A1BBECD.namprd11.prod.outlook.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: base64
 User-Agent: Evolution 3.58.2 (3.58.2-1.fc43) 
 MIME-Version: 1.0
-Received-SPF: pass client-ip=193.56.114.176;
- envelope-from=clement.mathieu--drif@eviden.com; helo=smarthost3.atos.net
+Received-SPF: pass client-ip=193.56.114.177;
+ envelope-from=clement.mathieu--drif@eviden.com; helo=smarthost4.atos.net
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -108,277 +105,153 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Ck9uIEZyaSwgMjAyNi0wMi0xMyBhdCAwNjoxNyArMDAwMCwgRHVhbiwgWmhlbnpob25nIHdyb3Rl
+Ogo+IEhpIENsZW1lbnQsCj4gCj4gQ291bGQgSSB0YWtlIGl0IGFzIGEgZm9ybWFsICJSZXZpZXdl
+ZC1ieTogQ2xlbWVudCBNYXRoaWV1LS1EcmlmIDxbY2xlbWVudC5tYXRoaWV1LS1kcmlmQGV2aWRl
+bi5jb21dKG1haWx0bzpjbGVtZW50Lm1hdGhpZXUtLWRyaWZAZXZpZGVuLmNvbSk+IiBvciBub3Q/
+CgpzdXJlCgpSZXZpZXdlZC1ieTogQ2xlbWVudCBNYXRoaWV1LS1EcmlmIDxjbGVtZW50Lm1hdGhp
+ZXUtLWRyaWZAZXZpZGVuLmNvbT4KCj4gCj4gVGhhbmtzICAKPiBaaGVuemhvbmcKPiAKPiAKPiA+
+IC0tLS0tT3JpZ2luYWwgTWVzc2FnZS0tLS0tCj4gPiBGcm9tOiBDbGVtZW50IE1hdGhpZXUtLURy
+aWYgPFtjbGVtZW50Lm1hdGhpZXUtLWRyaWZAZXZpZGVuLmNvbV0obWFpbHRvOmNsZW1lbnQubWF0
+aGlldS0tZHJpZkBldmlkZW4uY29tKT4KPiA+IFN1YmplY3Q6IFJlOiBbUkZDIFBBVENIIDA2LzE0
+XSBpbnRlbF9pb21tdTogRXhwb3J0IHNvbWUgZnVuY3Rpb25zCj4gPiAKPiA+IGxndG0KPiA+IAo+
+ID4gT24gV2VkLCAyMDI2LTAyLTA0IGF0IDIyOjExIC0wNTAwLCBaaGVuemhvbmcgRHVhbiB3cm90
+ZToKPiA+IAo+ID4gPiBFeHBvcnQgc29tZSBmdW5jdGlvbnMgZm9yIGFjY2VsIGNvZGUgdXNhZ2Vz
+LiBJbmxpbmUgZnVuY3Rpb25zIGFuZCBNQUNST3MKPiA+ID4gYXJlIG1vdmVkIHRvIGludGVybmFs
+IGhlYWRlciBmaWxlcy4gVGhlbiBhY2NlbCBjb2RlIGluIGZvbGxvd2luZyBwYXRjaGVzCj4gPiA+
+IGNvdWxkIGFjY2VzcyB0aGVtLgo+ID4gPiAKPiA+ID4gU2lnbmVkLW9mZi1ieTogWmhlbnpob25n
+IER1YW4KPiA+IAo+ID4gPFtbemhlbnpob25nLmR1YW5AaW50ZWwuY29tXShtYWlsdG86emhlbnpo
+b25nLmR1YW5AaW50ZWwuY29tKV0obWFpbHRvOlt6aGVuemhvbmcuZHVhbkBpbnRlbC5jb21dKG1h
+aWx0bzp6aGVuemhvbmcuZHVhbkBpbnRlbC5jb20pKT4KPiA+IAo+ID4gPiAtLS0KPiA+ID4gwqBo
+dy9pMzg2L2ludGVsX2lvbW11X2ludGVybmFsLmggfCAzMSArKysrKysrKysrKysrKysrKysrKysr
+KysrCj4gPiA+IMKgaHcvaTM4Ni9pbnRlbF9pb21tdS5jwqDCoMKgwqDCoMKgwqDCoMKgIHwgNDIg
+KysrKysrKystLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQo+ID4gPiDCoDIgZmlsZXMgY2hhbmdl
+ZCwgNDAgaW5zZXJ0aW9ucygrKSwgMzMgZGVsZXRpb25zKC0pCj4gPiA+IAo+ID4gPiBkaWZmIC0t
+Z2l0IGEvaHcvaTM4Ni9pbnRlbF9pb21tdV9pbnRlcm5hbC5oIGIvaHcvaTM4Ni9pbnRlbF9pb21t
+dV9pbnRlcm5hbC5oCj4gPiA+IGluZGV4IDcxY2IzYjY2MmUuLjY3NTNhMjBjYTQgMTAwNjQ0Cj4g
+PiA+IC0tLSBhL2h3L2kzODYvaW50ZWxfaW9tbXVfaW50ZXJuYWwuaAo+ID4gPiArKysgYi9ody9p
+Mzg2L2ludGVsX2lvbW11X2ludGVybmFsLmgKPiA+ID4gQEAgLTYxNSw2ICs2MTUsMTIgQEAgdHlw
+ZWRlZiBzdHJ1Y3QgVlREUm9vdEVudHJ5IFZURFJvb3RFbnRyeTsKPiA+ID4gwqAjZGVmaW5lIFZU
+RF9TTV9DT05URVhUX0VOVFJZX1JTVkRfVkFMMcKgwqDCoMKgwqAgMHhmZmZmZmZmZmZmZTAwMDAw
+VUxMCj4gPiA+IMKgI2RlZmluZSBWVERfU01fQ09OVEVYVF9FTlRSWV9QUkXCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgIDB4MTBVTEwKPiA+ID4gCj4gPiA+ICsvKiBjb250ZXh0IGVudHJ5IG9wZXJhdGlv
+bnMgKi8KPiA+ID4gKyNkZWZpbmUgVlREX0NFX0dFVF9QQVNJRF9ESVJfVEFCTEUoY2UpIFwKPiA+
+ID4gK8KgwqDCoCAoKGNlKS0+dmFsWzBdICYgVlREX1BBU0lEX0RJUl9CQVNFX0FERFJfTUFTSykK
+PiA+ID4gKyNkZWZpbmUgVlREX0NFX0dFVF9QUkUoY2UpIFwKPiA+ID4gK8KgwqDCoCAoKGNlKS0+
+dmFsWzBdICYgVlREX1NNX0NPTlRFWFRfRU5UUllfUFJFKQo+ID4gPiArCj4gPiA+IMKgdHlwZWRl
+ZiBzdHJ1Y3QgVlREUEFTSURDYWNoZUluZm8gewo+ID4gPiDCoMKgwqDCoCB1aW50OF90IHR5cGU7
+Cj4gPiA+IMKgwqDCoMKgIHVpbnQxNl90IGRpZDsKPiA+ID4gQEAgLTczMyw0ICs3MzksMjkgQEAg
+c3RhdGljIGlubGluZSBib29sIHZ0ZF9wZV9wZ3R0X2lzX2ZzdChWVERQQVNJREVudHJ5Cj4gPiAK
+PiA+ICpwZSkKPiA+IAo+ID4gPiDCoHsKPiA+ID4gwqDCoMKgwqAgcmV0dXJuIChWVERfU01fUEFT
+SURfRU5UUllfUEdUVChwZSkgPT0gVlREX1NNX1BBU0lEX0VOVFJZX0ZTVCk7Cj4gPiA+IMKgfQo+
+ID4gPiArCj4gPiA+ICtzdGF0aWMgaW5saW5lIGJvb2wgdnRkX3BkaXJlX3ByZXNlbnQoVlREUEFT
+SUREaXJFbnRyeSAqcGRpcmUpCj4gPiA+ICt7Cj4gPiA+ICvCoMKgwqAgcmV0dXJuIHBkaXJlLT52
+YWwgJiAxOwo+ID4gPiArfQo+ID4gPiArCj4gPiA+ICtzdGF0aWMgaW5saW5lIGJvb2wgdnRkX3Bl
+X3ByZXNlbnQoVlREUEFTSURFbnRyeSAqcGUpCj4gPiA+ICt7Cj4gPiA+ICvCoMKgwqAgcmV0dXJu
+IHBlLT52YWxbMF0gJiBWVERfUEFTSURfRU5UUllfUDsKPiA+ID4gK30KPiA+ID4gKwo+ID4gPiAr
+c3RhdGljIGlubGluZSBpbnQgdnRkX3Bhc2lkX2VudHJ5X2NvbXBhcmUoVlREUEFTSURFbnRyeSAq
+cDEsIFZURFBBU0lERW50cnkKPiA+IAo+ID4gKnAyKQo+ID4gCj4gPiA+ICt7Cj4gPiA+ICvCoMKg
+wqAgcmV0dXJuIG1lbWNtcChwMSwgcDIsIHNpemVvZigqcDEpKTsKPiA+ID4gK30KPiA+ID4gKwo+
+ID4gPiAraW50IHZ0ZF9nZXRfcGRpcmVfZnJvbV9wZGlyX3RhYmxlKGRtYV9hZGRyX3QgcGFzaWRf
+ZGlyX2Jhc2UsIHVpbnQzMl90IHBhc2lkLAo+ID4gPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIFZURFBBU0lERGlyRW50
+cnkgKnBkaXJlKTsKPiA+ID4gK2ludCB2dGRfZ2V0X3BlX2luX3Bhc2lkX2xlYWZfdGFibGUoSW50
+ZWxJT01NVVN0YXRlICpzLCB1aW50MzJfdCBwYXNpZCwKPiA+ID4gK8KgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIGRtYV9h
+ZGRyX3QgYWRkciwgVlREUEFTSURFbnRyeSAqcGUpOwo+ID4gPiAraW50IHZ0ZF9kZXZfdG9fY29u
+dGV4dF9lbnRyeShJbnRlbElPTU1VU3RhdGUgKnMsIHVpbnQ4X3QgYnVzX251bSwKPiA+ID4gK8Kg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHVp
+bnQ4X3QgZGV2Zm4sIFZURENvbnRleHRFbnRyeSAqY2UpOwo+ID4gPiAraW50IHZ0ZF9jZV9nZXRf
+cGFzaWRfZW50cnkoSW50ZWxJT01NVVN0YXRlICpzLCBWVERDb250ZXh0RW50cnkgKmNlLAo+ID4g
+PiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBW
+VERQQVNJREVudHJ5ICpwZSwgdWludDMyX3QgcGFzaWQpOwo+ID4gPiArVlREQWRkcmVzc1NwYWNl
+ICp2dGRfZ2V0X2FzX2J5X3NpZChJbnRlbElPTU1VU3RhdGUgKnMsIHVpbnQxNl90IHNpZCk7Cj4g
+PiA+IMKgI2VuZGlmCj4gPiA+IGRpZmYgLS1naXQgYS9ody9pMzg2L2ludGVsX2lvbW11LmMgYi9o
+dy9pMzg2L2ludGVsX2lvbW11LmMKPiA+ID4gaW5kZXggOTE2ZWIwYWY1YS4uYWI1MmE2ODhjNSAx
+MDA2NDQKPiA+ID4gLS0tIGEvaHcvaTM4Ni9pbnRlbF9pb21tdS5jCj4gPiA+ICsrKyBiL2h3L2kz
+ODYvaW50ZWxfaW9tbXUuYwo+ID4gPiBAQCAtNDIsMTIgKzQyLDYgQEAKPiA+ID4gwqAjaW5jbHVk
+ZSAibWlncmF0aW9uL3Ztc3RhdGUuaCIKPiA+ID4gwqAjaW5jbHVkZSAidHJhY2UuaCIKPiA+ID4g
+Cj4gPiA+IC0vKiBjb250ZXh0IGVudHJ5IG9wZXJhdGlvbnMgKi8KPiA+ID4gLSNkZWZpbmUgVlRE
+X0NFX0dFVF9QQVNJRF9ESVJfVEFCTEUoY2UpIFwKPiA+ID4gLcKgwqDCoCAoKGNlKS0+dmFsWzBd
+ICYgVlREX1BBU0lEX0RJUl9CQVNFX0FERFJfTUFTSykKPiA+ID4gLSNkZWZpbmUgVlREX0NFX0dF
+VF9QUkUoY2UpIFwKPiA+ID4gLcKgwqDCoCAoKGNlKS0+dmFsWzBdICYgVlREX1NNX0NPTlRFWFRf
+RU5UUllfUFJFKQo+ID4gPiAtCj4gPiA+IMKgLyoKPiA+ID4gwqAgKiBQYWdpbmcgbW9kZSBmb3Ig
+Zmlyc3Qtc3RhZ2UgdHJhbnNsYXRpb24gKFZURCBzcGVjIEZpZ3VyZSA5LTYpCj4gPiA+IMKgICog
+MDA6IDQtbGV2ZWwgcGFnaW5nLCAwMTogNS1sZXZlbCBwYWdpbmcKPiA+ID4gQEAgLTgzMSwxOCAr
+ODI1LDEyIEBAIHN0YXRpYyBpbmxpbmUgYm9vbAo+ID4gCj4gPiB2dGRfcGVfdHlwZV9jaGVjayhJ
+bnRlbElPTU1VU3RhdGUgKnMsIFZURFBBU0lERW50cnkgKnBlKQo+ID4gCj4gPiA+IMKgwqDCoMKg
+IH0KPiA+ID4gwqB9Cj4gPiA+IAo+ID4gPiAtc3RhdGljIGlubGluZSBib29sIHZ0ZF9wZGlyZV9w
+cmVzZW50KFZURFBBU0lERGlyRW50cnkgKnBkaXJlKQo+ID4gPiAtewo+ID4gPiAtwqDCoMKgIHJl
+dHVybiBwZGlyZS0+dmFsICYgMTsKPiA+ID4gLX0KPiA+ID4gLQo+ID4gPiDCoC8qKgo+ID4gPiDC
+oCAqIENhbGxlciBvZiB0aGlzIGZ1bmN0aW9uIHNob3VsZCBjaGVjayBwcmVzZW50IGJpdCBpZiB3
+YW50cwo+ID4gPiDCoCAqIHRvIHVzZSBwZGlyIGVudHJ5IGZvciBmdXJ0aGVyIHVzYWdlIGV4Y2Vw
+dCBmb3IgZnBkIGJpdCBjaGVjay4KPiA+ID4gwqAgKi8KPiA+ID4gLXN0YXRpYyBpbnQgdnRkX2dl
+dF9wZGlyZV9mcm9tX3BkaXJfdGFibGUoZG1hX2FkZHJfdCBwYXNpZF9kaXJfYmFzZSwKPiA+ID4g
+LcKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHVpbnQzMl90IHBhc2lkLAo+ID4gPiAtwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqAgVlREUEFTSUREaXJFbnRyeSAqcGRpcmUpCj4gPiA+ICtpbnQgdnRkX2dl
+dF9wZGlyZV9mcm9tX3BkaXJfdGFibGUoZG1hX2FkZHJfdCBwYXNpZF9kaXJfYmFzZSwgdWludDMy
+X3QgcGFzaWQsCj4gPiA+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgVlREUEFTSUREaXJFbnRyeSAqcGRpcmUpCj4gPiA+
+IMKgewo+ID4gPiDCoMKgwqDCoCB1aW50MzJfdCBpbmRleDsKPiA+ID4gwqDCoMKgwqAgZG1hX2Fk
+ZHJfdCBhZGRyLCBlbnRyeV9zaXplOwo+ID4gPiBAQCAtODYwLDE1ICs4NDgsOCBAQCBzdGF0aWMg
+aW50IHZ0ZF9nZXRfcGRpcmVfZnJvbV9wZGlyX3RhYmxlKGRtYV9hZGRyX3QKPiA+IAo+ID4gcGFz
+aWRfZGlyX2Jhc2UsCj4gPiAKPiA+ID4gwqDCoMKgwqAgcmV0dXJuIDA7Cj4gPiA+IMKgfQo+ID4g
+PiAKPiA+ID4gLXN0YXRpYyBpbmxpbmUgYm9vbCB2dGRfcGVfcHJlc2VudChWVERQQVNJREVudHJ5
+ICpwZSkKPiA+ID4gLXsKPiA+ID4gLcKgwqDCoCByZXR1cm4gcGUtPnZhbFswXSAmIFZURF9QQVNJ
+RF9FTlRSWV9QOwo+ID4gPiAtfQo+ID4gPiAtCj4gPiA+IC1zdGF0aWMgaW50IHZ0ZF9nZXRfcGVf
+aW5fcGFzaWRfbGVhZl90YWJsZShJbnRlbElPTU1VU3RhdGUgKnMsCj4gPiA+IC3CoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgIHVpbnQzMl90IHBhc2lkLAo+ID4gPiAtwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoCBkbWFfYWRkcl90IGFkZHIsCj4gPiA+IC3CoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+IFZURFBBU0lERW50cnkgKnBlKQo+ID4gPiAraW50IHZ0ZF9nZXRfcGVfaW5fcGFzaWRfbGVhZl90
+YWJsZShJbnRlbElPTU1VU3RhdGUgKnMsIHVpbnQzMl90IHBhc2lkLAo+ID4gPiArwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqAgZG1hX2FkZHJfdCBhZGRyLCBWVERQQVNJREVudHJ5ICpwZSkKPiA+ID4gwqB7Cj4gPiA+IMKg
+wqDCoMKgIHVpbnQ4X3QgcGd0dDsKPiA+ID4gwqDCoMKgwqAgdWludDMyX3QgaW5kZXg7Cj4gPiA+
+IEBAIC05NTQsOCArOTM1LDggQEAgc3RhdGljIGludAo+ID4gCj4gPiB2dGRfZ2V0X3BlX2Zyb21f
+cGFzaWRfdGFibGUoSW50ZWxJT01NVVN0YXRlICpzLAo+ID4gCj4gPiA+IMKgwqDCoMKgIHJldHVy
+biAwOwo+ID4gPiDCoH0KPiA+ID4gCj4gPiA+IC1zdGF0aWMgaW50IHZ0ZF9jZV9nZXRfcGFzaWRf
+ZW50cnkoSW50ZWxJT01NVVN0YXRlICpzLCBWVERDb250ZXh0RW50cnkgKmNlLAo+ID4gPiAtwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgIFZURFBBU0lERW50cnkgKnBlLCB1aW50MzJfdCBwYXNpZCkKPiA+ID4gK2ludCB2dGRf
+Y2VfZ2V0X3Bhc2lkX2VudHJ5KEludGVsSU9NTVVTdGF0ZSAqcywgVlREQ29udGV4dEVudHJ5ICpj
+ZSwKPiA+ID4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqAgVlREUEFTSURFbnRyeSAqcGUsIHVpbnQzMl90IHBhc2lkKQo+ID4gPiDCoHsKPiA+ID4g
+wqDCoMKgwqAgZG1hX2FkZHJfdCBwYXNpZF9kaXJfYmFzZTsKPiA+ID4gCj4gPiA+IEBAIC0xNTMx
+LDggKzE1MTIsOCBAQCBzdGF0aWMgaW50IHZ0ZF9jZV9wYXNpZF8wX2NoZWNrKEludGVsSU9NTVVT
+dGF0ZSAqcywKPiA+IAo+ID4gVlREQ29udGV4dEVudHJ5ICpjZSkKPiA+IAo+ID4gPiDCoH0KPiA+
+ID4gCj4gPiA+IMKgLyogTWFwIGEgZGV2aWNlIHRvIGl0cyBjb3JyZXNwb25kaW5nIGRvbWFpbiAo
+Y29udGV4dC1lbnRyeSkgKi8KPiA+ID4gLXN0YXRpYyBpbnQgdnRkX2Rldl90b19jb250ZXh0X2Vu
+dHJ5KEludGVsSU9NTVVTdGF0ZSAqcywgdWludDhfdCBidXNfbnVtLAo+ID4gPiAtwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoCB1aW50OF90IGRldmZuLCBWVERDb250ZXh0RW50cnkgKmNlKQo+ID4gPiAraW50IHZ0ZF9k
+ZXZfdG9fY29udGV4dF9lbnRyeShJbnRlbElPTU1VU3RhdGUgKnMsIHVpbnQ4X3QgYnVzX251bSwK
+PiA+ID4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgIHVpbnQ4X3QgZGV2Zm4sIFZURENvbnRleHRFbnRyeSAqY2UpCj4gPiA+IMKgewo+ID4g
+PiDCoMKgwqDCoCBWVERSb290RW50cnkgcmU7Cj4gPiA+IMKgwqDCoMKgIGludCByZXRfZnI7Cj4g
+PiA+IEBAIC0xODk0LDcgKzE4NzUsNyBAQCBzdGF0aWMgVlREQWRkcmVzc1NwYWNlCj4gPiAKPiA+
+ICp2dGRfZ2V0X2FzX2J5X3NpZF9hbmRfcGFzaWQoSW50ZWxJT01NVVN0YXRlICpzLAo+ID4gCj4g
+PiA+IMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqAgdnRkX2ZpbmRfYXNfYnlfc2lkX2FuZF9wYXNpZCwgJmtleSk7Cj4gPiA+IMKgfQo+ID4g
+PiAKPiA+ID4gLXN0YXRpYyBWVERBZGRyZXNzU3BhY2UgKnZ0ZF9nZXRfYXNfYnlfc2lkKEludGVs
+SU9NTVVTdGF0ZSAqcywgdWludDE2X3Qgc2lkKQo+ID4gPiArVlREQWRkcmVzc1NwYWNlICp2dGRf
+Z2V0X2FzX2J5X3NpZChJbnRlbElPTU1VU3RhdGUgKnMsIHVpbnQxNl90IHNpZCkKPiA+ID4gwqB7
+Cj4gPiA+IMKgwqDCoMKgIHJldHVybiB2dGRfZ2V0X2FzX2J5X3NpZF9hbmRfcGFzaWQocywgc2lk
+LCBQQ0lfTk9fUEFTSUQpOwo+ID4gPiDCoH0KPiA+ID4gQEAgLTMxMTIsMTEgKzMwOTMsNiBAQCBz
+dGF0aWMgaW5saW5lIGludAo+ID4gCj4gPiB2dGRfZGV2X2dldF9wZV9mcm9tX3Bhc2lkKFZUREFk
+ZHJlc3NTcGFjZSAqdnRkX2FzLAo+ID4gCj4gPiA+IMKgwqDCoMKgIHJldHVybiB2dGRfY2VfZ2V0
+X3Bhc2lkX2VudHJ5KHMsICZjZSwgcGUsIHZ0ZF9hcy0+cGFzaWQpOwo+ID4gPiDCoH0KPiA+ID4g
+Cj4gPiA+IC1zdGF0aWMgaW50IHZ0ZF9wYXNpZF9lbnRyeV9jb21wYXJlKFZURFBBU0lERW50cnkg
+KnAxLCBWVERQQVNJREVudHJ5ICpwMikKPiA+ID4gLXsKPiA+ID4gLcKgwqDCoCByZXR1cm4gbWVt
+Y21wKHAxLCBwMiwgc2l6ZW9mKCpwMSkpOwo+ID4gPiAtfQo+ID4gPiAtCj4gPiA+IMKgLyogVXBk
+YXRlIG9yIGludmFsaWRhdGUgcGFzaWQgY2FjaGUgYmFzZWQgb24gdGhlIHBhc2lkIGVudHJ5IGlu
+IGd1ZXN0IG1lbW9yeS4KPiA+IAo+ID4gKi8KPiA+IAo+ID4gPiDCoHN0YXRpYyB2b2lkIHZ0ZF9w
+YXNpZF9jYWNoZV9zeW5jX2xvY2tlZChncG9pbnRlciBrZXksIGdwb2ludGVyIHZhbHVlLAo+ID4g
+PiDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBncG9pbnRlciB1c2VyX2RhdGEpCj4gPgo+IAo=
 
-On Fri, 2026-02-13 at 01:21 +0000, Duan, Zhenzhong wrote:
->=20
->=20
->=20
-> > -----Original Message-----
-> > From: Clement Mathieu--Drif <[clement.mathieu--drif@eviden.com](mailto:=
-clement.mathieu--drif@eviden.com)>
-> > Subject: Re: [RFC PATCH 05/14] intel_iommu: Change pasid property from =
-bool to
-> > uint8
-> >=20
-> >=20
-> > On Thu, 2026-02-12 at 08:16 +0000, Duan, Zhenzhong wrote:
-> >=20
-> > >=20
-> > >=20
-> > >=20
-> > >=20
-> > > > -----Original Message-----
-> > > > From: Clement Mathieu--Drif <[clement.mathieu--
-> > >=20
-> >=20
-> > [drif@eviden.com](mailto:drif@eviden.com)](mailto:[clement.mathieu--dri=
-f@eviden.com](mailto:clement.mathieu--drif@eviden.com))>
-> >=20
-> > >=20
-> > > > Subject: Re: [RFC PATCH 05/14] intel_iommu: Change pasid property f=
-rom bool
-> > >=20
-> >=20
-> > to
-> >=20
-> > >=20
-> > > > uint8
-> > > >=20
-> > > >=20
-> > > > On Wed, 2026-02-04 at 22:11 -0500, Zhenzhong Duan wrote:
-> > > >=20
-> > > >=20
-> > > > > 'x-pasid-mode' is a bool property, we need an extra 'pss' propert=
-y to
-> > > > > represent PASID size supported. Because there is no any device in=
- QEMU
-> > > > > supporting pasid capability yet, no guest could use the pasid fea=
-ture
-> > > > > until now, 'x-pasid-mode' takes no effect.
-> > > > >=20
-> > > > > So instead of an extra 'pss' property we can use a single 'pasid'
-> > > > > property of uint8 type to represent if pasid is supported and the=
- PASID
-> > > > > bits size. A value of N > 0 means pasid is supported and N - 1 is=
- the
-> > > > > value in PSS field in ECAP register.
-> > > > >=20
-> > > > > Signed-off-by: Zhenzhong Duan
-> > > >=20
-> > > >=20
-> > > >=20
-> > >=20
-> >=20
-> > <[[[zhenzhong.duan@intel.com](mailto:zhenzhong.duan@intel.com)](mailto:=
-[zhenzhong.duan@intel.com](mailto:zhenzhong.duan@intel.com))](mailto:[zhen
-> > [zhong.duan@intel.com](mailto:zhong.duan@intel.com)](mailto:[zhenzhong.=
-duan@intel.com](mailto:zhenzhong.duan@intel.com)))>
-> >=20
-> > >=20
-> > > >=20
-> > > >=20
-> > > > > ---
-> > > > > =C2=A0hw/i386/intel_iommu_internal.h | 1 -
-> > > > > =C2=A0include/hw/i386/intel_iommu.h=C2=A0 | 2 +-
-> > > > > =C2=A0hw/i386/intel_iommu.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0 | 4 ++--
-> > > > > =C2=A03 files changed, 3 insertions(+), 4 deletions(-)
-> > > > >=20
-> > > > > diff --git a/hw/i386/intel_iommu_internal.h
-> > > >=20
-> > >=20
-> >=20
-> > b/hw/i386/intel_iommu_internal.h
-> >=20
-> > >=20
-> > > >=20
-> > > > > index a2ca79f925..71cb3b662e 100644
-> > > > > --- a/hw/i386/intel_iommu_internal.h
-> > > > > +++ b/hw/i386/intel_iommu_internal.h
-> > > > > @@ -194,7 +194,6 @@
-> > > > > =C2=A0#define VTD_ECAP_PRS=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 (1ULL << 29)
-> > > > > =C2=A0#define VTD_ECAP_MHMV=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 (15ULL << 20)
-> > > > > =C2=A0#define VTD_ECAP_SRS=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 (1ULL << 31)
-> > > > > -#define VTD_ECAP_PSS=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 (7ULL << 35) /* limit: Mem=
-TxAttrs::pid */
-> > > > > =C2=A0#define VTD_ECAP_PASID=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 (1ULL << 40)
-> > > > > =C2=A0#define VTD_ECAP_SMTS=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 (1ULL << 43)
-> > > > > =C2=A0#define VTD_ECAP_SSTS=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 (1ULL << 46)
-> > > > > diff --git a/include/hw/i386/intel_iommu.h
-> > > >=20
-> > >=20
-> >=20
-> > b/include/hw/i386/intel_iommu.h
-> >=20
-> > >=20
-> > > >=20
-> > > > > index 6c61fd39c7..5e5779e460 100644
-> > > > > --- a/include/hw/i386/intel_iommu.h
-> > > > > +++ b/include/hw/i386/intel_iommu.h
-> > > > > @@ -315,7 +315,7 @@ struct IntelIOMMUState {
-> > > > > =C2=A0=C2=A0=C2=A0=C2=A0 bool buggy_eim;=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 /*=
- Force buggy EIM unless eim=3Doff */
-> > > > > =C2=A0=C2=A0=C2=A0=C2=A0 uint8_t aw_bits;=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 /* Host/=
-IOVA address width (in bits) */
-> > > > > =C2=A0=C2=A0=C2=A0=C2=A0 bool dma_drain;=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 /*=
- Whether DMA r/w draining enabled */
-> > > > > -=C2=A0=C2=A0=C2=A0 bool pasid;=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0 /* Whether to support PASID */
-> > > > > +=C2=A0=C2=A0=C2=A0 uint8_t pasid;=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 /*=
- PASID supported in bits, 0 if not */
-> > > > > =C2=A0=C2=A0=C2=A0=C2=A0 bool fs1gp;=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0 /* First Stage 1-GByte Page Support */
-> > > > >=20
-> > > > > =C2=A0=C2=A0=C2=A0=C2=A0 /* Transient Mapping, Reserved(0) since =
-VTD spec revision 3.2 */
-> > > > > diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-> > > > > index e8a6f50a5a..916eb0af5a 100644
-> > > > > --- a/hw/i386/intel_iommu.c
-> > > > > +++ b/hw/i386/intel_iommu.c
-> > > > > @@ -4151,7 +4151,7 @@ static const Property vtd_properties[] =3D =
-{
-> > > > > =C2=A0=C2=A0=C2=A0=C2=A0 DEFINE_PROP_BOOL("x-scalable-mode", Inte=
-lIOMMUState,
-> > > >=20
-> > >=20
-> >=20
-> > scalable_mode,
-> >=20
-> > >=20
-> > > >=20
-> > > > FALSE),
-> > > >=20
-> > > >=20
-> > > > > =C2=A0=C2=A0=C2=A0=C2=A0 DEFINE_PROP_BOOL("x-flts", IntelIOMMUSta=
-te, fsts, FALSE),
-> > > > > =C2=A0=C2=A0=C2=A0=C2=A0 DEFINE_PROP_BOOL("snoop-control", IntelI=
-OMMUState, snoop_control,
-> > > >=20
-> > > >=20
-> > > > false),
-> > > >=20
-> > > >=20
-> > > > > -=C2=A0=C2=A0=C2=A0 DEFINE_PROP_BOOL("x-pasid-mode", IntelIOMMUSt=
-ate, pasid, false),
-> > > > > +=C2=A0=C2=A0=C2=A0 DEFINE_PROP_UINT8("pasid", IntelIOMMUState, p=
-asid, 0),
-> > > > > =C2=A0=C2=A0=C2=A0=C2=A0 DEFINE_PROP_BOOL("dma-drain", IntelIOMMU=
-State, dma_drain, true),
-> > > > > =C2=A0=C2=A0=C2=A0=C2=A0 DEFINE_PROP_BOOL("stale-tm", IntelIOMMUS=
-tate, stale_tm, false),
-> > > > > =C2=A0=C2=A0=C2=A0=C2=A0 DEFINE_PROP_BOOL("fs1gp", IntelIOMMUStat=
-e, fs1gp, true),
-> > > > > @@ -4981,7 +4981,7 @@ static void vtd_cap_init(IntelIOMMUState *s=
-)
-> > > > > =C2=A0=C2=A0=C2=A0=C2=A0 }
-> > > > >=20
-> > > > > =C2=A0=C2=A0=C2=A0=C2=A0 if (s->pasid) {
-> > > > > -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 s->ecap |=3D VTD_ECAP=
-_PASID | VTD_ECAP_PSS;
-> > > > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 s->ecap =3D VTD_ECAP_=
-PASID | deposit64(s->ecap, 35, 5, s->pasid - 1);
-> > > >=20
-> > > >=20
-> > > >=20
-> > > > I think this is a bit dangerous, the MemTxAttrs only allow up to 8 =
-bits.
-> > > > We have a comment next to the definition of VTD_ECAP_PSS about this=
-.
-> > >=20
-> > >=20
-> > >=20
-> > > Could you elaborate what dangerous do you see if s->pasid > 8?
-> > > MemTxAttrs only allow up to 8bits, then Max PASID Width in emulated d=
-evice's
-> > > PASID capability Register is no more than 8. Emulated device should n=
-ever send
-> > > a Request-with-pasid with pasid > 255.
-> > >=20
-> > > Hard code VTD_ECAP_PSS to 8 bits will make us not able to utilize the=
- full pasid
-> > > space of passthrough device if it has larger Max PASID Width value in=
- pasid
-> >=20
-> > capability.
-> >=20
-> > >=20
-> >=20
-> >=20
-> > The previous approach was to make sure that the kernel never allocates =
-a too
-> > large pasid
-> > by limiting the width in the iommu instead of doint it in the devices. =
-Your patch
-> > seems to
-> > reverse the problem. Is it something we are ready to accept?
->=20
->=20
-> Not get your concern. Define a hard coded limit looks an overkill. =20
-> How you define too large here, larger than MIN(iommu.VTD_ECAP_PSS, device=
-'s Max PASID Width)?
-
-Oh yep, you are righ, my "too large" is not very explicit. =20
-I mean too large to be passed from an emulated device, all the way down to =
-the iommu, through MemTxAttrs.
-
->=20
-> IIUC, kernel should take MIN(iommu.VTD_ECAP_PSS, device's Max PASID Width=
-) as the upper limit =20
-> of pasid range.
-
-Yes, that's true. =20
-Our current implementation makes sure that this MIN is always smaller than =
-what fits in MemTxAttrs. =20
-This is always the case as pss is small enough. =20
-
-Increasing pss means that it's now up to devices to know that the attrs can=
-not carry a full-width pasid =20
-and expose a lower pasid size to make sure the kernel never allocates an ou=
-t-of-range pasid.
-
-This a bit more dagerous for device implementors but I don't see any other =
-way to make accel work without this change. I just wanted to make sure that=
- you noticed the design shift behind your patch.
-
-btw, why do we need to pass the actual value on the command line? Couldn't =
-we fetch the pss supported by =20
-the underlying hardware and use the same value?
-
-Thanks!
-cmd
-
->=20
-> We also have patch12 to ensure vIOMMU's pasid upper limit not bigger than=
- host side:
->=20
-> @@ -64,6 +65,13 @@ bool vtd_check_hiod_accel(IntelIOMMUState *s, VTDHostI=
-OMMUDevice *vtd_hiod, =20
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return false; =20
-> =C2=A0=C2=A0=C2=A0=C2=A0 }
->=20
-> +=C2=A0=C2=A0=C2=A0 /* Only do the check when host device support PASIDs =
-*/ =20
-> +=C2=A0=C2=A0=C2=A0 if (caps->max_pasid_log2 && s->pasid > hpasid) { =20
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 error_setg(errp, "PASID bits =
-size %d > host IOMMU PASID bits size %d", =20
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 s->pasid, hpasid); =20
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return false; =20
-> +=C2=A0=C2=A0=C2=A0 }
->=20
-> Thanks =20
-> Zhenzhong
 
