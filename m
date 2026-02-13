@@ -4,33 +4,33 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF991EF48CC
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Feb 2026 06:07:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3653EF48CA
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Feb 2026 06:07:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqmKU-00045v-PB; Fri, 13 Feb 2026 01:07:02 -0500
+	id 1vqmKi-0004MY-5z; Fri, 13 Feb 2026 01:07:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vqmKP-000445-68; Fri, 13 Feb 2026 01:06:57 -0500
+ id 1vqmKb-0004Is-Je; Fri, 13 Feb 2026 01:07:12 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vqmKM-0001MN-Ql; Fri, 13 Feb 2026 01:06:56 -0500
+ id 1vqmKY-0001N5-VX; Fri, 13 Feb 2026 01:07:09 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 14E81188BF8;
- Fri, 13 Feb 2026 09:06:49 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 3BD35188BFA;
+ Fri, 13 Feb 2026 09:07:02 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 25651363993;
- Fri, 13 Feb 2026 09:06:52 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 4C0AD363994;
+ Fri, 13 Feb 2026 09:07:05 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: Michael Tokarev <mjt@tls.msk.ru>,
 	qemu-stable@nongnu.org
-Subject: [ANNOUNCE] QEMU 10.0.8 Stable released
-Date: Fri, 13 Feb 2026 09:06:34 +0300
-Message-ID: <20260213060647.200707-1-mjt@tls.msk.ru>
+Subject: [ANNOUNCE] QEMU 10.1.4 Stable released
+Date: Fri, 13 Feb 2026 09:07:01 +0300
+Message-ID: <20260213060704.200732-1-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -60,199 +60,219 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Hi everyone,
 
-The QEMU v10.0.8 stable release is now available.
+The QEMU v10.1.4 stable release is now available.
 
 You can grab the tarball from our download page here:
 
   https://www.qemu.org/download/#source
 
-  https://download.qemu.org/qemu-10.0.8.tar.xz
-  https://download.qemu.org/qemu-10.0.8.tar.xz.sig (signature)
+  https://download.qemu.org/qemu-10.1.4.tar.xz
+  https://download.qemu.org/qemu-10.1.4.tar.xz.sig (signature)
 
-v10.0.8 is now tagged in the official qemu.git repository, and the
-stable-10.0 branch has been updated accordingly:
+v10.1.4 is now tagged in the official qemu.git repository, and the
+stable-10.1 branch has been updated accordingly:
 
-  https://gitlab.com/qemu-project/qemu/-/commits/stable-10.0
+  https://gitlab.com/qemu-project/qemu/-/commits/stable-10.1
 
-There are 85 changes since the previous v10.0.7 release.
+There are 95 changes since the previous v10.1.3 release.
 
 Thank you everyone who has been involved and helped with the stable series!
 
 /mjt
 
-Changelog (stable-10.0-hash master-hash Author Name: Commmit-Subject):
+Changelog (stable-10.1-hash master-hash Author Name: Commmit-Subject):
 
-bb77968955 Michael Tokarev:
- Update version for 10.0.8 release
-e4fb63f1a8 80c97930a9 Andrey Drobyshev:
+384ba786ab Michael Tokarev:
+ Update version for 10.1.4 release
+5323c1b9e6 80c97930a9 Andrey Drobyshev:
  scripts/qemugdb: timers: Fix KeyError in 'qemu timers' command
-b6c0a76016 d22e9aec57 Aleksandr Sergeev:
+2a4209ee94 d22e9aec57 Aleksandr Sergeev:
  linux-user/syscall.c: Prevent acquiring clone_lock while fork()
-12ce00e31a 3560b51979 Honglei Huang:
+25d3fa6367 25465c0e1f Jonathan Cameron:
+ hw/cxl: Take into account how many media operations are requested for param check
+36c85f19e1 87f8e5a71d Jonathan Cameron:
+ hw/cxl: Check for overflow on santize media as both base and offset 64bit.
+fc186fdb6a 3560b51979 Honglei Huang:
  virtio-gpu: fix error handling in virgl_cmd_resource_create_blob
-90b3d44f6d efd581a8cd Li Chen:
+21500ffad2 efd581a8cd Li Chen:
  virtio-pmem: ignore empty queue notifications
-8d5a8ebaaf e27194e087 Joelle van Dyne:
+da9b1cd37f e27194e087 Joelle van Dyne:
  virtio-gpu-virgl: correct parent for blob memory region
-3464e88bc9 7b913094c7 zhenwei pi:
+95aac32313 7b913094c7 zhenwei pi:
  cryptodev-builtin: Limit the maximum size
-e649201bb9 91c6438caf zhenwei pi:
+1ea1baa5c8 91c6438caf zhenwei pi:
  hw/virtio/virtio-crypto: verify asym request size
-79fd6bf98d 66cf169e29 Igor Mammedov:
+259da6b08f 66cf169e29 Igor Mammedov:
  q35: Fix migration of SMRAM state
-8b3ac19ae1 fff77cfb84 Dorinda Bassey:
+0901e4379f f73e5ed9bc Kevin Wolf:
+ pcie_sriov: Fix PCI_SRIOV_* accesses in pcie_sriov_pf_exit()
+dbb6465a08 623db85647 Kevin Wolf:
+ virtio: Fix crash when sriov-pf is set for non-PCI-Express device
+88d40c0578 fff77cfb84 Dorinda Bassey:
  virtio-dmabuf: Ensure UUID persistence for hash table insertion
-c228a06d9c fd3a2c601a Wafer Xie:
+5e40faac9c fd3a2c601a Wafer Xie:
  vdpa: fix vhost-vdpa suspended state not be shared
-517830b989 efea7ddb46 Jamin Lin:
+ea4be299f0 efea7ddb46 Jamin Lin:
  hw/i2c/aspeed_i2c: Fix DMA moving data into incorrect address
-623b0bad8e 9cbd8ee7f6 Jamin Lin:
+6af4aff205 9cbd8ee7f6 Jamin Lin:
  hw/i2c/aspeed: Fix wrong I2CC_DMA_LEN when I2CM_DMA_TX/RX_ADDR set first
-4c12f312d0 0a1d477067 Nabih Estefan:
+1b107b64b8 7d64f04863 Jamin Lin:
+ hw/arm/aspeed_ast27x0: Fix EHCI3/4 IRQ routing to GIC
+2cf4cbc011 0a1d477067 Nabih Estefan:
  hw/i2c/aspeed_i2c.c: Add a check for dma_read
-793da59173 4c6521296d Cédric Le Goater:
+4bad6c7c9e 4c6521296d Cédric Le Goater:
  hw/adc: Fix out-of-bounds write in Aspeed ADC model
-f81dd3987a 46dee71a94 Gerd Hoffmann:
+d7500e1259 46dee71a94 Gerd Hoffmann:
  hw/uefi: fix size negotiation
-b2137aabc6 eda9baa17a Akihiko Odaki:
+46853d7d3a eda9baa17a Akihiko Odaki:
  hw/nvme: Fix bootindex suffix use-after-free
-66b489b368 587f4a1805 John Snow:
+de302beabe 587f4a1805 John Snow:
  python: fix msys64 wheel directory specification
-51f314c12c 94e72135d4 Ilia Levi:
+4a08de6d46 94e72135d4 Ilia Levi:
  tests/qtest/ufs-test: Add test for mcq completion queue wraparound
-851536a836 f78762a3cc Ilia Levi:
+4093551fdb f78762a3cc Ilia Levi:
  hw/ufs: Fix mcq completion queue wraparound
-318779a5f2 ed621cc8e2 Jeuk Kim:
+e4ccceaa34 ed621cc8e2 Jeuk Kim:
  hw/ufs: fix CQE endianness and UPIU length
-fa886ca495 289e6a3edf Jeuk Kim:
+43539aeaf6 289e6a3edf Jeuk Kim:
  hw/ufs: Ensure DBC of PRDT uses only lower 18 bits
-4f4ccd438b d9ca273f8f Alex Bennée:
+5594fe1415 d9ca273f8f Alex Bennée:
  tests/functional: migrate sbsa_ref test images
-07e8cd9556 e4f1a9b1da Thomas Huth:
+6e47285707 e4f1a9b1da Thomas Huth:
  pc-bios/optionrom: Use 32-bit linker emulation for the optionroms
-fe84cb0037 2eb8d97343 Paolo Bonzini:
+356f4bf499 2eb8d97343 Paolo Bonzini:
  target/i386/tcg: fix a few instructions that do not support VEX.L=1
-207df2f80c d68f0e2e90 Icenowy Zheng:
+c35df6aa24 d68f0e2e90 Icenowy Zheng:
  linux-user: fixup termios2 related things on PowerPC
-0ed119360f 4f22fcb5c6 Vivian Wang:
+ad62f095c3 4f22fcb5c6 Vivian Wang:
  linux-user: Add missing termios baud rates
-7c0402f0dc 947b971cad Luca Bonissi:
+790d4660c7 947b971cad Luca Bonissi:
  linux-user: Add termios2 support to sparc target
-be468e6f9f afbe0ff81c Luca Bonissi:
+b2ae0dfc9f afbe0ff81c Luca Bonissi:
  linux-user: Add termios2 support to sh4 target
-ebf963f559 edf9184f4f Luca Bonissi:
+ed70cb9917 edf9184f4f Luca Bonissi:
  linux-user: Add termios2 support to mips target
-f1f8f23a14 edc741710a Luca Bonissi:
+64c435a412 edc741710a Luca Bonissi:
  linux-user: Add termios2 support to hppa target
-9a78e261c3 8d8c6aeee8 Luca Bonissi:
+d56a471701 8d8c6aeee8 Luca Bonissi:
  linux-user: Add termios2 support to alpha target
-ac4ed4bd6b e9a8a10e84 Luca Bonissi:
+b4fdd67021 e9a8a10e84 Luca Bonissi:
  linux-user: Add termios2 support
-eb5a0a6eeb cf10273aff Alex Bennée:
+000dc91c0e cf10273aff Alex Bennée:
  hw/intc: avoid byte swap fiddling in gicv3 its path
-e990f9a83d f0de58ccf6 Pierrick Bouvier:
+3b0b8f0193 f0de58ccf6 Pierrick Bouvier:
  bsd-user/syscall_defs.h: define STAT_TIME_T_EXT only for 32 bits
-83b0cf4c0e 369c1ba2b7 Richard Henderson:
+374bf44ecc 369c1ba2b7 Richard Henderson:
  bsd-user: Fix __i386__ test for TARGET_HAS_STAT_TIME_T_EXT
-5a84115173 214f79fdfb Bernhard Beschow:
+aef41c4cd1 214f79fdfb Bernhard Beschow:
  hw/sd/sdhci: Fix TYPE_IMX_USDHC to implement sd-spec-version 3 by default
-21846ec434 83017c4aaa Pierrick Bouvier:
+48c61c2efb 83017c4aaa Pierrick Bouvier:
  linux-user/aarch64/target_fcntl.h: add missing TARGET_O_LARGEFILE definition
-373ee7d1fb 290e4e7de7 Philippe Mathieu-Daudé:
+9945f966c6 290e4e7de7 Philippe Mathieu-Daudé:
  tests/functional: Mark another MIPS replay test as flaky
-dadefc1b2a 1c11aa1807 Philippe Mathieu-Daudé:
+2b873575d3 1c11aa1807 Philippe Mathieu-Daudé:
  tests/functional: Mark the MIPS replay tests as flaky
-012d0a1753 b67a35622f Peter Maydell:
+56943614f2 7be4256281 Philippe Mathieu-Daudé:
+ accel/nvmm: Fix 'cpu' typo in nvmm_init_vcpu()
+ac167f2f9d b67a35622f Peter Maydell:
  target/arm: Correctly trap HCR.TID1 registers in v7A
-4d402fcd1c 205ca535ab Peter Maydell:
+d32a6bdf2e 205ca535ab Peter Maydell:
  target/arm: Correctly honour HCR.TID3 for v7A cores
-bf1070909b 8da52b8401 Peter Maydell:
+c9ac53e1d4 8da52b8401 Peter Maydell:
  target/arm: Don't specify ID_PFR1 accessfn twice
-21264e6c98 7cf096d609 Alex Bennée:
+a246fac13b 7cf096d609 Alex Bennée:
  tests/functional: migrate aspeed_rainier image
-8491f94268 49ee001a5b Yao Zi:
+86b3d39699 49ee001a5b Yao Zi:
  hw/loongarch/virt: Don't abort on access to unimplemented IOCSR
-ed709c0e1d a7be2e0a3f Song Gao:
+469308eeb8 a7be2e0a3f Song Gao:
  target/loongarch: Fix exception ADEF/ADEM missing to update CSR_BADV
-788dcf5c0a e4f0ef58d5 Song Gao:
+47f5eb44e3 e4f0ef58d5 Song Gao:
  target/loongarch: Fix exception BCE missing to update CSR_BADV
-6fdac75e78 70cf9b7bf7 Song Gao:
+e39caabd23 70cf9b7bf7 Song Gao:
  target/loongach: Fix some exceptions failure in updating CSR_BADV
-297b8ea0f5 ff54394eed Xianglai Li:
+4f702110f4 ff54394eed Xianglai Li:
  hw/loongarch/virt: Fix irq allocation failure with pci device from fdt
-cf6d62c5c9 47de28a0b7 Xianglai Li:
+eb6ec3d5a8 47de28a0b7 Xianglai Li:
  hw/loongarch/virt: Modify the interrupt trigger type in fdt table
-4ba877461e c7504ba2a5 Vulnerability Report:
+43fd7e29ba c7504ba2a5 Vulnerability Report:
  hw/i386/kvm: fix PIRQ bounds check in xen_physdev_map_pirq()
-4f0a748c93 ed88bdcfbd Paolo Bonzini:
+2a57020689 ed88bdcfbd Paolo Bonzini:
  target/i386/tcg: allow VEX in 16-bit protected mode
-43ea497790 5e3572ef2e Paolo Bonzini:
+766c34ccf5 5e3572ef2e Paolo Bonzini:
  target/i386/tcg: mask addresses for VSIB
-dbd9c5112c 73dd6e4a36 Paolo Bonzini:
+bd792679ca 73dd6e4a36 Paolo Bonzini:
  target/i386/tcg: do not mark all SSE instructions as unaligned
-275a88c250 11dac41f2e Laurent Vivier:
+768ad6c12c 11dac41f2e Laurent Vivier:
  m68k: fix CAS2 writeback when Dc1=�2
-71615b13f6 894c8bd56f Paolo Bonzini:
+827c5bfe33 894c8bd56f Paolo Bonzini:
  configs: use default prefix for Windows compilation
-6a19810d96 9290c10ae9 Matthew Lugg:
+c51a959081 628bda1ab7 Fabiano Rosas:
+ target/ppc: Fix env->quiesced migration
+4ec12db86e 9290c10ae9 Matthew Lugg:
  tests: add tcg coverage for fixed mremap bugs
-92bf9c32c9 81ceab3049 Matthew Lugg:
+3ef571a4da 81ceab3049 Matthew Lugg:
  linux-user: fix reserved_va page leak in do_munmap
-cab823a454 2422884ec5 Matthew Lugg:
+1f65eb3d5d 2422884ec5 Matthew Lugg:
  linux-user: fix mremap errors for invalid ranges
-d3ba2bcf5d aaed9ca179 Matthew Lugg:
+1b5caf073f aaed9ca179 Matthew Lugg:
  linux-user: fix mremap unmapping adjacent region
-087712da63 82ae60c8b5 Jean-Christian CÎRSTEA:
+48437a384a 82ae60c8b5 Jean-Christian CÎRSTEA:
  linux-user: allow null `pathname` for statx()/fstatat()
-8c3c8daaad af6db3b713 Richard Henderson:
+944741cfa5 af6db3b713 Richard Henderson:
  tcg/riscv: Fix TCG_REG_TMP0 clobber in tcg_gen_dup{m,i}
-446e4e1a66 e714f1a3d4 Jie Song:
+e0842a3275 23b53ec3a8 Paolo Bonzini:
+ tcg/optimize: Do use affected bits
+ccb199fc95 08b12bfb8f Richard Henderson:
+ tcg/optimize: Fix a_mask computation for orc
+f71aca857a 7d2d577de0 Richard Henderson:
+ tcg/optimize: Save o_mask in fold_masks_zosa_int
+020288b092 e714f1a3d4 Jie Song:
  monitor/qmp: cleanup SocketChardev listener sources early to avoid fd handling race
-943c736516 3fbadbb392 Alano Song:
+32a8e10684 75bcfb98a1 Cédric Le Goater:
+ tests/functional: Fix URL of gb200nvl-bmc image
+832f421978 3fbadbb392 Alano Song:
  hw/i2c/imx: Fix trace func name error
-fb6b39358f 0db1b556e4 Paolo Bonzini:
+4029ff773e 0db1b556e4 Paolo Bonzini:
  target/i386/tcg: ignore V3 in 32-bit mode
-95f5470012 60efba3c1b Andrew Cooper:
+82a3e0c6f9 60efba3c1b Andrew Cooper:
  target/i386: Fix #GP error code for INT instructions
-05636333e9 00829ae384 Zesen Liu:
+ede2f1e49c 00829ae384 Zesen Liu:
  qdev: fix error handling in set_uint64_checkmask
-0a879fb466 d7e1df7699 Cédric Le Goater:
+05836f5f81 d7e1df7699 Cédric Le Goater:
  gdbstub: Fix const qualifier build errors with recent glibc
-5be91f937c dfe87815ba Cédric Le Goater:
+d15bb0b3e4 dfe87815ba Cédric Le Goater:
  monitor: Fix const qualifier build errors with recent glibc
-f417f1d0b3 e37a0d514a Cédric Le Goater:
+9b13c950b9 e37a0d514a Cédric Le Goater:
  tests/vhost-user-bridge.c: Fix const qualifier build errors with recent glibc
-47d030d1a0 2f5c96d534 Cédric Le Goater:
+e436f7bb36 2f5c96d534 Cédric Le Goater:
  i386: Fix const qualifier build errors with recent glibc
-ae2224c4d7 326e620fc0 Cédric Le Goater:
+46ff6a1ca2 326e620fc0 Cédric Le Goater:
  Fix const qualifier build errors with recent glibc
-4e529c2abe 83f6dceb8f Thomas Huth:
+831cf1c18b 83f6dceb8f Thomas Huth:
  qga: Fix ubsan warning
-3b0b68549f b002acacc1 Hanna Czenczek:
+28db12b336 ab0065e36a Thomas Huth:
+ tests/qemu-iotests: Fix check for existing file in _require_disk_usage()
+e20d07862d b002acacc1 Hanna Czenczek:
  Revert "nvme: Fix coroutine waking"
-466c6a1d6a ac3520f599 Hanna Czenczek:
+d763d9b749 ac3520f599 Hanna Czenczek:
  nvme: Note in which AioContext some functions run
-71bfe50b6a 307bc43095 Kevin Wolf:
+6758c408c3 307bc43095 Kevin Wolf:
  block: Fix BDS use after free during shutdown
-97055b3f87 e742b7bdc2 Stefan Weil:
+59bb74c5d6 e742b7bdc2 Stefan Weil:
  scripts/nsis.py: Tell makensis that WoA is 64 bit
-b2997c5a18 46228925ed Hanna Czenczek:
+cee3e62d52 46228925ed Hanna Czenczek:
  vhost: Always initialize cached vring data
-f121f524fa dd77ef99aa Alex Bennée:
+7ceeab2dc4 8062bfd517 Denis V. Lunev:
+ scripts: fix broken error path in modinfo-collect.py
+8864d375de dd77ef99aa Alex Bennée:
  target/arm: handle unaligned PC during tlb probe
-b9bef0a51b 41706d3e72 Richard Henderson:
- tcg: Zero extend 32-bit addresses for TCI
-4162e46522 61432e805e Alex Bennée:
- tests/docker: fix debian-all-test-cross
-9107a75a83 6da616bb17 Alex Bennée:
- tests/docker: handle host-arch selection for all-test-cross
-3aefdb1970 408c862910 Alex Bennée:
- tests/docker: add --arch-only to qemu deps for all-test-cross
-85df3071b6 eafc5f69e6 Alex Bennée:
+1dfa2156a9 eafc5f69e6 Alex Bennée:
  gitlab: move custom runners to Ubuntu 24.04
-cb1be41c9d 7e71b8e7f2 Michael Tokarev:
+7a08ce0419 7e71b8e7f2 Michael Tokarev:
  gitlab-ci.d/cirrus: Update the FreeBSD job to v14.3
-07421d312c c8958b7eb4 Paolo Bonzini:
- tests/vm: bump FreeBSD image to 14.3
+c27375417d 41706d3e72 Richard Henderson:
+ tcg: Zero extend 32-bit addresses for TCI
+469b4b6fcb 2c3165a1a6 Kevin Wolf:
+ file-posix: Handle suspended dm-multipath better for SG_IO
 
 
