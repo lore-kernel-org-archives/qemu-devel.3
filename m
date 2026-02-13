@@ -4,107 +4,127 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A57FEDF17D
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Feb 2026 16:36:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFB26EDF17D
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Feb 2026 16:58:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqw98-0007T4-Cn; Fri, 13 Feb 2026 11:35:58 -0500
+	id 1vqwUT-000262-05; Fri, 13 Feb 2026 11:58:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vqw95-0007Sn-CQ
- for qemu-devel@nongnu.org; Fri, 13 Feb 2026 11:35:55 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vqw92-0003Wh-Tr
- for qemu-devel@nongnu.org; Fri, 13 Feb 2026 11:35:54 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771000550;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=RvQG+w3q/EtKBb2VPD3fL8W3e3E0DPOn6yLlTsL4iDY=;
- b=X/aCteVKR0dWU/9letuGinFUIiOn1dlH0ryKzXuKJsbZY+oLjISeUs8KBul1KSzRx5lJa4
- CXjUSyJHvJJ7kNqEdG3fxYehT7DZ/5PFjGr41JBvmkC8kv5i6TBpJphlt3yRYkl6oPGuk3
- +fXkJi9j1c0sTt2+MXzkDuM+u9Jjhdo=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-655-axgRLeHhOem14UQwoRjiBA-1; Fri, 13 Feb 2026 11:35:49 -0500
-X-MC-Unique: axgRLeHhOem14UQwoRjiBA-1
-X-Mimecast-MFC-AGG-ID: axgRLeHhOem14UQwoRjiBA_1771000549
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-896fb2fb9d5so52814556d6.1
- for <qemu-devel@nongnu.org>; Fri, 13 Feb 2026 08:35:49 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vqwUQ-00025H-Ui
+ for qemu-devel@nongnu.org; Fri, 13 Feb 2026 11:57:58 -0500
+Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vqwUO-0001oU-No
+ for qemu-devel@nongnu.org; Fri, 13 Feb 2026 11:57:58 -0500
+Received: by mail-pf1-x42e.google.com with SMTP id
+ d2e1a72fcca58-8230f8f27cfso651256b3a.0
+ for <qemu-devel@nongnu.org>; Fri, 13 Feb 2026 08:57:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1771000549; x=1771605349; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=RvQG+w3q/EtKBb2VPD3fL8W3e3E0DPOn6yLlTsL4iDY=;
- b=eWiTq+IFHZKOI1/dO8I1i4dVGKxlnKsKcTe+S1PgryL6UDIWdP4BAyYYQYv1u8c++J
- LG63IeRV3U4IN+Mv1sA2RQqufgNpDaCuiEE6TX6um3ZLXGFP0bReQnBPuRxaeEKKRkmO
- AWVDmkhEZVyQa9DDCUQZD5WlnvZeg1B2WMMjvuso+YCVnUYdTZzidxl5njWSkmihxHpa
- 6TU2n/DbW4AdILXYdtmRXITsLDHR+5MwEfqQ8kn8J9ubjl5RHoWZQnRT9SL1ZTXmLglW
- zrcGyFIsGrheeAXgJUGKWfNQFu3I2DU68H8NbXjE5zYEeYoehCcg2ahDC+GxuSTs5X/5
- x6TQ==
+ d=linaro.org; s=google; t=1771001871; x=1771606671; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=BBk3LN13vRIrraQyMYVrvO3hBZWS4Kd/DHX6ab2IqGI=;
+ b=GjKh3vmPms5OEG/A6tvDdeW+iC00uAjxk6Nih8UbReWKStcqllTt/vpqlejQFBInE4
+ qyy2HCUfvQxMCtmhK6f94vw9Qnz6QjAv6rkdzOzXNxcnBaetCsTGhhGBe3VffVikLkVU
+ v5AEG4Tx+iECBsP7Cr7aQbvbIxaAyTkNZAkBpozQmTerlvGHjuAnkJJGFsUaoXPW00ji
+ c4QzM9sGH1iyecwKXuHPRL8PfmYtxvzi3bKLUSZp5DJocpoT6qE7CeJTJ0BW1+mp7/vb
+ gSO8tQHPKsIvtikxG4Ga9q4qLeOu8svfMvEcQftMZZGSe8O7ZQ0+EO0t7NPqKVjiAevO
+ c5EA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771000549; x=1771605349;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=RvQG+w3q/EtKBb2VPD3fL8W3e3E0DPOn6yLlTsL4iDY=;
- b=bo/UjgF5U8Buy9yApK4ZL+jn7Rz9kmwmccxZeeCud8nJ/vfLEda6k/SAQov8gEgVr8
- tb49WfXLnTLBdRu5BYKZP5EBLiGGMZ/PiTlR439mM3XRd14Dtum2jmpIcT4qtI2n5gfb
- hWDAljsY5dLXp+1VfLNaCMeT3oHJbsjgeDBQ7zUzuCLYkAUUPihhZtM1W/YZL9K4/jfx
- gwdv6KwjO9x0buVKgar8GB8CWR8gkbnqTai8ZP3gV6BjyA8AuPuqX8JRsp9Icf81ktX2
- LAKZGvhiNGMGiRMnfXwHD+fWFANnslWTUMdzv6X1wVP8tYoQ317xjWt+luJC6qjkvJNe
- 1CzA==
-X-Gm-Message-State: AOJu0YxQ6hhCaP9qN2O9a0f3zWQyj0S8S19GLHpio4sk+4fpoHfMW5TQ
- /ZJOr1m1YU52RV3lPXABut2iSMfviq/mYkygu8qCLG8o7j2+AMoo4yZTcbaJVYqF472LYIKkYvN
- 0Uc3QbYP65Mi8qoVCJJm9Pj+beHwuHzj4VVKtjytdPw8MtNw0IaEqGc4F
-X-Gm-Gg: AZuq6aJUIvaapNVCFS7CPzVOavlc0SmY3wZ7ypxyrXusgiycUT5Ts1m5iR8id9eGMBw
- aT+2tIMVW0L2nsbFdQ3rD8mgCCMjRHW8Ig3xrnkUwC/ZbsVOj4hNittJ/VXPHOQkDApWg6Yh6/v
- a/egxzN51H499UkD+amjvF1Mt+HLIBLryQPUwYmpAOQw1TmkVX6lsaYZhJc/TwPrOSMJ/KLUXh1
- s3/wlfPKHUURRBFU7b+gwxPV/fdmOtbGfP7jDxE9aNczvNKSZ3dl7LhpLtbSBm+Pbn8g0cQNFqj
- ggPr/YgZkAKCQPfLLe5nWGJVa0LDDxBpfaXJM/mSLe5J/F0uHpRqklarcHtLyu6LIAzW7bvL4VN
- oiqi9XAm/XW78cA==
-X-Received: by 2002:a05:6214:248d:b0:88a:277d:100 with SMTP id
- 6a1803df08f44-897362e3671mr34545906d6.62.1771000548924; 
- Fri, 13 Feb 2026 08:35:48 -0800 (PST)
-X-Received: by 2002:a05:6214:248d:b0:88a:277d:100 with SMTP id
- 6a1803df08f44-897362e3671mr34545176d6.62.1771000548099; 
- Fri, 13 Feb 2026 08:35:48 -0800 (PST)
-Received: from x1.local ([174.91.117.149]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-8971cd8d8c7sm77539606d6.26.2026.02.13.08.35.47
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 13 Feb 2026 08:35:47 -0800 (PST)
-Date: Fri, 13 Feb 2026 11:35:36 -0500
-From: Peter Xu <peterx@redhat.com>
-To: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- Mark Kanda <mark.kanda@oracle.com>, Ben Chaney <bchaney@akamai.com>
-Subject: Re: [PATCH] migration/cpr: Include vfio-cpr.h instead of vfio-device.h
-Message-ID: <aY9S2EIjP6tqPss0@x1.local>
-References: <20260211171532.1556719-1-clg@redhat.com>
- <aYzTTrgqWTlY76m_@x1.local>
- <4689305f-84bb-4423-8b7a-d66e6f77f6c0@redhat.com>
+ d=1e100.net; s=20230601; t=1771001871; x=1771606671;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=BBk3LN13vRIrraQyMYVrvO3hBZWS4Kd/DHX6ab2IqGI=;
+ b=BPw76r48PHjGc88HLV1D8FP9rTbDSMkf9v+9cRtIgt1nk3N3EEjANzD+AZEs+a8eow
+ CW9kfBc7jWtLLSJnoisOUhINZoAdVAUCxYokAKDVwX57dTTL7NYnZpc9rrinDLzl8SGB
+ Xy90u1g+FCUixuJOdkfrGpWp9qgiQDo6JDaDsJuQcsl0rpo+SkFhsJr5ilEKCRuwrdkG
+ xEmFzL6NVYDBrPUy68SZjmfCY5Xy+BIBZOUtlZjB9laKOvWkK3YV1xPKbNftTeoa21+L
+ OH+mTZb+AFt6Xyphisk71pVQ5F4ihs+4UiDr11bHU41usLIVn7wQSW1oRJcCd3XAPWao
+ R4FA==
+X-Gm-Message-State: AOJu0YxEQZVx8XpEduhgx5zXrGiQJRLsO/lhbwoxrkQGLe3VkhSasWr5
+ uBtd410WTQiFILkTUzOUfYy5mzLTb0OAOZJKVA7dnuxSTlw57VEi6nuuuP9/Ta9zN6T7im/Ycz3
+ O2RQo
+X-Gm-Gg: AZuq6aJg6tOfm+H+FTkkejhyQvdZl3U+n9CMy/GYTPSZQRxp+Q3RcSkigUYUb39SzCr
+ 0bNQP4Bna19dzL+yZsa3NzlpPmmi5mifQPU/UP7x/P71N71Y82E0gohoF3DiQVPTiEKUMOU6mwo
+ 4qtjgKUA6DcTTQAuLqet5vLjnyoXMz9Ie3IYGHcs2kvBTU4kTPMJBNUlm2Ot+nxTHvgsw/nNCZK
+ JMb9lNRz0Yq5u60ucrVqAZhQsbdSFzoXqdwegZs3u3+gT10nwzlj+1i5nfCcKVWjrFYdk4p3cEu
+ nK98GyBPfWEEhqZ4eSwOwDxJkAySXYALP1XBONSWcjHDkFQJ1OSikhHj8vSOXz/4I0Jd68quUDi
+ XyjtDmT5QTlwafTRCak9FTj1ll3wWyr7yDajUWdjKI8dwWN+TrcgFXjj+nxTttp5wMl1PsCZKlu
+ BXOWZ8/oXv/dvmrbV+A1TdJFH5AMK6LZdTd2qloqGE16wR84eVi4GhSapxyrSalZkuh0Xd
+X-Received: by 2002:a05:6a00:1c96:b0:822:7fd8:ffbd with SMTP id
+ d2e1a72fcca58-824c961b794mr2355511b3a.59.1771001870959; 
+ Fri, 13 Feb 2026 08:57:50 -0800 (PST)
+Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-824c6bb26f9sm3348830b3a.57.2026.02.13.08.57.50
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 13 Feb 2026 08:57:50 -0800 (PST)
+Message-ID: <8b32f147-89b2-4481-a440-b6b2bd84685d@linaro.org>
+Date: Fri, 13 Feb 2026 08:57:50 -0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <4689305f-84bb-4423-8b7a-d66e6f77f6c0@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/4] contrib/plugins/uftrace: add riscv64 support
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>, alistair.francis@wdc.com,
+ Mahmoud Mandour <ma.mandourr@gmail.com>, manos.pitsidianakis@linaro.org,
+ philmd@linaro.org, anjo@rev.ng, brian.cain@oss.qualcomm.com
+References: <20260210201344.1403613-1-pierrick.bouvier@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Content-Language: en-US
+Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
+ 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
+ ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
+In-Reply-To: <20260210201344.1403613-1-pierrick.bouvier@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,109 +140,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Feb 13, 2026 at 10:05:06AM +0100, Cédric Le Goater wrote:
-> On 2/11/26 20:06, Peter Xu wrote:
-> > On Wed, Feb 11, 2026 at 06:15:32PM +0100, Cédric Le Goater wrote:
-> > > The file migration/cpr.c uses vmstate_cpr_vfio_devices which is
-> > > declared in hw/vfio/vfio-cpr.h, not in hw/vfio/vfio-device.h.
-> > > 
-> > > Replace the include with the correct header file to avoid pulling in
-> > > unnecessary VFIO device declarations.
-> > > 
-> > > Signed-off-by: Cédric Le Goater <clg@redhat.com>
-> > > ---
-> > >   migration/cpr.c | 2 +-
-> > >   1 file changed, 1 insertion(+), 1 deletion(-)
-> > > 
-> > > diff --git a/migration/cpr.c b/migration/cpr.c
-> > > index adee2a919a364244867ef190fdf29bd1fe7e20e2..a0b37007f55d6dac32bd6220ffe65d32c4e6b52e 100644
-> > > --- a/migration/cpr.c
-> > > +++ b/migration/cpr.c
-> > > @@ -9,7 +9,7 @@
-> > >   #include "qemu/error-report.h"
-> > >   #include "qapi/error.h"
-> > >   #include "qemu/error-report.h"
-> > > -#include "hw/vfio/vfio-device.h"
-> > > +#include "hw/vfio/vfio-cpr.h"
-> > >   #include "migration/cpr.h"
-> > >   #include "migration/misc.h"
-> > >   #include "migration/options.h"
-> > > -- 
-> > > 2.53.0
-> > > 
-> > 
-> > This should be better as a standalone change, thanks.
-> > 
-> > Reviewed-by: Peter Xu <peterx@redhat.com>
-> > 
-> > Some thoughts beyond this patch alone.
-> > 
-> > When looking at this, it's a layer violation.  Logically migration/cpr.c
-> > shouldn't include a vfio header, otherwise it means when new devices added
-> > to support cpr then migration needs to include headers to every single of
-> > these devices..
-> > 
-> > Logically it should be the other way round where migration/cpr.c should
-> > provide a helper allowing devices to opt-in for cpr-states to register
-> > instead.
+On 2/10/26 12:13 PM, Pierrick Bouvier wrote:
+> This series adds support for riscv64 system tracing.
+> Compared to aarch64 and x86_64, stack layout has different offsets for accessing
+> frame pointers chain.
 > 
-> with vmstate_un/register() ?
-
-Likely not, because the vmstate_register() API only put things onto the
-global default savevm_state.handlers.  Those are "normal" VMSDs that will
-be migrated within the normal migration framework / channel, not the CPR
-special channel at earlier stage.
-
-CPR channel currently saves only the special VMSD, which is currently
-vmstate_cpr_state.  That should also be why the vfio early sub-section is
-attached.
-
-Logically it can be another similar vmstate_register_cpr(), then that'll
-put the VFIO speical VMSD to be one of the subsections registered to the
-CPR vmstate_cpr_state global VMSD.  Here subsections can be a good API
-between CPR core and CPR submodules (like VFIO) because when we send a
-subsection the dest QEMU will be able to lookup the subsections based on
-the name of subsection.
-
-Then I believe it means when there're >1 consumers we don't need to worry
-on which got registered first, so the order of subsections to be registered
-shouldn't be part of ABI, however the name of the subsection VMSD will (see
-vmstate_get_subsection() on how we do the lookup when loadvm, that applies
-too when loading CPR state).
-
-I don't know any existing use case of such dynamically registering
-subsections, but I think it sounds doable and maybe one simple solution for
-CPR's use to make registrations dynamic.
-
-> > Now it's also awkward that vmstate_cpr_state always have a subsection
-> > called vmstate_cpr_vfio_devices.. it means we will migrate this subsection
-> > even if there's no vfio device..  that's also another point that I think it
-> > should be done the other way round..
-> > 
-> > I do not know whether we must persist CPR ABI now.. if we need, we can't
-> > change this anymore without a machine type compat entry (as we will expect
-> > vmstate_cpr_vfio_devices to come from an older binary that does a cpr
-> > migration).  But that'll be sad..
+> To build and trace a riscv64 system (requires only podman and qemu-user-static):
+> $ git clone https://github.com/pbo-linaro/qemu-linux-stack -b riscv64
+> $ git checkout qemu-linux-stack
+> $ ./build.sh
+> $ env INIT=true ./trace.sh /path/to/qemu-system-riscv64
+> $ uftrace replay
 > 
-> vmstate_cpr_state was introduced in 10.0
-> vmstate_cpr_vfio_devices in 10.1
+> Result perfetto trace can be downloaded:
+> https://drive.google.com/file/d/18AVzg5ftwJZyJMMbm_KcB4FMVSas6jVz
+> And load it on:
+> https://ui.perfetto.dev/
 > 
-> commit a6f2f9c42f3a ("migration: vfio cpr state hook") already
-> broke migration compatibility. May be this is something we can
-> still fix without a machine compat.
+> Pierrick Bouvier (4):
+>    contrib/plugins/uftrace: fix infinite stack unwind detection
+>    contrib/plugins/uftrace: add ops for walking frame pointers chain
+>    docs/about/emulation/uftrace: add info about automatic tracing
+>    contrib/plugins/uftrace: add riscv64 support
 > 
-> I have no idea how cpr is used today, in which product ? Can the
-> maintainers tell us more ?
+>   docs/about/emulation.rst  |  23 +++++--
+>   contrib/plugins/uftrace.c | 128 +++++++++++++++++++++++++++++++++++---
+>   2 files changed, 138 insertions(+), 13 deletions(-)
+> 
 
-Yep.
+This was merged into master (7d224fe8ca3959687e9fa16f0891d1731c9205bd).
 
-I didn't pay much attention when reading the series when being reviewed,
-but IMHO we could have marked cpr features unstable from the start until
-it's relatively solid and in serious production deployments.
-
-Thanks,
-
--- 
-Peter Xu
-
+Regards,
+Pierrick
 
