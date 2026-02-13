@@ -4,57 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B179AEDF145
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Feb 2026 10:08:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 969A8EDF148
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Feb 2026 10:10:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vqq5e-0001Qx-Cd; Fri, 13 Feb 2026 05:07:58 -0500
+	id 1vqq81-0002Mq-7p; Fri, 13 Feb 2026 05:10:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vqq5Y-0001QQ-M1
- for qemu-devel@nongnu.org; Fri, 13 Feb 2026 05:07:52 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vqq7u-0002MF-8V
+ for qemu-devel@nongnu.org; Fri, 13 Feb 2026 05:10:20 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vqq5V-0002qX-K8
- for qemu-devel@nongnu.org; Fri, 13 Feb 2026 05:07:51 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vqq7o-00039f-21
+ for qemu-devel@nongnu.org; Fri, 13 Feb 2026 05:10:13 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1770977268;
+ s=mimecast20190719; t=1770977410;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=0SgbZ157mZ8U/Nqdbj5vUSfIDoqh5mgZM43bK5QvmzE=;
- b=ZapK2oHZEtetH/kWBXt3jX8ljcJIkZivtDkfm3o/+B8D1BE6QGI1s0CXqul1kBmHOoTk9o
- hhKhDqirrapMneIOtW0dj/J9CJ05JeO65ltNPMwDXWQczCjrJct9QOsw47tv2Nwe5WLTPM
- x3ZJ6n3bwKcbMM1CvRHLac9Y3+lcCcA=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ bh=dzorLegeeN/epTIw73yegf+DcJ8LoqDxdAb+hqO18ik=;
+ b=WQ8ApGRToBPpQV6HZxI7Pi4BQj6Bb3u0R4nBo4LocW76VNVu0djSix8hMZuzaJsGbzT+GX
+ Q37Br7bOKL9gJbYuNVFIqfUMGbWx8q0nnsF56cWHcbgzdYKneE3/U+g+SPtwzPf3+MSzJM
+ oM/AKNEVXCXySzWxnGjZloUUcSNLnJE=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-111-EfiJOUedOiqO3nOqlLEqtw-1; Fri,
- 13 Feb 2026 05:07:43 -0500
-X-MC-Unique: EfiJOUedOiqO3nOqlLEqtw-1
-X-Mimecast-MFC-AGG-ID: EfiJOUedOiqO3nOqlLEqtw_1770977263
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-597-Z8axEeLjPJS7K-ft_C2ysg-1; Fri,
+ 13 Feb 2026 05:10:07 -0500
+X-MC-Unique: Z8axEeLjPJS7K-ft_C2ysg-1
+X-Mimecast-MFC-AGG-ID: Z8axEeLjPJS7K-ft_C2ysg_1770977406
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E6A981830183; Fri, 13 Feb 2026 10:07:35 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 91BE6180025B; Fri, 13 Feb 2026 10:10:06 +0000 (UTC)
 Received: from [10.45.224.181] (unknown [10.45.224.181])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 41FEE30002CE; Fri, 13 Feb 2026 10:07:28 +0000 (UTC)
-Message-ID: <8d658d94-d38f-4338-90f2-1d25ab1bfac7@redhat.com>
-Date: Fri, 13 Feb 2026 11:07:26 +0100
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 15C1219560B9; Fri, 13 Feb 2026 10:09:35 +0000 (UTC)
+Message-ID: <086fa14b-d791-401e-be8e-34c52d05c2e0@redhat.com>
+Date: Fri, 13 Feb 2026 11:09:33 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 27/43] audio/sdl: replace custom logging with error_report
+Subject: Re: [PATCH 26/43] audio/pw: replace custom logging with error_report
 To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>, Thomas Huth <huth@tuxfamily.org>
+ Gerd Hoffmann <kraxel@redhat.com>
 References: <20260127182516.289834-1-marcandre.lureau@redhat.com>
- <20260127182516.289834-28-marcandre.lureau@redhat.com>
+ <20260127182516.289834-27-marcandre.lureau@redhat.com>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -99,10 +99,10 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20260127182516.289834-28-marcandre.lureau@redhat.com>
+In-Reply-To: <20260127182516.289834-27-marcandre.lureau@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -131,18 +131,13 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 27/01/2026 19.24, marcandre.lureau@redhat.com wrote:
 > From: Marc-André Lureau <marcandre.lureau@redhat.com>
 > 
-> Replace the custom audio logging infrastructure (dolog macro and
-> AUD_log/AUD_vlog) with standard QEMU error reporting (error_report,
-> error_printf, error_vprintf).
-> 
-> Note that we also dropped the abort() call in DEBUG_AUDIO, as it is not
-> usually compiled with, doesn't help much, and can easily be added back
-> when doing development as needed.
+> Replace the custom audio logging infrastructure (dolog macro) with
+> standard QEMU error reporting (error_report).
 > 
 > Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 > ---
->   audio/sdlaudio.c | 31 ++++++++++++-------------------
->   1 file changed, 12 insertions(+), 19 deletions(-)
+>   audio/pwaudio.c | 11 +++++------
+>   1 file changed, 5 insertions(+), 6 deletions(-)
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
