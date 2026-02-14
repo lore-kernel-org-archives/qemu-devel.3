@@ -4,132 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E361EF99F3
-	for <qemu-devel@archiver.kernel.org>; Sat, 14 Feb 2026 02:39:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 587F1EF99F3
+	for <qemu-devel@archiver.kernel.org>; Sat, 14 Feb 2026 02:46:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vr5Z8-0005W4-DT; Fri, 13 Feb 2026 21:39:26 -0500
+	id 1vr5fp-0006S6-3h; Fri, 13 Feb 2026 21:46:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vr5Z6-0005VW-J2
- for qemu-devel@nongnu.org; Fri, 13 Feb 2026 21:39:24 -0500
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
+ id 1vr5fm-0006Rs-Uu
+ for qemu-devel@nongnu.org; Fri, 13 Feb 2026 21:46:18 -0500
+Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vr5Z4-0003Re-Tq
- for qemu-devel@nongnu.org; Fri, 13 Feb 2026 21:39:24 -0500
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-2aadc18f230so10500415ad.3
- for <qemu-devel@nongnu.org>; Fri, 13 Feb 2026 18:39:21 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
+ id 1vr5fk-0006Yb-QD
+ for qemu-devel@nongnu.org; Fri, 13 Feb 2026 21:46:18 -0500
+Received: by mail-ej1-x633.google.com with SMTP id
+ a640c23a62f3a-b8f9568e074so240538466b.0
+ for <qemu-devel@nongnu.org>; Fri, 13 Feb 2026 18:46:16 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1771037175; cv=none;
+ d=google.com; s=arc-20240605;
+ b=W8t3/a3xtJYvf3+fhcaBdr6eIBANi1R4Kv5+Ht8EswZizXt1ZVW7OvhqHzB16wnpNb
+ S+C9gmfRedlGVsa44FtcITCRaM92dnlbZS94swOJ3Riex3ps1IV9SkEFhRlU75dcSfJl
+ 7hI6nMT6+YAH4b4Ri1Sb+5t3dtt0CZcvNuhalpQDjsc+W/Dlz+/NHG07PVHLNx2IitiL
+ IjrSlf3TeCBXDERnxvgXGH7Hp9aoB4Ia3Z3140oh8zqYMJXQaA5rVN6/kpZNdEVtjTmG
+ X/v3UBwaLcGg+KRLr2fi4VJENx0GjH6R1/075Z2vzXCJxDTZY9vN/5C0DoM6/1o69sDw
+ o1tw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=gXw+9a1MtYw9rjC+ZAPDkltnLFijPKyk1wJ/vWEeMLQ=;
+ fh=nbpNME/n1szgj2GMR3pTCKsMXVqEHJV9X2rsEb3nItU=;
+ b=ZLVE650W3LimJwSCE1ajruXE8n7RkcjbzRWE6NYL2hH5kubmwqvHLITx4NY4dINL9Z
+ 7/D4QZCesj7lRVIAs9zuVohbZHGA/k6boQHZzGfR/MduPnhILBr/fDzqxpdjLBexbJ2V
+ /2Y3kaHglJIVqWLF8odjS7G9Dvjiy27g7tb5JGIunTuPSm7LpHfbKOoBL/KQ/alQa7YA
+ TCwlD2kq7Kx9WCrgK91Qj/czXwmNX+ne9CUfE1r9Qr/iI6NjfzVp6j9SzwkUMriAgwZ/
+ zXfWqvkq6iV2P3dYRstR20uBXBJw2fkMKSBS57O2hMTKiMqaEcJbj5AVID5Z1S2qenzV
+ nOqw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771036760; x=1771641560; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=BGrKHsjxOMm7239XBXF+U/qBdVaFf0fldyfwUB5FB9A=;
- b=wvdz85YnDCagYDtf5SrThfq5/PtwHt7NWtYbXCiQ9NTVOm2Wyec/PuMLldQaieTV/b
- Iu01+ZoIBiCM0kCNiFP5ZNbFUutoPEy2FhYKzwBo5vycYNVVxJI/zpfknoBKBJIocdaC
- T/Fqm00RlVmKJVhIvVXbulACyc0tPn69JVchV6/TQNPYVZQv1rSx//ocyjdRjKuh0Qzr
- 2KTGgxRqX4ptOySSQh4ewhENjD88XVHw/9GWhNxoMwfcS7LZ20boKtBaLTNXUwX0SuBS
- ltzJuU0kFBHcUGCNRwhasf9n+yUVZyT3rvtHkgSRPYo1JvDtzgpgtHOhFnUQhi0ih6ge
- zV2w==
+ d=gmail.com; s=20230601; t=1771037175; x=1771641975; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=gXw+9a1MtYw9rjC+ZAPDkltnLFijPKyk1wJ/vWEeMLQ=;
+ b=TTcKoEooJ3+gcXG7PzFTbW6RCxdoyRDTSaFDbFNEGLTd7cl1iSltMNhTZ6vOS/1i3P
+ 2zEndvwghjorkG9yynfsdZhHxEYM9lu/jWc+Ih7v+4tYDIPU3Mehw5HDJ8rT3Qkp9tCV
+ s5JLE8l574por6sNpLaRDvTm1GcrCBkitNWCm0q/pLDCCrlLMcWs5Q7UyIc7sLaAHsiS
+ 9ic6W0ISGzjT0LZ6eb/LtUDJT5b+Y+eTQ6Y7zY5F4tE4oHZ0TdBfWu/Y/yvIB8o6GQfq
+ 3+RUM9CXcMnBeMENZy8AeLyvc0XV5syphV8A9tnO1ePJProjpWmY9Roi3G+aiEe5c9Fs
+ MLWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771036760; x=1771641560;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=BGrKHsjxOMm7239XBXF+U/qBdVaFf0fldyfwUB5FB9A=;
- b=OJoc2cujB5QPHS05EAh3HGjpNHp5p/UFJliZ03hOjslSEFZhVEiGNQ43gAZN7QDdhY
- GEwPTiXCfc/vollBrz3XBCOjS5MCdkxZh3AW7iKgpqarg7cHs56XM0mCfIMpoLaHB9QE
- zlqI8Xk1KIzPQZ9+j3xMsrKPD1+UOUnwKK+WCKwMV7b40Ysgat7yRIVmhJtt+PGRTB9W
- Ui3E+MCzfYe9eRROKdKyZPTHjQ8hS/PLDzeuZeYlyMCv5+0kzS7/FgDQPCwjOJtAb5hp
- nJgwnJ8eLGnT3K92U1n1cNbReWSgnKieTi58CRQEg4PwTvB1UqF2qi+lOU/NHyL6sts2
- SnmA==
+ d=1e100.net; s=20230601; t=1771037175; x=1771641975;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=gXw+9a1MtYw9rjC+ZAPDkltnLFijPKyk1wJ/vWEeMLQ=;
+ b=r3EeY5l3gsUBXTwFSyDc0o7PXygi2wuHiPydTCyEIj8gjk+eE4JPW6S13NaNQm7pnb
+ Ii95g6KDuKzDOD0PYJ+3hMIjS6INF/cXWw4hV54ttZikTIOq3IUmNU9IAQzODsthTw/o
+ f6gowLL7yf3uyft3nalom0BV8eZuajZ6xQtDVbt34UtWejlZgGqDgAKwhUzm+N0rS2H5
+ /8Rsj7v4NrJDxFWzqanDfdNNB75KrQQSqX5YF47+UEXZA5TGXgkOrXT6ecUo1Johup5b
+ XOdgUhJRVM0RSRg+iPvpqnC70ACTzJdk80VqlpjZV7Ml+u+5mCcZIEeaoSOzZZdiyW1V
+ 2S+g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX1xbo+jtJR2pTj2AcDVKNuJi7kt015Qu49JgFAVd8cqK8tDZJbH7ALAL3QvpvkJmJmbx4ltPF8yBFP@nongnu.org
-X-Gm-Message-State: AOJu0Yx58ipCbatwwNAEgNSp1+i1lzriEX7hwQTggbl3STjebaZIuAFG
- ZhZjtW1TdeaBBT23Kool/Ng5KJzC0PczSWOcvuqV2S7HU0lUTncfIBh4DqUDCpYWhBA=
-X-Gm-Gg: AZuq6aLOyETWRRhR7WR1Iob429fwHBvW+TPvZXNW27xEO1mJT9RvVmD6Fxouv6wEkgf
- nte7V/TBWGTCE2vDxgx2nRyrMyN1VeSpgHdLF8x82GfGHijcYjMYZWNp0KpgpzZeNjNrP5ugBiZ
- Goiankx2oFlIbhNYkgsF8p44wIqqfVY+q8hnTwJdWbUcuzmRCDc5QC3U7UrgmuiAiK8OmW/Ji5r
- AneSPdgDnKlrlDPpvKjv2T/RWX5HSndKfti6FXvu5jRfZqFWsgzJ0jMUDMr5BbBw+ZyQLxXsI/w
- BaUQwx2mg8todB69w98c6/NBgjObF5Vtq0hWHzXBAleurAOwoXiimOSFjn0IALxYTdqaPgsHNaK
- AESMJVAeI3QMkvW3OFhFZiEaS0NDBB7vx2rxqSKOie0+Oxghf5fAtH6laE1jo2r/g5h5orpSjZ8
- Lw4m9dGhTc2yMr9Qj2uwKKZPOhpAAsTH8BKpVIE4OAD/87O36MNkLbAdvNo3Hoy/bzsKiW
-X-Received: by 2002:a17:903:2f03:b0:2aa:f43d:7c42 with SMTP id
- d9443c01a7336-2ad17493e13mr12688205ad.24.1771036760419; 
- Fri, 13 Feb 2026 18:39:20 -0800 (PST)
-Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-35662e6d098sm13292437a91.8.2026.02.13.18.39.19
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 13 Feb 2026 18:39:19 -0800 (PST)
-Message-ID: <390f5a90-b3f6-4652-9096-2d2666f72df9@linaro.org>
-Date: Fri, 13 Feb 2026 18:39:19 -0800
+ AJvYcCUPglJMp9Kq1uPePKhkiEeORSVQW//ws69TdmCOaVa5F+9xIVu6nVm5lh1bjHWPG/9+ihx/MwZHw0/i@nongnu.org
+X-Gm-Message-State: AOJu0YymxTly/zXsY6IQKpz61JiCBi/RDkmJTNQaYB/G4k6XFiSIEPEl
+ dJ4W2c3M8QLODiQf/BvO9VTy/h814IyKvr0J9qbGU8cmbshCcDNMSCFEAEO/ylXv0JDZS5LJajn
+ NyUgIj+fJ47Hb5qVSiQMbfuFVZWw+JT0=
+X-Gm-Gg: AZuq6aKX3v5kC2ggNWhSrW+d6Rbr8KpVGETYnC5pAtk1mU2t6ko7sUn5TY1stkuG4oa
+ XpaBA03WjL8UkSmEnRZ/5pBQJe5Pda4W6G1sq/M4CIWpQD9+MU0kzGXWdFQd5TRu8eFOZKTaKB5
+ Q7WgIxeND4LEg8hZxx+z+6yL7JG3l+con+Wts6ybvPcVcssE4Mifgcx8/eDHQ3uJcbVBxREz9eF
+ BeUpc9IenGVX7F0LuAQd95hV4z5U9oa8WnNTUlEpXul5my1KxZP3AA98KPpezkqAnFTLmm8h7EF
+ Rbp9BGn4
+X-Received: by 2002:a17:907:1c2a:b0:b8a:f2cb:8088 with SMTP id
+ a640c23a62f3a-b8fc3c46515mr69301066b.33.1771037174843; Fri, 13 Feb 2026
+ 18:46:14 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 8/8] system/globals: Build as common code
-Content-Language: en-US
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Chinmay Rath <rathc@linux.ibm.com>,
- =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Nicholas Piggin <npiggin@gmail.com>, Artyom Tarasenko <atar4qemu@gmail.com>,
- qemu-ppc@nongnu.org, Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Laurent Vivier <laurent@vivier.eu>
-References: <20260214021240.58657-1-philmd@linaro.org>
- <20260214021240.58657-9-philmd@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
- 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
- ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <20260214021240.58657-9-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62a.google.com
+References: <20260207134728.1495932-1-lulu@redhat.com>
+ <20260207134728.1495932-2-lulu@redhat.com>
+In-Reply-To: <20260207134728.1495932-2-lulu@redhat.com>
+From: Zhang Chen <zhangckid@gmail.com>
+Date: Sat, 14 Feb 2026 10:45:38 +0800
+X-Gm-Features: AZwV_Qj2JWpXTYh-0ldLXA9_Ae3Ii5YgOiEC3wWJrAdn2ny8TKPN4Z7PjOKJ2lQ
+Message-ID: <CAK3tnvKxsumtqbF6z6_3v5jWWwAeUg4sdYsXNY9Jha9tXYR6ag@mail.gmail.com>
+Subject: Re: [PATCH 02/12] net/filter-mirror: add enable_when_stopped option
+ for filter-redirector
+To: Cindy Lu <lulu@redhat.com>
+Cc: mst@redhat.com, jasowang@redhat.com, lizhijian@fujitsu.com, 
+ qemu-devel@nongnu.org, Juraj Marcin <jmarcin@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::633;
+ envelope-from=zhangckid@gmail.com; helo=mail-ej1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -145,20 +120,302 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/13/26 6:12 PM, Philippe Mathieu-Daudé wrote:
-> Now than all targets have the graphic dimension variables
-> initialized the same way, we can move them to the common
-> file unit, having them built once. Remove the now empty
-> globals-target.c file.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   system/globals-target.c | 14 --------------
->   system/globals.c        |  3 +++
->   system/meson.build      |  4 ----
->   3 files changed, 3 insertions(+), 18 deletions(-)
->   delete mode 100644 system/globals-target.c
-> 
+On Sat, Feb 7, 2026 at 9:47=E2=80=AFPM Cindy Lu <lulu@redhat.com> wrote:
+>
+> From: Jason Wang <jasowang@redhat.com>
+>
+> Add a QAPI option 'enable_when_stopped' for filter-redirector that
+> allows it to continue receiving data from netdev when VM is stopped.
+>
+> When enabled, a VM state change handler activates the netdev's
+> read_poll() when VM stops, allowing the netdev to continue reading
+> data and passing it through filter-redirector to the chardev output.
+>
+> This is useful for scenarios where filter-redirector needs to
+> process network traffic even when the VM is paused.
+>
+> Usage:
+>   -object filter-redirector,id=3Df0,netdev=3Dnet0,queue=3Dtx,\
+>           outdev=3Dchardev0,enable_when_stopped=3Dtrue
+>
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+It seems this series is trying to address previous VM migration network
+related issues that Juraj Marcin mentioned.
+Add CC to him.
+
+I've taken a quick look, and this series lacks support for
+filter-reply and filter-rewriter.
+Could there be a reason for this?
+
+Thanks
+Chen
+
+.
+
+
+
+
+> Signed-off-by: Jason Wang <jasowang@redhat.com>
+> Signed-off-by: Cindy Lu <lulu@redhat.com>
+> ---
+>  net/filter-mirror.c                  |  38 ++++++++++
+>  qapi/qom.json                        |   7 +-
+>  tests/qtest/test-filter-redirector.c | 106 +++++++++++++++++++++++++++
+>  3 files changed, 150 insertions(+), 1 deletion(-)
+>
+> diff --git a/net/filter-mirror.c b/net/filter-mirror.c
+> index aa2ab452fd..e1a0650abd 100644
+> --- a/net/filter-mirror.c
+> +++ b/net/filter-mirror.c
+> @@ -21,6 +21,7 @@
+>  #include "qemu/iov.h"
+>  #include "qemu/sockets.h"
+>  #include "block/aio-wait.h"
+> +#include "system/runstate.h"
+>
+>  #define TYPE_FILTER_MIRROR "filter-mirror"
+>  typedef struct MirrorState MirrorState;
+> @@ -41,6 +42,8 @@ struct MirrorState {
+>      CharFrontend chr_out;
+>      SocketReadState rs;
+>      bool vnet_hdr;
+> +    bool enable_when_stopped;
+> +    VMChangeStateEntry *vmsentry;
+>  };
+>
+>  typedef struct FilterSendCo {
+> @@ -251,6 +254,7 @@ static void filter_redirector_cleanup(NetFilterState =
+*nf)
+>
+>      qemu_chr_fe_deinit(&s->chr_in, false);
+>      qemu_chr_fe_deinit(&s->chr_out, false);
+> +    qemu_del_vm_change_state_handler(s->vmsentry);
+>  }
+>
+>  static void filter_mirror_setup(NetFilterState *nf, Error **errp)
+> @@ -282,6 +286,18 @@ static void redirector_rs_finalize(SocketReadState *=
+rs)
+>      redirector_to_filter(nf, rs->buf, rs->packet_len);
+>  }
+>
+> +static void filter_redirector_vm_state_change(void *opaque, bool running=
+,
+> +                                              RunState state)
+> +{
+> +    NetFilterState *nf =3D opaque;
+> +    MirrorState *s =3D FILTER_REDIRECTOR(nf);
+> +    NetClientState *nc =3D nf->netdev;
+> +
+> +    if (!running && s->enable_when_stopped && nc->info->read_poll) {
+> +        nc->info->read_poll(nc, true);
+> +    }
+> +}
+> +
+>  static void filter_redirector_setup(NetFilterState *nf, Error **errp)
+>  {
+>      MirrorState *s =3D FILTER_REDIRECTOR(nf);
+> @@ -331,6 +347,9 @@ static void filter_redirector_setup(NetFilterState *n=
+f, Error **errp)
+>              return;
+>          }
+>      }
+> +
+> +    s->vmsentry =3D qemu_add_vm_change_state_handler(
+> +        filter_redirector_vm_state_change, nf);
+>  }
+>
+>  static void filter_redirector_status_changed(NetFilterState *nf, Error *=
+*errp)
+> @@ -437,6 +456,22 @@ static void filter_redirector_set_vnet_hdr(Object *o=
+bj,
+>      s->vnet_hdr =3D value;
+>  }
+>
+> +static bool filter_redirector_get_enable_when_stopped(Object *obj, Error=
+ **errp)
+> +{
+> +    MirrorState *s =3D FILTER_REDIRECTOR(obj);
+> +
+> +    return s->enable_when_stopped;
+> +}
+> +
+> +static void filter_redirector_set_enable_when_stopped(Object *obj,
+> +                                                      bool value,
+> +                                                      Error **errp)
+> +{
+> +    MirrorState *s =3D FILTER_REDIRECTOR(obj);
+> +
+> +    s->enable_when_stopped =3D value;
+> +}
+> +
+>  static void filter_mirror_class_init(ObjectClass *oc, const void *data)
+>  {
+>      NetFilterClass *nfc =3D NETFILTER_CLASS(oc);
+> @@ -463,6 +498,9 @@ static void filter_redirector_class_init(ObjectClass =
+*oc, const void *data)
+>      object_class_property_add_bool(oc, "vnet_hdr_support",
+>                                     filter_redirector_get_vnet_hdr,
+>                                     filter_redirector_set_vnet_hdr);
+> +    object_class_property_add_bool(oc, "enable_when_stopped",
+> +                                   filter_redirector_get_enable_when_sto=
+pped,
+> +                                   filter_redirector_set_enable_when_sto=
+pped);
+>
+>      nfc->setup =3D filter_redirector_setup;
+>      nfc->cleanup =3D filter_redirector_cleanup;
+> diff --git a/qapi/qom.json b/qapi/qom.json
+> index 6f5c9de0f0..b1fe55944c 100644
+> --- a/qapi/qom.json
+> +++ b/qapi/qom.json
+> @@ -488,13 +488,18 @@
+>  # @vnet_hdr_support: if true, vnet header support is enabled
+>  #     (default: false)
+>  #
+> +# @enable_when_stopped: if true, activate netdev's read poll when VM
+> +#     stops to allow filter-redirector to continue receiving data
+> +#     (default: false)
+> +#
+>  # Since: 2.6
+>  ##
+>  { 'struct': 'FilterRedirectorProperties',
+>    'base': 'NetfilterProperties',
+>    'data': { '*indev': 'str',
+>              '*outdev': 'str',
+> -            '*vnet_hdr_support': 'bool' } }
+> +            '*vnet_hdr_support': 'bool',
+> +            '*enable_when_stopped': 'bool' } }
+>
+>  ##
+>  # @FilterRewriterProperties:
+> diff --git a/tests/qtest/test-filter-redirector.c b/tests/qtest/test-filt=
+er-redirector.c
+> index 5540c232c0..fa958bb0a5 100644
+> --- a/tests/qtest/test-filter-redirector.c
+> +++ b/tests/qtest/test-filter-redirector.c
+> @@ -385,6 +385,110 @@ static void test_redirector_init_status_off(void)
+>      qtest_quit(qts);
+>  }
+>
+> +/*
+> + * Test filter-redirector works when VM is stopped (TX direction).
+> + *
+> + * This test verifies that when VM is stopped, the filter-redirector
+> + * can still receive data from the netdev because the VM state change
+> + * handler activates the netdev's read_poll(). Data flows from netdev
+> + * to filter-redirector and out through the chardev.
+> + *
+> + * Data flow: backend_sock -> netdev (read_poll) -> filter-redirector ->=
+ chardev
+> + */
+> +static void test_redirector_with_vm_stop(void)
+> +{
+> +    int backend_sock[2], recv_sock;
+> +    uint32_t ret =3D 0, len =3D 0;
+> +    char send_buf[] =3D "Hello!!";
+> +    char sock_path0[] =3D "filter-redirector0.XXXXXX";
+> +    char *recv_buf;
+> +    uint32_t size =3D sizeof(send_buf);
+> +    size =3D htonl(size);
+> +    QTestState *qts;
+> +    struct timeval tv;
+> +    fd_set rfds;
+> +
+> +    ret =3D socketpair(PF_UNIX, SOCK_STREAM, 0, backend_sock);
+> +    g_assert_cmpint(ret, !=3D, -1);
+> +
+> +    ret =3D mkstemp(sock_path0);
+> +    g_assert_cmpint(ret, !=3D, -1);
+> +
+> +    /*
+> +     * Setup TX path: netdev -> filter-redirector -> chardev
+> +     * Data sent to backend_sock[0] will be read by the netdev,
+> +     * passed through filter-redirector, and output to sock_path0.
+> +     * Enable enable_when_stopped to activate read_poll when VM stops.
+> +     */
+> +    qts =3D qtest_initf(
+> +        "-nic socket,id=3Dqtest-bn0,fd=3D%d "
+> +        "-chardev socket,id=3Dredirector0,path=3D%s,server=3Don,wait=3Do=
+ff "
+> +        "-object filter-redirector,id=3Dqtest-f0,netdev=3Dqtest-bn0,"
+> +        "queue=3Dtx,outdev=3Dredirector0,enable_when_stopped=3Dtrue ",
+> +        backend_sock[1], sock_path0);
+> +
+> +    recv_sock =3D unix_connect(sock_path0, NULL);
+> +    g_assert_cmpint(recv_sock, !=3D, -1);
+> +
+> +    /* Ensure connection is established */
+> +    qtest_qmp_assert_success(qts, "{ 'execute' : 'query-status'}");
+> +
+> +    struct iovec iov[] =3D {
+> +        {
+> +            .iov_base =3D &size,
+> +            .iov_len =3D sizeof(size),
+> +        }, {
+> +            .iov_base =3D send_buf,
+> +            .iov_len =3D sizeof(send_buf),
+> +        },
+> +    };
+> +
+> +    /*
+> +     * Stop the VM - this triggers our vm_state_change handler
+> +     * which should activate the netdev's read_poll()
+> +     */
+> +    qtest_qmp_assert_success(qts, "{ 'execute' : 'stop'}");
+> +
+> +    /* Wait for VM to actually stop */
+> +    qtest_qmp_eventwait(qts, "STOP");
+> +
+> +    /*
+> +     * Send data to backend socket while VM is stopped.
+> +     * The netdev should still read the data (because read_poll is
+> +     * activated by our vm_state_change handler), pass it through
+> +     * filter-redirector, and output to the chardev.
+> +     */
+> +    ret =3D iov_send(backend_sock[0], iov, 2, 0, sizeof(size) + sizeof(s=
+end_buf));
+> +    g_assert_cmpint(ret, =3D=3D, sizeof(send_buf) + sizeof(size));
+> +
+> +    /*
+> +     * Data should arrive at recv_sock even with VM stopped,
+> +     * because read_poll is activated.
+> +     */
+> +    FD_ZERO(&rfds);
+> +    FD_SET(recv_sock, &rfds);
+> +    tv.tv_sec =3D 5;
+> +    tv.tv_usec =3D 0;
+> +    ret =3D select(recv_sock + 1, &rfds, NULL, NULL, &tv);
+> +    g_assert_cmpint(ret, =3D=3D, 1);  /* Data should arrive */
+> +
+> +    ret =3D recv(recv_sock, &len, sizeof(len), 0);
+> +    g_assert_cmpint(ret, =3D=3D, sizeof(len));
+> +    len =3D ntohl(len);
+> +
+> +    g_assert_cmpint(len, =3D=3D, sizeof(send_buf));
+> +    recv_buf =3D g_malloc(len);
+> +    ret =3D recv(recv_sock, recv_buf, len, 0);
+> +    g_assert_cmpint(ret, =3D=3D, len);
+> +    g_assert_cmpstr(recv_buf, =3D=3D, send_buf);
+> +
+> +    g_free(recv_buf);
+> +    close(recv_sock);
+> +    close(backend_sock[0]);
+> +    unlink(sock_path0);
+> +    qtest_quit(qts);
+> +}
+> +
+>  static void test_redirector_rx_event_opened(void)
+>  {
+>      int backend_sock[2], send_sock;
+> @@ -489,5 +593,7 @@ int main(int argc, char **argv)
+>                     test_redirector_init_status_off);
+>      qtest_add_func("/netfilter/redirector_rx_event_opened",
+>                     test_redirector_rx_event_opened);
+> +    qtest_add_func("/netfilter/redirector_with_vm_stop",
+> +                   test_redirector_with_vm_stop);
+>      return g_test_run();
+>  }
+> --
+> 2.52.0
+>
 
