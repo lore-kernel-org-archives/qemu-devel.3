@@ -4,129 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7455CEF5851
-	for <qemu-devel@archiver.kernel.org>; Sat, 14 Feb 2026 19:40:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2050EF584C
+	for <qemu-devel@archiver.kernel.org>; Sat, 14 Feb 2026 19:53:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vrLUw-0007Q2-QY; Sat, 14 Feb 2026 14:40:10 -0500
+	id 1vrLh2-0000it-Ib; Sat, 14 Feb 2026 14:52:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vrLUu-0007Ps-KH
- for qemu-devel@nongnu.org; Sat, 14 Feb 2026 14:40:08 -0500
-Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vrLUs-0004wb-C4
- for qemu-devel@nongnu.org; Sat, 14 Feb 2026 14:40:08 -0500
-Received: by mail-pf1-x429.google.com with SMTP id
- d2e1a72fcca58-824af5e5c81so1846977b3a.0
- for <qemu-devel@nongnu.org>; Sat, 14 Feb 2026 11:40:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771098004; x=1771702804; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=r0eqHBxKVDkzo16lO+tTLwpKuwUQgMZJ1oUtqUOYBZ0=;
- b=OEv1vUUsoFGuHi2ct52bJEu7ELo2GUEC2pswlhRDW9OAFBEzfXVBmAWd49JDhfhUHQ
- 6zoEFbM+1lE+Yth7iFQEUlipeaVO4JkCyeJtZb7aJA2jgFwvhWVwKyHEVcLDGvO2v7AL
- h9qq7U9qBIZUthwp9Io/vayGkL+Bu8tDihRgWO/VwuM0I3qrrAbZhdHawF0X8Dj/kyJJ
- e9T2zzWocmfx6UBRMi+Oo210J0GiO+4TZ/4JkhXZF7QkZ2bKz8pzWoivqBZVcNo/w7Gb
- TBWasVcjsIIH/cY39lH2LmKLKqbkYaYFaNO0bCgF1gvGvS4fr/FUGTx1hQL0ozKG3Nxi
- XruA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771098004; x=1771702804;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=r0eqHBxKVDkzo16lO+tTLwpKuwUQgMZJ1oUtqUOYBZ0=;
- b=BDU1do/FWTyMw19wrazKkDcu+9HUC8iNiXG5kIhUHnBXlUWmxxNoxyqim+Auvl5gGJ
- NA+CuP9bPJDggM4twM+Y70dsaqUwSB/qKiLrt1XVnTf8ouKsvcBaFm3X4PNMXLPVhxNr
- aRfdc3Z4NCRADSVUU5ALzOKHHlxag1gm7pGaKq3ySQipgu3ynqTq6o1EmlI7cxwZzbZs
- wLVrplNGHV4Jntfc+9SQ/D3V3/LT16D34bCIZi3/M7ynaGqAbB5fCzwWK21cXqVj8ffZ
- GLR/voaLDAnb09EdNFoBeITHhL7lMgkKmlkqdcMRTR3QEsBWlwSyF0RUSEmH/0mKylJy
- NYGg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXMfOa6chej4c1VrgyiA5UWm7VF09nY8Z9UZo+XXEwLLzDsi04kM72S6RDrsBCgXXThBPODmJ7I6SHD@nongnu.org
-X-Gm-Message-State: AOJu0YzRd1EGHz/ld2ZR0kQUXa8GP2gdMJEBBCInDUx4ICoTIMUeEoEc
- smhI3B/PopkMUUIkjjcyZinzc+3trI6vx+vRBRct9cHQNOkwIY8Iw9Y9FowUe85iucM=
-X-Gm-Gg: AZuq6aLoOeKNEf2W5PjPPri84xNM6D8TTYrhVGjaM4th8mGYuwaF/uhODUU95h2+csL
- F5Liu1Q1/eL89ebCBrm86FqO8L1tUY/dR1c6TVVj/xRmGhH3YCpvWHRYtVoiBBkkFMbwHJ7ToDB
- yXQtVjT61goSY3tAcaF7NFxWIrdsd998Gpt9V2L9JZDIb//3wh519LWkj+NvhntTXkOmd8f6nW/
- zrGvVSms8yVW8S7E8lMTWWPce1GnHJG7fFIHvPMsYc3UvHwW2/iorwzsRhAXKlTYnjkd+exxCnS
- hqFWOQ2OzLo3TYmLipaC0lkJ8v8zJyivMosfypYDc7n4SGkEKJncYZskwAptVDnbzCFudAtpIZp
- MeJq/OG9jKFXf646+GSnA0glgElTgodNO1YkBrW/7wDDQ2yOKLSmApNM0nXGUb6omd1jqFyd6F7
- M650VK0yvh3wXkTxCwOPeCtRDsemfMx2lji7kAzk/rd7kNopz8B9RSokHz57Uh9CiCoMUv
-X-Received: by 2002:a05:6a00:3a02:b0:81f:9b23:3d1c with SMTP id
- d2e1a72fcca58-824c5f11872mr5622294b3a.23.1771098003878; 
- Sat, 14 Feb 2026 11:40:03 -0800 (PST)
-Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-824c6bb55adsm6051265b3a.62.2026.02.14.11.40.03
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 14 Feb 2026 11:40:03 -0800 (PST)
-Message-ID: <4814fdb5-97bc-43ff-96ff-49b84300100f@linaro.org>
-Date: Sat, 14 Feb 2026 11:40:03 -0800
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] contrib/plugins/cpp: use __has_include
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>, Alexandre Iooss
- <erdnaxe@crans.org>, jsnow@redhat.com
-References: <20260214061025.1239457-1-pierrick.bouvier@linaro.org>
- <47a7d557-c864-4b43-a178-9adfa12bba9f@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Content-Language: en-US
-Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
- 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
- ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <47a7d557-c864-4b43-a178-9adfa12bba9f@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x429.google.com
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1vrLgz-0000ic-01
+ for qemu-devel@nongnu.org; Sat, 14 Feb 2026 14:52:37 -0500
+Received: from p-west1-cluster5-host2-snip4-7.eps.apple.com ([57.103.66.188]
+ helo=outbound.pv.icloud.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1vrLgw-00080o-Nc
+ for qemu-devel@nongnu.org; Sat, 14 Feb 2026 14:52:36 -0500
+Received: from outbound.pv.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-west-1a-60-percent-15 (Postfix) with ESMTPS id
+ 669AE18005B3; Sat, 14 Feb 2026 19:52:25 +0000 (UTC)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; t=1771098750; x=1773690750;
+ bh=D3+KlGKLpcPU5HRgJ5kAGMN63WXwzAkiQ2RDeDkhwLU=;
+ h=From:Message-Id:Content-Type:Mime-Version:Subject:Date:To:x-icloud-hme;
+ b=CjdXU1PH20X0btesiHucrZPOOY9Kb0CgowfgiNwU0A6lrrTQUjq7FIZPiJLnm0hEvAPMKAChntIOO4K8nJvFJYIp1RAOBHqDqjOt8JfxFW9wW1k8fR2d514NGeY61D8SgA6ZBl9fpDibqyZfs718d4t7HVYQWva5SvI1QHDkKhGGmpJohoPDJlcWi2pNubSiJadPGa8LcWrmHZEkWbPY2GTnp7DU28qV754yyfjTzFtzbcolgIKHq1NVIdhPv37s1/+bzZQqbi6nBkoztDJVZ1TGmlXyunHqV253iM0TiJEPX+9Hpmq5EdI/qYtqS6silGSQ9/hX3iUA4ZS1sWwE3A==
+mail-alias-created-date: 1752046281608
+Received: from smtpclient.apple (unknown [17.56.9.36])
+ by p00-icloudmta-asmtp-us-west-1a-60-percent-15 (Postfix) with ESMTPSA id
+ AF35418005A0; Sat, 14 Feb 2026 19:52:23 +0000 (UTC)
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+Message-Id: <4F19682B-800C-4442-A5BA-C63E81D3E792@unpredictable.fr>
+Content-Type: multipart/alternative;
+ boundary="Apple-Mail=_BE1BE1EE-6147-44DB-8F60-7E30C3016EEC"
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.400.21\))
+Subject: Re: [PATCH 0/3] i386 emulate fixes
+Date: Sat, 14 Feb 2026 20:52:11 +0100
+In-Reply-To: <20260214131659.31378-1-shentey@gmail.com>
+Cc: qemu-devel@nongnu.org, Cameron Esfahani <dirty@apple.com>,
+ Magnus Kulke <magnuskulke@linux.microsoft.com>,
+ Roman Bolshakov <rbolshakov@ddn.com>,
+ Phil Dennis-Jordan <phil@philjordan.eu>, Wei Liu <wei.liu@kernel.org>
+To: Bernhard Beschow <shentey@gmail.com>
+References: <20260214131659.31378-1-shentey@gmail.com>
+X-Mailer: Apple Mail (2.3864.400.21)
+X-Authority-Info-Out: v=2.4 cv=SsSdKfO0 c=1 sm=1 tr=0 ts=6990d27b
+ cx=c_apl:c_apl_out:c_pps a=azHRBMxVc17uSn+fyuI/eg==:117
+ a=azHRBMxVc17uSn+fyuI/eg==:17 a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22 a=VwQbUJbxAAAA:8
+ a=pGLkceISAAAA:8 a=OQdDbjkjo2-Olhh4lEAA:9 a=lqcHg5cX4UMA:10 a=CjuIK1q_8ugA:10
+ a=2XsdyA_o0lUjXkYChjcA:9 a=jt1rJ_WpdYvtSKXg:21 a=_W_S_7VecoQA:10
+X-Proofpoint-GUID: xxBJnMMmaXx81D22X85UpOxvSgRBbXLR
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjE0MDE2NiBTYWx0ZWRfX3uU4VemAYS14
+ BS1BA+qAKOJUs7M7cXaAcA0cWttofHcJGhlBvfbPU5h/cf8Ybs6Lm3TRg2Qw0oAzHw2Hyca4l2x
+ cic0gOxcn2NYJ+VNdEdmuUm00/Ejg1kIeMdUoKAfPhZrm7NSUBIYERHerH0Ed9E99GBjdXMB64j
+ YHQkoBjhtfHyMw/TUcEdEtv3tg21vTHmKJkbIqD1xzrY18tL6L7+Q+5rY/ftkQ6Rsa0aJ3riuYL
+ ZJXwIeujWiqeHTMC3PMM5+qvbEQoR572APMkY1rCJ9oeB9CEwjIDxzgrm3R2ofBtp0P/SvkF+b3
+ Ls+aIqjQ1yYSjd7Y6qTMatxtXmzhzhXdecVtp/wzKB9TUIBX6mrBP6+jmMRawI=
+X-Proofpoint-ORIG-GUID: xxBJnMMmaXx81D22X85UpOxvSgRBbXLR
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-02-14_02,2026-02-13_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
+ bulkscore=0 mlxlogscore=771 suspectscore=0 mlxscore=0 spamscore=0
+ lowpriorityscore=0 phishscore=0 malwarescore=0 clxscore=1030 classifier=spam
+ authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
+ definitions=main-2602140166
+X-JNJ: AAAAAAABZLjuU49qt3SeBQJRqanDOZsbvv1Pg67+SH3HlBLIqDZ8uRg/88pb1E6chJ4bhjeKOIjKdMgAyy1FG0iNckIyYhjJh8kl6Pjz7u698IDGsklKJVyLkMPgBCitj/Y0k2HqQ1F+jks6JVnoJ/zy9NKLgn95+QvtfdpxGO1Yqlj/8PDCxpa5m7jIfvS52ZIz/jeDz53BUAcWA+XvZmTviSKSR7eI6IaXVE3mi2gZiEirlsyqKgf4WiWdAtpvEbZBKiuJiwWZnuDO73PEOio+AGz39DhSblPiVopWuEw7+y20japth53wTc097tTjkC3rNQ25sU2f+5DX3HGfcPPPA7gvxYOn+Z0CI55X/50/HXbmW7KlAIHsVcAeS1w0QuaB8GfApipSiJpKiCc0dHw2ept5dG7KgePtKHqNVtuQXEiz3qabfiErWTlr7aWt2dlrA+x3tiYwcE0HsGTrFhuDXxbI2rmLmm8X0dSPoIn3EZY8cfr65xBzPWR0AWX03eQ2G3nDYGxOwmLkiBlsEgcUDFZN++8F4hE2q6IAj0zZ37Zh3XeZDQFTMMh5+W417ovsB2DirAWO51q3brLGJFC0ujz0+SiiuSraRP5eTUxWNG2IwyZ7dknNrkF/Mum6u3f6BHke33ZyZApjbPys9LGajy9Si76gMmfsX2QcwgaqfIWjWOjvtGGNAQN9dQMaj6v5zZc06L+m
+Received-SPF: pass client-ip=57.103.66.188;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.pv.icloud.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -142,62 +95,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/14/26 3:46 AM, Philippe Mathieu-Daudé wrote:
-> On 14/2/26 07:10, Pierrick Bouvier wrote:
->> This make sure we can include all possible headers without breaking
->> build for environments missing them. It fixes compilation on openbsd.
->>
->> We don't want to pollute configure script, as it's really a special case
->> here to make sure we don't have a compilation regression with
->> qemu-plugins header.
->>
->> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->> ---
->>    contrib/plugins/cpp.cpp | 261 +++++++++++++++++++++++++++++++++++++++-
->>    1 file changed, 259 insertions(+), 2 deletions(-)
->>
->> diff --git a/contrib/plugins/cpp.cpp b/contrib/plugins/cpp.cpp
->> index 1ff54896d97..0673c4f074d 100644
->> --- a/contrib/plugins/cpp.cpp
->> +++ b/contrib/plugins/cpp.cpp
->> @@ -6,103 +6,360 @@
->>    
->>    #include <qemu-plugin.h>
->>    
->> -/* https://en.cppreference.com/w/cpp/headers.html */
->> +/*
->> + * We include all C++ standard headers (without deprecated ones),
->> + * taken from: https://en.cppreference.com/w/cpp/headers.html
->> + *
->> + * To update, copy page text, and then:
->> + * grep '^<' |
->> + * sort -u |
->> + * grep -v strstream |
->> + * grep -v codecvt |
->> + * sed -e 's/\(.*\)/#if __has_include(\1)\n#include \1\n#endif/'
->> + */
->> +
->> +#if __has_include(<algorithm>)
->>    #include <algorithm>
->> +#endif
-> 
-> Should we test __has_include is defined, as the GCC documentation
-> recommends?
-> 
->     [...] the recommended use of the operators is as follows:
-> 
->     #if defined __has_include
->     #  if __has_include (<stdatomic.h>)
->     #    include <stdatomic.h>
->     #  endif
->     #endif
->
 
-It's not needed, as it's part of C++17 standard, and it's now set to 
-C++23, so we know it's always available. If C++23 was not available, we 
-would have an error message directly from configure.
-https://en.cppreference.com/w/cpp/preprocessor/include
+--Apple-Mail=_BE1BE1EE-6147-44DB-8F60-7E30C3016EEC
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=us-ascii
 
-> https://gcc.gnu.org/onlinedocs/cpp/_005f_005fhas_005finclude.html
 
+
+> On 14. Feb 2026, at 14:16, Bernhard Beschow <shentey@gmail.com> wrote:
+>=20
+> When testing Mohamed's recent x86_64 WHPX updates [1] I encountered =
+two
+> compilation issues under MSYS2/GCC which are fixed in this series. The =
+last
+> commit fixes a missed optimization opportunity in MSHV code.
+>=20
+> The MSHV code will be reused in WHPX [1] which allowed me to test it. =
+I
+> didn't notice any performance benefits, though in theory there should =
+be some
+> due to less guest memory accesses.
+>=20
+> Testing done:
+> * Use a Linux VM for a couple of hours
+>=20
+> [1] =
+https://lore.kernel.org/qemu-devel/20260213034556.13471-1-mohamed@unpredic=
+table.fr/
+>=20
+> Bernhard Beschow (3):
+>  target/i386/emulate/x86_decode: Fix compiler warning
+>  target/i386/hvf/x86_mmu: Fix compiler warning
+>  target/i386/emulate/x86_decode: Actually use stream in
+>    decode_instruction_stream()
+>=20
+For the series:
+
+Reviewed-by: Mohamed Mediouni <mohamed@unpredictable.fr =
+<mailto:mohamed@unpredictable.fr>>
+
+> target/i386/emulate/x86_decode.c | 6 +++---
+> target/i386/hvf/x86_mmu.c        | 6 ++++--
+> 2 files changed, 7 insertions(+), 5 deletions(-)
+>=20
+> --=20
+> 2.53.0
+>=20
+
+
+--Apple-Mail=_BE1BE1EE-6147-44DB-8F60-7E30C3016EEC
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html;
+	charset=us-ascii
+
+<html aria-label=3D"message body"><head><meta http-equiv=3D"content-type" =
+content=3D"text/html; charset=3Dus-ascii"></head><body =
+style=3D"overflow-wrap: break-word; -webkit-nbsp-mode: space; =
+line-break: after-white-space;"><br =
+id=3D"lineBreakAtBeginningOfMessage"><div><br><blockquote =
+type=3D"cite"><div>On 14. Feb 2026, at 14:16, Bernhard Beschow =
+&lt;shentey@gmail.com&gt; wrote:</div><br =
+class=3D"Apple-interchange-newline"><div><div>When testing Mohamed's =
+recent x86_64 WHPX updates [1] I encountered two<br>compilation issues =
+under MSYS2/GCC which are fixed in this series. The last<br>commit fixes =
+a missed optimization opportunity in MSHV code.<br><br>The MSHV code =
+will be reused in WHPX [1] which allowed me to test it. I<br>didn't =
+notice any performance benefits, though in theory there should be =
+some<br>due to less guest memory accesses.<br><br>Testing done:<br>* Use =
+a Linux VM for a couple of hours<br><br>[1] =
+https://lore.kernel.org/qemu-devel/20260213034556.13471-1-mohamed@unpredic=
+table.fr/<br><br>Bernhard Beschow (3):<br> =
+&nbsp;target/i386/emulate/x86_decode: Fix compiler warning<br> =
+&nbsp;target/i386/hvf/x86_mmu: Fix compiler warning<br> =
+&nbsp;target/i386/emulate/x86_decode: Actually use stream in<br> =
+&nbsp;&nbsp;&nbsp;decode_instruction_stream()<br><br></div></div></blockqu=
+ote>For the series:</div><div><br></div><div>Reviewed-by: Mohamed =
+Mediouni &lt;<a =
+href=3D"mailto:mohamed@unpredictable.fr">mohamed@unpredictable.fr</a>&gt;<=
+/div><div><br></div><div><blockquote =
+type=3D"cite"><div><div>target/i386/emulate/x86_decode.c | 6 +++---<br> =
+target/i386/hvf/x86_mmu.c &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| 6 =
+++++--<br> 2 files changed, 7 insertions(+), 5 deletions(-)<br><br>-- =
+<br>2.53.0<br><br></div></div></blockquote></div><br></body></html>=
+
+--Apple-Mail=_BE1BE1EE-6147-44DB-8F60-7E30C3016EEC--
 
