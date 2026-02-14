@@ -4,76 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFE1FEF99EA
-	for <qemu-devel@archiver.kernel.org>; Sat, 14 Feb 2026 02:34:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECC75EF99EA
+	for <qemu-devel@archiver.kernel.org>; Sat, 14 Feb 2026 02:38:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vr5Tz-0002rs-8C; Fri, 13 Feb 2026 21:34:07 -0500
+	id 1vr5Xx-00047W-Md; Fri, 13 Feb 2026 21:38:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vr5Tx-0002qa-8J
- for qemu-devel@nongnu.org; Fri, 13 Feb 2026 21:34:05 -0500
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ id 1vr5Xw-00046W-Tr
+ for qemu-devel@nongnu.org; Fri, 13 Feb 2026 21:38:12 -0500
+Received: from mail-pg1-x532.google.com ([2607:f8b0:4864:20::532])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vr5Tt-0002yp-6A
- for qemu-devel@nongnu.org; Fri, 13 Feb 2026 21:34:03 -0500
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-2a871daa98fso11044575ad.1
- for <qemu-devel@nongnu.org>; Fri, 13 Feb 2026 18:34:00 -0800 (PST)
+ id 1vr5Xv-0003Os-5E
+ for qemu-devel@nongnu.org; Fri, 13 Feb 2026 21:38:12 -0500
+Received: by mail-pg1-x532.google.com with SMTP id
+ 41be03b00d2f7-c648bc907ebso814734a12.3
+ for <qemu-devel@nongnu.org>; Fri, 13 Feb 2026 18:38:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771036439; x=1771641239; darn=nongnu.org;
+ d=linaro.org; s=google; t=1771036689; x=1771641489; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=mliHk88umJ1aUO06hXwpfitUtVd2IuWQCBUA5+HDINM=;
- b=Otr53juzNoyWc6s+1ztH3JPfvwOijpjzCtbu6PbHGah5m/Es3CHohJTgheCGhRLEzD
- OT3tX88RqqFNX8skPtITDUs3GehuG6vfW1s4oDfSek2211OUhCISvcfu/Vv+XQxh5+KY
- FvSoz4ajC3glQyuaoYhBLHj8JAMzYy1Aa0vV5Y+lFgMMsbB9VQbgNQYdppyOtxEM+myU
- baKPvQA3p6WKLEgsVgv7MTKHMsU5jjucjuy0/r0MAtiFvok/TtrJ6PSgEqCzKaCiSHvK
- ed5plQ3oDE/VKpaDYnGP0Uc4W6XtrRQtohEg5DtY1qESwl+29CwyY472QFEseUNZddod
- vhvw==
+ bh=lzvuY8mXIHXzD/ElPpK2odFOR3uw329zckcQAtcF19w=;
+ b=L9tamhUS47mJFz8r5Fhj4oSCSc+OlJh8XHq1Lti1OqkXdUnD9BUW4c5S76GezYZcjC
+ RFkIHvph5hSjxl6X0OwOs2pRCz4oMbwJCkrRtfs3B65CBCEMMLVuliIa1jUWKXCw9Hbs
+ tBUsYHm5oM4P8e+QMwxwlHcgzcq6Ism4nwsUb5QjYDhKTRP23unsFKLIofMMsmhq4SMv
+ IbmtYyx8RVWqzgqHV6vvVIN3jMYkUtr2iLUXOe0JlGNMEUfa8zl8+dgv+dvLpefp3/9H
+ kcORindNqLB/8NcGXh2qK40dNRQ1g1k0H8WYiDecXUvBWnZjYbw2D1zUHb0d2Pkh5qje
+ 37Ow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771036439; x=1771641239;
+ d=1e100.net; s=20230601; t=1771036689; x=1771641489;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=mliHk88umJ1aUO06hXwpfitUtVd2IuWQCBUA5+HDINM=;
- b=NtjVDqQc8ocAD0ZYTShkJ7TXXhfSOsiB4h0Y1/89NuSyoUGIiICGutr+/9UwrJiB8T
- Bmrsrn3NU2Dq66WkTncckPG0kFCG9y7zNpOonCllqBA94xIzFvc8CEVKpYrlQDVdb5D5
- bgWvpv8iMCNg8wAewMgpYDHKl3+IULX18WWaxrEjfETzQE5NUV5eB0TltwgjJTYC4KB8
- wrk4KA5m2FeUp94l3a1d9o7mKIuU0zOxsH+3Nwp/KKbN6ynQwKP3iwrl0x/LhlpOLfUh
- COYMW/y8m/ry5JYIW6/jQKXzvPuD8BhaU68kbitLvq8VY5Cj9N7BRMaSe67QqssNgwQh
- cWCA==
+ bh=lzvuY8mXIHXzD/ElPpK2odFOR3uw329zckcQAtcF19w=;
+ b=cJFMii4iwu/P8NZcbTETNpOccTwtECPsQeziZDv7ah/IzW4VePOGX+izknPrOTcKCU
+ 29PL83U+DjosF5gWM3hb0+GC074aik6i6kXXOYkWv/I+2xVV4H0sy43MurfTFxIEu0m5
+ hI8oe7Om5bB5nt1+stvI6Q4nMoJe03OaZd4AWjiUrDOnm2N4ggGNxhNUqW4Z1BlfyXQR
+ Zt1dk9y+IPl2sXHi1jxnHAXABt93ZKZhLRJfL2DhTWvwQ7clFovOK4zuyPUly2i2M89V
+ obZvGbCH2uA/FvSaz84MzNwWDOvwdKPjXYwhHdfcjKJslpvvJXETliHvnd2/PoUXZ8Li
+ 7QXA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWRbw9KwAI4CrEU9zwz6WuQ24n8vIoLKoy3jz8+TU/UurqvboBMRUlCZfKlLBIrNDjLFqtP2LxYDNNA@nongnu.org
-X-Gm-Message-State: AOJu0Yydi0hGuiPszQo2PzZGmBbGi1pCpvmeIPHAhPAUhjlrSGjK8NvP
- Ub0vCt3HnGEiOM5zABA9LLyNOQaw1MoExiPN2E0Hbx+PrC6OstPHc6jYX2rcBJQDNLM=
-X-Gm-Gg: AZuq6aJFMjuhmRrvh9I7eexuC7/K5DCXHoJN0GxrXNMKjMLyk0HUDMESh/ZihtCIUPb
- NLlfy4L6t43lazYRiG0vMk1Edk3aA2o5ExcEhZMo9vP/yZGodGmifHfGoPcpilo2L469HwsMsc2
- FVdY/aumjRWL9sBz+/v7l7v9vxdyNtGPV9LAfZH1dn3iD4ICLqOdW4IUWD9q032JxS1tqazP86p
- CzgA5ltQ9uKcBwBp7BEQ9PXKtT9SlGq6vy/Sc6OUK8kSLObGs6fGNSHdqYjl3CFUUJYUK0r05jg
- ZgKGagNW3gYG8jAKrWLVMnuF3asGkHkB1QvuWC2zkNQgeT2oWUEi2ZAPA5FVlkWJwW+lI6bnuO9
- 2bbnXflszs3lcL6tKVl5lKpJXBTgKGnTydmBmLKNfZcFfCc7ccvYJQzSixvVjw0eDO36eEQtlL4
- O7TiVXln29EwMpX9/n9Ba4OXBTUZgOvF9ae6RoYdc0Z2zxOVoF9oAGZ9cgzM6CZ5rCuXnE6o/ir
- pJ2Xrc=
-X-Received: by 2002:a17:902:f64e:b0:2aa:eed5:c5b4 with SMTP id
- d9443c01a7336-2ad1751998emr11830265ad.38.1771036439447; 
- Fri, 13 Feb 2026 18:33:59 -0800 (PST)
+ AJvYcCWbydoha2mNSQzEOU784RSix9ccS6Qii/Ic81U65MqjEx6ExlXqnc+0CGIQHs7XIyIkvTGeXPnX1xTU@nongnu.org
+X-Gm-Message-State: AOJu0YwaOch+v5NHxFukXWLLZMlIPROTffqpdQgsYwrqDOm1qPnGzAie
+ 1V7tgAuOhq5bAxynwChHiXojy2/BuCoWxgomWNHrVY2Zu3f4mr+OpsKvDDwSy4TYu7o=
+X-Gm-Gg: AZuq6aJTa42qj0Ob5e78bFngTI83MpsZ230P6ohlsUScUF/MchBSr29dMOZYbjWmNBM
+ R3dXWCAg+Xrfeh+Bw3M3+OGu8qyPUStKyNgb+6r/80MHz1k7hZpGQoTIA+pUYCKAndqJFtX9VWj
+ 9eSoHgk0mfcc1pPIqRZrQps8sLnGDizR9cYnPZwEx5H5SevDg9eO2v/e9ZM0SP7bFSsw7kZL8CC
+ MQe5j7J8/f7UVKshi3CzYcJcCh2Mfn5kolwsIkGSUoKIa26sBvIJ4N9YDMrouGJPnrO74SzubOZ
+ b1PeVcw7kxkL1pM9mG+jUHHCIJcUnrky6rFt/c817Mp/35excG/o0SXr98Tcm6FgbG/bc1kpnkk
+ sauNeQ2pPrFX1VOWFzsiMXKpXQET7D3IMxFRjlkoB6Taky8+Ehm6lprVEcOV1bXoDZMG+r6Kats
+ xWGhhpMvPib6u19vPx1LISrIMx2mGF5o00sfWn2H7OhLVJ07HTcuUDQYDSHSlXmKK2YTpYhMblF
+ nSHqcg=
+X-Received: by 2002:a17:902:f68a:b0:2aa:f9d7:689c with SMTP id
+ d9443c01a7336-2ab4cfa78a0mr46321835ad.22.1771036689306; 
+ Fri, 13 Feb 2026 18:38:09 -0800 (PST)
 Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2ad1a713e8bsm5389515ad.28.2026.02.13.18.33.58
+ d9443c01a7336-2ad1a9d5bdesm4415045ad.55.2026.02.13.18.38.08
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 13 Feb 2026 18:33:59 -0800 (PST)
-Message-ID: <db8843cc-d164-499d-8445-fe5a5d7df892@linaro.org>
-Date: Fri, 13 Feb 2026 18:33:58 -0800
+ Fri, 13 Feb 2026 18:38:08 -0800 (PST)
+Message-ID: <67873123-156c-4a1e-bc6a-90a5514147f6@linaro.org>
+Date: Fri, 13 Feb 2026 18:38:08 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/8] hw/m68k/q800: Set MACFB_DISPLAY_APPLE_21_COLOR within
- MacFrameBuffer
+Subject: Re: [PATCH 5/8] hw/m68k: Set graphic display dimensions generically
 Content-Language: en-US
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
@@ -84,7 +83,7 @@ Cc: Chinmay Rath <rathc@linux.ibm.com>,
  qemu-ppc@nongnu.org, Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  Laurent Vivier <laurent@vivier.eu>
 References: <20260214021240.58657-1-philmd@linaro.org>
- <20260214021240.58657-5-philmd@linaro.org>
+ <20260214021240.58657-6-philmd@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  xsDNBGK9dgwBDACYuRpR31LD+BnJ0M4b5YnPZKbj+gyu82IDN0MeMf2PGf1sux+1O2ryzmnA
@@ -120,11 +119,11 @@ Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  5SYuJaKzCAgNeAy3gUVUUPrUsul1oe2PeWMFUhWKrqko0/Qo4HkwTZY6S16drTMncoUahSAl
  X4Z3BbSPXPq0v1JJBYNBL9qmjULEX+NbtRd3v0OfB5L49sSAC2zIO8S9Cufiibqx3mxZTaJ1
  ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <20260214021240.58657-5-philmd@linaro.org>
+In-Reply-To: <20260214021240.58657-6-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x634.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::532;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x532.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -148,14 +147,14 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2/13/26 6:12 PM, Philippe Mathieu-Daudé wrote:
-> The MACFB_DISPLAY_APPLE_21_COLOR mode is not specific to the Q800
-> machine. Check and set it once in the MacFB DeviceRealize handler.
+> If a dimension is not set, have the machine init code
+> (q800_machine_init) set the default value.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   hw/display/macfb.c | 4 ++++
->   hw/m68k/q800.c     | 5 -----
->   2 files changed, 4 insertions(+), 5 deletions(-)
+>   hw/m68k/q800.c          | 6 +++---
+>   system/globals-target.c | 6 +++---
+>   2 files changed, 6 insertions(+), 6 deletions(-)
 > 
 
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
