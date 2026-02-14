@@ -4,74 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CA67EF99FA
-	for <qemu-devel@archiver.kernel.org>; Sat, 14 Feb 2026 03:43:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 402E5EF99FF
+	for <qemu-devel@archiver.kernel.org>; Sat, 14 Feb 2026 04:35:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vr6Xm-00058x-7v; Fri, 13 Feb 2026 22:42:06 -0500
+	id 1vr7MR-000092-BG; Fri, 13 Feb 2026 23:34:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1vr6Xk-00058h-Ol
- for qemu-devel@nongnu.org; Fri, 13 Feb 2026 22:42:04 -0500
-Received: from mgamail.intel.com ([198.175.65.12])
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vr7MP-00008Z-IG; Fri, 13 Feb 2026 23:34:25 -0500
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1vr6Xj-0008J1-6E
- for qemu-devel@nongnu.org; Fri, 13 Feb 2026 22:42:04 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1771040523; x=1802576523;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=eonLPTLYxHldYtymxYRdcAgJia5SUfNkvhTZV0PxX1E=;
- b=csV6RbByZEgD2QV1dxHWq0RXsNyKJVcLr1N5T7Ajy3Rfr+k5cS9MfDkN
- mH15/CPcCPP3kTZayxb/rR6GIJBZ5saSuAp5RlKAWBOCVX7M1jHA0J8HW
- dNVJijbnV77nNUMBUl/46vb/QmxEsaw0DScC8maE8iML7zNQ6cKfcY4Kf
- OeeVSz/8/dskeVJhcTgh3ST2uOxbMx+BfOWaLNyD5Ihb6QdHLDKZsFLV/
- MphKujYiRVW64v2FiIgiq1X2fo42K7WnqVeYGucCtdEcDE3rdRfavprSm
- 4cNwXKCffwfPebBtPRLQRorxadgsBupS8o7osEutBZ6oJFbghSpG0kRMh w==;
-X-CSE-ConnectionGUID: MxeKY6pXSRm7Y9W4o+1QEg==
-X-CSE-MsgGUID: mjMckC+LRNazO1dxw0Q52g==
-X-IronPort-AV: E=McAfee;i="6800,10657,11700"; a="83666820"
-X-IronPort-AV: E=Sophos;i="6.21,289,1763452800"; d="scan'208";a="83666820"
-Received: from orviesa009.jf.intel.com ([10.64.159.149])
- by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 13 Feb 2026 19:42:02 -0800
-X-CSE-ConnectionGUID: YDZSswRgTVmtNFukaC+csQ==
-X-CSE-MsgGUID: l0NYaZo1Tkquu7ZzjcdMsA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.21,289,1763452800"; d="scan'208";a="212933004"
-Received: from unknown (HELO gnr-sp-2s-612.sh.intel.com) ([10.112.230.229])
- by orviesa009-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 13 Feb 2026 19:41:59 -0800
-From: Zhenzhong Duan <zhenzhong.duan@intel.com>
-To: qemu-devel@nongnu.org
-Cc: alex@shazbot.org, clg@redhat.com, eric.auger@redhat.com, mst@redhat.com,
- jasowang@redhat.com, jgg@nvidia.com, nicolinc@nvidia.com,
- skolothumtho@nvidia.com, joao.m.martins@oracle.com,
- clement.mathieu--drif@eviden.com, kevin.tian@intel.com, yi.l.liu@intel.com,
- xudong.hao@intel.com, Zhenzhong Duan <zhenzhong.duan@intel.com>
-Subject: [RFCv2 PATCH 04/13] intel_iommu: Create the nested hwpt with
- IOMMU_HWPT_ALLOC_PASID flag
-Date: Fri, 13 Feb 2026 22:41:24 -0500
-Message-ID: <20260214034135.220413-5-zhenzhong.duan@intel.com>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260214034135.220413-1-zhenzhong.duan@intel.com>
-References: <20260214034135.220413-1-zhenzhong.duan@intel.com>
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vr7MM-0002x2-89; Fri, 13 Feb 2026 23:34:25 -0500
+Received: from h205.csg.ci.i.u-tokyo.ac.jp (h205.csg.ci.i.u-tokyo.ac.jp
+ [133.11.54.205]) (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 61E4XfFf021785
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Sat, 14 Feb 2026 13:33:53 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=sd3849txVWpf4agTIrXwJOdVo2SNRDihL4uhG/9jcOY=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=From:Date:Subject:Message-Id:To;
+ s=rs20250326; t=1771043633; v=1;
+ b=i0g4utVv8C50Dlr8fI8zHSJTDKOWSdQoiaXOXqfYUXgGR+k1TS1vKLJRbdXDaC+k
+ uTDrnRCTVYH7rIPTjoTRu2JOdZaoi41FLk2sE6s1DRu9Urx3biCF1+bcWLtbeyeL
+ IcvBfsKm0rnZD+mpNQKyFwpZrOkuAX7IX6VxoOnSyf0g9ITa5fW1rsBK3xOd3cC2
+ kOi4EBMh2cjtlbiHMp3k05HSMJxyT++g16YncJeyntwrmMEsSL5jdmCoBaYHt6zZ
+ OCBokgWwSt2X1Q5EqardE6afZJX3BzEQGUwIsAHx6L4FI0OGjF+dADKLUUcDHqlH
+ lpmy2DTmBzDv7PXKkSgKWA==
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Date: Sat, 14 Feb 2026 13:33:36 +0900
+Subject: [PATCH] virtio-gpu-virgl: Add virtio-gpu-virgl-hostmem-region type
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=198.175.65.12;
- envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260214-region-v1-1-229f00ae1f38@rsg.ci.i.u-tokyo.ac.jp>
+X-B4-Tracking: v=1; b=H4sIAB/7j2kC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDIzMDI0MT3aLUdKASXTNLg0RDc/NkAxNzUyWg4oKi1LTMCrBB0bG1tQAW5WF
+ hWAAAAA==
+X-Change-ID: 20260214-region-690a177c0475
+To: qemu-devel@nongnu.org
+Cc: "Michael S. Tsirkin" <mst@redhat.com>,
+ =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Joelle van Dyne <j@getutm.app>, Michael Tokarev <mjt@tls.msk.ru>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-stable@nongnu.org,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+X-Mailer: b4 0.15-dev-67ece
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,83 +77,175 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When pasid is enabled, any hwpt attached to non-PASID or PASID should be
-IOMMU_HWPT_ALLOC_PASID flagged, or else attachment fails.
+Commit e27194e087ae ("virtio-gpu-virgl: correct parent for blob memory
+region") made the name member of MemoryRegion unset, causing a NULL
+pointer dereference[1]:
+> Thread 2 "qemu-system-x86" received signal SIGSEGV, Segmentation fault.
+> (gdb) bt
+> #0  0x00007ffff56565e2 in __strcmp_evex () at /lib64/libc.so.6
+> #1  0x0000555555841bdb in find_fd (head=0x5555572337d0 <cpr_state>,
+> name=0x0, id=0) at ../migration/cpr.c:68
+> #2  cpr_delete_fd (name=name@entry=0x0, id=id@entry=0) at
+> ../migration/cpr.c:77
+> #3  0x000055555582290a in qemu_ram_free (block=0x7ff7e93aa7f0) at
+> ../system/physmem.c:2615
+> #4  0x000055555581ae02 in memory_region_finalize (obj=<optimized out>)
+> at ../system/memory.c:1816
+> #5  0x0000555555a70ab9 in object_deinit (obj=<optimized out>,
+> type=<optimized out>) at ../qom/object.c:715
+> #6  object_finalize (data=0x7ff7e936eff0) at ../qom/object.c:729
+> #7  object_unref (objptr=0x7ff7e936eff0) at ../qom/object.c:1232
+> #8  0x0000555555814fae in memory_region_unref (mr=<optimized out>) at
+> ../system/memory.c:1848
+> #9  flatview_destroy (view=0x555559ed6c40) at ../system/memory.c:301
+> #10 0x0000555555bfc122 in call_rcu_thread (opaque=<optimized out>) at
+> ../util/rcu.c:324
+> #11 0x0000555555bf17a7 in qemu_thread_start (args=0x555557b99520) at
+> ../util/qemu-thread-posix.c:393
+> #12 0x00007ffff556f464 in start_thread () at /lib64/libc.so.6
+> #13 0x00007ffff55f25ac in __clone3 () at /lib64/libc.so.6
 
-Change vtd_destroy_old_fs_hwpt() to pass in 'VTDHostIOMMUDevice *' for
-naming consistency.
+The intention of the aforementioned commit is to prevent a MemoryRegion
+from parenting itself while its references is counted indendependently
+of the device. To achieve the same goal, add a type of QOM objects that
+count references and parent MemoryRegions.
 
-Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+[1] https://lore.kernel.org/qemu-devel/4eb93d7a-1fa9-4b3c-8ad7-a2eb64f025a0@collabora.com/
+
+Cc: qemu-stable@nongnu.org
+Fixes: e27194e087ae ("virtio-gpu-virgl: correct parent for blob memory region")
+Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 ---
- hw/i386/intel_iommu_accel.c | 18 +++++++++++-------
- 1 file changed, 11 insertions(+), 7 deletions(-)
+ hw/display/virtio-gpu-virgl.c | 54 +++++++++++++++++++++++++++++++------------
+ 1 file changed, 39 insertions(+), 15 deletions(-)
 
-diff --git a/hw/i386/intel_iommu_accel.c b/hw/i386/intel_iommu_accel.c
-index 45c08c8f6f..c2757f3bcd 100644
---- a/hw/i386/intel_iommu_accel.c
-+++ b/hw/i386/intel_iommu_accel.c
-@@ -69,11 +69,13 @@ VTDHostIOMMUDevice *vtd_find_hiod_iommufd(VTDAddressSpace *as)
-     return NULL;
- }
+diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+index ecf8494f3676..0f754829fb71 100644
+--- a/hw/display/virtio-gpu-virgl.c
++++ b/hw/display/virtio-gpu-virgl.c
+@@ -52,11 +52,17 @@ virgl_get_egl_display(G_GNUC_UNUSED void *cookie)
  
--static bool vtd_create_fs_hwpt(HostIOMMUDeviceIOMMUFD *idev,
-+static bool vtd_create_fs_hwpt(VTDHostIOMMUDevice *vtd_hiod,
-                                VTDPASIDEntry *pe, uint32_t *fs_hwpt_id,
-                                Error **errp)
- {
-+    HostIOMMUDeviceIOMMUFD *idev = HOST_IOMMU_DEVICE_IOMMUFD(vtd_hiod->hiod);
-     struct iommu_hwpt_vtd_s1 vtd = {};
-+    uint32_t flags = vtd_hiod->iommu_state->pasid ? IOMMU_HWPT_ALLOC_PASID : 0;
+ #if VIRGL_VERSION_MAJOR >= 1
+ struct virtio_gpu_virgl_hostmem_region {
++    Object parent_obj;
+     MemoryRegion mr;
+     struct VirtIOGPU *g;
+     bool finish_unmapping;
+ };
  
-     vtd.flags = (VTD_SM_PASID_ENTRY_SRE(pe) ? IOMMU_VTD_S1_SRE : 0) |
-                 (VTD_SM_PASID_ENTRY_WPE(pe) ? IOMMU_VTD_S1_WPE : 0) |
-@@ -82,13 +84,15 @@ static bool vtd_create_fs_hwpt(HostIOMMUDeviceIOMMUFD *idev,
-     vtd.pgtbl_addr = (uint64_t)vtd_pe_get_fspt_base(pe);
- 
-     return iommufd_backend_alloc_hwpt(idev->iommufd, idev->devid, idev->hwpt_id,
--                                      0, IOMMU_HWPT_DATA_VTD_S1, sizeof(vtd),
--                                      &vtd, fs_hwpt_id, errp);
-+                                      flags, IOMMU_HWPT_DATA_VTD_S1,
-+                                      sizeof(vtd), &vtd, fs_hwpt_id, errp);
- }
- 
--static void vtd_destroy_old_fs_hwpt(HostIOMMUDeviceIOMMUFD *idev,
-+static void vtd_destroy_old_fs_hwpt(VTDHostIOMMUDevice *vtd_hiod,
-                                     VTDAddressSpace *vtd_as)
- {
-+    HostIOMMUDeviceIOMMUFD *idev = HOST_IOMMU_DEVICE_IOMMUFD(vtd_hiod->hiod);
++#define TYPE_VIRTIO_GPU_VIRGL_HOSTMEM_REGION "virtio-gpu-virgl-hostmem-region"
 +
-     if (!vtd_as->fs_hwpt_id) {
-         return;
-     }
-@@ -116,7 +120,7 @@ static bool vtd_device_attach_iommufd(VTDHostIOMMUDevice *vtd_hiod,
++OBJECT_DECLARE_SIMPLE_TYPE(virtio_gpu_virgl_hostmem_region,
++                           VIRTIO_GPU_VIRGL_HOSTMEM_REGION)
++
+ static struct virtio_gpu_virgl_hostmem_region *
+ to_hostmem_region(MemoryRegion *mr)
+ {
+@@ -70,14 +76,22 @@ static void virtio_gpu_virgl_resume_cmdq_bh(void *opaque)
+     virtio_gpu_process_cmdq(g);
+ }
+ 
+-static void virtio_gpu_virgl_hostmem_region_free(void *obj)
++/*
++ * MR could outlive the resource if MR's reference is held outside of
++ * virtio-gpu. In order to prevent unmapping resource while MR is alive,
++ * and thus, making the data pointer invalid, we will block virtio-gpu
++ * command processing until MR is fully unreferenced and freed.
++ */
++static void virtio_gpu_virgl_hostmem_region_finalize(Object *obj)
+ {
+-    MemoryRegion *mr = MEMORY_REGION(obj);
+-    struct virtio_gpu_virgl_hostmem_region *vmr;
++    struct virtio_gpu_virgl_hostmem_region *vmr = VIRTIO_GPU_VIRGL_HOSTMEM_REGION(obj);
+     VirtIOGPUBase *b;
+     VirtIOGPUGL *gl;
+ 
+-    vmr = to_hostmem_region(mr);
++    if (!vmr->g) {
++        return;
++    }
++
+     vmr->finish_unmapping = true;
+ 
+     b = VIRTIO_GPU_BASE(vmr->g);
+@@ -92,11 +106,26 @@ static void virtio_gpu_virgl_hostmem_region_free(void *obj)
+     qemu_bh_schedule(gl->cmdq_resume_bh);
+ }
+ 
++static const TypeInfo virtio_gpu_virgl_hostmem_region_info = {
++    .parent = TYPE_OBJECT,
++    .name = TYPE_VIRTIO_GPU_VIRGL_HOSTMEM_REGION,
++    .instance_size = sizeof(struct virtio_gpu_virgl_hostmem_region),
++    .instance_finalize = virtio_gpu_virgl_hostmem_region_finalize
++};
++
++static void virtio_gpu_virgl_types(void)
++{
++    type_register_static(&virtio_gpu_virgl_hostmem_region_info);
++}
++
++type_init(virtio_gpu_virgl_types)
++
+ static int
+ virtio_gpu_virgl_map_resource_blob(VirtIOGPU *g,
+                                    struct virtio_gpu_virgl_resource *res,
+                                    uint64_t offset)
+ {
++    g_autofree char *name = NULL;
+     struct virtio_gpu_virgl_hostmem_region *vmr;
+     VirtIOGPUBase *b = VIRTIO_GPU_BASE(g);
+     MemoryRegion *mr;
+@@ -117,21 +146,16 @@ virtio_gpu_virgl_map_resource_blob(VirtIOGPU *g,
      }
  
-     if (vtd_pe_pgtt_is_fst(pe)) {
--        if (!vtd_create_fs_hwpt(idev, pe, &hwpt_id, errp)) {
-+        if (!vtd_create_fs_hwpt(vtd_hiod, pe, &hwpt_id, errp)) {
-             return false;
-         }
-     }
-@@ -126,7 +130,7 @@ static bool vtd_device_attach_iommufd(VTDHostIOMMUDevice *vtd_hiod,
-     trace_vtd_device_attach_hwpt(idev->devid, vtd_as->pasid, hwpt_id, ret);
-     if (ret) {
-         /* Destroy old fs_hwpt if it's a replacement */
--        vtd_destroy_old_fs_hwpt(idev, vtd_as);
-+        vtd_destroy_old_fs_hwpt(vtd_hiod, vtd_as);
-         if (vtd_pe_pgtt_is_fst(pe)) {
-             vtd_as->fs_hwpt_id = hwpt_id;
-         }
-@@ -161,7 +165,7 @@ static bool vtd_device_detach_iommufd(VTDHostIOMMUDevice *vtd_hiod,
+     vmr = g_new0(struct virtio_gpu_virgl_hostmem_region, 1);
++    name = g_strdup_printf("blob[%" PRIu32 "]", res->base.resource_id);
++    object_initialize_child(OBJECT(g), name, vmr,
++                            TYPE_VIRTIO_GPU_VIRGL_HOSTMEM_REGION);
+     vmr->g = g;
+ 
+     mr = &vmr->mr;
+-    memory_region_init_ram_ptr(mr, OBJECT(mr), NULL, size, data);
++    memory_region_init_ram_ptr(mr, OBJECT(vmr), "mr", size, data);
+     memory_region_add_subregion(&b->hostmem, offset, mr);
+     memory_region_set_enabled(mr, true);
+ 
+-    /*
+-     * MR could outlive the resource if MR's reference is held outside of
+-     * virtio-gpu. In order to prevent unmapping resource while MR is alive,
+-     * and thus, making the data pointer invalid, we will block virtio-gpu
+-     * command processing until MR is fully unreferenced and freed.
+-     */
+-    OBJECT(mr)->free = virtio_gpu_virgl_hostmem_region_free;
+-
+     res->mr = mr;
+ 
+     trace_virtio_gpu_cmd_res_map_blob(res->base.resource_id, vmr, mr);
+@@ -163,7 +187,7 @@ virtio_gpu_virgl_unmap_resource_blob(VirtIOGPU *g,
+      * 1. Begin async unmapping with memory_region_del_subregion()
+      *    and suspend/block cmd processing.
+      * 2. Wait for res->mr to be freed and cmd processing resumed
+-     *    asynchronously by virtio_gpu_virgl_hostmem_region_free().
++     *    asynchronously by virtio_gpu_virgl_hostmem_region_finalize().
+      * 3. Finish the unmapping with final virgl_renderer_resource_unmap().
+      */
+     if (vmr->finish_unmapping) {
+@@ -186,7 +210,7 @@ virtio_gpu_virgl_unmap_resource_blob(VirtIOGPU *g,
+         /* memory region owns self res->mr object and frees it by itself */
+         memory_region_set_enabled(mr, false);
+         memory_region_del_subregion(&b->hostmem, mr);
+-        object_unref(OBJECT(mr));
++        object_unparent(OBJECT(vmr));
      }
  
-     if (ret) {
--        vtd_destroy_old_fs_hwpt(idev, vtd_as);
-+        vtd_destroy_old_fs_hwpt(vtd_hiod, vtd_as);
-     }
- 
-     return ret;
--- 
-2.47.3
+     return 0;
+
+---
+base-commit: ece408818d27f745ef1b05fb3cc99a1e7a5bf580
+change-id: 20260214-region-690a177c0475
+
+Best regards,
+--  
+Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 
 
