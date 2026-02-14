@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6F46EF99FA
-	for <qemu-devel@archiver.kernel.org>; Sat, 14 Feb 2026 03:43:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7F60EF99F6
+	for <qemu-devel@archiver.kernel.org>; Sat, 14 Feb 2026 03:43:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vr6YG-0005JD-1Z; Fri, 13 Feb 2026 22:42:36 -0500
+	id 1vr6Xi-00058G-5j; Fri, 13 Feb 2026 22:42:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1vr6YF-0005Hz-71
- for qemu-devel@nongnu.org; Fri, 13 Feb 2026 22:42:35 -0500
+ id 1vr6Xg-000581-US
+ for qemu-devel@nongnu.org; Fri, 13 Feb 2026 22:42:00 -0500
 Received: from mgamail.intel.com ([198.175.65.12])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1vr6YD-0008J1-Kp
- for qemu-devel@nongnu.org; Fri, 13 Feb 2026 22:42:34 -0500
+ id 1vr6Xf-0008J1-D6
+ for qemu-devel@nongnu.org; Fri, 13 Feb 2026 22:42:00 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1771040554; x=1802576554;
+ t=1771040519; x=1802576519;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=SDpCFayu97R5owktLGHAkU9F+zX5Nl2NSUvxpfROTIE=;
- b=VFSoW0ZLsCVB4SFIzWwi2nY7v7ZQotzMXgHkakk4OSUGSNoUxZQcOW3A
- eYjQmkAc9GoSMcmq5YxLbKhVrUnhAdcdnPisYtH3h+UYAcWl6bdEiC9ZQ
- xRENjK+08mjZs31a8Z+LEgxoKHrmi23F1RrKqQcC1V0rH4U2faWRLNW13
- NuDMMkakuSclopH33L+lG7EqfqhbBIt6uhmu9KZITGXUVzXdKlZaiVnKO
- 4CxsB0KIBSIrClIO2zwSx9M3sMnI9WH+MNVRQCNB1BoEGX4/3gNDXfn8J
- zDJvteo8KYWiBxTHI+/Q+0IbTEvFeisYsI3W/6ANSfm1dy43afg2dKhz4 w==;
-X-CSE-ConnectionGUID: EqByieCcR2ixmcP/cFmWxg==
-X-CSE-MsgGUID: vaT1F+OpQruyVgdqUyRpHg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11700"; a="83666877"
-X-IronPort-AV: E=Sophos;i="6.21,289,1763452800"; d="scan'208";a="83666877"
+ bh=PZiKPHz95BBgPb151LL+6wUcQZZQYeja5VAOu/lm/xE=;
+ b=Q/2KH6KedOJNqHqeL+A3P+2qYDl1kD31vUhndRxAWj419mgNL62cLMXu
+ HHAiXT1+4up4Ls8Bv4uCozJtx0EgQaJVtT1vpgQdtZIVGfv2OGDwP5pJ4
+ iCkdc84PvKUjtbgUuWO3Lrq/fySnN/OVG5oi14xCbwa7OEFfLvUw5tkPz
+ w+EbqbY39ZkNzgaoyBWYwsGuJXUhPyOjVDto0QI1jYld9+YukMuDK2Wst
+ 7Oirc8pz7R6pakMYXKDCD5KrG7iTA8OSyTfwpOsMNgXUvENPVNcp/uxB+
+ 5yuh94VfF9bl1La8zK5kYVmOV2F2Nwvq+AVqyPAtn0zG29sGFeBev/qQ8 A==;
+X-CSE-ConnectionGUID: K7Yh8dHxTRe3H503KlhtUA==
+X-CSE-MsgGUID: MiQFb6TGRr2Onua7MnG+dQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11700"; a="83666812"
+X-IronPort-AV: E=Sophos;i="6.21,289,1763452800"; d="scan'208";a="83666812"
 Received: from orviesa009.jf.intel.com ([10.64.159.149])
  by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 13 Feb 2026 19:42:33 -0800
-X-CSE-ConnectionGUID: Q9A+0ZH+Q1mINV4PkNrjug==
-X-CSE-MsgGUID: DyMFskqeSDW2xzh2ajFqKQ==
+ 13 Feb 2026 19:41:59 -0800
+X-CSE-ConnectionGUID: 1mmkvfy0QxGbzWuXnom65A==
+X-CSE-MsgGUID: Hdbcwh/ySymgabw7UlbsMg==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.21,289,1763452800"; d="scan'208";a="212933129"
+X-IronPort-AV: E=Sophos;i="6.21,289,1763452800"; d="scan'208";a="212932951"
 Received: from unknown (HELO gnr-sp-2s-612.sh.intel.com) ([10.112.230.229])
  by orviesa009-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 13 Feb 2026 19:42:29 -0800
+ 13 Feb 2026 19:41:55 -0800
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
 Cc: alex@shazbot.org, clg@redhat.com, eric.auger@redhat.com, mst@redhat.com,
@@ -53,9 +53,10 @@ Cc: alex@shazbot.org, clg@redhat.com, eric.auger@redhat.com, mst@redhat.com,
  skolothumtho@nvidia.com, joao.m.martins@oracle.com,
  clement.mathieu--drif@eviden.com, kevin.tian@intel.com, yi.l.liu@intel.com,
  xudong.hao@intel.com, Zhenzhong Duan <zhenzhong.duan@intel.com>
-Subject: [RFCv2 PATCH 12/13] intel_iommu_accel: Add pasid bits size check
-Date: Fri, 13 Feb 2026 22:41:32 -0500
-Message-ID: <20260214034135.220413-13-zhenzhong.duan@intel.com>
+Subject: [RFCv2 PATCH 03/13] vfio/iommufd: Create nesting parent hwpt with
+ IOMMU_HWPT_ALLOC_PASID flag
+Date: Fri, 13 Feb 2026 22:41:23 -0500
+Message-ID: <20260214034135.220413-4-zhenzhong.duan@intel.com>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260214034135.220413-1-zhenzhong.duan@intel.com>
 References: <20260214034135.220413-1-zhenzhong.duan@intel.com>
@@ -86,72 +87,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-If pasid bits size is bigger than host side, host could fail to emulate
-all bindings in guest. Add a check to fail device plug early.
+When both host device and vIOMMU have PASID enabled, then guest may
+setup pasid attached translation.
 
-Pasid bits size should also be no more than 20 bits according to PCI spec.
+We need to create the nesting parent hwpt with IOMMU_HWPT_ALLOC_PASID
+flag because according to uAPI, any domain attached to the non-PASID
+part of the device must also be flagged, otherwise attaching a PASID
+will blocked.
+
+Introduce a vfio_device_get_viommu_flags_pasid_supported() helper to
+facilitate this implementation.
 
 Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 ---
- hw/i386/intel_iommu_internal.h | 1 +
- hw/i386/intel_iommu.c          | 5 +++++
- hw/i386/intel_iommu_accel.c    | 8 ++++++++
- 3 files changed, 14 insertions(+)
+ include/hw/vfio/vfio-device.h |  1 +
+ hw/vfio/device.c              | 11 +++++++++++
+ hw/vfio/iommufd.c             |  8 +++++++-
+ 3 files changed, 19 insertions(+), 1 deletion(-)
 
-diff --git a/hw/i386/intel_iommu_internal.h b/hw/i386/intel_iommu_internal.h
-index e4bcc884b0..e5518a94ea 100644
---- a/hw/i386/intel_iommu_internal.h
-+++ b/hw/i386/intel_iommu_internal.h
-@@ -195,6 +195,7 @@
- #define VTD_ECAP_MHMV               (15ULL << 20)
- #define VTD_ECAP_SRS                (1ULL << 31)
- #define VTD_ECAP_NWFS               (1ULL << 33)
-+#define VTD_ECAP_PSS(x)             extract64(x, 35, 5)
- #define VTD_ECAP_PASID              (1ULL << 40)
- #define VTD_ECAP_PDS                (1ULL << 42)
- #define VTD_ECAP_SMTS               (1ULL << 43)
-diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-index 6483cb3d85..c1b31b17de 100644
---- a/hw/i386/intel_iommu.c
-+++ b/hw/i386/intel_iommu.c
-@@ -5545,6 +5545,11 @@ static bool vtd_decide_config(IntelIOMMUState *s, Error **errp)
-         error_setg(errp, "Need to set scalable mode for PASID");
-         return false;
-     }
-+    if (s->pasid >= PCI_EXT_CAP_PASID_MAX_WIDTH) {
-+        error_setg(errp, "PASID width %d, exceed Max PASID Width %d allowed "
-+                   "in PCI spec", s->pasid, PCI_EXT_CAP_PASID_MAX_WIDTH);
-+        return false;
+diff --git a/include/hw/vfio/vfio-device.h b/include/hw/vfio/vfio-device.h
+index 35a5ec6d92..983eb0ecce 100644
+--- a/include/hw/vfio/vfio-device.h
++++ b/include/hw/vfio/vfio-device.h
+@@ -268,6 +268,7 @@ void vfio_device_prepare(VFIODevice *vbasedev, VFIOContainer *bcontainer,
+ void vfio_device_unprepare(VFIODevice *vbasedev);
+ 
+ bool vfio_device_get_viommu_flags_want_nesting(VFIODevice *vbasedev);
++bool vfio_device_get_viommu_flags_pasid_supported(VFIODevice *vbasedev);
+ bool vfio_device_get_host_iommu_quirk_bypass_ro(VFIODevice *vbasedev,
+                                                 uint32_t type, void *caps,
+                                                 uint32_t size);
+diff --git a/hw/vfio/device.c b/hw/vfio/device.c
+index 973fc35b59..b15ca6ef0a 100644
+--- a/hw/vfio/device.c
++++ b/hw/vfio/device.c
+@@ -533,6 +533,17 @@ bool vfio_device_get_viommu_flags_want_nesting(VFIODevice *vbasedev)
+     return false;
+ }
+ 
++bool vfio_device_get_viommu_flags_pasid_supported(VFIODevice *vbasedev)
++{
++    VFIOPCIDevice *vdev = vfio_pci_from_vfio_device(vbasedev);
++
++    if (vdev) {
++        return !!(pci_device_get_viommu_flags(PCI_DEVICE(vdev)) &
++                  VIOMMU_FLAG_PASID_SUPPORTED);
 +    }
++    return false;
++}
++
+ bool vfio_device_get_host_iommu_quirk_bypass_ro(VFIODevice *vbasedev,
+                                                 uint32_t type, void *caps,
+                                                 uint32_t size)
+diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
+index 005f97fe25..c408f9151b 100644
+--- a/hw/vfio/iommufd.c
++++ b/hw/vfio/iommufd.c
+@@ -360,6 +360,7 @@ static bool iommufd_cdev_autodomains_get(VFIODevice *vbasedev,
+     VendorCaps caps;
+     VFIOIOASHwpt *hwpt;
+     uint32_t hwpt_id;
++    uint8_t max_pasid_log2 = 0;
+     int ret;
  
-     if (s->svm) {
-         if (!x86_iommu->dt_supported) {
-diff --git a/hw/i386/intel_iommu_accel.c b/hw/i386/intel_iommu_accel.c
-index acb1b1e238..15412123d5 100644
---- a/hw/i386/intel_iommu_accel.c
-+++ b/hw/i386/intel_iommu_accel.c
-@@ -44,6 +44,7 @@ bool vtd_check_hiod_accel(IntelIOMMUState *s, VTDHostIOMMUDevice *vtd_hiod,
-     HostIOMMUDevice *hiod = vtd_hiod->hiod;
-     struct HostIOMMUDeviceCaps *caps = &hiod->caps;
-     struct iommu_hw_info_vtd *vtd = &caps->vendor_caps.vtd;
-+    uint8_t hpasid = VTD_ECAP_PSS(vtd->ecap_reg) + 1;
-     PCIBus *bus = vtd_hiod->bus;
-     PCIDevice *pdev = bus->devices[vtd_hiod->devfn];
- 
-@@ -64,6 +65,13 @@ bool vtd_check_hiod_accel(IntelIOMMUState *s, VTDHostIOMMUDevice *vtd_hiod,
+     /* Try to find a domain */
+@@ -405,7 +406,7 @@ static bool iommufd_cdev_autodomains_get(VFIODevice *vbasedev,
+      */
+     if (!iommufd_backend_get_device_info(vbasedev->iommufd, vbasedev->devid,
+                                          &type, &caps, sizeof(caps), &hw_caps,
+-                                         NULL, errp)) {
++                                         &max_pasid_log2, errp)) {
          return false;
      }
  
-+    /* Only do the check when host device support PASIDs */
-+    if (caps->max_pasid_log2 && s->pasid > hpasid) {
-+        error_setg(errp, "PASID bits size %d > host IOMMU PASID bits size %d",
-+                   s->pasid, hpasid);
-+        return false;
+@@ -427,6 +428,11 @@ static bool iommufd_cdev_autodomains_get(VFIODevice *vbasedev,
+         }
+     }
+ 
++    if (max_pasid_log2 &&
++        vfio_device_get_viommu_flags_pasid_supported(vbasedev)) {
++        flags |= IOMMU_HWPT_ALLOC_PASID;
 +    }
 +
-     if (pci_device_get_iommu_bus_devfn(pdev, &bus, NULL, NULL)) {
-         error_setg(errp, "Host device downstream to a PCI bridge is "
-                    "unsupported when x-flts=on");
+     if (cpr_is_incoming()) {
+         hwpt_id = vbasedev->cpr.hwpt_id;
+         goto skip_alloc;
 -- 
 2.47.3
 
