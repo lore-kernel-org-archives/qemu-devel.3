@@ -4,57 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE373EF99FF
-	for <qemu-devel@archiver.kernel.org>; Sat, 14 Feb 2026 12:13:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CEC6EF48C5
+	for <qemu-devel@archiver.kernel.org>; Sat, 14 Feb 2026 12:20:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vrEWZ-0005Go-8e; Sat, 14 Feb 2026 07:13:23 -0500
+	id 1vrEcP-0007nG-R3; Sat, 14 Feb 2026 07:19:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vrEWY-0005Gg-Ak
- for qemu-devel@nongnu.org; Sat, 14 Feb 2026 07:13:22 -0500
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ id 1vrEcK-0007mc-8f; Sat, 14 Feb 2026 07:19:20 -0500
+Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vrEWW-00008b-5I
- for qemu-devel@nongnu.org; Sat, 14 Feb 2026 07:13:22 -0500
+ id 1vrEcI-0000hG-2S; Sat, 14 Feb 2026 07:19:19 -0500
 Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id B389B5969F6;
- Sat, 14 Feb 2026 13:13:17 +0100 (CET)
+ by zero.eik.bme.hu (Postfix) with ESMTP id 389BA596A0B;
+ Sat, 14 Feb 2026 13:19:16 +0100 (CET)
 X-Virus-Scanned: amavis at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id 9VCgWtzFeKSe; Sat, 14 Feb 2026 13:13:15 +0100 (CET)
+ id iaK4fc6q5T1a; Sat, 14 Feb 2026 13:19:14 +0100 (CET)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 9CD215969F1; Sat, 14 Feb 2026 13:13:15 +0100 (CET)
+ id 2134B5969F1; Sat, 14 Feb 2026 13:19:14 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 9797E5969F0;
- Sat, 14 Feb 2026 13:13:15 +0100 (CET)
-Date: Sat, 14 Feb 2026 13:13:15 +0100 (CET)
+ by zero.eik.bme.hu (Postfix) with ESMTP id 1F8965969F0;
+ Sat, 14 Feb 2026 13:19:14 +0100 (CET)
+Date: Sat, 14 Feb 2026 13:19:14 +0100 (CET)
 From: BALATON Zoltan <balaton@eik.bme.hu>
-To: =?ISO-8859-15?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>
-cc: Mark Cave-Ayland <mark.caveayland@nutanix.com>, qemu-devel@nongnu.org, 
- =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>, 
- Gerd Hoffmann <kraxel@redhat.com>
-Subject: Re: [PATCH 34/43] audio: rework DEBUG_POLL
-In-Reply-To: <CAMxuvay8QBghas9-vmf_2mqL2aDj9byFOmK+G1G1562E5KLvKQ@mail.gmail.com>
-Message-ID: <9647b133-f824-74ea-f1c4-3691ee99222f@eik.bme.hu>
-References: <20260127182516.289834-1-marcandre.lureau@redhat.com>
- <20260127182516.289834-35-marcandre.lureau@redhat.com>
- <d094a131-9ef7-4c49-b037-76583b3b48e0@nutanix.com>
- <CAMxuvay8QBghas9-vmf_2mqL2aDj9byFOmK+G1G1562E5KLvKQ@mail.gmail.com>
+To: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
+cc: qemu-devel@nongnu.org, Chinmay Rath <rathc@linux.ibm.com>, 
+ =?ISO-8859-15?Q?Herv=E9_Poussineau?= <hpoussin@reactos.org>, 
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, 
+ Nicholas Piggin <npiggin@gmail.com>, 
+ Artyom Tarasenko <atar4qemu@gmail.com>, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-ppc@nongnu.org, 
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, 
+ Laurent Vivier <laurent@vivier.eu>
+Subject: Re: [PATCH 8/8] system/globals: Build as common code
+In-Reply-To: <c2a8834a-de12-d48e-f869-197acbbe1d3e@eik.bme.hu>
+Message-ID: <17b8fc03-2eee-8cc7-c619-7f862b552408@eik.bme.hu>
+References: <20260214021240.58657-1-philmd@linaro.org>
+ <20260214021240.58657-9-philmd@linaro.org>
+ <6c85073c-e70c-3cb2-d2ad-57c5177dab88@eik.bme.hu>
+ <c2a8834a-de12-d48e-f869-197acbbe1d3e@eik.bme.hu>
 MIME-Version: 1.0
 Content-Type: multipart/mixed;
- boundary="3866299591-1956513522-1771071195=:43665"
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+ boundary="3866299591-1559090299-1771071554=:43665"
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -73,91 +77,79 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
   This message is in MIME format.  The first part should be readable text,
   while the remaining parts are likely unreadable without MIME-aware tools.
 
---3866299591-1956513522-1771071195=:43665
-Content-Type: text/plain; charset=UTF-8; format=flowed
+--3866299591-1559090299-1771071554=:43665
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
 Content-Transfer-Encoding: 8BIT
 
-On Sat, 14 Feb 2026, Marc-André Lureau wrote:
-> On Fri, Feb 13, 2026 at 4:50 PM Mark Cave-Ayland
-> <mark.caveayland@nutanix.com> wrote:
->>
->> On 27/01/2026 18:25, marcandre.lureau@redhat.com wrote:
->>
->>> From: Marc-André Lureau <marcandre.lureau@redhat.com>
->>>
->>> Use more correct GTimer, specific for each backend, with a trace event.
->>>
->>> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+On Sat, 14 Feb 2026, BALATON Zoltan wrote:
+> On Sat, 14 Feb 2026, BALATON Zoltan wrote:
+>> On Sat, 14 Feb 2026, Philippe Mathieu-Daud� wrote:
+>>> Now than all targets have the graphic dimension variables
+>> 
+>> Typo: ^^^^ that
+>> 
+>>> initialized the same way, we can move them to the common
+>>> file unit, having them built once. Remove the now empty
+>>> globals-target.c file.
+>>> 
+>>> Signed-off-by: Philippe Mathieu-Daud� <philmd@linaro.org>
 >>> ---
->>>   audio/audio_int.h       |  1 +
->>>   audio/audio-mixeng-be.c | 25 +++++++++----------------
->>>   audio/trace-events      |  1 +
->>>   3 files changed, 11 insertions(+), 16 deletions(-)
->>>
->>> diff --git a/audio/audio_int.h b/audio/audio_int.h
->>> index dd5f2220d75..e0ed6af67ed 100644
->>> --- a/audio/audio_int.h
->>> +++ b/audio/audio_int.h
->>> @@ -224,6 +224,7 @@ struct AudioMixengBackend {
->>>       Audiodev *dev;
->>>
->>>       QEMUTimer *ts;
->>> +    GTimer *run_timer;
->>>       QLIST_HEAD (hw_in_listhead, HWVoiceIn) hw_head_in;
->>>       QLIST_HEAD (hw_out_listhead, HWVoiceOut) hw_head_out;
->>>       QLIST_HEAD (cap_listhead, CaptureVoiceOut) cap_head;
->>> diff --git a/audio/audio-mixeng-be.c b/audio/audio-mixeng-be.c
->>> index 343f6ec181e..1b2c1fafa87 100644
->>> --- a/audio/audio-mixeng-be.c
->>> +++ b/audio/audio-mixeng-be.c
->>> @@ -24,13 +24,13 @@
->>>   #include "system/replay.h"
->>>   #include "system/runstate.h"
->>>   #include "trace.h"
->>> +#include "trace/control.h"
->>>
->>>   #define AUDIO_CAP "audio"
->>>   #include "audio_int.h"
->>>
->>>   /* #define DEBUG_OUT */
->>>   /* #define DEBUG_CAPTURE */
->>> -/* #define DEBUG_POLL */
->>>
->>>   #define SW_NAME(sw) (sw)->name ? (sw)->name : "unknown"
->>>
->>> @@ -1269,22 +1269,12 @@ void audio_run(AudioMixengBackend *s, const char *msg)
->>>       audio_run_in(s);
->>>       audio_run_capture(s);
->>>
->>> -#ifdef DEBUG_POLL
->>> -    {
->>> -        static double prevtime;
->>> -        double currtime;
->>> -        struct timeval tv;
+>>> system/globals-target.c | 14 --------------
+>>> system/globals.c        |  3 +++
+>>> system/meson.build      |  4 ----
+>>> 3 files changed, 3 insertions(+), 18 deletions(-)
+>>> delete mode 100644 system/globals-target.c
+>>> 
+>>> diff --git a/system/globals-target.c b/system/globals-target.c
+>>> deleted file mode 100644
+>>> index ffa6c308b59..00000000000
+>>> --- a/system/globals-target.c
+>>> +++ /dev/null
+>>> @@ -1,14 +0,0 @@
+>>> -/*
+>>> - * Global variables that should not exist (target specific)
+>>> - *
+>>> - * Copyright (c) 2003-2008 Fabrice Bellard
+>>> - *
+>>> - * SPDX-License-Identifier: MIT
+>>> - */
 >>> -
->>> -        if (gettimeofday (&tv, NULL)) {
->>> -            perror ("audio_run: gettimeofday");
->>> -            return;
->>> -        }
+>>> -#include "qemu/osdep.h"
+>>> -#include "system/system.h"
 >>> -
->>> -        currtime = tv.tv_sec + tv.tv_usec * 1e-6;
->>> -        dolog ("Elapsed since last %s: %f\n", msg, currtime - prevtime);
->>> -        prevtime = currtime;
->>> +    if (trace_event_get_state(TRACE_AUDIO_RUN_POLL)) {
->>> +        /* Convert seconds to microseconds for trace event */
->>> +        int64_t elapsed_us = g_timer_elapsed(s->run_timer, NULL) * 1000000;
->>
->> Not being familiar with g_timer_elapsed() I had a look at the glib docs,
->> and it seems that g_timer_elapsed() returns a gdouble as opposed to an
->> int64_t?
+>>> -int graphic_width;
+>>> -int graphic_height;
+>>> -int graphic_depth;
+>>> diff --git a/system/globals.c b/system/globals.c
+>>> index c33f6ed3902..34fd3ce9c72 100644
+>>> --- a/system/globals.c
+>>> +++ b/system/globals.c
+>>> @@ -49,6 +49,9 @@ bool enable_cpu_pm;
+>>> int autostart = 1;
+>>> int vga_interface_type = VGA_NONE;
+>>> bool vga_interface_created;
+>>> +int graphic_width;
+>>> +int graphic_height;
+>>> +int graphic_depth;
+>> 
+>> Where do other machines get their default values from now? This used to 
+>> have #else 800x600x32 which is the default resolution when not specifying a 
+>> -g option and some machines may depend on that. Where that default is
+>> established now?
 >
-> yes, as seconds. So it is multiplied by 1000000 to get back usec, as before
+> So it seems this reverts your commit 5dc4337f7908 from a year ago. The 
+> message linked in that commit message says these are only used by ppc and 
+> sparc machines. In that case maybe not needed here as global and better be 
+> moved to ppc.{h,c} after removing the special cases as I thought in previous 
+> patch.
 
-There's #define NANOSECONDS_PER_SECOND 1000000000LL in qemu/timer.h. Do we 
-need a MICROSECONDS_PER_SECOND constant there (or defined here) to make it 
-more obvious?
+Of course I should also think before speaking because then where do sparc 
+and q800 get those variables and the command line parsing that sets 
+them... So this needs to stay as globals for now but can be set to 
+800x600x32 as global defaults (that sparc an 188 will replace with their 
+own) so the ppc patch is not needed then.
 
 Regards,
 BALATON Zoltan
---3866299591-1956513522-1771071195=:43665--
+--3866299591-1559090299-1771071554=:43665--
 
