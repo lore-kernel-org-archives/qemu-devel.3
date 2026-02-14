@@ -4,88 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7AAFEDF142
-	for <qemu-devel@archiver.kernel.org>; Sat, 14 Feb 2026 06:11:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71013EF99E1
+	for <qemu-devel@archiver.kernel.org>; Sat, 14 Feb 2026 07:03:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vr8rh-0003Vo-Vk; Sat, 14 Feb 2026 01:10:49 -0500
+	id 1vr9gA-0003qr-Ae; Sat, 14 Feb 2026 02:02:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vr8rg-0003Vb-5R
- for qemu-devel@nongnu.org; Sat, 14 Feb 2026 01:10:48 -0500
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vr8rd-0000aF-MD
- for qemu-devel@nongnu.org; Sat, 14 Feb 2026 01:10:47 -0500
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-2aad9b03745so8250255ad.0
- for <qemu-devel@nongnu.org>; Fri, 13 Feb 2026 22:10:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771049444; x=1771654244; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=S/TdjhIX7ndaIiCITprzVCbcaXDOvqYMczYb6hGcNms=;
- b=ysOkIOMDMa4fl3qZ+u2n7efahtd/szdV4d5oBQIcit5H7GRVv8pTW8Spmt92GLJXJP
- 4n6dmw/wqQNVlNWbLT38kMC5w4S85R8YYuz2yPrg9FD/AoCquTL1chsofoUjBIccjKUg
- +zy7tE22ii8KLN1lcPQRz+ZGGsCttDZgd79TrEj1ZenpkH6hJ5X6bxVsycjdEQ5u85Yi
- 56wLqYpwro0tErvvDHumiWGWENV9l1WFZDL3vb3yt21hIYJNyQO3KXYM0xCzJQX8yIYA
- 6z1vncNs1GebSYTLbGoPxzG5WLLe6b9dZ2jH/GSsZ9OY0uG6+BRdDwTU6j2/FbWm8bC8
- 3inw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771049444; x=1771654244;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=S/TdjhIX7ndaIiCITprzVCbcaXDOvqYMczYb6hGcNms=;
- b=PmNM87uZb0B/3aeeaay8DUwL5lS5UpWIw860wRRBEtTQoF8LqfsKqeRItlffXFKXkV
- asvujaAfSeIxrsXnLaNY0zpfFcqg8zfwXWSzu/rWv4sriBC3yQdEKnhUNkiAgfv/FtMM
- HWKrZpYM/uVOIX4H59vQU8shgYUal/JAoHo9dHcCQkW4bq/1FdPrMmShwT5wP/cko7M0
- DievxzPGbV6+4sDs/cp1pIWEkhhkqWee0SqiPS4ky4wxfMrFCDddoBHVCJnwqDyQugSy
- gV0flcrs84R72Tk/AhRFivFG2v/nGVgc4Md0Tk37IF11hKSP2Vr/HdJ9a8fTArXNCu+b
- nx3w==
-X-Gm-Message-State: AOJu0YwGmFVU9xsKKALF+JwXu8TZ/Z0nYy5Lfg2ScLgzzseSeJJMKubI
- LECEezPVulWD2FryW3+1oYPX7XGtPywWOnisnnEL+MUffQGMQB/1jJZf0ajG+VeiFQMSYG5mSQa
- vEAgs
-X-Gm-Gg: AZuq6aJkEomlSTTLwH1PSkAdPl5CdKcgyq14BFBRcH/S5yEidvxhTSoNACqPKy0/Pxr
- PcrtMEiJnfYSbEVQ7yS8oIQluutZYT/1nr7hIt46uWakGu4tSCGFLZWuezdAGU+VNClsrwS9PUN
- koJJHe/gJFPpHHWOP5IwCfBW5jqz0rymQv4/K+nIYz0Uwr0RkV1hQhsEDk+6HrYTqusuaRsv6fw
- 4pLVLXGaiEa748XLNe+l2xgE/Lhkbuz8X/1N46tdSz63bDnzWhUGhEfbuOsVjCkT0EdlmtJWl7f
- vL7I2ew0atgIOBbOR64svuj0Lwg3iV0xHHEO2iWmQRE3QzZwKuazI43leWFapIx9xUmG76/4Lao
- pylRUUvkQp8a9F3i/pLSpCznbUGV8nYJkdqWhH5z5h4AGVlpw53TFfpNwq4/oDRVtPtrljsVBBQ
- OsEg0M1/VwRRhew2P0nb5CtCXGT4fB/goiOMwecRXi1hYqzozBskf75nWZP1FAuNpR+qWmWmoR9
- MXQ
-X-Received: by 2002:a17:903:32d0:b0:2aa:e1f0:5481 with SMTP id
- d9443c01a7336-2acba598d5fmr25974095ad.30.1771049443791; 
- Fri, 13 Feb 2026 22:10:43 -0800 (PST)
-Received: from pc.taild8403c.ts.net (216-71-219-44.dyn.novuscom.net.
- [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2ad1aadbb9bsm8545945ad.62.2026.02.13.22.10.43
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 13 Feb 2026 22:10:43 -0800 (PST)
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, philmd@linaro.org,
- Alexandre Iooss <erdnaxe@crans.org>, jsnow@redhat.com
-Subject: [PATCH] contrib/plugins/cpp: use __has_include
-Date: Fri, 13 Feb 2026 22:10:24 -0800
-Message-ID: <20260214061025.1239457-1-pierrick.bouvier@linaro.org>
-X-Mailer: git-send-email 2.47.3
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1vr9g8-0003qZ-Kh; Sat, 14 Feb 2026 02:02:56 -0500
+Received: from isrv.corpit.ru ([212.248.84.144])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1vr9g6-0004MJ-Bo; Sat, 14 Feb 2026 02:02:56 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 67283189594;
+ Sat, 14 Feb 2026 10:02:36 +0300 (MSK)
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 4AAD1364863;
+ Sat, 14 Feb 2026 10:02:41 +0300 (MSK)
+Message-ID: <35e40a06-ba51-4716-a492-71b58b517a89@tls.msk.ru>
+Date: Sat, 14 Feb 2026 10:02:41 +0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x635.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] net/slirp: allow hostfwd socket paths with dashes
+To: Christopher Palmer-Richez <crichez@pm.me>, qemu-devel@nongnu.org,
+ qemu-trivial@nongnu.org
+Cc: Samuel Thibault <samuel.thibault@ens-lyon.org>,
+ Jason Wang <jasowang@redhat.com>
+References: <20260213-fix-hostfwd-unix-dash-v1-1-9e26fc2b63d6@pm.me>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <20260213-fix-hostfwd-unix-dash-v1-1-9e26fc2b63d6@pm.me>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,386 +105,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This make sure we can include all possible headers without breaking
-build for environments missing them. It fixes compilation on openbsd.
+On 2/14/26 00:57, Christopher Palmer-Richez wrote:
+> Adds get_last_str_sep, a variant of get_str_sep that checks for the last
+> occurence of a separator. Updates slirp_hostfwd to parse unix domain
+> socket paths with dashes.
+> 
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/347
+> Signed-off-by: Christopher Palmer-Richez <crichez@pm.me>
+> ---
+> QEMU added support for `-netdev user,hostfwd=unix:/tmp/vm-:22` last year.
+> The implementation detects the first dash, and interprets the right side
+> of it as the guest address (or lack thereof). If the host socket path
+> contains a dash, the invocation fails with "Bad guest address."
+> 
+> This tiny patch adds a variant of the `get_str_sep` method previously
+> used by `slirp_hostfwd`, but that detects the last occurence of a
+> separator instead: `get_last_str_sep`. The only difference is the use of
+> `strrchr` instead of `strchr`. `slirp_hostfwd` now uses it. It ignores
+> dashes up to the last occurence, which allows unix domain socket paths
+> with dashes.
 
-We don't want to pollute configure script, as it's really a special case
-here to make sure we don't have a compilation regression with
-qemu-plugins header.
+I think neither of the current or the proposed variants is the right
+solution.  It doesn't matter how we count the dashes, one way or another
+we'll miss the user intention, for example, does the host side allowed
+to contain a host name instead of just an IP address?  Besides,
+hostfwd=unix:/tmp/foo-bar-:22 is just ugly, it's difficult to read.
 
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
----
- contrib/plugins/cpp.cpp | 261 +++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 259 insertions(+), 2 deletions(-)
+It feels like some other solution should be used here, and the
+original way wasn't right (it is in used now already, though).
 
-diff --git a/contrib/plugins/cpp.cpp b/contrib/plugins/cpp.cpp
-index 1ff54896d97..0673c4f074d 100644
---- a/contrib/plugins/cpp.cpp
-+++ b/contrib/plugins/cpp.cpp
-@@ -6,103 +6,360 @@
- 
- #include <qemu-plugin.h>
- 
--/* https://en.cppreference.com/w/cpp/headers.html */
-+/*
-+ * We include all C++ standard headers (without deprecated ones),
-+ * taken from: https://en.cppreference.com/w/cpp/headers.html
-+ *
-+ * To update, copy page text, and then:
-+ * grep '^<' |
-+ * sort -u |
-+ * grep -v strstream |
-+ * grep -v codecvt |
-+ * sed -e 's/\(.*\)/#if __has_include(\1)\n#include \1\n#endif/'
-+ */
-+
-+#if __has_include(<algorithm>)
- #include <algorithm>
-+#endif
-+#if __has_include(<any>)
- #include <any>
-+#endif
-+#if __has_include(<array>)
- #include <array>
-+#endif
-+#if __has_include(<atomic>)
- #include <atomic>
-+#endif
-+#if __has_include(<barrier>)
- #include <barrier>
-+#endif
-+#if __has_include(<bit>)
- #include <bit>
-+#endif
-+#if __has_include(<bitset>)
- #include <bitset>
-+#endif
-+#if __has_include(<cassert>)
- #include <cassert>
-+#endif
-+#if __has_include(<cctype>)
- #include <cctype>
-+#endif
-+#if __has_include(<cerrno>)
- #include <cerrno>
-+#endif
-+#if __has_include(<cfenv>)
- #include <cfenv>
-+#endif
-+#if __has_include(<cfloat>)
- #include <cfloat>
-+#endif
-+#if __has_include(<charconv>)
- #include <charconv>
-+#endif
-+#if __has_include(<chrono>)
- #include <chrono>
-+#endif
-+#if __has_include(<cinttypes>)
- #include <cinttypes>
-+#endif
-+#if __has_include(<climits>)
- #include <climits>
-+#endif
-+#if __has_include(<clocale>)
- #include <clocale>
-+#endif
-+#if __has_include(<cmath>)
- #include <cmath>
--#include <codecvt>
-+#endif
-+#if __has_include(<compare>)
- #include <compare>
-+#endif
-+#if __has_include(<complex>)
- #include <complex>
-+#endif
-+#if __has_include(<concepts>)
- #include <concepts>
-+#endif
-+#if __has_include(<condition_variable>)
- #include <condition_variable>
-+#endif
-+#if __has_include(<contracts>)
-+#include <contracts>
-+#endif
-+#if __has_include(<coroutine>)
- #include <coroutine>
-+#endif
-+#if __has_include(<csetjmp>)
- #include <csetjmp>
-+#endif
-+#if __has_include(<csignal>)
- #include <csignal>
-+#endif
-+#if __has_include(<cstdarg>)
- #include <cstdarg>
-+#endif
-+#if __has_include(<cstddef>)
- #include <cstddef>
-+#endif
-+#if __has_include(<cstdint>)
- #include <cstdint>
-+#endif
-+#if __has_include(<cstdio>)
- #include <cstdio>
-+#endif
-+#if __has_include(<cstdlib>)
- #include <cstdlib>
-+#endif
-+#if __has_include(<cstring>)
- #include <cstring>
-+#endif
-+#if __has_include(<ctime>)
- #include <ctime>
-+#endif
-+#if __has_include(<cuchar>)
- #include <cuchar>
-+#endif
-+#if __has_include(<cwchar>)
- #include <cwchar>
-+#endif
-+#if __has_include(<cwctype>)
- #include <cwctype>
-+#endif
-+#if __has_include(<debugging>)
-+#include <debugging>
-+#endif
-+#if __has_include(<deque>)
- #include <deque>
-+#endif
-+#if __has_include(<exception>)
- #include <exception>
-+#endif
-+#if __has_include(<execution>)
- #include <execution>
-+#endif
-+#if __has_include(<expected>)
-+#include <expected>
-+#endif
-+#if __has_include(<filesystem>)
- #include <filesystem>
-+#endif
-+#if __has_include(<flat_map>)
-+#include <flat_map>
-+#endif
-+#if __has_include(<flat_set>)
-+#include <flat_set>
-+#endif
-+#if __has_include(<format>)
-+#include <format>
-+#endif
-+#if __has_include(<forward_list>)
- #include <forward_list>
-+#endif
-+#if __has_include(<fstream>)
- #include <fstream>
-+#endif
-+#if __has_include(<functional>)
- #include <functional>
-+#endif
-+#if __has_include(<future>)
- #include <future>
-+#endif
-+#if __has_include(<generator>)
-+#include <generator>
-+#endif
-+#if __has_include(<hazard_pointer>)
-+#include <hazard_pointer>
-+#endif
-+#if __has_include(<hive>)
-+#include <hive>
-+#endif
-+#if __has_include(<initializer_list>)
- #include <initializer_list>
-+#endif
-+#if __has_include(<inplace_vector>)
-+#include <inplace_vector>
-+#endif
-+#if __has_include(<iomanip>)
- #include <iomanip>
-+#endif
-+#if __has_include(<ios>)
- #include <ios>
-+#endif
-+#if __has_include(<iosfwd>)
- #include <iosfwd>
-+#endif
-+#if __has_include(<iostream>)
- #include <iostream>
-+#endif
-+#if __has_include(<istream>)
- #include <istream>
-+#endif
-+#if __has_include(<iterator>)
- #include <iterator>
-+#endif
-+#if __has_include(<latch>)
- #include <latch>
-+#endif
-+#if __has_include(<limits>)
- #include <limits>
-+#endif
-+#if __has_include(<linalg>)
-+#include <linalg>
-+#endif
-+#if __has_include(<list>)
- #include <list>
-+#endif
-+#if __has_include(<locale>)
- #include <locale>
-+#endif
-+#if __has_include(<map>)
- #include <map>
-+#endif
-+#if __has_include(<mdspan>)
-+#include <mdspan>
-+#endif
-+#if __has_include(<memory>)
- #include <memory>
-+#endif
-+#if __has_include(<memory_resource>)
- #include <memory_resource>
-+#endif
-+#if __has_include(<mutex>)
- #include <mutex>
-+#endif
-+#if __has_include(<new>)
- #include <new>
-+#endif
-+#if __has_include(<numbers>)
- #include <numbers>
-+#endif
-+#if __has_include(<numeric>)
- #include <numeric>
-+#endif
-+#if __has_include(<optional>)
- #include <optional>
-+#endif
-+#if __has_include(<ostream>)
- #include <ostream>
-+#endif
-+#if __has_include(<print>)
-+#include <print>
-+#endif
-+#if __has_include(<queue>)
- #include <queue>
-+#endif
-+#if __has_include(<random>)
- #include <random>
-+#endif
-+#if __has_include(<ranges>)
- #include <ranges>
-+#endif
-+#if __has_include(<ratio>)
- #include <ratio>
-+#endif
-+#if __has_include(<rcu>)
-+#include <rcu>
-+#endif
-+#if __has_include(<regex>)
- #include <regex>
-+#endif
-+#if __has_include(<scoped_allocator>)
- #include <scoped_allocator>
-+#endif
-+#if __has_include(<semaphore>)
- #include <semaphore>
-+#endif
-+#if __has_include(<set>)
- #include <set>
-+#endif
-+#if __has_include(<shared_mutex>)
- #include <shared_mutex>
-+#endif
-+#if __has_include(<simd>)
-+#include <simd>
-+#endif
-+#if __has_include(<source_location>)
- #include <source_location>
-+#endif
-+#if __has_include(<span>)
- #include <span>
-+#endif
-+#if __has_include(<spanstream>)
-+#include <spanstream>
-+#endif
-+#if __has_include(<sstream>)
- #include <sstream>
-+#endif
-+#if __has_include(<stack>)
- #include <stack>
-+#endif
-+#if __has_include(<stacktrace>)
-+#include <stacktrace>
-+#endif
-+#if __has_include(<stdexcept>)
- #include <stdexcept>
-+#endif
-+#if __has_include(<stdfloat>)
-+#include <stdfloat>
-+#endif
-+#if __has_include(<stop_token>)
- #include <stop_token>
-+#endif
-+#if __has_include(<streambuf>)
- #include <streambuf>
-+#endif
-+#if __has_include(<string>)
- #include <string>
-+#endif
-+#if __has_include(<string_view>)
- #include <string_view>
-+#endif
-+#if __has_include(<syncstream>)
- #include <syncstream>
-+#endif
-+#if __has_include(<system_error>)
- #include <system_error>
-+#endif
-+#if __has_include(<text_encoding>)
-+#include <text_encoding>
-+#endif
-+#if __has_include(<thread>)
- #include <thread>
-+#endif
-+#if __has_include(<tuple>)
- #include <tuple>
-+#endif
-+#if __has_include(<typeindex>)
- #include <typeindex>
-+#endif
-+#if __has_include(<typeinfo>)
- #include <typeinfo>
-+#endif
-+#if __has_include(<type_traits>)
- #include <type_traits>
-+#endif
-+#if __has_include(<unordered_map>)
- #include <unordered_map>
-+#endif
-+#if __has_include(<unordered_set>)
- #include <unordered_set>
-+#endif
-+#if __has_include(<utility>)
- #include <utility>
-+#endif
-+#if __has_include(<valarray>)
- #include <valarray>
-+#endif
-+#if __has_include(<variant>)
- #include <variant>
-+#endif
-+#if __has_include(<vector>)
- #include <vector>
-+#endif
-+#if __has_include(<version>)
- #include <version>
-+#endif
- 
- QEMU_PLUGIN_EXPORT int qemu_plugin_version = QEMU_PLUGIN_VERSION;
- 
--- 
-2.47.3
+Or maybe I'm wrong.. dunno.  It somehow feels all wrong :)
 
+Thanks,
+
+/mjt
 
