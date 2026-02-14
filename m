@@ -4,66 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6CD8EF99F0
-	for <qemu-devel@archiver.kernel.org>; Sat, 14 Feb 2026 02:14:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFDAFEF99F0
+	for <qemu-devel@archiver.kernel.org>; Sat, 14 Feb 2026 02:14:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vr5A6-0003oE-8K; Fri, 13 Feb 2026 21:13:34 -0500
+	id 1vr5AL-0004NM-6i; Fri, 13 Feb 2026 21:13:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vr5A4-0003nh-MY
- for qemu-devel@nongnu.org; Fri, 13 Feb 2026 21:13:32 -0500
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vr5AJ-00049K-CF
+ for qemu-devel@nongnu.org; Fri, 13 Feb 2026 21:13:47 -0500
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vr5A3-0004ch-5G
- for qemu-devel@nongnu.org; Fri, 13 Feb 2026 21:13:32 -0500
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-4837634de51so4538985e9.1
- for <qemu-devel@nongnu.org>; Fri, 13 Feb 2026 18:13:30 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vr5AH-0004dq-NZ
+ for qemu-devel@nongnu.org; Fri, 13 Feb 2026 21:13:47 -0500
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-48372efa020so9277655e9.2
+ for <qemu-devel@nongnu.org>; Fri, 13 Feb 2026 18:13:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771035209; x=1771640009; darn=nongnu.org;
+ d=linaro.org; s=google; t=1771035224; x=1771640024; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ZOdWgV2/IOn9a1EHv9glZetOs4gjLWtVaCBAgnLarRY=;
- b=oKRQMkC8n8hUD50KRmgWRsWnysiK31Pu9E+MPYsSpZi2fYbhwtp9DxgqHTztEsfgdj
- lUi0krpYACm5rgegDAyqiLNE/0MSa6ND+NXKje5/AkUt0GL14j6WVzAqJT7D4ZPLedr2
- DwLQRdbxEQwqqf3JNnk9mhz+lcwWR4VVb4xeVdGHSWgeSZtR7VQ5s/xjE3Pjw24yz4FO
- P//0IwxsRzgnLij6AFpGkGQgH+aDICrZN7J3fcvC3HntSIBKKVVCGsiVPwiliBPtti67
- hGGZJ8l7fobDVR29o91aJEU2UlDeRklJVNJrVYNWHrr0zFBuESFQdzrCEdqXzu0Bc2AT
- MYxA==
+ bh=IBfS1gwelZ2mj2qarZUPVGv4uT0cGemLv8DXYJc3eqg=;
+ b=SEZtf8XFVgVTmh310w4BaWz+InFg8ztedq/p+g/dRvSrlfGmDzSCMymnq13jInehMR
+ Lcm3wSQ/7khSNh+BixvAlrEz3PqFJfSgPH5gk9jVtWqV3fFmaqLGxxnCxcE7yJZQ9tCy
+ Sw1qacHAcZWFSk4S3/y+5Wz1o9ys5+FfwYqZNNJTrZyC0KtZ64RVCQXs7+K4XL/tZdUA
+ CpqOavz2K7LNG9GIYSbE+/pYzaFkdIQA4NiK+YKbStczH6+6Xsu9iflTnzBGqj8FE4Ts
+ m1pHpq4DHwMzUS63m0Xbf7xw0BSInCrtGbkF9lBvoJPmgqUHOfR1zmTRUuCaYyCK23bp
+ ktzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771035209; x=1771640009;
+ d=1e100.net; s=20230601; t=1771035224; x=1771640024;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=ZOdWgV2/IOn9a1EHv9glZetOs4gjLWtVaCBAgnLarRY=;
- b=VfxBeEN+xql/c5oHDbtePlqn0pm8KaNzrqZ7SCcLmS/Av6rZ7d7LMtk3dTxNEYHM73
- +VcUKBLPmbkG9V/suPDUygvwzN5vDSCGxD1modo8NEO3elvD/F0+Baj/J62oeR04ieUr
- VbAK2jLsCyc1g5q2JhfRYdJvx0aNkJStVCNHk4fExr1Goe3teEvmWaHRW9wk7K9F/dwU
- 2ci+G/vp07VzcpZo1+LUb6qjI+CUG3sFwZpgSNCyea9oh3fslI+o+7ZX5bvixK0sBtiU
- gHcTD4M0XIoIpYtsQfJ3W0VsAurtgRy3f5/ZDurk1NQEuXEOgVRGOeVaW0ofJekQ6WOh
- Bd7w==
-X-Gm-Message-State: AOJu0YzZaq1AHVyRDf1zjXdR+q3qL3z6WrQegoklDqJhklFXNxb/oA6o
- Gejv0nQcdYEXUnD5equCbV4uM51f1T6lg7jvayRpTSPSVK80/oQ0DunGEY8oVJT5u/Sx3Fm+KQy
- FKAPZOYU=
-X-Gm-Gg: AZuq6aIsdAoutqIuzal4HbvCQdOXc+4V1C62jnFo3qm69gifmbqE6lPBvA7GoN52ir0
- yVOANvXzytBZLNpPG4OGWKpEf1ZaSs7MnVGIEeZGwWuJ+G+R7wF/bAn4XrEqiXGhBQ8C/pbASrq
- Ci8TAKtV3sBR1G/sX7VCX60FGAXFi2QA/fVK2iqe0NSxQP8z1VrEqSua85FiR6nu7r/u7E3jITH
- Ltkg/AmCxflwUwGVCF4G9PIrpWi5OxCXbBgfqIqU29WJhbvzckqaPS4VTK3cbs71UZM4E2Qs1X3
- E8/75C16mGe3LoBvxS3F1ffrub35yBVg7sp6NSMAaw4jbs8tJ9Hp1GAxZ45B4oxh7WWc2s+V4Jq
- v98qdWh8dRDPXMwslPejaLlo+ZM5ElvkmqxTql2iL1cOFxIT+SonqJ6Hy+KrdSC3y9wPnEsu5ou
- Lpivl5STosCpwi8xO4qGJ4UZ80ChpTaUs4Gr+4Erq4bD5zbVnrkdF3UnB4B0m93xRrOtWI0kZTZ
- KwudUmon/o=
-X-Received: by 2002:a05:600c:468d:b0:47e:e20e:bbb4 with SMTP id
- 5b1f17b1804b1-4837108fcf1mr80633225e9.26.1771035209399; 
- Fri, 13 Feb 2026 18:13:29 -0800 (PST)
+ bh=IBfS1gwelZ2mj2qarZUPVGv4uT0cGemLv8DXYJc3eqg=;
+ b=clGIl1ssQ3Q25gmXgd6gWkAAAPdghMuUHVnsF4bJXDPa7ObxBXpjouEEjMCiryDo/o
+ ZN7omIHtPe9wMS12RhHQSDz80nVENWZdtbP/pGYOGw6uoCaKvibm9OI/O8al9LbkeSpu
+ OmYOWIMdUC0uQuDZgHNjcJShyM8Dd0NEKtaGlurkkMSFOVtUKu78S1qncHBKzAVY8uSS
+ jbKq7m8sTVmVGaA8Yt2p0+HCGBQS3e5UfPd5Nh6gfWJoCJBJIdEIytpOAKue7z0l3KMh
+ 5A2e/2PzaGexglHLR1ni7+/q3g5QE7NjJOeuYk9OXxFLX6KgJkK0JQa97v6gutUeMOxC
+ HNvg==
+X-Gm-Message-State: AOJu0YwH8FUMJ5UqgQBC5tzRU76mB3NEqeSfHtdhPg7OLP40gZj8z6lQ
+ Y1ds9gZYZOjNF39/V3fcZedc0l+vBzSi0IUtUMZqu/VQW6YYfP8qILLbWIzOO088iBbdKrBWFBm
+ SPZ3QYJQ=
+X-Gm-Gg: AZuq6aLuLBonv/MbsTOoD4HHMbhxZV33PnpCMfXpxVm5mPCDKJMt2bUvHR1SA0R1ub0
+ ftmNLHjoWPaJYzgbcpj1wZSlbVHHzT4LoyLxUJv2u5wuSwx0Soge+y82AHaAMpCZRo4dg2ttlOM
+ b7MOMajHqU2+RNFuPJo8vjDYw01k7Tb7FKDyDITnO6kUUgoUnZHHgRbe0mv30VfJHzYuF7jtpi2
+ 5n1zmZ0Ph/XLFA0JWmz9gi3HchMNQTGm6rhNDn3ed4gA8OxIYhuKZyXjRnSpdieOxji9PZccQO4
+ IkGjTSIHlJSPcGH2Bviaw+gCvGyyMx6/sObS6kMddZNBTjzqw+yhG8RRjMfDehZRwvDpl8n1JJF
+ u+j4PLUg16+O4dXd99cvS2heRJPmjsHyb94s9uHwXx7J72L2begUnhdIDYKfdJBYtd45m/XZwOh
+ w+5t7r41sl2mjZsL2Ly4xp3Vd+sGZCtcvhaO2KetECk3/q7GujrE/YjByqTOksTNYvFEV9tktU
+X-Received: by 2002:a05:600c:83c6:b0:480:6941:d38b with SMTP id
+ 5b1f17b1804b1-48379c1cde5mr13980735e9.30.1771035223809; 
+ Fri, 13 Feb 2026 18:13:43 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48370a41be2sm50789865e9.1.2026.02.13.18.13.28
+ ffacd0b85a97d-43796ac8209sm9885016f8f.30.2026.02.13.18.13.42
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 13 Feb 2026 18:13:28 -0800 (PST)
+ Fri, 13 Feb 2026 18:13:43 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Chinmay Rath <rathc@linux.ibm.com>,
@@ -75,17 +74,17 @@ Cc: Chinmay Rath <rathc@linux.ibm.com>,
  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  Laurent Vivier <laurent@vivier.eu>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 6/8] hw/sparc: Set graphic display dimensions generically
-Date: Sat, 14 Feb 2026 03:12:37 +0100
-Message-ID: <20260214021240.58657-7-philmd@linaro.org>
+Subject: [PATCH 8/8] system/globals: Build as common code
+Date: Sat, 14 Feb 2026 03:12:39 +0100
+Message-ID: <20260214021240.58657-9-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260214021240.58657-1-philmd@linaro.org>
 References: <20260214021240.58657-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,74 +107,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-If a dimension is not set, have the machine init code
-set the default value.
+Now than all targets have the graphic dimension variables
+initialized the same way, we can move them to the common
+file unit, having them built once. Remove the now empty
+globals-target.c file.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/sparc/sun4m.c        |  9 +++++++++
- hw/sparc64/sun4u.c      | 10 ++++++++++
- system/globals-target.c |  6 +-----
- 3 files changed, 20 insertions(+), 5 deletions(-)
+ system/globals-target.c | 14 --------------
+ system/globals.c        |  3 +++
+ system/meson.build      |  4 ----
+ 3 files changed, 3 insertions(+), 18 deletions(-)
+ delete mode 100644 system/globals-target.c
 
-diff --git a/hw/sparc/sun4m.c b/hw/sparc/sun4m.c
-index 0c0d658d301..a17bdb36927 100644
---- a/hw/sparc/sun4m.c
-+++ b/hw/sparc/sun4m.c
-@@ -892,6 +892,15 @@ static void sun4m_hw_init(MachineState *machine)
-                      hwdef->esp_base, slavio_irq[18],
-                      hwdef->le_base, slavio_irq[16], &hostid);
- 
-+    if (!graphic_width) {
-+        graphic_width = 1024;
-+    }
-+    if (!graphic_height) {
-+        graphic_height = 768;
-+    }
-+    if (!graphic_depth) {
-+        graphic_depth = 8;
-+    }
-     if (graphic_depth != 8 && graphic_depth != 24) {
-         error_report("Unsupported depth: %d", graphic_depth);
-         exit (1);
-diff --git a/hw/sparc64/sun4u.c b/hw/sparc64/sun4u.c
-index 5d7787fc1a5..b8bda1eb816 100644
---- a/hw/sparc64/sun4u.c
-+++ b/hw/sparc64/sun4u.c
-@@ -666,6 +666,16 @@ static void sun4uv_init(MemoryRegion *address_space_mem,
-                                 sysbus_mmio_get_region(s, 0));
-     nvram = NVRAM(dev);
-  
-+    if (!graphic_width) {
-+        graphic_width = 1024;
-+    }
-+    if (!graphic_height) {
-+        graphic_height = 768;
-+    }
-+    if (!graphic_depth) {
-+        graphic_depth = 8;
-+    }
-+
-     initrd_size = 0;
-     initrd_addr = 0;
-     kernel_size = sun4u_load_kernel(machine->kernel_filename,
 diff --git a/system/globals-target.c b/system/globals-target.c
-index e3f7d846ac0..17a27a06218 100644
+deleted file mode 100644
+index ffa6c308b59..00000000000
 --- a/system/globals-target.c
-+++ b/system/globals-target.c
-@@ -9,11 +9,7 @@
- #include "qemu/osdep.h"
- #include "system/system.h"
- 
--#ifdef TARGET_SPARC
--int graphic_width = 1024;
--int graphic_height = 768;
--int graphic_depth = 8;
--#elif defined(TARGET_M68K)
-+#if defined(TARGET_SPARC) || defined(TARGET_M68K)
- int graphic_width;
- int graphic_height;
- int graphic_depth;
++++ /dev/null
+@@ -1,14 +0,0 @@
+-/*
+- * Global variables that should not exist (target specific)
+- *
+- * Copyright (c) 2003-2008 Fabrice Bellard
+- *
+- * SPDX-License-Identifier: MIT
+- */
+-
+-#include "qemu/osdep.h"
+-#include "system/system.h"
+-
+-int graphic_width;
+-int graphic_height;
+-int graphic_depth;
+diff --git a/system/globals.c b/system/globals.c
+index c33f6ed3902..34fd3ce9c72 100644
+--- a/system/globals.c
++++ b/system/globals.c
+@@ -49,6 +49,9 @@ bool enable_cpu_pm;
+ int autostart = 1;
+ int vga_interface_type = VGA_NONE;
+ bool vga_interface_created;
++int graphic_width;
++int graphic_height;
++int graphic_depth;
+ Chardev *parallel_hds[MAX_PARALLEL_PORTS];
+ QEMUOptionRom option_rom[MAX_OPTION_ROMS];
+ int nb_option_roms;
+diff --git a/system/meson.build b/system/meson.build
+index d91703d3dcc..579e8353d53 100644
+--- a/system/meson.build
++++ b/system/meson.build
+@@ -1,7 +1,3 @@
+-specific_ss.add(when: 'CONFIG_SYSTEM_ONLY', if_true: [files(
+-  'globals-target.c',
+-)])
+-
+ system_ss.add(files(
+   'vl.c',
+ ), sdl, libpmem, libdaxctl)
 -- 
 2.52.0
 
