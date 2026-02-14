@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE277EF99F1
-	for <qemu-devel@archiver.kernel.org>; Sat, 14 Feb 2026 02:13:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4469EEF99F2
+	for <qemu-devel@archiver.kernel.org>; Sat, 14 Feb 2026 02:13:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vr59c-0003eq-46; Fri, 13 Feb 2026 21:13:04 -0500
+	id 1vr59U-0003dK-2v; Fri, 13 Feb 2026 21:12:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vr59Z-0003eB-Ul
- for qemu-devel@nongnu.org; Fri, 13 Feb 2026 21:13:01 -0500
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vr59R-0003bN-Pf
+ for qemu-devel@nongnu.org; Fri, 13 Feb 2026 21:12:53 -0500
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vr59Y-0004WH-H8
- for qemu-devel@nongnu.org; Fri, 13 Feb 2026 21:13:01 -0500
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-4836f363d0dso12335825e9.3
- for <qemu-devel@nongnu.org>; Fri, 13 Feb 2026 18:13:00 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vr59Q-0004Vd-9r
+ for qemu-devel@nongnu.org; Fri, 13 Feb 2026 21:12:53 -0500
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-4359228b7c6so1045999f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 13 Feb 2026 18:12:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771035178; x=1771639978; darn=nongnu.org;
+ d=linaro.org; s=google; t=1771035170; x=1771639970; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=nmUxv3UTE6ZdlIHSSW1HHJoRu03dAklDGcxZsp/sqZ4=;
- b=sCDmB2ZtC83l38Z/GIYPm6uldV+ni2oCbixbye9fC/oiGTDhsN2CEQ4UDl2YI82X36
- m7nI9kaFEzz7ZhhSoEyE9+CPBdqBzEvci7d/o+Y9NLf82mLOUaHNxQsArG9NUvQld5YO
- TpMWiQUomEqt7N4AkvdV+ZqEB87M2vM2G0DpvzjMb/Nu9jXPj1PNCg0Sf16ZBjCSbsnA
- lIW7GL1Lh6dUHShgAaLy/qd4rSsNo+tDmtrFjQVA0idBKP/1otKi0rnagkTr020kHGh3
- oKORZyG5r2ewEs/ZASCKnBr99qefyU+FjMYkQYrZmoiVIlo/QEhlzGWtTXd2FRkWo1RZ
- NM1w==
+ bh=UW54D3jaK4/hOnhFU88FxBB/FWP9ogaH9ApScZzAiAU=;
+ b=Ig0PCF4uSz+14+C5YHx7ambnsPAt42wI9f9ergufYPT+gdaU5DwNWXt6W8kYd4M5bH
+ M+o7sn5ClZCFeV3MNTvQNm/EHuauf+7SQk26sAI8FT+KjXF/CLUn1IrhIfugQLZvadaD
+ GTloQIyr2t7dIMncFG3EvDQ14M3VWYvO/DZQOBB8WVMg+bAsHnpPh/cuqxh4u7ytKON3
+ M3XgMb0FcPGTeflqfw3msXcDu8r852JrUoMbRErLkcV24LR83WMh2NE4s2y2HpkCHhU8
+ XARqOt4mA+mwm8ppH1xellVhHC4HEnXulXVZiYNxmN2mV8JEgwgDCne27SW/kVD4qi3s
+ 8pgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771035178; x=1771639978;
+ d=1e100.net; s=20230601; t=1771035170; x=1771639970;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=nmUxv3UTE6ZdlIHSSW1HHJoRu03dAklDGcxZsp/sqZ4=;
- b=Hce3cCYhws1yzZk1yO5vIkJccGQsEI/kZ+Nt0Al2EtAOqHcqXAZ9Lp5crjUBWOFDTr
- dD6tbbVc5rZv1m6HBgCrJIeXrFYJofgrGJ8DqsYG/L0l6qzBQJy2hifdDKj5s7nNguSk
- D8+CYUQ8tkCZQM2UXINnQdhNvHVn5epLzGsZnFASesSnEd4dT+APeQmzedXcM7GucHD/
- bx2X4kG7yncL/xr8z1FrWYoonTNhp6tDD725IenX2FUBscZxE0EwSKZvAg1Tp8GuoVlx
- yvdpuCkkkAQ3Fj1kFDttLUWyEQZhT8+O08Y+E9Oe+686pPN0LPXAJMJPHlOEzef5GIyF
- 2Gng==
-X-Gm-Message-State: AOJu0YwGdruQSXoIqc13Q47qTsdpinQXc7lA9gV1yfe5M4Uw7v+16Vbm
- SrChAeimM0yrYypHizi3WFVXLfOv5STllXydR8KlT/5v43uZ23tjUw+fPuDbLLcA01nAQXv0YvA
- aWMhGgtk=
-X-Gm-Gg: AZuq6aJDZfEhmUEGJgxrSxLdZxvaLoChWi6CLd2J2EYyeWlTRSYyAuUT7eYWXnLacN+
- T0dcGTPCvdjPVN2pDLrvXZnfFMoymUQURu9pHaS7gdVepaFt9JujdcjQAo9U+k3FH4n8pI4hpQ4
- 1X7Ya5zlwpxVw0I/Jmd+0btj1ouKXIQDN4nfxVnlPK/+xCCSrxO4S3fA5vF0AddgwzMdveudoku
- tnFx/IMHoVdTtv0cU96jIYCCIUotslHnHjj6bUNjJ6Wc40v34jqmTH/fQCQ021ot4EE0eu2nXkR
- ogJN7mGumPpm/IP99Sk5Ovo49ZDTvqoGho91BA0N9XNDe/QC1tHv1/OCIh0/VRRFhTXE4oQjKH7
- d27VfUmCB8Vs9BzggcCMdt/qEEED35xyPNrPwEs3eGo/TCuoYcb2YvBf7BEhcSAxaislNDM4n7p
- xgJR0Ea/thBKBSH0SwpBaG+2fWQmYGWTb523ubMmFUYd7+rfsGCmme1Wb5xV71SU5+5bxSlX9Xt
- Hmh+QP4dIM=
-X-Received: by 2002:a05:600c:4443:b0:47e:e952:86c9 with SMTP id
- 5b1f17b1804b1-48379b318bamr18979695e9.0.1771035178495; 
- Fri, 13 Feb 2026 18:12:58 -0800 (PST)
+ bh=UW54D3jaK4/hOnhFU88FxBB/FWP9ogaH9ApScZzAiAU=;
+ b=HzLrPdiZAdb6ITeBj81GF+RTT7wiY0CB1WzesoTgYmtWDn5NW66bTUite1ZRY0IhWG
+ pLn/XHzZeaKOK3oJJ8u0H1r41Ztha7Tr40zz7wJ6XslOEk9q356p4u7wcJtggR0UCCbn
+ oAp34HSjQlYVqi9uEXtS4/Pu3IJ0HbydaEQygYplT9hYJ23KwikJstf+sKSF8pHx9roT
+ WW+xjdGZ0+wXhLJO3nsG5yOe1Zjw3dPpn1jSvd/AuomxtDz1x5blRq8ezZFXZNhpy54i
+ xAi0DC4SaA83dGZZmsaLVNvp/euEaNkUasY0+TLJldwt83er3Jh1MLS0zYXOJ+p3Bv+3
+ 8LiA==
+X-Gm-Message-State: AOJu0YzCQDUY6JFuxWW+bLwFn00DB3CBfPdtYVat2babDhwqsrh8/K5F
+ tJIgo80qFUrw2dZcrAufP4LxWLHrUGIJiZ4aHz0PqxCLT02EYftnLjmkCcEt+PbmS+A5nQOxwav
+ CdABvkG0=
+X-Gm-Gg: AZuq6aLHisCaa45OdrRFCL9V3mfGnruMYuepO+FKiFN0/MpkgfDipIMYyzVXZ4o4ZnP
+ T6g3zK8D5Y6/83UJeNoG/theFGw9TlTbb/1WQkCIbNKY85SI2C441B6dDtFBqhi/91yALnVwIF2
+ rplQ1meVE+PPpcXk1STivZHoQu/NolqpSmMJkNXbVqHVqHF9VRZs5bLgKQrgVTd74D+CYcNWXfa
+ OqwwigomCGD8UfA+wqwvTo+7/R+cqVov0lFCdDh9qWzkUClhg47McVcE4S2NoyHfFhruSxqMj2o
+ s2IBt3JlD9ULpekYhniod10w7DRtE5XPi5QU6EaszLb294+oMCyZ6TW/MNnFmFkIXU0SyhA8pbd
+ 8fhMob+uazKR4IHQ/tRkBCfeYerTHdxMwS+C5swuexwjGoCiZTPP/N/iuosdmW2p/qzyHrf0ist
+ 9BwnsTxBzL6dNNxDFo2CRBUYG4LIqLOO4GeUVRNMVop/ZXHuPXSPGfjUj3TazmTbarDxofCnvtJ
+ 2vfps2HxbY=
+X-Received: by 2002:a05:6000:2dc6:b0:436:145a:e54f with SMTP id
+ ffacd0b85a97d-4379db66af5mr2632969f8f.24.1771035170355; 
+ Fri, 13 Feb 2026 18:12:50 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4834d482480sm328085395e9.0.2026.02.13.18.12.56
+ ffacd0b85a97d-43796abc8b1sm9981348f8f.23.2026.02.13.18.12.49
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 13 Feb 2026 18:12:57 -0800 (PST)
+ Fri, 13 Feb 2026 18:12:49 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Chinmay Rath <rathc@linux.ibm.com>,
@@ -75,24 +75,24 @@ Cc: Chinmay Rath <rathc@linux.ibm.com>,
  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  Laurent Vivier <laurent@vivier.eu>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 2/8] hw/display/macfb: Constify macfb_mode_table[] array
-Date: Sat, 14 Feb 2026 03:12:33 +0100
-Message-ID: <20260214021240.58657-3-philmd@linaro.org>
+Subject: [PATCH 1/8] hw/display/macfb: Constify macfb_sense_table[] array
+Date: Sat, 14 Feb 2026 03:12:32 +0100
+Message-ID: <20260214021240.58657-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260214021240.58657-1-philmd@linaro.org>
 References: <20260214021240.58657-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,89 +108,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-macfb_mode_table[] is only read, never updated, so can be const.
+macfb_sense_table[] is only read, never updated, so can be const.
 
-Update the call sites accordingly.
-Make the MacfbState::mode pointer to const.
+Update the single call site, macfb_sense_read().
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/hw/display/macfb.h |  2 +-
- hw/display/macfb.c         | 10 +++++-----
- hw/m68k/q800.c             |  2 +-
- 3 files changed, 7 insertions(+), 7 deletions(-)
+ hw/display/macfb.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/include/hw/display/macfb.h b/include/hw/display/macfb.h
-index 495dead44b5..cb7aac7a4dd 100644
---- a/include/hw/display/macfb.h
-+++ b/include/hw/display/macfb.h
-@@ -66,7 +66,7 @@ typedef struct MacfbState {
-     uint8_t type;
- 
-     uint32_t regs[MACFB_NUM_REGS];
--    MacFbMode *mode;
-+    const MacFbMode *mode;
- 
-     QEMUTimer *vbl_timer;
-     qemu_irq irq;
 diff --git a/hw/display/macfb.c b/hw/display/macfb.c
-index 57ad8ad5587..8ef174dc6df 100644
+index 388f8de5070..57ad8ad5587 100644
 --- a/hw/display/macfb.c
 +++ b/hw/display/macfb.c
-@@ -100,7 +100,7 @@ static const MacFbSense macfb_sense_table[] = {
-     { MACFB_DISPLAY_SVGA, 0x7, 0x5 },
- };
+@@ -82,7 +82,7 @@ typedef struct MacFbSense {
+     uint8_t ext_sense;
+ } MacFbSense;
  
--static MacFbMode macfb_mode_table[] = {
-+static const MacFbMode macfb_mode_table[] = {
-     { MACFB_DISPLAY_VGA, 1, 0x100, 0x71e, 640, 480, 0x400, 0x1000 },
-     { MACFB_DISPLAY_VGA, 2, 0x100, 0x70e, 640, 480, 0x400, 0x1000 },
-     { MACFB_DISPLAY_VGA, 4, 0x100, 0x706, 640, 480, 0x400, 0x1000 },
-@@ -397,7 +397,7 @@ static void macfb_update_mode(MacfbState *s)
+-static MacFbSense macfb_sense_table[] = {
++static const MacFbSense macfb_sense_table[] = {
+     { MACFB_DISPLAY_APPLE_21_COLOR, 0x0, 0 },
+     { MACFB_DISPLAY_APPLE_PORTRAIT, 0x1, 0 },
+     { MACFB_DISPLAY_APPLE_12_RGB, 0x2, 0 },
+@@ -342,7 +342,7 @@ static void macfb_invalidate_display(void *opaque)
  
- static void macfb_mode_write(MacfbState *s)
+ static uint32_t macfb_sense_read(MacfbState *s)
  {
--    MacFbMode *macfb_mode;
-+    const MacFbMode *macfb_mode;
-     int i;
+-    MacFbSense *macfb_sense;
++    const MacFbSense *macfb_sense;
+     uint8_t sense;
  
-     for (i = 0; i < ARRAY_SIZE(macfb_mode_table); i++) {
-@@ -418,11 +418,11 @@ static void macfb_mode_write(MacfbState *s)
-     }
- }
- 
--static MacFbMode *macfb_find_mode(MacfbDisplayType display_type,
-+static const MacFbMode *macfb_find_mode(MacfbDisplayType display_type,
-                                   uint16_t width, uint16_t height,
-                                   uint8_t depth)
- {
--    MacFbMode *macfb_mode;
-+    const MacFbMode *macfb_mode;
-     int i;
- 
-     for (i = 0; i < ARRAY_SIZE(macfb_mode_table); i++) {
-@@ -440,7 +440,7 @@ static MacFbMode *macfb_find_mode(MacfbDisplayType display_type,
- static gchar *macfb_mode_list(void)
- {
-     GString *list = g_string_new("");
--    MacFbMode *macfb_mode;
-+    const MacFbMode *macfb_mode;
-     int i;
- 
-     for (i = 0; i < ARRAY_SIZE(macfb_mode_table); i++) {
-diff --git a/hw/m68k/q800.c b/hw/m68k/q800.c
-index 25ddddb5d9f..4767eb4298f 100644
---- a/hw/m68k/q800.c
-+++ b/hw/m68k/q800.c
-@@ -255,7 +255,7 @@ static void q800_machine_init(MachineState *machine)
-     int32_t initrd_size;
-     uint8_t *prom;
-     int i, checksum;
--    MacFbMode *macfb_mode;
-+    const MacFbMode *macfb_mode;
-     ram_addr_t ram_size = machine->ram_size;
-     const char *kernel_filename = machine->kernel_filename;
-     const char *initrd_filename = machine->initrd_filename;
+     assert(s->type < ARRAY_SIZE(macfb_sense_table));
 -- 
 2.52.0
 
