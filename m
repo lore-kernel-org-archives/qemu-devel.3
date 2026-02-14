@@ -4,89 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C52DEF5851
-	for <qemu-devel@archiver.kernel.org>; Sat, 14 Feb 2026 20:19:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24E36EF584D
+	for <qemu-devel@archiver.kernel.org>; Sat, 14 Feb 2026 23:13:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vrM6j-0004eC-Tb; Sat, 14 Feb 2026 15:19:13 -0500
+	id 1vrOof-0007DQ-1U; Sat, 14 Feb 2026 18:12:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <haroldknowlden@gmail.com>)
- id 1vrKw3-0003Iz-65
- for qemu-devel@nongnu.org; Sat, 14 Feb 2026 14:04:07 -0500
-Received: from mail-ot1-x32a.google.com ([2607:f8b0:4864:20::32a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <haroldknowlden@gmail.com>)
- id 1vrKw1-00042X-Mr
- for qemu-devel@nongnu.org; Sat, 14 Feb 2026 14:04:06 -0500
-Received: by mail-ot1-x32a.google.com with SMTP id
- 46e09a7af769-7d195166b2cso1377607a34.3
- for <qemu-devel@nongnu.org>; Sat, 14 Feb 2026 11:04:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1771095843; x=1771700643; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=xYWEyjpYVY2l7pzkthPd8PINyDJVvlVJRdS43y6R8B0=;
- b=COeD+XbZYPHOVhAM6/y+rYJ2HuKP280ICxVZHz3MysEqqaatsHNa+77VK9LqIW1Ryh
- DuI0gEX5Wwa16CofRE+zftb4Gw0KcluXq2hW/KCVgzLLMc6BMIAadmJYbusay+AItfCs
- S1wFcTlU/RU96sDw6Febx5vLJ7mx4E5PoL6tfwzGVXaVJPUgW6fFrS9+c0Rs/TV9QJLG
- i8DlKHn0X00u5D4iZYTUBBqIpWE+wiZnzOrV7dnAmvXrU/zYlCLT6EzsgiUWhj8LWMZq
- p42Ts/7KKXwNx7gDaGuhcC2B/00e6vtEKsJktEJIRiAibOeCjHWo64g7uzNvWW6rJHY/
- GcDQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771095843; x=1771700643;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=xYWEyjpYVY2l7pzkthPd8PINyDJVvlVJRdS43y6R8B0=;
- b=kaNGvxi+brhX4BPFcyxj3DcdfFPqFz+GGwk2/HUa6O2eviML55gQ2a92Cqo0j8nYuC
- QNFi161ndTy8noTOotX9X7p0cwXNLpJg0+cXIY7f2pUu0BwhYfBHBlyHCw2NpnydAyvT
- esbK8ObaY2VJyITn1QhDDY5OjwpDhSW6W9o6G8PAQNwZsqaE7D90r7ujSnvFyTBVXNlV
- q+vYrqXv0oeDrgJPxroNMTWT7BZvDh4ZO0xxzW/cjMzVaQ6ctv6XcPeQjTF7hv2y7QAw
- JFWCZnTu9ceXGFD+Gu21cSaX2CNiMTb6vVUk0kQItGyMCqWquLvnlAEnNWzNBY4uxEHv
- E4/Q==
-X-Gm-Message-State: AOJu0YwonuoBf30y/asQJkO3tGDXXAlkinAWdUqIZOLz1C6YdS5+Kyg6
- 9kzJnRkX9yGPhsLX4ULgpqSKlNCCrbEMDPHVOYgBuhJtPbcaZ7IpbBYVGJt69SjF
-X-Gm-Gg: AZuq6aLG0OKlVWip5+sAtrslo4pYhxa5WSU4pu28vFuW3fiBiRSOX0TdVNpg6SqldkN
- 8Qx36c+Jpj71NaFb1GXxG6A6bthQisd2Q6FvnoP5NW4PmPgJRLoPWYTDt6/mvKFPGpxx4X9Xeme
- NH4jpFqddmM81vRy6AuzD9LmmMasBFAsO0Bsm8Frwgns0MGAklMkG5YKpQ0AdiV8dgxKJTx4XkX
- vakaCItM+Y/lRNciPwpF/N2h2XXd9XuvnBNVwIYwhwjPC36P8MI1ujLDNwNVzlmAfFqEHcp3Tuz
- PnCnZfmb5K60VLrcMWajyND9x0oylcKCRynIoEiMUuskOukaZebi/WM+CCh4EpCyaKcYhRZlB62
- O0ARwNEJRjUlUVa7cVNFXNKcnT3oP+DZ+5wvCIXcccM3XNRfE1eENcofnWLqDcNpmuAy2d23vKK
- XOheZmdIM14BYMGkUU8blRvLUuGTW56ciL6IgNHYU=
-X-Received: by 2002:a05:6830:240a:b0:7d1:569d:ce7b with SMTP id
- 46e09a7af769-7d4c31cc549mr3704142a34.29.1771095842831; 
- Sat, 14 Feb 2026 11:04:02 -0800 (PST)
-Received: from localhost.localdomain ([47.227.2.18])
- by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-7d4a76e1e59sm8853025a34.17.2026.02.14.11.04.02
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 14 Feb 2026 11:04:02 -0800 (PST)
-From: ChaseKnowlden <haroldknowlden@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Marcelo Tosatti <mtosatti@redhat.com>, kvm@vger.kernel.org,
- Paolo Bonzini <pbonzini@redhat.com>,
- ChaseKnowlden <haroldknowlden@gmail.com>,
- GitHub Copilot <copilot@github.com>,
- Copilot <223556219+Copilot@users.noreply.github.com>
-Subject: [PATCH] target/i386/kvm: Reset PMU state in kvm_init_pmu_info
-Date: Sat, 14 Feb 2026 14:03:53 -0500
-Message-ID: <20260214190353.29337-1-haroldknowlden@gmail.com>
-X-Mailer: git-send-email 2.53.0
+ (Exim 4.90_1) (envelope-from
+ <bounce.sp3pfh7edfh7tt3=0hpass0429i2=q8ojuz88y4jqyc@em483429.getutm.app>)
+ id 1vrOod-0007Cq-5G
+ for qemu-devel@nongnu.org; Sat, 14 Feb 2026 18:12:43 -0500
+Received: from a4i986.smtp2go.com ([158.120.83.218])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from
+ <bounce.sp3pfh7edfh7tt3=0hpass0429i2=q8ojuz88y4jqyc@em483429.getutm.app>)
+ id 1vrOob-0001gL-C6
+ for qemu-devel@nongnu.org; Sat, 14 Feb 2026 18:12:42 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=getutm.app;
+ i=@getutm.app; q=dns/txt; s=s483429; t=1771110747; h=from : subject :
+ to : message-id : date;
+ bh=qYLwnXQ/ZNvwlGPf13gNTKdCQxlPpn0NHCvLfrc6X7I=;
+ b=JpjVAx0eSzr+FpK5y0daPSukOmJmuBsLtKI1ctPL2Zi8ugj1KqJdjAPNDA1ZP2LxYSS65
+ s/y5t6iO0cZ1HguzG9fkzLGpJ1nRZqvCMHqhjMc6sXVPgNkQQvn3yhJzVrK1ca3CeN4JJHG
+ mp1WD9KZWVqGs5AmBfKeOYqS7VsVvsA/V2YvAZY7PXGa/uYbhY+hMfE6wyV51UPpHCJ7kx0
+ K0O2ImaqIMqnakOUT8W7QW4FWlvenAaICKkt/9SCZkrHdFqJwKt9/1CIUyJU/Y6QOJjGmHU
+ W4tRtLO8rMcWMdgidXxpNwFcY3y37fmVuAqa9EEL/L8EdSK2WppzHeWXrzsw==
+Received: from [10.159.238.187] (helo=mail-ed1-f51.google.com)
+ by smtpcorp.com with esmtpsa
+ (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_128_GCM:128)
+ (Exim 4.99.1-S2G) (envelope-from <j@getutm.app>)
+ id 1vrOoK-AIkwcC8wdrz-E9kq for qemu-devel@nongnu.org;
+ Sat, 14 Feb 2026 23:12:24 +0000
+Received: by mail-ed1-f51.google.com with SMTP id
+ 4fb4d7f45d1cf-65bebcbffe8so110533a12.1
+ for <qemu-devel@nongnu.org>; Sat, 14 Feb 2026 15:12:23 -0800 (PST)
+X-Gm-Message-State: AOJu0YwyuUtlVDme5bHMdjSKObxCQioA+JeqYirW8SXXuJzMzhyaxV3j
+ UsU+YWFMnl7R77TWPVtJmkj1GA2NUHHyVwC+5LCklMYggCYStE2rbKlg9tsdBzW3SZL8gDYxTDo
+ 2pFa20rt3GS5W+tZU0U8mMlX7B1zLgtA=
+X-Received: by 2002:a17:907:980e:b0:b87:2abc:4a32 with SMTP id
+ a640c23a62f3a-b8fb41edd8dmr453332866b.18.1771110742442; Sat, 14 Feb 2026
+ 15:12:22 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::32a;
- envelope-from=haroldknowlden@gmail.com; helo=mail-ot1-x32a.google.com
+References: <20260214-region-v1-1-229f00ae1f38@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <20260214-region-v1-1-229f00ae1f38@rsg.ci.i.u-tokyo.ac.jp>
+From: Joelle van Dyne <j@getutm.app>
+Date: Sat, 14 Feb 2026 15:12:11 -0800
+X-Gmail-Original-Message-ID: <CA+E+eSB6KLyZTLT7e-0ng1x=0F4zNRm4PF0akkAub2cxXdX5sw@mail.gmail.com>
+X-Gm-Features: AaiRm53YWvBEYPQtfhidWWrl1YNF-BSjqZ9Shjy3Sd2jZLxuuaY7YKfb_ikicgw
+Message-ID: <CA+E+eSB6KLyZTLT7e-0ng1x=0F4zNRm4PF0akkAub2cxXdX5sw@mail.gmail.com>
+Subject: Re: [PATCH] virtio-gpu-virgl: Add virtio-gpu-virgl-hostmem-region type
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>, Joelle van Dyne <j@getutm.app>,
+ Michael Tokarev <mjt@tls.msk.ru>, Peter Maydell <peter.maydell@linaro.org>,
+ qemu-stable@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Report-Abuse: Please forward a copy of this message, including all headers,
+ to <abuse-report@smtp2go.com>
+Feedback-ID: 483429m:483429abrvJvs:483429siAqW4ZwIF
+X-smtpcorp-track: Qck6M3H066OW.hBmSMqxoOu0g.Xg4nzA0iDZ5
+Received-SPF: pass client-ip=158.120.83.218;
+ envelope-from=bounce.sp3pfh7edfh7tt3=0hpass0429i2=q8ojuz88y4jqyc@em483429.getutm.app;
+ helo=a4i986.smtp2go.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Sat, 14 Feb 2026 15:19:10 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -101,47 +92,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The static variables pmu_version, num_pmu_gp_counters, and
-num_pmu_fixed_counters persist across different VCPU initializations.
-When kvm_init_pmu_info() returns early (e.g., when PMU is disabled or
-there's a vendor mismatch), these variables retain stale values from
-previous initializations.
+On Fri, Feb 13, 2026 at 8:34=E2=80=AFPM Akihiko Odaki
+<odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
+>
+> Commit e27194e087ae ("virtio-gpu-virgl: correct parent for blob memory
+> region") made the name member of MemoryRegion unset, causing a NULL
+> pointer dereference[1]:
+> > Thread 2 "qemu-system-x86" received signal SIGSEGV, Segmentation fault.
+> > (gdb) bt
+> > #0  0x00007ffff56565e2 in __strcmp_evex () at /lib64/libc.so.6
+> > #1  0x0000555555841bdb in find_fd (head=3D0x5555572337d0 <cpr_state>,
+> > name=3D0x0, id=3D0) at ../migration/cpr.c:68
+> > #2  cpr_delete_fd (name=3Dname@entry=3D0x0, id=3Did@entry=3D0) at
+> > ../migration/cpr.c:77
+> > #3  0x000055555582290a in qemu_ram_free (block=3D0x7ff7e93aa7f0) at
+> > ../system/physmem.c:2615
+> > #4  0x000055555581ae02 in memory_region_finalize (obj=3D<optimized out>=
+)
+> > at ../system/memory.c:1816
+> > #5  0x0000555555a70ab9 in object_deinit (obj=3D<optimized out>,
+> > type=3D<optimized out>) at ../qom/object.c:715
+> > #6  object_finalize (data=3D0x7ff7e936eff0) at ../qom/object.c:729
+> > #7  object_unref (objptr=3D0x7ff7e936eff0) at ../qom/object.c:1232
+> > #8  0x0000555555814fae in memory_region_unref (mr=3D<optimized out>) at
+> > ../system/memory.c:1848
+> > #9  flatview_destroy (view=3D0x555559ed6c40) at ../system/memory.c:301
+> > #10 0x0000555555bfc122 in call_rcu_thread (opaque=3D<optimized out>) at
+> > ../util/rcu.c:324
+> > #11 0x0000555555bf17a7 in qemu_thread_start (args=3D0x555557b99520) at
+> > ../util/qemu-thread-posix.c:393
+> > #12 0x00007ffff556f464 in start_thread () at /lib64/libc.so.6
+> > #13 0x00007ffff55f25ac in __clone3 () at /lib64/libc.so.6
+>
+> The intention of the aforementioned commit is to prevent a MemoryRegion
+> from parenting itself while its references is counted indendependently
+> of the device. To achieve the same goal, add a type of QOM objects that
+> count references and parent MemoryRegions.
+>
+> [1] https://lore.kernel.org/qemu-devel/4eb93d7a-1fa9-4b3c-8ad7-a2eb64f025=
+a0@collabora.com/
+>
+> Cc: qemu-stable@nongnu.org
+> Fixes: e27194e087ae ("virtio-gpu-virgl: correct parent for blob memory re=
+gion")
+> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+> ---
+> base-commit: ece408818d27f745ef1b05fb3cc99a1e7a5bf580
+> change-id: 20260214-region-690a177c0475
+>
+> Best regards,
+> --
+> Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+>
 
-This causes crashes during guest reboots, particularly with Windows XP,
-when kvm_put_msrs() attempts to write PMU MSRs based on the stale
-pmu_version value for a CPU that doesn't actually support PMU.
-
-Fix this by resetting the PMU state variables to 0 at the start of
-kvm_init_pmu_info() to ensure clean initialization for each VCPU.
-
-Fixes: 4c7f05232c ("target/i386/kvm: reset AMD PMU registers during VM reset")
-Signed-off-by: GitHub Copilot <copilot@github.com>
-
-Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>
----
- target/i386/kvm/kvm.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
-
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index 9f1a4d4cbb..c636f1f487 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -2193,6 +2193,14 @@ static void kvm_init_pmu_info(struct kvm_cpuid2 *cpuid, X86CPU *cpu)
- {
-     CPUX86State *env = &cpu->env;
- 
-+    /*
-+     * Reset PMU state to avoid stale values from previous VCPU
-+     * initializations affecting subsequent ones.
-+     */
-+    pmu_version = 0;
-+    num_pmu_gp_counters = 0;
-+    num_pmu_fixed_counters = 0;
-+
-     /*
-      * If KVM_CAP_PMU_CAPABILITY is not supported, there is no way to
-      * disable the AMD PMU virtualization.
--- 
-2.53.0
-
+Tested-by: Joelle van Dyne <j@getutm.app>
 
