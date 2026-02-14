@@ -4,58 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2641CEF48C4
-	for <qemu-devel@archiver.kernel.org>; Sat, 14 Feb 2026 11:30:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A79FEEF48C5
+	for <qemu-devel@archiver.kernel.org>; Sat, 14 Feb 2026 11:47:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vrDqj-0001bY-IT; Sat, 14 Feb 2026 06:30:09 -0500
+	id 1vrE6e-0005q8-Fj; Sat, 14 Feb 2026 06:46:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vrDqf-0001Zj-An; Sat, 14 Feb 2026 06:30:05 -0500
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vrDqb-0007CA-1R; Sat, 14 Feb 2026 06:30:03 -0500
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 4214A596A29;
- Sat, 14 Feb 2026 12:29:56 +0100 (CET)
-X-Virus-Scanned: amavis at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id WJp4W4OJEAbo; Sat, 14 Feb 2026 12:29:54 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 25FC25969F1; Sat, 14 Feb 2026 12:29:54 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 23E755969F0;
- Sat, 14 Feb 2026 12:29:54 +0100 (CET)
-Date: Sat, 14 Feb 2026 12:29:54 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
-cc: qemu-devel@nongnu.org, Chinmay Rath <rathc@linux.ibm.com>, 
- =?ISO-8859-15?Q?Herv=E9_Poussineau?= <hpoussin@reactos.org>, 
- Harsh Prateek Bora <harshpb@linux.ibm.com>, 
- Nicholas Piggin <npiggin@gmail.com>, 
- Artyom Tarasenko <atar4qemu@gmail.com>, 
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-ppc@nongnu.org, 
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, 
- Laurent Vivier <laurent@vivier.eu>
-Subject: Re: [PATCH 3/8] hw/m68k/q800: Use MacFbMode fields in
- q800_machine_init()
-In-Reply-To: <20260214021240.58657-4-philmd@linaro.org>
-Message-ID: <e4af27a4-08b9-97a4-b775-1a8db71a234c@eik.bme.hu>
-References: <20260214021240.58657-1-philmd@linaro.org>
- <20260214021240.58657-4-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vrE6T-0005hi-4O
+ for qemu-devel@nongnu.org; Sat, 14 Feb 2026 06:46:28 -0500
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vrE6R-0003ql-Cm
+ for qemu-devel@nongnu.org; Sat, 14 Feb 2026 06:46:24 -0500
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-43626796202so1512452f8f.3
+ for <qemu-devel@nongnu.org>; Sat, 14 Feb 2026 03:46:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1771069581; x=1771674381; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=K58w8STfLmO0fANjixOgmRI07dP7UvVCNU4cvc/V/1o=;
+ b=RwV3oV52sAMprcdqd+h7HEwEDgCfmuWJm+74QM9Eea9X/eYtvZd++wRE3OLQLOdZfu
+ FDgGHy95f4YtWWHao4IORtbN5ZndoVHqq8GCFOOjdSzVr4M3AcNhJ+kWZDop4a+FV1zo
+ e0a2gCTh2g1Pdq31rCO1MDoaMjtfQCx8SULgAL0+fiORd+d37doO/XOV/h2jYCU5mqZf
+ mJy0kQIpBS3lCyibocw10ydor7ZViMP22XmVSgXj6GtLBFgLDe7i9naBNcqWOBNzggeN
+ zTMVNhAIVPffzWi8SN/TKeVyYCh+O6hjJr0CD5v1m0VcUlP5A3hZ6lG1L+NWbdaqb8gt
+ TCGQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1771069581; x=1771674381;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=K58w8STfLmO0fANjixOgmRI07dP7UvVCNU4cvc/V/1o=;
+ b=AHZdbrgsxJkXeH52z6fRNdQD9Mr/hGWlJHUoZlGSMu3AVvGjp9AVR3+gNdmISHKyDD
+ r/2QnrmBBlD2BWymDWTNZEpDcwjzptgeD5xSg18VcPyLpSPwAl7n51aG6C8q3HDgX6Yv
+ 6NSJa3hGhcQ+RJ0GMqYifne+APb2UaOHaYbDj78V5dNLYekBMctloe4d36f+hdvE2yio
+ qW8N2jlqN23lVfrh6AeLK2cKCwxZWoDcJC5uO8+p1weRFTr3JkimCBmGLr5CQDic79QZ
+ phHQeZlzcBiPhz5GhyVGggg+/nJImJMDh0huBkd/lSwXCytREYy1xrXKOTVgNXCy3U7+
+ WWgQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXI/nGHL4pBCWgruE/hKiHZZtFvioFYjtcjWm1v0530z7+slsDBprI0nXvDv9xwHLrJ4GOAtRkp8tCw@nongnu.org
+X-Gm-Message-State: AOJu0YyZB83RXHe+6BbNr4tYdsW/guALYRxzVhvrFo1fsaJsaMzxHsv/
+ 7CzdXBSezcK0XxeDx/kOhTy4KAH0iBomQJQ6ToVBH5IUEDNz6d77B+o6Vq+EH5JraSw=
+X-Gm-Gg: AZuq6aL9y9oYvv6C5g4YwHgn8NpVFI+IQRXf5ivmiFk5c3dQKD6jd9eV6EF5fS5F4rE
+ aVpbVO/hJS1JLcocpAIG9WNaBKCWQK75UF1SS6JM/ssm4VKSl/H0LoCOjd/YCU+JzEs1mF3RDFY
+ nWSiALDGPrE0mRpApjJ2w54a/DjgiHKNDmsvN6s1rlwCGoHiiDvfsKQwtdo+JLpy8Wu0ogQXksq
+ r6HcdCykHcMMWd0CbNJnfolqVFhvYLScSuRXgXI0mOCuB9y+RXUdMYobuH3pxWRg56hdekibdqo
+ v2VlrdrQQeTcuAsQH4E2/sKmaXsU3MWhhKsGw7P9Ams+AiitlyWc/0n+bR6dGVZNY3KFOSJ9bKu
+ 3Yap4eutixNmcIzRnedO0Svw479bl/V9ZqvjhHG/b3IGltc6JKqiaUlpzBZAnffvDazxgJsFlx4
+ IJMlCrmt5SOSFayUaSgWd9Bau2BBm7W5PMb6Gf6mOVQ8Z2AeJcSf9rVIFvEg222heXng6lTnYje
+ hmi
+X-Received: by 2002:a05:600c:4f50:b0:477:af8d:203a with SMTP id
+ 5b1f17b1804b1-48373a662a4mr75487745e9.27.1771069581014; 
+ Sat, 14 Feb 2026 03:46:21 -0800 (PST)
+Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-43796ac8d46sm13642556f8f.32.2026.02.14.03.46.19
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sat, 14 Feb 2026 03:46:20 -0800 (PST)
+Message-ID: <47a7d557-c864-4b43-a178-9adfa12bba9f@linaro.org>
+Date: Sat, 14 Feb 2026 12:46:18 +0100
 MIME-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="3866299591-985540205-1771068594=:43665"
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] contrib/plugins/cpp: use __has_include
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>, Alexandre Iooss
+ <erdnaxe@crans.org>, jsnow@redhat.com
+References: <20260214061025.1239457-1-pierrick.bouvier@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260214061025.1239457-1-pierrick.bouvier@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -72,44 +105,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
-
---3866299591-985540205-1771068594=:43665
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8BIT
-
-On Sat, 14 Feb 2026, Philippe Mathieu-Daudé wrote:
-> Once the Mac Frame Buffer device is realized on the NuBus,
-> its MacFbMode might be different of the global graphic_depth
-> and graphic_width globals. Prefer the device MacFbMode fields
-> to initialize the BootInfo structure.
->
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+On 14/2/26 07:10, Pierrick Bouvier wrote:
+> This make sure we can include all possible headers without breaking
+> build for environments missing them. It fixes compilation on openbsd.
+> 
+> We don't want to pollute configure script, as it's really a special case
+> here to make sure we don't have a compilation regression with
+> qemu-plugins header.
+> 
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 > ---
-> hw/m68k/q800.c | 4 ++--
-> 1 file changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/hw/m68k/q800.c b/hw/m68k/q800.c
-> index 4767eb4298f..b55c03a90bf 100644
-> --- a/hw/m68k/q800.c
-> +++ b/hw/m68k/q800.c
-> @@ -605,9 +605,9 @@ static void q800_machine_init(MachineState *machine)
->         BOOTINFO2(param_ptr, BI_MEMCHUNK, 0, ram_size);
->         BOOTINFO1(param_ptr, BI_MAC_VADDR,
->                   VIDEO_BASE + macfb_mode->offset);
-> -        BOOTINFO1(param_ptr, BI_MAC_VDEPTH, graphic_depth);
-> +        BOOTINFO1(param_ptr, BI_MAC_VDEPTH, macfb_mode->depth);
->         BOOTINFO1(param_ptr, BI_MAC_VDIM,
-> -                  (graphic_height << 16) | graphic_width);
-> +                  (graphic_height << 16) | macfb_mode->width);
->         BOOTINFO1(param_ptr, BI_MAC_VROW, macfb_mode->stride);
->         BOOTINFO1(param_ptr, BI_MAC_SCCBASE, SCC_BASE);
+>   contrib/plugins/cpp.cpp | 261 +++++++++++++++++++++++++++++++++++++++-
+>   1 file changed, 259 insertions(+), 2 deletions(-)
+> 
+> diff --git a/contrib/plugins/cpp.cpp b/contrib/plugins/cpp.cpp
+> index 1ff54896d97..0673c4f074d 100644
+> --- a/contrib/plugins/cpp.cpp
+> +++ b/contrib/plugins/cpp.cpp
+> @@ -6,103 +6,360 @@
+>   
+>   #include <qemu-plugin.h>
+>   
+> -/* https://en.cppreference.com/w/cpp/headers.html */
+> +/*
+> + * We include all C++ standard headers (without deprecated ones),
+> + * taken from: https://en.cppreference.com/w/cpp/headers.html
+> + *
+> + * To update, copy page text, and then:
+> + * grep '^<' |
+> + * sort -u |
+> + * grep -v strstream |
+> + * grep -v codecvt |
+> + * sed -e 's/\(.*\)/#if __has_include(\1)\n#include \1\n#endif/'
+> + */
+> +
+> +#if __has_include(<algorithm>)
+>   #include <algorithm>
+> +#endif
 
-I know nothing about this but the idea is to let the user override 
-graphics resolution via the command line. Would this break that?
+Should we test __has_include is defined, as the GCC documentation
+recommends?
 
-Regards,
-BALATON Zoltan
---3866299591-985540205-1771068594=:43665--
+   [...] the recommended use of the operators is as follows:
+
+   #if defined __has_include
+   #  if __has_include (<stdatomic.h>)
+   #    include <stdatomic.h>
+   #  endif
+   #endif
+
+https://gcc.gnu.org/onlinedocs/cpp/_005f_005fhas_005finclude.html
 
