@@ -4,33 +4,33 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D15E9EF48C9
-	for <qemu-devel@archiver.kernel.org>; Sat, 14 Feb 2026 11:47:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2C2CEF48C5
+	for <qemu-devel@archiver.kernel.org>; Sat, 14 Feb 2026 11:54:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vrE6h-0005qp-Pd; Sat, 14 Feb 2026 06:46:40 -0500
+	id 1vrEDO-0007p8-MV; Sat, 14 Feb 2026 06:53:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vrE6e-0005qN-OT; Sat, 14 Feb 2026 06:46:37 -0500
+ id 1vrEDM-0007oc-BU; Sat, 14 Feb 2026 06:53:32 -0500
 Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vrE6c-0003r7-3j; Sat, 14 Feb 2026 06:46:36 -0500
+ id 1vrEDK-0004Nc-N2; Sat, 14 Feb 2026 06:53:32 -0500
 Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id CFDC7596ADA;
- Sat, 14 Feb 2026 12:46:30 +0100 (CET)
+ by zero.eik.bme.hu (Postfix) with ESMTP id D91FB5969F6;
+ Sat, 14 Feb 2026 12:53:28 +0100 (CET)
 X-Virus-Scanned: amavis at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id iu8HW44TlmLw; Sat, 14 Feb 2026 12:46:28 +0100 (CET)
+ id L_pfypCQvas1; Sat, 14 Feb 2026 12:53:26 +0100 (CET)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id B9C74596AC7; Sat, 14 Feb 2026 12:46:28 +0100 (CET)
+ id 961E45969F1; Sat, 14 Feb 2026 12:53:26 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id B80B35969F6;
- Sat, 14 Feb 2026 12:46:28 +0100 (CET)
-Date: Sat, 14 Feb 2026 12:46:28 +0100 (CET)
+ by zero.eik.bme.hu (Postfix) with ESMTP id 944B55969F0;
+ Sat, 14 Feb 2026 12:53:26 +0100 (CET)
+Date: Sat, 14 Feb 2026 12:53:26 +0100 (CET)
 From: BALATON Zoltan <balaton@eik.bme.hu>
 To: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
 cc: qemu-devel@nongnu.org, Chinmay Rath <rathc@linux.ibm.com>, 
@@ -41,15 +41,15 @@ cc: qemu-devel@nongnu.org, Chinmay Rath <rathc@linux.ibm.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-ppc@nongnu.org, 
  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, 
  Laurent Vivier <laurent@vivier.eu>
-Subject: Re: [PATCH 7/8] hw/ppc: Set graphic display dimensions generically
-In-Reply-To: <20260214021240.58657-8-philmd@linaro.org>
-Message-ID: <252b2fa2-9251-3949-625b-7071c525c8e2@eik.bme.hu>
+Subject: Re: [PATCH 8/8] system/globals: Build as common code
+In-Reply-To: <20260214021240.58657-9-philmd@linaro.org>
+Message-ID: <6c85073c-e70c-3cb2-d2ad-57c5177dab88@eik.bme.hu>
 References: <20260214021240.58657-1-philmd@linaro.org>
- <20260214021240.58657-8-philmd@linaro.org>
+ <20260214021240.58657-9-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: multipart/mixed;
- BOUNDARY="3866299591-748815940-1771068859=:43665"
-Content-ID: <83d4573b-b87d-6721-97b7-1122260f6ab5@eik.bme.hu>
+ BOUNDARY="3866299591-825164378-1771069674=:43665"
+Content-ID: <a085a5d7-edb7-2f69-c070-d92efa81f206@eik.bme.hu>
 Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
  helo=zero.eik.bme.hu
 X-Spam_score_int: -18
@@ -76,215 +76,83 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
   This message is in MIME format.  The first part should be readable text,
   while the remaining parts are likely unreadable without MIME-aware tools.
 
---3866299591-748815940-1771068859=:43665
+--3866299591-825164378-1771069674=:43665
 Content-Type: text/plain; CHARSET=ISO-8859-15; format=flowed
 Content-Transfer-Encoding: 8BIT
-Content-ID: <561c4897-6084-daef-ffc3-81306ca2cef0@eik.bme.hu>
+Content-ID: <93fe92c1-7408-6144-c23f-854558efa8f9@eik.bme.hu>
 
 On Sat, 14 Feb 2026, Philippe Mathieu-Daudé wrote:
-> If a dimension is not set, have the machine init code set
-> the default value by calling the ppc_graphic_dimensions()
-> helper, common to all PowerPC machines. Declare local
-> variables to avoid using the global ones.
+> Now than all targets have the graphic dimension variables
+
+Typo: ^^^^ that
+
+> initialized the same way, we can move them to the common
+> file unit, having them built once. Remove the now empty
+> globals-target.c file.
 >
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
-> include/hw/ppc/ppc.h    |  2 ++
-> hw/ppc/mac_newworld.c   | 10 ++++++----
-> hw/ppc/mac_oldworld.c   | 10 ++++++----
-> hw/ppc/ppc.c            |  8 ++++++++
-> hw/ppc/prep.c           |  4 ++++
-> hw/ppc/spapr.c          |  4 ++++
-> system/globals-target.c |  6 ------
-> 7 files changed, 30 insertions(+), 14 deletions(-)
+> system/globals-target.c | 14 --------------
+> system/globals.c        |  3 +++
+> system/meson.build      |  4 ----
+> 3 files changed, 3 insertions(+), 18 deletions(-)
+> delete mode 100644 system/globals-target.c
 >
-> diff --git a/include/hw/ppc/ppc.h b/include/hw/ppc/ppc.h
-> index cb51d704c6d..14cc09ab22b 100644
-> --- a/include/hw/ppc/ppc.h
-> +++ b/include/hw/ppc/ppc.h
-> @@ -102,6 +102,8 @@ enum {
->     ARCH_MAC99_U3,
-> };
->
-> +void ppc_graphic_dimensions(int *width, int *height, int *depth);
-> +
-> #define FW_CFG_PPC_WIDTH        (FW_CFG_ARCH_LOCAL + 0x00)
-> #define FW_CFG_PPC_HEIGHT       (FW_CFG_ARCH_LOCAL + 0x01)
-> #define FW_CFG_PPC_DEPTH        (FW_CFG_ARCH_LOCAL + 0x02)
-> diff --git a/hw/ppc/mac_newworld.c b/hw/ppc/mac_newworld.c
-> index 7275563a155..daf0029c01a 100644
-> --- a/hw/ppc/mac_newworld.c
-> +++ b/hw/ppc/mac_newworld.c
-> @@ -156,6 +156,7 @@ static void ppc_core99_init(MachineState *machine)
->     DeviceState *uninorth_internal_dev = NULL, *uninorth_agp_dev = NULL;
->     hwaddr nvram_addr = 0xFFF04000;
->     uint64_t tbfreq = kvm_enabled() ? kvmppc_get_tbfreq() : TBFREQ;
-> +    int graphic_width, graphic_height, graphic_depth;
->
->     /* init CPUs */
->     for (i = 0; i < machine->smp.cpus; i++) {
-> @@ -432,10 +433,6 @@ static void ppc_core99_init(MachineState *machine)
->
->     pci_vga_init(pci_bus);
->
-> -    if (graphic_depth != 15 && graphic_depth != 32 && graphic_depth != 8) {
-> -        graphic_depth = 15;
-> -    }
+> diff --git a/system/globals-target.c b/system/globals-target.c
+> deleted file mode 100644
+> index ffa6c308b59..00000000000
+> --- a/system/globals-target.c
+> +++ /dev/null
+> @@ -1,14 +0,0 @@
+> -/*
+> - * Global variables that should not exist (target specific)
+> - *
+> - * Copyright (c) 2003-2008 Fabrice Bellard
+> - *
+> - * SPDX-License-Identifier: MIT
+> - */
 > -
->     pci_init_nic_devices(pci_bus, mc->default_nic);
->
->     /* The NewWorld NVRAM is not located in the MacIO device */
-> @@ -480,6 +477,11 @@ static void ppc_core99_init(MachineState *machine)
->     fw_cfg_add_i32(fw_cfg, FW_CFG_INITRD_SIZE, initrd_size);
->     fw_cfg_add_i16(fw_cfg, FW_CFG_BOOT_DEVICE, ppc_boot_device);
->
-> +    ppc_graphic_dimensions(&graphic_width, &graphic_height, &graphic_depth);
-> +    if (graphic_depth != 15 && graphic_depth != 32 && graphic_depth != 8) {
-> +        graphic_depth = 15;
-> +    }
-> +
->     fw_cfg_add_i16(fw_cfg, FW_CFG_PPC_WIDTH, graphic_width);
->     fw_cfg_add_i16(fw_cfg, FW_CFG_PPC_HEIGHT, graphic_height);
->     fw_cfg_add_i16(fw_cfg, FW_CFG_PPC_DEPTH, graphic_depth);
-> diff --git a/hw/ppc/mac_oldworld.c b/hw/ppc/mac_oldworld.c
-> index e679d338985..ea1f778877c 100644
-> --- a/hw/ppc/mac_oldworld.c
-> +++ b/hw/ppc/mac_oldworld.c
-> @@ -108,6 +108,7 @@ static void ppc_heathrow_init(MachineState *machine)
->     DriveInfo *dinfo, *hd[MAX_IDE_BUS * MAX_IDE_DEVS];
->     void *fw_cfg;
->     uint64_t tbfreq = kvm_enabled() ? kvmppc_get_tbfreq() : TBFREQ;
-> +    int graphic_width, graphic_height, graphic_depth;
->
->     /* init CPUs */
->     for (i = 0; i < machine->smp.cpus; i++) {
-> @@ -288,10 +289,6 @@ static void ppc_heathrow_init(MachineState *machine)
->         pci_create_simple(pci_bus, -1, "pci-ohci");
->     }
->
-> -    if (graphic_depth != 15 && graphic_depth != 32 && graphic_depth != 8) {
-> -        graphic_depth = 15;
-> -    }
+> -#include "qemu/osdep.h"
+> -#include "system/system.h"
 > -
->     /* No PCI init: the BIOS will do it */
->
->     dev = qdev_new(TYPE_FW_CFG_MEM);
-> @@ -321,6 +318,11 @@ static void ppc_heathrow_init(MachineState *machine)
->     fw_cfg_add_i32(fw_cfg, FW_CFG_INITRD_SIZE, initrd_size);
->     fw_cfg_add_i16(fw_cfg, FW_CFG_BOOT_DEVICE, ppc_boot_device);
->
-> +    ppc_graphic_dimensions(&graphic_width, &graphic_height, &graphic_depth);
-> +    if (graphic_depth != 15 && graphic_depth != 32 && graphic_depth != 8) {
-> +        graphic_depth = 15;
-> +    }
-> +
->     fw_cfg_add_i16(fw_cfg, FW_CFG_PPC_WIDTH, graphic_width);
->     fw_cfg_add_i16(fw_cfg, FW_CFG_PPC_HEIGHT, graphic_height);
->     fw_cfg_add_i16(fw_cfg, FW_CFG_PPC_DEPTH, graphic_depth);
-> diff --git a/hw/ppc/ppc.c b/hw/ppc/ppc.c
-> index a512d4fa647..d7b4466d701 100644
-> --- a/hw/ppc/ppc.c
-> +++ b/hw/ppc/ppc.c
-> @@ -29,6 +29,7 @@
-> #include "qemu/timer.h"
-> #include "exec/cpu-interrupt.h"
-> #include "system/cpus.h"
-> +#include "system/system.h"
-> #include "qemu/log.h"
-> #include "qemu/main-loop.h"
-> #include "qemu/error-report.h"
-> @@ -1557,3 +1558,10 @@ void ppc_irq_reset(PowerPCCPU *cpu)
->         kvmppc_set_interrupt(cpu, PPC_INTERRUPT_EXT, 0);
->     }
-> }
-> +
-> +void ppc_graphic_dimensions(int *width, int *height, int *depth)
-> +{
-> +    *width = graphic_width ?: 800;
-> +    *height = graphic_height ?: 600;
-> +    *depth = graphic_depth ?: 32;
-> +}
+> -int graphic_width;
+> -int graphic_height;
+> -int graphic_depth;
+> diff --git a/system/globals.c b/system/globals.c
+> index c33f6ed3902..34fd3ce9c72 100644
+> --- a/system/globals.c
+> +++ b/system/globals.c
+> @@ -49,6 +49,9 @@ bool enable_cpu_pm;
+> int autostart = 1;
+> int vga_interface_type = VGA_NONE;
+> bool vga_interface_created;
+> +int graphic_width;
+> +int graphic_height;
+> +int graphic_depth;
 
-I think there's no reason to have this common to all ppc machines. If we 
-change this we could also make it per machine like for other targets. 
-There's nothing common in these machines that dictate these defaults. It 
-seems it used to be an arbitrary default in QEMU that some machines later 
-deviated from. So might as well just keep it as global for now after you 
-removed the SPARC and M68K special cases. If the ppc machines are the last 
-users of these global defaults you can just move them to hw/ppc/ppc.{h,c} 
-for now and let ppc people clean this up eventually.
+Where do other machines get their default values from now? This used to 
+have #else 800x600x32 which is the default resolution when not specifying 
+a -g option and some machines may depend on that. Where that default is
+established now?
 
 Regards,
 BALATON Zoltan
 
-> diff --git a/hw/ppc/prep.c b/hw/ppc/prep.c
-> index c4efd1d3908..7077b047b25 100644
-> --- a/hw/ppc/prep.c
-> +++ b/hw/ppc/prep.c
-> @@ -43,6 +43,7 @@
-> #include "exec/target_page.h"
-> #include "system/kvm.h"
-> #include "system/reset.h"
-> +#include "system/system.h"
-> #include "trace.h"
-> #include "elf.h"
-> #include "qemu/units.h"
-> @@ -250,6 +251,7 @@ static void ibm_40p_init(MachineState *machine)
->     uint32_t kernel_base = 0, initrd_base = 0;
->     long kernel_size = 0, initrd_size = 0;
->     char boot_device;
-> +    int graphic_width, graphic_height, graphic_depth;
+> Chardev *parallel_hds[MAX_PARALLEL_PORTS];
+> QEMUOptionRom option_rom[MAX_OPTION_ROMS];
+> int nb_option_roms;
+> diff --git a/system/meson.build b/system/meson.build
+> index d91703d3dcc..579e8353d53 100644
+> --- a/system/meson.build
+> +++ b/system/meson.build
+> @@ -1,7 +1,3 @@
+> -specific_ss.add(when: 'CONFIG_SYSTEM_ONLY', if_true: [files(
+> -  'globals-target.c',
+> -)])
+> -
+> system_ss.add(files(
+>   'vl.c',
+> ), sdl, libpmem, libdaxctl)
 >
->     if (kvm_enabled()) {
->         error_report("machine %s does not support the KVM accelerator",
-> @@ -412,6 +414,8 @@ static void ibm_40p_init(MachineState *machine)
->     fw_cfg_add_i64(fw_cfg, FW_CFG_RAM_SIZE, (uint64_t)machine->ram_size);
->     fw_cfg_add_i16(fw_cfg, FW_CFG_MACHINE_ID, ARCH_PREP);
->
-> +    ppc_graphic_dimensions(&graphic_width, &graphic_height, &graphic_depth);
-> +
->     fw_cfg_add_i16(fw_cfg, FW_CFG_PPC_WIDTH, graphic_width);
->     fw_cfg_add_i16(fw_cfg, FW_CFG_PPC_HEIGHT, graphic_height);
->     fw_cfg_add_i16(fw_cfg, FW_CFG_PPC_DEPTH, graphic_depth);
-> diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
-> index 274f38785f2..c50c7da34d5 100644
-> --- a/hw/ppc/spapr.c
-> +++ b/hw/ppc/spapr.c
-> @@ -1143,6 +1143,7 @@ static void spapr_dt_chosen(SpaprMachineState *spapr, void *fdt, bool reset)
-> {
->     MachineState *machine = MACHINE(spapr);
->     int chosen;
-> +    int graphic_width, graphic_height, graphic_depth;
->
->     _FDT(chosen = fdt_add_subnode(fdt, 0, "chosen"));
->
-> @@ -1177,6 +1178,9 @@ static void spapr_dt_chosen(SpaprMachineState *spapr, void *fdt, bool reset)
->         if (machine->boot_config.has_menu && machine->boot_config.menu) {
->             _FDT((fdt_setprop_cell(fdt, chosen, "qemu,boot-menu", true)));
->         }
-> +
-> +        ppc_graphic_dimensions(&graphic_width, &graphic_height, &graphic_depth);
-> +
->         _FDT(fdt_setprop_cell(fdt, chosen, "qemu,graphic-width", graphic_width));
->         _FDT(fdt_setprop_cell(fdt, chosen, "qemu,graphic-height", graphic_height));
->         _FDT(fdt_setprop_cell(fdt, chosen, "qemu,graphic-depth", graphic_depth));
-> diff --git a/system/globals-target.c b/system/globals-target.c
-> index 17a27a06218..ffa6c308b59 100644
-> --- a/system/globals-target.c
-> +++ b/system/globals-target.c
-> @@ -9,12 +9,6 @@
-> #include "qemu/osdep.h"
-> #include "system/system.h"
->
-> -#if defined(TARGET_SPARC) || defined(TARGET_M68K)
-> int graphic_width;
-> int graphic_height;
-> int graphic_depth;
-> -#else
-> -int graphic_width = 800;
-> -int graphic_height = 600;
-> -int graphic_depth = 32;
-> -#endif
->
---3866299591-748815940-1771068859=:43665--
+--3866299591-825164378-1771069674=:43665--
 
