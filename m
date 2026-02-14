@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D77AEF99EA
-	for <qemu-devel@archiver.kernel.org>; Sat, 14 Feb 2026 02:33:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3E1AEF99F1
+	for <qemu-devel@archiver.kernel.org>; Sat, 14 Feb 2026 02:33:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vr5Sw-0001zR-OY; Fri, 13 Feb 2026 21:33:02 -0500
+	id 1vr5TI-00021z-Nh; Fri, 13 Feb 2026 21:33:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vr5Sv-0001z4-Gz
- for qemu-devel@nongnu.org; Fri, 13 Feb 2026 21:33:01 -0500
+ id 1vr5T9-00020p-Sy
+ for qemu-devel@nongnu.org; Fri, 13 Feb 2026 21:33:15 -0500
 Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vr5St-0002kd-KM
- for qemu-devel@nongnu.org; Fri, 13 Feb 2026 21:33:01 -0500
+ id 1vr5T5-0002lL-Ij
+ for qemu-devel@nongnu.org; Fri, 13 Feb 2026 21:33:14 -0500
 Received: by mail-pf1-x434.google.com with SMTP id
- d2e1a72fcca58-8230c2d3128so753521b3a.0
- for <qemu-devel@nongnu.org>; Fri, 13 Feb 2026 18:32:58 -0800 (PST)
+ d2e1a72fcca58-824ba8f0acaso990088b3a.1
+ for <qemu-devel@nongnu.org>; Fri, 13 Feb 2026 18:33:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771036377; x=1771641177; darn=nongnu.org;
+ d=linaro.org; s=google; t=1771036390; x=1771641190; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=tJDBtSQ5Ssw/C+mp8eqsVbzvg6ugbpXyovDNVW1bL+s=;
- b=h2IFZ4L2K/itCUHsNgBmMgVUGKq7r46fTAOBUy3Ls6sG75hKiV26VIsszkG5pwrIeS
- H6DWITR0PhYq5aw32tZQnBXktf+v9rJ9IfpjI66Y0UJS/1+oZDzJUgcVfzh7fW50Wk+u
- aB0c2nPPKPrCIhDtM4kVxEKj5QMMrpXsaStLToLN5YgSVZ4/wJvPi+F8E3ADNJJnX7o7
- emenf50fz63Eh32Wcszkt+Y3MsKU3afeGVwNxNiOd6nOlGOSP36KP7wGctK+tzq9XF3w
- BYhSBmrb9gFJRT6Zzxrw1W0lgORfIvJNb8UMfAd2m2i8dDwpj4p6X57/g3HIijtrv+Q7
- ZTuA==
+ bh=/uLygcR/j40dIJJq/Ks+BCAHMIffzXuwN8BSV0Yy0vk=;
+ b=hIDFwElJs1qJO6/Vh54JeOafxikb1NUyYjDAWO2lTCxTpggOY9KDN6Qx1+Y0SREHA8
+ jeUp0eX5fS3UH9ctgx7edLi7GjYTmOBF66AfHQbqlxQD3SqAM1kDyUEYatssYTs/olzy
+ iYeL5411HpDkbvRG4da3qENnlk/qGC5iR2HXgmJOLKS/PrpPv9PQWoKM4Bhf+jLRrRtI
+ 5WUQywxFF3xJDoDO4YZBjvB1RRbbqvy/ICSgRUFAEESqlArOAznlb0YrTRlYVo0QVqqK
+ WyX3fB6O5OcnknNCIPC7HjyWQzf/+zaoyr+39udG91IUMglMs2jQSLk2UR6LFs4dVc0f
+ Rq7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771036377; x=1771641177;
+ d=1e100.net; s=20230601; t=1771036390; x=1771641190;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=tJDBtSQ5Ssw/C+mp8eqsVbzvg6ugbpXyovDNVW1bL+s=;
- b=DsXyf9Ywam6zMcSrS0W996MOt6wjXPyzWUVJe3WcPXnBAE3lRjJyZyXXlTicLMqHRh
- yt317CCpG0XQkZ6N9Y5smknw6Jx+yxErPTG6OpmRyYFxLx7f7R3lnAERZHU0rOpCFX5k
- tfKIwsHQNKt9kM+p3MOmk5EEmyeREv2tatRk3JMOLHupqI4Q7VMwbdqnM9wKSCfMZmHm
- cwAQ/ZUabluZstSA5g8XjSemzd8NSLhIl/3Qm2y+kmJjTJvuva6TPrp6m2eR4GAkW4Vv
- BTBWTGuKw6wLxaVHCCIHgkvW67SaeyTFUkQqMCp4ZU9a23gBZsaR8JGVDsE7htZ5rVq6
- pEIg==
+ bh=/uLygcR/j40dIJJq/Ks+BCAHMIffzXuwN8BSV0Yy0vk=;
+ b=Qc5GLYgtJbviqx5i5X1ZLufAe1WukwQGiWmD8fhp+vjxuycVYmWUZz9gyrac+r6lmd
+ LtyH7TOTKr1zkJ9GEkb+19hecA/l6FhjGmyitGlqoZodhwtZ90h6EGy8p8I+uMO/VcH+
+ hx0QJI3ft+27wHJompAnUGx8k6Xykqo5QvBdZ4XaCJT2MWiPaceHyLPiJrpvVUzNx0WS
+ AZl26xO8yRoiFKaYwJgcjA+DSJs9e1NqotfgboNgIUVaBKQu2pQ0Bwi3lgi3lNQiUBet
+ pLovGbSUkIZqsQ8gWfLJZKPdgdTkZJiWasAjngjIwheBMz1vZjMO3xKSDn20FPDDt+we
+ J4aA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUgdbdUaRtzdOd/m62cUnmy8iQiPBTUfB2bQP09Tbmy/Jut99CVNXrJb9KT3UCK7Yy+LPCyofsyId7W@nongnu.org
-X-Gm-Message-State: AOJu0YwNEys9vERRwWuhvhMPafPjK6kU6VZBnM36ed8RSyLlG5pnw9bn
- P4vdNV4uvAEcN9Sg9+x9Pf3nUdDAqHIb+MfOKTMACehW49u4V/GgO3NTUA8O5sr/qy8=
-X-Gm-Gg: AZuq6aIxEZSUUcMo2z9nZAaAne10eOs7iMUMqZnkBIfmNpG5/zypLEnqAIiVekJR5zq
- GuTVH3jtoQrFv/RxZ/ncpXtAIn6PSrwkX9VtUcrxfoN+7fbHFY2OCxt/3mXDNPmaN5yNimoHJ69
- xY1LqdHnL4zY3Hb7NbVZddbAfo0yt3cXGURmGTQhcZOEEnj78U/ZCTrfO3+laTHynJrVQCaVjrm
- SV74O9xB45ZPHgmkxajA4hlJIztAsITA30jsxR6HixbI2wUjaV57Gk0bIPmAio/Vd0HcbVbecun
- WPTRHELgRojgtsIlGrIX74MKg82ZEKazAtIcAdNNqH9WROfw4EpyQ1iramFXhl8yt4QKth/o2+X
- DUubYpyHF0p/6ZIy6PT+ppCvcK9qgsqkW9in+bhPdvA6vkqxOXvj2on5z6BNWnroyL48eVv3KK1
- tXJ396U6EUHcms3rPBz/IXL+46zKw2D1pQ10wiQr/KXvRhfso7Yg6kh4ksv6rsEYDj6nic
-X-Received: by 2002:a05:6a20:c998:b0:38d:f745:4d63 with SMTP id
- adf61e73a8af0-3946c8d30fcmr4107392637.63.1771036376794; 
- Fri, 13 Feb 2026 18:32:56 -0800 (PST)
+ AJvYcCUyNdIgiVuKA6DmMOfHt7BbO7cHne6U0F+8VfhFrzKNMtVYClAqadLzehiSB1STfbR4UNIzEKa2mi0l@nongnu.org
+X-Gm-Message-State: AOJu0YwN1RjepZN4Kz4LXebFRzMWNsV1urcjQg+Wyjgzzu0SgeIVD7Kx
+ zNAfNCpjV0EbmbMo+MSEP9AEk64av8fxRDfbZrvyTeZEqjQoL65CC2Ztry+c2BeDd68=
+X-Gm-Gg: AZuq6aLxFS7TZ7v9FZ3qE51S9+H9kqNrXLJobjy64LHcxHN3wT0uFs0od+pY5zftZw1
+ s8tkieJ/RtC4qicKQYZiFqd6ALhmO21EJYcc25NGrFCfnqt5UtHQJO349XaEjQkdkSBa1RCIbSs
+ Ih74y6SiX7GqiM8VxETVM9FI/HV/2RCJLh+NykkV265LpWvJlvQZOaIDYaIRbmmQTLiy2TMWEVc
+ TCXgik7856KUE+QkrRMA/bdR4T313pvyfWllvFkQfy/A/9Tolyx9j8zFG6Q/2vtZxnqOZJnCDR8
+ +gKgVkeNcjgFT/wSgaWRy/rk8xOqzGAugsPjevecdQvMm6m4uR6D+a8CF41/fXYD97KDA2CwnFj
+ FNKMMZ/24KH29QPwyTBo4IOKwBm892IiMxdHv5wEgwvtuplCYeeG2aaTGSmKKcvNKlXmMRZ7020
+ zIkvCDB3Jnyl2ChKK5IsS0az4uDGM9lM8ZrtFPKVeP+BaG6pyzgDnDYu6dA5CexsK5vv7K
+X-Received: by 2002:a05:6a20:a126:b0:387:a311:3825 with SMTP id
+ adf61e73a8af0-3946c96c912mr3909425637.61.1771036390118; 
+ Fri, 13 Feb 2026 18:33:10 -0800 (PST)
 Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-356a6b16982sm2346965a91.2.2026.02.13.18.32.56
+ 41be03b00d2f7-c6e52fe2300sm443921a12.8.2026.02.13.18.33.09
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 13 Feb 2026 18:32:56 -0800 (PST)
-Message-ID: <d0248723-a849-4622-a08c-46bc84a3eae8@linaro.org>
-Date: Fri, 13 Feb 2026 18:32:55 -0800
+ Fri, 13 Feb 2026 18:33:09 -0800 (PST)
+Message-ID: <97322314-0245-468b-a57b-7dcfffdd96dc@linaro.org>
+Date: Fri, 13 Feb 2026 18:33:09 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/8] hw/display/macfb: Constify macfb_sense_table[] array
+Subject: Re: [PATCH 2/8] hw/display/macfb: Constify macfb_mode_table[] array
 Content-Language: en-US
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
@@ -82,7 +82,7 @@ Cc: Chinmay Rath <rathc@linux.ibm.com>,
  qemu-ppc@nongnu.org, Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  Laurent Vivier <laurent@vivier.eu>
 References: <20260214021240.58657-1-philmd@linaro.org>
- <20260214021240.58657-2-philmd@linaro.org>
+ <20260214021240.58657-3-philmd@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  xsDNBGK9dgwBDACYuRpR31LD+BnJ0M4b5YnPZKbj+gyu82IDN0MeMf2PGf1sux+1O2ryzmnA
@@ -118,7 +118,7 @@ Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  5SYuJaKzCAgNeAy3gUVUUPrUsul1oe2PeWMFUhWKrqko0/Qo4HkwTZY6S16drTMncoUahSAl
  X4Z3BbSPXPq0v1JJBYNBL9qmjULEX+NbtRd3v0OfB5L49sSAC2zIO8S9Cufiibqx3mxZTaJ1
  ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <20260214021240.58657-2-philmd@linaro.org>
+In-Reply-To: <20260214021240.58657-3-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
@@ -129,7 +129,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -146,14 +146,17 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2/13/26 6:12 PM, Philippe Mathieu-Daudé wrote:
-> macfb_sense_table[] is only read, never updated, so can be const.
+> macfb_mode_table[] is only read, never updated, so can be const.
 > 
-> Update the single call site, macfb_sense_read().
+> Update the call sites accordingly.
+> Make the MacfbState::mode pointer to const.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   hw/display/macfb.c | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
+>   include/hw/display/macfb.h |  2 +-
+>   hw/display/macfb.c         | 10 +++++-----
+>   hw/m68k/q800.c             |  2 +-
+>   3 files changed, 7 insertions(+), 7 deletions(-)
 > 
 
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
