@@ -4,105 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A12F6EF99F5
-	for <qemu-devel@archiver.kernel.org>; Sat, 14 Feb 2026 03:06:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42106EF99F6
+	for <qemu-devel@archiver.kernel.org>; Sat, 14 Feb 2026 03:42:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vr5yJ-0000qo-Qx; Fri, 13 Feb 2026 22:05:28 -0500
+	id 1vr6Xp-00059T-JX; Fri, 13 Feb 2026 22:42:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1vr5yC-0000ok-C8
- for qemu-devel@nongnu.org; Fri, 13 Feb 2026 22:05:20 -0500
-Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1vr5yA-0000Zi-Pe
- for qemu-devel@nongnu.org; Fri, 13 Feb 2026 22:05:20 -0500
-Received: by mail-ej1-x635.google.com with SMTP id
- a640c23a62f3a-b8fb6ad3243so160164766b.1
- for <qemu-devel@nongnu.org>; Fri, 13 Feb 2026 19:05:18 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1771038317; cv=none;
- d=google.com; s=arc-20240605;
- b=afUchyZQguBzPaw0+lnNln5T4dE2QhVRf5dlDWvzKgGOiCFpg2/qwP0suimzPO204L
- 0vGPHcyK9UnF8Kjf41jCpIa+tA4RnMxOV9XDZssw19CQGordJrCuxnFAZocU4C2vFO0r
- BgaonKdCr/II+aiPHycDPyC8hl4IRBhTpBLPQ6ufFCbWFjtDKZvoflbBHChSfiQQIXzv
- HISejEkhrD6uQqLMddFpODBDn6ilXuHGMT8jmoFxj8HsnxlV7UqJh2/p42tR0axiLVkw
- vp92NB0wT+jdC/2dK7eVKspUYvx3zwjdqv+rz+HesNXJJ/c0eHQpF0S/Q1DE1F5ESdJQ
- baJw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=nm3jJS4jUsvrJJdfrBT2BEWd/9Ktwe/piMl9eJajs8M=;
- fh=jStUEheBxcMHYHSMDqpFm4kZ8DSIxwhDW4jCHn7dUzk=;
- b=fqYhDZUAaE6iqQKn69oamhawfpZAJtB8ISeVQ/EN+7Ulv2h0+ow9Q+r7yi+CLDFu0A
- bh4XztqvQP8opj/ZQQ9U7+eRaEXNyfD5lt6L56ySOb+2puk+FqmgPXCUTZOF0XO2OmTr
- IBZMAIU4bskshmw66udxyHZXD+WSm09+qMX2IgpVkJ+g8+zJW8xGFNISpqE1DEcpj1/n
- agVUmabdS+tMaDg7gqvkETrIXogXOBPGvbdfsGeCOh0cPQdg/RUfj096eTmXkTyL7lxB
- g0WHt0mZs9UA0z9hJ2L3amPhaYzRg81oMkssqgNHVesJWl1+HlCJl7lNpcxMrMGRSUB9
- FfaQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1771038317; x=1771643117; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=nm3jJS4jUsvrJJdfrBT2BEWd/9Ktwe/piMl9eJajs8M=;
- b=aX0dqAlidvhMS0uQMKlz3gFgnf7WT5h2W/Wdk8Hs+ir+syEcR1dugdY6H0O9ZJOGnC
- +M1mD2XLunYDdKWzrJS25FSXY+H7OXsgNFtl9KHbNXtTSVUXTMsJmlzS0AIOwo/8l2RG
- zqPhHIW/ftNjG35n9fgtLc2HagQ4F9u8m1sI2Uo8XM5yx8FziT2/hjGOKnra1XXLOOaB
- KrG+iGIebk22vW6J73PtOLyPZEtBES5dthk/l7Zkj1uOdbbwcZgJz+1dUmlpKf5zmAKz
- cIP2gJ3BwT5MlAYtJ2UQ8ljQSaG6AFGdGZ2ibpFDi0ivyNSPsvTJnCuCnhdnuJhwvbKP
- ScFw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771038317; x=1771643117;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=nm3jJS4jUsvrJJdfrBT2BEWd/9Ktwe/piMl9eJajs8M=;
- b=uU+aLb9cES61LDl3IeWLNz4ygtx7wC4xDMziHhKiY7HHJv3gRRIRrwhFIgAF2vMXlV
- vR9F/Z/SmWMkIlC1WmE3baBikgelNBHo9DxdX09q8x2tHgdHAZImr+qUNz8dRhJCPkqK
- iW9vgOqGIVArsnXOrlpvHQY+OngleQ92Jzo6F/vOWjDsKADGvlU5FkMr9JgdgKFVpTna
- wC6x75PPokO9f6+BrsxOjhaAO/4W6oLs1EQfrS/giBEUaLpqPajm6oFMgZ6de++pP6D+
- cQMhCbWrTozKmBDlJObSyKXHU+RKlUwFdH4E3W5S+iHTdivWWjBm7D7dyHpwKhWQAAjF
- Rh7w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUQBVQ/wK4ezWxBp+GHFBxHB3XfQelmz79fdD/mIeOtjVe/5KYVeiMx/haDrQj5inVYcSclbXWXoaDG@nongnu.org
-X-Gm-Message-State: AOJu0Yyc8T5QPwM5G+KilUdvf3D3PXGgijGL1fK+kHPyaCteInQQmmwu
- G5ZfS5/2Re95C3kLDcXE4jtTgWod2vUj48bc6REx+HbwcdEZqSxreqbUSEbI6E13+mtuovZZFWg
- F7Cg+cf2x/HQxAc5as7IuiYa2M/+3PFI=
-X-Gm-Gg: AZuq6aJaTAkDo1a4RDHuCW8dVK5mbaDZ+93QDYVAyVqIkC3F3hDUOoWt91MRvZfL4ja
- X22GTuWsRu1CClXBzSEP5AD118ftt0YD/MNVvSZeODBAEl1J9dWCHOYKmy48fT1s4mR/8zwXj5Z
- ybkbsn12VmTUv9EuoTyzfsDqlGzyFpCYxCuXfo3hm4RmApTamq16yt1lq0pHj2pdeKNd3eluU++
- wQFziDMiHhQJOPDgvYvwgjsYXSB55r0DHd6hbPwPqpJEYzP8OXsIcRltN5QluCpM6wFxD9nOOA8
- Pggw7o2Z
-X-Received: by 2002:a17:907:6eab:b0:b8e:796a:fd5c with SMTP id
- a640c23a62f3a-b8fb438cbf2mr229072366b.27.1771038316438; Fri, 13 Feb 2026
- 19:05:16 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1vr6Xo-00059H-ID
+ for qemu-devel@nongnu.org; Fri, 13 Feb 2026 22:42:08 -0500
+Received: from mgamail.intel.com ([198.175.65.12])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1vr6Xm-0008J1-Vr
+ for qemu-devel@nongnu.org; Fri, 13 Feb 2026 22:42:08 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1771040527; x=1802576527;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=UOlCwBlzHCMuS6OLxbG1uRV5/WHYGyGNEx4/PbnGdYw=;
+ b=kO6Fd0Vvafsdc1A6soqs5c1Orf181BfLLp739xVmucsYrQjXinzCgjqr
+ 4EnzHknfixAXYlS3K14Yc1IROZL2Mv7C8dz5LXFUFmTAYDRR1UaB/qRUU
+ yVP0ICAJELiDJXlHOcMvu2068cUVvOtRDvt0nsg5FpaeTcCC6/kJRnuAH
+ kxfaJ/twjA+idodwvNjzBZ/H9CJziOyZT2tfNa3JCpkKXI3l+0VYp9NEq
+ qWWhod5n0sR8Ye+KG61BUhC89/l3+WQRdz52zyJT9+rSIYaoNdLryZE8I
+ fWN8GOT3ddLsz77QBIj6iaIdcjoTQMA+Gv986tNFCBUva5N3kSe2cqw25 w==;
+X-CSE-ConnectionGUID: IsP/XK5GR7aqLSAS2jYBOg==
+X-CSE-MsgGUID: 5d6UmafeR4mSm0iWh93NQA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11700"; a="83666826"
+X-IronPort-AV: E=Sophos;i="6.21,289,1763452800"; d="scan'208";a="83666826"
+Received: from orviesa009.jf.intel.com ([10.64.159.149])
+ by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 13 Feb 2026 19:42:06 -0800
+X-CSE-ConnectionGUID: aLyRGausTQmAfUICrvKflA==
+X-CSE-MsgGUID: q8Y8xv8pSWWJV+2BtW1mhA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.21,289,1763452800"; d="scan'208";a="212933038"
+Received: from unknown (HELO gnr-sp-2s-612.sh.intel.com) ([10.112.230.229])
+ by orviesa009-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 13 Feb 2026 19:42:03 -0800
+From: Zhenzhong Duan <zhenzhong.duan@intel.com>
+To: qemu-devel@nongnu.org
+Cc: alex@shazbot.org, clg@redhat.com, eric.auger@redhat.com, mst@redhat.com,
+ jasowang@redhat.com, jgg@nvidia.com, nicolinc@nvidia.com,
+ skolothumtho@nvidia.com, joao.m.martins@oracle.com,
+ clement.mathieu--drif@eviden.com, kevin.tian@intel.com, yi.l.liu@intel.com,
+ xudong.hao@intel.com, Zhenzhong Duan <zhenzhong.duan@intel.com>
+Subject: [RFCv2 PATCH 05/13] intel_iommu: Change pasid property from bool to
+ uint8
+Date: Fri, 13 Feb 2026 22:41:25 -0500
+Message-ID: <20260214034135.220413-6-zhenzhong.duan@intel.com>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260214034135.220413-1-zhenzhong.duan@intel.com>
+References: <20260214034135.220413-1-zhenzhong.duan@intel.com>
 MIME-Version: 1.0
-References: <20260213071042.3733239-1-lulu@redhat.com>
-In-Reply-To: <20260213071042.3733239-1-lulu@redhat.com>
-From: Zhang Chen <zhangckid@gmail.com>
-Date: Sat, 14 Feb 2026 11:04:40 +0800
-X-Gm-Features: AZwV_Qj8bJHoKQLqLh7_g3iKKwZukGyeGGV0J1QmQfISGrp076cqKnKw3sSoqxw
-Message-ID: <CAK3tnvLBSB=sKKwjMai5Pw_AGq8sLzuaQkEoonJ-AaHgn3EwVw@mail.gmail.com>
-Subject: Re: [RFC 0/5] net/filter-redirector: Add AF_PACKET support for
- vhost-net
-To: Cindy Lu <lulu@redhat.com>
-Cc: mst@redhat.com, jasowang@redhat.com, lizhijian@fujitsu.com, 
- qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::635;
- envelope-from=zhangckid@gmail.com; helo=mail-ej1-x635.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=198.175.65.12;
+ envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -119,62 +87,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Feb 13, 2026 at 3:10=E2=80=AFPM Cindy Lu <lulu@redhat.com> wrote:
->
-> This series extends filter-redirector to support vhost-net backends by
-> introducing AF_PACKET based packet capture and injection.
->
+'x-pasid-mode' is a bool property, we need an extra 'pss' property to
+represent PASID size supported. Because there is no any device in QEMU
+supporting pasid capability yet, no guest could use the pasid feature
+until now, 'x-pasid-mode' takes no effect.
 
-Very happy to see this series~
+So instead of an extra 'pss' property we can use a single 'pasid'
+property of uint8 type to represent if pasid is supported and the PASID
+bits size. A value of N > 0 means pasid is supported and N - 1 is the
+value in PSS field in ECAP register.
 
-> TODO
-> =3D=3D=3D=3D=3D=3D=3D=3D
-> This series introduces basic support for filter-redirector, enabling
-> simple mirroring of VM1's ingress traffic to VM2's mirror port.
-> Additional functionality including filter_buffer and other filter feature=
-s
-> will be added in following versions.
->
-> Example Usage
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> Primary VM (mirror incoming packets to secondary via chardev socket):
->
->   -netdev tap,id=3Dnet0,vhost=3Don,...
->   -chardev socket,id=3Dmirror0,host=3D...,port=3D...,server=3Don,wait=3Do=
-ff
->   -object filter-redirector,id=3Dvm1redir,netdev=3Dnet0,in_netdev=3Dnet0,=
-outdev=3Dmirror0
->
-> Secondary VM (receive mirrored packets):
->
->   -chardev socket,id=3Dred0,host=3D...,port=3D...,reconnect-ms=3D1000
->   -object filter-redirector,id=3Dvm2redir,netdev=3Dnet0,indev=3Dred0,out_=
-netdev=3Dnet0
+Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+---
+ hw/i386/intel_iommu_internal.h | 1 -
+ include/hw/i386/intel_iommu.h  | 2 +-
+ hw/i386/intel_iommu.c          | 4 ++--
+ 3 files changed, 3 insertions(+), 4 deletions(-)
 
-Whether the receive side need the same setup the  "-netdev
-tap,id=3Dnet0,vhost=3Don" or not?
+diff --git a/hw/i386/intel_iommu_internal.h b/hw/i386/intel_iommu_internal.h
+index 11a53aa369..04a9392e8a 100644
+--- a/hw/i386/intel_iommu_internal.h
++++ b/hw/i386/intel_iommu_internal.h
+@@ -195,7 +195,6 @@
+ #define VTD_ECAP_MHMV               (15ULL << 20)
+ #define VTD_ECAP_SRS                (1ULL << 31)
+ #define VTD_ECAP_NWFS               (1ULL << 33)
+-#define VTD_ECAP_PSS                (7ULL << 35) /* limit: MemTxAttrs::pid */
+ #define VTD_ECAP_PASID              (1ULL << 40)
+ #define VTD_ECAP_PDS                (1ULL << 42)
+ #define VTD_ECAP_SMTS               (1ULL << 43)
+diff --git a/include/hw/i386/intel_iommu.h b/include/hw/i386/intel_iommu.h
+index 54c2b6b77a..bb957b93e0 100644
+--- a/include/hw/i386/intel_iommu.h
++++ b/include/hw/i386/intel_iommu.h
+@@ -315,7 +315,7 @@ struct IntelIOMMUState {
+     OnOffAuto intr_eim;             /* Toggle for EIM cabability */
+     uint8_t aw_bits;                /* Host/IOVA address width (in bits) */
+     bool dma_drain;                 /* Whether DMA r/w draining enabled */
+-    bool pasid;                     /* Whether to support PASID */
++    uint8_t pasid;                  /* PASID supported in bits, 0 if not */
+     bool fs1gp;                     /* First Stage 1-GByte Page Support */
+ 
+     /* Transient Mapping, Reserved(0) since VTD spec revision 3.2 */
+diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
+index 92a367d657..e27a7c725f 100644
+--- a/hw/i386/intel_iommu.c
++++ b/hw/i386/intel_iommu.c
+@@ -4186,7 +4186,7 @@ static const Property vtd_properties[] = {
+     DEFINE_PROP_BOOL("x-scalable-mode", IntelIOMMUState, scalable_mode, FALSE),
+     DEFINE_PROP_BOOL("x-flts", IntelIOMMUState, fsts, FALSE),
+     DEFINE_PROP_BOOL("snoop-control", IntelIOMMUState, snoop_control, false),
+-    DEFINE_PROP_BOOL("x-pasid-mode", IntelIOMMUState, pasid, false),
++    DEFINE_PROP_UINT8("pasid", IntelIOMMUState, pasid, 0),
+     DEFINE_PROP_BOOL("svm", IntelIOMMUState, svm, false),
+     DEFINE_PROP_BOOL("dma-drain", IntelIOMMUState, dma_drain, true),
+     DEFINE_PROP_BOOL("stale-tm", IntelIOMMUState, stale_tm, false),
+@@ -5033,7 +5033,7 @@ static void vtd_cap_init(IntelIOMMUState *s)
+     }
+ 
+     if (s->pasid) {
+-        s->ecap |= VTD_ECAP_PASID | VTD_ECAP_PSS;
++        s->ecap = VTD_ECAP_PASID | deposit64(s->ecap, 35, 5, s->pasid - 1);
+     }
+ }
+ 
+-- 
+2.47.3
 
-Thanks
-Chen
-
->
-> Testing
-> =3D=3D=3D=3D=3D=3D=3D
-> - Tested with vhost=3Don/off TAP netdev on x86_64
->
-> Cindy Lu (5):
->   net/filter: Allow redirector on vhost backends
->   net/filter-redirector: add in/out_netdev properties
->   net/filter-redirector: Add AF_PACKET sockets initialization
->   net/filter-redirector: add AF_PACKET redirect datapath
->   qapi: add in/out_netdev to filter-redirector
->
->  net/filter-mirror.c | 460 +++++++++++++++++++++++++++++++++++++++++---
->  net/filter.c        |   6 +-
->  qapi/qom.json       |  19 +-
->  3 files changed, 459 insertions(+), 26 deletions(-)
->
-> --
-> 2.52.0
->
 
