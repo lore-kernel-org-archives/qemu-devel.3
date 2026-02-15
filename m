@@ -4,84 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 385A4E63F19
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DBC4E63F1A
 	for <qemu-devel@archiver.kernel.org>; Sun, 15 Feb 2026 22:05:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vrkEQ-0005Yr-G2; Sun, 15 Feb 2026 17:04:46 -0500
+	id 1vrkEJ-0005XA-3z; Sun, 15 Feb 2026 17:04:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1vrkEK-0005XR-Ib
- for qemu-devel@nongnu.org; Sun, 15 Feb 2026 17:04:41 -0500
-Received: from mail-oi1-x22f.google.com ([2607:f8b0:4864:20::22f])
+ id 1vrkEF-0005Ve-Ez
+ for qemu-devel@nongnu.org; Sun, 15 Feb 2026 17:04:35 -0500
+Received: from mail-oi1-x236.google.com ([2607:f8b0:4864:20::236])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1vrkEI-00053L-Be
- for qemu-devel@nongnu.org; Sun, 15 Feb 2026 17:04:39 -0500
-Received: by mail-oi1-x22f.google.com with SMTP id
- 5614622812f47-45ee8823e2aso1569988b6e.0
- for <qemu-devel@nongnu.org>; Sun, 15 Feb 2026 14:04:37 -0800 (PST)
+ id 1vrkED-00051h-J9
+ for qemu-devel@nongnu.org; Sun, 15 Feb 2026 17:04:34 -0500
+Received: by mail-oi1-x236.google.com with SMTP id
+ 5614622812f47-45f053b7b90so1737449b6e.0
+ for <qemu-devel@nongnu.org>; Sun, 15 Feb 2026 14:04:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1771193077; x=1771797877; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1771193066; x=1771797866; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=cPGnHVzXgj2fdKy4LYV1thowyCOxSvdIUm2/cRgvu/o=;
- b=FgIf4sGyQT1LxCydcIBQU4DnqA9cvYbonD1hxrX80kkibSlsDwcB55ZD+v+9Z20ZcS
- fhqZQu7Rs1QIghUP34MrFldJ/lYlMAf9n9UIEpbSJm5P/ukIhgydr18QkXdHGS71DY0z
- fKvDGBRMywTb6qDbURvqGNpDzILhZPPzb0rdVh7AEsFwnbCaMLdkcnar324Y6N+ZQcw6
- A+H3MNGLTiO88Csdv/nP835kull6Likru+vXxztE86Zc0pkevxKDVAG0ofbIX+iFipxP
- lBxhH6qLSfpQy+bsl6ajgiewPQHpQw0CJzcH0r1xqA9YvK304ot6UmxnMwdQXor0H9GT
- n1Hg==
+ bh=aBj+PJapUP53A+URWnuk2XhCH08ytxjfqnXbU+6yJx4=;
+ b=afQ8rXxtdwTMEh8oZIcFS2KanNCJ2A+2ewp//Gqv2ENKCHOiN0/046aMoH1mAPmXhM
+ dFUPSut2imPr8IlHI5FIW7RH2KTlkcDA64mTGCVVZzoQpOPKBxzVPkS/qVLrRH9uZyK4
+ g6SNtwtxOPcpgmQAGpNeSEPn+G5EPJYPm+FjCElq3r2HgI+JQDB2bnP9t79Wz9X1z8cq
+ zRUoDmP/WnYnNxa9Yu1KoBOwjT8Z/aRnUZuFO0pARHwg97I5tqVD6EEAOw5XlE45/TO9
+ Xz/SDdtvZm0i1a08tzvAmR8D+itwUExO5F9waIm4+2TPGaPIC/vnXJtVFyh8fmPSJbZ/
+ v2iQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771193077; x=1771797877;
+ d=1e100.net; s=20230601; t=1771193066; x=1771797866;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=cPGnHVzXgj2fdKy4LYV1thowyCOxSvdIUm2/cRgvu/o=;
- b=a5Cc9z+AUYIKZMN/6S0Hm1YefDRVAkgKPSihVrhnD/6/R1lSkvSktArlJgMrmMtoRE
- Fj6ipJRd69C8e2iUMrfvBXB/ao00LHwqZASfiv5h/DNtooQmIXuU4kzDlwwCvbTHtSAd
- He6YQu5PxkPfKORDdTKIwQMNLXcXZk4ODAU8Kqq7KCwcsTJ2NFm2GvZkFgmWRoiqdQNg
- h3/2qs3Q/6N+MN0Jq70hd2QY2N1rQEAuv6qMeM5tbf7GhZsWZnd+3ilaL73l4mmvnceP
- BoKzqPUPsdRT/BJ1ka4g+AUdBDZNZm6rdwhNIw5C3dJ/jykPxlf+c58uApnm9XxYgX5g
- nhiQ==
-X-Gm-Message-State: AOJu0Yxj0fPE6IpRTq8tz4XEo+iBd4XonsRLVdgui6lc8/9nF3M9Q+Eq
- L1EcJ1mUL3pAbqoA19VmtM6J29/KWytIbW8XSn62xe/ZPEr9FGLHXvcpueoLNw==
-X-Gm-Gg: AZuq6aLVPKAHFZ2pwyINi+oBhujf7HZpr96z+BCiIo0wtH+lsE0nMZHfF5diqyCU7iA
- Vno3dh5aMgOK1lpzFDo1mhdSYRtqv3TcTSu7G8Pm6Y/MC12DPxnwMA12na6iiBSVD/cjDSvjiwq
- BSKud7ZisAdIZWSs+R0bcxXGzStj8TBvahC457g212kDmsfNit62z52FORcRqqHKCBXFVvC8jSO
- N5XL1BKaEe8ouKmyomVEfnYl0dXKrZ14BvI3j415d+o4HYxOtWPG6lVn1QpPlmfqAFvdVi1b8rL
- Yh+g8ZbQ5vu5AgELjbeIoZvNreXhlQ6rS5zVUH7eVxXsrlHJTst3GZXBVTECNqcm5PTm1E1bsVs
- 4Af5NP53AGg1rOUcMFbCSmz6RRH9l78ywDOZSf4jY6iPTbvUsNHarvuxHIzYbFTDLuon6fKF6NN
- bww2bNqYRW1k1oJLYCtzRsVWevNOWW5m7pLoBenxuxuI2NgG87y30H+7AeGogKA6GX0Nm590Icv
- xMvHPKMkPWxSRZS
-X-Received: by 2002:a05:6820:8186:b0:676:e126:e7b4 with SMTP id
- 006d021491bc7-67723709956mr4964218eaf.78.1771193076683; 
- Sun, 15 Feb 2026 14:04:36 -0800 (PST)
+ bh=aBj+PJapUP53A+URWnuk2XhCH08ytxjfqnXbU+6yJx4=;
+ b=O9LrWDdQ76F2oxfjAGyv440nPgElyKrSlcf1GSMo3gHIge8d6rmWRXkWttQrS+to+Z
+ Z1bc0VP4lWFBY19vYWaP3AnIVpH/YI8yEgRiou5i4ZdsNNpxXIhIXEaE4FbX7gudzuNv
+ OeFSb1jqFfJud+WSfLpHf7V57M0SOQzHbog98wvxc+Xg9InqCyVR/U0enQZ7CBdwVxsE
+ 2ew0noMGAehc8AFM5K5divmyK7j2aTnctlp1JAfK7m/zAWv1krIpFSfcKGC0Zmv1eSP8
+ Q9ImyB4cjWFR/uUs7/xo9PbkZjsXz9OTtp4ytkUAOVcC/7We0FyoDyxOuMy2X9BWgpPu
+ 6gXA==
+X-Gm-Message-State: AOJu0YzhF2PxLf5yWo6AU2ohettqNb1yJwlr+WLcDm6ZzMN+5ufnihLy
+ 9WVKamH1x3ZFXRpvRNfMaDKzymdDaOW8bz8T1UGLXsYCUNVo5rAemfDSWxma9Q==
+X-Gm-Gg: AZuq6aITVuQfNxjNw9KamPe1oiY7TjoWlj9YkVucHqEDfh9KO7tYJMxE0Jd09vo7913
+ X2Rc87zjazls8TsZjkHSC79GpsRwvR5bDv12gDgjJO+0bu3fNwk3mmnlhGhaSHyEPYaO0zSVY3i
+ zGOZ488n5BWwZHk2L5FhELhppQDhyQ7FjrPjV4eH65ln32t5/w12Xm93rxkHGusbConH1KghPm4
+ F1i0GDtjnp8A904ngoUfYPmzgJiP83n3eg8qO3zp8GgAcxKmhr4y49hnJYH2uO/gz9cWNI0U3IW
+ YaCIhHMfG7QewYVlLilYYzwB5GIxE/8jH3h69jtn1B/tbyme63YcDoKMbVguRjXAQ0n0j1X4/ou
+ pQx8WTg7kdJoiRhf84BP34bOCiTGjna+wC5i6gQOH2/7v9UVmtbgiwFMR/iMxkbNkdw3/JtxYmD
+ gp7xMv5w+ih/mSINaiPBSnIE6PtOuX2o0Fp9R40fo5yheWzUeeIIlGKjqAvZsM7AmhH/m+XeHd2
+ JqusPUxBosK2VjI
+X-Received: by 2002:a05:6808:5142:b0:462:de55:9d48 with SMTP id
+ 5614622812f47-4639ef195e7mr3830356b6e.1.1771193066372; 
+ Sun, 15 Feb 2026 14:04:26 -0800 (PST)
 Received: from taylor-ubuntu.. (c-67-172-136-152.hsd1.co.comcast.net.
  [67.172.136.152]) by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-40eaf101db0sm13556664fac.12.2026.02.15.14.04.35
+ 586e51a60fabf-40eaf101db0sm13556664fac.12.2026.02.15.14.04.25
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 15 Feb 2026 14:04:36 -0800 (PST)
+ Sun, 15 Feb 2026 14:04:25 -0800 (PST)
 From: Taylor Simpson <ltaylorsimpson@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: brian.cain@oss.qualcomm.com, matheus.bernardino@oss.qualcomm.com,
  sid.manning@oss.qualcomm.com, marco.liebel@oss.qualcomm.com,
  richard.henderson@linaro.org, philmd@linaro.org, ale@rev.ng, anjo@rev.ng,
  ltaylorsimpson@gmail.com
-Subject: [PATCH v2 8/8] Hexagon (target/hexagon) Remove snprint_a_pkt_debug
-Date: Sun, 15 Feb 2026 15:04:22 -0700
-Message-ID: <20260215220422.212249-9-ltaylorsimpson@gmail.com>
+Subject: [PATCH v2 1/8] Hexagon (target/hexagon) Properly handle Hexagon CPU
+ version
+Date: Sun, 15 Feb 2026 15:04:15 -0700
+Message-ID: <20260215220422.212249-2-ltaylorsimpson@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260215220422.212249-1-ltaylorsimpson@gmail.com>
 References: <20260215220422.212249-1-ltaylorsimpson@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::22f;
- envelope-from=ltaylorsimpson@gmail.com; helo=mail-oi1-x22f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::236;
+ envelope-from=ltaylorsimpson@gmail.com; helo=mail-oi1-x236.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,64 +105,124 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Function is not used
+Add the following CPU versions that were previously missing
+    v5
+    v55
+    v60
+    v61
+    v62
+    v65
 
+Create an enum with the known Hexagon CPU versions
+Add a field to HexagonCPUClass to note the Hexagon CPU version
+
+Co-authored-by: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
+Co-authored-by: Brian Cain <brian.cain@oss.qualcomm.com>
 Signed-off-by: Taylor Simpson <ltaylorsimpson@gmail.com>
 ---
- target/hexagon/printinsn.h |  1 -
- target/hexagon/printinsn.c | 31 -------------------------------
- 2 files changed, 32 deletions(-)
+ target/hexagon/cpu-qom.h | 23 +++++++++++++++++++++++
+ target/hexagon/cpu.h     |  2 ++
+ target/hexagon/cpu.c     | 28 ++++++++++++++++++++++------
+ 3 files changed, 47 insertions(+), 6 deletions(-)
 
-diff --git a/target/hexagon/printinsn.h b/target/hexagon/printinsn.h
-index d437d35005..db61ea1055 100644
---- a/target/hexagon/printinsn.h
-+++ b/target/hexagon/printinsn.h
-@@ -23,6 +23,5 @@
+diff --git a/target/hexagon/cpu-qom.h b/target/hexagon/cpu-qom.h
+index 0b149bd5fe..d2f98c683a 100644
+--- a/target/hexagon/cpu-qom.h
++++ b/target/hexagon/cpu-qom.h
+@@ -11,11 +11,34 @@
  
- void snprint_a_pkt_disas(GString *buf, Packet *pkt, uint32_t *words,
-                          target_ulong pc, HexagonVersion hex_version);
--void snprint_a_pkt_debug(GString *buf, Packet *pkt);
+ #include "hw/core/cpu.h"
  
- #endif
-diff --git a/target/hexagon/printinsn.c b/target/hexagon/printinsn.c
-index 99f8020d5d..a442e853b2 100644
---- a/target/hexagon/printinsn.c
-+++ b/target/hexagon/printinsn.c
-@@ -118,34 +118,3 @@ void snprint_a_pkt_disas(GString *buf, Packet *pkt, uint32_t *words,
-         g_string_append(buf, "  :endloop01");
-     }
- }
--
--void snprint_a_pkt_debug(GString *buf, Packet *pkt)
--{
--    int slot, opcode;
--
--    if (pkt->num_insns > 1) {
--        g_string_append(buf, "\n{\n");
--    }
--
--    for (int i = 0; i < pkt->num_insns; i++) {
--        if (pkt->insn[i].part1) {
--            continue;
--        }
--        g_string_append(buf, "\t");
--        snprintinsn(buf, &(pkt->insn[i]));
--
--        if (GET_ATTRIB(pkt->insn[i].opcode, A_SUBINSN)) {
--            g_string_append(buf, " //subinsn");
--        }
--        if (pkt->insn[i].extension_valid) {
--            g_string_append(buf, " //constant extended");
--        }
--        slot = pkt->insn[i].slot;
--        opcode = pkt->insn[i].opcode;
--        g_string_append_printf(buf, " //slot=%d:tag=%s\n",
--                               slot, opcode_names[opcode]);
--    }
--    if (pkt->num_insns > 1) {
--        g_string_append(buf, "}\n");
--    }
--}
++typedef enum {
++    HEX_VER_NONE = 0x00,
++    HEX_VER_V5 = 0x04,
++    HEX_VER_V55 = 0x05,
++    HEX_VER_V60 = 0x60,
++    HEX_VER_V61 = 0x61,
++    HEX_VER_V62 = 0x62,
++    HEX_VER_V65 = 0x65,
++    HEX_VER_V66 = 0x66,
++    HEX_VER_V67 = 0x67,
++    HEX_VER_V68 = 0x68,
++    HEX_VER_V69 = 0x69,
++    HEX_VER_V71 = 0x71,
++    HEX_VER_V73 = 0x73,
++    HEX_VER_ANY = 0xff,
++} HexagonVersion;
++
+ #define TYPE_HEXAGON_CPU "hexagon-cpu"
+ 
+ #define HEXAGON_CPU_TYPE_SUFFIX "-" TYPE_HEXAGON_CPU
+ #define HEXAGON_CPU_TYPE_NAME(name) (name HEXAGON_CPU_TYPE_SUFFIX)
+ 
++#define TYPE_HEXAGON_CPU_V5 HEXAGON_CPU_TYPE_NAME("v5")
++#define TYPE_HEXAGON_CPU_V55 HEXAGON_CPU_TYPE_NAME("v55")
++#define TYPE_HEXAGON_CPU_V60 HEXAGON_CPU_TYPE_NAME("v60")
++#define TYPE_HEXAGON_CPU_V61 HEXAGON_CPU_TYPE_NAME("v61")
++#define TYPE_HEXAGON_CPU_V62 HEXAGON_CPU_TYPE_NAME("v62")
++#define TYPE_HEXAGON_CPU_V65 HEXAGON_CPU_TYPE_NAME("v65")
+ #define TYPE_HEXAGON_CPU_V66 HEXAGON_CPU_TYPE_NAME("v66")
+ #define TYPE_HEXAGON_CPU_V67 HEXAGON_CPU_TYPE_NAME("v67")
+ #define TYPE_HEXAGON_CPU_V68 HEXAGON_CPU_TYPE_NAME("v68")
+diff --git a/target/hexagon/cpu.h b/target/hexagon/cpu.h
+index 85afd59277..2b8e761c4d 100644
+--- a/target/hexagon/cpu.h
++++ b/target/hexagon/cpu.h
+@@ -117,6 +117,8 @@ typedef struct HexagonCPUClass {
+ 
+     DeviceRealize parent_realize;
+     ResettablePhases parent_phases;
++
++    HexagonVersion hex_version;
+ } HexagonCPUClass;
+ 
+ struct ArchCPU {
+diff --git a/target/hexagon/cpu.c b/target/hexagon/cpu.c
+index 58a22ee41f..09a0de3c2f 100644
+--- a/target/hexagon/cpu.c
++++ b/target/hexagon/cpu.c
+@@ -27,12 +27,22 @@
+ #include "exec/gdbstub.h"
+ #include "accel/tcg/cpu-ops.h"
+ 
+-static void hexagon_v66_cpu_init(Object *obj) { }
+-static void hexagon_v67_cpu_init(Object *obj) { }
+-static void hexagon_v68_cpu_init(Object *obj) { }
+-static void hexagon_v69_cpu_init(Object *obj) { }
+-static void hexagon_v71_cpu_init(Object *obj) { }
+-static void hexagon_v73_cpu_init(Object *obj) { }
++#define HEX_CPU_INIT(NAME, VER) \
++static void hexagon_##NAME##_cpu_init(Object *obj) \
++{ HEXAGON_CPU_GET_CLASS(obj)->hex_version = VER; }
++
++HEX_CPU_INIT(v5, HEX_VER_V5)
++HEX_CPU_INIT(v55, HEX_VER_V55)
++HEX_CPU_INIT(v60, HEX_VER_V60)
++HEX_CPU_INIT(v61, HEX_VER_V61)
++HEX_CPU_INIT(v62, HEX_VER_V62)
++HEX_CPU_INIT(v65, HEX_VER_V65)
++HEX_CPU_INIT(v66, HEX_VER_V66)
++HEX_CPU_INIT(v67, HEX_VER_V67)
++HEX_CPU_INIT(v68, HEX_VER_V68)
++HEX_CPU_INIT(v69, HEX_VER_V69)
++HEX_CPU_INIT(v71, HEX_VER_V71)
++HEX_CPU_INIT(v73, HEX_VER_V73)
+ 
+ static ObjectClass *hexagon_cpu_class_by_name(const char *cpu_model)
+ {
+@@ -395,6 +405,12 @@ static const TypeInfo hexagon_cpu_type_infos[] = {
+         .class_size = sizeof(HexagonCPUClass),
+         .class_init = hexagon_cpu_class_init,
+     },
++    DEFINE_CPU(TYPE_HEXAGON_CPU_V5,               hexagon_v5_cpu_init),
++    DEFINE_CPU(TYPE_HEXAGON_CPU_V55,              hexagon_v55_cpu_init),
++    DEFINE_CPU(TYPE_HEXAGON_CPU_V60,              hexagon_v60_cpu_init),
++    DEFINE_CPU(TYPE_HEXAGON_CPU_V61,              hexagon_v61_cpu_init),
++    DEFINE_CPU(TYPE_HEXAGON_CPU_V62,              hexagon_v62_cpu_init),
++    DEFINE_CPU(TYPE_HEXAGON_CPU_V65,              hexagon_v65_cpu_init),
+     DEFINE_CPU(TYPE_HEXAGON_CPU_V66,              hexagon_v66_cpu_init),
+     DEFINE_CPU(TYPE_HEXAGON_CPU_V67,              hexagon_v67_cpu_init),
+     DEFINE_CPU(TYPE_HEXAGON_CPU_V68,              hexagon_v68_cpu_init),
 -- 
 2.43.0
 
