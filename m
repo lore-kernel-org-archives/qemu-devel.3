@@ -4,149 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C340FEF586D
-	for <qemu-devel@archiver.kernel.org>; Sun, 15 Feb 2026 08:56:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C1C6EF5870
+	for <qemu-devel@archiver.kernel.org>; Sun, 15 Feb 2026 09:52:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vrXue-00024e-86; Sun, 15 Feb 2026 03:55:32 -0500
+	id 1vrYmp-0002Ol-Ru; Sun, 15 Feb 2026 04:51:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ankita@nvidia.com>) id 1vrXuM-0001yN-D7
- for qemu-devel@nongnu.org; Sun, 15 Feb 2026 03:55:19 -0500
-Received: from mail-southcentralusazon11013007.outbound.protection.outlook.com
- ([40.93.196.7] helo=SA9PR02CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vrYmo-0002O7-Iu; Sun, 15 Feb 2026 04:51:30 -0500
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ankita@nvidia.com>) id 1vrXuI-0003L1-Cf
- for qemu-devel@nongnu.org; Sun, 15 Feb 2026 03:55:13 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Rg77g5uEC5gNjTa4jfY88iT9GHsjFUF/4wC5VIQKjQ3puEjZhCX/3HnAaolgKRYrckf3QOC/KEnu9tDB3aV/iOikaeRMu0v91uv+IIRgtS1+Px5lAVKZjvgY/NnyLxf3/QReccyr013QEtFv1kSuBc1sdY7Fc9XoVWO2ZqvN2MLASUfIHGO8znrmtQ1OVlZa9Rv54/wtrXdIaOHImE0b/0xWVlLvgJLE14cfXwWlwCQzhinWdN/huZMRDyoMXU3JvTji0l3Hu6FlRVrMRvxXCMIHT3yijzYJ4vFR6tbHmD2p2tP+svpfqJL+1L2E4X0qGzfDujnCIq/MBZ8y5WoNqw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=QlJi4GalqPmHNwIpq8wYzWqCs7zDASkjSD5PuT0qwPY=;
- b=tZRHUU76b+sgmzafd9W8ly1b0zQ+QujQb5vEGrSsAOBzIfQINk6xjwIXhEhLMsWvL3cMx8Xi6dHWUWgf+4lGk6jU0M0IyHSsb9OiB5HNYLAKiARX+VtG2kzToZ+I1dI0PezJCLwekWj2dA93YovphAq+95fgiV6vyjKYk1JnXgpXwqEMK3HrKFyRdppHKfhqiJ/bq+sLkCDS8uqKz+v4jw1FcwHJJrTnFlAU2o/u0ifSDEtsjXnZArodCCLsFNuBEESeG3GsWl8pxtVTMNQEwZeeJybxSiM9Mq4KxWZYWm3ZThRMs2rZljkRhAtzHUC6qeMu3qZat+77WrvsM2p1bA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.160) smtp.rcpttodomain=shazbot.org smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=QlJi4GalqPmHNwIpq8wYzWqCs7zDASkjSD5PuT0qwPY=;
- b=DOne18eOHEoqafv0BG75xfi9OQ0BwC53iK6Pn7B2J2MMLgogocz4L5wdV8rjqD17WjDecc+B5F4EJ+2kP287RIYm1lnJY7t5sjG8ZJpJO0TlMvWZ8v0UhGgT/Tc5+cxNGWTFNiYPEbSM10FBmGg5LdLEElvsuDD8w0jrHf2i1xGJVCkpY9L+7WPmoe8Rjn/G7wphL6EB8tQw5VmQ2SEVW4s86sCz4+TYhGcGIFIDmKS4fq5SyauFAjEE+j9JhqQcJQC+92ju57XRcNfoaEGJ6Q+wN56JDydW0DWza1Td2XWsZIb/qL9NSv/muE3NEuSqyBPzLPYv38RRVjX9ySGwUw==
-Received: from SJ0PR05CA0050.namprd05.prod.outlook.com (2603:10b6:a03:33f::25)
- by CH3PR12MB8995.namprd12.prod.outlook.com (2603:10b6:610:17e::5)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9611.15; Sun, 15 Feb
- 2026 08:50:03 +0000
-Received: from MWH0EPF000C6186.namprd02.prod.outlook.com
- (2603:10b6:a03:33f:cafe::59) by SJ0PR05CA0050.outlook.office365.com
- (2603:10b6:a03:33f::25) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9632.12 via Frontend Transport; Sun,
- 15 Feb 2026 08:50:02 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
- smtp.mailfrom=nvidia.com;
- dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.160) by
- MWH0EPF000C6186.mail.protection.outlook.com (10.167.249.118) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9632.12 via Frontend Transport; Sun, 15 Feb 2026 08:50:03 +0000
-Received: from rnnvmail201.nvidia.com (10.129.68.8) by mail.nvidia.com
- (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Sun, 15 Feb
- 2026 00:49:52 -0800
-Received: from rnnvmail204.nvidia.com (10.129.68.6) by rnnvmail201.nvidia.com
- (10.129.68.8) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Sun, 15 Feb
- 2026 00:49:51 -0800
-Received: from localhost.nvidia.com (10.127.8.12) by mail.nvidia.com
- (10.129.68.6) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20 via Frontend
- Transport; Sun, 15 Feb 2026 00:49:51 -0800
-From: <ankita@nvidia.com>
-To: <ankita@nvidia.com>, <vsethi@nvidia.com>, <jgg@nvidia.com>,
- <skolothumtho@nvidia.com>, <alex@shazbot.org>, <clg@redhat.com>
-CC: <aniketa@nvidia.com>, <cjia@nvidia.com>, <kwankhede@nvidia.com>,
- <targupta@nvidia.com>, <zhiw@nvidia.com>, <mochs@nvidia.com>,
- <kjaju@nvidia.com>, <qemu-devel@nongnu.org>
-Subject: [PATCH v3 2/3] vfio: Add Error ** parameter to vfio_region_setup()
-Date: Sun, 15 Feb 2026 08:49:49 +0000
-Message-ID: <20260215084950.4657-3-ankita@nvidia.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260215084950.4657-1-ankita@nvidia.com>
-References: <20260215084950.4657-1-ankita@nvidia.com>
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vrYml-00014O-VE; Sun, 15 Feb 2026 04:51:30 -0500
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id F32315969F1;
+ Sun, 15 Feb 2026 10:51:20 +0100 (CET)
+X-Virus-Scanned: amavis at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
+ id 3So2WGIhq1G0; Sun, 15 Feb 2026 10:51:18 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id CF3265969F6; Sun, 15 Feb 2026 10:51:18 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id CCA5D5969F0;
+ Sun, 15 Feb 2026 10:51:18 +0100 (CET)
+Date: Sun, 15 Feb 2026 10:51:18 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
+cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org, 
+ Chinmay Rath <rathc@linux.ibm.com>, 
+ =?ISO-8859-15?Q?Herv=E9_Poussineau?= <hpoussin@reactos.org>, 
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, 
+ Nicholas Piggin <npiggin@gmail.com>, 
+ Artyom Tarasenko <atar4qemu@gmail.com>, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-ppc@nongnu.org, 
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, 
+ Laurent Vivier <laurent@vivier.eu>
+Subject: Re: [PATCH 7/8] hw/ppc: Set graphic display dimensions generically
+In-Reply-To: <56a0f465-2055-4c82-b0c0-963b376609e9@linaro.org>
+Message-ID: <0492fc65-e156-1afe-ea72-520134ccca41@eik.bme.hu>
+References: <20260214021240.58657-1-philmd@linaro.org>
+ <20260214021240.58657-8-philmd@linaro.org>
+ <252b2fa2-9251-3949-625b-7071c525c8e2@eik.bme.hu>
+ <56a0f465-2055-4c82-b0c0-963b376609e9@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-NV-OnPremToCloud: ExternallySecured
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MWH0EPF000C6186:EE_|CH3PR12MB8995:EE_
-X-MS-Office365-Filtering-Correlation-Id: ff313f6f-831a-4385-d8b0-08de6c6f35cf
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|82310400026|36860700013|376014; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?IeH9S7Bcisx9kv16TgwBu+qx7GRvIVFSLFDvfQFUl3T1KlXdxVmXXar/1ILq?=
- =?us-ascii?Q?VRlohCtta5a4Jo2Honm7CHgI4vE1VFPcsSoja1CQSvK/X2PhWGNPmJhbVjkK?=
- =?us-ascii?Q?SW21uZ4gBmJpc5R3PjDmy4vENDwPESUuScuZxflDe1MQnPdi88G6m0y5Pu+r?=
- =?us-ascii?Q?TNmxUhoD7OV+khQggEFNbyr5XylN8Rgm+XCqDy9sIXALORyJda2FqWC77ryG?=
- =?us-ascii?Q?RHW6qGVtx+JTZTcBn5J9MQZRFsyx/x2qaWKsXxEZk+FkLY/+x6QRVowo+L4M?=
- =?us-ascii?Q?EUl8ZHwYHZ7jJf5+9XZQfxVnGc6/eoCa5whRZpguQRCaXlL7X+WXjj0SlruJ?=
- =?us-ascii?Q?ST2aeo8cKp0u4rJ9eJtQ4R1JTymWjU5gRGy9cnv5+RPKhsPUYVEGRYJm+zNQ?=
- =?us-ascii?Q?t7GBHMWVKYGTA9tWHfpCfZEhZC/s29JGxPTYmD+vwVtds56re1pMaZfHwS1y?=
- =?us-ascii?Q?JnCmIUDgjUEIHdDEbh44Q+TixVqWYL4K1DSmYRJHTr10HSDCJU1jLI86dbga?=
- =?us-ascii?Q?OujpzZacwHtz3UdYpVcTGESdCFXpbjbe67rRaFaYcG6QgXo4MFdRU/PVubQe?=
- =?us-ascii?Q?gP29iYI48MdlaQ4FhNJdIhf+i5gSHXeqP8mH5QqGTDONNWP7GaC4vA4cg1Qc?=
- =?us-ascii?Q?lrpRNGc0JDcKEMo3oetZE2U71FjmVMMc8o7+vnJAFZ7VckSoMb6yZI6qM5GT?=
- =?us-ascii?Q?Ir0ZtG6yUEuxmvg51QUcPnnzycTpkh+dBfe40VfwZ9dpRqU3BsYPAG6QqwDI?=
- =?us-ascii?Q?M9qss9CY4mzUKzgrWci+Le9mvowyATUcGx6Ez1PSFgS3j2vSePmZ5fWq7NHl?=
- =?us-ascii?Q?YjJwXjh1xcj9gZESP9Krpwe4baJbKclWPgq/jioeNcNkfN6h8sSvxIrN3+o9?=
- =?us-ascii?Q?HxiBqj5BrfFFrIw2Vlo+BS2O1QoLu/oKvoQUgcefYlhVMfcHyIDQ3xAzj4Ym?=
- =?us-ascii?Q?4IWjWluTsJz6j004p4Jcob4XbZeiXNTzQA/WNF4aoD8bAhu3WWeL2vLqncCL?=
- =?us-ascii?Q?NjtcaXiK+yZt8WuZVbGiSiV4/MGLNnEW7EkT+54PITkm5ZUrGuHpnLDOV3/y?=
- =?us-ascii?Q?1eDMgOqky6krlvuZBhtSqbuo8F9fbmlyMq7/nJ3she5WrZ/TxGwmbf2avCxU?=
- =?us-ascii?Q?2Rl5WXUNmEY19ISswn968KnoQeFXNj+3+dkOswWE6Sd+AXuls4KOv8qTrp/1?=
- =?us-ascii?Q?MxUjwAXFytZAzxZV2pe3lpbS76lVBznPlq+AlkQvmbT8dYnqJC2OI6eMHVmL?=
- =?us-ascii?Q?aKaMHdyWpygSC31wLbcciuyjIFLJE/pk2IREfjRwJczUae5Us/LyEojG6q3F?=
- =?us-ascii?Q?jdhwYxHnQfbIVXZqyPI0sC+CGVN+SS2+y//KXaQfcaPthDsIv1Zn1Bvid7/2?=
- =?us-ascii?Q?Xt7wNvRIuzp94QUhIT6t4CGfg2sTCQBxHQVWjF9WthQ3kmoC1TZhj/ciNqGS?=
- =?us-ascii?Q?KgZp8XdhnrkqxfYIC+toY04LmmzN12e8MMHym41PA9GdZy7NA0wrWwtChTTc?=
- =?us-ascii?Q?R9PHNXiaxRC+8z+dW4s+UunL6B4c8Yq60Qxv9d1Fw1VBOXZ5bBjwohqApOvO?=
- =?us-ascii?Q?8u+XJFb8DOC0BqKx9LaJol0DOzdOfUESHyiMOROW1afSLV0OPe2BgVSC/n+2?=
- =?us-ascii?Q?f5IRUz5b670IQjJ1QI32pwe8JJNoql6ZVQ3CKrB5vylJbGVejnEwWe4JhCOi?=
- =?us-ascii?Q?hJzsvA=3D=3D?=
-X-Forefront-Antispam-Report: CIP:216.228.117.160; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge1.nvidia.com; CAT:NONE;
- SFS:(13230040)(1800799024)(82310400026)(36860700013)(376014); DIR:OUT;
- SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: dLRvJyx6O2VRbZEbGNsHAw+0P5D8PPyr9pzm28lJjR4ZlgxLvXLTq2ZqdVEEluWMck4gEWEbXaY/xKJNJ2OOVY7EelQApBClO8jY4DR3cX1iy79qy9XzNf94JEnI9mvgn8p8X7x8XOcV4HgOrfB+3aImBGii7asdg3rCSKmbTeuVaL63+wyftpBfySiSnfkxn7BnlynIqRjV0YOQptJzTOYftLff4KbMQ6ZOEoIA8pVhswiO1eUtKXzyAFkbMKqx0MsEZx82sFLqfmI6vWQVra0oER9YyJu//xKfu+eQKVyRPfnrsNxE8ZIWlC81iumx3hlTB2SebS5e7pEgYPBS5DkPWjK6ceP/NKQ+xcURcJpMaETm1GBw7AYXBqfEo7jH4XQXDIL7+5AP9IYXhNZgESQ1v9Xj6Fs8iSJ3c/VAEL10Rxr0WpuWP+BRDTFVqUy6
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 Feb 2026 08:50:03.1735 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: ff313f6f-831a-4385-d8b0-08de6c6f35cf
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.160];
- Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: MWH0EPF000C6186.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR12MB8995
-Received-SPF: permerror client-ip=40.93.196.7; envelope-from=ankita@nvidia.com;
- helo=SA9PR02CU001.outbound.protection.outlook.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
+Content-Type: multipart/mixed;
+ boundary="3866299591-1858189989-1771149078=:26579"
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FORGED_SPF_HELO=1, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_NONE=0.001 autolearn=no autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -162,95 +74,182 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ankit Agrawal <ankita@nvidia.com>
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Add an Error **errp parameter to vfio_region_setup() to allow
-proper error handling instead of just returning error codes.
+--3866299591-1858189989-1771149078=:26579
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8BIT
 
-The function sets errors via error_setg_errno() when failures
-occur.
+On Sun, 15 Feb 2026, Philippe Mathieu-Daudé wrote:
+> On 14/2/26 12:46, BALATON Zoltan wrote:
+>> On Sat, 14 Feb 2026, Philippe Mathieu-Daudé wrote:
+>>> If a dimension is not set, have the machine init code set
+>>> the default value by calling the ppc_graphic_dimensions()
+>>> helper, common to all PowerPC machines. Declare local
+>>> variables to avoid using the global ones.
+>>> 
+>>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>> ---
+>>> include/hw/ppc/ppc.h    |  2 ++
+>>> hw/ppc/mac_newworld.c   | 10 ++++++----
+>>> hw/ppc/mac_oldworld.c   | 10 ++++++----
+>>> hw/ppc/ppc.c            |  8 ++++++++
+>>> hw/ppc/prep.c           |  4 ++++
+>>> hw/ppc/spapr.c          |  4 ++++
+>>> system/globals-target.c |  6 ------
+>>> 7 files changed, 30 insertions(+), 14 deletions(-)
+>>> 
+>>> diff --git a/include/hw/ppc/ppc.h b/include/hw/ppc/ppc.h
+>>> index cb51d704c6d..14cc09ab22b 100644
+>>> --- a/include/hw/ppc/ppc.h
+>>> +++ b/include/hw/ppc/ppc.h
+>>> @@ -102,6 +102,8 @@ enum {
+>>>     ARCH_MAC99_U3,
+>>> };
+>>> 
+>>> +void ppc_graphic_dimensions(int *width, int *height, int *depth);
+>>> +
+>>> #define FW_CFG_PPC_WIDTH        (FW_CFG_ARCH_LOCAL + 0x00)
+>>> #define FW_CFG_PPC_HEIGHT       (FW_CFG_ARCH_LOCAL + 0x01)
+>>> #define FW_CFG_PPC_DEPTH        (FW_CFG_ARCH_LOCAL + 0x02)
+>>> diff --git a/hw/ppc/mac_newworld.c b/hw/ppc/mac_newworld.c
+>>> index 7275563a155..daf0029c01a 100644
+>>> --- a/hw/ppc/mac_newworld.c
+>>> +++ b/hw/ppc/mac_newworld.c
+>>> @@ -156,6 +156,7 @@ static void ppc_core99_init(MachineState *machine)
+>>>     DeviceState *uninorth_internal_dev = NULL, *uninorth_agp_dev = NULL;
+>>>     hwaddr nvram_addr = 0xFFF04000;
+>>>     uint64_t tbfreq = kvm_enabled() ? kvmppc_get_tbfreq() : TBFREQ;
+>>> +    int graphic_width, graphic_height, graphic_depth;
+>>> 
+>>>     /* init CPUs */
+>>>     for (i = 0; i < machine->smp.cpus; i++) {
+>>> @@ -432,10 +433,6 @@ static void ppc_core99_init(MachineState *machine)
+>>> 
+>>>     pci_vga_init(pci_bus);
+>>> 
+>>> -    if (graphic_depth != 15 && graphic_depth != 32 && graphic_depth ! = 
+>>> 8) {
+>>> -        graphic_depth = 15;
+>>> -    }
+>>> -
+>>>     pci_init_nic_devices(pci_bus, mc->default_nic);
+>>> 
+>>>     /* The NewWorld NVRAM is not located in the MacIO device */
+>>> @@ -480,6 +477,11 @@ static void ppc_core99_init(MachineState *machine)
+>>>     fw_cfg_add_i32(fw_cfg, FW_CFG_INITRD_SIZE, initrd_size);
+>>>     fw_cfg_add_i16(fw_cfg, FW_CFG_BOOT_DEVICE, ppc_boot_device);
+>>> 
+>>> +    ppc_graphic_dimensions(&graphic_width, &graphic_height, 
+>>> &graphic_depth);
+>>> +    if (graphic_depth != 15 && graphic_depth != 32 && graphic_depth ! = 
+>>> 8) {
+>>> +        graphic_depth = 15;
+>>> +    }
+>>> +
+>>>     fw_cfg_add_i16(fw_cfg, FW_CFG_PPC_WIDTH, graphic_width);
+>>>     fw_cfg_add_i16(fw_cfg, FW_CFG_PPC_HEIGHT, graphic_height);
+>>>     fw_cfg_add_i16(fw_cfg, FW_CFG_PPC_DEPTH, graphic_depth);
+>>> diff --git a/hw/ppc/mac_oldworld.c b/hw/ppc/mac_oldworld.c
+>>> index e679d338985..ea1f778877c 100644
+>>> --- a/hw/ppc/mac_oldworld.c
+>>> +++ b/hw/ppc/mac_oldworld.c
+>>> @@ -108,6 +108,7 @@ static void ppc_heathrow_init(MachineState *machine)
+>>>     DriveInfo *dinfo, *hd[MAX_IDE_BUS * MAX_IDE_DEVS];
+>>>     void *fw_cfg;
+>>>     uint64_t tbfreq = kvm_enabled() ? kvmppc_get_tbfreq() : TBFREQ;
+>>> +    int graphic_width, graphic_height, graphic_depth;
+>>> 
+>>>     /* init CPUs */
+>>>     for (i = 0; i < machine->smp.cpus; i++) {
+>>> @@ -288,10 +289,6 @@ static void ppc_heathrow_init(MachineState *machine)
+>>>         pci_create_simple(pci_bus, -1, "pci-ohci");
+>>>     }
+>>> 
+>>> -    if (graphic_depth != 15 && graphic_depth != 32 && graphic_depth ! = 
+>>> 8) {
+>>> -        graphic_depth = 15;
+>>> -    }
+>>> -
+>>>     /* No PCI init: the BIOS will do it */
+>>> 
+>>>     dev = qdev_new(TYPE_FW_CFG_MEM);
+>>> @@ -321,6 +318,11 @@ static void ppc_heathrow_init(MachineState *machine)
+>>>     fw_cfg_add_i32(fw_cfg, FW_CFG_INITRD_SIZE, initrd_size);
+>>>     fw_cfg_add_i16(fw_cfg, FW_CFG_BOOT_DEVICE, ppc_boot_device);
+>>> 
+>>> +    ppc_graphic_dimensions(&graphic_width, &graphic_height, 
+>>> &graphic_depth);
+>>> +    if (graphic_depth != 15 && graphic_depth != 32 && graphic_depth ! = 
+>>> 8) {
+>>> +        graphic_depth = 15;
+>>> +    }
+>>> +
+>>>     fw_cfg_add_i16(fw_cfg, FW_CFG_PPC_WIDTH, graphic_width);
+>>>     fw_cfg_add_i16(fw_cfg, FW_CFG_PPC_HEIGHT, graphic_height);
+>>>     fw_cfg_add_i16(fw_cfg, FW_CFG_PPC_DEPTH, graphic_depth);
+>>> diff --git a/hw/ppc/ppc.c b/hw/ppc/ppc.c
+>>> index a512d4fa647..d7b4466d701 100644
+>>> --- a/hw/ppc/ppc.c
+>>> +++ b/hw/ppc/ppc.c
+>>> @@ -29,6 +29,7 @@
+>>> #include "qemu/timer.h"
+>>> #include "exec/cpu-interrupt.h"
+>>> #include "system/cpus.h"
+>>> +#include "system/system.h"
+>>> #include "qemu/log.h"
+>>> #include "qemu/main-loop.h"
+>>> #include "qemu/error-report.h"
+>>> @@ -1557,3 +1558,10 @@ void ppc_irq_reset(PowerPCCPU *cpu)
+>>>         kvmppc_set_interrupt(cpu, PPC_INTERRUPT_EXT, 0);
+>>>     }
+>>> }
+>>> +
+>>> +void ppc_graphic_dimensions(int *width, int *height, int *depth)
+>>> +{
+>>> +    *width = graphic_width ?: 800;
+>>> +    *height = graphic_height ?: 600;
+>>> +    *depth = graphic_depth ?: 32;
+>>> +}
+>> 
+>> I think there's no reason to have this common to all ppc machines. If we 
+>> change this we could also make it per machine like for other targets. 
+>> There's nothing common in these machines that dictate these defaults. It 
+>> seems it used to be an arbitrary default in QEMU that some machines later 
+>> deviated from. So might as well just keep it as global for now after you 
+>> removed the SPARC and M68K special cases. If the ppc machines are the last 
+>> users of these global defaults you can just move them to hw/ppc/ppc.{h,c} 
+>> for now and let ppc people clean this up eventually.
+>
+> What you are asking is to use 800x600x32 as the default for all
+> non-SPARC / non-M68K targets, so PPC don't have to change? But then
 
-Signed-off-by: Ankit Agrawal <ankita@nvidia.com>
----
- hw/vfio/display.c     | 2 +-
- hw/vfio/pci.c         | 3 +--
- hw/vfio/region.c      | 5 ++++-
- hw/vfio/vfio-region.h | 2 +-
- 4 files changed, 7 insertions(+), 5 deletions(-)
+This is what the original code did. But now I get that you need a way to 
+tell if these were set so changed the default to 0 so the sparc and m68k 
+can set their own defaults if the user did not provide values.
 
-diff --git a/hw/vfio/display.c b/hw/vfio/display.c
-index faacd9019a..bb9015804c 100644
---- a/hw/vfio/display.c
-+++ b/hw/vfio/display.c
-@@ -449,7 +449,7 @@ static void vfio_display_region_update(void *opaque)
-         ret = vfio_region_setup(OBJECT(vdev), &vdev->vbasedev,
-                                 &dpy->region.buffer,
-                                 plane.region_index,
--                                "display");
-+                                "display", NULL);
-         if (ret != 0) {
-             error_report("%s: vfio_region_setup(%d): %s",
-                          __func__, plane.region_index, strerror(-ret));
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index 36d8fbe872..c89f3fbea3 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -3056,11 +3056,10 @@ bool vfio_pci_populate_device(VFIOPCIDevice *vdev, Error **errp)
-         char *name = g_strdup_printf("%s BAR %d", vbasedev->name, i);
- 
-         ret = vfio_region_setup(OBJECT(vdev), vbasedev,
--                                &vdev->bars[i].region, i, name);
-+                                &vdev->bars[i].region, i, name, errp);
-         g_free(name);
- 
-         if (ret) {
--            error_setg_errno(errp, -ret, "failed to get region %d info", i);
-             return false;
-         }
- 
-diff --git a/hw/vfio/region.c b/hw/vfio/region.c
-index 177494c379..b83b09fa2f 100644
---- a/hw/vfio/region.c
-+++ b/hw/vfio/region.c
-@@ -227,13 +227,14 @@ static int vfio_setup_region_sparse_mmaps(VFIORegion *region,
- }
- 
- int vfio_region_setup(Object *obj, VFIODevice *vbasedev, VFIORegion *region,
--                      int index, const char *name)
-+                      int index, const char *name, Error **errp)
- {
-     struct vfio_region_info *info = NULL;
-     int ret;
- 
-     ret = vfio_device_get_region_info(vbasedev, index, &info);
-     if (ret) {
-+        error_setg_errno(errp, -ret, "failed to get region %d info", index);
-         return ret;
-     }
- 
-@@ -260,6 +261,8 @@ int vfio_region_setup(Object *obj, VFIODevice *vbasedev, VFIORegion *region,
-                 region->mmaps[0].offset = 0;
-                 region->mmaps[0].size = region->size;
-             } else if (ret) {
-+                error_setg_errno(errp, -ret, "failed to setup region %d",
-+                                 index);
-                 return ret;
-             }
-         }
-diff --git a/hw/vfio/vfio-region.h b/hw/vfio/vfio-region.h
-index ede6e0c8f9..9b21d4ee5b 100644
---- a/hw/vfio/vfio-region.h
-+++ b/hw/vfio/vfio-region.h
-@@ -38,7 +38,7 @@ void vfio_region_write(void *opaque, hwaddr addr,
- uint64_t vfio_region_read(void *opaque,
-                           hwaddr addr, unsigned size);
- int vfio_region_setup(Object *obj, VFIODevice *vbasedev, VFIORegion *region,
--                      int index, const char *name);
-+                      int index, const char *name, Error **errp);
- int vfio_region_mmap(VFIORegion *region);
- void vfio_region_mmaps_set_enabled(VFIORegion *region, bool enabled);
- void vfio_region_unmap(VFIORegion *region);
--- 
-2.34.1
+> SPARC and M68k won't be able to use the '-g' CLI (which Paolo asked
+> me not to remove, thus this series). What is worrying you exactly?
 
+Too much churn and introducing interdependency between ppc machines that 
+should be removed later. The ppc_graphic_dimensions does not make sense as 
+these are different machines with potentially different default 
+resolutions (and most of these should be able to use EDID that we since 
+have in QEMU).
+
+> Can you provide a patch showing how you'd prefer it to be done?
+
+Maybe turning these into properties could work. I could look at adding 
+such properties but don't know how to change the -g option. But 
+considering these are all machines that Mark maintains maybe he should do 
+something about it. The easiest were if he agreed to drop -g option but he 
+never agrees removing anything so then he should provide patches to clean 
+this up the way he prefers. I could try to make patches but I'm afraid 
+those would become wasted effort so may I only do it when there's an 
+approved way that will be accepted.
+
+Regards,
+BALATON Zoltan
+--3866299591-1858189989-1771149078=:26579--
 
