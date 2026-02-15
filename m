@@ -4,112 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D10C5E63F14
-	for <qemu-devel@archiver.kernel.org>; Sun, 15 Feb 2026 20:33:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 257C5E63F19
+	for <qemu-devel@archiver.kernel.org>; Sun, 15 Feb 2026 22:05:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vrimt-0008AI-3e; Sun, 15 Feb 2026 15:32:15 -0500
+	id 1vrkEH-0005W4-Fn; Sun, 15 Feb 2026 17:04:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1vrimr-00089v-2W
- for qemu-devel@nongnu.org; Sun, 15 Feb 2026 15:32:13 -0500
-Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
+ (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
+ id 1vrkEF-0005Vb-1O
+ for qemu-devel@nongnu.org; Sun, 15 Feb 2026 17:04:35 -0500
+Received: from mail-oi1-x22b.google.com ([2607:f8b0:4864:20::22b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1vriml-0004o6-J1
- for qemu-devel@nongnu.org; Sun, 15 Feb 2026 15:32:12 -0500
-Received: by mail-ed1-x52a.google.com with SMTP id
- 4fb4d7f45d1cf-65c0891f4e9so557099a12.1
- for <qemu-devel@nongnu.org>; Sun, 15 Feb 2026 12:32:06 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1771187525; cv=none;
- d=google.com; s=arc-20240605;
- b=bwg/Vc/ujzI8O5+ZzSa2cPybvdlPyq6ysIfXhlZP2q5KSkdyDyEfy/XVTt3RvL60p4
- KxXZivYT4y0WXRdkvpce2Mm48Ik965TI9ylPF/pcWeW4RLtoy4s6xbhjwAja3bJn2zQB
- 2liaHZE/a1f6mXFhS/cd+P5cmnBED8So2Nou75HPGnnmfGWIBEtL1g/YskRGflGJp6M+
- j13dy9sItWI5ccjwlESu8wKt14KQ9ZW5O9y7b3WAK8kyiqOeE6Qit+nCwl9HkbNyTemn
- i+thUAyCuYCQxq8/ilN4eC0MSJ90vp0GQ4HwK0E+ToBUTR0tc1TT5LYkYnsNn0z6Zu8T
- 7Nvg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=XABNvLoXDQWxQvSm8H8jBA4yYZd6zYBc56Cmgo7N9AY=;
- fh=fa9r3k2RM1BPu//GuZC/xhfPX6IkvWffHptETS5k24I=;
- b=OM3lw1IV9tuJdqq1JAlPAl5rG6AXi5FXwU0TVvEJ7aSmrpoMsGkFM98hZwIqFtt8Zg
- yzyFH/C9HBqFba0HfhOiDHH95ExLDtgJqSKGFJMiDcoIH6lS8ESAfRx9Ih4cvFuzJrn/
- peP6jrhLvLoHvB0Y5beCnSIc+M1GqxgEa4ARIn+uMFoemZ5Ddjoe+QHISzsDe5d6wh7z
- AR0FLy/B07qAR1V8CLKUK/nra4Cw6qtab2Y4WqseGOH30u3NARbn9tu/HSTQYGlAa5RA
- cFYvhZpu0SEVMgozzkHeyyz/3ZUfOm77OaDa9A3yhPELLfk4CteQlyr63ml3ETh94y2C
- DhTg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
+ id 1vrkED-00051x-J9
+ for qemu-devel@nongnu.org; Sun, 15 Feb 2026 17:04:34 -0500
+Received: by mail-oi1-x22b.google.com with SMTP id
+ 5614622812f47-46391e91e16so1598666b6e.3
+ for <qemu-devel@nongnu.org>; Sun, 15 Feb 2026 14:04:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1771187525; x=1771792325; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1771193069; x=1771797869; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=XABNvLoXDQWxQvSm8H8jBA4yYZd6zYBc56Cmgo7N9AY=;
- b=cNXXEFUOvQ0TLybghIL5GB9Hfq6EPq0h4mBHr1pj7edxuKYd2lC6qaNneXV3tJPggR
- I4RfN6cfKI5rrX9EnenEPnoE//taPBXimBeqxDBsK2qCDok6kP/DIzCYxn4/A1dW0Ngw
- hAEl7vFrBnTMgT5UzI2MlHJyhmyWV5DJp+21lcvpq0aws49RgjusPqRWhJowo0pDaaGh
- 0hiFo5n8BK624AlKJUET4l83Qv3zfUehJlXJGn5vit3uQkJ/u46MpZHC5bWDE99NFGEb
- LjoQYi8kDNVwoj+XuQ5EtQirhvO3wk+5fRpw35O3AKLNDDY5L5aUtIrAE3KCgl+a1LIj
- pq4w==
+ bh=lxLWwnLWO5/HaRXFh+o5fRDXxqBc982XqQkT3y5pKHs=;
+ b=ORIwS9V+IqnO8J24sSJoxJdeR/4s8DmjQHPVT6ALUmDZp71QCW2/V71e/CLvtWc5SD
+ P3RBgvBw1MZR8CmmVZzY2M1L02DkDY6hUsKh9/GOldOnV3O+qjbMtYbrm0ifNkL6uONB
+ /TkHLv5b7BwCkl5OtNzFyR3Z215nik6yOme4poKCP+4hKL3S5uRxRwLIQgxCVfboVxZB
+ YvGYr4ydVVLoNgC+e9MEDHciyxzQerky+zH+eIs1Lrmbzg35tSeN9nxzc2pe97Gy0/eR
+ t5rNIFuQnSaFmQQTD9ZDMvKnX+lIGixdJT9eRfTia2XyRDZIjRVMCvJ78yV/nfTUcxWJ
+ 0eeQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771187525; x=1771792325;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ d=1e100.net; s=20230601; t=1771193069; x=1771797869;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=XABNvLoXDQWxQvSm8H8jBA4yYZd6zYBc56Cmgo7N9AY=;
- b=PZpT+dRTZgs2k7ys2OPgFQjCU5VoNg6ng3AROfXLzV6+MfNV+w2nIgNk0wUkx4fFX0
- OMj9ZQEi4EA8SroqYYSTwLIbZGIsXc5rSjGK4hI3tWG0DOCJkU12y00wYBBH3EEA9M2P
- wsz01geaZdZf6tMSB+YYv9piqWN2O6gSfFEDBMEcRT+AlfVpCFOu+jZ99aqi1U0k5TZN
- gpmm+IOu6O7wt/lidA6asTNeJvOQh0FSUGHD4C+Sj6UBdEo7zRVLvLkBe7tody08uQs2
- 7pb36GQe0Ve8ovgbKGjEN3zJZKIXaMeKh6MZCK7K1jrGR1KL3IXKHPI79BoNGirowL6H
- uUsw==
-X-Gm-Message-State: AOJu0Yz1BNGCUraTl44DvBUQVND1yEW+3hOw0JyaBcZ/whhaOdS5p8fv
- TCf7LhZFYW4uNivYpZ9Mbc6X7gX23WNz6Btun5dJj69mF6Xsvf0GtoLxwZjzmeQg4svaxB1GDtG
- okEBYh0te8eipvCJqD0/Rggsy5AssO8Y=
-X-Gm-Gg: AZuq6aJlyrwp5ByQYUObCbWU9EPvCSUeBkNSAYx6gKo05Ogl8A+yx9uDliHksH4IPNg
- 9jGSLZtB6UhoL+mW6StuIlYXPGqaQnLnK0HM0VQbj2wDZGJvO3n5SEEuizcV6YqN/oFjvwDmAwA
- EJ6tmZE23VjFulQkUf5UR78D/4wY7bwNUXXt7Vg6daHFHcMlem9jt36+pQ6qMUF4n8PrCZsjhVa
- 8Qpu57x8CW/I+Zgql3GPbp8hnwByeme5dToPdksHX2tje2AFkjdFknHIVECczUj2YFxQvd6F99z
- giAjkqTpQNSk93AB
-X-Received: by 2002:a05:6402:5188:b0:65a:2903:315d with SMTP id
- 4fb4d7f45d1cf-65bc7a7b702mr2760311a12.30.1771187525028; Sun, 15 Feb 2026
- 12:32:05 -0800 (PST)
+ bh=lxLWwnLWO5/HaRXFh+o5fRDXxqBc982XqQkT3y5pKHs=;
+ b=hpBTHtxbXVZI6FMoSlJ2OoQ0QnFPzMxv1J/toj5xGA+DoBGFzSMZlJb9hld/2oP0rB
+ vzG/OeLQFzlqLByP+GWv7pMis01deYJmGvurqFflaGtqXihx6VH5+bt7QIo5qCdp//p7
+ vY8AiMSKnFoLN+IEMmIkNzx9u4UtgbmVrciQRLSWwoBIsMb3MiCULhrTdWGVsWMHakdY
+ kVO4ksTQn+WNe6ijjDvK+nAZvjtI/jNkU38FNvyiZHIcA8vE8+DHVZ+FTd569uS19gO9
+ XixtfhIen0HTBjVI8h4GEzI4h81iszHZxuJ9mgIVIg4wzhUxIRoqMZJVO9j/scz5bfqZ
+ r80Q==
+X-Gm-Message-State: AOJu0YwewSfdMWt0tEeGdjCiqdalSuCMKV4zitxSN+YH4ZywWgJceOrs
+ 0xhiCq5U393NKLvlmS3FZtw9364r5P9FF0cnuzB2Q2wONMeAKbjX1HR7FPonIw==
+X-Gm-Gg: AZuq6aJGAp/5Naw4UKrJtEUua1EhcA0rcR7mNoC6lx+TyJjilzKX9jk4HbO+wjzS51o
+ 2+B2AHLa5nL2+svBHTzDQF4BbUrO6/pTbfa5sexcMau2JjmckjirhRYtQCZLSQkRzt+JB/1BW/a
+ iToa+N+aOpxny0KUCyfZ+IJi5JBTna9DUfFpq+b4hVVu6uKpJhITsMqx00Uo1hdhq6wrekAlw1p
+ 1tTN0ShjRRQnmekMNju7Gy/Kr3vP6ETB1iX56Z0F7sIT4TUcyWYz8dNgOI3chk5QeSntjhJJ+G1
+ yPfCt5nbXZHbZIehv7ySu9Tke8cWMgwKr3Gdck2ai42vs/UMx3DssDEiWJ7dKWCKOuRHSBpPGuU
+ TCHkh9423C/IyWh/PP7IF/sgFlVUvmePExFuujFw39wWxDFLhLvV+4Jepjhmna2aFrVKKI8VbF7
+ U0pv000T4LeyS3GaihHK/kMda0PMm8Q0KmgVClRKEQN9SvVd0p9sF7NlQPTvmZWfQg0HnR3MHUh
+ eni42uPrXmJMtgj
+X-Received: by 2002:a05:6808:50a7:b0:45f:42d6:2fff with SMTP id
+ 5614622812f47-4639f1e8f40mr4545781b6e.32.1771193069658; 
+ Sun, 15 Feb 2026 14:04:29 -0800 (PST)
+Received: from taylor-ubuntu.. (c-67-172-136-152.hsd1.co.comcast.net.
+ [67.172.136.152]) by smtp.gmail.com with ESMTPSA id
+ 586e51a60fabf-40eaf101db0sm13556664fac.12.2026.02.15.14.04.27
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 15 Feb 2026 14:04:28 -0800 (PST)
+From: Taylor Simpson <ltaylorsimpson@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: brian.cain@oss.qualcomm.com, matheus.bernardino@oss.qualcomm.com,
+ sid.manning@oss.qualcomm.com, marco.liebel@oss.qualcomm.com,
+ richard.henderson@linaro.org, philmd@linaro.org, ale@rev.ng, anjo@rev.ng,
+ ltaylorsimpson@gmail.com
+Subject: [PATCH v2 3/8] Hexagon (target/hexagon) Add Hexagon version field to
+ DisasContext
+Date: Sun, 15 Feb 2026 15:04:17 -0700
+Message-ID: <20260215220422.212249-4-ltaylorsimpson@gmail.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260215220422.212249-1-ltaylorsimpson@gmail.com>
+References: <20260215220422.212249-1-ltaylorsimpson@gmail.com>
 MIME-Version: 1.0
-References: <CAJSP0QVXXX7GV5W4nj7kP35x_4gbF2nG1G1jdh9Q=XgSx=nX3A@mail.gmail.com>
- <CAJSP0QVQNExn01ipcu4KTQJrmnXGVmvFyKzXe5m9P3_jQwJ6cA@mail.gmail.com>
- <CAJSP0QW4bMO8-iYODO_6oaDn44efPeV6e00AfD5A42pQ9d+REQ@mail.gmail.com>
- <aXH4PpkC4AtccsOE@redhat.com>
- <CAMxuvaw04pDNzHyw5+Qcv_KfrhDTiyp+MNxpECp+HfTa5iLOGw@mail.gmail.com>
- <aXH-TlzxZ1gDvPH2@redhat.com>
- <CAFEAcA_u6QUhs+6-cyYm_qttsDiV2zHbsc-_FbTb8QzWXk6+tw@mail.gmail.com>
- <aXICpFZuNM9GG4Kv@redhat.com>
- <CAMxuvawgOvQbwoyCzFBLw++JqR0vFbVUhbv1AJWU6VqK1MM_Og@mail.gmail.com>
- <82f74c82-c572-4ab9-b527-11ea287056d1@linaro.org>
- <CAJ+F1CJtrv9YgDbiekVmDD2yT+6nUe39nLwLsKxvFOtMc1kUGA@mail.gmail.com>
- <CAJSP0QUCQ8LkHEPNPb75XZmo46xxvP3uA373fzAZTwn=bo_bdg@mail.gmail.com>
- <f7a90238-f33d-430d-acd2-d8cd9ec275fe@gmx.de>
- <CAJSP0QVbvRxZXjbfoegu+NA=0hX3N9pSeG7Stx_jpqo1Mgwd0w@mail.gmail.com>
- <93c80b9e-7eb9-45f2-bdd7-a769e2935ba1@gmx.de>
- <CAJSP0QU7TJ5Y2gAy=ipk4=7hrqejifJJ8YcDz2LsbiQbWL5Kig@mail.gmail.com>
- <5befbced-8aaa-46e2-8875-88d681854aee@gmx.de>
-In-Reply-To: <5befbced-8aaa-46e2-8875-88d681854aee@gmx.de>
-From: Stefan Hajnoczi <stefanha@gmail.com>
-Date: Sun, 15 Feb 2026 15:31:52 -0500
-X-Gm-Features: AaiRm529hcdahmLgoK3UmgcviYoaROHdjNUdS2LIQmCd7bd9yr36j4maiMUqv2A
-Message-ID: <CAJSP0QUwP1L5YQH=_u5AFS++iQXZFK8r9H6xkg5KAHoJa0evsw@mail.gmail.com>
-Subject: Re: Call for GSoC internship project ideas
-To: Helge Deller <deller@gmx.de>
-Cc: qemu-devel <qemu-devel@nongnu.org>, Paolo Bonzini <pbonzini@redhat.com>, 
- Fam Zheng <fam@euphon.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
- envelope-from=stefanha@gmail.com; helo=mail-ed1-x52a.google.com
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::22b;
+ envelope-from=ltaylorsimpson@gmail.com; helo=mail-oi1-x22b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -132,40 +105,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, Feb 15, 2026 at 1:25=E2=80=AFPM Helge Deller <deller@gmx.de> wrote:
->
-> Hi Stefan,
->
-> On 2/10/26 19:23, Stefan Hajnoczi wrote:
-> > You can still propose an idea before February 19th.
-> >
-> > The Linux scsi_debug driver has support for emulating a tape device,
-> > so that may already be usable with QEMU but I'm not sure.
->
-> It is interesting, but it is only available with Linux hosts,
-> and doesn't seem to handle existing TAPE files or can be
-> used to permanently store things (e.g. it handles everything in RAM).
->
-> > If you have a use case for SCSI tape emulation in QEMU then it sounds
-> > like something that would fit GSoC.
->
-> Here is my proposal.
-> I hope this is OK?
+Initialize the field in hexagon_tr_init_disas_context
 
-Thanks, Helge. I have added your project idea to the wiki and edited it:
-https://wiki.qemu.org/Google_Summer_of_Code_2026#SCSI_TAPE_device_emulation
+Co-authored-by: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
+Co-authored-by: Brian Cain <brian.cain@oss.qualcomm.com>
+Signed-off-by: Taylor Simpson <ltaylorsimpson@gmail.com>
+---
+ target/hexagon/translate.h | 1 +
+ target/hexagon/translate.c | 1 +
+ 2 files changed, 2 insertions(+)
 
-The intern needs to research the project idea and come up with a
-design before the coding period starts. You can make this easier by
-specifying more of the design so the intern has less to figure out. I
-think your project description contains enough pointers so that a
-motivated applicant can discuss the details with you during the GSoC
-application phase.
+diff --git a/target/hexagon/translate.h b/target/hexagon/translate.h
+index b37cb49238..c95c26c1d6 100644
+--- a/target/hexagon/translate.h
++++ b/target/hexagon/translate.h
+@@ -30,6 +30,7 @@ typedef struct DisasContext {
+     DisasContextBase base;
+     Packet *pkt;
+     Insn *insn;
++    HexagonVersion hex_version;
+     uint32_t next_PC;
+     uint32_t mem_idx;
+     uint32_t num_packets;
+diff --git a/target/hexagon/translate.c b/target/hexagon/translate.c
+index 2fdc956bf9..d300c910d4 100644
+--- a/target/hexagon/translate.c
++++ b/target/hexagon/translate.c
+@@ -988,6 +988,7 @@ static void hexagon_tr_init_disas_context(DisasContextBase *dcbase,
+     ctx->branch_cond = TCG_COND_NEVER;
+     ctx->is_tight_loop = FIELD_EX32(hex_flags, TB_FLAGS, IS_TIGHT_LOOP);
+     ctx->short_circuit = hex_cpu->short_circuit;
++    ctx->hex_version = HEXAGON_CPU_GET_CLASS(hex_cpu)->hex_version;
+ }
+ 
+ static void hexagon_tr_tb_start(DisasContextBase *db, CPUState *cpu)
+-- 
+2.43.0
 
-Two pieces of information that could help focus this project:
-1. Do you have any tape data files for reference that you want QEMU to
-be able to access?
-2. Do you have a particular guest OS in mind?
-
-Stefan
 
