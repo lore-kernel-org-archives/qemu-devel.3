@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFC26EF586A
-	for <qemu-devel@archiver.kernel.org>; Sun, 15 Feb 2026 05:23:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30112EF586B
+	for <qemu-devel@archiver.kernel.org>; Sun, 15 Feb 2026 05:23:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vrUan-0000HM-Qa; Sun, 15 Feb 2026 00:22:49 -0500
+	id 1vrUau-0000KX-Np; Sun, 15 Feb 2026 00:22:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vrUag-0000Fw-BH
- for qemu-devel@nongnu.org; Sun, 15 Feb 2026 00:22:43 -0500
-Received: from p-west2-cluster4-host11-snip4-10.eps.apple.com ([57.103.69.141]
+ id 1vrUao-0000Hd-9H
+ for qemu-devel@nongnu.org; Sun, 15 Feb 2026 00:22:51 -0500
+Received: from p-west2-cluster2-host2-snip4-10.eps.apple.com ([57.103.68.203]
  helo=outbound.mr.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vrUad-0004qD-On
- for qemu-devel@nongnu.org; Sun, 15 Feb 2026 00:22:41 -0500
+ id 1vrUam-0004rM-IC
+ for qemu-devel@nongnu.org; Sun, 15 Feb 2026 00:22:50 -0500
 Received: from outbound.mr.icloud.com (unknown [127.0.0.2])
  by p00-icloudmta-asmtp-us-west-2a-60-percent-1 (Postfix) with ESMTPS id
- 5097B18003A7; Sun, 15 Feb 2026 05:22:36 +0000 (UTC)
+ 65B131800190; Sun, 15 Feb 2026 05:22:46 +0000 (UTC)
 Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1771132958; x=1773724958;
- bh=QtB5IM5BAghTfw4VydIIrSdULvSeei+O6xHHjZ7ePFY=;
- h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
- b=PaiqB263o+dFCh4g0mzLOEFKjo5OvdXiFGRo1mY9Bb/aDmgIhem7mMzGedAfyhwzXY5Nf5qOAhmBpRxfmo2rOCoRAmixu7RVzCh5uISDGhfQPoVEw58zHSitJEsVssoqixPIaE7cMQnoSe+Pf0blRtHFcG/hCUUAb1C0/LC9r3ouP23J5W2+lsZCWWug5XyMERI/lXhvDrhDsoqPQceQOjusZ9N4WpICDlM7mJHszNQOBINst4mDy7cJHSKjICfUrLWxPMNIieU8MmUDAYHKNb5imPkC9WLcYkpJUwwNB0EBhNjzDIGA4YCk96iFgEkk4bKnmcLmUScPuFTrUZxGUA==
+ s=sig1; t=1771132967; x=1773724967;
+ bh=tOIg27vUU88mwrgezr591bqoq+9r1MOdy71woXavApE=;
+ h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type:x-icloud-hme;
+ b=gJTsQ55M1l+aj8n3//qPrwomS7V21x+k7hD5OupiZjgL8qm8RkvWs4lDOgos0WyfyXhnJ/uCOcVPONVnwt7MIwSW78YPziNCpGsomR7XxbnClTyJi2Fs2RSSOj3GBk8nDBGZWy/mutyoNbg6jk3RYh0yMP1I+qebQySMojju7lOYcBmjLm/+hK0vxp6R8M+0/0n/dn4p35yukYG992aVZOrwBo1Ot8hZlu7NKxVOCO7vLX7TABPzjsKHMCZK10r04Bbdvl8s/ndlM2vt3EH8XWIxKVTxDsWNwc21hlBy4DZFWzNFAPKokWcLry9p3hrTtxIjo5E4I71jrv+jm34OxA==
 mail-alias-created-date: 1752046281608
 Received: from localhost.localdomain (unknown [17.57.152.38])
  by p00-icloudmta-asmtp-us-west-2a-60-percent-1 (Postfix) with ESMTPSA id
- A9FF6180012A; Sun, 15 Feb 2026 05:22:32 +0000 (UTC)
+ E8C501800094; Sun, 15 Feb 2026 05:22:42 +0000 (UTC)
 From: Mohamed Mediouni <mohamed@unpredictable.fr>
 To: qemu-devel@nongnu.org
 Cc: Phil Dennis-Jordan <phil@philjordan.eu>,
@@ -47,37 +47,40 @@ Cc: Phil Dennis-Jordan <phil@philjordan.eu>,
  Magnus Kulke <magnus.kulke@linux.microsoft.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Wei Liu <wei.liu@kernel.org>, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH v3 01/14] target/i386/emulate/x86_decode: Fix compiler warning
-Date: Sun, 15 Feb 2026 06:22:12 +0100
-Message-ID: <20260215052225.22513-2-mohamed@unpredictable.fr>
+Subject: [PATCH v3 04/14] target/i386: emulate,
+ hvf: move x86_mmu to common code
+Date: Sun, 15 Feb 2026 06:22:15 +0100
+Message-ID: <20260215052225.22513-5-mohamed@unpredictable.fr>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20260215052225.22513-1-mohamed@unpredictable.fr>
 References: <20260215052225.22513-1-mohamed@unpredictable.fr>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Authority-Info-Out: v=2.4 cv=cZ/fb3DM c=1 sm=1 tr=0 ts=6991581d
+X-Proofpoint-GUID: tMoW4fO6zFhPXsQ3F-TVpJQMXCZASCm8
+X-Proofpoint-ORIG-GUID: tMoW4fO6zFhPXsQ3F-TVpJQMXCZASCm8
+X-Authority-Info-Out: v=2.4 cv=bIEb4f+Z c=1 sm=1 tr=0 ts=69915827
  cx=c_apl:c_apl_out:c_pps a=9OgfyREA4BUYbbCgc0Y0oA==:117
- a=9OgfyREA4BUYbbCgc0Y0oA==:17 a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22 a=pGLkceISAAAA:8
- a=1g1V9cNuhepT8r8r7IUA:9
-X-Proofpoint-GUID: XwUEs3hcw_O1sliJWqN2K722X_BF4L4Y
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjE1MDAzNiBTYWx0ZWRfX9Od3PVwji50s
- O6MQR0rklhxVX3mKrmEEUHorYvZQeBVdV1034+GVW92bwlaYVPZic2Z0hLG0VaVecVWej5uG01B
- w1FL2vQhvu+ga1TYdlTQMEYHB3wLSCBKRwUevUhtDOap9zT9T0JEpeVeKpWkzPQ8ZVsB9u49/1m
- WSKEGBJAyTUTUaQ7NE6HG5dbADfsC/JAqHzhifqEiVYjpc31iYpW/opn22pxiYsUxHctlIvxSWq
- z/ALgXu3ecr0+3fROXCc89U6tmnihJp7cVFtp4nHzqORWd+YC7nrRyc0sXAOQS5I5Q/f8DKYjhm
- vMZtYK8c4CDm00802vuWIVI5Stsnzn8XrIql4QYEZ07K/EldgcMUUft/Vb/V94=
-X-Proofpoint-ORIG-GUID: XwUEs3hcw_O1sliJWqN2K722X_BF4L4Y
+ a=9OgfyREA4BUYbbCgc0Y0oA==:17 a=IkcTkHD0fZMA:10 a=HzLeVaNsDn8A:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22
+ a=KKAkSRfTAAAA:8 a=NAek0MM3JjVz2OpMgrkA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjE1MDAzNiBTYWx0ZWRfX36lvfWghgENo
+ DkezWIsnEIMAWFcFDAQ6xnVxud/+H7HXfYHUEJbzJneJY0hQRNRN2WYk7shA6ipFSaIixujlSqm
+ 2J8sEk3pu6UazJ68uT5fgqTY8Sqpicb84lbbAXZq/j27meQooMNqr9Slk7+88TSpMzmpDJHhcKc
+ XTzpE9SNkwPyruelpYNAkgUXgopZheKGCzkYT+3oxgNP+69n6/Xc2p6IDFJYfGY1tzYmNWDGoKX
+ 2chpRfPM7RsoKPQbZFIzIuZ+jr1SZcS7KQa8AJlyxK40+N03wfJo03/HzziHE6+Cf4b3KvPBhwu
+ BqMnAIfYI+KUWMQAsAYbgX/J1NoNN4JB2p9Tm/FvTepVBSkenFPFc9eBBorpKs=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-02-15_02,2026-02-13_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0
- lowpriorityscore=0 clxscore=1030 bulkscore=0 adultscore=0 malwarescore=0
- suspectscore=0 spamscore=0 mlxscore=0 mlxlogscore=791 classifier=spam
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxscore=0
+ spamscore=0 clxscore=1030 adultscore=0 mlxlogscore=999 lowpriorityscore=0
+ malwarescore=0 bulkscore=0 suspectscore=0 phishscore=0 classifier=spam
  authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
  definitions=main-2602150036
-X-JNJ: AAAAAAABaI2wdvfq7k0JyGZszqcAbZ9kC0Sh9VE5K0rkv6NrwX9HYKo26lM6X12VkAT3ovxiN216+Urb/GyU2P5qUMzfkcpA1Y3nq5Jb1mEKlfyzT1euhBv4fpU+tQH8BNALru7h5giuezC3uEtbD39diEiimlpE4h+jBI37cG+DsDIeg08lb7g8NWDrP1kNHxzUkGsYO4d2dtVdP/mGImpmtcs83xdJd0sX7rXky5x1dSYmMS69j+jxHx/Ey1IKxR9pf4ZV/w9mJgQfVmIMEAcz5/PuvFxvrFGzPb9nlac7sEpCXjEI8oz3t2s8OoA+Eb04uq89t0rJxz3wggIMnTckbiu+0x02hElxjumsZQzJcrBnr2pqr3+dPwhfYx5LTfyrKqtp39V+KyeDkS+hXB1MXt08RIpa0TvBjKCUihXgCT3z12q2b8vYm6f34iegpiO6n3M+MOHLZwPg/jPlgtwjhJUoUMzGFw/rYLD3HrEQHGCR1JxHefcSaD96AzBMisdEwzgZjdOYflDZGmRM69Elv+YCt1nya3uWQrB3NR/LRjx0LhZHHAA0HrhHCSvv/13B4tnZlJuEnvxh0bR7MgQK4DzoTIo4R8nmvvPlbV7rvuEkLxrhQXkt9OQPIJou/mJcwZ3cc+H6WrLywQ26ql8nbYKcrKo7v5fzS71HRowGpkvBS49owLDmBeBwIh+J+7YsomvjYBGfCEeSlVyhMDatDibyI+t7CFopfFf0Lh8Beoz2OqZO3uI3gKtB+VM1ZkTvA/Q4Cu7P6qN25WOGay4jwSUBWAGVcez75OmAPjw7Q9PanuNA5IpNVwLdWki5BIvAnN/XazVb2vYJh0SM6g==
-Received-SPF: pass client-ip=57.103.69.141;
+X-JNJ: AAAAAAABpvwjwoCnagoaj3z6vZgzbZ+2YbYjyromENN5RqOf9/pLNqbtErUmfbFJkGJn/853pTvpT3PpnMoVWewgMVDUSpUE90O5PsFaxcXa3L4ImBLxXIdVHf4dvW9XT9B/0QZT+gcWh5zjeKko5YN8aEg7U7Svjsl2pfIJQXbEegJJZ71rM8wgoSLL2HbxXmKBAe9N0hQxiwd8OIZis+MQxvrBqJ4QtIjTINu6umIGkmuzEAkcx/1y7Ku7y9gt6kuj+KJ7nfjZD0TGLXLYN1wBC7Oke4JIxdK006bZjx1Trq0GJ4cQC85Psw3Hm6dVib/3hfPz9FC3jYznPyrdCdAA9AJWGmWWNsmg4ph9QYLvhybd641E4IdN24NN6elDHf4z5Vjam45wz5fOiankW7H1Wc4up7j2EZ52pX4YfUcevGI9cgMDPqUnGEOhik+QCOEM+VVGXR2lHXexMbgfnOxJQKiE9S+gvU1sSQP6Tnjm+MN4im0w3N4WOkhmrTdzrcEDBd+/deEIJTdcauvUIKtQZge3fyHg2o/xxgqDQaX5lcuOjm73o7lMePvCoWkuRbrrBam9VV5SJpQdqqjPvOXaq0cl25pNuP4Ot0pvu00eR/0ckQFpofF235I68InkaS/lFk+lwRUL5Zyxi0uxN5NrE7Ra3E/Xzk7aKBPDrTgi8Dk5mV4SKzKooPzazw9eY1+VBPeKXQecHhb76jwRIhgF8sddZLuiAiWYsiHNB+79lXt+A5Ac/l7DKNYKsadJQmWdv/XSH0Eix/mR0AuPeBKcRHfyWusYGjOY/mi8x3x7
+Received-SPF: pass client-ip=57.103.68.203;
  envelope-from=mohamed@unpredictable.fr; helo=outbound.mr.icloud.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
@@ -102,51 +105,159 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bernhard Beschow <shentey@gmail.com>
-
-When compiling for i386-softmmu under MSYS2, GCC emits the following warning:
-
-  In function 'get_reg_val',
-      inlined from 'calc_modrm_operand64' at ../src/target/i386/emulate/x86_decode.c:1796:15:
-  ../src/target/i386/emulate/x86_decode.c:1703:5: error: 'memcpy' forming offset [4, 7] is out of the bounds [0, 4] of object 'val' with type 'target_ulong' {aka 'unsigned int'} [-Werror=array-bounds=]
-   1703 |     memcpy(&val,
-        |     ^~~~~~~~~~~~
-   1704 |            get_reg_ref(env, reg, rex_present, is_extended, size),
-        |            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   1705 |            size);
-        |            ~~~~~
-  ../src/target/i386/emulate/x86_decode.c: In function 'calc_modrm_operand64':
-  ../src/target/i386/emulate/x86_decode.c:1702:18: note: 'val' declared here
-   1702 |     target_ulong val = 0;
-        |                  ^~~
-
-In the calc_modrm_operand64() case the compiler sees size == 8 to be mem-copied
-to a target_ulong variable which is only 4 bytes wide in case of i386-softmmu.
-Note that when size != 1, get_reg_ref() always returns a pointer to an 8 byte
-register, regardless of the target_ulong size. Fix the compiler warning by
-always providing 8 bytes of storage by means of uint64_t.
-
-Fixes: 77a2dba45cc9 ("target/i386/emulate: stop overloading decode->op[N].ptr")
-cc: qemu-stable
-Signed-off-by: Bernhard Beschow <shentey@gmail.com>
-Reviewed-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/i386/emulate/x86_decode.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ target/i386/emulate/meson.build        |  1 +
+ target/i386/{hvf => emulate}/x86_mmu.c | 14 +++++++++-----
+ target/i386/{hvf => emulate}/x86_mmu.h |  0
+ target/i386/hvf/hvf.c                  | 10 +++++++++-
+ target/i386/hvf/meson.build            |  1 -
+ target/i386/hvf/x86.c                  |  2 +-
+ target/i386/hvf/x86_task.c             |  2 +-
+ 7 files changed, 21 insertions(+), 9 deletions(-)
+ rename target/i386/{hvf => emulate}/x86_mmu.c (95%)
+ rename target/i386/{hvf => emulate}/x86_mmu.h (100%)
 
-diff --git a/target/i386/emulate/x86_decode.c b/target/i386/emulate/x86_decode.c
-index d037ed1142..6ad03b71b0 100644
---- a/target/i386/emulate/x86_decode.c
-+++ b/target/i386/emulate/x86_decode.c
-@@ -1699,7 +1699,7 @@ void *get_reg_ref(CPUX86State *env, int reg, int rex_present,
- target_ulong get_reg_val(CPUX86State *env, int reg, int rex_present,
-                          int is_extended, int size)
+diff --git a/target/i386/emulate/meson.build b/target/i386/emulate/meson.build
+index b6dafb6a5b..dd047c424a 100644
+--- a/target/i386/emulate/meson.build
++++ b/target/i386/emulate/meson.build
+@@ -2,6 +2,7 @@ emulator_files = files(
+   'x86_decode.c',
+   'x86_emu.c',
+   'x86_flags.c',
++  'x86_mmu.c'
+ )
+ 
+ i386_system_ss.add(when: [hvf, 'CONFIG_HVF'], if_true: emulator_files)
+diff --git a/target/i386/hvf/x86_mmu.c b/target/i386/emulate/x86_mmu.c
+similarity index 95%
+rename from target/i386/hvf/x86_mmu.c
+rename to target/i386/emulate/x86_mmu.c
+index fe44d2edf4..b82a55a3da 100644
+--- a/target/i386/hvf/x86_mmu.c
++++ b/target/i386/emulate/x86_mmu.c
+@@ -19,10 +19,10 @@
+ #include "qemu/osdep.h"
+ #include "panic.h"
+ #include "cpu.h"
++#include "system/address-spaces.h"
++#include "system/memory.h"
+ #include "emulate/x86.h"
+-#include "x86_mmu.h"
+-#include "vmcs.h"
+-#include "vmx.h"
++#include "emulate/x86_mmu.h"
+ 
+ #define pte_present(pte) (pte & PT_PRESENT)
+ #define pte_write_access(pte) (pte & PT_WRITE)
+@@ -99,6 +99,8 @@ static bool get_pt_entry(CPUState *cpu, struct gpt_translation *pt,
+ static bool test_pt_entry(CPUState *cpu, struct gpt_translation *pt,
+                           int level, int *largeness, bool pae)
  {
--    target_ulong val = 0;
-+    uint64_t val = 0;
-     memcpy(&val,
-            get_reg_ref(env, reg, rex_present, is_extended, size),
-            size);
++    X86CPU *x86_cpu = X86_CPU(cpu);
++    CPUX86State *env = &x86_cpu->env;
+     uint64_t pte = pt->pte[level];
+ 
+     if (pt->write_access) {
+@@ -127,7 +129,7 @@ static bool test_pt_entry(CPUState *cpu, struct gpt_translation *pt,
+         pt->err_code |= MMU_PAGE_PT;
+     }
+ 
+-    uint32_t cr0 = rvmcs(cpu->accel->fd, VMCS_GUEST_CR0);
++    uint32_t cr0 = env->cr[0];
+     /* check protection */
+     if (cr0 & CR0_WP_MASK) {
+         if (pt->write_access && !pte_write_access(pte)) {
+@@ -179,9 +181,11 @@ static inline uint64_t large_page_gpa(struct gpt_translation *pt, bool pae,
+ static bool walk_gpt(CPUState *cpu, target_ulong addr, int err_code,
+                      struct gpt_translation *pt, bool pae)
+ {
++    X86CPU *x86_cpu = X86_CPU(cpu);
++    CPUX86State *env = &x86_cpu->env;
+     int top_level, level;
+     int largeness = 0;
+-    target_ulong cr3 = rvmcs(cpu->accel->fd, VMCS_GUEST_CR3);
++    target_ulong cr3 = env->cr[3];
+     uint64_t page_mask = pae ? PAE_PTE_PAGE_MASK : LEGACY_PTE_PAGE_MASK;
+     
+     memset(pt, 0, sizeof(*pt));
+diff --git a/target/i386/hvf/x86_mmu.h b/target/i386/emulate/x86_mmu.h
+similarity index 100%
+rename from target/i386/hvf/x86_mmu.h
+rename to target/i386/emulate/x86_mmu.h
+diff --git a/target/i386/hvf/hvf.c b/target/i386/hvf/hvf.c
+index ce54020f00..0b3674ad33 100644
+--- a/target/i386/hvf/hvf.c
++++ b/target/i386/hvf/hvf.c
+@@ -62,7 +62,7 @@
+ #include "emulate/x86.h"
+ #include "x86_descr.h"
+ #include "emulate/x86_flags.h"
+-#include "x86_mmu.h"
++#include "emulate/x86_mmu.h"
+ #include "emulate/x86_decode.h"
+ #include "emulate/x86_emu.h"
+ #include "x86_task.h"
+@@ -254,11 +254,19 @@ static void hvf_read_segment_descriptor(CPUState *s, struct x86_segment_descript
+ 
+ static void hvf_read_mem(CPUState *cpu, void *data, target_ulong gva, int bytes)
+ {
++    X86CPU *x86_cpu = X86_CPU(cpu);
++    CPUX86State *env = &x86_cpu->env;
++    env->cr[0] = rvmcs(cpu->accel->fd, VMCS_GUEST_CR0);
++    env->cr[3] = rvmcs(cpu->accel->fd, VMCS_GUEST_CR3);
+     vmx_read_mem(cpu, data, gva, bytes);
+ }
+ 
+ static void hvf_write_mem(CPUState *cpu, void *data, target_ulong gva, int bytes)
+ {
++    X86CPU *x86_cpu = X86_CPU(cpu);
++    CPUX86State *env = &x86_cpu->env;
++    env->cr[0] = rvmcs(cpu->accel->fd, VMCS_GUEST_CR0);
++    env->cr[3] = rvmcs(cpu->accel->fd, VMCS_GUEST_CR3);
+     vmx_write_mem(cpu, gva, data, bytes);
+ }
+ 
+diff --git a/target/i386/hvf/meson.build b/target/i386/hvf/meson.build
+index 519d190f0e..22bf886978 100644
+--- a/target/i386/hvf/meson.build
++++ b/target/i386/hvf/meson.build
+@@ -3,7 +3,6 @@ i386_system_ss.add(when: [hvf, 'CONFIG_HVF'], if_true: files(
+   'x86.c',
+   'x86_cpuid.c',
+   'x86_descr.c',
+-  'x86_mmu.c',
+   'x86_task.c',
+   'x86hvf.c',
+   'hvf-cpu.c',
+diff --git a/target/i386/hvf/x86.c b/target/i386/hvf/x86.c
+index 5c75ec9a00..2fa210ff60 100644
+--- a/target/i386/hvf/x86.c
++++ b/target/i386/hvf/x86.c
+@@ -23,7 +23,7 @@
+ #include "emulate/x86_emu.h"
+ #include "vmcs.h"
+ #include "vmx.h"
+-#include "x86_mmu.h"
++#include "emulate/x86_mmu.h"
+ #include "x86_descr.h"
+ 
+ /* static uint32_t x86_segment_access_rights(struct x86_segment_descriptor *var)
+diff --git a/target/i386/hvf/x86_task.c b/target/i386/hvf/x86_task.c
+index bdf8b51ae6..b1e541a642 100644
+--- a/target/i386/hvf/x86_task.c
++++ b/target/i386/hvf/x86_task.c
+@@ -16,7 +16,7 @@
+ #include "vmx.h"
+ #include "emulate/x86.h"
+ #include "x86_descr.h"
+-#include "x86_mmu.h"
++#include "emulate/x86_mmu.h"
+ #include "emulate/x86_decode.h"
+ #include "emulate/x86_emu.h"
+ #include "x86_task.h"
 -- 
 2.50.1 (Apple Git-155)
 
