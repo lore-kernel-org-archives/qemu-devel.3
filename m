@@ -4,60 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C1C6EF5870
-	for <qemu-devel@archiver.kernel.org>; Sun, 15 Feb 2026 09:52:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BB66EF586D
+	for <qemu-devel@archiver.kernel.org>; Sun, 15 Feb 2026 10:16:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vrYmp-0002Ol-Ru; Sun, 15 Feb 2026 04:51:32 -0500
+	id 1vrZAQ-0008B9-KT; Sun, 15 Feb 2026 05:15:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vrYmo-0002O7-Iu; Sun, 15 Feb 2026 04:51:30 -0500
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1vrZAO-0008As-DE
+ for qemu-devel@nongnu.org; Sun, 15 Feb 2026 05:15:52 -0500
+Received: from p-west1-cluster5-host9-snip4-1.eps.apple.com ([57.103.66.192]
+ helo=outbound.pv.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vrYml-00014O-VE; Sun, 15 Feb 2026 04:51:30 -0500
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id F32315969F1;
- Sun, 15 Feb 2026 10:51:20 +0100 (CET)
-X-Virus-Scanned: amavis at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id 3So2WGIhq1G0; Sun, 15 Feb 2026 10:51:18 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id CF3265969F6; Sun, 15 Feb 2026 10:51:18 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id CCA5D5969F0;
- Sun, 15 Feb 2026 10:51:18 +0100 (CET)
-Date: Sun, 15 Feb 2026 10:51:18 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
-cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org, 
- Chinmay Rath <rathc@linux.ibm.com>, 
- =?ISO-8859-15?Q?Herv=E9_Poussineau?= <hpoussin@reactos.org>, 
- Harsh Prateek Bora <harshpb@linux.ibm.com>, 
- Nicholas Piggin <npiggin@gmail.com>, 
- Artyom Tarasenko <atar4qemu@gmail.com>, 
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-ppc@nongnu.org, 
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, 
- Laurent Vivier <laurent@vivier.eu>
-Subject: Re: [PATCH 7/8] hw/ppc: Set graphic display dimensions generically
-In-Reply-To: <56a0f465-2055-4c82-b0c0-963b376609e9@linaro.org>
-Message-ID: <0492fc65-e156-1afe-ea72-520134ccca41@eik.bme.hu>
-References: <20260214021240.58657-1-philmd@linaro.org>
- <20260214021240.58657-8-philmd@linaro.org>
- <252b2fa2-9251-3949-625b-7071c525c8e2@eik.bme.hu>
- <56a0f465-2055-4c82-b0c0-963b376609e9@linaro.org>
-MIME-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="3866299591-1858189989-1771149078=:26579"
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1vrZAM-0007BJ-Av
+ for qemu-devel@nongnu.org; Sun, 15 Feb 2026 05:15:52 -0500
+Received: from outbound.pv.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-west-1a-100-percent-12 (Postfix) with ESMTPS id
+ 39E4D18000A4; Sun, 15 Feb 2026 10:15:42 +0000 (UTC)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; t=1771150546; x=1773742546;
+ bh=AcGv2nwkJk4U+LCcoLzQCdWtzyCezLYVSF6WFtAEX3M=;
+ h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
+ b=WPXT/ysI5akii/frqVg9rp5M8m/AZ4fhi3iBoET0fkLhjPaWg9fkpUnmWA05BVbxRaNOnecNC0Wd5VqxGmW30UzZFXpQd1JLvpYc9iFmu+85l2q2blb0oBb/uVdzY8KBN6JNo7aJYIiP7+g5x1rro8vCFVW3ykpidgOFqPiZdcDaOe2e8AjKxah5UFsf5Tiv8waZctn0Bf4RQjGUua2FN5CmD/EvLzNFBbc0wejmuP7Grn0N1nQ6bTlcmA7Nl27LKaXtfFRgWgGvvcVwxGYP3DarGuoS21VHRjF24qPaq75HNp5rWk0VmMCT7fT30pjFF48CmcMDNyDg9eE8oFeVdw==
+mail-alias-created-date: 1752046281608
+Received: from smtpclient.apple (unknown [17.56.9.36])
+ by p00-icloudmta-asmtp-us-west-1a-100-percent-12 (Postfix) with ESMTPSA id
+ B425918002C1; Sun, 15 Feb 2026 10:15:40 +0000 (UTC)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.400.21\))
+Subject: Re: [PATCH v5 2/2] target/arm/hvf: Sync CNTV_CTL_EL0 & CNTV_CVAL_EL0
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+In-Reply-To: <20260118215945.46693-3-philmd@linaro.org>
+Date: Sun, 15 Feb 2026 11:15:28 +0100
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ Peter Maydell <peter.maydell@linaro.org>, Alexander Graf <agraf@csgraf.de>,
+ Cameron Esfahani <dirty@apple.com>, Mads Ynddal <mads@ynddal.dk>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <EC8E03E9-3E48-4425-B4C6-D395BF34B454@unpredictable.fr>
+References: <20260118215945.46693-1-philmd@linaro.org>
+ <20260118215945.46693-3-philmd@linaro.org>
+To: =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+X-Mailer: Apple Mail (2.3864.400.21)
+X-Authority-Info-Out: v=2.4 cv=R/IO2NRX c=1 sm=1 tr=0 ts=69919cd0
+ cx=c_apl:c_apl_out:c_pps a=azHRBMxVc17uSn+fyuI/eg==:117
+ a=azHRBMxVc17uSn+fyuI/eg==:17 a=IkcTkHD0fZMA:10 a=HzLeVaNsDn8A:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22
+ a=KKAkSRfTAAAA:8 a=GiNw9T3wKVwWRrP4O7cA:9 a=QEXdDO2ut3YA:10
+ a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-GUID: 3nMDhrJbj8p_iBl_0maVa1zRbUxEq_zc
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjE1MDA4MiBTYWx0ZWRfX/cXt998bE7e0
+ NUC1vVdep50a7Com0a7Eu7nRQzl4vs3kKkJGchu4V/2aKJ0lIWN5jmEG0rHoKqT21jjWQwI8e13
+ d2fmNgFFZmIniaJEVm+XQELmYjkgvGv3r1ISJLUHmuCiDMqEITHL5eLDKKST+tmJiA43PwpqmKh
+ gmSg9M4/ratJbOUWk/4JlX4XH69wJUQJbtF6AK7WzCZ08TUP4iOWqKQct+4plzmXcipQxrJW/8Y
+ bzeke2siUuzyUKEfAuLSutmarZoeZxbLM0PyF4+DtzXbNNIiV3aja+BFAgFPSuFD8H3XuoApfS8
+ yewaQ0wBWTZhqarICYuWo//hMkwHEc5Bet5TZiFM2/evJwTUq0oOJJxICa1ynM=
+X-Proofpoint-ORIG-GUID: 3nMDhrJbj8p_iBl_0maVa1zRbUxEq_zc
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-02-15_03,2026-02-13_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 clxscore=1030
+ mlxlogscore=844 bulkscore=0 mlxscore=0 spamscore=0 adultscore=0
+ lowpriorityscore=0 malwarescore=0 suspectscore=0 phishscore=0 classifier=spam
+ authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
+ definitions=main-2602150082
+X-JNJ: AAAAAAABR6y+rU+x7MrCI1Kc1SOaaZgt3mzDP98WtUjLERmq7IfDByP93mRNWHUA32ZbPN0ZcQ/xPSlrcbV4YzDLe50vw07DnOrqJJYx/lLAaStiLI4pTsTeXZQOBwXY4KzUcSa0lktd4eBHhrzwfqOosi99BrY4U+NIv3eEnOSb4OnU0HBbVkr5ja8xAuFklliKLytLaEHNej//V8/wTGvayhHkHMjHijjU5QaT129ecRb/bmrj0R/87Jg2WZ2bNWYog9yZcLQ5aJVSETT6ykcwYd3BPuiRAuyYpNSeEPFHl+9ptQUi23vV5pOjtccamDcahRkOEb6hCYbStTK++4ij10ivSyUuMpzxFOBiBzPuGqF+qeHvYkg9L2NZw83hQP4WOkZbeIvhbvW3vkqE6oymf1rAZgi+jNq0hJ1gOJmWU8ra2Qj2QZN4n5QKYAORS7JNicW2t8JvRzCMw+PA2c8TcqHevUnZ3VDNqQfqscwVMyPpgRufJxGVdLYeQqehrM1Z6vVdtGiwivH5rIumIzCb92noL6+WAWtWUFe2DwHS2E9vFX1f8ghG96KGIP8HhPpXp3Nq4Me8yZkp7UeeoyhGc1x3ypORCPJ1c4+RU0LgZKbE+TOKkyHGfTfgUYKSooC+RnyiGxpGAP7AkOrsKU195W9/Kl9D7zqfdocnPEoPintYY1TbJ8xeLgf4SGQfG3VeMnRDmB5bomOjOw==
+Received-SPF: pass client-ip=57.103.66.192;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.pv.icloud.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -74,182 +98,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
 
---3866299591-1858189989-1771149078=:26579
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8BIT
 
-On Sun, 15 Feb 2026, Philippe Mathieu-Daudé wrote:
-> On 14/2/26 12:46, BALATON Zoltan wrote:
->> On Sat, 14 Feb 2026, Philippe Mathieu-Daudé wrote:
->>> If a dimension is not set, have the machine init code set
->>> the default value by calling the ppc_graphic_dimensions()
->>> helper, common to all PowerPC machines. Declare local
->>> variables to avoid using the global ones.
->>> 
->>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>> ---
->>> include/hw/ppc/ppc.h    |  2 ++
->>> hw/ppc/mac_newworld.c   | 10 ++++++----
->>> hw/ppc/mac_oldworld.c   | 10 ++++++----
->>> hw/ppc/ppc.c            |  8 ++++++++
->>> hw/ppc/prep.c           |  4 ++++
->>> hw/ppc/spapr.c          |  4 ++++
->>> system/globals-target.c |  6 ------
->>> 7 files changed, 30 insertions(+), 14 deletions(-)
->>> 
->>> diff --git a/include/hw/ppc/ppc.h b/include/hw/ppc/ppc.h
->>> index cb51d704c6d..14cc09ab22b 100644
->>> --- a/include/hw/ppc/ppc.h
->>> +++ b/include/hw/ppc/ppc.h
->>> @@ -102,6 +102,8 @@ enum {
->>>     ARCH_MAC99_U3,
->>> };
->>> 
->>> +void ppc_graphic_dimensions(int *width, int *height, int *depth);
->>> +
->>> #define FW_CFG_PPC_WIDTH        (FW_CFG_ARCH_LOCAL + 0x00)
->>> #define FW_CFG_PPC_HEIGHT       (FW_CFG_ARCH_LOCAL + 0x01)
->>> #define FW_CFG_PPC_DEPTH        (FW_CFG_ARCH_LOCAL + 0x02)
->>> diff --git a/hw/ppc/mac_newworld.c b/hw/ppc/mac_newworld.c
->>> index 7275563a155..daf0029c01a 100644
->>> --- a/hw/ppc/mac_newworld.c
->>> +++ b/hw/ppc/mac_newworld.c
->>> @@ -156,6 +156,7 @@ static void ppc_core99_init(MachineState *machine)
->>>     DeviceState *uninorth_internal_dev = NULL, *uninorth_agp_dev = NULL;
->>>     hwaddr nvram_addr = 0xFFF04000;
->>>     uint64_t tbfreq = kvm_enabled() ? kvmppc_get_tbfreq() : TBFREQ;
->>> +    int graphic_width, graphic_height, graphic_depth;
->>> 
->>>     /* init CPUs */
->>>     for (i = 0; i < machine->smp.cpus; i++) {
->>> @@ -432,10 +433,6 @@ static void ppc_core99_init(MachineState *machine)
->>> 
->>>     pci_vga_init(pci_bus);
->>> 
->>> -    if (graphic_depth != 15 && graphic_depth != 32 && graphic_depth ! = 
->>> 8) {
->>> -        graphic_depth = 15;
->>> -    }
->>> -
->>>     pci_init_nic_devices(pci_bus, mc->default_nic);
->>> 
->>>     /* The NewWorld NVRAM is not located in the MacIO device */
->>> @@ -480,6 +477,11 @@ static void ppc_core99_init(MachineState *machine)
->>>     fw_cfg_add_i32(fw_cfg, FW_CFG_INITRD_SIZE, initrd_size);
->>>     fw_cfg_add_i16(fw_cfg, FW_CFG_BOOT_DEVICE, ppc_boot_device);
->>> 
->>> +    ppc_graphic_dimensions(&graphic_width, &graphic_height, 
->>> &graphic_depth);
->>> +    if (graphic_depth != 15 && graphic_depth != 32 && graphic_depth ! = 
->>> 8) {
->>> +        graphic_depth = 15;
->>> +    }
->>> +
->>>     fw_cfg_add_i16(fw_cfg, FW_CFG_PPC_WIDTH, graphic_width);
->>>     fw_cfg_add_i16(fw_cfg, FW_CFG_PPC_HEIGHT, graphic_height);
->>>     fw_cfg_add_i16(fw_cfg, FW_CFG_PPC_DEPTH, graphic_depth);
->>> diff --git a/hw/ppc/mac_oldworld.c b/hw/ppc/mac_oldworld.c
->>> index e679d338985..ea1f778877c 100644
->>> --- a/hw/ppc/mac_oldworld.c
->>> +++ b/hw/ppc/mac_oldworld.c
->>> @@ -108,6 +108,7 @@ static void ppc_heathrow_init(MachineState *machine)
->>>     DriveInfo *dinfo, *hd[MAX_IDE_BUS * MAX_IDE_DEVS];
->>>     void *fw_cfg;
->>>     uint64_t tbfreq = kvm_enabled() ? kvmppc_get_tbfreq() : TBFREQ;
->>> +    int graphic_width, graphic_height, graphic_depth;
->>> 
->>>     /* init CPUs */
->>>     for (i = 0; i < machine->smp.cpus; i++) {
->>> @@ -288,10 +289,6 @@ static void ppc_heathrow_init(MachineState *machine)
->>>         pci_create_simple(pci_bus, -1, "pci-ohci");
->>>     }
->>> 
->>> -    if (graphic_depth != 15 && graphic_depth != 32 && graphic_depth ! = 
->>> 8) {
->>> -        graphic_depth = 15;
->>> -    }
->>> -
->>>     /* No PCI init: the BIOS will do it */
->>> 
->>>     dev = qdev_new(TYPE_FW_CFG_MEM);
->>> @@ -321,6 +318,11 @@ static void ppc_heathrow_init(MachineState *machine)
->>>     fw_cfg_add_i32(fw_cfg, FW_CFG_INITRD_SIZE, initrd_size);
->>>     fw_cfg_add_i16(fw_cfg, FW_CFG_BOOT_DEVICE, ppc_boot_device);
->>> 
->>> +    ppc_graphic_dimensions(&graphic_width, &graphic_height, 
->>> &graphic_depth);
->>> +    if (graphic_depth != 15 && graphic_depth != 32 && graphic_depth ! = 
->>> 8) {
->>> +        graphic_depth = 15;
->>> +    }
->>> +
->>>     fw_cfg_add_i16(fw_cfg, FW_CFG_PPC_WIDTH, graphic_width);
->>>     fw_cfg_add_i16(fw_cfg, FW_CFG_PPC_HEIGHT, graphic_height);
->>>     fw_cfg_add_i16(fw_cfg, FW_CFG_PPC_DEPTH, graphic_depth);
->>> diff --git a/hw/ppc/ppc.c b/hw/ppc/ppc.c
->>> index a512d4fa647..d7b4466d701 100644
->>> --- a/hw/ppc/ppc.c
->>> +++ b/hw/ppc/ppc.c
->>> @@ -29,6 +29,7 @@
->>> #include "qemu/timer.h"
->>> #include "exec/cpu-interrupt.h"
->>> #include "system/cpus.h"
->>> +#include "system/system.h"
->>> #include "qemu/log.h"
->>> #include "qemu/main-loop.h"
->>> #include "qemu/error-report.h"
->>> @@ -1557,3 +1558,10 @@ void ppc_irq_reset(PowerPCCPU *cpu)
->>>         kvmppc_set_interrupt(cpu, PPC_INTERRUPT_EXT, 0);
->>>     }
->>> }
->>> +
->>> +void ppc_graphic_dimensions(int *width, int *height, int *depth)
->>> +{
->>> +    *width = graphic_width ?: 800;
->>> +    *height = graphic_height ?: 600;
->>> +    *depth = graphic_depth ?: 32;
->>> +}
->> 
->> I think there's no reason to have this common to all ppc machines. If we 
->> change this we could also make it per machine like for other targets. 
->> There's nothing common in these machines that dictate these defaults. It 
->> seems it used to be an arbitrary default in QEMU that some machines later 
->> deviated from. So might as well just keep it as global for now after you 
->> removed the SPARC and M68K special cases. If the ppc machines are the last 
->> users of these global defaults you can just move them to hw/ppc/ppc.{h,c} 
->> for now and let ppc people clean this up eventually.
->
-> What you are asking is to use 800x600x32 as the default for all
-> non-SPARC / non-M68K targets, so PPC don't have to change? But then
+> On 18. Jan 2026, at 22:59, Philippe Mathieu-Daud=C3=A9 =
+<philmd@linaro.org> wrote:
+>=20
+> Keep CNTV_CTL_EL0 and CNTV_CVAL_EL0 synchronized with the
+> host hardware accelerator.
+>=20
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> ---
+> target/arm/hvf/hvf.c | 25 +++++++++++++++++++++++++
+> 1 file changed, 25 insertions(+)
+Hello,
 
-This is what the original code did. But now I get that you need a way to 
-tell if these were set so changed the default to 0 so the sparc and m68k 
-can set their own defaults if the user did not provide values.
+This broke VM save/restore on my setup. Will have a commit to revert =
+this in my next revision
+of the HVF nested virt series.
 
-> SPARC and M68k won't be able to use the '-g' CLI (which Paolo asked
-> me not to remove, thus this series). What is worrying you exactly?
+Thanks,
+-Mohamed
+>=20
+> diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
+> index fcb7fa3b30c..9ce720793d8 100644
+> --- a/target/arm/hvf/hvf.c
+> +++ b/target/arm/hvf/hvf.c
+> @@ -200,6 +200,9 @@ void hvf_arm_init_debug(void)
+> #define SYSREG_PMCEID0_EL0    SYSREG(3, 3, 9, 12, 6)
+> #define SYSREG_PMCEID1_EL0    SYSREG(3, 3, 9, 12, 7)
+> #define SYSREG_PMCCNTR_EL0    SYSREG(3, 3, 9, 13, 0)
+> +
+> +#define SYSREG_CNTV_CTL_EL0   SYSREG(3, 3, 14, 3, 1)
+> +#define SYSREG_CNTV_CVAL_EL0  SYSREG(3, 3, 14, 3, 2)
+> #define SYSREG_PMCCFILTR_EL0  SYSREG(3, 3, 14, 15, 7)
+>=20
+> #define SYSREG_ICC_AP0R0_EL1     SYSREG(3, 0, 12, 8, 4)
+> @@ -502,6 +505,7 @@ int hvf_arch_get_registers(CPUState *cpu)
+>     uint64_t val;
+>     hv_simd_fp_uchar16_t fpval;
+>     int i, n;
+> +    bool b;
+>=20
+>     for (i =3D 0; i < ARRAY_SIZE(hvf_reg_match); i++) {
+>         ret =3D hv_vcpu_get_reg(cpu->accel->fd, hvf_reg_match[i].reg, =
+&val);
+> @@ -631,6 +635,16 @@ int hvf_arch_get_registers(CPUState *cpu)
+>=20
+>     aarch64_restore_sp(env, arm_current_el(env));
+>=20
+> +    ret =3D hv_vcpu_get_sys_reg(cpu->accel->fd, =
+HV_SYS_REG_CNTV_CVAL_EL0, &val);
+> +    assert_hvf_ok(ret);
+> +    b =3D hvf_sysreg_write_cp(cpu, "VTimer", SYSREG_CNTV_CVAL_EL0, =
+val);
+> +    assert(b);
+> +
+> +    ret =3D hv_vcpu_get_sys_reg(cpu->accel->fd, =
+HV_SYS_REG_CNTV_CTL_EL0, &val);
+> +    assert_hvf_ok(ret);
+> +    b =3D hvf_sysreg_write_cp(cpu, "VTimer", SYSREG_CNTV_CTL_EL0, =
+val);
+> +    assert(b);
+> +
+>     return 0;
+> }
+>=20
+> @@ -642,6 +656,7 @@ int hvf_arch_put_registers(CPUState *cpu)
+>     uint64_t val;
+>     hv_simd_fp_uchar16_t fpval;
+>     int i, n;
+> +    bool b;
+>=20
+>     for (i =3D 0; i < ARRAY_SIZE(hvf_reg_match); i++) {
+>         val =3D *(uint64_t *)((void *)env + hvf_reg_match[i].offset);
+> @@ -756,6 +771,16 @@ int hvf_arch_put_registers(CPUState *cpu)
+>     ret =3D hv_vcpu_set_vtimer_offset(cpu->accel->fd, =
+hvf_state->vtimer_offset);
+>     assert_hvf_ok(ret);
+>=20
+> +    b =3D hvf_sysreg_read_cp(cpu, "VTimer", SYSREG_CNTV_CVAL_EL0, =
+&val);
+> +    assert(b);
+> +    ret =3D hv_vcpu_set_sys_reg(cpu->accel->fd, =
+HV_SYS_REG_CNTV_CVAL_EL0, val);
+> +    assert_hvf_ok(ret);
+> +
+> +    b =3D hvf_sysreg_read_cp(cpu, "VTimer", SYSREG_CNTV_CTL_EL0, =
+&val);
+> +    assert(b);
+> +    ret =3D hv_vcpu_set_sys_reg(cpu->accel->fd, =
+HV_SYS_REG_CNTV_CTL_EL0, val);
+> +    assert_hvf_ok(ret);
+> +
+>     return 0;
+> }
+>=20
+> --=20
+> 2.52.0
+>=20
 
-Too much churn and introducing interdependency between ppc machines that 
-should be removed later. The ppc_graphic_dimensions does not make sense as 
-these are different machines with potentially different default 
-resolutions (and most of these should be able to use EDID that we since 
-have in QEMU).
-
-> Can you provide a patch showing how you'd prefer it to be done?
-
-Maybe turning these into properties could work. I could look at adding 
-such properties but don't know how to change the -g option. But 
-considering these are all machines that Mark maintains maybe he should do 
-something about it. The easiest were if he agreed to drop -g option but he 
-never agrees removing anything so then he should provide patches to clean 
-this up the way he prefers. I could try to make patches but I'm afraid 
-those would become wasted effort so may I only do it when there's an 
-approved way that will be accepted.
-
-Regards,
-BALATON Zoltan
---3866299591-1858189989-1771149078=:26579--
 
