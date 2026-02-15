@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08886EF5859
-	for <qemu-devel@archiver.kernel.org>; Sun, 15 Feb 2026 05:23:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6CF8EF586A
+	for <qemu-devel@archiver.kernel.org>; Sun, 15 Feb 2026 05:23:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vrUaj-0000Fz-SM; Sun, 15 Feb 2026 00:22:45 -0500
+	id 1vrUax-0000ML-Ky; Sun, 15 Feb 2026 00:22:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vrUad-0000Fc-Vj
- for qemu-devel@nongnu.org; Sun, 15 Feb 2026 00:22:40 -0500
-Received: from p-west2-cluster3-host6-snip4-9.eps.apple.com ([57.103.69.102]
+ id 1vrUav-0000L1-I8
+ for qemu-devel@nongnu.org; Sun, 15 Feb 2026 00:22:57 -0500
+Received: from p-west2-cluster2-host11-snip4-9.eps.apple.com ([57.103.68.212]
  helo=outbound.mr.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vrUaa-0004q1-M7
- for qemu-devel@nongnu.org; Sun, 15 Feb 2026 00:22:38 -0500
+ id 1vrUat-0004sN-9m
+ for qemu-devel@nongnu.org; Sun, 15 Feb 2026 00:22:57 -0500
 Received: from outbound.mr.icloud.com (unknown [127.0.0.2])
  by p00-icloudmta-asmtp-us-west-2a-60-percent-1 (Postfix) with ESMTPS id
- DFEAA180010D; Sun, 15 Feb 2026 05:22:32 +0000 (UTC)
+ 3CA461800139; Sun, 15 Feb 2026 05:22:53 +0000 (UTC)
 Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1771132954; x=1773724954;
- bh=5r6MQJEJ3iESg5UlG2XKuo1X6toQ1yNHBuwcqgZU86U=;
- h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type:x-icloud-hme;
- b=QVA3j0qw3oFDGgmjDolq1IAu3vsHBMA+AjdTnonuu7yhnJosIKNgPqLwDd3kkRq0gPEy7t0zWkv5eJ63T0bGBMsD7ol+yF73CK4LUwaJRgpqwq1JhaW3z3R6p791LCfq2dFxPbL+h6YOTHqmnDLBZiPf4xW3jSHfS6jwNWooJ5sbZF7a6yYzg1+RB8lRNs6fUA8gvYcFu7YVHsnpsbvk17rU9KyTll0ZMGmTSpbSLXbk4i5KcKiEVnrvHaqOQzGKnb0hNQG92voQUMvY8R3M4DImeGgHzKosqRojyrOrmZPk2MhhfCvxTKonuMbSiq0N+meDRSkuUG4CcvP15y31iQ==
+ s=sig1; t=1771132974; x=1773724974;
+ bh=mfxct9QuL+ifLWFIShtfDThHLnEEVf+FJyNrc4eM18s=;
+ h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
+ b=PHmZZZ6/Vv49F3QHVpEbdNgaeTyWT4vIly+FlBIKFFZf3+vqaudBh5HinFSb0SVDocJ7WLqdDnYqCDRj+1EsFNk5NWAz+wweWOfdTSo7nM8qD1nIcm5x5ZLYBuBcobEt8o/quKD6OuFwMkU0fuG1gveSBUuJAx5tgdxb4X39eCaT+Fvk8c5+nPFLNqhmckRHvSo7Mq4UGBLD/hUhb+bNNjRLQzHprrU5Z5DCfkx+qxe/ebtiIx35uW/nIHYV5Au3u0UugWBb+ZTPqU1mcaComsppeiCprqHWza+xNSWlz7FcYAjYWc3JJHfKkTcDmc9QDWM/TWdaZbcMeNfbSCgh9Q==
 mail-alias-created-date: 1752046281608
 Received: from localhost.localdomain (unknown [17.57.152.38])
  by p00-icloudmta-asmtp-us-west-2a-60-percent-1 (Postfix) with ESMTPSA id
- 3CB891800103; Sun, 15 Feb 2026 05:22:29 +0000 (UTC)
+ C1AC418006A2; Sun, 15 Feb 2026 05:22:49 +0000 (UTC)
 From: Mohamed Mediouni <mohamed@unpredictable.fr>
 To: qemu-devel@nongnu.org
 Cc: Phil Dennis-Jordan <phil@philjordan.eu>,
@@ -47,36 +47,37 @@ Cc: Phil Dennis-Jordan <phil@philjordan.eu>,
  Magnus Kulke <magnus.kulke@linux.microsoft.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Wei Liu <wei.liu@kernel.org>, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH v3 00/14] whpx: x86 updates (2026-02)
-Date: Sun, 15 Feb 2026 06:22:11 +0100
-Message-ID: <20260215052225.22513-1-mohamed@unpredictable.fr>
+Subject: [PATCH v3 06/14] whpx: preparatory changes before switching over from
+ winhvemulation
+Date: Sun, 15 Feb 2026 06:22:17 +0100
+Message-ID: <20260215052225.22513-7-mohamed@unpredictable.fr>
 X-Mailer: git-send-email 2.50.1
+In-Reply-To: <20260215052225.22513-1-mohamed@unpredictable.fr>
+References: <20260215052225.22513-1-mohamed@unpredictable.fr>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: kpZ0zTdTQTYABzvQk9sCg3xn0gqlvhUm
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjE1MDAzNiBTYWx0ZWRfX68DekAS9aRPz
- h1kJdPsmOcnE9+5scOBx3a89Nw9ANuRgXkHXXsRWDJjBoZl4epc2dgTojQxbvBfxdnzpo59hgR0
- kD0pwkTjV5EA33zFd4vXk8fmklabQ8d+zImv7xyoQ31Ap5/vIY9VtGaepnRSFiTj2Vk9q4rT8YH
- /ib3qb1YfqIy6Qc/t4aqp4RL7Q1CYU+7WRUjiw+3/MrDI3ZIuxK1n1wGR7JwJ4XASRGp2jZHSIm
- 5G6+GQcL0zMQhiPJI4v1evtOQnEWNyukPXD6ctNex4zLmarOSg0KlR9xiqhXoO2ryvbGbG8bkWv
- k3ypcRA7G0KM4IE2OFBU5Um1AN0oyooew+ZxecyMv/ivdN7JQVfh0NGM7mqxIM=
-X-Authority-Info-Out: v=2.4 cv=ZsPg6t7G c=1 sm=1 tr=0 ts=69915819
+X-Authority-Info-Out: v=2.4 cv=Dbgaa/tW c=1 sm=1 tr=0 ts=6991582e
  cx=c_apl:c_apl_out:c_pps a=9OgfyREA4BUYbbCgc0Y0oA==:117
- a=9OgfyREA4BUYbbCgc0Y0oA==:17 a=IkcTkHD0fZMA:10 a=HzLeVaNsDn8A:10
- a=VkNPw1HP01LnGYTKEx00:22 a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22
- a=VwQbUJbxAAAA:8 a=pGLkceISAAAA:8 a=4FhJtAkXLpUwS9ICwxIA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: kpZ0zTdTQTYABzvQk9sCg3xn0gqlvhUm
+ a=9OgfyREA4BUYbbCgc0Y0oA==:17 a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22 a=qtJoQR36IQ-qKrO0xoYA:9
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjE1MDAzNiBTYWx0ZWRfX8U/Ipf/o5huD
+ jLT1fuc5ANwoXD6Lw8OT30M/6ZCZbf084TO9GiXlIncW0hkKwF0q/IQKdKxgtVYKHqJA+3axJsg
+ BpkyGChauZQbBBb790wAGEZ0SoO0eMjg2pDlxIlFivlHN6hB6mRxkfclsez2N707m7T2SqSbllt
+ m9ZQ/dYpZyTnAaZ3jUgtAEl4oWcXUz5oLRkNX+tGGy4yjmG9jTSLJ1tXgFRPLJlg5n4FXt+ZVuT
+ aICSGWy60vECM39Kb/QD2ijk/cRmINV5i15sDUQDQcC0/Snf2T7Go5v7lLEs8rvumUbUhdKYyCM
+ 0geYyqXToq9Y6guVQ3LImLcJU18cpwqupHwqFP59GwszOhT+MAjg89+240Ypfs=
+X-Proofpoint-GUID: kGBPQUM1rs1_1wBGPoAFeza-kxJTaWL_
+X-Proofpoint-ORIG-GUID: kGBPQUM1rs1_1wBGPoAFeza-kxJTaWL_
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-02-15_02,2026-02-13_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
- mlxscore=0 phishscore=0 malwarescore=0 mlxlogscore=758 bulkscore=0
- clxscore=1030 suspectscore=0 spamscore=0 lowpriorityscore=0 classifier=spam
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxscore=0
+ clxscore=1030 mlxlogscore=941 malwarescore=0 spamscore=0 adultscore=0
+ bulkscore=0 lowpriorityscore=0 suspectscore=0 phishscore=0 classifier=spam
  authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
  definitions=main-2602150036
-X-JNJ: AAAAAAABX1B1dAd7tds/s9f9lreiQ0ioWrB32hggdAjP72YKjQeg7oDOrocsqdRPbRVUDbh3G8xdb8dFZi6pIoLdLw2Au3BnzzL/X3H/d5swYH7xU7kY0v+kzVQq30SPQj99l0cNZ5qYrK42HwysaFFX9K37zqLQGoGhVU8p5zLJkj8sjVoQb62U8atGWPb+9FeMxWrvqjxecSAqLuyMZHv3mBsZJOgtneeClZFozcnLzpRA6NOlahyUgSmo3XQBLwYJ6W+doej58f7Jv5cyyJX85GN1OosN6l6VijYP2LuDYBASVqwSJgaCL3gsLzXn5mkuPZi11O1EfBx1yDwAWH6KFvqGSJ+dxGErRg/FKkS9E/Dc3pJb/B7tmcxxY7C2ZHrtqJhnMDc1FkgWFp9qOphIageBQxW5urg0WPrGGbxtGxv58ol3ga2uX5r7uhinB0/EYsEXX6pKTi72mchVQKgWhESF4PjNHppb7otoELWPtcZCUC6FcGtNxl412JE43TlYJ5mMyZ17qlXG8maQp2VuUkyxGh5A41JjNQPj1dotRAZ77QJutZvlQ+dXUQpAaENSQjAV4AgLqlAzwoGEDOy0h1defRuqhZV7SVWpLl1/6XIPQS1Cv9z9/V+HM7DQ44XbsBuDly70AQb8NKK06FgUHEjWJvP1xAiFSRODUinEznzfSGrCHvHhDCkijIoi/4eXNQFLXsPnV3o19564gFhuveQpS+Le236QxH+a4kAxd2sAM2lQ8gZY7z6J6FVgUFmHAv7zp06Ss7+IPPNZfwm+91QoS8f/xwDjMGtWK7WRImuMlN62L/6VCnL3OkVPJOsM8CBvmon3zMDwp4i2JoLPbpnQTZh9PoCn
-Received-SPF: pass client-ip=57.103.69.102;
+X-JNJ: AAAAAAABoHOty67ZPd+c5nQlsDNNFaaZ41UzO3wIHNDkzSRbDFNXJKa5PxyJsRdaQF5n3O3SLARViG+BjTLhZI4DcjcmX+HiEwgBJ9MfSkwU9EiWBLsSlxbnBZcH+uCAJgCktKdgKF7JHjWzmxEyYfTaCrBdwXl98BFmv5jxM5zGDMSzGlccDK8/kWpQarSdAGTN6KUwN7FKIpgQ5Nc8zakYLams1/KAQRugMWtweRIpgHB01fvag5/b4dRixEd1PZKovefR2Xe/s/Is3a76qscw1DDmOmNApZ9FwxTIa0aRk0+gtRxKnWcCdQvEBY8kbhAIcM24dnGTnH+CxlibhxnTMF2+xdOdhLPbXFx487YjtOgdAfWACfoa5+BT6JXsrFJBGsUCAtY75cAnrszes3+Phn1g/wCJemB/J6MjTOL/E4Dnm1k01P407E8pcQo4Bc3iFTE2R0Pd43ovqYO/iLqg8ddw43D6chsR4CTWeKpSLbUZRxPadOHtVXt07wEOkk/QD8zbLibH8ortF+11YzN9RVPeAMumtkgZBe4t/sOtmtfl3fINtv+p4J9vcSN7LOi8z003Bd8muvslmmZEJ8TBxiC4is+jecK7DGekFPsKv2lYG5NaaP3XQ6J+v4PHKFQqfulskRsNrIb2poibA2O4adCl1APYCfez7A8c6kwnSz26uxHidHRj348OkilVs42NHbKiYjwnQ04b6tKRsD7qkRjAbavJD/StrJwfWm2SdObk0HtF2jDZf9TLWbVHok6lepLqMUhl2igLrodM9U7s0XoEz682PSCf/tyoNGzkGHWWBENZkK45T7Fs
+Received-SPF: pass client-ip=57.103.68.212;
  envelope-from=mohamed@unpredictable.fr; helo=outbound.mr.icloud.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -100,71 +101,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-x86_64 WHPX updates:
+Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+---
+ target/i386/cpu.h               | 2 +-
+ target/i386/emulate/meson.build | 1 +
+ target/i386/mshv/meson.build    | 4 ++++
+ 3 files changed, 6 insertions(+), 1 deletion(-)
 
-- target/i386/emulate fixes
-- move HVF x86_mmu code to common code
-- fixing debug support, which was broken since around: "gdbstub: move guest debug support check to ops"
-a48e7d9e52f8fe8b47f4c74f3e99d9d677b87fe5
-- switch over from winhvemulation to common x86 VM exit emulation code
-- remove some log lines
-- Remove WHPX CPUID traps as they're currently quite broken
-
-Changes added since v2:
-- Take target/i386/emulate patches from Bernhard Beschow
-https://lore.kernel.org/qemu-devel/20260214131659.31378-1-shentey@gmail.com/
-- Rework state levels to an enum
-- Skip some state loading on the registers save path too
-
-Changes added since v1:
-- move HVF x86_mmu code to common code
-- Use x86_mmu in WHPX MMIO exits
-- Remove WHPX CPUID traps as they're currently quite broken
-- Optimise MMIO vmexits by not restoring the full state
-
-Bernhard Beschow (3):
-  target/i386/emulate/x86_decode: Fix compiler warning
-  target/i386/hvf/x86_mmu: Fix compiler warning
-  target/i386/emulate/x86_decode: Actually use stream in
-    decode_instruction_stream()
-
-Mohamed Mediouni (11):
-  target/i386: emulate, hvf: move x86_mmu to common code
-  whpx: i386: re-enable guest debug support
-  whpx: preparatory changes before switching over from winhvemulation
-  whpx: refactor whpx_destroy_vcpu to arch-specific function
-  whpx: move whpx_get_reg/whpx_set_reg to generic code
-  whpx: i386: switch over from winhvemulation to target/i386/emulate
-  whpx: i386: remove remaining winhvemulation support code
-  whpx: i386: remove messages
-  whpx: i386: remove CPUID trapping
-  whpx: common, i386, arm: rework state levels
-  whpx: i386: saving/restoring less state for
-    WHPX_LEVEL_FAST_RUNTIME_STATE
-
- accel/whpx/whpx-accel-ops.c            |   8 +
- accel/whpx/whpx-common.c               |  68 +++--
- include/system/whpx-accel-ops.h        |  16 +-
- include/system/whpx-all.h              |  11 +-
- include/system/whpx-common.h           |   6 +-
- include/system/whpx-internal.h         |  16 -
- meson.build                            |   3 +-
- target/arm/whpx/whpx-all.c             |  41 +--
- target/i386/cpu.h                      |   2 +-
- target/i386/emulate/meson.build        |   2 +
- target/i386/emulate/x86_decode.c       |   6 +-
- target/i386/{hvf => emulate}/x86_mmu.c |  20 +-
- target/i386/{hvf => emulate}/x86_mmu.h |   0
- target/i386/hvf/hvf.c                  |  10 +-
- target/i386/hvf/meson.build            |   1 -
- target/i386/hvf/x86.c                  |   2 +-
- target/i386/hvf/x86_task.c             |   2 +-
- target/i386/mshv/meson.build           |   4 +
- target/i386/whpx/whpx-all.c            | 391 +++++++++----------------
- 19 files changed, 253 insertions(+), 356 deletions(-)
- rename target/i386/{hvf => emulate}/x86_mmu.c (92%)
- rename target/i386/{hvf => emulate}/x86_mmu.h (100%)
-
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index 9f222a0c9f..065613722f 100644
+--- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -2286,7 +2286,7 @@ typedef struct CPUArchState {
+     QEMUTimer *xen_periodic_timer;
+     QemuMutex xen_timers_lock;
+ #endif
+-#if defined(CONFIG_HVF) || defined(CONFIG_MSHV)
++#if defined(CONFIG_HVF) || defined(CONFIG_MSHV) || defined(CONFIG_WHPX)
+     void *emu_mmio_buf;
+ #endif
+ 
+diff --git a/target/i386/emulate/meson.build b/target/i386/emulate/meson.build
+index dd047c424a..1bb3516249 100644
+--- a/target/i386/emulate/meson.build
++++ b/target/i386/emulate/meson.build
+@@ -7,3 +7,4 @@ emulator_files = files(
+ 
+ i386_system_ss.add(when: [hvf, 'CONFIG_HVF'], if_true: emulator_files)
+ i386_system_ss.add(when: 'CONFIG_MSHV', if_true: emulator_files)
++i386_system_ss.add(when: 'CONFIG_WHPX', if_true: emulator_files)
+diff --git a/target/i386/mshv/meson.build b/target/i386/mshv/meson.build
+index 647e5dafb7..3fadd4598a 100644
+--- a/target/i386/mshv/meson.build
++++ b/target/i386/mshv/meson.build
+@@ -6,3 +6,7 @@ i386_mshv_ss.add(files(
+ ))
+ 
+ i386_system_ss.add_all(when: 'CONFIG_MSHV', if_true: i386_mshv_ss)
++
++i386_system_ss.add(when: 'CONFIG_WHPX', if_true: files(
++  'x86.c',
++))
 -- 
 2.50.1 (Apple Git-155)
 
