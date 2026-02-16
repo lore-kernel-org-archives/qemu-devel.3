@@ -4,56 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76575E7BD92
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 11:18:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CF65E7BD92
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 11:19:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vrwbr-00062k-TM; Mon, 16 Feb 2026 06:17:49 -0500
+	id 1vrwa6-0004ma-PT; Mon, 16 Feb 2026 06:15:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vrwaS-00054I-Hw
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 06:16:24 -0500
+ id 1vrwa4-0004lb-DT
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 06:15:56 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vrwaI-0007M4-U6
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 06:16:13 -0500
+ id 1vrwa2-0007Ji-AI
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 06:15:56 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771240568;
+ s=mimecast20190719; t=1771240553;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=58QRcSder0RaqQBxAedoRAnN13Ui3FUWfO2I/pFVn1M=;
- b=hV95g5WKHVWcijr8UCHO7CME0AKDJnz+CZB4Uj/xvYauBiXdmrAUaw4VPV36h3e5Xd2DBG
- mEKJzLUwlxd0CJEm9iy5Yb9hrDBLoBRutab1YhlJZdwUC72o7MkrxniZ4pYgzheX8rxwpN
- EQgarafzQvbjqWIOaJP0b32tJcPtaBY=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=TQTKsJe+H0JmAEbmIdQJvVw5lqnUUPR6AFifO+6umuY=;
+ b=AIz/btq0KIH9fBPBxN7ONXn+va/nUrALzVPPN4sOc9V/pZ8OcCR1WbQudLC7e+L20tuWtE
+ lJGx8pjH1fX62PfUiPYWWV0hFG2wsG53P7JWegzC59IEcH9OcX5GAnU6QI+zWJJdxOHpzJ
+ T928Fs0cbZMd6stc88Ruzp/6WsJHqp0=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-196-z6KJDR3nMCudWPFGktoPzA-1; Mon,
- 16 Feb 2026 06:16:04 -0500
-X-MC-Unique: z6KJDR3nMCudWPFGktoPzA-1
-X-Mimecast-MFC-AGG-ID: z6KJDR3nMCudWPFGktoPzA_1771240562
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-452-WlHKukHPNKiwgDbFuE7VgQ-1; Mon,
+ 16 Feb 2026 06:15:50 -0500
+X-MC-Unique: WlHKukHPNKiwgDbFuE7VgQ-1
+X-Mimecast-MFC-AGG-ID: WlHKukHPNKiwgDbFuE7VgQ_1771240548
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7D5FA1800349; Mon, 16 Feb 2026 11:16:02 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4409719560B2; Mon, 16 Feb 2026 11:15:48 +0000 (UTC)
 Received: from localhost (unknown [10.45.242.26])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D49B930001B9; Mon, 16 Feb 2026 11:16:01 +0000 (UTC)
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 9BDD019560A2; Mon, 16 Feb 2026 11:15:47 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Mon, 16 Feb 2026 12:14:58 +0100
-Subject: [PATCH 09/85] build-sys: create a libaudio
+Date: Mon, 16 Feb 2026 12:14:53 +0100
+Subject: [PATCH 04/85] audio/dbus: make "dbus" the default backend when
+ using -display dbus
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260216-audio-v1-9-e676662e4514@redhat.com>
+Message-Id: <20260216-audio-v1-4-e676662e4514@redhat.com>
 References: <20260216-audio-v1-0-e676662e4514@redhat.com>
 In-Reply-To: <20260216-audio-v1-0-e676662e4514@redhat.com>
 To: qemu-devel@nongnu.org
@@ -73,24 +74,24 @@ Cc: Gerd Hoffmann <kraxel@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
  Mark Cave-Ayland <mark.caveayland@nutanix.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1548;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3368;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=Hk7/EXh9zm0G5EktVx4Fxa+ZyOM5/pIT6vTnyxaK2F8=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBpkvxO6qngCi7boRhVlrkB6kH1FyUurZHfm9x8j
- KRTcrGJN1+JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaZL8TgAKCRDa6OEJdZac
- 5flQD/wNpuizM5bLhXysInhyfoF+cqOdpy9PueN8IwskFnP4s1GcSpYxqJfQ5nQQl+8UJtEgg33
- jAERBlDyLAd8HJ9tqUKGDAIvdxBp72dhI6BIeEBHn/ZnDS2tzit79MnRpJaYmVxS67QpasHk+8v
- ez3Rz82svmoIdqGrcqQAPAhL2robuu23n3jF2FKk/+3Gtm02N/ASPMl2OOIcKA7cwItAnhPR8tj
- HWE9tOIxo1ytzTU8FbAWkYP0CIjKaXZgrxUsayYHRAYQgXdwgWbiAkwOxUNv7UWLrrTjs6jqqjZ
- 2jg5pydR7zbB6z6yoFmsCxIQ7qwQKTZT2E9IbJYRJSgtp+r6W5p9IBeVJVK/Zj4y1KFZ8qdvx73
- u4QmnVnSwLunkINZzVc/yIwLwgsmHNEudc84eLOI70b4wdZ3o8UJxVui+YQsNBfRlhk5D4G6jgp
- +VlZsviVNtmLuj28zpUDNm/9LFbECuJv9BHoIFGw9ARWpqddvPiYtsXearaIzw9nrAvudNI+qMo
- t21LQwfHDw5No63rMpJVDUbAO793acxRsKJO431kPWibHmmVNyK+/YxjcJyvxoALBOvBe4YLzDI
- cSFxy+OY+xMp7DRFM9KNyL8CgVfqVCmy+ljf4DRW5QmndoWeTqiR3CzxgPrm8TUJ3j6VU1TlyTN
- ciIkcsznw2BlPNw==
+ bh=i0hZV7AIfgA8SuFqO30DlmD20T1D7KstDiHR2TRDsyg=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBpkvxOjI4h00rSui2Rb0WXtwvFdNIDvuQWGaEkY
+ Dk/2hw+feaJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaZL8TgAKCRDa6OEJdZac
+ 5XPyEACk3jplro9UmB+SMonTa5N8UUYgLik3j3qZoeg8vDsKCsCksav3E995HKv41rj/FcTkydl
+ edVc022hab9KCZmexplrB3uZ2GtGzNAhTieFPzeRENWBfgppc+0ngp4KT2f5npPVnBJfBn9wzPX
+ e50DMTOmSFA+iO4WVzrFPWHeZS8aodZeu/KZkPzAk/j9GLsUg3Ep02EJfaTTkfAnzr3GoOtRHN4
+ a3BlijkBRWQdWt7Ia5a7rgEuhXT7jpIIHbDqPpqperJxlG641+RvSgt+jUJ4oEhuA74dq4MNXIf
+ OroHkt2VWw5I6iyeV0NNEgo5gnsInGPxCCP+yO6iDOSrQ8inCCgF2CxHHxyxaEn6HBg4iLUnJki
+ D0xgHTsTTUTm5Mx0nM8lbcz6ZRPOrxiO2HrpiMZw/9QrLRpoOWQaCgmHnJciam/gltxcyPxVr+6
+ af7A4wfFwrv2EvPAvcAMqdxiXM15g2KzHhZWOd4qSWIpdgrs6pOpZmqVuSX4TqD2x011JyEmEtX
+ Loj8pdWMz7BadQSTzxYnZ9EzX1NwTUp96QYywcj7wrnFIBFNHcrIeygMPgh7DMeNq1YMYIIKzP5
+ UaL8mZrdXHxotWOcVGQV7MEqWq32QI10d7d+y/muzHJmv2R4AeYLsoEWQGUW09ZBd3OX025rySs
+ v2Tc9NYJTyHijtg==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -101,7 +102,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,51 +118,117 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This can help create tests, for example.
+Set "using_dbus_display" during early_dbus_init(), so that we can try to
+create the "dbus" audio backend by default from audio_prio_list.
+
+This makes dbus audio work by default when using an audio device,
+without having to setup and wire up the -audiodev manually.
+
+The added FIXME is addressed in the following commits.
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
 ---
- meson.build       | 10 +++++++++-
- audio/meson.build |  3 ++-
- 2 files changed, 11 insertions(+), 2 deletions(-)
+ audio/audio.c     |  3 +++
+ audio/dbusaudio.c |  8 +++++++-
+ ui/dbus.c         | 22 +++++++++++++++++-----
+ 3 files changed, 27 insertions(+), 6 deletions(-)
 
-diff --git a/meson.build b/meson.build
-index 4af32c3e1f2..904605b844f 100644
---- a/meson.build
-+++ b/meson.build
-@@ -4070,11 +4070,19 @@ libhwcore = static_library('hwcore', sources: hwcore_ss.sources() + genh,
- hwcore = declare_dependency(objects: libhwcore.extract_all_objects(recursive: false))
- common_ss.add(hwcore)
+diff --git a/audio/audio.c b/audio/audio.c
+index a218570a4f4..9563583cd1e 100644
+--- a/audio/audio.c
++++ b/audio/audio.c
+@@ -58,6 +58,9 @@
+     that we generate the list.
+ */
+ const char *audio_prio_list[] = {
++#ifdef CONFIG_GIO
++    "dbus",
++#endif
+     "spice",
+     CONFIG_AUDIO_DRIVERS
+     "none",
+diff --git a/audio/dbusaudio.c b/audio/dbusaudio.c
+index d729a810aa6..1fe7c4ed647 100644
+--- a/audio/dbusaudio.c
++++ b/audio/dbusaudio.c
+@@ -32,6 +32,7 @@
+ #endif
  
-+audio_ss = audio_ss.apply({})
-+libaudio = static_library('qemuaudio', audio_ss.sources() + genh,
-+                          dependencies: [audio_ss.dependencies()],
-+                          build_by_default: false)
+ #include "ui/dbus.h"
++#include "ui/dbus-display.h"
+ #include "ui/dbus-display1.h"
+ 
+ #define AUDIO_CAP "dbus"
+@@ -408,8 +409,13 @@ dbus_enable_in(HWVoiceIn *hw, bool enable)
+ static void *
+ dbus_audio_init(Audiodev *dev, Error **errp)
+ {
+-    DBusAudio *da = g_new0(DBusAudio, 1);
++    DBusAudio *da;
+ 
++    if (!qemu_using_dbus_display(errp)) {
++        return NULL;
++    }
 +
-+audio = declare_dependency(objects: libaudio.extract_all_objects(recursive: false),
-+                           dependencies: [audio_ss.dependencies(), qom])
++    da = g_new0(DBusAudio, 1);
+     da->dev = dev;
+     da->out_listeners = g_hash_table_new_full(g_str_hash, g_str_equal,
+                                                 g_free, g_object_unref);
+diff --git a/ui/dbus.c b/ui/dbus.c
+index 31f6eb1189f..0be1931d208 100644
+--- a/ui/dbus.c
++++ b/ui/dbus.c
+@@ -35,6 +35,7 @@
+ #include "ui/egl-context.h"
+ #endif
+ #include "qemu/audio.h"
++#include "audio/audio_int.h" /* FIXME: use QOM dynamic cast instead of drv->name */
+ #include "qapi/error.h"
+ #include "trace.h"
+ 
+@@ -218,9 +219,20 @@ dbus_display_complete(UserCreatable *uc, Error **errp)
+         return;
+     }
+ 
+-    if (dd->audiodev && *dd->audiodev) {
+-        AudioBackend *audio_be = audio_be_by_name(dd->audiodev, errp);
+-        if (!audio_be || !audio_be_set_dbus_server(audio_be, dd->server, dd->p2p, errp)) {
++    {
++        AudioBackend *audio_be = audio_get_default_audio_be(NULL);
 +
- ###########
- # Targets #
- ###########
++        if (audio_be && !g_str_equal(audio_be->drv->name, "dbus")) {
++            audio_be = NULL;
++        }
++        if (dd->audiodev && *dd->audiodev) {
++            audio_be = audio_be_by_name(dd->audiodev, errp);
++            if (!audio_be) {
++                return;
++            }
++        }
++        if (audio_be &&
++            !audio_be_set_dbus_server(audio_be, dd->server, dd->p2p, errp)) {
+             return;
+         }
+     }
+@@ -475,6 +487,8 @@ early_dbus_init(DisplayOptions *opts)
+ #endif
+     }
  
--system_ss.add(authz, blockdev, chardev, crypto, io, qmp)
-+system_ss.add(authz, blockdev, chardev, crypto, io, qmp, audio)
- common_ss.add(qom, qemuutil)
++    using_dbus_display = 1;
++
+     type_register_static(&dbus_vc_type_info);
+ }
  
- libuser = static_library('user',
-diff --git a/audio/meson.build b/audio/meson.build
-index 23fb66d571f..a5fec14fb3a 100644
---- a/audio/meson.build
-+++ b/audio/meson.build
-@@ -1,4 +1,5 @@
--system_ss.add(files(
-+audio_ss = ss.source_set()
-+audio_ss.add(files(
-   'audio.c',
-   'mixeng.c',
-   'noaudio.c',
+@@ -488,8 +502,6 @@ dbus_init(DisplayState *ds, DisplayOptions *opts)
+         exit(1);
+     }
+ 
+-    using_dbus_display = 1;
+-
+     object_new_with_props(TYPE_DBUS_DISPLAY,
+                           object_get_objects_root(),
+                           "dbus-display", &error_fatal,
 
 -- 
 2.53.0
