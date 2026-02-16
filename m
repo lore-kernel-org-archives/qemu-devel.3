@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CA0CE83825
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04EBBE83823
 	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 19:14:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vs42C-0007xs-UI; Mon, 16 Feb 2026 14:13:29 -0500
+	id 1vs42Y-00080J-Ci; Mon, 16 Feb 2026 14:13:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1vs42B-0007xd-CZ
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 14:13:27 -0500
+ id 1vs42U-0007zj-OO
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 14:13:46 -0500
 Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1vs426-0003Yp-4s
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 14:13:27 -0500
-ARC-Seal: i=1; a=rsa-sha256; t=1771269188; cv=none; 
+ id 1vs42P-0003Zs-F0
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 14:13:46 -0500
+ARC-Seal: i=1; a=rsa-sha256; t=1771269206; cv=none; 
  d=zohomail.com; s=zohoarc; 
- b=k+n9C8d/2pAqzi+VhKUYUhOZ+i+fpV1GNVawvIPUTfACIDcckMlbBUtVON11X//t3nfV+Nif6YgKJcjB/NcT5lS2EDPkLXS/QwUAp26/Qj5NeaY/IxQ3Bw3fLWBLgSSgVHfdEKXUnsB8UAMYFwH0Ly8nuVXqItU2vY6/IFi7Eh0=
+ b=jMK/YHRpbeoh7iXIWslzAyXtVglLiwf6pzQ5jrCBFAta8sNvKEXpqs4XAt6u/WumtDjcHv1dFTJsGg6BYP0O6yKZPHj3uVIy3n2sFG5vA5ARxw+IPFqqpYW5FcIFajianW0e696WNWlChBYSj195kF9y8F88UNqXYovSx3sDCcg=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1771269188;
- h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=ViKEV6K3E34y8YBULDM7wujUiITFIahQHAYDINTR4aQ=; 
- b=A+VX5ms5nzeJTDwUCpY4OkZWK5rWIewOP9eggIbncTiXAvl84o1Q14/TxyxMoWwG4Zt56NvgPkN3SDBCvMVSMqdRmFJYxh51d9rB4Z6x290SVY7mZpLwCQhSfjITtqrgmUqhiwRK3zbUYqLwQw/DGuzGHpdDuDxM4z9fqPP8/8g=
+ s=zohoarc; t=1771269206;
+ h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
+ bh=8KakjeBuMa9tT1qIeSOYpkTIcB03znWFoZVRX9UTVeE=; 
+ b=Ain+K0GFniyAWb+edECMqTsKGQyzS9u2tag+JbzxnCo2A2g8Z/2lHh780nYCsvxsC1MrsNghAMX2uNE9JLyBe0EG2vbZLj6POKGkWNnaQ5caT6jurncrk2HYWqO+lFn8xsCDYFKNb9Q3svqBwyu3duMhh02OcGN3lXOXtDtrw2o=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
  dkim=pass  header.i=collabora.com;
  spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
  dmarc=pass header.from=<dmitry.osipenko@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1771269188; 
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1771269206; 
  s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
- h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
- bh=ViKEV6K3E34y8YBULDM7wujUiITFIahQHAYDINTR4aQ=;
- b=CZCQRIVZTV/S4axlhdRPbjqHDuvgN1gXpq10sljx7RNeyJmU/CpiuXHP+BWyDfvX
- 6Ae6zAWvRdIG95KXw/LLQn7YH3471/W9sTnoGY3Zbw6GoqDab+Diz8MqW8ecCCuI4OC
- 3k1v7zgweKJi9jU4sGssimTu39ot0Vd0iQ8MLoZo=
-Received: by mx.zohomail.com with SMTPS id 1771269187470995.8314660575726;
- Mon, 16 Feb 2026 11:13:07 -0800 (PST)
+ h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To;
+ bh=8KakjeBuMa9tT1qIeSOYpkTIcB03znWFoZVRX9UTVeE=;
+ b=WDEVfbW815meV5c8+ztF0dt8Ar5al+7wGYU+HqLu5OnLgYkTSN7lpFPuhIqVcOC8
+ KciDjTscrvnGRu6fT0nQ/SqHG449ZljQ1tDJvBrU+1Vk/1zkJ7n34vN98+UqkidIrrJ
+ l1s9i4V/QZ6EOdaM9SnWsLOlKWXosnJPoQmoqC3U=
+Received: by mx.zohomail.com with SMTPS id 1771269204079180.3340548395522;
+ Mon, 16 Feb 2026 11:13:24 -0800 (PST)
 From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
  Huang Rui <ray.huang@amd.com>,
@@ -62,15 +62,13 @@ Cc: Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
  Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
  Chen Jiqian <Jiqian.Chen@amd.com>, Rob Clark <robdclark@gmail.com>,
  Robert Beckett <bob.beckett@collabora.com>
-Subject: [PATCH v17 03/18] ui/gtk: Don't disable scanout when display is
- refreshed
-Date: Mon, 16 Feb 2026 22:11:58 +0300
-Message-ID: <20260216191213.2556073-4-dmitry.osipenko@collabora.com>
+Subject: [PATCH v17 06/18] virtio-gpu: Unset context after GL operations
+Date: Mon, 16 Feb 2026 22:12:01 +0300
+Message-ID: <20260216191213.2556073-7-dmitry.osipenko@collabora.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260216191213.2556073-1-dmitry.osipenko@collabora.com>
 References: <20260216191213.2556073-1-dmitry.osipenko@collabora.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-ZohoMailClient: External
 Received-SPF: pass client-ip=136.143.188.112;
@@ -98,49 +96,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Display refreshment is invoked by a timer and it erroneously disables
-the active scanout if it happens to be invoked after scanout has been
-enabled. This offending scanout-disable race condition with a timer
-can be easily hit when Qemu runs with a disabled vsync by using SDL or
-GTK displays (with vblank_mode=0 for GTK). Refreshment of display's
-content shouldn't disable the active display. Fix it by keeping the
-scanout's state unchanged when display is redrawn.
+VirtIO-GPU commands may be processed outside of main-loop, from a CPU
+thread. This results in GL context switch failure because context is held
+by main-loop thread when GL is invoked from CPU thread. Always release GL
+context after performing GL operations such that other threads could take
+over the context.
 
-Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Tested-by: Alex Bennée <alex.bennee@linaro.org>
-Acked-by: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
-Reviewed-by: Yiwei Zhang <zzyiwei@gmail.com>
+ 0  SDL_GL_MakeCurrent() (libSDL3)
+ 1  SDL_GL_MakeCurrent_REAL() (libSDL2)
+ 2  sdl2_gl_make_context_current() (ui/sdl2-gl.c:201)
+ 3  make_current() (virglrenderer.c:639)
+ 4  vrend_finish_context_switch() (vrend_renderer.c:11630)
+ 5  vrend_hw_switch_context() (vrend_renderer.c:11613)
+ 6  vrend_renderer_force_ctx_0() (vrend_renderer.c:12986)
+ 7  virgl_renderer_force_ctx_0() (virglrenderer.c:460)
+ 8  virtio_gpu_virgl_process_cmd() (virtio-gpu-virgl.c:1013)
+ 9  virtio_gpu_process_cmdq() (virtio-gpu.c:1050)
+ 10 virtio_gpu_gl_handle_ctrl() (virtio-gpu-gl.c:86)
+ 11 aio_bh_poll() (util/async.c)
+ 12 aio_poll() (util/aio-posix.c)
+ 13 blk_pwrite() (block/block-gen.c:1985)
+ 14 pflash_update() (pflash_cfi01.c:396)
+ 15 pflash_write() (pflash_cfi01.c:541)
+ 16 memory_region_dispatch_write() (system/memory.c:1554)
+ 17 flatview_write() (system/physmem.c:3333)
+ 18 address_space_write() (system/physmem.c:3453)
+ 19 kvm_cpu_exec() (accel/kvm/kall-all.c:3248)
+ 20 kvm_vcpu_thread_fn() (accel/kvm/kaccel-ops.c:53)
+
 Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 ---
- ui/gtk-egl.c     | 1 -
- ui/gtk-gl-area.c | 1 -
- 2 files changed, 2 deletions(-)
+ hw/display/virtio-gpu-virgl.c | 21 ++++++++++++++++++---
+ 1 file changed, 18 insertions(+), 3 deletions(-)
 
-diff --git a/ui/gtk-egl.c b/ui/gtk-egl.c
-index ae9239999cdb..0dbb429958e5 100644
---- a/ui/gtk-egl.c
-+++ b/ui/gtk-egl.c
-@@ -180,7 +180,6 @@ void gd_egl_refresh(DisplayChangeListener *dcl)
- 
-     if (vc->gfx.glupdates) {
-         vc->gfx.glupdates = 0;
--        gtk_egl_set_scanout_mode(vc, false);
-         gd_egl_draw(vc);
-     }
+diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+index 0f754829fb71..cde1a7a8426f 100644
+--- a/hw/display/virtio-gpu-virgl.c
++++ b/hw/display/virtio-gpu-virgl.c
+@@ -896,14 +896,19 @@ static void virgl_cmd_set_scanout_blob(VirtIOGPU *g,
  }
-diff --git a/ui/gtk-gl-area.c b/ui/gtk-gl-area.c
-index cd86022d264a..c709b2ce0f63 100644
---- a/ui/gtk-gl-area.c
-+++ b/ui/gtk-gl-area.c
-@@ -199,7 +199,6 @@ void gd_gl_area_refresh(DisplayChangeListener *dcl)
+ #endif
  
-     if (vc->gfx.glupdates) {
-         vc->gfx.glupdates = 0;
--        gtk_gl_area_set_scanout_mode(vc, false);
-         gtk_gl_area_queue_render(GTK_GL_AREA(vc->gfx.drawing_area));
-     }
+-void virtio_gpu_virgl_process_cmd(VirtIOGPU *g,
+-                                      struct virtio_gpu_ctrl_command *cmd)
++static void virtio_gpu_virgl_unset_gl_context(void)
++{
++    dpy_gl_ctx_make_current(qemu_console_lookup_default(), NULL);
++}
++
++static void
++virtio_gpu_virgl_do_process_cmd(VirtIOGPU *g,
++                                struct virtio_gpu_ctrl_command *cmd)
+ {
+     bool cmd_suspended = false;
+ 
+     VIRTIO_GPU_FILL_CMD(cmd->cmd_hdr);
+ 
+-    virgl_renderer_force_ctx_0();
+     switch (cmd->cmd_hdr.type) {
+     case VIRTIO_GPU_CMD_CTX_CREATE:
+         virgl_cmd_context_create(g, cmd);
+@@ -1010,6 +1015,14 @@ void virtio_gpu_virgl_process_cmd(VirtIOGPU *g,
+     virgl_renderer_create_fence(cmd->cmd_hdr.fence_id, cmd->cmd_hdr.type);
  }
+ 
++void virtio_gpu_virgl_process_cmd(VirtIOGPU *g,
++                                  struct virtio_gpu_ctrl_command *cmd)
++{
++    virgl_renderer_force_ctx_0();
++    virtio_gpu_virgl_do_process_cmd(g, cmd);
++    virtio_gpu_virgl_unset_gl_context();
++}
++
+ static void virgl_write_fence(void *opaque, uint32_t fence)
+ {
+     VirtIOGPU *g = opaque;
+@@ -1136,8 +1149,10 @@ static void virtio_gpu_fence_poll(void *opaque)
+     VirtIOGPU *g = opaque;
+     VirtIOGPUGL *gl = VIRTIO_GPU_GL(g);
+ 
++    virgl_renderer_force_ctx_0();
+     virgl_renderer_poll();
+     virtio_gpu_process_cmdq(g);
++    virtio_gpu_virgl_unset_gl_context();
+     if (!QTAILQ_EMPTY(&g->cmdq) || !QTAILQ_EMPTY(&g->fenceq)) {
+         timer_mod(gl->fence_poll, qemu_clock_get_ms(QEMU_CLOCK_VIRTUAL) + 10);
+     }
 -- 
 2.52.0
 
