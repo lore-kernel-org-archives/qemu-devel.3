@@ -4,56 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 728BEE7BD92
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 11:20:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECFC7E7BD95
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 11:20:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vrwe4-0001Me-5g; Mon, 16 Feb 2026 06:20:04 -0500
+	id 1vrwcp-00075u-Qb; Mon, 16 Feb 2026 06:18:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vrwbO-0005c9-QE
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 06:17:24 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1vrwaa-0005Au-4a
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 06:16:31 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vrwbJ-0007hT-Uv
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 06:17:17 -0500
+ id 1vrwaW-0007O6-Au
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 06:16:27 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771240624;
+ s=mimecast20190719; t=1771240581;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=U0bHWW5dgK+/HJjVU+OAOt9u9O6Cx3FhrDkXc/laulI=;
- b=D9AUBAToeDykvv5IQOg+DEJ9Z4Qg1ldgfY1oR7AVGVTZ29v6ZADKxmTVBFs2oxT/uU3K93
- gF36TUPMVY5QQDgiYIuDoyW9TiYygMwzK6YnuoYZRZZYxlkrZTmB1RDBH7WMtiBx1kZdOs
- ZeVrRQvuOwPawbXDVGxCpujbXyz13Z0=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=8Pvu9sPNY0tMfaU2ZV+9MViXpKMjnpndfyaKXMmfEhY=;
+ b=W5f+pcsWTAC9x/OnF3J8qbL1OWGhHug8X2CRPLeKU0JIImtG90qrgS+47Ovbk590QEq/jz
+ UlaQGAdIrMEZEkKWrGT9idaOKmKUToQGL+UMELaAsjZsEA5Q/Gs/Bdaq3Xpy34h3EnmbST
+ 6JbrjUVYAkDlD8KG/JhlbfegaK5CRfw=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-97-TVTG2A9MMSOzqy6JBVlDGQ-1; Mon,
- 16 Feb 2026 06:17:01 -0500
-X-MC-Unique: TVTG2A9MMSOzqy6JBVlDGQ-1
-X-Mimecast-MFC-AGG-ID: TVTG2A9MMSOzqy6JBVlDGQ_1771240619
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-630-pnl55yZ8MWulEYuE4IEaVw-1; Mon,
+ 16 Feb 2026 06:16:17 -0500
+X-MC-Unique: pnl55yZ8MWulEYuE4IEaVw-1
+X-Mimecast-MFC-AGG-ID: pnl55yZ8MWulEYuE4IEaVw_1771240575
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 57EA119560B2; Mon, 16 Feb 2026 11:16:59 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 96E5F1954B07; Mon, 16 Feb 2026 11:16:15 +0000 (UTC)
 Received: from localhost (unknown [10.45.242.26])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 13AB130001B9; Mon, 16 Feb 2026 11:16:57 +0000 (UTC)
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 5616C18003F5; Mon, 16 Feb 2026 11:16:14 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Mon, 16 Feb 2026 12:15:18 +0100
-Subject: [PATCH 29/85] audio: replace type_init() with DEFINE_TYPES
+Date: Mon, 16 Feb 2026 12:15:02 +0100
+Subject: [PATCH 13/85] scripts/modinfo: use f-strings
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260216-audio-v1-29-e676662e4514@redhat.com>
+Message-Id: <20260216-audio-v1-13-e676662e4514@redhat.com>
 References: <20260216-audio-v1-0-e676662e4514@redhat.com>
 In-Reply-To: <20260216-audio-v1-0-e676662e4514@redhat.com>
 To: qemu-devel@nongnu.org
@@ -71,26 +71,27 @@ Cc: Gerd Hoffmann <kraxel@redhat.com>,
  Alistair Francis <alistair@alistair23.me>, 
  "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, 
  Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org, 
- =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=12925;
+ =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
+ Mark Cave-Ayland <mark.caveayland@nutanix.com>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2413;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=/OclfmP5XewpxJNnSJDp4/Un0I4vQMcL2p0K7RiWt4g=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBpkvxPzq1tH1Qld4toiGW9FYMLYpn54fKwAT0rU
- t4x/7ROkeuJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaZL8TwAKCRDa6OEJdZac
- 5XZ5D/92BWDs6BYjDg87G45/PgA62LTJsOjfYla3IWwsajkwczYlhI7uPJ5UromLxFIX8caU8hY
- 0qcuok4XsErMv0/pP6E7mpiwpnwwdUPPIBZQjTtM6RKte3xpcVFbNqDZ81RE13vrC4sajh4r71+
- Pf7s0lvB5r59HOEW5qxQOlolKDyfHxofNWHdhYH08vwlAg/2fpRl8SCtgZqQ1urSEZgX1WjrQig
- ZytPyiyuc9NY1vgwMCZebFPcA8tCYRVW1LUaYeMswPG2i4VYwUOFhwjYbnKntDk8M4xBOCx1+5f
- w4wHmFYqFAxo0h0KwL9jB9aJpiOf0bQXw6OBZe7EO6y/pM5fwNS2oe1Vr0YVcQgS+aa0CPkVv5C
- w2Wkl2scangyq9W54eKBhu+y2FD96PYVUEBaFGUABj3pMhzADEOsRvzwTNBKgaHpbgC1xACt3FH
- EDpY1BstbEyMR/w97IzuzUdPPdtsd4oFLvkTe4sRVtXz1zxCml5qJbbff5fGbjZnIL5uWZZxn8i
- RmjH0upZzn9bWl+ud5hPXMyId3OJ+OyBIXaqZ8D1boiuVU3Jp2On0u/txT1Ad069DRr+3FOZfvs
- gEJxDqEJpzuLtDQC7dQGQ5VUTkf3Xd8BnLqg9z5E1M5Sx2Jai9jpO0OM/Dvj5lrEpi+q1TzTwqW
- FUG5mus6sXQUtGg==
+ bh=6PlmzXnbqXoosgARgagqlx0sP0Vfwn0BB6rG0yq1OTU=;
+ b=kA0DAAoB2ujhCXWWnOUByyZiAGmS/E7IT+AiivzWxJ5/k1ojjI9agX6/OR2qrMSpBZDldvWi3
+ 4kCMwQAAQoAHRYhBIepvZM/h8YG0nb2Ldro4Ql1lpzlBQJpkvxOAAoJENro4Ql1lpzlbPkP/1Le
+ IV2RB2XQ8S8T0Z4eOD28taggz8eeNA7/y0AoE8PoySxW+NL1t/nn6oMwr/HW8XQ2uxApoygq0Qt
+ Rwfq5Y2PZW7xG+6ZI8Ew4E7VWJNOpA1Om9S0NYBs0zqfKsmbr55fqf9EWSalRp+70Sja/0XLXTn
+ pXzTqD59f/g5DZXxznz7lXzw1zChWlRf/GVsbON0Rp7vLChbgEVif6AV7W/4iKXPLPG/Cq7ByOb
+ 3VwJr0R4WL9Kolo0uhor7cYIriaAnR62zpKWhfJUjHvg/DAxTJrEWCNViTk4dLIZHLFDeamalBC
+ Z5x2zY7mpGYctwoMSMMAnqDhnD1NhjTq5BZjGIcqFfGO9qabBMuq011pEg5s0RLxa61DGsdU5yj
+ +3XQeicR/pRb0DgLc7vq/rJqrhrPZ5syyn4Sq9j9s0Yr6LRkIsVBwq3HXrJiWq7cqGVp1EZMuy3
+ +TjrY52v+WPMTtt+ORH6unmPf7/XMf3Fk360BRir0a7EeZTTxewCMwd49Oz1X8TVBwOADdHbezj
+ c6QNcZRZo4VZwuRpmk9bpzqF/y+n1a2rbD4yI8ip5OylF3rhh/onLkmYe47H1OOqmuu/T/WejCU
+ T9vMXDdrJ2BBiDvcfn5VMEO35Po+EeyrF+8ZkhfQjfGpWacfTihO57UMXBFaxlN43nvFxGmVEEp
+ /Dr6e
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -98,9 +99,9 @@ X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,421 +117,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use the convenience macro to register types.
-
-Note that jack backend was using the type registration to initialize
-some globals. Use a ctor function instead.
-
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
 ---
- audio/alsaaudio.c   | 19 ++++++++-----------
- audio/dbusaudio.c   | 18 ++++++++----------
- audio/dsoundaudio.c | 18 ++++++++----------
- audio/jackaudio.c   | 18 ++++++++++--------
- audio/noaudio.c     | 18 ++++++++----------
- audio/ossaudio.c    | 18 ++++++++----------
- audio/paaudio.c     | 18 ++++++++----------
- audio/pwaudio.c     | 20 ++++++++------------
- audio/sdlaudio.c    | 18 ++++++++----------
- audio/sndioaudio.c  | 19 ++++++++-----------
- audio/spiceaudio.c  | 18 ++++++++----------
- audio/wavaudio.c    | 18 ++++++++----------
- audio/coreaudio.m   | 18 ++++++++----------
- 13 files changed, 106 insertions(+), 132 deletions(-)
+ scripts/modinfo-generate.py | 14 ++++++--------
+ 1 file changed, 6 insertions(+), 8 deletions(-)
 
-diff --git a/audio/alsaaudio.c b/audio/alsaaudio.c
-index 7200777ad82..ae1cec6a36e 100644
---- a/audio/alsaaudio.c
-+++ b/audio/alsaaudio.c
-@@ -962,17 +962,14 @@ static struct audio_driver alsa_audio_driver = {
-     .voice_size_in  = sizeof (ALSAVoiceIn)
- };
+diff --git a/scripts/modinfo-generate.py b/scripts/modinfo-generate.py
+index 63093a0f820..8011c842caf 100644
+--- a/scripts/modinfo-generate.py
++++ b/scripts/modinfo-generate.py
+@@ -9,7 +9,7 @@ def print_array(name: str, values: list[str]) -> None:
+     if len(values) == 0:
+         return
+     list = ", ".join(values)
+-    print("    .%s = ((const char*[]){ %s, NULL })," % (name, list))
++    print(f"    .{name} = ((const char*[]){{ {list}, NULL }}),")
  
--static const TypeInfo audio_alsa_info = {
--    .name = TYPE_AUDIO_ALSA,
--    .parent = TYPE_AUDIO_MIXENG_BACKEND,
--    .instance_size = sizeof(AudioALSA),
--    .class_init = audio_alsa_class_init,
-+static const TypeInfo audio_types[] = {
-+    {
-+        .name = TYPE_AUDIO_ALSA,
-+        .parent = TYPE_AUDIO_MIXENG_BACKEND,
-+        .instance_size = sizeof(AudioALSA),
-+        .class_init = audio_alsa_class_init,
-+    },
- };
+ def parse_line(line: str) -> tuple[str, str]:
+     kind = ""
+@@ -53,17 +53,16 @@ def generate(name: str, lines: list[str], enabled: set[str]) -> Optional[set[str
+                 # don't add a module which dependency is not enabled
+                 # in kconfig
+                 if data.strip() not in enabled:
+-                    print("    /* module {} isn't enabled in Kconfig. */"
+-                          .format(data.strip()))
++                    print(f"    /* module {data.strip()} isn't enabled in Kconfig. */")
+                     print("/* },{ */")
+                     return None
+             else:
+                 print("unknown:", kind)
+                 exit(1)
  
--
--static void register_audio_alsa(void)
--{
--    type_register_static(&audio_alsa_info);
--}
--type_init(register_audio_alsa);
-+DEFINE_TYPES(audio_types)
- module_obj(TYPE_AUDIO_ALSA);
-diff --git a/audio/dbusaudio.c b/audio/dbusaudio.c
-index 48c9078d80e..269db7877b6 100644
---- a/audio/dbusaudio.c
-+++ b/audio/dbusaudio.c
-@@ -729,18 +729,16 @@ static void audio_dbus_class_init(ObjectClass *klass, const void *data)
-     k->driver = &dbus_audio_driver;
- }
+-    print("    .name = \"%s\"," % name)
++    print(f'    .name = "{name}",')
+     if arch != "":
+-        print("    .arch = %s," % arch)
++        print(f"    .arch = {arch},")
+     print_array("objs", objs)
+     print_array("deps", deps)
+     print_array("opts", opts)
+@@ -100,7 +99,7 @@ def main(args: list[str]) -> None:
+     for modinfo in args[2:]:
+         with open(modinfo) as f:
+             lines = f.readlines()
+-        print("    /* %s */" % modinfo)
++        print(f"    /* {modinfo} */")
+         (basename, _) = os.path.splitext(modinfo)
+         moddeps = generate(basename, lines, enabled)
+         if moddeps is not None:
+@@ -110,8 +109,7 @@ def main(args: list[str]) -> None:
  
--static const TypeInfo audio_dbus_info = {
--    .name = TYPE_AUDIO_DBUS,
--    .parent = TYPE_AUDIO_MIXENG_BACKEND,
--    .instance_size = sizeof(AudioDbus),
--    .class_init = audio_dbus_class_init,
-+static const TypeInfo audio_types[] = {
-+    {
-+        .name = TYPE_AUDIO_DBUS,
-+        .parent = TYPE_AUDIO_MIXENG_BACKEND,
-+        .instance_size = sizeof(AudioDbus),
-+        .class_init = audio_dbus_class_init,
-+    },
- };
+     error = False
+     for dep in deps.difference(modules):
+-        print("Dependency {} cannot be satisfied".format(dep),
+-              file=sys.stderr)
++        print(f"Dependency {dep} cannot be satisfied", file=sys.stderr)
+         error = True
  
--static void register_audio_dbus(void)
--{
--    type_register_static(&audio_dbus_info);
--}
--type_init(register_audio_dbus);
-+DEFINE_TYPES(audio_types)
- 
- module_dep("ui-dbus")
- module_obj(TYPE_AUDIO_DBUS)
-diff --git a/audio/dsoundaudio.c b/audio/dsoundaudio.c
-index 6d213899660..462d09e02af 100644
---- a/audio/dsoundaudio.c
-+++ b/audio/dsoundaudio.c
-@@ -711,16 +711,14 @@ static struct audio_driver dsound_audio_driver = {
-     .voice_size_in  = sizeof (DSoundVoiceIn)
- };
- 
--static const TypeInfo audio_dsound_info = {
--    .name = TYPE_AUDIO_DSOUND,
--    .parent = TYPE_AUDIO_MIXENG_BACKEND,
--    .instance_size = sizeof(AudioDsound),
--    .class_init = audio_dsound_class_init,
-+static const TypeInfo audio_types[] = {
-+    {
-+        .name = TYPE_AUDIO_DSOUND,
-+        .parent = TYPE_AUDIO_MIXENG_BACKEND,
-+        .instance_size = sizeof(AudioDsound),
-+        .class_init = audio_dsound_class_init,
-+    },
- };
- 
--static void register_audio_dsound(void)
--{
--    type_register_static(&audio_dsound_info);
--}
--type_init(register_audio_dsound);
-+DEFINE_TYPES(audio_types)
- module_obj(TYPE_AUDIO_DSOUND);
-diff --git a/audio/jackaudio.c b/audio/jackaudio.c
-index bfce4cb0b4c..972b158f023 100644
---- a/audio/jackaudio.c
-+++ b/audio/jackaudio.c
-@@ -708,22 +708,24 @@ static void qjack_info(const char *msg)
-     dolog("I: %s\n", msg);
- }
- 
--static const TypeInfo audio_jack_info = {
--    .name = TYPE_AUDIO_JACK,
--    .parent = TYPE_AUDIO_MIXENG_BACKEND,
--    .instance_size = sizeof(AudioJack),
--    .class_init = audio_jack_class_init,
-+static const TypeInfo audio_types[] = {
-+    {
-+        .name = TYPE_AUDIO_JACK,
-+        .parent = TYPE_AUDIO_MIXENG_BACKEND,
-+        .instance_size = sizeof(AudioJack),
-+        .class_init = audio_jack_class_init,
-+    },
- };
- 
--static void register_audio_jack(void)
-+static void __attribute__((__constructor__)) audio_jack_init(void)
- {
-     qemu_mutex_init(&qjack_shutdown_lock);
--    type_register_static(&audio_jack_info);
- #if !defined(WIN32) && defined(CONFIG_PTHREAD_SETNAME_NP_W_TID)
-     jack_set_thread_creator(qjack_thread_creator);
- #endif
-     jack_set_error_function(qjack_error);
-     jack_set_info_function(qjack_info);
- }
--type_init(register_audio_jack);
-+
-+DEFINE_TYPES(audio_types)
- module_obj(TYPE_AUDIO_JACK);
-diff --git a/audio/noaudio.c b/audio/noaudio.c
-index 8b5ebd71bf6..65679b8b13d 100644
---- a/audio/noaudio.c
-+++ b/audio/noaudio.c
-@@ -155,16 +155,14 @@ static struct audio_driver no_audio_driver = {
-     .voice_size_in  = sizeof (NoVoiceIn)
- };
- 
--static const TypeInfo audio_none_info = {
--    .name = TYPE_AUDIO_NONE,
--    .parent = TYPE_AUDIO_MIXENG_BACKEND,
--    .instance_size = sizeof(AudioNone),
--    .class_init = audio_none_class_init,
-+static const TypeInfo audio_types[] = {
-+    {
-+        .name = TYPE_AUDIO_NONE,
-+        .parent = TYPE_AUDIO_MIXENG_BACKEND,
-+        .instance_size = sizeof(AudioNone),
-+        .class_init = audio_none_class_init,
-+    },
- };
- 
--static void register_audio_none(void)
--{
--    type_register_static(&audio_none_info);
--}
--type_init(register_audio_none);
-+DEFINE_TYPES(audio_types)
- module_obj(TYPE_AUDIO_NONE);
-diff --git a/audio/ossaudio.c b/audio/ossaudio.c
-index b8e26b17ed7..f64c564e345 100644
---- a/audio/ossaudio.c
-+++ b/audio/ossaudio.c
-@@ -789,16 +789,14 @@ static struct audio_driver oss_audio_driver = {
-     .voice_size_in  = sizeof (OSSVoiceIn)
- };
- 
--static const TypeInfo audio_oss_info = {
--    .name = TYPE_AUDIO_OSS,
--    .parent = TYPE_AUDIO_MIXENG_BACKEND,
--    .instance_size = sizeof(AudioOss),
--    .class_init = audio_oss_class_init,
-+static const TypeInfo audio_types[] = {
-+    {
-+        .name = TYPE_AUDIO_OSS,
-+        .parent = TYPE_AUDIO_MIXENG_BACKEND,
-+        .instance_size = sizeof(AudioOss),
-+        .class_init = audio_oss_class_init,
-+    },
- };
- 
--static void register_audio_oss(void)
--{
--    type_register_static(&audio_oss_info);
--}
--type_init(register_audio_oss);
-+DEFINE_TYPES(audio_types)
- module_obj(TYPE_AUDIO_OSS);
-diff --git a/audio/paaudio.c b/audio/paaudio.c
-index adaeb2af807..331da4f2ed6 100644
---- a/audio/paaudio.c
-+++ b/audio/paaudio.c
-@@ -948,16 +948,14 @@ static struct audio_driver pa_audio_driver = {
-     .voice_size_in  = sizeof (PAVoiceIn),
- };
- 
--static const TypeInfo audio_pa_info = {
--    .name = TYPE_AUDIO_PA,
--    .parent = TYPE_AUDIO_MIXENG_BACKEND,
--    .instance_size = sizeof(AudioPa),
--    .class_init = audio_pa_class_init,
-+static const TypeInfo audio_types[] = {
-+    {
-+        .name = TYPE_AUDIO_PA,
-+        .parent = TYPE_AUDIO_MIXENG_BACKEND,
-+        .instance_size = sizeof(AudioPa),
-+        .class_init = audio_pa_class_init,
-+    },
- };
- 
--static void register_audio_pa(void)
--{
--    type_register_static(&audio_pa_info);
--}
--type_init(register_audio_pa);
-+DEFINE_TYPES(audio_types)
- module_obj(TYPE_AUDIO_PA);
-diff --git a/audio/pwaudio.c b/audio/pwaudio.c
-index facd166052c..3b524dfea5a 100644
---- a/audio/pwaudio.c
-+++ b/audio/pwaudio.c
-@@ -864,18 +864,14 @@ static struct audio_driver pw_audio_driver = {
-     .voice_size_in = sizeof(PWVoiceIn),
- };
- 
--static const TypeInfo audio_pw_info = {
--    .name = TYPE_AUDIO_PW,
--    .parent = TYPE_AUDIO_MIXENG_BACKEND,
--    .instance_size = sizeof(AudioPw),
--    .class_init = audio_pw_class_init,
-+static const TypeInfo audio_types[] = {
-+    {
-+        .name = TYPE_AUDIO_PW,
-+        .parent = TYPE_AUDIO_MIXENG_BACKEND,
-+        .instance_size = sizeof(AudioPw),
-+        .class_init = audio_pw_class_init,
-+    },
- };
- 
--static void
--register_audio_pw(void)
--{
--    type_register_static(&audio_pw_info);
--}
--
--type_init(register_audio_pw);
-+DEFINE_TYPES(audio_types)
- module_obj(TYPE_AUDIO_PW);
-diff --git a/audio/sdlaudio.c b/audio/sdlaudio.c
-index c00f1366d17..a60b1629da0 100644
---- a/audio/sdlaudio.c
-+++ b/audio/sdlaudio.c
-@@ -508,16 +508,14 @@ static struct audio_driver sdl_audio_driver = {
-     .voice_size_in  = sizeof(SDLVoiceIn),
- };
- 
--static const TypeInfo audio_sdl_info = {
--    .name = TYPE_AUDIO_SDL,
--    .parent = TYPE_AUDIO_MIXENG_BACKEND,
--    .instance_size = sizeof(AudioSdl),
--    .class_init = audio_sdl_class_init,
-+static const TypeInfo audio_types[] = {
-+    {
-+        .name = TYPE_AUDIO_SDL,
-+        .parent = TYPE_AUDIO_MIXENG_BACKEND,
-+        .instance_size = sizeof(AudioSdl),
-+        .class_init = audio_sdl_class_init,
-+    },
- };
- 
--static void register_audio_sdl(void)
--{
--    type_register_static(&audio_sdl_info);
--}
--type_init(register_audio_sdl);
-+DEFINE_TYPES(audio_types)
- module_obj(TYPE_AUDIO_SDL);
-diff --git a/audio/sndioaudio.c b/audio/sndioaudio.c
-index c8310b1fa37..2a9ae42992b 100644
---- a/audio/sndioaudio.c
-+++ b/audio/sndioaudio.c
-@@ -572,17 +572,14 @@ static struct audio_driver sndio_audio_driver = {
-     .voice_size_in  = sizeof(SndioVoice)
- };
- 
--static const TypeInfo audio_sndio_info = {
--    .name = TYPE_AUDIO_SNDIO,
--    .parent = TYPE_AUDIO_MIXENG_BACKEND,
--    .instance_size = sizeof(AudioSndio),
--    .class_init = audio_sndio_class_init,
-+static const TypeInfo audio_types[] = {
-+    {
-+        .name = TYPE_AUDIO_SNDIO,
-+        .parent = TYPE_AUDIO_MIXENG_BACKEND,
-+        .instance_size = sizeof(AudioSndio),
-+        .class_init = audio_sndio_class_init,
-+    },
- };
- 
--static void register_audio_sndio(void)
--{
--    type_register_static(&audio_sndio_info);
--}
--
--type_init(register_audio_sndio);
-+DEFINE_TYPES(audio_types)
- module_obj(TYPE_AUDIO_SNDIO);
-diff --git a/audio/spiceaudio.c b/audio/spiceaudio.c
-index d1bb318b6b7..ad7cb69673b 100644
---- a/audio/spiceaudio.c
-+++ b/audio/spiceaudio.c
-@@ -342,18 +342,16 @@ static struct audio_driver spice_audio_driver = {
-     .voice_size_in  = sizeof (SpiceVoiceIn),
- };
- 
--static const TypeInfo audio_spice_info = {
--    .name = TYPE_AUDIO_SPICE,
--    .parent = TYPE_AUDIO_MIXENG_BACKEND,
--    .instance_size = sizeof(AudioSpice),
--    .class_init = audio_spice_class_init,
-+static const TypeInfo audio_types[] = {
-+    {
-+        .name = TYPE_AUDIO_SPICE,
-+        .parent = TYPE_AUDIO_MIXENG_BACKEND,
-+        .instance_size = sizeof(AudioSpice),
-+        .class_init = audio_spice_class_init,
-+    },
- };
- 
--static void register_audio_spice(void)
--{
--    type_register_static(&audio_spice_info);
--}
--type_init(register_audio_spice);
-+DEFINE_TYPES(audio_types)
- module_obj(TYPE_AUDIO_SPICE);
- 
- module_dep("ui-spice-core");
-diff --git a/audio/wavaudio.c b/audio/wavaudio.c
-index 12d4108ffad..cd2ceffd42b 100644
---- a/audio/wavaudio.c
-+++ b/audio/wavaudio.c
-@@ -231,16 +231,14 @@ static struct audio_driver wav_audio_driver = {
-     .voice_size_in  = 0
- };
- 
--static const TypeInfo audio_wav_info = {
--    .name = TYPE_AUDIO_WAV,
--    .parent = TYPE_AUDIO_MIXENG_BACKEND,
--    .instance_size = sizeof(AudioWav),
--    .class_init = audio_wav_class_init,
-+static const TypeInfo audio_types[] = {
-+    {
-+        .name = TYPE_AUDIO_WAV,
-+        .parent = TYPE_AUDIO_MIXENG_BACKEND,
-+        .instance_size = sizeof(AudioWav),
-+        .class_init = audio_wav_class_init,
-+    }
- };
- 
--static void register_audio_wav(void)
--{
--    type_register_static(&audio_wav_info);
--}
--type_init(register_audio_wav);
-+DEFINE_TYPES(audio_types)
- module_obj(TYPE_AUDIO_WAV);
-diff --git a/audio/coreaudio.m b/audio/coreaudio.m
-index 5efd16df7c4..862cb9dd9b0 100644
---- a/audio/coreaudio.m
-+++ b/audio/coreaudio.m
-@@ -690,16 +690,14 @@ static void coreaudio_audio_fini (void *opaque)
-     .voice_size_in  = 0
- };
- 
--static const TypeInfo audio_coreaudio_info = {
--    .name = TYPE_AUDIO_COREAUDIO,
--    .parent = TYPE_AUDIO_MIXENG_BACKEND,
--    .instance_size = sizeof(AudioCoreaudio),
--    .class_init = audio_coreaudio_class_init,
-+static const TypeInfo audio_types[] = {
-+    {
-+        .name = TYPE_AUDIO_COREAUDIO,
-+        .parent = TYPE_AUDIO_MIXENG_BACKEND,
-+        .instance_size = sizeof(AudioCoreaudio),
-+        .class_init = audio_coreaudio_class_init,
-+    },
- };
- 
--static void register_audio_coreaudio(void)
--{
--    type_register_static(&audio_coreaudio_info);
--}
--type_init(register_audio_coreaudio);
-+DEFINE_TYPES(audio_types)
- module_obj(TYPE_AUDIO_COREAUDIO);
+     if error:
 
 -- 
 2.53.0
