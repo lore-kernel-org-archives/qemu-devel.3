@@ -4,56 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B082EE7BD92
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1B87E7BD95
 	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 11:20:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vrwda-0000oT-GG; Mon, 16 Feb 2026 06:19:36 -0500
+	id 1vrwdT-0008R4-V8; Mon, 16 Feb 2026 06:19:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vrwb7-0005Pd-Qk
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 06:17:08 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1vrwbX-0005fj-Pe
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 06:17:33 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vrwb4-0007Vn-5M
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 06:17:01 -0500
+ id 1vrwbT-0007tZ-H9
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 06:17:26 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771240614;
+ s=mimecast20190719; t=1771240642;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=MUsBjBksReZ1gaFRLPZuGSgyXvz6SSrNa1EyYK/h58o=;
- b=WHU0VmppVc2vxgYE76nQqeqAKMTl1zGBkIuTMv7WaK17Tc7PZxlpQFuBpzLXzlCHcx/5Rv
- +U4/gWW2LYTrlcqk2mpzShxwo4C1BpD25zohxNMQENY9z3ujb2jRAEqL1mUjroSOxfsLRZ
- RmAtccfBiIEK6IFy9PsyvGj0uRcxxHc=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=8+nrp9qBSi6zwojCZeyXirIcfPIy3aiCAysKZAQazqs=;
+ b=PpgHGZk3IlHHoBSk2+QIbKhL4T0SoH+lxQLx0oQhxHFZPJXr5pW5DVNT+ZzBZnknM/x/Vp
+ 44n6t0FxKlT8NbhNwK+LVeEyWXaVXNeOI5P9rrFfR6j5KWxbtLdPb/maA0GmFvDkzB6k4L
+ x1c96ggi+Gj6I9EP403XLtZeIh+nnqw=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-228-Rsf5jSByM_aMDxAiFpTD6Q-1; Mon,
- 16 Feb 2026 06:16:50 -0500
-X-MC-Unique: Rsf5jSByM_aMDxAiFpTD6Q-1
-X-Mimecast-MFC-AGG-ID: Rsf5jSByM_aMDxAiFpTD6Q_1771240608
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-643-d0kVv8e4M0-F4X4nNSFX1Q-1; Mon,
+ 16 Feb 2026 06:17:21 -0500
+X-MC-Unique: d0kVv8e4M0-F4X4nNSFX1Q-1
+X-Mimecast-MFC-AGG-ID: d0kVv8e4M0-F4X4nNSFX1Q_1771240639
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 460DD1956094; Mon, 16 Feb 2026 11:16:48 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D181E195608A; Mon, 16 Feb 2026 11:17:18 +0000 (UTC)
 Received: from localhost (unknown [10.45.242.26])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 526E130001A5; Mon, 16 Feb 2026 11:16:47 +0000 (UTC)
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 3FEB11800465; Mon, 16 Feb 2026 11:17:18 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Mon, 16 Feb 2026 12:15:14 +0100
-Subject: [PATCH 25/85] audio: remove set_dbus_server from audio_driver
+Date: Mon, 16 Feb 2026 12:15:25 +0100
+Subject: [PATCH 36/85] audio: split AudioBackend
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260216-audio-v1-25-e676662e4514@redhat.com>
+Message-Id: <20260216-audio-v1-36-e676662e4514@redhat.com>
 References: <20260216-audio-v1-0-e676662e4514@redhat.com>
 In-Reply-To: <20260216-audio-v1-0-e676662e4514@redhat.com>
 To: qemu-devel@nongnu.org
@@ -73,25 +73,25 @@ Cc: Gerd Hoffmann <kraxel@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
  Mark Cave-Ayland <mark.caveayland@nutanix.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4292;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=16069;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=dbOONFCzI/swxM9VY+S6bbCkaSc4yZrxA86hh54hOys=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBpkvxPfP2bXM3hb4gPF8nqfgGOjVTVptgrC2Mqj
- KZK0TbdxwKJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaZL8TwAKCRDa6OEJdZac
- 5d0RD/9hN+Gu4T9upe7I8RRO1rWs7WdRBo1JGUlaVLYfcEOaFzfAuyNqlxd9STApGJ4UTKy5I6g
- zl+1ytMpxE/nCZLTTgMi/xCZhwmnVwlRAEvR/5+sMXBYFbPkgoEQCKI+b6mCqQYCT70townLztb
- vKWqgBUhQ5b/0iyvVkQ67ni1//OyK5W90oZJABWGIiQbr+WHlVwK9JRhRFH9mw7fk/42JGS/aei
- w3TCpFhfU8D4SGsxLG818oQnqZWzuCq8/ZaTOH1xV+cckTgxc/2fGmNHKVW0LlvmRxXAnrL9owm
- T7VWbo6xnSrJ1RhToHjA5VPxmT3YBT+KrRcL5TulamHQ23laoAXdJZz4MEggmzeoTUOlFHT+Tm6
- 5L1cmBRmPV2arkLZ7Od5qwLUwevbUcQHwU8pPo0R4Ox7hMp+YggIwiIZFlvXO3LHuB2MYKMWP3q
- yMUgG/jFpMcCNDPGouS7zzWsNabxtyPjQtrnVkPqQqJgLWnmnf8MjurtA9mtCnr7BUGcFikey8N
- vnHSBTKCzYD14lfP9yJc1hxnERWvSo31fNaUQpNmwLdI3aMziQgKHnPQYjjVGpNbMSN3hE44RNB
- rdyFBUDQYzf7Sf3gMYZ8x2wy6XitImVk9GnvwAN2jahXkyIEcnN6icj1plhWMueucHBT0H+So3F
- uYvxZ33u1O1NaTA==
+ bh=VahWk8EyqYcNksac0aGnGbnCMMzcEu89NuQd+pfGwDM=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBpkvxPitklu/qLDYihp68whkOhYB5aLOys9hM1K
+ HhCyrm0pguJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaZL8TwAKCRDa6OEJdZac
+ 5ULwD/0eKChYSEmxjt7lq3k1T7N9EBMcHr+GmfYBKcGJExrRA8nKjqfnPQiIN/X9kriLbA0PJM/
+ qum5kJT8e8ts7S88GSkWzyVvd29AxbbaWhRYS4bdPpw3KjH7m3TD838xA3LVPhF1vukR2t34gYx
+ GvHBxppt3VWkTGz5QS0OvkTUK/pExUQoWxfxI69ncFXIDuM9+PqiBSisC8La6NzT9n3l3UPzGx8
+ cnUWoRGFYMIj2L1ICtBhZCTZg9tHD4Z6oMwAkL9CqI0305oaGeQDHZxZfEPKtQEp5ndlxyiMWbZ
+ CLfAn59p84vXrYeaWzLe4QjoODZevgBK+4B34hpSAc0p3Ix868eVuTlMvomzFw7kZnDToztISQx
+ o94VxV7PsFJpFhiAutWuGb68hS3kRybf8bolWE4nV5SaJQ8R/jUT/57u9CEtuXJOKRpdc/GiGw8
+ QVA+eytC4hLUawYjfQS/RzVEpsZhAPIqzI7QIGEIHl/8lXFzCwkoAbLABMrOb4TSrJx+RuBjUGb
+ f+Xx5F03MgulEnw+TQtyZvaMOe5aO+48XlK27hRJYROsO+kBiEIedDQn5SEosLzw92nQH3la+S3
+ Ed6TO2TV1CQDcLtmX35W16SZtRjE95U7IcDSz/d3+PreBpNMmk9eMVwaB8O+YtL3AKyw1X56pFu
+ rzx1cUTudk1XS1w==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -99,9 +99,9 @@ X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,138 +117,574 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use the QOM class vtable only instead.
+Code clean-up, to allow building bare abstract class separately.
+
+The original file is MIT-licensed.
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
 ---
- audio/audio_int.h | 10 ----------
- audio/audio.c     | 29 +++--------------------------
- audio/dbusaudio.c | 17 +++++++++--------
- 3 files changed, 12 insertions(+), 44 deletions(-)
+ include/qemu/audio.h |   2 +
+ audio/audio-be.c     | 206 ++++++++++++++++++++++++++++++++++++++++++++++++++
+ audio/audio.c        | 209 +--------------------------------------------------
+ audio/meson.build    |   1 +
+ 4 files changed, 211 insertions(+), 207 deletions(-)
 
-diff --git a/audio/audio_int.h b/audio/audio_int.h
-index 29f5864be69..0b97c8edee3 100644
---- a/audio/audio_int.h
-+++ b/audio/audio_int.h
-@@ -33,10 +33,6 @@
- #include "qemu/audio-capture.h"
- #include "mixeng.h"
+diff --git a/include/qemu/audio.h b/include/qemu/audio.h
+index 4fae48886ba..9f85c6316a8 100644
+--- a/include/qemu/audio.h
++++ b/include/qemu/audio.h
+@@ -111,6 +111,8 @@ typedef struct AudioBackendClass {
  
--#ifdef CONFIG_GIO
--#include <gio/gio.h>
--#endif
--
- void G_GNUC_PRINTF(2, 0)
- AUD_vlog(const char *cap, const char *fmt, va_list ap);
+ bool AUD_backend_check(AudioBackend **be, Error **errp);
  
-@@ -145,12 +141,6 @@ struct audio_driver {
-     const char *name;
-     void *(*init) (Audiodev *, Error **);
-     void (*fini) (void *);
--#ifdef CONFIG_GIO
--    bool (*set_dbus_server)(AudioBackend *be,
--                            GDBusObjectManagerServer *manager,
--                            bool p2p,
--                            Error **errp);
--#endif
-     struct audio_pcm_ops *pcm_ops;
-     int max_voices_out;
-     int max_voices_in;
++AudioBackend *audio_be_new(Audiodev *dev, Error **errp);
++
+ SWVoiceOut *AUD_open_out(
+     AudioBackend *be,
+     SWVoiceOut *sw,
+diff --git a/audio/audio-be.c b/audio/audio-be.c
+new file mode 100644
+index 00000000000..51fb124026a
+--- /dev/null
++++ b/audio/audio-be.c
+@@ -0,0 +1,206 @@
++/* SPDX-License-Identifier: MIT */
++
++#include "qemu/osdep.h"
++#include "qemu/audio.h"
++#include "qemu/audio-capture.h"
++#include "qapi/error.h"
++
++bool AUD_backend_check(AudioBackend **be, Error **errp)
++{
++    assert(be != NULL);
++
++    if (!*be) {
++        *be = audio_get_default_audio_be(errp);
++        if (!*be) {
++            return false;
++        }
++    }
++
++    return true;
++}
++
++SWVoiceIn *AUD_open_in(
++    AudioBackend *be,
++    SWVoiceIn *sw,
++    const char *name,
++    void *callback_opaque,
++    audio_callback_fn callback_fn,
++    const struct audsettings *as)
++{
++    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
++
++    return klass->open_in(be, sw, name, callback_opaque, callback_fn, as);
++}
++
++SWVoiceOut *AUD_open_out(
++    AudioBackend *be,
++    SWVoiceOut *sw,
++    const char *name,
++    void *callback_opaque,
++    audio_callback_fn callback_fn,
++    const struct audsettings *as)
++{
++    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
++
++    return klass->open_out(be, sw, name, callback_opaque, callback_fn, as);
++}
++
++void AUD_close_out(AudioBackend *be, SWVoiceOut *sw)
++{
++    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
++
++    return klass->close_out(be, sw);
++}
++
++void AUD_close_in(AudioBackend *be, SWVoiceIn *sw)
++{
++    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
++
++    return klass->close_in(be, sw);
++}
++
++bool AUD_is_active_out(AudioBackend *be, SWVoiceOut *sw)
++{
++    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
++
++    return klass->is_active_out(be, sw);
++}
++
++bool AUD_is_active_in(AudioBackend *be, SWVoiceIn *sw)
++{
++    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
++
++    return klass->is_active_in(be, sw);
++}
++
++size_t AUD_write(AudioBackend *be, SWVoiceOut *sw, void *buf, size_t size)
++{
++    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
++
++    return klass->write(be, sw, buf, size);
++}
++
++size_t AUD_read(AudioBackend *be, SWVoiceIn *sw, void *buf, size_t size)
++{
++    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
++
++    return klass->read(be, sw, buf, size);
++}
++
++int AUD_get_buffer_size_out(AudioBackend *be, SWVoiceOut *sw)
++{
++    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
++
++    return klass->get_buffer_size_out(be, sw);
++}
++
++void AUD_set_active_out(AudioBackend *be, SWVoiceOut *sw, bool on)
++{
++    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
++
++    return klass->set_active_out(be, sw, on);
++}
++
++void AUD_set_active_in(AudioBackend *be, SWVoiceIn *sw, bool on)
++{
++    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
++
++    return klass->set_active_in(be, sw, on);
++}
++
++void AUD_set_volume_out(AudioBackend *be, SWVoiceOut *sw, Volume *vol)
++{
++    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
++
++    klass->set_volume_out(be, sw, vol);
++}
++
++void AUD_set_volume_in(AudioBackend *be, SWVoiceIn *sw, Volume *vol)
++{
++    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
++
++    klass->set_volume_in(be, sw, vol);
++}
++
++CaptureVoiceOut *AUD_add_capture(
++    AudioBackend *be,
++    struct audsettings *as,
++    struct audio_capture_ops *ops,
++    void *cb_opaque)
++{
++    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
++
++    return klass->add_capture(be, as, ops, cb_opaque);
++}
++
++void AUD_del_capture(AudioBackend *be, CaptureVoiceOut *cap, void *cb_opaque)
++{
++    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
++
++    klass->del_capture(be, cap, cb_opaque);
++}
++
++#ifdef CONFIG_GIO
++bool audio_be_can_set_dbus_server(AudioBackend *be)
++{
++    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
++
++    return klass->set_dbus_server != NULL;
++}
++
++bool audio_be_set_dbus_server(AudioBackend *be,
++                              GDBusObjectManagerServer *server,
++                              bool p2p,
++                              Error **errp)
++{
++    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
++
++    if (!audio_be_can_set_dbus_server(be)) {
++        error_setg(errp, "Audiodev '%s' is not compatible with DBus",
++                   audio_be_get_id(be));
++        return false;
++    }
++
++    return klass->set_dbus_server(be, server, p2p, errp);
++}
++#endif
++
++const char *audio_be_get_id(AudioBackend *be)
++{
++    if (be) {
++        return AUDIO_BACKEND_GET_CLASS(be)->get_id(be);
++    } else {
++        return "";
++    }
++}
++
++AudioBackend *audio_be_new(Audiodev *dev, Error **errp)
++{
++    const char *drvname = AudiodevDriver_str(dev->driver);
++    g_autofree char *type = g_strconcat("audio-", drvname, NULL);
++    AudioBackend *be = AUDIO_BACKEND(object_new(type));
++
++    if (!be) {
++        error_setg(errp, "Unknown audio driver `%s'", drvname);
++        return NULL;
++    }
++
++    if (!AUDIO_BACKEND_GET_CLASS(be)->realize(be, dev, errp)) {
++        object_unref(OBJECT(be));
++        return NULL;
++    }
++
++    return be;
++}
++
++static const TypeInfo audio_types[] = {
++    {
++        .name = TYPE_AUDIO_BACKEND,
++        .parent = TYPE_OBJECT,
++        .instance_size = sizeof(AudioBackend),
++        .abstract = true,
++        .class_size = sizeof(AudioBackendClass),
++    },
++};
++
++DEFINE_TYPES(audio_types)
 diff --git a/audio/audio.c b/audio/audio.c
-index 3e1cd988852..5d0f5ad2145 100644
+index 32b2b882f80..22e55ac9758 100644
 --- a/audio/audio.c
 +++ b/audio/audio.c
-@@ -1640,31 +1640,11 @@ static const char *audio_mixeng_backend_get_id(AudioBackend *be)
-     return AUDIO_MIXENG_BACKEND(be)->dev->id;
+@@ -870,15 +870,8 @@ static size_t audio_mixeng_backend_write(AudioBackend *be, SWVoiceOut *sw,
+     }
  }
  
--#ifdef CONFIG_GIO
--static bool audio_mixeng_backend_set_dbus_server(AudioBackend *be,
--                                                 GDBusObjectManagerServer *manager,
--                                                 bool p2p,
--                                                 Error **errp)
+-size_t AUD_write(AudioBackend *be, SWVoiceOut *sw, void *buf, size_t size)
 -{
--    AudioMixengBackend *d = AUDIO_MIXENG_BACKEND(be);
+-    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
 -
--    if (!d->drv->set_dbus_server) {
--        return false;
--    }
--
--    return d->drv->set_dbus_server(be, manager, p2p, errp);
+-    return klass->write(be, sw, buf, size);
 -}
 -
--#endif
+-static size_t audio_mixeng_backend_read(AudioBackend *be, SWVoiceIn *sw,
+-                                        void *buf, size_t size)
++static size_t audio_mixeng_backend_read(AudioBackend *be,
++                                        SWVoiceIn *sw, void *buf, size_t size)
+ {
+     HWVoiceIn *hw;
+ 
+@@ -901,13 +894,6 @@ static size_t audio_mixeng_backend_read(AudioBackend *be, SWVoiceIn *sw,
+ 
+ }
+ 
+-size_t AUD_read(AudioBackend *be, SWVoiceIn *sw, void *buf, size_t size)
+-{
+-    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
+-
+-    return klass->read(be, sw, buf, size);
+-}
+-
+ static int audio_mixeng_backend_get_buffer_size_out(AudioBackend *be, SWVoiceOut *sw)
+ {
+     if (!sw) {
+@@ -921,13 +907,6 @@ static int audio_mixeng_backend_get_buffer_size_out(AudioBackend *be, SWVoiceOut
+     return sw->hw->samples * sw->hw->info.bytes_per_frame;
+ }
+ 
+-int AUD_get_buffer_size_out(AudioBackend *be, SWVoiceOut *sw)
+-{
+-    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
+-
+-    return klass->get_buffer_size_out(be, sw);
+-}
+-
+ static void audio_mixeng_backend_set_active_out(AudioBackend *be, SWVoiceOut *sw,
+                                                 bool on)
+ {
+@@ -978,13 +957,6 @@ static void audio_mixeng_backend_set_active_out(AudioBackend *be, SWVoiceOut *sw
+ 
+ }
+ 
+-void AUD_set_active_out(AudioBackend *be, SWVoiceOut *sw, bool on)
+-{
+-    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
+-
+-    return klass->set_active_out(be, sw, on);
+-}
+-
+ static void audio_mixeng_backend_set_active_in(AudioBackend *be, SWVoiceIn *sw, bool on)
+ {
+     HWVoiceIn *hw;
+@@ -1030,13 +1002,6 @@ static void audio_mixeng_backend_set_active_in(AudioBackend *be, SWVoiceIn *sw,
+     }
+ }
+ 
+-void AUD_set_active_in(AudioBackend *be, SWVoiceIn *sw, bool on)
+-{
+-    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
+-
+-    return klass->set_active_in(be, sw, on);
+-}
+-
+ static size_t audio_get_avail(SWVoiceIn *sw)
+ {
+     size_t live;
+@@ -1643,25 +1608,6 @@ static bool audio_mixeng_backend_realize(AudioBackend *abe,
+     return true;
+ }
+ 
+-static AudioBackend *audio_be_new(Audiodev *dev, Error **errp)
+-{
+-    const char *drvname = AudiodevDriver_str(dev->driver);
+-    g_autofree char *type = g_strconcat("audio-", drvname, NULL);
+-    AudioBackend *be = AUDIO_BACKEND(object_new(type));
+-
+-    if (!be) {
+-        error_setg(errp, "Unknown audio driver `%s'", drvname);
+-        return NULL;
+-    }
+-
+-    if (!AUDIO_BACKEND_GET_CLASS(be)->realize(be, dev, errp)) {
+-        object_unref(OBJECT(be));
+-        return NULL;
+-    }
+-
+-    return be;
+-}
+-
+ static void audio_vm_change_state_handler (void *opaque, bool running,
+                                            RunState state)
+ {
+@@ -1685,14 +1631,6 @@ static void audio_vm_change_state_handler (void *opaque, bool running,
+ 
+ static const VMStateDescription vmstate_audio;
+ 
+-static void audio_be_init(Object *obj)
+-{
+-}
+-
+-static void audio_be_finalize(Object *obj)
+-{
+-}
+-
+ static const char *audio_mixeng_backend_get_id(AudioBackend *be)
+ {
+     return AUDIO_MIXENG_BACKEND(be)->dev->id;
+@@ -1714,60 +1652,6 @@ static void audio_mixeng_backend_set_volume_out(AudioBackend *be, SWVoiceOut *sw
+ static void audio_mixeng_backend_set_volume_in(AudioBackend *be, SWVoiceIn *sw,
+                                                Volume *vol);
+ 
+-SWVoiceOut *AUD_open_out(
+-    AudioBackend *be,
+-    SWVoiceOut *sw,
+-    const char *name,
+-    void *callback_opaque,
+-    audio_callback_fn callback_fn,
+-    const struct audsettings *as)
+-{
+-    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
+-
+-    return klass->open_out(be, sw, name, callback_opaque, callback_fn, as);
+-}
+-
+-SWVoiceIn *AUD_open_in(
+-    AudioBackend *be,
+-    SWVoiceIn *sw,
+-    const char *name,
+-    void *callback_opaque,
+-    audio_callback_fn callback_fn,
+-    const struct audsettings *as)
+-{
+-    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
+-
+-    return klass->open_in(be, sw, name, callback_opaque, callback_fn, as);
+-}
+-
+-void AUD_close_out(AudioBackend *be, SWVoiceOut *sw)
+-{
+-    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
+-
+-    return klass->close_out(be, sw);
+-}
+-
+-void AUD_close_in(AudioBackend *be, SWVoiceIn *sw)
+-{
+-    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
+-
+-    return klass->close_in(be, sw);
+-}
+-
+-bool AUD_is_active_out(AudioBackend *be, SWVoiceOut *sw)
+-{
+-    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
+-
+-    return klass->is_active_out(be, sw);
+-}
+-
+-bool AUD_is_active_in(AudioBackend *be, SWVoiceIn *sw)
+-{
+-    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
+-
+-    return klass->is_active_in(be, sw);
+-}
 -
  static void audio_mixeng_backend_class_init(ObjectClass *klass, const void *data)
  {
      AudioBackendClass *be = AUDIO_BACKEND_CLASS(klass);
- 
-     be->get_id = audio_mixeng_backend_get_id;
--#ifdef CONFIG_GIO
--    be->set_dbus_server = audio_mixeng_backend_set_dbus_server;
--#endif
+@@ -1972,20 +1856,6 @@ AudioBackend *audio_get_default_audio_be(Error **errp)
+     return default_audio_be;
  }
  
- static void audio_mixeng_backend_init(Object *obj)
-@@ -2264,12 +2244,9 @@ AudioBackend *audio_be_by_name(const char *name, Error **errp)
- #ifdef CONFIG_GIO
- bool audio_be_can_set_dbus_server(AudioBackend *be)
- {
--    /*
--     * TODO:
--     * AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
--     * return klass->set_dbus_server != NULL;
--     */
--    return AUDIO_MIXENG_BACKEND(be)->drv->set_dbus_server != NULL;
-+    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
-+
-+    return klass->set_dbus_server != NULL;
- }
- 
- bool audio_be_set_dbus_server(AudioBackend *be,
-diff --git a/audio/dbusaudio.c b/audio/dbusaudio.c
-index 4d62de6d72c..5a5752b8f33 100644
---- a/audio/dbusaudio.c
-+++ b/audio/dbusaudio.c
-@@ -54,13 +54,6 @@ struct AudioDbus {
- 
- static struct audio_driver dbus_audio_driver;
- 
--static void audio_dbus_class_init(ObjectClass *klass, const void *data)
+-bool AUD_backend_check(AudioBackend **be, Error **errp)
 -{
--    AudioMixengBackendClass *k = AUDIO_MIXENG_BACKEND_CLASS(klass);
+-    assert(be != NULL);
 -
--    k->driver = &dbus_audio_driver;
+-    if (!*be) {
+-        *be = audio_get_default_audio_be(errp);
+-        if (!*be) {
+-            return false;
+-        }
+-    }
+-
+-    return true;
 -}
 -
- typedef struct DBusAudio {
-     Audiodev *dev;
-     GDBusObjectManagerServer *server;
-@@ -720,7 +713,6 @@ static struct audio_driver dbus_audio_driver = {
-     .name            = "dbus",
-     .init            = dbus_audio_init,
-     .fini            = dbus_audio_fini,
--    .set_dbus_server = dbus_audio_set_server,
-     .pcm_ops         = &dbus_pcm_ops,
-     .max_voices_out  = INT_MAX,
-     .max_voices_in   = INT_MAX,
-@@ -728,6 +720,15 @@ static struct audio_driver dbus_audio_driver = {
-     .voice_size_in   = sizeof(DBusVoiceIn)
- };
+ static struct audio_pcm_ops capture_pcm_ops;
  
-+static void audio_dbus_class_init(ObjectClass *klass, const void *data)
-+{
-+    AudioBackendClass *b = AUDIO_BACKEND_CLASS(klass);
-+    AudioMixengBackendClass *k = AUDIO_MIXENG_BACKEND_CLASS(klass);
-+
-+    b->set_dbus_server = dbus_audio_set_server;
-+    k->driver = &dbus_audio_driver;
-+}
-+
- static const TypeInfo audio_dbus_info = {
-     .name = TYPE_AUDIO_DBUS,
-     .parent = TYPE_AUDIO_MIXENG_BACKEND,
+ static CaptureVoiceOut *audio_mixeng_backend_add_capture(
+@@ -2062,17 +1932,6 @@ static CaptureVoiceOut *audio_mixeng_backend_add_capture(
+     return cap;
+ }
+ 
+-CaptureVoiceOut *AUD_add_capture(
+-    AudioBackend *be,
+-    struct audsettings *as,
+-    struct audio_capture_ops *ops,
+-    void *cb_opaque)
+-{
+-    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
+-
+-    return klass->add_capture(be, as, ops, cb_opaque);
+-}
+-
+ static void audio_mixeng_backend_del_capture(
+     AudioBackend *be,
+     CaptureVoiceOut *cap,
+@@ -2115,13 +1974,6 @@ static void audio_mixeng_backend_del_capture(
+     }
+ }
+ 
+-void AUD_del_capture(AudioBackend *be, CaptureVoiceOut *cap, void *cb_opaque)
+-{
+-    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
+-
+-    klass->del_capture(be, cap, cb_opaque);
+-}
+-
+ static void audio_mixeng_backend_set_volume_out(AudioBackend *be, SWVoiceOut *sw,
+                                                 Volume *vol)
+ {
+@@ -2139,13 +1991,6 @@ static void audio_mixeng_backend_set_volume_out(AudioBackend *be, SWVoiceOut *sw
+     }
+ }
+ 
+-void AUD_set_volume_out(AudioBackend *be, SWVoiceOut *sw, Volume *vol)
+-{
+-    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
+-
+-    klass->set_volume_out(be, sw, vol);
+-}
+-
+ static void audio_mixeng_backend_set_volume_in(AudioBackend *be, SWVoiceIn *sw,
+                                                Volume *vol)
+ {
+@@ -2163,13 +2008,6 @@ static void audio_mixeng_backend_set_volume_in(AudioBackend *be, SWVoiceIn *sw,
+     }
+ }
+ 
+-void AUD_set_volume_in(AudioBackend *be, SWVoiceIn *sw, Volume *vol)
+-{
+-    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
+-
+-    klass->set_volume_in(be, sw, vol);
+-}
+-
+ static void audio_create_pdos(Audiodev *dev)
+ {
+     switch (dev->driver) {
+@@ -2423,40 +2261,6 @@ AudioBackend *audio_be_by_name(const char *name, Error **errp)
+     }
+ }
+ 
+-#ifdef CONFIG_GIO
+-bool audio_be_can_set_dbus_server(AudioBackend *be)
+-{
+-    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
+-
+-    return klass->set_dbus_server != NULL;
+-}
+-
+-bool audio_be_set_dbus_server(AudioBackend *be,
+-                              GDBusObjectManagerServer *server,
+-                              bool p2p,
+-                              Error **errp)
+-{
+-    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
+-
+-    if (!audio_be_can_set_dbus_server(be)) {
+-        error_setg(errp, "Audiodev '%s' is not compatible with DBus",
+-                   audio_be_get_id(be));
+-        return false;
+-    }
+-
+-    return klass->set_dbus_server(be, server, p2p, errp);
+-}
+-#endif
+-
+-const char *audio_be_get_id(AudioBackend *be)
+-{
+-    if (be) {
+-        return AUDIO_BACKEND_GET_CLASS(be)->get_id(be);
+-    } else {
+-        return "";
+-    }
+-}
+-
+ const char *audio_application_name(void)
+ {
+     const char *vm_name;
+@@ -2521,15 +2325,6 @@ AudiodevList *qmp_query_audiodevs(Error **errp)
+ }
+ 
+ static const TypeInfo audio_types[] = {
+-    {
+-        .name = TYPE_AUDIO_BACKEND,
+-        .parent = TYPE_OBJECT,
+-        .instance_size = sizeof(AudioBackend),
+-        .instance_init = audio_be_init,
+-        .instance_finalize = audio_be_finalize,
+-        .abstract = true,
+-        .class_size = sizeof(AudioBackendClass),
+-    },
+     {
+         .name = TYPE_AUDIO_MIXENG_BACKEND,
+         .parent = TYPE_AUDIO_BACKEND,
+diff --git a/audio/meson.build b/audio/meson.build
+index 55ee0bfc865..17f58369c20 100644
+--- a/audio/meson.build
++++ b/audio/meson.build
+@@ -1,6 +1,7 @@
+ audio_ss = ss.source_set()
+ audio_ss.add(files(
+   'audio.c',
++  'audio-be.c',
+   'mixeng.c',
+   'noaudio.c',
+   'wavaudio.c',
 
 -- 
 2.53.0
