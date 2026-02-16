@@ -4,167 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15C3FEDF142
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 08:47:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81E16E63F3F
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 08:49:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vruGa-0006Dt-9k; Mon, 16 Feb 2026 03:47:40 -0500
+	id 1vruIe-00073a-4g; Mon, 16 Feb 2026 03:49:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
- id 1vruGX-0006D8-O3; Mon, 16 Feb 2026 03:47:37 -0500
-Received: from mail-southcentralusazlp170120001.outbound.protection.outlook.com
- ([2a01:111:f403:c10d::1] helo=SN4PR2101CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1vruIa-00073Q-2g
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 03:49:44 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
- id 1vruGU-0000a2-2G; Mon, 16 Feb 2026 03:47:37 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=HfZfcFJ3wszHDtVCN8daTL9tTvoW7kMIsELkGGTXQ8SXlZJC15/E8WOsWOOZg8X07LoIQIvGd491kbZmiqz8HvC1v/z0k+kEblqm11T3Po+o7j6OypsKeh+bLjtzAmkjDYCpeesrxoWKH1aVFWPNtf0LIH78inr33oT+LN3SbTLubLVcm6bikKSrdUXHt4i/C9H8pLrqEBkJBT75+xfZSgabuU7mAfbxxX0zs0/lADPMzyr1mA4QcGPT5lzMb2zzJ34Y4jBQvjVwnbLnXdQ/bWCaDauZCWWUFZhcJEdRLPbCita56bsOMSjth9ayZgZ9OXxJ8dz0vGlHH+bOS81Qug==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=i6rkIkoo52B/CNPOc9OGd+ubClSYH+uMa67aXJO8l8M=;
- b=vl+x4g5d8jPKmd6MUU6uOJNe9S0CzjY+1AMck3P5XOwRurCO4+uvi0UCT4lW8Qno9RJm8w931ZeMZIGymwFlv3QJZab4QHdASJ+3WQNAVdHNm+36Z1YZJsagcvORfjlXP6wqZQH8yxnIp7AII+rSP8VxgQi2+HAHWYPXuOBRPVyjFfNaPrjgKoc+qPFFH6yHjU1IW9htjUjhRmtJDrgHHqqkQMZW67MBRH6P1T66vnfWw+B/0/dU/PoC1HilqVNE776fa0z6VmLQeYBQKoYX6i0WSGUqKm3q+tfU727Mfskj73WvM47Nub7HzFJepLtlIpiDIBQ+mYqLH2AQ0wXpow==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=i6rkIkoo52B/CNPOc9OGd+ubClSYH+uMa67aXJO8l8M=;
- b=eiZKU//5R8SmmKxz/eahxscb5FCISLwXW8OUzAF82QnIG0JQeO3+s3150HTxFXjJ8a0tOwmyU9tSREOrI7OBX+ETC9YsL9YFJMVKrBKoUVmb8oD6HHUacfAVlUK5t0QdE9SIuhAmbqy876hLQUIk+irh3YV2X+sfqm9Krr+0+9sZBe816vnN2sbYyIhd0Da/gnbYsrt6G84LQTvnJsINv+T9qBNIz0H3eHP5IP32m+gXC5W2L3Avr0ztqgkS6z8tgH69bdfva8UGZnCEXLbEGG2iWW/gWE1hAIkK//YFfXzKGenn710M5coujLGbdMylCWtq+mnRZLyiyI1jScYYbQ==
-Received: from CH3PR12MB7548.namprd12.prod.outlook.com (2603:10b6:610:144::12)
- by PH7PR12MB7985.namprd12.prod.outlook.com (2603:10b6:510:27b::5)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9611.16; Mon, 16 Feb
- 2026 08:47:28 +0000
-Received: from CH3PR12MB7548.namprd12.prod.outlook.com
- ([fe80::b710:d6a1:ab16:76de]) by CH3PR12MB7548.namprd12.prod.outlook.com
- ([fe80::b710:d6a1:ab16:76de%5]) with mapi id 15.20.9611.013; Mon, 16 Feb 2026
- 08:47:28 +0000
-From: Shameer Kolothum Thodi <skolothumtho@nvidia.com>
-To: Nicolin Chen <nicolinc@nvidia.com>
-CC: "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>, "eric.auger@redhat.com" <eric.auger@redhat.com>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>, "clg@redhat.com"
- <clg@redhat.com>, "alex@shazbot.org" <alex@shazbot.org>, Nathan Chen
- <nathanc@nvidia.com>, Matt Ochs <mochs@nvidia.com>, Jiandi An
- <jan@nvidia.com>, Jason Gunthorpe <jgg@nvidia.com>,
- "jonathan.cameron@huawei.com" <jonathan.cameron@huawei.com>,
- "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>,
- "zhenzhong.duan@intel.com" <zhenzhong.duan@intel.com>, Krishnakant Jaju
- <kjaju@nvidia.com>
-Subject: RE: [PATCH v2 18/24] hw/arm/tegra241-cmdqv: Read and propagate
- Tegra241 CMDQV errors
-Thread-Topic: [PATCH v2 18/24] hw/arm/tegra241-cmdqv: Read and propagate
- Tegra241 CMDQV errors
-Thread-Index: AQHcl3f9y+i+U9/QGkSwr+6DL/lxT7WBUi2AgAO/QXA=
-Date: Mon, 16 Feb 2026 08:47:27 +0000
-Message-ID: <CH3PR12MB7548181422C31426CC4ED295AB6CA@CH3PR12MB7548.namprd12.prod.outlook.com>
-References: <20260206144823.80655-1-skolothumtho@nvidia.com>
- <20260206144823.80655-19-skolothumtho@nvidia.com>
- <aY+zx++9jISoKBiR@nvidia.com>
-In-Reply-To: <aY+zx++9jISoKBiR@nvidia.com>
-Accept-Language: en-US, en-GB
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: CH3PR12MB7548:EE_|PH7PR12MB7985:EE_
-x-ms-office365-filtering-correlation-id: 65812e4e-4c41-4539-bd27-08de6d38039f
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|366016|376014|1800799024|7053199007|38070700021; 
-x-microsoft-antispam-message-info: =?us-ascii?Q?gQVNSpPbaha5I0642RoxBNA3qtLNiYCreorpNetpPVpKWw7/+vrKV13XtplN?=
- =?us-ascii?Q?V+XpYETy1ruWkRauv6/NeVIGHj+m1raLnz/PyHITXHPH1/V0/LJjraBnMfdi?=
- =?us-ascii?Q?uBhIZof2qRXW9m9B8U8SSyXdQ9vDtMJPPZsVptB/h8MrQIl+HIhfwmt25wA9?=
- =?us-ascii?Q?hOZbxVeCkfuUPF7fScylxCaFtN4OjePA58mbI86fkj0Cir0XQAD8rgsT3qXV?=
- =?us-ascii?Q?gDXM8IEAjH4aVvsWdQMRGPsjCVvsIxw0QF42vpE8FpKEUMYBVgvqJzxgjRQY?=
- =?us-ascii?Q?D8pdhq04UEs02yplg96olmuj/KiOdko4lUa4z5wsY+V7nTL0JRNMRUHzGHAv?=
- =?us-ascii?Q?bZeegfx2okJ9dj04rk9yUz/nlIRD0CGyoh26lzgKYryhF9SWNHpQzt1ckhzM?=
- =?us-ascii?Q?uj3HiLQAu0ZPy87FEsceKa8AdpcjWO+zTAF0h2b8fR4I+P5khq8UDNIXvabo?=
- =?us-ascii?Q?+pJkK2l8+ZDxbA7ZV/U8jQlMJOtgX0C2dwsJE4/YI1ofk2+Lby49l8RFIKnd?=
- =?us-ascii?Q?NONH0Y67mBpFpUWTLTGYy1IBrXagyN4zS0JtokqtqNCtD9hMhjPnSUOTvzKE?=
- =?us-ascii?Q?pCPV93aIh+cJOrhrYL0USIsshrE7yN/CZ/gQ/IIdFcV2/FJqnzI1KJqoQAMQ?=
- =?us-ascii?Q?YCpcYjSEfvTXT/lgk6D3ca8I6TfzoO8HlopaNgpHaVCFm0o6J/p14I6PHszf?=
- =?us-ascii?Q?CSPuy89KoM/P8iJ5ATnrnizU2bGSYQyNBM1lip/kCSJJRFSRr3MhGQZX/bNW?=
- =?us-ascii?Q?WpbCrdcJrrBX+mKlDAxYNLzk+4vvyczaiKDw5oXOsb8Y8AaKgzzm5G1poA7W?=
- =?us-ascii?Q?M0OHBFpC0blJW6pnvAokyLrmB1ME7GXHgoZ1zDRVNRJQ8PCNQI4ST+R+K3yj?=
- =?us-ascii?Q?qEfbhp/HlDzBCz2Trd4zXR/w0PNTFfUfaDPp6vpvnQiBgylYJ1QguEaLoBe+?=
- =?us-ascii?Q?6vBgLO5XgGmV0A/w/U3fck1OA2YyCZt1ePBcVt6kdCqOIvUx5b1Tn2WMQyl8?=
- =?us-ascii?Q?sK7PhNm7F5x+wB8HIWBNxpj6QSpE8SVjuclb1DAUM2KRHMLdlLmrRvz8CbYx?=
- =?us-ascii?Q?AoyQfPMfAWsgw1EsUrAat6Mlp9Sdkz4upXNJrS9xWkgZI5we9dre8jjS8q49?=
- =?us-ascii?Q?7FgBDYm56Rvp/P+DsU/3PSbK9TTZnqkJwVmwBlFKpOOSuIFxknbcckCIOFku?=
- =?us-ascii?Q?BzrsUUX87qeV6NRv6IuNJfLISn/ffBvXGiqaSO90LiImhTStukvrxo30FZCC?=
- =?us-ascii?Q?c7bsfe8Ow9MI6fTEaXoeJ95raECU2O9I0LCrhHVhpGfoT0xON+r/4Oay/kti?=
- =?us-ascii?Q?ZwZxjwWFrqjhG4pZby8rgTKGBU/dH2jJKxpJ/8kbsAQNn0VmLlLfcQiUYD60?=
- =?us-ascii?Q?22SvFPrNreVQXZXY2ozu0TDk2g3VHEbhHhekwMuRcICIGZMMoSi1ckEQmNhU?=
- =?us-ascii?Q?oevAb7fKPvE+BeRPUazMBtCa6InvBOdQJcAVwosowLCuLqDpO8rrytJiRdWh?=
- =?us-ascii?Q?3BKUgwWTed8A42NLNKkM1ox18p+zOBFiKwYHo9MPIVA28qknAYETXbm9uEkY?=
- =?us-ascii?Q?agQktv7ymY5pjAAtCPnlE0rocvomVseVAxuzaNqGlxXH8/VZidD30BqeHFwz?=
- =?us-ascii?Q?ZEsVh+PpKacbtMevaP52MEw=3D?=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:CH3PR12MB7548.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(376014)(1800799024)(7053199007)(38070700021); DIR:OUT;
- SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?QRTjNxV2awhlcECn8R6tGdYyrn/Qxr9eFqANZXeO6tHtQ6lUcYGcL84KZgO0?=
- =?us-ascii?Q?AI3fii5Yyd6laWFMH8s2KcwmecOIC8pbEz48w+eUUuLTYLMmmTBlV7d7ioMH?=
- =?us-ascii?Q?RLoZpsByPrMmFvXWDRdb3ZjND2913/0aqsTOOBOEpC9Akgfc3hm6R4w3KZBB?=
- =?us-ascii?Q?kyNDz1T+l7mrNRkoNmjUw+ma6Ob8eAsw1uGRXuIbl9xggzaBy3v7TOAN0qU3?=
- =?us-ascii?Q?PD/W+EDQlBJ8sIQauFspQIaAVFzrs+lr8VbQeNXNRPjU3iaSv3j5IAmkkoL+?=
- =?us-ascii?Q?PCep5i9XnhW+J0GFbH1RwJ5hnF+FY8G6EvF06EHsc618MGpe/IzH++388BNc?=
- =?us-ascii?Q?toR0oqSEfb58moyGNjBryPDT24oQr3uzX7bM//ecynJY55Y8sCByR8oOwGod?=
- =?us-ascii?Q?cxgLf6Be2RJrWW8RgSn7HB256zI4aHpgGUGxuQECWGtvUeuwL76j73kuU1ke?=
- =?us-ascii?Q?SP0xQKC83uvJ4e0P4TBVfQzdUUk6zD59WUauW0v4w3Pgfs8h1OXbafVNt7Vq?=
- =?us-ascii?Q?TfXWCvcw8YGKRT92qhDu97OIfRehcL1Vj+zZjTajyWEiOvKSp1WeBOBZ9njp?=
- =?us-ascii?Q?94scUkxzA2Q9hGZ1QieqGdw35TsZtwoxSXl8Y2eoQjlSAWGtN9b/1gVdScdQ?=
- =?us-ascii?Q?FTxTl7D+ka1MhFgTUUZ2AsewiHbx0kXalvctoC9v5AD+ROe+KcXvT/stCcZf?=
- =?us-ascii?Q?Sqzaj7CKGVsPfmFBfe0SNypjuCWcy/KU5+HphdGY33wra/HKQxV1R53zhDKH?=
- =?us-ascii?Q?5GFwZG6LkmdrnY2k1s3ITHmJVqI3tFx8rAXiLKSOcz27Mzu42Hu5L8OTXpk4?=
- =?us-ascii?Q?9rmhj0h2cUEntZjQU8pEtF6Yi9ffcVGQgpE40z99w7xywKvQWHyGQzIg5T4p?=
- =?us-ascii?Q?vMFiqdP6oqJ+kajFvKyzW36BIz6/StzpWYXiwwBAXXkbsBfjACbcdMNet7Hg?=
- =?us-ascii?Q?XK+RdKt8wcoTQtkB8iRACuGL/K/ellyKjtUSYhR5e7cq4QrvvOzkP6vE+O1U?=
- =?us-ascii?Q?U7fQjJaRAzjrvZuC807McBAOGYEbTR5OV9/PACQ/yFwbSqDYoAI4YbRzVXEO?=
- =?us-ascii?Q?Iw+DluVfVu4tPlM1i4bQpWupS3wqFG0LkblBNPh6tUqlpE4hsUSHhujR2JET?=
- =?us-ascii?Q?OpaM2Aq/t5E75l5J7CrPypLGd1wnf17AR4cIcJZfWKxFCdYiraFA/tAMzXFV?=
- =?us-ascii?Q?NGzrqPPuu1A2rciB2tu2uXRMCmHi95bqHWWgrA6s+AB4RHhgeesqyvpHxAdH?=
- =?us-ascii?Q?RnXa0wVLHlfKtL2DjnjUAGki3g0cEHmEOZe6zfLzkzookFk74+qUsF6EcScW?=
- =?us-ascii?Q?lAyJH2ffOxLPB+hKLQZ0xrw1n4Lwk7SWO2yisKNwnWvn3lFOcQ9d7WO1fYAj?=
- =?us-ascii?Q?MmKsj/2dYEoyuAFsQVmO5vFzahPJ+pVltcDdCJqPrGbRxrJhMNs+UvBkwpwP?=
- =?us-ascii?Q?jUEeQ4mIl17FIfXoIoilXE74I11cFM9T4pNMkY6ALjIUQI0ze1POoOKya777?=
- =?us-ascii?Q?zBaJKVqgI70fugqQ4cOsRDxBVRBiBkG1glvljUphKEWyB3ja55T3mLpVqKIo?=
- =?us-ascii?Q?uF91MvkZY+EYzbPx2lFCTNtx3O39diFDiYY+UEwRDRIfqL6cOL+4SMr2S90a?=
- =?us-ascii?Q?e5PCpRzk93Y9lrFejOZ8UK7X5PH/Q4AxpHMPsnN9DLDItxRi5JtSU1IWebsL?=
- =?us-ascii?Q?VqoyEqxVrsFVAfGn358w4nkuGVJsPDO/g+bVQrS3MUUni1CTZMfjafRfyHFy?=
- =?us-ascii?Q?YpQX33w3Ag=3D=3D?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1vruIX-00018m-QI
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 03:49:43 -0500
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 61FDsEA24098074; Mon, 16 Feb 2026 08:49:38 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=VN6hw+
+ Bo6aANVYPVi3cGVGyvWTnFELf49KNNqDVxGyM=; b=NCSDk/5CWNwC6a1iyOPTHE
+ 2Ti5NDc1OV9/dSNtn3XTzejC0Oas/4bBp2B7S3q9DYJOVygii2FBuokh1AhjgVqj
+ Zrf+XAvc+q4dg/7A7YIAHrrTgGocIhYZI0yC9uxXFrnypNzzbZ9eFAspVeC9P05y
+ gse+3jERDleAQOS4YD9loISJOuKgRCSAsZzIpDVXDltSBsGBUDi/eGDvQ/DNfVf9
+ tJwh0HaQQa4s/X/kWJdSTAKJvwPTw/k1y97UW59j93MfF+wrpxcueQjsOVrOpunR
+ TWzmoa1yjSXPpKt7Ima0aCsZhRF9IG50wjGIaKy993F0n8MoF03qCfo2hnGRWcQA
+ ==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4cajcj6e1a-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 16 Feb 2026 08:49:37 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 61G8NCEO002862;
+ Mon, 16 Feb 2026 08:49:36 GMT
+Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4cb5kj4fnh-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 16 Feb 2026 08:49:36 +0000
+Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
+ [10.20.54.103])
+ by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 61G8nWNx51642656
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 16 Feb 2026 08:49:33 GMT
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id DC2A520043;
+ Mon, 16 Feb 2026 08:49:32 +0000 (GMT)
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id BB81020040;
+ Mon, 16 Feb 2026 08:49:30 +0000 (GMT)
+Received: from [9.109.199.210] (unknown [9.109.199.210])
+ by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 16 Feb 2026 08:49:30 +0000 (GMT)
+Message-ID: <e7eb830a-4bcc-4a27-a349-56d45e38eac9@linux.ibm.com>
+Date: Mon, 16 Feb 2026 14:19:29 +0530
 MIME-Version: 1.0
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB7548.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 65812e4e-4c41-4539-bd27-08de6d38039f
-X-MS-Exchange-CrossTenant-originalarrivaltime: 16 Feb 2026 08:47:27.9446 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: s8dgjDOez5BS7usGWYn0g02YprwSYNID4oEA/dgIr5uAseD2Jx/E7Dtjoj/5q8VBey3uXKb72fDrqwgOJecWfQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB7985
-Received-SPF: permerror client-ip=2a01:111:f403:c10d::1;
- envelope-from=skolothumtho@nvidia.com;
- helo=SN4PR2101CU001.outbound.protection.outlook.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FORGED_SPF_HELO=1, SPF_HELO_PASS=-0.001,
- SPF_NONE=0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 4/4] tests/functional/ppc64: Remove custom migration
+ routine
+To: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
+Cc: thuth@redhat.com, berrange@redhat.com, peterx@redhat.com,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>
+References: <20260204172332.21367-1-farosas@suse.de>
+ <20260204172332.21367-5-farosas@suse.de>
+Content-Language: en-US
+From: Aditya Gupta <adityag@linux.ibm.com>
+In-Reply-To: <20260204172332.21367-5-farosas@suse.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-ORIG-GUID: HsqBkC8jMMIIG0PJ7ETlzoHWzOSL7-d4
+X-Authority-Analysis: v=2.4 cv=Md9hep/f c=1 sm=1 tr=0 ts=6992da21 cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=IkcTkHD0fZMA:10 a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22 a=VnNF1IyMAAAA:8
+ a=3uas-pzL17UqV6fx6mkA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjE2MDA3MiBTYWx0ZWRfX4IKvc2FbTx1Z
+ r7RpdtaJwRr6R4DEIwx6HwJaziJScDORA4rf3y6cRu5pfg67yih2tZ//Ck1aKj0R34FzFPwjhMX
+ h8Sm8PR6GzH9BnrHp8rWwZrCm80JrWZtFgyvWI9X0l//23Zze7Oz6IRCgmD2d2feV3l6JeUwmHQ
+ FJ749XQ9fiKyFLG4t1yxU1UO+7h3r3Q/55t/+ArVezz3TtOASdDVQ1dsVz9gKRICZXj3UKMxLS9
+ 7hnunB2LwhVvhaKjvrFaly2hpH6ajxxr3+rM+R9FZUFHnJPeR8DBSrfctvOOcjoMH4xBQRnWDz5
+ ecEJSvVAAV5gRQRqsihf8SJrmYXYMduFiXi3SRnWoV9soPHygjfIoqX8COS187+CazLhGzI0Jdd
+ 0kig+x53Gvs0JhEtIwwkptIHvjhl0AQx01zfu0gi1qGIGSnbKhsRvpuz5dyCNIQox6BJ+C3kNVm
+ 6fdUX4AOrirK0VKwfzw==
+X-Proofpoint-GUID: sXimLXyok9KLii1xAQsWZ0LHiWfRlitj
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-02-16_03,2026-02-16_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 impostorscore=0 lowpriorityscore=0 spamscore=0 adultscore=0
+ priorityscore=1501 suspectscore=0 malwarescore=0 phishscore=0 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2601150000 definitions=main-2602160072
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=adityag@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -181,82 +128,36 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
+On 04/02/26 22:53, Fabiano Rosas wrote:
+> Don't implement a custom migration routine at PpcMigrationTest and
+> instead reuse the generic one from MigrationTest.
+>
+> This removes the dependency of PpcMigrationTest from
+> PseriesMachine. Having one test import another causes unittest code to
+> instantiate the imported test, resulting in the setup and teardown
+> methods being invoked for the imported test class, even if no test
+> from that class will be executed.
+>
+> If run in parallel, the extra setup/teardown methods that result from
+> importing can race with the ones from the actual test being executed
+> and cause the following error:
+>
+> File "<SRC_DIR>/tests/functional/qemu_test/testcase.py", line 238, in tearDown
+> shutil.rmtree(self.workdir)
+> ...
+> FileNotFoundError: [Errno 2] No such file or directory:
+> '<SRC_DIR>/build/tests/functional/ppc64/.../test_migration_with_exec/scratch'
+>
+> Fixes: f4e34d0fd5 ("tests/functional: Add a OS level migration test for pseries")
+> Reported-by: Aditya Gupta <adityag@linux.ibm.com>
+> Signed-off-by: Fabiano Rosas <farosas@suse.de>
 
-> -----Original Message-----
-> From: Nicolin Chen <nicolinc@nvidia.com>
-> Sent: 13 February 2026 23:29
-> To: Shameer Kolothum Thodi <skolothumtho@nvidia.com>
-> Cc: qemu-arm@nongnu.org; qemu-devel@nongnu.org;
-> eric.auger@redhat.com; peter.maydell@linaro.org; clg@redhat.com;
-> alex@shazbot.org; Nathan Chen <nathanc@nvidia.com>; Matt Ochs
-> <mochs@nvidia.com>; Jiandi An <jan@nvidia.com>; Jason Gunthorpe
-> <jgg@nvidia.com>; jonathan.cameron@huawei.com;
-> zhangfei.gao@linaro.org; zhenzhong.duan@intel.com; Krishnakant Jaju
-> <kjaju@nvidia.com>
-> Subject: Re: [PATCH v2 18/24] hw/arm/tegra241-cmdqv: Read and propagate
-> Tegra241 CMDQV errors
->=20
-> On Fri, Feb 06, 2026 at 02:48:17PM +0000, Shameer Kolothum wrote:
-> > +static void tegra241_cmdqv_event_read(void *opaque)
-> > +{
-> [...]
-> > +    bytes =3D read(cmdqv->veventq->veventq_fd, &buf, sizeof(buf));
-> > +    if (bytes <=3D 0) {
-> > +        if (errno =3D=3D EAGAIN || errno =3D=3D EINTR) {
-> > +            return;
-> > +        }
-> > +        error_report_once("Tegra241 CMDQV: vEVENTQ: read failed (%m)")=
-;
-> > +        return;
-> > +    }
-> > +
-> > +    if (bytes =3D=3D sizeof(buf.hdr) &&
-> > +        (buf.hdr.flags & IOMMU_VEVENTQ_FLAG_LOST_EVENTS)) {
-> > +        error_report_once("Tegra241 CMDQV: vEVENTQ has lost events");
-> > +        return;
-> > +    }
-> > +
-> > +    if (bytes < sizeof(buf)) {
-> > +        error_report_once("Tegra241 `CMDQV: vEVENTQ: incomplete read
-> (%zd/%zd bytes)",
-> > +                          bytes, sizeof(buf));
-> > +        cmdqv->event_start =3D false;
-> > +        return;
-> > +    }
-> > +
-> > +    /* Check sequence in hdr for lost events if any */
-> > +    if (cmdqv->event_start && (buf.hdr.sequence - last_seq !=3D 1)) {
-> > +        error_report_once("Tegra241 CMDQV: vEVENTQ: detected lost %u
-> event(s)",
-> > +                          buf.hdr.sequence - last_seq - 1);
-> > +    }
->=20
-> It shares the exact same routine with smmuv3_accel_event_read().
-> Can we put these into a common helper?
 
-Yes. I think you had the same comment in RFC as well. I have noted that as =
-a
-TODO in the cover letter for this. Will do.
+Tested-by: Aditya Gupta <adityag@linux.ibm.com>
 
-> I also suggested in the veventq series that event_start/last_seq
-> could be moved into the common structure.
+Thank you for fixing the issue Fabiano. Now I don't see any issues 
+running the tests in parallel.
+- Aditya G
 
-Yes. I see that.
-=20
-> >      veventq =3D g_new(IOMMUFDVeventq, 1);
-> >      veventq->veventq_id =3D veventq_id;
-> >      veventq->veventq_fd =3D veventq_fd;
-> >      veventq->viommu =3D viommu;
-> >      cmdqv->veventq =3D veventq;
-> >
-> > +    /* Set up event handler for veventq fd */
-> > +    qemu_set_fd_handler(veventq_fd, tegra241_cmdqv_event_read, NULL,
-> s);
->=20
-> Should pass in "cmdqv" instead of "s".
 
-Ah..Right.
-
-Thanks,
-Shameer
 
