@@ -4,56 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACA38E7BD92
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 11:22:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CF8EE7BD95
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 11:22:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vrwfj-0000ts-S0; Mon, 16 Feb 2026 06:21:48 -0500
+	id 1vrweE-0002hq-8Z; Mon, 16 Feb 2026 06:20:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vrwdT-0008Uh-Gq
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 06:19:28 -0500
+ id 1vrwbu-0006B2-Dz
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 06:17:51 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vrwdQ-0008Un-Il
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 06:19:27 -0500
+ id 1vrwbo-00085t-9s
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 06:17:49 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771240763;
+ s=mimecast20190719; t=1771240658;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=j/L1qp3ldn5ldXcfT6BhehGpgMBZTb6wUy0XgMwt8eQ=;
- b=VgMVArvTB8xJTwvc7rh/ZGwk+mjQkxXXJEmHYZ0l4BESvvZF/EDwV3ydppf66QdA8EG3kI
- 3VKdbOm3V2J0pW7pwb1PhBKbuneXtVDtXqgNHhzBAIikfS4mqsI9fPnK3CWs9RetprJd/H
- ahMlnWaStCoqI5Pa5Q0oQ1PoEljuxSs=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=WtzBFPtZnBgBep7PFOTmKmy8bJLlcZgL5VlJnM7+pJ0=;
+ b=fewvYkhqYEDmCI7gNbUUPvfaoMZlrQYlhcKXTlyFdaxUAUrzibHraL821YbzcLSp8Y+8bF
+ cvaweGlFnzw+4QpwMl5xpIivZkj8cpGv1qYYs2z1eFokmhF2ClfpKwbzjChynYE7wOYwrp
+ /cHgeyoI0Y3HcEE3WBW48eLNA+L+IRk=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-689-ij9K_VF3OMeyv3ibV2-OZA-1; Mon,
- 16 Feb 2026 06:19:20 -0500
-X-MC-Unique: ij9K_VF3OMeyv3ibV2-OZA-1
-X-Mimecast-MFC-AGG-ID: ij9K_VF3OMeyv3ibV2-OZA_1771240758
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-691-OyzgE7IpMM2b6tCvuj9R3Q-1; Mon,
+ 16 Feb 2026 06:17:35 -0500
+X-MC-Unique: OyzgE7IpMM2b6tCvuj9R3Q-1
+X-Mimecast-MFC-AGG-ID: OyzgE7IpMM2b6tCvuj9R3Q_1771240653
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C7B711956050; Mon, 16 Feb 2026 11:19:18 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 21D4A19560AA; Mon, 16 Feb 2026 11:17:33 +0000 (UTC)
 Received: from localhost (unknown [10.45.242.26])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id A059519560A2; Mon, 16 Feb 2026 11:19:17 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 7902030001A5; Mon, 16 Feb 2026 11:17:32 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Mon, 16 Feb 2026 12:16:07 +0100
-Subject: [PATCH 78/85] audio: replace DEBUG_AUDIO with trace
+Date: Mon, 16 Feb 2026 12:15:30 +0100
+Subject: [PATCH 41/85] audio: make audio_driver init() & fini() optional
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260216-audio-v1-78-e676662e4514@redhat.com>
+Message-Id: <20260216-audio-v1-41-e676662e4514@redhat.com>
 References: <20260216-audio-v1-0-e676662e4514@redhat.com>
 In-Reply-To: <20260216-audio-v1-0-e676662e4514@redhat.com>
 To: qemu-devel@nongnu.org
@@ -73,24 +73,24 @@ Cc: Gerd Hoffmann <kraxel@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
  Mark Cave-Ayland <mark.caveayland@nutanix.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2400;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1273;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=xQHNvgrEZK26gRRFzeS01/f7AY6vbpJbR/MSqj2WBVI=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBpkvxSjsTCtVBufqbWe12dQHHQP4s2y6y0BeiKl
- 6xSWk4QUzeJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaZL8UgAKCRDa6OEJdZac
- 5UxLEACRC7wS8hTEs8W4MzLQqSnqwSWssu9QpJ6ji7QfaHvm3NCgQQ3Bzq0KH8ql/P1Iev0CNFi
- MOt9Ma3s4FOsX3tHDzeTlqQICKX5EZIESDFeQ9/sJdkjoQ4rcqHGcsDZF+7vVKWlP4LM2A21Fel
- JfVLs6lThdyoV8fJdsliaJptYgtQ+3t9y0MrYgFrp/YJviL8tM0Q2pnlglbVyo4HS3h4JpH8L3i
- P7jE4vpsZq/tSL2ubW76BBxqlDVerx6CNQZVR99G/tG8L0Zs3cscckS3hgwQbOYqltchzhMQaW/
- 2mI7X+YfoIYG4WnyZnwY4dIdvTn1SfyN7xWoMd8bNJASQODHa+R/+X79rdUpHCaPBI9DiAyMyHE
- HfuNnNv5X90Y0oeTSCx2HFsP2xAqSiGKjiRwgwHUEBNYVkdlJAW+JhSEXOspYSxQ2C07PZbuQTz
- P0w5OD5N6TyUxPGr2a4KAMF2TtOYIq6/97MvyirRuhysY8BVHr8U7UeDt2RFszuBLWc47uaLG0H
- 6pK7EIWpIqZ8HiBqlwCsOxRmoSyIM9RvpVljHvE7RQexh1luM4Db1oI3pt/Kwn+6pj4w2DoGIho
- I8v5aGf2zwGbIiV+zUqPeiKfarIYX3ZvScTDSkJyIAmQOMG8nkDK9/0TciQNdPeZgD7PGBDkLCO
- 0FLSjghCKLeYq2Q==
+ bh=XQa2aioA9AFhg3/Oy50D65dq2g48xqh2ie7D90kz/0Q=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBpkvxQcgsxG/QPT1xwp6eTSva+fkwZaMPVgDQ5s
+ tdKRSBWNNuJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaZL8UAAKCRDa6OEJdZac
+ 5RrbEAC6nuwwg50L+LZw27hDN+5qNR4U4jwGL9q6Dg0pxY1loNf3ojd3vqw8UrE51gQPdQpEX12
+ WfA2XEoSjxZ4qvwU8Q6CcvMXM03QGeRuDkYZpRy9ynry6jx1e+5+0/dMIzzd/IybXsRQnrADoDX
+ 9IbM243vhrMwoUUmlL9Er/+VM2764zELP3e2fsym3lXGOwGKyYt1ddmv6Jm0i8CKqVxlTwbRtRN
+ XHF1MQATkyWwnhHFXMH5o22Y/y0sLCqFxyyd8YGYykG6j53OvvIB/tBF9XGo9rVZiDDFMnrKywB
+ xYf8TBdBU7xEJeccI/nMyNgDrcWHK1XaZF/6aWPUY4cXYVz2z4n8vtpXxwE3aKPlk2i68EfaxNY
+ pD4u3r0XF5f6kYpdCHAVUl1GDoFpU7oOFmM16ViX05+wx2udhBdD0uqEK/iLraVQy+iuVBcrU/2
+ 6SVVPRbdDmX9EOGuRqIdGP2eNyLjzHI4X57LHB8DNb++KjAI8hA8CN1mPl5htrWFnsv1q28iAGD
+ B57bJXSc8kvN+JcDRH3Xgb+Srkn987dEYWP4jooaqLQ5t0S5DLUOIhIHNxatH0I4fpvkkQ5XlKz
+ EH23S0CKio0QEk0+6+PzJAXwycG8iNqut9ReKKDcJfFnCsJ4HA8zFBejrP0oD/J9fpl34Q+YmIG
+ GuvJIamUvPR7qPA==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -117,64 +117,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+The next patches are going to remove usage of the driver callbacks in
+favor of QOM realize/finalize.
+
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
 ---
- audio/audio_template.h  | 10 +++++-----
- audio/audio-mixeng-be.c |  9 ---------
- audio/trace-events      |  1 +
- 3 files changed, 6 insertions(+), 14 deletions(-)
+ audio/audio-mixeng-be.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/audio/audio_template.h b/audio/audio_template.h
-index c47a2f202f0..e884c8e9b1a 100644
---- a/audio/audio_template.h
-+++ b/audio/audio_template.h
-@@ -556,11 +556,11 @@ static SW *glue(audio_mixeng_backend_open_, TYPE) (
-     sw->callback.fn = callback_fn;
-     sw->callback.opaque = callback_opaque;
- 
--#ifdef DEBUG_AUDIO
--    dolog ("%s\n", name);
--    audio_pcm_print_info ("hw", &sw->hw->info);
--    audio_pcm_print_info ("sw", &sw->info);
--#endif
-+    trace_audio_voice_pair(G_STRINGIFY(TYPE), name,
-+                           AudioFormat_str(sw->hw->info.af),
-+                           sw->hw->info.freq, sw->hw->info.nchannels,
-+                           AudioFormat_str(sw->info.af),
-+                           sw->info.freq, sw->info.nchannels);
- 
-     return sw;
- 
 diff --git a/audio/audio-mixeng-be.c b/audio/audio-mixeng-be.c
-index 3dd9d17dd25..7eabb1c2505 100644
+index f906c84bf7c..45873646b3c 100644
 --- a/audio/audio-mixeng-be.c
 +++ b/audio/audio-mixeng-be.c
-@@ -620,15 +620,6 @@ static size_t audio_pcm_sw_write(SWVoiceOut *sw, void *buf, size_t buf_len)
-     return total_in * sw->info.bytes_per_frame;
- }
+@@ -1521,9 +1521,11 @@ static bool audio_mixeng_backend_realize(AudioBackend *abe,
+     audio_driver *drv = AUDIO_MIXENG_BACKEND_GET_CLASS(be)->driver;
  
--#ifdef DEBUG_AUDIO
--static void audio_pcm_print_info (const char *cap, struct audio_pcm_info *info)
--{
--    dolog("%s: %s, freq %d, nchan %d\n",
--          cap, AudioFormat_str(info->af), info->freq,
--          info->nchannels);
--}
--#endif
--
- #define DAC
- #include "audio_template.h"
- #undef DAC
-diff --git a/audio/trace-events b/audio/trace-events
-index 7a73d6eb84f..ed04792d508 100644
---- a/audio/trace-events
-+++ b/audio/trace-events
-@@ -74,3 +74,4 @@ audio_out_played(size_t played) "played=%zu"
- # audio_template.h
- audio_open_out(const char *name, int freq, int nchannels, int fmt) "open %s, freq %d, nchannels %d, fmt %d"
- audio_open_in(const char *name, int freq, int nchannels, int fmt) "open %s, freq %d, nchannels %d, fmt %d"
-+audio_voice_pair(const char *type, const char *name, const char *hw_fmt, int hw_freq, int hw_nchannels, const char *sw_fmt, int sw_freq, int sw_nchannels) "%s: name=%s hw=%s/%d/%d sw=%s/%d/%d"
+     be->dev = dev;
+-    be->drv_opaque = drv->init(be->dev, errp);
+-    if (!be->drv_opaque) {
+-        return false;
++    if (drv->init != NULL) {
++        be->drv_opaque = drv->init(be->dev, errp);
++        if (!be->drv_opaque) {
++            return false;
++        }
+     }
+ 
+     if (!drv->pcm_ops->get_buffer_in) {
+@@ -1664,7 +1666,9 @@ static void audio_mixeng_backend_finalize(Object *obj)
+     }
+ 
+     if (s->drv) {
+-        s->drv->fini (s->drv_opaque);
++        if (s->drv->fini) {
++            s->drv->fini (s->drv_opaque);
++        }
+         s->drv = NULL;
+     }
+ 
 
 -- 
 2.53.0
