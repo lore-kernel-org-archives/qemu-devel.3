@@ -4,57 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E425E7BD92
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 11:28:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1913E7BD92
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 11:28:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vrwfk-0000z7-Gd; Mon, 16 Feb 2026 06:21:48 -0500
+	id 1vrwfZ-0008F0-HV; Mon, 16 Feb 2026 06:21:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vrwcr-0007IG-WF
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 06:18:51 -0500
+ id 1vrwdG-0007kz-RP
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 06:19:15 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vrwcp-0008ML-F1
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 06:18:49 -0500
+ id 1vrwdF-0008SJ-2V
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 06:19:14 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771240726;
+ s=mimecast20190719; t=1771240752;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=hLSoXVhoQIeUoHnSqf7NdVnGnnPXay6u7AUxyZ65rWQ=;
- b=NLbMazNnxJgLHPOGy6Fe6CWYG/MeH3ZEndh9AXeUxc9cB/ToaoWQwsJ6ouySd9kfx5QhmI
- 3Sc6RV7VLbEQBjVrr+X031j7bAXbzjULdjwQnYV8xqxJIETOmoaZNLARGiLT3hoVa8b4eU
- Isbz0qJGu61rL7RmGcqMhS1+jkkE/ZU=
+ bh=jh01TnR1WKr53dWUDRQLe2CRWCIsdVlOiG3qS34GaeQ=;
+ b=Qr8v+z9+5DPTyaREJwtAcA3sEYWk9i6iZL0fWPlOjnBHIyiunWs4U5bVIz5YjR/oBY7khI
+ QP99EGyVj65r97oBJBaXIKz3DcMFPJ7qCVZsoS7AFdxjLPRfLUwCw4DEZY48VldlnX+9U4
+ zVksCSu0TMtgaMiZGJoY6rP8xGFGwz0=
 Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-599-u2Bp3mhwM0ybXtk98bioWg-1; Mon,
- 16 Feb 2026 06:18:43 -0500
-X-MC-Unique: u2Bp3mhwM0ybXtk98bioWg-1
-X-Mimecast-MFC-AGG-ID: u2Bp3mhwM0ybXtk98bioWg_1771240721
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-383-t-1jchMZMYSArAE2aATl6g-1; Mon,
+ 16 Feb 2026 06:19:09 -0500
+X-MC-Unique: t-1jchMZMYSArAE2aATl6g-1
+X-Mimecast-MFC-AGG-ID: t-1jchMZMYSArAE2aATl6g_1771240747
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 58E4E18004BB; Mon, 16 Feb 2026 11:18:41 +0000 (UTC)
+ id 07E8C1800342; Mon, 16 Feb 2026 11:19:07 +0000 (UTC)
 Received: from localhost (unknown [10.45.242.26])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id AA5971800464; Mon, 16 Feb 2026 11:18:40 +0000 (UTC)
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id D83CC18004AD; Mon, 16 Feb 2026 11:19:05 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Mon, 16 Feb 2026 12:15:54 +0100
-Subject: [PATCH 65/85] audio/oss: replace custom logging with report &
- trace
+Date: Mon, 16 Feb 2026 12:16:03 +0100
+Subject: [PATCH 74/85] audio: replace ldebug with trace events
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260216-audio-v1-65-e676662e4514@redhat.com>
+Message-Id: <20260216-audio-v1-74-e676662e4514@redhat.com>
 References: <20260216-audio-v1-0-e676662e4514@redhat.com>
 In-Reply-To: <20260216-audio-v1-0-e676662e4514@redhat.com>
 To: qemu-devel@nongnu.org
@@ -74,24 +73,24 @@ Cc: Gerd Hoffmann <kraxel@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
  Mark Cave-Ayland <mark.caveayland@nutanix.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=16589;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2585;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=lywGw39/K7tbYnTEejhPkXeJI8LPyKiBTCBxJgYT1QE=;
- b=kA0DAAoB2ujhCXWWnOUByyZiAGmS/FGgfCj2YjnLyA349Yy2aVqG26hNPn8fFkoBofZH157sz
- okCMwQAAQoAHRYhBIepvZM/h8YG0nb2Ldro4Ql1lpzlBQJpkvxRAAoJENro4Ql1lpzlt5gP/AxQ
- tV8FrcIA7ePhB3T8atS+KwV57ns5GnHlwvAH5rDBqRziozFSsnknJZz0pIcHXxcLiBc/f7Iv2JD
- a1aNpweI3DIha8ez0g8WNd/in6t9hxEaFMl4gnmxgr/n29dtYluRRwVISYLrQKqAK1uISTUiINq
- q9yptjMhUkbp5rWJ9HJtzFnKshz3BAPks4Fd/cJfvHvd6oo/jENTc9GFH/YHMhwMhX8S2y/nkb/
- NyeqscBOMee9tarX/i58azdCiGYqYgCApl1ItJnd7o8G7Z/dGf6+nM2XqaGWbH1rHm8YhrWYqHg
- n0JEMaTLORUbcUSEhVwkhZhn2xUGzLD6CREcOw2dxZwhWU3No5ANwmBx9z0BAlvKVgbQOxS7MRL
- y/DvfyCPPy+Ssc6yoSe5tIT0VDCa+NCGBNkOeq8Plx1/dv1JZ7aLpBc1C28S/XRib4Q3l1zsNc1
- 4O7L3IRpx1KcVZqwzT65R2vzJW4XLdIq+DE+7d2GBrQ56D7eb4yZVoPyWDndiPZUh2XjtDHMoWi
- 0AM8Lio4ObSYR2E7n9+X7PsG4mVuI0VkxIVX93/qLMj7PKrPjO9J6Vx0i7j5USauZlmCOcCLUo8
- GgWm2UOTvBvtMeRL+6FRtSSzvdMzUUyUOiCqZxDfBzgTw+am9jxKtkg+aXKkiMfGBHpGba8wTZA
- DaRYw
+ bh=LJcSuW2BtX9Mst8LxXKghg7ubBSgT/CUaX2Tj3sx1Wg=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBpkvxSPE7di7Rch31YMastXMAVy+GZfzsJE4IK6
+ Fvi8O83bZqJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaZL8UgAKCRDa6OEJdZac
+ 5T+GEACpbLJzGOjg525NzPv4kC8pvkMsd0iF3XyMVgKJam1cBlQj3If6dK7B8zrxLr6BFknjArQ
+ ySqgc1cXCqWLFgXK4BMJcHo5CaL8u/DHoi1lJFSbZPa+NoBEPGUB8wyGBt9XHsYytZenl7wUXFh
+ vM6h/Zf+lGgdEykhcOCMTMx27HyCWYOehMkaHxvBBxG0PbsVIr3z7BbJllfUWG75bPZijIBe8VK
+ yikCQXRwIhP3WfGV3DgTl31aWi2WuZ3J86HhKeT+7pAIwP6vO3yvZ/zmr7VqH3qzJJOv+rRzWb2
+ NqMtIlJ5Q+nhaelSKGv8fHPak1ZQfPvEGbUeMcNLA25auYn6u+eDKs5PxsFJhlcQ6ukmGUFuj+T
+ emyrxm6uBHi9u313nbGOiOjH5NcCfJJu8tbkEjUHi3b0C6s8wED1MJFeO7pAP1aQl7Q0j2kFXv0
+ 1pk8oozJhDROqsGgwEgnV6S1xEXoEBaA1OgjEjWW3CjoGg0ThJUX+Sv2SeEDMYBdrmfPjAVcxdu
+ GpFi+SNC05FTnDNB7BafVusVJoozRXEcFi/k5wmYawxlmmh7bpOl0uG6u7yGQHShan845xSZrtt
+ 1C8it1U+Jmz/hkiO6SFY45YeG6vVaXDP3W3sMmwQiAUHmyaubvCB1G1lE5WK1MnLbevRjvAriTt
+ ksLlNbUW3axPwlQ==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -118,442 +117,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Replace the custom audio logging infrastructure with standard QEMU
-error reporting and tracing.
+Replace the ldebug macro calls with proper trace events:
+- audio_get_avail: traces available samples in capture stream
+- audio_open_out/audio_open_in: traces stream open parameters
 
-Note the patch drops DEBUG_MISMATCH condition, and now always trace
-actual audio parameters.
+This provides structured tracing that can be enabled at runtime
+without requiring debug builds.
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
 ---
- audio/ossaudio.c   | 176 +++++++++++++++++++++++------------------------------
- audio/trace-events |   5 ++
- 2 files changed, 81 insertions(+), 100 deletions(-)
+ audio/audio_template.h  | 7 +++++--
+ audio/audio-mixeng-be.c | 6 +-----
+ audio/trace-events      | 7 +++++++
+ 3 files changed, 13 insertions(+), 7 deletions(-)
 
-diff --git a/audio/ossaudio.c b/audio/ossaudio.c
-index d12c65dd0d7..81f49f9a7e7 100644
---- a/audio/ossaudio.c
-+++ b/audio/ossaudio.c
-@@ -31,11 +31,10 @@
- #include "qemu/host-utils.h"
- #include "qapi/error.h"
- #include "qemu/audio.h"
-+#include "qemu/error-report.h"
- #include "qom/object.h"
--#include "trace.h"
--
--#define AUDIO_CAP "oss"
- #include "audio_int.h"
-+#include "trace.h"
+diff --git a/audio/audio_template.h b/audio/audio_template.h
+index 3da91a4782c..c47a2f202f0 100644
+--- a/audio/audio_template.h
++++ b/audio/audio_template.h
+@@ -507,8 +507,11 @@ static SW *glue(audio_mixeng_backend_open_, TYPE) (
+     k = AUDIO_MIXENG_BACKEND_GET_CLASS(s);
+     pdo = glue(audio_get_pdo_, TYPE)(s->dev);
  
- #define TYPE_AUDIO_OSS "audio-oss"
- OBJECT_DECLARE_SIMPLE_TYPE(AudioOss, AUDIO_OSS)
-@@ -76,43 +75,40 @@ struct oss_params {
-     int fragsize;
- };
+-    ldebug ("open %s, freq %d, nchannels %d, fmt %d\n",
+-            name, as->freq, as->nchannels, as->fmt);
++#ifdef DAC
++    trace_audio_open_out(name, as->freq, as->nchannels, as->fmt);
++#else
++    trace_audio_open_in(name, as->freq, as->nchannels, as->fmt);
++#endif
  
--static void G_GNUC_PRINTF (2, 3) oss_logerr (int err, const char *fmt, ...)
-+static void G_GNUC_PRINTF(2, 3) oss_logerr(int err, const char *fmt, ...)
- {
-     va_list ap;
- 
--    va_start (ap, fmt);
--    AUD_vlog (AUDIO_CAP, fmt, ap);
--    va_end (ap);
-+    error_printf("oss: ");
-+    va_start(ap, fmt);
-+    error_vprintf(fmt, ap);
-+    va_end(ap);
- 
--    AUD_log (AUDIO_CAP, "Reason: %s\n", strerror (err));
-+    error_printf(" Reason: %s\n", strerror(err));
- }
- 
--static void G_GNUC_PRINTF (3, 4) oss_logerr2 (
--    int err,
--    const char *typ,
--    const char *fmt,
--    ...
--    )
-+static void G_GNUC_PRINTF(3, 4) oss_logerr2(int err, const char *typ,
-+                                            const char *fmt, ...)
- {
-     va_list ap;
- 
--    AUD_log (AUDIO_CAP, "Could not initialize %s\n", typ);
-+    error_printf("oss: Could not initialize %s: ", typ);
- 
--    va_start (ap, fmt);
--    AUD_vlog (AUDIO_CAP, fmt, ap);
--    va_end (ap);
-+    va_start(ap, fmt);
-+    error_vprintf(fmt, ap);
-+    va_end(ap);
- 
--    AUD_log (AUDIO_CAP, "Reason: %s\n", strerror (err));
-+    error_printf(" Reason: %s\n", strerror(err));
- }
- 
--static void oss_anal_close (int *fdp)
-+static void oss_anal_close(int *fdp)
- {
-     int err;
- 
--    qemu_set_fd_handler (*fdp, NULL, NULL, NULL);
--    err = close (*fdp);
-+    qemu_set_fd_handler(*fdp, NULL, NULL, NULL);
-+    err = close(*fdp);
-     if (err) {
--        oss_logerr (errno, "Failed to close file(fd=%d)\n", *fdp);
-+        oss_logerr(errno, "Failed to close file(fd=%d)", *fdp);
-     }
-     *fdp = -1;
- }
-@@ -159,10 +155,7 @@ static int aud_to_ossfmt(AudioFormat fmt, bool big_endian)
-         return big_endian ? AFMT_U16_BE : AFMT_U16_LE;
- 
-     default:
--        dolog ("Internal logic error: Bad audio format %d\n", fmt);
--#ifdef DEBUG_AUDIO
--        abort ();
--#endif
-+        error_report("oss: Internal logic error: Bad audio format %d", fmt);
-         return AFMT_U8;
-     }
- }
-@@ -201,27 +194,13 @@ static int oss_to_audfmt (int ossfmt, AudioFormat *fmt, int *endianness)
-         break;
- 
-     default:
--        dolog ("Unrecognized audio format %d\n", ossfmt);
-+        error_report("oss: Unrecognized audio format %d", ossfmt);
-         return -1;
-     }
- 
-     return 0;
- }
- 
--#if defined DEBUG_MISMATCHES || defined DEBUG
--static void oss_dump_info (struct oss_params *req, struct oss_params *obt)
--{
--    dolog ("parameter | requested value | obtained value\n");
--    dolog ("format    |      %10d |     %10d\n", req->fmt, obt->fmt);
--    dolog ("channels  |      %10d |     %10d\n",
--           req->nchannels, obt->nchannels);
--    dolog ("frequency |      %10d |     %10d\n", req->freq, obt->freq);
--    dolog ("nfrags    |      %10d |     %10d\n", req->nfrags, obt->nfrags);
--    dolog ("fragsize  |      %10d |     %10d\n",
--           req->fragsize, obt->fragsize);
--}
--#endif
--
- #ifdef USE_DSP_POLICY
- static int oss_get_version (int fd, int *version, const char *typ)
- {
-@@ -240,7 +219,7 @@ static int oss_get_version (int fd, int *version, const char *typ)
-             return 0;
-         }
- #endif
--        oss_logerr2 (errno, typ, "Failed to get OSS version\n");
-+        oss_logerr2(errno, typ, "Failed to get OSS version");
-         return -1;
-     }
-     return 0;
-@@ -269,7 +248,7 @@ static int oss_open(int in, struct oss_params *req, audsettings *as,
- 
-     fd = open (dspname, oflags | O_NONBLOCK);
-     if (-1 == fd) {
--        oss_logerr2 (errno, typ, "Failed to open `%s'\n", dspname);
-+        oss_logerr2(errno, typ, "Failed to open '%s'", dspname);
-         return -1;
-     }
- 
-@@ -281,23 +260,23 @@ static int oss_open(int in, struct oss_params *req, audsettings *as,
-         qapi_AudiodevOssPerDirectionOptions_base(opdo), as, 23220);
- 
-     if (ioctl (fd, SNDCTL_DSP_SAMPLESIZE, &fmt)) {
--        oss_logerr2 (errno, typ, "Failed to set sample size %d\n", req->fmt);
-+        oss_logerr2(errno, typ, "Failed to set sample size %d", req->fmt);
-         goto err;
-     }
- 
-     if (ioctl (fd, SNDCTL_DSP_CHANNELS, &nchannels)) {
--        oss_logerr2 (errno, typ, "Failed to set number of channels %d\n",
--                     req->nchannels);
-+        oss_logerr2(errno, typ, "Failed to set number of channels %d",
-+                    req->nchannels);
-         goto err;
-     }
- 
-     if (ioctl (fd, SNDCTL_DSP_SPEED, &freq)) {
--        oss_logerr2 (errno, typ, "Failed to set frequency %d\n", req->freq);
-+        oss_logerr2(errno, typ, "Failed to set frequency %d", req->freq);
-         goto err;
-     }
- 
-     if (ioctl (fd, SNDCTL_DSP_NONBLOCK, NULL)) {
--        oss_logerr2 (errno, typ, "Failed to set non-blocking mode\n");
-+        oss_logerr2(errno, typ, "Failed to set non-blocking mode");
-         goto err;
-     }
- 
-@@ -311,9 +290,9 @@ static int oss_open(int in, struct oss_params *req, audsettings *as,
-             if (version >= 0x040000) {
-                 int policy2 = policy;
-                 if (ioctl(fd, SNDCTL_DSP_POLICY, &policy2)) {
--                    oss_logerr2 (errno, typ,
--                                 "Failed to set timing policy to %d\n",
--                                 policy);
-+                    oss_logerr2(errno, typ,
-+                                "Failed to set timing policy to %d",
-+                                policy);
-                     goto err;
-                 }
-                 setfragment = 0;
-@@ -325,20 +304,20 @@ static int oss_open(int in, struct oss_params *req, audsettings *as,
-     if (setfragment) {
-         int mmmmssss = (req->nfrags << 16) | ctz32 (req->fragsize);
-         if (ioctl (fd, SNDCTL_DSP_SETFRAGMENT, &mmmmssss)) {
--            oss_logerr2 (errno, typ, "Failed to set buffer length (%d, %d)\n",
--                         req->nfrags, req->fragsize);
-+            oss_logerr2(errno, typ, "Failed to set buffer length (%d, %d)",
-+                        req->nfrags, req->fragsize);
-             goto err;
-         }
-     }
- 
-     if (ioctl (fd, in ? SNDCTL_DSP_GETISPACE : SNDCTL_DSP_GETOSPACE, &abinfo)) {
--        oss_logerr2 (errno, typ, "Failed to get buffer length\n");
-+        oss_logerr2(errno, typ, "Failed to get buffer length");
-         goto err;
-     }
- 
-     if (!abinfo.fragstotal || !abinfo.fragsize) {
--        AUD_log (AUDIO_CAP, "Returned bogus buffer information(%d, %d) for %s\n",
--                 abinfo.fragstotal, abinfo.fragsize, typ);
-+        error_report("oss: Returned bogus buffer information(%d, %d) for %s",
-+                     abinfo.fragstotal, abinfo.fragsize, typ);
-         goto err;
-     }
- 
-@@ -349,20 +328,13 @@ static int oss_open(int in, struct oss_params *req, audsettings *as,
-     obt->fragsize = abinfo.fragsize;
-     *pfd = fd;
- 
--#ifdef DEBUG_MISMATCHES
--    if ((req->fmt != obt->fmt) ||
--        (req->nchannels != obt->nchannels) ||
--        (req->freq != obt->freq) ||
--        (req->fragsize != obt->fragsize) ||
--        (req->nfrags != obt->nfrags)) {
--        dolog ("Audio parameters mismatch\n");
--        oss_dump_info (req, obt);
--    }
--#endif
-+    trace_oss_out_params(
-+        req->fmt, obt->fmt,
-+        req->nchannels, obt->nchannels,
-+        req->freq, obt->freq,
-+        req->nfrags, obt->nfrags,
-+        req->fragsize, obt->fragsize);
- 
--#ifdef DEBUG
--    oss_dump_info (req, obt);
--#endif
-     return 0;
- 
-  err:
-@@ -378,7 +350,7 @@ static size_t oss_get_available_bytes(OSSVoiceOut *oss)
- 
-     err = ioctl(oss->fd, SNDCTL_DSP_GETOPTR, &cntinfo);
-     if (err < 0) {
--        oss_logerr(errno, "SNDCTL_DSP_GETOPTR failed\n");
-+        oss_logerr(errno, "SNDCTL_DSP_GETOPTR failed");
+     if (audio_bug(__func__, audio_validate_settings(as))) {
+         audio_print_settings (as);
+diff --git a/audio/audio-mixeng-be.c b/audio/audio-mixeng-be.c
+index d05202aabae..84e4d136de3 100644
+--- a/audio/audio-mixeng-be.c
++++ b/audio/audio-mixeng-be.c
+@@ -881,11 +881,7 @@ static size_t audio_get_avail(SWVoiceIn *sw)
          return 0;
      }
  
-@@ -459,8 +431,7 @@ static size_t oss_write(HWVoiceOut *hw, void *buf, size_t len)
-         bytes_written = write(oss->fd, pcm, len);
-         if (bytes_written < 0) {
-             if (errno != EAGAIN) {
--                oss_logerr(errno, "failed to write %zu bytes\n",
--                           len);
-+                oss_logerr(errno, "failed to write %zu bytes", len);
-             }
-             return pos;
-         }
-@@ -474,18 +445,18 @@ static size_t oss_write(HWVoiceOut *hw, void *buf, size_t len)
-     return pos;
+-    ldebug (
+-        "%s: get_avail live %zu frontend frames %u\n",
+-        SW_NAME (sw),
+-        live, st_rate_frames_out(sw->rate, live)
+-        );
++    trace_audio_get_avail(SW_NAME(sw), live, st_rate_frames_out(sw->rate, live));
+ 
+     return live;
  }
- 
--static void oss_fini_out (HWVoiceOut *hw)
-+static void oss_fini_out(HWVoiceOut *hw)
- {
-     int err;
--    OSSVoiceOut *oss = (OSSVoiceOut *) hw;
-+    OSSVoiceOut *oss = (OSSVoiceOut *)hw;
- 
--    ldebug ("oss_fini\n");
--    oss_anal_close (&oss->fd);
-+    trace_oss_fini_out();
-+    oss_anal_close(&oss->fd);
- 
-     if (oss->mmapped && hw->buf_emul) {
-         err = munmap(hw->buf_emul, hw->size_emul);
-         if (err) {
--            oss_logerr(errno, "Failed to unmap buffer %p, size %zu\n",
-+            oss_logerr(errno, "Failed to unmap buffer %p, size %zu",
-                        hw->buf_emul, hw->size_emul);
-         }
-         hw->buf_emul = NULL;
-@@ -526,8 +497,8 @@ static int oss_init_out(HWVoiceOut *hw, struct audsettings *as)
-     oss->fragsize = obt.fragsize;
- 
-     if (obt.nfrags * obt.fragsize % hw->info.bytes_per_frame) {
--        dolog ("warning: Misaligned DAC buffer, size %d, alignment %d\n",
--               obt.nfrags * obt.fragsize, hw->info.bytes_per_frame);
-+        warn_report("oss: Misaligned DAC buffer, size %d, alignment %d",
-+                    obt.nfrags * obt.fragsize, hw->info.bytes_per_frame);
-     }
- 
-     hw->samples = (obt.nfrags * obt.fragsize) / hw->info.bytes_per_frame;
-@@ -544,20 +515,16 @@ static int oss_init_out(HWVoiceOut *hw, struct audsettings *as)
-             0
-             );
-         if (hw->buf_emul == MAP_FAILED) {
--            oss_logerr(errno, "Failed to map %zu bytes of DAC\n",
--                       hw->size_emul);
-+            oss_logerr(errno, "Failed to map %zu bytes of DAC", hw->size_emul);
-             hw->buf_emul = NULL;
-         } else {
-             int trig = 0;
-             if (ioctl (fd, SNDCTL_DSP_SETTRIGGER, &trig) < 0) {
--                oss_logerr (errno, "SNDCTL_DSP_SETTRIGGER 0 failed\n");
-+                oss_logerr(errno, "SNDCTL_DSP_SETTRIGGER 0 failed");
-             } else {
-                 trig = PCM_ENABLE_OUTPUT;
--                if (ioctl (fd, SNDCTL_DSP_SETTRIGGER, &trig) < 0) {
--                    oss_logerr (
--                        errno,
--                        "SNDCTL_DSP_SETTRIGGER PCM_ENABLE_OUTPUT failed\n"
--                        );
-+                if (ioctl(fd, SNDCTL_DSP_SETTRIGGER, &trig) < 0) {
-+                    oss_logerr(errno, "SNDCTL_DSP_SETTRIGGER PCM_ENABLE_OUTPUT failed");
-                 } else {
-                     oss->mmapped = 1;
-                 }
-@@ -566,7 +533,7 @@ static int oss_init_out(HWVoiceOut *hw, struct audsettings *as)
-             if (!oss->mmapped) {
-                 err = munmap(hw->buf_emul, hw->size_emul);
-                 if (err) {
--                    oss_logerr(errno, "Failed to unmap buffer %p size %zu\n",
-+                    oss_logerr(errno, "Failed to unmap buffer %p size %zu",
-                                hw->buf_emul, hw->size_emul);
-                 }
-                 hw->buf_emul = NULL;
-@@ -582,13 +549,14 @@ static int oss_init_out(HWVoiceOut *hw, struct audsettings *as)
- static void oss_enable_out(HWVoiceOut *hw, bool enable)
- {
-     int trig;
--    OSSVoiceOut *oss = (OSSVoiceOut *) hw;
-+    OSSVoiceOut *oss = (OSSVoiceOut *)hw;
-     AudiodevOssPerDirectionOptions *opdo = oss->dev->u.oss.out;
- 
-+    trace_oss_enable_out(enable);
-+
-     if (enable) {
-         hw->poll_mode = opdo->try_poll;
- 
--        ldebug("enabling voice\n");
-         if (hw->poll_mode) {
-             oss_poll_out(hw);
-         }
-@@ -601,12 +569,12 @@ static void oss_enable_out(HWVoiceOut *hw, bool enable)
-         trig = PCM_ENABLE_OUTPUT;
-         if (ioctl(oss->fd, SNDCTL_DSP_SETTRIGGER, &trig) < 0) {
-             oss_logerr(errno,
--                       "SNDCTL_DSP_SETTRIGGER PCM_ENABLE_OUTPUT failed\n");
-+                       "SNDCTL_DSP_SETTRIGGER PCM_ENABLE_OUTPUT failed");
-             return;
-         }
-     } else {
-         if (hw->poll_mode) {
--            qemu_set_fd_handler (oss->fd, NULL, NULL, NULL);
-+            qemu_set_fd_handler(oss->fd, NULL, NULL, NULL);
-             hw->poll_mode = 0;
-         }
- 
-@@ -614,10 +582,9 @@ static void oss_enable_out(HWVoiceOut *hw, bool enable)
-             return;
-         }
- 
--        ldebug ("disabling voice\n");
-         trig = 0;
--        if (ioctl (oss->fd, SNDCTL_DSP_SETTRIGGER, &trig) < 0) {
--            oss_logerr (errno, "SNDCTL_DSP_SETTRIGGER 0 failed\n");
-+        if (ioctl(oss->fd, SNDCTL_DSP_SETTRIGGER, &trig) < 0) {
-+            oss_logerr(errno, "SNDCTL_DSP_SETTRIGGER 0 failed");
-             return;
-         }
-     }
-@@ -654,9 +621,16 @@ static int oss_init_in(HWVoiceIn *hw, struct audsettings *as)
-     oss->nfrags = obt.nfrags;
-     oss->fragsize = obt.fragsize;
- 
-+    trace_oss_in_params(
-+        req.fmt, obt.fmt,
-+        req.nchannels, obt.nchannels,
-+        req.freq, obt.freq,
-+        req.nfrags, obt.nfrags,
-+        req.fragsize, obt.fragsize);
-+
-     if (obt.nfrags * obt.fragsize % hw->info.bytes_per_frame) {
--        dolog ("warning: Misaligned ADC buffer, size %d, alignment %d\n",
--               obt.nfrags * obt.fragsize, hw->info.bytes_per_frame);
-+        warn_report("oss: Misaligned ADC buffer, size %d, alignment %d",
-+                    obt.nfrags * obt.fragsize, hw->info.bytes_per_frame);
-     }
- 
-     hw->samples = (obt.nfrags * obt.fragsize) / hw->info.bytes_per_frame;
-@@ -690,7 +664,7 @@ static size_t oss_read(HWVoiceIn *hw, void *buf, size_t len)
-             case EAGAIN:
-                 break;
-             default:
--                oss_logerr(errno, "Failed to read %zu bytes of audio (to %p)\n",
-+                oss_logerr(errno, "Failed to read %zu bytes of audio (to %p)",
-                            len, dst);
-                 break;
-             }
-@@ -706,9 +680,11 @@ static size_t oss_read(HWVoiceIn *hw, void *buf, size_t len)
- 
- static void oss_enable_in(HWVoiceIn *hw, bool enable)
- {
--    OSSVoiceIn *oss = (OSSVoiceIn *) hw;
-+    OSSVoiceIn *oss = (OSSVoiceIn *)hw;
-     AudiodevOssPerDirectionOptions *opdo = oss->dev->u.oss.out;
- 
-+    trace_oss_enable_in(enable);
-+
-     if (enable) {
-         hw->poll_mode = opdo->try_poll;
- 
 diff --git a/audio/trace-events b/audio/trace-events
-index 79744456cec..f33be2dd8e3 100644
+index f33be2dd8e3..4749c54fc04 100644
 --- a/audio/trace-events
 +++ b/audio/trace-events
-@@ -17,6 +17,11 @@ alsa_enable_in(bool enable) "enable=%d"
- 
- # ossaudio.c
- oss_version(int version) "OSS version = 0x%x"
-+oss_out_params(int req_fmt, int obt_fmt, int req_channels, int obt_channels, int req_freq, int obt_freq, int req_nfrags, int obt_nfrags, int req_fragsize, int obt_fragsize) "fmt=%d->%d, channels %d->%d, freq=%d->%d, nfrags=%d->%d, fragsize=%d->%d"
-+oss_in_params(int req_fmt, int obt_fmt, int req_channels, int obt_channels, int req_freq, int obt_freq, int req_nfrags, int obt_nfrags, int req_fragsize, int obt_fragsize) "fmt=%d->%d, channels %d->%d, freq=%d->%d, nfrags=%d->%d, fragsize=%d->%d"
-+oss_fini_out(void) ""
-+oss_enable_out(bool enable) "enable=%d"
-+oss_enable_in(bool enable) "enable=%d"
- 
- # dbusaudio.c
- dbus_audio_register(const char *s, const char *dir) "sender = %s, dir = %s"
+@@ -58,3 +58,10 @@ audio_be_set_active_out(void *sw, bool on) "sw=%p, on=%d"
+ audio_timer_start(int interval) "interval %d ms"
+ audio_timer_stop(void) ""
+ audio_timer_delayed(int interval) "interval %d ms"
++
++# audio-mixeng-be.c
++audio_get_avail(const char *name, size_t live, uint32_t frontend_frames) "%s: get_avail live %zu frontend frames %u"
++
++# audio_template.h
++audio_open_out(const char *name, int freq, int nchannels, int fmt) "open %s, freq %d, nchannels %d, fmt %d"
++audio_open_in(const char *name, int freq, int nchannels, int fmt) "open %s, freq %d, nchannels %d, fmt %d"
 
 -- 
 2.53.0
