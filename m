@@ -4,94 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 122E2E8383F
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 22:43:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12AA0E8383C
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 22:43:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vs7Ir-0006G2-5H; Mon, 16 Feb 2026 17:42:53 -0500
+	id 1vs7Jq-0006ms-PZ; Mon, 16 Feb 2026 17:43:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vs7Io-0006FV-PV
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 17:42:50 -0500
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
+ id 1vs7Jp-0006jc-Rr
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 17:43:53 -0500
+Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vs7Im-0005HJ-Il
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 17:42:50 -0500
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-2a7a23f5915so19535055ad.2
- for <qemu-devel@nongnu.org>; Mon, 16 Feb 2026 14:42:47 -0800 (PST)
+ id 1vs7Jo-0005Lp-89
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 17:43:53 -0500
+Received: by mail-pf1-x435.google.com with SMTP id
+ d2e1a72fcca58-823075fed75so2051475b3a.1
+ for <qemu-devel@nongnu.org>; Mon, 16 Feb 2026 14:43:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771281767; x=1771886567; darn=nongnu.org;
+ d=linaro.org; s=google; t=1771281830; x=1771886630; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=/5ftDsAj1fPgg5RsG3LKmEy4aqdFaCzXj8WaSTCOxEo=;
- b=n4TOjcBmdNt/Zfu2JpgheebsX/6ng74fP0sVVZd/Ch1EXM1LC2qqkbsmO1g7GMSWwz
- +rLOvbFsMSVcla7cnZe8yaz0TddtBYqCRlxHY9JqDZGoM8yOvF6L2SY87asiwQwW6oMD
- pAvs1rSN5+AYMVmdD+kUilzVrheOOoCeQU0+NC1aJ2cvzC4LRPAU2qcWySsmcTPFloax
- ywliHk82evw4GqUhBqMgFMsExWBF0cFLZw4QCc71bie5lz0xEnJ5UjeU6BQvA/i2kUp0
- 6yYgyxiKgoRuCsV8sfvmxvT7UcH8xB+am9HnfrZRY/5j+idI1h9larP7CN2m7WpdrJfy
- RecQ==
+ bh=W5FRkTCIzQJ1yMDVOXCWUpEHbA07lq33qSJf7nqj0N4=;
+ b=wdByGwyueXr1Q4f+U8riDjS+LIxw/vA6cvehU8A9bjdDnqVZcjX9GywIHj4qGbEjkZ
+ j9CyRu31KZvVZU/jhtiVgqM8o+2yVKrd0rctZwthNz+ie3/Qyo1sPWLIxGMWq4BSzJc6
+ pFx58Ff4BZOhvEeEzYeF4ED9stXT7XLaZimYIR3Mg9KZ0rDs0lkLjTsm3lSWpGuR+Ysc
+ QJMHULK/u8Q1AuEmw3nCQNes/FVAm9GZ35KNdgx25mHyOfMSKJJDZiR+toXccDhlmeV+
+ YpvkC3KtqYDncKl63EeWcFQD4Yl6l5kPuQ1AwrLq2R93mnn9xttgpRS0eZdHWVcLMDFU
+ yQSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771281767; x=1771886567;
+ d=1e100.net; s=20230601; t=1771281830; x=1771886630;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=/5ftDsAj1fPgg5RsG3LKmEy4aqdFaCzXj8WaSTCOxEo=;
- b=LCl8FOAURdWQg/3lG7PXOeFxfKs0ovDMP70FeLB4IXQI9ueJRbrpFCrHBfNr9xlKu/
- VicArOZWXTaFglYjnjUw7EXXe8c7acueBKcpsGPNXa1W/A/7AooFQwIZthlDoyGj7/JR
- X2CPdENVGNQWznDDbpDotF6v4Vrl3NFaA7ikQSA7tp/uilinIUIU/DpsJNVLmRHqnDEJ
- w5QSUuxMsx7aivfVxPzMZlZIGj+xfw43GhNTBSiiI2glk7UMbMS0zAJxbt/la+4h18rK
- fBkSDUDQeP6gjL0/Kj3rMsPw6VUo8MTLNQ3EKSphXrpzWajTay/QOp7KX4sxAXfVQhe1
- L4TA==
+ bh=W5FRkTCIzQJ1yMDVOXCWUpEHbA07lq33qSJf7nqj0N4=;
+ b=eflQj1Qlu6RKsYDQYDEjEI7x7t3EGZ7b4j01J6eC2xWduV8f25FF7ENk2rVHjHR6l0
+ aRol4mNF0RsuUapUn7Es2JzvJ0P8P64Hku38YAR2ZPjfddz3Y9qGmwrZtc7YC9xEJ4P+
+ ZEKhLZ3RTGFOSxyWYwKOPHZ/Lr/GqB3U0Ge2/1Aiso7u35+O7JJigGghL3nJ98oxAtIV
+ W2/pvoEVh6EMBu/g6+qP6ot/U8i9qOfkmx7RPQ7jEvnurzC7VbjR03Osf5WOHPQn80Pz
+ J6QEJ0yMcp9e2FV1okaNc8Ls9guUL8Znx4SJ79wJBU1f+0W3fnyMKSy3LLi0QqIDNPoc
+ Sjsw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUGiZH9Oe1x78d7m/m+GUJ5KBvpOat1rlu3eeThyKC+n3TbQkSxRTHXLjsM7Tnkqw8D11kfOS8C4SRC@nongnu.org
-X-Gm-Message-State: AOJu0Yy1NZHe5xxNGXB4h7jeDC9JgiAfJXCuLe3396ngX/NgXAd1pY3N
- GDDH8cAOKy4WqFfgXYTbDSpTDFHYi7o0Q9gnuMt1ua5dADziR5/s+a5XpmgU6Ewk2Mo=
-X-Gm-Gg: AZuq6aLZUGRcDrwS63hFxJl7gpgwiTgCUXqKQIIk/hr35eqqjs47iO7A+t5OsU6xqC4
- m9jA9cMxEGKL0OCdrnXDclU7gxQLacdgx0lMKvdtfKrfsf1pY43Mm4ZYz3ycJvRyGkJDUNZh59Z
- QEnaJlLnoH+sX+hvdpnMOp/UaRg+Vvb3VUZvUUjsyP/V+MaAyWxQ0gyzjA90ET7WgXlRuY06CXL
- CNUNd6nfoceyDVp5DNQuWHX8mypKjUA3147JAyAaOuBSrbRUz+tiLtr5h7NkmNRUN2eggAztsRL
- L7z3NSU2SlhAP54Kkz7JWG9uEVKFdZci4tzg2qb4UDrs1sRJ17TzWxH/Zpj9HYgH0WGSH0OqWeL
- t5SnBfpWeOUGf1BnX3B1HXeDZOKYjdlhQBxRlvqyNGCusB5t9e3bLw3PdmXUr9EdlNuMBRhuNSp
- KSZTmG+8WwBG1KiLUQ0VXSUSFKeoLDZjO3x912YgdSx8Eg5O0EB3CV323/Ameq1UqzNVjAlZ5vm
- iYBnYOcsuZRcd5mUSOZlcY05xEyf4zcNTFpHgXV6s8/XL9L+r9tqTs=
-X-Received: by 2002:a17:903:1a44:b0:2a1:1074:4199 with SMTP id
- d9443c01a7336-2ab505b6446mr111206065ad.32.1771281766456; 
- Mon, 16 Feb 2026 14:42:46 -0800 (PST)
+ AJvYcCXFZp4eumvC9ObaR9j9tuZm0Omp8xHVP494EOXe5Iso7Q/9EP1F/q0YiRg8CNa3g9zwHpiWzEe+iRyH@nongnu.org
+X-Gm-Message-State: AOJu0Yz1Lm0h1MDAa3F9rFqA4CA0XNYXGVoWCr5TnzwvAa1Uocoj1YiO
+ mPaIfwJ/jv4JRs8h3/6M0FM5r8AeTfVb5sDoKEabtjW5CflLrc7psEq8/GbWsCf+YRw=
+X-Gm-Gg: AZuq6aKDH8eF+xYlFoK7qpIdqU9+bWI+PM8BI5d6kg9ee3IqFRRmsp703UpvPtvpxoX
+ /Z2pv/3atb1rNDmuEFU+FO/ZfwwHm4WxNNi+S6wyTBKEpNFiBet/3xakqS7OsJLK0/IYGN/5VCs
+ GeelgQlnmqgCGWCriHTZBO3upcINJvr7zqyw7MpYKqGLYY0XAOuwixW07XoN9ytJ08uFGCWFKVT
+ EWr/tNYcv75pjKkKrpAFXol0ZN+P9nX/eY5AHX94+V1j6WTcLAjcrgM4j8YzGzpSEo9i6tHoGSj
+ lHMgjLSBLXHrEFf+KJWhLHn8KB81/zaXONK85ViW04Fr3u+F7UnID/9sv1VzTcqJSTq2tCBGK5U
+ PPrVQCE+sTh2UpfZBwTH/jd6CnyPcxKSfpqbJYd7jBfZY9zKbMgalRLanVGrKmT/QllAucMo0BI
+ xI72BONZPBa/k9qwdIFgWZL+nm1f7r/LMeCjrjX5MkqU8nM8/RWE5uanUMWNqDMfsBuUOeDouU+
+ cVtB8yKwqvbPJ/NqHPG7SNCBlO6KL/0NGb77KcEMV5p6SvwkHhp4bg=
+X-Received: by 2002:a05:6a00:bc10:b0:81f:832a:174 with SMTP id
+ d2e1a72fcca58-824d5e1c726mr8131350b3a.16.1771281829858; 
+ Mon, 16 Feb 2026 14:43:49 -0800 (PST)
 Received: from ?IPV6:2401:d002:dc0f:2100:1e87:e093:79fa:89a7?
  (bg30dhzpjwwrss5hh6ty.ip6.superloop.au.
  [2401:d002:dc0f:2100:1e87:e093:79fa:89a7])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2ad1aadb858sm78516205ad.61.2026.02.16.14.42.40
+ d2e1a72fcca58-824c6b69f2asm11488073b3a.37.2026.02.16.14.43.45
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 16 Feb 2026 14:42:46 -0800 (PST)
-Message-ID: <80517977-f2ca-48c4-a300-67ef7220246e@linaro.org>
-Date: Tue, 17 Feb 2026 08:42:36 +1000
+ Mon, 16 Feb 2026 14:43:49 -0800 (PST)
+Message-ID: <d45659aa-5f04-4515-8163-15d81e8fb223@linaro.org>
+Date: Tue, 17 Feb 2026 08:43:41 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 6/7] hw/riscv: Set IOMMU PAS via property
-To: Anton Johansson <anjo@rev.ng>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Helge Deller <deller@gmx.de>, Paolo Bonzini <pbonzini@redhat.com>,
- Song Gao <gaosong@loongson.cn>, Bibo Mao <maobibo@loongson.cn>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Brian Cain <brian.cain@oss.qualcomm.com>,
- Chao Liu <chao.liu.zevorn@gmail.com>
-References: <20260216-phys_addr-v5-0-29d522f1339c@rev.ng>
- <20260216-phys_addr-v5-6-29d522f1339c@rev.ng>
+Subject: Re: [PATCH] gdbstub: Make generated compound literal array size
+ explicit
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ John Snow <jsnow@redhat.com>, Gustavo Romero <gustavo.romero@linaro.org>,
+ Cleber Rosa <crosa@redhat.com>
+References: <20260216214332.47639-1-philmd@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260216-phys_addr-v5-6-29d522f1339c@rev.ng>
+In-Reply-To: <20260216214332.47639-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62c.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -114,107 +113,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/17/26 02:28, Anton Johansson wrote:
-> Replaces the only remaining use of TARGET_PHYS_ADDR_SPACE_BITS for RISCV
-> with a property RISCVIOMMUState::pas_bits that gets written to the
-> capabilities field upon device realization.  This write needs to happen
-> at realize-time to ensure the property has been set.
+On 2/17/26 07:43, Philippe Mathieu-Daudé wrote:
+> GDBFeature::num_regs holds the number of registers, but when using
+> the compound literal construction, if the last array entry is not
+> set, the array will be shorter. Prevent array overrun by making the
+> array length explicit,
 > 
-> For the virt machine and sysbus device, pas_bits is set by
-> virt_machine_init() to either 34 or 56 bits, retaining previous behaviour.
-> However, for the PCI device we do not have access to the CPU state, and
-> instead use the maximum riscv64 value of 56 bits.
-> 
-> Signed-off-by: Anton Johansson <anjo@rev.ng>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   hw/riscv/riscv-iommu.h     | 1 +
->   hw/riscv/riscv-iommu-pci.c | 3 +++
->   hw/riscv/riscv-iommu.c     | 8 ++++----
->   hw/riscv/virt.c            | 7 +++++++
->   4 files changed, 15 insertions(+), 4 deletions(-)
+>   scripts/feature_to_c.py | 7 +++++--
+>   1 file changed, 5 insertions(+), 2 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 r~
 
 > 
-> diff --git a/hw/riscv/riscv-iommu.h b/hw/riscv/riscv-iommu.h
-> index 2dabd86941..2a9f6fccd5 100644
-> --- a/hw/riscv/riscv-iommu.h
-> +++ b/hw/riscv/riscv-iommu.h
-> @@ -34,6 +34,7 @@ struct RISCVIOMMUState {
->       /*< public >*/
->       uint32_t version;     /* Reported interface version number */
->       uint32_t pid_bits;    /* process identifier width */
-> +    uint32_t pas_bits;    /* physical address bits */
->       uint32_t bus;         /* PCI bus mapping for non-root endpoints */
+> diff --git a/scripts/feature_to_c.py b/scripts/feature_to_c.py
+> index 807af0e685c..3aa62fb895f 100644
+> --- a/scripts/feature_to_c.py
+> +++ b/scripts/feature_to_c.py
+> @@ -90,13 +90,16 @@ def writeliteral(indent, bytes):
+>       writeliteral(8, read)
+>       sys.stdout.write(',\n')
+>       writeliteral(8, bytes(feature_name, 'utf-8'))
+> -    sys.stdout.write(',\n        (const char * const []) {\n')
+> +    sys.stdout.write(',\n')
+> +    sys.stdout.write(f'        (const char * const [{num_regs}]) {{\n')
 >   
->       uint64_t cap;         /* IOMMU supported capabilities */
-> diff --git a/hw/riscv/riscv-iommu-pci.c b/hw/riscv/riscv-iommu-pci.c
-> index 5f7d359204..14dd5f3857 100644
-> --- a/hw/riscv/riscv-iommu-pci.c
-> +++ b/hw/riscv/riscv-iommu-pci.c
-> @@ -158,6 +158,9 @@ static void riscv_iommu_pci_init(Object *obj)
+>       for index, regname in enumerate(regnames):
+>           sys.stdout.write(f'            [{regnums[index] - base_reg}] =\n')
+>           writeliteral(16, bytes(regname, 'utf-8'))
+>           sys.stdout.write(',\n')
 >   
->       iommu->icvec_avail_vectors = RISCV_IOMMU_PCI_ICVEC_VECTORS;
->       riscv_iommu_set_cap_igs(iommu, RISCV_IOMMU_CAP_IGS_MSI);
-> +
-> +    /* Report maximum physical address size of riscv64 */
-> +    iommu->pas_bits = 56;
->   }
+> -    sys.stdout.write(f'        }},\n        {num_regs},\n    }},\n')
+> +    sys.stdout.write( '        },\n')
+> +    sys.stdout.write(f'        {num_regs},\n')
+> +    sys.stdout.write( '    },\n')
 >   
->   static const Property riscv_iommu_pci_properties[] = {
-> diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-> index b46b337375..98345b1280 100644
-> --- a/hw/riscv/riscv-iommu.c
-> +++ b/hw/riscv/riscv-iommu.c
-> @@ -2453,10 +2453,6 @@ static void riscv_iommu_instance_init(Object *obj)
->       /* Enable translation debug interface */
->       s->cap = RISCV_IOMMU_CAP_DBG;
->   
-> -    /* Report QEMU target physical address space limits */
-> -    s->cap = set_field(s->cap, RISCV_IOMMU_CAP_PAS,
-> -                       TARGET_PHYS_ADDR_SPACE_BITS);
-> -
->       /* TODO: method to report supported PID bits */
->       s->pid_bits = 8; /* restricted to size of MemTxAttrs.pid */
->       s->cap |= RISCV_IOMMU_CAP_PD8;
-> @@ -2487,6 +2483,9 @@ static void riscv_iommu_realize(DeviceState *dev, Error **errp)
->   {
->       RISCVIOMMUState *s = RISCV_IOMMU(dev);
->   
-> +    /* Report QEMU target physical address space limits. */
-> +    s->cap = set_field(s->cap, RISCV_IOMMU_CAP_PAS, s->pas_bits);
-> +
->       s->cap |= s->version & RISCV_IOMMU_CAP_VERSION;
->       if (s->enable_msi) {
->           s->cap |= RISCV_IOMMU_CAP_MSI_FLAT | RISCV_IOMMU_CAP_MSI_MRIF;
-> @@ -2645,6 +2644,7 @@ void riscv_iommu_reset(RISCVIOMMUState *s)
->   static const Property riscv_iommu_properties[] = {
->       DEFINE_PROP_UINT32("version", RISCVIOMMUState, version,
->           RISCV_IOMMU_SPEC_DOT_VER),
-> +    DEFINE_PROP_UINT32("pas-bits", RISCVIOMMUState, pas_bits, 0),
->       DEFINE_PROP_UINT32("bus", RISCVIOMMUState, bus, 0x0),
->       DEFINE_PROP_UINT32("ioatc-limit", RISCVIOMMUState, iot_limit,
->           LIMIT_CACHE_IOT),
-> diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-> index 07e66b3936..bbce2fb667 100644
-> --- a/hw/riscv/virt.c
-> +++ b/hw/riscv/virt.c
-> @@ -1739,6 +1739,13 @@ static void virt_machine_init(MachineState *machine)
->           object_property_set_link(OBJECT(iommu_sys), "irqchip",
->                                    OBJECT(mmio_irqchip),
->                                    &error_fatal);
-> +        /*
-> +         * For riscv64 use a physical address size of 56 bits (44 bit PPN),
-> +         * and for riscv32 use 34 bits (22 bit PPN).
-> +         */
-> +        object_property_set_uint(OBJECT(iommu_sys), "pas-bits",
-> +                                 riscv_is_32bit(&s->soc[0]) ? 34 : 56,
-> +                                 &error_fatal);
->   
->           sysbus_realize_and_unref(SYS_BUS_DEVICE(iommu_sys), &error_fatal);
->       }
-> 
+>   sys.stdout.write('    { NULL }\n};\n')
 
 
