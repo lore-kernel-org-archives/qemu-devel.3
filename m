@@ -4,118 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52E80E83830
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 20:12:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA4F2E8382F
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 20:46:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vs4wX-0006Qk-1R; Mon, 16 Feb 2026 15:11:41 -0500
+	id 1vs5TM-0007N7-SM; Mon, 16 Feb 2026 15:45:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <borntraeger@linux.ibm.com>)
- id 1vs4wS-0006Q8-Hb; Mon, 16 Feb 2026 15:11:36 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <borntraeger@linux.ibm.com>)
- id 1vs4wQ-0001AT-NJ; Mon, 16 Feb 2026 15:11:36 -0500
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 61GEqhMP3526026; Mon, 16 Feb 2026 19:44:52 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=zd6B2N
- Iec2MKTrQknnfEfVqb1JuAWmjCZoGLgdlRh24=; b=B5ccpVsMgggGsxxhmUrmqb
- +bRvuNPhzey56ScxwFxu2DMlhaAa/d4IYgGuL/M5S9yjb62TkkS5i1RBZVrAQUiC
- tIZ++Uf9+3EW+L4vsFp9UuOPbRslU+S4PHioy4biT75PVE3v5v5yFWBkBEY+KAgA
- T90pKB7Szp4Yv8qCU+ifO8jQ61W8f3sH3bqx7TU4x8eg5RGL+Ca79sZepr/Dxt1c
- IHWb8JzcxYz2ztt25lbMfwYQmjwd9yj73aA57v1wZESSM+ftM3+1aF0vSlG6JRWV
- E3AOD6dkPNTE/f9Zq8yaNZh+bplJwrnYPVUjaBjVZ2dNB0eHwjzuBawe3Pb/VE8Q
- ==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4cajcj8hpg-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 16 Feb 2026 19:44:52 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 61GGjOHl004035;
- Mon, 16 Feb 2026 19:44:51 GMT
-Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4cb4cmxmcr-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 16 Feb 2026 19:44:51 +0000
-Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
- [10.20.54.100])
- by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 61GJilp551314946
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 16 Feb 2026 19:44:47 GMT
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9B5D620043;
- Mon, 16 Feb 2026 19:44:47 +0000 (GMT)
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9B61A20040;
- Mon, 16 Feb 2026 19:44:46 +0000 (GMT)
-Received: from [9.87.132.244] (unknown [9.87.132.244])
- by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 16 Feb 2026 19:44:46 +0000 (GMT)
-Message-ID: <8f5f2131-b5cc-4a9a-84f7-57586c3df928@linux.ibm.com>
-Date: Mon, 16 Feb 2026 20:44:45 +0100
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vs5TL-0007MQ-3O
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 15:45:35 -0500
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vs5TJ-0007BT-Ee
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 15:45:34 -0500
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-436317c80f7so3778745f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 16 Feb 2026 12:45:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1771274732; x=1771879532; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=MXVVAM2+8SfS9q9coPWxDTOqxlnTjvAg7e+RtIUJcCY=;
+ b=nHxdqJt996GS5Iu+iSg3dJfLP2kFxf9sghqYeD2zTahMl7frxHuEYwO10Bc0XAszAM
+ hGsRK2/6H6uX/AoN+KoHCDN5Q6sGH0peQ+WomG8ZWwEh+SmOh+S03AG9h3ksUEiYLsrN
+ SCJLakIqwir8ZrjnxNbhoXKPKruyvhv+QjelsuI1v9zcLDfTmdJO7x6QAy4NdJHxIU/C
+ fU5fv3j3PXtRHKYwSOgk8oGMFGI2a2yG6+gSV7joqC1GatEGJcEWWobbuoC5+Fhmj3t9
+ a8bSv5fL/IPL9bX7dIh4rG+SBVl2YvYT5vBw5bVqyMZidlDeLnUAI9frxdCsRr8drEkA
+ rqLQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1771274732; x=1771879532;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=MXVVAM2+8SfS9q9coPWxDTOqxlnTjvAg7e+RtIUJcCY=;
+ b=CVmcTDHxHNxu19l2UuczEj63yzfFlVCDEIe1nQZOUytKm2IVRgyt1281sk+6503gTb
+ ctePflQBV1OSE/Fc7AceArEzFJnPG8jr/teTCB04yrwPFFRSQ1t7URHJEfC41UWnVw4O
+ C0RlEq2Wjiy9HP3Y07Sz4OSSLnLdYF2Uhfn2+ZVKjfR7flRK1qUAmiq4LEAJ9Id6d+Bu
+ EpHJojZibWViOiud5XFW9yPUhjcsJR5kRatBpmxitE5KqmxeG7yE+vDNOwcV6t5qullp
+ KCvZZrm/OvyZYHMl03AXRUkUAJMJw/lGI+Qps6+TwqU/UqDkhu5rfqeI1dBeqRSB4ZKI
+ SbtQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVHCCPQmWkpjPtz5BikkPBSIc5HSYw3ztu4OL0wz9iuNuISkhcqvTaI5r+HjlrlVA6/MP5HYto6XuaF@nongnu.org
+X-Gm-Message-State: AOJu0YwpdptAEVQkhxSlpt8LIuMnBOBQ4OOJfSHYhEm0cABDda7CBBGb
+ +I5DIUQmWvkas+BnoBFsEQ5+bkqREkdwB2ux7t3xIqGm3RYjNXPWycUI
+X-Gm-Gg: AZuq6aLH19Wq0wjW6i2Sxj3w0IPjGwdorXYlmQJBHaSOYo9QIf3BSV2bbPZlqvHCudE
+ oZEr5iEqhM0V5dEaH0C67iRZbkEA76ZpQz5d3v+mdCAk0pD7bs+tIR6+4LdO1rQw5te4axpyEqB
+ fWWtaVkhTQ7+AmRu9d4JpbAam1Rq3dipAOAPSf/0HTKS6vslJtKP1HslQAdxLraEmoZzyXtfmID
+ Fqbg3ulfWT5u5fx0TsctR8ENki91lHSVXDSF1C6i53CWakHr0SlNQgqw6ba+sZXW0hZClJJj9lN
+ DBwlCNKJKl7Fo0arptNjGoAMNvBl8KPWm3yfhXrV2WpNhFQm8vi7MU3KCIQIqLcRr8M7yEiCeTc
+ /GNbKUz24376XvN0BFPwtbhJsT5J+uls8QuLsVutZdpZFzPflA30nNTOvutW7rGgmUT8I8EqMxm
+ HpD73o8h8xZbHbtYtqsCsZCDsIdU/knkSs31iYuF44gpTDyRQFdamhiI3JFdgBQQmRrYfXAWMWs
+ pN2C8Fm5hNMXdoik7Vb+zrEu9m16H+qI7Y4O3C88NaDbA==
+X-Received: by 2002:a05:6000:2403:b0:436:339a:9ab2 with SMTP id
+ ffacd0b85a97d-4379d5e3c6fmr17616050f8f.7.1771274731633; 
+ Mon, 16 Feb 2026 12:45:31 -0800 (PST)
+Received: from ehlo.thunderbird.net
+ (dynamic-2a02-3100-2363-0f00-f009-a6c9-39e7-d8fe.310.pool.telefonica.de.
+ [2a02:3100:2363:f00:f009:a6c9:39e7:d8fe])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-43796a74918sm29228577f8f.17.2026.02.16.12.45.30
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 16 Feb 2026 12:45:31 -0800 (PST)
+Date: Mon, 16 Feb 2026 18:41:06 +0000
+From: Bernhard Beschow <shentey@gmail.com>
+To: Mohamed Mediouni <mohamed@unpredictable.fr>, qemu-devel@nongnu.org
+CC: Phil Dennis-Jordan <phil@philjordan.eu>, Cameron Esfahani <dirty@apple.com>,
+ Magnus Kulke <magnuskulke@linux.microsoft.com>, qemu-arm@nongnu.org,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Roman Bolshakov <rbolshakov@ddn.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Pedro Barbuda <pbarbuda@microsoft.com>,
+ =?ISO-8859-1?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>,
+ =?ISO-8859-1?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>,
+ Magnus Kulke <magnus.kulke@linux.microsoft.com>,
+ =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Wei Liu <wei.liu@kernel.org>, Zhao Liu <zhao1.liu@intel.com>
+Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_v3_14/14=5D_whpx=3A_i386=3A_saving/restori?=
+ =?US-ASCII?Q?ng_less_state_for_WHPX=5FLEVEL=5FFAST=5FRUNTIME=5FSTATE?=
+In-Reply-To: <20260215052225.22513-15-mohamed@unpredictable.fr>
+References: <20260215052225.22513-1-mohamed@unpredictable.fr>
+ <20260215052225.22513-15-mohamed@unpredictable.fr>
+Message-ID: <03058DA4-50B2-436C-B023-1422AD41108B@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] s390x/kvm: Add ASTFLE facility 2 for nested virtualization
-To: Christoph Schlameuss <schlameuss@linux.ibm.com>, qemu-devel@nongnu.org
-Cc: Halil Pasic <pasic@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>,
- David Hildenbrand <david@kernel.org>, Thomas Huth <thuth@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Cornelia Huck <cohuck@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Hendrik Brueckner <brueckner@linux.ibm.com>,
- Nina Schoetterl-Glausch <nsg@linux.ibm.com>, qemu-s390x@nongnu.org,
- kvm@vger.kernel.org
-References: <20260211-astfleie2-v1-1-cfa11f422fd8@linux.ibm.com>
-Content-Language: en-US
-From: Christian Borntraeger <borntraeger@linux.ibm.com>
-In-Reply-To: <20260211-astfleie2-v1-1-cfa11f422fd8@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: 9sM1BSp6PJco8Z1Nslvk5YLzI2EHDmPU
-X-Authority-Analysis: v=2.4 cv=Md9hep/f c=1 sm=1 tr=0 ts=699373b4 cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=IkcTkHD0fZMA:10 a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22 a=VnNF1IyMAAAA:8
- a=69wJf7TsAAAA:8 a=KKAkSRfTAAAA:8 a=VwQbUJbxAAAA:8 a=20KFwNOVAAAA:8
- a=PTbICRZ3nymfZhTA7ioA:9 a=NqO74GWdXPXpGKcKHaDJD/ajO6k=:19 a=QEXdDO2ut3YA:10
- a=Fg1AiH1G6rFz08G2ETeA:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjE2MDE2NCBTYWx0ZWRfX8FMS/CMi/THg
- 2VfOUEJrAQaiL9iEBy8YFT1YZRfjUxU7Bqj4o2cfn0afzTpfbG/Au3OXVl42mZkFGQ99KOj5O3i
- JTZ4WmnXYiXVHV6GJeIVZf+ZJbsGWB06Zp4p3ccpWWV1Yq5q06Qpg3XCYvCnwR/gXz9744ZgWei
- ywgXXWg7LWX8ITI62KHGvUgCQ2PxO+QeyyqbhBHj6xppsiiLtl29w07ydfkgDor3wd0znluwari
- 41bFx9N/m5KxhQrsQNiXWNr7O8/felT4K/rYdHpUcjLqGAim+MxNf9/Z5wxjuGN4uYI78KvYXkA
- QBvmvDLqIWr0zN3clBrWfUxBnYJsQNh6+Zyq95UZmfzQukB8bnj6i2/rUPGhZI+4H0pWEEiH8X3
- Ap6+bqtxeTxN9NrAwQXx916/3kV9fG0GmWv5H2RXgfqT9lP1eI/9OKweVO8L+82jBC/SqzIkMrd
- ZyxHB/sl39WpDnEQdjg==
-X-Proofpoint-GUID: 9sM1BSp6PJco8Z1Nslvk5YLzI2EHDmPU
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-02-16_06,2026-02-16_04,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1011 impostorscore=0 lowpriorityscore=0 spamscore=0 adultscore=0
- priorityscore=1501 suspectscore=0 malwarescore=0 phishscore=0 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2601150000 definitions=main-2602160164
-Received-SPF: pass client-ip=148.163.158.5;
- envelope-from=borntraeger@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=shentey@gmail.com; helo=mail-wr1-x435.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -133,35 +116,91 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-Am 11.02.26 um 15:56 schrieb Christoph Schlameuss:
-> Allow propagation of the ASTFLEIE2 feature bit.
-> 
-> If the host does have the ASTFLE Interpretive Execution Facility 2 the
-> guest can enable the ASTFLE format 2 for its guests.
-> 
-> Signed-off-by: Christoph Schlameuss <schlameuss@linux.ibm.com>
-> ---
-> Cc: qemu-devel@nongnu.org
-> Cc: Halil Pasic <pasic@linux.ibm.com>
-> Cc: Christian Borntraeger <borntraeger@linux.ibm.com>
-> Cc: Eric Farman <farman@linux.ibm.com>
-> Cc: Matthew Rosato <mjrosato@linux.ibm.com>
-> Cc: Richard Henderson <richard.henderson@linaro.org>
-> Cc: Ilya Leoshkevich <iii@linux.ibm.com>
-> Cc: David Hildenbrand <david@kernel.org>
-> Cc: Thomas Huth <thuth@redhat.com>
-> Cc: Michael S. Tsirkin <mst@redhat.com>
-> Cc: Cornelia Huck <cohuck@redhat.com>
-> Cc: Paolo Bonzini <pbonzini@redhat.com>
-> Cc: Hendrik Brueckner <brueckner@linux.ibm.com>
-> Cc: Nina Schoetterl-Glausch <nsg@linux.ibm.com>
-> To: qemu-s390x@nongnu.org
-> Cc: kvm@vger.kernel.org
-> ---
-> 
-> @Christian, @Hendrik: Please confirm that we want to add ASTFLEIE2 to
-> the Z16 default facilities.
+Am 15=2E Februar 2026 05:22:25 UTC schrieb Mohamed Mediouni <mohamed@unpre=
+dictable=2Efr>:
+>Optimise vmexits by save/restoring less state in those cases instead of t=
+he full state=2E
+>
+>Signed-off-by: Mohamed Mediouni <mohamed@unpredictable=2Efr>
+>---
+> target/i386/whpx/whpx-all=2Ec | 16 ++++++++++++----
+> 1 file changed, 12 insertions(+), 4 deletions(-)
+>
+>diff --git a/target/i386/whpx/whpx-all=2Ec b/target/i386/whpx/whpx-all=2E=
+c
+>index 7bbe63e794=2E=2E9d1febce52 100644
+>--- a/target/i386/whpx/whpx-all=2Ec
+>+++ b/target/i386/whpx/whpx-all=2Ec
+>@@ -420,6 +420,13 @@ void whpx_set_registers(CPUState *cpu, WHPXStateLeve=
+l level)
+>         vcxt=2Evalues[idx]=2ESegment =3D whpx_seg_q2h(&env->segs[i], v86=
+, r86);
+>     }
+>=20
+>+    /*
+>+     * This is a hot path called on every MMIO access=2E
+>+     */
+>+    if (level <=3D WHPX_LEVEL_FAST_RUNTIME_STATE) {
+>+        goto skip_to_set_registers;
+>+    }
 
-This depends on the sie facility (sie format2) so I guess it should not be default
-but rather FULL model.
+Looks like we can get rid of the goto by extending the scope of the if sta=
+tement to the skip_to_set_registers label=2E
+
+With this fixed:
+
+Reviewed-by: Bernhard Beschow <shentey@gmail=2Ecom>
+
+>+
+>     assert(idx =3D=3D WHvX64RegisterLdtr);
+>     vcxt=2Evalues[idx++]=2ESegment =3D whpx_seg_q2h(&env->ldt, 0, 0);
+>=20
+>@@ -529,10 +536,11 @@ void whpx_set_registers(CPUState *cpu, WHPXStateLev=
+el level)
+>=20
+>     assert(idx =3D=3D RTL_NUMBER_OF(whpx_register_names));
+>=20
+>+    skip_to_set_registers:
+>     hr =3D whp_dispatch=2EWHvSetVirtualProcessorRegisters(
+>         whpx->partition, cpu->cpu_index,
+>         whpx_register_names,
+>-        RTL_NUMBER_OF(whpx_register_names),
+>+        idx,
+>         &vcxt=2Evalues[0]);
+>=20
+>     if (FAILED(hr)) {
+>@@ -612,7 +620,7 @@ void whpx_get_registers(CPUState *cpu, WHPXStateLevel=
+ level)
+>                      hr);
+>     }
+>=20
+>-    if (whpx_irqchip_in_kernel()) {
+>+    if (level > WHPX_LEVEL_FAST_RUNTIME_STATE && whpx_irqchip_in_kernel(=
+)) {
+>         /*
+>          * Fetch the TPR value from the emulated APIC=2E It may get over=
+written
+>          * below with the value from CR8 returned by
+>@@ -668,7 +676,7 @@ void whpx_get_registers(CPUState *cpu, WHPXStateLevel=
+ level)
+>     env->cr[4] =3D vcxt=2Evalues[idx++]=2EReg64;
+>     assert(whpx_register_names[idx] =3D=3D WHvX64RegisterCr8);
+>     tpr =3D vcxt=2Evalues[idx++]=2EReg64;
+>-    if (tpr !=3D vcpu->tpr) {
+>+    if (level > WHPX_LEVEL_FAST_RUNTIME_STATE && tpr !=3D vcpu->tpr) {
+>         vcpu->tpr =3D tpr;
+>         cpu_set_apic_tpr(x86_cpu->apic_state, whpx_cr8_to_apic_tpr(tpr))=
+;
+>     }
+>@@ -754,7 +762,7 @@ void whpx_get_registers(CPUState *cpu, WHPXStateLevel=
+ level)
+>=20
+>     assert(idx =3D=3D RTL_NUMBER_OF(whpx_register_names));
+>=20
+>-    if (whpx_irqchip_in_kernel()) {
+>+    if (level > WHPX_LEVEL_FAST_RUNTIME_STATE && whpx_irqchip_in_kernel(=
+)) {
+>         whpx_apic_get(x86_cpu->apic_state);
+>     }
+>=20
 
