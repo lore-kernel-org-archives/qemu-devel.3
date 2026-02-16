@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B166E83829
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F77CE83824
 	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 19:16:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vs42M-0007yc-Og; Mon, 16 Feb 2026 14:13:38 -0500
+	id 1vs44h-0002SB-61; Mon, 16 Feb 2026 14:16:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1vs42G-0007yF-Q5
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 14:13:34 -0500
-Received: from sender4-pp-g124.zoho.com ([136.143.188.124])
+ id 1vs43U-0001P8-Jr
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 14:14:51 -0500
+Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1vs42E-0003Z9-M3
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 14:13:32 -0500
-ARC-Seal: i=1; a=rsa-sha256; t=1771269194; cv=none; 
+ id 1vs43S-0003dd-Ij
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 14:14:48 -0500
+ARC-Seal: i=1; a=rsa-sha256; t=1771269272; cv=none; 
  d=zohomail.com; s=zohoarc; 
- b=ONxJkf0hPvNBovgmzzT8aBZQLfqw62G7Fh/pfZPhh73vSn0UlOUDUC26ELz7l1O4nppL6B7Qm3PaBEfHmRidVNE6iraxLTywt6vB4vKeRbl6pRMqi4gGfxE+ADeyY7O/JVLpbwXNJvCRgyYj2C4XkNxnAGBTjQH0GqHn5bGoxOQ=
+ b=Ak2Zvz6+tBzQaizRcLTK9+mxdTuiQ8ajsKl9DDqt3ucwRDCVLaP7VQuFLdy3o8Sxq36WTdyvLkO2eLe2/9MsLM50O8jLBQJh7Y5kCOpm6qgphpvmOFliEM1h+9/ZLGynMzGF0ERCAXGw+3owEw6yEtClW8+/oC7ClorJVPocgok=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1771269194;
+ s=zohoarc; t=1771269272;
  h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=aQaG6nS4+RzGmjU/24LUpRpZp6FwJ6sMEExKWN7vBb0=; 
- b=mbO1GPBp/otdwdWHEqs5NBSFx9QcunKF/7h3on3scCElR51aj3SwLwHkAMeI65WL9mJuRFJn/aY34B/lxRWlmJslQZuHrRAx23O6H+CPyQmy+5eT2hYc2FpFT3JePdqj3gbVDB3mGEQjuveUoiL9GlJ7IP1AMN9EASwpN9lIbsI=
+ bh=2BkcHvuo/3eJScoEGBI3qWZiVEyCaTerkX48Ls6XLzE=; 
+ b=nT9+Eyyzn349wZqo5vcM+lOvJMHybFAZzqsuY4rWIBxHG2WBR7zywrsfVhm3jupBBW42FOfXx+cfxQ6YLXiGjiHHw+HRgs+I/NprbwF5dC78iaPHdndqiia1gDwIOblfgyw34gi9z051tShjYRnfDGaXZtLn6ZLdSQnQOrPZIo0=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
  dkim=pass  header.i=collabora.com;
  spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
  dmarc=pass header.from=<dmitry.osipenko@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1771269194; 
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1771269272; 
  s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
  h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To;
- bh=aQaG6nS4+RzGmjU/24LUpRpZp6FwJ6sMEExKWN7vBb0=;
- b=j0fZXqV5YeJ7f2s2dKTOMSPOhCy5Ee01qmRZ5PjnwEqKRmrM9ST2kPooG+wdazUA
- VCG7TxYUo46HkaqCm1wtgbWFvlhxGbtIB1JeEG++SGJ0dX9shrSVOo/NtRrRAg7jkWj
- TXtQ82EdfgBth6PCpTiFyGOzw0+Ttd2W7agHXHzc=
-Received: by mx.zohomail.com with SMTPS id 17712691929841008.3265234117447;
- Mon, 16 Feb 2026 11:13:12 -0800 (PST)
+ bh=2BkcHvuo/3eJScoEGBI3qWZiVEyCaTerkX48Ls6XLzE=;
+ b=Pf0cm7AtRoT+vGUzj9wU2ha27YenX0It8BNyvjFChO0byJWvQMqz+1p4o0sl8yDr
+ YYOqc27iNfXoV+isEuAmpNGsxcacmGCUmgaogGKCkgKVJac4LLzEdOHsx2mX6OG3b1O
+ U0FzJPsJ3clSV1Q/JSEIX0tgDPJbC+eClLMnXVFc=
+Received: by mx.zohomail.com with SMTPS id 1771269270347175.20981562029635;
+ Mon, 16 Feb 2026 11:14:30 -0800 (PST)
 From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
  Huang Rui <ray.huang@amd.com>,
@@ -62,23 +62,24 @@ Cc: Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
  Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
  Chen Jiqian <Jiqian.Chen@amd.com>, Rob Clark <robdclark@gmail.com>,
  Robert Beckett <bob.beckett@collabora.com>
-Subject: [PATCH v17 04/18] ui/sdl2: Unset context after GL operations
-Date: Mon, 16 Feb 2026 22:11:59 +0300
-Message-ID: <20260216191213.2556073-5-dmitry.osipenko@collabora.com>
+Subject: [PATCH v17 17/18] virtio-gpu: Destroy virgl resources on virtio-gpu
+ reset
+Date: Mon, 16 Feb 2026 22:12:12 +0300
+Message-ID: <20260216191213.2556073-18-dmitry.osipenko@collabora.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260216191213.2556073-1-dmitry.osipenko@collabora.com>
 References: <20260216191213.2556073-1-dmitry.osipenko@collabora.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-ZohoMailClient: External
-Received-SPF: pass client-ip=136.143.188.124;
- envelope-from=dmitry.osipenko@collabora.com; helo=sender4-pp-g124.zoho.com
+Received-SPF: pass client-ip=136.143.188.112;
+ envelope-from=dmitry.osipenko@collabora.com; helo=sender4-pp-f112.zoho.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -96,78 +97,260 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-VirtIO-GPU commands may be processed outside of main-loop, from a CPU
-thread. This results in GL context switch failure because context is held
-by main-loop thread when GL is invoked from CPU thread. Always release GL
-context after performing GL operations such that other threads could take
-over the context.
+Properly destroy virgl resources on virtio-gpu reset to not leak resources
+on a hot reboot of a VM.
 
- 0  SDL_GL_MakeCurrent() (libSDL3)
- 1  SDL_GL_MakeCurrent_REAL() (libSDL2)
- 2  sdl2_gl_make_context_current() (ui/sdl2-gl.c:201)
- 3  make_current() (virglrenderer.c:639)
- 4  vrend_finish_context_switch() (vrend_renderer.c:11630)
- 5  vrend_hw_switch_context() (vrend_renderer.c:11613)
- 6  vrend_renderer_force_ctx_0() (vrend_renderer.c:12986)
- 7  virgl_renderer_force_ctx_0() (virglrenderer.c:460)
- 8  virtio_gpu_virgl_process_cmd() (virtio-gpu-virgl.c:1013)
- 9  virtio_gpu_process_cmdq() (virtio-gpu.c:1050)
- 10 virtio_gpu_gl_handle_ctrl() (virtio-gpu-gl.c:86)
- 11 aio_bh_poll() (util/async.c)
- 12 aio_poll() (util/aio-posix.c)
- 13 blk_pwrite() (block/block-gen.c:1985)
- 14 pflash_update() (pflash_cfi01.c:396)
- 15 pflash_write() (pflash_cfi01.c:541)
- 16 memory_region_dispatch_write() (system/memory.c:1554)
- 17 flatview_write() (system/physmem.c:3333)
- 18 address_space_write() (system/physmem.c:3453)
- 19 kvm_cpu_exec() (accel/kvm/kall-all.c:3248)
- 20 kvm_vcpu_thread_fn() (accel/kvm/kaccel-ops.c:53)
-
+Suggested-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 ---
- ui/sdl2-gl.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ hw/display/virtio-gpu-gl.c     |  18 +----
+ hw/display/virtio-gpu-virgl.c  | 121 +++++++++++++++++++++++++++------
+ include/hw/virtio/virtio-gpu.h |   6 +-
+ 3 files changed, 105 insertions(+), 40 deletions(-)
 
-diff --git a/ui/sdl2-gl.c b/ui/sdl2-gl.c
-index 55e22a7a3d59..936b15f737d8 100644
---- a/ui/sdl2-gl.c
-+++ b/ui/sdl2-gl.c
-@@ -57,6 +57,8 @@ static void sdl2_gl_render_surface(struct sdl2_console *scon)
+diff --git a/hw/display/virtio-gpu-gl.c b/hw/display/virtio-gpu-gl.c
+index b941e9a4b789..8b71dd6fc26f 100644
+--- a/hw/display/virtio-gpu-gl.c
++++ b/hw/display/virtio-gpu-gl.c
+@@ -63,29 +63,14 @@ static void virtio_gpu_gl_flushed(VirtIOGPUBase *b)
+ static void virtio_gpu_gl_handle_ctrl(VirtIODevice *vdev, VirtQueue *vq)
+ {
+     VirtIOGPU *g = VIRTIO_GPU(vdev);
+-    VirtIOGPUGL *gl = VIRTIO_GPU_GL(vdev);
+     struct virtio_gpu_ctrl_command *cmd;
  
-     surface_gl_render_texture(scon->gls, scon->surface);
-     SDL_GL_SwapWindow(scon->real_window);
-+
-+    SDL_GL_MakeCurrent(scon->real_window, NULL);
- }
- 
- void sdl2_gl_update(DisplayChangeListener *dcl,
-@@ -73,6 +75,8 @@ void sdl2_gl_update(DisplayChangeListener *dcl,
-     SDL_GL_MakeCurrent(scon->real_window, scon->winctx);
-     surface_gl_update_texture(scon->gls, scon->surface, x, y, w, h);
-     scon->updates++;
-+
-+    SDL_GL_MakeCurrent(scon->real_window, NULL);
- }
- 
- void sdl2_gl_switch(DisplayChangeListener *dcl,
-@@ -91,6 +95,7 @@ void sdl2_gl_switch(DisplayChangeListener *dcl,
-     if (surface_is_placeholder(new_surface) && qemu_console_get_index(dcl->con)) {
-         qemu_gl_fini_shader(scon->gls);
-         scon->gls = NULL;
-+        SDL_GL_MakeCurrent(scon->real_window, NULL);
-         sdl2_window_destroy(scon);
+     if (!virtio_queue_ready(vq)) {
          return;
      }
-@@ -105,6 +110,8 @@ void sdl2_gl_switch(DisplayChangeListener *dcl,
+ 
+-    switch (gl->renderer_state) {
+-    case RS_RESET:
+-        virtio_gpu_virgl_reset(g);
+-        /* fallthrough */
+-    case RS_START:
+-        if (virtio_gpu_virgl_init(g)) {
+-            gl->renderer_state = RS_INIT_FAILED;
+-            return;
+-        }
+-
+-        gl->renderer_state = RS_INITED;
+-        break;
+-    case RS_INIT_FAILED:
++    if (!virtio_gpu_virgl_update_render_state(g)) {
+         return;
+-    case RS_INITED:
+-        break;
      }
  
-     surface_gl_create_texture(scon->gls, scon->surface);
+     cmd = virtqueue_pop(vq, sizeof(struct virtio_gpu_ctrl_command));
+@@ -201,6 +186,7 @@ static void virtio_gpu_gl_class_init(ObjectClass *klass, const void *data)
+     vgc->process_cmd = virtio_gpu_virgl_process_cmd;
+     vgc->update_cursor_data = virtio_gpu_gl_update_cursor_data;
+ 
++    vgc->resource_destroy = virtio_gpu_virgl_resource_destroy;
+     vdc->realize = virtio_gpu_gl_device_realize;
+     vdc->unrealize = virtio_gpu_gl_device_unrealize;
+     vdc->reset = virtio_gpu_gl_reset;
+diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+index b1c323f4f539..3f77946c7a3a 100644
+--- a/hw/display/virtio-gpu-virgl.c
++++ b/hw/display/virtio-gpu-virgl.c
+@@ -96,6 +96,10 @@ static void virtio_gpu_virgl_resume_cmdq_bh(void *opaque)
+ {
+     VirtIOGPU *g = opaque;
+ 
++    if (!virtio_gpu_virgl_update_render_state(g)) {
++        return;
++    }
 +
-+    SDL_GL_MakeCurrent(scon->real_window, NULL);
+     virtio_gpu_process_cmdq(g);
  }
  
- void sdl2_gl_refresh(DisplayChangeListener *dcl)
+@@ -344,14 +348,46 @@ static void virgl_cmd_create_resource_3d(VirtIOGPU *g,
+     virgl_renderer_resource_create(&args, NULL, 0);
+ }
+ 
++static int
++virtio_gpu_virgl_resource_unref(VirtIOGPU *g,
++                                struct virtio_gpu_virgl_resource *res,
++                                bool *suspended)
++{
++    struct iovec *res_iovs = NULL;
++    int num_iovs = 0;
++#if VIRGL_VERSION_MAJOR >= 1
++    int ret;
++
++    ret = virtio_gpu_virgl_unmap_resource_blob(g, res, suspended);
++    if (ret) {
++        return ret;
++    }
++    if (*suspended) {
++        return 0;
++    }
++#endif
++
++    virgl_renderer_resource_detach_iov(res->base.resource_id,
++                                       &res_iovs,
++                                       &num_iovs);
++    if (res_iovs != NULL && num_iovs != 0) {
++        virtio_gpu_cleanup_mapping_iov(g, res_iovs, num_iovs);
++    }
++    virgl_renderer_resource_unref(res->base.resource_id);
++
++    QTAILQ_REMOVE(&g->reslist, &res->base, next);
++
++    g_free(res);
++
++    return 0;
++}
++
+ static void virgl_cmd_resource_unref(VirtIOGPU *g,
+                                      struct virtio_gpu_ctrl_command *cmd,
+                                      bool *cmd_suspended)
+ {
+     struct virtio_gpu_resource_unref unref;
+     struct virtio_gpu_virgl_resource *res;
+-    struct iovec *res_iovs = NULL;
+-    int num_iovs = 0;
+ 
+     VIRTIO_GPU_FILL_CMD(unref);
+     trace_virtio_gpu_cmd_res_unref(unref.resource_id);
+@@ -364,27 +400,21 @@ static void virgl_cmd_resource_unref(VirtIOGPU *g,
+         return;
+     }
+ 
+-#if VIRGL_VERSION_MAJOR >= 1
+-    if (virtio_gpu_virgl_unmap_resource_blob(g, res, cmd_suspended)) {
+-        cmd->error = VIRTIO_GPU_RESP_ERR_UNSPEC;
+-        return;
+-    }
+-    if (*cmd_suspended) {
+-        return;
+-    }
+-#endif
++    virtio_gpu_virgl_resource_unref(g, res, cmd_suspended);
++}
+ 
+-    virgl_renderer_resource_detach_iov(unref.resource_id,
+-                                       &res_iovs,
+-                                       &num_iovs);
+-    if (res_iovs != NULL && num_iovs != 0) {
+-        virtio_gpu_cleanup_mapping_iov(g, res_iovs, num_iovs);
+-    }
+-    virgl_renderer_resource_unref(unref.resource_id);
++void virtio_gpu_virgl_resource_destroy(VirtIOGPU *g,
++                                       struct virtio_gpu_simple_resource *base,
++                                       Error **errp)
++{
++    struct virtio_gpu_virgl_resource *res;
++    bool suspended = false;
+ 
+-    QTAILQ_REMOVE(&g->reslist, &res->base, next);
++    res = container_of(base, struct virtio_gpu_virgl_resource, base);
+ 
+-    g_free(res);
++    if (virtio_gpu_virgl_resource_unref(g, res, &suspended)) {
++        error_setg(errp, "failed to destroy virgl resource");
++    }
+ }
+ 
+ static void virgl_cmd_context_create(VirtIOGPU *g,
+@@ -1304,6 +1334,10 @@ static void virtio_gpu_fence_poll(void *opaque)
+     VirtIOGPU *g = opaque;
+     VirtIOGPUGL *gl = VIRTIO_GPU_GL(g);
+ 
++    if (!virtio_gpu_virgl_update_render_state(g)) {
++        return;
++    }
++
+     virgl_renderer_force_ctx_0();
+     virgl_renderer_poll();
+     virtio_gpu_process_cmdq(g);
+@@ -1328,14 +1362,30 @@ void virtio_gpu_virgl_reset_scanout(VirtIOGPU *g)
+     }
+ }
+ 
+-void virtio_gpu_virgl_reset(VirtIOGPU *g)
++static bool virtio_gpu_virgl_reset(VirtIOGPU *g)
+ {
++    struct virtio_gpu_simple_resource *res, *tmp;
++
++    /*
++     * Virgl blob resource unmapping can be suspended and
++     * deferred on unref, ensure that destruction is completed.
++     */
++    QTAILQ_FOREACH_SAFE(res, &g->reslist, next, tmp) {
++        virtio_gpu_virgl_resource_destroy(g, res, NULL);
++    }
++
++    if (!QTAILQ_EMPTY(&g->reslist)) {
++        return false;
++    }
++
+     virgl_renderer_reset();
+ 
+     virtio_gpu_virgl_reset_async_fences(g);
++
++    return true;
+ }
+ 
+-int virtio_gpu_virgl_init(VirtIOGPU *g)
++static int virtio_gpu_virgl_init(VirtIOGPU *g)
+ {
+     int ret;
+     uint32_t flags = 0;
+@@ -1413,6 +1463,33 @@ int virtio_gpu_virgl_init(VirtIOGPU *g)
+     return 0;
+ }
+ 
++bool virtio_gpu_virgl_update_render_state(VirtIOGPU *g)
++{
++    VirtIOGPUGL *gl = VIRTIO_GPU_GL(g);
++
++    switch (gl->renderer_state) {
++    case RS_RESET:
++        if (!virtio_gpu_virgl_reset(g)) {
++            return false;
++        }
++        /* fallthrough */
++    case RS_START:
++        if (virtio_gpu_virgl_init(g)) {
++            gl->renderer_state = RS_INIT_FAILED;
++            return false;
++        }
++
++        gl->renderer_state = RS_INITED;
++        break;
++    case RS_INIT_FAILED:
++        return false;
++    case RS_INITED:
++        break;
++    }
++
++    return true;
++}
++
+ static void virtio_gpu_virgl_add_capset(GArray *capset_ids, uint32_t capset_id)
+ {
+     g_array_append_val(capset_ids, capset_id);
+diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gpu.h
+index 718332284305..1f509d0d5beb 100644
+--- a/include/hw/virtio/virtio-gpu.h
++++ b/include/hw/virtio/virtio-gpu.h
+@@ -389,9 +389,11 @@ void virtio_gpu_virgl_process_cmd(VirtIOGPU *g,
+                                   struct virtio_gpu_ctrl_command *cmd);
+ void virtio_gpu_virgl_fence_poll(VirtIOGPU *g);
+ void virtio_gpu_virgl_reset_scanout(VirtIOGPU *g);
+-void virtio_gpu_virgl_reset(VirtIOGPU *g);
+-int virtio_gpu_virgl_init(VirtIOGPU *g);
+ GArray *virtio_gpu_virgl_get_capsets(VirtIOGPU *g);
+ void virtio_gpu_virgl_reset_async_fences(VirtIOGPU *g);
++void virtio_gpu_virgl_resource_destroy(VirtIOGPU *g,
++                                       struct virtio_gpu_simple_resource *res,
++                                       Error **errp);
++bool virtio_gpu_virgl_update_render_state(VirtIOGPU *g);
+ 
+ #endif
 -- 
 2.52.0
 
