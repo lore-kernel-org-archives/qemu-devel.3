@@ -4,158 +4,163 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0C33EF48C9
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 08:58:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77AE3E63F3F
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 09:13:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vruQr-0001xb-BQ; Mon, 16 Feb 2026 03:58:17 -0500
+	id 1vrufE-0005Nk-UC; Mon, 16 Feb 2026 04:13:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vruQn-0001xN-Ic
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 03:58:13 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
+ id 1vrufD-0005NW-Vu; Mon, 16 Feb 2026 04:13:08 -0500
+Received: from mail-westcentralusazlp170130007.outbound.protection.outlook.com
+ ([2a01:111:f403:c112::7] helo=CY3PR05CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vruQk-0003St-QV
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 03:58:13 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771232288;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=qPkKlFLN1DWiTfpVaxSEdHmP9UKP70+z6xPfERyxxKY=;
- b=N+vIqos4XXb525IUqZpvKeQJViyw8h7oNe4nl+sEEZ7Dw8hJPae7ocvTijaFJ0owHGqvSn
- 7+HEpOHt7GP3GhuzYU+upHMCqLPKPoS93uZsbUXXhrNGY12snrJ++jeMwvF5i5dbcy9Hab
- hD+hdooXpw61C7HFqZg5Ok2A0zvFpQg=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-534-KIDJrApDOdeTbZLPg2Ef7Q-1; Mon, 16 Feb 2026 03:58:06 -0500
-X-MC-Unique: KIDJrApDOdeTbZLPg2Ef7Q-1
-X-Mimecast-MFC-AGG-ID: KIDJrApDOdeTbZLPg2Ef7Q_1771232286
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-4376e25bb4dso3531113f8f.0
- for <qemu-devel@nongnu.org>; Mon, 16 Feb 2026 00:58:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1771232285; x=1771837085; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=qPkKlFLN1DWiTfpVaxSEdHmP9UKP70+z6xPfERyxxKY=;
- b=F6qUFb2ieo3WM0ojvBbPzukBzfbKm9qXPFp3SHhN1mdxeR7TTa5mxeVwfcuNFUzdES
- 37e/ibdUqR5BaJNgJo0rFLy61Gmdim1TqPx2P9P1WF8x1HqhQsQmTxtAbwhEmXyQDaco
- nP62cfIj+oiDM4U5NlKZ1xyR3zks75ujbezrybrRebfrs2tawEfZtVyushYlz1cdmme5
- FWs9QXkDEFMgb9nhIaC0sAhIsOt2hW816GFZMpb/2meAJuHiLv8oH1H17aGzXhro+Frd
- ov5QdGzbyZzdAYyii02m7HfHp4hvxCyyspOJFIlfCl1pJrPqDDNDLA8kXvAjHTBQDzLQ
- QDzw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771232285; x=1771837085;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=qPkKlFLN1DWiTfpVaxSEdHmP9UKP70+z6xPfERyxxKY=;
- b=Ky86zD9vqs/RZV+zUdeMtqrb1MAm41Ojxvc1cQo0HpjUWmGokKgr4lTFgVR6+QkYsu
- ipFrhO8dv5H44Bm+DBe/y/T0hBKYUG3v4wA/G1fOqCHq5E4r4dRlVSy5rHktl/AV4XMg
- 34HQFyJ7iSMTJtP8Jlxnl2QRk+YUxex707ac1WHsqk+wN2pLt8h+/4wvRi3v/iqglaIv
- rgWWVoKa/+lHlTMeYtfedOIwxqw0Iy1ibWaU2uvb8xh9ulcu0Qwbx0RupEitc9vlDb0O
- 7O3mvZlpV7OHBgloiLnkTslh93/4ucjEEH+xkMrrUYeL+Wz78yKE2sD9Gya4L0vPpGrB
- pLVA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVPCscTkZuk3tPaP1sOajBWN2VVt4UBWws6GGNs2QqQBZSBfWJtESigU0v5+8d2vkq40+N/JFh3a8W+@nongnu.org
-X-Gm-Message-State: AOJu0YzkLOL+ZCQOuQGdeYl9WpDqfqmIEgH3uutt63KVUTJAmHQM4Ptp
- 5arTqPMEY699lNGZQFG+QUiIBcd77Em9bA8HqM/aZeoLRVLjOYVQU5JEr3ulVbQf100jns1YZNm
- N3oWOzQLFoYY4qwdIwc2BULNH42g59mdqJ8sWfOGo1ySwbARoXHfRvymu
-X-Gm-Gg: AZuq6aImTROAvcHUoC18fndScjAZ88sEA4OdDM1SMYjEErzb5fAGBK+OdXFP31CWx/T
- MLq2gB/4O36eKd5UJomjn3n2hy6n4igcSJfTH+4UqVlVaqdTQwkP/+YL+2l73rpwV3EykutxxdC
- QkVcNkYrU5KW9nR8d2h05G0GTx73mjKHyT9DgI7lCCqMnygruU4BWflQHLOAAcYTQ0fMIkgFJNX
- 4cEgbeZTM+HKpaRwv+/99iRwSYfY7oFUO5nCky7s0ZNbYvCTLhvLQE6WFXsXjGDKq8ZVGlGD68y
- mq+KDnvsKoMmquIgcJwfny/fyO5VgbO6krJ/Nxalt+CrEUzxflybSQM7kUlWXinzh8KtQD3UccD
- dvsIby2EO3tr+6i2zTSxaoxt7ffPO131YTCykcrYyeqZ6AhLp0Z7ASi9PwebR
-X-Received: by 2002:a05:6000:603:b0:435:9d70:f299 with SMTP id
- ffacd0b85a97d-43796ac2063mr16518573f8f.22.1771232285540; 
- Mon, 16 Feb 2026 00:58:05 -0800 (PST)
-X-Received: by 2002:a05:6000:603:b0:435:9d70:f299 with SMTP id
- ffacd0b85a97d-43796ac2063mr16518536f8f.22.1771232285097; 
- Mon, 16 Feb 2026 00:58:05 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43796abd793sm25467351f8f.25.2026.02.16.00.58.04
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 16 Feb 2026 00:58:04 -0800 (PST)
-Message-ID: <b0c45e8f-8a84-44a4-a813-31dfaa02dbf2@redhat.com>
-Date: Mon, 16 Feb 2026 09:58:03 +0100
+ (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
+ id 1vrufC-0005T4-9B; Mon, 16 Feb 2026 04:13:07 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=VIpz0eQGAXqqM5yOo6ah+QkSWgOsR6dSKlQO+dFDEZ9RyC6tXBm8XfA4JDb6YG2Uh4Pu7nFJNEgNTZ5dZNBFm1hfWSgc16RWJeifNSO73Q/5eCTlqxNtieokaMxIWFL+67W1s/iOAmviViZoq3xY5RH2GCKJu6m0LeaVyMTIhJu+kERtHJ3Inz1Qd13E4FxJqeYhhjgmrB1iZE3rE+6up1iljo2xFyTplC2X6SKxAwXUMD+uvCgY0hD5DpJcY0FDNRw4WJoTMLEXQsN2+XXrU6sxD6BgN+Up+BxfBXNcORpQkv14svZHqASCFLrAOMDSGkDduAgqq2ZNARF32cOYJA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=A4RAyo1/moktCr8Ydt6QEbiJESzSlSeZ2RpJ4NK704w=;
+ b=upzt9hd77TloylGSTWyHrstwvITK8jE+XpaPNnTbjp51+GsO/w+8g5orj5jrzB1lUS/6K/ooFGfxzlFml6avK2vz7swXAozztoYUr7qvKiVZn2jBEFz9BjKXhhMXRNjWIRHYOl5jacf+D/RQ5MtfLd64kxe3DfHm9WY6NqbTXDKl0OtYY1NiGG1C1+H6o/2VO/EQKowUJrCMn7Kau6hBRZauer011dh6JeuotLDHWGkgJyeIrZnCLvEj+UWVSYbahZ7maTsS46lAGpsSonldafHEmU1UHBjGvT8ERPGio6+t9f+9mbiGGhOlsU+fZhCCNaULpjdG9/qaaPl8Rs65bg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=A4RAyo1/moktCr8Ydt6QEbiJESzSlSeZ2RpJ4NK704w=;
+ b=pjhsZ3x1NI1JsmSXkFnDcA+XNbd+evygYi23Asnlg3I7k+cTyoQCrIKdzZ9Qlql08/EaEsXcsbcFqt3/SOkPzOm2o2ObqfMcUhliIN/CoPy6PkLCo6XM+japKmDsQ98mGVlTpMpiDI9YUxuQRMbd0/eeMVmRiUvkCPDx0S8SP+2LZq5GJrKJnzv5upCYzSjcYRz6rsgLLNYlvRgMMWBlMnCNnkltHb5DIE8vO0Hq80kw3fomR5lglL14HAD5B7RSgzQmCIdRxkFcdIJZFi3jsryzDZZpLYT8mOHt9l7zmV/ev2LtVBOpbScRxyElJ9IkZ4LU1JDS6cikJ7w0uoImAw==
+Received: from CH3PR12MB7548.namprd12.prod.outlook.com (2603:10b6:610:144::12)
+ by BY5PR12MB4259.namprd12.prod.outlook.com (2603:10b6:a03:202::17)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9611.13; Mon, 16 Feb
+ 2026 09:13:00 +0000
+Received: from CH3PR12MB7548.namprd12.prod.outlook.com
+ ([fe80::b710:d6a1:ab16:76de]) by CH3PR12MB7548.namprd12.prod.outlook.com
+ ([fe80::b710:d6a1:ab16:76de%5]) with mapi id 15.20.9611.013; Mon, 16 Feb 2026
+ 09:13:00 +0000
+From: Shameer Kolothum Thodi <skolothumtho@nvidia.com>
+To: Nicolin Chen <nicolinc@nvidia.com>
+CC: "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>, "eric.auger@redhat.com" <eric.auger@redhat.com>,
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>, Nathan Chen
+ <nathanc@nvidia.com>, Matt Ochs <mochs@nvidia.com>, Jiandi An
+ <jan@nvidia.com>, Jason Gunthorpe <jgg@nvidia.com>,
+ "jonathan.cameron@huawei.com" <jonathan.cameron@huawei.com>,
+ "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>,
+ "zhenzhong.duan@intel.com" <zhenzhong.duan@intel.com>, Krishnakant Jaju
+ <kjaju@nvidia.com>
+Subject: RE: [PATCH v6 0/5] vEVENTQ support for accelerated SMMUv3 devices
+Thread-Topic: [PATCH v6 0/5] vEVENTQ support for accelerated SMMUv3 devices
+Thread-Index: AQHcnNWJbrAUCUyEs0yx/M1OvgwZx7WBN2qAgAPWCQA=
+Date: Mon, 16 Feb 2026 09:13:00 +0000
+Message-ID: <CH3PR12MB75483507A3A764ACD4B46AE8AB6CA@CH3PR12MB7548.namprd12.prod.outlook.com>
+References: <20260213103942.142823-1-skolothumtho@nvidia.com>
+ <aY+mVQU2w1S3bc9p@nvidia.com>
+In-Reply-To: <aY+mVQU2w1S3bc9p@nvidia.com>
+Accept-Language: en-US, en-GB
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: CH3PR12MB7548:EE_|BY5PR12MB4259:EE_
+x-ms-office365-filtering-correlation-id: 90f03055-c51d-457a-6708-08de6d3b9511
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|376014|1800799024|366016|7053199007|38070700021; 
+x-microsoft-antispam-message-info: =?us-ascii?Q?zqYHRXCydSxvRBzoCySCIglpfyP0lrqZb5/P5GklQ3UrmDBtMAUpEBZ7qmuf?=
+ =?us-ascii?Q?aVRbsbK++5WztbZTnBQ9DdEDUSnLeHAj7CIrmkxtjtFJbbdJUfm45n161+vs?=
+ =?us-ascii?Q?7GBv1DKW4HX/YNeM9M2nGFM/H9+J/Ic8MFDpIDtWvsNI3P+RrTm9cIv/DxK8?=
+ =?us-ascii?Q?uhZbpD1HYXeq2hWB/+XGLzvaNAOjkXJJpR8WHFM/bhR+9eZBMlT+oWAdhZGs?=
+ =?us-ascii?Q?hTF/U2sY1IAoQYKDlIKiU+mPakzU3PszawHPz9Q86+Z+rqDN2F+S91tSwMf6?=
+ =?us-ascii?Q?dJNkXLDrQxT9EwvCmJdM7eV2PVHc6nXm4XBHHrUlKse5Z7QB0KLbx74eI+Wm?=
+ =?us-ascii?Q?PMD1Q7yl6nxrJZm4IoqVSm3pN3Z6YXbBhUL1xU3ZeYN+mX2jS6NY/9YzbBOT?=
+ =?us-ascii?Q?JGSAEIlB+rvN8NhidZMxnEzXjpv3K3nRqoecVMRWSBNA/YCAM/Hul6iYbVLA?=
+ =?us-ascii?Q?9u5Ao0/QD+XUPLZscw9DfHbXwcwXy52XoIV2U9gS7g5xi9Gn7FqzrjEAJHXy?=
+ =?us-ascii?Q?OZGB39g2Sl0YDq5SG5QSrpR0SBh09MeytPnGZhwpqqpr8xIGdO2aqpXieR1d?=
+ =?us-ascii?Q?WsjO/tqFZbAUV0txjnh3hWpkbqCn8vTfEjzUzpsYN2lFaEz2eowXnARiJZ41?=
+ =?us-ascii?Q?ReL9hLj/x+uP8nZ45vaaNxBb+85ua7oUDcRAWBw1cSChwoq7eZLf96vVHhbV?=
+ =?us-ascii?Q?7jI69vOsOHjtLshqVPEMp33lrKvRDG8msU7uYv/loM2b8yBLKDmuZn2WP/2A?=
+ =?us-ascii?Q?3CcC3uQuxD0Gjn89NIh4z/0zTcxJ3nWyBXVzJCb0XFB4nY4zQCBfL3Z7yncU?=
+ =?us-ascii?Q?6dyvL3aKkz4VQaE4D9IgXFlxWdJRdTdCZRqlaYpp2ldQnkxWaPc6+aJER7FJ?=
+ =?us-ascii?Q?EfbJIA6g5wnnu3irrpJgwLLnn4ys4bMzCe3JhnhAP03O/bpacGG/SpeSR5yO?=
+ =?us-ascii?Q?Tv1OGsLNMAnR1bFUMHSTaoDoZTL6SBkFubG8A4FDab4gbHl6RsKrpjFUyBut?=
+ =?us-ascii?Q?F4U/EeIeaiYExHKUpONcECs5yiHkmhH5Vr1ajupXQ8dkq6Sa0mBv+kFhVcAE?=
+ =?us-ascii?Q?2MX5qnf/Q+loTVyZ9+xipdYJvjrq8bb1qvFgMwuagP7oVSXGjOfR5DPCYZgB?=
+ =?us-ascii?Q?um9nzjC6FbfefljJJkrhTPEybVJDEypEKSpS/lbUmnvlEmBRX2LEd4g/Cfed?=
+ =?us-ascii?Q?ZQYfUPjI4VK+hU18qN38AByxvZ5xh8SfOz6X1lO/uMCxJ4E0eEcQv2Enygfi?=
+ =?us-ascii?Q?c2bgv5oDk+Qp+UR5Ww39t9ijSpHRsVLli0+gaKVYQUKUTpGbnA2inmF+ytmg?=
+ =?us-ascii?Q?5eZ8rINYvB9lhIP+mqHdEi4pHW3YuMqOhjbfzzZaGOWii+mWG57Ck1r1bgGO?=
+ =?us-ascii?Q?fF5SVa/vS51j0neBMCs1hIsJ3Bi1XcKVAMX+rwBttQkUFjjAPlqGCQVLKOmL?=
+ =?us-ascii?Q?R13Cpd2eGLrPt8MGaS/VDpfzMRagb6tDYH1oPDowwlCIvFRDl9gmRDzmOGm9?=
+ =?us-ascii?Q?fkulcuWSC+lelEhNXWzJ4YxfnFnlmGc9C09tAbmxDyfsyhwiBUaFz1xhtCLY?=
+ =?us-ascii?Q?9yRTx9oosOOw3NCSlWeQUqzceoVVJvpICEfhK4KMd+AP12LG+ZBoVcFKYK6S?=
+ =?us-ascii?Q?kS3p5o6/yq+PLQ6P5qgGtjg=3D?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:CH3PR12MB7548.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(1800799024)(366016)(7053199007)(38070700021); DIR:OUT;
+ SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?63b2+eb36LN6v7EfZfsTXUoM8VFmqLw6Ywlfj/bgqBv2SXWF+h9KSjH4tmlF?=
+ =?us-ascii?Q?VrJzOA4KoBOk6askX816dC1JbFB5QG+8egAj5OEbvPb+p/vQitY8rFiIpATW?=
+ =?us-ascii?Q?056rSxwyw84HK/dPLeDWqKL0Lf2iI0GzVNsEJDiigkqkBDVw3BTC8+lXknMo?=
+ =?us-ascii?Q?YY5d3GRGGZyuv5cly7yjFPKMa+98nb0RjJKhMoC5mmiC92ppp+KWsLpcKDRM?=
+ =?us-ascii?Q?NxR4g84/3pvEKqgqwWmT2H67qHkVRL7pZaf9rkeuKejWA6xqpVH+4lFzbyde?=
+ =?us-ascii?Q?TKdqi9qvb5rJpNTCwBK7FdBf566/l32FEEUYIBF+/bkPjOppSemRbKBh1cTK?=
+ =?us-ascii?Q?auAO5ISHExiGe/H4ltoLxSZQ9g9JcBwJSFWLXrgf+T6jls+E/jykI7A2hATY?=
+ =?us-ascii?Q?VuU8YXv2ZsrAjgzh6snGx2HkuXKFx+po5c1DtyEZMHbqL/LoKsxQ7g52ayfS?=
+ =?us-ascii?Q?aUUXsXX+YUhr6T71/lwPYryenFTggIFVIKjZMIxPPdnHhI0BDtWsIMW/WcGD?=
+ =?us-ascii?Q?s42qS0e/nP7mTmUbBdcHGcuaCx6hhRze1g1f0FNeZfBctWAdS3rBXCdErKL4?=
+ =?us-ascii?Q?h0q7dn9GtRfYJW3sfld5p7+kmSb0p9j4mloWQxApAxdCLJ2+cquewoshuRAS?=
+ =?us-ascii?Q?DLPJPJjIlaQNfLqkvZF3rEyVuR0gJjht9GMGWVR/TrsYIiFWqJ/M79MmxCzs?=
+ =?us-ascii?Q?eWCbYmAv3b6qC7p8DZ9V03Ex+dbfxpKuNHqs6AfOkqEv2fbLvxWaULPTU5CS?=
+ =?us-ascii?Q?vnCuDzp4lhvsagDlxQy/6VQThGhqwtBl2QMFXMuMmvbdaM7lo45elCkqTOu/?=
+ =?us-ascii?Q?LX7lwMyC4I3XtcIt9z9n4XReNf+V2b8zDa5EJr2ymlgb9Qy9Vypi1tXOYwxW?=
+ =?us-ascii?Q?pyigDaPa197NMdgYSXYSOaZu6QF95SVYVuytWLzBKTwr2h9Yc0FB4t8HN7nS?=
+ =?us-ascii?Q?C7gML++rXTRyBO5urp/iba2lU31rMC3v460RurGFeWv54teKtmFTZzn4h/5o?=
+ =?us-ascii?Q?doNl3gzrm2PpWSt/deGhyeZnyWOl+QHNYyfGKnb5kNE7c1WBX/iQAgwXNWm5?=
+ =?us-ascii?Q?yQFtq8/G79J8+qMqn/04uvNAH8PWbl8Urm+ziqeQ+CNE03i6llX8yyRnqZjg?=
+ =?us-ascii?Q?4blH+Ogs7+c/a3qv8UH1dcIELEKV35eqF1gZZJPe1uNkXppIYFUIaVpdpcYG?=
+ =?us-ascii?Q?X9vFwpxQ6bania0VrmMgGPLbByTHWSJb1HNWly7iHJReI9kIOBrxXbGh1hcj?=
+ =?us-ascii?Q?Pc/sXsPlyjUwml7Rj1HxnaES1SwxsGoCJywdyZkRoQSATKEJ7fkE3P5JbK+3?=
+ =?us-ascii?Q?f5skhjbSzs6inuiAV0JG+kg2kylbart7o5DuQoCpixwgHenmXezCcWPPWHqx?=
+ =?us-ascii?Q?r7BoJ24Cl/Ch6PMIO6uVYqxJ6bbQLrpKNZ7mIH9bihWgvVWVIOzJlRXaGw02?=
+ =?us-ascii?Q?DytiOG/PFGqubeOoAvaRZHlZCT3noqwPQHhTnMo93w9F/vDKfx+WpSn5RFEl?=
+ =?us-ascii?Q?CzN+OSiOcMhj+ipE1sG+cNr0Zj2x2S7zNXcl8Ohpf1kw6Iy202g25RsQAWPT?=
+ =?us-ascii?Q?TMoNMcdmnAuqA/twA0RVHDgKuTG5AdkaqQr9JFvVCt4UNQUwOH6SbNOVcAQ3?=
+ =?us-ascii?Q?k4y6xPrRr6p/K5ncE7zj3qUD/kWxoaFOxAeGWa9RvE0ZJil7M0494/n4Q0Rn?=
+ =?us-ascii?Q?MyKP+q5tVR7DDv2r0Ts+jjS3SI3wWolcx7vrpYsOWsbIAhSnYrcW8wUca9d7?=
+ =?us-ascii?Q?nrHT6BbzQw=3D=3D?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/3] hw/vfio: sort and validate sparse mmap regions by
- offset
-To: ankita@nvidia.com, vsethi@nvidia.com, jgg@nvidia.com,
- skolothumtho@nvidia.com, alex@shazbot.org
-Cc: aniketa@nvidia.com, cjia@nvidia.com, kwankhede@nvidia.com,
- targupta@nvidia.com, zhiw@nvidia.com, mochs@nvidia.com, kjaju@nvidia.com,
- qemu-devel@nongnu.org
-References: <20260215084950.4657-1-ankita@nvidia.com>
- <20260215084950.4657-2-ankita@nvidia.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260215084950.4657-2-ankita@nvidia.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB7548.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 90f03055-c51d-457a-6708-08de6d3b9511
+X-MS-Exchange-CrossTenant-originalarrivaltime: 16 Feb 2026 09:13:00.4304 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: drA5yWA1zD0w3WfjIWCgoxtniX7FZM+ciPoL0CWKewVajtQpjFU55PT7khtrYBY87BXutvsCKxi4nWjyY0ECyQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BY5PR12MB4259
+Received-SPF: permerror client-ip=2a01:111:f403:c112::7;
+ envelope-from=skolothumtho@nvidia.com;
+ helo=CY3PR05CU001.outbound.protection.outlook.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -171,108 +176,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/15/26 09:49, ankita@nvidia.com wrote:
-> From: Ankit Agrawal <ankita@nvidia.com>
-> 
-> Sort sparse mmap regions by offset during region setup to ensure
-> predictable mapping order, avoid overlaps and a proper handling
-> of the gaps between sub-regions.
-> 
-> Add validation to detect overlapping sparse regions early during
-> setup before any mapping operations begin.
-> 
-> The sorting is performed on the subregions ranges during
-> vfio_setup_region_sparse_mmaps(). This also ensures that subsequent
-> mapping code can rely on subregions being in ascending offset order.
-> 
-> This is preparatory work for alignment adjustments needed to support
-> hugepfnmap on systems where device memory (e.g., Grace-based systems)
-> may have non-power-of-2 sizes.
-> 
-> cc: Alex Williamson <alex@shazbot.org>
-> Reviewed-by: Alex Williamson <alex@shazbot.org>
-> Reviewed-by: Shameer Kolothum <skolothumtho@nvidia.com>
-> Signed-off-by: Ankit Agrawal <ankita@nvidia.com>
-> ---
->   hw/vfio/region.c | 45 ++++++++++++++++++++++++++++++++++++++++++++-
->   1 file changed, 44 insertions(+), 1 deletion(-)
-> 
-> diff --git a/hw/vfio/region.c b/hw/vfio/region.c
-> index ab39d77574..177494c379 100644
-> --- a/hw/vfio/region.c
-> +++ b/hw/vfio/region.c
-> @@ -149,6 +149,19 @@ static const MemoryRegionOps vfio_region_ops = {
->       },
->   };
->   
-> +static int vfio_mmap_compare_offset(const void *a, const void *b)
-> +{
-> +    const VFIOMmap *mmap_a = a;
-> +    const VFIOMmap *mmap_b = b;
-> +
-> +    if (mmap_a->offset < mmap_b->offset) {
-> +        return -1;
-> +    } else if (mmap_a->offset > mmap_b->offset) {
-> +        return 1;
-> +    }
-> +    return 0;
-> +}
-> +
->   static int vfio_setup_region_sparse_mmaps(VFIORegion *region,
->                                             struct vfio_region_info *info)
->   {
-> @@ -182,6 +195,34 @@ static int vfio_setup_region_sparse_mmaps(VFIORegion *region,
->       region->nr_mmaps = j;
->       region->mmaps = g_realloc(region->mmaps, j * sizeof(VFIOMmap));
->   
-> +    /*
-> +     * Sort sparse mmaps by offset to ensure proper handling of gaps
-> +     * and predictable mapping order in vfio_region_mmap().
-> +     */
-> +    if (region->nr_mmaps > 1) {
-> +        qsort(region->mmaps, region->nr_mmaps, sizeof(VFIOMmap),
-> +              vfio_mmap_compare_offset);
-> +
-> +        /*
-> +         * Validate that sparse regions dont overlap after sorting.
 
-dont -> don't
 
-> +         */
-> +        for (i = 1; i < region->nr_mmaps; i++) {
-> +            off_t prev_end = region->mmaps[i - 1].offset +
-> +                             region->mmaps[i - 1].size;
-> +            if (prev_end > region->mmaps[i].offset) {
-> +                error_report("%s: overlapping sparse mmap regions detected "
-> +                             "in region %d: [0x%lx-0x%lx] overlaps with [0x%lx-0x%lx]",
-> +                             __func__, region->nr, region->mmaps[i - 1].offset,
-> +                             prev_end - 1, region->mmaps[i].offset,
-> +                             region->mmaps[i].offset + region->mmaps[i].size - 1);
-> +                g_free(region->mmaps);
-> +                region->mmaps = NULL;
-> +                region->nr_mmaps = 0;
-> +                return -EINVAL;
-> +            }
-> +        }
-> +    }
-> +
->       return 0;
->   }
->   
-> @@ -213,11 +254,13 @@ int vfio_region_setup(Object *obj, VFIODevice *vbasedev, VFIORegion *region,
->   
->               ret = vfio_setup_region_sparse_mmaps(region, info);
->   
-> -            if (ret) {
-> +            if (ret == -ENODEV) {
->                   region->nr_mmaps = 1;
->                   region->mmaps = g_new0(VFIOMmap, region->nr_mmaps);
->                   region->mmaps[0].offset = 0;
->                   region->mmaps[0].size = region->size;
-> +            } else if (ret) {
-> +                return ret;
->               }
->           }
->       }
+> -----Original Message-----
+> From: Nicolin Chen <nicolinc@nvidia.com>
+> Sent: 13 February 2026 22:32
+> To: Shameer Kolothum Thodi <skolothumtho@nvidia.com>
+> Cc: qemu-arm@nongnu.org; qemu-devel@nongnu.org;
+> eric.auger@redhat.com; peter.maydell@linaro.org; Nathan Chen
+> <nathanc@nvidia.com>; Matt Ochs <mochs@nvidia.com>; Jiandi An
+> <jan@nvidia.com>; Jason Gunthorpe <jgg@nvidia.com>;
+> jonathan.cameron@huawei.com; zhangfei.gao@linaro.org;
+> zhenzhong.duan@intel.com; Krishnakant Jaju <kjaju@nvidia.com>
+> Subject: Re: [PATCH v6 0/5] vEVENTQ support for accelerated SMMUv3
+> devices
+>=20
+> On Fri, Feb 13, 2026 at 10:39:37AM +0000, Shameer Kolothum wrote:
+> > Hi,
+> >
+> > Changes from v5:
+> >  https://lore.kernel.org/qemu-devel/20260211083415.133534-1-
+> skolothumtho@nvidia.com/
+> >
+> >  -Addressed feedback and picked up tags. Thanks!
+> >  -Decoupled alloc_veventq on smmuv3_cmdq_consume() (patch  #3)
+> >  -Updated error messages (patch #5)
+>=20
+> I tested by hacking away the RMR nodes and msi_gpa to trigger some
+> translation faults at MSI doorbell.
+>=20
+> Tested-by: Nicolin Chen <nicolinc@nvidia.com>
+
+Thanks. I also tested, modifying  STE0_S1CDMAX to trigger BAD_CD ones.
+
+Shameer
 
 
