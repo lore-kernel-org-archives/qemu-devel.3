@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA54FE81A44
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 16:25:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FDD0E81A40
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 16:26:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vs1Pg-00005h-Ca; Mon, 16 Feb 2026 11:25:32 -0500
+	id 1vs1Pj-00006D-DM; Mon, 16 Feb 2026 11:25:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vs1Pe-000055-8L
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vs1Pe-000054-7p
  for qemu-devel@nongnu.org; Mon, 16 Feb 2026 11:25:30 -0500
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vs1Pa-0002tx-3w
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 11:25:28 -0500
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vs1PY-0002rj-N3
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 11:25:27 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=Cc:To:In-Reply-To:References:Message-Id:Content-Transfer-Encoding:
  Content-Type:MIME-Version:Subject:Date:From:Sender:Reply-To:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=4LkiTaljfkOqrefowX7cdd5uer+Jd06QUXUJdOltMMk=; b=CZfc6LSHGF63IGf
- luLxOOiwMWD1GlizhU7OqvZt6sZ36R9d42njIkdcwYnNGasLV8Ukr4+bOj0mPdHO89FCuC9EsLnJt
- PaSYPd+88rbvyQXY9TPDopvPx1YWFqBcOULO8MG5Xtc9EQbAsvc5dbm8f0u8lnqCHklHYUxqTYn/M
- /Q=;
-Date: Mon, 16 Feb 2026 17:28:42 +0100
-Subject: [PATCH v5 5/7] hw/loongarch: Use loongarch_palen_mask()
+ List-Help; bh=qTdMzO8D+HpvpcqOqOp681WOkWmZdRJ71H1gRfIO0uw=; b=RyHcccxpd1kXJPb
+ af0hEWnV40zcmjIHezc/JBm7aNdmgATbvkRQ3BSd4cFjy1vwH/xnDItFXAeH6Jo2ITyMAAA29hpen
+ GzJUqyuyoM0Sj5xji5eCcm8UNu7XoqLJmpShQUUwVt2RCJ4WJwVHObMX+wYD8qT1zzHWn+LL0Ah0R
+ Bo=;
+Date: Mon, 16 Feb 2026 17:28:41 +0100
+Subject: [PATCH v5 4/7] target/loongarch: Introduce loongarch_palen_mask()
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260216-phys_addr-v5-5-29d522f1339c@rev.ng>
+Message-Id: <20260216-phys_addr-v5-4-29d522f1339c@rev.ng>
 References: <20260216-phys_addr-v5-0-29d522f1339c@rev.ng>
 In-Reply-To: <20260216-phys_addr-v5-0-29d522f1339c@rev.ng>
 To: qemu-devel@nongnu.org
@@ -45,11 +45,11 @@ Cc: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Alistair Francis <alistair.francis@wdc.com>, 
  Brian Cain <brian.cain@oss.qualcomm.com>, 
  Chao Liu <chao.liu.zevorn@gmail.com>, Anton Johansson <anjo@rev.ng>
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1771259334; l=6394;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1771259334; l=6162;
  i=anjo@rev.ng; s=20260210; h=from:subject:message-id;
- bh=5MbRiX/4ApGQhlJ/njDl1vuK2WFfFk2T7B57kDt5a54=;
- b=WeQMQNQ8+AcyBkzmRZEOj1+cSnOmwyxzvuseV+GkTu6htuNFyWaC9JYkb6OkvE/+//I6fcJTy
- gtNlVNHyaIJA6wvXt9MzQdaeR5CrdjA8cmfg/LVJhTzeHqfJkMdZsKp
+ bh=uZIdrFfRYeBc4gNAM/v/8l39gnpLMzbIHrnRvkKuCw8=;
+ b=0WwES4bE+1EwqslF9oHP23dbXr2MatCL/kFCkhlBQA7TFmmC5QmFC1ErQPQTt7N0/82In5cxt
+ Z3sNFrVzk3HBk2hkjarW3ABUxdbRf1r1D5QTt1dWpAZSVSBSZYWHo62
 X-Developer-Key: i=anjo@rev.ng; a=ed25519;
  pk=dKsZvj/g3kgDxnV1/SWg8a0YNGSpWtFGNsWIepQYKow=
 Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
@@ -60,7 +60,8 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ T_FILL_THIS_FORM_SHORT=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,153 +79,159 @@ From:  Anton Johansson via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Replaces remaining uses of TARGET_PHYS_ADDR_SPACE_BITS with
-runtime calls to loongarch_palen_mask() to fetch the physical
-address mask from the cpucfg PALEN field.
+In preparation for dropping TARGET_PHYS_ADDR_SPACE_BITS, define a
+runtime function to construct a mask from the PALEN cpucfg field.
+The mask is then used when converting from virtual to physical
+addresses.
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Anton Johansson <anjo@rev.ng>
 ---
- include/hw/loongarch/boot.h |  3 ++-
- hw/loongarch/boot.c         | 28 ++++++++++++++++------------
- hw/loongarch/virt.c         |  5 ++++-
- 3 files changed, 22 insertions(+), 14 deletions(-)
+ target/loongarch/cpu-mmu.h        |  1 +
+ target/loongarch/internals.h      |  1 -
+ target/loongarch/cpu_helper.c     | 15 ++++++++++++---
+ target/loongarch/tcg/tlb_helper.c | 12 ++++++++----
+ 4 files changed, 21 insertions(+), 8 deletions(-)
 
-diff --git a/include/hw/loongarch/boot.h b/include/hw/loongarch/boot.h
-index 9819f7fbe3..4984322f75 100644
---- a/include/hw/loongarch/boot.h
-+++ b/include/hw/loongarch/boot.h
-@@ -113,6 +113,7 @@ struct memmap_entry {
-     uint32_t reserved;
- };
+diff --git a/target/loongarch/cpu-mmu.h b/target/loongarch/cpu-mmu.h
+index 2259de9d36..3286accc14 100644
+--- a/target/loongarch/cpu-mmu.h
++++ b/target/loongarch/cpu-mmu.h
+@@ -98,5 +98,6 @@ TLBRet loongarch_ptw(CPULoongArchState *env, MMUContext *context,
+ void get_dir_base_width(CPULoongArchState *env, uint64_t *dir_base,
+                         uint64_t *dir_width, unsigned int level);
+ hwaddr loongarch_cpu_get_phys_page_debug(CPUState *cpu, vaddr addr);
++uint64_t loongarch_palen_mask(CPULoongArchState *env);
  
--void loongarch_load_kernel(MachineState *ms, struct loongarch_boot_info *info);
-+void loongarch_load_kernel(MachineState *ms, struct loongarch_boot_info *info,
-+                           uint64_t phys_addr_mask);
+ #endif  /* LOONGARCH_CPU_MMU_H */
+diff --git a/target/loongarch/internals.h b/target/loongarch/internals.h
+index 8793bd9df6..e01dbed40f 100644
+--- a/target/loongarch/internals.h
++++ b/target/loongarch/internals.h
+@@ -13,7 +13,6 @@
+ #define FCMP_UN   0b0100  /* unordered */
+ #define FCMP_GT   0b1000  /* fp0 > fp1 */
  
- #endif /* HW_LOONGARCH_BOOT_H */
-diff --git a/hw/loongarch/boot.c b/hw/loongarch/boot.c
-index 711d5ffbbc..ef8eae237c 100644
---- a/hw/loongarch/boot.c
-+++ b/hw/loongarch/boot.c
-@@ -217,10 +217,12 @@ static void init_cmdline(struct loongarch_boot_info *info, void *p, void *start)
+-#define TARGET_PHYS_MASK MAKE_64BIT_MASK(0, TARGET_PHYS_ADDR_SPACE_BITS)
+ #define TARGET_VIRT_MASK MAKE_64BIT_MASK(0, TARGET_VIRT_ADDR_SPACE_BITS)
  
- static uint64_t cpu_loongarch_virt_to_phys(void *opaque, uint64_t addr)
+ void loongarch_translate_init(void);
+diff --git a/target/loongarch/cpu_helper.c b/target/loongarch/cpu_helper.c
+index 51ad9ff2b4..6044168766 100644
+--- a/target/loongarch/cpu_helper.c
++++ b/target/loongarch/cpu_helper.c
+@@ -147,6 +147,7 @@ TLBRet loongarch_ptw(CPULoongArchState *env, MMUContext *context,
  {
--    return addr & MAKE_64BIT_MASK(0, TARGET_PHYS_ADDR_SPACE_BITS);
-+    uint64_t *phys_addr_mask = opaque;
-+    return addr & *phys_addr_mask;
- }
+     CPUState *cs = env_cpu(env);
+     hwaddr index = 0, phys = 0;
++    uint64_t palen_mask = loongarch_palen_mask(env);
+     uint64_t dir_base, dir_width;
+     uint64_t base, pte;
+     int level;
+@@ -154,13 +155,14 @@ TLBRet loongarch_ptw(CPULoongArchState *env, MMUContext *context,
+     TLBRet ret;
+     MemTxResult ret1;
  
- static int64_t load_loongarch_linux_image(const char *filename,
-+                                          uint64_t phys_addr_mask,
-                                           uint64_t *kernel_entry,
-                                           uint64_t *kernel_low,
-                                           uint64_t *kernel_high)
-@@ -251,10 +253,8 @@ static int64_t load_loongarch_linux_image(const char *filename,
-     }
- 
-     /* Early kernel versions may have those fields in virtual address */
--    *kernel_entry = extract64(le64_to_cpu(hdr->kernel_entry),
--                              0, TARGET_PHYS_ADDR_SPACE_BITS);
--    *kernel_low = extract64(le64_to_cpu(hdr->load_offset),
--                            0, TARGET_PHYS_ADDR_SPACE_BITS);
-+    *kernel_entry = le64_to_cpu(hdr->kernel_entry) & phys_addr_mask;
-+    *kernel_low = le64_to_cpu(hdr->load_offset) & phys_addr_mask;
-     *kernel_high = *kernel_low + size;
- 
-     rom_add_blob_fixed(filename, buffer, size, *kernel_low);
-@@ -303,19 +303,21 @@ static ram_addr_t alloc_initrd_memory(struct loongarch_boot_info *info,
-     exit(1);
- }
- 
--static int64_t load_kernel_info(struct loongarch_boot_info *info)
-+static int64_t load_kernel_info(struct loongarch_boot_info *info,
-+                                uint64_t phys_addr_mask)
- {
-     uint64_t kernel_entry, kernel_low, kernel_high, initrd_offset = 0;
-     ssize_t kernel_size;
- 
-     kernel_size = load_elf(info->kernel_filename, NULL,
--                           cpu_loongarch_virt_to_phys, NULL,
-+                           cpu_loongarch_virt_to_phys, &phys_addr_mask,
-                            &kernel_entry, &kernel_low,
-                            &kernel_high, NULL, ELFDATA2LSB,
-                            EM_LOONGARCH, 1, 0);
--    kernel_entry = cpu_loongarch_virt_to_phys(NULL, kernel_entry);
-+    kernel_entry = cpu_loongarch_virt_to_phys(&phys_addr_mask, kernel_entry);
-     if (kernel_size < 0) {
-         kernel_size = load_loongarch_linux_image(info->kernel_filename,
-+                                                 phys_addr_mask,
-                                                  &kernel_entry, &kernel_low,
-                                                  &kernel_high);
-     }
-@@ -395,14 +397,15 @@ static void init_boot_rom(MachineState *ms,
- }
- 
- static void loongarch_direct_kernel_boot(MachineState *ms,
--                                         struct loongarch_boot_info *info)
-+                                         struct loongarch_boot_info *info,
-+                                         uint64_t phys_addr_mask)
- {
-     void *p, *bp;
-     int64_t kernel_addr = VIRT_FLASH0_BASE;
-     uint64_t *data;
- 
-     if (info->kernel_filename) {
--        kernel_addr = load_kernel_info(info);
-+        kernel_addr = load_kernel_info(info, phys_addr_mask);
++
+     address = context->addr;
+     if ((address >> 63) & 0x1) {
+         base = env->CSR_PGDH;
      } else {
-         if (!qtest_enabled()) {
-             warn_report("No kernel provided, booting from flash drive.");
-@@ -429,7 +432,8 @@ static void loongarch_direct_kernel_boot(MachineState *ms,
-     g_free(bp);
- }
- 
--void loongarch_load_kernel(MachineState *ms, struct loongarch_boot_info *info)
-+void loongarch_load_kernel(MachineState *ms, struct loongarch_boot_info *info,
-+                           uint64_t phys_addr_mask)
- {
-     LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(ms);
- 
-@@ -440,6 +444,6 @@ void loongarch_load_kernel(MachineState *ms, struct loongarch_boot_info *info)
-     if (lvms->bios_loaded) {
-         loongarch_firmware_boot(lvms, info);
-     } else {
--        loongarch_direct_kernel_boot(ms, info);
-+        loongarch_direct_kernel_boot(ms, info, phys_addr_mask);
+         base = env->CSR_PGDL;
      }
+-    base &= TARGET_PHYS_MASK;
++    base &= palen_mask;
+ 
+     for (level = 4; level >= 0; level--) {
+         get_dir_base_width(env, &dir_base, &dir_width, level);
+@@ -181,7 +183,7 @@ TLBRet loongarch_ptw(CPULoongArchState *env, MMUContext *context,
+                 break;
+             } else {
+                 /* Discard high bits with page directory table */
+-                base &= TARGET_PHYS_MASK;
++                base &= palen_mask;
+             }
+         }
+     }
+@@ -315,7 +317,7 @@ TLBRet get_physical_address(CPULoongArchState *env, MMUContext *context,
+     /* Check PG and DA */
+     address = context->addr;
+     if (da & !pg) {
+-        context->physical = address & TARGET_PHYS_MASK;
++        context->physical = address & loongarch_palen_mask(env);
+         context->prot = PAGE_READ | PAGE_WRITE | PAGE_EXEC;
+         context->mmu_index = MMU_DA_IDX;
+         return TLBRET_MATCH;
+@@ -364,3 +366,10 @@ hwaddr loongarch_cpu_get_phys_page_debug(CPUState *cs, vaddr addr)
+     }
+     return context.physical;
  }
-diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
-index a75968e4c9..9e26c25c23 100644
---- a/hw/loongarch/virt.c
-+++ b/hw/loongarch/virt.c
-@@ -34,6 +34,7 @@
- #include "hw/misc/unimp.h"
- #include "hw/loongarch/fw_cfg.h"
- #include "target/loongarch/cpu.h"
-+#include "target/loongarch/cpu-mmu.h"
- #include "hw/firmware/smbios.h"
- #include "qapi/qapi-visit-common.h"
- #include "hw/acpi/generic_event_device.h"
-@@ -928,6 +929,7 @@ static void virt_init(MachineState *machine)
-     hwaddr base, size, ram_size = machine->ram_size;
-     MachineClass *mc = MACHINE_GET_CLASS(machine);
-     Object *cpuobj;
-+    uint64_t phys_addr_mask = 0;
++
++uint64_t loongarch_palen_mask(CPULoongArchState *env)
++{
++    /* PALEN stores physical address bits - 1 */
++    uint64_t phys_bits = FIELD_EX32(env->cpucfg[1], CPUCFG1, PALEN) + 1;
++    return MAKE_64BIT_MASK(0, phys_bits);
++}
+diff --git a/target/loongarch/tcg/tlb_helper.c b/target/loongarch/tcg/tlb_helper.c
+index b6e9a3a3c7..c1dc77a8f8 100644
+--- a/target/loongarch/tcg/tlb_helper.c
++++ b/target/loongarch/tcg/tlb_helper.c
+@@ -692,8 +692,10 @@ target_ulong helper_lddir(CPULoongArchState *env, target_ulong base,
+     CPUState *cs = env_cpu(env);
+     uint64_t badvaddr;
+     hwaddr index, phys;
++    uint64_t palen_mask = loongarch_palen_mask(env);
+     uint64_t dir_base, dir_width;
  
-     if (!cpu_model) {
-         cpu_model = LOONGARCH_CPU_TYPE_NAME("la464");
-@@ -1017,7 +1019,8 @@ static void virt_init(MachineState *machine)
-     qemu_register_powerdown_notifier(&lvms->powerdown_notifier);
++
+     if (unlikely((level == 0) || (level > 4))) {
+         qemu_log_mask(LOG_GUEST_ERROR,
+                       "Attepted LDDIR with level %u\n", level);
+@@ -715,11 +717,11 @@ target_ulong helper_lddir(CPULoongArchState *env, target_ulong base,
+     }
  
-     lvms->bootinfo.ram_size = ram_size;
--    loongarch_load_kernel(machine, &lvms->bootinfo);
-+    phys_addr_mask = loongarch_palen_mask(&LOONGARCH_CPU(first_cpu)->env);
-+    loongarch_load_kernel(machine, &lvms->bootinfo, phys_addr_mask);
+     badvaddr = env->CSR_TLBRBADV;
+-    base = base & TARGET_PHYS_MASK;
++    base = base & palen_mask;
+     get_dir_base_width(env, &dir_base, &dir_width, level);
+     index = (badvaddr >> dir_base) & ((1 << dir_width) - 1);
+     phys = base | index << 3;
+-    return ldq_le_phys(cs->as, phys) & TARGET_PHYS_MASK;
++    return ldq_le_phys(cs->as, phys) & palen_mask;
  }
  
- static void virt_get_acpi(Object *obj, Visitor *v, const char *name,
+ void helper_ldpte(CPULoongArchState *env, target_ulong base, target_ulong odd,
+@@ -730,9 +732,11 @@ void helper_ldpte(CPULoongArchState *env, target_ulong base, target_ulong odd,
+     uint64_t badv;
+     uint64_t ptbase = FIELD_EX64(env->CSR_PWCL, CSR_PWCL, PTBASE);
+     uint64_t ptwidth = FIELD_EX64(env->CSR_PWCL, CSR_PWCL, PTWIDTH);
++    uint64_t palen_mask = loongarch_palen_mask(env);
+     uint64_t dir_base, dir_width;
+     uint8_t  ps;
+ 
++
+     /*
+      * The parameter "base" has only two types,
+      * one is the page table base address,
+@@ -740,7 +744,7 @@ void helper_ldpte(CPULoongArchState *env, target_ulong base, target_ulong odd,
+      * and the other is the huge page entry,
+      * whose bit 6 should be 1.
+      */
+-    base = base & TARGET_PHYS_MASK;
++    base = base & palen_mask;
+     if (FIELD_EX64(base, TLBENTRY, HUGE)) {
+         /*
+          * Gets the huge page level and Gets huge page size.
+@@ -781,7 +785,7 @@ void helper_ldpte(CPULoongArchState *env, target_ulong base, target_ulong odd,
+         ptoffset0 = ptindex << 3;
+         ptoffset1 = (ptindex + 1) << 3;
+         phys = base | (odd ? ptoffset1 : ptoffset0);
+-        tmp0 = ldq_le_phys(cs->as, phys) & TARGET_PHYS_MASK;
++        tmp0 = ldq_le_phys(cs->as, phys) & palen_mask;
+         ps = ptbase;
+     }
+ 
 
 -- 
 2.52.0
