@@ -4,150 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42CE0E7BDB5
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 12:32:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E189E7BDB7
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 12:43:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vrxm2-0000YQ-AX; Mon, 16 Feb 2026 07:32:23 -0500
+	id 1vrxvy-00035a-DI; Mon, 16 Feb 2026 07:42:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vrxlu-0000Xj-6R
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 07:32:14 -0500
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1vrxvt-00034t-Jm
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 07:42:34 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vrxls-0002A7-2H
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 07:32:13 -0500
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1vrxvr-0004bN-6k
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 07:42:33 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771245129;
+ s=mimecast20190719; t=1771245749;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=Gq0plVVf4kuDVVW/Aqn2h1TxoGHLRI3+ZIHmmKTDCpc=;
- b=XwGAp2VNUVglxdg1JWb+MohyGq5YRCqgclGorioHnSeTxRa70aaKGGTkA28v3aRzXTLsL8
- BBBkvSk24ayg0qHSYK+6zvNAGsonihwZ1YTaJtB/uJ9lj1ZmgraiyHqPxtvZrozdp5L0/f
- mKD75FeejBlBKwJXR9mGGRMp4q+ghTU=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-508-x6Rpg6U2NGGKL5BBfWp0jg-1; Mon, 16 Feb 2026 07:32:08 -0500
-X-MC-Unique: x6Rpg6U2NGGKL5BBfWp0jg-1
-X-Mimecast-MFC-AGG-ID: x6Rpg6U2NGGKL5BBfWp0jg_1771245127
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4830e7c6131so34435125e9.2
- for <qemu-devel@nongnu.org>; Mon, 16 Feb 2026 04:32:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1771245127; x=1771849927; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=Gq0plVVf4kuDVVW/Aqn2h1TxoGHLRI3+ZIHmmKTDCpc=;
- b=X4NllFjqBZtIaRt22eKo4d44FWqaRd55Wh090rOE3H5Fv1EGJ6UVxEpNFRRm+XZgAp
- iYcKx/EFxb8nfnTRRGDudLoGlobWF+kdoWXVxH9CG2Xazh25CJ5r/yQ5ZtGvCJe9snyJ
- +Jx8ZBS6Y3B7FTxvtOtosnjV6BW7DVK++Ai8QbUoBzoWizVnjo5eDeE4WnHn38ljJWEi
- rQzfYc2WiFzFb/kf3dnBYqIT6jI/ewbbUGkeoapI76XlbLEB9TU9alCOOpohOmXlluSG
- x4Vn5FZZTNJX8gjIzOuo41QvhRwXSMfGPIMbjDPpWkaTz9wdesBO2XIvPVZtegO39gNQ
- 2nyg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771245127; x=1771849927;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Gq0plVVf4kuDVVW/Aqn2h1TxoGHLRI3+ZIHmmKTDCpc=;
- b=RWEsVH1MdatfqmY2OzZYQinOs5B/rnUCGpJ5xP/ywcOvTIlYA0v5cutQ2fssLor6mq
- Bi9DsxLihD+v9FGEoLUD+WC+KBYvpgmB+qeH1vjjfWM6iSiJhUrAETLEZAR2DIQ6UX/U
- 59nTHw+iQLlsD/H3cOt8Hhebc6cczPyFjHj/lHs8ou1wd/EcuoMhxrU5drxu0bfcpEx6
- 9qIsvJag/D/XEQu9b1YrQBo5JcRIpuRvwnR1yFxK91KuOsnTE057GBr77D1SfdiaFHhk
- J07WCiiyQCFIR6CY9PsxD9RB7tLDS0jgQ7+UAqqcKSHC/GYiF/4kYm1MyR/TS2yMpcl1
- Rvlg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXB5CxmJhZb7urU6s6y56ZzS0Mb5Zy9UJY9sdZChB4YkhdQuqY/wQlazn8U90KuIDf/c4Knvdub36ZR@nongnu.org
-X-Gm-Message-State: AOJu0Yz6ybgYfP4o0EtyT9AvhzhIi2c/4ky/SdQSDjgLs5a/rLDCGgZC
- l8jjFXqsBkDxD2EYLG8BSE41gIhq4fbzip0S5o3vTUyQid0CriyfRmV+bXHWInaHyKawdAaw6id
- Kl823u/J4YeBiBU1jH0OFRUosgZ/XDw7x6J8ZgvxFb5CqGAtuW4BAdtLB
-X-Gm-Gg: AZuq6aI1d+UA0vYYcIMFVWd0IsG/rfctgISYb11TrIJO+gXGuPvRyruem+uMA7OAlih
- 1GVZbGHEYlLm2GSG5k0+dqSFHeKeLWkkrOUA5IafTAhefkjciYv1mnRj7hAcIX6W12RI1UNFV8L
- UoLHqLXQxwVdPbNkzMZKJiQWNNGb/VDg0opRL1427ouu4b5Wdm4IKv0ne8vJ47inUCRZhOISq8e
- seMJsfpdlMM5P50/H46LVnDRPIsgiQ4FVsq8kg8fiOrw7r+g/uh/tXbSJLraBynUOuB4j6kQc54
- wNCqb0ldmsQHqXe4TQ9Qs03vBl96w1RdYJs8fOIOV/WTZJA1VLnpCnPQLGEdoACaW1LesZgwM9k
- wsrykJTbkgwo/8L7zBWk0mwgZg7IRqGGY9EsD0OIU2+naMxy31LpudutqWdKe
-X-Received: by 2002:a05:600c:6098:b0:477:b734:8c53 with SMTP id
- 5b1f17b1804b1-48379ba08a6mr130359765e9.12.1771245127072; 
- Mon, 16 Feb 2026 04:32:07 -0800 (PST)
-X-Received: by 2002:a05:600c:6098:b0:477:b734:8c53 with SMTP id
- 5b1f17b1804b1-48379ba08a6mr130359205e9.12.1771245126529; 
- Mon, 16 Feb 2026 04:32:06 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4834d5ebd1bsm502112985e9.6.2026.02.16.04.32.05
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 16 Feb 2026 04:32:06 -0800 (PST)
-Message-ID: <6d3238b8-51b4-4879-9367-e8fa2f0ab9ab@redhat.com>
-Date: Mon, 16 Feb 2026 13:32:05 +0100
+ in-reply-to:in-reply-to:references:references;
+ bh=5a81tuM+MAE9ZfJm3QKffXKPyS8F4EexeHB+vBsyPu4=;
+ b=QxKFVMic1UwNQIqVE4Z0CIpDDrkRnTH92uXjJbm6CW889juHvQFuvbXdJdeMne9VA48t1g
+ pOnYxHlHkv0NB74JjQPAXEcKMxTdLoJKWWaKO3RtoMIilVJawsip+QGq+cvuJuKuy5q0au
+ +8LV2+xfv2mJq7PkKpoPGlwc2WbHIMQ=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-100-oJAFSlLyNq28xwTE-1pfNA-1; Mon,
+ 16 Feb 2026 07:42:27 -0500
+X-MC-Unique: oJAFSlLyNq28xwTE-1pfNA-1
+X-Mimecast-MFC-AGG-ID: oJAFSlLyNq28xwTE-1pfNA_1771245744
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8B3801800342; Mon, 16 Feb 2026 12:42:23 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.55])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id DEE0219560AD; Mon, 16 Feb 2026 12:42:21 +0000 (UTC)
+Date: Mon, 16 Feb 2026 07:42:20 -0500
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: JAEHOON KIM <jhkim@linux.ibm.com>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, pbonzini@redhat.com,
+ fam@euphon.net, armbru@redhat.com, eblake@redhat.com,
+ berrange@redhat.com, eduardo@habkost.net, dave@treblig.org, sw@weilnetz.de
+Subject: Re: [PATCH RFC v1 0/3] aio-poll: improve aio-polling efficiency
+Message-ID: <20260216124220.GA391065@fedora>
+References: <20260113174824.464720-1-jhkim@linux.ibm.com>
+ <20260119181630.GA834718@fedora>
+ <eb9693ae-6aae-4599-8c8c-22268357d2c0@linux.ibm.com>
+ <20260203211222.GB449076@fedora>
+ <b507e8c4-47c8-44fb-a7fc-6239e029cd56@linux.ibm.com>
+ <20260212185321.GA257116@fedora>
+ <b338db97-efdc-445f-9e9c-34091425d3d5@linux.ibm.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 02/16] tests/functional: Add SDK tests with Linux 5.15
-To: Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>, 
- "Daniel P. Berrange" <berrange@redhat.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org,
- Kane Chen <kane_chen@aspeedtech.com>
-References: <20260212213955.2225662-1-clg@redhat.com>
- <20260212213955.2225662-3-clg@redhat.com>
- <CAFEAcA_oJgTc2SyRr11QTeTkmCPgvKiwngAaDiDNw5nUcTFA2w@mail.gmail.com>
- <CAFEAcA_9Np04vouA-m99xB8yU-JhduwxxLj_dTG0QM=AnDbHoQ@mail.gmail.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- xsFNBFu8o3UBEADP+oJVJaWm5vzZa/iLgpBAuzxSmNYhURZH+guITvSySk30YWfLYGBWQgeo
- 8NzNXBY3cH7JX3/a0jzmhDc0U61qFxVgrPqs1PQOjp7yRSFuDAnjtRqNvWkvlnRWLFq4+U5t
- yzYe4SFMjFb6Oc0xkQmaK2flmiJNnnxPttYwKBPd98WfXMmjwAv7QfwW+OL3VlTPADgzkcqj
- 53bfZ4VblAQrq6Ctbtu7JuUGAxSIL3XqeQlAwwLTfFGrmpY7MroE7n9Rl+hy/kuIrb/TO8n0
- ZxYXvvhT7OmRKvbYuc5Jze6o7op/bJHlufY+AquYQ4dPxjPPVUT/DLiUYJ3oVBWFYNbzfOrV
- RxEwNuRbycttMiZWxgflsQoHF06q/2l4ttS3zsV4TDZudMq0TbCH/uJFPFsbHUN91qwwaN/+
- gy1j7o6aWMz+Ib3O9dK2M/j/O/Ube95mdCqN4N/uSnDlca3YDEWrV9jO1mUS/ndOkjxa34ia
- 70FjwiSQAsyIwqbRO3CGmiOJqDa9qNvd2TJgAaS2WCw/TlBALjVQ7AyoPEoBPj31K74Wc4GS
- Rm+FSch32ei61yFu6ACdZ12i5Edt+To+hkElzjt6db/UgRUeKfzlMB7PodK7o8NBD8outJGS
- tsL2GRX24QvvBuusJdMiLGpNz3uqyqwzC5w0Fd34E6G94806fwARAQABzSJDw6lkcmljIExl
- IEdvYXRlciA8Y2xnQHJlZGhhdC5jb20+wsGRBBMBCAA7FiEEoPZlSPBIlev+awtgUaNDx8/7
- 7KEFAmTLlVECGwMFCwkIBwICIgIGFQoJCAsCBBYCAwECHgcCF4AACgkQUaNDx8/77KG0eg//
- S0zIzTcxkrwJ/9XgdcvVTnXLVF9V4/tZPfB7sCp8rpDCEseU6O0TkOVFoGWM39sEMiQBSvyY
- lHrP7p7E/JYQNNLh441MfaX8RJ5Ul3btluLapm8oHp/vbHKV2IhLcpNCfAqaQKdfk8yazYhh
- EdxTBlzxPcu+78uE5fF4wusmtutK0JG0sAgq0mHFZX7qKG6LIbdLdaQalZ8CCFMKUhLptW71
- xe+aNrn7hScBoOj2kTDRgf9CE7svmjGToJzUxgeh9mIkxAxTu7XU+8lmL28j2L5uNuDOq9vl
- hM30OT+pfHmyPLtLK8+GXfFDxjea5hZLF+2yolE/ATQFt9AmOmXC+YayrcO2ZvdnKExZS1o8
- VUKpZgRnkwMUUReaF/mTauRQGLuS4lDcI4DrARPyLGNbvYlpmJWnGRWCDguQ/LBPpbG7djoy
- k3NlvoeA757c4DgCzggViqLm0Bae320qEc6z9o0X0ePqSU2f7vcuWN49Uhox5kM5L86DzjEQ
- RHXndoJkeL8LmHx8DM+kx4aZt0zVfCHwmKTkSTQoAQakLpLte7tWXIio9ZKhUGPv/eHxXEoS
- 0rOOAZ6np1U/xNR82QbF9qr9TrTVI3GtVe7Vxmff+qoSAxJiZQCo5kt0YlWwti2fFI4xvkOi
- V7lyhOA3+/3oRKpZYQ86Frlo61HU3r6d9wzOwU0EW7yjdQEQALyDNNMw/08/fsyWEWjfqVhW
- pOOrX2h+z4q0lOHkjxi/FRIRLfXeZjFfNQNLSoL8j1y2rQOs1j1g+NV3K5hrZYYcMs0xhmrZ
- KXAHjjDx7FW3sG3jcGjFW5Xk4olTrZwFsZVUcP8XZlArLmkAX3UyrrXEWPSBJCXxDIW1hzwp
- bV/nVbo/K9XBptT/wPd+RPiOTIIRptjypGY+S23HYBDND3mtfTz/uY0Jytaio9GETj+fFis6
- TxFjjbZNUxKpwftu/4RimZ7qL+uM1rG1lLWc9SPtFxRQ8uLvLOUFB1AqHixBcx7LIXSKZEFU
- CSLB2AE4wXQkJbApye48qnZ09zc929df5gU6hjgqV9Gk1rIfHxvTsYltA1jWalySEScmr0iS
- YBZjw8Nbd7SxeomAxzBv2l1Fk8fPzR7M616dtb3Z3HLjyvwAwxtfGD7VnvINPbzyibbe9c6g
- LxYCr23c2Ry0UfFXh6UKD83d5ybqnXrEJ5n/t1+TLGCYGzF2erVYGkQrReJe8Mld3iGVldB7
- JhuAU1+d88NS3aBpNF6TbGXqlXGF6Yua6n1cOY2Yb4lO/mDKgjXd3aviqlwVlodC8AwI0Sdu
- jWryzL5/AGEU2sIDQCHuv1QgzmKwhE58d475KdVX/3Vt5I9kTXpvEpfW18TjlFkdHGESM/Jx
- IqVsqvhAJkalABEBAAHCwV8EGAECAAkFAlu8o3UCGwwACgkQUaNDx8/77KEhwg//WqVopd5k
- 8hQb9VVdk6RQOCTfo6wHhEqgjbXQGlaxKHoXywEQBi8eULbeMQf5l4+tHJWBxswQ93IHBQjK
- yKyNr4FXseUI5O20XVNYDJZUrhA4yn0e/Af0IX25d94HXQ5sMTWr1qlSK6Zu79lbH3R57w9j
- hQm9emQEp785ui3A5U2Lqp6nWYWXz0eUZ0Tad2zC71Gg9VazU9MXyWn749s0nXbVLcLS0yop
- s302Gf3ZmtgfXTX/W+M25hiVRRKCH88yr6it+OMJBUndQVAA/fE9hYom6t/zqA248j0QAV/p
- LHH3hSirE1mv+7jpQnhMvatrwUpeXrOiEw1nHzWCqOJUZ4SY+HmGFW0YirWV2mYKoaGO2YBU
- wYF7O9TI3GEEgRMBIRT98fHa0NPwtlTktVISl73LpgVscdW8yg9Gc82oe8FzU1uHjU8b10lU
- XOMHpqDDEV9//r4ZhkKZ9C4O+YZcTFu+mvAY3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfA
- HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
- izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <CAFEAcA_9Np04vouA-m99xB8yU-JhduwxxLj_dTG0QM=AnDbHoQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="ZX7okOAnJl77fjUE"
+Content-Disposition: inline
+In-Reply-To: <b338db97-efdc-445f-9e9c-34091425d3d5@linux.ibm.com>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -156,7 +76,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -172,43 +92,251 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-+Jamin,
 
-On 2/16/26 12:17, Peter Maydell wrote:
-> On Mon, 16 Feb 2026 at 11:13, Peter Maydell <peter.maydell@linaro.org> wrote:
->>
->> On Thu, 12 Feb 2026 at 21:42, Cédric Le Goater <clg@redhat.com> wrote:
->>>
->>> Add functional tests for AST2500 and AST2600 machines using the
->>> OpenBMC SDK v11.00 with Linux kernel 5.15. These tests complement the
->>> existing SDK tests and verify that QEMU correctly boots older kernel
->>> versions on these platforms.
->>
->>
->>> +    ASSET_SDK_V1100_AST2600_515 = Asset(
->>> +        'https://github.com/AspeedTech-BMC/openbmc/releases/download/v11.00/ast2600-default-515-obmc.tar.gz',
->>> +        'ece1a934095378929780f03e7d092e562f4b33b2841b80ad7c3d12a85744c0f6')
->>
->> This asset file is over a gigabyte in size, it takes forever to
->> download, and our functional test asset download framework has
->> no mechanism for giving any kind of progress indication for
->> downloads (or even for telling you the URL it is downloading
->> until after the download is complete).
->>
->> Can we have a size limit for test assets please, at least until
->> the framework can support large assets a bit better ?
-> 
-> Followup: we have six test assets that are over 500MB in size,
-> and they are all aspeed tests. Please can you have a look at
-> slimming these down?
+--ZX7okOAnJl77fjUE
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
+On Fri, Feb 13, 2026 at 09:13:29AM -0600, JAEHOON KIM wrote:
+> On 2/12/2026 12:53 PM, Stefan Hajnoczi wrote:
+> > On Fri, Feb 06, 2026 at 12:50:38AM -0600, JAEHOON KIM wrote:
+> > > On 2/3/2026 3:12 PM, Stefan Hajnoczi wrote:
+> > > > On Fri, Jan 23, 2026 at 01:15:04PM -0600, JAEHOON KIM wrote:
+> > > > > On 1/19/2026 12:16 PM, Stefan Hajnoczi wrote:
+> > > > > > On Tue, Jan 13, 2026 at 11:48:21AM -0600, Jaehoon Kim wrote:
+> > > > > > > We evaluated the patches on an s390x host with a single guest=
+ using 16
+> > > > > > > virtio block devices backed by FCP multipath devices in a sep=
+arate-disk
+> > > > > > > setup, with the I/O scheduler set to 'none' in both host and =
+guest.
+> > > > > > >=20
+> > > > > > > The fio workload included sequential and random read/write wi=
+th varying
+> > > > > > > numbers of jobs (1,4,8,16) and io_depth of 8. The tests were =
+conducted
+> > > > > > > with single and dual iothreads, using the newly introduced po=
+ll-weight
+> > > > > > > parameter to measure their impact on CPU cost and throughput.
+> > > > > > >=20
+> > > > > > > Compared to the baseline, across four FIO workload patterns (=
+sequential
+> > > > > > > R/W, random R/W), and averaged over FIO job counts of 1, 4, 8=
+, and 16,
+> > > > > > > throughput decreased slightly (-3% to -8% for one iothread, -=
+2% to -5%
+> > > > > > > for two iothreads), while CPU usage on the s390x host dropped
+> > > > > > > significantly (-10% to -25% and -7% to -12%, respectively).
+> > > > > > Hi Jaehoon,
+> > > > > > I would like to run the same fio benchmarks on a local NVMe dri=
+ve (<10us
+> > > > > > request latency) to see how that type of hardware configuration=
+ is
+> > > > > > affected. Are the scripts and fio job files available somewhere?
+> > > > > >=20
+> > > > > > Thanks,
+> > > > > > Stefan
+> > > > > Thank you for your reply.
+> > > > > The fio scripts are not available in a location you can access, b=
+ut there is nothing particularly special in the settings.
+> > > > > I=E2=80=99m sharing below the methodology and test setup used by =
+our performance team.
+> > > > >=20
+> > > > > Guest Setup
+> > > > > ----------------------
+> > > > > - 12 vCPUs, 4 GiB memory
+> > > > > - 16 virtio disks based on the FCP multipath devices in the host
+> > > > >=20
+> > > > > FIO test parameters
+> > > > > -----------------------
+> > > > > - FIO Version: fio-3.33
+> > > > > - Filesize: 2G
+> > > > > - Blocksize: 8K / 128K
+> > > > > - Direct I/O: 1
+> > > > > - FIO I/O Engine: libaio
+> > > > > - NUMJOB List: 1, 4, 8, 16
+> > > > > - IODEPTH: 8
+> > > > > - Runtime (s): 150
+> > > > >=20
+> > > > > Two FIO samples for random read
+> > > > > --------------------------------
+> > > > > fio --direct=3D1 --name=3Dtest --numjobs=3D16 --filename=3Dbase.0=
+=2E0:base.1.0:base.2.0:base.3.0:base.4.0:base.5.0:base.6.0:base.7.0:base.8.=
+0:base.9.0:base.10.0:base.11.0:base.12.0:base.13.0:base.14.0:base.15.0 --si=
+ze=3D32G  --time_based --runtime=3D4m --readwrite=3Drandread --ioengine=3Dl=
+ibaio --iodepth=3D8 --bs=3D8k
+> > > > > fio --direct=3D1 --name=3Dtest --numjobs=3D4  --filename=3Dsubw1/=
+base.0.0:subw4/base.3.0:subw8/base.7.0:subw12/base.11.0:subw16/base.15.0   =
+                                                                     --size=
+=3D8G   --time_based --runtime=3D4m --readwrite=3Drandread --ioengine=3Dlib=
+aio --iodepth=3D8 --bs=3D8k
+> > > > >=20
+> > > > >=20
+> > > > > additional notes
+> > > > > ----------------
+> > > > > - Each file is placed on a separate disk device mounted under sub=
+w<n> as specified in --filename=3D....
+> > > > > - We execute one warmup run, then two measurement runs and calcul=
+ate the average
+> > > > Hi Jaehoon,
+> > > > I ran fio benchmarks on an Intel Optane SSD DC P4800X Series drive =
+(<10
+> > > > microsecond latency). This is with just 1 drive.
+> > > >=20
+> > > > The 8 KiB block size results show something similar to what you
+> > > > reported: there are IOPS (or throughput) regressions and CPU utiliz=
+ation
+> > > > improvements.
+> > > >=20
+> > > > Although the CPU improvements are welcome, I think the default beha=
+vior
+> > > > should only be changed if the IOPS regressions can be brought below=
+ 5%.
+> > > >=20
+> > > > The regressions seem to happen regardless of whether 1 or 2 IOThrea=
+ds
+> > > > are configured. CPU utilization is different (98% vs 78%) depending=
+ on
+> > > > the number of IOThreads, so the regressions happen across a range o=
+f CPU
+> > > > utilizations.
+> > > >=20
+> > > > The 128 KiB block size results are not interesting because the drive
+> > > > already saturates at numjobs=3D1. This is expected since the drive =
+cannot
+> > > > go much above ~2 GiB/s throughput.
+> > > >=20
+> > > > You can find the Ansible playbook, libvirt domain XML, fio
+> > > > command-lines, and the fio/sar data here:
+> > > >=20
+> > > > https://gitlab.com/stefanha/virt-playbooks/-/tree/aio-polling-effic=
+iency
+> > > >=20
+> > > > Please let me know if you'd like me to rerun the benchmark with new
+> > > > patches or a configuration change.
+> > > >=20
+> > > > Do you want to have a video call to discuss your work and how to ge=
+t the
+> > > > patches merged?
+> > > >=20
+> > > > Host
+> > > > ----
+> > > > CPU: Intel Xeon Silver 4214 CPU @ 2.20GHz
+> > > > RAM: 32 GiB
+> > > >=20
+> > > > Guest
+> > > > -----
+> > > > vCPUs: 8
+> > > > RAM: 4 GiB
+> > > > Disk: 1 virtio-blk aio=3Dnative cache=3Dnone
+> > > >=20
+> > > > IOPS
+> > > > ----
+> > > > rw        bs   numjobs iothreads iops   diff
+> > > > randread  8k   1       1         163417 -7.8%
+> > > > randread  8k   1       2         165041 -2.4%
+> > > > randread  8k   4       1         221508 -0.64%
+> > > > randread  8k   4       2         251298 0.008%
+> > > > randread  8k   8       1         222128 -0.51%
+> > > > randread  8k   8       2         249489 -2.6%
+> > > > randread  8k   16      1         230535 -0.18%
+> > > > randread  8k   16      2         246732 -0.22%
+> > > > randread  128k 1       1          17616 -0.11%
+> > > > randread  128k 1       2          17678 0.027%
+> > > > randread  128k 4       1          17536 -0.27%
+> > > > randread  128k 4       2          17610 -0.031%
+> > > > randread  128k 8       1          17369 -0.42%
+> > > > randread  128k 8       2          17433 -0.071%
+> > > > randread  128k 16      1          17215 -0.61%
+> > > > randread  128k 16      2          17269 -0.22%
+> > > > randwrite 8k   1       1         156597 -3.1%
+> > > > randwrite 8k   1       2         157720 -3.8%
+> > > > randwrite 8k   4       1         218448 -0.5%
+> > > > randwrite 8k   4       2         247075 -5.1%
+> > > > randwrite 8k   8       1         220866 -0.75%
+> > > > randwrite 8k   8       2         260935 -0.011%
+> > > > randwrite 8k   16      1         230913 0.23%
+> > > > randwrite 8k   16      2         261125 -0.01%
+> > > > randwrite 128k 1       1          16009 0.094%
+> > > > randwrite 128k 1       2          16070 0.035%
+> > > > randwrite 128k 4       1          16073 -0.62%
+> > > > randwrite 128k 4       2          16131 0.059%
+> > > > randwrite 128k 8       1          16106 0.092%
+> > > > randwrite 128k 8       2          16153 0.048%
+> > > > randwrite 128k 16      1          16102 -0.0091%
+> > > > randwrite 128k 16      2          16160 0.048%
+> > > >=20
+> > > > IOThread CPU usage
+> > > > ------------------
+> > > > iothreads before  after
+> > > > 1         98.7    95.81
+> > > > 2         78.43   66.13
+> > > >=20
+> > > > Stefan
+> > > Hello Stefan,
+> > >=20
+> > > Thank you very much for your effort in running these benchmarks.
+> > > The results show a pattern very similar to what our performance team
+> > > observed.
+> > >=20
+> > > I fully agree with the 5% threshold for the default behavior.
+> > > However, we need an approach that balances the current performance
+> > > oriented polling scheme with CPU efficiency.
+> > >=20
+> > > I found that relying on grow/shrink parameters was too limited to
+> > > achieve these results. This is why I've adjusted the process using a
+> > > weight-based grow/shrink approach to ensure the polling window remains
+> > > robust against jitter. Specifically, it avoids abrupt resets to zero
+> > > by implementing a gradual shrink rather than an immediate reset, even
+> > > when device latency exceeds the threshold.
+> > >=20
+> > > As seen in both your results and our team's measurements, this may le=
+ad
+> > > to a bit of a performance trade-off, but it provides a reasonable
+> > > balance for CPU-sensitive environment.
+> > >=20
+> > > Thank you for suggesting the video call and I am also looking forward=
+ to
+> > > hearing your thoughts. I'm on US Central Time. Except for Tuesday, I =
+can
+> > > adjust my schedule to a time that works for you.
+> > >=20
+> > > Please let me know your preferred time.
+> > Is Monday, February 16th at 10:00am CST good for you? If not, please
+> > feel free to pick any time on Monday.
+> >=20
+> > Meeting link: https://meet.jit.si/AioPollingOptimization
+> >=20
+> > Anyone else interested in this topic is welcome to join.
+> >=20
+> > Thanks,
+> > Stefan
+>=20
+> Thank you for the invite, Stefan.
+> Monday at 10:00 AM CST works well for me.
+> I'll make sure to be there and look forward to the discussion. See you th=
+en!
 
-Yes. There has been a considerable increase in size over the last 6m.
+Great, talk to you soon!
 
-Thanks,
+Stefan
 
-C.
+--ZX7okOAnJl77fjUE
+Content-Type: application/pgp-signature; name=signature.asc
 
+-----BEGIN PGP SIGNATURE-----
 
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmmTEKwACgkQnKSrs4Gr
+c8hJLAgAmrHNXI1AiPpV4UeL85Ko2poA0d2IZqQNBnPF2UgGMTfbRMO0Vs2f3BTc
+fm6QTgyU6W8GUvzSjfALhXxJXQ+J0lrjNNljcrZ9aW2Vw+M3VNQw87GN2qiiWAEg
+Xx+Gr2RBCgUpqsYHOXnt5NS1gkhogo77mBjM7nAURPM9k//jVUIih8krkTgYNmOr
+DvJWJ3wdESqH/K94kerLw82SFmpbSctzf3TXamYnGgzePEOlkeM2YG7WReOEew6s
+fBM4xAr3KA/OWlRfW4qADqElgiTBclSvHTTrQa2Wau96XmHYzWMjuTo+12gigQEt
+Tu3ZdOYRUdQAkIf/sKN3GTn9kAtwNQ==
+=VNLc
+-----END PGP SIGNATURE-----
+
+--ZX7okOAnJl77fjUE--
 
 
