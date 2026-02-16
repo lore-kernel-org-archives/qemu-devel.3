@@ -4,57 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5246E7BD9F
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 11:29:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60712E7BDA1
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 11:29:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vrwfO-0006aR-C8; Mon, 16 Feb 2026 06:21:26 -0500
+	id 1vrwfO-0006Ze-90; Mon, 16 Feb 2026 06:21:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vrwce-0006t4-Lt
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 06:18:38 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1vrwcA-0006UA-RP
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 06:18:09 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vrwcc-0008Gb-Ha
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 06:18:36 -0500
+ id 1vrwc8-0008BV-SN
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 06:18:06 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771240713;
+ s=mimecast20190719; t=1771240684;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=imf3hzI7LKBfMTfzAqdoQfPRWfEP/D7PMD9pqFFwoX4=;
- b=Z055ss6NJck6oBXnWE5f2b2h3EwPEuz6JQO9wslJ8aSsecY41RXOGJKrNlUTfybefXxoGe
- GKN8qyHixfnuRHrbeAeHx8UqNnLNkb0F5l/wUCR1yBakTFXGve40vTyQMpyFzkyHYpg6Xr
- qlCG7NGHnUhdfHd07ibrYvzZhddtkYE=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=JxdTNnVEA5dLWdTaaPYS9EB7LtH7sy5sV7cgK+yuVqQ=;
+ b=W2W/Y3vtlCdsK9xJu0mKnxCIInXIfgrnpPco15/eW7/XmQeXMyTzUMNWWT4syM/RyTUfNB
+ KsZjp/zLrCZtoeG+5Z+6kWv9Ck4RNDZOT2HVMsrqQzHqdJAuW3SmGnrcrFZ8oG0mUvLcYk
+ rphm96pzKabqL4htyMsMY2VUaEteig8=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-647-kUpd9RqsO-iJeRoGm3Ma0w-1; Mon,
- 16 Feb 2026 06:18:30 -0500
-X-MC-Unique: kUpd9RqsO-iJeRoGm3Ma0w-1
-X-Mimecast-MFC-AGG-ID: kUpd9RqsO-iJeRoGm3Ma0w_1771240708
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-436--wvVxrslPou7Q_UZU69iHg-1; Mon,
+ 16 Feb 2026 06:18:00 -0500
+X-MC-Unique: -wvVxrslPou7Q_UZU69iHg-1
+X-Mimecast-MFC-AGG-ID: -wvVxrslPou7Q_UZU69iHg_1771240678
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 83AB01955D8C; Mon, 16 Feb 2026 11:18:28 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1CECF18004BB; Mon, 16 Feb 2026 11:17:58 +0000 (UTC)
 Received: from localhost (unknown [10.45.242.26])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 7AB5618003F5; Mon, 16 Feb 2026 11:18:27 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 5A74E30001A5; Mon, 16 Feb 2026 11:17:57 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Mon, 16 Feb 2026 12:15:49 +0100
-Subject: [PATCH 60/85] audio/coreaudio: replace custom logging with
- error_report
+Date: Mon, 16 Feb 2026 12:15:39 +0100
+Subject: [PATCH 50/85] audio/pw: convert to QOM lifecycle methods
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260216-audio-v1-60-e676662e4514@redhat.com>
+Message-Id: <20260216-audio-v1-50-e676662e4514@redhat.com>
 References: <20260216-audio-v1-0-e676662e4514@redhat.com>
 In-Reply-To: <20260216-audio-v1-0-e676662e4514@redhat.com>
 To: qemu-devel@nongnu.org
@@ -74,25 +73,25 @@ Cc: Gerd Hoffmann <kraxel@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
  Mark Cave-Ayland <mark.caveayland@nutanix.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=13433;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=12053;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=m+PfI40oEtHkORC+s06hkAac6Itn0SlxZ9kz6+PeIgI=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBpkvxR8X/TvnCVl+mCda3Iro5ShzHHVVEFfxXl3
- WgWLRikONKJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaZL8UQAKCRDa6OEJdZac
- 5d0VEACVPK67nF1fF8Nsi2ki/pm5LW/1WcGQ1Fun8hGoVWmFf7OlLXWBwMC1dvAjQi5V/oNd/vu
- /tSI8hcG4RAEPC6CPZy1hAqGcsCvSsduDGqPYUAnjmgLGPqxB3ywNjwS4koXKoAt8u05++Q7wwT
- oZi+633AX9bpJ5q4sn2pVNDZVry1yzeOTjbLeVoN+QuZId3oceNbgLEyIkyW/53jmAT81yGpUEQ
- 2t1hAvIVAp34GpwQfgCinHkC2ADe+Geta6GCbpTavfOjH6BOsQiyukct22hVU7kdrflaiON/Zab
- dCsG4DUCS7NowOVB8MIhni3TZbCw6b4zm72TVgE2biCiu/1K/5yFxUKTcDcAQyJZGykYQFYG2Wo
- 89ENOBDT9Wd0wgDzC2aPbdrjxj9RijbIN8FLV9mTzoITmyS2Q8zTgy5vovBTfhYKkR5zJvIn9ws
- 9ViKXIUJ7ONhlxyd5B3iSyzqTv5MWVu/YjVqmPFrOws4AIAZjMfXTx28H5WOjnCccQyqhQUfCId
- sTPNEzWevUWli3TynbdhxaxflIr4q/H70isdCqkQGAqn8cECAdr8wc9W4mFzPmlQDfVtL3VU3fU
- KOfRA8KLM+gjFQ6ZpP3pAfa+z3XMOzV56ix3jtEFTdpeufyIM3xfp4wQK6eELXNfBYAjC/dh4Rr
- 7lgAccHkUpm9+Kg==
+ bh=bH5+vNyDDwdZkNy3frawvDWH6mwupPcSpMoXcje0aDk=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBpkvxQJ/hD0x7wGCiHDqWdVH3+569qWFB7r8MYE
+ AFOV0C5zOiJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaZL8UAAKCRDa6OEJdZac
+ 5dJ4D/0eBJ519OUSgb8YMQ6AUwynOBk6buTKswp2KglOQu3mliBl8Y/o8F2p6hRvLMWgWhTxrGx
+ i6M8wAhBb91KQLmNlotztvgoRGQwoee38u4ROs6+5kYPB+e7zl2OElxDH5bNgR1132f8bmDHjzT
+ 61P3Dkrb7BsD121mEA4OSO4zitDuW7VRlbrcNnUcvU+6roRIB5aU9hYx/juk6gWI5SeEJbX5Zba
+ RoxRRMLMy/DWRazbVuVnJnxYTXh6wM49pdvt+VaIJqW5krUm+YfQiGzOW/J7zJGtfvzCG2R47bp
+ z9aGuz6aOSBkXRxRVLeAU1xj4I5kmKBsKWM7ZfROtj0670V5AY5BilxFPg36rlOFrFx0XqYxmrF
+ 7NWbABgXpAiMHI7rhI1A+b9M3xwYJ3b1MhEz2dsWf36OEiNkond1TYUbokkINqe2T2CpeS2FymV
+ FU2D/WdjkMONAp/NKnxNPuIL68lyxu3mt9C2rRDJmLewrqftCftVFIPRkuz1RDo8LXAnpmm8fHG
+ ZzMNIg9Y9b91aBogU3ML7CYPdl2YgOrNIfcx8FRi7AOQi5lValcnh0fSyA4kWHnMdUp6FlyGelU
+ VJ2DgmurlxTTq1yyUgrIHPWrXUsY1VGIdjTg7BggemNZ3KSjj9zdPkAmwml6bV9BpVO3St4k6Tw
+ O2HmGJy61t2JOZQ==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -100,9 +99,9 @@ X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,331 +117,369 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The CoreAudio backend uses its own logging infrastructure (AUD_log,
-AUD_vlog, dolog) and the AUDIO_CAP macro. This approach is inconsistent
-with the rest of QEMU and makes the output harder to filter and
-configure.
+Migrate the PipeWire audio backend from the legacy driver init/fini
+callbacks to proper QOM realize and finalize methods.
 
-Replace the custom logging with standard QEMU error reporting:
-- Use error_report() / error_printf() for errors
-- Use warn_report() for non-fatal warnings (buffer frame size
-  adjustments)
+The pwaudio struct fields are now embedded directly in the AudioPw
+QOM object instead of being allocated separately as drv_opaque. This
+allows accessing the backend state through proper QOM type casting
+with AUDIO_PW() rather than casting drv_opaque pointers.
+
+The PipeWire thread loop and context are now managed through the QOM
+lifecycle, with initialization in realize and cleanup in finalize.
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 ---
- audio/coreaudio.m | 124 ++++++++++++++++++++++++++----------------------------
- 1 file changed, 60 insertions(+), 64 deletions(-)
+ audio/pwaudio.c | 119 +++++++++++++++++++++++++++-----------------------------
+ 1 file changed, 58 insertions(+), 61 deletions(-)
 
-diff --git a/audio/coreaudio.m b/audio/coreaudio.m
-index 561c08f47c1..0c0e8583c89 100644
---- a/audio/coreaudio.m
-+++ b/audio/coreaudio.m
-@@ -28,10 +28,9 @@
+diff --git a/audio/pwaudio.c b/audio/pwaudio.c
+index 3b524dfea5a..ca61a1b4ef5 100644
+--- a/audio/pwaudio.c
++++ b/audio/pwaudio.c
+@@ -31,36 +31,27 @@
+ #define TYPE_AUDIO_PW "audio-pipewire"
+ OBJECT_DECLARE_SIMPLE_TYPE(AudioPw, AUDIO_PW)
  
- #include "qemu/main-loop.h"
- #include "qemu/module.h"
-+#include "qemu/error-report.h"
- #include "qemu/audio.h"
- #include "qom/object.h"
++static AudioBackendClass *audio_pw_parent_class;
++
+ struct AudioPw {
+     AudioMixengBackend parent_obj;
+-};
+ 
+-static struct audio_driver pw_audio_driver;
++    struct pw_thread_loop *thread_loop;
++    struct pw_context *context;
+ 
+-static void audio_pw_class_init(ObjectClass *klass, const void *data)
+-{
+-    AudioMixengBackendClass *k = AUDIO_MIXENG_BACKEND_CLASS(klass);
++    struct pw_core *core;
++    struct spa_hook core_listener;
++    int last_seq, pending_seq, error;
++};
+ 
+-    k->driver = &pw_audio_driver;
+-}
++static struct audio_driver pw_audio_driver;
+ 
+ typedef struct pwvolume {
+     uint32_t channels;
+     float values[SPA_AUDIO_MAX_CHANNELS];
+ } pwvolume;
+ 
+-typedef struct pwaudio {
+-    Audiodev *dev;
+-    struct pw_thread_loop *thread_loop;
+-    struct pw_context *context;
 -
--#define AUDIO_CAP "coreaudio"
- #include "audio_int.h"
+-    struct pw_core *core;
+-    struct spa_hook core_listener;
+-    int last_seq, pending_seq, error;
+-} pwaudio;
+-
+ typedef struct PWVoice {
+-    pwaudio *g;
+     struct pw_stream *stream;
+     struct spa_hook stream_listener;
+     struct spa_audio_info_raw info;
+@@ -236,9 +227,9 @@ static const struct pw_stream_events playback_stream_events = {
+ static size_t
+ qpw_read(HWVoiceIn *hw, void *data, size_t len)
+ {
++    AudioPw *c = AUDIO_PW(hw->s);
+     PWVoiceIn *pw = (PWVoiceIn *) hw;
+     PWVoice *v = &pw->v;
+-    pwaudio *c = v->g;
+     const char *error = NULL;
+     size_t l;
+     int32_t avail;
+@@ -273,9 +264,9 @@ done_unlock:
  
- #define TYPE_AUDIO_COREAUDIO "audio-coreaudio"
-@@ -157,7 +156,7 @@ static OSStatus coreaudio_get_isrunning(AudioDeviceID id, UInt32 *result)
-                                       result);
+ static size_t qpw_buffer_get_free(HWVoiceOut *hw)
+ {
++    AudioPw *c = AUDIO_PW(hw->s);
+     PWVoiceOut *pw = (PWVoiceOut *)hw;
+     PWVoice *v = &pw->v;
+-    pwaudio *c = v->g;
+     const char *error = NULL;
+     int32_t filled, avail;
+     uint32_t index;
+@@ -298,9 +289,9 @@ done_unlock:
+ static size_t
+ qpw_write(HWVoiceOut *hw, void *data, size_t len)
+ {
++    AudioPw *c = AUDIO_PW(hw->s);
+     PWVoiceOut *pw = (PWVoiceOut *) hw;
+     PWVoice *v = &pw->v;
+-    pwaudio *c = v->g;
+     const char *error = NULL;
+     int32_t filled, avail;
+     uint32_t index;
+@@ -434,7 +425,7 @@ pw_to_audfmt(enum spa_audio_format fmt, int *endianness,
  }
  
--static void coreaudio_logstatus (OSStatus status)
-+static void coreaudio_logstatus(OSStatus status)
+ static int
+-qpw_stream_new(pwaudio *c, PWVoice *v, const char *stream_name,
++qpw_stream_new(AudioPw *c, PWVoice *v, const char *stream_name,
+                const char *name, enum spa_direction dir)
  {
-     const char *str = "BUG";
+     int res;
+@@ -452,8 +443,8 @@ qpw_stream_new(pwaudio *c, PWVoice *v, const char *stream_name,
+     }
  
-@@ -207,70 +206,64 @@ static void coreaudio_logstatus (OSStatus status)
-         break;
+     /* 75% of the timer period for faster updates */
+-    buf_samples = (uint64_t)v->g->dev->timer_period * v->info.rate
+-                    * 3 / 4 / 1000000;
++    buf_samples = (uint64_t)AUDIO_MIXENG_BACKEND(c)->dev->timer_period
++        * v->info.rate * 3 / 4 / 1000000;
+     pw_properties_setf(props, PW_KEY_NODE_LATENCY, "%" PRIu64 "/%u",
+                        buf_samples, v->info.rate);
  
-     default:
--        AUD_log (AUDIO_CAP, "Reason: status code %" PRId32 "\n", (int32_t)status);
-+        error_printf(" Reason: status code %" PRId32, (int32_t)status);
+@@ -535,11 +526,11 @@ qpw_set_position(uint32_t channels, uint32_t position[SPA_AUDIO_MAX_CHANNELS])
+ static int
+ qpw_init_out(HWVoiceOut *hw, struct audsettings *as, void *drv_opaque)
+ {
++    AudioPw *c = AUDIO_PW(hw->s);
+     PWVoiceOut *pw = (PWVoiceOut *) hw;
+     PWVoice *v = &pw->v;
+     struct audsettings obt_as = *as;
+-    pwaudio *c = v->g = drv_opaque;
+-    AudiodevPipewireOptions *popts = &c->dev->u.pipewire;
++    AudiodevPipewireOptions *popts = &AUDIO_MIXENG_BACKEND(c)->dev->u.pipewire;
+     AudiodevPipewirePerDirectionOptions *ppdo = popts->out;
+     int r;
+ 
+@@ -554,11 +545,11 @@ qpw_init_out(HWVoiceOut *hw, struct audsettings *as, void *drv_opaque)
+         pw_to_audfmt(v->info.format, &obt_as.endianness, &v->frame_size);
+     v->frame_size *= as->nchannels;
+ 
+-    v->req = (uint64_t)c->dev->timer_period * v->info.rate
++    v->req = (uint64_t)AUDIO_MIXENG_BACKEND(c)->dev->timer_period * v->info.rate
+         * 1 / 2 / 1000000 * v->frame_size;
+ 
+     /* call the function that creates a new stream for playback */
+-    r = qpw_stream_new(c, v, ppdo->stream_name ? : c->dev->id,
++    r = qpw_stream_new(c, v, ppdo->stream_name ?: AUDIO_MIXENG_BACKEND(c)->dev->id,
+                        ppdo->name, SPA_DIRECTION_OUTPUT);
+     if (r < 0) {
+         pw_thread_loop_unlock(c->thread_loop);
+@@ -582,11 +573,11 @@ qpw_init_out(HWVoiceOut *hw, struct audsettings *as, void *drv_opaque)
+ static int
+ qpw_init_in(HWVoiceIn *hw, struct audsettings *as, void *drv_opaque)
+ {
++    AudioPw *c = AUDIO_PW(hw->s);
+     PWVoiceIn *pw = (PWVoiceIn *) hw;
+     PWVoice *v = &pw->v;
+     struct audsettings obt_as = *as;
+-    pwaudio *c = v->g = drv_opaque;
+-    AudiodevPipewireOptions *popts = &c->dev->u.pipewire;
++    AudiodevPipewireOptions *popts = &AUDIO_MIXENG_BACKEND(c)->dev->u.pipewire;
+     AudiodevPipewirePerDirectionOptions *ppdo = popts->in;
+     int r;
+ 
+@@ -602,7 +593,7 @@ qpw_init_in(HWVoiceIn *hw, struct audsettings *as, void *drv_opaque)
+     v->frame_size *= as->nchannels;
+ 
+     /* call the function that creates a new stream for recording */
+-    r = qpw_stream_new(c, v, ppdo->stream_name ? : c->dev->id,
++    r = qpw_stream_new(c, v, ppdo->stream_name ? : AUDIO_MIXENG_BACKEND(c)->dev->id,
+                        ppdo->name, SPA_DIRECTION_INPUT);
+     if (r < 0) {
+         pw_thread_loop_unlock(c->thread_loop);
+@@ -621,10 +612,8 @@ qpw_init_in(HWVoiceIn *hw, struct audsettings *as, void *drv_opaque)
+ }
+ 
+ static void
+-qpw_voice_fini(PWVoice *v)
++qpw_voice_fini(AudioPw *c, PWVoice *v)
+ {
+-    pwaudio *c = v->g;
+-
+     if (!v->stream) {
          return;
      }
- 
--    AUD_log (AUDIO_CAP, "Reason: %s\n", str);
-+    error_printf(" Reason: %s", str);
+@@ -637,19 +626,18 @@ qpw_voice_fini(PWVoice *v)
+ static void
+ qpw_fini_out(HWVoiceOut *hw)
+ {
+-    qpw_voice_fini(&PW_VOICE_OUT(hw)->v);
++    qpw_voice_fini(AUDIO_PW(hw->s), &PW_VOICE_OUT(hw)->v);
  }
  
--static void G_GNUC_PRINTF (2, 3) coreaudio_logerr (
--    OSStatus status,
--    const char *fmt,
--    ...
--    )
-+static void G_GNUC_PRINTF(2, 3) coreaudio_logerr(OSStatus status,
-+                                                const char *fmt, ...)
+ static void
+ qpw_fini_in(HWVoiceIn *hw)
  {
-     va_list ap;
+-    qpw_voice_fini(&PW_VOICE_IN(hw)->v);
++    qpw_voice_fini(AUDIO_PW(hw->s), &PW_VOICE_IN(hw)->v);
+ }
  
--    va_start (ap, fmt);
--    AUD_log (AUDIO_CAP, fmt, ap);
--    va_end (ap);
+ static void
+-qpw_voice_set_enabled(PWVoice *v, bool enable)
++qpw_voice_set_enabled(AudioPw *c, PWVoice *v, bool enable)
+ {
+-    pwaudio *c = v->g;
+     pw_thread_loop_lock(c->thread_loop);
+     pw_stream_set_active(v->stream, enable);
+     pw_thread_loop_unlock(c->thread_loop);
+@@ -658,19 +646,18 @@ qpw_voice_set_enabled(PWVoice *v, bool enable)
+ static void
+ qpw_enable_out(HWVoiceOut *hw, bool enable)
+ {
+-    qpw_voice_set_enabled(&PW_VOICE_OUT(hw)->v, enable);
++    qpw_voice_set_enabled(AUDIO_PW(hw->s), &PW_VOICE_OUT(hw)->v, enable);
+ }
+ 
+ static void
+ qpw_enable_in(HWVoiceIn *hw, bool enable)
+ {
+-    qpw_voice_set_enabled(&PW_VOICE_IN(hw)->v, enable);
++    qpw_voice_set_enabled(AUDIO_PW(hw->s), &PW_VOICE_IN(hw)->v, enable);
+ }
+ 
+ static void
+-qpw_voice_set_volume(PWVoice *v, Volume *vol)
++qpw_voice_set_volume(AudioPw *c, PWVoice *v, Volume *vol)
+ {
+-    pwaudio *c = v->g;
+     int i, ret;
+ 
+     pw_thread_loop_lock(c->thread_loop);
+@@ -693,16 +680,16 @@ qpw_voice_set_volume(PWVoice *v, Volume *vol)
+ static void
+ qpw_volume_out(HWVoiceOut *hw, Volume *vol)
+ {
+-    qpw_voice_set_volume(&PW_VOICE_OUT(hw)->v, vol);
++    qpw_voice_set_volume(AUDIO_PW(hw->s), &PW_VOICE_OUT(hw)->v, vol);
+ }
+ 
+ static void
+ qpw_volume_in(HWVoiceIn *hw, Volume *vol)
+ {
+-    qpw_voice_set_volume(&PW_VOICE_IN(hw)->v, vol);
++    qpw_voice_set_volume(AUDIO_PW(hw->s), &PW_VOICE_IN(hw)->v, vol);
+ }
+ 
+-static int wait_resync(pwaudio *pw)
++static int wait_resync(AudioPw *pw)
+ {
+     int res;
+     pw->pending_seq = pw_core_sync(pw->core, PW_ID_CORE, pw->pending_seq);
+@@ -725,7 +712,7 @@ static int wait_resync(pwaudio *pw)
+ static void
+ on_core_error(void *data, uint32_t id, int seq, int res, const char *message)
+ {
+-    pwaudio *pw = data;
++    AudioPw *pw = data;
+ 
+     error_report("error id:%u seq:%d res:%d (%s): %s",
+                 id, seq, res, spa_strerror(res), message);
+@@ -737,7 +724,7 @@ on_core_error(void *data, uint32_t id, int seq, int res, const char *message)
+ static void
+ on_core_done(void *data, uint32_t id, int seq)
+ {
+-    pwaudio *pw = data;
++    AudioPw *pw = data;
+     assert(id == PW_ID_CORE);
+     pw->last_seq = seq;
+     if (pw->pending_seq == seq) {
+@@ -752,17 +739,20 @@ static const struct pw_core_events core_events = {
+     .error = on_core_error,
+ };
+ 
+-static void *
+-qpw_audio_init(Audiodev *dev, Error **errp)
++static bool
++audio_pw_realize(AudioBackend *abe, Audiodev *dev, Error **errp)
+ {
+-    g_autofree pwaudio *pw = g_new0(pwaudio, 1);
++    AudioPw *pw = AUDIO_PW(abe);
+ 
+     assert(dev->driver == AUDIODEV_DRIVER_PIPEWIRE);
+     trace_pw_audio_init();
+ 
++    if (!audio_pw_parent_class->realize(abe, dev, errp)) {
++        return false;
++    }
++
+     pw_init(NULL, NULL);
+ 
+-    pw->dev = dev;
+     pw->thread_loop = pw_thread_loop_new("PipeWire thread loop", NULL);
+     if (pw->thread_loop == NULL) {
+         error_setg_errno(errp, errno, "Could not create PipeWire loop");
+@@ -801,8 +791,7 @@ qpw_audio_init(Audiodev *dev, Error **errp)
+     }
+ 
+     pw_thread_loop_unlock(pw->thread_loop);
 -
--    coreaudio_logstatus (status);
-+    error_printf("coreaudio: ");
-+    va_start(ap, fmt);
-+    error_vprintf(fmt, ap);
-+    va_end(ap);
-+    coreaudio_logstatus(status);
-+    error_printf("\n");
+-    return g_steal_pointer(&pw);
++    return true;
+ 
+ fail:
+     if (pw->thread_loop) {
+@@ -810,13 +799,13 @@ fail:
+     }
+     g_clear_pointer(&pw->context, pw_context_destroy);
+     g_clear_pointer(&pw->thread_loop, pw_thread_loop_destroy);
+-    return NULL;
++    return false;
  }
  
--static void G_GNUC_PRINTF (3, 4) coreaudio_logerr2 (
--    OSStatus status,
--    const char *typ,
--    const char *fmt,
--    ...
--    )
-+static void G_GNUC_PRINTF(3, 4) coreaudio_logerr2(OSStatus status,
-+                                                  const char *typ,
-+                                                  const char *fmt, ...)
+ static void
+-qpw_audio_fini(void *opaque)
++audio_pw_finalize(Object *obj)
  {
-     va_list ap;
+-    pwaudio *pw = opaque;
++    AudioPw *pw = AUDIO_PW(obj);
  
--    AUD_log (AUDIO_CAP, "Could not initialize %s\n", typ);
+     if (pw->thread_loop) {
+         pw_thread_loop_stop(pw->thread_loop);
+@@ -831,9 +820,7 @@ qpw_audio_fini(void *opaque)
+     if (pw->context) {
+         pw_context_destroy(pw->context);
+     }
+-    pw_thread_loop_destroy(pw->thread_loop);
 -
--    va_start (ap, fmt);
--    AUD_vlog (AUDIO_CAP, fmt, ap);
--    va_end (ap);
--
--    coreaudio_logstatus (status);
-+    error_printf("coreaudio: Could not initialize %s: ", typ);
-+    va_start(ap, fmt);
-+    error_vprintf(fmt, ap);
-+    va_end(ap);
-+    coreaudio_logstatus(status);
-+    error_printf("\n");
+-    g_free(pw);
++    g_clear_pointer(&pw->thread_loop, pw_thread_loop_destroy);
  }
  
- #define coreaudio_playback_logerr(status, ...) \
-     coreaudio_logerr2(status, "playback", __VA_ARGS__)
+ static struct audio_pcm_ops qpw_pcm_ops = {
+@@ -855,8 +842,6 @@ static struct audio_pcm_ops qpw_pcm_ops = {
  
--static int coreaudio_buf_lock (coreaudioVoiceOut *core, const char *fn_name)
-+static int coreaudio_buf_lock(coreaudioVoiceOut *core, const char *fn_name)
- {
-     int err;
+ static struct audio_driver pw_audio_driver = {
+     .name = "pipewire",
+-    .init = qpw_audio_init,
+-    .fini = qpw_audio_fini,
+     .pcm_ops = &qpw_pcm_ops,
+     .max_voices_out = INT_MAX,
+     .max_voices_in = INT_MAX,
+@@ -864,12 +849,24 @@ static struct audio_driver pw_audio_driver = {
+     .voice_size_in = sizeof(PWVoiceIn),
+ };
  
--    err = pthread_mutex_lock (&core->buf_mutex);
-+    err = pthread_mutex_lock(&core->buf_mutex);
-     if (err) {
--        dolog ("Could not lock voice for %s\nReason: %s\n",
--               fn_name, strerror (err));
-+        error_report("coreaudio: Could not lock voice for %s: %s",
-+                     fn_name, strerror(err));
-         return -1;
-     }
-     return 0;
- }
- 
--static int coreaudio_buf_unlock (coreaudioVoiceOut *core, const char *fn_name)
-+static int coreaudio_buf_unlock(coreaudioVoiceOut *core, const char *fn_name)
- {
-     int err;
- 
--    err = pthread_mutex_unlock (&core->buf_mutex);
-+    err = pthread_mutex_unlock(&core->buf_mutex);
-     if (err) {
--        dolog ("Could not unlock voice for %s\nReason: %s\n",
--               fn_name, strerror (err));
-+        error_report("coreaudio: Could not unlock voice for %s: %s",
-+                     fn_name, strerror(err));
-         return -1;
-     }
-     return 0;
-@@ -378,12 +371,13 @@ static OSStatus init_out_device(coreaudioVoiceOut *core)
- 
-     status = coreaudio_get_voice(&core->outputDeviceID);
-     if (status != kAudioHardwareNoError) {
--        coreaudio_playback_logerr (status,
--                                   "Could not get default output Device\n");
-+        coreaudio_playback_logerr(status,
-+                                  "Could not get default output device");
-         return status;
-     }
-     if (core->outputDeviceID == kAudioDeviceUnknown) {
--        dolog ("Could not initialize playback - Unknown Audiodevice\n");
-+        error_report("coreaudio: Could not initialize playback: "
-+                     "Unknown audio device");
-         return status;
-     }
- 
-@@ -394,17 +388,19 @@ static OSStatus init_out_device(coreaudioVoiceOut *core)
-         return 0;
-     }
-     if (status != kAudioHardwareNoError) {
--        coreaudio_playback_logerr (status,
--                                    "Could not get device buffer frame range\n");
-+        coreaudio_playback_logerr(status,
-+                                  "Could not get device buffer frame range");
-         return status;
-     }
- 
-     if (frameRange.mMinimum > core->frameSizeSetting) {
-         core->audioDevicePropertyBufferFrameSize = (UInt32) frameRange.mMinimum;
--        dolog ("warning: Upsizing Buffer Frames to %f\n", frameRange.mMinimum);
-+        warn_report("coreaudio: Upsizing buffer frames to %f",
-+                    frameRange.mMinimum);
-     } else if (frameRange.mMaximum < core->frameSizeSetting) {
-         core->audioDevicePropertyBufferFrameSize = (UInt32) frameRange.mMaximum;
--        dolog ("warning: Downsizing Buffer Frames to %f\n", frameRange.mMaximum);
-+        warn_report("coreaudio: Downsizing buffer frames to %f",
-+                    frameRange.mMaximum);
-     } else {
-         core->audioDevicePropertyBufferFrameSize = core->frameSizeSetting;
-     }
-@@ -416,9 +412,9 @@ static OSStatus init_out_device(coreaudioVoiceOut *core)
-         return 0;
-     }
-     if (status != kAudioHardwareNoError) {
--        coreaudio_playback_logerr (status,
--                                    "Could not set device buffer frame size %" PRIu32 "\n",
--                                    (uint32_t)core->audioDevicePropertyBufferFrameSize);
-+        coreaudio_playback_logerr(status,
-+                                  "Could not set device buffer frame size %" PRIu32,
-+                                  (uint32_t)core->audioDevicePropertyBufferFrameSize);
-         return status;
-     }
- 
-@@ -429,8 +425,8 @@ static OSStatus init_out_device(coreaudioVoiceOut *core)
-         return 0;
-     }
-     if (status != kAudioHardwareNoError) {
--        coreaudio_playback_logerr (status,
--                                    "Could not get device buffer frame size\n");
-+        coreaudio_playback_logerr(status,
-+                                  "Could not get device buffer frame size");
-         return status;
-     }
-     core->hw.samples = core->bufferCount * core->audioDevicePropertyBufferFrameSize;
-@@ -442,9 +438,9 @@ static OSStatus init_out_device(coreaudioVoiceOut *core)
-         return 0;
-     }
-     if (status != kAudioHardwareNoError) {
--        coreaudio_playback_logerr (status,
--                                   "Could not set samplerate %lf\n",
--                                   streamBasicDescription.mSampleRate);
-+        coreaudio_playback_logerr(status,
-+                                  "Could not set samplerate %lf",
-+                                  streamBasicDescription.mSampleRate);
-         core->outputDeviceID = kAudioDeviceUnknown;
-         return status;
-     }
-@@ -468,7 +464,7 @@ static OSStatus init_out_device(coreaudioVoiceOut *core)
-         return 0;
-     }
-     if (status != kAudioHardwareNoError || core->ioprocid == NULL) {
--        coreaudio_playback_logerr (status, "Could not set IOProc\n");
-+        coreaudio_playback_logerr(status, "Could not set IOProc");
-         core->outputDeviceID = kAudioDeviceUnknown;
-         return status;
-     }
-@@ -486,13 +482,13 @@ static void fini_out_device(coreaudioVoiceOut *core)
-     if (status != kAudioHardwareBadObjectError) {
-         if (status != kAudioHardwareNoError) {
-             coreaudio_logerr(status,
--                             "Could not determine whether Device is playing\n");
-+                             "Could not determine whether device is playing");
-         }
- 
-         if (isrunning) {
-             status = AudioDeviceStop(core->outputDeviceID, core->ioprocid);
-             if (status != kAudioHardwareBadDeviceError && status != kAudioHardwareNoError) {
--                coreaudio_logerr(status, "Could not stop playback\n");
-+                coreaudio_logerr(status, "Could not stop playback");
-             }
-         }
-     }
-@@ -501,7 +497,7 @@ static void fini_out_device(coreaudioVoiceOut *core)
-     status = AudioDeviceDestroyIOProcID(core->outputDeviceID,
-                                         core->ioprocid);
-     if (status != kAudioHardwareBadDeviceError && status != kAudioHardwareNoError) {
--        coreaudio_logerr(status, "Could not remove IOProc\n");
-+        coreaudio_logerr(status, "Could not remove IOProc");
-     }
-     core->outputDeviceID = kAudioDeviceUnknown;
- }
-@@ -515,7 +511,7 @@ static void update_device_playback_state(coreaudioVoiceOut *core)
-     if (status != kAudioHardwareNoError) {
-         if (status != kAudioHardwareBadObjectError) {
-             coreaudio_logerr(status,
--                             "Could not determine whether Device is playing\n");
-+                             "Could not determine whether device is playing");
-         }
- 
-         return;
-@@ -526,7 +522,7 @@ static void update_device_playback_state(coreaudioVoiceOut *core)
-         if (!isrunning) {
-             status = AudioDeviceStart(core->outputDeviceID, core->ioprocid);
-             if (status != kAudioHardwareBadDeviceError && status != kAudioHardwareNoError) {
--                coreaudio_logerr (status, "Could not resume playback\n");
-+                coreaudio_logerr(status, "Could not resume playback");
-             }
-         }
-     } else {
-@@ -535,7 +531,7 @@ static void update_device_playback_state(coreaudioVoiceOut *core)
-             status = AudioDeviceStop(core->outputDeviceID,
-                                      core->ioprocid);
-             if (status != kAudioHardwareBadDeviceError && status != kAudioHardwareNoError) {
--                coreaudio_logerr(status, "Could not pause playback\n");
-+                coreaudio_logerr(status, "Could not pause playback");
-             }
-         }
-     }
-@@ -576,7 +572,7 @@ static int coreaudio_init_out(HWVoiceOut *hw, struct audsettings *as)
-     /* create mutex */
-     err = pthread_mutex_init(&core->buf_mutex, NULL);
-     if (err) {
--        dolog("Could not create mutex\nReason: %s\n", strerror (err));
-+        error_report("coreaudio: Could not create mutex: %s", strerror(err));
-         return -1;
-     }
- 
-@@ -594,8 +590,8 @@ static int coreaudio_init_out(HWVoiceOut *hw, struct audsettings *as)
-                                             &voice_addr, handle_voice_change,
-                                             core);
-     if (status != kAudioHardwareNoError) {
--        coreaudio_playback_logerr (status,
--                                   "Could not listen to voice property change\n");
-+        coreaudio_playback_logerr(status,
-+                                  "Could not listen to voice property change");
-         return -1;
-     }
- 
-@@ -606,7 +602,7 @@ static int coreaudio_init_out(HWVoiceOut *hw, struct audsettings *as)
-                                                    core);
-         if (status != kAudioHardwareNoError) {
-             coreaudio_playback_logerr(status,
--                                      "Could not remove voice property change listener\n");
-+                                      "Could not remove voice property change listener");
-         }
- 
-         return -1;
-@@ -626,7 +622,7 @@ static void coreaudio_fini_out (HWVoiceOut *hw)
-                                                handle_voice_change,
-                                                core);
-     if (status != kAudioHardwareNoError) {
--        coreaudio_logerr(status, "Could not remove voice property change listener\n");
-+        coreaudio_logerr(status, "Could not remove voice property change listener");
-     }
- 
-     fini_out_device(core);
-@@ -634,7 +630,7 @@ static void coreaudio_fini_out (HWVoiceOut *hw)
-     /* destroy mutex */
-     err = pthread_mutex_destroy(&core->buf_mutex);
-     if (err) {
--        dolog("Could not destroy mutex\nReason: %s\n", strerror (err));
-+        error_report("coreaudio: Could not destroy mutex: %s", strerror(err));
-     }
- }
++static void audio_pw_class_init(ObjectClass *klass, const void *data)
++{
++    AudioBackendClass *b = AUDIO_BACKEND_CLASS(klass);
++    AudioMixengBackendClass *k = AUDIO_MIXENG_BACKEND_CLASS(klass);
++
++    audio_pw_parent_class = AUDIO_BACKEND_CLASS(object_class_get_parent(klass));
++
++    b->realize = audio_pw_realize;
++    k->driver = &pw_audio_driver;
++}
++
+ static const TypeInfo audio_types[] = {
+     {
+         .name = TYPE_AUDIO_PW,
+         .parent = TYPE_AUDIO_MIXENG_BACKEND,
+         .instance_size = sizeof(AudioPw),
+         .class_init = audio_pw_class_init,
++        .instance_finalize = audio_pw_finalize,
+     },
+ };
  
 
 -- 
