@@ -4,101 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41C11E7BD83
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 10:54:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8055E7BD91
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 11:14:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vrwEZ-0000Ub-Sy; Mon, 16 Feb 2026 05:53:43 -0500
+	id 1vrwXj-00046H-55; Mon, 16 Feb 2026 06:13:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vrwEY-0000UP-A9
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 05:53:42 -0500
-Received: from mail-yw1-x112d.google.com ([2607:f8b0:4864:20::112d])
+ id 1vrwXf-00045o-D9
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 06:13:27 -0500
+Received: from mail-yx1-xb12d.google.com ([2607:f8b0:4864:20::b12d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vrwEV-0002Qx-J0
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 05:53:42 -0500
-Received: by mail-yw1-x112d.google.com with SMTP id
- 00721157ae682-794719afcd4so27936997b3.1
- for <qemu-devel@nongnu.org>; Mon, 16 Feb 2026 02:53:39 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1771239218; cv=none;
+ id 1vrwXd-0006jO-Tm
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 06:13:27 -0500
+Received: by mail-yx1-xb12d.google.com with SMTP id
+ 956f58d0204a3-64ae2ce2fe1so2654497d50.1
+ for <qemu-devel@nongnu.org>; Mon, 16 Feb 2026 03:13:25 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1771240405; cv=none;
  d=google.com; s=arc-20240605;
- b=AsAJlw+LLimarQmSid4vA3JpnUneVM+juvG5ZFPyapbRnhI8YEIJ2PHWRnQEPDhU33
- jfOcaXUnsawittfQPucmajBQdBc8ixfcNiPZm1sUvVnbtIgftvUOT/l1hZ3lIeFqdobv
- zr99Te0uw9oXkC73U3odOVyLs8NGy+PsLFIvmd80FZxg6skILX/ftdPsAsJz4d42zJrO
- GvQ6NT079EQkVEzVpsl8KVo87727wr3IqXypu5C6glMhmHZ6SHiJ03F0fpQzzJcvlGG6
- lE1M9IxA9Nl/pAG9BLldliW8TXZqOrJsfB7ptFUbFqZKo4IZ7ttbZB40lvsimahSt7ZX
- UNLQ==
+ b=khkdLmHs8/Pdwof5MPJquKJiG0yr+3K372kO8mGEA4n6OE+cAzaU7Rws9ai7gygXCH
+ bltz/2jcNkyiT6RyR5MzAYVESJrTmL1nmExXPihqXHvJxMyN7EY68arQ/bEogwXMjxMB
+ a6dFf5kBu2hjadl9ogVUV1YwppK0KzPjRWsihFK3PhzdF5tfXDXPe6zFddlklQ7W7u/t
+ +NAARq0tNzuQkqNYyo9v810/Pl5DLocxj+pFqnA3AkYrbSluKgzWykymN1u5fKdvhnMr
+ ePItDBwL9C9YixI1k2YqScqX7915tYT6xACazMAE+aKK87YgMOj+GFuZWVwNl3L0jEXz
+ mVnA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=3r6gceMc31Kn1NaBbHeBtt7sGJfmSVtZPxIASHmbdeA=;
- fh=NZfrAI7bq0DsDHYmdU1Dphm7+eiePN4L3xj1I6ew1oc=;
- b=lwDHeHHqH/14Tpw5ZOE8yTgOAXGJwFCY22qci9ENxzxosxArsOc9M8w2LxLjnNhj5X
- BXeH9VJUpKCurwLiPACB1HcvtubxYAnQ2FV2p3nCVRcVY5q2UiN9RYb0lv/qj7aFb/ss
- XHALKI7Ny+q7ylU8lzM/fwiFZTXL9kyvbqSHYTD8iCkuq6lwY60flUbOjXInUkHosog3
- z7hWs5gE/9TD+ai7ynwOqyufB5wFirtISDL9Wye9P4nIAjbOJWvVVjUztD05xW12fMU8
- xKlwhW0eSUjrMHPARA2tFqh7fVjCwptrbd3rkBlXWcWKqocaAncgcON1w+/jd68qE6Xl
- u8cA==; darn=nongnu.org
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=Bnj6PYX9XX64sJHAlUbiGDSZBG2TAqZE+5aCucDPgzg=;
+ fh=vvj2DZQY5LAdehuQPz0q2ks1wDBqfeLL9XHCMNWn8sw=;
+ b=iHcUP7HW6bkY/+jsWhBQ6bHFCfinBpKo6SU3JPCFCxh9DPB5RuCPOfeVkfofMJxTcN
+ Fbkf1lpgoa9kyyCmObc9At3YSEMksMirYh1HzctzaqfY01DUMBZcX9jk/LfMaPVM+Fe3
+ 4TNy+GfZKe9IW3fr7iThZcGTVztjwNI2vNIjHZfUnumoVAIUmbH+suzO6szmr1NkcFM9
+ Xf9isk9dc58vDochCatq0uuXuHUnsAfguWvH9M7/etcYK0toLwZdLBnAOtEF3+1wHjrU
+ TCEMS0Inizaa421tzE2n0Fj2tW2/H1unQ3UfwPz9jI6UaRxpNGb7zKpC0Uhsc5psQmkw
+ 7IFw==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771239218; x=1771844018; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=3r6gceMc31Kn1NaBbHeBtt7sGJfmSVtZPxIASHmbdeA=;
- b=Xy2mtnOeWLtpxKNPEF2bPcqHCz0GWM1rg4oozz2eqvmZ0AkQdIAddhQ4GZ+oy95VeG
- osusq0aSF1QgUulH8p2wUInJ991R9k6GmN62neaxetNcfi1sZEwNMBNyiv7tImKgN1pX
- Ihk15W0qB2NAiGugTtBwqe6an6iPdrGkULad+KdGAmSuI6wVerFh/PTdp5LKdKwvCABY
- Hf1AU17ej6rd36yzZjiRRAyZZvoiTIUNw4WRTeRcfttZbffZAfQk6eKohd4WTC8cP/w5
- gVFwCuFoWDYolFmrGibZ3IXP1EUVLPxkfmdFC2FOwQWf/VT5RQFnmQQbSrF4zqe62zrB
- JG2Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771239218; x=1771844018;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1771240405; x=1771845205; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=3r6gceMc31Kn1NaBbHeBtt7sGJfmSVtZPxIASHmbdeA=;
- b=BLYJk3YATI4b4b2yt9tWn/xmoghHdcqMtDJn7EFtaxx8MucuQSa2rD6hxtZUqR35U+
- eErcSn016ko9hIwiBcGOl+DtEU59HvlcXW0J9fzvlzFjyaRkMGR/560IZHse9o297rqT
- w4ivc1KGAswJW1b+4UMsWwgdMaV6HpmL2swKCMuFqNxeoP3JZ7w6VUgrQSPhm5p6TbbS
- ur5EsTytxo2OztZXcNB8uBzju64MazIODCkjkJl52XlqOjAtHGvMuefBoyJYsyP6WwVH
- xaiJGJjqJF5QsT853H/WF881A/6K+OST0YvebnVw0RkF2QAfeGVQT25/BhgxRj8kndHD
- GgXA==
-X-Gm-Message-State: AOJu0YwV+4xiV9fFM4UgbLj70H0iM9QRZ1AR+P2uJuEBDtXJYg6BQjNM
- ATyj3DRmEXQVvuPH7VE2ihVWAzjRiBbjlK4F6Mh2aiHyWPDPdkVnA++ohPvbNM95hHnjJMNvrDw
- uEdEyAdu0fBmuX0BXP8fhuHEOZgerlCdqe3z4ik09qw==
-X-Gm-Gg: AZuq6aL9DcW3XmZtwsyojMAs/iMsmutvD/TpIwRzEcsi64umGDiY2VvKx2wejxjuHdZ
- CJfTsdXrxxSp0Gew7paxIy5bgt4MALRcAGUaKvzQcsj2LB6Rg4FtLDrK2ktV8tu1b+U+qpHZUIV
- NUDyzupGG6d9Ak/1O0R5Yw/PPh201VlRJHJL9wT6hGb4og5NTdkf1irFUu9XV8/pZMIHMBZypqr
- 64TemDF3sa4ciz6V6lL5ds3yAFjW8MEuLydyxFsdfvbDu5UCDYtHB2Pt+19IeXIu2O9X/7RYR6n
- wmhQmqs3SK4UVYQcYFQbmvGDSjYF8zrJ78GuwfrxW0tC1nh6G50+2ELElv2bvEs9Who=
-X-Received: by 2002:a53:b74f:0:b0:64a:dbb5:2849 with SMTP id
- 956f58d0204a3-64c19b7b686mr4865378d50.97.1771239218299; Mon, 16 Feb 2026
- 02:53:38 -0800 (PST)
+ bh=Bnj6PYX9XX64sJHAlUbiGDSZBG2TAqZE+5aCucDPgzg=;
+ b=dXiIZQLUoBVxbYAUkzuueHQbsn9hFtMCoM0pDjkjKXe4aC/1uHXngVIyOPlg2VlIz0
+ Qhp2XnpzXxgU1S9SaQ4vnOrCeNsGTGGww3UH17i7AZowrLyZywP94h5cbhAQoKq/VTkY
+ NRYfWdqPq+T0BKFMYt1FNmthB6o0TZb53ZQILFLAhOC0o4Apwi5Rdu7SoA+XelccNJE3
+ 9TjOfavxM6RwEA1JVMOmzH9HXZdsRSQmDJ+h6qzV3jCBcKit4POryvkyAGVUVjIIdPcB
+ aW9qMLqq3P6yz3V+NMiTFGrekV4F797/PCPW4Dv7CuRhwP55LBwLgaRSZFiqnAWSMCao
+ 1pUw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1771240405; x=1771845205;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=Bnj6PYX9XX64sJHAlUbiGDSZBG2TAqZE+5aCucDPgzg=;
+ b=FyHHYrVyx+ch3xbDDhZW9a0NOalsdLFQZm7CcocrJSH1sEII0JEEEeIaAnDLwTbsEx
+ Wuj2q84vFfRPd6EExajtItX835gNwjZuOAu6malPFdcIslu/nJTINKZ2lSAtzlHfkCZc
+ zGg1AxSwxy2k5GmWw2BCLr09QMo367aJB+gqBS0hipzFthxXDgukjlNdkBGqirzz8YZO
+ E/JEiNlNqGEVwKpz59qGX112JxORxrjpaY6A34kzeXEFcFhzNZzZreBRNY817oNcy6x6
+ xJMdSCA3eqE2+ACTss0Lj5FKrBhU1GyXzKx+VcyTeRXNCutt+eQ7dbh6tuAa6tQrYkbs
+ aJ2Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWp8icOOlkD3Q1qzdLN535WTOXMlP00DRgXt8sbqVJGaWFd3y201gs+ZMwAOo0uAnwuLLHLSIqOX8ZB@nongnu.org
+X-Gm-Message-State: AOJu0YyEw34m1uU/HYHM4UW22fbC9v5HIFqjO8JaA38Irh0y6Lt/QFM2
+ YyIxtRm1vu052wRKis42vdN9GJH/CQCleYDzv6O80dnqndbkO2jiwAjHudnihr/in7iNvgsVywm
+ F6E/RpXmcRyN60L0XY8DqXCpsDb+tfLIX6NFlE0JpVQ==
+X-Gm-Gg: AZuq6aIch855A4y5gj6jM5rw9dRh+0S5YHzEqvhLnbV+P9rar7H1cALg3/wG55ei0Hp
+ QMz2Cog/Ev6l8JAf/Xp5IQ2kbOl9f7hcwPSXKTmTo0Vb1LCSmvwhH9SW0OGpstMUxJL4bZPg5FJ
+ z4Zm5KSUOzBJm5Iw9zMQ3mk5yzMQE/keFBp7dhFo5KA6MM8TbDv2zW2yxq3y0GhX7W0fma2Hmf+
+ CZlFjsOIqz73UCWEdfQWcFdJ994Tq9Rw/uEAT8P6Zwgndupv35Y5egImiXJDApjiYJ+f5NcG5Sn
+ uFd9yNU/IeIgJtmWiBYYrbe49PpB3rWt3/W5vIueP6qAlfuX5sqNa9kErYLuMHB6Mz8=
+X-Received: by 2002:a05:690e:408e:b0:645:54a9:11b6 with SMTP id
+ 956f58d0204a3-64c19b196f1mr7675589d50.52.1771240404710; Mon, 16 Feb 2026
+ 03:13:24 -0800 (PST)
 MIME-Version: 1.0
-References: <20260212104432.4168886-1-kchiu@axiado.com>
-In-Reply-To: <20260212104432.4168886-1-kchiu@axiado.com>
+References: <20260212213955.2225662-1-clg@redhat.com>
+ <20260212213955.2225662-3-clg@redhat.com>
+In-Reply-To: <20260212213955.2225662-3-clg@redhat.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 16 Feb 2026 10:53:26 +0000
-X-Gm-Features: AZwV_Qg2ou8jI52ex9Ood6Pt-5QN0WRtTzAWyX6bh6ir_CkCsSIsmoHsADzsgwE
-Message-ID: <CAFEAcA_u5B2RdVEaGycCQ6gCx1pQuT8rvGVGZpoKLTK+2s72+w@mail.gmail.com>
-Subject: Re: [PATCH v1] hw/char/cadence_uart: Add BXRS register
-To: Kuan-Jui Chiu <kchiu@axiado.com>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, pbonzini@redhat.com, 
- marcandre.lureau@redhat.com, alistair@alistair23.me, edgar.iglesias@gmail.com
+Date: Mon, 16 Feb 2026 11:13:12 +0000
+X-Gm-Features: AZwV_Qi3cGskL0yyDjDTutpSoqbX2OXFxE3VeTo0RHl0QtnqdczfaLKUuGaj3u8
+Message-ID: <CAFEAcA_oJgTc2SyRr11QTeTkmCPgvKiwngAaDiDNw5nUcTFA2w@mail.gmail.com>
+Subject: Re: [PULL 02/16] tests/functional: Add SDK tests with Linux 5.15
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
+ Thomas Huth <thuth@redhat.com>, "Daniel P. Berrange" <berrange@redhat.com>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, 
+ Kane Chen <kane_chen@aspeedtech.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112d;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112d.google.com
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,33 +120,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 12 Feb 2026 at 10:47, Kuan-Jui Chiu <kchiu@axiado.com> wrote:
+On Thu, 12 Feb 2026 at 21:42, C=C3=A9dric Le Goater <clg@redhat.com> wrote:
 >
-> The new CADENCE UART driver in upstream kernel access BXRS register
-> This patch adds BXRS (RX FIFO byte status register) or there would be
-> kernel panic if user are using the new CADENCE UART driver
->
-> Signed-off-by: Kuan-Jui Chiu <kchiu@axiado.com>
+> Add functional tests for AST2500 and AST2600 machines using the
+> OpenBMC SDK v11.00 with Linux kernel 5.15. These tests complement the
+> existing SDK tests and verify that QEMU correctly boots older kernel
+> versions on these platforms.
 
-Hi; thanks for this patch.
 
-> diff --git a/hw/char/cadence_uart.c b/hw/char/cadence_uart.c
-> index eff6a3c4d1..f57cad57a8 100644
-> --- a/hw/char/cadence_uart.c
-> +++ b/hw/char/cadence_uart.c
-> @@ -120,6 +120,7 @@
->  #define R_PMIN     (0x3C/4)
->  #define R_PWID     (0x40/4)
->  #define R_TTRIG    (0x44/4)
-> +#define R_RXBS     (0x48/4)
+> +    ASSET_SDK_V1100_AST2600_515 =3D Asset(
+> +        'https://github.com/AspeedTech-BMC/openbmc/releases/download/v11=
+.00/ast2600-default-515-obmc.tar.gz',
+> +        'ece1a934095378929780f03e7d092e562f4b33b2841b80ad7c3d12a85744c0f=
+6')
 
-Where is this register documented? The cadence_uart.c file
-references the Zynq 7000 Soc TRM UG585; its URL for that
-is out of date, but looking at the copy on the AMD website,
-there is a table giving the register summary for the UART:
-https://docs.amd.com/r/en-US/ug585-zynq-7000-SoC-TRM/UART-Controller-UART
-and it lists only registers from offsets 0 to 0x44.
+This asset file is over a gigabyte in size, it takes forever to
+download, and our functional test asset download framework has
+no mechanism for giving any kind of progress indication for
+downloads (or even for telling you the URL it is downloading
+until after the download is complete).
+
+Can we have a size limit for test assets please, at least until
+the framework can support large assets a bit better ?
 
 thanks
--- PMM
+-- PMm
 
