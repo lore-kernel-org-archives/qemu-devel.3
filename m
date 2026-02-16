@@ -4,56 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E536E7BD92
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 11:17:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54D97E7BD92
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 11:17:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vrwa4-0004lN-2o; Mon, 16 Feb 2026 06:15:56 -0500
+	id 1vrwa3-0004kq-96; Mon, 16 Feb 2026 06:15:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vrwZy-0004jb-8K
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 06:15:50 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1vrwZu-0004im-GX
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 06:15:46 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vrwZw-0007IC-SZ
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 06:15:50 -0500
+ id 1vrwZs-0007Hb-Tb
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 06:15:46 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771240548;
+ s=mimecast20190719; t=1771240544;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=7MlFTFz5SURHIKJ7Chwid9xkKley/jFZjjT9ZD8VwRk=;
- b=P5pi4zrhnwd0wWjK+ljhJ+brggUOSrTHo+wtrU8XM4yXZTyzePqCPjRi37cyHTmIULi9UR
- cMvHodD0TCfQOISpXs4jt3QWrNmF6Zk63rGyxzIu1HToH9sDruchhAcnTZkVUC7+FSw9YF
- SrQH9QB+quI6EFCaC3RiyRUR30P9zdI=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=a+cxlaNFYy99fV6iC6NoJX8UA3JXNvcFW8aev589keg=;
+ b=dNl4XLLv7fkaPzR9ZlxrbNwLqc12PRjStui0RwU3aXFreXYQPpAKmqqDrecpHjJt6aDy53
+ aLMz/8LA47KHdUcWr0p16xvscEX34fIo5YPWyBea5fUwSgHpqHpESjQSOYazSmjWhtT+R3
+ SWgMb75hKhn2XibJi/UphT73kGmmJmM=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-551-Iqjo95IbO6-uth_fyNUh9A-1; Mon,
- 16 Feb 2026 06:15:44 -0500
-X-MC-Unique: Iqjo95IbO6-uth_fyNUh9A-1
-X-Mimecast-MFC-AGG-ID: Iqjo95IbO6-uth_fyNUh9A_1771240542
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-502-RLLL5PiYMpqruZ6MocVKDg-1; Mon,
+ 16 Feb 2026 06:15:41 -0500
+X-MC-Unique: RLLL5PiYMpqruZ6MocVKDg-1
+X-Mimecast-MFC-AGG-ID: RLLL5PiYMpqruZ6MocVKDg_1771240538
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9E2601955BC1; Mon, 16 Feb 2026 11:15:42 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A01E11956046; Mon, 16 Feb 2026 11:15:38 +0000 (UTC)
 Received: from localhost (unknown [10.45.242.26])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id BE1E01955F43; Mon, 16 Feb 2026 11:15:40 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id F1A5930001A5; Mon, 16 Feb 2026 11:15:36 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Mon, 16 Feb 2026 12:14:51 +0100
-Subject: [PATCH 02/85] adlib: remove dead code
+Date: Mon, 16 Feb 2026 12:14:50 +0100
+Subject: [PATCH 01/85] audio: remove obsolete/obscure functions
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260216-audio-v1-2-e676662e4514@redhat.com>
+Message-Id: <20260216-audio-v1-1-e676662e4514@redhat.com>
 References: <20260216-audio-v1-0-e676662e4514@redhat.com>
 In-Reply-To: <20260216-audio-v1-0-e676662e4514@redhat.com>
 To: qemu-devel@nongnu.org
@@ -73,25 +73,25 @@ Cc: Gerd Hoffmann <kraxel@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
  Mark Cave-Ayland <mark.caveayland@nutanix.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=815;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=4945;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=NB1RxHPpsDtB0Hj+b8jAY+ZHvQgT3NFrR5FzA9w1Gw4=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBpkvxOp0rnV0W1P+b7sRUoECuJ9slq/i14tEiJI
- vNrBDjBmRSJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaZL8TgAKCRDa6OEJdZac
- 5QcfD/9QalNaqugfYM5ToCEAKHYctl6ujrL5rfpHsNkoy2GQ7L1tv25nWTXIbQbSk9VKt39lnk8
- rJhEFI1rHDeeL2MbBebSrB02xH81zi8g3z08P27yFhsV5GpEUfGaHP2uwwDUybKDis9Ni+M/QEW
- /HPVUhb/E9+YFGNuO3SzHzGQ2eAAXK2LOU38WZEGNTz4KusC4SyZ8lBMIKADuO2Jz3Zde9BQPPr
- a/d1MlpkA41TlYzdtGIQw73ZyyPwawXSbZl1mIKn+WY/zXHsLt96G+PSJQJP8eAZrzM+3P+8M2G
- fTSVYCc9F/FvIwPGheF83tnO6FNnUTXK/AGtPZa4JiD+jdv6gDa2aB/RL9NCAQ2lX1Pnzi5h9ax
- 1aStAmAc1FW/QK5XpRnagdFvX/25cpjycgqxyfZ4lALJGosASw/R1gqgkd9vvKkiIMbPjvPOGYx
- mlyqC/lYuuvIhtyQrYRJo9GhUh/o6dk2xC8sZU3e0uVuEToc2rRvnkFF7rrd5pWNrGKbFoJWszJ
- bsDJLfQLJYL6de8EjNUlCipcqzJ/XGwI59JdtRhM1cdUt3KK234KmfKNBolRw8wQ/W/7hRjf7iB
- 5j7FO0iib2u+WxXgdU+Dnne62DanZ5UksCcL8HmckCpH00uRo+HdjpzbnC/qITZiAUG9ERN+KFh
- NDhXltwcqCGAShA==
+ bh=uYrPkyR2tbIVOyryH+czFSaxcbDkF6UtkEqgWhCJ+H4=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBpkvxO+d6ICHrYv6hGlpFTYw4HlvaAJ7jd9uV2n
+ b++9zOtZzOJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaZL8TgAKCRDa6OEJdZac
+ 5b+ND/45TvOtX8BfOgqI/W0WnB0DA3lCeo9vR9NhkjsyE8sMg9eDfy31jADVynQbEoVUnCOiNbW
+ LacedWyycQSv0tN4DL4/ESoDW/GTGFwDhsekJU0U4diB91TIvDV+6VNxPGZmD3z6cqpUa7xAMhf
+ qBw2Rj8onPuEUDHF4OVETHE315S0netvAkRzgz2tl8QmPnUD9X6LixK7+ODCudfw+97A7Tgbek/
+ BN0hAfPOfxjFHEB8w1TCErVbP/jL4fczUNPVRFwQs3zA12SrY4HMoYwhG348QdRuHDQ7FpHfvW0
+ OTrMbh788HQHh5EeW+MpnanXhfzER4ddQRAEgsfJE6m01FxJ/MbItTvxFPvZSDFdQ4QUhI6h56X
+ BENf82M6X6AU62wnN6xXxrEVPB4okoOaI2GxO+GMrkYRslH71z5QtK+l2VBkV4kVilBcGlWf4Bo
+ K3GK0+kezAw4LXApbdr7EmUEVJx3+lS+FwqSNlkvH3Qtnt9duvKfRl263nWSxUzmUrQwWjRX+qh
+ i6q/y55qgJqKCgju5u40cApg0N2CaGsrvplSDQVB42PyHtRY/EE9QPumyQSS2Z0hqUztPMDuMlL
+ ZZIEzoEv0+p21MXRIcZzxY2BhjrUW/fa7iH7Wvw8826HlaiaHqHonGSJIcwmjDbnF8i9TqPRa8x
+ ShaaWhtzyr06BCg==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -99,9 +99,9 @@ X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,34 +117,163 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Previous commit drop the need for this field.
+AUD_init_time_stamp_{in,out} and AUD_get_elapsed_usec_{in,out} are only
+used by the adlib device. The result isn't actually being used since
+ADLIB_KILL_TIMERS was set some 20y ago. Let's drop this dead code now.
+
+Drop QEMUAudioTimeStamp as well as reported by Akihiko Odaki.
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
 ---
- hw/audio/adlib.c | 2 --
- 1 file changed, 2 deletions(-)
+ audio/audio_template.h                             | 34 ----------------------
+ include/qemu/audio.h                               | 10 -------
+ hw/audio/adlib.c                                   | 18 +-----------
+ .../codeconverter/codeconverter/test_regexps.py    |  1 -
+ 4 files changed, 1 insertion(+), 62 deletions(-)
 
+diff --git a/audio/audio_template.h b/audio/audio_template.h
+index 7a8c431f2d7..1ab3c47fd76 100644
+--- a/audio/audio_template.h
++++ b/audio/audio_template.h
+@@ -569,40 +569,6 @@ bool glue(AUD_is_active_, TYPE)(SW *sw)
+     return sw ? sw->active : 0;
+ }
+ 
+-void glue (AUD_init_time_stamp_, TYPE) (SW *sw, QEMUAudioTimeStamp *ts)
+-{
+-    if (!sw) {
+-        return;
+-    }
+-
+-    ts->old_ts = sw->hw->ts_helper;
+-}
+-
+-uint64_t glue (AUD_get_elapsed_usec_, TYPE) (SW *sw, QEMUAudioTimeStamp *ts)
+-{
+-    uint64_t delta, cur_ts, old_ts;
+-
+-    if (!sw) {
+-        return 0;
+-    }
+-
+-    cur_ts = sw->hw->ts_helper;
+-    old_ts = ts->old_ts;
+-    /* dolog ("cur %" PRId64 " old %" PRId64 "\n", cur_ts, old_ts); */
+-
+-    if (cur_ts >= old_ts) {
+-        delta = cur_ts - old_ts;
+-    } else {
+-        delta = UINT64_MAX - old_ts + cur_ts;
+-    }
+-
+-    if (!delta) {
+-        return 0;
+-    }
+-
+-    return muldiv64 (delta, sw->hw->info.freq, 1000000);
+-}
+-
+ #undef TYPE
+ #undef HW
+ #undef SW
+diff --git a/include/qemu/audio.h b/include/qemu/audio.h
+index a92e0b70ef0..a1a64ad340d 100644
+--- a/include/qemu/audio.h
++++ b/include/qemu/audio.h
+@@ -50,10 +50,6 @@ struct AudioBackendClass {
+ 
+ typedef struct AudioBackend AudioBackend;
+ 
+-typedef struct QEMUAudioTimeStamp {
+-    uint64_t old_ts;
+-} QEMUAudioTimeStamp;
+-
+ bool AUD_backend_check(AudioBackend **be, Error **errp);
+ 
+ SWVoiceOut *AUD_open_out (
+@@ -71,9 +67,6 @@ int  AUD_get_buffer_size_out (SWVoiceOut *sw);
+ void AUD_set_active_out(SWVoiceOut *sw, bool on);
+ bool AUD_is_active_out(SWVoiceOut *sw);
+ 
+-void     AUD_init_time_stamp_out (SWVoiceOut *sw, QEMUAudioTimeStamp *ts);
+-uint64_t AUD_get_elapsed_usec_out (SWVoiceOut *sw, QEMUAudioTimeStamp *ts);
+-
+ #define AUDIO_MAX_CHANNELS 16
+ typedef struct Volume {
+     bool mute;
+@@ -112,9 +105,6 @@ size_t AUD_read (SWVoiceIn *sw, void *pcm_buf, size_t size);
+ void AUD_set_active_in(SWVoiceIn *sw, bool on);
+ bool AUD_is_active_in(SWVoiceIn *sw);
+ 
+-void     AUD_init_time_stamp_in (SWVoiceIn *sw, QEMUAudioTimeStamp *ts);
+-uint64_t AUD_get_elapsed_usec_in (SWVoiceIn *sw, QEMUAudioTimeStamp *ts);
+-
+ void audio_cleanup(void);
+ 
+ typedef struct st_sample st_sample;
 diff --git a/hw/audio/adlib.c b/hw/audio/adlib.c
-index efab5107a4c..f79654627f5 100644
+index 8b9fe53e17b..efab5107a4c 100644
 --- a/hw/audio/adlib.c
 +++ b/hw/audio/adlib.c
-@@ -66,7 +66,6 @@ struct AdlibState {
-     int64_t exp[2];
- #endif
-     int16_t *mixbuf;
--    uint64_t dexp[2];
+@@ -34,8 +34,6 @@
+ 
+ #define DEBUG 0
+ 
+-#define ADLIB_KILL_TIMERS 1
+-
+ #define ADLIB_DESC "Yamaha YM3812 (OPL2)"
+ 
+ #if DEBUG
+@@ -71,7 +69,6 @@ struct AdlibState {
+     uint64_t dexp[2];
      SWVoiceOut *voice;
      int left, pos, samples;
+-    QEMUAudioTimeStamp ats;
      FM_OPL *opl;
-@@ -133,7 +132,6 @@ static void timer_handler (void *opaque, int c, double interval_Sec)
-     s->exp[n] = exp;
+     PortioList port_list;
+ };
+@@ -88,19 +85,7 @@ static void adlib_kill_timers (AdlibState *s)
+ 
+     for (i = 0; i < 2; ++i) {
+         if (s->ticking[i]) {
+-            uint64_t delta;
+-
+-            delta = AUD_get_elapsed_usec_out (s->voice, &s->ats);
+-            ldebug (
+-                "delta = %f dexp = %f expired => %d",
+-                delta / 1000000.0,
+-                s->dexp[i] / 1000000.0,
+-                delta >= s->dexp[i]
+-                );
+-            if (ADLIB_KILL_TIMERS || delta >= s->dexp[i]) {
+-                adlib_stop_opl_timer (s, i);
+-                AUD_init_time_stamp_out (s->voice, &s->ats);
+-            }
++            adlib_stop_opl_timer(s, i);
+         }
+     }
+ }
+@@ -149,7 +134,6 @@ static void timer_handler (void *opaque, int c, double interval_Sec)
  #endif
  
--    s->dexp[n] = interval_Sec * 1000000.0;
+     s->dexp[n] = interval_Sec * 1000000.0;
+-    AUD_init_time_stamp_out (s->voice, &s->ats);
  }
  
  static int write_audio (AdlibState *s, int samples)
+diff --git a/scripts/codeconverter/codeconverter/test_regexps.py b/scripts/codeconverter/codeconverter/test_regexps.py
+index 2b9f5b80111..f92389e9618 100644
+--- a/scripts/codeconverter/codeconverter/test_regexps.py
++++ b/scripts/codeconverter/codeconverter/test_regexps.py
+@@ -202,7 +202,6 @@ def test_struct_re():
+     uint64_t dexp[2];
+     SWVoiceOut *voice;
+     int left, pos, samples;
+-    QEMUAudioTimeStamp ats;
+     FM_OPL *opl;
+     PortioList port_list;
+ } AdlibState;
 
 -- 
 2.53.0
