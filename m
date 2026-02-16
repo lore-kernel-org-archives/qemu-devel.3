@@ -4,57 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB32AE81A2F
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 14:54:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2E16E81A2B
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 14:58:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vrzyz-0006r6-Od; Mon, 16 Feb 2026 09:53:53 -0500
+	id 1vs03Y-0000Th-Rj; Mon, 16 Feb 2026 09:58:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
- id 1vrzyx-0006qY-7j
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 09:53:51 -0500
-Received: from frasgout.his.huawei.com ([185.176.79.56])
+ (Exim 4.90_1) (envelope-from <anthony@xenproject.org>)
+ id 1vs03X-0000T2-9k
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 09:58:35 -0500
+Received: from mail.xenproject.org ([104.130.215.37])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
- id 1vrzyt-0004XG-Bc
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 09:53:50 -0500
-Received: from mail.maildlp.com (unknown [172.18.224.150])
- by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4fF5My5NB0zJ46Bv;
- Mon, 16 Feb 2026 22:52:14 +0800 (CST)
-Received: from dubpeml500005.china.huawei.com (unknown [7.214.145.207])
- by mail.maildlp.com (Postfix) with ESMTPS id 58BAB40539;
- Mon, 16 Feb 2026 22:52:23 +0800 (CST)
-Received: from a2303103017.china.huawei.com (10.47.67.55) by
- dubpeml500005.china.huawei.com (7.214.145.207) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.11; Mon, 16 Feb 2026 14:52:22 +0000
-To: <qemu-devel@nongnu.org>, <lizhijian@fujitsu.com>
-CC: <anisa.su887@gmail.com>, <armbru@redhat.com>, <david@kernel.org>,
- <gourry@gourry.net>, <imammedo@redhat.com>, <jonathan.cameron@huawei.com>,
- <linuxarm@huawei.com>, <mst@redhat.com>, <nifan.cxl@gmail.com>,
- <peterx@redhat.com>, <philmd@linaro.org>, <ppbonzini@redhat.com>,
- <venkataravis@micron.com>, <xiaoguangrong.eric@gmail.com>
-Subject: [PATCH v3 0/2] Performant CXL type 3 non-interleaved regions
-Date: Mon, 16 Feb 2026 14:52:16 +0000
-Message-ID: <20260216145219.1959-1-alireza.sanaee@huawei.com>
-X-Mailer: git-send-email 2.51.0.windows.2
+ (Exim 4.90_1) (envelope-from <anthony@xenproject.org>)
+ id 1vs03V-00078f-LK
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 09:58:34 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=xenproject.org; s=20200302mail; h=In-Reply-To:Content-Type:MIME-Version:
+ References:Message-ID:Subject:Cc:To:From:Date;
+ bh=kEp5yCAkSItYMvkoIhmqya1saaFVQf+HKzKlaw/jnJA=; b=Q3Vt0CaqqOHQdwTvRxk4PBGXbo
+ BVMPVirFsIY2g3/Xrf7yO2TxUhprRKEpJBanZ2OVB3AXnAQ/CwcHoDf7E3/W8Tulxl8QW5LHHrPs4
+ HMIPeFxknSd52CAXVbxleSV1Ywl68ehVHZhHqsis1Nj+rLjt5D7FMpSxSW+BPgFFa6CM=;
+Received: from xenbits.xenproject.org ([104.239.192.120])
+ by mail.xenproject.org with esmtp (Exim 4.96)
+ (envelope-from <anthony@xenproject.org>) id 1vs03S-00BwP6-1C;
+ Mon, 16 Feb 2026 14:58:30 +0000
+Received: from [2a01:cb15:80df:da00:80b5:18da:fdf4:baa] (helo=l14)
+ by xenbits.xenproject.org with esmtpsa (TLS1.3) tls
+ TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.96)
+ (envelope-from <anthony@xenproject.org>) id 1vs03R-00AWgn-1l;
+ Mon, 16 Feb 2026 14:58:30 +0000
+Date: Mon, 16 Feb 2026 15:58:28 +0100
+From: Anthony PERARD <anthony@xenproject.org>
+To: Ross Lagerwall <ross.lagerwall@citrix.com>
+Cc: qemu-devel@nongnu.org, Stefano Stabellini <sstabellini@kernel.org>,
+ Paul Durrant <paul@xen.org>, "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+Subject: Re: [PATCH] xen-hvm: Emit RTC_CHANGE upon TIMEOFFSET ioreq
+Message-ID: <aZMwlMwYufj6LCrU@l14>
+References: <20260108135406.1879210-1-ross.lagerwall@citrix.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.47.67.55]
-X-ClientProxiedBy: lhrpeml100009.china.huawei.com (7.191.174.83) To
- dubpeml500005.china.huawei.com (7.214.145.207)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=alireza.sanaee@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260108135406.1879210-1-ross.lagerwall@citrix.com>
+Received-SPF: pass client-ip=104.130.215.37;
+ envelope-from=anthony@xenproject.org; helo=mail.xenproject.org
+X-Spam_score_int: -43
+X-Spam_score: -4.4
 X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -67,257 +69,40 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Alireza Sanaee <alireza.sanaee@huawei.com>
-From:  Alireza Sanaee via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hey everyone,
-
-This is v3 of performant CXL type 3 regions set:
-
-v2 -> v3: Addressing Zhijian Li. Thanks for the feedback.
-v1 -> v2: Mainly rebase.
-
-Base: On top of Jonathan's tree -> https://github.com/sarsanaee/qemu-lab/commits/performant-v3-E/
-
-==========================================================
-
-The CXL address to device decoding logic is complex because of the need
-to correctly decode fine grained interleave. The current implementation
-prevents use with KVM where executed instructions may reside in that
-memory and gives very slow performance even in TCG.
-
-In many real cases non interleaved memory configurations are useful and
-for those we can use a more conventional memory region alias allowing
-similar performance to other memory in the system.
-
-Whether this fast path is applicable can be established once the full
-set of HDM decoders has been committed (in whatever order the guest
-decides to commit them). As such a check is performed on each commit /
-uncommit of HDM decoder to establish if the alias should be added or
-removed.
-
-
-Performance numbers:
-
-For a read/write test with 4K block size, 256M region size, and 1 thread
-with 100 iteration on TCG (it should do similar on KVM):
-
-  - Non-interleaved region (fast path): 25-30 seconds.
-  - Interleaved region (no fast path):  Never finishes within 10
-    minutes.
-
-Tested Topologies and Region Layouts
-====================================
-
-This series was validated across multiple CXL topology configurations,
-covering single-device, multi-device, multi-host-bridge, and switched
-fabrics. Region creation was exercised using the `cxl` userspace tool
-with both non-interleaved and interleaved setups.
-
-Decoder and memdev identifiers were discovered using:
-
-  cxl list
-  cxl list -D
-
-Decoder IDs (e.g. decoder0.0) and memdev names (mem0, mem1) are
-environment-specific. Commands below use placeholders such as
-<decoder_span_both> which should be replaced with IDs from `cxl list -D`.
-
----------------------------------------------------------------------
-
-Region Layout Notation
-----------------------
-
-CFMW (CXL Fixed Memory Window) is shown as a linear address space
-containing regions:
-
-  CFMW: [ R0 | R1 | R2 ]
-
-R0, R1, R2 are regions created by `cxl create-region`.
-
-Non-interleaved region:
-
-  R0 (ways=1) -> entirely on one device (mem0 or mem1)
-  Fast path: APPLICABLE
-
-2-way interleaved region (g=256):
-
-  R1 (ways=2, g=256) striped across devices:
-
-    |mem0|mem1|mem0|mem1|mem0|mem1| ...
-     256  256  256  256  256  256  bytes
-
-  Fast path: NOT APPLICABLE
-
----------------------------------------------------------------------
-
-1) One device, one host bridge, one fixed window
-------------------------------------------------
-
-QEMU:
-
-  -M q35,cxl=on,cxl-fmw.0.targets.0=cxl.0,cxl-fmw.0.size=4G
-  -device pxb-cxl,id=cxl.0,bus=pcie.0,bus_nr=12
-  -device cxl-rp,id=rp0,bus=cxl.0,port=0,chassis=0,slot=2
-  -object memory-backend-ram,id=mem0,size=512M,share=on
-  -device cxl-type3,id=dev0,bus=rp0,memdev=mem0
-
-Topology:
-
-  Host
-    |
-    +-- CXL Host Bridge (cxl.0)
-         |
-         +-- Root Port (rp0)
-              |
-              +-- Type-3 (dev0, mem0)
-
-Regions created:
-
-  cxl create-region ... -w 1 ... mem0   (Fast path: YES)
-  cxl create-region ... -w 1 ... mem0   (Fast path: YES)
-
-Layout:
-
-  CFMW: [ R0 | R1 ]
-
-  R0 -> mem0  (Fast path: YES)
-  R1 -> mem0  (Fast path: YES)
-
----------------------------------------------------------------------
-
-2) One host bridge, two Type-3 devices (via two root ports)
-------------------------------------------------------------
-
-QEMU:
-
-  -M q35,cxl=on,cxl-fmw.0.targets.0=cxl.0,cxl-fmw.0.size=4G
-  -device pxb-cxl,id=cxl.0,bus=pcie.0,bus_nr=12
-  -device cxl-rp,id=rp0,bus=cxl.0,port=0,chassis=0,slot=2
-  -device cxl-rp,id=rp1,bus=cxl.0,port=1,chassis=0,slot=3
-  -object memory-backend-ram,id=mem0,size=512M,share=on
-  -object memory-backend-ram,id=mem1,size=512M,share=on
-  -device cxl-type3,id=dev0,bus=rp0,memdev=mem0
-  -device cxl-type3,id=dev1,bus=rp1,memdev=mem1
-
-Topology:
-
-  Host
-    |
-    +-- CXL Host Bridge (cxl.0)
-         |
-         +-- Root Port (rp0) -- Type-3 (dev0, mem0)
-         |
-         +-- Root Port (rp1) -- Type-3 (dev1, mem1)
-
-Region patterns exercised:
-
-2.1 All non-interleaved:
-  R0 -> mem0  (Fast path: YES)
-  R1 -> mem0  (Fast path: YES)
-  R2 -> mem1  (Fast path: YES)
-  R3 -> mem1  (Fast path: YES)
-
-2.2 Interleaved + local:
-  R0 -> mem0/mem1 interleaved  (Fast path: NO)
-  R1 -> mem0                   (Fast path: YES)
-
-2.3 Local + interleaved + local:
-  R0 -> mem0                   (Fast path: YES)
-  R1 -> mem0/mem1 interleaved  (Fast path: NO)
-  R2 -> mem1                   (Fast path: YES)
-
----------------------------------------------------------------------
-
-3) Two host bridges, one device per host bridge
-------------------------------------------------
-
-QEMU:
-
-  -M q35,cxl=on,
-     cxl-fmw.0.targets.0=cxl.0,cxl-fmw.0.size=4G,
-     cxl-fmw.1.targets.0=cxl.1,cxl-fmw.1.size=4G,
-     cxl-fmw.2.targets.0=cxl.0,cxl-fmw.2.size=4G
-  -device pxb-cxl,id=cxl.0,bus=pcie.0,bus_nr=12
-  -device cxl-rp,id=rp0,bus=cxl.0,port=0,chassis=0,slot=2
-  -object memory-backend-ram,id=mem0,size=512M,share=on
-  -device cxl-type3,id=dev0,bus=rp0,memdev=mem0
-  -device pxb-cxl,id=cxl.1,bus=pcie.0,bus_nr=13
-  -device cxl-rp,id=rp1,bus=cxl.1,port=0,chassis=1,slot=2
-  -object memory-backend-ram,id=mem1,size=512M,share=on
-  -device cxl-type3,id=dev1,bus=rp1,memdev=mem1
-
-Region patterns identical to section 2, and fast-path applicability is
-identical per region mapping (non-interleaved: YES, interleaved: NO).
-
----------------------------------------------------------------------
-
-4) Switch topology
-------------------
-
-QEMU:
-
-  -M q35,cxl=on,cxl-fmw.0.targets.0=cxl.0,cxl-fmw.0.size=4G
-  -device pxb-cxl,id=cxl.0,bus=pcie.0,bus_nr=12
-  -device cxl-rp,id=rp0,bus=cxl.0,port=0,chassis=0,slot=2
-  -device cxl-rp,id=rp1,bus=cxl.0,port=0,chassis=0,slot=3
-  -device cxl-upstream,id=us0,bus=rp0
-  -device cxl-downstream,id=ds0,bus=us0,port=0,chassis=0,slot=4
-  -object memory-backend-ram,id=mem0,size=512M,share=on
-  -device cxl-type3,id=dev0,bus=ds0,memdev=mem0
-
-Topology (detailed):
-
-  Host
-    |
-    +-- CXL Host Bridge (cxl.0)
-         |
-         +-- Root Port (rp0)
-         |     |
-         |     +-- CXL Switch (upstream us0)
-         |           |
-         |           +-- Downstream Port (ds0) -- Type-3 (mem0)
-         |           |
-         |           +-- Downstream Port (ds1) -- Type-3 (mem1) [optional]
-         +-- Root Port (rp1)
-               |
-               +-- More devices/switches.
-
-Fast-path interpretation in this topology:
-
-  If only mem0 exists:
-    All regions -> Fast path: YES
-
-  If mem0 and mem1 exist:
-    Non-interleaved regions -> Fast path: YES
-    Interleaved regions     -> Fast path: NO
-
----------------------------------------------------------------------
-
-Summary
--------
-
-Across all topologies, region creation, enablement, and HDM decoder
-commit/uncommit flows were exercised. The fast path is enabled only when
-all decoders describe a non-interleaved mapping and is removed when any
-interleave configuration is introduced.
-
-Alireza Sanaee (2):
-  hw/cxl: Use HPA in cxl_cfmws_find_device() rather than offset in
-    window.
-  hw/cxl: Add a performant (and correct) path for the non interleaved
-    cases
-
- hw/cxl/cxl-component-utils.c |   6 ++
- hw/cxl/cxl-host.c            | 203 +++++++++++++++++++++++++++++++++--
- hw/mem/cxl_type3.c           |   4 +
- include/hw/cxl/cxl.h         |   1 +
- include/hw/cxl/cxl_device.h  |   1 +
- 5 files changed, 206 insertions(+), 9 deletions(-)
+On Thu, Jan 08, 2026 at 01:54:06PM +0000, Ross Lagerwall wrote:
+> When the guest writes to the RTC, the write is intercepted and emulated
+> by Xen and the time difference is broadcasted as a TIMEOFFSET ioreq.
+> Emit an RTC_CHANGE QMP event when this happens rather than ignoring it
+> so that something can make use of the information (e.g. the toolstack
+> can persist it between VM starts).
+> 
+> Signed-off-by: Ross Lagerwall <ross.lagerwall@citrix.com>
+> ---
+>  hw/xen/xen-hvm-common.c | 2 ++
+>  1 file changed, 2 insertions(+)
+> 
+> diff --git a/hw/xen/xen-hvm-common.c b/hw/xen/xen-hvm-common.c
+> index 59c73dfaeb59..9b539f5c5c56 100644
+> --- a/hw/xen/xen-hvm-common.c
+> +++ b/hw/xen/xen-hvm-common.c
+> @@ -471,6 +472,7 @@ static void handle_ioreq(XenIOState *state, ioreq_t *req)
+>              cpu_ioreq_move(req);
+>              break;
+>          case IOREQ_TYPE_TIMEOFFSET:
+> +            qapi_event_send_rtc_change((int64_t)req->data, NULL);
+
+Would you be fine to replace `NULL` by `""`? I've notice a TODO in
+visit_type_str() at
+https://gitlab.com/qemu-project/qemu/-/blob/master/qapi/qapi-visit-core.c#L344
+which is one of the function doing something with that parameter.
+
+With that, which I can do on commit: Acked-by: Anthony PERARD <anthony.perard@vates.tech>
+
+Thanks,
 
 -- 
-2.43.0
-
+Anthony PERARD
 
