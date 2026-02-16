@@ -4,75 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 183B6E81A28
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 14:58:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30DF5E81A2B
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 14:59:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vs03J-0000Qw-VZ; Mon, 16 Feb 2026 09:58:21 -0500
+	id 1vs04L-0001Re-Hz; Mon, 16 Feb 2026 09:59:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1vs03I-0000Qf-HP
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 09:58:20 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1vs04J-0001Qt-9r
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 09:59:23 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1vs03G-00077K-Dv
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 09:58:20 -0500
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1vs04H-0007CQ-A6
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 09:59:23 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771253896;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1771253960;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Xc3eskw6EjXADVVe2Fh/wrvyTVBGJzr0Vp7RB93fmQU=;
- b=DiBzIBzp+mC+XJi+Kv5SCwPGom/A5kNQV1MFqlKNr+4a0WusMRfbEYC0fQpVGRe7ao3l0K
- asEkl406+jPh39bR4D4mui2UzN7u8H93uFmymZXuJ5LCyt6pW1Ef3DduSGm+Zcd+PIpx1z
- ogZ7hJ80V0E9wS1fgdMr8D1ybQA90qI=
+ bh=EkCbvDet1WGIGsHaEpegvqENk6jWzwz0bWmqEZhgDEw=;
+ b=R31dyChI2ID/ns0c5qgkTnHkZEkM0ldxfDAYaoLwnWdgXJbf+Z7EqfjK+lYLKf1nY76+Rg
+ xRUMgPYl7s/FENUbNKB4BNjb4kPex0VX3WahDd2QCWxvhUtn2mzTbzYpkPNsd/JnRe2Sex
+ Zm85T8gKVyqU0xHtYF2haT1jDXNeP5A=
 Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-356-5eX4HhTyOKqZIOW4gNT33A-1; Mon,
- 16 Feb 2026 09:58:13 -0500
-X-MC-Unique: 5eX4HhTyOKqZIOW4gNT33A-1
-X-Mimecast-MFC-AGG-ID: 5eX4HhTyOKqZIOW4gNT33A_1771253891
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-629-aukwpUE1OLaKVMwHZH7nlw-1; Mon,
+ 16 Feb 2026 09:59:16 -0500
+X-MC-Unique: aukwpUE1OLaKVMwHZH7nlw-1
+X-Mimecast-MFC-AGG-ID: aukwpUE1OLaKVMwHZH7nlw_1771253956
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BE99C1955D99; Mon, 16 Feb 2026 14:58:10 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.139])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 1EFC319560AD; Mon, 16 Feb 2026 14:58:08 +0000 (UTC)
-Date: Mon, 16 Feb 2026 09:58:07 -0500
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Jaehoon Kim <jhkim@linux.ibm.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, pbonzini@redhat.com,
- fam@euphon.net, armbru@redhat.com, eblake@redhat.com,
- berrange@redhat.com, eduardo@habkost.net, dave@treblig.org, sw@weilnetz.de
-Subject: Re: [PATCH RFC v1 1/3] aio-poll: avoid unnecessary polling time
- computation
-Message-ID: <20260216145807.GA396170@fedora>
-References: <20260113174824.464720-1-jhkim@linux.ibm.com>
- <20260113174824.464720-2-jhkim@linux.ibm.com>
+ id A6AAB195FDDB; Mon, 16 Feb 2026 14:59:15 +0000 (UTC)
+Received: from redhat.com (unknown [10.45.225.52])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0C3801800464; Mon, 16 Feb 2026 14:59:12 +0000 (UTC)
+Date: Mon, 16 Feb 2026 14:59:09 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org, Kane Chen <kane_chen@aspeedtech.com>
+Subject: Re: [PULL 02/16] tests/functional: Add SDK tests with Linux 5.15
+Message-ID: <aZMwvfw4O5xeH-Gm@redhat.com>
+References: <20260212213955.2225662-1-clg@redhat.com>
+ <20260212213955.2225662-3-clg@redhat.com>
+ <CAFEAcA_oJgTc2SyRr11QTeTkmCPgvKiwngAaDiDNw5nUcTFA2w@mail.gmail.com>
+ <CAFEAcA_9Np04vouA-m99xB8yU-JhduwxxLj_dTG0QM=AnDbHoQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="5BAxZ5spNFCCpeKd"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260113174824.464720-2-jhkim@linux.ibm.com>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAFEAcA_9Np04vouA-m99xB8yU-JhduwxxLj_dTG0QM=AnDbHoQ@mail.gmail.com>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,101 +89,52 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Mon, Feb 16, 2026 at 11:17:38AM +0000, Peter Maydell wrote:
+> On Mon, 16 Feb 2026 at 11:13, Peter Maydell <peter.maydell@linaro.org> wrote:
+> >
+> > On Thu, 12 Feb 2026 at 21:42, Cédric Le Goater <clg@redhat.com> wrote:
+> > >
+> > > Add functional tests for AST2500 and AST2600 machines using the
+> > > OpenBMC SDK v11.00 with Linux kernel 5.15. These tests complement the
+> > > existing SDK tests and verify that QEMU correctly boots older kernel
+> > > versions on these platforms.
+> >
+> >
+> > > +    ASSET_SDK_V1100_AST2600_515 = Asset(
+> > > +        'https://github.com/AspeedTech-BMC/openbmc/releases/download/v11.00/ast2600-default-515-obmc.tar.gz',
+> > > +        'ece1a934095378929780f03e7d092e562f4b33b2841b80ad7c3d12a85744c0f6')
+> >
+> > This asset file is over a gigabyte in size, it takes forever to
+> > download, and our functional test asset download framework has
+> > no mechanism for giving any kind of progress indication for
+> > downloads (or even for telling you the URL it is downloading
+> > until after the download is complete).
+> >
+> > Can we have a size limit for test assets please, at least until
+> > the framework can support large assets a bit better ?
+> 
+> Followup: we have six test assets that are over 500MB in size,
+> and they are all aspeed tests. Please can you have a look at
+> slimming these down?
 
---5BAxZ5spNFCCpeKd
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I see 2 big assets from aspeed only
 
-On Tue, Jan 13, 2026 at 11:48:22AM -0600, Jaehoon Kim wrote:
-> Nodes are no longer added to poll_aio_handlers when adaptive polling is
-> disabled, preventing unnecessary try_poll_mode() calls. Additionally,
-> aio_poll() skips try_poll_mode() when timeout is 0.
+  64d8926a7d01b649168be96c986603b5690f06391286c438a3a772c8c7039e93
+  ece1a934095378929780f03e7d092e562f4b33b2841b80ad7c3d12a85744c0f6
 
-Do these two changes need to be made together? If not, please split them
-into two commits. This will make the commit descriptions easier to
-understand.
 
->=20
-> This avoids iterating over all nodes to compute max_ns unnecessarily
-> when polling is disabled or timeout is 0.
->=20
-> Signed-off-by: Jaehoon Kim <jhkim@linux.ibm.com>
-> ---
->  util/aio-posix.c | 11 ++++++-----
->  1 file changed, 6 insertions(+), 5 deletions(-)
->=20
-> diff --git a/util/aio-posix.c b/util/aio-posix.c
-> index e24b955fd9..7ddf92a25f 100644
-> --- a/util/aio-posix.c
-> +++ b/util/aio-posix.c
-> @@ -306,9 +306,8 @@ static bool aio_dispatch_handler(AioContext *ctx, Aio=
-Handler *node)
->       * fdmon_supports_polling(), but only until the fd fires for the fir=
-st
->       * time.
->       */
-> -    if (!QLIST_IS_INSERTED(node, node_deleted) &&
-> -        !QLIST_IS_INSERTED(node, node_poll) &&
-> -        node->io_poll) {
-> +    if (ctx->poll_max_ns && !QLIST_IS_INSERTED(node, node_deleted) &&
-> +        !QLIST_IS_INSERTED(node, node_poll) && node->io_poll) {
->          trace_poll_add(ctx, node, node->pfd.fd, revents);
->          if (ctx->poll_started && node->io_poll_begin) {
->              node->io_poll_begin(node->opaque);
-> @@ -630,7 +629,7 @@ static void adjust_polling_time(AioContext *ctx, AioP=
-olledEvent *poll,
->  bool aio_poll(AioContext *ctx, bool blocking)
->  {
->      AioHandlerList ready_list =3D QLIST_HEAD_INITIALIZER(ready_list);
-> -    bool progress;
-> +    bool progress =3D false;
->      bool use_notify_me;
->      int64_t timeout;
->      int64_t start =3D 0;
-> @@ -655,7 +654,9 @@ bool aio_poll(AioContext *ctx, bool blocking)
->      }
-> =20
->      timeout =3D blocking ? aio_compute_timeout(ctx) : 0;
-> -    progress =3D try_poll_mode(ctx, &ready_list, &timeout);
-> +    if ((ctx->poll_max_ns !=3D 0) && (timeout !=3D 0)) {
-> +        progress =3D try_poll_mode(ctx, &ready_list, &timeout);
-> +    }
->      assert(!(timeout && progress));
+what are the names of the other files in $HOME/.cache/qemu/download
+you have that are over 500 MB ?
 
-Can you walk me through the timeout =3D=3D 0 case when polling is active?
-
-Further down in aio_poll():
-
-  /* If polling is allowed, non-blocking aio_poll does not need the
-   * system call---a single round of run_poll_handlers_once suffices.
-   */
-  if (timeout || ctx->fdmon_ops->need_wait(ctx)) {
-
-My concern is that aio_poll(timeout=3D0) could return without polling or
-waiting for fds when polling is active. Maybe I've missed something that
-prevents this?
-
-Stefan
-
---5BAxZ5spNFCCpeKd
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmmTMH8ACgkQnKSrs4Gr
-c8h5IAf+M2TbNPK+0XpZ03LnNcRUcREnEfeC4zAv/aYxtw35ehk4scAqHqsmRkjM
-vD0nI5LDMG+q683KAuXrAYvwsMu0uQsVs4wKDHPes4LKPTUVZ0tbW8RwAw46sA6i
-G5GUVXGgNek3y4mtELC3QUzkDW6CssMa1RL093Iw4i0V0Be3IOSZ3wt9HJ5XITz0
-Ybj6xDS7gKfDndv0qpLg4FJhub87RSOix1rY8nz5be/g6YVS3+/Db3awJd8hL0hZ
-Ag/gc/yiHZlceOACR1h69KqGrImGeXTKWYnGiX4Qxh3NXsYmn8URghdoWSxjzMX3
-DypEd4II3q1IKs7QwKY00i6VEhA1oA==
-=Vwbi
------END PGP SIGNATURE-----
-
---5BAxZ5spNFCCpeKd--
+With regards,
+Daniel
+-- 
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 
 
