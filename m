@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67956E63F2D
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 03:45:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD894E63F25
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 03:45:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vrpXa-0002Xs-Qz; Sun, 15 Feb 2026 22:44:54 -0500
+	id 1vrpXS-0002Vq-Dy; Sun, 15 Feb 2026 22:44:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vrpXZ-0002XO-DQ
- for qemu-devel@nongnu.org; Sun, 15 Feb 2026 22:44:53 -0500
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ id 1vrpXR-0002VR-G5
+ for qemu-devel@nongnu.org; Sun, 15 Feb 2026 22:44:45 -0500
+Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vrpXY-0002Qg-0Q
- for qemu-devel@nongnu.org; Sun, 15 Feb 2026 22:44:53 -0500
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-2a79ded11a2so17386605ad.3
- for <qemu-devel@nongnu.org>; Sun, 15 Feb 2026 19:44:51 -0800 (PST)
+ id 1vrpXQ-0002Pp-4J
+ for qemu-devel@nongnu.org; Sun, 15 Feb 2026 22:44:45 -0500
+Received: by mail-pl1-x62a.google.com with SMTP id
+ d9443c01a7336-2a8fba3f769so11697395ad.2
+ for <qemu-devel@nongnu.org>; Sun, 15 Feb 2026 19:44:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771213491; x=1771818291; darn=nongnu.org;
+ d=linaro.org; s=google; t=1771213483; x=1771818283; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=wbaWufcL2e5tEtCZHFxuRaX3s02e+nS0+Goels1wiTo=;
- b=xzsnB34SneBwnNatga5TfxJzvv9HcssmGhM/t48DCqCT26sCc1JGagjkam/UNf/tpz
- AF/hcrAqS3KiqL+WTIaz8bFivpQFb/bx0vvYwoRrLMNF0wNpY4wE7y/8JTv6fyqCclw+
- M9MhowaezAUsGkb4o02nzBxLYSlubXkIvHs6zNWw9qU7x0xEge3zDnOBtDFGsVegKjPz
- wxMbqgQ2GhUYVVE5JtUfCLmD2KrchBKIZseZx/sC2XDALYdMBE+Y34ZrldXSixXSaiU7
- 6wStlnJef3wbLUYJm6g7VJ/jiy6QGlI9LUOn5X6CKMzY4+EVBsGqj0p2xfNtc8C0CCN5
- ZWew==
+ :reply-to; bh=Sx4EklBCDXRhXcx4X7Amw2w/L2qFpEA1iQNUEaWH8vg=;
+ b=iCFhWeeJgVhObOxanFVVof8cdrl2C5DlN976POlnJ8ZZX2XllKDbx7w1gyYucI40IZ
+ dLfxGeePw1hOAE+cB/KshjmUe0lbJDzr80Lb0dcokfd1Ung9ghtrSBFd6OXiPVpukvK+
+ lKaZKbjPbD5+Sjbt+a02t/UzH4HidI2OqO2UhJsBzCX7CPP5qg7fM/LLL4g0H5zJrBdp
+ a9mHYnd9YUsleji5EFZTWLqyBgYzFTZtUoxZcqDak+8IOeldKU7fAnDfyKsVh+GXkub4
+ NWisceAt3r4Mlic6Q6guBsaOkEMeOqE2ATpvscgYZQ/kOyDpyB9gZCb4TRLGaRai1oaM
+ 9/DQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771213491; x=1771818291;
+ d=1e100.net; s=20230601; t=1771213483; x=1771818283;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=wbaWufcL2e5tEtCZHFxuRaX3s02e+nS0+Goels1wiTo=;
- b=q6vW3fpicMBixTSAQqeknx26h+hkN1hWCY9Pj52JyjjH21B8wZVhd85g41rMOPrFRx
- N/4DZnHRWmU7vEmJTrbFhk9hI7Nx3wKbw5EXMNIItBsDSwLg5MqH9Bwr6xoL9JdRCzUw
- /UOARK/Udid9f7bMLih1p4n5lAZeFZEv9tYiAQXwVJsleYpWaGESURNpVTIM1Jzql0O5
- ShoDGmvF3tcam1Y5GJF/8fGuALhYqvolIT59qAPPtd59BcauLYq+3SSjkRhWgkfGUwTa
- KGT2beGR2OyVjXIG9mGdANAOhEjsjsth7VAFepXM5w2j04AB3feIdE1II7S8PTTKsu11
- UThw==
-X-Gm-Message-State: AOJu0YyodHmUKlnaPXuUyr9y2vyQDsGp1Sb3xKoe9XosQv8IgMeW10bf
- VqHN9yB2XMFXNXE/SHIZl17ZKGkaQIfJq26PV7T0RkwmI5u77DCjV/mGvHIMR7V+JJtXmzMxW4g
- /gpEgBNc=
-X-Gm-Gg: AZuq6aK3eBnk8K6Tuqa4vreV2VYBMCbNwIbAUX/vk8SnGYChyK3wErQSwyQOxBcVOSK
- 2txukbyCqz46R1bS2tJcBnyXiuo0HxwFVXenK09+DcQf+YFvyhg7As/NUanIktVs2Nj8qVBQB7y
- ec5NXk5e/EBS6SMttaynTfaCJShmdqVbUhP6J867z/5Y/QDecwmPSa9ykHa8TLImmGn3KV5qlDL
- oBd2WTW+lz315GN4PQuZaUcAfmK67UgWvMR8BmWPk74J+b9SOFLP8XizdHFtffPFavSiq3rQlMs
- K7bPsesu/xQnMX07OTV2GgjxLEkEY657OTclurhaepW3BkrcYg8N+d0mrVBOAJZw0qEqmMkVjA5
- TlChqFSR5ZiCjdAXUekQ1Gsdn91TDYodbX8RvEBUcVq368NWfdUCzFCqoY86fmDclosS9OGQjHw
- C4rRkFsLcKDLl7UawTQryic7CQcHrtQM5b
-X-Received: by 2002:a17:903:22d2:b0:2aa:e6c1:cea1 with SMTP id
- d9443c01a7336-2ab50506bbdmr88481665ad.17.1771213490551; 
- Sun, 15 Feb 2026 19:44:50 -0800 (PST)
+ bh=Sx4EklBCDXRhXcx4X7Amw2w/L2qFpEA1iQNUEaWH8vg=;
+ b=JpKq6k3BLCsl7cvX6BN5Df6l6jI9wt4tcJLAtDi2MOTX8pj+3/Iehq3zHqnk6gjhwD
+ 3bFXOInPyP41B1ohidG8c2kF1lUOYJvz6fWl3rqs0q3QSHCiWuUs6gqK9kRXOM9KSp59
+ XyhP/CsO5Oetb2sl724fkl35+WayLLoJD5DcBxsTIM4uCu54n4nEh1aIYgu0hwxp6KvQ
+ t9QOsJCGovhNVpvnZJAc3QTctSfOLWuVljkImb1iXwVyLtbRiT7wzCKPbdG+tY7JJqjb
+ tDcW6rcGhQUJIBIJxGo6tDH3VOjMNCjnZfBEsXy4fZPU7/nlx3+tVyMx9ZcvuLtATRtl
+ qQZQ==
+X-Gm-Message-State: AOJu0YzqtYC3jDaWz7cXhx+5E97HQqBsrR3kh5ki6ofEb+T5le2IztJh
+ oYCZ9hNV4GsoS3xR/9QEAvY2RhLLyFl+ZZA68TFkNHtUTjElCawwwEV11Ay0riWPTDcejCz+k8v
+ cGyqt+/g=
+X-Gm-Gg: AZuq6aLxGQ4Xp9GpvA2cc417IG/uLusJ1gRvOiSrx3hhFVc+3k0Rn4iBp70RRkhAyt/
+ emQqlpt7kr9k1PRLsx54hjqg4Ffsg0yy5gk2CQsdvyjhnuwUxJykrCliFDHrggOrbg3xjvEMBj0
+ ThK+2ojTLjwSXCe3NGn85QbTicAmqN7dJBvBRTg5y7Z3LwkbmbP2o747CfpVult31yhdEE4wbkc
+ 8XamOYtuxkwQ+hcOnKcr1tP3GXDPuSElUVkdbwRZomwuLtazDfTzgps04+0JyiLT/PCLpYtMdQ5
+ TcZ61XVTrA1tYVgBBaekjsluc4fUGZbiPfXkAJiSsoibzBHKr2YCwevcPb2++U8rogLSMmP17Jn
+ TuEJ4hlFOC6KPYW0vdgl5uCGGRf/sNvadfstI1FAonM0iYVcDLfDgpiwJBwoRdg4gerZfP+V6bU
+ ACtLDJRx1qwhAv3V1Q+cuLjNosIczfhQZi
+X-Received: by 2002:a17:903:3545:b0:2aa:d672:3be with SMTP id
+ d9443c01a7336-2ab506152c4mr91464745ad.52.1771213482537; 
+ Sun, 15 Feb 2026 19:44:42 -0800 (PST)
 Received: from stoup.. ([2401:d002:dc0f:2100:4a1:428a:70f2:5844])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2ad1aadca84sm53294155ad.70.2026.02.15.19.44.49
+ d9443c01a7336-2ad1aadca84sm53294155ad.70.2026.02.15.19.44.40
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 15 Feb 2026 19:44:50 -0800 (PST)
+ Sun, 15 Feb 2026 19:44:42 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [RFC PATCH 06/13] target/arm: Drop kvm_arm_sve_supported
-Date: Mon, 16 Feb 2026 13:44:25 +1000
-Message-ID: <20260216034432.23912-7-richard.henderson@linaro.org>
+Subject: [RFC PATCH 02/13] target/arm: Remove aarch64 test for kvm
+Date: Mon, 16 Feb 2026 13:44:21 +1000
+Message-ID: <20260216034432.23912-3-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260216034432.23912-1-richard.henderson@linaro.org>
 References: <20260216034432.23912-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x631.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,103 +99,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This function has only one real use, so inline it and
-drop the stubs.
+We no longer support kvm for aarch32, therefore the aarch64
+test is trivially true.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/kvm_arm.h  | 12 ------------
- target/arm/kvm-stub.c |  5 -----
- target/arm/kvm.c      |  9 +--------
- 3 files changed, 1 insertion(+), 25 deletions(-)
+ target/arm/cpu64.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/target/arm/kvm_arm.h b/target/arm/kvm_arm.h
-index 97549766ea..cee06b5f0b 100644
---- a/target/arm/kvm_arm.h
-+++ b/target/arm/kvm_arm.h
-@@ -176,13 +176,6 @@ bool kvm_arm_aarch32_supported(void);
-  */
- bool kvm_arm_pmu_supported(void);
- 
--/**
-- * kvm_arm_sve_supported:
-- *
-- * Returns true if KVM can enable SVE and false otherwise.
-- */
--bool kvm_arm_sve_supported(void);
--
- /**
-  * kvm_arm_mte_supported:
-  *
-@@ -208,11 +201,6 @@ static inline bool kvm_arm_pmu_supported(void)
-     return false;
- }
- 
--static inline bool kvm_arm_sve_supported(void)
--{
--    return false;
--}
--
- static inline bool kvm_arm_mte_supported(void)
- {
-     return false;
-diff --git a/target/arm/kvm-stub.c b/target/arm/kvm-stub.c
-index f2de36aef3..f1d0ca09e6 100644
---- a/target/arm/kvm-stub.c
-+++ b/target/arm/kvm-stub.c
-@@ -37,11 +37,6 @@ bool kvm_arm_pmu_supported(void)
-     return false;
- }
- 
--bool kvm_arm_sve_supported(void)
--{
--    return false;
--}
--
- bool kvm_arm_mte_supported(void)
- {
-     return false;
-diff --git a/target/arm/kvm.c b/target/arm/kvm.c
-index 464356989b..7724609b28 100644
---- a/target/arm/kvm.c
-+++ b/target/arm/kvm.c
-@@ -246,7 +246,6 @@ static int get_host_cpu_reg(int fd, ARMHostCPUFeatures *ahcf,
- 
- static uint32_t kvm_arm_sve_get_vls(int fd)
- {
--    /* Only call this function if kvm_arm_sve_supported() returns true. */
-     uint64_t vls[KVM_ARM64_SVE_VLS_WORDS];
-     struct kvm_one_reg reg = {
-         .id = KVM_REG_ARM64_SVE_VLS,
-@@ -298,7 +297,7 @@ static bool kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
-      * Ask for SVE if supported, so that we can query ID_AA64ZFR0,
-      * which is otherwise RAZ.
-      */
--    sve_supported = kvm_arm_sve_supported();
-+    sve_supported = kvm_check_extension(kvm_state, KVM_CAP_ARM_SVE);
-     if (sve_supported) {
-         init.features[0] |= 1 << KVM_ARM_VCPU_SVE;
-     }
-@@ -1909,11 +1908,6 @@ bool kvm_arm_el2_supported(void)
-     return kvm_check_extension(kvm_state, KVM_CAP_ARM_EL2);
- }
- 
--bool kvm_arm_sve_supported(void)
--{
--    return kvm_check_extension(kvm_state, KVM_CAP_ARM_SVE);
--}
--
- bool kvm_arm_mte_supported(void)
- {
-     return kvm_check_extension(kvm_state, KVM_CAP_ARM_MTE);
-@@ -1968,7 +1962,6 @@ int kvm_arch_init_vcpu(CPUState *cs)
-         cpu->kvm_init_features[0] |= 1 << KVM_ARM_VCPU_PMU_V3;
-     }
-     if (cpu_isar_feature(aa64_sve, cpu)) {
--        assert(kvm_arm_sve_supported());
-         cpu->kvm_init_features[0] |= 1 << KVM_ARM_VCPU_SVE;
-     }
-     if (cpu_isar_feature(aa64_pauth, cpu)) {
+diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
+index 5d7c6b7fbb..10c6796548 100644
+--- a/target/arm/cpu64.c
++++ b/target/arm/cpu64.c
+@@ -767,9 +767,7 @@ static void aarch64_host_initfn(Object *obj)
+     ARMCPU *cpu = ARM_CPU(obj);
+ #if defined(CONFIG_KVM)
+     kvm_arm_set_cpu_features_from_host(cpu);
+-    if (arm_feature(&cpu->env, ARM_FEATURE_AARCH64)) {
+-        aarch64_add_sve_properties(obj);
+-    }
++    aarch64_add_sve_properties(obj);
+ #elif defined(CONFIG_HVF)
+     hvf_arm_set_cpu_features_from_host(cpu);
+ #elif defined(CONFIG_WHPX)
 -- 
 2.43.0
 
