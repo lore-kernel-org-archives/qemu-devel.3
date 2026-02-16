@@ -4,109 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77F0EE63F3D
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 09:51:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0AACFE7BD80
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 09:52:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vrvFe-0005wC-MY; Mon, 16 Feb 2026 04:50:47 -0500
+	id 1vrvGk-0006RL-24; Mon, 16 Feb 2026 04:51:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1vrvFX-0005vm-J3
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 04:50:42 -0500
+ id 1vrvGj-0006R7-1f
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 04:51:53 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1vrvFU-0006RG-SI
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 04:50:39 -0500
+ id 1vrvGh-00076k-Hg
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 04:51:52 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771235434;
+ s=mimecast20190719; t=1771235510;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=MQYgE6XEbsdS+XOpkXvH8ab6fn5uSG821/53ECZNjoM=;
- b=a6La8HTDVdH8d2GsJU8GQwBtegSlSeRByATHRdPnvL84XjXPZeXswpZCnxJFGVsZRqDQL8
- F90GHHVA2aFy0l7fwSX5RqITQtTDJJZNaCMCTDf0Tk7WHGcXMRNVVvdRcU62sBUJ5J2oH/
- mhZW20AqvtKLUtCGFbSsrtc8LgOC7/U=
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=FWUpQhnc8s7yl5iXYvAuEslZ3YZzVUjypZpTLTHqQtY=;
+ b=MVwFXEQLv8f7GjH8Q55J0FoGbrT5x9b8Z2Y6S8w6VsGTg1ERMqo5xn21pw3C6Yu0AhL+7K
+ JiakKH+KSDlFDWxA0c4gsDVNHVo3u2prqfAGxRzd7NRGy9hI8xcN6wlAfVKKQMozvt6OhE
+ GrpIkms8zEB9QZssHoIYxeKY0zsJEPU=
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
+ [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-372-r9dyiipgNo6vtHOuRdVurg-1; Mon, 16 Feb 2026 04:50:32 -0500
-X-MC-Unique: r9dyiipgNo6vtHOuRdVurg-1
-X-Mimecast-MFC-AGG-ID: r9dyiipgNo6vtHOuRdVurg_1771235432
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-506c0da79c5so150443511cf.1
- for <qemu-devel@nongnu.org>; Mon, 16 Feb 2026 01:50:32 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1771235432; cv=none;
+ us-mta-460-tIqgOsnaPMCeXzYh8Nl0RA-1; Mon, 16 Feb 2026 04:51:47 -0500
+X-MC-Unique: tIqgOsnaPMCeXzYh8Nl0RA-1
+X-Mimecast-MFC-AGG-ID: tIqgOsnaPMCeXzYh8Nl0RA_1771235507
+Received: by mail-qv1-f69.google.com with SMTP id
+ 6a1803df08f44-897021ebe91so217124356d6.0
+ for <qemu-devel@nongnu.org>; Mon, 16 Feb 2026 01:51:47 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1771235507; cv=none;
  d=google.com; s=arc-20240605;
- b=XI8I4rjxYi0vmfhOO3v/bQybcMrJRMbDw0KygeivqPovkG2mo0D5JCNW4S16zwF8cv
- 2wr3IV8wAw69J0YLLscHGhwCa4Epmxcb3loMy0eCsyuecwzqOW04ZarMfMg2L5tGo7AN
- IzaTK5ldjZ2paEicFAK7mABOYhurG/FIya53uxwb4IXYm1hgjCjysUJB60TKdPvfH7Jl
- 4hGHTfhRNW+y0D9cgu+L85hcALMmlgjjWETDFyglh3ophrLyYST6ffhnROuT4tQ0GQq8
- CqDNGXz8vjXKFUdlTxcjISYm4k9+snw4m8UyQ+t23vak2kUp/Xio6CcZ9H7SnQSGdMJD
- Tz8w==
+ b=e2Q3enVOVskP4pSxnCwl7lU76y6cWp5TulXaPZy3L9sTjuc52fNfxDnuWTqR0Nvs9N
+ yfegH9r89AxO8IJv4j1xa12rHBp+vf/8k7ben8nUU5ybmD3wB2RCYsGIFpXlX1MqdG05
+ d0ttNtnLgimLCRYlqYgf2lP2Tl9DfFiER641y+P6K8Kma3suYCEP/WIPNLokGTB+n3xJ
+ HZdxixuhTXn/+y0Kana2Zzthfr5RIkWA+1xBEi9xrwSmORn8qtLAQRnc9r1a2TPwNn6m
+ Um6EvNeASZarnoydeHPNIMhlhc4ddgm0uzI0r7deLKf3VJT/Af79vX1+1KP1crKFDj6h
+ 3wqA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=MQYgE6XEbsdS+XOpkXvH8ab6fn5uSG821/53ECZNjoM=;
+ bh=FWUpQhnc8s7yl5iXYvAuEslZ3YZzVUjypZpTLTHqQtY=;
  fh=sIsIOvEHAUniTyi3GhO91uUMlcdX4avqzqeMhQBuOOs=;
- b=B8YpRdJQYbmcDmRNSCn5otQmd0jMJI+27cyDKrBfFVbjNFP4oeFCttqzU4KfVcTu8/
- GxubToImFMU3WYFx0yqCq4/vWDgEH2D2Kak7HBK6ZJ3BaIcf+3+RTVfthvMLjxjawxSd
- JOI8P/8UUUEr2d/sZr8+pLm4ALMOb4wQhOm4/8izoXD5rdxqEnNDr6RPnX4DdS2fkLal
- rzSn1VTfHaj+kXWeV50hv+gx/DmQhlFEuVyn5dWK4lrWsI2enpowOOpU0QxiXHx5aPtC
- hIuORDE4fIItX2OQWMqIsLXLnqY4rUENVvChdEMQhmR65jkJab1XWQ+ydHqdzUI0BQh/
- jZeQ==; darn=nongnu.org
+ b=Q3SL1PnfLTI2fTLrJ0kL6Kp8OVqVYYZ4rNYExH9Lnx+svt5V4HGdvT8vYHpQpOZxgs
+ pVMB/yVzxItaZyUvTpL8KN4gVmhhLlYE14B/LZ/XC7qZleb8KsE66ttG6NFqxaqh1A3E
+ /sxUKb34kSwUT8RKZhkGn6vqhk2HgsGC/+3oj6hyS+oLCLBQCnK9TosNgpfJxUXW4S9C
+ Jnn35ja2DHY+Hc2a9NlGrbYpTC5nusA8BxxtN5vfZrPF7X6j9zRMB8kOP3lawsBN/1Cn
+ dbKHioxKAu6/gNuyg5n1pK8LGLt/YwQbp4s/609mUe90icgyL2aroDcmQyxYvk/JQcT1
+ H2dQ==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1771235432; x=1771840232; darn=nongnu.org;
+ d=redhat.com; s=google; t=1771235507; x=1771840307; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=MQYgE6XEbsdS+XOpkXvH8ab6fn5uSG821/53ECZNjoM=;
- b=C2LIsMXDGLyv+ZuNWTj18R6LiDXConVV0WhwKmVrf6S6m25Hl36FrrIoT0OXeLEE4E
- dj9fGEQE1XvxzY9Rk2vyIqI6x8OGR+uD45Epv1Qsf9/Sc003NqxoejNboqCNwq2azbRC
- nVjlSvFLl5gP3JRidtc1lgIkIK7uRrJjj2QOIg1JvFXdg+8x+Bh4L5x3orqtFFNunE+V
- 6G2Gl5+j2ggojTMvGOmIxFhuhG76GTfrtUuKhftvE1Wpx4s9PDoRMns3QEEndaZ8JEVC
- UpSjUAuC9MFvbxjCpxmJVbHQRygnYbJNUiXaul86jv1vU3e3X6gCxnPppJz+gHZd6gKu
- zzpw==
+ bh=FWUpQhnc8s7yl5iXYvAuEslZ3YZzVUjypZpTLTHqQtY=;
+ b=O9k9juRzUvkx7quphZAv4cdqkrSNZQE0vPti7UgiKaucm9DagB9x5mAqEjiosRQK9l
+ i4r+0m9sk118d0zNp8jVoP/MvSkqIVcS1WLf5hr5Uc/D36v7plfXzhDWgZgKifo/LDSi
+ 9YnKnECd7Ngsu6ElnZgj5hiNA1b/q1X6UUV66FliZ2a4x4t8KdfL72iydTEqRvd+B5NK
+ I4h2QmpLCC62g+8cvFtGzAxG0jFLU3x82lzDxpy9xlyr3JZWehZWbz78I//zHvMAfLZ6
+ a+9sv9pCdhKIOnBsZqxO5CBqZkLP+fmcS4a4MK/rnMmSKGBJAZkfDNOoO6V3GUxPwfAX
+ 5uEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771235432; x=1771840232;
+ d=1e100.net; s=20230601; t=1771235507; x=1771840307;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=MQYgE6XEbsdS+XOpkXvH8ab6fn5uSG821/53ECZNjoM=;
- b=i/1hKYGnvfEW+nN8//D/QhA9rxs8Ew5H/Z4C73L8kKEV9+G5jLOF+8NdSoBsd/uaR2
- DmHq/eaW2082+ZMHljSsps9rp/uEpJvV+AZaseiM0OijNjSOpZlnsZCwV5wYM9Xjh6xJ
- LULLBsF3ccehLnOpbaf2YZAwxBU0wyGmQvfmb3l9jv7kV1dBv5oG3d6SsAFHbsTuYEFH
- 0Am3x+F0yTaaowD+9Zqxt+/5Yw2I3Q+nNNIf8u7qejcv7nWir0rfE4YIyjn/hCaHf17J
- BuNP0+524f49Gv/p1XO1E+IyScig5ckaoe3Ps4fwGhwwo8QQFzH8DLCbfb4Hz5qcZYm1
- HH/A==
-X-Gm-Message-State: AOJu0YyKIr5YndPCkLpNZ8bPXYWOdoFDXucptfWMKcTrO+RtmK7/J7QQ
- fvtuZEO49KYoHNRAIG5dAL8RcvXmbWsrvq+aJ8wZWwBaFU0n3pWCAvmzsgUM4qJ5lE1yVqXoEo3
- nHF5JXnIkAgWxMU6nNtKkin56PWCeLP+/KrpfYilrmUaRBjcrpC00SOVoWWr+pI4HxmjUTRipNo
- noiM4YxefYts6k1o9qvzwj7qIGx9uydQk=
-X-Gm-Gg: AZuq6aI4Ct+f4KP+R+BPOTixQst3iRusnG92osOMXu6GjuGlvZc+lJCUMV02yrxNan0
- StbmPIZlph9YulANK21ufguSFY1heWXkRSuPAdzww5ADqEsqHS2+QSN6c8BxH1hqG+slD7WUJA6
- VKtYqIslyinKvLirM8eqVBRpYA1sJa1i1qPmqb/QfdJWKvCAxgp03HcVR8qEw20I9asy9cKXB9F
- d+IChqmXdBiLk1MlGAVI6yZ4j55zNCg7IRt
-X-Received: by 2002:a05:622a:d3:b0:506:9d3e:67e4 with SMTP id
- d75a77b69052e-506b3f7e2a4mr100464791cf.5.1771235431780; 
- Mon, 16 Feb 2026 01:50:31 -0800 (PST)
-X-Received: by 2002:a05:622a:d3:b0:506:9d3e:67e4 with SMTP id
- d75a77b69052e-506b3f7e2a4mr100464641cf.5.1771235431442; Mon, 16 Feb 2026
- 01:50:31 -0800 (PST)
+ bh=FWUpQhnc8s7yl5iXYvAuEslZ3YZzVUjypZpTLTHqQtY=;
+ b=dcmqtS17lf6ksAnOGKowxDrbMZiC6PFiC1JDLY7q9V+4kPPljbqSslcpzSq9bqKXfV
+ fQLibXWZYc3UgwCLGsXBm8D70ReWwBYMWFRxasSnMOwq5jDgQMk4uvB6+mFOJW5hCcuc
+ ShQUJjq0mF81bUhG3GNZ7rRbuDevtyE6Fdiys6u2D3y0EuTd2eCRbPJvNDIjbzfzAjWX
+ dsPybbUQsVxWgfUz45KQ96W/lgtETdc8l8ULa36mkkKIIz0+V1IRPVtjkj04efTfPB0N
+ W5d+dSHzTdmvDPcsY/9ULGuPj92kOC5fjamYB4/WDWgVbFfHHuxsed9TmWgcxAh6YGy+
+ OW7Q==
+X-Gm-Message-State: AOJu0YwXJF4rDjgBoF+YUiMbhxZXrS3h95mDZfMihD2DcTmY9Jmo1JIL
+ RO5YIMezTuOoGirPBxEKTxAjsKuRarP0BNBFISehEWGlqbjLAKT5De6wOxK8GCJ4SKT+m8poXWj
+ QybKp5Leu58x/ZZKhqWcC8Wn6QIe4ztzJfkm5woSXDb+lJTGSUDPdALEIfv5j5W/XLjPhXYJblc
+ 3ScxTWBT+Y9IsDw6SsutH/2GW3ux2GiSQ=
+X-Gm-Gg: AZuq6aJN6MBNlK+z1TmAe4QmQCfH2FDaoqNIzzgx1XJrQ/R23pM6QJJr3mOsoG1G5da
+ UsDNWYOj72zOW2uqINV4ZQcv6mxJMAZslicYImQ4DCsJTsaPQHxy39mD5ak7WCNYxiHwjI5FynR
+ 9W6E0MnRr4Bw6nk8PJL8JPYFgMcafCdSlIlUSLqfRrhfGrCF8zn/wQ5sw1PydxH+C/btvWzStwq
+ VPvdKjdrVZmEl6EQkUqKDmEolzO8B3RZ2U8
+X-Received: by 2002:a05:6214:21a7:b0:88e:b33f:dc08 with SMTP id
+ 6a1803df08f44-8974047bc8bmr112606586d6.39.1771235507130; 
+ Mon, 16 Feb 2026 01:51:47 -0800 (PST)
+X-Received: by 2002:a05:6214:21a7:b0:88e:b33f:dc08 with SMTP id
+ 6a1803df08f44-8974047bc8bmr112606406d6.39.1771235506685; Mon, 16 Feb 2026
+ 01:51:46 -0800 (PST)
 MIME-Version: 1.0
 References: <20260206131438.1857182-1-imammedo@redhat.com>
- <20260206131438.1857182-5-imammedo@redhat.com>
-In-Reply-To: <20260206131438.1857182-5-imammedo@redhat.com>
+ <20260206131438.1857182-6-imammedo@redhat.com>
+In-Reply-To: <20260206131438.1857182-6-imammedo@redhat.com>
 From: Ani Sinha <anisinha@redhat.com>
-Date: Mon, 16 Feb 2026 15:20:19 +0530
-X-Gm-Features: AaiRm5034mBBpQTh0tRO7QhR4LJfmn8ymxYh_82WTeROBodfCRvI_myoeyWoiCU
-Message-ID: <CAK3XEhMrtqzhXdA-WsR_01WzbuVXSsTyCho56JBr2mkxyJuhgg@mail.gmail.com>
-Subject: Re: [PATCH 04/11] tests: acpi: x86/q35: whitelist new WDAT table
+Date: Mon, 16 Feb 2026 15:21:33 +0530
+X-Gm-Features: AaiRm527P547kHWAU-9wXS8fjB09es__pSa30Gbc0N6a1Z3mqGich4HBLWBMgrA
+Message-ID: <CAK3XEhOSLVF5+XoNykscxsNKYYYQ6ECw1X6_h8a+-YE27E+z0Q@mail.gmail.com>
+Subject: Re: [PATCH 05/11] tests: acpi: x86/q35: add WDAT table test case
 To: Igor Mammedov <imammedo@redhat.com>
 Cc: qemu-devel@nongnu.org, mst@redhat.com, pbonzini@redhat.com, 
  peter.maydell@linaro.org, shannon.zhaosl@gmail.com, philmd@linaro.org, 
@@ -143,26 +143,44 @@ wrote:
 >
 > Signed-off-by: Igor Mammedov <imammedo@redhat.com>
 
-Acked-by: Ani Sinha <anisinha@redhat.com>
+Reviewed-by: Ani Sinha <anisinha@redhat.com>
 
 > ---
->  tests/qtest/bios-tables-test-allowed-diff.h | 1 +
->  tests/data/acpi/x86/q35/WDAT.wdat           | 0
->  2 files changed, 1 insertion(+)
->  create mode 100644 tests/data/acpi/x86/q35/WDAT.wdat
+>  tests/qtest/bios-tables-test.c | 13 +++++++++++++
+>  1 file changed, 13 insertions(+)
 >
-> diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bi=
-os-tables-test-allowed-diff.h
-> index dfb8523c8b..14b680debe 100644
-> --- a/tests/qtest/bios-tables-test-allowed-diff.h
-> +++ b/tests/qtest/bios-tables-test-allowed-diff.h
-> @@ -1 +1,2 @@
->  /* List of comma-separated changed AML files to ignore */
-> +"tests/data/acpi/x86/q35/WDAT.wdat",
-> diff --git a/tests/data/acpi/x86/q35/WDAT.wdat b/tests/data/acpi/x86/q35/=
-WDAT.wdat
-> new file mode 100644
-> index 0000000000..e69de29bb2
+> diff --git a/tests/qtest/bios-tables-test.c b/tests/qtest/bios-tables-tes=
+t.c
+> index e489d94331..25345dd035 100644
+> --- a/tests/qtest/bios-tables-test.c
+> +++ b/tests/qtest/bios-tables-test.c
+> @@ -2511,6 +2511,18 @@ static void test_acpi_isapc_smbios_legacy(void)
+>      free_test_data(&data);
+>  }
+>
+> +static void test_acpi_q35_wdat(void)
+> +{
+> +    test_data data =3D {
+> +        .machine =3D MACHINE_Q35,
+> +        .arch    =3D "x86",
+> +        .variant =3D ".wdat",
+> +    };
+> +
+> +    test_acpi_one("-machine acpi-watchdog=3Don", &data);
+> +    free_test_data(&data);
+> +}
+> +
+>  static void test_oem_fields(test_data *data)
+>  {
+>      int i;
+> @@ -2805,6 +2817,7 @@ int main(int argc, char *argv[])
+>              qtest_add_func("acpi/q35/cxl", test_acpi_q35_cxl);
+>  #endif
+>              qtest_add_func("acpi/q35/slic", test_acpi_q35_slic);
+> +            qtest_add_func("acpi/q35/wdat", test_acpi_q35_wdat);
+>          }
+>          if (qtest_has_machine("microvm")) {
+>              qtest_add_func("acpi/microvm", test_acpi_microvm_tcg);
 > --
 > 2.47.3
 >
