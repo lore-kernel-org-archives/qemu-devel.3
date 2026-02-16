@@ -4,113 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A229E83830
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 20:47:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9611FE83830
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 20:52:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vs5VN-0000E5-PP; Mon, 16 Feb 2026 15:47:41 -0500
+	id 1vs5a5-0001GQ-3X; Mon, 16 Feb 2026 15:52:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jhkim@linux.ibm.com>)
- id 1vs5VL-0000DQ-FF; Mon, 16 Feb 2026 15:47:39 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1vs5a3-0001Fn-Pu; Mon, 16 Feb 2026 15:52:31 -0500
+Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jhkim@linux.ibm.com>)
- id 1vs5VJ-0007PG-T6; Mon, 16 Feb 2026 15:47:39 -0500
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 61GEcBpR3400804; Mon, 16 Feb 2026 20:47:33 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=yekLwi
- 1rAG1I1yGTPVgQJ2xYpw7JXDERd5Gu58M5sks=; b=AvnZJW+bDrWJdZSyJ/yY7a
- uZeO3PmfwcmuZPjuRyJuhmreB6vTXOabgWdtJaxclQEHEGD9ZpNBLqeXCPe1iPBW
- YnswAOAm3Frzl7JLqF8xpky/UZ1EKF5gKvPmz+fh7dnG4nrWXmaGvYMenOqB1ZOg
- 7JIK6kXfAbHpzTIPgcVEBKuOaOFDvdoeA8LBUB18Nzj8PcobeEw80gHkTE1RKr5F
- EhKGnVHSn6rEEXl2Rdo5LsbB+bCQMCAAv4U1KB0/OYltU0ydhJP4TAHeOEJRfQ9/
- zKDl/5I8p3cu2k2jxRCxbqsOWm8lGcXykfuEswqN/kZDdFxJxOxHqZOAXNmfMXpA
- ==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4caj6rs8ur-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 16 Feb 2026 20:47:32 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 61GH0Wbt003744;
- Mon, 16 Feb 2026 20:47:31 GMT
-Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4cb4cmxsbk-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 16 Feb 2026 20:47:31 +0000
-Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
- [10.241.53.103])
- by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 61GKlVkT28115672
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 16 Feb 2026 20:47:31 GMT
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id EB76558056;
- Mon, 16 Feb 2026 20:47:30 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8745258052;
- Mon, 16 Feb 2026 20:47:30 +0000 (GMT)
-Received: from [9.61.241.179] (unknown [9.61.241.179])
- by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 16 Feb 2026 20:47:30 +0000 (GMT)
-Message-ID: <bca708cd-a776-4103-a328-fa6b3d65a47e@linux.ibm.com>
-Date: Mon, 16 Feb 2026 14:47:27 -0600
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1vs5a2-0000Zy-8J; Mon, 16 Feb 2026 15:52:31 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
+ In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
+ Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
+ :Resent-To:Resent-Cc:Resent-Message-ID;
+ bh=XsiZZSmT7kt+ODb4nAa1KAsqxsSvjtrdFEdgwzZ6/4s=; b=vaoiXnH1QvejDCCilWomCjrWLE
+ Pxqba4XO7BxmuXAh6dFTTWJpAcPE+4mCj66RgJdjP5lqh/rDhMavkLIx7N97gxaIRGZxN+YHSNmv5
+ m17Lfq8kI0/ZyzzFbk6N2jCUCTLx6AZyY8+j/oF/rrdkZutyQVpl5vfYXiIwb9vDAwWZpZJSaMnYo
+ hFa35hzkbKD/mLrlbqXR8/52swURe3N+OPQSHsljtg+5pb0YGgTZel4rMnYH7PVIh0OBJFWeiePlp
+ ge9Np2aXPfdIC3+A4/GJCfy2kgkVvmobb+VVBjTqKmFsGcOWTE4JrVmbkW518TJHGl0/UKCLDstcv
+ 29wEH0i2JF3/xx2fFBc/JcYGCmNV59zqzLVpZjQ2oOaIX4e8Xz3zPFvqbAFma6Bt71HINUGwSc+AR
+ PnFTWHYgLcKRf2kQ/wUhevaA9iuZl5UqgV2XyYqKUbHEMUUZMzs8yRFpPyidTzwvh8QZo+OCW/dVF
+ MpQKxvnqCisZobcr39cxNNR9AGJU4XKvl2A7GbgBHg9c+DWHjlupM/mgoPlu2Z1k0o1UTC0mtQZZf
+ 4mKBLyT9LgGKmYDENWlRWI60AS2OJGAMS5qGzdJ7wRoCH7XeEjELJeWjDW5xGa+paDKRdlWMPJErK
+ 5kWw91Mk6hFCtzN2dum9KNyWEOmdRaHF8psXT39xU=;
+Received: from [2a02:8012:2f01:0:f01d:4e0f:6874:3706]
+ by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1vs5X4-000CWk-Iu; Mon, 16 Feb 2026 20:49:30 +0000
+Message-ID: <bb7f3e4d-cd98-471b-9521-2eaf24c42ad6@ilande.co.uk>
+Date: Mon, 16 Feb 2026 20:52:14 +0000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC v1 1/3] aio-poll: avoid unnecessary polling time
- computation
-To: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, pbonzini@redhat.com,
- fam@euphon.net, armbru@redhat.com, eblake@redhat.com,
- berrange@redhat.com, eduardo@habkost.net, dave@treblig.org, sw@weilnetz.de
-References: <20260113174824.464720-1-jhkim@linux.ibm.com>
- <20260113174824.464720-2-jhkim@linux.ibm.com>
- <20260216152131.GB396170@fedora>
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Chinmay Rath <rathc@linux.ibm.com>,
+ =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Nicholas Piggin <npiggin@gmail.com>, Artyom Tarasenko <atar4qemu@gmail.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-ppc@nongnu.org,
+ Laurent Vivier <laurent@vivier.eu>
+References: <20260214021240.58657-1-philmd@linaro.org>
+ <20260214021240.58657-2-philmd@linaro.org>
 Content-Language: en-US
-From: JAEHOON KIM <jhkim@linux.ibm.com>
-In-Reply-To: <20260216152131.GB396170@fedora>
+From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
+ xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
+ 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
+ E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
+ PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
+ PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
+ AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
+ eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
+ NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
+ mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
+ z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
+ T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
+ DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
+ y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
+ 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
+ 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
+ YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
+ Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
+ BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
+ opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
+ NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
+ Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
+ KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
+ imgcU9TTGC5qd9g=
+In-Reply-To: <20260214021240.58657-2-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=dvvWylg4 c=1 sm=1 tr=0 ts=69938264 cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=IkcTkHD0fZMA:10 a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22 a=_2359ND7rWshGlaeOjYA:9
- a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: _Y5o6x2JcN2fGyc0y9peg1amTuy5AmRz
-X-Proofpoint-ORIG-GUID: _Y5o6x2JcN2fGyc0y9peg1amTuy5AmRz
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjE2MDE3NyBTYWx0ZWRfX7qudTjMk59eB
- SkkF6d4nE+2E6bbHDeRCOzzLcw7oIRlYsC/wY/fSNiesSNQNCJayfNv6MildzYV0Mivlgheg7n2
- ZbgI8AmlEjolWjqA36IeH0vHmdTvCmc3DVP24x9ubJG2CaU4Su9IdpE3aiLJBsyoYyNcST4kqUV
- RmfKo4Uj5yEbNrXmtO19bcTimPP9DngbNv2t/w+5OBjqsMm+KQm2r2SdMCXipiYfWdL7BhEP4bA
- V0X826iNSSQkgSp1TPtkiTHzlwb6l8ihK7G3ehRMY9JsuWE2Ewl5Q3wj/X88eqD9j2ODvwcH1D8
- WGpFw4OwH/6Uw1y6oTiXTbYly7ARRowE7vEGsWNvEk0aEQHjCHJ727s4SdOJQBax9bnjIpKyHsJ
- t+wC7p4FzDrUd0Zs5oFFzoN1+UyLE1wpvur9SQ4LouX0GQnbVzq4R1trATXpBCBBTOBN+S9aB3x
- SiWsuJOGeRrW3+Z2Mjw==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-02-16_07,2026-02-16_04,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 lowpriorityscore=0 impostorscore=0 adultscore=0
- priorityscore=1501 clxscore=1015 malwarescore=0 phishscore=0 suspectscore=0
- bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
- definitions=main-2602160177
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=jhkim@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:f01d:4e0f:6874:3706
+X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
+Subject: Re: [PATCH 1/8] hw/display/macfb: Constify macfb_sense_table[] array
+X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
+X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
+Received-SPF: pass client-ip=2001:41c9:1:41f::167;
+ envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,33 +108,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/16/2026 9:21 AM, Stefan Hajnoczi wrote:
-> On Tue, Jan 13, 2026 at 11:48:22AM -0600, Jaehoon Kim wrote:
->> Nodes are no longer added to poll_aio_handlers when adaptive polling is
->> disabled, preventing unnecessary try_poll_mode() calls. Additionally,
->> aio_poll() skips try_poll_mode() when timeout is 0.
->>
->> This avoids iterating over all nodes to compute max_ns unnecessarily
->> when polling is disabled or timeout is 0.
-> Did you consider optimizing the case when polling is active and there is
-> no way around calculating the polling time? Glib has ordered data
-> structures that have lower operation costs than O(n).
->
-> Stefan
+On 14/02/2026 02:12, Philippe Mathieu-Daudé wrote:
 
-If I understand correctly, while optimizing the data structure to be 
-cheaper
-than O(n) is one approach, I believe bypassing the function entirely 
-efficient
-for cases where timeout=0 is frequently triggered.
+> macfb_sense_table[] is only read, never updated, so can be const.
+> 
+> Update the single call site, macfb_sense_read().
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   hw/display/macfb.c | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/hw/display/macfb.c b/hw/display/macfb.c
+> index 388f8de5070..57ad8ad5587 100644
+> --- a/hw/display/macfb.c
+> +++ b/hw/display/macfb.c
+> @@ -82,7 +82,7 @@ typedef struct MacFbSense {
+>       uint8_t ext_sense;
+>   } MacFbSense;
+>   
+> -static MacFbSense macfb_sense_table[] = {
+> +static const MacFbSense macfb_sense_table[] = {
+>       { MACFB_DISPLAY_APPLE_21_COLOR, 0x0, 0 },
+>       { MACFB_DISPLAY_APPLE_PORTRAIT, 0x1, 0 },
+>       { MACFB_DISPLAY_APPLE_12_RGB, 0x2, 0 },
+> @@ -342,7 +342,7 @@ static void macfb_invalidate_display(void *opaque)
+>   
+>   static uint32_t macfb_sense_read(MacfbState *s)
+>   {
+> -    MacFbSense *macfb_sense;
+> +    const MacFbSense *macfb_sense;
+>       uint8_t sense;
+>   
+>       assert(s->type < ARRAY_SIZE(macfb_sense_table));
 
-Since the result of the calculation is not used at all in these cases, 
-it seems
-to more efficient to skip the function than to optimize calculation itself.
+Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 
-Please let me know if I have misunderstood your point.
 
-Thanks,
-Jaehoon Kim.
+ATB,
+
+Mark.
 
 
