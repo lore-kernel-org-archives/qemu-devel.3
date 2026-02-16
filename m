@@ -4,65 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A645EE81A3A
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 15:49:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0135BE81A3D
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 15:53:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vs0qd-0005t0-OE; Mon, 16 Feb 2026 10:49:19 -0500
+	id 1vs0uC-000736-RL; Mon, 16 Feb 2026 10:53:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vs0qb-0005sP-CS
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 10:49:17 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vs0qT-0001Io-4R
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 10:49:15 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771256947;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=+USCgHFiPNvrOaxKAyrXKL9M8GKKvwHi8L2w83I4I2M=;
- b=FyN1zGD4Cz0uZp1SnmYbPCLw2WqeDGUoMD+aJh19batPWyBR8qpsmTItcKsF42o8WrApaY
- XpbgQnX8KROZlZePakObQfJ7XScccCnmbMNkGQgh2ebvcaAS3DoWr7/1EB/9DK1kr/wtAo
- dPgIIj9uKbrAQVC3qzFhRVto82WDK9k=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-556-MSWwJHU_MFipdxW0LjjtWQ-1; Mon,
- 16 Feb 2026 10:49:05 -0500
-X-MC-Unique: MSWwJHU_MFipdxW0LjjtWQ-1
-X-Mimecast-MFC-AGG-ID: MSWwJHU_MFipdxW0LjjtWQ_1771256944
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 912F6195FDC6; Mon, 16 Feb 2026 15:49:04 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.45.224.142])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 5C041180087F; Mon, 16 Feb 2026 15:49:03 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: qemu-devel@nongnu.org,
-	Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Subject: [PATCH] hw/pci-host/sabre: Mark unusable PCI busses as full to ease
- device plugging
-Date: Mon, 16 Feb 2026 16:49:01 +0100
-Message-ID: <20260216154901.602613-1-thuth@redhat.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vs0uB-00072a-Ek
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 10:52:59 -0500
+Received: from mail-yw1-x1130.google.com ([2607:f8b0:4864:20::1130])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vs0u9-0002YS-Ma
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 10:52:59 -0500
+Received: by mail-yw1-x1130.google.com with SMTP id
+ 00721157ae682-7964f1405a0so34161377b3.1
+ for <qemu-devel@nongnu.org>; Mon, 16 Feb 2026 07:52:56 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1771257175; cv=none;
+ d=google.com; s=arc-20240605;
+ b=YifvcBZPQEJGTIJ8/aikgxO3yHk+2HJFae4KVr5dqBmNE3FTYJaVQOC2dX4LXUWQef
+ PU2O3jC3kXFmH9PZghe514KSXDFH6lKRVP9+GtU2ClI/6oFA+fwhugT2txWQ9q4u0nJG
+ IceHsatuFDG5w4rI2N18G2cZX4XYfWXHmNyk4fR2/MCmGAr0DVzzpCFLov6xkimsvEB4
+ PLuhJ4gZ3IQ0QZVaV17knNp4gO1G6g/akdU+VziXf6hk9eSivoUuGAq64UJDjw9rvaj+
+ YRcwilMsX58bdgjsVJKMWW+eDJfXp2KFwMgxPreEVHlPM1e/ZknZnhfBhX+3fRyBRVLD
+ 0BoQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=dP7OJCe4IFWPzF0ucWa9rG4RGTcEJ98iWAzWk9PebNw=;
+ fh=2WCIYsl40A352Dxo4B6IOy0bgaLCiK89nOgLYW+Qbs4=;
+ b=EAbux8zwaffIOz4qoj3AmZvQ+DB0yRD86/TMan3loDhfm1xSvFwWdkLJvk1K7RmcCT
+ HSsCOTu/pd+PO03wnrrCWEjX8rpQbaQoVaH3nG64GSjXunCL8ZsAm+u5ocOMUS3QsWNu
+ YHgyOGigffPrbpI9dcPdUgsxG6ardyNXIe04E04yL9riMbFDSIJrT95DOupcVuz8ZfvJ
+ aNxmVFrVfizOucM1Pim5Os5eurDpRJ+M4NlifA5Gvyxf6nDyjumlSymNgs/NWpD2dQDw
+ rg1ryjH0cNHhVzIt3WPCjvE+NJGGPsPYmvhyy7onrXSTb/PxswIc7WucbXY88ryRwua3
+ xhHw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1771257175; x=1771861975; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=dP7OJCe4IFWPzF0ucWa9rG4RGTcEJ98iWAzWk9PebNw=;
+ b=bWLFI05SO3r4bFhIvkP8h2prIy+BCbOGf9Aq7uWqYnKR2YiSfNMHkida9w3iEMykfr
+ i5/g7wkTkxmWwKOXnoBtM45xi9pvl834Sq8goCXdQRk9fa2xuyYVA7voj6Ej1dBjZpp0
+ ft10i1beZM2y2GufPjy7zM3hg0OwVwVMfv6UT4PuZ/E5IaYNfDrdozSqXqNuQcUHA76e
+ Ed5nbvpILi1sKGRUZhVm24+nPJBBseqNfvRUBzuY/esba4E+wgKt1L0fPXEMlyp+3JH6
+ nXheY/jrt4VEmxopapfqpg9Y1eM5vkux56PnlbLH7a623cfPdP9726qYFUoOIDuWJu2U
+ btOg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1771257175; x=1771861975;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=dP7OJCe4IFWPzF0ucWa9rG4RGTcEJ98iWAzWk9PebNw=;
+ b=BysxeqXbRR3JRMURiwfhOO3s3YTd4F6eDjR01RnqGfXRuSUSMH0eqXLCZtCoSW5XUw
+ 3hovcdv9PlvVaqfWVekAy+ATElnVaSVQ4VSqNCYlv5eyFI1DeVnElX/m49ry0QWQaSED
+ GJE6rZD1i28Rm0cIAfLk0bMZUmMFQm9eNGcEryzafW47iurw6njbOCF9Knx6NfABsgKs
+ Qdj3VLl2R4WDAl8XoCTkJrZHnD/rKM5pepNIKgNf1Oylu04ELA3wmCOW4ECkFPtzK4ib
+ ugjsgvD9ubumPLfeQSZ7xyAx4llnAB5rZmzbQnjufwaaaxkCLo0ZayM400WOVGzRw1Td
+ aCxA==
+X-Gm-Message-State: AOJu0YwLbgQmaD196TKPZGKtk3ZR6Baac/y/DhvHovaPN+xauhAkiUTV
+ oxY9tXpGhMr0Zl9DYtj5rX0wFjqge3xaZAHvkKNDPcPgwOVnP1rAfnCYeSGdOvERGDYeDlCDTn2
+ ndQfx0U7BJ+wgYk81TEK5qWwbKxaUTut7GBhWwW0DsQ==
+X-Gm-Gg: AZuq6aJ/djYD7LmxnJAsAmEhYwkPWeRCG3zhDZjndYxMcTDUExUZxfHC2xtdLdLW2RD
+ nDDpgRAYobjuKfXNDh/tjFxJHpEhMvcrR35ps5ducpf5d/sRUk/wtapUASbCKQP3UTCSf0vRU3V
+ o6CVreCHZBeZKxTqDB3+8hmqhT131uaTZczBwCd9paVAFfFqT6U51L+6+ib4ExG3ET12sw0c6AJ
+ Uo6It/j8EcmPHPxL0rSOBlXHs11s98d8oCt+0n9HADcahOxC6QN97GGo9BMYP/D/ONhv/vN+Zqr
+ fHk4kq73NqGUxn4vX8E3vnKSxJixecvLQ6EBt5zOYZvPYpc/NMroOtzt7BPCM/ehTXx1z28v+ha
+ aOA==
+X-Received: by 2002:a05:690e:13c4:b0:64a:ee12:e7c3 with SMTP id
+ 956f58d0204a3-64c21b27b78mr6172226d50.49.1771257175307; Mon, 16 Feb 2026
+ 07:52:55 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20260210201540.1405424-1-pierrick.bouvier@linaro.org>
+ <93f8f250-7899-4528-b277-1ddd469c192c@linaro.org>
+ <CAFEAcA9YUOxko51ziY3yAOaDfTCEAwqmXnifF=q_mkyotFHTcg@mail.gmail.com>
+In-Reply-To: <CAFEAcA9YUOxko51ziY3yAOaDfTCEAwqmXnifF=q_mkyotFHTcg@mail.gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 16 Feb 2026 15:52:44 +0000
+X-Gm-Features: AZwV_Qhn_PA25doQjTID65lEcz5xT-1XaHevKcqNoTL7fZxazaWzkWciCHn6keY
+Message-ID: <CAFEAcA8XCSjjb2opkf2A5WZwCa5THNswOOUO=fpj7kUJEc79qQ@mail.gmail.com>
+Subject: Re: [PATCH v3 00/12] target/arm: single-binary
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: qemu-devel@nongnu.org, anjo@rev.ng, 
+ Jim MacArthur <jim.macarthur@linaro.org>, kvm@vger.kernel.org, 
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ qemu-arm@nongnu.org, Richard Henderson <richard.henderson@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1130;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1130.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -79,50 +121,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+On Thu, 12 Feb 2026 at 10:59, Peter Maydell <peter.maydell@linaro.org> wrote:
+>
+> On Tue, 10 Feb 2026 at 20:19, Pierrick Bouvier
+> <pierrick.bouvier@linaro.org> wrote:
+> >
+> > On 2/10/26 12:15 PM, Pierrick Bouvier wrote:
+> > > This series continues cleaning target/arm, especially tcg folder.
+> > >
+> > > For now, it contains some cleanups in headers, and it splits helpers per
+> > > category, thus removing several usage of TARGET_AARCH64.
+> > > First version was simply splitting 32 vs 64-bit helpers, and Richard asked
+> > > to split per sub category.
+> > >
+> > > v3
+> > > --
+> > >
+> > > - translate.h: missing vaddr replacement
+> > > - move tcg_use_softmmu to tcg/tcg-internal.h to avoid duplicating compilation
+> > >    units between system and user builds.
+> > > - eradicate TARGET_INSN_START_EXTRA_WORDS by calling tcg_gen_insn_start with
+> > >    additional 0 parameters if needed.
+> > >
+> > > v2
+> > > --
+> > >
+> > > - add missing kvm_enabled() in arm-qmp-cmds.c
+> > > - didn't extract arm_wfi for tcg/psci.c. If that's a hard requirement, I can do
+> > >    it in next version.
+> > > - restricted scope of series to helper headers, so we can validate things one
+> > >    step at a time. Series will keep on growing once all patches are reviewed.
+> > > - translate.h: use vaddr where appropriate, as asked by Richard.
+>
+> > Patches 1-11 are reviewed and ready to be pulled.
+>
+> Looks like patch 12 has also now been reviewed, so I've applied
+> the whole series to target-arm.next.
 
-When trying to plug a PCI device to a Sparc64 machine, you currently
-have to specify the right bus ("bus=pciB"), otherwise you get this error:
+I meant to send this to the list, but accidentally sent it to
+Pierrick only:
 
- $ qemu-system-sparc64 -device virtio-scsi-pci
- qemu-system-sparc64: -device virtio-scsi-pci: PCI: no slot/function
-  available for virtio-scsi-pci, all in use or reserved
+I just ran this (plus some other patches) through gitlab CI, and
+it fails to build on the kvm-only and xen-only jobs:
 
-This is quite annoying for the unexperienced users, and it also breaks
-e.g. the iotests ("make check-block") when running with qemu-system-sparc64.
+https://gitlab.com/pm215/qemu/-/jobs/13131658696
 
-Mark the non-usable PCI busses as full now, so that QEMU can automatically
-plug new PCI devices to the right "pciB" bus.
+In file included from /builds/pm215/qemu/include/exec/helper-gen.h.inc:9,
+                 from /builds/pm215/qemu/include/exec/helper-gen-common.h:11,
+                 from ../target/arm/helper.h:7,
+                 from ../target/arm/helper.c:13:
+/builds/pm215/qemu/include/tcg/tcg.h:35:10: fatal error: tcg-target.h:
+No such file or directory
+   35 | #include "tcg-target.h"
+      |          ^~~~~~~~~~~~~~
 
-Signed-off-by: Thomas Huth <thuth@redhat.com>
----
- Note: Only lightly tested, it seems to work fine for me at a first glance,
- but maybe I missed something...
 
- hw/pci-host/sabre.c | 2 ++
- 1 file changed, 2 insertions(+)
+https://gitlab.com/pm215/qemu/-/jobs/13131658593
 
-diff --git a/hw/pci-host/sabre.c b/hw/pci-host/sabre.c
-index cd2328ad53f..9c8519f3849 100644
---- a/hw/pci-host/sabre.c
-+++ b/hw/pci-host/sabre.c
-@@ -382,6 +382,7 @@ static void sabre_realize(DeviceState *dev, Error **errp)
-                                      &s->pci_mmio,
-                                      &s->pci_ioport,
-                                      0, 0x40, TYPE_PCI_BUS);
-+    qbus_mark_full(&phb->bus->qbus);
- 
-     pci_create_simple(phb->bus, 0, TYPE_SABRE_PCI_DEVICE);
- 
-@@ -400,6 +401,7 @@ static void sabre_realize(DeviceState *dev, Error **errp)
-     s->bridgeA = PCI_BRIDGE(pci_dev);
-     pci_bridge_map_irq(s->bridgeA, "pciA", pci_simbaA_map_irq);
-     pci_realize_and_unref(pci_dev, phb->bus, &error_fatal);
-+    qbus_mark_full(&s->bridgeA->sec_bus.qbus);
- }
- 
- static void sabre_init(Object *obj)
--- 
-2.53.0
+In file included from /builds/pm215/qemu/include/exec/helper-gen.h.inc:9,
+                 from /builds/pm215/qemu/include/exec/helper-gen-common.h:11,
+                 from ../target/arm/helper.h:7,
+                 from ../target/arm/debug_helper.c:11:
+/builds/pm215/qemu/include/tcg/tcg.h:35:10: fatal error: tcg-target.h:
+No such file or directory
+    35 | #include "tcg-target.h"
+       | ^~~~~~~~~~~~~~
 
+I think the problem looks like it's in "move exec/helper-* plumbery to
+helper.h", which has put the "emit the TCG gen_helper_foo inline
+functions" into target/arm/helper.h, when they were previously
+handled by target/arm/tcg/translate.h and so only in source files
+that are part of the TCG translate-time code. helper.h only needs the
+prototypes of the helper functions themselves.
+
+Some of the other new helper-foo.h files look like they would
+also have this problem, except they happen to only be included
+from tcg files. For instance target/arm/helper-mve.h is only
+included from files in target/arm/tcg (so it maybe could be
+in target/arm/tcg itself).
+
+I couldn't see an obvious easy fixup for this, so I'm afraid
+I've removed the series from target-arm.next.
+
+thanks
+-- PMM
 
