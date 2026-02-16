@@ -4,81 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20645E83837
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 21:44:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D2EBE8383E
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 21:55:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vs6NZ-0002Iy-7j; Mon, 16 Feb 2026 16:43:41 -0500
+	id 1vs6Y4-0005NA-NI; Mon, 16 Feb 2026 16:54:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vs6NY-0002HU-2z
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 16:43:40 -0500
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vs6Y2-0005Le-0i
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 16:54:30 -0500
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vs6NV-0008BK-MQ
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 16:43:39 -0500
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-4377174e1ebso2690468f8f.3
- for <qemu-devel@nongnu.org>; Mon, 16 Feb 2026 13:43:35 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vs6Y0-00012G-Ft
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 16:54:29 -0500
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-2a77c1d5c3bso13057315ad.0
+ for <qemu-devel@nongnu.org>; Mon, 16 Feb 2026 13:54:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771278214; x=1771883014; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=OTDC+IzXTddfFCPQNzAsj0ZHhDkOeqcFAGhe17LmNSQ=;
- b=AB3cIwo1JRH7sc0i5m33ixyMm0R1fK2hNTmC4H6Xk35C2x3OzfmvssqYw3fN3hEpQs
- gmlRk9FV+dMnAlShquBE6OoHxmA4tqmw2veazFLnm7noSu65h+F62vyDvbIPip5/34a4
- dK1IeEv+r8rBoDgOYsx/AkwnPd2mj3lnUWhvzezoRgsxwF36K8xE2G0elTUpPN4YagdZ
- uWm9bNIHE9TYc6IwcJUEerZrQdlC/tfqr8+uiYnggDhk2cu/3Wzwc/b9eq5TBoYYubwG
- 3XddFoIUF6QMt64qrogXZtowSn4XfXBNt6qDpXKf4mOZOyeK0KiR9mirhoNFS9ZGlkDk
- HKvg==
+ d=linaro.org; s=google; t=1771278867; x=1771883667; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=UM7LVJsxFSpRtd6bXwqCb/fv8D0/2eLsi9HRM+BQdMU=;
+ b=us/DTvqRp/x+ZrtSRbXA7zQjl3miz7tytMcar726WxBR1Hb6YkfkGTMjsxwmhC/TAg
+ PnD16amW4xLJiHyf6CUIZaU40+do+eqFlPqsn3AGXpFqwI40rAHmff9oWsmgJmPMddMu
+ c0O48YqCm3HBUxWHCiRG12tBLVzVx2aoLasl+vQySVSk+3UNTmcJo/sFZNBuK6HZ+JRL
+ u0yHIT3nggN5H9DY3giXbOSJGn3MeCjhh+fztcWNfV3enK9CmZyT7vFBar7uW6keWPTr
+ Pv2UpQO28azJ0eYm7ax/THpiWaexGutr+dB2v+8OHhI7Pgrgw4psTteYyYNaNUVZDySg
+ 4pzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771278214; x=1771883014;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=OTDC+IzXTddfFCPQNzAsj0ZHhDkOeqcFAGhe17LmNSQ=;
- b=Rz+g5kOPLs91SHptPLlvcGoPkiL/EGWFc6fGtk4ZyWkQFBm9aiDp7EBChHsj3hUcmq
- gNiQ2mKsSIOCRjetbkjlJUjluQWdGDm3SStzVoot0WWvrtWjwOW3ZLSz2bUZ9XFQp9zF
- y0jRwuUPJWNar0ilbQGoZVfdlaH4Y9s63lkWKiJJ2xlIbx6d7ER5XmK+PBHC1kLWgFRY
- xEkFzYJ0Xl625VC8P5bLuiQHn1eDher9wniXYvKn13ETkwHcyz6JHpw7cZQtPymcxIbw
- I2/dKkUiCqQzriNr4snh/hoZdWdJZi1kViSifXOQa/Ske4j+kVb9VVm59Mk8ta2dvF8k
- iBaw==
-X-Gm-Message-State: AOJu0Yzuy/C5PAJiC9sS1/M/J7xvmB4xDVTUcw2091CthPV2GFjafmmQ
- 1dioJ6QgkprwC1HYaQAsnI6U0iNbHYblJiynyo8n31HGv/NnUpSXZcoGPPweIWpuLIQIevOJIGZ
- Dvaj9qHU=
-X-Gm-Gg: AZuq6aLPPb3i2/nmhxb6AUs1pD/9NSlKjFITpOapboBTXOeESlWcTStseFZX3c7BjYI
- HIpgSSK22RpwbK1PsH9+wf1MUY9GIiGxEldpASi+p0p2xEhrvDc6a0bP2eEW8MELexKRSeH6yT9
- D08Cq84loimFLCxCd+Snk8HAs0AY/kbPMStMLRX6Nj0ijx3HZhTCSwXdjFOCCW5ww0W+I4t8h/Q
- aEuGVWBT5KmE2aruG4WdQWGIMGoaStpmcodVzMn5YAi+KWePkmH1P+3AH4mQteyeUxuRmNqUD7Y
- 5ykGNCdaOHOQs8f4D1zu6hSQfUSizfPLkW6ldLKlcwquGOiNtX2FYhoqplj4JTw89rb8+doLmhl
- cHFE/ROyhK2fBADv4PJD1jxDnQkGI/HTeYmb0hTimSwI/WbNmks+5JU3R6trN7T66joa9MWzey+
- Pxj2XAdf/0NHh7wftC2tDqr3878umC9z5DSanj5pKhB9HSTQiPNrNvtK5MRF0wpHfYZm6R+vJU
-X-Received: by 2002:a5d:5f54:0:b0:437:70d3:44e7 with SMTP id
- ffacd0b85a97d-4379790e686mr19766136f8f.30.1771278214178; 
- Mon, 16 Feb 2026 13:43:34 -0800 (PST)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43796ac7d91sm30112811f8f.26.2026.02.16.13.43.33
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 16 Feb 2026 13:43:33 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- John Snow <jsnow@redhat.com>, Gustavo Romero <gustavo.romero@linaro.org>,
- Cleber Rosa <crosa@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH] gdbstub: Make generated compound literal array size explicit
-Date: Mon, 16 Feb 2026 22:43:32 +0100
-Message-ID: <20260216214332.47639-1-philmd@linaro.org>
-X-Mailer: git-send-email 2.52.0
+ d=1e100.net; s=20230601; t=1771278867; x=1771883667;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=UM7LVJsxFSpRtd6bXwqCb/fv8D0/2eLsi9HRM+BQdMU=;
+ b=mEm7CASyayWqiCwkHCMgW32Y7g31wTVIPKEudxdqKArTR5MRcIfbYcgBqCiVSNW28+
+ 4zA6iRDLIaS8UM+nRdhY0393f1+8z/dnpGodA93NeS3e9Gbnv9bkRZBFLpeL8XqG3dkt
+ F3hAb3VuD5HHwjsSsbQ2yedH+gUxVtg7YFMcSvNf2vHSQ2KidNU+aWNTOVBjJUqZTKK/
+ p/M3SHgzUOHGQwZPcJAGeC4gAJHyggR9XJUCYZ1n7w0tW/msnQO5Z/6axJTdhHuXA1Is
+ vW1VNq9Wo1Zms1lEjtIydFv7JsI/HVSTwJTyiQAZeyB34ddP/OIXQGragyz7597cqEKp
+ 2koA==
+X-Gm-Message-State: AOJu0YyGNhuX4R75eWsSdgjm2zsFJ8V8ZnhDFQ9kRwiyeslreQBBwDc4
+ B3LUANAvn3fAzTz9bdG8jsLajyclWjlxN3WU+BLomY3vvG9i+Yd4KQtKnxta4Rn+4hdxZP/qwoN
+ mmZQq
+X-Gm-Gg: AZuq6aJ8CCTUeflnGJWBZXaj7AKryso+qShRyD9p0dIet9ahdHeTOGx7JiKKfH/TcBt
+ Pg6BbeiKvuzyYXGLcMe/3mdRMo0g3UYsdOrGs8RIzbMi+UqLqil79JBBeDl1+PRhHvR35riFwdE
+ uvAVIVlLa+FAFJ5jfxhoiiICodurhUMfXrLvwOmnauzrY1R0dtaWm7yCHAJL6p8GSYcCCXLhA6y
+ wvyAgcXuQc9z0qYPNE2iHpaQOIHzYS2GZ284SU7ec5BGOveCY6oWYJNEDWwzRk7AibEg9FuZoOL
+ WJVqRPdFzaf97HrP5yabc/gv3WaywujJ40JXHIUU0pGqrAiCt2LoW9yA0jrl9vuj9dBrvrVqsJE
+ RMTd3cvYVd8feoh6CKHwrM/XbvgVpXNE1rSgUh8HB5G0rovWTyihy7bHAF8k9eReTbXxoWYq57d
+ wr9rX8vLwHsremvaVRzC6cGnQlfDPqskCtZKm1LZbITDVc2HyL3WjfLArh8x4ZnnnSA19bW+G+N
+ i6ELWIkhMsFXTfscpXhNsKC
+X-Received: by 2002:a17:903:183:b0:2a0:fb1c:144c with SMTP id
+ d9443c01a7336-2ab504d5ae8mr137048875ad.5.1771278866634; 
+ Mon, 16 Feb 2026 13:54:26 -0800 (PST)
+Received: from ?IPV6:2401:d002:dc0f:2100:1e87:e093:79fa:89a7?
+ ([2401:d002:dc0f:2100:1e87:e093:79fa:89a7])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2ad1a6f9ae9sm74328285ad.16.2026.02.16.13.54.25
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 16 Feb 2026 13:54:26 -0800 (PST)
+Message-ID: <05f4ea1c-bc5c-439c-a190-40a3b5e3fcf4@linaro.org>
+Date: Tue, 17 Feb 2026 07:54:21 +1000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/2] target/arm: Don't use HELPER_H in non-tcg files
+To: qemu-devel@nongnu.org
+References: <20260216160349.3079657-1-peter.maydell@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260216160349.3079657-1-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,40 +105,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-GDBFeature::num_regs holds the number of registers, but when using
-the compound literal construction, if the last array entry is not
-set, the array will be shorter. Prevent array overrun by making the
-array length explicit,
+On 2/17/26 02:03, Peter Maydell wrote:
+> This patchset gets rid of a couple of uses of HELPER_H to pull in the
+> TCG helper function prototypes in files that aren't in
+> target/arm/tcg:
+> 
+>   - debug_helper.c has a lot of TCG only code that can
+>     happily live in a new tcg/debug.c file instead, and only
+>     the CONFIG_TCG code was using the helper prototypes
+>   - helper.c was calling exactly one TCG helper function
+>     directly, and can be made to call a different function
+>     instead for the same effect
+> 
+> Pierrick: these might be helpful for you with getting the target/arm
+> single-binary series to compile when TCG is disabled.  I think it
+> might be best to avoid having a single helper.h that gives both the
+> helper_foo and the gen_helper_foo prototypes, though: even if it
+> doesn't cause compilation failures, only translate*.c need all the
+> inline definitions of gen_helper_foo. If you take that approach
+> then it would fix the compile errors without needing these patches.
+> 
+> (I did wonder if we could move target/arm/helper.h into the
+> tcg/ subdirectory, since it really is TCG-specific, but it looks
+> like the machinery in include/exec/helper* assumes that the target
+> has a helper.h in its top level directory.)
+> 
+> thanks
+> -- PMM
+> 
+> Peter Maydell (2):
+>    target/arm: Move TCG-specific code out of debug_helper.c
+>    target/arm: Don't require helper prototypes in helper.c
+> 
+>   target/arm/debug_helper.c                  | 769 ---------------------
+>   target/arm/helper.c                        |   5 +-
+>   target/arm/{debug_helper.c => tcg/debug.c} | 542 +--------------
+>   target/arm/tcg/meson.build                 |   2 +
+>   4 files changed, 4 insertions(+), 1314 deletions(-)
+>   copy target/arm/{debug_helper.c => tcg/debug.c} (53%)
+> 
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- scripts/feature_to_c.py | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-diff --git a/scripts/feature_to_c.py b/scripts/feature_to_c.py
-index 807af0e685c..3aa62fb895f 100644
---- a/scripts/feature_to_c.py
-+++ b/scripts/feature_to_c.py
-@@ -90,13 +90,16 @@ def writeliteral(indent, bytes):
-     writeliteral(8, read)
-     sys.stdout.write(',\n')
-     writeliteral(8, bytes(feature_name, 'utf-8'))
--    sys.stdout.write(',\n        (const char * const []) {\n')
-+    sys.stdout.write(',\n')
-+    sys.stdout.write(f'        (const char * const [{num_regs}]) {{\n')
- 
-     for index, regname in enumerate(regnames):
-         sys.stdout.write(f'            [{regnums[index] - base_reg}] =\n')
-         writeliteral(16, bytes(regname, 'utf-8'))
-         sys.stdout.write(',\n')
- 
--    sys.stdout.write(f'        }},\n        {num_regs},\n    }},\n')
-+    sys.stdout.write( '        },\n')
-+    sys.stdout.write(f'        {num_regs},\n')
-+    sys.stdout.write( '    },\n')
- 
- sys.stdout.write('    { NULL }\n};\n')
--- 
-2.52.0
-
+r~
 
