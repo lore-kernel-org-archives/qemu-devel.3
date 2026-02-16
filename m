@@ -4,87 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87EF9E63F3F
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 17:56:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CA0CE83825
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 19:14:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vs2pp-0002Ir-38; Mon, 16 Feb 2026 12:56:37 -0500
+	id 1vs42C-0007xs-UI; Mon, 16 Feb 2026 14:13:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <bounce+0e9322.97607e-qemu-devel=nongnu.org@yodel.dev>)
- id 1vs2pn-0002II-7H
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 12:56:35 -0500
-Received: from k62.kb8c70eb.use4.send.mailgun.net ([204.220.184.62])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1)
- (envelope-from <bounce+0e9322.97607e-qemu-devel=nongnu.org@yodel.dev>)
- id 1vs2pk-0001rz-F1
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 12:56:34 -0500
-X-Mailgun-Sid: WyI4ZDFlNiIsInFlbXUtZGV2ZWxAbm9uZ251Lm9yZyIsIjk3NjA3ZSJd
-Received: from mail.yodel.dev (mail.yodel.dev [35.209.39.246]) by
- 9ce62a630647843b9e8642e249457cd130d627116186ee729f889660d8ed5cd5 with SMTP id
- 69935a4d064eedcf2f3aafea; Mon, 16 Feb 2026 17:56:29 GMT
-X-Mailgun-Sending-Ip: 204.220.184.62
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yodel.dev;
- s=rsa2048; t=1771264588;
- bh=sjabOpJebOr56va9ZGWq2za1iwpNkDpLKiauQXxZTG4=;
- h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:
- X-Mailgun-Dkim:From:In-Reply-To:Content-Type:
- Content-Transfer-Encoding:From:Reply-to:Subject:Date:Message-id:To:
- Cc:Mime-version:Content-type:Content-transfer-encoding:In-reply-to:
- References;
- b=bnWaNLv9b4l1QmTOWFaNZhhQjShFRRyNcfvtIbJYBa6uEmDcv/OTAQt0T0XSya3MO
- 25wGvsEXooPmXgZ/2OFnWr5unkdJ+HJFlnTJNL1eMha9Ig4wPofHvT4CNK5CBRzZwt
- 1GhWD5pNvLLADICY0oBeGfdO+PsI4kiuvqlduYgHmliwbeEdh/pxbNAEgcaeqowkT8
- RZOzJSIe1P0FjmQwDWNWjdToES/GpPUDZtiMfa0vHL9x/VAO/cqz7gN8R/5LYQ6w6J
- ohecIPJ+ywUlQAt8CgilGoQ06cwMi+YhGsiuoKGsPSTkREh4PPBEfK3NBoHb3cLJqr
- y3vIhb5ozgRaw==
-Message-ID: <6ab90f3e-261a-46b1-b241-9adc3c5ecb59@yodel.dev>
-Date: Mon, 16 Feb 2026 11:56:27 -0600
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1vs42B-0007xd-CZ
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 14:13:27 -0500
+Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1vs426-0003Yp-4s
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 14:13:27 -0500
+ARC-Seal: i=1; a=rsa-sha256; t=1771269188; cv=none; 
+ d=zohomail.com; s=zohoarc; 
+ b=k+n9C8d/2pAqzi+VhKUYUhOZ+i+fpV1GNVawvIPUTfACIDcckMlbBUtVON11X//t3nfV+Nif6YgKJcjB/NcT5lS2EDPkLXS/QwUAp26/Qj5NeaY/IxQ3Bw3fLWBLgSSgVHfdEKXUnsB8UAMYFwH0Ly8nuVXqItU2vY6/IFi7Eh0=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
+ s=zohoarc; t=1771269188;
+ h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
+ bh=ViKEV6K3E34y8YBULDM7wujUiITFIahQHAYDINTR4aQ=; 
+ b=A+VX5ms5nzeJTDwUCpY4OkZWK5rWIewOP9eggIbncTiXAvl84o1Q14/TxyxMoWwG4Zt56NvgPkN3SDBCvMVSMqdRmFJYxh51d9rB4Z6x290SVY7mZpLwCQhSfjITtqrgmUqhiwRK3zbUYqLwQw/DGuzGHpdDuDxM4z9fqPP8/8g=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+ dkim=pass  header.i=collabora.com;
+ spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
+ dmarc=pass header.from=<dmitry.osipenko@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1771269188; 
+ s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
+ h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+ bh=ViKEV6K3E34y8YBULDM7wujUiITFIahQHAYDINTR4aQ=;
+ b=CZCQRIVZTV/S4axlhdRPbjqHDuvgN1gXpq10sljx7RNeyJmU/CpiuXHP+BWyDfvX
+ 6Ae6zAWvRdIG95KXw/LLQn7YH3471/W9sTnoGY3Zbw6GoqDab+Diz8MqW8ecCCuI4OC
+ 3k1v7zgweKJi9jU4sGssimTu39ot0Vd0iQ8MLoZo=
+Received: by mx.zohomail.com with SMTPS id 1771269187470995.8314660575726;
+ Mon, 16 Feb 2026 11:13:07 -0800 (PST)
+From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Huang Rui <ray.huang@amd.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Yiwei Zhang <zzyiwei@gmail.com>,
+ Sergio Lopez Pascual <slp@redhat.com>
+Cc: Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
+ Gurchetan Singh <gurchetansingh@chromium.org>, Alyssa Ross <hi@alyssa.is>,
+ =?UTF-8?q?Roger=20Pau=20Monn=C3=A9?= <roger.pau@citrix.com>,
+ Alex Deucher <alexander.deucher@amd.com>,
+ Stefano Stabellini <stefano.stabellini@amd.com>,
+ =?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+ Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
+ Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
+ Chen Jiqian <Jiqian.Chen@amd.com>, Rob Clark <robdclark@gmail.com>,
+ Robert Beckett <bob.beckett@collabora.com>
+Subject: [PATCH v17 03/18] ui/gtk: Don't disable scanout when display is
+ refreshed
+Date: Mon, 16 Feb 2026 22:11:58 +0300
+Message-ID: <20260216191213.2556073-4-dmitry.osipenko@collabora.com>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20260216191213.2556073-1-dmitry.osipenko@collabora.com>
+References: <20260216191213.2556073-1-dmitry.osipenko@collabora.com>
 MIME-Version: 1.0
-Subject: Re: [PATCH] Revert "rcu: Unify force quiescent state"
-To: Thomas Huth <thuth@redhat.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Jim MacArthur <jim.macarthur@linaro.org>, Paolo Bonzini
- <pbonzini@redhat.com>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>
-References: <20260209120336.41454-1-thuth@redhat.com>
- <0e63016c-2ca3-4074-8a5e-db46f22d8eda@linaro.org>
- <745fbb72-a977-4ec4-84ea-eefc33cf33a8@rsg.ci.i.u-tokyo.ac.jp>
- <f64415bf-8c89-47ff-95b7-f362d51dc9bf@yodel.dev>
- <7dfb9920-540b-4586-afc6-a60bb96c2921@yodel.dev>
- <8c52b80e-2792-48e8-a9f0-c8766af2cfda@redhat.com>
-Content-Language: en-US
-X-Mailgun-Dkim: no
-X-Mailgun-Dkim: no
-From: Yodel Eldar <yodel.eldar@yodel.dev>
-Autocrypt: addr=yodel.eldar@yodel.dev; keydata=
- xjMEZxqXdhYJKwYBBAHaRw8BAQdAkletQdG3CLyANZyuf2t7Z9PK4b6HiT+DdSPUB2mHzmPN
- I1lvZGVsIEVsZGFyIDx5b2RlbC5lbGRhckB5b2RlbC5kZXY+wpkEExYKAEECGwMFCQOcG00F
- CwkIBwIGFQoJCAsCBBYCAwECHgECF4AWIQTTzRjNQG27imap+N+V7k+3NmVNrAUCaNWASwIZ
- AQAKCRCV7k+3NmVNrNnSAPoDjQXa6v7ZzdQSaLdRfAQy/5SsUucv+zp3WAP4pXdgJQEAzMMC
- Ctx4l6b13Fs2hZdRXEnF/4BZ9t1K68nwzZOV3QnOOARnGpd2EgorBgEEAZdVAQUBAQdAKPIy
- 3W/DKFsm1e+31zoqmOY0pqz8vjIM846wM6lEY2QDAQgHwn4EGBYIACYCGwwWIQTTzRjNQG27
- imap+N+V7k+3NmVNrAUCaNWG7QUJA5wi9wAKCRCV7k+3NmVNrPusAQCQDQwETy7VT6UhHPho
- TkrQnsNqQfFU3tXqCTiViToktQD7B/U2/to97hQIJCWbK6yd3T+KPZJPMcHMg2XRyedUvgA=
-In-Reply-To: <8c52b80e-2792-48e8-a9f0-c8766af2cfda@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=204.220.184.62;
- envelope-from=bounce+0e9322.97607e-qemu-devel=nongnu.org@yodel.dev;
- helo=k62.kb8c70eb.use4.send.mailgun.net
+X-ZohoMailClient: External
+Received-SPF: pass client-ip=136.143.188.112;
+ envelope-from=dmitry.osipenko@collabora.com; helo=sender4-pp-f112.zoho.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,41 +98,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 15/02/2026 23:20, Thomas Huth wrote:
-> On 16/02/2026 02.12, Yodel Eldar wrote:
-> ...
->> Thomas and Akihiko, if it's alright with you, could we delay the PR of
->> the revert at least until we sort this out? I realize the erratic
->> timeouts are gumming up the CI, but maybe we could reduce the deltas of
->> the git history in short order if it's not too much trouble? I can
->> submit the patch in one to two days; I just want to make sure it's done
->> correctly.
-> 
->   Hi!
-> 
-> Sorry, but it has already been reverted:
-> 
->   https://gitlab.com/qemu-project/qemu/-/commit/ 
-> ddb4d9d1748681cfde824d765af6
-> 
-> ... but that should not be a big deal, simply submit the patch again 
-> once you've got a proper fix for the problem.
-> 
->   Regards,
->    Thomas
-> 
-> 
+Display refreshment is invoked by a timer and it erroneously disables
+the active scanout if it happens to be invoked after scanout has been
+enabled. This offending scanout-disable race condition with a timer
+can be easily hit when Qemu runs with a disabled vsync by using SDL or
+GTK displays (with vblank_mode=0 for GTK). Refreshment of display's
+content shouldn't disable the active display. Fix it by keeping the
+scanout's state unchanged when display is redrawn.
 
-Ah, it was already part of that set! Thanks for letting me know. I
-suppose that softens the sense of urgency with the fix; nonetheless,
-I'll aim for sooner rather than later.
+Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Tested-by: Alex Bennée <alex.bennee@linaro.org>
+Acked-by: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
+Reviewed-by: Yiwei Zhang <zzyiwei@gmail.com>
+Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+---
+ ui/gtk-egl.c     | 1 -
+ ui/gtk-gl-area.c | 1 -
+ 2 files changed, 2 deletions(-)
 
-I'm inclined to squash the fix into the re-introduction (especially when
-the fix is small in scope), or should they be separate commits since the
-original patch and the fix touch different subsystems? For the latter, I
-think the fix can precede the re-introductory commit (as suggested by a
-quick cherry-pick and replay test run), so as to avoid poisoning
-bisectability.
+diff --git a/ui/gtk-egl.c b/ui/gtk-egl.c
+index ae9239999cdb..0dbb429958e5 100644
+--- a/ui/gtk-egl.c
++++ b/ui/gtk-egl.c
+@@ -180,7 +180,6 @@ void gd_egl_refresh(DisplayChangeListener *dcl)
+ 
+     if (vc->gfx.glupdates) {
+         vc->gfx.glupdates = 0;
+-        gtk_egl_set_scanout_mode(vc, false);
+         gd_egl_draw(vc);
+     }
+ }
+diff --git a/ui/gtk-gl-area.c b/ui/gtk-gl-area.c
+index cd86022d264a..c709b2ce0f63 100644
+--- a/ui/gtk-gl-area.c
++++ b/ui/gtk-gl-area.c
+@@ -199,7 +199,6 @@ void gd_gl_area_refresh(DisplayChangeListener *dcl)
+ 
+     if (vc->gfx.glupdates) {
+         vc->gfx.glupdates = 0;
+-        gtk_gl_area_set_scanout_mode(vc, false);
+         gtk_gl_area_queue_render(GTK_GL_AREA(vc->gfx.drawing_area));
+     }
+ }
+-- 
+2.52.0
 
-Yodel
 
