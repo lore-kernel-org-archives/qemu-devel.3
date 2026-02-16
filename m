@@ -4,56 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3144FE7BD8F
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 11:16:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02476E7BD8F
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 11:17:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vrwa5-0004m8-CD; Mon, 16 Feb 2026 06:15:57 -0500
+	id 1vrwaZ-00054M-UE; Mon, 16 Feb 2026 06:16:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vrwa3-0004kn-2B
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 06:15:55 -0500
+ id 1vrwaK-0004vb-5t
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 06:16:12 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vrwa1-0007JL-62
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 06:15:54 -0500
+ id 1vrwaF-0007Lq-8e
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 06:16:08 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771240552;
+ s=mimecast20190719; t=1771240566;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=03yR22OPWyv4xOgsTRflUVZkTa9pLbZJpc7QOwE/YKQ=;
- b=TGoOJBTQFu7C3Tf5HBYi/M8siHV5k4SBHvv+N6mzwbfue1JVNCOy0DSuThYqEn+vZtf25V
- pEwvem1zNM/pOYu2WWNQ32IVxz0kxPsH6LEyF364V92kI/g/U68QlA0blUWPlY1xa+IH7f
- gAPyf+p8/pkwYYwqaIHE8tOJb85AtMg=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=1Zx9tUgPYauS3ey3x8MRhHhI+AI2QGIcLzfbiUv0MoU=;
+ b=bj2JDcE/WG+tA0afuEfM1jA117MCJm5yP9zZFAhSS0i7euJMyGngpVVWWGgHwv2spCJ+NP
+ o+kxdVZohicG/pXyt3Zrylz3PgEkcg/kcrDBrDP/6EFE4wpUsOGONJ9hLRWIdngHpd/JPZ
+ YKtK7nM6pAY1rOWUr5AhCI1BdnYY5AQ=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-575-S_3Rn-x3NoK6-w9xBzQ9TQ-1; Mon,
- 16 Feb 2026 06:15:47 -0500
-X-MC-Unique: S_3Rn-x3NoK6-w9xBzQ9TQ-1
-X-Mimecast-MFC-AGG-ID: S_3Rn-x3NoK6-w9xBzQ9TQ_1771240545
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-539-GnkfrpEwN6-rQdgXCf97uA-1; Mon,
+ 16 Feb 2026 06:16:02 -0500
+X-MC-Unique: GnkfrpEwN6-rQdgXCf97uA-1
+X-Mimecast-MFC-AGG-ID: GnkfrpEwN6-rQdgXCf97uA_1771240560
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CE3911955D4D; Mon, 16 Feb 2026 11:15:45 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0E1A81955E88; Mon, 16 Feb 2026 11:16:00 +0000 (UTC)
 Received: from localhost (unknown [10.45.242.26])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 8A63119560B2; Mon, 16 Feb 2026 11:15:44 +0000 (UTC)
+ id 62D9519560AD; Mon, 16 Feb 2026 11:15:59 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Mon, 16 Feb 2026 12:14:52 +0100
-Subject: [PATCH 03/85] audio/adlib: drop ts_helper HWVoice field
+Date: Mon, 16 Feb 2026 12:14:57 +0100
+Subject: [PATCH 08/85] audio: list backends as modules
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260216-audio-v1-3-e676662e4514@redhat.com>
+Message-Id: <20260216-audio-v1-8-e676662e4514@redhat.com>
 References: <20260216-audio-v1-0-e676662e4514@redhat.com>
 In-Reply-To: <20260216-audio-v1-0-e676662e4514@redhat.com>
 To: qemu-devel@nongnu.org
@@ -73,21 +73,21 @@ Cc: Gerd Hoffmann <kraxel@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
  Mark Cave-Ayland <mark.caveayland@nutanix.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1480;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1122;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=/79pMsmTucvlzgY5FBqKNb003r8HB/EPhG2j1zf1dS8=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBpkvxOtpJ93glYebWbW0M9TwpEeqzqZE8wKES33
- RpgLlFp1SaJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaZL8TgAKCRDa6OEJdZac
- 5R1BEAC1bQIZC001c8va6eb/i5dK/TdhxHw+4klXKNMMuGSZ+JwVRaxYcY7R2CI478M/ELBtQkY
- 4/V5alEvtX2F2ho08cK0axbyCE9VkCq08MmXq2+UuHz8eHd2r27EX+JZ3m5ErrQtunIk1afEn82
- sKHC1peBr6Zq/FTNB+ud/MzVK7zm35OlZWeVzcnT5C3fOF1WPO1w/IrQgUppQUhgBqkeZi/aVtX
- NPx/fEL/1WMRR91QxWWTXhZXoWYbJ5f7zkNI5mouFp8VR6lxzOXd5v1XYqcNb7/osyRUMjfVkqN
- 74FaxTgii9tdNhEKUozF5fa8jXTmqhA4Gzw6K5rQ1+njUcGNkBC6kO2wqBHPUf6/EoGRozaLvCg
- f/3qksrInIQLbaMRlHJnz1Zt/1Si+6IkEmpzxG7mF92uQyaeGp5hrQ+W/w9s9ws3/bdyURTfP1X
- ba2QcsfkupaOjIF41sA0EXVftgZKcakw3OsJUedprcVxnx+2QvkoyfeHTR+g7lWDE3Hzgd8aI/Q
- Tx2HAZmVKIfOSmhcZ2C9hhzhKRI6y6EiXKDSn/gTQG+9wtIzwNiVCPkUJEXJmZSRc+8F4x+HbRS
- 3tDMRV15aAagKqjcM/gYsyJzxB6OiK841t7AZOOvvcww5ujOeoltNFXQrFxdMdIlAakRx7KZSSX
- g9lwi9ZRnAbskLg==
+ bh=8RNCjDZJyS99FQfKQHwCUPWQBTeZ+z6QEmMkBqjgbCg=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBpkvxOjiqYkb/gGmjzw5f6xEC8yFeCioIBUMa4S
+ sMMFw+J2HqJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaZL8TgAKCRDa6OEJdZac
+ 5V7CD/9xKru/LK2lgX4C86GOaSRjp2RVfRZ/yasiByWUXUv3PBZKZMZobo/BRNf3kFhjl/3heiQ
+ Zeh+jSys7GPQlsF9NULG9n11zqSG/SJHdgiwi28mwRrF7z0CEDMFrJWjXBpMHIkenQyV1G93h9c
+ PLQPsqHd4UkGkzuKtK7JEDfBWk7of0uuOk3VN1yUx4wwHbAp3V5R3rK+50d/gb3nHCyl8YjSt2g
+ EbTpFVy6jgTXHr/A/OFNgR1UTZCMkF9iXzM7I4UDTGPvy2BV3P2CcaPVBr0FG3PO8udN3Xfx9Jj
+ INR0CELEMycWW9OPd21frl/CsgcULf9ylL1wOYILmAbTaR+W0OlvPmD0X9Jmvex1Lva7E7fWQhO
+ P9w2mxx/tzQ9dJcJdLDNUAOhKnLvi8mEhKO6oJ/pbKmCsLcW85VrqXdCajP4P1ZNzRxwUe6XKJ5
+ L/TJ5iWlhbJJdrqjAJgkipLsHvy3kKu1J3sBac3PkmEy0WM9GPoHFvUp16HGnlm2OtDuZPIigUe
+ laybi10ZafbvmL/5QzzO+82kFoZGqoYE0FG0m6eW0M/kgIjyev32jQDI9CadRcvx2Fj+e45xh8g
+ LIHMihhIAFIUqK4i5c441C+OPFwBs4crfAG7FIjm9IW4Q8JGbiLKvTgwKh1NRSaKzWjCQlNUFy+
+ V7icFWJIpd7vzfQ==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
@@ -117,55 +117,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Previous commits made this dead code.
+Windows doesn't support modules, atm, but we can treat it as a regular
+audio unit regardless.
+
+MacOs does support module, so this is fine.
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
 ---
- audio/audio_int.h | 2 --
- audio/audio.c     | 2 --
- 2 files changed, 4 deletions(-)
+ audio/meson.build | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/audio/audio_int.h b/audio/audio_int.h
-index b2b8002477c..20b4c87b0b6 100644
---- a/audio/audio_int.h
-+++ b/audio/audio_int.h
-@@ -77,7 +77,6 @@ typedef struct HWVoiceOut {
-     struct audio_pcm_info info;
+diff --git a/audio/meson.build b/audio/meson.build
+index b2dca2c6409..23fb66d571f 100644
+--- a/audio/meson.build
++++ b/audio/meson.build
+@@ -8,12 +8,11 @@ system_ss.add(files(
+ # deprecated since v10.2, to be removed
+ system_ss.add(files('audio-hmp-cmds.c', 'wavcapture.c'))
  
-     f_sample *clip;
--    uint64_t ts_helper;
- 
-     STSampleBuffer mix_buf;
-     void *buf_emul;
-@@ -99,7 +98,6 @@ typedef struct HWVoiceIn {
-     t_sample *conv;
- 
-     size_t total_samples_captured;
--    uint64_t ts_helper;
- 
-     STSampleBuffer conv_buf;
-     void *buf_emul;
-diff --git a/audio/audio.c b/audio/audio.c
-index b7a28f79d4f..a218570a4f4 100644
---- a/audio/audio.c
-+++ b/audio/audio.c
-@@ -1240,7 +1240,6 @@ static void audio_run_out(AudioBackend *s)
- #endif
- 
-         if (played) {
--            hw->ts_helper += played;
-             audio_capture_mix_and_clear (hw, prev_rpos, played);
-         }
- 
-@@ -1320,7 +1319,6 @@ static void audio_run_in(AudioBackend *s)
- 
-         min = audio_pcm_hw_find_min_in (hw);
-         hw->total_samples_captured += captured - min;
--        hw->ts_helper += captured;
- 
-         for (sw = hw->sw_head.lh_first; sw; sw = sw->entries.le_next) {
-             sw->total_hw_samples_acquired -= min;
+-system_ss.add(when: coreaudio, if_true: files('coreaudio.m'))
+-system_ss.add(when: dsound, if_true: files('dsoundaudio.c', 'audio_win_int.c'))
+-
+ audio_modules = {}
+ foreach m : [
+   ['alsa', alsa, files('alsaaudio.c')],
++  ['coreaudio', coreaudio, files('coreaudio.m')],
++  ['dsound', dsound, files('dsoundaudio.c', 'audio_win_int.c')],
+   ['oss', oss, files('ossaudio.c')],
+   ['pa', pulse, files('paaudio.c')],
+   ['sdl', sdl, files('sdlaudio.c')],
 
 -- 
 2.53.0
