@@ -4,95 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41E63E83837
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 21:33:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DF5AE83838
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 21:33:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vs6Cw-0002nC-R0; Mon, 16 Feb 2026 16:32:42 -0500
+	id 1vs6Ay-0005cL-H7; Mon, 16 Feb 2026 16:30:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vs6CK-0000us-GP
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 16:32:07 -0500
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vs6CI-00043M-IP
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 16:32:04 -0500
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-4377174e1ebso2685765f8f.3
- for <qemu-devel@nongnu.org>; Mon, 16 Feb 2026 13:32:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771277521; x=1771882321; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=V8wNVeXGsx4+MMgwpCdoiP3HRol652dz1JzpsDMD+6w=;
- b=GBmUQg0DARuunz3u1v8BuoPKnU8ffmQ6/sRGf2Y5tqvo/LsLDa5yrVufmqB62Z/Wp3
- xjO+3lLR6dH+7hu3SJ+HI4Xc3POk5ZM0s2Eo2GtinL3pc/3SI6ZfrU/y7/IulNDkY3yd
- i0nervPMEdMnKn1t9d0kQDecgxhlYnGdNGKxC0daxtAKmz7AvReT7fbMGJTrwMA2zsHm
- c+M2Nw59ED6X/y/mDZ88wvrJP1doMisvpISuW82tQU2Pf8t33r6S9lGLpyBTbmrsoZB2
- X/wVXZkaS7c2xCPQ0TnQC/7LlVZVu+LJuipdBOT+mNFCvgsT/qeDQNkaOrfbRU0z7hHS
- jJLQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771277521; x=1771882321;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=V8wNVeXGsx4+MMgwpCdoiP3HRol652dz1JzpsDMD+6w=;
- b=tgGO3SIt+C0hW7DAZ6X5Widx6gZ0t8y6arQX7Yz9CFNx9eBP82tm96Ps7rOA1m+62j
- IOqaUxy/P4YfwCcOhZYcCHVGBSWfk9VHMwj8OHQHI5i1DilPQe5IPHCixrItL2SbjGiX
- 2JX7d9t6vpdWnySvZKnJcayIKMEJK0n9JjJuOdzAgM6Rc4w4Mmkjc6B6GHoshkm6JtZA
- yO5N8xc4nOqLCMqavWg73cnwT5Pz7SxPLe0FIXQ1FwacjNODGBkWBhJjLT/MYPuanrRY
- +hB4/ihugCLTaj5lJ2MbQm7DmC3gIXVY712gmYj2A/Sy2wGDwb7VAul6k8lot20fKn5L
- Ppcw==
-X-Gm-Message-State: AOJu0YxCcrN/uYAX89s99I49WCJNl/sdKr3shHkdswYXT6W2RD9UeAoQ
- 9kMqkDf1HdHyCchSHFb9/FZ6FkeQO6+K78DDqpVe+I1knxnTrJScNosnnVbTfq5LTVgGJ67EE5s
- p7rrFivQ=
-X-Gm-Gg: AZuq6aIQXl66Ux+p2UbgLjonhXQIi3Ai27hMBxdH2q4dc4I5qO5f5tQulYFoL2U/SqU
- K6QSzwQhfi8J/HXh3iOgMvl+LMNKUNeK+KTXV7OtvLORxlxwiXHBU8VdjSAU9LHPzmIefi4GoQU
- 6cVFt9OHSoeZgZjK4PD6Q7WuVqTZW7zz3Hkx6L2WkS2A9c2ubq+x+4jxz+FvKDca8KqPo+Xr94P
- icjU4pFZ21Z1uf5LwbPx1NXc4nnj3kNAARjLcuFwWpXDiG8NvXbWk/6PB8VR1342kX7t9qAufs6
- iMrPWwm2xcf50f+oC8YB3e8LTo8ZojDMlxnQ4CPhhcbUR0VKE4mR0AvbaIwi7QI+vD7wrxNn4Dy
- dnXvi9bBsql/O+I1QSMYa0jLft1i67hlem36RKcKUIhFVS8l7rWCk7mOHi375wJzdOrM6rBgx47
- 0e1vt+NMdPnmzIvFnyP3zFW7EBo6zPsNi6XZkaiKoKx4ec+z5qOTCnCf3YpaSceELICnj39UIpY
- 3zLtHKOLIM=
-X-Received: by 2002:a05:6000:1843:b0:435:e3bd:5838 with SMTP id
- ffacd0b85a97d-437978dd2fcmr20770738f8f.25.1771277520693; 
- Mon, 16 Feb 2026 13:32:00 -0800 (PST)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43796a74704sm31690316f8f.16.2026.02.16.13.31.59
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 16 Feb 2026 13:31:59 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vs6Av-0005bk-4h
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 16:30:37 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vs6As-0003rv-Qi
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 16:30:36 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1771277433;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=RBNO8DoAZwzS3Itpv7gEeqcD0norh/VyAfIfnIjin7A=;
+ b=ZfR9NvBiGB8KH5arN2ABVsFKLFf9+AwCzBunCU6uNGMOnDZJW8CxMXZ1Yuro4ozKYRujfY
+ C5YyaEJPUOIR5AgQBiImLnyEkJG6BK1PxjEW8FiCcIXEuDp9qey7qjMrD8aGVyv4xrIgCF
+ yyJTIaFctyaSb8lTTho69hhIy878wUM=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-310-T8OcLoxaPqWMKE6BHy1zXA-1; Mon,
+ 16 Feb 2026 16:30:29 -0500
+X-MC-Unique: T8OcLoxaPqWMKE6BHy1zXA-1
+X-Mimecast-MFC-AGG-ID: T8OcLoxaPqWMKE6BHy1zXA_1771277426
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 508AB18AD910; Mon, 16 Feb 2026 21:30:26 +0000 (UTC)
+Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.88.120])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 4B31919560A3; Mon, 16 Feb 2026 21:30:20 +0000 (UTC)
+From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>,
- =?UTF-8?q?Herv=C3=A9=20Poussineau?= <hpoussin@reactos.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Chinmay Rath <rathc@linux.ibm.com>,
- Artyom Tarasenko <atar4qemu@gmail.com>,
+Cc: qemu-block@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Laurent Vivier <laurent@vivier.eu>, qemu-ppc@nongnu.org,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 5/8] hw/m68k: Set graphic display dimensions generically
-Date: Mon, 16 Feb 2026 22:31:18 +0100
-Message-ID: <20260216213121.47122-6-philmd@linaro.org>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260216213121.47122-1-philmd@linaro.org>
-References: <20260216213121.47122-1-philmd@linaro.org>
+ Cleber Rosa <crosa@redhat.com>, Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Thomas Huth <thuth@redhat.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Kyle Evans <kevans@freebsd.org>, Peter Xu <peterx@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+ Yonggang Luo <luoyonggang@gmail.com>, John Snow <jsnow@redhat.com>,
+ Warner Losh <imp@bsdimp.com>, Maksim Davydov <davydov-max@yandex-team.ru>,
+ Alexandre Iooss <erdnaxe@crans.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Ed Maste <emaste@freebsd.org>, Kevin Wolf <kwolf@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Michael Roth <michael.roth@amd.com>,
+ Li-Wen Hsu <lwhsu@freebsd.org>, Hanna Reitz <hreitz@redhat.com>
+Subject: [PATCH v7 04/19] python/mkvenv: add 'tooling' and 'functests'
+ dependency groups
+Date: Mon, 16 Feb 2026 16:29:36 -0500
+Message-ID: <20260216212952.420120-5-jsnow@redhat.com>
+In-Reply-To: <20260216212952.420120-1-jsnow@redhat.com>
+References: <20260216212952.420120-1-jsnow@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,52 +100,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-If a dimension is not set, have the machine init code
-(q800_machine_init) set the default values.
+'tooling' contains depedencies required to run various tools (like
+qmp-shell) as well as dependencies required to run "make check", and as
+such, we promise that these dependencies can be sourced from the user's
+distribution repository or from vendored packages so that "make check"
+can be executed offline in an isolated build environment.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+In contrast, pygdbmi is only needed for functional tests and not tests
+in general; we do not make the same offline/isolated guarantees for
+functional tests, and this dependency group is allowed to fetch
+dependencies from PyPI at runtime.
+
+For the time being, amend the "check-venv" target to install both
+dependency groups, to avoid a duplicate dependency between them. By the
+end of this series, however, "check-venv" will be eliminated in favor of
+always installing "tooling" at configure time and allowing "functests"
+to be installed on-demand as needed by meson/ninja.
+
+Signed-off-by: John Snow <jsnow@redhat.com>
+Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- hw/m68k/q800.c          | 6 +++---
- system/globals-target.c | 6 +++---
- 2 files changed, 6 insertions(+), 6 deletions(-)
+ pythondeps.toml        | 10 +++++++++-
+ tests/Makefile.include |  2 +-
+ 2 files changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/hw/m68k/q800.c b/hw/m68k/q800.c
-index ba32da2fa45..ded531394e6 100644
---- a/hw/m68k/q800.c
-+++ b/hw/m68k/q800.c
-@@ -560,9 +560,9 @@ static void q800_machine_init(MachineState *machine)
-                             TYPE_NUBUS_MACFB);
-     dev = DEVICE(&m->macfb);
-     qdev_prop_set_uint32(dev, "slot", 9);
--    qdev_prop_set_uint32(dev, "width", graphic_width);
--    qdev_prop_set_uint32(dev, "height", graphic_height);
--    qdev_prop_set_uint8(dev, "depth", graphic_depth);
-+    qdev_prop_set_uint32(dev, "width", graphic_width ?: 800);
-+    qdev_prop_set_uint32(dev, "height", graphic_height ?: 600);
-+    qdev_prop_set_uint8(dev, "depth", graphic_depth ?: 8);
-     qdev_realize(dev, BUS(nubus), &error_fatal);
+diff --git a/pythondeps.toml b/pythondeps.toml
+index 85220a36426..743e2a8848c 100644
+--- a/pythondeps.toml
++++ b/pythondeps.toml
+@@ -31,6 +31,14 @@ meson = { accepted = ">=1.10.0", installed = "1.10.0", canary = "meson" }
+ sphinx = { accepted = ">=3.4.3", installed = "6.2.1", canary = "sphinx-build" }
+ sphinx_rtd_theme = { accepted = ">=0.5", installed = "1.2.2" }
  
-     macfb_mode = (NUBUS_MACFB(dev)->macfb).mode;
-diff --git a/system/globals-target.c b/system/globals-target.c
-index 989720591e7..e3f7d846ac0 100644
---- a/system/globals-target.c
-+++ b/system/globals-target.c
-@@ -14,9 +14,9 @@ int graphic_width = 1024;
- int graphic_height = 768;
- int graphic_depth = 8;
- #elif defined(TARGET_M68K)
--int graphic_width = 800;
--int graphic_height = 600;
--int graphic_depth = 8;
-+int graphic_width;
-+int graphic_height;
-+int graphic_depth;
- #else
- int graphic_width = 800;
- int graphic_height = 600;
+-[testdeps]
++# This test group is for dependencies required to run various tooling
++# and tests that should always be installed at configure time. It should
++# only include dependencies that can be guaranteed via configure from
++# system packages, or python packages we vendor.
++[tooling]
+ "qemu.qmp" = { accepted = ">=0.0.5", installed = "0.0.5" }
++
++# This test group is for functional tests, and can include dependencies
++# fetched from PyPI.
++[functests]
+ pygdbmi = { accepted = ">=0.11.0.0", installed = "0.11.0.0" }
+diff --git a/tests/Makefile.include b/tests/Makefile.include
+index be3b78fdfb7..76d77545b71 100644
+--- a/tests/Makefile.include
++++ b/tests/Makefile.include
+@@ -108,7 +108,7 @@ quiet-venv-pip = $(quiet-@)$(call quiet-command-run, \
+ 
+ $(TESTS_VENV_TOKEN): $(SRC_PATH)/pythondeps.toml
+ 	$(call quiet-venv-pip,install -e "$(SRC_PATH)/python/")
+-	$(MKVENV_ENSUREGROUP) $< testdeps
++	$(MKVENV_ENSUREGROUP) $< tooling functests
+ 	$(call quiet-command, touch $@)
+ 
+ check-venv: $(TESTS_VENV_TOKEN)
 -- 
-2.52.0
+2.53.0
 
 
