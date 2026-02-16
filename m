@@ -4,56 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9E7AE7BD9B
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 11:25:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1F7EE7BD9D
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 11:25:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vrwfG-0005EL-4D; Mon, 16 Feb 2026 06:21:18 -0500
+	id 1vrwfS-0007Bw-Bj; Mon, 16 Feb 2026 06:21:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vrwc5-0006Ol-2v
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 06:18:04 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1vrwbK-0005ag-Mm
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 06:17:24 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vrwc1-00089Q-Q8
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 06:18:00 -0500
+ id 1vrwb7-0007dA-Sb
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 06:17:04 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771240675;
+ s=mimecast20190719; t=1771240621;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=FEm66eRxFketQFIgeZBzb+TUChBafUGfeNq/IMh5ojk=;
- b=JrSvBeQmc6eU6zJa+kzPxRizcsgyKPL9P0kByv1wD9455qpiuTRyEgjb3i8hEMmEpbt4g+
- Z+uz5dzV7foteG1EsuEj+9IllMb/D7iPXTuc6CRUtjuINj4uAXyrUbcvpiHF0cAynIYhgY
- Qj6HPyZwvdxxUTwR+t2zdss97c3L3H0=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=oCvtiKHuMNHGGGyZh38jZ7AWFLiBWPGcC09Xtri+dZc=;
+ b=RfxemQF2HB9Nm071CjbiZIfS8yl4/s2w78fZkZuDAUM3RYEawaGjHfZJ/LKBfvpAapRCaR
+ VHQWoDSph4iLUwZTUwg5a4p0QAiEdxmnBNu8cnGNeBZAgKqcnXdIF94jjzwp1mNveL51Q3
+ ZMKpiaV4LRosixwvGZ0eGOr2zoXnEhI=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-499-xBxOfUlKOMW5imetpbPsyw-1; Mon,
- 16 Feb 2026 06:17:52 -0500
-X-MC-Unique: xBxOfUlKOMW5imetpbPsyw-1
-X-Mimecast-MFC-AGG-ID: xBxOfUlKOMW5imetpbPsyw_1771240670
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-520-1xnOWLLlOmOPIbnDMqituA-1; Mon,
+ 16 Feb 2026 06:16:58 -0500
+X-MC-Unique: 1xnOWLLlOmOPIbnDMqituA-1
+X-Mimecast-MFC-AGG-ID: 1xnOWLLlOmOPIbnDMqituA_1771240616
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3AB731800367; Mon, 16 Feb 2026 11:17:50 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 404DD1956053; Mon, 16 Feb 2026 11:16:56 +0000 (UTC)
 Received: from localhost (unknown [10.45.242.26])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 44DED30001A5; Mon, 16 Feb 2026 11:17:49 +0000 (UTC)
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 1D5241800464; Mon, 16 Feb 2026 11:16:54 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Mon, 16 Feb 2026 12:15:36 +0100
-Subject: [PATCH 47/85] audio/oss: convert to QOM lifecycle methods
+Date: Mon, 16 Feb 2026 12:15:17 +0100
+Subject: [PATCH 28/85] module: remove audio module support
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260216-audio-v1-47-e676662e4514@redhat.com>
+Message-Id: <20260216-audio-v1-28-e676662e4514@redhat.com>
 References: <20260216-audio-v1-0-e676662e4514@redhat.com>
 In-Reply-To: <20260216-audio-v1-0-e676662e4514@redhat.com>
 To: qemu-devel@nongnu.org
@@ -73,25 +73,25 @@ Cc: Gerd Hoffmann <kraxel@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
  Mark Cave-Ayland <mark.caveayland@nutanix.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4118;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1350;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=WSaswajA4EH4bQvF1yrHLLnXVV/md1CQHXeFT1moIKg=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBpkvxQCWIyFxILKTEM9E5I8G/E+JA2cKon2GziR
- 0mw2ZgO4GSJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaZL8UAAKCRDa6OEJdZac
- 5ZVrD/0aE3LDDMhOs8tIc36loNx326609rrLev+SeQjQ0OvkE4fitDeY+ZFjvSOBJeldk0Ejgub
- I9HpvWfasNhPnn+bqhx85dWEYPgtBsGilDfAtXxUfqbr4+aowcYk9hBdgLGexX2MrxkYuSe3Rj7
- jfEMvY9j3+49VHu9Om6Xg78NmpRK973xo/J9DSqOrx4EYegsQ5uOqVJmkSErSMJy/CiS3sFYJNG
- CGz5h5dQbONyMNtEdt4ipcRvjeWbr2MS1UvzC9EE455qO/2iD8WtgXENaLaZuXFw/DVmvokB/vu
- d9RoFfLmd3zUbYmIqY+8JahHoLYZzJjFTKu63jlTmdzkq92QWLmJXm++yDDPGg1wAFc/lrlXYIf
- EYuOtGM4VG7JYV2z0lwyxsR0wvIvIHcZY4xarj8LDzCigFfR7VxA2WGWqHyMC0fSdv/kFgWaiIN
- 6PEUG9CBh2H7JT+IJBhr2TcSUWgk+gcjdW5LYOuQb1n+KjiJT/bW1Bwusc0zhMh2HMDqal2aIzZ
- kx6psFeNh4ykZjNyCDxircAghw8RfNq5QUbssv1zWtcyz2LoY0n+r7ubnnyqvADJc7bBOOHh3Ry
- jjgSM2MmyV4y7BWVhvZ1+CIY8VrGZLHFR+JbYoXAw7MC62i90qgTFnXPOzSwLBrCT9/aHmDqQxv
- M+pD4POPkumPXNw==
+ bh=xo7WcFF7K5qpRxKZuwsYck3lIjO818VAyiQpuJT+ksg=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBpkvxPYH2LVSDfFtszpts1e0wJZTFXoNQ0TAXdp
+ myy7dZCIGeJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaZL8TwAKCRDa6OEJdZac
+ 5agPEACSNMLPLuFrMBRyR/zdSmNr/TBTd/1Jl8hYbgWfANPkOxiQPXmB37YPucBLD783m1lv20N
+ DL/3NHPix53uFQLMjHwryeBx0XgO7WldwB4ahMC8SZGSSZIKux4O85n9z79Wfsen42YYXkBbMhu
+ 4d8D3+e+JSQFLHEGQTyg14XXinI8439zrXjRljPMNGkh5oTpn76PoiimcFG8jEdq1lH15dBHcCk
+ cKBjdQpM8jHNe8WEgGfymOtRLDRYCe/7G6g60ZYi77dypboiwtalzovZoy2xgANPA9CXifx5J4r
+ BfGEON09lm4fzfaAL+iW7flLp7j1+cZQv9D3E+9elhPXJ3fh/G+FET99L44hw26utxLjfA9QjjS
+ wl8e+hASIXD8KDqGnJMERRN7ne/UqZi9ecdk6vNhb8NFwRx2KdEvc6BZPc1EkNXM4ocADW+P7dT
+ jSHaIsYq2KbYjDCAcR02YibaWq/+pvob8Ro/775np9fx9eJs10ep7hNevS6ReZPFNTQ5bJokpUm
+ ArkLfyQ4xI8mWePWJrt4A4JaN5mJPXe9sP8tU/c/K2p73omKwJJuYfJ9wtHfgRlYRCJ6b1QYpzY
+ pNdYtEaXmoXblGuWapn/LP9cS0U/0pPUJuFZrmUYQDRG9Os6ezuUHai7XoXi0t+HniqhbGYeQCD
+ NRqdyBHUBs/8vuw==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -99,9 +99,9 @@ X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,135 +117,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Migrate the OSS audio backend from the legacy driver init/fini
-callbacks to proper QOM realize method.
-
-The oss_audio_init() function is replaced with audio_oss_realize(),
-which performs the same device accessibility check before delegating
-to the parent class realize method. The empty oss_audio_fini() is
-removed.
-
-Access to the Audiodev is now through hw->s->dev instead of the
-drv_opaque pointer.
+It relies on dynamic object loading support instead.
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
 ---
- audio/ossaudio.c | 41 +++++++++++++++++++++++------------------
- 1 file changed, 23 insertions(+), 18 deletions(-)
+ include/qemu/module.h | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/audio/ossaudio.c b/audio/ossaudio.c
-index f64c564e345..fedd2bbd722 100644
---- a/audio/ossaudio.c
-+++ b/audio/ossaudio.c
-@@ -23,6 +23,7 @@
-  */
+diff --git a/include/qemu/module.h b/include/qemu/module.h
+index c37ce74b16f..9885ac9afb3 100644
+--- a/include/qemu/module.h
++++ b/include/qemu/module.h
+@@ -63,7 +63,6 @@ typedef enum {
+ #define migration_init(function) module_init(function, MODULE_INIT_MIGRATION)
+ #define block_module_load(lib, errp) module_load("block-", lib, errp)
+ #define ui_module_load(lib, errp) module_load("ui-", lib, errp)
+-#define audio_module_load(lib, errp) module_load("audio-", lib, errp)
  
- #include "qemu/osdep.h"
-+#include "qapi-types-audio.h"
- #include <sys/ioctl.h>
- #include <sys/soundcard.h>
- #include "qemu/main-loop.h"
-@@ -39,19 +40,14 @@
- #define TYPE_AUDIO_OSS "audio-oss"
- OBJECT_DECLARE_SIMPLE_TYPE(AudioOss, AUDIO_OSS)
- 
-+static AudioBackendClass *audio_oss_parent_class;
-+
- struct AudioOss {
-     AudioMixengBackend parent_obj;
- };
- 
- static struct audio_driver oss_audio_driver;
- 
--static void audio_oss_class_init(ObjectClass *klass, const void *data)
--{
--    AudioMixengBackendClass *k = AUDIO_MIXENG_BACKEND_CLASS(klass);
--
--    k->driver = &oss_audio_driver;
--}
--
- #if defined OSS_GETVERSION && defined SNDCTL_DSP_POLICY
- #define USE_DSP_POLICY
- #endif
-@@ -505,7 +501,7 @@ static int oss_init_out(HWVoiceOut *hw, struct audsettings *as,
-     int err;
-     int fd;
-     struct audsettings obt_as;
--    Audiodev *dev = drv_opaque;
-+    Audiodev *dev = hw->s->dev;
-     AudiodevOssOptions *oopts = &dev->u.oss;
- 
-     oss->fd = -1;
-@@ -636,7 +632,7 @@ static int oss_init_in(HWVoiceIn *hw, struct audsettings *as, void *drv_opaque)
-     int err;
-     int fd;
-     struct audsettings obt_as;
--    Audiodev *dev = drv_opaque;
-+    Audiodev *dev = hw->s->dev;
- 
-     oss->fd = -1;
- 
-@@ -737,7 +733,8 @@ static void oss_init_per_direction(AudiodevOssPerDirectionOptions *opdo)
-     }
- }
- 
--static void *oss_audio_init(Audiodev *dev, Error **errp)
-+static bool
-+audio_oss_realize(AudioBackend *abe, Audiodev *dev, Error **errp)
- {
-     AudiodevOssOptions *oopts;
-     assert(dev->driver == AUDIODEV_DRIVER_OSS);
-@@ -748,17 +745,16 @@ static void *oss_audio_init(Audiodev *dev, Error **errp)
- 
-     if (access(oopts->in->dev ?: "/dev/dsp", R_OK | W_OK) < 0) {
-         error_setg_errno(errp, errno, "%s not accessible", oopts->in->dev ?: "/dev/dsp");
--        return NULL;
-+        qapi_free_Audiodev(dev);
-+        return false;
-     }
-     if (access(oopts->out->dev ?: "/dev/dsp", R_OK | W_OK) < 0) {
-         error_setg_errno(errp, errno, "%s not accessible", oopts->out->dev ?: "/dev/dsp");
--        return NULL;
-+        qapi_free_Audiodev(dev);
-+        return false;
-     }
--    return dev;
--}
- 
--static void oss_audio_fini (void *opaque)
--{
-+    return audio_oss_parent_class->realize(abe, dev, errp);
- }
- 
- static struct audio_pcm_ops oss_pcm_ops = {
-@@ -780,8 +776,6 @@ static struct audio_pcm_ops oss_pcm_ops = {
- 
- static struct audio_driver oss_audio_driver = {
-     .name           = "oss",
--    .init           = oss_audio_init,
--    .fini           = oss_audio_fini,
-     .pcm_ops        = &oss_pcm_ops,
-     .max_voices_out = INT_MAX,
-     .max_voices_in  = INT_MAX,
-@@ -789,6 +783,17 @@ static struct audio_driver oss_audio_driver = {
-     .voice_size_in  = sizeof (OSSVoiceIn)
- };
- 
-+static void audio_oss_class_init(ObjectClass *klass, const void *data)
-+{
-+    AudioBackendClass *b = AUDIO_BACKEND_CLASS(klass);
-+    AudioMixengBackendClass *k = AUDIO_MIXENG_BACKEND_CLASS(klass);
-+
-+    audio_oss_parent_class = AUDIO_BACKEND_CLASS(object_class_get_parent(klass));
-+
-+    b->realize = audio_oss_realize;
-+    k->driver = &oss_audio_driver;
-+}
-+
- static const TypeInfo audio_types[] = {
-     {
-         .name = TYPE_AUDIO_OSS,
+ void register_module_init(void (*fn)(void), module_init_type type);
+ void register_dso_module_init(void (*fn)(void), module_init_type type);
+@@ -78,7 +77,7 @@ void module_call_init(module_init_type type);
+  * - get_relocated_path(CONFIG_QEMU_MODDIR);
+  * - /var/run/qemu/${version_dir}
+  *
+- * prefix:         a subsystem prefix, or the empty string ("audio-", ..., "")
++ * prefix:         a subsystem prefix, or the empty string ("ui-", ..., "")
+  * name:           name of the module
+  * errp:           error to set in case the module is found, but load failed.
+  *
 
 -- 
 2.53.0
