@@ -4,119 +4,164 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61423E63F2A
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 07:01:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D0D9E63F32
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 07:18:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vrsao-000091-GM; Mon, 16 Feb 2026 02:00:26 -0500
+	id 1vrsrP-0005TU-Ds; Mon, 16 Feb 2026 02:17:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1vrsal-00008S-FB
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 02:00:23 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <ankita@nvidia.com>) id 1vrsrL-0005SZ-Mm
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 02:17:31 -0500
+Received: from mail-westusazlp170100001.outbound.protection.outlook.com
+ ([2a01:111:f403:c000::1] helo=BYAPR05CU005.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1vrsaf-0001DA-1M
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 02:00:23 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771225212;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=zJYeWhpgd6KHC/Y0C7tY5lHxgaaxpCTJy9D58dWyfas=;
- b=VYJ+uuOHxeQvd7cbZvLfyasobCYe3dDKZe35dO8mW5Oj6GNmXvXMT86XR6NWnlpqXXBj15
- yzs9C6NuneYgh+PgrvrVif39wqoNAvtBYx5VS0vKxRH96vTv53CPoTJo7LLXCrpYMU8cnz
- 14sx95BqYhgC2BvZL9fJ5LYLFUJS0I4=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-616-7CBqOYFhOAe6IBcRxuqJOw-1; Mon, 16 Feb 2026 02:00:11 -0500
-X-MC-Unique: 7CBqOYFhOAe6IBcRxuqJOw-1
-X-Mimecast-MFC-AGG-ID: 7CBqOYFhOAe6IBcRxuqJOw_1771225210
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4837bfcfe0dso10304045e9.1
- for <qemu-devel@nongnu.org>; Sun, 15 Feb 2026 23:00:10 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1771225209; cv=none;
- d=google.com; s=arc-20240605;
- b=B1DsJYZVbzQgi+F+17kUng6hl6UiJvRByCw++thyIGgusnEuFD9SrIBrWn+Ly8Ir2i
- ZSj4Ng8H67L2J/od28FlCPzmUDF5w8QJrFbjmWe8dw6lhY5rEsbblEAIY/7kT23LjNY9
- cAd7HUtxN0O6sUWTKmBQAjqs2129gSfGrjSRHSFZqI9/sROlWlKcTcTPbpn/hFBpTPlj
- Fv8RndGNovtIfZFYsMKL42WED0B73yOtpm/fWzxJLMpUzwxAuvZ4tL1M9LRB0AiDhklY
- AEEu/1wrtYsaMvikJPRBSHNWz5XEJ586a8fB/xKs9HJN+Ef/uGlNx8NlDsaE21qycjdN
- jPMg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=zJYeWhpgd6KHC/Y0C7tY5lHxgaaxpCTJy9D58dWyfas=;
- fh=BBUr5Ap/sCcmjrRPv/rvpgy0x+9aasqFDcwH7HHT3hQ=;
- b=L5Uyq4WSuNYLlPYSmMaoDTDb/McOtPlIwhT/pYb3AbK/xLojp1eLM041wz1hT50RbG
- tfn2GErIZaMja7NddocThBbaCcm6kseJ0iZfrbdibb9tQ7hUiSeTZRldOvxbEH+G25fV
- apbSMR4xppdmBXIkpposBx6ylmg/s38hUC3Ha8SNQLbzU+6TQEjTtIigC7pxiPEyq12l
- l69mvn/jGAxLkyhIkrdiMQ5fs3sMx4Z6xwo9b4gOW+GLq6+oDOiQPN1WtNnmMJx+Y2Rg
- JNz4BaLzKI/Icc0DdgFRpO1QniraP2Lob/ycZO4P2/3WfGDRT2lCQp2DV96oZJ4H2QJ8
- Kf/A==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1771225209; x=1771830009; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=zJYeWhpgd6KHC/Y0C7tY5lHxgaaxpCTJy9D58dWyfas=;
- b=to9MMuwrI80Q9HwFPCrhlDwe3XNrVCpv6IZPz1oLRYnLhcwEoWQ0hUmBPb+X3s3WED
- 1h2o7ZxsN7BJdd9gVtrIhWoQyKC2QwJmBwlMhA/i7hejVzXyDYgMJ9nQOmwLuthtHa2Y
- VhmW0dFk4Q9o1EVt8VWk+ivIU4SLER3obKE1+W0d0scxpfVBRSizMxi1gvfRyBMpphO6
- iJGr2M4mIMbcHU72iAjbVBEP/czwxGegO8uKJUbnu+HK7aLKlPrF2zmr4gZrb1pBmZPQ
- agofDR8muIRFTBeAbC5T90raNILuyv0x0SOa52ZgBBRPYEVLwQPvOuJNr3U3qk4auIzX
- BaBA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771225209; x=1771830009;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=zJYeWhpgd6KHC/Y0C7tY5lHxgaaxpCTJy9D58dWyfas=;
- b=BDBhI56dIAa5N8T5tuy1T+/vfE4oGzkoy6MvWh/wU3TWKC9eAjtEOi6AoaefCmqLPR
- b6HTDlxcB/14tNcJg/R4g83pSKMGQLNB+YHGsJ3+vZkDiOQYY423SFJtAD0bPnAKGvsl
- 5Uiqa4dY1VwExjDQ8aDDA/OU+vbVRGkyJviUK9+fnyxFbaIfCnSXaJgUq/0GBQ8mhZoR
- Jemd5Od8GKMe61x9v/+plR4SLY4TTKFPk2+xmRlAJwH2/saKzUMqU/Bqv9I5Tl2DgdXt
- og58kdVDS2akFKNETKXaMW51nZZb43tS212woMtvp5iiUUBUxqp088Ljr9s+j3e/aW+4
- 9N3Q==
-X-Gm-Message-State: AOJu0Yz0TjgNPa462HxKoe5dOgbpxqndQIOU9muOJ725XrG3uKX6VNdP
- C7saxrw0izUO4oVVAnDexbKm8RsF8x7db4A5FPBEZQoifatWrd5Q4gGLPi3Sr5sBaTkZlrzWuAU
- SUl1qVR5JEkBNagnQv7wrkexz01dTxEkC837KqZu3zM8qFPiIQl6PAKxwgvMSmx/Nvmb88GxG+x
- crUdzRsOROv7K3n+3RBQ7NbHI4pOiRzGte/1d6C9Bj9w==
-X-Gm-Gg: AZuq6aL5jGF5X0d2wo4C4B7UzHZQrWBW1pu+ZoNjZX62vjXT5/1j3Veyy9iFWlaOyg1
- Yo+CCCIe9gTHyesr03k7ykm8Ravb8FfvGbuj4rzG5geRFK+efAC+lSyqZs7Dvw6OPBG18CRCq+i
- f8oiS1yRD3ilxc3rHU9HRPsSLcLpeH9luY38i2vKL031nRjGwyNcdLa/sZyA8QBxC2DRPEBRXG3
- 89V9dPpp9VNgvQAatPsQKK2wWelM7QAOXrezmrrDElbqqKaKStSi3vYmdLeMwqiXsDz
-X-Received: by 2002:a05:600c:6098:b0:477:b734:8c53 with SMTP id
- 5b1f17b1804b1-48379ba08a6mr115555295e9.12.1771225209100; 
- Sun, 15 Feb 2026 23:00:09 -0800 (PST)
-X-Received: by 2002:a05:600c:6098:b0:477:b734:8c53 with SMTP id
- 5b1f17b1804b1-48379ba08a6mr115554725e9.12.1771225208546; Sun, 15 Feb 2026
- 23:00:08 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <ankita@nvidia.com>) id 1vrsrJ-0004yo-GU
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 02:17:31 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=VAsztJ6vBDRmclKfsOxJOBA/6nlGU2o0SGVbY761N4/sWOi5QnGaQjrZ4oAHNUV2nNZOzHGexzWH9+ysW+b4PyqjJCADXYYs+n1t9gQQpohNGjOK3pZnvPatfgbkXXpPrImoKDbvwhqpe35pWFNK2jPB7I/im80WYcJ3jPMi7/t8lyh7lJPAtiJx7Pq7ro+D9Nj9Wjn58Z4EAJeU5jISy/6v86wvvRoYM3rotrNacxEpB2ONBkP6rz92/j60w2XYf7xoq6IuYO6AXTBbBkF7eLewjWfoqnYwJ7X8KjtWi7DJqjC5xAfo/DTccH6e2Wsaa0fAXxTZNzT6upOhRL0ekw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=k8yvA+F0IQ/sZJ9pi92er7KsxgA9jFUgZ+m89FJf98o=;
+ b=Jl+6AWGMOtUMcKYfMmxmnvgKIW//Ox1WIkNVu+hUuiYT2eWb+3t2234vqdZpwr8flonBfRNATcunUJCxE8FyZmVCieywnG5djW95YoKbzLhTj2rcxmTAo6zql5dVXe+nwT+fouhDfWTYTw55D+xIzXXyvMVx/Pqmks3qKq6/St/sqSpXSyPsLFbnnRUlok4kpbHopvzi8r58bqGW3d8ZH5FaVM+GCtScgHVUUlmFLvm/ovZnAESIj9Dz8LlOHIlP9xBAjJD365yRiGnTAl5qyxL/jKrEyjkk12btXIFQcd+JgPi9QDXNXqXHdPq8KW/oGTBZxCBLYEqjCKhafJc8/A==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=k8yvA+F0IQ/sZJ9pi92er7KsxgA9jFUgZ+m89FJf98o=;
+ b=AeD7WIjnNkYocqW7bRbx0baKqUqPSi9vPAubKpXiHyVIpCpSMa0zFqeU4Mbk+v78Ua6fbJLT7DBY5FUHBUyBbqa194xpDT2hm6zgyc5zBbOEecTlL2ASUjBe0Il8MEjLmlqc9E1OFA/vgrvIwdjQxmXZuFj13UBadsFNCTy4FNWXT2QbM3NigVXE//HJiAMtvYh0QC5n0UbYnU83YAIBqST6XQ0dTOtEysoprePis4U3ErJ6arKwzqLLhKQmdvtjUENi4U6XEgzNw/CcHjkOTTPgGyIQatJYhpMWUV/CpTOn4sSXBaSFIrpx/csF3TuV1IvuKxNSbRkCGDBvk7utwA==
+Received: from SA1PR12MB7199.namprd12.prod.outlook.com (2603:10b6:806:2bc::21)
+ by SN7PR12MB7177.namprd12.prod.outlook.com (2603:10b6:806:2a5::14)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9611.14; Mon, 16 Feb
+ 2026 07:17:23 +0000
+Received: from SA1PR12MB7199.namprd12.prod.outlook.com
+ ([fe80::928c:89d8:e8d6:72dd]) by SA1PR12MB7199.namprd12.prod.outlook.com
+ ([fe80::928c:89d8:e8d6:72dd%6]) with mapi id 15.20.9611.013; Mon, 16 Feb 2026
+ 07:17:23 +0000
+From: Ankit Agrawal <ankita@nvidia.com>
+To: =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@redhat.com>, Vikram Sethi
+ <vsethi@nvidia.com>, Jason Gunthorpe <jgg@nvidia.com>, Shameer Kolothum Thodi
+ <skolothumtho@nvidia.com>, "alex@shazbot.org" <alex@shazbot.org>
+CC: Aniket Agashe <aniketa@nvidia.com>, Neo Jia <cjia@nvidia.com>, Kirti
+ Wankhede <kwankhede@nvidia.com>, "Tarun Gupta (SW-GPU)"
+ <targupta@nvidia.com>, Zhi Wang <zhiw@nvidia.com>, Matt Ochs
+ <mochs@nvidia.com>, Krishnakant Jaju <kjaju@nvidia.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Subject: Re: [PATCH v2 1/2] hw/vfio: sort and validate sparse mmap regions by
+ offset
+Thread-Topic: [PATCH v2 1/2] hw/vfio: sort and validate sparse mmap regions by
+ offset
+Thread-Index: AQHcmwN0ar8vW5hixUmg2suBTSh537V9x2aAgAclqK8=
+Date: Mon, 16 Feb 2026 07:17:23 +0000
+Message-ID: <SA1PR12MB71994FF05BA4E852DF0CA080B06CA@SA1PR12MB7199.namprd12.prod.outlook.com>
+References: <20260211030615.3202-1-ankita@nvidia.com>
+ <20260211030615.3202-2-ankita@nvidia.com>
+ <98b36726-71d1-4129-99cf-b16bea1575f1@redhat.com>
+In-Reply-To: <98b36726-71d1-4129-99cf-b16bea1575f1@redhat.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+msip_labels: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: SA1PR12MB7199:EE_|SN7PR12MB7177:EE_
+x-ms-office365-filtering-correlation-id: 00c8bb9a-91ef-4cf4-bc6e-08de6d2b6e10
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0; ARA:13230040|1800799024|376014|366016|38070700021;
+x-microsoft-antispam-message-info: =?iso-8859-1?Q?ROOn/T6vwdwoAaYSZVrURuvPtcUppPB0YgP0WUUXzBmZkJkHYuXg/fHR/U?=
+ =?iso-8859-1?Q?CfC84BZDdPhQGiY/1gURY+xt+DseXuv805RXowCgiaJgZ/ecN8TJtiyF+A?=
+ =?iso-8859-1?Q?EUHW7V4BRBd2aySZbpLjTKE72TUyzp1htfd7YVil12n5SpH7wr5xKouKJF?=
+ =?iso-8859-1?Q?vPEh+itzLbrwXc3bjItL01nAEqQGJeBuPsTcFWLaH6I7TpGDJp3ofpWKc/?=
+ =?iso-8859-1?Q?QgmIkkAmAGESCE0DPDhakOOC38kVltyAB/q88jVZ+b3neLSj9D2Ye01hB9?=
+ =?iso-8859-1?Q?UDA9xaCDvRZFYPySTVA4GhbSUT1/0zgbImJILM8K+CPYZYgpTOqEG8Ifqy?=
+ =?iso-8859-1?Q?+hhEMRMKTRiOu3BRc8niF5dhVRXFP6burXzBnK5U0eX7ym2zXyyjH+Cbwe?=
+ =?iso-8859-1?Q?8FUHa5yH/iZ78bbemPGHuzMzPAGrCYSgitWiizwH+h8BGabtb91fVChqKb?=
+ =?iso-8859-1?Q?SGiBa48OSWWJ/jCLiDASWZOEPOOZVXs12VoRnv0Th58gDJ6dcV7EiJLMEh?=
+ =?iso-8859-1?Q?CgpvRQgwHq7DlXoamOSf4SwecdPTgAVhdLn9yZbs754dBMW0mPCXa1AlY0?=
+ =?iso-8859-1?Q?PDQjPepGQPrA40k9Lt3SQFt3R/BqAsVH74ysDaAf4d7+6odz2orR4aKLHs?=
+ =?iso-8859-1?Q?dY8B12AzFv2EHGyMXHVxgC3mCk0ImWoVJTVSGGPeeaCJ/nGJnEkURuqyis?=
+ =?iso-8859-1?Q?+3Yd0SNRxcpzAlmNO7j+26NxiU8/ZMLy+TChOBm9ByhQ1brRGldQtKh1eO?=
+ =?iso-8859-1?Q?sprigs4oXDL3xh3d9uyP14kKrEydeYvhyHsFITYNfZh/brf++YFifiM+ab?=
+ =?iso-8859-1?Q?z76oHjLYmTpOeED9bofFY8ESEcxm6EgLkLU0wHQU2XPsZnLoIuj6w+o7ma?=
+ =?iso-8859-1?Q?Z5p7TGlQVOsIZa/SwnErOgTxdyQ53bEslVfehebyfkbyq14I40C9hek0Zm?=
+ =?iso-8859-1?Q?XiAJzo6IHGkzwf85Pq4qPUCYcrQdNcW4bBWbB7dsd5cfbbskoKwZqk6FOn?=
+ =?iso-8859-1?Q?QIifNezTOoAfqIAC56aSZN24xrcnkWqki/EeJxexwD89lPpHEBmVAuEDqt?=
+ =?iso-8859-1?Q?NNE8wt6iWyqtMqFzYEqiPRFLvcUToHJWTJpSwuYZgfhs0pHJRsXfH7V+8r?=
+ =?iso-8859-1?Q?jzf6FQjHTJ0SaAiCzs+hxOzsQYtufbfVzZo4mupwqjLSjRMHuYsqS6A/bz?=
+ =?iso-8859-1?Q?pnyDjKqey0W0iyL7HGBVkxPMyWQM6EZqhjYR6NLnTbRhiIIzBBfaFw+WoE?=
+ =?iso-8859-1?Q?Thnk9whWi5CBXiklQt34sJZXd+B+Do7u/RkPc+MQYnY0vUBVhKBARBaijd?=
+ =?iso-8859-1?Q?UkSQOKYIgL/1mNXWXGBngc5wtxoSUdKdgvjlxJoTcjE7Rk1wDGWiGqEnWR?=
+ =?iso-8859-1?Q?PbKiCAuxEoyA5lKI0J53ySBouGltyCPULnTOpTRjeQjoIIRfwSIK4aKrAd?=
+ =?iso-8859-1?Q?efGXvA2WyVnL+Jtsh/Iiw1PeFvo2XC4D6/Jxk41QhRWNYCa1t6CxfKYd/l?=
+ =?iso-8859-1?Q?5wYzng+l1gNIhdWLBlXoMPdhs5PHQeEe7FZtwhtLBLN/wzlYKQwVuAudwE?=
+ =?iso-8859-1?Q?S9Ve/uO8R0je2xiROm2+CzdcjKAhpnzpfeH2tm+0Gno6k1JtsxzXwKNwcC?=
+ =?iso-8859-1?Q?Lov4omPCGnUaZAPnJ3jdfGmZJ39d4qPDokh95JATsOa+45B1Qwyp7YZ/yb?=
+ =?iso-8859-1?Q?wCI2PkP4IrVMHtCHsyc=3D?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:SA1PR12MB7199.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(376014)(366016)(38070700021); DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?1jOcXnypaxRoTwGSN2QPrBLTpqpoS18kxI2xjeVRUuGgyM1lnHdCWwJ0AL?=
+ =?iso-8859-1?Q?2/WliXuBRbha48mGZ9wplfbhoMyc96c1Njx+hLQKtSfSnwNAHHyMhsOVdU?=
+ =?iso-8859-1?Q?Jm1eSnXWmrF8LsAT58ADnxvDwJh/W986fOWen4Ph4o7u1tEDv28E7cq+2F?=
+ =?iso-8859-1?Q?yI/uyfXf+0f4jpRGw10TlGKb0Kl/zETEKgglQy5RZIAkXZXtI3KFGtDt3W?=
+ =?iso-8859-1?Q?awQXyfCjJFjg96G1KP2eq/kpNY34+se03eoXdLuiPWP61ugyGb99TRVmml?=
+ =?iso-8859-1?Q?CliUfETy2R0dKK0HUDC3l9lVcelO6ROQTJDQvrKC9JHu5ZdI6RgKgPxCgi?=
+ =?iso-8859-1?Q?spTjj4Runv0xBr+Tua8qhmPihUWZphZ7Z4yPkCr6Vmd2/GB7j/QblhvV84?=
+ =?iso-8859-1?Q?NgAUko2E5pEPINeQ/V5MzodBldD7fz+Bwvfq/JoGn5VeS7+ux8J1Gnpe6v?=
+ =?iso-8859-1?Q?EPm72b1h6Vk+X/OUGQLPN7akl9vv8jQkIb7Kby/JRj2BZ/77RQ3QrOufkJ?=
+ =?iso-8859-1?Q?klCPaWxQW/3J5KYwV6+Otx5aAIEPv14GW4J8daWcqAB0T8OU/NSrpaUIH9?=
+ =?iso-8859-1?Q?BE5TLpTSKRSztayikMEEwri+ppAZ397DxmTmcC/96QzGyMCNPWRs/h7Chd?=
+ =?iso-8859-1?Q?B7gENdACJKAN1VXXngqSayrhKYalB8YTQDgInR/6L7Krw9EwQsmSzhqtiF?=
+ =?iso-8859-1?Q?saB/Bu5UtZEU/EygprNhLEtW8VZBCS2sRVOshl1/SF0Yb2BR2EivFlFlua?=
+ =?iso-8859-1?Q?AJpVv8jYPHGZpXi8OXRGtJFUGN5cd8vzYx1pooASzCzaXuAlh9TwdUi0tW?=
+ =?iso-8859-1?Q?rma5GCWHA+2+M2BOOZ0Np36dtlUnBhqoARJJEbqspmvfTFUMPC+2fDW41T?=
+ =?iso-8859-1?Q?+iGvmnjlZ6Ac2Ff8P3t5uPjwmqXY8F6tnQVNfHjuQElSl5BaFZnAzxutNE?=
+ =?iso-8859-1?Q?tl44DmkBs6d6TyeaRNMMZ5j5CcHE/fgngdpTXEk0DWpKyuHH3FLcLaDeY6?=
+ =?iso-8859-1?Q?ta+VJ+IV+aZ5bdMu0mj6iLr4JcDerTjrWErfPnMGtVcKEXiN/MAOiGWjyF?=
+ =?iso-8859-1?Q?q4hkx9+W3uyknToU6SxtUgblLDMumi3r7DJHQE7JtJQ1RAmTjePnJOmeLE?=
+ =?iso-8859-1?Q?4RqAMaZbuM1ojEkrerQDiGdUZ14xM3lD0j8U1HxmvCxZmABMh6S9LXf8eV?=
+ =?iso-8859-1?Q?xH9GxDhAdCuAZmwNNzI8V1vqUcp+kT2pllw2luhwcM/iHxWkGMNF4+wF3l?=
+ =?iso-8859-1?Q?OiBIimDv1sp/XB/IKLKyYAJPjhu0UVXZpzZAh0gw82FYuRrXItO0T3yWfr?=
+ =?iso-8859-1?Q?fCOcQlP2opjhL0yE+nUPCXRtodOM4k9bdqj8qUwYiejhzt7z7VPi8CDJCf?=
+ =?iso-8859-1?Q?Z+WXEj2AO3Y05dQvo5hzJYJAvmunXS+lL0ZhIOwDKdjv9HCNMJs6V4wc1n?=
+ =?iso-8859-1?Q?rBTYsPEG2zlDAqJyNNkyJlptoa/lV0p3lOFKWfIVHfBPBP+Fl1SESwtaUn?=
+ =?iso-8859-1?Q?EuLOWdRh1kQTMxiUA/YZxiKK8/nQ34zmRpqUG/K2C1Hib4Ai6EOBswIhBr?=
+ =?iso-8859-1?Q?W9z1ATBBfcYpBjtVcYa/BX87OEcCGRIBT41N7MHcKSN15pNiB0qW7J7JUz?=
+ =?iso-8859-1?Q?Z4K87/8AhJz1I/VDhlDNya1HurgfpxLwtjZtMFWpbu+Ppi+Kt04TC6q4Ru?=
+ =?iso-8859-1?Q?b3FV8gdwmxoTc6emOePgA88LeVan6g7wwg/KH4Sl7KtM5j/+YLKR3KlK6T?=
+ =?iso-8859-1?Q?FX9DEe4SpPIjuq1tsOPAiWiz++X5EKPM6CA+KshzZL7xFf?=
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-References: <20260209132303.717784-1-ppandit@redhat.com>
-In-Reply-To: <20260209132303.717784-1-ppandit@redhat.com>
-From: Prasad Pandit <ppandit@redhat.com>
-Date: Mon, 16 Feb 2026 12:29:52 +0530
-X-Gm-Features: AaiRm52AQf7gglvRtLPju8sc2e3jnQ9iTCFr6eD9KegN14nivh1FgGHZjjGCxoQ
-Message-ID: <CAE8KmOzuUqK9EYhWt8RyR2B9jA79MuHeUSxJUGDiMQRsk++1=g@mail.gmail.com>
-Subject: Re: [PATCH v1] migration: introduce MIGRATION_STATUS_FAILING
-To: qemu-devel@nongnu.org
-Cc: peterx@redhat.com, farosas@suse.de, Prasad Pandit <pjp@fedoraproject.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=ppandit@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: SA1PR12MB7199.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 00c8bb9a-91ef-4cf4-bc6e-08de6d2b6e10
+X-MS-Exchange-CrossTenant-originalarrivaltime: 16 Feb 2026 07:17:23.0449 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: KSp5DAUa7OuIHODRPE7pY/HOr1M2Q4mHHzx/fRNrvNHD2+E1h3YoC2DEMclqwnz7BZpYBf5vlR5xUAqh2LL9Dg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR12MB7177
+Received-SPF: permerror client-ip=2a01:111:f403:c000::1;
+ envelope-from=ankita@nvidia.com;
+ helo=BYAPR05CU005.outbound.protection.outlook.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -132,316 +177,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 9 Feb 2026 at 18:55, Prasad Pandit <ppandit@redhat.com> wrote:
-> When migration connection is broken, the QEMU and libvirtd(8)
-> process on the source side receive TCP connection reset
-> notification. QEMU sets the migration status to FAILED and
-> proceeds to migration_cleanup(). Meanwhile, Libvirtd(8) sends
-> a QMP command to migrate_set_capabilities().
->
-> The migration_cleanup() and qmp_migrate_set_capabilities()
-> calls race with each other. When the latter is invoked first,
-> since the migration is not running (FAILED), migration
-> capabilities are reset to false, so during migration_cleanup()
-> the QEMU process crashes with assertion failure.
->
-> Introduce a new migration status FAILING and use it as an
-> interim status when an error occurs. Once migration_cleanup()
-> is done, it sets the migration status to FAILED. This helps
-> to avoid the above race condition and ensuing failure.
->
-> Interim status FAILING is set wherever the execution moves
-> towards migration_cleanup():
->   - postcopy_start()
->   - migration_thread()
->   - migration_cleanup()
->   - multifd_send_setup()
->   - bg_migration_thread()
->   - migration_completion()
->   - migration_detect_error()
->   - bg_migration_completion()
->   - multifd_send_error_propagate()
->   - migration_connect_error_propagate()
->
-> The migration status finally moves to FAILED and reports an
-> appropriate error to the user.
->
-> Interim status FAILING is _NOT_ set in the following routines
-> because they do not follow the migration_cleanup() path to the
-> FAILED state:
->   - cpr_exec_cb()
->   - qemu_savevm_state()
->   - postcopy_listen_thread()
->   - process_incoming_migration_co()
->   - multifd_recv_terminate_threads()
->   - migration_channel_process_incoming()
->
-> Signed-off-by: Prasad Pandit <pjp@fedoraproject.org>
-> ---
->  migration/migration.c                 | 34 +++++++++++++++++----------
->  migration/multifd.c                   |  4 ++--
->  qapi/migration.json                   |  8 ++++---
->  tests/qtest/migration/migration-qmp.c |  3 ++-
->  tests/qtest/migration/precopy-tests.c |  3 ++-
->  5 files changed, 32 insertions(+), 20 deletions(-)
->
-> v1:
->  - Rebase patch on the latest upstream version
->  - Add list of functions where interim state FAILING is set
->    and where it is not changed.
->
-> 67/67 qtest+qtest-x86_64 - qemu:qtest-x86_64/migration-test                 OK             113.97s   84 subtests passed
-> 68/68 qemu:qtest+qtest-x86_64 / qtest-x86_64/migration-test                 OK             107.20s   84 subtests passed
->
-> v0:
->  - https://lore.kernel.org/qemu-devel/20251222114822.327623-1-ppandit@redhat.com/T/#u
->
-> diff --git a/migration/migration.c b/migration/migration.c
-> index b103a82fc0..16c71e502a 100644
-> --- a/migration/migration.c
-> +++ b/migration/migration.c
-> @@ -1016,6 +1016,7 @@ bool migration_is_running(void)
->      case MIGRATION_STATUS_DEVICE:
->      case MIGRATION_STATUS_WAIT_UNPLUG:
->      case MIGRATION_STATUS_CANCELLING:
-> +    case MIGRATION_STATUS_FAILING:
->      case MIGRATION_STATUS_COLO:
->          return true;
->      default:
-> @@ -1158,6 +1159,7 @@ static void fill_source_migration_info(MigrationInfo *info)
->      case MIGRATION_STATUS_POSTCOPY_PAUSED:
->      case MIGRATION_STATUS_POSTCOPY_RECOVER_SETUP:
->      case MIGRATION_STATUS_POSTCOPY_RECOVER:
-> +    case MIGRATION_STATUS_FAILING:
->          /* TODO add some postcopy stats */
->          populate_time_info(info, s);
->          populate_ram_info(info, s);
-> @@ -1210,6 +1212,7 @@ static void fill_destination_migration_info(MigrationInfo *info)
->      case MIGRATION_STATUS_POSTCOPY_PAUSED:
->      case MIGRATION_STATUS_POSTCOPY_RECOVER:
->      case MIGRATION_STATUS_FAILED:
-> +    case MIGRATION_STATUS_FAILING:
->      case MIGRATION_STATUS_COLO:
->          info->has_status = true;
->          break;
-> @@ -1331,6 +1334,9 @@ static void migration_cleanup(MigrationState *s)
->      if (s->state == MIGRATION_STATUS_CANCELLING) {
->          migrate_set_state(&s->state, MIGRATION_STATUS_CANCELLING,
->                            MIGRATION_STATUS_CANCELLED);
-> +    } else if (s->state == MIGRATION_STATUS_FAILING) {
-> +        migrate_set_state(&s->state, MIGRATION_STATUS_FAILING,
-> +                          MIGRATION_STATUS_FAILED);
->      }
->
->      type = migration_has_failed(s) ? MIG_EVENT_PRECOPY_FAILED :
-> @@ -1383,7 +1389,7 @@ void migration_connect_error_propagate(MigrationState *s, Error *error)
->
->      switch (current) {
->      case MIGRATION_STATUS_SETUP:
-> -        next = MIGRATION_STATUS_FAILED;
-> +        next = MIGRATION_STATUS_FAILING;
->          break;
->
->      case MIGRATION_STATUS_POSTCOPY_PAUSED:
-> @@ -1397,9 +1403,10 @@ void migration_connect_error_propagate(MigrationState *s, Error *error)
->          break;
->
->      case MIGRATION_STATUS_CANCELLING:
-> +    case MIGRATION_STATUS_FAILING:
->          /*
-> -         * Don't move out of CANCELLING, the only valid transition is to
-> -         * CANCELLED, at migration_cleanup().
-> +         * Keep the current state, next transition is to be done
-> +         * in migration_cleanup().
->           */
->          break;
->
-> @@ -1547,6 +1554,7 @@ bool migration_has_failed(MigrationState *s)
->  {
->      return (s->state == MIGRATION_STATUS_CANCELLING ||
->              s->state == MIGRATION_STATUS_CANCELLED ||
-> +            s->state == MIGRATION_STATUS_FAILING ||
->              s->state == MIGRATION_STATUS_FAILED);
->  }
->
-> @@ -2472,7 +2480,7 @@ static int postcopy_start(MigrationState *ms, Error **errp)
->          if (postcopy_preempt_establish_channel(ms)) {
->              if (ms->state != MIGRATION_STATUS_CANCELLING) {
->                  migrate_set_state(&ms->state, ms->state,
-> -                                  MIGRATION_STATUS_FAILED);
-> +                                  MIGRATION_STATUS_FAILING);
->              }
->              error_setg(errp, "%s: Failed to establish preempt channel",
->                         __func__);
-> @@ -2635,7 +2643,7 @@ fail_closefb:
->      qemu_fclose(fb);
->  fail:
->      if (ms->state != MIGRATION_STATUS_CANCELLING) {
-> -        migrate_set_state(&ms->state, ms->state, MIGRATION_STATUS_FAILED);
-> +        migrate_set_state(&ms->state, ms->state, MIGRATION_STATUS_FAILING);
->      }
->      migration_block_activate(NULL);
->      migration_call_notifiers(MIG_EVENT_PRECOPY_FAILED, NULL);
-> @@ -2828,7 +2836,7 @@ fail:
->      }
->
->      if (s->state != MIGRATION_STATUS_CANCELLING) {
-> -        migrate_set_state(&s->state, s->state, MIGRATION_STATUS_FAILED);
-> +        migrate_set_state(&s->state, s->state, MIGRATION_STATUS_FAILING);
->      }
->  }
->
-> @@ -2865,7 +2873,7 @@ static void bg_migration_completion(MigrationState *s)
->
->  fail:
->      migrate_set_state(&s->state, current_active_state,
-> -                      MIGRATION_STATUS_FAILED);
-> +                      MIGRATION_STATUS_FAILING);
->  }
->
->  typedef enum MigThrError {
-> @@ -3066,7 +3074,7 @@ static MigThrError migration_detect_error(MigrationState *s)
->           * For precopy (or postcopy with error outside IO, or before dest
->           * starts), we fail with no time.
->           */
-> -        migrate_set_state(&s->state, state, MIGRATION_STATUS_FAILED);
-> +        migrate_set_state(&s->state, state, MIGRATION_STATUS_FAILING);
->          trace_migration_thread_file_err();
->
->          /* Time to stop the migration, now. */
-> @@ -3297,7 +3305,7 @@ static void migration_iteration_finish(MigrationState *s)
->          migrate_start_colo_process(s);
->          s->vm_old_state = RUN_STATE_RUNNING;
->          /* Fallthrough */
-> -    case MIGRATION_STATUS_FAILED:
-> +    case MIGRATION_STATUS_FAILING:
->      case MIGRATION_STATUS_CANCELLED:
->      case MIGRATION_STATUS_CANCELLING:
->          if (!migration_block_activate(&local_err)) {
-> @@ -3356,7 +3364,7 @@ static void bg_migration_iteration_finish(MigrationState *s)
->      switch (s->state) {
->      case MIGRATION_STATUS_COMPLETED:
->      case MIGRATION_STATUS_ACTIVE:
-> -    case MIGRATION_STATUS_FAILED:
-> +    case MIGRATION_STATUS_FAILING:
->      case MIGRATION_STATUS_CANCELLED:
->      case MIGRATION_STATUS_CANCELLING:
->          break;
-> @@ -3541,7 +3549,7 @@ static void *migration_thread(void *opaque)
->      if (ret) {
->          migrate_error_propagate(s, local_err);
->          migrate_set_state(&s->state, MIGRATION_STATUS_ACTIVE,
-> -                          MIGRATION_STATUS_FAILED);
-> +                          MIGRATION_STATUS_FAILING);
->          goto out;
->      }
->
-> @@ -3664,7 +3672,7 @@ static void *bg_migration_thread(void *opaque)
->      if (ret) {
->          migrate_error_propagate(s, local_err);
->          migrate_set_state(&s->state, MIGRATION_STATUS_ACTIVE,
-> -                          MIGRATION_STATUS_FAILED);
-> +                          MIGRATION_STATUS_FAILING);
->          goto fail_setup;
->      }
->
-> @@ -3727,7 +3735,7 @@ static void *bg_migration_thread(void *opaque)
->  fail:
->      if (early_fail) {
->          migrate_set_state(&s->state, MIGRATION_STATUS_ACTIVE,
-> -                MIGRATION_STATUS_FAILED);
-> +                MIGRATION_STATUS_FAILING);
->          bql_unlock();
->      }
->
-> diff --git a/migration/multifd.c b/migration/multifd.c
-> index ad6261688f..178c6b3350 100644
-> --- a/migration/multifd.c
-> +++ b/migration/multifd.c
-> @@ -431,7 +431,7 @@ static void multifd_send_error_propagate(Error *err)
->              s->state == MIGRATION_STATUS_DEVICE ||
->              s->state == MIGRATION_STATUS_ACTIVE) {
->              migrate_set_state(&s->state, s->state,
-> -                              MIGRATION_STATUS_FAILED);
-> +                              MIGRATION_STATUS_FAILING);
->          }
->      }
->  }
-> @@ -986,7 +986,7 @@ bool multifd_send_setup(void)
->
->  err:
->      migrate_set_state(&s->state, MIGRATION_STATUS_SETUP,
-> -                      MIGRATION_STATUS_FAILED);
-> +                      MIGRATION_STATUS_FAILING);
->      return false;
->  }
->
-> diff --git a/qapi/migration.json b/qapi/migration.json
-> index f925e5541b..903c1d9618 100644
-> --- a/qapi/migration.json
-> +++ b/qapi/migration.json
-> @@ -158,7 +158,9 @@
->  #
->  # @completed: migration is finished.
->  #
-> -# @failed: some error occurred during migration process.
-> +# @failing: error occurred during migration, clean-up underway.
-> +#
-> +# @failed: error occurred during migration, clean-up done.
->  #
->  # @colo: VM is in the process of fault tolerance, VM can not get into
->  #     this state unless colo capability is enabled for migration.
-> @@ -181,8 +183,8 @@
->    'data': [ 'none', 'setup', 'cancelling', 'cancelled',
->              'active', 'postcopy-device', 'postcopy-active',
->              'postcopy-paused', 'postcopy-recover-setup',
-> -            'postcopy-recover', 'completed', 'failed', 'colo',
-> -            'pre-switchover', 'device', 'wait-unplug' ] }
-> +            'postcopy-recover', 'completed', 'failing', 'failed',
-> +            'colo', 'pre-switchover', 'device', 'wait-unplug' ] }
->
->  ##
->  # @VfioStats:
-> diff --git a/tests/qtest/migration/migration-qmp.c b/tests/qtest/migration/migration-qmp.c
-> index 5c46ceb3e6..8279504db1 100644
-> --- a/tests/qtest/migration/migration-qmp.c
-> +++ b/tests/qtest/migration/migration-qmp.c
-> @@ -241,7 +241,8 @@ void wait_for_migration_fail(QTestState *from, bool allow_active)
->      do {
->          status = migrate_query_status(from);
->          bool result = !strcmp(status, "setup") || !strcmp(status, "failed") ||
-> -            (allow_active && !strcmp(status, "active"));
-> +            (allow_active && !strcmp(status, "active")) ||
-> +            !strcmp(status, "failing");
->          if (!result) {
->              fprintf(stderr, "%s: unexpected status status=%s allow_active=%d\n",
->                      __func__, status, allow_active);
-> diff --git a/tests/qtest/migration/precopy-tests.c b/tests/qtest/migration/precopy-tests.c
-> index a5423ca33c..f17dc5176d 100644
-> --- a/tests/qtest/migration/precopy-tests.c
-> +++ b/tests/qtest/migration/precopy-tests.c
-> @@ -1247,7 +1247,7 @@ void migration_test_add_precopy(MigrationTestEnv *env)
->      }
->
->      /* ensure new status don't go unnoticed */
-> -    assert(MIGRATION_STATUS__MAX == 16);
-> +    assert(MIGRATION_STATUS__MAX == 17);
->
->      for (int i = MIGRATION_STATUS_NONE; i < MIGRATION_STATUS__MAX; i++) {
->          switch (i) {
-> @@ -1259,6 +1259,7 @@ void migration_test_add_precopy(MigrationTestEnv *env)
->          case MIGRATION_STATUS_POSTCOPY_PAUSED:
->          case MIGRATION_STATUS_POSTCOPY_RECOVER_SETUP:
->          case MIGRATION_STATUS_POSTCOPY_RECOVER:
-> +        case MIGRATION_STATUS_FAILING:
->              continue;
->          default:
->              migration_test_add_suffix("/migration/cancel/src/after/",
-> --
-
-
-Ping..!
----
-  - Prasad
-
+=0A=
+> +=A0=A0=A0=A0=A0=A0=A0=A0 */=0A=
+> +=A0=A0=A0=A0=A0=A0=A0 for (i =3D 1; i < region->nr_mmaps; i++) {=0A=
+> +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 off_t prev_end =3D region->mmaps[i - 1=
+].offset +=0A=
+> +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
+=A0=A0=A0=A0 region->mmaps[i - 1].size;=0A=
+> +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 if (prev_end > region->mmaps[i].offset=
+) {=0A=
+> +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 error_report("%s: overlapp=
+ing sparse mmap regions detected "=0A=
+> +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
+=A0=A0=A0=A0 "in region %d: [0x%lx-0x%lx] overlaps with [0x%lx-0x%lx]",=0A=
+>=0A=
+> please use PRIx64=0A=
+>=0A=
+>=0A=
+> An extra 'Error **' parameter to vfio_region_setup() could also be=0A=
+> considered to propagate the error to vfio_pci_realize(). It shouldn't=0A=
+> be too complex to add.=0A=
+=0A=
+Thanks Cedric for the comment, I've posted v3 addressing the additional=0A=
+Error ** param. Please take a look.=0A=
+https://lore.kernel.org/all/20260215084950.4657-1-ankita@nvidia.com/=0A=
+=0A=
+I missed to address to use the PRIx64 in error_report. I'll consolidate tha=
+t=0A=
+with any additional comments that I get in that version.=
 
