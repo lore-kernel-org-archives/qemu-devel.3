@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 380D2E83842
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 22:53:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 088A3E8383F
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 22:54:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vs7Sf-0001sG-H7; Mon, 16 Feb 2026 17:53:01 -0500
+	id 1vs7Tc-0004LU-3L; Mon, 16 Feb 2026 17:54:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vs7Sd-0001rV-NS
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 17:52:59 -0500
-Received: from mail-wm1-x342.google.com ([2a00:1450:4864:20::342])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vs7TX-00049e-Vn
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 17:53:56 -0500
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vs7Sb-0006TD-GG
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 17:52:59 -0500
-Received: by mail-wm1-x342.google.com with SMTP id
- 5b1f17b1804b1-48375f1defeso28391305e9.0
- for <qemu-devel@nongnu.org>; Mon, 16 Feb 2026 14:52:57 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vs7TW-0006se-GP
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 17:53:55 -0500
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-4362d4050c1so4189351f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 16 Feb 2026 14:53:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771282375; x=1771887175; darn=nongnu.org;
+ d=linaro.org; s=google; t=1771282433; x=1771887233; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Q1qYXxoXs3fg7sMo9aLOdEMvIAw8M+fxuDARxQQ5jdw=;
- b=Wg9NE9MHlbIB+kM8zj1XeJFw3gRRvGUPUDgyyC0vApcQEohLB8z+fisXlCVjaYpERR
- aEdepDTP6udelwxnXolaih59pYdZ2oJ2OBl1d111QSjpBPzUQzlvOY1CDVisx/mVJh8H
- wLqiuv9TrzkkupsNZ8QkGTvgBgITt8eNFXVFOiNY5kKRW2oD3qdmCwPWJWK/R1KxnGB1
- ow7ODoDV1m7PdIG9uZbk0OhcvMm9Lrs2O1JTD0uDdKSDD4BC2Mh8FMI22sMTgfewcGAm
- 1X6q9zYxK3zBB4Wbv7YrqtY6pHv87RwnlAhZ7/SO5nDdYRi2GX5bJJig0L4XzIkMXJue
- +vmw==
+ bh=uFudOc/oMxtQlpMgDNqOz0GyKx9jheZ4E4APiNB+NOY=;
+ b=qL9mvDB71syBAnzcgzHtG+4rO+KE+zKmj+nX59yN3z0UQCOT/w1dkVblCHQD2K4LJe
+ dFwbmtTks3Q6/CfsZWft5XbRC4IHdglm8XYpJNlmVRGZ0jBl2pc79BSPra3NRTFRvy76
+ JiBm3I0gMz2KjBkEkgnureG1Qq09WktB+nlnuDGvhBaksnhFrKxDdKaVYoSTaDZui2dT
+ aCgx8S2w7qLjUdRg1WD9gqjKfheRa4TF5Kqn9Hi1/3+3BkBr66c3p+yr0D5c+0p/iT4l
+ pNqK7hp8188CiuhnhrXGVEaY3/ifL7+SYVGNVLQ0Cn7DHoM5pGMRoRJkJHVnkZj3uKE7
+ k40g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771282375; x=1771887175;
+ d=1e100.net; s=20230601; t=1771282433; x=1771887233;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=Q1qYXxoXs3fg7sMo9aLOdEMvIAw8M+fxuDARxQQ5jdw=;
- b=o2FMD+eyhK3WjV7tIJsCGgLIt2erP8ZksHVx1TxDFHqEYWk7qUeF+eek+Um4Y3hMp2
- gLCaYsEYWLUBIacLjZCtiYM+c0GFKQRSJR86Zais+9016JYq8qJ7QVtiqiLOAJmcaxDW
- RNYt4dys6sgwkJrBKzrfSg36KqT5c25aorLX/jD3xAaugRd5vvnsfNGbs8obBb0KGamB
- 3KUFNPsI3mlv8wjBUUXwdtWo53NVhzuEvTvURIIsMHq50gsg/hHFoLv7lDpz1u9RpzSQ
- UQh4kW3SizPna34G6AohIc1d44sMP0w4vF4TaFRhLNnRw/Vd5aZzBNIDROCIX0P34CMw
- CRpw==
-X-Gm-Message-State: AOJu0Yz+eOTE0iNZmVuh4nyiyu0QqLBMKxvOjoBuP4Md7m5ZMsFbFuNx
- fKcs0/C10bLa5KaR91tbXhNOK+XTOEBEN/C4F0UX/Go2BTUmKBkFS6zcz2tvrgUUW+pjjOnz6PK
- 43rlAozA=
-X-Gm-Gg: AZuq6aLLxIqAV23Hd95JcOd0E2+sjs5lVJWPYdx5S5O9XsRfgG44gslPUu7b1+s3jGx
- w0uyJ3HCr/cCnOzZo6HiVnW+AfTAe1tEh4Lgd3ntP4/CjkZj8hPWe84Fb3hZPhCg3k0PY3HtJ4q
- leZDlN4tXKqoUD6acuLWLW59du2T5qA4flwFlgIY6TokCKEp2eWk9DH8tlrYm2IRGjw6beI2ze+
- 9pVJkCe0CR7gpZFXljnCI1U/meixdSon4m/N7LsLQtsvrd5KwxJF32amePgEImNqOJFdhhzZ9H0
- h+YU+CE6bi80kyKIfEzhB56M4Lq9y+J5eN8pWLQWk/17SJ6SY1ULENlpZCIun4w0VGm6X8zwDvM
- GwXeyPqaLRrM4zSXe+fPfgMvNoQx3Rf/TioEYujmlWsYPNxBPomRuw9sIW9fx6/PNXFZACuWflm
- 85Er/OSI3qTAS6/Gt4FeWMepp07BjH7Tnriq2ZIcJ6O2Ic/JeWqsBhG4yqaXDGNYZZL4vWjhvK
-X-Received: by 2002:a05:600c:8a16:10b0:483:8e43:6dce with SMTP id
- 5b1f17b1804b1-4838e436e43mr27418275e9.29.1771282374604; 
- Mon, 16 Feb 2026 14:52:54 -0800 (PST)
+ bh=uFudOc/oMxtQlpMgDNqOz0GyKx9jheZ4E4APiNB+NOY=;
+ b=jFjS9sOGSIGQUfrPrCBgbrUiXW5CPP3HWDXgOMFJFMMoXGc07KwSQ4Rl09UuLw6nsT
+ I+gOVFjBO/BKYxWmTaZodxsfjz8gmwAQO4Izg9fym9y3B0cNyk/xhMch7Tb+3VaRAGsI
+ RQ3iJGW3BLGuc6sgarYMEHQK2tOfYp8F8Fhkz40IKQhAUfBc0vY+A2PgOcpS3hl1vbWr
+ 37JSVSihB/Qt3oC1qm+QTof2McRd3pSFpLbiE7kSE0FWYDyzekJOeGD8CCzSGvTaq5da
+ vPHA4/hlm4vLxTunzQ2zPu0aF8kgPRKPLAsSeIswt+K8eZ893UM+3PYvSfKYL8GTmJei
+ xVtw==
+X-Gm-Message-State: AOJu0Yyie5mOyYdhMLbUh+r6iOtjYhV8iW9vCW5fNB9NTDFP87W8dl6r
+ zETt/pH1bRVmbdjZKEagdBzzFitytLiEKFl1k/roENKlxiG0YPRkwkpwlfd56VLNi7NYoGS4Z2r
+ 0Tn291n0=
+X-Gm-Gg: AZuq6aIcBoAgPB2BYIPGkOD9Yv4Ypj1RZXn8ZMXMHUjvCUjYmuxIKAIcl6ONmsapF95
+ mbZHeklz9/+Xz9QM7wL2kdsnvcTp67cvZoxnmnXDd6sIzDnqCGHjj+IXDZ5RzDql7e698iuddqB
+ epOFTXz/qbf0EcE8Q/RHXGFp5x081eDhn8rY/UeMZQOiZMzlpggouX1+XeyJQZG5iXzcShIdArI
+ Lnhu1Y4tBsTdK7gu/9gUWQmxnze8aMnOlzDLn9SpLHcxJJnfbv0JI8bWF/e6FvRyFqlIzRE2XSy
+ kzksuHUiOLrZcOOw5+2fqK5ZeWiN1OeUuXSG1Y7fkMeFwbBNsb81BW+n9+q5zYKmTW9/NLsl7Cb
+ uz9SUXu/y6Eh0cT+j/dcZBEKQpEHw2hYnFyrZtdFCvwtgFYxj0mv0niSqps6CLq+WSjpMWtUjMa
+ bGR1DLA9phMfweEHZleKVyQJAzN4jXePKBGsC7gI3jmojmr4RFypTT3DJ6JG/I69kdv5logqJ8
+X-Received: by 2002:a5d:5f54:0:b0:432:a9db:f9a2 with SMTP id
+ ffacd0b85a97d-43797913b92mr20541061f8f.41.1771282432575; 
+ Mon, 16 Feb 2026 14:53:52 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4835d99e194sm356603725e9.8.2026.02.16.14.52.53
+ ffacd0b85a97d-43796a5d156sm33100660f8f.5.2026.02.16.14.53.51
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 16 Feb 2026 14:52:53 -0800 (PST)
+ Mon, 16 Feb 2026 14:53:52 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Laurent Vivier <laurent@vivier.eu>,
@@ -78,17 +78,18 @@ Cc: Laurent Vivier <laurent@vivier.eu>,
  Paolo Bonzini <pbonzini@redhat.com>, unisono@quyllur.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-ppc@nongnu.org
-Subject: [PATCH 03/11] target/sparc: Restore 'gdb-xml/sparc64-fpu.xml'
-Date: Mon, 16 Feb 2026 23:52:19 +0100
-Message-ID: <20260216225228.53959-4-philmd@linaro.org>
+Subject: [PATCH 11/11] target/ppc: Remove MonitorDef register entries
+ available via gdbstub
+Date: Mon, 16 Feb 2026 23:52:27 +0100
+Message-ID: <20260216225228.53959-12-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260216225228.53959-1-philmd@linaro.org>
 References: <20260216225228.53959-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::342;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x342.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -111,334 +112,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Restore gdb-xml/sparc64-fpu.xml from mainstream binutils, tag
-'binutils-2_46', found in the gdb/features/sparc/folder [*].
-
-Extract sparc_fpu_gdb_write_register() out of
-sparc_cpu_gdb_read_register() and sparc_fpu_gdb_write_register()
-out of sparc_cpu_gdb_write_register(), taking care to update the
-register indexes in the switch cases.
-
-Register these helpers with a call to gdb_register_coprocessor()
-in sparc_cpu_register_gdb_regs().
-
-[*] https://sourceware.org/git/?p=binutils-gdb.git;a=tree;f=gdb/features/sparc;hb=refs/tags/binutils-2_46
+All these registers are already provided by via gdbstub parsed XML
+and handler by the gdb_get_register() helper in the monitor/hmp.c
+file. Remove as now unreachable code.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- configs/targets/sparc64-linux-user.mak |  2 +-
- configs/targets/sparc64-softmmu.mak    |  2 +-
- target/sparc/cpu.c                     |  2 +-
- target/sparc/gdbstub.c                 | 88 +++++++++++++++++---------
- gdb-xml/sparc64-core.xml               | 50 ---------------
- gdb-xml/sparc64-fpu.xml                | 59 +++++++++++++++++
- 6 files changed, 120 insertions(+), 83 deletions(-)
- create mode 100644 gdb-xml/sparc64-fpu.xml
+ target/ppc/ppc-qmp-cmds.c | 5 -----
+ 1 file changed, 5 deletions(-)
 
-diff --git a/configs/targets/sparc64-linux-user.mak b/configs/targets/sparc64-linux-user.mak
-index 930f7e13ab9..a5f8f8d51a2 100644
---- a/configs/targets/sparc64-linux-user.mak
-+++ b/configs/targets/sparc64-linux-user.mak
-@@ -4,6 +4,6 @@ TARGET_ABI_DIR=sparc
- TARGET_SYSTBL_ABI=common,64
- TARGET_SYSTBL=syscall.tbl
- TARGET_BIG_ENDIAN=y
--TARGET_XML_FILES=gdb-xml/sparc64-core.xml gdb-xml/sparc64-cp0.xml
-+TARGET_XML_FILES=gdb-xml/sparc64-core.xml gdb-xml/sparc64-fpu.xml gdb-xml/sparc64-cp0.xml
- TARGET_LONG_BITS=64
- TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API=y
-diff --git a/configs/targets/sparc64-softmmu.mak b/configs/targets/sparc64-softmmu.mak
-index 22e7f3c94a7..c35b6b1bb8a 100644
---- a/configs/targets/sparc64-softmmu.mak
-+++ b/configs/targets/sparc64-softmmu.mak
-@@ -1,7 +1,7 @@
- TARGET_ARCH=sparc64
- TARGET_BASE_ARCH=sparc
- TARGET_BIG_ENDIAN=y
--TARGET_XML_FILES=gdb-xml/sparc64-core.xml gdb-xml/sparc64-cp0.xml
-+TARGET_XML_FILES=gdb-xml/sparc64-core.xml gdb-xml/sparc64-fpu.xml gdb-xml/sparc64-cp0.xml
- TARGET_LONG_BITS=64
- TARGET_NOT_USING_LEGACY_LDST_PHYS_API=y
- TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API=y
-diff --git a/target/sparc/cpu.c b/target/sparc/cpu.c
-index 6f7b250abb3..2db34d88b97 100644
---- a/target/sparc/cpu.c
-+++ b/target/sparc/cpu.c
-@@ -1094,7 +1094,7 @@ static void sparc_cpu_class_init(ObjectClass *oc, const void *data)
+diff --git a/target/ppc/ppc-qmp-cmds.c b/target/ppc/ppc-qmp-cmds.c
+index 7022564604f..7dfa78c2e0d 100644
+--- a/target/ppc/ppc-qmp-cmds.c
++++ b/target/ppc/ppc-qmp-cmds.c
+@@ -93,16 +93,11 @@ void hmp_info_tlb(Monitor *mon, const QDict *qdict)
+ }
  
- #if defined(TARGET_SPARC64) && !defined(TARGET_ABI32)
-     cc->gdb_core_xml_file = "sparc64-core.xml";
--    cc->gdb_num_core_regs = 80;
-+    cc->gdb_num_core_regs = 32;
- #else
-     cc->gdb_num_core_regs = 72;
- #endif
-diff --git a/target/sparc/gdbstub.c b/target/sparc/gdbstub.c
-index bdd759dd0a9..b5b1494950a 100644
---- a/target/sparc/gdbstub.c
-+++ b/target/sparc/gdbstub.c
-@@ -40,32 +40,40 @@ int sparc_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
-         /* register window */
-         return gdb_get_rega(mem_buf, env->regwptr[n - 8]);
-     }
-+    return 0;
-+}
-+
-+__attribute__((unused))
-+static int sparc_fpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
-+{
-+    CPUSPARCState *env = cpu_env(cs);
-+
- #if defined(TARGET_ABI32) || !defined(TARGET_SPARC64)
--    if (n < 64) {
-+    if (n < 32) {
-         /* fprs */
-         if (n & 1) {
--            return gdb_get_reg32(mem_buf, env->fpr[(n - 32) / 2].l.lower);
-+            return gdb_get_reg32(mem_buf, env->fpr[n / 2].l.lower);
-         } else {
--            return gdb_get_reg32(mem_buf, env->fpr[(n - 32) / 2].l.upper);
-+            return gdb_get_reg32(mem_buf, env->fpr[n / 2].l.upper);
-         }
-     }
- #else
--    if (n < 64) {
-+    if (n < 32) {
-         /* f0-f31 */
-         if (n & 1) {
--            return gdb_get_reg32(mem_buf, env->fpr[(n - 32) / 2].l.lower);
-+            return gdb_get_reg32(mem_buf, env->fpr[n / 2].l.lower);
-         } else {
--            return gdb_get_reg32(mem_buf, env->fpr[(n - 32) / 2].l.upper);
-+            return gdb_get_reg32(mem_buf, env->fpr[n / 2].l.upper);
-         }
-     }
--    if (n < 80) {
-+    if (n < 48) {
-         /* f32-f62 (16 double width registers, even register numbers only)
--         * n == 64: f32 : env->fpr[16]
--         * n == 65: f34 : env->fpr[17]
-+         * n == 32: f32 : env->fpr[16]
-+         * n == 33: f34 : env->fpr[17]
-          * etc...
--         * n == 79: f62 : env->fpr[31]
-+         * n == 47: f62 : env->fpr[31]
-          */
--        return gdb_get_reg64(mem_buf, env->fpr[(n - 64) + 16].ll);
-+        return gdb_get_reg64(mem_buf, env->fpr[(n - 32) + 16].ll);
-     }
- #endif
-     return 0;
-@@ -135,39 +143,55 @@ int sparc_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
-     if (n < 8) {
-         /* g0..g7 */
-         env->gregs[n] = tmp;
--    } else if (n < 32) {
-+    } else {
-         /* register window */
-         env->regwptr[n - 8] = tmp;
-     }
- #if defined(TARGET_ABI32) || !defined(TARGET_SPARC64)
--    else if (n < 64) {
--        /* fprs */
--        /* f0-f31 */
--        if (n & 1) {
--            env->fpr[(n - 32) / 2].l.lower = tmp;
--        } else {
--            env->fpr[(n - 32) / 2].l.upper = tmp;
--        }
--    }
-     return 4;
- #else
--    else if (n < 64) {
-+    return 8;
-+#endif
-+}
-+
-+__attribute__((unused))
-+static int sparc_fpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
-+{
-+    CPUSPARCState *env = cpu_env(cs);
-+
-+#if defined(TARGET_ABI32) || !defined(TARGET_SPARC64)
-+    uint32_t tmp;
-+
-+    tmp = ldl_p(mem_buf);
-+
-+    /* fprs */
-+    /* f0-f31 */
-+    if (n & 1) {
-+        env->fpr[n / 2].l.lower = tmp;
-+    } else {
-+        env->fpr[n / 2].l.upper = tmp;
-+    }
-+
-+    return 4;
-+#else
-+    if (n < 32) {
-         /* f0-f31 */
--        tmp = ldl_p(mem_buf);
-+        uint32_t tmp = ldl_p(mem_buf);
-         if (n & 1) {
--            env->fpr[(n - 32) / 2].l.lower = tmp;
-+            env->fpr[n / 2].l.lower = tmp;
-         } else {
--            env->fpr[(n - 32) / 2].l.upper = tmp;
-+            env->fpr[n  / 2].l.upper = tmp;
-         }
-         return 4;
--    } else if (n < 80) {
-+    } else {
-+        uint64_t tmp = ldq_p(mem_buf);
-         /* f32-f62 (16 double width registers, even register numbers only)
--         * n == 64: f32 : env->fpr[16]
--         * n == 65: f34 : env->fpr[17]
-+         * n == 32: f32 : env->fpr[16]
-+         * n == 33: f34 : env->fpr[17]
-          * etc...
--         * n == 79: f62 : env->fpr[31]
-+         * n == 47: f62 : env->fpr[31]
-          */
--        env->fpr[(n - 64) + 16].ll = tmp;
-+        env->fpr[(n - 32) + 16].ll = tmp;
-     }
-     return 8;
- #endif
-@@ -249,6 +273,10 @@ void sparc_cpu_register_gdb_regs(CPUState *cs)
- #if defined(TARGET_ABI32) || !defined(TARGET_SPARC64)
-     /* Not yet supported */
- #else
-+    gdb_register_coprocessor(cs, sparc_fpu_gdb_read_register,
-+                             sparc_fpu_gdb_write_register,
-+                             gdb_find_static_feature("sparc64-fpu.xml"),
-+                             0);
-     gdb_register_coprocessor(cs, sparc_cp0_gdb_read_register,
-                              sparc_cp0_gdb_write_register,
-                              gdb_find_static_feature("sparc64-cp0.xml"),
-diff --git a/gdb-xml/sparc64-core.xml b/gdb-xml/sparc64-core.xml
-index 1c26d8c01c1..85b0820a408 100644
---- a/gdb-xml/sparc64-core.xml
-+++ b/gdb-xml/sparc64-core.xml
-@@ -39,54 +39,4 @@
-   <reg name="i5" bitsize="64" type="uint64" regnum="29"/>
-   <reg name="fp" bitsize="64" type="uint64" regnum="30"/>
-   <reg name="i7" bitsize="64" type="uint64" regnum="31"/>
--
--  <reg name="f0" bitsize="32" type="ieee_single" regnum="32"/>
--  <reg name="f1" bitsize="32" type="ieee_single" regnum="33"/>
--  <reg name="f2" bitsize="32" type="ieee_single" regnum="34"/>
--  <reg name="f3" bitsize="32" type="ieee_single" regnum="35"/>
--  <reg name="f4" bitsize="32" type="ieee_single" regnum="36"/>
--  <reg name="f5" bitsize="32" type="ieee_single" regnum="37"/>
--  <reg name="f6" bitsize="32" type="ieee_single" regnum="38"/>
--  <reg name="f7" bitsize="32" type="ieee_single" regnum="39"/>
--  <reg name="f8" bitsize="32" type="ieee_single" regnum="40"/>
--  <reg name="f9" bitsize="32" type="ieee_single" regnum="41"/>
--  <reg name="f10" bitsize="32" type="ieee_single" regnum="42"/>
--  <reg name="f11" bitsize="32" type="ieee_single" regnum="43"/>
--  <reg name="f12" bitsize="32" type="ieee_single" regnum="44"/>
--  <reg name="f13" bitsize="32" type="ieee_single" regnum="45"/>
--  <reg name="f14" bitsize="32" type="ieee_single" regnum="46"/>
--  <reg name="f15" bitsize="32" type="ieee_single" regnum="47"/>
--  <reg name="f16" bitsize="32" type="ieee_single" regnum="48"/>
--  <reg name="f17" bitsize="32" type="ieee_single" regnum="49"/>
--  <reg name="f18" bitsize="32" type="ieee_single" regnum="50"/>
--  <reg name="f19" bitsize="32" type="ieee_single" regnum="51"/>
--  <reg name="f20" bitsize="32" type="ieee_single" regnum="52"/>
--  <reg name="f21" bitsize="32" type="ieee_single" regnum="53"/>
--  <reg name="f22" bitsize="32" type="ieee_single" regnum="54"/>
--  <reg name="f23" bitsize="32" type="ieee_single" regnum="55"/>
--  <reg name="f24" bitsize="32" type="ieee_single" regnum="56"/>
--  <reg name="f25" bitsize="32" type="ieee_single" regnum="57"/>
--  <reg name="f26" bitsize="32" type="ieee_single" regnum="58"/>
--  <reg name="f27" bitsize="32" type="ieee_single" regnum="59"/>
--  <reg name="f28" bitsize="32" type="ieee_single" regnum="60"/>
--  <reg name="f29" bitsize="32" type="ieee_single" regnum="61"/>
--  <reg name="f30" bitsize="32" type="ieee_single" regnum="62"/>
--  <reg name="f31" bitsize="32" type="ieee_single" regnum="63"/>
--
--  <reg name="f32" bitsize="64" type="ieee_double" regnum="64"/>
--  <reg name="f34" bitsize="64" type="ieee_double" regnum="65"/>
--  <reg name="f36" bitsize="64" type="ieee_double" regnum="66"/>
--  <reg name="f38" bitsize="64" type="ieee_double" regnum="67"/>
--  <reg name="f40" bitsize="64" type="ieee_double" regnum="68"/>
--  <reg name="f42" bitsize="64" type="ieee_double" regnum="69"/>
--  <reg name="f44" bitsize="64" type="ieee_double" regnum="70"/>
--  <reg name="f46" bitsize="64" type="ieee_double" regnum="71"/>
--  <reg name="f48" bitsize="64" type="ieee_double" regnum="72"/>
--  <reg name="f50" bitsize="64" type="ieee_double" regnum="73"/>
--  <reg name="f52" bitsize="64" type="ieee_double" regnum="74"/>
--  <reg name="f54" bitsize="64" type="ieee_double" regnum="75"/>
--  <reg name="f56" bitsize="64" type="ieee_double" regnum="76"/>
--  <reg name="f58" bitsize="64" type="ieee_double" regnum="77"/>
--  <reg name="f60" bitsize="64" type="ieee_double" regnum="78"/>
--  <reg name="f62" bitsize="64" type="ieee_double" regnum="79"/>
- </feature>
-diff --git a/gdb-xml/sparc64-fpu.xml b/gdb-xml/sparc64-fpu.xml
-new file mode 100644
-index 00000000000..d7151b34c7f
---- /dev/null
-+++ b/gdb-xml/sparc64-fpu.xml
-@@ -0,0 +1,59 @@
-+<?xml version="1.0"?>
-+<!-- Copyright (C) 2013-2026 Free Software Foundation, Inc.
-+
-+     Copying and distribution of this file, with or without modification,
-+     are permitted in any medium without royalty provided the copyright
-+     notice and this notice are preserved.  -->
-+
-+<!DOCTYPE feature SYSTEM "gdb-target.dtd">
-+<feature name="org.gnu.gdb.sparc.fpu">
-+  <reg name="f0" bitsize="32" type="ieee_single" regnum="32"/>
-+  <reg name="f1" bitsize="32" type="ieee_single" regnum="33"/>
-+  <reg name="f2" bitsize="32" type="ieee_single" regnum="34"/>
-+  <reg name="f3" bitsize="32" type="ieee_single" regnum="35"/>
-+  <reg name="f4" bitsize="32" type="ieee_single" regnum="36"/>
-+  <reg name="f5" bitsize="32" type="ieee_single" regnum="37"/>
-+  <reg name="f6" bitsize="32" type="ieee_single" regnum="38"/>
-+  <reg name="f7" bitsize="32" type="ieee_single" regnum="39"/>
-+  <reg name="f8" bitsize="32" type="ieee_single" regnum="40"/>
-+  <reg name="f9" bitsize="32" type="ieee_single" regnum="41"/>
-+  <reg name="f10" bitsize="32" type="ieee_single" regnum="42"/>
-+  <reg name="f11" bitsize="32" type="ieee_single" regnum="43"/>
-+  <reg name="f12" bitsize="32" type="ieee_single" regnum="44"/>
-+  <reg name="f13" bitsize="32" type="ieee_single" regnum="45"/>
-+  <reg name="f14" bitsize="32" type="ieee_single" regnum="46"/>
-+  <reg name="f15" bitsize="32" type="ieee_single" regnum="47"/>
-+  <reg name="f16" bitsize="32" type="ieee_single" regnum="48"/>
-+  <reg name="f17" bitsize="32" type="ieee_single" regnum="49"/>
-+  <reg name="f18" bitsize="32" type="ieee_single" regnum="50"/>
-+  <reg name="f19" bitsize="32" type="ieee_single" regnum="51"/>
-+  <reg name="f20" bitsize="32" type="ieee_single" regnum="52"/>
-+  <reg name="f21" bitsize="32" type="ieee_single" regnum="53"/>
-+  <reg name="f22" bitsize="32" type="ieee_single" regnum="54"/>
-+  <reg name="f23" bitsize="32" type="ieee_single" regnum="55"/>
-+  <reg name="f24" bitsize="32" type="ieee_single" regnum="56"/>
-+  <reg name="f25" bitsize="32" type="ieee_single" regnum="57"/>
-+  <reg name="f26" bitsize="32" type="ieee_single" regnum="58"/>
-+  <reg name="f27" bitsize="32" type="ieee_single" regnum="59"/>
-+  <reg name="f28" bitsize="32" type="ieee_single" regnum="60"/>
-+  <reg name="f29" bitsize="32" type="ieee_single" regnum="61"/>
-+  <reg name="f30" bitsize="32" type="ieee_single" regnum="62"/>
-+  <reg name="f31" bitsize="32" type="ieee_single" regnum="63"/>
-+
-+  <reg name="f32" bitsize="64" type="ieee_double" regnum="64"/>
-+  <reg name="f34" bitsize="64" type="ieee_double" regnum="65"/>
-+  <reg name="f36" bitsize="64" type="ieee_double" regnum="66"/>
-+  <reg name="f38" bitsize="64" type="ieee_double" regnum="67"/>
-+  <reg name="f40" bitsize="64" type="ieee_double" regnum="68"/>
-+  <reg name="f42" bitsize="64" type="ieee_double" regnum="69"/>
-+  <reg name="f44" bitsize="64" type="ieee_double" regnum="70"/>
-+  <reg name="f46" bitsize="64" type="ieee_double" regnum="71"/>
-+  <reg name="f48" bitsize="64" type="ieee_double" regnum="72"/>
-+  <reg name="f50" bitsize="64" type="ieee_double" regnum="73"/>
-+  <reg name="f52" bitsize="64" type="ieee_double" regnum="74"/>
-+  <reg name="f54" bitsize="64" type="ieee_double" regnum="75"/>
-+  <reg name="f56" bitsize="64" type="ieee_double" regnum="76"/>
-+  <reg name="f58" bitsize="64" type="ieee_double" regnum="77"/>
-+  <reg name="f60" bitsize="64" type="ieee_double" regnum="78"/>
-+  <reg name="f62" bitsize="64" type="ieee_double" regnum="79"/>
-+</feature>
+ const MonitorDef monitor_defs[] = {
+-    { "fpscr", offsetof(CPUPPCState, fpscr) },
+     /* Next instruction pointer */
+-    { "nip|pc", offsetof(CPUPPCState, nip) },
+-    { "lr", offsetof(CPUPPCState, lr) },
+-    { "ctr", offsetof(CPUPPCState, ctr) },
+     { "decr", 0, &monitor_get_decr, },
+     { "ccr|cr", 0, &monitor_get_ccr, },
+     /* Machine state register */
+     { "xer", 0, &monitor_get_xer },
+-    { "msr", offsetof(CPUPPCState, msr) },
+     { "tbu", 0, &monitor_get_tbu, },
+ #if defined(TARGET_PPC64)
+     { "tb", 0, &monitor_get_tbl, },
 -- 
 2.52.0
 
