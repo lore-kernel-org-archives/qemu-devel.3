@@ -4,108 +4,125 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C75BDE7BD86
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 10:11:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE8FAE7BD88
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 10:23:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vrvZI-0002D1-Gi; Mon, 16 Feb 2026 05:11:04 -0500
+	id 1vrvkM-0004CN-4b; Mon, 16 Feb 2026 05:22:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1vrvZE-0002Bu-JP
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 05:11:01 -0500
-Received: from mail-qt1-x82b.google.com ([2607:f8b0:4864:20::82b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1vrvZC-0002io-UM
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 05:11:00 -0500
-Received: by mail-qt1-x82b.google.com with SMTP id
- d75a77b69052e-506aa68065eso25547021cf.1
- for <qemu-devel@nongnu.org>; Mon, 16 Feb 2026 02:10:58 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1771236658; cv=none;
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1vrvkK-0004Bx-5r
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 05:22:28 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1vrvkH-0005mV-UD
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 05:22:27 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1771237344;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=4fkUz6bVuygUTd+Xe0xiBI4iHyk8L4fdLMV6McBM5XI=;
+ b=LYRt8/y5LRQdFwWO+gRi9FOyffaj8p0lXWr9j6I742LAlvHT+VWxHeno2S1syJi/oWIBOa
+ txj/eTIqhX3fi0JFdv5+aeev94qZGz65R9y3lcrYb0RD3zEaWjbTX2Ma9t6PGbcM56PTti
+ BuuZTpGa5MqfajsNu68Itd1PnK7F7fo=
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
+ [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-422-HdU9pgdFMfif_2gmq-Z0yw-1; Mon, 16 Feb 2026 05:22:22 -0500
+X-MC-Unique: HdU9pgdFMfif_2gmq-Z0yw-1
+X-Mimecast-MFC-AGG-ID: HdU9pgdFMfif_2gmq-Z0yw_1771237342
+Received: by mail-qv1-f69.google.com with SMTP id
+ 6a1803df08f44-88fcbe2e351so243621386d6.1
+ for <qemu-devel@nongnu.org>; Mon, 16 Feb 2026 02:22:22 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1771237342; cv=none;
  d=google.com; s=arc-20240605;
- b=dV/XRNatNoyJ+P0MWHjYCKeonHQnGR7TVVrEe6Ir+q0verZJ/K/ndSBIIw2OU468lS
- 4gEPBE0ZXpwibqLq4kvHV73avv98gpIwRgTmW+j46qXkInVnQ21pX40ChDTjLxuEL3kY
- 8Jk3Xs9sukMgpCyKK24UaOJTTbpKGwKTtLVWTkSocA2i0vR3a2iwD03Ejq1V2oCi1qFh
- 2A3z5TSPkuW0VJsngggFBRtfN0lzF7IOMIMTs4gKgf/X+vNdklF5PxwIHLacoo9BY5nb
- vEQU0hDswOHSAXYaWwsltG8y58KF8LzGhZmrZfP3nyAnN2hSsCxFV8XqgqFiTRs1jmtM
- VczA==
+ b=NK3EYvbONzXObikGrfTSJ9HwfHORf6QJZcaQF9Lw4GfC0vzT+eaabtoAxGXdQ6jCBz
+ SLuYy7HaBZa7uKbsNJPfPMU2jQWxoBeQvw4ZR4yvwQCyuWVhhlO9kIMGRu6lPPe3q27E
+ HgVctAIAmOVyGjnSMiYs65Vn9wkYnFgfdZVB9IUFwn4+8gwIz9RqraE3hcjulebvJ+xj
+ 18G/MnbkYlVTtbOpT4J8vuFqYhZQzOpIofTkIzu1f5jKzy9p7MxYc0C5bysLlaaoNw36
+ g7YhvYtxTJMa4MyNNxm6kmcjn++wp3mcQyTuHvWGHPuVqpXQVR1wCe4p2dkSbGwkYyJr
+ SxWw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=Pos3m4CUAqdw7LlYIAp8p0DJFDuwxAtAWoiHvzAfsyw=;
- fh=7YH/6k/j25NNwwt5Z0aNR+l5vsUJilkY+EqN5Ef/xhY=;
- b=VfzP8y5FUUg9KTj9EExAf3Yb3VT23+QMeAyNP0KgYMv4/z7V42WSfxUsBjB/9mfDV1
- vAFSbfw2U124hbjSXIWMfJP9rmm+Hy8yPqo1vwLDoUloBM6RbS4TVMd4dvqX5DVgEB/O
- frF6z9hlsTbPkKjqBmFLoTixAVuXHxYpEOb0ctCu3hYJe9A49FsNCBD7FLTkZCn9GaIp
- QSFBZUIRzyMZjnfeNH9Bf2+owL19Uonjq3IQBlD0mQw741gccnt58YSBdxyrF/wJ8Lbi
- G/cSf9WAUZOg366COGjn/IDaye9VzswsnVped12UJEEsuAGOhqUnzd1dAlyteiJk7DGq
- ZhqQ==; darn=nongnu.org
+ bh=4fkUz6bVuygUTd+Xe0xiBI4iHyk8L4fdLMV6McBM5XI=;
+ fh=sIsIOvEHAUniTyi3GhO91uUMlcdX4avqzqeMhQBuOOs=;
+ b=kumbyDj4DcsvGmpyJK6fDUvYlQo/yMZPtNcqyNRdmEZYUyVwcOrmK1soQib3kr8uWj
+ IyA0XROSlS0drFG1VJNnrKJuUDrO3gwi4HgMcftNe4tFqqWy4ZNN0RFM3leZSU/8IZ9H
+ owD13xQPqhiLnBLTd75MVp+HnqqbCs6XdWHNpcMQ+b18l0ugu1Bvm41ERpz0KCAyXlTt
+ vjQLRhldQ49yDM0R2/IoZpKv/AO49p9YVFn2QXVkkFCLY8RpI7o3Q2MyLmBa+zgE9nDB
+ I7WfD3KJftgaZN3xlwvaxpOXuZveSUWaPhhx4VizR8c2a5WECv1N9v7nMnn/edkJgyHx
+ mSdQ==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1771236658; x=1771841458; darn=nongnu.org;
+ d=redhat.com; s=google; t=1771237342; x=1771842142; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Pos3m4CUAqdw7LlYIAp8p0DJFDuwxAtAWoiHvzAfsyw=;
- b=gnMNAMYKiDRdPyjX8QGL9HeceK9POPXLpyUWOq/7KmrcC4w3t8ku+ob3z7Dsu1YcKb
- +mENwJ1796HeoGDwFupXV0iAabrfTZvxCLk9R7H7awE0Nub/9DDzqHRixgUs5hbS0rkO
- +z9kHnuwLGwwvpXywn+FXZjrEqDrETf9kQa/DQeJ7enjrK8xyM4hNJcAim3MF4fP+qMO
- QSyVQ8Uz7j4XZdaRxssflvioys7IxtZqQVtnGdLIhsgROAJtzxqAfijZ2UzYUbKGrwep
- /wBVs0xvFJR46P3S8HPjpji+MLjqbQ/WKilfyNmUvi8LLK2TotcNqyBd0VKYDok+eyT9
- wT8w==
+ bh=4fkUz6bVuygUTd+Xe0xiBI4iHyk8L4fdLMV6McBM5XI=;
+ b=ORpRuK+RWCSfHeg4o5rjBBNgxefhVnbYc4yDH5DExAFOi8NigwMXLNf/V3kQQ7WBIz
+ /mOhPCgm81A84ukqKiCs2/oH3xmCFymGDrSj9viRvwAXuh0FXa0Krum8WwquYh7zuLwz
+ k31clmgLQXFB/HRm5EVg4P0P3qEAhTp/sNUelWYrikeU4gFEpqWM859ijYlrSLPUnyd8
+ UeTTy42MylPTcYe/+Xgh+ia0eVef0/f18Fk7LXcOALI6JEXskYROmqRMsQbAUWEbSR/2
+ GqBV+bz9THRkD/iRSt+NQAejvLP4YmyshYt/GkjO3hiyEM3qscFqBrC8wYfUPXLGBaS6
+ uCGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771236658; x=1771841458;
+ d=1e100.net; s=20230601; t=1771237342; x=1771842142;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=Pos3m4CUAqdw7LlYIAp8p0DJFDuwxAtAWoiHvzAfsyw=;
- b=AvOZ8XGKHVgjq4syWmHi6xWzIJktGo3XE/hPtWNWGXFiXgVi+2rauodPLICy/zUin4
- aAWHVKlnoB0I1VOXWFVgLytPrKAoalJ+kSzyLW8VmUiR7khB3Oo4hoGQxDRnrnOaHPto
- i/NUMi0gJgEO/soFfXWc5EfaSnR5PjjE7yZ3AUqZVHlN6NNdonakFktbvWryZ15u+J4m
- r0y+bZn+WxzJmG7u1i32/ZOKtcjfEZbIeJEx0AmVbo3Zo+gR8uO3Eg8OSbsxkHGMQnBd
- 89MJPOuyIwLgpseuTivR4KeDKIclsiRckRtGCUf/FPOoM/U82uP6NpRSQIm/mEz69k1g
- DOMQ==
-X-Gm-Message-State: AOJu0YzepSf7Tq1WcnwUlzZ87wvLym6W9rX9pzqmss4tGv3yPCf5Jk1u
- 42a34fQ8dnqj6+uqyB2cYPmH/deY5ocvmPapT8mVif98xBbfLnaxzhViXm0z/puKXDDWn1IeoH5
- HF3bHXtPHptAIKTOyFqs5DX6LoRIZUJIz+dXA
-X-Gm-Gg: AZuq6aIqajXAGZZz8ug3etFlrsBLhkKlCbqEWbgSIUFOGEuSOKPklskLjwngMhOaZSc
- GReD3FDe7LW/Lfc65kRBStiN+bDtbBFNKOxAIu5MXoWOMlh/9eqs1sw1FG/DJMF8InIimyc64+k
- +kHr4pvrm5CmSNJQt9pz9BhuvIlarbTW9+m4i0pkhBwA3m5HEwtiWoVgRlFihBbVdb7j7WXjPF/
- Vd5I74/QedCykSffbbdCJY06O3mjP79y6XiaDCUxLYlL7kS348lEq8tHAU+Pya9zyFYFRRpCy66
- SA+ubqdA3dyyDDqJBs1wxln+elL3lfLdMHycpR5k
-X-Received: by 2002:ac8:7d4a:0:b0:506:8738:651d with SMTP id
- d75a77b69052e-506a8364795mr127563821cf.62.1771236657694; Mon, 16 Feb 2026
- 02:10:57 -0800 (PST)
+ bh=4fkUz6bVuygUTd+Xe0xiBI4iHyk8L4fdLMV6McBM5XI=;
+ b=Ngkl4wdxxN1iNqCc6rgMytI1vJbIb4dw/PewjnzYFDk41WDxaPzOdE8w4SE2jlOg7H
+ ogMCpqLB79bNgB+2SE7UHhOTqLxDOlnaGm8YszxLmJHdy6eBj50/KHbj2JSk82uJyxgJ
+ iRF8DDA3M5hO2h5H2d7jc6mpvQkMF0R7CwgfM82uN0BM9WmDxgBUOBCVI0QSiKRE+0eL
+ yIegPWeRbYosaExQNA1AgPP3tjtvfDlwwPQ5lYiNC1KaVMyca5G3njY8P9eB6BgetQGc
+ 8UX8OKKnbzOfDmW78SimWrB/a0yZ7Dgec0YuMbTV8svhHtqHdifA1jaSa70y0Wd+guz/
+ E3tA==
+X-Gm-Message-State: AOJu0YzcUcTi5tKjBihqMcoA1Gu4nP6vOBoWd8GfSxucef/O6beyG5KA
+ SHxkgwZb7OeI2E1uhP0KeIwNbBcNyQxktLYs+NxUSdqgww2K4ZqYjVp2g87egySSuOwetMg13gy
+ JYtldcYry5YglhjSq8Sxkth+dvu4GCqBi+cEbeboPojYsHcbIB64W0sbybqUNyhnNF9OoFnIuvU
+ dU8M8pzAGE5M8iDLk2mMRDneUSkZv/PXU=
+X-Gm-Gg: AZuq6aL15CFyL5dujVtc/VWITDv++0QyeO5o3mtf77Iye2GXxALk3WFUmOalPMaBvp5
+ bUFXi8awMfoc8q6y88Iza16rTUxsmlXCJWWPCLWD2OD3LJn4f48xO6It/YVRnPp1sZxzaF110L8
+ VFcQujNhaZ+3PeVFR/+bgnK3CV3Jk15gafLSVmtHbuKPelWR3RVErmIzBzB5O5a9vpCuQrFQLKI
+ yI346U/IfFHdYdHxHkEpiAZVTQOa+P8hcQj
+X-Received: by 2002:a05:6214:c42:b0:894:3bac:49d1 with SMTP id
+ 6a1803df08f44-8973f2a161cmr122634036d6.11.1771237342050; 
+ Mon, 16 Feb 2026 02:22:22 -0800 (PST)
+X-Received: by 2002:a05:6214:c42:b0:894:3bac:49d1 with SMTP id
+ 6a1803df08f44-8973f2a161cmr122633856d6.11.1771237341642; Mon, 16 Feb 2026
+ 02:22:21 -0800 (PST)
 MIME-Version: 1.0
-References: <20260127182516.289834-1-marcandre.lureau@redhat.com>
- <20260127182516.289834-35-marcandre.lureau@redhat.com>
- <d094a131-9ef7-4c49-b037-76583b3b48e0@nutanix.com>
- <CAMxuvay8QBghas9-vmf_2mqL2aDj9byFOmK+G1G1562E5KLvKQ@mail.gmail.com>
- <1de4cd68-b623-440a-b88d-e91e5a739979@nutanix.com>
-In-Reply-To: <1de4cd68-b623-440a-b88d-e91e5a739979@nutanix.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Mon, 16 Feb 2026 11:10:46 +0100
-X-Gm-Features: AaiRm51ss5EAZlPPnoUjIz-nONyeiRiMscSHt8GyWlRdzZtaW_K1SV0BHCu67z4
-Message-ID: <CAJ+F1CKxHjovOPWu2GmyRL9n3F8cyE+Gcx1UBUqT6aJfsOrd5Q@mail.gmail.com>
-Subject: Re: [PATCH 34/43] audio: rework DEBUG_POLL
-To: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Gerd Hoffmann <kraxel@redhat.com>
+References: <20260206131438.1857182-1-imammedo@redhat.com>
+ <20260206131438.1857182-8-imammedo@redhat.com>
+In-Reply-To: <20260206131438.1857182-8-imammedo@redhat.com>
+From: Ani Sinha <anisinha@redhat.com>
+Date: Mon, 16 Feb 2026 15:52:10 +0530
+X-Gm-Features: AaiRm50Kgb0cTwGJiB6bADULXPlSVzgNXShlAgSGtiph9Sw5S9ckf4mKnIIgQJE
+Message-ID: <CAK3XEhMYzsmbhE1S3ZFdV-oQpesuy24FVb_rn=sdcRYi6xKScQ@mail.gmail.com>
+Subject: Re: [PATCH 07/11] arm: add tracing events to sbsa_gwdt
+To: Igor Mammedov <imammedo@redhat.com>
+Cc: qemu-devel@nongnu.org, mst@redhat.com, pbonzini@redhat.com, 
+ peter.maydell@linaro.org, shannon.zhaosl@gmail.com, philmd@linaro.org, 
+ zhao1.liu@intel.com, rad@semihalf.com, leif.lindholm@oss.qualcomm.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::82b;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x82b.google.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_GMAIL_RCVD=1,
- FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=anisinha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,158 +138,129 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
+On Fri, Feb 6, 2026 at 6:45=E2=80=AFPM Igor Mammedov <imammedo@redhat.com> =
+wrote:
+>
+> Signed-off-by: Igor Mammedov <imammedo@redhat.com>
 
-On Mon, Feb 16, 2026 at 10:34=E2=80=AFAM Mark Cave-Ayland
-<mark.caveayland@nutanix.com> wrote:
->
-> On 14/02/2026 10:24, Marc-Andr=C3=A9 Lureau wrote:
->
-> > Hi
-> >
-> > On Fri, Feb 13, 2026 at 4:50=E2=80=AFPM Mark Cave-Ayland
-> > <mark.caveayland@nutanix.com> wrote:
-> >>
-> >> On 27/01/2026 18:25, marcandre.lureau@redhat.com wrote:
-> >>
-> >>> From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> >>>
-> >>> Use more correct GTimer, specific for each backend, with a trace even=
-t.
-> >>>
-> >>> Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> >>> ---
-> >>>    audio/audio_int.h       |  1 +
-> >>>    audio/audio-mixeng-be.c | 25 +++++++++----------------
-> >>>    audio/trace-events      |  1 +
-> >>>    3 files changed, 11 insertions(+), 16 deletions(-)
-> >>>
-> >>> diff --git a/audio/audio_int.h b/audio/audio_int.h
-> >>> index dd5f2220d75..e0ed6af67ed 100644
-> >>> --- a/audio/audio_int.h
-> >>> +++ b/audio/audio_int.h
-> >>> @@ -224,6 +224,7 @@ struct AudioMixengBackend {
-> >>>        Audiodev *dev;
-> >>>
-> >>>        QEMUTimer *ts;
-> >>> +    GTimer *run_timer;
-> >>>        QLIST_HEAD (hw_in_listhead, HWVoiceIn) hw_head_in;
-> >>>        QLIST_HEAD (hw_out_listhead, HWVoiceOut) hw_head_out;
-> >>>        QLIST_HEAD (cap_listhead, CaptureVoiceOut) cap_head;
-> >>> diff --git a/audio/audio-mixeng-be.c b/audio/audio-mixeng-be.c
-> >>> index 343f6ec181e..1b2c1fafa87 100644
-> >>> --- a/audio/audio-mixeng-be.c
-> >>> +++ b/audio/audio-mixeng-be.c
-> >>> @@ -24,13 +24,13 @@
-> >>>    #include "system/replay.h"
-> >>>    #include "system/runstate.h"
-> >>>    #include "trace.h"
-> >>> +#include "trace/control.h"
-> >>>
-> >>>    #define AUDIO_CAP "audio"
-> >>>    #include "audio_int.h"
-> >>>
-> >>>    /* #define DEBUG_OUT */
-> >>>    /* #define DEBUG_CAPTURE */
-> >>> -/* #define DEBUG_POLL */
-> >>>
-> >>>    #define SW_NAME(sw) (sw)->name ? (sw)->name : "unknown"
-> >>>
-> >>> @@ -1269,22 +1269,12 @@ void audio_run(AudioMixengBackend *s, const c=
-har *msg)
-> >>>        audio_run_in(s);
-> >>>        audio_run_capture(s);
-> >>>
-> >>> -#ifdef DEBUG_POLL
-> >>> -    {
-> >>> -        static double prevtime;
-> >>> -        double currtime;
-> >>> -        struct timeval tv;
-> >>> -
-> >>> -        if (gettimeofday (&tv, NULL)) {
-> >>> -            perror ("audio_run: gettimeofday");
-> >>> -            return;
-> >>> -        }
-> >>> -
-> >>> -        currtime =3D tv.tv_sec + tv.tv_usec * 1e-6;
-> >>> -        dolog ("Elapsed since last %s: %f\n", msg, currtime - prevti=
-me);
-> >>> -        prevtime =3D currtime;
-> >>> +    if (trace_event_get_state(TRACE_AUDIO_RUN_POLL)) {
-> >>> +        /* Convert seconds to microseconds for trace event */
-> >>> +        int64_t elapsed_us =3D g_timer_elapsed(s->run_timer, NULL) *=
- 1000000;
-> >>
-> >> Not being familiar with g_timer_elapsed() I had a look at the glib doc=
-s,
-> >> and it seems that g_timer_elapsed() returns a gdouble as opposed to an
-> >> int64_t?
-> >
-> > yes, as seconds. So it is multiplied by 1000000 to get back usec, as be=
-fore
->
-> Sorry I was probably a little bit vague here: the part I was unsure
-> about was what was happening with the conversion from gdouble to int64_t
-> without an explicit cast? I was expecting the compiler to complain.
+Other than what mentioned below,
+Reviewed-by: Ani Sinha <anisinha@redhat.com>
 
-It doesnt complain, the multiply is done in double and the decimal
-part is dropped when assigning to int.
+> ---
+>  hw/watchdog/sbsa_gwdt.c  | 8 ++++++++
+>  hw/watchdog/trace-events | 9 +++++++++
+>  2 files changed, 17 insertions(+)
+>
+> diff --git a/hw/watchdog/sbsa_gwdt.c b/hw/watchdog/sbsa_gwdt.c
+> index 7ade5c6f18..d159e61c34 100644
+> --- a/hw/watchdog/sbsa_gwdt.c
+> +++ b/hw/watchdog/sbsa_gwdt.c
+> @@ -24,6 +24,7 @@
+>  #include "migration/vmstate.h"
+>  #include "qemu/log.h"
+>  #include "qemu/module.h"
+> +#include "trace.h"
+>
+>  static const VMStateDescription vmstate_sbsa_gwdt =3D {
+>      .name =3D "sbsa-gwdt",
+> @@ -62,6 +63,7 @@ static uint64_t sbsa_gwdt_rread(void *opaque, hwaddr ad=
+dr, unsigned int size)
+>          qemu_log_mask(LOG_GUEST_ERROR, "bad address in refresh frame rea=
+d :"
+>                          " 0x%x\n", (int)addr);
+>      }
+> +    trace_sbsa_gwdt_refresh_read(addr, ret);
+>      return ret;
+>  }
+>
+> @@ -93,6 +95,7 @@ static uint64_t sbsa_gwdt_read(void *opaque, hwaddr add=
+r, unsigned int size)
+>          qemu_log_mask(LOG_GUEST_ERROR, "bad address in control frame rea=
+d :"
+>                          " 0x%x\n", (int)addr);
+>      }
+> +    trace_sbsa_gwdt_control_read(addr, ret);
+>      return ret;
+>  }
+>
+> @@ -127,6 +130,7 @@ static void sbsa_gwdt_rwrite(void *opaque, hwaddr off=
+set, uint64_t data,
+>                               unsigned size) {
+>      SBSA_GWDTState *s =3D SBSA_GWDT(opaque);
+>
+> +    trace_sbsa_gwdt_refresh_write(offset, data);
+                                                                       ^^^^=
+^
+this is 64 bit.
 
-thanks
+>      if (offset =3D=3D SBSA_GWDT_WRR) {
+>          s->wcs &=3D ~(SBSA_GWDT_WCS_WS0 | SBSA_GWDT_WCS_WS1);
+>
+> @@ -141,6 +145,7 @@ static void sbsa_gwdt_write(void *opaque, hwaddr offs=
+et, uint64_t data,
+>                               unsigned size) {
+>      SBSA_GWDTState *s =3D SBSA_GWDT(opaque);
+>
+> +    trace_sbsa_gwdt_control_write(offset, data);
 
->
-> >>
-> >>> +        trace_audio_run_poll(msg, elapsed_us);
-> >>> +        g_timer_start(s->run_timer);
-> >>>        }
-> >>> -#endif
-> >>>    }
-> >>>
-> >>>    void audio_generic_run_buffer_in(HWVoiceIn *hw)
-> >>> @@ -1545,6 +1535,7 @@ static void audio_mixeng_backend_init(Object *o=
-bj)
-> >>>        QLIST_INIT(&s->hw_head_in);
-> >>>        QLIST_INIT(&s->cap_head);
-> >>>        s->ts =3D timer_new_ns(QEMU_CLOCK_VIRTUAL, audio_timer, s);
-> >>> +    s->run_timer =3D g_timer_new();
-> >>>
-> >>>        s->vmse =3D qemu_add_vm_change_state_handler(audio_vm_change_s=
-tate_handler, s);
-> >>>        assert(s->vmse !=3D NULL);
-> >>> @@ -1596,6 +1587,8 @@ static void audio_mixeng_backend_finalize(Objec=
-t *obj)
-> >>>            s->ts =3D NULL;
-> >>>        }
-> >>>
-> >>> +    g_clear_pointer(&s->run_timer, g_timer_destroy);
-> >>> +
-> >>>        if (s->vmse) {
-> >>>            qemu_del_vm_change_state_handler(s->vmse);
-> >>>            s->vmse =3D NULL;
-> >>> diff --git a/audio/trace-events b/audio/trace-events
-> >>> index 4749c54fc04..d66a712e871 100644
-> >>> --- a/audio/trace-events
-> >>> +++ b/audio/trace-events
-> >>> @@ -61,6 +61,7 @@ audio_timer_delayed(int interval) "interval %d ms"
-> >>>
-> >>>    # audio-mixeng-be.c
-> >>>    audio_get_avail(const char *name, size_t live, uint32_t frontend_f=
-rames) "%s: get_avail live %zu frontend frames %u"
-> >>> +audio_run_poll(const char *msg, int64_t elapsed_us) "Elapsed since l=
-ast %s: %" PRId64 " us"
-> >>>
-> >>>    # audio_template.h
-> >>>    audio_open_out(const char *name, int freq, int nchannels, int fmt)=
- "open %s, freq %d, nchannels %d, fmt %d"
->
->
-> ATB,
->
-> Mark.
->
->
+Same here ...
 
+>      switch (offset) {
+>      case SBSA_GWDT_WCS:
+>          s->wcs =3D data & SBSA_GWDT_WCS_EN;
+> @@ -180,6 +185,7 @@ static void wdt_sbsa_gwdt_reset(DeviceState *dev)
+>  {
+>      SBSA_GWDTState *s =3D SBSA_GWDT(dev);
+>
+> +    trace_sbsa_gwdt_reset();
+>      timer_del(s->timer);
+>
+>      s->wcs  =3D 0;
+> @@ -196,10 +202,12 @@ static void sbsa_gwdt_timer_sysinterrupt(void *opaq=
+ue)
+>
+>      if (!(s->wcs & SBSA_GWDT_WCS_WS0)) {
+>          s->wcs |=3D SBSA_GWDT_WCS_WS0;
+> +        trace_sbsa_gwdt_ws0_asserted();
+>          sbsa_gwdt_update_timer(s, TIMEOUT_REFRESH);
+>          qemu_set_irq(s->irq, 1);
+>      } else {
+>          s->wcs |=3D SBSA_GWDT_WCS_WS1;
+> +        trace_sbsa_gwdt_ws1_asserted();
+>          qemu_log_mask(CPU_LOG_RESET, "Watchdog timer expired.\n");
+>          /*
+>           * Reset the watchdog only if the guest gets notified about
+> diff --git a/hw/watchdog/trace-events b/hw/watchdog/trace-events
+> index ad3be1e9bd..5be430fb9e 100644
+> --- a/hw/watchdog/trace-events
+> +++ b/hw/watchdog/trace-events
+> @@ -33,3 +33,12 @@ spapr_watchdog_expired(uint64_t num, unsigned action) =
+"num=3D%" PRIu64 " action=3D%u
+>  # watchdog.c
+>  watchdog_perform_action(unsigned int action) "action=3D%u"
+>  watchdog_set_action(unsigned int action) "action=3D%u"
+> +
+> +#sbsa_gwdt.c
+> +sbsa_gwdt_refresh_read(uint64_t addr, uint32_t value) "[0x%" PRIu64 "] -=
+> 0x%" PRIu32
+> +sbsa_gwdt_refresh_write(uint64_t addr, uint32_t value) "[0x%" PRIu64 "] =
+<- 0x%" PRIu32
+                                                                      ^^^^^=
+^^
+This needs to be 64 bit.
 
---=20
-Marc-Andr=C3=A9 Lureau
+> +sbsa_gwdt_control_read(uint64_t addr, uint32_t value) "[0x%" PRIu64 "] -=
+> 0x%" PRIu32
+> +sbsa_gwdt_control_write(uint64_t addr, uint32_t value) "[0x%" PRIu64 "] =
+<- 0x%" PRIu32
+
+Same here .
+
+> +sbsa_gwdt_ws0_asserted(void) "WS0 signal is asserted"
+> +sbsa_gwdt_ws1_asserted(void) "WS1 signal is asserted"
+> +sbsa_gwdt_reset(void) "reset watchdog to defaut state"
+                                                                         ^^=
+^^^^
+typo.
+
 
