@@ -4,99 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA467E63F3F
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 09:13:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32E6BEF48D2
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 09:24:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vrufN-0005Ot-Hp; Mon, 16 Feb 2026 04:13:17 -0500
+	id 1vrupX-0007SX-V9; Mon, 16 Feb 2026 04:23:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vrufL-0005Ob-A1
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 04:13:15 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vrupV-0007SE-Tv
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 04:23:46 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vrufJ-0005Td-77
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 04:13:15 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vrupT-0000lE-KW
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 04:23:45 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771233191;
+ s=mimecast20190719; t=1771233821;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=5/pblL5lP1jT2rcikOjt+GHRdXYsIz8lhEFD7MMCxZs=;
- b=GXqGAFUzB1UhncJZWIvhnI/BgpuJrmSSKotAwMjtNvPNBXVmrGG4laAgQ5cdpOOnxXhi7p
- dPRxepsEtxZfC3bQlZ9wigp4aO6V+/DXhZ4s55jqmhOE2TcF7KuLnpg87p/2/KSgqm1Dtb
- byuTd6qUDTNVAhjKcKZO8G5NPa6QWa4=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=lzf4lWOhPOHWvHPPyz1GhUtgMp03D/cUtr0z3/mVhVw=;
+ b=jUbWRVbd99gIBCFI+E+Z0TPpAI96TEDSyWxmC9Zd7Snv3EgAAWra0Lnj4Hjr/vbY0qM3kj
+ E3d9QE9uXiLVEJljRzm2R1x/HBsT0MDSnKZAQOKz7hv5KaQANthPg7lVLPhhkqikLqpif5
+ tna3B3n6kqmdgVXtgDf1u/dErconjBY=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-454-2OtfNpnEN82roM9HvxYhAg-1; Mon, 16 Feb 2026 04:13:08 -0500
-X-MC-Unique: 2OtfNpnEN82roM9HvxYhAg-1
-X-Mimecast-MFC-AGG-ID: 2OtfNpnEN82roM9HvxYhAg_1771233187
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-4806b12ad3fso38219825e9.0
- for <qemu-devel@nongnu.org>; Mon, 16 Feb 2026 01:13:08 -0800 (PST)
+ us-mta-694-Crom3xLmM5-k2mPUG8vkVw-1; Mon, 16 Feb 2026 04:23:40 -0500
+X-MC-Unique: Crom3xLmM5-k2mPUG8vkVw-1
+X-Mimecast-MFC-AGG-ID: Crom3xLmM5-k2mPUG8vkVw_1771233819
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-435991d4a3aso1698795f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 16 Feb 2026 01:23:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1771233187; x=1771837987; darn=nongnu.org;
+ d=redhat.com; s=google; t=1771233819; x=1771838619; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=5/pblL5lP1jT2rcikOjt+GHRdXYsIz8lhEFD7MMCxZs=;
- b=YxXIqFks9HrIX6jz6zgKPVQbCVuB8bbJ7aK6yjkNFtlWBcKze24koN42cuqRoBfs/g
- iiYufZ+tPoDneTH1YkRUsJq06vdzwo65V6rVb6fK67r2Oe0W7cnROzrqDer6/qpmX1UU
- yBw5pzdxiXDrFi6+mH0NWBrIpU9iEdQWL8J7SyDAZnbMhfSADV+QomQr+QlmfFY5hSex
- YFOyJGL/1Teyl1+4N7BaYOKtoXsfDpOVFHcjjXhq8PGB7gbexKHusxJkm5JN0Ss+dDUz
- oWqBTRJwlEmN+Rq2s9ISJx/Lyztc3A+++H5PFzSuQmG3kDM6kCdFPZ1tev+OrNluQR07
- 9eFg==
+ bh=lzf4lWOhPOHWvHPPyz1GhUtgMp03D/cUtr0z3/mVhVw=;
+ b=OJz6fWqlUrzae/1UghrZYjpXsr//QqVfnbZxflU0CXJT2jPUVXW31tn6AGWMCUkXnj
+ CpSzwpxtc7jB03YrxoZ08HEfmm6HVWCMhr3JRhqeUHTeRukymQycrb/L/XCrEIkahYWW
+ qXebiHB9Dvl0Z6ZIl8NuZ0Um/HuTBs6WAVM2K96FZky9fGeB0R/1QqZoBojyu9W6aUFL
+ rHv+g0CgzkNlVBnpClkjw4dT+LRUXgwaa/kUo1UhScyJdQYsXtGMDOESoWEuRIexk/zP
+ jFbcIV3Xy15FPVOQASP77goPiyyg5qmA5BrFq/8ZB0+GeLAwDpq11uJ9Zx8SWV0eZ+Ks
+ m2tA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771233187; x=1771837987;
+ d=1e100.net; s=20230601; t=1771233819; x=1771838619;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=5/pblL5lP1jT2rcikOjt+GHRdXYsIz8lhEFD7MMCxZs=;
- b=JoI7NeFB2VxnPTgV3eMbCmyqQgLHHizyFC4SM/wvFM8u+9qSXeIi3HBN4zEOMNp5ua
- g9e1b1CRdPgi/lbFQFjYz5OA92N/qMq6JrkpebOrwfZlbADXEb6WZsSFyQjB80HLaHs5
- 7wkilT27mVWvh3eqNFgy/ofxPGJgb7ffsz9HoW5dgQdNEDbdq4OnMz8L0VqcFEx5Z3kd
- cJ5cKmiDHyujeF6B0UhLRDxs4hcF5O7UbSDUko0jCEyiJF7GzKn79oL8YLAR7t+7MNH4
- aA9si8OpdBzzFajnytrW0PoMauXnYl4X1F5Nzv2PPswufc1ogAeJ14vCgf7wvJvSkFIn
- y8nw==
+ bh=lzf4lWOhPOHWvHPPyz1GhUtgMp03D/cUtr0z3/mVhVw=;
+ b=I/hDkroDI+HF/YjzFac3f8jQohf3MgpOuV5ErmvHxYHokUOawzFbgfs2ioLS5BkbCP
+ Ug1xYYvUCirs0wnw1ghHWWKyrvTH29MtTS3ozxrAp/sxRA7Rhf7MbW3akFsXLxFwxGsY
+ CSXuoTRabpDD+3OlyTYXoXbjX8o4uGGasQDRkY7sBE66+6yYfi7Gfx3ziZZ2XC1FHSas
+ inK9UR73nbG5d8coYjB5G1jMO44vMXF/HVe6zDaGKg0cg4uuVlpRGiMlF3giaAC7DDM9
+ yw374VFgTJjpagnRynxTYHYhg3hKNAApn/0b4afRJ5x35paDiUImcp/xkMEDIzf7KroR
+ VF+w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVKkUrhA2NM7QMUs5t2Qk/CLw3uU5neGl0kefiX2ldajCw9Gb0g8/rJGIhZTOhvHt6b2n6dO07OIHiQ@nongnu.org
-X-Gm-Message-State: AOJu0YwogeudLWaZu5fgRJx5ClfrKjzS1a0stVJhnBAll1ZGKahKtgSK
- BGnbFmXv4rg0vidYLLBBAkM7GDBywqZKorH/XN+xY3NMeNoe1vokTRKbwVEDrLqRw5FxY4m+pQn
- nhN9aRu3zJKYaOef7RTHO0oGY1B0ugoQ7Ll8lnS9k0UoJp3HdOn3LiipX
-X-Gm-Gg: AZuq6aKly0o6L3Pdy5iKTFd8Xg+s/rBbsGhe31LYWfOAaCM8rrEJBur9+r3GxYFuPGQ
- mfJGXnuxAN/7XY0VcBDaX67n+H4dzTBIhXWAMn9T9ek2VkFOJGnECdQFYmYT4G43Wl53RqAsbh5
- 8Osnf2FwuGuR0AGe4ZogV/LbP0/cD70eGw2bEDlqlkIbbm3dobGULvVJvB8aMdZJfi9jWouYzo5
- /7p2tR/3T4JBuuguk+1Wg03OnwXnVJ/4IyR+t3nQZp3NTb48C9vgDO/5PUTRl/Exgkj2o5MNf5J
- EXmBND9NzX0kvG2qHz6BEmPdGaEIp3Ond72ylyu/+jVb7aZnBzR+s0Bj8ezv9I2+mEvaGbT9u84
- /ActJ4G2/Bp93p4PmURUrjPbzFkNrhm8DqjZxWEPRNXqoZZFOxOcu8sOUvJOX
-X-Received: by 2002:a05:600c:1d28:b0:480:52fd:d2e4 with SMTP id
- 5b1f17b1804b1-48370def8e0mr154657125e9.0.1771233186880; 
- Mon, 16 Feb 2026 01:13:06 -0800 (PST)
-X-Received: by 2002:a05:600c:1d28:b0:480:52fd:d2e4 with SMTP id
- 5b1f17b1804b1-48370def8e0mr154656695e9.0.1771233186326; 
- Mon, 16 Feb 2026 01:13:06 -0800 (PST)
+ AJvYcCXNLEXitZXRcrVTbDphfMG6akE7YnYwPcMNAhMfI5xp8a7BZGtRQOGLnxb1pRetNdxZTtlYxSftPz/X@nongnu.org
+X-Gm-Message-State: AOJu0Yzi8OOUe4zSc8HYScp9o8+mBKlOM2sfmPjnK5Jb2NwFnvUVHEJd
+ g4ULe6nxCUH1nQDzvLtGgZNOHOLQI8epLogVi+AyEo96CTkAoq4YLousUK1Y63JfbZXwzyxJsTM
+ eBGghj0Hm676XUHTUiZ1TiIDO2uQwpW2WDcSef9Uj6/pHKJcBdkrJ5UUb
+X-Gm-Gg: AZuq6aJF7u0oPXjZ82lBNboK41Eq/eVpCKRqAuXhUPxB29v8USV0hlBQxzsViN1398d
+ 144K8G43LfxB6FM7s9VQeqVYzHQJcEYOutAotlLxNH4Ak4ju4rXgP2iTWZkYuG4qbSMlSt6jS/u
+ wHtn+1gW00W8cvZ/xxaApqWTY/xHxNYK2ocONkqy8EKLuHF2Gg0OSCN/pQ3bSFmMB4yJkeGHE1z
+ DGAsTrW7x2CeZ96aIikMg9O4k7FXDiKwUsVLxjKoSnrH5hjbJIrSg8Pzfi9d3HVoU5m2YoMNjn2
+ 6TzU1ZKZ10Mse/Te4e7wXscT0rsgSzNc7Wp55SiAjkj8yPwPHinJKm9wEMuGlMF1I05vnGLBleI
+ mvWrcJfpgBvl5N/eqLxPdaSgqCgLJLUIQjkvyMZgsE/rI7Qhq0wheO61VumHD
+X-Received: by 2002:a05:6000:2313:b0:437:6625:d0d7 with SMTP id
+ ffacd0b85a97d-43797917d9amr19497782f8f.42.1771233818755; 
+ Mon, 16 Feb 2026 01:23:38 -0800 (PST)
+X-Received: by 2002:a05:6000:2313:b0:437:6625:d0d7 with SMTP id
+ ffacd0b85a97d-43797917d9amr19497738f8f.42.1771233818243; 
+ Mon, 16 Feb 2026 01:23:38 -0800 (PST)
 Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
  ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4835d994670sm327363805e9.4.2026.02.16.01.13.05
+ ffacd0b85a97d-43796ac82f7sm27998153f8f.28.2026.02.16.01.23.37
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 16 Feb 2026 01:13:05 -0800 (PST)
-Message-ID: <1a2e0fb6-b3d2-42fb-9ac7-15dc743ec38e@redhat.com>
-Date: Mon, 16 Feb 2026 10:13:04 +0100
+ Mon, 16 Feb 2026 01:23:37 -0800 (PST)
+Message-ID: <d4d9dbc7-12f2-4413-863a-02dcc68ed8b1@redhat.com>
+Date: Mon, 16 Feb 2026 10:23:36 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/3] vfio: Add Error ** parameter to vfio_region_setup()
+Subject: Re: [PATCH v3 3/3] hw/vfio: align mmap to power-of-2 of region size
+ for hugepfnmap
 To: ankita@nvidia.com, vsethi@nvidia.com, jgg@nvidia.com,
  skolothumtho@nvidia.com, alex@shazbot.org
 Cc: aniketa@nvidia.com, cjia@nvidia.com, kwankhede@nvidia.com,
  targupta@nvidia.com, zhiw@nvidia.com, mochs@nvidia.com, kjaju@nvidia.com,
  qemu-devel@nongnu.org
 References: <20260215084950.4657-1-ankita@nvidia.com>
- <20260215084950.4657-3-ankita@nvidia.com>
+ <20260215084950.4657-4-ankita@nvidia.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -142,7 +143,7 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260215084950.4657-3-ankita@nvidia.com>
+In-Reply-To: <20260215084950.4657-4-ankita@nvidia.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
@@ -173,94 +174,181 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 2/15/26 09:49, ankita@nvidia.com wrote:
 > From: Ankit Agrawal <ankita@nvidia.com>
 > 
-> Add an Error **errp parameter to vfio_region_setup() to allow
-> proper error handling instead of just returning error codes.
+> On Grace-based systems such as GB200, device memory is exposed as a
+> BAR but the actual mappable size is not power-of-2 aligned. The
+> previous algorithm aligned each sparse mmap area based on its
+> individual size using ctz64() which prevented efficient huge page
+> usage by the kernel.
 > 
-> The function sets errors via error_setg_errno() when failures
-> occur.
+> Adjust VFIO region mapping alignment to use the next power-of-2 of
+> the total region size and place the sparse subregions at their
+> appropriate offset. This provides better opportunities to get huge
+> alignment allowing the kernel to use larger page sizes for the VMA.
 > 
+> This enables the use of PMD-level huge pages which can significantly
+> improve memory access performance and reduce TLB pressure for large
+> device memory regions.
+> 
+> With this change:
+> - Create a single aligned base mapping for the entire region
+> - Change Alignment to be based on pow2ceil(region->size), capped at 1GiB
+> - Unmap gaps between sparse regions
+> - Use MAP_FIXED to overlay sparse mmap areas at their offsets
+> 
+> Example VMA for device memory of size 0x2F00F00000 on GB200:
+> 
+> Before (misaligned, no hugepfnmap):
+> ff88ff000000-ffb7fff00000 rw-s 400000000000 00:06 727                    /dev/vfio/devices/vfio1
+> 
+> After (aligned to 1GiB boundary, hugepfnmap enabled):
+> ff8ac0000000-ffb9c0f00000 rw-s 400000000000 00:06 727                    /dev/vfio/devices/vfio1
+> 
+> Requires sparse regions to be sorted by offset (done in previous
+> patch) to correctly identify and handle gaps.
+
+Please add a visible comment saying that vfio_region_mmap() assumes
+that the array mmap[] is sorted. May be before the loop :
+
+    for (i = 0; i < region->nr_mmaps; i++) {
+    ...
+
+Or some other place, but it should be clear.
+
+     /*
+      * Regions should already be sorted by vfio_setup_region_sparse_mmaps().
+      * This is critical for the algorithm below which relies on ascending
+      * order.
+      */
+
+Thanks,
+
+C.
+
+> 
+> cc: Alex Williamson <alex@shazbot.org>
+> Reviewed-by: Alex Williamson <alex@shazbot.org>
+> Reviewed-by: Shameer Kolothum <skolothumtho@nvidia.com>
+> Suggested-by: Jason Gunthorpe <jgg@nvidia.com>
 > Signed-off-by: Ankit Agrawal <ankita@nvidia.com>
 > ---
->   hw/vfio/display.c     | 2 +-
->   hw/vfio/pci.c         | 3 +--
->   hw/vfio/region.c      | 5 ++++-
->   hw/vfio/vfio-region.h | 2 +-
->   4 files changed, 7 insertions(+), 5 deletions(-)
+>   hw/vfio/region.c | 81 ++++++++++++++++++++++++++++++++----------------
+>   1 file changed, 54 insertions(+), 27 deletions(-)
 > 
-> diff --git a/hw/vfio/display.c b/hw/vfio/display.c
-> index faacd9019a..bb9015804c 100644
-> --- a/hw/vfio/display.c
-> +++ b/hw/vfio/display.c
-> @@ -449,7 +449,7 @@ static void vfio_display_region_update(void *opaque)
->           ret = vfio_region_setup(OBJECT(vdev), &vdev->vbasedev,
->                                   &dpy->region.buffer,
->                                   plane.region_index,
-> -                                "display");
-> +                                "display", NULL);
->           if (ret != 0) {
->               error_report("%s: vfio_region_setup(%d): %s",
->                            __func__, plane.region_index, strerror(-ret));
-
-or better, user error_report_err().
-
-> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-> index 36d8fbe872..c89f3fbea3 100644
-> --- a/hw/vfio/pci.c
-> +++ b/hw/vfio/pci.c
-> @@ -3056,11 +3056,10 @@ bool vfio_pci_populate_device(VFIOPCIDevice *vdev, Error **errp)
->           char *name = g_strdup_printf("%s BAR %d", vbasedev->name, i);
->   
->           ret = vfio_region_setup(OBJECT(vdev), vbasedev,
-> -                                &vdev->bars[i].region, i, name);
-> +                                &vdev->bars[i].region, i, name, errp);
->           g_free(name);
->   
->           if (ret) {
-> -            error_setg_errno(errp, -ret, "failed to get region %d info", i);
->               return false;
->           }
->   
 > diff --git a/hw/vfio/region.c b/hw/vfio/region.c
-> index 177494c379..b83b09fa2f 100644
+> index b83b09fa2f..51523a33b1 100644
 > --- a/hw/vfio/region.c
 > +++ b/hw/vfio/region.c
-> @@ -227,13 +227,14 @@ static int vfio_setup_region_sparse_mmaps(VFIORegion *region,
->   }
+> @@ -344,8 +344,11 @@ static bool vfio_region_create_dma_buf(VFIORegion *region, Error **errp)
 >   
->   int vfio_region_setup(Object *obj, VFIODevice *vbasedev, VFIORegion *region,
-> -                      int index, const char *name)
-> +                      int index, const char *name, Error **errp)
+>   int vfio_region_mmap(VFIORegion *region)
 >   {
->       struct vfio_region_info *info = NULL;
->       int ret;
+> -    int i, ret, prot = 0;
+> +    void *map_base, *map_align;
+>       Error *local_err = NULL;
+> +    int i, ret, prot = 0;
+> +    off_t map_offset = 0;
+> +    size_t align;
+>       char *name;
+>       int fd;
 >   
->       ret = vfio_device_get_region_info(vbasedev, index, &info);
->       if (ret) {
-> +        error_setg_errno(errp, -ret, "failed to get region %d info", index);
->           return ret;
+> @@ -356,41 +359,56 @@ int vfio_region_mmap(VFIORegion *region)
+>       prot |= region->flags & VFIO_REGION_INFO_FLAG_READ ? PROT_READ : 0;
+>       prot |= region->flags & VFIO_REGION_INFO_FLAG_WRITE ? PROT_WRITE : 0;
+>   
+> -    for (i = 0; i < region->nr_mmaps; i++) {
+> -        size_t align = MIN(1ULL << ctz64(region->mmaps[i].size), 1 * GiB);
+> -        void *map_base, *map_align;
+> +    /*
+> +     * Align the mmap for more efficient mapping in the kernel. Ideally
+> +     * we'd know the PMD and PUD mapping sizes to use as discrete alignment
+> +     * intervals, but we don't. As of Linux v6.19, the largest PUD size
+> +     * supporting huge pfnmap is 1GiB (ARCH_SUPPORTS_PUD_PFNMAP is only set
+> +     * on x86_64).
+> +     *
+> +     * Align by power-of-two of the size of the entire region - capped
+> +     * by 1G - and place the sparse subregions at their appropriate offset.
+> +     * This will get maximum alignment.
+> +     *
+> +     * NB. qemu_memalign() and friends actually allocate memory, whereas
+> +     * the region size here can exceed host memory, therefore we manually
+> +     * create an oversized anonymous mapping and clean it up for alignment.
+> +     */
+>   
+> -        /*
+> -         * Align the mmap for more efficient mapping in the kernel.  Ideally
+> -         * we'd know the PMD and PUD mapping sizes to use as discrete alignment
+> -         * intervals, but we don't.  As of Linux v6.12, the largest PUD size
+> -         * supporting huge pfnmap is 1GiB (ARCH_SUPPORTS_PUD_PFNMAP is only set
+> -         * on x86_64).  Align by power-of-two size, capped at 1GiB.
+> -         *
+> -         * NB. qemu_memalign() and friends actually allocate memory, whereas
+> -         * the region size here can exceed host memory, therefore we manually
+> -         * create an oversized anonymous mapping and clean it up for alignment.
+> -         */
+> -        map_base = mmap(0, region->mmaps[i].size + align, PROT_NONE,
+> -                        MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
+> -        if (map_base == MAP_FAILED) {
+> -            ret = -errno;
+> -            goto no_mmap;
+> -        }
+> +    align = MIN(pow2ceil(region->size), 1 * GiB);
+>   
+> -        fd = vfio_device_get_region_fd(region->vbasedev, region->nr);
+> +    map_base = mmap(0, region->size + align, PROT_NONE,
+> +                    MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
+> +    if (map_base == MAP_FAILED) {
+> +        ret = -errno;
+> +        trace_vfio_region_mmap_fault(memory_region_name(region->mem), -1,
+> +                                     region->fd_offset,
+> +                                     region->fd_offset + region->size - 1, ret);
+> +        return ret;
+> +    }
+> +
+> +    fd = vfio_device_get_region_fd(region->vbasedev, region->nr);
+>   
+> -        map_align = (void *)ROUND_UP((uintptr_t)map_base, (uintptr_t)align);
+> -        munmap(map_base, map_align - map_base);
+> -        munmap(map_align + region->mmaps[i].size,
+> -               align - (map_align - map_base));
+> +    map_align = (void *)ROUND_UP((uintptr_t)map_base, (uintptr_t)align);
+> +    munmap(map_base, map_align - map_base);
+> +    munmap(map_align + region->size,
+> +           align - (map_align - map_base));
+>   
+> -        region->mmaps[i].mmap = mmap(map_align, region->mmaps[i].size, prot,
+> +    for (i = 0; i < region->nr_mmaps; i++) {
+> +        munmap(map_align + map_offset, region->mmaps[i].offset - map_offset);
+> +        region->mmaps[i].mmap = mmap(map_align + region->mmaps[i].offset,
+> +                                     region->mmaps[i].size, prot,
+>                                        MAP_SHARED | MAP_FIXED, fd,
+>                                        region->fd_offset +
+>                                        region->mmaps[i].offset);
+>           if (region->mmaps[i].mmap == MAP_FAILED) {
+>               ret = -errno;
+> +            /*
+> +             * Only unmap the rest of the region. Any mmaps that were successful
+> +             * will be unmapped in no_mmap.
+> +             */
+> +            munmap(map_align + region->mmaps[i].offset,
+> +                   region->size - region->mmaps[i].offset);
+>               goto no_mmap;
+>           }
+>   
+> @@ -408,6 +426,15 @@ int vfio_region_mmap(VFIORegion *region)
+>                                  region->mmaps[i].offset,
+>                                  region->mmaps[i].offset +
+>                                  region->mmaps[i].size - 1);
+> +
+> +        map_offset = region->mmaps[i].offset + region->mmaps[i].size;
+> +    }
+> +
+> +    /*
+> +     * Unmap the rest of the region not covered by sparse mmap.
+> +     */
+> +    if (map_offset < region->size) {
+> +        munmap(map_align + map_offset, region->size - map_offset);
 >       }
 >   
-> @@ -260,6 +261,8 @@ int vfio_region_setup(Object *obj, VFIODevice *vbasedev, VFIORegion *region,
->                   region->mmaps[0].offset = 0;
->                   region->mmaps[0].size = region->size;
->               } else if (ret) {
-> +                error_setg_errno(errp, -ret, "failed to setup region %d",
-> +                                 index);
->                   return ret;
->               }
->           }
-> diff --git a/hw/vfio/vfio-region.h b/hw/vfio/vfio-region.h
-> index ede6e0c8f9..9b21d4ee5b 100644
-> --- a/hw/vfio/vfio-region.h
-> +++ b/hw/vfio/vfio-region.h
-> @@ -38,7 +38,7 @@ void vfio_region_write(void *opaque, hwaddr addr,
->   uint64_t vfio_region_read(void *opaque,
->                             hwaddr addr, unsigned size);
->   int vfio_region_setup(Object *obj, VFIODevice *vbasedev, VFIORegion *region,
-> -                      int index, const char *name);
-> +                      int index, const char *name, Error **errp);
->   int vfio_region_mmap(VFIORegion *region);
->   void vfio_region_mmaps_set_enabled(VFIORegion *region, bool enabled);
->   void vfio_region_unmap(VFIORegion *region);
+>       if (!vfio_region_create_dma_buf(region, &local_err)) {
 
 
