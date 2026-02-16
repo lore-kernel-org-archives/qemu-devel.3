@@ -4,67 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 484B5E81A2C
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 14:37:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8829E81A2F
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 14:53:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vrzhp-0000wu-GP; Mon, 16 Feb 2026 09:36:10 -0500
+	id 1vrzyL-0006jC-Au; Mon, 16 Feb 2026 09:53:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vrzhn-0000wN-Jq; Mon, 16 Feb 2026 09:36:07 -0500
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
+ id 1vrzyJ-0006iU-57
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 09:53:11 -0500
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vrzhi-0000p7-1c; Mon, 16 Feb 2026 09:36:07 -0500
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 001985969FF;
- Mon, 16 Feb 2026 15:35:55 +0100 (CET)
-X-Virus-Scanned: amavis at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id ml2rD5Ez90TX; Mon, 16 Feb 2026 15:35:53 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id C8D735969F1; Mon, 16 Feb 2026 15:35:53 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id C42525969FD;
- Mon, 16 Feb 2026 15:35:53 +0100 (CET)
-Date: Mon, 16 Feb 2026 15:35:53 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: =?ISO-8859-15?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>
-cc: qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>, 
- Eduardo Habkost <eduardo@habkost.net>, Paolo Bonzini <pbonzini@redhat.com>, 
- =?ISO-8859-15?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>, 
- =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>, 
- John Snow <jsnow@redhat.com>, Cleber Rosa <crosa@redhat.com>, 
- Christian Schoenebeck <qemu_oss@crudebyte.com>, 
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
- Thomas Huth <huth@tuxfamily.org>, Alexandre Ratchov <alex@caoua.org>, 
- =?ISO-8859-15?Q?Alex_Benn=E9e?= <alex.bennee@linaro.org>, 
- Laurent Vivier <laurent@vivier.eu>, "Michael S. Tsirkin" <mst@redhat.com>, 
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, 
- Alistair Francis <alistair@alistair23.me>, 
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, 
- Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org, 
- Mark Cave-Ayland <mark.caveayland@nutanix.com>
-Subject: Re: [PATCH 42/85] audio/dbus: convert to QOM lifecycle methods
-In-Reply-To: <CAMxuvawVZm60+KE5bOAphvYPSTZcKuEgYd_r1jt6J0oPvTSqdw@mail.gmail.com>
-Message-ID: <0a30b17a-e5ef-8e42-66b2-614fcdaf5c0c@eik.bme.hu>
-References: <20260216-audio-v1-0-e676662e4514@redhat.com>
- <20260216-audio-v1-42-e676662e4514@redhat.com>
- <ed0bd069-0660-b195-b639-b0ce7717ea36@eik.bme.hu>
- <CAMxuvawVZm60+KE5bOAphvYPSTZcKuEgYd_r1jt6J0oPvTSqdw@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
+ id 1vrzyG-0004s4-4a
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 09:53:10 -0500
+Received: from mail.maildlp.com (unknown [172.18.224.83])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4fF5Nb39cjzJ468n;
+ Mon, 16 Feb 2026 22:52:47 +0800 (CST)
+Received: from dubpeml500005.china.huawei.com (unknown [7.214.145.207])
+ by mail.maildlp.com (Postfix) with ESMTPS id 0E3EB40572;
+ Mon, 16 Feb 2026 22:52:56 +0800 (CST)
+Received: from a2303103017.china.huawei.com (10.47.67.55) by
+ dubpeml500005.china.huawei.com (7.214.145.207) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.11; Mon, 16 Feb 2026 14:52:55 +0000
+To: <qemu-devel@nongnu.org>, <lizhijian@fujitsu.com>
+CC: <anisa.su887@gmail.com>, <armbru@redhat.com>, <david@kernel.org>,
+ <gourry@gourry.net>, <imammedo@redhat.com>, <jonathan.cameron@huawei.com>,
+ <linuxarm@huawei.com>, <mst@redhat.com>, <nifan.cxl@gmail.com>,
+ <peterx@redhat.com>, <philmd@linaro.org>, <ppbonzini@redhat.com>,
+ <venkataravis@micron.com>, <xiaoguangrong.eric@gmail.com>
+Subject: [PATCH v3 1/2] hw/cxl: Use HPA in cxl_cfmws_find_device() rather than
+ offset in window.
+Date: Mon, 16 Feb 2026 14:52:17 +0000
+Message-ID: <20260216145219.1959-2-alireza.sanaee@huawei.com>
+X-Mailer: git-send-email 2.51.0.windows.2
+In-Reply-To: <20260216145219.1959-1-alireza.sanaee@huawei.com>
+References: <20260216145219.1959-1-alireza.sanaee@huawei.com>
 MIME-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="3866299591-1276271257-1771252553=:34635"
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.47.67.55]
+X-ClientProxiedBy: lhrpeml100009.china.huawei.com (7.191.174.83) To
+ dubpeml500005.china.huawei.com (7.214.145.207)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=alireza.sanaee@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -77,186 +70,69 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Alireza Sanaee <alireza.sanaee@huawei.com>
+From:  Alireza Sanaee via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+This function will shortly be used to help find if there is a route to a
+device, serving an HPA, under a particular fixed memory window. Rather
+than having that new use case subtract the base address in the caller,
+only to add it again in cxl_cfmws_find_device(), push the responsibility
+for calculating the HPA to the caller.
 
---3866299591-1276271257-1771252553=:34635
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8BIT
+This also reduces the inconsistency in the meaning of the hwaddr
+addr parameter between this function and the calls made within it
+that access the HDM decoders that operating on HPA.
 
-On Mon, 16 Feb 2026, Marc-André Lureau wrote:
-> On Mon, Feb 16, 2026 at 1:15 PM BALATON Zoltan <balaton@eik.bme.hu> wrote:
->>
->> On Mon, 16 Feb 2026, Marc-André Lureau wrote:
->>> Migrate the D-Bus audio backend from the legacy driver init/fini
->>> callbacks to proper QOM realize and finalize methods.
->>>
->>> The DBusAudio struct fields are now embedded directly in the AudioDbus
->>> QOM object instead of being allocated separately as drv_opaque. This
->>> allows accessing the backend state through proper QOM type casting
->>> with AUDIO_DBUS() rather than casting drv_opaque pointers.
->>>
->>> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
->>> Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
->>> ---
->>> audio/dbusaudio.c | 76 ++++++++++++++++++++++++++++---------------------------
->>> 1 file changed, 39 insertions(+), 37 deletions(-)
->>>
->>> diff --git a/audio/dbusaudio.c b/audio/dbusaudio.c
->>> index 269db7877b6..fb059815de9 100644
->>> --- a/audio/dbusaudio.c
->>> +++ b/audio/dbusaudio.c
->>> @@ -48,21 +48,20 @@
->>> #define TYPE_AUDIO_DBUS "audio-dbus"
->>> OBJECT_DECLARE_SIMPLE_TYPE(AudioDbus, AUDIO_DBUS)
->>>
->>> +static AudioBackendClass *audio_dbus_parent_class;
->>> +
->>> struct AudioDbus {
->>>     AudioMixengBackend parent_obj;
->>> -};
->>> -
->>> -static struct audio_driver dbus_audio_driver;
->>>
->>> -typedef struct DBusAudio {
->>> -    Audiodev *dev;
->>>     GDBusObjectManagerServer *server;
->>>     bool p2p;
->>>     GDBusObjectSkeleton *audio;
->>>     QemuDBusDisplay1Audio *iface;
->>>     GHashTable *out_listeners;
->>>     GHashTable *in_listeners;
->>> -} DBusAudio;
->>> +};
->>> +
->>> +static struct audio_driver dbus_audio_driver;
->>>
->>> typedef struct DBusVoiceOut {
->>>     HWVoiceOut hw;
->>> @@ -105,7 +104,7 @@ static void *dbus_get_buffer_out(HWVoiceOut *hw, size_t *size)
->>>
->>> static size_t dbus_put_buffer_out(HWVoiceOut *hw, void *buf, size_t size)
->>> {
->>> -    DBusAudio *da = (DBusAudio *)hw->s->drv_opaque;
->>> +    AudioDbus *da = AUDIO_DBUS(hw->s);
->>>     DBusVoiceOut *vo = container_of(hw, DBusVoiceOut, hw);
->>>     GHashTableIter iter;
->>>     QemuDBusDisplay1AudioOutListener *listener = NULL;
->>> @@ -162,9 +161,9 @@ dbus_init_out_listener(QemuDBusDisplay1AudioOutListener *listener,
->>> }
->>>
->>> static guint
->>> -dbus_audio_get_nsamples(DBusAudio *da)
->>> +dbus_audio_get_nsamples(AudioDbus *da)
->>> {
->>> -    AudiodevDBusOptions *opts = &da->dev->u.dbus;
->>> +    AudiodevDBusOptions *opts = &AUDIO_MIXENG_BACKEND(da)->dev->u.dbus;
->>>
->>>     if (opts->has_nsamples && opts->nsamples) {
->>>         return opts->nsamples;
->>> @@ -176,7 +175,7 @@ dbus_audio_get_nsamples(DBusAudio *da)
->>> static int
->>> dbus_init_out(HWVoiceOut *hw, struct audsettings *as, void *drv_opaque)
->>> {
->>> -    DBusAudio *da = (DBusAudio *)hw->s->drv_opaque;
->>> +    AudioDbus *da = AUDIO_DBUS(hw->s);
->>>     DBusVoiceOut *vo = container_of(hw, DBusVoiceOut, hw);
->>>     GHashTableIter iter;
->>>     QemuDBusDisplay1AudioOutListener *listener = NULL;
->>> @@ -195,7 +194,7 @@ dbus_init_out(HWVoiceOut *hw, struct audsettings *as, void *drv_opaque)
->>> static void
->>> dbus_fini_out(HWVoiceOut *hw)
->>> {
->>> -    DBusAudio *da = (DBusAudio *)hw->s->drv_opaque;
->>> +    AudioDbus *da = AUDIO_DBUS(hw->s);
->>>     DBusVoiceOut *vo = container_of(hw, DBusVoiceOut, hw);
->>>     GHashTableIter iter;
->>>     QemuDBusDisplay1AudioOutListener *listener = NULL;
->>> @@ -214,7 +213,7 @@ dbus_fini_out(HWVoiceOut *hw)
->>> static void
->>> dbus_enable_out(HWVoiceOut *hw, bool enable)
->>> {
->>> -    DBusAudio *da = (DBusAudio *)hw->s->drv_opaque;
->>> +    AudioDbus *da = AUDIO_DBUS(hw->s);
->>>     DBusVoiceOut *vo = container_of(hw, DBusVoiceOut, hw);
->>>     GHashTableIter iter;
->>>     QemuDBusDisplay1AudioOutListener *listener = NULL;
->>> @@ -256,7 +255,7 @@ dbus_volume_out_listener(HWVoiceOut *hw,
->>> static void
->>> dbus_volume_out(HWVoiceOut *hw, Volume *vol)
->>> {
->>> -    DBusAudio *da = (DBusAudio *)hw->s->drv_opaque;
->>> +    AudioDbus *da = AUDIO_DBUS(hw->s);
->>>     DBusVoiceOut *vo = container_of(hw, DBusVoiceOut, hw);
->>>     GHashTableIter iter;
->>>     QemuDBusDisplay1AudioOutListener *listener = NULL;
->>> @@ -290,7 +289,7 @@ dbus_init_in_listener(QemuDBusDisplay1AudioInListener *listener, HWVoiceIn *hw)
->>> static int
->>> dbus_init_in(HWVoiceIn *hw, struct audsettings *as, void *drv_opaque)
->>> {
->>> -    DBusAudio *da = (DBusAudio *)hw->s->drv_opaque;
->>> +    AudioDbus *da = AUDIO_DBUS(hw->s);
->>>     DBusVoiceIn *vo = container_of(hw, DBusVoiceIn, hw);
->>>     GHashTableIter iter;
->>>     QemuDBusDisplay1AudioInListener *listener = NULL;
->>> @@ -309,7 +308,7 @@ dbus_init_in(HWVoiceIn *hw, struct audsettings *as, void *drv_opaque)
->>> static void
->>> dbus_fini_in(HWVoiceIn *hw)
->>> {
->>> -    DBusAudio *da = (DBusAudio *)hw->s->drv_opaque;
->>> +    AudioDbus *da = AUDIO_DBUS(hw->s);
->>>     GHashTableIter iter;
->>>     QemuDBusDisplay1AudioInListener *listener = NULL;
->>>
->>> @@ -346,7 +345,7 @@ dbus_volume_in_listener(HWVoiceIn *hw,
->>> static void
->>> dbus_volume_in(HWVoiceIn *hw, Volume *vol)
->>> {
->>> -    DBusAudio *da = (DBusAudio *)hw->s->drv_opaque;
->>> +    AudioDbus *da = AUDIO_DBUS(hw->s);
->>>     DBusVoiceIn *vo = container_of(hw, DBusVoiceIn, hw);
->>>     GHashTableIter iter;
->>>     QemuDBusDisplay1AudioInListener *listener = NULL;
->>> @@ -363,7 +362,7 @@ dbus_volume_in(HWVoiceIn *hw, Volume *vol)
->>> static size_t
->>> dbus_read(HWVoiceIn *hw, void *buf, size_t size)
->>> {
->>> -    DBusAudio *da = (DBusAudio *)hw->s->drv_opaque;
->>> +    AudioDbus *da = AUDIO_DBUS(hw->s);
->>>     /* DBusVoiceIn *vo = container_of(hw, DBusVoiceIn, hw); */
->>>     GHashTableIter iter;
->>>     QemuDBusDisplay1AudioInListener *listener = NULL;
->>> @@ -398,7 +397,7 @@ dbus_read(HWVoiceIn *hw, void *buf, size_t size)
->>> static void
->>> dbus_enable_in(HWVoiceIn *hw, bool enable)
->>> {
->>> -    DBusAudio *da = (DBusAudio *)hw->s->drv_opaque;
->>> +    AudioDbus *da = AUDIO_DBUS(hw->s);
->>
->> Are you sure we need a QOM cast in all these potentially frequently called
->> functions? The QOM cast is kind of expensive so only needed if it can get
->> other objects than the expected. If the object is already checked in
->> realize with a QOM cast it may not be needed to check it again every time
->> it's accessed.
->
-> I would not be concerned if the check is done every 20ms or even 5ms.
-> (and with --disable-qom-cast-debug it should also help).
->
-> If you want, I can look at providing some perf data, but I am afraid
-> it will be just noise difference.
+Signed-off-by: Alireza Sanaee <alireza.sanaee@huawei.com>
+Tested-by: Gregory Price <gourry@gourry.net>
+---
+ hw/cxl/cxl-host.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
-Since --disable-qom-cast-debug is not the default this does not help as 
-likely nobody will have it disabled. I don't use dbus and other audio 
-backends don't seem to have this so I don't care too much but this is like 
-using unnecessary QOM casts in iomem callbacks that take an already 
-checked parameter so a C cast should be OK here too (iomem callbacks have 
-void *opaque so those don't need an explicit cast). But dbus audio is your 
-area so whatever you prefer.
+diff --git a/hw/cxl/cxl-host.c b/hw/cxl/cxl-host.c
+index f3479b1991..415a792380 100644
+--- a/hw/cxl/cxl-host.c
++++ b/hw/cxl/cxl-host.c
+@@ -157,7 +157,8 @@ static bool cxl_hdm_find_target(uint32_t *cache_mem, hwaddr addr,
+     return found;
+ }
+ 
+-static PCIDevice *cxl_cfmws_find_device(CXLFixedWindow *fw, hwaddr addr)
++static PCIDevice *cxl_cfmws_find_device(CXLFixedWindow *fw, hwaddr addr,
++                                        bool allow_interleave)
+ {
+     CXLComponentState *hb_cstate, *usp_cstate;
+     PCIHostState *hb;
+@@ -168,8 +169,6 @@ static PCIDevice *cxl_cfmws_find_device(CXLFixedWindow *fw, hwaddr addr)
+     bool target_found;
+     PCIDevice *rp, *d;
+ 
+-    /* Address is relative to memory region. Convert to HPA */
+-    addr += fw->base;
+ 
+     rb_index = (addr / cxl_decode_ig(fw->enc_int_gran)) % fw->num_targets;
+     hb = PCI_HOST_BRIDGE(fw->target_hbs[rb_index]->cxl_host_bridge);
+@@ -254,7 +253,7 @@ static MemTxResult cxl_read_cfmws(void *opaque, hwaddr addr, uint64_t *data,
+     CXLFixedWindow *fw = opaque;
+     PCIDevice *d;
+ 
+-    d = cxl_cfmws_find_device(fw, addr);
++    d = cxl_cfmws_find_device(fw, addr + fw->base, true);
+     if (d == NULL) {
+         *data = 0;
+         /* Reads to invalid address return poison */
+@@ -271,7 +270,7 @@ static MemTxResult cxl_write_cfmws(void *opaque, hwaddr addr,
+     CXLFixedWindow *fw = opaque;
+     PCIDevice *d;
+ 
+-    d = cxl_cfmws_find_device(fw, addr);
++    d = cxl_cfmws_find_device(fw, addr + fw->base, true);
+     if (d == NULL) {
+         /* Writes to invalid address are silent */
+         return MEMTX_OK;
+-- 
+2.43.0
 
-Regards,
-BALATON Zoltan
---3866299591-1276271257-1771252553=:34635--
 
