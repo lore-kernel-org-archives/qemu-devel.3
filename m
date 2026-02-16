@@ -4,65 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30440E83838
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 21:33:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41E63E83837
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 21:33:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vs6Cr-00023D-Gc; Mon, 16 Feb 2026 16:32:37 -0500
+	id 1vs6Cw-0002nC-R0; Mon, 16 Feb 2026 16:32:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vs6CE-0000bh-42
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 16:32:01 -0500
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vs6CK-0000us-GP
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 16:32:07 -0500
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vs6CB-00041p-Bc
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 16:31:57 -0500
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-483770e0b25so30818145e9.0
- for <qemu-devel@nongnu.org>; Mon, 16 Feb 2026 13:31:54 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vs6CI-00043M-IP
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 16:32:04 -0500
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-4377174e1ebso2685765f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 16 Feb 2026 13:32:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771277513; x=1771882313; darn=nongnu.org;
+ d=linaro.org; s=google; t=1771277521; x=1771882321; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=4iTYDTjW8oF01EE5U+uJHraTm442v4OtMz2SMPZaJV0=;
- b=NuDFnYm+eVmGOrK4dlTMIP/d3LjUJh8VxOhnhokSVX07Yb/QacVmkEzW3dl0g5KxBn
- irtFKnMbtXUzkXErA17RQsjRDLsVGZVvjt/WSbHTwAh42OKGgFMRoiEiiN1kecXlvXGY
- BEmbHmffCzB62t9BFOLp/Y4mEpe+0fBIf8Dm65VU1zS1YVFmzaqjI+LF1iv8jG05tWuI
- /lCQxsgawTfo7ilGOFI8fvsq8rktMUnH5latOEsX8Zynckvv7BT1Mukeghu+pdEpmexq
- C2GYHuoSCRBLGkh6XRQOLkyKJ4Gz6PT+GhmZqU8ClEMmBvcWZiGC2RowwTVyJY05XZUj
- jbJg==
+ bh=V8wNVeXGsx4+MMgwpCdoiP3HRol652dz1JzpsDMD+6w=;
+ b=GBmUQg0DARuunz3u1v8BuoPKnU8ffmQ6/sRGf2Y5tqvo/LsLDa5yrVufmqB62Z/Wp3
+ xjO+3lLR6dH+7hu3SJ+HI4Xc3POk5ZM0s2Eo2GtinL3pc/3SI6ZfrU/y7/IulNDkY3yd
+ i0nervPMEdMnKn1t9d0kQDecgxhlYnGdNGKxC0daxtAKmz7AvReT7fbMGJTrwMA2zsHm
+ c+M2Nw59ED6X/y/mDZ88wvrJP1doMisvpISuW82tQU2Pf8t33r6S9lGLpyBTbmrsoZB2
+ X/wVXZkaS7c2xCPQ0TnQC/7LlVZVu+LJuipdBOT+mNFCvgsT/qeDQNkaOrfbRU0z7hHS
+ jJLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771277513; x=1771882313;
+ d=1e100.net; s=20230601; t=1771277521; x=1771882321;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=4iTYDTjW8oF01EE5U+uJHraTm442v4OtMz2SMPZaJV0=;
- b=clNSKiJ2vr1YlzpDwtNcip91P4u9mj21ebm7vidWEawpPbim/tdTKNxLT35gdBUN7B
- uw60tImHkJLD2KjTf0nbmwZwxXdD0EIwxAUMh2Gt8aio/uPR2cI3xNFg9KIbEwTbPkI/
- +eELN8AcuyA7wFnGRe7wE3Qjkt43muYxGEkTugBHhv6sZ45ilbNAwqYvMw7ibr0tpBFW
- kjGn9JblmDI5D6EoDNbIfM3Jib6lxNlVTwEjo7yLqLuS+0I2Tfd9AINKSIQXtw+9cDYH
- QxLWTFPu0EvFWdcbR8HwshZP+rds9s0iAGh3sXmTuqfMSZsw7LJpdN6JZzcLLWFWMc9d
- 1PPg==
-X-Gm-Message-State: AOJu0YxVYjprGmV2ftswLzfrs2zl6Z+ZNItlRZEx1JTbjcTuyjTGOZVZ
- rL682xnbGFTSvsxR45DwiffcmWI+/xci5ECaqxgS8hrr3vTzKwWZ7ldlRWm+KUbBQniQXe8l1Ru
- k56ZdMXI=
-X-Gm-Gg: AZuq6aIr45CTqfqWc+OZrsg7XwwONSWAYTxwUFMLirEDeXKR6mHEhDjKQ4Fwbq7aIQ+
- xCfi/rvpq+43crpoxYuLVB/4TG1X8DwtD54xyMxMS/DWwkDcDcojB2Hb6ea6825cdLy8v/yQZCR
- tRCqgovH/khQDjY/eBYHAodnrNQjQyW4KVtH6zN8Q93IBy3GPC0oElTPqe0OZt5o3ZsE8dHr60R
- pbwovfJUVEzUFfo5xWXp41dpwlO4/ITZYuXFPg0gr5KU/syVz4I/VxkcBzqUAeDuu6OJAqdRqtY
- Lsmu8SmHF0dCwQM1nQGOyr/puplt31HvxXLocnEMWIB9Gm/0/OORJClT4iL4f9NWoGAAHkab+xL
- 8ZXR2TmfVBcLxdF0C2VBuvTa4VohlWCX9XPm/v0WlBth+obhgivHsd3KAK0IBBQX60EA7HH/S7c
- NgYXVqrK2GRi92CcNEyGzznaVFvU3/VFu6IcH+wDOdBBRokwi7QTq9HQZIRZfnqoCJPtpNWI2o
-X-Received: by 2002:a05:600c:620d:b0:480:3bba:1cac with SMTP id
- 5b1f17b1804b1-48371043046mr182491715e9.6.1771277513333; 
- Mon, 16 Feb 2026 13:31:53 -0800 (PST)
+ bh=V8wNVeXGsx4+MMgwpCdoiP3HRol652dz1JzpsDMD+6w=;
+ b=tgGO3SIt+C0hW7DAZ6X5Widx6gZ0t8y6arQX7Yz9CFNx9eBP82tm96Ps7rOA1m+62j
+ IOqaUxy/P4YfwCcOhZYcCHVGBSWfk9VHMwj8OHQHI5i1DilPQe5IPHCixrItL2SbjGiX
+ 2JX7d9t6vpdWnySvZKnJcayIKMEJK0n9JjJuOdzAgM6Rc4w4Mmkjc6B6GHoshkm6JtZA
+ yO5N8xc4nOqLCMqavWg73cnwT5Pz7SxPLe0FIXQ1FwacjNODGBkWBhJjLT/MYPuanrRY
+ +hB4/ihugCLTaj5lJ2MbQm7DmC3gIXVY712gmYj2A/Sy2wGDwb7VAul6k8lot20fKn5L
+ Ppcw==
+X-Gm-Message-State: AOJu0YxCcrN/uYAX89s99I49WCJNl/sdKr3shHkdswYXT6W2RD9UeAoQ
+ 9kMqkDf1HdHyCchSHFb9/FZ6FkeQO6+K78DDqpVe+I1knxnTrJScNosnnVbTfq5LTVgGJ67EE5s
+ p7rrFivQ=
+X-Gm-Gg: AZuq6aIQXl66Ux+p2UbgLjonhXQIi3Ai27hMBxdH2q4dc4I5qO5f5tQulYFoL2U/SqU
+ K6QSzwQhfi8J/HXh3iOgMvl+LMNKUNeK+KTXV7OtvLORxlxwiXHBU8VdjSAU9LHPzmIefi4GoQU
+ 6cVFt9OHSoeZgZjK4PD6Q7WuVqTZW7zz3Hkx6L2WkS2A9c2ubq+x+4jxz+FvKDca8KqPo+Xr94P
+ icjU4pFZ21Z1uf5LwbPx1NXc4nnj3kNAARjLcuFwWpXDiG8NvXbWk/6PB8VR1342kX7t9qAufs6
+ iMrPWwm2xcf50f+oC8YB3e8LTo8ZojDMlxnQ4CPhhcbUR0VKE4mR0AvbaIwi7QI+vD7wrxNn4Dy
+ dnXvi9bBsql/O+I1QSMYa0jLft1i67hlem36RKcKUIhFVS8l7rWCk7mOHi375wJzdOrM6rBgx47
+ 0e1vt+NMdPnmzIvFnyP3zFW7EBo6zPsNi6XZkaiKoKx4ec+z5qOTCnCf3YpaSceELICnj39UIpY
+ 3zLtHKOLIM=
+X-Received: by 2002:a05:6000:1843:b0:435:e3bd:5838 with SMTP id
+ ffacd0b85a97d-437978dd2fcmr20770738f8f.25.1771277520693; 
+ Mon, 16 Feb 2026 13:32:00 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48371a3f835sm91270965e9.25.2026.02.16.13.31.52
+ ffacd0b85a97d-43796a74704sm31690316f8f.16.2026.02.16.13.31.59
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 16 Feb 2026 13:31:52 -0800 (PST)
+ Mon, 16 Feb 2026 13:31:59 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>,
@@ -74,25 +75,24 @@ Cc: Nicholas Piggin <npiggin@gmail.com>,
  Harsh Prateek Bora <harshpb@linux.ibm.com>,
  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 4/8] hw/m68k/q800: Set MACFB_DISPLAY_APPLE_21_COLOR within
- MacFrameBuffer
-Date: Mon, 16 Feb 2026 22:31:17 +0100
-Message-ID: <20260216213121.47122-5-philmd@linaro.org>
+Subject: [PATCH v2 5/8] hw/m68k: Set graphic display dimensions generically
+Date: Mon, 16 Feb 2026 22:31:18 +0100
+Message-ID: <20260216213121.47122-6-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260216213121.47122-1-philmd@linaro.org>
 References: <20260216213121.47122-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,51 +108,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The MACFB_DISPLAY_APPLE_21_COLOR mode is not specific to the Q800
-machine. Check and set it once in the MacFB DeviceRealize handler.
-
-No need to explicitly set the MACFB_DISPLAY_VGA mode since this is
-the default value.
+If a dimension is not set, have the machine init code
+(q800_machine_init) set the default values.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 ---
- hw/display/macfb.c | 4 ++++
- hw/m68k/q800.c     | 5 -----
- 2 files changed, 4 insertions(+), 5 deletions(-)
+ hw/m68k/q800.c          | 6 +++---
+ system/globals-target.c | 6 +++---
+ 2 files changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/hw/display/macfb.c b/hw/display/macfb.c
-index 8ef174dc6df..b8115c2be13 100644
---- a/hw/display/macfb.c
-+++ b/hw/display/macfb.c
-@@ -645,6 +645,10 @@ static bool macfb_common_realize(DeviceState *dev, MacfbState *s, Error **errp)
- {
-     DisplaySurface *surface;
- 
-+    if (s->width == 1152 && s->height == 870) {
-+        s->type = MACFB_DISPLAY_APPLE_21_COLOR;
-+    }
-+
-     s->mode = macfb_find_mode(s->type, s->width, s->height, s->depth);
-     if (!s->mode) {
-         gchar *list;
 diff --git a/hw/m68k/q800.c b/hw/m68k/q800.c
-index b55c03a90bf..ba32da2fa45 100644
+index ba32da2fa45..ded531394e6 100644
 --- a/hw/m68k/q800.c
 +++ b/hw/m68k/q800.c
-@@ -563,11 +563,6 @@ static void q800_machine_init(MachineState *machine)
-     qdev_prop_set_uint32(dev, "width", graphic_width);
-     qdev_prop_set_uint32(dev, "height", graphic_height);
-     qdev_prop_set_uint8(dev, "depth", graphic_depth);
--    if (graphic_width == 1152 && graphic_height == 870) {
--        qdev_prop_set_uint8(dev, "display", MACFB_DISPLAY_APPLE_21_COLOR);
--    } else {
--        qdev_prop_set_uint8(dev, "display", MACFB_DISPLAY_VGA);
--    }
+@@ -560,9 +560,9 @@ static void q800_machine_init(MachineState *machine)
+                             TYPE_NUBUS_MACFB);
+     dev = DEVICE(&m->macfb);
+     qdev_prop_set_uint32(dev, "slot", 9);
+-    qdev_prop_set_uint32(dev, "width", graphic_width);
+-    qdev_prop_set_uint32(dev, "height", graphic_height);
+-    qdev_prop_set_uint8(dev, "depth", graphic_depth);
++    qdev_prop_set_uint32(dev, "width", graphic_width ?: 800);
++    qdev_prop_set_uint32(dev, "height", graphic_height ?: 600);
++    qdev_prop_set_uint8(dev, "depth", graphic_depth ?: 8);
      qdev_realize(dev, BUS(nubus), &error_fatal);
  
      macfb_mode = (NUBUS_MACFB(dev)->macfb).mode;
+diff --git a/system/globals-target.c b/system/globals-target.c
+index 989720591e7..e3f7d846ac0 100644
+--- a/system/globals-target.c
++++ b/system/globals-target.c
+@@ -14,9 +14,9 @@ int graphic_width = 1024;
+ int graphic_height = 768;
+ int graphic_depth = 8;
+ #elif defined(TARGET_M68K)
+-int graphic_width = 800;
+-int graphic_height = 600;
+-int graphic_depth = 8;
++int graphic_width;
++int graphic_height;
++int graphic_depth;
+ #else
+ int graphic_width = 800;
+ int graphic_height = 600;
 -- 
 2.52.0
 
