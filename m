@@ -4,56 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D55FE7BD98
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 11:26:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11FEAE7BD9B
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 11:26:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vrwdX-0000L0-Dj; Mon, 16 Feb 2026 06:19:31 -0500
+	id 1vrwfa-0008Mu-ID; Mon, 16 Feb 2026 06:21:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vrwbe-0005ok-Kx
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 06:17:41 -0500
+ id 1vrwdL-0007yI-4e
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 06:19:19 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vrwbd-00084X-2a
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 06:17:34 -0500
+ id 1vrwdJ-0008TO-2x
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 06:19:18 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771240652;
+ s=mimecast20190719; t=1771240756;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=wAPlRNPKdeWquLi18FJ2oBHPOgXeFeTuRgnXP8s7MNw=;
- b=DsgVnK8wzxB+3CQNSjKbHNHHb30z9FVOkgIm4t23dCQQLIHS/EPnYZGRpX6sBEKlJGLeYO
- l8/1pMfFMxl+fbfc1nvyUNR8bQcSyPdCOlD+1q5bwgBV3IcazYiqSIsv3sKCXSctgNtrAf
- SfbXYZsTn98eg1jxxhh3BBt0rOEUHiM=
+ bh=N7c59NEfg4hmqcbZ3MZ180N2UP3aJ4ktCpkln/Wb2qE=;
+ b=JqOcgD0JtQkNLMFqZ40t0jkzI+1vxDCkRnqErCEwp/D8kdoa3bm+CVZnHWwdq0WJaMx0Sr
+ hZGj+UlYaPAP5CvxPka8Q3saMEzAass3eT5BTIAix57fvOPX1mz31A0XNIJDnuNGQjoIFs
+ kZsuLuiWb/KZxd/fxksFvzm9+3YSqpY=
 Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-517-cd9xv65uOfOsBhC4iBoU3g-1; Mon,
- 16 Feb 2026 06:17:29 -0500
-X-MC-Unique: cd9xv65uOfOsBhC4iBoU3g-1
-X-Mimecast-MFC-AGG-ID: cd9xv65uOfOsBhC4iBoU3g_1771240647
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-199-4BQWyRFXM5OZuEZ7gBJIeg-1; Mon,
+ 16 Feb 2026 06:19:11 -0500
+X-MC-Unique: 4BQWyRFXM5OZuEZ7gBJIeg-1
+X-Mimecast-MFC-AGG-ID: 4BQWyRFXM5OZuEZ7gBJIeg_1771240749
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 22C141800454; Mon, 16 Feb 2026 11:17:27 +0000 (UTC)
+ id 9C51D18002C1; Mon, 16 Feb 2026 11:19:09 +0000 (UTC)
 Received: from localhost (unknown [10.45.242.26])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 3D47530001A5; Mon, 16 Feb 2026 11:17:26 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 0BD8A1955F43; Mon, 16 Feb 2026 11:19:08 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Mon, 16 Feb 2026 12:15:28 +0100
-Subject: [PATCH 39/85] audio-be: add some state trace for debugging
+Date: Mon, 16 Feb 2026 12:16:04 +0100
+Subject: [PATCH 75/85] audio: rework DEBUG_POLL
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260216-audio-v1-39-e676662e4514@redhat.com>
+Message-Id: <20260216-audio-v1-75-e676662e4514@redhat.com>
 References: <20260216-audio-v1-0-e676662e4514@redhat.com>
 In-Reply-To: <20260216-audio-v1-0-e676662e4514@redhat.com>
 To: qemu-devel@nongnu.org
@@ -73,24 +73,24 @@ Cc: Gerd Hoffmann <kraxel@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
  Mark Cave-Ayland <mark.caveayland@nutanix.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1629;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3820;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=kMAYRkuXfPx/cZR8FpZgmCzTRG5cT4t64cUDglhy7GI=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBpkvxQixfbluWJqT7ahwdfeB1Q28ST2iQZa5i/8
- na0PnKQsTuJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaZL8UAAKCRDa6OEJdZac
- 5eJWEACLsK+PAoy7lMvERRTwLTizbY1kaUHb0+0vZJtbIeLdK5tgiAwkedV20WdImXC5RDxZxKM
- 7BYTcjQQZWMCWagBaERbfdS/K8sucAIQ+Es0g375snfHgpaJDujrP/u8WpidG6x0uhpA8lmByUU
- ZVVVc8U0AzbF8wcZQ1OizVge7F5MIGULxtp7R0X/7Dtg7VP9Q167MiHv3r3pGVBWVg11Uo/J7qb
- vY6ijHcBySCTC10ZO8CxG+piCXKhDHR6u1pbiZy971YeazNyrCpEjN/4VWZ7nhIK1jdt9CZ5vMs
- 9Xiy3P956JKOBPCxBC5/9yIVyxF37V3rC4K2vEr7+/G0ogEnfms0IeRFL8AAFt4c0SOyAUrVEpT
- MWUVdiIPp5qRczRWWPizhiMTuE0C85YpxS5dOaj0okkoh1YVaLMJElPMmxurOFka4djJ0jylapT
- FBF4q2bRUoymSVvtfoNCKgSPOIHIOqXlyHSuFyhzdwH9BZvbd31s6NcI9kkrFHdyfiel6Mi9gGO
- zEREegwgG2D1TvcbVHC4umG31k/s1k4k2k16iKeWRvR96CfHKvJohogqe8SGuKIniP35Eovtyhe
- NtQIVoc/KpcmYapa1QiwFdHnSTkUTAUl6Lzpl8L7Q7dIZkt4jRrI02X1SRq7Z5Bf0+IjsDAm5O3
- 8MVZO3MYwN5b3Cw==
+ bh=VuHJE/OMoLF5FV66Xec/LvzCGIsN/NmdER0U65ZSEv0=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBpkvxSC3oidMw+TYQw+bed/aGyUDri9z1ES2mfP
+ mNcR+kss6KJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaZL8UgAKCRDa6OEJdZac
+ 5c4uD/sEd++T8QohRaQ95Za6IPQRCm1KE+xDf5nA1SOKwPzmuQDDiQrozdPuMv5Vcy1FSDc0oPq
+ hMyYijL0C49wC06yiwaPAjtwios2ncI6XYim21cjvauUwO/wfvXwu0MB94+nmkjhMYrXkIJq+MI
+ xs7veXvlVf+ThVbDHMxp9LjWFNxRnlYrbYzfKcgOLSYqNusDtMnHmJRdlm6C+A/Er/LPMCAl0Vr
+ +GSVoh5Gz81ZwuZo0hyXkkF6l8BZIvU6ECtv8YpOIQLgrnxRX9sKNRzHG5sRhu+QcjEmUbNy7H/
+ ppfOeH/VQd4wnJhY9VVvvsdOi8tFnW0tcmc0ONrzKxnO4nMaKbQB1QoD6JdlPe8TOTDncUdQonJ
+ MxBn0lCJMKJ9CIBR0dj49JKuelJUP6gLrphdeiyq68CSuXhXcylMFXmwwwpv43NS2RbpKzPRgPf
+ Ak/YJest1iyVRLsB1w2ixFHwRXqRWIrfz1h04eRahIvgr3feZJPKOhFMIcXUoEBMysWPkXT3vGY
+ We+JscZXwHlOTYrJh9JOxhR+OmoHYO27+PI0xWwCIedoP3ZCe5SmKubNKk1XoxUpSV6Ag7v/QvJ
+ vlAgGhrJnAB6N2j85w8oN3e+SbsyenoPP+47zACsMUTS6W6ZyiQAiWvgRSPBJcSkYuRFFvmXAYI
+ XLrX7JpFBi9H96w==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -101,7 +101,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,58 +117,117 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Use more correct GTimer, specific for each backend, with a trace event.
+
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
 ---
- audio/audio-be.c   | 5 +++++
- audio/trace-events | 4 ++++
- 2 files changed, 9 insertions(+)
+ audio/audio_int.h       |  1 +
+ include/qemu/timer.h    |  1 +
+ audio/audio-mixeng-be.c | 25 +++++++++----------------
+ audio/trace-events      |  1 +
+ 4 files changed, 12 insertions(+), 16 deletions(-)
 
-diff --git a/audio/audio-be.c b/audio/audio-be.c
-index 719dd8cac12..3203bb80e05 100644
---- a/audio/audio-be.c
-+++ b/audio/audio-be.c
-@@ -4,6 +4,7 @@
- #include "qemu/audio.h"
- #include "qemu/audio-capture.h"
- #include "qapi/error.h"
-+#include "trace.h"
+diff --git a/audio/audio_int.h b/audio/audio_int.h
+index dd5f2220d75..e0ed6af67ed 100644
+--- a/audio/audio_int.h
++++ b/audio/audio_int.h
+@@ -224,6 +224,7 @@ struct AudioMixengBackend {
+     Audiodev *dev;
  
- bool audio_be_check(AudioBackend **be, Error **errp)
- {
-@@ -134,6 +135,8 @@ void audio_be_set_active_out(AudioBackend *be, SWVoiceOut *sw, bool on)
- {
-     AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
+     QEMUTimer *ts;
++    GTimer *run_timer;
+     QLIST_HEAD (hw_in_listhead, HWVoiceIn) hw_head_in;
+     QLIST_HEAD (hw_out_listhead, HWVoiceOut) hw_head_out;
+     QLIST_HEAD (cap_listhead, CaptureVoiceOut) cap_head;
+diff --git a/include/qemu/timer.h b/include/qemu/timer.h
+index 7c18da16525..b931181f53d 100644
+--- a/include/qemu/timer.h
++++ b/include/qemu/timer.h
+@@ -6,6 +6,7 @@
+ #include "qemu/host-utils.h"
  
-+    trace_audio_be_set_active_out(sw, on);
-+
-     if (!sw) {
-         return;
+ #define NANOSECONDS_PER_SECOND 1000000000LL
++#define MICROSECONDS_PER_SECOND 1000000LL
+ 
+ /* timers */
+ 
+diff --git a/audio/audio-mixeng-be.c b/audio/audio-mixeng-be.c
+index 84e4d136de3..2aeb05ba37e 100644
+--- a/audio/audio-mixeng-be.c
++++ b/audio/audio-mixeng-be.c
+@@ -24,13 +24,13 @@
+ #include "system/replay.h"
+ #include "system/runstate.h"
+ #include "trace.h"
++#include "trace/control.h"
+ 
+ #define AUDIO_CAP "audio"
+ #include "audio_int.h"
+ 
+ /* #define DEBUG_OUT */
+ /* #define DEBUG_CAPTURE */
+-/* #define DEBUG_POLL */
+ 
+ #define SW_NAME(sw) (sw)->name ? (sw)->name : "unknown"
+ 
+@@ -1269,22 +1269,12 @@ void audio_run(AudioMixengBackend *s, const char *msg)
+     audio_run_in(s);
+     audio_run_capture(s);
+ 
+-#ifdef DEBUG_POLL
+-    {
+-        static double prevtime;
+-        double currtime;
+-        struct timeval tv;
+-
+-        if (gettimeofday (&tv, NULL)) {
+-            perror ("audio_run: gettimeofday");
+-            return;
+-        }
+-
+-        currtime = tv.tv_sec + tv.tv_usec * 1e-6;
+-        dolog ("Elapsed since last %s: %f\n", msg, currtime - prevtime);
+-        prevtime = currtime;
++    if (trace_event_get_state(TRACE_AUDIO_RUN_POLL)) {
++        /* Convert seconds to microseconds for trace event */
++        int64_t elapsed_us = g_timer_elapsed(s->run_timer, NULL) * MICROSECONDS_PER_SECOND;
++        trace_audio_run_poll(msg, elapsed_us);
++        g_timer_start(s->run_timer);
      }
-@@ -145,6 +148,8 @@ void audio_be_set_active_in(AudioBackend *be, SWVoiceIn *sw, bool on)
- {
-     AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
+-#endif
+ }
  
-+    trace_audio_be_set_active_in(sw, on);
-+
-     if (!sw) {
-         return;
+ void audio_generic_run_buffer_in(HWVoiceIn *hw)
+@@ -1545,6 +1535,7 @@ static void audio_mixeng_backend_init(Object *obj)
+     QLIST_INIT(&s->hw_head_in);
+     QLIST_INIT(&s->cap_head);
+     s->ts = timer_new_ns(QEMU_CLOCK_VIRTUAL, audio_timer, s);
++    s->run_timer = g_timer_new();
+ 
+     s->vmse = qemu_add_vm_change_state_handler(audio_vm_change_state_handler, s);
+     assert(s->vmse != NULL);
+@@ -1596,6 +1587,8 @@ static void audio_mixeng_backend_finalize(Object *obj)
+         s->ts = NULL;
      }
+ 
++    g_clear_pointer(&s->run_timer, g_timer_destroy);
++
+     if (s->vmse) {
+         qemu_del_vm_change_state_handler(s->vmse);
+         s->vmse = NULL;
 diff --git a/audio/trace-events b/audio/trace-events
-index 7e3f1593c81..f7f639d9605 100644
+index 4749c54fc04..d66a712e871 100644
 --- a/audio/trace-events
 +++ b/audio/trace-events
-@@ -26,6 +26,10 @@ pw_vol(const char *ret) "set volume: %s"
- pw_period(uint64_t quantum, uint32_t rate) "period =%" PRIu64 "/%u"
- pw_audio_init(void) "Initialize PipeWire context"
+@@ -61,6 +61,7 @@ audio_timer_delayed(int interval) "interval %d ms"
  
-+# audio-be.c
-+audio_be_set_active_in(void *sw, bool on) "sw=%p, on=%d"
-+audio_be_set_active_out(void *sw, bool on) "sw=%p, on=%d"
-+
- # audio.c
- audio_timer_start(int interval) "interval %d ms"
- audio_timer_stop(void) ""
+ # audio-mixeng-be.c
+ audio_get_avail(const char *name, size_t live, uint32_t frontend_frames) "%s: get_avail live %zu frontend frames %u"
++audio_run_poll(const char *msg, int64_t elapsed_us) "Elapsed since last %s: %" PRId64 " us"
+ 
+ # audio_template.h
+ audio_open_out(const char *name, int freq, int nchannels, int fmt) "open %s, freq %d, nchannels %d, fmt %d"
 
 -- 
 2.53.0
