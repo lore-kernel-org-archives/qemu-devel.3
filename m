@@ -4,124 +4,125 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45104E63F33
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 07:40:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54BC7E63F38
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 08:13:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vrtDB-0002fu-FK; Mon, 16 Feb 2026 02:40:05 -0500
+	id 1vrtid-0008Hu-Ay; Mon, 16 Feb 2026 03:12:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1vrtD2-0002fW-Kv
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 02:39:56 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1vrtiZ-0008HZ-Kw
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 03:12:33 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1vrtCw-0002HH-R3
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 02:39:54 -0500
+ id 1vrtiW-0007hU-C5
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 03:12:30 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771227584;
+ s=mimecast20190719; t=1771229546;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=u9Sd22frdKEr2L0ol1+aGwYGCZ26GSezlhVAp+dwe5g=;
- b=V9b8dOaZtLtlCC9rVd7rMBEmfk4WPPtrj8ABtIICOj3paoMic57DP6Om1rOp+O4nBJ+4vA
- zpSUst0iOj0+Dc1jnn0DRPttVqyBn6vM+95OsiiFZOZjkOyk1azyJhUKvNjA+eI2kzXXBW
- G5H1iXkRdAhbfIPTrzkliUIPSy9tYgY=
+ bh=7gbOSvjbKgU/L/u0eYeyTMFDz1SNfjlskyOhBcCV7gw=;
+ b=KghjAiiQQxGVk63+iEUoKckrOFxH4bzKc3+CrGJspr0/ADrCB5fmsEez1k/kxD3nc+lxSq
+ LUzQb3pMbpztWBmE38Dr0UQcBmwOviIuJA+aD/+4NB5xsCGWLYT3fBIUItndLK/vvthXTK
+ UYK+VXQbcrrP1le9z07qlrsEtv979LU=
 Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
  [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-589-vL1znrBhOwm2hl8MhZTcrQ-1; Mon, 16 Feb 2026 02:39:43 -0500
-X-MC-Unique: vL1znrBhOwm2hl8MhZTcrQ-1
-X-Mimecast-MFC-AGG-ID: vL1znrBhOwm2hl8MhZTcrQ_1771227583
+ us-mta-590-PoCODVGSMHGkoDU-DYcn6g-1; Mon, 16 Feb 2026 03:12:24 -0500
+X-MC-Unique: PoCODVGSMHGkoDU-DYcn6g-1
+X-Mimecast-MFC-AGG-ID: PoCODVGSMHGkoDU-DYcn6g_1771229544
 Received: by mail-qt1-f197.google.com with SMTP id
- d75a77b69052e-5033b62efa7so219799631cf.1
- for <qemu-devel@nongnu.org>; Sun, 15 Feb 2026 23:39:43 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1771227583; cv=none;
+ d75a77b69052e-506c0231e63so154237761cf.1
+ for <qemu-devel@nongnu.org>; Mon, 16 Feb 2026 00:12:24 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1771229544; cv=none;
  d=google.com; s=arc-20240605;
- b=ATk9E3iFyRByADoX0cKhqYdEaX1g0Rx2oAQF1fYQFY2bHfxedgydl4RU3zEIwyGOyj
- PjL2mSLT8KHbIL6u2qFuYxYP9Mfb0NM9Qv4MgYYHY/BXZPehWB+rM/XACCAUEMyA4cTd
- Q/rJvc5887ZSwPrzBi0nl7n/uNdek2fbMmun6tPbtpSeS0VjiVQ1s+o43/pDxnSMze/i
- q+lpkhSCe/Gs86ruZJJECZTF4mD9YfCAOrGPCAP3KbBvCjdzygBlh7xwkMpz9w4RIKJe
- 45YN7pZOf+iiFKxc4Yo5ZSBtsAdWHTRh+e2xk0E9J71ZggHNsZybBaKxjVpQ/9sW2xiI
- lutA==
+ b=O9CyjJxcwb8lmjkJHHIG5I6xlGybxpFGAo0bh9U0mk493MNpmmQ3XWcHVKezEeVxEy
+ As4/Ik5+5GWGjPx/wFTZNWiX7xM4Io/UJCpbtLKFAMnlhimIQep7yWJKmOhWXga0JAWW
+ OLBVi4XMbIMgP2uVMYf7DNi7c/7EPC28fj0wt58OpLQfN9gzxaz+QqKlKAhjdH/zEOdQ
+ IHuPch56VeuXt7iDv48JTj9caCd4N5LZ/emSNwWcaN/fJdD1OeKbrZ421TKRpHu/g2b3
+ uLsq28Gok/5lhZ8hx7q+CLwaWeUeHdTjzO43fbCxsMduH5xSLdecmajfAcT0pPDl4xwS
+ mpLA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=u9Sd22frdKEr2L0ol1+aGwYGCZ26GSezlhVAp+dwe5g=;
+ bh=7gbOSvjbKgU/L/u0eYeyTMFDz1SNfjlskyOhBcCV7gw=;
  fh=sIsIOvEHAUniTyi3GhO91uUMlcdX4avqzqeMhQBuOOs=;
- b=by0pbTpnyQwkhCctr7n8oyPBt4LmR+BfvZlEZm7DYLHbVlX7CrEE0uVrs2a5o4MYi9
- EV561agEe6PcYjHED5cyZxbxsUXkAjdRe6yvachjjo202zxH/Hbz0k8kQ+WWRdArlp2U
- aM6fhBxt6/fPmTyw5BDdkz+3a5Eui1sUhurqz9KyswHJ1+YoMNAjuNLqGjoMZ0p4KHqb
- YEPZoJlcl97vfj2FropWpXbzTPAbys39QRh8DMip0TpiNDxo+RL2i/xX6KBg4UR8KoXK
- 4B7fLgcDvrOnrmrfMvUlFGsCLbdlowLz6u7k0D4ukSBWBDP+pyZp53GEBzgRbgLhFHGB
- +/ug==; darn=nongnu.org
+ b=SQMjhsHptz6YeoXhqaN1sPj22oofAIwDBxGEyez4hBd5lcoDOENFnHJITr7+v8+r+T
+ oK2fu/6t346IJAEKyInQl9wwb0lwReDKhRHWIu8oSicWrZ597WVyCmBj8K7AKIOvOg8E
+ xJ1HJdh4EX8YzgVECv7/KnK+slVu0KMFunDsl7RyQAYGtDXEdUV7Z1Os3KEhnmPY7D1C
+ 5Rs/jGha8BRXBpBIsNCsge1rBoebMyyEZLnn1LeWlDxo38/GRj7ohO90b+7+Y7tLWNz3
+ i0909PtmefQgBXi4j38tXxzOtLExruMfGKA7FiedsYPVH5jGr8Uo4AUOiNOGdqWuFn0J
+ voIQ==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1771227583; x=1771832383; darn=nongnu.org;
+ d=redhat.com; s=google; t=1771229544; x=1771834344; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=u9Sd22frdKEr2L0ol1+aGwYGCZ26GSezlhVAp+dwe5g=;
- b=jjuGSP+RHuRvTxz0tFN55BgeYjSfuEVRtZ3MzBUMypwD8ftY6pafJNYAVW4AHDc/N7
- Gu2fcmZkEg85aB+qYf+Q3H5GHlup8nh6ejOhtNlBF8fug3wPdVFe3vIzTqIKD7UYSpFC
- 9UCW5wQLacq6egyAvA7Fj5zvPaMR9x7Kjl4Wzcmdm6AUIM/DsSttuR1efIiLrMcrxVUr
- tVkDTEhqRU4JDin7qR2QpWuI0XNs9CuLnKrtyg6o+SaFUayJmf5ECLuXetUIzgAxYy0Y
- PvrG2sNBPYY0JgJ+J1VMD/yhuvUT4RoGQcp09FQZPm4YAKNhOr2zZirfH27of5OvF+w0
- dABA==
+ bh=7gbOSvjbKgU/L/u0eYeyTMFDz1SNfjlskyOhBcCV7gw=;
+ b=MPqGhYOqhQBlKjEcT2pzbjOyNH/1ploWckLmPysNoqqIB31wSv/VrTm7gbt/OEKBpw
+ J7eVEv1QPrb7LWYIwwTcCyZb3Iqfc5O8Y36LZ1C/upgfVUWWxCMY8DuNqYKxpB+18f+o
+ JbJytw7FcoOCLeNN74pgKFUr/i3/9VLAsiPoxVmE+ZGP1bty4cBsTVfvMYgKrpRWPX0c
+ YKy4Bl5RPIDD4pWltA95OHz5YtMaQ0jgS7j8ghEcvC42oeA3iUNdVX99ZRj54+5mF851
+ exPyfEDV6k32ZqJVNVGjXVZL8pmjy7P8eJA5vwS26mV68FhjWPXs9C3Nqrpcixnf8Lb+
+ Ls+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771227583; x=1771832383;
+ d=1e100.net; s=20230601; t=1771229544; x=1771834344;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=u9Sd22frdKEr2L0ol1+aGwYGCZ26GSezlhVAp+dwe5g=;
- b=X2wq32PuQ+XStJGyOgI04dFkb4H4NW7XcahnoR8gyc2tCrl8iYLR3jRXTtf7aVeBn6
- fjfxsXmilrIvYkZvp4hdKSDcJLGGEssOKe+qyP+dxrst5BxcEd/badYMs6dImBjv2kEM
- xEbU4oDop94+52Gl9t2sxCDEQNUCghDpwbihf0nnzBUny7o7u1ENRGgnwNDvu9TFGLKC
- w0scrQ5eFIjHRtkdkEJdpUfwDuelwImXES/n8pjAhfBBqrTNY5fR1ufhxDpX+KWZSJGG
- azelToCEItl1jlNAwGzupOWgJDhhCb2SVd6Skk3JHo3TVMk0zaZBcK9JJHiCspVOicHc
- YNyw==
-X-Gm-Message-State: AOJu0YyD0l/acqhJUjiBWVpIkN82/K0q6e1WZGFwEWyE9N0zJDgPX8td
- Yo/tele05KgjNIDci5DvBKzhE7hsndhDEgz+VNWAZ8AYvyo44OGcJTJ4+qIPcTFUZ3xd4BIF0/b
- 1sqt7lK2pxufGqAeBL+YWCEf8B9Y4WDVS17Vcq07zgGbYbr5qMl50m3y3/6plpNh1Bh2oVYt8LM
- Gcetbw/wihz00MMIqbZcsG+FztTaBZiAU=
-X-Gm-Gg: AZuq6aJxmEUQaGInwjI78IAk1OvDUv00hcVFCf48DHxkpAzdKpBysapNfJKJb8colug
- YnVXvpbhCW3LxIpkH/NmSF+54DpcUa7xkAjUSMe/CDi4l+eDbSh7FQMDxeX5O2qp6pvJAw09g4m
- YyIYFVhABOLZ2bPRvcICmSmMvwSjSztlzh4Ulbj7uRb9ICCFO1s9B0BfpKuiJjt1GuLC9isVgXy
- UgYyG/9+IfTkBVqHGtQUakAAnOIzk67pUGW
-X-Received: by 2002:ac8:5d56:0:b0:505:e4ea:ffa6 with SMTP id
- d75a77b69052e-506a8334d80mr126180791cf.54.1771227582723; 
- Sun, 15 Feb 2026 23:39:42 -0800 (PST)
-X-Received: by 2002:ac8:5d56:0:b0:505:e4ea:ffa6 with SMTP id
- d75a77b69052e-506a8334d80mr126180631cf.54.1771227582275; Sun, 15 Feb 2026
- 23:39:42 -0800 (PST)
+ bh=7gbOSvjbKgU/L/u0eYeyTMFDz1SNfjlskyOhBcCV7gw=;
+ b=ffdMPWUOMCtN2gl+v3ccmga0Xu0t3YkzK2oOi55f0RlLytyTN5UlW+hcjpA8gZomrs
+ GJFFxEj2gYZ7/52Y1DC8xuBOW0Ag1thlbA10GrMbM/8oPMJzCj2FeMM/ByZI9Uoh6T3D
+ 9jxtz9K2vGAjJMAzWMJm5tXL25leY4RRSelQt2ix66IfswjbA4Jco7HU5FVb4KFUZClq
+ umCncOWVsSlQJPqIgnUv6VBwKTKWOoBU/9Ng58qKGhRRtt4SPdMBtHINmyV/GMENAssQ
+ fkT6ZzlAG6VCKZbGwF8rQunqZalqK6tDjRHQIm9xe0XYWFDRwjfgrjZqDxpkBy/zUnm9
+ EBJQ==
+X-Gm-Message-State: AOJu0Yw6b19lUKmgjE4Mu4VEZ+X3z+rDwt7B5x7nV2mhtT6R6nx9mmp7
+ +Y0yoUXsAoRrd8FwU3BkgFhaaG4TDpw/GmlO83HMWWIKZJ5LOH0DvQNj1VG5BGGfXqPELsyQqt5
+ /yIGXV/idzQEFeOHf4TEYpNDp7rR1GxVyP3U0CJqz83U77YaKirE1ZAEgaT9xWfeW2dMJbQ61yV
+ SRAIu67gdyFYH3qlDmOZDFvfBBnEF82EU=
+X-Gm-Gg: AZuq6aIE8QffdO3Lge0rDVVbvAymbyNtKHQuACVk82cbFgl4+3X3Y9gxKlz8dTgOI4O
+ DQbtZjTHFAOordVcPDA39YPwoL9AxFwqIrgj3H0JKVWozrKL4jkRurfDx+79AAh+/jKPzpKi9Lx
+ Hmx6AWUBHKg37OUp7m4//Ojs3W9k7tmBVwDPEiT6Gamzs8K/dKZgsCIO/rOu49X5M8OpNBvVQII
+ ZKBOsseuGmiyS6LXpAfGHy23iIZziaGFSCR
+X-Received: by 2002:a05:622a:144c:b0:4ff:a8c1:b00e with SMTP id
+ d75a77b69052e-506b25fbdd3mr108550491cf.2.1771229544151; 
+ Mon, 16 Feb 2026 00:12:24 -0800 (PST)
+X-Received: by 2002:a05:622a:144c:b0:4ff:a8c1:b00e with SMTP id
+ d75a77b69052e-506b25fbdd3mr108550271cf.2.1771229543614; Mon, 16 Feb 2026
+ 00:12:23 -0800 (PST)
 MIME-Version: 1.0
 References: <20260206131438.1857182-1-imammedo@redhat.com>
-In-Reply-To: <20260206131438.1857182-1-imammedo@redhat.com>
+ <20260206131438.1857182-2-imammedo@redhat.com>
+In-Reply-To: <20260206131438.1857182-2-imammedo@redhat.com>
 From: Ani Sinha <anisinha@redhat.com>
-Date: Mon, 16 Feb 2026 13:09:30 +0530
-X-Gm-Features: AaiRm50yzQvxM6JFqzm6QkPaj1LbcPcUNJlzlsZLfJc1sDnbojyB4oYdJltW6V8
-Message-ID: <CAK3XEhNNRDRyg5hNUwpoYo8KS2CbyPEBHnzqjFH1zY8jjFhwCg@mail.gmail.com>
-Subject: Re: [PATCH 00/11] Introduce ACPI watchdog for Q35 and arm/virt boards
+Date: Mon, 16 Feb 2026 13:42:12 +0530
+X-Gm-Features: AaiRm52xrxds_-Yq2R40hnHa12yvRvByvKvKRBn3KJdzGSS6o04e8194FvTutQw
+Message-ID: <CAK3XEhOzZH8VUoFZTN7GuZt1Sn8PRZtsMEvq9Gs4p8CfKwX2pw@mail.gmail.com>
+Subject: Re: [PATCH 01/11] acpi: add API to build WDAT instructions
 To: Igor Mammedov <imammedo@redhat.com>
 Cc: qemu-devel@nongnu.org, mst@redhat.com, pbonzini@redhat.com, 
  peter.maydell@linaro.org, shannon.zhaosl@gmail.com, philmd@linaro.org, 
  zhao1.liu@intel.com, rad@semihalf.com, leif.lindholm@oss.qualcomm.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=anisinha@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=anisinha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -137,105 +138,182 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Feb 6, 2026 at 6:44=E2=80=AFPM Igor Mammedov <imammedo@redhat.com> =
+On Fri, Feb 6, 2026 at 6:45=E2=80=AFPM Igor Mammedov <imammedo@redhat.com> =
 wrote:
 >
-> Windows doesn't ship built-in TCO watchdog driver, and users are
-> forced to install vendor specific driver(s) if such exists.
-> However OS provides a generic watchdog driver that uses
-> ACPI WDAT table [1] to abstract actual hardware behind it.
-> The same applies to ARM version of Windows.
+> Add definitions for WDAT[1] actions/instructions
+> and build_append_wdat_ins() API to build table entries.
 >
-> This series adds
->  *  WDAT table tailored for TCO watchdog that Q35 already
->     has as part of ICH9 chipset and a knob to enable it.
->  *  SBSA GWDT to arm/vit machine with WDAT table tailored
->     for it and necessary tweaks to GWDT to make usable
->     with WDAT driver.
+> 1)
+> "Hardware Watchdog Timers Design Specification"
+>   https://uefi.org/acpi 'Watchdog Action Table (WDAT)'
 >
-> Guest OS support is present since Windows Vista and Linux since 2016[2].
+> Signed-off-by: Igor Mammedov <imammedo@redhat.com>
 
-I am confused. The linux documentation for arm64 says WDAT is not supported
-https://www.kernel.org/doc/html/latest/arch/arm64/acpi_object_usage.html
+Reviewed-by: Ani Sinha <anisinha@redhat.com>
 
-
->
-> One can test it launching VM with following options:
->    -machine acpi-watchdog=3Don
-> to trace access to TCO registers one can add to CLI:
->     -trace "tco_*"
-> to trace access to GWDT registers one can add to CLI:
->     -trace "sbsa_gwdt*"
->
-> To verify that guest uses WDAT (both Windows and Linux would use it if pr=
-esent),
->   * on linux make sure that watchdog service is configured/enabled
->    (use wdctl to check what watchdog device to use and confirm that it's
->     wadt based one) and then trigger kernel panic with command:
->       echo c > /proc/sysrq-trigger
->   * on Windows kill svchost process, running cmd in admin mode:
->       taskkill /f /im svchost.exe
->
-> Tested with WS2025 & RHEL9.6 & Fedore 43 (aarch64)
->
-> git tree at: https://gitlab.com/imammedo/qemu/-/commits/gwdt_v2
->
-> 1) http://msdn.microsoft.com/en-us/windows/hardware/gg463320.aspx
-> 2) https://lwn.net/Articles/700524/
->
-> PS:
->  previous revision (q35 only):
->  https://patchwork.ozlabs.org/project/qemu-devel/cover/20251030123750.136=
-175-1-imammedo@redhat.com/
->
-> Also CCing SBSA folks to see if they are interested in adding it to their
-> reference machine
->
-> Igor Mammedov (11):
->   acpi: add API to build WDAT instructions
->   machine: add "acpi-watchdog" property
->   x86: q35: generate WDAT ACPI table
->   tests: acpi: x86/q35: whitelist new WDAT table
->   tests: acpi: x86/q35: add WDAT table test case
->   tests: acpi: x86/q35: update expected WDAT blob
->   arm: add tracing events to sbsa_gwdt
->   arm: virt: create GWDT watchdog paired with WDAT ACPI table
->   tests: acpi: arm/virt: whitelist new WDAT table
->   tests: acpi: arm/virt: add WDAT table test case
->   tests: acpi: arm/virt: update expected WDAT blob
->
->  include/hw/acpi/wdat-gwdt.h            |  19 ++++
->  include/hw/acpi/wdat-ich9.h            |  15 ++++
->  include/hw/acpi/wdat.h                 | 118 +++++++++++++++++++++++++
->  include/hw/arm/virt.h                  |   3 +
->  include/hw/core/boards.h               |   1 +
->  hw/acpi/aml-build.c                    |  14 +++
->  hw/acpi/meson.build                    |   5 +-
->  hw/acpi/wdat-gwdt-stub.c               |  16 ++++
->  hw/acpi/wdat-gwdt.c                    |  92 +++++++++++++++++++
->  hw/acpi/wdat-ich9-stub.c               |  15 ++++
->  hw/acpi/wdat-ich9.c                    |  87 ++++++++++++++++++
->  hw/arm/Kconfig                         |   1 +
->  hw/arm/virt-acpi-build.c               |  16 ++++
->  hw/arm/virt.c                          |  26 ++++++
->  hw/core/machine.c                      |  20 +++++
->  hw/i386/acpi-build.c                   |  12 +++
->  hw/watchdog/sbsa_gwdt.c                |   8 ++
->  hw/watchdog/trace-events               |   9 ++
->  tests/data/acpi/aarch64/virt/WDAT.wdat | Bin 0 -> 260 bytes
->  tests/data/acpi/x86/q35/WDAT.wdat      | Bin 0 -> 308 bytes
->  tests/qtest/bios-tables-test.c         |  34 +++++++
->  21 files changed, 510 insertions(+), 1 deletion(-)
->  create mode 100644 include/hw/acpi/wdat-gwdt.h
->  create mode 100644 include/hw/acpi/wdat-ich9.h
+> ---
+>  include/hw/acpi/wdat.h | 118 +++++++++++++++++++++++++++++++++++++++++
+>  hw/acpi/aml-build.c    |  14 +++++
+>  2 files changed, 132 insertions(+)
 >  create mode 100644 include/hw/acpi/wdat.h
->  create mode 100644 hw/acpi/wdat-gwdt-stub.c
->  create mode 100644 hw/acpi/wdat-gwdt.c
->  create mode 100644 hw/acpi/wdat-ich9-stub.c
->  create mode 100644 hw/acpi/wdat-ich9.c
->  create mode 100644 tests/data/acpi/aarch64/virt/WDAT.wdat
->  create mode 100644 tests/data/acpi/x86/q35/WDAT.wdat
 >
+> diff --git a/include/hw/acpi/wdat.h b/include/hw/acpi/wdat.h
+> new file mode 100644
+> index 0000000000..89803eef4b
+> --- /dev/null
+> +++ b/include/hw/acpi/wdat.h
+> @@ -0,0 +1,118 @@
+> +/*
+> + * Watchdog Action Table (WDAT) definitions
+> + *
+> + * Copyright Red Hat, Inc. 2026
+> + * Author(s): Igor Mammedov <imammedo@redhat.com>
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +#ifndef QEMU_HW_ACPI_WDAT_H
+> +#define QEMU_HW_ACPI_WDAT_H
+> +
+> +#include "hw/acpi/acpi-defs.h"
+> +
+> +/*
+> + * Watchdog actions as described in
+> + *  "Hardware Watchdog Timers Design Specification"
+> + * for link to spec see https://uefi.org/acpi
+> + *     'Watchdog Action Table (WDAT)'
+> + */
+> +typedef enum {
+> +    /*
+> +     * Restarts the watchdog timer's countdown. This action is
+> +     * required.
+> +     */
+> +    WDAT_ACTION_RESET =3D 0x1,
+> +    /*
+> +     * Returns the current countdown value of the watchdog hardware
+> +     * (in count intervals).
+> +     */
+> +    WDAT_ACTION_QUERY_CURRENT_COUNTDOWN_PERIOD =3D 0x4,
+> +    /*
+> +     * Returns the countdown value the watchdog hardware is
+> +     * configured to use when reset (in count intervals).
+> +     */
+> +    WDAT_ACTION_QUERY_COUNTDOWN_PERIOD =3D 0x5,
+> +    /*
+> +     * Sets the countdown value (in count intervals) to be used when
+> +     * the watchdog timer is reset. This action is required if
+> +     * WDAT_ACTION_RESET does not explicitly write a new
+> +     * countdown value to a register during a reset. Otherwise, this
+> +     * action is optional.
+> +     */
+> +    WDAT_ACTION_SET_COUNTDOWN_PERIOD =3D 0x6,
+> +    /*
+> +     * Determines if the watchdog hardware is currently in enabled/
+> +     * running state. The same result must occur when performed from
+> +     * both from enabled/stopped state and enabled/running state. If
+> +     * the watchdog hardware is disabled, results are indeterminate.
+> +     * This action is required.
+> +     */
+> +    WDAT_ACTION_QUERY_RUNNING_STATE =3D 0x8,
+> +    /*
+> +     * Starts the watchdog, if not already in running state. If the
+> +     * watchdog hardware is disabled, results are indeterminate.
+> +     * This action is required.
+> +     */
+> +    WDAT_ACTION_SET_RUNNING_STATE =3D 0x9,
+> +    /*
+> +     * Determines if the watchdog hardware is currently in enabled/
+> +     * stopped state. The same result must occur when performed from
+> +     * both the enabled/stopped state and enabled/running state. If
+> +     * the watchdog hardware is disabled, results are indeterminate.
+> +     * This action is required.
+> +     */
+> +    WDAT_ACTION_QUERY_STOPPED_STATE =3D 0xA,
+> +    /*
+> +     * Stops the watchdog, if not already in stopped state. If the
+> +     * watchdog hardware is disabled, results are indeterminate.
+> +     * This action is required.
+> +     */
+> +    WDAT_ACTION_SET_STOPPED_STATE =3D 0xB,
+> +    /*
+> +     * Determines if the watchdog hardware is configured to perform a
+> +     * reboot when the watchdog is fired.
+> +     */
+> +    WDAT_ACTION_QUERY_REBOOT =3D 0x10,
+> +    /*
+> +     * Configures the watchdog hardware to perform a reboot when it
+> +     * is fired.
+> +     */
+> +    WDAT_ACTION_SET_REBOOT =3D 0x11,
+> +    /*
+> +     * Determines if the watchdog hardware is configured to perform a
+> +     * system shutdown when fired.
+> +     */
+> +    WDAT_ACTION_QUERY_SHUTDOWN =3D 0x12,
+> +    /*
+> +     * Configures the watchdog hardware to perform a system shutdown
+> +     * when fired.
+> +     */
+> +    WDAT_ACTION_SET_SHUTDOWN =3D 0x13,
+> +    /*
+> +     * Determines if the current boot was caused by the watchdog
+> +     * firing. The boot status is required to be set if the watchdog
+> +     * fired and caused a reboot. It is recommended that the
+> +     * Watchdog Status be set if the watchdog fired and caused a
+> +     * shutdown. This action is required.
+> +     */
+> +    WDAT_ACTION_QUERY_WATCHDOG_STATUS =3D 0x20,
+> +    /*
+> +     * Sets the watchdog's boot status to the default value. This
+> +     * action is required.
+> +     */
+> +    WDAT_ACTION_SET_WATCHDOG_STATUS =3D 0x21,
+> +} WDATAction;
+> +
+> +#define WDAT_INS_READ_VALUE 0x0
+> +#define WDAT_INS_READ_COUNTDOWN 0x1
+> +#define WDAT_INS_WRITE_VALUE 0x2
+> +#define WDAT_INS_WRITE_COUNTDOWN 0x3
+> +#define WDAT_INS_PRESERVE_REGISTER 0x80
+> +
+> +void build_append_wdat_ins(GArray *table_data,
+> +                           WDATAction action, uint8_t flags,
+> +                           struct AcpiGenericAddress as,
+> +                           uint32_t val, uint32_t mask);
+> +
+> +#endif /* QEMU_HW_ACPI_WDAT_H */
+> diff --git a/hw/acpi/aml-build.c b/hw/acpi/aml-build.c
+> index ea1c415b21..9f9ce28dcc 100644
+> --- a/hw/acpi/aml-build.c
+> +++ b/hw/acpi/aml-build.c
+> @@ -32,6 +32,7 @@
+>  #include "hw/pci/pci_bus.h"
+>  #include "hw/pci/pci_bridge.h"
+>  #include "qemu/cutils.h"
+> +#include "hw/acpi/wdat.h"
+>
+>  static GArray *build_alloc_array(void)
+>  {
+> @@ -2647,3 +2648,16 @@ Aml *aml_error_device(void)
+>
+>      return dev;
+>  }
+> +
+> +void build_append_wdat_ins(GArray *table_data,
+> +                           WDATAction action, uint8_t flags,
+> +                           struct AcpiGenericAddress as,
+> +                           uint32_t val, uint32_t mask)
+> +{
+> +    build_append_int_noprefix(table_data, action, 1);    /* Watchdog Act=
+ion */
+> +    build_append_int_noprefix(table_data, flags, 1);     /* Instruction =
+Flags */
+> +    build_append_int_noprefix(table_data, 0, 2);         /* Reserved */
+> +    build_append_gas_from_struct(table_data, &as);       /* Register Reg=
+ion */
+> +    build_append_int_noprefix(table_data, val, 4);       /* Value */
+> +    build_append_int_noprefix(table_data, mask, 4);      /* Mask */
+> +}
 > --
 > 2.47.3
 >
