@@ -4,63 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F743E83841
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 23:11:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1694FE8383F
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 23:28:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vs7jd-0000x2-TL; Mon, 16 Feb 2026 18:10:34 -0500
+	id 1vs80l-0004XQ-Ht; Mon, 16 Feb 2026 18:28:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vs7jb-0000wl-Q0; Mon, 16 Feb 2026 18:10:31 -0500
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ id 1vs80j-0004WJ-Id; Mon, 16 Feb 2026 18:28:13 -0500
+Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vs7jZ-0003eG-HM; Mon, 16 Feb 2026 18:10:31 -0500
+ id 1vs80g-0007G1-VQ; Mon, 16 Feb 2026 18:28:13 -0500
 Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id A1F05596A0A;
- Tue, 17 Feb 2026 00:10:24 +0100 (CET)
+ by zero.eik.bme.hu (Postfix) with ESMTP id C5D5C596A0A;
+ Tue, 17 Feb 2026 00:28:07 +0100 (CET)
 X-Virus-Scanned: amavis at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id l36ZfLa6wLrO; Tue, 17 Feb 2026 00:10:22 +0100 (CET)
+ id pjNQObljGVje; Tue, 17 Feb 2026 00:28:05 +0100 (CET)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 76FA45969FD; Tue, 17 Feb 2026 00:10:22 +0100 (CET)
+ id BA1295969FD; Tue, 17 Feb 2026 00:28:05 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 74A6E5969FA;
- Tue, 17 Feb 2026 00:10:22 +0100 (CET)
-Date: Tue, 17 Feb 2026 00:10:22 +0100 (CET)
+ by zero.eik.bme.hu (Postfix) with ESMTP id B7E995969FA;
+ Tue, 17 Feb 2026 00:28:05 +0100 (CET)
+Date: Tue, 17 Feb 2026 00:28:05 +0100 (CET)
 From: BALATON Zoltan <balaton@eik.bme.hu>
-To: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
-cc: qemu-devel@nongnu.org, Laurent Vivier <laurent@vivier.eu>, 
- "Dr. David Alan Gilbert" <dave@treblig.org>, 
- Nicholas Piggin <npiggin@gmail.com>, Chinmay Rath <rathc@linux.ibm.com>, 
- =?ISO-8859-15?Q?Alex_Benn=E9e?= <alex.bennee@linaro.org>, 
- Zhao Liu <zhao1.liu@intel.com>, 
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, 
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
+To: Paolo Bonzini <pbonzini@redhat.com>
+cc: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>, 
+ qemu-devel <qemu-devel@nongnu.org>, Chinmay Rath <rathc@linux.ibm.com>, 
+ =?ISO-8859-15?Q?Herv=E9_Poussineau?= <hpoussin@reactos.org>, 
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, 
+ Nicholas Piggin <npiggin@gmail.com>, 
  Artyom Tarasenko <atar4qemu@gmail.com>, 
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
- Gustavo Romero <gustavo.romero@linaro.org>, 
- Paolo Bonzini <pbonzini@redhat.com>, unisono@quyllur.org, 
- qemu-ppc@nongnu.org
-Subject: Re: [PATCH 11/11] target/ppc: Remove MonitorDef register entries
- available via gdbstub
-In-Reply-To: <20260216225228.53959-12-philmd@linaro.org>
-Message-ID: <ba0fd311-4c13-97ae-49e8-d40f0cc6b3a3@eik.bme.hu>
-References: <20260216225228.53959-1-philmd@linaro.org>
- <20260216225228.53959-12-philmd@linaro.org>
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
+ "zmta06.collab.prod.int.phx2.redhat.com, list@suse.de" <qemu-ppc@nongnu.org>, 
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, 
+ Laurent Vivier <laurent@vivier.eu>
+Subject: Re: [PATCH 7/8] hw/ppc: Set graphic display dimensions generically
+In-Reply-To: <aa07574a-2bd4-6490-7508-2db86a1c4446@eik.bme.hu>
+Message-ID: <a02ccd2e-0972-08fa-af90-33d4ec7c050f@eik.bme.hu>
+References: <20260214021240.58657-1-philmd@linaro.org>
+ <20260214021240.58657-8-philmd@linaro.org>
+ <252b2fa2-9251-3949-625b-7071c525c8e2@eik.bme.hu>
+ <56a0f465-2055-4c82-b0c0-963b376609e9@linaro.org>
+ <0492fc65-e156-1afe-ea72-520134ccca41@eik.bme.hu>
+ <CABgObfZpxHmdmX7La7kQLRWY0=nPZSysOYiJsU7h99JEgzio5A@mail.gmail.com>
+ <aa07574a-2bd4-6490-7508-2db86a1c4446@eik.bme.hu>
 MIME-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="3866299591-1664473876-1771283422=:70802"
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -76,51 +78,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
-
---3866299591-1664473876-1771283422=:70802
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8BIT
-
-On Mon, 16 Feb 2026, Philippe Mathieu-Daudé wrote:
-> All these registers are already provided by via gdbstub parsed XML
-> and handler by the gdb_get_register() helper in the monitor/hmp.c
-> file. Remove as now unreachable code.
+On Mon, 16 Feb 2026, BALATON Zoltan wrote:
+> On Mon, 16 Feb 2026, Paolo Bonzini wrote:
+>> Il dom 15 feb 2026, 10:51 BALATON Zoltan <balaton@eik.bme.hu> ha scritto:
+>>>>>> +void ppc_graphic_dimensions(int *width, int *height, int *depth)
+>>>>>> +{
+>>>>>> +    *width = graphic_width ?: 800;
+>>>>>> +    *height = graphic_height ?: 600;
+>>>>>> +    *depth = graphic_depth ?: 32;
+>>>>>> +}
+>>>>> 
+>>>>> I think there's no reason to have this common to all ppc machines.
+>> 
+>> 
+>> I agree with you here that it's better to just inline this in all the
+>> boards that need it, because there's no reason to have 800x600x32 across
+>> such disparate machines.
+>> 
+>>> Can you provide a patch showing how you'd prefer it to be done?
+>>> 
+>>> Maybe turning these into properties could work. I could look at adding
+>>> such properties but don't know how to change the -g option. But
+>>> considering these are all machines that Mark maintains maybe he should do
+>>> something about it
+>> 
+>> 
+>> I am not sure what you'd be requesting of him?
+>> 
+>> The easiest were if he agreed to drop -g option but he
+>>> never agrees removing anything
+>> 
+>> 
+>> Not sure who's he? Is it me since I asked Philippe to keep -g, or Mark? And
+>> if it's Mark, I am not sure what you're trying to obtain by involving (and
+>> in a pretty rude way, too) someone who's not even part of the thread.
 >
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
-> target/ppc/ppc-qmp-cmds.c | 5 -----
-> 1 file changed, 5 deletions(-)
+> Mark is cc-ed on this thread and it seems this -g option is only used by 
+> machines he maintains. My previous experience with patches submitted to 
+> things he maintains is that this most of the time leads to long discussions 
+> on why what I propose is wrong and how else should it be done instead. (I'm 
+> not saying that it's because it's me who submits the patch, I've seen this 
+> happening to other contributors too but it looks like Mark has strong views 
+> on how things should be done and he's reluctant to accept anything else.) 
+> Because of that I try not to touch anything that Mark maintains unless he 
+> says beforehand what would be acceptable. I did not mean it to be rude or 
+> attack him but I also think this isn't the best way to work either. But given 
+> these cicrumstances I think Mark should state his peference about this as at 
+> the end he is the maintainer who will have to approve it.
 >
-> diff --git a/target/ppc/ppc-qmp-cmds.c b/target/ppc/ppc-qmp-cmds.c
-> index 7022564604f..7dfa78c2e0d 100644
-> --- a/target/ppc/ppc-qmp-cmds.c
-> +++ b/target/ppc/ppc-qmp-cmds.c
-> @@ -93,16 +93,11 @@ void hmp_info_tlb(Monitor *mon, const QDict *qdict)
-> }
+>> so then he should provide patches to clean
+>>> this up the way he prefers. I could try to make patches but I'm afraid
+>>> those would become wasted effort so may I only do it when there's an
+>>> approved way that will be accepted.
+>> 
+>> The -g 800x600x32 option, if desired, can become simply a shortcut for -M
+>> gfxwidth=800,gfxheight=600,gfxdepth=32 (or
+>> gfx.width=800,gfx.height=600,gfx.depth=32), which is more similar to how
+>> smp or boot work). This would actually be easier to implement with
+>> Philippe's move of all graphics_* accesses to board code, so his patches
+>> should go in either way. And then the globals can be removed altogether.
 >
-> const MonitorDef monitor_defs[] = {
-> -    { "fpscr", offsetof(CPUPPCState, fpscr) },
->     /* Next instruction pointer */
+> A problem with global option may be that resolution is not really a machine 
+> property but that of the display and one machine may have more than one 
+> display. Currently those display devices that support EDID use 
+> xres,yres,xmin,ymin,xmax,ymax properties and some devices like VGA have
 
-This comment should also go as it's for nip removed (nipped? :-) ) from 
-next line.
+Ther's no xmin,ymin but there's refresh_rate. However depth is missing.
+
+> DEFINE_EDID_PROPERTIES to forward these to the edid generation. For others it 
+> can be set less intuitively with -global. (This was asked by somebody for 
+> ati-vga recently so I plan to add forwarding properties for that.) Maybe we 
+> should move into that direction and make these properties of the display 
+> devices and call them xres,yres too for consistency. But there may be some 
+> complication here with fw_cfg and OpenBIOS too so in that case just keeping 
+> the globals and using machine properties may be simpler.
+
+Another problem with -g is that it only works with a few obscure machines 
+and will do nothing for most of the other machines which is confusing. So 
+in the longer term I think it should either be deprecated and these 
+machines changed to use properties on display devices like the others or 
+as you proposed last year it may need to become an option to set defaults 
+for all displays which is simliar to audiodev that was turned into a 
+machine property from a top level option a while ago.
+
+Anyway these are just my comments to this topic that I wanted to share and 
+then the involved parties will do whatever they want. I wanted to share 
+this in the hope to add some points that I think may be relevant.
 
 Regards,
 BALATON Zoltan
-
-> -    { "nip|pc", offsetof(CPUPPCState, nip) },
-> -    { "lr", offsetof(CPUPPCState, lr) },
-> -    { "ctr", offsetof(CPUPPCState, ctr) },
->     { "decr", 0, &monitor_get_decr, },
->     { "ccr|cr", 0, &monitor_get_ccr, },
->     /* Machine state register */
->     { "xer", 0, &monitor_get_xer },
-> -    { "msr", offsetof(CPUPPCState, msr) },
->     { "tbu", 0, &monitor_get_tbu, },
-> #if defined(TARGET_PPC64)
->     { "tb", 0, &monitor_get_tbl, },
->
---3866299591-1664473876-1771283422=:70802--
 
