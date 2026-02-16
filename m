@@ -4,99 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85F79E8383F
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 22:54:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F743E83841
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 23:11:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vs7TU-0003oh-Kx; Mon, 16 Feb 2026 17:53:52 -0500
+	id 1vs7jd-0000x2-TL; Mon, 16 Feb 2026 18:10:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vs7TR-0003a7-5h
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 17:53:49 -0500
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vs7TP-0006kl-Fx
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 17:53:48 -0500
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-43945763558so1140085f8f.3
- for <qemu-devel@nongnu.org>; Mon, 16 Feb 2026 14:53:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771282425; x=1771887225; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=DcFDo0OGdAbFK/LYHLtyhoYdjn54Jx25hy6jAoUO6d8=;
- b=lEOyHr95Zr40Xcx9dvWbR1+wSgcgjq6z1KLb8aXt7L9fSQBfHVS7WH8fX3y6ul17pA
- 7no7DCU4EOhZl8PiU2uIv4D5xQ+7cxNDAFeUSVJoc+aGlkhAp8YOQCMyJZYkXZyo9LPd
- mAUmayNBwAuevm2BHJZgDqwxyhQ09DXJfWJV/viVGSlJodm7b+kaa80gaWP904XvwaBd
- bgi2PmNq9W84L4nXsJDqcxF9s78BewDVz+AeTFUeaFl7N2KEN8hhmqy66a20Rmg/vbFO
- 2OJ/DI6Qvimaf5/uYLKrX6v3BtYp7C/Zkia7dgrCD9qJIpaXtKbtaApZ1OW6k/7OOutV
- V9KQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771282425; x=1771887225;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=DcFDo0OGdAbFK/LYHLtyhoYdjn54Jx25hy6jAoUO6d8=;
- b=bU3N3t//PXoNOPF2cvynYv0sMLdIL09u03zwBgedJ8ayWbCkWSXL1ACyicbW5zSN+I
- OkOP7wBxjaO4JLY23T/enU2xEncbaiUs5oNJdmDIhf3AtpVOrrFbduYA3NC0ITvxT9hO
- MiJeVBSUB1jrEfJSd/0pnkWXTQ/KM7Fo2atlwvxQzH+KrIYEMm6Z0srErlHCp8AZpCcE
- kUHxR/HnMI55EX3X4iKnBLohUNs0t4yYrjzsMIk05e28l3gS74BrVcpGR1JN7YE5ElIA
- P4tEomeTBISX9TZxTnL79Yvb9zG1qYtSHtIWAHE0uFYA3hvoDncsFQqw60bywhwF20l7
- eNpg==
-X-Gm-Message-State: AOJu0YxrSGknaQ9fG3zpto+IOEdQ6OLeuOESKm3dtyrG+vw6t1lFvLbx
- ckWQ8UAzoROiiLZrUV58sHR5tWkPOGVyYBBgq0QZNmaYWsO0mrkgrPUD8nsWE2f5KfuUzUrewYN
- 1GuI5ESY=
-X-Gm-Gg: AZuq6aIXidHNcLOntW9fVlwg/blmRSFNn0/P0AGuSw74odS3rInUhGuLQoc05ApoDZi
- 3ILpuazc0UDjHiTRSOx2YU7nur4DG3W0c3YC5LDDrLGSd6CaqJcaIpYPf232E9A1B8sdI9UgrGy
- PC/wjdQIlpm5akVV95NLWRzNezzNS8FqqL4xKHQU+eYnNWb7UXcv7lTQw6LwsU20j69PZ/jBf4c
- zPNbjWwuHkqxcFshoP4uKoqZwLWgNU4insiB5PbhsZN3tLDYNU2wTEeQ6F11Dg47G6b12g82qkx
- vDC99HWXTGiEiU7DHCa1dMGdJ88RmHEVNmr5zxrD7x3RbXeJ7TLMNYmFu4J3BjMX3VC3jltCEzG
- u7mfEyl8j4BKCqdUd068MomG1iQO60OUMqhuZjGgAkHCPTAcQ8YOF4l0s1+EXWWFORagDDIF13j
- FMRwlcePbUreVnOmmBpTNzjhKIDmLpTHeZn+1qu+l/WxqEDjAvNrLfk0Fn5zfYCu7LsZMXyJhe
-X-Received: by 2002:a5d:588d:0:b0:436:369f:39fa with SMTP id
- ffacd0b85a97d-43796af9ed9mr22202470f8f.44.1771282425415; 
- Mon, 16 Feb 2026 14:53:45 -0800 (PST)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43796a5ac7csm26797305f8f.7.2026.02.16.14.53.44
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 16 Feb 2026 14:53:44 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Laurent Vivier <laurent@vivier.eu>,
- "Dr. David Alan Gilbert" <dave@treblig.org>,
- Nicholas Piggin <npiggin@gmail.com>, Chinmay Rath <rathc@linux.ibm.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Artyom Tarasenko <atar4qemu@gmail.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Gustavo Romero <gustavo.romero@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, unisono@quyllur.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vs7jb-0000wl-Q0; Mon, 16 Feb 2026 18:10:31 -0500
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vs7jZ-0003eG-HM; Mon, 16 Feb 2026 18:10:31 -0500
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id A1F05596A0A;
+ Tue, 17 Feb 2026 00:10:24 +0100 (CET)
+X-Virus-Scanned: amavis at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
+ id l36ZfLa6wLrO; Tue, 17 Feb 2026 00:10:22 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 76FA45969FD; Tue, 17 Feb 2026 00:10:22 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 74A6E5969FA;
+ Tue, 17 Feb 2026 00:10:22 +0100 (CET)
+Date: Tue, 17 Feb 2026 00:10:22 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
+cc: qemu-devel@nongnu.org, Laurent Vivier <laurent@vivier.eu>, 
+ "Dr. David Alan Gilbert" <dave@treblig.org>, 
+ Nicholas Piggin <npiggin@gmail.com>, Chinmay Rath <rathc@linux.ibm.com>, 
+ =?ISO-8859-15?Q?Alex_Benn=E9e?= <alex.bennee@linaro.org>, 
+ Zhao Liu <zhao1.liu@intel.com>, 
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
+ Artyom Tarasenko <atar4qemu@gmail.com>, 
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
+ Gustavo Romero <gustavo.romero@linaro.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>, unisono@quyllur.org, 
  qemu-ppc@nongnu.org
-Subject: [PATCH 10/11] target/m68k: Remove MonitorDef register entries
+Subject: Re: [PATCH 11/11] target/ppc: Remove MonitorDef register entries
  available via gdbstub
-Date: Mon, 16 Feb 2026 23:52:26 +0100
-Message-ID: <20260216225228.53959-11-philmd@linaro.org>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260216225228.53959-1-philmd@linaro.org>
+In-Reply-To: <20260216225228.53959-12-philmd@linaro.org>
+Message-ID: <ba0fd311-4c13-97ae-49e8-d40f0cc6b3a3@eik.bme.hu>
 References: <20260216225228.53959-1-philmd@linaro.org>
+ <20260216225228.53959-12-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: multipart/mixed;
+ boundary="3866299591-1664473876-1771283422=:70802"
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,45 +76,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-All these registers are already provided by via gdbstub parsed XML
-and handler by the gdb_get_register() helper in the monitor/hmp.c
-file. Remove as now unreachable code.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- target/m68k/monitor.c | 18 ------------------
- 1 file changed, 18 deletions(-)
+--3866299591-1664473876-1771283422=:70802
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8BIT
 
-diff --git a/target/m68k/monitor.c b/target/m68k/monitor.c
-index 6d101c75df0..08ced037b47 100644
---- a/target/m68k/monitor.c
-+++ b/target/m68k/monitor.c
-@@ -24,24 +24,6 @@ void hmp_info_tlb(Monitor *mon, const QDict *qdict)
- }
- 
- static const MonitorDef monitor_defs[] = {
--    { "d0", offsetof(CPUM68KState, dregs[0]), NULL, MD_I32 },
--    { "d1", offsetof(CPUM68KState, dregs[1]), NULL, MD_I32 },
--    { "d2", offsetof(CPUM68KState, dregs[2]), NULL, MD_I32 },
--    { "d3", offsetof(CPUM68KState, dregs[3]), NULL, MD_I32 },
--    { "d4", offsetof(CPUM68KState, dregs[4]), NULL, MD_I32 },
--    { "d5", offsetof(CPUM68KState, dregs[5]), NULL, MD_I32 },
--    { "d6", offsetof(CPUM68KState, dregs[6]), NULL, MD_I32 },
--    { "d7", offsetof(CPUM68KState, dregs[7]), NULL, MD_I32 },
--    { "a0", offsetof(CPUM68KState, aregs[0]), NULL, MD_I32 },
--    { "a1", offsetof(CPUM68KState, aregs[1]), NULL, MD_I32 },
--    { "a2", offsetof(CPUM68KState, aregs[2]), NULL, MD_I32 },
--    { "a3", offsetof(CPUM68KState, aregs[3]), NULL, MD_I32 },
--    { "a4", offsetof(CPUM68KState, aregs[4]), NULL, MD_I32 },
--    { "a5", offsetof(CPUM68KState, aregs[5]), NULL, MD_I32 },
--    { "a6", offsetof(CPUM68KState, aregs[6]), NULL, MD_I32 },
--    { "a7", offsetof(CPUM68KState, aregs[7]), NULL, MD_I32 },
--    { "pc", offsetof(CPUM68KState, pc), NULL, MD_I32 },
--    { "sr", offsetof(CPUM68KState, sr), NULL, MD_I32 },
-     { "ssp", offsetof(CPUM68KState, sp[0]), NULL, MD_I32 },
-     { "usp", offsetof(CPUM68KState, sp[1]), NULL, MD_I32 },
-     { "isp", offsetof(CPUM68KState, sp[2]), NULL, MD_I32 },
--- 
-2.52.0
+On Mon, 16 Feb 2026, Philippe Mathieu-Daudé wrote:
+> All these registers are already provided by via gdbstub parsed XML
+> and handler by the gdb_get_register() helper in the monitor/hmp.c
+> file. Remove as now unreachable code.
+>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+> target/ppc/ppc-qmp-cmds.c | 5 -----
+> 1 file changed, 5 deletions(-)
+>
+> diff --git a/target/ppc/ppc-qmp-cmds.c b/target/ppc/ppc-qmp-cmds.c
+> index 7022564604f..7dfa78c2e0d 100644
+> --- a/target/ppc/ppc-qmp-cmds.c
+> +++ b/target/ppc/ppc-qmp-cmds.c
+> @@ -93,16 +93,11 @@ void hmp_info_tlb(Monitor *mon, const QDict *qdict)
+> }
+>
+> const MonitorDef monitor_defs[] = {
+> -    { "fpscr", offsetof(CPUPPCState, fpscr) },
+>     /* Next instruction pointer */
 
+This comment should also go as it's for nip removed (nipped? :-) ) from 
+next line.
+
+Regards,
+BALATON Zoltan
+
+> -    { "nip|pc", offsetof(CPUPPCState, nip) },
+> -    { "lr", offsetof(CPUPPCState, lr) },
+> -    { "ctr", offsetof(CPUPPCState, ctr) },
+>     { "decr", 0, &monitor_get_decr, },
+>     { "ccr|cr", 0, &monitor_get_ccr, },
+>     /* Machine state register */
+>     { "xer", 0, &monitor_get_xer },
+> -    { "msr", offsetof(CPUPPCState, msr) },
+>     { "tbu", 0, &monitor_get_tbu, },
+> #if defined(TARGET_PPC64)
+>     { "tb", 0, &monitor_get_tbl, },
+>
+--3866299591-1664473876-1771283422=:70802--
 
