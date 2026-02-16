@@ -4,57 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D70DE7BD8A
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 10:43:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D1DFE7BD8B
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 10:43:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vrw4W-0001yw-VE; Mon, 16 Feb 2026 05:43:24 -0500
+	id 1vrw4s-0002BG-Ir; Mon, 16 Feb 2026 05:43:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vrw4F-0001rX-6e
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 05:43:03 -0500
+ id 1vrw4H-0001s5-UB
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 05:43:07 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vrw4B-00010D-4J
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 05:43:02 -0500
+ id 1vrw4G-00011g-FZ
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 05:43:05 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771238576;
+ s=mimecast20190719; t=1771238583;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=TQTKsJe+H0JmAEbmIdQJvVw5lqnUUPR6AFifO+6umuY=;
- b=crpxsER1bFNPHN3zvZSGL7LO4T/ImhutjN8kvegPunx4NlKeuAoAWy0HwizmnSHEEwut9m
- TfHETPZ20dqtSQPUqVkFbeHqG5xJ4X33LQKgZ/vBEY02hfQfOldu6Hjh/PMCrD75v5MNPQ
- oDiUy/sQwXNnhoUtuar1uX9m7O1oFdA=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=D9XkBQ/oXbUz12+FCnU0YeeeK3GbFA4EHm+vljyv3ok=;
+ b=enPHstVUB80gToFofp3ddLRM11wArRoePsgfCLLui+0FOyd3GKc2RvhER14Nvli5IVp/qk
+ /yN9TbRyu4xGXkcQFTCTvcrzIUu+XNYJK9BBohpArkVz1ApIdMC5z8zk64JFIlz84Aq+YF
+ lc2BKT5KQc6q68XDh7o1vzgMjTZEfns=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-317-SXMw1KXdPc2cPPzGTl4RVA-1; Mon,
- 16 Feb 2026 05:42:52 -0500
-X-MC-Unique: SXMw1KXdPc2cPPzGTl4RVA-1
-X-Mimecast-MFC-AGG-ID: SXMw1KXdPc2cPPzGTl4RVA_1771238570
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-661-LiECF5iUNvSo8CPkGrGdMQ-1; Mon,
+ 16 Feb 2026 05:43:00 -0500
+X-MC-Unique: LiECF5iUNvSo8CPkGrGdMQ-1
+X-Mimecast-MFC-AGG-ID: LiECF5iUNvSo8CPkGrGdMQ_1771238578
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D81511955D8B; Mon, 16 Feb 2026 10:42:49 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D4B8D1956061; Mon, 16 Feb 2026 10:42:57 +0000 (UTC)
 Received: from localhost (unknown [10.45.242.26])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 9DA231800464; Mon, 16 Feb 2026 10:42:47 +0000 (UTC)
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 4E3E41800465; Mon, 16 Feb 2026 10:42:57 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Mon, 16 Feb 2026 11:42:16 +0100
-Subject: [PATCH 04/85] audio/dbus: make "dbus" the default backend when
- using -display dbus
+Date: Mon, 16 Feb 2026 11:42:19 +0100
+Subject: [PATCH 07/85] audio: replace vm_running with runstate_is_running()
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260216-audio-v1-4-edcb25699381@redhat.com>
+Message-Id: <20260216-audio-v1-7-edcb25699381@redhat.com>
 References: <20260216-audio-v1-0-edcb25699381@redhat.com>
 In-Reply-To: <20260216-audio-v1-0-edcb25699381@redhat.com>
 To: qemu-devel@nongnu.org
@@ -74,24 +73,24 @@ Cc: Gerd Hoffmann <kraxel@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
  Mark Cave-Ayland <mark.caveayland@nutanix.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3368;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2337;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=i0hZV7AIfgA8SuFqO30DlmD20T1D7KstDiHR2TRDsyg=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBpkvSTDaBeOarKtQb/e+z8GAIX3xq6nru0YkWgv
- K8KfVYKKg6JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaZL0kwAKCRDa6OEJdZac
- 5YvtD/9EYxYxrAw3wrbHnG1FN7/B+BYmBhU8F/1AgWo85WfTJonNupBc4z3teykE2YpwHNvQ32b
- el8efRcYavgibMitmy/ffURLDKvDVH2ctbJ5qql4prRjiZSKIrD5qLtTVFT23YHoy5vu/NpIFDu
- Rc7ZP/2omTe0veZVgYISZ3b+1yMFATawB727eo5/L8tPfkTeSa9gsQ08uM3N3Aw3Ykf/M2NEQEs
- iUCdfoQfd4Oiqyc55Lrn8FXfiZGtbPaUbj0zdPrZIT60LHj2CMtP622JYqNiJAitsrV11ugPv1n
- gtq0Y6U8ixeiuWZBXMuM8+OPWSRdfSTcq/+B3WiRmoGQZNFgqEl3NAuV5/L/6oo8L2Gr87rw/1d
- 3zBHS1LgvHKP538d3Ek5CUZT8/SS0A3c3TT12INxCjfA3ZJLCe5Gat3l1t2yJD0K0eWr/F5lLgP
- K/4DlRyjkaBJ+CuWC3xxwmtsiJM84tMTmHHX6ejqi5RnGHvstOP26+vzlX+H2cFh9IaJYE952y4
- lDO/OSrcUBFYndHmFzqmfHlM+OBHqTnXEYfDIi9cOUo73Kbfomkx+2AVtyjt1H5Pj+O3XKujmk+
- z3VtwzFPEXuF9yuc/IkvBbXPRJ5ChSO6P3CRxGse/r0qZU36yE74ksMs4dA3lwHATeKFDU7fuse
- 0a2TQC5mRZDLUAQ==
+ bh=n+3siSegRS3y0Lxy97FkNncK5ldFf6lqIw8dDZCokNw=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBpkvSTPmqaLxLA/HnmcaTTCsvqE3vdDiQVPpbzs
+ RWr6Rwjk4qJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaZL0kwAKCRDa6OEJdZac
+ 5WnBD/0Wpu3HWqfd4pfZYaECQPFMgJuX4qlciR3vERz8tz2i9ViuKGz2MPe3enDc6GPfT5nRsUG
+ +o/IR2SIGrF5CKUDBLemoWaT7csiIVoWmgPri5wF1nNmbcQ+lvOHVFE5qfkkahsYyTsRgjmX5Jf
+ Jm6m37g/3mdulv98jEMNkDQKvPoDL+7ikHooELlFQaxTs5r0t7r+PWkzlIkOuv3xBdaWKAjnebC
+ 24s2fgpb3CFmx0He6hurj7sJR8CTWOLlj61P5IRuncr1szCQxAtB9XJGwB6rMzitph28+amAWFq
+ o9N+2x2+AyZ7A/yjQggRwDNg+i1PCIhpNL/3ECDAWhQyumYfljyCMmyOcR+UXi6gZvXE//fi9K8
+ zE4mu1J7KNZrFajgN+DKVBR/Xd+l24weCfGRTjlTPf2Hm5dCsRDmyQG0QWsJgKLG/GrNFxPnISo
+ owjfC6+XH8a5fUmQyICurK2YGakinVR0XyY1vPjiYm+Y1WPtie2BuAbF1h7YSrNn1ADPp9jbBHR
+ S11vwda+8DE7AyPZFAyI1+a+5RXWjNozAHPvuSMgG6uwbGYdxPHU/GjBEtDSRf4QdlUYqAqq7Zc
+ 7e8ylb8ruQrclQRkXkiiDWwcJu/uLje+tkSxW5qJXrdbSg7wGmTIgbiPI9ZL3FSEchlfaeskMAz
+ vhLGGEXijI+/M0A==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -118,117 +117,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Set "using_dbus_display" during early_dbus_init(), so that we can try to
-create the "dbus" audio backend by default from audio_prio_list.
+AudioBackend had a vm_running field which was set in
+audio_vm_change_state_handler().
 
-This makes dbus audio work by default when using an audio device,
-without having to setup and wire up the -audiodev manually.
+The state change handler "bool running" argument is true when
+vm_prepare_start() calls it, and the VM runstate is either SUSPENDED or
+RUNNING.
 
-The added FIXME is addressed in the following commits.
+Audio hw voices shouldn't be running when the VM is suspended, but only
+when running. Thus replacing the vm_running field with a call to
+runstate_is_running() is both simpler and more correct.
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
 ---
- audio/audio.c     |  3 +++
- audio/dbusaudio.c |  8 +++++++-
- ui/dbus.c         | 22 +++++++++++++++++-----
- 3 files changed, 27 insertions(+), 6 deletions(-)
+ audio/audio_int.h | 1 -
+ audio/audio.c     | 5 ++---
+ 2 files changed, 2 insertions(+), 4 deletions(-)
 
+diff --git a/audio/audio_int.h b/audio/audio_int.h
+index 20b4c87b0b6..25de0e3f9cf 100644
+--- a/audio/audio_int.h
++++ b/audio/audio_int.h
+@@ -252,7 +252,6 @@ typedef struct AudioBackend {
+     QLIST_HEAD (cap_listhead, CaptureVoiceOut) cap_head;
+     int nb_hw_voices_out;
+     int nb_hw_voices_in;
+-    int vm_running;
+     int64_t period_ticks;
+ 
+     bool timer_running;
 diff --git a/audio/audio.c b/audio/audio.c
-index a218570a4f4..9563583cd1e 100644
+index 9563583cd1e..68698b13e15 100644
 --- a/audio/audio.c
 +++ b/audio/audio.c
-@@ -58,6 +58,9 @@
-     that we generate the list.
- */
- const char *audio_prio_list[] = {
-+#ifdef CONFIG_GIO
-+    "dbus",
-+#endif
-     "spice",
-     CONFIG_AUDIO_DRIVERS
-     "none",
-diff --git a/audio/dbusaudio.c b/audio/dbusaudio.c
-index d729a810aa6..1fe7c4ed647 100644
---- a/audio/dbusaudio.c
-+++ b/audio/dbusaudio.c
-@@ -32,6 +32,7 @@
- #endif
+@@ -933,7 +933,7 @@ void AUD_set_active_out(SWVoiceOut *sw, bool on)
+             hw->pending_disable = 0;
+             if (!hw->enabled) {
+                 hw->enabled = true;
+-                if (s->vm_running) {
++                if (runstate_is_running()) {
+                     if (hw->pcm_ops->enable_out) {
+                         hw->pcm_ops->enable_out(hw, true);
+                     }
+@@ -979,7 +979,7 @@ void AUD_set_active_in(SWVoiceIn *sw, bool on)
+         if (on) {
+             if (!hw->enabled) {
+                 hw->enabled = true;
+-                if (s->vm_running) {
++                if (runstate_is_running()) {
+                     if (hw->pcm_ops->enable_in) {
+                         hw->pcm_ops->enable_in(hw, true);
+                     }
+@@ -1598,7 +1598,6 @@ static void audio_vm_change_state_handler (void *opaque, bool running,
+     HWVoiceOut *hwo = NULL;
+     HWVoiceIn *hwi = NULL;
  
- #include "ui/dbus.h"
-+#include "ui/dbus-display.h"
- #include "ui/dbus-display1.h"
- 
- #define AUDIO_CAP "dbus"
-@@ -408,8 +409,13 @@ dbus_enable_in(HWVoiceIn *hw, bool enable)
- static void *
- dbus_audio_init(Audiodev *dev, Error **errp)
- {
--    DBusAudio *da = g_new0(DBusAudio, 1);
-+    DBusAudio *da;
- 
-+    if (!qemu_using_dbus_display(errp)) {
-+        return NULL;
-+    }
-+
-+    da = g_new0(DBusAudio, 1);
-     da->dev = dev;
-     da->out_listeners = g_hash_table_new_full(g_str_hash, g_str_equal,
-                                                 g_free, g_object_unref);
-diff --git a/ui/dbus.c b/ui/dbus.c
-index 31f6eb1189f..0be1931d208 100644
---- a/ui/dbus.c
-+++ b/ui/dbus.c
-@@ -35,6 +35,7 @@
- #include "ui/egl-context.h"
- #endif
- #include "qemu/audio.h"
-+#include "audio/audio_int.h" /* FIXME: use QOM dynamic cast instead of drv->name */
- #include "qapi/error.h"
- #include "trace.h"
- 
-@@ -218,9 +219,20 @@ dbus_display_complete(UserCreatable *uc, Error **errp)
-         return;
-     }
- 
--    if (dd->audiodev && *dd->audiodev) {
--        AudioBackend *audio_be = audio_be_by_name(dd->audiodev, errp);
--        if (!audio_be || !audio_be_set_dbus_server(audio_be, dd->server, dd->p2p, errp)) {
-+    {
-+        AudioBackend *audio_be = audio_get_default_audio_be(NULL);
-+
-+        if (audio_be && !g_str_equal(audio_be->drv->name, "dbus")) {
-+            audio_be = NULL;
-+        }
-+        if (dd->audiodev && *dd->audiodev) {
-+            audio_be = audio_be_by_name(dd->audiodev, errp);
-+            if (!audio_be) {
-+                return;
-+            }
-+        }
-+        if (audio_be &&
-+            !audio_be_set_dbus_server(audio_be, dd->server, dd->p2p, errp)) {
-             return;
-         }
-     }
-@@ -475,6 +487,8 @@ early_dbus_init(DisplayOptions *opts)
- #endif
-     }
- 
-+    using_dbus_display = 1;
-+
-     type_register_static(&dbus_vc_type_info);
- }
- 
-@@ -488,8 +502,6 @@ dbus_init(DisplayState *ds, DisplayOptions *opts)
-         exit(1);
-     }
- 
--    using_dbus_display = 1;
--
-     object_new_with_props(TYPE_DBUS_DISPLAY,
-                           object_get_objects_root(),
-                           "dbus-display", &error_fatal,
+-    s->vm_running = running;
+     while ((hwo = audio_pcm_hw_find_any_enabled_out(s, hwo))) {
+         if (hwo->pcm_ops->enable_out) {
+             hwo->pcm_ops->enable_out(hwo, running);
 
 -- 
 2.53.0
