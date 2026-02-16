@@ -4,50 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E297E81A40
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 16:17:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DD70E81A40
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 16:18:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vs1IB-0004yi-Hm; Mon, 16 Feb 2026 11:17:48 -0500
+	id 1vs1IE-00056v-LC; Mon, 16 Feb 2026 11:17:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1vs1HV-0004Xk-AP; Mon, 16 Feb 2026 11:17:10 -0500
-Received: from proxmox-new.maurer-it.com ([94.136.29.106])
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1vs1Hw-0004dy-Ru; Mon, 16 Feb 2026 11:17:44 -0500
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1vs1Gy-0006Ta-5C; Mon, 16 Feb 2026 11:16:56 -0500
-Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
- by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 064E949222;
- Mon, 16 Feb 2026 17:12:04 +0100 (CET)
-Message-ID: <811bbd59-df4e-4a60-adba-61cd2ef3016c@proxmox.com>
-Date: Mon, 16 Feb 2026 17:12:02 +0100
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1vs1Hl-0007E3-2J; Mon, 16 Feb 2026 11:17:26 -0500
+Received: from mail.maildlp.com (unknown [172.18.224.83])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4fF7F72prqzHnGhT;
+ Tue, 17 Feb 2026 00:16:27 +0800 (CST)
+Received: from dubpeml500005.china.huawei.com (unknown [7.214.145.207])
+ by mail.maildlp.com (Postfix) with ESMTPS id CFCB940086;
+ Tue, 17 Feb 2026 00:16:51 +0800 (CST)
+Received: from localhost (10.203.177.15) by dubpeml500005.china.huawei.com
+ (7.214.145.207) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.11; Mon, 16 Feb
+ 2026 16:16:50 +0000
+Date: Mon, 16 Feb 2026 16:16:49 +0000
+To: Shameer Kolothum <skolothumtho@nvidia.com>
+CC: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>, <eric.auger@redhat.com>,
+ <peter.maydell@linaro.org>, <nicolinc@nvidia.com>, <nathanc@nvidia.com>,
+ <mochs@nvidia.com>, <jan@nvidia.com>, <jgg@nvidia.com>,
+ <zhangfei.gao@linaro.org>, <zhenzhong.duan@intel.com>, <kjaju@nvidia.com>
+Subject: Re: [PATCH v6 3/5] hw/arm/smmuv3-accel: Allocate vEVENTQ for
+ accelerated SMMUv3 devices
+Message-ID: <20260216161649.00005f3a@huawei.com>
+In-Reply-To: <20260213103942.142823-4-skolothumtho@nvidia.com>
+References: <20260213103942.142823-1-skolothumtho@nvidia.com>
+ <20260213103942.142823-4-skolothumtho@nvidia.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] block/mirror: disable dirty bitmap only after job init
-To: Kevin Wolf <kwolf@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-stable@nongnu.org, qemu-block@nongnu.org,
- hreitz@redhat.com, vsementsov@yandex-team.ru, jsnow@redhat.com,
- jean-louis@dupond.be, dionbosschieter@gmail.com
-References: <20260212120411.369498-1-f.ebner@proxmox.com>
- <aZLwdRhpTHvi1Y1-@redhat.com>
- <66c3fca8-0f64-4cec-a2a9-5959ef67a251@proxmox.com>
- <5f336c06-c675-4d21-8c1c-e1a1ebe8e09f@proxmox.com>
- <aZM4KqW57Sb1l_Pb@redhat.com>
-Content-Language: en-US
-From: Fiona Ebner <f.ebner@proxmox.com>
-In-Reply-To: <aZM4KqW57Sb1l_Pb@redhat.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="US-ASCII"
 Content-Transfer-Encoding: 7bit
-X-Bm-Milter-Handled: 55990f41-d878-4baa-be0a-ee34c49e34d2
-X-Bm-Transport-Timestamp: 1771258316406
-Received-SPF: pass client-ip=94.136.29.106; envelope-from=f.ebner@proxmox.com;
- helo=proxmox-new.maurer-it.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+X-Originating-IP: [10.203.177.15]
+X-ClientProxiedBy: lhrpeml100010.china.huawei.com (7.191.174.197) To
+ dubpeml500005.china.huawei.com (7.214.145.207)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -62,279 +68,44 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <jonathan.cameron@huawei.com>
+From:  Jonathan Cameron via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 16.02.26 um 4:31 PM schrieb Kevin Wolf:
-> Am 16.02.2026 um 14:01 hat Fiona Ebner geschrieben:
->> Am 16.02.26 um 1:48 PM schrieb Fiona Ebner:
->>> Am 16.02.26 um 11:25 AM schrieb Kevin Wolf:
->>>> Am 12.02.2026 um 13:02 hat Fiona Ebner geschrieben:
->>>>> Currently, the dirty bitmap is disabled too early and the following
->>>>> bad scenario is possible:
->>>>>
->>>>> 1. Dirty bitmap is disabled in mirror_start_job()
->>>>> 2. Some request are started in mirror_top_bs while s->job == NULL
->>>>> 3. mirror_dirty_init() -> bdrv_co_is_allocated_above() runs and because
->>>>>    the request hasn't completed yet, the block isn't allocated
->>>>> 4. The request completes, still sees s->job == NULL and skips the
->>>>>    bitmap, and nothing else will mark it dirty either
->>>>>
->>>>> One ingredient is that mirror_top_opaque->job is only set after the
->>>>> job is fully initialized. For the rationale, see commit 32125b1460
->>>>> ("mirror: Fix access of uninitialised fields during start").
->>>>>
->>>>> Disabling the dirty bitmap is safe once bdrv_mirror_top_do_write()
->>>>> sees that the job is set, because then:
->>>>>
->>>>> 1. When not using MIRROR_COPY_MODE_WRITE_BLOCKING, the dirty bitmap
->>>>>    will be set by bdrv_mirror_top_do_write().
->>>>>
->>>>> 2. When using MIRROR_COPY_MODE_WRITE_BLOCKING, writes will be done
->>>>>    synchronously to the target.
->>>>>
->>>>> At least with virtio-blk using iothread-vq-mapping, mirror_run() and
->>>>> bdrv_mirror_top_do_write() might be called in different threads.
->>>>> bdrv_disable_dirty_bitmap() acquires and releases the dirty bitmap
->>>>> mutex, so the memory is synchronized between threads.
->>>>>
->>>>> Many thanks to Kevin Wolf for discussing the issue and solutions with
->>>>> me! [0]
->>>>>
->>>>> [0]: https://lore.kernel.org/qemu-devel/4853b0e5-8ec3-41e9-9a53-b1912b8e4449@dupond.be/T/
->>>>>
->>>>> Cc: qemu-stable@nongnu.org
->>>>> Closes: https://gitlab.com/qemu-project/qemu/-/issues/3273
->>>>> Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
->>>>> ---
->>>>>  block/mirror.c | 21 +++++++++++++++------
->>>>>  1 file changed, 15 insertions(+), 6 deletions(-)
->>>>>
->>>>> diff --git a/block/mirror.c b/block/mirror.c
->>>>> index b344182c74..eadd4501e8 100644
->>>>> --- a/block/mirror.c
->>>>> +++ b/block/mirror.c
->>>>> @@ -1123,6 +1123,21 @@ static int coroutine_fn mirror_run(Job *job, Error **errp)
->>>>>       */
->>>>>      mirror_top_opaque->job = s;
->>>>>  
->>>>> +    /*
->>>>> +     * Disabling the dirty bitmap is safe once bdrv_mirror_top_do_write() sees
->>>>> +     * that the job is set, because then:
->>>>> +     *
->>>>> +     * 1. When not using MIRROR_COPY_MODE_WRITE_BLOCKING, the dirty bitmap will
->>>>> +     * be set by bdrv_mirror_top_do_write().
->>>>> +     *
->>>>> +     * 2. When using MIRROR_COPY_MODE_WRITE_BLOCKING, writes will be done
->>>>> +     * synchronously to the target.
->>>>> +     *
->>>>> +     * bdrv_disable_dirty_bitmap() acquires and releases the dirty bitmap mutex,
->>>>> +     * so the memory is synchronized between threads.
->>>>> +     */
->>>>> +    bdrv_disable_dirty_bitmap(s->dirty_bitmap);
->>>>> +
->>>>>      assert(!s->dbi);
->>>>>      s->dbi = bdrv_dirty_iter_new(s->dirty_bitmap);
->>>>>      for (;;) {
->>>>> @@ -2014,12 +2029,6 @@ static BlockJob *mirror_start_job(
->>>>>          goto fail;
->>>>>      }
->>>>>  
->>>>> -    /*
->>>>> -     * The dirty bitmap is set by bdrv_mirror_top_do_write() when not in active
->>>>> -     * mode.
->>>>> -     */
->>>>> -    bdrv_disable_dirty_bitmap(s->dirty_bitmap);
->>>>> -
->>>>>      bdrv_graph_wrlock_drained();
->>>>>      ret = block_job_add_bdrv(&s->common, "source", bs, 0,
->>>>>                               BLK_PERM_WRITE_UNCHANGED | BLK_PERM_WRITE |
->>>>
->>>> The thing I meant in the other thread is if we don't need something like
->>>> this additionally:
->>>>
->>>> diff --git a/block/mirror.c b/block/mirror.c
->>>> index b344182c747..159954158ba 100644
->>>> --- a/block/mirror.c
->>>> +++ b/block/mirror.c
->>>> @@ -1672,9 +1672,17 @@ bdrv_mirror_top_do_write(BlockDriverState *bs, MirrorMethod method,
->>>>          abort();
->>>>      }
->>>>  
->>>> -    if (!copy_to_target && s->job && s->job->dirty_bitmap) {
->>>> +    if (!copy_to_target) {
->>>>          qatomic_set(&s->job->actively_synced, false);
->>>> -        bdrv_set_dirty_bitmap(s->job->dirty_bitmap, offset, bytes);
->>>> +        if (s->job && s->job->dirty_bitmap) {
->>>> +            bdrv_set_dirty_bitmap(s->job->dirty_bitmap, offset, bytes);
->>>> +        } else {
->>>> +            /*
->>>> +             * Avoid race in the case that mirror_run() disables the bitmap
->>>> +             * between here and bdrv_co_write_req_finish().
->>>> +             */
->>>> +            bdrv_set_dirty(bs, offset, bytes);
->>>> +        }
->>>>      }
->>>>  
->>>>      if (ret < 0) {
->>>
->>> You're right! It's not enough to ensure that the job is set before the
->>> bitmap is disabled, because both could happen after the check for job here.
->>>
->>> Isn't this change enough by itself? After the change,
->>> bdrv_mirror_top_do_write() ensures that:
->>>
->>> 1. When copy_to_target == true, the write is done synchronously to the
->>> target, no need to set the dirty bitmap.
->>>
->>> 2. When copy_to_target == false, the dirty bitmap is set.
->>>
->>> So it doesn't really matter at which point the dirty bitmap is disabled?
->>> Or am I missing something again?
->>
->> Ah right, bdrv_set_dirty() only sets it if still enabled :)
-> 
-> Yes, exactly.
-> 
-> If that's still too confusing, how about just giving mirror_top_bs
-> access to its dirty bitmap right from the start while it's drained? I
-> didn't try to reproduce the bug with it yet, though.
+On Fri, 13 Feb 2026 10:39:40 +0000
+Shameer Kolothum <skolothumtho@nvidia.com> wrote:
 
-You beat me to it :) Was thinking about this too, inspired by your
-initial suggestion for the alternate approach to avoid relying on the
-block layer for dirty tracking, but mine ended up needlessly involved,
-because I removed the dirty_bitmap from the MirrorBlockJob object and
-had to add a helper function for getting the dirty bitmap back from the
-job, which is less than ideal :P
+> From: Nicolin Chen <nicolinc@nvidia.com>
+> 
+> When the guest enables the Event Queue and a vIOMMU is present, allocate a
+> vEVENTQ object so that host-side events related to the vIOMMU can be
+> received and propagated back to the guest.
+> 
+> For cold-plugged devices using SMMUv3 acceleration, the vIOMMU is created
+> before the guest boots. In this case, the vEVENTQ is allocated when the
+> guest writes to SMMU_CR0 and sets EVENTQEN = 1.
+> 
+> If no cold-plugged device exists at boot (i.e. no vIOMMU initially), the
+> vEVENTQ is allocated when a vIOMMU is created, i.e. during the first
+> device hot-plug.
+> 
+> Also, rename the local error variable and refactor smmu_writel() to use
+> a single error accumulator with error_propagate().
+
+Why not split the rename out as a separate patch?  I don't hugely mind just
+feels like some noise in here could have been broken out before the real
+change and made it a tiny bit easier to review.
+
+I wouldn't bother unless you are respinning again for other reasons though!
+
+J
 
 > 
-> Kevin
+> Event read and propagation will be added in a later patch.
 > 
-> diff --git a/block/mirror.c b/block/mirror.c
-> index b344182c747..c11aca1366c 100644
-> --- a/block/mirror.c
-> +++ b/block/mirror.c
-> @@ -99,6 +99,7 @@ typedef struct MirrorBlockJob {
->  
->  typedef struct MirrorBDSOpaque {
->      MirrorBlockJob *job;
-> +    BdrvDirtyBitmap *dirty_bitmap;
->      bool stop;
->      bool is_commit;
->  } MirrorBDSOpaque;
-> @@ -1672,9 +1673,9 @@ bdrv_mirror_top_do_write(BlockDriverState *bs, MirrorMethod method,
->          abort();
->      }
->  
-> -    if (!copy_to_target && s->job && s->job->dirty_bitmap) {
-> +    if (!copy_to_target) {
-
-I put an assert(s->dirty_bitmap) here, but maybe it's not worth it?
-
->          qatomic_set(&s->job->actively_synced, false);
-> -        bdrv_set_dirty_bitmap(s->job->dirty_bitmap, offset, bytes);
-> +        bdrv_set_dirty_bitmap(s->dirty_bitmap, offset, bytes);
->      }
->  
->      if (ret < 0) {
-> @@ -1901,13 +1902,28 @@ static BlockJob *mirror_start_job(
-
-I created and disabled the dirty bitmap here already before the drained
-section. It seems slightly more readable. Do you see any downside to that?
-
->  
->      bdrv_drained_begin(bs);
->      ret = bdrv_append(mirror_top_bs, bs, errp);
-> -    bdrv_drained_end(bs);
-> -
->      if (ret < 0) {
-> +        bdrv_drained_end(bs);
->          bdrv_unref(mirror_top_bs);
->          return NULL;
->      }
->  
-> +    bs_opaque->dirty_bitmap = bdrv_create_dirty_bitmap(mirror_top_bs,
-> +                                                       granularity,
-> +                                                       NULL, errp);
-> +    if (!bs_opaque->dirty_bitmap) {
-> +        bdrv_drained_end(bs);
-> +        bdrv_unref(mirror_top_bs);
-> +        return NULL;
-> +    }
-> +
-> +    /*
-> +     * The dirty bitmap is set by bdrv_mirror_top_do_write() when not in active
-> +     * mode.
-> +     */
-
-This comment could become:
-
-+    /*
-+     * Disabling the dirty bitmap is safe, because:
-+     *
-+     * 1. If should_copy_to_target() == true, writes will be done
-synchronously
-+     * to the target, no need to set the bitmap.
-+     *
-+     * 2. If should_copy_to_target() == false, the dirty bitmap will be
-set by
-+     * bdrv_mirror_top_do_write().
-+     */
-
-> +    bdrv_disable_dirty_bitmap(bs_opaque->dirty_bitmap);
-> +    bdrv_drained_end(bs);
-> +
->      /* Make sure that the source is not resized while the job is running */
->      s = block_job_create(job_id, driver, NULL, mirror_top_bs,
->                           BLK_PERM_CONSISTENT_READ,
-> @@ -2002,24 +2018,13 @@ static BlockJob *mirror_start_job(
->      s->base_overlay = bdrv_find_overlay(bs, base);
->      s->granularity = granularity;
->      s->buf_size = ROUND_UP(buf_size, granularity);
-> +    s->dirty_bitmap = bs_opaque->dirty_bitmap;
->      s->unmap = unmap;
->      if (auto_complete) {
->          s->should_complete = true;
->      }
->      bdrv_graph_rdunlock_main_loop();
->  
-> -    s->dirty_bitmap = bdrv_create_dirty_bitmap(s->mirror_top_bs, granularity,
-> -                                               NULL, errp);
-> -    if (!s->dirty_bitmap) {
-> -        goto fail;
-> -    }
-> -
-> -    /*
-> -     * The dirty bitmap is set by bdrv_mirror_top_do_write() when not in active
-> -     * mode.
-> -     */
-> -    bdrv_disable_dirty_bitmap(s->dirty_bitmap);
-> -
->      bdrv_graph_wrlock_drained();
->      ret = block_job_add_bdrv(&s->common, "source", bs, 0,
->                               BLK_PERM_WRITE_UNCHANGED | BLK_PERM_WRITE |
-> @@ -2099,9 +2104,6 @@ fail:
->          g_free(s->replaces);
->          blk_unref(s->target);
->          bs_opaque->job = NULL;
-> -        if (s->dirty_bitmap) {
-> -            bdrv_release_dirty_bitmap(s->dirty_bitmap);
-> -        }
->          job_early_fail(&s->common.job);
->      }
->  
-> @@ -2115,6 +2117,7 @@ fail:
->      bdrv_graph_wrunlock();
->      bdrv_drained_end(bs);
->  
-> +    bdrv_release_dirty_bitmap(bs_opaque->dirty_bitmap);
->      bdrv_unref(mirror_top_bs);
->  
->      return NULL;
-> 
-> 
-
-Best Regards,
-Fiona
-
+> Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+> Tested-by: Nicolin Chen <nicolinc@nvidia.com>
+> Reviewed-by: Eric Auger <eric.auger@redhat.com>
+> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
 
