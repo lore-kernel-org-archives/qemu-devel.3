@@ -4,66 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67038E83840
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 22:53:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BCEA7E83840
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 22:53:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vs7TJ-0003Ds-Uo; Mon, 16 Feb 2026 17:53:41 -0500
+	id 1vs7T0-0002Os-41; Mon, 16 Feb 2026 17:53:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vs7TC-00034d-D0
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 17:53:34 -0500
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vs7Sy-0002Jl-Fq
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 17:53:20 -0500
+Received: from mail-wm1-x343.google.com ([2a00:1450:4864:20::343])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vs7TA-0006eJ-Ch
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 17:53:33 -0500
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-4836f4cbe0bso25767855e9.3
- for <qemu-devel@nongnu.org>; Mon, 16 Feb 2026 14:53:31 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vs7Sw-0006VC-8t
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 17:53:20 -0500
+Received: by mail-wm1-x343.google.com with SMTP id
+ 5b1f17b1804b1-4836f363d0dso31060435e9.3
+ for <qemu-devel@nongnu.org>; Mon, 16 Feb 2026 14:53:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771282411; x=1771887211; darn=nongnu.org;
+ d=linaro.org; s=google; t=1771282396; x=1771887196; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=z4b7EKIXUxIIWUL8kF3shWPR4w8ejLWmhqz7rlqrrl8=;
- b=hFYSWW6eJjSmR+pHPpMb3g0zGZ9OhhpNpedB3U68f3vD4XtJmTQa22/pRi6ip7ehe4
- DWjhFS97+M4emOgEZgNRONV8pHeiy4orrgYprGu/uTxaLyJ733ZpCvfwL7BVLQ/PAZNN
- iXBaba86cWxW9NSY6i52ODb8z97XCd8HnKqvTW6jX6PRlFY0czMlfap8uEZr7uBM35i2
- cP9qdWxj/henB8TeE7cf9LwlOBZrVgP38VrmPcT/DtXK9LcqqKGqWJxvSGRLMT8YWAi5
- rSbcmDLmnY6A/htTpQrAOalrFDjO70/qJZ8OUQxQ/g07rkS+ozWHsgg1jQgKsqfATkvn
- 4L0g==
+ bh=+g06lYMZoxaawxhYckKVy1oz0aLxQfVGw0j/XCTRlo8=;
+ b=TQfuuJR/W0ocAdej7PIysq8jorG9btBTK0PS/6CWOWk8ITY8lbtCR0NUoaxuYQCXL9
+ rtCH60FIyq1Kuqab3Bo3CjZBnagsAKPx9Igaxe4VeBp4hTYZ451s7hmDNnbJCyjGpY9g
+ zvfbzVZ3GZYtOLb/WopXG9FJx46Jd54R6kid6RpIo/WnnxwS6m/L7ysxY8gDMoSJBsbm
+ DGY5/MdfZGDiB7r8VhzB1vcVZFHl3hYroVSnCY1kzi44YzVL8eAEMoRceOAE9jGji1kA
+ kQ3nPipUu1sc5JGeVNvY0dkrGGaXNDLsIj/3mMSO53AwwNxrPaXr7pSw5/Pewipy64wq
+ QBkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771282411; x=1771887211;
+ d=1e100.net; s=20230601; t=1771282396; x=1771887196;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=z4b7EKIXUxIIWUL8kF3shWPR4w8ejLWmhqz7rlqrrl8=;
- b=CievFM0W0JQ1Ck9QppZzb9bcN4gYp6DAkbLiK8MXuJqoW84jpA13PfW+AeHz/dPNWl
- Oy1Lwsb+KJuR7oT6FgKDTMcfaN2vTRZe+8biH+LLuNpWNtdY/S2hSb4OOvkcQ21lg8bK
- uT/3YtZOeTStpo4cgJPWyC095z4oem14DjZgZC9rLI8ndWzqOELiT3nKbWwVErlZNXTL
- dik2z0QF3liEa8zWT+xvyDQUKD/26SsgBkDZkX1zxWc3LlQxq6XTGbkdCJT2wQ3BdrYg
- 0QMTP32QE7yWhNBQIlPDuIly7BqNjEGV+v7M+AGi8y80D96JY/kUrq7xE20m8epX+JTY
- 03Iw==
-X-Gm-Message-State: AOJu0Yw9fzsCa3AqOIaFHgLlXcf7N9qKG51i3DVJ0PEhbumBjPUsc0VA
- xpGDGKKNthE9YKQ0B7HKBSi1Yn4eXIGlFvJcZCF72hFPOf3Q9xY9km57T0KE5pLV4LZJdbBnDMc
- CBbYYK+A=
-X-Gm-Gg: AZuq6aJjKvtinI2yqd/VGKl0jqctyCWeUvxUE9shxcgcMqDBbT+dKRW7HT8BtiJmxAz
- wwvTB88Qbv2HMPv2scWfiIQD7g4GjADIp/WJ1yhw9JRHhC1gzRmoIdkvvwltD6EUeIdfChn44PX
- Q4mgclx++OFGeno9ih3U4lTn+gtxqaMEciRG9FjRPXZn4Mk4DZW6te32A4KM+rOTcDCRcwBpDtE
- UantCIHg1nkDS3IMjzg8p0/3HEZfxdJdWXgCbk8xQTJyQ1AqrhL9C+xhTEX85ysmL7Xt6HAyC5H
- RayZ7qylV5SyYOdx53OyPbnFLQ0V/XAEJ0zyYznqZ3dB3a5pfI2GgF/jJv4R+OWu24tCN8IUc90
- WrMRyvbEVLE/aB6ivUrb25jl6Yaqy1XlQTg1zniIps5gqrQBF24T1XuTPDa1h0J+4v6HoKlyCVN
- 83QwxjApI1QYsruwEijMhwXEl/MCIrBPZkw07veXe3r1QeBkSRuW1nKoo4bQ8F/lOxuTHxV31As
- GuoqXkV3AY=
-X-Received: by 2002:a05:600c:3e05:b0:480:1e9e:f9b with SMTP id
- 5b1f17b1804b1-4838dbae8b7mr39855925e9.16.1771282410582; 
- Mon, 16 Feb 2026 14:53:30 -0800 (PST)
+ bh=+g06lYMZoxaawxhYckKVy1oz0aLxQfVGw0j/XCTRlo8=;
+ b=XOzakDueqQQdUkR/jlvjH8vFGabBXkOCj11URtzXLsqQeksCY+N1cskYyYXwmAeNrl
+ n0UvnrCdQ8Ajwkfbmkb0eAxrvJAEhM5QxYIi2RT+PNWk6RyUKYBVsmiDN478FwQ7PAiw
+ uVQ9DIygR+GT/Pk4xjzvdbU10bsUs1O+sjWjuX8moOZMFFuSRZCH1nH4WQP8K9t6MW0F
+ cXgJRe4Kli1NpkP1VohuEWrDTNsgXX3cYjKPc856iCvEHAArftEFs7JZH0nWjS5/vqjn
+ tA/uvTybxp4uW3GmvKqPz+GAYDGThIwIbZ3Ey2JVerMnQK/tKc7ligaaRt/WqeRlBqZw
+ 2AFg==
+X-Gm-Message-State: AOJu0YxoDTgW6J8ksBMAmMbT7a0hfskN8skZkpcnwnZJjOTtJbngVslW
+ yoyBUnyO6Oo/3A6tQeXUN8WIZdZvpXZprSl0O2N9rCjmrI2xjYVQs0JJ7FjBIsLjXX0rmkkKVBC
+ 62W48AjI=
+X-Gm-Gg: AZuq6aIy/x2I10A1tYCv1kvLSGfOXH0zxctXWw+8evwB9VNQHU+59nriG3oSWd8YmEN
+ rkiWn8X85wIRpmJ5gpxSukJlEp0VsQlREwnTevCQqTMM4Yka0etCGn+/p+dZWwamEtAMP/S9fYE
+ s5T4YcEG/C5Fxsxk0VY9E+JLVGwENj6Lpma7P9ReuNMEWTOurQV0wbaGW3AORJ52BaP8vIuKBkL
+ aKJg2uRSGAaEc/M/7hNjwPOcBtdyJgq5EMfj+R8WmodbEdKSbRM9W15gbQP8lQCGYYSqPt6jw/g
+ Fg1bUdKHYww/DIZdnnPi7F2VlJi7FpRn1LYPXQ2P1TLnyfk3Ox2t0dkIa+I8e7FxYuogNjDxv9u
+ I9HXf1atU2yMjtvMLVNIPjMcSRP+rR5ymoYPRPbqOS6Q5W5cYMLJRmbZmP2+cIYvc95Vdu8cE88
+ ZRMtJdwP/+GW3nQFpaHSXxOiHTrznzRXcQ1DBtit/rhtblkAwhmNwgr3y2S+a4fEm2kkq4vaEd
+X-Received: by 2002:a05:600c:8b2f:b0:47d:885d:d2ff with SMTP id
+ 5b1f17b1804b1-48379c1faccmr122104925e9.29.1771282396044; 
+ Mon, 16 Feb 2026 14:53:16 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4835d99e194sm356624765e9.8.2026.02.16.14.53.29
+ 5b1f17b1804b1-48371a29982sm92061485e9.15.2026.02.16.14.53.14
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 16 Feb 2026 14:53:30 -0800 (PST)
+ Mon, 16 Feb 2026 14:53:15 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Laurent Vivier <laurent@vivier.eu>,
@@ -79,18 +78,18 @@ Cc: Laurent Vivier <laurent@vivier.eu>,
  Paolo Bonzini <pbonzini@redhat.com>, unisono@quyllur.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-ppc@nongnu.org
-Subject: [PATCH 08/11] target/sparc: Remove MonitorDef register entries
- available via gdbstub
-Date: Mon, 16 Feb 2026 23:52:24 +0100
-Message-ID: <20260216225228.53959-9-philmd@linaro.org>
+Subject: [PATCH 06/11] target/sparc: Expose gdbstub registers to sparc32
+ targets
+Date: Mon, 16 Feb 2026 23:52:22 +0100
+Message-ID: <20260216225228.53959-7-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260216225228.53959-1-philmd@linaro.org>
 References: <20260216225228.53959-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::343;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x343.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -113,142 +112,236 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-All these registers are already provided by via gdbstub parsed XML
-and handler by the gdb_get_register() helper in the monitor/hmp.c
-file. Remove as now unreachable code.
+Import gdb-xml/sparc32-{cpu,fpu,cp0}.xml from mainstream binutils,
+tag 'binutils-2_46', found in the gdb/features/sparc/folder [*].
+
+Register them by setting the CPUClass::gdb_core_xml_file field and
+calling gdb_register_coprocessor() in sparc_cpu_register_gdb_regs().
+
+[*] https://sourceware.org/git/?p=binutils-gdb.git;a=tree;f=gdb/features/sparc;hb=refs/tags/binutils-2_46
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/sparc/monitor.c | 107 -----------------------------------------
- 1 file changed, 107 deletions(-)
+ configs/targets/sparc-linux-user.mak |  1 +
+ configs/targets/sparc-softmmu.mak    |  1 +
+ target/sparc/cpu.c                   |  3 +-
+ target/sparc/gdbstub.c               | 13 +++++----
+ gdb-xml/sparc32-cp0.xml              | 18 ++++++++++++
+ gdb-xml/sparc32-cpu.xml              | 42 ++++++++++++++++++++++++++++
+ gdb-xml/sparc32-fpu.xml              | 42 ++++++++++++++++++++++++++++
+ 7 files changed, 114 insertions(+), 6 deletions(-)
+ create mode 100644 gdb-xml/sparc32-cp0.xml
+ create mode 100644 gdb-xml/sparc32-cpu.xml
+ create mode 100644 gdb-xml/sparc32-fpu.xml
 
-diff --git a/target/sparc/monitor.c b/target/sparc/monitor.c
-index 73f15aa272d..a60671a60a4 100644
---- a/target/sparc/monitor.c
-+++ b/target/sparc/monitor.c
-@@ -39,114 +39,8 @@ void hmp_info_tlb(Monitor *mon, const QDict *qdict)
-     dump_mmu(env1);
+diff --git a/configs/targets/sparc-linux-user.mak b/configs/targets/sparc-linux-user.mak
+index d3f0716ca2d..01446e28783 100644
+--- a/configs/targets/sparc-linux-user.mak
++++ b/configs/targets/sparc-linux-user.mak
+@@ -2,5 +2,6 @@ TARGET_ARCH=sparc
+ TARGET_SYSTBL_ABI=common,32
+ TARGET_SYSTBL=syscall.tbl
+ TARGET_BIG_ENDIAN=y
++TARGET_XML_FILES=gdb-xml/sparc32-cpu.xml gdb-xml/sparc32-fpu.xml gdb-xml/sparc32-cp0.xml
+ TARGET_LONG_BITS=32
+ TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API=y
+diff --git a/configs/targets/sparc-softmmu.mak b/configs/targets/sparc-softmmu.mak
+index c4c38946d54..ed846735f41 100644
+--- a/configs/targets/sparc-softmmu.mak
++++ b/configs/targets/sparc-softmmu.mak
+@@ -1,5 +1,6 @@
+ TARGET_ARCH=sparc
+ TARGET_BIG_ENDIAN=y
++TARGET_XML_FILES=gdb-xml/sparc32-cpu.xml gdb-xml/sparc32-fpu.xml gdb-xml/sparc32-cp0.xml
+ TARGET_LONG_BITS=32
+ TARGET_NOT_USING_LEGACY_LDST_PHYS_API=y
+ TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API=y
+diff --git a/target/sparc/cpu.c b/target/sparc/cpu.c
+index 08ebbd3640b..ec454affaad 100644
+--- a/target/sparc/cpu.c
++++ b/target/sparc/cpu.c
+@@ -1096,7 +1096,8 @@ static void sparc_cpu_class_init(ObjectClass *oc, const void *data)
+     cc->gdb_core_xml_file = "sparc64-cpu.xml";
+     cc->gdb_num_core_regs = 32;
+ #else
+-    cc->gdb_num_core_regs = 72;
++    cc->gdb_core_xml_file = "sparc32-cpu.xml";
++    cc->gdb_num_core_regs = 32;
+ #endif
+     cc->tcg_ops = &sparc_tcg_ops;
+ }
+diff --git a/target/sparc/gdbstub.c b/target/sparc/gdbstub.c
+index b5b1494950a..ed52e521dcc 100644
+--- a/target/sparc/gdbstub.c
++++ b/target/sparc/gdbstub.c
+@@ -43,7 +43,6 @@ int sparc_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
+     return 0;
  }
  
--#ifndef TARGET_SPARC64
--static target_long monitor_get_psr(Monitor *mon, const struct MonitorDef *md,
--                                   int val)
--{
--    CPUArchState *env = mon_get_cpu_env(mon);
--
--    return cpu_get_psr(env);
--}
--#endif
--
--static target_long monitor_get_reg(Monitor *mon, const struct MonitorDef *md,
--                                   int val)
--{
--    CPUArchState *env = mon_get_cpu_env(mon);
--    return env->regwptr[val];
--}
--
- const MonitorDef monitor_defs[] = {
--    { "g0", offsetof(CPUSPARCState, gregs[0]) },
--    { "g1", offsetof(CPUSPARCState, gregs[1]) },
--    { "g2", offsetof(CPUSPARCState, gregs[2]) },
--    { "g3", offsetof(CPUSPARCState, gregs[3]) },
--    { "g4", offsetof(CPUSPARCState, gregs[4]) },
--    { "g5", offsetof(CPUSPARCState, gregs[5]) },
--    { "g6", offsetof(CPUSPARCState, gregs[6]) },
--    { "g7", offsetof(CPUSPARCState, gregs[7]) },
--    { "o0", 0, monitor_get_reg },
--    { "o1", 1, monitor_get_reg },
--    { "o2", 2, monitor_get_reg },
--    { "o3", 3, monitor_get_reg },
--    { "o4", 4, monitor_get_reg },
--    { "o5", 5, monitor_get_reg },
--    { "o6", 6, monitor_get_reg },
--    { "o7", 7, monitor_get_reg },
--    { "l0", 8, monitor_get_reg },
--    { "l1", 9, monitor_get_reg },
--    { "l2", 10, monitor_get_reg },
--    { "l3", 11, monitor_get_reg },
--    { "l4", 12, monitor_get_reg },
--    { "l5", 13, monitor_get_reg },
--    { "l6", 14, monitor_get_reg },
--    { "l7", 15, monitor_get_reg },
--    { "i0", 16, monitor_get_reg },
--    { "i1", 17, monitor_get_reg },
--    { "i2", 18, monitor_get_reg },
--    { "i3", 19, monitor_get_reg },
--    { "i4", 20, monitor_get_reg },
--    { "i5", 21, monitor_get_reg },
--    { "i6", 22, monitor_get_reg },
--    { "i7", 23, monitor_get_reg },
--    { "pc", offsetof(CPUSPARCState, pc) },
--    { "npc", offsetof(CPUSPARCState, npc) },
--    { "y", offsetof(CPUSPARCState, y) },
--#ifndef TARGET_SPARC64
--    { "psr", 0, &monitor_get_psr, },
--    { "wim", offsetof(CPUSPARCState, wim) },
--#endif
--    { "tbr", offsetof(CPUSPARCState, tbr) },
--    { "fsr", offsetof(CPUSPARCState, fsr) },
--    { "f0", offsetof(CPUSPARCState, fpr[0].l.upper) },
--    { "f1", offsetof(CPUSPARCState, fpr[0].l.lower) },
--    { "f2", offsetof(CPUSPARCState, fpr[1].l.upper) },
--    { "f3", offsetof(CPUSPARCState, fpr[1].l.lower) },
--    { "f4", offsetof(CPUSPARCState, fpr[2].l.upper) },
--    { "f5", offsetof(CPUSPARCState, fpr[2].l.lower) },
--    { "f6", offsetof(CPUSPARCState, fpr[3].l.upper) },
--    { "f7", offsetof(CPUSPARCState, fpr[3].l.lower) },
--    { "f8", offsetof(CPUSPARCState, fpr[4].l.upper) },
--    { "f9", offsetof(CPUSPARCState, fpr[4].l.lower) },
--    { "f10", offsetof(CPUSPARCState, fpr[5].l.upper) },
--    { "f11", offsetof(CPUSPARCState, fpr[5].l.lower) },
--    { "f12", offsetof(CPUSPARCState, fpr[6].l.upper) },
--    { "f13", offsetof(CPUSPARCState, fpr[6].l.lower) },
--    { "f14", offsetof(CPUSPARCState, fpr[7].l.upper) },
--    { "f15", offsetof(CPUSPARCState, fpr[7].l.lower) },
--    { "f16", offsetof(CPUSPARCState, fpr[8].l.upper) },
--    { "f17", offsetof(CPUSPARCState, fpr[8].l.lower) },
--    { "f18", offsetof(CPUSPARCState, fpr[9].l.upper) },
--    { "f19", offsetof(CPUSPARCState, fpr[9].l.lower) },
--    { "f20", offsetof(CPUSPARCState, fpr[10].l.upper) },
--    { "f21", offsetof(CPUSPARCState, fpr[10].l.lower) },
--    { "f22", offsetof(CPUSPARCState, fpr[11].l.upper) },
--    { "f23", offsetof(CPUSPARCState, fpr[11].l.lower) },
--    { "f24", offsetof(CPUSPARCState, fpr[12].l.upper) },
--    { "f25", offsetof(CPUSPARCState, fpr[12].l.lower) },
--    { "f26", offsetof(CPUSPARCState, fpr[13].l.upper) },
--    { "f27", offsetof(CPUSPARCState, fpr[13].l.lower) },
--    { "f28", offsetof(CPUSPARCState, fpr[14].l.upper) },
--    { "f29", offsetof(CPUSPARCState, fpr[14].l.lower) },
--    { "f30", offsetof(CPUSPARCState, fpr[15].l.upper) },
--    { "f31", offsetof(CPUSPARCState, fpr[15].l.lower) },
- #ifdef TARGET_SPARC64
--    { "f32", offsetof(CPUSPARCState, fpr[16]) },
--    { "f34", offsetof(CPUSPARCState, fpr[17]) },
--    { "f36", offsetof(CPUSPARCState, fpr[18]) },
--    { "f38", offsetof(CPUSPARCState, fpr[19]) },
--    { "f40", offsetof(CPUSPARCState, fpr[20]) },
--    { "f42", offsetof(CPUSPARCState, fpr[21]) },
--    { "f44", offsetof(CPUSPARCState, fpr[22]) },
--    { "f46", offsetof(CPUSPARCState, fpr[23]) },
--    { "f48", offsetof(CPUSPARCState, fpr[24]) },
--    { "f50", offsetof(CPUSPARCState, fpr[25]) },
--    { "f52", offsetof(CPUSPARCState, fpr[26]) },
--    { "f54", offsetof(CPUSPARCState, fpr[27]) },
--    { "f56", offsetof(CPUSPARCState, fpr[28]) },
--    { "f58", offsetof(CPUSPARCState, fpr[29]) },
--    { "f60", offsetof(CPUSPARCState, fpr[30]) },
--    { "f62", offsetof(CPUSPARCState, fpr[31]) },
-     { "asi", offsetof(CPUSPARCState, asi) },
-     { "pstate", offsetof(CPUSPARCState, pstate) },
-     { "cansave", offsetof(CPUSPARCState, cansave) },
-@@ -154,7 +48,6 @@ const MonitorDef monitor_defs[] = {
-     { "otherwin", offsetof(CPUSPARCState, otherwin) },
-     { "wstate", offsetof(CPUSPARCState, wstate) },
-     { "cleanwin", offsetof(CPUSPARCState, cleanwin) },
--    { "fprs", offsetof(CPUSPARCState, fprs), NULL, MD_I32 },
+-__attribute__((unused))
+ static int sparc_fpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
+ {
+     CPUSPARCState *env = cpu_env(cs);
+@@ -79,7 +78,6 @@ static int sparc_fpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
+     return 0;
+ }
+ 
+-__attribute__((unused))
+ static int sparc_cp0_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
+ {
+     CPUSPARCState *env = cpu_env(cs);
+@@ -154,7 +152,6 @@ int sparc_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
  #endif
-     { NULL },
- };
+ }
+ 
+-__attribute__((unused))
+ static int sparc_fpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
+ {
+     CPUSPARCState *env = cpu_env(cs);
+@@ -197,7 +194,6 @@ static int sparc_fpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
+ #endif
+ }
+ 
+-__attribute__((unused))
+ static int sparc_cp0_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
+ {
+     CPUSPARCState *env = cpu_env(cs);
+@@ -271,7 +267,14 @@ static int sparc_cp0_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
+ void sparc_cpu_register_gdb_regs(CPUState *cs)
+ {
+ #if defined(TARGET_ABI32) || !defined(TARGET_SPARC64)
+-    /* Not yet supported */
++    gdb_register_coprocessor(cs, sparc_fpu_gdb_read_register,
++                             sparc_fpu_gdb_write_register,
++                             gdb_find_static_feature("sparc32-fpu.xml"),
++                             0);
++    gdb_register_coprocessor(cs, sparc_cp0_gdb_read_register,
++                             sparc_cp0_gdb_write_register,
++                             gdb_find_static_feature("sparc32-cp0.xml"),
++                             0);
+ #else
+     gdb_register_coprocessor(cs, sparc_fpu_gdb_read_register,
+                              sparc_fpu_gdb_write_register,
+diff --git a/gdb-xml/sparc32-cp0.xml b/gdb-xml/sparc32-cp0.xml
+new file mode 100644
+index 00000000000..eacd89cf3b5
+--- /dev/null
++++ b/gdb-xml/sparc32-cp0.xml
+@@ -0,0 +1,18 @@
++<?xml version="1.0"?>
++<!-- Copyright (C) 2013-2026 Free Software Foundation, Inc.
++
++     Copying and distribution of this file, with or without modification,
++     are permitted in any medium without royalty provided the copyright
++     notice and this notice are preserved.  -->
++
++<!DOCTYPE feature SYSTEM "gdb-target.dtd">
++<feature name="org.gnu.gdb.sparc.cp0">
++  <reg name="y" bitsize="32" type="uint32" regnum="64"/>
++  <reg name="psr" bitsize="32" type="uint32" regnum="65"/>
++  <reg name="wim" bitsize="32" type="uint32" regnum="66"/>
++  <reg name="tbr" bitsize="32" type="uint32" regnum="67"/>
++  <reg name="pc" bitsize="32" type="code_ptr" regnum="68"/>
++  <reg name="npc" bitsize="32" type="code_ptr" regnum="69"/>
++  <reg name="fsr" bitsize="32" type="uint32" regnum="70"/>
++  <reg name="csr" bitsize="32" type="uint32" regnum="71"/>
++</feature>
+diff --git a/gdb-xml/sparc32-cpu.xml b/gdb-xml/sparc32-cpu.xml
+new file mode 100644
+index 00000000000..242295c886e
+--- /dev/null
++++ b/gdb-xml/sparc32-cpu.xml
+@@ -0,0 +1,42 @@
++<?xml version="1.0"?>
++<!-- Copyright (C) 2013-2026 Free Software Foundation, Inc.
++
++     Copying and distribution of this file, with or without modification,
++     are permitted in any medium without royalty provided the copyright
++     notice and this notice are preserved.  -->
++
++<!DOCTYPE feature SYSTEM "gdb-target.dtd">
++<feature name="org.gnu.gdb.sparc.cpu">
++  <reg name="g0" bitsize="32" type="uint32" regnum="0"/>
++  <reg name="g1" bitsize="32" type="uint32" regnum="1"/>
++  <reg name="g2" bitsize="32" type="uint32" regnum="2"/>
++  <reg name="g3" bitsize="32" type="uint32" regnum="3"/>
++  <reg name="g4" bitsize="32" type="uint32" regnum="4"/>
++  <reg name="g5" bitsize="32" type="uint32" regnum="5"/>
++  <reg name="g6" bitsize="32" type="uint32" regnum="6"/>
++  <reg name="g7" bitsize="32" type="uint32" regnum="7"/>
++  <reg name="o0" bitsize="32" type="uint32" regnum="8"/>
++  <reg name="o1" bitsize="32" type="uint32" regnum="9"/>
++  <reg name="o2" bitsize="32" type="uint32" regnum="10"/>
++  <reg name="o3" bitsize="32" type="uint32" regnum="11"/>
++  <reg name="o4" bitsize="32" type="uint32" regnum="12"/>
++  <reg name="o5" bitsize="32" type="uint32" regnum="13"/>
++  <reg name="sp" bitsize="32" type="uint32" regnum="14"/>
++  <reg name="o7" bitsize="32" type="uint32" regnum="15"/>
++  <reg name="l0" bitsize="32" type="uint32" regnum="16"/>
++  <reg name="l1" bitsize="32" type="uint32" regnum="17"/>
++  <reg name="l2" bitsize="32" type="uint32" regnum="18"/>
++  <reg name="l3" bitsize="32" type="uint32" regnum="19"/>
++  <reg name="l4" bitsize="32" type="uint32" regnum="20"/>
++  <reg name="l5" bitsize="32" type="uint32" regnum="21"/>
++  <reg name="l6" bitsize="32" type="uint32" regnum="22"/>
++  <reg name="l7" bitsize="32" type="uint32" regnum="23"/>
++  <reg name="i0" bitsize="32" type="uint32" regnum="24"/>
++  <reg name="i1" bitsize="32" type="uint32" regnum="25"/>
++  <reg name="i2" bitsize="32" type="uint32" regnum="26"/>
++  <reg name="i3" bitsize="32" type="uint32" regnum="27"/>
++  <reg name="i4" bitsize="32" type="uint32" regnum="28"/>
++  <reg name="i5" bitsize="32" type="uint32" regnum="29"/>
++  <reg name="fp" bitsize="32" type="uint32" regnum="30"/>
++  <reg name="i7" bitsize="32" type="uint32" regnum="31"/>
++</feature>
+diff --git a/gdb-xml/sparc32-fpu.xml b/gdb-xml/sparc32-fpu.xml
+new file mode 100644
+index 00000000000..38217ca7a92
+--- /dev/null
++++ b/gdb-xml/sparc32-fpu.xml
+@@ -0,0 +1,42 @@
++<?xml version="1.0"?>
++<!-- Copyright (C) 2013-2026 Free Software Foundation, Inc.
++
++     Copying and distribution of this file, with or without modification,
++     are permitted in any medium without royalty provided the copyright
++     notice and this notice are preserved.  -->
++
++<!DOCTYPE feature SYSTEM "gdb-target.dtd">
++<feature name="org.gnu.gdb.sparc.fpu">
++  <reg name="f0" bitsize="32" type="ieee_single" regnum="32"/>
++  <reg name="f1" bitsize="32" type="ieee_single" regnum="33"/>
++  <reg name="f2" bitsize="32" type="ieee_single" regnum="34"/>
++  <reg name="f3" bitsize="32" type="ieee_single" regnum="35"/>
++  <reg name="f4" bitsize="32" type="ieee_single" regnum="36"/>
++  <reg name="f5" bitsize="32" type="ieee_single" regnum="37"/>
++  <reg name="f6" bitsize="32" type="ieee_single" regnum="38"/>
++  <reg name="f7" bitsize="32" type="ieee_single" regnum="39"/>
++  <reg name="f8" bitsize="32" type="ieee_single" regnum="40"/>
++  <reg name="f9" bitsize="32" type="ieee_single" regnum="41"/>
++  <reg name="f10" bitsize="32" type="ieee_single" regnum="42"/>
++  <reg name="f11" bitsize="32" type="ieee_single" regnum="43"/>
++  <reg name="f12" bitsize="32" type="ieee_single" regnum="44"/>
++  <reg name="f13" bitsize="32" type="ieee_single" regnum="45"/>
++  <reg name="f14" bitsize="32" type="ieee_single" regnum="46"/>
++  <reg name="f15" bitsize="32" type="ieee_single" regnum="47"/>
++  <reg name="f16" bitsize="32" type="ieee_single" regnum="48"/>
++  <reg name="f17" bitsize="32" type="ieee_single" regnum="49"/>
++  <reg name="f18" bitsize="32" type="ieee_single" regnum="50"/>
++  <reg name="f19" bitsize="32" type="ieee_single" regnum="51"/>
++  <reg name="f20" bitsize="32" type="ieee_single" regnum="52"/>
++  <reg name="f21" bitsize="32" type="ieee_single" regnum="53"/>
++  <reg name="f22" bitsize="32" type="ieee_single" regnum="54"/>
++  <reg name="f23" bitsize="32" type="ieee_single" regnum="55"/>
++  <reg name="f24" bitsize="32" type="ieee_single" regnum="56"/>
++  <reg name="f25" bitsize="32" type="ieee_single" regnum="57"/>
++  <reg name="f26" bitsize="32" type="ieee_single" regnum="58"/>
++  <reg name="f27" bitsize="32" type="ieee_single" regnum="59"/>
++  <reg name="f28" bitsize="32" type="ieee_single" regnum="60"/>
++  <reg name="f29" bitsize="32" type="ieee_single" regnum="61"/>
++  <reg name="f30" bitsize="32" type="ieee_single" regnum="62"/>
++  <reg name="f31" bitsize="32" type="ieee_single" regnum="63"/>
++</feature>
 -- 
 2.52.0
 
