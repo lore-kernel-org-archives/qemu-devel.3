@@ -4,66 +4,159 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C250E7BDA9
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 12:16:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0967E7BDA9
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 12:23:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vrxVx-0002xG-Jq; Mon, 16 Feb 2026 07:15:47 -0500
+	id 1vrxdR-0005eo-V9; Mon, 16 Feb 2026 07:23:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vrxVp-0002wF-I6; Mon, 16 Feb 2026 07:15:37 -0500
-Received: from zero.eik.bme.hu ([152.66.115.2])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vrxd4-0005aM-3i
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 07:23:09 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vrxVm-0005eP-8y; Mon, 16 Feb 2026 07:15:37 -0500
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id E6A25596A0A;
- Mon, 16 Feb 2026 13:15:28 +0100 (CET)
-X-Virus-Scanned: amavis at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id ZBtLe7_lWQxm; Mon, 16 Feb 2026 13:15:26 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id CA3F55969FF; Mon, 16 Feb 2026 13:15:26 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id C79D55969F6;
- Mon, 16 Feb 2026 13:15:26 +0100 (CET)
-Date: Mon, 16 Feb 2026 13:15:26 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: =?ISO-8859-15?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>
-cc: qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>, 
- Eduardo Habkost <eduardo@habkost.net>, Paolo Bonzini <pbonzini@redhat.com>, 
- =?ISO-8859-15?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>, 
- =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>, 
- John Snow <jsnow@redhat.com>, Cleber Rosa <crosa@redhat.com>, 
- Christian Schoenebeck <qemu_oss@crudebyte.com>, 
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
- Thomas Huth <huth@tuxfamily.org>, Alexandre Ratchov <alex@caoua.org>, 
- =?ISO-8859-15?Q?Alex_Benn=E9e?= <alex.bennee@linaro.org>, 
- Laurent Vivier <laurent@vivier.eu>, "Michael S. Tsirkin" <mst@redhat.com>, 
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, 
- Alistair Francis <alistair@alistair23.me>, 
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, 
- Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org, 
- Mark Cave-Ayland <mark.caveayland@nutanix.com>
-Subject: Re: [PATCH 42/85] audio/dbus: convert to QOM lifecycle methods
-In-Reply-To: <20260216-audio-v1-42-e676662e4514@redhat.com>
-Message-ID: <ed0bd069-0660-b195-b639-b0ce7717ea36@eik.bme.hu>
-References: <20260216-audio-v1-0-e676662e4514@redhat.com>
- <20260216-audio-v1-42-e676662e4514@redhat.com>
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vrxd0-0007jD-Dr
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 07:23:04 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1771244579;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=3FnSuZWZkc9CV8ugjfaOS/A7VhMeU06KMdwOPH2kv7w=;
+ b=Xsv6m3CcUNIwWFioXW/WM0K/wq04yeiMAAkiATNLrhhziD446+btokqWUkbgaGefOGpbcr
+ YDSJyRy0n2xhZheQVjiK1mYGuOX+Fa2s2akBRiioQTbbIhRPmFwaqomB/LCf8aoGTcro0P
+ DC2CMkgm00sg6/pBVsKaMjdgh/PMznA=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-344-8sFjSGemNh6U756UsZee9Q-1; Mon, 16 Feb 2026 07:22:57 -0500
+X-MC-Unique: 8sFjSGemNh6U756UsZee9Q-1
+X-Mimecast-MFC-AGG-ID: 8sFjSGemNh6U756UsZee9Q_1771244577
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-4837b6f6b93so16451045e9.3
+ for <qemu-devel@nongnu.org>; Mon, 16 Feb 2026 04:22:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1771244577; x=1771849377; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=3FnSuZWZkc9CV8ugjfaOS/A7VhMeU06KMdwOPH2kv7w=;
+ b=poRqAo6oB5XbUO+uKp4Y3Ss88lC3OOpt/jTypUXO9Scz6P75VDE5tuN4aPwz3KfCzB
+ xHd21/Jq7FMkQo8AC2MVGFm2W0Sawz5iRyYDLN2dpNFSMJJ6VnwPuiK0UQwXUvuA7ofE
+ IPwJtWAwz1TU9cGIb+ot7nUJzIfysmKh6AKq+gwu8H+NEwIVTeldQuTOakVXGpRGcDII
+ nIl1be+FodP+5V66JA98HSpkg7plIQZzVVkEiSjqYWDi5TkdGUCzahnihV4P4by3/Vwr
+ cLlooKFLAwWRKKOcDNTAoANl6UzwsMo3lhdxNJ7y8jaHNOVepmUKvctDDnApFMvDyigH
+ 7J+Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1771244577; x=1771849377;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=3FnSuZWZkc9CV8ugjfaOS/A7VhMeU06KMdwOPH2kv7w=;
+ b=DVXntbkDRpiRepOASksWsJJC7CJ73vLaUs4dCdpulZEKtpLwZaW81bgoWcwtfnRiDv
+ U0l9rX/+Kbt72tOeUju45LFZ+NHFTpLMipikX60o3jzAjNw2niT9241G7RcRZC4T6S7T
+ mH2rgnvwVraGzodEMgipPns8VbM7o86O/pprLcCkfZjO+pgKyafxHKNipMwDm/gHp5a2
+ m+jFckKwiR2W5Zcnn1wKOege2Lr9S4uxEzApf47igidrVu3dizO054PM4eQwWttgQ1vq
+ oRJIkWKmI8u/b/NA1/sXKg1PhATq7SeEiksiBtdRAua40lj8J8T8dXwwtoW0r7bFqK7j
+ YhHg==
+X-Gm-Message-State: AOJu0Yw/su93LT1w7WUlAIdtziYS1lI44kq5fdz+nya47jx5lDaEp5B0
+ /SVNVpV7N7raBzgvxe0Ysn+58wrVKlD/OrnPom5VbS5y6rfNiy3oFZ5B0wxWfpz+Bn0fJmqw/1n
+ xQXKaD6rlSILZK2WApGTY4a8uSaTW1hohRsc+iVz3qrVJYw9VbmBCISpy
+X-Gm-Gg: AZuq6aKj5DNJ6zWyjeY7cnOzyWAjdV6fyff3NTG83MvMhZlh07udyIouuPDqf2APOTt
+ EvQCO/UVTNByuGffrgK3Guj9LBp8iLvp3tJK9046EtW+Lnppehr464kKZPFflL4xZ7HRSfw79sI
+ QYcul6bW70pnrx3MjQaJmv0sPYOzCpfMF/7AlWZJ6i0UKGueCq2vhjnw0NwKwNtg+ganCm+kUTM
+ fRb0F01kFoXeIra0UoK08FUVUyJzdQzkvbGYcJ94WZYnOCKNTYCOG+ShPCHeMnTjGrQHX7ojIBC
+ Q9QvXUObB/BroitlaIb/EB4Ux7CNuS3aqdE3AH0uQMEaE51OGjPsbMHR1Q4vnBNmWRwFslc3rK9
+ hNiDblvf4hhXcnxiigC6AjNezweQnBOXYkMyMbRx6FL2Dc/hMqS7jspxceDyV
+X-Received: by 2002:a05:600c:6814:b0:47e:e78a:c834 with SMTP id
+ 5b1f17b1804b1-48379bf4788mr122691655e9.34.1771244576653; 
+ Mon, 16 Feb 2026 04:22:56 -0800 (PST)
+X-Received: by 2002:a05:600c:6814:b0:47e:e78a:c834 with SMTP id
+ 5b1f17b1804b1-48379bf4788mr122691225e9.34.1771244576209; 
+ Mon, 16 Feb 2026 04:22:56 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-43796ac9d77sm24860962f8f.33.2026.02.16.04.22.55
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 16 Feb 2026 04:22:55 -0800 (PST)
+Message-ID: <57489f93-0439-402d-b9d5-a9d2a0a30a25@redhat.com>
+Date: Mon, 16 Feb 2026 13:22:54 +0100
 MIME-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="3866299591-1233897087-1771244126=:82144"
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3] vfio/migration: Send VFIO_MIGRATION event before
+ PRE_COPY_P2P transition
+To: Avihai Horon <avihaih@nvidia.com>, Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Alex Williamson <alex@shazbot.org>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Maor Gottlieb <maorg@nvidia.com>
+References: <20260202173406.13979-1-avihaih@nvidia.com>
+ <24ea8ccb-d904-49e4-bd27-5378aac4a56a@redhat.com> <aYIqDAdld4a41VDy@x1.local>
+ <87cadb65-af45-4bb3-8090-8301a1e67103@nvidia.com>
+ <a0dbd63d-30b9-4c83-851d-abaf50d4c9fc@nvidia.com>
+ <aa18ad15-580e-483d-8e29-20c7e6ebb6fc@redhat.com>
+ <1260f024-b22a-439b-a70a-ef5429162b3e@nvidia.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <1260f024-b22a-439b-a70a-ef5429162b3e@nvidia.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -79,287 +172,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Peter, Avihai,
 
---3866299591-1233897087-1771244126=:82144
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8BIT
+>> As for enabling the VFIO migration events by default, I guess we
+>> all agree it could be done. We simply need a stakeholder to change
+>> the default behavior.
+> 
+> Ack.
 
-On Mon, 16 Feb 2026, Marc-André Lureau wrote:
-> Migrate the D-Bus audio backend from the legacy driver init/fini
-> callbacks to proper QOM realize and finalize methods.
->
-> The DBusAudio struct fields are now embedded directly in the AudioDbus
-> QOM object instead of being allocated separately as drv_opaque. This
-> allows accessing the backend state through proper QOM type casting
-> with AUDIO_DBUS() rather than casting drv_opaque pointers.
->
-> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-> Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-> ---
-> audio/dbusaudio.c | 76 ++++++++++++++++++++++++++++---------------------------
-> 1 file changed, 39 insertions(+), 37 deletions(-)
->
-> diff --git a/audio/dbusaudio.c b/audio/dbusaudio.c
-> index 269db7877b6..fb059815de9 100644
-> --- a/audio/dbusaudio.c
-> +++ b/audio/dbusaudio.c
-> @@ -48,21 +48,20 @@
-> #define TYPE_AUDIO_DBUS "audio-dbus"
-> OBJECT_DECLARE_SIMPLE_TYPE(AudioDbus, AUDIO_DBUS)
->
-> +static AudioBackendClass *audio_dbus_parent_class;
-> +
-> struct AudioDbus {
->     AudioMixengBackend parent_obj;
-> -};
-> -
-> -static struct audio_driver dbus_audio_driver;
->
-> -typedef struct DBusAudio {
-> -    Audiodev *dev;
->     GDBusObjectManagerServer *server;
->     bool p2p;
->     GDBusObjectSkeleton *audio;
->     QemuDBusDisplay1Audio *iface;
->     GHashTable *out_listeners;
->     GHashTable *in_listeners;
-> -} DBusAudio;
-> +};
-> +
-> +static struct audio_driver dbus_audio_driver;
->
-> typedef struct DBusVoiceOut {
->     HWVoiceOut hw;
-> @@ -105,7 +104,7 @@ static void *dbus_get_buffer_out(HWVoiceOut *hw, size_t *size)
->
-> static size_t dbus_put_buffer_out(HWVoiceOut *hw, void *buf, size_t size)
-> {
-> -    DBusAudio *da = (DBusAudio *)hw->s->drv_opaque;
-> +    AudioDbus *da = AUDIO_DBUS(hw->s);
->     DBusVoiceOut *vo = container_of(hw, DBusVoiceOut, hw);
->     GHashTableIter iter;
->     QemuDBusDisplay1AudioOutListener *listener = NULL;
-> @@ -162,9 +161,9 @@ dbus_init_out_listener(QemuDBusDisplay1AudioOutListener *listener,
-> }
->
-> static guint
-> -dbus_audio_get_nsamples(DBusAudio *da)
-> +dbus_audio_get_nsamples(AudioDbus *da)
-> {
-> -    AudiodevDBusOptions *opts = &da->dev->u.dbus;
-> +    AudiodevDBusOptions *opts = &AUDIO_MIXENG_BACKEND(da)->dev->u.dbus;
->
->     if (opts->has_nsamples && opts->nsamples) {
->         return opts->nsamples;
-> @@ -176,7 +175,7 @@ dbus_audio_get_nsamples(DBusAudio *da)
-> static int
-> dbus_init_out(HWVoiceOut *hw, struct audsettings *as, void *drv_opaque)
-> {
-> -    DBusAudio *da = (DBusAudio *)hw->s->drv_opaque;
-> +    AudioDbus *da = AUDIO_DBUS(hw->s);
->     DBusVoiceOut *vo = container_of(hw, DBusVoiceOut, hw);
->     GHashTableIter iter;
->     QemuDBusDisplay1AudioOutListener *listener = NULL;
-> @@ -195,7 +194,7 @@ dbus_init_out(HWVoiceOut *hw, struct audsettings *as, void *drv_opaque)
-> static void
-> dbus_fini_out(HWVoiceOut *hw)
-> {
-> -    DBusAudio *da = (DBusAudio *)hw->s->drv_opaque;
-> +    AudioDbus *da = AUDIO_DBUS(hw->s);
->     DBusVoiceOut *vo = container_of(hw, DBusVoiceOut, hw);
->     GHashTableIter iter;
->     QemuDBusDisplay1AudioOutListener *listener = NULL;
-> @@ -214,7 +213,7 @@ dbus_fini_out(HWVoiceOut *hw)
-> static void
-> dbus_enable_out(HWVoiceOut *hw, bool enable)
-> {
-> -    DBusAudio *da = (DBusAudio *)hw->s->drv_opaque;
-> +    AudioDbus *da = AUDIO_DBUS(hw->s);
->     DBusVoiceOut *vo = container_of(hw, DBusVoiceOut, hw);
->     GHashTableIter iter;
->     QemuDBusDisplay1AudioOutListener *listener = NULL;
-> @@ -256,7 +255,7 @@ dbus_volume_out_listener(HWVoiceOut *hw,
-> static void
-> dbus_volume_out(HWVoiceOut *hw, Volume *vol)
-> {
-> -    DBusAudio *da = (DBusAudio *)hw->s->drv_opaque;
-> +    AudioDbus *da = AUDIO_DBUS(hw->s);
->     DBusVoiceOut *vo = container_of(hw, DBusVoiceOut, hw);
->     GHashTableIter iter;
->     QemuDBusDisplay1AudioOutListener *listener = NULL;
-> @@ -290,7 +289,7 @@ dbus_init_in_listener(QemuDBusDisplay1AudioInListener *listener, HWVoiceIn *hw)
-> static int
-> dbus_init_in(HWVoiceIn *hw, struct audsettings *as, void *drv_opaque)
-> {
-> -    DBusAudio *da = (DBusAudio *)hw->s->drv_opaque;
-> +    AudioDbus *da = AUDIO_DBUS(hw->s);
->     DBusVoiceIn *vo = container_of(hw, DBusVoiceIn, hw);
->     GHashTableIter iter;
->     QemuDBusDisplay1AudioInListener *listener = NULL;
-> @@ -309,7 +308,7 @@ dbus_init_in(HWVoiceIn *hw, struct audsettings *as, void *drv_opaque)
-> static void
-> dbus_fini_in(HWVoiceIn *hw)
-> {
-> -    DBusAudio *da = (DBusAudio *)hw->s->drv_opaque;
-> +    AudioDbus *da = AUDIO_DBUS(hw->s);
->     GHashTableIter iter;
->     QemuDBusDisplay1AudioInListener *listener = NULL;
->
-> @@ -346,7 +345,7 @@ dbus_volume_in_listener(HWVoiceIn *hw,
-> static void
-> dbus_volume_in(HWVoiceIn *hw, Volume *vol)
-> {
-> -    DBusAudio *da = (DBusAudio *)hw->s->drv_opaque;
-> +    AudioDbus *da = AUDIO_DBUS(hw->s);
->     DBusVoiceIn *vo = container_of(hw, DBusVoiceIn, hw);
->     GHashTableIter iter;
->     QemuDBusDisplay1AudioInListener *listener = NULL;
-> @@ -363,7 +362,7 @@ dbus_volume_in(HWVoiceIn *hw, Volume *vol)
-> static size_t
-> dbus_read(HWVoiceIn *hw, void *buf, size_t size)
-> {
-> -    DBusAudio *da = (DBusAudio *)hw->s->drv_opaque;
-> +    AudioDbus *da = AUDIO_DBUS(hw->s);
->     /* DBusVoiceIn *vo = container_of(hw, DBusVoiceIn, hw); */
->     GHashTableIter iter;
->     QemuDBusDisplay1AudioInListener *listener = NULL;
-> @@ -398,7 +397,7 @@ dbus_read(HWVoiceIn *hw, void *buf, size_t size)
-> static void
-> dbus_enable_in(HWVoiceIn *hw, bool enable)
-> {
-> -    DBusAudio *da = (DBusAudio *)hw->s->drv_opaque;
-> +    AudioDbus *da = AUDIO_DBUS(hw->s);
 
-Are you sure we need a QOM cast in all these potentially frequently called 
-functions? The QOM cast is kind of expensive so only needed if it can get 
-other objects than the expected. If the object is already checked in 
-realize with a QOM cast it may not be needed to check it again every time 
-it's accessed.
+There could be value for the sysmgmt layers to receive a VFIO
+migration event reporting progress. For example, an event could
+be sent from vfio_save_iterate() including relevant size metrics
+to indicate progress (or not).
 
-Regards,
-BALATON Zoltan
+Any opinions ?
 
->     DBusVoiceIn *vo = container_of(hw, DBusVoiceIn, hw);
->     GHashTableIter iter;
->     QemuDBusDisplay1AudioInListener *listener = NULL;
-> @@ -416,28 +415,31 @@ dbus_enable_in(HWVoiceIn *hw, bool enable)
->     }
-> }
->
-> -static void *
-> -dbus_audio_init(Audiodev *dev, Error **errp)
-> +static bool
-> +audio_dbus_realize(AudioBackend *abe, Audiodev *dev, Error **errp)
-> {
-> -    DBusAudio *da;
-> +    AudioDbus *da = AUDIO_DBUS(abe);
->
->     if (!qemu_using_dbus_display(errp)) {
-> -        return NULL;
-> +        qapi_free_Audiodev(dev);
-> +        return false;
-> +    }
-> +
-> +    if (!audio_dbus_parent_class->realize(abe, dev, errp)) {
-> +        return false;
->     }
->
-> -    da = g_new0(DBusAudio, 1);
-> -    da->dev = dev;
->     da->out_listeners = g_hash_table_new_full(g_str_hash, g_str_equal,
-> -                                                g_free, g_object_unref);
-> +                                              g_free, g_object_unref);
->     da->in_listeners = g_hash_table_new_full(g_str_hash, g_str_equal,
-> -                                               g_free, g_object_unref);
-> -    return da;
-> +                                             g_free, g_object_unref);
-> +    return true;
-> }
->
-> static void
-> -dbus_audio_fini(void *opaque)
-> +audio_dbus_finalize(Object *obj)
-> {
-> -    DBusAudio *da = opaque;
-> +    AudioDbus *da = AUDIO_DBUS(obj);
->
->     if (da->server) {
->         g_dbus_object_manager_server_unexport(da->server,
-> @@ -448,14 +450,13 @@ dbus_audio_fini(void *opaque)
->     g_clear_pointer(&da->in_listeners, g_hash_table_unref);
->     g_clear_pointer(&da->out_listeners, g_hash_table_unref);
->     g_clear_object(&da->server);
-> -    g_free(da);
-> }
->
-> static void
-> listener_out_vanished_cb(GDBusConnection *connection,
->                          gboolean remote_peer_vanished,
->                          GError *error,
-> -                         DBusAudio *da)
-> +                         AudioDbus *da)
-> {
->     char *name = g_object_get_data(G_OBJECT(connection), "name");
->
-> @@ -466,7 +467,7 @@ static void
-> listener_in_vanished_cb(GDBusConnection *connection,
->                         gboolean remote_peer_vanished,
->                         GError *error,
-> -                        DBusAudio *da)
-> +                        AudioDbus *da)
-> {
->     char *name = g_object_get_data(G_OBJECT(connection), "name");
->
-> @@ -482,7 +483,7 @@ dbus_audio_register_listener(AudioMixengBackend *s,
->                              GVariant *arg_listener,
->                              bool out)
-> {
-> -    DBusAudio *da = s->drv_opaque;
-> +    AudioDbus *da = AUDIO_DBUS(s);
->     const char *sender =
->         da->p2p ? "p2p" : g_dbus_method_invocation_get_sender(invocation);
->     g_autoptr(GDBusConnection) listener_conn = NULL;
-> @@ -667,9 +668,8 @@ dbus_audio_set_server(AudioBackend *s,
->                       bool p2p,
->                       Error **errp)
-> {
-> -    DBusAudio *da = AUDIO_MIXENG_BACKEND(s)->drv_opaque;
-> +    AudioDbus *da = AUDIO_DBUS(s);
->
-> -    g_assert(da);
->     g_assert(!da->server);
->
->     da->server = g_object_ref(server);
-> @@ -711,8 +711,6 @@ static struct audio_pcm_ops dbus_pcm_ops = {
->
-> static struct audio_driver dbus_audio_driver = {
->     .name            = "dbus",
-> -    .init            = dbus_audio_init,
-> -    .fini            = dbus_audio_fini,
->     .pcm_ops         = &dbus_pcm_ops,
->     .max_voices_out  = INT_MAX,
->     .max_voices_in   = INT_MAX,
-> @@ -725,6 +723,9 @@ static void audio_dbus_class_init(ObjectClass *klass, const void *data)
->     AudioBackendClass *b = AUDIO_BACKEND_CLASS(klass);
->     AudioMixengBackendClass *k = AUDIO_MIXENG_BACKEND_CLASS(klass);
->
-> +    audio_dbus_parent_class = AUDIO_BACKEND_CLASS(object_class_get_parent(klass));
-> +
-> +    b->realize = audio_dbus_realize;
->     b->set_dbus_server = dbus_audio_set_server;
->     k->driver = &dbus_audio_driver;
-> }
-> @@ -734,6 +735,7 @@ static const TypeInfo audio_types[] = {
->         .name = TYPE_AUDIO_DBUS,
->         .parent = TYPE_AUDIO_MIXENG_BACKEND,
->         .instance_size = sizeof(AudioDbus),
-> +        .instance_finalize = audio_dbus_finalize,
->         .class_init = audio_dbus_class_init,
->     },
-> };
->
->
---3866299591-1233897087-1771244126=:82144--
+Thanks,
+
+C.
+
 
