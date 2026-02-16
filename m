@@ -4,83 +4,199 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 284F0E63F21
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 01:13:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D466CE63F21
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 02:22:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vrnAf-00057C-0w; Sun, 15 Feb 2026 20:13:05 -0500
+	id 1vroF5-0005r7-Jt; Sun, 15 Feb 2026 21:21:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <bounce+0e9322.97607e-qemu-devel=nongnu.org@yodel.dev>)
- id 1vrnAb-000572-W0
- for qemu-devel@nongnu.org; Sun, 15 Feb 2026 20:13:02 -0500
-Received: from k62.kb8c70eb.use4.send.mailgun.net ([204.220.184.62])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1)
- (envelope-from <bounce+0e9322.97607e-qemu-devel=nongnu.org@yodel.dev>)
- id 1vrnAZ-0006sh-El
- for qemu-devel@nongnu.org; Sun, 15 Feb 2026 20:13:01 -0500
-X-Mailgun-Sid: WyI4ZDFlNiIsInFlbXUtZGV2ZWxAbm9uZ251Lm9yZyIsIjk3NjA3ZSJd
-Received: from mail.yodel.dev (mail.yodel.dev [35.209.39.246]) by
- c9df4d7d81c51f612bc6d719256d83bf1e2291941ef015ac3bbbf3455704683e with SMTP id
- 69926f10f47733397cf01b64; Mon, 16 Feb 2026 01:12:48 GMT
-X-Mailgun-Sending-Ip: 204.220.184.62
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yodel.dev;
- s=rsa2048; t=1771204367;
- bh=V74aTczj7tA03dQavbJYRZd2eyGTw+qEahtBzo9SImM=;
- h=Message-ID:Date:MIME-Version:Subject:X-Mailgun-Dkim:From:To:Cc:
- References:In-Reply-To:Content-Type:Content-Transfer-Encoding:From:
- Reply-to:Subject:Date:Message-id:To:Cc:Mime-version:Content-type:
- Content-transfer-encoding:In-reply-to:References;
- b=D3ynC/qDRFOu/fxbZgghkNVOo20SNMG0SHXpeedQ9/NzcTfDypwVPgHV6K9b5Mknu
- cu4o+8BeHfT6iyuIq9XXYlEPM7aMkak/lBR2yb7DZETwIuFrofotTlDF//yUrhoTKv
- MsU1tjRO3kBmWsZCYWy5hRyJy4qyAWo9fdrEZE+QwbHHtwoh4rf0ZE7A+ZoIZuvf7m
- wfFwZEcja7paJRLUudpMKgBnmsir2veNbUzvDCbvEnShnka3MKdgmaPoejwb3wIWzz
- vktGOikQJilGMk9zulePgl2A+uSl1Tumq0rL2MJ1tAPzPi/MSaBpRB5Cp7oiS79mQB
- KiYGTBlzqH9+A==
-Message-ID: <7dfb9920-540b-4586-afc6-a60bb96c2921@yodel.dev>
-Date: Sun, 15 Feb 2026 19:12:45 -0600
+ (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1vroF2-0005qz-KN
+ for qemu-devel@nongnu.org; Sun, 15 Feb 2026 21:21:40 -0500
+Received: from mout.gmx.net ([212.227.15.19])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1vroF0-0002px-LE
+ for qemu-devel@nongnu.org; Sun, 15 Feb 2026 21:21:40 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+ s=s31663417; t=1771208490; x=1771813290; i=deller@gmx.de;
+ bh=nHQxijp6IOrrdb8UEKg8lkS2A+dBv5D3yE9z1KAEAv0=;
+ h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
+ References:From:In-Reply-To:Content-Type:
+ Content-Transfer-Encoding:cc:content-transfer-encoding:
+ content-type:date:from:message-id:mime-version:reply-to:subject:
+ to;
+ b=c2vlZobj3mzj5pGjXF7sdqi+hr1WQuLNT5ORsH64mZL1bI678m8cOBTXiQIQb3/T
+ skCr80FelIBPyubtxEp23qIeYPY7Lrta8CEJYscTqj6oxu4OzW6x56FHEwEyuM3Yu
+ RY1xBIlLQWcXxhLDRpAVzFCxATKaOFKqXHG2+0bldx2rsu8ZMzDOwoRORyKxfDjxu
+ YGEPwd5nfdCSSZaqt1mN7Dsx8KWjbthdyLOLq2ogFaMcLRf+APSfAJG+WPudUJPvh
+ yZ+vjzGGRthjH3Lnt73DlpncrGgD42maQ/6h6J3LTaa1lZ6EzTUmMPeM6qHpkPlfz
+ CYSh6GEmsO2ELCzq3g==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [192.168.20.55] ([109.250.51.52]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1M89Gj-1vn7972Y2V-00G8L6; Mon, 16
+ Feb 2026 03:21:30 +0100
+Message-ID: <52f5c3e9-e54c-4301-848a-1c134953c542@gmx.de>
+Date: Mon, 16 Feb 2026 03:21:29 +0100
 MIME-Version: 1.0
-Subject: Re: [PATCH] Revert "rcu: Unify force quiescent state"
-X-Mailgun-Dkim: no
-X-Mailgun-Dkim: no
-From: Yodel Eldar <yodel.eldar@yodel.dev>
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Jim MacArthur <jim.macarthur@linaro.org>, Thomas Huth <thuth@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>
-References: <20260209120336.41454-1-thuth@redhat.com>
- <0e63016c-2ca3-4074-8a5e-db46f22d8eda@linaro.org>
- <745fbb72-a977-4ec4-84ea-eefc33cf33a8@rsg.ci.i.u-tokyo.ac.jp>
- <f64415bf-8c89-47ff-95b7-f362d51dc9bf@yodel.dev>
+User-Agent: Mozilla Thunderbird
+Subject: Re: Call for GSoC internship project ideas
+To: Stefan Hajnoczi <stefanha@gmail.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>, Paolo Bonzini <pbonzini@redhat.com>,
+ Fam Zheng <fam@euphon.net>
+References: <CAJSP0QVXXX7GV5W4nj7kP35x_4gbF2nG1G1jdh9Q=XgSx=nX3A@mail.gmail.com>
+ <CAJSP0QW4bMO8-iYODO_6oaDn44efPeV6e00AfD5A42pQ9d+REQ@mail.gmail.com>
+ <aXH4PpkC4AtccsOE@redhat.com>
+ <CAMxuvaw04pDNzHyw5+Qcv_KfrhDTiyp+MNxpECp+HfTa5iLOGw@mail.gmail.com>
+ <aXH-TlzxZ1gDvPH2@redhat.com>
+ <CAFEAcA_u6QUhs+6-cyYm_qttsDiV2zHbsc-_FbTb8QzWXk6+tw@mail.gmail.com>
+ <aXICpFZuNM9GG4Kv@redhat.com>
+ <CAMxuvawgOvQbwoyCzFBLw++JqR0vFbVUhbv1AJWU6VqK1MM_Og@mail.gmail.com>
+ <82f74c82-c572-4ab9-b527-11ea287056d1@linaro.org>
+ <CAJ+F1CJtrv9YgDbiekVmDD2yT+6nUe39nLwLsKxvFOtMc1kUGA@mail.gmail.com>
+ <CAJSP0QUCQ8LkHEPNPb75XZmo46xxvP3uA373fzAZTwn=bo_bdg@mail.gmail.com>
+ <f7a90238-f33d-430d-acd2-d8cd9ec275fe@gmx.de>
+ <CAJSP0QVbvRxZXjbfoegu+NA=0hX3N9pSeG7Stx_jpqo1Mgwd0w@mail.gmail.com>
+ <93c80b9e-7eb9-45f2-bdd7-a769e2935ba1@gmx.de>
+ <CAJSP0QU7TJ5Y2gAy=ipk4=7hrqejifJJ8YcDz2LsbiQbWL5Kig@mail.gmail.com>
+ <5befbced-8aaa-46e2-8875-88d681854aee@gmx.de>
+ <CAJSP0QUwP1L5YQH=_u5AFS++iQXZFK8r9H6xkg5KAHoJa0evsw@mail.gmail.com>
 Content-Language: en-US
-Autocrypt: addr=yodel.eldar@yodel.dev; keydata=
- xjMEZxqXdhYJKwYBBAHaRw8BAQdAkletQdG3CLyANZyuf2t7Z9PK4b6HiT+DdSPUB2mHzmPN
- I1lvZGVsIEVsZGFyIDx5b2RlbC5lbGRhckB5b2RlbC5kZXY+wpkEExYKAEECGwMFCQOcG00F
- CwkIBwIGFQoJCAsCBBYCAwECHgECF4AWIQTTzRjNQG27imap+N+V7k+3NmVNrAUCaNWASwIZ
- AQAKCRCV7k+3NmVNrNnSAPoDjQXa6v7ZzdQSaLdRfAQy/5SsUucv+zp3WAP4pXdgJQEAzMMC
- Ctx4l6b13Fs2hZdRXEnF/4BZ9t1K68nwzZOV3QnOOARnGpd2EgorBgEEAZdVAQUBAQdAKPIy
- 3W/DKFsm1e+31zoqmOY0pqz8vjIM846wM6lEY2QDAQgHwn4EGBYIACYCGwwWIQTTzRjNQG27
- imap+N+V7k+3NmVNrAUCaNWG7QUJA5wi9wAKCRCV7k+3NmVNrPusAQCQDQwETy7VT6UhHPho
- TkrQnsNqQfFU3tXqCTiViToktQD7B/U2/to97hQIJCWbK6yd3T+KPZJPMcHMg2XRyedUvgA=
-In-Reply-To: <f64415bf-8c89-47ff-95b7-f362d51dc9bf@yodel.dev>
+From: Helge Deller <deller@gmx.de>
+Autocrypt: addr=deller@gmx.de; keydata=
+ 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
+In-Reply-To: <CAJSP0QUwP1L5YQH=_u5AFS++iQXZFK8r9H6xkg5KAHoJa0evsw@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=204.220.184.62;
- envelope-from=bounce+0e9322.97607e-qemu-devel=nongnu.org@yodel.dev;
- helo=k62.kb8c70eb.use4.send.mailgun.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:Iz1xIhmy+yijJ3cLXbjewWVxYZvR8Qcs214QgcVIC3SJX2efPp4
+ hDFw9rgWpV5Sl2Iad8LsJ1AhXvV0So8GVz0RlCL5IVXc9NCGicguibadwtdQIcwvUAKSvP+
+ JLfgM3YPNZPNraduaap4GVVR6eqc8UezRSCub3zDHzQdF301I1HuRQF4tdBY2KReWRLADdX
+ SefX1ycRKVaJL6OKz6wVQ==
+UI-OutboundReport: notjunk:1;M01:P0:SUy4sHA1MnY=;jbUKtopdr4k2nceLyh6ocd26px2
+ 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
+ w1wPX9GYuu8WLRYEdLPUwvRFVYk23
+Received-SPF: pass client-ip=212.227.15.19; envelope-from=deller@gmx.de;
+ helo=mout.gmx.net
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,216 +212,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-+rth (maintainer: accel/tcg/tcg-accel-ops-rr.c)
-
-Hi,
-
-On 11/02/2026 09:12, Yodel Eldar wrote:
-> +Ilya (author of mentioned commit)
-> 
-> Hi, all
-> 
-> On 10/02/2026 05:14, Akihiko Odaki wrote:
->> On 2026/02/10 20:04, Jim MacArthur wrote:
->>> On 2/9/26 12:03, Thomas Huth wrote:
->>>> From: Thomas Huth <thuth@redhat.com>
->>>>
->>>> This reverts commit 55d98e3edeeb17dd8445db27605d2b34f4c3ba85.
->>>>
->>>> The commit introduced a regression in the replay functional test
->>>> on alpha (tests/functional/alpha/test_replay.py), that causes CI
->>>> failures regularly. Thus revert this change until someone has
->>>> figured out what is going wrong here.
->>>>
->>>> Buglink: https://gitlab.com/qemu-project/qemu/-/issues/3197
->>>> Signed-off-by: Thomas Huth <thuth@redhat.com>
->>>> ---
->>>>   I just hit this again in the CI:
->>>>   https://gitlab.com/thuth/qemu/-/jobs/13018713844
->>>>   ... it's annoying, so I'd like to suggest to revert the offending
->>>>   patch 'til someone fixed this.
->>>>
+On 2/15/26 21:31, Stefan Hajnoczi wrote:
+> On Sun, Feb 15, 2026 at 1:25=E2=80=AFPM Helge Deller <deller@gmx.de> wro=
+te:
+>>
+>> Hi Stefan,
+>>
+>> On 2/10/26 19:23, Stefan Hajnoczi wrote:
+>>> You can still propose an idea before February 19th.
 >>>
->>> Hi Thomas,
->>>
->>> I am actively investigating this problem, but haven't made any 
->>> important progress so far. It's looking like a timing bug which is 
->>> annoying to track down. All I know for certain at the moment is that 
->>> faking some of the values returned by qemu_clock_get_ns to be 
->>> deterministic improves the failure rate, but does not remove it 
->>> entirely. I'm fine with this being reverted for now; we can add it 
->>> back in once we figure out what the true cause is.
+>>> The Linux scsi_debug driver has support for emulating a tape device,
+>>> so that may already be usable with QEMU but I'm not sure.
 >>
->> Thanks for investigating this. Let's have the commit reverted until 
->> there is some progress:
+>> It is interesting, but it is only available with Linux hosts,
+>> and doesn't seem to handle existing TAPE files or can be
+>> used to permanently store things (e.g. it handles everything in RAM).
 >>
->> Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+>>> If you have a use case for SCSI tape emulation in QEMU then it sounds
+>>> like something that would fit GSoC.
 >>
-> 
-> After the quiescence commit, timeouts were the only regression, until
-> f098c32db48 ("target/s390x: Fix infinite loop during replay") when the
-> replay test began failing with error, too; maybe this serves as a
-> diagnostic trigger?
-> 
-> Yodel
-> 
+>> Here is my proposal.
+>> I hope this is OK?
+>=20
+> Thanks, Helge. I have added your project idea to the wiki and edited it:
+> https://wiki.qemu.org/Google_Summer_of_Code_2026#SCSI_TAPE_device_emulat=
+ion
 
-Seems like the force_rcu notifier in rr tcg became incompatible with
-record/replay after Akihiko's patch; preventing registration of the
-notifier when in record/replay mode appears to fix the problem:
+Great, Thanks!
+ =20
+> The intern needs to research the project idea and come up with a
+> design before the coding period starts. You can make this easier by
+> specifying more of the design so the intern has less to figure out. I
+> think your project description contains enough pointers so that a
+> motivated applicant can discuss the details with you during the GSoC
+> application phase.
 
-diff --git a/accel/tcg/tcg-accel-ops-rr.c b/accel/tcg/tcg-accel-ops-rr.c
-index f84342e044..2073b1b13e 100644
---- a/accel/tcg/tcg-accel-ops-rr.c
-+++ b/accel/tcg/tcg-accel-ops-rr.c
-@@ -179,13 +179,15 @@ static int rr_cpu_count(void)
+Ok.
 
-  static void *rr_cpu_thread_fn(void *arg)
-  {
--    Notifier force_rcu;
-      CPUState *cpu = arg;
+> Two pieces of information that could help focus this project:
+> 1. Do you have any tape data files for reference that you want QEMU to
+> be able to access?
+> 2. Do you have a particular guest OS in mind?
 
-      assert(tcg_enabled());
-      rcu_register_thread();
--    force_rcu.notify = rr_force_rcu;
--    rcu_add_force_rcu_notifier(&force_rcu);
-+    if (replay_mode == REPLAY_MODE_NONE) {
-+        Notifier force_rcu;
-+        force_rcu.notify = rr_force_rcu;
-+        rcu_add_force_rcu_notifier(&force_rcu);
-+    }
-      tcg_register_thread();
+My current goal is to allow emulating MPE (an old operating system
+on the hppa architecture). This OS is installed via an install tape,
+which I may provide to the applicant for testing.
+But I think for this project it's sufficient if the applicant uses
+standard operating system tools to backup the current system, e.g.
+mt or baccula on Linux, and something else on Windows....
+I'll add that info to the Wiki.
 
-      bql_lock();
-
-as confirmed by running:
-     meson test --setup thorough --no-rebuild -t 0 \
-        --num-processes 1 --repeat 100 func-alpha-replay
-
-I'd like to do some additional testing/analysis to make sure this
-doesn't just trade one bug for another as I continue to study the
-internals of RCU and replay/record, but any comments regarding the above
-fix would be much appreciated.
-
-E.g., could we continue using a force_rcu notifier with record/replay if
-we added an async replay event for it, or by some other means?
-Should we?
-
-Furthermore, mttcg also uses a force_rcu notifier, but record/replay
-isn't supported with multiple CPUs, so are we really in the clear there?
-
-Also, the issue that firstly motivated rr_force_rcu():
-     https://gitlab.com/qemu-project/qemu/-/issues/650
-doesn't appear at first glance to occur in record/replay mode when the
-notifier isn't registered during record/replay; is that thanks to
-Akihiko's patch or was that never a problem in record/replay mode?
-Side note: eliminating the force_rcu notifier for non-record/replay mode
-does cause the same regression as in issue #650; i.e., rr_force_rcu is
-still seemingly necessary outside of replay/record mode.
-
-Here's the backtrace of qemu-system-alpha as it hangs in replay mode:
-------------------------------------------------------------------------
-Thread 4 (Thread 0x7f2b841ff6c0 (LWP 7653) "qemu-system-alp"):
-#0  0x00007f2b88c0906d in syscall () at /usr/lib/libc.so.6
-#1  0x000055692672e554 in qemu_futex_wait (f=0x556926ca6670 
-<rcu_call_ready_event>, val=0xffffffff) at /qemu/include/qemu/futex.h:47
-#2  0x000055692672e768 in qemu_event_wait (ev=0x556926ca6670 
-<rcu_call_ready_event>) at ../util/event.c:162
-#3  0x000055692673a87e in call_rcu_thread (opaque=0x0) at ../util/rcu.c:304
-#4  0x000055692672d032 in qemu_thread_start (args=0x556965cbd7b0) at 
-../util/qemu-thread-posix.c:393
-#5  0x00007f2b88b8797a in ??? () at /usr/lib/libc.so.6
-#6  0x00007f2b88c0b2bc in ??? () at /usr/lib/libc.so.6
-
-Thread 3 (Thread 0x7f2b831fe6c0 (LWP 7654) "qemu-system-alp"):
-#0  0x00007f2b88b8ff32 in ??? () at /usr/lib/libc.so.6
-#1  0x00007f2b88b8439c in ??? () at /usr/lib/libc.so.6
-#2  0x00007f2b88b843e4 in ??? () at /usr/lib/libc.so.6
-#3  0x00007f2b88bfe2f6 in ppoll () at /usr/lib/libc.so.6
-#4  0x00007f2b8a690784 in ??? () at /usr/lib/libglib-2.0.so.0
-#5  0x00007f2b8a690a17 in g_main_loop_run () at /usr/lib/libglib-2.0.so.0
-#6  0x0000556926565683 in iothread_run (opaque=0x556965d17c70) at 
-../iothread.c:70
-#7  0x000055692672d032 in qemu_thread_start (args=0x556965cf46e0) at 
-../util/qemu-thread-posix.c:393
-#8  0x00007f2b88b8797a in ??? () at /usr/lib/libc.so.6
-#9  0x00007f2b88c0b2bc in ??? () at /usr/lib/libc.so.6
-
-Thread 2 (Thread 0x7f2b821fd6c0 (LWP 7655) "qemu-system-alp"):
-#0  0x00007f2b88b8ff32 in ??? () at /usr/lib/libc.so.6
-#1  0x00007f2b88b8439c in ??? () at /usr/lib/libc.so.6
-#2  0x00007f2b88b8468c in ??? () at /usr/lib/libc.so.6
-#3  0x00007f2b88b86e5e in pthread_cond_wait () at /usr/lib/libc.so.6
-#4  0x000055692672c9ee in qemu_cond_wait_impl (cond=0x556965e6df40, 
-mutex=0x556926c821e0 <bql>, file=0x55692683204f "../system/cpus.c", 
-line=0x24e) at ../util/qemu-thread-posix.c:225
-#5  0x000055692630728b in qemu_cond_wait_bql (cond=0x556965e6df40) at 
-../system/cpus.c:590
-#6  0x000055692643b864 in rr_wait_io_event () at 
-../accel/tcg/tcg-accel-ops-rr.c:114
-#7  0x000055692643bcc5 in rr_cpu_thread_fn (arg=0x556965e69aa0) at 
-../accel/tcg/tcg-accel-ops-rr.c:235
-#8  0x000055692672d032 in qemu_thread_start (args=0x556965cf2ea0) at 
-../util/qemu-thread-posix.c:393
-#9  0x00007f2b88b8797a in ??? () at /usr/lib/libc.so.6
-#10 0x00007f2b88c0b2bc in ??? () at /usr/lib/libc.so.6
-
-Thread 1 (Thread 0x7f2b8690f180 (LWP 7652) "qemu-system-alp"):
-#0  0x00007f2b88b8ff32 in ??? () at /usr/lib/libc.so.6
-#1  0x00007f2b88b8439c in ??? () at /usr/lib/libc.so.6
-#2  0x00007f2b88b843e4 in ??? () at /usr/lib/libc.so.6
-#3  0x00007f2b88bfe2f6 in ppoll () at /usr/lib/libc.so.6
-#4  0x000055692674d35a in qemu_poll_ns (fds=0x5569667017a0, nfds=0x5, 
-timeout=0x3b597370) at ../util/qemu-timer.c:343
-#5  0x00005569267485ee in os_host_main_loop_wait (timeout=0x3b597370) at 
-../util/main-loop.c:308
-#6  0x0000556926748740 in main_loop_wait (nonblocking=0x0) at 
-../util/main-loop.c:592
-#7  0x0000556926335226 in qemu_main_loop () at ../system/runstate.c:903
-#8  0x000055692665e8cf in qemu_default_main (opaque=0x0) at 
-../system/main.c:50
-#9  0x000055692665e989 in main (argc=0x19, argv=0x7ffdb6f6f898) at 
-../system/main.c:93
-------------------------------------------------------------------------
-
-Interestingly, the `shift` value used in the alpha replay test's
-`-icount` option somewhat sneakily complicated debugging: When `shift`
-is greater than eight (it's currently nine), both TIMEOUTs and ERRORs
-would occur in `meson test ... func-alpha-replay` (after f098c32db48),
-but when `shift` is lowered, only TIMEOUTs occur. With my fix, neither
-occurs regardless of the `shift` value, but the kernel still seems to
-mind as seen when given an initrd [1]:
-
-     ./qemu-system-alpha -initrd ./initrd.gz \
-         -machine clipper \
-         -kernel ./vmlinuz \
-         -append 'console=ttyS0' \
-         -icount shift=9,rr=record,rrfile=replay.bin \
-         -nographic -net none
-
-yielding this printk:
-
-     BUG: soft lockup - CPU#0 stuck for 61s! [udevd:219]
-
-Is there an important reason why we set `shift=9` in the test?
-If not, maybe we should lower it, too, while we're at it?
-
-Please let me know if there's any other information that would be
-helpful with resolving this bug in the best way possible once and for
-all; I did quite a bit of testing/debugging over the last couple of days
-and would be happy to share more of the results/methodology.
-
-Thomas and Akihiko, if it's alright with you, could we delay the PR of
-the revert at least until we sort this out? I realize the erratic
-timeouts are gumming up the CI, but maybe we could reduce the deltas of
-the git history in short order if it's not too much trouble? I can
-submit the patch in one to two days; I just want to make sure it's done
-correctly.
-
-[1] 
-https://archive.debian.org/debian/dists/lenny/main/installer-alpha/20090123lenny10/images/cdrom/initrd.gz
-
-Thanks,
-Yodel
-
+Helge
 
