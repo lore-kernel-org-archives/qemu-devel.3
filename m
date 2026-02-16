@@ -4,100 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12AA0E8383C
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 22:43:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C6A4E8383F
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 22:48:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vs7Jq-0006ms-PZ; Mon, 16 Feb 2026 17:43:54 -0500
+	id 1vs7O8-0000tP-8G; Mon, 16 Feb 2026 17:48:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vs7Jp-0006jc-Rr
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 17:43:53 -0500
-Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vs7Jo-0005Lp-89
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 17:43:53 -0500
-Received: by mail-pf1-x435.google.com with SMTP id
- d2e1a72fcca58-823075fed75so2051475b3a.1
- for <qemu-devel@nongnu.org>; Mon, 16 Feb 2026 14:43:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771281830; x=1771886630; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=W5FRkTCIzQJ1yMDVOXCWUpEHbA07lq33qSJf7nqj0N4=;
- b=wdByGwyueXr1Q4f+U8riDjS+LIxw/vA6cvehU8A9bjdDnqVZcjX9GywIHj4qGbEjkZ
- j9CyRu31KZvVZU/jhtiVgqM8o+2yVKrd0rctZwthNz+ie3/Qyo1sPWLIxGMWq4BSzJc6
- pFx58Ff4BZOhvEeEzYeF4ED9stXT7XLaZimYIR3Mg9KZ0rDs0lkLjTsm3lSWpGuR+Ysc
- QJMHULK/u8Q1AuEmw3nCQNes/FVAm9GZ35KNdgx25mHyOfMSKJJDZiR+toXccDhlmeV+
- YpvkC3KtqYDncKl63EeWcFQD4Yl6l5kPuQ1AwrLq2R93mnn9xttgpRS0eZdHWVcLMDFU
- yQSA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771281830; x=1771886630;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=W5FRkTCIzQJ1yMDVOXCWUpEHbA07lq33qSJf7nqj0N4=;
- b=eflQj1Qlu6RKsYDQYDEjEI7x7t3EGZ7b4j01J6eC2xWduV8f25FF7ENk2rVHjHR6l0
- aRol4mNF0RsuUapUn7Es2JzvJ0P8P64Hku38YAR2ZPjfddz3Y9qGmwrZtc7YC9xEJ4P+
- ZEKhLZ3RTGFOSxyWYwKOPHZ/Lr/GqB3U0Ge2/1Aiso7u35+O7JJigGghL3nJ98oxAtIV
- W2/pvoEVh6EMBu/g6+qP6ot/U8i9qOfkmx7RPQ7jEvnurzC7VbjR03Osf5WOHPQn80Pz
- J6QEJ0yMcp9e2FV1okaNc8Ls9guUL8Znx4SJ79wJBU1f+0W3fnyMKSy3LLi0QqIDNPoc
- Sjsw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXFZp4eumvC9ObaR9j9tuZm0Omp8xHVP494EOXe5Iso7Q/9EP1F/q0YiRg8CNa3g9zwHpiWzEe+iRyH@nongnu.org
-X-Gm-Message-State: AOJu0Yz1Lm0h1MDAa3F9rFqA4CA0XNYXGVoWCr5TnzwvAa1Uocoj1YiO
- mPaIfwJ/jv4JRs8h3/6M0FM5r8AeTfVb5sDoKEabtjW5CflLrc7psEq8/GbWsCf+YRw=
-X-Gm-Gg: AZuq6aKDH8eF+xYlFoK7qpIdqU9+bWI+PM8BI5d6kg9ee3IqFRRmsp703UpvPtvpxoX
- /Z2pv/3atb1rNDmuEFU+FO/ZfwwHm4WxNNi+S6wyTBKEpNFiBet/3xakqS7OsJLK0/IYGN/5VCs
- GeelgQlnmqgCGWCriHTZBO3upcINJvr7zqyw7MpYKqGLYY0XAOuwixW07XoN9ytJ08uFGCWFKVT
- EWr/tNYcv75pjKkKrpAFXol0ZN+P9nX/eY5AHX94+V1j6WTcLAjcrgM4j8YzGzpSEo9i6tHoGSj
- lHMgjLSBLXHrEFf+KJWhLHn8KB81/zaXONK85ViW04Fr3u+F7UnID/9sv1VzTcqJSTq2tCBGK5U
- PPrVQCE+sTh2UpfZBwTH/jd6CnyPcxKSfpqbJYd7jBfZY9zKbMgalRLanVGrKmT/QllAucMo0BI
- xI72BONZPBa/k9qwdIFgWZL+nm1f7r/LMeCjrjX5MkqU8nM8/RWE5uanUMWNqDMfsBuUOeDouU+
- cVtB8yKwqvbPJ/NqHPG7SNCBlO6KL/0NGb77KcEMV5p6SvwkHhp4bg=
-X-Received: by 2002:a05:6a00:bc10:b0:81f:832a:174 with SMTP id
- d2e1a72fcca58-824d5e1c726mr8131350b3a.16.1771281829858; 
- Mon, 16 Feb 2026 14:43:49 -0800 (PST)
-Received: from ?IPV6:2401:d002:dc0f:2100:1e87:e093:79fa:89a7?
- (bg30dhzpjwwrss5hh6ty.ip6.superloop.au.
- [2401:d002:dc0f:2100:1e87:e093:79fa:89a7])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-824c6b69f2asm11488073b3a.37.2026.02.16.14.43.45
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 16 Feb 2026 14:43:49 -0800 (PST)
-Message-ID: <d45659aa-5f04-4515-8163-15d81e8fb223@linaro.org>
-Date: Tue, 17 Feb 2026 08:43:41 +1000
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vs7O5-0000sZ-74; Mon, 16 Feb 2026 17:48:18 -0500
+Received: from zero.eik.bme.hu ([152.66.115.2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vs7O2-0005w4-Nc; Mon, 16 Feb 2026 17:48:16 -0500
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 2162D5969FA;
+ Mon, 16 Feb 2026 23:48:12 +0100 (CET)
+X-Virus-Scanned: amavis at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
+ id tTSJUbnCAdgx; Mon, 16 Feb 2026 23:48:10 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id F0A825969F6; Mon, 16 Feb 2026 23:48:09 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id EADD15969F1;
+ Mon, 16 Feb 2026 23:48:09 +0100 (CET)
+Date: Mon, 16 Feb 2026 23:48:09 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: Paolo Bonzini <pbonzini@redhat.com>
+cc: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>, 
+ qemu-devel <qemu-devel@nongnu.org>, Chinmay Rath <rathc@linux.ibm.com>, 
+ =?ISO-8859-15?Q?Herv=E9_Poussineau?= <hpoussin@reactos.org>, 
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, 
+ Nicholas Piggin <npiggin@gmail.com>, 
+ Artyom Tarasenko <atar4qemu@gmail.com>, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
+ "zmta06.collab.prod.int.phx2.redhat.com, list@suse.de" <qemu-ppc@nongnu.org>, 
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, 
+ Laurent Vivier <laurent@vivier.eu>
+Subject: Re: [PATCH 7/8] hw/ppc: Set graphic display dimensions generically
+In-Reply-To: <CABgObfZpxHmdmX7La7kQLRWY0=nPZSysOYiJsU7h99JEgzio5A@mail.gmail.com>
+Message-ID: <aa07574a-2bd4-6490-7508-2db86a1c4446@eik.bme.hu>
+References: <20260214021240.58657-1-philmd@linaro.org>
+ <20260214021240.58657-8-philmd@linaro.org>
+ <252b2fa2-9251-3949-625b-7071c525c8e2@eik.bme.hu>
+ <56a0f465-2055-4c82-b0c0-963b376609e9@linaro.org>
+ <0492fc65-e156-1afe-ea72-520134ccca41@eik.bme.hu>
+ <CABgObfZpxHmdmX7La7kQLRWY0=nPZSysOYiJsU7h99JEgzio5A@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] gdbstub: Make generated compound literal array size
- explicit
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- John Snow <jsnow@redhat.com>, Gustavo Romero <gustavo.romero@linaro.org>,
- Cleber Rosa <crosa@redhat.com>
-References: <20260216214332.47639-1-philmd@linaro.org>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260216214332.47639-1-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x435.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,44 +77,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/17/26 07:43, Philippe Mathieu-Daudé wrote:
-> GDBFeature::num_regs holds the number of registers, but when using
-> the compound literal construction, if the last array entry is not
-> set, the array will be shorter. Prevent array overrun by making the
-> array length explicit,
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   scripts/feature_to_c.py | 7 +++++--
->   1 file changed, 5 insertions(+), 2 deletions(-)
+On Mon, 16 Feb 2026, Paolo Bonzini wrote:
+> Il dom 15 feb 2026, 10:51 BALATON Zoltan <balaton@eik.bme.hu> ha scritto:
+>>>>> +void ppc_graphic_dimensions(int *width, int *height, int *depth)
+>>>>> +{
+>>>>> +    *width = graphic_width ?: 800;
+>>>>> +    *height = graphic_height ?: 600;
+>>>>> +    *depth = graphic_depth ?: 32;
+>>>>> +}
+>>>>
+>>>> I think there's no reason to have this common to all ppc machines.
+>
+>
+> I agree with you here that it's better to just inline this in all the
+> boards that need it, because there's no reason to have 800x600x32 across
+> such disparate machines.
+>
+>> Can you provide a patch showing how you'd prefer it to be done?
+>>
+>> Maybe turning these into properties could work. I could look at adding
+>> such properties but don't know how to change the -g option. But
+>> considering these are all machines that Mark maintains maybe he should do
+>> something about it
+>
+>
+> I am not sure what you'd be requesting of him?
+>
+> The easiest were if he agreed to drop -g option but he
+>> never agrees removing anything
+>
+>
+> Not sure who's he? Is it me since I asked Philippe to keep -g, or Mark? And
+> if it's Mark, I am not sure what you're trying to obtain by involving (and
+> in a pretty rude way, too) someone who's not even part of the thread.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Mark is cc-ed on this thread and it seems this -g option is only used by 
+machines he maintains. My previous experience with patches submitted to 
+things he maintains is that this most of the time leads to long 
+discussions on why what I propose is wrong and how else should it be done 
+instead. (I'm not saying that it's because it's me who submits the patch, 
+I've seen this happening to other contributors too but it looks like Mark 
+has strong views on how things should be done and he's reluctant to accept 
+anything else.) Because of that I try not to touch anything that Mark 
+maintains unless he says beforehand what would be acceptable. I did not 
+mean it to be rude or attack him but I also think this isn't the best way 
+to work either. But given these cicrumstances I think Mark should state 
+his peference about this as at the end he is the maintainer who will have 
+to approve it.
 
-r~
+> so then he should provide patches to clean
+>> this up the way he prefers. I could try to make patches but I'm afraid
+>> those would become wasted effort so may I only do it when there's an
+>> approved way that will be accepted.
+>
+> The -g 800x600x32 option, if desired, can become simply a shortcut for -M
+> gfxwidth=800,gfxheight=600,gfxdepth=32 (or
+> gfx.width=800,gfx.height=600,gfx.depth=32), which is more similar to how
+> smp or boot work). This would actually be easier to implement with
+> Philippe's move of all graphics_* accesses to board code, so his patches
+> should go in either way. And then the globals can be removed altogether.
 
-> 
-> diff --git a/scripts/feature_to_c.py b/scripts/feature_to_c.py
-> index 807af0e685c..3aa62fb895f 100644
-> --- a/scripts/feature_to_c.py
-> +++ b/scripts/feature_to_c.py
-> @@ -90,13 +90,16 @@ def writeliteral(indent, bytes):
->       writeliteral(8, read)
->       sys.stdout.write(',\n')
->       writeliteral(8, bytes(feature_name, 'utf-8'))
-> -    sys.stdout.write(',\n        (const char * const []) {\n')
-> +    sys.stdout.write(',\n')
-> +    sys.stdout.write(f'        (const char * const [{num_regs}]) {{\n')
->   
->       for index, regname in enumerate(regnames):
->           sys.stdout.write(f'            [{regnums[index] - base_reg}] =\n')
->           writeliteral(16, bytes(regname, 'utf-8'))
->           sys.stdout.write(',\n')
->   
-> -    sys.stdout.write(f'        }},\n        {num_regs},\n    }},\n')
-> +    sys.stdout.write( '        },\n')
-> +    sys.stdout.write(f'        {num_regs},\n')
-> +    sys.stdout.write( '    },\n')
->   
->   sys.stdout.write('    { NULL }\n};\n')
+A problem with global option may be that resolution is not really a 
+machine property but that of the display and one machine may have more 
+than one display. Currently those display devices that support EDID use 
+xres,yres,xmin,ymin,xmax,ymax properties and some devices like VGA have 
+DEFINE_EDID_PROPERTIES to forward these to the edid generation. For others 
+it can be set less intuitively with -global. (This was asked by somebody 
+for ati-vga recently so I plan to add forwarding properties for that.) 
+Maybe we should move into that direction and make these properties of the 
+display devices and call them xres,yres too for consistency. But there may 
+be some complication here with fw_cfg and OpenBIOS too so in that case 
+just keeping the globals and using machine properties may be simpler.
 
+Regards,
+BALATON Zoltan
 
