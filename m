@@ -4,56 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A80CCE7BD9B
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 11:21:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BCCDEE7BD92
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 11:21:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vrweQ-0004LD-LP; Mon, 16 Feb 2026 06:20:27 -0500
+	id 1vrwch-0006rr-0D; Mon, 16 Feb 2026 06:18:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vrwbb-0005ki-61
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 06:17:35 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1vrwal-0005Hv-PV
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 06:17:04 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vrwbZ-0007zb-Et
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 06:17:30 -0500
+ id 1vrwah-0007SD-RO
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 06:16:38 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771240648;
+ s=mimecast20190719; t=1771240592;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=14KtznUlIjxeUhZQ3HJFjn608eAk9OXV5ZTi/HQfe2w=;
- b=BAj+uHrClYAJ+ZmOfuCWgYg2SMrWNHDiHXw1KiQ6o8/Usapkjn392xNwN1vdMKgFoEsxLK
- 4+1Xtu+5s1yuqMKAIwgW6nGAmn7eyJltWPbUCvUzndqBIsUm/DQkPVnwm9LFPBqPnyQ1l3
- 3D2+YBMOYzdvRnZKJA+2QjhLZVLXVcE=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=PiNp7Bs6o58noepSb4ZJhulxFQccOR3mrQTA7FuQtxU=;
+ b=G21GSbAUcFDl6iOiLUJclM8ukwWdWQk9H7uY70dIG1s6U+Egi1Gr28QlRKyC/gJiQ88K/6
+ /YLatecIoO3PVef4MqTCL/M97QaeN0IB/VEjDeZJlE3bNl8msDicclLmRZuvQDb419a06J
+ kYEZhATc0i74hjwk1F5816W4gDoU2Mk=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-423-9uq7PT2NMZmkYNLkkLBUlQ-1; Mon,
- 16 Feb 2026 06:17:26 -0500
-X-MC-Unique: 9uq7PT2NMZmkYNLkkLBUlQ-1
-X-Mimecast-MFC-AGG-ID: 9uq7PT2NMZmkYNLkkLBUlQ_1771240644
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-136-oy1fdGjvOtqU4u2GX6kfGA-1; Mon,
+ 16 Feb 2026 06:16:27 -0500
+X-MC-Unique: oy1fdGjvOtqU4u2GX6kfGA-1
+X-Mimecast-MFC-AGG-ID: oy1fdGjvOtqU4u2GX6kfGA_1771240586
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8791F1956058; Mon, 16 Feb 2026 11:17:24 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id EA4DE1956094; Mon, 16 Feb 2026 11:16:25 +0000 (UTC)
 Received: from localhost (unknown [10.45.242.26])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 8F3671800464; Mon, 16 Feb 2026 11:17:23 +0000 (UTC)
+ id 4BB8D1800464; Mon, 16 Feb 2026 11:16:25 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Mon, 16 Feb 2026 12:15:27 +0100
-Subject: [PATCH 38/85] audio-be: add common pre-conditions
+Date: Mon, 16 Feb 2026 12:15:06 +0100
+Subject: [PATCH 17/85] util: add some extra stubs for qemu modules
+ initialization
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260216-audio-v1-38-e676662e4514@redhat.com>
+Message-Id: <20260216-audio-v1-17-e676662e4514@redhat.com>
 References: <20260216-audio-v1-0-e676662e4514@redhat.com>
 In-Reply-To: <20260216-audio-v1-0-e676662e4514@redhat.com>
 To: qemu-devel@nongnu.org
@@ -71,27 +72,26 @@ Cc: Gerd Hoffmann <kraxel@redhat.com>,
  Alistair Francis <alistair@alistair23.me>, 
  "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, 
  Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org, 
- =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
- Mark Cave-Ayland <mark.caveayland@nutanix.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=6032;
+ =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1129;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=zXuDMfkjGAD2e+OunENZs2O7GncbAFbykUUyFo44jys=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBpkvxQfwdZmV+cpyVDheiWV5K7XQjwx6FCLGFQC
- ngi9xRbxFeJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaZL8UAAKCRDa6OEJdZac
- 5XQMD/9v89KN9GZbrcrzh/XCa9j3+bB/YHhyc1rytSaKDjw/9NGnAfu2vKs1T9J4AeFR3k+CbK7
- ZnvyKqL/1i0VxFQJtcqU22rw7hb77VVmLG1KLRghlneMYUohOsnVgQ7iSic5WbHViL84g+/GCc7
- QkhwiAadUNhTmWCqjRJG/zCKlDWcDop1wxuDPoODEjyi8OAQsIL/7kszvpXahKHrPVJ0eyo41Sv
- 2EHUSC6nEyjsBAudwJB8OQ26x4OTaLl+suBuA2xVhQBVNrHfd8Tl1AOjHGCmXZM/i0qWwudR9Bv
- b8wmkpVOO874YP0rZDJlBPAvcMf9XJLtOucDTiVdI7N+ySroCv3eLfS98dDb88Kvn/a5IUeQWi6
- Hh/U9Y/Ts3XyekcJVnUJwVfpSbeDI4UG2DkCIGhWFIF7D0ieN8DYFB/HzVwRqbuVSlhR0JSLRtc
- AHVAow7SR0j0VILmj5lXCYDC8805xpRfl8uJsr0UfiPvvMr7m05k+UO3qzg5I35cSOaC8zIf9Yn
- 76l1QJ4a/fbKg1PNzNYUGJBpMrlx/+Q2V/q2do/OF0tSkG7x6ppADgb9ZCePJgUugoua/KedDbw
- jdX6eNSNcdQmOZ66omCUyaZJnGRDxQouXQT4Sy5CuYjCnpRO/ZQsCkEYyZcmEpB1E7mCTyNd9AO
- gHRmv1iBh/OhCcg==
+ bh=0p2rFVhBpMNMUs9tMxnvfxcuRtuYlOuGuoE7FxD6FmI=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBpkvxOsm+4rwYJX7KYrAbNHOW4N3InH5fom7+BX
+ eFgmummRU6JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaZL8TgAKCRDa6OEJdZac
+ 5QEgD/9wts+kf9cQB0JcrXewmZmcdhJGqAwHKP6qiMmshyK2fQ1Dp6Kl1IXCH7r3cZ6IQJluCq+
+ GoZADxmeKVBsYSENAbKtn8eyamOm6W56xtXkS5YBYmVZWk0VlsWhqrMrnZQ2P9JEjjp2qZDPIqD
+ JkyVF2HdYfxzjWmO41rSM9seLWdvUdB/weDz8DdH1KbPSAM62NxYMXDegTkDEmxU6ykuE1Pb+ml
+ eDgaXI5ygJLxmPk56GVvR/LEqSAShWK6sZe7HMfZKDrzRslq9eOtSiGPnWE8J9GHLZ1Vx0amPpd
+ bTgzokFBsyFM4l1owuJAU34If3uvYlvXC/NeRpvm1W/UIZ9sgj9BIraRx6rty6rgJqfevokbxYt
+ kN1SLaziNHPW9HB7W/iyzxhgt6dG9xPBwW6EGVwlTzqoagT/lffaDj9lUW+h0DkEt9J7VU02v2R
+ ar4vK0IBqPfzl9OnYIPODyHb+G0I3gieEBbCW5TCZlSY+qo6WWLOWUYqJHarS5xGcLAC9UzHJJ2
+ erNduJcoW3Qa8AZ2iCq7+We6jn4y7OZVf7539ONqATZaUsZk3WLXV4ZbPCZQiWVQmaO9l1wj/Qw
+ uldMmisPUy0WWqsjGe4k+zbai4AT+90rYV/Du4A5xjVVVud0azCaPVbCs3M/2+Z05YuAScSFwoD
+ Y+/okbSk7FfQpGw==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124;
+Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -99,9 +99,9 @@ X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,217 +117,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-assert() on valid values, and handle acceptable NULL arguments
-gracefully.
-
-Note audio_driver_write() and audio_driver_read() used to return
-size (with a "XXX: Consider options") when sw was NULL. Imho, it is more
-correct to not pretend to have read/written anything by default in the
-AudioBackend base abstract class.
+Avoid extra ifdef-ery when optionally supporting modules, as done in
+audio-test (and vl.c).
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
 ---
- audio/audio-be.c         | 61 ++++++++++++++++++++++++++++++++++++++++++++++++
- tests/audio/test-audio.c |  8 +++----
- 2 files changed, 64 insertions(+), 5 deletions(-)
+ system/vl.c   | 2 --
+ util/module.c | 3 +++
+ 2 files changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/audio/audio-be.c b/audio/audio-be.c
-index 4d3b1e2bafd..719dd8cac12 100644
---- a/audio/audio-be.c
-+++ b/audio/audio-be.c
-@@ -29,6 +29,10 @@ SWVoiceIn *audio_be_open_in(
- {
-     AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
+diff --git a/system/vl.c b/system/vl.c
+index aa9a1550417..3e341142a0c 100644
+--- a/system/vl.c
++++ b/system/vl.c
+@@ -2889,10 +2889,8 @@ void qemu_init(int argc, char **argv)
  
-+    assert(name != NULL);
-+    assert(callback_fn != NULL);
-+    assert(as != NULL);
+     os_setup_limits();
+ 
+-#ifdef CONFIG_MODULES
+     module_init_info(qemu_modinfo);
+     module_allow_arch(target_name());
+-#endif
+ 
+     qemu_init_subsystems();
+ 
+diff --git a/util/module.c b/util/module.c
+index 1aa2079d013..09dc43f51eb 100644
+--- a/util/module.c
++++ b/util/module.c
+@@ -396,6 +396,9 @@ void qemu_load_module_for_opts(const char *group)
+ 
+ #else
+ 
++const QemuModinfo qemu_modinfo[] = {};
 +
-     return klass->open_in(be, sw, name, callback_opaque, callback_fn, as);
- }
- 
-@@ -42,6 +46,10 @@ SWVoiceOut *audio_be_open_out(
- {
-     AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
- 
-+    assert(name != NULL);
-+    assert(callback_fn != NULL);
-+    assert(as != NULL);
-+
-     return klass->open_out(be, sw, name, callback_opaque, callback_fn, as);
- }
- 
-@@ -49,6 +57,10 @@ void audio_be_close_out(AudioBackend *be, SWVoiceOut *sw)
- {
-     AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
- 
-+    if (!sw) {
-+        return;
-+    }
-+
-     return klass->close_out(be, sw);
- }
- 
-@@ -56,6 +68,10 @@ void audio_be_close_in(AudioBackend *be, SWVoiceIn *sw)
- {
-     AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
- 
-+    if (!sw) {
-+        return;
-+    }
-+
-     return klass->close_in(be, sw);
- }
- 
-@@ -63,6 +79,10 @@ bool audio_be_is_active_out(AudioBackend *be, SWVoiceOut *sw)
- {
-     AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
- 
-+    if (!sw) {
-+        return false;
-+    }
-+
-     return klass->is_active_out(be, sw);
- }
- 
-@@ -70,6 +90,10 @@ bool audio_be_is_active_in(AudioBackend *be, SWVoiceIn *sw)
- {
-     AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
- 
-+    if (!sw) {
-+        return false;
-+    }
-+
-     return klass->is_active_in(be, sw);
- }
- 
-@@ -77,6 +101,10 @@ size_t audio_be_write(AudioBackend *be, SWVoiceOut *sw, void *buf, size_t size)
- {
-     AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
- 
-+    if (!sw) {
-+        return 0;
-+    }
-+
-     return klass->write(be, sw, buf, size);
- }
- 
-@@ -84,6 +112,10 @@ size_t audio_be_read(AudioBackend *be, SWVoiceIn *sw, void *buf, size_t size)
- {
-     AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
- 
-+    if (!sw) {
-+        return 0;
-+    }
-+
-     return klass->read(be, sw, buf, size);
- }
- 
-@@ -91,6 +123,10 @@ int audio_be_get_buffer_size_out(AudioBackend *be, SWVoiceOut *sw)
- {
-     AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
- 
-+    if (!sw) {
-+        return 0;
-+    }
-+
-     return klass->get_buffer_size_out(be, sw);
- }
- 
-@@ -98,6 +134,10 @@ void audio_be_set_active_out(AudioBackend *be, SWVoiceOut *sw, bool on)
- {
-     AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
- 
-+    if (!sw) {
-+        return;
-+    }
-+
-     return klass->set_active_out(be, sw, on);
- }
- 
-@@ -105,6 +145,10 @@ void audio_be_set_active_in(AudioBackend *be, SWVoiceIn *sw, bool on)
- {
-     AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
- 
-+    if (!sw) {
-+        return;
-+    }
-+
-     return klass->set_active_in(be, sw, on);
- }
- 
-@@ -112,6 +156,10 @@ void audio_be_set_volume_out(AudioBackend *be, SWVoiceOut *sw, Volume *vol)
- {
-     AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
- 
-+    if (!sw) {
-+        return;
-+    }
-+
-     klass->set_volume_out(be, sw, vol);
- }
- 
-@@ -119,6 +167,10 @@ void audio_be_set_volume_in(AudioBackend *be, SWVoiceIn *sw, Volume *vol)
- {
-     AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
- 
-+    if (!sw) {
-+        return;
-+    }
-+
-     klass->set_volume_in(be, sw, vol);
- }
- 
-@@ -130,6 +182,9 @@ CaptureVoiceOut *audio_be_add_capture(
- {
-     AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
- 
-+    assert(as != NULL);
-+    assert(ops != NULL);
-+
-     return klass->add_capture(be, as, ops, cb_opaque);
- }
- 
-@@ -137,6 +192,10 @@ void audio_be_del_capture(AudioBackend *be, CaptureVoiceOut *cap, void *cb_opaqu
- {
-     AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
- 
-+    if (!cap) {
-+        return;
-+    }
-+
-     klass->del_capture(be, cap, cb_opaque);
- }
- 
-@@ -155,6 +214,8 @@ bool audio_be_set_dbus_server(AudioBackend *be,
- {
-     AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
- 
-+    assert(server != NULL);
-+
-     if (!audio_be_can_set_dbus_server(be)) {
-         error_setg(errp, "Audiodev '%s' is not compatible with DBus",
-                    audio_be_get_id(be));
-diff --git a/tests/audio/test-audio.c b/tests/audio/test-audio.c
-index 1827c084ac8..90d96ae0575 100644
---- a/tests/audio/test-audio.c
-+++ b/tests/audio/test-audio.c
-@@ -493,11 +493,9 @@ static void test_audio_null_handling(void)
-     /* audio_be_get_buffer_size_out(NULL) should return 0 */
-     g_assert_cmpint(audio_be_get_buffer_size_out(be, NULL), ==, 0);
- 
--    /* audio_be_write/read(NULL, ...) should return size (no-op) */
--    g_assert_cmpuint(audio_be_write(be, NULL, buffer, sizeof(buffer)), ==,
--                     sizeof(buffer));
--    g_assert_cmpuint(audio_be_read(be, NULL, buffer, sizeof(buffer)), ==,
--                     sizeof(buffer));
-+    /* audio_be_write/read(NULL, ...) should return 0 */
-+    g_assert_cmpuint(audio_be_write(be, NULL, buffer, sizeof(buffer)), ==, 0);
-+    g_assert_cmpuint(audio_be_read(be, NULL, buffer, sizeof(buffer)), ==, 0);
- 
-     /* These should not crash */
-     audio_be_set_active_out(be, NULL, true);
++void module_init_info(const QemuModinfo *info) {}
+ void module_allow_arch(const char *arch) {}
+ void qemu_load_module_for_opts(const char *group) {}
+ int module_load(const char *prefix, const char *name, Error **errp) { return 2; }
 
 -- 
 2.53.0
