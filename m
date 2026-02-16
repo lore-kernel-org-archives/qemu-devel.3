@@ -4,41 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE0DBE83835
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 21:03:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2AB4CE83835
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 21:05:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vs5kB-0005GF-LI; Mon, 16 Feb 2026 16:03:00 -0500
+	id 1vs5mk-0006Eh-BO; Mon, 16 Feb 2026 16:05:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1vs5k0-0005Fq-1p; Mon, 16 Feb 2026 16:02:48 -0500
+ id 1vs5mh-0006EF-Hr; Mon, 16 Feb 2026 16:05:36 -0500
 Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1vs5jy-0004EK-Gg; Mon, 16 Feb 2026 16:02:47 -0500
+ id 1vs5mf-0005j9-HX; Mon, 16 Feb 2026 16:05:35 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
  In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
  Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
  :Resent-To:Resent-Cc:Resent-Message-ID;
- bh=CAkzSoL0ZjHkhFLJjjLL6QsxICsgIr1E5kdFcdvhEVo=; b=ZRIFSRQ8NdJ+ut13TWcXRnWUAK
- 9Qv5/zDvXvouzsch8Frrhg8YhyqL1CGnjxolbiM0aJDMvtN4+4L3AppSd0Pmp3ICFG4PGOaDV/Pl5
- Ye02oRLzwg6cu94rnIxqWflR8J9s3hJJIUlGAW0n/d3vjou7bj4ZgUE+Q3VCQbRJryweoQq+8b1hU
- oS5skg4UalLPLRpz9tDa7C5la6aoE2RwASYjcdU8Io6rUkhu6BdGbQK6S1gSRcFLY9m8us+XwzLVA
- +PiQ/VHpn18C87gxAdzEWhTFqX1G8APLdWh9bgRMZpOFRqLo+SF/augUqXPdXKMyPpaeS6/B48FHu
- 5NgAnG0fVo+ftR4N/SznPyXcY0CcjOMm712gtdpv8gY1FlRjSIj/IWOM8e+MiLGJMo19coTUV3L/R
- 5hulyGfjL+RGQUD0l9n3g7wnmWCJx3D0jHE4jK7MsHnfFZbXqk7HY0ne/ApE0tYo6spNMSssVVfqm
- Nm4n4+Ceb0xIOl7U2qjlMoBfwH5YFZKr3KQX3YrfJpV9RXTgiJmS4cFUh+PYOEqEAsCPmERn3XF/f
- qSnK8cqehSsD0f30tlmMHqpIbULU0DPMMS2q6pEKLxeEZ9+nygttz8IjVa0tBa/u4cRbOgtXTskEp
- qqSx2RnSg9auqBVOTbTIN+qkQmgQY6NPabdCwEMY0=;
+ bh=AotiISKILNgy5Y6CoXi2SLyBg0LFDB/Sq0vaOwfnhMo=; b=vHNUaaxDjquyibMoteR2D1jR6G
+ ys2OkcM1RbwBEgETbqKM4TahTQcVVP5kFSG0T7H1xdHOl+5n4LYePXbZOd50SLSDVCOywDt9GqPXl
+ z5QXMT/EzgGQSg1lvlBiuiKHCsy529/33Cu1/TNYXjlB32NeXz+VoMICvrTc+ID9Cgmw4sSC5qUdH
+ VALFGOSUcgW1Zu3owqyt8hN3CWJfpD7bbVGn8vI0n39lYSe5/4iTi6L2i/AjrRMf7pe9WR0npFSJF
+ vCoBgovvyi4T8R8xVBz0voCO7cD3MyElkCdC/tL650yFxhwvBNns+nYtN+tzO/Yiw21nJLGGrkrIu
+ XX3UgwAUh8kqiW6oIAUr+R8YReG4PegsjsaQ+DqoDhp66WIo2nscMVyOOIZunKyc2gNb94RxuE3gh
+ jcJXthUJWBruLX9vmPFMlgyqANA22ulw6gWZ7OeSwNvRn4GpBH8I/e+bxW9HMh1pDZ2KFpsCiha49
+ Fb61AuWFpkKtVzKZK8hRCfzUKoINH6JLJXTwx3KOJhUwLpiaQJp6O0ByXhhAq+8AjiK0m7gCI2cFq
+ UvYbAcdQSlwPESLVGSnVEG+XRkrU9aFAwXgpSHqxIrKC7bKKqsV+jz22eMs0S1aF8JLRIfvTvS9sB
+ HoIAeN/uyZeiBrxgwQSBh7L01CSWR8ZOiubwDyHT0=;
 Received: from [2a02:8012:2f01:0:f01d:4e0f:6874:3706]
  by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1vs5h4-000CcB-3s; Mon, 16 Feb 2026 20:59:49 +0000
-Message-ID: <9ba89ff7-187d-452c-a264-5c0a698beb63@ilande.co.uk>
-Date: Mon, 16 Feb 2026 21:02:36 +0000
+ id 1vs5jp-000Cdj-4W; Mon, 16 Feb 2026 21:02:37 +0000
+Message-ID: <ec70a41d-f8ec-45ee-989e-20ddd81e5dbb@ilande.co.uk>
+Date: Mon, 16 Feb 2026 21:05:28 +0000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
@@ -50,7 +50,7 @@ Cc: Chinmay Rath <rathc@linux.ibm.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-ppc@nongnu.org,
  Laurent Vivier <laurent@vivier.eu>
 References: <20260214021240.58657-1-philmd@linaro.org>
- <20260214021240.58657-6-philmd@linaro.org>
+ <20260214021240.58657-7-philmd@linaro.org>
 Content-Language: en-US
 From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
@@ -77,12 +77,12 @@ Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
  Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
  KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
  imgcU9TTGC5qd9g=
-In-Reply-To: <20260214021240.58657-6-philmd@linaro.org>
+In-Reply-To: <20260214021240.58657-7-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:f01d:4e0f:6874:3706
 X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH 5/8] hw/m68k: Set graphic display dimensions generically
+Subject: Re: [PATCH 6/8] hw/sparc: Set graphic display dimensions generically
 X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
 X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
 Received-SPF: pass client-ip=2001:41c9:1:41f::167;
@@ -111,48 +111,73 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 14/02/2026 02:12, Philippe Mathieu-Daudé wrote:
 
 > If a dimension is not set, have the machine init code
-> (q800_machine_init) set the default value.
+> set the default value.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   hw/m68k/q800.c          | 6 +++---
->   system/globals-target.c | 6 +++---
->   2 files changed, 6 insertions(+), 6 deletions(-)
+>   hw/sparc/sun4m.c        |  9 +++++++++
+>   hw/sparc64/sun4u.c      | 10 ++++++++++
+>   system/globals-target.c |  6 +-----
+>   3 files changed, 20 insertions(+), 5 deletions(-)
 > 
-> diff --git a/hw/m68k/q800.c b/hw/m68k/q800.c
-> index ba32da2fa45..ded531394e6 100644
-> --- a/hw/m68k/q800.c
-> +++ b/hw/m68k/q800.c
-> @@ -560,9 +560,9 @@ static void q800_machine_init(MachineState *machine)
->                               TYPE_NUBUS_MACFB);
->       dev = DEVICE(&m->macfb);
->       qdev_prop_set_uint32(dev, "slot", 9);
-> -    qdev_prop_set_uint32(dev, "width", graphic_width);
-> -    qdev_prop_set_uint32(dev, "height", graphic_height);
-> -    qdev_prop_set_uint8(dev, "depth", graphic_depth);
-> +    qdev_prop_set_uint32(dev, "width", graphic_width ?: 800);
-> +    qdev_prop_set_uint32(dev, "height", graphic_height ?: 600);
-> +    qdev_prop_set_uint8(dev, "depth", graphic_depth ?: 8);
->       qdev_realize(dev, BUS(nubus), &error_fatal);
+> diff --git a/hw/sparc/sun4m.c b/hw/sparc/sun4m.c
+> index 0c0d658d301..a17bdb36927 100644
+> --- a/hw/sparc/sun4m.c
+> +++ b/hw/sparc/sun4m.c
+> @@ -892,6 +892,15 @@ static void sun4m_hw_init(MachineState *machine)
+>                        hwdef->esp_base, slavio_irq[18],
+>                        hwdef->le_base, slavio_irq[16], &hostid);
 >   
->       macfb_mode = (NUBUS_MACFB(dev)->macfb).mode;
+> +    if (!graphic_width) {
+> +        graphic_width = 1024;
+> +    }
+> +    if (!graphic_height) {
+> +        graphic_height = 768;
+> +    }
+> +    if (!graphic_depth) {
+> +        graphic_depth = 8;
+> +    }
+>       if (graphic_depth != 8 && graphic_depth != 24) {
+>           error_report("Unsupported depth: %d", graphic_depth);
+>           exit (1);
+> diff --git a/hw/sparc64/sun4u.c b/hw/sparc64/sun4u.c
+> index 5d7787fc1a5..b8bda1eb816 100644
+> --- a/hw/sparc64/sun4u.c
+> +++ b/hw/sparc64/sun4u.c
+> @@ -666,6 +666,16 @@ static void sun4uv_init(MemoryRegion *address_space_mem,
+>                                   sysbus_mmio_get_region(s, 0));
+>       nvram = NVRAM(dev);
+>    
+> +    if (!graphic_width) {
+> +        graphic_width = 1024;
+> +    }
+> +    if (!graphic_height) {
+> +        graphic_height = 768;
+> +    }
+> +    if (!graphic_depth) {
+> +        graphic_depth = 8;
+> +    }
+> +
+>       initrd_size = 0;
+>       initrd_addr = 0;
+>       kernel_size = sun4u_load_kernel(machine->kernel_filename,
 > diff --git a/system/globals-target.c b/system/globals-target.c
-> index 989720591e7..e3f7d846ac0 100644
+> index e3f7d846ac0..17a27a06218 100644
 > --- a/system/globals-target.c
 > +++ b/system/globals-target.c
-> @@ -14,9 +14,9 @@ int graphic_width = 1024;
->   int graphic_height = 768;
->   int graphic_depth = 8;
->   #elif defined(TARGET_M68K)
-> -int graphic_width = 800;
-> -int graphic_height = 600;
+> @@ -9,11 +9,7 @@
+>   #include "qemu/osdep.h"
+>   #include "system/system.h"
+>   
+> -#ifdef TARGET_SPARC
+> -int graphic_width = 1024;
+> -int graphic_height = 768;
 > -int graphic_depth = 8;
-> +int graphic_width;
-> +int graphic_height;
-> +int graphic_depth;
->   #else
->   int graphic_width = 800;
->   int graphic_height = 600;
+> -#elif defined(TARGET_M68K)
+> +#if defined(TARGET_SPARC) || defined(TARGET_M68K)
+>   int graphic_width;
+>   int graphic_height;
+>   int graphic_depth;
 
 Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 
