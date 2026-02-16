@@ -4,94 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE339E8383A
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 21:32:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38380E83839
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 21:32:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vs6Co-0001Zv-WD; Mon, 16 Feb 2026 16:32:35 -0500
+	id 1vs6CA-0000Ao-Kh; Mon, 16 Feb 2026 16:31:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vs6Bz-0007tQ-WD
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vs6C0-0007y5-NL
  for qemu-devel@nongnu.org; Mon, 16 Feb 2026 16:31:47 -0500
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vs6Bx-0003zH-9C
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 16:31:43 -0500
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-4836f363d0dso30672865e9.3
- for <qemu-devel@nongnu.org>; Mon, 16 Feb 2026 13:31:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771277499; x=1771882299; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ryaQ/AkO6jKX0PQ//vdGmEpeMhxdiou+ug6hLMUHQC8=;
- b=rg3pZiOk+YZKTiioXmikROsm1fdkwfEtkUYavO/Ygfq3gowsj/EJWcg5XoSyunk9+X
- +354Ix1IsP7phJ2ycpDxXfFJskP/+bX+z90i6RKDNF9AAV0kbRR0ZAYGlXwrqyRRsWHi
- bwyo3AKJYDyYAw/bxGPzFwOomqDWGfuPnOQxP+F/padpaxD4jKlLZU5eG36tWCjjp2XX
- f71gR8Z3oRyic2EPX7NnE2SptyPvGqx9wk2yKOtCukyszAAkdlVgMLY+tGhzzxRwUKMY
- vcV/eZyNla2L/hUufVJunmRLxJQhbY9m1H3+7FL9wCtmtcT1N0KGqSawPxsDLBo0p+F9
- AVMA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771277499; x=1771882299;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=ryaQ/AkO6jKX0PQ//vdGmEpeMhxdiou+ug6hLMUHQC8=;
- b=SmokBjxKvvI7wQ3ia3yPt5YcxU8GQYVhbk/ua90mOIATjUh3q2xYmEp+kQWIjAr5AE
- pwYduTcu73H47YFp28N/ZxVzSuqr6EH7Q3IYHMI1JkbSgefQGIORRvMVOHizYmK4dVg/
- mRu5Qac/edOii2tyY9dznYbtlJbFBGrPILRcIRvparDz8yRu19mtKUZE6xv5vdwt/c1r
- zeW/AnFNMp4V8j9zQrH0eQvakqOirL7lKz0iBglEUYkEGXPyWmPHZG576IYi4yc0y28+
- 0knc3S/VCVWhuJ1dxZoYt27Z9hzB7a/vCJlEgfDlYZH2m9NCXRpdc0MmiLCFFCl9ttAW
- 9Xog==
-X-Gm-Message-State: AOJu0YyIRWwH1NM9FXUPMKNe9aiQJ8PTu48irYYHv4K3Wcs2OhDEsMze
- Odxxvp7fp71D5wa+EatPiYqLH6ROKaNQgGaGlad+bp32OvWUZFSJjOrj02l6IOxOPk+RKXJHpX6
- aMN+ekxE=
-X-Gm-Gg: AZuq6aKxSkX/StN30e+ywqHbh/qv+TmOgD/gxdVgvhsYISVlTLrVR2TNhIE3ZVygDp2
- 48+3uO/vxaVnsd9pMSTewpTCpc75/Xx3tr5bUW2uxyEI7gSZUM8Q8KD+S8B+rKasUPc+69vNODO
- OEKNmQfz/H+WTwGB7qfquBtgg959mym3XJEqyyP6VY7KC5pNTlt2PX6G/a9scLWbOHr6fB4ElBJ
- M2TBze+Ewdt9HiQPy4p3YDNpSxl1KqMTwufcsThrJsGaaNvtQ2gZKqbma0MlwBCN7SskD1ajFZB
- Mt+1wltXKQGghsyKeH7MeCBo1VXehVZYcIWTKU1yamV5i1gZkBRfzKQ3/18gHNWutw3FaLBEKvi
- g+ipfiGo0NQ+3CaoKxy/7IOXEaZmZioNXTskfaSElcrnrBbrpfQS30TX/PVRKZ0AhSZI+Id54Qk
- NqtiXQl5iMLMaZRaala5y5YfJvK/cGn5mtBDBgCfIg4BE2N56oUI3chdqz1MKnwnJqIwgiXg9c
-X-Received: by 2002:a05:600c:8b84:b0:483:4bbc:89ea with SMTP id
- 5b1f17b1804b1-48379c42db1mr156642235e9.37.1771277499064; 
- Mon, 16 Feb 2026 13:31:39 -0800 (PST)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48370a63afesm93274735e9.9.2026.02.16.13.31.37
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 16 Feb 2026 13:31:37 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vs6By-0003zQ-Gm
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 16:31:44 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1771277501;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Q5AicOWZpE640gyRflInyoD3NMHpNim4n6AR9gdxa/8=;
+ b=JKXumEHnwfUxgBXcIryPvJ+TULfVEU8QPhGOrepDUBDYDbAEiHeHWMIcPXHlCS7cJFAjEs
+ KcXmyHHz0DTrr5XU3CIp24u0CwNgFMDPZKu5yfrI763kW2PFlmYRWq7w38es6YLhQl/L+x
+ /hJpgMUGvTe4WIr0IksoQ1bDuor/eI8=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-619-sL1Cvkg8McqoWea-7hZeMQ-1; Mon,
+ 16 Feb 2026 16:31:37 -0500
+X-MC-Unique: sL1Cvkg8McqoWea-7hZeMQ-1
+X-Mimecast-MFC-AGG-ID: sL1Cvkg8McqoWea-7hZeMQ_1771277495
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 421971956060; Mon, 16 Feb 2026 21:31:35 +0000 (UTC)
+Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.88.120])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 939E919560A2; Mon, 16 Feb 2026 21:31:29 +0000 (UTC)
+From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>,
- =?UTF-8?q?Herv=C3=A9=20Poussineau?= <hpoussin@reactos.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Chinmay Rath <rathc@linux.ibm.com>,
- Artyom Tarasenko <atar4qemu@gmail.com>,
+Cc: qemu-block@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Laurent Vivier <laurent@vivier.eu>, qemu-ppc@nongnu.org,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 2/8] hw/display/macfb: Constify macfb_mode_table[] array
-Date: Mon, 16 Feb 2026 22:31:15 +0100
-Message-ID: <20260216213121.47122-3-philmd@linaro.org>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260216213121.47122-1-philmd@linaro.org>
-References: <20260216213121.47122-1-philmd@linaro.org>
+ Cleber Rosa <crosa@redhat.com>, Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Thomas Huth <thuth@redhat.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Kyle Evans <kevans@freebsd.org>, Peter Xu <peterx@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+ Yonggang Luo <luoyonggang@gmail.com>, John Snow <jsnow@redhat.com>,
+ Warner Losh <imp@bsdimp.com>, Maksim Davydov <davydov-max@yandex-team.ru>,
+ Alexandre Iooss <erdnaxe@crans.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Ed Maste <emaste@freebsd.org>, Kevin Wolf <kwolf@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Michael Roth <michael.roth@amd.com>,
+ Li-Wen Hsu <lwhsu@freebsd.org>, Hanna Reitz <hreitz@redhat.com>
+Subject: [PATCH v7 15/19] tests: replace check-venv with vm-venv target
+Date: Mon, 16 Feb 2026 16:29:47 -0500
+Message-ID: <20260216212952.420120-16-jsnow@redhat.com>
+In-Reply-To: <20260216212952.420120-1-jsnow@redhat.com>
+References: <20260216212952.420120-1-jsnow@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,92 +98,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-macfb_mode_table[] is only read, never updated, so can be const.
+With the qemu.qmp and qemu.machine dependencies now installed by default
+at configure time and additional dependencies required by functional
+testing installed on demand, we do not need the explicit "check-venv" target.
 
-Update the call sites accordingly.
-Make the MacfbState::mode pointer to const.
+...However, to facilitate running VM tests without running configure, we
+move some of the former logic into tests/vm/Makefile.include to create a
+new venv (vm-venv) on-demand when running VM tests from the source tree.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- include/hw/display/macfb.h |  2 +-
- hw/display/macfb.c         | 10 +++++-----
- hw/m68k/q800.c             |  2 +-
- 3 files changed, 7 insertions(+), 7 deletions(-)
+ tests/Makefile.include    | 22 ++--------------------
+ tests/vm/Makefile.include | 18 ++++++++++++++----
+ 2 files changed, 16 insertions(+), 24 deletions(-)
 
-diff --git a/include/hw/display/macfb.h b/include/hw/display/macfb.h
-index 495dead44b5..cb7aac7a4dd 100644
---- a/include/hw/display/macfb.h
-+++ b/include/hw/display/macfb.h
-@@ -66,7 +66,7 @@ typedef struct MacfbState {
-     uint8_t type;
+diff --git a/tests/Makefile.include b/tests/Makefile.include
+index 76d77545b71..59b9a4b9220 100644
+--- a/tests/Makefile.include
++++ b/tests/Makefile.include
+@@ -22,7 +22,6 @@ ifneq ($(filter $(all-check-targets), check-softfloat),)
+ endif
+ 	@echo
+ 	@echo " $(MAKE) check-report.junit.xml        Generates an aggregated XML test report"
+-	@echo " $(MAKE) check-venv                    Creates a Python venv for tests"
+ 	@echo " $(MAKE) check-clean                   Clean the tests and related data"
+ 	@echo
+ 	@echo "The following are useful for CI builds"
+@@ -93,33 +92,16 @@ clean-tcg: $(CLEAN_TCG_TARGET_RULES)
+ .PHONY: distclean-tcg
+ distclean-tcg: $(DISTCLEAN_TCG_TARGET_RULES)
  
-     uint32_t regs[MACFB_NUM_REGS];
--    MacFbMode *mode;
-+    const MacFbMode *mode;
+-# Python venv for running tests
+-
+-.PHONY: check-venv
+-
+ # Build up our target list from the filtered list of ninja targets
+ TARGETS=$(patsubst libqemu-%.a, %, $(filter libqemu-%.a, $(ninja-targets)))
  
-     QEMUTimer *vbl_timer;
-     qemu_irq irq;
-diff --git a/hw/display/macfb.c b/hw/display/macfb.c
-index 57ad8ad5587..8ef174dc6df 100644
---- a/hw/display/macfb.c
-+++ b/hw/display/macfb.c
-@@ -100,7 +100,7 @@ static const MacFbSense macfb_sense_table[] = {
-     { MACFB_DISPLAY_SVGA, 0x7, 0x5 },
- };
+-TESTS_VENV_TOKEN=$(BUILD_DIR)/pyvenv/tests.group
+-
+-quiet-venv-pip = $(quiet-@)$(call quiet-command-run, \
+-    $(PYTHON) -m pip -q --disable-pip-version-check $1, \
+-    "VENVPIP","$1")
+-
+-$(TESTS_VENV_TOKEN): $(SRC_PATH)/pythondeps.toml
+-	$(call quiet-venv-pip,install -e "$(SRC_PATH)/python/")
+-	$(MKVENV_ENSUREGROUP) $< tooling functests
+-	$(call quiet-command, touch $@)
+-
+-check-venv: $(TESTS_VENV_TOKEN)
+-
+ FUNCTIONAL_TARGETS=$(patsubst %-softmmu,check-functional-%, $(filter %-softmmu,$(TARGETS)))
+ .PHONY: $(FUNCTIONAL_TARGETS)
+-$(FUNCTIONAL_TARGETS): check-venv
++$(FUNCTIONAL_TARGETS):
+ 	@$(MAKE) SPEED=thorough $(subst -functional,-func,$@)
  
--static MacFbMode macfb_mode_table[] = {
-+static const MacFbMode macfb_mode_table[] = {
-     { MACFB_DISPLAY_VGA, 1, 0x100, 0x71e, 640, 480, 0x400, 0x1000 },
-     { MACFB_DISPLAY_VGA, 2, 0x100, 0x70e, 640, 480, 0x400, 0x1000 },
-     { MACFB_DISPLAY_VGA, 4, 0x100, 0x706, 640, 480, 0x400, 0x1000 },
-@@ -397,7 +397,7 @@ static void macfb_update_mode(MacfbState *s)
+ .PHONY: check-functional
+-check-functional: check-venv
++check-functional:
+ 	@$(NINJA) precache-functional
+ 	@$(PYTHON) $(SRC_PATH)/scripts/clean_functional_cache.py
+ 	@QEMU_TEST_NO_DOWNLOAD=1 $(MAKE) SPEED=thorough check-func check-func-quick
+diff --git a/tests/vm/Makefile.include b/tests/vm/Makefile.include
+index 14188bba1c6..217bc706c20 100644
+--- a/tests/vm/Makefile.include
++++ b/tests/vm/Makefile.include
+@@ -2,13 +2,23 @@
  
- static void macfb_mode_write(MacfbState *s)
- {
--    MacFbMode *macfb_mode;
-+    const MacFbMode *macfb_mode;
-     int i;
+ # Hack to allow running in an unconfigured build tree
+ ifeq ($(realpath $(SRC_PATH)),$(realpath .))
+-VM_PYTHON = PYTHONPATH=$(SRC_PATH)/python /usr/bin/env python3
+-VM_VENV =
++VM_PYTHON = $(SRC_PATH)/vm-venv/bin/python3
++VM_VENV = vm-venv
+ else
+ VM_PYTHON = $(PYTHON)
+-VM_VENV = check-venv
++VM_VENV =
+ endif
  
-     for (i = 0; i < ARRAY_SIZE(macfb_mode_table); i++) {
-@@ -418,11 +418,11 @@ static void macfb_mode_write(MacfbState *s)
-     }
- }
++VM_VENV_TOKEN=$(SRC_PATH)/vm-venv/tooling.group $(SRC_PATH)/vm-venv/functests.group
++
++$(VM_VENV_TOKEN): $(SRC_PATH)/pythondeps.toml
++		/usr/bin/env python3 $(SRC_PATH)/python/scripts/mkvenv.py create vm-venv
++		$(SRC_PATH)/vm-venv/bin/python3 $(SRC_PATH)/python/scripts/mkvenv.py ensuregroup --online $(SRC_PATH)/pythondeps.toml tooling functests
++
++.PHONY: vm-venv
++vm-venv: $(VM_VENV_TOKEN)
++# end hackery
++
+ .PHONY: vm-build-all vm-clean-all
  
--static MacFbMode *macfb_find_mode(MacfbDisplayType display_type,
-+static const MacFbMode *macfb_find_mode(MacfbDisplayType display_type,
-                                   uint16_t width, uint16_t height,
-                                   uint8_t depth)
- {
--    MacFbMode *macfb_mode;
-+    const MacFbMode *macfb_mode;
-     int i;
+ EFI_AARCH64 = $(wildcard $(BUILD_DIR)/pc-bios/edk2-aarch64-code.fd)
+@@ -102,7 +112,7 @@ $(IMAGES_DIR)/%.img:	$(SRC_PATH)/tests/vm/% \
+ 		$(if $(LOG_CONSOLE),--log-console) \
+ 		--source-path $(SRC_PATH) \
+ 		--image "$@" \
+-		$(if $(filter-out check-venv, $?), --force) \
++		--force \
+ 		--build-image $@, \
+ 		"  VM-IMAGE $*")
  
-     for (i = 0; i < ARRAY_SIZE(macfb_mode_table); i++) {
-@@ -440,7 +440,7 @@ static MacFbMode *macfb_find_mode(MacfbDisplayType display_type,
- static gchar *macfb_mode_list(void)
- {
-     GString *list = g_string_new("");
--    MacFbMode *macfb_mode;
-+    const MacFbMode *macfb_mode;
-     int i;
- 
-     for (i = 0; i < ARRAY_SIZE(macfb_mode_table); i++) {
-diff --git a/hw/m68k/q800.c b/hw/m68k/q800.c
-index 25ddddb5d9f..4767eb4298f 100644
---- a/hw/m68k/q800.c
-+++ b/hw/m68k/q800.c
-@@ -255,7 +255,7 @@ static void q800_machine_init(MachineState *machine)
-     int32_t initrd_size;
-     uint8_t *prom;
-     int i, checksum;
--    MacFbMode *macfb_mode;
-+    const MacFbMode *macfb_mode;
-     ram_addr_t ram_size = machine->ram_size;
-     const char *kernel_filename = machine->kernel_filename;
-     const char *initrd_filename = machine->initrd_filename;
 -- 
-2.52.0
+2.53.0
 
 
