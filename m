@@ -4,56 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF0BCE7BD9E
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 11:27:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20641E7BD9F
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 11:27:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vrweJ-0003GR-Oj; Mon, 16 Feb 2026 06:20:19 -0500
+	id 1vrwfa-0008Ms-H1; Mon, 16 Feb 2026 06:21:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vrwcE-0006ak-BL
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 06:18:13 -0500
+ id 1vrwcc-0006ry-PT
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 06:18:37 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vrwcC-0008CB-E8
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 06:18:09 -0500
+ id 1vrwcY-0008Fi-Gt
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 06:18:34 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771240687;
+ s=mimecast20190719; t=1771240708;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=aSw0+nWfREHkM9D3OEgLFV+S+9mgN4B1YEV84KexTb8=;
- b=baETH920E1k/gOmzlN5QH7Nn45biI+VSwzxoKU1Ef7AJX8c9DURqFsBbTb6OnMcTOMXg8i
- mrMF4TDrJ3nx9+bJFIdeIlcnZvDOnaAp0KBUocGWm/aaFrwaYnuG1gFkjl9suwnAxQTW4B
- i7Mi0DP6j99jRdBUMvBjAd2RxoowI0A=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=eKkFMj950lDAUV4S1UFcLP4VDur4HUuRrCzi2Gmkt2k=;
+ b=Wg1Vdv1ECU/bV5PA+lUaMU86r9BjJczzfLGN/naVOqY2xv6M9UiNCMOeAlRly1dCsjvfgb
+ 4prE1skTiau21qrA2kvsrWfePZklLlfGvTmaIFoqOps0DLqYdrePRsdYEUm+o+vB7UMt+L
+ mTn8BhOOQnrQf0McdUZTdKLAQUGVndQ=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-187-Nf_NEw_UMeih7CYbTExd2Q-1; Mon,
- 16 Feb 2026 06:18:02 -0500
-X-MC-Unique: Nf_NEw_UMeih7CYbTExd2Q-1
-X-Mimecast-MFC-AGG-ID: Nf_NEw_UMeih7CYbTExd2Q_1771240680
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-649-q2zDzTkyPTu0ssSat28GlQ-1; Mon,
+ 16 Feb 2026 06:18:27 -0500
+X-MC-Unique: q2zDzTkyPTu0ssSat28GlQ-1
+X-Mimecast-MFC-AGG-ID: q2zDzTkyPTu0ssSat28GlQ_1771240705
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6ED021800454; Mon, 16 Feb 2026 11:18:00 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9A1901955D8F; Mon, 16 Feb 2026 11:18:25 +0000 (UTC)
 Received: from localhost (unknown [10.45.242.26])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id E54C518003F5; Mon, 16 Feb 2026 11:17:59 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 305A91955F43; Mon, 16 Feb 2026 11:18:23 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Mon, 16 Feb 2026 12:15:40 +0100
-Subject: [PATCH 51/85] audio/jack: convert to QOM lifecycle methods
+Date: Mon, 16 Feb 2026 12:15:48 +0100
+Subject: [PATCH 59/85] audio/alsa: replace custom logging with error_report
+ and trace events
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260216-audio-v1-51-e676662e4514@redhat.com>
+Message-Id: <20260216-audio-v1-59-e676662e4514@redhat.com>
 References: <20260216-audio-v1-0-e676662e4514@redhat.com>
 In-Reply-To: <20260216-audio-v1-0-e676662e4514@redhat.com>
 To: qemu-devel@nongnu.org
@@ -73,24 +74,24 @@ Cc: Gerd Hoffmann <kraxel@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
  Mark Cave-Ayland <mark.caveayland@nutanix.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2688;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=19789;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=t0ucslZSKbGcBRFeyrKr2G8Lh/S+UoRUSUp+0FAVQBY=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBpkvxQ5zrVbVSPL/xI25NQc7n5DQc/dYT/XBYH6
- jGtBjQPRGOJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaZL8UAAKCRDa6OEJdZac
- 5WzOEACqKsIXAM9F0PkZZn+jgTBQSEewvNiNgfEvoF6pvr4SPmK3rKBkBVcm2Qv1k9uGOjmOyiY
- 4Ql6Xq8Iw8lfcJa9VOz9O254OuuM4rqp9g6ydM+fQlTsv+p4pDMztk5vN+IbQlzgFIz7OKr2OBa
- nTgEpU/ymBj4ynkfbSPuze0f4O8jlPQ2FyPVO/var1rsHGiXl43Wolr0kuYx4DPLgjhobpg20Ug
- ReWFwfEdMEnJ1tmVvPGKYCv4dkLsFNkg5SJLfgmnOig2Gtkq2dgV4iK8bKAshHRK10R0BTmmx2X
- CXf8SgxL6lxpTQjTY5gsYOp1WOgImz9BqlqXqaCmwXY0gjefx1SWZX8e/p5Ys5yM7t6Ml5j1Jp2
- j2aFncipEjiEYzS7qmaneSezzThU7KP6Q0dOk29uYAp+TMV1gJML5j1Xk6OdUUDpluk8ODbJ1s+
- xBwM99P9PbDrjum5voco10gOCYfFLWbTazqO0u7JJsGoSL5uaiJEXQbu+zhQTH7jE7D9AtjQznJ
- nvqdfb3g4V0xAm4Cv2UMwTR8NeZM9fbPwswin8o6iiUagrK75YJzLjEj9iH5HluGZNLtmwDdNXS
- meGyOq9YLD0vTrxGPbmzc+Pa1U0ZprYpo9R5Vs0UW3AtDw7YQrgPHpbMW85mul0z9Y66T7x5GxL
- bQKS5h5MBYY87ow==
+ bh=CAWta9RWTinKoQTsIDLzifGCwuI25Ws2ra0+hdwsKPc=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBpkvxRy8HcvjIeoq6uibfYD0ekYfoi0Ybhg9tA2
+ oEup69+mFaJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaZL8UQAKCRDa6OEJdZac
+ 5UVbD/4k/XXp2RKQ+afpzp4JgmJ2HFnUGnM8yK2jeOabris8YGgenopoYRf4uwxC8r2x9IlpgoH
+ /uHY6bnLOfPHHlYU2mY9uYzTIHvCWnS4TAAW9Me10fXwSR9ZxOYZIyMEnPcpaPXqGAvA2M5O9iN
+ n224o2omAlaT320LbypUw3oRXgZFpkyW5YY55QyVHo7IA2SoeeD1R9b6IHM2jNTL0yhSCJqNzq0
+ nsmzjnUYNKF3PQ+m0XhpDywwZdt/qZ681lDLd2BbNT2IOFLls6z7DwxbPyeH5N9N7A3WGGGd4sB
+ r5b58BUdDnvtwRaMX381bFeSvIcsttD/+nF9ISko2Cu6zkFV2PaVg+3HWprnbVlQTx3Z5f5eutk
+ NN5637ID9GY2zJkx6Pos85qgsu/nIzTqZian4Nbh6hAEgJ8w5gAtJ76hzKyTErFaAFr2iqdExvn
+ C9/ohb8PJC1snAzAImcA8jhtLWlByRQlxUe2QyFhLaoHDtgdyBlAGx63uIx+2TYi5jz4h9zNw/x
+ ONcHxsjOAzPt65bmEId9Jr/A6Y91IaK+JGX28L6MEvCrY7zkumjgyh2aGlYNt8+cRibixfhXaUe
+ oO5p8ygV1GXsHCdAiQAispXakUuR4p3WnmEPZTxLvzkJtRihbOeNYJR8t6Mte/bEiAvUmOucLdS
+ 94voFGi2qnm6+NQ==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -117,94 +118,527 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Remove the legacy driver init/fini callbacks from the JACK audio backend.
+The ALSA audio backend uses its own logging infrastructure (AUD_log,
+AUD_vlog, dolog, ldebug) and a custom alsa_dump_info() debug helper.
+This approach is inconsistent with the rest of QEMU and makes the
+output harder to filter and configure.
 
-Both qjack_init() and qjack_fini() were no-ops that performed no real
-initialization or cleanup work. Access to the Audiodev is now through
-hw->s->dev instead of the drv_opaque pointer.
+Replace the custom logging with standard QEMU error reporting:
+- Use error_report() / error_printf() for errors
+- Use warn_report() for non-fatal warnings (invalid formats,
+  rejected parameters, unexpected states)
+- Convert ldebug() calls and alsa_dump_info() to trace events
+
+Remove DEBUG_ALSA and AUDIO_CAP macros which are no longer needed.
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
 ---
- audio/jackaudio.c | 30 +++++++++---------------------
- 1 file changed, 9 insertions(+), 21 deletions(-)
+ audio/alsaaudio.c  | 169 +++++++++++++++++++++--------------------------------
+ audio/trace-events |   5 ++
+ 2 files changed, 72 insertions(+), 102 deletions(-)
 
-diff --git a/audio/jackaudio.c b/audio/jackaudio.c
-index 972b158f023..31e3da6a7fe 100644
---- a/audio/jackaudio.c
-+++ b/audio/jackaudio.c
-@@ -44,13 +44,6 @@ struct AudioJack {
+diff --git a/audio/alsaaudio.c b/audio/alsaaudio.c
+index 8f226b42612..889240ad0c7 100644
+--- a/audio/alsaaudio.c
++++ b/audio/alsaaudio.c
+@@ -26,17 +26,15 @@
+ #include <alsa/asoundlib.h>
+ #include "qemu/main-loop.h"
+ #include "qemu/module.h"
++#include "qemu/error-report.h"
+ #include "qemu/audio.h"
+ #include "qom/object.h"
+ #include "trace.h"
  
- static struct audio_driver jack_driver;
+ #pragma GCC diagnostic ignored "-Waddress"
  
--static void audio_jack_class_init(ObjectClass *klass, const void *data)
--{
--    AudioMixengBackendClass *k = AUDIO_MIXENG_BACKEND_CLASS(klass);
+-#define AUDIO_CAP "alsa"
+ #include "audio_int.h"
+ 
+-#define DEBUG_ALSA 0
 -
--    k->driver = &jack_driver;
--}
--
- struct QJack;
+ #define TYPE_AUDIO_ALSA "audio-alsa"
+ OBJECT_DECLARE_SIMPLE_TYPE(AudioALSA, AUDIO_ALSA)
  
- typedef enum QJackState {
-@@ -518,7 +511,7 @@ static int qjack_init_out(HWVoiceOut *hw, struct audsettings *as,
-     void *drv_opaque)
+@@ -81,33 +79,29 @@ struct alsa_params_obt {
+     snd_pcm_uframes_t samples;
+ };
+ 
+-static void G_GNUC_PRINTF (2, 3) alsa_logerr (int err, const char *fmt, ...)
++static void G_GNUC_PRINTF(2, 3) alsa_logerr(int err, const char *fmt, ...)
  {
-     QJackOut *jo  = (QJackOut *)hw;
--    Audiodev *dev = (Audiodev *)drv_opaque;
-+    Audiodev *dev = hw->s->dev;
+     va_list ap;
  
-     jo->c.out       = true;
-     jo->c.enabled   = false;
-@@ -555,7 +548,7 @@ static int qjack_init_in(HWVoiceIn *hw, struct audsettings *as,
-     void *drv_opaque)
- {
-     QJackIn  *ji  = (QJackIn *)hw;
--    Audiodev *dev = (Audiodev *)drv_opaque;
-+    Audiodev *dev = hw->s->dev;
- 
-     ji->c.out       = false;
-     ji->c.enabled   = false;
-@@ -662,16 +655,6 @@ static int qjack_thread_creator(jack_native_thread_t *thread,
- }
- #endif
- 
--static void *qjack_init(Audiodev *dev, Error **errp)
--{
--    assert(dev->driver == AUDIODEV_DRIVER_JACK);
--    return dev;
--}
+-    va_start (ap, fmt);
+-    AUD_vlog (AUDIO_CAP, fmt, ap);
+-    va_end (ap);
 -
--static void qjack_fini(void *opaque)
--{
--}
--
- static struct audio_pcm_ops jack_pcm_ops = {
-     .init_out       = qjack_init_out,
-     .fini_out       = qjack_fini_out,
-@@ -689,8 +672,6 @@ static struct audio_pcm_ops jack_pcm_ops = {
- 
- static struct audio_driver jack_driver = {
-     .name           = "jack",
--    .init           = qjack_init,
--    .fini           = qjack_fini,
-     .pcm_ops        = &jack_pcm_ops,
-     .max_voices_out = INT_MAX,
-     .max_voices_in  = INT_MAX,
-@@ -708,6 +689,13 @@ static void qjack_info(const char *msg)
-     dolog("I: %s\n", msg);
+-    AUD_log (AUDIO_CAP, "Reason: %s\n", snd_strerror (err));
++    error_printf("alsa: ");
++    va_start(ap, fmt);
++    error_vprintf(fmt, ap);
++    va_end(ap);
++    error_printf(" Reason: %s", snd_strerror(err));
++    error_printf("\n");
  }
  
-+static void audio_jack_class_init(ObjectClass *klass, const void *data)
-+{
-+    AudioMixengBackendClass *k = AUDIO_MIXENG_BACKEND_CLASS(klass);
+-static void G_GNUC_PRINTF (3, 4) alsa_logerr2 (
+-    int err,
+-    const char *typ,
+-    const char *fmt,
+-    ...
+-    )
++static void G_GNUC_PRINTF(3, 4) alsa_logerr2(int err, const char *typ,
++                                             const char *fmt, ...)
+ {
+     va_list ap;
+ 
+-    AUD_log (AUDIO_CAP, "Could not initialize %s\n", typ);
+-
+-    va_start (ap, fmt);
+-    AUD_vlog (AUDIO_CAP, fmt, ap);
+-    va_end (ap);
+-
+-    AUD_log (AUDIO_CAP, "Reason: %s\n", snd_strerror (err));
++    error_printf("alsa: Could not initialize %s:", typ);
++    va_start(ap, fmt);
++    error_vprintf(fmt, ap);
++    va_end(ap);
++    error_printf(" Reason: %s", snd_strerror(err));
++    error_printf("\n");
+ }
+ 
+ static void alsa_fini_poll (struct pollhlp *hlp)
+@@ -130,7 +124,7 @@ static void alsa_anal_close1 (snd_pcm_t **handlep)
+ {
+     int err = snd_pcm_close (*handlep);
+     if (err) {
+-        alsa_logerr (err, "Failed to close PCM handle %p\n", *handlep);
++        alsa_logerr(err, "Failed to close PCM handle %p", *handlep);
+     }
+     *handlep = NULL;
+ }
+@@ -145,7 +139,7 @@ static int alsa_recover (snd_pcm_t *handle)
+ {
+     int err = snd_pcm_prepare (handle);
+     if (err < 0) {
+-        alsa_logerr (err, "Failed to prepare handle %p\n", handle);
++        alsa_logerr(err, "Failed to prepare handle %p", handle);
+         return -1;
+     }
+     return 0;
+@@ -155,7 +149,7 @@ static int alsa_resume (snd_pcm_t *handle)
+ {
+     int err = snd_pcm_resume (handle);
+     if (err < 0) {
+-        alsa_logerr (err, "Failed to resume handle %p\n", handle);
++        alsa_logerr(err, "Failed to resume handle %p", handle);
+         return -1;
+     }
+     return 0;
+@@ -170,7 +164,7 @@ static void alsa_poll_handler (void *opaque)
+ 
+     count = poll (hlp->pfds, hlp->count, 0);
+     if (count < 0) {
+-        dolog ("alsa_poll_handler: poll %s\n", strerror (errno));
++        warn_report("alsa_poll_handler: poll %s", strerror(errno));
+         return;
+     }
+ 
+@@ -183,7 +177,7 @@ static void alsa_poll_handler (void *opaque)
+     err = snd_pcm_poll_descriptors_revents (hlp->handle, hlp->pfds,
+                                             hlp->count, &revents);
+     if (err < 0) {
+-        alsa_logerr (err, "snd_pcm_poll_descriptors_revents");
++        alsa_logerr(err, "snd_pcm_poll_descriptors_revents");
+         return;
+     }
+ 
+@@ -215,7 +209,7 @@ static void alsa_poll_handler (void *opaque)
+         break;
+ 
+     default:
+-        dolog ("Unexpected state %d\n", state);
++        warn_report("alsa: Unexpected state %d", state);
+     }
+ }
+ 
+@@ -226,8 +220,8 @@ static int alsa_poll_helper (snd_pcm_t *handle, struct pollhlp *hlp, int mask)
+ 
+     count = snd_pcm_poll_descriptors_count (handle);
+     if (count <= 0) {
+-        dolog ("Could not initialize poll mode\n"
+-               "Invalid number of poll descriptors %d\n", count);
++        warn_report("alsa: Could not initialize poll mode: "
++                    "Invalid number of poll descriptors %d", count);
+         return -1;
+     }
+ 
+@@ -235,8 +229,7 @@ static int alsa_poll_helper (snd_pcm_t *handle, struct pollhlp *hlp, int mask)
+ 
+     err = snd_pcm_poll_descriptors (handle, pfds, count);
+     if (err < 0) {
+-        alsa_logerr (err, "Could not initialize poll mode\n"
+-                     "Could not obtain poll descriptors\n");
++        alsa_logerr(err, "Could not initialize poll mode: Could not obtain poll descriptors");
+         g_free (pfds);
+         return -1;
+     }
+@@ -298,10 +291,7 @@ static snd_pcm_format_t aud_to_alsafmt(AudioFormat fmt, bool big_endian)
+         return big_endian ? SND_PCM_FORMAT_FLOAT_BE : SND_PCM_FORMAT_FLOAT_LE;
+ 
+     default:
+-        dolog ("Internal logic error: Bad audio format %d\n", fmt);
+-#ifdef DEBUG_AUDIO
+-        abort ();
+-#endif
++        warn_report("alsa: Internal logic error: Bad audio format %d", fmt);
+         return SND_PCM_FORMAT_U8;
+     }
+ }
+@@ -371,29 +361,13 @@ static int alsa_to_audfmt (snd_pcm_format_t alsafmt, AudioFormat *fmt,
+         break;
+ 
+     default:
+-        dolog ("Unrecognized audio format %d\n", alsafmt);
++        warn_report("alsa: Unrecognized audio format %d", alsafmt);
+         return -1;
+     }
+ 
+     return 0;
+ }
+ 
+-static void alsa_dump_info (struct alsa_params_req *req,
+-                            struct alsa_params_obt *obt,
+-                            snd_pcm_format_t obtfmt,
+-                            AudiodevAlsaPerDirectionOptions *apdo)
+-{
+-    dolog("parameter | requested value | obtained value\n");
+-    dolog("format    |      %10d |     %10d\n", req->fmt, obtfmt);
+-    dolog("channels  |      %10d |     %10d\n",
+-          req->nchannels, obt->nchannels);
+-    dolog("frequency |      %10d |     %10d\n", req->freq, obt->freq);
+-    dolog("============================================\n");
+-    dolog("requested: buffer len %" PRId32 " period len %" PRId32 "\n",
+-          apdo->buffer_length, apdo->period_length);
+-    dolog("obtained: samples %ld\n", obt->samples);
+-}
+-
+ static void alsa_set_threshold (snd_pcm_t *handle, snd_pcm_uframes_t threshold)
+ {
+     int err;
+@@ -403,23 +377,22 @@ static void alsa_set_threshold (snd_pcm_t *handle, snd_pcm_uframes_t threshold)
+ 
+     err = snd_pcm_sw_params_current (handle, sw_params);
+     if (err < 0) {
+-        dolog ("Could not fully initialize DAC\n");
+-        alsa_logerr (err, "Failed to get current software parameters\n");
++        error_report("alsa: Could not fully initialize DAC");
++        alsa_logerr(err, "Failed to get current software parameters");
+         return;
+     }
+ 
+     err = snd_pcm_sw_params_set_start_threshold (handle, sw_params, threshold);
+     if (err < 0) {
+-        dolog ("Could not fully initialize DAC\n");
+-        alsa_logerr (err, "Failed to set software threshold to %ld\n",
+-                     threshold);
++        error_report("alsa: Could not fully initialize DAC");
++        alsa_logerr(err, "Failed to set software threshold to %ld", threshold);
+         return;
+     }
+ 
+     err = snd_pcm_sw_params (handle, sw_params);
+     if (err < 0) {
+-        dolog ("Could not fully initialize DAC\n");
+-        alsa_logerr (err, "Failed to set software parameters\n");
++        error_report("alsa: Could not fully initialize DAC");
++        alsa_logerr(err, "Failed to set software parameters");
+         return;
+     }
+ }
+@@ -451,13 +424,13 @@ static int alsa_open(bool in, struct alsa_params_req *req,
+         SND_PCM_NONBLOCK
+         );
+     if (err < 0) {
+-        alsa_logerr2 (err, typ, "Failed to open `%s':\n", pcm_name);
++        alsa_logerr2(err, typ, "Failed to open `%s'", pcm_name);
+         return -1;
+     }
+ 
+     err = snd_pcm_hw_params_any (handle, hw_params);
+     if (err < 0) {
+-        alsa_logerr2 (err, typ, "Failed to initialize hardware parameters\n");
++        alsa_logerr2(err, typ, "Failed to initialize hardware parameters");
+         goto err;
+     }
+ 
+@@ -467,18 +440,18 @@ static int alsa_open(bool in, struct alsa_params_req *req,
+         SND_PCM_ACCESS_RW_INTERLEAVED
+         );
+     if (err < 0) {
+-        alsa_logerr2 (err, typ, "Failed to set access type\n");
++        alsa_logerr2(err, typ, "Failed to set access type");
+         goto err;
+     }
+ 
+     err = snd_pcm_hw_params_set_format (handle, hw_params, req->fmt);
+     if (err < 0) {
+-        alsa_logerr2 (err, typ, "Failed to set format %d\n", req->fmt);
++        alsa_logerr2(err, typ, "Failed to set format %d", req->fmt);
+     }
+ 
+     err = snd_pcm_hw_params_set_rate_near (handle, hw_params, &freq, 0);
+     if (err < 0) {
+-        alsa_logerr2 (err, typ, "Failed to set frequency %d\n", req->freq);
++        alsa_logerr2(err, typ, "Failed to set frequency %d", req->freq);
+         goto err;
+     }
+ 
+@@ -488,8 +461,7 @@ static int alsa_open(bool in, struct alsa_params_req *req,
+         &nchannels
+         );
+     if (err < 0) {
+-        alsa_logerr2 (err, typ, "Failed to set number of channels %d\n",
+-                      req->nchannels);
++        alsa_logerr2(err, typ, "Failed to set number of channels %d", req->nchannels);
+         goto err;
+     }
+ 
+@@ -501,14 +473,14 @@ static int alsa_open(bool in, struct alsa_params_req *req,
+             handle, hw_params, &btime, &dir);
+ 
+         if (err < 0) {
+-            alsa_logerr2(err, typ, "Failed to set buffer time to %" PRId32 "\n",
++            alsa_logerr2(err, typ, "Failed to set buffer time to %" PRId32,
+                          apdo->buffer_length);
+             goto err;
+         }
+ 
+         if (apdo->has_buffer_length && btime != apdo->buffer_length) {
+-            dolog("Requested buffer time %" PRId32
+-                  " was rejected, using %u\n", apdo->buffer_length, btime);
++            warn_report("alsa: Requested buffer time %" PRId32 " was rejected, using %u",
++                        apdo->buffer_length, btime);
+         }
+     }
+ 
+@@ -520,43 +492,43 @@ static int alsa_open(bool in, struct alsa_params_req *req,
+                                                      &dir);
+ 
+         if (err < 0) {
+-            alsa_logerr2(err, typ, "Failed to set period time to %" PRId32 "\n",
++            alsa_logerr2(err, typ, "Failed to set period time to %" PRId32,
+                          apdo->period_length);
+             goto err;
+         }
+ 
+         if (apdo->has_period_length && ptime != apdo->period_length) {
+-            dolog("Requested period time %" PRId32 " was rejected, using %d\n",
+-                  apdo->period_length, ptime);
++            warn_report("alsa: Requested period time %" PRId32 " was rejected, using %d",
++                        apdo->period_length, ptime);
+         }
+     }
+ 
+     err = snd_pcm_hw_params (handle, hw_params);
+     if (err < 0) {
+-        alsa_logerr2 (err, typ, "Failed to apply audio parameters\n");
++        alsa_logerr2(err, typ, "Failed to apply audio parameters");
+         goto err;
+     }
+ 
+     err = snd_pcm_hw_params_get_buffer_size (hw_params, &obt_buffer_size);
+     if (err < 0) {
+-        alsa_logerr2 (err, typ, "Failed to get buffer size\n");
++        alsa_logerr2(err, typ, "Failed to get buffer size");
+         goto err;
+     }
+ 
+     err = snd_pcm_hw_params_get_format (hw_params, &obtfmt);
+     if (err < 0) {
+-        alsa_logerr2 (err, typ, "Failed to get format\n");
++        alsa_logerr2(err, typ, "Failed to get format");
+         goto err;
+     }
+ 
+     if (alsa_to_audfmt (obtfmt, &obt->fmt, &obt->endianness)) {
+-        dolog ("Invalid format was returned %d\n", obtfmt);
++        error_report("alsa: Invalid format was returned %d", obtfmt);
+         goto err;
+     }
+ 
+     err = snd_pcm_prepare (handle);
+     if (err < 0) {
+-        alsa_logerr2 (err, typ, "Could not prepare handle %p\n", handle);
++        alsa_logerr2(err, typ, "Could not prepare handle %p", handle);
+         goto err;
+     }
+ 
+@@ -574,11 +546,9 @@ static int alsa_open(bool in, struct alsa_params_req *req,
+ 
+     *handlep = handle;
+ 
+-    if (DEBUG_ALSA || obtfmt != req->fmt ||
+-        obt->nchannels != req->nchannels || obt->freq != req->freq) {
+-        dolog ("Audio parameters for %s\n", typ);
+-        alsa_dump_info(req, obt, obtfmt, apdo);
+-    }
++    trace_alsa_info_params(req->fmt, obtfmt, req->nchannels, obt->nchannels,
++                           req->freq, obt->freq);
++    trace_alsa_info_samples(apdo->buffer_length, apdo->period_length, obt->samples);
+ 
+     return 0;
+ 
+@@ -601,8 +571,7 @@ static size_t alsa_buffer_get_free(HWVoiceOut *hw)
+             }
+         }
+         if (avail < 0) {
+-            alsa_logerr(avail,
+-                        "Could not obtain number of available frames\n");
++            alsa_logerr(avail, "Could not obtain number of available frames");
+             avail = 0;
+         }
+     }
+@@ -643,8 +612,7 @@ static size_t alsa_write(HWVoiceOut *hw, void *buf, size_t len)
+ 
+             case -EPIPE:
+                 if (alsa_recover(alsa->handle)) {
+-                    alsa_logerr(written, "Failed to write %zu frames\n",
+-                                len_frames);
++                    alsa_logerr(written, "Failed to write %zu frames", len_frames);
+                     return pos;
+                 }
+                 trace_alsa_xrun_out();
+@@ -656,8 +624,7 @@ static size_t alsa_write(HWVoiceOut *hw, void *buf, size_t len)
+                  * recovery
+                  */
+                 if (alsa_resume(alsa->handle)) {
+-                    alsa_logerr(written, "Failed to write %zu frames\n",
+-                                len_frames);
++                    alsa_logerr(written, "Failed to write %zu frames", len_frames);
+                     return pos;
+                 }
+                 trace_alsa_resume_out();
+@@ -667,8 +634,7 @@ static size_t alsa_write(HWVoiceOut *hw, void *buf, size_t len)
+                 return pos;
+ 
+             default:
+-                alsa_logerr(written, "Failed to write %zu frames from %p\n",
+-                            len, src);
++                alsa_logerr(written, "Failed to write %zu frames from %p", len_frames, src);
+                 return pos;
+             }
+         }
+@@ -687,7 +653,7 @@ static void alsa_fini_out (HWVoiceOut *hw)
+ {
+     ALSAVoiceOut *alsa = (ALSAVoiceOut *) hw;
+ 
+-    ldebug ("alsa_fini\n");
++    trace_alsa_fini_out();
+     alsa_anal_close (&alsa->handle, &alsa->pollhlp);
+ }
+ 
+@@ -732,19 +698,19 @@ static int alsa_voice_ctl (snd_pcm_t *handle, const char *typ, int ctl)
+     if (ctl == VOICE_CTL_PAUSE) {
+         err = snd_pcm_drop (handle);
+         if (err < 0) {
+-            alsa_logerr (err, "Could not stop %s\n", typ);
++            alsa_logerr(err, "Could not stop %s", typ);
+             return -1;
+         }
+     } else {
+         err = snd_pcm_prepare (handle);
+         if (err < 0) {
+-            alsa_logerr (err, "Could not prepare handle for %s\n", typ);
++            alsa_logerr(err, "Could not prepare handle for %s", typ);
+             return -1;
+         }
+         if (ctl == VOICE_CTL_START) {
+             err = snd_pcm_start(handle);
+             if (err < 0) {
+-                alsa_logerr (err, "Could not start handle for %s\n", typ);
++                alsa_logerr(err, "Could not start handle for %s", typ);
+                 return -1;
+             }
+         }
+@@ -758,17 +724,17 @@ static void alsa_enable_out(HWVoiceOut *hw, bool enable)
+     ALSAVoiceOut *alsa = (ALSAVoiceOut *) hw;
+     AudiodevAlsaPerDirectionOptions *apdo = hw->s->dev->u.alsa.out;
+ 
++    trace_alsa_enable_out(enable);
 +
-+    k->driver = &jack_driver;
-+}
+     if (enable) {
+         bool poll_mode = apdo->try_poll;
+ 
+-        ldebug("enabling voice\n");
+         if (poll_mode && alsa_poll_out(hw)) {
+             poll_mode = 0;
+         }
+         hw->poll_mode = poll_mode;
+         alsa_voice_ctl(alsa->handle, "playback", VOICE_CTL_PREPARE);
+     } else {
+-        ldebug("disabling voice\n");
+         if (hw->poll_mode) {
+             hw->poll_mode = 0;
+             alsa_fini_poll(&alsa->pollhlp);
+@@ -834,7 +800,7 @@ static size_t alsa_read(HWVoiceIn *hw, void *buf, size_t len)
+ 
+             case -EPIPE:
+                 if (alsa_recover(alsa->handle)) {
+-                    alsa_logerr(nread, "Failed to read %zu frames\n", len);
++                    alsa_logerr(nread, "Failed to read %zu frames", len);
+                     return pos;
+                 }
+                 trace_alsa_xrun_in();
+@@ -844,8 +810,7 @@ static size_t alsa_read(HWVoiceIn *hw, void *buf, size_t len)
+                 return pos;
+ 
+             default:
+-                alsa_logerr(nread, "Failed to read %zu frames to %p\n",
+-                            len, dst);
++                alsa_logerr(nread, "Failed to read %zu frames to %p", len, dst);
+                 return pos;
+             }
+         }
+@@ -862,10 +827,11 @@ static void alsa_enable_in(HWVoiceIn *hw, bool enable)
+     ALSAVoiceIn *alsa = (ALSAVoiceIn *) hw;
+     AudiodevAlsaPerDirectionOptions *apdo = hw->s->dev->u.alsa.in;
+ 
++    trace_alsa_enable_in(enable);
 +
- static const TypeInfo audio_types[] = {
-     {
-         .name = TYPE_AUDIO_JACK,
+     if (enable) {
+         bool poll_mode = apdo->try_poll;
+ 
+-        ldebug("enabling voice\n");
+         if (poll_mode && alsa_poll_in(hw)) {
+             poll_mode = 0;
+         }
+@@ -873,7 +839,6 @@ static void alsa_enable_in(HWVoiceIn *hw, bool enable)
+ 
+         alsa_voice_ctl(alsa->handle, "capture", VOICE_CTL_START);
+     } else {
+-        ldebug ("disabling voice\n");
+         if (hw->poll_mode) {
+             hw->poll_mode = 0;
+             alsa_fini_poll(&alsa->pollhlp);
+diff --git a/audio/trace-events b/audio/trace-events
+index f7f639d9605..737e3e60694 100644
+--- a/audio/trace-events
++++ b/audio/trace-events
+@@ -9,6 +9,11 @@ alsa_read_zero(long len) "Failed to read %ld frames (read zero)"
+ alsa_xrun_out(void) "Recovering from playback xrun"
+ alsa_xrun_in(void) "Recovering from capture xrun"
+ alsa_resume_out(void) "Resuming suspended output stream"
++alsa_info_params(int req_fmt, int obt_fmt, int req_channels, int obt_channels, int req_freq, int obt_freq) "format %d->%d, channels %d->%d, frequency %d->%d"
++alsa_info_samples(int buffer_length, int period_length, long samples) "requested: buffer len %d, period len %d; obtained: %ld samples"
++alsa_fini_out(void) ""
++alsa_enable_out(bool enable) "enable=%d"
++alsa_enable_in(bool enable) "enable=%d"
+ 
+ # ossaudio.c
+ oss_version(int version) "OSS version = 0x%x"
 
 -- 
 2.53.0
