@@ -4,39 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6780DE81A42
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 771F3E81A3C
 	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 16:25:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vs1Pb-0008WL-Ra; Mon, 16 Feb 2026 11:25:27 -0500
+	id 1vs1PZ-0008TC-51; Mon, 16 Feb 2026 11:25:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vs1PV-0008Rs-Ql
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 11:25:22 -0500
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vs1PU-0008Rc-W6
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 11:25:21 -0500
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vs1PT-0002jE-At
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 11:25:21 -0500
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vs1PR-0002fI-Ft
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 11:25:20 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
- s=dkim; h=Cc:To:In-Reply-To:References:Message-Id:Content-Transfer-Encoding:
- Content-Type:MIME-Version:Subject:Date:From:Sender:Reply-To:Content-ID:
- Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
- :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+ s=dkim; h=Cc:To:Content-Transfer-Encoding:Content-Type:MIME-Version:
+ Message-Id:Date:Subject:From:Sender:Reply-To:Content-ID:Content-Description:
+ Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
+ In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=PbZj+MJ7ZvB1UDK3MKfN9VG/9j0a+ZXm8vyyR4l7ieE=; b=d0eSfVsrOx/r6mf
- g2mn4AJ3WBwYsxxCkjqeSTxdQ96oxaeoUQIR1NUHCehetwA5NcNMCuBV02nILikz1C/+1iFiNJK9a
- bmOSpZemv8HV+tWqUA1XJYDnNBAQPcz+3UqkqiDhWgQlZYYJwD0TkTFeENu1SPv1ZVDYR4KMT0cVv
- xg=;
-Date: Mon, 16 Feb 2026 17:28:38 +0100
-Subject: [PATCH v5 1/7] target/hppa: Define PA[20|1X] physical address
- space size
+ List-Help; bh=c2q//ZfSkpSmcUOxIspJJMkvgdip27L3r5cQhmM0+zA=; b=EY7uRfBCcFjYEaO
+ 9LIts4clSswEvPubHjpI/kZ5U5V86Gy9WOLuF6IfNmQmf/jrH7WMevz18BmFZZJGu367ASI59a4hA
+ gKEvk0FZEG3WtNcfO3pZhy3UfbtyyezDxKGrdR/bCTdVmqfmnkjAos6EWHzA24BjHBc0IKg1vXdRB
+ p8=;
+Subject: [PATCH v5 0/7] single-binary: Drop TARGET_PHYS_ADDR_SPACE_BITS
+Date: Mon, 16 Feb 2026 17:28:37 +0100
+Message-Id: <20260216-phys_addr-v5-0-29d522f1339c@rev.ng>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260216-phys_addr-v5-1-29d522f1339c@rev.ng>
-References: <20260216-phys_addr-v5-0-29d522f1339c@rev.ng>
-In-Reply-To: <20260216-phys_addr-v5-0-29d522f1339c@rev.ng>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/1XOQQ7CIBCF4asY1mJmBpDWlfcwxmABy6Y2YBqbp
+ neX1qi4fBO+P0wsuRhcYofNxKIbQgr3Lg+13bCmNd3N8WDzZgSkEEHyvh3TxVgb+RW81M4IQGl
+ Yft9H58NzbZ3OebchPe5xXNMDLtd3haAuKgNy4I2otBdOk9X6mL+x625sSQxUMFQlo8z2QhiDt
+ iZq7B8TH7YHRCqZyEz5Gry9SkDl/5j8MUIomcxMkzKqql0lmurL5nl+AYZJc3tEAQAA
+X-Change-ID: 20251104-phys_addr-b0f47ea3014a
 To: qemu-devel@nongnu.org
 Cc: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
  Richard Henderson <richard.henderson@linaro.org>, 
@@ -46,11 +48,11 @@ Cc: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Alistair Francis <alistair.francis@wdc.com>, 
  Brian Cain <brian.cain@oss.qualcomm.com>, 
  Chao Liu <chao.liu.zevorn@gmail.com>, Anton Johansson <anjo@rev.ng>
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1771259334; l=3909;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1771259334; l=3583;
  i=anjo@rev.ng; s=20260210; h=from:subject:message-id;
- bh=mJLHJbLS4Uz8+yGhmilwJgwYd61Krwd2i3KjZETkFK4=;
- b=WV8OfSSFxcYKdangHeDgRjXKUfikwbc0Ru/40VTu/Bsys1E+SCc+66aGX+Ufv4ZYrSTK1avK+
- ofa67S7rhK2B0sELkXr2EtDlcfyQzyfx6kSS+sZhyr5QKke8O+cCGFD
+ bh=et4276UqlxU+a7etOw4OFmOsxF/Ul9CUB4JCBw39t/8=;
+ b=63MsmN26/W6KLFplt61HSKq8uGEcJ9FHJi0Rv51U1xOT0Nd9jlFrGJVpomalwwf15up6GVdaS
+ AOp+rEwPi3MAtZVAWV34w2s60yn4EyZYZvlUs65JK5ZnMo7voiq7ix5
 X-Developer-Key: i=anjo@rev.ng; a=ed25519;
  pk=dKsZvj/g3kgDxnV1/SWg8a0YNGSpWtFGNsWIepQYKow=
 Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
@@ -79,109 +81,91 @@ From:  Anton Johansson via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When converting virtual to physical addresses,
-TARGET_PHYS_ADDR_SPACE_BITS is used under PA-RISC 2.0, and an explicit
-cast to uint32_t is used under PA-RISC 1.X.  Replace the former with a
-more specific macro limited to mem_helper.c, and make the latter
-conversion explicit by defining the size of the physical address space
-for PA-RISC 1.X.
+The target macro TARGET_PHYS_ADDR_SPACE_BITS is unused since commit
 
-Note: while 44 bits should be used for the 64-bit address space running
-a C3700, 40 bits is still chosen as this is expected by the SeaBIOS
-functional test.
+  2e8fe327eb6 ("accel/tcg: Simplify L1_MAP_ADDR_SPACE_BITS"),
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+replace the handful of remaining uses with runtime functions or
+constants.
+
+For discussion see:
+
+  https://lore.kernel.org/qemu-devel/8f0db5c1-f20b-4b7a-8d6c-76ce7ec7b4e0@linaro.org/
+
+Suggested-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Anton Johansson <anjo@rev.ng>
 ---
- target/hppa/cpu.h        |  1 +
- target/hppa/mem_helper.c | 32 +++++++++++++++++++++++++++-----
- 2 files changed, 28 insertions(+), 5 deletions(-)
+Changes in v5:
+- Added RISCVIOMMUState::pas_bits property (Richard, Chao);
+- Dropped already merged alpha patch (Philippe);
+- Added reviewed-bys;
+- Link to v4: https://lore.kernel.org/qemu-devel/20260210-phys_addr-v4-0-725a589e83c8@rev.ng
 
-diff --git a/target/hppa/cpu.h b/target/hppa/cpu.h
-index 012e54f8f6..092e647ccf 100644
---- a/target/hppa/cpu.h
-+++ b/target/hppa/cpu.h
-@@ -336,6 +336,7 @@ static inline vaddr hppa_form_gva(CPUHPPAState *env, uint64_t spc,
-     return hppa_form_gva_mask(env->gva_offset_mask, spc, off);
- }
- 
-+hwaddr hppa_abs_to_phys_pa1x(vaddr addr);
- hwaddr hppa_abs_to_phys_pa2_w0(vaddr addr);
- hwaddr hppa_abs_to_phys_pa2_w1(vaddr addr);
- 
-diff --git a/target/hppa/mem_helper.c b/target/hppa/mem_helper.c
-index cce82e6599..9199d1e06a 100644
---- a/target/hppa/mem_helper.c
-+++ b/target/hppa/mem_helper.c
-@@ -29,6 +29,28 @@
- #include "hw/core/cpu.h"
- #include "trace.h"
- 
-+/*
-+ * 64-bit (PA-RISC 2.0) machines are assumed to run PA-8700, and 32-bit
-+ * machines 7300LC.  This should give 44 and 32 bits of physical address
-+ * space respectively.
-+ *
-+ *   CPU model        Physical address space bits
-+ *   PA-7000--7300LC  32
-+ *   PA-8000--8600    40
-+ *   PA-8700--8900    44
-+ *
-+ * FIXME: However, the SeaBIOS firmware that is that tested against
-+ * uses 40-bit physical addresses, despite supposedly running a C3700
-+ * with a PA-8700 cpu, so use 40-bits for 64-bit.
-+ */
-+#define HPPA_PHYS_ADDR_SPACE_BITS_PA20 40
-+#define HPPA_PHYS_ADDR_SPACE_BITS_PA1X 32
-+
-+hwaddr hppa_abs_to_phys_pa1x(vaddr addr)
-+{
-+    return extract64(addr, 0, HPPA_PHYS_ADDR_SPACE_BITS_PA1X);
-+}
-+
- hwaddr hppa_abs_to_phys_pa2_w1(vaddr addr)
- {
-     /*
-@@ -42,8 +64,8 @@ hwaddr hppa_abs_to_phys_pa2_w1(vaddr addr)
-      * Since the supported physical address space is below 54 bits, the
-      * H-8 algorithm is moot and all that is left is to truncate.
-      */
--    QEMU_BUILD_BUG_ON(TARGET_PHYS_ADDR_SPACE_BITS > 54);
--    return sextract64(addr, 0, TARGET_PHYS_ADDR_SPACE_BITS);
-+    QEMU_BUILD_BUG_ON(HPPA_PHYS_ADDR_SPACE_BITS_PA20 > 54);
-+    return sextract64(addr, 0, HPPA_PHYS_ADDR_SPACE_BITS_PA20);
- }
- 
- hwaddr hppa_abs_to_phys_pa2_w0(vaddr addr)
-@@ -67,7 +89,7 @@ hwaddr hppa_abs_to_phys_pa2_w0(vaddr addr)
-          * is what can be seen on physical machines too.
-          */
-         addr = (uint32_t)addr;
--        addr |= -1ull << (TARGET_PHYS_ADDR_SPACE_BITS - 4);
-+        addr |= -1ull << (HPPA_PHYS_ADDR_SPACE_BITS_PA20 - 4);
-     }
-     return addr;
- }
-@@ -217,7 +239,7 @@ int hppa_get_physical_address(CPUHPPAState *env, vaddr addr, int mmu_idx,
-             if (hppa_is_pa20(env)) {
-                 phys = hppa_abs_to_phys_pa2_w0(addr);
-             } else {
--                phys = (uint32_t)addr;
-+                phys = hppa_abs_to_phys_pa1x(addr);
-             }
-             break;
-         default:
-@@ -558,7 +580,7 @@ static void itlbt_pa20(CPUHPPAState *env, target_ulong r1,
-     /* Align per the page size. */
-     ent->pa &= TARGET_PAGE_MASK << mask_shift;
-     /* Ignore the bits beyond physical address space. */
--    ent->pa = sextract64(ent->pa, 0, TARGET_PHYS_ADDR_SPACE_BITS);
-+    ent->pa = sextract64(ent->pa, 0, HPPA_PHYS_ADDR_SPACE_BITS_PA20);
- 
-     ent->t = extract64(r2, 61, 1);
-     ent->d = extract64(r2, 60, 1);
+Changes in v4:
+- Revert to using 40 bit physical addresses for HPPA to not break SeaBIOS
+  functional tests. This will be addressed in a separate series;
+- Added HPPA patch 3/8 to convert a missed 32-bit abs -> physical
+  address conversion;
+- Link to v3: https://lore.kernel.org/qemu-devel/20260112-phys_addr-v3-0-5f90fdb4015f@rev.ng
 
--- 
-2.52.0
+Changes in v3:
+- Added reviewed-by;
+- Widened CC;
+- Link to v2: https://lore.kernel.org/qemu-devel/20251215-phys_addr-v2-0-633aa1d922cd@rev.ng
+
+Changes in v2:
+- Move alpha_phys_addr_space_bits() to linux-user/alpha/target_proc.h
+  (Richard);
+- Link to v1: https://lore.kernel.org/qemu-devel/20251209-phys_addr-v1-0-c387f3e72d77@rev.ng
+
+---
+Anton Johansson (7):
+      target/hppa: Define PA[20|1X] physical address space size
+      hw/hppa: Use hppa_abs_to_phys_pa1x()
+      target/i386: Drop physical address range checks
+      target/loongarch: Introduce loongarch_palen_mask()
+      hw/loongarch: Use loongarch_palen_mask()
+      hw/riscv: Set IOMMU PAS via property
+      Drop TARGET_PHYS_ADDR_SPACE_BITS
+
+ hw/riscv/riscv-iommu.h            |  1 +
+ include/exec/cpu-defs.h           |  3 ---
+ include/exec/poison.h             |  2 --
+ include/hw/loongarch/boot.h       |  3 ++-
+ target/alpha/cpu-param.h          |  3 ---
+ target/arm/cpu-param.h            |  2 --
+ target/avr/cpu-param.h            |  1 -
+ target/hexagon/cpu-param.h        |  1 -
+ target/hppa/cpu-param.h           |  3 ---
+ target/hppa/cpu.h                 |  1 +
+ target/i386/cpu-param.h           |  2 --
+ target/i386/tcg/helper-tcg.h      |  2 --
+ target/loongarch/cpu-mmu.h        |  1 +
+ target/loongarch/cpu-param.h      |  1 -
+ target/loongarch/internals.h      |  1 -
+ target/m68k/cpu-param.h           |  1 -
+ target/microblaze/cpu-param.h     |  2 --
+ target/mips/cpu-param.h           |  2 --
+ target/or1k/cpu-param.h           |  1 -
+ target/ppc/cpu-param.h            |  7 -------
+ target/riscv/cpu-param.h          |  2 --
+ target/rx/cpu-param.h             |  1 -
+ target/s390x/cpu-param.h          |  1 -
+ target/sh4/cpu-param.h            |  1 -
+ target/sparc/cpu-param.h          |  2 --
+ target/tricore/cpu-param.h        |  1 -
+ target/xtensa/cpu-param.h         |  1 -
+ hw/hppa/machine.c                 |  2 +-
+ hw/loongarch/boot.c               | 28 ++++++++++++++++------------
+ hw/loongarch/virt.c               |  5 ++++-
+ hw/riscv/riscv-iommu-pci.c        |  3 +++
+ hw/riscv/riscv-iommu.c            |  8 ++++----
+ hw/riscv/virt.c                   |  7 +++++++
+ target/hppa/mem_helper.c          | 32 +++++++++++++++++++++++++++-----
+ target/i386/cpu.c                 |  9 +++------
+ target/i386/kvm/kvm.c             |  3 +--
+ target/loongarch/cpu_helper.c     | 15 ++++++++++++---
+ target/loongarch/tcg/tlb_helper.c | 12 ++++++++----
+ 38 files changed, 91 insertions(+), 82 deletions(-)
 
 
