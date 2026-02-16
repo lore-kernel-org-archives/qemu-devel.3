@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE456E83837
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC086E83839
 	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 21:31:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vs6Aj-0005Zv-Tt; Mon, 16 Feb 2026 16:30:25 -0500
+	id 1vs6B9-0005gA-Ar; Mon, 16 Feb 2026 16:30:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vs6Ah-0005ZP-G3
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 16:30:23 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vs6B5-0005ej-CH
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 16:30:47 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vs6Ag-0003rD-26
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 16:30:23 -0500
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vs6B3-0003ss-Ra
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 16:30:47 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771277421;
+ s=mimecast20190719; t=1771277445;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=LB7/rFjQozbBm2+Uwyj50YhZtgxoEyc5Zjh8IejbI+8=;
- b=S31bY6ABoAcZDlWtloBeRkVR23k+tj2pPwSfIuQ3QP7L9on76Q/8QcPt+50VXy+Jjs96CI
- SXmbFodP2VR168ZNYWnF/QZJqexJWgV/qXL/7T+OHBHFLi9OWQTI1LwyDpvHqvuwr+BItg
- JwtThxQ/yDQtAoYinsu0AR6WaK5c8X8=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=OGpEfNsE2yov0FONkKj8XU3QGIdoHegLcnLqOA3GTF4=;
+ b=Nud5+4+6wrOP+rK/ERBMhqwSwBBsAoW38bcKqgAaXAq9HO1qGiuMrcNK67TDign8RSTmqK
+ SKSuvY/uCBqyl8TEYyMtoOpZgzA2dRPMSwiKTCKIA/a34H9Y/1EiJx7GS86bUNWMSaEvKF
+ ycVoIC9hZxBttVKaSVtNSG70XUMHO2I=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-604-AqUEQxiTO6Wsoug2E72Y3w-1; Mon,
- 16 Feb 2026 16:30:15 -0500
-X-MC-Unique: AqUEQxiTO6Wsoug2E72Y3w-1
-X-Mimecast-MFC-AGG-ID: AqUEQxiTO6Wsoug2E72Y3w_1771277413
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-323--pd2fwx0NMKkgagtdEBhHg-1; Mon,
+ 16 Feb 2026 16:30:41 -0500
+X-MC-Unique: -pd2fwx0NMKkgagtdEBhHg-1
+X-Mimecast-MFC-AGG-ID: -pd2fwx0NMKkgagtdEBhHg_1771277439
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6FB5A1955D89; Mon, 16 Feb 2026 21:30:13 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9CE251956089; Mon, 16 Feb 2026 21:30:39 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.88.120])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id E9DC319560AD; Mon, 16 Feb 2026 21:30:07 +0000 (UTC)
+ id 5EA2C19560A2; Mon, 16 Feb 2026 21:30:33 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
@@ -65,23 +65,22 @@ Cc: qemu-block@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
  Ed Maste <emaste@freebsd.org>, Kevin Wolf <kwolf@redhat.com>,
  Fabiano Rosas <farosas@suse.de>, Michael Roth <michael.roth@amd.com>,
  Li-Wen Hsu <lwhsu@freebsd.org>, Hanna Reitz <hreitz@redhat.com>
-Subject: [PATCH v7 02/19] python/mkvenv: create timestamp file for each group
- "ensured"
-Date: Mon, 16 Feb 2026 16:29:34 -0500
-Message-ID: <20260216212952.420120-3-jsnow@redhat.com>
+Subject: [PATCH v7 06/19] meson, mkvenv: add functests custom target
+Date: Mon, 16 Feb 2026 16:29:38 -0500
+Message-ID: <20260216212952.420120-7-jsnow@redhat.com>
 In-Reply-To: <20260216212952.420120-1-jsnow@redhat.com>
 References: <20260216212952.420120-1-jsnow@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -99,33 +98,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Each group ensured by the mkvenv script will create an empty timestamp
-file named {groupname}.group which can be used to conditionally trigger
-dependency installation from various scripts and build machinery.
+add the "pyvenv_functests_group" target to meson. This target will
+invoke mkvenv.py to install the associated dependency group to the
+build/pyvenv directory.
+
+A "pyvenv_tooling_group" is not included here as it is the plan to
+always install this group by default, so it will not need an on-demand
+trigger.
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 ---
- python/scripts/mkvenv.py | 6 ++++++
- 1 file changed, 6 insertions(+)
+ meson.build        |  1 +
+ pyvenv/meson.build | 27 +++++++++++++++++++++++++++
+ 2 files changed, 28 insertions(+)
+ create mode 100644 pyvenv/meson.build
 
-diff --git a/python/scripts/mkvenv.py b/python/scripts/mkvenv.py
-index 5cba5770d22..b4662d33e6e 100644
---- a/python/scripts/mkvenv.py
-+++ b/python/scripts/mkvenv.py
-@@ -838,6 +838,12 @@ def ensure_group(
-             raise Ouch(result[0])
-         raise SystemExit(f"\n{result[0]}\n\n")
- 
-+    if inside_a_venv():
-+        for group in groups:
-+            path = Path(sys.prefix).joinpath(f"{group}.group")
-+            with open(path, "w", encoding="UTF8"):
-+                pass
+diff --git a/meson.build b/meson.build
+index 4af32c3e1f2..1a3684f36e9 100644
+--- a/meson.build
++++ b/meson.build
+@@ -4564,6 +4564,7 @@ subdir('scripts')
+ subdir('tools')
+ subdir('pc-bios')
+ subdir('docs')
++subdir('pyvenv')
+ # Tests are disabled on emscripten because they rely on host features that aren't
+ # supported by emscripten (e.g. fork and unix socket).
+ if host_os != 'emscripten'
+diff --git a/pyvenv/meson.build b/pyvenv/meson.build
+new file mode 100644
+index 00000000000..4e7d8d9fcc4
+--- /dev/null
++++ b/pyvenv/meson.build
+@@ -0,0 +1,27 @@
++# Note that this file only controls "optional" dependency groups; groups
++# unconditionally installed at configure time are handled in configure
++# instead; namely: meson, sphinx, and the tooling groups.
 +
- 
- def post_venv_setup() -> None:
-     """
++# Note that this command may or may not include the "--online" flag
++# based on configuration.
++ensuregroup_cmd = config_host['MKVENV_ENSUREGROUP'].split()
++
++pyvenv_common_deps = files(
++    meson.project_source_root() + '/pythondeps.toml',
++    meson.project_source_root() + '/python/scripts/mkvenv.py'
++)
++pyvenv_wheel_dir = meson.project_source_root() + '/python/wheels'
++
++# This group is allowed to (and must) rely on internet to fetch from
++# PyPI. Force the use of the --online flag here.
++pyvenv_functests_group = custom_target(
++    'pyvenv_functests_group',
++    output: 'functests.group',
++    input: pyvenv_common_deps,
++    command: ensuregroup_cmd + [
++        '--online',
++        '--dir', pyvenv_wheel_dir,
++        '@INPUT0@',
++        'functests',
++    ],
++)
 -- 
 2.53.0
 
