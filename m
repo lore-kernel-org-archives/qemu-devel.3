@@ -4,77 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F56BE63F2D
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 03:45:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D89AE63F2A
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 03:45:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vrpXQ-0002V2-Aq; Sun, 15 Feb 2026 22:44:44 -0500
+	id 1vrpXs-0002jO-OQ; Sun, 15 Feb 2026 22:45:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vrpXO-0002Ur-Ul
- for qemu-devel@nongnu.org; Sun, 15 Feb 2026 22:44:42 -0500
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ id 1vrpXn-0002dQ-AQ
+ for qemu-devel@nongnu.org; Sun, 15 Feb 2026 22:45:07 -0500
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vrpXN-0002NF-5d
- for qemu-devel@nongnu.org; Sun, 15 Feb 2026 22:44:42 -0500
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-2aae146b604so20919615ad.3
- for <qemu-devel@nongnu.org>; Sun, 15 Feb 2026 19:44:39 -0800 (PST)
+ id 1vrpXi-0002Sg-8V
+ for qemu-devel@nongnu.org; Sun, 15 Feb 2026 22:45:05 -0500
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-2a95bfdb31eso11641875ad.3
+ for <qemu-devel@nongnu.org>; Sun, 15 Feb 2026 19:45:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771213479; x=1771818279; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=N1dWwblShtU/K1pEStkcQTqcgPLAHki/FI2GQRACns4=;
- b=HoynBAOEicHDhN7yujRWkptybXL+GXPdjqmhtdOR1AEwLCkYb/Eg7bR25xXYcpELXI
- THiBx+tmLe9kTxCI8zXkPSfJDQ6nNSreV22WLLHmf9+aHZkrwgJYhrlR5GZ0vtmkoWwR
- lQpAwx2XBSgSkaynkw8Bu5GUuRRgZBk1kQUZAtL2BXIfMDraRQfn3OU88UZsuOiwalhH
- rioT0K+p8v2pjl1gRMZ174rp4HpGpdXYwQ551TCT9SLMu4XhtBz8Y92kZ9gONKenTEY2
- xNfmrlP+hVuSKu3F8qYqsg/rj+7w0c9otNtbhHcl/xu9QTc7jDmbkdhZ5lT4WZhQlf7H
- pRyw==
+ d=linaro.org; s=google; t=1771213501; x=1771818301; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=z1G5iNA34KzEcs/mYmm8XYsWLt81ZFoJDv6FYs6NiaA=;
+ b=kwi7nVc6QNCz+twvT7taGz94R89q21zSZ0wbr3R1uG0jN7BvRdf5vlSE8qC2DfKMXI
+ OrwLnkcndNVlEvZno48kVk9sWYfkGipOMUeaHord0OWpfalA0bPe6fdM1cxf5SCq3b9E
+ 362i9L00u6cbQxpY4ZLrwlYkrcecnYfzOI+sTSfhojIBloTQXyYFkY06QpIZ45Geuy8x
+ Osl2Pj7I5s5sgWnMy61qiICf+mTziDKOUY7Rc7f5gUkgNW6wvlYaqwE4LjEJwZ3M77/s
+ JhjmCRWSbSEmGi82UdDQPRHo2SBKUGmfMPRCoxb3idAQD00bJDFWqeLNIKee6VUNJlUW
+ lxvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771213479; x=1771818279;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=N1dWwblShtU/K1pEStkcQTqcgPLAHki/FI2GQRACns4=;
- b=Ew6ol1ZLwGEmAz8LZx7ax8d8N/Ezx54Sbtdr6FQymYu6QEFKgd4/iSje2ppvg6GiQc
- JfzjUqdnQvTU8lLpFr3wp8PQsgw2c8TKllOGRpAVwdrRG4QX1I4Pg3evlRnEGE+KKKfL
- wUPBpbpBazy+7flKSkzIxH7vfJFfxW9PVK9MM6w1viSlfgQFWhaZZueTkRALA3KZC8yI
- grztDFmwLJHYvPXSrew7YfE1kcop+G5p8h9WQ3lSN3cN6oLzpgyVzadLyeO8V9rryxG/
- w7d3/SHbAVJVPj0EzqWvL7l7zkGV4hy6Hx+/b+irgMAvw3k2eiUnStc0EyllDgj6erpF
- 4q5g==
-X-Gm-Message-State: AOJu0YxFAGKCGZQ3oF64CiUDm4fhWL1Fxkciy8WNnj6hTHRlK9YHY4dw
- iHrv9+/zblVHOZM8TIawSFEgBuVnVv2zp55pmaXPp+xml7rCtOjNzU+QSNbniXRIhhuwqvzuKx5
- khVAFQE4=
-X-Gm-Gg: AZuq6aLbzMTlYedQZIi45SnUkISzUiqpyJ6eKA1W4Tftll42XdNcEX6UoeEKlfEAGBv
- bFoBJR0zRW9yUwNqdx5yHf/nFHOfe9wyYq4IBhjtUGmnLKiVYiDCyjw5AWJca2JaEZR80SEJ/yy
- 3QVN9/5Z0CdNJfyOl4fSBqy/twMzfrzWJs4sJ6ZukMiLPI69NA+/OAB0RSnjeRhegS1Tmm/TORw
- lfI/XWgDlEWJ5u8H7XvTT/G6n5cKLJKnpgNwID8tgHlllm5MObK3EqL+Ism8JUmwrmeOIsM9PWd
- dJf/6b/cvPDLic4YbZZ/GdlfFZKM3hJd8H4lUGhorX/4LrCAPm0GwdUIDwVfUcHjrJIDBVfzMBl
- B2hstlDOdU4nqK8eHplhtkB2EMWD+aPApsLsoW+HJOdqdVm6cwZUS1Hyifg+q8mn0jSLYiOC9IS
- UJutnmFWW3SVu3TFtHMNV+9nPyUVKxbkMrrNcz2AUQf4k=
-X-Received: by 2002:a17:903:b48:b0:2aa:d600:d03e with SMTP id
- d9443c01a7336-2ab4cf84015mr93452445ad.18.1771213478601; 
- Sun, 15 Feb 2026 19:44:38 -0800 (PST)
+ d=1e100.net; s=20230601; t=1771213501; x=1771818301;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=z1G5iNA34KzEcs/mYmm8XYsWLt81ZFoJDv6FYs6NiaA=;
+ b=eR6Cd59swfcYhe2g+JLfBWM3e64vK8nsbB6BWDFuhrNN8MFbmCEH99QpaSU4Qbvqa2
+ W2Pb0vD32N83o0xsgEkV0qHbTZLJu+5tDyqkwe1lcOP3xMwKv5velAZHrDruVFx92Pa4
+ Jz2QOFrCC7ui5rV64GBlecNU83tmKsZfM30vF4rb+Dzs10nia+9bKe/jX+GRhl3i49o/
+ jCx5c1w97dIyQ5CgMduyUJwCnvwBxg3BnNRfWr4jQsbhXe3NcnIIj7KVjouaxWu/GXTE
+ LSiz5OnX8jCLtSoTyXjFA6AweCZv8sUJ1ZXk/sANl/W1xXknoaDlFB64DKkVJ/ZRibnc
+ WFTg==
+X-Gm-Message-State: AOJu0Yzyi6G40P96tyriI0LvSRHPu7lHo7VxUZSXF83QednRl4xSWeuJ
+ D85ZR1MsakUraYhllT5ToaRNATNB+sW+szp7DlLjGn3xiRbDT/13aVxiHi4xBlye2SThslqFZl8
+ X5p83hvw=
+X-Gm-Gg: AZuq6aKOmP+4mn72/f6Qog2fdHaTM2t/60DcMAAfDaPLRaiI0PmnwLbbsYd3/66IBP/
+ H6/5Hw0/G64CNp6ZnS//aur1m1EsITxLJkXXvWf2JQESe3NxPh5zXsBf9po5hElB0kxDSkxKJW/
+ 8hdpI29v08rjOdVg+rDSpnbZr4O7ycJm7q2EvruMKjRcaKvH+Ig+w6Op2uPgUFvaWSXYt2axcAn
+ ZGlOKqeSCuJthVWUfZGcHAtmihAt/CvIPaWKTT56jsBITfL8R63ylwXQYoQHg+WtG/IjaP9W/mc
+ 2fspiY9jKuHVGjFW6zi+u/RS4aYC5xHvo1oE6k7GC8D06T1mQxhD4pslhpmM0kwzeUusmcqGJDA
+ zMoBME2znOERnXDPlQzdI2apX9QnvKuhgvfFqd5qEQImVKOgjD/kX+OeuRO7hvOga6V6QwhpI91
+ XjwuW80TJmA6zacDoQf8K/W3L8vM0SmIt8
+X-Received: by 2002:a17:903:fb0:b0:2a9:4870:9606 with SMTP id
+ d9443c01a7336-2ab505ca1b6mr81683365ad.42.1771213500789; 
+ Sun, 15 Feb 2026 19:45:00 -0800 (PST)
 Received: from stoup.. ([2401:d002:dc0f:2100:4a1:428a:70f2:5844])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2ad1aadca84sm53294155ad.70.2026.02.15.19.44.36
+ d9443c01a7336-2ad1aadca84sm53294155ad.70.2026.02.15.19.44.59
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 15 Feb 2026 19:44:38 -0800 (PST)
+ Sun, 15 Feb 2026 19:45:00 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [RFC PATCH 00/13] target/arm: Support SME for KVM
-Date: Mon, 16 Feb 2026 13:44:19 +1000
-Message-ID: <20260216034432.23912-1-richard.henderson@linaro.org>
+Subject: [RFC PATCH 11/13] target/arm: Add have_ffr argument to kvm_arch_{get,
+ put}_sve
+Date: Mon, 16 Feb 2026 13:44:30 +1000
+Message-ID: <20260216034432.23912-12-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260216034432.23912-1-richard.henderson@linaro.org>
+References: <20260216034432.23912-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x630.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,54 +100,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-RFC mostly because the kernel support is not yet upsteam.
-This is based on
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ target/arm/kvm.c | 32 ++++++++++++++++++--------------
+ 1 file changed, 18 insertions(+), 14 deletions(-)
 
-https://lore.kernel.org/linux-arm-kernel/20251223-kvm-arm64-sme-v9-0-8be3867cb883@kernel.org/
-
-Properly testing this will take more time.  I'm not 100%
-sure how to confirm that the SME registers have the correct
-value across migration.
-
-I'm thinking of a test case in which the ZArray is loaded,
-the test program pauses, migration or vm save/load initiated,
-and the ZArray contents are verified after continuing.
-But anything that takes timing into account like that
-seems way sketchy, so I dunno.
-
-All I can say at the moment is that the VM does start up
-with SME enabled and stuff doesn't crash, but that the
-get/put paths are not really exercised.
-
-
-r~
-
-
-Richard Henderson (13):
-  NOTFORMERGE: Update linux-headers for arm64 kvm from SME devel branch
-  target/arm: Remove aarch64 test for kvm
-  target/arm: Move kvm_arm_sve_get_vls within kvm.c
-  target/arm: Init sve_vq in kvm_arm_set_cpu_features_from_host
-  target/arm: Move kvm test out of cpu_arm_set_sve
-  target/arm: Drop kvm_arm_sve_supported
-  target/arm: Remove kvm test in arm_set_pmu
-  target/arm: Drop kvm_arm_pmu_supported
-  target/arm: Detect SME in kvm_arm_get_host_cpu_features
-  target/arm: Add vq argument to kvm_arch_{get,put}_sve
-  target/arm: Add have_ffr argument to kvm_arch_{get,put}_sve
-  target/arm: Add SME state to kvm_arch_{get,put}_registers
-  target/arm: Add SME properties for KVM
-
- linux-headers/asm-arm64/kvm.h |  33 ++++
- linux-headers/linux/kvm.h     |   1 +
- target/arm/kvm_arm.h          |  35 ----
- target/arm/cpu.c              |   4 -
- target/arm/cpu64.c            |  90 ++++++----
- target/arm/kvm-stub.c         |  15 --
- target/arm/kvm.c              | 308 +++++++++++++++++++++++-----------
- target/arm/tcg/cpu64.c        |   2 +-
- 8 files changed, 306 insertions(+), 182 deletions(-)
-
+diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+index f6bab562a0..d05ad1d7e1 100644
+--- a/target/arm/kvm.c
++++ b/target/arm/kvm.c
+@@ -2122,7 +2122,7 @@ static int kvm_arch_put_fpsimd(CPUState *cs)
+  * code the slice index to zero for now as it's unlikely we'll need more than
+  * one slice for quite some time.
+  */
+-static int kvm_arch_put_sve(CPUState *cs, uint32_t vq)
++static int kvm_arch_put_sve(CPUState *cs, uint32_t vq, bool have_ffr)
+ {
+     CPUARMState *env = cpu_env(cs);
+     uint64_t tmp[ARM_MAX_VQ * 2];
+@@ -2145,11 +2145,13 @@ static int kvm_arch_put_sve(CPUState *cs, uint32_t vq)
+         }
+     }
+ 
+-    r = sve_bswap64(tmp, &env->vfp.pregs[FFR_PRED_NUM].p[0],
+-                    DIV_ROUND_UP(vq * 2, 8));
+-    ret = kvm_set_one_reg(cs, KVM_REG_ARM64_SVE_FFR(0), r);
+-    if (ret) {
+-        return ret;
++    if (have_ffr) {
++        r = sve_bswap64(tmp, &env->vfp.pregs[FFR_PRED_NUM].p[0],
++                        DIV_ROUND_UP(vq * 2, 8));
++        ret = kvm_set_one_reg(cs, KVM_REG_ARM64_SVE_FFR(0), r);
++        if (ret) {
++            return ret;
++        }
+     }
+ 
+     return 0;
+@@ -2238,7 +2240,7 @@ int kvm_arch_put_registers(CPUState *cs, KvmPutState level, Error **errp)
+     }
+ 
+     if (cpu_isar_feature(aa64_sve, cpu)) {
+-        ret = kvm_arch_put_sve(cs, cpu->sve_max_vq);
++        ret = kvm_arch_put_sve(cs, cpu->sve_max_vq, true);
+     } else {
+         ret = kvm_arch_put_fpsimd(cs);
+     }
+@@ -2304,7 +2306,7 @@ static int kvm_arch_get_fpsimd(CPUState *cs)
+  * code the slice index to zero for now as it's unlikely we'll need more than
+  * one slice for quite some time.
+  */
+-static int kvm_arch_get_sve(CPUState *cs, uint32_t vq)
++static int kvm_arch_get_sve(CPUState *cs, uint32_t vq, bool have_ffr)
+ {
+     CPUARMState *env = cpu_env(cs);
+     uint64_t *r;
+@@ -2328,12 +2330,14 @@ static int kvm_arch_get_sve(CPUState *cs, uint32_t vq)
+         sve_bswap64(r, r, DIV_ROUND_UP(vq * 2, 8));
+     }
+ 
+-    r = &env->vfp.pregs[FFR_PRED_NUM].p[0];
+-    ret = kvm_get_one_reg(cs, KVM_REG_ARM64_SVE_FFR(0), r);
+-    if (ret) {
+-        return ret;
++    if (have_ffr) {
++        r = &env->vfp.pregs[FFR_PRED_NUM].p[0];
++        ret = kvm_get_one_reg(cs, KVM_REG_ARM64_SVE_FFR(0), r);
++        if (ret) {
++            return ret;
++        }
++        sve_bswap64(r, r, DIV_ROUND_UP(vq * 2, 8));
+     }
+-    sve_bswap64(r, r, DIV_ROUND_UP(vq * 2, 8));
+ 
+     return 0;
+ }
+@@ -2421,7 +2425,7 @@ int kvm_arch_get_registers(CPUState *cs, Error **errp)
+     }
+ 
+     if (cpu_isar_feature(aa64_sve, cpu)) {
+-        ret = kvm_arch_get_sve(cs, cpu->sve_max_vq);
++        ret = kvm_arch_get_sve(cs, cpu->sve_max_vq, true);
+     } else {
+         ret = kvm_arch_get_fpsimd(cs);
+     }
 -- 
 2.43.0
 
