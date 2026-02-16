@@ -4,56 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7494E7BD98
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 11:22:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4690FE7BD95
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 11:22:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vrwfe-0000Ia-Dv; Mon, 16 Feb 2026 06:21:42 -0500
+	id 1vrwff-0000OI-3t; Mon, 16 Feb 2026 06:21:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vrwcp-0007AM-Ia
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 06:18:47 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1vrwdi-0001Gz-KJ
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 06:19:43 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vrwcn-0008IF-Ql
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 06:18:47 -0500
+ id 1vrwdf-00009q-ML
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 06:19:42 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771240724;
+ s=mimecast20190719; t=1771240777;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ESVl7hrPW6399tVk+EQUGmjKjUQ+e3r5I81ZjO955hM=;
- b=WxitHbsmSjMM2b+49J3z7E4jeHExDlNL9YtJJgZqO1QJFooysCcqjYh1XCarugsXkxUVIG
- tjIrYTwCkTJI80UeEYIBiv7ZUXzALFiF5+K4BhJZ1+4mYR5FCFOzoWDyqi8104FcKpR50q
- aAMhDYU7pAtiIbZ7NgHTXYLvO0zQ6lY=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=LUP+G2rwSZjjp818AEO2MqOgi20Zq+c3evxaj7rofVg=;
+ b=eL+WhRiMqBiEaR2GR3YxbOppvpdPo35kaGAMzjb460Z0g3DEY3QLlZODOX4HyB9UbvGxis
+ r7qXnE2I+Gq/v9Jp1DzRv4G5GgKfVekc5AwzHuJAyKq3EWvzutZnZ1Jcy6IC10x3YVabg+
+ /8rsP5uT8d94HuIvGnRP5tyLIHO3G+Y=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-681-rlQ0flM9PCaOP741xb7FmQ-1; Mon,
- 16 Feb 2026 06:18:40 -0500
-X-MC-Unique: rlQ0flM9PCaOP741xb7FmQ-1
-X-Mimecast-MFC-AGG-ID: rlQ0flM9PCaOP741xb7FmQ_1771240719
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-154-6rvFx-VzM8q23-UhVuhAUw-1; Mon,
+ 16 Feb 2026 06:19:34 -0500
+X-MC-Unique: 6rvFx-VzM8q23-UhVuhAUw-1
+X-Mimecast-MFC-AGG-ID: 6rvFx-VzM8q23-UhVuhAUw_1771240772
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EF0C71956094; Mon, 16 Feb 2026 11:18:38 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 809BC1800464; Mon, 16 Feb 2026 11:19:32 +0000 (UTC)
 Received: from localhost (unknown [10.45.242.26])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 533741955F43; Mon, 16 Feb 2026 11:18:38 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id D778B30001A5; Mon, 16 Feb 2026 11:19:31 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Mon, 16 Feb 2026 12:15:53 +0100
-Subject: [PATCH 64/85] audio/noaudio: remove unused AUDIO_CAP macro
+Date: Mon, 16 Feb 2026 12:16:12 +0100
+Subject: [PATCH 83/85] audio: remove AUD_log/ldebug
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260216-audio-v1-64-e676662e4514@redhat.com>
+Message-Id: <20260216-audio-v1-83-e676662e4514@redhat.com>
 References: <20260216-audio-v1-0-e676662e4514@redhat.com>
 In-Reply-To: <20260216-audio-v1-0-e676662e4514@redhat.com>
 To: qemu-devel@nongnu.org
@@ -73,25 +73,25 @@ Cc: Gerd Hoffmann <kraxel@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
  Mark Cave-Ayland <mark.caveayland@nutanix.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=508;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3404;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=JtGKRFxHxWAyAWIxjSqifHUPbgYk6YcOPZOxE1yLVOI=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBpkvxRVNsCBTWWg1tNNteGSBiz0njwgCY6FRIH3
- nMd4+9LO9CJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaZL8UQAKCRDa6OEJdZac
- 5QxZEACzT4G4yQQQQRGAk7dVAbUYTLYD8UPVGICeTbv6NcHVunbOtcVdjjeOTrktoBGCXXro3L/
- s7pjtgyI2h9+nxdLlYqSgg58ggPdq1Eb0kF974IiaO+pqd+tZwr2btWOcPZLl9fa8rSpJjP2y3H
- 5itX379LrSMcqd4J+OSzKwi76OYwzQaSYUnIJptdJKhp8WaWIVaeHcbTSGtFh/nK3y8glVAXj1+
- DRXaC62konBMk04aSuqcl7rOqykM0utLqBZNlwZdiCqfAvlKHln06SRKGgu3vIbSfZf3tX4MYah
- 5F8B8Z1il+3ssIEnVdW+uAXi4oOBDTG60LeATSdoO+7jQ1mPVf0qCUIac2rknTiKtMjf+I91jR4
- d8Nl+hwVKrnLyZV6LtP4C+Ou19Jf32P/SJfjpMZ1HCwGKsNSZKFqWOCbK/9TRl88c0U3YZtdLRT
- 0861nTq3twPkZaOsOlupjLpbnvmoB+pBq0BJFzUggW6jFNr90AjWQD+84XqhkBVWKvqOVRHCV9F
- mbbudDujqvRBkWg725+ANpP3AKbOnz29l1pC0vQ0+RTnWj0fpOzkC7CTfGxIasdXbSjaKSNhYbd
- qeUJE4YOT/A+fpMkB47QNgbu16fw+ieBBd7PkVZzS4lnV1+KXob6hcdNMZgsbdUHgwMqiaiaQR/
- cGGYVk6ZPANZvCw==
+ bh=wYEC+0RY6JzYLHGKwBVCYQt+/nE3Fr4RFck/o8ke+9Q=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBpkvxSB39sG13RfjzVUOgEPjEPtzl6qSSehB8VC
+ Yyu8pBZpF6JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaZL8UgAKCRDa6OEJdZac
+ 5cbxD/4gZMNLnfHBdGVo9QnEl60b3/UEw8dEanVeoITFTFDpqf2ci8JC75kPIInmGCi2Dobtz+f
+ lsL5xSoxpyhZg+t0ojuc8T6UBcw5ZOzv57fwBCQDQvFaULlIzddwmRqR6CVOM+8HPrmlHS9nQIS
+ UDheF1iCBoxwlaihAId4pxM1GIgTSHV6X1hwOApo7MSDqg/xNp2MqZnRcScPYKPbesk9mB9lSvs
+ 70mUUX3WFbndWXCJocQv1NEox7jfJsGhKVa/lUt5/M17GWDuNTCB6kNNbBmmBH/ocL532gItmWg
+ LS5UJLDGrxkBuKRjZFQRDsKFG/ierneuNnN2mxDX49jfSJhucbXt4PCR9yVuzjiu1Pu0RYlzqtx
+ Dt9fMlajxTVa9BJEgnbNVj0sMw7q8+YtkvzY8x9epI/fQkS/8kDN5pHNGztauT5CccgA8AAuwHv
+ 55LDXAtsofD6CghlgmOazwg/NvvU8BRA+kHpLHkSKvq0dwW7CSgfeX3bakCpWER49EcTYA4z6QF
+ Fx2UUaRQLpKoWoCbJMLtbktdAFZwtqMgZFWh3TQNjgM7duLj5gDnFs/aJmtAHsLr7lqCZ8Jweyn
+ Hv4ewuPxOX4oe8OzzO58dKge1Ht/oKntsoYqGdfHttiWD4JYX0zGSAY/qas6pvPEdoqyq8Dev0l
+ MIlxQLE98zjuV8Q==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -99,9 +99,9 @@ X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,24 +117,111 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+audio/ is now converted to use QEMU standard trace & error reporting.
+
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
 ---
- audio/noaudio.c | 1 -
- 1 file changed, 1 deletion(-)
+ audio/audio_int.h       | 14 --------------
+ audio/audio_template.h  |  2 +-
+ audio/audio-mixeng-be.c | 19 -------------------
+ audio/mixeng.c          |  1 -
+ 4 files changed, 1 insertion(+), 35 deletions(-)
 
-diff --git a/audio/noaudio.c b/audio/noaudio.c
-index e056813181a..70316c572ec 100644
---- a/audio/noaudio.c
-+++ b/audio/noaudio.c
-@@ -27,7 +27,6 @@
- #include "qemu/audio.h"
- #include "qom/object.h"
+diff --git a/audio/audio_int.h b/audio/audio_int.h
+index 20ec7883aab..3fc4b516878 100644
+--- a/audio/audio_int.h
++++ b/audio/audio_int.h
+@@ -33,12 +33,6 @@
+ #include "qemu/audio-capture.h"
+ #include "mixeng.h"
  
--#define AUDIO_CAP "noaudio"
+-void G_GNUC_PRINTF(2, 0)
+-AUD_vlog(const char *cap, const char *fmt, va_list ap);
+-
+-void G_GNUC_PRINTF(2, 3)
+-AUD_log(const char *cap, const char *fmt, ...);
+-
+ struct audio_callback {
+     void *opaque;
+     audio_callback_fn fn;
+@@ -276,14 +270,6 @@ static inline size_t audio_ring_posb(size_t pos, size_t dist, size_t len)
+     return pos >= dist ? pos - dist : len - dist + pos;
+ }
+ 
+-#define dolog(fmt, ...) AUD_log(AUDIO_CAP, fmt, ## __VA_ARGS__)
+-
+-#ifdef DEBUG
+-#define ldebug(fmt, ...) AUD_log(AUDIO_CAP, fmt, ## __VA_ARGS__)
+-#else
+-#define ldebug(fmt, ...) (void)0
+-#endif
+-
+ AudiodevPerDirectionOptions *audio_get_pdo_in(Audiodev *dev);
+ AudiodevPerDirectionOptions *audio_get_pdo_out(Audiodev *dev);
+ 
+diff --git a/audio/audio_template.h b/audio/audio_template.h
+index 760aaf5f31f..85a128e2f47 100644
+--- a/audio/audio_template.h
++++ b/audio/audio_template.h
+@@ -128,7 +128,7 @@ static int glue (audio_pcm_sw_alloc_resources_, TYPE) (SW *sw)
+         /* f_fe_min = ceil(1 [frames] * f_be [Hz] / size_be [frames]) */
+         f_fe_min = (f_be + HWBUF.size - 1) / HWBUF.size;
+         qemu_log_mask(LOG_UNIMP,
+-                      AUDIO_CAP ": The guest selected a " NAME " sample rate"
++                      "audio: The guest selected a " NAME " sample rate"
+                       " of %d Hz for %s. Only sample rates >= %" PRIu64 " Hz"
+                       " are supported.\n",
+                       sw->info.freq, sw->name, f_fe_min);
+diff --git a/audio/audio-mixeng-be.c b/audio/audio-mixeng-be.c
+index 87e5a2fc3af..a6d5812fc65 100644
+--- a/audio/audio-mixeng-be.c
++++ b/audio/audio-mixeng-be.c
+@@ -26,7 +26,6 @@
+ #include "trace.h"
+ #include "trace/control.h"
+ 
+-#define AUDIO_CAP "audio"
  #include "audio_int.h"
  
- #define TYPE_AUDIO_NONE "audio-none"
+ #define SW_NAME(sw) (sw)->name ? (sw)->name : "unknown"
+@@ -68,24 +67,6 @@ static int audio_format_to_index(AudioFormat af)
+     g_assert_not_reached();
+ }
+ 
+-void AUD_vlog (const char *cap, const char *fmt, va_list ap)
+-{
+-    if (cap) {
+-        fprintf(stderr, "%s: ", cap);
+-    }
+-
+-    vfprintf(stderr, fmt, ap);
+-}
+-
+-void AUD_log (const char *cap, const char *fmt, ...)
+-{
+-    va_list ap;
+-
+-    va_start (ap, fmt);
+-    AUD_vlog (cap, fmt, ap);
+-    va_end (ap);
+-}
+-
+ static char *audsettings_to_string(const struct audsettings *as)
+ {
+     return g_strdup_printf("frequency=%d nchannels=%d fmt=%s endian=%s",
+diff --git a/audio/mixeng.c b/audio/mixeng.c
+index e63c76e021d..a209737a913 100644
+--- a/audio/mixeng.c
++++ b/audio/mixeng.c
+@@ -26,7 +26,6 @@
+ #include "qemu/bswap.h"
+ #include "qemu/audio.h"
+ 
+-#define AUDIO_CAP "mixeng"
+ #include "audio_int.h"
+ #ifdef FLOAT_MIXENG
+ #include "qemu/error-report.h"
 
 -- 
 2.53.0
