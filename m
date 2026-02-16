@@ -4,67 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6B50E63F25
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 07:27:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07DF5E63F32
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 07:28:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vrszs-0008P5-WE; Mon, 16 Feb 2026 02:26:21 -0500
+	id 1vrt1R-0000qs-Ap; Mon, 16 Feb 2026 02:27:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vrszR-0008G2-3j; Mon, 16 Feb 2026 02:25:53 -0500
-Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vrszN-0007i6-0Y; Mon, 16 Feb 2026 02:25:52 -0500
-Received: from mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
- [IPv6:2a02:6b8:c24:fa2:0:640:41ee:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 8E28780854;
- Mon, 16 Feb 2026 10:25:44 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:450::1:4] (unknown [2a02:6bf:8080:450::1:4])
- by mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id hPSvxY2ACW20-eEY3tCbL; Mon, 16 Feb 2026 10:25:44 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1771226744;
- bh=i7DWY4R7GuyFc3Phdu768OUee0a9nkUQdh3YWwFQPBA=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=gX/fWfzp831yfUEa3ue0ZPUHHvKK4AGbFdiC6RElK4nefyGIj4qM+KJvoGOOHnPcL
- N1kzGDuejoaUo37lBaazIa8ejgfKLZdlhF7iUbfZxeOVMGOkAYDHQIz/QbQwQkaiPw
- m4FDhSUgnT/tV7h5mDkVVpNLRPs6WdNO/Mqmk0q0=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <94f379d8-4e9d-48fb-9529-c05251fdebab@yandex-team.ru>
-Date: Mon, 16 Feb 2026 10:25:43 +0300
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vrt1P-0000qk-Lg
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 02:27:55 -0500
+Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vrt1O-0007wM-7n
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 02:27:55 -0500
+Received: by mail-pf1-x434.google.com with SMTP id
+ d2e1a72fcca58-82361bcbd8fso1379113b3a.0
+ for <qemu-devel@nongnu.org>; Sun, 15 Feb 2026 23:27:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1771226872; x=1771831672; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=h9bM0D+0h/RJm4CYvudbWeupqxuHiioSrGUMG+xIyaE=;
+ b=g/A248WgnTffNz6pto/LHauoBffbrxAfKvYBG8WkATmNkAE8+TiD3rgzfhuPSv0PB/
+ qgn/IXZQu7eLCGUHb6PhkmU3eW+mGTZWy/ujpxSz+02L4wo4M0F84Df5pbev1HRu57bU
+ a2NiwQDNtNOzVsIEF4YL/GTy77c1xENk00n3+4vppTDqZMQ0cHUSvU8/W6P6YcwuPZmw
+ uIGMi0IK23+Xqujvndrr6GfiRWhYbKDHao/xL/pZPncjAvc/Ra0t3ZQ4QkTpqJOseh6Q
+ pHJo/P/4FVnSOOzx6rgJrAQEHE5gAiDAZgYdbBs6Ttn1+jU775GQjVJZiB26cNvTKJsD
+ H/rw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1771226872; x=1771831672;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=h9bM0D+0h/RJm4CYvudbWeupqxuHiioSrGUMG+xIyaE=;
+ b=hWt6HTCC9MloaZpIvs5VJmidmhONHJEbx8reI8XvU5UpywVhiaE5epJt2g5tEyMXC/
+ 8QK0f8S1ErO4YZ0RrKdNusFbKvTcasIQUlIpvfzLQ2QJ0YuglTkNfmlXijqu+ksc7Dtf
+ OaHrnDqNEG8Lr5ATQSqOrtmib+Hf+NprxChieUwUMpSH+1x/Q6KBtJffJuW4sfKLHImi
+ wX3sZdZyxmoJcBbSbqw8slBCb4hKV50so/hob0kn6aanTf+ivHPjDUZ1IZ1VvbItjKIn
+ yzl83EY0H6BnPYfYx6R3+qzgcxCTVyH45y/0lpxbCiIuKRYBlfUqfKNdlJLxVnE6bZKH
+ nINg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVSS2sF9SpvvWaVAMyEc8smLi3fCl13GGjPpIFtt0ImqtH/Oe3+oFQNhj54lbNMnuHkodiaZcSssrhT@nongnu.org
+X-Gm-Message-State: AOJu0YwvIXW2ya+A5obxTuG7ZmIZuj/+38Ep0+kJkEWluf3REZEHBIDW
+ 9Ls94GJNEmo2RXCT8bizt6/Q+lVzwMhKqC0Znb/gqcQYf6YX2aYw2UFIL/dif4tNXj8=
+X-Gm-Gg: AZuq6aI8CmQa4AO+XF6dgKE33Wqf5iGl7v4Ura+iKb8xX1cKicW/M4sosWRBYugFixj
+ Fi2Yhay9pKmzLLAiD+nO8tqt1IN5WXKFPwLJ6qyKX6WIIiS0kCNCdd/UydCLjHNjt1oPUPR5DGg
+ IjfshzaYcU1jUZwnA/xxYvLLMYlJ2sLPGUoxpZnRxvwy0Ta9QhyMboSRVgWM0XCcumzmoRr2ccT
+ Xs+YFnjNH2OJobnXgq5jVenSdtfUV9lwNP6UIO1jOLMCsvQg9/pir59Phe2vv2GV8hZgdQOLh4T
+ myICSyybJ6QQsheM6/pVodeW3SqcaS8KGMiY4qd2nVcK/yrhgwizPI/9PYWklTHFPZuuzEf6OEV
+ iafVOyOaWphVXA0rGnlugjDprHo/LZ0QHEcpA13C/se/uuJMWPcln2Zt63fA64pSE5i7q7x2u+G
+ aNsE1NAGoFKDqOBaYbsXtHHC2D7uRlnhBCaNPYfWzzjshN477OIzNS/9wCbLeZJQWe5uXeNEDMY
+ JORJECpego+GzZiEtUM3A==
+X-Received: by 2002:a05:6a00:228e:b0:81f:4675:c2a6 with SMTP id
+ d2e1a72fcca58-824d94d00a0mr6433443b3a.2.1771226872154; 
+ Sun, 15 Feb 2026 23:27:52 -0800 (PST)
+Received: from ?IPV6:2401:d002:dc0f:2100:4a1:428a:70f2:5844?
+ ([2401:d002:dc0f:2100:4a1:428a:70f2:5844])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-824c6a62c48sm9525281b3a.29.2026.02.15.23.27.49
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 15 Feb 2026 23:27:51 -0800 (PST)
+Message-ID: <600adf7c-2c6a-43df-9214-144ed03f8f11@linaro.org>
+Date: Mon, 16 Feb 2026 17:27:45 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v11 8/8] deprecate names duplication between qdev,
- block-node and block-export
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, eduardo@habkost.net,
- berrange@redhat.com, pbonzini@redhat.com, eblake@redhat.com,
- devel@lists.libvirt.org, hreitz@redhat.com, kwolf@redhat.com
-References: <20260119144941.87936-1-vsementsov@yandex-team.ru>
- <20260122160113.1147745-1-vsementsov@yandex-team.ru>
- <87qzr0y990.fsf@pond.sub.org>
- <74b1555d-1e4f-4be2-85e4-902f9670e435@yandex-team.ru>
- <877bsf23y4.fsf@pond.sub.org>
+Subject: Re: [PATCH 0/5] page-vary: Build set_preferred_target_page_bits() as
+ common code
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>
+References: <20260213182713.44924-1-philmd@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <877bsf23y4.fsf@pond.sub.org>
+In-Reply-To: <20260213182713.44924-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=178.154.239.136;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,99 +109,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 14.02.26 10:13, Markus Armbruster wrote:
-> Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
+On 2/14/26 04:27, Philippe Mathieu-Daudé wrote:
+> Allow common code check TARGET_PAGE_BITS_VARY at runtime
+> via the target_page_bits_vary() helper, then use that
+> in set_preferred_target_page_bits() in order to build this
+> method once as common code.
 > 
->> On 04.02.26 15:38, Markus Armbruster wrote:
->>> Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
->>>
->>>> Now we have blockdev-replace QMP command, which depend on a possibility
->>>> to select any block parent (block node, block export, or qdev) by one
->>>> unique name. The command fails, if name is ambiguous (i.e., match
->>>> several parents of different types). In future we want to rid of this
->>>> ambiguity.
->>>>
->>>> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
->>>
->>> We have numerous kinds of IDs, i.e. names chosen by the user than need
->>> to be unique, but only among the same kind.  For instance, you can't
->>> name two block nodes "foo", but you can name a block node, a block
->>> export, a qdev, and a network backend "foo".  Using the same ID for
->>> multiple things is of course a bad idea.  Permitting it was also a bad
->>> idea.
->>>
->>> Your patch rectifies this design mistake, but only partially.  Consider:
->>>
->>> * IDs need to be unique with their kind.  This is what we have now.  I
->>>    don't like it.
->>>
->>> * IDs need to be unique among their kind and possibly some set of
->>>     additional kinds.  This is where your patch takes us.  I like it even
->>>    less, to be honest.
->>>
->>> * IDs need to be unique, period.  This is what I'd like to have.
->>
->> I like it. Is it enough to write it so simple in deprecation doc? Or should
->> we still list all such ids we have in QEMU?
->>
->> It may be something like:
->>
->> Any kind of IDs you use to reference objects in QEMU must be unique, any
->> used ID must reference exactly one object. This includes, but is not limited
->> to qdev full and relative to "/peripheral/" paths, block-node and block-export
->> names.
+> Philippe Mathieu-Daudé (5):
+>    qemu/target_info: Add target_page_bits_vary() helper
+>    page-vary: Expose TARGET_PAGE_BITS_MIN definition
+>    page-vary: Use target_page_bits_vary in set_preferred_target_page_bits
+>    page-vary: Build set_preferred_target_page_bits() as common code
+>    page-vary: Inline set_preferred_target_page_bits_common()
 > 
-> This would serve as a declaration of intent.  Better than nothing, I
-> guess.
-> 
-> To enforce uniqueness, we'll have to create a single table of IDs.
-> 
-> If we make it a set, we can reject duplicate IDs, but can't point to the
-> other ID.  Meh.
-> 
-> If we make it map to the kind of ID, we can report the kind.  Something
-> like "block node name 'foo' clashes with block export ID 'foo'".  Feels
-> adequate.
-> 
-> If we make it map the the object the ID identifies, we can get rid of
-> existing means to map from ID to object.  May or may not be worthwhile.
-> 
-> If we create the single table of IDs now rather than later, we can warn.
-> Something like "duplicate IDs are deprecated: block node name 'foo'
-> clashes with block export ID 'foo'".  Much more likely to get users'
-> attention than a note in docs/about/deprecated.rst.
-> 
-> We could even wire it to the "-compat deprecated-input=..." machinery
-> (I'd assist with that).  This would let people test their software is
-> ready for enforced unique IDs.
-> 
-> Thoughts?
+>   include/exec/page-vary.h          | 15 ++++++++++++++-
+>   include/qemu/target-info-impl.h   |  2 ++
+>   include/qemu/target-info.h        |  7 +++++++
+>   configs/targets/aarch64-softmmu.c |  1 +
+>   configs/targets/arm-softmmu.c     |  1 +
+>   page-vary-common.c                | 29 ++++++++++++++++++-----------
+>   page-vary-target.c                | 25 -------------------------
+>   target-info-stub.c                |  5 +++++
+>   target-info.c                     |  5 +++++
+>   9 files changed, 53 insertions(+), 37 deletions(-)
 > 
 
-
-Sounds good. At least, I may try to make a common function, to be used both
-on object creation and from blockdev-replace to check for ambiguity.
-
-
-Now, another thought come in my mind:
-
-Shouldn't we instead of uniting different name-spaces, select qom-path as a
-primary source of object referencing?
-So, simple reserve "block/export/EXPORT_NAME" for exports and
-"block/node/NODE_NAME" for nodes?
-
-I imaging, if we simply "deprecate duplicating IDs", this will force libvirt
-and others to include object type into the id, so they may start use block
-node names like "block-node-disk1", and block export names like "block-export-disk1".
-We can be proactive, providing a common path for "foldering" IDs.
-
-This way, node-name becomes "relative" QOM path, and may be used in context where
-only node-name could be used (all existing use cases in the API now), but in interfaces,
-where may be used objects of different kinds (like new blockdev-replace) the full
-path is preferred (or even required).
+This patch set moves code from page-vary-target.c to page-vary-common.c, based on the new 
+target_info hook.  But since TARGET_PAGE_BITS_VARY is still used, I don't see the point.
 
 
--- 
-Best regards,
-Vladimir
+r~
 
