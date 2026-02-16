@@ -4,56 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEA25E7BD98
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 11:21:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B8C9E7BD92
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 11:21:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vrweB-0002H2-MI; Mon, 16 Feb 2026 06:20:11 -0500
+	id 1vrwfV-0007aW-7J; Mon, 16 Feb 2026 06:21:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vrwbT-0005fC-6a
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 06:17:27 -0500
+ id 1vrwd3-0007Sp-UF
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 06:19:06 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vrwbM-0007pb-Ir
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 06:17:20 -0500
+ id 1vrwd1-0008Pv-62
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 06:19:01 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771240633;
+ s=mimecast20190719; t=1771240738;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=3xeWvMvqtuFhrWKD3XFf59Ut7UelIyxTytDe1bEinLs=;
- b=EUnqt2B7zgPG+0HrUPXCbiadHTnmppL3vYhTIohB9XEmm0nLNdAanh7Dth3twuuqqfQvfX
- JOLzaLb2x0NcDA2IuLPkcWDhRNwmqWfGovWnrE+I2AarvAQdQTRArZkxfBNg7/WsqcGRNp
- GcFaWedIAaW67t8o+cGqQOY5p0uJfzU=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=zZPwP50pYxUr6MP+yYvCFJCeqAndqgUmshxGKnX4ZHc=;
+ b=bY3/3rUoUuvd6WdNtEbpT3v9Z8APV4CV782cX9cOIuLcjkb5OkP2zcRUmU1L6alq7GnLxV
+ MGjMFqr5XoRLRqgqJA8/7I16hXkvWArvzsZ2R9EWjvOHsL+kcbkeGpIQtfIkH8oQ2ZOPP/
+ Z+ThBY1Wq7J60/Ss3UhEm4SDN/Bwe64=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-640-8t5AbWi2OoWD2baAfHEgnw-1; Mon,
- 16 Feb 2026 06:17:12 -0500
-X-MC-Unique: 8t5AbWi2OoWD2baAfHEgnw-1
-X-Mimecast-MFC-AGG-ID: 8t5AbWi2OoWD2baAfHEgnw_1771240630
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-228-8W2w716eMz2pe1Ymxx73KA-1; Mon,
+ 16 Feb 2026 06:18:54 -0500
+X-MC-Unique: 8W2w716eMz2pe1Ymxx73KA-1
+X-Mimecast-MFC-AGG-ID: 8W2w716eMz2pe1Ymxx73KA_1771240732
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7643B1956061; Mon, 16 Feb 2026 11:17:10 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DD35C1956089; Mon, 16 Feb 2026 11:18:51 +0000 (UTC)
 Received: from localhost (unknown [10.45.242.26])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id E696719560A2; Mon, 16 Feb 2026 11:17:08 +0000 (UTC)
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 546601800464; Mon, 16 Feb 2026 11:18:51 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Mon, 16 Feb 2026 12:15:22 +0100
-Subject: [PATCH 33/85] replay: remove dependency on audio/
+Date: Mon, 16 Feb 2026 12:15:58 +0100
+Subject: [PATCH 69/85] audio/sndio: replace custom logging with
+ error_report
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260216-audio-v1-33-e676662e4514@redhat.com>
+Message-Id: <20260216-audio-v1-69-e676662e4514@redhat.com>
 References: <20260216-audio-v1-0-e676662e4514@redhat.com>
 In-Reply-To: <20260216-audio-v1-0-e676662e4514@redhat.com>
 To: qemu-devel@nongnu.org
@@ -71,25 +72,27 @@ Cc: Gerd Hoffmann <kraxel@redhat.com>,
  Alistair Francis <alistair@alistair23.me>, 
  "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, 
  Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org, 
- =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=10064;
+ =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
+ Thomas Huth <thuth@redhat.com>, 
+ Mark Cave-Ayland <mark.caveayland@nutanix.com>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3292;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=yYN0P5+55ydAfUsgTwVah+g7J0MKZlpuHaNWhwjdvxc=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBpkvxPkSir1VCgrDwANDcB3W/10y+GU5RHkdawC
- 9KiXszkRCKJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaZL8TwAKCRDa6OEJdZac
- 5e9sEACFTWvfUH2QNSKpxj1c/AV90HkIuaB7JEDE65qMyanr+kH7TFsWu9yNaemcnnAHz1tnqnc
- sMDe6CRuKBOabLT0hrOsoSZV1++9sUsnTtqtEhkxH+ui7xMb/TIM6FPmJe/zClXnrDNP2x0LL2R
- tL14pLnkvZisn77R6zxfeBWyd3fFmcFe5wuMWXpOvPc1BygBC3wyzBbX5pxpPIraZtHQS56QdwP
- c42JxVP2SlV/QBEd12Ypzuo30VIWU+JEgaRKjZAJc8BT0+/p9NP07o0tGUuy3grKr6qspQkZT25
- kXNjeOm32NDJ7yk21GpYssZPZVoNFwF3SVaK+7YliDWLBUJHtqhgxeNkoUwobhrkLFtLqL1rTCz
- ayKWzXdVm3pHtnn4SzjEUyOZCYQ0s2+nYnv9Ssz1HPWCXSe1mh0bEPWe074BZPzRSBJ0RDhMaOl
- dLW3GlZ3DwQL+hUAC4/M+WbF+jqT9Q1evDT9WfdB0ztwVL6s/pWQmoLACNRu3zwlLtEhRT029wv
- S+qIawFUdYgTdO1Aia2D+8DR8HqALEyoBC6H/T5TFg4gLZEb9vgHuXQZcI10OI4Uf75OclL1b1l
- 1GXuUcRt0koWhC49bkcYbuQtq9oAPiJJoWkixdLUPkdNtwDKq64mNl63lshlRgDdV8PoI8Wv8/E
- ynDBhNDRcxPVkCw==
+ bh=8yW9wJ3mIfAWUvsc6PEfigNiDWoTGEQkRlzr3mI/fbs=;
+ b=kA0DAAoB2ujhCXWWnOUByyZiAGmS/FGj/RWAwCaalX3Sad3mihLN/7gHO9AimlvuTKXg6QHZW
+ IkCMwQAAQoAHRYhBIepvZM/h8YG0nb2Ldro4Ql1lpzlBQJpkvxRAAoJENro4Ql1lpzlf+AP/0Hf
+ 9dfWzN4T09rWtuvAlg1E/wN4VBXt0eI3AatGe5dpxfHfpDTW8Gf1zggK5Qx7mNMyI2KMJUJJwDM
+ UTXQ5P7Y1Ic6ZXnEpfdCb/DIJl1Pf4YrGcItguC5V5aOoi6PpjZEwfDnotJRPyJkJDNYJEnYpdR
+ zfkd7dVkVSrWfN3NU91ql4qSJgp/0p1qvHeUeLCtzdqux6NUiyT8QQqLfHnuRlf+hKXDP3qeLoS
+ H/jylL1pNwpj86uuWs/d6zo2+SzI/X+ZV+tk7rzB1h5g7xiBYY//U7iKMsOf5JD/R/URdsKG74C
+ kUavivCFGwenRs38C5IdjZA14Ux520EYvlipOUd3D77am1d5fmsZk7VWCfwMZF0b121LJ/ubwSw
+ dovC0BR2Xzu1tigP7BYQQDg38dCLxtuhXICuOFeraMJrFRI0jRJiB/DJdgMEEI1D4lT8EiXu9Vo
+ raL2REVIggU7YvUbB3aDVdFObTivxJhssArngKrEvUeKRPiBT2ZcJoAxgNyCJktyqir1hwkMECW
+ QViUnBOFVaoQM+dhnK9XO9bIKTGS1NyXSbK9dNJsoolFyJxjLuRDat5U9DawIKfxrEfMuLsJV9A
+ tEQq8fWxNIhZBtdRnSOPAiSxCgExnHzhM+ZtloJ6Ya8IELrwEcQrij7HcUyjD5CqQg9DXM41f3b
+ U0XhE
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -116,281 +119,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The replay infrastructure shouldn't depend on internals of audio/.
-(st_sample is an internal implementation detail and could be different)
-
-Let audio drive the audio samples recording/replaying.
-
-Notice also we don't need to save & restore the internal ring "wpos",
-all replay should care about is the number of samples and the samples.
-
-Bump the replay version.
+Replace the custom audio logging infrastructure (dolog macro) with
+standard QEMU error reporting (error_report).
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
 ---
- audio/audio_int.h         |  5 +++++
- include/qemu/audio.h      |  5 -----
- include/system/replay.h   | 11 ++++++++--
- replay/replay-internal.h  |  2 ++
- audio/audio.c             | 23 +++++++++++++++++++--
- replay/replay-audio.c     | 51 ++++++++++++++++++++++++++++-------------------
- replay/replay.c           |  2 +-
- replay/stubs-system.c     |  8 +++++++-
- tests/audio/audio-stubs.c | 13 +++++++++---
- 9 files changed, 85 insertions(+), 35 deletions(-)
+ audio/sndioaudio.c | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/audio/audio_int.h b/audio/audio_int.h
-index e1f9fa333ba..250fd45238d 100644
---- a/audio/audio_int.h
-+++ b/audio/audio_int.h
-@@ -309,6 +309,11 @@ static inline size_t audio_ring_posb(size_t pos, size_t dist, size_t len)
- AudiodevPerDirectionOptions *audio_get_pdo_in(Audiodev *dev);
- AudiodevPerDirectionOptions *audio_get_pdo_out(Audiodev *dev);
+diff --git a/audio/sndioaudio.c b/audio/sndioaudio.c
+index 21f43836fd1..766eceeeefe 100644
+--- a/audio/sndioaudio.c
++++ b/audio/sndioaudio.c
+@@ -18,12 +18,12 @@
+ #include <poll.h>
+ #include <sndio.h>
+ #include "qemu/main-loop.h"
++#include "qemu/error-report.h"
+ #include "qemu/audio.h"
+-#include "trace.h"
+ #include "qom/object.h"
  
-+void audio_sample_to_uint64(const st_sample *sample, int pos,
-+                            uint64_t *left, uint64_t *right);
-+void audio_sample_from_uint64(st_sample *sample, int pos,
-+                              uint64_t left, uint64_t right);
-+
- #define TYPE_AUDIO_MIXENG_BACKEND "audio-mixeng-backend"
- OBJECT_DECLARE_TYPE(AudioMixengBackend, AudioMixengBackendClass, AUDIO_MIXENG_BACKEND)
+-#define AUDIO_CAP "sndio"
+ #include "audio_int.h"
++#include "trace.h"
  
-diff --git a/include/qemu/audio.h b/include/qemu/audio.h
-index 1eeead2a722..03ce9adbc88 100644
---- a/include/qemu/audio.h
-+++ b/include/qemu/audio.h
-@@ -120,11 +120,6 @@ void audio_cleanup(void);
- 
- typedef struct st_sample st_sample;
- 
--void audio_sample_to_uint64(const st_sample *sample, int pos,
--                            uint64_t *left, uint64_t *right);
--void audio_sample_from_uint64(st_sample *sample, int pos,
--                            uint64_t left, uint64_t right);
--
- void audio_add_audiodev(Audiodev *audio);
- void audio_add_default_audiodev(Audiodev *dev, Error **errp);
- void audio_parse_option(const char *opt);
-diff --git a/include/system/replay.h b/include/system/replay.h
-index f8715ca9feb..19fb6dbb396 100644
---- a/include/system/replay.h
-+++ b/include/system/replay.h
-@@ -165,8 +165,15 @@ void replay_net_packet_event(ReplayNetState *rns, unsigned flags,
- 
- /*! Saves/restores number of played samples of audio out operation. */
- void replay_audio_out(size_t *played);
--/*! Saves/restores recorded samples of audio in operation. */
--void replay_audio_in(size_t *recorded, st_sample *samples, size_t *wpos, size_t size);
-+/*
-+ * Start saves/restores recorded samples of audio in operation.
-+ * Must be called before replay_audio_in_sample_lr().
-+ */
-+void replay_audio_in_start(size_t *recorded);
-+/* Saves/restores recorded samples. */
-+void replay_audio_in_sample_lr(uint64_t *left, uint64_t *right);
-+/* Finish saves/restores recorded samples. */
-+void replay_audio_in_finish(void);
- 
- /* VM state operations */
- 
-diff --git a/replay/replay-internal.h b/replay/replay-internal.h
-index 75249b76936..643b357da12 100644
---- a/replay/replay-internal.h
-+++ b/replay/replay-internal.h
-@@ -85,6 +85,7 @@ enum ReplayEvents {
-  * @file_offset: offset into replay log at replay snapshot
-  * @block_request_id: current serialised block request id
-  * @read_event_id: current async read event id
-+ * @n_audio_samples: expected audio samples
-  */
- typedef struct ReplayState {
-     int64_t cached_clock[REPLAY_CLOCK_COUNT];
-@@ -96,6 +97,7 @@ typedef struct ReplayState {
-     uint64_t file_offset;
-     uint64_t block_request_id;
-     uint64_t read_event_id;
-+    size_t n_audio_samples;
- } ReplayState;
- extern ReplayState replay_state;
- 
-diff --git a/audio/audio.c b/audio/audio.c
-index 1fa63ee0421..3e16b719399 100644
---- a/audio/audio.c
-+++ b/audio/audio.c
-@@ -1301,13 +1301,32 @@ static void audio_run_in(AudioMixengBackend *s)
-     while ((hw = audio_pcm_hw_find_any_enabled_in(s, hw))) {
-         SWVoiceIn *sw;
-         size_t captured = 0, min;
-+        int pos;
- 
-         if (replay_mode != REPLAY_MODE_PLAY) {
-             captured = audio_pcm_hw_run_in(
-                 hw, hw->conv_buf.size - audio_pcm_hw_get_live_in(hw));
-         }
--        replay_audio_in(&captured, hw->conv_buf.buffer, &hw->conv_buf.pos,
--                        hw->conv_buf.size);
-+
-+        replay_audio_in_start(&captured);
-+        assert(captured <= hw->conv_buf.size);
-+        if (replay_mode == REPLAY_MODE_PLAY) {
-+            hw->conv_buf.pos = (hw->conv_buf.pos + captured) % hw->conv_buf.size;
-+        }
-+        for (pos = (hw->conv_buf.pos - captured + hw->conv_buf.size) % hw->conv_buf.size;
-+             pos != hw->conv_buf.pos;
-+             pos = (pos + 1) % hw->conv_buf.size) {
-+                uint64_t left, right;
-+
-+                if (replay_mode == REPLAY_MODE_RECORD) {
-+                    audio_sample_to_uint64(hw->conv_buf.buffer, pos, &left, &right);
-+                }
-+                replay_audio_in_sample_lr(&left, &right);
-+                if (replay_mode == REPLAY_MODE_PLAY) {
-+                    audio_sample_from_uint64(hw->conv_buf.buffer, pos, left, right);
-+                }
-+        }
-+        replay_audio_in_finish();
- 
-         min = audio_pcm_hw_find_min_in (hw);
-         hw->total_samples_captured += captured - min;
-diff --git a/replay/replay-audio.c b/replay/replay-audio.c
-index 1b614f41379..7d20ae9110c 100644
---- a/replay/replay-audio.c
-+++ b/replay/replay-audio.c
-@@ -13,7 +13,6 @@
- #include "qemu/error-report.h"
- #include "system/replay.h"
- #include "replay-internal.h"
--#include "qemu/audio.h"
- 
- void replay_audio_out(size_t *played)
- {
-@@ -35,38 +34,48 @@ void replay_audio_out(size_t *played)
+ #define TYPE_AUDIO_SNDIO "audio-sndio"
+ OBJECT_DECLARE_SIMPLE_TYPE(AudioSndio, AUDIO_SNDIO)
+@@ -348,7 +348,7 @@ static int sndio_init(SndioVoice *self,
+     /* open the device in non-blocking mode */
+     self->hdl = sio_open(dev_name, mode, 1);
+     if (self->hdl == NULL) {
+-        dolog("failed to open device\n");
++        error_report("sndio: failed to open device");
+         return -1;
      }
- }
  
--void replay_audio_in(size_t *recorded, st_sample *samples, size_t *wpos, size_t size)
-+void replay_audio_in_start(size_t *nsamples)
- {
--    int pos;
--    uint64_t left, right;
-     if (replay_mode == REPLAY_MODE_RECORD) {
-         g_assert(replay_mutex_locked());
-         replay_save_instructions();
-         replay_put_event(EVENT_AUDIO_IN);
--        replay_put_qword(*recorded);
--        replay_put_qword(*wpos);
--        for (pos = (*wpos - *recorded + size) % size ; pos != *wpos
--             ; pos = (pos + 1) % size) {
--            audio_sample_to_uint64(samples, pos, &left, &right);
--            replay_put_qword(left);
--            replay_put_qword(right);
--        }
-+        replay_put_qword(*nsamples);
-+        replay_state.n_audio_samples = *nsamples;
-     } else if (replay_mode == REPLAY_MODE_PLAY) {
-         g_assert(replay_mutex_locked());
-         replay_account_executed_instructions();
-         if (replay_next_event_is(EVENT_AUDIO_IN)) {
--            *recorded = replay_get_qword();
--            *wpos = replay_get_qword();
--            for (pos = (*wpos - *recorded + size) % size ; pos != *wpos
--                 ; pos = (pos + 1) % size) {
--                left = replay_get_qword();
--                right = replay_get_qword();
--                audio_sample_from_uint64(samples, pos, left, right);
--            }
--            replay_finish_event();
-+            *nsamples = replay_get_qword();
-+            replay_state.n_audio_samples = *nsamples;
-         } else {
-             error_report("Missing audio in event in the replay log");
-             abort();
-         }
+@@ -382,7 +382,7 @@ static int sndio_init(SndioVoice *self,
+         req.sig = 0;
+         break;
+     default:
+-        dolog("unknown audio sample format\n");
++        error_report("sndio: unknown audio sample format");
+         return -1;
      }
- }
-+
-+void replay_audio_in_sample_lr(uint64_t *left, uint64_t *right)
-+{
-+    if (replay_mode == REPLAY_MODE_RECORD) {
-+        replay_put_qword(*left);
-+        replay_put_qword(*right);
-+    } else if (replay_mode == REPLAY_MODE_PLAY) {
-+        *left = replay_get_qword();
-+        *right = replay_get_qword();
-+    } else {
-+        return;
-+    }
-+
-+    assert(replay_state.n_audio_samples > 0);
-+    replay_state.n_audio_samples--;
-+}
-+
-+void replay_audio_in_finish(void)
-+{
-+    assert(replay_state.n_audio_samples == 0);
-+
-+    if (replay_mode == REPLAY_MODE_PLAY) {
-+        replay_finish_event();
-+    }
-+}
-diff --git a/replay/replay.c b/replay/replay.c
-index b2121788c1d..2e5c6fa82ea 100644
---- a/replay/replay.c
-+++ b/replay/replay.c
-@@ -22,7 +22,7 @@
  
- /* Current version of the replay mechanism.
-    Increase it when file format changes. */
--#define REPLAY_VERSION              0xe0200c
-+#define REPLAY_VERSION              0xe0200d
- /* Size of replay log header */
- #define HEADER_SIZE                 (sizeof(uint32_t) + sizeof(uint64_t))
+@@ -401,12 +401,12 @@ static int sndio_init(SndioVoice *self,
+     req.appbufsz = req.rate * latency / 1000000;
  
-diff --git a/replay/stubs-system.c b/replay/stubs-system.c
-index 7f85764936f..b2c52bc4043 100644
---- a/replay/stubs-system.c
-+++ b/replay/stubs-system.c
-@@ -15,7 +15,13 @@ void replay_input_sync_event(void)
- void replay_add_blocker(const char *feature)
- {
- }
--void replay_audio_in(size_t *recorded, st_sample *samples, size_t *wpos, size_t size)
-+void replay_audio_in_start(size_t *nsamples)
-+{
-+}
-+void replay_audio_in_sample_lr(uint64_t *left, uint64_t *right)
-+{
-+}
-+void replay_audio_in_finish(void)
- {
- }
- void replay_audio_out(size_t *played)
-diff --git a/tests/audio/audio-stubs.c b/tests/audio/audio-stubs.c
-index dd7f635d460..2c19dfa7d6b 100644
---- a/tests/audio/audio-stubs.c
-+++ b/tests/audio/audio-stubs.c
-@@ -35,12 +35,19 @@ dbus_win32_import_socket(GDBusMethodInvocation *invocation,
- }
- #endif
+     if (!sio_setpar(self->hdl, &req)) {
+-        dolog("failed set audio params\n");
++        error_report("sndio: failed to set audio params");
+         goto fail;
+     }
  
--void replay_audio_in(size_t *recorded, st_sample *samples,
--                     size_t *wpos, size_t size)
-+void replay_audio_out(size_t *played)
- {
- }
+     if (!sio_getpar(self->hdl, &self->par)) {
+-        dolog("failed get audio params\n");
++        error_report("sndio: failed to get audio params");
+         goto fail;
+     }
  
--void replay_audio_out(size_t *played)
-+void replay_audio_in_start(size_t *nsamples)
-+{
-+}
-+
-+void replay_audio_in_sample_lr(uint64_t *left, uint64_t *right)
-+{
-+}
-+
-+void replay_audio_in_finish(void)
- {
- }
+@@ -419,7 +419,7 @@ static int sndio_init(SndioVoice *self,
+     if (self->par.bits != req.bits || self->par.bps != req.bits / 8 ||
+         self->par.sig != req.sig || (req.bits > 8 && self->par.le != req.le) ||
+         self->par.rate != as->freq || nch != as->nchannels) {
+-        dolog("unsupported audio params\n");
++        error_report("sndio: unsupported audio params");
+         goto fail;
+     }
+ 
+@@ -431,7 +431,7 @@ static int sndio_init(SndioVoice *self,
+ 
+     self->buf = g_malloc(self->buf_size);
+     if (self->buf == NULL) {
+-        dolog("failed to allocate audio buffer\n");
++        error_report("sndio: failed to allocate audio buffer");
+         goto fail;
+     }
+ 
+@@ -439,13 +439,13 @@ static int sndio_init(SndioVoice *self,
+ 
+     self->pfds = g_malloc_n(nfds, sizeof(struct pollfd));
+     if (self->pfds == NULL) {
+-        dolog("failed to allocate pollfd structures\n");
++        error_report("sndio: failed to allocate pollfd structures");
+         goto fail;
+     }
+ 
+     self->pindexes = g_malloc_n(nfds, sizeof(struct pollindex));
+     if (self->pindexes == NULL) {
+-        dolog("failed to allocate pollindex structures\n");
++        error_report("sndio: failed to allocate pollindex structures");
+         goto fail;
+     }
  
 
 -- 
