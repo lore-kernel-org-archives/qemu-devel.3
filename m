@@ -4,47 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68CA3E83839
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 21:31:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96348E83837
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 21:31:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vs6B4-0005eV-0X; Mon, 16 Feb 2026 16:30:46 -0500
+	id 1vs6AX-0005YC-Gq; Mon, 16 Feb 2026 16:30:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vs6Az-0005dF-Uo
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 16:30:42 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vs6AW-0005Xa-AU
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 16:30:12 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vs6Ax-0003sK-3c
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 16:30:40 -0500
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vs6AT-0003pZ-KQ
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 16:30:12 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771277438;
+ s=mimecast20190719; t=1771277407;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=4hgravtsOkkk5VDUuh01/2wbYrlfoToX4zteClpnseI=;
- b=fuWbBVvzAaudCqkkjxhWmtIo+EZOfAEPL3BRQuNIL5+F8x1CW/UFHwIW5YP4qF3PGgKgVb
- 7cBfBPceX+XwfmSsgAgMCU6E8FOPHxG8mDbG52zVaNuqXQ4SeWxJqduLbpAqS1Tcs4R6y6
- UqCOv4S1pIgoHCxIe9KiSOv/R8Ody2U=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=MtBCL7UOtkzlqsKKTJdf2TCiC+3Nt+OdmZZ43ilsAIs=;
+ b=hqbXivGthfsnkkyoK54XS9Zl7oYtS6m3CBJUrBwI0LMC/ow+Htur9joisUZcmkvdffRAGJ
+ 5CJMtUs8EliYbpnWVGdlxqoXCj9m4elpTuIzhpmBf5YHsWVREcbPTzuaAD8vQRNB88oepP
+ /GbBYue9YSNHF7OWx8Acm98R9T0YXc8=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-496-SyikLEWOPEqzm-vb4SYrNg-1; Mon,
- 16 Feb 2026 16:30:35 -0500
-X-MC-Unique: SyikLEWOPEqzm-vb4SYrNg-1
-X-Mimecast-MFC-AGG-ID: SyikLEWOPEqzm-vb4SYrNg_1771277433
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-351--khj8uOlMeSpz_fDsZizVw-1; Mon,
+ 16 Feb 2026 16:30:04 -0500
+X-MC-Unique: -khj8uOlMeSpz_fDsZizVw-1
+X-Mimecast-MFC-AGG-ID: -khj8uOlMeSpz_fDsZizVw_1771277402
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 046DC195605B; Mon, 16 Feb 2026 21:30:33 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id ED8C11955D7A; Mon, 16 Feb 2026 21:30:00 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.88.120])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 86AC519560A3; Mon, 16 Feb 2026 21:30:26 +0000 (UTC)
+ id 7AD9F19560A2; Mon, 16 Feb 2026 21:29:54 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
@@ -65,25 +64,23 @@ Cc: qemu-block@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
  Ed Maste <emaste@freebsd.org>, Kevin Wolf <kwolf@redhat.com>,
  Fabiano Rosas <farosas@suse.de>, Michael Roth <michael.roth@amd.com>,
  Li-Wen Hsu <lwhsu@freebsd.org>, Hanna Reitz <hreitz@redhat.com>
-Subject: [PATCH v7 05/19] python/mkvenv: add mechanism to install local
- package(s)
-Date: Mon, 16 Feb 2026 16:29:37 -0500
-Message-ID: <20260216212952.420120-6-jsnow@redhat.com>
-In-Reply-To: <20260216212952.420120-1-jsnow@redhat.com>
-References: <20260216212952.420120-1-jsnow@redhat.com>
+Subject: [PATCH v7 00/19] python: drop qemu.qmp from qemu.git tree
+Date: Mon, 16 Feb 2026 16:29:32 -0500
+Message-ID: <20260216212952.420120-1-jsnow@redhat.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,115 +96,217 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently, we "implicitly" install the local 'qemu' python package for
-'make check-venv' with some logic inside tests/Makefile.include. I would
-like to make this installation explicit in pythondeps.toml instead.
-
-This patch adds a path constraint that can be used in lieu of version
-constraints to specify that a package should be installed from the
-source tree instead of from PyPI or vendored packages. This is done to
-allow us to install the python packages hosted inside of the tree while
-also processing dependencies; i.e. so that our "qemu" package can
-specify that it needs "qemu.qmp", which soon will not be included in
-qemu.git.
-
-This also has the benefit of being able to specify in a declarative
-configuration file that our pyvenv environment *will* have our local
-python packages installed and available without any PYTHONPATH hacks,
-which should simplify iotests, device-crash-test and functional tests
-without needing to manage local inclusion paths in environment
-variables.
-
-On the downsides, installing packages through mkvenv/ensuregroup means
-that there are extra steps we need to take in order to install a local
-package *offline*; namely we must disable build isolation (so we have
-access to setuptools) and we must also include python3-wheel in QEMU's
-build dependencies in order for "make check" to run successfully when in
-an offline, isolated environment. These extra dependencies are handled
-in a forthcoming commit; for now, nothing is utilizing this new pathway.
-
-Signed-off-by: John Snow <jsnow@redhat.com>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
----
- python/scripts/mkvenv.py | 37 +++++++++++++++++++++++++++++++------
- 1 file changed, 31 insertions(+), 6 deletions(-)
-
-diff --git a/python/scripts/mkvenv.py b/python/scripts/mkvenv.py
-index b4662d33e6e..8ed6a354505 100644
---- a/python/scripts/mkvenv.py
-+++ b/python/scripts/mkvenv.py
-@@ -662,6 +662,7 @@ def pip_install(
-     args: Sequence[str],
-     online: bool = False,
-     wheels_dir: Optional[Union[str, Path]] = None,
-+    env: Optional[Dict[str, str]] = None,
- ) -> None:
-     """
-     Use pip to install a package or package(s) as specified in @args.
-@@ -687,6 +688,7 @@ def pip_install(
-     full_args += list(args)
-     subprocess.run(
-         full_args,
-+        env=env,
-         check=True,
-     )
- 
-@@ -733,9 +735,14 @@ def _do_ensure(
-     :param wheels_dir: If specified, search this path for packages.
-     """
-     absent = []
-+    local_packages = []
-     present = []
-     canary = None
-     for name, info in group.items():
-+        if "path" in info:
-+            pkgpath = Path(__file__).parents[2].joinpath(info["path"])
-+            local_packages.append(str(pkgpath))
-+            continue
-         constraint = _make_version_constraint(info, False)
-         matcher = Matcher(name + constraint)
-         print(f"mkvenv: checking for {matcher}", file=sys.stderr)
-@@ -770,15 +777,33 @@ def _do_ensure(
-             print(f"mkvenv: installing {', '.join(absent)}", file=sys.stderr)
-             try:
-                 pip_install(args=absent, online=online, wheels_dir=wheels_dir)
--                return None
-+                absent = []
-             except subprocess.CalledProcessError:
-                 pass
- 
--        return diagnose(
--            absent[0],
--            online,
--            wheels_dir,
--            canary,
-+        if absent:
-+            return diagnose(
-+                absent[0],
-+                online,
-+                wheels_dir,
-+                canary,
-+            )
-+
-+    # Handle local packages separately and last so we can use different
-+    # installation arguments (-e), and so that any dependencies that may
-+    # be covered above will be handled according to the depfile
-+    # specifications.
-+    if local_packages:
-+        print(f"mkvenv: installing {', '.join(local_packages)}",
-+              file=sys.stderr)
-+        env = dict(os.environ)
-+        env['PIP_CONFIG_SETTINGS'] = "editable_mode=compat"
-+        pip_install(
-+            args=["--no-build-isolation",
-+                  "-e"] + local_packages,
-+            online=online,
-+            wheels_dir=wheels_dir,
-+            env=env,
-         )
- 
-     return None
--- 
-2.53.0
+Hello!=0D
+=0D
+This series drops the in-tree version of our python-qemu-qmp package=0D
+("qemu.qmp") in favor of the version hosted on PyPI, whose repository is=0D
+located at https://gitlab.com/qemu-project/python-qemu-qmp.=0D
+=0D
+GitLab CI: https://gitlab.com/jsnow/qemu/-/pipelines/2329875804=0D
+=0D
+The major effects of this patch series are:=0D
+=0D
+1. qemu.qmp and the python/ directory will be installed to the=0D
+   configure-time venv (build/pyvenv) by default.=0D
+2. qemu.qmp will be installed from PyPI or vendored packages instead of=0D
+   being utilized directly from the qemu.git tree.=0D
+3. "make check-venv" is removed as it is no longer needed.=0D
+4. functional test dependencies are installed as-needed when running=0D
+   those tests.=0D
+5. Unfortunately, python3-wheel and python3-setuptools are now required=0D
+   on the host system if tests are to be executed and >=3D Python 3.13 is=0D
+   used.=0D
+6. An awful lot of deleted lines of code, and a lot fewer headaches=0D
+   managing two nearly-identical copies of this source code. O:-)=0D
+=0D
+v7:=0D
+=0D
+ - Fixed OpenBSD VM test=0D
+ - Fixed a recently failing MacOS test, by...=0D
+ - Upgraded lcitool to latest version=0D
+   - Upgraded Fedora from 41 -> 43=0D
+   - Upgraded Alpine from 3.21 -> 3.23=0D
+ - Included contrig/plugins/cpp fix for CI testing purposes=0D
+ - Added minimum versions for setuptools and wheel to pythondeps.toml=0D
+=0D
+Note that v7 sees a new(?) failure in check-rust-tools-nightly as a=0D
+result of the Fedora 43 upgrade. I think this series has spiralled out=0D
+of control trying to keep the CI green and I am not familiar enough with=0D
+our rust tooling to go and fix this myself. The tox test is *also* still=0D
+failing, but not because of this series - and will be fixed in a=0D
+separate series that updates our Python testing.=0D
+=0D
+v6:=0D
+=0D
+ - Added workaround for configure-less VM tests=0D
+=0D
+v5:=0D
+=0D
+ - Changed the local package install mechanism as per Paolo's advice=0D
+ - Changed "file://" mechanism for local installs, following the msys2=0D
+   test fixes upstream that did the same=0D
+ - Fix typo in cover letter (thuth)=0D
+ - Fixed comments around mkvenv invocations; functests group will=0D
+   *always* use the --online flag, whether or not it was=0D
+   configured. (danpb)=0D
+ - Please, let this nightmare be over=0D
+=0D
+v4:=0D
+=0D
+ - Rename "checktests" group to "tooling", install it by default=0D
+   alongside meson at configure-time.=0D
+ - Remove "check-venv" entirely.=0D
+ - Update python/README.rst to reflect the new paradigm=0D
+ - Update many scripts that import qemu.qmp to give new errors when they=0D
+   are run outside of the configure venv=0D
+=0D
+KNOWN ISSUES IN V4:=0D
+=0D
+ - The last patch is an RFC based on Thomas' observations, I don't have=0D
+   a strong opinion on if we want it or not.=0D
+ - Removing "make check-venv" causes the VM tests to rebuild more often;=0D
+   I was not sure how to replace the old conditional behavior in an=0D
+   equivalent manner. Suggestions, anyone...?=0D
+=0D
+v3:=0D
+=0D
+ - Fixed FreeBSD vm test=0D
+ - Fixed Cirrus macOS test (Needed setuptools as a dep, "file:///" had=0D
+   one too many forward slashes, which works fine for older=0D
+   pip/setuptools, but was incompatibly fixed recently.)=0D
+ - Fixed an issue that prevented installing the local python packages in=0D
+   an offline, isolated build environment (need --no-isolated-build and=0D
+   pip environment variable flags)=0D
+ - Added the python3-wheel and python3-setuptools build dependencies to=0D
+   lcitool, owing to the above issues=0D
+ - Ensured that the $download flag (for PyPI access) from configure is=0D
+   carried over into pytest/meson.build invocations.  This defaults to=0D
+   "enabled", so test dependencies should not have any issue being=0D
+   fetched on most developer workstations and build environments.=0D
+ - Fixed several bugs in the mkvenv.py local package installation mechanism=
+.=0D
+ - Flags and workarounds added for installing local packages offline now=0D
+   apply *only* to local package installations, and not "normal"=0D
+   depspecs.=0D
+ - Reordered patches into more logical "phases" for easier review (I=0D
+   hope...?)=0D
+=0D
+Known issues: "make check-build" still installs all of the test=0D
+dependencies to the pyvenv. I'm not sure if this is desired or not, but=0D
+I ran into problems preventing it from doing this without breaking a ton=0D
+of CI tests. I'll continue to investigate this, but wanted to send this=0D
+v3 out.=0D
+=0D
+v2:=0D
+=0D
+ - move "make check-venv" earlier in GitLab CI/CD pipeline, to avoid=0D
+   re-running configure=0D
+ - Fix functional tests not using PyPI to fetch pygdbmi package=0D
+ - Remove pre-requisites which are now merged=0D
+=0D
+--js=0D
+=0D
+John Snow (18):=0D
+  python/mkvenv: create timestamp file for each group "ensured"=0D
+  python/mkvenv: bump 'qemu.qmp' dependency for testdeps=0D
+  python/mkvenv: add 'tooling' and 'functests' dependency groups=0D
+  python/mkvenv: add mechanism to install local package(s)=0D
+  meson, mkvenv: add functests custom target=0D
+  tests: Use configured python to run GitLab iotests=0D
+  tests: use "run" script to execute device-crash-test=0D
+  tests/lcitool: update lcitool to latest version=0D
+  tests/lcitool: add python3 wheel and setuptools deps for qemu=0D
+  python: add vendored qemu.qmp package=0D
+  meson, mkvenv: make functional tests depend on functests group=0D
+  meson, mkvenv: add qemu.git/python/qemu package to pythondeps.toml=0D
+  configure: unconditionally install "tooling" group=0D
+  tests: replace check-venv with vm-venv target=0D
+  scripts: nudge users to use 'run' script for scripts that import=0D
+    qemu.qmp=0D
+  python: delete qemu.qmp=0D
+  python: update README.rst to reflect qemu.qmp's removal=0D
+  python: add setuptools and wheel dependencies=0D
+=0D
+Pierrick Bouvier (1):=0D
+  [do-not-merge] contrib/plugins/cpp: use __has_include=0D
+=0D
+ python/README.rst                             |   52 +-=0D
+ configure                                     |    2 +-=0D
+ meson.build                                   |    1 +=0D
+ .gitlab-ci.d/buildtest.yml                    |   26 +-=0D
+ .gitlab-ci.d/cirrus/freebsd-14.vars           |    2 +-=0D
+ .gitlab-ci.d/cirrus/macos-14.vars             |    2 +-=0D
+ .gitlab-ci.d/windows.yml                      |    2 +=0D
+ contrib/plugins/cpp.cpp                       |  261 +++-=0D
+ python/qemu/qmp/__init__.py                   |   60 -=0D
+ python/qemu/qmp/error.py                      |   53 -=0D
+ python/qemu/qmp/events.py                     |  751 -----------=0D
+ python/qemu/qmp/legacy.py                     |  339 -----=0D
+ python/qemu/qmp/message.py                    |  217 ----=0D
+ python/qemu/qmp/models.py                     |  146 ---=0D
+ python/qemu/qmp/protocol.py                   | 1101 -----------------=0D
+ python/qemu/qmp/py.typed                      |    0=0D
+ python/qemu/qmp/qmp_client.py                 |  732 -----------=0D
+ python/qemu/qmp/qmp_shell.py                  |  689 -----------=0D
+ python/qemu/qmp/qmp_tui.py                    |  665 ----------=0D
+ python/qemu/qmp/util.py                       |  150 ---=0D
+ python/qemu/utils/qom_fuse.py                 |    1 -=0D
+ python/scripts/mkvenv.py                      |   43 +-=0D
+ python/scripts/vendor.py                      |    2 +=0D
+ python/setup.cfg                              |   31 +-=0D
+ python/tests/minreqs.txt                      |    8 +-=0D
+ python/tests/protocol.py                      |  596 ---------=0D
+ python/wheels/qemu_qmp-0.0.5-py3-none-any.whl |  Bin 0 -> 72263 bytes=0D
+ pythondeps.toml                               |   21 +-=0D
+ pyvenv/meson.build                            |   27 +=0D
+ scripts/compare-machine-types.py              |    7 +-=0D
+ scripts/device-crash-test                     |    5 +-=0D
+ scripts/qmp/qemu-ga-client                    |   13 +-=0D
+ scripts/qmp/qmp-shell                         |   13 +-=0D
+ scripts/qmp/qmp-shell-wrap                    |   13 +-=0D
+ scripts/qmp/qom-fuse                          |   13 +-=0D
+ scripts/qmp/qom-get                           |   13 +-=0D
+ scripts/qmp/qom-list                          |   13 +-=0D
+ scripts/qmp/qom-set                           |   13 +-=0D
+ scripts/qmp/qom-tree                          |   13 +-=0D
+ scripts/qmp_helper.py                         |    9 +-=0D
+ scripts/render_block_graph.py                 |   10 +-=0D
+ scripts/simplebench/bench_block_job.py        |   10 +-=0D
+ tests/Makefile.include                        |   22 +-=0D
+ tests/docker/dockerfiles/alpine.docker        |    6 +-=0D
+ tests/docker/dockerfiles/centos9.docker       |  242 ++--=0D
+ .../dockerfiles/fedora-rust-nightly.docker    |  262 ++--=0D
+ .../dockerfiles/fedora-win64-cross.docker     |  162 +--=0D
+ tests/docker/dockerfiles/fedora.docker        |  262 ++--=0D
+ tests/docker/dockerfiles/opensuse-leap.docker |    1 +=0D
+ tests/functional/meson.build                  |    5 +-=0D
+ tests/lcitool/libvirt-ci                      |    2 +-=0D
+ tests/lcitool/mappings.yml                    |    2 +-=0D
+ tests/lcitool/projects/qemu.yml               |    2 +=0D
+ tests/lcitool/refresh                         |    8 +-=0D
+ tests/migration-stress/guestperf/engine.py    |   15 +-=0D
+ tests/vm/Makefile.include                     |   18 +-=0D
+ tests/vm/generated/freebsd.json               |    2 +=0D
+ tests/vm/openbsd                              |    3 +=0D
+ 58 files changed, 996 insertions(+), 6143 deletions(-)=0D
+ delete mode 100644 python/qemu/qmp/__init__.py=0D
+ delete mode 100644 python/qemu/qmp/error.py=0D
+ delete mode 100644 python/qemu/qmp/events.py=0D
+ delete mode 100644 python/qemu/qmp/legacy.py=0D
+ delete mode 100644 python/qemu/qmp/message.py=0D
+ delete mode 100644 python/qemu/qmp/models.py=0D
+ delete mode 100644 python/qemu/qmp/protocol.py=0D
+ delete mode 100644 python/qemu/qmp/py.typed=0D
+ delete mode 100644 python/qemu/qmp/qmp_client.py=0D
+ delete mode 100644 python/qemu/qmp/qmp_shell.py=0D
+ delete mode 100644 python/qemu/qmp/qmp_tui.py=0D
+ delete mode 100644 python/qemu/qmp/util.py=0D
+ delete mode 100644 python/tests/protocol.py=0D
+ create mode 100644 python/wheels/qemu_qmp-0.0.5-py3-none-any.whl=0D
+ create mode 100644 pyvenv/meson.build=0D
+=0D
+-- =0D
+2.53.0=0D
+=0D
 
 
