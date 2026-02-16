@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 420F0E83824
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 19:15:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCEE3E83824
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 19:16:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vs43b-0001ZH-M3; Mon, 16 Feb 2026 14:14:58 -0500
+	id 1vs42x-0008Cy-GW; Mon, 16 Feb 2026 14:14:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1vs43J-00016G-Ht
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 14:14:39 -0500
+ id 1vs42w-0008At-2c
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 14:14:14 -0500
 Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1vs43H-0003cl-4n
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 14:14:36 -0500
-ARC-Seal: i=1; a=rsa-sha256; t=1771269260; cv=none; 
+ id 1vs42u-0003b2-9b
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 14:14:13 -0500
+ARC-Seal: i=1; a=rsa-sha256; t=1771269238; cv=none; 
  d=zohomail.com; s=zohoarc; 
- b=H/Z/nuKiF+YpW2WKmEp7dyeD190js2UZvSuHfVzChHvtosg71j978f7RiwJFBi9Sxyes/MuoJMgmV64wRIDpgTVWMRb0RzNWcwzPE0dDatKfL3S92MriCOgzDyKphBG2HBOEJ9SJ3CsXRRTR6FFHOvRexucEO8dAej1OsSWqmv4=
+ b=a2ZZxxeMYT3Qzld0VjD8/XCu7OflkuffRoBTzEXJ116pYufHLNBB6P1E3xiDvLPcx8pIwQGZBTQu3phEhfiBDEZyJOR2OP81vJDpgpIxGS76tgJ8fKNvjziG8thQ4zGc/bMxAFWjjO4AKfNrYmlg8slDV4P8dXov+dejMPxK1b0=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1771269260;
+ s=zohoarc; t=1771269238;
  h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=cZRQx4NZh6z59MAsL+uEWPok6i5r3bXHDoDlzrj55oE=; 
- b=ZGJ2ZpoAEt+B6B1cryom89QkfNSGXGnIiKliuO56x09tMrFCdEmCZhf2VA+T2sAI3YqrbUeRFk91vBkrgPKpZQnQs90N16S/SOapals9eRVgax4NIyqx/jadJa8kbPrzTEDdEv7mg2REOXTklzwp6CUjencq4XRXj+1EBAYCagU=
+ bh=cQVKzCNePuz8jUV7UXB0l91mehSQ6Sdgsqpnc/e2K88=; 
+ b=djW4RqWIXCY7bYUSHQgHeszOqO9u9Mf+PF8xQUhGW8AIdU/JiRb7yFOnq+pkUt8iAXtiYd8vjahOFwPihlSO2WCgiNmzAiwKghJ7FkLuflBQrc+o2S2vKwq/WfqhU/YrJl8nV/2FBJbGP6+ut0opLfE3v8lym53Gr5g1KFKCLzE=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
  dkim=pass  header.i=collabora.com;
  spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
  dmarc=pass header.from=<dmitry.osipenko@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1771269260; 
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1771269238; 
  s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
  h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To;
- bh=cZRQx4NZh6z59MAsL+uEWPok6i5r3bXHDoDlzrj55oE=;
- b=QrHH/M/ZSEw9w5wvE3ihd+RrZlGpq5nOFTXhHRlI4IL6kmwT10oEksKSnPX5rTX0
- CfLakcUCSq+f8TS4OfAKDF8njtv1CDT+BlLXmdOyV8SbYPE6N8g8EVBR1HJSJRbYYEL
- N8Q7mW5P1xe+RBH1wCQ22bBC5lDf8/Fibfm3gjTU=
-Received: by mx.zohomail.com with SMTPS id 177126925933146.61990644785885;
- Mon, 16 Feb 2026 11:14:19 -0800 (PST)
+ bh=cQVKzCNePuz8jUV7UXB0l91mehSQ6Sdgsqpnc/e2K88=;
+ b=fbllHS7yG3CWOoFPJRU+KMf+YhfKkn57YDcW8CmW/wDroKXNblKbgdl2jjInDaE9
+ 2tlpOllJLTSRpS16l3UTIb8CHqGAztLb+iKRMAHORnwpkB4mSnKsZuXTWJP8ovZ11/g
+ 4gQomDpelLyqhJ01b763EGkZ4Yo+WWbBYR6CEp1M=
+Received: by mx.zohomail.com with SMTPS id 1771269236158142.00457474313305;
+ Mon, 16 Feb 2026 11:13:56 -0800 (PST)
 From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
  Huang Rui <ray.huang@amd.com>,
@@ -62,9 +62,9 @@ Cc: Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
  Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
  Chen Jiqian <Jiqian.Chen@amd.com>, Rob Clark <robdclark@gmail.com>,
  Robert Beckett <bob.beckett@collabora.com>
-Subject: [PATCH v17 15/18] virtio-gpu: Validate hostmem mapping offset
-Date: Mon, 16 Feb 2026 22:12:10 +0300
-Message-ID: <20260216191213.2556073-16-dmitry.osipenko@collabora.com>
+Subject: [PATCH v17 11/18] docs/system: virtio-gpu: Add link to Mesa VirGL doc
+Date: Mon, 16 Feb 2026 22:12:06 +0300
+Message-ID: <20260216191213.2556073-12-dmitry.osipenko@collabora.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260216191213.2556073-1-dmitry.osipenko@collabora.com>
 References: <20260216191213.2556073-1-dmitry.osipenko@collabora.com>
@@ -96,42 +96,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Check hostmem mapping boundaries originated from guest.
+Extend virtio-gpu documentation with a link to the Mesa VirGL
+documentation.
 
-Suggested-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Suggested-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Acked-by: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
+Reviewed-by: Yiwei Zhang <zzyiwei@gmail.com>
 Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 ---
- hw/display/virtio-gpu-virgl.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ docs/system/devices/virtio/virtio-gpu.rst | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
-index 988171c0a414..7928e8d9d6f4 100644
---- a/hw/display/virtio-gpu-virgl.c
-+++ b/hw/display/virtio-gpu-virgl.c
-@@ -791,6 +791,7 @@ static void virgl_cmd_resource_map_blob(VirtIOGPU *g,
-     struct virtio_gpu_resource_map_blob mblob;
-     struct virtio_gpu_virgl_resource *res;
-     struct virtio_gpu_resp_map_info resp;
-+    VirtIOGPUBase *b = VIRTIO_GPU_BASE(g);
-     int ret;
+diff --git a/docs/system/devices/virtio/virtio-gpu.rst b/docs/system/devices/virtio/virtio-gpu.rst
+index 086e2fcf27b9..89153103b9f8 100644
+--- a/docs/system/devices/virtio/virtio-gpu.rst
++++ b/docs/system/devices/virtio/virtio-gpu.rst
+@@ -61,7 +61,7 @@ on typical modern Linux distributions.
+ virtio-gpu virglrenderer
+ ------------------------
  
-     VIRTIO_GPU_FILL_CMD(mblob);
-@@ -804,6 +805,15 @@ static void virgl_cmd_resource_map_blob(VirtIOGPU *g,
-         return;
-     }
+-When using virgl accelerated graphics mode in the guest, OpenGL API calls
++When using `virgl`_ accelerated graphics mode in the guest, OpenGL API calls
+ are translated into an intermediate representation (see `Gallium3D`_). The
+ intermediate representation is communicated to the host and the
+ `virglrenderer`_ library on the host translates the intermediate
+@@ -70,6 +70,7 @@ representation back to OpenGL API calls.
+ .. parsed-literal::
+     -device virtio-gpu-gl
  
-+    if (mblob.offset + res->base.blob_size > b->conf.hostmem ||
-+        mblob.offset + res->base.blob_size < mblob.offset) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: failed to map virgl resource: invalid offset\n",
-+                      __func__);
-+        cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER;
-+        return;
-+    }
-+
-     ret = virtio_gpu_virgl_map_resource_blob(g, res, mblob.offset);
-     if (ret) {
-         cmd->error = VIRTIO_GPU_RESP_ERR_UNSPEC;
++.. _virgl: https://docs.mesa3d.org/drivers/virgl.html
+ .. _Gallium3D: https://www.freedesktop.org/wiki/Software/gallium/
+ .. _virglrenderer: https://gitlab.freedesktop.org/virgl/virglrenderer/
+ 
 -- 
 2.52.0
 
