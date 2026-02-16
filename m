@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C5D2E83824
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 19:15:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1746E83824
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 19:15:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vs43E-0000rc-7j; Mon, 16 Feb 2026 14:14:34 -0500
+	id 1vs42l-00082K-3t; Mon, 16 Feb 2026 14:14:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1vs43A-0000dJ-BK
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 14:14:28 -0500
-Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
+ id 1vs42i-000828-68
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 14:14:01 -0500
+Received: from sender4-pp-e107.zoho.com ([136.143.188.107])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1vs437-0003bm-Uf
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 14:14:27 -0500
-ARC-Seal: i=1; a=rsa-sha256; t=1771269250; cv=none; 
+ id 1vs42g-0003aa-2b
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 14:13:59 -0500
+ARC-Seal: i=1; a=rsa-sha256; t=1771269222; cv=none; 
  d=zohomail.com; s=zohoarc; 
- b=FvD5H6cyskwhPSUoS4lw6ms6m6eY8tQk9+/GgzkdYzU+uufR0hWdxYfwI0xSS98eiin4MX0Ky+pHOGtnxvLZaVvJfG9/GIKAyThu9PjLxQLvtsdRxX6NW0EaDSk180Ey+ZdlJ3dhOibnP0iArxXO1hv+n2lJqGKpO/xzpU90W/o=
+ b=ewv0UmF6qdQ1NAQIEXg9wF4lr42akl398yNUcbjb4GOfsFKHD9urdHPOorawpp+EkuDBn8p2U6TVyV//TNab9ec0GILQKheBvzgtyO0b/sh2Zw1LULcpX3JfoUkxLwtDPIzk8YHyMl9tk9C39AZ7/C1mcJ+Ju2j+HTTVUSIjogI=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1771269250;
+ s=zohoarc; t=1771269222;
  h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=LP0NMKJP0ZJsg3D6W1P93gHQbeBA3DA9ntBuX3+Brh4=; 
- b=QgUEJ8u3qADiOvDxDB327feUeJHSZaXohvHpuU1DcLyK6UH2JL1pbyK2uyVcFlCTFlHFGujxmm/YzkSwFUctPAmjdVHrHG3MgIFpCsojj36ItrPUMdJ94B0kiggPxKaP/iow3jyw9JGkk5kwHhM4LRB237QyLY/B+cf8AKuHEKI=
+ bh=nAeaxL4KxDA9p7Z4I31M0hbp9rxG8CrViMlN4r0GhWs=; 
+ b=kItBMZ8UvZF1MRYn4paQOjE8v4KTY8Uv5vAu+cllfo65j7tgj4zKU++0wgWKlaiFyMv1niYrHxlwTj79XAuADxCN4M+Na6PNIJ4GBby1lX52SphSTgbbOyndVgGOLZU9Pje2UQ+G9Pp5wHjau8fO/pA+NV/oh4RBqxzp7hFR/cs=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
  dkim=pass  header.i=collabora.com;
  spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
  dmarc=pass header.from=<dmitry.osipenko@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1771269250; 
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1771269222; 
  s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
  h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
- bh=LP0NMKJP0ZJsg3D6W1P93gHQbeBA3DA9ntBuX3+Brh4=;
- b=FdVSMA2sfQf5SrtvggPxpLpABSm1yUwUJik08giQZSsYovYeoGj6Z+4P036IcsrC
- 8acRhQDfwesxFW2PKBhJlvqPyuoWOuMPk/rvWwOXpd28lee0h3D0GZmm7guiFPVAOiX
- iPQk+idHI9T0w62UUqTepiScoo7o3kvps0pVcACI=
-Received: by mx.zohomail.com with SMTPS id 1771269248266835.0982533715644;
- Mon, 16 Feb 2026 11:14:08 -0800 (PST)
+ bh=nAeaxL4KxDA9p7Z4I31M0hbp9rxG8CrViMlN4r0GhWs=;
+ b=jweBHw+mzt0s202i2fLYwcjGiL1BMqkvScdDndr5PVVDtULOGR70LRHAuAdlXb2f
+ Fl/Ph/1MNMbJqTYmeJh123p561X0XOuMHEu7dF18iybd8pwDjgao+yXwHEnGbBZ7ehe
+ aa5lPRhJKCaLlLiVw650rGK77Ufv2oOWPHBpD1rc=
+Received: by mx.zohomail.com with SMTPS id 1771269220750330.1637863055522;
+ Mon, 16 Feb 2026 11:13:40 -0800 (PST)
 From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
  Huang Rui <ray.huang@amd.com>,
@@ -62,10 +62,9 @@ Cc: Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
  Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
  Chen Jiqian <Jiqian.Chen@amd.com>, Rob Clark <robdclark@gmail.com>,
  Robert Beckett <bob.beckett@collabora.com>
-Subject: [PATCH v17 13/18] docs/system: virtio-gpu: Document host/guest
- requirements
-Date: Mon, 16 Feb 2026 22:12:08 +0300
-Message-ID: <20260216191213.2556073-14-dmitry.osipenko@collabora.com>
+Subject: [PATCH v17 09/18] virtio-gpu: Support asynchronous fencing
+Date: Mon, 16 Feb 2026 22:12:04 +0300
+Message-ID: <20260216191213.2556073-10-dmitry.osipenko@collabora.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260216191213.2556073-1-dmitry.osipenko@collabora.com>
 References: <20260216191213.2556073-1-dmitry.osipenko@collabora.com>
@@ -73,14 +72,14 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-ZohoMailClient: External
-Received-SPF: pass client-ip=136.143.188.112;
- envelope-from=dmitry.osipenko@collabora.com; helo=sender4-pp-f112.zoho.com
+Received-SPF: pass client-ip=136.143.188.107;
+ envelope-from=dmitry.osipenko@collabora.com; helo=sender4-pp-e107.zoho.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -98,165 +97,257 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alex Bennée <alex.bennee@linaro.org>
+Support asynchronous fencing feature of virglrenderer. It allows Qemu to
+handle fence as soon as it's signalled instead of periodically polling
+the fence status. This feature is required for enabling DRM context
+support in Qemu because legacy fencing mode isn't supported for DRM
+contexts in virglrenderer.
 
-This attempts to tidy up the VirtIO GPU documentation to make the list
-of requirements clearer. There are still a lot of moving parts and the
-distros have some catching up to do before this is all handled
-automatically.
-
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Cc: Sergio Lopez Pascual <slp@redhat.com>
 Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Tested-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
 Acked-by: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
 Reviewed-by: Yiwei Zhang <zzyiwei@gmail.com>
+Tested-by: Yiwei Zhang <zzyiwei@gmail.com>
 Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-[dmitry.osipenko@collabora.com: Extended and corrected doc]
 ---
- docs/system/devices/virtio/virtio-gpu.rst | 105 +++++++++++++++++++++-
- 1 file changed, 102 insertions(+), 3 deletions(-)
+ hw/display/virtio-gpu-gl.c     |   5 ++
+ hw/display/virtio-gpu-virgl.c  | 127 +++++++++++++++++++++++++++++++++
+ include/hw/virtio/virtio-gpu.h |  11 +++
+ meson.build                    |   2 +
+ 4 files changed, 145 insertions(+)
 
-diff --git a/docs/system/devices/virtio/virtio-gpu.rst b/docs/system/devices/virtio/virtio-gpu.rst
-index ef5fb0401d5d..d05f8cb8e3f9 100644
---- a/docs/system/devices/virtio/virtio-gpu.rst
-+++ b/docs/system/devices/virtio/virtio-gpu.rst
-@@ -7,14 +7,28 @@ VirtIO GPU
- ==========
+diff --git a/hw/display/virtio-gpu-gl.c b/hw/display/virtio-gpu-gl.c
+index b98ef2ef9877..3e0680880e14 100644
+--- a/hw/display/virtio-gpu-gl.c
++++ b/hw/display/virtio-gpu-gl.c
+@@ -169,6 +169,11 @@ static void virtio_gpu_gl_device_unrealize(DeviceState *qdev)
+     if (gl->renderer_state >= RS_INITED) {
+ #if VIRGL_VERSION_MAJOR >= 1
+         qemu_bh_delete(gl->cmdq_resume_bh);
++
++        if (gl->async_fence_bh) {
++            virtio_gpu_virgl_reset_async_fences(g);
++            qemu_bh_delete(gl->async_fence_bh);
++        }
+ #endif
+         if (virtio_gpu_stats_enabled(g->parent_obj.conf)) {
+             timer_free(gl->print_stats);
+diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+index 05f22a418d71..49bf7117c098 100644
+--- a/hw/display/virtio-gpu-virgl.c
++++ b/hw/display/virtio-gpu-virgl.c
+@@ -24,6 +24,23 @@
  
- This document explains the setup and usage of the virtio-gpu device.
--The virtio-gpu device paravirtualizes the GPU and display controller.
-+The virtio-gpu device provides a GPU and display controller
-+paravirtualized using VirtIO. It supports a number of different modes
-+from simple 2D displays to fully accelerated 3D graphics.
+ #include <virglrenderer.h>
  
--Linux kernel support
----------------------
-+Linux guest kernel support
-+--------------------------
++/*
++ * VIRGL_CHECK_VERSION available since libvirglrenderer 1.0.1 and was fixed
++ * in 1.1.0. Undefine bugged version of the macro and provide our own.
++ */
++#if defined(VIRGL_CHECK_VERSION) && \
++    VIRGL_VERSION_MAJOR == 1 && VIRGL_VERSION_MINOR < 1
++#undef VIRGL_CHECK_VERSION
++#endif
++
++#ifndef VIRGL_CHECK_VERSION
++#define VIRGL_CHECK_VERSION(major, minor, micro) \
++    (VIRGL_VERSION_MAJOR > (major) || \
++     VIRGL_VERSION_MAJOR == (major) && VIRGL_VERSION_MINOR > (minor) || \
++     VIRGL_VERSION_MAJOR == (major) && VIRGL_VERSION_MINOR == (minor) && \
++     VIRGL_VERSION_MICRO >= (micro))
++#endif
++
+ struct virtio_gpu_virgl_resource {
+     struct virtio_gpu_simple_resource base;
+     MemoryRegion *mr;
+@@ -1092,6 +1109,103 @@ static void virgl_write_context_fence(void *opaque, uint32_t ctx_id,
+ }
+ #endif
  
- virtio-gpu requires a guest Linux kernel built with the
- ``CONFIG_DRM_VIRTIO_GPU`` option.
++void virtio_gpu_virgl_reset_async_fences(VirtIOGPU *g)
++{
++    struct virtio_gpu_virgl_context_fence *f;
++    VirtIOGPUGL *gl = VIRTIO_GPU_GL(g);
++
++    while (!QSLIST_EMPTY(&gl->async_fenceq)) {
++        f = QSLIST_FIRST(&gl->async_fenceq);
++
++        QSLIST_REMOVE_HEAD(&gl->async_fenceq, next);
++
++        g_free(f);
++    }
++}
++
++#if VIRGL_CHECK_VERSION(1, 1, 2)
++static void virtio_gpu_virgl_async_fence_bh(void *opaque)
++{
++    QSLIST_HEAD(, virtio_gpu_virgl_context_fence) async_fenceq;
++    struct virtio_gpu_ctrl_command *cmd, *tmp;
++    struct virtio_gpu_virgl_context_fence *f;
++    VirtIOGPU *g = opaque;
++    VirtIOGPUGL *gl = VIRTIO_GPU_GL(g);
++
++    if (gl->renderer_state != RS_INITED) {
++        return;
++    }
++
++    QSLIST_MOVE_ATOMIC(&async_fenceq, &gl->async_fenceq);
++
++    while (!QSLIST_EMPTY(&async_fenceq)) {
++        f = QSLIST_FIRST(&async_fenceq);
++
++        QSLIST_REMOVE_HEAD(&async_fenceq, next);
++
++        QTAILQ_FOREACH_SAFE(cmd, &g->fenceq, next, tmp) {
++            /*
++             * the guest can end up emitting fences out of order
++             * so we should check all fenced cmds not just the first one.
++             */
++            if (cmd->cmd_hdr.fence_id > f->fence_id) {
++                continue;
++            }
++            if (cmd->cmd_hdr.flags & VIRTIO_GPU_FLAG_INFO_RING_IDX) {
++                if (cmd->cmd_hdr.ring_idx != f->ring_idx) {
++                    continue;
++                }
++                if (cmd->cmd_hdr.ctx_id != f->ctx_id) {
++                    continue;
++                }
++            }
++            virtio_gpu_ctrl_response_nodata(g, cmd, VIRTIO_GPU_RESP_OK_NODATA);
++            QTAILQ_REMOVE(&g->fenceq, cmd, next);
++            g_free(cmd);
++        }
++
++        trace_virtio_gpu_fence_resp(f->fence_id);
++        g_free(f);
++        g->inflight--;
++        if (virtio_gpu_stats_enabled(g->parent_obj.conf)) {
++            trace_virtio_gpu_dec_inflight_fences(g->inflight);
++        }
++    }
++}
++
++static void
++virtio_gpu_virgl_push_async_fence(VirtIOGPU *g, uint32_t ctx_id,
++                                  uint32_t ring_idx, uint64_t fence_id)
++{
++    struct virtio_gpu_virgl_context_fence *f;
++    VirtIOGPUGL *gl = VIRTIO_GPU_GL(g);
++
++    f = g_new(struct virtio_gpu_virgl_context_fence, 1);
++    f->ctx_id = ctx_id;
++    f->ring_idx = ring_idx;
++    f->fence_id = fence_id;
++
++    QSLIST_INSERT_HEAD_ATOMIC(&gl->async_fenceq, f, next);
++
++    qemu_bh_schedule(gl->async_fence_bh);
++}
++
++static void virgl_write_async_fence(void *opaque, uint32_t fence)
++{
++    VirtIOGPU *g = opaque;
++
++    virtio_gpu_virgl_push_async_fence(g, 0, UINT32_MAX, fence);
++}
++
++static void virgl_write_async_context_fence(void *opaque, uint32_t ctx_id,
++                                            uint32_t ring_idx, uint64_t fence)
++{
++    VirtIOGPU *g = opaque;
++
++    virtio_gpu_virgl_push_async_fence(g, ctx_id, ring_idx, fence);
++}
++#endif
++
+ static virgl_renderer_gl_context
+ virgl_create_context(void *opaque, int scanout_idx,
+                      struct virgl_renderer_gl_ctx_param *params)
+@@ -1193,6 +1307,8 @@ void virtio_gpu_virgl_reset_scanout(VirtIOGPU *g)
+ void virtio_gpu_virgl_reset(VirtIOGPU *g)
+ {
+     virgl_renderer_reset();
++
++    virtio_gpu_virgl_reset_async_fences(g);
+ }
  
-+3D acceleration
-+---------------
-+
-+3D acceleration of a virtualized GPU is still an evolving field.
-+Depending on the 3D mode you are running you may need to override
-+distribution supplied libraries with more recent versions or enable
-+build options. There are a number of requirements the host must meet
-+to be able to be able to support guests. QEMU must be able to access the
-+host's GPU and for the best performance be able to reliably share GPU
-+memory with the guest. Details of 3D acceleration requirements are
-+described in a further sections.
-+
- QEMU virtio-gpu variants
- ------------------------
+ int virtio_gpu_virgl_init(VirtIOGPU *g)
+@@ -1205,6 +1321,12 @@ int virtio_gpu_virgl_init(VirtIOGPU *g)
+     if (qemu_egl_display) {
+         virtio_gpu_3d_cbs.version = 4;
+         virtio_gpu_3d_cbs.get_egl_display = virgl_get_egl_display;
++#if VIRGL_CHECK_VERSION(1, 1, 2)
++        virtio_gpu_3d_cbs.write_fence         = virgl_write_async_fence;
++        virtio_gpu_3d_cbs.write_context_fence = virgl_write_async_context_fence;
++        flags |= VIRGL_RENDERER_ASYNC_FENCE_CB;
++        flags |= VIRGL_RENDERER_THREAD_SYNC;
++#endif
+     }
+ #endif
+ #ifdef VIRGL_RENDERER_D3D11_SHARE_TEXTURE
+@@ -1238,6 +1360,11 @@ int virtio_gpu_virgl_init(VirtIOGPU *g)
+     gl->cmdq_resume_bh = aio_bh_new(qemu_get_aio_context(),
+                                     virtio_gpu_virgl_resume_cmdq_bh,
+                                     g);
++#if VIRGL_CHECK_VERSION(1, 1, 2)
++    gl->async_fence_bh = aio_bh_new(qemu_get_aio_context(),
++                                    virtio_gpu_virgl_async_fence_bh,
++                                    g);
++#endif
+ #endif
  
-@@ -67,8 +81,14 @@ intermediate representation is communicated to the host and the
- `virglrenderer`_ library on the host translates the intermediate
- representation back to OpenGL API calls.
+     return 0;
+diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gpu.h
+index 58e0f91fda65..16e9f6914f07 100644
+--- a/include/hw/virtio/virtio-gpu.h
++++ b/include/hw/virtio/virtio-gpu.h
+@@ -233,6 +233,13 @@ struct VirtIOGPUClass {
+                              Error **errp);
+ };
  
-+By default OpenGL version on guest is limited to 4.3. In order to enable
-+OpenGL 4.6 support, virtio-gpu  host blobs feature (``hostmem`` and ``blob``
-+fields) should be enabled.  The ``hostmem`` field specifies the size of
-+virtio-gpu host memory window. This is typically between 256M and 8G.
++struct virtio_gpu_virgl_context_fence {
++    uint32_t ctx_id;
++    uint32_t ring_idx;
++    uint64_t fence_id;
++    QSLIST_ENTRY(virtio_gpu_virgl_context_fence) next;
++};
 +
- .. parsed-literal::
-     -device virtio-gpu-gl
-+    -device virtio-gpu-gl,hostmem=8G,blob=true
+ /* VirtIOGPUGL renderer states */
+ typedef enum {
+     RS_START,       /* starting state */
+@@ -250,6 +257,9 @@ struct VirtIOGPUGL {
+     QEMUTimer *print_stats;
  
- .. _virgl: https://docs.mesa3d.org/drivers/virgl.html
- .. _Gallium3D: https://www.freedesktop.org/wiki/Software/gallium/
-@@ -96,6 +116,67 @@ of virtio-gpu host memory window. This is typically between 256M and 8G.
+     QEMUBH *cmdq_resume_bh;
++
++    QEMUBH *async_fence_bh;
++    QSLIST_HEAD(, virtio_gpu_virgl_context_fence) async_fenceq;
+ };
  
- .. _drm: https://gitlab.freedesktop.org/virgl/virglrenderer/-/tree/main/src/drm
+ struct VhostUserGPU {
+@@ -379,5 +389,6 @@ void virtio_gpu_virgl_reset_scanout(VirtIOGPU *g);
+ void virtio_gpu_virgl_reset(VirtIOGPU *g);
+ int virtio_gpu_virgl_init(VirtIOGPU *g);
+ GArray *virtio_gpu_virgl_get_capsets(VirtIOGPU *g);
++void virtio_gpu_virgl_reset_async_fences(VirtIOGPU *g);
  
-+.. list-table:: Linux Host Requirements
-+  :header-rows: 1
-+
-+  * - Capability
-+    - Kernel Version
-+    - Libvirglrenderer Version
-+  * - OpenGL pass-through
-+    - Any Linux version compatible with QEMU if not using host blobs feature,
-+      Linux 6.13+ otherwise
-+    - 0.8.2+
-+  * - Vulkan pass-through
-+    - Linux 6.13+
-+    - 1.0.0+
-+  * - AMDGPU DRM native context
-+    - Linux 6.13+
-+    - 1.1.0+
-+  * - Freedreno DRM native context
-+    - Linux 6.4+
-+    - 1.0.0+
-+  * - Intel i915 DRM native context
-+    - Linux 6.13+
-+    - 1.3.0+
-+  * - Asahi DRM native context
-+    - `Downstream version`_ of Asahi Linux kernel
-+    - 1.2.0+
-+  * - Panfrost native context
-+    - Linux 6.13+
-+    - 1.3.0+
-+
-+.. _Downstream version: https://github.com/AsahiLinux/linux
-+
-+.. list-table:: Linux Guest Requirements
-+  :header-rows: 1
-+
-+  * - Capability
-+    - Kernel Version
-+    - Mesa Version
-+  * - OpenGL pass-through
-+    - Any Linux version supporting virtio-gpu
-+    - 16.0.0+
-+  * - Vulkan pass-through
-+    - Linux 5.16+
-+    - 24.2.0+
-+  * - AMDGPU DRM native context
-+    - Linux 6.14+
-+    - 25.0.0+
-+  * - Freedreno DRM native context
-+    - Linux 6.14+
-+    - 23.1.0+
-+  * - Intel i915 DRM native context
-+    - Linux 6.14+
-+    - 26.1.0+
-+  * - Asahi DRM native context
-+    - Linux 6.14+
-+    - 24.2.0+
-+  * - Panfrost native context
-+    - Linux 6.14+
-+    - `mr36814`_
-+
-+.. _mr36814: https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/36814
-+
- virtio-gpu rutabaga
- -------------------
- 
-@@ -135,3 +216,21 @@ Surfaceless is the default if ``wsi`` is not specified.
- .. _Wayland display passthrough: https://www.youtube.com/watch?v=OZJiHMtIQ2M
- .. _gfxstream-enabled rutabaga: https://crosvm.dev/book/appendix/rutabaga_gfx.html
- .. _guest Wayland proxy: https://crosvm.dev/book/devices/wayland.html
-+
-+.. list-table:: Linux Host Requirements
-+  :header-rows: 1
-+
-+  * - Capability
-+    - Kernel Version
-+  * - Vulkan+Wayland pass-through
-+    - Linux 6.13+
-+
-+.. list-table:: Linux Guest Requirements
-+  :header-rows: 1
-+
-+  * - Capability
-+    - Kernel Version
-+    - Mesa Version
-+  * - Vulkan+Wayland pass-through
-+    - Linux 5.16+
-+    - 24.3.0+
+ #endif
+diff --git a/meson.build b/meson.build
+index 7b56a4b2775e..b72d28131891 100644
+--- a/meson.build
++++ b/meson.build
+@@ -2515,6 +2515,8 @@ config_host_data.set('CONFIG_VNC_JPEG', jpeg.found())
+ config_host_data.set('CONFIG_VNC_SASL', sasl.found())
+ if virgl.found()
+   config_host_data.set('VIRGL_VERSION_MAJOR', virgl.version().split('.')[0])
++  config_host_data.set('VIRGL_VERSION_MINOR', virgl.version().split('.')[1])
++  config_host_data.set('VIRGL_VERSION_MICRO', virgl.version().split('.')[2])
+ endif
+ config_host_data.set('CONFIG_VIRTFS', have_virtfs)
+ config_host_data.set('CONFIG_VTE', vte.found())
 -- 
 2.52.0
 
