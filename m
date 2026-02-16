@@ -4,56 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D559CE7BDA1
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06B5AE7BD9E
 	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 11:27:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vrwbx-0006Cf-64; Mon, 16 Feb 2026 06:17:55 -0500
+	id 1vrwfX-0007rg-AB; Mon, 16 Feb 2026 06:21:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vrwau-0005LK-D0
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 06:17:05 -0500
+ id 1vrwbv-0006EF-V1
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 06:17:52 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vrwar-0007TU-Gx
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 06:16:47 -0500
+ id 1vrwbq-00086x-5r
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 06:17:51 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771240604;
+ s=mimecast20190719; t=1771240665;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=gSrNsTt5OhqaSvFjhdYJ82+X+igQQqTBVU38kRxeX2E=;
- b=TaHhxT2yIXNtfwfuFbvyFxXSkCsDiDXj2l7PFMa6ULzGpWrS1Z4xITE09uoeUt8LPB6bIp
- nVrsXZtM9jcheXg4+z/hd07tLDQuwQuEZcjgl03e/4y0GZ4CQX1HJXIyecHY5k9QoBaH5z
- ztqlHdpJc9Kx0LzUaTKiDo/REVHCXJs=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=ZAePRO9iX/CdNZl5mbtEzsh4UrYfxMJmJv42slqeaKE=;
+ b=InubpNMfFFamqOdXQkfxHz9umZk4QQtbBKA0WJVjYB41+ichPJIq3pK9slcwqpoFeEBLLW
+ TzvvX5F8SrBgtgd26XvM8G0wT1AW995Sm9oO9Ha+jTtaYR0b3WhQHqDAJe2XQvBA9a2QeN
+ wcjywYgYAXx7XDeFrYrAjkm6jQ3X/50=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-441-qR0lGbmUOqGSUCG5Sssfsg-1; Mon,
- 16 Feb 2026 06:16:38 -0500
-X-MC-Unique: qR0lGbmUOqGSUCG5Sssfsg-1
-X-Mimecast-MFC-AGG-ID: qR0lGbmUOqGSUCG5Sssfsg_1771240596
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-213-jmIuXMb8MmCISZFgiasbOQ-1; Mon,
+ 16 Feb 2026 06:17:41 -0500
+X-MC-Unique: jmIuXMb8MmCISZFgiasbOQ-1
+X-Mimecast-MFC-AGG-ID: jmIuXMb8MmCISZFgiasbOQ_1771240659
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C90F719560B5; Mon, 16 Feb 2026 11:16:36 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 43D7119560AA; Mon, 16 Feb 2026 11:17:39 +0000 (UTC)
 Received: from localhost (unknown [10.45.242.26])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 2ADE319560A2; Mon, 16 Feb 2026 11:16:35 +0000 (UTC)
+ id C96B119560A2; Mon, 16 Feb 2026 11:17:37 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Mon, 16 Feb 2026 12:15:10 +0100
-Subject: [PATCH 21/85] audio: use DEFINE_TYPES
+Date: Mon, 16 Feb 2026 12:15:32 +0100
+Subject: [PATCH 43/85] audio/spice: convert to QOM lifecycle methods
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260216-audio-v1-21-e676662e4514@redhat.com>
+Message-Id: <20260216-audio-v1-43-e676662e4514@redhat.com>
 References: <20260216-audio-v1-0-e676662e4514@redhat.com>
 In-Reply-To: <20260216-audio-v1-0-e676662e4514@redhat.com>
 To: qemu-devel@nongnu.org
@@ -73,21 +73,21 @@ Cc: Gerd Hoffmann <kraxel@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
  Mark Cave-Ayland <mark.caveayland@nutanix.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2207;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2621;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=gobKDZoHJjzI4b+tyY2wIHYANsreP/cSqFXEdfYSp4E=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBpkvxPZqvwAOE+WQ9+SJAqFDFfOT8hkiMO3JjaX
- 4PujVC/lgSJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaZL8TwAKCRDa6OEJdZac
- 5ebuEACgEihyglGztshdETaDeHaVuIg0qhtzOQ2Gb/d3zR5O7YVfWNpEYCRgVwujPVC9ydlPoZw
- 4Xcy6a0xtD0X+g2TVOeem8+5LCzY0OEd5WDiG9TXP/9/yNP6DsUx4syQwtlLfrnX/l1h//41MNI
- fc/QSCUNJ0zUlDWcBlamU9HTKJ0BjxA9Y5Was+PUf7m3JcpNrah0X5ZM/Bp7MmX1NfeaAsnIxSV
- VDRbi5jv4QNQtTMpCMSBlIShk0BFfffzjtwuiDztRr+w838OumegW06wi6RHZNyYvLKPkhrN4Df
- 4B+44Y2tF6e381bd3fj3Ux4fGlxjgpWX0XLgUF3uXz+axp0/zSO7sqpVmMWz3r+PwgWQStIrjUF
- t/u9yHtYVazCWBVkMLqw5svh/k4Z682qxevtjeIvPl0wQB2UHE6KfB2qLit6ulNZxdD9kAJNxK1
- hI0F0IURBIAk1Mdd6ywAs6sxbP/wygB9kUJfwoxAJNdAoLEO2/k9Ar7U0cBHz5ge8heKSxPj1sn
- 9LMTpfK7MrlI5DvXbt9LYyAR172RpRbD6hWPjP6phcJnxKyyUryYyfEGoadtcyztIB1I0KDF5LX
- Ge8tvKri0Ut+eOH49sHszAk0bmc38H2DI7ZI/E3jTUJRvN6ehGSekvlWTDHAxa+757ZefS7UAZd
- XUuz8S27Y+wjOmQ==
+ bh=Rcs408lO9P4mK3uz8yvMkyVGqD72XWjzygJPEae432E=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBpkvxQAwF6m/TkCaYFng41JyP1I6mFplns1w39M
+ VCyg9F1V7yJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaZL8UAAKCRDa6OEJdZac
+ 5dXTD/4roKmuR4JVDbGSh1B2Tv7YYNc+wLiMg6Vo5Oum72fx4eaGMB/jDzjpWl1tcYyUeHZRydY
+ yF5FSzdhdVz+gvs53HwXhwyKcbEt1jJPAim14RehF7e5Y2ZOp1VSQ1XS9VcdTUPvaw4BtmIMbUU
+ LJCI2SLTzLYyt2/wgKhYmB3NmedVG3n1ljRyPSq7zF1gTjsct6X7d7jAW+qQd/sYDsgfK7ANrDG
+ 7g/oaWYhLP6F7lscbZOrboROm1u4OQY0JaXruNETx6xb+DyJF4khxKvNL9z/rRkeI8v3eKqUXvr
+ RkaTJM6WmWv4GSV0BVRHoo3IPz6hPBQ478s2nihRbNFAtf/7qhVHRV1jXk6SjlGbeRxEj6fmeVF
+ 6iy2cdA48jsyGIFXYEaf/NDKr2nR7L6dSwvMCSv0dRNrcW+ux5BZjBdBvSxPPgMDJn6i5XW3UVw
+ 3wMnVoB1guas3YAioQW4wb/pE7M0GzwktYauLXKk/I0UYvFJZ2yczpes1p3f3U0SOvvPLQ33/CY
+ Z6xZo2JYiGEFGtkZiUPtpb2O++cSBT44eTn6Tu0mu8xMvuphALaC8lY8S67Q6sy3Q8j0aHB2QpC
+ K/izWRigAhPbugB0kfMtLL1uKsxdK93BWkchDYQ0b3MAIuqKen/w8oaA9IftG/D3fXiIyv4t62x
+ TczxZ1PJLLgvXzw==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
@@ -101,7 +101,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,69 +117,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-It's the "modern" way of registring the object TypeInfo.
+Migrate the SPICE audio backend from the legacy driver init/fini
+callbacks to proper QOM realize method.
 
-Suggested-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+The spice_audio_init() function is replaced with spice_audio_realize(),
+which validates that SPICE is enabled before delegating to the parent
+class realize method. The empty spice_audio_fini() is removed as no
+cleanup is needed.
+
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
 ---
- audio/audio.c | 45 ++++++++++++++++++++-------------------------
- 1 file changed, 20 insertions(+), 25 deletions(-)
+ audio/spiceaudio.c | 34 +++++++++++++++++-----------------
+ 1 file changed, 17 insertions(+), 17 deletions(-)
 
-diff --git a/audio/audio.c b/audio/audio.c
-index 75a7f694319..c4e4adec106 100644
---- a/audio/audio.c
-+++ b/audio/audio.c
-@@ -2366,30 +2366,25 @@ AudiodevList *qmp_query_audiodevs(Error **errp)
-     return ret;
- }
+diff --git a/audio/spiceaudio.c b/audio/spiceaudio.c
+index ad7cb69673b..953dbf6c308 100644
+--- a/audio/spiceaudio.c
++++ b/audio/spiceaudio.c
+@@ -33,16 +33,33 @@
+ #define TYPE_AUDIO_SPICE "audio-spice"
+ OBJECT_DECLARE_SIMPLE_TYPE(AudioSpice, AUDIO_SPICE)
  
--static const TypeInfo audio_be_info = {
--    .name = TYPE_AUDIO_BACKEND,
--    .parent = TYPE_OBJECT,
--    .instance_size = sizeof(AudioBackend),
--    .instance_init = audio_be_init,
--    .instance_finalize = audio_be_finalize,
--    .abstract = true,
--    .class_size = sizeof(AudioBackendClass),
--};
--
--static const TypeInfo audio_mixeng_backend_info = {
--    .name = TYPE_AUDIO_MIXENG_BACKEND,
--    .parent = TYPE_AUDIO_BACKEND,
--    .instance_size = sizeof(AudioMixengBackend),
--    .instance_init = audio_mixeng_backend_init,
--    .instance_finalize = audio_mixeng_backend_finalize,
--    .class_size = sizeof(AudioMixengBackendClass),
--    .class_init = audio_mixeng_backend_class_init,
-+static const TypeInfo audio_types[] = {
-+    {
-+        .name = TYPE_AUDIO_BACKEND,
-+        .parent = TYPE_OBJECT,
-+        .instance_size = sizeof(AudioBackend),
-+        .instance_init = audio_be_init,
-+        .instance_finalize = audio_be_finalize,
-+        .abstract = true,
-+        .class_size = sizeof(AudioBackendClass),
-+    },
-+    {
-+        .name = TYPE_AUDIO_MIXENG_BACKEND,
-+        .parent = TYPE_AUDIO_BACKEND,
-+        .instance_size = sizeof(AudioMixengBackend),
-+        .instance_init = audio_mixeng_backend_init,
-+        .instance_finalize = audio_mixeng_backend_finalize,
-+        .class_size = sizeof(AudioMixengBackendClass),
-+        .class_init = audio_mixeng_backend_class_init,
-+    }
++static AudioBackendClass *audio_spice_parent_class;
++
+ struct AudioSpice {
+     AudioMixengBackend parent_obj;
  };
  
--static void register_types(void)
+ static struct audio_driver spice_audio_driver;
+ 
++static bool spice_audio_realize(AudioBackend *abe, Audiodev *dev, Error **errp)
++{
++    if (!using_spice) {
++        error_setg(errp, "Cannot use spice audio without -spice");
++        qapi_free_Audiodev(dev);
++        return false;
++    }
++
++    return audio_spice_parent_class->realize(abe, dev, errp);
++}
++
+ static void audio_spice_class_init(ObjectClass *klass, const void *data)
+ {
++    AudioBackendClass *b = AUDIO_BACKEND_CLASS(klass);
+     AudioMixengBackendClass *k = AUDIO_MIXENG_BACKEND_CLASS(klass);
+ 
++    audio_spice_parent_class = AUDIO_BACKEND_CLASS(object_class_get_parent(klass));
++
++    b->realize = spice_audio_realize;
+     k->driver = &spice_audio_driver;
+ }
+ 
+@@ -89,21 +106,6 @@ static const SpiceRecordInterface record_sif = {
+     .base.minor_version = SPICE_INTERFACE_RECORD_MINOR,
+ };
+ 
+-static void *spice_audio_init(Audiodev *dev, Error **errp)
 -{
--    type_register_static(&audio_be_info);
--    type_register_static(&audio_mixeng_backend_info);
+-    if (!using_spice) {
+-        error_setg(errp, "Cannot use spice audio without -spice");
+-        return NULL;
+-    }
+-
+-    return &spice_audio_init;
 -}
 -
--type_init(register_types);
-+DEFINE_TYPES(audio_types)
+-static void spice_audio_fini (void *opaque)
+-{
+-    /* nothing */
+-}
+-
+ /* playback */
+ 
+ static int line_out_init(HWVoiceOut *hw, struct audsettings *as,
+@@ -333,8 +335,6 @@ static struct audio_pcm_ops audio_callbacks = {
+ 
+ static struct audio_driver spice_audio_driver = {
+     .name           = "spice",
+-    .init           = spice_audio_init,
+-    .fini           = spice_audio_fini,
+     .pcm_ops        = &audio_callbacks,
+     .max_voices_out = 1,
+     .max_voices_in  = 1,
 
 -- 
 2.53.0
