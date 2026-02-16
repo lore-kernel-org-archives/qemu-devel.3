@@ -4,71 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AA53E7BD88
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 10:31:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B4E6E7BD87
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 10:31:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vrvrt-0005xZ-3l; Mon, 16 Feb 2026 05:30:17 -0500
+	id 1vrvrs-0005xY-Bj; Mon, 16 Feb 2026 05:30:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1vrvrp-0005wz-D5
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 05:30:14 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1vrvrl-0005we-EH
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 05:30:10 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1vrvrj-0006tK-7N
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 05:30:09 -0500
+ id 1vrvri-0006m7-Od
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 05:30:08 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771237805;
+ s=mimecast20190719; t=1771237803;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=rrHCY5KX91VDIK/7DELWtkdibSPQHxJxeU1/Q0fsMT0=;
- b=Cr7pj1VmvsJPAc9VWxbeW6sB1oNexqUBddcqqEX8/5y7ne2lOHySpb1XEJr6+Ab+rTVROB
- pSRl3ja8roHJDABZ+7NBZRnwCB3m3LvKrWbFEFBalsV8m6KEQfV6ArB+Hm84l5AmRe7BVf
- pxiN+hzrWzLO3izchRuJSSpYoSmEzBg=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=9y4jIW3yOBt9OHzqVap3xId+tC7KWpl0iJxMP328cPk=;
+ b=XL7uEidiWzBkEtA9JMprH0cejeT4pLwmP95DonogJVl8DhNIQYnByy6wWL5aWk+K9sq1zG
+ c22/vY9qMDCrLnlu+PfPMSIWhzUtEWxJ60wgnZ18R+kPSh+saQDb32Iyfs8d4GTYEoyjaf
+ wtzxlIv2GCQMnjb5XcBSycxAS+XNEn4=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-503-0eOSy0isOOeg5D-Nk9onkQ-1; Mon,
- 16 Feb 2026 05:30:03 -0500
-X-MC-Unique: 0eOSy0isOOeg5D-Nk9onkQ-1
-X-Mimecast-MFC-AGG-ID: 0eOSy0isOOeg5D-Nk9onkQ_1771237802
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-464-AfG6aiP6NfiKNsxDsSjSnw-1; Mon,
+ 16 Feb 2026 05:29:59 -0500
+X-MC-Unique: AfG6aiP6NfiKNsxDsSjSnw-1
+X-Mimecast-MFC-AGG-ID: AfG6aiP6NfiKNsxDsSjSnw_1771237799
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 53DFC1955D7A; Mon, 16 Feb 2026 10:30:02 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E8F8A180025A; Mon, 16 Feb 2026 10:29:58 +0000 (UTC)
 Received: from srv1.redhat.com (unknown [10.44.32.156])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2009F1800465; Mon, 16 Feb 2026 10:30:00 +0000 (UTC)
+ id B6E551800666; Mon, 16 Feb 2026 10:29:57 +0000 (UTC)
 From: Kostiantyn Kostiuk <kkostiuk@redhat.com>
 To: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 4/5] qga: Move CoInitialize/CoInitializeSecurity to main
- process thread
-Date: Mon, 16 Feb 2026 12:29:50 +0200
-Message-ID: <20260216102951.150381-5-kkostiuk@redhat.com>
+Subject: [PULL 2/5] util: Move qemu_ftruncate64 from block/file-win32.c to
+ oslib-win32.c
+Date: Mon, 16 Feb 2026 12:29:48 +0200
+Message-ID: <20260216102951.150381-3-kkostiuk@redhat.com>
 In-Reply-To: <20260216102951.150381-1-kkostiuk@redhat.com>
 References: <20260216102951.150381-1-kkostiuk@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kkostiuk@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kkostiuk@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,176 +85,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Elizabeth Ashurov <eashurov@redhat.com>
+From: Nguyen Dinh Phi <phind.uet@gmail.com>
 
-Problem:
-Two issues with COM initialization:
+qemu_ftruncate64() is a general-purpose utility function that may be
+used outside of the block layer. Move it to util/oslib-win32.c where
+other Windows-specific utility functions reside.
 
-Issue #1: Incorrect call order
-- requester_init() called CoInitializeSecurity first
-- Per Microsoft documentation, CoInitialize() must be called BEFORE
-  CoInitializeSecurity()
-
-Issue #2: Incorrect call location
-- CoInitializeSecurity was called from dll instead of the main process
-- Per Microsoft documentation, CoInitializeSecurity() must be called exactly once per process from
-  the main executable, not from a DLL
-
-Reference:
-https://learn.microsoft.com/en-us/windows/win32/api/combaseapi/nf-combaseapi-coinitializesecurity
-https://learn.microsoft.com/en-us/windows/win32/api/objbase/nf-objbase-coinitialize
-
-This caused incorrect COM initialization, preventing VSS Writers from
-calling back via IVssWriterCallback (hr = 0x80070005, Access denied,
-Event ID 8194).
-
-Fix:
-- Initialize COM in main.c for both service and CLI modes
-- Call CoInitialize() followed by CoInitializeSecurity() in correct order
-  in the main thread before any VSS operations
-- Add proper CoUninitialize() cleanup
-
-Result:
-VSS Writers can now successfully call back to the agent. Event ID 8194
-error is resolved.
-
-Signed-off-by: Elizabeth Ashurov <eashurov@redhat.com>
-Reviewed-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
-Tested-by: Dehan Meng <demeng@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20260211101744.757548-1-eashurov@redhat.com
+Signed-off-by: Nguyen Dinh Phi <phind.uet@gmail.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Link: https://lore.kernel.org/qemu-devel/20251218085446.462827-3-phind.uet@gmail.com
 Signed-off-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
 ---
- qga/main.c                  | 42 +++++++++++++++++++++++++++++++++++++
- qga/vss-win32/requester.cpp | 13 ------------
- 2 files changed, 42 insertions(+), 13 deletions(-)
+ block/file-win32.c | 32 --------------------------------
+ util/oslib-win32.c | 34 ++++++++++++++++++++++++++++++++++
+ 2 files changed, 34 insertions(+), 32 deletions(-)
 
-diff --git a/qga/main.c b/qga/main.c
-index dd1c216f9a..fd19c7037d 100644
---- a/qga/main.c
-+++ b/qga/main.c
-@@ -32,6 +32,8 @@
- #include "qemu/systemd.h"
- #include "qemu-version.h"
- #ifdef _WIN32
-+#include <windows.h>
-+#include <objbase.h>
- #include <dbt.h>
- #include <pdh.h>
- #include "qga/service-win32.h"
-@@ -830,6 +832,29 @@ DWORD WINAPI service_ctrl_handler(DWORD ctrl, DWORD type, LPVOID data,
-     return ret;
+diff --git a/block/file-win32.c b/block/file-win32.c
+index af9aea631c..8a44853389 100644
+--- a/block/file-win32.c
++++ b/block/file-win32.c
+@@ -170,38 +170,6 @@ static BlockAIOCB *paio_submit(BlockDriverState *bs, HANDLE hfile,
+     return thread_pool_submit_aio(aio_worker, acb, cb, opaque);
  }
  
-+/* Initialize COM for VSS operations */
-+static HRESULT init_com(void)
-+{
-+    HRESULT hr;
-+
-+    hr = CoInitialize(NULL);
-+    if (FAILED(hr)) {
-+        return hr;
-+    }
-+
-+    hr = CoInitializeSecurity(
-+        NULL, -1, NULL, NULL,
-+        RPC_C_AUTHN_LEVEL_PKT_PRIVACY,
-+        RPC_C_IMP_LEVEL_IDENTIFY,
-+        NULL, EOAC_NONE, NULL);
-+    if (FAILED(hr)) {
-+        CoUninitialize();
-+        return hr;
-+    }
-+
-+    return S_OK;
-+}
-+
- VOID WINAPI service_main(DWORD argc, TCHAR *argv[])
- {
-     GAService *service = &ga_state->service;
-@@ -842,6 +867,13 @@ VOID WINAPI service_main(DWORD argc, TCHAR *argv[])
-         return;
-     }
- 
-+    /* Initialize COM for VSS operations in the service thread */
-+    HRESULT hr_com = init_com();
-+    if (FAILED(hr_com)) {
-+        g_critical("Failed to initialize COM in service thread: 0x%lx", hr_com);
-+        return;
-+    }
-+
-     service->status.dwServiceType = SERVICE_WIN32;
-     service->status.dwCurrentState = SERVICE_RUNNING;
-     service->status.dwControlsAccepted = SERVICE_ACCEPT_STOP | SERVICE_ACCEPT_SHUTDOWN;
-@@ -866,6 +898,8 @@ VOID WINAPI service_main(DWORD argc, TCHAR *argv[])
- 
-     run_agent(ga_state);
- 
-+    CoUninitialize();
-+
-     UnregisterDeviceNotification(service->device_notification_handle);
-     service->status.dwCurrentState = SERVICE_STOPPED;
-     SetServiceStatus(service->status_handle, &service->status);
-@@ -1719,7 +1753,15 @@ int main(int argc, char **argv)
-         StartServiceCtrlDispatcher(service_table);
-         ret = EXIT_SUCCESS;
-     } else {
-+        HRESULT hr_com = init_com();
-+        if (FAILED(hr_com)) {
-+            g_critical("Failed to initialize COM: 0x%lx", hr_com);
-+            ret = EXIT_FAILURE;
-+            goto end;
-+        }
-+
-         ret = run_agent(s);
-+        CoUninitialize();
-     }
- #else
-     ret = run_agent(s);
-diff --git a/qga/vss-win32/requester.cpp b/qga/vss-win32/requester.cpp
-index 5615955b6f..2ebfabf45d 100644
---- a/qga/vss-win32/requester.cpp
-+++ b/qga/vss-win32/requester.cpp
-@@ -60,15 +60,6 @@ STDAPI requester_init(void)
- {
-     qga_debug_begin;
- 
--    COMInitializer initializer; /* to call CoInitializeSecurity */
--    HRESULT hr = CoInitializeSecurity(
--        NULL, -1, NULL, NULL, RPC_C_AUTHN_LEVEL_PKT_PRIVACY,
--        RPC_C_IMP_LEVEL_IDENTIFY, NULL, EOAC_NONE, NULL);
--    if (FAILED(hr)) {
--        qga_debug("failed to CoInitializeSecurity (error %lx)", hr);
--        return hr;
+-int qemu_ftruncate64(int fd, int64_t length)
+-{
+-    LARGE_INTEGER li;
+-    DWORD dw;
+-    LONG high;
+-    HANDLE h;
+-    BOOL res;
+-
+-    if ((GetVersion() & 0x80000000UL) && (length >> 32) != 0)
+-        return -1;
+-
+-    h = (HANDLE)_get_osfhandle(fd);
+-
+-    /* get current position, ftruncate do not change position */
+-    li.HighPart = 0;
+-    li.LowPart = SetFilePointer (h, 0, &li.HighPart, FILE_CURRENT);
+-    if (li.LowPart == INVALID_SET_FILE_POINTER && GetLastError() != NO_ERROR) {
+-        return -1;
 -    }
 -
-     hLib = LoadLibraryA("VSSAPI.DLL");
-     if (!hLib) {
-         qga_debug("failed to load VSSAPI.DLL");
-@@ -320,8 +311,6 @@ void requester_freeze(int *num_vols, void *mountpoints, ErrorSet *errset)
-         return;
-     }
- 
--    CoInitialize(NULL);
+-    high = length >> 32;
+-    dw = SetFilePointer(h, (DWORD) length, &high, FILE_BEGIN);
+-    if (dw == INVALID_SET_FILE_POINTER && GetLastError() != NO_ERROR) {
+-        return -1;
+-    }
+-    res = SetEndOfFile(h);
 -
-     /* Allow unrestricted access to events */
-     InitializeSecurityDescriptor(&sd, SECURITY_DESCRIPTOR_REVISION);
-     SetSecurityDescriptorDacl(&sd, TRUE, NULL, FALSE);
-@@ -560,7 +549,6 @@ out:
- 
- out1:
-     requester_cleanup();
--    CoUninitialize();
- 
-     qga_debug_end;
+-    /* back to old position */
+-    SetFilePointer(h, li.LowPart, &li.HighPart, FILE_BEGIN);
+-    return res ? 0 : -1;
+-}
+-
+ static int set_sparse(int fd)
+ {
+     DWORD returned;
+diff --git a/util/oslib-win32.c b/util/oslib-win32.c
+index 839b8a4170..766c602172 100644
+--- a/util/oslib-win32.c
++++ b/util/oslib-win32.c
+@@ -899,3 +899,37 @@ int qemu_shm_alloc(size_t size, Error **errp)
+     error_setg(errp, "Shared memory is not supported.");
+     return -1;
  }
-@@ -641,7 +629,6 @@ void requester_thaw(int *num_vols, void *mountpints, ErrorSet *errset)
-     *num_vols = vss_ctx.cFrozenVols;
-     requester_cleanup();
- 
--    CoUninitialize();
-     StopService();
- 
-     qga_debug_end;
++
++int qemu_ftruncate64(int fd, int64_t length)
++{
++    LARGE_INTEGER li;
++    DWORD dw;
++    LONG high;
++    HANDLE h;
++    BOOL res;
++
++    if ((GetVersion()&0x80000000UL) && (length >> 32) != 0) {
++        return -1;
++    }
++
++    h = (HANDLE)_get_osfhandle(fd);
++
++    /* get current position, ftruncate do not change position */
++    li.HighPart = 0;
++    li.LowPart = SetFilePointer (h, 0, &li.HighPart, FILE_CURRENT);
++    if (li.LowPart == INVALID_SET_FILE_POINTER && GetLastError() != NO_ERROR) {
++        return -1;
++    }
++
++    high = length >> 32;
++    dw = SetFilePointer(h, (DWORD) length, &high, FILE_BEGIN);
++    if (dw == INVALID_SET_FILE_POINTER && GetLastError() != NO_ERROR) {
++        return -1;
++    }
++    res = SetEndOfFile(h);
++
++    /* back to old position */
++    SetFilePointer(h, li.LowPart, &li.HighPart, FILE_BEGIN);
++    return res ? 0 : -1;
++}
++
 -- 
 2.52.0
 
