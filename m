@@ -4,73 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A983DE81A3B
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 15:31:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57980E81A36
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 15:32:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vs0Z1-0001Tw-Lj; Mon, 16 Feb 2026 10:31:07 -0500
+	id 1vs0aN-0001s4-ER; Mon, 16 Feb 2026 10:32:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vs0Z0-0001TZ-2Q
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 10:31:06 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1vs0a1-0001ql-7r
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 10:32:10 -0500
+Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vs0Yw-00069y-VK
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 10:31:05 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771255861;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=RCNcDgCEWgn87j8TFIPECxqRK40V1qcHgDASHOLoCtA=;
- b=NQM3RmgyCiZLCkzRTgMsr62+FbAmLI6MyOL0H3BB7PcoPoRTIyhQ4pgYe2fw3yqU6Jeuxf
- mfXtSetjhSFP4iTn/3t33WsSGM8MT3aU2ThvxGYGDE8WCeoTVCHVAPj4IMBzhzfii8CzHD
- PJwAIbQXoOnBPz56bThCEim1PL/DQMk=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-323-Ww3tiHd7NL-BWsd-9F9WwA-1; Mon,
- 16 Feb 2026 10:30:59 -0500
-X-MC-Unique: Ww3tiHd7NL-BWsd-9F9WwA-1
-X-Mimecast-MFC-AGG-ID: Ww3tiHd7NL-BWsd-9F9WwA_1771255858
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 53F451956054; Mon, 16 Feb 2026 15:30:57 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.33.255])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3E3131800666; Mon, 16 Feb 2026 15:30:52 +0000 (UTC)
-Date: Mon, 16 Feb 2026 16:30:50 +0100
-From: Kevin Wolf <kwolf@redhat.com>
-To: Fiona Ebner <f.ebner@proxmox.com>
-Cc: qemu-devel@nongnu.org, qemu-stable@nongnu.org, qemu-block@nongnu.org,
- hreitz@redhat.com, vsementsov@yandex-team.ru, jsnow@redhat.com,
- jean-louis@dupond.be, dionbosschieter@gmail.com
-Subject: Re: [PATCH] block/mirror: disable dirty bitmap only after job init
-Message-ID: <aZM4KqW57Sb1l_Pb@redhat.com>
-References: <20260212120411.369498-1-f.ebner@proxmox.com>
- <aZLwdRhpTHvi1Y1-@redhat.com>
- <66c3fca8-0f64-4cec-a2a9-5959ef67a251@proxmox.com>
- <5f336c06-c675-4d21-8c1c-e1a1ebe8e09f@proxmox.com>
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1vs0Zx-0006Fw-7o
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 10:32:07 -0500
+ARC-Seal: i=1; a=rsa-sha256; t=1771255911; cv=none; 
+ d=zohomail.com; s=zohoarc; 
+ b=RTuPgXRmPwTmsr7H6KkdIWUSklt1NhLSlrv3FI/wnmE2OGAMgZHQ+xBhyia5sZw27J3WCs126jtJ8PxfxPWOGCDhQi5xClaMNer51H6Py0IcYGW2We73oytspUcIl8T6D4A2hSSu2EeP6GK6KkrsdDPfD8kMDFXPAI9XDg6hnVs=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
+ s=zohoarc; t=1771255911;
+ h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
+ bh=FMJSWG7Mrnv23BkTetVWAPtjdiqd/i4OA66AdogcaJ4=; 
+ b=bYVDFuIpnQJruoqdyM2ru2y4zrkBVgcpQicIlUmBNzYjD/4Nhn2Y+Su6BOMQoDK6RZ80kXfLUoZdIJeqPl31KJRnydr6j6G9W+JPuGHLF/KnJxLv5HdnIPHcS3k2OKVCtx3rwH6mcQw78pifMc9RPe68+gxxr/+PZIdAxMnkGhg=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+ dkim=pass  header.i=collabora.com;
+ spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
+ dmarc=pass header.from=<dmitry.osipenko@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1771255911; 
+ s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
+ h=Message-ID:Date:Date:MIME-Version:Subject:Subject:To:To:Cc:Cc:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+ bh=FMJSWG7Mrnv23BkTetVWAPtjdiqd/i4OA66AdogcaJ4=;
+ b=f11cJAUKswmvBwWL0xn8ix+OfphVatRJUol9MzAsgefntDlouTbJHX9reau3bYjZ
+ hPhEjYHwvsYXeMybGjN4qMeqE1yy/0EMa/mx+bsV7t7EjQPBf0Vgg9NPqYsGu8iqlWR
+ Gzf66qd4r+wfr0F9WM1nZlq6wKJHqIt25iVbY33w=
+Received: by mx.zohomail.com with SMTPS id 1771255910464966.1265953868796;
+ Mon, 16 Feb 2026 07:31:50 -0800 (PST)
+Message-ID: <572a9584-cdc6-4fa1-88bd-f0aec5f82d2d@collabora.com>
+Date: Mon, 16 Feb 2026 18:31:46 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <5f336c06-c675-4d21-8c1c-e1a1ebe8e09f@proxmox.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 41/51] virtio-gpu-virgl: correct parent for blob memory
+ region
+To: Joelle van Dyne <j@getutm.app>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+References: <cover.1770231744.git.mst@redhat.com>
+ <81cb15cf3774140da7c17341018a3852f920acb5.1770231744.git.mst@redhat.com>
+ <CAFEAcA_8jB_KLzUzLS1=uG3y-nRRK_C2ZZp9SwKo1WrGu8dJkQ@mail.gmail.com>
+ <87tsvkmxb5.fsf@draig.linaro.org>
+ <CA+E+eSDZ+nrxT8=JKGvBJSO3b8cVoD-U1f+E0rhn-ZK7zePHrA@mail.gmail.com>
+From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Content-Language: en-US
+In-Reply-To: <CA+E+eSDZ+nrxT8=JKGvBJSO3b8cVoD-U1f+E0rhn-ZK7zePHrA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-ZohoMailClient: External
+Received-SPF: pass client-ip=136.143.188.112;
+ envelope-from=dmitry.osipenko@collabora.com; helo=sender4-pp-f112.zoho.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,240 +88,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 16.02.2026 um 14:01 hat Fiona Ebner geschrieben:
-> Am 16.02.26 um 1:48 PM schrieb Fiona Ebner:
-> > Am 16.02.26 um 11:25 AM schrieb Kevin Wolf:
-> >> Am 12.02.2026 um 13:02 hat Fiona Ebner geschrieben:
-> >>> Currently, the dirty bitmap is disabled too early and the following
-> >>> bad scenario is possible:
-> >>>
-> >>> 1. Dirty bitmap is disabled in mirror_start_job()
-> >>> 2. Some request are started in mirror_top_bs while s->job == NULL
-> >>> 3. mirror_dirty_init() -> bdrv_co_is_allocated_above() runs and because
-> >>>    the request hasn't completed yet, the block isn't allocated
-> >>> 4. The request completes, still sees s->job == NULL and skips the
-> >>>    bitmap, and nothing else will mark it dirty either
-> >>>
-> >>> One ingredient is that mirror_top_opaque->job is only set after the
-> >>> job is fully initialized. For the rationale, see commit 32125b1460
-> >>> ("mirror: Fix access of uninitialised fields during start").
-> >>>
-> >>> Disabling the dirty bitmap is safe once bdrv_mirror_top_do_write()
-> >>> sees that the job is set, because then:
-> >>>
-> >>> 1. When not using MIRROR_COPY_MODE_WRITE_BLOCKING, the dirty bitmap
-> >>>    will be set by bdrv_mirror_top_do_write().
-> >>>
-> >>> 2. When using MIRROR_COPY_MODE_WRITE_BLOCKING, writes will be done
-> >>>    synchronously to the target.
-> >>>
-> >>> At least with virtio-blk using iothread-vq-mapping, mirror_run() and
-> >>> bdrv_mirror_top_do_write() might be called in different threads.
-> >>> bdrv_disable_dirty_bitmap() acquires and releases the dirty bitmap
-> >>> mutex, so the memory is synchronized between threads.
-> >>>
-> >>> Many thanks to Kevin Wolf for discussing the issue and solutions with
-> >>> me! [0]
-> >>>
-> >>> [0]: https://lore.kernel.org/qemu-devel/4853b0e5-8ec3-41e9-9a53-b1912b8e4449@dupond.be/T/
-> >>>
-> >>> Cc: qemu-stable@nongnu.org
-> >>> Closes: https://gitlab.com/qemu-project/qemu/-/issues/3273
-> >>> Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
-> >>> ---
-> >>>  block/mirror.c | 21 +++++++++++++++------
-> >>>  1 file changed, 15 insertions(+), 6 deletions(-)
-> >>>
-> >>> diff --git a/block/mirror.c b/block/mirror.c
-> >>> index b344182c74..eadd4501e8 100644
-> >>> --- a/block/mirror.c
-> >>> +++ b/block/mirror.c
-> >>> @@ -1123,6 +1123,21 @@ static int coroutine_fn mirror_run(Job *job, Error **errp)
-> >>>       */
-> >>>      mirror_top_opaque->job = s;
-> >>>  
-> >>> +    /*
-> >>> +     * Disabling the dirty bitmap is safe once bdrv_mirror_top_do_write() sees
-> >>> +     * that the job is set, because then:
-> >>> +     *
-> >>> +     * 1. When not using MIRROR_COPY_MODE_WRITE_BLOCKING, the dirty bitmap will
-> >>> +     * be set by bdrv_mirror_top_do_write().
-> >>> +     *
-> >>> +     * 2. When using MIRROR_COPY_MODE_WRITE_BLOCKING, writes will be done
-> >>> +     * synchronously to the target.
-> >>> +     *
-> >>> +     * bdrv_disable_dirty_bitmap() acquires and releases the dirty bitmap mutex,
-> >>> +     * so the memory is synchronized between threads.
-> >>> +     */
-> >>> +    bdrv_disable_dirty_bitmap(s->dirty_bitmap);
-> >>> +
-> >>>      assert(!s->dbi);
-> >>>      s->dbi = bdrv_dirty_iter_new(s->dirty_bitmap);
-> >>>      for (;;) {
-> >>> @@ -2014,12 +2029,6 @@ static BlockJob *mirror_start_job(
-> >>>          goto fail;
-> >>>      }
-> >>>  
-> >>> -    /*
-> >>> -     * The dirty bitmap is set by bdrv_mirror_top_do_write() when not in active
-> >>> -     * mode.
-> >>> -     */
-> >>> -    bdrv_disable_dirty_bitmap(s->dirty_bitmap);
-> >>> -
-> >>>      bdrv_graph_wrlock_drained();
-> >>>      ret = block_job_add_bdrv(&s->common, "source", bs, 0,
-> >>>                               BLK_PERM_WRITE_UNCHANGED | BLK_PERM_WRITE |
-> >>
-> >> The thing I meant in the other thread is if we don't need something like
-> >> this additionally:
-> >>
-> >> diff --git a/block/mirror.c b/block/mirror.c
-> >> index b344182c747..159954158ba 100644
-> >> --- a/block/mirror.c
-> >> +++ b/block/mirror.c
-> >> @@ -1672,9 +1672,17 @@ bdrv_mirror_top_do_write(BlockDriverState *bs, MirrorMethod method,
-> >>          abort();
-> >>      }
-> >>  
-> >> -    if (!copy_to_target && s->job && s->job->dirty_bitmap) {
-> >> +    if (!copy_to_target) {
-> >>          qatomic_set(&s->job->actively_synced, false);
-> >> -        bdrv_set_dirty_bitmap(s->job->dirty_bitmap, offset, bytes);
-> >> +        if (s->job && s->job->dirty_bitmap) {
-> >> +            bdrv_set_dirty_bitmap(s->job->dirty_bitmap, offset, bytes);
-> >> +        } else {
-> >> +            /*
-> >> +             * Avoid race in the case that mirror_run() disables the bitmap
-> >> +             * between here and bdrv_co_write_req_finish().
-> >> +             */
-> >> +            bdrv_set_dirty(bs, offset, bytes);
-> >> +        }
-> >>      }
-> >>  
-> >>      if (ret < 0) {
-> > 
-> > You're right! It's not enough to ensure that the job is set before the
-> > bitmap is disabled, because both could happen after the check for job here.
-> > 
-> > Isn't this change enough by itself? After the change,
-> > bdrv_mirror_top_do_write() ensures that:
-> > 
-> > 1. When copy_to_target == true, the write is done synchronously to the
-> > target, no need to set the dirty bitmap.
-> > 
-> > 2. When copy_to_target == false, the dirty bitmap is set.
-> > 
-> > So it doesn't really matter at which point the dirty bitmap is disabled?
-> > Or am I missing something again?
+On 2/13/26 22:48, Joelle van Dyne wrote:
+> On Fri, Feb 13, 2026 at 8:18 AM Alex Bennée <alex.bennee@linaro.org> wrote:
+>>
+>> Peter Maydell <peter.maydell@linaro.org> writes:
+>>
+>>> On Wed, 4 Feb 2026 at 19:04, Michael S. Tsirkin <mst@redhat.com> wrote:
+>>>>
+>>>> From: Joelle van Dyne <j@getutm.app>
+>>>>
+>>>> When `owner` == `mr`, `object_unparent` will crash:
+>>>>
+>>>> object_unparent(mr) ->
+>>>> object_property_del_child(mr, mr) ->
+>>>> object_finalize_child_property(mr, name, mr) ->
+>>>> object_unref(mr) ->
+>>>> object_finalize(mr) ->
+>>>> object_property_del_all(mr) ->
+>>>> object_finalize_child_property(mr, name, mr) ->
+>>>> object_unref(mr) ->
+>>>> fail on g_assert(obj->ref > 0)
+>>>>
+>>>> However, passing a different `owner` to `memory_region_init` does not
+>>>> work. `memory_region_ref` has an optimization where it takes a ref
+>>>> only on the owner. That means when flatviews are created, it does not
+>>>> take a ref on the region and you can get a UAF from `flatview_destroy`
+>>>> called from RCU.
+>>>>
+>>>> The correct fix therefore is to use `NULL` as the name which will set
+>>>> the `owner` but not the `parent` (which is still NULL). This allows us
+>>>> to use `memory_region_ref` on itself while not having to rely on unparent
+>>>> for cleanup.
+>>>>
+>>>> Signed-off-by: Joelle van Dyne <j@getutm.app>
+>>>> Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+>>>> Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+>>>> Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+>>>> Message-Id: <20260103214400.71694-1-j@getutm.app>
+>>>> ---
+>>>>  hw/display/virtio-gpu-virgl.c | 4 ++--
+>>>>  1 file changed, 2 insertions(+), 2 deletions(-)
+>>>>
+>>>> diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+>>>> index 07f6355ad6..6a83fb63c8 100644
+>>>> --- a/hw/display/virtio-gpu-virgl.c
+>>>> +++ b/hw/display/virtio-gpu-virgl.c
+>>>> @@ -120,7 +120,7 @@ virtio_gpu_virgl_map_resource_blob(VirtIOGPU *g,
+>>>>      vmr->g = g;
+>>>>
+>>>>      mr = &vmr->mr;
+>>>> -    memory_region_init_ram_ptr(mr, OBJECT(mr), "blob", size, data);
+>>>> +    memory_region_init_ram_ptr(mr, OBJECT(mr), NULL, size, data);
+>>>
+>>> This looks very odd. The owner of an MR should be the
+>>> device that that MR belongs to, not the MR itself,
+>>> and usually not NULL either. The name should be something
+>>> useful for people looking at the HMP info output about
+>>> memory layouts.
+> The owner of the MR was set to itself before the change and this
+> caused a crash on my ARM64 host (I'm not sure why this wasn't a issue
+> beforehand on other architectures, I suspect it was a race condition
+> that was always won before). The original fix (see v2) was to call
+> memory_region_init_ram_ptr() with "owner" set to VirtIOGPU *g and then
+> manually setting "mr->owner = OBJECT(mr)" after the call, thus
+> breaking the self <-> parent loop that caused the original crash.
+> However, this was brittle as we were modifiying MR internals outside
+> of MR APIs so the suggestion was made to use NULL for "name" and
+> "object_unref" instead of "object_unparent" in cleanup. This MR was
+> properly an orphan and does not have a parent. We depended on the
+> behavior of "memory_region_do_init" to not call
+> "object_property_add_child" when "name" is NULL. The APIs were not
+> clear if "name" is allowed to be NULL but the existance of that code
+> path led to the assumption that NULL was permitted as an argument.
+> Obivously this assumption was flawed as the crash log that Dmitry
+> shared showed that cpr_name() in physmem.c will return NULL and this
+> causes the NULL name to be passed to cpr_delete_fd(). There might be
+> other places that expect the name to be non-NULL as well.
 > 
-> Ah right, bdrv_set_dirty() only sets it if still enabled :)
+>>>
+>>> If there's a use-after-free issue then I suspect that the right
+>>> fix must be somewhere else, not here.
+> The obivous fix is to revert the change but the original crash
+> referenced in the patch will still be an issue. Alternatively, it
+> seems that the v2 version is unclean but can still work because we
+> just need the MR to not have itself as the parent. This would be the
+> minimal patch that addresses both issues. (A proper fix should also
+> remove the code path in memory_region_do_init() for when name is NULL
+> and instead return an error because that path is invalid.) Another
+> alternative would be to modify the MR APIs with a clear way to create
+> an orphan MR. Finally, object_unparent() could recognize when the
+> object is its own parent and handle that case gracefully. Let me know
+> what people's preferred solution is and I'll whip up a patch.
+> 
+>>
+>> The blobs really cause issues for our MemoryRegion code because they are
+>> transient and aren't easily cleaned up with RCU because of the dance we
+>> have to do between qemu and virglrenderer for the underlying memory.
+>> There have been multiple attempts to clean this up and so far I don't
+>> think we've managed to reach a solid solution.
 
-Yes, exactly.
+Thanks for the clarification. Curious which gfx mode showed this
+problem, virgl or venus? What's the GPU card/model on host?
 
-If that's still too confusing, how about just giving mirror_top_bs
-access to its dirty bitmap right from the start while it's drained? I
-didn't try to reproduce the bug with it yet, though.
-
-Kevin
-
-diff --git a/block/mirror.c b/block/mirror.c
-index b344182c747..c11aca1366c 100644
---- a/block/mirror.c
-+++ b/block/mirror.c
-@@ -99,6 +99,7 @@ typedef struct MirrorBlockJob {
- 
- typedef struct MirrorBDSOpaque {
-     MirrorBlockJob *job;
-+    BdrvDirtyBitmap *dirty_bitmap;
-     bool stop;
-     bool is_commit;
- } MirrorBDSOpaque;
-@@ -1672,9 +1673,9 @@ bdrv_mirror_top_do_write(BlockDriverState *bs, MirrorMethod method,
-         abort();
-     }
- 
--    if (!copy_to_target && s->job && s->job->dirty_bitmap) {
-+    if (!copy_to_target) {
-         qatomic_set(&s->job->actively_synced, false);
--        bdrv_set_dirty_bitmap(s->job->dirty_bitmap, offset, bytes);
-+        bdrv_set_dirty_bitmap(s->dirty_bitmap, offset, bytes);
-     }
- 
-     if (ret < 0) {
-@@ -1901,13 +1902,28 @@ static BlockJob *mirror_start_job(
- 
-     bdrv_drained_begin(bs);
-     ret = bdrv_append(mirror_top_bs, bs, errp);
--    bdrv_drained_end(bs);
--
-     if (ret < 0) {
-+        bdrv_drained_end(bs);
-         bdrv_unref(mirror_top_bs);
-         return NULL;
-     }
- 
-+    bs_opaque->dirty_bitmap = bdrv_create_dirty_bitmap(mirror_top_bs,
-+                                                       granularity,
-+                                                       NULL, errp);
-+    if (!bs_opaque->dirty_bitmap) {
-+        bdrv_drained_end(bs);
-+        bdrv_unref(mirror_top_bs);
-+        return NULL;
-+    }
-+
-+    /*
-+     * The dirty bitmap is set by bdrv_mirror_top_do_write() when not in active
-+     * mode.
-+     */
-+    bdrv_disable_dirty_bitmap(bs_opaque->dirty_bitmap);
-+    bdrv_drained_end(bs);
-+
-     /* Make sure that the source is not resized while the job is running */
-     s = block_job_create(job_id, driver, NULL, mirror_top_bs,
-                          BLK_PERM_CONSISTENT_READ,
-@@ -2002,24 +2018,13 @@ static BlockJob *mirror_start_job(
-     s->base_overlay = bdrv_find_overlay(bs, base);
-     s->granularity = granularity;
-     s->buf_size = ROUND_UP(buf_size, granularity);
-+    s->dirty_bitmap = bs_opaque->dirty_bitmap;
-     s->unmap = unmap;
-     if (auto_complete) {
-         s->should_complete = true;
-     }
-     bdrv_graph_rdunlock_main_loop();
- 
--    s->dirty_bitmap = bdrv_create_dirty_bitmap(s->mirror_top_bs, granularity,
--                                               NULL, errp);
--    if (!s->dirty_bitmap) {
--        goto fail;
--    }
--
--    /*
--     * The dirty bitmap is set by bdrv_mirror_top_do_write() when not in active
--     * mode.
--     */
--    bdrv_disable_dirty_bitmap(s->dirty_bitmap);
--
-     bdrv_graph_wrlock_drained();
-     ret = block_job_add_bdrv(&s->common, "source", bs, 0,
-                              BLK_PERM_WRITE_UNCHANGED | BLK_PERM_WRITE |
-@@ -2099,9 +2104,6 @@ fail:
-         g_free(s->replaces);
-         blk_unref(s->target);
-         bs_opaque->job = NULL;
--        if (s->dirty_bitmap) {
--            bdrv_release_dirty_bitmap(s->dirty_bitmap);
--        }
-         job_early_fail(&s->common.job);
-     }
- 
-@@ -2115,6 +2117,7 @@ fail:
-     bdrv_graph_wrunlock();
-     bdrv_drained_end(bs);
- 
-+    bdrv_release_dirty_bitmap(bs_opaque->dirty_bitmap);
-     bdrv_unref(mirror_top_bs);
- 
-     return NULL;
-
+-- 
+Best regards,
+Dmitry
 
