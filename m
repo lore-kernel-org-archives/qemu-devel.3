@@ -4,125 +4,214 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE8FAE7BD88
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA85BE7BD83
 	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 10:23:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vrvkM-0004CN-4b; Mon, 16 Feb 2026 05:22:30 -0500
+	id 1vrvkc-0004Dm-6E; Mon, 16 Feb 2026 05:22:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1vrvkK-0004Bx-5r
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 05:22:28 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
+ id 1vrvka-0004DD-36
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 05:22:44 -0500
+Received: from mx0a-002c1b01.pphosted.com ([148.163.151.68])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1vrvkH-0005mV-UD
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 05:22:27 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771237344;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=4fkUz6bVuygUTd+Xe0xiBI4iHyk8L4fdLMV6McBM5XI=;
- b=LYRt8/y5LRQdFwWO+gRi9FOyffaj8p0lXWr9j6I742LAlvHT+VWxHeno2S1syJi/oWIBOa
- txj/eTIqhX3fi0JFdv5+aeev94qZGz65R9y3lcrYb0RD3zEaWjbTX2Ma9t6PGbcM56PTti
- BuuZTpGa5MqfajsNu68Itd1PnK7F7fo=
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
- [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-422-HdU9pgdFMfif_2gmq-Z0yw-1; Mon, 16 Feb 2026 05:22:22 -0500
-X-MC-Unique: HdU9pgdFMfif_2gmq-Z0yw-1
-X-Mimecast-MFC-AGG-ID: HdU9pgdFMfif_2gmq-Z0yw_1771237342
-Received: by mail-qv1-f69.google.com with SMTP id
- 6a1803df08f44-88fcbe2e351so243621386d6.1
- for <qemu-devel@nongnu.org>; Mon, 16 Feb 2026 02:22:22 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1771237342; cv=none;
- d=google.com; s=arc-20240605;
- b=NK3EYvbONzXObikGrfTSJ9HwfHORf6QJZcaQF9Lw4GfC0vzT+eaabtoAxGXdQ6jCBz
- SLuYy7HaBZa7uKbsNJPfPMU2jQWxoBeQvw4ZR4yvwQCyuWVhhlO9kIMGRu6lPPe3q27E
- HgVctAIAmOVyGjnSMiYs65Vn9wkYnFgfdZVB9IUFwn4+8gwIz9RqraE3hcjulebvJ+xj
- 18G/MnbkYlVTtbOpT4J8vuFqYhZQzOpIofTkIzu1f5jKzy9p7MxYc0C5bysLlaaoNw36
- g7YhvYtxTJMa4MyNNxm6kmcjn++wp3mcQyTuHvWGHPuVqpXQVR1wCe4p2dkSbGwkYyJr
- SxWw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=4fkUz6bVuygUTd+Xe0xiBI4iHyk8L4fdLMV6McBM5XI=;
- fh=sIsIOvEHAUniTyi3GhO91uUMlcdX4avqzqeMhQBuOOs=;
- b=kumbyDj4DcsvGmpyJK6fDUvYlQo/yMZPtNcqyNRdmEZYUyVwcOrmK1soQib3kr8uWj
- IyA0XROSlS0drFG1VJNnrKJuUDrO3gwi4HgMcftNe4tFqqWy4ZNN0RFM3leZSU/8IZ9H
- owD13xQPqhiLnBLTd75MVp+HnqqbCs6XdWHNpcMQ+b18l0ugu1Bvm41ERpz0KCAyXlTt
- vjQLRhldQ49yDM0R2/IoZpKv/AO49p9YVFn2QXVkkFCLY8RpI7o3Q2MyLmBa+zgE9nDB
- I7WfD3KJftgaZN3xlwvaxpOXuZveSUWaPhhx4VizR8c2a5WECv1N9v7nMnn/edkJgyHx
- mSdQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1771237342; x=1771842142; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=4fkUz6bVuygUTd+Xe0xiBI4iHyk8L4fdLMV6McBM5XI=;
- b=ORpRuK+RWCSfHeg4o5rjBBNgxefhVnbYc4yDH5DExAFOi8NigwMXLNf/V3kQQ7WBIz
- /mOhPCgm81A84ukqKiCs2/oH3xmCFymGDrSj9viRvwAXuh0FXa0Krum8WwquYh7zuLwz
- k31clmgLQXFB/HRm5EVg4P0P3qEAhTp/sNUelWYrikeU4gFEpqWM859ijYlrSLPUnyd8
- UeTTy42MylPTcYe/+Xgh+ia0eVef0/f18Fk7LXcOALI6JEXskYROmqRMsQbAUWEbSR/2
- GqBV+bz9THRkD/iRSt+NQAejvLP4YmyshYt/GkjO3hiyEM3qscFqBrC8wYfUPXLGBaS6
- uCGA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771237342; x=1771842142;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=4fkUz6bVuygUTd+Xe0xiBI4iHyk8L4fdLMV6McBM5XI=;
- b=Ngkl4wdxxN1iNqCc6rgMytI1vJbIb4dw/PewjnzYFDk41WDxaPzOdE8w4SE2jlOg7H
- ogMCpqLB79bNgB+2SE7UHhOTqLxDOlnaGm8YszxLmJHdy6eBj50/KHbj2JSk82uJyxgJ
- iRF8DDA3M5hO2h5H2d7jc6mpvQkMF0R7CwgfM82uN0BM9WmDxgBUOBCVI0QSiKRE+0eL
- yIegPWeRbYosaExQNA1AgPP3tjtvfDlwwPQ5lYiNC1KaVMyca5G3njY8P9eB6BgetQGc
- 8UX8OKKnbzOfDmW78SimWrB/a0yZ7Dgec0YuMbTV8svhHtqHdifA1jaSa70y0Wd+guz/
- E3tA==
-X-Gm-Message-State: AOJu0YzcUcTi5tKjBihqMcoA1Gu4nP6vOBoWd8GfSxucef/O6beyG5KA
- SHxkgwZb7OeI2E1uhP0KeIwNbBcNyQxktLYs+NxUSdqgww2K4ZqYjVp2g87egySSuOwetMg13gy
- JYtldcYry5YglhjSq8Sxkth+dvu4GCqBi+cEbeboPojYsHcbIB64W0sbybqUNyhnNF9OoFnIuvU
- dU8M8pzAGE5M8iDLk2mMRDneUSkZv/PXU=
-X-Gm-Gg: AZuq6aL15CFyL5dujVtc/VWITDv++0QyeO5o3mtf77Iye2GXxALk3WFUmOalPMaBvp5
- bUFXi8awMfoc8q6y88Iza16rTUxsmlXCJWWPCLWD2OD3LJn4f48xO6It/YVRnPp1sZxzaF110L8
- VFcQujNhaZ+3PeVFR/+bgnK3CV3Jk15gafLSVmtHbuKPelWR3RVErmIzBzB5O5a9vpCuQrFQLKI
- yI346U/IfFHdYdHxHkEpiAZVTQOa+P8hcQj
-X-Received: by 2002:a05:6214:c42:b0:894:3bac:49d1 with SMTP id
- 6a1803df08f44-8973f2a161cmr122634036d6.11.1771237342050; 
- Mon, 16 Feb 2026 02:22:22 -0800 (PST)
-X-Received: by 2002:a05:6214:c42:b0:894:3bac:49d1 with SMTP id
- 6a1803df08f44-8973f2a161cmr122633856d6.11.1771237341642; Mon, 16 Feb 2026
- 02:22:21 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
+ id 1vrvkX-0005mz-77
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 05:22:43 -0500
+Received: from pps.filterd (m0127840.ppops.net [127.0.0.1])
+ by mx0a-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 61FMGvke041856; Mon, 16 Feb 2026 02:22:36 -0800
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=
+ proofpoint20171006; bh=8KkmfLKyox2oVIKG/gSaeS9rPenCIzvwt9pGsBagw
+ so=; b=gtt1iL3oMecxnvqrM5bb6t9hF3I1jgaCFj75YVJT455tnKWavgWQMpeDT
+ IdwKOp/aJfzOkyMBGuGC8GRzC1us+4wlUQbtWY5vjKhTbCCC6lkzVxqgHMCevDvh
+ TJ+otvEgKKQGx0yJcleola59TwoO/00T1WbVoCU47YeUWeYad4A1gvqx1tFp7E2v
+ JBluGlvM2OhfCpIWs+FQEztANcS2z6aedWWFZOQYAOArYBmu7/FEiBdQMX1H0vlH
+ 36l3M2lcI6Lc3AOrHyzD3G6jZklpcpkDD2Ra7E4gaZWPCPmUbg9sUyNXRZeUJepP
+ i/EaIdkZuCZn7w6iVBXAgZhLnWFqw==
+Received: from mw6pr02cu001.outbound.protection.outlook.com
+ (mail-westus2azon11022082.outbound.protection.outlook.com [52.101.48.82])
+ by mx0a-002c1b01.pphosted.com (PPS) with ESMTPS id 4cap8wk86v-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Mon, 16 Feb 2026 02:22:36 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=BIlWy5dA0HZr6i3oPqCqN3bYhJmsA/wRuQfgVpCKE7xP4Pc2nE8SPNxmHpz0VDA5fblkgIoYxlsxTHpJPdZAY1DmuojNgPlEWB9+tjdQ8wjZIt8g7h6HKfdiYj+guChRkTaq5r6LkL6wpt3Iq5xbzyZMzd9HlEQEQB2h1iL/MxM9jBtWidlO1h7V834sBTBbhJP+DoWfR7vizRbVK+zzFvCJnzmEw0yMQ7hKp0i6+2Gxwac4pR+AW6d45bvo8kjXyywD+lRtxRH98hiCiKB9m0pnQvaLQmItkwsExPNM1NnJpP7fnCNO9zi3GVaYQPC1av6zK0EOZA+qaw3wcpR+Bw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=8KkmfLKyox2oVIKG/gSaeS9rPenCIzvwt9pGsBagwso=;
+ b=Pd6uXo75+BUpEir0JIKSTp8bJ569kYZyEmh18NULGVMRu2z2V3J3llFeiWY4uZs32Ut3PA+Y4MqomMPlWPxX1iv5XzlAGtBva7LkHBFkqjIx2eYEdZ46laWC09GCclyV+qxBkLv5sKw2Et+Z56gKhkGnj/NXo0s4Wl7+oHBUHH2PT2aj0zIU8dbnrqtgaItd2w+k42knBySSyFjc1vxqOwCMl6t9lFXvQxULp9ixvuVU3IVVUjedwSGItTPpfbzH+lDaTglq4eZYXS1jnNoBtKqgRwmAagdQVPdXUXG4bnDHOckz4Z6aHwKBIIfF1xnGtEkpj9NlDNz7LWDx3WRENw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
+ dkim=pass header.d=nutanix.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=8KkmfLKyox2oVIKG/gSaeS9rPenCIzvwt9pGsBagwso=;
+ b=dzESw+2F0Wa7yZJtDbI/4H6hS1dulhff5ifhFMD9feGspP2JuHh+zyjKnqWQm48zgdAneQz4qiBPGuAnTyIJgqf4pehVpwOwfGsd1+kaHdGx3bRN9xC7RSPZGKylxHF4u/LcVOqxVz1TzHffKNLWgdGfrR4KjrBP3khlfN1+IiXPmsDsSvrWFfr5adEGzRkCInj+vdp/3CAPAPBkDvelPimJG3SQfNubEUVBo63/tXPi9JeakEzVcfh3AxmzproWe80rH+mk616BCayddsUJi9I9xegoJPTYjGTckOOMDrUCP5uq2+PZ/i51bOLAN6k1fvalIYFcO2gjFmNREaeJaQ==
+Received: from PH0PR02MB7159.namprd02.prod.outlook.com (2603:10b6:510:16::8)
+ by IA3PR02MB10352.namprd02.prod.outlook.com (2603:10b6:208:533::21) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9611.13; Mon, 16 Feb
+ 2026 10:22:35 +0000
+Received: from PH0PR02MB7159.namprd02.prod.outlook.com
+ ([fe80::8e97:bc32:822c:b250]) by PH0PR02MB7159.namprd02.prod.outlook.com
+ ([fe80::8e97:bc32:822c:b250%7]) with mapi id 15.20.9611.012; Mon, 16 Feb 2026
+ 10:22:34 +0000
+Message-ID: <fd3762ea-247c-44a8-89ee-1b70bbed80ab@nutanix.com>
+Date: Mon, 16 Feb 2026 10:22:30 +0000
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 34/43] audio: rework DEBUG_POLL
+To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@gmail.com>
+Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Gerd Hoffmann <kraxel@redhat.com>
+References: <20260127182516.289834-1-marcandre.lureau@redhat.com>
+ <20260127182516.289834-35-marcandre.lureau@redhat.com>
+ <d094a131-9ef7-4c49-b037-76583b3b48e0@nutanix.com>
+ <CAMxuvay8QBghas9-vmf_2mqL2aDj9byFOmK+G1G1562E5KLvKQ@mail.gmail.com>
+ <1de4cd68-b623-440a-b88d-e91e5a739979@nutanix.com>
+ <CAJ+F1CKxHjovOPWu2GmyRL9n3F8cyE+Gcx1UBUqT6aJfsOrd5Q@mail.gmail.com>
+Content-Language: en-US
+From: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+In-Reply-To: <CAJ+F1CKxHjovOPWu2GmyRL9n3F8cyE+Gcx1UBUqT6aJfsOrd5Q@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: LO2P123CA0053.GBRP123.PROD.OUTLOOK.COM
+ (2603:10a6:600:1::17) To PH0PR02MB7159.namprd02.prod.outlook.com
+ (2603:10b6:510:16::8)
 MIME-Version: 1.0
-References: <20260206131438.1857182-1-imammedo@redhat.com>
- <20260206131438.1857182-8-imammedo@redhat.com>
-In-Reply-To: <20260206131438.1857182-8-imammedo@redhat.com>
-From: Ani Sinha <anisinha@redhat.com>
-Date: Mon, 16 Feb 2026 15:52:10 +0530
-X-Gm-Features: AaiRm50Kgb0cTwGJiB6bADULXPlSVzgNXShlAgSGtiph9Sw5S9ckf4mKnIIgQJE
-Message-ID: <CAK3XEhMYzsmbhE1S3ZFdV-oQpesuy24FVb_rn=sdcRYi6xKScQ@mail.gmail.com>
-Subject: Re: [PATCH 07/11] arm: add tracing events to sbsa_gwdt
-To: Igor Mammedov <imammedo@redhat.com>
-Cc: qemu-devel@nongnu.org, mst@redhat.com, pbonzini@redhat.com, 
- peter.maydell@linaro.org, shannon.zhaosl@gmail.com, philmd@linaro.org, 
- zhao1.liu@intel.com, rad@semihalf.com, leif.lindholm@oss.qualcomm.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=anisinha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PH0PR02MB7159:EE_|IA3PR02MB10352:EE_
+X-MS-Office365-Filtering-Correlation-Id: f21fad77-3730-4566-d122-08de6d454d0f
+x-proofpoint-crosstenant: true
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|366016|376014;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?eVdna1liSlFuMnZRcnpHR3hRMXRIVTkveHBtaS9mNWdKY091dmliL3A3RmVv?=
+ =?utf-8?B?UlNzc01IdUxnVFZtcVlFVXdPQ05YV0NiVkN5OXRpck55VHJnZHlmRXRpa0pl?=
+ =?utf-8?B?eUw2YW9DaFozWmpLYUNhdXVVbldSQzlTOHFHYU9HSCtzb1QyYVRKN3JiK2xy?=
+ =?utf-8?B?d1phdXhOelVEanNIYm1Tb1ozc29Od1lpdk5oYzRuZ2pxV3hjOUVaRnZySmdY?=
+ =?utf-8?B?eldZTGp4RytzVzFXNTlFSU5PdnIwLzlwT2ZOSGgyTEZMZVpOVXNRY3lDc2lu?=
+ =?utf-8?B?Q21xQy9jcncwbnp5Y0p5M0hUNjdXdDhCSXcvUEY0S3A5NFVsVGt3KzV0RlNX?=
+ =?utf-8?B?V0hWeEZpUEwyUmRiSGI5aUtzOUhMeVdXL1NjTjM0WW96R2ZqLzEvd1dwb01m?=
+ =?utf-8?B?WVlHcHAwUzdzT2lLUTl6WGdJRU5EalU4Qi9pVW1xM2RSdjAwK1l6OTdGSmtP?=
+ =?utf-8?B?eXVMY25FRDFKYTNwcTJKRTEzdmZrckZjRFZBRWhTVC9EcWNyUjFsMlJVRkQr?=
+ =?utf-8?B?WXd5NWE4bVY1QXhVc2JrWkR2bFJhNWpXUTkrUWpOeTlvSk5uTC9PMnF4NE0r?=
+ =?utf-8?B?UU80NWVNVXpNM01rWUM4RjVJVERrc0tob1NhVnFuWmlPdTlnUTJlT2hQbGQx?=
+ =?utf-8?B?WDBKWFYyYmNMTmZ5ODUxeFY1anRpbFpMcTIrbHhtU2RGbUIwVW0yZWpVVGN0?=
+ =?utf-8?B?WG8vZnpwaE1rYk42UVFnc2ZBZzhycjRici80bVNUQTk2bDFCQlozcTljQUFF?=
+ =?utf-8?B?UytqUFg1L0xGU296S05nVnJNcGFmTnVZNGdHN0dJeWpDeUlxOU1oRWx0OWg1?=
+ =?utf-8?B?T2E0SVpJVGNuaUlXQkhNK3JEaXRlWU10SE4ra2pjM1piYnYyREZ2RGR0OG1F?=
+ =?utf-8?B?UklvUWNTaXR0b0k4V2xhV0svbWhiczRRQnlST0l2WGR0ZXFMRzU0d2JyWXZn?=
+ =?utf-8?B?OHIrTWV4ZUIvYVh1Vk9KNStybWs0OUhiK2E5QWtSbStvc1pWd1EwMUtxNEJ0?=
+ =?utf-8?B?VVlkYUgxMVhNbVIrN01KbzN3YkJqdDJqRmsvaHM1NlJxTVVVVHhaQW9FaWQ4?=
+ =?utf-8?B?SkdYTytqc2w3OE9EUmg0VnRYbm80c01nS2NwNDZ0ZFVMM0ZWQ3pubWFOSEU2?=
+ =?utf-8?B?RUQvWk9aT0dxeDFDYnEyUEQ0Nzd4bGp2cVpjWm5xaHJrQVNvNnpIWjdNYXA0?=
+ =?utf-8?B?Z1UzZi9NM1BJVHVBMkxBQXhBNXZGVCtVVnh6ckN3MzJlY1pLcEhMNzAvOEVu?=
+ =?utf-8?B?cm55SXlDakQvaXVwanpSTGF3NWd2OWxTVzJaODdRRUdIUUlZZnhNblFYbkdH?=
+ =?utf-8?B?eVhJZm1tclpONlhZMURGcVVIKzhOS0V1OFl3VlpPZjVRWEdpVWN3ZStxbjdY?=
+ =?utf-8?B?VWlHTm9qbXBuUDh4WjVWSEFQWU9HcmJ6ZXFHNGhEbm4waGdacGVkVkFaUS9h?=
+ =?utf-8?B?WVBkK3QwZEtGYUs2enNuc0FRKytPMzRKMHNvcXdRRFVnNEd6aUcyVXpycDVJ?=
+ =?utf-8?B?RFpsMmhJcXRWbjYvNURUcWtOVFdDcEF0UmZ3WHJXaGdjVFlYQ2NMQ08vTTJx?=
+ =?utf-8?B?V3k1b2tUd3ZEQjdWM2JwYWhGU0FQVjRqd3JMRllkZTcwdXIveEZDdWpNUGFy?=
+ =?utf-8?B?ZWxxTGpuclRUQmtJcyt2djJ0Qmc5emwrSUZoTGVpWkxTNWJxTjZ2ZVhaS0xy?=
+ =?utf-8?B?YW01OFFRU0RwNjU4ZTdtVmZJSm9aL1l4Z1JYb004azFwMitFZkRvcnloeXVR?=
+ =?utf-8?B?TVh5OVg0YzFMMVRLNm1oN3FXVjNmQVN4cXE4R1VCVUlvNS9HOTdWdmF6Zkpk?=
+ =?utf-8?B?aHkxMXBLd2xPc25zZjRTV2ZWWWxlSUQ0YStWWE5CMDJtdTNYZ2t6OExUUDNo?=
+ =?utf-8?B?Q3NCb3RZNTVHY2d4SHFNSklwcG1ZelU2QStVWk9ZRGZWMFJVV2cvbXBIa1RG?=
+ =?utf-8?B?bHd5SWcvR3pnaEF0QUN5NDNFZWFITUpJODlndndBMFBvQzdXMDI1Q21aaG5z?=
+ =?utf-8?B?UU9NQkYxR3Rvdis2ZU95bG1BaEFUOVVDbXRoY3U5cDV2ZFhPQ2tLT2Y2bDM0?=
+ =?utf-8?B?cmM1S09ieFphY2R3eUhiT2JEcHU2TDc2MUplVy93RHdRbS9EejVKbzd6dkE3?=
+ =?utf-8?Q?k3CM=3D?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:PH0PR02MB7159.namprd02.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(366016)(376014); DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?TGxOMDBCZFo4cjlxbWxoaytkUm5GLzAzckhoclpudnlSSDBGc090cUVEdlJQ?=
+ =?utf-8?B?Uy9OSkZ0L1NOOXI3L3ViQmR5amk1ZzZiMkZGZ25yNXlqWktSb0phdVJJZFRn?=
+ =?utf-8?B?WG9jZVNqMWJsM3lTdG1majhBTEIwQXh3SmI5QUQyS0xSc2JEUEMxU0VLUlhY?=
+ =?utf-8?B?djR6QUNPaSt1ZXZ3dDdCYjVValhrK0Z1YS8yL3g2ZWxrNTJxRzh0SFFTMVk2?=
+ =?utf-8?B?TXpwTG5jZENpWXlTWXRoZ05VTjd6VHN0NDFmalgrODJPTThROTJiZmdjNUlF?=
+ =?utf-8?B?akRTUmdZV3N5dHpocFpEODV3Yjg3WG83b3hNQitsL0ZiVm4xZGJVZmpSM2Zu?=
+ =?utf-8?B?YmE2TSt3UHlET3VDSmVQYVR0ZlJPZXE0QUR3YzlMUFByZlBrQVFUWDNGczBm?=
+ =?utf-8?B?Vkp5cXBDSTdLWmo4bG5udjJnNGJqRU1qcE1qQWtTcnJaTlg0Z0FaRmRCWjJJ?=
+ =?utf-8?B?VEtPTjlub1hjN1h3MzVLMkNmem1GR0hRc1l4ZHBsTkwzbUE0WGYwVkVoZ3Vj?=
+ =?utf-8?B?NU5Ia3ZkeEVTc1VvbU1qV1pJS1JmcVJXS1ZOWGhvOUNJT2tYUjdoZ2x1UHZw?=
+ =?utf-8?B?SEpqaUZXUXRZb1V5dUw5R0x6dHI1ZkUzeVpYT09qOE1zVWRDTWdWN2haeU5H?=
+ =?utf-8?B?RlRRbkR6UkR4RjNoV3psWlR6aTdJUm1xSk43d0pBM1VYbnJ0MC9WM25lMmpR?=
+ =?utf-8?B?bGNoLzc3TU1mRHl2VEJmcDJveWJNRm9hL2NSeDYwMkZickVLckRrZ0UxTnB0?=
+ =?utf-8?B?TXoyVlJhZk00UWxxbmFISWNnWUdxQXZ3UzF4aS8yaXVlU2tHOWNNN0c3bTk4?=
+ =?utf-8?B?V1gxNDNxaDhFRkNUcTgrN3BPRjAzODZIN1hydnd6WkJleXBRbFlIRGRtd0hB?=
+ =?utf-8?B?aXNSMU81c0ZXWE5xZENibCtkdCs4L0d3RG83dzhmRzRHL09PUThvTFhaWmJq?=
+ =?utf-8?B?QVhOOTlsajJGTm9WdzBuTnFKSGVBbTljWmRjZk93UFdzUlg3bTlSSVJOdUlj?=
+ =?utf-8?B?WFFmRkVxb2pzVnV5SmJuVklndFh4QUdyQjVSdERlc3k4UnY3cHhFT0dhaW9V?=
+ =?utf-8?B?YnM1dS9WY1g3eElVOHlJWHp1TmZxbFVVNDVBNjA1QWtVUzR5OWJFVndJK2px?=
+ =?utf-8?B?SjMxNzA5QVhSeUxENTJ4bVJnVXZnR1IvQ0pWRlQ3cFFqcHRhYlRLc29pcDF5?=
+ =?utf-8?B?VmRLbENFZHo1Tkc3Tld3KzZSSTRuamdSUllqcEhFU3NqSHEwK0RpQ0dNWnNt?=
+ =?utf-8?B?WHJJRC93bGFFc0g3ZnVMTzJUa0lQa2JsLzlHdkN6Njh6TEJTOFlaTkNKNk5j?=
+ =?utf-8?B?Tmd5STc1QUMvSkliemI3UkdQUEZWUkx5VFh4WnhxOTFweGVhSHEwRXp4TndG?=
+ =?utf-8?B?OEk0SDQ1TllFWWxjZzZyRURqSTllK1hjSXJEQ3lMNDI5ZzQ5Wlg4VkdFZUZx?=
+ =?utf-8?B?eUZERWc1SHMzWjF0NDdpRGJpNlhBRjJaNWkzdVBzQ2JjNTBvYVR3Qnd6WDBD?=
+ =?utf-8?B?KzB1aWZvYnVvWDdwaEl4bGNPenZkMCtQSm1LeVNZVXlWdGM2dkFvdTVJUVBn?=
+ =?utf-8?B?bFAwQXhmbEVEL3B0ZVBLRU1YYzJvWXZWYk1XdkdyNDIzQkFnb2ExSUJnNFk0?=
+ =?utf-8?B?disvSWRwRm94UGJsZjVtOGtkRGdQVGQ5TURNVEFiTFJFM0FEcG1uL3NxWS9N?=
+ =?utf-8?B?aCttNVRHS0VpYmh2bXcwdkVvTmpwL2lBWmRDQnNIRk5SM1E4QkU1K1ZwV21m?=
+ =?utf-8?B?NEduU1F5SWJpaDlCS1VkUEhUdVlvaWtnT2ZYVXMrUDZucEVZalR3VnNSYjJN?=
+ =?utf-8?B?MS8vNDZEVDZJRmhzTlg1VXAwektnWFAzZ1VINXlDaEdQZUk5UDZvUGczRlY2?=
+ =?utf-8?B?OGk0QVNtOEJFOVBiMnRTa1h1M1hNZWxsY0IrRGdlQldOdmVYNDBNYVdaVHY0?=
+ =?utf-8?B?MHlIb2JVT0xCWCtrUUhiOU53VnRjZHE1Vml0YWRma2hkVlAyRkpKSVFXTEsv?=
+ =?utf-8?B?THZlU2duK3E5Wlo3bDlRM09zUG9BenNsMkVUVlJBOStIamRTS0V2YlFkeDY3?=
+ =?utf-8?B?QnNGdzNURzI2NE1PT210N0VpWW9CczFMZlZSejJxSjRYQ3lnb3UvSUVkaVVu?=
+ =?utf-8?B?a0gwbi9zcWtvbG9tbmw5WE1yZmErNmpRdDY5elRNRHdheStiMzlVWDhqZy84?=
+ =?utf-8?B?M0M5Vng3TElpVWNMdjRudlcxUUxiS1ZtVFVGbmd6WUhMNlV5eXgrVGNhVGtr?=
+ =?utf-8?B?cVB1WnB0bW9wYlJYdlJiekdRdE53Rk8rdE5MOFJKcFY1MXJ0WW9oWnE1T0JZ?=
+ =?utf-8?B?MlNjM1JxYUU3V1dwRHJHUkNldDQzQXp0ZTV5WXhCMi90VzNjRjN6TlVDZG1B?=
+ =?utf-8?Q?3UM6llnpXSd7Ojy4=3D?=
+X-OriginatorOrg: nutanix.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: f21fad77-3730-4566-d122-08de6d454d0f
+X-MS-Exchange-CrossTenant-AuthSource: PH0PR02MB7159.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Feb 2026 10:22:34.9020 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: j5Z1PUFO+1u8oJ88odAlfyumzibXah7IZ0LvzV4kRJ52Hy2bdE3e77HErSweMTTibeojg5iayQgXL3kIwrCI35EHeHQP3TIOsuUUmT8+tPk=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA3PR02MB10352
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjE2MDA4NyBTYWx0ZWRfXxKS0bxv+K1jR
+ zvSaYKJCaTOkxyR5qDNqX0INyUSrNkR286FuktmbIB6ZoDnINYLwhIu+nRMKbPMHd1aZgtxVont
+ FyZ+Sw4Y2oegP/ukh9nEDmpmaAIua0UPFegasuw/G505ix2NkaZIZ91IBx8kZa6c9DjcUv4BtxT
+ 9sNwEJPu/6xz75dKgkbVSytwxdp52ap+vl4ZZNka+Esjb02UpnzrwKced4aBxhwVxKZDjng9tw/
+ YQsXna+bUXbuA4+5ghiNjj60WVV+woCvlwcOeknkci2sNu2TuJ6Adsmwf5o+2sYIjzdmDEeamSW
+ RD6/8hoGW4pD6SzQk3sFvS57jX5ppvgcDmtStUeb9cnb60XqxCF1AIzUJkfOhs5prMR3iSpNRlQ
+ MdlmLbd//LjTeAcSw/y4soPhdhjORXwCx4vDbzRdeZ+yTJB3c8mcwYBU7K4R1aBP++VjNDb0AKQ
+ PUFNYETuKbMMpquzp0g==
+X-Authority-Analysis: v=2.4 cv=OP0qHCaB c=1 sm=1 tr=0 ts=6992efec cx=c_pps
+ a=n37zOek93uUOArlCZH3zig==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
+ a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
+ a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10 a=HzLeVaNsDn8A:10 a=0kUYKlekyDsA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22
+ a=64Cc0HZtAAAA:8 a=20KFwNOVAAAA:8 a=oDGEdQ-fgMcvttDe-sUA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: 7VLeBly9kkzTu8s_lQsdDcKr-GP8Bqwm
+X-Proofpoint-ORIG-GUID: 7VLeBly9kkzTu8s_lQsdDcKr-GP8Bqwm
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-02-16_04,2026-02-16_01,2025-10-01_01
+X-Proofpoint-Spam-Reason: safe
+Received-SPF: pass client-ip=148.163.151.68;
+ envelope-from=mark.caveayland@nutanix.com; helo=mx0a-002c1b01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -138,129 +227,146 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Feb 6, 2026 at 6:45=E2=80=AFPM Igor Mammedov <imammedo@redhat.com> =
-wrote:
->
-> Signed-off-by: Igor Mammedov <imammedo@redhat.com>
+On 16/02/2026 10:10, Marc-André Lureau wrote:
 
-Other than what mentioned below,
-Reviewed-by: Ani Sinha <anisinha@redhat.com>
+> Hi
+> 
+> On Mon, Feb 16, 2026 at 10:34 AM Mark Cave-Ayland
+> <mark.caveayland@nutanix.com> wrote:
+>>
+>> On 14/02/2026 10:24, Marc-André Lureau wrote:
+>>
+>>> Hi
+>>>
+>>> On Fri, Feb 13, 2026 at 4:50 PM Mark Cave-Ayland
+>>> <mark.caveayland@nutanix.com> wrote:
+>>>>
+>>>> On 27/01/2026 18:25, marcandre.lureau@redhat.com wrote:
+>>>>
+>>>>> From: Marc-André Lureau <marcandre.lureau@redhat.com>
+>>>>>
+>>>>> Use more correct GTimer, specific for each backend, with a trace event.
+>>>>>
+>>>>> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+>>>>> ---
+>>>>>     audio/audio_int.h       |  1 +
+>>>>>     audio/audio-mixeng-be.c | 25 +++++++++----------------
+>>>>>     audio/trace-events      |  1 +
+>>>>>     3 files changed, 11 insertions(+), 16 deletions(-)
+>>>>>
+>>>>> diff --git a/audio/audio_int.h b/audio/audio_int.h
+>>>>> index dd5f2220d75..e0ed6af67ed 100644
+>>>>> --- a/audio/audio_int.h
+>>>>> +++ b/audio/audio_int.h
+>>>>> @@ -224,6 +224,7 @@ struct AudioMixengBackend {
+>>>>>         Audiodev *dev;
+>>>>>
+>>>>>         QEMUTimer *ts;
+>>>>> +    GTimer *run_timer;
+>>>>>         QLIST_HEAD (hw_in_listhead, HWVoiceIn) hw_head_in;
+>>>>>         QLIST_HEAD (hw_out_listhead, HWVoiceOut) hw_head_out;
+>>>>>         QLIST_HEAD (cap_listhead, CaptureVoiceOut) cap_head;
+>>>>> diff --git a/audio/audio-mixeng-be.c b/audio/audio-mixeng-be.c
+>>>>> index 343f6ec181e..1b2c1fafa87 100644
+>>>>> --- a/audio/audio-mixeng-be.c
+>>>>> +++ b/audio/audio-mixeng-be.c
+>>>>> @@ -24,13 +24,13 @@
+>>>>>     #include "system/replay.h"
+>>>>>     #include "system/runstate.h"
+>>>>>     #include "trace.h"
+>>>>> +#include "trace/control.h"
+>>>>>
+>>>>>     #define AUDIO_CAP "audio"
+>>>>>     #include "audio_int.h"
+>>>>>
+>>>>>     /* #define DEBUG_OUT */
+>>>>>     /* #define DEBUG_CAPTURE */
+>>>>> -/* #define DEBUG_POLL */
+>>>>>
+>>>>>     #define SW_NAME(sw) (sw)->name ? (sw)->name : "unknown"
+>>>>>
+>>>>> @@ -1269,22 +1269,12 @@ void audio_run(AudioMixengBackend *s, const char *msg)
+>>>>>         audio_run_in(s);
+>>>>>         audio_run_capture(s);
+>>>>>
+>>>>> -#ifdef DEBUG_POLL
+>>>>> -    {
+>>>>> -        static double prevtime;
+>>>>> -        double currtime;
+>>>>> -        struct timeval tv;
+>>>>> -
+>>>>> -        if (gettimeofday (&tv, NULL)) {
+>>>>> -            perror ("audio_run: gettimeofday");
+>>>>> -            return;
+>>>>> -        }
+>>>>> -
+>>>>> -        currtime = tv.tv_sec + tv.tv_usec * 1e-6;
+>>>>> -        dolog ("Elapsed since last %s: %f\n", msg, currtime - prevtime);
+>>>>> -        prevtime = currtime;
+>>>>> +    if (trace_event_get_state(TRACE_AUDIO_RUN_POLL)) {
+>>>>> +        /* Convert seconds to microseconds for trace event */
+>>>>> +        int64_t elapsed_us = g_timer_elapsed(s->run_timer, NULL) * 1000000;
+>>>>
+>>>> Not being familiar with g_timer_elapsed() I had a look at the glib docs,
+>>>> and it seems that g_timer_elapsed() returns a gdouble as opposed to an
+>>>> int64_t?
+>>>
+>>> yes, as seconds. So it is multiplied by 1000000 to get back usec, as before
+>>
+>> Sorry I was probably a little bit vague here: the part I was unsure
+>> about was what was happening with the conversion from gdouble to int64_t
+>> without an explicit cast? I was expecting the compiler to complain.
+> 
+> It doesnt complain, the multiply is done in double and the decimal
+> part is dropped when assigning to int.
+> 
+> thanks
 
-> ---
->  hw/watchdog/sbsa_gwdt.c  | 8 ++++++++
->  hw/watchdog/trace-events | 9 +++++++++
->  2 files changed, 17 insertions(+)
->
-> diff --git a/hw/watchdog/sbsa_gwdt.c b/hw/watchdog/sbsa_gwdt.c
-> index 7ade5c6f18..d159e61c34 100644
-> --- a/hw/watchdog/sbsa_gwdt.c
-> +++ b/hw/watchdog/sbsa_gwdt.c
-> @@ -24,6 +24,7 @@
->  #include "migration/vmstate.h"
->  #include "qemu/log.h"
->  #include "qemu/module.h"
-> +#include "trace.h"
->
->  static const VMStateDescription vmstate_sbsa_gwdt =3D {
->      .name =3D "sbsa-gwdt",
-> @@ -62,6 +63,7 @@ static uint64_t sbsa_gwdt_rread(void *opaque, hwaddr ad=
-dr, unsigned int size)
->          qemu_log_mask(LOG_GUEST_ERROR, "bad address in refresh frame rea=
-d :"
->                          " 0x%x\n", (int)addr);
->      }
-> +    trace_sbsa_gwdt_refresh_read(addr, ret);
->      return ret;
->  }
->
-> @@ -93,6 +95,7 @@ static uint64_t sbsa_gwdt_read(void *opaque, hwaddr add=
-r, unsigned int size)
->          qemu_log_mask(LOG_GUEST_ERROR, "bad address in control frame rea=
-d :"
->                          " 0x%x\n", (int)addr);
->      }
-> +    trace_sbsa_gwdt_control_read(addr, ret);
->      return ret;
->  }
->
-> @@ -127,6 +130,7 @@ static void sbsa_gwdt_rwrite(void *opaque, hwaddr off=
-set, uint64_t data,
->                               unsigned size) {
->      SBSA_GWDTState *s =3D SBSA_GWDT(opaque);
->
-> +    trace_sbsa_gwdt_refresh_write(offset, data);
-                                                                       ^^^^=
-^
-this is 64 bit.
+Fair enough. In that case:
 
->      if (offset =3D=3D SBSA_GWDT_WRR) {
->          s->wcs &=3D ~(SBSA_GWDT_WCS_WS0 | SBSA_GWDT_WCS_WS1);
->
-> @@ -141,6 +145,7 @@ static void sbsa_gwdt_write(void *opaque, hwaddr offs=
-et, uint64_t data,
->                               unsigned size) {
->      SBSA_GWDTState *s =3D SBSA_GWDT(opaque);
->
-> +    trace_sbsa_gwdt_control_write(offset, data);
+Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
 
-Same here ...
+>>>>
+>>>>> +        trace_audio_run_poll(msg, elapsed_us);
+>>>>> +        g_timer_start(s->run_timer);
+>>>>>         }
+>>>>> -#endif
+>>>>>     }
+>>>>>
+>>>>>     void audio_generic_run_buffer_in(HWVoiceIn *hw)
+>>>>> @@ -1545,6 +1535,7 @@ static void audio_mixeng_backend_init(Object *obj)
+>>>>>         QLIST_INIT(&s->hw_head_in);
+>>>>>         QLIST_INIT(&s->cap_head);
+>>>>>         s->ts = timer_new_ns(QEMU_CLOCK_VIRTUAL, audio_timer, s);
+>>>>> +    s->run_timer = g_timer_new();
+>>>>>
+>>>>>         s->vmse = qemu_add_vm_change_state_handler(audio_vm_change_state_handler, s);
+>>>>>         assert(s->vmse != NULL);
+>>>>> @@ -1596,6 +1587,8 @@ static void audio_mixeng_backend_finalize(Object *obj)
+>>>>>             s->ts = NULL;
+>>>>>         }
+>>>>>
+>>>>> +    g_clear_pointer(&s->run_timer, g_timer_destroy);
+>>>>> +
+>>>>>         if (s->vmse) {
+>>>>>             qemu_del_vm_change_state_handler(s->vmse);
+>>>>>             s->vmse = NULL;
+>>>>> diff --git a/audio/trace-events b/audio/trace-events
+>>>>> index 4749c54fc04..d66a712e871 100644
+>>>>> --- a/audio/trace-events
+>>>>> +++ b/audio/trace-events
+>>>>> @@ -61,6 +61,7 @@ audio_timer_delayed(int interval) "interval %d ms"
+>>>>>
+>>>>>     # audio-mixeng-be.c
+>>>>>     audio_get_avail(const char *name, size_t live, uint32_t frontend_frames) "%s: get_avail live %zu frontend frames %u"
+>>>>> +audio_run_poll(const char *msg, int64_t elapsed_us) "Elapsed since last %s: %" PRId64 " us"
+>>>>>
+>>>>>     # audio_template.h
+>>>>>     audio_open_out(const char *name, int freq, int nchannels, int fmt) "open %s, freq %d, nchannels %d, fmt %d"
 
->      switch (offset) {
->      case SBSA_GWDT_WCS:
->          s->wcs =3D data & SBSA_GWDT_WCS_EN;
-> @@ -180,6 +185,7 @@ static void wdt_sbsa_gwdt_reset(DeviceState *dev)
->  {
->      SBSA_GWDTState *s =3D SBSA_GWDT(dev);
->
-> +    trace_sbsa_gwdt_reset();
->      timer_del(s->timer);
->
->      s->wcs  =3D 0;
-> @@ -196,10 +202,12 @@ static void sbsa_gwdt_timer_sysinterrupt(void *opaq=
-ue)
->
->      if (!(s->wcs & SBSA_GWDT_WCS_WS0)) {
->          s->wcs |=3D SBSA_GWDT_WCS_WS0;
-> +        trace_sbsa_gwdt_ws0_asserted();
->          sbsa_gwdt_update_timer(s, TIMEOUT_REFRESH);
->          qemu_set_irq(s->irq, 1);
->      } else {
->          s->wcs |=3D SBSA_GWDT_WCS_WS1;
-> +        trace_sbsa_gwdt_ws1_asserted();
->          qemu_log_mask(CPU_LOG_RESET, "Watchdog timer expired.\n");
->          /*
->           * Reset the watchdog only if the guest gets notified about
-> diff --git a/hw/watchdog/trace-events b/hw/watchdog/trace-events
-> index ad3be1e9bd..5be430fb9e 100644
-> --- a/hw/watchdog/trace-events
-> +++ b/hw/watchdog/trace-events
-> @@ -33,3 +33,12 @@ spapr_watchdog_expired(uint64_t num, unsigned action) =
-"num=3D%" PRIu64 " action=3D%u
->  # watchdog.c
->  watchdog_perform_action(unsigned int action) "action=3D%u"
->  watchdog_set_action(unsigned int action) "action=3D%u"
-> +
-> +#sbsa_gwdt.c
-> +sbsa_gwdt_refresh_read(uint64_t addr, uint32_t value) "[0x%" PRIu64 "] -=
-> 0x%" PRIu32
-> +sbsa_gwdt_refresh_write(uint64_t addr, uint32_t value) "[0x%" PRIu64 "] =
-<- 0x%" PRIu32
-                                                                      ^^^^^=
-^^
-This needs to be 64 bit.
 
-> +sbsa_gwdt_control_read(uint64_t addr, uint32_t value) "[0x%" PRIu64 "] -=
-> 0x%" PRIu32
-> +sbsa_gwdt_control_write(uint64_t addr, uint32_t value) "[0x%" PRIu64 "] =
-<- 0x%" PRIu32
+ATB,
 
-Same here .
-
-> +sbsa_gwdt_ws0_asserted(void) "WS0 signal is asserted"
-> +sbsa_gwdt_ws1_asserted(void) "WS1 signal is asserted"
-> +sbsa_gwdt_reset(void) "reset watchdog to defaut state"
-                                                                         ^^=
-^^^^
-typo.
+Mark.
 
 
