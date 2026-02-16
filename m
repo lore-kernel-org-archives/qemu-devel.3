@@ -4,56 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E767E7BD9F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD677E7BDA3
 	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 11:27:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vrwfW-0007pL-TK; Mon, 16 Feb 2026 06:21:34 -0500
+	id 1vrwfh-0000fr-S8; Mon, 16 Feb 2026 06:21:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vrwd9-0007Ur-5X
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 06:19:09 -0500
+ id 1vrwdQ-0008Kj-3t
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 06:19:25 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vrwd7-0008R6-C7
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 06:19:06 -0500
+ id 1vrwdO-0008UU-J5
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 06:19:23 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771240744;
+ s=mimecast20190719; t=1771240761;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=kcz5monBArNaXcY5PhEuW+EZzvnBJyzEr+NifJaMiTA=;
- b=I18eE5P0dTOHtgCARk8IHgIsw47vmnhku5Kc7JnFqud7AGjkew1MtEecUmKuIJ6FLVKDdm
- SmX7lp6T/9HApPpPt2M9dlyDoBLL5vt5aiTsKBUW40kjnUIw9fk74kCDXkeZb0U3s2jTDZ
- EhQR0StrH3QFK1ugCzd/Qa4xSt7vsqc=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=BB6jQvGRqbXD7hENVx2pNstNIc4pFnH7f/Xe+/sKYwo=;
+ b=KDk73N0wRcuB5rHKrW+C2Im2WGKmYztpEaRaHhYvnDlEBdqo/kZYw/Zz4v/9WO7zs8QFT8
+ 7hVJSzsCfm26zw3vYRoXngMCaDJWg6N23a+oqM0vpq7eXYHpXvLc8dyHQut6uK8v+sTwW2
+ rPIKdkCFN95o461EV66oqGNQWYDgG3U=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-457-wLzjMd9WOeuCX78ZAzILDg-1; Mon,
- 16 Feb 2026 06:19:00 -0500
-X-MC-Unique: wLzjMd9WOeuCX78ZAzILDg-1
-X-Mimecast-MFC-AGG-ID: wLzjMd9WOeuCX78ZAzILDg_1771240738
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-533-vPQv5zfANgG7zZ6iODK0HQ-1; Mon,
+ 16 Feb 2026 06:19:17 -0500
+X-MC-Unique: vPQv5zfANgG7zZ6iODK0HQ-1
+X-Mimecast-MFC-AGG-ID: vPQv5zfANgG7zZ6iODK0HQ_1771240755
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 24BAA1956089; Mon, 16 Feb 2026 11:18:58 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 911A2180047F; Mon, 16 Feb 2026 11:19:15 +0000 (UTC)
 Received: from localhost (unknown [10.45.242.26])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 29E7F30001A5; Mon, 16 Feb 2026 11:18:56 +0000 (UTC)
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id EE2E61800464; Mon, 16 Feb 2026 11:19:13 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Mon, 16 Feb 2026 12:16:00 +0100
-Subject: [PATCH 71/85] audio/wav: replace custom logging with error_report
+Date: Mon, 16 Feb 2026 12:16:06 +0100
+Subject: [PATCH 77/85] audio: replace DEBUG_OUT with traces
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260216-audio-v1-71-e676662e4514@redhat.com>
+Message-Id: <20260216-audio-v1-77-e676662e4514@redhat.com>
 References: <20260216-audio-v1-0-e676662e4514@redhat.com>
 In-Reply-To: <20260216-audio-v1-0-e676662e4514@redhat.com>
 To: qemu-devel@nongnu.org
@@ -72,26 +72,25 @@ Cc: Gerd Hoffmann <kraxel@redhat.com>,
  "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, 
  Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
- Thomas Huth <thuth@redhat.com>, 
  Mark Cave-Ayland <mark.caveayland@nutanix.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3883;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3777;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=uy45aaxsrjikhNcoNvvFIYlxO1WkTxvpW/LgSnOpQeQ=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBpkvxRdF6doIYfytosh7z/TOgj7Eu7I/l0FEgOC
- OWyEbY3E0iJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaZL8UQAKCRDa6OEJdZac
- 5W1pD/4soLavWDJkIjW9wjtTAn9bFFjzpkpQvg+h/UkCj+CwRYP9f0ABzpzzvK4HJTji5IErsBq
- Cv+dYZem2stuwHwUe1EFktQY8EbQ/QK/kqB0rk7Owvn8RceUCp86sgYCIYS2Htyf/7Zdw+tfgiL
- jpPmGk2jU8RcFOUPqBEGBR+T0Xp1y82JAwP8pHSpNfeJyWs5QjYnNHR0uzXyJ4wfLQPHHFRl1hl
- TmP5fPtgFXJrl+nsbESW4cIKKnOGC7Omib/SitjBwGrfEIKJNzgzRxABSKZmq20CkMEvqjpjT8I
- V58YqecwLayd6LAup7KagI7NI2T45yKEk/J/64awhwg5xYIlVLnzmrmeCQ65apIWgcgne+5d8Du
- S9TWQ2fpZ54PegbRkddf07FcgEPSFvYp+GVyAgbbZHz41wzTZeuWGFgcg0XY6V2Cl4u/hzNK/67
- eNRlZvguytwYAt+R4ciluJ4qJT94ROktWWoZi1m83NX5LmC7N2ruQo2/aUb1ehNSjDUEZ04/99J
- xhzrd24T8aqQ2ZF+Pr7FCZ74U/mjh6/aQ7Y5VWRDYUfhlDilx66zZ4AdjkA8OtUzYMFFdUzGfqA
- 4Z87I8w5yrRi2uaw5ppeHGnKf3Lct4ysBmHMNDy+jT0TJ3+jzWtkn66yK666d8YvftCQBZDpmmv
- cKGDqaKhgfK1rGg==
+ bh=b1klW4axY6twkEGfrheCi2WZdrVTpoIdzbMvZtSetFQ=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBpkvxSD1tB2iPbiDer/gUC7JJQHK122dd/DQiHS
+ gGvw/JMRp2JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaZL8UgAKCRDa6OEJdZac
+ 5Qi4D/4kXQIy8DYZMN/lWGjcNjP2yxGx6bYOyUBlC6LUHkP6lmCwgKBMMJxvfkK52LPURJ76oAl
+ doYlcUY3INlg0+gqnyafels7Du27ZnzlqbykSep+qMKAd5IT0A4vZzoyKogG8MWTmn+F0UUqlql
+ RivjAWeT8DjNwFbNjUb+XU1Qr3KV092DKgjabnrW/B759kiskAA/e/HEz4B2i8/6i1+7tsBmaCX
+ i7p2Dvu02Zin6B2O7pGq2TapCXQBdoaMV6NkqTTd4XpoUjlu6dAbgVw5u2KvkfT2xauUSl0y6TW
+ HaTvsOB0ZCwc71ObqHWNYH+R8IBwyFenQf28NGrT/uhT5WACKHBywrYRLZH80iEvgKpw6JKMnuS
+ EHilMeHUsB0Dh17FWNb3L1d2ddku3pCwB5a3D34EfnuG958UeKs4qNKgCXV2XdXrQexnqru8/oC
+ fcRKLJ1cbNfeC8nqOefyAp1lbW38vQaaSveXukk6Z+ZIZMgQmWlI+MvbQbUxSiQLEikQVwOqDlR
+ Nn6F+ehNer0rhvkCfIfwPwI7owWnHUpbx8pwYaMu19TInF3w75m0LJJHWz2OONGj4DO02aoFame
+ gxl6N3oCnKaFHRIkIs2nlyeyMorEzPgmmtCi2AnaPemuNUzMJWNR9H23Fv5NKvu8ksrnlJmOuwn
+ z189WHXkqsIdQ/g==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -102,7 +101,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,111 +117,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Replace the custom audio logging infrastructure (dolog macro) with
-standard QEMU error reporting (error_report).
-
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
 Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
 ---
- audio/wavaudio.c | 32 +++++++++++++-------------------
- 1 file changed, 13 insertions(+), 19 deletions(-)
+ audio/audio-mixeng-be.c | 32 ++++++++------------------------
+ audio/trace-events      |  5 +++++
+ 2 files changed, 13 insertions(+), 24 deletions(-)
 
-diff --git a/audio/wavaudio.c b/audio/wavaudio.c
-index ade8fd1d8c3..eed1e501af0 100644
---- a/audio/wavaudio.c
-+++ b/audio/wavaudio.c
-@@ -24,10 +24,10 @@
- 
- #include "qemu/osdep.h"
- #include "qemu/module.h"
-+#include "qemu/error-report.h"
- #include "qemu/audio.h"
- #include "qom/object.h"
- 
--#define AUDIO_CAP "wav"
+diff --git a/audio/audio-mixeng-be.c b/audio/audio-mixeng-be.c
+index 1963f3e5c79..3dd9d17dd25 100644
+--- a/audio/audio-mixeng-be.c
++++ b/audio/audio-mixeng-be.c
+@@ -29,8 +29,6 @@
+ #define AUDIO_CAP "audio"
  #include "audio_int.h"
  
- #define TYPE_AUDIO_WAV "audio-wav"
-@@ -51,8 +51,8 @@ static size_t wav_write_out(HWVoiceOut *hw, void *buf, size_t len)
-     assert(bytes % hw->info.bytes_per_frame == 0);
+-/* #define DEBUG_OUT */
+-
+ #define SW_NAME(sw) (sw)->name ? (sw)->name : "unknown"
  
-     if (bytes && fwrite(buf, bytes, 1, wav->f) != 1) {
--        dolog("wav_write_out: fwrite of %" PRId64 " bytes failed\nReason: %s\n",
--              bytes, strerror(errno));
-+        error_report("wav: fwrite of %" PRId64 " bytes failed: %s",
-+                     bytes, strerror(errno));
+ const struct mixeng_volume nominal_volume = {
+@@ -568,9 +566,7 @@ static size_t audio_pcm_sw_write(SWVoiceOut *sw, void *buf, size_t buf_len)
      }
  
-     wav->total_samples += bytes / hw->info.bytes_per_frame;
-@@ -98,11 +98,11 @@ static int wav_init_out(HWVoiceOut *hw, struct audsettings *as)
- 
-     case AUDIO_FORMAT_S32:
-     case AUDIO_FORMAT_U32:
--        dolog ("WAVE files can not handle 32bit formats\n");
-+        error_report("wav: WAVE files cannot handle 32-bit formats");
-         return -1;
- 
-     case AUDIO_FORMAT_F32:
--        dolog("WAVE files can not handle float formats\n");
-+        error_report("wav: WAVE files cannot handle float formats");
-         return -1;
- 
-     default:
-@@ -122,14 +122,13 @@ static int wav_init_out(HWVoiceOut *hw, struct audsettings *as)
- 
-     wav->f = fopen(wav_path, "wb");
-     if (!wav->f) {
--        dolog ("Failed to open wave file `%s'\nReason: %s\n",
--               wav_path, strerror(errno));
-+        error_report("wav: failed to open wave file '%s': %s",
-+                     wav_path, strerror(errno));
-         return -1;
+     if (live == hw->mix_buf.size) {
+-#ifdef DEBUG_OUT
+-        dolog ("%s is full %zu\n", sw->name, live);
+-#endif
++        trace_audio_out_full(sw->name, live);
+         return 0;
      }
  
-     if (fwrite (hdr, sizeof (hdr), 1, wav->f) != 1) {
--        dolog ("wav_init_out: failed to write header\nReason: %s\n",
--               strerror(errno));
-+        error_report("wav: failed to write header: %s", strerror(errno));
-         return -1;
+@@ -618,15 +614,8 @@ static size_t audio_pcm_sw_write(SWVoiceOut *sw, void *buf, size_t buf_len)
+         sw->resample_buf.pos = 0;
      }
  
-@@ -153,30 +152,25 @@ static void wav_fini_out (HWVoiceOut *hw)
-     le_store (dlen, datalen, 4);
+-#ifdef DEBUG_OUT
+-    dolog (
+-        "%s: write size %zu written %zu total mixed %zu\n",
+-        SW_NAME(sw),
+-        buf_len / sw->info.bytes_per_frame,
+-        total_in,
+-        sw->total_hw_samples_mixed
+-        );
+-#endif
++    trace_audio_sw_write(SW_NAME(sw), buf_len / sw->info.bytes_per_frame,
++                         total_in, sw->total_hw_samples_mixed);
  
-     if (fseek (wav->f, 4, SEEK_SET)) {
--        dolog ("wav_fini_out: fseek to rlen failed\nReason: %s\n",
--               strerror(errno));
-+        error_report("wav: fseek to rlen failed: %s", strerror(errno));
-         goto doclose;
-     }
-     if (fwrite (rlen, 4, 1, wav->f) != 1) {
--        dolog ("wav_fini_out: failed to write rlen\nReason: %s\n",
--               strerror (errno));
-+        error_report("wav: failed to write rlen: %s", strerror(errno));
-         goto doclose;
-     }
-     if (fseek (wav->f, 32, SEEK_CUR)) {
--        dolog ("wav_fini_out: fseek to dlen failed\nReason: %s\n",
--               strerror (errno));
-+        error_report("wav: fseek to dlen failed: %s", strerror(errno));
-         goto doclose;
-     }
-     if (fwrite (dlen, 4, 1, wav->f) != 1) {
--        dolog ("wav_fini_out: failed to write dlen\nReaons: %s\n",
--               strerror (errno));
-+        error_report("wav: failed to write dlen: %s", strerror(errno));
-         goto doclose;
-     }
- 
-  doclose:
-     if (fclose (wav->f))  {
--        dolog ("wav_fini_out: fclose %p failed\nReason: %s\n",
--               wav->f, strerror (errno));
-+        error_report("wav: fclose failed: %s", strerror(errno));
-     }
-     wav->f = NULL;
+     return total_in * sw->info.bytes_per_frame;
  }
+@@ -900,10 +889,8 @@ static size_t audio_get_free(SWVoiceOut *sw)
+ 
+     dead = sw->hw->mix_buf.size - live;
+ 
+-#ifdef DEBUG_OUT
+-    dolog("%s: get_free live %zu dead %zu frontend frames %u\n",
+-          SW_NAME(sw), live, dead, st_rate_frames_in(sw->rate, dead));
+-#endif
++    trace_audio_get_free(SW_NAME(sw), live, dead,
++                         st_rate_frames_in(sw->rate, dead));
+ 
+     return dead;
+ }
+@@ -1058,9 +1045,8 @@ static void audio_run_out(AudioMixengBackend *s)
+ 
+         if (hw->pending_disable && !nb_live) {
+             SWVoiceCap *sc;
+-#ifdef DEBUG_OUT
+-            dolog ("Disabling voice\n");
+-#endif
++
++            trace_audio_out_disable();
+             hw->enabled = false;
+             hw->pending_disable = false;
+             if (k->enable_out) {
+@@ -1089,9 +1075,7 @@ static void audio_run_out(AudioMixengBackend *s)
+             hw->mix_buf.pos = 0;
+         }
+ 
+-#ifdef DEBUG_OUT
+-        dolog("played=%zu\n", played);
+-#endif
++        trace_audio_out_played(played);
+ 
+         if (played) {
+             audio_capture_mix_and_clear (hw, prev_rpos, played);
+diff --git a/audio/trace-events b/audio/trace-events
+index 3f8ebf9c6cb..7a73d6eb84f 100644
+--- a/audio/trace-events
++++ b/audio/trace-events
+@@ -65,6 +65,11 @@ audio_capture_attach(const char *name, bool active) "capture %s active=%d"
+ audio_get_avail(const char *name, size_t live, uint32_t frontend_frames) "%s: get_avail live %zu frontend frames %u"
+ audio_run_poll(const char *msg, int64_t elapsed_us) "Elapsed since last %s: %" PRId64 " us"
+ audio_capture_free_sw(const char *name) "freeing %s"
++audio_out_full(const char *name, size_t live) "%s is full %zu"
++audio_sw_write(const char *name, size_t size, size_t written, size_t total_mixed) "%s: write size %zu written %zu total mixed %zu"
++audio_get_free(const char *name, size_t live, size_t dead, uint32_t frontend_frames) "%s: get_free live %zu dead %zu frontend frames %u"
++audio_out_disable(void) "Disabling voice"
++audio_out_played(size_t played) "played=%zu"
+ 
+ # audio_template.h
+ audio_open_out(const char *name, int freq, int nchannels, int fmt) "open %s, freq %d, nchannels %d, fmt %d"
 
 -- 
 2.53.0
