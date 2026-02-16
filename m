@@ -4,56 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE62DE7BD92
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 11:23:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF259E7BD92
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 11:23:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vrweE-0002iT-TF; Mon, 16 Feb 2026 06:20:14 -0500
+	id 1vrwfP-0006iP-6Z; Mon, 16 Feb 2026 06:21:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vrwbR-0005ep-Nk
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 06:17:24 -0500
+ id 1vrwd4-0007T9-Pc
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 06:19:08 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vrwbL-0007jM-J3
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 06:17:18 -0500
+ id 1vrwd3-0008QH-6H
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 06:19:02 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771240627;
+ s=mimecast20190719; t=1771240740;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=DqjVCvkYq0CnOFlMb4lk6iKs2Q8rG2tOtpRbxTNBD88=;
- b=URwOuUP23y3wuQTVphFC+p0HTL4Rj5pvBkQcZYb9TBcOsmBV80PlPMz5OA4hZsUTrNIbv7
- w8KWNeZHqCtzKI0T/QT6X0e036RmnTu9NWK3VYXR3tY4X86uO94M7d1vsTrE2gkUNQ77Vu
- DnMJkl+aVJ7k1tWE/JbsXJnAymqsyqA=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=KAKt4CvCFG4mzYabTt4mTrA6Ft2BKrJ6zjij58RhywI=;
+ b=WbaZA+hZvZYNQCRebrRamKW6qmueZupDti499s0u3u1ja+6Xqoop8jbVcQocHZUsB/LwCS
+ PdVs7L71WAOjGJ21xs2S5rCpIlMzUauPqpdsq7aK+tabvOYmNJ8Gx7ZB2wjOAd0AXp1Wll
+ UZUcHXBRMnhv0Whgme7bGng/89KJb6s=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-203-m-MpTFXUMRe-ryKWk1KUUg-1; Mon,
- 16 Feb 2026 06:17:03 -0500
-X-MC-Unique: m-MpTFXUMRe-ryKWk1KUUg-1
-X-Mimecast-MFC-AGG-ID: m-MpTFXUMRe-ryKWk1KUUg_1771240621
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-711-AQUHFmnfNzyCJtRKh0ofKg-1; Mon,
+ 16 Feb 2026 06:18:57 -0500
+X-MC-Unique: AQUHFmnfNzyCJtRKh0ofKg-1
+X-Mimecast-MFC-AGG-ID: AQUHFmnfNzyCJtRKh0ofKg_1771240735
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AC38A1955D80; Mon, 16 Feb 2026 11:17:01 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 47DE51956060; Mon, 16 Feb 2026 11:18:55 +0000 (UTC)
 Received: from localhost (unknown [10.45.242.26])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 0E8AC30001B9; Mon, 16 Feb 2026 11:17:00 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 01CD51955F22; Mon, 16 Feb 2026 11:18:53 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Mon, 16 Feb 2026 12:15:19 +0100
-Subject: [PATCH 30/85] audio: keep a strong reference on the backend
+Date: Mon, 16 Feb 2026 12:15:59 +0100
+Subject: [PATCH 70/85] audio/spice: remove unused AUDIO_CAP macro
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260216-audio-v1-30-e676662e4514@redhat.com>
+Message-Id: <20260216-audio-v1-70-e676662e4514@redhat.com>
 References: <20260216-audio-v1-0-e676662e4514@redhat.com>
 In-Reply-To: <20260216-audio-v1-0-e676662e4514@redhat.com>
 To: qemu-devel@nongnu.org
@@ -71,25 +71,27 @@ Cc: Gerd Hoffmann <kraxel@redhat.com>,
  Alistair Francis <alistair@alistair23.me>, 
  "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, 
  Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org, 
- =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2152;
+ =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
+ Thomas Huth <thuth@redhat.com>, 
+ Mark Cave-Ayland <mark.caveayland@nutanix.com>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=598;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=j2F0g3ta9yfDCkXiVp5Fmy/cGNEHqdhYISO5JqmAXcg=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBpkvxPIK7Ptx6NOV4c/yjxXVCio1QtyWaBS06Mx
- 6Fnq6zEKoaJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaZL8TwAKCRDa6OEJdZac
- 5fcNEACKgcbXrWgakQ8Z15q72T7ophiX9Uu7+hd2m/Xe96tMLXScVS/lDaVNIe9SKlvh8XMPArb
- 2ugRGKYmA/Sq+IWgTcR1k+NOZiRluMTWTDtt2bTAqB+fB+1qP4mgb0agGWEJvR8MMh/KpY12Ja3
- I0Wx+EJr1GKPZiJmZgkljA2/VQ7x3PMp5TNiiXmc/UAnuSxN1GFLafY82pLfF9Bcic2rr/s4kMN
- cjuaVlfSYCY0JH8DGZkc1+nqyfDOe0UOi0QQmQlC/p42JiblOYWYEMKCuPBaTMpJhJqvRkMVsfA
- D0FJAnNvoGT21iNZ2KUjg3+/LtUIC7RTjUdxNsGURXvGynBZpZRpvMp3lW0Zi2FxE1uLLDyTSf5
- 8WDXUQKuunIWyfOewQoB3qbvaAis+I0sOPODzh80zHY8xrS+9hus+Oo3gaMrQiOETVOGVasT9Nk
- D4UaqO7o7o7zQ1paL+LXTQPPhmHymdIIVpSCmpys2LjcU4bFVkeM/rXehKHw2sl6d7/GVKpQZf4
- iZ5IM51clSsBwYP6100G4Rm7d0p7U85QOCE2jWrcCE3bXbsHhT44bYnTOEOHzVzAPN/OhbMoiBB
- yP1SelUi7ra37Ox2AEg6VKO5hKJXN8H/s0qRX4VxLxyU0jl5x5cRjt/nO0gWupXNm2SLBev4EUL
- Gt0LWtDg6B3gIgw==
+ bh=MqZZlsSA5odZdvc1Tj/JSrGEReLFTmuCGtE0H89M0aU=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBpkvxRq4+gwTPcAd8pPhRDmKamOxBfo6hpEYoxU
+ th3CL7Fh7yJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaZL8UQAKCRDa6OEJdZac
+ 5ReJD/oDDMnZtfu+31bPvGH23DEWjsilPkIZqvDFleSu1VWYCqFLa2EesvLSR4rTt7xDDitfaU7
+ WV98YXuj+ZssBOXHXBKDtpFCSTSPMHwjFHqa1vmCeAxOPd/x5Ju0U2ZQddJxsdRWv2Lrjq5yL3X
+ n+o3ddftwnrnxp3VaIJcqlFVVe3bVvqckIlubggbsnfq/EBOQ6ibGk4KDx5zJmw7LtjVeiJfIoy
+ XPfOkx8kvvATM7KMBEfvf5inrxjx+txca2YQmnaNzHWXPmqL0wzj9pHELL2yKGpf6YGtg2H4WHc
+ b+3oK/EfKC11tQANh0JKngnTFCEV/COfXS0CXgdrgGRSF7mv8xO9PuqyqHzH9ahntyWTHMLZuur
+ Eitpb6fmcKCYGM06dMFHZDCe8ROCM6godaS/Fpnbf40EH9EQrZEcenDc2Ol2IHMWQSYIsttbc1y
+ JntkUsTcqTfkvYqb7HnndX0Dql6ErjCSlboMA6EWr/X41NbFhG4/WL0k6gGotsVCcx/l7RLu20q
+ gz2o7l+5aszzEKMa76YKUliQgUQyW3Fd0wkweJBgtxzsOCDFgy8Icl3LseE8nDAD2STK+hUOyG/
+ I7JHo0u1164yCzQx3XZMukynLckdTdM/qxqIlFtK3ifkTUwmBdhxqEb9zWU1xOlFkaEdTPP240+
+ 17eWOOQHjc147EQ==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -116,69 +118,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since we are going to convert audio_driver-based backends, we need to
-properly handle reference counting to allow for a different order of
-class finalization (for example, pulse class before base driver class).
+The AUDIO_CAP macro is no longer used.
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
 ---
- audio/audio_template.h | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ audio/spiceaudio.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/audio/audio_template.h b/audio/audio_template.h
-index a1f78d8748b..512abbfe22f 100644
---- a/audio/audio_template.h
-+++ b/audio/audio_template.h
-@@ -231,6 +231,7 @@ static void glue (audio_pcm_hw_gc_, TYPE) (HW **hwp)
-         glue(hw->pcm_ops->fini_, TYPE) (hw);
-         glue(s->nb_hw_voices_, TYPE) += 1;
-         glue(audio_pcm_hw_free_resources_ , TYPE) (hw);
-+        object_unref(hw->s);
-         g_free(hw);
-         *hwp = NULL;
-     }
-@@ -287,7 +288,7 @@ static HW *glue(audio_pcm_hw_add_new_, TYPE)(AudioMixengBackend *s,
-      * is guaranteed to be != 0. See the audio_init_nb_voices_* functions.
-      */
-     hw = g_malloc0(glue(drv->voice_size_, TYPE));
--    hw->s = s;
-+    hw->s = AUDIO_MIXENG_BACKEND(object_ref(s));
-     hw->pcm_ops = drv->pcm_ops;
+diff --git a/audio/spiceaudio.c b/audio/spiceaudio.c
+index 0d188e974df..81b897e13e0 100644
+--- a/audio/spiceaudio.c
++++ b/audio/spiceaudio.c
+@@ -26,7 +26,6 @@
+ #include "ui/qemu-spice.h"
+ #include "qom/object.h"
  
-     QLIST_INIT (&hw->sw_head);
-@@ -335,6 +336,7 @@ static HW *glue(audio_pcm_hw_add_new_, TYPE)(AudioMixengBackend *s,
-  err1:
-     glue (hw->pcm_ops->fini_, TYPE) (hw);
-  err0:
-+    object_unref(hw->s);
-     g_free (hw);
-     return NULL;
- }
-@@ -441,7 +443,7 @@ static SW *glue(audio_pcm_create_voice_pair_, TYPE)(
-     }
- 
-     sw = g_new0(SW, 1);
--    sw->s = s;
-+    sw->s = AUDIO_MIXENG_BACKEND(object_ref(s));
- 
-     hw = glue(audio_pcm_hw_add_, TYPE)(s, &hw_as);
-     if (!hw) {
-@@ -461,6 +463,7 @@ err2:
-     glue (audio_pcm_hw_del_sw_, TYPE) (sw);
-     glue (audio_pcm_hw_gc_, TYPE) (&hw);
- err1:
-+    object_unref(sw->s);
-     g_free(sw);
-     return NULL;
- }
-@@ -470,6 +473,8 @@ static void glue (audio_close_, TYPE) (SW *sw)
-     glue (audio_pcm_sw_fini_, TYPE) (sw);
-     glue (audio_pcm_hw_del_sw_, TYPE) (sw);
-     glue (audio_pcm_hw_gc_, TYPE) (&sw->hw);
-+
-+    object_unref(sw->s);
-     g_free (sw);
- }
+-#define AUDIO_CAP "spice"
+ #include "qemu/audio.h"
+ #include "audio_int.h"
  
 
 -- 
