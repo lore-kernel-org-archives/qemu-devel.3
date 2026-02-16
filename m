@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DDCAAE63F25
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 03:46:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58D19E63F2F
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 03:46:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vrpYE-00034K-VR; Sun, 15 Feb 2026 22:45:36 -0500
+	id 1vrpXs-0002hm-SJ; Sun, 15 Feb 2026 22:45:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vrpXp-0002jp-Mh
- for qemu-devel@nongnu.org; Sun, 15 Feb 2026 22:45:12 -0500
-Received: from mail-pg1-x532.google.com ([2607:f8b0:4864:20::532])
+ id 1vrpXn-0002de-Qt
+ for qemu-devel@nongnu.org; Sun, 15 Feb 2026 22:45:07 -0500
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vrpXn-0002dx-3E
- for qemu-devel@nongnu.org; Sun, 15 Feb 2026 22:45:08 -0500
-Received: by mail-pg1-x532.google.com with SMTP id
- 41be03b00d2f7-c648bc907ebso1662240a12.3
- for <qemu-devel@nongnu.org>; Sun, 15 Feb 2026 19:45:05 -0800 (PST)
+ id 1vrpXl-0002T8-3Z
+ for qemu-devel@nongnu.org; Sun, 15 Feb 2026 22:45:07 -0500
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-2a7a9b8ed69so27641535ad.2
+ for <qemu-devel@nongnu.org>; Sun, 15 Feb 2026 19:45:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771213505; x=1771818305; darn=nongnu.org;
+ d=linaro.org; s=google; t=1771213503; x=1771818303; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=YspkmQ6qCsCzLdbemTI6YW69AEAqfF80AIDpAXjfP0A=;
- b=xq19cRc225oig2HaE+i2uwxVgwlz5IcWBHLrrTkpbWlUbCS7PSmJ9T4fhxM9gUCsm0
- Sn4lzkfpjI4UEgAA5T0H4bzaHsTzyyiQZGYwKr+6luiAqs2KTxmUR0yRoSExdj2UCrYD
- 3RUva2h7DNnvfGoRROdHLZPdSF785oBq6jR8jPNFmWhs7PFV/IWnaV0qj0lTIzSQRGtJ
- H7LfNOpSmoE/LcCFyhull8J0X8sM19XhPBdWSCXwQ0pdKMrvSuvV/YBlOrtgwkQK8Y27
- CCDAZhDG6/RWL7s7lc3scmjQZLBdqretqU11kGuohy1qzQXYS/o8ti3+IiuCwr8o8a3v
- zeKA==
+ :reply-to; bh=oeZjdzqdE1iuyBszq/Z//al5shVLI8GhqttWbbZVCxI=;
+ b=QD8H0kCA+7qH+w3USdDjw8+EmP2a1g7vpmfyASliStMJBvGoxd9fjyW7WdMrTwwvs9
+ +AAisdpYdUM23j/pTzk5XuvT5ulFJHHAFcBkrIg6kyqMS33xQ6vueLqaVIWnCGqLG6z6
+ +fnPTn/liNHoFXKq1gBeI78Wm4+r+6e7+t8D0xcyfhCxPQ90qK14eG7wK9LsBsq2pS0m
+ sWrMZNg6woO/5spL8nhaeH15F71G1LX/uKdJ2x63/QV7Nc4avh316OsPeWmt35gkAXa+
+ hpFA6lauCQacqEgKNZuOPWcB5tQr92sp3DqQP3m8ksnJp0mJS+XB+5/7+953qcRZauRN
+ q0jg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771213505; x=1771818305;
+ d=1e100.net; s=20230601; t=1771213503; x=1771818303;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=YspkmQ6qCsCzLdbemTI6YW69AEAqfF80AIDpAXjfP0A=;
- b=E9sW8quuMIu90mv3ebSxu4X5Lm1tAZdm5QBtPR6gW42/c1zqGoH2XVn5aaHeBLyD+N
- 20vkL+upI+UU2lr41BEGor7ugI7naLDuJfkLAS6nyQ5tfOPaqdNht0QbK1GGr4gGImqF
- LDT/VrwX3cThHTBW8S/xw4yXlVEYHGz2JRzpgITSNbx/l+8MCasqofSg/DrPxxlx5Frz
- bUVDWNx5moWYj1WaLFCFw3s9mLcROZyTmmYcYHJrM7d3cS3o/GSCPzp2I7lSUDO8/Ddg
- RA7NHSFaohxhprCYr5frLDNVfVNMNSOV08HSpjJYXkkbgefN1a0LHFfrRTADCRODZ0wC
- /AGQ==
-X-Gm-Message-State: AOJu0Yyr6ehpXHgz8zsX0j3JbXdd2pr9TbrU94+y8fv8Cy+GCjcHObQK
- cD1Ojl8NYKNBpYO8pWTe/mAwHVBpoythCE6+KczgXMjNG+WPfuQNcJwd2bxy35crLkOFSjUU0jv
- TnpEA2KU=
-X-Gm-Gg: AZuq6aK8BFgxXQy8x57sSTIepWnKPtdbgl8r/vA7FYzGldjt+poiBjGhA9l6fcQ3EdN
- oEAaCICOQC5lmWET8r+soL8i7T/ju8ENrMActnMbE60zTpP8nJbKHwjBfxRkmSATblvnpt0vXYF
- WkGUcqMERReKaWElH8geNdEGSoOcn8BsNKvPPcIVeczZcT8/6KAM0kWIVE+J1z43fyRLf7ie2CU
- rUsuGLwCFdscLDGEuL2cb1PzYw1BNm+noXJeoX/0fM8fhgDDJxsjgwIMDZEg/LPgXP9tB97rpLV
- AOEH9B0z+vwWmopUaQ7HpGLPKVHsPK8n3pQu//LYJuh/aHkzmus9zimf+ApyO5Lur/nPQQprpwg
- njl0Osx4Nj44+/SmHmpR7/4qW90ZcnMQYxhoZUvqgeW8AQs5IZCs1HZs2RB9b0KxBbDIyrZOvR5
- 20075MHZWXsK+1zQl7fk3cPhML/sVfm22N
-X-Received: by 2002:a05:6a21:398f:b0:35d:d477:a7d7 with SMTP id
- adf61e73a8af0-3946711458fmr10264998637.7.1771213504591; 
- Sun, 15 Feb 2026 19:45:04 -0800 (PST)
+ bh=oeZjdzqdE1iuyBszq/Z//al5shVLI8GhqttWbbZVCxI=;
+ b=WwKhIoyg6gmmR+jGAO7jKYLQj6SPC+3BEvlR37qgjWO6Z3liYlZJ0Ceaal0pt5366v
+ ZV/o09s08kJgrNkTetfT41xUK6DWPybRSdOxpJHszotVRihPdasm59hRGoXDgFTh7aIY
+ 9/O8qkxAnXNW6TdaNV+ZNMy0LhklKCD0RODoYnklv5vFgWHx9BgwHpUcwcR8TpDgxZrQ
+ Hxxxy4OSey2FzOrtTelGHRoGRry1hGDsOt2rX9YRoPhRIxcG2IA+Fmb2BPHwVYxV4lQp
+ RIhez96bSG2hYAac07Kmhxm3rZt5vDOhVP5JMCqoNpeE06rFUrzAXF6g8iFCKvNCpZko
+ LLoQ==
+X-Gm-Message-State: AOJu0YyJiO5XSXAWDxHyrhpRqEUAWqgdj5RTVh8bCAn0f/kHafefv0ed
+ oKyPaGikyFFjAm5A+UP7o4HnnnRFWGhPdCb983Pf+t/wzysyZQv9YG0csroVhSdF5wXsJmVAIru
+ SD2ZrDFY=
+X-Gm-Gg: AZuq6aJNh1brwaSxBFSLHpCkhfAy4Q34869xXiOOLp29/aOw4y/Suty1z2Hc/0tdvZY
+ 3LvoyBGALnIUxCSfL6DTQRTtcCFBqDRP1U/RQC1nrDEoiMXBGYbs9La0jsUPqjgATKxJQaQGoOd
+ uJ0hyd7M5MDcY1pvhOZBIDBo0Qk2r2DA4SnBo0HIGBqVKD8QlYrBb6mlaSguXhGtKXr+z6mAyPz
+ QydjQA4r0QV3Ax5/IlTGyAzjPy+A4xj3Fr3UqlXyRbKOAnHursyUFrCrVqCQMBFtWBT+Qq/tEH8
+ pi51zJ1qmXwORTRjaX38m3sJ0Lr01hxhJhY6zB98lDKDrTBH2ephtReB8X/gjYurAuwwfv5wESi
+ uMpJId0TF9xjKdnNa5f/f/ZOO5ffMaOqGNhO77RxeONpRPttKpqUTfhcakDUZ5RC2oM7LpSzG2y
+ T8rik6CVbh4LnL4R8bYCMjzk089AEDLELl
+X-Received: by 2002:a17:902:e787:b0:2aa:d11d:5c36 with SMTP id
+ d9443c01a7336-2ab50598a38mr96753725ad.30.1771213502651; 
+ Sun, 15 Feb 2026 19:45:02 -0800 (PST)
 Received: from stoup.. ([2401:d002:dc0f:2100:4a1:428a:70f2:5844])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2ad1aadca84sm53294155ad.70.2026.02.15.19.45.03
+ d9443c01a7336-2ad1aadca84sm53294155ad.70.2026.02.15.19.45.01
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 15 Feb 2026 19:45:04 -0800 (PST)
+ Sun, 15 Feb 2026 19:45:02 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [RFC PATCH 13/13] target/arm: Add SME properties for KVM
-Date: Mon, 16 Feb 2026 13:44:32 +1000
-Message-ID: <20260216034432.23912-14-richard.henderson@linaro.org>
+Subject: [RFC PATCH 12/13] target/arm: Add SME state to kvm_arch_{get,
+ put}_registers
+Date: Mon, 16 Feb 2026 13:44:31 +1000
+Message-ID: <20260216034432.23912-13-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260216034432.23912-1-richard.henderson@linaro.org>
 References: <20260216034432.23912-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::532;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x532.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,50 +100,177 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add the properties even if SME is not supported, akin to how
-we unconditionally add the SVE properties.
-
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/cpu64.c | 18 +++++++++++++++---
- 1 file changed, 15 insertions(+), 3 deletions(-)
+ target/arm/kvm.c | 104 ++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 102 insertions(+), 2 deletions(-)
 
-diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
-index 38d06af49f..4a7032ba72 100644
---- a/target/arm/cpu64.c
-+++ b/target/arm/cpu64.c
-@@ -496,9 +496,20 @@ void aarch64_add_sme_properties(Object *obj)
-     ARMCPU *cpu = ARM_CPU(obj);
-     uint32_t vq;
+diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+index d05ad1d7e1..6d849573be 100644
+--- a/target/arm/kvm.c
++++ b/target/arm/kvm.c
+@@ -43,6 +43,11 @@
+ #include "target/arm/gtimer.h"
+ #include "migration/blocker.h"
  
--    object_property_add_bool(obj, "sme", cpu_arm_get_sme, cpu_arm_set_sme);
--    object_property_add_bool(obj, "sme_fa64", cpu_arm_get_sme_fa64,
--                             cpu_arm_set_sme_fa64);
-+    if (cpu->sme_vq.supported) {
-+        object_property_add_bool(obj, "sme", cpu_arm_get_sme, cpu_arm_set_sme);
-+    } else {
-+        assert(!tcg_enabled());
-+        prop_add_stub_bool(obj, "sme");
-+    }
-+    /*
-+     * Only TCG allows FA64 to be configured; host virtualization
-+     * enables it if and only if the host cpu supports it.
-+     */
-+    if (tcg_enabled()) {
-+        object_property_add_bool(obj, "sme_fa64", cpu_arm_get_sme_fa64,
-+                                 cpu_arm_set_sme_fa64);
-+    }
++/* ??? This probably belongs in asm-arm64/kvm.h */
++#define KVM_REG_ARM64_SME_ZT0 \
++    (KVM_REG_ARM64 | KVM_REG_ARM64_SME | \
++     KVM_REG_ARM64_SME_ZT_BASE | KVM_REG_SIZE_U512)
++
+ const KVMCapabilityInfo kvm_arch_required_capabilities[] = {
+     KVM_CAP_INFO(DEVICE_CTRL),
+     KVM_CAP_LAST_INFO
+@@ -2157,10 +2162,39 @@ static int kvm_arch_put_sve(CPUState *cs, uint32_t vq, bool have_ffr)
+     return 0;
+ }
  
-     for (vq = 1; vq <= ARM_MAX_VQ; vq <<= 1) {
-         char name[8];
-@@ -784,6 +795,7 @@ static void aarch64_host_initfn(Object *obj)
- #if defined(CONFIG_KVM)
-     kvm_arm_set_cpu_features_from_host(cpu);
-     aarch64_add_sve_properties(obj);
-+    aarch64_add_sme_properties(obj);
- #elif defined(CONFIG_HVF)
-     hvf_arm_set_cpu_features_from_host(cpu);
- #elif defined(CONFIG_WHPX)
++static int kvm_arch_put_sme(CPUState *cs, uint32_t svq)
++{
++    CPUARMState *env = cpu_env(cs);
++    ARMCPU *cpu = env_archcpu(env);
++    uint64_t tmp[ARM_MAX_VQ * 2];
++    uint64_t *r;
++    int ret;
++
++    for (int n = 0; n < svq * 16; ++n) {
++        r = sve_bswap64(tmp, &env->za_state.za[n].d[0], svq * 2);
++        ret = kvm_set_one_reg(cs, KVM_REG_ARM64_SME_ZAHREG(n, 0), r);
++        if (ret) {
++            return ret;
++        }
++    }
++
++    if (cpu_isar_feature(aa64_sme2, cpu)) {
++        r = sve_bswap64(tmp, env->za_state.zt0, ARRAY_SIZE(env->za_state.zt0));
++        ret = kvm_set_one_reg(cs, KVM_REG_ARM64_SME_ZT0, r);
++        if (ret) {
++            return ret;
++        }
++    }
++    return 0;
++}
++
+ int kvm_arch_put_registers(CPUState *cs, KvmPutState level, Error **errp)
+ {
+     uint64_t val;
+     uint32_t fpr;
++    bool sme_sm = false;
++    bool sme_za = false;
++    uint32_t svq = 0;
+     int i, ret;
+     unsigned int el;
+ 
+@@ -2239,7 +2273,18 @@ int kvm_arch_put_registers(CPUState *cs, KvmPutState level, Error **errp)
+         }
+     }
+ 
+-    if (cpu_isar_feature(aa64_sve, cpu)) {
++    if (cpu_isar_feature(aa64_sme, cpu)) {
++        /* Current SVL is required for either SM or ZA */
++        sme_sm = FIELD_EX64(env->svcr, SVCR, SM);
++        sme_za = FIELD_EX64(env->svcr, SVCR, ZA);
++        if (sme_sm || sme_za) {
++            svq = sve_vqm1_for_el_sm(env, el, true) + 1;
++        }
++    }
++
++    if (sme_sm) {
++        ret = kvm_arch_put_sve(cs, svq, cpu_isar_feature(aa64_sme_fa64, cpu));
++    } else if (cpu_isar_feature(aa64_sve, cpu)) {
+         ret = kvm_arch_put_sve(cs, cpu->sve_max_vq, true);
+     } else {
+         ret = kvm_arch_put_fpsimd(cs);
+@@ -2248,6 +2293,13 @@ int kvm_arch_put_registers(CPUState *cs, KvmPutState level, Error **errp)
+         return ret;
+     }
+ 
++    if (sme_za) {
++        ret = kvm_arch_put_sme(cs, svq);
++        if (ret) {
++            return ret;
++        }
++    }
++
+     fpr = vfp_get_fpsr(env);
+     ret = kvm_set_one_reg(cs, AARCH64_SIMD_CTRL_REG(fp_regs.fpsr), &fpr);
+     if (ret) {
+@@ -2342,11 +2394,41 @@ static int kvm_arch_get_sve(CPUState *cs, uint32_t vq, bool have_ffr)
+     return 0;
+ }
+ 
++static int kvm_arch_get_sme(CPUState *cs, uint32_t svq)
++{
++    CPUARMState *env = cpu_env(cs);
++    ARMCPU *cpu = env_archcpu(env);
++    uint64_t *r;
++    int ret;
++
++    for (int n = 0; n < svq * 16; ++n) {
++        r = &env->za_state.za[n].d[0];
++        ret = kvm_get_one_reg(cs, KVM_REG_ARM64_SME_ZAHREG(n, 0), r);
++        if (ret) {
++            return ret;
++        }
++        sve_bswap64(r, r, svq * 2);
++    }
++
++    if (cpu_isar_feature(aa64_sme2, cpu)) {
++        r = env->za_state.zt0;
++        ret = kvm_get_one_reg(cs, KVM_REG_ARM64_SME_ZT0, r);
++        if (ret) {
++            return ret;
++        }
++        sve_bswap64(r, r, ARRAY_SIZE(env->za_state.zt0));
++    }
++    return 0;
++}
++
+ int kvm_arch_get_registers(CPUState *cs, Error **errp)
+ {
+     uint64_t val;
+     unsigned int el;
+     uint32_t fpr;
++    bool sme_sm = false;
++    bool sme_za = false;
++    uint32_t svq = 0;
+     int i, ret;
+ 
+     ARMCPU *cpu = ARM_CPU(cs);
+@@ -2424,7 +2506,18 @@ int kvm_arch_get_registers(CPUState *cs, Error **errp)
+         env->spsr = env->banked_spsr[i];
+     }
+ 
+-    if (cpu_isar_feature(aa64_sve, cpu)) {
++    if (cpu_isar_feature(aa64_sme, cpu)) {
++        /* Current SVL is required for either SM or ZA */
++        sme_sm = FIELD_EX64(env->svcr, SVCR, SM);
++        sme_za = FIELD_EX64(env->svcr, SVCR, ZA);
++        if (sme_sm || sme_za) {
++            svq = sve_vqm1_for_el_sm(env, el, true) + 1;
++        }
++    }
++
++    if (sme_sm) {
++        ret = kvm_arch_get_sve(cs, svq, cpu_isar_feature(aa64_sme_fa64, cpu));
++    } else if (cpu_isar_feature(aa64_sve, cpu)) {
+         ret = kvm_arch_get_sve(cs, cpu->sve_max_vq, true);
+     } else {
+         ret = kvm_arch_get_fpsimd(cs);
+@@ -2433,6 +2526,13 @@ int kvm_arch_get_registers(CPUState *cs, Error **errp)
+         return ret;
+     }
+ 
++    if (sme_za) {
++        ret = kvm_arch_get_sme(cs, svq);
++        if (ret) {
++            return ret;
++        }
++    }
++
+     ret = kvm_get_one_reg(cs, AARCH64_SIMD_CTRL_REG(fp_regs.fpsr), &fpr);
+     if (ret) {
+         return ret;
 -- 
 2.43.0
 
