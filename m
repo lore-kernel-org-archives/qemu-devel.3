@@ -4,88 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEBD3E63F2A
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 04:53:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4AA3E63F25
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 05:09:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vrqbA-0002ph-Vu; Sun, 15 Feb 2026 23:52:41 -0500
+	id 1vrqqc-0004rY-M7; Mon, 16 Feb 2026 00:08:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vrqb9-0002pP-4g
- for qemu-devel@nongnu.org; Sun, 15 Feb 2026 23:52:39 -0500
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ id 1vrqn9-0004Ll-A2
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 00:05:03 -0500
+Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vrqb7-0002cJ-JH
- for qemu-devel@nongnu.org; Sun, 15 Feb 2026 23:52:38 -0500
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-2ab077e3f32so10757655ad.3
- for <qemu-devel@nongnu.org>; Sun, 15 Feb 2026 20:52:36 -0800 (PST)
+ id 1vrqn7-0004R9-Gp
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 00:05:02 -0500
+Received: by mail-pj1-x1029.google.com with SMTP id
+ 98e67ed59e1d1-354b20c1112so1877136a91.3
+ for <qemu-devel@nongnu.org>; Sun, 15 Feb 2026 21:05:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771217556; x=1771822356; darn=nongnu.org;
+ d=linaro.org; s=google; t=1771218300; x=1771823100; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=04tymg5hP9G9ie/NCLoqkR6b1BxqLj3OWi1/XfjNmEg=;
- b=Omvj6OCJ/yqOIEv7xLLTFrcPhPaY26aNctFou/4/sYfv5itdnUc6e6mERAOSap3kUj
- KxvfUjultZTpgNS0Pxs3J52QJZH7UbDSqpD8hLQHBn5JSQVFRyCQeqZThJtwK8Vh1l2x
- JbjZYVftHcf/zLs2LtxHa2gxPHw9s16vCgwyVGft/BGcUraKHfmK1xa2rKp5bkDLO02y
- jWG8dX2d9LdWCC6p7aYiCovh/XP2Hi7L8xX0bdeXPDMDnkXQGIzCsvWxmSw0bN3D1UBQ
- /jQSThSPLkK1om2GI4nY6j+cvZjfadnoZ6I3UgVlLKYQWYfzf1CUMpAs2U5V1vRCA7vC
- 1rdQ==
+ bh=5Z5eeL8KhhPNaZYUgPA9rNCozKBIkN5TVYK+RMbQFIU=;
+ b=OWNKihdDV2KLviNlFzZPq6O/8OUih8z4kP+z9sx6sPsma40S4xrD/mAUNxq4RuHxkX
+ FgbsRjsLQK+UrV+Vt2Y2fMEoxkqb+/WUvCySoyXWiegsYzcAMPxSsRNaXBpeFZRp0nry
+ W39ac2+mwtdP6a61XUWARO+JUO0oJWvEamd2jRut+BPdk/+NfTQMwrp1GxA6m9BWKvcR
+ PjDgjReK5dyXakxpntcbZkDXef2Z0y2ea3gKzA++3CO//FWaa6rZbJWkT2KULKUL/UCB
+ wGtQlOir+42HXji6wNUBybCHaI05ST39KSIVoQI4svcZniek9davkfZ817r5mjjzwmG4
+ 6ugQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771217556; x=1771822356;
+ d=1e100.net; s=20230601; t=1771218300; x=1771823100;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=04tymg5hP9G9ie/NCLoqkR6b1BxqLj3OWi1/XfjNmEg=;
- b=q598m5sy0gY4aHZGdCQ8h1LGTMArmZTUEau4fUXplNmxiVWYKwnGDXeMBt6iitAs2G
- fcKgV5s0iWDaAXwxvbu+6EE8DQqA9ynTFY2CFUKkuYok+LO/m2NX/cd4sOTUdGwj8fJP
- yc2VkRGtemqXjlhVM3v0TksS+uNo1PKWCGtc3QsquD8myAt2ylo7IpKOt7KsZ/6+CL7E
- XRI5jkY6WfFvF4LjJxABpysmIJSq/NqUAr90VGFyNGmVEeYmZc1xfG9/LvovvThTbN2o
- pj9DcxDCK++0WzxwvvpiEmd+v+mVAgpRbPhg07iTxQO00UveEDD7+mJ+Hn2eTxvq6AOC
- yJag==
-X-Gm-Message-State: AOJu0YwKZx5QPwZR91rIBHIg3TOxvB9v4qtAYcnfX5KIiCfeA8JnbnSj
- Hr0H+hYLZmhrNo+lKaQhmzzqayIhRRdK8XAwhJ7LS5RWPT934xOFlGKTRrfWme9e7JucoslAcKA
- xU3x8Teg=
-X-Gm-Gg: AZuq6aKbFvNyq1lLlmwb/kPOu96SPFJcVbcnYV0L1sG/0VsUXs4n+qFqAC6yTGFpc/c
- lebtQXEGlu8UJZeLg/UTWAojiJOq5jgHuVLHE8mawuWey6EJWGL/09Sl5Qmf1/RcL2fWTCQKcQ+
- crXdimbBr9h23mv13WgTIJwvKuXQZz0q2C5q19WdX2mrk6/wB6LyuVckv2CgyFRN/rCWFYUB6pJ
- Xv0kKtpCnhgWZGptz/cqJ7Oe7a+P+YbhqqoDoASYu8JOsy3092cLgWOhxLIkK0wKTiOghYYXMsX
- gB9h/4n6ctdxR/T0LWaHZxCdrWD9p5qIV36jSGoTAjLdoAQnqtd1LLAU8wW7TzSMHXR1hAW8F8h
- TOEa5rxr3fn6UgOxuYgBOTGeWm5HtW1aetrBs08QYmBWt7oYbW4d8j8M9ypFb/RmnG9N7p73ePz
- biV7CoauJsgf705GI0pp6YuqaW1HFS+zCZUfEzraw56M6zjt5WbAQ989RrOhPhRbolcAYRWloiL
- 8bIv61vq2anzEIXr/mFvPqj9N7IK9qGdbuifxwh8uA2vfkY6xjZ
-X-Received: by 2002:a17:902:f64b:b0:2a9:2942:e15a with SMTP id
- d9443c01a7336-2ad17450767mr74472145ad.19.1771217555550; 
- Sun, 15 Feb 2026 20:52:35 -0800 (PST)
+ bh=5Z5eeL8KhhPNaZYUgPA9rNCozKBIkN5TVYK+RMbQFIU=;
+ b=j6hyYVFvx+r+fbjYvNxdT7ZuSGeUW77lvokIZPCPxURWJsSejMlLAtWcFLwtkjbf1s
+ fRJL81MW5TBqbdzwZrIx2jVT34Rk+iiyRfmOcSRd8ZKpCIArieSX0nXji1ZicA3nS3bz
+ Rxd68m7yshGSxQciuCR4MbDz7syepQZ7BUIzzhfry7w2scGni32rgA47eXW8+ZajkYEk
+ E+GFKEpBOVlG4w59vCk+o9WWV4107ellXsu0HkCGrtv5+PhKFoD7ZSWnaB2MBQfBozbK
+ yjueMZSWX3AV9UKIfO/WiHzmG5X8FmD0Lb7Q5Se01ZTMCEZcTjidyfgj4Q395txl/0tC
+ Gg3w==
+X-Gm-Message-State: AOJu0YwkIOcuBNclrDJuEJHNTgsk1YUCF+Zm9XdpGvzer36i5Ky3mi3X
+ /hMu08yYW2WtwktkGVg291uyqhXCvWgb3dxhYx4zrk7jAwPJfkXBESMBlUZsXbX5CdQ=
+X-Gm-Gg: AZuq6aJ2dVJg9HVPVRg9IAo0wgMpDF2dpAL1r4bKg6uxccUjPgDenZKeljCryPIcK+t
+ HTdOwNRzSq3myOLBfbHUPL25SFENFjlTst+0eBZZyTcWmmDpKaG47H4AY4qsqFRBMwBnDilOvBD
+ vlK8WY7Vo4FXsSUBrf8VA7AMOUyxiZ29LbWq29jf9vVXV697yG1dFZDRO6diSOoU3Miout/EXa5
+ y/c3ViRoFeERx7nXCjbpKrU24RUtILFtHgoLwvxMdfyX8z1ghphXn6rjZTHsvxS9oMw4wpnQWtl
+ vyHF1Cb1GxbJtxmo9nZ/JnuYYYBS5E/y7q5eJU83oZnYUGhKEDp3L5n8ic2AFYWR8I9q98KKeAq
+ 1MQk94FN8lrS2reHIXB8dbt3YN3o2P4WbgoGLMZD89CBjG+wa7ajU+uFLTUWsCEI4yVwhi5suM3
+ y70SeHzRN5vVdtdi0g9FOQU3gnkvqhc/t7dum+7HB1L0vLCFwohsIMg015Mw1xC9cGARLaNc2G1
+ WiWb2nOUOM=
+X-Received: by 2002:a17:90b:53c3:b0:353:883:affc with SMTP id
+ 98e67ed59e1d1-356a7a42d1bmr10262745a91.18.1771218299729; 
+ Sun, 15 Feb 2026 21:04:59 -0800 (PST)
 Received: from ?IPV6:2401:d002:dc0f:2100:4a1:428a:70f2:5844?
- (bg30dhzm5ftjb9d57pjq.ip6.superloop.au.
- [2401:d002:dc0f:2100:4a1:428a:70f2:5844])
+ ([2401:d002:dc0f:2100:4a1:428a:70f2:5844])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2ad1a9d5c3esm61327915ad.47.2026.02.15.20.52.33
+ 98e67ed59e1d1-3567eba9451sm13991158a91.10.2026.02.15.21.04.58
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 15 Feb 2026 20:52:35 -0800 (PST)
-Message-ID: <4f06f566-c6dd-4b90-baba-342a0dbacc57@linaro.org>
-Date: Mon, 16 Feb 2026 14:52:29 +1000
+ Sun, 15 Feb 2026 21:04:59 -0800 (PST)
+Message-ID: <0a41230f-e8c5-41f4-8824-9d45de6ca17a@linaro.org>
+Date: Mon, 16 Feb 2026 15:04:54 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 02/13] target/arm: Remove aarch64 test for kvm
-To: Mohamed Mediouni <mohamed@unpredictable.fr>
+Subject: Re: [PATCH v4 8/9] fpu: Add conversion routines for OCP FP8 E4M3
+To: Max Chou <max.chou@sifive.com>
 Cc: qemu-devel@nongnu.org
-References: <20260216034432.23912-1-richard.henderson@linaro.org>
- <20260216034432.23912-3-richard.henderson@linaro.org>
- <D63EE934-C780-46F6-A944-0786463BE8F7@unpredictable.fr>
+References: <20260205111622.461497-1-richard.henderson@linaro.org>
+ <20260205111622.461497-9-richard.henderson@linaro.org>
+ <aZKVxean7S9fkHHn@sifive.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <D63EE934-C780-46F6-A944-0786463BE8F7@unpredictable.fr>
+In-Reply-To: <aZKVxean7S9fkHHn@sifive.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1029.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,57 +106,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/16/26 14:23, Mohamed Mediouni wrote:
-> 
->> On 16. Feb 2026, at 04:44, Richard Henderson <richard.henderson@linaro.org> wrote:
->>
->> We no longer support kvm for aarch32, therefore the aarch64
->> test is trivially true.
->>
-> Hello,
-> 
-> Probably harmless but aren’t AArch32 guests on an AArch64 KVM host still supported?
+On 2/16/26 14:22, Max Chou wrote:
+> Could you please let me know if you’re okay with the softfloat OCP FP
+> conversion v4 patchset containing the OCP FP classification functions?
+> (e.g. float8_[e4m3|e5m2]_is_[zero|normal|signaling_nan|quiet_nan], etc.)
+> If not, I could provide another patchset for these OCP FP classification
+> funtions.
 
-Yes, via the aarch64=off property. Here, we are only concerned about adding or not adding 
-the sve property set.
-
-Note that all properties are processed much later when we consume the command-line.  We 
-can't conditionally add properties based on other properties.
+Do you use those in target/riscv somewhere?
+I didn't include them simply because they seemed useless.
 
 
 r~
-
-> 
-> aarch64_cpu_set_aarch64 in target/arm/cpu.c unsets ARM_FEATURE_AARCH64
-> for being able to support that case.
-> 
-> Thank you,
->>
->>
->> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
->> ---
->> target/arm/cpu64.c | 4 +---
->> 1 file changed, 1 insertion(+), 3 deletions(-)
->>
->> diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
->> index 5d7c6b7fbb..10c6796548 100644
->> --- a/target/arm/cpu64.c
->> +++ b/target/arm/cpu64.c
->> @@ -767,9 +767,7 @@ static void aarch64_host_initfn(Object *obj)
->>      ARMCPU *cpu = ARM_CPU(obj);
->> #if defined(CONFIG_KVM)
->>      kvm_arm_set_cpu_features_from_host(cpu);
->> -    if (arm_feature(&cpu->env, ARM_FEATURE_AARCH64)) {
->> -        aarch64_add_sve_properties(obj);
->> -    }
->> +    aarch64_add_sve_properties(obj);
->> #elif defined(CONFIG_HVF)
->>      hvf_arm_set_cpu_features_from_host(cpu);
->> #elif defined(CONFIG_WHPX)
->> -- 
->> 2.43.0
->>
->>
-> 
-
 
