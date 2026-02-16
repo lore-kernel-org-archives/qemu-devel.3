@@ -4,106 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91E89E63F3F
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 08:55:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86FC3E63F3F
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 08:56:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vruO3-0000Gu-7U; Mon, 16 Feb 2026 03:55:23 -0500
+	id 1vruPC-00015y-AB; Mon, 16 Feb 2026 03:56:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vruO1-0000GR-KO
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 03:55:21 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vruP6-00015X-1E
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 03:56:28 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vruNz-0003Ki-Jn
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 03:55:21 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vruP4-0003OR-DD
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 03:56:27 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771232117;
+ s=mimecast20190719; t=1771232185;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=yVKbvfM+4ZsReQVaNkJX+B9dSjM+u4MtrC1hl7hWcq4=;
- b=gR7rDetIYZz4r64oAPu+D2cHHQO50mBgmVV/jFU7XLb8bs7KIBouDkH7nB64xRgmNx+Kzv
- xKIN2bjmoE5okknZzXcrS1thheBVvwNIhx48KErl+jjKzVtqdPENrnzcCk3rT+zJPqK+6/
- MvtAuuRSkuz+qoWWCMLEUuU2UG0qXUI=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=ldtol2FFO1ZH5DZ8iisb+E9fXd0G6mnBM1+M5A4C9eU=;
+ b=J3sGpAXosbsVr/kLru7N4nc0PRR5GpDCXQrJZuSXQabtpxPcb1GexuY+HQLLSBQCSiK/pb
+ 2v4eGn36pB3QGhef/5evB7flFNjXIAxAZyhF9ktkI4pUsrR1pR+jJRwfqSkIobKpfEXJID
+ le7qCx16hRk1sYljJb2e3d63XnYPO4E=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-318-TUeWIsl1OPWud60I5iTi3w-1; Mon, 16 Feb 2026 03:55:15 -0500
-X-MC-Unique: TUeWIsl1OPWud60I5iTi3w-1
-X-Mimecast-MFC-AGG-ID: TUeWIsl1OPWud60I5iTi3w_1771232114
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-4368060a5e5so3365197f8f.3
- for <qemu-devel@nongnu.org>; Mon, 16 Feb 2026 00:55:15 -0800 (PST)
+ us-mta-64-s3GTC3YPPsmLmZAwqsydMQ-1; Mon, 16 Feb 2026 03:56:23 -0500
+X-MC-Unique: s3GTC3YPPsmLmZAwqsydMQ-1
+X-Mimecast-MFC-AGG-ID: s3GTC3YPPsmLmZAwqsydMQ_1771232182
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-43768240a29so2030828f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 16 Feb 2026 00:56:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1771232114; x=1771836914; darn=nongnu.org;
+ d=redhat.com; s=google; t=1771232182; x=1771836982; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=yVKbvfM+4ZsReQVaNkJX+B9dSjM+u4MtrC1hl7hWcq4=;
- b=PvJts93cv33fVxRp1xaqao0cSJTut0fPgDWslorUhPZcX2vHPQjVsTdKo3JjM7tl79
- w1mR7uEyvf5EJCMa0LrCaaqO68bodOiVLZoVggFEElDMcWmOlGCAl4S/Cvad+VN84poE
- bPD5MOgUbDZbZCsv3ABe6ZjlfNK1QpQmg2YpKqsG82ui4ErNwaLqOu2etpa28znBlDyB
- QifGptok5sQSDWvKAm7c5A9cHYwFSl8DY8pzSZicZyu7bbD1rA7KMd/ZTatcRGg3grFV
- AxcCVsrqFUwys6rlAwZj6WaQvg41Ekw5t5elxeycLPyeH37bx5V+atz1/2tmUL7LtHWs
- yYfg==
+ bh=ldtol2FFO1ZH5DZ8iisb+E9fXd0G6mnBM1+M5A4C9eU=;
+ b=YUEGkBWP2bkm3Vd5K6CzlQHp7FzDuEOug/iHJlhxLBXrwaOnkNSd/Nx+9AgAzPXQW8
+ ic/uDgpSUVJbCoT1MyFEidaKknDPOu6+LfW96NHXiRm79725+t15slEbfQcsZiCJ3mCL
+ MadFSXpiu450fOJQXE9BdnBHAy4GzXV4Y0DHNHamaY+NW1OUbQM53KSolrHblEJyRZMc
+ eMCJT5+Ir+GUbzCKPOsVNoMfaUokUFi4rLS+eeXhfgkQRFOYa9zU0zFrePr1BbuSmjtL
+ RY2dOMi9huTXx7Adzf+MW04R86t4Gng7lhSMiDcLO3UtNf024D1xFGqXmmw5vhLHdy3e
+ +xhQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771232114; x=1771836914;
+ d=1e100.net; s=20230601; t=1771232182; x=1771836982;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=yVKbvfM+4ZsReQVaNkJX+B9dSjM+u4MtrC1hl7hWcq4=;
- b=tBjlSImgjgzaMYIqjcCntRCAS2VR8ig0u43+9zRuo80BAONnyEYsPQXOqEPIK5JoZG
- 6fapVBoG8qSqWSXdlUaFhYMlXpf5+68d2S0AyyVfsYx8zdtqfpzAPRJn4tEUUnR4DVlt
- LP6iqzU3REamTo2n1ppPqHEyimm0voCOpd0nGuIBzIoAZNXpeki49Y6cRN5VUDbW/9ZJ
- 3YObHbEDMMTpeZ6Cyndi9+Appn++azyZCWmLLflGDPqr+cI3j8iIzBJC8vwv1crBsVhK
- OFz2wpTk5clHjiYaMIShmTCREO9CXxpPfrdyLz3pnpRKv+e8XSUB/FKvKZR91c3rr5F8
- KEuQ==
+ bh=ldtol2FFO1ZH5DZ8iisb+E9fXd0G6mnBM1+M5A4C9eU=;
+ b=eGo2qg+qmgWaqASJ+lIt/dvYumW4AQnCoRdPkwJ7UeqqIyd2r3suqAkfkcYyGSM7qd
+ hYiejJoLmsFP+ZL0W/fkej3Ct4ZZr2dPqBI5FExctY6PyTxmm0n7bTKDBnh5ZmcRjPiQ
+ 2g9nopiVSfKq5QKuDeV0TKeMNOdNodWOZzHkiQ9krBVuqGkuui9Kiu5Cum6RApWw2sgs
+ Ek8V9Fz56+kZ4EUb0vBZBqfxIvN1aBN+GTdm5Zn2sE3Brwc3KM4Qh33RTfp1v5KdGb5H
+ +kRrk3nfg2Z6XPDyCj/XLy52k5nEe8u3NNO/Pi52a8YQ1nE3N4dPuxl3NltJrLUrMnMW
+ PJmw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUgpLfTwYt29kD5DbwzjUJAR1ihqL7ED9GC+xhOZgyBlUeEI4hD/uVD0aoGccaf9H41N9i5DoW3PGCL@nongnu.org
-X-Gm-Message-State: AOJu0YwfvroXz77bduv9xfcM8gk07rQPZhZyJRXfowoowTyCRROuqyQ9
- pDS0s/8VAruJi+INKaDGi6NThtVVRi8icgfdiEUDDiBgXWA0jztyc9EGOaSYW2zsUDwAe4qTamJ
- r7paARIwEUiiCxa7hchJ1e+P20sn/PxRg7c2xTdDtv+YUo1MHHspCB3mi
-X-Gm-Gg: AZuq6aK3okafBAD0u/rCnOBHOmF2SJ235UlEvBbse3mCz49prkvnVOOykf4qfI6naoa
- uHIjH7FJFLe1hImbbe38Ur9cLnCR9BbcV7o0UBvkyyvYUJiIDBF3tuK4BmaBcW8yoixaq3tP+vc
- MUcQ0OHEgwwMLCXTe5+5hY5tAJaeiNXrguQyRdi96jyAHDXLbl/g7D+pOtuBSZ86+PqHnj26XvB
- FKGlz+SQD07VfsCEqILCY6BEG/79XfI3bGzuDaiPar5jrVFszq3aoZ1Si6JzUQ/5fjTdpWNAvn+
- jxypT0e2OtG1a99cE+kB364NNqMEIFniFjSRgdBW+sSZTcAJ+7SxwuVG0ERhvx9xUeiUfpXmVnf
- Fl6CIZa93162KmI/YU8Lm89RfUuQMtk/vYUKlAkFoREyIRbIqS1pg0R/kj8aq
-X-Received: by 2002:a05:600c:698c:b0:477:5ad9:6df1 with SMTP id
- 5b1f17b1804b1-48379b932b7mr131966185e9.3.1771232114040; 
- Mon, 16 Feb 2026 00:55:14 -0800 (PST)
-X-Received: by 2002:a05:600c:698c:b0:477:5ad9:6df1 with SMTP id
- 5b1f17b1804b1-48379b932b7mr131965935e9.3.1771232113602; 
- Mon, 16 Feb 2026 00:55:13 -0800 (PST)
+ AJvYcCURL13jioiRopHCsFWVtIx/KrX6IjG4yCnp3XOruMkSbro1gghWTtHtLCgbYHg3wz5QjrNHr2K0EYpI@nongnu.org
+X-Gm-Message-State: AOJu0YwYnZBj7GpVLR3SOqDOG9eQH/Jkloes9iuMuFjPVFVZEYhvMm2o
+ 65rddCVmtAKbSkvCXdhsOa9eIuC6u/PidiZMgUcYT5jROnPzxngzW03o7s1Nog0ZXvii5h5Oj4o
+ qWtX0okkqSTUYUyuswZeam+JlL2VXUkynzIDqiK3UjnG2Hb6UlBK0n+50
+X-Gm-Gg: AZuq6aKLxIQnR4/3x28bqZfqWK1vKimx1FtxppFIdoi3gmkGkeWKw2nD6nGoT/1aYrY
+ 8GDDU46hbMCRvexG/hHPaMzM5JiR4RJnOc5r+jSRhU7g+oD5HhGW3NldOKbonLUIK2QipvFxKoj
+ 9hYtr1dYhZ3190FCha77ptf8kJo0nzKpHrAU4N0LgapIaOwrUUwxcMprXuxtApuW7TVj8UYwR89
+ JoQsOkTKr0bEu997MLN0/tDA84r6GI3yig19tRj5AihMU5RD8OzUfR7xz8aBRpQUES3IALoc+qs
+ DxzoXq/AH9JKZ4XPIp/Ug7mMb5Yh5U+r4Q+K13TkiDpeCeIZ0HTqaJWqMyww1kKRNFZXtsB0loR
+ LmqL/lNJRIeU9j82Q4EZrxSCLYdb+U8J5yK0ME0U2n0dgk+th4TgSoslAIA9o
+X-Received: by 2002:a05:6000:2403:b0:435:a135:777d with SMTP id
+ ffacd0b85a97d-4379d5e3fb8mr16533141f8f.9.1771232181687; 
+ Mon, 16 Feb 2026 00:56:21 -0800 (PST)
+X-Received: by 2002:a05:6000:2403:b0:435:a135:777d with SMTP id
+ ffacd0b85a97d-4379d5e3fb8mr16533110f8f.9.1771232181276; 
+ Mon, 16 Feb 2026 00:56:21 -0800 (PST)
 Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
  ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48370a41be2sm132434835e9.1.2026.02.16.00.55.12
+ ffacd0b85a97d-43796abd793sm25457474f8f.25.2026.02.16.00.56.20
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 16 Feb 2026 00:55:13 -0800 (PST)
-Message-ID: <dc42083f-e236-48cf-a3d1-69775031e629@redhat.com>
-Date: Mon, 16 Feb 2026 09:55:11 +0100
+ Mon, 16 Feb 2026 00:56:20 -0800 (PST)
+Message-ID: <37598978-a8dc-4e9b-bca7-f0609f3aa80e@redhat.com>
+Date: Mon, 16 Feb 2026 09:56:19 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/2] hw/vfio: sort and validate sparse mmap regions by
+Subject: Re: [PATCH v3 1/3] hw/vfio: sort and validate sparse mmap regions by
  offset
-To: Ankit Agrawal <ankita@nvidia.com>, Vikram Sethi <vsethi@nvidia.com>,
- Jason Gunthorpe <jgg@nvidia.com>,
- Shameer Kolothum Thodi <skolothumtho@nvidia.com>,
- "alex@shazbot.org" <alex@shazbot.org>
-Cc: Aniket Agashe <aniketa@nvidia.com>, Neo Jia <cjia@nvidia.com>,
- Kirti Wankhede <kwankhede@nvidia.com>,
- "Tarun Gupta (SW-GPU)" <targupta@nvidia.com>, Zhi Wang <zhiw@nvidia.com>,
- Matt Ochs <mochs@nvidia.com>, Krishnakant Jaju <kjaju@nvidia.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-References: <20260211030615.3202-1-ankita@nvidia.com>
- <20260211030615.3202-2-ankita@nvidia.com>
- <98b36726-71d1-4129-99cf-b16bea1575f1@redhat.com>
- <SA1PR12MB71994FF05BA4E852DF0CA080B06CA@SA1PR12MB7199.namprd12.prod.outlook.com>
+To: ankita@nvidia.com, vsethi@nvidia.com, jgg@nvidia.com,
+ skolothumtho@nvidia.com, alex@shazbot.org
+Cc: aniketa@nvidia.com, cjia@nvidia.com, kwankhede@nvidia.com,
+ targupta@nvidia.com, zhiw@nvidia.com, mochs@nvidia.com, kjaju@nvidia.com,
+ qemu-devel@nongnu.org
+References: <20260215084950.4657-1-ankita@nvidia.com>
+ <20260215084950.4657-2-ankita@nvidia.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -149,9 +143,9 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <SA1PR12MB71994FF05BA4E852DF0CA080B06CA@SA1PR12MB7199.namprd12.prod.outlook.com>
+In-Reply-To: <20260215084950.4657-2-ankita@nvidia.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -177,42 +171,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello Ankit,
-
-On 2/16/26 08:17, Ankit Agrawal wrote:
+On 2/15/26 09:49, ankita@nvidia.com wrote:
+> From: Ankit Agrawal <ankita@nvidia.com>
 > 
->> +         */
->> +        for (i = 1; i < region->nr_mmaps; i++) {
->> +            off_t prev_end = region->mmaps[i - 1].offset +
->> +                             region->mmaps[i - 1].size;
->> +            if (prev_end > region->mmaps[i].offset) {
->> +                error_report("%s: overlapping sparse mmap regions detected "
->> +                             "in region %d: [0x%lx-0x%lx] overlaps with [0x%lx-0x%lx]",
->>
->> please use PRIx64
->>
->>
->> An extra 'Error **' parameter to vfio_region_setup() could also be
->> considered to propagate the error to vfio_pci_realize(). It shouldn't
->> be too complex to add.
+> Sort sparse mmap regions by offset during region setup to ensure
+> predictable mapping order, avoid overlaps and a proper handling
+> of the gaps between sub-regions.
 > 
-> Thanks Cedric for the comment, I've posted v3 addressing the additional
-> Error ** param. Please take a look.
-> https://lore.kernel.org/all/20260215084950.4657-1-ankita@nvidia.com/
+> Add validation to detect overlapping sparse regions early during
+> setup before any mapping operations begin.
+> 
+> The sorting is performed on the subregions ranges during
+> vfio_setup_region_sparse_mmaps(). This also ensures that subsequent
+> mapping code can rely on subregions being in ascending offset order.
+> 
+> This is preparatory work for alignment adjustments needed to support
+> hugepfnmap on systems where device memory (e.g., Grace-based systems)
+> may have non-power-of-2 sizes.
+> 
+> cc: Alex Williamson <alex@shazbot.org>
+> Reviewed-by: Alex Williamson <alex@shazbot.org>
+> Reviewed-by: Shameer Kolothum <skolothumtho@nvidia.com>
+> Signed-off-by: Ankit Agrawal <ankita@nvidia.com>
+> ---
+>   hw/vfio/region.c | 45 ++++++++++++++++++++++++++++++++++++++++++++-
+>   1 file changed, 44 insertions(+), 1 deletion(-)
+> 
+> diff --git a/hw/vfio/region.c b/hw/vfio/region.c
+> index ab39d77574..177494c379 100644
+> --- a/hw/vfio/region.c
+> +++ b/hw/vfio/region.c
+> @@ -149,6 +149,19 @@ static const MemoryRegionOps vfio_region_ops = {
+>       },
+>   };
+>   
+> +static int vfio_mmap_compare_offset(const void *a, const void *b)
+> +{
+> +    const VFIOMmap *mmap_a = a;
+> +    const VFIOMmap *mmap_b = b;
+> +
+> +    if (mmap_a->offset < mmap_b->offset) {
+> +        return -1;
+> +    } else if (mmap_a->offset > mmap_b->offset) {
+> +        return 1;
+> +    }
+> +    return 0;
+> +}
+> +
+>   static int vfio_setup_region_sparse_mmaps(VFIORegion *region,
+>                                             struct vfio_region_info *info)
+>   {
+> @@ -182,6 +195,34 @@ static int vfio_setup_region_sparse_mmaps(VFIORegion *region,
+>       region->nr_mmaps = j;
+>       region->mmaps = g_realloc(region->mmaps, j * sizeof(VFIOMmap));
+>   
+> +    /*
+> +     * Sort sparse mmaps by offset to ensure proper handling of gaps
+> +     * and predictable mapping order in vfio_region_mmap().
+> +     */
+> +    if (region->nr_mmaps > 1) {
+> +        qsort(region->mmaps, region->nr_mmaps, sizeof(VFIOMmap),
+> +              vfio_mmap_compare_offset);
+> +
+> +        /*
+> +         * Validate that sparse regions dont overlap after sorting.
+> +         */
+> +        for (i = 1; i < region->nr_mmaps; i++) {
+> +            off_t prev_end = region->mmaps[i - 1].offset +
+> +                             region->mmaps[i - 1].size;
+> +            if (prev_end > region->mmaps[i].offset) {
+> +                error_report("%s: overlapping sparse mmap regions detected "
+> +                             "in region %d: [0x%lx-0x%lx] overlaps with [0x%lx-0x%lx]",
 
-vfio_setup_region_sparse_mmaps() can take 'Error ** errp' parameter
-too.
-  
-> I missed to address to use the PRIx64 in error_report. I'll consolidate that
-> with any additional comments that I get in that version.
+please use PRIx64 instead of 'lx'
 
-A v4 is required indeed bc of PRIx64. I will take a look.
-
-Thanks,
-
-C.
-
-
-  
+> +                             __func__, region->nr, region->mmaps[i - 1].offset,
+> +                             prev_end - 1, region->mmaps[i].offset,
+> +                             region->mmaps[i].offset + region->mmaps[i].size - 1);
+> +                g_free(region->mmaps);
+> +                region->mmaps = NULL;
+> +                region->nr_mmaps = 0;
+> +                return -EINVAL;
+> +            }
+> +        }
+> +    }
+> +
+>       return 0;
+>   }
+>   
+> @@ -213,11 +254,13 @@ int vfio_region_setup(Object *obj, VFIODevice *vbasedev, VFIORegion *region,
+>   
+>               ret = vfio_setup_region_sparse_mmaps(region, info);
+>   
+> -            if (ret) {
+> +            if (ret == -ENODEV) {
+>                   region->nr_mmaps = 1;
+>                   region->mmaps = g_new0(VFIOMmap, region->nr_mmaps);
+>                   region->mmaps[0].offset = 0;
+>                   region->mmaps[0].size = region->size;
+> +            } else if (ret) {
+> +                return ret;
+>               }
+>           }
+>       }
 
 
