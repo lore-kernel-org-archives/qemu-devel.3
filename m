@@ -4,176 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F0E3E81A40
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 16:17:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E297E81A40
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 16:17:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vs1H1-0004TV-DW; Mon, 16 Feb 2026 11:16:35 -0500
+	id 1vs1IB-0004yi-Hm; Mon, 16 Feb 2026 11:17:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ross.lagerwall@citrix.com>)
- id 1vs0iY-0003uq-HG
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 10:40:58 -0500
-Received: from mail-centralusazon11010050.outbound.protection.outlook.com
- ([52.101.61.50] helo=DM1PR04CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
+ id 1vs1HV-0004Xk-AP; Mon, 16 Feb 2026 11:17:10 -0500
+Received: from proxmox-new.maurer-it.com ([94.136.29.106])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ross.lagerwall@citrix.com>)
- id 1vs0iU-00008p-48
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 10:40:56 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=ZQvoEdwbcMVAgTEbuPgI6wxRDRn8TTBpJoEOnnR5H7Pt+ooI6sd+I93E9SGxzTEC6Vjg78Vg7zm3iOILMitdtE2/t/e4McSUdbzXc5sTwW6BoIKKPbxtX9jWA5oABwqK9ZWqoIu9mT5KTfDdrTaLoeGMvg/mNkP1tFWOFxtzcIZJvH68bsFIiO0F+V1haNSIPKMGZiYvQYwCgTZQUAu6m6iCiECQtvrzGjqjENaB0BpULp80mGeERqDK6cvO5x7rWp7tLVEhxXjg/zCTEZXfp5J8gb3A4UOiGfSnpOSpNEnA13Ma6/G2R7XPkEKjGVdx33BXTqix6gOiNWY06rhv2Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=vs5cIUPWYKztTnAi9VooG6CwTy8tVAnx/+bVqGPjFhs=;
- b=UvilZ69SVcn08eDqyaxQuM8KSKyOU0/uQeUTDal3jiMLk+eqzGXglEORVeVHBQ9fH0frxrtIzv4OrKucIg3MaCic8NjvhI0T7DfumEgcETmnbT0dGtIky0dam6kEveuvEeRqJUzkg8gGH52lf1jXTpWM00VlexAuJDxOzvRg1RGtA3GvJ9paNQlMOhSLlE9sXSWQJm0TZAS0a+aeRVhbil41P/Q10Z9X0sR25x3I3KaGv9KhGLWRDNujWaFcRn6teHauUVdYSYwhCEWaH81nO5N7Chnx5i883M0dQ7BW/fCLSkKZejx3eNzEWSy2QDGfGT5fNwDloO3WKhzah6nZbA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=citrix.com; dmarc=pass action=none header.from=citrix.com;
- dkim=pass header.d=citrix.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=citrix.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=vs5cIUPWYKztTnAi9VooG6CwTy8tVAnx/+bVqGPjFhs=;
- b=VWNLp8wOjvOPVZ+dmJ9FoGOr0dC65RGMRbdCxxD00CPiP741DMOWuH56rWSPFSYBHqoPmFEIeucWIjSXojJ8AsyCErtHusS59Vu49QSbeHdE2RMSrYAMtM+LEsghLEuEqhd5py7NlJ3pAcTDFzAiMZCAbDvjX+VnBTACGSlT8Hg=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=citrix.com;
-Received: from CH8PR03MB8274.namprd03.prod.outlook.com (2603:10b6:610:2ba::5)
- by PH0PR03MB6480.namprd03.prod.outlook.com (2603:10b6:510:b0::6) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9611.16; Mon, 16 Feb
- 2026 15:35:48 +0000
-Received: from CH8PR03MB8274.namprd03.prod.outlook.com
- ([fe80::ebe2:32c1:d2be:a096]) by CH8PR03MB8274.namprd03.prod.outlook.com
- ([fe80::ebe2:32c1:d2be:a096%6]) with mapi id 15.20.9611.013; Mon, 16 Feb 2026
- 15:35:48 +0000
-Message-ID: <7fa61eb0-9d7e-4a2f-b54f-df310f859641@citrix.com>
-Date: Mon, 16 Feb 2026 15:34:44 +0000
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] xen-hvm: Emit RTC_CHANGE upon TIMEOFFSET ioreq
-To: Anthony PERARD <anthony@xenproject.org>
-Cc: qemu-devel@nongnu.org, Stefano Stabellini <sstabellini@kernel.org>,
- Paul Durrant <paul@xen.org>, "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-References: <20260108135406.1879210-1-ross.lagerwall@citrix.com>
- <aZMwlMwYufj6LCrU@l14>
-Content-Language: en-US
-From: Ross Lagerwall <ross.lagerwall@citrix.com>
-In-Reply-To: <aZMwlMwYufj6LCrU@l14>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: LO4P123CA0101.GBRP123.PROD.OUTLOOK.COM
- (2603:10a6:600:191::16) To CH8PR03MB8274.namprd03.prod.outlook.com
- (2603:10b6:610:2ba::5)
+ (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
+ id 1vs1Gy-0006Ta-5C; Mon, 16 Feb 2026 11:16:56 -0500
+Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
+ by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 064E949222;
+ Mon, 16 Feb 2026 17:12:04 +0100 (CET)
+Message-ID: <811bbd59-df4e-4a60-adba-61cd2ef3016c@proxmox.com>
+Date: Mon, 16 Feb 2026 17:12:02 +0100
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH8PR03MB8274:EE_|PH0PR03MB6480:EE_
-X-MS-Office365-Filtering-Correlation-Id: ccac422d-3708-46f5-3360-08de6d710f36
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|366016|376014;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?QXcyWVY5VmRaeU5NTkZMOVBGNktiMlRjamU1RGdIWFRqQ3ZFU1Z0cHpJM3ll?=
- =?utf-8?B?S0lYUURIQldnc0U0YXJHVXRDMUt5T2FqdG8wVzJqRHJkeEttUnc4dDU3Vzd3?=
- =?utf-8?B?RS85aDZBQktUTEZUOXpXcENaQnRreE1KMUIwRGx5OEZKMkVwVzh5UDlGZnJD?=
- =?utf-8?B?bzR5UW92WFRYOXZLd3dYd3IzczZoTVViT3FoRDQ3akk4QUtqZGptaURzY0p1?=
- =?utf-8?B?VEtnamM5NW9PazZld1JpY2c0Ri83S3Ztc29qOHVLdjl5Uk5nSDJ6SlczcEJO?=
- =?utf-8?B?WmJaTjdiUHo0NEpjZjdYaTV3UGl3L2ppeFFrWE1yQXM5SVAxRlRWNTdxTVd3?=
- =?utf-8?B?cGcwNlpVcWFXQWFIalhuVVdadEVmMkFBV29sem9UUDREU25ic05PSGFybS8x?=
- =?utf-8?B?WXJ6RzFQOUgwemxzQXRMS1ZzT2krdmJLeDgrd1RobnJBSlQzWEYyb0FPMlU5?=
- =?utf-8?B?cVR0L05qcXY0Ykk3aUdOTjFtVXNDcVFHT3ZicXRvd0JGM1djak1XZXl2RVZM?=
- =?utf-8?B?MWJ3SkRtWStDM3JLV1RZNkxDMGJPVzBwTkNZSU9KTEZGNWNQVTNUUlllOVhQ?=
- =?utf-8?B?OWlVUXo2ajdOanJFTzI3aGdBd0R6RlVLZjBPWTdHVGYxV1g4WmNZTnI5cEU5?=
- =?utf-8?B?ME9jdHZvRjMrN1A2OVlzaDJNNnZYWFJYK1owUXRqMURsckhOSitnaStPeDdU?=
- =?utf-8?B?dHFxVGhuNTg0NmpFUmQ0TVM2L000azBUa3dlZ1U4cERGZE5KVmptMmFQYUpx?=
- =?utf-8?B?ZUEyWGhZKzMySkx2cjV2bHJHazJZR0FoNWVkdlREMThrU0trZHNEejdOUzNF?=
- =?utf-8?B?alUzaU0xUjE5MUVUODBrYmVIbzNQNVlPMzdteG5CdG51ZVo1Ujhuc2dzWUl0?=
- =?utf-8?B?Ykh4YW1yZ1pCK0dhSTNMTnpWUDhFTU9iN0QyNG1iaVJVem9IMjhTYUhNcnJj?=
- =?utf-8?B?Q2VUL0FWYS9qdTZ3VkxXVUtjNTRzQ3FoNW85SEQweGZCUG4zR05ySE5TWUxG?=
- =?utf-8?B?ZE1mZ1loYzV6OEphVXp4WVVnQXZ6RXN2Y3c0UGd2NThPV1loZ1h5RmRqd3Vv?=
- =?utf-8?B?aW1ZZWFUKzd0bEtXN0h1QmQ0NG9XUU9NRzRSSm1XdE5taU11RzZMWE1zTHVV?=
- =?utf-8?B?ZVQxVytVS1FQbExJN1pFS0twbEZRbjFJVkVnWEh1d1VMTXRvazVCZUxOQ1VT?=
- =?utf-8?B?bWpPZkFOa0xTdHFJaFA4cVp4TkZiYzNpQUc3Qm54Rm82Nm16SGFNS3doTUtJ?=
- =?utf-8?B?OGNScjNDTlpkRkg2WjV6Q1hUZm10YWhUVTVneG85TWtaTGF6TUl4MHFvdThB?=
- =?utf-8?B?ZXVBZkw3T3R0c3VKNFlhUW5lQlZMT1RZVWlxMkRLSkdGK1ZNNnNvV3RMQ1RZ?=
- =?utf-8?B?RUhUUHNRVFFjWW1pM3lna0tpK1FnQnBxd0tsSDF3dTdmUFN4aUlJbHBpZ3hW?=
- =?utf-8?B?VmVvVytoRG80Q3BldnFoZ1Bja0hUNW9zZVk1TWpDanRuNnlHMGtHNkJmRGhy?=
- =?utf-8?B?Rzh4eVJBYU13a1BueFRrYmlHdmRacWlKNDFYa2RQeS9zc3FTQ2tOUHQ2RlB3?=
- =?utf-8?B?WmJ5UjkxUmQrdGhSOUJaa3VFemRFdmh0UWhCWitFTTlob0tnR2RRak1uVyt4?=
- =?utf-8?B?eHQ5d0FiS1BMWDdpM3pVUkJGRVkraHhpb2xkNHdUK25uQkt2RDBYeVFIaVdv?=
- =?utf-8?B?bktvbmRKNkVqU2xvcElDTEcwaWg1UmhMVWdGVC9aTWNGcEVxcjN6TE56QTFB?=
- =?utf-8?B?SjF6TkplSkVzWVR2RlEreWkvb0JDQk5mNkxkTHl3d1lva01KMzlxcmtmNzM5?=
- =?utf-8?B?NFVuS0I3ZUYzRGErdnFTV05lNFBIZFdiZmkxUG1SNDk3SnZjWDc2YXg5TEY3?=
- =?utf-8?B?Q3JNV2RqRExKdk03OGhvVG5VMkQwSWZhTFd0TGhzK2lmRDVYSEttU3VadVVz?=
- =?utf-8?B?NmlSOU1YN3ZDclE0NmJ0TXFKb0xUYUhxMXA2aEVvajRjbWY5Qk5WNnhSdTZJ?=
- =?utf-8?B?RHNRSUF0alVqbnRXNTMybXJFbW81TWlqdHIrSHhYNGRPdGZJQWpYM2R2dWE1?=
- =?utf-8?B?ZVN2cEhLMnh5b0tiQjV1V1FDZU16UGljeHB2RkdBek82YlAxNzQ3Wk5BWTNu?=
- =?utf-8?Q?3hCo=3D?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:CH8PR03MB8274.namprd03.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(366016)(376014); DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?NFFLendQNGRuRDBpdmpPR2lRdW00UjJjTlJDUzJaWXpXUzgzYXNHQ3YwK0tU?=
- =?utf-8?B?dkpESFU5ODBmSjNZWGRYL0cwWUh2U0R2bm1rT2Z4Zy9BSEdMbUJ0eWVqQ2Qv?=
- =?utf-8?B?bFJTYTIxU1I1Nnp4Z2s0ZTBhOEh0K0JGRW5wMlpKK3g2REVoY3JaZ3Vqc01P?=
- =?utf-8?B?R2tkL2d1bXBvVTg2WVVkT1dJTXBMMW9PVndkd216SmRPTDdFbTcwd1diZytF?=
- =?utf-8?B?QmFtdUlXTytjTEF3aXNjelpKMnBSK2hFVTBXT1V6TjMwUDV0TGNPSXdoWWxX?=
- =?utf-8?B?MTdod29pbXRIMCsrMGtPV1pVNm9hUmJwek5EU0tMMzN1dlRvczcwRlEvbnlH?=
- =?utf-8?B?N1hnbHBpVEVYZWRod0dZRisvT283YVdRdy9DbytPa3BqL0ZkNTEyWG5RVjk2?=
- =?utf-8?B?SFFMZWRoTEx3MVRpclhJNXRsUVRMVVFnTklnMyt0UEpIRzRZRE5hM2hPT2ZU?=
- =?utf-8?B?MnE4OWpWZFYzMFh1N21QSW1pdTU2RUJUdUNHL1VxdG51YUgrcU45bitxVEVK?=
- =?utf-8?B?aXU0anZ2bW9DZ1hwSVZiYkRxUkF6T255SWJ4N09nZkVUV1FFMGl3QUltKzA4?=
- =?utf-8?B?bDQ2Y1BpMm12UWkyQ0Z6c3VYY3U3ZXdHaXZFOU5YZENVc09rdDBHUExIWmJ2?=
- =?utf-8?B?MGZ0YkpEWlMvOUZsWGRsQXN6eUxEM2hCazhIbkdjSEkrMHpzcWRra0lLdFYr?=
- =?utf-8?B?YXJqeUI2ZVZuWDNTR1FtNUZSbnk0Z2dMWjAxdkNVUzVkRjB1VFplaVgwb3NF?=
- =?utf-8?B?N2FEeEs1YjJTMzlQN3ROZTlWMExia2JHWGtkdmRsOUVnK1FpWDYzcXdHUWF2?=
- =?utf-8?B?eW5VVG5lUDFKOWdwUmtHMm1GRGhZQU5mK0U0d01pYys5akxsMkJXWnloSU9u?=
- =?utf-8?B?MWdUY1ViNThkNUZNSGxQaCt1WVhNOFJxNy9PRWYreXlNTzhHR25TNDVSdDdt?=
- =?utf-8?B?OFJZNkhWUlpxbmhQNHpaU1JaS1RZT0c0OWJOVFJWd2l0VlVBbWhZeHc0azhZ?=
- =?utf-8?B?S1FTQ0Y4dVk0WU0yRkZPNVo5T1pjNVJMUWFwdEtNaUxvbXp3YjZnQUtXdXJN?=
- =?utf-8?B?S2NaQUVHclhob293ZHJkR0tkdGZRRThjbUFBY1FyL1NhNHQ5R1BRSTdWcVY3?=
- =?utf-8?B?R21FY2RaRUtqaThuUTM4VEkrekxVN3NtQ0tFUGt6djAybE05MFQ4Nlc0Tm9u?=
- =?utf-8?B?ak0rcm9NRm5VN2ZxQXFybWFhNldzUVdLMG1sK2VJcHpsSlJ6c1NMR3YzdGcz?=
- =?utf-8?B?TlUwZkFhUWl3QUdFb3lDOUFzTnpnOTI4WkNEbXplVmp1MWh3YTdYQ1ltalY2?=
- =?utf-8?B?WTlQdE9nK2RZdFp4TlNablY2c1E1dHdrVG1hRkhQejhiN0VQT0hjY2c2Z3pZ?=
- =?utf-8?B?R1kvQVRHcGdzakVsbGszdG1TY3ZLeENEdEVpM0hPWmhEcDkvR01tWWFvNTUz?=
- =?utf-8?B?NUxGcHJYVlozcSs4a1Z0OU5RZTF0QTVlbUFaVkh3bHM2b1JuNXVmbXE2UFZr?=
- =?utf-8?B?eVZ1b2grajF6SnlOSzdOdjhTdkdRTDcwSUIreTNxUC9oaG1QNjh5TFZwWUh5?=
- =?utf-8?B?QXlsVFF4NDJMRGRSSzdhYXFpbUJ5SEZGU1o1d0lLbTh0OXB0LytOc2dQR1Br?=
- =?utf-8?B?cTg1c2hOTGxLczVkcHByR0ZtUCtkUHJoazNiY3FsZDRCU2JHSGJqWTB4bWtO?=
- =?utf-8?B?bE5tUFhCd0NSbUkwdXo0UXpZUU9mdlY1TUJqRng2N2JIbkJJdzZ0RmRxYkRW?=
- =?utf-8?B?MTdUYldQVjVhM3ZxVHR0dU5mTnRneDV0ckc0RytKYW41d3JobW96UUFDMG41?=
- =?utf-8?B?OVp3dW4xOHRyM1JJUEh3VmVEajFwWWNrOVRLcC9rVlRQNXNoVlJ5KzdrTWx6?=
- =?utf-8?B?NVdXanUyRFBla1FKS01XeTVMWkQ5Q25qNnZJMWhXNms2bi8xT3BIelc0clI1?=
- =?utf-8?B?UllBZXJOUnhoMG5EQzEveHhHSmo5RGVxZEl4azQyTGlTV0VoOGg1U2hCTmww?=
- =?utf-8?B?LytFbGIwd2pPOTRtVzNCandSa3QzVytJZXZtbXU1d3dLV09XaDdnbWVWQnpM?=
- =?utf-8?B?UUh0Y2EzOC9HWmR4SllWWkU5QWZUQ3BqMjVjckdmbFBzT2pKRjF1bUxVWXhP?=
- =?utf-8?B?dGVPL3JlRVFDRVkvNnJIT2Iya3dGeTlXK2NJSGtXTGpEUWc5MFNBVnBlSDY1?=
- =?utf-8?B?a2phdVJiajVud2ZBU0twSWczWXQ1eE9zOWNwQ014cEx3c0RpWDlkZXhyb2hw?=
- =?utf-8?B?VkFZQ1FRajQ3cUtEMDhTMUk0MGw5M0VxTUVRSGY5c29JQkpJSUdlcU52K2g5?=
- =?utf-8?B?UHZhZ2xhZEVZNFVLMnRDSUl0T3RHd0JnRENRSlVPclF3d3RRODlIbjhpNU5E?=
- =?utf-8?Q?bpAfc8A4nK9xwRmQ=3D?=
-X-OriginatorOrg: citrix.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: ccac422d-3708-46f5-3360-08de6d710f36
-X-MS-Exchange-CrossTenant-AuthSource: CH8PR03MB8274.namprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Feb 2026 15:35:48.8590 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 335836de-42ef-43a2-b145-348c2ee9ca5b
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: jioxsT1L/cD/pk+sGSDZmaNwT2aDq3fQIeWwBAgZQv/TP4BSBwyzcAvvPvgUw4XzMQ0wTJiUkMbDhIXixodwHG2QAw4Ug93cABk4h1kR+3U=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR03MB6480
-Received-SPF: pass client-ip=52.101.61.50;
- envelope-from=ross.lagerwall@citrix.com;
- helo=DM1PR04CU001.outbound.protection.outlook.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] block/mirror: disable dirty bitmap only after job init
+To: Kevin Wolf <kwolf@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-stable@nongnu.org, qemu-block@nongnu.org,
+ hreitz@redhat.com, vsementsov@yandex-team.ru, jsnow@redhat.com,
+ jean-louis@dupond.be, dionbosschieter@gmail.com
+References: <20260212120411.369498-1-f.ebner@proxmox.com>
+ <aZLwdRhpTHvi1Y1-@redhat.com>
+ <66c3fca8-0f64-4cec-a2a9-5959ef67a251@proxmox.com>
+ <5f336c06-c675-4d21-8c1c-e1a1ebe8e09f@proxmox.com>
+ <aZM4KqW57Sb1l_Pb@redhat.com>
+Content-Language: en-US
+From: Fiona Ebner <f.ebner@proxmox.com>
+In-Reply-To: <aZM4KqW57Sb1l_Pb@redhat.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Bm-Milter-Handled: 55990f41-d878-4baa-be0a-ee34c49e34d2
+X-Bm-Transport-Timestamp: 1771258316406
+Received-SPF: pass client-ip=94.136.29.106; envelope-from=f.ebner@proxmox.com;
+ helo=proxmox-new.maurer-it.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_NONE=0.001 autolearn=no autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Mon, 16 Feb 2026 11:16:32 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -188,39 +65,276 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/16/26 2:58 PM, Anthony PERARD wrote:
-> On Thu, Jan 08, 2026 at 01:54:06PM +0000, Ross Lagerwall wrote:
->> When the guest writes to the RTC, the write is intercepted and emulated
->> by Xen and the time difference is broadcasted as a TIMEOFFSET ioreq.
->> Emit an RTC_CHANGE QMP event when this happens rather than ignoring it
->> so that something can make use of the information (e.g. the toolstack
->> can persist it between VM starts).
+Am 16.02.26 um 4:31 PM schrieb Kevin Wolf:
+> Am 16.02.2026 um 14:01 hat Fiona Ebner geschrieben:
+>> Am 16.02.26 um 1:48 PM schrieb Fiona Ebner:
+>>> Am 16.02.26 um 11:25 AM schrieb Kevin Wolf:
+>>>> Am 12.02.2026 um 13:02 hat Fiona Ebner geschrieben:
+>>>>> Currently, the dirty bitmap is disabled too early and the following
+>>>>> bad scenario is possible:
+>>>>>
+>>>>> 1. Dirty bitmap is disabled in mirror_start_job()
+>>>>> 2. Some request are started in mirror_top_bs while s->job == NULL
+>>>>> 3. mirror_dirty_init() -> bdrv_co_is_allocated_above() runs and because
+>>>>>    the request hasn't completed yet, the block isn't allocated
+>>>>> 4. The request completes, still sees s->job == NULL and skips the
+>>>>>    bitmap, and nothing else will mark it dirty either
+>>>>>
+>>>>> One ingredient is that mirror_top_opaque->job is only set after the
+>>>>> job is fully initialized. For the rationale, see commit 32125b1460
+>>>>> ("mirror: Fix access of uninitialised fields during start").
+>>>>>
+>>>>> Disabling the dirty bitmap is safe once bdrv_mirror_top_do_write()
+>>>>> sees that the job is set, because then:
+>>>>>
+>>>>> 1. When not using MIRROR_COPY_MODE_WRITE_BLOCKING, the dirty bitmap
+>>>>>    will be set by bdrv_mirror_top_do_write().
+>>>>>
+>>>>> 2. When using MIRROR_COPY_MODE_WRITE_BLOCKING, writes will be done
+>>>>>    synchronously to the target.
+>>>>>
+>>>>> At least with virtio-blk using iothread-vq-mapping, mirror_run() and
+>>>>> bdrv_mirror_top_do_write() might be called in different threads.
+>>>>> bdrv_disable_dirty_bitmap() acquires and releases the dirty bitmap
+>>>>> mutex, so the memory is synchronized between threads.
+>>>>>
+>>>>> Many thanks to Kevin Wolf for discussing the issue and solutions with
+>>>>> me! [0]
+>>>>>
+>>>>> [0]: https://lore.kernel.org/qemu-devel/4853b0e5-8ec3-41e9-9a53-b1912b8e4449@dupond.be/T/
+>>>>>
+>>>>> Cc: qemu-stable@nongnu.org
+>>>>> Closes: https://gitlab.com/qemu-project/qemu/-/issues/3273
+>>>>> Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
+>>>>> ---
+>>>>>  block/mirror.c | 21 +++++++++++++++------
+>>>>>  1 file changed, 15 insertions(+), 6 deletions(-)
+>>>>>
+>>>>> diff --git a/block/mirror.c b/block/mirror.c
+>>>>> index b344182c74..eadd4501e8 100644
+>>>>> --- a/block/mirror.c
+>>>>> +++ b/block/mirror.c
+>>>>> @@ -1123,6 +1123,21 @@ static int coroutine_fn mirror_run(Job *job, Error **errp)
+>>>>>       */
+>>>>>      mirror_top_opaque->job = s;
+>>>>>  
+>>>>> +    /*
+>>>>> +     * Disabling the dirty bitmap is safe once bdrv_mirror_top_do_write() sees
+>>>>> +     * that the job is set, because then:
+>>>>> +     *
+>>>>> +     * 1. When not using MIRROR_COPY_MODE_WRITE_BLOCKING, the dirty bitmap will
+>>>>> +     * be set by bdrv_mirror_top_do_write().
+>>>>> +     *
+>>>>> +     * 2. When using MIRROR_COPY_MODE_WRITE_BLOCKING, writes will be done
+>>>>> +     * synchronously to the target.
+>>>>> +     *
+>>>>> +     * bdrv_disable_dirty_bitmap() acquires and releases the dirty bitmap mutex,
+>>>>> +     * so the memory is synchronized between threads.
+>>>>> +     */
+>>>>> +    bdrv_disable_dirty_bitmap(s->dirty_bitmap);
+>>>>> +
+>>>>>      assert(!s->dbi);
+>>>>>      s->dbi = bdrv_dirty_iter_new(s->dirty_bitmap);
+>>>>>      for (;;) {
+>>>>> @@ -2014,12 +2029,6 @@ static BlockJob *mirror_start_job(
+>>>>>          goto fail;
+>>>>>      }
+>>>>>  
+>>>>> -    /*
+>>>>> -     * The dirty bitmap is set by bdrv_mirror_top_do_write() when not in active
+>>>>> -     * mode.
+>>>>> -     */
+>>>>> -    bdrv_disable_dirty_bitmap(s->dirty_bitmap);
+>>>>> -
+>>>>>      bdrv_graph_wrlock_drained();
+>>>>>      ret = block_job_add_bdrv(&s->common, "source", bs, 0,
+>>>>>                               BLK_PERM_WRITE_UNCHANGED | BLK_PERM_WRITE |
+>>>>
+>>>> The thing I meant in the other thread is if we don't need something like
+>>>> this additionally:
+>>>>
+>>>> diff --git a/block/mirror.c b/block/mirror.c
+>>>> index b344182c747..159954158ba 100644
+>>>> --- a/block/mirror.c
+>>>> +++ b/block/mirror.c
+>>>> @@ -1672,9 +1672,17 @@ bdrv_mirror_top_do_write(BlockDriverState *bs, MirrorMethod method,
+>>>>          abort();
+>>>>      }
+>>>>  
+>>>> -    if (!copy_to_target && s->job && s->job->dirty_bitmap) {
+>>>> +    if (!copy_to_target) {
+>>>>          qatomic_set(&s->job->actively_synced, false);
+>>>> -        bdrv_set_dirty_bitmap(s->job->dirty_bitmap, offset, bytes);
+>>>> +        if (s->job && s->job->dirty_bitmap) {
+>>>> +            bdrv_set_dirty_bitmap(s->job->dirty_bitmap, offset, bytes);
+>>>> +        } else {
+>>>> +            /*
+>>>> +             * Avoid race in the case that mirror_run() disables the bitmap
+>>>> +             * between here and bdrv_co_write_req_finish().
+>>>> +             */
+>>>> +            bdrv_set_dirty(bs, offset, bytes);
+>>>> +        }
+>>>>      }
+>>>>  
+>>>>      if (ret < 0) {
+>>>
+>>> You're right! It's not enough to ensure that the job is set before the
+>>> bitmap is disabled, because both could happen after the check for job here.
+>>>
+>>> Isn't this change enough by itself? After the change,
+>>> bdrv_mirror_top_do_write() ensures that:
+>>>
+>>> 1. When copy_to_target == true, the write is done synchronously to the
+>>> target, no need to set the dirty bitmap.
+>>>
+>>> 2. When copy_to_target == false, the dirty bitmap is set.
+>>>
+>>> So it doesn't really matter at which point the dirty bitmap is disabled?
+>>> Or am I missing something again?
 >>
->> Signed-off-by: Ross Lagerwall <ross.lagerwall@citrix.com>
->> ---
->>   hw/xen/xen-hvm-common.c | 2 ++
->>   1 file changed, 2 insertions(+)
->>
->> diff --git a/hw/xen/xen-hvm-common.c b/hw/xen/xen-hvm-common.c
->> index 59c73dfaeb59..9b539f5c5c56 100644
->> --- a/hw/xen/xen-hvm-common.c
->> +++ b/hw/xen/xen-hvm-common.c
->> @@ -471,6 +472,7 @@ static void handle_ioreq(XenIOState *state, ioreq_t *req)
->>               cpu_ioreq_move(req);
->>               break;
->>           case IOREQ_TYPE_TIMEOFFSET:
->> +            qapi_event_send_rtc_change((int64_t)req->data, NULL);
+>> Ah right, bdrv_set_dirty() only sets it if still enabled :)
 > 
-> Would you be fine to replace `NULL` by `""`? I've notice a TODO in
-> visit_type_str() at
-> https://gitlab.com/qemu-project/qemu/-/blob/master/qapi/qapi-visit-core.c#L344
-> which is one of the function doing something with that parameter.
+> Yes, exactly.
 > 
-> With that, which I can do on commit: Acked-by: Anthony PERARD <anthony.perard@vates.tech>
+> If that's still too confusing, how about just giving mirror_top_bs
+> access to its dirty bitmap right from the start while it's drained? I
+> didn't try to reproduce the bug with it yet, though.
+
+You beat me to it :) Was thinking about this too, inspired by your
+initial suggestion for the alternate approach to avoid relying on the
+block layer for dirty tracking, but mine ended up needlessly involved,
+because I removed the dirty_bitmap from the MirrorBlockJob object and
+had to add a helper function for getting the dirty bitmap back from the
+job, which is less than ideal :P
+
+> 
+> Kevin
+> 
+> diff --git a/block/mirror.c b/block/mirror.c
+> index b344182c747..c11aca1366c 100644
+> --- a/block/mirror.c
+> +++ b/block/mirror.c
+> @@ -99,6 +99,7 @@ typedef struct MirrorBlockJob {
+>  
+>  typedef struct MirrorBDSOpaque {
+>      MirrorBlockJob *job;
+> +    BdrvDirtyBitmap *dirty_bitmap;
+>      bool stop;
+>      bool is_commit;
+>  } MirrorBDSOpaque;
+> @@ -1672,9 +1673,9 @@ bdrv_mirror_top_do_write(BlockDriverState *bs, MirrorMethod method,
+>          abort();
+>      }
+>  
+> -    if (!copy_to_target && s->job && s->job->dirty_bitmap) {
+> +    if (!copy_to_target) {
+
+I put an assert(s->dirty_bitmap) here, but maybe it's not worth it?
+
+>          qatomic_set(&s->job->actively_synced, false);
+> -        bdrv_set_dirty_bitmap(s->job->dirty_bitmap, offset, bytes);
+> +        bdrv_set_dirty_bitmap(s->dirty_bitmap, offset, bytes);
+>      }
+>  
+>      if (ret < 0) {
+> @@ -1901,13 +1902,28 @@ static BlockJob *mirror_start_job(
+
+I created and disabled the dirty bitmap here already before the drained
+section. It seems slightly more readable. Do you see any downside to that?
+
+>  
+>      bdrv_drained_begin(bs);
+>      ret = bdrv_append(mirror_top_bs, bs, errp);
+> -    bdrv_drained_end(bs);
+> -
+>      if (ret < 0) {
+> +        bdrv_drained_end(bs);
+>          bdrv_unref(mirror_top_bs);
+>          return NULL;
+>      }
+>  
+> +    bs_opaque->dirty_bitmap = bdrv_create_dirty_bitmap(mirror_top_bs,
+> +                                                       granularity,
+> +                                                       NULL, errp);
+> +    if (!bs_opaque->dirty_bitmap) {
+> +        bdrv_drained_end(bs);
+> +        bdrv_unref(mirror_top_bs);
+> +        return NULL;
+> +    }
+> +
+> +    /*
+> +     * The dirty bitmap is set by bdrv_mirror_top_do_write() when not in active
+> +     * mode.
+> +     */
+
+This comment could become:
+
++    /*
++     * Disabling the dirty bitmap is safe, because:
++     *
++     * 1. If should_copy_to_target() == true, writes will be done
+synchronously
++     * to the target, no need to set the bitmap.
++     *
++     * 2. If should_copy_to_target() == false, the dirty bitmap will be
+set by
++     * bdrv_mirror_top_do_write().
++     */
+
+> +    bdrv_disable_dirty_bitmap(bs_opaque->dirty_bitmap);
+> +    bdrv_drained_end(bs);
+> +
+>      /* Make sure that the source is not resized while the job is running */
+>      s = block_job_create(job_id, driver, NULL, mirror_top_bs,
+>                           BLK_PERM_CONSISTENT_READ,
+> @@ -2002,24 +2018,13 @@ static BlockJob *mirror_start_job(
+>      s->base_overlay = bdrv_find_overlay(bs, base);
+>      s->granularity = granularity;
+>      s->buf_size = ROUND_UP(buf_size, granularity);
+> +    s->dirty_bitmap = bs_opaque->dirty_bitmap;
+>      s->unmap = unmap;
+>      if (auto_complete) {
+>          s->should_complete = true;
+>      }
+>      bdrv_graph_rdunlock_main_loop();
+>  
+> -    s->dirty_bitmap = bdrv_create_dirty_bitmap(s->mirror_top_bs, granularity,
+> -                                               NULL, errp);
+> -    if (!s->dirty_bitmap) {
+> -        goto fail;
+> -    }
+> -
+> -    /*
+> -     * The dirty bitmap is set by bdrv_mirror_top_do_write() when not in active
+> -     * mode.
+> -     */
+> -    bdrv_disable_dirty_bitmap(s->dirty_bitmap);
+> -
+>      bdrv_graph_wrlock_drained();
+>      ret = block_job_add_bdrv(&s->common, "source", bs, 0,
+>                               BLK_PERM_WRITE_UNCHANGED | BLK_PERM_WRITE |
+> @@ -2099,9 +2104,6 @@ fail:
+>          g_free(s->replaces);
+>          blk_unref(s->target);
+>          bs_opaque->job = NULL;
+> -        if (s->dirty_bitmap) {
+> -            bdrv_release_dirty_bitmap(s->dirty_bitmap);
+> -        }
+>          job_early_fail(&s->common.job);
+>      }
+>  
+> @@ -2115,6 +2117,7 @@ fail:
+>      bdrv_graph_wrunlock();
+>      bdrv_drained_end(bs);
+>  
+> +    bdrv_release_dirty_bitmap(bs_opaque->dirty_bitmap);
+>      bdrv_unref(mirror_top_bs);
+>  
+>      return NULL;
+> 
 > 
 
-Sure, fine with me.
+Best Regards,
+Fiona
 
-Thanks,
-Ross
 
