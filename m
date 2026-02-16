@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 034CBE63F25
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 03:46:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43E69E63F2A
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 03:46:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vrpXR-0002VQ-Ei; Sun, 15 Feb 2026 22:44:45 -0500
+	id 1vrpXf-0002Z6-71; Sun, 15 Feb 2026 22:44:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vrpXQ-0002V0-4H
- for qemu-devel@nongnu.org; Sun, 15 Feb 2026 22:44:44 -0500
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ id 1vrpXd-0002Yi-PA
+ for qemu-devel@nongnu.org; Sun, 15 Feb 2026 22:44:57 -0500
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vrpXO-0002OH-70
- for qemu-devel@nongnu.org; Sun, 15 Feb 2026 22:44:43 -0500
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-2aaed195901so12760045ad.0
- for <qemu-devel@nongnu.org>; Sun, 15 Feb 2026 19:44:41 -0800 (PST)
+ id 1vrpXc-0002S0-9A
+ for qemu-devel@nongnu.org; Sun, 15 Feb 2026 22:44:57 -0500
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-2a963f49234so10283115ad.1
+ for <qemu-devel@nongnu.org>; Sun, 15 Feb 2026 19:44:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771213481; x=1771818281; darn=nongnu.org;
+ d=linaro.org; s=google; t=1771213495; x=1771818295; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=9NzjEqJY7+NdUrSQzEJSoR9zNgCwGWGpP9vTRT1K2JY=;
- b=yMsAxXn/osoE1eC/DTYhJAKtqz7CkPtYJQit86SyqS9xpxi07S7lqd097nK9dHK3L7
- sneZV3sTIXGAPB9u4hpZ4aEC1rtsgkrm/3tV16WchgTxrISMUsakKL5V7ZTJlo9m0+Mz
- hiQcCsPf09WHmtt17M2GzH02LZF7w+9FsVa8oVN+U5UYSna7iAW8a58fr+P45qATCOVu
- M6RwMGEDl8dJVLhGbarg1NIMmtDFpzQ8yE1j+b02PF/dW1UyoBNW/7yfjIqPWm22dwlF
- Xlyi8qx/IzulijsSNjjORWx73f4Xl/M06YjCIDO2e93q1QyeFXSfKNVSufl1HI3+LelO
- x6XA==
+ :reply-to; bh=lAX9q0FAVjvqhmCaLqgZcT2Y1IPbyARjOjUjg0Oyqjc=;
+ b=Aa1NimMHmrIuVZfoL/JWcwz5dpKQw1kkBoVUGEmmm+AV4SFfwe5Af82vgsw5MmY1l/
+ CAEFQwQ4Ktlmk7UL4YyZXOd5GAykGf4GxVlPBjCmn48KfBBcBXc5CXL2cC1ml44gFReG
+ S4/8y1yqulpSjkG1p1XIIejMgDlCtJHVmsUkvdt+E5jtJZrcSQaPaOpfE0tWh1w9PEc2
+ W1x4iVtAqR94NPGKvQGXJUEifIdmK6A82M3FRo8t52Kyq1FxGDJnl7e6YsfLirVL/M4+
+ UjC5YD9cOU79+mv9JypyAJEiwszFjuW+o1Dv5GpTB5R6EBpuO/fObZYHgjqeXkboh8Ey
+ eTrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771213481; x=1771818281;
+ d=1e100.net; s=20230601; t=1771213495; x=1771818295;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=9NzjEqJY7+NdUrSQzEJSoR9zNgCwGWGpP9vTRT1K2JY=;
- b=EVFZpuSCgd6vUmTcqgMOpvAPQVHdg2OLpDcO2N+TC+PfOGWoFp/UTkIdeHKAsPW4Hr
- WFpEYgF7eCnVW/qfRb/ThFP9ysOI2V5Nr+0UalszMz6MCw/BUAupFoqQ6iygp3EVGkqM
- Bn8OfiS4GEwub2hZcZtww1shU0+S4EnE4Fdi6ps6b1tj1XbMMU9TnykcKfOQzkKeCuH2
- ER25Uaip5VTdkP6CXXExqdufCJA/8oAxE5dh6W9aj7Np+Xz7AOE1DZTQ2WdQCZcgwxgq
- rRK9qAMbqddE4UafLYtub9vcmFhyRksy8IelFYeTZbyKZyn+jQLCcgh0tlexoVXBVNl1
- fZdQ==
-X-Gm-Message-State: AOJu0Yx7vOLnt7fgtU2bhkaQfdtzs0izQpS0GrWZkg8sLIuPgjfZp5gc
- ARaPf+PpcL2/LmxR5gaNCodTwKSmv3Xj7INaSYf0Z7W6idmVUQh8oRAT58cLFQ9qmVod5HeD/04
- mE12ws1E=
-X-Gm-Gg: AZuq6aJwIyFILFYF12tWuEOuybmdR5ypZq5TeseED6UHNS50ingWC3C+3fnekkMzcOG
- w+Ru0CLZty8ncD39ZRaXaS053lBdg5UHKGDquekleo14iujcAbnNLUOhWdrdomIqulZTV745gX7
- yv/pSRgrb4v9jBWAfGGIgJ3jP6k5gv4fAogXgouwVGMol/WaOYJB678OYnUsX7t56ifjDvNTd8H
- 3QXPnDI3wy+uppoMwuurnIZDEkKDA2YBZ0EHp7468YdNH6Sm0XGt2ILtrcTwuSSIQgrGJhzi3hw
- YzcwZ89lDMfwrFU6UpbnwvI3E1xwwOi7NeyoDjqrXwkhUSjYd30u6T3cxBkyOtMoZgKKiUj571v
- 26xSiWt51IANTR5lqSS3GAab5IIPt7FTbuhINgSBzMIlZeufEGSav2o8Om/1VXb2LVFPQxMfb5T
- +NEhr0ITEpx/i7HgHOUXuN9naDNXTROes1
-X-Received: by 2002:a17:902:f612:b0:295:8a2a:9595 with SMTP id
- d9443c01a7336-2ab505d7b3cmr100704075ad.39.1771213480475; 
- Sun, 15 Feb 2026 19:44:40 -0800 (PST)
+ bh=lAX9q0FAVjvqhmCaLqgZcT2Y1IPbyARjOjUjg0Oyqjc=;
+ b=fCBVgTkfjJx2OrMamSldFpdXSLxlOCrJBS0fa6QIXGtgFY7jUkxM8Uj6IWcvIM6SVM
+ WBwn3tJfdGOdwLvFT/Wvq3Cji5g1NToWVRgcLf73RK4MhaX95SnDYN8E/BuXEWxjDB8B
+ Ev2Db+mLjs8P4PSGQuZspAnapJikDYxEpSRPjt/QoeafWsow875cYPuZn3ilv9kqLfyb
+ Rq27ndlx/fuULuUzywT+TnIxyCEba66RHb5ol4AJRZvI7I7LdZaoVexTT42mCD3mqtfy
+ QZO7YXQQEVUXZhR+pOtV9Da6ijLpu4E6+2DDTI5ywJ+UzsxXQL9HgDLGgH/ZtnwaJi9X
+ iBOg==
+X-Gm-Message-State: AOJu0YxArdtgZWGezYmXkjyrwYgzxNUpFb5U2oDzXfoGg1M6KP/oQVe0
+ dYKsRCSTC1FVmdkmG8IqWmHww2kjTejOm5cBUy4iqcYT4uwbVZb9/uMrNqJpNRXQaPBQ2g14WO0
+ rclLmdCY=
+X-Gm-Gg: AZuq6aIUJAE1jxCPIkKxGPiB3y1CevVymBCgKQRt8g41496ftErOjk+1tnquaTbcmuQ
+ k+F/FLovMETem9ESEXmuOtvnqbal5c7L07vOG3WDZACiSYcQ8sgvuqf5iN7hBNiryDlimsHzXBs
+ 4Fjiv+W7JCQiafZmVlqDjP8J5xZqTuBPjMOLbZsMjd1JBCvXmgku6y4PS+JxQjJPce95F2Swley
+ Z00mceD1RLQiYy3SwnoxWBYyOGfjZbHubVgk0X8KLWUbbfF1J76cdKzz2NcVtmhXgPRgOwRi/SZ
+ clKTXchpjJpCOhUWsFgd5m9yK/HT33PicAodoYPYekUiqCSLMsngUeal/QEQiCZfueI24w+G7GY
+ 1NtUOL1mWMtWZeU1w9WBwWirDRO/tDnGluNBndEs/NDzSOrpEJvfNVEUVlehNFQ8VT0XMG0hQmD
+ Wud1rBv7u+YPmxu/XfWqYapJ2NcP/Sk3ll
+X-Received: by 2002:a17:902:ce89:b0:2aa:d289:2d95 with SMTP id
+ d9443c01a7336-2ab50559e20mr95416455ad.17.1771213494749; 
+ Sun, 15 Feb 2026 19:44:54 -0800 (PST)
 Received: from stoup.. ([2401:d002:dc0f:2100:4a1:428a:70f2:5844])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2ad1aadca84sm53294155ad.70.2026.02.15.19.44.39
+ d9443c01a7336-2ad1aadca84sm53294155ad.70.2026.02.15.19.44.53
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 15 Feb 2026 19:44:40 -0800 (PST)
+ Sun, 15 Feb 2026 19:44:54 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [RFC PATCH 01/13] NOTFORMERGE: Update linux-headers for arm64 kvm
- from SME devel branch
-Date: Mon, 16 Feb 2026 13:44:20 +1000
-Message-ID: <20260216034432.23912-2-richard.henderson@linaro.org>
+Subject: [RFC PATCH 08/13] target/arm: Drop kvm_arm_pmu_supported
+Date: Mon, 16 Feb 2026 13:44:27 +1000
+Message-ID: <20260216034432.23912-9-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260216034432.23912-1-richard.henderson@linaro.org>
 References: <20260216034432.23912-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x633.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,77 +99,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-To be replaced by a proper update once the API is merged upstream.
+This function has only one use, so inline it and drop the stubs.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- linux-headers/asm-arm64/kvm.h | 33 +++++++++++++++++++++++++++++++++
- linux-headers/linux/kvm.h     |  1 +
- 2 files changed, 34 insertions(+)
+ target/arm/kvm_arm.h  | 13 -------------
+ target/arm/kvm-stub.c |  5 -----
+ target/arm/kvm.c      |  7 +------
+ 3 files changed, 1 insertion(+), 24 deletions(-)
 
-diff --git a/linux-headers/asm-arm64/kvm.h b/linux-headers/asm-arm64/kvm.h
-index 46ffbddab5..bbfc4781ca 100644
---- a/linux-headers/asm-arm64/kvm.h
-+++ b/linux-headers/asm-arm64/kvm.h
-@@ -106,6 +106,13 @@ struct kvm_regs {
- #define KVM_ARM_VCPU_PTRAUTH_GENERIC	6 /* VCPU uses generic authentication */
- #define KVM_ARM_VCPU_HAS_EL2		7 /* Support nested virtualization */
- #define KVM_ARM_VCPU_HAS_EL2_E2H0	8 /* Limit NV support to E2H RES0 */
-+#define KVM_ARM_VCPU_SME		9 /* enable SME for this CPU */
-+
-+/*
-+ * An alias for _SVE since we finalize VL configuration for both SVE and SME
-+ * simultaneously.
-+ */
-+#define KVM_ARM_VCPU_VEC		KVM_ARM_VCPU_SVE
+diff --git a/target/arm/kvm_arm.h b/target/arm/kvm_arm.h
+index cee06b5f0b..82ac2aae46 100644
+--- a/target/arm/kvm_arm.h
++++ b/target/arm/kvm_arm.h
+@@ -168,14 +168,6 @@ void kvm_arm_steal_time_finalize(ARMCPU *cpu, Error **errp);
+  */
+ bool kvm_arm_aarch32_supported(void);
  
- struct kvm_vcpu_init {
- 	__u32 target;
-@@ -348,6 +355,32 @@ struct kvm_arm_counter_offset {
- #define KVM_ARM64_SVE_VLS_WORDS	\
- 	((KVM_ARM64_SVE_VQ_MAX - KVM_ARM64_SVE_VQ_MIN) / 64 + 1)
+-/**
+- * kvm_arm_pmu_supported:
+- *
+- * Returns: true if KVM can enable the PMU
+- * and false otherwise.
+- */
+-bool kvm_arm_pmu_supported(void);
+-
+ /**
+  * kvm_arm_mte_supported:
+  *
+@@ -196,11 +188,6 @@ static inline bool kvm_arm_aarch32_supported(void)
+     return false;
+ }
  
-+/* SME registers */
-+#define KVM_REG_ARM64_SME		(0x17 << KVM_REG_ARM_COPROC_SHIFT)
-+
-+#define KVM_ARM64_SME_VQ_MIN __SVE_VQ_MIN
-+#define KVM_ARM64_SME_VQ_MAX __SVE_VQ_MAX
-+
-+/* ZA and ZTn occupy blocks at the following offsets within this range: */
-+#define KVM_REG_ARM64_SME_ZA_BASE	0
-+#define KVM_REG_ARM64_SME_ZT_BASE	0x600
-+
-+#define KVM_ARM64_SME_MAX_ZAHREG	(__SVE_VQ_BYTES * KVM_ARM64_SME_VQ_MAX)
-+
-+#define KVM_REG_ARM64_SME_ZAHREG(n, i)					\
-+	(KVM_REG_ARM64 | KVM_REG_ARM64_SME | KVM_REG_ARM64_SME_ZA_BASE | \
-+	 KVM_REG_SIZE_U2048 |						\
-+	 (((n) & (KVM_ARM64_SME_MAX_ZAHREG - 1)) << 5) |		\
-+	 ((i) & (KVM_ARM64_SVE_MAX_SLICES - 1)))
-+
-+#define KVM_REG_ARM64_SME_ZTREG_SIZE	(512 / 8)
-+
-+/* Vector lengths pseudo-register: */
-+#define KVM_REG_ARM64_SME_VLS		(KVM_REG_ARM64 | KVM_REG_ARM64_SME | \
-+					 KVM_REG_SIZE_U512 | 0xfffe)
-+#define KVM_ARM64_SME_VLS_WORDS	\
-+	((KVM_ARM64_SVE_VQ_MAX - KVM_ARM64_SVE_VQ_MIN) / 64 + 1)
-+
- /* Bitmap feature firmware registers */
- #define KVM_REG_ARM_FW_FEAT_BMAP		(0x0016 << KVM_REG_ARM_COPROC_SHIFT)
- #define KVM_REG_ARM_FW_FEAT_BMAP_REG(r)		(KVM_REG_ARM64 | KVM_REG_SIZE_U64 | \
-diff --git a/linux-headers/linux/kvm.h b/linux-headers/linux/kvm.h
-index a4ab42dcba..d8fd57d681 100644
---- a/linux-headers/linux/kvm.h
-+++ b/linux-headers/linux/kvm.h
-@@ -966,6 +966,7 @@ struct kvm_enable_cap {
- #define KVM_CAP_GUEST_MEMFD_FLAGS 244
- #define KVM_CAP_ARM_SEA_TO_USER 245
- #define KVM_CAP_S390_USER_OPEREXEC 246
-+#define KVM_CAP_ARM_SME 247
+-static inline bool kvm_arm_pmu_supported(void)
+-{
+-    return false;
+-}
+-
+ static inline bool kvm_arm_mte_supported(void)
+ {
+     return false;
+diff --git a/target/arm/kvm-stub.c b/target/arm/kvm-stub.c
+index f1d0ca09e6..169ef5f206 100644
+--- a/target/arm/kvm-stub.c
++++ b/target/arm/kvm-stub.c
+@@ -32,11 +32,6 @@ bool kvm_arm_aarch32_supported(void)
+     return false;
+ }
  
- struct kvm_irq_routing_irqchip {
- 	__u32 irqchip;
+-bool kvm_arm_pmu_supported(void)
+-{
+-    return false;
+-}
+-
+ bool kvm_arm_mte_supported(void)
+ {
+     return false;
+diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+index 7724609b28..ccffa40900 100644
+--- a/target/arm/kvm.c
++++ b/target/arm/kvm.c
+@@ -319,7 +319,7 @@ static bool kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
+                              1 << KVM_ARM_VCPU_PTRAUTH_GENERIC);
+     }
+ 
+-    if (kvm_arm_pmu_supported()) {
++    if (kvm_check_extension(kvm_state, KVM_CAP_ARM_PMU_V3)) {
+         init.features[0] |= 1 << KVM_ARM_VCPU_PMU_V3;
+         pmu_supported = true;
+         features |= 1ULL << ARM_FEATURE_PMU;
+@@ -542,11 +542,6 @@ void kvm_arm_add_vcpu_properties(ARMCPU *cpu)
+                                     "Set off to disable KVM steal time.");
+ }
+ 
+-bool kvm_arm_pmu_supported(void)
+-{
+-    return kvm_check_extension(kvm_state, KVM_CAP_ARM_PMU_V3);
+-}
+-
+ int kvm_arm_get_max_vm_ipa_size(MachineState *ms, bool *fixed_ipa)
+ {
+     KVMState *s = KVM_STATE(ms->accelerator);
 -- 
 2.43.0
 
