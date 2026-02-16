@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CAD07E63F25
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 03:45:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67956E63F2D
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 03:45:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vrpXi-0002ZZ-Lj; Sun, 15 Feb 2026 22:45:02 -0500
+	id 1vrpXa-0002Xs-Qz; Sun, 15 Feb 2026 22:44:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vrpXg-0002Z7-8H
- for qemu-devel@nongnu.org; Sun, 15 Feb 2026 22:45:00 -0500
-Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
+ id 1vrpXZ-0002XO-DQ
+ for qemu-devel@nongnu.org; Sun, 15 Feb 2026 22:44:53 -0500
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vrpXe-0002SA-9a
- for qemu-devel@nongnu.org; Sun, 15 Feb 2026 22:44:59 -0500
-Received: by mail-pf1-x42d.google.com with SMTP id
- d2e1a72fcca58-824a3ba5222so1458308b3a.2
- for <qemu-devel@nongnu.org>; Sun, 15 Feb 2026 19:44:57 -0800 (PST)
+ id 1vrpXY-0002Qg-0Q
+ for qemu-devel@nongnu.org; Sun, 15 Feb 2026 22:44:53 -0500
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-2a79ded11a2so17386605ad.3
+ for <qemu-devel@nongnu.org>; Sun, 15 Feb 2026 19:44:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771213497; x=1771818297; darn=nongnu.org;
+ d=linaro.org; s=google; t=1771213491; x=1771818291; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=Nr30QrVHuiZUYlgVuaIXnVQfwgC+Xsfy6MjmOV0NUmo=;
- b=rK7foNSmxhZ/btc9aSsGQecveeEJpag92txQ8F4jYGwUZfuxHTsVmXg/7zavIwcMog
- LIxxa3YM9XwnTXG9f8bLntldSLxBVrjRgb+w1b55HdylLyYnpjElICobzQvOY/vtqyXE
- SqBECBuunnn6/yQwed3q82zjbFkt+LrVej7NUSe7yjflHG12DPOUxMilQJmpwfrb32HE
- bOB61ZcphQfoM94hlKmpnfcRLTx8nk1xPOYb6MkWcr7hGm2j2eThPVv6OnoI+8R8L/P+
- Z+iBTorQKdYlePprk0zhIgY3MzPux9WzWQd52N2Lj6a7AKZyecyr8ij85Ns+R7qMOEd0
- dD3w==
+ :reply-to; bh=wbaWufcL2e5tEtCZHFxuRaX3s02e+nS0+Goels1wiTo=;
+ b=xzsnB34SneBwnNatga5TfxJzvv9HcssmGhM/t48DCqCT26sCc1JGagjkam/UNf/tpz
+ AF/hcrAqS3KiqL+WTIaz8bFivpQFb/bx0vvYwoRrLMNF0wNpY4wE7y/8JTv6fyqCclw+
+ M9MhowaezAUsGkb4o02nzBxLYSlubXkIvHs6zNWw9qU7x0xEge3zDnOBtDFGsVegKjPz
+ wxMbqgQ2GhUYVVE5JtUfCLmD2KrchBKIZseZx/sC2XDALYdMBE+Y34ZrldXSixXSaiU7
+ 6wStlnJef3wbLUYJm6g7VJ/jiy6QGlI9LUOn5X6CKMzY4+EVBsGqj0p2xfNtc8C0CCN5
+ ZWew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771213497; x=1771818297;
+ d=1e100.net; s=20230601; t=1771213491; x=1771818291;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=Nr30QrVHuiZUYlgVuaIXnVQfwgC+Xsfy6MjmOV0NUmo=;
- b=Pel835DFBztMYqJBBCVIdXjYwD8HxaeAHR6uimRJKthVRlJ48PcTk8ELLDp+jF5yVG
- Y6W9S2evScS9Zx+Eon1hOjf875vg4X2zAfXInYB2Mo0q63aSFVWuOFTgehsUG64tiOWR
- /x6FVsrlJEnptwjAGEWIwIWezLcAFzAzv+212lLDfHMvR0gAysK8BT7mRtFecfWTHgKo
- kmbD3FYp2r/OK82ro4fztJ0eBAEoRKGCBshwyJPSgZCUtxxh7R8ynPZiGtNy5WB7qnsi
- AxgeDSNMhw2ih2x2vCPFXUoAuOPcfBCmiiBneuogxbB2dJPagnPzA+n0BsckqCHiMpcE
- DxlA==
-X-Gm-Message-State: AOJu0YxVW15muELUGbf1kw6WQ9O9mU04BumvanbZwlUanDKUBGPZP2Vw
- 16PDevxOCqAaY8LD1VfW904eynpbQ1TPSubEaW451oZRmJTcpL2g+UDtzTuSAoMubQvP/1Q7jyZ
- LeYHPbJ4=
-X-Gm-Gg: AZuq6aLm5GYW3oJZt7FHeEjc/+GQ4c+Z+AuXD5dxQ9Ixg1CSu3SLmil1Tw0NDPdKOjY
- RcB2Rw3rjcN8JTdtXVN2s1M+vpW5REt/lQD0/vVleUiqmd6nZSOS0ZmorJYiTUIfWm1gM7F98r3
- mQk3CO/bdash1AJjpQ32npIewW9EAPZWkCQvjqG4qSXZnconvwZ2/ZagbMeh5q0EK4ZToYad9ep
- J3GLPX03X2I2/mQlm9wZout+RPxB06CrdjM52V9OqLRPOMMYUK+Ps00YTuU4Evn0Uni2J4nIt5z
- 53RDBp4q0EmGgf86hS0bipmfIlukBvEsdsAQr4ci6+TU2rB3LcXSw6NaUXnXXN9wa97iDzQD6HA
- Iktaw6qXyaigMPPr1/tB+UbKhavr6OSEk/CZ3WwEx2HltlHE1iJX/m8eW3BR9kB4K8x7VTfRrvb
- HvpO/lGEMnPpeq5a9YXeWFQMhs4ipMUrgo
-X-Received: by 2002:a05:6a21:4d8d:b0:35d:7f7:4aac with SMTP id
- adf61e73a8af0-3948398f0b5mr5536808637.47.1771213496754; 
- Sun, 15 Feb 2026 19:44:56 -0800 (PST)
+ bh=wbaWufcL2e5tEtCZHFxuRaX3s02e+nS0+Goels1wiTo=;
+ b=q6vW3fpicMBixTSAQqeknx26h+hkN1hWCY9Pj52JyjjH21B8wZVhd85g41rMOPrFRx
+ N/4DZnHRWmU7vEmJTrbFhk9hI7Nx3wKbw5EXMNIItBsDSwLg5MqH9Bwr6xoL9JdRCzUw
+ /UOARK/Udid9f7bMLih1p4n5lAZeFZEv9tYiAQXwVJsleYpWaGESURNpVTIM1Jzql0O5
+ ShoDGmvF3tcam1Y5GJF/8fGuALhYqvolIT59qAPPtd59BcauLYq+3SSjkRhWgkfGUwTa
+ KGT2beGR2OyVjXIG9mGdANAOhEjsjsth7VAFepXM5w2j04AB3feIdE1II7S8PTTKsu11
+ UThw==
+X-Gm-Message-State: AOJu0YyodHmUKlnaPXuUyr9y2vyQDsGp1Sb3xKoe9XosQv8IgMeW10bf
+ VqHN9yB2XMFXNXE/SHIZl17ZKGkaQIfJq26PV7T0RkwmI5u77DCjV/mGvHIMR7V+JJtXmzMxW4g
+ /gpEgBNc=
+X-Gm-Gg: AZuq6aK3eBnk8K6Tuqa4vreV2VYBMCbNwIbAUX/vk8SnGYChyK3wErQSwyQOxBcVOSK
+ 2txukbyCqz46R1bS2tJcBnyXiuo0HxwFVXenK09+DcQf+YFvyhg7As/NUanIktVs2Nj8qVBQB7y
+ ec5NXk5e/EBS6SMttaynTfaCJShmdqVbUhP6J867z/5Y/QDecwmPSa9ykHa8TLImmGn3KV5qlDL
+ oBd2WTW+lz315GN4PQuZaUcAfmK67UgWvMR8BmWPk74J+b9SOFLP8XizdHFtffPFavSiq3rQlMs
+ K7bPsesu/xQnMX07OTV2GgjxLEkEY657OTclurhaepW3BkrcYg8N+d0mrVBOAJZw0qEqmMkVjA5
+ TlChqFSR5ZiCjdAXUekQ1Gsdn91TDYodbX8RvEBUcVq368NWfdUCzFCqoY86fmDclosS9OGQjHw
+ C4rRkFsLcKDLl7UawTQryic7CQcHrtQM5b
+X-Received: by 2002:a17:903:22d2:b0:2aa:e6c1:cea1 with SMTP id
+ d9443c01a7336-2ab50506bbdmr88481665ad.17.1771213490551; 
+ Sun, 15 Feb 2026 19:44:50 -0800 (PST)
 Received: from stoup.. ([2401:d002:dc0f:2100:4a1:428a:70f2:5844])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2ad1aadca84sm53294155ad.70.2026.02.15.19.44.55
+ d9443c01a7336-2ad1aadca84sm53294155ad.70.2026.02.15.19.44.49
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 15 Feb 2026 19:44:56 -0800 (PST)
+ Sun, 15 Feb 2026 19:44:50 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [RFC PATCH 09/13] target/arm: Detect SME in
- kvm_arm_get_host_cpu_features
-Date: Mon, 16 Feb 2026 13:44:28 +1000
-Message-ID: <20260216034432.23912-10-richard.henderson@linaro.org>
+Subject: [RFC PATCH 06/13] target/arm: Drop kvm_arm_sve_supported
+Date: Mon, 16 Feb 2026 13:44:25 +1000
+Message-ID: <20260216034432.23912-7-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260216034432.23912-1-richard.henderson@linaro.org>
 References: <20260216034432.23912-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,111 +99,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+This function has only one real use, so inline it and
+drop the stubs.
+
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/kvm.c | 54 +++++++++++++++++++++++++++++++++++++++++++++---
- 1 file changed, 51 insertions(+), 3 deletions(-)
+ target/arm/kvm_arm.h  | 12 ------------
+ target/arm/kvm-stub.c |  5 -----
+ target/arm/kvm.c      |  9 +--------
+ 3 files changed, 1 insertion(+), 25 deletions(-)
 
+diff --git a/target/arm/kvm_arm.h b/target/arm/kvm_arm.h
+index 97549766ea..cee06b5f0b 100644
+--- a/target/arm/kvm_arm.h
++++ b/target/arm/kvm_arm.h
+@@ -176,13 +176,6 @@ bool kvm_arm_aarch32_supported(void);
+  */
+ bool kvm_arm_pmu_supported(void);
+ 
+-/**
+- * kvm_arm_sve_supported:
+- *
+- * Returns true if KVM can enable SVE and false otherwise.
+- */
+-bool kvm_arm_sve_supported(void);
+-
+ /**
+  * kvm_arm_mte_supported:
+  *
+@@ -208,11 +201,6 @@ static inline bool kvm_arm_pmu_supported(void)
+     return false;
+ }
+ 
+-static inline bool kvm_arm_sve_supported(void)
+-{
+-    return false;
+-}
+-
+ static inline bool kvm_arm_mte_supported(void)
+ {
+     return false;
+diff --git a/target/arm/kvm-stub.c b/target/arm/kvm-stub.c
+index f2de36aef3..f1d0ca09e6 100644
+--- a/target/arm/kvm-stub.c
++++ b/target/arm/kvm-stub.c
+@@ -37,11 +37,6 @@ bool kvm_arm_pmu_supported(void)
+     return false;
+ }
+ 
+-bool kvm_arm_sve_supported(void)
+-{
+-    return false;
+-}
+-
+ bool kvm_arm_mte_supported(void)
+ {
+     return false;
 diff --git a/target/arm/kvm.c b/target/arm/kvm.c
-index ccffa40900..979265a810 100644
+index 464356989b..7724609b28 100644
 --- a/target/arm/kvm.c
 +++ b/target/arm/kvm.c
-@@ -61,6 +61,7 @@ typedef struct ARMHostCPUFeatures {
-     uint64_t features;
-     uint32_t target;
-     uint32_t sve_vq_supported;
-+    uint32_t sme_vq_supported;
-     const char *dtb_compatible;
- } ARMHostCPUFeatures;
+@@ -246,7 +246,6 @@ static int get_host_cpu_reg(int fd, ARMHostCPUFeatures *ahcf,
  
-@@ -273,6 +274,36 @@ static uint32_t kvm_arm_sve_get_vls(int fd)
-     return vls[0] & MAKE_64BIT_MASK(0, ARM_MAX_VQ);
- }
- 
-+static uint32_t kvm_arm_sme_get_vls(int fd)
-+{
-+    uint64_t vls[KVM_ARM64_SME_VLS_WORDS];
-+    struct kvm_one_reg reg = {
-+        .id = KVM_REG_ARM64_SME_VLS,
-+        .addr = (uint64_t)&vls[0],
-+    };
-+    uint32_t vq = 0;
-+    int ret;
-+
-+    ret = ioctl(fd, KVM_GET_ONE_REG, &reg);
-+    if (ret) {
-+        error_report("failed to get KVM_REG_ARM64_SME_VLS: %s",
-+                     strerror(errno));
-+        abort();
-+    }
-+
-+    for (int i = KVM_ARM64_SME_VLS_WORDS - 1; i >= 0; --i) {
-+        if (vls[i]) {
-+            vq = 64 - clz64(vls[i]) + i * 64;
-+            break;
-+        }
-+    }
-+    if (vq > ARM_MAX_VQ) {
-+        warn_report("KVM supports vector lengths larger than QEMU can enable");
-+    }
-+    return vls[0] & MAKE_64BIT_MASK(0, ARM_MAX_VQ);
-+}
-+
-+
- static bool kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
+ static uint32_t kvm_arm_sve_get_vls(int fd)
  {
-     /* Identify the feature bits corresponding to the host CPU, and
-@@ -282,6 +313,7 @@ static bool kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
+-    /* Only call this function if kvm_arm_sve_supported() returns true. */
+     uint64_t vls[KVM_ARM64_SVE_VLS_WORDS];
+     struct kvm_one_reg reg = {
+         .id = KVM_REG_ARM64_SVE_VLS,
+@@ -298,7 +297,7 @@ static bool kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
+      * Ask for SVE if supported, so that we can query ID_AA64ZFR0,
+      * which is otherwise RAZ.
       */
-     int fdarray[3];
-     bool sve_supported;
-+    bool sme_supported;
-     bool el2_supported;
-     bool pmu_supported = false;
-     uint64_t features = 0;
-@@ -302,9 +334,13 @@ static bool kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
+-    sve_supported = kvm_arm_sve_supported();
++    sve_supported = kvm_check_extension(kvm_state, KVM_CAP_ARM_SVE);
+     if (sve_supported) {
          init.features[0] |= 1 << KVM_ARM_VCPU_SVE;
      }
- 
--    /*
--     * Ask for EL2 if supported.
--     */
-+    /* Similarly for SME... */
-+    sme_supported = kvm_check_extension(kvm_state, KVM_CAP_ARM_SME);
-+    if (sme_supported) {
-+        init.features[0] |= 1 << KVM_ARM_VCPU_SME;
-+    }
-+
-+    /* ... and EL2. */
-     el2_supported = kvm_arm_el2_supported();
-     if (el2_supported) {
-         init.features[0] |= 1 << KVM_ARM_VCPU_HAS_EL2;
-@@ -449,6 +485,17 @@ static bool kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
-             /* Read the set of supported vector lengths. */
-             arm_host_cpu_features.sve_vq_supported = kvm_arm_sve_get_vls(fd);
-         }
-+
-+	if (sme_supported) {
-+            /*
-+	     * While ID_AA64SMFR0_EL1 is always accessible, if RAZ,
-+	     * it's unused if !sme_supported.
-+	     */
-+            err |= get_host_cpu_reg(fd, ahcf, ID_AA64SMFR0_EL1_IDX);
-+
-+            /* Read the set of supported vector lengths. */
-+            arm_host_cpu_features.sme_vq_supported = kvm_arm_sme_get_vls(fd);
-+        }
-     }
- 
-     kvm_arm_destroy_scratch_host_vcpu(fdarray);
-@@ -496,6 +543,7 @@ void kvm_arm_set_cpu_features_from_host(ARMCPU *cpu)
-     cpu->dtb_compatible = arm_host_cpu_features.dtb_compatible;
-     cpu->isar = arm_host_cpu_features.isar;
-     cpu->sve_vq.supported = arm_host_cpu_features.sve_vq_supported;
-+    cpu->sme_vq.supported = arm_host_cpu_features.sme_vq_supported;
-     env->features = arm_host_cpu_features.features;
+@@ -1909,11 +1908,6 @@ bool kvm_arm_el2_supported(void)
+     return kvm_check_extension(kvm_state, KVM_CAP_ARM_EL2);
  }
  
+-bool kvm_arm_sve_supported(void)
+-{
+-    return kvm_check_extension(kvm_state, KVM_CAP_ARM_SVE);
+-}
+-
+ bool kvm_arm_mte_supported(void)
+ {
+     return kvm_check_extension(kvm_state, KVM_CAP_ARM_MTE);
+@@ -1968,7 +1962,6 @@ int kvm_arch_init_vcpu(CPUState *cs)
+         cpu->kvm_init_features[0] |= 1 << KVM_ARM_VCPU_PMU_V3;
+     }
+     if (cpu_isar_feature(aa64_sve, cpu)) {
+-        assert(kvm_arm_sve_supported());
+         cpu->kvm_init_features[0] |= 1 << KVM_ARM_VCPU_SVE;
+     }
+     if (cpu_isar_feature(aa64_pauth, cpu)) {
 -- 
 2.43.0
 
