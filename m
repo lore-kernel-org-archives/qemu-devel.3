@@ -4,108 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0135BE81A3D
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 15:53:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2A19E81A3C
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 16:01:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vs0uC-000736-RL; Mon, 16 Feb 2026 10:53:00 -0500
+	id 1vs121-0001Q4-UV; Mon, 16 Feb 2026 11:01:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vs0uB-00072a-Ek
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 10:52:59 -0500
-Received: from mail-yw1-x1130.google.com ([2607:f8b0:4864:20::1130])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vs0u9-0002YS-Ma
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 10:52:59 -0500
-Received: by mail-yw1-x1130.google.com with SMTP id
- 00721157ae682-7964f1405a0so34161377b3.1
- for <qemu-devel@nongnu.org>; Mon, 16 Feb 2026 07:52:56 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1771257175; cv=none;
- d=google.com; s=arc-20240605;
- b=YifvcBZPQEJGTIJ8/aikgxO3yHk+2HJFae4KVr5dqBmNE3FTYJaVQOC2dX4LXUWQef
- PU2O3jC3kXFmH9PZghe514KSXDFH6lKRVP9+GtU2ClI/6oFA+fwhugT2txWQ9q4u0nJG
- IceHsatuFDG5w4rI2N18G2cZX4XYfWXHmNyk4fR2/MCmGAr0DVzzpCFLov6xkimsvEB4
- PLuhJ4gZ3IQ0QZVaV17knNp4gO1G6g/akdU+VziXf6hk9eSivoUuGAq64UJDjw9rvaj+
- YRcwilMsX58bdgjsVJKMWW+eDJfXp2KFwMgxPreEVHlPM1e/ZknZnhfBhX+3fRyBRVLD
- 0BoQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=dP7OJCe4IFWPzF0ucWa9rG4RGTcEJ98iWAzWk9PebNw=;
- fh=2WCIYsl40A352Dxo4B6IOy0bgaLCiK89nOgLYW+Qbs4=;
- b=EAbux8zwaffIOz4qoj3AmZvQ+DB0yRD86/TMan3loDhfm1xSvFwWdkLJvk1K7RmcCT
- HSsCOTu/pd+PO03wnrrCWEjX8rpQbaQoVaH3nG64GSjXunCL8ZsAm+u5ocOMUS3QsWNu
- YHgyOGigffPrbpI9dcPdUgsxG6ardyNXIe04E04yL9riMbFDSIJrT95DOupcVuz8ZfvJ
- aNxmVFrVfizOucM1Pim5Os5eurDpRJ+M4NlifA5Gvyxf6nDyjumlSymNgs/NWpD2dQDw
- rg1ryjH0cNHhVzIt3WPCjvE+NJGGPsPYmvhyy7onrXSTb/PxswIc7WucbXY88ryRwua3
- xhHw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771257175; x=1771861975; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=dP7OJCe4IFWPzF0ucWa9rG4RGTcEJ98iWAzWk9PebNw=;
- b=bWLFI05SO3r4bFhIvkP8h2prIy+BCbOGf9Aq7uWqYnKR2YiSfNMHkida9w3iEMykfr
- i5/g7wkTkxmWwKOXnoBtM45xi9pvl834Sq8goCXdQRk9fa2xuyYVA7voj6Ej1dBjZpp0
- ft10i1beZM2y2GufPjy7zM3hg0OwVwVMfv6UT4PuZ/E5IaYNfDrdozSqXqNuQcUHA76e
- Ed5nbvpILi1sKGRUZhVm24+nPJBBseqNfvRUBzuY/esba4E+wgKt1L0fPXEMlyp+3JH6
- nXheY/jrt4VEmxopapfqpg9Y1eM5vkux56PnlbLH7a623cfPdP9726qYFUoOIDuWJu2U
- btOg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771257175; x=1771861975;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=dP7OJCe4IFWPzF0ucWa9rG4RGTcEJ98iWAzWk9PebNw=;
- b=BysxeqXbRR3JRMURiwfhOO3s3YTd4F6eDjR01RnqGfXRuSUSMH0eqXLCZtCoSW5XUw
- 3hovcdv9PlvVaqfWVekAy+ATElnVaSVQ4VSqNCYlv5eyFI1DeVnElX/m49ry0QWQaSED
- GJE6rZD1i28Rm0cIAfLk0bMZUmMFQm9eNGcEryzafW47iurw6njbOCF9Knx6NfABsgKs
- Qdj3VLl2R4WDAl8XoCTkJrZHnD/rKM5pepNIKgNf1Oylu04ELA3wmCOW4ECkFPtzK4ib
- ugjsgvD9ubumPLfeQSZ7xyAx4llnAB5rZmzbQnjufwaaaxkCLo0ZayM400WOVGzRw1Td
- aCxA==
-X-Gm-Message-State: AOJu0YwLbgQmaD196TKPZGKtk3ZR6Baac/y/DhvHovaPN+xauhAkiUTV
- oxY9tXpGhMr0Zl9DYtj5rX0wFjqge3xaZAHvkKNDPcPgwOVnP1rAfnCYeSGdOvERGDYeDlCDTn2
- ndQfx0U7BJ+wgYk81TEK5qWwbKxaUTut7GBhWwW0DsQ==
-X-Gm-Gg: AZuq6aJ/djYD7LmxnJAsAmEhYwkPWeRCG3zhDZjndYxMcTDUExUZxfHC2xtdLdLW2RD
- nDDpgRAYobjuKfXNDh/tjFxJHpEhMvcrR35ps5ducpf5d/sRUk/wtapUASbCKQP3UTCSf0vRU3V
- o6CVreCHZBeZKxTqDB3+8hmqhT131uaTZczBwCd9paVAFfFqT6U51L+6+ib4ExG3ET12sw0c6AJ
- Uo6It/j8EcmPHPxL0rSOBlXHs11s98d8oCt+0n9HADcahOxC6QN97GGo9BMYP/D/ONhv/vN+Zqr
- fHk4kq73NqGUxn4vX8E3vnKSxJixecvLQ6EBt5zOYZvPYpc/NMroOtzt7BPCM/ehTXx1z28v+ha
- aOA==
-X-Received: by 2002:a05:690e:13c4:b0:64a:ee12:e7c3 with SMTP id
- 956f58d0204a3-64c21b27b78mr6172226d50.49.1771257175307; Mon, 16 Feb 2026
- 07:52:55 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vs11b-0001P0-Qf
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 11:00:39 -0500
+Received: from rev.ng ([94.130.142.21])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vs11X-0005W1-Ef
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 11:00:38 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
+ s=dkim; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject
+ :Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
+ Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+ :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+ List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
+ List-Help; bh=Lwt0kwTDz7UOcAmTU0eaHMXMyjNDAEUnNXpwrIa/54c=; b=rmZEVtinWIFRyFs
+ wNWTdCY4C76m2bXMvUI5ELsoyitjNHIkmJeUtMkPF9gKUDt5qxpn0ZMyuaia6/YBnPVw9hO8yhfSl
+ SyUx8PU6VUa42kj/2l8ztag8NZm4Rnx7yx7A50o/I1ocxXCBa/ImlhJBB/B7zhQipA1PWR/Tln3d6
+ ig=;
+Date: Mon, 16 Feb 2026 17:03:52 +0100
+To: Taylor Simpson <ltaylorsimpson@gmail.com>
+Cc: qemu-devel@nongnu.org, brian.cain@oss.qualcomm.com, 
+ matheus.bernardino@oss.qualcomm.com, sid.manning@oss.qualcomm.com,
+ marco.liebel@oss.qualcomm.com, 
+ richard.henderson@linaro.org, philmd@linaro.org, ale@rev.ng
+Subject: Re: [PATCH v2 6/8] Hexagon (target/hexagon) Disassembly of invalid
+ packets
+Message-ID: <aZM2v8J4RP7RgB_u@hive.localdomain>
+References: <20260215220422.212249-1-ltaylorsimpson@gmail.com>
+ <20260215220422.212249-7-ltaylorsimpson@gmail.com>
 MIME-Version: 1.0
-References: <20260210201540.1405424-1-pierrick.bouvier@linaro.org>
- <93f8f250-7899-4528-b277-1ddd469c192c@linaro.org>
- <CAFEAcA9YUOxko51ziY3yAOaDfTCEAwqmXnifF=q_mkyotFHTcg@mail.gmail.com>
-In-Reply-To: <CAFEAcA9YUOxko51ziY3yAOaDfTCEAwqmXnifF=q_mkyotFHTcg@mail.gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 16 Feb 2026 15:52:44 +0000
-X-Gm-Features: AZwV_Qhn_PA25doQjTID65lEcz5xT-1XaHevKcqNoTL7fZxazaWzkWciCHn6keY
-Message-ID: <CAFEAcA8XCSjjb2opkf2A5WZwCa5THNswOOUO=fpj7kUJEc79qQ@mail.gmail.com>
-Subject: Re: [PATCH v3 00/12] target/arm: single-binary
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: qemu-devel@nongnu.org, anjo@rev.ng, 
- Jim MacArthur <jim.macarthur@linaro.org>, kvm@vger.kernel.org, 
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- qemu-arm@nongnu.org, Richard Henderson <richard.henderson@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1130;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1130.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260215220422.212249-7-ltaylorsimpson@gmail.com>
+Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
+ helo=rev.ng
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,91 +64,141 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Anton Johansson <anjo@rev.ng>
+From:  Anton Johansson via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 12 Feb 2026 at 10:59, Peter Maydell <peter.maydell@linaro.org> wrote:
->
-> On Tue, 10 Feb 2026 at 20:19, Pierrick Bouvier
-> <pierrick.bouvier@linaro.org> wrote:
-> >
-> > On 2/10/26 12:15 PM, Pierrick Bouvier wrote:
-> > > This series continues cleaning target/arm, especially tcg folder.
-> > >
-> > > For now, it contains some cleanups in headers, and it splits helpers per
-> > > category, thus removing several usage of TARGET_AARCH64.
-> > > First version was simply splitting 32 vs 64-bit helpers, and Richard asked
-> > > to split per sub category.
-> > >
-> > > v3
-> > > --
-> > >
-> > > - translate.h: missing vaddr replacement
-> > > - move tcg_use_softmmu to tcg/tcg-internal.h to avoid duplicating compilation
-> > >    units between system and user builds.
-> > > - eradicate TARGET_INSN_START_EXTRA_WORDS by calling tcg_gen_insn_start with
-> > >    additional 0 parameters if needed.
-> > >
-> > > v2
-> > > --
-> > >
-> > > - add missing kvm_enabled() in arm-qmp-cmds.c
-> > > - didn't extract arm_wfi for tcg/psci.c. If that's a hard requirement, I can do
-> > >    it in next version.
-> > > - restricted scope of series to helper headers, so we can validate things one
-> > >    step at a time. Series will keep on growing once all patches are reviewed.
-> > > - translate.h: use vaddr where appropriate, as asked by Richard.
->
-> > Patches 1-11 are reviewed and ready to be pulled.
->
-> Looks like patch 12 has also now been reviewed, so I've applied
-> the whole series to target-arm.next.
+On 15/02/26, Taylor Simpson wrote:
+> We pass the Hexagon CPU version to disassemble_hexagon.  This allows
+> decode_packet to know if the opcodes are supported.
+> 
+> Note that we print valid instructions in a packet when one or more is
+> invalid.  Rather than this
+> 0x0002128c:  0x1eae4fec	{	<invalid>
+> 0x00021290:  0x1c434c04		<invalid>
+> 0x00021294:  0x1e03edf0		<invalid> }
+> 
+> We print this
+> 0x0002128c:  0x1eae4fec	{	<invalid>
+> 0x00021290:  0x1c434c04		V4.w = vadd(V12.w,V3.w)
+> 0x00021294:  0x1e03edf0		V16 = V13 }
+> 
+> Co-authored-by: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
+> Co-authored-by: Brian Cain <brian.cain@oss.qualcomm.com>
+> Signed-off-by: Taylor Simpson <ltaylorsimpson@gmail.com>
+> ---
+>  target/hexagon/cpu_bits.h  |  4 +++-
+>  target/hexagon/printinsn.h |  3 ++-
+>  disas/hexagon.c            |  3 ++-
+>  target/hexagon/cpu.c       |  3 +++
+>  target/hexagon/decode.c    | 22 ++++++++++++++++++----
+>  target/hexagon/printinsn.c |  9 +++++++--
+>  6 files changed, 35 insertions(+), 9 deletions(-)
+> 
+> diff --git a/target/hexagon/cpu_bits.h b/target/hexagon/cpu_bits.h
+> index 19beca81c0..80d99f5df9 100644
+> --- a/target/hexagon/cpu_bits.h
+> +++ b/target/hexagon/cpu_bits.h
+> @@ -19,6 +19,7 @@
+>  #define HEXAGON_CPU_BITS_H
+>  
+>  #include "qemu/bitops.h"
+> +#include "cpu-qom.h"
+>  
+>  #define PCALIGN 4
+>  #define PCALIGN_MASK (PCALIGN - 1)
+> @@ -65,6 +66,7 @@ static inline bool is_packet_end(uint32_t endocing)
+>      return ((bits == 0x3) || (bits == 0x0));
+>  }
+>  
+> -int disassemble_hexagon(uint32_t *words, int nwords, bfd_vma pc, GString *buf);
+> +int disassemble_hexagon(uint32_t *words, int nwords, bfd_vma pc, GString *buf,
+> +                        HexagonVersion hex_version);
+>  
+>  #endif
+> diff --git a/target/hexagon/printinsn.h b/target/hexagon/printinsn.h
+> index 2ecd1731d0..d437d35005 100644
+> --- a/target/hexagon/printinsn.h
+> +++ b/target/hexagon/printinsn.h
+> @@ -18,10 +18,11 @@
+>  #ifndef HEXAGON_PRINTINSN_H
+>  #define HEXAGON_PRINTINSN_H
+>  
+> +#include "cpu-qom.h"
+>  #include "insn.h"
+>  
+>  void snprint_a_pkt_disas(GString *buf, Packet *pkt, uint32_t *words,
+> -                         target_ulong pc);
+> +                         target_ulong pc, HexagonVersion hex_version);
+>  void snprint_a_pkt_debug(GString *buf, Packet *pkt);
+>  
+>  #endif
+> diff --git a/disas/hexagon.c b/disas/hexagon.c
+> index c1a4ffc5f6..9a18f12854 100644
+> --- a/disas/hexagon.c
+> +++ b/disas/hexagon.c
+> @@ -31,6 +31,7 @@
+>  
+>  int print_insn_hexagon(bfd_vma memaddr, struct disassemble_info *info)
+>  {
+> +    HexagonVersion hex_version = (HexagonVersion)info->target_info;
 
-I meant to send this to the list, but accidentally sent it to
-Pierrick only:
 
-I just ran this (plus some other patches) through gitlab CI, and
-it fails to build on the kvm-only and xen-only jobs:
+Don't store the HexagonVersion directly in the pointer, clang gets
+angry, just take the address of hex_version
 
-https://gitlab.com/pm215/qemu/-/jobs/13131658696
-
-In file included from /builds/pm215/qemu/include/exec/helper-gen.h.inc:9,
-                 from /builds/pm215/qemu/include/exec/helper-gen-common.h:11,
-                 from ../target/arm/helper.h:7,
-                 from ../target/arm/helper.c:13:
-/builds/pm215/qemu/include/tcg/tcg.h:35:10: fatal error: tcg-target.h:
-No such file or directory
-   35 | #include "tcg-target.h"
-      |          ^~~~~~~~~~~~~~
+  ../disas/hexagon.c:34:34: error: cast to smaller integer type 'HexagonVersion' from 'const void *' [-Werror,-Wvoid-pointer-to-enum-cast]
+     34 |     HexagonVersion hex_version = (HexagonVersion)info->target_info;
 
 
-https://gitlab.com/pm215/qemu/-/jobs/13131658593
 
-In file included from /builds/pm215/qemu/include/exec/helper-gen.h.inc:9,
-                 from /builds/pm215/qemu/include/exec/helper-gen-common.h:11,
-                 from ../target/arm/helper.h:7,
-                 from ../target/arm/debug_helper.c:11:
-/builds/pm215/qemu/include/tcg/tcg.h:35:10: fatal error: tcg-target.h:
-No such file or directory
-    35 | #include "tcg-target.h"
-       | ^~~~~~~~~~~~~~
 
-I think the problem looks like it's in "move exec/helper-* plumbery to
-helper.h", which has put the "emit the TCG gen_helper_foo inline
-functions" into target/arm/helper.h, when they were previously
-handled by target/arm/tcg/translate.h and so only in source files
-that are part of the TCG translate-time code. helper.h only needs the
-prototypes of the helper functions themselves.
 
-Some of the other new helper-foo.h files look like they would
-also have this problem, except they happen to only be included
-from tcg files. For instance target/arm/helper-mve.h is only
-included from files in target/arm/tcg (so it maybe could be
-in target/arm/tcg itself).
+>      uint32_t words[PACKET_WORDS_MAX];
+>      bool found_end = false;
+>      GString *buf;
+> @@ -58,7 +59,7 @@ int print_insn_hexagon(bfd_vma memaddr, struct disassemble_info *info)
+>      }
+>  
+>      buf = g_string_sized_new(PACKET_BUFFER_LEN);
+> -    len = disassemble_hexagon(words, i, memaddr, buf);
+> +    len = disassemble_hexagon(words, i, memaddr, buf, hex_version);
+>      (*info->fprintf_func)(info->stream, "%s", buf->str);
+>      g_string_free(buf, true);
+>  
+> diff --git a/target/hexagon/cpu.c b/target/hexagon/cpu.c
+> index 09a0de3c2f..4b16214ace 100644
+> --- a/target/hexagon/cpu.c
+> +++ b/target/hexagon/cpu.c
+> @@ -314,8 +314,11 @@ static void hexagon_cpu_reset_hold(Object *obj, ResetType type)
+>  static void hexagon_cpu_disas_set_info(const CPUState *cs,
+>                                         disassemble_info *info)
+>  {
+> +    CPUState *cs_nonconst = (CPUState *)cs;  /* so we can get hex_cpu */
+> +    HexagonCPU *hex_cpu = env_archcpu(cpu_env(cs_nonconst));
+>      info->print_insn = print_insn_hexagon;
+>      info->endian = BFD_ENDIAN_LITTLE;
+> +    info->target_info = (void *)HEXAGON_CPU_GET_CLASS(hex_cpu)->hex_version;
+>  }
 
-I couldn't see an obvious easy fixup for this, so I'm afraid
-I've removed the series from target-arm.next.
+Take the address of hex_version here.
 
-thanks
--- PMM
+The const cast is a bit sad, took a look at other targets and riscv uses
+the object cast macros instead, so something like
+
+  static void hexagon_cpu_disas_set_info(const CPUState *cs,
+                                         disassemble_info *info)
+  {
+      const HexagonCPUClass *mcc = HEXAGON_CPU_GET_CLASS(cs);
+      ...
+      info->target_info = (void *)&mcc->hex_version;
+  }
+
+but I don't know if assuming Object * == CPUState * == ArchCPU * is any
+better..  Maybe someone else can comment on this.
+
+-- 
+Anton Johansson
+rev.ng Labs Srl.
 
