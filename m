@@ -4,158 +4,215 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32E6BEF48D2
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 09:24:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69B48E63F3F
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 09:32:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vrupX-0007SX-V9; Mon, 16 Feb 2026 04:23:48 -0500
+	id 1vrux9-0000Nq-IT; Mon, 16 Feb 2026 04:31:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vrupV-0007SE-Tv
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 04:23:46 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
+ id 1vrux7-0000J3-Gb
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 04:31:37 -0500
+Received: from mx0a-002c1b01.pphosted.com ([148.163.151.68])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vrupT-0000lE-KW
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 04:23:45 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771233821;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=lzf4lWOhPOHWvHPPyz1GhUtgMp03D/cUtr0z3/mVhVw=;
- b=jUbWRVbd99gIBCFI+E+Z0TPpAI96TEDSyWxmC9Zd7Snv3EgAAWra0Lnj4Hjr/vbY0qM3kj
- E3d9QE9uXiLVEJljRzm2R1x/HBsT0MDSnKZAQOKz7hv5KaQANthPg7lVLPhhkqikLqpif5
- tna3B3n6kqmdgVXtgDf1u/dErconjBY=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-694-Crom3xLmM5-k2mPUG8vkVw-1; Mon, 16 Feb 2026 04:23:40 -0500
-X-MC-Unique: Crom3xLmM5-k2mPUG8vkVw-1
-X-Mimecast-MFC-AGG-ID: Crom3xLmM5-k2mPUG8vkVw_1771233819
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-435991d4a3aso1698795f8f.1
- for <qemu-devel@nongnu.org>; Mon, 16 Feb 2026 01:23:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1771233819; x=1771838619; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=lzf4lWOhPOHWvHPPyz1GhUtgMp03D/cUtr0z3/mVhVw=;
- b=OJz6fWqlUrzae/1UghrZYjpXsr//QqVfnbZxflU0CXJT2jPUVXW31tn6AGWMCUkXnj
- CpSzwpxtc7jB03YrxoZ08HEfmm6HVWCMhr3JRhqeUHTeRukymQycrb/L/XCrEIkahYWW
- qXebiHB9Dvl0Z6ZIl8NuZ0Um/HuTBs6WAVM2K96FZky9fGeB0R/1QqZoBojyu9W6aUFL
- rHv+g0CgzkNlVBnpClkjw4dT+LRUXgwaa/kUo1UhScyJdQYsXtGMDOESoWEuRIexk/zP
- jFbcIV3Xy15FPVOQASP77goPiyyg5qmA5BrFq/8ZB0+GeLAwDpq11uJ9Zx8SWV0eZ+Ks
- m2tA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771233819; x=1771838619;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=lzf4lWOhPOHWvHPPyz1GhUtgMp03D/cUtr0z3/mVhVw=;
- b=I/hDkroDI+HF/YjzFac3f8jQohf3MgpOuV5ErmvHxYHokUOawzFbgfs2ioLS5BkbCP
- Ug1xYYvUCirs0wnw1ghHWWKyrvTH29MtTS3ozxrAp/sxRA7Rhf7MbW3akFsXLxFwxGsY
- CSXuoTRabpDD+3OlyTYXoXbjX8o4uGGasQDRkY7sBE66+6yYfi7Gfx3ziZZ2XC1FHSas
- inK9UR73nbG5d8coYjB5G1jMO44vMXF/HVe6zDaGKg0cg4uuVlpRGiMlF3giaAC7DDM9
- yw374VFgTJjpagnRynxTYHYhg3hKNAApn/0b4afRJ5x35paDiUImcp/xkMEDIzf7KroR
- VF+w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXNLEXitZXRcrVTbDphfMG6akE7YnYwPcMNAhMfI5xp8a7BZGtRQOGLnxb1pRetNdxZTtlYxSftPz/X@nongnu.org
-X-Gm-Message-State: AOJu0Yzi8OOUe4zSc8HYScp9o8+mBKlOM2sfmPjnK5Jb2NwFnvUVHEJd
- g4ULe6nxCUH1nQDzvLtGgZNOHOLQI8epLogVi+AyEo96CTkAoq4YLousUK1Y63JfbZXwzyxJsTM
- eBGghj0Hm676XUHTUiZ1TiIDO2uQwpW2WDcSef9Uj6/pHKJcBdkrJ5UUb
-X-Gm-Gg: AZuq6aJF7u0oPXjZ82lBNboK41Eq/eVpCKRqAuXhUPxB29v8USV0hlBQxzsViN1398d
- 144K8G43LfxB6FM7s9VQeqVYzHQJcEYOutAotlLxNH4Ak4ju4rXgP2iTWZkYuG4qbSMlSt6jS/u
- wHtn+1gW00W8cvZ/xxaApqWTY/xHxNYK2ocONkqy8EKLuHF2Gg0OSCN/pQ3bSFmMB4yJkeGHE1z
- DGAsTrW7x2CeZ96aIikMg9O4k7FXDiKwUsVLxjKoSnrH5hjbJIrSg8Pzfi9d3HVoU5m2YoMNjn2
- 6TzU1ZKZ10Mse/Te4e7wXscT0rsgSzNc7Wp55SiAjkj8yPwPHinJKm9wEMuGlMF1I05vnGLBleI
- mvWrcJfpgBvl5N/eqLxPdaSgqCgLJLUIQjkvyMZgsE/rI7Qhq0wheO61VumHD
-X-Received: by 2002:a05:6000:2313:b0:437:6625:d0d7 with SMTP id
- ffacd0b85a97d-43797917d9amr19497782f8f.42.1771233818755; 
- Mon, 16 Feb 2026 01:23:38 -0800 (PST)
-X-Received: by 2002:a05:6000:2313:b0:437:6625:d0d7 with SMTP id
- ffacd0b85a97d-43797917d9amr19497738f8f.42.1771233818243; 
- Mon, 16 Feb 2026 01:23:38 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43796ac82f7sm27998153f8f.28.2026.02.16.01.23.37
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 16 Feb 2026 01:23:37 -0800 (PST)
-Message-ID: <d4d9dbc7-12f2-4413-863a-02dcc68ed8b1@redhat.com>
-Date: Mon, 16 Feb 2026 10:23:36 +0100
-MIME-Version: 1.0
+ (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
+ id 1vrux2-0001Yd-8f
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 04:31:36 -0500
+Received: from pps.filterd (m0127840.ppops.net [127.0.0.1])
+ by mx0a-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 61G967Zf3282454; Mon, 16 Feb 2026 01:31:23 -0800
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=
+ proofpoint20171006; bh=kxHktCdTajS9mfa5rqrXindKgGvgiv0AqMI2jzszk
+ d8=; b=EL1mgBM553yPsTrL2gzyWui3WVI49ZlXGJzNueVgQkB3oUZWHu+1gZiE+
+ eLOEjbZIW7SKtstATwMCVnr/yv371+bD8VY/nO7/V/MjGmnfhwkeR4eKTo0F0uCK
+ X8rrQ3zJZMGjhv/N+1XfxanjJ3d61C3Y3oCXF7aCe6e0IVltUscQiUzMpoxqiv7m
+ xD6HMKC9OW9gJcqjkxvcslK1hZCiD7duFCMXoaQOE4ZRXLelNFdhJz1iigo2slhP
+ UzLRaYyWXYIrKCyQbITDPVLHiBYQjAkkeod74G/BiWFvieZh0wr7LYRYVs6Om02L
+ Y3j3yFJOAjXaBRNlxNIVtZXkTNDZg==
+Received: from bn1pr04cu002.outbound.protection.outlook.com
+ (mail-eastus2azon11020085.outbound.protection.outlook.com [52.101.56.85])
+ by mx0a-002c1b01.pphosted.com (PPS) with ESMTPS id 4cap8wk4ne-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Mon, 16 Feb 2026 01:31:23 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=jnzZqdwufT5i6hfjac1ewT5NBhy6PZx8oET7IEcV1SJrtSN1iTpCdvtL6hgXf7RvZVAZIgg/CsevtjvhIuPO034uN/gZu6l0/LPCOMFrfKw9qsreQUbeiNQMnrzeOHxQl0S6cLGa+v0l/ZVxz8L/B1o/d/IyJ+5oneAJ2PF3cjmhHvpdWdn61B6gWnbO7plMaKy0rTn7RdtpWTDhbEYTSaTbzboIUSv+fQ8B371hkuSZE/8UPc1Li0No9X9MS6nRx4/V5f20nRP3JKKTU4mtYSnGHQrKrjgtnDBukkbC8k8iE9bNUvilfT0grp7suOrqyV3tIX6rHP+GTYaE3AQhoQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=kxHktCdTajS9mfa5rqrXindKgGvgiv0AqMI2jzszkd8=;
+ b=il541svPi3nJwEjpnIv9FO1rV4A/NTgdy/xm/iXTHQfRsd5E3DZOlelAFA4xugfEo7nP6EKxFg9yqLlfQzyf3h5tHMgbsBz/loam7Yj0wNAyDvF+D6WeDQK22tQWxpT4edmWTCv4RmowuX1wvpFQJhpb8T2buxwNUk3FxhrxVH6ec3R3ihdCrZcLAAbscS1uAPBw2RIBAcf4sobIJXXb25sBJtx61tEgCfGISR2neZFnSehfotVX6Sz8R+LF5O0OylYaJ1xQRzdZu660S9iWBwub2vzoCiuU6SO12BIQ/II1n5Gktf90oZHNMrXyGtS+QZ7le7cvMZqREiZY1vImzw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
+ dkim=pass header.d=nutanix.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=kxHktCdTajS9mfa5rqrXindKgGvgiv0AqMI2jzszkd8=;
+ b=VUdisrkgOY2H4TTeqly4Nvf8d/zwz5v913hzUnvCAGwYgBPjV+OFPhxjcwP8fT9yCQSF0qp+S4tUFGPOgyBGQEIynbUA+XNVIOsJNkd0lkyaaKx4WzNP3I8ib1BmZ1MzpLcpMivMpsFg8/rTw2USrkfTSnESNYRbVjbQrQEiQ/jQppGUPFLP7OXLTOVOobKYhvhVA2EMQgM1mSwQImMkOZ5GNWJqin2xZFN4klfi20lglqTrREQTtn6X+X0+jTt6fTqXZWHFGpnLD1fHGsrxGq/UFwG44PXv/Cnhwyirt+97jN6Myk3Pn33NRlLwdLKvFYUa3XrNkGt2/xls43ksNA==
+Received: from PH0PR02MB7159.namprd02.prod.outlook.com (2603:10b6:510:16::8)
+ by CO6PR02MB7761.namprd02.prod.outlook.com (2603:10b6:303:ab::7) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9611.14; Mon, 16 Feb
+ 2026 09:31:21 +0000
+Received: from PH0PR02MB7159.namprd02.prod.outlook.com
+ ([fe80::8e97:bc32:822c:b250]) by PH0PR02MB7159.namprd02.prod.outlook.com
+ ([fe80::8e97:bc32:822c:b250%7]) with mapi id 15.20.9611.012; Mon, 16 Feb 2026
+ 09:31:21 +0000
+Message-ID: <265f1343-64f6-4357-a82f-d20bad056904@nutanix.com>
+Date: Mon, 16 Feb 2026 09:31:16 +0000
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 3/3] hw/vfio: align mmap to power-of-2 of region size
- for hugepfnmap
-To: ankita@nvidia.com, vsethi@nvidia.com, jgg@nvidia.com,
- skolothumtho@nvidia.com, alex@shazbot.org
-Cc: aniketa@nvidia.com, cjia@nvidia.com, kwankhede@nvidia.com,
- targupta@nvidia.com, zhiw@nvidia.com, mochs@nvidia.com, kjaju@nvidia.com,
- qemu-devel@nongnu.org
-References: <20260215084950.4657-1-ankita@nvidia.com>
- <20260215084950.4657-4-ankita@nvidia.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260215084950.4657-4-ankita@nvidia.com>
+Subject: Re: [PATCH 31/43] audio/mixeng: replace redundant pcm_info fields
+ with AudioFormat
+To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Gerd Hoffmann <kraxel@redhat.com>,
+ Christian Schoenebeck <qemu_oss@crudebyte.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+References: <20260127182516.289834-1-marcandre.lureau@redhat.com>
+ <20260127182516.289834-32-marcandre.lureau@redhat.com>
+ <6f204d62-f14b-479c-ab37-1dcca6b5bd30@nutanix.com>
+ <CAMxuvazGyHmW1iUcyaKuEdwjvmHRxP_oF-0vno2eZc+-8XH_mQ@mail.gmail.com>
+Content-Language: en-US
+From: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+In-Reply-To: <CAMxuvazGyHmW1iUcyaKuEdwjvmHRxP_oF-0vno2eZc+-8XH_mQ@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: LO3P123CA0024.GBRP123.PROD.OUTLOOK.COM
+ (2603:10a6:600:388::7) To PH0PR02MB7159.namprd02.prod.outlook.com
+ (2603:10b6:510:16::8)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PH0PR02MB7159:EE_|CO6PR02MB7761:EE_
+X-MS-Office365-Filtering-Correlation-Id: 2e474b7d-40f2-4161-566f-08de6d3e24f7
+x-proofpoint-crosstenant: true
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|366016|376014|7053199007;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?dFdoS2dtV3VqREp5TW1xNlJ1c05aYUMwU0NJVGJYa25tc29KbUdWNExrdjR0?=
+ =?utf-8?B?R2VWc1JSdUU4RXF4WDl0NkxzU1VFZThWN2FFYXFCUVZqOW9xeEFFaHF1c0lX?=
+ =?utf-8?B?aWtZZGE4dnBTNEkvWExhZUZKRGVrQWlIVGlKSUM4UFAvZ2xyV3Y4dTN0aEFi?=
+ =?utf-8?B?dTJWZ29ML3pNSHh0Vm1Pdi9McFdTZTJ4dlphcFc5L1FuOFVKRjFDWjFyTXZW?=
+ =?utf-8?B?VVA5ZkZJQmppWkNXSnFsdGRRRkc5bmpjNmpkcm9LRExqZWhEd0xVZitjRVNw?=
+ =?utf-8?B?eXluNjdDaW9SVmYydzYvWXlDYzNsRWV3cXFMeXVScmZxcmRCNktIc1JZcTE0?=
+ =?utf-8?B?UTdmVTViellDYk5nYU5XcVRpc1ZuUTh6S1FKUXd1Z3paWTNHajBROTFlbFpI?=
+ =?utf-8?B?VFVqd1JwY2w3VmRaSHFqZXZjVUt0bjBmdFBhM0VsUTY1R0xCTXU0bU95eWd4?=
+ =?utf-8?B?UUlLUnhwcFBObEhobjdaSk1TbStVQlVJTDJMT2gweklPaFR2Nks1YzlvMnp0?=
+ =?utf-8?B?QXZpSXhNZjg0MFErUWdkWmlVSDZLMVhubnM4SExhTVh4bG5OelROTzBVek4v?=
+ =?utf-8?B?WTdaWWIxU1pBb2F2U2lFSG9rVFB6cnVvSE5tbmxUZTRHaHJQMERpZHcwakdS?=
+ =?utf-8?B?UU15MWt4RSttRHZpTUl6T3V0M1U2L3M4NUZ4eWF0aWFBMlpZenQ3U2xCL291?=
+ =?utf-8?B?OXZtOVlrR1hOUG5WY2w4Z0dta3VJYm55WU9IY0pBTWd6YlJFVVU1YXREMXpq?=
+ =?utf-8?B?emFSSmZuYlh5a1pTcXlnQll0VFhCSjRBTU5mWnZZSnh5VFVnOTBLVDBQSWZU?=
+ =?utf-8?B?RWk4SGpSeDRpNHVzL3RFcnVjTWsyaDhjYUhxS0RkNytkaTQzVE9VdGlOYk1Y?=
+ =?utf-8?B?YWxya2djNjlUc0IzTmJRS1EwNVRuK3BXWkRSN3FvVm1yVFpDc1JwQVBFZWdE?=
+ =?utf-8?B?aEZVb3NiUE5sQXRSL20rSHQ4RkluSndlaU15M29YU1JBTHFFN1VVcnBvSHB5?=
+ =?utf-8?B?WnhZZU1RMHBkTnVmemRocmoyRUQ4alFaN0FER2hHTGZMaTF2Uit3blQ1eFZu?=
+ =?utf-8?B?ci9pTkJacXVwWGlxM2ZmQXVCNE9pSzRET3NIbFI4VGV2d3lNbEY5ZkRrUVpK?=
+ =?utf-8?B?WEEwTVdMdURTQ2VWeU9ObFRPUXBsNmVYeUFhWmt2eHJVUExRSnlrT0twcStP?=
+ =?utf-8?B?Mzc3bEZUL1JwVjc2TlNBNlBDVDNWaTR1VlRoVnJHWE9MZXpqZExKeTBkcDN3?=
+ =?utf-8?B?RHpLTUUzY3lZWFhHKzNUMUxDUFVFT1pyL3h0YVBseW0wZ0RCSFhiYnZKUUlw?=
+ =?utf-8?B?NWpxaU5Wc2pjNzJTWWNtdGwxMURUdHZJMGpyS3NYWTZwR2dPMitGRXFDWnFh?=
+ =?utf-8?B?SFJyTk5vMDFqdEtsRjN3MW9VMlBTb1R1VnpmVU1IQlI0eldqa3pEd3dYakpX?=
+ =?utf-8?B?aEQvd0ZlMzRBbW9MYWhzbWN0cWFXNjh0clh5UFU1UEc3T0JnbVlXblhrTnNI?=
+ =?utf-8?B?OTNrZUZzbElIMTJ5V3B2RkY5cklTa1lUd3dGeWtKN2FGVVdReE1JMzhTOTdG?=
+ =?utf-8?B?QUFRRkpRVlMyNDVkYlEzby9FYUl3RnE3QS9nRis3MkUzcHN2dnd0WnkvcTBS?=
+ =?utf-8?B?bGxVNkQxSHNHQUtwWm10UWZ3djJBajBUcWVPTU5Ud0I0bmxsbHdUUmVINXMx?=
+ =?utf-8?B?QXhmRnI0ak1XTWlMQzZ6WTdUSS94bzNuYW9mYktLc05DWFQvZU81SGdhUHdw?=
+ =?utf-8?B?ZE54OHkwd2NmV3AwbTNxRzFHMlljVm9SNHg0SDF2WkVsdllFTTJxT1BrZjRp?=
+ =?utf-8?B?ZDdPUUxLWlMzRWk2UlRCeFVFU25saHE5dS8wSDhwZVp2ZFFJeGNkNEhyMC9I?=
+ =?utf-8?B?ZU9weDE1bngxNGdjYjBLay9ZNU9VL0pJc3gzMFcyZ0ZqU0NTNTJ0Q3FxYyth?=
+ =?utf-8?B?ZXI0ZTMrMHZiSHZVUlNFVm5hcEhlaVRvZVB5ZVN6SXdGT05Xaks1dlR4c2JT?=
+ =?utf-8?B?TzVnMk1HbG4xUkFBQXlvVk1YUlVGeXE0U3FKUVJST3hGZmoyMXlTaFF6UG9E?=
+ =?utf-8?B?Z3pIczN4WmMvcDZEb3hxakRZMXZzZE9TRkg1TzUrS0lraE91NmFuL3BhQmJj?=
+ =?utf-8?Q?WJ0w=3D?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:PH0PR02MB7159.namprd02.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(366016)(376014)(7053199007); DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?aWk4OFRKdE9iOTBYUThpNmx1aEMxRWc0bERieGVxRWdIRzRwNDcrWVVnbWFp?=
+ =?utf-8?B?Q3BmNVlXUUxtQk5lbU5rcUFib1B4RTJxRFVQcnRsaFZCaWp0dloxU1NFbUhO?=
+ =?utf-8?B?bC96R1FURkM0MWhqM0hKQXM1dGFqMTZORWRPYTVXY1pEZml6WmthamMzZ04x?=
+ =?utf-8?B?RDRmMDdvcGZlNGNTMXF5VS94WTlwcEN2QmhadkI5TVR5TStPRG1pQUxOdndu?=
+ =?utf-8?B?TTVkR1J2eFp6T042QzRQYkYzSm50ZFhBVEVaTXJDTU1wOEM3SW9ISWlsUk0y?=
+ =?utf-8?B?WlppZjRRVzNoUmoxV3phbjVlUnRCNTlDZElIRWpic0p4b1BkT2JTcFc2Nmh3?=
+ =?utf-8?B?dGlvVHJMM2hZRytvS2VKbkFpK24rWXY5UkFhd2d5Z1ROdjFCNGl5WkQ4WGpB?=
+ =?utf-8?B?NEF6d0tXQkFZYzNwNzNkSHdHN1ZhNGdNVGR2a0dWSW1qMDBaVlVSOVgxZ25Y?=
+ =?utf-8?B?M0VvY1VjbE41ZFN1bXhlN09jVks5RXVDMzZxTmhUVWo0cjRGWmdCbkdVay9Y?=
+ =?utf-8?B?MzVTZkZidzlwSmZxYmJma3FLYW9wdndWSXF6c0lXQjZodENMTlZ0NWwwNzkx?=
+ =?utf-8?B?Mk9qZWhnRmNkSWoyWG5STU9CUWJGU1JJdkdVYlZDdFFLcUFFd0RKUENmSitZ?=
+ =?utf-8?B?SFVqRVdGenFWbjJnWGxWUmRuc051NmFWNm5xWUJMU3V5RHlkWjlRS2IrOVl4?=
+ =?utf-8?B?ZjFNOWxoRzQvbUZyVjZtUHlkRkRLVkozdUV2NXhoclB2MjZIY3pUNTBJTTdF?=
+ =?utf-8?B?dWNycDdFdmRhMEV4NUxaWGhJODFKUGd5VlRrQ25tWUFMV3pJMzkrMDJQeE0v?=
+ =?utf-8?B?OWg0SHZNZzh6NFAyd3VldjRiTnBORG1xQ1l6RktTaTlCZS94T1dQcGFRYjZO?=
+ =?utf-8?B?eEFiQ3ZvTW1VYUF3RkxXS0tCUWpmd0Vvd0tUUXhlZm9SaEJCU1lkeTRrTUZN?=
+ =?utf-8?B?VUFaRTZrRmhDRWk2THcvVjFWSGpYbm1kSUR4WVpxdDQxc2dWby9Xb0RGb0NE?=
+ =?utf-8?B?am14OFF2ZkpFbWg1Y1hlTTQzYjVLU1paMUdkdXJNaFdRcFhYQXlmNFVHM3FI?=
+ =?utf-8?B?QTFqNythbUMxcm10OWM5MGFZaHlvTjdodUd2MFN6M2pKQzBKQ1VEZTZ0anBH?=
+ =?utf-8?B?dUVTMWZQWmFRUHlRRUhrSWdBVWVibHdNeXMyU3B2Z0YwZENWU0ZJaHc1M2dp?=
+ =?utf-8?B?VDh5V0pOV1FDRXlpZ1pDVjdwOGtVVEw4VUdGQ3d1MStlc3FteXhxaEp2VUtk?=
+ =?utf-8?B?cy9hYkxOQ01pREE2UlZob05RL3FZMVhla2dZQzlWZ3hBMWJZQSsvRVk4TTJw?=
+ =?utf-8?B?UXZNdXZXVVY5L3FBMnlpWkhrNHJIZzc5cW94c0kwQmdSUEpxOTFyMUhPblVX?=
+ =?utf-8?B?azlrR3BvamhMY3FjV1pUdFFNUGZYbVp2K2RzZytQRTlEbUl1SW9QaW1EQmo5?=
+ =?utf-8?B?T0dmbDVmMlphbzFTV2NYL1lLcDczUTVPZUFDTk9YcVF4cDl0R2hkcHZTMGZ4?=
+ =?utf-8?B?aFlXbFlnOHhMdTdBOWdYVG9BcVRVVHVPZWdPNHBMVi9FWEY3NXJKTVdKN2xs?=
+ =?utf-8?B?NisvRC9XZFZIZXpOcUJRNDUvaGhTbmo3TnBWVm5NaHJ0RjM4MjhESTFjd1dD?=
+ =?utf-8?B?RCt2bHZBeWRxU25paURkQ0N3a3k2RzFzZUhSbzR0NUZOSVhuTEZYNFlxWUov?=
+ =?utf-8?B?OGFScEN0dDNCbzFvMFBiOUhtSTNONFI5cGdsTUc2cUxaWHp0aGM3Nk0zWVIy?=
+ =?utf-8?B?ZnRrK2JvZnVHeEVsUUZ3SHBJc0FGeWlPbkgwN0kvN0hIUCtBb3FOd3Y1bkZ4?=
+ =?utf-8?B?aVFoTW1UOS9nbGp1YVU3UFpHMG55eVRUenBoQXVJUldvM0RFenhnMGFaQlRj?=
+ =?utf-8?B?TGdWazZESEl0MmJETS8vZG1qbzlFeGszcXlsdXlHN0dnSjJSZ252WFNWNDNF?=
+ =?utf-8?B?M25zdzdKNjV3RHZ6bTJYSVQ0eG5kVlVZUGMreSs3ZnVGQW1sQjFJZHBYN3Mz?=
+ =?utf-8?B?ekdtVU1qRjgxcFBNR0Z6Ni9GS0xjNWNkZ2t1bDBJSFJQaTExemVqbnVsZ1lq?=
+ =?utf-8?B?TEsydHc3YjJ4MjBEYUJrVkpFaXZycXVvQUpGeEJtUDdGRnRjbDhEZWcxTkk4?=
+ =?utf-8?B?b0xac3VkWkt2dmdNQmtJNE9KZ0p0Rm5aR0tValVwMkZ3K00rRkFXMm54aVFT?=
+ =?utf-8?B?bnhpbXoxNXBLbHZ1Q2NtQlRvTGJFbHFIcXo1cFBNWVZOMEYzalBIaWRTQmRp?=
+ =?utf-8?B?L25lZmVXbnAzcFoySFpOV3hrT0ZHM0tHaDBZTXpFMHEzeU11TWQ4VUtGYnA0?=
+ =?utf-8?B?Z1kyVC84elZnQitmdU1VT1ZjWUVlY1d4OFQ3MTcxS2tOVEQzZ29IOVFHTU9y?=
+ =?utf-8?Q?xp02VbOafWLvWrgo=3D?=
+X-OriginatorOrg: nutanix.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 2e474b7d-40f2-4161-566f-08de6d3e24f7
+X-MS-Exchange-CrossTenant-AuthSource: PH0PR02MB7159.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Feb 2026 09:31:21.0005 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: GZnVKZnpESjBdai4Z8GdaoYlib9KFFbn3Zb/oYRzRN0/IzRsxzb2eemTym8yuX2Ti527fRm6LVQiGD0lNRx75ZKQnuUt4Zm/fecq4jPXVC4=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CO6PR02MB7761
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjE2MDA3OSBTYWx0ZWRfXw1SWrCL9Cws/
+ PO6qAj2V9OISx3EVFJmwhYRyKMJ3i9s700h/1+Aa6Z8Z6zEr7ePZZgde/LLiNMNfVYM5ruBlwKz
+ uVH+GiP+6cSW8D+4GuEVI2oWHZnM9lWK4iXFOlUM02FMjDpXq6fAWtwnK2SSZbDQPXegUxtgH2M
+ FyosnUB86nUupTdSnypLZ3QNU+ejUvmmNNikPw5ZEc7loeihEIZIjkKXR+7TORjIfpKgQCSzBUZ
+ AEmF5hw0LjxkjnVs0D2xjThhFnZ2f+kYlZGQpfypAxwE/swhQo0BbD10fL0gSY8yjD3TQqDnFGp
+ BO5zrG+xqFZdv+mXSl53XaGjJpzNwSW2jOKNuYtWV63iDUf1sk4Fdhkfyd3gUFN6n0p+23hClgh
+ lnvm/HP6y4K5LCEJdBZha1az9Vqj95E1tAylOfYKqRn9Jsn1N3nFSKc4q2zsqdHZDw7NfGgsO5Y
+ /o2bViBuB9ck0Agi06Q==
+X-Authority-Analysis: v=2.4 cv=OP0qHCaB c=1 sm=1 tr=0 ts=6992e3eb cx=c_pps
+ a=82Hej2R/WPb/df+cPJtM0A==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
+ a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
+ a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10 a=HzLeVaNsDn8A:10 a=0kUYKlekyDsA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22
+ a=64Cc0HZtAAAA:8 a=20KFwNOVAAAA:8 a=QrdharD8P5BrLf_qZwAA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: QBBrWdCJfaVpcp1eA2rVhpp8yXUUtw8k
+X-Proofpoint-ORIG-GUID: QBBrWdCJfaVpcp1eA2rVhpp8yXUUtw8k
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-02-16_03,2026-02-16_01,2025-10-01_01
+X-Proofpoint-Spam-Reason: safe
+Received-SPF: pass client-ip=148.163.151.68;
+ envelope-from=mark.caveayland@nutanix.com; helo=mx0a-002c1b01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -171,184 +228,600 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/15/26 09:49, ankita@nvidia.com wrote:
-> From: Ankit Agrawal <ankita@nvidia.com>
-> 
-> On Grace-based systems such as GB200, device memory is exposed as a
-> BAR but the actual mappable size is not power-of-2 aligned. The
-> previous algorithm aligned each sparse mmap area based on its
-> individual size using ctz64() which prevented efficient huge page
-> usage by the kernel.
-> 
-> Adjust VFIO region mapping alignment to use the next power-of-2 of
-> the total region size and place the sparse subregions at their
-> appropriate offset. This provides better opportunities to get huge
-> alignment allowing the kernel to use larger page sizes for the VMA.
-> 
-> This enables the use of PMD-level huge pages which can significantly
-> improve memory access performance and reduce TLB pressure for large
-> device memory regions.
-> 
-> With this change:
-> - Create a single aligned base mapping for the entire region
-> - Change Alignment to be based on pow2ceil(region->size), capped at 1GiB
-> - Unmap gaps between sparse regions
-> - Use MAP_FIXED to overlay sparse mmap areas at their offsets
-> 
-> Example VMA for device memory of size 0x2F00F00000 on GB200:
-> 
-> Before (misaligned, no hugepfnmap):
-> ff88ff000000-ffb7fff00000 rw-s 400000000000 00:06 727                    /dev/vfio/devices/vfio1
-> 
-> After (aligned to 1GiB boundary, hugepfnmap enabled):
-> ff8ac0000000-ffb9c0f00000 rw-s 400000000000 00:06 727                    /dev/vfio/devices/vfio1
-> 
-> Requires sparse regions to be sorted by offset (done in previous
-> patch) to correctly identify and handle gaps.
+On 14/02/2026 08:20, Marc-André Lureau wrote:
 
-Please add a visible comment saying that vfio_region_mmap() assumes
-that the array mmap[] is sorted. May be before the loop :
-
-    for (i = 0; i < region->nr_mmaps; i++) {
-    ...
-
-Or some other place, but it should be clear.
-
-     /*
-      * Regions should already be sorted by vfio_setup_region_sparse_mmaps().
-      * This is critical for the algorithm below which relies on ascending
-      * order.
-      */
-
-Thanks,
-
-C.
-
+> Hi
 > 
-> cc: Alex Williamson <alex@shazbot.org>
-> Reviewed-by: Alex Williamson <alex@shazbot.org>
-> Reviewed-by: Shameer Kolothum <skolothumtho@nvidia.com>
-> Suggested-by: Jason Gunthorpe <jgg@nvidia.com>
-> Signed-off-by: Ankit Agrawal <ankita@nvidia.com>
-> ---
->   hw/vfio/region.c | 81 ++++++++++++++++++++++++++++++++----------------
->   1 file changed, 54 insertions(+), 27 deletions(-)
+> On Fri, Feb 13, 2026 at 4:28 PM Mark Cave-Ayland
+> <mark.caveayland@nutanix.com> wrote:
+>>
+>> On 27/01/2026 18:24, marcandre.lureau@redhat.com wrote:
+>>
+>>> From: Marc-André Lureau <marcandre.lureau@redhat.com>
+>>>
+>>> The audio_pcm_info structure stored three fields (bits, is_signed,
+>>> is_float) that were always derived from the AudioFormat enum. This
+>>> redundancy meant the same information was represented twice, with no
+>>> type-level guarantee that they stayed in sync.
+>>>
+>>> Replace these fields with a single AudioFormat field, and add helper
+>>> functions to extract the derived properties when needed:
+>>> - audio_format_bits()
+>>> - audio_format_is_signed()
+>>> - audio_format_is_float()
+>>>
+>>> This improves type safety by making AudioFormat the single source of
+>>> truth, eliminating the possibility of inconsistent state between the
+>>> format enum and its derived boolean/integer representations.
+>>>
+>>> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+>>> ---
+>>>    audio/audio_int.h       |   4 +-
+>>>    audio/audio_template.h  |  12 +--
+>>>    include/qemu/audio.h    |  49 +++++++++
+>>>    audio/audio-mixeng-be.c | 218 ++++++++++++----------------------------
+>>>    audio/dbusaudio.c       |  12 +--
+>>>    audio/coreaudio.m       |   2 +-
+>>>    6 files changed, 126 insertions(+), 171 deletions(-)
+>>>
+>>> diff --git a/audio/audio_int.h b/audio/audio_int.h
+>>> index 5334c4baad2..dd5f2220d75 100644
+>>> --- a/audio/audio_int.h
+>>> +++ b/audio/audio_int.h
+>>> @@ -45,9 +45,7 @@ struct audio_callback {
+>>>    };
+>>>
+>>>    struct audio_pcm_info {
+>>> -    int bits;
+>>> -    bool is_signed;
+>>> -    bool is_float;
+>>> +    AudioFormat af;
+>>>        int freq;
+>>>        int nchannels;
+>>>        int bytes_per_frame;
+>>> diff --git a/audio/audio_template.h b/audio/audio_template.h
+>>> index 08d60422589..3da91a4782c 100644
+>>> --- a/audio/audio_template.h
+>>> +++ b/audio/audio_template.h
+>>> @@ -173,7 +173,7 @@ static int glue (audio_pcm_sw_init_, TYPE) (
+>>>        sw->empty = true;
+>>>    #endif
+>>>
+>>> -    if (sw->info.is_float) {
+>>> +    if (audio_format_is_float(hw->info.af)) {
+>>>    #ifdef DAC
+>>>            sw->conv = mixeng_conv_float[sw->info.nchannels == 2]
+>>>                [sw->info.swap_endianness];
+>>> @@ -188,9 +188,9 @@ static int glue (audio_pcm_sw_init_, TYPE) (
+>>>            sw->clip = mixeng_clip
+>>>    #endif
+>>>                [sw->info.nchannels == 2]
+>>> -            [sw->info.is_signed]
+>>> +            [audio_format_is_signed(hw->info.af)]
+>>>                [sw->info.swap_endianness]
+>>> -            [audio_bits_to_index(sw->info.bits)];
+>>> +            [audio_format_to_index(hw->info.af)];
+>>>        }
+>>>
+>>>        sw->name = g_strdup (name);
+>>> @@ -300,7 +300,7 @@ static HW *glue(audio_pcm_hw_add_new_, TYPE)(AudioMixengBackend *s,
+>>>            goto err1;
+>>>        }
+>>>
+>>> -    if (hw->info.is_float) {
+>>> +    if (audio_format_is_float(hw->info.af)) {
+>>>    #ifdef DAC
+>>>            hw->clip = mixeng_clip_float[hw->info.nchannels == 2]
+>>>                [hw->info.swap_endianness];
+>>> @@ -315,9 +315,9 @@ static HW *glue(audio_pcm_hw_add_new_, TYPE)(AudioMixengBackend *s,
+>>>            hw->conv = mixeng_conv
+>>>    #endif
+>>>                [hw->info.nchannels == 2]
+>>> -            [hw->info.is_signed]
+>>> +            [audio_format_is_signed(hw->info.af)]
+>>>                [hw->info.swap_endianness]
+>>> -            [audio_bits_to_index(hw->info.bits)];
+>>> +            [audio_format_to_index(hw->info.af)];
+>>>        }
+>>>
+>>>        glue(audio_pcm_hw_alloc_resources_, TYPE)(hw);
+>>> diff --git a/include/qemu/audio.h b/include/qemu/audio.h
+>>> index b6b6ee9b560..a2fbc286eb1 100644
+>>> --- a/include/qemu/audio.h
+>>> +++ b/include/qemu/audio.h
+>>> @@ -185,6 +185,55 @@ bool audio_be_set_dbus_server(AudioBackend *be,
+>>>
+>>>    const char *audio_application_name(void);
+>>>
+>>> +static inline int audio_format_bits(AudioFormat fmt)
+>>
+>> Does the inline make a difference here? My understanding is that the
+>> compiler treats this as a weak hint these days, and generally does the
+>> right thing by itself.
 > 
-> diff --git a/hw/vfio/region.c b/hw/vfio/region.c
-> index b83b09fa2f..51523a33b1 100644
-> --- a/hw/vfio/region.c
-> +++ b/hw/vfio/region.c
-> @@ -344,8 +344,11 @@ static bool vfio_region_create_dma_buf(VFIORegion *region, Error **errp)
->   
->   int vfio_region_mmap(VFIORegion *region)
->   {
-> -    int i, ret, prot = 0;
-> +    void *map_base, *map_align;
->       Error *local_err = NULL;
-> +    int i, ret, prot = 0;
-> +    off_t map_offset = 0;
-> +    size_t align;
->       char *name;
->       int fd;
->   
-> @@ -356,41 +359,56 @@ int vfio_region_mmap(VFIORegion *region)
->       prot |= region->flags & VFIO_REGION_INFO_FLAG_READ ? PROT_READ : 0;
->       prot |= region->flags & VFIO_REGION_INFO_FLAG_WRITE ? PROT_WRITE : 0;
->   
-> -    for (i = 0; i < region->nr_mmaps; i++) {
-> -        size_t align = MIN(1ULL << ctz64(region->mmaps[i].size), 1 * GiB);
-> -        void *map_base, *map_align;
-> +    /*
-> +     * Align the mmap for more efficient mapping in the kernel. Ideally
-> +     * we'd know the PMD and PUD mapping sizes to use as discrete alignment
-> +     * intervals, but we don't. As of Linux v6.19, the largest PUD size
-> +     * supporting huge pfnmap is 1GiB (ARCH_SUPPORTS_PUD_PFNMAP is only set
-> +     * on x86_64).
-> +     *
-> +     * Align by power-of-two of the size of the entire region - capped
-> +     * by 1G - and place the sparse subregions at their appropriate offset.
-> +     * This will get maximum alignment.
-> +     *
-> +     * NB. qemu_memalign() and friends actually allocate memory, whereas
-> +     * the region size here can exceed host memory, therefore we manually
-> +     * create an oversized anonymous mapping and clean it up for alignment.
-> +     */
->   
-> -        /*
-> -         * Align the mmap for more efficient mapping in the kernel.  Ideally
-> -         * we'd know the PMD and PUD mapping sizes to use as discrete alignment
-> -         * intervals, but we don't.  As of Linux v6.12, the largest PUD size
-> -         * supporting huge pfnmap is 1GiB (ARCH_SUPPORTS_PUD_PFNMAP is only set
-> -         * on x86_64).  Align by power-of-two size, capped at 1GiB.
-> -         *
-> -         * NB. qemu_memalign() and friends actually allocate memory, whereas
-> -         * the region size here can exceed host memory, therefore we manually
-> -         * create an oversized anonymous mapping and clean it up for alignment.
-> -         */
-> -        map_base = mmap(0, region->mmaps[i].size + align, PROT_NONE,
-> -                        MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
-> -        if (map_base == MAP_FAILED) {
-> -            ret = -errno;
-> -            goto no_mmap;
-> -        }
-> +    align = MIN(pow2ceil(region->size), 1 * GiB);
->   
-> -        fd = vfio_device_get_region_fd(region->vbasedev, region->nr);
-> +    map_base = mmap(0, region->size + align, PROT_NONE,
-> +                    MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
-> +    if (map_base == MAP_FAILED) {
-> +        ret = -errno;
-> +        trace_vfio_region_mmap_fault(memory_region_name(region->mem), -1,
-> +                                     region->fd_offset,
-> +                                     region->fd_offset + region->size - 1, ret);
-> +        return ret;
-> +    }
-> +
-> +    fd = vfio_device_get_region_fd(region->vbasedev, region->nr);
->   
-> -        map_align = (void *)ROUND_UP((uintptr_t)map_base, (uintptr_t)align);
-> -        munmap(map_base, map_align - map_base);
-> -        munmap(map_align + region->mmaps[i].size,
-> -               align - (map_align - map_base));
-> +    map_align = (void *)ROUND_UP((uintptr_t)map_base, (uintptr_t)align);
-> +    munmap(map_base, map_align - map_base);
-> +    munmap(map_align + region->size,
-> +           align - (map_align - map_base));
->   
-> -        region->mmaps[i].mmap = mmap(map_align, region->mmaps[i].size, prot,
-> +    for (i = 0; i < region->nr_mmaps; i++) {
-> +        munmap(map_align + map_offset, region->mmaps[i].offset - map_offset);
-> +        region->mmaps[i].mmap = mmap(map_align + region->mmaps[i].offset,
-> +                                     region->mmaps[i].size, prot,
->                                        MAP_SHARED | MAP_FIXED, fd,
->                                        region->fd_offset +
->                                        region->mmaps[i].offset);
->           if (region->mmaps[i].mmap == MAP_FAILED) {
->               ret = -errno;
-> +            /*
-> +             * Only unmap the rest of the region. Any mmaps that were successful
-> +             * will be unmapped in no_mmap.
-> +             */
-> +            munmap(map_align + region->mmaps[i].offset,
-> +                   region->size - region->mmaps[i].offset);
->               goto no_mmap;
->           }
->   
-> @@ -408,6 +426,15 @@ int vfio_region_mmap(VFIORegion *region)
->                                  region->mmaps[i].offset,
->                                  region->mmaps[i].offset +
->                                  region->mmaps[i].size - 1);
-> +
-> +        map_offset = region->mmaps[i].offset + region->mmaps[i].size;
-> +    }
-> +
-> +    /*
-> +     * Unmap the rest of the region not covered by sparse mmap.
-> +     */
-> +    if (map_offset < region->size) {
-> +        munmap(map_align + map_offset, region->size - map_offset);
->       }
->   
->       if (!vfio_region_create_dma_buf(region, &local_err)) {
+> If you drop "inline" you get -Werror=unused-function.
+
+Ah I guess because this is a header file? Yeah that does make it 
+trickier, I guess let's keep the compiler happy then.
+
+>>
+>>> +{
+>>> +    switch (fmt) {
+>>> +    case AUDIO_FORMAT_S8:
+>>> +    case AUDIO_FORMAT_U8:
+>>> +        return 8;
+>>> +
+>>> +    case AUDIO_FORMAT_S16:
+>>> +    case AUDIO_FORMAT_U16:
+>>> +        return 16;
+>>> +
+>>> +    case AUDIO_FORMAT_F32:
+>>> +    case AUDIO_FORMAT_S32:
+>>> +    case AUDIO_FORMAT_U32:
+>>> +        return 32;
+>>> +
+>>> +    case AUDIO_FORMAT__MAX:
+>>> +     break;
+>>> +    }
+>>
+>> I'm not sure that AUDIO_FORMAT__MAX is a valid choice here - can you
+>> drop the explicit case for AUDIO_FORMAT__MAX and then simply have a
+>> default that calls g_assert_not_reached() instead?
+> 
+> We need to handle all variants, because -Werror=switch. That
+
+Does that also include the use of default? I was thinking something 
+along the lines of this to help make things clearer:
+
+static inline int audio_format_bits(AudioFormat fmt)
+{
+     switch (fmt) {
+     case AUDIO_FORMAT_S8:
+     case AUDIO_FORMAT_U8:
+         return 8;
+
+     case AUDIO_FORMAT_S16:
+     case AUDIO_FORMAT_U16:
+         return 16;
+
+     case AUDIO_FORMAT_F32:
+     case AUDIO_FORMAT_S32:
+     case AUDIO_FORMAT_U32:
+         return 32;
+
+     default:
+         break;
+     }
+
+     g_assert_not_reached();
+}
+
+>>> +    g_assert_not_reached();
+>>> +}
+>>> +
+>>> +static inline bool audio_format_is_float(AudioFormat fmt)
+>>
+>> Same comment here re: inline.
+>>
+>>> +{
+>>> +    return fmt == AUDIO_FORMAT_F32;
+>>> +}
+>>> +
+>>> +static inline bool audio_format_is_signed(AudioFormat fmt)
+>>
+>> And here.
+>>
+>>> +{
+>>> +    switch (fmt) {
+>>> +    case AUDIO_FORMAT_S8:
+>>> +    case AUDIO_FORMAT_S16:
+>>> +    case AUDIO_FORMAT_S32:
+>>> +    case AUDIO_FORMAT_F32:
+>>> +        return true;
+>>> +
+>>> +    case AUDIO_FORMAT_U8:
+>>> +    case AUDIO_FORMAT_U16:
+>>> +    case AUDIO_FORMAT_U32:
+>>> +        return false;
+>>> +
+>>> +    case AUDIO_FORMAT__MAX:
+>>
+>> Same comment here re: AUDIO_FORMAT__MAX.
+>>
+>>> +     break;
+>>> +    }
+>>> +
+>>> +    g_assert_not_reached();
+>>> +}
+>>> +
+>>>    #define DEFINE_AUDIO_PROPERTIES(_s, _f)         \
+>>>        DEFINE_PROP_AUDIODEV("audiodev", _s, _f)
+>>>
+>>> diff --git a/audio/audio-mixeng-be.c b/audio/audio-mixeng-be.c
+>>> index a0e542754e5..146026d0b39 100644
+>>> --- a/audio/audio-mixeng-be.c
+>>> +++ b/audio/audio-mixeng-be.c
+>>> @@ -62,23 +62,28 @@ int audio_bug (const char *funcname, int cond)
+>>>        return cond;
+>>>    }
+>>>
+>>> -static inline int audio_bits_to_index (int bits)
+>>> +/*
+>>> + * Convert audio format to mixeng_clip index. Used by audio_pcm_sw_init_ and
+>>> + * audio_mixeng_backend_add_capture()
+>>> + */
+>>> +static int audio_format_to_index(AudioFormat af)
+>>>    {
+>>> -    switch (bits) {
+>>> -    case 8:
+>>> +    switch (af) {
+>>> +    case AUDIO_FORMAT_U8:
+>>> +    case AUDIO_FORMAT_S8:
+>>>            return 0;
+>>> -
+>>> -    case 16:
+>>> +    case AUDIO_FORMAT_U16:
+>>> +    case AUDIO_FORMAT_S16:
+>>>            return 1;
+>>> -
+>>> -    case 32:
+>>> +    case AUDIO_FORMAT_U32:
+>>> +    case AUDIO_FORMAT_S32:
+>>>            return 2;
+>>> -
+>>> -    default:
+>>> -        audio_bug ("bits_to_index", 1);
+>>> -        AUD_log (NULL, "invalid bits %d\n", bits);
+>>> -        return 0;
+>>> +    case AUDIO_FORMAT_F32:
+>>> +    case AUDIO_FORMAT__MAX:
+>>
+>> Same comment re: AUDIO_FORMAT__MAX.
+>>
+>>> +        break;
+>>>        }
+>>> +
+>>> +    g_assert_not_reached();
+>>>    }
+>>>
+>>>    void AUD_vlog (const char *cap, const char *fmt, va_list ap)
+>>> @@ -172,141 +177,68 @@ static int audio_validate_settings (const struct audsettings *as)
+>>>
+>>>    static int audio_pcm_info_eq (struct audio_pcm_info *info, const struct audsettings *as)
+>>>    {
+>>> -    int bits = 8;
+>>> -    bool is_signed = false, is_float = false;
+>>> -
+>>> -    switch (as->fmt) {
+>>> -    case AUDIO_FORMAT_S8:
+>>> -        is_signed = true;
+>>> -        /* fall through */
+>>> -    case AUDIO_FORMAT_U8:
+>>> -        break;
+>>> -
+>>> -    case AUDIO_FORMAT_S16:
+>>> -        is_signed = true;
+>>> -        /* fall through */
+>>> -    case AUDIO_FORMAT_U16:
+>>> -        bits = 16;
+>>> -        break;
+>>> -
+>>> -    case AUDIO_FORMAT_F32:
+>>> -        is_float = true;
+>>> -        /* fall through */
+>>> -    case AUDIO_FORMAT_S32:
+>>> -        is_signed = true;
+>>> -        /* fall through */
+>>> -    case AUDIO_FORMAT_U32:
+>>> -        bits = 32;
+>>> -        break;
+>>> -
+>>> -    default:
+>>> -        abort();
+>>> -    }
+>>> -    return info->freq == as->freq
+>>> +    return info->af == as->fmt
+>>> +        && info->freq == as->freq
+>>>            && info->nchannels == as->nchannels
+>>> -        && info->is_signed == is_signed
+>>> -        && info->is_float == is_float
+>>> -        && info->bits == bits
+>>>            && info->swap_endianness == (as->endianness != HOST_BIG_ENDIAN);
+>>>    }
+>>>
+>>>    void audio_pcm_init_info (struct audio_pcm_info *info, const struct audsettings *as)
+>>>    {
+>>> -    int bits = 8, mul;
+>>> -    bool is_signed = false, is_float = false;
+>>> -
+>>> -    switch (as->fmt) {
+>>> -    case AUDIO_FORMAT_S8:
+>>> -        is_signed = true;
+>>> -        /* fall through */
+>>> -    case AUDIO_FORMAT_U8:
+>>> -        mul = 1;
+>>> -        break;
+>>> -
+>>> -    case AUDIO_FORMAT_S16:
+>>> -        is_signed = true;
+>>> -        /* fall through */
+>>> -    case AUDIO_FORMAT_U16:
+>>> -        bits = 16;
+>>> -        mul = 2;
+>>> -        break;
+>>> -
+>>> -    case AUDIO_FORMAT_F32:
+>>> -        is_float = true;
+>>> -        /* fall through */
+>>> -    case AUDIO_FORMAT_S32:
+>>> -        is_signed = true;
+>>> -        /* fall through */
+>>> -    case AUDIO_FORMAT_U32:
+>>> -        bits = 32;
+>>> -        mul = 4;
+>>> -        break;
+>>> -
+>>> -    default:
+>>> -        abort();
+>>> -    }
+>>> -
+>>> +    info->af = as->fmt;
+>>>        info->freq = as->freq;
+>>> -    info->bits = bits;
+>>> -    info->is_signed = is_signed;
+>>> -    info->is_float = is_float;
+>>>        info->nchannels = as->nchannels;
+>>> -    info->bytes_per_frame = as->nchannels * mul;
+>>> +    info->bytes_per_frame = as->nchannels * audio_format_bits(as->fmt) / 8;
+>>>        info->bytes_per_second = info->freq * info->bytes_per_frame;
+>>>        info->swap_endianness = (as->endianness != HOST_BIG_ENDIAN);
+>>>    }
+>>>
+>>> -void audio_pcm_info_clear_buf (struct audio_pcm_info *info, void *buf, int len)
+>>> +void audio_pcm_info_clear_buf(struct audio_pcm_info *info, void *buf, int len)
+>>>    {
+>>>        if (!len) {
+>>>            return;
+>>>        }
+>>>
+>>> -    if (info->is_signed || info->is_float) {
+>>> -        memset(buf, 0x00, len * info->bytes_per_frame);
+>>> -    } else {
+>>> -        switch (info->bits) {
+>>> -        case 8:
+>>> -            memset(buf, 0x80, len * info->bytes_per_frame);
+>>> -            break;
+>>> -
+>>> -        case 16:
+>>> -            {
+>>> -                int i;
+>>> -                uint16_t *p = buf;
+>>> -                short s = INT16_MAX;
+>>> -
+>>> -                if (info->swap_endianness) {
+>>> -                    s = bswap16 (s);
+>>> -                }
+>>> -
+>>> -                for (i = 0; i < len * info->nchannels; i++) {
+>>> -                    p[i] = s;
+>>> -                }
+>>> -            }
+>>> -            break;
+>>> +    switch (info->af) {
+>>> +    case AUDIO_FORMAT_U8:
+>>> +        memset(buf, 0x80, len * info->bytes_per_frame);
+>>
+>> This doesn't look right - isn't this the signed version?
+> 
+> No,
+> 
+>>
+>>> +        break;
+>>> +    case AUDIO_FORMAT_U16: {
+>>> +        int i;
+>>> +        uint16_t *p = buf;
+>>> +        short s = INT16_MAX;
+>>>
+>>> -        case 32:
+>>> -            {
+>>> -                int i;
+>>> -                uint32_t *p = buf;
+>>> -                int32_t s = INT32_MAX;
+>>> +        if (info->swap_endianness) {
+>>> +            s = bswap16(s);
+>>> +        }
+>>>
+>>> -                if (info->swap_endianness) {
+>>> -                    s = bswap32 (s);
+>>> -                }
+>>> +        for (i = 0; i < len * info->nchannels; i++) {
+>>> +            p[i] = s;
+>>> +        }
+>>
+>> I think this is signed too?
+>>
+>>> +        break;
+>>> +    }
+>>> +    case AUDIO_FORMAT_U32: {
+>>> +        int i;
+>>> +        uint32_t *p = buf;
+>>> +        int32_t s = INT32_MAX;
+>>>
+>>> -                for (i = 0; i < len * info->nchannels; i++) {
+>>> -                    p[i] = s;
+>>> -                }
+>>> -            }
+>>> -            break;
+>>> +        if (info->swap_endianness) {
+>>> +            s = bswap32(s);
+>>> +        }
+>>>
+>>> -        default:
+>>> -            AUD_log (NULL, "audio_pcm_info_clear_buf: invalid bits %d\n",
+>>> -                     info->bits);
+>>> -            break;
+>>> +        for (i = 0; i < len * info->nchannels; i++) {
+>>> +            p[i] = s;
+>>>            }
+>>
+>> And also here.
+>>
+>>> +        break;
+>>> +    }
+>>> +    case AUDIO_FORMAT_S8:
+>>> +    case AUDIO_FORMAT_S16:
+>>> +    case AUDIO_FORMAT_S32:
+>>> +    case AUDIO_FORMAT_F32:
+>>> +        memset(buf, 0x00, len * info->bytes_per_frame);
+>>
+>> ... and this the unsigned version? I think they've been swapped.
+> 
+> no, unsigned PCM use mid-range value for zero.
+
+Sigh. Yes of course you're right, sorry for the noise.
+
+>>> +        break;
+>>> +    case AUDIO_FORMAT__MAX:
+>>> +        g_assert_not_reached();
+>>
+>> This looks more like I would expect, although possibly replace the case
+>> with a default? I expect that another assert() would have tripped by now
+>> with real usage if AUDIO_FORMAT__MAX were specified, but I think it
+>> would be good to be consistent.
+> 
+> Unfortunately, the compiler complains for non-void functions if you
+> don't finish the function with the g_assert_not_reached().
+> 
+>>
+>>>        }
+>>>    }
+>>>
+>>> @@ -719,8 +651,8 @@ static size_t audio_pcm_sw_write(SWVoiceOut *sw, void *buf, size_t buf_len)
+>>>    #ifdef DEBUG_AUDIO
+>>>    static void audio_pcm_print_info (const char *cap, struct audio_pcm_info *info)
+>>>    {
+>>> -    dolog("%s: bits %d, sign %d, float %d, freq %d, nchan %d\n",
+>>> -          cap, info->bits, info->is_signed, info->is_float, info->freq,
+>>> +    dolog("%s: %s, freq %d, nchan %d\n",
+>>> +          cap, AudioFormat_str(info->af), info->freq,
+>>>              info->nchannels);
+>>
+>> More dolog. Presumably this gets converted to error_report() later?
+>>
+>>>    }
+>>>    #endif
+>>> @@ -1759,15 +1691,15 @@ static CaptureVoiceOut *audio_mixeng_backend_add_capture(
+>>>
+>>>            cap->buf = g_malloc0_n(hw->mix_buf.size, hw->info.bytes_per_frame);
+>>>
+>>> -        if (hw->info.is_float) {
+>>> +        if (audio_format_is_float(hw->info.af)) {
+>>>                hw->clip = mixeng_clip_float[hw->info.nchannels == 2]
+>>>                    [hw->info.swap_endianness];
+>>>            } else {
+>>>                hw->clip = mixeng_clip
+>>>                    [hw->info.nchannels == 2]
+>>> -                [hw->info.is_signed]
+>>> +                [audio_format_is_signed(hw->info.af)]
+>>>                    [hw->info.swap_endianness]
+>>> -                [audio_bits_to_index(hw->info.bits)];
+>>> +                [audio_format_to_index(hw->info.af)];
+>>>            }
+>>>
+>>>            QLIST_INSERT_HEAD (&s->cap_head, cap, entries);
+>>> @@ -1869,29 +1801,6 @@ audsettings audiodev_to_audsettings(AudiodevPerDirectionOptions *pdo)
+>>>        };
+>>>    }
+>>>
+>>> -int audioformat_bytes_per_sample(AudioFormat fmt)
+>>> -{
+>>> -    switch (fmt) {
+>>> -    case AUDIO_FORMAT_U8:
+>>> -    case AUDIO_FORMAT_S8:
+>>> -        return 1;
+>>> -
+>>> -    case AUDIO_FORMAT_U16:
+>>> -    case AUDIO_FORMAT_S16:
+>>> -        return 2;
+>>> -
+>>> -    case AUDIO_FORMAT_U32:
+>>> -    case AUDIO_FORMAT_S32:
+>>> -    case AUDIO_FORMAT_F32:
+>>> -        return 4;
+>>> -
+>>> -    case AUDIO_FORMAT__MAX:
+>>> -        ;
+>>> -    }
+>>> -    abort();
+>>> -}
+>>> -
+>>> -
+>>>    /* frames = freq * usec / 1e6 */
+>>>    int audio_buffer_frames(AudiodevPerDirectionOptions *pdo,
+>>>                            audsettings *as, int def_usecs)
+>>> @@ -1914,8 +1823,7 @@ int audio_buffer_samples(AudiodevPerDirectionOptions *pdo,
+>>>    int audio_buffer_bytes(AudiodevPerDirectionOptions *pdo,
+>>>                           audsettings *as, int def_usecs)
+>>>    {
+>>> -    return audio_buffer_samples(pdo, as, def_usecs) *
+>>> -        audioformat_bytes_per_sample(as->fmt);
+>>> +    return audio_buffer_samples(pdo, as, def_usecs) * audio_format_bits(as->fmt) / 8;
+>>>    }
+>>>
+>>>    void audio_rate_start(RateCtl *rate)
+>>> diff --git a/audio/dbusaudio.c b/audio/dbusaudio.c
+>>> index e284542b2dd..72d6194033b 100644
+>>> --- a/audio/dbusaudio.c
+>>> +++ b/audio/dbusaudio.c
+>>> @@ -147,9 +147,9 @@ dbus_init_out_listener(QemuDBusDisplay1AudioOutListener *listener,
+>>>        qemu_dbus_display1_audio_out_listener_call_init(
+>>>            listener,
+>>>            (uintptr_t)hw,
+>>> -        hw->info.bits,
+>>> -        hw->info.is_signed,
+>>> -        hw->info.is_float,
+>>> +        audio_format_bits(hw->info.af),
+>>> +        audio_format_is_signed(hw->info.af),
+>>> +        audio_format_is_float(hw->info.af),
+>>>            hw->info.freq,
+>>>            hw->info.nchannels,
+>>>            hw->info.bytes_per_frame,
+>>> @@ -273,9 +273,9 @@ dbus_init_in_listener(QemuDBusDisplay1AudioInListener *listener, HWVoiceIn *hw)
+>>>        qemu_dbus_display1_audio_in_listener_call_init(
+>>>            listener,
+>>>            (uintptr_t)hw,
+>>> -        hw->info.bits,
+>>> -        hw->info.is_signed,
+>>> -        hw->info.is_float,
+>>> +        audio_format_bits(hw->info.af),
+>>> +        audio_format_is_signed(hw->info.af),
+>>> +        audio_format_is_float(hw->info.af),
+>>>            hw->info.freq,
+>>>            hw->info.nchannels,
+>>>            hw->info.bytes_per_frame,
+>>> diff --git a/audio/coreaudio.m b/audio/coreaudio.m
+>>> index 40d7986b1d7..08bab353831 100644
+>>> --- a/audio/coreaudio.m
+>>> +++ b/audio/coreaudio.m
+>>> @@ -359,7 +359,7 @@ static OSStatus init_out_device(coreaudioVoiceOut *core)
+>>>        AudioValueRange frameRange;
+>>>
+>>>        AudioStreamBasicDescription streamBasicDescription = {
+>>> -        .mBitsPerChannel = core->hw.info.bits,
+>>> +        .mBitsPerChannel = audio_format_bits(core->hw.info.af),
+>>>            .mBytesPerFrame = core->hw.info.bytes_per_frame,
+>>>            .mBytesPerPacket = core->hw.info.bytes_per_frame,
+>>>            .mChannelsPerFrame = core->hw.info.nchannels,
+
+Having said that, given that the unsigned/signed bit is actually 
+correct, then regardless of the final form of the switch() statements 
+then this seems okay:
+
+Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+
+
+ATB,
+
+Mark.
 
 
