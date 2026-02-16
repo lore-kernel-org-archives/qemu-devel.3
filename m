@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53E48E83840
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 22:52:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D96EEE83840
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 22:53:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vs7SH-0001hs-GW; Mon, 16 Feb 2026 17:52:37 -0500
+	id 1vs7SW-0001oQ-RG; Mon, 16 Feb 2026 17:52:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vs7SE-0001hP-3f
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 17:52:35 -0500
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vs7SV-0001no-6l
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 17:52:51 -0500
+Received: from mail-wr1-x442.google.com ([2a00:1450:4864:20::442])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vs7SC-0006Qr-IS
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 17:52:33 -0500
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-4837584120eso23470625e9.1
- for <qemu-devel@nongnu.org>; Mon, 16 Feb 2026 14:52:32 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vs7ST-0006SQ-7u
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 17:52:50 -0500
+Received: by mail-wr1-x442.google.com with SMTP id
+ ffacd0b85a97d-436309f1ad7so2953686f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 16 Feb 2026 14:52:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771282351; x=1771887151; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=FvpYsvVz0njvhav/k+RkLNonp6k+us6Bz/UhZrU2Jio=;
- b=DO4J3m4cr8QPr+wV2TA6QEmk+MPXOQJilBoC7x3vufUup56Ybh0u6/+4ohEY5O6Iou
- Se2TneRm3DOJj14b4Rv0cfb7C0oVPoDlihtnuAtrdPIYvU1+VN+gbDch5DvU65tC4wh/
- 4MdbbHLbsRlzcSAX9CaZxjOVGrQfAPoMGSd6KKYtbR8Yo+vwMzSL+H3wL6zo1QG7oN0L
- uBw4HjkhADXVQhJSbcpfyz6F/guS2/OtBwRchT8yFjiUyVG5/fX47cAGZRCHkAvmjrc6
- CTGHL4wTLel+v85RMUrPqzLWvQgLqT1T5ahZk7F5hh8OOBYOoL/LtFSxachWYxFSg+Sz
- 7HJA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771282351; x=1771887151;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1771282367; x=1771887167; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=FvpYsvVz0njvhav/k+RkLNonp6k+us6Bz/UhZrU2Jio=;
- b=H6rjTRHCQrwgXMeDnf+F7lHuo2pfXXG9wytgjZAHgOBZ4dvfvjB6+rEmRNZlu/7Lmx
- v+a/ZMQ80ELmdXd6mh43GhiYhRlqDVU+iAWA6N40BBXanmYGJiZpbRr0nEGPBn9UYCVV
- DCFSfyCXr/yYA4xzFLYsNzS5KWyiRvRtXTa7dRMctBahhp1nDiij5Z4BUr0N+xo8M4Sq
- s+yQosHeMoH2pzCF8OfLldM0c0ZcHCuYbolWG09P+5a30RgaF6rD0GOXZ1BKTCoC6UVk
- OjBf54JBr7AMW3xvKI0j9LK6Nvde0aLlGhQhCXvN/gVVgpy/1JCXwQQo60ZjmKCvh3Jc
- cWJg==
-X-Gm-Message-State: AOJu0Yw/C1SKUTFlHyOyluOBtWL3MSSLFp7CvuvCQE+B0U0B+aiBYE0h
- 6RiyE54FoDYWox4t/yil0av+FFeNftJk7v8KSz0dblq+d3oHQ51CgtEfbWmJ1jMo6CeXhL8CA5V
- xpf+Seio=
-X-Gm-Gg: AZuq6aJi4PLKN3pmSMxA4I/JeqmyhGplE8QhtTwccV9eNxC9S2C+pOHY0mszQcAupDM
- H27S4banaCIs/CBkuN0SBnSHH4ZlTwLpcpdJ2BhIahOywlHJm9tFItFBZFF/sjLm/VHCCOf6f2g
- T9AyoZ4s/F4ljW+oU+ecVq631yl784IjC8d0BvZLqvEGUFmLqFUEYwe6FhJvwP2nbjGqChoyzKD
- J/0k1PSmyuuFMh1xDj4LSfS6PWRIqJXJvurkU75IH0p4auFvYmEoYOr62a5vhaVdPCxPKkXuRBd
- XQWqRyZrRjdw2kjBf27b8QFwebuuU/alJaffTzgavUyljYA2oobi5C2pNE9Ba8F5jDplil+FdxO
- hWvLg3uY4eWLMa+F/4nE/0+3CVnSC3in7fW1aTcnNjCse3qD8RgrMW/2d278e/EVOZiEur1LFJ8
- tVMk3rlSE3yPLPOJUzA49mm9HXQD2tCw5+5xxYrcWGx0MjCtZPFB+X5aAF/6yW7RGatjVvjK+Na
- j6QrmTEDrw=
-X-Received: by 2002:a05:600c:8b30:b0:480:1c69:9d36 with SMTP id
- 5b1f17b1804b1-48379bd7462mr165446135e9.17.1771282350586; 
- Mon, 16 Feb 2026 14:52:30 -0800 (PST)
+ bh=e9RadEY770T8BkT80nF7ZFO+SaaJXMTONCcTkYs0sK4=;
+ b=a9rY5x3e1nGjCmF5TBHm3q53odWbiLd5vGWi3pkAcBalSkIJcWHeL6WbhdqWfFzNLn
+ kp2Ss4tc1by9idMWevoWyrN4TZi17AE5/cNjC98ganGyuc9t5rGQlnWSUfh/hx2+mdwY
+ jlR8YvQdrYRnRxxtm1d6k05j39L9ojrklpd9IjuuZqH+ftHxcuvyka+t5MewJRkRlxxU
+ Etzp9HVqVGFlZXfUJ1WhXDcGhFfeXADF82uuHMcXn9NQgI7FCU7csbkRgJIBUBEFGUqp
+ ssSR2QEpYbe2gzShnMwy755YFL+HJR1o8YgxdCyadYlvOpcNR43ALiukSH5oAiG0kMeB
+ leFw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1771282367; x=1771887167;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=e9RadEY770T8BkT80nF7ZFO+SaaJXMTONCcTkYs0sK4=;
+ b=wM8qsTNQ/gGDlgigWlmcDj9irmdgPS4Bg5Y1EVkMcUiiS/c2Rl4NEWwqLFKPhqZ+Y9
+ uM9uCBMNvHSDiaFtZ5MlOrrGsdKN/HsD1maUemXxJ7iM7Gp2TLNdsmcYHec8H4cdxlQF
+ ig6xQB6c3pXe3VB9o6YdCRctwNStd9TpfBdpJt5MRuICHz2rQdqRYLEF76LoD/yS6D6i
+ yi2DtJGYFt27VCqrnNjZcUyzU+gCD6TNddhihI4zRyZ+Nuc4de1sdKTNOotihUS8er8E
+ kdlNw364q/3B1dTXJzN+ignsR111u1Db2uZr5XMmxGxMDiA0L3BiqikgebaAn9HWyHIO
+ vqZA==
+X-Gm-Message-State: AOJu0Yw7uNhl4MVCxeMGe5hsX3p6yJu4bawr/C9o5GS+eknYxrsAOYmg
+ Lwo0hWkKZ9R9EjiyO4zK8N9AOG54Abfibhs0dE8R15Lxz9ngFD6iPX8hOBE8Avh7LXh5DNzW/YB
+ elmpRugA=
+X-Gm-Gg: AZuq6aJOZTg7BGl7FqWh+MWxuoD4WfJgg1ue+yuATcprskR3BMOSKNlOS8JIJblr2G6
+ sDWm0uXh13B98DB0lkdxtEDx/+HU+7+uOvsSjfcX7QA7FJqldCcqD2+5xV/WcKsbi5Gj3ypV1wK
+ 5V3OEwDoKvYsBwP83AfDyfumhAQCv/qbdHEmkb3yTWwWfn7kiErsBYt+a2etg1mmYBfJ5oM+AhX
+ wu+Wvk4dxAKBhuylTklV7N7DF3VxkVP+4bix7v6p3ADeiKLBBaA3OFEuRLQ9FhetM1NAoVrgyer
+ uMFYBOVtBPl2Ik7htx12Od4B1W08GP8m/0wF6P0qrmc4/cSVFwpr8ZdhMJPIp/YsiY1EnKVEsU+
+ WzBrBD7tOPpTSk5fRu5chS9Eorkx8o1ZYGxuQojXCEJgemKI9PE0IzQaI5MjFpmSGgTxEoJoBjd
+ WV2bKCzeQ0iJkjerJmpgJHduVLLEKmNZSS5RZgc+yGteHuPpvawWys0iCcAj8auN0XIeiKuP72
+X-Received: by 2002:a05:6000:1ace:b0:437:6963:a115 with SMTP id
+ ffacd0b85a97d-4379dba6814mr17409563f8f.42.1771282367365; 
+ Mon, 16 Feb 2026 14:52:47 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43796ad0166sm30751164f8f.35.2026.02.16.14.52.29
+ ffacd0b85a97d-43796a5acaasm27211976f8f.6.2026.02.16.14.52.45
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 16 Feb 2026 14:52:29 -0800 (PST)
+ Mon, 16 Feb 2026 14:52:46 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Laurent Vivier <laurent@vivier.eu>,
@@ -78,23 +78,24 @@ Cc: Laurent Vivier <laurent@vivier.eu>,
  Paolo Bonzini <pbonzini@redhat.com>, unisono@quyllur.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-ppc@nongnu.org
-Subject: [PATCH 00/11] monitor/hmp: Automatically handle gdb-xml exposed
- registers
-Date: Mon, 16 Feb 2026 23:52:16 +0100
-Message-ID: <20260216225228.53959-1-philmd@linaro.org>
+Subject: [PATCH 02/11] target/sparc: Restore 'gdb-xml/sparc64-cp0.xml'
+Date: Mon, 16 Feb 2026 23:52:18 +0100
+Message-ID: <20260216225228.53959-3-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20260216225228.53959-1-philmd@linaro.org>
+References: <20260216225228.53959-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::442;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x442.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,59 +111,353 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-MonitorDef registers parsing is one of the oldest APIs in QEMU,
-thus predates gdbstub and XML register files. The latters are
-maintained by the GDB/binutils project and are more up-to-date.
-Getting the target register list from them allows to expose
-all accessible registers to the HMP commands.
+Restore gdb-xml/sparc64-cp0.xml from mainstream binutils, tag
+'binutils-2_46', found in the gdb/features/sparc/folder [*].
 
-This series adds gdb_get_register() to monitor to use XML
-generated registers, and remove the legacy MonitorDef entries
-which became unreachable.
+Extract sparc_cp0_gdb_write_register() out of
+sparc_cpu_gdb_read_register() and sparc_cp0_gdb_write_register()
+out of sparc_cpu_gdb_write_register(), taking care to update the
+register indexes in the switch cases.
 
-First we need to have the SPARC target better follow the
-gdb-xml API.
+Register these helpers with a call to gdb_register_coprocessor()
+in sparc_cpu_register_gdb_regs().
 
-Philippe Mathieu-Daudé (11):
-  target/sparc: Introduce sparc_cpu_register_gdb_regs() stub
-  target/sparc: Restore 'gdb-xml/sparc64-cp0.xml'
-  target/sparc: Restore 'gdb-xml/sparc64-fpu.xml'
-  target/sparc: Restore 'gdb-xml/sparc64-cpu.xml'
-  target/sparc: Expose gdbstub registers to sparc32plus target
-  target/sparc: Expose gdbstub registers to sparc32 targets
-  monitor/hmp: Handle gdb-xml exposed registers via  gdb_get_register()
-  target/sparc: Remove MonitorDef register entries available via gdbstub
-  target/i386: Remove MonitorDef register entries available via gdbstub
-  target/m68k: Remove MonitorDef register entries available via gdbstub
-  target/ppc: Remove MonitorDef register entries available via gdbstub
+[*] https://sourceware.org/git/?p=binutils-gdb.git;a=tree;f=gdb/features/sparc;hb=refs/tags/binutils-2_46
 
- configs/targets/sparc-linux-user.mak          |   1 +
- configs/targets/sparc-softmmu.mak             |   1 +
- configs/targets/sparc32plus-linux-user.mak    |   1 +
- configs/targets/sparc64-linux-user.mak        |   2 +-
- configs/targets/sparc64-softmmu.mak           |   2 +-
- target/sparc/cpu.h                            |   1 +
- monitor/hmp.c                                 |  49 ++-
- target/i386/monitor.c                         |  35 ---
- target/m68k/monitor.c                         |  18 --
- target/ppc/ppc-qmp-cmds.c                     |   5 -
- target/sparc/cpu.c                            |   9 +-
- target/sparc/gdbstub.c                        | 295 +++++++++++-------
- target/sparc/monitor.c                        | 107 -------
- gdb-xml/sparc32-cp0.xml                       |  18 ++
- gdb-xml/sparc32-cpu.xml                       |  42 +++
- gdb-xml/sparc32-fpu.xml                       |  42 +++
- gdb-xml/sparc64-cp0.xml                       |  16 +
- gdb-xml/sparc64-cpu.xml                       |  42 +++
- gdb-xml/{sparc64-core.xml => sparc64-fpu.xml} |  44 +--
- 19 files changed, 403 insertions(+), 327 deletions(-)
- create mode 100644 gdb-xml/sparc32-cp0.xml
- create mode 100644 gdb-xml/sparc32-cpu.xml
- create mode 100644 gdb-xml/sparc32-fpu.xml
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ configs/targets/sparc64-linux-user.mak |   2 +-
+ configs/targets/sparc64-softmmu.mak    |   2 +-
+ target/sparc/cpu.c                     |   2 +-
+ target/sparc/gdbstub.c                 | 193 ++++++++++++++-----------
+ gdb-xml/sparc64-core.xml               |   7 -
+ gdb-xml/sparc64-cp0.xml                |  16 ++
+ 6 files changed, 131 insertions(+), 91 deletions(-)
  create mode 100644 gdb-xml/sparc64-cp0.xml
- create mode 100644 gdb-xml/sparc64-cpu.xml
- rename gdb-xml/{sparc64-core.xml => sparc64-fpu.xml} (59%)
 
+diff --git a/configs/targets/sparc64-linux-user.mak b/configs/targets/sparc64-linux-user.mak
+index 3bbd8495210..930f7e13ab9 100644
+--- a/configs/targets/sparc64-linux-user.mak
++++ b/configs/targets/sparc64-linux-user.mak
+@@ -4,6 +4,6 @@ TARGET_ABI_DIR=sparc
+ TARGET_SYSTBL_ABI=common,64
+ TARGET_SYSTBL=syscall.tbl
+ TARGET_BIG_ENDIAN=y
+-TARGET_XML_FILES=gdb-xml/sparc64-core.xml
++TARGET_XML_FILES=gdb-xml/sparc64-core.xml gdb-xml/sparc64-cp0.xml
+ TARGET_LONG_BITS=64
+ TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API=y
+diff --git a/configs/targets/sparc64-softmmu.mak b/configs/targets/sparc64-softmmu.mak
+index 8a0290c2093..22e7f3c94a7 100644
+--- a/configs/targets/sparc64-softmmu.mak
++++ b/configs/targets/sparc64-softmmu.mak
+@@ -1,7 +1,7 @@
+ TARGET_ARCH=sparc64
+ TARGET_BASE_ARCH=sparc
+ TARGET_BIG_ENDIAN=y
+-TARGET_XML_FILES=gdb-xml/sparc64-core.xml
++TARGET_XML_FILES=gdb-xml/sparc64-core.xml gdb-xml/sparc64-cp0.xml
+ TARGET_LONG_BITS=64
+ TARGET_NOT_USING_LEGACY_LDST_PHYS_API=y
+ TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API=y
+diff --git a/target/sparc/cpu.c b/target/sparc/cpu.c
+index f58d0298966..6f7b250abb3 100644
+--- a/target/sparc/cpu.c
++++ b/target/sparc/cpu.c
+@@ -1094,7 +1094,7 @@ static void sparc_cpu_class_init(ObjectClass *oc, const void *data)
+ 
+ #if defined(TARGET_SPARC64) && !defined(TARGET_ABI32)
+     cc->gdb_core_xml_file = "sparc64-core.xml";
+-    cc->gdb_num_core_regs = 86;
++    cc->gdb_num_core_regs = 80;
+ #else
+     cc->gdb_num_core_regs = 72;
+ #endif
+diff --git a/target/sparc/gdbstub.c b/target/sparc/gdbstub.c
+index 79d661fbc10..bdd759dd0a9 100644
+--- a/target/sparc/gdbstub.c
++++ b/target/sparc/gdbstub.c
+@@ -18,6 +18,7 @@
+  * License along with this library; if not, see <http://www.gnu.org/licenses/>.
+  */
+ #include "qemu/osdep.h"
++#include "exec/gdbstub.h"
+ #include "cpu.h"
+ #include "gdbstub/helpers.h"
+ 
+@@ -48,27 +49,6 @@ int sparc_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
+             return gdb_get_reg32(mem_buf, env->fpr[(n - 32) / 2].l.upper);
+         }
+     }
+-    /* Y, PSR, WIM, TBR, PC, NPC, FPSR, CPSR */
+-    switch (n) {
+-    case 64:
+-        return gdb_get_rega(mem_buf, env->y);
+-    case 65:
+-        return gdb_get_rega(mem_buf, cpu_get_psr(env));
+-    case 66:
+-        return gdb_get_rega(mem_buf, env->wim);
+-    case 67:
+-        return gdb_get_rega(mem_buf, env->tbr);
+-    case 68:
+-        return gdb_get_rega(mem_buf, env->pc);
+-    case 69:
+-        return gdb_get_rega(mem_buf, env->npc);
+-    case 70:
+-        return gdb_get_rega(mem_buf, cpu_get_fsr(env));
+-    case 71:
+-        return gdb_get_rega(mem_buf, 0); /* csr */
+-    default:
+-        return gdb_get_rega(mem_buf, 0);
+-    }
+ #else
+     if (n < 64) {
+         /* f0-f31 */
+@@ -87,21 +67,51 @@ int sparc_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
+          */
+         return gdb_get_reg64(mem_buf, env->fpr[(n - 64) + 16].ll);
+     }
++#endif
++    return 0;
++}
++
++__attribute__((unused))
++static int sparc_cp0_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
++{
++    CPUSPARCState *env = cpu_env(cs);
++
++#if defined(TARGET_ABI32) || !defined(TARGET_SPARC64)
++    /* Y, PSR, WIM, TBR, PC, NPC, FPSR, CPSR */
+     switch (n) {
+-    case 80:
++    case 0:
++        return gdb_get_rega(mem_buf, env->y);
++    case 1:
++        return gdb_get_rega(mem_buf, cpu_get_psr(env));
++    case 2:
++        return gdb_get_rega(mem_buf, env->wim);
++    case 3:
++        return gdb_get_rega(mem_buf, env->tbr);
++    case 4:
++        return gdb_get_rega(mem_buf, env->pc);
++    case 5:
++        return gdb_get_rega(mem_buf, env->npc);
++    case 6:
++        return gdb_get_rega(mem_buf, cpu_get_fsr(env));
++    case 7:
++        return gdb_get_rega(mem_buf, 0); /* csr */
++    }
++#else
++    switch (n) {
++    case 0:
+         return gdb_get_regl(mem_buf, env->pc);
+-    case 81:
++    case 1:
+         return gdb_get_regl(mem_buf, env->npc);
+-    case 82:
++    case 2:
+         return gdb_get_regl(mem_buf, (cpu_get_ccr(env) << 32) |
+                                      ((env->asi & 0xff) << 24) |
+                                      ((env->pstate & 0xfff) << 8) |
+                                      cpu_get_cwp64(env));
+-    case 83:
++    case 3:
+         return gdb_get_regl(mem_buf, cpu_get_fsr(env));
+-    case 84:
++    case 4:
+         return gdb_get_regl(mem_buf, env->fprs);
+-    case 85:
++    case 5:
+         return gdb_get_regl(mem_buf, env->y);
+     }
+ #endif
+@@ -138,33 +148,6 @@ int sparc_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
+         } else {
+             env->fpr[(n - 32) / 2].l.upper = tmp;
+         }
+-    } else {
+-        /* Y, PSR, WIM, TBR, PC, NPC, FPSR, CPSR */
+-        switch (n) {
+-        case 64:
+-            env->y = tmp;
+-            break;
+-        case 65:
+-            cpu_put_psr(env, tmp);
+-            break;
+-        case 66:
+-            env->wim = tmp;
+-            break;
+-        case 67:
+-            env->tbr = tmp;
+-            break;
+-        case 68:
+-            env->pc = tmp;
+-            break;
+-        case 69:
+-            env->npc = tmp;
+-            break;
+-        case 70:
+-            cpu_put_fsr(env, tmp);
+-            break;
+-        default:
+-            return 0;
+-        }
+     }
+     return 4;
+ #else
+@@ -185,32 +168,77 @@ int sparc_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
+          * n == 79: f62 : env->fpr[31]
+          */
+         env->fpr[(n - 64) + 16].ll = tmp;
+-    } else {
+-        switch (n) {
+-        case 80:
+-            env->pc = tmp;
+-            break;
+-        case 81:
+-            env->npc = tmp;
+-            break;
+-        case 82:
+-            cpu_put_ccr(env, tmp >> 32);
+-            env->asi = (tmp >> 24) & 0xff;
+-            env->pstate = (tmp >> 8) & 0xfff;
+-            cpu_put_cwp64(env, tmp & 0xff);
+-            break;
+-        case 83:
+-            cpu_put_fsr(env, tmp);
+-            break;
+-        case 84:
+-            env->fprs = tmp;
+-            break;
+-        case 85:
+-            env->y = tmp;
+-            break;
+-        default:
+-            return 0;
+-        }
++    }
++    return 8;
++#endif
++}
++
++__attribute__((unused))
++static int sparc_cp0_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
++{
++    CPUSPARCState *env = cpu_env(cs);
++
++#if defined(TARGET_ABI32) || !defined(TARGET_SPARC64)
++    uint32_t tmp;
++
++    tmp = ldl_p(mem_buf);
++
++    /* Y, PSR, WIM, TBR, PC, NPC, FPSR, CPSR */
++    switch (n) {
++    case 0:
++        env->y = tmp;
++        break;
++    case 1:
++        cpu_put_psr(env, tmp);
++        break;
++    case 2:
++        env->wim = tmp;
++        break;
++    case 3:
++        env->tbr = tmp;
++        break;
++    case 4:
++        env->pc = tmp;
++        break;
++    case 5:
++        env->npc = tmp;
++        break;
++    case 6:
++        cpu_put_fsr(env, tmp);
++        break;
++    default:
++        return 0;
++    }
++    return 4;
++#else
++    uint64_t tmp;
++
++    tmp = ldq_p(mem_buf);
++
++    switch (n) {
++    case 0:
++        env->pc = tmp;
++        break;
++    case 1:
++        env->npc = tmp;
++        break;
++    case 2:
++        cpu_put_ccr(env, tmp >> 32);
++        env->asi = (tmp >> 24) & 0xff;
++        env->pstate = (tmp >> 8) & 0xfff;
++        cpu_put_cwp64(env, tmp & 0xff);
++        break;
++    case 3:
++        cpu_put_fsr(env, tmp);
++        break;
++    case 4:
++        env->fprs = tmp;
++        break;
++    case 5:
++        env->y = tmp;
++        break;
++    default:
++        return 0;
+     }
+     return 8;
+ #endif
+@@ -221,6 +249,9 @@ void sparc_cpu_register_gdb_regs(CPUState *cs)
+ #if defined(TARGET_ABI32) || !defined(TARGET_SPARC64)
+     /* Not yet supported */
+ #else
+-    /* Not yet supported */
++    gdb_register_coprocessor(cs, sparc_cp0_gdb_read_register,
++                             sparc_cp0_gdb_write_register,
++                             gdb_find_static_feature("sparc64-cp0.xml"),
++                             0);
+ #endif
+ }
+diff --git a/gdb-xml/sparc64-core.xml b/gdb-xml/sparc64-core.xml
+index 375b9bb0cc6..1c26d8c01c1 100644
+--- a/gdb-xml/sparc64-core.xml
++++ b/gdb-xml/sparc64-core.xml
+@@ -89,11 +89,4 @@
+   <reg name="f58" bitsize="64" type="ieee_double" regnum="77"/>
+   <reg name="f60" bitsize="64" type="ieee_double" regnum="78"/>
+   <reg name="f62" bitsize="64" type="ieee_double" regnum="79"/>
+-
+-  <reg name="pc" bitsize="64" type="code_ptr" regnum="80"/>
+-  <reg name="npc" bitsize="64" type="code_ptr" regnum="81"/>
+-  <reg name="state" bitsize="64" type="uint64" regnum="82"/>
+-  <reg name="fsr" bitsize="64" type="uint64" regnum="83"/>
+-  <reg name="fprs" bitsize="64" type="uint64" regnum="84"/>
+-  <reg name="y" bitsize="64" type="uint64" regnum="85"/>
+ </feature>
+diff --git a/gdb-xml/sparc64-cp0.xml b/gdb-xml/sparc64-cp0.xml
+new file mode 100644
+index 00000000000..9b938dc7ecc
+--- /dev/null
++++ b/gdb-xml/sparc64-cp0.xml
+@@ -0,0 +1,16 @@
++<?xml version="1.0"?>
++<!-- Copyright (C) 2013-2026 Free Software Foundation, Inc.
++
++     Copying and distribution of this file, with or without modification,
++     are permitted in any medium without royalty provided the copyright
++     notice and this notice are preserved.  -->
++
++<!DOCTYPE feature SYSTEM "gdb-target.dtd">
++<feature name="org.gnu.gdb.sparc.cp0">
++  <reg name="pc" bitsize="64" type="code_ptr" regnum="80"/>
++  <reg name="npc" bitsize="64" type="code_ptr" regnum="81"/>
++  <reg name="state" bitsize="64" type="uint64" regnum="82"/>
++  <reg name="fsr" bitsize="64" type="uint64" regnum="83"/>
++  <reg name="fprs" bitsize="64" type="uint64" regnum="84"/>
++  <reg name="y" bitsize="64" type="uint64" regnum="85"/>
++</feature>
 -- 
 2.52.0
 
