@@ -4,58 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DD70E81A40
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 16:18:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 552F4E81A40
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 16:25:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vs1IE-00056v-LC; Mon, 16 Feb 2026 11:17:50 -0500
+	id 1vs1Pq-00006g-OH; Mon, 16 Feb 2026 11:25:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1vs1Hw-0004dy-Ru; Mon, 16 Feb 2026 11:17:44 -0500
-Received: from frasgout.his.huawei.com ([185.176.79.56])
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vs1Pf-00005i-TQ
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 11:25:32 -0500
+Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1vs1Hl-0007E3-2J; Mon, 16 Feb 2026 11:17:26 -0500
-Received: from mail.maildlp.com (unknown [172.18.224.83])
- by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4fF7F72prqzHnGhT;
- Tue, 17 Feb 2026 00:16:27 +0800 (CST)
-Received: from dubpeml500005.china.huawei.com (unknown [7.214.145.207])
- by mail.maildlp.com (Postfix) with ESMTPS id CFCB940086;
- Tue, 17 Feb 2026 00:16:51 +0800 (CST)
-Received: from localhost (10.203.177.15) by dubpeml500005.china.huawei.com
- (7.214.145.207) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.11; Mon, 16 Feb
- 2026 16:16:50 +0000
-Date: Mon, 16 Feb 2026 16:16:49 +0000
-To: Shameer Kolothum <skolothumtho@nvidia.com>
-CC: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>, <eric.auger@redhat.com>,
- <peter.maydell@linaro.org>, <nicolinc@nvidia.com>, <nathanc@nvidia.com>,
- <mochs@nvidia.com>, <jan@nvidia.com>, <jgg@nvidia.com>,
- <zhangfei.gao@linaro.org>, <zhenzhong.duan@intel.com>, <kjaju@nvidia.com>
-Subject: Re: [PATCH v6 3/5] hw/arm/smmuv3-accel: Allocate vEVENTQ for
- accelerated SMMUv3 devices
-Message-ID: <20260216161649.00005f3a@huawei.com>
-In-Reply-To: <20260213103942.142823-4-skolothumtho@nvidia.com>
-References: <20260213103942.142823-1-skolothumtho@nvidia.com>
- <20260213103942.142823-4-skolothumtho@nvidia.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vs1Pd-0002xX-W1
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 11:25:31 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
+ s=dkim; h=Cc:To:In-Reply-To:References:Message-Id:Content-Transfer-Encoding:
+ Content-Type:MIME-Version:Subject:Date:From:Sender:Reply-To:Content-ID:
+ Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+ :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+ List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
+ List-Help; bh=EVTOqHa20xkuN8pbowvDJdQiy3xQO6bUDITFnBaSXuc=; b=n+37FUAWwKePGs0
+ nHPsT1rEsDG5UTRFExjNetqQ1HVDvqmevsCz0Ixavwm7LUmHUbL+aboAOKSm6jQX6REprCS3VQy3Q
+ 1wGlY6toz6bVtjP4I4AUCA5Trinb0VTrPEWH94O9YwB1kP7LTSQ4D8lR+Qt15mOPzvNGws2AeCaAL
+ Qo=;
+Date: Mon, 16 Feb 2026 17:28:43 +0100
+Subject: [PATCH v5 6/7] hw/riscv: Set IOMMU PAS via property
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.203.177.15]
-X-ClientProxiedBy: lhrpeml100010.china.huawei.com (7.191.174.197) To
- dubpeml500005.china.huawei.com (7.214.145.207)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Message-Id: <20260216-phys_addr-v5-6-29d522f1339c@rev.ng>
+References: <20260216-phys_addr-v5-0-29d522f1339c@rev.ng>
+In-Reply-To: <20260216-phys_addr-v5-0-29d522f1339c@rev.ng>
+To: qemu-devel@nongnu.org
+Cc: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Helge Deller <deller@gmx.de>, Paolo Bonzini <pbonzini@redhat.com>, 
+ Song Gao <gaosong@loongson.cn>, Bibo Mao <maobibo@loongson.cn>, 
+ Palmer Dabbelt <palmer@dabbelt.com>, 
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Brian Cain <brian.cain@oss.qualcomm.com>, 
+ Chao Liu <chao.liu.zevorn@gmail.com>, Anton Johansson <anjo@rev.ng>
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1771259335; l=4218;
+ i=anjo@rev.ng; s=20260210; h=from:subject:message-id;
+ bh=RhMMm25hymELLHUlU6FHekc0cJ209Hl5oXPKQXPtiO8=;
+ b=d2IrUkT1+OR9FQ3dSt4Cc6vW4nBFIpYOVw+i8TUxpXisJ9xQvLSytdC6rxvryAk/KGm13W+hk
+ LpcLaUSj7mPDJnV+2JeW9U6oEjwxWXmN6WIowLmthSuf/I3GipGaDBD
+X-Developer-Key: i=anjo@rev.ng; a=ed25519;
+ pk=dKsZvj/g3kgDxnV1/SWg8a0YNGSpWtFGNsWIepQYKow=
+Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
+ helo=rev.ng
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -68,44 +73,108 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <jonathan.cameron@huawei.com>
-From:  Jonathan Cameron via qemu development <qemu-devel@nongnu.org>
+Reply-to:  Anton Johansson <anjo@rev.ng>
+From:  Anton Johansson via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 13 Feb 2026 10:39:40 +0000
-Shameer Kolothum <skolothumtho@nvidia.com> wrote:
+Replaces the only remaining use of TARGET_PHYS_ADDR_SPACE_BITS for RISCV
+with a property RISCVIOMMUState::pas_bits that gets written to the
+capabilities field upon device realization.  This write needs to happen
+at realize-time to ensure the property has been set.
 
-> From: Nicolin Chen <nicolinc@nvidia.com>
-> 
-> When the guest enables the Event Queue and a vIOMMU is present, allocate a
-> vEVENTQ object so that host-side events related to the vIOMMU can be
-> received and propagated back to the guest.
-> 
-> For cold-plugged devices using SMMUv3 acceleration, the vIOMMU is created
-> before the guest boots. In this case, the vEVENTQ is allocated when the
-> guest writes to SMMU_CR0 and sets EVENTQEN = 1.
-> 
-> If no cold-plugged device exists at boot (i.e. no vIOMMU initially), the
-> vEVENTQ is allocated when a vIOMMU is created, i.e. during the first
-> device hot-plug.
-> 
-> Also, rename the local error variable and refactor smmu_writel() to use
-> a single error accumulator with error_propagate().
+For the virt machine and sysbus device, pas_bits is set by
+virt_machine_init() to either 34 or 56 bits, retaining previous behaviour.
+However, for the PCI device we do not have access to the CPU state, and
+instead use the maximum riscv64 value of 56 bits.
 
-Why not split the rename out as a separate patch?  I don't hugely mind just
-feels like some noise in here could have been broken out before the real
-change and made it a tiny bit easier to review.
+Signed-off-by: Anton Johansson <anjo@rev.ng>
+---
+ hw/riscv/riscv-iommu.h     | 1 +
+ hw/riscv/riscv-iommu-pci.c | 3 +++
+ hw/riscv/riscv-iommu.c     | 8 ++++----
+ hw/riscv/virt.c            | 7 +++++++
+ 4 files changed, 15 insertions(+), 4 deletions(-)
 
-I wouldn't bother unless you are respinning again for other reasons though!
+diff --git a/hw/riscv/riscv-iommu.h b/hw/riscv/riscv-iommu.h
+index 2dabd86941..2a9f6fccd5 100644
+--- a/hw/riscv/riscv-iommu.h
++++ b/hw/riscv/riscv-iommu.h
+@@ -34,6 +34,7 @@ struct RISCVIOMMUState {
+     /*< public >*/
+     uint32_t version;     /* Reported interface version number */
+     uint32_t pid_bits;    /* process identifier width */
++    uint32_t pas_bits;    /* physical address bits */
+     uint32_t bus;         /* PCI bus mapping for non-root endpoints */
+ 
+     uint64_t cap;         /* IOMMU supported capabilities */
+diff --git a/hw/riscv/riscv-iommu-pci.c b/hw/riscv/riscv-iommu-pci.c
+index 5f7d359204..14dd5f3857 100644
+--- a/hw/riscv/riscv-iommu-pci.c
++++ b/hw/riscv/riscv-iommu-pci.c
+@@ -158,6 +158,9 @@ static void riscv_iommu_pci_init(Object *obj)
+ 
+     iommu->icvec_avail_vectors = RISCV_IOMMU_PCI_ICVEC_VECTORS;
+     riscv_iommu_set_cap_igs(iommu, RISCV_IOMMU_CAP_IGS_MSI);
++
++    /* Report maximum physical address size of riscv64 */
++    iommu->pas_bits = 56;
+ }
+ 
+ static const Property riscv_iommu_pci_properties[] = {
+diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
+index b46b337375..98345b1280 100644
+--- a/hw/riscv/riscv-iommu.c
++++ b/hw/riscv/riscv-iommu.c
+@@ -2453,10 +2453,6 @@ static void riscv_iommu_instance_init(Object *obj)
+     /* Enable translation debug interface */
+     s->cap = RISCV_IOMMU_CAP_DBG;
+ 
+-    /* Report QEMU target physical address space limits */
+-    s->cap = set_field(s->cap, RISCV_IOMMU_CAP_PAS,
+-                       TARGET_PHYS_ADDR_SPACE_BITS);
+-
+     /* TODO: method to report supported PID bits */
+     s->pid_bits = 8; /* restricted to size of MemTxAttrs.pid */
+     s->cap |= RISCV_IOMMU_CAP_PD8;
+@@ -2487,6 +2483,9 @@ static void riscv_iommu_realize(DeviceState *dev, Error **errp)
+ {
+     RISCVIOMMUState *s = RISCV_IOMMU(dev);
+ 
++    /* Report QEMU target physical address space limits. */
++    s->cap = set_field(s->cap, RISCV_IOMMU_CAP_PAS, s->pas_bits);
++
+     s->cap |= s->version & RISCV_IOMMU_CAP_VERSION;
+     if (s->enable_msi) {
+         s->cap |= RISCV_IOMMU_CAP_MSI_FLAT | RISCV_IOMMU_CAP_MSI_MRIF;
+@@ -2645,6 +2644,7 @@ void riscv_iommu_reset(RISCVIOMMUState *s)
+ static const Property riscv_iommu_properties[] = {
+     DEFINE_PROP_UINT32("version", RISCVIOMMUState, version,
+         RISCV_IOMMU_SPEC_DOT_VER),
++    DEFINE_PROP_UINT32("pas-bits", RISCVIOMMUState, pas_bits, 0),
+     DEFINE_PROP_UINT32("bus", RISCVIOMMUState, bus, 0x0),
+     DEFINE_PROP_UINT32("ioatc-limit", RISCVIOMMUState, iot_limit,
+         LIMIT_CACHE_IOT),
+diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+index 07e66b3936..bbce2fb667 100644
+--- a/hw/riscv/virt.c
++++ b/hw/riscv/virt.c
+@@ -1739,6 +1739,13 @@ static void virt_machine_init(MachineState *machine)
+         object_property_set_link(OBJECT(iommu_sys), "irqchip",
+                                  OBJECT(mmio_irqchip),
+                                  &error_fatal);
++        /*
++         * For riscv64 use a physical address size of 56 bits (44 bit PPN),
++         * and for riscv32 use 34 bits (22 bit PPN).
++         */
++        object_property_set_uint(OBJECT(iommu_sys), "pas-bits",
++                                 riscv_is_32bit(&s->soc[0]) ? 34 : 56,
++                                 &error_fatal);
+ 
+         sysbus_realize_and_unref(SYS_BUS_DEVICE(iommu_sys), &error_fatal);
+     }
 
-J
+-- 
+2.52.0
 
-> 
-> Event read and propagation will be added in a later patch.
-> 
-> Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
-> Tested-by: Nicolin Chen <nicolinc@nvidia.com>
-> Reviewed-by: Eric Auger <eric.auger@redhat.com>
-> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
 
