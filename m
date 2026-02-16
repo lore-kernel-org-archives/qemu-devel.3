@@ -4,107 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8055E7BD91
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 11:14:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3144FE7BD8F
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 11:16:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vrwXj-00046H-55; Mon, 16 Feb 2026 06:13:31 -0500
+	id 1vrwa5-0004m8-CD; Mon, 16 Feb 2026 06:15:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vrwXf-00045o-D9
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 06:13:27 -0500
-Received: from mail-yx1-xb12d.google.com ([2607:f8b0:4864:20::b12d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vrwXd-0006jO-Tm
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 06:13:27 -0500
-Received: by mail-yx1-xb12d.google.com with SMTP id
- 956f58d0204a3-64ae2ce2fe1so2654497d50.1
- for <qemu-devel@nongnu.org>; Mon, 16 Feb 2026 03:13:25 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1771240405; cv=none;
- d=google.com; s=arc-20240605;
- b=khkdLmHs8/Pdwof5MPJquKJiG0yr+3K372kO8mGEA4n6OE+cAzaU7Rws9ai7gygXCH
- bltz/2jcNkyiT6RyR5MzAYVESJrTmL1nmExXPihqXHvJxMyN7EY68arQ/bEogwXMjxMB
- a6dFf5kBu2hjadl9ogVUV1YwppK0KzPjRWsihFK3PhzdF5tfXDXPe6zFddlklQ7W7u/t
- +NAARq0tNzuQkqNYyo9v810/Pl5DLocxj+pFqnA3AkYrbSluKgzWykymN1u5fKdvhnMr
- ePItDBwL9C9YixI1k2YqScqX7915tYT6xACazMAE+aKK87YgMOj+GFuZWVwNl3L0jEXz
- mVnA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=Bnj6PYX9XX64sJHAlUbiGDSZBG2TAqZE+5aCucDPgzg=;
- fh=vvj2DZQY5LAdehuQPz0q2ks1wDBqfeLL9XHCMNWn8sw=;
- b=iHcUP7HW6bkY/+jsWhBQ6bHFCfinBpKo6SU3JPCFCxh9DPB5RuCPOfeVkfofMJxTcN
- Fbkf1lpgoa9kyyCmObc9At3YSEMksMirYh1HzctzaqfY01DUMBZcX9jk/LfMaPVM+Fe3
- 4TNy+GfZKe9IW3fr7iThZcGTVztjwNI2vNIjHZfUnumoVAIUmbH+suzO6szmr1NkcFM9
- Xf9isk9dc58vDochCatq0uuXuHUnsAfguWvH9M7/etcYK0toLwZdLBnAOtEF3+1wHjrU
- TCEMS0Inizaa421tzE2n0Fj2tW2/H1unQ3UfwPz9jI6UaRxpNGb7zKpC0Uhsc5psQmkw
- 7IFw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771240405; x=1771845205; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Bnj6PYX9XX64sJHAlUbiGDSZBG2TAqZE+5aCucDPgzg=;
- b=dXiIZQLUoBVxbYAUkzuueHQbsn9hFtMCoM0pDjkjKXe4aC/1uHXngVIyOPlg2VlIz0
- Qhp2XnpzXxgU1S9SaQ4vnOrCeNsGTGGww3UH17i7AZowrLyZywP94h5cbhAQoKq/VTkY
- NRYfWdqPq+T0BKFMYt1FNmthB6o0TZb53ZQILFLAhOC0o4Apwi5Rdu7SoA+XelccNJE3
- 9TjOfavxM6RwEA1JVMOmzH9HXZdsRSQmDJ+h6qzV3jCBcKit4POryvkyAGVUVjIIdPcB
- aW9qMLqq3P6yz3V+NMiTFGrekV4F797/PCPW4Dv7CuRhwP55LBwLgaRSZFiqnAWSMCao
- 1pUw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771240405; x=1771845205;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=Bnj6PYX9XX64sJHAlUbiGDSZBG2TAqZE+5aCucDPgzg=;
- b=FyHHYrVyx+ch3xbDDhZW9a0NOalsdLFQZm7CcocrJSH1sEII0JEEEeIaAnDLwTbsEx
- Wuj2q84vFfRPd6EExajtItX835gNwjZuOAu6malPFdcIslu/nJTINKZ2lSAtzlHfkCZc
- zGg1AxSwxy2k5GmWw2BCLr09QMo367aJB+gqBS0hipzFthxXDgukjlNdkBGqirzz8YZO
- E/JEiNlNqGEVwKpz59qGX112JxORxrjpaY6A34kzeXEFcFhzNZzZreBRNY817oNcy6x6
- xJMdSCA3eqE2+ACTss0Lj5FKrBhU1GyXzKx+VcyTeRXNCutt+eQ7dbh6tuAa6tQrYkbs
- aJ2Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWp8icOOlkD3Q1qzdLN535WTOXMlP00DRgXt8sbqVJGaWFd3y201gs+ZMwAOo0uAnwuLLHLSIqOX8ZB@nongnu.org
-X-Gm-Message-State: AOJu0YyEw34m1uU/HYHM4UW22fbC9v5HIFqjO8JaA38Irh0y6Lt/QFM2
- YyIxtRm1vu052wRKis42vdN9GJH/CQCleYDzv6O80dnqndbkO2jiwAjHudnihr/in7iNvgsVywm
- F6E/RpXmcRyN60L0XY8DqXCpsDb+tfLIX6NFlE0JpVQ==
-X-Gm-Gg: AZuq6aIch855A4y5gj6jM5rw9dRh+0S5YHzEqvhLnbV+P9rar7H1cALg3/wG55ei0Hp
- QMz2Cog/Ev6l8JAf/Xp5IQ2kbOl9f7hcwPSXKTmTo0Vb1LCSmvwhH9SW0OGpstMUxJL4bZPg5FJ
- z4Zm5KSUOzBJm5Iw9zMQ3mk5yzMQE/keFBp7dhFo5KA6MM8TbDv2zW2yxq3y0GhX7W0fma2Hmf+
- CZlFjsOIqz73UCWEdfQWcFdJ994Tq9Rw/uEAT8P6Zwgndupv35Y5egImiXJDApjiYJ+f5NcG5Sn
- uFd9yNU/IeIgJtmWiBYYrbe49PpB3rWt3/W5vIueP6qAlfuX5sqNa9kErYLuMHB6Mz8=
-X-Received: by 2002:a05:690e:408e:b0:645:54a9:11b6 with SMTP id
- 956f58d0204a3-64c19b196f1mr7675589d50.52.1771240404710; Mon, 16 Feb 2026
- 03:13:24 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1vrwa3-0004kn-2B
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 06:15:55 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1vrwa1-0007JL-62
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 06:15:54 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1771240552;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=03yR22OPWyv4xOgsTRflUVZkTa9pLbZJpc7QOwE/YKQ=;
+ b=TGoOJBTQFu7C3Tf5HBYi/M8siHV5k4SBHvv+N6mzwbfue1JVNCOy0DSuThYqEn+vZtf25V
+ pEwvem1zNM/pOYu2WWNQ32IVxz0kxPsH6LEyF364V92kI/g/U68QlA0blUWPlY1xa+IH7f
+ gAPyf+p8/pkwYYwqaIHE8tOJb85AtMg=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-575-S_3Rn-x3NoK6-w9xBzQ9TQ-1; Mon,
+ 16 Feb 2026 06:15:47 -0500
+X-MC-Unique: S_3Rn-x3NoK6-w9xBzQ9TQ-1
+X-Mimecast-MFC-AGG-ID: S_3Rn-x3NoK6-w9xBzQ9TQ_1771240545
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id CE3911955D4D; Mon, 16 Feb 2026 11:15:45 +0000 (UTC)
+Received: from localhost (unknown [10.45.242.26])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 8A63119560B2; Mon, 16 Feb 2026 11:15:44 +0000 (UTC)
+From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+Date: Mon, 16 Feb 2026 12:14:52 +0100
+Subject: [PATCH 03/85] audio/adlib: drop ts_helper HWVoice field
 MIME-Version: 1.0
-References: <20260212213955.2225662-1-clg@redhat.com>
- <20260212213955.2225662-3-clg@redhat.com>
-In-Reply-To: <20260212213955.2225662-3-clg@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 16 Feb 2026 11:13:12 +0000
-X-Gm-Features: AZwV_Qi3cGskL0yyDjDTutpSoqbX2OXFxE3VeTo0RHl0QtnqdczfaLKUuGaj3u8
-Message-ID: <CAFEAcA_oJgTc2SyRr11QTeTkmCPgvKiwngAaDiDNw5nUcTFA2w@mail.gmail.com>
-Subject: Re: [PULL 02/16] tests/functional: Add SDK tests with Linux 5.15
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
- Thomas Huth <thuth@redhat.com>, "Daniel P. Berrange" <berrange@redhat.com>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, 
- Kane Chen <kane_chen@aspeedtech.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12d;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12d.google.com
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Message-Id: <20260216-audio-v1-3-e676662e4514@redhat.com>
+References: <20260216-audio-v1-0-e676662e4514@redhat.com>
+In-Reply-To: <20260216-audio-v1-0-e676662e4514@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Gerd Hoffmann <kraxel@redhat.com>, 
+ Eduardo Habkost <eduardo@habkost.net>, Paolo Bonzini <pbonzini@redhat.com>, 
+ =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
+ John Snow <jsnow@redhat.com>, Cleber Rosa <crosa@redhat.com>, 
+ Christian Schoenebeck <qemu_oss@crudebyte.com>, 
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
+ Thomas Huth <huth@tuxfamily.org>, Alexandre Ratchov <alex@caoua.org>, 
+ =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, 
+ Laurent Vivier <laurent@vivier.eu>, "Michael S. Tsirkin" <mst@redhat.com>, 
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, 
+ Alistair Francis <alistair@alistair23.me>, 
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, 
+ Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org, 
+ =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
+ Mark Cave-Ayland <mark.caveayland@nutanix.com>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1480;
+ i=marcandre.lureau@redhat.com; h=from:subject:message-id;
+ bh=/79pMsmTucvlzgY5FBqKNb003r8HB/EPhG2j1zf1dS8=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBpkvxOtpJ93glYebWbW0M9TwpEeqzqZE8wKES33
+ RpgLlFp1SaJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaZL8TgAKCRDa6OEJdZac
+ 5R1BEAC1bQIZC001c8va6eb/i5dK/TdhxHw+4klXKNMMuGSZ+JwVRaxYcY7R2CI478M/ELBtQkY
+ 4/V5alEvtX2F2ho08cK0axbyCE9VkCq08MmXq2+UuHz8eHd2r27EX+JZ3m5ErrQtunIk1afEn82
+ sKHC1peBr6Zq/FTNB+ud/MzVK7zm35OlZWeVzcnT5C3fOF1WPO1w/IrQgUppQUhgBqkeZi/aVtX
+ NPx/fEL/1WMRR91QxWWTXhZXoWYbJ5f7zkNI5mouFp8VR6lxzOXd5v1XYqcNb7/osyRUMjfVkqN
+ 74FaxTgii9tdNhEKUozF5fa8jXTmqhA4Gzw6K5rQ1+njUcGNkBC6kO2wqBHPUf6/EoGRozaLvCg
+ f/3qksrInIQLbaMRlHJnz1Zt/1Si+6IkEmpzxG7mF92uQyaeGp5hrQ+W/w9s9ws3/bdyURTfP1X
+ ba2QcsfkupaOjIF41sA0EXVftgZKcakw3OsJUedprcVxnx+2QvkoyfeHTR+g7lWDE3Hzgd8aI/Q
+ Tx2HAZmVKIfOSmhcZ2C9hhzhKRI6y6EiXKDSn/gTQG+9wtIzwNiVCPkUJEXJmZSRc+8F4x+HbRS
+ 3tDMRV15aAagKqjcM/gYsyJzxB6OiK841t7AZOOvvcww5ujOeoltNFXQrFxdMdIlAakRx7KZSSX
+ g9lwi9ZRnAbskLg==
+X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
+ fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=marcandre.lureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,29 +117,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 12 Feb 2026 at 21:42, C=C3=A9dric Le Goater <clg@redhat.com> wrote:
->
-> Add functional tests for AST2500 and AST2600 machines using the
-> OpenBMC SDK v11.00 with Linux kernel 5.15. These tests complement the
-> existing SDK tests and verify that QEMU correctly boots older kernel
-> versions on these platforms.
+Previous commits made this dead code.
 
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+---
+ audio/audio_int.h | 2 --
+ audio/audio.c     | 2 --
+ 2 files changed, 4 deletions(-)
 
-> +    ASSET_SDK_V1100_AST2600_515 =3D Asset(
-> +        'https://github.com/AspeedTech-BMC/openbmc/releases/download/v11=
-.00/ast2600-default-515-obmc.tar.gz',
-> +        'ece1a934095378929780f03e7d092e562f4b33b2841b80ad7c3d12a85744c0f=
-6')
+diff --git a/audio/audio_int.h b/audio/audio_int.h
+index b2b8002477c..20b4c87b0b6 100644
+--- a/audio/audio_int.h
++++ b/audio/audio_int.h
+@@ -77,7 +77,6 @@ typedef struct HWVoiceOut {
+     struct audio_pcm_info info;
+ 
+     f_sample *clip;
+-    uint64_t ts_helper;
+ 
+     STSampleBuffer mix_buf;
+     void *buf_emul;
+@@ -99,7 +98,6 @@ typedef struct HWVoiceIn {
+     t_sample *conv;
+ 
+     size_t total_samples_captured;
+-    uint64_t ts_helper;
+ 
+     STSampleBuffer conv_buf;
+     void *buf_emul;
+diff --git a/audio/audio.c b/audio/audio.c
+index b7a28f79d4f..a218570a4f4 100644
+--- a/audio/audio.c
++++ b/audio/audio.c
+@@ -1240,7 +1240,6 @@ static void audio_run_out(AudioBackend *s)
+ #endif
+ 
+         if (played) {
+-            hw->ts_helper += played;
+             audio_capture_mix_and_clear (hw, prev_rpos, played);
+         }
+ 
+@@ -1320,7 +1319,6 @@ static void audio_run_in(AudioBackend *s)
+ 
+         min = audio_pcm_hw_find_min_in (hw);
+         hw->total_samples_captured += captured - min;
+-        hw->ts_helper += captured;
+ 
+         for (sw = hw->sw_head.lh_first; sw; sw = sw->entries.le_next) {
+             sw->total_hw_samples_acquired -= min;
 
-This asset file is over a gigabyte in size, it takes forever to
-download, and our functional test asset download framework has
-no mechanism for giving any kind of progress indication for
-downloads (or even for telling you the URL it is downloading
-until after the download is complete).
+-- 
+2.53.0
 
-Can we have a size limit for test assets please, at least until
-the framework can support large assets a bit better ?
-
-thanks
--- PMm
 
