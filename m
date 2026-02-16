@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 407E4E83824
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 19:16:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4004E83824
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Feb 2026 19:17:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vs44G-00023x-NA; Mon, 16 Feb 2026 14:15:39 -0500
+	id 1vs42e-00081U-Gf; Mon, 16 Feb 2026 14:13:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1vs43R-0001KX-2U
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 14:14:47 -0500
+ id 1vs42b-00080u-Bz
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 14:13:53 -0500
 Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1vs43O-0003dE-SB
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 14:14:44 -0500
-ARC-Seal: i=1; a=rsa-sha256; t=1771269266; cv=none; 
+ id 1vs42Z-0003aJ-S6
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 14:13:53 -0500
+ARC-Seal: i=1; a=rsa-sha256; t=1771269216; cv=none; 
  d=zohomail.com; s=zohoarc; 
- b=mFfigRVzAu5Gq5V9X1K3Ys9kcpkU983UAe9YB3qJDMLYnzKCrx7L9wkcMu64MTwLQ8XJpWK0X3dmpZ8W0nCKiNZKgIS99AW6qTNMsds1W2OAtZMh1vEJ0TU/mIZYuCwiVPuXCcOoZiatc7BF+bNye8zXkqWy8iM9/OjZg1bCGZk=
+ b=TW+U22AMC71046bQ/NbEKOOzPs/CCOSqiU16ebg/yqD6VZFOcRtYntfhNagKNtI5aYRnVmieCqs7FZPVTeJQtVkrvi3cPMCvflMBWp6CmzYlPRslTmL7QYsuzYpha2j0ToGzdsYuKyTPQn2+7kf+PwJMD+bFppEL8nXzY9UIdQY=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1771269266;
- h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=P5osBMHaerccfSWLlffsmdiix8XtBj2gMCHzKDzxR3g=; 
- b=eHARRX3E+cHLak86UTyFeRc/hKSMZG/DyN97lTigupWrXFFX2RSLGxBLdzDnWbk8ZXdy5nHo4vQFzOS7vruu1zv+37ksKeKFy4nzHa5G+JMS2XDDxAiVHrjRxk8QAitWF5jelrlim3zqbtim+/r3jhBLLWQdN7hmSvvmKY9ucJc=
+ s=zohoarc; t=1771269216;
+ h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
+ bh=/V5w4p698DwEx15Lp0IDCl8LxKCNDYgzn2VKLq16mj0=; 
+ b=VegbS6oBRai9vvZcIKSW0nJ91RhrHWa07dj96B64Stc39jveTh2Kzj0V+IFcWGkIV8ovn1SZNPEwPbRAUQpRzb/oDikmMVOchFQG8lenNnqp4zJTVflMqIJSTyNLE68FfSCzB6OAfctg8un94oiVskxDHBMhvM28lly5KrITmuY=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
  dkim=pass  header.i=collabora.com;
  spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
  dmarc=pass header.from=<dmitry.osipenko@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1771269266; 
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1771269216; 
  s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
- h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To;
- bh=P5osBMHaerccfSWLlffsmdiix8XtBj2gMCHzKDzxR3g=;
- b=QUkNkEZUaTemzrEFBTJa/hwk2zDO2/FluhKGllQsJgWUhL6oISpoNB0t/NUQB0A0
- VYRCIhASkYyTU6gnrHys8Z1rxMgYHfEEY9x7QSc+CTNKBB5bZmyiFknsRTkhlXAfKEi
- 9ilnLBJxnDFBBB0P/Bcn5PfjQ2IdjYV+kZiTKHzA=
-Received: by mx.zohomail.com with SMTPS id 1771269264839445.9079171500555;
- Mon, 16 Feb 2026 11:14:24 -0800 (PST)
+ h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+ bh=/V5w4p698DwEx15Lp0IDCl8LxKCNDYgzn2VKLq16mj0=;
+ b=Y4KJCO1+sq/p8t6WPtcprRRPvlMvvt2u0W42+FGL55CIs88lYdJ/XHTbHoF9jHOd
+ SzihX0Fjv8+sMPSAnXRbHBCsRNQNwuBIxdW5XwwZIYKHznFG09z52jSW4uO1pQG0PY1
+ iPChH3Y/1dNAwFl5jSUbMEWdn8yyuVYGQpUsRgic=
+Received: by mx.zohomail.com with SMTPS id 1771269215115692.780083609549;
+ Mon, 16 Feb 2026 11:13:35 -0800 (PST)
 From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
  Huang Rui <ray.huang@amd.com>,
@@ -62,14 +62,14 @@ Cc: Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
  Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
  Chen Jiqian <Jiqian.Chen@amd.com>, Rob Clark <robdclark@gmail.com>,
  Robert Beckett <bob.beckett@collabora.com>
-Subject: [PATCH v17 16/18] virtio-gpu: Replace finish_unmapping with
- mapping_state
-Date: Mon, 16 Feb 2026 22:12:11 +0300
-Message-ID: <20260216191213.2556073-17-dmitry.osipenko@collabora.com>
+Subject: [PATCH v17 08/18] virtio-gpu: Handle virgl fence creation errors
+Date: Mon, 16 Feb 2026 22:12:03 +0300
+Message-ID: <20260216191213.2556073-9-dmitry.osipenko@collabora.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260216191213.2556073-1-dmitry.osipenko@collabora.com>
 References: <20260216191213.2556073-1-dmitry.osipenko@collabora.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-ZohoMailClient: External
 Received-SPF: pass client-ip=136.143.188.112;
@@ -97,115 +97,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Allow virtio_gpu_virgl_unmap_resource_blob() to be invoked while async
-unmapping is in progress. Do it in preparation to improvement of virtio-gpu
-resetting that will require this change.
+Print out error messages when virgl fence creation fails to aid debugging
+of the fence-related bugs.
 
-Suggested-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Tested-by: Alex Bennée <alex.bennee@linaro.org>
+Acked-by: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
+Reviewed-by: Yiwei Zhang <zzyiwei@gmail.com>
+Tested-by: Yiwei Zhang <zzyiwei@gmail.com>
 Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 ---
- hw/display/trace-events       |  2 +-
- hw/display/virtio-gpu-virgl.c | 28 ++++++++++++++++++++++------
- 2 files changed, 23 insertions(+), 7 deletions(-)
+ hw/display/virtio-gpu-virgl.c | 27 ++++++++++++++++++++++-----
+ 1 file changed, 22 insertions(+), 5 deletions(-)
 
-diff --git a/hw/display/trace-events b/hw/display/trace-events
-index e323a82cff24..4bfc457fbac1 100644
---- a/hw/display/trace-events
-+++ b/hw/display/trace-events
-@@ -39,7 +39,7 @@ virtio_gpu_cmd_res_create_2d(uint32_t res, uint32_t fmt, uint32_t w, uint32_t h)
- virtio_gpu_cmd_res_create_3d(uint32_t res, uint32_t fmt, uint32_t w, uint32_t h, uint32_t d) "res 0x%x, fmt 0x%x, w %d, h %d, d %d"
- virtio_gpu_cmd_res_create_blob(uint32_t res, uint64_t size) "res 0x%x, size %" PRId64
- virtio_gpu_cmd_res_map_blob(uint32_t res, void *vmr, void *mr) "res 0x%x, vmr %p, mr %p"
--virtio_gpu_cmd_res_unmap_blob(uint32_t res, void *mr, bool finish_unmapping) "res 0x%x, mr %p, finish_unmapping %d"
-+virtio_gpu_cmd_res_unmap_blob(uint32_t res, void *mr, int mapping_state) "res 0x%x, mr %p, mapping_state %d"
- virtio_gpu_cmd_res_unref(uint32_t res) "res 0x%x"
- virtio_gpu_cmd_res_back_attach(uint32_t res) "res 0x%x"
- virtio_gpu_cmd_res_back_detach(uint32_t res) "res 0x%x"
 diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
-index 7928e8d9d6f4..b1c323f4f539 100644
+index cde1a7a8426f..05f22a418d71 100644
 --- a/hw/display/virtio-gpu-virgl.c
 +++ b/hw/display/virtio-gpu-virgl.c
-@@ -68,11 +68,17 @@ virgl_get_egl_display(G_GNUC_UNUSED void *cookie)
- #endif
+@@ -906,6 +906,7 @@ virtio_gpu_virgl_do_process_cmd(VirtIOGPU *g,
+                                 struct virtio_gpu_ctrl_command *cmd)
+ {
+     bool cmd_suspended = false;
++    int ret;
  
+     VIRTIO_GPU_FILL_CMD(cmd->cmd_hdr);
+ 
+@@ -1005,14 +1006,30 @@ virtio_gpu_virgl_do_process_cmd(VirtIOGPU *g,
+     trace_virtio_gpu_fence_ctrl(cmd->cmd_hdr.fence_id, cmd->cmd_hdr.type);
  #if VIRGL_VERSION_MAJOR >= 1
-+enum virtio_gpu_virgl_hostmem_region_mapping_state {
-+    VIRTIO_GPU_MR_MAPPED,
-+    VIRTIO_GPU_MR_UNMAP_STARTED,
-+    VIRTIO_GPU_MR_UNMAP_COMPLETED,
-+};
+     if (cmd->cmd_hdr.flags & VIRTIO_GPU_FLAG_INFO_RING_IDX) {
+-        virgl_renderer_context_create_fence(cmd->cmd_hdr.ctx_id,
+-                                            VIRGL_RENDERER_FENCE_FLAG_MERGEABLE,
+-                                            cmd->cmd_hdr.ring_idx,
+-                                            cmd->cmd_hdr.fence_id);
++        const uint32_t flags = VIRGL_RENDERER_FENCE_FLAG_MERGEABLE;
 +
- struct virtio_gpu_virgl_hostmem_region {
-     Object parent_obj;
-     MemoryRegion mr;
-     struct VirtIOGPU *g;
--    bool finish_unmapping;
-+    enum virtio_gpu_virgl_hostmem_region_mapping_state mapping_state;
- };
- 
- #define TYPE_VIRTIO_GPU_VIRGL_HOSTMEM_REGION "virtio-gpu-virgl-hostmem-region"
-@@ -109,7 +115,7 @@ static void virtio_gpu_virgl_hostmem_region_finalize(Object *obj)
++        ret = virgl_renderer_context_create_fence(cmd->cmd_hdr.ctx_id, flags,
++                                                  cmd->cmd_hdr.ring_idx,
++                                                  cmd->cmd_hdr.fence_id);
++        if (ret) {
++            qemu_log_mask(LOG_GUEST_ERROR,
++                          "%s: virgl_renderer_context_create_fence error: %s",
++                          __func__, strerror(-ret));
++        }
          return;
      }
- 
--    vmr->finish_unmapping = true;
-+    vmr->mapping_state = VIRTIO_GPU_MR_UNMAP_COMPLETED;
- 
-     b = VIRTIO_GPU_BASE(vmr->g);
-     b->renderer_blocked--;
-@@ -167,6 +173,7 @@ virtio_gpu_virgl_map_resource_blob(VirtIOGPU *g,
-     object_initialize_child(OBJECT(g), name, vmr,
-                             TYPE_VIRTIO_GPU_VIRGL_HOSTMEM_REGION);
-     vmr->g = g;
-+    vmr->mapping_state = VIRTIO_GPU_MR_MAPPED;
- 
-     mr = &vmr->mr;
-     memory_region_init_ram_ptr(mr, OBJECT(vmr), "mr", size, data);
-@@ -195,7 +202,8 @@ virtio_gpu_virgl_unmap_resource_blob(VirtIOGPU *g,
- 
-     vmr = to_hostmem_region(res->mr);
- 
--    trace_virtio_gpu_cmd_res_unmap_blob(res->base.resource_id, mr, vmr->finish_unmapping);
-+    trace_virtio_gpu_cmd_res_unmap_blob(res->base.resource_id, mr,
-+                                        vmr->mapping_state);
- 
-     /*
-      * Perform async unmapping in 3 steps:
-@@ -206,7 +214,8 @@ virtio_gpu_virgl_unmap_resource_blob(VirtIOGPU *g,
-      *    asynchronously by virtio_gpu_virgl_hostmem_region_finalize().
-      * 3. Finish the unmapping with final virgl_renderer_resource_unmap().
-      */
--    if (vmr->finish_unmapping) {
-+    switch (vmr->mapping_state) {
-+    case VIRTIO_GPU_MR_UNMAP_COMPLETED:
-         res->mr = NULL;
-         g_free(vmr);
- 
-@@ -217,15 +226,22 @@ virtio_gpu_virgl_unmap_resource_blob(VirtIOGPU *g,
-                           __func__, strerror(-ret));
-             return ret;
-         }
--    } else {
--        *cmd_suspended = true;
-+        break;
- 
-+    case VIRTIO_GPU_MR_MAPPED:
-         /* render will be unblocked once MR is freed */
-         b->renderer_blocked++;
- 
-+        vmr->mapping_state = VIRTIO_GPU_MR_UNMAP_STARTED;
+ #endif
+-    virgl_renderer_create_fence(cmd->cmd_hdr.fence_id, cmd->cmd_hdr.type);
 +
-         /* memory region owns self res->mr object and frees it by itself */
-         memory_region_del_subregion(&b->hostmem, mr);
-         object_unparent(OBJECT(vmr));
-+
-+        /* Fallthrough */
-+    case VIRTIO_GPU_MR_UNMAP_STARTED:
-+        *cmd_suspended = true;
-+        break;
-     }
++    /*
++     * Unlike other virglrenderer functions, this one returns a positive
++     * error code.
++     */
++    ret = virgl_renderer_create_fence(cmd->cmd_hdr.fence_id, 0);
++    if (ret) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: virgl_renderer_create_fence error: %s",
++                      __func__, strerror(ret));
++    }
+ }
  
-     return 0;
+ void virtio_gpu_virgl_process_cmd(VirtIOGPU *g,
 -- 
 2.52.0
 
