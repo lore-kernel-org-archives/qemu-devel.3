@@ -4,121 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 303E2E68156
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Feb 2026 09:50:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2142E68156
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Feb 2026 09:52:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vsHiI-0001QX-1F; Tue, 17 Feb 2026 04:49:50 -0500
+	id 1vsHkV-0002l8-HN; Tue, 17 Feb 2026 04:52:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vsHiF-0001PY-Uh
- for qemu-devel@nongnu.org; Tue, 17 Feb 2026 04:49:48 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vsHiD-0004rf-Af
- for qemu-devel@nongnu.org; Tue, 17 Feb 2026 04:49:47 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771321777;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=KdfpcWEH7lB1i89f80n2hUQMflzH6rTJ0YsqBuUuC9I=;
- b=bWPAIC0IIJmhO978cI7TjezWZqtnTozf91+cincFXvIoYLqD+qQmgaSGsrQbR9C3kjOKrO
- 6GqV5eZ9O31gzc5j2TzTSYdnV9z/wKyG5eZY/h3O7xNqcA0wynL3k2JGGFNIEsCUWIErlw
- qij0od7ECw4HjHKD1q5doK2syPynVXU=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-111-3YzudVhGPwSRbjA4bZ2zzQ-1; Tue, 17 Feb 2026 04:49:36 -0500
-X-MC-Unique: 3YzudVhGPwSRbjA4bZ2zzQ-1
-X-Mimecast-MFC-AGG-ID: 3YzudVhGPwSRbjA4bZ2zzQ_1771321775
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4836cc0b38eso26698295e9.2
- for <qemu-devel@nongnu.org>; Tue, 17 Feb 2026 01:49:35 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vsHkN-0002U0-Jv
+ for qemu-devel@nongnu.org; Tue, 17 Feb 2026 04:51:59 -0500
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vsHkF-0006AL-RO
+ for qemu-devel@nongnu.org; Tue, 17 Feb 2026 04:51:56 -0500
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-2a7a9b8ed69so39554075ad.2
+ for <qemu-devel@nongnu.org>; Tue, 17 Feb 2026 01:51:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1771321775; x=1771926575; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=KdfpcWEH7lB1i89f80n2hUQMflzH6rTJ0YsqBuUuC9I=;
- b=Ps9K38w+dYwR85I6556rjsXZ/lWU/iw3NXT6ZtUKFnu4ThJnmOtcW3l8Ke3gJEorjf
- v2wrcingjX+1pF8ZQVOZdiehdiChPh2C75ghPXiakI81QQdrOqZ2F+zpaGVI+8DQinyY
- 7LP25GQNbLxd0yxZBEKt/iA6ZgkVn9vFPF4pgGgN15HIrZ7tCOv0Gz1FZNN8qzVxGNUM
- AgVe04nkhztf+mc1AVYvfkPRcuuIe5xOvZK1PZdgcaKZEj6bf5wiP5Um58DrUKYb04bp
- 4Ei4UnbTBpcWgQ/7x09VxOl4i+tUpGs5Jz97um7/igrGghuhXRH6NNvr25F7Ab2g6l3K
- MDyw==
+ d=linaro.org; s=google; t=1771321884; x=1771926684; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=hNM7XgKmeqgrM8/J+m8bKIPPky9vmnlqRq/BAY1KTRs=;
+ b=kYU7wyxZwI7PZWJFdLWK31ot/T0HmEt5yqZKvn3nZXC6l4Emdd9EGLPSufk9twnfjR
+ hAbXjnODWdbBS+ZFVqa/tkzYRvUbxZTSlvC1LP8iWT9FgNqzPI/UspQUWk4PZNvVRVHQ
+ Oq67/Yhtyut4NmB28taS+b8mwdiaF7uEKP555v234Gx0MK54KQICZzPMinVsX91p5urB
+ GcSiZztKC48izq5gXubSpvzt2Wr7jKlZnQ8daYFA+FwI1WuVAqv/DH/pXwG8GXn1aoSE
+ z3fWGO4IdLG9CLVQAxscia6lUinzVj49wxbUGdwCAvfzmM/1eEOyfpoV41i/SKvIR6Rr
+ XF3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771321775; x=1771926575;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=KdfpcWEH7lB1i89f80n2hUQMflzH6rTJ0YsqBuUuC9I=;
- b=eYT/PCQ/md7yA+T7ckSuQDtoR2UUnyGNxa5epvwJRM0fBXP9/No2cCeR91oMF0y0aE
- VK1Nn53ULS5LP4iZrve2zuUWxWtlWNRPRI0gS/FnOmPsdj0NNTp+muWVvo9smVi+8itx
- rdD2/GTQCFDO/+bC/VcgPb31dmiZ4RT2F2soKfewLoAFIJHTUMrIH6FfF0AXJQD5hcPd
- giWcLs7Jmwmb1nOZZr52Jp49ecsOd1GeO+a91cXj8a6QQrxoIwalhmkihwEbsqWMiQ8i
- xiiRtlVR+fEaR2FWdps964D7Oj5ApX4VQkREizdEUxCZ13c0gnPbCdIFqD94lou+utXL
- JmtQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXl1aydjsZig2xlA3TR0wUZsS02Qut1MM5+slc+dd+gwa/XI2U58TA7l+Tq7BThXNsTPtAAy/J3IzVD@nongnu.org
-X-Gm-Message-State: AOJu0YzNyJNBCPbKOLlcR8dJ6SXr4Q2IPY6g4aXn9YvDGxcxVtYPWj7t
- +u5CIgTUhDNCneX0XaqUDfeOEM73jUyBqYwKTJpqG8e4VTYkWufnGUNvvA6Dbq+D4Pr4wKA2io2
- exB13BnWYQ5WCS/8FEi7HXBaBV0+oTgRwIAfyTjGqkn6AZCNv5UsDyeqQ
-X-Gm-Gg: AZuq6aJ3eipdY1GpXq/K8aoaN1uRrtCx9vfWmWpxS1NZi9GkA3q99Hnw+DopdYROiOv
- XZ9bK0y56woCWQxoWjsunrQxqwprpljW9YGKK7kubf5HM5JmVYUsqo2dSoUCFvVXp6slPdbOyze
- Ng86epcMGBDoYB7yfb/j4bONWq0IzvAV5dLmFUHIy6LM54v1ApCuZsqlCS8NQak1l/Z8OD0HZHB
- 8zkvyeG/5n9WVtWwAaZs9WElFDt8rTIaPjW+XRpCth8a0RfLq7m70v6kgljIqpUpWRvW5C7wbW6
- qVL39OY+2AU8YuqpmluAu4Odo6L1fe7JrUxm6miR52PAhbpCJuS2ksUQiw5STDsK9PdO/EdIOmG
- GbgEvbJyctGvBGNY6kp+AE9XIUsnlBUrYxPup6XzD0sjFsMQ2jMapWUe6YiUXHVsYqCMitPLIp0
- P5QxasQEdRaY2exh3RDOAPRxap464=
-X-Received: by 2002:a05:600c:8486:b0:47e:e076:c7a5 with SMTP id
- 5b1f17b1804b1-48373a1c41emr196314845e9.11.1771321774905; 
- Tue, 17 Feb 2026 01:49:34 -0800 (PST)
-X-Received: by 2002:a05:600c:8486:b0:47e:e076:c7a5 with SMTP id
- 5b1f17b1804b1-48373a1c41emr196314585e9.11.1771321774452; 
- Tue, 17 Feb 2026 01:49:34 -0800 (PST)
-Received: from [192.168.10.48] ([151.95.144.138])
- by smtp.googlemail.com with ESMTPSA id
- 5b1f17b1804b1-483719b8e71sm312572205e9.2.2026.02.17.01.49.33
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 17 Feb 2026 01:49:33 -0800 (PST)
-Message-ID: <146c95fd-00f2-4b51-bda5-249dd768a719@redhat.com>
-Date: Tue, 17 Feb 2026 10:49:31 +0100
+ d=1e100.net; s=20230601; t=1771321884; x=1771926684;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=hNM7XgKmeqgrM8/J+m8bKIPPky9vmnlqRq/BAY1KTRs=;
+ b=fIOkFnjZFXKsv/GPjIv9Q79K/+AFIu2hmfy3lXUjKyKSyIqYsjkfWiU19ModMIb37j
+ s5J2xNWXXDeiLu/H2GAx4wKMnZ6svwmkJ64J9JzNdydErggML6Yzi8pOSrSXv4/UHXmW
+ HNrIt/uSmBU/OcDKAb1+1oftThkiTw1EGNqy7B3QG1+sGGxNX7Uw/QGB1RJvI3/Mt9Lh
+ h9eVGlU92i3alee9vHM9L79OCwHQGvGSftAkEyAf10vmNhc2L/7kqwcpnB5fLFwHyOsq
+ Raj2rzoRsXqEdPKo6D2sVbGrXXFBwS7YrX2lT46d6c2y5elpQdn5UjZ8dCUiVSoF7sm4
+ YYLQ==
+X-Gm-Message-State: AOJu0YybqNpvH0qNjNquMEKvo5R8fA2wOoAYnnqCcw8Z/+GuM5Fja0/i
+ hZ2K4dw8KuDpiEJ7a3LCYssvJWYQh++8u50E+GXyUVYTWNb+/fvJeimW9tDV5e5xjWJ2kNjfZ88
+ MCc5n8n0=
+X-Gm-Gg: AZuq6aILl3vLY603v9qKU7jFN9/mvNklciI8Le3jCObSGnTBIlOBdCAYOCMWBoWF7CJ
+ j/r2nSTZCB7sBEIXllBBaxdO80VARtJQx05caeWpztVMboh/ILyqjj8nIVohN5Q2dfE0exi6ZuA
+ UIe8eh8T6XSBswzqI1TK8YLURP424Jil2v694WZ/ivpqYjWGxffWb/jgEOU5bnBmcDMwvUYMg3W
+ R5s4gL/0/QY/6UrA734PmMlX1/5VXVQAW0x+XSB5CIEMrg3fPptTp8p/L2XRDwMuPwcqqoZi+1w
+ l6gyxo2jw/BtAF5v/RBQCoImKgB/0dAvQuwPfTDbbXQaFjF6vUtEpZHds6Ls5AR/IeCIJxTwyzO
+ tlzsaGkX30c0S+EFZn9rlREMnX25RpsOFWEAcGaUQ6ApEpTJnnJXxfC57m1avPzqJNN5VsHjdAR
+ xuoNtJeeetz4quMoTnoe572uAAM0irc4DKC/CkUqoU025fwU+j7XR5BOPl1I5xI05CfxuEBayqa
+ 0CLqlyB/JrEQZACXDY6XhSEGLIJzyLqdTcXzo4=
+X-Received: by 2002:a17:903:3805:b0:2a1:3cd9:a737 with SMTP id
+ d9443c01a7336-2ab50598d8fmr155781675ad.36.1771321883948; 
+ Tue, 17 Feb 2026 01:51:23 -0800 (PST)
+Received: from localhost.localdomain
+ (2403-580b-742d-0-10a2-dce1-aa4a-dd32.ip6.aussiebb.net.
+ [2403:580b:742d:0:10a2:dce1:aa4a:dd32])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2ad1a6fa33esm99108675ad.13.2026.02.17.01.51.22
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 17 Feb 2026 01:51:23 -0800 (PST)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: philmd@linaro.org
+Subject: [PATCH v2 5/7] page-vary: Build finalize_target_page_bits as common
+ code
+Date: Tue, 17 Feb 2026 19:51:04 +1000
+Message-ID: <20260217095106.598486-6-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260217095106.598486-1-richard.henderson@linaro.org>
+References: <20260217095106.598486-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 7/8] audio: do not build audio-related sources with
- --disable-audio
-To: Sergei Heifetz <heifetz@yandex-team.com>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Eric Blake <eblake@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Thomas Huth <thuth@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>
-References: <20260217052740.114117-1-heifetz@yandex-team.com>
- <20260217052740.114117-8-heifetz@yandex-team.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Content-Language: en-US
-In-Reply-To: <20260217052740.114117-8-heifetz@yandex-team.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -134,74 +104,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/17/26 06:27, Sergei Heifetz wrote:
-> When QEMU is configured with `--disable-audio`, do not build any
-> audio-related sources.
-> 
-> - audio/meson.build and replay/meson.build:
->    Exclude audio-related sources when audio is disabled.
-> 
-> - audio/audio-stub.c:
->    Provide a minimal set of straightforward stubs.
-> 
-> - replay/replay-audio-stub.c:
->    Move the existing stubs from replay/stubs-system.c into a separate
->    file.
-> 
-> - qapi/audio.json:
->    Remove the QMP `query-audiodevs` command.
-> 
-> - audio/audio-hmp-cmds-stub.c:
->    Provide meaningful messages for audio-related HMP commands:
->    stopcapture, wavcapture, info capture.
-> 
-> Signed-off-by: Sergei Heifetz <heifetz@yandex-team.com>
-> ---
->   audio/audio-hmp-cmds-stub.c | 28 ++++++++++++++++++++++++++++
+Use target_info->page_bits_init to merge
+finalize_target_page_bits_common into
+finalize_target_page_bits in page-vary-common.c.
 
-Can you remove the commands instead?
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ include/exec/page-vary.h |  4 ----
+ page-vary-common.c       | 15 +++++++++++----
+ page-vary-target.c       | 12 ------------
+ 3 files changed, 11 insertions(+), 20 deletions(-)
 
-> +AudioBackend *audio_be_by_name(const char *name, Error **errp)
-> +{
-> +  error_setg(
-> +      errp,
-> +      "trying to find audiodev '%s' by name with audio component disabled",
-
-This can be simplified to just  'audio disabled' or something like that.
-
-> +      name);
-> +  return NULL;
-> +}
-> +
-> +const char *audio_be_get_id(AudioBackend *be) { return ""; }
-
-Can you instead compile out qdev_prop_audiodev?
-
-> +bool audio_be_set_dbus_server(AudioBackend *be,
-> +                              GDBusObjectManagerServer *server, bool p2p,
-> +                              Error **errp)
-> +{
-> +  error_setg(errp, "trying to set dbus server with audio component disabled");
-
-Since this requires an AudioBackend, which you cannot get with audio 
-disabled, it can be simply abort().
-
-> +if audio_enabled
-> +  system_ss.add(when: 'CONFIG_TCG',
-> +  if_true: files('replay-audio.c'),
-> +  if_false: files('replay-audio-stub.c'))
-> +else
-> +  system_ss.add(files('replay-audio-stub.c'))
-> +endif
-
-I think this can be simply
-
-   system_ss.add(when: ['CONFIG_TCG', 'CONFIG_AUDIO'],
-      if_true: files('replay-audio.c'),
-      if_false: files('replay-audio-stub.c'))
-
-but I may be incorrect.
-
-Paolo
+diff --git a/include/exec/page-vary.h b/include/exec/page-vary.h
+index c4dc56634b..f2d735bec2 100644
+--- a/include/exec/page-vary.h
++++ b/include/exec/page-vary.h
+@@ -40,10 +40,6 @@ typedef struct {
+     uint64_t mask;
+ } TargetPageBits;
+ 
+-#ifdef IN_PAGE_VARY
+-void finalize_target_page_bits_common(int min);
+-#endif
+-
+ /**
+  * set_preferred_target_page_bits:
+  * @bits: number of bits needed to represent an address within the page
+diff --git a/page-vary-common.c b/page-vary-common.c
+index b41137c644..ddd0863378 100644
+--- a/page-vary-common.c
++++ b/page-vary-common.c
+@@ -50,11 +50,18 @@ bool set_preferred_target_page_bits(int bits)
+     return true;
+ }
+ 
+-void finalize_target_page_bits_common(int min)
++void finalize_target_page_bits(void)
+ {
+-    if (target_page.bits == 0) {
+-        target_page.bits = min;
++    int bits = target_page.bits;
++
++    if (bits == 0) {
++        const TargetInfo *ti = target_info();
++
++        bits = ti->page_bits_init;
++        assert(bits != 0);
++        target_page.bits = bits;
+     }
+-    target_page.mask = -1ull << target_page.bits;
++
++    target_page.mask = -1ull << bits;
+     target_page.decided = true;
+ }
+diff --git a/page-vary-target.c b/page-vary-target.c
+index d388c5c3d6..bc4d8931b6 100644
+--- a/page-vary-target.c
++++ b/page-vary-target.c
+@@ -38,15 +38,3 @@ int migration_legacy_page_bits(void)
+ #endif
+ }
+ #endif
+-
+-void finalize_target_page_bits(void)
+-{
+-#ifndef TARGET_PAGE_BITS_VARY
+-    finalize_target_page_bits_common(TARGET_PAGE_BITS);
+-#elif defined(CONFIG_USER_ONLY)
+-    assert(target_page.bits != 0);
+-    finalize_target_page_bits_common(target_page.bits);
+-#else
+-    finalize_target_page_bits_common(TARGET_PAGE_BITS_LEGACY);
+-#endif
+-}
+-- 
+2.43.0
 
 
