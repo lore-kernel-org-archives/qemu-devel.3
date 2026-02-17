@@ -4,61 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03239E63F2B
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Feb 2026 07:51:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A300E68141
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Feb 2026 08:07:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vsFrb-0000SS-PC; Tue, 17 Feb 2026 02:51:19 -0500
+	id 1vsG6a-0002uL-BG; Tue, 17 Feb 2026 03:06:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vsFrX-0000SG-UZ
- for qemu-devel@nongnu.org; Tue, 17 Feb 2026 02:51:16 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vsG6X-0002u6-2y
+ for qemu-devel@nongnu.org; Tue, 17 Feb 2026 03:06:45 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vsFrW-0003KX-9k
- for qemu-devel@nongnu.org; Tue, 17 Feb 2026 02:51:15 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vsG6U-0007Y3-QQ
+ for qemu-devel@nongnu.org; Tue, 17 Feb 2026 03:06:44 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771314672;
+ s=mimecast20190719; t=1771315600;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=Phars+mJG5yKR/1oErrVSZdj1G7B6wUb3lqEpzYli/A=;
- b=VILAWZSzzc/ELE1FkZ9kMKuxIb1pkuccihQZPzE5ry/Eg1mndT/uYAW1ujgQE5XXJNVw8E
- pB+JlymQuGcW7iG+joaczs6O7IaPRq8r7mnhmhmMVPWfjGhYXv10kv82aUMltXoChx2sLC
- 7OnGCG6g6B4kw46+RDF2XJwX0yKXguU=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=nJMOm8uAaLo9jAW3zbn7H0s9cOErrB5lDYx/COACt0Q=;
+ b=WfDzh0y9qgFEV+5/1Y1oq6tA7apCtkI1+xxAYhlNmIv4QPfjNudPMVQeHlTs1nQ7uiFb7Y
+ GTkxppqp0OM1C+HqNf0sdiZ/KCNuUjjZdNPBgXYT1WqZCrxBCtwX4Bk2q4ELk5iGMkCtZe
+ RI7jOXIxKyWevLg0jxmESBWnUkPvW5o=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-161-2CD2rHs9M3qzZrSsHMpxaA-1; Tue,
- 17 Feb 2026 02:51:08 -0500
-X-MC-Unique: 2CD2rHs9M3qzZrSsHMpxaA-1
-X-Mimecast-MFC-AGG-ID: 2CD2rHs9M3qzZrSsHMpxaA_1771314667
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-31-as1H0aVZMLWTRTwwuaUm8Q-1; Tue,
+ 17 Feb 2026 03:06:37 -0500
+X-MC-Unique: as1H0aVZMLWTRTwwuaUm8Q-1
+X-Mimecast-MFC-AGG-ID: as1H0aVZMLWTRTwwuaUm8Q_1771315595
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7EC7E1956052; Tue, 17 Feb 2026 07:51:07 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 051011800454; Tue, 17 Feb 2026 08:06:35 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.45.242.14])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B26BF1800348; Tue, 17 Feb 2026 07:51:06 +0000 (UTC)
+ id 8AA3F180034A; Tue, 17 Feb 2026 08:06:34 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 3A00021E692D; Tue, 17 Feb 2026 08:51:04 +0100 (CET)
+ id 2D34921E692D; Tue, 17 Feb 2026 09:06:32 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
-To: Zhang Chen <zhangckid@gmail.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>,  "Dr . David Alan Gilbert"
- <dave@treblig.org>,  Eric Blake <eblake@redhat.com>,  "Michael S .
- Tsirkin" <mst@redhat.com>,  Stefan Hajnoczi <stefanha@redhat.com>
-Subject: Re: [PATCH V4 4/4] qapi: examine IOThread attachment status via
- query-iothreads
-In-Reply-To: <20260213171622.55629-4-zhangckid@gmail.com> (Zhang Chen's
- message of "Sat, 14 Feb 2026 01:16:22 +0800")
-References: <20260213171622.55629-1-zhangckid@gmail.com>
- <20260213171622.55629-4-zhangckid@gmail.com>
-Date: Tue, 17 Feb 2026 08:51:04 +0100
-Message-ID: <87wm0bq047.fsf@pond.sub.org>
+To: Zhuoying Cai <zycai@linux.ibm.com>
+Cc: thuth@redhat.com,  berrange@redhat.com,  richard.henderson@linaro.org,
+ jrossi@linux.ibm.com,  qemu-s390x@nongnu.org,  qemu-devel@nongnu.org,
+ david@kernel.org,  walling@linux.ibm.com,  jjherne@linux.ibm.com,
+ pasic@linux.ibm.com,  borntraeger@linux.ibm.com,  farman@linux.ibm.com,
+ mjrosato@linux.ibm.com,  iii@linux.ibm.com,  eblake@redhat.com,
+ alifm@linux.ibm.com,  brueckner@linux.ibm.com
+Subject: Re: [PATCH v8 21/30] s390x: Guest support for Secure-IPL Code
+ Loading Attributes Facility (SCLAF)
+In-Reply-To: <20260212204352.1044699-22-zycai@linux.ibm.com> (Zhuoying Cai's
+ message of "Thu, 12 Feb 2026 15:43:42 -0500")
+References: <20260212204352.1044699-1-zycai@linux.ibm.com>
+ <20260212204352.1044699-22-zycai@linux.ibm.com>
+Date: Tue, 17 Feb 2026 09:06:32 +0100
+Message-ID: <87cy23pzef.fsf@pond.sub.org>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -88,104 +91,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Zhang Chen <zhangckid@gmail.com> writes:
+Zhuoying Cai <zycai@linux.ibm.com> writes:
 
-> Extend the 'IOThreadInfo' structure to include attachment metrics.
-> This allows users to monitor how many devices are associated with
-> a specific IOThread and identify them by their QOM paths.
+> The secure-IPL-code-loading-attributes facility (SCLAF)
+> provides additional security during secure IPL.
 >
-> New fields added to IOThreadInfo:
-> - @attached-cnt: An integer representing the number of devices
->   currently using this IOThread's AioContext.
-> - @attached-dev: A string containing a delimited list ("|") of
->   QOM paths for the attached devices.
+> Availability of SCLAF is determined by byte 136 bit 3 of the
+> SCLP Read Info block.
 >
-> These fields are also exposed via the Human Monitor Interface (HMP)
-> command 'info iothreads' to assist with manual debugging and
-> performance tuning.
+> This feature is available starting with the gen16 CPU model.
 >
-> Example QMP output:
-> {
->     "id": "iothread0",
->     "thread-id": 3134,
->     "attached-cnt": 2,
->     "attached-dev": "/machine/peripheral/blk1/virtio-backend | /machine/peripheral/blk0/virtio-backend",
->     ...
-> }
+> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
+> Reviewed-by: Collin Walling <walling@linux.ibm.com>
+> ---
+>  docs/specs/s390x-secure-ipl.rst     | 19 +++++++++++++++++++
+>  target/s390x/cpu_features.c         |  2 ++
+>  target/s390x/cpu_features_def.h.inc |  1 +
+>  target/s390x/cpu_models.c           |  3 +++
+>  target/s390x/gen-features.c         |  2 ++
+>  target/s390x/kvm/kvm.c              |  1 +
+>  6 files changed, 28 insertions(+)
 >
-> Signed-off-by: Zhang Chen <zhangckid@gmail.com>
+> diff --git a/docs/specs/s390x-secure-ipl.rst b/docs/specs/s390x-secure-ipl.rst
+> index 82dd8b847a..e7a93806f6 100644
+> --- a/docs/specs/s390x-secure-ipl.rst
+> +++ b/docs/specs/s390x-secure-ipl.rst
+> @@ -109,3 +109,22 @@ operations such as:
+>  
+>  The guest's kernel inspects the IIRB and uses the certificate data it contains
+>  to build the keyring.
+> +
+> +
+> +Secure Code Loading Attributes Facility
+> +---------------------------------
+
+Does not build:
+
+    docs/specs/s390x-secure-ipl.rst:170: WARNING: Title underline too short.
+
+    Secure Code Loading Attributes Facility
+    --------------------------------- [docutils]
+
+Please test with configure --enable-docs.
+
+> +
+> +The Secure Code Loading Attributes Facility (SCLAF) enhances system security
+> +during the IPL by enforcing additional verification rules.
+> +
+> +When SCLAF is available, its behavior depends on the IPL mode. It introduces
+> +verification of both signed and unsigned components to help ensure that only
+> +authorized code is loaded during the IPL process. Any errors detected by SCLAF
+> +are reported in the IIRB.
+> +
+> +Unsigned components are restricted to load addresses at or above absolute
+> +storage address ``0x2000``.
+> +
+> +Signed components must include a Secure Code Loading Attribute Block (SCLAB),
+> +which is appended at the very end of the component. The SCLAB defines security
+> +attributes for handling the signed code.
 
 [...]
-
-> diff --git a/qapi/misc.json b/qapi/misc.json
-> index 1f5062df2a..ca53638684 100644
-> --- a/qapi/misc.json
-> +++ b/qapi/misc.json
-> @@ -76,6 +76,19 @@
->  #
->  # @thread-id: ID of the underlying host thread
->  #
-> +# @attached-cnt: The parameter is a counter indicating how many
-> +#     active devices are currently associated with this iothread
-> +#     (e.g. virtio-blk).  In hotplug scenarios, users can
-> +#     pre-allocate multiple iothread objects to serve as a persistent
-> +#     thread pool.  When a device is hot-unplugged, the corresponding
-> +#     IOThread is released but remains available, allowing subsequent
-> +#     hot-plugged devices to attach to and reuse the existing thread.
-> +#     (since 11.0)
-> +#
-> +# @attached-dev: A list of QOM paths for the devices currently
-> +#     associated with this IOThread, delimited by " | ".
-> +#     Returns "none" if no devices are attached. (since 11.0)
-
-QAPI schema design maxim: do not encode structured data as strings.
-@attached-devs should be an array of QOM paths instead.
-
-Unless I misunderstand your docs, @attached-cnt is the number of QOM
-paths in @attached-dev, i.e. @attached-dev is redundant.  If this is the
-case, drop it.  If it isn't, educate me :)
-
-We generally avoid abbreviations in the QAPI schema: @attached-count,
-@attached-devices.
-
-> +#
->  # @poll-max-ns: maximum polling time in ns, 0 means polling is
->  #     disabled (since 2.9)
->  #
-> @@ -93,6 +106,8 @@
->  { 'struct': 'IOThreadInfo',
->    'data': {'id': 'str',
->             'thread-id': 'int',
-> +           'attached-cnt': 'int',
-> +           'attached-dev': 'str',
->             'poll-max-ns': 'int',
->             'poll-grow': 'int',
->             'poll-shrink': 'int',
-> @@ -118,6 +133,8 @@
->  #              {
->  #                 "id":"iothread0",
->  #                 "thread-id":3134,
-> +#                 "attached-cnt":2,
-> +#                 "attached-dev":/machine/peripheral/blk1/virtio-backend | /machine/peripheral/blk0/virtio-backend,
-
-Once again, the example is syntactically incorrect (the value lacks
-double quotes), and once again I recommend to create example I/O by
-actually running a test.  Getting tired of this, to be frank.
-
->  #                 "poll-max-ns":32768,
->  #                 "poll-grow":0,
->  #                 "poll-shrink":0,
-> @@ -126,6 +143,8 @@
->  #              {
->  #                 "id":"iothread1",
->  #                 "thread-id":3135,
-> +#                 "attached-cnt":1,
-> +#                 "attached-dev":/machine/peripheral/blk3/virtio-backend,
-
-Likewise.
-
->  #                 "poll-max-ns":32768,
->  #                 "poll-grow":0,
->  #                 "poll-shrink":0,
 
 
