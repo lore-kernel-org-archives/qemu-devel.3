@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D05F0E9A03B
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Feb 2026 21:23:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87439E9A03B
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Feb 2026 21:24:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vsSX9-0002jB-KF; Tue, 17 Feb 2026 16:23:03 -0500
+	id 1vsSX2-0002aE-7f; Tue, 17 Feb 2026 16:22:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1vsSX8-0002ih-4e
- for qemu-devel@nongnu.org; Tue, 17 Feb 2026 16:23:02 -0500
-Received: from mail-oi1-x229.google.com ([2607:f8b0:4864:20::229])
+ id 1vsSWz-0002PP-TV
+ for qemu-devel@nongnu.org; Tue, 17 Feb 2026 16:22:53 -0500
+Received: from mail-oi1-x230.google.com ([2607:f8b0:4864:20::230])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1vsSX6-0002K8-Df
- for qemu-devel@nongnu.org; Tue, 17 Feb 2026 16:23:01 -0500
-Received: by mail-oi1-x229.google.com with SMTP id
- 5614622812f47-463901a0accso1266830b6e.2
- for <qemu-devel@nongnu.org>; Tue, 17 Feb 2026 13:23:00 -0800 (PST)
+ id 1vsSWx-0002H6-Vd
+ for qemu-devel@nongnu.org; Tue, 17 Feb 2026 16:22:53 -0500
+Received: by mail-oi1-x230.google.com with SMTP id
+ 5614622812f47-463a0e14abfso2454257b6e.2
+ for <qemu-devel@nongnu.org>; Tue, 17 Feb 2026 13:22:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1771363379; x=1771968179; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1771363371; x=1771968171; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=m+qNKUAlpp9a6yuJ0J/t49+0Pl4hNg0jUhpv5P0Iy6I=;
- b=Awm91LYKHwTZhAiJP5+znS5JSUctvP9FMEUk+tt4CElkP7298RErM4bW8500HmjO3Q
- jvjQdJCM+SspdarGHHnlvIu/Z2PGcD2kSYaO50zHyVOUfZmVm5e19eLsKoKyMmPEwh9S
- B+kPzYGt2U9eCxzu7LyaiXMzhS9CEsRlFjxjvQAYukZj8CrzNqiXpG9Z4y01reUCO1g0
- 6vFaLsskEsPXoEGDi+RhXGA75ULFG7rE+gCbMK/p5tQ/RmDzYueHcnUX9g1yqxwRuv4Y
- xkcLKkSiS5TDLd9tJDO4ysSWeuYHPJxvZ+Id5+ehexmsIqbfy//87Xgus0AH4hzot3Ii
- g23Q==
+ bh=VY+khrWva4TQzXBdBU/u3tJFGnrI2ZRRl79vbOIZYRo=;
+ b=klQCoCKVRf0l4Iz1lfbVbsvMDK4ZuZgXaLAY/mxzUQBpuzx3PeiSb9ymOTYW3JC3+g
+ 9w6FoLbp7a6qWtOTlaVF2I2SuXWuPfN1YpgP8JXq9fnFB9TDMDonNF4cESCiWPO3JFHx
+ o/8dMqVLzQvwVd6vrwr4lJbxiciJ8P32tltuUz+iiZ3zqmk8m5H96o6l8RjIxb5c5Z7f
+ hhn5Sn2j2gw19KTCs1Jdp8/Zq4Pvg3+Ey+A+6hJRq3MhT3JVCFoFeGBsutpxlCdTKBCG
+ FcjCGOAj0V+z8lQXzxyk++WjYEx2cN4YSkjEKWYlvzLxyaot0DM/DQts5Q9lFyyu6YE7
+ vJXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771363379; x=1771968179;
+ d=1e100.net; s=20230601; t=1771363371; x=1771968171;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=m+qNKUAlpp9a6yuJ0J/t49+0Pl4hNg0jUhpv5P0Iy6I=;
- b=c3NPDqc6/tCt/VbmNy8Ybt8sTqfBtnLFN8IXYLIVxgtxoz786G66esB2cFX0yALcIP
- i9MPhu1Wf/MqM0epnMrOZNw231iZRRrEkhCDBsorE7B+7U1e9bfk/jMl3jW8q8p9bmCD
- GUtzXhDBCoW9Kk1rA4my2Wk6NZ/3DJseqN8JGN3iRCP7qUcz/47+4MqxBjuB1ZzP3pjH
- SiA1AL+VapPyGUAFGXmJJKToZ9oEuG4cxdu1iqA0IUSOw01IxLCOhygDpAJY0FRP+ES+
- +hdgmcxYd6+XtBtU+DLaEQ5cETnSHVYasz61B6SoDuw92AflaXhCy2E+PuZkfPf5V/0B
- kQkA==
-X-Gm-Message-State: AOJu0YyqHqwxZdnc4hjE3Uo1J8teAQ20a7pR5kqcw3PC2H+/FdlEmdlI
- 9t7iSfLwPr/mKh/kSoHiHwyGppoInf+l3Ueaey5qZE/C5o1vIBOJx/ais97hdw==
-X-Gm-Gg: AZuq6aKLNpow9NvHV6sg42Xqw4AhfT+NCZ58Rg3VRyzYZqJ/i9rhkEIsNIgKBp8IZXn
- 06j9+ES7gD+qTorPYXhcDjBP0qzKshPdNhabdNMyDOvOjl1D/JQw0gzuIeDk+x1G2q7rFfYF7JB
- 9Fwtvl2nMhiwj7cJ4x/w8aI9uRs+GjgcuL6ULH6ssbhNvzUbsSQUZPzijYvS0o7CvVUfyCeeJRX
- 5omIc5gKB+3opJpKcIl4TOkuQfWqvU81MPFqIQFyiWqCKzZ6oMykDpXSbsCiN8pa1on0rtYoWr4
- pIs2N5W0kI2J8zI2kSXPFGwXawK+uUl1Zyp+GI/Sth7LkRL6+unEHl68LEIRfY3uQgE2O9dEv3Q
- UZUjMS+f6in+hLsRTX2g4mFPYUpG0g6ABL2RyX5gHSgnfCADEvVHe3ICUvikAEtAhv7gXYjA3jw
- VW/tgCFGvML0oeYuAxg47NNy20rhwOl5edypnKrymYRFKtzGht3z8MJulhmiL58ziZpvf3hl0rj
- vUWJ+fjcVc0h1DIjzYNm6JIkcc=
-X-Received: by 2002:a05:6808:1793:b0:45e:fbe0:1bf3 with SMTP id
- 5614622812f47-463b409b4a3mr4845137b6e.52.1771363378953; 
- Tue, 17 Feb 2026 13:22:58 -0800 (PST)
+ bh=VY+khrWva4TQzXBdBU/u3tJFGnrI2ZRRl79vbOIZYRo=;
+ b=uaIrEVJRWXmXPSvxdicpexjSZ3KcGCZ+4T5KIr9/vtygPKM4Ps9dh7XF1XF3ENHGFL
+ kLovyRTNzBQI8TNKUGdgubeHdWlkkpd2xCgdGaLmTK4v3i/sgHDnNp3uqHKAqxdI3Z30
+ pXvgouqjuWktRWni3sMbqPaXnGtLrYjeBZL4g3Lp/xuHrekiK4MwkH1O6rtfIExXUD85
+ HcwUgaydf8GEKP588SE46xQxFp4lhzCUj3LiZWP8S1DpEIWTmGT/hgQEiKfDq/caBKvY
+ rghACp3gLgSnVmneIf1hnjtJQ0ccxbNXReVM6KwG67v0di6QEO5u7XgTc1ixZzRHVvVF
+ RJyw==
+X-Gm-Message-State: AOJu0YzBfcOd4HUgxyOizzG4utQWR+qF8CN2bWcxXmypLGikkHMQvs94
+ D52qqi9YfTWUTI91RI2p+aN+tHKHEaTPOXSAWGa1ijXqSCUdXo3nONnVqlwCWw==
+X-Gm-Gg: AZuq6aJ/RXGZh6oHgfCPUd/2bKp7/alz5Fe66G3trJ+87O65wqIlGo3KYa6xhWCuPxh
+ sOadxxuhIAGUiIYeqFioB7DvrMtca0HvMG3fLGbbKxJY5Myv2WbRDDIM7cyPkSfMwwz8dM7LYu3
+ ed83yLdF8/iqNJXfQR1M2W7+Fio/eIjZtCke/rJhGDlfBjNGI0SAllCYTiokpzczBNXKwp7wmcF
+ v9ax2cHolUvm8MG1QYvcIrjnzqnU5VBLIDmhIBestzatUgVuUJiZJYLBBCEAl8zEZPtCvgnxhoD
+ gU6NyEenaHaGvZE0lCNvtcNxWnNz0uMg274VHSwi8HnaXlGABWWSjap0RBz8t9cZiHMsFxRhITo
+ frFBZi5IfqJL70jl3GMcA/ia/THBNbXWcVcBy66/JvM7AkbLVtzcjS7aRv2zfjaTH/MiLb2i0ig
+ wxslDhMndUR1e8acaL+PgE2DLaIhx4orn1nXwuE06sVbZBfzjOdqIPhPfkxVFMZy9q76p+xsTWn
+ oyBTYWQP/p8C9Ah
+X-Received: by 2002:a05:6808:1302:b0:450:6eb0:3481 with SMTP id
+ 5614622812f47-4639adb5e20mr7367711b6e.43.1771363370675; 
+ Tue, 17 Feb 2026 13:22:50 -0800 (PST)
 Received: from taylor-ubuntu.. (c-67-172-136-152.hsd1.co.comcast.net.
  [67.172.136.152]) by smtp.gmail.com with ESMTPSA id
- 5614622812f47-4636ae8f86fsm12899319b6e.3.2026.02.17.13.22.56
+ 5614622812f47-4636ae8f86fsm12899319b6e.3.2026.02.17.13.22.49
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 17 Feb 2026 13:22:58 -0800 (PST)
+ Tue, 17 Feb 2026 13:22:50 -0800 (PST)
 From: Taylor Simpson <ltaylorsimpson@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: brian.cain@oss.qualcomm.com, matheus.bernardino@oss.qualcomm.com,
  sid.manning@oss.qualcomm.com, marco.liebel@oss.qualcomm.com,
  richard.henderson@linaro.org, philmd@linaro.org, ale@rev.ng, anjo@rev.ng,
  ltaylorsimpson@gmail.com
-Subject: [PATCH v3 7/8] tests/tcg/hexagon: Add test for revision-gated
- instruction decoding
-Date: Tue, 17 Feb 2026 14:22:44 -0700
-Message-ID: <20260217212245.95321-8-ltaylorsimpson@gmail.com>
+Subject: [PATCH v3 2/8] Hexagon (linux-user/hexagon) Identify Hexagon version
+ in ELF file
+Date: Tue, 17 Feb 2026 14:22:39 -0700
+Message-ID: <20260217212245.95321-3-ltaylorsimpson@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260217212245.95321-1-ltaylorsimpson@gmail.com>
 References: <20260217212245.95321-1-ltaylorsimpson@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::229;
- envelope-from=ltaylorsimpson@gmail.com; helo=mail-oi1-x229.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::230;
+ envelope-from=ltaylorsimpson@gmail.com; helo=mail-oi1-x230.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,192 +105,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Brian Cain <brian.cain@oss.qualcomm.com>
+Return proper Hexagon CPU version from get_elf_cpu_model
 
-Add check_rev_gating, a linux-user test that verifies the decoder
-rejects instructions from a newer CPU revision than the one selected
-by the ELF binary's e_flags.
-
-Co-authored-by: Taylor Simpson <ltaylorsimpson@gmail.com>
 Co-authored-by: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
-Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+Co-authored-by: Brian Cain <brian.cain@oss.qualcomm.com>
+Signed-off-by: Taylor Simpson <ltaylorsimpson@gmail.com>
 ---
- tests/tcg/hexagon/check_rev_gating.c | 141 +++++++++++++++++++++++++++
- tests/tcg/hexagon/Makefile.target    |   6 ++
- 2 files changed, 147 insertions(+)
- create mode 100644 tests/tcg/hexagon/check_rev_gating.c
+ linux-user/hexagon/elfload.c | 43 ++++++++++++++++++++++--------------
+ 1 file changed, 26 insertions(+), 17 deletions(-)
 
-diff --git a/tests/tcg/hexagon/check_rev_gating.c b/tests/tcg/hexagon/check_rev_gating.c
-new file mode 100644
-index 0000000000..26b66f5455
---- /dev/null
-+++ b/tests/tcg/hexagon/check_rev_gating.c
-@@ -0,0 +1,141 @@
-+/*
-+ * Test that instructions from a newer revision than the running CPU
-+ * are rejected with SIGILL.
-+ *
-+ * Compiled with -mv66 so that e_flags selects CPU v66. The test embeds
-+ * a v68 instruction (L2_loadw_aq: "r0 = memw_aq(r0)") via .word
-+ * encoding. The revision-gated decoder must reject it, and linux-user
-+ * must deliver SIGILL.
-+ *
-+ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include <assert.h>
-+#include <signal.h>
-+#include <stdio.h>
-+#include <stdlib.h>
-+#include <string.h>
-+#include <unistd.h>
-+
-+static void *resume_pc;
-+static int signals_handled;
-+static int expected_signals;
-+
-+static void handle_sigill(int sig, siginfo_t *info, void *puc)
-+{
-+    ucontext_t *uc = (ucontext_t *)puc;
-+
-+    if (sig != SIGILL) {
-+        _exit(EXIT_FAILURE);
-+    }
-+
-+    uc->uc_mcontext.r0 = SIGILL;
-+    uc->uc_mcontext.pc = (unsigned long)resume_pc;
-+    signals_handled++;
-+}
-+
-+/*
-+ * Try to execute an instruction introduced after v66
-+ * On a v66 CPU this must raise SIGILL.
-+ *
-+ * Since we are building for v66, the assembler will reject
-+ * the instructions, so introduce them with .word.
-+ */
-+#define TRY_FUNC(NAME, WORD) \
-+static int try_##NAME(void) \
-+{ \
-+    int sig; \
-+    expected_signals++; \
-+    asm volatile( \
-+        "r0 = #0\n" \
-+        "r1 = ##1f\n" \
-+        "memw(%1) = r1\n" \
-+        WORD \
-+        "1:\n" \
-+        "%0 = r0\n" \
-+        : "=r"(sig) \
-+        : "r"(&resume_pc) \
-+        : "r0", "r1", "memory"); \
-+    return sig; \
-+}
-+
-+TRY_FUNC(v68_loadw_aq,
-+         ".word 0x9200c800    /* { r0 = memw_aq(r0) } */\n")
-+TRY_FUNC(v68_loadd_aq,
-+         ".word 0x9201d800    /* r1:0 = memd_aq(r1) */\n")
-+TRY_FUNC(v68_release_at,
-+         ".word 0xa0e0c00c    /* release(r0):at */\n")
-+TRY_FUNC(v68_release_st,
-+         ".word 0xa0e0c02c    /* release(r0):st */\n")
-+TRY_FUNC(v68_storew_rl_at,
-+         ".word 0xa0a0c108    /* memw_rl(r0):at = r1 */\n")
-+TRY_FUNC(v68_stored_rl_at,
-+         ".word 0xa0e2c008    /* memd_rl(r2):at = r1:0 */\n")
-+TRY_FUNC(v68_storew_rl_st,
-+         ".word 0xa0a0c128    /* memw_rl(r0):st = r1 */\n")
-+TRY_FUNC(v68_stored_rl_st,
-+         ".word 0xa0e2c028    /* memd_rl(r2):st = r1:0 */\n")
-+
-+TRY_FUNC(v68hvx_v6mpy,
-+         ".word 0x1f42e424    /* v5:4.w = v6mpy(v5:4.ub, v3:2.b, #1):v */\n")
-+
-+TRY_FUNC(v69hvx_vasrvuhubrndsat,
-+         ".word 0x1d06c465    /* v5.ub = vasr(v5:4.uh, v6.ub):rnd:sat */\n")
-+TRY_FUNC(v69hvx_vasrvuhubsat,
-+         ".word 0x1d06c445    /* v5.ub = vasr(v5:4.uh, v6.ub):sat */\n")
-+TRY_FUNC(v69hvx_vasrvwuhrndsat,
-+         ".word 0x1d06c425    /* v5.uh = vasr(v5:4.w, v6.uh):rnd:sat */\n")
-+TRY_FUNC(v69hvx_vasrvwuhsat,
-+         ".word 0x1d06c405    /* v5.uh = vasr(v5:4.w, v6.uh):sat */\n")
-+TRY_FUNC(v69hvx_vassign_tmp,
-+         ".word 0x1e014dcc    /* { v12.tmp = v13 */\n"
-+         ".word 0x1c43cc04    /*    v4.w = vadd(v12.w, v3.w) } */\n")
-+TRY_FUNC(v69hvx_vcombine_tmp,
-+         ".word 0x1eae4fec    /* { v13:12.tmp = vcombine(v15, v14) */\n"
-+         ".word 0x1c434c04    /*   v4.w = vadd(v12.w, v3.w) */\n"
-+         ".word 0x1e03edf0    /*   v16 = v13 } */\n")
-+TRY_FUNC(v69hvx_vmpyuhvs,
-+         ".word 0x1fc5e4e4    /* v4.uh = vmpy(V4.uh, v5.uh):>>16 */\n")
-+
-+TRY_FUNC(v73_callrh,
-+         ".word 0x50c5c000    /* callrh r5 */\n")
-+TRY_FUNC(v73_jumprh,
-+         ".word 0x52c0c000    /* jumprh r0 */\n")
-+
-+int main(void)
-+{
-+    struct sigaction act;
-+
-+    memset(&act, 0, sizeof(act));
-+    act.sa_sigaction = handle_sigill;
-+    act.sa_flags = SA_SIGINFO;
-+    assert(sigaction(SIGILL, &act, NULL) == 0);
-+
-+    assert(try_v68_loadw_aq() == SIGILL);
-+    assert(try_v68_loadd_aq() == SIGILL);
-+    assert(try_v68_release_at() == SIGILL);
-+    assert(try_v68_release_st() == SIGILL);
-+    assert(try_v68_storew_rl_at() == SIGILL);
-+    assert(try_v68_stored_rl_at() == SIGILL);
-+    assert(try_v68_storew_rl_st() == SIGILL);
-+    assert(try_v68_stored_rl_st() == SIGILL);
-+
-+    assert(try_v68hvx_v6mpy() == SIGILL);
-+
-+    assert(try_v69hvx_vasrvuhubrndsat() == SIGILL);
-+    assert(try_v69hvx_vasrvuhubsat() == SIGILL);
-+    assert(try_v69hvx_vasrvwuhrndsat() == SIGILL);
-+    assert(try_v69hvx_vasrvwuhsat() == SIGILL);
-+    assert(try_v69hvx_vassign_tmp() == SIGILL);
-+    assert(try_v69hvx_vcombine_tmp() == SIGILL);
-+    assert(try_v69hvx_vmpyuhvs() == SIGILL);
-+
-+    assert(try_v73_callrh() == SIGILL);
-+    assert(try_v73_jumprh() == SIGILL);
-+
-+    assert(signals_handled == expected_signals);
-+
-+    puts("PASS");
-+    return EXIT_SUCCESS;
-+}
-diff --git a/tests/tcg/hexagon/Makefile.target b/tests/tcg/hexagon/Makefile.target
-index f86f02bb31..0050370806 100644
---- a/tests/tcg/hexagon/Makefile.target
-+++ b/tests/tcg/hexagon/Makefile.target
-@@ -81,6 +81,7 @@ HEX_TESTS += test_vminh
- HEX_TESTS += test_vpmpyh
- HEX_TESTS += test_vspliceb
+diff --git a/linux-user/hexagon/elfload.c b/linux-user/hexagon/elfload.c
+index d8b545032a..39b0201814 100644
+--- a/linux-user/hexagon/elfload.c
++++ b/linux-user/hexagon/elfload.c
+@@ -10,23 +10,32 @@ const char *get_elf_cpu_model(uint32_t eflags)
+     static char buf[32];
+     int err;
  
-+HEX_TESTS += check_rev_gating
- HEX_TESTS += v68_scalar
- HEX_TESTS += v68_hvx
- HEX_TESTS += v69_hvx
-@@ -106,6 +107,11 @@ read_write_overlap: read_write_overlap.c hex_test.h
- reg_mut: reg_mut.c hex_test.h
- unaligned_pc: unaligned_pc.c
+-    /* For now, treat anything newer than v5 as a v73 */
+-    /* FIXME - Disable instructions that are newer than the specified arch */
+-    if (eflags == 0x04 ||    /* v5  */
+-        eflags == 0x05 ||    /* v55 */
+-        eflags == 0x60 ||    /* v60 */
+-        eflags == 0x61 ||    /* v61 */
+-        eflags == 0x62 ||    /* v62 */
+-        eflags == 0x65 ||    /* v65 */
+-        eflags == 0x66 ||    /* v66 */
+-        eflags == 0x67 ||    /* v67 */
+-        eflags == 0x8067 ||  /* v67t */
+-        eflags == 0x68 ||    /* v68 */
+-        eflags == 0x69 ||    /* v69 */
+-        eflags == 0x71 ||    /* v71 */
+-        eflags == 0x8071 ||  /* v71t */
+-        eflags == 0x73       /* v73 */
+-       ) {
++    switch (eflags) {
++    case 0x04:
++        return "v5";
++    case 0x05:
++        return "v55";
++    case 0x60:
++        return "v60";
++    case 0x61:
++        return "v61";
++    case 0x62:
++        return "v62";
++    case 0x65:
++        return "v65";
++    case 0x66:
++        return "v66";
++    case 0x67:
++    case 0x8067:        /* v67t */
++        return "v67";
++    case 0x68:
++        return "v68";
++    case 0x69:
++        return "v69";
++    case 0x71:
++    case 0x8071:        /* v71t */
++        return "v71";
++    case 0x73:
+         return "v73";
+     }
  
-+# Compile for v66 so that the ELF selects a v66 CPU; the test then
-+# exercises revision gating by executing a v68 .word instruction.
-+check_rev_gating: check_rev_gating.c
-+	$(CC) $(CFLAGS) -mv66 -O2 $< -o $@ $(LDFLAGS)
-+
- # This test has to be compiled for the -mv67t target
- usr: usr.c hex_test.h
- 	$(CC) $(CFLAGS) -mv67t -O2 -Wno-inline-asm -Wno-expansion-to-defined $< -o $@ $(LDFLAGS)
 -- 
 2.43.0
 
