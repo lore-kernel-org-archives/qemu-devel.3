@@ -4,95 +4,130 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4DEEE909DA
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Feb 2026 17:02:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C99A8E9A027
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Feb 2026 17:53:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vsOSl-0004Gm-NZ; Tue, 17 Feb 2026 12:02:15 -0500
+	id 1vsPFN-0007AQ-1A; Tue, 17 Feb 2026 12:52:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vsOS5-0003uT-IA
- for qemu-devel@nongnu.org; Tue, 17 Feb 2026 12:01:36 -0500
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vsORz-0006PL-Vn
- for qemu-devel@nongnu.org; Tue, 17 Feb 2026 12:01:30 -0500
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-436317c80f7so10172f8f.1
- for <qemu-devel@nongnu.org>; Tue, 17 Feb 2026 09:01:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771347685; x=1771952485; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=77+c0e0Yovg9ap+AlPSHMs2Po67bUb2lMPPGT6TCzaE=;
- b=owrz3hZTr8zrSrn/kO/Vkez7dukjWrqjycmMSN3UDn+cpzkLp5aGOGP/hmcVeDJbOP
- RTKMb+sGeM+gIXzPWbqJh6qP7D+fJ/x/LajsWq2A8xDcjYWTohnvA9UMe+q6A4eVW3a+
- EqUMCoA2ReVDO8Qpp3PAWqQTo0QWyBPBdiwUb10QtY7QNTvsr4xdWpSCCtiwXLEHYHfX
- PNjuyTuc48iFnSZDB8T5/LJt0ndHnVzlp8PXG873tlKkl1b5q9S9XRV9Hd3al3BK6hKl
- BVXrXPaVUMo17XfQwtxTJnkrrYLCKz2GccxVFY7QkLAA9atyRjQn+4HCYk2JMOcmvadq
- G8TQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771347685; x=1771952485;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=77+c0e0Yovg9ap+AlPSHMs2Po67bUb2lMPPGT6TCzaE=;
- b=WKeujSDoW9BrBxplCoTYrQeAP2vKr/U+QErKp7TYErZ/kF/N14awvWabWczxV6iuA8
- Y/MIZmkDIbpq4MgH1Ph8SubIn621e0jGlFw3++yErU+OCcVI5MalmkSupuZkn5q3P70X
- VzgMxURl68656kLkbXVaFyXzszFCrgr3CQDnG3poNJ1g/GLAgQ8GVUhO1CT3tuNRG6I4
- ZYHYpfMa6zjzm3LzQZFMN/MPLwWN6XrVnSytg6tpB1f+cIDEuT8J90/dwESVSu2NyYiW
- vXzBoIJ2GAbKQQr0F92eVihtbWzl0VbAaDBFCHExBvYj1gJV3dtiEm0zaEl5z7Fq4HTE
- HJKg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWJ7LifGrdzJLVRrCrvNzfYAGOOIzqYaUWK1bhkyG1sB/ucJ40/krp7ZhKUl6CH/v+88lt+o4oIk5rQ@nongnu.org
-X-Gm-Message-State: AOJu0YxFnEuqCf/eubL+blGv4MOrnEVuxt1WIAEyQTmGefhszPl1mnqa
- mq/WDOMIl4xt3u5AjaVxO+/qtxM8FT2i56ak1JdaTkMjdpgnOHsEuFfhH9qHUktqCoI=
-X-Gm-Gg: AZuq6aJpIe9mEsGgGnVSxnGE/Xn8afw+vrmNRXJYdUtsAGNE0KqJaxVEgrJSf51cFLR
- V5Zvql7xkwkcoC+ht4AKXQmdIlUDncp1ZJZAaFEluIjFZWKPriTBtvtrTDIkNjhz6HJA/M0gThO
- bS9mp+ksnP4e2pOg7jYxeJzXQCblgSfO/XHwvmvP6CiATynt34kH5FdeooX861FiUnXtFLHd8q1
- 4eHDXxFApsntDFRaBtdkA+wBWwCSZ5ILnQCFN6Zoo/nlou9oq9Y1G/x+c2JofjGRlfybM0PH8RI
- U0r5BNjtnnF4CYjvorg6HqAyOMCklM8ZBy6YZAs8zXevS8jR0/SLDZanrEzM6y4v1rJ9y44MM5t
- vuWgd7PTEd8KSFcUVi7BPBYJq4nym20ZaWCxUp0nxU3cBb/fJHpME2IwghgufSnYe2YFkG0ZYe7
- FOj1vXU2MAOk1pVmPlixP19yKyRImcKlLfm++HVXXgZqZc1V/NCSPzfH9FmkLJsrHP5Q==
-X-Received: by 2002:a5d:5850:0:b0:436:180e:78d9 with SMTP id
- ffacd0b85a97d-4379d5db880mr23928365f8f.1.1771347685038; 
- Tue, 17 Feb 2026 09:01:25 -0800 (PST)
-Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43796ac8d82sm35438517f8f.31.2026.02.17.09.01.23
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 17 Feb 2026 09:01:23 -0800 (PST)
-Message-ID: <68c6ced9-dcbc-4981-b2be-65cdf7e2de9c@linaro.org>
-Date: Tue, 17 Feb 2026 18:01:22 +0100
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vsPFL-0007A7-Lo
+ for qemu-devel@nongnu.org; Tue, 17 Feb 2026 12:52:27 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vsPFJ-0002cO-Hw
+ for qemu-devel@nongnu.org; Tue, 17 Feb 2026 12:52:27 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1771350742;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=eyV4RMGDyuy/9AwhxCPo26QqQfircen/PVM5zwnbvbI=;
+ b=QfsCS2RKMLyrNXg1y/KKkMAR4g/ou2g17a4JAZk2zX6298kOaj30xX8KJTD9ALQT0+0wwa
+ YB/UfjpMe0Ya55jK6pWwOuSfY1il5ThhsA5TkMeq72rWywPKYgxfMA5OybDBPKza7BePb7
+ zWVYdzoG6MjVoY+E2WY0AIxBUpIXYks=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-132-7-dq3LkoO-m9r2RZARFSmA-1; Tue,
+ 17 Feb 2026 12:52:18 -0500
+X-MC-Unique: 7-dq3LkoO-m9r2RZARFSmA-1
+X-Mimecast-MFC-AGG-ID: 7-dq3LkoO-m9r2RZARFSmA_1771350736
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6529B195605B; Tue, 17 Feb 2026 17:52:15 +0000 (UTC)
+Received: from [10.45.224.144] (unknown [10.45.224.144])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id CE3BA1800296; Tue, 17 Feb 2026 17:52:03 +0000 (UTC)
+Message-ID: <b2cfb40c-95e2-4c1a-87c2-7266c7ddfe3d@redhat.com>
+Date: Tue, 17 Feb 2026 18:51:56 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] target/alpha: Reset CPU
-Content-Language: en-US
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
+Subject: Re: [PATCH v7 15/19] tests: replace check-venv with vm-venv target
+To: John Snow <jsnow@redhat.com>, qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Cleber Rosa <crosa@redhat.com>, Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Kyle Evans <kevans@freebsd.org>, Peter Xu <peterx@redhat.com>,
  =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Jim MacArthur <jim.macarthur@linaro.org>, Yodel Eldar
- <yodel.eldar@yodel.dev>, Igor Mammedov <imammedo@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>
-References: <20260217-alpha-v1-0-0dcc708c9db3@rsg.ci.i.u-tokyo.ac.jp>
- <20260217-alpha-v1-1-0dcc708c9db3@rsg.ci.i.u-tokyo.ac.jp>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260217-alpha-v1-1-0dcc708c9db3@rsg.ci.i.u-tokyo.ac.jp>
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+ Yonggang Luo <luoyonggang@gmail.com>, Warner Losh <imp@bsdimp.com>,
+ Maksim Davydov <davydov-max@yandex-team.ru>,
+ Alexandre Iooss <erdnaxe@crans.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Ed Maste <emaste@freebsd.org>, Kevin Wolf <kwolf@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Michael Roth <michael.roth@amd.com>,
+ Li-Wen Hsu <lwhsu@freebsd.org>, Hanna Reitz <hreitz@redhat.com>
+References: <20260216212952.420120-1-jsnow@redhat.com>
+ <20260216212952.420120-16-jsnow@redhat.com>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20260216212952.420120-16-jsnow@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.043,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,52 +143,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Akihiko,
-
-On 17/2/26 07:34, Akihiko Odaki wrote:
-> alpha_cpu_realizefn() did not properly call cpu_reset(), which
-> corrupted icount. Add the missing function call to fix icount.
+On 16/02/2026 22.29, John Snow wrote:
+> With the qemu.qmp and qemu.machine dependencies now installed by default
+> at configure time and additional dependencies required by functional
+> testing installed on demand, we do not need the explicit "check-venv" target.
 > 
-> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+> ...However, to facilitate running VM tests without running configure, we
+> move some of the former logic into tests/vm/Makefile.include to create a
+> new venv (vm-venv) on-demand when running VM tests from the source tree.
+> 
+> Signed-off-by: John Snow <jsnow@redhat.com>
 > ---
->   target/alpha/cpu.c | 1 +
->   1 file changed, 1 insertion(+)
-> 
-> diff --git a/target/alpha/cpu.c b/target/alpha/cpu.c
-> index 1780db7d1e29..74281ebdb367 100644
-> --- a/target/alpha/cpu.c
-> +++ b/target/alpha/cpu.c
-> @@ -124,6 +124,7 @@ static void alpha_cpu_realizefn(DeviceState *dev, Error **errp)
->       }
->   
->       qemu_init_vcpu(cs);
-> +    cpu_reset(cs);
->   
->       acc->parent_realize(dev, errp);
->   }
-> 
+>   tests/Makefile.include    | 22 ++--------------------
+>   tests/vm/Makefile.include | 18 ++++++++++++++----
+>   2 files changed, 16 insertions(+), 24 deletions(-)
 
-We ought to rework the CPU reset paths, it is too confuse.
-Peter / Alex / myself have been there. I started some work in the
-area, fixing few inconsistencies, but it isn't a priority so never
-got over it.
+Maybe consider adding "vm-venv" to the .gitignore file now?
 
-We really shouldn't manually call cpu_reset() in DeviceRealize
-handlers, thus not add more calls, rather remove. I appreciate this
-is a temporary kludge until we sort the cpu reset logic.
+Anyway,
+Tested-by: Thomas Huth <thuth@redhat.com>
 
-At a glance, since this is an icount issue, instead of adding
-cpu_reset() all over, I wonder about this surgical kludge instead
-(untested):
-
--- >8 --
-diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
-index ad94f96b252..0577c25e3e8 100644
---- a/accel/tcg/cpu-exec.c
-+++ b/accel/tcg/cpu-exec.c
-@@ -1071,2 +1071,3 @@ bool tcg_exec_realizefn(CPUState *cpu, Error **errp)
-      tcg_iommu_init_notifier_list(cpu);
-+    cpu->cc->tcg_ops->cpu_exec_reset(cpu);
-  #endif /* !CONFIG_USER_ONLY */
----
 
