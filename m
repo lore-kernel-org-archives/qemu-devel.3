@@ -4,122 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81CA1E63F29
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Feb 2026 07:25:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53024E63F29
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Feb 2026 07:40:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vsFS5-0003Tz-Nz; Tue, 17 Feb 2026 02:24:57 -0500
+	id 1vsFgA-0006mh-Ck; Tue, 17 Feb 2026 02:39:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vsFS4-0003TM-CP
- for qemu-devel@nongnu.org; Tue, 17 Feb 2026 02:24:56 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vsFg9-0006mQ-2Q
+ for qemu-devel@nongnu.org; Tue, 17 Feb 2026 02:39:29 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vsFS2-0005jP-Gl
- for qemu-devel@nongnu.org; Tue, 17 Feb 2026 02:24:56 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vsFg4-0000b1-Ma
+ for qemu-devel@nongnu.org; Tue, 17 Feb 2026 02:39:28 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771313093;
+ s=mimecast20190719; t=1771313961;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=UHpnmrGZLJeJzni08nJu72li5csB+LhHfYIhnhM0vbY=;
- b=MucxWfDNMBvWojYQrHsQRJX/J+rLdqZbqsS7cX6T6a2XpoAKSvNFSgGtQ1TW3BG5W+pvni
- NfxGft/Uk/WOiq12+whuFfCAaLgLZYUo8MKKYkfGl2SuClpo8NFXRmTvQJ+WZIt+FZyKkx
- HRSGPqaqDhWWx7owmCJlQEdRD2nR7F4=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ in-reply-to:in-reply-to:references:references;
+ bh=mA/5Dw3X6BiebAkvYJH/6JE9OBI0NVnZGT3BkoJ8ImA=;
+ b=ZbyaBMxN4oqYu7NzpEFe01ffRCXbA15sXIt+RL4TSE0Oli/yYQrfQNw5403ojzP12bHNMV
+ k/gqcMgMYgXJrsWEdmw0ylq3ZSt+2o7x9rBNrYl4dVH/A1xyXvb/To7sj9VSQFGR88w9P+
+ zRcP8RDECcModQnExxmTEK/Ybon/6FE=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-126-an9-09nWMCGT3bNuHrdmmw-1; Tue,
- 17 Feb 2026 02:24:50 -0500
-X-MC-Unique: an9-09nWMCGT3bNuHrdmmw-1
-X-Mimecast-MFC-AGG-ID: an9-09nWMCGT3bNuHrdmmw_1771313088
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-524-aoR16LHhMrSUDeV-5cVuFA-1; Tue,
+ 17 Feb 2026 02:39:19 -0500
+X-MC-Unique: aoR16LHhMrSUDeV-5cVuFA-1
+X-Mimecast-MFC-AGG-ID: aoR16LHhMrSUDeV-5cVuFA_1771313959
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 739621955D8B; Tue, 17 Feb 2026 07:24:47 +0000 (UTC)
-Received: from [10.45.224.144] (unknown [10.45.224.144])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 1607E1800352; Tue, 17 Feb 2026 07:24:34 +0000 (UTC)
-Message-ID: <56be2717-0824-4db0-845d-fc322c57e158@redhat.com>
-Date: Tue, 17 Feb 2026 08:24:32 +0100
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1B6D218003FC
+ for <qemu-devel@nongnu.org>; Tue, 17 Feb 2026 07:39:19 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.14])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 90DE41800361
+ for <qemu-devel@nongnu.org>; Tue, 17 Feb 2026 07:39:18 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 1D2DD21E692D; Tue, 17 Feb 2026 08:39:16 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [PATCH 2/5] json-parser: replace with a push parser
+In-Reply-To: <682de27d-4ebf-4c08-ad0c-45626a5a9dea@redhat.com> (Paolo
+ Bonzini's message of "Mon, 16 Feb 2026 17:41:18 +0100")
+References: <20260107084840.150843-1-pbonzini@redhat.com>
+ <20260107084840.150843-3-pbonzini@redhat.com>
+ <87sebab6mr.fsf@pond.sub.org>
+ <a31dca74-1ae8-428c-9ed8-315594afecbf@redhat.com>
+ <87wm0iumuv.fsf@pond.sub.org>
+ <682de27d-4ebf-4c08-ad0c-45626a5a9dea@redhat.com>
+Date: Tue, 17 Feb 2026 08:39:16 +0100
+Message-ID: <875x7vrf8b.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 13/19] meson, mkvenv: add qemu.git/python/qemu package
- to pythondeps.toml
-To: John Snow <jsnow@redhat.com>, qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Cleber Rosa <crosa@redhat.com>, Mahmoud Mandour <ma.mandourr@gmail.com>,
- Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Kyle Evans <kevans@freebsd.org>, Peter Xu <peterx@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
- Yonggang Luo <luoyonggang@gmail.com>, Warner Losh <imp@bsdimp.com>,
- Maksim Davydov <davydov-max@yandex-team.ru>,
- Alexandre Iooss <erdnaxe@crans.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Ed Maste <emaste@freebsd.org>, Kevin Wolf <kwolf@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Michael Roth <michael.roth@amd.com>,
- Li-Wen Hsu <lwhsu@freebsd.org>, Hanna Reitz <hreitz@redhat.com>
-References: <20260216212952.420120-1-jsnow@redhat.com>
- <20260216212952.420120-14-jsnow@redhat.com>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20260216212952.420120-14-jsnow@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -144,29 +93,359 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 16/02/2026 22.29, John Snow wrote:
-> Add the local python package group into pythondeps.toml for the
-> tooling This makes qemu.qmp, qemu.machine and qemu.utils
-> packages unconditionally available for tests and scripts.
-> 
-> Signed-off-by: John Snow <jsnow@redhat.com>
-> ---
->   pythondeps.toml | 1 +
->   1 file changed, 1 insertion(+)
-> 
-> diff --git a/pythondeps.toml b/pythondeps.toml
-> index 743e2a8848c..89256132fee 100644
-> --- a/pythondeps.toml
-> +++ b/pythondeps.toml
-> @@ -37,6 +37,7 @@ sphinx_rtd_theme = { accepted = ">=0.5", installed = "1.2.2" }
->   # system packages, or python packages we vendor.
->   [tooling]
->   "qemu.qmp" = { accepted = ">=0.0.5", installed = "0.0.5" }
-> +"qemu" = { path = "python/" }
->   
->   # This test group is for functional tests, and can include dependencies
->   # fetched from PyPI.
+Paolo Bonzini <pbonzini@redhat.com> writes:
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+> On 2/12/26 14:12, Markus Armbruster wrote:
+>>>> We know the stack is at most 1024 deep (MAX_NESTING).  Have you
+>>>> considered using an array instead of GQueue?
+>>>
+>>> It'd be only 8K, but I preferred to keep MAX_NESTING hidden within
+>>> json-streamer.c.  Not having bounds checking makes me a bit nervous
+>>> about having fixed-size arrays.
+>>=20
+>> Looks mostly harmless to me: there's exactly one spot where we push
+>> something onto the stack, one where we pop, and one where we pop
+>> everything.  We only ever look at the top of the stack.
+>
+> Yes, code-wise it's not hard.  But it's ugly/brittle to have two pieces=20
+> of code that have to sync on MAX_NESTING.
+>
+>>>> The parser's interesting part follows.  The parser is a pushdown
+>>>> automaton.  The pushdown automaton is coded in C.  On the one hand,
+>>>> d'oh!  Of course it is.  On the other hand, it's hard to see the actual
+>>>> automaton in C.  May I have a comment explaining state and state
+>>>> transitions?  Perhaps we better start with an informal description,
+>>>> discuss it, then distill the discussion into a comment.
+>>>
+>>> That was the purpose of the mysterious comment above.  If a mix between
+>>> BNF and automaton is okay for you, it could be something like
+>>>
+>>> input :=3D value        -> END_OF_VALUE
+>>>            END_OF_INPUT -> check stack is empty, return parsed value
+>>>
+>>> // entered on BEFORE_VALUE; after any of these rules are processed, the
+>>> // parser has completed a QObject and is in the END_OF_VALUE state.
+>>=20
+>> What do you mean by "after any of these rules are processed, ..."?
+>
+> That "literal", "'[' after_lsquare" and "'{' after_lcurly" both end up=20
+> with the state machine in the END_OF_VALUE state.
+
+So this is a "how to read the annotated BNF" comment?=20=20
+
+>>> //
+>>> // When the parser reaches the END_OF_VALUE state, it examines the
+>>> // top of the stack to see if it's coming from "input" (stack empty),
+>>> // "array_items" (TOS is a QList) or "dict_pairs" (TOS is a QString; the
+>>> // item below will be a QDict).  It then proceeds with the corresponding
+>>> // actions, which will be one of:
+>>> // - return parsed value
+>>> // - add value to QList
+>>> // - pop QString with the key, add key/value to the QDict
+>>=20
+>> Forward references to array_items and dict_pairs.  Suggest to add a
+>> suitable "below", or indicate the forward reference some other way.
+>
+> I can put instead after_lsquare and after_lcurly.
+
+BNF usually reads easiest when written top down, i.e. start symbol
+production first, other non-terminals' productions after their use.
+
+I don't mind the forward references in the comment here, it just took me
+a second to recognize them.  No real problem, but perhaps adding "above"
+/ "below" could help the reader.
+
+>>> value :=3D literal       -> END_OF_VALUE
+>>>         | '['            -> push empty QList -> AFTER_LSQUARE
+>>>            after_lsquare -> END_OF_VALUE
+>>>         | '{'            -> push empty QDict -> AFTER_LCURLY
+>>>            after_lcurly  -> END_OF_VALUE
+>>>
+>>> // non-recursive values, entered on BEFORE_VALUE
+>>> literal :=3D INTEGER   -> END_OF_VALUE
+>>>        | FLOAT         -> END_OF_VALUE
+>>>        | KEYWORD       -> END_OF_VALUE
+>>>        | STRING        -> END_OF_VALUE
+>>>        | INTERP        -> END_OF_VALUE
+>>>
+>>> // entered on AFTER_LSQUARE
+>>> after_lsquare :=3D ']' -> pop completed QList -> END_OF_VALUE
+>>>          | =CF=B5           -> BEFORE_VALUE
+>>>            array_items -> END_OF_VALUE
+>>>
+>>> // entered on BEFORE_VALUE, with TOS being a QList
+>>> array_items :=3D value   -> add value to QList -> END_OF_VALUE
+>>>          (']'            -> pop completed QList -> END_OF_VALUE
+>>>           | ','          -> BEFORE_VALUE
+>>>             array_items) -> END_OF_VALUE
+>>>
+>>> // entered on AFTER_LCURLY
+>>> after_lcurly :=3D '}'  -> pop completed QDict -> END_OF_VALUE
+>>>          | =CF=B5           -> BEFORE_KEY
+>>>            dict_pairs  -> END_OF_VALUE
+>>>
+>>> // entered on BEFORE_KEY, with TOS being a QDict
+>>> dict_pairs :=3D STRING  -> push QString -> END_OF_KEY
+>>>          ':'            -> BEFORE_VALUE
+>>>          value          -> pop QString + add pair to QDict -> END_OF_VA=
+LUE
+>>>          ('}'           -> pop completed QDict -> END_OF_VALUE
+>>>           | ','         -> BEFORE_KEY
+>>>             dict_pairs) -> END_OF_VALUE
+>>=20
+>> The BNF part is everything but the -> ...  Easy enough.  However, I'm
+>> not quite certain how to interpret the --> ...
+>>=20
+>> The "// entered on STATE ..." I can read as assertion.
+>
+> Yes, that's a comment (with C++ syntax to have something familiar).
+>
+>> The text after "->" seems to be one ore more state / stack transitions.
+>> Let me describe them in my own words to make sure I understand you.
+>> Note that I had to also look at the source code to produce my
+>> description.
+>>=20
+>> -> STATE
+>>=20
+>>     Set top stack entry's state to STATE.
+>>=20
+>> -> push OBJ -> STATE
+>>=20
+>>     Push (STATE, OBJ) onto the stack.
+>
+> Intended more like push (OBJ, undefined), set top stack entry state to=20
+> STATE, but yes.
+>
+>> -> pop completed OBJ -> END_OF_VALUE
+>>=20
+>>     Pop (_, OBJ) from the stack, set new top stack entry's state to
+>>     END_OF_VALUE.  OBJ is the result of parsing non-terminal @value.
+>>=20
+>> -> add value to QList -> END_OF_VALUE
+>>=20
+>>     Append the result of parsing non-terminal @value to the top stack
+>>     entry's QList.  Set the top stack entry's state to END_OF_VALUE.
+>>=20
+>> -> pop QString + add pair to QDict -> END_OF_VALUE
+>>=20
+>>     Pop (_, QString) from the stack, it's the key.  Its value is the
+>>     result of parsing non-terminal value.  Store this key: value pair in
+>>     the top stack entry's QDict.  Set the top stack entry's state to
+>>     END_OF_VALUE.
+>
+> Correct. "-> STATE" generally means "go to state STATE", where teh state=
+=20
+> is stored in the top stack entry.
+
+So I was able to work out how to read the annotations.  How can we make
+that easier for the next guy?  Could well be me in six months...
+
+>> Stack entry members @partial from bottom to top:
+>>=20
+>> * a QList element for an unclosed '[',
+>>=20
+>> * a QDict and a QString element for an unclosed '{', except the
+>>    innermost one need not have a QString.  This is because the QString is
+>>    on the stack only while we're parsing ':' value.
+>>=20
+>> So, stack contents invariant:
+>>=20
+>>      ( QList | QDict QString )* QDict?
+>
+> Makes sense.
+
+Let's write it down where we describe the structure of the stack.
+
+>> I found the QString business somewhat confusing, probably because I
+>> expected one stack entry per nesting level, and tossing that invalid
+>> assumption took mental effort.
+>
+> ... while I wrote the parser as one per pending nonterminal.  Coming=20
+> from the recursive descent probably suggested that approach, somewhat=20
+> subconsciously.
+>
+>> I figure we could have one stack entry per: add a const char *key member
+>> to JSONParserStackEntry, non-null exactly when we have a QString sitting
+>> on a QDict now.  We'd trade representable invalid state "QString
+>> directly above non-QDict in the stack" for "QList stack entry has member
+>> @key set".  Would be slightly more local.  Matter of taste, I guess.
+>
+> I can check what the code looks like, sure.
+>
+>> More representable invalid state, as far as I can tell (observation, not
+>> objection):
+>>=20
+>> * a QList stack entry can only have state AFTER_LSQUARE, BEFORE_VALUE,
+>>    END_OF_VALUE, never AFTER_LCURLY, BEFORE_KEY, END_OF_KEY
+>>=20
+>> * a QDict stack entry can only have state AFTER_LCURLY, BEFORE_KEY,
+>>    END_OF_VALUE, never AFTER_LSQUARE, BEFORE_VALUE, END_OF_KEY
+>>=20
+>> * a QString stack entry can only have state BEFORE_VALUE and END_OF_KEY,
+>>    never AFTER_LCURLY, AFTER_LSQUARE, BEFORE_VALUE, END_OF_VALUE.
+>>=20
+>> Stack entries by @state instead of by @partial:
+>>
+>> * AFTER_LCURLY: @partial is QDict
+>>
+>> * AFTER_LSQUARE: @partial is QList
+>>
+>> * BEFORE_KEY: @partial is QDict
+>>
+>> * BEFORE_VALUE: @partial is QList or QString
+>
+> ... or empty:
+>
+>      state =3D entry ? entry->state : BEFORE_VALUE;
+
+Yes, forgot that one.
+
+>> * END_OF_KEY: @partial is QString
+>>
+>> * END_OF_VALUE: @partial is QList or QString
+>>
+>> Invariants worth documenting, I think.
+>
+> Ok---as assertions in the code?
+
+Making invalid states unrepresentable is best, but that's often not
+practical in C.
+
+I generally prefer assertions to comments as long as the assertions are
+easy enough to read.
+
+>> Here's my attempt at explaining the automaton and how states and stack
+>> fit together: annotated JSON syntax diagrams.  The diagrams are from
+>> www.json.org with whitespace nonterminal omitted for brevity.
+>>=20
+>> Semantic actions are connected with dashed lines.  State names are
+>> abbreviated to ALC, ALS, BK, BV, EOK, EOV.  (STATE, QTYPE) describes the
+>> top stack entry.  "assert (STATE, QTYPE)" asserts the top stack entry's
+>> @state is STATE, and its @partial is of QTYPE.  "set STATE" means the
+>> top stack entry's state is set to STATE.
+>>=20
+>>                                 set EOV
+>>                            result is QObject
+>>           value                    =E2=94=86
+>>           >=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
+=80=E2=94=80=E2=95=AE=E2=94=80=E2=94=80=E2=94=80 string =E2=94=80=E2=94=80=
+=E2=95=AD=E2=94=80=E2=94=80=E2=94=80>
+>>           =E2=94=86        =E2=94=82             =E2=94=82
+>>   assert (BV, _)   =E2=95=B0=E2=94=80=E2=94=80=E2=94=80 number =E2=94=80=
+=E2=94=80=E2=95=AF
+>>                    =E2=94=82             =E2=94=82
+>>                    =E2=95=B0=E2=94=80=E2=94=80=E2=94=80 object =E2=94=80=
+=E2=94=80=E2=95=AF
+>>                    =E2=94=82             =E2=94=82
+>>                    =E2=95=B0=E2=94=80=E2=94=80=E2=94=80 array =E2=94=80=
+=E2=94=80=E2=94=80=E2=95=AF
+>>                    =E2=94=82             =E2=94=82
+>>                    =E2=95=B0=E2=94=80=E2=94=80=E2=94=80 true =E2=94=80=
+=E2=94=80=E2=94=80=E2=94=80=E2=95=AF
+>>                    =E2=94=82             =E2=94=82
+>>                    =E2=95=B0=E2=94=80=E2=94=80=E2=94=80 false =E2=94=80=
+=E2=94=80=E2=94=80=E2=95=AF
+>>                    =E2=94=82             =E2=94=82
+>>                    =E2=95=B0=E2=94=80=E2=94=80=E2=94=80 null =E2=94=80=
+=E2=94=80=E2=94=80=E2=94=80=E2=95=AF
+>>=20
+>>=20
+>>               push (ALS, QList)   pop (ALS, QList)
+>>                      =E2=94=86             assert (BV, _)
+>>                      =E2=94=86               set EOV
+>>                      =E2=94=86          result is popped QList
+>>           array      =E2=94=86                  =E2=94=86
+>>           >=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
+=80 [ =E2=94=80=E2=95=AE=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
+=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=95=AD=E2=94=80=
+ ] =E2=94=80=E2=94=80>
+>>           =E2=94=86           =E2=94=82            =E2=94=82=20
+>>   assert (BV, _)      =E2=94=82 =E2=94=84 set BV   =E2=94=82
+>>                       =E2=94=82            =E2=94=82
+>>               set BV  =E2=94=82            =E2=94=82
+>>                   =E2=94=86   =E2=94=82            =E2=94=82
+>>              =E2=95=AD=E2=94=80 , =E2=94=80=E2=94=80=E2=94=80=E2=94=80=
+=E2=95=B0=E2=94=80=E2=94=80 value =E2=94=80=E2=94=80=E2=95=AE=E2=95=AF
+>>              =E2=94=82                    =E2=94=82 =E2=94=84 assert (EO=
+V, QList)
+>>              =E2=95=B0=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
+=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
+=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=95=AF   put va=
+lue into QList
+>>=20
+>>=20
+>>=20
+>>               push (ALC, QDict)                  pop (ALC, QDict)
+>>                      =E2=94=86                            assert (BV, _)
+>>                      =E2=94=86                              set EOV
+>>                      =E2=94=86                         result is popped =
+QDict
+>>           object     =E2=94=86                                 =E2=94=86
+>>           >=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
+=80 { =E2=94=80=E2=95=AE=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
+=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
+=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
+=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=95=AD=E2=94=80 } =E2=94=80=E2=
+=94=80>
+>>           =E2=94=86           =E2=94=82                           =E2=94=
+=82
+>>   assert (BV, _)      =E2=94=82 =E2=94=84 set BK                  =E2=94=
+=82
+>>                       =E2=94=82                           =E2=94=82
+>>               set BK  =E2=94=82  push (EOK, QString)      =E2=94=82
+>>                   =E2=94=86   =E2=94=82         =E2=94=86               =
+  =E2=94=82
+>>              =E2=95=AD=E2=94=80 , =E2=94=80=E2=94=80=E2=94=80=E2=94=80=
+=E2=95=B0=E2=94=80 string =E2=94=80=E2=94=80=E2=94=80 : =E2=94=80=E2=94=80=
+=E2=94=80 value =E2=94=80=E2=95=AE=E2=95=AF
+>>              =E2=94=82                        =E2=94=86          =E2=94=
+=82   pop (BV, QString)
+>>              =E2=94=82                     set BV        =E2=94=82 =E2=
+=94=84 assert (EOV, QDict)
+>>              =E2=94=82                                   =E2=94=82   put=
+ string: value
+>>              =E2=95=B0=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
+=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
+=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
+=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
+=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=95=AF      into QDict
+>>=20
+>> Might be your turn to be confused ;)
+>
+> I'm not confused but maybe it is a bit too detailed.
+
+We can elide detail.  For instance, if we document the stack structure
+elsewhere, assertions on stack contents are low value here.
+
+>>>>> +static QObject *json_parser_parse_token(JSONParserContext *ctxt, con=
+st JSONToken *token)
+>>>>
+>>>> Rename to parse_token()?  Or inline into json_parser_feed()?
+>>>
+>>> Renaming is good.
+>>>
+>>>>> +            if (!key) {
+>>>>> +                return NULL;
+>>>>> +            }
+>>>>
+>>>> Key to understand the switch is the meaning of "break" and "return
+>>>> NULL".
+>>>>
+>>>> We do the latter when we're done for this token.
+>>>>
+>>>> We do the former when this token completed a (sub-)value.  @value holds
+>>>> it.  If the stack is empty, @value is the result of the parse, and the
+>>>> code after the switch returns it.  Else, @value is a sub-value, and the
+>>>> code after the switch stores it in the object being constructed.
+>>>
+>>> Correct.  Want me to include it somehow or is the grammar above fine?
+>>=20
+>> Whether the grammar makes the meaning of "break" and "return NULL"
+>> obvious enough is hard to tell now: I know too much.  Should fix itself
+>> within a few days ;)
+>
+> Probably not. :)  I'll see if I can move the post-pr
+
+I can offer a pair of fresher eyes on v2.
 
 
