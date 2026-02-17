@@ -4,100 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D0FEE83856
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Feb 2026 06:52:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F029E8385F
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Feb 2026 06:55:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vsEvZ-0001O2-D3; Tue, 17 Feb 2026 01:51:21 -0500
+	id 1vsEzW-0002iB-1z; Tue, 17 Feb 2026 01:55:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vsEvW-0001Jm-6S
- for qemu-devel@nongnu.org; Tue, 17 Feb 2026 01:51:18 -0500
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vsEvU-000766-DC
- for qemu-devel@nongnu.org; Tue, 17 Feb 2026 01:51:17 -0500
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-48329eb96a7so20246595e9.3
- for <qemu-devel@nongnu.org>; Mon, 16 Feb 2026 22:51:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771311074; x=1771915874; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=cTKeTtulh4xZljYtMeXi7Zzv5jjQ2xB7gfYXEyx5JsA=;
- b=Rk+p96/cweRJNX9GLSZ4s+KgDUR87wXr6+r5paAvz3aFQ4jvxRorZBBujKV8O+fuw6
- nisgD8n7p6DqJo+CHbAuqAHSTK89vr+6wmi7sJe8qvBDBSOB2/nG/hLgYOIbReqejMnr
- I4M7hBZKCh6cCTkY0+JPPYkzOW552E+vahki4WOQj7wm1pY8IGImbaw2q/Gq9OQp5oHZ
- 4V2pMyfP1o5C/gN/oilqhNCYHkLfw8+v5DkbFIqPOw3oBp4qq4uHaBUxWPlXideU5RJp
- 9Rq8pOzTGBs7lZW34AmA27mPFUJNFlWNX/gjr4z8q6rLFXl1dY/+RZO7cs+KSaZ+VHyR
- 5SUA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771311074; x=1771915874;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=cTKeTtulh4xZljYtMeXi7Zzv5jjQ2xB7gfYXEyx5JsA=;
- b=qdmF0YuCABIvfYd7AQIFFzQDzdEiIu8FlJkxaRaAVEGGrSICUBgzN2gcWcd0Z7bvi+
- BsS5mP6a127eRW6NzCJ2hP4YqEgHRgK3k4kykaY924ti0zStwvcXHQ7Yn4KhxuP8kMET
- XK2gl08LMz0l8HwDbnjXSFrm1iI8UnXLZzIuEa4OrCMJVHC+6+rp/RWiGQp2zhYh632b
- Rl0k0yKyR/1S6CtL7IENhbqZnqYrtY3pBoMd5zdSmsQ7mh9GG0k5xaOj4CcqeNLC0LHj
- F5DDjPcD7VNNrerOqTwmrW34lSBok3ZUpjWuDHY3ptFjpA3hEYgk916NKTD6pvwgahmg
- S6FQ==
-X-Gm-Message-State: AOJu0Yxhp/xp0fBJEANt+q4nIeJUMUnpVvUUzdBcPZA3ZUwTxRoW4f8W
- lcmAvHxzl+B29Ev4+c/WUmGw/I1iJYnoZhgiHNTdnEyyhLpoDeoAbiprMLjlHrEZPyySk+VteNC
- oYVPvgzU=
-X-Gm-Gg: AZuq6aKIHCB2tfPyokHSw+9xwsoz0SVRhJXOZO0SsytCKJEGzS3AklNEdavkLQ02czf
- O6tg5RgvofpXHM2bz6dA/EeiQa3yBfrHgNF14udLtdDQ7FOr1VHmW2FLeUm5txLwBkRxFP5zUy5
- Ml08Y+zCbCeXurdW3EdglaxqAI9IRH35sWPvutIDNb9wiqg75TVcLflBbVfU6kpnVaaPs8qjnBT
- TkcZbkz4Sx6B6nH15nhk4yXwjUTOvvXYUKHZD4QazsOO4E249l/p5HmPC5x05blbLCK4GbH62NG
- pGv8jO8ayIG1KJoVSGNCAqJpJUz7CTB6Ly8Hf3MexcXmoDmVAbMSrky7KW1Plh2Y2EE74seO86Q
- SzemIR+ZttdxY2EVeNMa4qtBE4qHZqvxUy8iGT7xhyKLELm3YHNefLOnnc/toC7gPdgZoaMIUxp
- 92lfwT2JKVjjpa3TfCeptR0QDJS/4WYtbovuOtpzedZWKYh9ztaD3Xg6gcONs5dOO+qg==
-X-Received: by 2002:a05:600c:c108:b0:483:78c7:e1c1 with SMTP id
- 5b1f17b1804b1-48378c7e1d3mr152102665e9.12.1771311074274; 
- Mon, 16 Feb 2026 22:51:14 -0800 (PST)
-Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4834d5ebd1bsm554494705e9.6.2026.02.16.22.51.12
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 16 Feb 2026 22:51:13 -0800 (PST)
-Message-ID: <5acb7c2d-5ab3-4689-9e6e-ae46bee05875@linaro.org>
-Date: Tue, 17 Feb 2026 07:51:12 +0100
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vsEzU-0002i2-Cj
+ for qemu-devel@nongnu.org; Tue, 17 Feb 2026 01:55:24 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vsEzR-0007nl-Gl
+ for qemu-devel@nongnu.org; Tue, 17 Feb 2026 01:55:24 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1771311319;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=xxuPDdw5TH9LEkj25eyU1DH0VmeW/6aAiddyvkFrVU4=;
+ b=D02ObU+Z5yMEYuGFJAmslq5AQFUY28NtsbAQWV+HYCeiQRqCwGNY/tK6HwjHc5XRhDs0AH
+ fEiUHk/Byn2faXoN8krxj58vxISd+/PiARSynKX3gVmMe38hXSazAOpHJUDU5yMYg/CuR7
+ 6cH8FOiPJhkKRv+R5jtnG8aZ3XdhN/o=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-196-etKsC4ocNtSyeFSXLpr6VA-1; Tue,
+ 17 Feb 2026 01:55:17 -0500
+X-MC-Unique: etKsC4ocNtSyeFSXLpr6VA-1
+X-Mimecast-MFC-AGG-ID: etKsC4ocNtSyeFSXLpr6VA_1771311316
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6CC661800451; Tue, 17 Feb 2026 06:55:16 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.45.224.144])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 8F049180058A; Tue, 17 Feb 2026 06:55:14 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: "Michael S. Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org,
+ Markus Armbruster <armbru@redhat.com>
+Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Subject: [PATCH] hw/pci: Avoid adding PCI devices to the "unattached" QOM tree
+ node
+Date: Tue, 17 Feb 2026 07:55:12 +0100
+Message-ID: <20260217065512.245237-1-thuth@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 07/11] monitor/hmp: Handle gdb-xml exposed registers via
- gdb_get_register()
-To: qemu-devel@nongnu.org
-Cc: Laurent Vivier <laurent@vivier.eu>,
- "Dr. David Alan Gilbert" <dave@treblig.org>,
- Nicholas Piggin <npiggin@gmail.com>, Chinmay Rath <rathc@linux.ibm.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Artyom Tarasenko <atar4qemu@gmail.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Gustavo Romero <gustavo.romero@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, unisono@quyllur.org, qemu-ppc@nongnu.org
-References: <20260216225228.53959-1-philmd@linaro.org>
- <20260216225228.53959-8-philmd@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260216225228.53959-8-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,56 +80,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 16/2/26 23:52, Philippe Mathieu-Daudé wrote:
-> Implement the gdb_get_register() helper and call it before the
-> regular get_monitor_def() one. Registers is exposed via the
-> GDB XML files will be directly handled, possibily allowing new
-> registers added to XML files to be automatically accessible in
-> QEMU monitor. All targets having GDB XML files can now be used
-> within the monitor.
+From: Thomas Huth <thuth@redhat.com>
 
-For example with Loongarch, before:
+PCI devices that are added via pci_create_simple_multifunction(),
+pci_create_simple() or pci_init_nic_in_slot() currently show up
+under "/machine/unattached" in the QOM tree. This is somewhat ugly,
+the parent should rather be the PCI bus node instead, so let's add
+the proper relation here.
 
-   $ qemu-system-loongarch64 -M virt -S -monitor stdio
-   QEMU 10.2.0 monitor - type 'help' for more information
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+---
+ hw/pci/pci.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-   (qemu) info registers
-
-   CPU#0
-    PC=000000001c000000  FCSR0 0x00000000
-    ...
-
-   (qemu) p/x $pc
-   unknown register
-   Try "help p" for more information
-   (qemu)
-
-and after:
-
-   $ ./qemu-system-loongarch64 -M virt -S -monitor stdio
-   QEMU 10.2.50 monitor - type 'help' for more information
-   (qemu) p/x $pc
-   0x1c000000
-   (qemu)
-
-Similarly RISC-V:
-
-   QEMU 10.2.0 monitor - type 'help' for more information
-   (qemu) p/x $pc
-   unknown register
-   Try "help p" for more information
-
-VS
-
-   QEMU 10.2.50 monitor - type 'help' for more information
-   (qemu) p/x $pc
-   0x1000
-   (qemu)
-
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   monitor/hmp.c | 49 ++++++++++++++++++++++++++++++++++++++++++++++---
->   1 file changed, 46 insertions(+), 3 deletions(-)
+diff --git a/hw/pci/pci.c b/hw/pci/pci.c
+index 90d6d71efdc..2f4d2be50fd 100644
+--- a/hw/pci/pci.c
++++ b/hw/pci/pci.c
+@@ -2071,6 +2071,15 @@ const pci_class_desc *get_class_desc(int class)
+     return desc;
+ }
+ 
++static void pci_dev_property_add_child(PCIBus *bus, const char *name,
++                                       PCIDevice *dev)
++{
++    g_autofree char *childname = g_strdup_printf("%s[%d.%d]", name,
++                                                 PCI_SLOT(dev->devfn),
++                                                 PCI_FUNC(dev->devfn));
++    object_property_add_child(OBJECT(bus), childname, OBJECT(dev));
++}
++
+ void pci_init_nic_devices(PCIBus *bus, const char *default_model)
+ {
+     qemu_create_nic_bus_devices(&bus->qbus, TYPE_PCI_DEVICE, default_model,
+@@ -2114,6 +2123,7 @@ bool pci_init_nic_in_slot(PCIBus *rootbus, const char *model,
+ 
+     pci_dev = pci_new(devfn, model);
+     qdev_set_nic_properties(&pci_dev->qdev, nd);
++    pci_dev_property_add_child(bus, model, pci_dev);
+     pci_realize_and_unref(pci_dev, bus, &error_fatal);
+     return true;
+ }
+@@ -2412,6 +2422,8 @@ PCIDevice *pci_create_simple_multifunction(PCIBus *bus, int devfn,
+                                            const char *name)
+ {
+     PCIDevice *dev = pci_new_multifunction(devfn, name);
++
++    pci_dev_property_add_child(bus, name, dev);
+     pci_realize_and_unref(dev, bus, &error_fatal);
+     return dev;
+ }
+@@ -2419,6 +2431,8 @@ PCIDevice *pci_create_simple_multifunction(PCIBus *bus, int devfn,
+ PCIDevice *pci_create_simple(PCIBus *bus, int devfn, const char *name)
+ {
+     PCIDevice *dev = pci_new(devfn, name);
++
++    pci_dev_property_add_child(bus, name, dev);
+     pci_realize_and_unref(dev, bus, &error_fatal);
+     return dev;
+ }
+-- 
+2.53.0
 
 
