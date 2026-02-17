@@ -4,99 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C595E909D4
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Feb 2026 16:20:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8079AE909D5
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Feb 2026 16:21:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vsNk5-0002Nz-IA; Tue, 17 Feb 2026 11:16:05 -0500
+	id 1vsNpA-0005T9-U5; Tue, 17 Feb 2026 11:21:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vsNk2-00021o-My
- for qemu-devel@nongnu.org; Tue, 17 Feb 2026 11:16:02 -0500
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vsNp7-0005SI-7e
+ for qemu-devel@nongnu.org; Tue, 17 Feb 2026 11:21:17 -0500
 Received: from smtp-out2.suse.de ([195.135.223.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vsNjz-0003D6-Ez
- for qemu-devel@nongnu.org; Tue, 17 Feb 2026 11:16:02 -0500
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vsNp4-00059V-Ts
+ for qemu-devel@nongnu.org; Tue, 17 Feb 2026 11:21:16 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 1B6545BCFD;
- Tue, 17 Feb 2026 16:15:22 +0000 (UTC)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 6D98F5BCE1
+ for <qemu-devel@nongnu.org>; Tue, 17 Feb 2026 16:21:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1771344922; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Cp1/L9VLv4rwmbtSW57Mya9oHqi4a5jOhw+l/VFHbiE=;
- b=VYUC/s84tUOtW/O9BOny8MYlrBeBknI4Y/Q/2wbFXMKQLj++B1sVPww0ZOICL7G7k6UslC
- 8VWlIXNTbanjqa2kLH8a4wKxjyXrFj5B8xy/oQXq0F9hCou4OYCFnIwoUBtI2b6U9ZlKrX
- s6eePPZ1yzKGBpcLErIg+Y1efuTY+zM=
+ t=1771345271; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=kupGdaLY3Mwbu/WVwy4xhPcKQs5fKRET+M1TvboSp5U=;
+ b=eKW0ApRAnSYqktcYLe5hUilvIOCuYPKJiODvjgF1yGM8rCz97F5Lccl2AtW47dPePC5WgV
+ 5E7KIF7qT87J/RyHNyp67aMpdnCCdSsd4ss0m9TcIxJqvhF98wZnPu9iqBGddXwwxilXH5
+ yzQ77C8o9HvFqxXIe7CDMksr9C9VEeU=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1771344922;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Cp1/L9VLv4rwmbtSW57Mya9oHqi4a5jOhw+l/VFHbiE=;
- b=XIglfEJNxbFDPVpizqFngSD9e1Hn8yFJ/Z/x1m5ZxUftl6RFR/inrdo/ipBmQjr4zFHymU
- 8RASO1a5TuiiF7DA==
+ s=susede2_ed25519; t=1771345271;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=kupGdaLY3Mwbu/WVwy4xhPcKQs5fKRET+M1TvboSp5U=;
+ b=e5SLL9xpioxs5h0YD70DdctaED2BnzGC1j39H7s6cUlaxneOW8GvprL+BT6PobJLYmM5UQ
+ JjLXz/YxCc6PxIDg==
 Authentication-Results: smtp-out2.suse.de;
-	none
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=WoPVuYxh;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=fER3oiKH
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1771344922; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Cp1/L9VLv4rwmbtSW57Mya9oHqi4a5jOhw+l/VFHbiE=;
- b=VYUC/s84tUOtW/O9BOny8MYlrBeBknI4Y/Q/2wbFXMKQLj++B1sVPww0ZOICL7G7k6UslC
- 8VWlIXNTbanjqa2kLH8a4wKxjyXrFj5B8xy/oQXq0F9hCou4OYCFnIwoUBtI2b6U9ZlKrX
- s6eePPZ1yzKGBpcLErIg+Y1efuTY+zM=
+ t=1771345270; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=kupGdaLY3Mwbu/WVwy4xhPcKQs5fKRET+M1TvboSp5U=;
+ b=WoPVuYxhtHhRy92S6Ov1KMpnjIDdV8o7+TnrL4Jm8bOBaDBww/Pg3UX6oKjhW6wDkY2DIV
+ hAoyXaMc+E8TNr4+o6MlLtQ1rW5XPp6/cAXV9pRDYvKluhd0Mn7/MTwEdmarmjtyadhcMb
+ t3sI4fHky6Y50mEwN0pejxa2JmT/Yuw=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1771344922;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Cp1/L9VLv4rwmbtSW57Mya9oHqi4a5jOhw+l/VFHbiE=;
- b=XIglfEJNxbFDPVpizqFngSD9e1Hn8yFJ/Z/x1m5ZxUftl6RFR/inrdo/ipBmQjr4zFHymU
- 8RASO1a5TuiiF7DA==
+ s=susede2_ed25519; t=1771345270;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=kupGdaLY3Mwbu/WVwy4xhPcKQs5fKRET+M1TvboSp5U=;
+ b=fER3oiKHuKAiTeCwmTioZRZOPF4pqGPTePhTdmQZH5Tp3CemPwzCBN40AfJiDkrV49/Cjx
+ H+2JzDUdJomDxdDQ==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id D5ED13EA66;
- Tue, 17 Feb 2026 16:15:20 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id A611E3EA65
+ for <qemu-devel@nongnu.org>; Tue, 17 Feb 2026 16:21:09 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id UJFIJhiUlGmHTgAAD6G6ig
- (envelope-from <farosas@suse.de>); Tue, 17 Feb 2026 16:15:20 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id WkqlGnWVlGnPVAAAD6G6ig
+ (envelope-from <farosas@suse.de>)
+ for <qemu-devel@nongnu.org>; Tue, 17 Feb 2026 16:21:09 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>,
-	Lukas Straub <lukasstraub2@web.de>
-Subject: [PULL 20/32] migration: Introduce qemu_savevm_state_end()
-Date: Tue, 17 Feb 2026 13:14:31 -0300
-Message-ID: <20260217161443.12738-21-farosas@suse.de>
+Subject: [PULL 0/2] QTest patches for 2026-02-17
+Date: Tue, 17 Feb 2026 13:21:04 -0300
+Message-ID: <20260217162106.13630-1-farosas@suse.de>
 X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20260217161443.12738-1-farosas@suse.de>
-References: <20260217161443.12738-1-farosas@suse.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+X-Rspamd-Action: no action
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[99.99%];
  NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
  R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-1.000];
- MIME_GOOD(-0.10)[text/plain];
- FUZZY_RATELIMITED(0.00)[rspamd.com]; TO_DN_SOME(0.00)[];
- ARC_NA(0.00)[]; RCVD_TLS_ALL(0.00)[]; MIME_TRACE(0.00)[0:+];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ MIME_GOOD(-0.10)[text/plain]; MX_GOOD(-0.01)[];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; ARC_NA(0.00)[];
  RCVD_VIA_SMTP_AUTH(0.00)[];
+ FUZZY_RATELIMITED(0.00)[rspamd.com]; RCPT_COUNT_ONE(0.00)[1];
+ MIME_TRACE(0.00)[0:+]; FROM_HAS_DN(0.00)[];
+ PREVIOUSLY_DELIVERED(0.00)[qemu-devel@nongnu.org];
+ FROM_EQ_ENVFROM(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[gitlab.com:url,suse.de:dkim,suse.de:mid,imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- URIBL_BLOCKED(0.00)[suse.de:mid,suse.de:email,imap1.dmz-prg2.suse.org:helo];
- FROM_HAS_DN(0.00)[]; FREEMAIL_CC(0.00)[redhat.com,web.de];
- RCPT_COUNT_THREE(0.00)[3]; FROM_EQ_ENVFROM(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,suse.de:email,imap1.dmz-prg2.suse.org:helo];
- RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- FREEMAIL_ENVRCPT(0.00)[web.de]
+ RCVD_TLS_ALL(0.00)[]; TO_DN_NONE(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ DKIM_TRACE(0.00)[suse.de:+]
+X-Rspamd-Queue-Id: 6D98F5BCE1
 Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
  helo=smtp-out2.suse.de
 X-Spam_score_int: -43
@@ -122,90 +119,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Xu <peterx@redhat.com>
+The following changes since commit ece408818d27f745ef1b05fb3cc99a1e7a5bf580:
 
-Introduce a helper to end a migration stream.
+  Merge tag 'for-upstream' of https://gitlab.com/bonzini/qemu into staging (2026-02-13 10:30:08 +0000)
 
-Signed-off-by: Peter Xu <peterx@redhat.com>
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
-Tested-by: Lukas Straub <lukasstraub2@web.de>
-Link: https://lore.kernel.org/qemu-devel/20260127185254.3954634-15-peterx@redhat.com
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
----
- migration/colo.c   |  2 +-
- migration/savevm.c | 12 +++++++++---
- migration/savevm.h |  1 +
- 3 files changed, 11 insertions(+), 4 deletions(-)
+are available in the Git repository at:
 
-diff --git a/migration/colo.c b/migration/colo.c
-index 0b1a58cd8f..db804b25a9 100644
---- a/migration/colo.c
-+++ b/migration/colo.c
-@@ -470,7 +470,7 @@ static int colo_do_checkpoint_transaction(MigrationState *s,
-      * to be blocked here.
-      */
-     qemu_savevm_state_complete_precopy_iterable(s->to_dst_file, false);
--    qemu_put_byte(s->to_dst_file, QEMU_VM_EOF);
-+    qemu_savevm_state_end(s->to_dst_file);
- 
-     /*
-      * We need the size of the VMstate data in Secondary side,
-diff --git a/migration/savevm.c b/migration/savevm.c
-index d41e89228d..a787691352 100644
---- a/migration/savevm.c
-+++ b/migration/savevm.c
-@@ -1065,6 +1065,12 @@ static int vmstate_save(QEMUFile *f, SaveStateEntry *se, JSONWriter *vmdesc,
-     }
-     return 0;
- }
-+
-+void qemu_savevm_state_end(QEMUFile *f)
-+{
-+    qemu_put_byte(f, QEMU_VM_EOF);
-+}
-+
- /**
-  * qemu_savevm_command_send: Send a 'QEMU_VM_COMMAND' type element with the
-  *                           command and associated data.
-@@ -1555,7 +1561,7 @@ void qemu_savevm_state_complete_postcopy(QEMUFile *f)
-         }
-     }
- 
--    qemu_put_byte(f, QEMU_VM_EOF);
-+    qemu_savevm_state_end(f);
-     qemu_fflush(f);
- }
- 
-@@ -1699,7 +1705,7 @@ int qemu_savevm_state_complete_precopy_non_iterable(QEMUFile *f,
- 
-     if (!in_postcopy) {
-         /* Postcopy stream will still be going */
--        qemu_put_byte(f, QEMU_VM_EOF);
-+        qemu_savevm_state_end(f);
- 
-         if (vmdesc) {
-             json_writer_end_array(vmdesc);
-@@ -1879,7 +1885,7 @@ int qemu_save_device_state(QEMUFile *f)
-         }
-     }
- 
--    qemu_put_byte(f, QEMU_VM_EOF);
-+    qemu_savevm_state_end(f);
- 
-     return qemu_file_get_error(f);
- }
-diff --git a/migration/savevm.h b/migration/savevm.h
-index ea01ca63ec..d0596d1d62 100644
---- a/migration/savevm.h
-+++ b/migration/savevm.h
-@@ -49,6 +49,7 @@ void qemu_savevm_state_pending_estimate(uint64_t *must_precopy,
-                                         uint64_t *can_postcopy);
- int qemu_savevm_state_complete_precopy_iterable(QEMUFile *f, bool in_postcopy);
- bool qemu_savevm_state_postcopy_prepare(QEMUFile *f, Error **errp);
-+void qemu_savevm_state_end(QEMUFile *f);
- void qemu_savevm_send_ping(QEMUFile *f, uint32_t value);
- void qemu_savevm_send_open_return_path(QEMUFile *f);
- int qemu_savevm_send_packaged(QEMUFile *f, const uint8_t *buf, size_t len);
+  https://gitlab.com/farosas/qemu.git tags/qtest-20260217-pull-request
+
+for you to fetch changes up to a8f98ffd7b22a5c6554bc475096cf5de1d0cbd6f:
+
+  tests/qtest: Add RISC-V IOMMU bare-metal test (2026-02-17 09:37:40 -0300)
+
+----------------------------------------------------------------
+QTest pull request
+
+- RISCV IOMMU test
+
+----------------------------------------------------------------
+
+Chao Liu (2):
+  tests/qtest/libqos: Add RISC-V IOMMU helper library
+  tests/qtest: Add RISC-V IOMMU bare-metal test
+
+ MAINTAINERS                          |   2 +
+ tests/qtest/iommu-riscv-test.c       | 279 +++++++++++++++++++
+ tests/qtest/libqos/meson.build       |   2 +-
+ tests/qtest/libqos/qos-riscv-iommu.c | 403 +++++++++++++++++++++++++++
+ tests/qtest/libqos/qos-riscv-iommu.h | 164 +++++++++++
+ tests/qtest/meson.build              |   5 +-
+ 6 files changed, 853 insertions(+), 2 deletions(-)
+ create mode 100644 tests/qtest/iommu-riscv-test.c
+ create mode 100644 tests/qtest/libqos/qos-riscv-iommu.c
+ create mode 100644 tests/qtest/libqos/qos-riscv-iommu.h
+
 -- 
 2.51.0
 
