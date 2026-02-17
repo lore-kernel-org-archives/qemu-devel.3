@@ -4,40 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F31DE83857
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Feb 2026 05:28:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8C95E83856
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Feb 2026 05:28:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vsDcq-0002c5-KX; Tue, 17 Feb 2026 00:27:56 -0500
+	id 1vsDcq-0002c7-FC; Tue, 17 Feb 2026 00:27:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <heifetz@yandex-team.com>)
- id 1vsDcm-0002ab-OS
+ id 1vsDcm-0002aZ-Lm
  for qemu-devel@nongnu.org; Tue, 17 Feb 2026 00:27:52 -0500
 Received: from forwardcorp1b.mail.yandex.net
  ([2a02:6b8:c02:900:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <heifetz@yandex-team.com>)
- id 1vsDcj-0006cS-Mc
+ id 1vsDcj-0006ca-Se
  for qemu-devel@nongnu.org; Tue, 17 Feb 2026 00:27:52 -0500
 Received: from mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
  [IPv6:2a02:6b8:c37:8aa5:0:640:e6ae:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id A73C488503;
- Tue, 17 Feb 2026 08:27:46 +0300 (MSK)
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id A86EF88521;
+ Tue, 17 Feb 2026 08:27:48 +0300 (MSK)
 Received: from heifetz-lin.yandex-team.ru (unknown [2a02:6bf:8080:b54::1:2f])
  by mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
- (smtpcorp/Yandex) with ESMTPSA id eRRjrX2Ak0U0-no4eOMdv; 
- Tue, 17 Feb 2026 08:27:46 +0300
+ (smtpcorp/Yandex) with ESMTPSA id eRRjrX2Ak0U0-1IK7YrqY; 
+ Tue, 17 Feb 2026 08:27:48 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.com;
- s=default; t=1771306066;
- bh=af12Emi/cCgStn/UwxBq6KWZOfBbIxl3KK7Jm000Jrw=;
+ s=default; t=1771306068;
+ bh=DtG4qrnXYpar9yRTqdDK14JALo4UMhi3utRTPaLQXtc=;
  h=Message-Id:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=SURyeHnvSEZV/Cw7htk6hFT91JgzgDqGty7JuzLp0yo23bgQKQ/GC6TSqxHBQa7sW
- 8NErywTjVtw+lamF6sbcnVHOCy1Vv8n9GTxMBHV/4nglxA7OchVUa10oepWVyOicHC
- aXyL7zoWJJn3lV4PJBMIWW+EnK+tMf02IJNihl7k=
+ b=a6RDPZ48IqpcOqwbP1hIR3xhLaO0EL3nY67RGQ3rR0WbGeWJ3z+pp3biaPoNdEreZ
+ jkNhZW3pE5jPArON1j7sIC2lTzXIePXzQUO2b9diiQ+5jZwE2+gM40Sdwr2s0Htx/m
+ i3htSN56oAWZExaMLGtadQmuUgDiG+y4MT2OD598=
 Authentication-Results: mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.com
 From: Sergei Heifetz <heifetz@yandex-team.com>
@@ -50,10 +50,10 @@ Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Markus Armbruster <armbru@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
  Gerd Hoffmann <kraxel@redhat.com>, Laurent Vivier <lvivier@redhat.com>
-Subject: [PATCH 4/8] hw/audio/pcspk: change PCSPK behaviour with
- --disable-audio
-Date: Tue, 17 Feb 2026 10:27:36 +0500
-Message-Id: <20260217052740.114117-5-heifetz@yandex-team.com>
+Subject: [PATCH 6/8] system/vl: remove audio and audiodev options when audio
+ is disabled
+Date: Tue, 17 Feb 2026 10:27:38 +0500
+Message-Id: <20260217052740.114117-7-heifetz@yandex-team.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260217052740.114117-1-heifetz@yandex-team.com>
 References: <20260217052740.114117-1-heifetz@yandex-team.com>
@@ -82,96 +82,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-PCSPK (PC Speaker) is an embedded audio device. We don't want it to use audio
-when QEMU is configured with `--disable-audio`. This is achieved with minimal,
-non-invasive changes to the code.
-
-In essence, the changes ensure that PCSPK does not use the corresponding
-audio backend, while functioning the same way in non-audio aspects.
+Remove the audio and audiodev runtime options when QEMU is configured
+with `--disable-audio`.
 
 Signed-off-by: Sergei Heifetz <heifetz@yandex-team.com>
 ---
- hw/audio/pcspk.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ system/vl.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/hw/audio/pcspk.c b/hw/audio/pcspk.c
-index 916c56fa4c..03fe816024 100644
---- a/hw/audio/pcspk.c
-+++ b/hw/audio/pcspk.c
-@@ -36,10 +36,12 @@
- #include "qom/object.h"
- #include "trace.h"
+diff --git a/system/vl.c b/system/vl.c
+index aa9a155041..b4f0c3b2f3 100644
+--- a/system/vl.c
++++ b/system/vl.c
+@@ -2248,7 +2248,9 @@ static int global_init_func(void *opaque, QemuOpts *opts, Error **errp)
+ static bool is_qemuopts_group(const char *group)
+ {
+     if (g_str_equal(group, "object") ||
++#ifdef CONFIG_AUDIO
+         g_str_equal(group, "audiodev") ||
++#endif
+         g_str_equal(group, "machine") ||
+         g_str_equal(group, "smp-opts") ||
+         g_str_equal(group, "boot-opts")) {
+@@ -2265,6 +2267,7 @@ static void qemu_record_config_group(const char *group, QDict *dict,
+         object_option_add_visitor(v);
+         visit_free(v);
  
 +#ifdef CONFIG_AUDIO
- #define PCSPK_BUF_LEN 1792
- #define PCSPK_SAMPLE_RATE 32000
- #define PCSPK_MAX_FREQ (PCSPK_SAMPLE_RATE >> 1)
- #define PCSPK_MIN_COUNT DIV_ROUND_UP(PIT_FREQ, PCSPK_MAX_FREQ)
+     } else if (g_str_equal(group, "audiodev")) {
+         Audiodev *dev = NULL;
+         Visitor *v = qobject_input_visitor_new_keyval(QOBJECT(dict));
+@@ -2272,6 +2275,7 @@ static void qemu_record_config_group(const char *group, QDict *dict,
+             audio_add_audiodev(dev);
+         }
+         visit_free(v);
 +#endif
  
- OBJECT_DECLARE_SIMPLE_TYPE(PCSpkState, PC_SPEAKER)
- 
-@@ -48,18 +50,25 @@ struct PCSpkState {
- 
-     MemoryRegion ioport;
-     uint32_t iobase;
+     } else if (g_str_equal(group, "machine")) {
+         /*
+@@ -3059,6 +3063,7 @@ void qemu_init(int argc, char **argv)
+                 }
+                 break;
+ #endif
 +#ifdef CONFIG_AUDIO
-     uint8_t sample_buf[PCSPK_BUF_LEN];
+             case QEMU_OPTION_audiodev:
+                 default_audio = 0;
+                 audio_parse_option(optarg);
+@@ -3099,6 +3104,7 @@ void qemu_init(int argc, char **argv)
+                 }
+                 break;
+             }
 +#endif
-     AudioBackend *audio_be;
-+#ifdef CONFIG_AUDIO
-     SWVoiceOut *voice;
-+#endif
-     PITCommonState *pit;
-+#ifdef CONFIG_AUDIO
-     unsigned int pit_count;
-     unsigned int samples;
-     unsigned int play_pos;
-+#endif
-     uint8_t data_on;
-     uint8_t dummy_refresh_clock;
-     bool migrate;
- };
- 
-+#ifdef CONFIG_AUDIO
- static const char *s_spk = "pcspk";
- 
- static inline void generate_samples(PCSpkState *s)
-@@ -131,6 +140,7 @@ static int pcspk_audio_init(PCSpkState *s)
- 
-     return 0;
- }
-+#endif
- 
- static uint64_t pcspk_io_read(void *opaque, hwaddr addr,
-                               unsigned size)
-@@ -161,11 +171,13 @@ static void pcspk_io_write(void *opaque, hwaddr addr, uint64_t val,
- 
-     s->data_on = (val >> 1) & 1;
-     pit_set_gate(s->pit, 2, gate);
-+#ifdef CONFIG_AUDIO
-     if (s->voice) {
-         if (gate) /* restart */
-             s->play_pos = 0;
-         AUD_set_active_out(s->voice, gate & s->data_on);
-     }
-+#endif
- }
- 
- static const MemoryRegionOps pcspk_io_ops = {
-@@ -196,10 +208,12 @@ static void pcspk_realizefn(DeviceState *dev, Error **errp)
- 
-     isa_register_ioport(isadev, &s->ioport, s->iobase);
- 
-+#ifdef CONFIG_AUDIO
-     if (s->audio_be && AUD_backend_check(&s->audio_be, errp)) {
-         pcspk_audio_init(s);
-         return;
-     }
-+#endif
- }
- 
- static bool migrate_needed(void *opaque)
+             case QEMU_OPTION_h:
+                 help(0);
+                 break;
 -- 
 2.34.1
 
