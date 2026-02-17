@@ -4,115 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45B3BE68169
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Feb 2026 10:41:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 478F8E68165
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Feb 2026 11:26:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vsIVx-0003Sn-9o; Tue, 17 Feb 2026 05:41:11 -0500
+	id 1vsJCv-0001BX-KH; Tue, 17 Feb 2026 06:25:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hbathini@linux.ibm.com>)
- id 1vsIVu-0003SQ-Jl; Tue, 17 Feb 2026 05:41:06 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vsJCs-0001B6-GT
+ for qemu-devel@nongnu.org; Tue, 17 Feb 2026 06:25:30 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hbathini@linux.ibm.com>)
- id 1vsIVs-0001xh-CK; Tue, 17 Feb 2026 05:41:06 -0500
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 61GMjKBY2301761; Tue, 17 Feb 2026 10:41:01 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=KjL7ji
- va1IxFVZt+ngKCGhFEJFXfi9is3Rj1ezq/0r0=; b=rWj0t+7V5dTeU6lMegWqOA
- w6s5/DheyUZ0ciJN4HvDSi/vsmEvd/Dx17PoqmvhQpkaprdHHDnJUKyj0iEPS260
- sSVzHyW2JC88at6qkD+/fjg53m/Z5TlFc/ndOq6qSOoHvplSSwxkOvFxFxwjLzB/
- ZceshV8/Wmhr+kyH9eL0OAVmZ05GAG7T9wlm5seHGHbn4UIYrWaiXwzvSmwhOynk
- fmZc+Tw12wSMuwZNFes6eBsk6HTUjOdztR18KcAFD5ulxNTIwli8r5+JuYIF9I87
- LUDJJwdC+D/y5YAJCQ4LUpLSXQHB4fhr7RjbRrHMinKIDiO/6e9wBVvCklslsgoA
- ==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4caj642q1x-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 17 Feb 2026 10:41:01 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 61H8pibn023889;
- Tue, 17 Feb 2026 10:41:00 GMT
-Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4ccb452260-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 17 Feb 2026 10:41:00 +0000
-Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
- [10.20.54.100])
- by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 61HAevxL27918994
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 17 Feb 2026 10:40:57 GMT
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 00F202004B;
- Tue, 17 Feb 2026 10:40:57 +0000 (GMT)
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id CD30020040;
- Tue, 17 Feb 2026 10:40:55 +0000 (GMT)
-Received: from [9.78.106.17] (unknown [9.78.106.17])
- by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 17 Feb 2026 10:40:55 +0000 (GMT)
-Message-ID: <017a0a00-60e9-42c6-974a-a66b111f5a83@linux.ibm.com>
-Date: Tue, 17 Feb 2026 16:10:54 +0530
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vsJCq-0002hF-13
+ for qemu-devel@nongnu.org; Tue, 17 Feb 2026 06:25:29 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1771327526;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=RdN74SNI4C5i0j/Bd4DQ23T8s4MFrzW9feCq1F4CcYA=;
+ b=e+3TYSELi1u3R5vmx+JQm7Ico7+NFj47x9KozhJIp6EfEutYEBOhLKAGm8YU9eOb2uTxgv
+ XPU+Ky65h7usy5kLj7B3VL0sOxMtTmDS/b1KreMWfWO0mrUmNSyF1pzHyDIHHgbX+oYYCq
+ jZWjD3V3k5JynQc4IjTJiLjFE6wp7mg=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-256-7qOjpSG0PsyF-15C6Y_nTg-1; Tue,
+ 17 Feb 2026 06:25:24 -0500
+X-MC-Unique: 7qOjpSG0PsyF-15C6Y_nTg-1
+X-Mimecast-MFC-AGG-ID: 7qOjpSG0PsyF-15C6Y_nTg_1771327524
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D07BA18003F6; Tue, 17 Feb 2026 11:25:23 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.14])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8790E19560A2; Tue, 17 Feb 2026 11:25:23 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id E94BA21E692D; Tue, 17 Feb 2026 12:25:20 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Peter Krempa <pkrempa@redhat.com>
+Cc: Peter Xu <peterx@redhat.com>,  qemu-devel@nongnu.org,  Juraj Marcin
+ <jmarcin@redhat.com>,  Daniel P . =?utf-8?Q?Berrang=C3=A9?=
+ <berrange@redhat.com>,  Fabiano
+ Rosas <farosas@suse.de>,  Prasad Pandit <ppandit@redhat.com>
+Subject: Re: [PATCH v2 0/2] migration: feature removals for 11.0
+In-Reply-To: <aZQ0q2r6w3OkSP2f@angien.pipo.sk> (Peter Krempa's message of
+ "Tue, 17 Feb 2026 10:29:38 +0100")
+References: <20260115225503.3083355-1-peterx@redhat.com>
+ <aZQ0q2r6w3OkSP2f@angien.pipo.sk>
+Date: Tue, 17 Feb 2026 12:25:20 +0100
+Message-ID: <87ms17lihr.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/9] hw/ppc: Implement S0 SBE interrupt as cpu_pause
- then host reset
-To: Aditya Gupta <adityag@linux.ibm.com>
-Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
- Sourabh Jain <sourabhjain@linux.ibm.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>
-References: <20251206055648.1908734-1-adityag@linux.ibm.com>
- <20251206055648.1908734-3-adityag@linux.ibm.com>
- <9b6db774-cba5-49f7-b0ec-d56232cbeb99@linux.ibm.com>
- <aZQIJHZekWD-sWqI@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
- <aZQ2qJhGhdKo-cGI@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
-Content-Language: en-US
-From: Hari Bathini <hbathini@linux.ibm.com>
-In-Reply-To: <aZQ2qJhGhdKo-cGI@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: Ecp4lFIUTFs0ODVzMNv_t6jUywf_KEM4
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjE3MDA4OCBTYWx0ZWRfX/oo+ZjARGlYH
- 7Lr0uoZLdcjBDdXtarUV9U3WTHosp4pL3PSy1ZcKzmEJk2C2uAB4sujek36MjiSHLZlTuN+hEzT
- /LtzwshDvOgV/LAmiFuSSWkEnu2MhXCZMu5VtdPaLQrYSugFJbjBegLcl+aMMYhYjzGyOkCQu4P
- bsgpNKhepn4X0zhNIvy+6E7M2fno0sWPtDOMtQRh2m5QQGcYUgePGNFKxnyp0yYVZDAQ6FH3vSR
- nsxOLxNg2AIkA2RBCv4yYAMrEeBjEfJcvzsfiQDQ/lce8f6a+n3Y23nKF4TUf0g0UA6Uqb5+/73
- BGTB6Nire6+T3FoYgv0jsXbAU6WExhL8qdQ82vwSTEyQDeEFBaZ9110l1HWCukkgg8qy81QLtgL
- yF6mwffHAvZvlP/c42y0bVy7IHA6ZCDLFpQFE1evreMnekCxGk69wP41cdJejvCZexJU6OC3fm6
- NG32/7sGc1Dm0Fdkgdw==
-X-Proofpoint-GUID: Ecp4lFIUTFs0ODVzMNv_t6jUywf_KEM4
-X-Authority-Analysis: v=2.4 cv=U+mfzOru c=1 sm=1 tr=0 ts=699445bd cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=IkcTkHD0fZMA:10 a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22 a=P2EAv-b9zTbMH-od8MgA:9
- a=QEXdDO2ut3YA:10
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-02-17_01,2026-02-16_04,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 bulkscore=0 impostorscore=0 malwarescore=0 spamscore=0
- adultscore=0 phishscore=0 lowpriorityscore=0 priorityscore=1501
- suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
- definitions=main-2602170088
-Received-SPF: pass client-ip=148.163.158.5;
- envelope-from=hbathini@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -128,34 +88,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Peter Krempa <pkrempa@redhat.com> writes:
 
+> On Thu, Jan 15, 2026 at 17:55:01 -0500, Peter Xu wrote:
+>> v2:
+>> - Added R-bs
+>> - Updated description for removing zero-blocks [Markus]
+>> - Squashed the "fd: to file" test removal into the 2nd patch
+>> - I dropped the COLO patch, I have a local patch to remove colo migration
+>>   completely, but looks like we won't do it..  Let's leave it for later but
+>>   do the rest first
+>> 
+>> This series removes two deprecated features for 11.0.
+>> 
+>> Please review, thanks.
+>> 
+>> Peter Xu (2):
+>>   migration: Remove zero-blocks capability
+>>   migration: Remove fd: support on files
+>> 
+>>  docs/about/deprecated.rst             | 20 -------------
+>
+> Note that per the 'MAINTAINERS' file, changes to any deprecations ought
+> to be CC'd to the libvirt list for visibility.
+>
+> In this case we've forgotten about the deprecation and didn't fix it
+> before the qemu cahnge was pushed. I'll send out patches soon, but keep
+> in mind to *always* CC the libvirt list with deprecations.
 
-On 17/02/26 3:07 pm, Aditya Gupta wrote:
-> On 26/02/17 11:48AM, Aditya Gupta wrote:
->> On 26/01/19 01:11PM, Hari Bathini wrote:
->>>
->>>
->>> On 06/12/25 11:26 am, Aditya Gupta wrote:
->>>> During MPIPL (aka fadump), OPAL triggers the S0 SBE interrupt to trigger
->>>> MPIPL.
->>>
->>> As mentioned in cover letter, add more clarity by mentioning that
->>> kernel initiates fadump with OPAL call. Skiboot then triggers S0
->>> SBE interrupt...
->>
->> Will add here also. Thanks Hari !
-> 
-> Does this look okay Hari ?
-> 
->      During MPIPL (aka fadump), after a kernel crash, the kernel does
->      opal_cec_reboot2 opal call, signifying an abnormal termination.
->      When OPAL recieves this opal call, it further triggers SBE S0 interrupt,
->      to trigger a MPIPL boot.
-> 
->      Currently S0 interrupt is unimplemented in QEMU.
-> 
+Review fail (mine).
 
-Yeah. That offers better insight.
+Should we try to make checkpatch.pl catch it?  So far, it doesn't check
+cc: at all.
 
-- Hari
 
