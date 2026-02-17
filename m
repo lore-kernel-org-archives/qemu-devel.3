@@ -4,130 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C99A8E9A027
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Feb 2026 17:53:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E5B6E9A029
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Feb 2026 17:56:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vsPFN-0007AQ-1A; Tue, 17 Feb 2026 12:52:29 -0500
+	id 1vsPIz-0000Wx-Qi; Tue, 17 Feb 2026 12:56:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vsPFL-0007A7-Lo
- for qemu-devel@nongnu.org; Tue, 17 Feb 2026 12:52:27 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1vsPIu-0000QL-Dh; Tue, 17 Feb 2026 12:56:08 -0500
+Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vsPFJ-0002cO-Hw
- for qemu-devel@nongnu.org; Tue, 17 Feb 2026 12:52:27 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771350742;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=eyV4RMGDyuy/9AwhxCPo26QqQfircen/PVM5zwnbvbI=;
- b=QfsCS2RKMLyrNXg1y/KKkMAR4g/ou2g17a4JAZk2zX6298kOaj30xX8KJTD9ALQT0+0wwa
- YB/UfjpMe0Ya55jK6pWwOuSfY1il5ThhsA5TkMeq72rWywPKYgxfMA5OybDBPKza7BePb7
- zWVYdzoG6MjVoY+E2WY0AIxBUpIXYks=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-132-7-dq3LkoO-m9r2RZARFSmA-1; Tue,
- 17 Feb 2026 12:52:18 -0500
-X-MC-Unique: 7-dq3LkoO-m9r2RZARFSmA-1
-X-Mimecast-MFC-AGG-ID: 7-dq3LkoO-m9r2RZARFSmA_1771350736
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6529B195605B; Tue, 17 Feb 2026 17:52:15 +0000 (UTC)
-Received: from [10.45.224.144] (unknown [10.45.224.144])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id CE3BA1800296; Tue, 17 Feb 2026 17:52:03 +0000 (UTC)
-Message-ID: <b2cfb40c-95e2-4c1a-87c2-7266c7ddfe3d@redhat.com>
-Date: Tue, 17 Feb 2026 18:51:56 +0100
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1vsPIo-0003CL-HG; Tue, 17 Feb 2026 12:56:06 -0500
+Received: from mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
+ [IPv6:2a02:6b8:c42:65a0:0:640:e1de:0])
+ by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 61C6E807CC;
+ Tue, 17 Feb 2026 20:55:50 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:8080:b3b::1:9] (unknown [2a02:6bf:8080:b3b::1:9])
+ by mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id ntdlr33AhKo0-hN5uptP3; Tue, 17 Feb 2026 20:55:49 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1771350949;
+ bh=Tv68b5iLW1ED7FVww5PjYMG21KQ2786yuOcSvJ3nY0w=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=gJ+W5PqtuXlkuaa92a/11vxGzUQagcuKVIexfg2LgdGWS5ztH0icRayd+Jc9iJRFW
+ 68mAX/PYNbwOIJRRYdIbApay4PqBRzXbgcDWmZR+FzbBpQgo3nne1B+wrsub2syTwo
+ sOzEWJ/UN7B9B1FkFgleUVgpfbhPPC8IeFeGC4D8=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <04575653-a2ba-4ef1-b1af-a514bec80a69@yandex-team.ru>
+Date: Tue, 17 Feb 2026 20:55:49 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 15/19] tests: replace check-venv with vm-venv target
-To: John Snow <jsnow@redhat.com>, qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Cleber Rosa <crosa@redhat.com>, Mahmoud Mandour <ma.mandourr@gmail.com>,
- Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Kyle Evans <kevans@freebsd.org>, Peter Xu <peterx@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
- Yonggang Luo <luoyonggang@gmail.com>, Warner Losh <imp@bsdimp.com>,
- Maksim Davydov <davydov-max@yandex-team.ru>,
- Alexandre Iooss <erdnaxe@crans.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Ed Maste <emaste@freebsd.org>, Kevin Wolf <kwolf@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Michael Roth <michael.roth@amd.com>,
- Li-Wen Hsu <lwhsu@freebsd.org>, Hanna Reitz <hreitz@redhat.com>
-References: <20260216212952.420120-1-jsnow@redhat.com>
- <20260216212952.420120-16-jsnow@redhat.com>
-From: Thomas Huth <thuth@redhat.com>
+Subject: Re: [PATCH v10 4/8] qapi: add blockdev-replace command
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, eduardo@habkost.net,
+ berrange@redhat.com, pbonzini@redhat.com, eblake@redhat.com,
+ devel@lists.libvirt.org, hreitz@redhat.com, kwolf@redhat.com
+References: <20260119144941.87936-1-vsementsov@yandex-team.ru>
+ <20260119144941.87936-5-vsementsov@yandex-team.ru>
+ <87wm0sy9s4.fsf@pond.sub.org>
+ <739edd0f-8342-418e-96bb-01bc9bd3349e@yandex-team.ru>
+ <87seb3zr7j.fsf@pond.sub.org>
+ <f9aed7fd-2f56-4b54-bf4f-693e0c10fb38@yandex-team.ru>
+ <87seazjz2q.fsf@pond.sub.org>
 Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20260216212952.420120-16-jsnow@redhat.com>
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <87seazjz2q.fsf@pond.sub.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=178.154.239.200;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.043,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -143,24 +81,206 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 16/02/2026 22.29, John Snow wrote:
-> With the qemu.qmp and qemu.machine dependencies now installed by default
-> at configure time and additional dependencies required by functional
-> testing installed on demand, we do not need the explicit "check-venv" target.
+On 17.02.26 16:10, Markus Armbruster wrote:
+> Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
 > 
-> ...However, to facilitate running VM tests without running configure, we
-> move some of the former logic into tests/vm/Makefile.include to create a
-> new venv (vm-venv) on-demand when running VM tests from the source tree.
+>> On 14.02.26 11:04, Markus Armbruster wrote:
+>>> Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
+>>>
+>>>> On 04.02.26 15:26, Markus Armbruster wrote:
+>>>>> Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
+>>>>>
+>>>>>> Add a command that can replace bs in following BdrvChild structures:
+>>>>>>
+>>>>>>     - qdev blk root child
+>>>>>>     - block-export blk root child
+>>>>>>     - any child of BlockDriverState selected by child-name
+>>>>>>
+>>>>>> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 > 
-> Signed-off-by: John Snow <jsnow@redhat.com>
-> ---
->   tests/Makefile.include    | 22 ++--------------------
->   tests/vm/Makefile.include | 18 ++++++++++++++----
->   2 files changed, 16 insertions(+), 24 deletions(-)
+> [...]
+> 
+>>>>> Let's see whether I understand...
+>>>>>
+>>>>> @parent determines which of the three cases mentioned in the commit
+>>>>> message it ids:
+>>>>>
+>>>>> * If @parent is a QOM path, case 1.
+>>>>>
+>>>>> * If @parent is a block export name (@id in BlockExportOptions and
+>>>>>     BlockExportInfo), case 2.
+>>>>>
+>>>>> * If @parent is a block node name (@node-name in BlockdevOptions and
+>>>>>     BlockDeviceInfo), case 3.
+>>>>>
+>>>>> Correct?
+>>>>>
+>>>>> Problem: this is ambiguous.  A @parent "foo" could in fact be any of the
+>>>>> three cases.
+>>>>
+>>>> Yes. And we return an error in case of any ambiguity.
+>>>
+>>> So, in case of ambiguity, the command does not work.
+>>>
+>>> On the one hand, this is the user's doing: reusing the same ID for
+>>> multiple things has always been a bad idea.
+>>>
+>>> On the other hand, we're now turning a bad idea that may cause confusion
+>>> into an bad idea that may break things.  Feels iffy.
+>>>
+>>> For QOM paths, we have a workaround: avoid partial QOM paths.  Feels
+>>> okay.  Partial QOM paths are rather obscure, and best avoided entirely.
+>>>
+>>> The only workaround for block export vs. block node ambiguity is to
+>>> avoid ID reuse.  By the time a user sees the command fail, the IDs are
+>>> what they are, and there's is no workaround.
+>>>
+>>> Do you need blockdev-replace to work for both *now*?
+>>>
+>>> At the very least, we need to document the trap and point to the
+>>> workaround.
+>>>
+>>> Alternatively, come up with an interface that avoids the issue.  See
+>>> below.
+>>>
+>>>>> 3. If a block node named "foo" exists, it's case 3.
+>>>>>
+>>>>> 2. If a block export named "foo" exists, it's also case 2.
+>>>>>
+>>>>> 1. If exactly one QOM object named "foo" exists, it's also case 1.  Why?
+>>>>>       "foo" is a syntactically valid partial QOM path.  Partial QOM paths
+>>>>>       are a convenience feature that is virtually unknown (and possibly
+>>>>>       ill-advised): you can omit leading path components as long as there's
+>>>>>       no ambiguity.
+>>>>>
+>>>>> Peeking ahead in the series...  PATCH 8 appears to deprecate the
+>>>>> ambiguity between case 2. and 3.
+>>>>>
+>>>>> I think we need to do better.
+>>>
+>>> See review of PATCH 8 for doing better on deprecation.
+>>>
+>>>>> More questions...
+>>>>>
+>>>>> In case 1 and 2, @child "should be root".  What happens when it's
+>>>>> something else?
+>>>>
+>>>> Error returned. s/should/must/ ?
+>>>
+>>> Yes, please.
+>>>
+>>>>> In case 3, @child "should be any if its children names".  I figure the
+>>>>> command fails when it isn't.
+>>>>
+>>>> And here.
+>>>
+>>> Likewise.
+>>>
+>>>>>> +{ 'command': 'blockdev-replace',
+>>>>>> +  'data': { 'parent': 'str', 'child': 'str', 'new-child': 'str' } }
+>>>>>
+>>>>> [...]
+>>>
+>>> This interface sort of overloads @parent and @child, and overloading the
+>>> former creates ambiguity that can make the command unusable.
+>>
+>> Is it a real problem if we do deprecate the thing, that leads to this
+>> ambiguity?
+>>
+>> If it is, we may mark the command "unstable" during the deprecation period.
+> 
+> By itself, the proposed command is a trap for the unwary.
+> 
+> Deprecating the usage that enables the trap makes the trap temporary.
+> 
+> Warning on (deprecated) usage that enables the trap helps users avoid
+> it.  Human users, mostly.
+> 
+> Marking the command "unstable" should ensure management application
+> avoid the command, and thus the trap.
+> 
+> All of the above together feels acceptable to me.  Can we do better?
+> Maybe, and that's discussed below.
+> 
+>> Or even postpone its addition up to the end of this period.
+> 
+> No trap, no problem :)
+> 
+>>> @parent's set of valid values is the union of QOM path, block node name,
+>>> block export ID with values occuring in more than one of them dropped.
+>>>
+>>> @child's set of valid values depends on @parent: child name when it's a
+>>> QOM path, else "root".
+>>>
+>>> The obvious non-overloaded interface is a union of three branches: QOM,
+>>> block node, block export.  The QOM branch has variant members @qom-path
+>>> and @child.  The block node branch has variant member @node-name.  The
+>>> block export branch has variant member @id.
+>>>
+>>> This is a bit more verbose: you have to specify the union tag[*].
+>>>
+>>> If we ever need to replace block nodes associated with additional
+>>> things, we simply more branches.  These branches can have arbitrary
+>>> members.  In your interface, we'd have to make do with @child, or maybe
+>>> add optional arguments.
+>>>
+>>> Thoughts?  Mind, this isn't a demand!  I'm exploring the design space.
+>>
+>> Union-based solution was v9: https://lore.kernel.org/qemu-devel/20240626115350.405778-5-vsementsov@yandex-team.ru/
+>>
+>> And there was a discussion, that we may try a way without a union. And that's
+>> this v10.
+> 
+> I see Kevin suggested to explore this approach.  I certainly respect his
+> judgement.
+> 
+>> Hmm, but that had different field names for parents: qdev-id, export-id and node-name.
+>>
+>> What you suggest is to keep one filed for parent - "parent", but also add a "parent-type"
+>> field. This way, we may deprecate and remove "parent-type" in future. Or, we may
+>> add it as deprecated now (together with deprecating non-unique IDs)
+> 
+> We can't deprecate the union tag right away: it is *required*.
+> 
+>>> [*] We could add a "may omit union tag when the tag value can be derived
+>>> from present variant members" convenience feature to QAPI, but I'm not
+>>> sure it's worth the complexity.
+>>>
+>>
+>> It also may be not a union, but a simple structure with optional fields:
+>>
+>> {
+>>      parent: str, required, qom-path, or node-name, or export name
+>>      child: str, optional, but required when parent is node-name, and must be 'root'
+>>             if present for other parent types
+>>      parent-type: str, optional, "qom-path" | "block-node" | "block-export", helps to
+>>             overcome parent ambiguity, deprecated
+>>      new-child: str, required node-name
+>> }
+> 
+> PRO union: which members are valid together is syntactically obvious.
+> With a bunch of optional members, that information is in the member
+> descriptions.
+> 
+> CON union: need to specify the union tag.  The verbosity is a non-issue
+> for management applications, and mildly bothersome for humans.
+> 
+> How important is keeping things terse for humans here?
+> 
 
-Maybe consider adding "vm-venv" to the .gitignore file now?
+It's not very important. Mostly, I just want to make "nice" interface, and possibility to
+reference any supported object by one ID seemed very tempting to me.
 
-Anyway,
-Tested-by: Thomas Huth <thuth@redhat.com>
+But to be honest, introducing such a precedent makes sense, if we have in mind more
+cases where such approach may be reused. Personally, I don't have them. If blockdev-replace
+command remains the only API for the ages, which allows to mix in one field different kinds
+of IDs, it becomes just an extra exclusion from common practices.
 
+Finally, I don't care too much, which interface we chose. I'm not sure now that unifying
+ids is better than union. So I'm OK to go back to union-based solution from v9, update and
+resend it as v11.
+
+-- 
+Best regards,
+Vladimir
 
