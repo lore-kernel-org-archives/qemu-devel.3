@@ -4,49 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9DF6E83856
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Feb 2026 06:35:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDA39E83856
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Feb 2026 06:35:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vsEfp-0006X9-OX; Tue, 17 Feb 2026 01:35:05 -0500
+	id 1vsEfr-0006Yg-DB; Tue, 17 Feb 2026 01:35:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vsEfo-0006Vq-Bf
- for qemu-devel@nongnu.org; Tue, 17 Feb 2026 01:35:04 -0500
+ id 1vsEfp-0006Wj-EK
+ for qemu-devel@nongnu.org; Tue, 17 Feb 2026 01:35:05 -0500
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vsEfm-0004Sg-E3
- for qemu-devel@nongnu.org; Tue, 17 Feb 2026 01:35:04 -0500
+ id 1vsEfn-0004T5-AB
+ for qemu-devel@nongnu.org; Tue, 17 Feb 2026 01:35:05 -0500
 Received: from h205.csg.ci.i.u-tokyo.ac.jp (h205.csg.ci.i.u-tokyo.ac.jp
  [133.11.54.205]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 61H6Yfkf030238
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 61H6Yfkh030238
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Tue, 17 Feb 2026 15:34:42 +0900 (JST)
+ Tue, 17 Feb 2026 15:34:43 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=+jSeD27nf4R/+FSHJiv6T3JBfTslbGrXgZQQ/ab9Mt0=; 
+DKIM-Signature: a=rsa-sha256; bh=H6ljr/jVCWKO176X63ceZZm1uT0oaOP95joZ3kpX6PE=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Subject:Date:Message-Id:To;
- s=rs20250326; t=1771310082; v=1;
- b=Grxy6bun1jxYd3o+9msPmf0dPd+hxRxJFLlIkDVidA45t4EBXctf5BYFYxyeLxph
- YspM6GQ0iwcUlcob5jjYTCTpOt6sKeJTdb1hNlY/qX38zhVNR6uajLiHcfTqmdcT
- 6x0dDPZTyjwWv8dVODERDVd4iFYBylnTJAtg9JEKLhCrDNIUm41IBOypnd43WNsb
- ThCwowQnq/4/VrAZO3JJNTZgYjDNwkGLGK9srArXPrpSmml8ajCFnqjt2kpRd8y2
- YCuyfj791d1Z2Dm90SEaFnBVGrIBOUd4jZePfWYK98uMZ5RkVKLTnHnhz9p+jy30
- ueAocoKMQyrAQy6VzM2lsg==
+ h=From:Date:Subject:Message-Id:To;
+ s=rs20250326; t=1771310083; v=1;
+ b=I6ibcv2tH/cxK1WAVj7w1vVYPuCyblBvxIhjoB9Ie8jdOVkH7Iz7UCpjek2k267A
+ q6TfDi5WVhibb4on388be7fReS4UQm688TGNFlLJa3PH10VyPS+hDwfARpF9Frqy
+ QaDlfw6tPYGcmGBKRpiT5tcWj0D6jsjWLhRiK5nzbSJFFCiqV09v4HBo3sIA/lbL
+ dG9N6i85rjXDJu1s8Komvd2367xxxekagRoJKZT4/RjsFHzT+LW9GOFxr2hBGqrK
+ EY0Fg9BvbfekKXaGftjg8PRJIzujRhtQN+ZSU8JUEO7amNED8e5FbHFXaNQlUVOI
+ ImkI4FP8N7rnaty3Gn3BiA==
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Subject: [PATCH 0/2] Reapply "rcu: Unify force quiescent state"
-Date: Tue, 17 Feb 2026 15:34:28 +0900
-Message-Id: <20260217-alpha-v1-0-0dcc708c9db3@rsg.ci.i.u-tokyo.ac.jp>
+Date: Tue, 17 Feb 2026 15:34:30 +0900
+Subject: [PATCH 2/2] Reapply "rcu: Unify force quiescent state"
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAPQLlGkC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDIzMDI0Mz3cScgoxEXRMjA3OjVEuLFNOkFCWg2oKi1LTMCrA50bG1tQD20WG
- /VwAAAA==
-X-Change-ID: 20260216-alpha-42072e98d5bd
+Message-Id: <20260217-alpha-v1-2-0dcc708c9db3@rsg.ci.i.u-tokyo.ac.jp>
+References: <20260217-alpha-v1-0-0dcc708c9db3@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <20260217-alpha-v1-0-0dcc708c9db3@rsg.ci.i.u-tokyo.ac.jp>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
@@ -89,27 +87,169 @@ The commit says:
 > failures regularly. Thus revert this change until someone has
 > figured out what is going wrong here.
 
-I could not reproduce the alpha issue when I tried a bit while ago, but
-trying on a more conventional setup (x86 without ASan where I usually
-use Apple M2 with ASan) did a trick. So here is a fix for alpha and a
-patch to reapply commit 55d98e3edeeb17dd8445db27605d2b34f4c3ba85. I
-confirmed no failure occurs in 100 trials with the alpha fix.
+Reapply the change as alpha is fixed.
 
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 ---
-Akihiko Odaki (2):
-      target/alpha: Reset CPU
-      Reapply "rcu: Unify force quiescent state"
+ util/rcu.c | 79 ++++++++++++++++++++++++++++++++++++++++----------------------
+ 1 file changed, 51 insertions(+), 28 deletions(-)
 
- target/alpha/cpu.c |  1 +
- util/rcu.c         | 79 +++++++++++++++++++++++++++++++++++-------------------
- 2 files changed, 52 insertions(+), 28 deletions(-)
----
-base-commit: ece408818d27f745ef1b05fb3cc99a1e7a5bf580
-change-id: 20260216-alpha-42072e98d5bd
+diff --git a/util/rcu.c b/util/rcu.c
+index b703c86f15a3..acac9446ea98 100644
+--- a/util/rcu.c
++++ b/util/rcu.c
+@@ -43,10 +43,14 @@
+ #define RCU_GP_LOCKED           (1UL << 0)
+ #define RCU_GP_CTR              (1UL << 1)
+ 
++
++#define RCU_CALL_MIN_SIZE        30
++
+ unsigned long rcu_gp_ctr = RCU_GP_LOCKED;
+ 
+ QemuEvent rcu_gp_event;
+ static int in_drain_call_rcu;
++static int rcu_call_count;
+ static QemuMutex rcu_registry_lock;
+ static QemuMutex rcu_sync_lock;
+ 
+@@ -76,15 +80,29 @@ static void wait_for_readers(void)
+ {
+     ThreadList qsreaders = QLIST_HEAD_INITIALIZER(qsreaders);
+     struct rcu_reader_data *index, *tmp;
++    int sleeps = 0;
++    bool forced = false;
+ 
+     for (;;) {
+-        /* We want to be notified of changes made to rcu_gp_ongoing
+-         * while we walk the list.
++        /*
++         * Force the grace period to end and wait for it if any of the
++         * following heuristical conditions are satisfied:
++         * - A decent number of callbacks piled up.
++         * - It timed out.
++         * - It is in a drain_call_rcu() call.
++         *
++         * Otherwise, periodically poll the grace period, hoping it ends
++         * promptly.
+          */
+-        qemu_event_reset(&rcu_gp_event);
++        if (!forced &&
++            (qatomic_read(&rcu_call_count) >= RCU_CALL_MIN_SIZE ||
++             sleeps >= 5 || qatomic_read(&in_drain_call_rcu))) {
++            forced = true;
+ 
+-        QLIST_FOREACH(index, &registry, node) {
+-            qatomic_set(&index->waiting, true);
++            QLIST_FOREACH(index, &registry, node) {
++                notifier_list_notify(&index->force_rcu, NULL);
++                qatomic_set(&index->waiting, true);
++            }
+         }
+ 
+         /* Here, order the stores to index->waiting before the loads of
+@@ -106,8 +124,6 @@ static void wait_for_readers(void)
+                  * get some extra futex wakeups.
+                  */
+                 qatomic_set(&index->waiting, false);
+-            } else if (qatomic_read(&in_drain_call_rcu)) {
+-                notifier_list_notify(&index->force_rcu, NULL);
+             }
+         }
+ 
+@@ -115,7 +131,8 @@ static void wait_for_readers(void)
+             break;
+         }
+ 
+-        /* Wait for one thread to report a quiescent state and try again.
++        /*
++         * Sleep for a while and try again.
+          * Release rcu_registry_lock, so rcu_(un)register_thread() doesn't
+          * wait too much time.
+          *
+@@ -133,7 +150,20 @@ static void wait_for_readers(void)
+          * rcu_registry_lock is released.
+          */
+         qemu_mutex_unlock(&rcu_registry_lock);
+-        qemu_event_wait(&rcu_gp_event);
++
++        if (forced) {
++            qemu_event_wait(&rcu_gp_event);
++
++            /*
++             * We want to be notified of changes made to rcu_gp_ongoing
++             * while we walk the list.
++             */
++            qemu_event_reset(&rcu_gp_event);
++        } else {
++            g_usleep(10000);
++            sleeps++;
++        }
++
+         qemu_mutex_lock(&rcu_registry_lock);
+     }
+ 
+@@ -173,15 +203,11 @@ void synchronize_rcu(void)
+     }
+ }
+ 
+-
+-#define RCU_CALL_MIN_SIZE        30
+-
+ /* Multi-producer, single-consumer queue based on urcu/static/wfqueue.h
+  * from liburcu.  Note that head is only used by the consumer.
+  */
+ static struct rcu_head dummy;
+ static struct rcu_head *head = &dummy, **tail = &dummy.next;
+-static int rcu_call_count;
+ static QemuEvent rcu_call_ready_event;
+ 
+ static void enqueue(struct rcu_head *node)
+@@ -259,30 +285,27 @@ static void *call_rcu_thread(void *opaque)
+     rcu_register_thread();
+ 
+     for (;;) {
+-        int tries = 0;
+-        int n = qatomic_read(&rcu_call_count);
++        int n;
+ 
+-        /* Heuristically wait for a decent number of callbacks to pile up.
++        /*
+          * Fetch rcu_call_count now, we only must process elements that were
+          * added before synchronize_rcu() starts.
+          */
+-        while (n == 0 || (n < RCU_CALL_MIN_SIZE && ++tries <= 5)) {
+-            g_usleep(10000);
+-            if (n == 0) {
+-                qemu_event_reset(&rcu_call_ready_event);
+-                n = qatomic_read(&rcu_call_count);
+-                if (n == 0) {
++        for (;;) {
++            qemu_event_reset(&rcu_call_ready_event);
++            n = qatomic_read(&rcu_call_count);
++            if (n) {
++                break;
++            }
++
+ #if defined(CONFIG_MALLOC_TRIM)
+-                    malloc_trim(4 * 1024 * 1024);
++            malloc_trim(4 * 1024 * 1024);
+ #endif
+-                    qemu_event_wait(&rcu_call_ready_event);
+-                }
+-            }
+-            n = qatomic_read(&rcu_call_count);
++            qemu_event_wait(&rcu_call_ready_event);
+         }
+ 
+-        qatomic_sub(&rcu_call_count, n);
+         synchronize_rcu();
++        qatomic_sub(&rcu_call_count, n);
+         bql_lock();
+         while (n > 0) {
+             node = try_dequeue();
 
-Best regards,
---  
-Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+-- 
+2.53.0
 
 
