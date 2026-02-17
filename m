@@ -4,88 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFAF1E909C7
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Feb 2026 15:52:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFC53E909CC
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Feb 2026 15:52:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vsNM9-0002Je-NM; Tue, 17 Feb 2026 10:51:21 -0500
+	id 1vsNMA-0002KC-Vu; Tue, 17 Feb 2026 10:51:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
- id 1vsMx4-0003b2-Di
+ id 1vsMx4-0003bX-VT
  for qemu-devel@nongnu.org; Tue, 17 Feb 2026 10:25:26 -0500
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
- id 1vsMx1-0005f8-Gr
+ id 1vsMx3-0005fo-A3
  for qemu-devel@nongnu.org; Tue, 17 Feb 2026 10:25:26 -0500
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-48378136adcso23117235e9.1
- for <qemu-devel@nongnu.org>; Tue, 17 Feb 2026 07:25:21 -0800 (PST)
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-48372efa020so31710535e9.2
+ for <qemu-devel@nongnu.org>; Tue, 17 Feb 2026 07:25:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mihalicyn.com; s=mihalicyn; t=1771341920; x=1771946720; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=Brb3KYbswM8WiwWkhozk8T5T5lyvsjBrf/InVBnPESw=;
- b=N4hhvyt8cpXtqwaNDh9HdE5LmUdSGad3CEReNfRolPi9dnKrCrWihaHLAe89wivTWb
- B+5ujxsEdb01Kp57D8z0hy0liQ+ReJtk42Q2f6Q0WsxR8Nvhp4flVl657qAPqh87tQYR
- H44h1ptXYM4AMkxuT7rUdd+gAWx1fU8p00iY8=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771341920; x=1771946720;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=mihalicyn.com; s=mihalicyn; t=1771341923; x=1771946723; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Brb3KYbswM8WiwWkhozk8T5T5lyvsjBrf/InVBnPESw=;
- b=ZXdikUDDihPYuRDPB6zloAIHMhcZbdosMvQBnyqjHVVzPhfvgRc1aLYn2bzrz0eMel
- HXJW3EBKYgRW0ylhIfV/tKW8qcTS9dCcE2Mgwd5vDmlFzMvcgCH0sJpH84tLe1U2yOi9
- ZgWiatbpxdoWdtw16kogl/QsM9WWS5j1gOnfABz6HbiXHoM9x8Vo8nzjmesxW9AXlvmQ
- NJWwTO7A1o48Z2alvk5aLVnHYc4MRajNGuVnySvcrI7P8/EAgy85slOGpcuVPkh0KctP
- VtWLJ6EW1KbHai8CURIh9d9/cFbYHdljKm7zLfCmqLp8k7D4IpG+I8fIehsAAkgcnPOt
- p9sA==
-X-Gm-Message-State: AOJu0YzKdocD+RHWpdi8SWewJWYctSFJPsDQu9n3W3wefR774CjYIZIo
- 2NLloOS5jtlLkmzvuNymMBNgvwQS6qXDUHctIuwHTWz5qe8DLEbxmVhUm7n2P0tut+vrJQZ01de
- 28n2y
-X-Gm-Gg: AZuq6aIT0aEtF/6srXYVtqTjnWupAJ/qCmqjOan5LIn0EQXuPCNbKOttbJwkD5lrpst
- Xj49Fu+f639DsvmaYuOm+sns6IrbQnDGaB2fJm/5zEx05Nd2am6qitGKOZr4zPtdFqTlq95KLqw
- 1VT4pQaZyGqMqFYRstPg32XT5QaXO9c2+nGQN4+WohYo8KrBN60vZRpD48U8garuYv++BhRGezN
- 2yZEs++A4a95I/yB+ZUhMubqLco4xdVwVRwIsS5mkQmF70eS6wcdRnlHP+vuhGS6+M8BsXTX1V+
- BYWlshYmBckKm+J9B6lJZI2ly4lSQ6Dwrt96ISN+299FUoiefd1uHFBORxAwYZffGTn2z6ernm/
- TeXnWtpu64ztUv3RT3xSwC9JIISooKtBlYfFMOokJqkNnuBJFuVtsyprp2xJZhoc+VR2qfe9eeK
- GsNIj74/NnXFjDr4jG3jB8wfkzHCwnBBnpPb+JKH5sFtGI/aUOmF0jHrHXs23MmpqlgIo+nbyii
- GYcsG56grkF/Sh9wHWbimU=
-X-Received: by 2002:a05:600c:4750:b0:483:7783:5373 with SMTP id
- 5b1f17b1804b1-48379bfd6b6mr181116315e9.23.1771341919641; 
- Tue, 17 Feb 2026 07:25:19 -0800 (PST)
+ bh=gpP959L10hBsg4INOewg8w8g5XRXZUc7QBJng71AuUU=;
+ b=U4XIah9PEwipknD1wF6QX1V0A8n9YkVLGzK/y7x2BQ7ThJ3vsDikGIiJL//kyExl4U
+ f3mhA5RLLffAbvn6tTaK3eNoBFkSSnrUVRbDKuYMklKQcHA2dlq9rIRMKO3mZqk1Z80P
+ mqje8khLXsiGJAbbw9YBMVRoNo25mX0qLleU0=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1771341923; x=1771946723;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=gpP959L10hBsg4INOewg8w8g5XRXZUc7QBJng71AuUU=;
+ b=lsVwzwQn4eNmxZ5/iK+LlGzGGqDMk9ePpobZFyL9E4H0HcSqqc7KFImlSQogpDimhk
+ woeBEMBPq1+nZ9tNyxQ0l+D7DtUV2+m79NmivWrxC3w3Y/I8Q3JrUqg+fV1FUv7MrhI0
+ ho2Iox66iBixjxu2nsn20/h+6Kgf4XL1kUpfjaxxCl1HyqQ4+5W9Xr+Yk286kLq5Ingh
+ ecFAaD1niiuk/eRTy4olHfN2ekC9CoK4sZfZyfugLhY8ms/AukBqVSl+saXmEK5vrQuE
+ SYlVbjBmA9lng8mAwzEE27Zwb3p6voPBhmVCpvVgPoYUfpX5oQHviVU+AUrlQeCFFAbj
+ h+Lw==
+X-Gm-Message-State: AOJu0Yw3FGoceBtHnFbxA7cjdmtUPuchz3vBe3gSt0zENX75dh/QVIZ9
+ WqnOSPlCDEexHpy7PUx7ZNCzjklDABGFMwpRQXilH3D13jUXg0VGwajK7Cu7PTPNwbXiX1fR5fG
+ FLJYu
+X-Gm-Gg: AZuq6aI1+VaEhPH6bdEyRizV2dLNh/ffcvj2kyO52QljQ0kkstl0f0bi0wvsszd/l5Y
+ 0FYmvEmrMgu/ckw/Ynd39QcXEnQMvURVMeMrKXQrpvGljLmk3CfAWVUkYZKqYlC65gFJBCyhz13
+ A5OZukL/uDxVPkdx9x8DwiqObySK++hT/9SQxcrKqS+RtMQSHt/R6bj/KxdWZGJL9jxOGa55Cvd
+ WDcIxjlo1oxAd4GP+Z1jDOPubZgNe9Tuvb6et4c3bjFpe17cGpT2hUjVvdc1PoRwEMhAEY6oLWY
+ IOGxG0arMQeWGnv7PWIqJ36b9L5iv1OwsFjborHKvsKM+/bbZCEyG+AQqAW7yPjDJKJR3GFF3Ez
+ 1E1ZZ/gj7kg/0S5QB3+o+nXXmlXcQdUCCtBfuy1Zs9evfhUPX6n66hPe6Ewc6hsalol4q5vCyLd
+ VtDpWdBXtxF9RMOhM1P0bqxlIl3fv3xyaqaAD1zfTUTHh0j0HsnPqS2gt18TUp8WRNoSWeGEepd
+ YoFNyB03FKSc5InvsxYbN8=
+X-Received: by 2002:a05:600c:46c9:b0:46e:4a13:e6c6 with SMTP id
+ 5b1f17b1804b1-48379bfd71cmr178343185e9.19.1771341922297; 
+ Tue, 17 Feb 2026 07:25:22 -0800 (PST)
 Received: from alex-laptop.lan
  (p200300cf574bcf00ffb15ba913f79a3b.dip0.t-ipconnect.de.
  [2003:cf:574b:cf00:ffb1:5ba9:13f7:9a3b])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4835dd0e327sm519169015e9.14.2026.02.17.07.25.18
+ 5b1f17b1804b1-4835dd0e327sm519169015e9.14.2026.02.17.07.25.21
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 17 Feb 2026 07:25:18 -0800 (PST)
+ Tue, 17 Feb 2026 07:25:21 -0800 (PST)
 From: Alexander Mikhalitsyn <alexander@mihalicyn.com>
 To: qemu-devel@nongnu.org
 Cc: Jesper Devantier <foss@defmacro.it>, Peter Xu <peterx@redhat.com>,
  Klaus Jensen <its@irrelevant.dk>, Fabiano Rosas <farosas@suse.de>,
  qemu-block@nongnu.org, Keith Busch <kbusch@kernel.org>,
  Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
-Subject: [PATCH 0/4] [RFC] hw/nvme: add basic live migration support
-Date: Tue, 17 Feb 2026 16:25:13 +0100
-Message-ID: <20260217152517.271422-1-alexander@mihalicyn.com>
+Subject: [PATCH 2/4] hw/nvme: split nvme_init_sq/nvme_init_cq into helpers
+Date: Tue, 17 Feb 2026 16:25:15 +0100
+Message-ID: <20260217152517.271422-3-alexander@mihalicyn.com>
 X-Mailer: git-send-email 2.47.3
-Content-Type: text/plain; charset="utf-8"
+In-Reply-To: <20260217152517.271422-1-alexander@mihalicyn.com>
+References: <20260217152517.271422-1-alexander@mihalicyn.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=alexander@mihalicyn.com; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=alexander@mihalicyn.com; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-Mailman-Approved-At: Tue, 17 Feb 2026 10:51:21 -0500
 X-BeenThere: qemu-devel@nongnu.org
@@ -104,41 +106,109 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
 
-Dear friends,
+Signed-off-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
+---
+ hw/nvme/ctrl.c | 57 +++++++++++++++++++++++++++++++-------------------
+ 1 file changed, 36 insertions(+), 21 deletions(-)
 
-This patchset adds basic live migration support for
-QEMU emulated NVMe device.
-
-Implementation has some limitations:
-- only one NVMe namespace is supported
-- SMART counters are not preserved
-- CMB is not supported
-- PMR is not supported
-- SPDM is not supported
-- SR-IOV is not supported
-- AERs are not fully supported
-
-I believe this is something I can support in next patchset versions or
-separately on-demand (when usecase appears). But I wanted to share this
-first version as RFC to get some feedback on this in case if I'm approaching
-it wrong.
-
-Kind regards,
-Alex
-
-Alexander Mikhalitsyn (4):
-  hw/nvme: add migration blockers for non-supported cases
-  hw/nvme: split nvme_init_sq/nvme_init_cq into helpers
-  migration: add VMSTATE_VARRAY_OF_POINTER_TO_STRUCT_ALLOC
-  hw/nvme: add basic live migration support
-
- hw/nvme/ctrl.c              | 505 +++++++++++++++++++++++++++++++++---
- hw/nvme/nvme.h              |   5 +
- hw/nvme/trace-events        |   9 +
- include/migration/vmstate.h |  21 ++
- migration/vmstate-types.c   |  88 +++++++
- 5 files changed, 598 insertions(+), 30 deletions(-)
-
+diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+index 4694bdb4d02..89cc26d745b 100644
+--- a/hw/nvme/ctrl.c
++++ b/hw/nvme/ctrl.c
+@@ -4852,18 +4852,14 @@ static uint16_t nvme_del_sq(NvmeCtrl *n, NvmeRequest *req)
+     return NVME_SUCCESS;
+ }
+ 
+-static void nvme_init_sq(NvmeSQueue *sq, NvmeCtrl *n, uint64_t dma_addr,
+-                         uint16_t sqid, uint16_t cqid, uint16_t size)
++static void __nvme_init_sq(NvmeSQueue *sq)
+ {
++    NvmeCtrl *n = sq->ctrl;
++    uint16_t sqid = sq->sqid;
++    uint16_t cqid = sq->cqid;
+     int i;
+     NvmeCQueue *cq;
+ 
+-    sq->ctrl = n;
+-    sq->dma_addr = dma_addr;
+-    sq->sqid = sqid;
+-    sq->size = size;
+-    sq->cqid = cqid;
+-    sq->head = sq->tail = 0;
+     sq->io_req = g_new0(NvmeRequest, sq->size);
+ 
+     QTAILQ_INIT(&sq->req_list);
+@@ -4893,6 +4889,18 @@ static void nvme_init_sq(NvmeSQueue *sq, NvmeCtrl *n, uint64_t dma_addr,
+     n->sq[sqid] = sq;
+ }
+ 
++static void nvme_init_sq(NvmeSQueue *sq, NvmeCtrl *n, uint64_t dma_addr,
++                         uint16_t sqid, uint16_t cqid, uint16_t size)
++{
++    sq->ctrl = n;
++    sq->dma_addr = dma_addr;
++    sq->sqid = sqid;
++    sq->size = size;
++    sq->cqid = cqid;
++    sq->head = sq->tail = 0;
++    __nvme_init_sq(sq);
++}
++
+ static uint16_t nvme_create_sq(NvmeCtrl *n, NvmeRequest *req)
+ {
+     NvmeSQueue *sq;
+@@ -5553,24 +5561,16 @@ static uint16_t nvme_del_cq(NvmeCtrl *n, NvmeRequest *req)
+     return NVME_SUCCESS;
+ }
+ 
+-static void nvme_init_cq(NvmeCQueue *cq, NvmeCtrl *n, uint64_t dma_addr,
+-                         uint16_t cqid, uint16_t vector, uint16_t size,
+-                         uint16_t irq_enabled)
++static void __nvme_init_cq(NvmeCQueue *cq)
+ {
++    NvmeCtrl *n = cq->ctrl;
+     PCIDevice *pci = PCI_DEVICE(n);
++    uint16_t cqid = cq->cqid;
+ 
+-    if (msix_enabled(pci) && irq_enabled) {
+-        msix_vector_use(pci, vector);
++    if (msix_enabled(pci) && cq->irq_enabled) {
++        msix_vector_use(pci, cq->vector);
+     }
+ 
+-    cq->ctrl = n;
+-    cq->cqid = cqid;
+-    cq->size = size;
+-    cq->dma_addr = dma_addr;
+-    cq->phase = 1;
+-    cq->irq_enabled = irq_enabled;
+-    cq->vector = vector;
+-    cq->head = cq->tail = 0;
+     QTAILQ_INIT(&cq->req_list);
+     QTAILQ_INIT(&cq->sq_list);
+     if (n->dbbuf_enabled) {
+@@ -5588,6 +5588,21 @@ static void nvme_init_cq(NvmeCQueue *cq, NvmeCtrl *n, uint64_t dma_addr,
+                                  &DEVICE(cq->ctrl)->mem_reentrancy_guard);
+ }
+ 
++static void nvme_init_cq(NvmeCQueue *cq, NvmeCtrl *n, uint64_t dma_addr,
++                         uint16_t cqid, uint16_t vector, uint16_t size,
++                         uint16_t irq_enabled)
++{
++    cq->ctrl = n;
++    cq->cqid = cqid;
++    cq->size = size;
++    cq->dma_addr = dma_addr;
++    cq->phase = 1;
++    cq->irq_enabled = irq_enabled;
++    cq->vector = vector;
++    cq->head = cq->tail = 0;
++    __nvme_init_cq(cq);
++}
++
+ static uint16_t nvme_create_cq(NvmeCtrl *n, NvmeRequest *req)
+ {
+     NvmeCQueue *cq;
 -- 
 2.47.3
 
