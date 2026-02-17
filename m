@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 244ABE9A03E
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Feb 2026 21:52:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6471E9A03B
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Feb 2026 21:52:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vsSz1-00087b-KC; Tue, 17 Feb 2026 16:51:51 -0500
+	id 1vsSz6-0008A9-V8; Tue, 17 Feb 2026 16:51:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1vsSz0-00086c-MU
- for qemu-devel@nongnu.org; Tue, 17 Feb 2026 16:51:50 -0500
+ id 1vsSz2-000889-Cx
+ for qemu-devel@nongnu.org; Tue, 17 Feb 2026 16:51:52 -0500
 Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1vsSyz-0001LZ-03
- for qemu-devel@nongnu.org; Tue, 17 Feb 2026 16:51:50 -0500
-ARC-Seal: i=1; a=rsa-sha256; t=1771365096; cv=none; 
+ id 1vsSz0-0001Lm-Ox
+ for qemu-devel@nongnu.org; Tue, 17 Feb 2026 16:51:52 -0500
+ARC-Seal: i=1; a=rsa-sha256; t=1771365084; cv=none; 
  d=zohomail.com; s=zohoarc; 
- b=FtavBoijbHUWVtkWEoVJLlnE/VSZ0NwC2Xw/DjizjG5TkRyG/6BhgsbmyraDzoVRumpTM9LbYMmCqy/yj6SKcC9g+FCv0VjJUJ9VtZ7PFTwqfrote9csi9FtrC6v8qVC8CAS481Ov+JmcTdm1cUUgDEGFMymwn0GZD5jU9V3MKE=
+ b=bHBt250SyGFgSOplbmPnGYv1L6aDpgVW5aibVhQNv9Uk2eFIp/68jG+7RGqPtZEDrY4N4Aq3p9OfAy4A7wBF/VJczM1VIc4N92TsKh6mLNb3kzyvq4nkrLKLPCsqqI8bGkN0utsLaGhumkPWbcIZiVFzMOF7uw++Ow6Gfk269To=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1771365096;
+ s=zohoarc; t=1771365084;
  h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=ViKEV6K3E34y8YBULDM7wujUiITFIahQHAYDINTR4aQ=; 
- b=VRj4qke70I52AERoRWiePoc+NFgMmG4EQUvkmuu1G2ykjd85ivBRXPuxm7oRsgrIsMiV24K2GxXATeG6COleN/JiWmW1mUToamLU1soFH/51Hc4Sko7g9nmHtAosfLmmLLnl8TS45DTKvXHmQierRrfa+eMV27+xSuobGJqz3K0=
+ bh=26KDt+l8nTHjv9XZIrWP4uirI4EqmdpJAiWfCgmym7A=; 
+ b=kwpfMOQbTskBa2chSPgXvZLiW00EtpPn5noxXOsqaSeiignrcdmF8ym3mQE+dA9b68bPcccEdp+f1sW79q9/2rWDmgCKL9Wg08S+FR8145hb5bXdQ1eRSaG2T60nv/RQgk8UhdAwPqgpPTwN349ait1MGw4WvY4nEJZ3FfQD8js=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
  dkim=pass  header.i=collabora.com;
  spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
  dmarc=pass header.from=<dmitry.osipenko@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1771365096; 
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1771365084; 
  s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
  h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
- bh=ViKEV6K3E34y8YBULDM7wujUiITFIahQHAYDINTR4aQ=;
- b=SDffQMUEKey4pCA8J8el11BfKhuYtwh52S0AtIbWB9ksU4DSCcV+wQCZp7RcxD5A
- Fw2MkgNJbxctR1kWMQlGyTGVLAR5SXsB+PMkhov3Ef2/WnoM336JczaNwoY13v+Hf34
- SkK4ATYb/X00Ps6ZVUUzgxbh2cZNp1ByDLYf5/NM=
-Received: by mx.zohomail.com with SMTPS id 1771365094175186.40816534884448;
- Tue, 17 Feb 2026 13:51:34 -0800 (PST)
+ bh=26KDt+l8nTHjv9XZIrWP4uirI4EqmdpJAiWfCgmym7A=;
+ b=ThNp1EaQRO0rSw8Po7Ydaz/mdbQPI6sMtGmlM4cwZQ7ddgdRBPNeo47iTaTSKxtV
+ cxrzEUSdVK3n+nsqywSO8Ya6hsl/Ba82NJPwxoCkG4T8HlIFBYd22eslE1Kc1Vpro0x
+ wZnLsYIt/z+E33HklkEx2AH08pH/dEtjmt7Bvb8I=
+Received: by mx.zohomail.com with SMTPS id 1771365082616470.515655327892;
+ Tue, 17 Feb 2026 13:51:22 -0800 (PST)
 From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
  Huang Rui <ray.huang@amd.com>,
@@ -62,10 +62,10 @@ Cc: Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
  Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
  Chen Jiqian <Jiqian.Chen@amd.com>, Rob Clark <robdclark@gmail.com>,
  Robert Beckett <bob.beckett@collabora.com>
-Subject: [PATCH v18 03/19] ui/gtk: Don't disable scanout when display is
- refreshed
-Date: Wed, 18 Feb 2026 00:49:12 +0300
-Message-ID: <20260217214928.2970885-4-dmitry.osipenko@collabora.com>
+Subject: [PATCH v18 01/19] ui/sdl2: Restore original context after new context
+ creation
+Date: Wed, 18 Feb 2026 00:49:10 +0300
+Message-ID: <20260217214928.2970885-2-dmitry.osipenko@collabora.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260217214928.2970885-1-dmitry.osipenko@collabora.com>
 References: <20260217214928.2970885-1-dmitry.osipenko@collabora.com>
@@ -98,13 +98,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Display refreshment is invoked by a timer and it erroneously disables
-the active scanout if it happens to be invoked after scanout has been
-enabled. This offending scanout-disable race condition with a timer
-can be easily hit when Qemu runs with a disabled vsync by using SDL or
-GTK displays (with vblank_mode=0 for GTK). Refreshment of display's
-content shouldn't disable the active display. Fix it by keeping the
-scanout's state unchanged when display is redrawn.
+SDL API changes GL context to a newly created GL context, which differs
+from other GL providers that don't switch context. Change SDL backend to
+restore the original GL context. This allows Qemu's virtio-gpu to support
+new virglrenderer async-fencing feature for Virgl contexts, otherwise
+virglrenderer's vrend creates a fence-sync context on the Qemu's
+main-loop thread that erroneously stays in-use by the main-loop after
+creation, not allowing vrend's fence-sync thread switch to this new
+context that belongs to it.
 
 Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 Acked-by: Michael S. Tsirkin <mst@redhat.com>
@@ -113,34 +114,23 @@ Acked-by: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
 Reviewed-by: Yiwei Zhang <zzyiwei@gmail.com>
 Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 ---
- ui/gtk-egl.c     | 1 -
- ui/gtk-gl-area.c | 1 -
- 2 files changed, 2 deletions(-)
+ ui/sdl2-gl.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/ui/gtk-egl.c b/ui/gtk-egl.c
-index ae9239999cdb..0dbb429958e5 100644
---- a/ui/gtk-egl.c
-+++ b/ui/gtk-egl.c
-@@ -180,7 +180,6 @@ void gd_egl_refresh(DisplayChangeListener *dcl)
- 
-     if (vc->gfx.glupdates) {
-         vc->gfx.glupdates = 0;
--        gtk_egl_set_scanout_mode(vc, false);
-         gd_egl_draw(vc);
+diff --git a/ui/sdl2-gl.c b/ui/sdl2-gl.c
+index 3be17d1079af..ea2301305d3e 100644
+--- a/ui/sdl2-gl.c
++++ b/ui/sdl2-gl.c
+@@ -168,6 +168,9 @@ QEMUGLContext sdl2_gl_create_context(DisplayGLCtx *dgc,
+                             SDL_GL_CONTEXT_PROFILE_ES);
+         ctx = SDL_GL_CreateContext(scon->real_window);
      }
++
++    SDL_GL_MakeCurrent(scon->real_window, scon->winctx);
++
+     return (QEMUGLContext)ctx;
  }
-diff --git a/ui/gtk-gl-area.c b/ui/gtk-gl-area.c
-index cd86022d264a..c709b2ce0f63 100644
---- a/ui/gtk-gl-area.c
-+++ b/ui/gtk-gl-area.c
-@@ -199,7 +199,6 @@ void gd_gl_area_refresh(DisplayChangeListener *dcl)
  
-     if (vc->gfx.glupdates) {
-         vc->gfx.glupdates = 0;
--        gtk_gl_area_set_scanout_mode(vc, false);
-         gtk_gl_area_queue_render(GTK_GL_AREA(vc->gfx.drawing_area));
-     }
- }
 -- 
 2.52.0
 
