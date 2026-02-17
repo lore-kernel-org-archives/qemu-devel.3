@@ -4,161 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D419BE68167
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Feb 2026 10:19:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45B3BE68169
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Feb 2026 10:41:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vsIAu-0007AL-Vg; Tue, 17 Feb 2026 05:19:25 -0500
+	id 1vsIVx-0003Sn-9o; Tue, 17 Feb 2026 05:41:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vsIAr-00079w-8S
- for qemu-devel@nongnu.org; Tue, 17 Feb 2026 05:19:22 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <hbathini@linux.ibm.com>)
+ id 1vsIVu-0003SQ-Jl; Tue, 17 Feb 2026 05:41:06 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vsIAi-00052e-35
- for qemu-devel@nongnu.org; Tue, 17 Feb 2026 05:19:14 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771323550;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=VnhZh/vhboLIIvR3/lHkvx1u4O/uvAH6wx7FzI2BGfg=;
- b=AUaVpmk/C2laXYNKZzm46t+ho397fnCG4YRYfPi/ZTcH4mkpVlWBX1WBszDi5imj6ES1EO
- 1tVYkDRP2p703OFWxEjyBJOBBYILF2PYX0uvE9HEPDgX1/yNAyBY/CwslRrCZuKfVaWRtf
- J+FigjuZrcpHvcXTv/ZDJwmLoeR0HbE=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-91-oPpDTsZNND6arrV57r7RCQ-1; Tue, 17 Feb 2026 05:19:08 -0500
-X-MC-Unique: oPpDTsZNND6arrV57r7RCQ-1
-X-Mimecast-MFC-AGG-ID: oPpDTsZNND6arrV57r7RCQ_1771323547
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4837a71903aso17520595e9.1
- for <qemu-devel@nongnu.org>; Tue, 17 Feb 2026 02:19:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1771323547; x=1771928347; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :references:cc:to:from:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=VnhZh/vhboLIIvR3/lHkvx1u4O/uvAH6wx7FzI2BGfg=;
- b=tR4xb6pd8D50gLNxRF9tiyiW863eTuobjZJB+b8uCMe+1tdis+7175AH0LP6I0Trz2
- cioPlQ5OSdswgwv5YpAHGFZfPhM5DbE1chQaxQKgqTQvDPmPJ89lS5kWz3samZS8+JtQ
- Q5UI4BEk72G+ulaMzzOVxSW2oZAzgzNXFRHtNfwOfzG+rXPDqUsvqEUVxu6UZpSskLlI
- 8qoYLM2Nfp2eD23crRSO+eYkSpksi61AFBvQWESpAd3ynirEcUr26oHKYikmBIcvO8AN
- TAxoRfH+/NzKvE04OMwN+/vbIi2h/aXv2MlUTHqmwTFbpbEMTJpkXhY9hOhKkTmfw/B0
- L3dA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771323547; x=1771928347;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :references:cc:to:from:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=VnhZh/vhboLIIvR3/lHkvx1u4O/uvAH6wx7FzI2BGfg=;
- b=bffnYnvHL72SRVnDtQxJn7pkAOsnNAfURPvn7KKtrJW47Eyint9cDc6xATpxk5j0XU
- UEJrMFKsSpShc9ds8lAUcYxH1ALS/tTvR/s+N0ULj9sXSTbljBr/RvgorlCYKYFB9+Fe
- 5PJGrbfKfcNzV9SYRMz396eW8JIDUkurgx2u16AafcC0sAudoo7oL4WKQjtHg4/P2CVK
- 1iyc3EKfagKiCy17xZDMoQkfqj68k0WzSlFAdtxxb5zJn3Aen4m2XtiqTh3OI5OFXg57
- JMtfRhe2J05qyl9i2CbEXpeUnGXNv+OMSHbV9SYgNNcQm0PpSaPJNffuqP/YIk+3cO08
- 52tg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUYv2jrfj+UZZb+SRFp7xG/CfYDefrUxW/FmlzN/ALa65RqG4drMvEPnCXbfpv7h3VnyFHF15KXIIuw@nongnu.org
-X-Gm-Message-State: AOJu0YyhD2ARXKmHwQBReS9piKlTd6b9LUmOnspqhNGCQpmjJLzaRPp+
- mHlqKuS2uURc1Fk5DeH22UC+POZiypRNRJsJA5uUOweINJmSrlRG7Yi8CoepOTKIh0tNfK1wFHX
- /Fb/+ukoD0DdOvVkJ3jPyvfRmP0tIxJamUX5wSt8bpe0ygkS36pMS646v
-X-Gm-Gg: AZuq6aLq8DxEj87mJC1gnt8uhyYq6jQrClsmuw0Amp+FKkITyldwUg8TUrhEie+yezD
- bsDPCTQFL56K7mqxMJLiUmd2ybETNaoMhz4VUZaKHTO+u3GXRJ/7TGRH35EfV24wdwcqt/mnWoN
- +ScAuUwpDIAp1vs4kzGvnFMQSopDBf1vS5f1obHpb2EbaRmYdpT5c+EW+M+77U1eC+Deu8nH6wv
- fb6Kz/9/Oi0K2kJ7/9es04K8CtTUoJXealr96IlnHrOTn+1bQmnNYlliprJKD09JhQkac+Tb78v
- htG0dhxw62GW2Rlbq1VwDyIJIBbxjEHJPFUA3WPKbhcAkZQUbW1k8IbrBrOSxLIYWzb0xqdg+7x
- SEJVIk0a9kRL1exKmPgaIT1v8SIBpDEXRrzBSnXCR0RK5geXayxXWwY92aBFo
-X-Received: by 2002:a05:600c:1f92:b0:47d:25ac:3a94 with SMTP id
- 5b1f17b1804b1-48379bfd727mr180011865e9.17.1771323547129; 
- Tue, 17 Feb 2026 02:19:07 -0800 (PST)
-X-Received: by 2002:a05:600c:1f92:b0:47d:25ac:3a94 with SMTP id
- 5b1f17b1804b1-48379bfd727mr180011155e9.17.1771323546191; 
- Tue, 17 Feb 2026 02:19:06 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4836ff00332sm296646735e9.2.2026.02.17.02.19.05
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 17 Feb 2026 02:19:05 -0800 (PST)
-Message-ID: <7b68fe15-f8fb-4d72-9559-8b6b89bd7563@redhat.com>
-Date: Tue, 17 Feb 2026 11:19:04 +0100
+ (Exim 4.90_1) (envelope-from <hbathini@linux.ibm.com>)
+ id 1vsIVs-0001xh-CK; Tue, 17 Feb 2026 05:41:06 -0500
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 61GMjKBY2301761; Tue, 17 Feb 2026 10:41:01 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=KjL7ji
+ va1IxFVZt+ngKCGhFEJFXfi9is3Rj1ezq/0r0=; b=rWj0t+7V5dTeU6lMegWqOA
+ w6s5/DheyUZ0ciJN4HvDSi/vsmEvd/Dx17PoqmvhQpkaprdHHDnJUKyj0iEPS260
+ sSVzHyW2JC88at6qkD+/fjg53m/Z5TlFc/ndOq6qSOoHvplSSwxkOvFxFxwjLzB/
+ ZceshV8/Wmhr+kyH9eL0OAVmZ05GAG7T9wlm5seHGHbn4UIYrWaiXwzvSmwhOynk
+ fmZc+Tw12wSMuwZNFes6eBsk6HTUjOdztR18KcAFD5ulxNTIwli8r5+JuYIF9I87
+ LUDJJwdC+D/y5YAJCQ4LUpLSXQHB4fhr7RjbRrHMinKIDiO/6e9wBVvCklslsgoA
+ ==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4caj642q1x-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 17 Feb 2026 10:41:01 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 61H8pibn023889;
+ Tue, 17 Feb 2026 10:41:00 GMT
+Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4ccb452260-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 17 Feb 2026 10:41:00 +0000
+Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
+ [10.20.54.100])
+ by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 61HAevxL27918994
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 17 Feb 2026 10:40:57 GMT
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 00F202004B;
+ Tue, 17 Feb 2026 10:40:57 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id CD30020040;
+ Tue, 17 Feb 2026 10:40:55 +0000 (GMT)
+Received: from [9.78.106.17] (unknown [9.78.106.17])
+ by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 17 Feb 2026 10:40:55 +0000 (GMT)
+Message-ID: <017a0a00-60e9-42c6-974a-a66b111f5a83@linux.ibm.com>
+Date: Tue, 17 Feb 2026 16:10:54 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 02/16] tests/functional: Add SDK tests with Linux 5.15
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>
-Cc: Thomas Huth <thuth@redhat.com>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org, Kane Chen <kane_chen@aspeedtech.com>,
- 'Jamin Lin' <jamin_lin@aspeedtech.com>
-References: <20260212213955.2225662-1-clg@redhat.com>
- <20260212213955.2225662-3-clg@redhat.com>
- <CAFEAcA_oJgTc2SyRr11QTeTkmCPgvKiwngAaDiDNw5nUcTFA2w@mail.gmail.com>
- <CAFEAcA_9Np04vouA-m99xB8yU-JhduwxxLj_dTG0QM=AnDbHoQ@mail.gmail.com>
- <aZMwvfw4O5xeH-Gm@redhat.com>
- <98898cd4-de19-41b7-b519-541c48b462ea@redhat.com>
-Content-Language: en-US, fr
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <98898cd4-de19-41b7-b519-541c48b462ea@redhat.com>
+Subject: Re: [PATCH v2 2/9] hw/ppc: Implement S0 SBE interrupt as cpu_pause
+ then host reset
+To: Aditya Gupta <adityag@linux.ibm.com>
+Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
+ Sourabh Jain <sourabhjain@linux.ibm.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>
+References: <20251206055648.1908734-1-adityag@linux.ibm.com>
+ <20251206055648.1908734-3-adityag@linux.ibm.com>
+ <9b6db774-cba5-49f7-b0ec-d56232cbeb99@linux.ibm.com>
+ <aZQIJHZekWD-sWqI@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
+ <aZQ2qJhGhdKo-cGI@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
+Content-Language: en-US
+From: Hari Bathini <hbathini@linux.ibm.com>
+In-Reply-To: <aZQ2qJhGhdKo-cGI@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: Ecp4lFIUTFs0ODVzMNv_t6jUywf_KEM4
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjE3MDA4OCBTYWx0ZWRfX/oo+ZjARGlYH
+ 7Lr0uoZLdcjBDdXtarUV9U3WTHosp4pL3PSy1ZcKzmEJk2C2uAB4sujek36MjiSHLZlTuN+hEzT
+ /LtzwshDvOgV/LAmiFuSSWkEnu2MhXCZMu5VtdPaLQrYSugFJbjBegLcl+aMMYhYjzGyOkCQu4P
+ bsgpNKhepn4X0zhNIvy+6E7M2fno0sWPtDOMtQRh2m5QQGcYUgePGNFKxnyp0yYVZDAQ6FH3vSR
+ nsxOLxNg2AIkA2RBCv4yYAMrEeBjEfJcvzsfiQDQ/lce8f6a+n3Y23nKF4TUf0g0UA6Uqb5+/73
+ BGTB6Nire6+T3FoYgv0jsXbAU6WExhL8qdQ82vwSTEyQDeEFBaZ9110l1HWCukkgg8qy81QLtgL
+ yF6mwffHAvZvlP/c42y0bVy7IHA6ZCDLFpQFE1evreMnekCxGk69wP41cdJejvCZexJU6OC3fm6
+ NG32/7sGc1Dm0Fdkgdw==
+X-Proofpoint-GUID: Ecp4lFIUTFs0ODVzMNv_t6jUywf_KEM4
+X-Authority-Analysis: v=2.4 cv=U+mfzOru c=1 sm=1 tr=0 ts=699445bd cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=IkcTkHD0fZMA:10 a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22 a=P2EAv-b9zTbMH-od8MgA:9
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-02-17_01,2026-02-16_04,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 bulkscore=0 impostorscore=0 malwarescore=0 spamscore=0
+ adultscore=0 phishscore=0 lowpriorityscore=0 priorityscore=1501
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
+ definitions=main-2602170088
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=hbathini@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -174,75 +128,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello,
 
-+ Jamin,
 
-On 2/16/26 16:08, Cédric Le Goater wrote:
-> On 2/16/26 15:59, Daniel P. Berrangé wrote:
->> On Mon, Feb 16, 2026 at 11:17:38AM +0000, Peter Maydell wrote:
->>> On Mon, 16 Feb 2026 at 11:13, Peter Maydell <peter.maydell@linaro.org> wrote:
->>>>
->>>> On Thu, 12 Feb 2026 at 21:42, Cédric Le Goater <clg@redhat.com> wrote:
->>>>>
->>>>> Add functional tests for AST2500 and AST2600 machines using the
->>>>> OpenBMC SDK v11.00 with Linux kernel 5.15. These tests complement the
->>>>> existing SDK tests and verify that QEMU correctly boots older kernel
->>>>> versions on these platforms.
->>>>
->>>>
->>>>> +    ASSET_SDK_V1100_AST2600_515 = Asset(
->>>>> +        'https://github.com/AspeedTech-BMC/openbmc/releases/download/v11.00/ast2600-default-515-obmc.tar.gz',
->>>>> +        'ece1a934095378929780f03e7d092e562f4b33b2841b80ad7c3d12a85744c0f6')
->>>>
->>>> This asset file is over a gigabyte in size, it takes forever to
->>>> download, and our functional test asset download framework has
->>>> no mechanism for giving any kind of progress indication for
->>>> downloads (or even for telling you the URL it is downloading
->>>> until after the download is complete).
->>>>
->>>> Can we have a size limit for test assets please, at least until
->>>> the framework can support large assets a bit better ?
+On 17/02/26 3:07 pm, Aditya Gupta wrote:
+> On 26/02/17 11:48AM, Aditya Gupta wrote:
+>> On 26/01/19 01:11PM, Hari Bathini wrote:
 >>>
->>> Followup: we have six test assets that are over 500MB in size,
->>> and they are all aspeed tests. Please can you have a look at
->>> slimming these down?
+>>>
+>>> On 06/12/25 11:26 am, Aditya Gupta wrote:
+>>>> During MPIPL (aka fadump), OPAL triggers the S0 SBE interrupt to trigger
+>>>> MPIPL.
+>>>
+>>> As mentioned in cover letter, add more clarity by mentioning that
+>>> kernel initiates fadump with OPAL call. Skiboot then triggers S0
+>>> SBE interrupt...
 >>
->> I see 2 big assets from aspeed only
->>
->>    64d8926a7d01b649168be96c986603b5690f06391286c438a3a772c8c7039e93
->>    ece1a934095378929780f03e7d092e562f4b33b2841b80ad7c3d12a85744c0f6
->>
->>
->> what are the names of the other files in $HOME/.cache/qemu/download
->> you have that are over 500 MB ?
->>
->> With regards,
->> Daniel
+>> Will add here also. Thanks Hari !
 > 
-> These are the files :
+> Does this look okay Hari ?
 > 
-> 5732255d4617d98b76bbbc116d331d6ac89906fa212969eb8213fdc4aea86451  166M  ast2500-default-515-obmc.tar.gz
-> 2768e2526bdd3f928df31341801cb6de3b9a40ca942b538a3d0800cd26fbdbfe  166M  ast2500-default-obmc.tar.gz
-> ece1a934095378929780f03e7d092e562f4b33b2841b80ad7c3d12a85744c0f6  1.1G  ast2600-default-515-obmc.tar.gz
-> 64d8926a7d01b649168be96c986603b5690f06391286c438a3a772c8c7039e93  1.2G  ast2600-default-obmc.tar.gz
-> 4f8778be176ece1b57d33c4aee13bb989be114c3e4703150eaeb6f996bd5587f  582M  ast2700-a1-dcscm-obmc.tar.gz
-> d5ceed511cd0dfefbb102fff2d731159e0472948a28066dc0d90bcd54be76525  520M  ast2700-a1-obmc.tar.gz
-> 0e93f7976139da71fab9df7952a58bdd80650e23e7abf5853b0eb6695deb02d0  581M  ast2700-dcscm-obmc.tar.gz
-> e2b8f043fe8063dd3b6ded93422e38bd41914dc9c3202199507652df024de4dc  519M  ast2700-default-obmc.tar.gz
+>      During MPIPL (aka fadump), after a kernel crash, the kernel does
+>      opal_cec_reboot2 opal call, signifying an abnormal termination.
+>      When OPAL recieves this opal call, it further triggers SBE S0 interrupt,
+>      to trigger a MPIPL boot.
+> 
+>      Currently S0 interrupt is unimplemented in QEMU.
+> 
 
-The image size for v09.08 was around 250 MB for the ast2500,
-ast2600 and ast2700 SoCs. It would be best to keep it like
-this for testing.
+Yeah. That offers better insight.
 
-Would it be possible in v12.00 ?
-
-Thanks,
-
-C.
-
-
-
-
-
+- Hari
 
