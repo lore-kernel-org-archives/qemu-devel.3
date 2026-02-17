@@ -4,95 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B78D3E8385B
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Feb 2026 07:01:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C044E63F2B
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Feb 2026 07:10:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vsF4u-0003T2-V0; Tue, 17 Feb 2026 02:01:01 -0500
+	id 1vsFDe-00052t-UD; Tue, 17 Feb 2026 02:10:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
- id 1vsF4q-0003Sh-6t
- for qemu-devel@nongnu.org; Tue, 17 Feb 2026 02:00:56 -0500
-Received: from smtp-relay-services-1.canonical.com ([185.125.188.251])
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1vsFDd-000524-El; Tue, 17 Feb 2026 02:10:01 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
- id 1vsF4h-0001Hj-0M
- for qemu-devel@nongnu.org; Tue, 17 Feb 2026 02:00:54 -0500
-Received: from scripts.lp.internal (scripts.lp.internal [10.131.215.246])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-relay-services-1.canonical.com (Postfix) with ESMTPSA id 447133FC3B
- for <qemu-devel@nongnu.org>; Tue, 17 Feb 2026 07:00:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=launchpad.net;
- s=20210803; t=1771311641;
- bh=u8tpw8kMrsYVfBg7s+04NzX4BEf+sFjGO5xobvVkPQI=;
- h=MIME-Version:Content-Type:Date:From:To:Reply-To:References:
- Message-Id:Subject;
- b=bML1/Kw75ZM5mgDqvoyQPkZFqQj+/6oF7u4nmOv1RJ+eydXpFs5thkkkaJANOtIO9
- tAkN5mp+Ur67bLVDpXc4LCdI24zOmVNh3FiMZw83MQOuZfFZIIf3pxqs1+d8iCJMJD
- /zxcOYgKe1zxYsWEiHsUc0HJGTQizNByDploTFwddLNu5YuFJawoPs+JSj4z5oGUsR
- ScxXoRDfuNp55E+5kzjjx1kkJxD2hkwupvLWJD0+C/VuZxbG3bGI3H/HJU32UTuHTi
- LvkFrRF9mi2YCIqLuIrj5pLL8tGJIxWqKSdzbONEAuNzjtssSwch9CLh1rC6M/L98X
- JTp2F78V1j8zw==
-Received: from scripts.lp.internal (localhost [127.0.0.1])
- by scripts.lp.internal (Postfix) with ESMTP id 2FEAC7FB7C
- for <qemu-devel@nongnu.org>; Tue, 17 Feb 2026 07:00:41 +0000 (UTC)
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1vsFDb-0003QK-Tc; Tue, 17 Feb 2026 02:10:01 -0500
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 61GFx8sE1915831; Tue, 17 Feb 2026 07:09:58 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-type:date:from:in-reply-to:message-id:mime-version
+ :references:subject:to; s=pp1; bh=nxPGF3bHEjINJKr2VvHy+C+xUgOxXY
+ cvrw38vtH0/OU=; b=XgRkOcYXZ/2lX/AHhBm5Y0iQp3hNrIn8L8aTB+ElWlHFNf
+ 7UoXEhKsVMXJm42TxLCREaVD2W0CsbeSboiWT69EC4vrRC16hnRSklzD+3a1Bvpm
+ Avn67Y0Krpv7p9334VEblWAwangJjoGxObD9z+0SfmlTe3PHbwdwIgeFRufQ0lUQ
+ qoDLiLEbzVcSII1JVToa42hk1E0QiKxoHWfONoNi+CEDZUVgWxgiPwjxJnab/e24
+ Ez38pAoRNHBGAz0qsC0RKhaa53B36lLrwYYnWRrL9VDZ3T8xbtnNkceXNcZU1yae
+ CQ8xvkCDmfIlbCXKBMiEN/APboydxIFTtvIwDBgg==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4caj6ujus0-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 17 Feb 2026 07:09:57 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 61H3AHvZ023889;
+ Tue, 17 Feb 2026 07:09:56 GMT
+Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4ccb451f4r-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 17 Feb 2026 07:09:56 +0000
+Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
+ [10.20.54.102])
+ by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 61H79rPQ55443776
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 17 Feb 2026 07:09:53 GMT
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 0A38020043;
+ Tue, 17 Feb 2026 07:09:53 +0000 (GMT)
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 91EFB20040;
+ Tue, 17 Feb 2026 07:09:51 +0000 (GMT)
+Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com (unknown
+ [9.109.199.210])
+ by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+ Tue, 17 Feb 2026 07:09:51 +0000 (GMT)
+Date: Tue, 17 Feb 2026 12:39:49 +0530
+From: Aditya Gupta <adityag@linux.ibm.com>
+To: Hari Bathini <hbathini@linux.ibm.com>
+Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
+ Sourabh Jain <sourabhjain@linux.ibm.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>
+Subject: Re: [PATCH v2 4/9] pnv/mpipl: Preserve memory regions as per
+ MDST/MDDT tables
+Message-ID: <aZQIZyGyV_rXeSxb@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
+References: <20251206055648.1908734-1-adityag@linux.ibm.com>
+ <20251206055648.1908734-5-adityag@linux.ibm.com>
+ <eb079c05-2ff9-4dde-a82d-31d3f37951d8@linux.ibm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-Date: Tue, 17 Feb 2026 06:50:35 -0000
-From: Michael Tokarev <2133804@bugs.launchpad.net>
-To: qemu-devel@nongnu.org
-X-Launchpad-Notification-Type: bug
-X-Launchpad-Bug: product=qemu; status=Fix Released; importance=Unknown;
- assignee=None; 
-X-Launchpad-Bug: distribution=ubuntu; sourcepackage=qemu; component=main;
- milestone=ubuntu-26.04; status=In Progress; importance=High;
- assignee=hector.cao@canonical.com; 
-X-Launchpad-Bug: distribution=ubuntu; distroseries=jammy; sourcepackage=qemu;
- component=main; status=Confirmed; importance=Low; assignee=None; 
-X-Launchpad-Bug: distribution=ubuntu; distroseries=noble; sourcepackage=qemu;
- component=main; milestone=ubuntu-24.04.4; status=Confirmed; importance=High;
- assignee=None; 
-X-Launchpad-Bug: distribution=ubuntu; distroseries=plucky; sourcepackage=qemu;
- component=main; status=Won't Fix; importance=Medium; assignee=None; 
-X-Launchpad-Bug: distribution=ubuntu; distroseries=questing; sourcepackage=qemu;
- component=main; status=Confirmed; importance=Medium; assignee=None; 
-X-Launchpad-Bug: distribution=ubuntu; distroseries=resolute; sourcepackage=qemu;
- component=main; milestone=ubuntu-26.04; status=In Progress; importance=High;
- assignee=hector.cao@canonical.com; 
-X-Launchpad-Bug-Tags: server-todo
-X-Launchpad-Bug-Information-Type: Public
-X-Launchpad-Bug-Private: no
-X-Launchpad-Bug-Security-Vulnerability: no
-X-Launchpad-Bug-Commenters: hectorcao mjt+launchpad-tls paelzer utkarsh xypron
-X-Launchpad-Bug-Reporter: Heinrich Schuchardt (xypron)
-X-Launchpad-Bug-Modifier: Michael Tokarev (mjt+launchpad-tls)
-References: <176477927666.3767208.4954653462090539439.malonedeb@juju-98d295-prod-launchpad-3>
-Message-Id: <177131103564.2223205.11181479976162422423.malone@juju-98d295-prod-launchpad-4>
-Subject: [Bug 2133804] Re: QEMU does not emulate IOCTL TCGETS2
-X-Launchpad-Message-Rationale: Subscriber (QEMU) @qemu-devel-ml
-X-Launchpad-Message-For: qemu-devel-ml
-Precedence: bulk
-X-Generated-By: Launchpad (canonical.com);
- Revision="357f4dbcf6d55b96276140b48d9caf6c75ab8067";
- Instance="launchpad-scripts"
-X-Launchpad-Hash: 2e55340973cc22e3b6491ae3effe5af560449685
-Received-SPF: pass client-ip=185.125.188.251;
- envelope-from=noreply@launchpad.net; helo=smtp-relay-services-1.canonical.com
-X-Spam_score_int: -42
-X-Spam_score: -4.3
-X-Spam_bar: ----
-X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <eb079c05-2ff9-4dde-a82d-31d3f37951d8@linux.ibm.com>
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=E+/AZKdl c=1 sm=1 tr=0 ts=69941445 cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=kj9zAlcOel0A:10 a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22 a=jf3XgTADd5hNh77I6RYA:9
+ a=CjuIK1q_8ugA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjE3MDA1OCBTYWx0ZWRfXwnp7hBz8QBUq
+ wpnbDwr11yfNiwzORe1jvZ2s1TKGuVVO1gP2qNls9hHL6kqQXQFICxlv8TY24lKC0RDo2EvhtUD
+ 4BbtwhDBO5MDzLrLNghA2S9Fgd/z/rGyjA9lAXj2VfAi3SpOkQ7l4ikgW5bcGqzcTzqJ4QWq4cd
+ Ksy12rA95/Akk5ocdxV0p4zqio0+PpR7CaZRM5qDi/RIHQfEGcygxWLRMuGeq2jQFtuGblhARLp
+ acXIzHqAR36Rn8WsHZ1420G6jJexVXpyMKvLyCn8j+OuRonRPqNBSw3f9Nzbk8nuodWWeVl6J9m
+ MRKyiO+qcpZA6yiGQTeHF/5bUcaaKdnbL/7NuTkL2HBHcrNpAOysjbDU+6reaH/9suX2q4tZepw
+ H8Cwhqr1UL4QG54ZfW1YiEWqZGJNjHwxKB1U7cnjDJG2NJB8n2K9LdURX3zEdVCL8y/CWxfg2Kr
+ O9GipPN9w9Yp4cpc7Dw==
+X-Proofpoint-ORIG-GUID: xIWu87mPS8cwmmgmcpU6NKhgxy6LOIth
+X-Proofpoint-GUID: xIWu87mPS8cwmmgmcpU6NKhgxy6LOIth
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-02-17_01,2026-02-16_04,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 priorityscore=1501 malwarescore=0 phishscore=0 bulkscore=0
+ suspectscore=0 spamscore=0 clxscore=1015 impostorscore=0 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2601150000 definitions=main-2602170058
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=adityag@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
+Precedence: list
 List-Id: qemu development <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -101,91 +120,45 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Bug 2133804 <2133804@bugs.launchpad.net>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-FWIW, for the upstream stable qemu series, the forkflow is as follows.
+On 26/01/19 01:15PM, Hari Bathini wrote:
+> 
+> 
+> On 06/12/25 11:26 am, Aditya Gupta wrote:
+> > <...snip...>
+> >
+> > Though HDAT section "15.3.1.3 Memory Dump Results Table (MDRT)" says:
+> >      The Memory Dump Results Table is a list of the memory ranges that
+> >      have been included in the dump
+> > 
+> > Based on above statement, it looks like MDRT should include only those
+> > regions which are successfully captured in the dump, hence, regions
+> > which qemu fails to dump, just get skipped, and will not have a
+> > corresponding entry in MDRT
+> 
+> Yeah. No error status is looked for by kernel. It tries to export
+> /proc/vmcore with how much ever firmware succeeds in preserving..
 
-First, stable-N.M branches are only updated when a next stable release
-is made (in this case, v10.2.1) - at the same time, I push a tag and we
-publish new tarballs on download.qemu.org, and I send announces.
-stable-N.M branches are static, only receiving new commits, once a
-commit is there, it's cast in stone.
+Thanks for confirming. We are handling it correct way in qemu then.
 
-Before a stable release, it is staging-N.M branch, - which is a volatile
-branch, which can be overridden, reordered, etc, as the work progresses.
+> 
+> > <...snip...>
+> >
+> > +        src_addr  = be64_to_cpu(mdst[i].addr) & ~HRMOR_BIT;
+> > +        dest_addr = be64_to_cpu(mddt[i].addr) & ~HRMOR_BIT;
+> 
+> > +        src_len   = be32_to_cpu(mddt[i].size);
+> 
+> data_len sounds more appropriate instead of src_len here, especially
+> as we are using mddt length..
 
-And even before staging-N.M, I usually push to my repository on gitlab
-first, https://gitlab.com/mjt0k/qemu - this is because there, I can
-avoid thinking about gitlab CI credits, clashing CI pipelines with the
-staging/master branches, etc.
+Makes sense, Will do it.
 
-So, expecting stuff to show up on stable-N.M branches isn't wise before
-the next stable release.
+Thanks,
+- Aditya G
 
-HTH
-
---=20
-You received this bug notification because you are a member of qemu-
-devel-ml, which is subscribed to QEMU.
-https://bugs.launchpad.net/bugs/2133804
-
-Title:
-  QEMU does not emulate IOCTL TCGETS2
-
-Status in QEMU:
-  Fix Released
-Status in qemu package in Ubuntu:
-  In Progress
-Status in qemu source package in Jammy:
-  Confirmed
-Status in qemu source package in Noble:
-  Confirmed
-Status in qemu source package in Plucky:
-  Won't Fix
-Status in qemu source package in Questing:
-  Confirmed
-Status in qemu source package in Resolute:
-  In Progress
-
-Bug description:
-  In Ubuntu 25.10 we moved to glibc 2.42. Here glibc has changed the
-  implementation of isatty(). It now uses IOCTL TCGETS2 instead of
-  TCGETS. TCGETS2 is not emulated by static QEMU (qemu-riscv64, qemu-
-  arm64, ...).
-
-  This leads to failures in containers for foreign architectures. E.g. no c=
-onsole prompt is displayed.=20
-  A detailed analysis is contained in LP #2133188.
-
-  A proper implementation of the missing IOCTLs will include:
-
-  Functions:
-
-  in linux-user/syscall.c:
-  host_to_target_termios2()
-  target_to_host_termios2()
-  print_termios2()
-
-  Definitions:
-
-  in linux-user/syscall.c
-  #define termios2 host_termios2
-
-  in linux-user/syscall_types.h
-  STRUCT_SPECIAL(termios2)
-
-  in linux-user/ioctls.h:
-  IOCTL(TCGETS2, IOC_R, MK_PTR(MK_STRUCT(STRUCT_termios2)))
-  IOCTL(TCSETS2, IOC_W, MK_PTR(MK_STRUCT(STRUCT_termios2)))
-  IOCTL(TCSETSF2, IOC_W, MK_PTR(MK_STRUCT(STRUCT_termios2)))
-  IOCTL(TCSETSW2, IOC_W, MK_PTR(MK_STRUCT(STRUCT_termios2)))
-
-  in linux-user/user-internals.h:
-  void print_termios2(void *arg);
-
-To manage notifications about this bug go to:
-https://bugs.launchpad.net/qemu/+bug/2133804/+subscriptions
-
+> 
+> - Hari
 
