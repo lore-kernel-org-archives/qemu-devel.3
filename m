@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B39DE9A03E
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Feb 2026 21:51:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3BA5E9A03E
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Feb 2026 21:51:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vsSyp-0007qb-Rw; Tue, 17 Feb 2026 16:51:39 -0500
+	id 1vsSyx-00081D-Nr; Tue, 17 Feb 2026 16:51:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1vsSyn-0007p3-L3
- for qemu-devel@nongnu.org; Tue, 17 Feb 2026 16:51:37 -0500
+ id 1vsSyv-0007zY-GA
+ for qemu-devel@nongnu.org; Tue, 17 Feb 2026 16:51:45 -0500
 Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1vsSyl-0001II-GD
- for qemu-devel@nongnu.org; Tue, 17 Feb 2026 16:51:37 -0500
-ARC-Seal: i=1; a=rsa-sha256; t=1771365078; cv=none; 
+ id 1vsSyu-0001KZ-34
+ for qemu-devel@nongnu.org; Tue, 17 Feb 2026 16:51:45 -0500
+ARC-Seal: i=1; a=rsa-sha256; t=1771365090; cv=none; 
  d=zohomail.com; s=zohoarc; 
- b=LQYhelxr+ntpyxhObSQtRoyNIivgPsIiLlrjLFhr4NgdYBT6JCsaIJVtJLx5HkjrWif3jjjpFXDVLzddK/vJ5mvfktJ6as0SSrPkMyOeHWCtF29n9bB+2O2Q1E1aWtD5I9TSV3n3eO8B9ePDaYYv3s+heKP/8FszZjvuFT3ZZKw=
+ b=nxCq++OSoJbsJaWTjVAwmS+qQqmOWOQLap5QFfru5Y+DnPfbuCeGj9pDAcqjeYLto0bj2GEGnCqsEHtRHL63WiSAiIGLsbTLVscigEMGHcnJo8xZHwqf5KNvJ/H5kEjV7eAxprksZ8X5Gwak8FUDYiNnmr65lKhavSod79MOW4I=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1771365078;
- h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=NVhQW4VRPSkR8LqKtjEJ7hG8cWhctnNeUuTyUKD9HhI=; 
- b=VvMxN9DsUk6mc47r5CAhnGIMFZBWIX97Ai0tuf2kUgNsifdMyyMC09UGffe6jkPzngaqX+KiNGynfomnkShPZJ29VeZcn/btkO7NxRgPPJd9iIfcYAL8JS6S2mjzOMi1D2CMROSzmd5c1/wgtZhkjzU+gJymAe/4rqMzk42Iq+Q=
+ s=zohoarc; t=1771365090;
+ h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
+ bh=a4Z0PO9JY3U765LZd2ErcQUOa3Sm74gRbcnJ4jJWrbk=; 
+ b=kAGIU9brBiUXSIN72gOWVNmCKlHiuO6gHBMY7E7oAnVZbt/uCusUoTzQedDQTaPJ1PmvYuX1FXqbXiEfW02ECtP002EkrfR238BhJzOTv6YuEEFLhxOV4XbG9tfVFsC0XxqpKWf09q/Ar0m4d7N5xa0nwpVGYHTF/HxprQVnMgA=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
  dkim=pass  header.i=collabora.com;
  spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
  dmarc=pass header.from=<dmitry.osipenko@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1771365078; 
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1771365090; 
  s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
- h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
- bh=NVhQW4VRPSkR8LqKtjEJ7hG8cWhctnNeUuTyUKD9HhI=;
- b=Xb+U2lnp5J+RWtVYN8qh39jpipYIS9ysrXnf+XafTrQOQpih3UFBQUrF+T4guHtM
- iMeLJj0ocnRrPh+zTepcZ7AGhZlmLc+iCOVgbea/webcm7Gv6XxW8btf4vIql3u441A
- 6GANPzVw0pv9XNK6o/K2qOG6lm0IeCXrvZSB8aKo=
-Received: by mx.zohomail.com with SMTPS id 1771365076716762.7162524544602;
- Tue, 17 Feb 2026 13:51:16 -0800 (PST)
+ h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+ bh=a4Z0PO9JY3U765LZd2ErcQUOa3Sm74gRbcnJ4jJWrbk=;
+ b=aYXsllga28TlIFubR+WC1lJtOcMNzRYpnqEV3EUQ7kYylVT1vnm/m2W2vGfgtIaL
+ 9DqiHdC44lYwdbZVjmZnYpi4zWPyaPA0EEIuWwq4liHMvrGh03H47cOyosbhKxoxng1
+ DrDJy1SHLncYu5REAkd6AVMQ6BAl5cY9iKxjnurA=
+Received: by mx.zohomail.com with SMTPS id 1771365088324944.8750480876251;
+ Tue, 17 Feb 2026 13:51:28 -0800 (PST)
 From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
  Huang Rui <ray.huang@amd.com>,
@@ -62,11 +62,13 @@ Cc: Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
  Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
  Chen Jiqian <Jiqian.Chen@amd.com>, Rob Clark <robdclark@gmail.com>,
  Robert Beckett <bob.beckett@collabora.com>
-Subject: [PATCH v18 00/19] Support virtio-gpu DRM native context and MAP_FIXED
- API
-Date: Wed, 18 Feb 2026 00:49:09 +0300
-Message-ID: <20260217214928.2970885-1-dmitry.osipenko@collabora.com>
+Subject: [PATCH v18 02/19] ui/sdl2: Don't disable scanout when display is
+ refreshed
+Date: Wed, 18 Feb 2026 00:49:11 +0300
+Message-ID: <20260217214928.2970885-3-dmitry.osipenko@collabora.com>
 X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20260217214928.2970885-1-dmitry.osipenko@collabora.com>
+References: <20260217214928.2970885-1-dmitry.osipenko@collabora.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -96,82 +98,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello,
+Display refreshment is invoked by a timer and it erroneously disables
+the active scanout if it happens to be invoked after scanout has been
+enabled. This offending scanout-disable race condition with a timer
+can be easily hit when Qemu runs with a disabled vsync by using SDL or
+GTK displays (with vblank_mode=0 for GTK). Refreshment of display's
+content shouldn't disable the active display. Fix it by keeping the
+scanout's state unchanged when display is redrawn.
 
-This is follow up to DRM native context v16 [1] and MAP_FIXED API v10 [2]
-virtio-gpu patches that has been reviwed previously and were waiting for a
-new release of libvirglrenderer 1.3.0.
+Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Tested-by: Alex Bennée <alex.bennee@linaro.org>
+Acked-by: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
+Reviewed-by: Yiwei Zhang <zzyiwei@gmail.com>
+Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+---
+ ui/sdl2-gl.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-[1] https://lore.kernel.org/qemu-devel/20251116125641.2255794-1-dmitry.osipenko@collabora.com/
-[2] https://lore.kernel.org/qemu-devel/20260118162856.223796-1-dmitry.osipenko@collabora.com/
-
-Based-on: 20260214-region-v1-1-229f00ae1f38@rsg.ci.i.u-tokyo.ac.jp
-
-Changelog:
-
-v18:- Changed dpy_gl_ctx_make_current() to use first scanout when unsetting
-      virgl's GL ctx0 and improved naming of cmd-processing function.
-      Suggested by Akihiko Odaki.
-
-    - Added "ui/gdk: Unset context after GL operations" patch after
-      realizing GDK/GL code needed more gdk_gl_context_clear_current().
-
-v17:- Rebased patches on recent upstream, updated doc patches with new
-      drm native contexts supported by libvirglrenderer.
-
-    - Applied minor change that was requested from Akihiko Odaki
-      by moving virtio_gpu_device_realize() for MAP_FIXED v10.
-
-    - Added virtio_gpu_virgl_update_render_state() to virtio_gpu_fence_poll()
-      that was missed in MAP_FIXED v10.
-
-    - Added new patches fixing another GL context switching problem I ran
-      into recently with virgl commands unexpectedly processed from CPU
-      thread instead main-loop:
-
-        ui/sdl2: Unset context after GL operations
-        ui/gtk-egl: Unset context after GL operations
-        virtio-gpu: Unset context after GL operations
-
-Alex Bennée (1):
-  docs/system: virtio-gpu: Document host/guest requirements
-
-Dmitry Osipenko (17):
-  ui/sdl2: Restore original context after new context creation
-  ui/sdl2: Don't disable scanout when display is refreshed
-  ui/gtk: Don't disable scanout when display is refreshed
-  ui/sdl2: Unset context after GL operations
-  ui/gtk-egl: Unset context after GL operations
-  ui/gdk: Unset context after GL operations
-  virtio-gpu: Unset context after GL operations
-  virtio-gpu: Handle virgl fence creation errors
-  virtio-gpu: Support asynchronous fencing
-  virtio-gpu: Support DRM native context
-  docs/system: virtio-gpu: Add link to Mesa VirGL doc
-  docs/system: virtio-gpu: Update Venus link
-  virtio-gpu: Remove superfluous memory_region_set_enabled()
-  virtio-gpu: Validate hostmem mapping offset
-  virtio-gpu: Replace finish_unmapping with mapping_state
-  virtio-gpu: Destroy virgl resources on virtio-gpu reset
-  virtio-gpu: Support mapping hostmem blobs with map_fixed
-
-Pierre-Eric Pelloux-Prayer (1):
-  ui/sdl2: Implement dpy dmabuf functions
-
- docs/system/devices/virtio/virtio-gpu.rst | 121 +++++-
- hw/display/trace-events                   |   2 +-
- hw/display/virtio-gpu-gl.c                |  62 +++-
- hw/display/virtio-gpu-virgl.c             | 424 ++++++++++++++++++++--
- hw/display/virtio-gpu.c                   |  15 +
- include/hw/virtio/virtio-gpu.h            |  23 +-
- include/ui/sdl2.h                         |   7 +
- meson.build                               |   8 +-
- ui/gtk-egl.c                              |  17 +-
- ui/gtk-gl-area.c                          |  18 +-
- ui/sdl2-gl.c                              |  77 +++-
- ui/sdl2.c                                 |  42 +++
- 12 files changed, 744 insertions(+), 72 deletions(-)
-
+diff --git a/ui/sdl2-gl.c b/ui/sdl2-gl.c
+index ea2301305d3e..55e22a7a3d59 100644
+--- a/ui/sdl2-gl.c
++++ b/ui/sdl2-gl.c
+@@ -51,7 +51,6 @@ static void sdl2_gl_render_surface(struct sdl2_console *scon)
+     int ww, wh;
+ 
+     SDL_GL_MakeCurrent(scon->real_window, scon->winctx);
+-    sdl2_set_scanout_mode(scon, false);
+ 
+     SDL_GetWindowSize(scon->real_window, &ww, &wh);
+     surface_gl_setup_viewport(scon->gls, scon->surface, ww, wh);
 -- 
 2.52.0
 
