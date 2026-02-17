@@ -4,90 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3168AE68158
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Feb 2026 09:53:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 230F8E68158
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Feb 2026 09:55:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vsHkW-0002mW-Cv; Tue, 17 Feb 2026 04:52:08 -0500
+	id 1vsHni-0006B6-TG; Tue, 17 Feb 2026 04:55:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vsHkJ-0002Tb-Sb
- for qemu-devel@nongnu.org; Tue, 17 Feb 2026 04:51:59 -0500
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vsHkF-00065b-IN
- for qemu-devel@nongnu.org; Tue, 17 Feb 2026 04:51:53 -0500
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-2aad1bb5058so41040205ad.0
- for <qemu-devel@nongnu.org>; Tue, 17 Feb 2026 01:51:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771321879; x=1771926679; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=KONI0odzEjpnPZwDGvH1YlLeEVQ/Hz1dcJSr9A9Azdc=;
- b=QXAKPlqxYDX74hIN8KP3z2yb8c7mY+hq6k5XVc89SfgmJdWIPY6/UcToKr6PtcqxWv
- AVgOnirOOrgl5wBRxDMLdBCst0zyBDAIxLmKFi6RT6YimRenyV4sV8Q3/X165moLXQ0T
- i49NOgZ6c55oOt9HdgwoWQfUdcx7JWU5nL6esU1LW2qB+/SN/S3PVr7drQetCMWQS8up
- RuKqqIbc/KJBvlAiDipL43XMALqVDXvLekdLrp/+YmHVFkHQQXGTEK5gdJIEwPzEXpFn
- CFLidU2vwB6jYL/jUkxKL3DZHPOqzmsUwiUxBNXdYuLizGEEwFDzndU8AbJJkvELO60y
- /05w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771321879; x=1771926679;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=KONI0odzEjpnPZwDGvH1YlLeEVQ/Hz1dcJSr9A9Azdc=;
- b=tlcEpn0sE4pkFulJELJPFMzWbxZf7+tVY+Y/7/+kTdFzJrRsOQVOkyrTY3dr/aRGxn
- gD+UaeFRG8P0z0Kle3ksns6ZG/mAK+SFwTKihInIp1+3aaN5rcHX7TWcjdJcpL2X1GWP
- /PICeV+YDjLXw2lquad9KCEg4Zv+VcT1XPYK2PG+haIy1wu2LCkVVQLweh/0KyrwuEmz
- 1QoHsFr3Cmwtdj8QPcI/8PE6cAKW9vq5M6BeIoCOOJv6dPN+q7EF0VZbIaSlwXMZ+c1w
- 6JQ+sOm6bnrh7SHWLhKRj3SKqz5oXAr1ZzkLPndouZbZHX3ujXzlvxuYdpp+nKrs5GC9
- TD7w==
-X-Gm-Message-State: AOJu0YzZr501EX4GqKCHok8g8Hl4z2fiIU2pMbJIjXNHtrmlpHtzusX3
- qlxNeCdEKMNEbaBeHxVaxQBQSPTy6QQ2iYt/XsC6v/wm1dmcyZf/xRHl28kCA+4t7Y0HuoUpfv9
- 73jO5+ik=
-X-Gm-Gg: AZuq6aLVu7l2EsctO9tPbqd16C3+MLt00RVvT3YsH3cAMbCPhGfd4r50w+OJf571PyH
- dsWpWt5AjCFJ9RsdQ/2qYiJWz/PRxuMRF4gbOD2/rV8uAchAedeYEREQJNXFXGkBW1EMUv69mQB
- JjOL129l2ajgyVuf4N5WP5TSJ8YV7mSB6HECPujdxwGOAz7lmrWtkl0n9KV1cLgmxQYhcYfQYSI
- uAKjGMAs7IziRgJ423VTxC7h9Rngx0o8jK/IfIk5GsOJV9IXtkTFgql0acxI3PUs8vITrG+K293
- 3hdRr8BVEDTip42WmsDEKc1UKfagDKFSUY5UzEZHzUk7Ad3BudX/kTRWfHEWl5xfirfwJKDJi+B
- t2yzdZDxrL9e3DOUCke7UzozFoHJ62L9XfMHKAxvK4xrrCaHUKywTU3ZKLTo+gFF/IY2MfDh90R
- 4qdAjaFOtJiiy44PbTGItIyc54PIoFJQUy+o+iQLrFPQ/dOOFR0lmaavqgAHSqmj33gG5OLyj9E
- mAKW4zwU+px/5dQhr4E3JyPEk5Avj+nqnj6QQw=
-X-Received: by 2002:a17:902:d4ce:b0:2aa:ecec:a442 with SMTP id
- d9443c01a7336-2ab505b7ccbmr149742125ad.40.1771321879451; 
- Tue, 17 Feb 2026 01:51:19 -0800 (PST)
-Received: from localhost.localdomain
- (2403-580b-742d-0-10a2-dce1-aa4a-dd32.ip6.aussiebb.net.
- [2403:580b:742d:0:10a2:dce1:aa4a:dd32])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2ad1a6fa33esm99108675ad.13.2026.02.17.01.51.17
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 17 Feb 2026 01:51:19 -0800 (PST)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: philmd@linaro.org
-Subject: [PATCH v2 3/7] target-info: Move TARGET_PAGE_BITS sanity check
-Date: Tue, 17 Feb 2026 19:51:02 +1000
-Message-ID: <20260217095106.598486-4-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260217095106.598486-1-richard.henderson@linaro.org>
-References: <20260217095106.598486-1-richard.henderson@linaro.org>
+ (Exim 4.90_1) (envelope-from <pkrempa@redhat.com>)
+ id 1vsHnh-00069P-0J
+ for qemu-devel@nongnu.org; Tue, 17 Feb 2026 04:55:25 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pkrempa@redhat.com>)
+ id 1vsHne-0000nw-VK
+ for qemu-devel@nongnu.org; Tue, 17 Feb 2026 04:55:24 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1771322121;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=5e0wSzLvMMSKsnTKlgNh2OH56IjGtiZR5DVzAEfqZIM=;
+ b=fPjWlt636A6rPx9yN6iQHE9qJ9j4unPA6849v17FGngLqhhKoxk5to36/IJOrtR3Ym7dXx
+ HNJsLE+O7Rdk8BMcx8E2ZnaluqL2PD+GkZVIcWp00vVenUHdu3At7kgPD9Dn22MaLIfXVX
+ TSyHK4ttzEG79v5kuzDOk3q+GAAkOdk=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-600-kNvYwMHZM7-8Qw1nOw9lmg-1; Tue,
+ 17 Feb 2026 04:55:20 -0500
+X-MC-Unique: kNvYwMHZM7-8Qw1nOw9lmg-1
+X-Mimecast-MFC-AGG-ID: kNvYwMHZM7-8Qw1nOw9lmg_1771322119
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D3C831800454; Tue, 17 Feb 2026 09:55:18 +0000 (UTC)
+Received: from angien.pipo.sk (unknown [10.44.34.119])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 905CA180034A; Tue, 17 Feb 2026 09:55:16 +0000 (UTC)
+Date: Tue, 17 Feb 2026 10:55:13 +0100
+From: Peter Krempa <pkrempa@redhat.com>
+To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
+Cc: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org,
+ Juraj Marcin <jmarcin@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Markus Armbruster <armbru@redhat.com>, Prasad Pandit <ppandit@redhat.com>
+Subject: Re: [PATCH v2 0/2] migration: feature removals for 11.0
+Message-ID: <aZQ7AWli0Wv4Df2P@angien.pipo.sk>
+References: <20260115225503.3083355-1-peterx@redhat.com>
+ <aZQ0q2r6w3OkSP2f@angien.pipo.sk> <aZQ5HObOS3RGwf-4@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x633.google.com
+In-Reply-To: <aZQ5HObOS3RGwf-4@redhat.com>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pkrempa@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,53 +89,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Move the check from page-vary-target.c to target-info-stub.c,
-in the process of removing page-vary-target.c entirely.
+On Tue, Feb 17, 2026 at 09:47:08 +0000, Daniel P. Berrangé wrote:
+> On Tue, Feb 17, 2026 at 10:29:38AM +0100, Peter Krempa wrote:
+> > On Thu, Jan 15, 2026 at 17:55:01 -0500, Peter Xu wrote:
+> > > v2:
+> > > - Added R-bs
+> > > - Updated description for removing zero-blocks [Markus]
+> > > - Squashed the "fd: to file" test removal into the 2nd patch
+> > > - I dropped the COLO patch, I have a local patch to remove colo migration
+> > >   completely, but looks like we won't do it..  Let's leave it for later but
+> > >   do the rest first
+> > > 
+> > > This series removes two deprecated features for 11.0.
+> > > 
+> > > Please review, thanks.
+> > > 
+> > > Peter Xu (2):
+> > >   migration: Remove zero-blocks capability
+> > >   migration: Remove fd: support on files
+> > > 
+> > >  docs/about/deprecated.rst             | 20 -------------
+> > 
+> > Note that per the 'MAINTAINERS' file, changes to any deprecations ought
+> > to be CC'd to the libvirt list for visibility.
+> > 
+> > In this case we've forgotten about the deprecation and didn't fix it
+> > before the qemu cahnge was pushed. I'll send out patches soon, but keep
+> > in mind to *always* CC the libvirt list with deprecations.
+> 
+> I'm suprised  to see libvirt broken at all here.
+> 
+> AFAIR, the 'fd:' protocol inadvertantly gained support for targetting
+> plain files, which the deprecation aimed to then revert (remove). The
+> actual removal though seems to have targetted anything which is not a
+> socket, which includes pipes, which libvirt was using.
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- page-vary-target.c | 4 ----
- target-info-stub.c | 6 ++++++
- 2 files changed, 6 insertions(+), 4 deletions(-)
+Libvirt is using pipes for *most* cases, but not all. There is one code
+path (virsh restore without compression or cache bypass, when residing
+on an actual filesystem (not a root squashed NFS)) which still can pass
+a file FD to the migration code as 'fd:'. In all other cases we do pass
+in a pipe in one way or another (via the compression program,
+virFileWrapper (mandatorily used on equivalents of 'virsh save', or the
+helper process used to access root-squashed NFS). The code is not easy
+to follow because there are numerous layers where the wrapping of the
+file into a pipe can happen, one of which is right next to the migration
+code. I'll soon post patches.
 
-diff --git a/page-vary-target.c b/page-vary-target.c
-index ab92da4539..7c0565dd8d 100644
---- a/page-vary-target.c
-+++ b/page-vary-target.c
-@@ -23,10 +23,6 @@
- #include "exec/page-vary.h"
- #include "exec/target_page.h"
- 
--#ifndef TARGET_PAGE_BITS_VARY
--QEMU_BUILD_BUG_ON(TARGET_PAGE_BITS < TARGET_PAGE_BITS_MIN);
--#endif
--
- #ifndef CONFIG_USER_ONLY
- #include "exec/tlb-flags.h"
- 
-diff --git a/target-info-stub.c b/target-info-stub.c
-index 896f16e582..f5896a7262 100644
---- a/target-info-stub.c
-+++ b/target-info-stub.c
-@@ -11,11 +11,17 @@
- #include "qemu/target-info-impl.h"
- #include "hw/core/boards.h"
- #include "cpu.h"
-+#include "exec/page-vary.h"
- 
- /* Validate correct placement of CPUArchState. */
- QEMU_BUILD_BUG_ON(offsetof(ArchCPU, parent_obj) != 0);
- QEMU_BUILD_BUG_ON(offsetof(ArchCPU, env) != sizeof(CPUState));
- 
-+/* Validate target page size, if invariant. */
-+#ifndef TARGET_PAGE_BITS_VARY
-+QEMU_BUILD_BUG_ON(TARGET_PAGE_BITS < TARGET_PAGE_BITS_MIN);
-+#endif
-+
- static const TargetInfo target_info_stub = {
-     .target_name = TARGET_NAME,
-     .target_arch = glue(SYS_EMU_TARGET_, TARGET_ARCH),
--- 
-2.43.0
+Anyways, my point was that notifications about deprecated and removed
+features ought to be CCd to the libvirt list regardless of perceived
+impact on libvirt.
 
 
