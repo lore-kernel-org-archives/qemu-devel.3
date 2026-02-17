@@ -4,115 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46CCAE9A03E
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Feb 2026 20:30:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 965CCE9A047
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Feb 2026 20:49:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vsRhS-0003Qz-3D; Tue, 17 Feb 2026 15:29:38 -0500
+	id 1vsRzh-0005z4-4C; Tue, 17 Feb 2026 15:48:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1vsRhQ-0003Qa-2d; Tue, 17 Feb 2026 15:29:36 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1vsRhO-0000GE-KP; Tue, 17 Feb 2026 15:29:35 -0500
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 61HItIOg3356257; Tue, 17 Feb 2026 20:29:28 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=CHmE2H
- fq8aZMZCk3sZsT3YIu/YC0B91u7fM09GxVBiQ=; b=c446BkX+yM562OUVAif94O
- Tl2ylwdzJJTLuavibDCHGAnUjOOub3VltUy3dK6AzLUGZEsH8qMZTIPB40BtT6MG
- iazouT2x8lq9ShhKH+7L6uEg216a0t11RKo8x3v8dyUAoZB/rEKPMhR7HVJHNQQS
- 75SbTZEBMgGQP5y7qWIILUaSlKBHkPppYmsgPrQQhhKyOWxoYg4F1C89bKcfLFjj
- ETfQqFW7+hWZgo+1XqJI6l5H37hDvYPyQAZEcnRdE7mmuk/fL/KuuyrVqKMC/kct
- eCI61zx/G6rr/SfZHnspxLk5Hn3locwL+Nhe3L/zRmr3LY6wuAUI28YGxkdB016Q
- ==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4caj6rxe47-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 17 Feb 2026 20:29:28 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 61HJ0PAe011912;
- Tue, 17 Feb 2026 20:29:27 GMT
-Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4ccb26w1fv-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 17 Feb 2026 20:29:27 +0000
-Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
- [10.39.53.229])
- by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 61HKTPwj18940636
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 17 Feb 2026 20:29:26 GMT
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id CFE1858058;
- Tue, 17 Feb 2026 20:29:25 +0000 (GMT)
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D9E8758059;
- Tue, 17 Feb 2026 20:29:23 +0000 (GMT)
-Received: from [9.61.75.187] (unknown [9.61.75.187])
- by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 17 Feb 2026 20:29:23 +0000 (GMT)
-Message-ID: <e3c184c3-5009-474f-9c78-3b3697f7cc09@linux.ibm.com>
-Date: Tue, 17 Feb 2026 15:29:23 -0500
+ (Exim 4.90_1) (envelope-from <osama.abdelkader@gmail.com>)
+ id 1vsRzg-0005ym-6l
+ for qemu-devel@nongnu.org; Tue, 17 Feb 2026 15:48:28 -0500
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <osama.abdelkader@gmail.com>)
+ id 1vsRze-000481-UR
+ for qemu-devel@nongnu.org; Tue, 17 Feb 2026 15:48:27 -0500
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-48374014a77so41105365e9.3
+ for <qemu-devel@nongnu.org>; Tue, 17 Feb 2026 12:48:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1771361305; x=1771966105; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=m1hBELbbkMX18hRUqpO9MNGDpcn4R+jjBIPGvu40z1k=;
+ b=LNbL2NqmIECDeHByzN6M1igOTNLcsc0W374TWGzGBVHTHt0ndgDN6jfk8BD506VjAe
+ pl/RHflR1nM59gV2gTN4n+UKkM13J6pjjWk16ITZNJq4m+CiHxua7cZxiIr4NgDNITky
+ wrIsi7/2D8Cyri7U+nNszfGuGxIH1lm8RaDtFY2QAHsNg1vDnBkYvMlgzXkZbvOc8ohb
+ 5dHcXy0h/QWwOihw7/wgn3NFekSC1J5swCybRWuWv1YpF0nbxCuHAdD9XzcTDlYcbYJ6
+ fnkjVoCr8pCTL5U6x93m+5ulgoXT4e7l+tFwMegaSOzovp31mx7IJWI+3Lu7FNi8W/fc
+ ZlTw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1771361305; x=1771966105;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=m1hBELbbkMX18hRUqpO9MNGDpcn4R+jjBIPGvu40z1k=;
+ b=kl2b7m+5bhxAdQRQV3KjY1wvyFtcfQDF0ipIc8LJk2bVIgaiXRpU9fZIRA1xub5fVq
+ CNYL6Q+dloxGRRf41bEmOQ9wEDuehmbYVFiJ43pWhY9s2Lc9yos9q99Y+BZaMN+DHf/u
+ ur2BTIF13kSU8cbZ03HnsmWQrj/0pvuC3PvijtW6N83WWnnkWWuGUh/cg3vyvzKuJXmL
+ 07Z3EEyDGI2Eeu4el+R+lZxSitrjY7fuK9Op3TcI75RHKZLoA2TuoA8KbBYHEPXmGQCI
+ jygNMb605jwf0NyBDzU32QSe59OCAPpGg8164kdhQ2MviWSd5ia6wENPLwFJ4XLUSrYc
+ FjOQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUB3iz4XL6kbRF02Rc8rwDR6nzeSZvSwskFa4txluGCLJ1+RoO/0d3CWxqt431UU6qieZ5+wWjZ3Qr9@nongnu.org
+X-Gm-Message-State: AOJu0YzOQ4DsyZaiASunlyRZFXTNQvdPeBv1Jiz118whCL77fFb038TF
+ bE/iUKe5vfgoCzuBNZYJ3keHTfNV+mFlFHNLUbu0ui7HfJ/2WF7g65SC
+X-Gm-Gg: AZuq6aLsep2C7TgrvXOh2Y/spDzx7xyAxPc5+S6GzG3uv7W5XG9g4+LKYIaZlNhsN/d
+ eb74xpRPd7ZAmPgqPR3f5AbCBIo1IHpcJPBnPXOBiHSxP82S5MQqmqC3I2snp30u2hDTDSUnufl
+ LWESiGlmj3TEILnurbYzPEOjr2E+y7YTYe3Ma2IDni9uhXXuyf6xMtwLcKrKxDp8CL8gB/zpct3
+ niRMTv6wjYXhgSvfbhQPvXidjyUs0PZ1fMAacIHGRC4NJmWNE6xnKWxW1aDx5Lp3hUCm1fpADWI
+ PaBsTzOU0/W5v40Snbt8TMjLrQHqkZzfhuq0/akdpZ8FtG3ZujPlPpzTGa3psLLlyIMENQaRK4/
+ Dtkhit3SR4Q5FwqMx9bW8tWLc8j10DNwcxJ3ZzTpF6N+t84nMhU7riOBxv7AvCM2Z1qKeOvSu17
+ NGrfJhhXyQp0z0FDetIPxzNqux4cNpZIUs5V9Evah6otmensX97v7KOcE=
+X-Received: by 2002:a05:600c:3f0c:b0:47d:5e02:14e5 with SMTP id
+ 5b1f17b1804b1-483739ffa1emr283738315e9.5.1771361304468; 
+ Tue, 17 Feb 2026 12:48:24 -0800 (PST)
+Received: from osama.. ([41.46.249.95]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-483983d0df2sm1637055e9.8.2026.02.17.12.48.20
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 17 Feb 2026 12:48:24 -0800 (PST)
+From: Osama Abdelkader <osama.abdelkader@gmail.com>
+To: Pedro Barbuda <pbarbuda@microsoft.com>,
+ Mohamed Mediouni <mohamed@unpredictable.fr>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: Osama Abdelkader <osama.abdelkader@gmail.com>
+Subject: [PATCH] whpx: remove duplicate include
+Date: Tue, 17 Feb 2026 21:47:54 +0100
+Message-ID: <20260217204754.101223-1-osama.abdelkader@gmail.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 30/30] docs/system/s390x: Add secure IPL documentation
-To: Markus Armbruster <armbru@redhat.com>
-Cc: thuth@redhat.com, berrange@redhat.com, richard.henderson@linaro.org,
- jrossi@linux.ibm.com, qemu-s390x@nongnu.org, qemu-devel@nongnu.org,
- david@kernel.org, walling@linux.ibm.com, jjherne@linux.ibm.com,
- pasic@linux.ibm.com, borntraeger@linux.ibm.com, farman@linux.ibm.com,
- mjrosato@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
- alifm@linux.ibm.com, brueckner@linux.ibm.com
-References: <20260212204352.1044699-1-zycai@linux.ibm.com>
- <20260212204352.1044699-31-zycai@linux.ibm.com> <87bjhnpzeb.fsf@pond.sub.org>
- <87tsvfok6p.fsf@pond.sub.org>
-Content-Language: en-US
-From: Zhuoying Cai <zycai@linux.ibm.com>
-In-Reply-To: <87tsvfok6p.fsf@pond.sub.org>
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=dvvWylg4 c=1 sm=1 tr=0 ts=6994cfa8 cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=IkcTkHD0fZMA:10 a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22 a=20KFwNOVAAAA:8
- a=VnNF1IyMAAAA:8 a=fkdjs8v7KmaFqklBIpgA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: gh-SCuRIxBphyu2OFR25Y33reLJ4qGSz
-X-Proofpoint-ORIG-GUID: gh-SCuRIxBphyu2OFR25Y33reLJ4qGSz
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjE3MDE2NSBTYWx0ZWRfX7ZIqENdirSRT
- jk6ZIzBd5o48oTrVMldLxF9bu+CKR9Mt5dli7uEQvIzO33xyUbKn+CjFPOjSQX77/PbAVSRTRnl
- /W29PnDFtRAyaM454o/xyEwcCvs0wRF+Qi+giFk6FH2U+GVZaC8GxZWM/bDtiDApd3Fb5qcdvld
- 9acRDuZJuGWh7Ijy1in3++m2dUWboP/jDRhWEJPDdIYsj0HMKy61CIPq9ki95idLxxI9ViB7fuQ
- emZF24Nt1Wq4dgal/6ye4SmGNb734FLVTnYXX0vgwFHiT5aSR/ntiBEjOJ/T3Rvy7Ccsplu51Rx
- UzDFs7tfD/Az8js/kq3ljv/lqz+1uXiQJm4iDSSRHKEA4MEbg9yyWWeWohhgP8fpqMWE0ELJRBc
- tVXKcxx4p3Up/SH8lt1t3kE0giYOlm0HTE7qHBLfO255BEcnTOlYeAwBdlzRLkokElBHIbRkNZV
- U+vyT6TxI4h1uXUwHrw==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-02-17_03,2026-02-16_04,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 lowpriorityscore=0 impostorscore=0 adultscore=0
- priorityscore=1501 clxscore=1015 malwarescore=0 phishscore=0 suspectscore=0
- bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
- definitions=main-2602170165
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=zycai@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -6
-X-Spam_score: -0.7
-X-Spam_bar: /
-X-Spam_report: (-0.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, KHOP_DYNAMIC=1.999,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=osama.abdelkader@gmail.com; helo=mail-wm1-x32b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -128,51 +100,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/17/26 3:20 AM, Markus Armbruster wrote:
-> Markus Armbruster <armbru@redhat.com> writes:
-> 
->> Zhuoying Cai <zycai@linux.ibm.com> writes:
->>
->>> Add documentation for secure IPL
->>>
->>> Signed-off-by: Collin Walling <walling@linux.ibm.com>
->>> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
->>> ---
->>>  docs/system/s390x/secure-ipl.rst | 96 ++++++++++++++++++++++++++++++++
->>>  1 file changed, 96 insertions(+)
->>>
->>> diff --git a/docs/system/s390x/secure-ipl.rst b/docs/system/s390x/secure-ipl.rst
->>> index e0af086c38..275aa422c7 100644
->>> --- a/docs/system/s390x/secure-ipl.rst
->>> +++ b/docs/system/s390x/secure-ipl.rst
->>
->> [...]
->>
->>> +Command line options for starting the guest
->>> +----------------------------
->>
->> Does not build:
->>
->>     docs/system/s390x/secure-ipl.rst:172: WARNING: Title underline too short.
->>
->>     Command line options for starting the guest
->>     ---------------------------- [docutils]
->>
->> Please test with configure --enable-docs.
-> 
-> With that fixed, I get
-> 
->     docs/specs/s390x-secure-ipl.rst: WARNING: document isn't included in any toctree [toc.not_included]
-> 
+cpu.h is included twice
 
-Thank you for the review. I’ll test the series with configure
---enable-docs and will fix the documentation build issues in the next
-version.
+Signed-off-by: Osama Abdelkader <osama.abdelkader@gmail.com>
+---
+ target/arm/whpx/whpx-all.c | 1 -
+ 1 file changed, 1 deletion(-)
 
->>> +
->>> +.. code-block:: shell
->>> +
->>> +    qemu-system-s390x -machine s390-ccw-virtio,secure-boot=on,boot-certs.0.path=cert.pem ...
-> 
+diff --git a/target/arm/whpx/whpx-all.c b/target/arm/whpx/whpx-all.c
+index 36c5e30a03..b0602266af 100644
+--- a/target/arm/whpx/whpx-all.c
++++ b/target/arm/whpx/whpx-all.c
+@@ -27,7 +27,6 @@
+ #include <winerror.h>
+ 
+ #include "syndrome.h"
+-#include "cpu.h"
+ #include "target/arm/cpregs.h"
+ #include "internals.h"
+ 
+-- 
+2.43.0
 
 
