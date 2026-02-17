@@ -4,52 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2F4BE8385F
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Feb 2026 07:18:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A61DEE63F29
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Feb 2026 07:21:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vsFLm-0001F9-3B; Tue, 17 Feb 2026 02:18:26 -0500
+	id 1vsFOq-0002ij-Qi; Tue, 17 Feb 2026 02:21:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vsFLj-0001EK-0G
- for qemu-devel@nongnu.org; Tue, 17 Feb 2026 02:18:23 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vsFOn-0002hp-L7
+ for qemu-devel@nongnu.org; Tue, 17 Feb 2026 02:21:34 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vsFLf-0004I5-VJ
- for qemu-devel@nongnu.org; Tue, 17 Feb 2026 02:18:21 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vsFOl-00053B-Va
+ for qemu-devel@nongnu.org; Tue, 17 Feb 2026 02:21:33 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771312699;
+ s=mimecast20190719; t=1771312890;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=ZfeRk3BVgN4F2OoQGk6n0R5BFQezb9OdWbm+Pb7w/Jc=;
- b=ZX1YI6CUz82UBwlvgZM2bmxu8ISnzX1HGnK1IA0b0S2zRNfBo7LTB9bvPE5/ykrrES7Maq
- 6X8QkWQ1NydM2i6ZDyTr6OD8fb3CUnOFz5O0WuYHvT//Vp+IbIpRCBMvmiDqL+b+kVhvTn
- dq/lUnNrwg6/qpJOr7K46pSXQjNjiTc=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=XBBepF4KlYnXhcW/+y92w7QpX50Erz8PrxPIOAozv7s=;
+ b=PoDgA+e5l1lx350bAcTfgUnzlsbUTPrV4JzHA02LIEvucfqd6GS6Sy5eipDIRba3L465v+
+ Y37rqZUNGhR7miaGydonXiVumM8hotTpZ0/CrHXTayH4oUwRp+z0NAIHUbgS8M7bp3YNaP
+ xmfAg+YdZ5XFt18RiHJapNph/HQ0gy8=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-518-vCdBB2jIOUKV8ry7zOD50w-1; Tue,
- 17 Feb 2026 02:18:13 -0500
-X-MC-Unique: vCdBB2jIOUKV8ry7zOD50w-1
-X-Mimecast-MFC-AGG-ID: vCdBB2jIOUKV8ry7zOD50w_1771312691
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-633-PPwWDiRBMD-Fce89TICwcA-1; Tue,
+ 17 Feb 2026 02:21:19 -0500
+X-MC-Unique: PPwWDiRBMD-Fce89TICwcA-1
+X-Mimecast-MFC-AGG-ID: PPwWDiRBMD-Fce89TICwcA_1771312877
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2287C1956046; Tue, 17 Feb 2026 07:18:10 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BB959180047F; Tue, 17 Feb 2026 07:21:16 +0000 (UTC)
 Received: from [10.45.224.144] (unknown [10.45.224.144])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 84ADD1800348; Tue, 17 Feb 2026 07:17:56 +0000 (UTC)
-Message-ID: <9153f626-7a14-4177-be27-2a9dbc703775@redhat.com>
-Date: Tue, 17 Feb 2026 08:17:54 +0100
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id ABB5630001B9; Tue, 17 Feb 2026 07:21:04 +0000 (UTC)
+Message-ID: <537b0dda-62be-4b53-92b1-204fff25d9ad@redhat.com>
+Date: Tue, 17 Feb 2026 08:21:02 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 09/19] tests/lcitool: update lcitool to latest version
+Subject: Re: [PATCH v7 10/19] tests/lcitool: add python3 wheel and setuptools
+ deps for qemu
 To: John Snow <jsnow@redhat.com>, qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
@@ -69,7 +70,7 @@ Cc: qemu-block@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
  Fabiano Rosas <farosas@suse.de>, Michael Roth <michael.roth@amd.com>,
  Li-Wen Hsu <lwhsu@freebsd.org>, Hanna Reitz <hreitz@redhat.com>
 References: <20260216212952.420120-1-jsnow@redhat.com>
- <20260216212952.420120-10-jsnow@redhat.com>
+ <20260216212952.420120-11-jsnow@redhat.com>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -114,18 +115,18 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20260216212952.420120-10-jsnow@redhat.com>
+In-Reply-To: <20260216212952.420120-11-jsnow@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -144,24 +145,37 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 16/02/2026 22.29, John Snow wrote:
-> Update to latest lcitool master and refresh tests. Fedora is upgraded to
-> Fedora 43 and Alpine from 3.21 to 3.23 as a result.
+> Installing local dependencies while offline, without PyPI access,
+> requires the python3-setuptools and python3-wheel packages. Most
+> distributions have these available anyway for one reason or another, but
+> not all of them.
 > 
-> This is being done in this series primarily to ensure that MacOS
-> installs python-setuptools, which is now separate from the core python
-> package, and which is needed for this series to work correctly.
+> If you are asking yourself "Wait, aren't these packages guaranteed via
+> installation of pip, via the ensurepip module, which mkvenv takes
+> immense pains to provide for us?" - Well... since Python 3.13, "pip"
+> does not actually come with "setuptools" or "wheel" anymore, and so if
+> we want to build and install a python package, we actually need these
+> available in the host environment.
+> 
+> (Note that you don't need these packages just to install a pre-built
+> package, you only need them to *build* a package. With cutting edge
+> setuptools and pip, all locally installed packages, even in editable
+> mode, must be "built" first before being installed. Thus, these
+> dependencies are being added specifically to facilitate installing
+> qemu.git/python/qemu to the configure-time venv.)
 > 
 > Signed-off-by: John Snow <jsnow@redhat.com>
 > ---
->   .gitlab-ci.d/cirrus/macos-14.vars             |   2 +-
->   tests/docker/dockerfiles/alpine.docker        |   4 +-
->   tests/docker/dockerfiles/centos9.docker       | 240 ++++++++--------
->   .../dockerfiles/fedora-rust-nightly.docker    | 262 +++++++++---------
->   .../dockerfiles/fedora-win64-cross.docker     | 162 +++++------
->   tests/docker/dockerfiles/fedora.docker        | 262 +++++++++---------
->   tests/lcitool/libvirt-ci                      |   2 +-
->   tests/lcitool/refresh                         |   8 +-
->   8 files changed, 471 insertions(+), 471 deletions(-)
+>   .gitlab-ci.d/cirrus/freebsd-14.vars           | 2 +-
+>   .gitlab-ci.d/windows.yml                      | 2 ++
+>   tests/docker/dockerfiles/alpine.docker        | 2 ++
+>   tests/docker/dockerfiles/centos9.docker       | 2 ++
+>   tests/docker/dockerfiles/opensuse-leap.docker | 1 +
+>   tests/lcitool/mappings.yml                    | 2 +-
+>   tests/lcitool/projects/qemu.yml               | 2 ++
+>   tests/vm/generated/freebsd.json               | 2 ++
+>   tests/vm/openbsd                              | 3 +++
+>   9 files changed, 16 insertions(+), 2 deletions(-)
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
