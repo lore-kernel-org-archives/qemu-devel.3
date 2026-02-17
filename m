@@ -4,117 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40A79E68149
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Feb 2026 08:52:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F957E68149
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Feb 2026 08:53:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vsGoK-0003ee-Ep; Tue, 17 Feb 2026 03:52:00 -0500
+	id 1vsGpg-0004WW-GB; Tue, 17 Feb 2026 03:53:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <schlameuss@linux.ibm.com>)
- id 1vsGoJ-0003eM-3e; Tue, 17 Feb 2026 03:51:59 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vsGpd-0004TW-HL
+ for qemu-devel@nongnu.org; Tue, 17 Feb 2026 03:53:21 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <schlameuss@linux.ibm.com>)
- id 1vsGoH-00088l-IQ; Tue, 17 Feb 2026 03:51:58 -0500
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 61H6Hl4u3548407; Tue, 17 Feb 2026 08:51:52 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=z9v2eG
- PO98yQYxa7pdi54Q3clFHoZ4yUqPrRZ6jGAaM=; b=XQ0AcDXpfiaOodHABrfBPc
- lOFLVfJGtRTUhSRkl59AsdJUMimcica5DAe28XeDCKwb7ZsAJ3AsFksjP7CYtwEq
- DCgXaoC3brt7bNwIx3QT9NYL+7LrMrpv15kCS6heLMkqSV1sXvEOppbDoetz+XGn
- JzCwoQgKVyxImJiEqNBsTlhSxi3GOfHi0cd55WlzZ0C6ctXpZT1a8L0apqpHMngT
- hBMnVcobWnnK8NHq3gDhK6AQeAQxb0hcBBx7DfNz5gxMosl5Bafexr2K3Z3RHa6f
- 8OqlKAHXqUU97qeue5HJLoT1Mc12I3blzizWoL+m9x8fyX61tFMRjAJkvIbqFoGw
- ==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4cajcqu5mr-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 17 Feb 2026 08:51:51 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 61H3OSbN011898;
- Tue, 17 Feb 2026 08:51:50 GMT
-Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4ccb26ss63-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 17 Feb 2026 08:51:50 +0000
-Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
- [10.20.54.103])
- by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 61H8pkDE23593326
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 17 Feb 2026 08:51:46 GMT
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 71FBC2004D;
- Tue, 17 Feb 2026 08:51:46 +0000 (GMT)
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 4D3142004B;
- Tue, 17 Feb 2026 08:51:46 +0000 (GMT)
-Received: from darkmoore (unknown [9.87.130.124])
- by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 17 Feb 2026 08:51:46 +0000 (GMT)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Tue, 17 Feb 2026 09:51:41 +0100
-Message-Id: <DGH3XLSWU2OB.29T9W7UBKFNRS@linux.ibm.com>
-Subject: Re: [PATCH] s390x/kvm: Add ASTFLE facility 2 for nested virtualization
-From: "Christoph Schlameuss" <schlameuss@linux.ibm.com>
-Cc: "Halil Pasic" <pasic@linux.ibm.com>, "Eric Farman" <farman@linux.ibm.com>,
- "Matthew Rosato" <mjrosato@linux.ibm.com>, "Richard
- Henderson" <richard.henderson@linaro.org>, "Ilya Leoshkevich"
- <iii@linux.ibm.com>, "David Hildenbrand" <david@kernel.org>, "Thomas Huth"
- <thuth@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, "Cornelia Huck"
- <cohuck@redhat.com>, "Paolo Bonzini" <pbonzini@redhat.com>, "Hendrik
- Brueckner" <brueckner@linux.ibm.com>, "Nina Schoetterl-Glausch"
- <nsg@linux.ibm.com>, <qemu-s390x@nongnu.org>, <kvm@vger.kernel.org>
-To: "Christian Borntraeger" <borntraeger@linux.ibm.com>, "Christoph
- Schlameuss" <schlameuss@linux.ibm.com>, <qemu-devel@nongnu.org>
-X-Mailer: aerc 0.21.0
-References: <20260211-astfleie2-v1-1-cfa11f422fd8@linux.ibm.com>
- <8f5f2131-b5cc-4a9a-84f7-57586c3df928@linux.ibm.com>
-In-Reply-To: <8f5f2131-b5cc-4a9a-84f7-57586c3df928@linux.ibm.com>
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: 9tM4ANgpK_AQqaAow0r-uO8I94VAgi36
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjE3MDA3MSBTYWx0ZWRfXxhPkqfcZfJhD
- R994RWTLLlXqN2+XV2LfkQunSZT3HP33ZCqK+QYwpPqfNQub1iLwylz6H51/UmzaHkstYUMpJKB
- 64JdfAXccyw/Wh76r4YsknDiY0KfrGeLglchV3+I2YgdyoulFKEXyS+ypVQUM4j63kvsdZ79I6F
- PqEZUJRnbOP0CZlxi4K4n4ux/Ul6LrzEM1G0N1KN5V9XgSdUBZYf786Azkx261CKM+vFo21eezV
- qwkEnExDsJwhkFcKXbSqLoTQ0+9qFDCq3sfL/mbRDo5XGTOP1UCm2eigCw5mrynBnGTFC2W7jRI
- 2ia0zmxflLxa9ofzZyAgzqT0CGnRpWoHYfMjInoWY2nqhN3fokZxf9mfrNy28uscuV/wZpp8Dsf
- WaTmsYV9KeZxxWhdjmqMCYVz2fnujRVoOlyZt5ITs6pHL/CT/T6B3OejQ2zQ2jtGnjutS3wuCYr
- kVMZR1IHc7403efbUzw==
-X-Authority-Analysis: v=2.4 cv=UPXQ3Sfy c=1 sm=1 tr=0 ts=69942c27 cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=IkcTkHD0fZMA:10 a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22 a=VnNF1IyMAAAA:8
- a=69wJf7TsAAAA:8 a=KKAkSRfTAAAA:8 a=VwQbUJbxAAAA:8 a=20KFwNOVAAAA:8
- a=Iy1ZBe_RzdfgodXlwn4A:9 a=NqO74GWdXPXpGKcKHaDJD/ajO6k=:19 a=QEXdDO2ut3YA:10
- a=Fg1AiH1G6rFz08G2ETeA:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: 9tM4ANgpK_AQqaAow0r-uO8I94VAgi36
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-02-17_01,2026-02-16_04,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 suspectscore=0 phishscore=0 impostorscore=0 adultscore=0
- bulkscore=0 clxscore=1015 lowpriorityscore=0 priorityscore=1501 spamscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2601150000 definitions=main-2602170071
-Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=schlameuss@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vsGpa-0008MD-RY
+ for qemu-devel@nongnu.org; Tue, 17 Feb 2026 03:53:21 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1771318397;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=PGwDgTmHD62H404io2XwKIIfImIFJIsa1voyfbPhPas=;
+ b=gNINUE/ulbcdE8rA/Z78xp0ujxuu085giAmQs4Hmq4gQLVnDQF0iDzhkYYJ6GkRob2p6+5
+ c+KssF2yhT5URmOlsqjh+8Nx6bddAbEVGlhEsHCiKVLlhPRVdzGUbCfMZjD0iPWuEI9qr6
+ pA4feZ2QOMA2EBIDjBDqJxYpem/8aU4=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-445-JRmIFhlPOYGVnLkwAPltOw-1; Tue,
+ 17 Feb 2026 03:53:16 -0500
+X-MC-Unique: JRmIFhlPOYGVnLkwAPltOw-1
+X-Mimecast-MFC-AGG-ID: JRmIFhlPOYGVnLkwAPltOw_1771318395
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B358B1955D8C; Tue, 17 Feb 2026 08:53:14 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.14])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2BAAE1800361; Tue, 17 Feb 2026 08:53:14 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id D5E7421E692D; Tue, 17 Feb 2026 09:53:11 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Antoine Damhet <adamhet@scaleway.com>
+Cc: qemu-devel@nongnu.org,  qemu-block@nongnu.org,  Kevin Wolf
+ <kwolf@redhat.com>,  Hanna Reitz <hreitz@redhat.com>,  Pierrick Bouvier
+ <pierrick.bouvier@linaro.org>,  Eric Blake <eblake@redhat.com>
+Subject: Re: [PATCH 2/2] block/curl: add support for S3 presigned URLs
+In-Reply-To: <20260212162730.440855-3-adamhet@scaleway.com> (Antoine Damhet's
+ message of "Thu, 12 Feb 2026 17:27:25 +0100")
+References: <20260212162730.440855-1-adamhet@scaleway.com>
+ <20260212162730.440855-3-adamhet@scaleway.com>
+Date: Tue, 17 Feb 2026 09:53:11 +0100
+Message-ID: <878qcroio8.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -130,41 +87,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon Feb 16, 2026 at 8:44 PM CET, Christian Borntraeger wrote:
->
->
-> Am 11.02.26 um 15:56 schrieb Christoph Schlameuss:
->> Allow propagation of the ASTFLEIE2 feature bit.
->>=20
->> If the host does have the ASTFLE Interpretive Execution Facility 2 the
->> guest can enable the ASTFLE format 2 for its guests.
->>=20
->> Signed-off-by: Christoph Schlameuss <schlameuss@linux.ibm.com>
->> ---
->> Cc: qemu-devel@nongnu.org
->> Cc: Halil Pasic <pasic@linux.ibm.com>
->> Cc: Christian Borntraeger <borntraeger@linux.ibm.com>
->> Cc: Eric Farman <farman@linux.ibm.com>
->> Cc: Matthew Rosato <mjrosato@linux.ibm.com>
->> Cc: Richard Henderson <richard.henderson@linaro.org>
->> Cc: Ilya Leoshkevich <iii@linux.ibm.com>
->> Cc: David Hildenbrand <david@kernel.org>
->> Cc: Thomas Huth <thuth@redhat.com>
->> Cc: Michael S. Tsirkin <mst@redhat.com>
->> Cc: Cornelia Huck <cohuck@redhat.com>
->> Cc: Paolo Bonzini <pbonzini@redhat.com>
->> Cc: Hendrik Brueckner <brueckner@linux.ibm.com>
->> Cc: Nina Schoetterl-Glausch <nsg@linux.ibm.com>
->> To: qemu-s390x@nongnu.org
->> Cc: kvm@vger.kernel.org
->> ---
->>=20
->> @Christian, @Hendrik: Please confirm that we want to add ASTFLEIE2 to
->> the Z16 default facilities.
->
-> This depends on the sie facility (sie format2) so I guess it should not b=
-e default
-> but rather FULL model.
+Antoine Damhet <adamhet@scaleway.com> writes:
 
-Thank you, will limit it to the full model in the next version.
+> S3 presigned URLs are signed for a specific HTTP method (typically GET
+> for our use cases). The curl block driver currently issues a HEAD
+> request to discover the backend features and the file size, which fails
+> with 403.
+>
+> Add a 'force-range' option that skips the HEAD request and instead
+> issues a minimal GET request (querying 1 byte from the server) to
+> extract the file size from the 'Content-Range' response header. To
+> achieve this the 'curl_header_cb' is redesigned to generically parse
+> HTTP headers.
+>
+> $ $QEMU -drive driver=http,\
+>              'url=https://s3.example.com/some.img?X-Amz-Security-Token=XXX',
+>              force-range=true
+>
+> Enabling the 'force-range' option without the backend supporting it is
+> undefined behavior and untested
+
+"Undefined behavior" suggests it could do anything, even destroy data.
+I hope that's not the case.  What is the case?
+
+What is "the backend"?  The web server specified with @url?
+
+>                                 but the libcurl should ignore the body
+> and stop reading after the HTTP headers then we would fail with the
+> expected `Server does not support 'range' (byte ranges).` error.
+>
+> Signed-off-by: Antoine Damhet <adamhet@scaleway.com>
+> ---
+
+[...]
+
+> diff --git a/qapi/block-core.json b/qapi/block-core.json
+> index b82af7425614..ff018c2d6bfb 100644
+> --- a/qapi/block-core.json
+> +++ b/qapi/block-core.json
+> @@ -4582,12 +4582,17 @@
+>  # @cookie-secret: ID of a QCryptoSecret object providing the cookie
+>  #     data in a secure way.  See @cookie for the format.  (since 2.10)
+>  #
+> +# @force-range: Don't issue a HEAD HTTP request to discover if the
+> +#     backend supports range requests and rely only on GET requests.
+> +#     This is especially useful for S3 presigned URLs.  (since 11.0)
+
+Unlike the commit message, this doesn't mention the need for "the
+backend" (whatever that may be) supporting it.
+
+> +#
+>  # Since: 2.9
+>  ##
+>  { 'struct': 'BlockdevOptionsCurlHttp',
+>    'base': 'BlockdevOptionsCurlBase',
+>    'data': { '*cookie': 'str',
+> -            '*cookie-secret': 'str'} }
+> +            '*cookie-secret': 'str',
+> +            '*force-range': 'bool'} }
+>  
+>  ##
+>  # @BlockdevOptionsCurlHttps:
+> @@ -4605,13 +4610,18 @@
+>  # @cookie-secret: ID of a QCryptoSecret object providing the cookie
+>  #     data in a secure way.  See @cookie for the format.  (since 2.10)
+>  #
+> +# @force-range: Don't issue a HEAD HTTP request to discover if the
+> +#     backend supports range requests and rely only on GET requests.
+> +#     This is especially useful for S3 presigned URLs.  (since 11.0)
+> +#
+>  # Since: 2.9
+>  ##
+
+@force-range is is duplicated between BlockdevOptionsCurlHttp and
+BlockdevOptionsCurlHttps.  @cookie and @cookie-secret is already
+duplicated before the patch.  Time to factor out a common base type?
+
+>  { 'struct': 'BlockdevOptionsCurlHttps',
+>    'base': 'BlockdevOptionsCurlBase',
+>    'data': { '*cookie': 'str',
+>              '*sslverify': 'bool',
+> -            '*cookie-secret': 'str'} }
+> +            '*cookie-secret': 'str',
+> +            '*force-range': 'bool'} }
+>  
+>  ##
+>  # @BlockdevOptionsCurlFtp:
+
 
