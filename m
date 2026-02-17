@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 422F4E8384C
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Feb 2026 05:12:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 575ADE8384C
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Feb 2026 05:12:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vsDMq-0006jE-H1; Tue, 17 Feb 2026 00:11:24 -0500
+	id 1vsDMt-0006kO-EO; Tue, 17 Feb 2026 00:11:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vsDMp-0006iq-Ni
- for qemu-devel@nongnu.org; Tue, 17 Feb 2026 00:11:23 -0500
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vsDMr-0006jh-SJ
+ for qemu-devel@nongnu.org; Tue, 17 Feb 2026 00:11:25 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vsDMo-0002JK-3f
- for qemu-devel@nongnu.org; Tue, 17 Feb 2026 00:11:23 -0500
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vsDMq-0002Jl-CP
+ for qemu-devel@nongnu.org; Tue, 17 Feb 2026 00:11:25 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771305081;
+ s=mimecast20190719; t=1771305083;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=IuGfykvuaPWnW+5hdWJzME16NjhM0NzpRBIzZgi4ek4=;
- b=BxF8pBL8XVHeIVgKr6RPA53UT6Kin0/RO2ckMDp1FSzr9/Uvp34f3uCDRA3I5d7b1C1G0m
- /M4sOYjAFt8b/Jtp1kfAkbgCv0Imf0V6B5UC2VSPDSB24NTmlyVAXDl0+tmOEQSoytNwt5
- 6So12B6fAKDYIHvMEZuOdP4UXiFRFuw=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ bh=ZMNK/u4T6GyLsKEapVa/Q0nhkqLr/xFn+Upfxdzq4bc=;
+ b=E1AOH9Xgj4lKNLl9hWnb9fQpq2GEmsahiDmhU4fItkbCp925kjLx/1R92hKyJmJRXkbnvd
+ zc6bKT8zyMNbS0hyI4azUzNYJEsgO+KZ1H0aiIdJyRP9dSn5qjgo+VDbddLHJA9TWSTdpG
+ MMCOgOUxAIhIp8gJm2cWJQ5O1wmKb5k=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-199--bXMIQiNNaeXQdPJ3NJzfw-1; Tue,
- 17 Feb 2026 00:11:18 -0500
-X-MC-Unique: -bXMIQiNNaeXQdPJ3NJzfw-1
-X-Mimecast-MFC-AGG-ID: -bXMIQiNNaeXQdPJ3NJzfw_1771305078
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-55-7SVcCxfsOQ-koXEzY65AUg-1; Tue,
+ 17 Feb 2026 00:11:20 -0500
+X-MC-Unique: 7SVcCxfsOQ-koXEzY65AUg-1
+X-Mimecast-MFC-AGG-ID: 7SVcCxfsOQ-koXEzY65AUg_1771305080
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C4D9F1800265
- for <qemu-devel@nongnu.org>; Tue, 17 Feb 2026 05:11:17 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 341CE1800464
+ for <qemu-devel@nongnu.org>; Tue, 17 Feb 2026 05:11:20 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.88.120])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id BD3D618003F6; Tue, 17 Feb 2026 05:11:16 +0000 (UTC)
+ id 3E67C18003F5; Tue, 17 Feb 2026 05:11:19 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Cleber Rosa <crosa@redhat.com>,
 	John Snow <jsnow@redhat.com>
-Subject: [PATCH 2/4] python: replace avocado tests with pytest
-Date: Tue, 17 Feb 2026 00:11:10 -0500
-Message-ID: <20260217051112.446957-3-jsnow@redhat.com>
+Subject: [PATCH 4/4] python: add formal python3.14 support and testing
+Date: Tue, 17 Feb 2026 00:11:12 -0500
+Message-ID: <20260217051112.446957-5-jsnow@redhat.com>
 In-Reply-To: <20260217051112.446957-1-jsnow@redhat.com>
 References: <20260217051112.446957-1-jsnow@redhat.com>
 MIME-Version: 1.0
@@ -83,168 +83,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Following suit with the rest of this repository, drop avocado and
-replace it with the Python standard "pytest" package.
-
-In this case, we do not truly need pytest as all we are using it for is
-running other python processes formerly launched by shell scripts, but
-this matches how the standalone python-qemu-qmp package does things,
-which keeps things simple on my end.
-
-(pytest version chosen based off of Debian 11's package version as queried by
-repology; under the assumption that this is the likely the oldest
-version we currently leverage in testing.)
-
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- python/Makefile          |  4 +-
- python/setup.cfg         |  1 +
- python/tests/linters.py  | 89 ++++++++++++++++++++++++++++++++++++++++
- python/tests/minreqs.txt |  1 +
- 4 files changed, 93 insertions(+), 2 deletions(-)
- create mode 100644 python/tests/linters.py
+ python/setup.cfg | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/python/Makefile b/python/Makefile
-index b6c9cd1bce2..42994d39618 100644
---- a/python/Makefile
-+++ b/python/Makefile
-@@ -105,7 +105,7 @@ develop:
- 
- .PHONY: check
- check:
--	@avocado --config avocado.cfg run tests/
-+	@pytest -v tests/*.py
- 
- .PHONY: check-tox
- check-tox:
-@@ -113,7 +113,7 @@ check-tox:
- 
- .PHONY: check-coverage
- check-coverage:
--	@coverage run -m avocado --config avocado.cfg run tests/*.py
-+	@coverage run -m pytest -v tests/*.py
- 	@coverage combine
- 	@coverage html
- 	@coverage report
 diff --git a/python/setup.cfg b/python/setup.cfg
-index c46a95f8d41..03344526730 100644
+index e5bf498f0e1..80975933971 100644
 --- a/python/setup.cfg
 +++ b/python/setup.cfg
-@@ -43,6 +43,7 @@ devel =
-     mypy >= 1.4.0
-     pylint >= 2.17.3
-     pylint != 3.2.4; python_version<"3.9"
-+    pytest >= 6.0.2
-     tox >= 3.18.0
-     sphinx >= 3.4.3
+@@ -19,6 +19,7 @@ classifiers =
+     Programming Language :: Python :: 3.11
+     Programming Language :: Python :: 3.12
+     Programming Language :: Python :: 3.13
++    Programming Language :: Python :: 3.14
+     Typing :: Typed
  
-diff --git a/python/tests/linters.py b/python/tests/linters.py
-new file mode 100644
-index 00000000000..28556c09910
---- /dev/null
-+++ b/python/tests/linters.py
-@@ -0,0 +1,89 @@
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+
-+import os
-+import subprocess
-+import sys
-+
-+
-+def pyrun(*args):
-+    subprocess.run((sys.executable, *args), check=True)
-+
-+
-+class TestLinters:
-+
-+    def test_flake8_pkg(self):
-+        pyrun("-m", "flake8", "qemu/")
-+
-+    def test_flake8_scripts(self):
-+        pyrun("-m", "flake8", "scripts/")
-+
-+    def test_flake8_qapi(self):
-+        pyrun("-m", "flake8",
-+              "../scripts/qapi/",
-+              "../docs/sphinx/qapidoc.py",
-+              "../docs/sphinx/qapi_domain.py")
-+
-+    def test_isort_pkg(self):
-+        pyrun("-m", "isort", "-c", "qemu/")
-+
-+    def test_isort_scripts(self):
-+        pyrun("-m", "isort", "-c", "scripts/")
-+
-+    def test_isort_qapi(self):
-+        pyrun("-m", "isort", "--sp", ".", "-c", "../scripts/qapi/")
-+
-+    def test_isort_qapi_sphinx(self):
-+        # Force isort to recognize 'compat' as a local module and not
-+        # third-party
-+        pyrun("-m", "isort", "--sp", ".", "-c", "-p", "compat",
-+              "../docs/sphinx/qapi_domain.py",
-+              "../docs/sphinx/qapidoc.py")
-+
-+    def test_mypy_pkg(self):
-+        pyrun("-m", "mypy", "-p", "qemu")
-+
-+    def test_mypy_scripts(self):
-+        pyrun("-m", "mypy", "scripts/")
-+
-+    def test_mypy_qapi(self):
-+        pyrun("-m", "mypy", "../scripts/qapi")
-+
-+    def test_mypy_iotests(self):
-+        cwd = os.getcwd()
-+        try:
-+            os.chdir("../tests/qemu-iotests/")
-+            pyrun("-m", "linters", "--mypy")
-+        finally:
-+            os.chdir(cwd)
-+
-+    # Setuptools v60 introduced the SETUPTOOLS_USE_DISTUTILS=stdlib
-+    # workaround; stdlib distutils was fully removed in Python
-+    # 3.12+. Once we are on >=3.12+ exclusively, this workaround can be
-+    # dropped safely. Until then, it is needed for some versions on
-+    # Fedora/Debian distributions which relied upon distro-patched
-+    # setuptools present in CPython, but not within setuptools itself.
-+
-+    def test_pylint_pkg(self):
-+        os.environ['SETUPTOOLS_USE_DISTUTILS'] = 'stdlib'
-+        pyrun("-m", "pylint", "qemu/")
-+
-+    def test_pylint_scripts(self):
-+        os.environ['SETUPTOOLS_USE_DISTUTILS'] = 'stdlib'
-+        pyrun("-m", "pylint", "qemu/")
-+
-+    def test_pylint_qapi(self):
-+        os.environ['SETUPTOOLS_USE_DISTUTILS'] = 'stdlib'
-+        pyrun("-m", "pylint",
-+              "--rcfile=../scripts/qapi/pylintrc",
-+              "../scripts/qapi/",
-+              "../docs/sphinx/qapidoc.py",
-+              "../docs/sphinx/qapi_domain.py")
-+
-+    def test_pylint_iotests(self):
-+        os.environ['SETUPTOOLS_USE_DISTUTILS'] = 'stdlib'
-+        cwd = os.getcwd()
-+        try:
-+            os.chdir("../tests/qemu-iotests/")
-+            pyrun("-m", "linters", "--pylint")
-+        finally:
-+            os.chdir(cwd)
-diff --git a/python/tests/minreqs.txt b/python/tests/minreqs.txt
-index 38b17d17e14..19912027076 100644
---- a/python/tests/minreqs.txt
-+++ b/python/tests/minreqs.txt
-@@ -32,6 +32,7 @@ fusepy==2.0.4
+ [options]
+@@ -162,7 +163,7 @@ multi_line_output=3
+ # of python available on your system to run this test.
  
- # Test-runners, utilities, etc.
- avocado-framework==90.0
-+pytest==6.0.2
+ [tox:tox]
+-envlist = py39, py310, py311, py312, py313
++envlist = py39, py310, py311, py312, py313, py314
+ skip_missing_interpreters = true
  
- # Linters
- flake8==5.0.4
+ [testenv]
 -- 
 2.53.0
 
