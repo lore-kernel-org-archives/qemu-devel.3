@@ -4,110 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D18FE83849
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Feb 2026 06:19:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6DE8E83856
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Feb 2026 06:35:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vsEQE-00047u-Q0; Tue, 17 Feb 2026 01:18:58 -0500
+	id 1vsEfF-0006QD-7R; Tue, 17 Feb 2026 01:34:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1vsEQD-00047e-8E; Tue, 17 Feb 2026 01:18:57 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vsEf7-0006Pj-9q
+ for qemu-devel@nongnu.org; Tue, 17 Feb 2026 01:34:22 -0500
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1vsEQB-0007a3-S2; Tue, 17 Feb 2026 01:18:56 -0500
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 61H2rmpk2549181; Tue, 17 Feb 2026 06:18:54 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-type:date:from:in-reply-to:message-id:mime-version
- :references:subject:to; s=pp1; bh=+7gVyrDBdKOEm4gVE8xp/DOMIQiY9z
- iyZ1V8JFm9gq0=; b=P4LVQC4jB/UX3A7O8KnEqigUMKRlz9UXRmS+PREvikxh+t
- RTHO+G6kAoeSRxG91InvTHBX7Ws5Aoj/VuFq/ZdTA4tyT0/aFZsgl6DiNHfLWb0b
- TxLVcQCJMua3yehqf47H2K2iGCUz1xm5O+ZJl4hysaBKj2D/b6YzCvKB8T4lkctg
- egETaHZ8ZJ2UCww9cjuvU68vwYKBMqRJnZqZtvbMivZQs2QS/vQHnYF+ee6N9o6q
- Y+XC6nzm/3vweaI/2VtFnC92Yssk/CmLnhW3VmH7Ej6rbZOYS1gk0YH9c6Yxng3s
- wTQ+Pl1saG1jJqg0OmNEGsJ592BjDn6V04DV/piA==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4cajcj9xwm-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 17 Feb 2026 06:18:54 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 61H356IN017769;
- Tue, 17 Feb 2026 06:18:54 GMT
-Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4ccb289bc2-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 17 Feb 2026 06:18:53 +0000
-Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
- [10.20.54.106])
- by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 61H6IogA30015922
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 17 Feb 2026 06:18:50 GMT
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id EF2012004B;
- Tue, 17 Feb 2026 06:18:49 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 5C92520040;
- Tue, 17 Feb 2026 06:18:48 +0000 (GMT)
-Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com (unknown
- [9.109.199.210])
- by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTPS;
- Tue, 17 Feb 2026 06:18:48 +0000 (GMT)
-Date: Tue, 17 Feb 2026 11:48:46 +0530
-From: Aditya Gupta <adityag@linux.ibm.com>
-To: Hari Bathini <hbathini@linux.ibm.com>
-Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
- Sourabh Jain <sourabhjain@linux.ibm.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>
-Subject: Re: [PATCH v2 2/9] hw/ppc: Implement S0 SBE interrupt as cpu_pause
- then host reset
-Message-ID: <aZQIJHZekWD-sWqI@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
-References: <20251206055648.1908734-1-adityag@linux.ibm.com>
- <20251206055648.1908734-3-adityag@linux.ibm.com>
- <9b6db774-cba5-49f7-b0ec-d56232cbeb99@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vsEf4-0004Qd-5m
+ for qemu-devel@nongnu.org; Tue, 17 Feb 2026 01:34:21 -0500
+Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 61H6WCtF029340
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Tue, 17 Feb 2026 15:33:42 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=P/4xLX2g/W1/mYaojAwyVVHOpMfF05ph5kUzJocPcDw=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=Message-ID:Date:Subject:To:From;
+ s=rs20250326; t=1771310023; v=1;
+ b=VNHOxBgma63YQ9cVF5dzDifNIfXbRf8nS17he2iNCE6rbBx83MDHT/CmHVkYnnYv
+ v/2QICfW7BZ0L3C9TakSrjnzIuJxWP2PA7DVD9xFdOnoCtS6qIDgYEzjciSD6iH5
+ kNfolaxfmUFJp4bk38Bqu3J3gjU97azh0EfeuDf5Aof9PJVfK9w6hJPlmeGSgXP3
+ Rw+L/6ZBF+t/hoYUylEob2wJC689fOaCeGcE843WorslqSHLKjWvvXLsVazU5VjG
+ jfqkiHwBVztoYPCTmFmE9i4qA4/BCeYIBUb0AQOyXAYvBbQbDl7nUNP/h2kKtkMA
+ 21oyS46QJel5v09vc79Y7Q==
+Message-ID: <9116c5dd-d0ee-4a6e-b318-bbd410ad09ee@rsg.ci.i.u-tokyo.ac.jp>
+Date: Tue, 17 Feb 2026 15:32:12 +0900
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <9b6db774-cba5-49f7-b0ec-d56232cbeb99@linux.ibm.com>
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: 9JV_USjEfsH7nU4mCooc0JVNXWqVLNry
-X-Authority-Analysis: v=2.4 cv=Md9hep/f c=1 sm=1 tr=0 ts=6994084e cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=kj9zAlcOel0A:10 a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22 a=jZP69XEFQdFFEnHkrXwA:9
- a=CjuIK1q_8ugA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjE3MDA0OSBTYWx0ZWRfX9Npp7rrCpiAI
- Y/AjL4u5GhxJVfIX2OH5jt6hphfKPpoCu/TP2WoZPciqUr/t7m0RaiCn8jJB7hH4G0FSNwsVNpK
- lXTo7zc3j4MNEI5PoBCMw47iclysWo03N4eM53VTkXb/sUflwd6SpGiwM/fWAVFK9NioagZWah4
- kE0Q8nUJxuD9CzyyWmuwC6IV70hZY/jrXTYR+9vVTj9vKt+ouma5YW4zQsCG3v4hbk5oZxMAsXm
- K+TvCJl0oUQyUEmEqkz48Dv4N+ieMl+AopvMk6yZfXG7RWxvnDo0ctkIi4uIPVrZFfevugXhW5Z
- jzkawCu7/TgwRJHVEdkZNSnZql5LsF+wnBKOPmYylfbdskDCW6LjY+uxibFSU9Q4PNdkWzspsNf
- LVwatQZlivxisXkyBT2z4glun2bh7X4+sF9ootNLjqHy1FdOQGhBwnoK0D0I3f73VFdtOaPAngd
- i2LLx3QJcdmiSNAhB1g==
-X-Proofpoint-GUID: 9JV_USjEfsH7nU4mCooc0JVNXWqVLNry
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-02-17_01,2026-02-16_04,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 impostorscore=0 lowpriorityscore=0 spamscore=0 adultscore=0
- priorityscore=1501 suspectscore=0 malwarescore=0 phishscore=0 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2601150000 definitions=main-2602170049
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=adityag@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v17 06/18] virtio-gpu: Unset context after GL operations
+To: Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Huang Rui <ray.huang@amd.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>,
+ Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Yiwei Zhang <zzyiwei@gmail.com>,
+ Sergio Lopez Pascual <slp@redhat.com>
+Cc: Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
+ Gurchetan Singh <gurchetansingh@chromium.org>, Alyssa Ross <hi@alyssa.is>,
+ =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger.pau@citrix.com>,
+ Alex Deucher <alexander.deucher@amd.com>,
+ Stefano Stabellini <stefano.stabellini@amd.com>,
+ =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
+ Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
+ Honglei Huang <honglei1.huang@amd.com>,
+ Julia Zhang <julia.zhang@amd.com>, Chen Jiqian <Jiqian.Chen@amd.com>,
+ Rob Clark <robdclark@gmail.com>, Robert Beckett <bob.beckett@collabora.com>
+References: <20260216191213.2556073-1-dmitry.osipenko@collabora.com>
+ <20260216191213.2556073-7-dmitry.osipenko@collabora.com>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <20260216191213.2556073-7-dmitry.osipenko@collabora.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,21 +92,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26/01/19 01:11PM, Hari Bathini wrote:
+On 2026/02/17 4:12, Dmitry Osipenko wrote:
+> VirtIO-GPU commands may be processed outside of main-loop, from a CPU
+> thread. This results in GL context switch failure because context is held
+> by main-loop thread when GL is invoked from CPU thread. Always release GL
+> context after performing GL operations such that other threads could take
+> over the context.
 > 
+>   0  SDL_GL_MakeCurrent() (libSDL3)
+>   1  SDL_GL_MakeCurrent_REAL() (libSDL2)
+>   2  sdl2_gl_make_context_current() (ui/sdl2-gl.c:201)
+>   3  make_current() (virglrenderer.c:639)
+>   4  vrend_finish_context_switch() (vrend_renderer.c:11630)
+>   5  vrend_hw_switch_context() (vrend_renderer.c:11613)
+>   6  vrend_renderer_force_ctx_0() (vrend_renderer.c:12986)
+>   7  virgl_renderer_force_ctx_0() (virglrenderer.c:460)
+>   8  virtio_gpu_virgl_process_cmd() (virtio-gpu-virgl.c:1013)
+>   9  virtio_gpu_process_cmdq() (virtio-gpu.c:1050)
+>   10 virtio_gpu_gl_handle_ctrl() (virtio-gpu-gl.c:86)
+>   11 aio_bh_poll() (util/async.c)
+>   12 aio_poll() (util/aio-posix.c)
+>   13 blk_pwrite() (block/block-gen.c:1985)
+>   14 pflash_update() (pflash_cfi01.c:396)
+>   15 pflash_write() (pflash_cfi01.c:541)
+>   16 memory_region_dispatch_write() (system/memory.c:1554)
+>   17 flatview_write() (system/physmem.c:3333)
+>   18 address_space_write() (system/physmem.c:3453)
+>   19 kvm_cpu_exec() (accel/kvm/kall-all.c:3248)
+>   20 kvm_vcpu_thread_fn() (accel/kvm/kaccel-ops.c:53)
 > 
-> On 06/12/25 11:26 am, Aditya Gupta wrote:
-> > During MPIPL (aka fadump), OPAL triggers the S0 SBE interrupt to trigger
-> > MPIPL.
+> Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+> ---
+>   hw/display/virtio-gpu-virgl.c | 21 ++++++++++++++++++---
+>   1 file changed, 18 insertions(+), 3 deletions(-)
 > 
-> As mentioned in cover letter, add more clarity by mentioning that
-> kernel initiates fadump with OPAL call. Skiboot then triggers S0
-> SBE interrupt...
+> diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+> index 0f754829fb71..cde1a7a8426f 100644
+> --- a/hw/display/virtio-gpu-virgl.c
+> +++ b/hw/display/virtio-gpu-virgl.c
+> @@ -896,14 +896,19 @@ static void virgl_cmd_set_scanout_blob(VirtIOGPU *g,
+>   }
+>   #endif
+>   
+> -void virtio_gpu_virgl_process_cmd(VirtIOGPU *g,
+> -                                      struct virtio_gpu_ctrl_command *cmd)
+> +static void virtio_gpu_virgl_unset_gl_context(void)
+> +{
+> +    dpy_gl_ctx_make_current(qemu_console_lookup_default(), NULL);
 
-Will add here also. Thanks Hari !
+An appropriate console needs to be selected as 
+virgl_make_context_current() does.
 
-- Aditya G
+> +}
+> +
+> +static void
+> +virtio_gpu_virgl_do_process_cmd(VirtIOGPU *g,
 
-> 
-> - Hari
+Although it is a common practice to differentiate functions with having 
+a word like "do", I see it as a bad one. The word conveys no meaning at 
+all. A more descriptive phrase like "with_ctx" may be better.
+
+Regards,
+Akihiko Odaki
+
+> +                                struct virtio_gpu_ctrl_command *cmd)
+>   {
+>       bool cmd_suspended = false;
+>   
+>       VIRTIO_GPU_FILL_CMD(cmd->cmd_hdr);
+>   
+> -    virgl_renderer_force_ctx_0();
+>       switch (cmd->cmd_hdr.type) {
+>       case VIRTIO_GPU_CMD_CTX_CREATE:
+>           virgl_cmd_context_create(g, cmd);
+> @@ -1010,6 +1015,14 @@ void virtio_gpu_virgl_process_cmd(VirtIOGPU *g,
+>       virgl_renderer_create_fence(cmd->cmd_hdr.fence_id, cmd->cmd_hdr.type);
+>   }
+>   
+> +void virtio_gpu_virgl_process_cmd(VirtIOGPU *g,
+> +                                  struct virtio_gpu_ctrl_command *cmd)
+> +{
+> +    virgl_renderer_force_ctx_0();
+> +    virtio_gpu_virgl_do_process_cmd(g, cmd);
+> +    virtio_gpu_virgl_unset_gl_context();
+> +}
+> +
+>   static void virgl_write_fence(void *opaque, uint32_t fence)
+>   {
+>       VirtIOGPU *g = opaque;
+> @@ -1136,8 +1149,10 @@ static void virtio_gpu_fence_poll(void *opaque)
+>       VirtIOGPU *g = opaque;
+>       VirtIOGPUGL *gl = VIRTIO_GPU_GL(g);
+>   
+> +    virgl_renderer_force_ctx_0();
+>       virgl_renderer_poll();
+>       virtio_gpu_process_cmdq(g);
+> +    virtio_gpu_virgl_unset_gl_context();
+>       if (!QTAILQ_EMPTY(&g->cmdq) || !QTAILQ_EMPTY(&g->fenceq)) {
+>           timer_mod(gl->fence_poll, qemu_clock_get_ms(QEMU_CLOCK_VIRTUAL) + 10);
+>       }
+
 
