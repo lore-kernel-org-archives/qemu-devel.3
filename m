@@ -4,92 +4,121 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79C99E909CF
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Feb 2026 15:53:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D515AE909D0
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Feb 2026 16:16:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vsNMC-0002Ka-W7; Tue, 17 Feb 2026 10:51:25 -0500
+	id 1vsNjB-00017q-5C; Tue, 17 Feb 2026 11:15:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
- id 1vsMx5-0003bn-Um
- for qemu-devel@nongnu.org; Tue, 17 Feb 2026 10:25:27 -0500
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vsNj9-00017Y-GR
+ for qemu-devel@nongnu.org; Tue, 17 Feb 2026 11:15:07 -0500
+Received: from smtp-out2.suse.de ([195.135.223.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
- id 1vsMx3-0005fs-Bm
- for qemu-devel@nongnu.org; Tue, 17 Feb 2026 10:25:27 -0500
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-482f454be5bso59766745e9.0
- for <qemu-devel@nongnu.org>; Tue, 17 Feb 2026 07:25:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mihalicyn.com; s=mihalicyn; t=1771341923; x=1771946723; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=IlHEsOq1lRlSlooXzt+pm7Wiy/G62pSLyPWrCWOS3Ss=;
- b=Zgo9xmHCbHyQf5Ac4xadpHtoeuCl8D4XBQR6Wad89JN6KW1p7pQLM6OKUp0S3vBt9K
- pFSJcvIb/OSahgC7/7yb0OJmXTCaF3syFr0BknxuIA7Z+gk5BZxsyjjuZV2TGH8ZlRIq
- qQjIBTur1Q9SikCC+E4c+n8FRGaXDMVT/pybM=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771341923; x=1771946723;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=IlHEsOq1lRlSlooXzt+pm7Wiy/G62pSLyPWrCWOS3Ss=;
- b=UgzdNmSR9ZIXLciWC8MqPrcuyp6KIVKhqXZN43lEh1Ix/jqlLoavOC5l/ZY2MpbceZ
- hggxat0uPLs3yNjUhVk3coh4k+hnaNtgvEtgCSDO4+7a32IpdEV4b3ZUk/hwpRxOta+G
- Kv5aVRcZN7mqQabUz3/TxpRfoDCaeJQPzEfYXDpLT6uzklxmv/fdl1IHVsU6fNTeAUd0
- SjeMiUzQw6hNNtMrxHJTmDurMCPd53IJR8uDXPhGKrwyAJBEdfRQ2zBc1JsIUcWEk+JW
- ApTVTYAxPtCsp4VwQejKS9irLiZSm73Fb7NXBgPH7AFFR5lcFjJGaWLlE0uv9aRmyZCO
- 5m1w==
-X-Gm-Message-State: AOJu0Yz24rqNRDr/2lH8GTqufLH0XEfeL81HRpKJr7xE01waTbNpKrsC
- vZOOrCBhEKwoJfFcDvwpsa244QTD0/IfDd8w8+LVwvXtJS+5m0MkGQsOlPUR4B7/8/OBaOK2j5v
- elduz
-X-Gm-Gg: AZuq6aK5k1wip9vWHx4oooi4Ha+pAwpG4onyiKdOsJc82zqiDeWb9LCoZZPGV4EJI98
- B3ilPg8kKwKdok0vfa3ELnK4KxSJ7KSZXEzpu898g22XVXkkcj26edw0HK/gYn0bMI9vPhkykWL
- y4onTg9/D5HIa6XiKZ1pTbUBhgWD4xjZYB1zhERo5fTukrNcgxNv5HR3GaM3rm5omtCf/nt/TRz
- +cmbI2dJLt6vrW5wdnVikkcruazex14Wg6Wb5pzOGvAzjYtvDdHNVnuDsKUzj68GWWeOYQWPNs+
- u1EdRDffgOV8vC4GNJOaW6Oz1K0AziPIIYuCMvldwdbXnmw0HrB8Rnj5gPvmDt2vHTDGKDJ6/4y
- gagQdLRolkC50uXPF8N6Dm23bfDr9+Jlx+erZEMluTyBNw4oJ/sj9pKNtKGM6QeyGTQGRntvaK8
- n+MNl9aGgpjQzWMcW5RwTWbF1h4cDCLE0Nj3RzGQ0hAmgSJaeUnk17T3Kq+kwCDek3WrwZNrQYv
- +iWdIuQv16K4MeOBnkTMlw=
-X-Received: by 2002:a05:600c:6b6b:b0:477:9a61:fd06 with SMTP id
- 5b1f17b1804b1-48378d62cb2mr146393345e9.8.1771341923213; 
- Tue, 17 Feb 2026 07:25:23 -0800 (PST)
-Received: from alex-laptop.lan
- (p200300cf574bcf00ffb15ba913f79a3b.dip0.t-ipconnect.de.
- [2003:cf:574b:cf00:ffb1:5ba9:13f7:9a3b])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4835dd0e327sm519169015e9.14.2026.02.17.07.25.22
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 17 Feb 2026 07:25:22 -0800 (PST)
-From: Alexander Mikhalitsyn <alexander@mihalicyn.com>
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vsNj7-000369-LV
+ for qemu-devel@nongnu.org; Tue, 17 Feb 2026 11:15:07 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 487285BD25;
+ Tue, 17 Feb 2026 16:14:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1771344893; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=lXS3qPLaaXZTCH90dpwD2LMixcjitYHHrgCtwvXeX1M=;
+ b=slWUp8qc2/LdKG/VYXlMo4E1TuJ0H1/zl+EBX4ezaZW+AmcO6DVLiFF8sICMXJWxxN0hLn
+ Bbt4e318zYru0uahbwnCiX4mg3HYV9E/SNA8dCMpyZvujQzgkkJXmoou2qYq0LNbGZ2zS2
+ ZS8Wy6LRZ8456tOOb05KxFSG8gr7Or0=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1771344893;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=lXS3qPLaaXZTCH90dpwD2LMixcjitYHHrgCtwvXeX1M=;
+ b=7DKaFzuqEkS1fFvWd/Y0KHrx3b4njF2gCXBjAP5Jmf6bZGLHBXrVziOLQs3qr1RBy3/QVk
+ JgMUdHYbIqIIJdDA==
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=slWUp8qc;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=7DKaFzuq
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1771344893; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=lXS3qPLaaXZTCH90dpwD2LMixcjitYHHrgCtwvXeX1M=;
+ b=slWUp8qc2/LdKG/VYXlMo4E1TuJ0H1/zl+EBX4ezaZW+AmcO6DVLiFF8sICMXJWxxN0hLn
+ Bbt4e318zYru0uahbwnCiX4mg3HYV9E/SNA8dCMpyZvujQzgkkJXmoou2qYq0LNbGZ2zS2
+ ZS8Wy6LRZ8456tOOb05KxFSG8gr7Or0=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1771344893;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=lXS3qPLaaXZTCH90dpwD2LMixcjitYHHrgCtwvXeX1M=;
+ b=7DKaFzuqEkS1fFvWd/Y0KHrx3b4njF2gCXBjAP5Jmf6bZGLHBXrVziOLQs3qr1RBy3/QVk
+ JgMUdHYbIqIIJdDA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 917053EA66;
+ Tue, 17 Feb 2026 16:14:51 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id SC6cFfuTlGmHTgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 17 Feb 2026 16:14:51 +0000
+From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
-Cc: Jesper Devantier <foss@defmacro.it>, Peter Xu <peterx@redhat.com>,
- Klaus Jensen <its@irrelevant.dk>, Fabiano Rosas <farosas@suse.de>,
- qemu-block@nongnu.org, Keith Busch <kbusch@kernel.org>,
- Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
-Subject: [PATCH 3/4] migration: add VMSTATE_VARRAY_OF_POINTER_TO_STRUCT_ALLOC
-Date: Tue, 17 Feb 2026 16:25:16 +0100
-Message-ID: <20260217152517.271422-4-alexander@mihalicyn.com>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260217152517.271422-1-alexander@mihalicyn.com>
-References: <20260217152517.271422-1-alexander@mihalicyn.com>
+Cc: Peter Xu <peterx@redhat.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>
+Subject: [PULL 03/32] migration: Notify migration FAILED before starting VM
+Date: Tue, 17 Feb 2026 13:14:14 -0300
+Message-ID: <20260217161443.12738-4-farosas@suse.de>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20260217161443.12738-1-farosas@suse.de>
+References: <20260217161443.12738-1-farosas@suse.de>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=alexander@mihalicyn.com; helo=mail-wm1-x331.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spamd-Result: default: False [-3.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
+ NEURAL_HAM_SHORT(-0.20)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ MIME_GOOD(-0.10)[text/plain]; MX_GOOD(-0.01)[];
+ TO_DN_SOME(0.00)[]; FUZZY_RATELIMITED(0.00)[rspamd.com];
+ MIME_TRACE(0.00)[0:+];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ RCVD_TLS_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ RCPT_COUNT_FIVE(0.00)[5]; RCVD_COUNT_TWO(0.00)[2];
+ TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,suse.de:mid,suse.de:dkim,suse.de:email];
+ URIBL_BLOCKED(0.00)[imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,suse.de:mid,suse.de:dkim,suse.de:email];
+ DKIM_TRACE(0.00)[suse.de:+]
+X-Rspamd-Action: no action
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+X-Rspamd-Queue-Id: 487285BD25
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Tue, 17 Feb 2026 10:51:21 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -104,154 +133,113 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
+From: Peter Xu <peterx@redhat.com>
 
-Add VMSTATE_VARRAY_OF_POINTER_TO_STRUCT_ALLOC, which
-helps to save/restore a dynamic array of pointers to
-structures.
+Devices may opt-in migration FAILED notifiers to be invoked when migration
+fails.  Currently, the notifications happen in migration_cleanup().  It is
+normally fine, but maybe not ideal if there's dependency of the fallback
+v.s. VM starts.
 
-Signed-off-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
+This patch moves the FAILED notification earlier, so that if the failure
+happened during switchover, it'll notify before VM restart.
+
+After walking over all existing FAILED notifier users, I got the conclusion
+that this should also be a cleaner approach at least from design POV.
+
+We have these notifier users, where the first two do not need to trap
+FAILED:
+
+|----------------------------+-------------------------------------+---------------------|
+| device                     | handler                             | events needed       |
+|----------------------------+-------------------------------------+---------------------|
+| gicv3                      | kvm_arm_gicv3_notifier              | DONE                |
+| vfio_iommufd / vfio_legacy | vfio_cpr_reboot_notifier            | SETUP               |
+| cpr-exec                   | cpr_exec_notifier                   | FAILED, DONE        |
+| virtio-net                 | virtio_net_migration_state_notifier | SETUP, FAILED       |
+| vfio                       | vfio_migration_state_notifier       | FAILED              |
+| vdpa                       | vdpa_net_migration_state_notifier   | SETUP, FAILED       |
+| spice [*]                  | migration_state_notifier            | SETUP, FAILED, DONE |
+|----------------------------+-------------------------------------+---------------------|
+
+For cpr-exec, it tries to cleanup some cpr-exec specific fd or env
+variables.  This should be fine either way, as long as before
+migration_cleanup().
+
+For virtio-net, we need to re-plug the primary device back to guest in the
+failover mode.  Likely benign.
+
+VFIO needs to re-start the device if FAILED.  IIUC it should do it before
+vm_start(), if the VFIO device can be put into a STOPed state due to
+migration, we should logically make it running again before vCPUs run.
+
+VDPA will disable SVQ when migration is FAILED.  Likely benign too, but
+looks better if we can do it before resuming vCPUs.
+
+For spice, we should rely on "spice_server_migrate_end(false)" to retake
+the ownership.  Benign, but looks more reasonable if the spice client does
+it before VM runs again.
+
+Note that this change may introduce slightly more downtime, if the
+migration failed exactly at the switchover phase.  But that's very rare,
+and even if it happens, none of above expects a long delay, but a short
+one, likely will be buried in the total downtime even if failed.
+
+Cc: Cédric Le Goater <clg@redhat.com>
+Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
+Acked-by: Stefan Hajnoczi <stefanha@redhat.com>
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Signed-off-by: Peter Xu <peterx@redhat.com>
+Link: https://lore.kernel.org/qemu-devel/20260126213614.3815900-4-peterx@redhat.com
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- include/migration/vmstate.h | 21 +++++++++
- migration/vmstate-types.c   | 88 +++++++++++++++++++++++++++++++++++++
- 2 files changed, 109 insertions(+)
+ migration/migration.c | 19 +++++++++++++++----
+ 1 file changed, 15 insertions(+), 4 deletions(-)
 
-diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
-index 89f9f49d20a..bc6495a7f67 100644
---- a/include/migration/vmstate.h
-+++ b/include/migration/vmstate.h
-@@ -265,6 +265,7 @@ extern const VMStateInfo vmstate_info_bitmap;
- extern const VMStateInfo vmstate_info_qtailq;
- extern const VMStateInfo vmstate_info_gtree;
- extern const VMStateInfo vmstate_info_qlist;
-+extern const VMStateInfo vmstate_info_ptrs_array_entry;
+diff --git a/migration/migration.c b/migration/migration.c
+index bd24006c1a..8d1c294b47 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -1283,7 +1283,6 @@ static void migration_cleanup_json_writer(MigrationState *s)
  
- #define type_check_2darray(t1,t2,n,m) ((t1(*)[n][m])0 - (t2*)0)
- /*
-@@ -537,6 +538,26 @@ extern const VMStateInfo vmstate_info_qlist;
-     .offset     = vmstate_offset_array(_s, _f, _type*, _n),          \
+ static void migration_cleanup(MigrationState *s)
+ {
+-    MigrationEventType type;
+     QEMUFile *tmp = NULL;
+ 
+     trace_migration_cleanup();
+@@ -1333,9 +1332,14 @@ static void migration_cleanup(MigrationState *s)
+                           MIGRATION_STATUS_CANCELLED);
+     }
+ 
+-    type = migration_has_failed(s) ? MIG_EVENT_PRECOPY_FAILED :
+-                                     MIG_EVENT_PRECOPY_DONE;
+-    migration_call_notifiers(type, NULL);
++    /*
++     * FAILED notification should have already happened.  Notify DONE if
++     * migration completed successfully.
++     */
++    if (!migration_has_failed(s)) {
++        migration_call_notifiers(MIG_EVENT_PRECOPY_DONE, NULL);
++    }
++
+     yank_unregister_instance(MIGRATION_YANK_INSTANCE);
  }
  
-+/*
-+ * For migrating a dynamically allocated uint32-indexed array
-+ * of pointers to structures (with NULL entries and with auto memory allocation).
-+ *
-+ * _type: type of structure pointed to
-+ * _vmsd: VMSD for structure
-+ * start: size of structure pointed to (for auto memory allocation)
-+ */
-+#define VMSTATE_VARRAY_OF_POINTER_TO_STRUCT_ALLOC(_field, _state, _field_num, _version, _vmsd, _type) { \
-+    .name       = (stringify(_field)),                                \
-+    .version_id = (_version),                                         \
-+    .num_offset = vmstate_offset_value(_state, _field_num, uint32_t), \
-+    .info       = &vmstate_info_ptrs_array_entry,                     \
-+    .vmsd       = &(_vmsd),                                           \
-+    .start      = sizeof(_type),                                      \
-+    .size       = sizeof(_type *),                                    \
-+    .flags      = VMS_VARRAY_UINT32|VMS_POINTER,                      \
-+    .offset     = vmstate_offset_pointer(_state, _field, _type *),    \
-+}
+@@ -3323,6 +3327,13 @@ static void migration_iteration_finish(MigrationState *s)
+             error_free(local_err);
+             break;
+         }
 +
- #define VMSTATE_VARRAY_OF_POINTER_UINT32(_field, _state, _field_num, _version, _info, _type) { \
-     .name       = (stringify(_field)),                                    \
-     .version_id = (_version),                                             \
-diff --git a/migration/vmstate-types.c b/migration/vmstate-types.c
-index 89cb2114721..3335377cd07 100644
---- a/migration/vmstate-types.c
-+++ b/migration/vmstate-types.c
-@@ -942,3 +942,91 @@ const VMStateInfo vmstate_info_qlist = {
-     .get  = get_qlist,
-     .put  = put_qlist,
- };
++        /*
++         * Notify FAILED before starting VM, so that devices can invoke
++         * necessary fallbacks before vCPUs run again.
++         */
++        migration_call_notifiers(MIG_EVENT_PRECOPY_FAILED, NULL);
 +
-+static int put_ptrs_array_entry(QEMUFile *f, void *ppv, size_t unused_size,
-+                                const VMStateField *field, JSONWriter *vmdesc)
-+{
-+    const VMStateDescription *vmsd = field->vmsd;
-+    int ret;
-+    Error *local_err = NULL;
-+    void *pv;
-+
-+    /*
-+     * (ppv) is an address of an i-th element of a dynamic array.
-+     *
-+     * (ppv) can not be NULL unless we have some regression/bug in
-+     * vmstate_save_state_v(), because it is result of pointer arithemic like:
-+     * first_elem + size * i.
-+     */
-+    if (ppv == NULL) {
-+        error_report("vmstate: put_ptrs_array_entry must be called with ppv != NULL");
-+        return -EINVAL;
-+    }
-+
-+    /* get a pointer to a structure */
-+    pv = *(void **)ppv;
-+
-+    if (pv == NULL) {
-+        /* write a mark telling that there was a NULL pointer */
-+        qemu_put_byte(f, false);
-+        return 0;
-+    }
-+
-+    /* if pointer is not NULL, dump the structure contents with help of vmsd */
-+    qemu_put_byte(f, true);
-+    ret = vmstate_save_state(f, vmsd, pv, vmdesc, &local_err);
-+    if (ret) {
-+        error_report_err(local_err);
-+        return ret;
-+    }
-+
-+    return 0;
-+}
-+
-+static int get_ptrs_array_entry(QEMUFile *f, void *ppv, size_t unused_size,
-+                                const VMStateField *field)
-+{
-+    int ret = 0;
-+    Error *local_err = NULL;
-+    const VMStateDescription *vmsd = field->vmsd;
-+    /* size of structure pointed to by elements of array */
-+    size_t size = field->start;
-+
-+    if (ppv == NULL) {
-+        error_report("vmstate: get_ptrs_array_entry must be called with ppv != NULL");
-+        return -EINVAL;
-+    }
-+
-+    /*
-+     * We start from a clean array, all elements must be NULL, unless
-+     * something we haven't prepared for has changed in vmstate_save_state_v().
-+     * Let's check for this just in case.
-+     */
-+    if (*(void **)ppv != NULL) {
-+        error_report("vmstate: get_ptrs_array_entry must be called with *ppv == NULL");
-+        return -EINVAL;
-+    }
-+
-+    if (qemu_get_byte(f)) {
-+        void *pv;
-+
-+        /* allocate memory for structure */
-+        pv = g_malloc0(size);
-+        ret = vmstate_load_state(f, vmsd, pv, vmsd->version_id, &local_err);
-+        if (ret) {
-+            error_report_err(local_err);
-+            g_free(pv);
-+            return ret;
-+        }
-+
-+        *(void **)ppv = pv;
-+    }
-+
-+    return ret;
-+}
-+
-+const VMStateInfo vmstate_info_ptrs_array_entry = {
-+    .name = "ptrs_array_entry",
-+    .get  = get_ptrs_array_entry,
-+    .put  = put_ptrs_array_entry,
-+};
+         if (runstate_is_live(s->vm_old_state)) {
+             if (!runstate_check(RUN_STATE_SHUTDOWN)) {
+                 vm_start();
 -- 
-2.47.3
+2.51.0
 
 
