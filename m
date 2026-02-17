@@ -4,52 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A02A5E68152
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Feb 2026 09:15:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D808E68152
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Feb 2026 09:20:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vsHB4-0002CT-QF; Tue, 17 Feb 2026 04:15:30 -0500
+	id 1vsHFh-00036D-Q2; Tue, 17 Feb 2026 04:20:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vsHB3-0002C5-Qi
- for qemu-devel@nongnu.org; Tue, 17 Feb 2026 04:15:29 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vsHFa-000358-KB
+ for qemu-devel@nongnu.org; Tue, 17 Feb 2026 04:20:10 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vsHB2-0004En-6m
- for qemu-devel@nongnu.org; Tue, 17 Feb 2026 04:15:29 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vsHFW-0006Jc-QS
+ for qemu-devel@nongnu.org; Tue, 17 Feb 2026 04:20:08 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771319727;
+ s=mimecast20190719; t=1771320005;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=aDzpoGBBYoeH57Jd3DWkZyqeucGK5dzJWPJaUmuLJFM=;
- b=YQjrqms42VWQcZqEJqFRNc0h04dKI9UD/Ltsn+VzOCtQ2WVLkjuQ4xwiUMbFaobU/Zq6Yg
- DZdqbMQ/eFu+whrgTZbbnSFNfns06zQdQtVIIiop1cbqrQugYdkFfz5FDCh1pc2eS/4kRg
- kqlKmYptw2glFxn+mahUBTMYiP2SXaQ=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=AsBR8/Iqhx9HE4Yl6lVt/EEhccFXAi+oCe31Sm6Cajc=;
+ b=G+xy16mhi61AXJdlhpHMIxhABm+LfKdvY1PvTbLOIt4l5hATRCQg93Ih9kLKG424lKj5J1
+ DcR98iWQXIyLe775Juy8qvq9GUA6E2n2DS8qpSWY0+bHXdCndqmk4njuqqDBm1XLMWWsBF
+ K8ssb5SJOnc/VrTY3e3holZIbZAw8vo=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-375-HHnSCOX2P-iHkKc6x6DT7w-1; Tue,
- 17 Feb 2026 04:15:23 -0500
-X-MC-Unique: HHnSCOX2P-iHkKc6x6DT7w-1
-X-Mimecast-MFC-AGG-ID: HHnSCOX2P-iHkKc6x6DT7w_1771319722
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-583--m36YO1YNHyTmmzb5GNSBQ-1; Tue,
+ 17 Feb 2026 04:20:01 -0500
+X-MC-Unique: -m36YO1YNHyTmmzb5GNSBQ-1
+X-Mimecast-MFC-AGG-ID: -m36YO1YNHyTmmzb5GNSBQ_1771320000
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 44CC21955D99; Tue, 17 Feb 2026 09:15:21 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4025A1955BE0; Tue, 17 Feb 2026 09:20:00 +0000 (UTC)
 Received: from [10.45.224.144] (unknown [10.45.224.144])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 890121800352; Tue, 17 Feb 2026 09:15:15 +0000 (UTC)
-Message-ID: <e72d300c-7869-4cb6-86d6-bfce906db232@redhat.com>
-Date: Tue, 17 Feb 2026 10:15:13 +0100
+ id 63D811800361; Tue, 17 Feb 2026 09:19:53 +0000 (UTC)
+Message-ID: <cbe2223e-a5a0-46f9-8ad1-780db59c4a6a@redhat.com>
+Date: Tue, 17 Feb 2026 10:19:52 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/8] Kconfig: add AUDIO dependency to audio-related devices
+Subject: Re: [PATCH 3/8] tests/qtest: remove -audio none when configured with
+ --disable-audio
 To: Sergei Heifetz <heifetz@yandex-team.com>, qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -60,7 +61,7 @@ Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
  Laurent Vivier <lvivier@redhat.com>
 References: <20260217052740.114117-1-heifetz@yandex-team.com>
- <20260217052740.114117-6-heifetz@yandex-team.com>
+ <20260217052740.114117-4-heifetz@yandex-team.com>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -105,7 +106,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20260217052740.114117-6-heifetz@yandex-team.com>
+In-Reply-To: <20260217052740.114117-4-heifetz@yandex-team.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
@@ -135,24 +136,29 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 17/02/2026 06.27, Sergei Heifetz wrote:
-> The idea of the `--disable-audio` option is to stop building audio-related
-> source files. Although this is not yet implemented, we can already make
-> the existing AUDIO Kconfig option a dependency for a number of devices so
-> that the build does not break when we remove `audio/` and other sources.
-> 
-> Note that some machines have embedded audio devices and therefore cannot
-> be used with `--disable-audio` at all. `-audio none` should be used for
-> such machines if audio needs to be muted.
-> 
-> The only device that is purposefully not included in this patch is PCSPK
-> (PC speaker), because its code has already been modified to work with
-> `--disable-audio`.
+> It does not matter much whether `-audio none` is passed. In the future,
+> support for `-audio none` with `--disable-audio` will be dropped, so we
+> should remove it beforehand.
 > 
 > Signed-off-by: Sergei Heifetz <heifetz@yandex-team.com>
 > ---
->   hw/audio/Kconfig | 21 ++++++++++++---------
->   hw/usb/Kconfig   |  2 +-
->   2 files changed, 13 insertions(+), 10 deletions(-)
+>   tests/qtest/libqtest.c | 2 ++
+>   1 file changed, 2 insertions(+)
+> 
+> diff --git a/tests/qtest/libqtest.c b/tests/qtest/libqtest.c
+> index 794d870085..adb968f40e 100644
+> --- a/tests/qtest/libqtest.c
+> +++ b/tests/qtest/libqtest.c
+> @@ -464,7 +464,9 @@ gchar *qtest_qemu_args(const char *extra_args)
+>                         "-chardev socket,path=%s,id=char0 "
+>                         "-mon chardev=char0,mode=control "
+>                         "-display none "
+> +#ifdef CONFIG_AUDIO
+>                         "-audio none "
+> +#endif
+>                         "%s"
+>                         "%s"
+>                         " -accel qtest",
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
