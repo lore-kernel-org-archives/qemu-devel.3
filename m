@@ -4,121 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46242E63F2B
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Feb 2026 07:46:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03239E63F2B
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Feb 2026 07:51:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vsFmE-0007rb-U0; Tue, 17 Feb 2026 02:45:46 -0500
+	id 1vsFrb-0000SS-PC; Tue, 17 Feb 2026 02:51:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vsFm8-0007qb-4o
- for qemu-devel@nongnu.org; Tue, 17 Feb 2026 02:45:40 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vsFrX-0000SG-UZ
+ for qemu-devel@nongnu.org; Tue, 17 Feb 2026 02:51:16 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vsFm6-0002uc-L7
- for qemu-devel@nongnu.org; Tue, 17 Feb 2026 02:45:39 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vsFrW-0003KX-9k
+ for qemu-devel@nongnu.org; Tue, 17 Feb 2026 02:51:15 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771314337;
+ s=mimecast20190719; t=1771314672;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=v5VBptMu9ExDiHr4iF3WoV8Yws8BvLp2SxJ3Osv3oio=;
- b=QBHpXyXoeIqCz0hzaLOxFmlEazJMeGbm0IWvP41/fjeCEy4YfT/Ue/vYmhfaRE0JEMSoqo
- +CpXleS76GQ+QO6OzZepGSeBU4/d1N2boTUj6xM6UczGSlWCYk9GERI3pJOU4dQD1O8XnB
- Gt0QEnXBntnIjTN/aibr+jZvvq3kuW0=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ in-reply-to:in-reply-to:references:references;
+ bh=Phars+mJG5yKR/1oErrVSZdj1G7B6wUb3lqEpzYli/A=;
+ b=VILAWZSzzc/ELE1FkZ9kMKuxIb1pkuccihQZPzE5ry/Eg1mndT/uYAW1ujgQE5XXJNVw8E
+ pB+JlymQuGcW7iG+joaczs6O7IaPRq8r7mnhmhmMVPWfjGhYXv10kv82aUMltXoChx2sLC
+ 7OnGCG6g6B4kw46+RDF2XJwX0yKXguU=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-479-lgA7x77-PdS8KZAl0G-waw-1; Tue,
- 17 Feb 2026 02:45:34 -0500
-X-MC-Unique: lgA7x77-PdS8KZAl0G-waw-1
-X-Mimecast-MFC-AGG-ID: lgA7x77-PdS8KZAl0G-waw_1771314332
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-161-2CD2rHs9M3qzZrSsHMpxaA-1; Tue,
+ 17 Feb 2026 02:51:08 -0500
+X-MC-Unique: 2CD2rHs9M3qzZrSsHMpxaA-1
+X-Mimecast-MFC-AGG-ID: 2CD2rHs9M3qzZrSsHMpxaA_1771314667
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5CAD718003F6; Tue, 17 Feb 2026 07:45:31 +0000 (UTC)
-Received: from [10.45.224.144] (unknown [10.45.224.144])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 44E0C1800352; Tue, 17 Feb 2026 07:45:17 +0000 (UTC)
-Message-ID: <ca4b107e-e21b-4ffe-b9e6-ef3d66c90a03@redhat.com>
-Date: Tue, 17 Feb 2026 08:45:15 +0100
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7EC7E1956052; Tue, 17 Feb 2026 07:51:07 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.14])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B26BF1800348; Tue, 17 Feb 2026 07:51:06 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 3A00021E692D; Tue, 17 Feb 2026 08:51:04 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Zhang Chen <zhangckid@gmail.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>,  "Dr . David Alan Gilbert"
+ <dave@treblig.org>,  Eric Blake <eblake@redhat.com>,  "Michael S .
+ Tsirkin" <mst@redhat.com>,  Stefan Hajnoczi <stefanha@redhat.com>
+Subject: Re: [PATCH V4 4/4] qapi: examine IOThread attachment status via
+ query-iothreads
+In-Reply-To: <20260213171622.55629-4-zhangckid@gmail.com> (Zhang Chen's
+ message of "Sat, 14 Feb 2026 01:16:22 +0800")
+References: <20260213171622.55629-1-zhangckid@gmail.com>
+ <20260213171622.55629-4-zhangckid@gmail.com>
+Date: Tue, 17 Feb 2026 08:51:04 +0100
+Message-ID: <87wm0bq047.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 19/19] python: add setuptools and wheel dependencies
-To: John Snow <jsnow@redhat.com>, qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Cleber Rosa <crosa@redhat.com>, Mahmoud Mandour <ma.mandourr@gmail.com>,
- Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Kyle Evans <kevans@freebsd.org>, Peter Xu <peterx@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
- Yonggang Luo <luoyonggang@gmail.com>, Warner Losh <imp@bsdimp.com>,
- Maksim Davydov <davydov-max@yandex-team.ru>,
- Alexandre Iooss <erdnaxe@crans.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Ed Maste <emaste@freebsd.org>, Kevin Wolf <kwolf@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Michael Roth <michael.roth@amd.com>,
- Li-Wen Hsu <lwhsu@freebsd.org>, Hanna Reitz <hreitz@redhat.com>
-References: <20260216212952.420120-1-jsnow@redhat.com>
- <20260216212952.420120-20-jsnow@redhat.com>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20260216212952.420120-20-jsnow@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -143,22 +88,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 16/02/2026 22.29, John Snow wrote:
-> Add setuptools and wheel packages to ease installation burden when
-> internet access is allowed. When internet access is not allowed, this
-> functions as a configure-time check ensuring that our environment has
-> the necessary minimum viable versions for these packaging tools
-> available.
-> 
-> For detailed information on Python ecosystem versions, please see
-> https://gitlab.com/jsnow/repology-dashboard#results-overview-as-of-2026-02-16
-> 
-> Suggested-by: Paolo Bonzini <pbonzini@redhat.com>
-> Signed-off-by: John Snow <jsnow@redhat.com>
-> ---
->   pythondeps.toml | 8 ++++++++
->   1 file changed, 8 insertions(+)
+Zhang Chen <zhangckid@gmail.com> writes:
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+> Extend the 'IOThreadInfo' structure to include attachment metrics.
+> This allows users to monitor how many devices are associated with
+> a specific IOThread and identify them by their QOM paths.
+>
+> New fields added to IOThreadInfo:
+> - @attached-cnt: An integer representing the number of devices
+>   currently using this IOThread's AioContext.
+> - @attached-dev: A string containing a delimited list ("|") of
+>   QOM paths for the attached devices.
+>
+> These fields are also exposed via the Human Monitor Interface (HMP)
+> command 'info iothreads' to assist with manual debugging and
+> performance tuning.
+>
+> Example QMP output:
+> {
+>     "id": "iothread0",
+>     "thread-id": 3134,
+>     "attached-cnt": 2,
+>     "attached-dev": "/machine/peripheral/blk1/virtio-backend | /machine/peripheral/blk0/virtio-backend",
+>     ...
+> }
+>
+> Signed-off-by: Zhang Chen <zhangckid@gmail.com>
+
+[...]
+
+> diff --git a/qapi/misc.json b/qapi/misc.json
+> index 1f5062df2a..ca53638684 100644
+> --- a/qapi/misc.json
+> +++ b/qapi/misc.json
+> @@ -76,6 +76,19 @@
+>  #
+>  # @thread-id: ID of the underlying host thread
+>  #
+> +# @attached-cnt: The parameter is a counter indicating how many
+> +#     active devices are currently associated with this iothread
+> +#     (e.g. virtio-blk).  In hotplug scenarios, users can
+> +#     pre-allocate multiple iothread objects to serve as a persistent
+> +#     thread pool.  When a device is hot-unplugged, the corresponding
+> +#     IOThread is released but remains available, allowing subsequent
+> +#     hot-plugged devices to attach to and reuse the existing thread.
+> +#     (since 11.0)
+> +#
+> +# @attached-dev: A list of QOM paths for the devices currently
+> +#     associated with this IOThread, delimited by " | ".
+> +#     Returns "none" if no devices are attached. (since 11.0)
+
+QAPI schema design maxim: do not encode structured data as strings.
+@attached-devs should be an array of QOM paths instead.
+
+Unless I misunderstand your docs, @attached-cnt is the number of QOM
+paths in @attached-dev, i.e. @attached-dev is redundant.  If this is the
+case, drop it.  If it isn't, educate me :)
+
+We generally avoid abbreviations in the QAPI schema: @attached-count,
+@attached-devices.
+
+> +#
+>  # @poll-max-ns: maximum polling time in ns, 0 means polling is
+>  #     disabled (since 2.9)
+>  #
+> @@ -93,6 +106,8 @@
+>  { 'struct': 'IOThreadInfo',
+>    'data': {'id': 'str',
+>             'thread-id': 'int',
+> +           'attached-cnt': 'int',
+> +           'attached-dev': 'str',
+>             'poll-max-ns': 'int',
+>             'poll-grow': 'int',
+>             'poll-shrink': 'int',
+> @@ -118,6 +133,8 @@
+>  #              {
+>  #                 "id":"iothread0",
+>  #                 "thread-id":3134,
+> +#                 "attached-cnt":2,
+> +#                 "attached-dev":/machine/peripheral/blk1/virtio-backend | /machine/peripheral/blk0/virtio-backend,
+
+Once again, the example is syntactically incorrect (the value lacks
+double quotes), and once again I recommend to create example I/O by
+actually running a test.  Getting tired of this, to be frank.
+
+>  #                 "poll-max-ns":32768,
+>  #                 "poll-grow":0,
+>  #                 "poll-shrink":0,
+> @@ -126,6 +143,8 @@
+>  #              {
+>  #                 "id":"iothread1",
+>  #                 "thread-id":3135,
+> +#                 "attached-cnt":1,
+> +#                 "attached-dev":/machine/peripheral/blk3/virtio-backend,
+
+Likewise.
+
+>  #                 "poll-max-ns":32768,
+>  #                 "poll-grow":0,
+>  #                 "poll-shrink":0,
 
 
