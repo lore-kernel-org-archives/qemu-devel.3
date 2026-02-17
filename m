@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEA9AE83847
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Feb 2026 01:56:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40ACFE83847
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Feb 2026 02:26:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vsAJS-0007ec-BW; Mon, 16 Feb 2026 20:55:42 -0500
+	id 1vsAmp-0003z0-WA; Mon, 16 Feb 2026 21:26:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
- id 1vsAJQ-0007eU-4F
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 20:55:40 -0500
-Received: from smtp-relay-services-0.canonical.com ([185.125.188.250])
+ id 1vsAmm-0003yp-Lu
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 21:26:01 -0500
+Received: from smtp-relay-services-1.canonical.com ([185.125.188.251])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
- id 1vsAJN-00037A-Ms
- for qemu-devel@nongnu.org; Mon, 16 Feb 2026 20:55:39 -0500
+ id 1vsAmh-00012p-P6
+ for qemu-devel@nongnu.org; Mon, 16 Feb 2026 21:25:59 -0500
 Received: from scripts.lp.internal (scripts.lp.internal [10.131.215.246])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-relay-services-0.canonical.com (Postfix) with ESMTPSA id 2B1483FEA0
- for <qemu-devel@nongnu.org>; Tue, 17 Feb 2026 01:55:34 +0000 (UTC)
+ by smtp-relay-services-1.canonical.com (Postfix) with ESMTPSA id 300FA3FAC3
+ for <qemu-devel@nongnu.org>; Tue, 17 Feb 2026 02:25:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=launchpad.net;
- s=20210803; t=1771293334;
- bh=m9ILcCHdrhTTOf/Vb9//mHnMRs/wHrp5t3ej3uAziL8=;
+ s=20210803; t=1771295153;
+ bh=Mv6ZHkF9i7dXA1bNjJE1RcBEMANVol7FiWiJwufsPsk=;
  h=MIME-Version:Content-Type:Date:From:To:Reply-To:References:
  Message-Id:Subject;
- b=o9f4kkU/WEmq/GJJHHAAojNZrZq4LrVpBrXe5xI2mTN3PWIB0m/dUQhRRc0WjUrMC
- rRDPpCYwsVft9TDgxIw87wKxbMw6E7c3dAHgti4PX/LVG/z2pwGlG9+XSMsEuPRSjc
- 4eADZazfz2svH8H7J4z6JnktcKv2pTrCQR1IdQ3QiR6EXwrPjHNjUO2USH4IEc20CG
- tmwifkMVIf5vw9eYzweSPDHdvDahheSomF4TX7UfpKmH56rjOu9y0w96LDIbesdFgS
- ZWObC4yDCB48VckQwboq6ABdk0F36ayUbNlph6vu9XdvVJ4qmI/7cJGJ5k38NQlVvg
- GXUumXZwHPeSg==
+ b=gwG0ruPjxoJREj0uf2AVEDy6Zs1p/oopa1zYTHF2df8SPCSIgkbJcjL/rwaLGxc0r
+ zdCobsgo90mKmBuVYumvIIToyaTlhIMepmCVI+3HbMqoP0BKjnLquVvHxTQ39qqMFW
+ zyGvyyIsFl1oLiygKzVul4sNcAA7I04J/pHWrG1arBdaDtlF0dnF8cz0Ft9qKGsy/Z
+ 2zeiy49JsuEoU+PSq3Idf0yaJPf1zccre2o5R3g2x+l5tb9XrxqoDB8rvw6JntsOFO
+ XuoqFNX13ujXy4ecEOm2ilRmgqx3oiG0ew4PPgUoNlYieM1PylGZlE5jXAZOITUKxT
+ n4zPVjDHIiE+w==
 Received: from scripts.lp.internal (localhost [127.0.0.1])
- by scripts.lp.internal (Postfix) with ESMTP id 132167FB7C
- for <qemu-devel@nongnu.org>; Tue, 17 Feb 2026 01:55:34 +0000 (UTC)
+ by scripts.lp.internal (Postfix) with ESMTP id 1A4047F442
+ for <qemu-devel@nongnu.org>; Tue, 17 Feb 2026 02:25:53 +0000 (UTC)
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: quoted-printable
-Date: Tue, 17 Feb 2026 01:49:06 -0000
+Date: Tue, 17 Feb 2026 02:16:05 -0000
 From: Hector CAO <2133804@bugs.launchpad.net>
 To: qemu-devel@nongnu.org
 X-Launchpad-Notification-Type: bug
 X-Launchpad-Bug: product=qemu; status=Fix Released; importance=Unknown;
  assignee=None; 
 X-Launchpad-Bug: distribution=ubuntu; sourcepackage=qemu; component=main;
- milestone=ubuntu-26.04; status=Confirmed; importance=High;
+ milestone=ubuntu-26.04; status=In Progress; importance=High;
  assignee=hector.cao@canonical.com; 
 X-Launchpad-Bug: distribution=ubuntu; distroseries=jammy; sourcepackage=qemu;
  component=main; status=Confirmed; importance=Low; assignee=None; 
@@ -62,7 +62,7 @@ X-Launchpad-Bug: distribution=ubuntu; distroseries=plucky; sourcepackage=qemu;
 X-Launchpad-Bug: distribution=ubuntu; distroseries=questing; sourcepackage=qemu;
  component=main; status=Confirmed; importance=Medium; assignee=None; 
 X-Launchpad-Bug: distribution=ubuntu; distroseries=resolute; sourcepackage=qemu;
- component=main; milestone=ubuntu-26.04; status=Confirmed; importance=High;
+ component=main; milestone=ubuntu-26.04; status=In Progress; importance=High;
  assignee=hector.cao@canonical.com; 
 X-Launchpad-Bug-Tags: server-todo
 X-Launchpad-Bug-Information-Type: Public
@@ -72,7 +72,7 @@ X-Launchpad-Bug-Commenters: hectorcao mjt+launchpad-tls paelzer utkarsh xypron
 X-Launchpad-Bug-Reporter: Heinrich Schuchardt (xypron)
 X-Launchpad-Bug-Modifier: Hector CAO (hectorcao)
 References: <176477927666.3767208.4954653462090539439.malonedeb@juju-98d295-prod-launchpad-3>
-Message-Id: <177129294614.1717974.13069749607228035108.malone@juju-98d295-prod-launchpad-3>
+Message-Id: <177129456607.1872660.5775653189323308661.launchpad@juju-98d295-prod-launchpad-4>
 Subject: [Bug 2133804] Re: QEMU does not emulate IOCTL TCGETS2
 X-Launchpad-Message-Rationale: Subscriber (QEMU) @qemu-devel-ml
 X-Launchpad-Message-For: qemu-devel-ml
@@ -80,17 +80,16 @@ Precedence: bulk
 X-Generated-By: Launchpad (canonical.com);
  Revision="357f4dbcf6d55b96276140b48d9caf6c75ab8067";
  Instance="launchpad-scripts"
-X-Launchpad-Hash: 46df1c47c4baaa3ab55e62a5d61a1d0529462ad9
-Received-SPF: pass client-ip=185.125.188.250;
- envelope-from=noreply@launchpad.net; helo=smtp-relay-services-0.canonical.com
+X-Launchpad-Hash: 7669133183022f40838d4b2d7fa716a92d63778f
+Received-SPF: pass client-ip=185.125.188.251;
+ envelope-from=noreply@launchpad.net; helo=smtp-relay-services-1.canonical.com
 X-Spam_score_int: -42
 X-Spam_score: -4.3
 X-Spam_bar: ----
 X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,9 +105,12 @@ Reply-To: Bug 2133804 <2133804@bugs.launchpad.net>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The patchset has been merged in qemu upstream :
-https://gitlab.com/qemu-project/qemu/-/commit/fea2d7a784fc3627a8aa72875f51f=
-e7634b04b81
+** Merge proposal linked:
+   https://code.launchpad.net/~hectorcao/ubuntu/+source/qemu/+git/qemu/+mer=
+ge/498837
+
+** Changed in: qemu (Ubuntu Resolute)
+       Status: Confirmed =3D> In Progress
 
 --=20
 You received this bug notification because you are a member of qemu-
@@ -121,7 +123,7 @@ Title:
 Status in QEMU:
   Fix Released
 Status in qemu package in Ubuntu:
-  Confirmed
+  In Progress
 Status in qemu source package in Jammy:
   Confirmed
 Status in qemu source package in Noble:
@@ -131,7 +133,7 @@ Status in qemu source package in Plucky:
 Status in qemu source package in Questing:
   Confirmed
 Status in qemu source package in Resolute:
-  Confirmed
+  In Progress
 
 Bug description:
   In Ubuntu 25.10 we moved to glibc 2.42. Here glibc has changed the
