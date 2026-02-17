@@ -4,120 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A371BE68171
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Feb 2026 13:08:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1AF2CE68171
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Feb 2026 13:10:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vsKny-0004Zk-Hk; Tue, 17 Feb 2026 08:07:54 -0500
+	id 1vsKqK-0005Ym-K9; Tue, 17 Feb 2026 08:10:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vsKnv-0004ZG-NM
- for qemu-devel@nongnu.org; Tue, 17 Feb 2026 08:07:51 -0500
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vsKns-0003Vb-K6
- for qemu-devel@nongnu.org; Tue, 17 Feb 2026 08:07:51 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vsKqI-0005YC-FO
+ for qemu-devel@nongnu.org; Tue, 17 Feb 2026 08:10:18 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vsKqF-0003pK-NJ
+ for qemu-devel@nongnu.org; Tue, 17 Feb 2026 08:10:18 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1771333814;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=l2EpLW/ilo7vhlBI4JW6oCCdvpOjeoHz83wOHHU0ufI=;
+ b=Eu8HNoC4MQaN0CJT0UyP1B6SNt44E+wcKyKLSaJMB6J9NejPpOOdri+jmJOhhI4095ysJL
+ AH4oLe2qU/vAXiIqmLVpp67YR3D7sQu/8/bEiwaPo0ofc5C1Tr3vLYkYx00x/F41AJoxUa
+ FNW/QNT1/zWiD4g1iffEht5rVZ4XXy0=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-387-amuiGJbSNcCbQ7SXfFS7EQ-1; Tue,
+ 17 Feb 2026 08:10:11 -0500
+X-MC-Unique: amuiGJbSNcCbQ7SXfFS7EQ-1
+X-Mimecast-MFC-AGG-ID: amuiGJbSNcCbQ7SXfFS7EQ_1771333810
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 552E43E6FA;
- Tue, 17 Feb 2026 13:07:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1771333665; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=VJnbyQlzR1d2+rV3ZP91HpnUUYTHdbQa5wE7VLv7giU=;
- b=vqOPH2DseBoyXBGZo1ZsnkXr+XqqD/1D7zkgGGVEm0jjFUjp4o21kHiDNwbqXt04HpWoFY
- 656QEcxJ8ro0+d9j3S3tsY/xH5XV2pzTLHyWg+fQlXdoF7t+v+SwM5JbYg31W1k+c09wYD
- +NWnegj0Uwey5vOm5skrTFJMhRLm1io=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1771333665;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=VJnbyQlzR1d2+rV3ZP91HpnUUYTHdbQa5wE7VLv7giU=;
- b=ys7SWNAZ8yJB/f9vH/hKJZqIlXRHN8YMxcSYyKLH4R7Hd83F0dj2E1EoT3Bbej+cLYCRZX
- 3dKWeBOxjvdPjwCA==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=vqOPH2Ds;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=ys7SWNAZ
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1771333665; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=VJnbyQlzR1d2+rV3ZP91HpnUUYTHdbQa5wE7VLv7giU=;
- b=vqOPH2DseBoyXBGZo1ZsnkXr+XqqD/1D7zkgGGVEm0jjFUjp4o21kHiDNwbqXt04HpWoFY
- 656QEcxJ8ro0+d9j3S3tsY/xH5XV2pzTLHyWg+fQlXdoF7t+v+SwM5JbYg31W1k+c09wYD
- +NWnegj0Uwey5vOm5skrTFJMhRLm1io=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1771333665;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=VJnbyQlzR1d2+rV3ZP91HpnUUYTHdbQa5wE7VLv7giU=;
- b=ys7SWNAZ8yJB/f9vH/hKJZqIlXRHN8YMxcSYyKLH4R7Hd83F0dj2E1EoT3Bbej+cLYCRZX
- 3dKWeBOxjvdPjwCA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id C77D63EA65;
- Tue, 17 Feb 2026 13:07:44 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id lREJIyBolGm9RgAAD6G6ig
- (envelope-from <farosas@suse.de>); Tue, 17 Feb 2026 13:07:44 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Lukas Straub <lukasstraub2@web.de>, qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Laurent Vivier <lvivier@redhat.com>, Paolo
- Bonzini <pbonzini@redhat.com>, Zhang Chen <zhangckid@gmail.com>, Hailiang
- Zhang <zhanghailiang@xfusion.com>, Markus Armbruster <armbru@redhat.com>,
- Li Zhijian <lizhijian@fujitsu.com>, "Dr. David Alan Gilbert"
- <dave@treblig.org>, Lukas Straub <lukasstraub2@web.de>, Juan Quintela
- <quintela@trasno.org>
-Subject: Re: [PATCH v8 00/17] migration: Add COLO multifd support and COLO
- migration unit test
-In-Reply-To: <20260210-colo_unit_test_multifd-v8-0-7f9e5f7d082b@web.de>
-References: <20260210-colo_unit_test_multifd-v8-0-7f9e5f7d082b@web.de>
-Date: Tue, 17 Feb 2026 10:07:41 -0300
-Message-ID: <87ecmjmsbm.fsf@suse.de>
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7AF5E180025E; Tue, 17 Feb 2026 13:10:09 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.14])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 48E521955F43; Tue, 17 Feb 2026 13:10:08 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id C5B5121E692D; Tue, 17 Feb 2026 14:10:05 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: qemu-devel@nongnu.org,  qemu-block@nongnu.org,  eduardo@habkost.net,
+ berrange@redhat.com,  pbonzini@redhat.com,  eblake@redhat.com,
+ devel@lists.libvirt.org,  hreitz@redhat.com,  kwolf@redhat.com
+Subject: Re: [PATCH v10 4/8] qapi: add blockdev-replace command
+In-Reply-To: <f9aed7fd-2f56-4b54-bf4f-693e0c10fb38@yandex-team.ru> (Vladimir
+ Sementsov-Ogievskiy's message of "Mon, 16 Feb 2026 08:48:06 +0300")
+References: <20260119144941.87936-1-vsementsov@yandex-team.ru>
+ <20260119144941.87936-5-vsementsov@yandex-team.ru>
+ <87wm0sy9s4.fsf@pond.sub.org>
+ <739edd0f-8342-418e-96bb-01bc9bd3349e@yandex-team.ru>
+ <87seb3zr7j.fsf@pond.sub.org>
+ <f9aed7fd-2f56-4b54-bf4f-693e0c10fb38@yandex-team.ru>
+Date: Tue, 17 Feb 2026 14:10:05 +0100
+Message-ID: <87seazjz2q.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; FREEMAIL_TO(0.00)[web.de,nongnu.org];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FUZZY_RATELIMITED(0.00)[rspamd.com];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- ARC_NA(0.00)[]; RCPT_COUNT_TWELVE(0.00)[12];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; MIME_TRACE(0.00)[0:+];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- FREEMAIL_ENVRCPT(0.00)[gmail.com,web.de];
- FREEMAIL_CC(0.00)[redhat.com,gmail.com,xfusion.com,fujitsu.com,treblig.org,web.de,trasno.org];
- RCVD_TLS_ALL(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:97:from,2a07:de40:b281:106:10:150:64:167:received];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- TO_DN_SOME(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- DKIM_TRACE(0.00)[suse.de:+]; MISSING_XM_UA(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim, suse.de:mid,
- imap1.dmz-prg2.suse.org:rdns, imap1.dmz-prg2.suse.org:helo]
-X-Rspamd-Action: no action
-X-Rspamd-Queue-Id: 552E43E6FA
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -13
+X-Spam_score: -1.4
+X-Spam_bar: -
+X-Spam_report: (-1.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.043,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ GB_FAKE_RF=0.754, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -133,99 +92,189 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Lukas Straub <lukasstraub2@web.de> writes:
+Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
 
-> Hello everyone,
-> This has some cleanups for and adds multifd support and migration unit tests
-> for COLO migration.
->
-> Regards,
-> Lukas
->
-> Signed-off-by: Lukas Straub <lukasstraub2@web.de>
-> ---
-> Changes in v8:
-> - Fix peter's review comments
-> - Link to v7: https://lore.kernel.org/qemu-devel/20260210-colo_unit_test_multifd-v7-0-23bd32f36828@web.de
->
-> Changes in v7:
-> - Fix peter's review comments
-> - Link to v6: https://lore.kernel.org/qemu-devel/20260206-colo_unit_test_multifd-v6-0-27779dda139d@web.de
->
-> Changes in v6:
-> - Fix the crash when running COLO with TCG accel.
-> - Link to v5: https://lore.kernel.org/qemu-devel/20260203-colo_unit_test_multifd-v5-0-57508b7389f6@web.de
->
-> Changes in v5:
-> - Remove unused inmports from multifd-colo.c
-> - Mention the checkpoint overhead of reset to the Q35 fix
-> - Link to v4: https://lore.kernel.org/qemu-devel/20260130-colo_unit_test_multifd-v4-0-7115ab6f0e77@web.de
->
-> Changes in v4:
-> - Add cleanup patches to remove migration_incoming_colo_enabled() and MIG_CMD_ENABLE_COLO
-> - Add more comments to the colo unit test
-> - Call colo_release_ram_cache() after multifd threads terminate
-> - Link to v3: https://lore.kernel.org/qemu-devel/20260125-colo_unit_test_multifd-v3-0-ae926ccd8eae@web.de
->
-> Changes in v3:
-> - Fix peter's review comments.
-> - Fix COLO with Q35 machine
-> - Link to v2: https://lore.kernel.org/qemu-devel/20260117-colo_unit_test_multifd-v2-0-ab521777fa51@web.de
->
-> Changes in v2:
-> - Fix review comments
-> - Hide stderr in colo migration test since the logged errors are expected
-> - Add benchmarking data for multifd
-> - Add myself as maintainer for COLO migration framework
-> - Link to v1: https://lore.kernel.org/qemu-devel/20251230-colo_unit_test_multifd-v1-0-f9734bc74c71@web.de
->
-> ---
-> Lukas Straub (17):
->       MAINTAINERS: Add myself as maintainer for COLO migration framework
->       MAINTAINERS: Remove Hailiang Zhang from COLO migration framework
->       colo: Setup ram cache in normal migration path
->       colo: Replace migration_incoming_colo_enabled() with migrate_colo()
->       colo: Remove ENABLE_COLO savevm command and mark it as deprecated
->       ram: Remove colo special-casing
->       multifd: Move ram state receive into multifd_ram_state_recv()
->       multifd: Add COLO support
->       Call colo_release_ram_cache() after multifd threads terminate
->       colo: Fix crash during device vmstate load
->       colo: Hold the BQL while sending ram state
->       colo: Do not hold the BQL while receiving ram state.
->       migration-test: Add COLO migration unit test
->       Convert colo main documentation to restructuredText
->       qemu-colo.rst: Miscellaneous changes
->       qemu-colo.rst: Add my copyright
->       qemu-colo.rst: Simplify the block replication setup
->
->  MAINTAINERS                        |   6 +-
->  docs/COLO-FT.txt                   | 334 ----------------------------------
->  docs/system/index.rst              |   1 +
->  docs/system/qemu-colo.rst          | 362 +++++++++++++++++++++++++++++++++++++
->  include/migration/colo.h           |   3 -
->  migration/colo.c                   |  21 ++-
->  migration/meson.build              |   2 +-
->  migration/migration.c              |  61 ++-----
->  migration/multifd-colo.c           |  44 +++++
->  migration/multifd-colo.h           |  26 +++
->  migration/multifd-nocomp.c         |  10 +-
->  migration/multifd.c                |  19 +-
->  migration/multifd.h                |   5 +-
->  migration/ram.c                    |  12 +-
->  migration/savevm.c                 |  37 +---
->  migration/savevm.h                 |   1 -
->  migration/trace-events             |   1 -
->  tests/qtest/meson.build            |   7 +-
->  tests/qtest/migration-test.c       |   1 +
->  tests/qtest/migration/colo-tests.c | 198 ++++++++++++++++++++
->  tests/qtest/migration/framework.h  |   5 +
->  21 files changed, 720 insertions(+), 436 deletions(-)
-> ---
-> base-commit: 0b91040d23dc8820724a60c811223b777f3bc6b7
-> change-id: 20251230-colo_unit_test_multifd-8bf58dcebd46
->
-> Best regards,
+> On 14.02.26 11:04, Markus Armbruster wrote:
+>> Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
+>> 
+>>> On 04.02.26 15:26, Markus Armbruster wrote:
+>>>> Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
+>>>>
+>>>>> Add a command that can replace bs in following BdrvChild structures:
+>>>>>
+>>>>>    - qdev blk root child
+>>>>>    - block-export blk root child
+>>>>>    - any child of BlockDriverState selected by child-name
+>>>>>
+>>>>> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 
-Queued, thanks
+[...]
+
+>>>> Let's see whether I understand...
+>>>>
+>>>> @parent determines which of the three cases mentioned in the commit
+>>>> message it ids:
+>>>>
+>>>> * If @parent is a QOM path, case 1.
+>>>>
+>>>> * If @parent is a block export name (@id in BlockExportOptions and
+>>>>    BlockExportInfo), case 2.
+>>>>
+>>>> * If @parent is a block node name (@node-name in BlockdevOptions and
+>>>>    BlockDeviceInfo), case 3.
+>>>>
+>>>> Correct?
+>>>>
+>>>> Problem: this is ambiguous.  A @parent "foo" could in fact be any of the
+>>>> three cases.
+>>>
+>>> Yes. And we return an error in case of any ambiguity.
+>> 
+>> So, in case of ambiguity, the command does not work.
+>> 
+>> On the one hand, this is the user's doing: reusing the same ID for
+>> multiple things has always been a bad idea.
+>> 
+>> On the other hand, we're now turning a bad idea that may cause confusion
+>> into an bad idea that may break things.  Feels iffy.
+>> 
+>> For QOM paths, we have a workaround: avoid partial QOM paths.  Feels
+>> okay.  Partial QOM paths are rather obscure, and best avoided entirely.
+>> 
+>> The only workaround for block export vs. block node ambiguity is to
+>> avoid ID reuse.  By the time a user sees the command fail, the IDs are
+>> what they are, and there's is no workaround.
+>> 
+>> Do you need blockdev-replace to work for both *now*?
+>> 
+>> At the very least, we need to document the trap and point to the
+>> workaround.
+>> 
+>> Alternatively, come up with an interface that avoids the issue.  See
+>> below.
+>> 
+>>>> 3. If a block node named "foo" exists, it's case 3.
+>>>>
+>>>> 2. If a block export named "foo" exists, it's also case 2.
+>>>>
+>>>> 1. If exactly one QOM object named "foo" exists, it's also case 1.  Why?
+>>>>      "foo" is a syntactically valid partial QOM path.  Partial QOM paths
+>>>>      are a convenience feature that is virtually unknown (and possibly
+>>>>      ill-advised): you can omit leading path components as long as there's
+>>>>      no ambiguity.
+>>>>
+>>>> Peeking ahead in the series...  PATCH 8 appears to deprecate the
+>>>> ambiguity between case 2. and 3.
+>>>>
+>>>> I think we need to do better.
+>> 
+>> See review of PATCH 8 for doing better on deprecation.
+>> 
+>>>> More questions...
+>>>>
+>>>> In case 1 and 2, @child "should be root".  What happens when it's
+>>>> something else?
+>>>
+>>> Error returned. s/should/must/ ?
+>> 
+>> Yes, please.
+>> 
+>>>> In case 3, @child "should be any if its children names".  I figure the
+>>>> command fails when it isn't.
+>>>
+>>> And here.
+>> 
+>> Likewise.
+>> 
+>>>>> +{ 'command': 'blockdev-replace',
+>>>>> +  'data': { 'parent': 'str', 'child': 'str', 'new-child': 'str' } }
+>>>>
+>>>> [...]
+>> 
+>> This interface sort of overloads @parent and @child, and overloading the
+>> former creates ambiguity that can make the command unusable.
+>
+> Is it a real problem if we do deprecate the thing, that leads to this
+> ambiguity?
+>
+> If it is, we may mark the command "unstable" during the deprecation period.
+
+By itself, the proposed command is a trap for the unwary.
+
+Deprecating the usage that enables the trap makes the trap temporary.
+
+Warning on (deprecated) usage that enables the trap helps users avoid
+it.  Human users, mostly.
+
+Marking the command "unstable" should ensure management application
+avoid the command, and thus the trap.
+
+All of the above together feels acceptable to me.  Can we do better?
+Maybe, and that's discussed below.
+
+> Or even postpone its addition up to the end of this period.
+
+No trap, no problem :)
+
+>> @parent's set of valid values is the union of QOM path, block node name,
+>> block export ID with values occuring in more than one of them dropped.
+>> 
+>> @child's set of valid values depends on @parent: child name when it's a
+>> QOM path, else "root".
+>> 
+>> The obvious non-overloaded interface is a union of three branches: QOM,
+>> block node, block export.  The QOM branch has variant members @qom-path
+>> and @child.  The block node branch has variant member @node-name.  The
+>> block export branch has variant member @id.
+>> 
+>> This is a bit more verbose: you have to specify the union tag[*].
+>> 
+>> If we ever need to replace block nodes associated with additional
+>> things, we simply more branches.  These branches can have arbitrary
+>> members.  In your interface, we'd have to make do with @child, or maybe
+>> add optional arguments.
+>> 
+>> Thoughts?  Mind, this isn't a demand!  I'm exploring the design space.
+>
+> Union-based solution was v9: https://lore.kernel.org/qemu-devel/20240626115350.405778-5-vsementsov@yandex-team.ru/
+>
+> And there was a discussion, that we may try a way without a union. And that's
+> this v10.
+
+I see Kevin suggested to explore this approach.  I certainly respect his
+judgement.
+
+> Hmm, but that had different field names for parents: qdev-id, export-id and node-name.
+>
+> What you suggest is to keep one filed for parent - "parent", but also add a "parent-type"
+> field. This way, we may deprecate and remove "parent-type" in future. Or, we may
+> add it as deprecated now (together with deprecating non-unique IDs)
+
+We can't deprecate the union tag right away: it is *required*.
+
+>> [*] We could add a "may omit union tag when the tag value can be derived
+>> from present variant members" convenience feature to QAPI, but I'm not
+>> sure it's worth the complexity.
+>> 
+>
+> It also may be not a union, but a simple structure with optional fields:
+>
+> {
+>     parent: str, required, qom-path, or node-name, or export name
+>     child: str, optional, but required when parent is node-name, and must be 'root'
+>            if present for other parent types
+>     parent-type: str, optional, "qom-path" | "block-node" | "block-export", helps to
+>            overcome parent ambiguity, deprecated
+>     new-child: str, required node-name
+> }
+
+PRO union: which members are valid together is syntactically obvious.
+With a bunch of optional members, that information is in the member
+descriptions.
+
+CON union: need to specify the union tag.  The verbosity is a non-issue
+for management applications, and mildly bothersome for humans.
+
+How important is keeping things terse for humans here?
+
 
