@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22107E9A03E
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Feb 2026 21:24:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BCB4E9A03B
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Feb 2026 21:24:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vsSX6-0002hz-Uf; Tue, 17 Feb 2026 16:23:00 -0500
+	id 1vsSX6-0002hj-DP; Tue, 17 Feb 2026 16:23:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1vsSX5-0002hJ-Io
+ id 1vsSX5-0002hH-F9
  for qemu-devel@nongnu.org; Tue, 17 Feb 2026 16:22:59 -0500
-Received: from mail-oi1-x22a.google.com ([2607:f8b0:4864:20::22a])
+Received: from mail-oi1-x243.google.com ([2607:f8b0:4864:20::243])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1vsSX1-0002IB-7I
+ id 1vsSX3-0002Ip-N0
  for qemu-devel@nongnu.org; Tue, 17 Feb 2026 16:22:59 -0500
-Received: by mail-oi1-x22a.google.com with SMTP id
- 5614622812f47-463960df4f9so2809480b6e.0
- for <qemu-devel@nongnu.org>; Tue, 17 Feb 2026 13:22:54 -0800 (PST)
+Received: by mail-oi1-x243.google.com with SMTP id
+ 5614622812f47-46398742245so1208041b6e.1
+ for <qemu-devel@nongnu.org>; Tue, 17 Feb 2026 13:22:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1771363374; x=1771968174; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1771363376; x=1771968176; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=gfgCsWubwOz8K2Dazgy4vfRsEw2hF2osh1NPGFOAWrA=;
- b=Fr9bgvBPlxyRHsOFbNw3yOIQ0rQcz1lhLa5buujWvw9KanBpzz4Y3867vd3WVnuejI
- KDHqNh4HK1XeQKQllI5SJve/r2AkUdlEkcKd4U24X3mB/8usC5uM6bn8i4uiXyEnx3aO
- gKBX9Fhv7MLIct6K6xyt+myJ9LqexkzBHsKwJiUwmnq/3zPWB47IcwDHinvJqYPf/iBr
- aW40OpS1iBNfHU82E9dmUddfAi9ZKVAl7TASAxX1bUn/yh5FNfaETGg48Q7PH98bxxbV
- x0bRYJ99zm2oQhXDM7BTvGMLVG/7hesyfmIDXnEM8Zg3Y490pW4RjWHt2JRnTKHw3aBh
- yp6g==
+ bh=rNHs4Sobj03r02yaX9a9D3Jb/8tlBnii4di7lAr9aUU=;
+ b=AZPB/2NhI7eyRNpYn+COF0OcbV8tFX+xIKC43T7RU6Rbj8Pkx38Tw/SrbM7eKr0D0c
+ noTIx5pQFrlL+Kv3meVuWhiy92HAR10ptVx/seKQyO3IhIYT43dYEjSa2qEceIG3JVAX
+ dO/SYvQloA7AslopsTTX5KeCPsPsLmSbp6Oq4Y7F0PT2uce+AzvOlE4OVfQfTvqvkf1u
+ zgdI8sexybn6G6wLDgzN7RgWWF/5+AbvU+DZPbtqDmoDTa6wLygomISHncSiYmfA3w4J
+ eUWZKsOalEqBTu/HQ3oliNpGQNd+OPE7U3vHP2k3OvlUe3PGHfL2KcsOjb63UrwH2Eoq
+ A+Mg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771363374; x=1771968174;
+ d=1e100.net; s=20230601; t=1771363376; x=1771968176;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=gfgCsWubwOz8K2Dazgy4vfRsEw2hF2osh1NPGFOAWrA=;
- b=i7zBOF279zrd7t2C4uQ46RwxIXleGuZZk4aqdj1ScIuMq9KfhydxfUTDogSX9KHRhE
- 9Wo+GOmcO3zkpzuP6n3HvLeXjtF4kbvQUJscJBvmXUJ0eUkoLf+/VUmcEFQGhut1m9HG
- oE2DcedvuO1QqPbLxSEBPGY0piE/Q/8xjISBflau7APs1Kq+UYLVGzPvED8zaPaC4kba
- WBkyNhZ31Scruyn/UPQO8MMhoXKXVBTJdeMjdlXloKhixiW+cejTo9Lk1/x/nDruevZv
- /GXcT9NqtMx+w/3iZVq6hP/b963Z1XnU6wEJQ8Vh9mO5HZP2wV+yHeNON2+ObCMjnz95
- SzZg==
-X-Gm-Message-State: AOJu0YySj0rKk9v6GBGcdxGJLrt8Z2ml+OEcGaSlKjueUNewEYhv468s
- wOMRy+UTK0LGHzZ29FpaEC3q08cr//7rWNqFUbPK8ifhFCa23fepEeIZfK796A==
-X-Gm-Gg: AZuq6aJT3K7AJzWT9mryuHNmXvJLjw3MVlgYPAdzbYZgs5CMzt9W0EktFIbMLOPnQaw
- NMKk56ledP5Jbz2/8/4lV7EAQNCzzokTH8wPwv3aB9mL+kW5pqh5zBGYaV6ERR0onRr15lcnFfP
- 8pa7glL+2aC7OdwfeBeu6V+GX1lwfNKr9Vb2WEC3cUEU4hmdBeHp/tDPdUdSTgs9T1pIYi1C5N9
- SS+S/rUaJ3BmJOIqGZPbKCqXh9rd6K/bdOI+pIVXqubfgUoIB6yr3OQoJ/f5vPc4fZBVMh34xF1
- Akns4MAJtt+oNPmQzL8rris3h82abu6OjHS3p1TNlaoydybzqtapDMM5pLVSwSVZMxafcz9EHng
- NVkK3tfuJQKA1eezu5wCOU8CcIxvfPpfwpSXFRvRbCbXAT3rjXpycjke9B3soEi8oUHa8qoVRJS
- O8Xd7Ow5pInF1unTAy737ZTqB+UviIZfpwKb7FyBuTWWjeaLHYwhl4whyccMZPV1LKsk02NhjAQ
- buC0DF/7NwRRKe4gboy+Ko1nj8=
-X-Received: by 2002:a05:6808:2445:b0:450:5e3a:6f1a with SMTP id
- 5614622812f47-463b3f655e2mr6719364b6e.20.1771363373404; 
- Tue, 17 Feb 2026 13:22:53 -0800 (PST)
+ bh=rNHs4Sobj03r02yaX9a9D3Jb/8tlBnii4di7lAr9aUU=;
+ b=AllnYYvm5+odIoZGJTBgQSJOlzwXn6e62q+1ESEH6uD/hyRygHievVW7+vK9CQkNxo
+ PkO21QExlb98tCixOHuaUPLbVmUqTOAamp/zAKPk1qjlPOkszJsGCqo+iCrD4WHrkAiW
+ WGFN3L7EqGVuIK/af60Ps5yTJ+zJU9DQZfM0N2i4QHndvnUOUbRdu5ixSvS2O2BGwpM8
+ 76jK6wIqAvPDK1Utx4wDjn03P6eus8OM5Kbk8XG/NAHfCMhQiNwp5hWix1LyU7x16XvT
+ 9KNe5kTyFMVfg84NXXNzvq9wrZPiihaZz9jxhrjR7JIQEh0t2t/0gcZ9P/ruxpQ3v/17
+ pX7w==
+X-Gm-Message-State: AOJu0YwI5CdICNizPz1u8JlTig7PywxLjJOavUHvnrjoZ+f5SZfbdAxg
+ hN5kZmZvUt7a+wXQySUlTmzzfKNqKD3eiCCjRC8ic7Tycvw++Ez+eOWA2Vse7DGd
+X-Gm-Gg: AZuq6aIvGmcFJfzdIV5TXUCT8cl7PCZlmXJHHY+oyQp6Kyzs9IC6wZKaxA3BDh3ESLo
+ O0u3bpKEG+XuYRc9xVVz/G2SfabRWwWjZS0M+taHY4Fc5gZrvx3m7BPEKjBcp1A0hO9shtSxFo2
+ ZuiFnQWfm5EgeKUI5Z1BqTgKPGVN0Wzqd+KrC2je4DDs+zQojsWYt7dYb14I0qfRWXb5slGFlSH
+ R9R0oqowZH5A9uZPx1VWiRfP5t3JObk7x3eJgfbAmF2Eu5rFMbFiH5lAhncJDfl/VYG63skV+cd
+ LDILZh1R7bRpr+D6mhFqQbyhy1RtPziYukuUe7UD82nHTOTLgaM7lmleBjheiJ3XR4iYtNAMHmJ
+ cdk86dnRxx+qFHlV84T9X+zwr2PSHqtZ1HLug5NgPD0TZgYPdhMAK2BSJhZfJtaDahSztUvZOqP
+ kvDoRXfVQG2tq63sBLLVvYf9xC8IhljNrva2qcp+MmlJAoo2RnrsnJSxT+ZsaYqKN46740qfxXV
+ Eo1mxSvgL2P/lPW
+X-Received: by 2002:a05:6808:158e:b0:45f:210:4dbd with SMTP id
+ 5614622812f47-4639ef3137fmr6741119b6e.16.1771363376022; 
+ Tue, 17 Feb 2026 13:22:56 -0800 (PST)
 Received: from taylor-ubuntu.. (c-67-172-136-152.hsd1.co.comcast.net.
  [67.172.136.152]) by smtp.gmail.com with ESMTPSA id
- 5614622812f47-4636ae8f86fsm12899319b6e.3.2026.02.17.13.22.52
+ 5614622812f47-4636ae8f86fsm12899319b6e.3.2026.02.17.13.22.55
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 17 Feb 2026 13:22:52 -0800 (PST)
+ Tue, 17 Feb 2026 13:22:55 -0800 (PST)
 From: Taylor Simpson <ltaylorsimpson@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: brian.cain@oss.qualcomm.com, matheus.bernardino@oss.qualcomm.com,
  sid.manning@oss.qualcomm.com, marco.liebel@oss.qualcomm.com,
  richard.henderson@linaro.org, philmd@linaro.org, ale@rev.ng, anjo@rev.ng,
  ltaylorsimpson@gmail.com
-Subject: [PATCH v3 4/8] Hexagon (target/hexagon) Introduce tag_rev_info.c.inc
-Date: Tue, 17 Feb 2026 14:22:41 -0700
-Message-ID: <20260217212245.95321-5-ltaylorsimpson@gmail.com>
+Subject: [PATCH v3 6/8] Hexagon (target/hexagon) Disassembly of invalid packets
+Date: Tue, 17 Feb 2026 14:22:43 -0700
+Message-ID: <20260217212245.95321-7-ltaylorsimpson@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260217212245.95321-1-ltaylorsimpson@gmail.com>
 References: <20260217212245.95321-1-ltaylorsimpson@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::22a;
- envelope-from=ltaylorsimpson@gmail.com; helo=mail-oi1-x22a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::243;
+ envelope-from=ltaylorsimpson@gmail.com; helo=mail-oi1-x243.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,639 +104,185 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
+We pass the Hexagon CPU definition to disassemble_hexagon.  This allows
+decode_packet to know if the opcodes are supported.
 
-Table that records which CPU revision introduced or removed
-for each opcode
+Note that we print valid instructions in a packet when one or more is
+invalid.  Rather than this
+0x0002128c:  0x1eae4fec	{	<invalid>
+0x00021290:  0x1c434c04		<invalid>
+0x00021294:  0x1e03edf0		<invalid> }
 
+We print this
+0x0002128c:  0x1eae4fec	{	<invalid>
+0x00021290:  0x1c434c04		V4.w = vadd(V12.w,V3.w)
+0x00021294:  0x1e03edf0		V16 = V13 }
+
+Co-authored-by: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
 Co-authored-by: Brian Cain <brian.cain@oss.qualcomm.com>
-Co-authored-by: Taylor Simpson <ltaylorsimpson@gmail.com>
-Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
 Signed-off-by: Taylor Simpson <ltaylorsimpson@gmail.com>
 ---
- target/hexagon/tag_rev_info.c.inc | 613 ++++++++++++++++++++++++++++++
- 1 file changed, 613 insertions(+)
- create mode 100644 target/hexagon/tag_rev_info.c.inc
+ target/hexagon/cpu_bits.h  |  4 +++-
+ target/hexagon/printinsn.h |  3 ++-
+ disas/hexagon.c            |  3 ++-
+ target/hexagon/cpu.c       |  2 ++
+ target/hexagon/decode.c    | 25 +++++++++++++++++++++----
+ target/hexagon/printinsn.c |  9 +++++++--
+ 6 files changed, 37 insertions(+), 9 deletions(-)
 
-diff --git a/target/hexagon/tag_rev_info.c.inc b/target/hexagon/tag_rev_info.c.inc
-new file mode 100644
-index 0000000000..11c90f86ad
---- /dev/null
-+++ b/target/hexagon/tag_rev_info.c.inc
-@@ -0,0 +1,613 @@
-+/*
-+ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#ifndef HEXAGON_TAG_ARCH_TABLE_H
-+#define HEXAGON_TAG_ARCH_TABLE_H
-+
-+struct tag_rev_info { HexagonVersion introduced, removed; };
-+
-+static const struct tag_rev_info tag_rev_info[XX_LAST_OPCODE] = {
-+    [A5_ACS] = { .introduced = HEX_VER_V55, .removed = HEX_VER_NONE },
-+
-+    [J2_jumpfpt] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [J2_jumprfpt] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [J2_jumprtpt] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [J2_jumptpt] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [S6_rol_i_p] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [S6_rol_i_p_acc] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [S6_rol_i_p_and] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [S6_rol_i_p_nac] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [S6_rol_i_p_or] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [S6_rol_i_p_xacc] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [S6_rol_i_r] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [S6_rol_i_r_acc] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [S6_rol_i_r_and] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [S6_rol_i_r_nac] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [S6_rol_i_r_or] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [S6_rol_i_r_xacc] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_extractw] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_lvsplatw] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_pred_and] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_pred_and_n] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_pred_not] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_pred_or] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_pred_or_n] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_pred_scalar2] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_pred_xor] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vL32Ub_ai] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vL32Ub_pi] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vL32Ub_ppu] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vL32b_ai] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vL32b_cur_ai] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vL32b_cur_pi] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vL32b_cur_ppu] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vL32b_nt_ai] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vL32b_nt_cur_ai] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vL32b_nt_cur_pi] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vL32b_nt_cur_ppu] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vL32b_nt_pi] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vL32b_nt_ppu] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vL32b_nt_tmp_ai] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vL32b_nt_tmp_pi] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vL32b_nt_tmp_ppu] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vL32b_pi] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vL32b_ppu] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vL32b_tmp_ai] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vL32b_tmp_pi] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vL32b_tmp_ppu] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vS32Ub_ai] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vS32Ub_npred_ai] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vS32Ub_npred_pi] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vS32Ub_npred_ppu] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vS32Ub_pi] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vS32Ub_ppu] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vS32Ub_pred_ai] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vS32Ub_pred_pi] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vS32Ub_pred_ppu] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vS32b_ai] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vS32b_new_ai] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vS32b_new_npred_ai] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vS32b_new_npred_pi] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vS32b_new_npred_ppu] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vS32b_new_pi] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vS32b_new_ppu] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vS32b_new_pred_ai] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vS32b_new_pred_pi] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vS32b_new_pred_ppu] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vS32b_npred_ai] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vS32b_npred_pi] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vS32b_npred_ppu] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vS32b_nqpred_ai] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vS32b_nqpred_pi] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vS32b_nqpred_ppu] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vS32b_nt_ai] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vS32b_nt_new_ai] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vS32b_nt_new_npred_ai] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vS32b_nt_new_npred_pi] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vS32b_nt_new_npred_ppu] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vS32b_nt_new_pi] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vS32b_nt_new_ppu] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vS32b_nt_new_pred_ai] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vS32b_nt_new_pred_pi] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vS32b_nt_new_pred_ppu] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vS32b_nt_npred_ai] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vS32b_nt_npred_pi] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vS32b_nt_npred_ppu] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vS32b_nt_nqpred_ai] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vS32b_nt_nqpred_pi] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vS32b_nt_nqpred_ppu] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vS32b_nt_pi] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vS32b_nt_ppu] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vS32b_nt_pred_ai] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vS32b_nt_pred_pi] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vS32b_nt_pred_ppu] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vS32b_nt_qpred_ai] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vS32b_nt_qpred_pi] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vS32b_nt_qpred_ppu] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vS32b_pi] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vS32b_ppu] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vS32b_pred_ai] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vS32b_pred_pi] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vS32b_pred_ppu] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vS32b_qpred_ai] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vS32b_qpred_pi] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vS32b_qpred_ppu] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vabsdiffh] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vabsdiffub] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vabsdiffuh] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vabsdiffw] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vabsh] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vabsh_sat] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vabsw] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vabsw_sat] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vaddb] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vaddb_dv] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vaddbnq] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vaddbq] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vaddh] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vaddh_dv] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vaddhnq] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vaddhq] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vaddhsat] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vaddhsat_dv] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vaddhw] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vaddubh] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vaddubsat] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vaddubsat_dv] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vadduhsat] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vadduhsat_dv] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vadduhw] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vaddw] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vaddw_dv] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vaddwnq] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vaddwq] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vaddwsat] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vaddwsat_dv] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_valignb] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_valignbi] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vand] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vandqrt] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vandqrt_acc] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vandvrt] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vandvrt_acc] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vaslh] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vaslhv] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vaslw] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vaslw_acc] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vaslwv] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vasrh] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vasrhbrndsat] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vasrhubrndsat] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vasrhubsat] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vasrhv] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vasrw] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vasrw_acc] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vasrwh] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vasrwhrndsat] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vasrwhsat] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vasrwuhsat] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vasrwv] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vassign] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vavgh] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vavghrnd] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vavgub] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vavgubrnd] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vavguh] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vavguhrnd] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vavgw] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vavgwrnd] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vccombine] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vcl0h] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vcl0w] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vcmov] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vcombine] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vdeal] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vdealb] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vdealb4w] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vdealh] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vdealvdd] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vdelta] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vdmpybus] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vdmpybus_acc] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vdmpybus_dv] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vdmpybus_dv_acc] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vdmpyhb] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vdmpyhb_acc] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vdmpyhb_dv] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vdmpyhb_dv_acc] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vdmpyhisat] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vdmpyhisat_acc] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vdmpyhsat] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vdmpyhsat_acc] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vdmpyhsuisat] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vdmpyhsuisat_acc] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vdmpyhsusat] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vdmpyhsusat_acc] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vdmpyhvsat] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vdmpyhvsat_acc] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vdsaduh] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vdsaduh_acc] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_veqb] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_veqb_and] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_veqb_or] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_veqb_xor] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_veqh] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_veqh_and] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_veqh_or] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_veqh_xor] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_veqw] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_veqw_and] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_veqw_or] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_veqw_xor] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vgtb] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vgtb_and] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vgtb_or] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vgtb_xor] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vgth] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vgth_and] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vgth_or] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vgth_xor] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vgtub] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vgtub_and] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vgtub_or] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vgtub_xor] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vgtuh] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vgtuh_and] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vgtuh_or] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vgtuh_xor] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vgtuw] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vgtuw_and] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vgtuw_or] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vgtuw_xor] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vgtw] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vgtw_and] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vgtw_or] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vgtw_xor] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vhist] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vhistq] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vinsertwr] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vlalignb] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vlalignbi] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vlsrh] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vlsrhv] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vlsrw] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vlsrwv] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vlutvvb] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vlutvvb_oracc] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vlutvwh] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vlutvwh_oracc] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vmaxh] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vmaxub] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vmaxuh] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vmaxw] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vminh] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vminub] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vminuh] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vminw] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vmpabus] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vmpabus_acc] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vmpabusv] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vmpabuuv] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vmpahb] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vmpahb_acc] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vmpybus] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vmpybus_acc] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vmpybusv] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vmpybusv_acc] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vmpybv] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vmpybv_acc] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vmpyewuh] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vmpyh] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vmpyhsat_acc] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vmpyhsrs] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vmpyhss] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vmpyhus] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vmpyhus_acc] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vmpyhv] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vmpyhv_acc] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vmpyhvsrs] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vmpyieoh] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vmpyiewh_acc] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vmpyiewuh] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vmpyiewuh_acc] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vmpyih] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vmpyih_acc] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vmpyihb] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vmpyihb_acc] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vmpyiowh] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vmpyiwb] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vmpyiwb_acc] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vmpyiwh] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vmpyiwh_acc] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vmpyowh] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vmpyowh_rnd] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vmpyowh_rnd_sacc] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vmpyowh_sacc] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vmpyub] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vmpyub_acc] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vmpyubv] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vmpyubv_acc] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vmpyuh] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vmpyuh_acc] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vmpyuhv] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vmpyuhv_acc] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vmux] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vnavgh] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vnavgub] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vnavgw] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vnccombine] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vncmov] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vnormamth] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vnormamtw] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vnot] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vor] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vpackeb] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vpackeh] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vpackhb_sat] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vpackhub_sat] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vpackob] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vpackoh] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vpackwh_sat] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vpackwuh_sat] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vpopcounth] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vrdelta] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vrmpybus] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vrmpybus_acc] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vrmpybusi] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vrmpybusi_acc] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vrmpybusv] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vrmpybusv_acc] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vrmpybv] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vrmpybv_acc] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vrmpyub] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vrmpyub_acc] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vrmpyubi] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vrmpyubi_acc] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vrmpyubv] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vrmpyubv_acc] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vror] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vroundhb] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vroundhub] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vroundwh] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vroundwuh] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vrsadubi] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vrsadubi_acc] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vsathub] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vsatwh] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vsb] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vsh] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vshufeh] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vshuff] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vshuffb] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vshuffeb] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vshuffh] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vshuffob] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vshuffvdd] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vshufoeb] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vshufoeh] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vshufoh] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vsubb] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vsubb_dv] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vsubbnq] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vsubbq] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vsubh] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vsubh_dv] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vsubhnq] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vsubhq] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vsubhsat] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vsubhsat_dv] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vsubhw] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vsububh] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vsububsat] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vsububsat_dv] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vsubuhsat] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vsubuhsat_dv] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vsubuhw] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vsubw] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vsubw_dv] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vsubwnq] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vsubwq] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vsubwsat] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vsubwsat_dv] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vswap] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vtmpyb] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vtmpyb_acc] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vtmpybus] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vtmpybus_acc] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vtmpyhb] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vtmpyhb_acc] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vunpackb] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vunpackh] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vunpackob] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vunpackoh] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vunpackub] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vunpackuh] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vxor] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vzb] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+    [V6_vzh] = { .introduced = HEX_VER_V60, .removed = HEX_VER_NONE },
-+
-+    [A6_vminub_RdP] = { .introduced = HEX_VER_V62, .removed = HEX_VER_NONE },
-+    [M6_vabsdiffb] = { .introduced = HEX_VER_V62, .removed = HEX_VER_NONE },
-+    [M6_vabsdiffub] = { .introduced = HEX_VER_V62, .removed = HEX_VER_NONE },
-+    [S6_vsplatrbp] = { .introduced = HEX_VER_V62, .removed = HEX_VER_NONE },
-+    [S6_vtrunehb_ppp] = { .introduced = HEX_VER_V62, .removed = HEX_VER_NONE },
-+    [S6_vtrunohb_ppp] = { .introduced = HEX_VER_V62, .removed = HEX_VER_NONE },
-+    [V6_lvsplatb] = { .introduced = HEX_VER_V62, .removed = HEX_VER_NONE },
-+    [V6_lvsplath] = { .introduced = HEX_VER_V62, .removed = HEX_VER_NONE },
-+    [V6_pred_scalar2v2] = { .introduced = HEX_VER_V62, .removed = HEX_VER_NONE },
-+    [V6_shuffeqh] = { .introduced = HEX_VER_V62, .removed = HEX_VER_NONE },
-+    [V6_shuffeqw] = { .introduced = HEX_VER_V62, .removed = HEX_VER_NONE },
-+    [V6_vL32b_cur_npred_ai] = { .introduced = HEX_VER_V62, .removed = HEX_VER_NONE },
-+    [V6_vL32b_cur_npred_pi] = { .introduced = HEX_VER_V62, .removed = HEX_VER_NONE },
-+    [V6_vL32b_cur_npred_ppu] = { .introduced = HEX_VER_V62, .removed = HEX_VER_NONE },
-+    [V6_vL32b_cur_pred_ai] = { .introduced = HEX_VER_V62, .removed = HEX_VER_NONE },
-+    [V6_vL32b_cur_pred_pi] = { .introduced = HEX_VER_V62, .removed = HEX_VER_NONE },
-+    [V6_vL32b_cur_pred_ppu] = { .introduced = HEX_VER_V62, .removed = HEX_VER_NONE },
-+    [V6_vL32b_npred_ai] = { .introduced = HEX_VER_V62, .removed = HEX_VER_NONE },
-+    [V6_vL32b_npred_pi] = { .introduced = HEX_VER_V62, .removed = HEX_VER_NONE },
-+    [V6_vL32b_npred_ppu] = { .introduced = HEX_VER_V62, .removed = HEX_VER_NONE },
-+    [V6_vL32b_nt_cur_npred_ai] = { .introduced = HEX_VER_V62, .removed = HEX_VER_NONE },
-+    [V6_vL32b_nt_cur_npred_pi] = { .introduced = HEX_VER_V62, .removed = HEX_VER_NONE },
-+    [V6_vL32b_nt_cur_npred_ppu] = { .introduced = HEX_VER_V62, .removed = HEX_VER_NONE },
-+    [V6_vL32b_nt_cur_pred_ai] = { .introduced = HEX_VER_V62, .removed = HEX_VER_NONE },
-+    [V6_vL32b_nt_cur_pred_pi] = { .introduced = HEX_VER_V62, .removed = HEX_VER_NONE },
-+    [V6_vL32b_nt_cur_pred_ppu] = { .introduced = HEX_VER_V62, .removed = HEX_VER_NONE },
-+    [V6_vL32b_nt_npred_ai] = { .introduced = HEX_VER_V62, .removed = HEX_VER_NONE },
-+    [V6_vL32b_nt_npred_pi] = { .introduced = HEX_VER_V62, .removed = HEX_VER_NONE },
-+    [V6_vL32b_nt_npred_ppu] = { .introduced = HEX_VER_V62, .removed = HEX_VER_NONE },
-+    [V6_vL32b_nt_pred_ai] = { .introduced = HEX_VER_V62, .removed = HEX_VER_NONE },
-+    [V6_vL32b_nt_pred_pi] = { .introduced = HEX_VER_V62, .removed = HEX_VER_NONE },
-+    [V6_vL32b_nt_pred_ppu] = { .introduced = HEX_VER_V62, .removed = HEX_VER_NONE },
-+    [V6_vL32b_nt_tmp_npred_ai] = { .introduced = HEX_VER_V62, .removed = HEX_VER_NONE },
-+    [V6_vL32b_nt_tmp_npred_pi] = { .introduced = HEX_VER_V62, .removed = HEX_VER_NONE },
-+    [V6_vL32b_nt_tmp_npred_ppu] = { .introduced = HEX_VER_V62, .removed = HEX_VER_NONE },
-+    [V6_vL32b_nt_tmp_pred_ai] = { .introduced = HEX_VER_V62, .removed = HEX_VER_NONE },
-+    [V6_vL32b_nt_tmp_pred_pi] = { .introduced = HEX_VER_V62, .removed = HEX_VER_NONE },
-+    [V6_vL32b_nt_tmp_pred_ppu] = { .introduced = HEX_VER_V62, .removed = HEX_VER_NONE },
-+    [V6_vL32b_pred_ai] = { .introduced = HEX_VER_V62, .removed = HEX_VER_NONE },
-+    [V6_vL32b_pred_pi] = { .introduced = HEX_VER_V62, .removed = HEX_VER_NONE },
-+    [V6_vL32b_pred_ppu] = { .introduced = HEX_VER_V62, .removed = HEX_VER_NONE },
-+    [V6_vL32b_tmp_npred_ai] = { .introduced = HEX_VER_V62, .removed = HEX_VER_NONE },
-+    [V6_vL32b_tmp_npred_pi] = { .introduced = HEX_VER_V62, .removed = HEX_VER_NONE },
-+    [V6_vL32b_tmp_npred_ppu] = { .introduced = HEX_VER_V62, .removed = HEX_VER_NONE },
-+    [V6_vL32b_tmp_pred_ai] = { .introduced = HEX_VER_V62, .removed = HEX_VER_NONE },
-+    [V6_vL32b_tmp_pred_pi] = { .introduced = HEX_VER_V62, .removed = HEX_VER_NONE },
-+    [V6_vL32b_tmp_pred_ppu] = { .introduced = HEX_VER_V62, .removed = HEX_VER_NONE },
-+    [V6_vaddbsat] = { .introduced = HEX_VER_V62, .removed = HEX_VER_NONE },
-+    [V6_vaddbsat_dv] = { .introduced = HEX_VER_V62, .removed = HEX_VER_NONE },
-+    [V6_vaddcarry] = { .introduced = HEX_VER_V62, .removed = HEX_VER_NONE },
-+    [V6_vaddclbh] = { .introduced = HEX_VER_V62, .removed = HEX_VER_NONE },
-+    [V6_vaddclbw] = { .introduced = HEX_VER_V62, .removed = HEX_VER_NONE },
-+    [V6_vaddhw_acc] = { .introduced = HEX_VER_V62, .removed = HEX_VER_NONE },
-+    [V6_vaddubh_acc] = { .introduced = HEX_VER_V62, .removed = HEX_VER_NONE },
-+    [V6_vaddububb_sat] = { .introduced = HEX_VER_V62, .removed = HEX_VER_NONE },
-+    [V6_vadduhw_acc] = { .introduced = HEX_VER_V62, .removed = HEX_VER_NONE },
-+    [V6_vadduwsat] = { .introduced = HEX_VER_V62, .removed = HEX_VER_NONE },
-+    [V6_vadduwsat_dv] = { .introduced = HEX_VER_V62, .removed = HEX_VER_NONE },
-+    [V6_vandnqrt] = { .introduced = HEX_VER_V62, .removed = HEX_VER_NONE },
-+    [V6_vandnqrt_acc] = { .introduced = HEX_VER_V62, .removed = HEX_VER_NONE },
-+    [V6_vandvnqv] = { .introduced = HEX_VER_V62, .removed = HEX_VER_NONE },
-+    [V6_vandvqv] = { .introduced = HEX_VER_V62, .removed = HEX_VER_NONE },
-+    [V6_vasrhbsat] = { .introduced = HEX_VER_V62, .removed = HEX_VER_NONE },
-+    [V6_vasruwuhrndsat] = { .introduced = HEX_VER_V62, .removed = HEX_VER_NONE },
-+    [V6_vasrwuhrndsat] = { .introduced = HEX_VER_V62, .removed = HEX_VER_NONE },
-+    [V6_vlsrb] = { .introduced = HEX_VER_V62, .removed = HEX_VER_NONE },
-+    [V6_vlutvvb_nm] = { .introduced = HEX_VER_V62, .removed = HEX_VER_NONE },
-+    [V6_vlutvvb_oracci] = { .introduced = HEX_VER_V62, .removed = HEX_VER_NONE },
-+    [V6_vlutvvbi] = { .introduced = HEX_VER_V62, .removed = HEX_VER_NONE },
-+    [V6_vlutvwh_nm] = { .introduced = HEX_VER_V62, .removed = HEX_VER_NONE },
-+    [V6_vlutvwh_oracci] = { .introduced = HEX_VER_V62, .removed = HEX_VER_NONE },
-+    [V6_vlutvwhi] = { .introduced = HEX_VER_V62, .removed = HEX_VER_NONE },
-+    [V6_vmaxb] = { .introduced = HEX_VER_V62, .removed = HEX_VER_NONE },
-+    [V6_vminb] = { .introduced = HEX_VER_V62, .removed = HEX_VER_NONE },
-+    [V6_vmpauhb] = { .introduced = HEX_VER_V62, .removed = HEX_VER_NONE },
-+    [V6_vmpauhb_acc] = { .introduced = HEX_VER_V62, .removed = HEX_VER_NONE },
-+    [V6_vmpyewuh_64] = { .introduced = HEX_VER_V62, .removed = HEX_VER_NONE },
-+    [V6_vmpyiwub] = { .introduced = HEX_VER_V62, .removed = HEX_VER_NONE },
-+    [V6_vmpyiwub_acc] = { .introduced = HEX_VER_V62, .removed = HEX_VER_NONE },
-+    [V6_vmpyowh_64_acc] = { .introduced = HEX_VER_V62, .removed = HEX_VER_NONE },
-+    [V6_vrounduhub] = { .introduced = HEX_VER_V62, .removed = HEX_VER_NONE },
-+    [V6_vrounduwuh] = { .introduced = HEX_VER_V62, .removed = HEX_VER_NONE },
-+    [V6_vsatuwuh] = { .introduced = HEX_VER_V62, .removed = HEX_VER_NONE },
-+    [V6_vsubbsat] = { .introduced = HEX_VER_V62, .removed = HEX_VER_NONE },
-+    [V6_vsubbsat_dv] = { .introduced = HEX_VER_V62, .removed = HEX_VER_NONE },
-+    [V6_vsubcarry] = { .introduced = HEX_VER_V62, .removed = HEX_VER_NONE },
-+    [V6_vsubububb_sat] = { .introduced = HEX_VER_V62, .removed = HEX_VER_NONE },
-+    [V6_vsubuwsat] = { .introduced = HEX_VER_V62, .removed = HEX_VER_NONE },
-+    [V6_vsubuwsat_dv] = { .introduced = HEX_VER_V62, .removed = HEX_VER_NONE },
-+    [V6_vwhist128] = { .introduced = HEX_VER_V62, .removed = HEX_VER_NONE },
-+    [V6_vwhist128m] = { .introduced = HEX_VER_V62, .removed = HEX_VER_NONE },
-+    [V6_vwhist128q] = { .introduced = HEX_VER_V62, .removed = HEX_VER_NONE },
-+    [V6_vwhist128qm] = { .introduced = HEX_VER_V62, .removed = HEX_VER_NONE },
-+    [V6_vwhist256] = { .introduced = HEX_VER_V62, .removed = HEX_VER_NONE },
-+    [V6_vwhist256_sat] = { .introduced = HEX_VER_V62, .removed = HEX_VER_NONE },
-+    [V6_vwhist256q] = { .introduced = HEX_VER_V62, .removed = HEX_VER_NONE },
-+    [V6_vwhist256q_sat] = { .introduced = HEX_VER_V62, .removed = HEX_VER_NONE },
-+
-+    [A6_vcmpbeq_notany] = { .introduced = HEX_VER_V65, .removed = HEX_VER_NONE },
-+    [V6_vS32b_srls_ai] = { .introduced = HEX_VER_V65, .removed = HEX_VER_NONE },
-+    [V6_vS32b_srls_pi] = { .introduced = HEX_VER_V65, .removed = HEX_VER_NONE },
-+    [V6_vS32b_srls_ppu] = { .introduced = HEX_VER_V65, .removed = HEX_VER_NONE },
-+    [V6_vabsb] = { .introduced = HEX_VER_V65, .removed = HEX_VER_NONE },
-+    [V6_vabsb_sat] = { .introduced = HEX_VER_V65, .removed = HEX_VER_NONE },
-+    [V6_vaslh_acc] = { .introduced = HEX_VER_V65, .removed = HEX_VER_NONE },
-+    [V6_vasrh_acc] = { .introduced = HEX_VER_V65, .removed = HEX_VER_NONE },
-+    [V6_vasruhubrndsat] = { .introduced = HEX_VER_V65, .removed = HEX_VER_NONE },
-+    [V6_vasruhubsat] = { .introduced = HEX_VER_V65, .removed = HEX_VER_NONE },
-+    [V6_vasruwuhsat] = { .introduced = HEX_VER_V65, .removed = HEX_VER_NONE },
-+    [V6_vavgb] = { .introduced = HEX_VER_V65, .removed = HEX_VER_NONE },
-+    [V6_vavgbrnd] = { .introduced = HEX_VER_V65, .removed = HEX_VER_NONE },
-+    [V6_vavguw] = { .introduced = HEX_VER_V65, .removed = HEX_VER_NONE },
-+    [V6_vavguwrnd] = { .introduced = HEX_VER_V65, .removed = HEX_VER_NONE },
-+    [V6_vgathermh] = { .introduced = HEX_VER_V65, .removed = HEX_VER_NONE },
-+    [V6_vgathermhq] = { .introduced = HEX_VER_V65, .removed = HEX_VER_NONE },
-+    [V6_vgathermhw] = { .introduced = HEX_VER_V65, .removed = HEX_VER_NONE },
-+    [V6_vgathermhwq] = { .introduced = HEX_VER_V65, .removed = HEX_VER_NONE },
-+    [V6_vgathermw] = { .introduced = HEX_VER_V65, .removed = HEX_VER_NONE },
-+    [V6_vgathermwq] = { .introduced = HEX_VER_V65, .removed = HEX_VER_NONE },
-+    [V6_vlut4] = { .introduced = HEX_VER_V65, .removed = HEX_VER_NONE },
-+    [V6_vmpabuu] = { .introduced = HEX_VER_V65, .removed = HEX_VER_NONE },
-+    [V6_vmpabuu_acc] = { .introduced = HEX_VER_V65, .removed = HEX_VER_NONE },
-+    [V6_vmpahhsat] = { .introduced = HEX_VER_V65, .removed = HEX_VER_NONE },
-+    [V6_vmpauhuhsat] = { .introduced = HEX_VER_V65, .removed = HEX_VER_NONE },
-+    [V6_vmpsuhuhsat] = { .introduced = HEX_VER_V65, .removed = HEX_VER_NONE },
-+    [V6_vmpyh_acc] = { .introduced = HEX_VER_V65, .removed = HEX_VER_NONE },
-+    [V6_vmpyuhe] = { .introduced = HEX_VER_V65, .removed = HEX_VER_NONE },
-+    [V6_vmpyuhe_acc] = { .introduced = HEX_VER_V65, .removed = HEX_VER_NONE },
-+    [V6_vnavgb] = { .introduced = HEX_VER_V65, .removed = HEX_VER_NONE },
-+    [V6_vprefixqb] = { .introduced = HEX_VER_V65, .removed = HEX_VER_NONE },
-+    [V6_vprefixqh] = { .introduced = HEX_VER_V65, .removed = HEX_VER_NONE },
-+    [V6_vprefixqw] = { .introduced = HEX_VER_V65, .removed = HEX_VER_NONE },
-+    [V6_vscattermh] = { .introduced = HEX_VER_V65, .removed = HEX_VER_NONE },
-+    [V6_vscattermh_add] = { .introduced = HEX_VER_V65, .removed = HEX_VER_NONE },
-+    [V6_vscattermhq] = { .introduced = HEX_VER_V65, .removed = HEX_VER_NONE },
-+    [V6_vscattermhw] = { .introduced = HEX_VER_V65, .removed = HEX_VER_NONE },
-+    [V6_vscattermhw_add] = { .introduced = HEX_VER_V65, .removed = HEX_VER_NONE },
-+    [V6_vscattermhwq] = { .introduced = HEX_VER_V65, .removed = HEX_VER_NONE },
-+    [V6_vscattermw] = { .introduced = HEX_VER_V65, .removed = HEX_VER_NONE },
-+    [V6_vscattermw_add] = { .introduced = HEX_VER_V65, .removed = HEX_VER_NONE },
-+    [V6_vscattermwq] = { .introduced = HEX_VER_V65, .removed = HEX_VER_NONE },
-+
-+    [F2_dfadd] = { .introduced = HEX_VER_V66, .removed = HEX_VER_NONE },
-+    [F2_dfsub] = { .introduced = HEX_VER_V66, .removed = HEX_VER_NONE },
-+    [M2_mnaci] = { .introduced = HEX_VER_V66, .removed = HEX_VER_NONE },
-+    [S2_mask] = { .introduced = HEX_VER_V66, .removed = HEX_VER_NONE },
-+    [V6_vaddcarryo] = { .introduced = HEX_VER_V66, .removed = HEX_VER_NONE },
-+    [V6_vaddcarrysat] = { .introduced = HEX_VER_V66, .removed = HEX_VER_NONE },
-+    [V6_vasr_into] = { .introduced = HEX_VER_V66, .removed = HEX_VER_NONE },
-+    [V6_vrotr] = { .introduced = HEX_VER_V66, .removed = HEX_VER_NONE },
-+    [V6_vsatdw] = { .introduced = HEX_VER_V66, .removed = HEX_VER_NONE },
-+    [V6_vsubcarryo] = { .introduced = HEX_VER_V66, .removed = HEX_VER_NONE },
-+
-+    [A7_clip] = { .introduced = HEX_VER_V67, .removed = HEX_VER_NONE },
-+    [A7_croundd_ri] = { .introduced = HEX_VER_V67, .removed = HEX_VER_NONE },
-+    [A7_croundd_rr] = { .introduced = HEX_VER_V67, .removed = HEX_VER_NONE },
-+    [A7_vclip] = { .introduced = HEX_VER_V67, .removed = HEX_VER_NONE },
-+    [F2_dfmax] = { .introduced = HEX_VER_V67, .removed = HEX_VER_NONE },
-+    [F2_dfmin] = { .introduced = HEX_VER_V67, .removed = HEX_VER_NONE },
-+    [F2_dfmpyfix] = { .introduced = HEX_VER_V67, .removed = HEX_VER_NONE },
-+    [F2_dfmpyhh] = { .introduced = HEX_VER_V67, .removed = HEX_VER_NONE },
-+    [F2_dfmpylh] = { .introduced = HEX_VER_V67, .removed = HEX_VER_NONE },
-+    [F2_dfmpyll] = { .introduced = HEX_VER_V67, .removed = HEX_VER_NONE },
-+    [J2_callrh] = { .introduced = 0x73, .removed = HEX_VER_NONE },
-+    [J2_jumprh] = { .introduced = 0x73, .removed = HEX_VER_NONE },
-+    [L2_loadw_aq] = { .introduced = HEX_VER_V68, .removed = HEX_VER_NONE },
-+    [L4_loadd_aq] = { .introduced = HEX_VER_V68, .removed = HEX_VER_NONE },
-+    [M7_dcmpyiw] = { .introduced = HEX_VER_V67, .removed = HEX_VER_NONE },
-+    [M7_dcmpyiw_acc] = { .introduced = HEX_VER_V67, .removed = HEX_VER_NONE },
-+    [M7_dcmpyiwc] = { .introduced = HEX_VER_V67, .removed = HEX_VER_NONE },
-+    [M7_dcmpyiwc_acc] = { .introduced = HEX_VER_V67, .removed = HEX_VER_NONE },
-+    [M7_dcmpyrw] = { .introduced = HEX_VER_V67, .removed = HEX_VER_NONE },
-+    [M7_dcmpyrw_acc] = { .introduced = HEX_VER_V67, .removed = HEX_VER_NONE },
-+    [M7_dcmpyrwc] = { .introduced = HEX_VER_V67, .removed = HEX_VER_NONE },
-+    [M7_dcmpyrwc_acc] = { .introduced = HEX_VER_V67, .removed = HEX_VER_NONE },
-+    [M7_wcmpyiw] = { .introduced = HEX_VER_V67, .removed = HEX_VER_NONE },
-+    [M7_wcmpyiw_rnd] = { .introduced = HEX_VER_V67, .removed = HEX_VER_NONE },
-+    [M7_wcmpyiwc] = { .introduced = HEX_VER_V67, .removed = HEX_VER_NONE },
-+    [M7_wcmpyiwc_rnd] = { .introduced = HEX_VER_V67, .removed = HEX_VER_NONE },
-+    [M7_wcmpyrw] = { .introduced = HEX_VER_V67, .removed = HEX_VER_NONE },
-+    [M7_wcmpyrw_rnd] = { .introduced = HEX_VER_V67, .removed = HEX_VER_NONE },
-+    [M7_wcmpyrwc] = { .introduced = HEX_VER_V67, .removed = HEX_VER_NONE },
-+    [M7_wcmpyrwc_rnd] = { .introduced = HEX_VER_V67, .removed = HEX_VER_NONE },
-+    [R6_release_at_vi] = { .introduced = HEX_VER_V68, .removed = HEX_VER_NONE },
-+    [R6_release_st_vi] = { .introduced = HEX_VER_V68, .removed = HEX_VER_NONE },
-+    [S2_storew_rl_at_vi] = { .introduced = HEX_VER_V68, .removed = HEX_VER_NONE },
-+    [S2_storew_rl_st_vi] = { .introduced = HEX_VER_V68, .removed = HEX_VER_NONE },
-+    [S4_stored_rl_at_vi] = { .introduced = HEX_VER_V68, .removed = HEX_VER_NONE },
-+    [S4_stored_rl_st_vi] = { .introduced = HEX_VER_V68, .removed = HEX_VER_NONE },
-+    [V6_v6mpyhubs10] = { .introduced = HEX_VER_V68, .removed = HEX_VER_NONE },
-+    [V6_v6mpyhubs10_vxx] = { .introduced = HEX_VER_V68, .removed = HEX_VER_NONE },
-+    [V6_v6mpyvubs10] = { .introduced = HEX_VER_V68, .removed = HEX_VER_NONE },
-+    [V6_v6mpyvubs10_vxx] = { .introduced = HEX_VER_V68, .removed = HEX_VER_NONE },
-+    [V6_vasrvuhubrndsat] = { .introduced = HEX_VER_V69, .removed = HEX_VER_NONE },
-+    [V6_vasrvuhubsat] = { .introduced = HEX_VER_V69, .removed = HEX_VER_NONE },
-+    [V6_vasrvwuhrndsat] = { .introduced = HEX_VER_V69, .removed = HEX_VER_NONE },
-+    [V6_vasrvwuhsat] = { .introduced = HEX_VER_V69, .removed = HEX_VER_NONE },
-+    [V6_vassign_tmp] = { .introduced = HEX_VER_V69, .removed = HEX_VER_NONE },
-+    [V6_vcombine_tmp] = { .introduced = HEX_VER_V69, .removed = HEX_VER_NONE },
-+    [V6_vmpyuhvs] = { .introduced = HEX_VER_V69, .removed = HEX_VER_NONE },
-+};
-+
-+#endif /* HEXAGON_TAG_ARCH_TABLE_H */
+diff --git a/target/hexagon/cpu_bits.h b/target/hexagon/cpu_bits.h
+index 19beca81c0..aaac6b9ea6 100644
+--- a/target/hexagon/cpu_bits.h
++++ b/target/hexagon/cpu_bits.h
+@@ -19,6 +19,7 @@
+ #define HEXAGON_CPU_BITS_H
+ 
+ #include "qemu/bitops.h"
++#include "cpu-qom.h"
+ 
+ #define PCALIGN 4
+ #define PCALIGN_MASK (PCALIGN - 1)
+@@ -65,6 +66,7 @@ static inline bool is_packet_end(uint32_t endocing)
+     return ((bits == 0x3) || (bits == 0x0));
+ }
+ 
+-int disassemble_hexagon(uint32_t *words, int nwords, bfd_vma pc, GString *buf);
++int disassemble_hexagon(uint32_t *words, int nwords, bfd_vma pc, GString *buf,
++                        const HexagonCPUDef *hex_def);
+ 
+ #endif
+diff --git a/target/hexagon/printinsn.h b/target/hexagon/printinsn.h
+index 2ecd1731d0..6f84ef93c3 100644
+--- a/target/hexagon/printinsn.h
++++ b/target/hexagon/printinsn.h
+@@ -18,10 +18,11 @@
+ #ifndef HEXAGON_PRINTINSN_H
+ #define HEXAGON_PRINTINSN_H
+ 
++#include "cpu-qom.h"
+ #include "insn.h"
+ 
+ void snprint_a_pkt_disas(GString *buf, Packet *pkt, uint32_t *words,
+-                         target_ulong pc);
++                         target_ulong pc, const HexagonCPUDef *hex_def);
+ void snprint_a_pkt_debug(GString *buf, Packet *pkt);
+ 
+ #endif
+diff --git a/disas/hexagon.c b/disas/hexagon.c
+index c1a4ffc5f6..36b8321c26 100644
+--- a/disas/hexagon.c
++++ b/disas/hexagon.c
+@@ -31,6 +31,7 @@
+ 
+ int print_insn_hexagon(bfd_vma memaddr, struct disassemble_info *info)
+ {
++    const HexagonCPUDef *hex_def = (const HexagonCPUDef *)info->target_info;
+     uint32_t words[PACKET_WORDS_MAX];
+     bool found_end = false;
+     GString *buf;
+@@ -58,7 +59,7 @@ int print_insn_hexagon(bfd_vma memaddr, struct disassemble_info *info)
+     }
+ 
+     buf = g_string_sized_new(PACKET_BUFFER_LEN);
+-    len = disassemble_hexagon(words, i, memaddr, buf);
++    len = disassemble_hexagon(words, i, memaddr, buf, hex_def);
+     (*info->fprintf_func)(info->stream, "%s", buf->str);
+     g_string_free(buf, true);
+ 
+diff --git a/target/hexagon/cpu.c b/target/hexagon/cpu.c
+index 949d509a15..001ea3c4ef 100644
+--- a/target/hexagon/cpu.c
++++ b/target/hexagon/cpu.c
+@@ -297,8 +297,10 @@ static void hexagon_cpu_reset_hold(Object *obj, ResetType type)
+ static void hexagon_cpu_disas_set_info(const CPUState *cs,
+                                        disassemble_info *info)
+ {
++    const HexagonCPU *cpu = HEXAGON_CPU(cs);
+     info->print_insn = print_insn_hexagon;
+     info->endian = BFD_ENDIAN_LITTLE;
++    info->target_info = HEXAGON_CPU_GET_CLASS(cpu)->hex_def;
+ }
+ 
+ static void hexagon_cpu_realize(DeviceState *dev, Error **errp)
+diff --git a/target/hexagon/decode.c b/target/hexagon/decode.c
+index b8a1cd5b12..c4cf430e5a 100644
+--- a/target/hexagon/decode.c
++++ b/target/hexagon/decode.c
+@@ -828,19 +828,36 @@ int decode_packet(DisasContext *ctx, int max_words, const uint32_t *words,
+ 
+ /* Used for "-d in_asm" logging */
+ int disassemble_hexagon(uint32_t *words, int nwords, bfd_vma pc,
+-                        GString *buf)
++                        GString *buf, const HexagonCPUDef  *hex_def)
+ {
++    HexagonCPUDef any_def = {
++        .hex_version = HEX_VER_ANY,  /* Allow decode to accept anything */
++    };
+     DisasContext ctx;
+     Packet pkt;
+ 
+     memset(&ctx, 0, sizeof(DisasContext));
++    ctx.hex_def = &any_def;
+     ctx.pkt = &pkt;
+ 
+     if (decode_packet(&ctx, nwords, words, &pkt, true) > 0) {
+-        snprint_a_pkt_disas(buf, &pkt, words, pc);
++        snprint_a_pkt_disas(buf, &pkt, words, pc, hex_def);
+         return pkt.encod_pkt_size_in_bytes;
+     } else {
+-        g_string_assign(buf, "<invalid>");
+-        return 0;
++        for (int i = 0; i < nwords; i++) {
++            g_string_append_printf(buf, "0x" TARGET_FMT_lx "\t", words[i]);
++            if (i == 0) {
++                g_string_append(buf, "{");
++            }
++            g_string_append(buf, "\t");
++            g_string_append(buf, "<invalid>");
++            if (i < nwords - 1) {
++                pc += 4;
++                g_string_append_printf(buf, "\n0x" TARGET_FMT_lx ":  ",
++                                       (target_ulong)pc);
++            }
++        }
++        g_string_append(buf, " }");
++        return nwords * sizeof(uint32_t);
+     }
+ }
+diff --git a/target/hexagon/printinsn.c b/target/hexagon/printinsn.c
+index 4865cdd133..22b305f018 100644
+--- a/target/hexagon/printinsn.c
++++ b/target/hexagon/printinsn.c
+@@ -21,6 +21,7 @@
+ #include "insn.h"
+ #include "reg_fields.h"
+ #include "internal.h"
++#include "decode.h"
+ 
+ static const char *sreg2str(unsigned int reg)
+ {
+@@ -51,7 +52,7 @@ static void snprintinsn(GString *buf, Insn *insn)
+ }
+ 
+ void snprint_a_pkt_disas(GString *buf, Packet *pkt, uint32_t *words,
+-                         target_ulong pc)
++                         target_ulong pc, const HexagonCPUDef *hex_def)
+ {
+     bool has_endloop0 = false;
+     bool has_endloop1 = false;
+@@ -83,7 +84,11 @@ void snprint_a_pkt_disas(GString *buf, Packet *pkt, uint32_t *words,
+         }
+ 
+         g_string_append(buf, "\t");
+-        snprintinsn(buf, &(pkt->insn[i]));
++        if (opcode_supported(pkt->insn[i].opcode, hex_def)) {
++            snprintinsn(buf, &(pkt->insn[i]));
++        } else {
++            g_string_append(buf, "<invalid>");
++        }
+ 
+         if (i < pkt->num_insns - 1) {
+             /*
 -- 
 2.43.0
 
