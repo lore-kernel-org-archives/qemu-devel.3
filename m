@@ -4,108 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D172E909D0
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Feb 2026 16:16:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E65DE909CF
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Feb 2026 16:16:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vsNkE-0003Bk-Db; Tue, 17 Feb 2026 11:16:14 -0500
+	id 1vsNkF-0003Jn-SE; Tue, 17 Feb 2026 11:16:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vsNkC-0002zI-K3
- for qemu-devel@nongnu.org; Tue, 17 Feb 2026 11:16:12 -0500
-Received: from smtp-out1.suse.de ([195.135.223.130])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vsNkE-0003C3-AJ
+ for qemu-devel@nongnu.org; Tue, 17 Feb 2026 11:16:14 -0500
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vsNkA-0003Ep-CU
- for qemu-devel@nongnu.org; Tue, 17 Feb 2026 11:16:12 -0500
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vsNkC-0003F0-Cr
+ for qemu-devel@nongnu.org; Tue, 17 Feb 2026 11:16:14 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 4E1D23E725;
- Tue, 17 Feb 2026 16:15:30 +0000 (UTC)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 06D355BD20;
+ Tue, 17 Feb 2026 16:15:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1771344930; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1771344927; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=S3VqrKrhdN5UPnNL8q16Ourr8Cn92niRQK+xWCs/D10=;
- b=A49DJAyCNnsOP7m7aht2B0NePSLNZt/TfUpWfNeXJPo6CmaZCHb6gQJ36Hz+ao+IGGQtg+
- WE6msDTSHXxHmpUr9g9QlSnANQE1o5KM8c/VgYz5H7ajJkPPGz8NLvKcqmTdkH83xpPsl+
- I9z3yplpuLySOuzEoGUCUdOGMju5quk=
+ bh=tK4/ttAO/SNXZmJLNh5rwp3VCdcNm1uinpaCsgNSp1M=;
+ b=JyCIBlvmOFNjDkOIF2I6UI3it+Q20HnET5vec0svinR2SKiLiCqFHAoT1zj/uaAVgOz1cu
+ IgXl3NJnJHM3Pc2fb4aW9A2/D1Nq5QWIsElsd++XBuezsXAqcJMamek7/GCtqIHZDQI0Xe
+ gUK4AfMEGdaz+xQMXLbcweHPibdMGxw=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1771344930;
+ s=susede2_ed25519; t=1771344927;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=S3VqrKrhdN5UPnNL8q16Ourr8Cn92niRQK+xWCs/D10=;
- b=9tgZ0aEObuQDHEu/w/vDLlBFlVnNpuQ0a0zeEAY1VFelaPyFd28Cks/50zRco52pyMP39a
- aMeI2P+w7q4wl8Cw==
-Authentication-Results: smtp-out1.suse.de;
-	none
+ bh=tK4/ttAO/SNXZmJLNh5rwp3VCdcNm1uinpaCsgNSp1M=;
+ b=d50Tdt3Voby7qBiz12UY9lcF/5wr4AVh65rMfPunFmKRPnR80qaTWJHWtOXXch5WycY/5O
+ pv/OwdU50gBchMDg==
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=JyCIBlvm;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=d50Tdt3V
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1771344930; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1771344927; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=S3VqrKrhdN5UPnNL8q16Ourr8Cn92niRQK+xWCs/D10=;
- b=A49DJAyCNnsOP7m7aht2B0NePSLNZt/TfUpWfNeXJPo6CmaZCHb6gQJ36Hz+ao+IGGQtg+
- WE6msDTSHXxHmpUr9g9QlSnANQE1o5KM8c/VgYz5H7ajJkPPGz8NLvKcqmTdkH83xpPsl+
- I9z3yplpuLySOuzEoGUCUdOGMju5quk=
+ bh=tK4/ttAO/SNXZmJLNh5rwp3VCdcNm1uinpaCsgNSp1M=;
+ b=JyCIBlvmOFNjDkOIF2I6UI3it+Q20HnET5vec0svinR2SKiLiCqFHAoT1zj/uaAVgOz1cu
+ IgXl3NJnJHM3Pc2fb4aW9A2/D1Nq5QWIsElsd++XBuezsXAqcJMamek7/GCtqIHZDQI0Xe
+ gUK4AfMEGdaz+xQMXLbcweHPibdMGxw=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1771344930;
+ s=susede2_ed25519; t=1771344927;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=S3VqrKrhdN5UPnNL8q16Ourr8Cn92niRQK+xWCs/D10=;
- b=9tgZ0aEObuQDHEu/w/vDLlBFlVnNpuQ0a0zeEAY1VFelaPyFd28Cks/50zRco52pyMP39a
- aMeI2P+w7q4wl8Cw==
+ bh=tK4/ttAO/SNXZmJLNh5rwp3VCdcNm1uinpaCsgNSp1M=;
+ b=d50Tdt3Voby7qBiz12UY9lcF/5wr4AVh65rMfPunFmKRPnR80qaTWJHWtOXXch5WycY/5O
+ pv/OwdU50gBchMDg==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 147323EA66;
- Tue, 17 Feb 2026 16:15:28 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id C36F53EA66;
+ Tue, 17 Feb 2026 16:15:25 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id cB6yMiCUlGmHTgAAD6G6ig
- (envelope-from <farosas@suse.de>); Tue, 17 Feb 2026 16:15:28 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id SEbNIR2UlGmHTgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 17 Feb 2026 16:15:25 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>,
 	Lukas Straub <lukasstraub2@web.de>
-Subject: [PULL 25/32] migration: Refactor qemu_savevm_state_setup()
-Date: Tue, 17 Feb 2026 13:14:36 -0300
-Message-ID: <20260217161443.12738-26-farosas@suse.de>
+Subject: [PULL 23/32] migration: qemu_savevm_state_complete_precopy() take
+ MigrationState*
+Date: Tue, 17 Feb 2026 13:14:34 -0300
+Message-ID: <20260217161443.12738-24-farosas@suse.de>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260217161443.12738-1-farosas@suse.de>
 References: <20260217161443.12738-1-farosas@suse.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
- R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-1.000];
- MIME_GOOD(-0.10)[text/plain];
- FUZZY_RATELIMITED(0.00)[rspamd.com]; TO_DN_SOME(0.00)[];
- ARC_NA(0.00)[]; RCVD_TLS_ALL(0.00)[]; MIME_TRACE(0.00)[0:+];
- RCVD_VIA_SMTP_AUTH(0.00)[];
+X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_MISSING_CHARSET(0.50)[];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ URIBL_BLOCKED(0.00)[suse.de:mid,suse.de:dkim,suse.de:email,imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- URIBL_BLOCKED(0.00)[suse.de:mid,suse.de:email,imap1.dmz-prg2.suse.org:helo];
- FROM_HAS_DN(0.00)[]; FREEMAIL_CC(0.00)[redhat.com,web.de];
- RCPT_COUNT_THREE(0.00)[3]; FROM_EQ_ENVFROM(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:mid,suse.de:email];
- RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- FREEMAIL_ENVRCPT(0.00)[web.de]
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+];
+ FUZZY_RATELIMITED(0.00)[rspamd.com]; ARC_NA(0.00)[];
+ FREEMAIL_CC(0.00)[redhat.com,web.de]; RCVD_TLS_ALL(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
+ FROM_HAS_DN(0.00)[];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,suse.de:mid,suse.de:dkim,suse.de:email];
+ R_RATELIMIT(0.00)[to_ip_from(RLi3368pnyb3ujpcs6u1hud8b3)];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; DKIM_TRACE(0.00)[suse.de:+];
+ RCPT_COUNT_THREE(0.00)[3]; FREEMAIL_ENVRCPT(0.00)[web.de]
+X-Rspamd-Action: no action
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+X-Rspamd-Queue-Id: 06D355BD20
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -124,182 +132,79 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Peter Xu <peterx@redhat.com>
 
-Split it into two smaller chunks:
-
-  - Dump of early_setup VMSDs
-  - Dump of save_setup() sections
-
-They're mutual exclusive, hence we can run two loops and do them
-sequentially.  This will cause migration thread to loop one more time, but
-it should be fine when migration just started and only do it once.  It's
-needed because we will need to reuse the early_vmsd helper later to
-deduplicate code elsewhere.
-
-QEMU almost sticks with qemu_savevm_state_XXX() to represent the dump of
-vmstates's section XXX.  With that in mind, this patch renamed the original
-qemu_savevm_state_setup() to qemu_savevm_state_do_setup() instead.
-
-So after this patch:
-
-  - qemu_savevm_state_non_iterable_early() dumps early_vmsds only,
-  - qemu_savevm_state_setup() dumps save_setup() sections only,
-  - qemu_savevm_state_do_setup() does all things needed during setup
-    phase (including migration SETUP notifies)
+Make it pass in MigrationState* instead of s->to_dst_file, so as to drop
+the internal migrate_get_current().
 
 Signed-off-by: Peter Xu <peterx@redhat.com>
 Reviewed-by: Fabiano Rosas <farosas@suse.de>
 Tested-by: Lukas Straub <lukasstraub2@web.de>
-Link: https://lore.kernel.org/qemu-devel/20260127185254.3954634-20-peterx@redhat.com
+Link: https://lore.kernel.org/qemu-devel/20260127185254.3954634-18-peterx@redhat.com
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- migration/migration.c |  4 ++--
- migration/savevm.c    | 56 ++++++++++++++++++++++++++++++-------------
- migration/savevm.h    |  6 +++--
- 3 files changed, 46 insertions(+), 20 deletions(-)
+ migration/migration.c | 2 +-
+ migration/savevm.c    | 7 ++++---
+ migration/savevm.h    | 2 +-
+ 3 files changed, 6 insertions(+), 5 deletions(-)
 
 diff --git a/migration/migration.c b/migration/migration.c
-index 27e4456429..f81ac21d4e 100644
+index b1d421953f..27e4456429 100644
 --- a/migration/migration.c
 +++ b/migration/migration.c
-@@ -3540,7 +3540,7 @@ static void *migration_thread(void *opaque)
+@@ -2757,7 +2757,7 @@ static int migration_completion_precopy(MigrationState *s)
+         goto out_unlock;
      }
  
-     bql_lock();
--    ret = qemu_savevm_state_setup(s->to_dst_file, &local_err);
-+    ret = qemu_savevm_state_do_setup(s->to_dst_file, &local_err);
+-    ret = qemu_savevm_state_complete_precopy(s->to_dst_file);
++    ret = qemu_savevm_state_complete_precopy(s);
+ out_unlock:
      bql_unlock();
- 
-     qemu_savevm_wait_unplug(s, MIGRATION_STATUS_SETUP,
-@@ -3663,7 +3663,7 @@ static void *bg_migration_thread(void *opaque)
- 
-     bql_lock();
-     qemu_savevm_state_header(s->to_dst_file);
--    ret = qemu_savevm_state_setup(s->to_dst_file, &local_err);
-+    ret = qemu_savevm_state_do_setup(s->to_dst_file, &local_err);
-     bql_unlock();
- 
-     qemu_savevm_wait_unplug(s, MIGRATION_STATUS_SETUP,
+     return ret;
 diff --git a/migration/savevm.c b/migration/savevm.c
-index 0683a103c8..b04a21ffc9 100644
+index e1918d4f38..830d8e5988 100644
 --- a/migration/savevm.c
 +++ b/migration/savevm.c
-@@ -1367,29 +1367,33 @@ int qemu_savevm_state_prepare(Error **errp)
+@@ -1728,8 +1728,9 @@ int qemu_savevm_state_non_iterable(QEMUFile *f)
      return 0;
  }
  
--int qemu_savevm_state_setup(QEMUFile *f, Error **errp)
-+int qemu_savevm_state_non_iterable_early(QEMUFile *f,
-+                                         JSONWriter *vmdesc,
-+                                         Error **errp)
+-int qemu_savevm_state_complete_precopy(QEMUFile *f)
++int qemu_savevm_state_complete_precopy(MigrationState *s)
  {
--    ERRP_GUARD();
--    MigrationState *ms = migrate_get_current();
--    JSONWriter *vmdesc = ms->vmdesc;
-     SaveStateEntry *se;
--    int ret = 0;
-+    int ret;
++    QEMUFile *f = s->to_dst_file;
+     int ret;
  
--    if (vmdesc) {
--        json_writer_int64(vmdesc, "page_size", qemu_target_page_size());
--        json_writer_start_array(vmdesc, "devices");
--    }
--
--    trace_savevm_state_setup();
-     QTAILQ_FOREACH(se, &savevm_state.handlers, entry) {
-         if (se->vmsd && se->vmsd->early_setup) {
-             ret = vmstate_save(f, se, vmdesc, errp);
-             if (ret) {
--                break;
-+                return ret;
-             }
--            continue;
-         }
-+    }
- 
-+    return 0;
-+}
-+
-+static int qemu_savevm_state_setup(QEMUFile *f, Error **errp)
-+{
-+    SaveStateEntry *se;
-+    int ret;
-+
-+    trace_savevm_state_setup();
-+
-+    QTAILQ_FOREACH(se, &savevm_state.handlers, entry) {
-         if (!se->ops || !se->ops->save_setup) {
-             continue;
-         }
-@@ -1399,14 +1403,34 @@ int qemu_savevm_state_setup(QEMUFile *f, Error **errp)
-             }
-         }
-         save_section_header(f, se, QEMU_VM_SECTION_START);
--
-         ret = se->ops->save_setup(f, se->opaque, errp);
-         save_section_footer(f, se);
-         if (ret < 0) {
--            break;
-+            return ret;
-         }
-     }
- 
-+    return 0;
-+}
-+
-+int qemu_savevm_state_do_setup(QEMUFile *f, Error **errp)
-+{
-+    ERRP_GUARD();
-+    MigrationState *ms = migrate_get_current();
-+    JSONWriter *vmdesc = ms->vmdesc;
-+    int ret;
-+
-+    if (vmdesc) {
-+        json_writer_int64(vmdesc, "page_size", qemu_target_page_size());
-+        json_writer_start_array(vmdesc, "devices");
-+    }
-+
-+    ret = qemu_savevm_state_non_iterable_early(f, vmdesc, errp);
-+    if (ret) {
-+        return ret;
-+    }
-+
-+    ret = qemu_savevm_state_setup(f, errp);
-     if (ret) {
+     ret = qemu_savevm_state_complete_precopy_iterable(f, false);
+@@ -1742,7 +1743,7 @@ int qemu_savevm_state_complete_precopy(QEMUFile *f)
          return ret;
      }
-@@ -1826,7 +1850,7 @@ static int qemu_savevm_state(QEMUFile *f, Error **errp)
-     ms->to_dst_file = f;
  
-     qemu_savevm_state_header(f);
--    ret = qemu_savevm_state_setup(f, errp);
-+    ret = qemu_savevm_state_do_setup(f, errp);
-     if (ret) {
-         goto cleanup;
+-    qemu_savevm_state_end_precopy(migrate_get_current(), f);
++    qemu_savevm_state_end_precopy(s, f);
+ 
+     return qemu_fflush(f);
+ }
+@@ -1841,7 +1842,7 @@ static int qemu_savevm_state(QEMUFile *f, Error **errp)
+ 
+     ret = qemu_file_get_error(f);
+     if (ret == 0) {
+-        qemu_savevm_state_complete_precopy(f);
++        qemu_savevm_state_complete_precopy(ms);
+         ret = qemu_file_get_error(f);
      }
+     if (ret != 0) {
 diff --git a/migration/savevm.h b/migration/savevm.h
-index bded5e2a6c..f2750eca09 100644
+index 57b96133d5..bded5e2a6c 100644
 --- a/migration/savevm.h
 +++ b/migration/savevm.h
-@@ -34,7 +34,7 @@
- bool qemu_savevm_state_blocked(Error **errp);
- void qemu_savevm_non_migratable_list(strList **reasons);
- int qemu_savevm_state_prepare(Error **errp);
--int qemu_savevm_state_setup(QEMUFile *f, Error **errp);
-+int qemu_savevm_state_do_setup(QEMUFile *f, Error **errp);
- bool qemu_savevm_state_guest_unplug_pending(void);
- int qemu_savevm_state_resume_prepare(MigrationState *s);
- void qemu_savevm_send_header(QEMUFile *f);
-@@ -75,7 +75,9 @@ int qemu_loadvm_state_main(QEMUFile *f, MigrationIncomingState *mis,
- int qemu_load_device_state(QEMUFile *f, Error **errp);
- int qemu_loadvm_approve_switchover(void);
- int qemu_savevm_state_non_iterable(QEMUFile *f);
--
-+int qemu_savevm_state_non_iterable_early(QEMUFile *f,
-+                                         JSONWriter *vmdesc,
-+                                         Error **errp);
- bool qemu_loadvm_load_state_buffer(const char *idstr, uint32_t instance_id,
-                                    char *buf, size_t len, Error **errp);
- 
+@@ -42,7 +42,7 @@ void qemu_savevm_state_header(QEMUFile *f);
+ int qemu_savevm_state_iterate(QEMUFile *f, bool postcopy);
+ void qemu_savevm_state_cleanup(void);
+ void qemu_savevm_state_complete_postcopy(QEMUFile *f);
+-int qemu_savevm_state_complete_precopy(QEMUFile *f);
++int qemu_savevm_state_complete_precopy(MigrationState *s);
+ void qemu_savevm_state_pending_exact(uint64_t *must_precopy,
+                                      uint64_t *can_postcopy);
+ void qemu_savevm_state_pending_estimate(uint64_t *must_precopy,
 -- 
 2.51.0
 
