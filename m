@@ -4,111 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9B17E9A03E
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Feb 2026 22:55:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5D25E9A03E
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Feb 2026 22:59:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vsTy0-0001ef-E5; Tue, 17 Feb 2026 17:54:52 -0500
+	id 1vsU2R-0002pk-CV; Tue, 17 Feb 2026 17:59:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yodel.eldar@gmail.com>)
- id 1vsTxw-0001ct-32
- for qemu-devel@nongnu.org; Tue, 17 Feb 2026 17:54:48 -0500
-Received: from mail-yw1-x1141.google.com ([2607:f8b0:4864:20::1141])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <yodel.eldar@gmail.com>)
- id 1vsTxu-0003IT-Ez
- for qemu-devel@nongnu.org; Tue, 17 Feb 2026 17:54:47 -0500
-Received: by mail-yw1-x1141.google.com with SMTP id
- 00721157ae682-797d3864d89so22707537b3.1
- for <qemu-devel@nongnu.org>; Tue, 17 Feb 2026 14:54:44 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1771368884; cv=none;
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vsU2P-0002pN-OL
+ for qemu-devel@nongnu.org; Tue, 17 Feb 2026 17:59:25 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vsU2N-0004xZ-NB
+ for qemu-devel@nongnu.org; Tue, 17 Feb 2026 17:59:25 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1771369160;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type;
+ bh=il0IO40dlCf8CRhaTHzhMGY41U6uroR9xUmFBNQEMIE=;
+ b=BafC5iTElhsMz6yVOtNdtWuGefp5f589NhQcnjh/JSCNY6n6VP85hq3GuNatXDRqbqp92Z
+ LxSteTIRFv2FYB+IiaBgBzzAl+F+qWWDT++utMsru98CebXMXj5OteHzf4C1RB+9ueYckO
+ miNkg+fN05kixImyQzz9DDJ44y7G9Uw=
+Received: from mail-yx1-f69.google.com (mail-yx1-f69.google.com
+ [74.125.224.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-131-TsEDmG_ZN5CSQy2kfAaVIA-1; Tue, 17 Feb 2026 17:59:18 -0500
+X-MC-Unique: TsEDmG_ZN5CSQy2kfAaVIA-1
+X-Mimecast-MFC-AGG-ID: TsEDmG_ZN5CSQy2kfAaVIA_1771369158
+Received: by mail-yx1-f69.google.com with SMTP id
+ 956f58d0204a3-6445cf02fcbso6184801d50.2
+ for <qemu-devel@nongnu.org>; Tue, 17 Feb 2026 14:59:18 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1771369158; cv=none;
  d=google.com; s=arc-20240605;
- b=ls8zmlWblt+qY/B6nhHih1x4RnFqcixS4eM7rO4NxOpAn5GgtjxuYjlZJG50yJonJX
- 0kwphH3d24E+sK2rBCv+g2mW4wNPf9TdN5J6YFXxhrsaSPy9Pp8m8ynnKogZouq7T58O
- n1KTwrCaTHq23Ohcl9+Im+AvLI7qDnP2DdY6BLbJtDd/K5bxAssnC1NJe5O9yOE7RHuI
- 91bh+36lshHx5WRhfqPjXekEWwJvTg8q1GdYqgPs3o1wTFZNJzU1NsFprFRzeJQYt9X6
- S37R+U2E7IM53u5daeKFnvlCUfhtEhlWfrPcfVhNGsfknKiUwD1L1/uiPfMhkRwFRUKI
- +t8A==
+ b=GB+KWsl3OeMZ7MwOrW83KzSsdPwHUTZKrmqQJbP+fKcFX/UCV51NQlQgoFOhHJBdHY
+ lZrxPTNepIEcXTa0NPfX5oQPtgBhRaIzM3jfPoHZ7qK/QnvAY8zrn2/8OGqRd/6msZzo
+ /45eaknFN0hVmqNi0got+3UxViLXck6h8p60TqHNr8+FGPGOawGc5HtAAgyQGQ8eXx5R
+ tRVf5pcyoxIqrY+n3RWzfQpqsN2mkm8QAMhv7XcgdQzWXO4trkrcSdKy0dwhG5AyyejN
+ /u+2wsJRdRnxkkyHHR4g1M12Ax1ABUsmzCVjgEeKmZr1BsEXsOIkbcyHVcWCTl6UG82v
+ aGPg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=YEnutw2sVh1ItS1+q6chAGpS6HxrnYqJ0Cfzm2eb4wY=;
- fh=mj0YjNTLQ2HKm3ZQoYxwoSDXHNgWbXit4jyFqp+SmHw=;
- b=W6QuoWiCN7hGxzwD2oFQW8HbDloY4oECNm94bFpj/K0QOPNIKD/91sq+swj0tj3vOl
- lxIn86dewEX5pc+K3ZgnjKeVYnDZIWhiR931OgYonsuJXglN87pDIwPUsWC1v7fceY5Y
- BeyqaqcpY+tOFgcJxKy4uFup0G+To5X0NKq1NH/QfX/TvqcoDNCanBFy40V8Q/l/8bnk
- o+bNyy9qwCUj57xBA5uRsjMFEWpaEJD/9vv4RsMy9GLDNwNI4CdBWcO9glYgASWxSmvs
- reM9gQoJ55CLHdvPN1+/8JoV4J0st2IARkzAKv5mDolsFMny1loU2SjvXfdo2noN+b9Y
- m6bA==; darn=nongnu.org
+ h=cc:to:subject:message-id:date:from:mime-version:dkim-signature;
+ bh=il0IO40dlCf8CRhaTHzhMGY41U6uroR9xUmFBNQEMIE=;
+ fh=8C6y83VEMDKlK39gq6r2vep4v8J8/aEe9p+XfkW5wUA=;
+ b=IlyuzqvZ17WUsavPm/P3uDFqg2Rc+jzWkXkXlzXYEgg67/eAJkXGCL2hKq7hHd9yFR
+ ugxxtXZF19e+E3uvCdBLhoCSjXz/HbZhWX97xbgkHD6gSiU/RRfs7SvKbXNzahgOl/ek
+ ryw8K5eJgsQjGGgRVd4u7nuqUx2A6p4yIItQxux78A9afjEoxlMdBmgHVO0UtGaCcJwp
+ mbQfioBPtfR4uAnBs91Awz71+xzfnsx6PLJI86ZsmHC2j33kOII3tkE3KD/IpVwVBuHI
+ B5a+NJU/3VbHd9PeBD0REcmdUvoa/bdLXEdPSTNwyZ1cqjsthl5lZynscOdS/2rRqDRd
+ ccxA==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1771368884; x=1771973684; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=YEnutw2sVh1ItS1+q6chAGpS6HxrnYqJ0Cfzm2eb4wY=;
- b=A4IBhyBI9es2tiR6sgRotWDgMemhLfroRJIWLrzjI8Y9D1l8xDcOgmY5RCLKyBEP9v
- +XMZ5CH4sPu6ONY5Bha/NyOyrfdmJhz3ueUIxEL3IFvFsFLsgSnGjt3F7zOdkBs2sBRv
- 8S86WYcjagF5teu2upD8aoetRbP6RzgzSJ7yWqmRwE9NGc+LD4vhaqY7wDIEYxak4LBS
- AXbZ1mPVni2ZP+qQxxfZ/HGKZbiAaQXELzel0Z01l1Emxe3sb8FMH+7qS9rtOHVyO4G0
- Exf/cYsB//ZxO4Y8ZgNoKU9C4Zg3CNGYLaH49ntPLWi2ZPT84xwqBbv10fpaWsMWEk4N
- N99A==
+ d=redhat.com; s=google; t=1771369158; x=1771973958; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=il0IO40dlCf8CRhaTHzhMGY41U6uroR9xUmFBNQEMIE=;
+ b=kJIuKzlWEdFRSSyhJ3rxEDjZw6qUgzqUjsyAQXw1VkDMUM5xgPiFUvBFGxILqvA3Uj
+ 8F523fZwjEqW6PH85VC1q5SYQxLB4bWIT6Qgn9CJd3o/WzidEQ+4icFjjVLj3uCnXWCM
+ yG92JD9W07StXG2Niv9GhDmsllWgc6eaoaHp1I60N51PUbNc6jwu4FuOIBzWVlvCJ1EC
+ GtaQlr7AB2P+xYs7ltdJJLA0TWZzHQXIaK1B6WxZ5pWnWxKHMCJ1dmDbVXRGToe9LuAi
+ Lvok3IHpmZOijn5Y4gvUpZ4WM05puO/lkwTmyhA5ePxaF2s5FCmhjwnW/wsTp9mjiccK
+ zarA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771368884; x=1771973684;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=YEnutw2sVh1ItS1+q6chAGpS6HxrnYqJ0Cfzm2eb4wY=;
- b=qVzrwMQSbyYewMQie2/is5DzPCG1YJ++U+MPiWhA/tyPw196nDYAZHaglCr8UXOmR4
- LxA5RDHh8LISLYGPTfmleqdoEjO3H83OjK8u3GJ8hKYZ0Dr6UYxOfZK86YzxNSCbOzmX
- MosiZ7zBZIf/dD0YTzP0KcYBY0z67BXSpPEpas7gsrVM8eFj7v57GRuNkswvitkJdNUp
- /WIkif842P/qSOikAqRwf7HyvJQRlyL4FmeZXzzUeC/1r74XGKCDUyytssxWHDmnII9H
- I4mrl5KT9CeVNc25WcBaNkhLYNv5xjmicaBOveFCIfm34osYooAz5x0sGBCYbgWqOcsk
- ii7w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVj+bs2BDmiyOFhlGvGfC1bDC5fxFwaRahC3quqviqFCtLQ1RVDlW/ZmEXFjN9uoS7PWvC7vw92nmCl@nongnu.org
-X-Gm-Message-State: AOJu0YxLc/uai6nTbMBYkfZgvGVopd27ihF54sbn0n8VmkhvBQxBbk54
- nlz3oA7OXoI0el2jcHn/CRsWmqKs/ibrNY8qQgu5fKhvhYLKyOVIPdGk57zqolgGAXkDrrBy5Al
- gOaR14lNFue3aLtmIidBdp2hnrHVrcrw=
-X-Gm-Gg: AZuq6aI9BzuoGDtyjBKzfEJrFDdcJhwQ+XP4ij9PfioPwlaT7Lo6VltqDRe3Alr13oC
- gKEJ1lFEXjAJX6KsEuahyDfzVSLdiRVgNfw5+dnAdkabRS0t96gPoA/hXbNmQSyFn+LQo4pJgez
- HKU17uaWEjp/PWRGllIMyCZxpfbcasWkxltL1W1o3aAVA5zw0ORySNsouXLQq7i3/ECyvFMnNJE
- urAFj5t3WGjAV8k9Cj/aVBZa7tlv3keRnG5LJtiKi6I3T7DdtT1fU4kNJqLLsuMVmocx9jKpTS9
- ljhHLt4=
-X-Received: by 2002:a05:690e:16a0:b0:64a:f3fa:af58 with SMTP id
- 956f58d0204a3-64c21a43cf9mr10256618d50.17.1771368883742; Tue, 17 Feb 2026
- 14:54:43 -0800 (PST)
+ d=1e100.net; s=20230601; t=1771369158; x=1771973958;
+ h=cc:to:subject:message-id:date:from:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=il0IO40dlCf8CRhaTHzhMGY41U6uroR9xUmFBNQEMIE=;
+ b=Gwa1kEYvXaELgxUwpviWiFKxZM++wgnfCWPRpEsy5TMIw2rg4gie22l8HR45Pf7kLD
+ 2zA/JdCOC7pZEJDCOqZx3Fjk047NnP5CPgFilc1OlIk3dDYXrNBj1N6G2HrturQM7YZe
+ D7EbILiSuRHid9xGXJbKjT6byPAaNoHpmxXUFqUsUtj6vAArqDMPtjiFNfRYx53kmtfV
+ qilATwphToAK7AP/OTQtO4wXNO0Tb6x8Vt0E9esCZ+IXYwAnnaz+PWFooae771Mxdugk
+ CBqfuAuusFGgMtgrpnCUB5z6Wu+g9NKLl8jLe9rWicNDbCwBNn+cYc9g54uoxqhPW17N
+ MvhA==
+X-Gm-Message-State: AOJu0YxRCM+914VmQMFl4d3CrZ6+wrGJhMaHBIyetWhWgbdtTR80PZkO
+ zbDWAzL8NVOyO3EmpiysfBscjlERX66e4wgA3H7OfpnJ6i8SDEbWbyZpfz6MFFLSYNw6W8nxIE2
+ kYHZjrVIJjUv5FsXv8O1wOI+k3blS60CB1/s7a0IRagRSyZa8mjjo/LLDy+Q9RxUIjXPGts7peU
+ fLrwrWqLp8BpL8Qll5XjQHO6Rv35oEAUyEv4zX7v0rKQ==
+X-Gm-Gg: AZuq6aLvBFEVqYMJ/J1cAFo5buVKC0F6KLgaV5TZp8wkTPb4NOES40sw24IKphVf6lm
+ qsoLInVRXMBOQge/juJzeVTZ+/nnZUq+/iJvtJO8tssvWceEDvH7MfcmVOb1WiqrMmQ2J5XEprA
+ 2OlVrSlZ1uiYk7ptNfC15DZql7cLtxO2KzkbxhDU02E8SY3curXAXyve2E4uZRQvgGYiLS/n0Hj
+ QAriDLMb1iUCZCXopafqyN3sQhm8B8adrt9qg==
+X-Received: by 2002:a05:690c:6c09:b0:796:2ee6:3fa7 with SMTP id
+ 00721157ae682-797a0d09a16mr266206657b3.70.1771369157817; 
+ Tue, 17 Feb 2026 14:59:17 -0800 (PST)
+X-Received: by 2002:a05:690c:6c09:b0:796:2ee6:3fa7 with SMTP id
+ 00721157ae682-797a0d09a16mr266206287b3.70.1771369157370; Tue, 17 Feb 2026
+ 14:59:17 -0800 (PST)
 MIME-Version: 1.0
-References: <20260217-alpha-v1-0-0dcc708c9db3@rsg.ci.i.u-tokyo.ac.jp>
- <20260217-alpha-v1-1-0dcc708c9db3@rsg.ci.i.u-tokyo.ac.jp>
- <68c6ced9-dcbc-4981-b2be-65cdf7e2de9c@linaro.org>
-In-Reply-To: <68c6ced9-dcbc-4981-b2be-65cdf7e2de9c@linaro.org>
-From: Yodel Eldar <yodel.eldar@gmail.com>
-Date: Tue, 17 Feb 2026 16:54:33 -0600
-X-Gm-Features: AZwV_Qgec_5EStm_fKnsLn5KXDi-r8pnO5StwC7c_mCiLXqCbX3xZNXP5fdYaEA
-Message-ID: <CAHhgW4UzC4vxPrpGz37GbAdgO+G+dL_OB+LpR4iXRbvsDHXbFw@mail.gmail.com>
-Subject: Re: [PATCH 1/2] target/alpha: Reset CPU
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org, 
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Jim MacArthur <jim.macarthur@linaro.org>, Yodel Eldar <yodel.eldar@yodel.dev>, 
- Igor Mammedov <imammedo@redhat.com>, Peter Maydell <peter.maydell@linaro.org>
+From: John Snow <jsnow@redhat.com>
+Date: Tue, 17 Feb 2026 17:59:06 -0500
+X-Gm-Features: AZwV_Qg6s_tZEP83Gzr8jo8LKofznZLJILyO4M7Glz2QE8i3_6Af4psw0GMOlDo
+Message-ID: <CAFn=p-YGckyEF8GCOviMJ-FfWsM_dDa6nqEBJChPmUxP7Ydi_w@mail.gmail.com>
+Subject: CentOS 9, Python, and other Fairytales
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>,
+ =?UTF-8?Q?Daniel_Berrang=C3=A9?= <berrange@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1141;
- envelope-from=yodel.eldar@gmail.com; helo=mail-yw1-x1141.google.com
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.043,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,62 +126,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi, Philippe
+FYI,
 
-On Tue, Feb 17, 2026 at 11:01=E2=80=AFAM Philippe Mathieu-Daud=C3=A9
-<philmd@linaro.org> wrote:
->
-> Hi Akihiko,
->
-> On 17/2/26 07:34, Akihiko Odaki wrote:
-> > alpha_cpu_realizefn() did not properly call cpu_reset(), which
+bash-5.1# cat /etc/centos-release
+CentOS Stream release 9
+bash-5.1# python3 --version
+Python 3.9.25
+bash-5.1# dnf install python3.12-setuptools python3.12-wheel python3.12-pip
+Last metadata expiration check: 0:02:24 ago on Tue Feb 17 22:39:26 2026.
+Dependencies resolved.
+==================================================================================================================================================
+ Package                                    Architecture
+ Version                              Repository
+Size
+==================================================================================================================================================
+Installing:
+ python3.12-pip                             noarch
+ 23.2.1-5.el9                         appstream
+3.2 M
+ python3.12-setuptools                      noarch
+ 68.2.2-5.el9                         appstream
+1.6 M
+ python3.12-wheel                           noarch
+ 0.41.2-3.el9                         appstream
+166 k
+Installing dependencies:
+ libnsl2                                    x86_64
+ 2.0.0-1.el9                          appstream
+31 k
+ libtirpc                                   x86_64
+ 1.3.3-9.el9                          baseos
+94 k
+ mpdecimal                                  x86_64
+ 2.5.1-3.el9                          appstream
+86 k
+ python3.12                                 x86_64
+ 3.12.12-3.el9                        appstream
+25 k
+ python3.12-libs                            x86_64
+ 3.12.12-3.el9                        appstream
+9.7 M
+ python3.12-pip-wheel                       noarch
+ 23.2.1-5.el9                         appstream
+1.5 M
 
-...skipping...
+Transaction Summary
+==================================================================================================================================================
+Install  9 Packages
 
-> >
->
-> We ought to rework the CPU reset paths, it is too confuse.
-> Peter / Alex / myself have been there. I started some work in the
-> area, fixing few inconsistencies, but it isn't a priority so never
-> got over it.
->
-> We really shouldn't manually call cpu_reset() in DeviceRealize
-> handlers, thus not add more calls, rather remove. I appreciate this
-> is a temporary kludge until we sort the cpu reset logic.
->
-> At a glance, since this is an icount issue, instead of adding
-> cpu_reset() all over, I wonder about this surgical kludge instead
-> (untested):
->
-> -- >8 --
-> diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
-> index ad94f96b252..0577c25e3e8 100644
-> --- a/accel/tcg/cpu-exec.c
-> +++ b/accel/tcg/cpu-exec.c
-> @@ -1071,2 +1071,3 @@ bool tcg_exec_realizefn(CPUState *cpu, Error **errp=
-)
->       tcg_iommu_init_notifier_list(cpu);
-> +    cpu->cc->tcg_ops->cpu_exec_reset(cpu);
->   #endif /* !CONFIG_USER_ONLY */
-> ---
->
+Total download size: 16 M
+Installed size: 66 M
+Is this ok [y/N]:
 
-I'm getting a regression in mips64el malta with the above; not sure why:
+...
 
-    meson test --setup qemu:thorough -t 1 \
-        --num-processes 1 func-mips64el-malta
+So we actually probably have decent movement we can make as soon as
+Ubuntu 22.04 is dropped; enough to do:
 
-ERRORs out.
+Python 3.9 -> 3.11
+pip 21.3.1 -> 23.0.1
+setuptools 53.0.0 -> 63.1.0
+wheel 0.36.2 -> 0.38.4
 
-I like the idea of reworking the CPU reset paths; please Cc me on
-related work you submit so that I may test it out (though, I'll keep an
-eye out for it anyway even if you forget :))
+With most of the new sticking points being debian 12 (EOL in June) or
+FreeBSD (timeline uncertain for when they'll re-modernize their python
+stack)
 
-Thanks,
-Yodel
+One edge case here, however, is Sphinx, which does not actually have a
+modern package in centOS stream 9.
 
-P.S. I actually sent this email out from my other address over an hour ago,
-but just now realized that my SMTP relay had blocked it due to too many
-recipients (I guess that number's 10 then), hence the switch to this accoun=
-t.
+CentOS currently ships 3.4.3, but it would not be usable if using the
+optional 3.12 upgrade. If we ignore this, both FreeBSD and Debian 12
+have sphinx 5.3.0 to offer us, which is a reasonable version jump, but
+it means that CentOS would not be able to build docs unless you
+enabled `--online` for configuring QEMU or sideloaded Sphinx
+otherwise.
+
+That's enough to delete a large amount of the horrid crap in
+docs/sphinx/compat.py, though not all of it - version 6.2.0 is the
+version that would allow me to delete the *entire* thing.
+
+When Debian 12 is dropped (June), we're waiting on just FreeBSD to
+modernize their stack and we could make that final leap, too.
+
+My plan:
+- Wait and see what happens after the current QEMU release
+- Gleefully drop Ubuntu 22.04 in April (Allows Python 3.11+)
+- Gleefully drop Debian 12 in June
+- Hold my breath and see if FreeBSD happens to modernize by this point
+(They have until October 2027 to do so, so it's a dice roll if they
+will or not)
+- Do a big round of Python modernization all at once; either to 3.11
+or 3.12 depending, and either to Sphinx 5.x or 7.x depending, pray for
+forgiveness that I am removing CentOS stream 9's ability to build docs
+offline so I don't have to wait another six months and then do another
+big cleanup round
+
+Updated version dashboard:
+https://gitlab.com/jsnow/repology-dashboard#results-overview-as-of-2026-02-16
+
+--js
+
 
