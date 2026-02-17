@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D849CE9A04A
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Feb 2026 21:53:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9296DE9A03B
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Feb 2026 21:53:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vsT0H-0001CQ-J0; Tue, 17 Feb 2026 16:53:09 -0500
+	id 1vsT0N-00026T-OJ; Tue, 17 Feb 2026 16:53:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1vsT0E-0000oX-Lu
- for qemu-devel@nongnu.org; Tue, 17 Feb 2026 16:53:06 -0500
+ id 1vsT0L-0001cl-3h
+ for qemu-devel@nongnu.org; Tue, 17 Feb 2026 16:53:13 -0500
 Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1vsT02-0001cI-N7
- for qemu-devel@nongnu.org; Tue, 17 Feb 2026 16:53:06 -0500
-ARC-Seal: i=1; a=rsa-sha256; t=1771365160; cv=none; 
+ id 1vsT0J-0001iF-Hs
+ for qemu-devel@nongnu.org; Tue, 17 Feb 2026 16:53:12 -0500
+ARC-Seal: i=1; a=rsa-sha256; t=1771365172; cv=none; 
  d=zohomail.com; s=zohoarc; 
- b=fqlSjNE746gb6/1Mh/PWi9jI4mS6dDiOKlhLJCpWoATh/Pbs0RjWZLAODLOYVcESHVWeqaAXDgX7Y/6XcVKobk03t2vmZN9QS0gQdX5EERtVb2WR+zxV09acDMkRDUhElxlz2S9GKeH+Uzrca6jLcZtPhCZAk36xACsyQWdpT/g=
+ b=Wsm0QCQV8R0bMRhTIBamQs55FeJiomoskL7jrvHXJNVexcd4X6VL8wg/JxJp3xwJGgX2JCCmTjALjF6vB0lPL5luHJ1KsByHp9LzDxCO1y3QQcwdUFBhlRX76RSsyo0FfwJSw1FPzGDY0QC9zgR6qBB166j8fVXNIfHzHWm/Mbg=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1771365160;
- h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=LP0NMKJP0ZJsg3D6W1P93gHQbeBA3DA9ntBuX3+Brh4=; 
- b=MVlXrk5SJx/sJWuNZHniTA/83R1s6mwc4+yt1LWK65jvVuet78hEymh23VPffBRue/LVxRcBgDIvg1fz6C2OZm2lpVFvcMZnTk2vCgkb68Of/XoGwbo0OlL768maIcrBz7KrXarkmFwEEhoiHVfGReBkgaSC1Vw9TP6ZnqmLcZM=
+ s=zohoarc; t=1771365172;
+ h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
+ bh=l3bUXmNXH6JSzxT94rsGuffA3s4Mcl9ThwiRJgBO7Ys=; 
+ b=c2DwzGi93cP+19rAPSd2YVHOfQVCin9u5EerMlNhMSD5gcxHOASMPz80wkxINBtnVUGiJTzZXLVTeydpWfOK9IYnfEm4uVYAaxq/sb/+HAn4CyyVumGR/h1Xvyt+NWZPC4EF1sDmHNkAmM/8ssnw/Kwtkwy2mWOQ16fdCIi2vfg=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
  dkim=pass  header.i=collabora.com;
  spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
  dmarc=pass header.from=<dmitry.osipenko@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1771365160; 
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1771365172; 
  s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
- h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
- bh=LP0NMKJP0ZJsg3D6W1P93gHQbeBA3DA9ntBuX3+Brh4=;
- b=TkZrJVFpo6UO6NlL6AvUjsZec3XxmZgDnasQBSCCiIw/z0W1Uy4rB6yQ1yBOhFAU
- 2z9NIZPyxfwZqtf4JeVAJgHGfKft5hvukNT3eJXo2+F+Wz2+Ag/e2rxmvnbgt3WoVtx
- iojnqNAQm+d2Xg14DUhaoXyCPTs8tKfOkB1rdEY0=
-Received: by mx.zohomail.com with SMTPS id 1771365158379357.0636983420949;
- Tue, 17 Feb 2026 13:52:38 -0800 (PST)
+ h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To;
+ bh=l3bUXmNXH6JSzxT94rsGuffA3s4Mcl9ThwiRJgBO7Ys=;
+ b=lYnPqc9CiH56ElKXnudVIRwaEwLfh6BMwiALOtPSVOOqR3/r/YRDnc5cR84RNcln
+ 8nITD53dmTvvgvquPdOlz9pSBysbaOQryrsAU9Maz6cvC/G4HV+2HK2zWpvp+1dd6tD
+ SO7EVkvOtvnXl9m8WTrqQ4bYf1sdhDwNGZwfDWMI=
+Received: by mx.zohomail.com with SMTPS id 1771365169942683.5270397556595;
+ Tue, 17 Feb 2026 13:52:49 -0800 (PST)
 From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
  Huang Rui <ray.huang@amd.com>,
@@ -62,15 +62,13 @@ Cc: Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
  Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
  Chen Jiqian <Jiqian.Chen@amd.com>, Rob Clark <robdclark@gmail.com>,
  Robert Beckett <bob.beckett@collabora.com>
-Subject: [PATCH v18 14/19] docs/system: virtio-gpu: Document host/guest
- requirements
-Date: Wed, 18 Feb 2026 00:49:23 +0300
-Message-ID: <20260217214928.2970885-15-dmitry.osipenko@collabora.com>
+Subject: [PATCH v18 16/19] virtio-gpu: Validate hostmem mapping offset
+Date: Wed, 18 Feb 2026 00:49:25 +0300
+Message-ID: <20260217214928.2970885-17-dmitry.osipenko@collabora.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260217214928.2970885-1-dmitry.osipenko@collabora.com>
 References: <20260217214928.2970885-1-dmitry.osipenko@collabora.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-ZohoMailClient: External
 Received-SPF: pass client-ip=136.143.188.112;
@@ -98,165 +96,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alex Bennée <alex.bennee@linaro.org>
+Check hostmem mapping boundaries originated from guest.
 
-This attempts to tidy up the VirtIO GPU documentation to make the list
-of requirements clearer. There are still a lot of moving parts and the
-distros have some catching up to do before this is all handled
-automatically.
-
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Cc: Sergio Lopez Pascual <slp@redhat.com>
-Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Acked-by: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
-Reviewed-by: Yiwei Zhang <zzyiwei@gmail.com>
+Suggested-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-[dmitry.osipenko@collabora.com: Extended and corrected doc]
 ---
- docs/system/devices/virtio/virtio-gpu.rst | 105 +++++++++++++++++++++-
- 1 file changed, 102 insertions(+), 3 deletions(-)
+ hw/display/virtio-gpu-virgl.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/docs/system/devices/virtio/virtio-gpu.rst b/docs/system/devices/virtio/virtio-gpu.rst
-index ef5fb0401d5d..d05f8cb8e3f9 100644
---- a/docs/system/devices/virtio/virtio-gpu.rst
-+++ b/docs/system/devices/virtio/virtio-gpu.rst
-@@ -7,14 +7,28 @@ VirtIO GPU
- ==========
+diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+index b8e3c7e9aee9..77fe5cd4ecd8 100644
+--- a/hw/display/virtio-gpu-virgl.c
++++ b/hw/display/virtio-gpu-virgl.c
+@@ -791,6 +791,7 @@ static void virgl_cmd_resource_map_blob(VirtIOGPU *g,
+     struct virtio_gpu_resource_map_blob mblob;
+     struct virtio_gpu_virgl_resource *res;
+     struct virtio_gpu_resp_map_info resp;
++    VirtIOGPUBase *b = VIRTIO_GPU_BASE(g);
+     int ret;
  
- This document explains the setup and usage of the virtio-gpu device.
--The virtio-gpu device paravirtualizes the GPU and display controller.
-+The virtio-gpu device provides a GPU and display controller
-+paravirtualized using VirtIO. It supports a number of different modes
-+from simple 2D displays to fully accelerated 3D graphics.
+     VIRTIO_GPU_FILL_CMD(mblob);
+@@ -804,6 +805,15 @@ static void virgl_cmd_resource_map_blob(VirtIOGPU *g,
+         return;
+     }
  
--Linux kernel support
----------------------
-+Linux guest kernel support
-+--------------------------
- 
- virtio-gpu requires a guest Linux kernel built with the
- ``CONFIG_DRM_VIRTIO_GPU`` option.
- 
-+3D acceleration
-+---------------
++    if (mblob.offset + res->base.blob_size > b->conf.hostmem ||
++        mblob.offset + res->base.blob_size < mblob.offset) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: failed to map virgl resource: invalid offset\n",
++                      __func__);
++        cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER;
++        return;
++    }
 +
-+3D acceleration of a virtualized GPU is still an evolving field.
-+Depending on the 3D mode you are running you may need to override
-+distribution supplied libraries with more recent versions or enable
-+build options. There are a number of requirements the host must meet
-+to be able to be able to support guests. QEMU must be able to access the
-+host's GPU and for the best performance be able to reliably share GPU
-+memory with the guest. Details of 3D acceleration requirements are
-+described in a further sections.
-+
- QEMU virtio-gpu variants
- ------------------------
- 
-@@ -67,8 +81,14 @@ intermediate representation is communicated to the host and the
- `virglrenderer`_ library on the host translates the intermediate
- representation back to OpenGL API calls.
- 
-+By default OpenGL version on guest is limited to 4.3. In order to enable
-+OpenGL 4.6 support, virtio-gpu  host blobs feature (``hostmem`` and ``blob``
-+fields) should be enabled.  The ``hostmem`` field specifies the size of
-+virtio-gpu host memory window. This is typically between 256M and 8G.
-+
- .. parsed-literal::
-     -device virtio-gpu-gl
-+    -device virtio-gpu-gl,hostmem=8G,blob=true
- 
- .. _virgl: https://docs.mesa3d.org/drivers/virgl.html
- .. _Gallium3D: https://www.freedesktop.org/wiki/Software/gallium/
-@@ -96,6 +116,67 @@ of virtio-gpu host memory window. This is typically between 256M and 8G.
- 
- .. _drm: https://gitlab.freedesktop.org/virgl/virglrenderer/-/tree/main/src/drm
- 
-+.. list-table:: Linux Host Requirements
-+  :header-rows: 1
-+
-+  * - Capability
-+    - Kernel Version
-+    - Libvirglrenderer Version
-+  * - OpenGL pass-through
-+    - Any Linux version compatible with QEMU if not using host blobs feature,
-+      Linux 6.13+ otherwise
-+    - 0.8.2+
-+  * - Vulkan pass-through
-+    - Linux 6.13+
-+    - 1.0.0+
-+  * - AMDGPU DRM native context
-+    - Linux 6.13+
-+    - 1.1.0+
-+  * - Freedreno DRM native context
-+    - Linux 6.4+
-+    - 1.0.0+
-+  * - Intel i915 DRM native context
-+    - Linux 6.13+
-+    - 1.3.0+
-+  * - Asahi DRM native context
-+    - `Downstream version`_ of Asahi Linux kernel
-+    - 1.2.0+
-+  * - Panfrost native context
-+    - Linux 6.13+
-+    - 1.3.0+
-+
-+.. _Downstream version: https://github.com/AsahiLinux/linux
-+
-+.. list-table:: Linux Guest Requirements
-+  :header-rows: 1
-+
-+  * - Capability
-+    - Kernel Version
-+    - Mesa Version
-+  * - OpenGL pass-through
-+    - Any Linux version supporting virtio-gpu
-+    - 16.0.0+
-+  * - Vulkan pass-through
-+    - Linux 5.16+
-+    - 24.2.0+
-+  * - AMDGPU DRM native context
-+    - Linux 6.14+
-+    - 25.0.0+
-+  * - Freedreno DRM native context
-+    - Linux 6.14+
-+    - 23.1.0+
-+  * - Intel i915 DRM native context
-+    - Linux 6.14+
-+    - 26.1.0+
-+  * - Asahi DRM native context
-+    - Linux 6.14+
-+    - 24.2.0+
-+  * - Panfrost native context
-+    - Linux 6.14+
-+    - `mr36814`_
-+
-+.. _mr36814: https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/36814
-+
- virtio-gpu rutabaga
- -------------------
- 
-@@ -135,3 +216,21 @@ Surfaceless is the default if ``wsi`` is not specified.
- .. _Wayland display passthrough: https://www.youtube.com/watch?v=OZJiHMtIQ2M
- .. _gfxstream-enabled rutabaga: https://crosvm.dev/book/appendix/rutabaga_gfx.html
- .. _guest Wayland proxy: https://crosvm.dev/book/devices/wayland.html
-+
-+.. list-table:: Linux Host Requirements
-+  :header-rows: 1
-+
-+  * - Capability
-+    - Kernel Version
-+  * - Vulkan+Wayland pass-through
-+    - Linux 6.13+
-+
-+.. list-table:: Linux Guest Requirements
-+  :header-rows: 1
-+
-+  * - Capability
-+    - Kernel Version
-+    - Mesa Version
-+  * - Vulkan+Wayland pass-through
-+    - Linux 5.16+
-+    - 24.3.0+
+     ret = virtio_gpu_virgl_map_resource_blob(g, res, mblob.offset);
+     if (ret) {
+         cmd->error = VIRTIO_GPU_RESP_ERR_UNSPEC;
 -- 
 2.52.0
 
