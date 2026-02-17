@@ -4,111 +4,120 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CA76E68151
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Feb 2026 09:38:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43773E68155
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Feb 2026 09:43:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vsHWb-0007Nf-Qz; Tue, 17 Feb 2026 04:37:47 -0500
+	id 1vsHbc-0008Cl-7L; Tue, 17 Feb 2026 04:42:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1vsHWW-0007MW-Gl; Tue, 17 Feb 2026 04:37:41 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1vsHbX-0008CG-Hf
+ for qemu-devel@nongnu.org; Tue, 17 Feb 2026 04:42:51 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1vsHWU-00023C-4X; Tue, 17 Feb 2026 04:37:39 -0500
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 61H6h40M3759249; Tue, 17 Feb 2026 09:37:34 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-type:date:from:in-reply-to:message-id:mime-version
- :references:subject:to; s=pp1; bh=7eGXtqs/XhyJmfZcUkVqf3SgV4UeNF
- fUaVxeMp34SE8=; b=QvCuhikyenJRdwecAeJ8s/FLvDkbvbJRdiLtYaGUCypGnf
- lL12zfaem/uCFzkKsUHN2QScOIZZ66ibxbfFqbWup9+2k++5NlZepG6ZGE8Fn2YK
- ShYh+OvgwLCwHMrTUn6Xdp+E9Nw5CtRLz+rWWJHR27ma+wZhS3XRuus2NkK+dZDx
- LjM8IEMZrx/GvZt4fwKZ9MTSNO55EevSi86x7Y1r0fb4ty7FVc5jp7E4+1kcoVw7
- AULKMzK0XKSTsMFHg1CHZ6eWrT5UL8Qxe3OfH1GaVGrjYi7yN+7InqnXKVOuirHN
- JaCvUM+akQ2DAitUCvt9Y7RBorp+KprFunAJVGDw==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4cajcjah5g-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 17 Feb 2026 09:37:34 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 61H8uS1r015697;
- Tue, 17 Feb 2026 09:37:34 GMT
-Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4ccb451vsq-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 17 Feb 2026 09:37:33 +0000
-Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
- [10.20.54.106])
- by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 61H9bU6X54395278
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 17 Feb 2026 09:37:30 GMT
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 0251E2004B;
- Tue, 17 Feb 2026 09:37:30 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8D72D20043;
- Tue, 17 Feb 2026 09:37:28 +0000 (GMT)
-Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com (unknown
- [9.109.199.210])
- by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTPS;
- Tue, 17 Feb 2026 09:37:28 +0000 (GMT)
-Date: Tue, 17 Feb 2026 15:07:26 +0530
-From: Aditya Gupta <adityag@linux.ibm.com>
-To: Hari Bathini <hbathini@linux.ibm.com>
-Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
- Sourabh Jain <sourabhjain@linux.ibm.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>
-Subject: Re: [PATCH v2 2/9] hw/ppc: Implement S0 SBE interrupt as cpu_pause
- then host reset
-Message-ID: <aZQ2qJhGhdKo-cGI@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
-References: <20251206055648.1908734-1-adityag@linux.ibm.com>
- <20251206055648.1908734-3-adityag@linux.ibm.com>
- <9b6db774-cba5-49f7-b0ec-d56232cbeb99@linux.ibm.com>
- <aZQIJHZekWD-sWqI@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1vsHbV-0003QO-8I
+ for qemu-devel@nongnu.org; Tue, 17 Feb 2026 04:42:51 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1771321368;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=tq83adxn1WHkeBbsb89kOrynytES++HknCz40BCZt2I=;
+ b=N9Fq8QHz3/yyr4LxQK5Z1fqRE9gWiq4R2jcDiAYQqx0aNYSyTpSFV/MkWANcY99hC/Uvly
+ WacT7Pfsls1eimuOG9F7RxyT99csbCZoKJcAZtzhiM3m14DDVgbYODr/gmJNQFueojLL6+
+ wuwMhcKo1ZXT6XRNZP4J8RPUFTOiMYg=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-275-fFkJuEHRMQ-f3zlirBQfKw-1; Tue, 17 Feb 2026 04:42:46 -0500
+X-MC-Unique: fFkJuEHRMQ-f3zlirBQfKw-1
+X-Mimecast-MFC-AGG-ID: fFkJuEHRMQ-f3zlirBQfKw_1771321365
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-43771113b3bso3113337f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 17 Feb 2026 01:42:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1771321365; x=1771926165; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=tq83adxn1WHkeBbsb89kOrynytES++HknCz40BCZt2I=;
+ b=ZgnnksLZqQd+HPpyh7//D6htymnlMBKUM06owVY79Zr5zGbtH2JHxx25J55LauGdaH
+ 5nSEJhnwWQOB80VoQYF6g6vkM75UBuK1wRl0ZqUDlb91FfHZHM5fCyCD0gP9sJSrcT+0
+ jKO8IET5fX1MalbiD8trD3RiIiK0FQPUXdK0pzrLTAVSXb1Ru1TMXj5ktRdcQ3JjgRDh
+ QdP7otD1pYdWfavve9UIkCGQePEsAclNMPrsFdTUx4/lFtycncjvYAfiDr2EBJC/L6Um
+ 2JpeS5Gahr6wOKuqNazQZbNpHltJmecWkEVR0/fZ8JFvadiuMG9Y3W4c3fm65IKRmaCu
+ CETg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1771321365; x=1771926165;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=tq83adxn1WHkeBbsb89kOrynytES++HknCz40BCZt2I=;
+ b=YbCds0UwkEtmrJOT6o/Q7OTjYNGitRfjaDWdR8ZXEA8tnAw7DaXCnha3f+RcNbpnoL
+ 8iEMRL5zqd6vk8t/rP/TADJZrj9gA1kUebhsPo3uJ3ItXkJGfYrMqFMhj6ynHZiVEGh8
+ zg7beYkRWawCu7pHajQWsWU7bJ3mTIob5nPWVG1B4MHB9RnaAVxev4ldRkrN6eF5OXQa
+ 1+98K2sKiqsGczLoqmnETIaeBl62QReGe6oaOgzvSkpNt1c3zgHv+MR7jxYVdCm49EuE
+ hq7luHIqa9yog2NpGuB0pa499I4kpdwaAZ4TSwyYcUB+uaS6V9QA+wcp6qnHYVsLyroJ
+ enkQ==
+X-Gm-Message-State: AOJu0Ywkjd4BDHQy0GdXgr31v4DMu/zB8rAGHIQuiib9rf9An3tQ8370
+ Lf1fYWzFgK50Ns6l5JcfNMDM6sebH+JQHU0pVEIZZrdayigG2OfNyBla0ew8KH3+ui/Ez5hFjfu
+ /3+nJzbOlX3lu4D0ErZ5eDC4Jhb7BYXoSMRQnGkmll1tGHusKjdhMgQK4
+X-Gm-Gg: AZuq6aI2S+LU6r7Xh2Tk58t8ZVTtbY1BCTOcou9aQoSs8FhIxDmQ/9PL/8/vwuCHbQn
+ rj5HwuwCpyUfZCa5oIpBTKgWz6csrhMVPRR7TP5ZXksn9BbxLDWgGiHi8aclre/V6V6oxmGMcAR
+ JLwnEhmL31K53Kz7pG0w8jvNjEh8MOQJ4wKJzEdzMkMghszLjy+kiXstSwFKDckW5eXrchFICPM
+ AOJC8By5nY7DH90HpuQaIGVcIqV1p/lyYE2T9lrQqzrMRwyqmWQncWthV8M465RbqhGDBnUePCe
+ ftZhrvGHz0hlbyl48YGoIsj0GeyJvXVaxER3V2y/2XE56jSkWPlX4UuyumQVbBB+k0gFHRb5yQM
+ oCtifKNA74pNBp6bI3WpkN/9pUWT4wCts3VX+E0nM6iJDDPOXARmZKL64RuSX4AaESABvVh42Oa
+ UEAx3sd8rMW0BPKtw8qdIS6GgWsFI=
+X-Received: by 2002:a05:6000:26cd:b0:437:a49:137c with SMTP id
+ ffacd0b85a97d-437978c09bemr23705277f8f.3.1771321365150; 
+ Tue, 17 Feb 2026 01:42:45 -0800 (PST)
+X-Received: by 2002:a05:6000:26cd:b0:437:a49:137c with SMTP id
+ ffacd0b85a97d-437978c09bemr23705246f8f.3.1771321364683; 
+ Tue, 17 Feb 2026 01:42:44 -0800 (PST)
+Received: from [192.168.10.48] ([151.95.144.138])
+ by smtp.googlemail.com with ESMTPSA id
+ ffacd0b85a97d-43796a6b563sm33012925f8f.12.2026.02.17.01.42.43
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 17 Feb 2026 01:42:43 -0800 (PST)
+Message-ID: <d09950dc-dd3e-45ca-b54a-cbdff9f71e0d@redhat.com>
+Date: Tue, 17 Feb 2026 10:42:40 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aZQIJHZekWD-sWqI@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: 6hBvsOGkOMfB4iezuZuD_Mvx-sxDmF3a
-X-Authority-Analysis: v=2.4 cv=Md9hep/f c=1 sm=1 tr=0 ts=699436de cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=kj9zAlcOel0A:10 a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22 a=c9tvyXZS9ylmDNhe8C4A:9
- a=CjuIK1q_8ugA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjE3MDA3NSBTYWx0ZWRfX65eyTccrSWOo
- X6XvEP8TlD366UiE9wlkvT6QWyCdeTSJahOjjS8GVLT1iseB06J9r5fWgTluQtO5k5OIX0awLov
- Ty7NjXnQ+vWUFx0iVycK8aKaYopQzR05jAA6x8lD5/aYYMXAusqMtrWiW7XNIvhqI6BJZ9cmsps
- tQRgR93k9aL7R8PHmrBkSkrsSgDZGm5TupiKERMzN98nSwZ0KpFmZZ4HmGdOpUjMh/i/neIk2wT
- dz/ePcvoscRC/TAuds6MK5pGYkCk8G7IB0fXYvNMJhHFHxlp8SOo92Vy5yjYA3tzmk+1Jgxan5j
- JpB9WUqDTg8KcNQzLKDPaqfQaUO/6xdvNP2iYA+BaHZH9GEe+Fve76jxT/J5SAYgtDpPIiHPjfa
- PojI/M8BxTJw3oCmN34tvIpCs7QWCnjB9kJDx+i0MQLmrZ4neQv5YOylCr39cnEvPVuOCc84Kr1
- q6hv8kUR2xxeiCsy/hQ==
-X-Proofpoint-GUID: 6hBvsOGkOMfB4iezuZuD_Mvx-sxDmF3a
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-02-17_01,2026-02-16_04,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 impostorscore=0 lowpriorityscore=0 spamscore=0 adultscore=0
- priorityscore=1501 suspectscore=0 malwarescore=0 phishscore=0 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2601150000 definitions=main-2602170075
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=adityag@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/8] audio: add `audio` build option for meson and Kconfig
+To: Peter Maydell <peter.maydell@linaro.org>,
+ Sergei Heifetz <heifetz@yandex-team.com>
+Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Eric Blake <eblake@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Thomas Huth <thuth@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>
+References: <20260217052740.114117-1-heifetz@yandex-team.com>
+ <20260217052740.114117-2-heifetz@yandex-team.com>
+ <CAFEAcA9y-QEaiRZMrYadQWJ1KgnHxT8Fkqt1uS0PkbY0Sb-_3Q@mail.gmail.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Content-Language: en-US
+In-Reply-To: <CAFEAcA9y-QEaiRZMrYadQWJ1KgnHxT8Fkqt1uS0PkbY0Sb-_3Q@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,27 +133,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26/02/17 11:48AM, Aditya Gupta wrote:
-> On 26/01/19 01:11PM, Hari Bathini wrote:
-> > 
-> > 
-> > On 06/12/25 11:26 am, Aditya Gupta wrote:
-> > > During MPIPL (aka fadump), OPAL triggers the S0 SBE interrupt to trigger
-> > > MPIPL.
-> > 
-> > As mentioned in cover letter, add more clarity by mentioning that
-> > kernel initiates fadump with OPAL call. Skiboot then triggers S0
-> > SBE interrupt...
+On 2/17/26 10:31, Peter Maydell wrote:
+> On Tue, 17 Feb 2026 at 05:29, Sergei Heifetz <heifetz@yandex-team.com> wrote:
+>>
+>> This patch adds the `audio` option to meson_options.txt. It is
+>> propagated into Kconfig as AUDIO. It is enabled by default.
+>> The corresponding `--disable-audio` and `--enable-audio` options
+>> for `configure` are also added.
+>>
+>> For now, this option does nothing. In subsequent patches, it will
+>> gradually disable audio in different places. The final goal is to stop
+>> building sources from `audio/` and `hw/audio/` and other audio-related
+>> files (except for some stubs). Note that this intent is different from
+>> `-audio none`, which mutes audio but still compiles the audio subsystem.
 > 
-> Will add here also. Thanks Hari !
+> Not building audio/ code makes sense, but do we really want to
+> stop building hw/audio code ? That's the guest facing audio
+> devices, and if for instance a machine type has an embedded
+> sound device that would require us to stop compiling that
+> machine. I think it would be very confusing for users if
+> --disable-audio meant "we will silently not build half the
+> Arm boards that have a pl041 in them".
+> 
+> Maybe it would be better if "--disable-audio" meant "don't build
+> the audio backends, and everything behaves as if the user
+> passed -audio none" ?
 
-Does this look okay Hari ?
+The problem is that "-audio none" uses a silent backend but still keeps 
+all the audio/ code around.  If you prefer to keep the Arm boards 
+around, the solution would be to disable the audio code in the 
+individual pl041 devices with "#ifdef CONFIG_AUDIO", so that the 
+"depends on AUDIO" for pl041 can be removed too.
 
-    During MPIPL (aka fadump), after a kernel crash, the kernel does
-    opal_cec_reboot2 opal call, signifying an abnormal termination.
-    When OPAL recieves this opal call, it further triggers SBE S0 interrupt,
-    to trigger a MPIPL boot.
+I agree that this extra ifdef-ery is not great, and it's the only thing 
+that makes me pause on this series.
 
-    Currently S0 interrupt is unimplemented in QEMU.
+Paolo
 
 
