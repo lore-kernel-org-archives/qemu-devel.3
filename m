@@ -4,67 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 380B1E909A4
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Feb 2026 14:19:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2EF08E909AF
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Feb 2026 14:25:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vsLuY-0005d9-Aw; Tue, 17 Feb 2026 09:18:46 -0500
+	id 1vsM0S-0006xX-Q8; Tue, 17 Feb 2026 09:24:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vsLuS-0005cj-Ca
- for qemu-devel@nongnu.org; Tue, 17 Feb 2026 09:18:41 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vsLuP-0003IS-Pw
- for qemu-devel@nongnu.org; Tue, 17 Feb 2026 09:18:39 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771337915;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=LitcDpK0ew726Tvm6Ez9WjIPd2hV+C/MCUnybNLjGjU=;
- b=bCpY8OKo1oXV31JXE/E/u05oIUd19hBjdHFBsd63nbEPprctOSQ+gcfSAdm9XtGDBAtPBC
- A9/tJpNwRR6EhTc6SG+DkLpmBzlQNlI9umk9oWL/RvzrBKGGwj4EUamhANdesfEAoI1dxm
- mv/IhPRu4jg+RjSHMnZLZNSyui0Aqq0=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-438-MsvNNPruPNaNTq2BvxzhOg-1; Tue,
- 17 Feb 2026 09:18:34 -0500
-X-MC-Unique: MsvNNPruPNaNTq2BvxzhOg-1
-X-Mimecast-MFC-AGG-ID: MsvNNPruPNaNTq2BvxzhOg_1771337913
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0A9A01800378; Tue, 17 Feb 2026 14:18:33 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.45.224.144])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id A53D019560A2; Tue, 17 Feb 2026 14:18:29 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- "Michael S . Tsirkin " <mst@redhat.com>
-Cc: qemu-trivial@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>
-Subject: [PATCH] hw/i386/pc: Add a proper owner for the ioport memory regions
-Date: Tue, 17 Feb 2026 15:18:27 +0100
-Message-ID: <20260217141827.534426-1-thuth@redhat.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vsM0Q-0006v5-Lp
+ for qemu-devel@nongnu.org; Tue, 17 Feb 2026 09:24:50 -0500
+Received: from mail-yx1-xb12d.google.com ([2607:f8b0:4864:20::b12d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vsM0P-0004jS-0h
+ for qemu-devel@nongnu.org; Tue, 17 Feb 2026 09:24:50 -0500
+Received: by mail-yx1-xb12d.google.com with SMTP id
+ 956f58d0204a3-649df393c04so3716319d50.1
+ for <qemu-devel@nongnu.org>; Tue, 17 Feb 2026 06:24:48 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1771338287; cv=none;
+ d=google.com; s=arc-20240605;
+ b=a/W7vawlWjuFkaUsGYJ0arkhFwaiyU5A59q1d+vEkBLr+CbLnZIcp1RQAF7Us/DCAH
+ ymDao5//pEVQBlfJNrERu54n5neHVgJLp3LBQUUV7HOXP7xKgVTWSYp8ELLvGNJ2i2jv
+ B2Hap6PLPUYn8virY00jz2p8rrCY69c+11lNXx4qjPLuVPnd9b1dQZJJKKL0rjshrbHS
+ EY7lg8C2sNvJzyUc+VoGepZgWa+q0wrW06sq4Y+Q7/wE/c4SnmeH1fV2ZDA67w7Z94+U
+ zCB70tekcWx5hMpHZURKfU5h/CrXPi53+yZ+TG0oAs2AxRCzNAEcHhqLlcqWrJvlewIL
+ 7jyg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=RJhlzFYeinT9K32+dkA2FzKvYK9zoEX87hrTuJqHSYk=;
+ fh=Nu3cw6gGXG9gVRFXyozVPi4y8ypLPBn7yqTxSacWp3E=;
+ b=lDHL+t9TkmeFPlhcytgqXGuJ3uuumt+d80cUZzngM+eHPyugJwfrdBrdn1IuD+BZ0W
+ CuGxVFwZWNivlX2x/uvX1SY0x+/rn4snw3VvT8xmdZS1QzGKj6iljvAAJnoxGEXsm2ft
+ H2PmVs9c+O4ELx5sBgoGaXFqowV5GZu46kZGkLWalkdRnTuP1WF6I0TEfRoGdLc/yMKy
+ plKnhTHU5j1eJF/b9/3EnEqM5RhAhtWIiqU6V5gn02biyoF1ALb/pfsYw3Tx7GQHiITt
+ X8e3e821FBrJD7uk0KlpcHwMtkvXI2qK8JjhbSZO/Zav0pMNwIr0ae2mIIc5+O8OfCYn
+ yz3g==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1771338287; x=1771943087; darn=nongnu.org;
+ h=content-transfer-encoding:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=RJhlzFYeinT9K32+dkA2FzKvYK9zoEX87hrTuJqHSYk=;
+ b=uWsAH1R5Fos+dw8rGQlu6hoien2cEW8E2NlwvH1aGRL0SnoEpyvp/pxPo2RdM2Mihf
+ nLPBOPkXw3sSEpD3k8Ku5UO92NfglQcs9bOCa9sGCFlTwHuKlerghxPJmExoqu2bhsQm
+ CVszkJ0FWEW7+gSpbazc+Cbsnw/OBLeBldJk4Zyq1AorXBeA5bZwV5cPg569tKASvYqq
+ tAlrr42WMyvnAFQEaHz0raBdZBuVHh6VkIHebjPVAWbTIndQUQVWJCKgY9bSeP8GP2El
+ AYOeeU3rwkzE5rhDzdWQC9MB2TeV6JF8eYJtl/b8gSeZ6AhGchS83/QzZbte3eMYSqQr
+ UZDw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1771338287; x=1771943087;
+ h=content-transfer-encoding:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=RJhlzFYeinT9K32+dkA2FzKvYK9zoEX87hrTuJqHSYk=;
+ b=bK4fDK3yWTrULuYfGDD5wKxFyoDe9jA+R1Sd+eX21FwkUZzVK0Xbui+DyZtr62WdYL
+ Za0vOY8a/GmBmUK90wWKG6xjoVpMIDOT7w408H9N6QLpZRMFT6K04vAB0XKvLxx6yDJE
+ tntlMz081MJj+xYeJmWMAX6MfyrGVMmdIKHIz8qKez0XgXqsJ+VPEHHEhkh/N2Ayo2NW
+ kGcqk77uEkAddCP8PdWC1RcReDvcGvwaT/jY8GxNY2XXSGRfJFBtIKaMhh7XOzK6Ke0i
+ HpAtrN+JccJwr1xI883CJRfqAupURCec9jrwugCL1X7oF2lev4AYki6ZcO14LrmSFiXZ
+ xYGA==
+X-Gm-Message-State: AOJu0YwgV317yvieh/rpu/aIxE+Mf943CY2YgTf4+SrXfkaE3BOSg53v
+ TpcN0xtE4LpdQ9aVTR3uUD4Uph6TAlvUDox+MOuwq3rmjVMNJkRV1O7Gq4cVk1OviJD/R4Ebo7d
+ MT70bwMpCt9bhC7Fhj7S+PdwSity7U3F5OP54wgsP7AENR4lKhGSX
+X-Gm-Gg: AZuq6aJiZxeASAjloYlosONoUDSrdTtx35iyochDucnlkODRT/mGNSeN90UL4+Fo3Zp
+ tmUcuXX71H0UP/gziZ/0xS6pQwsFFd0r3KYB5ryWOEKQCnJc4RaOyyLsqO1L1AccAfEeOYtVDUQ
+ mG6z+Dd+Tp9WVYKonttZv2HqTJrCsMI8eUhSNGCslJpMRFlrAN+fQKO/03roSb4w1GW3pHHt8xI
+ ZvrwVP9sobYK+ePWyRjcvBvGMGfkLhkN51fMyUYKAAbUX4JBGlv2K65isXwHQ3ExQiKABfTgqky
+ pe7vRwAQAHp2U4ZQtGzRwmVTt8ImiqDQEd8Z0E3J1nCogU8logvopwS9l03BA/hskMU=
+X-Received: by 2002:a05:690e:4184:b0:649:412a:dd11 with SMTP id
+ 956f58d0204a3-64c19b5585amr10536743d50.74.1771338287299; Tue, 17 Feb 2026
+ 06:24:47 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20260129160917.1415092-1-peter.maydell@linaro.org>
+ <20260129160917.1415092-15-peter.maydell@linaro.org>
+In-Reply-To: <20260129160917.1415092-15-peter.maydell@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 17 Feb 2026 14:24:35 +0000
+X-Gm-Features: AZwV_QgkyMJFoET1qakm-f-NNSglkvs1QLTaaUAHH-FP4S9VjTpvp8b6Aq69l5I
+Message-ID: <CAFEAcA-AoJmHpcAydqk9x_Y6M8_7N=7-izYFPxerLuTdYUKsNg@mail.gmail.com>
+Subject: Re: [PULL 14/43] hw/arm/smmuv3-accel: Add nested vSTE
+ install/uninstall support
+To: qemu-devel@nongnu.org, Nicolin Chen <nicolinc@nvidia.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.043,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,36 +116,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+On Thu, 29 Jan 2026 at 16:09, Peter Maydell <peter.maydell@linaro.org> wrot=
+e:
+>
+> From: Nicolin Chen <nicolinc@nvidia.com>
+>
+> A device placed behind a vSMMU instance must have corresponding vSTEs
+> (bypass, abort, or translate) installed. The bypass and abort proxy neste=
+d
+> HWPTs are pre-allocated.
+>
+> For translat HWPT, a vDEVICE object is allocated and associated with the
+> vIOMMU for each guest device. This allows the host kernel to establish a
+> virtual SID to physical SID mapping, which is required for handling
+> invalidations and event reporting.
+>
+> An translate HWPT is allocated based on the guest STE configuration and
+> attached to the device when the guest issues SMMU_CMD_CFGI_STE or
+> SMMU_CMD_CFGI_STE_RANGE, provided the STE enables S1 translation.
+>
+> If the guest STE is invalid or S1 translation is disabled, the device is
+> attached to one of the pre-allocated ABORT or BYPASS HWPTs instead.
+>
+> While at it, export smmu_find_ste() for use here.
 
-Without a proper owner, the memory regions show up in /machine/unattached
-in the QOM tree, which is something that should be avoided.
+Hi; Coverity points out what looks like a missing
+deallocation on an error-exit path in this function (CID 1644832):
 
-Signed-off-by: Thomas Huth <thuth@redhat.com>
----
- hw/i386/pc.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+> +bool smmuv3_accel_install_ste(SMMUv3State *s, SMMUDevice *sdev, int sid,
+> +                              Error **errp)
+> +{
 
-diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-index 0dd3fd01d98..ee72dd47590 100644
---- a/hw/i386/pc.c
-+++ b/hw/i386/pc.c
-@@ -1127,10 +1127,12 @@ void pc_basic_device_init(struct PCMachineState *pcms,
-     MemoryRegion *ioportF0_io = g_new(MemoryRegion, 1);
-     X86MachineState *x86ms = X86_MACHINE(pcms);
- 
--    memory_region_init_io(ioport80_io, NULL, &ioport80_io_ops, NULL, "ioport80", 1);
-+    memory_region_init_io(ioport80_io, OBJECT(pcms), &ioport80_io_ops, NULL,
-+                          "ioport80", 1);
-     memory_region_add_subregion(isa_bus->address_space_io, 0x80, ioport80_io);
- 
--    memory_region_init_io(ioportF0_io, NULL, &ioportF0_io_ops, NULL, "ioportF0", 1);
-+    memory_region_init_io(ioportF0_io, OBJECT(pcms), &ioportF0_io_ops, NULL,
-+                          "ioportF0", 1);
-     memory_region_add_subregion(isa_bus->address_space_io, 0xf0, ioportF0_io);
- 
-     /*
--- 
-2.53.0
+[...]
 
+> +    /*
+> +     * Install the STE based on SMMU enabled/config:
+> +     * - attach a pre-allocated HWPT for abort/bypass
+> +     * - or a new HWPT for translate STE
+> +     *
+> +     * Note: The vdev remains associated with accel_dev even if HWPT
+> +     * attach/alloc fails, since the Guest=E2=80=93Host SID mapping stay=
+s
+> +     * valid as long as the device is behind the accelerated SMMUv3.
+> +     */
+> +    if (!smmu_enabled(s)) {
+> +        hwpt_id =3D smmuv3_accel_gbpa_hwpt(s, accel);
+> +    } else {
+> +        config =3D STE_CONFIG(&ste);
+> +
+> +        if (!STE_VALID(&ste) || STE_CFG_ABORT(config)) {
+> +            hwpt_id =3D accel->abort_hwpt_id;
+> +        } else if (STE_CFG_BYPASS(config)) {
+> +            hwpt_id =3D accel->bypass_hwpt_id;
+> +        } else if (STE_CFG_S1_TRANSLATE(config)) {
+> +            s1_hwpt =3D smmuv3_accel_dev_alloc_translate(accel_dev, &ste=
+, errp);
+
+In this function we allocate memory and return it, assigning
+it to s1_hwpt...
+
+
+> +            if (!s1_hwpt) {
+> +                return false;
+> +            }
+> +            hwpt_id =3D s1_hwpt->hwpt_id;
+> +       }
+> +    }
+> +
+> +    if (!hwpt_id) {
+> +        error_setg(errp, "Invalid STE config for sid 0x%x",
+> +                   smmu_get_sid(&accel_dev->sdev));
+> +        return false;
+
+...but in this error-exit code path we don't free it.
+
+> +    }
+> +
+> +    if (!host_iommu_device_iommufd_attach_hwpt(idev, hwpt_id, errp)) {
+> +        if (s1_hwpt) {
+> +            iommufd_backend_free_id(idev->iommufd, s1_hwpt->hwpt_id);
+> +            g_free(s1_hwpt);
+> +        }
+
+Compare the error-handling here which does tidy up s1_hwpt.
+
+> +        return false;
+> +    }
+
+thanks
+-- PMM
 
