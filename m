@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5EAD1E83854
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B8F2E83856
 	for <qemu-devel@archiver.kernel.org>; Tue, 17 Feb 2026 05:11:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vsDMr-0006js-WA; Tue, 17 Feb 2026 00:11:26 -0500
+	id 1vsDMp-0006iv-VR; Tue, 17 Feb 2026 00:11:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vsDMq-0006jG-SQ
- for qemu-devel@nongnu.org; Tue, 17 Feb 2026 00:11:24 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vsDMn-0006iZ-VD
+ for qemu-devel@nongnu.org; Tue, 17 Feb 2026 00:11:22 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vsDMp-0002JZ-4K
- for qemu-devel@nongnu.org; Tue, 17 Feb 2026 00:11:24 -0500
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vsDMm-0002JA-JN
+ for qemu-devel@nongnu.org; Tue, 17 Feb 2026 00:11:21 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771305082;
+ s=mimecast20190719; t=1771305079;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=HWRUA8tj40Tz3RR9F8yelmtXUdPZZ2umwgoMnemQSdQ=;
- b=NGkbSORhbm3gjOUdCRN5U90XFFETBDDez4r96xnmVplsqfoEZ+Kt+u2s447oN3cyUw9cyu
- Kyc0GdMCDpD0EhtfD1RlSc9fYlqhLe1e6Wm2pSLx5X7+DO7TBDu4NkoUoXhugb16YViPyA
- gSK1+jteWDa1H/EbcjfbDxtwMyEc33E=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ bh=3piZw7mx8H8ZRPxcaYjHBw/SvUX6/of2m3+OJq3TxyM=;
+ b=hM/9IvL2QBsgqUl9F9Ekl89rr4KAfVzDWopF0lE2NdStQyvt81j6SRfVrzo2AQoP+MBEU1
+ rf5JN59xwwamJYkWVEDoB/O3JCH1YYsk9U1FG/7TSNBlcgHRk12PxZTQeIgB8Tw/YETQaY
+ Ct2hneC85NKw8AFa95dyOBHlkcyLTvo=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-541-eMVjBIbZNAWap3m-G1x4sQ-1; Tue,
- 17 Feb 2026 00:11:20 -0500
-X-MC-Unique: eMVjBIbZNAWap3m-G1x4sQ-1
-X-Mimecast-MFC-AGG-ID: eMVjBIbZNAWap3m-G1x4sQ_1771305079
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-628-7xlMkK3VOUe55ad9b1VP3A-1; Tue,
+ 17 Feb 2026 00:11:16 -0500
+X-MC-Unique: 7xlMkK3VOUe55ad9b1VP3A-1
+X-Mimecast-MFC-AGG-ID: 7xlMkK3VOUe55ad9b1VP3A_1771305076
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 036AA18005AD
- for <qemu-devel@nongnu.org>; Tue, 17 Feb 2026 05:11:19 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 207E718003F6
+ for <qemu-devel@nongnu.org>; Tue, 17 Feb 2026 05:11:16 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.88.120])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 49EDD18003F6; Tue, 17 Feb 2026 05:11:17 +0000 (UTC)
+ id 1634C18003F6; Tue, 17 Feb 2026 05:11:14 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Cleber Rosa <crosa@redhat.com>,
 	John Snow <jsnow@redhat.com>
-Subject: [PATCH 3/4] python: drop avocado
-Date: Tue, 17 Feb 2026 00:11:11 -0500
-Message-ID: <20260217051112.446957-4-jsnow@redhat.com>
+Subject: [PATCH 1/4] python: add pinned 'wheel' version
+Date: Tue, 17 Feb 2026 00:11:09 -0500
+Message-ID: <20260217051112.446957-2-jsnow@redhat.com>
 In-Reply-To: <20260217051112.446957-1-jsnow@redhat.com>
 References: <20260217051112.446957-1-jsnow@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -83,201 +83,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Avocado-framework is no longer used for anything, so it can be removed.
+With recent python packaging ecosystem updates, the latest 'wheel' is no
+longer compatible with older packages - and was somehow still compatible
+with our Python 3.9 environment. Pin wheel to an older version (Version
+based on Debian 11's available wheel package) to remove warnings during
+the minreqs test.
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- python/README.rst              |  2 --
- python/avocado.cfg             | 13 -------------
- python/setup.cfg               |  1 -
- python/tests/flake8.sh         |  3 ---
- python/tests/iotests-mypy.sh   |  4 ----
- python/tests/iotests-pylint.sh |  5 -----
- python/tests/isort.sh          |  3 ---
- python/tests/minreqs.txt       |  1 -
- python/tests/mypy.sh           |  3 ---
- python/tests/pylint.sh         |  4 ----
- python/tests/qapi-flake8.sh    |  6 ------
- python/tests/qapi-isort.sh     |  8 --------
- python/tests/qapi-mypy.sh      |  4 ----
- python/tests/qapi-pylint.sh    |  8 --------
- 14 files changed, 65 deletions(-)
- delete mode 100644 python/avocado.cfg
- delete mode 100755 python/tests/flake8.sh
- delete mode 100755 python/tests/iotests-mypy.sh
- delete mode 100755 python/tests/iotests-pylint.sh
- delete mode 100755 python/tests/isort.sh
- delete mode 100755 python/tests/mypy.sh
- delete mode 100755 python/tests/pylint.sh
- delete mode 100755 python/tests/qapi-flake8.sh
- delete mode 100755 python/tests/qapi-isort.sh
- delete mode 100755 python/tests/qapi-mypy.sh
- delete mode 100755 python/tests/qapi-pylint.sh
+ python/Makefile          | 2 --
+ python/tests/minreqs.txt | 1 +
+ 2 files changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/python/README.rst b/python/README.rst
-index ec5cb5e971b..e34d1a1c7b1 100644
---- a/python/README.rst
-+++ b/python/README.rst
-@@ -108,8 +108,6 @@ Files in this directory
- 
- - ``qemu/`` Python 'qemu' namespace package source directory.
- - ``tests/`` Python package tests directory.
--- ``avocado.cfg`` Configuration for the Avocado test-runner.
--  Used by ``make check`` et al.
- - ``Makefile`` provides some common testing/installation invocations.
-   Try ``make help`` to see available targets.
- - ``MANIFEST.in`` is read by python setuptools, it specifies additional files
-diff --git a/python/avocado.cfg b/python/avocado.cfg
-deleted file mode 100644
-index a4604200594..00000000000
---- a/python/avocado.cfg
-+++ /dev/null
-@@ -1,13 +0,0 @@
--[run]
--test_runner = nrunner
--
--[simpletests]
--# Don't show stdout/stderr in the test *summary*
--status.failure_fields = ['status']
--
--[job]
--# Don't show the full debug.log output; only select stdout/stderr.
--output.testlogs.logfiles = ['stdout', 'stderr']
--
--# Show full stdout/stderr only on tests that FAIL
--output.testlogs.statuses = ['FAIL']
-diff --git a/python/setup.cfg b/python/setup.cfg
-index 03344526730..e5bf498f0e1 100644
---- a/python/setup.cfg
-+++ b/python/setup.cfg
-@@ -35,7 +35,6 @@ install_requires =
- [options.extras_require]
- # Remember to update tests/minreqs.txt if changing anything below:
- devel =
--    avocado-framework >= 90.0
-     distlib >= 0.3.6
-     flake8 >= 5.0.4
-     fusepy >= 2.0.4
-diff --git a/python/tests/flake8.sh b/python/tests/flake8.sh
-deleted file mode 100755
-index e0136996453..00000000000
---- a/python/tests/flake8.sh
-+++ /dev/null
-@@ -1,3 +0,0 @@
--#!/bin/sh -e
--python3 -m flake8 qemu/
--python3 -m flake8 scripts/
-diff --git a/python/tests/iotests-mypy.sh b/python/tests/iotests-mypy.sh
-deleted file mode 100755
-index ee764708199..00000000000
---- a/python/tests/iotests-mypy.sh
-+++ /dev/null
-@@ -1,4 +0,0 @@
--#!/bin/sh -e
--
--cd ../tests/qemu-iotests/
--python3 -m linters --mypy
-diff --git a/python/tests/iotests-pylint.sh b/python/tests/iotests-pylint.sh
-deleted file mode 100755
-index 33c5ae900a5..00000000000
---- a/python/tests/iotests-pylint.sh
-+++ /dev/null
-@@ -1,5 +0,0 @@
--#!/bin/sh -e
--
--cd ../tests/qemu-iotests/
--# See commit message for environment variable explainer.
--SETUPTOOLS_USE_DISTUTILS=stdlib python3 -m linters --pylint
-diff --git a/python/tests/isort.sh b/python/tests/isort.sh
-deleted file mode 100755
-index 66c2f7df0fd..00000000000
---- a/python/tests/isort.sh
-+++ /dev/null
-@@ -1,3 +0,0 @@
--#!/bin/sh -e
--python3 -m isort -c qemu/
--python3 -m isort -c scripts/
+diff --git a/python/Makefile b/python/Makefile
+index 32aedce4137..b6c9cd1bce2 100644
+--- a/python/Makefile
++++ b/python/Makefile
+@@ -63,8 +63,6 @@ $(QEMU_MINVENV_DIR) $(QEMU_MINVENV_DIR)/bin/activate: setup.cfg tests/minreqs.tx
+ 	@(								\
+ 		echo "ACTIVATE $(QEMU_MINVENV_DIR)";			\
+ 		. $(QEMU_MINVENV_DIR)/bin/activate;			\
+-		echo "INSTALL wheel $(QEMU_MINVENV_DIR)";               \
+-		$(PIP_INSTALL) wheel 1>/dev/null;		               \
+ 		echo "INSTALL -r tests/minreqs.txt $(QEMU_MINVENV_DIR)";\
+ 		$(PIP_INSTALL) -r tests/minreqs.txt 1>/dev/null;	\
+ 		echo "INSTALL -e qemu $(QEMU_MINVENV_DIR)";		\
 diff --git a/python/tests/minreqs.txt b/python/tests/minreqs.txt
-index 19912027076..05c3bdb89f8 100644
+index 855b5129c94..38b17d17e14 100644
 --- a/python/tests/minreqs.txt
 +++ b/python/tests/minreqs.txt
-@@ -31,7 +31,6 @@ distlib==0.3.6
- fusepy==2.0.4
+@@ -16,6 +16,7 @@
+ # installation of the QEMU package itself fails, failing to find
+ # setuptools.
+ setuptools<=70
++wheel==0.34.2
  
- # Test-runners, utilities, etc.
--avocado-framework==90.0
- pytest==6.0.2
- 
- # Linters
-diff --git a/python/tests/mypy.sh b/python/tests/mypy.sh
-deleted file mode 100755
-index a33a3f58ab3..00000000000
---- a/python/tests/mypy.sh
-+++ /dev/null
-@@ -1,3 +0,0 @@
--#!/bin/sh -e
--python3 -m mypy -p qemu
--python3 -m mypy scripts/
-diff --git a/python/tests/pylint.sh b/python/tests/pylint.sh
-deleted file mode 100755
-index 2b68da90df7..00000000000
---- a/python/tests/pylint.sh
-+++ /dev/null
-@@ -1,4 +0,0 @@
--#!/bin/sh -e
--# See commit message for environment variable explainer.
--SETUPTOOLS_USE_DISTUTILS=stdlib python3 -m pylint qemu/
--SETUPTOOLS_USE_DISTUTILS=stdlib python3 -m pylint scripts/
-diff --git a/python/tests/qapi-flake8.sh b/python/tests/qapi-flake8.sh
-deleted file mode 100755
-index c69f9ea2e00..00000000000
---- a/python/tests/qapi-flake8.sh
-+++ /dev/null
-@@ -1,6 +0,0 @@
--#!/bin/sh -e
--# SPDX-License-Identifier: GPL-2.0-or-later
--
--python3 -m flake8 ../scripts/qapi/ \
--        ../docs/sphinx/qapidoc.py \
--        ../docs/sphinx/qapi_domain.py
-diff --git a/python/tests/qapi-isort.sh b/python/tests/qapi-isort.sh
-deleted file mode 100755
-index 067c16d5d94..00000000000
---- a/python/tests/qapi-isort.sh
-+++ /dev/null
-@@ -1,8 +0,0 @@
--#!/bin/sh -e
--# SPDX-License-Identifier: GPL-2.0-or-later
--
--python3 -m isort --sp . -c ../scripts/qapi/
--# Force isort to recognize "compat" as a local module and not third-party
--python3 -m isort --sp . -c -p compat \
--        ../docs/sphinx/qapi_domain.py \
--        ../docs/sphinx/qapidoc.py
-diff --git a/python/tests/qapi-mypy.sh b/python/tests/qapi-mypy.sh
-deleted file mode 100755
-index 363dbaf8c06..00000000000
---- a/python/tests/qapi-mypy.sh
-+++ /dev/null
-@@ -1,4 +0,0 @@
--#!/bin/sh -e
--# SPDX-License-Identifier: GPL-2.0-or-later
--
--python3 -m mypy ../scripts/qapi
-diff --git a/python/tests/qapi-pylint.sh b/python/tests/qapi-pylint.sh
-deleted file mode 100755
-index 8767d9d2a2d..00000000000
---- a/python/tests/qapi-pylint.sh
-+++ /dev/null
-@@ -1,8 +0,0 @@
--#!/bin/sh -e
--# SPDX-License-Identifier: GPL-2.0-or-later
--
--SETUPTOOLS_USE_DISTUTILS=stdlib python3 -m pylint \
--                                --rcfile=../scripts/qapi/pylintrc \
--                                ../scripts/qapi/ \
--                                ../docs/sphinx/qapidoc.py \
--                                ../docs/sphinx/qapi_domain.py
+ # Dependencies for qapidoc/qapi_domain et al
+ sphinx==3.4.3
 -- 
 2.53.0
 
