@@ -4,40 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DD03E83856
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Feb 2026 05:29:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3F15E83857
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Feb 2026 05:29:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vsDcr-0002cP-9y; Tue, 17 Feb 2026 00:27:57 -0500
+	id 1vsDcs-0002ck-Mo; Tue, 17 Feb 2026 00:27:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <heifetz@yandex-team.com>)
- id 1vsDcm-0002aa-OD
- for qemu-devel@nongnu.org; Tue, 17 Feb 2026 00:27:52 -0500
+ id 1vsDco-0002bI-0e
+ for qemu-devel@nongnu.org; Tue, 17 Feb 2026 00:27:54 -0500
 Received: from forwardcorp1b.mail.yandex.net
  ([2a02:6b8:c02:900:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <heifetz@yandex-team.com>)
- id 1vsDci-0006cD-Mf
- for qemu-devel@nongnu.org; Tue, 17 Feb 2026 00:27:52 -0500
+ id 1vsDcm-0006cm-5y
+ for qemu-devel@nongnu.org; Tue, 17 Feb 2026 00:27:53 -0500
 Received: from mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
  [IPv6:2a02:6b8:c37:8aa5:0:640:e6ae:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 561578850B;
- Tue, 17 Feb 2026 08:27:43 +0300 (MSK)
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id E90A78852A;
+ Tue, 17 Feb 2026 08:27:50 +0300 (MSK)
 Received: from heifetz-lin.yandex-team.ru (unknown [2a02:6bf:8080:b54::1:2f])
  by mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
- (smtpcorp/Yandex) with ESMTPSA id eRRjrX2Ak0U0-ia88aOt0; 
- Tue, 17 Feb 2026 08:27:42 +0300
+ (smtpcorp/Yandex) with ESMTPSA id eRRjrX2Ak0U0-BEQR34Gh; 
+ Tue, 17 Feb 2026 08:27:50 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.com;
- s=default; t=1771306062;
- bh=ls0bepPgan6SXopc401jXzwdANvz23800COR8K8r76A=;
+ s=default; t=1771306070;
+ bh=cW96GpRtxrwmpHjA3rFfk5LGg/7cNAQbpRSdRXk6Veo=;
  h=Message-Id:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=hhznRAKEvTF2eXcPYZ5ytvDNDsU0GQX08HQt6UnUfvC6CkuM4tRjvf3dfYJU9Bmn6
- CvzPgqcRPVgNdojefbqL/8BZ2fm/F90cQ3SpiGl8JqVeGnekK9TUL/d4lptRp7Pe+h
- 1b7H78E//OOcCtFXeg+82869BxSpbQgqm8yyE+gk=
+ b=B6yNRU49+hngQyNX40/rrbl+kLZgpYohiOF6T4KqYn4Kr/dXS6Dt1d35WHr/Hqo+c
+ VzuEGXtkuNzGCr0rBs//lq4FIblA/mCwQQowuFfnmYh8yOmfSocB30X5HnwaC/WSDk
+ UxcVHRtLktGSjaMGckLcigkrHY25zTepq2aq+tww=
 Authentication-Results: mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.com
 From: Sergei Heifetz <heifetz@yandex-team.com>
@@ -50,9 +50,10 @@ Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Markus Armbruster <armbru@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
  Gerd Hoffmann <kraxel@redhat.com>, Laurent Vivier <lvivier@redhat.com>
-Subject: [PATCH 1/8] audio: add `audio` build option for meson and Kconfig
-Date: Tue, 17 Feb 2026 10:27:33 +0500
-Message-Id: <20260217052740.114117-2-heifetz@yandex-team.com>
+Subject: [PATCH 8/8] meson.build: ignore audio drivers when configured with
+ --disable-audio
+Date: Tue, 17 Feb 2026 10:27:40 +0500
+Message-Id: <20260217052740.114117-9-heifetz@yandex-team.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260217052740.114117-1-heifetz@yandex-team.com>
 References: <20260217052740.114117-1-heifetz@yandex-team.com>
@@ -81,89 +82,119 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch adds the `audio` option to meson_options.txt. It is
-propagated into Kconfig as AUDIO. It is enabled by default.
-The corresponding `--disable-audio` and `--enable-audio` options
-for `configure` are also added.
-
-For now, this option does nothing. In subsequent patches, it will
-gradually disable audio in different places. The final goal is to stop
-building sources from `audio/` and `hw/audio/` and other audio-related
-files (except for some stubs). Note that this intent is different from
-`-audio none`, which mutes audio but still compiles the audio subsystem.
+When QEMU is configured with `--disable-audio`, we do not need to add the
+audio drivers list to config_host_data. We also do not need to print this
+list.
 
 Signed-off-by: Sergei Heifetz <heifetz@yandex-team.com>
 ---
- Kconfig.host      | 3 +++
- configure         | 4 ++++
- meson.build       | 3 +++
- meson_options.txt | 3 +++
- 4 files changed, 13 insertions(+)
+ meson.build | 80 ++++++++++++++++++++++++++++++-----------------------
+ 1 file changed, 45 insertions(+), 35 deletions(-)
 
-diff --git a/Kconfig.host b/Kconfig.host
-index 933425c74b..ec129aa4fc 100644
---- a/Kconfig.host
-+++ b/Kconfig.host
-@@ -29,6 +29,9 @@ config IVSHMEM
- config TPM
-     bool
- 
-+config AUDIO
-+    bool
-+
- config FDT
-     bool
- 
-diff --git a/configure b/configure
-index 4b61fd3bbf..ff391c79a1 100755
---- a/configure
-+++ b/configure
-@@ -762,6 +762,10 @@ for opt do
-   ;;
-   --wasm64-32bit-address-limit)
-   ;;
-+  --enable-audio) meson_option_add -Daudio=true
-+  ;;
-+  --disable-audio) meson_option_add -Daudio=false
-+  ;;
-   # everything else has the same name in configure and meson
-   --*) meson_option_parse "$opt" "$optarg"
-   ;;
 diff --git a/meson.build b/meson.build
-index 8c6c0a9a32..69aa7cd189 100644
+index 69aa7cd189..a1224c9695 100644
 --- a/meson.build
 +++ b/meson.build
-@@ -68,6 +68,8 @@ foreach target : target_dirs
- endforeach
- have_user = have_linux_user or have_bsd_user
+@@ -2266,46 +2266,55 @@ endif
+ config_host_data = configuration_data()
  
-+audio_enabled = get_option('audio')
-+
- ############
- # Programs #
- ############
-@@ -3244,6 +3246,7 @@ disassemblers = {
- have_ivshmem = config_host_data.get('CONFIG_EVENTFD')
- host_kconfig = \
-   (get_option('fuzzing') ? ['CONFIG_FUZZ=y'] : []) + \
-+  (audio_enabled ? ['CONFIG_AUDIO=y'] : []) + \
-   (have_tpm ? ['CONFIG_TPM=y'] : []) + \
-   (pixman.found() ? ['CONFIG_PIXMAN=y'] : []) + \
-   (spice.found() ? ['CONFIG_SPICE=y'] : []) + \
-diff --git a/meson_options.txt b/meson_options.txt
-index 2836156257..172ed10ead 100644
---- a/meson_options.txt
-+++ b/meson_options.txt
-@@ -71,6 +71,9 @@ option('malloc_trim', type : 'feature', value : 'auto',
- option('malloc', type : 'combo', choices : ['system', 'tcmalloc', 'jemalloc'],
-        value: 'system', description: 'choose memory allocator to use')
+ config_host_data.set('CONFIG_HAVE_RUST', have_rust)
+-audio_drivers_selected = []
+-if have_system
+-  audio_drivers_available = {
+-    'alsa': alsa.found(),
+-    'coreaudio': coreaudio.found(),
+-    'dsound': dsound.found(),
+-    'jack': jack.found(),
+-    'oss': oss.found(),
+-    'pa': pulse.found(),
+-    'pipewire': pipewire.found(),
+-    'sdl': sdl.found(),
+-    'sndio': sndio.found(),
+-  }
+-  foreach k, v: audio_drivers_available
+-    config_host_data.set('CONFIG_AUDIO_' + k.to_upper(), v)
+-  endforeach
++config_host_data.set('CONFIG_AUDIO', audio_enabled)
++if audio_enabled
++  audio_drivers_selected = []
++  if have_system
++    audio_drivers_available = {
++      'alsa': alsa.found(),
++      'coreaudio': coreaudio.found(),
++      'dsound': dsound.found(),
++      'jack': jack.found(),
++      'oss': oss.found(),
++      'pa': pulse.found(),
++      'pipewire': pipewire.found(),
++      'sdl': sdl.found(),
++      'sndio': sndio.found(),
++    }
++    foreach k, v: audio_drivers_available
++      config_host_data.set('CONFIG_AUDIO_' + k.to_upper(), v)
++    endforeach
  
-+option('audio', type: 'boolean', value: true,
-+       description: 'Audio support')
-+
- option('kvm', type: 'feature', value: 'auto',
-        description: 'KVM acceleration support')
- option('mshv', type: 'feature', value: 'auto',
+-  # Default to native drivers first, OSS second, SDL third
+-  audio_drivers_priority = \
+-    [ 'pa', 'coreaudio', 'dsound', 'sndio', 'oss' ] + \
+-    (host_os == 'linux' ? [] : [ 'sdl' ])
+-  audio_drivers_default = []
+-  foreach k: audio_drivers_priority
+-    if audio_drivers_available[k]
+-      audio_drivers_default += k
+-    endif
+-  endforeach
++    # Default to native drivers first, OSS second, SDL third
++    audio_drivers_priority = \
++      [ 'pa', 'coreaudio', 'dsound', 'sndio', 'oss' ] + \
++      (host_os == 'linux' ? [] : [ 'sdl' ])
++    audio_drivers_default = []
++    foreach k: audio_drivers_priority
++      if audio_drivers_available[k]
++        audio_drivers_default += k
++      endif
++    endforeach
+ 
++    foreach k: get_option('audio_drv_list')
++      if k == 'default'
++        audio_drivers_selected += audio_drivers_default
++      elif not audio_drivers_available[k]
++        error('Audio driver "@0@" not available.'.format(k))
++      else
++        audio_drivers_selected += k
++      endif
++    endforeach
++  endif
++  config_host_data.set('CONFIG_AUDIO_DRIVERS',
++                      '"' + '", "'.join(audio_drivers_selected) + '", ')
++else
+   foreach k: get_option('audio_drv_list')
+-    if k == 'default'
+-      audio_drivers_selected += audio_drivers_default
+-    elif not audio_drivers_available[k]
+-      error('Audio driver "@0@" not available.'.format(k))
+-    else
+-      audio_drivers_selected += k
++    if k != 'default'
++      error('Audio drivers are not supported because audio is disabled.')
+     endif
+   endforeach
+ endif
+-config_host_data.set('CONFIG_AUDIO_DRIVERS',
+-                     '"' + '", "'.join(audio_drivers_selected) + '", ')
+ 
+ have_host_block_device = (host_os != 'darwin' or
+     cc.has_header('IOKit/storage/IOMedia.h'))
+@@ -4660,7 +4669,8 @@ if enable_modules
+   summary_info += {'alternative module path': get_option('module_upgrades')}
+ endif
+ summary_info += {'fuzzing support':   get_option('fuzzing')}
+-if have_system
++summary_info += {'Audio':             get_option('audio')}
++if have_system and audio_enabled
+   summary_info += {'Audio drivers':     ' '.join(audio_drivers_selected)}
+ endif
+ summary_info += {'Trace backends':    ','.join(get_option('trace_backends'))}
 -- 
 2.34.1
 
