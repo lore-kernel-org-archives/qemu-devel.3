@@ -4,80 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C2A0E6817A
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Feb 2026 12:26:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 022CCE6817D
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Feb 2026 12:54:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vsK9c-0003rk-9B; Tue, 17 Feb 2026 07:26:13 -0500
+	id 1vsKak-0000UG-BS; Tue, 17 Feb 2026 07:54:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vsK9M-0003hw-NE
- for qemu-devel@nongnu.org; Tue, 17 Feb 2026 07:25:57 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1vsKag-0000Ty-2o
+ for qemu-devel@nongnu.org; Tue, 17 Feb 2026 07:54:10 -0500
+Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vsK9I-0000tm-OR
- for qemu-devel@nongnu.org; Tue, 17 Feb 2026 07:25:55 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771331151;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=zG9nbBMpSkASCJNW+/hK46qBLNsO37PRXzmzdP2v3ks=;
- b=KG9UwnBQZlOPiLqFmuV7V4n0sgyhoORzrXC+xc5gw6rtrkcxCKkdBhNO8VqAqeJ3DXdFom
- +WFTUizi+A/POMABXtEcuh4Nym5zcgaOSbG9F78OPDvOaajpOfg4DJNekvODB+Pt2JIES4
- UEaeOji+0vHbLaEeXtTCZOKIhOmAbbE=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-571-W974cedtOXq6XXuw4DKTbw-1; Tue,
- 17 Feb 2026 07:25:48 -0500
-X-MC-Unique: W974cedtOXq6XXuw4DKTbw-1
-X-Mimecast-MFC-AGG-ID: W974cedtOXq6XXuw4DKTbw_1771331147
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3D5991955F16; Tue, 17 Feb 2026 12:25:46 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.14])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0556F30001A5; Tue, 17 Feb 2026 12:25:44 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 7598E21E692D; Tue, 17 Feb 2026 13:25:42 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: qemu-devel@nongnu.org,  qemu-block@nongnu.org,  eduardo@habkost.net,
- berrange@redhat.com,  pbonzini@redhat.com,  eblake@redhat.com,
- devel@lists.libvirt.org,  hreitz@redhat.com,  kwolf@redhat.com
-Subject: Re: [PATCH v11 8/8] deprecate names duplication between qdev,
- block-node and block-export
-In-Reply-To: <94f379d8-4e9d-48fb-9529-c05251fdebab@yandex-team.ru> (Vladimir
- Sementsov-Ogievskiy's message of "Mon, 16 Feb 2026 10:25:43 +0300")
-References: <20260119144941.87936-1-vsementsov@yandex-team.ru>
- <20260122160113.1147745-1-vsementsov@yandex-team.ru>
- <87qzr0y990.fsf@pond.sub.org>
- <74b1555d-1e4f-4be2-85e4-902f9670e435@yandex-team.ru>
- <877bsf23y4.fsf@pond.sub.org>
- <94f379d8-4e9d-48fb-9529-c05251fdebab@yandex-team.ru>
-Date: Tue, 17 Feb 2026 13:25:42 +0100
-Message-ID: <878qcrlfp5.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1vsKaa-0007sz-9W
+ for qemu-devel@nongnu.org; Tue, 17 Feb 2026 07:54:08 -0500
+ARC-Seal: i=1; a=rsa-sha256; t=1771332813; cv=none; 
+ d=zohomail.com; s=zohoarc; 
+ b=lzcreig+0T2+rypWgGPut0U0DV1FsHLz3hU4cXmr/o8r24gTNog3UamCw+UGnQB0ACyv+OweyK0E674wjSt3VRj1ovNvPff1/T+oynC36oK0B3BmL73lsed3uBYUi9G/+C6SdcX453rBVC6YK0TN8dtMn2+9s+QnByg+7HJ4NGU=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
+ s=zohoarc; t=1771332813;
+ h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
+ bh=lV/6jEjChzisX4IWhMytFeLbWZ5hF3f6Tmg8STBMhso=; 
+ b=FG2J9Hs3u2bLqcFLRTkqXUbqrmfqIhPBfTGpCpOizhPmpSY0dfmY3PLW65yKrycHRK/33rDfW1bMMDrW907EV/AEeOWZzn26HAo4MohZPQWF9e4vJM9J4gbj2nfUq4VQJ3fB6QZ7vKRe/eGJoJgune4kOH96VBxxPzKaUQnFThk=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+ dkim=pass  header.i=collabora.com;
+ spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
+ dmarc=pass header.from=<dmitry.osipenko@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1771332813; 
+ s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
+ h=Message-ID:Date:Date:MIME-Version:Subject:Subject:To:To:Cc:Cc:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+ bh=lV/6jEjChzisX4IWhMytFeLbWZ5hF3f6Tmg8STBMhso=;
+ b=AZyXkbDi2JCqpmv8OnUa0r88Zg3wCGHDpNYL3uR4lCmx9+gvawixNh36hnVATwWR
+ EUQzjbCcURrWKKFBZmkJA6ikv5BB2uA9e5XGw4lQMqLBresh5v41FgE+MSfQgSdtogH
+ ky7KhSS20f/OLSLyZLC4WQmALY7cBgS6LlsDBa5k=
+Received: by mx.zohomail.com with SMTPS id 1771332812447351.60888636842367;
+ Tue, 17 Feb 2026 04:53:32 -0800 (PST)
+Message-ID: <ba0de6c2-8281-4a0c-a21d-86a01c785cf5@collabora.com>
+Date: Tue, 17 Feb 2026 15:53:24 +0300
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -13
-X-Spam_score: -1.4
-X-Spam_bar: -
-X-Spam_report: (-1.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.043,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- GB_FAKE_RF=0.754, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v17 06/18] virtio-gpu: Unset context after GL operations
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Huang Rui <ray.huang@amd.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>,
+ Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Yiwei Zhang <zzyiwei@gmail.com>, Sergio Lopez Pascual <slp@redhat.com>
+Cc: Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
+ Gurchetan Singh <gurchetansingh@chromium.org>, Alyssa Ross <hi@alyssa.is>,
+ =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger.pau@citrix.com>,
+ Alex Deucher <alexander.deucher@amd.com>,
+ Stefano Stabellini <stefano.stabellini@amd.com>,
+ =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
+ Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
+ Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
+ Chen Jiqian <Jiqian.Chen@amd.com>, Rob Clark <robdclark@gmail.com>,
+ Robert Beckett <bob.beckett@collabora.com>
+References: <20260216191213.2556073-1-dmitry.osipenko@collabora.com>
+ <20260216191213.2556073-7-dmitry.osipenko@collabora.com>
+ <9116c5dd-d0ee-4a6e-b318-bbd410ad09ee@rsg.ci.i.u-tokyo.ac.jp>
+From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Content-Language: en-US
+In-Reply-To: <9116c5dd-d0ee-4a6e-b318-bbd410ad09ee@rsg.ci.i.u-tokyo.ac.jp>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-ZohoMailClient: External
+Received-SPF: pass client-ip=136.143.188.112;
+ envelope-from=dmitry.osipenko@collabora.com; helo=sender4-pp-f112.zoho.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,123 +99,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
+Hello Akihiko,
 
-> On 14.02.26 10:13, Markus Armbruster wrote:
->> Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
->> 
->>> On 04.02.26 15:38, Markus Armbruster wrote:
->>>> Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
->>>>
->>>>> Now we have blockdev-replace QMP command, which depend on a possibility
->>>>> to select any block parent (block node, block export, or qdev) by one
->>>>> unique name. The command fails, if name is ambiguous (i.e., match
->>>>> several parents of different types). In future we want to rid of this
->>>>> ambiguity.
->>>>>
->>>>> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
->>>>
->>>> We have numerous kinds of IDs, i.e. names chosen by the user than need
->>>> to be unique, but only among the same kind.  For instance, you can't
->>>> name two block nodes "foo", but you can name a block node, a block
->>>> export, a qdev, and a network backend "foo".  Using the same ID for
->>>> multiple things is of course a bad idea.  Permitting it was also a bad
->>>> idea.
->>>>
->>>> Your patch rectifies this design mistake, but only partially.  Consider:
->>>>
->>>> * IDs need to be unique with their kind.  This is what we have now.  I
->>>>    don't like it.
->>>>
->>>> * IDs need to be unique among their kind and possibly some set of
->>>>     additional kinds.  This is where your patch takes us.  I like it even
->>>>    less, to be honest.
->>>>
->>>> * IDs need to be unique, period.  This is what I'd like to have.
->>>
->>> I like it. Is it enough to write it so simple in deprecation doc? Or should
->>> we still list all such ids we have in QEMU?
->>>
->>> It may be something like:
->>>
->>> Any kind of IDs you use to reference objects in QEMU must be unique, any
->>> used ID must reference exactly one object. This includes, but is not limited
->>> to qdev full and relative to "/peripheral/" paths, block-node and block-export
->>> names.
->> 
->> This would serve as a declaration of intent.  Better than nothing, I
->> guess.
->> 
->> To enforce uniqueness, we'll have to create a single table of IDs.
->> 
->> If we make it a set, we can reject duplicate IDs, but can't point to the
->> other ID.  Meh.
->> 
->> If we make it map to the kind of ID, we can report the kind.  Something
->> like "block node name 'foo' clashes with block export ID 'foo'".  Feels
->> adequate.
->> 
->> If we make it map the the object the ID identifies, we can get rid of
->> existing means to map from ID to object.  May or may not be worthwhile.
->> 
->> If we create the single table of IDs now rather than later, we can warn.
->> Something like "duplicate IDs are deprecated: block node name 'foo'
->> clashes with block export ID 'foo'".  Much more likely to get users'
->> attention than a note in docs/about/deprecated.rst.
->> 
->> We could even wire it to the "-compat deprecated-input=..." machinery
->> (I'd assist with that).  This would let people test their software is
->> ready for enforced unique IDs.
->> 
->> Thoughts?
->> 
->
->
-> Sounds good. At least, I may try to make a common function, to be used both
-> on object creation and from blockdev-replace to check for ambiguity.
->
->
-> Now, another thought come in my mind:
->
-> Shouldn't we instead of uniting different name-spaces, select qom-path as a
-> primary source of object referencing?
-> So, simple reserve "block/export/EXPORT_NAME" for exports and
-> "block/node/NODE_NAME" for nodes?
+On 2/17/26 09:32, Akihiko Odaki wrote:
+> On 2026/02/17 4:12, Dmitry Osipenko wrote:
+>> VirtIO-GPU commands may be processed outside of main-loop, from a CPU
+>> thread. This results in GL context switch failure because context is held
+>> by main-loop thread when GL is invoked from CPU thread. Always release GL
+>> context after performing GL operations such that other threads could take
+>> over the context.
+>>
+>>   0  SDL_GL_MakeCurrent() (libSDL3)
+>>   1  SDL_GL_MakeCurrent_REAL() (libSDL2)
+>>   2  sdl2_gl_make_context_current() (ui/sdl2-gl.c:201)
+>>   3  make_current() (virglrenderer.c:639)
+>>   4  vrend_finish_context_switch() (vrend_renderer.c:11630)
+>>   5  vrend_hw_switch_context() (vrend_renderer.c:11613)
+>>   6  vrend_renderer_force_ctx_0() (vrend_renderer.c:12986)
+>>   7  virgl_renderer_force_ctx_0() (virglrenderer.c:460)
+>>   8  virtio_gpu_virgl_process_cmd() (virtio-gpu-virgl.c:1013)
+>>   9  virtio_gpu_process_cmdq() (virtio-gpu.c:1050)
+>>   10 virtio_gpu_gl_handle_ctrl() (virtio-gpu-gl.c:86)
+>>   11 aio_bh_poll() (util/async.c)
+>>   12 aio_poll() (util/aio-posix.c)
+>>   13 blk_pwrite() (block/block-gen.c:1985)
+>>   14 pflash_update() (pflash_cfi01.c:396)
+>>   15 pflash_write() (pflash_cfi01.c:541)
+>>   16 memory_region_dispatch_write() (system/memory.c:1554)
+>>   17 flatview_write() (system/physmem.c:3333)
+>>   18 address_space_write() (system/physmem.c:3453)
+>>   19 kvm_cpu_exec() (accel/kvm/kall-all.c:3248)
+>>   20 kvm_vcpu_thread_fn() (accel/kvm/kaccel-ops.c:53)
+>>
+>> Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+>> ---
+>>   hw/display/virtio-gpu-virgl.c | 21 ++++++++++++++++++---
+>>   1 file changed, 18 insertions(+), 3 deletions(-)
+>>
+>> diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-
+>> virgl.c
+>> index 0f754829fb71..cde1a7a8426f 100644
+>> --- a/hw/display/virtio-gpu-virgl.c
+>> +++ b/hw/display/virtio-gpu-virgl.c
+>> @@ -896,14 +896,19 @@ static void virgl_cmd_set_scanout_blob(VirtIOGPU
+>> *g,
+>>   }
+>>   #endif
+>>   -void virtio_gpu_virgl_process_cmd(VirtIOGPU *g,
+>> -                                      struct virtio_gpu_ctrl_command
+>> *cmd)
+>> +static void virtio_gpu_virgl_unset_gl_context(void)
+>> +{
+>> +    dpy_gl_ctx_make_current(qemu_console_lookup_default(), NULL);
+> 
+> An appropriate console needs to be selected as
+> virgl_make_context_current() does.
 
-Making everything a QOM object has some merit.  However, we'd have to
-push QOMification pretty far.
+See now that virglrender always sets ctx0 for scanout=0. Hence same
+scanout=0 can be used when unsetting GL context. Will change it.
 
-Some ID kinds are already in QOM.  For instance, -device id=foo,...
-creates "/machine/peripheral/foo", and -object id=bar,.. creates
-"/objects/bar".
+>> +}
+>> +
+>> +static void
+>> +virtio_gpu_virgl_do_process_cmd(VirtIOGPU *g,
+> 
+> Although it is a common practice to differentiate functions with having
+> a word like "do", I see it as a bad one. The word conveys no meaning at
+> all. A more descriptive phrase like "with_ctx" may be better.
 
-Some ID kinds could and quite possibly should be in QOM, such as device
-backends: -chardev, -netdev, ...
+Will rename the func, thanks for the review.
 
-What about monitors?  -mon & friends.  Having them in QOM wouldn't hurt,
-I guess, but would it be worth the churn?
-
-What about -rtc?  -global?  -action?
-
-> I imaging, if we simply "deprecate duplicating IDs", this will force libvirt
-> and others to include object type into the id, so they may start use block
-> node names like "block-node-disk1", and block export names like "block-export-disk1".
-
-Question for libvirt developers: would any living version of libvirt use
-the same ID for different kinds of IDs?
-
-> We can be proactive, providing a common path for "foldering" IDs.
->
-> This way, node-name becomes "relative" QOM path, and may be used in context where
-> only node-name could be used (all existing use cases in the API now), but in interfaces,
-> where may be used objects of different kinds (like new blockdev-replace) the full
-> path is preferred (or even required).
-
-As is, we cannot define IDs as relative QOM paths even for the kinds of
-IDs that are already in QOM.
-
-Say we have both a device and an object with ID "foo".  The device's QOM
-path is "/machine/peripheral/foo".  The object's is "/objects/foo".  The
-relative QOM path "foo" is then ambiguous, and won't resolve.
-
+-- 
+Best regards,
+Dmitry
 
