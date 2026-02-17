@@ -4,94 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82784E63F29
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Feb 2026 07:13:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A961E8385B
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Feb 2026 07:14:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vsFGW-0006Zo-6X; Tue, 17 Feb 2026 02:13:00 -0500
+	id 1vsFHf-0007N6-1q; Tue, 17 Feb 2026 02:14:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1vsFG4-0006Mv-P4; Tue, 17 Feb 2026 02:12:34 -0500
+ id 1vsFHX-0007Kc-ES; Tue, 17 Feb 2026 02:14:03 -0500
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1vsFG3-0003nI-Ce; Tue, 17 Feb 2026 02:12:32 -0500
+ id 1vsFHW-0003qT-2b; Tue, 17 Feb 2026 02:14:03 -0500
 Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 61H3QQEa2643792; Tue, 17 Feb 2026 07:12:22 GMT
+ 61H505ML3310647; Tue, 17 Feb 2026 07:14:00 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=6ELXBU
- xs/l1zmhZ2pOkDLd9hnS2MMKour97fVDXHGYE=; b=sGSCiB2/8rzLk+CM3TK/Yl
- 0Lvz0WFh2WS6jZhqJtGFIv1X3MmOQ8R/zO3SLcogidlQR32AfGgd9zujQRBadzYT
- C/hrqHsHWs/zhsyfj7mbQPjRO05jRyjPm6Re0Np6gtM9lOlURiiRM9wuKgqEjM/q
- Ehv9h85h8pGGBAXC96Hwmdt7LXavX1HdfTOiY8SwC3THHum4szaxSMsWa721DJTS
- bg00MrKsSsAvXME103UzoeSZcJFyhbib+8HIiVbH854YXVPxdgnXEvePx3/UJdDr
- CobLKveyqq0H/2Jci8ITI8+mbqGf5ntOkr3yfAfzPhxQJQFc3iL6JazmOtJ+jh4g
- ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4caj4ka2re-1
+ :content-type:date:from:in-reply-to:message-id:mime-version
+ :references:subject:to; s=pp1; bh=HKsWdBHfX8vQk0ENBocK4+IxdVEsMz
+ oAr8eSrkajCd8=; b=IBwDuMpmGtzVvNyUgtxjr2yWXGlSJINY5MJMil04Rr1zd2
+ H4OridF0ljg1Er64n/CahylylZKfOAZl8ITZniLp4bdvF/kGuUHD9mAbRK6Z/ouk
+ BXJzJt/okcNpoJbamb9z2E1Dt4G81XxRfbWct0xz8PuvJWyerkXi8L5e57jWncT9
+ Xl+KEsSJv7zMKqauqOaTnJh+kfNI73LSzJa4Rrgh6n4zWVSAHGl4E0SYBvHqUBaA
+ ASdENCWuE/Cbi3SmPC+raDO1ttc/eNVAIf1UaVLxXg3WJgyGftMO6zKx1fYV6DNK
+ TXX+fKrcH0eltl7nezW3ac2P7feXo4JZbRGnqVIw==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4caj4ka2w2-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 17 Feb 2026 07:12:21 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 61H35JAa017792;
- Tue, 17 Feb 2026 07:12:21 GMT
-Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4ccb289fvg-1
+ Tue, 17 Feb 2026 07:14:00 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 61H3Jem6023886;
+ Tue, 17 Feb 2026 07:14:00 GMT
+Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4ccb451fh2-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 17 Feb 2026 07:12:21 +0000
-Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
- [10.20.54.100])
- by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 61H7CH5H26608104
+ Tue, 17 Feb 2026 07:13:59 +0000
+Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
+ [10.20.54.106])
+ by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 61H7DtrO50856256
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 17 Feb 2026 07:12:17 GMT
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id EA59720043;
- Tue, 17 Feb 2026 07:12:16 +0000 (GMT)
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7F9772004B;
- Tue, 17 Feb 2026 07:12:15 +0000 (GMT)
+ Tue, 17 Feb 2026 07:13:55 GMT
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id AFA332004B;
+ Tue, 17 Feb 2026 07:13:55 +0000 (GMT)
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 5F09E20043;
+ Tue, 17 Feb 2026 07:13:54 +0000 (GMT)
 Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com (unknown
  [9.109.199.210])
- by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTPS;
- Tue, 17 Feb 2026 07:12:15 +0000 (GMT)
-Date: Tue, 17 Feb 2026 12:42:13 +0530
+ by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+ Tue, 17 Feb 2026 07:13:54 +0000 (GMT)
+Date: Tue, 17 Feb 2026 12:43:52 +0530
 From: Aditya Gupta <adityag@linux.ibm.com>
 To: Hari Bathini <hbathini@linux.ibm.com>
 Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
  Sourabh Jain <sourabhjain@linux.ibm.com>,
  Harsh Prateek Bora <harshpb@linux.ibm.com>
-Subject: Re: [PATCH v2 5/9] pnv/mpipl: Preserve CPU registers after crash
-Message-ID: <aZQUatl4mkouE-tu@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
+Subject: Re: [PATCH v2 8/9] pnv/mpipl: Enable MPIPL support
+Message-ID: <aZQU2n-YFOxp-YQN@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
 References: <20251206055648.1908734-1-adityag@linux.ibm.com>
- <20251206055648.1908734-6-adityag@linux.ibm.com>
- <b35e15b0-6677-4fda-b687-50affe40c678@linux.ibm.com>
- <4d47c1b4-47d3-44a4-b189-2401b5176b93@linux.ibm.com>
+ <20251206055648.1908734-9-adityag@linux.ibm.com>
+ <f67681eb-d2b2-48cd-995c-a889550cdba4@linux.ibm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <4d47c1b4-47d3-44a4-b189-2401b5176b93@linux.ibm.com>
+In-Reply-To: <f67681eb-d2b2-48cd-995c-a889550cdba4@linux.ibm.com>
 X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjE3MDA1OCBTYWx0ZWRfX/qzUj0UoALy4
- 8Mf/SonP/HIZWhWkVQNKJ4QNSKG3wp0sjXHX0k1Dqr33xKPNIfcbhvW5r9/kZz6g5YX5qPk2myw
- ZsTuCrtanLWp8kABBr2tvFc+jPGlVXlkJV56VnYrKZeRWqm9F8tMhKexthMIKhBog+137mz1fsL
- YiCayhop4BWEpjor8yukPeLGXIluFylHWJXzy3VwvE3uOEIC4ZiT03P0iVavcF5INkKmCeezKl9
- rhJf6UGI5jK0WOUG6FiYinKvNlgJ/NTYROrTX4HiZowJb5w6Rw+szF//kgkg2d75ZQu8DtZe1tc
- KsVK5M27h9gpvfzTKBeudMFXtAsono9bJwgR9OtTmF4B9Qt2VGaCl0dJ5Vb4Z+7LUsvT7ByUmQ2
- ZvDmdxp/t/56lBQ2VaomGkOyJi+3cjjpNk2GLI3VqWfuxr/wlJoKOSUksCzpPjUy3fUJtdl40g7
- sdoEGsqhWsM3wz2E3Lw==
-X-Proofpoint-ORIG-GUID: 01p2dLGz1DVh0dWDjJSJ6aCqNIgN9bJO
-X-Proofpoint-GUID: 01p2dLGz1DVh0dWDjJSJ6aCqNIgN9bJO
-X-Authority-Analysis: v=2.4 cv=M7hA6iws c=1 sm=1 tr=0 ts=699414d5 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=IkcTkHD0fZMA:10 a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22 a=28rbkFGKs0NOtsuNU2wA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjE3MDA1OCBTYWx0ZWRfX8hjC1JTCgny/
+ 3LcZAudEKofCjilTxuFJy6gNhnJ7lBYRwaqGR/MV6SrVm7BJr2mtA5skV+bOGIZx+Aewgz4F+/P
+ FEw/oxOX4oIux2umu0Bp+DPBaIhzWdYpYiny7LN2SSHrkf3DsIbTMOyrRx2rJybYhkrN6iW5Nve
+ /paHRQGAWzPbSY8kkE5AX4PUBeY/HPx8I6Ki5d+f7SWa4lNXT/IMxxjxcO05BanG0RsaDoS/YmY
+ 9Jmk+aHFc2U5b+vzKE3GMXbuy+bsfkRORwmVX2FY5/xrZVymTnyI3MqoFucLioMH9Aw46wRm36l
+ PAYIRpZ6EpJTPb3PQ0kwOdj8pQhJG+hld0FqnEcAN5eB2LfiR95Lw8pEmlribK4QIpWnaahXf6o
+ u+2W9VZklLf6goycn3sijdt72tsrJSDU3+3JD6AWVo3Jiqkno05yj7pn2Ra3cokLGIAEDFGKtni
+ ZXsPf54PBnQNCW1UETg==
+X-Proofpoint-ORIG-GUID: RcvRFD-SRiqrMQ7E61-nBiF0D4qDfgtS
+X-Proofpoint-GUID: RcvRFD-SRiqrMQ7E61-nBiF0D4qDfgtS
+X-Authority-Analysis: v=2.4 cv=M7hA6iws c=1 sm=1 tr=0 ts=69941538 cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=kj9zAlcOel0A:10 a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22 a=n5_htZFP4T_TsJTqqv8A:9
+ a=CjuIK1q_8ugA:10
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-02-17_01,2026-02-16_04,2025-10-01_01
@@ -125,40 +122,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26/01/19 01:19PM, Hari Bathini wrote:
+On 26/01/19 01:21PM, Hari Bathini wrote:
 > 
 > 
-> > <...snip...>
-> On 19/01/26 1:17 pm, Hari Bathini wrote:
-> > >   typedef struct MpiplPreservedState MpiplPreservedState;
+> <...snip...>
 > 
-> > > +typedef struct MpiplRegDataHdr MpiplRegDataHdr;
-> > > +typedef struct MpiplRegEntry MpiplRegEntry;
-> > > +typedef struct MpiplProcDumpArea MpiplProcDumpArea;
+> > +    /* Add kernel and initrd as fw-load-area */
+> > +    uint64_t fw_load_area[4] = {
+> > +        cpu_to_be64(KERNEL_LOAD_ADDR), cpu_to_be64(KERNEL_MAX_SIZE),
+> > +        cpu_to_be64(INITRD_LOAD_ADDR), cpu_to_be64(INITRD_MAX_SIZE)
+> > +    };
+> > +
+> > +    _FDT((fdt_setprop(fdt, off, "fw-load-area",
+> > +                    fw_load_area, sizeof(fw_load_area))));
+> > +}
+> > +
 > 
-> > > +typedef struct MpiplPreservedState MpiplPreservedState;
-> 
-> btw, the above typedef is already available from a previous patch..
+> While the changelog only talks about dump node, fw-load-area is
+> exported too. A comment explaining what and why it is used helps..
 
-Will remove this duplicate.
-
-> 
-> > > +typedef struct MpiplPreservedCPUState MpiplPreservedCPUState;
-> > > +
-> > >   /* Following offsets are copied from skiboot source code */
-> > >   /* Use 768 bytes for SPIRAH */
-> > >   #define SPIRAH_OFF      0x00010000
-> > > @@ -46,6 +52,8 @@ typedef struct MpiplPreservedState MpiplPreservedState;
-> > >   #define __packed             __attribute__((packed))
-> > 
-> > > +#define NUM_REGS_PER_CPU 34 /*(32 GPRs, NIP, MSR)*/
-> > > +
-> > 
-> > Any limitation with saving the other SPRs? At least, LR is one other
-> > relevant SPR that needs to be saved for some meaningful context..
-
-Few registers are not implemented in QEMU. But LR should be possible,
-will add more registers that can be added Hari.
+Sure hari, will add purpose of fw-load-area also in the description
 
 Thanks,
 - Aditya G
