@@ -4,75 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A321E909A3
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Feb 2026 13:48:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F25CE909A9
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Feb 2026 14:04:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vsLQz-0005em-KS; Tue, 17 Feb 2026 08:48:13 -0500
+	id 1vsLg5-0000LH-0q; Tue, 17 Feb 2026 09:03:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vsLQq-0005e7-D9
- for qemu-devel@nongnu.org; Tue, 17 Feb 2026 08:48:05 -0500
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1vsLg0-0000KU-F7
+ for qemu-devel@nongnu.org; Tue, 17 Feb 2026 09:03:47 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vsLQn-0004gk-Ri
- for qemu-devel@nongnu.org; Tue, 17 Feb 2026 08:48:04 -0500
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1vsLfx-0007rO-BN
+ for qemu-devel@nongnu.org; Tue, 17 Feb 2026 09:03:44 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771336078;
+ s=mimecast20190719; t=1771337018;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=3fQYat7mc8Q+ksbq0wZwOPmnuloIiMfIilwBbj9la2U=;
- b=C6AOym8oOsFX6BHBrso/dRMyAK9AE0XeWzyaOopqjJwQdexc3ODKlt85NsPRgdnFgwyYYn
- qTX2be3Bis9EcJzVkcFsO1Suk46r71TfeVPgY4iDLlsHQiL2ZyNoMPYyLr71Y9kJX6ZRiP
- +5A0GaTTLwmMoYeEVtpyjJmQVyTGWcg=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=qKSzX9R1m++tW24JaSFYE0RYvrFv5B3FXjyQ7uVCEx8=;
+ b=XXdjHb2zay/GLdn1yVXs1g71mnfIliBYxMTiXFH22XmIN0eUPt8U+zw71/wzOVo9BgFQva
+ Lxpnfdf2JyYU3D9dfDJ01Psjkff5SlkCaW0Rmtz2NzhJdC2WKroE7bKebEzU6ArzD3iAJ+
+ EdWwYwcBYnq+OUOLF4mzdFDpGnnKlfw=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-531-iORAYsYqN1mIub6A8yvD3w-1; Tue,
- 17 Feb 2026 08:47:55 -0500
-X-MC-Unique: iORAYsYqN1mIub6A8yvD3w-1
-X-Mimecast-MFC-AGG-ID: iORAYsYqN1mIub6A8yvD3w_1771336074
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-193-zzV-G9iyPV-nzrpX82_uQQ-1; Tue,
+ 17 Feb 2026 09:03:34 -0500
+X-MC-Unique: zzV-G9iyPV-nzrpX82_uQQ-1
+X-Mimecast-MFC-AGG-ID: zzV-G9iyPV-nzrpX82_uQQ_1771337014
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 736271955D7A; Tue, 17 Feb 2026 13:47:54 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.14])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A45D319560A2; Tue, 17 Feb 2026 13:47:53 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 5B18421E692D; Tue, 17 Feb 2026 14:47:51 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org,  peterx@redhat.com,  ppandit@redhat.com,  Peter
- Maydell <peter.maydell@linaro.org>
-Subject: Re: [PATCH v2] migration/options: Fix leaks in StrOrNull qdev
- accessors
-In-Reply-To: <87jywgn7gv.fsf@suse.de> (Fabiano Rosas's message of "Fri, 13 Feb
- 2026 09:39:12 -0300")
-References: <20260127150916.23329-1-farosas@suse.de>
- <875x813t7l.fsf@pond.sub.org> <87jywgn7gv.fsf@suse.de>
-Date: Tue, 17 Feb 2026 14:47:51 +0100
-Message-ID: <87jywbjxbs.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A86B51956054; Tue, 17 Feb 2026 14:03:33 +0000 (UTC)
+Received: from dobby.home.kraxel.org (unknown [10.45.226.105])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 33CB81800348; Tue, 17 Feb 2026 14:03:33 +0000 (UTC)
+Received: by dobby.home.kraxel.org (Postfix, from userid 1000)
+ id EF26F685FF5; Tue, 17 Feb 2026 12:37:15 +0100 (CET)
+Date: Tue, 17 Feb 2026 12:37:15 +0100
+From: Gerd Hoffmann <kraxel@redhat.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: Andrea Bolognani <abologna@redhat.com>, qemu-devel@nongnu.org, 
+ Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
+ Kashyap Chamarthy <kchamart@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: Re: [PATCH v2 1/1] docs/interop/firmware: Add 'uefi-vars' member for
+ FirmwareMappingMemory
+Message-ID: <aZRStq9gJVoe9JkT@dobby.home.kraxel.org>
+References: <20260209133906.294720-1-abologna@redhat.com>
+ <20260209133906.294720-2-abologna@redhat.com>
+ <87seazn3ep.fsf@pond.sub.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <87seazn3ep.fsf@pond.sub.org>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kraxel@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -13
-X-Spam_score: -1.4
-X-Spam_bar: -
-X-Spam_report: (-1.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.043,
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.043,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- GB_FAKE_RF=0.754, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,180 +90,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fabiano Rosas <farosas@suse.de> writes:
+On Tue, Feb 17, 2026 at 10:08:14AM +0100, Markus Armbruster wrote:
+> 
+> (Since 11.0) and indent like this, please:
+> 
+>    # @uefi-vars: Information specific to firmware builds that expect the
+>    #     "uefi-vars" device to be used to provide access to the UEFI
+>    #     variable store.  If the mapping contains this member, the
+>    #     firmware descriptor should advertise the @uefi interface from
+>    #     @FirmwareOSInterface as well as the @host-uefi-vars feature
+>    #     from @FirmwareFeature.  (Since 11.0)
 
-> Markus Armbruster <armbru@redhat.com> writes:
->
->> Fabiano Rosas <farosas@suse.de> writes:
->>
->>> Fix a couple of leaks detected by Coverity. Both are currently
->>> harmless.
->>
->> Details?  See below.
->>
->>> - set_StrOrNull: the visitor should never fail unless there's a
->>> programming error and a property of different type has been passed in.
->>
->> Really?  See below.
->>
->>> Change it to only allocate memory after the visit call has returned
->>> successfully.
->>>
->>> - get_StrOrNull: the whole of the getter is unused, it's only purpose at
->>> the moment is to provide a complete implementation of the StrOrNull
->>> property. If it were used, it would always receive a non-NULL pointer
->>> because this property is part of s->parameters and always initialized
->>> by the setter.
->>
->> Which "received" pointer exactly would always be non-null?  See below.
->>
->
-> Not technically "received", but derived from what has been received.
->
->>> Assert non-NULL instead of allocating a new object.
->>>
->>> Fixes: CID 1643919
->>> Fixes: CID 1643920
->>> Reported-by: Peter Maydell <peter.maydell@linaro.org>
->>> Signed-off-by: Fabiano Rosas <farosas@suse.de>
->>> ---
->>>  migration/options.c | 32 ++++++++++++++++----------------
->>>  1 file changed, 16 insertions(+), 16 deletions(-)
->>>
->>> diff --git a/migration/options.c b/migration/options.c
->>> index 1ffe85a2d8..93d11bba60 100644
->>> --- a/migration/options.c
->>> +++ b/migration/options.c
->>> @@ -216,36 +216,36 @@ const size_t migration_properties_count = ARRAY_SIZE(migration_properties);
->>>  static void get_StrOrNull(Object *obj, Visitor *v, const char *name,
->>>                            void *opaque, Error **errp)
->>>  {
->>> -    const Property *prop = opaque;
->>
->> Yes, we don't actually need the variable.  However, it serves as
->> documentation of what @opaque is supposed to be.
->>
->> For what it's worth, the property accessors defined in hw/core all
->> declare the variable
->>
->>> -    StrOrNull **ptr = object_field_prop_ptr(obj, prop);
->>> +    StrOrNull **ptr = object_field_prop_ptr(obj, opaque);
->>>      StrOrNull *str_or_null = *ptr;
->>>  
->>> -    if (!str_or_null) {
->>> -        str_or_null = g_new0(StrOrNull, 1);
->>> -        str_or_null->type = QTYPE_QSTRING;
->>> -        str_or_null->u.s = g_strdup("");
->>
->> The memory allocated here is never freed.  Harmless, because the code is
->> unreachable.
->>
->>> -    } else {
->>> -        /* the setter doesn't allow QNULL */
->>> -        assert(str_or_null->type != QTYPE_QNULL);
->>> -    }
->>> +    /*
->>> +     * The property should never be NULL because it's part of
->>> +     * s->parameters and a default value is always set. It should also
->>> +     * never be QNULL as the setter doesn't allow it.
->>> +     */
->>> +    assert(str_or_null && str_or_null->type != QTYPE_QNULL);
->>
->> Actually, @str_or_null cannot be null, because @obj isn't null, and
->> object_field_prop_ptr(obj, prop) returns a pointer into @obj.
->>
->
-> And that pointer must point to zeroes at some time. It cannot be that it
-> comes pre-set with the property value. I'm describing that it won't
-> point to zeroes anymore because the setter called from
-> .set_default_value will have already set that memory to some meaningful
-> value.
+Fixed up and queued.
 
-The comment's "should never be NULL" part does not make sense to me.
-Can we phrase it more clearly?
-
->>>      visit_type_str(v, name, &str_or_null->u.s, errp);
->>>  }
->>>  
->>>  static void set_StrOrNull(Object *obj, Visitor *v, const char *name,
->>>                            void *opaque, Error **errp)
->>>  {
->>> -    const Property *prop = opaque;
->>> -    StrOrNull **ptr = object_field_prop_ptr(obj, prop);
->>> -    StrOrNull *str_or_null = g_new0(StrOrNull, 1);
->>> +    StrOrNull **ptr = object_field_prop_ptr(obj, opaque);
->>> +    StrOrNull *str_or_null;
->>> +    char *str;
->>> +
->>> +    if (!visit_type_str(v, name, &str, errp)) {
->>> +        return;
->>> +    }
->>>  
->>>      /*
->>>       * Only str to keep compatibility, QNULL was never used via
->>>       * command line.
->>>       */
->>
->> This comment is from Fabiano's recent commit be346eb6673 (migration: Add
->> a qdev property for StrOrNull).  Fabiano, did you mean to write "Only
->> StrOrNull to keep compatibility"?
->>
->
-> No, it's "only str" indeed. The point is that -global tls-creds NULL was
-> never supported, so now that we have a property, this setter will never
-> create a QNULL to avoid ever passing a QNULL to code that used to
-> consume tls-creds and doesn't expect a QNULL value (the "compatibility"
-> part).
-
-The comment confuses me.  I interpreted its first part as "This is only
-str to keep compatibility" and went "wait, it's StrOrNull only for
-compatibility!"
-
-Can we phrase this more clearly?
-
->>> +    str_or_null = g_new0(StrOrNull, 1);
->>>      str_or_null->type = QTYPE_QSTRING;
->>> -    if (!visit_type_str(v, name, &str_or_null->u.s, errp)) {
->>
->> We leak @str_or_null here.  You plug the leak by delaying the allocation
->> until after visit_type_str().  Good.
->>
->>> -        return;
->>> -    }
->>> +    str_or_null->u.s = str;
->>>  
->>>      qapi_free_StrOrNull(*ptr);
->>>      *ptr = str_or_null;
->>
->> The function fails only when visit_type_str() fails, and
->> visit_type_str() fails only when v->type_str() fails.
->>
->> Why are you certain it won't?
->
-> By inspection, I only see the failure points at qobject_input_type_str:
->
->     QObject *qobj = qobject_input_get_object(qiv, name, true, errp);
->     ...
->     if (!qobj) {
->         return false;
->     }
->
->     qstr = qobject_to(QString, qobj);
->     if (!qstr) {
->         error_setg(errp, "Invalid parameter type for '%s', expected: string",
->                    full_name(qiv, name));
->         return false;
->     }
->
-> I'm relying on qdev's boilerplate not allowing incorrect invocations
-> from the user. If code has been written that allows the .set function to
-> be reached with a wrong type or a incorrect member name inside of a
-> struct, for instance, then I'm calling it a programming error.
-
-Alright, you're constructing a non-local argument to show the memory
-leak is actually unreachable.
-
-Please work this more verbose version of the argument into the commit
-message.
+take care,
+  Gerd
+  
 
 
