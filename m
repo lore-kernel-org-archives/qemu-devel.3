@@ -4,91 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5208AE9A03B
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Feb 2026 21:49:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1923E9A03B
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Feb 2026 21:50:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vsSwX-0005oP-Qe; Tue, 17 Feb 2026 16:49:17 -0500
+	id 1vsSxW-0006qP-QL; Tue, 17 Feb 2026 16:50:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vsSwW-0005nu-9F
- for qemu-devel@nongnu.org; Tue, 17 Feb 2026 16:49:16 -0500
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vsSwU-0000Lm-J7
- for qemu-devel@nongnu.org; Tue, 17 Feb 2026 16:49:16 -0500
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-4836f363ad2so52309805e9.1
- for <qemu-devel@nongnu.org>; Tue, 17 Feb 2026 13:49:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771364953; x=1771969753; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=utvCkmsj+touOyQEV38XHtgIsDxYA9wU/Mp3NYCotBY=;
- b=WPy2r1c4174rm8Fd2XuH5YimkdIRo82YcxGFXKs34PZVKspCn1U/hLHHnXZe0zffm/
- C5NdwOmlTpUh8s+XncnHeTWXdC5y+2Gp4mneYoWOll20PEjzkjsItFAjoEwrdHQLMT0x
- n7kvPAC6+G6mb3wW0oTxUZGNQYp1uDHzPJF6YILJJaDg/L6XnqOWCQZk8bY6NG1zyNOh
- KKG/QzbSv8D9x94D92Uz0IjhuzG6uJv6wJwuPRqrK2ORPaFQ3Bqi5AfdNwfWdlWdTsJX
- hprVSZObPULYe+htzGEQlTPh67B6ekBlFPXzTrDRbYjdJbVxqCWdkMH+NZLeHUlHSEFu
- U7vw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771364953; x=1771969753;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=utvCkmsj+touOyQEV38XHtgIsDxYA9wU/Mp3NYCotBY=;
- b=EWT1h0RaGLOdkeMvwpbGtuzapdra3QLsaEyf9ZWzeqtAkWrYWM1VC6p1FNj1U/BdJx
- 0d3xiyglIDhYAMfwHgRaU67AiI2rfnBoshthXYRp2vx1TxLdtVWWXDDo+ntcnZ6f1gja
- c4UV3oHWeAUg1w06BnzgtIy7Z47v5SIitBQ9eHkUOxb+X3Yfn7zejfWrZTgUsH8nyjxg
- aBpWZtVsYV6pR4ylt3Vo65tArh87E2s4WYIN7aowK9cbiI7TQ5b6s4jkvO/mVAD4yOmt
- jm+iD9lWSpCxaB5kLw+uM+mK4HS9xjTat0JNb/5dtDiZ6zAKDshMXcGHcb0iRyd9Quoq
- bxdA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXUqwMu9Yb2QuYBO5FlLkMTUn3f7RrskAMytndSznSIR25N+gbbaxNDeC5N0LTTr4wCNvnKxPARdN9z@nongnu.org
-X-Gm-Message-State: AOJu0Yzxhmb/9a8N9VT+45RJ4+vJM39/V5cOOxJuFR1qlX5lofdbkPpV
- t0BIe/PVTfVKfTCkSa2+3tQhUbW/hxoRkYb86btaWlJmcoCcuaYODGEfqOUR1B38wl8=
-X-Gm-Gg: AZuq6aIfdM0rVtlEpTm8t417S7o7oaM/ugX4bY7tdiP30CgHUVxMBOLWlnuekOkMblj
- AARMlYxP3/Ndof1CCxmYMzjMiFq1T9kX2C5lKEpJUS2X9BfZ4JIeThRjCFYO9erp+hF42pErwpZ
- sZ5IFiA87JUDFRWIj9dBRvCRfNC9FeTgX3cv7dOqtQpqe6vwvQWpR6gpMoAZZXx6uvcbUZgRL9H
- dgIKHkzCcieLUmmZt+qtVcLHDh7VhKQlKhn/l/vZNvKa806Ag9KGNUP52/z94MnI1YBWvdjVGI5
- 0ghGDTJ0CUUpGC+YQ/u9InYzItKSamnG4+9WNJsRKTyr/aPPG+8dmLqGfdP4U8JBNDp9ah9z9S8
- Q1ZKmRrjmUCHI4DDzAlbRI2OEc+4tnDSQVxYZ2HOac+p8DBYYd3IG18+gbtgCR0gqIpxEnHLW1f
- kAkWsvw4eNnjaVIAXxN7gF0Nj8sRYTIrFBlT3eLfGuw76TDSG7Ch69y/gIkUI/xS1J9SRiwLXv9
- e0B
-X-Received: by 2002:a05:600c:4f0e:b0:477:7bca:8b2b with SMTP id
- 5b1f17b1804b1-48373a1029emr286784975e9.15.1771364952945; 
- Tue, 17 Feb 2026 13:49:12 -0800 (PST)
-Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4837a5d562esm248105335e9.15.2026.02.17.13.49.12
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 17 Feb 2026 13:49:12 -0800 (PST)
-Message-ID: <ed97732a-a626-41a8-80f1-f335dd459201@linaro.org>
-Date: Tue, 17 Feb 2026 22:49:11 +0100
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vsSxT-0006oD-8E
+ for qemu-devel@nongnu.org; Tue, 17 Feb 2026 16:50:15 -0500
+Received: from zero.eik.bme.hu ([152.66.115.2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vsSxP-0000qr-40
+ for qemu-devel@nongnu.org; Tue, 17 Feb 2026 16:50:13 -0500
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 28F73596A3F;
+ Tue, 17 Feb 2026 22:50:07 +0100 (CET)
+X-Virus-Scanned: amavis at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
+ id 1W8_ono_5eO6; Tue, 17 Feb 2026 22:50:01 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id C1F3F596A0D; Tue, 17 Feb 2026 22:50:01 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id BFC5E5969F0;
+ Tue, 17 Feb 2026 22:50:01 +0100 (CET)
+Date: Tue, 17 Feb 2026 22:50:01 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
+cc: Yodel Eldar <yodel.eldar@yodel.dev>, 
+ Peter Maydell <peter.maydell@linaro.org>, 
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org, 
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>, 
+ =?ISO-8859-15?Q?Alex_Benn=E9e?= <alex.bennee@linaro.org>, 
+ Jim MacArthur <jim.macarthur@linaro.org>
+Subject: Re: [PATCH 1/2] target/alpha: Reset CPU
+In-Reply-To: <28c7b18c-c998-4392-a1f2-9b287d7545c5@linaro.org>
+Message-ID: <6051494c-a55f-e4cd-faac-7c1f6c3288f0@eik.bme.hu>
+References: <20260217-alpha-v1-0-0dcc708c9db3@rsg.ci.i.u-tokyo.ac.jp>
+ <20260217-alpha-v1-1-0dcc708c9db3@rsg.ci.i.u-tokyo.ac.jp>
+ <CAFEAcA_BJdifU=58m7ObeAe_ZByE6M-Zkg0cU70wP10+gpUkNg@mail.gmail.com>
+ <385d1a8e-c202-4d72-a24a-1e49478278b4@yodel.dev>
+ <28c7b18c-c998-4392-a1f2-9b287d7545c5@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 6/7] page-vary: Build migration_legacy_page_bits as
- common code
-Content-Language: en-US
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-References: <20260217095106.598486-1-richard.henderson@linaro.org>
- <20260217095106.598486-7-richard.henderson@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260217095106.598486-7-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: multipart/mixed;
+ boundary="3866299591-1822290650-1771365001=:96587"
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,18 +76,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 17/2/26 10:51, Richard Henderson wrote:
-> Use target_info->page_bits_init to implement
-> migration_legacy_page_bits.  Because this is the last
-> function within the file, rename page-vary-target.c
-> to page-vary-system.c and build once for system mode.
-> 
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   page-vary-target.c => page-vary-system.c | 19 ++++++-------------
->   meson.build                              |  2 +-
->   2 files changed, 7 insertions(+), 14 deletions(-)
->   rename page-vary-target.c => page-vary-system.c (74%)
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+--3866299591-1822290650-1771365001=:96587
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8BIT
+
+On Tue, 17 Feb 2026, Philippe Mathieu-Daudé wrote:
+> On 17/2/26 20:12, Yodel Eldar wrote:
+>> +Philippe
+>> 
+>> Hi,
+>> 
+>> On 17/02/2026 03:21, Peter Maydell wrote:
+>>> On Tue, 17 Feb 2026 at 06:35, Akihiko Odaki
+>>> <odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
+>>>> 
+>>>> alpha_cpu_realizefn() did not properly call cpu_reset(), which
+>>>> corrupted icount. Add the missing function call to fix icount.
+>>>> 
+>>>> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+>>>> ---
+>> 
+>> So, the real culprit was hiding in plain sight in Alpha-specific code
+>> all along? Congrats on finding it!
+>> 
+>>>>   target/alpha/cpu.c | 1 +
+>>>>   1 file changed, 1 insertion(+)
+>>>> 
+>>>> diff --git a/target/alpha/cpu.c b/target/alpha/cpu.c
+>>>> index 1780db7d1e29..74281ebdb367 100644
+>>>> --- a/target/alpha/cpu.c
+>>>> +++ b/target/alpha/cpu.c
+>>>> @@ -124,6 +124,7 @@ static void alpha_cpu_realizefn(DeviceState *dev, 
+>>>> Error **errp)
+>>>>       }
+>>>> 
+>>>>       qemu_init_vcpu(cs);
+>>>> +    cpu_reset(cs);
+>>>> 
+>>>>       acc->parent_realize(dev, errp);
+>>>>   }
+>>> 
+>>> Realize functions shouldn't call reset on themselves.
+>>> For CPU objects it is currently the responsibility of the
+>>> board code to arrange that the CPU objects get reset.
+>>> 
+>>> thanks
+>>> -- PMM
+>>> 
+>> 
+>> I think the following addresses Peter's remarks; it passed 100
+>> repetitions of the Alpha replay test after reapplying the reverted
+>> commit:
+>> 
+>> diff --git hw/alpha/dp264.c hw/alpha/dp264.c
+>> index 5e64528431..091ffc0085 100644
+>> --- hw/alpha/dp264.c
+>> +++ hw/alpha/dp264.c
+>> @@ -68,5 +68,7 @@ static void clipper_init(MachineState *machine)
+>>       memset(cpus, 0, sizeof(cpus));
+>>       for (i = 0; i < smp_cpus; ++i) {
+>> -        cpus[i] = ALPHA_CPU(cpu_create(machine->cpu_type));
+>> +        CPUState *cpu = cpu_create(machine->cpu_type);
+>> +        cpu_reset(cpu);
+>> +        cpus[i] = ALPHA_CPU(cpu);
+>
+> Hmm this pattern is used a lot (creating CPUs in board_init without
+> manually calling cpu_reset). If this is the simplest fix, maybe
+> we could add a cpu_create_resetted() helper and use it where
+> appropriate (i.e. not where qemu_register_reset is then called).
+
+I've been bitten by this before and was suggested to add a 
+machine_cpu_reset function that calls cpu_reset and register it with 
+qemu_register_reset in the machine init method. That was a while ago so 
+maybe things changed since but hw/ppc/ppc440_bamboo.c is a simple example 
+showing this (although that machnie is old and not quite maintained 
+machine so may not follow up to date recommendations) and most other ppc 
+machines do this.
+
+Regards,
+BALATON Zoltan
+--3866299591-1822290650-1771365001=:96587--
 
