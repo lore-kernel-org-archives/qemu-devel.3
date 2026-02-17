@@ -4,86 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74ED3E6815B
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Feb 2026 09:58:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC4DEE68159
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Feb 2026 09:59:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vsHps-0007ix-F5; Tue, 17 Feb 2026 04:57:40 -0500
+	id 1vsHrH-0000ag-2q; Tue, 17 Feb 2026 04:59:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vsHpr-0007ib-GN
- for qemu-devel@nongnu.org; Tue, 17 Feb 2026 04:57:39 -0500
-Received: from mail-ot1-x32d.google.com ([2607:f8b0:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1vsHr0-0000Wv-RK
+ for qemu-devel@nongnu.org; Tue, 17 Feb 2026 04:58:52 -0500
+Received: from mail-qt1-x835.google.com ([2607:f8b0:4864:20::835])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vsHpp-0001Cu-PV
- for qemu-devel@nongnu.org; Tue, 17 Feb 2026 04:57:39 -0500
-Received: by mail-ot1-x32d.google.com with SMTP id
- 46e09a7af769-7d18a9d2b1aso3710652a34.2
- for <qemu-devel@nongnu.org>; Tue, 17 Feb 2026 01:57:37 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1vsHqx-0001Ke-9o
+ for qemu-devel@nongnu.org; Tue, 17 Feb 2026 04:58:49 -0500
+Received: by mail-qt1-x835.google.com with SMTP id
+ d75a77b69052e-50336cffef9so35736661cf.0
+ for <qemu-devel@nongnu.org>; Tue, 17 Feb 2026 01:58:46 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1771322325; cv=none;
+ d=google.com; s=arc-20240605;
+ b=M+xh+v5PoNo7ncBNbq4cave1hE6upTG3s2snhbEK6W7c5IYWJchRssv31tvtJGOmBH
+ pSmKBHzewIHr8mdSPFTxytUqHuBv+dK2ObrZZBQLZGORmfSrhuSGP4tcPENiEFszCQzy
+ 4bL4ykTQcJoiTGOKgZG/ES+JrgeEaK9vdr+kU87X0/dl4wAkA7FSY8sxnObU1oXPmvf3
+ diRKJCJycWV4+qqC7hqA/5Fts6n98dT/ZRjZ/z7kKLpiENxQSzFeJh0yS38//Teezw1W
+ CvsMqQQ+K3ggr7eE2SCeN7ZOpO8VsL4I6Ub3tBGHVFZuCnf7Iw+LMy0X3Ju5jZt80zPG
+ kexw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=iYMu7tv6gTB+om556T/2z3xYcm/ZazW3bs7SOqSiJJw=;
+ fh=rWAlG7a1BiEttu50XauJMXD+5ngzyLxdqQmsIIKWUkI=;
+ b=GdU0MCdvJ0YjR4kfY+FqfUT53IKkBfLR09jVuv/vS2p7KDDWYzmP+6Z1SXS/wjDvTL
+ 4wrKS524sc/VMOU9uXU4zV9m6OIZLhKA1oQr+KK440J+MD5Tq5KbYEJoCGe1TTcWVenR
+ Iqa7GiAcM6joPmr47Z/VFQB8O0FcH+FqfjOsqYEAWoPZzva4Z1yyD7+odUgaDR8QS9me
+ aD97+JszGu6KZ579MRGHfktEj8voJ+stIrX1+M+yPJKr6Grku8CpxzYp7JVQXygR7JoY
+ bupjvEEOU243xbuyMGx2eu9rnogRlGJDi5RXsgFiDOWHnouY1/BknGsxhCBurGQXT8L+
+ nf+A==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771322256; x=1771927056; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=eEX9ymO65QuTU4jpBkZ1UxQXc5p//uJ4DsnmCRgXSR0=;
- b=RxoietxMuzDeGCT5oFc4tr8ty94te4h/K8nk8O69O7GuivooM/HRJRVr5kyqRTUPWH
- zJ4M/TTTZVqgLYIlEFEzAIMEQbIYpXXexknvnONjFx8G0Aa8lbzKMAbXr0e8e4OGpBkM
- zU82y+0LdMDNPrQzm1mfm4dUNWi3RXDOyakCIxUu78leKQM5I2Dnd+eztmwebeXO2h31
- 9CbxFYbBRjVLqBdGVVWK4fHeqQQEVh961y/2h1HFWsSvalJtVy0+KJfi1pDXmc0bBw5p
- cAT4L9+HvO6v02Bm2EiGAKPiKOSeuVxqK5Z6u4C6shtSSJ6/0K3TthXs+6X0SV7tsalM
- WceA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771322256; x=1771927056;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1771322325; x=1771927125; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=eEX9ymO65QuTU4jpBkZ1UxQXc5p//uJ4DsnmCRgXSR0=;
- b=hShRupBc56KB+haAEX3ZD2piF0tH7rbHruEZzgeRXsG3dklx0Poxu1HShEfgkRbQjb
- YjT/7V0O39hXAzJguX2YFk5AJMy9cMQnuh+konuxOUaghhU7FTkkz7sXW0tLaNeSP7Dn
- gAtwu5hkH6tBNMqC41tCuhJIlp3DWptq56698TXZBAUDn4zHGM5gLYH5BKWR4COBkL4n
- 9Ku/rBG+X32fhzhGf6SEtejiZ9msszGQ215YFDvkXR5nH6XikW84lqAVHbzoe88wVMR4
- T34gBMaasmIw95+Mk/sfWxo38U8RYhamO3F1MXR36z/q3hTFONHHHcpRYVjPU2YHuDje
- EaoA==
-X-Gm-Message-State: AOJu0YzUV8qdn6GyM78xOqtIDNsa92PU77LnbIktOs1Aqdr7YmAFjQt1
- XMtNRJp4zckhVHCEupJiGyaVUbVAS+AtogeYRPMfkJ0R2q3GrFK+RAakfit8scJqqVgCe9/MRFP
- U9nuBpAw=
-X-Gm-Gg: AZuq6aIEHPcl7/iDeHHXS4ZtrpLOhl8h6ypMnLv/eMio6eOQOGhJ8OXXuF9uMD9m1YP
- Imu8psK5jbIm/9pTTvzBiTEAkd6ihLmYyU0Il5pU6b0AQ0dgl33/NtiTXFaX2bUT686RmryVKVz
- NXPty2LWB4gFJsL9UveDCHgW6iaXLiFgwXltk9Iv7AlwFp366uZQiJ+jfl1WGXfQJP4gyVbkeUj
- XRTn6m+3L7hjDBNnS5mgQH1O6gUgsAEzRZEt/oSjOF1fwzBtIvosjj8u/WkeAqzpvteF3kxGogP
- 2prGt1wMXYvEYrLRwZTCSU0BwKszNNxfuqOGWw0m8DwzEA5Nca6ug6/KjBTWNpFRt42jG7fdJ4c
- Wvk63yIil0T6ZVcSjY7xVrdOHi6nwDs/ESIuNHyQXDHPqJ+tu8Yr8Qenoxz51hX98SGWgPj8COW
- IoqPJ4HGKFXSQnGiGPeJZLrFYw/8Tv9TetHzB8HYPRig3SzC64T5mSRzvGG501+qaZGxCraYckS
- oaDOoD7yJCEcUpNLyogUptqST/N1KQULzknuYE=
-X-Received: by 2002:a17:902:d591:b0:2aa:e3da:52b5 with SMTP id
- d9443c01a7336-2ab50519ee2mr115665065ad.9.1771321872346; 
- Tue, 17 Feb 2026 01:51:12 -0800 (PST)
-Received: from localhost.localdomain
- (2403-580b-742d-0-10a2-dce1-aa4a-dd32.ip6.aussiebb.net.
- [2403:580b:742d:0:10a2:dce1:aa4a:dd32])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2ad1a6fa33esm99108675ad.13.2026.02.17.01.51.10
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 17 Feb 2026 01:51:11 -0800 (PST)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: philmd@linaro.org
-Subject: [PATCH v2 0/7] page-vary: Build once
-Date: Tue, 17 Feb 2026 19:50:59 +1000
-Message-ID: <20260217095106.598486-1-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
+ bh=iYMu7tv6gTB+om556T/2z3xYcm/ZazW3bs7SOqSiJJw=;
+ b=e2Qn6Uqa/BBSQkQxRZOCcTquuDGdEG+zhYNejMlD/XFikmXW+gbc57AHu78wfEYbjM
+ UIuxGHF70vB8BedaGgPqH2w/3EdA12pqMOlngXkIaV/oogGIuqv/fj3PeHnsEaVQGf0z
+ aW+DQJCiWjrQWslyHWdD6WKtnOhqkmRFDgpkNfk9MUUe2pKmI5YIDswxKhHlBvIjpQod
+ KvvLHtR5/e67Tcboequ4oLs0npRdp8TcFsnUir0dI/tLO1SVFQgFO60+TtqMiPh2h20z
+ eEyXpGU5O6nu/6k4QOi+bYqv5Qu/Qf8Y0RSAlMUz0AmnMZ6wLFthoU51SKFMq0iQ+TYf
+ 4hyg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1771322325; x=1771927125;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=iYMu7tv6gTB+om556T/2z3xYcm/ZazW3bs7SOqSiJJw=;
+ b=hImjFKkrECI79ZWZH7kCiwZwzf7N4zrrqMhEoWUeONJGOf6lGKrgqHRWGQKcAoFTxb
+ BnB1jw5WCIja5P5shq3H42bWXKduVRrPX+nIRQTLpeQhRIUMaz/NXVgI+hYYEdYqid/l
+ A0MrWeUPZVb5y3c1eamIPnRXC1Gcyd+eEsfsed6e0W9yOfsnyyiw3pl7z0qoKu4r4T8E
+ 1LAqiqgkIh1S+icACUFgQ/VgfeZGzJZgcaJOxOqOthdaOsTRxkzU1327ToBuELsLLxN/
+ fr+zTEVYY+hJ3pLRs0UhVpX54b4CE6mPH6eSKxHtIma2XZnhmSoiZTseI+xu7vSThpE7
+ jYVw==
+X-Gm-Message-State: AOJu0YxL6vYwbgHtNBLhsBt6lck5Zn7W+HJjzvmHLHBwSfOWCg4ElztV
+ E/mSuJQjJvYvnEPKAuk2hizVOOfjSg+0VPsLC5ydVDmvS7fhGZz777si9aVUMXgb1GFL03lMqcT
+ jbB+CC85mD7puQRJQiRB4iR9ZCDSSgjiSKkzCD/0JTZIN
+X-Gm-Gg: AZuq6aLzbx0wzJ9Wn7oAmXpa82qRqRRY3vPO2/k6rEk/WejwekEL/dH+Uzaau0/wQxV
+ TceV0Mc//4oBxetGRFCdE2dIoirr2ZIj7cWTaF9cysIfTiykLesJZjsrTKVetJbZ+bMsSc5GzkQ
+ S98hWO+UVYm1HTHJgHRgxz/mOnTBg/B15V5146XLER0F+yROZiaXSyFJzDlzs8Vq1M5GmGEc6ng
+ yEWF6UcoO+HEOM5Ty7XaCrEezk0bofVkbmmTIowfloXjsDLIuYc2qtxZJUPI79RRkm6z6IMbsMg
+ RGCbGtN7E2tKXkdFCjVrwAbnjmdmRXooGsp0eSXc
+X-Received: by 2002:a05:622a:44:b0:506:20bc:f66a with SMTP id
+ d75a77b69052e-506a6a4ca91mr187340291cf.34.1771322325186; Tue, 17 Feb 2026
+ 01:58:45 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::32d;
- envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x32d.google.com
+References: <20260217052740.114117-1-heifetz@yandex-team.com>
+In-Reply-To: <20260217052740.114117-1-heifetz@yandex-team.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Date: Tue, 17 Feb 2026 10:58:33 +0100
+X-Gm-Features: AaiRm51apQjPkMhiR-vKkiH2Kw6Y6rOyDpbof5vZVe3XpL_Z2oER89P4mo7bkO8
+Message-ID: <CAJ+F1CJRG5yReEGmCvrvJ-P07U2T0p9YNXHx=iq+WdMPZBZ=mA@mail.gmail.com>
+Subject: Re: [PATCH 0/8] add build option to disable audio subsystem
+To: Sergei Heifetz <heifetz@yandex-team.com>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Eric Blake <eblake@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Markus Armbruster <armbru@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ Thomas Huth <thuth@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>, 
+ Laurent Vivier <lvivier@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::835;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x835.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -101,41 +123,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Phil,
+Hi Sergei
 
-What about going a step or two further and eliminating
-page-vary-target.c entirely?
+On Tue, Feb 17, 2026 at 6:28=E2=80=AFAM Sergei Heifetz <heifetz@yandex-team=
+.com> wrote:
+>
+> This patch series adds a compile-time option to disable building
+> audio-related sources (mostly, files under `audio/` and `hw/audio/`).
+> It adds `--disable-audio` and `--enable-audio` options to the
+> `configure` script. Audio remains enabled by default, and the changes are
+> harmless in that case.
+>
+> When audio is disabled, it may not be possible to build a number of
+> devices and machines. This is expected, and can be addressed on a
+> case-by-case basis if needed.
+>
+> This feature may be useful in production environments which only use a
+> specific subset of QEMU=E2=80=99s functionality and, in particular, do no=
+t need
+> the audio subsystem. In such environments it is generally beneficial to
+> avoid building unused code, for both security and maintenance reasons.
 
 
-r~
+I am planning to send a PR for "[PATCH 00/85] audio: cleanups & add a
+manual test" soon, could you rebase your series on top?
+
+thanks
 
 
-Philippe Mathieu-Daudé (1):
-  page-vary: Expose TARGET_PAGE_BITS_MIN definition
 
-Richard Henderson (6):
-  target-info: Add page_bits_{init,vary}
-  target-info: Move TARGET_PAGE_BITS sanity check
-  page-vary: Build set_preferred_target_page_bits as common code
-  page-vary: Build finalize_target_page_bits as common code
-  page-vary: Build migration_legacy_page_bits as common code
-  target-info: Eliminate TARGET_PAGE_BITS_LEGACY
 
- include/exec/page-vary.h          | 19 ++++++--
- include/qemu/target-info-impl.h   |  7 +++
- target/arm/cpu-param.h            |  1 -
- configs/targets/aarch64-softmmu.c |  2 +
- configs/targets/arm-softmmu.c     |  2 +
- page-vary-common.c                | 44 +++++++++++------
- page-vary-system.c                | 33 +++++++++++++
- page-vary-target.c                | 81 -------------------------------
- target-info-stub.c                | 15 ++++++
- meson.build                       |  2 +-
- 10 files changed, 103 insertions(+), 103 deletions(-)
- create mode 100644 page-vary-system.c
- delete mode 100644 page-vary-target.c
+>
+> Sergei Heifetz (8):
+>   audio: add `audio` build option for meson and Kconfig
+>   ui/vnc: disable audio feature when configured with --disable-audio
+>   tests/qtest: remove -audio none when configured with --disable-audio
+>   hw/audio/pcspk: change PCSPK behaviour with --disable-audio
+>   Kconfig: add AUDIO dependency to audio-related devices
+>   system/vl: remove audio and audiodev options when audio is disabled
+>   audio: do not build audio-related sources with --disable-audio
+>   meson.build: ignore audio drivers when configured with --disable-audio
+>
+>  Kconfig.host                |  3 ++
+>  audio/audio-hmp-cmds-stub.c | 28 +++++++++++++
+>  audio/audio-stub.c          | 35 ++++++++++++++++
+>  audio/meson.build           |  5 +++
+>  configure                   |  4 ++
+>  hw/audio/Kconfig            | 21 ++++++----
+>  hw/audio/pcspk.c            | 14 +++++++
+>  hw/usb/Kconfig              |  2 +-
+>  meson.build                 | 83 +++++++++++++++++++++----------------
+>  meson_options.txt           |  3 ++
+>  qapi/audio.json             |  3 +-
+>  replay/meson.build          |  9 +++-
+>  replay/replay-audio-stub.c  | 16 +++++++
+>  replay/stubs-system.c       |  6 ---
+>  system/vl.c                 |  6 +++
+>  tests/qtest/libqtest.c      |  2 +
+>  ui/vnc.c                    | 31 ++++++++++++--
+>  17 files changed, 215 insertions(+), 56 deletions(-)
+>  create mode 100644 audio/audio-hmp-cmds-stub.c
+>  create mode 100644 audio/audio-stub.c
+>  create mode 100644 replay/replay-audio-stub.c
+>
+> --
+> 2.34.1
+>
+>
 
--- 
-2.43.0
 
+--=20
+Marc-Andr=C3=A9 Lureau
 
