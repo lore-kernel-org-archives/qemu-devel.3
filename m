@@ -4,106 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86536E909D0
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Feb 2026 16:16:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3013BE909CF
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Feb 2026 16:16:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vsNjF-00018y-7A; Tue, 17 Feb 2026 11:15:13 -0500
+	id 1vsNj8-00015u-6D; Tue, 17 Feb 2026 11:15:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vsNjD-00018N-NI
- for qemu-devel@nongnu.org; Tue, 17 Feb 2026 11:15:11 -0500
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vsNj3-00010p-A5
+ for qemu-devel@nongnu.org; Tue, 17 Feb 2026 11:15:02 -0500
 Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vsNjC-000379-4P
- for qemu-devel@nongnu.org; Tue, 17 Feb 2026 11:15:11 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vsNiy-0002sh-Mv
+ for qemu-devel@nongnu.org; Tue, 17 Feb 2026 11:15:01 -0500
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id F16233E720;
- Tue, 17 Feb 2026 16:14:57 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 7D5733E718;
+ Tue, 17 Feb 2026 16:14:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1771344898; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=/FTa9nDOo0CQKYv3Kw0PjHMAuXiEYgAuNBcR2Xn4edk=;
- b=U+pau7cKJSCu7C+fY84Rzot5bg9jXPBwguMdbdutUxfGypLw0AWwvyt5X53C5QxjjBSp8d
- +rjTFJQsiKPp19war52jlzEbbNzF6QbXH656jET5DeL76tyKioH0nP5tZIegYRqbDkKyOu
- H8ZUrOU5BNksI02LK3Ja1JKS1KER6Ao=
+ t=1771344887; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=luLM0vHPkLb2Q+4P4WAWdCTD4HqzH18BgcVwS6oKeAE=;
+ b=JVd8EYgJC1TMydARvAAu8dR6DVI0yLrTD6f1KHT/ETM3Vx3IaLBMfE0Xr3fHOW3H1BWiGw
+ 09UKv7G7dPFkcG5zUNvRF8/w93BvTc65bAFZz+PiGAdc1GmroonDxurwLaexlHorBuDwEI
+ fSoFeqXp53tph0aoqOFkE+tP+enNf8s=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1771344898;
+ s=susede2_ed25519; t=1771344887;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=/FTa9nDOo0CQKYv3Kw0PjHMAuXiEYgAuNBcR2Xn4edk=;
- b=w6hgHXFSqSw7rLsdbWRdmxxMQa7js/9zaFA3UYRE7KP90Z6Ek9QnO9VZvMch/Ee5dHIyA9
- wxPwbNrL6OZsqmAQ==
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=luLM0vHPkLb2Q+4P4WAWdCTD4HqzH18BgcVwS6oKeAE=;
+ b=+Dvf0knq4SQuYdnKlL8gY7tLYLPWuQqwtdAJ++JnCON6xyE1/LpgD+w61EYrTM0/Wdc/hk
+ WA4dk8kgnP80QODg==
 Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=vUt9K8Dr;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=azxbTjW8
+	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1771344897; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=/FTa9nDOo0CQKYv3Kw0PjHMAuXiEYgAuNBcR2Xn4edk=;
- b=vUt9K8Drwiu5c7p8h+F0X4EXSfR9C0JAUexBHsTtvov7fovksSyDQLh30zbmBNSbTfFWMx
- 1uGsmHxxQhJaAK8DEtZ9BG+u3G1o49Xg7JSnDtailqFZj42lglhI8koxZIsONgboi9Yrse
- m0532juNZH2Cks7YkfxpRmRV1FxX+dc=
+ t=1771344887; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=luLM0vHPkLb2Q+4P4WAWdCTD4HqzH18BgcVwS6oKeAE=;
+ b=JVd8EYgJC1TMydARvAAu8dR6DVI0yLrTD6f1KHT/ETM3Vx3IaLBMfE0Xr3fHOW3H1BWiGw
+ 09UKv7G7dPFkcG5zUNvRF8/w93BvTc65bAFZz+PiGAdc1GmroonDxurwLaexlHorBuDwEI
+ fSoFeqXp53tph0aoqOFkE+tP+enNf8s=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1771344897;
+ s=susede2_ed25519; t=1771344887;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=/FTa9nDOo0CQKYv3Kw0PjHMAuXiEYgAuNBcR2Xn4edk=;
- b=azxbTjW8O0xS9LXqm7c10TcCwox7P8f5FuptfWIfVIcXUaEG/gx51BDc5UGEHPLHrmARpc
- +sh0eNuPQWowEcCw==
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=luLM0vHPkLb2Q+4P4WAWdCTD4HqzH18BgcVwS6oKeAE=;
+ b=+Dvf0knq4SQuYdnKlL8gY7tLYLPWuQqwtdAJ++JnCON6xyE1/LpgD+w61EYrTM0/Wdc/hk
+ WA4dk8kgnP80QODg==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id F18633EA66;
- Tue, 17 Feb 2026 16:14:56 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 7CFE53EA66;
+ Tue, 17 Feb 2026 16:14:46 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id iGUILQCUlGmHTgAAD6G6ig
- (envelope-from <farosas@suse.de>); Tue, 17 Feb 2026 16:14:56 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id pxGMEPaTlGmHTgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 17 Feb 2026 16:14:46 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>
-Subject: [PULL 06/32] migration: Update comments mentioning qmp_migrate_finish
-Date: Tue, 17 Feb 2026 13:14:17 -0300
-Message-ID: <20260217161443.12738-7-farosas@suse.de>
+Subject: [PULL 00/32] Migration patches for 2026-02-17
+Date: Tue, 17 Feb 2026 13:14:11 -0300
+Message-ID: <20260217161443.12738-1-farosas@suse.de>
 X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20260217161443.12738-1-farosas@suse.de>
-References: <20260217161443.12738-1-farosas@suse.de>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Rspamd-Action: no action
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
- R_MISSING_CHARSET(0.50)[];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+X-Spamd-Result: default: False [-3.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
  NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- FUZZY_RATELIMITED(0.00)[rspamd.com]; FROM_HAS_DN(0.00)[];
- TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:mid,suse.de:email,imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns];
- RCVD_TLS_ALL(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- URIBL_BLOCKED(0.00)[suse.de:dkim,suse.de:mid,suse.de:email,imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns];
- FROM_EQ_ENVFROM(0.00)[];
+ RCPT_COUNT_TWO(0.00)[2]; FUZZY_RATELIMITED(0.00)[rspamd.com];
+ ARC_NA(0.00)[]; MIME_TRACE(0.00)[0:+];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; RCVD_TLS_ALL(0.00)[];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- RCPT_COUNT_TWO(0.00)[2];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Queue-Id: F16233E720
+ URIBL_BLOCKED(0.00)[imap1.dmz-prg2.suse.org:helo,gitlab.com:url,suse.de:mid]; 
+ FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
+ FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[gitlab.com:url, suse.de:mid,
+ imap1.dmz-prg2.suse.org:helo]
 Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
  envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
 X-Spam_score_int: -20
@@ -127,47 +113,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The qmp_migrate_finish function was recently removed in commit
-2379a04e60 ("migration: Remove qmp_migrate_finish"), update comments
-that mention it.
+The following changes since commit ece408818d27f745ef1b05fb3cc99a1e7a5bf580:
 
-Reviewed-by: Peter Xu <peterx@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20260202124112.30684-1-farosas@suse.de
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
----
- migration/migration.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+  Merge tag 'for-upstream' of https://gitlab.com/bonzini/qemu into staging (2026-02-13 10:30:08 +0000)
 
-diff --git a/migration/migration.c b/migration/migration.c
-index 7ab0294d22..850150a261 100644
---- a/migration/migration.c
-+++ b/migration/migration.c
-@@ -1473,8 +1473,8 @@ void migration_cancel(void)
-     }
- 
-     /*
--     * If qmp_migrate_finish has not been called, then there is no path that
--     * will complete the cancellation.  Do it now.
-+     * If migration_connect_outgoing has not been called, then there
-+     * is no path that will complete the cancellation. Do it now.
-      */
-     if (setup && !s->to_dst_file) {
-         migrate_set_state(&s->state, MIGRATION_STATUS_CANCELLING,
-@@ -2057,11 +2057,12 @@ void qmp_migrate(const char *uri, bool has_channels,
-      * For cpr-transfer, the target may not be listening yet on the migration
-      * channel, because first it must finish cpr_load_state.  The target tells
-      * us it is listening by closing the cpr-state socket.  Wait for that HUP
--     * event before connecting in qmp_migrate_finish.
-+     * event before connecting in migration_connect_outgoing.
-      *
-      * The HUP could occur because the target fails while reading CPR state,
-      * in which case the target will not listen for the incoming migration
--     * connection, so qmp_migrate_finish will fail to connect, and then recover.
-+     * connection, so migration_connect_outgoing will fail to connect,
-+     * and then recover.
-      */
-     if (migrate_mode() == MIG_MODE_CPR_TRANSFER) {
-         cpr_transfer_add_hup_watch(s, migration_connect_outgoing_cb,
+are available in the Git repository at:
+
+  https://gitlab.com/farosas/qemu.git tags/migration-20260217-pull-request
+
+for you to fetch changes up to fd5ecd187bc245013399d14cc225f05c0ad1a96c:
+
+  tests/qtest/migration/tls-tests.c: Don't use tls_psk end hook for no_tls tests (2026-02-17 10:06:03 -0300)
+
+----------------------------------------------------------------
+Migration pull request
+
+- Notifier changes: Remove duplicated events during postcopy. Emit
+  MIG_EVENT_FAILED before the VM is started.
+
+- Undefined behavior fix for tls-tests.
+
+- Cleanups: COLO, savevm handlers, CPR/VFIOheaders.
+
+----------------------------------------------------------------
+
+Cédric Le Goater (1):
+  migration/cpr: Include vfio-cpr.h instead of vfio-device.h
+
+Fabiano Rosas (1):
+  migration: Update comments mentioning qmp_migrate_finish
+
+Peter Maydell (1):
+  tests/qtest/migration/tls-tests.c: Don't use tls_psk end hook for
+    no_tls tests
+
+Peter Xu (29):
+  migration: Add a tracepoint for invoking migration notifiers
+  migration: Fix double notification of DONE/FAIL for postcopy
+  migration: Notify migration FAILED before starting VM
+  migration: Drop explicit block activation in postcopy fail path
+  migration: Rename MIG_EVENT_PRECOPY_* to MIG_EVENT_*
+  migration: Introduce qemu_savevm_send_* helpers
+  migration: Use qemu_savevm_send_header() in qemu_save_device_state()
+  migration: Remove one migration_in_colo_state() occurance
+  migration/savevm: Remove SaveStateEntry.is_ram
+  migration/colo: Unwrap qemu_savevm_live_state()
+  migration: Remove call to send switchover start event in colo/savevm
+  colo: Forbid VM resume during checkpointing
+  migration/colo: Use the RAM iterable helper directly
+  migration/colo: Document qemu_fflush(fb)
+  migration: Drop iterable_only in qemu_savevm_state_complete_precopy
+  migration: Drop qemu_file_set_error() when save non-iterable fails
+  migration/colo: Send device states without copying buffer
+  migration/postcopy: Send device states without copying buffer
+  migration: Introduce qemu_savevm_state_end()
+  migration: Provide helper for save vm description
+  migration: Split qemu_savevm_state_complete_precopy_non_iterable()
+  migration: qemu_savevm_state_complete_precopy() take MigrationState*
+  migration: Cleanup error propagates in qemu_savevm_state_setup()
+  migration: Refactor qemu_savevm_state_setup()
+  migration: Introduce qemu_savevm_state_active()
+  migration/bg-snapshot: Cleanup error paths
+  migration: Make qemu_savevm_state_non_iterable() take errp
+  migration: Simplify qemu_save_device_state()
+  migration/colo/xen: Use generic helpers in qemu_save_device_state()
+
+ hw/intc/arm_gicv3_kvm.c           |   2 +-
+ hw/net/virtio-net.c               |   4 +-
+ hw/scsi/scsi-disk.c               |   4 +-
+ hw/vfio/cpr-legacy.c              |   2 +-
+ hw/vfio/cpr.c                     |   8 +-
+ hw/vfio/migration.c               |   4 +-
+ include/migration/misc.h          |  20 +-
+ migration/colo.c                  |  16 +-
+ migration/cpr-exec.c              |   6 +-
+ migration/cpr.c                   |   2 +-
+ migration/migration.c             |  86 ++++----
+ migration/savevm.c                | 320 ++++++++++++++++--------------
+ migration/savevm.h                |  18 +-
+ migration/trace-events            |   1 +
+ monitor/qmp-cmds.c                |   3 +
+ net/vhost-vdpa.c                  |   4 +-
+ tests/qtest/migration/tls-tests.c |   8 +-
+ ui/spice-core.c                   |   7 +-
+ 18 files changed, 280 insertions(+), 235 deletions(-)
+
 -- 
 2.51.0
 
