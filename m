@@ -4,64 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2ECA6E9A04C
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 09:08:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91E0CE9A03B
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 09:08:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vsdXL-0002bD-1v; Wed, 18 Feb 2026 04:07:59 -0500
+	id 1vsdX3-00017Y-FL; Wed, 18 Feb 2026 04:07:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vsdX5-0001Fb-Gw
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 04:07:43 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1vsdWR-0000h6-V4
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 04:07:05 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vsdX3-0002VO-BN
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 04:07:43 -0500
+ id 1vsdWM-0002PQ-PA
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 04:07:01 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771405660;
+ s=mimecast20190719; t=1771405607;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=KcMrLyAIgOYdFY64yVHRXdrwUnIJyXUy4fcgyWcJqb8=;
- b=dNPIHEqhK58YwBB0Qf/Sx8S3KM598t4ZJTPr5WjC7TwaTrlD3H72Tw3qLsXLGcVeSTNbkm
- rV2YDcC69eoQhJ2Pnz0xz5O9f+fRohwOi+mI3xkFpHJQE2I/TVI0ujyvWEO7zTQuej7/TY
- /9ho6RsKVWpu2Uv/pgFgH4yVTecRasw=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=tXlUokVOk05xaO6XwoA2MppkyQAliaUQDcaoGYgnaL4=;
+ b=HCo0Fu9b3DlWxjTiug1GgNAQjYd2NcNAG4dHD1xjtS0SwzCfK403lMTkhtqh9pHJViauIs
+ hUHB2z/7EbNf23lJs9zFcGm2gz3FE75H4AIePiUms7WvB6S65CCgTCa+qO/s/Z1QMGK1vx
+ tTax+HnHRlGeEc8IWZt5ClNGLU1kVbI=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-178-wv5qVG65M--zPsHfxNmm3w-1; Wed,
- 18 Feb 2026 04:07:36 -0500
-X-MC-Unique: wv5qVG65M--zPsHfxNmm3w-1
-X-Mimecast-MFC-AGG-ID: wv5qVG65M--zPsHfxNmm3w_1771405655
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-597-ge6swgX8MJa6MsRS-Ezk0g-1; Wed,
+ 18 Feb 2026 04:06:44 -0500
+X-MC-Unique: ge6swgX8MJa6MsRS-Ezk0g-1
+X-Mimecast-MFC-AGG-ID: ge6swgX8MJa6MsRS-Ezk0g_1771405603
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A19B21956089; Wed, 18 Feb 2026 09:07:35 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 300D4195606E; Wed, 18 Feb 2026 09:06:43 +0000 (UTC)
 Received: from localhost (unknown [10.45.242.26])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id BE1021955F43; Wed, 18 Feb 2026 09:07:34 +0000 (UTC)
+ id 9F3A91956095; Wed, 18 Feb 2026 09:06:42 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Gerd Hoffmann <kraxel@redhat.com>
-Subject: [PULL 81/85] audio: rework audio_bug()
-Date: Wed, 18 Feb 2026 10:03:21 +0100
-Message-ID: <20260218090330.1476169-82-marcandre.lureau@redhat.com>
+ Gerd Hoffmann <kraxel@redhat.com>,
+ Christian Schoenebeck <qemu_oss@crudebyte.com>
+Subject: [PULL 63/85] audio/jack: replace custom logging with report & trace
+Date: Wed, 18 Feb 2026 10:03:03 +0100
+Message-ID: <20260218090330.1476169-64-marcandre.lureau@redhat.com>
 In-Reply-To: <20260218090330.1476169-1-marcandre.lureau@redhat.com>
 References: <20260218090330.1476169-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124;
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -69,7 +70,7 @@ X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.043,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -89,293 +90,139 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-audio_bug() is a bit unconventional, it is meant to be used as a
-condition expression, passing the actual condition as second argument
-(and __func__ as first argument).
-
-If the condition is true, it uses AUD_log() to print to stderr, and has
-some dubious recommendations printed only once.
-
-This change:
-- clears the control flow, and make the condition directly visible in
-  the 'if' statement.
-- uses standard QEMU error_report()
-- audio_bug() now captures __func__
-- remove the "Save all your work and restart..." once hint
+Replace the custom audio logging infrastructure with standard QEMU
+error reporting and tracing.
 
 Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
 Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- audio/audio_int.h       |  2 --
- audio/audio_template.h  | 38 +++++++++++------------
- audio/audio-mixeng-be.c | 69 ++++++++++++++++-------------------------
- 3 files changed, 46 insertions(+), 63 deletions(-)
+ audio/jackaudio.c  | 29 +++++++++++++----------------
+ audio/trace-events |  9 +++++++++
+ 2 files changed, 22 insertions(+), 16 deletions(-)
 
-diff --git a/audio/audio_int.h b/audio/audio_int.h
-index e0ed6af67ed..20ec7883aab 100644
---- a/audio/audio_int.h
-+++ b/audio/audio_int.h
-@@ -244,8 +244,6 @@ extern const char *audio_prio_list[];
- void audio_pcm_init_info (struct audio_pcm_info *info, const struct audsettings *as);
- void audio_pcm_info_clear_buf (struct audio_pcm_info *info, void *buf, int len);
- 
--int audio_bug (const char *funcname, int cond);
+diff --git a/audio/jackaudio.c b/audio/jackaudio.c
+index e415e94e6e6..a2f725a3232 100644
+--- a/audio/jackaudio.c
++++ b/audio/jackaudio.c
+@@ -26,11 +26,11 @@
+ #include "qemu/module.h"
+ #include "qemu/atomic.h"
+ #include "qemu/main-loop.h"
++#include "qemu/error-report.h"
+ #include "qemu/audio.h"
+ #include "qom/object.h"
 -
- void audio_run(AudioMixengBackend *s, const char *msg);
+-#define AUDIO_CAP "jack"
+ #include "audio_int.h"
++#include "trace.h"
  
- typedef struct RateCtl {
-diff --git a/audio/audio_template.h b/audio/audio_template.h
-index 5711f4a26e1..9dde36738bc 100644
---- a/audio/audio_template.h
-+++ b/audio/audio_template.h
-@@ -64,15 +64,15 @@ static void glue(audio_init_nb_voices_, TYPE)(AudioMixengBackend *s,
-                min_voices);
+ #include <jack/jack.h>
+ #include <jack/thread.h>
+@@ -343,7 +343,7 @@ static void qjack_client_recover(QJackClient *c)
+ 
+         /* if enabled then attempt to recover */
+         if (c->enabled) {
+-            dolog("attempting to reconnect to server\n");
++            trace_jack_client_recover();
+             qjack_client_init(c);
+         }
+     }
+@@ -399,10 +399,10 @@ static void qjack_client_connect_ports(QJackClient *c)
+         }
+ 
+         if (c->out) {
+-            dolog("connect %s -> %s\n", p, ports[i]);
++            trace_jack_connect(p, ports[i]);
+             jack_connect(c->client, p, ports[i]);
+         } else {
+-            dolog("connect %s -> %s\n", ports[i], p);
++            trace_jack_connect(ports[i], p);
+             jack_connect(c->client, ports[i], p);
+         }
+     }
+@@ -441,9 +441,9 @@ static int qjack_client_init(QJackClient *c)
+       c->opt->server_name);
+ 
+     if (c->client == NULL) {
+-        dolog("jack_client_open failed: status = 0x%2.0x\n", status);
++        error_report("jack: jack_client_open failed: status = 0x%2.0x", status);
+         if (status & JackServerFailed) {
+-            dolog("unable to connect to JACK server\n");
++            error_report("jack: unable to connect to JACK server");
+         }
+         return -1;
+     }
+@@ -451,12 +451,11 @@ static int qjack_client_init(QJackClient *c)
+     c->freq = jack_get_sample_rate(c->client);
+ 
+     if (status & JackServerStarted) {
+-        dolog("JACK server started\n");
++        trace_jack_server_started();
      }
  
--    if (audio_bug(__func__, !voice_size && max_voices)) {
--        dolog("drv=`%s' voice_size=0 max_voices=%d\n",
--               k->name, max_voices);
-+    if (!voice_size && max_voices) {
-+        audio_bug("drv=`%s' voice_size=0 max_voices=%d",
-+                  k->name, max_voices);
-         glue(s->nb_hw_voices_, TYPE) = 0;
+     if (status & JackNameNotUnique) {
+-        dolog("JACK unique name assigned %s\n",
+-          jack_get_client_name(c->client));
++        trace_jack_unique_name(jack_get_client_name(c->client));
      }
  
--    if (audio_bug(__func__, voice_size && !max_voices)) {
--        dolog("drv=`%s' voice_size=%zu max_voices=0\n",
--              k->name, voice_size);
-+    if (voice_size && !max_voices) {
-+        audio_bug("drv=`%s' voice_size=%zu max_voices=0",
-+                  k->name, voice_size);
-     }
+     /* Allocate working buffer for process callback */
+@@ -536,8 +535,7 @@ static int qjack_init_out(HWVoiceOut *hw, struct audsettings *as)
+     };
+     audio_pcm_init_info(&hw->info, &os);
+ 
+-    dolog("JACK output configured for %dHz (%d samples)\n",
+-        jo->c.freq, jo->c.buffersize);
++    trace_jack_out_init(jo->c.freq, jo->c.buffersize);
+ 
+     return 0;
+ }
+@@ -572,8 +570,7 @@ static int qjack_init_in(HWVoiceIn *hw, struct audsettings *as)
+     };
+     audio_pcm_init_info(&hw->info, &is);
+ 
+-    dolog("JACK input configured for %dHz (%d samples)\n",
+-        ji->c.freq, ji->c.buffersize);
++    trace_jack_in_init(ji->c.freq, ji->c.buffersize);
+ 
+     return 0;
+ }
+@@ -654,12 +651,12 @@ static int qjack_thread_creator(jack_native_thread_t *thread,
+ 
+ static void qjack_error(const char *msg)
+ {
+-    dolog("E: %s\n", msg);
++    error_report("jack: %s", msg);
  }
  
-@@ -88,8 +88,8 @@ static void glue(audio_pcm_hw_alloc_resources_, TYPE)(HW *hw)
+ static void qjack_info(const char *msg)
  {
-     if (glue(audio_get_pdo_, TYPE)(hw->s->dev)->mixing_engine) {
-         size_t samples = hw->samples;
--        if (audio_bug(__func__, samples == 0)) {
--            dolog("Attempted to allocate empty buffer\n");
-+        if (samples == 0) {
-+            audio_bug("Attempted to allocate empty buffer");
-         }
+-    dolog("I: %s\n", msg);
++    trace_jack_info(msg);
+ }
  
-         HWBUF.buffer = g_new0(st_sample, samples);
-@@ -275,8 +275,8 @@ static HW *glue(audio_pcm_hw_add_new_, TYPE)(AudioMixengBackend *s,
-         return NULL;
-     }
+ static void audio_jack_class_init(ObjectClass *klass, const void *data)
+diff --git a/audio/trace-events b/audio/trace-events
+index b2f29666700..79744456cec 100644
+--- a/audio/trace-events
++++ b/audio/trace-events
+@@ -28,6 +28,15 @@ dsound_clear_sample(void *p1, uint32_t blen1, uint32_t len1, void *p2, uint32_t
+ dsound_wave_format(uint16_t wFormatTag, uint16_t nChannels, uint32_t nSamplesPerSec, uint32_t nAvgBytesPerSec, uint16_t nBlockAlign, uint16_t wBitsPerSample, uint16_t cbSize) "wFormatTag=%u, nChannels=%u, nSamplesPerSec=%u, nAvgBytesPerSec=%u, nBlockAlign=%u, wBitsPerSample=%u, cbSize=%u"
+ dsound_buffer_bytes(uint32_t caps_bytes, uint32_t desc_bytes) "caps_bytes=%u, desc_bytes=%u"
  
--    if (audio_bug(__func__, !glue(k->init_, TYPE))) {
--        dolog("No host audio driver or missing init_%s\n", NAME);
-+    if (!glue(k->init_, TYPE)) {
-+        audio_bug("No host audio driver or missing init_%s", NAME);
-         return NULL;
-     }
- 
-@@ -295,8 +295,8 @@ static HW *glue(audio_pcm_hw_add_new_, TYPE)(AudioMixengBackend *s,
-         goto err0;
-     }
- 
--    if (audio_bug(__func__, hw->samples <= 0)) {
--        dolog("hw->samples=%zd\n", hw->samples);
-+    if (hw->samples <= 0) {
-+        audio_bug("hw->samples=%zd", hw->samples);
-         goto err1;
-     }
- 
-@@ -477,8 +477,8 @@ static void glue (audio_close_, TYPE) (SW *sw)
- static void glue(audio_mixeng_backend_close_, TYPE)(AudioBackend *be, SW *sw)
- {
-     if (sw) {
--        if (audio_bug(__func__, !be)) {
--            dolog("backend=%p\n", be);
-+        if (!be) {
-+            audio_bug("backend=%p", be);
-             return;
-         }
- 
-@@ -498,9 +498,9 @@ static SW *glue(audio_mixeng_backend_open_, TYPE) (
-     AudioMixengBackendClass *k;
-     AudiodevPerDirectionOptions *pdo;
- 
--    if (audio_bug(__func__, !be || !name || !callback_fn || !as)) {
--        dolog("backend=%p name=%p callback_fn=%p as=%p\n",
--              be, name, callback_fn, as);
-+    if (!be || !name || !callback_fn || !as) {
-+        audio_bug("backend=%p name=%p callback_fn=%p as=%p",
-+                  be, name, callback_fn, as);
-         goto fail;
-     }
- 
-@@ -519,8 +519,8 @@ static SW *glue(audio_mixeng_backend_open_, TYPE) (
-         goto fail;
-     }
- 
--    if (audio_bug(__func__, !glue(k->init_, TYPE))) {
--        dolog("Can not open `%s' (no host audio driver)\n", name);
-+    if (!glue(k->init_, TYPE)) {
-+        error_report("audio: Can not open `%s' (no host audio driver)", name);
-         goto fail;
-     }
- 
-diff --git a/audio/audio-mixeng-be.c b/audio/audio-mixeng-be.c
-index bb8c0b56f78..45bcfb74338 100644
---- a/audio/audio-mixeng-be.c
-+++ b/audio/audio-mixeng-be.c
-@@ -31,6 +31,8 @@
- 
- #define SW_NAME(sw) (sw)->name ? (sw)->name : "unknown"
- 
-+#define audio_bug(fmt, ...) error_report("%s: " fmt, __func__, ##__VA_ARGS__)
++# jackaudio.c
++jack_client_recover(void) "attempting to reconnect to server"
++jack_connect(const char *src, const char *dst) "connect %s -> %s"
++jack_server_started(void) "server started"
++jack_unique_name(const char *name) "unique name assigned %s"
++jack_out_init(uint32_t freq, int buffersize) "output configured for %uHz (%d samples)"
++jack_in_init(uint32_t freq, int buffersize) "input configured for %uHz (%d samples)"
++jack_info(const char *msg) "%s"
 +
- const struct mixeng_volume nominal_volume = {
-     .mute = 0,
- #ifdef FLOAT_MIXENG
-@@ -42,23 +44,6 @@ const struct mixeng_volume nominal_volume = {
- #endif
- };
- 
--int audio_bug (const char *funcname, int cond)
--{
--    if (cond) {
--        static int shown;
--
--        AUD_log (NULL, "A bug was just triggered in %s\n", funcname);
--        if (!shown) {
--            shown = 1;
--            AUD_log (NULL, "Save all your work and restart without audio\n");
--            AUD_log (NULL, "I am sorry\n");
--        }
--        AUD_log (NULL, "Context:\n");
--    }
--
--    return cond;
--}
--
- /*
-  * Convert audio format to mixeng_clip index. Used by audio_pcm_sw_init_ and
-  * audio_mixeng_backend_add_capture()
-@@ -332,8 +317,8 @@ static size_t audio_pcm_hw_find_min_in (HWVoiceIn *hw)
- static size_t audio_pcm_hw_get_live_in(HWVoiceIn *hw)
- {
-     size_t live = hw->total_samples_captured - audio_pcm_hw_find_min_in (hw);
--    if (audio_bug(__func__, live > hw->conv_buf.size)) {
--        dolog("live=%zu hw->conv_buf.size=%zu\n", live, hw->conv_buf.size);
-+    if (live > hw->conv_buf.size) {
-+        audio_bug("live=%zu hw->conv_buf.size=%zu", live, hw->conv_buf.size);
-         return 0;
-     }
-     return live;
-@@ -402,8 +387,8 @@ static size_t audio_pcm_sw_read(SWVoiceIn *sw, void *buf, size_t buf_len)
-     if (!live) {
-         return 0;
-     }
--    if (audio_bug(__func__, live > hw->conv_buf.size)) {
--        dolog("live_in=%zu hw->conv_buf.size=%zu\n", live, hw->conv_buf.size);
-+    if (live > hw->conv_buf.size) {
-+        audio_bug("live=%zu hw->conv_buf.size=%zu", live, hw->conv_buf.size);
-         return 0;
-     }
- 
-@@ -454,8 +439,8 @@ static size_t audio_pcm_hw_get_live_out (HWVoiceOut *hw, int *nb_live)
-     if (nb_live1) {
-         size_t live = smin;
- 
--        if (audio_bug(__func__, live > hw->mix_buf.size)) {
--            dolog("live=%zu hw->mix_buf.size=%zu\n", live, hw->mix_buf.size);
-+        if (live > hw->mix_buf.size) {
-+            audio_bug("live=%zu hw->mix_buf.size=%zu", live, hw->mix_buf.size);
-             return 0;
-         }
-         return live;
-@@ -533,8 +518,8 @@ static size_t audio_pcm_sw_write(SWVoiceOut *sw, void *buf, size_t buf_len)
-     size_t frames_in_max, frames_out_max, total_in, total_out;
- 
-     live = sw->total_hw_samples_mixed;
--    if (audio_bug(__func__, live > hw->mix_buf.size)) {
--        dolog("live=%zu hw->mix_buf.size=%zu\n", live, hw->mix_buf.size);
-+    if (live > hw->mix_buf.size) {
-+        audio_bug("live=%zu hw->mix_buf.size=%zu", live, hw->mix_buf.size);
-         return 0;
-     }
- 
-@@ -824,9 +809,9 @@ static size_t audio_get_avail(SWVoiceIn *sw)
-     }
- 
-     live = sw->hw->total_samples_captured - sw->total_hw_samples_acquired;
--    if (audio_bug(__func__, live > sw->hw->conv_buf.size)) {
--        dolog("live=%zu sw->hw->conv_buf.size=%zu\n", live,
--              sw->hw->conv_buf.size);
-+    if (live > sw->hw->conv_buf.size) {
-+        audio_bug("live=%zu sw->hw->conv_buf.size=%zu", live,
-+                  sw->hw->conv_buf.size);
-         return 0;
-     }
- 
-@@ -845,9 +830,9 @@ static size_t audio_get_free(SWVoiceOut *sw)
- 
-     live = sw->total_hw_samples_mixed;
- 
--    if (audio_bug(__func__, live > sw->hw->mix_buf.size)) {
--        dolog("live=%zu sw->hw->mix_buf.size=%zu\n", live,
--              sw->hw->mix_buf.size);
-+    if (live > sw->hw->mix_buf.size) {
-+        audio_bug("live=%zu sw->hw->mix_buf.size=%zu", live,
-+                  sw->hw->mix_buf.size);
-         return 0;
-     }
- 
-@@ -1002,8 +987,8 @@ static void audio_run_out(AudioMixengBackend *s)
-             live = 0;
-         }
- 
--        if (audio_bug(__func__, live > hw->mix_buf.size)) {
--            dolog("live=%zu hw->mix_buf.size=%zu\n", live, hw->mix_buf.size);
-+        if (live > hw->mix_buf.size) {
-+            audio_bug("live=%zu hw->mix_buf.size=%zu", live, hw->mix_buf.size);
-             continue;
-         }
- 
-@@ -1033,9 +1018,9 @@ static void audio_run_out(AudioMixengBackend *s)
-         prev_rpos = hw->mix_buf.pos;
-         played = audio_pcm_hw_run_out(hw, live);
-         replay_audio_out(&played);
--        if (audio_bug(__func__, hw->mix_buf.pos >= hw->mix_buf.size)) {
--            dolog("hw->mix_buf.pos=%zu hw->mix_buf.size=%zu played=%zu\n",
--                  hw->mix_buf.pos, hw->mix_buf.size, played);
-+        if (hw->mix_buf.pos >= hw->mix_buf.size) {
-+            audio_bug("hw->mix_buf.pos=%zu hw->mix_buf.size=%zu played=%zu",
-+                      hw->mix_buf.pos, hw->mix_buf.size, played);
-             hw->mix_buf.pos = 0;
-         }
- 
-@@ -1050,9 +1035,9 @@ static void audio_run_out(AudioMixengBackend *s)
-                 continue;
-             }
- 
--            if (audio_bug(__func__, played > sw->total_hw_samples_mixed)) {
--                dolog("played=%zu sw->total_hw_samples_mixed=%zu\n",
--                      played, sw->total_hw_samples_mixed);
-+            if (played > sw->total_hw_samples_mixed) {
-+                audio_bug("played=%zu sw->total_hw_samples_mixed=%zu",
-+                          played, sw->total_hw_samples_mixed);
-                 played = sw->total_hw_samples_mixed;
-             }
- 
-@@ -1195,9 +1180,9 @@ static void audio_run_capture(AudioMixengBackend *s)
-                 continue;
-             }
- 
--            if (audio_bug(__func__, captured > sw->total_hw_samples_mixed)) {
--                dolog("captured=%zu sw->total_hw_samples_mixed=%zu\n",
--                      captured, sw->total_hw_samples_mixed);
-+            if (captured > sw->total_hw_samples_mixed) {
-+                audio_bug("captured=%zu sw->total_hw_samples_mixed=%zu",
-+                          captured, sw->total_hw_samples_mixed);
-                 captured = sw->total_hw_samples_mixed;
-             }
- 
+ # pwaudio.c
+ pw_state_changed(int nodeid, const char *s) "node id: %d stream state: %s"
+ pw_read(int32_t avail, uint32_t index, size_t len) "avail=%d index=%u len=%zu"
 -- 
 2.53.0
 
