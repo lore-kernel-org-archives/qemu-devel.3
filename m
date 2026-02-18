@@ -4,69 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 481CCE9A02C
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 13:55:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 167CBE9A02C
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 14:01:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vsi0W-0002MF-Vl; Wed, 18 Feb 2026 08:54:25 -0500
+	id 1vsi6T-000409-4m; Wed, 18 Feb 2026 09:00:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dg@treblig.org>)
- id 1vsi0V-0002Lv-97; Wed, 18 Feb 2026 08:54:23 -0500
-Received: from mx.treblig.org ([2a00:1098:5b::1])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vsi6N-0003xa-Uh
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 09:00:29 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dg@treblig.org>)
- id 1vsi0T-0002xF-Iv; Wed, 18 Feb 2026 08:54:23 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
- ; s=bytemarkmx;
- h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
- :Subject; bh=avViAHnZ/4M6Cj/G6GZcWDVPgXLbv16ACnQ8pngUpKs=; b=HtM7eIsRBUx5H2d/
- elpLS0WVxZjxM38oTgZNk7HKaWio1qeYDWC24eSGxVbokB10gqPDgodEQO6kmriy0Y9aPKCBEkkn3
- t9/C11hVgxZGgKQdUmXorYMAJ+oTcG0pKhVvhAhNJa48EthXfOcHXOBGlXRxuqV4SmMJ6S/VyMg3x
- aKJJCtI28XLtpsBeAbQsQ/RkUBbeHkLdRcPlV1zlNuz1hSKFEbAu/YseXy4h4bC89uNGnbLQpr423
- ROu7hKWX7Mu1UqKNOEIxcZajmInxzHRSNr6u33oD8ckNCRKmlfRN7yEPD3Vg4PQs6ri3eQC+qEy8V
- 6Lq+aHGwnzVvrJoNIA==;
-Received: from dg by mx.treblig.org with local (Exim 4.98.2)
- (envelope-from <dg@treblig.org>) id 1vsi0I-000000048TJ-1LTQ;
- Wed, 18 Feb 2026 13:54:10 +0000
-Date: Wed, 18 Feb 2026 13:54:10 +0000
-From: "Dr. David Alan Gilbert" <dave@treblig.org>
-To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Laurent Vivier <laurent@vivier.eu>,
- Nicholas Piggin <npiggin@gmail.com>, Chinmay Rath <rathc@linux.ibm.com>,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Artyom Tarasenko <atar4qemu@gmail.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Gustavo Romero <gustavo.romero@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, unisono@quyllur.org,
- qemu-ppc@nongnu.org
-Subject: Re: [PATCH 07/11] monitor/hmp: Handle gdb-xml exposed registers via
- gdb_get_register()
-Message-ID: <aZXEgrLH1Jsjz_Cc@gallifrey>
-References: <20260216225228.53959-1-philmd@linaro.org>
- <20260216225228.53959-8-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vsi6L-0007Az-53
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 09:00:26 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1771423224;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=V/pA3ScU7INhBgfTMYS0saB19ICuaNzZtxc63hZ50S8=;
+ b=a/a4q55ulErPitGaXKbZ9JFvHiNknN0r91aNJu5c5/PhLeKN6QU99LQ4h7CqCub6Qg1CRT
+ JTDZ79JkZBgwti5oLyjuCPHqJm5p2JbtpDpFP04DSDWmzCzeX6BoXF3WbA1o3lTIzr3rkP
+ 3V7YP/LkP4Pqz6SVYa48JUxd8FlZXvg=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-437-mV5Gc6TKMnmk-hbVsFJ8mg-1; Wed,
+ 18 Feb 2026 09:00:15 -0500
+X-MC-Unique: mV5Gc6TKMnmk-hbVsFJ8mg-1
+X-Mimecast-MFC-AGG-ID: mV5Gc6TKMnmk-hbVsFJ8mg_1771423213
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id CB74E195FDE7; Wed, 18 Feb 2026 14:00:12 +0000 (UTC)
+Received: from corto.redhat.com (unknown [10.45.224.251])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id E6C4B1956095; Wed, 18 Feb 2026 14:00:10 +0000 (UTC)
+From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Alex Williamson <alex@shazbot.org>, Ankit Agrawal <ankita@nvidia.com>,
+ Shameer Kolothum <skolothumtho@nvidia.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PULL 2/5] hw/vfio: sort and validate sparse mmap regions by offset
+Date: Wed, 18 Feb 2026 15:00:00 +0100
+Message-ID: <20260218140003.1554502-3-clg@redhat.com>
+In-Reply-To: <20260218140003.1554502-1-clg@redhat.com>
+References: <20260218140003.1554502-1-clg@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260216225228.53959-8-philmd@linaro.org>
-X-Chocolate: 70 percent or better cocoa solids preferably
-X-Operating-System: Linux/6.12.48+deb13-amd64 (x86_64)
-X-Uptime: 13:52:07 up 114 days, 13:28,  3 users,  load average: 0.01, 0.01,
- 0.00
-User-Agent: Mutt/2.2.13 (2024-03-09)
-Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
- helo=mx.treblig.org
-X-Spam_score_int: -12
-X-Spam_score: -1.3
-X-Spam_bar: -
-X-Spam_report: (-1.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, GB_FAKE_RF=0.754,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.043,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,124 +84,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-* Philippe Mathieu-Daudé (philmd@linaro.org) wrote:
-> Implement the gdb_get_register() helper and call it before the
-> regular get_monitor_def() one. Registers is exposed via the
-> GDB XML files will be directly handled, possibily allowing new
-> registers added to XML files to be automatically accessible in
-> QEMU monitor. All targets having GDB XML files can now be used
-> within the monitor.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+From: Ankit Agrawal <ankita@nvidia.com>
 
-Nice;  I might be tempted to add more checks on the return size of
-gdb_read_register(..) just in case any arch is a bit screwy
-(e.g. if they're 0 for example?) - but it should fine.
+Sort sparse mmap regions by offset during region setup to ensure
+predictable mapping order, avoid overlaps and a proper handling
+of the gaps between sub-regions.
 
-So for HMP;
+Add validation to detect overlapping sparse regions early during
+setup before any mapping operations begin.
 
-Reviewed-by: Dr. David Alan Gilbert <dave@treblig.org>
+The sorting is performed on the subregions ranges during
+vfio_setup_region_sparse_mmaps(). This also ensures that subsequent
+mapping code can rely on subregions being in ascending offset order.
 
+This is preparatory work for alignment adjustments needed to support
+hugepfnmap on systems where device memory (e.g., Grace-based systems)
+may have non-power-of-2 sizes.
 
-> ---
->  monitor/hmp.c | 49 ++++++++++++++++++++++++++++++++++++++++++++++---
->  1 file changed, 46 insertions(+), 3 deletions(-)
-> 
-> diff --git a/monitor/hmp.c b/monitor/hmp.c
-> index 0a5bbf82197..0e5913fabb1 100644
-> --- a/monitor/hmp.c
-> +++ b/monitor/hmp.c
-> @@ -27,14 +27,18 @@
->  #include "hw/core/qdev.h"
->  #include "monitor-internal.h"
->  #include "monitor/hmp.h"
-> +#include "monitor/hmp-target.h"
->  #include "qobject/qdict.h"
->  #include "qobject/qnum.h"
-> +#include "qemu/bswap.h"
->  #include "qemu/config-file.h"
->  #include "qemu/ctype.h"
->  #include "qemu/cutils.h"
->  #include "qemu/log.h"
->  #include "qemu/option.h"
-> +#include "qemu/target-info.h"
->  #include "qemu/units.h"
-> +#include "exec/gdbstub.h"
->  #include "system/block-backend.h"
->  #include "trace.h"
->  
-> @@ -306,6 +310,46 @@ void hmp_help_cmd(Monitor *mon, const char *name)
->      free_cmdline_args(args, nb_args);
->  }
->  
-> +/*
-> + * Set @pval to the value in the register identified by @name.
-> + * return %true if the register is found, %false otherwise.
-> + */
-> +static bool gdb_get_register(Monitor *mon, int64_t *pval, const char *name)
-> +{
-> +    g_autoptr(GArray) regs = NULL;
-> +    CPUState *cs = mon_get_cpu(mon);
-> +
-> +    if (cs == NULL) {
-> +        return false;
-> +    }
-> +
-> +    regs = gdb_get_register_list(cs);
-> +
-> +    for (int i = 0; i < regs->len; i++) {
-> +        GDBRegDesc *reg = &g_array_index(regs, GDBRegDesc, i);
-> +        g_autoptr(GByteArray) buf = NULL;
-> +        int reg_size;
-> +
-> +        if (!reg->name || g_strcmp0(name, reg->name)) {
-> +            continue;
-> +        }
-> +
-> +        buf = g_byte_array_new();
-> +        reg_size = gdb_read_register(cs, buf, reg->gdb_reg);
-> +        if (reg_size > sizeof(*pval)) {
-> +            return false;
-> +        }
-> +
-> +        if (target_big_endian()) {
-> +            *pval = ldn_be_p(buf->data, reg_size);
-> +        } else {
-> +            *pval = ldn_le_p(buf->data, reg_size);
-> +        }
-> +        return true;
-> +    }
-> +    return false;
-> +}
-> +
->  /*******************************************************************/
->  
->  static const char *pch;
-> @@ -338,7 +382,6 @@ static int64_t expr_unary(Monitor *mon)
->  {
->      int64_t n;
->      char *p;
-> -    int ret;
->  
->      switch (*pch) {
->      case '+':
-> @@ -393,8 +436,8 @@ static int64_t expr_unary(Monitor *mon)
->                  pch++;
->              }
->              *q = 0;
-> -            ret = get_monitor_def(mon, &reg, buf);
-> -            if (ret < 0) {
-> +            if (!gdb_get_register(mon, &reg, buf)
-> +                && get_monitor_def(mon, &reg, buf) < 0) {
->                  expr_error(mon, "unknown register");
->              }
->              n = reg;
-> -- 
-> 2.52.0
-> 
+cc: Alex Williamson <alex@shazbot.org>
+Reviewed-by: Alex Williamson <alex@shazbot.org>
+Reviewed-by: Shameer Kolothum <skolothumtho@nvidia.com>
+Signed-off-by: Ankit Agrawal <ankita@nvidia.com>
+Reviewed-by: CÃ©dric Le Goater <clg@redhat.com>
+Link: https://lore.kernel.org/qemu-devel/20260217153010.408739-2-ankita@nvidia.com
+Signed-off-by: CÃ©dric Le Goater <clg@redhat.com>
+---
+ hw/vfio/region.c | 46 +++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 45 insertions(+), 1 deletion(-)
+
+diff --git a/hw/vfio/region.c b/hw/vfio/region.c
+index ab39d77574ccef0ca8d393435979db97bcbd882b..8fbc98918f5f7c76c5e2f99956b54b96d0908fd6 100644
+--- a/hw/vfio/region.c
++++ b/hw/vfio/region.c
+@@ -149,6 +149,19 @@ static const MemoryRegionOps vfio_region_ops = {
+     },
+ };
+ 
++static int vfio_mmap_compare_offset(const void *a, const void *b)
++{
++    const VFIOMmap *mmap_a = a;
++    const VFIOMmap *mmap_b = b;
++
++    if (mmap_a->offset < mmap_b->offset) {
++        return -1;
++    } else if (mmap_a->offset > mmap_b->offset) {
++        return 1;
++    }
++    return 0;
++}
++
+ static int vfio_setup_region_sparse_mmaps(VFIORegion *region,
+                                           struct vfio_region_info *info)
+ {
+@@ -182,6 +195,35 @@ static int vfio_setup_region_sparse_mmaps(VFIORegion *region,
+     region->nr_mmaps = j;
+     region->mmaps = g_realloc(region->mmaps, j * sizeof(VFIOMmap));
+ 
++    /*
++     * Sort sparse mmaps by offset to ensure proper handling of gaps
++     * and predictable mapping order in vfio_region_mmap().
++     */
++    if (region->nr_mmaps > 1) {
++        qsort(region->mmaps, region->nr_mmaps, sizeof(VFIOMmap),
++              vfio_mmap_compare_offset);
++
++        /*
++         * Validate that sparse regions don't overlap after sorting.
++         */
++        for (i = 1; i < region->nr_mmaps; i++) {
++            off_t prev_end = region->mmaps[i - 1].offset +
++                             region->mmaps[i - 1].size;
++            if (prev_end > region->mmaps[i].offset) {
++                error_report("%s: overlapping sparse mmap regions detected "
++                             "in region %d: [0x%"PRIx64"-0x%"PRIx64"] overlaps "
++                             "with [0x%"PRIx64"-0x%"PRIx64"]",
++                             __func__, region->nr, region->mmaps[i - 1].offset,
++                             prev_end - 1, region->mmaps[i].offset,
++                             region->mmaps[i].offset + region->mmaps[i].size - 1);
++                g_free(region->mmaps);
++                region->mmaps = NULL;
++                region->nr_mmaps = 0;
++                return -EINVAL;
++            }
++        }
++    }
++
+     return 0;
+ }
+ 
+@@ -213,11 +255,13 @@ int vfio_region_setup(Object *obj, VFIODevice *vbasedev, VFIORegion *region,
+ 
+             ret = vfio_setup_region_sparse_mmaps(region, info);
+ 
+-            if (ret) {
++            if (ret == -ENODEV) {
+                 region->nr_mmaps = 1;
+                 region->mmaps = g_new0(VFIOMmap, region->nr_mmaps);
+                 region->mmaps[0].offset = 0;
+                 region->mmaps[0].size = region->size;
++            } else if (ret) {
++                return ret;
+             }
+         }
+     }
 -- 
- -----Open up your eyes, open up your mind, open up your code -------   
-/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
-\        dave @ treblig.org |                               | In Hex /
- \ _________________________|_____ http://www.treblig.org   |_______/
+2.53.0
+
 
