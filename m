@@ -4,65 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AFBEE9A03B
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 09:04:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4ED4E9A03B
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 09:04:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vsdTb-0000qh-8m; Wed, 18 Feb 2026 04:04:07 -0500
+	id 1vsdTF-0000is-AG; Wed, 18 Feb 2026 04:03:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vsdTZ-0000qK-N7
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 04:04:05 -0500
+ id 1vsdTE-0000ib-AK
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 04:03:44 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vsdTY-0008UF-8Y
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 04:04:05 -0500
+ id 1vsdTD-0008S3-0V
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 04:03:44 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771405443;
+ s=mimecast20190719; t=1771405422;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=dkHOFUAfBqSLk9g2fYou7ziGsCwoD/UvRsdVc+GnD88=;
- b=ILnGkNPs4nadYEVjqRlREYpJiCL7T0STscjYBgGT0EQa+7D63Hl3ltxQbFCit4588lBez3
- YzzDPh8X0hKU/CaN4FQje0WxeDhtlGjTueRrRt2blYBwG3g3+RL21Rz6DyQf9LU3RQekwA
- QgXnw4FxnZWfLtXtf5YozSmds/IIxzc=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=vlXsfrxNTTwtktc7+v5NGne8/II769oIaK6YKxokHKU=;
+ b=Tec/7Ee4pmpX10RvcWnYBOeoP2oDyoPjCBJkMlQk2u3jkHaMcr3Ovm3yK0PITOp/ToRq70
+ X4hWypkziBGxuxzJrJJ5tVqjF4TfDr5ACA2Ogk4j1EK1lWDYJrK5CqVpZsP2meB7JaTIvg
+ mWJplGquX2zFB5NVGKIC0WV3j8ocWvo=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-235-KUOJ3XCSML2j5LJajUhWew-1; Wed,
- 18 Feb 2026 04:04:00 -0500
-X-MC-Unique: KUOJ3XCSML2j5LJajUhWew-1
-X-Mimecast-MFC-AGG-ID: KUOJ3XCSML2j5LJajUhWew_1771405439
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-189-u_NqhBcBPDylA-0gcxcCTg-1; Wed,
+ 18 Feb 2026 04:03:39 -0500
+X-MC-Unique: u_NqhBcBPDylA-0gcxcCTg-1
+X-Mimecast-MFC-AGG-ID: u_NqhBcBPDylA-0gcxcCTg_1771405419
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3DDF61956066; Wed, 18 Feb 2026 09:03:59 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 134E51800342; Wed, 18 Feb 2026 09:03:39 +0000 (UTC)
 Received: from localhost (unknown [10.45.242.26])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 7BDC619560AD; Wed, 18 Feb 2026 09:03:58 +0000 (UTC)
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id DEC541800348; Wed, 18 Feb 2026 09:03:37 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Gerd Hoffmann <kraxel@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 09/85] build-sys: create a libaudio
-Date: Wed, 18 Feb 2026 10:02:09 +0100
-Message-ID: <20260218090330.1476169-10-marcandre.lureau@redhat.com>
+ Gerd Hoffmann <kraxel@redhat.com>
+Subject: [PULL 02/85] adlib: remove dead code
+Date: Wed, 18 Feb 2026 10:02:02 +0100
+Message-ID: <20260218090330.1476169-3-marcandre.lureau@redhat.com>
 In-Reply-To: <20260218090330.1476169-1-marcandre.lureau@redhat.com>
 References: <20260218090330.1476169-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -91,52 +89,35 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-This can help create tests, for example.
+Previous commit drop the need for this field.
 
 Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
 Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- meson.build       | 10 +++++++++-
- audio/meson.build |  3 ++-
- 2 files changed, 11 insertions(+), 2 deletions(-)
+ hw/audio/adlib.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/meson.build b/meson.build
-index 4af32c3e1f2..904605b844f 100644
---- a/meson.build
-+++ b/meson.build
-@@ -4070,11 +4070,19 @@ libhwcore = static_library('hwcore', sources: hwcore_ss.sources() + genh,
- hwcore = declare_dependency(objects: libhwcore.extract_all_objects(recursive: false))
- common_ss.add(hwcore)
+diff --git a/hw/audio/adlib.c b/hw/audio/adlib.c
+index efab5107a4c..f79654627f5 100644
+--- a/hw/audio/adlib.c
++++ b/hw/audio/adlib.c
+@@ -66,7 +66,6 @@ struct AdlibState {
+     int64_t exp[2];
+ #endif
+     int16_t *mixbuf;
+-    uint64_t dexp[2];
+     SWVoiceOut *voice;
+     int left, pos, samples;
+     FM_OPL *opl;
+@@ -133,7 +132,6 @@ static void timer_handler (void *opaque, int c, double interval_Sec)
+     s->exp[n] = exp;
+ #endif
  
-+audio_ss = audio_ss.apply({})
-+libaudio = static_library('qemuaudio', audio_ss.sources() + genh,
-+                          dependencies: [audio_ss.dependencies()],
-+                          build_by_default: false)
-+
-+audio = declare_dependency(objects: libaudio.extract_all_objects(recursive: false),
-+                           dependencies: [audio_ss.dependencies(), qom])
-+
- ###########
- # Targets #
- ###########
+-    s->dexp[n] = interval_Sec * 1000000.0;
+ }
  
--system_ss.add(authz, blockdev, chardev, crypto, io, qmp)
-+system_ss.add(authz, blockdev, chardev, crypto, io, qmp, audio)
- common_ss.add(qom, qemuutil)
- 
- libuser = static_library('user',
-diff --git a/audio/meson.build b/audio/meson.build
-index 23fb66d571f..a5fec14fb3a 100644
---- a/audio/meson.build
-+++ b/audio/meson.build
-@@ -1,4 +1,5 @@
--system_ss.add(files(
-+audio_ss = ss.source_set()
-+audio_ss.add(files(
-   'audio.c',
-   'mixeng.c',
-   'noaudio.c',
+ static int write_audio (AdlibState *s, int samples)
 -- 
 2.53.0
 
