@@ -4,86 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CCE6E9A02C
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 22:20:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 793D5E9A04E
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 22:29:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vspuJ-0006Oc-Mi; Wed, 18 Feb 2026 17:20:31 -0500
+	id 1vsq1m-000866-7t; Wed, 18 Feb 2026 17:28:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vspuI-0006O0-NI
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 17:20:30 -0500
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ id 1vsq1l-00085q-IJ
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 17:28:13 -0500
+Received: from mail-pg1-x52a.google.com ([2607:f8b0:4864:20::52a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vspuH-0007lV-26
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 17:20:30 -0500
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-2aaed195901so1283525ad.0
- for <qemu-devel@nongnu.org>; Wed, 18 Feb 2026 14:20:28 -0800 (PST)
+ id 1vsq1k-0000MB-0d
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 17:28:13 -0500
+Received: by mail-pg1-x52a.google.com with SMTP id
+ 41be03b00d2f7-c6e72d7a4d7so183496a12.0
+ for <qemu-devel@nongnu.org>; Wed, 18 Feb 2026 14:28:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771453228; x=1772058028; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:references:cc:to
- :from:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=g80EdMCRqkl5P4MpbZoq6n/rrEGsjSdHDKOyaKEyNTQ=;
- b=rkkPGbRvEZ0qDI3IBxkzj+PrPvf8Mvv/QzLM7xS5mJwrITPrTtTL8R5hFNDT3OLt/N
- rqx32X1h4cSEtBISf8MahldUUXsppdjiFQKn8mfeSG4IdktFB8+v1zSaMB3Nyj/Ng0Ok
- c2TJeeNXSwLQ5mvFTtv17ZLKKSHB0x7QJnX7ePLga2GHvVENSgX2c/M3HkX4TQOPXYyW
- VDdTXwFFZEYUxraplVeoJmetV94edd9RJajrRCg1QdsIdJUfVwb8N/9vBbfHGCz4mcvx
- fA9Q9Qg716p2yQp6tDdCkp4SXliNxHQ2QO5JXI4qzBHf3HAv3ZZweUrsts6rRxyg+TJ7
- e2og==
+ d=linaro.org; s=google; t=1771453690; x=1772058490; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=YO8PrTtrKjvRZRvhKvQ2hIH/jfEAIWnMCRPDZR7xxWA=;
+ b=CrE4BOrm22p7k7UhVFiLjX0zcgMFq/94DzOt3QqGswxg/KMAJGWIAFMvuPbVJGb4n1
+ 346lJaVCFiAJO75NyJujPESO+66sbnQbfuBmbx7RnBIGlurhehNzM+7ZyMgX8hhHtPq0
+ Qdp2kWwR5KM7XrL+CmqcikCwAUnQWM0q2O4RpZyJ0O2TicitigJPMt/Uhk9Fuy1c7osl
+ SuM04YnmmMmasAPveEgzAkRGz1ejzDY3ApNCO2/kkPcC4s0Fi9vvOOhSpwpYYVq1stX8
+ PanG4Q+kdwmM9oITWOMWnkMjuMb5KIM5BVP/L0JZIYic6cCW//t3HzoqtIUucApfWuXN
+ z0PA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771453228; x=1772058028;
- h=content-transfer-encoding:in-reply-to:autocrypt:references:cc:to
- :from:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=g80EdMCRqkl5P4MpbZoq6n/rrEGsjSdHDKOyaKEyNTQ=;
- b=rgcBMNJdYIC28sXuXu5T5JAhiFzn1A4JZHlS3Wf2koe8p+EqyN8B8J0CFq8zv7tFoj
- L5kz5McQEDvtYKSvySJWaWhHI88VDylHvnfXmR2PVFC1y+61/lKdCIMG5meXy4H9V55L
- m10yUNTvf4EcdAIc5l6cpGgJ9jrBzO9TSf5vURFdZPrV8vVPdTMZJCQxyY7i22h3okG+
- xTzi8yJdS2A0YOaxYmoeE8f3hlTT0shDJPbp6S1FrLPcGflqh3EL6+nD+7zNMNOnybJN
- sMhmMi+YlXLNuRWylcAjiNXYVUNvg+oakYcS4k5MgsCd1YiSxluU1R6BUs2n4M5ajzi7
- yR0w==
+ d=1e100.net; s=20230601; t=1771453690; x=1772058490;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=YO8PrTtrKjvRZRvhKvQ2hIH/jfEAIWnMCRPDZR7xxWA=;
+ b=j9H7x6UHAJkZ0CCPSVUmmfr8TzKaJAXJZ2QEtyn1jirF3E+hNi5ehR5ohLGdnPeBUP
+ oGeJDPNOBviBOx9YFCvZ3pvaEjJMKGfCOKXDspmrEkeY5v8Bzal/cuqWHwCULvIrA7bh
+ f0THIJBiBNKrB5iC98lh1XkauaknFNkvSLINlaRcvgtdv8VvX1TwhR0ZSg2NKHN+69vi
+ e79LPMc29CZpE0EvVrMVTNztTQdTlXL/R2jBpBcJqRUunjwNQMOkVV2355NOO234WNJu
+ qo6L9iR0PQltZKeMDrdjrDmtdCZ+uvTRBsV4txrgo+C4z0KDJnfzBBnXhVsZs3Lsx++L
+ LWJQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVEVvqd7Da5Z1LtcPq4m6eH4C90TZzoXjMSzCO+LSvVermJioxrbQBWi0KhLmxSgtA0ir0qDPZqgqAY@nongnu.org
-X-Gm-Message-State: AOJu0YxkPNJqml2BzZbICN3HoWUglikLMz3a00UTb46WPKaqO4nUPPdx
- t1INcHUsyKU47fytx2b3N8f+0wgSQ7V1EQxPDIG/dq3CioEQ2nWACrwCvtghgfFZFFI=
-X-Gm-Gg: AZuq6aI3XpDcAYIQC3mv7S6EXFASp1CkcBvLEWbxZYeju7Nzo7i9Z2owO+KoEarR302
- ZOohB5ugHcAdojFQxsvhduPIkU/fYqomFMEuT7xwX0fZWSPB+6fdNXS3f8ffjlfR5sWexHfAGbs
- b/r/sNWFqzRgboNOVOZmQhpQ7NP5uWSH9m/pR7vOfGUQPzhKRSuru4EucFsFjChMJ9EUXBN3fux
- 9gHSsA2JqP29PGevojeRFQe11Y+4wsP7IfGBG76AcOXafMPdTHYNi8Yf7iUTC/7o95PPSnuAjei
- zhRHkS8JsTkbyN7PqlMJdda4UBnpiMhWr6YdDxwJtwIEeYF/Di2iK3TsdVX81fkfc42HDYymfzN
- b9b6bvbGG/ObxgKUekDfdJz4yzvi9o0tOB8BVVTaiwcibR4LSZQs1adup4XZfKfUkmCIZC9w4sb
- r/niknY/RkA7Za2quN4VtzcezhmnhN1AB36zQc9Us6Ylc6rMEhFnP5wHMeJMYQHX0W8H6X
-X-Received: by 2002:a17:903:2f0c:b0:2a7:3dae:de9b with SMTP id
- d9443c01a7336-2ab505e8319mr175261355ad.44.1771453227554; 
- Wed, 18 Feb 2026 14:20:27 -0800 (PST)
+ AJvYcCVyCV6IolGYrbi+ZIEZF1DbvFW7TCgze3To88XYJwDIh9IRst+riHsAJ15LKLHkHQjYwFH1wcK4CKeq@nongnu.org
+X-Gm-Message-State: AOJu0YxiWqe82bI95yBjzi1ZgxvYbbsjbxKFIIE5aDlfOQg0K78LeKmz
+ 127+M24rdr/nZTA41sckh4Sdve9/b3rf7g8xofWGG0yIPAGlFJJOucTNwFLd/tr5NqQ=
+X-Gm-Gg: AZuq6aLIxtD1O6wuhHkVKkH+KkKaoIMx+46BTrAbbRbAnLRaa5KK9ACB+Di+qrriPUm
+ oN0o5Vgius2Hs5XHC+5sRPzITLHugVu6ZS31wDWD2aHZT7/hGvQuq8ZpG7pLbpE+WTU2/0JO2o1
+ TZLEDMmmzKlcC9iOzylcTRdAxqaCJUFl5iBJjtAukLuXmbX76VRdcU7a0fiFSBvB8BBReb9zuxH
+ w3fi34NV1Uig/z6iQyG2dKsZZRcY3YPyv7RUzeJvuUTg11VKKPiaIZyQod9Wks5bxR+jX5pe43R
+ aUMMG8l9mp+YoqNK1kRY/eQ9BtXjiLp/ibXUj+YpVl1tA7geXLgluOzYn6cTV3Xkk31qmqGFkSJ
+ 1AQ92+Prc4OeT4zTmK3d8YLCDK4O5IkeKKOz9cZ1/gE3iKvZ7U/5AY3hpWQ2YMcknvYY4wd/Ad1
+ yf4JJAMEsqMIkxq3sw9VtUS541W4Orks856wQ8POWZnu1E438g6gWxSYiNe8l9jfWqWrzy
+X-Received: by 2002:a17:90b:3ecc:b0:353:e91:9b2f with SMTP id
+ 98e67ed59e1d1-356a7aab90emr18594252a91.37.1771453690076; 
+ Wed, 18 Feb 2026 14:28:10 -0800 (PST)
 Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2ad1a61cf8asm205620965ad.0.2026.02.18.14.20.26
+ 98e67ed59e1d1-3567e9dff38sm22479371a91.7.2026.02.18.14.28.09
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 18 Feb 2026 14:20:27 -0800 (PST)
-Message-ID: <df5cca4c-4ea5-4284-8504-61854573435b@linaro.org>
-Date: Wed, 18 Feb 2026 14:20:26 -0800
+ Wed, 18 Feb 2026 14:28:09 -0800 (PST)
+Message-ID: <a5107790-fe4c-481a-b7d5-6c796c9a1a3a@linaro.org>
+Date: Wed, 18 Feb 2026 14:28:08 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] hw/virtio: add virtio_vdev_is_{modern, legacy}
+Subject: Re: [PATCH 1/2] target/arm: Move TCG-specific code out of
+ debug_helper.c
 Content-Language: en-US
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
  qemu-devel@nongnu.org
-Cc: qemu-ppc@nongnu.org, Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Stefano Garzarella <sgarzare@redhat.com>, Jason Wang <jasowang@redhat.com>,
- Nicholas Piggin <npiggin@gmail.com>, stefanha@redhat.com,
- richard.henderson@linaro.org, "Michael S. Tsirkin" <mst@redhat.com>
-References: <20260212234602.338131-1-pierrick.bouvier@linaro.org>
- <20260212234602.338131-2-pierrick.bouvier@linaro.org>
- <02b667c5-da6a-4829-87f1-4b9ebc53d5a4@linaro.org>
- <332a3290-9ebe-404f-8b49-d09a83bd47cb@linaro.org>
+References: <20260216160349.3079657-1-peter.maydell@linaro.org>
+ <20260216160349.3079657-2-peter.maydell@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  xsDNBGK9dgwBDACYuRpR31LD+BnJ0M4b5YnPZKbj+gyu82IDN0MeMf2PGf1sux+1O2ryzmnA
  eOiRCUY9l7IbtPYPHN5YVx+7W3vo6v89I7mL940oYAW8loPZRSMbyCiUeSoiN4gWPXetoNBg
@@ -118,11 +113,11 @@ Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  5SYuJaKzCAgNeAy3gUVUUPrUsul1oe2PeWMFUhWKrqko0/Qo4HkwTZY6S16drTMncoUahSAl
  X4Z3BbSPXPq0v1JJBYNBL9qmjULEX+NbtRd3v0OfB5L49sSAC2zIO8S9Cufiibqx3mxZTaJ1
  ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <332a3290-9ebe-404f-8b49-d09a83bd47cb@linaro.org>
+In-Reply-To: <20260216160349.3079657-2-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x630.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52a;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x52a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -145,58 +140,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/18/26 2:17 PM, Pierrick Bouvier wrote:
-> On 2/18/26 1:00 PM, Philippe Mathieu-Daudé wrote:
->> On 13/2/26 00:46, Pierrick Bouvier wrote:
->>> This simplifies code compared to having
->>> virtio_vdev_has_feature(vdev, VIRTIO_F_VERSION_1) or
->>> !virtio_vdev_has_feature(vdev, VIRTIO_F_VERSION_1).
->>>
->>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->>> ---
->>>     include/hw/virtio/virtio-access.h |  3 +--
->>>     include/hw/virtio/virtio.h        | 12 +++++++++++-
->>>     hw/net/virtio-net.c               |  2 +-
->>>     hw/virtio/vhost.c                 |  2 +-
->>>     hw/virtio/virtio-pci.c            |  2 +-
->>>     hw/virtio/virtio.c                | 16 ++++++++--------
->>>     6 files changed, 23 insertions(+), 14 deletions(-)
->>
->>
->>> diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
->>> index 27cd98d2fe1..8f1e4323599 100644
->>> --- a/include/hw/virtio/virtio.h
->>> +++ b/include/hw/virtio/virtio.h
->>> @@ -468,9 +468,19 @@ static inline bool virtio_host_has_feature(VirtIODevice *vdev,
->>>         return virtio_has_feature(vdev->host_features, fbit);
->>>     }
->>>     
->>> +static inline bool virtio_vdev_is_modern(const VirtIODevice *vdev)
->>> +{
->>> +    return virtio_vdev_has_feature(vdev, VIRTIO_F_VERSION_1);
->>> +}
->>> +
->>> +static inline bool virtio_vdev_is_legacy(const VirtIODevice *vdev)
->>> +{
->>> +    return !virtio_vdev_is_modern(vdev);
->>> +}
->>
->> With retrospective, mentioning 'modern' was a mistake IMHO. But I
->> understand it was simpler to add 'modern' code without updating the
->> 'legacy' code base. Today I'd rather have 'legacy' explicit in function
->> names, everything else being the normal / current / modern version,
->> without having to clarify it.
->>
+On 2/16/26 8:03 AM, Peter Maydell wrote:
+> The target/arm/debug_helper.c file has some code which we need
+> for non-TCG accelerators, but quite a lot which is guarded by
+> a CONFIG_TCG ifdef. Move all this TCG-only code out to a
+> new file target/arm/tcg/debug.c.
 > 
-> Agree.
+> In particular all the code requiring access to the TCG
+> helper function prototypes is in the moved code, so we can
+> drop the use of tcg/helper.h from debug_helper.c.
 > 
->> Thus back to this series I'd rather not introduce virtio_vdev_is_modern
->> and use !virtio_vdev_is_legacy instead.
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+>   target/arm/debug_helper.c                  | 769 ---------------------
+>   target/arm/{debug_helper.c => tcg/debug.c} | 542 +--------------
+>   target/arm/tcg/meson.build                 |   2 +
+>   3 files changed, 3 insertions(+), 1310 deletions(-)
+>   copy target/arm/{debug_helper.c => tcg/debug.c} (53%)
 > 
-> Sounds good. I feel it's still easier and clearer to read than
-> "!has_feature(1.0)". But as said in my previous answer to Zoltan, I
-> don't mind this patch too much, only 3rd one really matter.
 
-s/!has_feature(1.0)/has_feature(1.0), thus showing I've been confused 
-once more :).
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
