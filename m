@@ -4,107 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23124E9A047
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 13:36:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E183E9A02C
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 13:36:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vshfA-0003pD-Ox; Wed, 18 Feb 2026 08:32:20 -0500
+	id 1vshfg-0004HK-KN; Wed, 18 Feb 2026 08:32:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1vshf6-0003oI-Ti
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 08:32:18 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1vshfZ-000465-Fi
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 08:32:46 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1vshf2-000546-3i
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 08:32:16 -0500
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1vshfL-0005eo-7y
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 08:32:45 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771421521;
+ s=mimecast20190719; t=1771421550;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=yWcGLprdpXgo2UanWZOxr3c/Uu5d1zE+FoOX3fFgguc=;
- b=Z/q3DZLPHhWwTJW3iiigHPCMCPOdcl43XdFKEeiS+nWqAHgxWPZASjCnLHjcprb6jFHz3q
- gc/doRaKCneGz/NAQOd1m7mVnMU16SnSfRKoNcLAaokDhOBbPKF5zw2Gr3WLx2Cnelym1A
- GNa8RN0wVKQsw4qRj7Nln4mueGCff1o=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=8xXGf9wQuXiSKLxPb3FYIBG/K87QsiFd36ndnCqGkII=;
+ b=NIgSMuTfWBwOHSm+OI3lXnF7gfZ/gVy+USj69XECvqFltayaAS34yyAIAD0AeT1/ERUE4z
+ m+WGmFxqfRgUOWX4/80SKcI+MtVqflFo53aLpbhJfOo8ZF7YBf3+YeWCsYe6fGhj4arXYx
+ W91cBcwT/zPkmfTcCGeLhGFnFdVjkSQ=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-31-LUVopu8ZPdmRCbCTfR509w-1; Wed, 18 Feb 2026 08:26:49 -0500
-X-MC-Unique: LUVopu8ZPdmRCbCTfR509w-1
-X-Mimecast-MFC-AGG-ID: LUVopu8ZPdmRCbCTfR509w_1771421208
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-4368060a5e5so5642639f8f.3
- for <qemu-devel@nongnu.org>; Wed, 18 Feb 2026 05:26:48 -0800 (PST)
+ us-mta-250-6VMkZD4ZOeuX7w_UEyMf9g-1; Wed, 18 Feb 2026 08:27:22 -0500
+X-MC-Unique: 6VMkZD4ZOeuX7w_UEyMf9g-1
+X-Mimecast-MFC-AGG-ID: 6VMkZD4ZOeuX7w_UEyMf9g_1771421242
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4806cfffca6so59699385e9.2
+ for <qemu-devel@nongnu.org>; Wed, 18 Feb 2026 05:27:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1771421208; x=1772026008; darn=nongnu.org;
+ d=redhat.com; s=google; t=1771421241; x=1772026041; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=yWcGLprdpXgo2UanWZOxr3c/Uu5d1zE+FoOX3fFgguc=;
- b=D/SHPUPpG5gE9D+pwLeTDU4Pcbvx0/1d0c10AYgfWNSlefQi4Z9ilxgtJnFWnLFxTp
- Mq7r9Jc3neeX+aJmhr3a6g9svaUxihI+5PMPk6SQBX4/ASpphfYchJj042rGFzrl3Atw
- QuAORszsT4fPLpuOZWhuV9pHLb6sLETl+/jEsQ8Cfn/YMfJSwAQeV9qlR5fqvLQcH4vf
- DcWCXCcHfPcIqlifaFS44VoKybBBiMEhHHbhr1VTErrjEF0nzEm6qMvB1q2c/B4lq3bL
- Mg3s8j5FGWNBIo8P/B+EwpmYJ/6gtExyU1kc3QgU5/vt32pQEOBKr1LFygC71G719YUx
- 6C6g==
+ bh=8xXGf9wQuXiSKLxPb3FYIBG/K87QsiFd36ndnCqGkII=;
+ b=Qdk6/Xq3YbV9wEOTk9iRs6ZRws1ySI+DzBuDN31fixqmL/uuEygtbxJqjnjDUKNVhn
+ UPvnNoK29mG0Ptva0deMWrGlJWCUEpBqVIdT0VBd2pEi9udEYlOmrNHp0WRzV4REnHLZ
+ EIykGYM1fRFrHZW/xMslxXcISCqkAF6z/jru19rbnom0dQdCU/8tUnEYXGLU1vrx/gUZ
+ NzS/gqYLWFxoN04kO6IHb30dKdFpDE61ifM4HH4c9YlWsHvDNAH8UnqanOsRTDSgXwpt
+ lpSfkpdbCjTsbdoJ+oPsi1O1tAVh6/iN3R97VFuRjfPfQhs4vQ3BrYL3WCMrbBTo79x6
+ iSSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771421208; x=1772026008;
+ d=1e100.net; s=20230601; t=1771421241; x=1772026041;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=yWcGLprdpXgo2UanWZOxr3c/Uu5d1zE+FoOX3fFgguc=;
- b=bus7eGLILJtx7aW4SBZ3yHTYNkQWk/78lSMxheSB5Ir5bhX4CTEoGgi1pLV7CTOeKx
- +8P2zbpIpJ24Wl35YOMtRBZKBcVS8mb7h3hklLNyRBWuG6b28eja/3NB/u/gHFreRern
- DHD7oAF2a3kI3SEDOLIm4YpibyVWNXYoxwb1a0TQF2E1BpSD7BiXCrJb4WXNVbN9B5i2
- fj55bxTXeTXIkQklS6DlqakZWmcWAcw4dhl2QM1vUmxG2NjsrQ92Wi+hMiHxF9rtrFof
- AF0x5UIvW5SlK2zwmq0VZbfmbFF179FSZt8+fzdRfLWvYBvtSy+xGZoqC3oUg+cM6C7/
- /gnw==
-X-Gm-Message-State: AOJu0YyRy5tRT+aFcQyeKGdiKI0rBy6viVxUuOaYxPAlFG3kf/vlvxhx
- r4ItnPglI1DHPENozdq4JS/P/ha1oW6j1m0bg2EXwgZqgSI4Rfs4/TI5Og85+FXz+vplB2upKO2
- 1wQgE4CvyZIDU07abqMqUfJ5+NK0uqgp2jtEfW4uN5gclNCQRC9VcvyTk
-X-Gm-Gg: AZuq6aLXi5CiUTLOd8sJXdKCdlOrbL+oBV+p7mfNmPbsNLYIk+zeIlSSyeqbiclSr8o
- 2LSetFOfMYsKPjd3wZq01D1wm9XSNwyP8X0wl4P6dRkr/YOA17m0gD6Z4AQkb5EDO99A1+dsfv3
- /m78nTLzO5XV2ca8/z4++nHzcq+f8ohDzulyPQKlFRiGx3a0NprAcLewEV0nHxvoK6sHAX55tnf
- G/4Zmu1n8oBmUrKtVVR6bcR4ve6fL6Q8yDSmYut/CR3IlsTDnlen0waA/k0fr0q1AHTmM+FI9xT
- olfU1WgmU4HFL7hLVg5gjWbkIFQiRg5p8clEE7EoBUJ0anxSdy/u2s4iMsbGbKJCggVl5ueo5SR
- ZFlJbo72sX0n0A0MfqjZhgf6eUQ6hDKB/khfvu/Ouu/CboxS3k2ufuBaB6rr1x39ASMIDYeXJOJ
- v8U5t4
-X-Received: by 2002:a05:6000:2508:b0:435:8e14:9877 with SMTP id
- ffacd0b85a97d-4379dbae484mr23152421f8f.60.1771421207816; 
- Wed, 18 Feb 2026 05:26:47 -0800 (PST)
-X-Received: by 2002:a05:6000:2508:b0:435:8e14:9877 with SMTP id
- ffacd0b85a97d-4379dbae484mr23152382f8f.60.1771421207355; 
- Wed, 18 Feb 2026 05:26:47 -0800 (PST)
+ bh=8xXGf9wQuXiSKLxPb3FYIBG/K87QsiFd36ndnCqGkII=;
+ b=DKiudhNuaFgmmcJ6sJJss8j9sw+xaOC1ecdDFuij8Cne70tbL43jAL4U0awEy+EGEa
+ OfXYQ7ecRrkdJR+g5TqKStBUzHaY/LPrxO/mrtBsEoOFFzT2UECvibi+u3Fc+LMzEf49
+ 9qpslpYEAZS9HZNmXHLW1p6zLxfNHQIe6so7CqOcwQ6Nvg3qEt8TAWSYsPYNzpwg4neR
+ bTm7L4qT5b4w7R+yaydOSkAw3dvYEYSqotRDDbZ/SSVlLZWJKXHGlQ/6IB5fZlMy85II
+ zxqGPpnKM70e1TpSY/LzA+1pDWzmqwVsecJ02SSdM4vn3c+XchDgOLRw4NWAU/XIy55s
+ Kt+Q==
+X-Gm-Message-State: AOJu0Yy/QciD5a7wUl5jgXnz1+S9KbFzXHjEIqiT8fb68JxxkwpOMCXZ
+ wyjilA8B+FpnPgI2PRwUfjhzRsr87pR5vIHdQScq9zcuTWlXXGk6eCoARKktdmTC6Bk2mw1mSUx
+ YfFWISL98pxP3bYuXrOr8AOfFge0HORWjZClb4MePc2Zi4LSS0fXva6LM
+X-Gm-Gg: AZuq6aICf+0FDJ6nVviPyFVeTZizsP8w8LAXysbNVmBX3tfiXqaQem1ISDBEwElLDUQ
+ AfaQmkbytfTAGmlmqSLbBm4yvT9oemjhLZLTb22bx87m3W2EfFuSoDR16rqtGsSDRxQ1HddS+15
+ qaBq93BrT/4BDyWsLWP2sCQzYGkM3nqtk3ZsdEfWPvzneSfkUp3u2H84TQQ9YwpM+rHzJSMm2oA
+ k7U5iNo+aB6k/Yb3K76txDtCX4F7HQ88u290p+MYbML35qPIHO7M6XaMrIHOW9JrKNI9cQhWhIG
+ hVj6dCS9coOvoHEAsjOXLYvLps1uUvH4ihdesX+rlOEBo/LKZPFrtrqM4Xo5eekhBq+5xQ248yg
+ trfjP8yiEzheYs1S4OoksfNVZnT7WA5HJWbSjA5o/8C/3TTJaJXc5hCTlpzRlUDM5ux2U0h3Eio
+ MSkIZu
+X-Received: by 2002:a05:600c:148f:b0:483:7f7c:ad89 with SMTP id
+ 5b1f17b1804b1-4837f7cb108mr162399005e9.37.1771421241476; 
+ Wed, 18 Feb 2026 05:27:21 -0800 (PST)
+X-Received: by 2002:a05:600c:148f:b0:483:7f7c:ad89 with SMTP id
+ 5b1f17b1804b1-4837f7cb108mr162398695e9.37.1771421241028; 
+ Wed, 18 Feb 2026 05:27:21 -0800 (PST)
 Received: from localhost
  (p200300cfd737d029edef7b8da7441ac2.dip0.t-ipconnect.de.
  [2003:cf:d737:d029:edef:7b8d:a744:1ac2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43796a6c1bfsm43078466f8f.13.2026.02.18.05.26.45
+ 5b1f17b1804b1-48387ab1974sm207441865e9.3.2026.02.18.05.27.19
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 18 Feb 2026 05:26:45 -0800 (PST)
+ Wed, 18 Feb 2026 05:27:20 -0800 (PST)
 From: Hanna Czenczek <hreitz@redhat.com>
 To: qemu-block@nongnu.org
 Cc: qemu-devel@nongnu.org, Hanna Czenczek <hreitz@redhat.com>,
  Kevin Wolf <kwolf@redhat.com>, Brian Song <hibriansong@gmail.com>
-Subject: [PATCH v4 02/24] fuse: Ensure init clean-up even with error_fatal
-Date: Wed, 18 Feb 2026 14:26:11 +0100
-Message-ID: <20260218132633.29748-3-hreitz@redhat.com>
+Subject: [PATCH v4 15/24] block: Move qemu_fcntl_addfl() into osdep.c
+Date: Wed, 18 Feb 2026 14:26:24 +0100
+Message-ID: <20260218132633.29748-16-hreitz@redhat.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260218132633.29748-1-hreitz@redhat.com>
 References: <20260218132633.29748-1-hreitz@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=hreitz@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=hreitz@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.043,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -122,36 +122,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When exports are created on the command line (with the storage daemon),
-errp is going to point to error_fatal.  Without ERRP_GUARD, we would
-exit immediately when *errp is set, i.e. skip the clean-up code under
-the `fail` label.  Use ERRP_GUARD so we always run that code.
+Move file-posix's helper to add a flag (or a set of flags) to an FD's
+existing set of flags into osdep.c for other places to use.
 
-As far as I know, this has no actual impact right now[1], but it is
-still better to make this right.
-
-[1] Not cleaning up the mount point is the only thing I can imagine
-    would be problematic, but that is the last thing we attempt, so if
-    it fails, it will clean itself up.
-
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+Suggested-by: Eric Blake <eblake@redhat.com>
 Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
 ---
- block/export/fuse.c | 1 +
- 1 file changed, 1 insertion(+)
+ include/qemu/osdep.h |  1 +
+ block/file-posix.c   | 17 +----------------
+ util/osdep.c         | 18 ++++++++++++++++++
+ 3 files changed, 20 insertions(+), 16 deletions(-)
 
-diff --git a/block/export/fuse.c b/block/export/fuse.c
-index cea9de61f1..2ed22c6b2f 100644
---- a/block/export/fuse.c
-+++ b/block/export/fuse.c
-@@ -119,6 +119,7 @@ static int fuse_export_create(BlockExport *blk_exp,
-                               BlockExportOptions *blk_exp_args,
-                               Error **errp)
+diff --git a/include/qemu/osdep.h b/include/qemu/osdep.h
+index b384b5b506..f151578b5c 100644
+--- a/include/qemu/osdep.h
++++ b/include/qemu/osdep.h
+@@ -633,6 +633,7 @@ int qemu_lock_fd(int fd, int64_t start, int64_t len, bool exclusive);
+ int qemu_unlock_fd(int fd, int64_t start, int64_t len);
+ int qemu_lock_fd_test(int fd, int64_t start, int64_t len, bool exclusive);
+ bool qemu_has_ofd_lock(void);
++int qemu_fcntl_addfl(int fd, int flag);
+ #endif
+ 
+ bool qemu_has_direct_io(void);
+diff --git a/block/file-posix.c b/block/file-posix.c
+index 6265d2e248..e49b13d6ab 100644
+--- a/block/file-posix.c
++++ b/block/file-posix.c
+@@ -1056,21 +1056,6 @@ static int raw_handle_perm_lock(BlockDriverState *bs,
+     return ret;
+ }
+ 
+-/* Sets a specific flag */
+-static int fcntl_setfl(int fd, int flag)
+-{
+-    int flags;
+-
+-    flags = fcntl(fd, F_GETFL);
+-    if (flags == -1) {
+-        return -errno;
+-    }
+-    if (fcntl(fd, F_SETFL, flags | flag) == -1) {
+-        return -errno;
+-    }
+-    return 0;
+-}
+-
+ static int raw_reconfigure_getfd(BlockDriverState *bs, int flags,
+                                  int *open_flags, uint64_t perm, Error **errp)
  {
-+    ERRP_GUARD(); /* ensure clean-up even with error_fatal */
-     FuseExport *exp = container_of(blk_exp, FuseExport, common);
-     BlockExportOptionsFuse *args = &blk_exp_args->u.fuse;
-     int ret;
+@@ -1109,7 +1094,7 @@ static int raw_reconfigure_getfd(BlockDriverState *bs, int flags,
+         /* dup the original fd */
+         fd = qemu_dup(s->fd);
+         if (fd >= 0) {
+-            ret = fcntl_setfl(fd, *open_flags);
++            ret = qemu_fcntl_addfl(fd, *open_flags);
+             if (ret) {
+                 qemu_close(fd);
+                 fd = -1;
+diff --git a/util/osdep.c b/util/osdep.c
+index 770369831b..000e7daac8 100644
+--- a/util/osdep.c
++++ b/util/osdep.c
+@@ -280,6 +280,24 @@ int qemu_lock_fd_test(int fd, int64_t start, int64_t len, bool exclusive)
+         return fl.l_type == F_UNLCK ? 0 : -EAGAIN;
+     }
+ }
++
++/**
++ * Set the given flag(s) (fcntl GETFL/SETFL) on the given FD, while retaining
++ * other flags.
++ */
++int qemu_fcntl_addfl(int fd, int flag)
++{
++    int flags;
++
++    flags = fcntl(fd, F_GETFL);
++    if (flags == -1) {
++        return -errno;
++    }
++    if (fcntl(fd, F_SETFL, flags | flag) == -1) {
++        return -errno;
++    }
++    return 0;
++}
+ #endif
+ 
+ bool qemu_has_direct_io(void)
 -- 
 2.53.0
 
