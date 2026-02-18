@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D277E9A049
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 21:36:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00230E9A049
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 21:36:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vspCo-0007fu-Ih; Wed, 18 Feb 2026 16:35:34 -0500
+	id 1vspCt-0007wE-3T; Wed, 18 Feb 2026 16:35:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vspCk-0007al-F5
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 16:35:30 -0500
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vspCq-0007n9-Tt
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 16:35:36 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vspCi-0002Cq-TY
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 16:35:30 -0500
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vspCo-0002EQ-Gw
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 16:35:35 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771450528;
+ s=mimecast20190719; t=1771450533;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=lEWqDoyixgxCz5zBPNhV2v3CL7QSMfi5JOtFo/5nd/I=;
- b=HEBahuOC5D9cKfDr5qaHh5Y4jd0RComsvfKZ/xnNQT51YcIwjelbdk5svLMn+h0v1EVKK7
- TGLm0i/19XFSVB0N+mjGvDRBuEeWHCL8PFugS1+aOkbTBmV3uW3Dyrq8xa8xzXX+WB6T+b
- uaD83DTttf1L9G58iYTwni3QidR3wR8=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=svwUZmFcXrxAz0z+6CagrgvUzVmfiLjUGUqEXIJFjak=;
+ b=SKRBuGl2WlftNZ1SKI+P/lL0P8Oq7yViugZViv2cEUDrm4cQcUBZk+bYmnpTX43SJmTSvj
+ GCgtYARv2OqJ0D+Pn96FOOK1dNwVDI8ZbKk4r371GvIlbgm37ZyoyHRkwj45bIys58k9p3
+ odp9heJFzdIH6IvVUPqD11tpB7Kma6g=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-517-LFMWfBNQM6ey2fOTdjfrWA-1; Wed,
- 18 Feb 2026 16:35:23 -0500
-X-MC-Unique: LFMWfBNQM6ey2fOTdjfrWA-1
-X-Mimecast-MFC-AGG-ID: LFMWfBNQM6ey2fOTdjfrWA_1771450521
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-213-hL9NoCcqO5Cy3xeZBGRrKw-1; Wed,
+ 18 Feb 2026 16:35:30 -0500
+X-MC-Unique: hL9NoCcqO5Cy3xeZBGRrKw-1
+X-Mimecast-MFC-AGG-ID: hL9NoCcqO5Cy3xeZBGRrKw_1771450528
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 624AB1955D8F; Wed, 18 Feb 2026 21:35:21 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2B4F0195FDD5; Wed, 18 Feb 2026 21:35:28 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.65.233])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id EC2E219560B5; Wed, 18 Feb 2026 21:35:15 +0000 (UTC)
+ id 9E59E19560B5; Wed, 18 Feb 2026 21:35:21 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Kevin Wolf <kwolf@redhat.com>, Warner Losh <imp@bsdimp.com>,
@@ -66,12 +66,13 @@ Cc: Kevin Wolf <kwolf@redhat.com>, Warner Losh <imp@bsdimp.com>,
  Kyle Evans <kevans@freebsd.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Subject: [PATCH v8 08/20] iotests: tolerate being run outside of pyvenv
-Date: Wed, 18 Feb 2026 16:34:03 -0500
-Message-ID: <20260218213416.674483-9-jsnow@redhat.com>
+Subject: [PATCH v8 09/20] tests: use "run" script to execute device-crash-test
+Date: Wed, 18 Feb 2026 16:34:04 -0500
+Message-ID: <20260218213416.674483-10-jsnow@redhat.com>
 In-Reply-To: <20260218213416.674483-1-jsnow@redhat.com>
 References: <20260218213416.674483-1-jsnow@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
@@ -99,65 +100,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Modify the iotests environment preparation so that it can detect when it
-is being run outside of the configure-time virtual environment and give
-a warning to the user, suggesting the use of the meson run script
-instead.
-
-As a bonus, since the test executor itself does not actually rely on
-anything in the configure-time venv in and of itself, it is possible to
-just modify the python executable it uses for launching tests to be the
-correct, configured venv that has access to qemu.qmp and other test
-dependencies.
+Instead of invoking python from the configure venv manually, instruct
+developers to use the "run" script instead. Change the test invocation
+to be a good example going forward.
 
 Signed-off-by: John Snow <jsnow@redhat.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 ---
- tests/qemu-iotests/testenv.py | 25 ++++++++++++++++++++++++-
- 1 file changed, 24 insertions(+), 1 deletion(-)
+ .gitlab-ci.d/buildtest.yml | 6 +++---
+ scripts/device-crash-test  | 2 +-
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/tests/qemu-iotests/testenv.py b/tests/qemu-iotests/testenv.py
-index 29caaa8a349..c357e6ebf50 100644
---- a/tests/qemu-iotests/testenv.py
-+++ b/tests/qemu-iotests/testenv.py
-@@ -20,6 +20,7 @@
- import sys
- import tempfile
- from pathlib import Path
-+import shlex
- import shutil
- import collections
- import contextlib
-@@ -140,7 +141,29 @@ def init_binaries(self) -> None:
-              PYTHON (for bash tests)
-              QEMU_PROG, QEMU_IMG_PROG, QEMU_IO_PROG, QEMU_NBD_PROG, QSD_PROG
-         """
--        self.python = sys.executable
-+        self.python = str(Path(sys.executable).absolute())
-+
-+        # QEMU configure-time venv python executable
-+        venv_python = Path(
-+            os.path.join(self.build_root, "pyvenv", "bin", "python3")
-+        ).absolute()
-+
-+        if self.python != str(venv_python):
-+            runpath = os.path.join(self.build_root, "run")
-+            cmd = ' '.join(shlex.quote(x) for x in sys.argv)
-+            print(
-+                "\n\033[93m\033[1mWARNING\033[0m: "
-+                "iotests is being run from outside of the configure-time "
-+                "python virtual environment\n\n"
-+                f"current python: {self.python}\n"
-+                f"pyvenv python:  {venv_python}\n\n"
-+                "Individual python tests will be executed inside the pyvenv,\n"
-+                "but the test runner will continue to run outside.\n\n"
-+                "\033[1mPlease use the meson run script:\033[0m\n"
-+                f"\t{runpath} {cmd}\n",
-+                file=sys.stderr
-+            )
-+            self.python = str(venv_python)
+diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
+index 4c280dd29bc..b2db70ff904 100644
+--- a/.gitlab-ci.d/buildtest.yml
++++ b/.gitlab-ci.d/buildtest.yml
+@@ -102,7 +102,7 @@ crash-test-debian:
+   script:
+     - cd build
+     - make NINJA=":" check-venv
+-    - pyvenv/bin/python3 scripts/device-crash-test -q --tcg-only ./qemu-system-i386
++    - ./run scripts/device-crash-test -q --tcg-only ./qemu-system-i386
  
-         def root(*names: str) -> str:
-             return os.path.join(self.build_root, *names)
+ build-system-fedora:
+   extends:
+@@ -159,8 +159,8 @@ crash-test-fedora:
+   script:
+     - cd build
+     - make NINJA=":" check-venv
+-    - pyvenv/bin/python3 scripts/device-crash-test -q ./qemu-system-ppc
+-    - pyvenv/bin/python3 scripts/device-crash-test -q ./qemu-system-riscv32
++    - ./run scripts/device-crash-test -q ./qemu-system-ppc
++    - ./run scripts/device-crash-test -q ./qemu-system-riscv32
+ 
+ build-system-centos:
+   extends:
+diff --git a/scripts/device-crash-test b/scripts/device-crash-test
+index f97d9909c05..8a91dcaee31 100755
+--- a/scripts/device-crash-test
++++ b/scripts/device-crash-test
+@@ -42,7 +42,7 @@ except ModuleNotFoundError as exc:
+     print(f"Module '{exc.name}' not found.")
+     print("  Try 'make check-venv' from your build directory,")
+     print("  and then one way to run this script is like so:")
+-    print(f'  > $builddir/pyvenv/bin/python3 "{path}"')
++    print(f'  > $builddir/run "{path}"')
+     sys.exit(1)
+ 
+ logger = logging.getLogger('device-crash-test')
 -- 
 2.53.0
 
