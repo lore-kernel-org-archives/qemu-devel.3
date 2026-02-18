@@ -4,54 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C5B6E9A02C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CBE9CE9A04B
 	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 20:13:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vsnuq-0001er-CN; Wed, 18 Feb 2026 15:13:00 -0500
+	id 1vsnuh-0001dF-Pm; Wed, 18 Feb 2026 15:12:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vsnuS-0001cT-OK
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vsnuS-0001cU-OW
  for qemu-devel@nongnu.org; Wed, 18 Feb 2026 15:12:32 -0500
-Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
+Received: from tor.source.kernel.org ([172.105.4.254])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vsnuQ-0002Y8-G6
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vsnuQ-0002Yf-GB
  for qemu-devel@nongnu.org; Wed, 18 Feb 2026 15:12:31 -0500
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by tor.source.kernel.org (Postfix) with ESMTP id 6DFDB61857;
+ by tor.source.kernel.org (Postfix) with ESMTP id 14AE961858;
+ Wed, 18 Feb 2026 20:12:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FE8CC19422;
  Wed, 18 Feb 2026 20:12:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB3E5C116D0;
- Wed, 18 Feb 2026 20:12:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1771445545;
- bh=mgZlM6/10+cu5QgnPE0lEKFT+lYSfxjzXHXHrsmt/JI=;
- h=From:To:Cc:Subject:Date:From;
- b=vKMvWUyu8YaNbFmWF62UyIhvG1Xd7WGzNFdA6ZOlkqcdiubsu6Nwg+NZOZg9vgQ5i
- VD4Cjz3cJX9UoLyVfwZ92+Hcs2LuRqnreIC2/KSYtCpiAT8EkVZNHnEVcb1Yfsp+eP
- 0GX4y/KK3gMeiT737rqpx56FApSYb7iIo39hs9/cofXAdiUJLtIlVqm8resdvPPRgc
- 6dGhuyXoOo7E6JWeQubwWLD/EdhSXkvMcR00GYc6+S89YgJ/bFOeZNLz7C7HKqlN7b
- aBfnIfBo3Yrfe6xrsvK8oOjFLlnONRxxQUjn9jwr4CkR/+PqkRGIVd5pFP54HpXb/o
- Ty7M4l3jQUa7Q==
+ s=k20201202; t=1771445546;
+ bh=QFeQB0IwUUBd+DKXwF9jdWueatX2CVSTCLXormm5iOc=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=jOLk4aT2n+KNJnIKhgA69NFATirmbqMFyvFSfb9FEVeZbixMiVLHCSkZqvdtol0pM
+ J9OlLHelsnK4WILV/l60Qx8jaqgfbRWvNKWWMxb4WQT55749MSTNyYpWClvizrgN8C
+ taHzFufCbMDxEMbqbZzz6FuRGEfVjd6f1npKgY3CqcouV08gTKDMzsBQCUGtkq6571
+ x60aGSGv4H8IPmFtCu725r7k6nKaRXD8J3umsxvylYOvT4M5R5dmvQoveOQYqxhSKu
+ tTzFeJVl1H0O1JseiXZyCrxwlDn0g8d2m4K59paqkdlZ9eAFXW2rUaB/9C+HJrFI48
+ WftYNrKJF8QTw==
 From: deller@kernel.org
 To: Richard Henderson <richard.henderson@linaro.org>,
 	qemu-devel@nongnu.org
 Cc: Anton Johansson <anjo@rev.ng>,
 	Helge Deller <deller@gmx.de>
-Subject: [PATCH 0/4] hppa a400 machine support
-Date: Wed, 18 Feb 2026 21:12:17 +0100
-Message-ID: <20260218201221.20958-1-deller@kernel.org>
+Subject: [PATCH 1/4] hw/hppa: Add BMC on 64-bit machines only
+Date: Wed, 18 Feb 2026 21:12:18 +0100
+Message-ID: <20260218201221.20958-2-deller@kernel.org>
 X-Mailer: git-send-email 2.53.0
-Content-Type: text/plain; charset="utf-8"
+In-Reply-To: <20260218201221.20958-1-deller@kernel.org>
+References: <20260218201221.20958-1-deller@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
- envelope-from=deller@kernel.org; helo=tor.source.kernel.org
+Received-SPF: pass client-ip=172.105.4.254; envelope-from=deller@kernel.org;
+ helo=tor.source.kernel.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.043,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -70,29 +72,31 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Helge Deller <deller@gmx.de>
 
-Major enhancements to SeaBIOS-hppa to support an A400
-server. This server requires 64-bit PAT firmware, so
-SeaBIOS-hppa was extendend a lot. PAT firmware is required
-as well to support 64-bit HP-UX 11i3 or MPE.
+Prevent adding the BMC with it's serial ports on 32-bit machines, even
+if they have a PCI bus like the B160L. This fixes boot problems with
+HP-UX on B160L.
 
-The patches to qemu are quite small.
+Signed-off-by: Helge Deller <deller@gmx.de>
+Fixes: 557bc5260cfd ("hw/hppa: PCI devices depend on availability of PCI bus")
+Cc: qemu-stable@nongnu.org
+---
+ hw/hppa/machine.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-Please review.
-
-Helge
-
-Helge Deller (4):
-  hw/hppa: Add BMC on 64-bit machines only
-  target/hppa: Update SeaBIOS-hppa to version 22
-  hw/hppa: Require SeaBIOS version 22 for A400 machine
-  hw/hppa: Add emulation for the 64-bit A400 server
-
- hw/hppa/machine.c           |  32 +++++++++++++++++++++++++++++++-
- pc-bios/hppa-firmware.img   | Bin 628952 -> 632048 bytes
- pc-bios/hppa-firmware64.img | Bin 692032 -> 713608 bytes
- roms/seabios-hppa           |   2 +-
- 4 files changed, 32 insertions(+), 2 deletions(-)
-
+diff --git a/hw/hppa/machine.c b/hw/hppa/machine.c
+index c3680667ae..d6aeb793c0 100644
+--- a/hw/hppa/machine.c
++++ b/hw/hppa/machine.c
+@@ -376,7 +376,9 @@ static void machine_HP_common_init_tail(MachineState *machine, PCIBus *pci_bus,
+ 
+     if (pci_bus) {
+         pci_init_nic_devices(pci_bus, mc->default_nic);
++    }
+ 
++    if (pci_bus && hppa_is_pa20(&cpu[0]->env)) {
+         /* BMC board: HP Diva GSP PCI card */
+         dev = qdev_new("diva-gsp");
+         if (dev && !object_property_get_bool(OBJECT(dev), "disable", NULL)) {
 -- 
 2.53.0
 
