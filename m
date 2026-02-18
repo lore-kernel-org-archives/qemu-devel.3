@@ -4,114 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75CB7E9A047
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 15:08:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA195E9A02C
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 15:24:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vsj9p-0001J4-E7; Wed, 18 Feb 2026 10:08:05 -0500
+	id 1vsjPH-0003hc-AI; Wed, 18 Feb 2026 10:24:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1vsj9o-0001Iv-0o
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 10:08:04 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1vsj9m-0002xD-9F
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 10:08:03 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771427280;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=M+YhQT0gbq1eXwaTS6GyWhwJJ0Tom4TMrt47Lob5H2o=;
- b=Gfrwp+sqq8nUu5PJlGMwpoINrWKEM2+ObLePpm/6VYTC1AccNyVDXChEGwvUbbjh8RXIP+
- 4/GVEGOPS9J0h2Go3XRPd8kqOQud4wBDDeMu8pvoTJqTv3GHqDL+qyXb2D07CXPNoof96G
- YXob4OIAxSOR975ODSDp1pwZASmjMRo=
-Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com
- [209.85.214.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-452-We8J0r77O2GQNkqGO3-rGQ-1; Wed, 18 Feb 2026 10:07:58 -0500
-X-MC-Unique: We8J0r77O2GQNkqGO3-rGQ-1
-X-Mimecast-MFC-AGG-ID: We8J0r77O2GQNkqGO3-rGQ_1771427278
-Received: by mail-pl1-f200.google.com with SMTP id
- d9443c01a7336-2aad5fc5b2fso58415765ad.1
- for <qemu-devel@nongnu.org>; Wed, 18 Feb 2026 07:07:58 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
+ id 1vsjPF-0003hM-LZ
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 10:24:01 -0500
+Received: from mail-dl1-x1232.google.com ([2607:f8b0:4864:20::1232])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
+ id 1vsjOu-000539-VW
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 10:24:01 -0500
+Received: by mail-dl1-x1232.google.com with SMTP id
+ a92af1059eb24-126ea4e9694so749578c88.1
+ for <qemu-devel@nongnu.org>; Wed, 18 Feb 2026 07:23:27 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1771428206; cv=none;
+ d=google.com; s=arc-20240605;
+ b=RzffSDc6xL0wz/8uK1F7qlLW8imnBPYFmr8lXAdE4is3QGRQM5U2DjlEtLaKE2ujWr
+ mvnGU/DdiGDzYeL0Cf9siQRqCsdXNcvOUX8MMQWJOqldvgxJVN/xSj91xXya8nNxvKBT
+ RjbZrmd8Sh4wI1qpbHCNQraRposs8ZwEt8EzLMjV9YGMMXUdotgFLxUBEN/p+6d3kc+d
+ UL6M4yxsskVovEYT4h3cdZ0kJuPzgSnqIcmbEX1OMdodfCs0J2p76NHntDI6pLhwDgqx
+ ALGZ5m2taWSf3YCmRwc/Qa4hAMywhq8nGDvXZ/RPXhkU1wMIgFUvsiY4HBPfbhD3k2GU
+ rm5Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=2UsbvPdUzkpU92dkxDHalvZCOXMpxYS7kgECiTNSA90=;
+ fh=sdRjwF8oUqEiD33m04wmpwcDN3OVLMFzW3bOd/8YB8s=;
+ b=dw4wjfsZUdHhRQ4JopEEuH953BkzKHj/HGbpiD9WQJxByG7curIZR80oxnXXT6scQe
+ 2SJutebNb6684+iS58rS32JzqoUqB4DG/9r5IoX9Ry2jslkVCp0WW2CMLssUNtWDv6XR
+ dzlJWQua7fezw23dqoKItSybyxDIga7STrwD18+54ZxbGRWpAN3TCqC/Licg3dGiA/EQ
+ 3ps9MEZebRf3eC5QGGzJEV03inG479Px5WtNUMbvZ6PEYYeVLBUr8TonXLCFyd8uhQpo
+ uvdOCOE+sbgROhbjLGia4NdWSTtEWZf4iOx6+acWlrlQkheP8zExaQ6njVhG17nIykWC
+ OM7w==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1771427278; x=1772032078; darn=nongnu.org;
- h=to:references:message-id:content-transfer-encoding:cc:date
- :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1771428206; x=1772033006; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=M+YhQT0gbq1eXwaTS6GyWhwJJ0Tom4TMrt47Lob5H2o=;
- b=B1JE3O+EZ5JmygRUejrir8Mxda+4xQKzZkejomn+WZ5U02aY4h8fIybfoY1cIIKXj7
- VrKyBf+nh+qzbongViCXXH35ZDyDW4MvElJmneB8lSXwuCxJN3rvnMvwfZ48juoaSTHS
- evrgTsx/mSrz/H+FbriZskdQC2X6kf/BWWltTGJXPO//TwEE/oKQ+Xq1wnnxiTTGpLCQ
- hgWQuLbaKzcxGq6Pv3H+AYdZ5UEfV4pJxZdf64SJBRXRI3f8dHiIt3fe0eN0X6M147at
- 50kik67nEx+KQDF5YEPLF9IhxmUe8LuU5A5BXsddyBNypuVuDcoQLtXDI6RjUNyMaBU0
- Qm3Q==
+ bh=2UsbvPdUzkpU92dkxDHalvZCOXMpxYS7kgECiTNSA90=;
+ b=OdZLnXTcZartAQoJQjlR/xvGiSKm7trk9km3PyVIWyRLcgT1statnYoXgG7oNipkDl
+ bKhcZ++DEmqockaKVA118OfPr3A7qOJ/Xx74PWe0hoD972xG0B47mL+vHMvnozcPIn4X
+ 12QXn7QTUDgFO1h+2sblCeeSFbBXrPhf3TjwwfP/oP4R3ua+MMXeooJa5sL841bC82je
+ EIFFJWk6RrKjk04u1zQQgLPJhl8HhlqwD0CKNYhS9shRmxyxsdGwPJ74/mG+QurVP6Ll
+ oSn6Iwi4CUDgi4D5Di+ZZxfbX7lCKMEJhRUg2MI5P5T2Ex7FSdddx334GCX0kWt+P9Vn
+ IbkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771427278; x=1772032078;
- h=to:references:message-id:content-transfer-encoding:cc:date
- :in-reply-to:from:subject:mime-version:x-gm-gg:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=M+YhQT0gbq1eXwaTS6GyWhwJJ0Tom4TMrt47Lob5H2o=;
- b=HUmi9JxjncBLqFjvWi18WGWo0O9vDE1YL4Ht3pkLlpbijbVoaKZgaaA6W2WyTBdtUa
- w9uB6GKVnnFnMhp4brsaj+Spy544UMPgwR0uzH7pMBdWRXYOM+elvWorphPsCVmR0TPg
- lhARVqq39WXawQgwkbq+Ric+HlrdpBsQiUSUPY6mtrvre+Cnu6g/WpxMeoiOtBAxyFez
- sWKtN5TyM4JVKjhQzBZYzf28XsxCQ5a9hwMk56C904HMtX6exewypcgkT32oHarQutTe
- xp4ZBzdXqQ3XORsypY+K6SVb7BZVQJAQCKOv+X+ly5jU86K3S9wKsnQOhJsut+Tpr59V
- +wiw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU6M3J3IEwblri17/Ynxk1ObbuPJXGuq89R7SDzxL5Lv2rW0+q0PLNDc+GqqEWzEWeYJ3+n/Y+iepSm@nongnu.org
-X-Gm-Message-State: AOJu0Yxu2Tejhjzz9f6I9UgjgnCJvgRfOdcFoecf8EB9hhH3/lRCU0Ym
- s/DT02yqY7D02QLMYrxCDCFAQFL4MJfLWsMI+z05QvToXSZNgl2pEzUpHeDEXarnSzVSR35572G
- 0juCaJZgOcQuRl+u0iyyZe2lItNzsixroEi1m0zX0YUTD0qMkr8FOOqd2
-X-Gm-Gg: AZuq6aLS6XfMZBfWjTaoXXyFAzWsu0z6+jozDVfz5D0lN+Kw8j6ZrydIGayhg9QxRGl
- J7rjp5/cmCLt6mLoo/DK9a61zJFF7j1tcyh8JOF/eIg6m8Q+2oWn4RPimLR0kvcRMJvEHSnb6FD
- uWH5Ds1N3SIz1nhjCXMjEaR10NGIOZYIwY/YfvOliHWpjhecdGdYnnJ/WLglm2AS7Ebj5fDixCR
- UksikYxU3hmCEWTew2AVSvSYXt5/5rVRpnn91qUhGZHo1hBC7h1nWMkkdHklb8EjSY8AeTA4FEk
- JcjUl7i0IdH/kAkko+l5y62YmlFKHD1Dgq1BEZnXspPIYpfR5lWeRev0Qk1n8EcSF9/+tYeTK4J
- yLVYm9jLKIPXky/moPiZ43hjl7m3+9jbkQuCxuciqMa3CRWdunKMMvRDGkViXKVEbsl4=
-X-Received: by 2002:a17:903:8d0:b0:2a9:5c0b:e5dc with SMTP id
- d9443c01a7336-2ad50fd1e8cmr20506035ad.54.1771427277731; 
- Wed, 18 Feb 2026 07:07:57 -0800 (PST)
-X-Received: by 2002:a17:903:8d0:b0:2a9:5c0b:e5dc with SMTP id
- d9443c01a7336-2ad50fd1e8cmr20505725ad.54.1771427277198; 
- Wed, 18 Feb 2026 07:07:57 -0800 (PST)
-Received: from smtpclient.apple ([117.99.83.54])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2ad1adef6e2sm133232505ad.2.2026.02.18.07.07.55
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Wed, 18 Feb 2026 07:07:56 -0800 (PST)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81.1.4\))
-Subject: Re: [PATCH v5 22/34] hw/vfio: generate new file fd for pseudo device
- and rebind existing descriptors
-From: Ani Sinha <anisinha@redhat.com>
-In-Reply-To: <96665575-c28c-43fb-af7b-41be109dc959@redhat.com>
-Date: Wed, 18 Feb 2026 20:37:42 +0530
-Cc: Alex Williamson <alex@shazbot.org>, Gerd Hoffmann <kraxel@redhat.com>,
- qemu-devel <qemu-devel@nongnu.org>
+ d=1e100.net; s=20230601; t=1771428206; x=1772033006;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=2UsbvPdUzkpU92dkxDHalvZCOXMpxYS7kgECiTNSA90=;
+ b=rEmX6qAYWk5usyxWILshARs9lQ45nIVYBp5Pw6KpS6c/e88TXGXGMA+x/+fWGoLvWJ
+ VW0nXWX9v6T6aNXYwEEP5hLUgg3GtrsB/0A4aLc4HA43Vcgl12pIPj5vGxJyifLKZUXx
+ Ou9aGTfWyvPwkMMwAu16Z8tySbgPP4Z/+YS5Sd62c0vBfE+GxwyvlSum62R8R6dDt/kg
+ HyquX8dKhlMAfMwUVKAjt6ph5YIRsf3RkgiqJIK8x4JjCtX6CLwQ8Vuy1FZh0P5xERpo
+ 51BqSPkWtxYUgXMgsNCDb0vVJzqtm6uECcLn6T7xxTQPwHITcxPgSpinWsTvZKupqfUK
+ 5UEw==
+X-Gm-Message-State: AOJu0YwYu8RH54Wx9jqshm9Fg5tSOKSUCrVu3lrAREhhXX8+C58laTE0
+ uMR+1OFUned+797GMafH94gDwwfVP3sa+fvlcd/pW4Yr9BCwG31yDoR/Ia6k6S90pUbAIGy9YPQ
+ 1Yqpg5vTVX98OQbqO7SOZZDmFmZIdZahYqw==
+X-Gm-Gg: AZuq6aKGsW6EueWEmlvcmlTkHdt1JBRJjIUUt3Wwf2n6r0r+FDqo99xfcfnxAg7N9bl
+ 7iEajJEwon1SySQinpWJ5RKflkLK67JUM2zl5JJQ0yTX7NqPNZ8pan6HH6x+dCKboxCPq1dqFZl
+ EeWwPC5ltQBhBldClomczQ+KUDhcrgMbC7CFdFfDtAVe2u94Izyf6ZPTOSyqNHl/sZNWOLl+dpw
+ 3RFpaKRT5SUM7TyKOTzkqZge4kq455JUB5VlJ30Hk64jLipJIpqy2UOKh+Ki7xvIzL8ZPVRU+HG
+ 66GnMbsLWo313RG0ItmxWYx20C+vKIpliMwvUCP134g=
+X-Received: by 2002:a05:6102:1621:b0:5fd:f2ad:c653 with SMTP id
+ ada2fe7eead31-5fe1acde7ebmr7592163137.16.1771427580739; Wed, 18 Feb 2026
+ 07:13:00 -0800 (PST)
+MIME-Version: 1.0
+References: <20260218015151.4052-1-graf@amazon.com>
+ <20260218015151.4052-9-graf@amazon.com>
+In-Reply-To: <20260218015151.4052-9-graf@amazon.com>
+From: Dorjoy Chowdhury <dorjoychy111@gmail.com>
+Date: Wed, 18 Feb 2026 21:12:49 +0600
+X-Gm-Features: AaiRm513RFggHu2TxwroliXKL5PLEVkM4Y1EBl3AzSXfa4BnC2Pr5o3HpsuJTqU
+Message-ID: <CAFfO_h4xRp9RpP1_viAUbkuHG86q-S_tWunt_T2eC3Th3V=5NA@mail.gmail.com>
+Subject: Re: [PATCH 08/10] hw/core/eif: Move definitions to header
+To: Alexander Graf <graf@amazon.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
+ Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>,
+ alex.bennee@linaro.org, 
+ philmd@linaro.org, berrange@redhat.com, marcandre.lureau@redhat.com, 
+ Cornelia Huck <cohuck@redhat.com>, mst@redhat.com, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ Tyler Fanelli <tfanelli@redhat.com>, mknaust@amazon.com,
+ nh-open-source@amazon.com
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <20472A29-B096-4407-B144-74C3804CC315@redhat.com>
-References: <20260218114233.266178-1-anisinha@redhat.com>
- <20260218114233.266178-23-anisinha@redhat.com>
- <96665575-c28c-43fb-af7b-41be109dc959@redhat.com>
-To: Cedric Le Goater <clg@redhat.com>
-X-Mailer: Apple Mail (2.3826.700.81.1.4)
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=anisinha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.043,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1232;
+ envelope-from=dorjoychy111@gmail.com; helo=mail-dl1-x1232.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,190 +125,139 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Wed, Feb 18, 2026 at 7:53=E2=80=AFAM Alexander Graf <graf@amazon.com> wr=
+ote:
+>
+> In follow-up patches we need some EIF file definitions that are
+> currently in the eif.c file, but want to access them from a separate
+> device. Move them into the header instead.
+>
+> Signed-off-by: Alexander Graf <graf@amazon.com>
+> ---
+>  hw/core/eif.c | 38 --------------------------------------
+>  hw/core/eif.h | 38 ++++++++++++++++++++++++++++++++++++++
+>  2 files changed, 38 insertions(+), 38 deletions(-)
 
+Reviewed-by: Dorjoy Chowdhury <dorjoychy111@gmail.com>
 
-> On 18 Feb 2026, at 7:37=E2=80=AFPM, C=C3=A9dric Le Goater =
-<clg@redhat.com> wrote:
->=20
-> On 2/18/26 12:42, Ani Sinha wrote:
->> Normally the vfio pseudo device file descriptor lives for the life of =
-the VM.
->> However, when the kvm VM file descriptor changes, a new file =
-descriptor
->> for the pseudo device needs to be generated against the new kvm VM =
-descriptor.
->> Other existing vfio descriptors needs to be reattached to the new =
-pseudo device
->> descriptor. This change performs the above steps.
->> Tested-by: C=C3=A9dric Le Goater <clg@redhat.com>
->=20
-> There is a regression since last version.
->=20
->=20
-> 'reboot' from the guest and command 'system_reset' from the QEMU
-> monitor now generate these outputs:
->=20
->  qemu-system-x86_64: info: virtual machine state has been rebuilt with =
-new guest file handle.
->  qemu-system-x86_64: info: virtual machine state has been rebuilt with =
-new guest file handle.
->  qemu-system-x86_64: info: virtual machine state has been rebuilt with =
-new guest file handle.
->  ...
->=20
-> and QEMU exits after a while.
+Regards,
+Dorjoy
 
-I have only seen this in SEV-ES with more than one vcpus. Never with TDX =
-or SEV-SNP (single or multiple cpus).
-On which host/guest type did you see this?
-
->=20
->=20
->=20
->> Signed-off-by: Ani Sinha <anisinha@redhat.com>
->=20
-> Anyhow this patch looks good.
->=20
-> Reviewed-by: C=C3=A9dric Le Goater <clg@redhat.com>
->=20
-> Thanks,
->=20
-> C.
->=20
->> ---
->>  hw/vfio/helpers.c | 92 =
-+++++++++++++++++++++++++++++++++++++++++++++++
->>  1 file changed, 92 insertions(+)
->> diff --git a/hw/vfio/helpers.c b/hw/vfio/helpers.c
->> index f68f8165d0..e2bedd15ec 100644
->> --- a/hw/vfio/helpers.c
->> +++ b/hw/vfio/helpers.c
->> @@ -116,6 +116,89 @@ bool vfio_get_info_dma_avail(struct =
-vfio_iommu_type1_info *info,
->>   * we'll re-use it should another vfio device be attached before =
-then.
->>   */
->>  int vfio_kvm_device_fd =3D -1;
->> +
->> +/*
->> + * Confidential virtual machines:
->> + * During reset of confidential vms, the kvm vm file descriptor =
-changes.
->> + * In this case, the old vfio kvm file descriptor is
->> + * closed and a new descriptor is created against the new kvm vm =
-file
->> + * descriptor.
->> + */
->> +
->> +typedef struct VFIODeviceFd {
->> +    int fd;
->> +    QLIST_ENTRY(VFIODeviceFd) node;
->> +} VFIODeviceFd;
->> +
->> +static QLIST_HEAD(, VFIODeviceFd) vfio_device_fds =3D
->> +    QLIST_HEAD_INITIALIZER(vfio_device_fds);
->> +
->> +static void vfio_device_fd_list_add(int fd)
->> +{
->> +    VFIODeviceFd *file_fd;
->> +    file_fd =3D g_malloc0(sizeof(*file_fd));
->> +    file_fd->fd =3D fd;
->> +    QLIST_INSERT_HEAD(&vfio_device_fds, file_fd, node);
->> +}
->> +
->> +static void vfio_device_fd_list_remove(int fd)
->> +{
->> +    VFIODeviceFd *file_fd, *next;
->> +
->> +    QLIST_FOREACH_SAFE(file_fd, &vfio_device_fds, node, next) {
->> +        if (file_fd->fd =3D=3D fd) {
->> +            QLIST_REMOVE(file_fd, node);
->> +            g_free(file_fd);
->> +            break;
->> +        }
->> +    }
->> +}
->> +
->> +static int vfio_device_fd_rebind(NotifierWithReturn *notifier, void =
-*data,
->> +                                  Error **errp)
->> +{
->> +    VFIODeviceFd *file_fd;
->> +    int ret =3D 0;
->> +    struct kvm_device_attr attr =3D {
->> +        .group =3D KVM_DEV_VFIO_FILE,
->> +        .attr =3D KVM_DEV_VFIO_FILE_ADD,
->> +    };
->> +    struct kvm_create_device cd =3D {
->> +        .type =3D KVM_DEV_TYPE_VFIO,
->> +    };
->> +
->> +    /* we are not interested in pre vmfd change notification */
->> +    if (((VmfdChangeNotifier *)data)->pre) {
->> +        return 0;
->> +    }
->> +
->> +    if (kvm_vm_ioctl(kvm_state, KVM_CREATE_DEVICE, &cd)) {
->> +        error_setg_errno(errp, errno, "Failed to create KVM VFIO =
-device");
->> +        return -errno;
->> +    }
->> +
->> +    if (vfio_kvm_device_fd !=3D -1) {
->> +        close(vfio_kvm_device_fd);
->> +    }
->> +
->> +    vfio_kvm_device_fd =3D cd.fd;
->> +
->> +    QLIST_FOREACH(file_fd, &vfio_device_fds, node) {
->> +        attr.addr =3D (uint64_t)(unsigned long)&file_fd->fd;
->> +        if (ioctl(vfio_kvm_device_fd, KVM_SET_DEVICE_ATTR, &attr)) {
->> +            error_setg_errno(errp, errno,
->> +                             "Failed to add fd %d to KVM VFIO =
-device",
->> +                             file_fd->fd);
->> +            ret =3D -errno;
->> +        }
->> +    }
->> +    return ret;
->> +}
->> +
->> +static struct NotifierWithReturn vfio_vmfd_change_notifier =3D {
->> +    .notify =3D vfio_device_fd_rebind,
->> +};
->> +
->>  #endif
->>    void vfio_kvm_device_close(void)
->> @@ -153,6 +236,11 @@ int vfio_kvm_device_add_fd(int fd, Error **errp)
->>          }
->>            vfio_kvm_device_fd =3D cd.fd;
->> +        /*
->> +         * If the vm file descriptor changes, add a notifier so that =
-we can
->> +         * re-create the vfio_kvm_device_fd.
->> +         */
->> +        kvm_vmfd_add_change_notifier(&vfio_vmfd_change_notifier);
->>      }
->>        if (ioctl(vfio_kvm_device_fd, KVM_SET_DEVICE_ATTR, &attr)) {
->> @@ -160,6 +248,8 @@ int vfio_kvm_device_add_fd(int fd, Error **errp)
->>                           fd);
->>          return -errno;
->>      }
->> +
->> +    vfio_device_fd_list_add(fd);
->>  #endif
->>      return 0;
->>  }
->> @@ -183,6 +273,8 @@ int vfio_kvm_device_del_fd(int fd, Error **errp)
->>                           "Failed to remove fd %d from KVM VFIO =
-device", fd);
->>          return -errno;
->>      }
->> +
->> +    vfio_device_fd_list_remove(fd);
->>  #endif
->>      return 0;
->>  }
->=20
-
+>
+> diff --git a/hw/core/eif.c b/hw/core/eif.c
+> index 513caec6b4..96f1d76578 100644
+> --- a/hw/core/eif.c
+> +++ b/hw/core/eif.c
+> @@ -18,44 +18,6 @@
+>
+>  #include "hw/core/eif.h"
+>
+> -#define MAX_SECTIONS 32
+> -
+> -/* members are ordered according to field order in .eif file */
+> -typedef struct EifHeader {
+> -    uint8_t  magic[4]; /* must be .eif in ascii i.e., [46, 101, 105, 102=
+] */
+> -    uint16_t version;
+> -    uint16_t flags;
+> -    uint64_t default_memory;
+> -    uint64_t default_cpus;
+> -    uint16_t reserved;
+> -    uint16_t section_cnt;
+> -    uint64_t section_offsets[MAX_SECTIONS];
+> -    uint64_t section_sizes[MAX_SECTIONS];
+> -    uint32_t unused;
+> -    uint32_t eif_crc32;
+> -} QEMU_PACKED EifHeader;
+> -
+> -/* members are ordered according to field order in .eif file */
+> -typedef struct EifSectionHeader {
+> -    /*
+> -     * 0 =3D invalid, 1 =3D kernel, 2 =3D cmdline, 3 =3D ramdisk, 4 =3D =
+signature,
+> -     * 5 =3D metadata
+> -     */
+> -    uint16_t section_type;
+> -    uint16_t flags;
+> -    uint64_t section_size;
+> -} QEMU_PACKED EifSectionHeader;
+> -
+> -enum EifSectionTypes {
+> -    EIF_SECTION_INVALID =3D 0,
+> -    EIF_SECTION_KERNEL =3D 1,
+> -    EIF_SECTION_CMDLINE =3D 2,
+> -    EIF_SECTION_RAMDISK =3D 3,
+> -    EIF_SECTION_SIGNATURE =3D 4,
+> -    EIF_SECTION_METADATA =3D 5,
+> -    EIF_SECTION_MAX =3D 6,
+> -};
+> -
+>  static const char *section_type_to_string(uint16_t type)
+>  {
+>      const char *str;
+> diff --git a/hw/core/eif.h b/hw/core/eif.h
+> index fed3cb5514..a3412377a9 100644
+> --- a/hw/core/eif.h
+> +++ b/hw/core/eif.h
+> @@ -11,6 +11,44 @@
+>  #ifndef HW_CORE_EIF_H
+>  #define HW_CORE_EIF_H
+>
+> +#define MAX_SECTIONS 32
+> +
+> +/* members are ordered according to field order in .eif file */
+> +typedef struct EifHeader {
+> +    uint8_t  magic[4]; /* must be .eif in ascii i.e., [46, 101, 105, 102=
+] */
+> +    uint16_t version;
+> +    uint16_t flags;
+> +    uint64_t default_memory;
+> +    uint64_t default_cpus;
+> +    uint16_t reserved;
+> +    uint16_t section_cnt;
+> +    uint64_t section_offsets[MAX_SECTIONS];
+> +    uint64_t section_sizes[MAX_SECTIONS];
+> +    uint32_t unused;
+> +    uint32_t eif_crc32;
+> +} QEMU_PACKED EifHeader;
+> +
+> +/* members are ordered according to field order in .eif file */
+> +typedef struct EifSectionHeader {
+> +    /*
+> +     * 0 =3D invalid, 1 =3D kernel, 2 =3D cmdline, 3 =3D ramdisk, 4 =3D =
+signature,
+> +     * 5 =3D metadata
+> +     */
+> +    uint16_t section_type;
+> +    uint16_t flags;
+> +    uint64_t section_size;
+> +} QEMU_PACKED EifSectionHeader;
+> +
+> +enum EifSectionTypes {
+> +    EIF_SECTION_INVALID =3D 0,
+> +    EIF_SECTION_KERNEL =3D 1,
+> +    EIF_SECTION_CMDLINE =3D 2,
+> +    EIF_SECTION_RAMDISK =3D 3,
+> +    EIF_SECTION_SIGNATURE =3D 4,
+> +    EIF_SECTION_METADATA =3D 5,
+> +    EIF_SECTION_MAX =3D 6,
+> +};
+> +
+>  bool read_eif_file(const char *eif_path, const char *machine_initrd,
+>                     char **kernel_path, char **initrd_path,
+>                     char **kernel_cmdline, uint8_t *image_sha384,
+> --
+> 2.47.1
+>
+>
+>
+>
+> Amazon Web Services Development Center Germany GmbH
+> Tamara-Danz-Str. 13
+> 10243 Berlin
+> Geschaeftsfuehrung: Christof Hellmis, Andreas Stieger
+> Eingetragen am Amtsgericht Charlottenburg unter HRB 257764 B
+> Sitz: Berlin
+> Ust-ID: DE 365 538 597
+>
 
