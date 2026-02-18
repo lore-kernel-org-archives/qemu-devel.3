@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20805E9A03B
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 01:53:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 718EAE9A04B
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 01:53:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vsWku-0000W1-Me; Tue, 17 Feb 2026 20:53:32 -0500
+	id 1vsWkw-0000a2-Lu; Tue, 17 Feb 2026 20:53:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=502105d20=graf@amazon.de>)
- id 1vsWks-0000RL-GX; Tue, 17 Feb 2026 20:53:30 -0500
+ id 1vsWkv-0000YJ-Cg; Tue, 17 Feb 2026 20:53:33 -0500
 Received: from pdx-out-014.esa.us-west-2.outbound.mail-perimeter.amazon.com
  ([35.83.148.184])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=502105d20=graf@amazon.de>)
- id 1vsWkq-0005hY-Mq; Tue, 17 Feb 2026 20:53:30 -0500
+ id 1vsWkt-0005hY-BT; Tue, 17 Feb 2026 20:53:33 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazoncorp2;
- t=1771379608; x=1802915608;
+ t=1771379611; x=1802915611;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=vGUcozSGDe3LdA51buWeDnWuA1XOyLH+O+KdKgLB5Pc=;
- b=S1elGRZYfYi6eeLSA2ZbHPAvKxbrFZUe9HNijDZ+AIxE006rvcw8K3uG
- +uqZ6gwrUU975KYvUQJjyMoetT518uGs0q5kdZeAo90dZYNsj1ZjeRHVq
- r95HXvOcn3QQX+vibiL7QFEKZSgt6wkRprT1YG42cDztl8e349KrU6B8V
- K5xwQdjIT5eWpgCNt9E5CEBt6UQ/8MYJsZpK66CqkTlm7wVMHZM84N6ew
- O1Pwtpw6pnh5uKmgpH0G7JquvUStob4qQ9ZOG3SwSRyKWeoBihajB8oVv
- JIej/CwTp+xVwwvWvojxoChlNKOHuzr3QZAXFbxaXVMZzluuDE2QGgyUi A==;
-X-CSE-ConnectionGUID: 6RaYNiU/T8y49rRrUjpGMA==
-X-CSE-MsgGUID: Pxs3kH1ESw2hw1KvXZzSRg==
-X-IronPort-AV: E=Sophos;i="6.21,297,1763424000"; d="scan'208";a="13037688"
+ bh=3hLOH/1PH9KgMpnJK/l9v0L+U9NxjDuT0ZDVOs230+4=;
+ b=b8pikC+6cFajKK4rpfUDa5OfTGHbW/BzeDSBQXrQUhHaHpcjiIDw0HdZ
+ 887aGuywIwItqBJf3uCGmzXkQ1Dp/neIEQ+ucnUtawM15aPm2Mt2ta+rG
+ fcZA3ifgct6WwLzQyTuVbZjcUHo1abGl5Ps/mbZ4paQrqKlkTClsUpUUJ
+ C9iVWOGCyzvZOKJtazYXjfWXEOaueo2dF3p+WdD94S3mIRbD2H7VJImmQ
+ vgULR9iu3eclXudxpWx1yMX6OF0R4yDy3rBSpXu0u107xsyCMukx8Bl7B
+ tXyMJnPciAUAscyqffPb0gSzO5e61hI2qG4shxqSvWpppfckrZctMc9Lb A==;
+X-CSE-ConnectionGUID: ziCxB2d/SJaHTzwBHvIBww==
+X-CSE-MsgGUID: 9r57eOH5Rtqe9eS9qu958w==
+X-IronPort-AV: E=Sophos;i="6.21,297,1763424000"; d="scan'208";a="13037692"
 Received: from ip-10-5-6-203.us-west-2.compute.internal (HELO
  smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.6.203])
  by internal-pdx-out-014.esa.us-west-2.outbound.mail-perimeter.amazon.com with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Feb 2026 01:53:24 +0000
-Received: from EX19MTAUWC001.ant.amazon.com [205.251.233.105:30148]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.45.241:2525]
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Feb 2026 01:53:26 +0000
+Received: from EX19MTAUWB002.ant.amazon.com [205.251.233.48:7051]
+ by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.11.41:2525]
  with esmtp (Farcaster)
- id 0c8131c5-47b6-420c-ad7d-5afbafb4ae0e; Wed, 18 Feb 2026 01:53:23 +0000 (UTC)
-X-Farcaster-Flow-ID: 0c8131c5-47b6-420c-ad7d-5afbafb4ae0e
+ id 38446c7a-17e8-442f-be23-a47edb0fb50d; Wed, 18 Feb 2026 01:53:26 +0000 (UTC)
+X-Farcaster-Flow-ID: 38446c7a-17e8-442f-be23-a47edb0fb50d
 Received: from EX19D020UWC004.ant.amazon.com (10.13.138.149) by
- EX19MTAUWC001.ant.amazon.com (10.250.64.174) with Microsoft SMTP Server
+ EX19MTAUWB002.ant.amazon.com (10.250.64.231) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.35;
- Wed, 18 Feb 2026 01:53:23 +0000
+ Wed, 18 Feb 2026 01:53:26 +0000
 Received: from ip-10-253-83-51.amazon.com (172.19.99.218) by
  EX19D020UWC004.ant.amazon.com (10.13.138.149) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.35;
- Wed, 18 Feb 2026 01:53:20 +0000
+ Wed, 18 Feb 2026 01:53:23 +0000
 From: Alexander Graf <graf@amazon.com>
 To: <qemu-devel@nongnu.org>
 CC: <qemu-arm@nongnu.org>, Peter Maydell <peter.maydell@linaro.org>, "Thomas
@@ -60,9 +60,9 @@ CC: <qemu-arm@nongnu.org>, Peter Maydell <peter.maydell@linaro.org>, "Thomas
  <dorjoychy111@gmail.com>, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, Tyler Fanelli <tfanelli@redhat.com>,
  <mknaust@amazon.com>, <nh-open-source@amazon.com>
-Subject: [PATCH 09/10] hw/nitro: Enable direct kernel boot
-Date: Wed, 18 Feb 2026 01:51:49 +0000
-Message-ID: <20260218015151.4052-10-graf@amazon.com>
+Subject: [PATCH 10/10] docs: Add Nitro Enclaves documentation
+Date: Wed, 18 Feb 2026 01:51:50 +0000
+Message-ID: <20260218015151.4052-11-graf@amazon.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20260218015151.4052-1-graf@amazon.com>
 References: <20260218015151.4052-1-graf@amazon.com>
@@ -99,186 +99,187 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Nitro Enclaves can only boot EIF files which are a combination of
-kernel, initramfs and cmdline in a single file. When the kernel image is
-not an EIF, treat it like a kernel image and assemble an EIF image on
-the fly. This way, users can call QEMU with a direct
-kernel/initrd/cmdline combination and everything "just works".
+Now that all pieces are in place to spawn Nitro Enclaves using
+a special purpose accelerator and machine model, document how
+to use it.
 
 Signed-off-by: Alexander Graf <graf@amazon.com>
 ---
- hw/core/eif.h        |   3 ++
- hw/nitro/machine.c   | 116 +++++++++++++++++++++++++++++++++++++++++++
- hw/nitro/meson.build |   2 +-
- 3 files changed, 120 insertions(+), 1 deletion(-)
+ MAINTAINERS                                |   1 +
+ docs/system/confidential-guest-support.rst |   1 +
+ docs/system/index.rst                      |   1 +
+ docs/system/nitro.rst                      | 128 +++++++++++++++++++++
+ 4 files changed, 131 insertions(+)
+ create mode 100644 docs/system/nitro.rst
 
-diff --git a/hw/core/eif.h b/hw/core/eif.h
-index a3412377a9..0c432dbc2d 100644
---- a/hw/core/eif.h
-+++ b/hw/core/eif.h
-@@ -12,6 +12,7 @@
- #define HW_CORE_EIF_H
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 53ce075e9a..5e9e429530 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -3027,6 +3027,7 @@ M: Alexander Graf <graf@amazon.com>
+ S: Maintained
+ F: hw/nitro/
+ F: include/hw/nitro/
++F: docs/system/nitro.rst
  
- #define MAX_SECTIONS 32
-+#define EIF_HDR_ARCH_ARM64 0x1
+ Subsystems
+ ----------
+diff --git a/docs/system/confidential-guest-support.rst b/docs/system/confidential-guest-support.rst
+index 66129fbab6..562a7c3c28 100644
+--- a/docs/system/confidential-guest-support.rst
++++ b/docs/system/confidential-guest-support.rst
+@@ -41,5 +41,6 @@ Currently supported confidential guest mechanisms are:
+ * Intel Trust Domain Extension (TDX) (see :doc:`i386/tdx`)
+ * POWER Protected Execution Facility (PEF) (see :ref:`power-papr-protected-execution-facility-pef`)
+ * s390x Protected Virtualization (PV) (see :doc:`s390x/protvirt`)
++* AWS Nitro Enclaves (see :doc:`nitro`)
  
- /* members are ordered according to field order in .eif file */
- typedef struct EifHeader {
-@@ -49,6 +50,8 @@ enum EifSectionTypes {
-     EIF_SECTION_MAX = 6,
- };
- 
-+#define EIF_MAGIC { '.', 'e', 'i', 'f' }
+ Other mechanisms may be supported in future.
+diff --git a/docs/system/index.rst b/docs/system/index.rst
+index 427b020483..d297a95282 100644
+--- a/docs/system/index.rst
++++ b/docs/system/index.rst
+@@ -39,5 +39,6 @@ or Hypervisor.Framework.
+    multi-process
+    confidential-guest-support
+    igvm
++   nitro
+    vm-templating
+    sriov
+diff --git a/docs/system/nitro.rst b/docs/system/nitro.rst
+new file mode 100644
+index 0000000000..ebf118a108
+--- /dev/null
++++ b/docs/system/nitro.rst
+@@ -0,0 +1,128 @@
++AWS Nitro Enclaves
++==================
 +
- bool read_eif_file(const char *eif_path, const char *machine_initrd,
-                    char **kernel_path, char **initrd_path,
-                    char **kernel_cmdline, uint8_t *image_sha384,
-diff --git a/hw/nitro/machine.c b/hw/nitro/machine.c
-index 197adfbdb5..33b0749288 100644
---- a/hw/nitro/machine.c
-+++ b/hw/nitro/machine.c
-@@ -32,9 +32,104 @@
- #include "system/nitro-accel.h"
- #include "qemu/accel.h"
- #include "hw/arm/machines-qom.h"
-+#include "hw/core/eif.h"
-+#include <zlib.h> /* for crc32 */
- 
- #define EIF_LOAD_ADDR   (8 * 1024 * 1024)
- 
-+static bool is_eif(char *eif, gsize len)
-+{
-+    const char eif_magic[] = EIF_MAGIC;
++`AWS Nitro Enclaves <https://aws.amazon.com/ec2/nitro/nitro-enclaves/>`_
++are isolated compute environments that run alongside EC2 instances.
++They are created by partitioning CPU and memory resources from a parent
++instance and launching a signed Enclave Image Format (EIF) file inside
++a confidential VM managed by the Nitro Hypervisor.
 +
-+    return len >= sizeof(eif_magic) &&
-+           !memcmp(eif, eif_magic, sizeof(eif_magic));
-+}
++QEMU supports launching Nitro Enclaves on EC2 instances that have
++enclave support enabled, using the ``nitro`` accelerator and the
++``nitro`` machine type.
 +
-+static void build_eif_section(EifHeader *hdr, GByteArray *buf, uint16_t type,
-+                              const char *data, uint64_t size)
-+{
-+    uint16_t section = be16_to_cpu(hdr->section_cnt);
-+    EifSectionHeader shdr = {
-+        .section_type = cpu_to_be16(type),
-+        .flags = 0,
-+        .section_size = cpu_to_be64(size),
-+    };
++Prerequisites
++-------------
 +
-+    hdr->section_offsets[section] = cpu_to_be64(buf->len);
-+    hdr->section_sizes[section] = cpu_to_be64(size);
++* An EC2 instance with Nitro Enclaves enabled
++* The ``nitro_enclaves`` kernel module loaded (provides ``/dev/nitro_enclaves``)
++* CPU cores allocated to the Nitro Enclaves pool via ``nitro-enclaves-allocator``
++* Huge pages allocated for Nitro Enclaves via ``nitro-enclaves-allocator``
 +
-+    g_byte_array_append(buf, (const uint8_t *)&shdr, sizeof(shdr));
-+    if (size) {
-+        g_byte_array_append(buf, (const uint8_t *)data, size);
-+    }
++Quick Start
++-----------
 +
-+    hdr->section_cnt = cpu_to_be16(section + 1);
-+}
++Launch a Nitro Enclave from a pre-built EIF file::
 +
-+/*
-+ * Nitro Enclaves only support loading EIF files. When the user provides
-+ * a Linux kernel, initrd and cmdline, convert them into EIF format.
-+ */
-+static char *build_eif(const char *kernel_data, gsize kernel_size,
-+                       const char *initrd_path, const char *cmdline,
-+                       gsize *out_size, Error **errp)
-+{
-+    g_autofree char *initrd_data = NULL;
-+    static const char metadata[] = "{}";
-+    size_t metadata_len = sizeof(metadata) - 1;
-+    gsize initrd_size = 0;
-+    GByteArray *buf;
-+    EifHeader hdr;
-+    uint32_t crc = 0;
-+    size_t cmdline_len;
++    $ qemu-system-x86_64 -accel nitro,debug-mode=on -M nitro -nographic \
++        -smp 2 -m 512M -kernel enclave.eif
 +
-+    if (initrd_path) {
-+        if (!g_file_get_contents(initrd_path, &initrd_data,
-+                                 &initrd_size, NULL)) {
-+            error_setg(errp, "Failed to read initrd '%s'", initrd_path);
-+            return NULL;
-+        }
-+    }
++Launch an enclave from individual kernel and initrd files::
 +
-+    buf = g_byte_array_new();
++    $ qemu-system-x86_64 -accel nitro,debug-mode=on -M nitro -nographic \
++        -smp 2 -m 512M -kernel vmlinuz -initrd initrd.cpio \
++        -append "console=ttyS0"
 +
-+    cmdline_len = cmdline ? strlen(cmdline) : 0;
++The same commands work with ``qemu-system-aarch64`` on Graviton based EC2
++instances.
 +
-+    hdr = (EifHeader) {
-+        .magic = EIF_MAGIC,
-+        .version = cpu_to_be16(4),
-+        .flags = cpu_to_be16(target_aarch64() ? EIF_HDR_ARCH_ARM64 : 0),
-+    };
++Accelerator
++-----------
 +
-+    g_byte_array_append(buf, (const uint8_t *)&hdr, sizeof(hdr));
++The ``nitro`` accelerator (``-accel nitro``) drives the
++``/dev/nitro_enclaves`` device to create and manage a Nitro Enclave.
++It handles:
 +
-+    /* Kernel */
-+    build_eif_section(&hdr, buf, EIF_SECTION_KERNEL, kernel_data, kernel_size);
++* Creating the enclave VM slot
++* Donating memory regions (must be huge page backed)
++* Adding vCPUs (must be full physical cores)
++* Starting the enclave
++* Forwarding the enclave CID to devices that need it
 +
-+    /* Command line */
-+    build_eif_section(&hdr, buf, EIF_SECTION_CMDLINE, cmdline, cmdline_len);
++Accelerator options:
 +
-+    /* Initramfs */
-+    build_eif_section(&hdr, buf, EIF_SECTION_RAMDISK, initrd_data, initrd_size);
++``debug-mode=on|off``
++    Enable debug mode. When enabled, the Nitro Hypervisor exposes the
++    enclave's serial console output via a vsock port that the machine
++    model automatically connects to. In debug mode, PCR values are zero.
++    Default is ``off``.
 +
-+    /* Metadata */
-+    build_eif_section(&hdr, buf, EIF_SECTION_METADATA, metadata, metadata_len);
++Machine
++-------
 +
-+    /*
-+     * Patch the header into the buffer first (with real section offsets
-+     * and sizes), then compute CRC over everything except the CRC field.
-+     */
-+    memcpy(buf->data, &hdr, sizeof(hdr));
-+    crc = crc32(crc, buf->data, offsetof(EifHeader, eif_crc32));
-+    crc = crc32(crc, &buf->data[sizeof(hdr)], buf->len - sizeof(hdr));
++The ``nitro`` machine (``-M nitro``) is a minimal, architecture-independent
++machine that provides only what a Nitro Enclave needs:
 +
-+    /* Finally write the CRC into the in-buffer header */
-+    ((EifHeader *)buf->data)->eif_crc32 = cpu_to_be32(crc);
++* RAM (huge page backed via memfd)
++* vCPUs (defaults to ``host`` CPU type)
++* A heartbeat device (vsock server on port 9000)
++* A serial console bridge (vsock client, debug mode only)
 +
-+    *out_size = buf->len;
-+    return (char *)g_byte_array_free(buf, false);
-+}
++Communication to the Nitro Enclave is limited to virtio-vsock. The Enclave
++is allocated a CID at launch at which it is reachable. The CID is available
++as QOM property in the accelerator and as a trace event.
 +
- static void nitro_create_cpu(const char *cpu_type, int index)
- {
-     Object *obj = object_new(cpu_type);
-@@ -87,6 +182,27 @@ static void nitro_machine_init(MachineState *machine)
-         error_report("nitro: failed to read EIF '%s'", eif_path);
-         exit(1);
-     }
++EIF Image Format
++^^^^^^^^^^^^^^^^
 +
-+    if (!is_eif(eif_data, eif_size)) {
-+        char *kernel_data = eif_data;
-+        gsize kernel_size = eif_size;
-+        Error *err = NULL;
++Nitro Enclaves boot from EIF (Enclave Image Format) files. When
++``-kernel`` points to an EIF file (detected by the ``.eif`` magic
++bytes), it is loaded directly into guest memory.
 +
-+        /*
-+         * The user gave us a non-EIF kernel, likely a Linux kernel image.
-+         * Assemble an EIF file from it, the -initrd and the -append arguments,
-+         * so that users can perform a natural direct kernel boot.
-+         */
-+        eif_data = build_eif(kernel_data, kernel_size, machine->initrd_filename,
-+                             machine->kernel_cmdline, &eif_size, &err);
-+        if (!eif_data) {
-+            error_report_err(err);
-+            exit(1);
-+        }
++When ``-kernel`` points to a regular kernel image (e.g. a bzImage or
++Image), the machine automatically assembles a minimal EIF on the fly
++from ``-kernel``, ``-initrd``, and ``-append``. This allows standard
++direct kernel boot without external EIF tooling.
 +
-+        g_free(kernel_data);
-+    }
++CPU Requirements
++^^^^^^^^^^^^^^^^
 +
-     address_space_write(&address_space_memory, EIF_LOAD_ADDR,
-                         MEMTXATTRS_UNSPECIFIED, eif_data, eif_size);
- 
-diff --git a/hw/nitro/meson.build b/hw/nitro/meson.build
-index 813f5a9c87..7b23f71d5a 100644
---- a/hw/nitro/meson.build
-+++ b/hw/nitro/meson.build
-@@ -1,3 +1,3 @@
- system_ss.add(when: 'CONFIG_NITRO_SERIAL_VSOCK', if_true: files('serial-vsock.c'))
- system_ss.add(when: 'CONFIG_NITRO_HEARTBEAT', if_true: files('heartbeat.c'))
--system_ss.add(when: 'CONFIG_NITRO_MACHINE', if_true: files('machine.c'))
-+system_ss.add(when: 'CONFIG_NITRO_MACHINE', if_true: [files('machine.c'), zlib])
++Nitro Enclaves require full physical CPU cores. On hyperthreaded
++systems, this means ``-smp`` must be a multiple of the threads per
++core (typically 2).
++
++Nitro Enclaves can only consume cores that are donated to the Nitro Enclave
++CPU pool. You can configure the CPU pool using the ``nitro-enclaves-allocator``
++tool or manually by writing to the nitro_enclaves cpu pool parameter. To
++allocate vCPUs 1, 2 and 3, you can call::
++
++  $ echo 1,2,3 | sudo tee /sys/module/nitro_enclaves/parameters/ne_cpus
++
++Beware that on x86-64 systems, hyperthread siblings are not consecutive
++and must be added in pairs to the pool. Consult tools like ``lstopo``
++or ``lscpu`` for details about your instance's CPU topology.
++
++Memory Requirements
++^^^^^^^^^^^^^^^^^^^
++
++Enclave memory must be huge page backed. The machine automatically
++creates a memfd memory backend with huge pages enabled. To make the
++huge page allocation work, ensure that huge pages are reserved in
++the system. To reserve 1 GiB of memory on a 4 KiB PAGE_SIZE system,
++you can call::
++
++    $ echo 512 | sudo tee /proc/sys/vm/nr_hugepages
++
++Emulated Nitro Enclaves
++-----------------------
++
++In addition to the native Nitro Enclaves invocation, you can also use
++the emulated nitro-enclave machine target (see :doc:`i386/nitro-enclave`)
++which implements the x86 Nitro Enclave device model. While -M nitro
++delegates virtual machine device emulation to the Nitro Hypervisor, -M
++nitro-enclave implements all devices itself, which means it also works
++on non-EC2 instances.
++
++If you require NSM based attestation backed by valid AWS certificates,
++you must use -M nitro. The -M nitro-enclave model does not provide
++you with an AWS signed attestation document.
 -- 
 2.47.1
 
