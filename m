@@ -4,93 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E183E9A02C
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 13:36:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38AF2E9A02C
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 13:36:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vshfg-0004HK-KN; Wed, 18 Feb 2026 08:32:52 -0500
+	id 1vshfc-0004Ag-IJ; Wed, 18 Feb 2026 08:32:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1vshfZ-000465-Fi
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 08:32:46 -0500
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1vshfT-0003yp-Sv
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 08:32:40 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1vshfL-0005eo-7y
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 08:32:45 -0500
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1vshfA-000543-Mr
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 08:32:36 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771421550;
+ s=mimecast20190719; t=1771421521;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=8xXGf9wQuXiSKLxPb3FYIBG/K87QsiFd36ndnCqGkII=;
- b=NIgSMuTfWBwOHSm+OI3lXnF7gfZ/gVy+USj69XECvqFltayaAS34yyAIAD0AeT1/ERUE4z
- m+WGmFxqfRgUOWX4/80SKcI+MtVqflFo53aLpbhJfOo8ZF7YBf3+YeWCsYe6fGhj4arXYx
- W91cBcwT/zPkmfTcCGeLhGFnFdVjkSQ=
+ bh=uVtrqVMsyosUaHcDZ5RGcCJIBeUjW9Ffsh9VA3rZWsw=;
+ b=AeyrBG0I8Z/gy2CHBlrsKoNkpb1OUeSHLcd3P22Jhl4S3B3xQm3lYTx3nHOBDRIqzGlJBr
+ mpr7kcOtGaJdgSCaGYqSXNOtKmgwazHy5VlxDKQyPE804wHvpiudUAcNCHNREdmVakFyEo
+ EJyB4evfUqU//cQATwx/PkByAOsyDQI=
 Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
  [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-250-6VMkZD4ZOeuX7w_UEyMf9g-1; Wed, 18 Feb 2026 08:27:22 -0500
-X-MC-Unique: 6VMkZD4ZOeuX7w_UEyMf9g-1
-X-Mimecast-MFC-AGG-ID: 6VMkZD4ZOeuX7w_UEyMf9g_1771421242
+ us-mta-178-kk2Z5bLzN0SfwJNal-15ow-1; Wed, 18 Feb 2026 08:26:55 -0500
+X-MC-Unique: kk2Z5bLzN0SfwJNal-15ow-1
+X-Mimecast-MFC-AGG-ID: kk2Z5bLzN0SfwJNal-15ow_1771421211
 Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4806cfffca6so59699385e9.2
- for <qemu-devel@nongnu.org>; Wed, 18 Feb 2026 05:27:22 -0800 (PST)
+ 5b1f17b1804b1-48071615686so47356145e9.1
+ for <qemu-devel@nongnu.org>; Wed, 18 Feb 2026 05:26:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1771421241; x=1772026041; darn=nongnu.org;
+ d=redhat.com; s=google; t=1771421211; x=1772026011; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=8xXGf9wQuXiSKLxPb3FYIBG/K87QsiFd36ndnCqGkII=;
- b=Qdk6/Xq3YbV9wEOTk9iRs6ZRws1ySI+DzBuDN31fixqmL/uuEygtbxJqjnjDUKNVhn
- UPvnNoK29mG0Ptva0deMWrGlJWCUEpBqVIdT0VBd2pEi9udEYlOmrNHp0WRzV4REnHLZ
- EIykGYM1fRFrHZW/xMslxXcISCqkAF6z/jru19rbnom0dQdCU/8tUnEYXGLU1vrx/gUZ
- NzS/gqYLWFxoN04kO6IHb30dKdFpDE61ifM4HH4c9YlWsHvDNAH8UnqanOsRTDSgXwpt
- lpSfkpdbCjTsbdoJ+oPsi1O1tAVh6/iN3R97VFuRjfPfQhs4vQ3BrYL3WCMrbBTo79x6
- iSSw==
+ bh=uVtrqVMsyosUaHcDZ5RGcCJIBeUjW9Ffsh9VA3rZWsw=;
+ b=NqHrJnuUikqcOd2cbqltc5QoZYnRlYSSPG2FWQJYjbtpdm9NH+FykPXOEuqkuat756
+ coMiUcU/Wsmvu0ZRk57towBEO8U4bML7oIwcY/tfUveNlHxm2N5/3zx5sP0LDbd3Mfzx
+ eqj/8NykUIId0i4ch7CocYPBQkQZWmxQvyGSpzi/0x80lKdm1EN2WWqPt8ivDe7euST1
+ 53R5tdAGeNPhX253abSlTr1H82DhZuijAztXWKkZJ9ax9NRqAng42OBKjBrNxh7nznv/
+ ZTJdFg1Ha1jdr1TyPfLMHOB12druKtLF0OcJdIktC13+DweCQMEod/NsKCmJe/G1YQeE
+ 2/Pw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771421241; x=1772026041;
+ d=1e100.net; s=20230601; t=1771421211; x=1772026011;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=8xXGf9wQuXiSKLxPb3FYIBG/K87QsiFd36ndnCqGkII=;
- b=DKiudhNuaFgmmcJ6sJJss8j9sw+xaOC1ecdDFuij8Cne70tbL43jAL4U0awEy+EGEa
- OfXYQ7ecRrkdJR+g5TqKStBUzHaY/LPrxO/mrtBsEoOFFzT2UECvibi+u3Fc+LMzEf49
- 9qpslpYEAZS9HZNmXHLW1p6zLxfNHQIe6so7CqOcwQ6Nvg3qEt8TAWSYsPYNzpwg4neR
- bTm7L4qT5b4w7R+yaydOSkAw3dvYEYSqotRDDbZ/SSVlLZWJKXHGlQ/6IB5fZlMy85II
- zxqGPpnKM70e1TpSY/LzA+1pDWzmqwVsecJ02SSdM4vn3c+XchDgOLRw4NWAU/XIy55s
- Kt+Q==
-X-Gm-Message-State: AOJu0Yy/QciD5a7wUl5jgXnz1+S9KbFzXHjEIqiT8fb68JxxkwpOMCXZ
- wyjilA8B+FpnPgI2PRwUfjhzRsr87pR5vIHdQScq9zcuTWlXXGk6eCoARKktdmTC6Bk2mw1mSUx
- YfFWISL98pxP3bYuXrOr8AOfFge0HORWjZClb4MePc2Zi4LSS0fXva6LM
-X-Gm-Gg: AZuq6aICf+0FDJ6nVviPyFVeTZizsP8w8LAXysbNVmBX3tfiXqaQem1ISDBEwElLDUQ
- AfaQmkbytfTAGmlmqSLbBm4yvT9oemjhLZLTb22bx87m3W2EfFuSoDR16rqtGsSDRxQ1HddS+15
- qaBq93BrT/4BDyWsLWP2sCQzYGkM3nqtk3ZsdEfWPvzneSfkUp3u2H84TQQ9YwpM+rHzJSMm2oA
- k7U5iNo+aB6k/Yb3K76txDtCX4F7HQ88u290p+MYbML35qPIHO7M6XaMrIHOW9JrKNI9cQhWhIG
- hVj6dCS9coOvoHEAsjOXLYvLps1uUvH4ihdesX+rlOEBo/LKZPFrtrqM4Xo5eekhBq+5xQ248yg
- trfjP8yiEzheYs1S4OoksfNVZnT7WA5HJWbSjA5o/8C/3TTJaJXc5hCTlpzRlUDM5ux2U0h3Eio
- MSkIZu
-X-Received: by 2002:a05:600c:148f:b0:483:7f7c:ad89 with SMTP id
- 5b1f17b1804b1-4837f7cb108mr162399005e9.37.1771421241476; 
- Wed, 18 Feb 2026 05:27:21 -0800 (PST)
-X-Received: by 2002:a05:600c:148f:b0:483:7f7c:ad89 with SMTP id
- 5b1f17b1804b1-4837f7cb108mr162398695e9.37.1771421241028; 
- Wed, 18 Feb 2026 05:27:21 -0800 (PST)
+ bh=uVtrqVMsyosUaHcDZ5RGcCJIBeUjW9Ffsh9VA3rZWsw=;
+ b=qzORdUBf1B+5UW/2DSWI2FWYctf+33NWZ3EPaSyZDZeV4qBKL85yP915H/9NqsLgF9
+ 15O9C9wrJN4u3m25QhGppwiR/e2i/704XzhKd54bcYR7skkie3hT+N4JLnge2sqjbbVS
+ 1EW+WnErPuGMjQUN7vxtiPgz4YbaXi76W00K+TidwQKevSoa8QBmK5VHZu1hGj537UKN
+ /JrkvtNwj4cu2CcVZPrp3OsZXvUKCCuMoOQzEccsGw7Urde1Bd/1qI7aN/oQzI3bX5AB
+ JQgoV5d6LnVGV2AFNMr7zn7QS6+eFBFuP2Il2GackN9d4E+nqpzGY9S7hk+9+SWKLpo0
+ 7x3w==
+X-Gm-Message-State: AOJu0Yx/+8FjndYWP6xQHLiONFW/JCWjwo6zI1SxFbEkjhm3RGICP8R0
+ kGw7oeKgyRYmKo7DdpV6MQTzY7k2KeSf1v6BjTFu0TgHI948eogtUPxIfHIDDD+jT7igHckSEwB
+ DJ7tsmRCrr4IAoIicVpEuCG2QzpVmcgxaPljiJZMqzMlixfHt9m8IVS+8
+X-Gm-Gg: AZuq6aLUutCNCp5SWwVxk1AUQp54L+vnSS+ZRyIkGSOepyo+dVa0o/SuZtf0+mfGlSU
+ dze6f8PLvfiFeg4TE7oVzWPAGqkU7oaS2yNHmheie6mEw+OtXjq03kSesdzItPuSiPDqbouYufL
+ yA+mXHzYleKe5p//7nwZfIsMkkRXKGLNKIybrDuLfPYhs6MQUCNuaiW4Cj6LNkFzIpw8MSLPCly
+ 5Evr1JRkdE+583RXVkggq7JwzSDC1Bl123nqM9KumxXzpPaUVWlMzDIJnz8vOIG/UL5M/rfncBz
+ aNsnTuB06b1f+z5fr4QxIX2VhpwP5mPLv3EoGp1CgmP0EMwLhtGjOEMSGd2w4wBGuGmp1PApuf+
+ RbDQcrNnyNXraysXC5hM2qrkTXwywF34AHtoHKKBIMKNbeBzNMTfzDdjrYxqvldutguBwpm5z2n
+ cG+vn0
+X-Received: by 2002:a05:600c:4e42:b0:483:76b2:cacf with SMTP id
+ 5b1f17b1804b1-48398aee83amr33458715e9.32.1771421210866; 
+ Wed, 18 Feb 2026 05:26:50 -0800 (PST)
+X-Received: by 2002:a05:600c:4e42:b0:483:76b2:cacf with SMTP id
+ 5b1f17b1804b1-48398aee83amr33458325e9.32.1771421210386; 
+ Wed, 18 Feb 2026 05:26:50 -0800 (PST)
 Received: from localhost
  (p200300cfd737d029edef7b8da7441ac2.dip0.t-ipconnect.de.
  [2003:cf:d737:d029:edef:7b8d:a744:1ac2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48387ab1974sm207441865e9.3.2026.02.18.05.27.19
+ 5b1f17b1804b1-483970d447fsm36188655e9.0.2026.02.18.05.26.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 18 Feb 2026 05:27:20 -0800 (PST)
+ Wed, 18 Feb 2026 05:26:48 -0800 (PST)
 From: Hanna Czenczek <hreitz@redhat.com>
 To: qemu-block@nongnu.org
 Cc: qemu-devel@nongnu.org, Hanna Czenczek <hreitz@redhat.com>,
  Kevin Wolf <kwolf@redhat.com>, Brian Song <hibriansong@gmail.com>
-Subject: [PATCH v4 15/24] block: Move qemu_fcntl_addfl() into osdep.c
-Date: Wed, 18 Feb 2026 14:26:24 +0100
-Message-ID: <20260218132633.29748-16-hreitz@redhat.com>
+Subject: [PATCH v4 03/24] fuse: Remove superfluous empty line
+Date: Wed, 18 Feb 2026 14:26:12 +0100
+Message-ID: <20260218132633.29748-4-hreitz@redhat.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260218132633.29748-1-hreitz@redhat.com>
 References: <20260218132633.29748-1-hreitz@redhat.com>
@@ -106,7 +106,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.043,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,93 +122,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Move file-posix's helper to add a flag (or a set of flags) to an FD's
-existing set of flags into osdep.c for other places to use.
-
-Suggested-by: Eric Blake <eblake@redhat.com>
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
 ---
- include/qemu/osdep.h |  1 +
- block/file-posix.c   | 17 +----------------
- util/osdep.c         | 18 ++++++++++++++++++
- 3 files changed, 20 insertions(+), 16 deletions(-)
+ block/export/fuse.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/include/qemu/osdep.h b/include/qemu/osdep.h
-index b384b5b506..f151578b5c 100644
---- a/include/qemu/osdep.h
-+++ b/include/qemu/osdep.h
-@@ -633,6 +633,7 @@ int qemu_lock_fd(int fd, int64_t start, int64_t len, bool exclusive);
- int qemu_unlock_fd(int fd, int64_t start, int64_t len);
- int qemu_lock_fd_test(int fd, int64_t start, int64_t len, bool exclusive);
- bool qemu_has_ofd_lock(void);
-+int qemu_fcntl_addfl(int fd, int flag);
- #endif
- 
- bool qemu_has_direct_io(void);
-diff --git a/block/file-posix.c b/block/file-posix.c
-index 6265d2e248..e49b13d6ab 100644
---- a/block/file-posix.c
-+++ b/block/file-posix.c
-@@ -1056,21 +1056,6 @@ static int raw_handle_perm_lock(BlockDriverState *bs,
-     return ret;
- }
- 
--/* Sets a specific flag */
--static int fcntl_setfl(int fd, int flag)
--{
--    int flags;
--
--    flags = fcntl(fd, F_GETFL);
--    if (flags == -1) {
--        return -errno;
--    }
--    if (fcntl(fd, F_SETFL, flags | flag) == -1) {
--        return -errno;
--    }
--    return 0;
--}
--
- static int raw_reconfigure_getfd(BlockDriverState *bs, int flags,
-                                  int *open_flags, uint64_t perm, Error **errp)
- {
-@@ -1109,7 +1094,7 @@ static int raw_reconfigure_getfd(BlockDriverState *bs, int flags,
-         /* dup the original fd */
-         fd = qemu_dup(s->fd);
-         if (fd >= 0) {
--            ret = fcntl_setfl(fd, *open_flags);
-+            ret = qemu_fcntl_addfl(fd, *open_flags);
-             if (ret) {
-                 qemu_close(fd);
-                 fd = -1;
-diff --git a/util/osdep.c b/util/osdep.c
-index 770369831b..000e7daac8 100644
---- a/util/osdep.c
-+++ b/util/osdep.c
-@@ -280,6 +280,24 @@ int qemu_lock_fd_test(int fd, int64_t start, int64_t len, bool exclusive)
-         return fl.l_type == F_UNLCK ? 0 : -EAGAIN;
+diff --git a/block/export/fuse.c b/block/export/fuse.c
+index 2ed22c6b2f..4cdf527d69 100644
+--- a/block/export/fuse.c
++++ b/block/export/fuse.c
+@@ -464,7 +464,6 @@ static int fuse_do_truncate(const FuseExport *exp, int64_t size,
      }
- }
-+
-+/**
-+ * Set the given flag(s) (fcntl GETFL/SETFL) on the given FD, while retaining
-+ * other flags.
-+ */
-+int qemu_fcntl_addfl(int fd, int flag)
-+{
-+    int flags;
-+
-+    flags = fcntl(fd, F_GETFL);
-+    if (flags == -1) {
-+        return -errno;
-+    }
-+    if (fcntl(fd, F_SETFL, flags | flag) == -1) {
-+        return -errno;
-+    }
-+    return 0;
-+}
- #endif
  
- bool qemu_has_direct_io(void)
+     if (add_resize_perm) {
+-
+         if (!qemu_in_main_thread()) {
+             /* Changing permissions like below only works in the main thread */
+             return -EPERM;
 -- 
 2.53.0
 
