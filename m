@@ -4,81 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 579A5E9A03B
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 06:25:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62622E9A03B
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 06:32:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vsb0H-0003yN-7i; Wed, 18 Feb 2026 01:25:41 -0500
+	id 1vsb6R-0005wz-0o; Wed, 18 Feb 2026 01:32:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vsb07-0003vx-L4
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 01:25:33 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <wei.liu@kernel.org>)
+ id 1vsb6P-0005wl-DE
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 01:32:01 -0500
+Received: from tor.source.kernel.org ([172.105.4.254])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vsb04-0001xN-FG
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 01:25:31 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771395926;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=1GfMJpxrVQX5GE56NB9ajihdV3TyZgpnEtvGAYvDucs=;
- b=e9JohtXEjksr4DQv+orcJO0LNlPCb7HUxxVeS4xzbaaKjs2xitnDlBaBh7eckN3RBpRj6H
- rG5cyKdtmVZN1jIoCvaPUcZrRPQOcXGXeU50kBy1DFQxRLWKrDswszazUL06rhEzhe5Ag/
- o1t+Ne4fJ4gwEYHYpvFynaTRyb/IAV4=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-475-u-MLPxE1NsGZMaj2LKXh0g-1; Wed,
- 18 Feb 2026 01:25:22 -0500
-X-MC-Unique: u-MLPxE1NsGZMaj2LKXh0g-1
-X-Mimecast-MFC-AGG-ID: u-MLPxE1NsGZMaj2LKXh0g_1771395921
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5EC9719560B2; Wed, 18 Feb 2026 06:25:20 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.14])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 18FD01956095; Wed, 18 Feb 2026 06:25:19 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id A032C21E692D; Wed, 18 Feb 2026 07:25:16 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: qemu-devel@nongnu.org,  qemu-block@nongnu.org,  eduardo@habkost.net,
- berrange@redhat.com,  pbonzini@redhat.com,  eblake@redhat.com,
- devel@lists.libvirt.org,  hreitz@redhat.com,  kwolf@redhat.com
-Subject: Re: [PATCH v10 4/8] qapi: add blockdev-replace command
-In-Reply-To: <04575653-a2ba-4ef1-b1af-a514bec80a69@yandex-team.ru> (Vladimir
- Sementsov-Ogievskiy's message of "Tue, 17 Feb 2026 20:55:49 +0300")
-References: <20260119144941.87936-1-vsementsov@yandex-team.ru>
- <20260119144941.87936-5-vsementsov@yandex-team.ru>
- <87wm0sy9s4.fsf@pond.sub.org>
- <739edd0f-8342-418e-96bb-01bc9bd3349e@yandex-team.ru>
- <87seb3zr7j.fsf@pond.sub.org>
- <f9aed7fd-2f56-4b54-bf4f-693e0c10fb38@yandex-team.ru>
- <87seazjz2q.fsf@pond.sub.org>
- <04575653-a2ba-4ef1-b1af-a514bec80a69@yandex-team.ru>
-Date: Wed, 18 Feb 2026 07:25:16 +0100
-Message-ID: <87a4x6h8kz.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <wei.liu@kernel.org>)
+ id 1vsb6N-0002v2-Nm
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 01:32:01 -0500
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by tor.source.kernel.org (Postfix) with ESMTP id 7270C6013F;
+ Wed, 18 Feb 2026 06:31:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06DB9C19421;
+ Wed, 18 Feb 2026 06:31:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1771396318;
+ bh=c6vDU6qxGmdW06UE3Ykjfk1TJfYOZ4o5fif5odKNA60=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=c2JskeNdBqp7ZtmDuO6/RIeHG9J4ny4anMDEscejUvAAje7IKjh0VRRG0SqYTiXzm
+ QzX62hWr1/j4sDF5oonxB4kzmnkmgU+6VR+W/a2P4tiiZRE7woETtaehmShk7RucaV
+ 4bImY/qi4Z8mHDgoe5YRaJUbeV3ShdMq/HhfTbbRMyxZuhG5hLQVO3HJgjyTmCMw5Q
+ jbJdSe7xDTGgf+eqviU+ipLCBThB1oo9d7SNeD47iLNF2vnJGUmOvxM0hjAwF6DrAF
+ 7gn/qyZVKMUIOvIZC9awvmbMOhDI9JodYXzcYlqDmCpiQHMEgonJVQuoAXwUJm7iV0
+ lQy8x8LZrE2Kg==
+Date: Wed, 18 Feb 2026 06:31:56 +0000
+From: Wei Liu <wei.liu@kernel.org>
+To: Bernhard Beschow <shentey@gmail.com>
+Cc: qemu-devel@nongnu.org, Cameron Esfahani <dirty@apple.com>,
+ Magnus Kulke <magnuskulke@linux.microsoft.com>,
+ Roman Bolshakov <rbolshakov@ddn.com>,
+ Phil Dennis-Jordan <phil@philjordan.eu>, Wei Liu <wei.liu@kernel.org>,
+ Mohamed Mediouni <mohamed@unpredictable.fr>
+Subject: Re: [PATCH 0/3] i386 emulate fixes
+Message-ID: <20260218063156.GC2236050@liuwe-devbox-debian-v2.local>
+References: <20260214131659.31378-1-shentey@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -13
-X-Spam_score: -1.4
-X-Spam_bar: -
-X-Spam_report: (-1.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.043,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260214131659.31378-1-shentey@gmail.com>
+Received-SPF: pass client-ip=172.105.4.254; envelope-from=wei.liu@kernel.org;
+ helo=tor.source.kernel.org
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.043,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- GB_FAKE_RF=0.754, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,116 +74,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Block layer maintainers' advice sought:
+On Sat, Feb 14, 2026 at 02:16:56PM +0100, Bernhard Beschow wrote:
+> When testing Mohamed's recent x86_64 WHPX updates [1] I encountered two
+> compilation issues under MSYS2/GCC which are fixed in this series. The last
+> commit fixes a missed optimization opportunity in MSHV code.
+> 
+> The MSHV code will be reused in WHPX [1] which allowed me to test it. I
+> didn't notice any performance benefits, though in theory there should be some
+> due to less guest memory accesses.
+> 
+> Testing done:
+> * Use a Linux VM for a couple of hours
+> 
+> [1] https://lore.kernel.org/qemu-devel/20260213034556.13471-1-mohamed@unpredictable.fr/
+> 
+> Bernhard Beschow (3):
+>   target/i386/emulate/x86_decode: Fix compiler warning
+>   target/i386/hvf/x86_mmu: Fix compiler warning
+>   target/i386/emulate/x86_decode: Actually use stream in
+>     decode_instruction_stream()
 
-Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
-
-> On 17.02.26 16:10, Markus Armbruster wrote:
->> Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
->> 
->>> On 14.02.26 11:04, Markus Armbruster wrote:
-
-[...]
-
->>>> This interface sort of overloads @parent and @child, and overloading the
->>>> former creates ambiguity that can make the command unusable.
->>>
->>> Is it a real problem if we do deprecate the thing, that leads to this
->>> ambiguity?
->>>
->>> If it is, we may mark the command "unstable" during the deprecation period.
->> 
->> By itself, the proposed command is a trap for the unwary.
->> 
->> Deprecating the usage that enables the trap makes the trap temporary.
->> 
->> Warning on (deprecated) usage that enables the trap helps users avoid
->> it.  Human users, mostly.
->> 
->> Marking the command "unstable" should ensure management application
->> avoid the command, and thus the trap.
->> 
->> All of the above together feels acceptable to me.  Can we do better?
->> Maybe, and that's discussed below.
->> 
->>> Or even postpone its addition up to the end of this period.
->> 
->> No trap, no problem :)
->> 
->>>> @parent's set of valid values is the union of QOM path, block node name,
->>>> block export ID with values occuring in more than one of them dropped.
->>>>
->>>> @child's set of valid values depends on @parent: child name when it's a
->>>> QOM path, else "root".
->>>>
->>>> The obvious non-overloaded interface is a union of three branches: QOM,
->>>> block node, block export.  The QOM branch has variant members @qom-path
->>>> and @child.  The block node branch has variant member @node-name.  The
->>>> block export branch has variant member @id.
->>>>
->>>> This is a bit more verbose: you have to specify the union tag[*].
->>>>
->>>> If we ever need to replace block nodes associated with additional
->>>> things, we simply more branches.  These branches can have arbitrary
->>>> members.  In your interface, we'd have to make do with @child, or maybe
->>>> add optional arguments.
->>>>
->>>> Thoughts?  Mind, this isn't a demand!  I'm exploring the design space.
->>>
->>> Union-based solution was v9: https://lore.kernel.org/qemu-devel/20240626115350.405778-5-vsementsov@yandex-team.ru/
->>>
->>> And there was a discussion, that we may try a way without a union. And that's
->>> this v10.
->> 
->> I see Kevin suggested to explore this approach.  I certainly respect his
->> judgement.
->> 
->>> Hmm, but that had different field names for parents: qdev-id, export-id and node-name.
->>>
->>> What you suggest is to keep one filed for parent - "parent", but also add a "parent-type"
->>> field. This way, we may deprecate and remove "parent-type" in future. Or, we may
->>> add it as deprecated now (together with deprecating non-unique IDs)
->> 
->> We can't deprecate the union tag right away: it is *required*.
->> 
->>>> [*] We could add a "may omit union tag when the tag value can be derived
->>>> from present variant members" convenience feature to QAPI, but I'm not
->>>> sure it's worth the complexity.
->>>>
->>>
->>> It also may be not a union, but a simple structure with optional fields:
->>>
->>> {
->>>      parent: str, required, qom-path, or node-name, or export name
->>>      child: str, optional, but required when parent is node-name, and must be 'root'
->>>             if present for other parent types
->>>      parent-type: str, optional, "qom-path" | "block-node" | "block-export", helps to
->>>             overcome parent ambiguity, deprecated
->>>      new-child: str, required node-name
->>> }
->> 
->> PRO union: which members are valid together is syntactically obvious.
->> With a bunch of optional members, that information is in the member
->> descriptions.
->> 
->> CON union: need to specify the union tag.  The verbosity is a non-issue
->> for management applications, and mildly bothersome for humans.
->> 
->> How important is keeping things terse for humans here?
->> 
->
-> It's not very important. Mostly, I just want to make "nice" interface, and possibility to
-> reference any supported object by one ID seemed very tempting to me.
->
-> But to be honest, introducing such a precedent makes sense, if we have in mind more
-> cases where such approach may be reused. Personally, I don't have them. If blockdev-replace
-> command remains the only API for the ages, which allows to mix in one field different kinds
-> of IDs, it becomes just an extra exclusion from common practices.
->
-> Finally, I don't care too much, which interface we chose. I'm not sure now that unifying
-> ids is better than union. So I'm OK to go back to union-based solution from v9, update and
-> resend it as v11.
-
-Hanna, Kevin, got a preference?
-
+Reviewed-by: Wei Liu (Microsoft) <wei.liu@kernel.org>
 
