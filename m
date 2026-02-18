@@ -4,85 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6AA19E9A03E
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 10:46:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF2CFE9A03E
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 10:46:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vsf3f-0000Pv-ES; Wed, 18 Feb 2026 05:45:30 -0500
+	id 1vsf4O-0000aF-RR; Wed, 18 Feb 2026 05:46:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vsf3d-0000PQ-J2
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 05:45:25 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vsf4E-0000V1-7y
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 05:46:06 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vsf3b-0002nF-CV
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 05:45:25 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vsf4C-0002vD-QD
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 05:46:01 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771411520;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
+ s=mimecast20190719; t=1771411559;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=1daQWUYdxPH0U39GJiqxU0N0Xk6rs2qulmWoOgh/mOo=;
- b=K32nqNEB9odnFaPz6vmR6A8xQZ+bxB6cXb20WNpdtl+NngfawVMgG1ZSuRGMYCntFS2cOV
- 07pRv8/Ms9UTxewesmtnF/DhgTdCQa0rgkPrEMJpQnwGPuIiB2l2+UO5XjVeLbOV6H6KkC
- oplaNWv8nH3Wkg4RMHsd+oRSHzlcZ1c=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=2chEJDZ5xJ6PccoIYSFNEnyoWpD1sEsWa9LcVH12gpw=;
+ b=ScaN+cWkR6DeTL3EM7GEYkucd5E4oFjxZbppliteRgaT0TJZ3wC3jrsrLZW+nuXQbYJWdl
+ sYnBGGlE10MMbM3yTavSLBuNGsycpHJwPIuMEAc4ddqzbHmPH+FJ8spXkRWPgK3FEibiV/
+ 3yx0sIyFNGqyhuINexMwRk4W21gSCCU=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-93-laaogyxCOISg7a4gQKmong-1; Wed,
- 18 Feb 2026 05:45:17 -0500
-X-MC-Unique: laaogyxCOISg7a4gQKmong-1
-X-Mimecast-MFC-AGG-ID: laaogyxCOISg7a4gQKmong_1771411516
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-364-PAT0JQpmNDKygG-J__wV-Q-1; Wed,
+ 18 Feb 2026 05:45:55 -0500
+X-MC-Unique: PAT0JQpmNDKygG-J__wV-Q-1
+X-Mimecast-MFC-AGG-ID: PAT0JQpmNDKygG-J__wV-Q_1771411553
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5CCCA1800282; Wed, 18 Feb 2026 10:45:15 +0000 (UTC)
-Received: from redhat.com (unknown [10.45.224.150])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7E7BA19560B5; Wed, 18 Feb 2026 10:45:09 +0000 (UTC)
-Date: Wed, 18 Feb 2026 10:45:05 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Stefan Weil <sw@weilnetz.de>, "Dr. David Alan Gilbert" <dave@treblig.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, devel@lists.libvirt.org,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- qemu-block@nongnu.org, qemu-rust@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
- Christian Schoenebeck <qemu_oss@crudebyte.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: Re: [PATCH v6 12/27] util: avoid repeated prefix on incremental
- qemu_log calls
-Message-ID: <aZWYMQHK1w3UpX4K@redhat.com>
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1AB271956067; Wed, 18 Feb 2026 10:45:53 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.14])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 97ACF180058B; Wed, 18 Feb 2026 10:45:52 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 37C3C21E692D; Wed, 18 Feb 2026 11:45:50 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org,  Manos Pitsidianakis
+ <manos.pitsidianakis@linaro.org>,  Stefan Weil <sw@weilnetz.de>,  "Dr.
+ David Alan Gilbert" <dave@treblig.org>,  Pierrick Bouvier
+ <pierrick.bouvier@linaro.org>,  devel@lists.libvirt.org,  Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  =?utf-8?Q?Marc-Andr?=
+ =?utf-8?Q?=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>,  Hanna Reitz <hreitz@redhat.com>,  Kevin
+ Wolf <kwolf@redhat.com>,  qemu-block@nongnu.org,  qemu-rust@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>,  Gerd Hoffmann <kraxel@redhat.com>,
+ Christian Schoenebeck <qemu_oss@crudebyte.com>,  Richard Henderson
+ <richard.henderson@linaro.org>
+Subject: Re: [PATCH v6 13/27] util/log: add missing error reporting in
+ qemu_log_trylock_with_err
+In-Reply-To: <20260211152508.732487-14-berrange@redhat.com> ("Daniel
+ P. =?utf-8?Q?Berrang=C3=A9=22's?= message of "Wed, 11 Feb 2026 15:24:54
+ +0000")
 References: <20260211152508.732487-1-berrange@redhat.com>
- <20260211152508.732487-13-berrange@redhat.com>
- <87ms16e5vc.fsf@pond.sub.org>
+ <20260211152508.732487-14-berrange@redhat.com>
+Date: Wed, 18 Feb 2026 11:45:50 +0100
+Message-ID: <878qcqe3dt.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <87ms16e5vc.fsf@pond.sub.org>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -13
 X-Spam_score: -1.4
 X-Spam_bar: -
 X-Spam_report: (-1.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.043,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- GB_FAKE_RF=0.754, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001,
+ GB_FAKE_RF=0.754, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
  RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
@@ -98,70 +97,95 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Feb 18, 2026 at 10:52:07AM +0100, Markus Armbruster wrote:
-> Daniel P. Berrangé <berrange@redhat.com> writes:
-> 
-> > There are three general patterns to QEMU log output
-> >
-> >  1. Single complete message calls
-> >
-> >       qemu_log("Some message\n");
-> >
-> >  2. Direct use of fprintf
-> >
-> >       FILE *f = qemu_log_trylock()
-> >       fprintf(f, "...");
-> >       fprintf(f, "...");
-> >       fprintf(f, "...\n");
-> >       qemu_log_unlock(f)
-> 
-> Real code needs to check @f or risk crashing.  Shouldn't we show that
-> here?
+Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
-Yes, we should really.
+> One codepath that could return NULL failed to populate the errp
+> object.
+>
+> Reported-by: Markus Armbruster <armbru@redhat.com>
+> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+> ---
+>  util/log.c | 1 +
+>  1 file changed, 1 insertion(+)
+>
+> diff --git a/util/log.c b/util/log.c
+> index 1644e6814b..1c9c7adb2d 100644
+> --- a/util/log.c
+> +++ b/util/log.c
+> @@ -118,6 +118,7 @@ static FILE *qemu_log_trylock_with_err(Error **errp)
+   static FILE *qemu_log_trylock_with_err(Error **errp)
+   {
+       FILE *logfile;
 
-> >  3. Mixed use of qemu_log_trylock/qemu_log()
-> >
-> >       FILE *f = qemu_log_trylock()
-> >       qemu_log("....");
-> >       qemu_log("....");
-> >       qemu_log("....\n");
-> >       qemu_log_unlock(f)
-> >
-> > When message prefixes are enabled, the timestamp will be
-> > unconditionally emitted for all qemu_log() calls. This
-> > works fine in the 1st case, and has no effect in the 2nd
-> > case. In the 3rd case, however, we get the timestamp
-> > printed over & over in each fragment.
-> >
-> > One can suggest that pattern (3) is pointless as it is
-> > functionally identical to (2) but with extra indirection
-> > and overhead. None the less we have a fair bit of code
-> > that does this.
-> >
-> > The qemu_log() call itself is nothing more than a wrapper
-> > which does pattern (2) with a single fprintf() call.
-> 
-> qemu_log_trylock()'s lock is recursive.  Worth a comment?  Not sure.
+       logfile =3D thread_file;
+       if (!logfile) {
 
-Sure.
+Slow path: no log file cached for this thread.
 
-> > Fixes: 012842c07552 (log: make '-msg timestamp=on' apply to all qemu_log usage)
-> > Reported-by: Richard Henderson <richard.henderson@linaro.org>
-> > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> 
-> Reviewed-by: Markus Armbruster <armbru@redhat.com>
-> 
+           if (log_per_thread) {
 
-With regards,
-Daniel
--- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+We're logging to per-thread log files.  @global_filename is a file name
+pattern; derive this thread's log file from it.
+
+               g_autofree char *filename
+                   =3D g_strdup_printf(global_filename, log_thread_id());
+               logfile =3D fopen(filename, "w");
+               if (!logfile) {
+                   error_setg_errno(errp, errno,
+                                    "Error opening logfile %s for thread %d=
+",
+                                    filename, log_thread_id());
+                   return NULL;
+               }
+               thread_file =3D logfile;
+               qemu_log_thread_cleanup_notifier.notify =3D qemu_log_thread_=
+cleanup;
+               qemu_thread_atexit_add(&qemu_log_thread_cleanup_notifier);
+           } else {
+
+Logging to a single log file.  Fetch it from @global_file.
+
+               rcu_read_lock();
+               /*
+                * FIXME: typeof_strip_qual, as used by qatomic_rcu_read,
+                * does not work with pointers to undefined structures,
+                * such as we have with struct _IO_FILE and musl libc.
+                * Since all we want is a read of a pointer, cast to void**,
+                * which does work with typeof_strip_qual.
+                */
+>              logfile =3D qatomic_rcu_read((void **)&global_file);
+>              if (!logfile) {
+
+@global_file was null when we fetched it.
+
+It can be null when @daemonized and the user didn't set a log file.
+
+>                  rcu_read_unlock();
+> +                error_setg(errp, "Global log file output is not open");
+
+Impact?  The only callers passing non-null @errp is
+qemu_set_log_internal(), and it can call only when @log_per_thread.  We
+can't reach the new error then.
+
+So this is just a latent bug.  Worth mentioning in the commit message?
+
+>                  return NULL;
+>              }
+
+We do not set thread_file.  We'll take the slow path again.  Harmless
+enough, but its a bit at odds with how the code is structured here.
+Observation, not a demand.
+
+>          }
+       }
+
+       qemu_flockfile(logfile);
+       return logfile;
+   }
+
+Reviewed-by: Markus Armbruster <armbru@redhat.com>
 
 
