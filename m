@@ -4,65 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09595E9A03B
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE5DBE9A04C
 	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 09:09:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vsdTd-0000rP-NL; Wed, 18 Feb 2026 04:04:09 -0500
+	id 1vsdYD-0005kg-KJ; Wed, 18 Feb 2026 04:08:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vsdTc-0000r2-B4
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 04:04:08 -0500
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1vsdY3-0005d5-5z
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 04:08:44 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vsdTa-0008UP-T6
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 04:04:08 -0500
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1vsdY1-0002bD-9A
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 04:08:42 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771405446;
+ s=mimecast20190719; t=1771405720;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=xylTBKBAhBBCEFQDa1PQFtrPBq4ip0t0I/XcTSk6BaU=;
- b=WyBAD0pK79iKC1EpF25+fiqKbTGGFlxbuV90Tt9INiwiqtWyToS6qUScLVh2j8NkGiqun/
- M2N/nbbIGYBe6k0bksUDjS1d0T+VSo3bOsMlYEbIi61cfDh40z4MNrbZoT4oZYY6w7ayBe
- HriBr1MT9t57jV8sTuhbdMAV334CT2U=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ content-transfer-encoding:content-transfer-encoding;
+ bh=hD5+15fZNrYR33UJM4bVqZGnvSNEe8DnFkthFcqU2o8=;
+ b=TLiHVe4IT3oPOf9MqZLPYj2+1DJSeVfc4e8Mg/oqd1sDwrsJv1dCmk6qJLR/pEIfN6ZpUl
+ 4oQBak5KN+MmBo4wZqCZhzP6iYN6zMgJgrbZsa2eZ5zCAqALLqQvjlucBEAxfAjAPDwJ60
+ kD5w1Jifs7uQvyXYGoLUUAhXXvXb0XY=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-636-7WZsw2tXOrO1OxMV8KcAbw-1; Wed,
- 18 Feb 2026 04:04:03 -0500
-X-MC-Unique: 7WZsw2tXOrO1OxMV8KcAbw-1
-X-Mimecast-MFC-AGG-ID: 7WZsw2tXOrO1OxMV8KcAbw_1771405442
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-96-Ykld6_8lOjS2NJIxjgpjLg-1; Wed,
+ 18 Feb 2026 04:08:39 -0500
+X-MC-Unique: Ykld6_8lOjS2NJIxjgpjLg-1
+X-Mimecast-MFC-AGG-ID: Ykld6_8lOjS2NJIxjgpjLg_1771405718
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D244018001FB; Wed, 18 Feb 2026 09:04:02 +0000 (UTC)
-Received: from localhost (unknown [10.45.242.26])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 29E3A19560AD; Wed, 18 Feb 2026 09:04:00 +0000 (UTC)
-From: marcandre.lureau@redhat.com
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- John Snow <jsnow@redhat.com>, Cleber Rosa <crosa@redhat.com>
-Subject: [PULL 10/85] scripts/modinfo: add type annotations
-Date: Wed, 18 Feb 2026 10:02:10 +0100
-Message-ID: <20260218090330.1476169-11-marcandre.lureau@redhat.com>
-In-Reply-To: <20260218090330.1476169-1-marcandre.lureau@redhat.com>
-References: <20260218090330.1476169-1-marcandre.lureau@redhat.com>
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2530B195DE50; Wed, 18 Feb 2026 09:08:38 +0000 (UTC)
+Received: from dobby.home.kraxel.org (unknown [10.45.226.44])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6C1ED1956095; Wed, 18 Feb 2026 09:08:37 +0000 (UTC)
+Received: by dobby.home.kraxel.org (Postfix, from userid 1000)
+ id 7C3A968B171; Wed, 18 Feb 2026 09:59:45 +0100 (CET)
+From: Gerd Hoffmann <kraxel@redhat.com>
+To: qemu-devel@redhat.com, qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>, Kashyap Chamarthy <kchamart@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Ani Sinha <anisinha@redhat.com>, Stefano Garzarella <sgarzare@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PULL 0/2] Firmware 20260218 patches
+Date: Wed, 18 Feb 2026 09:59:43 +0100
+Message-ID: <20260218085945.1050788-1-kraxel@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=marcandre.lureau@redhat.com;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kraxel@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -87,72 +85,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+The following changes since commit ece408818d27f745ef1b05fb3cc99a1e7a5bf580:
 
-Type annotations allow easier code reading, refactoring, checking etc.
+  Merge tag 'for-upstream' of https://gitlab.com/bonzini/qemu into staging (2026-02-13 10:30:08 +0000)
 
-Reviewed-by: Yodel Eldar <yodel.eldar@yodel.dev>
-Tested-by: Yodel Eldar <yodel.eldar@yodel.dev>
-Acked-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
----
- scripts/modinfo-generate.py | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+are available in the Git repository at:
 
-diff --git a/scripts/modinfo-generate.py b/scripts/modinfo-generate.py
-index aaf23544c46..5a8abcae5d3 100644
---- a/scripts/modinfo-generate.py
-+++ b/scripts/modinfo-generate.py
-@@ -2,14 +2,16 @@
- 
- import os
- import sys
-+from typing import Optional
- 
--def print_array(name, values):
-+
-+def print_array(name: str, values: list[str]) -> None:
-     if len(values) == 0:
-         return
-     list = ", ".join(values)
-     print("    .%s = ((const char*[]){ %s, NULL })," % (name, list))
- 
--def parse_line(line):
-+def parse_line(line: str) -> tuple[str, str]:
-     kind = ""
-     data = ""
-     get_kind = False
-@@ -31,7 +33,7 @@ def parse_line(line):
-             continue
-     return (kind, data)
- 
--def generate(name, lines, enabled):
-+def generate(name: str, lines: list[str], enabled: set[str]) -> Optional[set[str]]:
-     arch = ""
-     objs = []
-     deps = []
-@@ -68,17 +70,17 @@ def generate(name, lines, enabled):
-     print("},{")
-     return {dep.strip('" ') for dep in deps}
- 
--def print_pre():
-+def print_pre() -> None:
-     print("/* generated by scripts/modinfo-generate.py */")
-     print("#include \"qemu/osdep.h\"")
-     print("#include \"qemu/module.h\"")
-     print("const QemuModinfo qemu_modinfo[] = {{")
- 
--def print_post():
-+def print_post() -> None:
-     print("    /* end of list */")
-     print("}};")
- 
--def main(args):
-+def main(args: list[str]) -> None:
-     if len(args) < 3 or args[0] != '--devices':
-         print('Expected: modinfo-generate.py --devices '
-               'config-device.mak [modinfo files]', file=sys.stderr)
+  https://gitlab.com/kraxel/qemu.git tags/firmware-20260218-pull-request
+
+for you to fetch changes up to e8dcd2a0c2d663963408f2d642de864feac8ca0d:
+
+  docs/interop/firmware: Add 'uefi-vars' member for FirmwareMappingMemory (2026-02-17 16:03:06 +0100)
+
+----------------------------------------------------------------
+- firmware json spec update
+- igvm update
+
+----------------------------------------------------------------
+
+Andrea Bolognani (1):
+  docs/interop/firmware: Add 'uefi-vars' member for
+    FirmwareMappingMemory
+
+Oliver Steffen (1):
+  igvm: Add NULL checks for igvm_get_buffer()
+
+ backends/igvm.c            | 37 ++++++++++++++++++++++++++------
+ docs/interop/firmware.json | 43 +++++++++++++++++++++++++++++++++++++-
+ 2 files changed, 73 insertions(+), 7 deletions(-)
+
 -- 
 2.53.0
 
