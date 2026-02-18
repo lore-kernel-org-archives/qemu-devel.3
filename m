@@ -4,83 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA11FE9A049
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 03:32:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D7F0E9A03B
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 06:04:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vsYI5-00084f-4s; Tue, 17 Feb 2026 22:31:54 -0500
+	id 1vsafN-0007kP-9q; Wed, 18 Feb 2026 01:04:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vsYI2-00084F-Hq
- for qemu-devel@nongnu.org; Tue, 17 Feb 2026 22:31:50 -0500
-Received: from p-east2-cluster1-host3-snip4-10.eps.apple.com ([57.103.76.13]
- helo=outbound.st.icloud.com)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vsafI-0007jZ-Gv
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 01:04:01 -0500
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vsYI1-0005Ou-1S
- for qemu-devel@nongnu.org; Tue, 17 Feb 2026 22:31:50 -0500
-Received: from outbound.st.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-east-1a-100-percent-1 (Postfix) with ESMTPS id
- 5BF02180009A; Wed, 18 Feb 2026 03:31:45 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1771385508; x=1773977508;
- bh=9eIki2jdTlI67LaSEqdH3Ogz9CEP5EaBbksZCxlOPb8=;
- h=From:Message-Id:Content-Type:Mime-Version:Subject:Date:To:x-icloud-hme;
- b=fqaJ8uwCNNzKn9oRCkSRTg7vSB11tb7z96J2sOMnNAd+z+WOE0qpwrPHbeY/wCZx2zI6xuvgKUUBjZwAlvWDfg8rLZniOmnSXG/+k5g653uM+KwXvtumKCdLUgzLe0PuhsUFFVArI9gzKNud07SmXTNCG3MiA86i8bq0eiPk+CVNFkixKI+4Ata1q0lJyvu0sww6LeoPrfcf9dR4HqSaB6MGv2/wGbQ2BvB0PE5Mvc5q9dnUqGKR211FbK1uTs1FEoaNX/63dNh+O021QXgj+3QZZF3kt9mYw7uLhb3FP7aeb7PxFtpZOvF1eegtyiR15r0TAuBEUvPmTtpO75f3rA==
-mail-alias-created-date: 1752046281608
-Received: from smtpclient.apple (unknown [17.42.251.67])
- by p00-icloudmta-asmtp-us-east-1a-100-percent-1 (Postfix) with ESMTPSA id
- 8905118000F1; Wed, 18 Feb 2026 03:31:43 +0000 (UTC)
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
-Message-Id: <D58BE88F-9629-4886-B0AA-DD833AC88D74@unpredictable.fr>
-Content-Type: multipart/alternative;
- boundary="Apple-Mail=_65AF2D6E-D2A4-4DA8-92C1-3398673E31E2"
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.400.21\))
-Subject: Re: [PATCH] whpx: fix FP register loop
-Date: Wed, 18 Feb 2026 04:31:31 +0100
-In-Reply-To: <20260217210805.104427-1-osama.abdelkader@gmail.com>
-Cc: Pedro Barbuda <pbarbuda@microsoft.com>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-To: Osama Abdelkader <osama.abdelkader@gmail.com>
-References: <20260217210805.104427-1-osama.abdelkader@gmail.com>
-X-Mailer: Apple Mail (2.3864.400.21)
-X-Proofpoint-GUID: gEdh-8hd5rJoa8mlx_-wKHMmSCVdBeTO
-X-Proofpoint-ORIG-GUID: gEdh-8hd5rJoa8mlx_-wKHMmSCVdBeTO
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjE4MDAyOSBTYWx0ZWRfX2+shEDgxsP16
- WGaye0uOLzX+hZHFdmYSLB22io4Xw7kYWca79eSVHfslUomX0iRy1DgLKmGobnpn1nZh5yzlbIu
- IeVchhg2jNzz+UIMOH2YJ4c7eyDgBYujlnaQSqyGsRwRBlTuCd8v0uXZ1DS8bUH4kpuoaS5X4uN
- 0Nk/TchsIEqPrh0hYrUYgdvvhSgfICLhuhAXfJ/mxtHdXElrykl9UkEdLvuSIrKFuDhyasi9USn
- zmbtjg6aiFnVFLz/NpQRW5/Mdt8tLjjlBpnuw0g4Fmw0QQ/SfVZ0v3yWQQkKsyOheMgONgBELwR
- DFJPk/lYegn9ZVsscyD/2XG6ss5GJux2XbAOAOvWKqsxUmRuVLLl1XHrf71aeU=
-X-Authority-Info-Out: v=2.4 cv=G6IR0tk5 c=1 sm=1 tr=0 ts=699532a2
- cx=c_apl:c_apl_out:c_pps a=YrL12D//S6tul8v/L+6tKg==:117
- a=YrL12D//S6tul8v/L+6tKg==:17 a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22 a=pGLkceISAAAA:8
- a=Nm3HiP7PBx0Bg88O27kA:9 a=lqcHg5cX4UMA:10 a=CjuIK1q_8ugA:10
- a=zX2X_24SlQdIqLFkdPQA:9 a=oIcGjva_s8TGZmfV:21 a=_W_S_7VecoQA:10
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-02-17_04,2026-02-16_04,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0
- malwarescore=0 spamscore=0 phishscore=0
- mlxlogscore=796 lowpriorityscore=0
- adultscore=0 bulkscore=0 clxscore=1030 mlxscore=0 classifier=spam authscore=0
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
- definitions=main-2602180029
-X-JNJ: AAAAAAAB0oJvQyr1OmxHtZ9TauRmttYuNlL3KuGuiUv8yEzOMKhMNgkYSvfYLH1+Wuw/uoQ16QF+9iCi914iF1lKxcnLC3uJ0UvtaYCYqyKVcfRZALNZFMA1USUHSDKXTOGOtqD0FXV+p72L6DhEoJbWM8FVlyO92fQs3BK+4aQrfkFTiFWbZ/TW/6PqNq8aAhwuaGYUbSqNHwbbxLR+H2hRoAm3MTwl+7AuBbjHljzmIRRKoTiQEjhIoWPNP5s+Xvb+0wuf6YYNC+r7j6p0Fq+0K+Vokpp6AzcE5E+Z9ahulkXK8ZImvDfmFkBhFwynSZzW8K+PzHMEN63HPpmpa5VhO8ysKQMuNJ5Qzj9c3WPNOgO25zq8ukc43x4a9jFMo7RPK4mfmUiXxypan5A7fm+BHgeVULdznsvmP6WmZt7gDNAxh2e7L7jsUeAprF28Dd4eHEJtxHPtPrwP2jNuq/IfKY6ibU9M0bgUFD6XQmLtJmNYai9HEd3NKYbhStowmRh0A5zBa0yj3DVG5swcRXfyd+i+nCllKKsJykM4N8MMTs505IPCReq9m0XUNmZ5ioEBQ9YbDBYxXlHWpw80ZSuMuVWjwDOnxSy6UA6NJ/KkQf6dzJTscqzvZzOmOBysy7dVc1boQzqx1iP755k=
-Received-SPF: pass client-ip=57.103.76.13;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.st.icloud.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vsafF-0008DC-JM
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 01:04:00 -0500
+Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 61I630S0014866
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Wed, 18 Feb 2026 15:03:24 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=WZ1XHjBgD6Nyjrh98YMdo7FQoH9ohUu2PKz8g+f7c3o=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=Message-ID:Date:Subject:To:From;
+ s=rs20250326; t=1771394605; v=1;
+ b=lRW/8eJAy+bcgw+uRTpOhy8pLVUaAmdG28VtlDZ+aEcZ5LFnHOtY3C95CT1xbfgG
+ 6F2uR6eoPVzlbeSChwakYRSB0b+nU1sTiiO2sp44sOGYOjBckvc/M482ozbq2yvD
+ Grbimeufj8Wwq3bDlFYd1CECyeeLP0u8UEmWraX/LCudB5rVH52mB97EZYzm1fox
+ r9aBlcn8O6ifPq3S1i7Y4/4vtfyX171oLE9AcEb5SOEsPEGgKdRkYGzFoDsQL+c/
+ Ixc2htb+eORdOhOjjZHhZAEb3+xYqCZGggsc2daylvTt60hsIJeV7/LTD0Kqfmtr
+ h8N8Pi4yVgNIVDYDiXGGIg==
+Message-ID: <d36a0608-e1d9-44a0-87c4-26b4501a41ca@rsg.ci.i.u-tokyo.ac.jp>
+Date: Wed, 18 Feb 2026 15:02:59 +0900
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v18 07/19] virtio-gpu: Unset context after GL operations
+To: Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Huang Rui <ray.huang@amd.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>,
+ Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Yiwei Zhang <zzyiwei@gmail.com>,
+ Sergio Lopez Pascual <slp@redhat.com>
+Cc: Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
+ Gurchetan Singh <gurchetansingh@chromium.org>, Alyssa Ross <hi@alyssa.is>,
+ =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger.pau@citrix.com>,
+ Alex Deucher <alexander.deucher@amd.com>,
+ Stefano Stabellini <stefano.stabellini@amd.com>,
+ =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
+ Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
+ Honglei Huang <honglei1.huang@amd.com>,
+ Julia Zhang <julia.zhang@amd.com>, Chen Jiqian <Jiqian.Chen@amd.com>,
+ Rob Clark <robdclark@gmail.com>, Robert Beckett <bob.beckett@collabora.com>
+References: <20260217214928.2970885-1-dmitry.osipenko@collabora.com>
+ <20260217214928.2970885-8-dmitry.osipenko@collabora.com>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <20260217214928.2970885-8-dmitry.osipenko@collabora.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,106 +92,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
---Apple-Mail=_65AF2D6E-D2A4-4DA8-92C1-3398673E31E2
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;
-	charset=us-ascii
-
-
-
-> On 17. Feb 2026, at 22:08, Osama Abdelkader =
-<osama.abdelkader@gmail.com> wrote:
->=20
-> In whpx_get_registers and whpx_set_registers the loops over FP =
-registers
-> were using whpx_reg_match[i].reg instead of whpx_fpreg_match[i].reg
->=20
-> Signed-off-by: Osama Abdelkader <osama.abdelkader@gmail.com>
+On 2026/02/18 6:49, Dmitry Osipenko wrote:
+> VirtIO-GPU commands may be processed outside of main-loop, from a CPU
+> thread. This results in GL context switch failure because context is held
+> by main-loop thread when GL is invoked from CPU thread. Always release GL
+> context after performing GL operations such that other threads could take
+> over the context.
+> 
+>   0  SDL_GL_MakeCurrent() (libSDL3)
+>   1  SDL_GL_MakeCurrent_REAL() (libSDL2)
+>   2  sdl2_gl_make_context_current() (ui/sdl2-gl.c:201)
+>   3  make_current() (virglrenderer.c:639)
+>   4  vrend_finish_context_switch() (vrend_renderer.c:11630)
+>   5  vrend_hw_switch_context() (vrend_renderer.c:11613)
+>   6  vrend_renderer_force_ctx_0() (vrend_renderer.c:12986)
+>   7  virgl_renderer_force_ctx_0() (virglrenderer.c:460)
+>   8  virtio_gpu_virgl_process_cmd() (virtio-gpu-virgl.c:1013)
+>   9  virtio_gpu_process_cmdq() (virtio-gpu.c:1050)
+>   10 virtio_gpu_gl_handle_ctrl() (virtio-gpu-gl.c:86)
+>   11 aio_bh_poll() (util/async.c)
+>   12 aio_poll() (util/aio-posix.c)
+>   13 blk_pwrite() (block/block-gen.c:1985)
+>   14 pflash_update() (pflash_cfi01.c:396)
+>   15 pflash_write() (pflash_cfi01.c:541)
+>   16 memory_region_dispatch_write() (system/memory.c:1554)
+>   17 flatview_write() (system/physmem.c:3333)
+>   18 address_space_write() (system/physmem.c:3453)
+>   19 kvm_cpu_exec() (accel/kvm/kall-all.c:3248)
+>   20 kvm_vcpu_thread_fn() (accel/kvm/kaccel-ops.c:53)
+> 
+> Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 > ---
+>   hw/display/virtio-gpu-virgl.c | 22 +++++++++++++++++++---
+>   1 file changed, 19 insertions(+), 3 deletions(-)
+> 
+> diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+> index 0f754829fb71..0021df45d4b2 100644
+> --- a/hw/display/virtio-gpu-virgl.c
+> +++ b/hw/display/virtio-gpu-virgl.c
+> @@ -896,14 +896,20 @@ static void virgl_cmd_set_scanout_blob(VirtIOGPU *g,
+>   }
+>   #endif
+>   
+> -void virtio_gpu_virgl_process_cmd(VirtIOGPU *g,
+> -                                      struct virtio_gpu_ctrl_command *cmd)
+> +static void virtio_gpu_virgl_unset_ctx_0(VirtIOGPU *g)
+> +{
+> +    /* Virglrender always uses first scanout for GL. */
+> +    dpy_gl_ctx_make_current(g->parent_obj.scanout[0].con, NULL);
 
-Reviewed-by: Mohamed Mediouni <mohamed@unpredictable.fr =
-<mailto:mohamed@unpredictable.fr>>
+"unset_ctx_0" is a misnomer. It uses the scanout with index 0, but "0" 
+in virgl_renderer_force_ctx_0() refers to a context, not scanout.
 
-Thank you,
-> target/arm/whpx/whpx-all.c | 4 ++--
-> 1 file changed, 2 insertions(+), 2 deletions(-)
->=20
-> diff --git a/target/arm/whpx/whpx-all.c b/target/arm/whpx/whpx-all.c
-> index b0602266af..40ada2d5b6 100644
-> --- a/target/arm/whpx/whpx-all.c
-> +++ b/target/arm/whpx/whpx-all.c
-> @@ -554,7 +554,7 @@ void whpx_get_registers(CPUState *cpu)
->     }
->=20
->     for (i =3D 0; i < ARRAY_SIZE(whpx_fpreg_match); i++) {
-> -        whpx_get_reg(cpu, whpx_reg_match[i].reg, &val);
-> +        whpx_get_reg(cpu, whpx_fpreg_match[i].reg, &val);
->         memcpy((char *)env + whpx_fpreg_match[i].offset, &val, =
-sizeof(val.Reg128));
->     }
->=20
-> @@ -605,7 +605,7 @@ void whpx_set_registers(CPUState *cpu, int level)
->=20
->     for (i =3D 0; i < ARRAY_SIZE(whpx_fpreg_match); i++) {
->         memcpy(&val.Reg128, (char *)env + whpx_fpreg_match[i].offset, =
-sizeof(val.Reg128));
-> -        whpx_set_reg(cpu, whpx_reg_match[i].reg, val);
-> +        whpx_set_reg(cpu, whpx_fpreg_match[i].reg, val);
->     }
->=20
->     clean_whv_register_value(&val);
-> --=20
-> 2.43.0
->=20
+virglrenderer creates multiple contexts; it creates contexts as the 
+guest requests, and also creates one special context that performs 
+operations not bound to the contexts the guest requested to create. The 
+special context is called "ctx_0".
 
+When unsetting a context, it does not matter what context is currently 
+set, so it should just say "ctx", not "ctx_0".
 
---Apple-Mail=_65AF2D6E-D2A4-4DA8-92C1-3398673E31E2
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/html;
-	charset=us-ascii
+By the way, writing this email, I found the use of phrase "setting a 
+context" is unusual. "Binding" is more conventional, and that's what the 
+EGL specification uses for eglMakeCurrent(). So, this function should be 
+named "unbind_ctx" or something like that.
 
-<html aria-label=3D"message body"><head><meta http-equiv=3D"content-type" =
-content=3D"text/html; charset=3Dus-ascii"></head><body =
-style=3D"overflow-wrap: break-word; -webkit-nbsp-mode: space; =
-line-break: after-white-space;"><br =
-id=3D"lineBreakAtBeginningOfMessage"><div><br><blockquote =
-type=3D"cite"><div>On 17. Feb 2026, at 22:08, Osama Abdelkader =
-&lt;osama.abdelkader@gmail.com&gt; wrote:</div><br =
-class=3D"Apple-interchange-newline"><div><div>In whpx_get_registers and =
-whpx_set_registers the loops over FP registers<br>were using =
-whpx_reg_match[i].reg instead of =
-whpx_fpreg_match[i].reg<br><br>Signed-off-by: Osama Abdelkader =
-&lt;osama.abdelkader@gmail.com&gt;<br>---<br></div></div></blockquote><div=
-><br></div>Reviewed-by: Mohamed Mediouni &lt;<a =
-href=3D"mailto:mohamed@unpredictable.fr">mohamed@unpredictable.fr</a>&gt;<=
-/div><div><br></div><div>Thank you,</div><div><blockquote =
-type=3D"cite"><div><div>target/arm/whpx/whpx-all.c | 4 ++--<br> 1 file =
-changed, 2 insertions(+), 2 deletions(-)<br><br>diff --git =
-a/target/arm/whpx/whpx-all.c b/target/arm/whpx/whpx-all.c<br>index =
-b0602266af..40ada2d5b6 100644<br>--- a/target/arm/whpx/whpx-all.c<br>+++ =
-b/target/arm/whpx/whpx-all.c<br>@@ -554,7 +554,7 @@ void =
-whpx_get_registers(CPUState *cpu)<br> &nbsp;&nbsp;&nbsp;&nbsp;}<br><br> =
-&nbsp;&nbsp;&nbsp;&nbsp;for (i =3D 0; i &lt; =
-ARRAY_SIZE(whpx_fpreg_match); i++) {<br>- =
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;whpx_get_reg(cpu, =
-whpx_reg_match[i].reg, &amp;val);<br>+ =
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;whpx_get_reg(cpu, =
-whpx_fpreg_match[i].reg, &amp;val);<br> =
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;memcpy((char *)env + =
-whpx_fpreg_match[i].offset, &amp;val, sizeof(val.Reg128));<br> =
-&nbsp;&nbsp;&nbsp;&nbsp;}<br><br>@@ -605,7 +605,7 @@ void =
-whpx_set_registers(CPUState *cpu, int level)<br><br> =
-&nbsp;&nbsp;&nbsp;&nbsp;for (i =3D 0; i &lt; =
-ARRAY_SIZE(whpx_fpreg_match); i++) {<br> =
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;memcpy(&amp;val.Reg128, =
-(char *)env + whpx_fpreg_match[i].offset, sizeof(val.Reg128));<br>- =
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;whpx_set_reg(cpu, =
-whpx_reg_match[i].reg, val);<br>+ =
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;whpx_set_reg(cpu, =
-whpx_fpreg_match[i].reg, val);<br> &nbsp;&nbsp;&nbsp;&nbsp;}<br><br> =
-&nbsp;&nbsp;&nbsp;&nbsp;clean_whv_register_value(&amp;val);<br>-- =
-<br>2.43.0<br><br></div></div></blockquote></div><br></body></html>=
-
---Apple-Mail=_65AF2D6E-D2A4-4DA8-92C1-3398673E31E2--
+Regards,
+Akihiko Odaki
 
