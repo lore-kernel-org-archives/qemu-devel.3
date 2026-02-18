@@ -4,73 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 364EAE9A03B
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 09:10:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D54D8E9A03B
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 09:10:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vsdYJ-0006R2-4n; Wed, 18 Feb 2026 04:08:59 -0500
+	id 1vsdXG-0001vy-8h; Wed, 18 Feb 2026 04:07:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <heifetz@yandex-team.com>)
- id 1vsdYA-0005ii-O3
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 04:08:50 -0500
-Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1vsdWw-0000zY-34
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 04:07:35 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <heifetz@yandex-team.com>)
- id 1vsdY6-0002bk-5b
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 04:08:49 -0500
-Received: from mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
- [IPv6:2a02:6b8:c42:94a9:0:640:a3fa:0])
- by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id E55B680B3E;
- Wed, 18 Feb 2026 12:08:41 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:18e::1:1d] (unknown
- [2a02:6bf:8080:18e::1:1d])
- by mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id d8WeSd3A94Y0-zBrC2Y35; Wed, 18 Feb 2026 12:08:41 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.com;
- s=default; t=1771405721;
- bh=h4tALshQAb+1ocBp08bQe/VMk2WzGNQe6aBxwP0IqCw=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=lnFUzw/8HW7b8oMhLAiIM7r1FWeluV21gtbhsJyhZEsPrULBGvwMACn2z0u7YWTB7
- OSlIHdYU9UMFkdRfrt0DIBrkIbWjidHqGYLsT5j9JSf+RU/fh1kR4jKLVemDJLTBxE
- zgR1t6uUMqjPF3No79/zK1VIos3qNU1lVn4FxnHk=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.com
-Message-ID: <baf33285-850f-4a44-8b02-651df060a451@yandex-team.com>
-Date: Wed, 18 Feb 2026 14:08:39 +0500
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1vsdWq-0002Sl-ST
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 04:07:32 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1771405643;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=iolbSR7ouNZT1Z1A/hTnNFQIrAqvCIZOr9ITrRjYxKc=;
+ b=CKcpOiHeknu9DbBp0OcmJrlSZhckZKKwlN1cG9X6nh087GvcXtaOQQS3SqsdcWE9lONsis
+ 65L2vLr4wic2HnJpGZ6YyuNGzVRcmne4yTvFFt/2NUXmCC2xWM6kDbJM3iQiGKkCY5Pvao
+ gqEeWUBbKSFlYhx7912zJyDJh3OuZV0=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-595-JEgfJhPvPxGI53WBnyeZlA-1; Wed,
+ 18 Feb 2026 04:07:22 -0500
+X-MC-Unique: JEgfJhPvPxGI53WBnyeZlA-1
+X-Mimecast-MFC-AGG-ID: JEgfJhPvPxGI53WBnyeZlA_1771405641
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 45D4519560AA; Wed, 18 Feb 2026 09:07:21 +0000 (UTC)
+Received: from localhost (unknown [10.45.242.26])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 82508180034A; Wed, 18 Feb 2026 09:07:20 +0000 (UTC)
+From: marcandre.lureau@redhat.com
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Gerd Hoffmann <kraxel@redhat.com>
+Subject: [PULL 76/85] audio: replace DEBUG_CAPTURE with traces
+Date: Wed, 18 Feb 2026 10:03:16 +0100
+Message-ID: <20260218090330.1476169-77-marcandre.lureau@redhat.com>
+In-Reply-To: <20260218090330.1476169-1-marcandre.lureau@redhat.com>
+References: <20260218090330.1476169-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 7/8] audio: do not build audio-related sources with
- --disable-audio
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Eric Blake <eblake@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Thomas Huth <thuth@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>
-References: <20260217052740.114117-1-heifetz@yandex-team.com>
- <20260217052740.114117-8-heifetz@yandex-team.com>
- <146c95fd-00f2-4b51-bda5-249dd768a719@redhat.com>
-Content-Language: en-US
-From: Sergei Heifetz <heifetz@yandex-team.com>
-In-Reply-To: <146c95fd-00f2-4b51-bda5-249dd768a719@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.154.239.200;
- envelope-from=heifetz@yandex-team.com; helo=forwardcorp1d.mail.yandex.net
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=marcandre.lureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.043,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,87 +87,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/17/26 14:49, Paolo Bonzini wrote:
-> On 2/17/26 06:27, Sergei Heifetz wrote:
->> When QEMU is configured with `--disable-audio`, do not build any
->> audio-related sources.
->>
->> - audio/meson.build and replay/meson.build:
->>    Exclude audio-related sources when audio is disabled.
->>
->> - audio/audio-stub.c:
->>    Provide a minimal set of straightforward stubs.
->>
->> - replay/replay-audio-stub.c:
->>    Move the existing stubs from replay/stubs-system.c into a separate
->>    file.
->>
->> - qapi/audio.json:
->>    Remove the QMP `query-audiodevs` command.
->>
->> - audio/audio-hmp-cmds-stub.c:
->>    Provide meaningful messages for audio-related HMP commands:
->>    stopcapture, wavcapture, info capture.
->>
->> Signed-off-by: Sergei Heifetz <heifetz@yandex-team.com>
->> ---
->>   audio/audio-hmp-cmds-stub.c | 28 ++++++++++++++++++++++++++++
->
-> Can you remove the commands instead?
->
-Yes, sure.
->> +AudioBackend *audio_be_by_name(const char *name, Error **errp)
->> +{
->> +  error_setg(
->> +      errp,
->> +      "trying to find audiodev '%s' by name with audio component 
->> disabled",
->
-> This can be simplified to just  'audio disabled' or something like that.
-Ok.
->
->> +      name);
->> +  return NULL;
->> +}
->> +
->> +const char *audio_be_get_id(AudioBackend *be) { return ""; }
->
-> Can you instead compile out qdev_prop_audiodev?
-I think so. I'll try it.
->
->> +bool audio_be_set_dbus_server(AudioBackend *be,
->> +                              GDBusObjectManagerServer *server, bool 
->> p2p,
->> +                              Error **errp)
->> +{
->> +  error_setg(errp, "trying to set dbus server with audio component 
->> disabled");
->
-> Since this requires an AudioBackend, which you cannot get with audio 
-> disabled, it can be simply abort().
-That's reasonable, I'll replace it with abort().
->
->> +if audio_enabled
->> +  system_ss.add(when: 'CONFIG_TCG',
->> +  if_true: files('replay-audio.c'),
->> +  if_false: files('replay-audio-stub.c'))
->> +else
->> +  system_ss.add(files('replay-audio-stub.c'))
->> +endif
->
-> I think this can be simply
->
->   system_ss.add(when: ['CONFIG_TCG', 'CONFIG_AUDIO'],
->      if_true: files('replay-audio.c'),
->      if_false: files('replay-audio-stub.c'))
->
-> but I may be incorrect.
->
-I’ve already tried it, and it doesn’t work for some reason.
-> Paolo
->
-Thank you for reviewing and for participating in the discussion about 
-the series. I probably wouldn’t have been able to summarise the points 
-as clearly myself.
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
+
+Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+---
+ audio/audio-mixeng-be.c | 20 +++++++-------------
+ audio/trace-events      |  3 +++
+ 2 files changed, 10 insertions(+), 13 deletions(-)
+
+diff --git a/audio/audio-mixeng-be.c b/audio/audio-mixeng-be.c
+index 2aeb05ba37e..1963f3e5c79 100644
+--- a/audio/audio-mixeng-be.c
++++ b/audio/audio-mixeng-be.c
+@@ -30,7 +30,6 @@
+ #include "audio_int.h"
+ 
+ /* #define DEBUG_OUT */
+-/* #define DEBUG_CAPTURE */
+ 
+ #define SW_NAME(sw) (sw)->name ? (sw)->name : "unknown"
+ 
+@@ -249,9 +248,8 @@ static void audio_notify_capture (CaptureVoiceOut *cap, audcnotification_e cmd)
+ {
+     struct capture_callback *cb;
+ 
+-#ifdef DEBUG_CAPTURE
+-    dolog ("notification %d sent\n", cmd);
+-#endif
++    trace_audio_notify_capture(cmd);
++
+     for (cb = cap->cb_head.lh_first; cb; cb = cb->entries.le_next) {
+         cb->ops.notify (cb->opaque, cmd);
+     }
+@@ -333,12 +331,10 @@ static int audio_attach_capture (HWVoiceOut *hw)
+         sw->rate = st_rate_start (sw->info.freq, hw_cap->info.freq);
+         QLIST_INSERT_HEAD (&hw_cap->sw_head, sw, entries);
+         QLIST_INSERT_HEAD (&hw->cap_head, sc, entries);
+-#ifdef DEBUG_CAPTURE
+-        sw->name = g_strdup_printf ("for %p %d,%d,%d",
+-                                    hw, sw->info.freq, sw->info.bits,
+-                                    sw->info.nchannels);
+-        dolog ("Added %s active = %d\n", sw->name, sw->active);
+-#endif
++        sw->name = g_strdup_printf("for %p %d,%s,%d",
++                                   hw, sw->info.freq, AudioFormat_str(sw->info.af),
++                                   sw->info.nchannels);
++        trace_audio_capture_attach(sw->name, sw->active);
+         if (sw->active) {
+             audio_capture_maybe_changed (cap, 1);
+         }
+@@ -1707,10 +1703,8 @@ static void audio_mixeng_backend_del_capture(
+ 
+                 while (sw) {
+                     SWVoiceCap *sc = (SWVoiceCap *) sw;
+-#ifdef DEBUG_CAPTURE
+-                    dolog ("freeing %s\n", sw->name);
+-#endif
+ 
++                    trace_audio_capture_free_sw(sw->name);
+                     sw1 = sw->entries.le_next;
+                     if (sw->rate) {
+                         st_rate_stop (sw->rate);
+diff --git a/audio/trace-events b/audio/trace-events
+index d66a712e871..3f8ebf9c6cb 100644
+--- a/audio/trace-events
++++ b/audio/trace-events
+@@ -58,10 +58,13 @@ audio_be_set_active_out(void *sw, bool on) "sw=%p, on=%d"
+ audio_timer_start(int interval) "interval %d ms"
+ audio_timer_stop(void) ""
+ audio_timer_delayed(int interval) "interval %d ms"
++audio_notify_capture(int cmd) "notification %d sent"
++audio_capture_attach(const char *name, bool active) "capture %s active=%d"
+ 
+ # audio-mixeng-be.c
+ audio_get_avail(const char *name, size_t live, uint32_t frontend_frames) "%s: get_avail live %zu frontend frames %u"
+ audio_run_poll(const char *msg, int64_t elapsed_us) "Elapsed since last %s: %" PRId64 " us"
++audio_capture_free_sw(const char *name) "freeing %s"
+ 
+ # audio_template.h
+ audio_open_out(const char *name, int freq, int nchannels, int fmt) "open %s, freq %d, nchannels %d, fmt %d"
+-- 
+2.53.0
 
 
