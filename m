@@ -4,182 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AC12E9A04B
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 19:55:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EE5EE9A04B
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 20:03:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vsndO-0004HT-1z; Wed, 18 Feb 2026 14:54:54 -0500
+	id 1vsnkv-0005r6-DF; Wed, 18 Feb 2026 15:02:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1vsndA-0004E3-Bu
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 14:54:41 -0500
-Received: from mout.gmx.net ([212.227.17.22])
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1vsnkZ-0005q0-5n
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 15:02:26 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1vsnd8-0004uh-DV
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 14:54:40 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
- s=s31663417; t=1771444469; x=1772049269; i=deller@gmx.de;
- bh=WexSOEzLNL3MKMlxp/HesyRGjg7vNt+RPjosTLFvB8E=;
- h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
- References:From:In-Reply-To:Content-Type:
- Content-Transfer-Encoding:cc:content-transfer-encoding:
- content-type:date:from:message-id:mime-version:reply-to:subject:
- to;
- b=Hcv5w0psx87MmS5JDnsUP3mVikpn76xEKtAFU5zrITxnuWNKb1K/D23VT+Nvvml9
- ZqwlhcSexlFCZhaOO5CmOm5zRz3BKKwqSZrHvrR3X+19dgtPiZjNxoJcjpYSf/J8N
- yKmsxY8xqqLBnfgH8ihcvad7/4utfXU4ZqnXW+ZwkbCEKvQT72BMKut5y+/dczxZP
- U+rfNrUNAQVRLqgEZq4Zo/F2PrZE35Kq3glv4m45OZlnvsuROLKU5HgI+1xwF79/J
- 8FQvkyJ87TFity2pQxK4y9Cffms219b5X1CiapjCRQ8qkRUb9z3Z72dYK9GP5Nsmm
- I97QIEVZLqwbBLB16Q==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [192.168.20.55] ([109.250.50.198]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MZktj-1wDW3m2j7X-00Wfn7; Wed, 18
- Feb 2026 20:54:29 +0100
-Message-ID: <cc002f2d-198d-4b59-b99b-0038d002f1e7@gmx.de>
-Date: Wed, 18 Feb 2026 20:54:29 +0100
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1vsnkW-0006Fa-1M
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 15:02:18 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1771444934;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Jl9rBB1SCH8iTy1FFzAPaQni1lp/tr2LocvbG9HIUCQ=;
+ b=XzCq3pqawAj5X+sm91zZRVUCINRpvTonGK9HbA0MiAD3NcqR1XD4ZfuVpvgqjsLXMxmEF3
+ M1EgebLxqYnsdJJFRKsGUzeq0W8h4DCsglYJC4OshQSFWmJZL/KYJGSqeN/cDYY35C5TES
+ EgKh6cysFEo4Lq3UFuylD+qaCS1xH6w=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-689-XH1gOSM7O5uwe07XZbqTIg-1; Wed,
+ 18 Feb 2026 15:02:10 -0500
+X-MC-Unique: XH1gOSM7O5uwe07XZbqTIg-1
+X-Mimecast-MFC-AGG-ID: XH1gOSM7O5uwe07XZbqTIg_1771444929
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BE64A1800366; Wed, 18 Feb 2026 20:02:08 +0000 (UTC)
+Received: from localhost (unknown [10.2.17.113])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id BD0E919560B7; Wed, 18 Feb 2026 20:02:07 +0000 (UTC)
+Date: Wed, 18 Feb 2026 15:02:06 -0500
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Jens Axboe <axboe@kernel.dk>
+Cc: Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org,
+ qemu-devel@nongnu.org, fam@euphon.net, Fiona Ebner <f.ebner@proxmox.com>
+Subject: Re: [PATCH 1/2] fdmon-io_uring: notify main loop when SQEs are queued
+Message-ID: <20260218200206.GA605390@fedora>
+References: <20260213143225.161043-1-axboe@kernel.dk>
+ <20260213143225.161043-2-axboe@kernel.dk>
+ <aY9Lj1BTVRCFyfic@redhat.com>
+ <c32915a9-33a2-47c5-a91b-27f01147918f@proxmox.com>
+ <20260218160621.GB587447@fedora>
+ <7811fc80-b2a1-4857-95f5-4bf01c806d07@kernel.dk>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/4] hppa: Add simple C3600 machine with PA-8600 CPU
-To: Anton Johansson <anjo@rev.ng>, qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>
-References: <20260218-hppa-c3600-v3-0-b37ad58a20dd@rev.ng>
-Content-Language: en-US
-From: Helge Deller <deller@gmx.de>
-Autocrypt: addr=deller@gmx.de; keydata=
- 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
-In-Reply-To: <20260218-hppa-c3600-v3-0-b37ad58a20dd@rev.ng>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:LtCRMluC1mZRkyzsfvCq23A2KJdBVYmav1/8E9NUM0H41+fZMNG
- VeLIPkwjJnk3J9QE2qdHsPkiA8Jd62kog6EtT7bRiUlySQcBfEt9t3cEVpwF58EcmajauX5
- P+6g362HMkVGc1TWq3ym5kajcw7GTey8y3xa4NionnmwlUp5Vv/v9Ko4+vYYlRFONj76q6S
- qhtZpReDDbKnmxtAM2A/g==
-UI-OutboundReport: notjunk:1;M01:P0:J+QlZaOJTT0=;ZHSa+HO7yBiKO4c20iUQ5YJlYtY
- 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
- PymsmwbM=
-Received-SPF: pass client-ip=212.227.17.22; envelope-from=deller@gmx.de;
- helo=mout.gmx.net
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="ht/2PgAXqIQowSbJ"
+Content-Disposition: inline
+In-Reply-To: <7811fc80-b2a1-4857-95f5-4bf01c806d07@kernel.dk>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.043,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -195,78 +90,200 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/18/26 20:48, Anton Johansson via qemu development wrote:
-> This patchset tries to address a discrepancy between the C3700 machine
-> in QEMU/SeaBIOS and the documentation (chapter 5)
->=20
->    http://ftp.parisc-linux.org/docs/whitepapers/PA-8700wp.pdf
->=20
-> where 40 bits of physical address space are used in SeaBIOS compared
-> to the 44 bits specified in the documentation.
->=20
-> A PA-8600 CPU with 40 bits of physical address space is added along with
-> a C3600 machine using it by default.
 
-As I mentioned earlier, I've now the patches ready for submission
-to add a A400 machine. The A400 uses a PA8500 CPU, which has 40bits too.
-So, instead of adding the C3600, can we please rebase your patch on my
-series instead?  I send my series in the the next few minutes...
+--ht/2PgAXqIQowSbJ
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Thanks!
-Helge
+On Wed, Feb 18, 2026 at 09:17:57AM -0700, Jens Axboe wrote:
+> On 2/18/26 9:06 AM, Stefan Hajnoczi wrote:
+> > On Wed, Feb 18, 2026 at 10:57:02AM +0100, Fiona Ebner wrote:
+> >> Am 13.02.26 um 5:05 PM schrieb Kevin Wolf:
+> >>> Am 13.02.2026 um 15:26 hat Jens Axboe geschrieben:
+> >>>> When a vCPU thread handles MMIO (holding BQL), aio_co_enter() runs t=
+he
+> >>>> block I/O coroutine inline on the vCPU thread because
+> >>>> qemu_get_current_aio_context() returns the main AioContext when BQL =
+is
+> >>>> held. The coroutine calls luring_co_submit() which queues an SQE via
+> >>>> fdmon_io_uring_add_sqe(), but the actual io_uring_submit() only happ=
+ens
+> >>>> in gsource_prepare() on the main loop thread.
+> >>>
+> >>> Ouch! Yes, looks like we completely missed I/O submitted in vCPU thre=
+ads
+> >>> in the recent changes (or I guess worker threads in theory, but I don=
+'t
+> >>> think there any that actually make use of aio_add_sqe()).
+> >>>
+> >>>> Since the coroutine ran inline (not via aio_co_schedule()), no BH is
+> >>>> scheduled and aio_notify() is never called. The main loop remains as=
+leep
+> >>>> in ppoll() with up to a 499ms timeout, leaving the SQE unsubmitted u=
+ntil
+> >>>> the next timer fires.
+> >>>>
+> >>>> Fix this by calling aio_notify() after queuing the SQE. This wakes t=
+he
+> >>>> main loop via the eventfd so it can run gsource_prepare() and submit=
+ the
+> >>>> pending SQE promptly.
+> >>>>
+> >>>> This is a generic fix that benefits all devices using aio=3Dio_uring.
+> >>>> Without it, AHCI/SATA devices see MUCH worse I/O latency since they =
+use
+> >>>> MMIO (not ioeventfd like virtio) and have no other mechanism to wake=
+ the
+> >>>> main loop after queuing block I/O.
+> >>>>
+> >>>> This is usually a bit hard to detect, as it also relies on the ppoll
+> >>>> loop not waking up for other activity, and micro benchmarks tend not=
+ to
+> >>>> see it because they don't have any real processing time. With a
+> >>>> synthetic test case that has a few usleep() to simulate processing of
+> >>>> read data, it's very noticeable. The below example reads 128MB with
+> >>>> O_DIRECT in 128KB chunks in batches of 16, and has a 1ms delay before
+> >>>> each batch submit, and a 1ms delay after processing each completion.
+> >>>> Running it on /dev/sda yields:
+> >>>>
+> >>>> time sudo ./iotest /dev/sda
+> >>>>
+> >>>> ________________________________________________________
+> >>>> Executed in   25.76 secs      fish           external
+> >>>>    usr time    6.19 millis  783.00 micros    5.41 millis
+> >>>>    sys time   12.43 millis  642.00 micros   11.79 millis
+> >>>>
+> >>>> while on a virtio-blk or NVMe device we get:
+> >>>>
+> >>>> time sudo ./iotest /dev/vdb
+> >>>>
+> >>>> ________________________________________________________
+> >>>> Executed in    1.25 secs      fish           external
+> >>>>    usr time    1.40 millis    0.30 millis    1.10 millis
+> >>>>    sys time   17.61 millis    1.43 millis   16.18 millis
+> >>>>
+> >>>> time sudo ./iotest /dev/nvme0n1
+> >>>>
+> >>>> ________________________________________________________
+> >>>> Executed in    1.26 secs      fish           external
+> >>>>    usr time    6.11 millis    0.52 millis    5.59 millis
+> >>>>    sys time   13.94 millis    1.50 millis   12.43 millis
+> >>>>
+> >>>> where the latter are consistent. If we run the same test but keep the
+> >>>> socket for the ssh connection active by having activity there, then
+> >>>> the sda test looks as follows:
+> >>>>
+> >>>> time sudo ./iotest /dev/sda
+> >>>>
+> >>>> ________________________________________________________
+> >>>> Executed in    1.23 secs      fish           external
+> >>>>    usr time    2.70 millis   39.00 micros    2.66 millis
+> >>>>    sys time    4.97 millis  977.00 micros    3.99 millis
+> >>>>
+> >>>> as now the ppoll loop is woken all the time anyway.
+> >>>>
+> >>>> After this fix, on an idle system:
+> >>>>
+> >>>> time sudo ./iotest /dev/sda
+> >>>>
+> >>>> ________________________________________________________
+> >>>> Executed in    1.30 secs      fish           external
+> >>>>    usr time    2.14 millis    0.14 millis    2.00 millis
+> >>>>    sys time   16.93 millis    1.16 millis   15.76 millis
+> >>>>
+> >>>> Signed-off-by: Jens Axboe <axboe@kernel.dk>
+> >>>> ---
+> >>>>  util/fdmon-io_uring.c | 8 ++++++++
+> >>>>  1 file changed, 8 insertions(+)
+> >>>>
+> >>>> diff --git a/util/fdmon-io_uring.c b/util/fdmon-io_uring.c
+> >>>> index d0b56127c670..96392876b490 100644
+> >>>> --- a/util/fdmon-io_uring.c
+> >>>> +++ b/util/fdmon-io_uring.c
+> >>>> @@ -181,6 +181,14 @@ static void fdmon_io_uring_add_sqe(AioContext *=
+ctx,
+> >>>> =20
+> >>>>      trace_fdmon_io_uring_add_sqe(ctx, opaque, sqe->opcode, sqe->fd,=
+ sqe->off,
+> >>>>                                   cqe_handler);
+> >>>> +
+> >>>> +    /*
+> >>>> +     * Wake the main loop if it is sleeping in ppoll().  When a vCP=
+U thread
+> >>>> +     * runs a coroutine inline (holding BQL), it queues SQEs here b=
+ut the
+> >>>> +     * actual io_uring_submit() only happens in gsource_prepare(). =
+ Without
+> >>>> +     * this notify, ppoll() can sleep up to 499ms before submitting.
+> >>>> +     */
+> >>>> +    aio_notify(ctx);
+> >>>>  }
+> >>>
+> >>> Makes sense to me.
+> >>>
+> >>> At first I wondered if we should use defer_call() for the aio_notify()
+> >>> to batch the submission, but of course holding the BQL will already t=
+ake
+> >>> care of that. And in iothreads where there is no BQL, the aio_notify()
+> >>> shouldn't make a difference anyway because we're already in the right
+> >>> thread.
+> >>>
+> >>> I suppose the other variation could be have another io_uring_enter()
+> >>> call here (but then probably really through defer_call()) to avoid
+> >>> waiting for another CPU to submit the request in its main loop. But I
+> >>> don't really have an intuition if that would make things better or wo=
+rse
+> >>> in the common case.
+> >=20
+> > It's possible to call io_uring_enter(). QEMU currently doesn't use
+> > IORING_SETUP_SINGLE_ISSUER, so it's okay for multiple threads to call
+> > io_uring_enter() on the same io_uring fd.
+>=20
+> I would not recommend that, see below.
+>=20
+> > I experimented with IORING_SETUP_SINGLE_ISSUER (as well as
+> > IORING_SETUP_COOP_TASKRUN and IORING_SETUP_TASKRUN_FLAG) in the past and
+> > didn't measure a performance improvement:
+> > https://lore.kernel.org/qemu-devel/20250724204702.576637-1-stefanha@red=
+hat.com/
+> >=20
+> > Jens, any advice regarding these flags?
+>=20
+> None other than "yes you should use them" - it's an expanding area of
+> "let's make that faster", so if you tested something older, then that
+> may be why as we didn't have a lot earlier. We're toying with getting
+> rid of the uring_lock for SINGLE_ISSUER, for example.
+>=20
+> Hence I think having multiple threads do enter is a design mistake, and
+> one that might snowball down the line and make it harder to step back
+> and make SINGLE_ISSUER work for you. Certain features also end up being
+> gated behing DEFER_TASKRUN, which requires SINGLE_ISSUER as well.
+>=20
+> tldr - don't have multiple threads do enter on the same ring, ever, if
+> it can be avoided. It's a design mistake.
 
->  AFAICT there are no major
-> differences from QEMUs side between the PA-8600 and 8700 aside from the
-> physical address space size.  The PA-8700 machine can then be
-> moved to using 44 bits.  To account for the discrepancy with SeaBIOS, th=
-e
-> functional tests now run a C3700 but with a PA-8600 CPU.
->=20
-> CPU model definitions now inherit from a TYPE_HPPA_CPU base class and
-> use a HPPACPUDef struct to provide model specifics, similar to the SPARC
-> and RISCV targets.  This hopefully makes it easier to add other models,
-> such as the 8800/8900.
->=20
-> Based on:
->    [PATCH v6 0/8] single-binary: Drop TARGET_PHYS_ADDR_SPACE_BITS
->    (20260218-phys_addr-v6-0-a603bf363218@rev.ng)
->=20
-> Signed-off-by: Anton Johansson <anjo@rev.ng>
-> ---
-> Changes in v3:
-> - Fixed spelling in commit message/comment
-> - Rebased
-> - Dropped if statement in hppa_cpu_class_base_init() (patch
->    "hppa: Introduce HPPACPUDef").  Not needed as it will simply
->    be set to NULL for the abstract base class anyway.
-> - Link to v2: https://lore.kernel.org/qemu-devel/20260210-hppa-c3600-v2-=
-0-9ca09c677012@rev.ng
->=20
-> Changes in v2:
-> - Missed a reference to the old "hppa" CPU model, updated to
->    "pa-7300lc".
-> - Link to v1: https://lore.kernel.org/qemu-devel/20260210-hppa-c3600-v1-=
-0-a17ec58f053f@rev.ng
->=20
-> ---
-> Anton Johansson (4):
->        hppa: Prepare for additional CPU models
->        hppa: Introduce HPPACPUDef
->        hppa: Get physical address space bits from HPPACPUDef
->        hppa: Add C3600 machine with PA-8600 CPU
->=20
->   target/hppa/cpu-qom.h                 |  8 ++++-
->   target/hppa/cpu.h                     | 35 +++++++++++++++----
->   hw/hppa/machine.c                     | 64 +++++++++++++++++++++++++++=
-=2D-------
->   hw/pci-host/astro.c                   |  2 +-
->   linux-user/hppa/elfload.c             |  2 +-
->   target/hppa/cpu.c                     | 50 ++++++++++++++++++++-------
->   target/hppa/mem_helper.c              | 40 +++++++---------------
->   tests/qtest/machine-none-test.c       |  2 +-
->   tests/functional/hppa/test_seabios.py |  3 ++
->   9 files changed, 141 insertions(+), 65 deletions(-)
->=20
->=20
+That's useful information, thanks. I will resurrect the patches to add
+modern io_uring_setup() flags and we'll document the assumption that
+only one thread invokes io_uring_enter().
+
+Stefan
+
+--ht/2PgAXqIQowSbJ
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmmWGr4ACgkQnKSrs4Gr
+c8guwQf/fSFEp0K+oif7YFkAGf5BpEDYxYopdh14qClGecVZB2zI1jDi4ExsTxtS
+oDISVsXUglQLKrhfUuzIH9d/IxG90t4pPE/IbfwO6g9BUZyLBQjo0R4+vM3yT3qA
+Yzkr/9oUqcN8bSPsGHGjvB0LkvrxGFv6w9KfgLxdzwz+LZ6GtKJ4SUhrykOZPubV
+K93hf52bTBoVUUzdNBXbJIdUo8OFf8/quSZO9Wqt4t6CBHdKdjgAnUP4XZW6f+x8
+skiBnqATEBPkobCyJ0+tIfzOSAwShRR+56GzxyFdbxxs9KY024ruQJPQg+TnRxyb
+bPpxjKBmMCU7mItB/T9Sq4GJkw61vg==
+=VlB6
+-----END PGP SIGNATURE-----
+
+--ht/2PgAXqIQowSbJ--
 
 
