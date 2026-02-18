@@ -4,93 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06FD4E9A02C
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 13:34:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B5D9E9A04D
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 13:35:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vshfl-0004Or-TD; Wed, 18 Feb 2026 08:32:57 -0500
+	id 1vshfk-0004NE-VH; Wed, 18 Feb 2026 08:32:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1vshfi-0004IY-Gg
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 08:32:54 -0500
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1vshfc-0004An-C1
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 08:32:48 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1vshfg-0006FD-Pl
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 08:32:54 -0500
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1vshfT-0005lZ-7j
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 08:32:48 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771421572;
+ s=mimecast20190719; t=1771421555;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=V9XxWeIBv2c1tdmnmag9Jzf/vBSh0dtlPyj8GrQc20M=;
- b=MptuV2QkR/JnP5YfGsLv/5V4AElPD/GGJvGeXP9D5UBnKK3AALM1Iakg+MZswK+xBo6guc
- WvzuqCQb6CSnZuR/xfGHJ7d0rGa+16pdL20pd5BcPyqH0EDRq0Mw1aq0gTuul8vubilhbP
- Fqh6wX8n3nlCYegziq2k2g/F21X8AbM=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=/6wY9hvfJ1eIlvKpdImFzHfK6DZcwfCljnWmU410eEo=;
+ b=TkoyQ7MMKMc/Z8Hth3a5ilkp5LOmV+g0A/ob7ghqovZ70/D6+xO6oCUJXvIeY4MC812B35
+ YgERPkVokdMW4AHsBUBraE99uGDakbVsg2WbIOKk7SPqZHGss2qS5fY7I5xwJWjI56azJs
+ 1ZSxdZu5T6pP40ArTIVTElIT87CVrQE=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-626-UZEsV54wMe-N1uNB_beKNA-1; Wed, 18 Feb 2026 08:27:45 -0500
-X-MC-Unique: UZEsV54wMe-N1uNB_beKNA-1
-X-Mimecast-MFC-AGG-ID: UZEsV54wMe-N1uNB_beKNA_1771421264
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-4376ecafb7fso3352010f8f.2
- for <qemu-devel@nongnu.org>; Wed, 18 Feb 2026 05:27:45 -0800 (PST)
+ us-mta-212-TaHz-W2QOxa_4eWltVvVwA-1; Wed, 18 Feb 2026 08:27:20 -0500
+X-MC-Unique: TaHz-W2QOxa_4eWltVvVwA-1
+X-Mimecast-MFC-AGG-ID: TaHz-W2QOxa_4eWltVvVwA_1771421239
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4836cc0b38eso37897185e9.2
+ for <qemu-devel@nongnu.org>; Wed, 18 Feb 2026 05:27:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1771421264; x=1772026064; darn=nongnu.org;
+ d=redhat.com; s=google; t=1771421239; x=1772026039; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=V9XxWeIBv2c1tdmnmag9Jzf/vBSh0dtlPyj8GrQc20M=;
- b=FUHAJtutqMyqNDBEnE+UdP88BMDRukkR7ZC7dDnXssZnVVVenqfnld0EIdQbxTL9kE
- uPPzkvgl5DexmX2a89/+/MUiONQldLtDsYVKSwsU+NZjbWVxAWodfSZQBjf7l48CZpYZ
- hLtp7QN/OxYmedXnv0/iWUok9qt96bEPYpDxCsa87s2Ahz8/36CQRbrFgceH5mT26V9J
- RQs86JMpCqEhCE5dhZG3yJcu5ZI0GRrsTSkXYmsz8uqr0IqjTL9RFhBBtOgGTkpucWtS
- BBTC/NFSx3YpKgygkDRHdGssjOA6lMxRSQnxtBo1BwZA9hStKFO6nx6LXZfIeS5c9qp7
- LoxQ==
+ bh=/6wY9hvfJ1eIlvKpdImFzHfK6DZcwfCljnWmU410eEo=;
+ b=TRm1va/OQyke6Olh1Wym7Cpp1wftOdbNXLiYHk1/qVuwzxBCGqV3Gy15N8nhqkUHXA
+ WvscdX2vXzyR0KWasuYxjtnOzQlasO+YLhUeY4wLlCMIcwRyoqbg6TAQAMThZCxmyprW
+ gq0oB+xc8lWYNA/wes9GUQmIhfIAXDYvIQp5WX1h8pD3Rs1x9CCoU3xcGZjKt2Xr7/Ld
+ Wc6Gg/V2DQfRzXyRs6lco8AL3EfJKPnYw07O6DSSSTTA6s79eRP8TdkSkHZPqF2GrYTS
+ Zrcwsz1qtcjJeTM1WlzvrcXvkDkM/wEr0CNFsjoSJXrelI/hUyw8IfhzDndxUIQeoE6K
+ fXSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771421264; x=1772026064;
+ d=1e100.net; s=20230601; t=1771421239; x=1772026039;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=V9XxWeIBv2c1tdmnmag9Jzf/vBSh0dtlPyj8GrQc20M=;
- b=bIAhNZRF7BOLXIQG0SNohkfj+qRs5toRW40MVGVhGAfzvEoR+ksneO3mHEyqVTI8xM
- LO/QIuzzWa267eYpYE6ICQYQs4YcJyfpcwtHE4JtqIYIWMiddAX2tj6GXYK5RC/DGvba
- SE++MM4a4Yb+pfmhoL6ypKmWPHeJDVca5JCasQenXza7z4Dx4a9ZbRacHBN3yS679hGz
- GpFxqa3S8LSHlflMyk62aRc8aPa6N7ddnSngreogpj18lA7rq7dQw5ObpY0MT9tqlC1J
- kO3CP+UomRbe9WV6JsSQbwBQ+D2O+rLc7aLjpDgg9Jv6LPCc0WEiSt2U7cGT/3ho6kci
- TtBw==
-X-Gm-Message-State: AOJu0Ywa+oo77N3RDC1B+ruQFjVG+2SmX8lIgS52I9KSGkNqxawTfH7v
- b8ZC2L1RJjI+tAsDg79X20r2jCIFoghQP2V+ZHr3yHLPZWhOaajDVwioe0myq2WlI8okzC0GGti
- g/nbdIXpkxsHXxJTCWFQotyt+W5rxfKs7dEY7u9/ANZlF3ahdLty5Uhly
-X-Gm-Gg: AZuq6aJWb2qcgdo04yDomEymcsD0vyoNCwzyXg7/8oIVosWW5Ck+Oz13opO9SpneL5F
- I1KFpyW17Pn/D6aeRcDf3S3j0UaCsrSjSBeA01EicNuff7tO+BW3i8C3ztJ7ToK+QM4v6vwEbcq
- 0QF5rHtvjX6tQk5pxR0f6CTvBsF5oC7LfVuJRecNog47lXqrCjhTJfgU6DkHGL+DoKX4vcTDVaS
- +z8zxM3+H0qXI4bcUKqO5zosDUiiZuDzV0O0ARb25PXWUs57atHX93PRRetYUX3oJeMUjUAT/BB
- lVB6K79bQyVD0zEStyQeprY9G7FyTMI09OQNglaL2268L9OaNz9OkCpEp/y67vc07g1b/rKK83D
- NU79VdYmTNn2m/psZRqoe4ef/FIMGzUX1fVLiGj1Q4TENfqi1RVR2jcd+3ssZEF53IqY4g0SBE6
- Y3X0eN
-X-Received: by 2002:a5d:5f82:0:b0:437:6aca:d1c6 with SMTP id
- ffacd0b85a97d-43958e3bed1mr3347703f8f.33.1771421263921; 
- Wed, 18 Feb 2026 05:27:43 -0800 (PST)
-X-Received: by 2002:a5d:5f82:0:b0:437:6aca:d1c6 with SMTP id
- ffacd0b85a97d-43958e3bed1mr3347644f8f.33.1771421263180; 
- Wed, 18 Feb 2026 05:27:43 -0800 (PST)
+ bh=/6wY9hvfJ1eIlvKpdImFzHfK6DZcwfCljnWmU410eEo=;
+ b=CWGk3P8SQQbiIoBY1laUwH9TFGDl8Q8vloBrvvR5DwVj4zhtjybkwzzl8iSCt8fCoD
+ Y9wL26ajUQTkko3B7IPztBmNmdUYkuLYhqC5Z5tqS2rlT6i3rhxLyNCozMBCd/5OxAbw
+ pbRxLlee7IXu97nvdL6Sw+riFJ+sNtgjXh2R8gLDrASwIPq0YtO8PhNm//7t25e8TN60
+ f1JxU/W6LyftwzNEcDkymPBifsFChiOwJzVPE9+eBT/3E9wh5v8empzvEsa5L4xRlSHC
+ 9csPtoFFMKaLNzSkPRmA15fvQn/ogH3IUyxkLlBSCo08so/59+osvVEmnDkB4yDXnb+i
+ pUQg==
+X-Gm-Message-State: AOJu0Ywbzb9rssK2ZNtvwEe1rSgifg/Qw3l5ttSjG4/eyY5XW5YuY9ST
+ moKq4v6WZVdcEykXyiXI9wkhKs9I7fFv+MB5DdcF6i9PIRt4u0JmC1Rn3OIxpIlISkJDbEIboRb
+ cu4L7p/OHhU1RQ+NhTmQyvPp+jx33KiucDZ+dBzBJKVgFr8R0Se319mAo
+X-Gm-Gg: AZuq6aJWPIBL2B/YrlMHD7O1INdu2ychNmHRht5mfBjrr72HTC9sC14m/I5FtGgNK/r
+ izWmoKs602XkU27E5j0263JB4ORPsSIZz03fMzsbC/dBFfeu2vx+RRiAjGCfuAJiDqD6koiUGya
+ ryTmvef6wxAEYILVw24+LYh643vQZhg/t5k8aJI+v8+DzKX+PKQ0K4QmQnxISSRiaFtVgEIJ+Xy
+ RyBd0SQJTpz/WEP89lzZ5DfhLQ9cH/J4r3vKCBXh2ZpU2tDTX9vK/T86XZS25TfzW0UlKCCWYtN
+ pXp05ig4ZY395gxQCOkPiqDynFzid2NBOegSbWCCqqcnNs/h6udLAoJxLSJ1La+HdmKx9/WxXAP
+ EbiGGQMLRQ4hlYRVHucuqKHoeUAb1f8qfytYzosaZcdsGvH1JkCBjeeihAyRDYKtsP6MyTL1M6C
+ EaDJ+j
+X-Received: by 2002:a05:600c:871b:b0:483:7783:5382 with SMTP id
+ 5b1f17b1804b1-48398ae5e18mr33799315e9.27.1771421239358; 
+ Wed, 18 Feb 2026 05:27:19 -0800 (PST)
+X-Received: by 2002:a05:600c:871b:b0:483:7783:5382 with SMTP id
+ 5b1f17b1804b1-48398ae5e18mr33798785e9.27.1771421238797; 
+ Wed, 18 Feb 2026 05:27:18 -0800 (PST)
 Received: from localhost
  (p200300cfd737d029edef7b8da7441ac2.dip0.t-ipconnect.de.
  [2003:cf:d737:d029:edef:7b8d:a744:1ac2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43796acf5b9sm40227691f8f.34.2026.02.18.05.27.42
+ ffacd0b85a97d-43796abc85csm41619785f8f.22.2026.02.18.05.27.16
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 18 Feb 2026 05:27:42 -0800 (PST)
+ Wed, 18 Feb 2026 05:27:17 -0800 (PST)
 From: Hanna Czenczek <hreitz@redhat.com>
 To: qemu-block@nongnu.org
 Cc: qemu-devel@nongnu.org, Hanna Czenczek <hreitz@redhat.com>,
  Kevin Wolf <kwolf@redhat.com>, Brian Song <hibriansong@gmail.com>
-Subject: [PATCH v4 24/24] iotests/308: Add multi-threading sanity test
-Date: Wed, 18 Feb 2026 14:26:33 +0100
-Message-ID: <20260218132633.29748-25-hreitz@redhat.com>
+Subject: [PATCH v4 14/24] fuse: Explicitly handle non-grow post-EOF accesses
+Date: Wed, 18 Feb 2026 14:26:23 +0100
+Message-ID: <20260218132633.29748-15-hreitz@redhat.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260218132633.29748-1-hreitz@redhat.com>
 References: <20260218132633.29748-1-hreitz@redhat.com>
@@ -106,7 +106,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.043,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,143 +122,175 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Run qemu-img bench on a simple multi-threaded FUSE export to test that
-it works.
+When reading to / writing from non-growable exports, we cap the I/O size
+by `offset - blk_len`.  This will underflow for accesses that are
+completely past the disk end.
 
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+Check and handle that case explicitly.
+
+This is also enough to ensure that `offset + size` will not overflow;
+blk_len is int64_t, offset is uint32_t, `offset < blk_len`, so from
+`INT64_MAX + UINT32_MAX < UINT64_MAX` it follows that `offset + size`
+cannot overflow.
+
+Just one catch: We have to allow write accesses to growable exports past
+the EOF, so then we cannot rely on `offset < blk_len`, but have to
+verify explicitly that `offset + size` does not overflow.
+
+The negative consequences of not having this commit are luckily limited
+because blk_pread() and blk_pwrite() will reject post-EOF requests
+anyway, so a `size` underflow post-EOF will just result in an I/O error.
+So:
+- Post-EOF reads will incorrectly result in I/O errors instead of just
+  0-length reads.  We will also attempt to allocate a very large buffer,
+  which is wrong and not good, but not terrible.
+- Post-EOF writes on non-growable exports will result in I/O errors
+  instead of 0-length writes (which generally indicate ENOSPC).
+- Post-EOF writes on growable exports can theoretically overflow on EOF
+  and truncate the export down to a much too small size, but in
+  practice, FUSE will never send an offset greater than signed INT_MAX,
+  preventing a uint64_t overflow.  (fuse_write_args_fill() in the kernel
+  uses loff_t for the offset, which is signed.)
+
 Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
 ---
- tests/qemu-iotests/308     | 51 ++++++++++++++++++++++++++++++++++
- tests/qemu-iotests/308.out | 56 ++++++++++++++++++++++++++++++++++++++
- 2 files changed, 107 insertions(+)
+ block/export/fuse.c        | 20 +++++++++++++++++++-
+ tests/qemu-iotests/308     | 35 ++++++++++++++++++++++++++++++-----
+ tests/qemu-iotests/308.out | 10 ++++++++++
+ 3 files changed, 59 insertions(+), 6 deletions(-)
 
+diff --git a/block/export/fuse.c b/block/export/fuse.c
+index d45c6b814f..af0a8de17b 100644
+--- a/block/export/fuse.c
++++ b/block/export/fuse.c
+@@ -657,6 +657,16 @@ static void fuse_read(fuse_req_t req, fuse_ino_t inode,
+         return;
+     }
+ 
++    if (offset >= blk_len) {
++        /*
++         * Technically libfuse does not allow returning a zero error code for
++         * read requests, but in practice this is a 0-length read (and a future
++         * commit will change this code anyway)
++         */
++        fuse_reply_err(req, 0);
++        return;
++    }
++
+     if (offset + size > blk_len) {
+         size = blk_len - offset;
+     }
+@@ -717,7 +727,15 @@ static void fuse_write(fuse_req_t req, fuse_ino_t inode, const char *buf,
+         return;
+     }
+ 
+-    if (offset + size > blk_len) {
++    if (offset >= blk_len && !exp->growable) {
++        fuse_reply_write(req, 0);
++        return;
++    }
++
++    if (offset + size < offset) {
++        fuse_reply_err(req, EINVAL);
++        return;
++    } else if (offset + size > blk_len) {
+         if (exp->growable) {
+             ret = fuse_do_truncate(exp, offset + size, true, PREALLOC_MODE_OFF);
+             if (ret < 0) {
 diff --git a/tests/qemu-iotests/308 b/tests/qemu-iotests/308
-index a83c6fc01f..f4a06a522e 100755
+index 6ecb275555..a83c6fc01f 100755
 --- a/tests/qemu-iotests/308
 +++ b/tests/qemu-iotests/308
-@@ -441,6 +441,57 @@ $QEMU_IO -c 'read -P 0 0 64M' "$TEST_IMG" | _filter_qemu_io
+@@ -300,16 +300,34 @@ dd if=/dev/zero of="$EXT_MP" bs=1 count=64k seek=$orig_len \
+     conv=notrunc 2>&1 \
+     | _filter_testdir | _filter_imgfmt
  
- _cleanup_test_img
++# And one really squarely post-EOF write
++dd if=/dev/zero of="$EXT_MP" bs=1 count=1 seek=$((orig_len + 32 * 1024)) \
++    conv=notrunc 2>&1 \
++    | _filter_testdir | _filter_imgfmt
++
++# Half-post-EOF reads
++dd if="$EXT_MP" of=/dev/null bs=1 count=64k skip=$((orig_len - 32 * 1024)) \
++    2>&1 | _filter_testdir | _filter_imgfmt
++
++# And one really squarely post-EOF read
++dd if="$EXT_MP" of=/dev/null bs=1 count=1 skip=$((orig_len + 32 * 1024)) \
++    2>&1 | _filter_testdir | _filter_imgfmt
++
+ echo
+ echo '--- Resize export ---'
  
-+echo
-+echo '=== Multi-threading ==='
+ # But we can truncate it explicitly; even with fallocate
+-fallocate -o "$orig_len" -l 64k "$EXT_MP"
++# (Make sure we extend it to a length not divisible by 128k, we need that below)
++bs=$((128 * 1024))
++extend_to=$(((orig_len + bs - 1) / bs * bs + bs / 2))
++extend_by=$((extend_to - orig_len))
 +
-+# Just set up a null block device, export it (with multi-threading), and run
-+# qemu-img bench on it (to get parallel requests)
++fallocate -o "$orig_len" -l $extend_by "$EXT_MP"
+ 
+ new_len=$(get_proto_len "$EXT_MP" "$TEST_IMG")
+-if [ "$new_len" != "$((orig_len + 65536))" ]; then
++if [ "$new_len" != "$extend_to" ]; then
+     echo 'ERROR: Unexpected post-truncate image size:'
+-    echo "$new_len != $((orig_len + 65536))"
++    echo "$new_len != $extend_to"
+ else
+     echo 'OK: Post-truncate image size is as expected'
+ fi
+@@ -322,6 +340,13 @@ else
+     echo "$orig_disk_usage => $new_disk_usage"
+ fi
+ 
++# Use this opportunity to test a read access across the (now no longer so much
++# aligned) EOF.  dd can only do requests with a length of its block size, and
++# all of its seek/skip values are in bs units, so it is hard to do a request
++# across the EOF if the EOF is at a power of two (64M).
++dd if="$EXT_MP" of=/dev/null bs=$bs count=2 skip=$((extend_to / bs)) \
++    2>&1 | _filter_testdir | _filter_imgfmt
 +
-+_launch_qemu
-+_send_qemu_cmd $QEMU_HANDLE \
-+    "{'execute': 'qmp_capabilities'}" \
-+    'return'
-+
-+_send_qemu_cmd $QEMU_HANDLE \
-+    "{'execute': 'blockdev-add',
-+      'arguments': {
-+          'driver': 'null-co',
-+          'node-name': 'null'
-+      } }" \
-+    'return'
-+
-+for id in iothread{0,1,2,3}; do
-+    _send_qemu_cmd $QEMU_HANDLE \
-+        "{'execute': 'object-add',
-+          'arguments': {
-+              'qom-type': 'iothread',
-+              'id': '$id'
-+          } }" \
-+        'return'
-+done
-+
-+echo
-+
-+iothreads="['iothread0', 'iothread1', 'iothread2', 'iothread3']"
-+fuse_export_add \
-+    'export' \
-+    "'mountpoint': '$EXT_MP', 'iothread': $iothreads" \
-+    'return' \
-+    'null'
-+
-+echo
-+$QEMU_IMG bench -f raw "$EXT_MP" |
-+    sed -e 's/[0-9.]\+ seconds/X.XXX seconds/'
-+echo
-+
-+fuse_export_del 'export'
-+
-+_send_qemu_cmd $QEMU_HANDLE \
-+    "{'execute': 'quit'}" \
-+    'return'
-+
-+wait=yes _cleanup_qemu
-+
- # success, all done
- echo "*** done"
- rm -f $seq.full
+ echo
+ echo '--- Try growing growable export ---'
+ 
+@@ -338,9 +363,9 @@ dd if=/dev/zero of="$EXT_MP" bs=1 count=64k seek=$new_len conv=notrunc 2>&1 \
+     | _filter_testdir | _filter_imgfmt
+ 
+ new_len=$(get_proto_len "$EXT_MP" "$TEST_IMG")
+-if [ "$new_len" != "$((orig_len + 131072))" ]; then
++if [ "$new_len" != "$((extend_to + 65536))" ]; then
+     echo 'ERROR: Unexpected post-grow image size:'
+-    echo "$new_len != $((orig_len + 131072))"
++    echo "$new_len != $((extend_to + 65536))"
+ else
+     echo 'OK: Post-grow image size is as expected'
+ fi
 diff --git a/tests/qemu-iotests/308.out b/tests/qemu-iotests/308.out
-index ebeaf64b48..580cc94e92 100644
+index 2d7a38d63d..ebeaf64b48 100644
 --- a/tests/qemu-iotests/308.out
 +++ b/tests/qemu-iotests/308.out
-@@ -217,4 +217,60 @@ read 67108864/67108864 bytes at offset 0
- {"return": {}}
- read 67108864/67108864 bytes at offset 0
- 64 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+
-+=== Multi-threading ===
-+{'execute': 'qmp_capabilities'}
-+{"return": {}}
-+{'execute': 'blockdev-add',
-+      'arguments': {
-+          'driver': 'null-co',
-+          'node-name': 'null'
-+      } }
-+{"return": {}}
-+{'execute': 'object-add',
-+          'arguments': {
-+              'qom-type': 'iothread',
-+              'id': 'iothread0'
-+          } }
-+{"return": {}}
-+{'execute': 'object-add',
-+          'arguments': {
-+              'qom-type': 'iothread',
-+              'id': 'iothread1'
-+          } }
-+{"return": {}}
-+{'execute': 'object-add',
-+          'arguments': {
-+              'qom-type': 'iothread',
-+              'id': 'iothread2'
-+          } }
-+{"return": {}}
-+{'execute': 'object-add',
-+          'arguments': {
-+              'qom-type': 'iothread',
-+              'id': 'iothread3'
-+          } }
-+{"return": {}}
-+
-+{'execute': 'block-export-add',
-+          'arguments': {
-+              'type': 'fuse',
-+              'id': 'export',
-+              'node-name': 'null',
-+              'mountpoint': 'TEST_DIR/t.IMGFMT.fuse', 'iothread': ['iothread0', 'iothread1', 'iothread2', 'iothread3']
-+          } }
-+{"return": {}}
-+
-+Sending 75000 read requests, 4096 bytes each, 64 in parallel (starting at offset 0, step size 4096)
-+Run completed in X.XXX seconds.
-+
-+{'execute': 'block-export-del',
-+          'arguments': {
-+              'id': 'export'
-+          } }
-+{"return": {}}
-+{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "BLOCK_EXPORT_DELETED", "data": {"id": "export"}}
-+{'execute': 'quit'}
-+{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "SHUTDOWN", "data": {"guest": false, "reason": "host-qmp-quit"}}
-+{"return": {}}
- *** done
+@@ -134,11 +134,21 @@ wrote 65536/65536 bytes at offset 1048576
+ dd: error writing 'TEST_DIR/t.IMGFMT.fuse': No space left on device
+ 1+0 records in
+ 0+0 records out
++dd: error writing 'TEST_DIR/t.IMGFMT.fuse': No space left on device
++1+0 records in
++0+0 records out
++32768+0 records in
++32768+0 records out
++dd: TEST_DIR/t.IMGFMT.fuse: cannot skip to specified offset
++0+0 records in
++0+0 records out
+ 
+ --- Resize export ---
+ (OK: Lengths of export and original are the same)
+ OK: Post-truncate image size is as expected
+ OK: Disk usage grew with fallocate
++0+1 records in
++0+1 records out
+ 
+ --- Try growing growable export ---
+ {'execute': 'block-export-del',
 -- 
 2.53.0
 
