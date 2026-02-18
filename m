@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48121E9A047
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 17:20:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66CDBE9A047
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 17:20:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vslCk-0005V1-EG; Wed, 18 Feb 2026 12:19:14 -0500
+	id 1vslCj-0005UO-Fr; Wed, 18 Feb 2026 12:19:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vslCP-0005Pc-Uu
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 12:18:55 -0500
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vslCS-0005Q6-Vm
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 12:19:01 -0500
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vslCM-0005ao-8z
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 12:18:53 -0500
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vslCO-0005bj-6M
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 12:18:55 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=Cc:To:In-Reply-To:References:Message-Id:Content-Transfer-Encoding:
  Content-Type:MIME-Version:Subject:Date:From:Sender:Reply-To:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=l0HRAVma9ndkaSde+UB/ONObyP/1dQNd8nP9SB7nhk0=; b=DZAO9FzXzeXiaYn
- RWkoAuJPpQDrxTFs3EDX1vSQrokZo0Fmh77nyoxlw9Q57QSA4QtZRA4HuBn+n+wiNZnRW9eo53WaU
- 7GybmtE8hZT+glEOriOAe5f9onMb6fRyvh55fZ4/eXWJoGWAtxJYeT2C6qmjUpoxYuTnBZnJ2MZOa
- k4=;
-Date: Wed, 18 Feb 2026 18:21:28 +0100
-Subject: [PATCH v6 2/7] hw/hppa: Use hppa_abs_to_phys_pa1x()
+ List-Help; bh=LnNbdLp6lQkk91nnwZLN8LDmCRe89n2NmaZDvq59+QA=; b=C/gJ8DR3bhcrFV5
+ keA9iPRwGad6D5iQaYFxDsA1NsTRDOzfqyhegk/4Qgw5fH/Cs3namKa9wnWwWR3VyI96nywOGBDMQ
+ pqx1gk9X9YNmOjjfGAqZ77L2u7MMJgeY8GWdGZAxqdwWCaXrMJeBZjZq+limyBcNRLmiUZhXAu64n
+ ec=;
+Date: Wed, 18 Feb 2026 18:21:32 +0100
+Subject: [PATCH v6 6/7] hw/riscv: Set IOMMU PAS via property
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260218-phys_addr-v6-2-a603bf363218@rev.ng>
+Message-Id: <20260218-phys_addr-v6-6-a603bf363218@rev.ng>
 References: <20260218-phys_addr-v6-0-a603bf363218@rev.ng>
 In-Reply-To: <20260218-phys_addr-v6-0-a603bf363218@rev.ng>
 To: qemu-devel@nongnu.org
@@ -45,11 +45,11 @@ Cc: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Alistair Francis <alistair.francis@wdc.com>, 
  Brian Cain <brian.cain@oss.qualcomm.com>, 
  Chao Liu <chao.liu.zevorn@gmail.com>, Anton Johansson <anjo@rev.ng>
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1771435335; l=783;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1771435335; l=4281;
  i=anjo@rev.ng; s=20260210; h=from:subject:message-id;
- bh=42KgcWQ/ftfrQLOF92oSXQz3WYbg/sVjiv4TZ+OpiWs=;
- b=xSxs5raGvuRZN1PA8+y+yoj0ZO1/4MNbkCbSTLmrAuKQveAI88xkyt4OP6Wn8v7ZsFLu6ECma
- 4JFjgokY8IlCgnngEvVd4C/rMzicOvakusn3SsJ6I4tZAAQL1SWbDou
+ bh=dlOqt+TTtplPC4FQ9ACzr9DxXad4u3ktCRVuu39x550=;
+ b=THl3UN1A24W+CHvt1EgKc3BBOF0+bvJ1Mexi59eQOiaHaglsPzcRIiACJWHnyF+rVzH0Rso2f
+ dI8C9OSBFMVBIpUarYR63houZRDezdgma+vpiktNiulLGqf+UA4x0VU
 X-Developer-Key: i=anjo@rev.ng; a=ed25519;
  pk=dKsZvj/g3kgDxnV1/SWg8a0YNGSpWtFGNsWIepQYKow=
 Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
@@ -78,28 +78,102 @@ From:  Anton Johansson via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Makes the physical address space conversion for 32 bit machines more
-explicit, using the translation function defined in mem_helper.c.
+Replaces the only remaining use of TARGET_PHYS_ADDR_SPACE_BITS for RISCV
+with a property RISCVIOMMUState::pas_bits that gets written to the
+capabilities field upon device realization.  This write needs to happen
+at realize-time to ensure the property has been set.
+
+For the virt machine and sysbus device, pas_bits is set by
+virt_machine_init() to either 34 or 56 bits, retaining previous behaviour.
+However, for the PCI device we do not have access to the CPU state, and
+instead use the maximum riscv64 value of 56 bits.
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Anton Johansson <anjo@rev.ng>
 ---
- hw/hppa/machine.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/riscv/riscv-iommu.h     | 1 +
+ hw/riscv/riscv-iommu-pci.c | 3 +++
+ hw/riscv/riscv-iommu.c     | 8 ++++----
+ hw/riscv/virt.c            | 7 +++++++
+ 4 files changed, 15 insertions(+), 4 deletions(-)
 
-diff --git a/hw/hppa/machine.c b/hw/hppa/machine.c
-index c3680667ae..6b0f46c789 100644
---- a/hw/hppa/machine.c
-+++ b/hw/hppa/machine.c
-@@ -181,7 +181,7 @@ static uint64_t linux_kernel_virt_to_phys(void *opaque, uint64_t addr)
+diff --git a/hw/riscv/riscv-iommu.h b/hw/riscv/riscv-iommu.h
+index 2dabd86941..2a9f6fccd5 100644
+--- a/hw/riscv/riscv-iommu.h
++++ b/hw/riscv/riscv-iommu.h
+@@ -34,6 +34,7 @@ struct RISCVIOMMUState {
+     /*< public >*/
+     uint32_t version;     /* Reported interface version number */
+     uint32_t pid_bits;    /* process identifier width */
++    uint32_t pas_bits;    /* physical address bits */
+     uint32_t bus;         /* PCI bus mapping for non-root endpoints */
  
- static uint64_t translate_pa10(void *dummy, uint64_t addr)
- {
--    return (uint32_t)addr;
-+    return hppa_abs_to_phys_pa1x(addr);
+     uint64_t cap;         /* IOMMU supported capabilities */
+diff --git a/hw/riscv/riscv-iommu-pci.c b/hw/riscv/riscv-iommu-pci.c
+index 5f7d359204..14dd5f3857 100644
+--- a/hw/riscv/riscv-iommu-pci.c
++++ b/hw/riscv/riscv-iommu-pci.c
+@@ -158,6 +158,9 @@ static void riscv_iommu_pci_init(Object *obj)
+ 
+     iommu->icvec_avail_vectors = RISCV_IOMMU_PCI_ICVEC_VECTORS;
+     riscv_iommu_set_cap_igs(iommu, RISCV_IOMMU_CAP_IGS_MSI);
++
++    /* Report maximum physical address size of riscv64 */
++    iommu->pas_bits = 56;
  }
  
- static uint64_t translate_pa20(void *dummy, uint64_t addr)
+ static const Property riscv_iommu_pci_properties[] = {
+diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
+index b46b337375..98345b1280 100644
+--- a/hw/riscv/riscv-iommu.c
++++ b/hw/riscv/riscv-iommu.c
+@@ -2453,10 +2453,6 @@ static void riscv_iommu_instance_init(Object *obj)
+     /* Enable translation debug interface */
+     s->cap = RISCV_IOMMU_CAP_DBG;
+ 
+-    /* Report QEMU target physical address space limits */
+-    s->cap = set_field(s->cap, RISCV_IOMMU_CAP_PAS,
+-                       TARGET_PHYS_ADDR_SPACE_BITS);
+-
+     /* TODO: method to report supported PID bits */
+     s->pid_bits = 8; /* restricted to size of MemTxAttrs.pid */
+     s->cap |= RISCV_IOMMU_CAP_PD8;
+@@ -2487,6 +2483,9 @@ static void riscv_iommu_realize(DeviceState *dev, Error **errp)
+ {
+     RISCVIOMMUState *s = RISCV_IOMMU(dev);
+ 
++    /* Report QEMU target physical address space limits. */
++    s->cap = set_field(s->cap, RISCV_IOMMU_CAP_PAS, s->pas_bits);
++
+     s->cap |= s->version & RISCV_IOMMU_CAP_VERSION;
+     if (s->enable_msi) {
+         s->cap |= RISCV_IOMMU_CAP_MSI_FLAT | RISCV_IOMMU_CAP_MSI_MRIF;
+@@ -2645,6 +2644,7 @@ void riscv_iommu_reset(RISCVIOMMUState *s)
+ static const Property riscv_iommu_properties[] = {
+     DEFINE_PROP_UINT32("version", RISCVIOMMUState, version,
+         RISCV_IOMMU_SPEC_DOT_VER),
++    DEFINE_PROP_UINT32("pas-bits", RISCVIOMMUState, pas_bits, 0),
+     DEFINE_PROP_UINT32("bus", RISCVIOMMUState, bus, 0x0),
+     DEFINE_PROP_UINT32("ioatc-limit", RISCVIOMMUState, iot_limit,
+         LIMIT_CACHE_IOT),
+diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+index 07e66b3936..bbce2fb667 100644
+--- a/hw/riscv/virt.c
++++ b/hw/riscv/virt.c
+@@ -1739,6 +1739,13 @@ static void virt_machine_init(MachineState *machine)
+         object_property_set_link(OBJECT(iommu_sys), "irqchip",
+                                  OBJECT(mmio_irqchip),
+                                  &error_fatal);
++        /*
++         * For riscv64 use a physical address size of 56 bits (44 bit PPN),
++         * and for riscv32 use 34 bits (22 bit PPN).
++         */
++        object_property_set_uint(OBJECT(iommu_sys), "pas-bits",
++                                 riscv_is_32bit(&s->soc[0]) ? 34 : 56,
++                                 &error_fatal);
+ 
+         sysbus_realize_and_unref(SYS_BUS_DEVICE(iommu_sys), &error_fatal);
+     }
 
 -- 
 2.52.0
