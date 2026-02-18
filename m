@@ -4,93 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7875AE9A02C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93948E9A047
 	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 18:37:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vsmQ4-0004tP-EZ; Wed, 18 Feb 2026 13:37:04 -0500
+	id 1vsmQJ-0004v5-8A; Wed, 18 Feb 2026 13:37:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vsmQ2-0004t2-Lb
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 13:37:02 -0500
-Received: from mail-yx1-xb12d.google.com ([2607:f8b0:4864:20::b12d])
+ id 1vsmQH-0004uj-Fw
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 13:37:17 -0500
+Received: from mail-yw1-x1130.google.com ([2607:f8b0:4864:20::1130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vsmQ0-00043I-Tm
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 13:37:02 -0500
-Received: by mail-yx1-xb12d.google.com with SMTP id
- 956f58d0204a3-64ae2ce2fe1so58010d50.1
- for <qemu-devel@nongnu.org>; Wed, 18 Feb 2026 10:37:00 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1771439820; cv=none;
+ id 1vsmQG-00045G-08
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 13:37:17 -0500
+Received: by mail-yw1-x1130.google.com with SMTP id
+ 00721157ae682-78fc4425b6bso1325187b3.1
+ for <qemu-devel@nongnu.org>; Wed, 18 Feb 2026 10:37:15 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1771439834; cv=none;
  d=google.com; s=arc-20240605;
- b=ek1rO5Nnax0jliNmFrPY8vWkAog8+oepFkhGcG4w701v90wJtuLP6CxNgO6m78ShTg
- vKFQ3t/R5vIADrJZPJ0sCKOgtiamrbVOGSMKazaQLJ91/5b0m75yzX9Yfc07e9xp49xK
- YcKsOxn1h51vm8576a31KQybasZzYnv1/m7IRM/MEKEpH4lnSMcgIy0imN2S/calsIV5
- lL8hncXi3wQTt5UIv8eH9bVgsR9a3JXNj124Y9HfaauuIqexVXnmFF/pwAGBc+tBQ+nU
- M1SgA4t+8RG9nHFQRSyt3IGXgesj9MtF/ghUrk5p3hDeemzIPFPrKICC6gYWB+wl7O5Z
- ogbQ==
+ b=IqBvPMK/jOIO8+8+7b78VdiQ0fguXnPLTHbByICe0UC97cMRoE73FrhtQUL9hSN7Ee
+ 2pg3JYJTBcWbLbA+qVzHVZDeF/rN8QMq8zB4y6Or6DDTGhYPl/+IyCDoHHJ+mQUnF9JD
+ XLmi6sS7Cn24YCaGg9cDj2XW8TA1evtdovxdIySOeKLPJdxunbQBlKnoe9vlIhCXBb3g
+ K9ald8o947LTbh/CAF8oiNrx79E7KDYIXWer1art6xL8SuVrTPB/ScyZxGlm5+x3iMIP
+ 3geqyzT6+8+X95se2QOETI1C/QfMvJImXr01cP3JyZ4BdHpW3cfCMW5ZZ7Q2pQyFuSLH
+ QSHw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=lgIPidw36U66/xW6S1l3TlRoatzSM9UYI6dZmctMsvI=;
- fh=6kJ3CohSxQ+7EgnARanNFMAgatAnP0uu5SOkx3O7QGs=;
- b=KPDgVRKUnBDFHJO8TuQQaCwzrG1srsGrmHe8mxIusg1mH5/mW+b2qbtqcNLF0mERds
- 27rQFbBDFudJcnqESqAckJceYidfBkDR+fkEeXAOoF3Yq8RyCInvXuske+Qfwm5xubsE
- ck338fctQa1Hekwv4WjbzJ1rsuJm9vOoPEDv4BgIakHsnfv6+GqzsRS9cSCbmGPe9H5N
- Qymcs6roWcOdM8r6P4m8E8A81Bq7vp1hF+3MMDyaDmQWiFpETW9FQde9+vMFXkGnTbAH
- VsHUj8J3X1aghSEHPwL1QczEnr1bcRb3JIM9Ddh9xGAU5dR29x+gh78YdSc9YofrZqeB
- XfXQ==; darn=nongnu.org
+ bh=44EEzCK8wsogbyPOQe5WaZgG5z0u5zw9+yNPgn+TjLw=;
+ fh=QwYyyUxj49fE3r2/5S05Hg3zHNtF3HBjcsjpjamgaAA=;
+ b=dZprqYMNtTTN54f1pWPfp1AnfLbC0ZyzvgijmljbdSnaZ8hgR+hef8YUzqkjOrT+1n
+ m//MOayvrdrM18x+YWJRlRbX6lPSiogV7CWODSrkJ7eh4spy7lq7IZXLNI1SI72N+nli
+ qdtjD+s8ZNzogtuDQBbeo3aJSawBpq8/ycPkFowvQltJAwvt8tekHwFzJIs4fMJ3IxUy
+ G93fNyGdnhS+Aj7khMM/NvrdAge3Ee0wQ6Te3mVxC4j+FgXNfs7yQ6Ncy6b5PHFa4Wtr
+ DPQ3hdhnzLgJ0AnoRLEqx9yPjmaFzO5wHhGnA7aw8fx7EIZQyvpGe+MSZUYxpSQ8uax4
+ vOKQ==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771439820; x=1772044620; darn=nongnu.org;
+ d=linaro.org; s=google; t=1771439834; x=1772044634; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=lgIPidw36U66/xW6S1l3TlRoatzSM9UYI6dZmctMsvI=;
- b=EEJi3OZdNVPk8y5UVPJLCbzi7/b/7zKwSntOkDKKmB5o7aj112Dz3R0BXuUcf0eStH
- Qtzeyykl6o0NSOOuRVV5mkt4mIuDja/Wz3QxVQFp2e8ntLMmAI2B+zxtkVTuKCezMLMb
- zSMlgfhcnVXedjw90Yr6/EF92yn5Q2eGZtTszQ0v20p3cdYvOH4imAjOwnyRowNtJUUl
- x8Azb9hsgQAVqp/kElZvYBR6Oa64CN6byemYFL2AfZDIgugM9tdHff9TMDjm6zdvKjbg
- 280SVd1zxyFRLXpG9xpAwFtLvPFPfK7bUKhAjX+HvsyMq/MQfEJ4s3ehGMtsEEmIEaZD
- hlqw==
+ bh=44EEzCK8wsogbyPOQe5WaZgG5z0u5zw9+yNPgn+TjLw=;
+ b=g8c8OCvKkHXIJStIRLpe5dELgJIAo3W1wDbg1PHXzD4LcIUxpcHQueQXn8cQnuopGd
+ lGkIuPefzDtFEOPVidMmik1aVMJ2ufAbPZyye1wwz/d5zM91tqWgO5kDc2BfP5/7nlIV
+ d7wSfCOxNFmvfYrDo1XTyGc6Rzrh0nhIb+g9QpvhV5mZcjn/C8WaXPk5JEXKVzoIz4zy
+ cI1FzKgY9BTp7orCNLTgTr8bspdYrtfCB4QqsTtLYro9GJwuuio0sDFRMVWOHPn4+AmP
+ +/O4g+zMS0zgoHBCTMFLMr6EFZdxUQye0JbnpayH+oG5aGmcih1za4h8f9dFB49i+g6m
+ OwSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771439820; x=1772044620;
+ d=1e100.net; s=20230601; t=1771439834; x=1772044634;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=lgIPidw36U66/xW6S1l3TlRoatzSM9UYI6dZmctMsvI=;
- b=vHOgOIYxXyYc3nCA7BsltH+/KoJ8Eag3ZEjZM2xF+ZGJ5QzatKDyq3R3didLG8cN9q
- +lDXgrO9Lo6+Udg3cly78SeuyP38XRtWYGqaq2t4sv8VyvuZYJeWgsC867BlwNgNX/oU
- QBhF3ddP2oNgRhzfxSrBeNcLADSMm9ugy79QQcttmZJ0lcUvPU6tS3SZG1qZj1BICdGI
- wdleLygAEXvPxMxBIVGkychZYeNUshFgEjOeZ9T4er92aIVzmvEOaQbPzf32H5+7DaUj
- MFbYkivvDFUZK0dAxojZzM51HgnaJHgVWCFSG4yu+P2vGysNOqUfVaC/iLNnW6ewxwNu
- Oejg==
-X-Gm-Message-State: AOJu0YzD3hoB/T3UpCof/RPanHHtf5EnVC4tm4JZHhPNzdbiWl9afAkE
- cgObZs1jiW8n071MQTiPsgUd6bOmLZZHHetpDCxsrGxQbMZHhdPnsgdd/Uk8zjc8b25Dn8Kbyw6
- 7qljfHNTHAN8vGRjdYoL5lVZzqCxjJ6bUjsyaaooaAw==
-X-Gm-Gg: AZuq6aJ8SY1eMKWpzYY+4RRopR9+I5dJrTyT6CnKRr0/mkB7ZqU16mD+NeQPowpnun+
- FCU7l494mcFZUaIP8/bShdMgU/nKoPhLJ3q6/5CS4q9p7l9SdPi5COwTN62SwxzK+cKGeEp5mXi
- 5oGYd+C+D8h8Dw9RcGhiTvYzvkIMfspbyppFbHDrlQxWrBU6mv583r0ZYidUAdLhF+cEaPtGaev
- 2bJr2hyBRhZ/y5lBp+B2d5D9O7cCLj/DpBbyi3wazlz9BiZNZ2eFbmQcXyNZ7X8PelX//m4WqIQ
- 8COMmUxsTCmesHaiyu7YAKtYDu64gJOTJId2uFCJ1IWIrPOZy00wJb4iknRORgFipJ4=
-X-Received: by 2002:a05:690e:1514:b0:64a:d444:48f5 with SMTP id
- 956f58d0204a3-64c556c9974mr2857583d50.65.1771439819571; Wed, 18 Feb 2026
- 10:36:59 -0800 (PST)
+ bh=44EEzCK8wsogbyPOQe5WaZgG5z0u5zw9+yNPgn+TjLw=;
+ b=TAPrD9BHM5Epm1SWB8Wf/qLWo4ZV3o4X7jQgx1ddQMFvyBmI86vSyZFYE+7e+4+JC/
+ MrJlDb4FKkDqyq3jCJMcpPsWnclatmr6gWtxic6iLpRVslsDCcAU0U2HfeJ5EkogJZvS
+ /mQto72kyfcGIUGHhTPeWmfoHcoDUZW31fAcRkst06nvxB69R6KhSYjXMAQ5gii6u1EF
+ EhDfhTrHpMmunqNQ2Im9lTZO/3QNCnLg9p3A45cWHp+mLxmFcL39iVSb8RgUszk7hi1X
+ 3OEuZ5sL6aANUq5aZNmLqach0F9vF64C3N2wBjSAU7PT55E+9oFfIQ1uspR787yPFLYm
+ QIVQ==
+X-Gm-Message-State: AOJu0YyA3LvSlJ7iQheiqWN55CP5BR/OyUVX5qnWshNwXhsO39toOGwz
+ /UfxTNP2Q0UZ4bKONyjggaOZesrAI8V3SL9k9RuRiF2uc8FDckLGqduPUhr+An6cBHLJnZC1k5q
+ nCHKEwdef3TqX5yhOBhGmE8V8h3VTvCXG2fVoJvOqdQQxXGTVXPgb
+X-Gm-Gg: AZuq6aLfY6PjoXMTQSiTbKDdPM1eW1sjuWh1r0SBcxPeQ1DSFoznGUr6VQe8eNfTm9Z
+ U2aFbukJE91Ean78I6jR3kKj4ngaW8lyDfrvgXyBW2jUynqkQgGbfBkf9hEbx8iij0Y9Ipd2nP1
+ hyPqcvjZiX9Bmyztq23rZVlhn+Hs6uZ2QE+llRjKC7tpqVELbpWG0Nm42hYsgCp1164vph6VB2v
+ gJuul4ZPDywTfQqBuEPCNMB4/9poO4+ND8SQwy4YYI7cEI0B0BC/pBe3ziOYkdM9isMai2zh/JW
+ suHTv+/knlP1l9lA5WKcJ5TXc+H0M1xOKh7UD95QRZfoRl/mSjebC3MYG1MAWKyvzRQ=
+X-Received: by 2002:a05:690e:11c2:b0:64a:ceb8:30b9 with SMTP id
+ 956f58d0204a3-64c556e074amr1892377d50.92.1771439834203; Wed, 18 Feb 2026
+ 10:37:14 -0800 (PST)
 MIME-Version: 1.0
-References: <20260217161443.12738-1-farosas@suse.de>
-In-Reply-To: <20260217161443.12738-1-farosas@suse.de>
+References: <20260217162106.13630-1-farosas@suse.de>
+In-Reply-To: <20260217162106.13630-1-farosas@suse.de>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Wed, 18 Feb 2026 18:36:46 +0000
-X-Gm-Features: AZwV_Qi0Jhvd-L6CL8akj9Mr_oH98pj9H554_xtqkYkiVxssW3VsyqjT3cE2ksw
-Message-ID: <CAFEAcA9xHs0-BGhwh9C8SJkfOoza+37Rt3V451PwaTGLPSd8PQ@mail.gmail.com>
-Subject: Re: [PULL 00/32] Migration patches for 2026-02-17
+Date: Wed, 18 Feb 2026 18:37:03 +0000
+X-Gm-Features: AZwV_QjOeEJS4Bgp_uDmgsEMhItChd49uay1oB9vENsCBrB6vfxxqh14oPcIIyw
+Message-ID: <CAFEAcA_AvAeaPgwBwJL+ftdKTJxbBxmHkuTEkFqb4yn1ZJD-Aw@mail.gmail.com>
+Subject: Re: [PULL 0/2] QTest patches for 2026-02-17
 To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12d;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1130;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1130.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -113,7 +113,7 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 17 Feb 2026 at 16:16, Fabiano Rosas <farosas@suse.de> wrote:
+On Tue, 17 Feb 2026 at 16:21, Fabiano Rosas <farosas@suse.de> wrote:
 >
 > The following changes since commit ece408818d27f745ef1b05fb3cc99a1e7a5bf580:
 >
@@ -121,21 +121,18 @@ On Tue, 17 Feb 2026 at 16:16, Fabiano Rosas <farosas@suse.de> wrote:
 >
 > are available in the Git repository at:
 >
->   https://gitlab.com/farosas/qemu.git tags/migration-20260217-pull-request
+>   https://gitlab.com/farosas/qemu.git tags/qtest-20260217-pull-request
 >
-> for you to fetch changes up to fd5ecd187bc245013399d14cc225f05c0ad1a96c:
+> for you to fetch changes up to a8f98ffd7b22a5c6554bc475096cf5de1d0cbd6f:
 >
->   tests/qtest/migration/tls-tests.c: Don't use tls_psk end hook for no_tls tests (2026-02-17 10:06:03 -0300)
+>   tests/qtest: Add RISC-V IOMMU bare-metal test (2026-02-17 09:37:40 -0300)
 >
 > ----------------------------------------------------------------
-> Migration pull request
+> QTest pull request
 >
-> - Notifier changes: Remove duplicated events during postcopy. Emit
->   MIG_EVENT_FAILED before the VM is started.
+> - RISCV IOMMU test
 >
-> - Undefined behavior fix for tls-tests.
->
-> - Cleanups: COLO, savevm handlers, CPR/VFIOheaders.
+> ----------------------------------------------------------------
 >
 
 
