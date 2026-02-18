@@ -4,87 +4,155 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A013E9A02C
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 14:06:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D79FE9A02C
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 14:11:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vsiAh-000711-PS; Wed, 18 Feb 2026 09:04:56 -0500
+	id 1vsiDT-0007SM-LD; Wed, 18 Feb 2026 09:07:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vsiAN-0006zb-KW
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 09:04:35 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vsiDR-0007SE-So
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 09:07:45 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vsiAL-0007cT-TN
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 09:04:35 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vsiDQ-0008MH-6B
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 09:07:45 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771423471;
+ s=mimecast20190719; t=1771423663;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=3FLojfTLE4eLm/XXjE3D7lXFlW7GaXopO/nuhESGVJg=;
- b=Vg8zisJ3cZF7Y+y5mTpgzBpiOqdCe7WoQs/3/aVjRsVAplVz40kM/jv9W1pD39nk8DYUYF
- SnMeWQKDeIsLRuPYR8vPO68iOCrVmkMLPkmhodVnydC20KXYIhy2vXC8xwi5dEYpUA5X+c
- Ark7KOYg/B73M9tcMq/PqW17WFau2Wk=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-176-YXjKa5LFN8i2DxQauVFtYw-1; Wed,
- 18 Feb 2026 09:04:28 -0500
-X-MC-Unique: YXjKa5LFN8i2DxQauVFtYw-1
-X-Mimecast-MFC-AGG-ID: YXjKa5LFN8i2DxQauVFtYw_1771423467
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D4FD21800342; Wed, 18 Feb 2026 14:04:26 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.14])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 206611800370; Wed, 18 Feb 2026 14:04:26 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id B927721E692D; Wed, 18 Feb 2026 15:04:23 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org,  Manos Pitsidianakis
- <manos.pitsidianakis@linaro.org>,  Stefan Weil <sw@weilnetz.de>,  "Dr.
- David Alan Gilbert" <dave@treblig.org>,  Pierrick Bouvier
- <pierrick.bouvier@linaro.org>,  devel@lists.libvirt.org,  Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  =?utf-8?Q?Marc-Andr?=
- =?utf-8?Q?=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>,  Hanna Reitz <hreitz@redhat.com>,  Kevin
- Wolf <kwolf@redhat.com>,  qemu-block@nongnu.org,  qemu-rust@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>,  Gerd Hoffmann <kraxel@redhat.com>,
- Christian Schoenebeck <qemu_oss@crudebyte.com>,  Richard Henderson
- <richard.henderson@linaro.org>
-Subject: Re: [PATCH v6 22/27] util: introduce common helper for error-report
- & log code
-In-Reply-To: <20260211152508.732487-23-berrange@redhat.com> ("Daniel
- P. =?utf-8?Q?Berrang=C3=A9=22's?= message of "Wed, 11 Feb 2026 15:25:03
- +0000")
-References: <20260211152508.732487-1-berrange@redhat.com>
- <20260211152508.732487-23-berrange@redhat.com>
-Date: Wed, 18 Feb 2026 15:04:23 +0100
-Message-ID: <87342yb120.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=bmxw3i8w9udwO3yfzjZUdH+d+snOY/Feq9bkKFxOEqc=;
+ b=eFkBHLOFDaLdz0wUSg0Jwzju3yZO50AI5Rt8TJxDRupN7lLxsv0e32UGpSC+KGJZzEYjq1
+ vNY43m2cf4tLYuZGLcIui/0pL3l3HZgpHii3Kh9mNZNQRXwdb2fevlE1d5w7uJyz5eunfU
+ maQwrYZkMSdOKC7hJKR48/R5yHjQ44Q=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-219-G1j4FSFJMFK38VhTV8HPPA-1; Wed, 18 Feb 2026 09:07:41 -0500
+X-MC-Unique: G1j4FSFJMFK38VhTV8HPPA-1
+X-Mimecast-MFC-AGG-ID: G1j4FSFJMFK38VhTV8HPPA_1771423660
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-4806cfffca6so60093565e9.2
+ for <qemu-devel@nongnu.org>; Wed, 18 Feb 2026 06:07:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1771423660; x=1772028460; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=bmxw3i8w9udwO3yfzjZUdH+d+snOY/Feq9bkKFxOEqc=;
+ b=R+4vMHsFEpsytgLX/lFZuj5AWQx13nE/8c3bdHB+GslBSsTb6t+0gypQKxUL+dnT3E
+ FBfLAdsRbVkfn5sGv0gzSZyqRPX7K9Se0qf5syj3fUMNk4pQSgvv5RXqgy9TIbYfzDDw
+ NAgPNAKi4Y/zhZjhVwD4J82PJpBlPaM3QC0DxJGc3arns1u7g73bNHG20brjOwCEnRTD
+ 5HH7e0+cciBCYOZJVaMx8yO3Pa4y29ovJq/rNqHCixbF98e9kFSiUyDTJaKlJLO/pqF1
+ kCXVK7kUwYgAVBk1+zH5+C5dQapGkcFMJiDSRKLIJ11wFe03nvUgI36thcJPkmSl95QA
+ IMDw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1771423660; x=1772028460;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=bmxw3i8w9udwO3yfzjZUdH+d+snOY/Feq9bkKFxOEqc=;
+ b=dNnet9VDswgI/+cfDFqLIF0cnC5KZ/hWZfNAjEoOHDn2Mr/eJZXanNlyhZ2+BBqreq
+ aZlvdFw7ItNKuZUqQJDcllQXkAMW2PMLjmqXQxGE4akMg8XJiJ0N5/sYPMbVSXJ61Mzv
+ 2l7nFb7wDskgUbuegVZvh9UvGpTddS3w2R4NhzuMNdTOij+C4HSq5jcQCqo1c8rWwP68
+ HWOWh7TLUndV9yEqc9+JWgjHhTpfYgYke3H58MEwGNAYWz1XPs1bJXSx7nwdAuqk+TgQ
+ qCzPyul3ivLN8pmreU1XL36RKPM4BbUJcewN1Hk5oMErit1y3dhSe0/WzWyrvRyu77NA
+ XcoA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWS1yoRSftXEdE2meryh5EfUZ+vXYTLX3TvXjt5MwMaDEDhWOZ87qudP9w2ifWYIcbAVnx+domMfmnX@nongnu.org
+X-Gm-Message-State: AOJu0Yz4Tpo3EifXkugvfIGc4E7GfTvJRxgFJRuJ4herlXyLK95Vp9M5
+ IU4DpeRRXc7gX3LtH9Bii1NhiZpm4B4lb/TEetyUJdz3QNI7iJoEOkYuLOiapMnSB0yIuD8bgMy
+ 27MqOerHBu/mOm5p+KQrP6VGqgxc+iGUaaplx0lA1cP7kAYOn05Y5ufid
+X-Gm-Gg: AZuq6aLGwR3EDaGl8Y54gfCm2kJClolzZ+LFrIcrs8OuIHG7xthzeCXMa13aL4gSNQ9
+ 9pc+nPSVlgBBriMTc0HpZyN41PbgCrr26nkc/ikO0EkyWuCZst0DlQ/GmkSCSyU/xwhhBaSxLEd
+ 3E9KWk0fZ/jEes4Ka7c7f9N56VgEaQOpxYQpJ68wK6qzscIxizZDxWqSsg6tEU+Tp4Um9WuaPbX
+ wxGzJrOxqc8Ecd/lKcfGLFmvd3ViRicmCyvUnhJWBF5UoVn1UqiLOYTc+rqA3pYBrCo1DDB1uTw
+ D7XVw2JsGZQRUBhNuG1I4WgYLOX6srgz+5CDH9/+II3Sh9G3cr9c+Npsfw7vAwd+0HPddjJU4qe
+ m+OJtZ3rR/h9eZAv9yXl99LnlkaFGp16D/0Zi5g/jLFxsWSLQrDHYeBMU9Byp
+X-Received: by 2002:a05:600c:4f0e:b0:477:7bca:8b2b with SMTP id
+ 5b1f17b1804b1-48373a1029emr327400645e9.15.1771423658497; 
+ Wed, 18 Feb 2026 06:07:38 -0800 (PST)
+X-Received: by 2002:a05:600c:4f0e:b0:477:7bca:8b2b with SMTP id
+ 5b1f17b1804b1-48373a1029emr327398255e9.15.1771423656271; 
+ Wed, 18 Feb 2026 06:07:36 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4834d482480sm627082505e9.0.2026.02.18.06.07.35
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 18 Feb 2026 06:07:35 -0800 (PST)
+Message-ID: <96665575-c28c-43fb-af7b-41be109dc959@redhat.com>
+Date: Wed, 18 Feb 2026 15:07:34 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 22/34] hw/vfio: generate new file fd for pseudo device
+ and rebind existing descriptors
+To: Ani Sinha <anisinha@redhat.com>, Alex Williamson <alex@shazbot.org>
+Cc: kraxel@redhat.com, qemu-devel@nongnu.org
+References: <20260218114233.266178-1-anisinha@redhat.com>
+ <20260218114233.266178-23-anisinha@redhat.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <20260218114233.266178-23-anisinha@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -13
-X-Spam_score: -1.4
-X-Spam_bar: -
-X-Spam_report: (-1.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.043,
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.043,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- GB_FAKE_RF=0.754, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,165 +168,167 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+On 2/18/26 12:42, Ani Sinha wrote:
+> Normally the vfio pseudo device file descriptor lives for the life of the VM.
+> However, when the kvm VM file descriptor changes, a new file descriptor
+> for the pseudo device needs to be generated against the new kvm VM descriptor.
+> Other existing vfio descriptors needs to be reattached to the new pseudo device
+> descriptor. This change performs the above steps.
+> 
+> Tested-by: Cédric Le Goater <clg@redhat.com>
 
-> The error-report and log code both have a need to add prefixes
-> to messages they are printing, with the current example being
-> a timestamp.
->
-> The format and configuration they use should be consistent, so
-> providing a common helper will ensure this is always the case.
-> Initially the helper only emits a timestamp, but future patches
-> will expand this.
->
-> This takes the liberty of assigning the new file to the same
-> maintainer as the existing error-report.c file, given it will
-> be extracting some functionality from the latter.
+There is a regression since last version.
 
-Fair.
 
-> While vreport() dynamically changes between reporting to the
-> monitor vs stderr, depending on whether HMP is active or not,
-> message prefixes are only ever used in the non-HMP case. Thus
-> the helper API can take a FILE * object and not have to deal
-> with the monitor at all.
->
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+'reboot' from the guest and command 'system_reset' from the QEMU
+monitor now generate these outputs:
+
+   qemu-system-x86_64: info: virtual machine state has been rebuilt with new guest file handle.
+   qemu-system-x86_64: info: virtual machine state has been rebuilt with new guest file handle.
+   qemu-system-x86_64: info: virtual machine state has been rebuilt with new guest file handle.
+   ...
+
+and QEMU exits after a while.
+
+
+
+> Signed-off-by: Ani Sinha <anisinha@redhat.com>
+
+Anyhow this patch looks good.
+
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+
+Thanks,
+
+C.
+
 > ---
->  MAINTAINERS            |  2 ++
->  include/qemu/message.h | 28 ++++++++++++++++++++++++++++
->  util/meson.build       |  1 +
->  util/message.c         | 23 +++++++++++++++++++++++
->  4 files changed, 54 insertions(+)
->  create mode 100644 include/qemu/message.h
->  create mode 100644 util/message.c
-
-No uses, yet.  Commit message could mention it's put to use in the next
-few commits.
-
->
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 29f88d48f3..96a4ce438e 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -3261,9 +3261,11 @@ M: Markus Armbruster <armbru@redhat.com>
->  S: Supported
->  F: include/qapi/error.h
->  F: include/qemu/error-report.h
-> +F: include/qemu/message.h
->  F: qapi/error.json
->  F: util/error.c
->  F: util/error-report.c
-> +F: util/message.c
->  F: scripts/coccinelle/err-bad-newline.cocci
->  F: scripts/coccinelle/error-use-after-free.cocci
->  F: scripts/coccinelle/error_propagate_null.cocci
-> diff --git a/include/qemu/message.h b/include/qemu/message.h
-> new file mode 100644
-> index 0000000000..0a06421f77
-> --- /dev/null
-> +++ b/include/qemu/message.h
-> @@ -0,0 +1,28 @@
-> +/* SPDX-License-Identifier: GPL-2.0-or-later */
+>   hw/vfio/helpers.c | 92 +++++++++++++++++++++++++++++++++++++++++++++++
+>   1 file changed, 92 insertions(+)
+> 
+> diff --git a/hw/vfio/helpers.c b/hw/vfio/helpers.c
+> index f68f8165d0..e2bedd15ec 100644
+> --- a/hw/vfio/helpers.c
+> +++ b/hw/vfio/helpers.c
+> @@ -116,6 +116,89 @@ bool vfio_get_info_dma_avail(struct vfio_iommu_type1_info *info,
+>    * we'll re-use it should another vfio device be attached before then.
+>    */
+>   int vfio_kvm_device_fd = -1;
 > +
-> +#ifndef QEMU_MESSAGE_H
-> +#define QEMU_MESSAGE_H
-> +
-> +enum QMessageFormatFlags {
-> +    QMESSAGE_FORMAT_TIMESTAMP =3D (1 << 0),
-> +};
-> +
-> +/**
-> + * qmessage_set_format:
-> + * @flags: the message information to emit
-> + *
-> + * Select which pieces of information to
-> + * emit for messages
+> +/*
+> + * Confidential virtual machines:
+> + * During reset of confidential vms, the kvm vm file descriptor changes.
+> + * In this case, the old vfio kvm file descriptor is
+> + * closed and a new descriptor is created against the new kvm vm file
+> + * descriptor.
 > + */
-> +void qmessage_set_format(int flags);
 > +
-> +/**
-> + * qmessage_context_print:
-> + * @fp: file to emit the prefix on
-> + *
-> + * Emit a message prefix with the information selected by
-> + * an earlier call to qmessage_set_format.
-> + */
-> +void qmessage_context_print(FILE *fp);
+> +typedef struct VFIODeviceFd {
+> +    int fd;
+> +    QLIST_ENTRY(VFIODeviceFd) node;
+> +} VFIODeviceFd;
 > +
-> +#endif /* QEMU_MESSAGE_H */
-> diff --git a/util/meson.build b/util/meson.build
-> index 7c9445615d..3035bd4bee 100644
-> --- a/util/meson.build
-> +++ b/util/meson.build
-> @@ -38,6 +38,7 @@ util_ss.add(files('host-utils.c'))
->  util_ss.add(files('bitmap.c', 'bitops.c'))
->  util_ss.add(files('fifo8.c'))
->  util_ss.add(files('cacheflush.c'))
-> +util_ss.add(files('message.c'))
->  util_ss.add(files('error.c', 'error-report.c'))
->  util_ss.add(files('qemu-print.c'))
->  util_ss.add(files('id.c'))
-> diff --git a/util/message.c b/util/message.c
-> new file mode 100644
-> index 0000000000..99a403f9d0
-> --- /dev/null
-> +++ b/util/message.c
-> @@ -0,0 +1,23 @@
-> +/* SPDX-License-Identifier: GPL-2.0-or-later */
+> +static QLIST_HEAD(, VFIODeviceFd) vfio_device_fds =
+> +    QLIST_HEAD_INITIALIZER(vfio_device_fds);
 > +
-> +#include "qemu/osdep.h"
-> +
-> +#include "qemu/message.h"
-> +#include "monitor/monitor.h"
-
-Superfluous #include.
-
-It'll become used in PATCH 26, for qemu_thread_get_name().  Should
-include qemu/thread.h there instead.
-
-> +
-> +static int message_format;
-> +
-> +void qmessage_set_format(int flags)
+> +static void vfio_device_fd_list_add(int fd)
 > +{
-> +    message_format =3D flags;
+> +    VFIODeviceFd *file_fd;
+> +    file_fd = g_malloc0(sizeof(*file_fd));
+> +    file_fd->fd = fd;
+> +    QLIST_INSERT_HEAD(&vfio_device_fds, file_fd, node);
 > +}
 > +
-> +void qmessage_context_print(FILE *fp)
+> +static void vfio_device_fd_list_remove(int fd)
 > +{
-> +    if (message_format & QMESSAGE_FORMAT_TIMESTAMP) {
-> +        g_autoptr(GDateTime) dt =3D g_date_time_new_now_utc();
-> +        g_autofree char *timestr =3D g_date_time_format_iso8601(dt);
-> +        fputs(timestr, fp);
-> +        fputc(' ', fp);
-
-The context string is either empty, or it ends with a space, for ease of
-use.  Okay.
-
-I'd go for
-
-           fprintf(fp, "%s ", timestr);
-
+> +    VFIODeviceFd *file_fd, *next;
+> +
+> +    QLIST_FOREACH_SAFE(file_fd, &vfio_device_fds, node, next) {
+> +        if (file_fd->fd == fd) {
+> +            QLIST_REMOVE(file_fd, node);
+> +            g_free(file_fd);
+> +            break;
+> +        }
 > +    }
 > +}
-
-Alright, everybody's favorite topic: naming.
-
-message.[ch] aren't about messages, but message *prefixes*.  You call
-them "context" in qmessage_context_print().  I'm fine with "context".
-
-External symbols are prefixed with qmessage_.  I prefer such prefixes to
-match the filename.
-
-Prefix in util/ overwhelmingly start with qemu_.
-
-Somewhat long prefixes feel okay here, as these symbols are used only a
-couple of times.  qemu_message_context_ might be too long, though.
-
-Could use the classic technique of murdering vowels: to qemu_msg_ctxt_.
-
-Thoughts?
+> +
+> +static int vfio_device_fd_rebind(NotifierWithReturn *notifier, void *data,
+> +                                  Error **errp)
+> +{
+> +    VFIODeviceFd *file_fd;
+> +    int ret = 0;
+> +    struct kvm_device_attr attr = {
+> +        .group = KVM_DEV_VFIO_FILE,
+> +        .attr = KVM_DEV_VFIO_FILE_ADD,
+> +    };
+> +    struct kvm_create_device cd = {
+> +        .type = KVM_DEV_TYPE_VFIO,
+> +    };
+> +
+> +    /* we are not interested in pre vmfd change notification */
+> +    if (((VmfdChangeNotifier *)data)->pre) {
+> +        return 0;
+> +    }
+> +
+> +    if (kvm_vm_ioctl(kvm_state, KVM_CREATE_DEVICE, &cd)) {
+> +        error_setg_errno(errp, errno, "Failed to create KVM VFIO device");
+> +        return -errno;
+> +    }
+> +
+> +    if (vfio_kvm_device_fd != -1) {
+> +        close(vfio_kvm_device_fd);
+> +    }
+> +
+> +    vfio_kvm_device_fd = cd.fd;
+> +
+> +    QLIST_FOREACH(file_fd, &vfio_device_fds, node) {
+> +        attr.addr = (uint64_t)(unsigned long)&file_fd->fd;
+> +        if (ioctl(vfio_kvm_device_fd, KVM_SET_DEVICE_ATTR, &attr)) {
+> +            error_setg_errno(errp, errno,
+> +                             "Failed to add fd %d to KVM VFIO device",
+> +                             file_fd->fd);
+> +            ret = -errno;
+> +        }
+> +    }
+> +    return ret;
+> +}
+> +
+> +static struct NotifierWithReturn vfio_vmfd_change_notifier = {
+> +    .notify = vfio_device_fd_rebind,
+> +};
+> +
+>   #endif
+>   
+>   void vfio_kvm_device_close(void)
+> @@ -153,6 +236,11 @@ int vfio_kvm_device_add_fd(int fd, Error **errp)
+>           }
+>   
+>           vfio_kvm_device_fd = cd.fd;
+> +        /*
+> +         * If the vm file descriptor changes, add a notifier so that we can
+> +         * re-create the vfio_kvm_device_fd.
+> +         */
+> +        kvm_vmfd_add_change_notifier(&vfio_vmfd_change_notifier);
+>       }
+>   
+>       if (ioctl(vfio_kvm_device_fd, KVM_SET_DEVICE_ATTR, &attr)) {
+> @@ -160,6 +248,8 @@ int vfio_kvm_device_add_fd(int fd, Error **errp)
+>                            fd);
+>           return -errno;
+>       }
+> +
+> +    vfio_device_fd_list_add(fd);
+>   #endif
+>       return 0;
+>   }
+> @@ -183,6 +273,8 @@ int vfio_kvm_device_del_fd(int fd, Error **errp)
+>                            "Failed to remove fd %d from KVM VFIO device", fd);
+>           return -errno;
+>       }
+> +
+> +    vfio_device_fd_list_remove(fd);
+>   #endif
+>       return 0;
+>   }
 
 
