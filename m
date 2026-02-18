@@ -4,64 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09991E9A047
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 09:11:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36F04E9A03E
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 09:12:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vsdVj-0007rq-0y; Wed, 18 Feb 2026 04:06:19 -0500
+	id 1vsdXE-0001fA-85; Wed, 18 Feb 2026 04:07:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vsdVd-0007Qa-7M
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 04:06:13 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1vsdWt-0000sV-Fe
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 04:07:33 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vsdVb-0001lJ-1i
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 04:06:12 -0500
+ id 1vsdWi-0002Ry-Ko
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 04:07:30 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771405570;
+ s=mimecast20190719; t=1771405634;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=J4SucUVkl0WRnnZuCp5t+N6kiYAKNSlru5EZCcCUPGM=;
- b=RJ3/dMLv3pQklClff2pAxQDti1tr4vbP8npxb6yIUo7YATAerPpEjTktfz4Nz3an4DzPSl
- fO+Xs6WH86uLaGr7tlYtTsAp/OME7E2euuhsieLfOgCZc4soQr9n2qYkuhUUI8s6+y7AIC
- D73EbBfhUnyRMCNhz0hIqVzFhcYJbs0=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=9PW0mPhi96B1jy2liciMA8T0hiAyIY89/0XH9xb3rNg=;
+ b=NCdv0IRQlpkor+tZpAWiP5Ll2ZPDk6RO13V7sNV+badleLfeIJKwkf7hUJAxtR79lNamQv
+ f26jHde6XZ0HuvZZ1kNrTbbir85PIxx1tNH3jwl94DpoDp3lQpLARhaKc4qA+XgFDPBDEC
+ qnIhKTn5Nh1aH2m8sUi/Uh/9D6+POz4=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-593-QyyCXZa8NkegRtTSiO0ZOg-1; Wed,
- 18 Feb 2026 04:06:06 -0500
-X-MC-Unique: QyyCXZa8NkegRtTSiO0ZOg-1
-X-Mimecast-MFC-AGG-ID: QyyCXZa8NkegRtTSiO0ZOg_1771405565
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-18-KgLv-7ZxPRKVJM3KZj99PQ-1; Wed,
+ 18 Feb 2026 04:07:10 -0500
+X-MC-Unique: KgLv-7ZxPRKVJM3KZj99PQ-1
+X-Mimecast-MFC-AGG-ID: KgLv-7ZxPRKVJM3KZj99PQ_1771405629
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 32A361956050; Wed, 18 Feb 2026 09:06:05 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 07FB41955D76; Wed, 18 Feb 2026 09:07:09 +0000 (UTC)
 Received: from localhost (unknown [10.45.242.26])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 5770730001B9; Wed, 18 Feb 2026 09:06:04 +0000 (UTC)
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 57DBB19560AD; Wed, 18 Feb 2026 09:07:08 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Gerd Hoffmann <kraxel@redhat.com>
-Subject: [PULL 50/85] audio/pw: convert to QOM lifecycle methods
-Date: Wed, 18 Feb 2026 10:02:50 +0100
-Message-ID: <20260218090330.1476169-51-marcandre.lureau@redhat.com>
+ Gerd Hoffmann <kraxel@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Christian Schoenebeck <qemu_oss@crudebyte.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Subject: [PULL 72/85] audio/mixeng: replace redundant pcm_info fields with
+ AudioFormat
+Date: Wed, 18 Feb 2026 10:03:12 +0100
+Message-ID: <20260218090330.1476169-73-marcandre.lureau@redhat.com>
 In-Reply-To: <20260218090330.1476169-1-marcandre.lureau@redhat.com>
 References: <20260218090330.1476169-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -69,7 +73,7 @@ X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.043,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -89,371 +93,494 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Migrate the PipeWire audio backend from the legacy driver init/fini
-callbacks to proper QOM realize and finalize methods.
+The audio_pcm_info structure stored three fields (bits, is_signed,
+is_float) that were always derived from the AudioFormat enum. This
+redundancy meant the same information was represented twice, with no
+type-level guarantee that they stayed in sync.
 
-The pwaudio struct fields are now embedded directly in the AudioPw
-QOM object instead of being allocated separately as drv_opaque. This
-allows accessing the backend state through proper QOM type casting
-with AUDIO_PW() rather than casting drv_opaque pointers.
+Replace these fields with a single AudioFormat field, and add helper
+functions to extract the derived properties when needed:
+- audio_format_bits()
+- audio_format_is_signed()
+- audio_format_is_float()
 
-The PipeWire thread loop and context are now managed through the QOM
-lifecycle, with initialization in realize and cleanup in finalize.
+This improves type safety by making AudioFormat the single source of
+truth, eliminating the possibility of inconsistent state between the
+format enum and its derived boolean/integer representations.
 
-Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
 ---
- audio/pwaudio.c | 119 +++++++++++++++++++++++-------------------------
- 1 file changed, 58 insertions(+), 61 deletions(-)
+ audio/audio_int.h       |   4 +-
+ audio/audio_template.h  |  12 +--
+ include/qemu/audio.h    |  49 +++++++++
+ audio/audio-mixeng-be.c | 218 ++++++++++++----------------------------
+ audio/dbusaudio.c       |  12 +--
+ audio/coreaudio.m       |   2 +-
+ 6 files changed, 126 insertions(+), 171 deletions(-)
 
-diff --git a/audio/pwaudio.c b/audio/pwaudio.c
-index 3b524dfea5a..ca61a1b4ef5 100644
---- a/audio/pwaudio.c
-+++ b/audio/pwaudio.c
-@@ -31,36 +31,27 @@
- #define TYPE_AUDIO_PW "audio-pipewire"
- OBJECT_DECLARE_SIMPLE_TYPE(AudioPw, AUDIO_PW)
- 
-+static AudioBackendClass *audio_pw_parent_class;
-+
- struct AudioPw {
-     AudioMixengBackend parent_obj;
--};
- 
--static struct audio_driver pw_audio_driver;
-+    struct pw_thread_loop *thread_loop;
-+    struct pw_context *context;
- 
--static void audio_pw_class_init(ObjectClass *klass, const void *data)
--{
--    AudioMixengBackendClass *k = AUDIO_MIXENG_BACKEND_CLASS(klass);
-+    struct pw_core *core;
-+    struct spa_hook core_listener;
-+    int last_seq, pending_seq, error;
-+};
- 
--    k->driver = &pw_audio_driver;
--}
-+static struct audio_driver pw_audio_driver;
- 
- typedef struct pwvolume {
-     uint32_t channels;
-     float values[SPA_AUDIO_MAX_CHANNELS];
- } pwvolume;
- 
--typedef struct pwaudio {
--    Audiodev *dev;
--    struct pw_thread_loop *thread_loop;
--    struct pw_context *context;
--
--    struct pw_core *core;
--    struct spa_hook core_listener;
--    int last_seq, pending_seq, error;
--} pwaudio;
--
- typedef struct PWVoice {
--    pwaudio *g;
-     struct pw_stream *stream;
-     struct spa_hook stream_listener;
-     struct spa_audio_info_raw info;
-@@ -236,9 +227,9 @@ static const struct pw_stream_events playback_stream_events = {
- static size_t
- qpw_read(HWVoiceIn *hw, void *data, size_t len)
- {
-+    AudioPw *c = AUDIO_PW(hw->s);
-     PWVoiceIn *pw = (PWVoiceIn *) hw;
-     PWVoice *v = &pw->v;
--    pwaudio *c = v->g;
-     const char *error = NULL;
-     size_t l;
-     int32_t avail;
-@@ -273,9 +264,9 @@ done_unlock:
- 
- static size_t qpw_buffer_get_free(HWVoiceOut *hw)
- {
-+    AudioPw *c = AUDIO_PW(hw->s);
-     PWVoiceOut *pw = (PWVoiceOut *)hw;
-     PWVoice *v = &pw->v;
--    pwaudio *c = v->g;
-     const char *error = NULL;
-     int32_t filled, avail;
-     uint32_t index;
-@@ -298,9 +289,9 @@ done_unlock:
- static size_t
- qpw_write(HWVoiceOut *hw, void *data, size_t len)
- {
-+    AudioPw *c = AUDIO_PW(hw->s);
-     PWVoiceOut *pw = (PWVoiceOut *) hw;
-     PWVoice *v = &pw->v;
--    pwaudio *c = v->g;
-     const char *error = NULL;
-     int32_t filled, avail;
-     uint32_t index;
-@@ -434,7 +425,7 @@ pw_to_audfmt(enum spa_audio_format fmt, int *endianness,
- }
- 
- static int
--qpw_stream_new(pwaudio *c, PWVoice *v, const char *stream_name,
-+qpw_stream_new(AudioPw *c, PWVoice *v, const char *stream_name,
-                const char *name, enum spa_direction dir)
- {
-     int res;
-@@ -452,8 +443,8 @@ qpw_stream_new(pwaudio *c, PWVoice *v, const char *stream_name,
-     }
- 
-     /* 75% of the timer period for faster updates */
--    buf_samples = (uint64_t)v->g->dev->timer_period * v->info.rate
--                    * 3 / 4 / 1000000;
-+    buf_samples = (uint64_t)AUDIO_MIXENG_BACKEND(c)->dev->timer_period
-+        * v->info.rate * 3 / 4 / 1000000;
-     pw_properties_setf(props, PW_KEY_NODE_LATENCY, "%" PRIu64 "/%u",
-                        buf_samples, v->info.rate);
- 
-@@ -535,11 +526,11 @@ qpw_set_position(uint32_t channels, uint32_t position[SPA_AUDIO_MAX_CHANNELS])
- static int
- qpw_init_out(HWVoiceOut *hw, struct audsettings *as, void *drv_opaque)
- {
-+    AudioPw *c = AUDIO_PW(hw->s);
-     PWVoiceOut *pw = (PWVoiceOut *) hw;
-     PWVoice *v = &pw->v;
-     struct audsettings obt_as = *as;
--    pwaudio *c = v->g = drv_opaque;
--    AudiodevPipewireOptions *popts = &c->dev->u.pipewire;
-+    AudiodevPipewireOptions *popts = &AUDIO_MIXENG_BACKEND(c)->dev->u.pipewire;
-     AudiodevPipewirePerDirectionOptions *ppdo = popts->out;
-     int r;
- 
-@@ -554,11 +545,11 @@ qpw_init_out(HWVoiceOut *hw, struct audsettings *as, void *drv_opaque)
-         pw_to_audfmt(v->info.format, &obt_as.endianness, &v->frame_size);
-     v->frame_size *= as->nchannels;
- 
--    v->req = (uint64_t)c->dev->timer_period * v->info.rate
-+    v->req = (uint64_t)AUDIO_MIXENG_BACKEND(c)->dev->timer_period * v->info.rate
-         * 1 / 2 / 1000000 * v->frame_size;
- 
-     /* call the function that creates a new stream for playback */
--    r = qpw_stream_new(c, v, ppdo->stream_name ? : c->dev->id,
-+    r = qpw_stream_new(c, v, ppdo->stream_name ?: AUDIO_MIXENG_BACKEND(c)->dev->id,
-                        ppdo->name, SPA_DIRECTION_OUTPUT);
-     if (r < 0) {
-         pw_thread_loop_unlock(c->thread_loop);
-@@ -582,11 +573,11 @@ qpw_init_out(HWVoiceOut *hw, struct audsettings *as, void *drv_opaque)
- static int
- qpw_init_in(HWVoiceIn *hw, struct audsettings *as, void *drv_opaque)
- {
-+    AudioPw *c = AUDIO_PW(hw->s);
-     PWVoiceIn *pw = (PWVoiceIn *) hw;
-     PWVoice *v = &pw->v;
-     struct audsettings obt_as = *as;
--    pwaudio *c = v->g = drv_opaque;
--    AudiodevPipewireOptions *popts = &c->dev->u.pipewire;
-+    AudiodevPipewireOptions *popts = &AUDIO_MIXENG_BACKEND(c)->dev->u.pipewire;
-     AudiodevPipewirePerDirectionOptions *ppdo = popts->in;
-     int r;
- 
-@@ -602,7 +593,7 @@ qpw_init_in(HWVoiceIn *hw, struct audsettings *as, void *drv_opaque)
-     v->frame_size *= as->nchannels;
- 
-     /* call the function that creates a new stream for recording */
--    r = qpw_stream_new(c, v, ppdo->stream_name ? : c->dev->id,
-+    r = qpw_stream_new(c, v, ppdo->stream_name ? : AUDIO_MIXENG_BACKEND(c)->dev->id,
-                        ppdo->name, SPA_DIRECTION_INPUT);
-     if (r < 0) {
-         pw_thread_loop_unlock(c->thread_loop);
-@@ -621,10 +612,8 @@ qpw_init_in(HWVoiceIn *hw, struct audsettings *as, void *drv_opaque)
- }
- 
- static void
--qpw_voice_fini(PWVoice *v)
-+qpw_voice_fini(AudioPw *c, PWVoice *v)
- {
--    pwaudio *c = v->g;
--
-     if (!v->stream) {
-         return;
-     }
-@@ -637,19 +626,18 @@ qpw_voice_fini(PWVoice *v)
- static void
- qpw_fini_out(HWVoiceOut *hw)
- {
--    qpw_voice_fini(&PW_VOICE_OUT(hw)->v);
-+    qpw_voice_fini(AUDIO_PW(hw->s), &PW_VOICE_OUT(hw)->v);
- }
- 
- static void
- qpw_fini_in(HWVoiceIn *hw)
- {
--    qpw_voice_fini(&PW_VOICE_IN(hw)->v);
-+    qpw_voice_fini(AUDIO_PW(hw->s), &PW_VOICE_IN(hw)->v);
- }
- 
- static void
--qpw_voice_set_enabled(PWVoice *v, bool enable)
-+qpw_voice_set_enabled(AudioPw *c, PWVoice *v, bool enable)
- {
--    pwaudio *c = v->g;
-     pw_thread_loop_lock(c->thread_loop);
-     pw_stream_set_active(v->stream, enable);
-     pw_thread_loop_unlock(c->thread_loop);
-@@ -658,19 +646,18 @@ qpw_voice_set_enabled(PWVoice *v, bool enable)
- static void
- qpw_enable_out(HWVoiceOut *hw, bool enable)
- {
--    qpw_voice_set_enabled(&PW_VOICE_OUT(hw)->v, enable);
-+    qpw_voice_set_enabled(AUDIO_PW(hw->s), &PW_VOICE_OUT(hw)->v, enable);
- }
- 
- static void
- qpw_enable_in(HWVoiceIn *hw, bool enable)
- {
--    qpw_voice_set_enabled(&PW_VOICE_IN(hw)->v, enable);
-+    qpw_voice_set_enabled(AUDIO_PW(hw->s), &PW_VOICE_IN(hw)->v, enable);
- }
- 
- static void
--qpw_voice_set_volume(PWVoice *v, Volume *vol)
-+qpw_voice_set_volume(AudioPw *c, PWVoice *v, Volume *vol)
- {
--    pwaudio *c = v->g;
-     int i, ret;
- 
-     pw_thread_loop_lock(c->thread_loop);
-@@ -693,16 +680,16 @@ qpw_voice_set_volume(PWVoice *v, Volume *vol)
- static void
- qpw_volume_out(HWVoiceOut *hw, Volume *vol)
- {
--    qpw_voice_set_volume(&PW_VOICE_OUT(hw)->v, vol);
-+    qpw_voice_set_volume(AUDIO_PW(hw->s), &PW_VOICE_OUT(hw)->v, vol);
- }
- 
- static void
- qpw_volume_in(HWVoiceIn *hw, Volume *vol)
- {
--    qpw_voice_set_volume(&PW_VOICE_IN(hw)->v, vol);
-+    qpw_voice_set_volume(AUDIO_PW(hw->s), &PW_VOICE_IN(hw)->v, vol);
- }
- 
--static int wait_resync(pwaudio *pw)
-+static int wait_resync(AudioPw *pw)
- {
-     int res;
-     pw->pending_seq = pw_core_sync(pw->core, PW_ID_CORE, pw->pending_seq);
-@@ -725,7 +712,7 @@ static int wait_resync(pwaudio *pw)
- static void
- on_core_error(void *data, uint32_t id, int seq, int res, const char *message)
- {
--    pwaudio *pw = data;
-+    AudioPw *pw = data;
- 
-     error_report("error id:%u seq:%d res:%d (%s): %s",
-                 id, seq, res, spa_strerror(res), message);
-@@ -737,7 +724,7 @@ on_core_error(void *data, uint32_t id, int seq, int res, const char *message)
- static void
- on_core_done(void *data, uint32_t id, int seq)
- {
--    pwaudio *pw = data;
-+    AudioPw *pw = data;
-     assert(id == PW_ID_CORE);
-     pw->last_seq = seq;
-     if (pw->pending_seq == seq) {
-@@ -752,17 +739,20 @@ static const struct pw_core_events core_events = {
-     .error = on_core_error,
+diff --git a/audio/audio_int.h b/audio/audio_int.h
+index 5334c4baad2..dd5f2220d75 100644
+--- a/audio/audio_int.h
++++ b/audio/audio_int.h
+@@ -45,9 +45,7 @@ struct audio_callback {
  };
  
--static void *
--qpw_audio_init(Audiodev *dev, Error **errp)
-+static bool
-+audio_pw_realize(AudioBackend *abe, Audiodev *dev, Error **errp)
- {
--    g_autofree pwaudio *pw = g_new0(pwaudio, 1);
-+    AudioPw *pw = AUDIO_PW(abe);
+ struct audio_pcm_info {
+-    int bits;
+-    bool is_signed;
+-    bool is_float;
++    AudioFormat af;
+     int freq;
+     int nchannels;
+     int bytes_per_frame;
+diff --git a/audio/audio_template.h b/audio/audio_template.h
+index 08d60422589..3da91a4782c 100644
+--- a/audio/audio_template.h
++++ b/audio/audio_template.h
+@@ -173,7 +173,7 @@ static int glue (audio_pcm_sw_init_, TYPE) (
+     sw->empty = true;
+ #endif
  
-     assert(dev->driver == AUDIODEV_DRIVER_PIPEWIRE);
-     trace_pw_audio_init();
+-    if (sw->info.is_float) {
++    if (audio_format_is_float(hw->info.af)) {
+ #ifdef DAC
+         sw->conv = mixeng_conv_float[sw->info.nchannels == 2]
+             [sw->info.swap_endianness];
+@@ -188,9 +188,9 @@ static int glue (audio_pcm_sw_init_, TYPE) (
+         sw->clip = mixeng_clip
+ #endif
+             [sw->info.nchannels == 2]
+-            [sw->info.is_signed]
++            [audio_format_is_signed(hw->info.af)]
+             [sw->info.swap_endianness]
+-            [audio_bits_to_index(sw->info.bits)];
++            [audio_format_to_index(hw->info.af)];
+     }
  
-+    if (!audio_pw_parent_class->realize(abe, dev, errp)) {
-+        return false;
+     sw->name = g_strdup (name);
+@@ -300,7 +300,7 @@ static HW *glue(audio_pcm_hw_add_new_, TYPE)(AudioMixengBackend *s,
+         goto err1;
+     }
+ 
+-    if (hw->info.is_float) {
++    if (audio_format_is_float(hw->info.af)) {
+ #ifdef DAC
+         hw->clip = mixeng_clip_float[hw->info.nchannels == 2]
+             [hw->info.swap_endianness];
+@@ -315,9 +315,9 @@ static HW *glue(audio_pcm_hw_add_new_, TYPE)(AudioMixengBackend *s,
+         hw->conv = mixeng_conv
+ #endif
+             [hw->info.nchannels == 2]
+-            [hw->info.is_signed]
++            [audio_format_is_signed(hw->info.af)]
+             [hw->info.swap_endianness]
+-            [audio_bits_to_index(hw->info.bits)];
++            [audio_format_to_index(hw->info.af)];
+     }
+ 
+     glue(audio_pcm_hw_alloc_resources_, TYPE)(hw);
+diff --git a/include/qemu/audio.h b/include/qemu/audio.h
+index b6b6ee9b560..9e4566d60aa 100644
+--- a/include/qemu/audio.h
++++ b/include/qemu/audio.h
+@@ -185,6 +185,55 @@ bool audio_be_set_dbus_server(AudioBackend *be,
+ 
+ const char *audio_application_name(void);
+ 
++static inline int audio_format_bits(AudioFormat fmt)
++{
++    switch (fmt) {
++    case AUDIO_FORMAT_S8:
++    case AUDIO_FORMAT_U8:
++        return 8;
++
++    case AUDIO_FORMAT_S16:
++    case AUDIO_FORMAT_U16:
++        return 16;
++
++    case AUDIO_FORMAT_F32:
++    case AUDIO_FORMAT_S32:
++    case AUDIO_FORMAT_U32:
++        return 32;
++
++    case AUDIO_FORMAT__MAX:
++        break;
 +    }
 +
-     pw_init(NULL, NULL);
- 
--    pw->dev = dev;
-     pw->thread_loop = pw_thread_loop_new("PipeWire thread loop", NULL);
-     if (pw->thread_loop == NULL) {
-         error_setg_errno(errp, errno, "Could not create PipeWire loop");
-@@ -801,8 +791,7 @@ qpw_audio_init(Audiodev *dev, Error **errp)
-     }
- 
-     pw_thread_loop_unlock(pw->thread_loop);
--
--    return g_steal_pointer(&pw);
-+    return true;
- 
- fail:
-     if (pw->thread_loop) {
-@@ -810,13 +799,13 @@ fail:
-     }
-     g_clear_pointer(&pw->context, pw_context_destroy);
-     g_clear_pointer(&pw->thread_loop, pw_thread_loop_destroy);
--    return NULL;
-+    return false;
- }
- 
- static void
--qpw_audio_fini(void *opaque)
-+audio_pw_finalize(Object *obj)
- {
--    pwaudio *pw = opaque;
-+    AudioPw *pw = AUDIO_PW(obj);
- 
-     if (pw->thread_loop) {
-         pw_thread_loop_stop(pw->thread_loop);
-@@ -831,9 +820,7 @@ qpw_audio_fini(void *opaque)
-     if (pw->context) {
-         pw_context_destroy(pw->context);
-     }
--    pw_thread_loop_destroy(pw->thread_loop);
--
--    g_free(pw);
-+    g_clear_pointer(&pw->thread_loop, pw_thread_loop_destroy);
- }
- 
- static struct audio_pcm_ops qpw_pcm_ops = {
-@@ -855,8 +842,6 @@ static struct audio_pcm_ops qpw_pcm_ops = {
- 
- static struct audio_driver pw_audio_driver = {
-     .name = "pipewire",
--    .init = qpw_audio_init,
--    .fini = qpw_audio_fini,
-     .pcm_ops = &qpw_pcm_ops,
-     .max_voices_out = INT_MAX,
-     .max_voices_in = INT_MAX,
-@@ -864,12 +849,24 @@ static struct audio_driver pw_audio_driver = {
-     .voice_size_in = sizeof(PWVoiceIn),
- };
- 
-+static void audio_pw_class_init(ObjectClass *klass, const void *data)
-+{
-+    AudioBackendClass *b = AUDIO_BACKEND_CLASS(klass);
-+    AudioMixengBackendClass *k = AUDIO_MIXENG_BACKEND_CLASS(klass);
-+
-+    audio_pw_parent_class = AUDIO_BACKEND_CLASS(object_class_get_parent(klass));
-+
-+    b->realize = audio_pw_realize;
-+    k->driver = &pw_audio_driver;
++    g_assert_not_reached();
 +}
 +
- static const TypeInfo audio_types[] = {
-     {
-         .name = TYPE_AUDIO_PW,
-         .parent = TYPE_AUDIO_MIXENG_BACKEND,
-         .instance_size = sizeof(AudioPw),
-         .class_init = audio_pw_class_init,
-+        .instance_finalize = audio_pw_finalize,
-     },
- };
++static inline bool audio_format_is_float(AudioFormat fmt)
++{
++    return fmt == AUDIO_FORMAT_F32;
++}
++
++static inline bool audio_format_is_signed(AudioFormat fmt)
++{
++    switch (fmt) {
++    case AUDIO_FORMAT_S8:
++    case AUDIO_FORMAT_S16:
++    case AUDIO_FORMAT_S32:
++    case AUDIO_FORMAT_F32:
++        return true;
++
++    case AUDIO_FORMAT_U8:
++    case AUDIO_FORMAT_U16:
++    case AUDIO_FORMAT_U32:
++        return false;
++
++    case AUDIO_FORMAT__MAX:
++        break;
++    }
++
++    g_assert_not_reached();
++}
++
+ #define DEFINE_AUDIO_PROPERTIES(_s, _f)         \
+     DEFINE_PROP_AUDIODEV("audiodev", _s, _f)
  
+diff --git a/audio/audio-mixeng-be.c b/audio/audio-mixeng-be.c
+index d02cfe3c509..931d5b206f2 100644
+--- a/audio/audio-mixeng-be.c
++++ b/audio/audio-mixeng-be.c
+@@ -62,23 +62,28 @@ int audio_bug (const char *funcname, int cond)
+     return cond;
+ }
+ 
+-static inline int audio_bits_to_index (int bits)
++/*
++ * Convert audio format to mixeng_clip index. Used by audio_pcm_sw_init_ and
++ * audio_mixeng_backend_add_capture()
++ */
++static int audio_format_to_index(AudioFormat af)
+ {
+-    switch (bits) {
+-    case 8:
++    switch (af) {
++    case AUDIO_FORMAT_U8:
++    case AUDIO_FORMAT_S8:
+         return 0;
+-
+-    case 16:
++    case AUDIO_FORMAT_U16:
++    case AUDIO_FORMAT_S16:
+         return 1;
+-
+-    case 32:
++    case AUDIO_FORMAT_U32:
++    case AUDIO_FORMAT_S32:
+         return 2;
+-
+-    default:
+-        audio_bug ("bits_to_index", 1);
+-        AUD_log (NULL, "invalid bits %d\n", bits);
+-        return 0;
++    case AUDIO_FORMAT_F32:
++    case AUDIO_FORMAT__MAX:
++        break;
+     }
++
++    g_assert_not_reached();
+ }
+ 
+ void AUD_vlog (const char *cap, const char *fmt, va_list ap)
+@@ -172,141 +177,68 @@ static int audio_validate_settings (const struct audsettings *as)
+ 
+ static int audio_pcm_info_eq (struct audio_pcm_info *info, const struct audsettings *as)
+ {
+-    int bits = 8;
+-    bool is_signed = false, is_float = false;
+-
+-    switch (as->fmt) {
+-    case AUDIO_FORMAT_S8:
+-        is_signed = true;
+-        /* fall through */
+-    case AUDIO_FORMAT_U8:
+-        break;
+-
+-    case AUDIO_FORMAT_S16:
+-        is_signed = true;
+-        /* fall through */
+-    case AUDIO_FORMAT_U16:
+-        bits = 16;
+-        break;
+-
+-    case AUDIO_FORMAT_F32:
+-        is_float = true;
+-        /* fall through */
+-    case AUDIO_FORMAT_S32:
+-        is_signed = true;
+-        /* fall through */
+-    case AUDIO_FORMAT_U32:
+-        bits = 32;
+-        break;
+-
+-    default:
+-        abort();
+-    }
+-    return info->freq == as->freq
++    return info->af == as->fmt
++        && info->freq == as->freq
+         && info->nchannels == as->nchannels
+-        && info->is_signed == is_signed
+-        && info->is_float == is_float
+-        && info->bits == bits
+         && info->swap_endianness == (as->endianness != HOST_BIG_ENDIAN);
+ }
+ 
+ void audio_pcm_init_info (struct audio_pcm_info *info, const struct audsettings *as)
+ {
+-    int bits = 8, mul;
+-    bool is_signed = false, is_float = false;
+-
+-    switch (as->fmt) {
+-    case AUDIO_FORMAT_S8:
+-        is_signed = true;
+-        /* fall through */
+-    case AUDIO_FORMAT_U8:
+-        mul = 1;
+-        break;
+-
+-    case AUDIO_FORMAT_S16:
+-        is_signed = true;
+-        /* fall through */
+-    case AUDIO_FORMAT_U16:
+-        bits = 16;
+-        mul = 2;
+-        break;
+-
+-    case AUDIO_FORMAT_F32:
+-        is_float = true;
+-        /* fall through */
+-    case AUDIO_FORMAT_S32:
+-        is_signed = true;
+-        /* fall through */
+-    case AUDIO_FORMAT_U32:
+-        bits = 32;
+-        mul = 4;
+-        break;
+-
+-    default:
+-        abort();
+-    }
+-
++    info->af = as->fmt;
+     info->freq = as->freq;
+-    info->bits = bits;
+-    info->is_signed = is_signed;
+-    info->is_float = is_float;
+     info->nchannels = as->nchannels;
+-    info->bytes_per_frame = as->nchannels * mul;
++    info->bytes_per_frame = as->nchannels * audio_format_bits(as->fmt) / 8;
+     info->bytes_per_second = info->freq * info->bytes_per_frame;
+     info->swap_endianness = (as->endianness != HOST_BIG_ENDIAN);
+ }
+ 
+-void audio_pcm_info_clear_buf (struct audio_pcm_info *info, void *buf, int len)
++void audio_pcm_info_clear_buf(struct audio_pcm_info *info, void *buf, int len)
+ {
+     if (!len) {
+         return;
+     }
+ 
+-    if (info->is_signed || info->is_float) {
+-        memset(buf, 0x00, len * info->bytes_per_frame);
+-    } else {
+-        switch (info->bits) {
+-        case 8:
+-            memset(buf, 0x80, len * info->bytes_per_frame);
+-            break;
+-
+-        case 16:
+-            {
+-                int i;
+-                uint16_t *p = buf;
+-                short s = INT16_MAX;
+-
+-                if (info->swap_endianness) {
+-                    s = bswap16 (s);
+-                }
+-
+-                for (i = 0; i < len * info->nchannels; i++) {
+-                    p[i] = s;
+-                }
+-            }
+-            break;
++    switch (info->af) {
++    case AUDIO_FORMAT_U8:
++        memset(buf, 0x80, len * info->bytes_per_frame);
++        break;
++    case AUDIO_FORMAT_U16: {
++        int i;
++        uint16_t *p = buf;
++        short s = INT16_MAX;
+ 
+-        case 32:
+-            {
+-                int i;
+-                uint32_t *p = buf;
+-                int32_t s = INT32_MAX;
++        if (info->swap_endianness) {
++            s = bswap16(s);
++        }
+ 
+-                if (info->swap_endianness) {
+-                    s = bswap32 (s);
+-                }
++        for (i = 0; i < len * info->nchannels; i++) {
++            p[i] = s;
++        }
++        break;
++    }
++    case AUDIO_FORMAT_U32: {
++        int i;
++        uint32_t *p = buf;
++        int32_t s = INT32_MAX;
+ 
+-                for (i = 0; i < len * info->nchannels; i++) {
+-                    p[i] = s;
+-                }
+-            }
+-            break;
++        if (info->swap_endianness) {
++            s = bswap32(s);
++        }
+ 
+-        default:
+-            AUD_log (NULL, "audio_pcm_info_clear_buf: invalid bits %d\n",
+-                     info->bits);
+-            break;
++        for (i = 0; i < len * info->nchannels; i++) {
++            p[i] = s;
+         }
++        break;
++    }
++    case AUDIO_FORMAT_S8:
++    case AUDIO_FORMAT_S16:
++    case AUDIO_FORMAT_S32:
++    case AUDIO_FORMAT_F32:
++        memset(buf, 0x00, len * info->bytes_per_frame);
++        break;
++    case AUDIO_FORMAT__MAX:
++        g_assert_not_reached();
+     }
+ }
+ 
+@@ -719,8 +651,8 @@ static size_t audio_pcm_sw_write(SWVoiceOut *sw, void *buf, size_t buf_len)
+ #ifdef DEBUG_AUDIO
+ static void audio_pcm_print_info (const char *cap, struct audio_pcm_info *info)
+ {
+-    dolog("%s: bits %d, sign %d, float %d, freq %d, nchan %d\n",
+-          cap, info->bits, info->is_signed, info->is_float, info->freq,
++    dolog("%s: %s, freq %d, nchan %d\n",
++          cap, AudioFormat_str(info->af), info->freq,
+           info->nchannels);
+ }
+ #endif
+@@ -1759,15 +1691,15 @@ static CaptureVoiceOut *audio_mixeng_backend_add_capture(
+ 
+         cap->buf = g_malloc0_n(hw->mix_buf.size, hw->info.bytes_per_frame);
+ 
+-        if (hw->info.is_float) {
++        if (audio_format_is_float(hw->info.af)) {
+             hw->clip = mixeng_clip_float[hw->info.nchannels == 2]
+                 [hw->info.swap_endianness];
+         } else {
+             hw->clip = mixeng_clip
+                 [hw->info.nchannels == 2]
+-                [hw->info.is_signed]
++                [audio_format_is_signed(hw->info.af)]
+                 [hw->info.swap_endianness]
+-                [audio_bits_to_index(hw->info.bits)];
++                [audio_format_to_index(hw->info.af)];
+         }
+ 
+         QLIST_INSERT_HEAD (&s->cap_head, cap, entries);
+@@ -1869,29 +1801,6 @@ audsettings audiodev_to_audsettings(AudiodevPerDirectionOptions *pdo)
+     };
+ }
+ 
+-int audioformat_bytes_per_sample(AudioFormat fmt)
+-{
+-    switch (fmt) {
+-    case AUDIO_FORMAT_U8:
+-    case AUDIO_FORMAT_S8:
+-        return 1;
+-
+-    case AUDIO_FORMAT_U16:
+-    case AUDIO_FORMAT_S16:
+-        return 2;
+-
+-    case AUDIO_FORMAT_U32:
+-    case AUDIO_FORMAT_S32:
+-    case AUDIO_FORMAT_F32:
+-        return 4;
+-
+-    case AUDIO_FORMAT__MAX:
+-        ;
+-    }
+-    abort();
+-}
+-
+-
+ /* frames = freq * usec / 1e6 */
+ int audio_buffer_frames(AudiodevPerDirectionOptions *pdo,
+                         audsettings *as, int def_usecs)
+@@ -1914,8 +1823,7 @@ int audio_buffer_samples(AudiodevPerDirectionOptions *pdo,
+ int audio_buffer_bytes(AudiodevPerDirectionOptions *pdo,
+                        audsettings *as, int def_usecs)
+ {
+-    return audio_buffer_samples(pdo, as, def_usecs) *
+-        audioformat_bytes_per_sample(as->fmt);
++    return audio_buffer_samples(pdo, as, def_usecs) * audio_format_bits(as->fmt) / 8;
+ }
+ 
+ void audio_rate_start(RateCtl *rate)
+diff --git a/audio/dbusaudio.c b/audio/dbusaudio.c
+index 5f65c043c16..b212b3d6022 100644
+--- a/audio/dbusaudio.c
++++ b/audio/dbusaudio.c
+@@ -147,9 +147,9 @@ dbus_init_out_listener(QemuDBusDisplay1AudioOutListener *listener,
+     qemu_dbus_display1_audio_out_listener_call_init(
+         listener,
+         (uintptr_t)hw,
+-        hw->info.bits,
+-        hw->info.is_signed,
+-        hw->info.is_float,
++        audio_format_bits(hw->info.af),
++        audio_format_is_signed(hw->info.af),
++        audio_format_is_float(hw->info.af),
+         hw->info.freq,
+         hw->info.nchannels,
+         hw->info.bytes_per_frame,
+@@ -273,9 +273,9 @@ dbus_init_in_listener(QemuDBusDisplay1AudioInListener *listener, HWVoiceIn *hw)
+     qemu_dbus_display1_audio_in_listener_call_init(
+         listener,
+         (uintptr_t)hw,
+-        hw->info.bits,
+-        hw->info.is_signed,
+-        hw->info.is_float,
++        audio_format_bits(hw->info.af),
++        audio_format_is_signed(hw->info.af),
++        audio_format_is_float(hw->info.af),
+         hw->info.freq,
+         hw->info.nchannels,
+         hw->info.bytes_per_frame,
+diff --git a/audio/coreaudio.m b/audio/coreaudio.m
+index 0c0e8583c89..1f4b3d9d467 100644
+--- a/audio/coreaudio.m
++++ b/audio/coreaudio.m
+@@ -359,7 +359,7 @@ static OSStatus init_out_device(coreaudioVoiceOut *core)
+     AudioValueRange frameRange;
+ 
+     AudioStreamBasicDescription streamBasicDescription = {
+-        .mBitsPerChannel = core->hw.info.bits,
++        .mBitsPerChannel = audio_format_bits(core->hw.info.af),
+         .mBytesPerFrame = core->hw.info.bytes_per_frame,
+         .mBytesPerPacket = core->hw.info.bytes_per_frame,
+         .mChannelsPerFrame = core->hw.info.nchannels,
 -- 
 2.53.0
 
