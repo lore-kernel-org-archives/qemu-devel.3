@@ -4,124 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EC4AE9A02C
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 22:18:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93589E9A02C
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 22:18:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vsprr-0005Ap-Qk; Wed, 18 Feb 2026 17:18:00 -0500
+	id 1vspsb-0005N3-3i; Wed, 18 Feb 2026 17:18:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vsprn-00059h-SR
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 17:17:57 -0500
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1vspsY-0005MM-Rs
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 17:18:42 -0500
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vsprm-0007I3-8I
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 17:17:55 -0500
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-2a79998d35aso1842175ad.0
- for <qemu-devel@nongnu.org>; Wed, 18 Feb 2026 14:17:53 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1vspsX-0007Nq-CN
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 17:18:42 -0500
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-43590777e22so190434f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 18 Feb 2026 14:18:40 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1771453119; cv=none;
+ d=google.com; s=arc-20240605;
+ b=jhpJUKDF+v4Av63Ke5JHBDzR15TtEHmqlEX6EbU+5m1mvf9o2Du1ymhnxYbPvtwAyh
+ xLqI/A9NNrL++QazfhIgvgM5w7tg7tXvvs7RDoszTDfqtBcef5YTHtC0U7My+LkdtRhQ
+ w8m8XDQ+8rgV3y29BaNVa7izpclIkQyLTa9D6UnaeTRIIA/VeUAiuUkW2jeHVZakCG/7
+ qVlTD9MBYendvm3sWfJ3VR1DBVQTVp4xPONFlDerUpoM+idqjp8IBdKvwFj4OzoeWWhO
+ w8BaSCzqxTLSZ3jxHpx207RZUBChumvGpWiRLEoDJPe8dT54ZoXEx3K/eQ8mbKa4T6XZ
+ SmwQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=kNLdJY+bDyZs3AuromPUlwhRlMeM8vZOB4FmPTCEEDk=;
+ fh=FKOoIp1rxFO8urHSToKRxGpSRx1wX/uu9viThisijkg=;
+ b=XeZtrGL6oYsflwXZWfmuNZTa3RHfoaXlSTi25WQ67Bw0Yo+LBDZJdfJ4OiFgc2FbHl
+ JapGjzFc3x69RVsvtoXeSF6wlfi3/ha7jQWL60Z2BfHxyYZa95qr3B58t0lT25ryqgch
+ 4RYuTCMqhsDiMP2GLOYLcZgXOmWw7/40ZMFqYl80w1ExBLZaU1CREH5nKUkX5sjokvv1
+ pUhcDt8OVw1nrL35WjmKSY9sa6ah5xzdS+Oc5yiBgYxXYVGDJYM39BuK0q/kXYNJjpY4
+ caY9rEBUHhDzS5gIehpm2sQimva+RJQFW+N8LTYtRKE3XLENOI20HqAPfBRKl42fPTeQ
+ oA2w==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771453072; x=1772057872; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=IgbN+0+nZGvceT4qVDkyK0Z5yonnu9/EOzy5Ppa7sow=;
- b=yCNXGFH+EDMEw/endjFk7KWV2t9CmNmq6xbpuvZlCGb4K9pTeN+srWkuEqbaOjW5kY
- ySsfcMy82TTb/0IPZ6CmTtezEU2UxA6kf3ZNkTL3rAPd6ZMDiaHFODTJ3f2KYCL4mnwR
- gEHEbV0GjuBl21gKs2Umbf2iY23J3eBlhenCyRmoYOMlm757/6kBG0Rc4htv3yjdkM9E
- bwD/DlqO2RdNiqxR5FQM3DXz4v2dZJ1urRQ5+Ax1OXYzpw0LeNWqgdJaKfzKJMqUTxlv
- XmZHmxEtynIJtDx3k+AxBY1xYmfeWWcs2K3cTeHZ9af74+gMDVSUT2oQFWRf5bpwC0Ro
- Ixug==
+ d=linaro.org; s=google; t=1771453119; x=1772057919; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=kNLdJY+bDyZs3AuromPUlwhRlMeM8vZOB4FmPTCEEDk=;
+ b=w1MSnC+HxhpD8OWnNb0dieSplIg73A65YH/L04PL2EinexvL79DubhMbLWNZsfh9fU
+ ifI9kT8+BIhpyvEL9eOzMG/rarT/IR0ZLYqQyU5ZyqbgGEpV4a9RAmXUey2UhW/iRWos
+ 3qWUx+urI2pBy//dW2ijfKNM53eCIo6yGxX6j4teaKaMTMLIoRDK35+jQq4eRwTqXBp8
+ SMs3ReD8hycDM+JBAByThJWKOWYwXoIYu0X94ddW2w+b3pn0urR+WCpOOYTQaJ+aJNDp
+ 5XfBxSuJkwfiCCOBN6QFAOF+VdYG7c+ONHdZNidFUK2NzifkhpgRj7KDV2i1o2IFsTGc
+ fsjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771453072; x=1772057872;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=IgbN+0+nZGvceT4qVDkyK0Z5yonnu9/EOzy5Ppa7sow=;
- b=DRgI3D7KC/49CPFu9kgjKdCMtNKgKcBdXhF94c/S6xdMcMYhboawLTYzaLhYRZhH0V
- Qx2+eCRefB3okTf0JyVxM+g4ffNSLBNM/iJa6+Bj10Nyjkf7JZ1prJSXHeyPDBXeJhC9
- GN+NWQkKuzPqlGfdWp+W/VbYQmZ2vPr4enjVrWS1gAvKmTlyJnc5UC5EtB61yS68ymI9
- jPB4wuLMVdSJTPu43xQk131jOFv7yF+DdIgf6KN5RQ7ZNh+H2rU4HYhHIcDwRdOmHZXk
- qpdT4Hlqawg0+XoG5RmsAd+GdPvCgDULFyvLsVncIxuBjRuyyVcFywAozh5F6ROykM+Y
- IByw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW12fk6eOqsIqoV4zMs/ZriECygxs+WXtiLquvRTpgwR5H4n6Ffwdi7juMcMBZTS2wZPGIFaSeL19tB@nongnu.org
-X-Gm-Message-State: AOJu0YzXNfFLtlXNwaTtSuBDr/aGv8+HRtu6+jK+C2X91lZO0tDLBPb2
- a91vmvEclhCMHZXR4+IG0pdPT2AzdKF+TeJjXx6My8VW07SV6OQsLCDoVJREYQWCDH0=
-X-Gm-Gg: AZuq6aJWBC0ah3VAnKqOWICLk0R/Xmp58vQ+Ac8WbAcdnJNj2uSE4hvHNpmp2hFOU1G
- oeMNeRovQ6l9O9sT/lowIx5G23g/g8DUIxg1k+XqDvNHMO/ySdaam0sJ5KpzVlVPtpEpEHrOEPB
- Xy5juQgvPBjYqzXxt7jcK+fBd26ZAaxGQUZLUMPQksrskQIQzB4NmLL0d2/3NfP4RmNY+QVEGwt
- 3oH1EOtnv4OcbeZierEGtSjgL7uzX3vlgUHmvrzNXkHzpLCUkxHfsByLnV5UHFPg+X6PdLJJN2F
- JShFbHgWK9rv1JvvcYWaxG/ZgyZBUD/337a1BIgm5LMXKIZXFJKOuyAPCPaCtUMV6QoYo6+Qfrq
- 6nk2fHyfSlaD0B/Yjqdd3qpT9T+qSwmyD7leZRBvMb66LD+bJKjBdU5NF4HoMyozGE3gqo7O2Bk
- SAYMJmDK6kgR8EWtsWAyzCAghUpgM1cuBzQMeNhPHAxZc7gPHpby59z4oFJVyi2jxK9i+M
-X-Received: by 2002:a17:903:11d1:b0:2ab:2830:b03b with SMTP id
- d9443c01a7336-2ad5b1b7053mr5750405ad.61.1771453072387; 
- Wed, 18 Feb 2026 14:17:52 -0800 (PST)
-Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3567ebc3508sm22569840a91.14.2026.02.18.14.17.51
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 18 Feb 2026 14:17:51 -0800 (PST)
-Message-ID: <332a3290-9ebe-404f-8b49-d09a83bd47cb@linaro.org>
-Date: Wed, 18 Feb 2026 14:17:51 -0800
+ d=1e100.net; s=20230601; t=1771453119; x=1772057919;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=kNLdJY+bDyZs3AuromPUlwhRlMeM8vZOB4FmPTCEEDk=;
+ b=ZVmUDKQZs3tdvIee6eoom4nFji9SYIKuiIE0tazv+Bz2EZW3g2P1oZa5IVRd+Qbtua
+ /RTnl1wGP2g29dTJCONrXfpePSIPlmIfWMrKr1WcxyRkvdi87gf5+vrsCJ3wGVjmL8MH
+ ssmn4IEagFht3onPfU55OUNaXw36fSFumtCvIcLaxOHzY0JBXOYe62pEY+xJk3r0ggUm
+ 2jdCC3QMuh0CDsdwOiTzuyhu2jqBIvRR84QUNFt6UqYzhu4eD9UXjyEfVLBjc48I68aK
+ W3RTN/sVEQt7pth9DG1vc+2ywN0aqFQlpk49I5/AYxky3lEsKKhCYL0alGPRA+CRA80+
+ 0Cmw==
+X-Gm-Message-State: AOJu0Yy7HWmlJ3dlbs90DBj3+j+QtwS5wsDOXIsNn/uK+WU7nYJ9Vq89
+ vTV4Vz6v05BMOu40RcIwLkNUcyL3/gGlb1Tff0ItW3+eIVAzH8tqHBwVIm49ayB8ty8TCe9SzYx
+ GQksYMvE++L1AVpgiSiQOInJ26RzMlw5959xPZKddNg==
+X-Gm-Gg: AZuq6aLWLJsToHKJ/cy1psoickQL2JBTawhTfxI8WSf1EKRewEsRleAMPonpNDYwz2A
+ xapmtDH+3GnKJnwuv7Lrqz23f1/ubmYfr/HO+PaxwP9/1yjMbXmGQjeXPC0Oy7vwBEsLZoV9342
+ 9TqSqVSkMqfjRSieaRhnKl0UlINAv2AaNqBoAAyshVut+5Sod+L2GC27ovjDCpGokyJOXPGVawI
+ aOOp3VEFuLBw/zelCMI2RGlhds39KZ0TXrj50l6ruPfGCYzMXoMYAfScRkP8RSaSUMbbTj/KoCm
+ w2AmpGtbxwQJMpMGYl+jxle5kiRkIywI7pEKVKAN/9sF6YyOKg==
+X-Received: by 2002:a05:6000:4312:b0:436:233c:c7c2 with SMTP id
+ ffacd0b85a97d-4379db33f54mr26262939f8f.16.1771453119201; Wed, 18 Feb 2026
+ 14:18:39 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] hw/virtio: add virtio_vdev_is_{modern, legacy}
-Content-Language: en-US
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: qemu-ppc@nongnu.org, Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Stefano Garzarella <sgarzare@redhat.com>, Jason Wang <jasowang@redhat.com>,
- Nicholas Piggin <npiggin@gmail.com>, stefanha@redhat.com,
- richard.henderson@linaro.org, "Michael S. Tsirkin" <mst@redhat.com>
-References: <20260212234602.338131-1-pierrick.bouvier@linaro.org>
- <20260212234602.338131-2-pierrick.bouvier@linaro.org>
- <02b667c5-da6a-4829-87f1-4b9ebc53d5a4@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
- 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
- ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <02b667c5-da6a-4829-87f1-4b9ebc53d5a4@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x633.google.com
+References: <20260218192444.658046-1-jsnow@redhat.com>
+ <20260218192444.658046-2-jsnow@redhat.com>
+In-Reply-To: <20260218192444.658046-2-jsnow@redhat.com>
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Date: Thu, 19 Feb 2026 00:18:13 +0200
+X-Gm-Features: AaiRm535NhTbxtVoNzWAkZd10x104joM_zkHi6QJ3UwISn6egz6codQUPm4zWQg
+Message-ID: <CAAjaMXYmdTmKRXMs83DH6Fw=BDg6_KiHgOTghFG5MLmEt9nGqg@mail.gmail.com>
+Subject: Re: [PATCH 1/1] rust: use checked_div to make clippy happy
+To: John Snow <jsnow@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wr1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -144,54 +116,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/18/26 1:00 PM, Philippe Mathieu-Daudé wrote:
-> On 13/2/26 00:46, Pierrick Bouvier wrote:
->> This simplifies code compared to having
->> virtio_vdev_has_feature(vdev, VIRTIO_F_VERSION_1) or
->> !virtio_vdev_has_feature(vdev, VIRTIO_F_VERSION_1).
->>
->> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->> ---
->>    include/hw/virtio/virtio-access.h |  3 +--
->>    include/hw/virtio/virtio.h        | 12 +++++++++++-
->>    hw/net/virtio-net.c               |  2 +-
->>    hw/virtio/vhost.c                 |  2 +-
->>    hw/virtio/virtio-pci.c            |  2 +-
->>    hw/virtio/virtio.c                | 16 ++++++++--------
->>    6 files changed, 23 insertions(+), 14 deletions(-)
-> 
-> 
->> diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
->> index 27cd98d2fe1..8f1e4323599 100644
->> --- a/include/hw/virtio/virtio.h
->> +++ b/include/hw/virtio/virtio.h
->> @@ -468,9 +468,19 @@ static inline bool virtio_host_has_feature(VirtIODevice *vdev,
->>        return virtio_has_feature(vdev->host_features, fbit);
->>    }
->>    
->> +static inline bool virtio_vdev_is_modern(const VirtIODevice *vdev)
->> +{
->> +    return virtio_vdev_has_feature(vdev, VIRTIO_F_VERSION_1);
->> +}
->> +
->> +static inline bool virtio_vdev_is_legacy(const VirtIODevice *vdev)
->> +{
->> +    return !virtio_vdev_is_modern(vdev);
->> +}
-> 
-> With retrospective, mentioning 'modern' was a mistake IMHO. But I
-> understand it was simpler to add 'modern' code without updating the
-> 'legacy' code base. Today I'd rather have 'legacy' explicit in function
-> names, everything else being the normal / current / modern version,
-> without having to clarify it.
+On Wed, Feb 18, 2026 at 9:25=E2=80=AFPM John Snow <jsnow@redhat.com> wrote:
 >
+> When upgrading from Fedora 41 to Fedora 43 for CI tests, clippy begins
+> complaining about not using checked_div instead of manually checking
+> divisors. Make clippy happy and use checked_div() instead.
+>
+> Signed-off-by: John Snow <jsnow@redhat.com>
+> ---
 
-Agree.
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
-> Thus back to this series I'd rather not introduce virtio_vdev_is_modern
-> and use !virtio_vdev_is_legacy instead.
-
-Sounds good. I feel it's still easier and clearer to read than 
-"!has_feature(1.0)". But as said in my previous answer to Zoltan, I 
-don't mind this patch too much, only 3rd one really matter.
+>  rust/hw/core/src/qdev.rs | 14 ++++++--------
+>  1 file changed, 6 insertions(+), 8 deletions(-)
+>
+> diff --git a/rust/hw/core/src/qdev.rs b/rust/hw/core/src/qdev.rs
+> index 145e20a984f..c4a7312168f 100644
+> --- a/rust/hw/core/src/qdev.rs
+> +++ b/rust/hw/core/src/qdev.rs
+> @@ -425,18 +425,16 @@ pub const fn period_from_ns(ns: u64) -> u64 {
+>      }
+>
+>      pub const fn period_from_hz(hz: u64) -> u64 {
+> -        if hz =3D=3D 0 {
+> -            0
+> -        } else {
+> -            Self::PERIOD_1SEC / hz
+> +        match Self::PERIOD_1SEC.checked_div(hz) {
+> +            Some(value) =3D> value,
+> +            None =3D> 0,
+>          }
+>      }
+>
+>      pub const fn period_to_hz(period: u64) -> u64 {
+> -        if period =3D=3D 0 {
+> -            0
+> -        } else {
+> -            Self::PERIOD_1SEC / period
+> +        match period.checked_div(Self::PERIOD_1SEC) {
+> +            Some(value) =3D> value,
+> +            None =3D> 0,
+>          }
+>      }
+>
+> --
+> 2.53.0
+>
 
