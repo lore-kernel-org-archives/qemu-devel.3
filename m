@@ -4,69 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA9A1E9A03B
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 09:06:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2461AE9A03E
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 09:06:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vsdV6-0005IZ-Jw; Wed, 18 Feb 2026 04:05:40 -0500
+	id 1vsdUe-0003R2-DT; Wed, 18 Feb 2026 04:05:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vsdUs-0004Ko-Mx
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 04:05:29 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1vsdUO-0002nd-Tn
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 04:04:57 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vsdUo-0000Nv-Am
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 04:05:26 -0500
+ id 1vsdUL-00007l-VT
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 04:04:56 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771405521;
+ s=mimecast20190719; t=1771405492;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=32WFOc5uOoFBKCIWZ5Udbsc+mY+tpUP+Ingx1iQ3Jbk=;
- b=FIK+Kk3lhIOWx30WvSzEG5PULQdTYeNJ4Er+2TxYLc0ECQxP2HX584xFPNGIIQ7fpxeKRP
- ZHbcDfubnfnVnwYAW1uE2gwgLjQHwXGuUxBei/5W62g/OZEuHZmn4D1IunKHNJxqeQRbr0
- N8nBcNI9l4dM5znVGX7uZrphY8tqOvY=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=8fGV94VVX3seSWRJwyKsFhWxzUn+0ErA9KzpBi1fBXU=;
+ b=D9bXRGD6JGS70BlP1mlnU3AY3HUvprWvqWm/ij0xgYSvytpG78NEczwHxKkew/4veuENpJ
+ q8JFg6bbI5iYch2f4gEDmkZ/9h7dq9Lmfi1NtZNeiTJN2uDILZiSS0zwhi8MHO2pYzaj7j
+ HqgLte53hrHQhUmGnX6hv6CwL+LIdnk=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-34-pUnDKdk7OW2DFCV_e5bIUA-1; Wed,
- 18 Feb 2026 04:05:17 -0500
-X-MC-Unique: pUnDKdk7OW2DFCV_e5bIUA-1
-X-Mimecast-MFC-AGG-ID: pUnDKdk7OW2DFCV_e5bIUA_1771405516
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-465-iTdf7s4XPIGdjLSr_PKgZw-1; Wed,
+ 18 Feb 2026 04:04:47 -0500
+X-MC-Unique: iTdf7s4XPIGdjLSr_PKgZw-1
+X-Mimecast-MFC-AGG-ID: iTdf7s4XPIGdjLSr_PKgZw_1771405486
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 842E618ADBC1; Wed, 18 Feb 2026 09:05:16 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id AFD1B180061C; Wed, 18 Feb 2026 09:04:45 +0000 (UTC)
 Received: from localhost (unknown [10.45.242.26])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id DB4C81800594; Wed, 18 Feb 2026 09:05:14 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 897451956095; Wed, 18 Feb 2026 09:04:43 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Gerd Hoffmann <kraxel@redhat.com>, Laurent Vivier <laurent@vivier.eu>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Alistair Francis <alistair@alistair23.me>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- qemu-arm@nongnu.org (open list:Xilinx ZynqMP and...)
-Subject: [PULL 34/85] audio: make all the backend-specific APIs take the be
-Date: Wed, 18 Feb 2026 10:02:34 +0100
-Message-ID: <20260218090330.1476169-35-marcandre.lureau@redhat.com>
+ Gerd Hoffmann <kraxel@redhat.com>,
+ Christian Schoenebeck <qemu_oss@crudebyte.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Thomas Huth <huth@tuxfamily.org>, Alexandre Ratchov <alex@caoua.org>
+Subject: [PULL 24/85] audio: add QOM module-objects for each backend
+Date: Wed, 18 Feb 2026 10:02:24 +0100
+Message-ID: <20260218090330.1476169-25-marcandre.lureau@redhat.com>
 In-Reply-To: <20260218090330.1476169-1-marcandre.lureau@redhat.com>
 References: <20260218090330.1476169-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -74,10 +73,9 @@ X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.043,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
- T_FILL_THIS_FORM_SHORT=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,1351 +93,730 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-This will allow to dispatch to different implementations next.
+This will allow to use QOM and the dynamic object module loading.
 
-Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+The changes are done systematically, introducing an empty instance
+structure that will later be filled by state with further refactoring.
+
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
 ---
- audio/audio_template.h       |  2 +-
- include/qemu/audio-capture.h |  9 ++--
- include/qemu/audio.h         | 34 ++++++++-------
- audio/audio.c                | 18 ++++----
- audio/wavcapture.c           |  7 ++-
- hw/audio/ac97.c              | 24 +++++------
- hw/audio/adlib.c             |  9 ++--
- hw/audio/asc.c               | 16 +++----
- hw/audio/cs4231a.c           | 16 +++----
- hw/audio/es1370.c            | 12 +++---
- hw/audio/gus.c               |  9 ++--
- hw/audio/hda-codec.c         | 20 +++++----
- hw/audio/lm4549.c            | 12 +++---
- hw/audio/pcspk.c             |  4 +-
- hw/audio/sb16.c              | 14 +++---
- hw/audio/via-ac97.c          | 14 +++---
- hw/audio/virtio-snd.c        | 14 +++---
- hw/audio/wm8750.c            | 24 +++++------
- hw/display/xlnx_dp.c         | 10 ++---
- hw/usb/dev-audio.c           | 12 +++---
- tests/audio/test-audio.c     | 83 ++++++++++++++++++------------------
- ui/vnc.c                     |  2 +-
- 22 files changed, 192 insertions(+), 173 deletions(-)
+ audio/audio_int.h   |  2 ++
+ audio/alsaaudio.c   | 27 +++++++++++++++++++++++++++
+ audio/dbusaudio.c   | 26 ++++++++++++++++++++++++++
+ audio/dsoundaudio.c | 26 ++++++++++++++++++++++++++
+ audio/jackaudio.c   | 26 ++++++++++++++++++++++++++
+ audio/noaudio.c     | 26 ++++++++++++++++++++++++++
+ audio/ossaudio.c    | 26 ++++++++++++++++++++++++++
+ audio/paaudio.c     | 26 ++++++++++++++++++++++++++
+ audio/pwaudio.c     | 26 ++++++++++++++++++++++++++
+ audio/sdlaudio.c    | 26 ++++++++++++++++++++++++++
+ audio/sndioaudio.c  | 26 ++++++++++++++++++++++++++
+ audio/spiceaudio.c  | 26 ++++++++++++++++++++++++++
+ audio/wavaudio.c    | 26 ++++++++++++++++++++++++++
+ audio/coreaudio.m   | 26 ++++++++++++++++++++++++++
+ 14 files changed, 341 insertions(+)
 
-diff --git a/audio/audio_template.h b/audio/audio_template.h
-index 512abbfe22f..33f2ff432eb 100644
---- a/audio/audio_template.h
-+++ b/audio/audio_template.h
-@@ -569,7 +569,7 @@ SW *glue (AUD_open_, TYPE) (
-     return NULL;
- }
+diff --git a/audio/audio_int.h b/audio/audio_int.h
+index 06f5160e8df..29f5864be69 100644
+--- a/audio/audio_int.h
++++ b/audio/audio_int.h
+@@ -241,6 +241,8 @@ struct SWVoiceCap {
  
--bool glue(AUD_is_active_, TYPE)(SW *sw)
-+bool glue(AUD_is_active_, TYPE)(AudioBackend *be, SW *sw)
- {
-     return sw ? sw->active : 0;
- }
-diff --git a/include/qemu/audio-capture.h b/include/qemu/audio-capture.h
-index a07412db857..f500b0a7f8c 100644
---- a/include/qemu/audio-capture.h
-+++ b/include/qemu/audio-capture.h
-@@ -36,8 +36,11 @@ CaptureVoiceOut *AUD_add_capture(
-     AudioBackend *be,
-     struct audsettings *as,
-     struct audio_capture_ops *ops,
--    void *opaque
--    );
--void AUD_del_capture (CaptureVoiceOut *cap, void *cb_opaque);
-+    void *opaque);
+ struct AudioMixengBackendClass {
+     AudioBackendClass parent_class;
 +
-+void AUD_del_capture(
-+    AudioBackend *be,
-+    CaptureVoiceOut *cap,
-+    void *cb_opaque);
++    audio_driver *driver;
+ };
  
- #endif /* QEMU_AUDIO_CAPTURE_H */
-diff --git a/include/qemu/audio.h b/include/qemu/audio.h
-index 03ce9adbc88..e87708e3d1e 100644
---- a/include/qemu/audio.h
-+++ b/include/qemu/audio.h
-@@ -63,7 +63,7 @@ typedef struct AudioBackendClass {
+ struct AudioMixengBackend {
+diff --git a/audio/alsaaudio.c b/audio/alsaaudio.c
+index 814820e2864..ecc22d7c8f9 100644
+--- a/audio/alsaaudio.c
++++ b/audio/alsaaudio.c
+@@ -27,6 +27,7 @@
+ #include "qemu/main-loop.h"
+ #include "qemu/module.h"
+ #include "qemu/audio.h"
++#include "qom/object.h"
+ #include "trace.h"
  
- bool AUD_backend_check(AudioBackend **be, Error **errp);
+ #pragma GCC diagnostic ignored "-Waddress"
+@@ -36,6 +37,22 @@
  
--SWVoiceOut *AUD_open_out (
-+SWVoiceOut *AUD_open_out(
-     AudioBackend *be,
-     SWVoiceOut *sw,
-     const char *name,
-@@ -72,11 +72,11 @@ SWVoiceOut *AUD_open_out (
-     const struct audsettings *settings
-     );
+ #define DEBUG_ALSA 0
  
--void AUD_close_out (AudioBackend *be, SWVoiceOut *sw);
--size_t AUD_write (SWVoiceOut *sw, void *pcm_buf, size_t size);
--int  AUD_get_buffer_size_out (SWVoiceOut *sw);
--void AUD_set_active_out(SWVoiceOut *sw, bool on);
--bool AUD_is_active_out(SWVoiceOut *sw);
-+void AUD_close_out(AudioBackend *be, SWVoiceOut *sw);
-+size_t AUD_write(AudioBackend *be, SWVoiceOut *sw, void *pcm_buf, size_t size);
-+int  AUD_get_buffer_size_out(AudioBackend *be, SWVoiceOut *sw);
-+void AUD_set_active_out(AudioBackend *be, SWVoiceOut *sw, bool on);
-+bool AUD_is_active_out(AudioBackend *be, SWVoiceOut *sw);
- 
- #define AUDIO_MAX_CHANNELS 16
- typedef struct Volume {
-@@ -85,19 +85,23 @@ typedef struct Volume {
-     uint8_t vol[AUDIO_MAX_CHANNELS];
- } Volume;
- 
--void AUD_set_volume_out(SWVoiceOut *sw, Volume *vol);
--void AUD_set_volume_in(SWVoiceIn *sw, Volume *vol);
-+void AUD_set_volume_out(AudioBackend *be, SWVoiceOut *sw, Volume *vol);
-+void AUD_set_volume_in(AudioBackend *be, SWVoiceIn *sw, Volume *vol);
- 
- static inline void
--AUD_set_volume_out_lr(SWVoiceOut *sw, bool mut, uint8_t lvol, uint8_t rvol) {
--    AUD_set_volume_out(sw, &(Volume) {
-+AUD_set_volume_out_lr(AudioBackend *be, SWVoiceOut *sw,
-+                      bool mut, uint8_t lvol, uint8_t rvol)
++#define TYPE_AUDIO_ALSA "audio-alsa"
++OBJECT_DECLARE_SIMPLE_TYPE(AudioALSA, AUDIO_ALSA)
++
++struct AudioALSA {
++    AudioMixengBackend parent_obj;
++};
++
++static struct audio_driver alsa_audio_driver;
++
++static void audio_alsa_class_init(ObjectClass *klass, const void *data)
 +{
-+    AUD_set_volume_out(be, sw, &(Volume) {
-         .mute = mut, .channels = 2, .vol = { lvol, rvol }
-     });
- }
++    AudioMixengBackendClass *k = AUDIO_MIXENG_BACKEND_CLASS(klass);
++
++    k->driver = &alsa_audio_driver;
++}
++
+ struct pollhlp {
+     snd_pcm_t *handle;
+     struct pollfd *pfds;
+@@ -945,8 +962,18 @@ static struct audio_driver alsa_audio_driver = {
+     .voice_size_in  = sizeof (ALSAVoiceIn)
+ };
  
- static inline void
--AUD_set_volume_in_lr(SWVoiceIn *sw, bool mut, uint8_t lvol, uint8_t rvol) {
--    AUD_set_volume_in(sw, &(Volume) {
-+AUD_set_volume_in_lr(AudioBackend *be, SWVoiceIn *sw,
-+                     bool mut, uint8_t lvol, uint8_t rvol)
-+{
-+    AUD_set_volume_in(be, sw, &(Volume) {
-         .mute = mut, .channels = 2, .vol = { lvol, rvol }
-     });
- }
-@@ -112,9 +116,9 @@ SWVoiceIn *AUD_open_in(
-     );
- 
- void AUD_close_in(AudioBackend *be, SWVoiceIn *sw);
--size_t AUD_read (SWVoiceIn *sw, void *pcm_buf, size_t size);
--void AUD_set_active_in(SWVoiceIn *sw, bool on);
--bool AUD_is_active_in(SWVoiceIn *sw);
-+size_t AUD_read(AudioBackend *be, SWVoiceIn *sw, void *pcm_buf, size_t size);
-+void AUD_set_active_in(AudioBackend *be, SWVoiceIn *sw, bool on);
-+bool AUD_is_active_in(AudioBackend *be, SWVoiceIn *sw);
- 
- void audio_cleanup(void);
- 
-diff --git a/audio/audio.c b/audio/audio.c
-index 3e16b719399..320035c0484 100644
---- a/audio/audio.c
-+++ b/audio/audio.c
-@@ -847,7 +847,7 @@ static void audio_timer (void *opaque)
- /*
-  * Public API
-  */
--size_t AUD_write(SWVoiceOut *sw, void *buf, size_t size)
-+size_t AUD_write(AudioBackend *be, SWVoiceOut *sw, void *buf, size_t size)
++static const TypeInfo audio_alsa_info = {
++    .name = TYPE_AUDIO_ALSA,
++    .parent = TYPE_AUDIO_MIXENG_BACKEND,
++    .instance_size = sizeof(AudioALSA),
++    .class_init = audio_alsa_class_init,
++};
++
++
+ static void register_audio_alsa(void)
  {
-     HWVoiceOut *hw;
- 
-@@ -869,7 +869,7 @@ size_t AUD_write(SWVoiceOut *sw, void *buf, size_t size)
-     }
+     audio_driver_register(&alsa_audio_driver);
++    type_register_static(&audio_alsa_info);
  }
- 
--size_t AUD_read(SWVoiceIn *sw, void *buf, size_t size)
-+size_t AUD_read(AudioBackend *be, SWVoiceIn *sw, void *buf, size_t size)
- {
-     HWVoiceIn *hw;
- 
-@@ -891,7 +891,7 @@ size_t AUD_read(SWVoiceIn *sw, void *buf, size_t size)
-     }
- }
- 
--int AUD_get_buffer_size_out(SWVoiceOut *sw)
-+int AUD_get_buffer_size_out(AudioBackend *be, SWVoiceOut *sw)
- {
-     if (!sw) {
-         return 0;
-@@ -904,7 +904,7 @@ int AUD_get_buffer_size_out(SWVoiceOut *sw)
-     return sw->hw->samples * sw->hw->info.bytes_per_frame;
- }
- 
--void AUD_set_active_out(SWVoiceOut *sw, bool on)
-+void AUD_set_active_out(AudioBackend *be, SWVoiceOut *sw, bool on)
- {
-     HWVoiceOut *hw;
- 
-@@ -952,7 +952,7 @@ void AUD_set_active_out(SWVoiceOut *sw, bool on)
-     }
- }
- 
--void AUD_set_active_in(SWVoiceIn *sw, bool on)
-+void AUD_set_active_in(AudioBackend *be, SWVoiceIn *sw, bool on)
- {
-     HWVoiceIn *hw;
- 
-@@ -997,7 +997,7 @@ void AUD_set_active_in(SWVoiceIn *sw, bool on)
-     }
- }
- 
--static size_t audio_get_avail (SWVoiceIn *sw)
-+static size_t audio_get_avail(SWVoiceIn *sw)
- {
-     size_t live;
- 
-@@ -1938,7 +1938,7 @@ CaptureVoiceOut *AUD_add_capture(
-     return cap;
- }
- 
--void AUD_del_capture (CaptureVoiceOut *cap, void *cb_opaque)
-+void AUD_del_capture(AudioBackend *be, CaptureVoiceOut *cap, void *cb_opaque)
- {
-     struct capture_callback *cb;
- 
-@@ -1977,7 +1977,7 @@ void AUD_del_capture (CaptureVoiceOut *cap, void *cb_opaque)
-     }
- }
- 
--void AUD_set_volume_out(SWVoiceOut *sw, Volume *vol)
-+void AUD_set_volume_out(AudioBackend *be, SWVoiceOut *sw, Volume *vol)
- {
-     if (sw) {
-         HWVoiceOut *hw = sw->hw;
-@@ -1993,7 +1993,7 @@ void AUD_set_volume_out(SWVoiceOut *sw, Volume *vol)
-     }
- }
- 
--void AUD_set_volume_in(SWVoiceIn *sw, Volume *vol)
-+void AUD_set_volume_in(AudioBackend *be, SWVoiceIn *sw, Volume *vol)
- {
-     if (sw) {
-         HWVoiceIn *hw = sw->hw;
-diff --git a/audio/wavcapture.c b/audio/wavcapture.c
-index b33a38ff45b..2950ceaf242 100644
---- a/audio/wavcapture.c
-+++ b/audio/wavcapture.c
-@@ -1,4 +1,5 @@
- #include "qemu/osdep.h"
-+#include "qemu/audio.h"
- #include "qemu/qemu-print.h"
+ type_init(register_audio_alsa);
++module_obj(TYPE_AUDIO_ALSA);
+diff --git a/audio/dbusaudio.c b/audio/dbusaudio.c
+index 96d4fa3f471..4d62de6d72c 100644
+--- a/audio/dbusaudio.c
++++ b/audio/dbusaudio.c
+@@ -26,6 +26,7 @@
  #include "qemu/error-report.h"
+ #include "qemu/module.h"
+ #include "qemu/dbus.h"
++#include "qom/object.h"
+ 
+ #ifdef G_OS_UNIX
+ #include <gio/gunixfdlist.h>
+@@ -44,6 +45,22 @@
+ 
+ #define DBUS_DEFAULT_AUDIO_NSAMPLES 480
+ 
++#define TYPE_AUDIO_DBUS "audio-dbus"
++OBJECT_DECLARE_SIMPLE_TYPE(AudioDbus, AUDIO_DBUS)
++
++struct AudioDbus {
++    AudioMixengBackend parent_obj;
++};
++
++static struct audio_driver dbus_audio_driver;
++
++static void audio_dbus_class_init(ObjectClass *klass, const void *data)
++{
++    AudioMixengBackendClass *k = AUDIO_MIXENG_BACKEND_CLASS(klass);
++
++    k->driver = &dbus_audio_driver;
++}
++
+ typedef struct DBusAudio {
+     Audiodev *dev;
+     GDBusObjectManagerServer *server;
+@@ -711,10 +728,19 @@ static struct audio_driver dbus_audio_driver = {
+     .voice_size_in   = sizeof(DBusVoiceIn)
+ };
+ 
++static const TypeInfo audio_dbus_info = {
++    .name = TYPE_AUDIO_DBUS,
++    .parent = TYPE_AUDIO_MIXENG_BACKEND,
++    .instance_size = sizeof(AudioDbus),
++    .class_init = audio_dbus_class_init,
++};
++
+ static void register_audio_dbus(void)
+ {
+     audio_driver_register(&dbus_audio_driver);
++    type_register_static(&audio_dbus_info);
+ }
+ type_init(register_audio_dbus);
+ 
+ module_dep("ui-dbus")
++module_obj(TYPE_AUDIO_DBUS)
+diff --git a/audio/dsoundaudio.c b/audio/dsoundaudio.c
+index 7a03d1dad86..91c83dec742 100644
+--- a/audio/dsoundaudio.c
++++ b/audio/dsoundaudio.c
+@@ -33,6 +33,7 @@
  #include "audio_int.h"
-@@ -10,6 +11,7 @@ typedef struct {
-     int freq;
-     int bits;
-     int nchannels;
-+    AudioBackend *audio_be;
-     CaptureVoiceOut *cap;
- } WAVState;
+ #include "qemu/module.h"
+ #include "qapi/error.h"
++#include "qom/object.h"
  
-@@ -84,7 +86,7 @@ static void wav_capture_destroy (void *opaque)
+ #include <windows.h>
+ #include <mmsystem.h>
+@@ -41,6 +42,22 @@
+ 
+ #include "audio_win_int.h"
+ 
++#define TYPE_AUDIO_DSOUND "audio-dsound"
++OBJECT_DECLARE_SIMPLE_TYPE(AudioDsound, AUDIO_DSOUND)
++
++struct AudioDsound {
++    AudioMixengBackend parent_obj;
++};
++
++static struct audio_driver dsound_audio_driver;
++
++static void audio_dsound_class_init(ObjectClass *klass, const void *data)
++{
++    AudioMixengBackendClass *k = AUDIO_MIXENG_BACKEND_CLASS(klass);
++
++    k->driver = &dsound_audio_driver;
++}
++
+ /* #define DEBUG_DSOUND */
+ 
+ typedef struct {
+@@ -694,8 +711,17 @@ static struct audio_driver dsound_audio_driver = {
+     .voice_size_in  = sizeof (DSoundVoiceIn)
+ };
+ 
++static const TypeInfo audio_dsound_info = {
++    .name = TYPE_AUDIO_DSOUND,
++    .parent = TYPE_AUDIO_MIXENG_BACKEND,
++    .instance_size = sizeof(AudioDsound),
++    .class_init = audio_dsound_class_init,
++};
++
+ static void register_audio_dsound(void)
  {
-     WAVState *wav = opaque;
+     audio_driver_register(&dsound_audio_driver);
++    type_register_static(&audio_dsound_info);
+ }
+ type_init(register_audio_dsound);
++module_obj(TYPE_AUDIO_DSOUND);
+diff --git a/audio/jackaudio.c b/audio/jackaudio.c
+index 7a3fcaedbae..7ed2e91fcc8 100644
+--- a/audio/jackaudio.c
++++ b/audio/jackaudio.c
+@@ -27,6 +27,7 @@
+ #include "qemu/atomic.h"
+ #include "qemu/main-loop.h"
+ #include "qemu/audio.h"
++#include "qom/object.h"
  
--    AUD_del_capture (wav->cap, wav);
-+    AUD_del_capture(wav->audio_be, wav->cap, wav);
-     g_free (wav);
+ #define AUDIO_CAP "jack"
+ #include "audio_int.h"
+@@ -34,6 +35,22 @@
+ #include <jack/jack.h>
+ #include <jack/thread.h>
+ 
++#define TYPE_AUDIO_JACK "audio-jack"
++OBJECT_DECLARE_SIMPLE_TYPE(AudioJack, AUDIO_JACK)
++
++struct AudioJack {
++    AudioMixengBackend parent_obj;
++};
++
++static struct audio_driver jack_driver;
++
++static void audio_jack_class_init(ObjectClass *klass, const void *data)
++{
++    AudioMixengBackendClass *k = AUDIO_MIXENG_BACKEND_CLASS(klass);
++
++    k->driver = &jack_driver;
++}
++
+ struct QJack;
+ 
+ typedef enum QJackState {
+@@ -691,10 +708,18 @@ static void qjack_info(const char *msg)
+     dolog("I: %s\n", msg);
  }
  
-@@ -159,6 +161,7 @@ int wav_start_capture(AudioBackend *state, CaptureState *s, const char *path,
-         return -1;
-     }
- 
-+    wav->audio_be = state;
-     wav->path = g_strdup (path);
-     wav->bits = bits;
-     wav->nchannels = nchannels;
-@@ -169,7 +172,7 @@ int wav_start_capture(AudioBackend *state, CaptureState *s, const char *path,
-         goto error_free;
-     }
- 
--    cap = AUD_add_capture(state, &as, &ops, wav);
-+    cap = AUD_add_capture(wav->audio_be, &as, &ops, wav);
-     if (!cap) {
-         error_report("Failed to add audio capture");
-         goto error_free;
-diff --git a/hw/audio/ac97.c b/hw/audio/ac97.c
-index 0694f0adf9c..65a4141b8af 100644
---- a/hw/audio/ac97.c
-+++ b/hw/audio/ac97.c
-@@ -246,15 +246,15 @@ static void voice_set_active(AC97LinkState *s, int bm_index, int on)
++static const TypeInfo audio_jack_info = {
++    .name = TYPE_AUDIO_JACK,
++    .parent = TYPE_AUDIO_MIXENG_BACKEND,
++    .instance_size = sizeof(AudioJack),
++    .class_init = audio_jack_class_init,
++};
++
+ static void register_audio_jack(void)
  {
-     switch (bm_index) {
-     case PI_INDEX:
--        AUD_set_active_in(s->voice_pi, on);
-+        AUD_set_active_in(s->audio_be, s->voice_pi, on);
-         break;
- 
-     case PO_INDEX:
--        AUD_set_active_out(s->voice_po, on);
-+        AUD_set_active_out(s->audio_be, s->voice_po, on);
-         break;
- 
-     case MC_INDEX:
--        AUD_set_active_in(s->voice_mc, on);
-+        AUD_set_active_in(s->audio_be, s->voice_mc, on);
-         break;
- 
-     default:
-@@ -378,15 +378,15 @@ static void reset_voices(AC97LinkState *s, uint8_t active[LAST_INDEX])
- 
-     freq = mixer_load(s, AC97_PCM_LR_ADC_Rate);
-     open_voice(s, PI_INDEX, freq);
--    AUD_set_active_in(s->voice_pi, active[PI_INDEX]);
-+    AUD_set_active_in(s->audio_be, s->voice_pi, active[PI_INDEX]);
- 
-     freq = mixer_load(s, AC97_PCM_Front_DAC_Rate);
-     open_voice(s, PO_INDEX, freq);
--    AUD_set_active_out(s->voice_po, active[PO_INDEX]);
-+    AUD_set_active_out(s->audio_be, s->voice_po, active[PO_INDEX]);
- 
-     freq = mixer_load(s, AC97_MIC_ADC_Rate);
-     open_voice(s, MC_INDEX, freq);
--    AUD_set_active_in(s->voice_mc, active[MC_INDEX]);
-+    AUD_set_active_in(s->audio_be, s->voice_mc, active[MC_INDEX]);
- }
- 
- static void get_volume(uint16_t vol, uint16_t mask, int inverse,
-@@ -416,7 +416,7 @@ static void update_combined_volume_out(AC97LinkState *s)
-     lvol = (lvol * plvol) / 255;
-     rvol = (rvol * prvol) / 255;
- 
--    AUD_set_volume_out_lr(s->voice_po, mute, lvol, rvol);
-+    AUD_set_volume_out_lr(s->audio_be, s->voice_po, mute, lvol, rvol);
- }
- 
- static void update_volume_in(AC97LinkState *s)
-@@ -427,7 +427,7 @@ static void update_volume_in(AC97LinkState *s)
-     get_volume(mixer_load(s, AC97_Record_Gain_Mute), 0x0f, 0,
-                &mute, &lvol, &rvol);
- 
--    AUD_set_volume_in_lr(s->voice_pi, mute, lvol, rvol);
-+    AUD_set_volume_in_lr(s->audio_be, s->voice_pi, mute, lvol, rvol);
- }
- 
- static void set_volume(AC97LinkState *s, int index, uint32_t val)
-@@ -904,7 +904,7 @@ static int write_audio(AC97LinkState *s, AC97BusMasterRegs *r,
-         int copied;
-         to_copy = MIN(temp, sizeof(tmpbuf));
-         pci_dma_read(&s->dev, addr, tmpbuf, to_copy);
--        copied = AUD_write(s->voice_po, tmpbuf, to_copy);
-+        copied = AUD_write(s->audio_be, s->voice_po, tmpbuf, to_copy);
-         dolog("write_audio max=%x to_copy=%x copied=%x",
-               max, to_copy, copied);
-         if (!copied) {
-@@ -948,7 +948,7 @@ static void write_bup(AC97LinkState *s, int elapsed)
-     while (elapsed) {
-         int temp = MIN(elapsed, sizeof(s->silence));
-         while (temp) {
--            int copied = AUD_write(s->voice_po, s->silence, temp);
-+            int copied = AUD_write(s->audio_be, s->voice_po, s->silence, temp);
-             if (!copied) {
-                 return;
-             }
-@@ -978,7 +978,7 @@ static int read_audio(AC97LinkState *s, AC97BusMasterRegs *r,
-     while (temp) {
-         int acquired;
-         to_copy = MIN(temp, sizeof(tmpbuf));
--        acquired = AUD_read(voice, tmpbuf, to_copy);
-+        acquired = AUD_read(s->audio_be, voice, tmpbuf, to_copy);
-         if (!acquired) {
-             *stop = 1;
-             break;
-@@ -1275,7 +1275,7 @@ static void ac97_realize(PCIDevice *dev, Error **errp)
-     AC97LinkState *s = AC97(dev);
-     uint8_t *c = s->dev.config;
- 
--    if (!AUD_backend_check (&s->audio_be, errp)) {
-+    if (!AUD_backend_check(&s->audio_be, errp)) {
-         return;
-     }
- 
-diff --git a/hw/audio/adlib.c b/hw/audio/adlib.c
-index f79654627f5..dd5d9cf6772 100644
---- a/hw/audio/adlib.c
-+++ b/hw/audio/adlib.c
-@@ -95,7 +95,7 @@ static void adlib_write(void *opaque, uint32_t nport, uint32_t val)
-     int a = nport & 3;
- 
-     s->active = 1;
--    AUD_set_active_out (s->voice, 1);
-+    AUD_set_active_out(s->audio_be, s->voice, 1);
- 
-     adlib_kill_timers (s);
- 
-@@ -143,7 +143,8 @@ static int write_audio (AdlibState *s, int samples)
-         int nbytes, wbytes, wsampl;
- 
-         nbytes = samples << SHIFT;
--        wbytes = AUD_write (
-+        wbytes = AUD_write(
-+            s->audio_be,
-             s->voice,
-             s->mixbuf + (pos << (SHIFT - 1)),
-             nbytes
-@@ -255,7 +256,7 @@ static void adlib_realizefn (DeviceState *dev, Error **errp)
-     as.fmt = AUDIO_FORMAT_S16;
-     as.endianness = HOST_BIG_ENDIAN;
- 
--    s->voice = AUD_open_out (
-+    s->voice = AUD_open_out(
-         s->audio_be,
-         s->voice,
-         "adlib",
-@@ -269,7 +270,7 @@ static void adlib_realizefn (DeviceState *dev, Error **errp)
-         return;
-     }
- 
--    s->samples = AUD_get_buffer_size_out (s->voice) >> SHIFT;
-+    s->samples = AUD_get_buffer_size_out(s->audio_be, s->voice) >> SHIFT;
-     s->mixbuf = g_malloc0 (s->samples << SHIFT);
- 
-     adlib_portio_list[0].offset = s->port;
-diff --git a/hw/audio/asc.c b/hw/audio/asc.c
-index a934c2e82c0..43cd51939a3 100644
---- a/hw/audio/asc.c
-+++ b/hw/audio/asc.c
-@@ -355,12 +355,12 @@ static void asc_out_cb(void *opaque, int free_b)
-              * loop because the FIFO has run out of data, and the driver
-              * reuses the stale content in its circular audio buffer.
-              */
--            AUD_write(s->voice, s->silentbuf, samples << s->shift);
-+            AUD_write(s->audio_be, s->voice, s->silentbuf, samples << s->shift);
-         }
-         return;
-     }
- 
--    AUD_write(s->voice, s->mixbuf, generated << s->shift);
-+    AUD_write(s->audio_be, s->voice, s->mixbuf, generated << s->shift);
- }
- 
- static uint64_t asc_fifo_read(void *opaque, hwaddr addr,
-@@ -470,9 +470,9 @@ static void asc_write(void *opaque, hwaddr addr, uint64_t value,
-             asc_fifo_reset(&s->fifos[1]);
-             asc_lower_irq(s);
-             if (value != 0) {
--                AUD_set_active_out(s->voice, 1);
-+                AUD_set_active_out(s->audio_be, s->voice, 1);
-             } else {
--                AUD_set_active_out(s->voice, 0);
-+                AUD_set_active_out(s->audio_be, s->voice, 0);
-             }
-         }
-         break;
-@@ -489,7 +489,7 @@ static void asc_write(void *opaque, hwaddr addr, uint64_t value,
-         {
-             int vol = (value & 0xe0);
- 
--            AUD_set_volume_out_lr(s->voice, 0, vol, vol);
-+            AUD_set_volume_out_lr(s->audio_be, s->voice, 0, vol, vol);
-             break;
-         }
-     }
-@@ -545,7 +545,7 @@ static int asc_post_load(void *opaque, int version)
-     ASCState *s = ASC(opaque);
- 
-     if (s->regs[ASC_MODE] != 0) {
--        AUD_set_active_out(s->voice, 1);
-+        AUD_set_active_out(s->audio_be, s->voice, 1);
-     }
- 
-     return 0;
-@@ -614,7 +614,7 @@ static void asc_reset_hold(Object *obj, ResetType type)
- {
-     ASCState *s = ASC(obj);
- 
--    AUD_set_active_out(s->voice, 0);
-+    AUD_set_active_out(s->audio_be, s->voice, 0);
- 
-     memset(s->regs, 0, sizeof(s->regs));
-     asc_fifo_reset(&s->fifos[0]);
-@@ -658,7 +658,7 @@ static void asc_realize(DeviceState *dev, Error **errp)
-     }
- 
-     s->shift = 1;
--    s->samples = AUD_get_buffer_size_out(s->voice) >> s->shift;
-+    s->samples = AUD_get_buffer_size_out(s->audio_be, s->voice) >> s->shift;
-     s->mixbuf = g_malloc0(s->samples << s->shift);
- 
-     s->silentbuf = g_malloc(s->samples << s->shift);
-diff --git a/hw/audio/cs4231a.c b/hw/audio/cs4231a.c
-index 7489cf42b7d..3b8ed092fe4 100644
---- a/hw/audio/cs4231a.c
-+++ b/hw/audio/cs4231a.c
-@@ -327,7 +327,7 @@ static void cs_reset_voices (CSState *s, uint32_t val)
-         goto error;
-     }
- 
--    s->voice = AUD_open_out (
-+    s->voice = AUD_open_out(
-         s->audio_be,
-         s->voice,
-         "cs4231a",
-@@ -339,7 +339,7 @@ static void cs_reset_voices (CSState *s, uint32_t val)
-     if (s->dregs[Interface_Configuration] & PEN) {
-         if (!s->dma_running) {
-             k->hold_DREQ(s->isa_dma, s->dma);
--            AUD_set_active_out (s->voice, 1);
-+            AUD_set_active_out(s->audio_be, s->voice, 1);
-             s->transferred = 0;
-         }
-         s->dma_running = 1;
-@@ -347,7 +347,7 @@ static void cs_reset_voices (CSState *s, uint32_t val)
-     else {
-         if (s->dma_running) {
-             k->release_DREQ(s->isa_dma, s->dma);
--            AUD_set_active_out (s->voice, 0);
-+            AUD_set_active_out(s->audio_be, s->voice, 0);
-         }
-         s->dma_running = 0;
-     }
-@@ -356,7 +356,7 @@ static void cs_reset_voices (CSState *s, uint32_t val)
-  error:
-     if (s->dma_running) {
-         k->release_DREQ(s->isa_dma, s->dma);
--        AUD_set_active_out (s->voice, 0);
-+        AUD_set_active_out(s->audio_be, s->voice, 0);
-     }
- }
- 
-@@ -465,7 +465,7 @@ static void cs_write (void *opaque, hwaddr addr,
-                 if (s->dma_running) {
-                     IsaDmaClass *k = ISADMA_GET_CLASS(s->isa_dma);
-                     k->release_DREQ(s->isa_dma, s->dma);
--                    AUD_set_active_out (s->voice, 0);
-+                    AUD_set_active_out(s->audio_be, s->voice, 0);
-                     s->dma_running = 0;
-                 }
-             }
-@@ -551,11 +551,11 @@ static int cs_write_audio (CSState *s, int nchan, int dma_pos,
- 
-             for (i = 0; i < copied; ++i)
-                 linbuf[i] = s->tab[tmpbuf[i]];
--            copied = AUD_write (s->voice, linbuf, copied << 1);
-+            copied = AUD_write(s->audio_be, s->voice, linbuf, copied << 1);
-             copied >>= 1;
-         }
-         else {
--            copied = AUD_write (s->voice, tmpbuf, copied);
-+            copied = AUD_write(s->audio_be, s->voice, tmpbuf, copied);
-         }
- 
-         temp -= copied;
-@@ -614,7 +614,7 @@ static int cs4231a_pre_load (void *opaque)
-     if (s->dma_running) {
-         IsaDmaClass *k = ISADMA_GET_CLASS(s->isa_dma);
-         k->release_DREQ(s->isa_dma, s->dma);
--        AUD_set_active_out (s->voice, 0);
-+        AUD_set_active_out(s->audio_be, s->voice, 0);
-     }
-     s->dma_running = 0;
-     return 0;
-diff --git a/hw/audio/es1370.c b/hw/audio/es1370.c
-index 566f93f1eae..44b204730b5 100644
---- a/hw/audio/es1370.c
-+++ b/hw/audio/es1370.c
-@@ -411,7 +411,7 @@ static void es1370_update_voices (ES1370State *s, uint32_t ctl, uint32_t sctl)
- 
-                 if (i == ADC_CHANNEL) {
-                     s->adc_voice =
--                        AUD_open_in (
-+                        AUD_open_in(
-                             s->audio_be,
-                             s->adc_voice,
-                             "es1370.adc",
-@@ -421,7 +421,7 @@ static void es1370_update_voices (ES1370State *s, uint32_t ctl, uint32_t sctl)
-                             );
-                 } else {
-                     s->dac_voice[i] =
--                        AUD_open_out (
-+                        AUD_open_out(
-                             s->audio_be,
-                             s->dac_voice[i],
-                             i ? "es1370.dac2" : "es1370.dac1",
-@@ -438,9 +438,9 @@ static void es1370_update_voices (ES1370State *s, uint32_t ctl, uint32_t sctl)
-             int on = (ctl & b->ctl_en) && !(sctl & b->sctl_pause);
- 
-             if (i == ADC_CHANNEL) {
--                AUD_set_active_in (s->adc_voice, on);
-+                AUD_set_active_in(s->audio_be, s->adc_voice, on);
-             } else {
--                AUD_set_active_out (s->dac_voice[i], on);
-+                AUD_set_active_out(s->audio_be, s->dac_voice[i], on);
-             }
-         }
-     }
-@@ -627,7 +627,7 @@ static void es1370_transfer_audio (ES1370State *s, struct chan *d, int loop_sel,
-             int acquired, to_copy;
- 
-             to_copy = MIN(to_transfer, sizeof(tmpbuf));
--            acquired = AUD_read (s->adc_voice, tmpbuf, to_copy);
-+            acquired = AUD_read(s->audio_be, s->adc_voice, tmpbuf, to_copy);
-             if (!acquired) {
-                 break;
-             }
-@@ -646,7 +646,7 @@ static void es1370_transfer_audio (ES1370State *s, struct chan *d, int loop_sel,
- 
-             to_copy = MIN(to_transfer, sizeof(tmpbuf));
-             pci_dma_read (&s->dev, addr, tmpbuf, to_copy);
--            copied = AUD_write (voice, tmpbuf, to_copy);
-+            copied = AUD_write(s->audio_be, voice, tmpbuf, to_copy);
-             if (!copied) {
-                 break;
-             }
-diff --git a/hw/audio/gus.c b/hw/audio/gus.c
-index 69ddc419191..1ede1c4a51d 100644
---- a/hw/audio/gus.c
-+++ b/hw/audio/gus.c
-@@ -87,7 +87,8 @@ static int write_audio (GUSState *s, int samples)
-         int nbytes, wbytes, wsampl;
- 
-         nbytes = samples << s->shift;
--        wbytes = AUD_write (
-+        wbytes = AUD_write(
-+            s->audio_be,
-             s->voice,
-             s->mixbuf + (pos << (s->shift - 1)),
-             nbytes
-@@ -257,7 +258,7 @@ static void gus_realizefn (DeviceState *dev, Error **errp)
-     as.fmt = AUDIO_FORMAT_S16;
-     as.endianness = HOST_BIG_ENDIAN;
- 
--    s->voice = AUD_open_out (
-+    s->voice = AUD_open_out(
-         s->audio_be,
-         NULL,
-         "gus",
-@@ -272,7 +273,7 @@ static void gus_realizefn (DeviceState *dev, Error **errp)
-     }
- 
-     s->shift = 2;
--    s->samples = AUD_get_buffer_size_out (s->voice) >> s->shift;
-+    s->samples = AUD_get_buffer_size_out(s->audio_be, s->voice) >> s->shift;
-     s->mixbuf = g_malloc0 (s->samples << s->shift);
- 
-     isa_register_portio_list(d, &s->portio_list1, s->port,
-@@ -287,7 +288,7 @@ static void gus_realizefn (DeviceState *dev, Error **errp)
-     s->emu.opaque = s;
-     s->pic = isa_bus_get_irq(bus, s->emu.gusirq);
- 
--    AUD_set_active_out (s->voice, 1);
-+    AUD_set_active_out(s->audio_be, s->voice, 1);
- }
- 
- static const Property gus_properties[] = {
-diff --git a/hw/audio/hda-codec.c b/hw/audio/hda-codec.c
-index 6445d227594..0373d2f7271 100644
---- a/hw/audio/hda-codec.c
-+++ b/hw/audio/hda-codec.c
-@@ -275,7 +275,8 @@ static void hda_audio_input_cb(void *opaque, int avail)
-     while (to_transfer) {
-         uint32_t start = (uint32_t) (wpos & B_MASK);
-         uint32_t chunk = (uint32_t) MIN(B_SIZE - start, to_transfer);
--        uint32_t read = AUD_read(st->voice.in, st->buf + start, chunk);
-+        uint32_t read = AUD_read(st->state->audio_be, st->voice.in,
-+                                 st->buf + start, chunk);
-         wpos += read;
-         to_transfer -= read;
-         st->wpos += read;
-@@ -354,7 +355,8 @@ static void hda_audio_output_cb(void *opaque, int avail)
-     while (to_transfer) {
-         uint32_t start = (uint32_t) (rpos & B_MASK);
-         uint32_t chunk = (uint32_t) MIN(B_SIZE - start, to_transfer);
--        uint32_t written = AUD_write(st->voice.out, st->buf + start, chunk);
-+        uint32_t written = AUD_write(st->state->audio_be, st->voice.out,
-+                                     st->buf + start, chunk);
-         rpos += written;
-         to_transfer -= written;
-         st->rpos += written;
-@@ -375,7 +377,8 @@ static void hda_audio_compat_input_cb(void *opaque, int avail)
- 
-     while (avail - recv >= sizeof(st->compat_buf)) {
-         if (st->compat_bpos != sizeof(st->compat_buf)) {
--            len = AUD_read(st->voice.in, st->compat_buf + st->compat_bpos,
-+            len = AUD_read(st->state->audio_be, st->voice.in,
-+                           st->compat_buf + st->compat_bpos,
-                            sizeof(st->compat_buf) - st->compat_bpos);
-             st->compat_bpos += len;
-             recv += len;
-@@ -408,7 +411,8 @@ static void hda_audio_compat_output_cb(void *opaque, int avail)
-             }
-             st->compat_bpos = 0;
-         }
--        len = AUD_write(st->voice.out, st->compat_buf + st->compat_bpos,
-+        len = AUD_write(st->state->audio_be, st->voice.out,
-+                        st->compat_buf + st->compat_bpos,
-                         sizeof(st->compat_buf) - st->compat_bpos);
-         st->compat_bpos += len;
-         sent += len;
-@@ -440,9 +444,9 @@ static void hda_audio_set_running(HDAAudioStream *st, bool running)
-         }
-     }
-     if (st->output) {
--        AUD_set_active_out(st->voice.out, st->running);
-+        AUD_set_active_out(st->state->audio_be, st->voice.out, st->running);
-     } else {
--        AUD_set_active_in(st->voice.in, st->running);
-+        AUD_set_active_in(st->state->audio_be, st->voice.in, st->running);
-     }
- }
- 
-@@ -466,9 +470,9 @@ static void hda_audio_set_amp(HDAAudioStream *st)
-         return;
-     }
-     if (st->output) {
--        AUD_set_volume_out_lr(st->voice.out, muted, left, right);
-+        AUD_set_volume_out_lr(st->state->audio_be, st->voice.out, muted, left, right);
-     } else {
--        AUD_set_volume_in_lr(st->voice.in, muted, left, right);
-+        AUD_set_volume_in_lr(st->state->audio_be, st->voice.in, muted, left, right);
-     }
- }
- 
-diff --git a/hw/audio/lm4549.c b/hw/audio/lm4549.c
-index f85226d1ac5..b875e83d454 100644
---- a/hw/audio/lm4549.c
-+++ b/hw/audio/lm4549.c
-@@ -101,11 +101,11 @@ static void lm4549_audio_transfer(lm4549_state *s)
-     uint32_t i;
- 
-     /* Activate the voice */
--    AUD_set_active_out(s->voice, 1);
-+    AUD_set_active_out(s->audio_be, s->voice, 1);
-     s->voice_is_active = 1;
- 
-     /* Try to write the buffer content */
--    written_bytes = AUD_write(s->voice, s->buffer,
-+    written_bytes = AUD_write(s->audio_be, s->voice, s->buffer,
-                               s->buffer_level * sizeof(uint16_t));
-     written_samples = written_bytes >> 1;
- 
-@@ -129,14 +129,14 @@ static void lm4549_audio_out_callback(void *opaque, int free)
-     static uint32_t prev_buffer_level;
- 
- #ifdef LM4549_DEBUG
--    int size = AUD_get_buffer_size_out(s->voice);
-+    int size = AUD_get_buffer_size_out(s->audio_be, s->voice);
-     DPRINTF("audio_out_callback size = %i free = %i\n", size, free);
+     qemu_mutex_init(&qjack_shutdown_lock);
+     audio_driver_register(&jack_driver);
++    type_register_static(&audio_jack_info);
+ #if !defined(WIN32) && defined(CONFIG_PTHREAD_SETNAME_NP_W_TID)
+     jack_set_thread_creator(qjack_thread_creator);
  #endif
- 
-     /* Detect that no data are consumed
-        => disable the voice */
-     if (s->buffer_level == prev_buffer_level) {
--        AUD_set_active_out(s->voice, 0);
-+        AUD_set_active_out(s->audio_be, s->voice, 0);
-         s->voice_is_active = 0;
-     }
-     prev_buffer_level = s->buffer_level;
-@@ -285,7 +285,7 @@ static int lm4549_post_load(void *opaque, int version_id)
- 
-     /* Request data */
-     if (s->voice_is_active == 1) {
--        lm4549_audio_out_callback(s, AUD_get_buffer_size_out(s->voice));
-+        lm4549_audio_out_callback(s, AUD_get_buffer_size_out(s->audio_be, s->voice));
-     }
- 
-     return 0;
-@@ -323,7 +323,7 @@ void lm4549_init(lm4549_state *s, lm4549_callback data_req_cb, void* opaque,
-         &as
-     );
- 
--    AUD_set_volume_out_lr(s->voice, 0, 255, 255);
-+    AUD_set_volume_out_lr(s->audio_be, s->voice, 0, 255, 255);
- 
-     s->voice_is_active = 0;
- 
-diff --git a/hw/audio/pcspk.c b/hw/audio/pcspk.c
-index 0b01544941c..07ebfcfccf6 100644
---- a/hw/audio/pcspk.c
-+++ b/hw/audio/pcspk.c
-@@ -105,7 +105,7 @@ static void pcspk_callback(void *opaque, int free)
- 
-     while (free > 0) {
-         n = MIN(s->samples - s->play_pos, (unsigned int)free);
--        n = AUD_write(s->voice, &s->sample_buf[s->play_pos], n);
-+        n = AUD_write(s->audio_be, s->voice, &s->sample_buf[s->play_pos], n);
-         if (!n)
-             break;
-         s->play_pos = (s->play_pos + n) % s->samples;
-@@ -163,7 +163,7 @@ static void pcspk_io_write(void *opaque, hwaddr addr, uint64_t val,
-     if (s->voice) {
-         if (gate) /* restart */
-             s->play_pos = 0;
--        AUD_set_active_out(s->voice, gate & s->data_on);
-+        AUD_set_active_out(s->audio_be, s->voice, gate & s->data_on);
-     }
+@@ -702,3 +727,4 @@ static void register_audio_jack(void)
+     jack_set_info_function(qjack_info);
  }
+ type_init(register_audio_jack);
++module_obj(TYPE_AUDIO_JACK);
+diff --git a/audio/noaudio.c b/audio/noaudio.c
+index 4ed9d2156c5..b3305480013 100644
+--- a/audio/noaudio.c
++++ b/audio/noaudio.c
+@@ -25,10 +25,27 @@
+ #include "qemu/osdep.h"
+ #include "qemu/module.h"
+ #include "qemu/audio.h"
++#include "qom/object.h"
  
-diff --git a/hw/audio/sb16.c b/hw/audio/sb16.c
-index 3c5beb9dfa3..da0c33ea41b 100644
---- a/hw/audio/sb16.c
-+++ b/hw/audio/sb16.c
-@@ -185,11 +185,11 @@ static void control (SB16State *s, int hold)
+ #define AUDIO_CAP "noaudio"
+ #include "audio_int.h"
  
-     if (hold) {
-         k->hold_DREQ(isa_dma, dma);
--        AUD_set_active_out (s->voice, 1);
-+        AUD_set_active_out(s->audio_be, s->voice, 1);
-     }
-     else {
-         k->release_DREQ(isa_dma, dma);
--        AUD_set_active_out (s->voice, 0);
-+        AUD_set_active_out(s->audio_be, s->voice, 0);
-     }
- }
++#define TYPE_AUDIO_NONE "audio-none"
++OBJECT_DECLARE_SIMPLE_TYPE(AudioNone, AUDIO_NONE)
++
++struct AudioNone {
++    AudioMixengBackend parent_obj;
++};
++
++static struct audio_driver no_audio_driver;
++
++static void audio_none_class_init(ObjectClass *klass, const void *data)
++{
++    AudioMixengBackendClass *k = AUDIO_MIXENG_BACKEND_CLASS(klass);
++
++    k->driver = &no_audio_driver;
++}
++
+ typedef struct NoVoiceOut {
+     HWVoiceOut hw;
+     RateCtl rate;
+@@ -138,8 +155,17 @@ static struct audio_driver no_audio_driver = {
+     .voice_size_in  = sizeof (NoVoiceIn)
+ };
  
-@@ -215,7 +215,7 @@ static void continue_dma8 (SB16State *s)
-         as.fmt = s->fmt;
-         as.endianness = 0;
- 
--        s->voice = AUD_open_out (
-+        s->voice = AUD_open_out(
-             s->audio_be,
-             s->voice,
-             "sb16",
-@@ -378,7 +378,7 @@ static void dma_cmd (SB16State *s, uint8_t cmd, uint8_t d0, int dma_len)
-         as.fmt = s->fmt;
-         as.endianness = 0;
- 
--        s->voice = AUD_open_out (
-+        s->voice = AUD_open_out(
-             s->audio_be,
-             s->voice,
-             "sb16",
-@@ -879,7 +879,7 @@ static void legacy_reset (SB16State *s)
-     as.fmt = AUDIO_FORMAT_U8;
-     as.endianness = 0;
- 
--    s->voice = AUD_open_out (
-+    s->voice = AUD_open_out(
-         s->audio_be,
-         s->voice,
-         "sb16",
-@@ -1196,7 +1196,7 @@ static int write_audio (SB16State *s, int nchan, int dma_pos,
-         }
- 
-         copied = k->read_memory(isa_dma, nchan, tmpbuf, dma_pos, to_copy);
--        copied = AUD_write (s->voice, tmpbuf, copied);
-+        copied = AUD_write(s->audio_be, s->voice, tmpbuf, copied);
- 
-         temp -= copied;
-         dma_pos = (dma_pos + copied) % dma_len;
-@@ -1302,7 +1302,7 @@ static int sb16_post_load (void *opaque, int version_id)
-             as.fmt = s->fmt;
-             as.endianness = 0;
- 
--            s->voice = AUD_open_out (
-+            s->voice = AUD_open_out(
-                 s->audio_be,
-                 s->voice,
-                 "sb16",
-diff --git a/hw/audio/via-ac97.c b/hw/audio/via-ac97.c
-index 019d2968534..5b344d7a0fc 100644
---- a/hw/audio/via-ac97.c
-+++ b/hw/audio/via-ac97.c
-@@ -53,7 +53,7 @@ static void codec_volume_set_out(ViaAC97State *s)
-     rvol /= 255;
-     mute = CODEC_REG(s, AC97_Master_Volume_Mute) >> MUTE_SHIFT;
-     mute |= CODEC_REG(s, AC97_PCM_Out_Volume_Mute) >> MUTE_SHIFT;
--    AUD_set_volume_out_lr(s->vo, mute, lvol, rvol);
-+    AUD_set_volume_out_lr(s->audio_be, s->vo, mute, lvol, rvol);
- }
- 
- static void codec_reset(ViaAC97State *s)
-@@ -189,7 +189,7 @@ static void out_cb(void *opaque, int avail)
-         while (temp) {
-             to_copy = MIN(temp, sizeof(tmpbuf));
-             pci_dma_read(&s->dev, c->addr, tmpbuf, to_copy);
--            copied = AUD_write(s->vo, tmpbuf, to_copy);
-+            copied = AUD_write(s->audio_be, s->vo, tmpbuf, to_copy);
-             if (!copied) {
-                 stop = true;
-                 break;
-@@ -208,7 +208,7 @@ static void out_cb(void *opaque, int avail)
-                     c->stat |= STAT_PAUSED;
-                 } else {
-                     c->stat &= ~STAT_ACTIVE;
--                    AUD_set_active_out(s->vo, 0);
-+                    AUD_set_active_out(s->audio_be, s->vo, 0);
-                 }
-                 if (c->type & STAT_EOL) {
-                     via_isa_set_irq(&s->dev, 0, 1);
-@@ -317,20 +317,20 @@ static void sgd_write(void *opaque, hwaddr addr, uint64_t val, unsigned size)
-         break;
-     case 1:
-         if (val & CNTL_START) {
--            AUD_set_active_out(s->vo, 1);
-+            AUD_set_active_out(s->audio_be, s->vo, 1);
-             s->aur.stat = STAT_ACTIVE;
-         }
-         if (val & CNTL_TERM) {
--            AUD_set_active_out(s->vo, 0);
-+            AUD_set_active_out(s->audio_be, s->vo, 0);
-             s->aur.stat &= ~(STAT_ACTIVE | STAT_PAUSED);
-             s->aur.clen = 0;
-         }
-         if (val & CNTL_PAUSE) {
--            AUD_set_active_out(s->vo, 0);
-+            AUD_set_active_out(s->audio_be, s->vo, 0);
-             s->aur.stat &= ~STAT_ACTIVE;
-             s->aur.stat |= STAT_PAUSED;
-         } else if (!(val & CNTL_PAUSE) && (s->aur.stat & STAT_PAUSED)) {
--            AUD_set_active_out(s->vo, 1);
-+            AUD_set_active_out(s->audio_be, s->vo, 1);
-             s->aur.stat |= STAT_ACTIVE;
-             s->aur.stat &= ~STAT_PAUSED;
-         }
-diff --git a/hw/audio/virtio-snd.c b/hw/audio/virtio-snd.c
-index 9101560f387..47fef61af88 100644
---- a/hw/audio/virtio-snd.c
-+++ b/hw/audio/virtio-snd.c
-@@ -463,7 +463,7 @@ static uint32_t virtio_snd_pcm_prepare(VirtIOSound *s, uint32_t stream_id)
-                                          stream,
-                                          virtio_snd_pcm_out_cb,
-                                          &as);
--        AUD_set_volume_out_lr(stream->voice.out, 0, 255, 255);
-+        AUD_set_volume_out_lr(s->audio_be, stream->voice.out, 0, 255, 255);
-     } else {
-         stream->voice.in = AUD_open_in(s->audio_be,
-                                         stream->voice.in,
-@@ -471,7 +471,7 @@ static uint32_t virtio_snd_pcm_prepare(VirtIOSound *s, uint32_t stream_id)
-                                         stream,
-                                         virtio_snd_pcm_in_cb,
-                                         &as);
--        AUD_set_volume_in_lr(stream->voice.in, 0, 255, 255);
-+        AUD_set_volume_in_lr(s->audio_be, stream->voice.in, 0, 255, 255);
-     }
- 
-     return cpu_to_le32(VIRTIO_SND_S_OK);
-@@ -561,9 +561,9 @@ static void virtio_snd_handle_pcm_start_stop(VirtIOSound *s,
-             stream->active = start;
-         }
-         if (stream->info.direction == VIRTIO_SND_D_OUTPUT) {
--            AUD_set_active_out(stream->voice.out, start);
-+            AUD_set_active_out(s->audio_be, stream->voice.out, start);
-         } else {
--            AUD_set_active_in(stream->voice.in, start);
-+            AUD_set_active_in(s->audio_be, stream->voice.in, start);
-         }
-     } else {
-         error_report("Invalid stream id: %"PRIu32, stream_id);
-@@ -1166,7 +1166,8 @@ static void virtio_snd_pcm_out_cb(void *data, int available)
-                 buffer->populated = true;
-             }
-             for (;;) {
--                size = AUD_write(stream->voice.out,
-+                size = AUD_write(stream->s->audio_be,
-+                                 stream->voice.out,
-                                  buffer->data + buffer->offset,
-                                  MIN(buffer->size, available));
-                 assert(size <= MIN(buffer->size, available));
-@@ -1258,7 +1259,8 @@ static void virtio_snd_pcm_in_cb(void *data, int available)
-                     return_rx_buffer(stream, buffer);
-                     break;
-                 }
--                size = AUD_read(stream->voice.in,
-+                size = AUD_read(stream->s->audio_be,
-+                        stream->voice.in,
-                         buffer->data + buffer->size,
-                         MIN(available, (stream->params.period_bytes -
-                                         buffer->size)));
-diff --git a/hw/audio/wm8750.c b/hw/audio/wm8750.c
-index 336fb6d20bd..bc347fe5376 100644
---- a/hw/audio/wm8750.c
-+++ b/hw/audio/wm8750.c
-@@ -72,7 +72,7 @@ static inline void wm8750_in_load(WM8750State *s)
-     if (s->idx_in + s->req_in <= sizeof(s->data_in))
-         return;
-     s->idx_in = MAX(0, (int) sizeof(s->data_in) - s->req_in);
--    AUD_read(*s->in[0], s->data_in + s->idx_in,
-+    AUD_read(s->audio_be, *s->in[0], s->data_in + s->idx_in,
-              sizeof(s->data_in) - s->idx_in);
- }
- 
-@@ -80,7 +80,7 @@ static inline void wm8750_out_flush(WM8750State *s)
++static const TypeInfo audio_none_info = {
++    .name = TYPE_AUDIO_NONE,
++    .parent = TYPE_AUDIO_MIXENG_BACKEND,
++    .instance_size = sizeof(AudioNone),
++    .class_init = audio_none_class_init,
++};
++
+ static void register_audio_none(void)
  {
-     int sent = 0;
-     while (sent < s->idx_out)
--        sent += AUD_write(*s->out[0], s->data_out + sent, s->idx_out - sent)
-+        sent += AUD_write(s->audio_be, *s->out[0], s->data_out + sent, s->idx_out - sent)
-                 ?: s->idx_out;
-     s->idx_out = 0;
+     audio_driver_register(&no_audio_driver);
++    type_register_static(&audio_none_info);
  }
-@@ -145,30 +145,30 @@ static void wm8750_vol_update(WM8750State *s)
+ type_init(register_audio_none);
++module_obj(TYPE_AUDIO_NONE);
+diff --git a/audio/ossaudio.c b/audio/ossaudio.c
+index 6ad20ab1876..9697f4a0beb 100644
+--- a/audio/ossaudio.c
++++ b/audio/ossaudio.c
+@@ -30,11 +30,28 @@
+ #include "qemu/host-utils.h"
+ #include "qapi/error.h"
+ #include "qemu/audio.h"
++#include "qom/object.h"
+ #include "trace.h"
+ 
+ #define AUDIO_CAP "oss"
+ #include "audio_int.h"
+ 
++#define TYPE_AUDIO_OSS "audio-oss"
++OBJECT_DECLARE_SIMPLE_TYPE(AudioOss, AUDIO_OSS)
++
++struct AudioOss {
++    AudioMixengBackend parent_obj;
++};
++
++static struct audio_driver oss_audio_driver;
++
++static void audio_oss_class_init(ObjectClass *klass, const void *data)
++{
++    AudioMixengBackendClass *k = AUDIO_MIXENG_BACKEND_CLASS(klass);
++
++    k->driver = &oss_audio_driver;
++}
++
+ #if defined OSS_GETVERSION && defined SNDCTL_DSP_POLICY
+ #define USE_DSP_POLICY
+ #endif
+@@ -772,8 +789,17 @@ static struct audio_driver oss_audio_driver = {
+     .voice_size_in  = sizeof (OSSVoiceIn)
+ };
+ 
++static const TypeInfo audio_oss_info = {
++    .name = TYPE_AUDIO_OSS,
++    .parent = TYPE_AUDIO_MIXENG_BACKEND,
++    .instance_size = sizeof(AudioOss),
++    .class_init = audio_oss_class_init,
++};
++
+ static void register_audio_oss(void)
  {
-     /* FIXME: multiply all volumes by s->invol[2], s->invol[3] */
- 
--    AUD_set_volume_in_lr(s->adc_voice[0], s->mute,
-+    AUD_set_volume_in_lr(s->audio_be, s->adc_voice[0], s->mute,
-                     s->inmute[0] ? 0 : WM8750_INVOL_TRANSFORM(s->invol[0]),
-                     s->inmute[1] ? 0 : WM8750_INVOL_TRANSFORM(s->invol[1]));
--    AUD_set_volume_in_lr(s->adc_voice[1], s->mute,
-+    AUD_set_volume_in_lr(s->audio_be, s->adc_voice[1], s->mute,
-                     s->inmute[0] ? 0 : WM8750_INVOL_TRANSFORM(s->invol[0]),
-                     s->inmute[1] ? 0 : WM8750_INVOL_TRANSFORM(s->invol[1]));
--    AUD_set_volume_in_lr(s->adc_voice[2], s->mute,
-+    AUD_set_volume_in_lr(s->audio_be, s->adc_voice[2], s->mute,
-                     s->inmute[0] ? 0 : WM8750_INVOL_TRANSFORM(s->invol[0]),
-                     s->inmute[1] ? 0 : WM8750_INVOL_TRANSFORM(s->invol[1]));
- 
-     /* FIXME: multiply all volumes by s->outvol[0], s->outvol[1] */
- 
-     /* Speaker: LOUT2VOL ROUT2VOL */
--    AUD_set_volume_out_lr(s->dac_voice[0], s->mute,
-+    AUD_set_volume_out_lr(s->audio_be, s->dac_voice[0], s->mute,
-                     s->outmute[0] ? 0 : WM8750_OUTVOL_TRANSFORM(s->outvol[4]),
-                     s->outmute[1] ? 0 : WM8750_OUTVOL_TRANSFORM(s->outvol[5]));
- 
-     /* Headphone: LOUT1VOL ROUT1VOL */
--    AUD_set_volume_out_lr(s->dac_voice[1], s->mute,
-+    AUD_set_volume_out_lr(s->audio_be, s->dac_voice[1], s->mute,
-                     s->outmute[0] ? 0 : WM8750_OUTVOL_TRANSFORM(s->outvol[2]),
-                     s->outmute[1] ? 0 : WM8750_OUTVOL_TRANSFORM(s->outvol[3]));
- 
-     /* MONOOUT: MONOVOL MONOVOL */
--    AUD_set_volume_out_lr(s->dac_voice[2], s->mute,
-+    AUD_set_volume_out_lr(s->audio_be, s->dac_voice[2], s->mute,
-                     s->outmute[0] ? 0 : WM8750_OUTVOL_TRANSFORM(s->outvol[6]),
-                     s->outmute[1] ? 0 : WM8750_OUTVOL_TRANSFORM(s->outvol[6]));
+     audio_driver_register(&oss_audio_driver);
++    type_register_static(&audio_oss_info);
  }
-@@ -182,9 +182,9 @@ static void wm8750_set_format(WM8750State *s)
-     wm8750_out_flush(s);
+ type_init(register_audio_oss);
++module_obj(TYPE_AUDIO_OSS);
+diff --git a/audio/paaudio.c b/audio/paaudio.c
+index 0c06a397195..707a6d2fb23 100644
+--- a/audio/paaudio.c
++++ b/audio/paaudio.c
+@@ -4,12 +4,29 @@
+ #include "qemu/module.h"
+ #include "qemu/audio.h"
+ #include "qapi/error.h"
++#include "qom/object.h"
  
-     if (s->in[0] && *s->in[0])
--        AUD_set_active_in(*s->in[0], 0);
-+        AUD_set_active_in(s->audio_be, *s->in[0], 0);
-     if (s->out[0] && *s->out[0])
--        AUD_set_active_out(*s->out[0], 0);
-+        AUD_set_active_out(s->audio_be, *s->out[0], 0);
+ #include <pulse/pulseaudio.h>
  
-     for (i = 0; i < IN_PORT_N; i ++)
-         if (s->adc_voice[i]) {
-@@ -235,9 +235,9 @@ static void wm8750_set_format(WM8750State *s)
-      * for mixing or combining paths to different ports, so we
-      * connect both channels to where the left channel is routed.  */
-     if (s->in[0] && *s->in[0])
--        AUD_set_active_in(*s->in[0], 1);
-+        AUD_set_active_in(s->audio_be, *s->in[0], 1);
-     if (s->out[0] && *s->out[0])
--        AUD_set_active_out(*s->out[0], 1);
-+        AUD_set_active_out(s->audio_be, *s->out[0], 1);
- }
+ #define AUDIO_CAP "pulseaudio"
+ #include "audio_int.h"
  
- static void wm8750_clk_update(WM8750State *s, int ext)
-diff --git a/hw/display/xlnx_dp.c b/hw/display/xlnx_dp.c
-index a24e95f0a73..deda7efe15d 100644
---- a/hw/display/xlnx_dp.c
-+++ b/hw/display/xlnx_dp.c
-@@ -331,7 +331,7 @@ static inline void xlnx_dp_audio_activate(XlnxDPState *s)
++#define TYPE_AUDIO_PA "audio-pa"
++OBJECT_DECLARE_SIMPLE_TYPE(AudioPa, AUDIO_PA)
++
++struct AudioPa {
++    AudioMixengBackend parent_obj;
++};
++
++static struct audio_driver pa_audio_driver;
++
++static void audio_pa_class_init(ObjectClass *klass, const void *data)
++{
++    AudioMixengBackendClass *k = AUDIO_MIXENG_BACKEND_CLASS(klass);
++
++    k->driver = &pa_audio_driver;
++}
++
+ typedef struct PAConnection {
+     char *server;
+     int refcount;
+@@ -931,8 +948,17 @@ static struct audio_driver pa_audio_driver = {
+     .voice_size_in  = sizeof (PAVoiceIn),
+ };
+ 
++static const TypeInfo audio_pa_info = {
++    .name = TYPE_AUDIO_PA,
++    .parent = TYPE_AUDIO_MIXENG_BACKEND,
++    .instance_size = sizeof(AudioPa),
++    .class_init = audio_pa_class_init,
++};
++
+ static void register_audio_pa(void)
  {
-     bool activated = ((s->core_registers[DP_TX_AUDIO_CONTROL]
-                    & DP_TX_AUD_CTRL) != 0);
--    AUD_set_active_out(s->amixer_output_stream, activated);
-+    AUD_set_active_out(s->audio_be, s->amixer_output_stream, activated);
-     xlnx_dpdma_set_host_data_location(s->dpdma, DP_AUDIO_DMA_CHANNEL(0),
-                                       &s->audio_buffer_0);
-     xlnx_dpdma_set_host_data_location(s->dpdma, DP_AUDIO_DMA_CHANNEL(1),
-@@ -401,7 +401,7 @@ static void xlnx_dp_audio_callback(void *opaque, int avail)
-     /* Send the buffer through the audio. */
-     if (s->byte_left <= MAX_QEMU_BUFFER_SIZE) {
-         if (s->byte_left != 0) {
--            written = AUD_write(s->amixer_output_stream,
-+            written = AUD_write(s->audio_be, s->amixer_output_stream,
-                                 &s->out_buffer[s->data_ptr], s->byte_left);
-         } else {
-              int len_to_copy;
-@@ -413,12 +413,12 @@ static void xlnx_dp_audio_callback(void *opaque, int avail)
-             while (avail) {
-                 len_to_copy = MIN(AUD_CHBUF_MAX_DEPTH, avail);
-                 memset(s->out_buffer, 0, len_to_copy);
--                avail -= AUD_write(s->amixer_output_stream, s->out_buffer,
-+                avail -= AUD_write(s->audio_be, s->amixer_output_stream, s->out_buffer,
-                                    len_to_copy);
-             }
-         }
-     } else {
--        written = AUD_write(s->amixer_output_stream,
-+        written = AUD_write(s->audio_be, s->amixer_output_stream,
-                             &s->out_buffer[s->data_ptr], MAX_QEMU_BUFFER_SIZE);
-     }
-     s->byte_left -= written;
-@@ -1401,7 +1401,7 @@ static void xlnx_dp_realize(DeviceState *dev, Error **errp)
-                                            s,
-                                            xlnx_dp_audio_callback,
-                                            &as);
--    AUD_set_volume_out_lr(s->amixer_output_stream, 0, 255, 255);
-+    AUD_set_volume_out_lr(s->audio_be, s->amixer_output_stream, 0, 255, 255);
-     xlnx_dp_audio_activate(s);
-     s->vblank = ptimer_init(vblank_hit, s, DP_VBLANK_PTIMER_POLICY);
-     ptimer_transaction_begin(s->vblank);
-diff --git a/hw/usb/dev-audio.c b/hw/usb/dev-audio.c
-index dfda2dccc04..0f36587fc6f 100644
---- a/hw/usb/dev-audio.c
-+++ b/hw/usb/dev-audio.c
-@@ -669,7 +669,7 @@ static void output_callback(void *opaque, int avail)
-             return;
-         }
+     audio_driver_register(&pa_audio_driver);
++    type_register_static(&audio_pa_info);
+ }
+ type_init(register_audio_pa);
++module_obj(TYPE_AUDIO_PA);
+diff --git a/audio/pwaudio.c b/audio/pwaudio.c
+index 30f717ccacf..31f8899d1ed 100644
+--- a/audio/pwaudio.c
++++ b/audio/pwaudio.c
+@@ -13,6 +13,7 @@
+ #include "qemu/audio.h"
+ #include "qemu/error-report.h"
+ #include "qapi/error.h"
++#include "qom/object.h"
+ #include <spa/param/audio/format-utils.h>
+ #include <spa/utils/ringbuffer.h>
+ #include <spa/utils/result.h>
+@@ -27,6 +28,22 @@
  
--        written = AUD_write(s->out.voice, data, len);
-+        written = AUD_write(s->audio_be, s->out.voice, data, len);
-         avail -= written;
-         s->out.buf.cons += written;
+ #include "audio_int.h"
  
-@@ -683,7 +683,7 @@ static int usb_audio_set_output_altset(USBAudioState *s, int altset)
++#define TYPE_AUDIO_PW "audio-pipewire"
++OBJECT_DECLARE_SIMPLE_TYPE(AudioPw, AUDIO_PW)
++
++struct AudioPw {
++    AudioMixengBackend parent_obj;
++};
++
++static struct audio_driver pw_audio_driver;
++
++static void audio_pw_class_init(ObjectClass *klass, const void *data)
++{
++    AudioMixengBackendClass *k = AUDIO_MIXENG_BACKEND_CLASS(klass);
++
++    k->driver = &pw_audio_driver;
++}
++
+ typedef struct pwvolume {
+     uint32_t channels;
+     float values[SPA_AUDIO_MAX_CHANNELS];
+@@ -847,10 +864,19 @@ static struct audio_driver pw_audio_driver = {
+     .voice_size_in = sizeof(PWVoiceIn),
+ };
+ 
++static const TypeInfo audio_pw_info = {
++    .name = TYPE_AUDIO_PW,
++    .parent = TYPE_AUDIO_MIXENG_BACKEND,
++    .instance_size = sizeof(AudioPw),
++    .class_init = audio_pw_class_init,
++};
++
+ static void
+ register_audio_pw(void)
  {
-     switch (altset) {
-     case ALTSET_OFF:
--        AUD_set_active_out(s->out.voice, false);
-+        AUD_set_active_out(s->audio_be, s->out.voice, false);
-         break;
-     case ALTSET_STEREO:
-     case ALTSET_51:
-@@ -692,7 +692,7 @@ static int usb_audio_set_output_altset(USBAudioState *s, int altset)
-             usb_audio_reinit(USB_DEVICE(s), altset_channels[altset]);
-         }
-         streambuf_init(&s->out.buf, s->buffer, s->out.channels);
--        AUD_set_active_out(s->out.voice, true);
-+        AUD_set_active_out(s->audio_be, s->out.voice, true);
-         break;
-     default:
-         return -1;
-@@ -805,7 +805,7 @@ static int usb_audio_set_control(USBAudioState *s, uint8_t attrib,
-             }
-             fprintf(stderr, "\n");
-         }
--        AUD_set_volume_out(s->out.voice, &s->out.vol);
-+        AUD_set_volume_out(s->audio_be, s->out.voice, &s->out.vol);
-     }
- 
-     return ret;
-@@ -980,8 +980,8 @@ static void usb_audio_reinit(USBDevice *dev, unsigned channels)
- 
-     s->out.voice = AUD_open_out(s->audio_be, s->out.voice, TYPE_USB_AUDIO,
-                                 s, output_callback, &s->out.as);
--    AUD_set_volume_out(s->out.voice, &s->out.vol);
--    AUD_set_active_out(s->out.voice, 0);
-+    AUD_set_volume_out(s->audio_be, s->out.voice, &s->out.vol);
-+    AUD_set_active_out(s->audio_be, s->out.voice, 0);
+     audio_driver_register(&pw_audio_driver);
++    type_register_static(&audio_pw_info);
  }
  
- static const VMStateDescription vmstate_usb_audio = {
-diff --git a/tests/audio/test-audio.c b/tests/audio/test-audio.c
-index 66693f0fbfd..6c182ee7c60 100644
---- a/tests/audio/test-audio.c
-+++ b/tests/audio/test-audio.c
-@@ -142,7 +142,7 @@ static void test_sine_callback(void *opaque, int avail)
+ type_init(register_audio_pw);
++module_obj(TYPE_AUDIO_PW);
+diff --git a/audio/sdlaudio.c b/audio/sdlaudio.c
+index 707110973ac..5841e131cc0 100644
+--- a/audio/sdlaudio.c
++++ b/audio/sdlaudio.c
+@@ -28,6 +28,7 @@
+ #include "qemu/module.h"
+ #include "qapi/error.h"
+ #include "qemu/audio.h"
++#include "qom/object.h"
  
-     generate_sine_samples(buffer, frames_to_write, s->frames_written);
+ #ifndef _WIN32
+ #ifdef __sun__
+@@ -40,6 +41,22 @@
+ #define AUDIO_CAP "sdl"
+ #include "audio_int.h"
  
--    bytes_written = AUD_write(s->voice, buffer,
-+    bytes_written = AUD_write(s->be, s->voice, buffer,
-                               frames_to_write * sizeof(int16_t) * CHANNELS);
-     s->frames_written += bytes_written / (sizeof(int16_t) * CHANNELS);
- }
-@@ -163,7 +163,7 @@ static void test_audio_out_sine_wave(void)
-                                       &state, test_sine_callback);
++#define TYPE_AUDIO_SDL "audio-sdl"
++OBJECT_DECLARE_SIMPLE_TYPE(AudioSdl, AUDIO_SDL)
++
++struct AudioSdl {
++    AudioMixengBackend parent_obj;
++};
++
++static struct audio_driver sdl_audio_driver;
++
++static void audio_sdl_class_init(ObjectClass *klass, const void *data)
++{
++    AudioMixengBackendClass *k = AUDIO_MIXENG_BACKEND_CLASS(klass);
++
++    k->driver = &sdl_audio_driver;
++}
++
+ typedef struct SDLVoiceOut {
+     HWVoiceOut hw;
+     int exit;
+@@ -491,8 +508,17 @@ static struct audio_driver sdl_audio_driver = {
+     .voice_size_in  = sizeof(SDLVoiceIn),
+ };
  
-     g_test_message("Playing 440Hz sine wave for %d seconds...", DURATION_SECS);
--    AUD_set_active_out(state.voice, true);
-+    AUD_set_active_out(state.be, state.voice, true);
- 
-     /*
-      * Run the audio subsystem until all frames are written or timeout.
-@@ -188,7 +188,7 @@ static void test_audio_out_sine_wave(void)
- 
-     g_assert_cmpint(state.frames_written, ==, state.total_frames);
- 
--    AUD_set_active_out(state.voice, false);
-+    AUD_set_active_out(state.be, state.voice, false);
-     AUD_close_out(state.be, state.voice);
- }
- 
-@@ -224,13 +224,13 @@ static void test_audio_out_active_state(void)
-     be = get_test_audio_backend();
-     voice = open_test_voice_out(be, "test-active", NULL, dummy_audio_callback);
- 
--    g_assert_false(AUD_is_active_out(voice));
-+    g_assert_false(AUD_is_active_out(be, voice));
- 
--    AUD_set_active_out(voice, true);
--    g_assert_true(AUD_is_active_out(voice));
-+    AUD_set_active_out(be, voice, true);
-+    g_assert_true(AUD_is_active_out(be, voice));
- 
--    AUD_set_active_out(voice, false);
--    g_assert_false(AUD_is_active_out(voice));
-+    AUD_set_active_out(be, voice, false);
-+    g_assert_false(AUD_is_active_out(be, voice));
- 
-     AUD_close_out(be, voice);
- }
-@@ -244,13 +244,13 @@ static void test_audio_out_buffer_size(void)
-     be = get_test_audio_backend();
-     voice = open_test_voice_out(be, "test-buffer", NULL, dummy_audio_callback);
- 
--    buffer_size = AUD_get_buffer_size_out(voice);
-+    buffer_size = AUD_get_buffer_size_out(be, voice);
-     g_test_message("Buffer size: %d bytes", buffer_size);
-     g_assert_cmpint(buffer_size, >, 0);
- 
-     AUD_close_out(be, voice);
- 
--    g_assert_cmpint(AUD_get_buffer_size_out(NULL), ==, 0);
-+    g_assert_cmpint(AUD_get_buffer_size_out(NULL, NULL), ==, 0);
- }
- 
- static void test_audio_out_volume(void)
-@@ -263,13 +263,13 @@ static void test_audio_out_volume(void)
-     voice = open_test_voice_out(be, "test-volume", NULL, dummy_audio_callback);
- 
-     vol = (Volume){ .mute = false, .channels = 2, .vol = {255, 255} };
--    AUD_set_volume_out(voice, &vol);
-+    AUD_set_volume_out(be, voice, &vol);
- 
-     vol = (Volume){ .mute = true, .channels = 2, .vol = {255, 255} };
--    AUD_set_volume_out(voice, &vol);
-+    AUD_set_volume_out(be, voice, &vol);
- 
-     vol = (Volume){ .mute = false, .channels = 2, .vol = {128, 128} };
--    AUD_set_volume_out(voice, &vol);
-+    AUD_set_volume_out(be, voice, &vol);
- 
-     AUD_close_out(be, voice);
- }
-@@ -286,13 +286,13 @@ static void test_audio_in_active_state(void)
-         return;
-     }
- 
--    g_assert_false(AUD_is_active_in(voice));
-+    g_assert_false(AUD_is_active_in(be, voice));
- 
--    AUD_set_active_in(voice, true);
--    g_assert_true(AUD_is_active_in(voice));
-+    AUD_set_active_in(be, voice, true);
-+    g_assert_true(AUD_is_active_in(be, voice));
- 
--    AUD_set_active_in(voice, false);
--    g_assert_false(AUD_is_active_in(voice));
-+    AUD_set_active_in(be, voice, false);
-+    g_assert_false(AUD_is_active_in(be, voice));
- 
-     AUD_close_in(be, voice);
- }
-@@ -311,10 +311,10 @@ static void test_audio_in_volume(void)
-     }
- 
-     vol = (Volume){ .mute = false, .channels = 2, .vol = {255, 255} };
--    AUD_set_volume_in(voice, &vol);
-+    AUD_set_volume_in(be, voice, &vol);
- 
-     vol = (Volume){ .mute = true, .channels = 2, .vol = {255, 255} };
--    AUD_set_volume_in(voice, &vol);
-+    AUD_set_volume_in(be, voice, &vol);
- 
-     AUD_close_in(be, voice);
- }
-@@ -427,7 +427,7 @@ static void test_audio_capture(void)
-                                 &sine_state, test_sine_callback);
-     sine_state.voice = voice;
- 
--    AUD_set_active_out(voice, true);
-+    AUD_set_active_out(be, voice, true);
- 
-     start_time = g_get_monotonic_time();
-     while (sine_state.frames_written < sine_state.total_frames ||
-@@ -472,10 +472,10 @@ static void test_audio_capture(void)
-         g_assert_cmpfloat(match_ratio, >=, 0.9);
-     }
- 
--    AUD_set_active_out(voice, false);
-+    AUD_set_active_out(be, voice, false);
-     AUD_close_out(be, voice);
- 
--    AUD_del_capture(cap, &state);
-+    AUD_del_capture(be, cap, &state);
-     g_assert_true(state.destroy_called);
- 
-     g_free(state.captured_samples);
-@@ -483,26 +483,27 @@ static void test_audio_capture(void)
- 
- static void test_audio_null_handling(void)
++static const TypeInfo audio_sdl_info = {
++    .name = TYPE_AUDIO_SDL,
++    .parent = TYPE_AUDIO_MIXENG_BACKEND,
++    .instance_size = sizeof(AudioSdl),
++    .class_init = audio_sdl_class_init,
++};
++
+ static void register_audio_sdl(void)
  {
-+    AudioBackend *be = get_test_audio_backend();
-     uint8_t buffer[64];
- 
-     /* AUD_is_active_out/in(NULL) should return false */
--    g_assert_false(AUD_is_active_out(NULL));
--    g_assert_false(AUD_is_active_in(NULL));
-+    g_assert_false(AUD_is_active_out(be, NULL));
-+    g_assert_false(AUD_is_active_in(be, NULL));
- 
-     /* AUD_get_buffer_size_out(NULL) should return 0 */
--    g_assert_cmpint(AUD_get_buffer_size_out(NULL), ==, 0);
-+    g_assert_cmpint(AUD_get_buffer_size_out(be, NULL), ==, 0);
- 
-     /* AUD_write/read(NULL, ...) should return size (no-op) */
--    g_assert_cmpuint(AUD_write(NULL, buffer, sizeof(buffer)), ==,
-+    g_assert_cmpuint(AUD_write(be, NULL, buffer, sizeof(buffer)), ==,
-                      sizeof(buffer));
--    g_assert_cmpuint(AUD_read(NULL, buffer, sizeof(buffer)), ==,
-+    g_assert_cmpuint(AUD_read(be, NULL, buffer, sizeof(buffer)), ==,
-                      sizeof(buffer));
- 
-     /* These should not crash */
--    AUD_set_active_out(NULL, true);
--    AUD_set_active_out(NULL, false);
--    AUD_set_active_in(NULL, true);
--    AUD_set_active_in(NULL, false);
-+    AUD_set_active_out(be, NULL, true);
-+    AUD_set_active_out(be, NULL, false);
-+    AUD_set_active_in(be, NULL, true);
-+    AUD_set_active_in(be, NULL, false);
+     audio_driver_register(&sdl_audio_driver);
++    type_register_static(&audio_sdl_info);
  }
+ type_init(register_audio_sdl);
++module_obj(TYPE_AUDIO_SDL);
+diff --git a/audio/sndioaudio.c b/audio/sndioaudio.c
+index 8197b8b0b47..7f388b498f6 100644
+--- a/audio/sndioaudio.c
++++ b/audio/sndioaudio.c
+@@ -20,10 +20,27 @@
+ #include "qemu/main-loop.h"
+ #include "qemu/audio.h"
+ #include "trace.h"
++#include "qom/object.h"
  
- static void test_audio_multiple_voices(void)
-@@ -516,19 +517,19 @@ static void test_audio_multiple_voices(void)
-     out2 = open_test_voice_out(be, "test-multi-out2", NULL, dummy_audio_callback);
-     in1 = open_test_voice_in(be, "test-multi-in1", NULL, dummy_audio_callback);
+ #define AUDIO_CAP "sndio"
+ #include "audio_int.h"
  
--    AUD_set_active_out(out1, true);
--    AUD_set_active_out(out2, true);
--    AUD_set_active_in(in1, true);
-+    AUD_set_active_out(be, out1, true);
-+    AUD_set_active_out(be, out2, true);
-+    AUD_set_active_in(be, in1, true);
++#define TYPE_AUDIO_SNDIO "audio-sndio"
++OBJECT_DECLARE_SIMPLE_TYPE(AudioSndio, AUDIO_SNDIO)
++
++struct AudioSndio {
++    AudioMixengBackend parent_obj;
++};
++
++static struct audio_driver sndio_audio_driver;
++
++static void audio_sndio_class_init(ObjectClass *klass, const void *data)
++{
++    AudioMixengBackendClass *k = AUDIO_MIXENG_BACKEND_CLASS(klass);
++
++    k->driver = &sndio_audio_driver;
++}
++
+ /* default latency in microseconds if no option is set */
+ #define SNDIO_LATENCY_US   50000
  
--    g_assert_true(AUD_is_active_out(out1));
--    g_assert_true(AUD_is_active_out(out2));
-+    g_assert_true(AUD_is_active_out(be, out1));
-+    g_assert_true(AUD_is_active_out(be, out2));
-     if (in1) {
--        g_assert_true(AUD_is_active_in(in1));
-+        g_assert_true(AUD_is_active_in(be, in1));
-     }
+@@ -555,9 +572,18 @@ static struct audio_driver sndio_audio_driver = {
+     .voice_size_in  = sizeof(SndioVoice)
+ };
  
--    AUD_set_active_out(out1, false);
--    AUD_set_active_out(out2, false);
--    AUD_set_active_in(in1, false);
-+    AUD_set_active_out(be, out1, false);
-+    AUD_set_active_out(be, out2, false);
-+    AUD_set_active_in(be, in1, false);
- 
-     AUD_close_in(be, in1);
-     AUD_close_out(be, out2);
-diff --git a/ui/vnc.c b/ui/vnc.c
-index a61a4f937d6..c142d9fc7c0 100644
---- a/ui/vnc.c
-+++ b/ui/vnc.c
-@@ -1289,7 +1289,7 @@ static void audio_add(VncState *vs)
- static void audio_del(VncState *vs)
++static const TypeInfo audio_sndio_info = {
++    .name = TYPE_AUDIO_SNDIO,
++    .parent = TYPE_AUDIO_MIXENG_BACKEND,
++    .instance_size = sizeof(AudioSndio),
++    .class_init = audio_sndio_class_init,
++};
++
+ static void register_audio_sndio(void)
  {
-     if (vs->audio_cap) {
--        AUD_del_capture(vs->audio_cap, vs);
-+        AUD_del_capture(vs->vd->audio_be, vs->audio_cap, vs);
-         vs->audio_cap = NULL;
-     }
+     audio_driver_register(&sndio_audio_driver);
++    type_register_static(&audio_sndio_info);
  }
+ 
+ type_init(register_audio_sndio);
++module_obj(TYPE_AUDIO_SNDIO);
+diff --git a/audio/spiceaudio.c b/audio/spiceaudio.c
+index 7db2d1f0dfd..d0bcc0836ad 100644
+--- a/audio/spiceaudio.c
++++ b/audio/spiceaudio.c
+@@ -24,11 +24,28 @@
+ #include "qemu/timer.h"
+ #include "qapi/error.h"
+ #include "ui/qemu-spice.h"
++#include "qom/object.h"
+ 
+ #define AUDIO_CAP "spice"
+ #include "qemu/audio.h"
+ #include "audio_int.h"
+ 
++#define TYPE_AUDIO_SPICE "audio-spice"
++OBJECT_DECLARE_SIMPLE_TYPE(AudioSpice, AUDIO_SPICE)
++
++struct AudioSpice {
++    AudioMixengBackend parent_obj;
++};
++
++static struct audio_driver spice_audio_driver;
++
++static void audio_spice_class_init(ObjectClass *klass, const void *data)
++{
++    AudioMixengBackendClass *k = AUDIO_MIXENG_BACKEND_CLASS(klass);
++
++    k->driver = &spice_audio_driver;
++}
++
+ #if SPICE_INTERFACE_PLAYBACK_MAJOR > 1 || SPICE_INTERFACE_PLAYBACK_MINOR >= 3
+ #define LINE_OUT_SAMPLES (480 * 4)
+ #else
+@@ -325,10 +342,19 @@ static struct audio_driver spice_audio_driver = {
+     .voice_size_in  = sizeof (SpiceVoiceIn),
+ };
+ 
++static const TypeInfo audio_spice_info = {
++    .name = TYPE_AUDIO_SPICE,
++    .parent = TYPE_AUDIO_MIXENG_BACKEND,
++    .instance_size = sizeof(AudioSpice),
++    .class_init = audio_spice_class_init,
++};
++
+ static void register_audio_spice(void)
+ {
+     audio_driver_register(&spice_audio_driver);
++    type_register_static(&audio_spice_info);
+ }
+ type_init(register_audio_spice);
++module_obj(TYPE_AUDIO_SPICE);
+ 
+ module_dep("ui-spice-core");
+diff --git a/audio/wavaudio.c b/audio/wavaudio.c
+index 46460a5d573..00cf110ecd7 100644
+--- a/audio/wavaudio.c
++++ b/audio/wavaudio.c
+@@ -25,10 +25,27 @@
+ #include "qemu/osdep.h"
+ #include "qemu/module.h"
+ #include "qemu/audio.h"
++#include "qom/object.h"
+ 
+ #define AUDIO_CAP "wav"
+ #include "audio_int.h"
+ 
++#define TYPE_AUDIO_WAV "audio-wav"
++OBJECT_DECLARE_SIMPLE_TYPE(AudioWav, AUDIO_WAV)
++
++struct AudioWav {
++    AudioMixengBackend parent_obj;
++};
++
++static struct audio_driver wav_audio_driver;
++
++static void audio_wav_class_init(ObjectClass *klass, const void *data)
++{
++    AudioMixengBackendClass *k = AUDIO_MIXENG_BACKEND_CLASS(klass);
++
++    k->driver = &wav_audio_driver;
++}
++
+ typedef struct WAVVoiceOut {
+     HWVoiceOut hw;
+     FILE *f;
+@@ -214,8 +231,17 @@ static struct audio_driver wav_audio_driver = {
+     .voice_size_in  = 0
+ };
+ 
++static const TypeInfo audio_wav_info = {
++    .name = TYPE_AUDIO_WAV,
++    .parent = TYPE_AUDIO_MIXENG_BACKEND,
++    .instance_size = sizeof(AudioWav),
++    .class_init = audio_wav_class_init,
++};
++
+ static void register_audio_wav(void)
+ {
+     audio_driver_register(&wav_audio_driver);
++    type_register_static(&audio_wav_info);
+ }
+ type_init(register_audio_wav);
++module_obj(TYPE_AUDIO_WAV);
+diff --git a/audio/coreaudio.m b/audio/coreaudio.m
+index 997017a1e96..61333e9f2f9 100644
+--- a/audio/coreaudio.m
++++ b/audio/coreaudio.m
+@@ -29,10 +29,27 @@
+ #include "qemu/main-loop.h"
+ #include "qemu/module.h"
+ #include "qemu/audio.h"
++#include "qom/object.h"
+ 
+ #define AUDIO_CAP "coreaudio"
+ #include "audio_int.h"
+ 
++#define TYPE_AUDIO_COREAUDIO "audio-coreaudio"
++OBJECT_DECLARE_SIMPLE_TYPE(AudioCoreaudio, AUDIO_COREAUDIO)
++
++struct AudioCoreaudio {
++    AudioMixengBackend parent_obj;
++};
++
++static struct audio_driver coreaudio_audio_driver;
++
++static void audio_coreaudio_class_init(ObjectClass *klass, const void *data)
++{
++    AudioMixengBackendClass *k = AUDIO_MIXENG_BACKEND_CLASS(klass);
++
++    k->driver = &coreaudio_audio_driver;
++}
++
+ typedef struct coreaudioVoiceOut {
+     HWVoiceOut hw;
+     pthread_mutex_t buf_mutex;
+@@ -673,8 +690,17 @@ static void coreaudio_audio_fini (void *opaque)
+     .voice_size_in  = 0
+ };
+ 
++static const TypeInfo audio_coreaudio_info = {
++    .name = TYPE_AUDIO_COREAUDIO,
++    .parent = TYPE_AUDIO_MIXENG_BACKEND,
++    .instance_size = sizeof(AudioCoreaudio),
++    .class_init = audio_coreaudio_class_init,
++};
++
+ static void register_audio_coreaudio(void)
+ {
+     audio_driver_register(&coreaudio_audio_driver);
++    type_register_static(&audio_coreaudio_info);
+ }
+ type_init(register_audio_coreaudio);
++module_obj(TYPE_AUDIO_COREAUDIO);
 -- 
 2.53.0
 
