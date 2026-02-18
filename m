@@ -4,19 +4,19 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66CDBE9A047
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 17:20:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A57EE9A047
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 17:20:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vslCj-0005UO-Fr; Wed, 18 Feb 2026 12:19:13 -0500
+	id 1vslCk-0005VC-U3; Wed, 18 Feb 2026 12:19:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vslCS-0005Q6-Vm
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vslCS-0005Q1-U6
  for qemu-devel@nongnu.org; Wed, 18 Feb 2026 12:19:01 -0500
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vslCO-0005bj-6M
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vslCM-0005bU-Uc
  for qemu-devel@nongnu.org; Wed, 18 Feb 2026 12:18:55 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=Cc:To:In-Reply-To:References:Message-Id:Content-Transfer-Encoding:
@@ -24,16 +24,16 @@ DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=LnNbdLp6lQkk91nnwZLN8LDmCRe89n2NmaZDvq59+QA=; b=C/gJ8DR3bhcrFV5
- keA9iPRwGad6D5iQaYFxDsA1NsTRDOzfqyhegk/4Qgw5fH/Cs3namKa9wnWwWR3VyI96nywOGBDMQ
- pqx1gk9X9YNmOjjfGAqZ77L2u7MMJgeY8GWdGZAxqdwWCaXrMJeBZjZq+limyBcNRLmiUZhXAu64n
- ec=;
-Date: Wed, 18 Feb 2026 18:21:32 +0100
-Subject: [PATCH v6 6/7] hw/riscv: Set IOMMU PAS via property
+ List-Help; bh=4LkiTaljfkOqrefowX7cdd5uer+Jd06QUXUJdOltMMk=; b=pj7BtxBhEYx189M
+ Lme4/kNkrfZ8RPJN530aj5/M4z9azx4Jdiuk8X+5rRNOLlAkwD/+DdrPvyCnOpNZWLyCZZ4elBGU7
+ hKP9ICnZ4iMBy2WCAdTo+AV6VELY7lxDdYXojzWfOyJFvGlwZrKRcogkNM8viUL1lYHb03WTiVRDi
+ Cs=;
+Date: Wed, 18 Feb 2026 18:21:31 +0100
+Subject: [PATCH v6 5/7] hw/loongarch: Use loongarch_palen_mask()
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260218-phys_addr-v6-6-a603bf363218@rev.ng>
+Message-Id: <20260218-phys_addr-v6-5-a603bf363218@rev.ng>
 References: <20260218-phys_addr-v6-0-a603bf363218@rev.ng>
 In-Reply-To: <20260218-phys_addr-v6-0-a603bf363218@rev.ng>
 To: qemu-devel@nongnu.org
@@ -45,11 +45,11 @@ Cc: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Alistair Francis <alistair.francis@wdc.com>, 
  Brian Cain <brian.cain@oss.qualcomm.com>, 
  Chao Liu <chao.liu.zevorn@gmail.com>, Anton Johansson <anjo@rev.ng>
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1771435335; l=4281;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1771435335; l=6394;
  i=anjo@rev.ng; s=20260210; h=from:subject:message-id;
- bh=dlOqt+TTtplPC4FQ9ACzr9DxXad4u3ktCRVuu39x550=;
- b=THl3UN1A24W+CHvt1EgKc3BBOF0+bvJ1Mexi59eQOiaHaglsPzcRIiACJWHnyF+rVzH0Rso2f
- dI8C9OSBFMVBIpUarYR63houZRDezdgma+vpiktNiulLGqf+UA4x0VU
+ bh=5MbRiX/4ApGQhlJ/njDl1vuK2WFfFk2T7B57kDt5a54=;
+ b=IjK5A6YVSgglcH5kru7RfKl2D10X/wLMb2SB9/q0/YkB8/eykM/cKnTGw2qzMWKS4MlqBsbMx
+ /Up8e7XFadQD8jjcZq4DGbuweRlm8G6F8JkflaSzHZpPyf0KDTpoZU0
 X-Developer-Key: i=anjo@rev.ng; a=ed25519;
  pk=dKsZvj/g3kgDxnV1/SWg8a0YNGSpWtFGNsWIepQYKow=
 Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
@@ -78,102 +78,153 @@ From:  Anton Johansson via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Replaces the only remaining use of TARGET_PHYS_ADDR_SPACE_BITS for RISCV
-with a property RISCVIOMMUState::pas_bits that gets written to the
-capabilities field upon device realization.  This write needs to happen
-at realize-time to ensure the property has been set.
-
-For the virt machine and sysbus device, pas_bits is set by
-virt_machine_init() to either 34 or 56 bits, retaining previous behaviour.
-However, for the PCI device we do not have access to the CPU state, and
-instead use the maximum riscv64 value of 56 bits.
+Replaces remaining uses of TARGET_PHYS_ADDR_SPACE_BITS with
+runtime calls to loongarch_palen_mask() to fetch the physical
+address mask from the cpucfg PALEN field.
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Anton Johansson <anjo@rev.ng>
 ---
- hw/riscv/riscv-iommu.h     | 1 +
- hw/riscv/riscv-iommu-pci.c | 3 +++
- hw/riscv/riscv-iommu.c     | 8 ++++----
- hw/riscv/virt.c            | 7 +++++++
- 4 files changed, 15 insertions(+), 4 deletions(-)
+ include/hw/loongarch/boot.h |  3 ++-
+ hw/loongarch/boot.c         | 28 ++++++++++++++++------------
+ hw/loongarch/virt.c         |  5 ++++-
+ 3 files changed, 22 insertions(+), 14 deletions(-)
 
-diff --git a/hw/riscv/riscv-iommu.h b/hw/riscv/riscv-iommu.h
-index 2dabd86941..2a9f6fccd5 100644
---- a/hw/riscv/riscv-iommu.h
-+++ b/hw/riscv/riscv-iommu.h
-@@ -34,6 +34,7 @@ struct RISCVIOMMUState {
-     /*< public >*/
-     uint32_t version;     /* Reported interface version number */
-     uint32_t pid_bits;    /* process identifier width */
-+    uint32_t pas_bits;    /* physical address bits */
-     uint32_t bus;         /* PCI bus mapping for non-root endpoints */
+diff --git a/include/hw/loongarch/boot.h b/include/hw/loongarch/boot.h
+index 9819f7fbe3..4984322f75 100644
+--- a/include/hw/loongarch/boot.h
++++ b/include/hw/loongarch/boot.h
+@@ -113,6 +113,7 @@ struct memmap_entry {
+     uint32_t reserved;
+ };
  
-     uint64_t cap;         /* IOMMU supported capabilities */
-diff --git a/hw/riscv/riscv-iommu-pci.c b/hw/riscv/riscv-iommu-pci.c
-index 5f7d359204..14dd5f3857 100644
---- a/hw/riscv/riscv-iommu-pci.c
-+++ b/hw/riscv/riscv-iommu-pci.c
-@@ -158,6 +158,9 @@ static void riscv_iommu_pci_init(Object *obj)
+-void loongarch_load_kernel(MachineState *ms, struct loongarch_boot_info *info);
++void loongarch_load_kernel(MachineState *ms, struct loongarch_boot_info *info,
++                           uint64_t phys_addr_mask);
  
-     iommu->icvec_avail_vectors = RISCV_IOMMU_PCI_ICVEC_VECTORS;
-     riscv_iommu_set_cap_igs(iommu, RISCV_IOMMU_CAP_IGS_MSI);
-+
-+    /* Report maximum physical address size of riscv64 */
-+    iommu->pas_bits = 56;
+ #endif /* HW_LOONGARCH_BOOT_H */
+diff --git a/hw/loongarch/boot.c b/hw/loongarch/boot.c
+index 711d5ffbbc..ef8eae237c 100644
+--- a/hw/loongarch/boot.c
++++ b/hw/loongarch/boot.c
+@@ -217,10 +217,12 @@ static void init_cmdline(struct loongarch_boot_info *info, void *p, void *start)
+ 
+ static uint64_t cpu_loongarch_virt_to_phys(void *opaque, uint64_t addr)
+ {
+-    return addr & MAKE_64BIT_MASK(0, TARGET_PHYS_ADDR_SPACE_BITS);
++    uint64_t *phys_addr_mask = opaque;
++    return addr & *phys_addr_mask;
  }
  
- static const Property riscv_iommu_pci_properties[] = {
-diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-index b46b337375..98345b1280 100644
---- a/hw/riscv/riscv-iommu.c
-+++ b/hw/riscv/riscv-iommu.c
-@@ -2453,10 +2453,6 @@ static void riscv_iommu_instance_init(Object *obj)
-     /* Enable translation debug interface */
-     s->cap = RISCV_IOMMU_CAP_DBG;
- 
--    /* Report QEMU target physical address space limits */
--    s->cap = set_field(s->cap, RISCV_IOMMU_CAP_PAS,
--                       TARGET_PHYS_ADDR_SPACE_BITS);
--
-     /* TODO: method to report supported PID bits */
-     s->pid_bits = 8; /* restricted to size of MemTxAttrs.pid */
-     s->cap |= RISCV_IOMMU_CAP_PD8;
-@@ -2487,6 +2483,9 @@ static void riscv_iommu_realize(DeviceState *dev, Error **errp)
- {
-     RISCVIOMMUState *s = RISCV_IOMMU(dev);
- 
-+    /* Report QEMU target physical address space limits. */
-+    s->cap = set_field(s->cap, RISCV_IOMMU_CAP_PAS, s->pas_bits);
-+
-     s->cap |= s->version & RISCV_IOMMU_CAP_VERSION;
-     if (s->enable_msi) {
-         s->cap |= RISCV_IOMMU_CAP_MSI_FLAT | RISCV_IOMMU_CAP_MSI_MRIF;
-@@ -2645,6 +2644,7 @@ void riscv_iommu_reset(RISCVIOMMUState *s)
- static const Property riscv_iommu_properties[] = {
-     DEFINE_PROP_UINT32("version", RISCVIOMMUState, version,
-         RISCV_IOMMU_SPEC_DOT_VER),
-+    DEFINE_PROP_UINT32("pas-bits", RISCVIOMMUState, pas_bits, 0),
-     DEFINE_PROP_UINT32("bus", RISCVIOMMUState, bus, 0x0),
-     DEFINE_PROP_UINT32("ioatc-limit", RISCVIOMMUState, iot_limit,
-         LIMIT_CACHE_IOT),
-diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-index 07e66b3936..bbce2fb667 100644
---- a/hw/riscv/virt.c
-+++ b/hw/riscv/virt.c
-@@ -1739,6 +1739,13 @@ static void virt_machine_init(MachineState *machine)
-         object_property_set_link(OBJECT(iommu_sys), "irqchip",
-                                  OBJECT(mmio_irqchip),
-                                  &error_fatal);
-+        /*
-+         * For riscv64 use a physical address size of 56 bits (44 bit PPN),
-+         * and for riscv32 use 34 bits (22 bit PPN).
-+         */
-+        object_property_set_uint(OBJECT(iommu_sys), "pas-bits",
-+                                 riscv_is_32bit(&s->soc[0]) ? 34 : 56,
-+                                 &error_fatal);
- 
-         sysbus_realize_and_unref(SYS_BUS_DEVICE(iommu_sys), &error_fatal);
+ static int64_t load_loongarch_linux_image(const char *filename,
++                                          uint64_t phys_addr_mask,
+                                           uint64_t *kernel_entry,
+                                           uint64_t *kernel_low,
+                                           uint64_t *kernel_high)
+@@ -251,10 +253,8 @@ static int64_t load_loongarch_linux_image(const char *filename,
      }
+ 
+     /* Early kernel versions may have those fields in virtual address */
+-    *kernel_entry = extract64(le64_to_cpu(hdr->kernel_entry),
+-                              0, TARGET_PHYS_ADDR_SPACE_BITS);
+-    *kernel_low = extract64(le64_to_cpu(hdr->load_offset),
+-                            0, TARGET_PHYS_ADDR_SPACE_BITS);
++    *kernel_entry = le64_to_cpu(hdr->kernel_entry) & phys_addr_mask;
++    *kernel_low = le64_to_cpu(hdr->load_offset) & phys_addr_mask;
+     *kernel_high = *kernel_low + size;
+ 
+     rom_add_blob_fixed(filename, buffer, size, *kernel_low);
+@@ -303,19 +303,21 @@ static ram_addr_t alloc_initrd_memory(struct loongarch_boot_info *info,
+     exit(1);
+ }
+ 
+-static int64_t load_kernel_info(struct loongarch_boot_info *info)
++static int64_t load_kernel_info(struct loongarch_boot_info *info,
++                                uint64_t phys_addr_mask)
+ {
+     uint64_t kernel_entry, kernel_low, kernel_high, initrd_offset = 0;
+     ssize_t kernel_size;
+ 
+     kernel_size = load_elf(info->kernel_filename, NULL,
+-                           cpu_loongarch_virt_to_phys, NULL,
++                           cpu_loongarch_virt_to_phys, &phys_addr_mask,
+                            &kernel_entry, &kernel_low,
+                            &kernel_high, NULL, ELFDATA2LSB,
+                            EM_LOONGARCH, 1, 0);
+-    kernel_entry = cpu_loongarch_virt_to_phys(NULL, kernel_entry);
++    kernel_entry = cpu_loongarch_virt_to_phys(&phys_addr_mask, kernel_entry);
+     if (kernel_size < 0) {
+         kernel_size = load_loongarch_linux_image(info->kernel_filename,
++                                                 phys_addr_mask,
+                                                  &kernel_entry, &kernel_low,
+                                                  &kernel_high);
+     }
+@@ -395,14 +397,15 @@ static void init_boot_rom(MachineState *ms,
+ }
+ 
+ static void loongarch_direct_kernel_boot(MachineState *ms,
+-                                         struct loongarch_boot_info *info)
++                                         struct loongarch_boot_info *info,
++                                         uint64_t phys_addr_mask)
+ {
+     void *p, *bp;
+     int64_t kernel_addr = VIRT_FLASH0_BASE;
+     uint64_t *data;
+ 
+     if (info->kernel_filename) {
+-        kernel_addr = load_kernel_info(info);
++        kernel_addr = load_kernel_info(info, phys_addr_mask);
+     } else {
+         if (!qtest_enabled()) {
+             warn_report("No kernel provided, booting from flash drive.");
+@@ -429,7 +432,8 @@ static void loongarch_direct_kernel_boot(MachineState *ms,
+     g_free(bp);
+ }
+ 
+-void loongarch_load_kernel(MachineState *ms, struct loongarch_boot_info *info)
++void loongarch_load_kernel(MachineState *ms, struct loongarch_boot_info *info,
++                           uint64_t phys_addr_mask)
+ {
+     LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(ms);
+ 
+@@ -440,6 +444,6 @@ void loongarch_load_kernel(MachineState *ms, struct loongarch_boot_info *info)
+     if (lvms->bios_loaded) {
+         loongarch_firmware_boot(lvms, info);
+     } else {
+-        loongarch_direct_kernel_boot(ms, info);
++        loongarch_direct_kernel_boot(ms, info, phys_addr_mask);
+     }
+ }
+diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
+index a75968e4c9..9e26c25c23 100644
+--- a/hw/loongarch/virt.c
++++ b/hw/loongarch/virt.c
+@@ -34,6 +34,7 @@
+ #include "hw/misc/unimp.h"
+ #include "hw/loongarch/fw_cfg.h"
+ #include "target/loongarch/cpu.h"
++#include "target/loongarch/cpu-mmu.h"
+ #include "hw/firmware/smbios.h"
+ #include "qapi/qapi-visit-common.h"
+ #include "hw/acpi/generic_event_device.h"
+@@ -928,6 +929,7 @@ static void virt_init(MachineState *machine)
+     hwaddr base, size, ram_size = machine->ram_size;
+     MachineClass *mc = MACHINE_GET_CLASS(machine);
+     Object *cpuobj;
++    uint64_t phys_addr_mask = 0;
+ 
+     if (!cpu_model) {
+         cpu_model = LOONGARCH_CPU_TYPE_NAME("la464");
+@@ -1017,7 +1019,8 @@ static void virt_init(MachineState *machine)
+     qemu_register_powerdown_notifier(&lvms->powerdown_notifier);
+ 
+     lvms->bootinfo.ram_size = ram_size;
+-    loongarch_load_kernel(machine, &lvms->bootinfo);
++    phys_addr_mask = loongarch_palen_mask(&LOONGARCH_CPU(first_cpu)->env);
++    loongarch_load_kernel(machine, &lvms->bootinfo, phys_addr_mask);
+ }
+ 
+ static void virt_get_acpi(Object *obj, Visitor *v, const char *name,
 
 -- 
 2.52.0
