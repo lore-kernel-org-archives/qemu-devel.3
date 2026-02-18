@@ -4,63 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D54D8E9A03B
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 09:10:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19E6DE9A03E
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 09:10:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vsdXG-0001vy-8h; Wed, 18 Feb 2026 04:07:54 -0500
+	id 1vsdXF-0001nm-5d; Wed, 18 Feb 2026 04:07:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vsdWw-0000zY-34
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 04:07:35 -0500
+ id 1vsdWR-0000h5-V9
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 04:07:06 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vsdWq-0002Sl-ST
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 04:07:32 -0500
+ id 1vsdWM-0002Pr-U4
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 04:07:02 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771405643;
+ s=mimecast20190719; t=1771405617;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=iolbSR7ouNZT1Z1A/hTnNFQIrAqvCIZOr9ITrRjYxKc=;
- b=CKcpOiHeknu9DbBp0OcmJrlSZhckZKKwlN1cG9X6nh087GvcXtaOQQS3SqsdcWE9lONsis
- 65L2vLr4wic2HnJpGZ6YyuNGzVRcmne4yTvFFt/2NUXmCC2xWM6kDbJM3iQiGKkCY5Pvao
- gqEeWUBbKSFlYhx7912zJyDJh3OuZV0=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=BlvSqwSi5p6HvV5NUZQ1P6/nC//iuZk8I7I3m6Rju4Y=;
+ b=O2rna3TqE9/F1XYyhkQqqtUH4Nh9nCzD5hnLC8zZOw7o7sHSdcsmwzm8HAHSdYh/4dISre
+ XEaTP0l5MdB60eaGImO6rpm1kwqYkCNR3+wEUspa92PNc/dJmW7MNKMVVf03ztbOefwvuP
+ l2wanhE+jaEalfc+OyL6blYyBZBVJ+o=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-595-JEgfJhPvPxGI53WBnyeZlA-1; Wed,
- 18 Feb 2026 04:07:22 -0500
-X-MC-Unique: JEgfJhPvPxGI53WBnyeZlA-1
-X-Mimecast-MFC-AGG-ID: JEgfJhPvPxGI53WBnyeZlA_1771405641
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-325-aP-akWQOOJmoWr56arU3kg-1; Wed,
+ 18 Feb 2026 04:06:56 -0500
+X-MC-Unique: aP-akWQOOJmoWr56arU3kg-1
+X-Mimecast-MFC-AGG-ID: aP-akWQOOJmoWr56arU3kg_1771405615
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 45D4519560AA; Wed, 18 Feb 2026 09:07:21 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5435A180034D; Wed, 18 Feb 2026 09:06:55 +0000 (UTC)
 Received: from localhost (unknown [10.45.242.26])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 82508180034A; Wed, 18 Feb 2026 09:07:20 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 52E263000223; Wed, 18 Feb 2026 09:06:54 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Gerd Hoffmann <kraxel@redhat.com>
-Subject: [PULL 76/85] audio: replace DEBUG_CAPTURE with traces
-Date: Wed, 18 Feb 2026 10:03:16 +0100
-Message-ID: <20260218090330.1476169-77-marcandre.lureau@redhat.com>
+Subject: [PULL 67/85] audio/pw: replace custom logging with error_report
+Date: Wed, 18 Feb 2026 10:03:07 +0100
+Message-ID: <20260218090330.1476169-68-marcandre.lureau@redhat.com>
 In-Reply-To: <20260218090330.1476169-1-marcandre.lureau@redhat.com>
 References: <20260218090330.1476169-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -89,85 +89,65 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
+Replace the custom audio logging infrastructure (dolog macro) with
+standard QEMU error reporting (error_report).
+
 Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- audio/audio-mixeng-be.c | 20 +++++++-------------
- audio/trace-events      |  3 +++
- 2 files changed, 10 insertions(+), 13 deletions(-)
+ audio/pwaudio.c | 11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
-diff --git a/audio/audio-mixeng-be.c b/audio/audio-mixeng-be.c
-index 2aeb05ba37e..1963f3e5c79 100644
---- a/audio/audio-mixeng-be.c
-+++ b/audio/audio-mixeng-be.c
-@@ -30,7 +30,6 @@
- #include "audio_int.h"
+diff --git a/audio/pwaudio.c b/audio/pwaudio.c
+index 7a009a94f3a..6a80e5a333e 100644
+--- a/audio/pwaudio.c
++++ b/audio/pwaudio.c
+@@ -20,14 +20,13 @@
+ #include <spa/param/props.h>
  
- /* #define DEBUG_OUT */
--/* #define DEBUG_CAPTURE */
- 
- #define SW_NAME(sw) (sw)->name ? (sw)->name : "unknown"
- 
-@@ -249,9 +248,8 @@ static void audio_notify_capture (CaptureVoiceOut *cap, audcnotification_e cmd)
- {
-     struct capture_callback *cb;
- 
--#ifdef DEBUG_CAPTURE
--    dolog ("notification %d sent\n", cmd);
--#endif
-+    trace_audio_notify_capture(cmd);
+ #include <pipewire/pipewire.h>
 +
-     for (cb = cap->cb_head.lh_first; cb; cb = cb->entries.le_next) {
-         cb->ops.notify (cb->opaque, cmd);
++#include "audio_int.h"
+ #include "trace.h"
+ 
+-#define AUDIO_CAP "pipewire"
+ #define RINGBUFFER_SIZE    (1u << 22)
+ #define RINGBUFFER_MASK    (RINGBUFFER_SIZE - 1)
+ 
+-#include "audio_int.h"
+-
+ #define TYPE_AUDIO_PW "audio-pipewire"
+ OBJECT_DECLARE_SIMPLE_TYPE(AudioPw, AUDIO_PW)
+ 
+@@ -358,7 +357,7 @@ audfmt_to_pw(AudioFormat fmt, bool big_endian)
+         format = big_endian ? SPA_AUDIO_FORMAT_F32_BE : SPA_AUDIO_FORMAT_F32_LE;
+         break;
+     default:
+-        dolog("Internal logic error: Bad audio format %d\n", fmt);
++        error_report("pipewire: internal logic error: bad audio format %d", fmt);
+         format = SPA_AUDIO_FORMAT_U8;
+         break;
      }
-@@ -333,12 +331,10 @@ static int audio_attach_capture (HWVoiceOut *hw)
-         sw->rate = st_rate_start (sw->info.freq, hw_cap->info.freq);
-         QLIST_INSERT_HEAD (&hw_cap->sw_head, sw, entries);
-         QLIST_INSERT_HEAD (&hw->cap_head, sc, entries);
--#ifdef DEBUG_CAPTURE
--        sw->name = g_strdup_printf ("for %p %d,%d,%d",
--                                    hw, sw->info.freq, sw->info.bits,
--                                    sw->info.nchannels);
--        dolog ("Added %s active = %d\n", sw->name, sw->active);
--#endif
-+        sw->name = g_strdup_printf("for %p %d,%s,%d",
-+                                   hw, sw->info.freq, AudioFormat_str(sw->info.af),
-+                                   sw->info.nchannels);
-+        trace_audio_capture_attach(sw->name, sw->active);
-         if (sw->active) {
-             audio_capture_maybe_changed (cap, 1);
-         }
-@@ -1707,10 +1703,8 @@ static void audio_mixeng_backend_del_capture(
+@@ -418,7 +417,7 @@ pw_to_audfmt(enum spa_audio_format fmt, int *endianness,
+         return AUDIO_FORMAT_F32;
+     default:
+         *sample_size = 1;
+-        dolog("Internal logic error: Bad spa_audio_format %d\n", fmt);
++        error_report("pipewire: internal logic error: bad spa_audio_format %d", fmt);
+         return AUDIO_FORMAT_U8;
+     }
+ }
+@@ -518,7 +517,7 @@ qpw_set_position(uint32_t channels, uint32_t position[SPA_AUDIO_MAX_CHANNELS])
+         position[0] = SPA_AUDIO_CHANNEL_MONO;
+         break;
+     default:
+-        dolog("Internal error: unsupported channel count %d\n", channels);
++        error_report("pipewire: unsupported channel count %d", channels);
+     }
+ }
  
-                 while (sw) {
-                     SWVoiceCap *sc = (SWVoiceCap *) sw;
--#ifdef DEBUG_CAPTURE
--                    dolog ("freeing %s\n", sw->name);
--#endif
- 
-+                    trace_audio_capture_free_sw(sw->name);
-                     sw1 = sw->entries.le_next;
-                     if (sw->rate) {
-                         st_rate_stop (sw->rate);
-diff --git a/audio/trace-events b/audio/trace-events
-index d66a712e871..3f8ebf9c6cb 100644
---- a/audio/trace-events
-+++ b/audio/trace-events
-@@ -58,10 +58,13 @@ audio_be_set_active_out(void *sw, bool on) "sw=%p, on=%d"
- audio_timer_start(int interval) "interval %d ms"
- audio_timer_stop(void) ""
- audio_timer_delayed(int interval) "interval %d ms"
-+audio_notify_capture(int cmd) "notification %d sent"
-+audio_capture_attach(const char *name, bool active) "capture %s active=%d"
- 
- # audio-mixeng-be.c
- audio_get_avail(const char *name, size_t live, uint32_t frontend_frames) "%s: get_avail live %zu frontend frames %u"
- audio_run_poll(const char *msg, int64_t elapsed_us) "Elapsed since last %s: %" PRId64 " us"
-+audio_capture_free_sw(const char *name) "freeing %s"
- 
- # audio_template.h
- audio_open_out(const char *name, int freq, int nchannels, int fmt) "open %s, freq %d, nchannels %d, fmt %d"
 -- 
 2.53.0
 
