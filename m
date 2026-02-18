@@ -4,46 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 922CEE9A04C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C5B6E9A02C
 	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 20:13:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vsnvA-0001gx-0W; Wed, 18 Feb 2026 15:13:16 -0500
+	id 1vsnuq-0001er-CN; Wed, 18 Feb 2026 15:13:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vsnua-0001e1-Eb
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 15:12:45 -0500
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vsnuS-0001cT-OK
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 15:12:32 -0500
 Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vsnuX-0002Zw-Bb
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 15:12:40 -0500
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vsnuQ-0002Y8-G6
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 15:12:31 -0500
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by tor.source.kernel.org (Postfix) with ESMTP id 0BC6E61857;
- Wed, 18 Feb 2026 20:12:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16956C19423;
- Wed, 18 Feb 2026 20:12:32 +0000 (UTC)
+ by tor.source.kernel.org (Postfix) with ESMTP id 6DFDB61857;
+ Wed, 18 Feb 2026 20:12:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB3E5C116D0;
+ Wed, 18 Feb 2026 20:12:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1771445554;
- bh=fdMSHdHw/VxM+V0zW5wuIrMTv4tUBIJWNrApGmRCuSs=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=IR4V4K96B+PheIN5wxXa91WOGHOuxwly9lHgJc8Ar2ExWpHchgthK+Dx6wPVOnCq8
- ycQ8+nV62PLhh1pp7c1zmO8mkzcDr4IcGLXONaW7sZ5PoUSzeqUCe4wM6/Txuve3jm
- MlWbzMnYXedG7X2V78pTi8jeT3NbPJmrCZr6v89QkBzUHllX8jhrJpbYq9+m5JBcvI
- 35cMVjkh939mlWIcyww1BhJeFlgQ3C2sGTrl7Z2T/Fx2Ibax1fnckSgtkKKLfV7cWV
- yV31IdWqScT3LvxfTrwnr1k4dFD+7XR/7InoTdzZtxG7S1h5a2SYN2KpzZ6H+4HWqe
- J9Qliu+nFYuXg==
+ s=k20201202; t=1771445545;
+ bh=mgZlM6/10+cu5QgnPE0lEKFT+lYSfxjzXHXHrsmt/JI=;
+ h=From:To:Cc:Subject:Date:From;
+ b=vKMvWUyu8YaNbFmWF62UyIhvG1Xd7WGzNFdA6ZOlkqcdiubsu6Nwg+NZOZg9vgQ5i
+ VD4Cjz3cJX9UoLyVfwZ92+Hcs2LuRqnreIC2/KSYtCpiAT8EkVZNHnEVcb1Yfsp+eP
+ 0GX4y/KK3gMeiT737rqpx56FApSYb7iIo39hs9/cofXAdiUJLtIlVqm8resdvPPRgc
+ 6dGhuyXoOo7E6JWeQubwWLD/EdhSXkvMcR00GYc6+S89YgJ/bFOeZNLz7C7HKqlN7b
+ aBfnIfBo3Yrfe6xrsvK8oOjFLlnONRxxQUjn9jwr4CkR/+PqkRGIVd5pFP54HpXb/o
+ Ty7M4l3jQUa7Q==
 From: deller@kernel.org
 To: Richard Henderson <richard.henderson@linaro.org>,
 	qemu-devel@nongnu.org
 Cc: Anton Johansson <anjo@rev.ng>,
 	Helge Deller <deller@gmx.de>
-Subject: [PATCH 3/4] hw/hppa: Require SeaBIOS version 22 for A400 machine
-Date: Wed, 18 Feb 2026 21:12:20 +0100
-Message-ID: <20260218201221.20958-4-deller@kernel.org>
+Subject: [PATCH 0/4] hppa a400 machine support
+Date: Wed, 18 Feb 2026 21:12:17 +0100
+Message-ID: <20260218201221.20958-1-deller@kernel.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260218201221.20958-1-deller@kernel.org>
-References: <20260218201221.20958-1-deller@kernel.org>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
@@ -71,29 +70,29 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Helge Deller <deller@gmx.de>
 
-Require at least SeaBIOS version 22 before adding the A400 machine.
-This is required, because version 22 adds the A400 machine definition
-and provides the necessary 64-bit PAT firmware. All other machines up to
-now used only the 32- or 64-bit PDC firmware without the PAT extensions.
+Major enhancements to SeaBIOS-hppa to support an A400
+server. This server requires 64-bit PAT firmware, so
+SeaBIOS-hppa was extendend a lot. PAT firmware is required
+as well to support 64-bit HP-UX 11i3 or MPE.
 
-Signed-off-by: Helge Deller <deller@gmx.de>
----
- hw/hppa/machine.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+The patches to qemu are quite small.
 
-diff --git a/hw/hppa/machine.c b/hw/hppa/machine.c
-index d6aeb793c0..5ce4a17915 100644
---- a/hw/hppa/machine.c
-+++ b/hw/hppa/machine.c
-@@ -45,7 +45,7 @@ struct HppaMachineState {
-     MachineState parent_obj;
- };
- 
--#define MIN_SEABIOS_HPPA_VERSION 19 /* require at least this fw version */
-+#define MIN_SEABIOS_HPPA_VERSION 22 /* require at least this fw version */
- 
- #define HPA_POWER_BUTTON        (FIRMWARE_END - 0x10)
- static hwaddr soft_power_reg;
+Please review.
+
+Helge
+
+Helge Deller (4):
+  hw/hppa: Add BMC on 64-bit machines only
+  target/hppa: Update SeaBIOS-hppa to version 22
+  hw/hppa: Require SeaBIOS version 22 for A400 machine
+  hw/hppa: Add emulation for the 64-bit A400 server
+
+ hw/hppa/machine.c           |  32 +++++++++++++++++++++++++++++++-
+ pc-bios/hppa-firmware.img   | Bin 628952 -> 632048 bytes
+ pc-bios/hppa-firmware64.img | Bin 692032 -> 713608 bytes
+ roms/seabios-hppa           |   2 +-
+ 4 files changed, 32 insertions(+), 2 deletions(-)
+
 -- 
 2.53.0
 
