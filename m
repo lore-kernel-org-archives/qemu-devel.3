@@ -4,67 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC7F0E9A02C
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 17:20:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15454E9A02C
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 17:24:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vslCj-0005Uo-Vo; Wed, 18 Feb 2026 12:19:14 -0500
+	id 1vslHV-0000rG-1R; Wed, 18 Feb 2026 12:24:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vslCO-0005PQ-EK
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 12:18:55 -0500
-Received: from rev.ng ([94.130.142.21])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vslCG-0005aZ-Hm
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 12:18:49 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
- s=dkim; h=Cc:To:Content-Transfer-Encoding:Content-Type:MIME-Version:
- Message-Id:Date:Subject:From:Sender:Reply-To:Content-ID:Content-Description:
- Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
- In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
- List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=Yog9jPtAES0Jn63OVmBniBo9y/VkOCMQJJHTIyDoGno=; b=MrOQ/Shqo7LeVKu
- 2MzcPiOKFxIMCKlTNGHCwxb3E6b3TV/qmXM/8Ow/r/AwaB8LwN8uKQ/NPVOEUSJwo4XHx5oExRssI
- C6bxdyKY3UoO03ShYRdB1nT95JV3sHpHPo2FY+OQAwr/n59ybSb/jgVwK03xUv7tP3SE8oYN18q/x
- Is=;
-Subject: [PATCH v6 0/7] single-binary: Drop TARGET_PHYS_ADDR_SPACE_BITS
-Date: Wed, 18 Feb 2026 18:21:26 +0100
-Message-Id: <20260218-phys_addr-v6-0-a603bf363218@rev.ng>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/1XOS27DIBSF4a1EjEt0H2BMR91HVVWER8zEiaCyG
- kXee0mipHh4rvh+cRU1lhyreN9dRYlLrvk0tzG87YSf3HyMMoe2BQFpRFDyPF3qtwuhyAMkZaJ
- jQOVEe38uMeXfe+vzq+0p159TudzTC96ujwqB7SoLSpCeR5M4GgrGfLRv7OejuCUW6hjqnlFjA
- 7NzGCyRDxvGTzYAIvWMG9PJQgoHBajThql/Rgg9U40Z0k6PNo7sxw3TPRt6phsjGzRRQmbrX2x
- d1z/FwJN3ewEAAA==
-X-Change-ID: 20251104-phys_addr-b0f47ea3014a
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vslHT-0000qx-I6
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 12:24:07 -0500
+Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vslHS-0006VT-3Z
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 12:24:07 -0500
+Received: by mail-pf1-x435.google.com with SMTP id
+ d2e1a72fcca58-8220bd582ddso1024b3a.2
+ for <qemu-devel@nongnu.org>; Wed, 18 Feb 2026 09:24:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1771435444; x=1772040244; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=go8zD64Fw6NrSCUlR0CioUzF+vztoGXWF68Lnwt2cTI=;
+ b=JamVy/hNYOm/mVQEDzsyjzMOBCNSduNkLYJRBbr3PshBDXZ4O6BfpDWu5XhOGpRpw3
+ OdTdlBzA+97QyAl8mg41NxpKzvRo0jszvUAl+yXbT+RXmhbLczmSPEn3rDyPLM1qt3+S
+ QC7C9Tou27seJiPZZ9+OfRMPSFXCwgTbxLlEPsGGYf07tJaA6xRE7490vFOQZttSf4Ri
+ MGLzpFmuRZvEcG4EhXZVfcACouE/QymsyuAx/OF2jnpdsjczrHfGfCdIpm5/NSBJ8ItH
+ qCd5c7E7pbILdjZmL5mhHrgkg61nVX1MwcvZcEf03jAFB1zgxQaLGMuAYkBnn9kLanlt
+ xEZg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1771435444; x=1772040244;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=go8zD64Fw6NrSCUlR0CioUzF+vztoGXWF68Lnwt2cTI=;
+ b=kXDEumEaiMEE/IMTAWvkZUIypcZ3hdqMfd9VtDTZ05ppdwWEn4cGwNbmxZxMFAKMfy
+ 7wzPdwdYzProgyzHYZGrJKfqWIu/FZhsuFja6lPGrakUQer33MvhIeRk7hfsx0pvidVI
+ CfMsdEFzo4rs0Fl4PKv0rs2g3zCRs1TkxawHL+ySApYH2kdXs1TwDvOuGLNGhXJL393m
+ yGGXnX60r6qwxUMup9M2wN0Ai4E0Cv/M/VfjY4M0SazZ5XYj0xpPcy9AULA8iQnXv6z5
+ j3qdH+FBiXN7wBeYbYidGlLsz04ZJQtPX8mVuUX9Jtca3btxANos8T6lMg9RMwKT3WM5
+ bX/w==
+X-Gm-Message-State: AOJu0YxDKPbZhUum1iFmZ/KahnmI134W5xhpnvbsrJGlwold/qP0B2hT
+ vaE+BFTRFKuaX2xlMYEHK6CrJ5PAI6wnx/ciQRCeY7sPeblA1xIkqV21LspXoYUsf0BAQoxI22o
+ HaQrT
+X-Gm-Gg: AZuq6aLnv19qMOsne0RGOmvMBv7DPwHtn+4WGiZJUuuKFuJhgZNAgBVCSam0QXNKlR9
+ KGGIgvdgMaibW1bArJ9mnUMPAILMtDUH77Y1TMcO1AuPqbD9CchgGTPdSuSR8VpJYcAka7FuXUr
+ PMw2ar+HFR5hDXDWfs+ogvZhFeGwNW6KTsWnsXfOUXYiI1c3HUk97b5sU7oWKrXC31xY5xE+oIO
+ Csl8AYuzxk3fZHy2BlnuBTgmu5WLA2QUBLH4PgziQ2te2gC/3ABjXT7qcMlqsXUk8/6bvIDUmmD
+ aLCTppVEbCd9xdM0W1XS8qDvEZZNmCqX2flXYlpV5qfqFtJ+oepuqRbnD3+IJDN2FRwklnYoEDy
+ EvtIRwFYkhlBRIgWAPpsdH7eVH8OCYJAqEQlyYNL9pO7poCkHT1poWWGck8Wwhbdn5tS1ncTKa7
+ mfcQMt8vt/t7hdX6ChrI4oPKDCp0oFj1CzKDeqbJ2oeVWkXrCZn6UVDNJoKVmhggbPdXRc/xyKV
+ VEO
+X-Received: by 2002:a05:6a20:914b:b0:38d:f9b0:118b with SMTP id
+ adf61e73a8af0-394fc31d45dmr2287672637.41.1771435444229; 
+ Wed, 18 Feb 2026 09:24:04 -0800 (PST)
+Received: from pc.taild8403c.ts.net (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-c6e5301176dsm12660681a12.13.2026.02.18.09.24.03
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 18 Feb 2026 09:24:03 -0800 (PST)
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
- Richard Henderson <richard.henderson@linaro.org>, 
- Helge Deller <deller@gmx.de>, Paolo Bonzini <pbonzini@redhat.com>, 
- Song Gao <gaosong@loongson.cn>, Bibo Mao <maobibo@loongson.cn>, 
- Palmer Dabbelt <palmer@dabbelt.com>, 
- Alistair Francis <alistair.francis@wdc.com>, 
- Brian Cain <brian.cain@oss.qualcomm.com>, 
- Chao Liu <chao.liu.zevorn@gmail.com>, Anton Johansson <anjo@rev.ng>
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1771435335; l=3743;
- i=anjo@rev.ng; s=20260210; h=from:subject:message-id;
- bh=cF/SKDDeS9pFbN8O0z4Rg2jBtPjLR3INVqUkjt4c4ng=;
- b=+izUq47c8FzTKYhURlJcuxhhdBZ48dHPY7GV7fbIakcocznkKW9q8gV8NIGe60F/Y5rlt1H5V
- 3RwMELK/wqfCgqfc7qSi8Qvjcw5WEq5pMLLnQJ04S4QqbK+0Gh6ht4h
-X-Developer-Key: i=anjo@rev.ng; a=ed25519;
- pk=dKsZvj/g3kgDxnV1/SWg8a0YNGSpWtFGNsWIepQYKow=
-Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
- helo=rev.ng
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>, philmd@linaro.org,
+ Alexandre Iooss <erdnaxe@crans.org>
+Subject: [PATCH] contrib/plugins/uftrace_symbols.py: filter out some addr2line
+ error messages
+Date: Wed, 18 Feb 2026 09:23:56 -0800
+Message-ID: <20260218172356.938236-1-pierrick.bouvier@linaro.org>
+X-Mailer: git-send-email 2.47.3
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -77,102 +99,34 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Anton Johansson <anjo@rev.ng>
-From:  Anton Johansson via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The target macro TARGET_PHYS_ADDR_SPACE_BITS is unused since commit
+This was found when tracing Hafnium and SLOF binaries, and it's probably
+related to a bug in toolchain used. It's safe to ignore those entries,
+and related symbols will still be present in output, whether they can be
+found or not.
 
-  2e8fe327eb6 ("accel/tcg: Simplify L1_MAP_ADDR_SPACE_BITS"),
-
-replace the handful of remaining uses with runtime functions or
-constants.
-
-For discussion see:
-
-  https://lore.kernel.org/qemu-devel/8f0db5c1-f20b-4b7a-8d6c-76ce7ec7b4e0@linaro.org/
-
-Series fully reviewed.
-
-Suggested-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Anton Johansson <anjo@rev.ng>
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
-Changes in v6:
-- Added reviewed-bys
-- Link to v5: https://lore.kernel.org/qemu-devel/20260216-phys_addr-v5-0-29d522f1339c@rev.ng
+ contrib/plugins/uftrace_symbols.py | 3 +++
+ 1 file changed, 3 insertions(+)
 
-Changes in v5:
-- Added RISCVIOMMUState::pas_bits property (Richard, Chao);
-- Dropped already merged alpha patch (Philippe);
-- Added reviewed-bys;
-- Link to v4: https://lore.kernel.org/qemu-devel/20260210-phys_addr-v4-0-725a589e83c8@rev.ng
-
-Changes in v4:
-- Revert to using 40 bit physical addresses for HPPA to not break SeaBIOS
-  functional tests. This will be addressed in a separate series;
-- Added HPPA patch 3/8 to convert a missed 32-bit abs -> physical
-  address conversion;
-- Link to v3: https://lore.kernel.org/qemu-devel/20260112-phys_addr-v3-0-5f90fdb4015f@rev.ng
-
-Changes in v3:
-- Added reviewed-by;
-- Widened CC;
-- Link to v2: https://lore.kernel.org/qemu-devel/20251215-phys_addr-v2-0-633aa1d922cd@rev.ng
-
-Changes in v2:
-- Move alpha_phys_addr_space_bits() to linux-user/alpha/target_proc.h
-  (Richard);
-- Link to v1: https://lore.kernel.org/qemu-devel/20251209-phys_addr-v1-0-c387f3e72d77@rev.ng
-
----
-Anton Johansson (7):
-      target/hppa: Define PA[20|1X] physical address space size
-      hw/hppa: Use hppa_abs_to_phys_pa1x()
-      target/i386: Drop physical address range checks
-      target/loongarch: Introduce loongarch_palen_mask()
-      hw/loongarch: Use loongarch_palen_mask()
-      hw/riscv: Set IOMMU PAS via property
-      Drop TARGET_PHYS_ADDR_SPACE_BITS
-
- hw/riscv/riscv-iommu.h            |  1 +
- include/exec/cpu-defs.h           |  3 ---
- include/exec/poison.h             |  2 --
- include/hw/loongarch/boot.h       |  3 ++-
- target/alpha/cpu-param.h          |  3 ---
- target/arm/cpu-param.h            |  2 --
- target/avr/cpu-param.h            |  1 -
- target/hexagon/cpu-param.h        |  1 -
- target/hppa/cpu-param.h           |  3 ---
- target/hppa/cpu.h                 |  1 +
- target/i386/cpu-param.h           |  2 --
- target/i386/tcg/helper-tcg.h      |  2 --
- target/loongarch/cpu-mmu.h        |  1 +
- target/loongarch/cpu-param.h      |  1 -
- target/loongarch/internals.h      |  1 -
- target/m68k/cpu-param.h           |  1 -
- target/microblaze/cpu-param.h     |  2 --
- target/mips/cpu-param.h           |  2 --
- target/or1k/cpu-param.h           |  1 -
- target/ppc/cpu-param.h            |  7 -------
- target/riscv/cpu-param.h          |  2 --
- target/rx/cpu-param.h             |  1 -
- target/s390x/cpu-param.h          |  1 -
- target/sh4/cpu-param.h            |  1 -
- target/sparc/cpu-param.h          |  2 --
- target/tricore/cpu-param.h        |  1 -
- target/xtensa/cpu-param.h         |  1 -
- hw/hppa/machine.c                 |  2 +-
- hw/loongarch/boot.c               | 28 ++++++++++++++++------------
- hw/loongarch/virt.c               |  5 ++++-
- hw/riscv/riscv-iommu-pci.c        |  3 +++
- hw/riscv/riscv-iommu.c            |  8 ++++----
- hw/riscv/virt.c                   |  7 +++++++
- target/hppa/mem_helper.c          | 32 +++++++++++++++++++++++++++-----
- target/i386/cpu.c                 |  9 +++------
- target/i386/kvm/kvm.c             |  3 +--
- target/loongarch/cpu_helper.c     | 15 ++++++++++++---
- target/loongarch/tcg/tlb_helper.c | 12 ++++++++----
- 38 files changed, 91 insertions(+), 82 deletions(-)
+diff --git a/contrib/plugins/uftrace_symbols.py b/contrib/plugins/uftrace_symbols.py
+index 21704541a6c..7d79b81cdec 100755
+--- a/contrib/plugins/uftrace_symbols.py
++++ b/contrib/plugins/uftrace_symbols.py
+@@ -59,6 +59,9 @@ def find_symbols_locations(elf_file, symbols):
+         print(e.output)
+         raise
+     out = out.strip().split('\n')
++    # filter out some addr2line error messages
++    skip_err='addr2line: DWARF error: mangled line number section (bad file number)'
++    out = [src for src in out if src != skip_err]
+     assert len(out) == len(symbols)
+     for i in range(len(symbols)):
+         s = symbols[i]
+-- 
+2.47.3
 
 
