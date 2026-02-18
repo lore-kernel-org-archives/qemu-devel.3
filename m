@@ -4,96 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0902BE9A02C
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 19:02:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D99DE9A02C
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 19:09:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vsmoB-0001yz-1R; Wed, 18 Feb 2026 14:01:59 -0500
+	id 1vsmuv-000319-S2; Wed, 18 Feb 2026 14:08:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vsmo9-0001yc-45
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 14:01:57 -0500
-Received: from mail-yw1-x1131.google.com ([2607:f8b0:4864:20::1131])
+ id 1vsmuq-00030q-Gw
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 14:08:52 -0500
+Received: from mail-yx1-xb12b.google.com ([2607:f8b0:4864:20::b12b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vsmo6-0005xu-V4
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 14:01:56 -0500
-Received: by mail-yw1-x1131.google.com with SMTP id
- 00721157ae682-797d509a2f5so2186387b3.2
- for <qemu-devel@nongnu.org>; Wed, 18 Feb 2026 11:01:54 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1771441313; cv=none;
+ id 1vsmuo-0003a6-07
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 14:08:52 -0500
+Received: by mail-yx1-xb12b.google.com with SMTP id
+ 956f58d0204a3-649278a69c5so135343d50.3
+ for <qemu-devel@nongnu.org>; Wed, 18 Feb 2026 11:08:49 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1771441728; cv=none;
  d=google.com; s=arc-20240605;
- b=ObBaEIjQY8wu+WZ+cPI5Z5gxwj32Zh+Rb0WS8MFuVZoNmn3mFoXoIEBpaQcRTwvhzs
- tTjpmaibvdSR9sW5CXEEi46md2Rd3+5ORhbTD3KoPlXjAql7NY8RAYlF/qe9bnba0GHx
- i6/ZZ9LLwrY+mtsA9fe9/wO31MRuPtT9n4E6SuGPaPKo1+FR0M45fKfjQlfWvjiI7S0K
- M6XgHiM1dDm/pqy6gTTS/++j2zfueso1lldvWFKWUPlR82VTuKnA+YkljtZRJezFUl1u
- awehsR0sZGsnx0TiM/ibi8u1kqkgxDIztulO9Esp/O+4ztFIdBp03WTretmM/96gYbQr
- C3Gg==
+ b=e6KO9++08DcJJqvN/63DtnWYDbuq5OJdZY7y+EWqkS8uTqjho/U+6Yi6rLmGXMFntQ
+ VH7BXf3gEZxx2ES3RCrwOcrhYMa2s6uWS9k1DbfDXX9oXKmHfgtCJKDfMIWjsd0SdcxY
+ 5jRqTq7Nilkml1YVjrG7tJCeKgyYMZJuaJZKnB15DfbHe/gDStdo0CCsIp9hpwoUuiJW
+ e1fS3RMkyiHf1hxmC4sp/KF31SQbCBdgfpVDwSlM/MXyWAx1b9MfGjCcvps5SrOmcLiJ
+ miJ0wHLH21mdkE1KXK8nQRkoGpzr+p7BxTe7zARUSENYbHX2o13CAUT/AzwS/HWWqg1E
+ ydbw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=iRQW58jUjd7vqT9HNmwPUqH/1MRqYRFTjLXvnPOklEI=;
- fh=EW9hBPmu06DRmAd6hMxBcpY5XawM6U88N8rDhpCGN1w=;
- b=F0fP4Fra3WnBejnZbw6qrfi0JuqBzieBo5ZY3FdNbtj5XyWp8QjyxU30AbHWsyxZ6G
- FQJ6beXnN/srzxmIcbRMz8R3nxP5NiQJcbmLaSEVqWCz3NBvSC3/V2QotvoJyKzb+nt8
- WljgrxGYnpxqzWe9XLq9mqNR2N1tkRMCWcccl47xLjoSHNX7YsR6WBsFU6t4Ks8IF3c/
- vm4Nh4x0TVPy9cHG+ch/1fvTfs6MGg40A1Jb/3jiUX6YreRX0JsTRMAFgS9GJxjr731W
- cUYqATNwlgozPqjIb9l2iBMseA1I22qqSkUXtAeVYWf6PgHzFwGlz4NDf63+Mc5aOOam
- kU1g==; darn=nongnu.org
+ bh=9W7gl2hVXplswO1QhVFR8xnttvo6FvyK8legK6LQVsY=;
+ fh=ljsPVrMqM9WEgWa5yaVojVHzX4ehGvtuqRUN4Y5D7gg=;
+ b=LUIBkyOy7LF3kvyAKnUaWFCgc7JwtZHL25L4VP2VYFyv98H8RI/q6GMXphj6o5YXIP
+ Um617I2vo3dmV9AIImBykdhAIeE1vr7bsPXV94zilUCq1QBqkfNdysXLBgXID01p2MQJ
+ RBGvthiC2U3RH6IMscy6sHaXlEUzF55juZRvfWuxFg2mm/k057WUU/Y6ORNCEddQsYlo
+ QlxbNUKdNcQViM99IjsanpyrYwsOi/puLDhtsm+zD8KWgfcfqyNOYhO+KiL0Zz7/AEyO
+ /rsMrn3fPznv9D3PfgVWjMUnMEOKkMwUy7ZgpEXoUN01e/nDN/wCA3v6D7Z1ZFzYxcE+
+ OOag==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771441313; x=1772046113; darn=nongnu.org;
+ d=linaro.org; s=google; t=1771441728; x=1772046528; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=iRQW58jUjd7vqT9HNmwPUqH/1MRqYRFTjLXvnPOklEI=;
- b=UeR4HWmIBx7hvWZ52Q23m2ApLRk3WpNt9aPl2OgZAIqpXMHIG6DCEEVI7rrZCf9lPc
- 1OBHwfLO2OryjEb6CqvpaU+5G0Fd5ioC9BUn6vOP2qr8yObqhN1RGErWjSZdK/QY5fze
- NcC6I60Bwd2pf1i1NHi/k2iHMEEmk5mFFiP+I11EzwdSIu4U4I+rZYLUhRtmOFVe5Fqj
- 2fuTSpT8v8a4KWPSVQyc7xJpUxT3ymgmy7SltEiqYZDJIPFAJkL8HP8pHClX9yDHHvDL
- iKGNttUn+itA2clAO5Y2d+IPGOTlNnjnQ8N6iMRzkwBU/Brt/hPflmp+6Tgo404vSnxh
- w9Yw==
+ bh=9W7gl2hVXplswO1QhVFR8xnttvo6FvyK8legK6LQVsY=;
+ b=Daf7YdOfu/0pL1tell6kvWZjWHc5/d3oSgRysHkZ6MZEI0LHfhaBUS2uN+gcPAsgoX
+ c27nVUoHhs6xyJ94xuOCqh5n2xR6mUXiaeW2Cbz7J4QLeTE4YB1EORQj5yee7nFDU9Mq
+ mJfvJfRrjzVxLP6sWGBF6Nx9LeLkoKcaBrGWw1wA7td97t7CeR1CSocKS3kimVAo1oJp
+ GeyoI3fpwp8YjL92L9C0BB3g9KD+ApR0OHugcVcahvW2cWsp7A3AcXf/S419EBxstfgx
+ eDWdaQ864E4mb0Nd5mbgjhoK1aqcdyjLB+Vp5s5gf69j+Ki7yrwc4Dk3VZ1ciHcjTCrN
+ Fnlg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771441313; x=1772046113;
+ d=1e100.net; s=20230601; t=1771441728; x=1772046528;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=iRQW58jUjd7vqT9HNmwPUqH/1MRqYRFTjLXvnPOklEI=;
- b=IzL7OhKqnrXgdNPLkIVnqSoVqGOl9od2XI0yVnOM8kLszXx2m80e2NuZB/1z2GdMSB
- zJ5CZyiMt66HVhK+VtOmmDIerzVG1UH7Qa4B5YJC9NQKNuJZijEkL59v6c5xhgDllJTR
- sTv/vHN5ZtgQaj486t9v1Ib3E8FVEI4cxKKS959yP/YJZXmoAF6GEeKk5diExXo2sWq3
- 0e1G8xjlNmPWmvYGldXjShV9cmz0tXknakm2xLlw6zx3XQkiw7M+ndj4TEttDNjs61U6
- qlIhryigo4L7/nPdO2VW+qun43zg6zuWCRTAZgQDsd5PwSLBJVMWl5WgB/sl7j1KvWGb
- linw==
-X-Gm-Message-State: AOJu0Ywdn7mByd9TLdr34dDou6AqRg5p2iOzMLpBpgTU2fkl1OvK/Syh
- BSRNOF8B5JPTeaAOPVFEIxenR80G11e7W0Ugd9g2cUTNiS6BF7w6GmpDRq9XclfIHVnvV7RdsY9
- PEJHiLZMSpAi666K1zKjhg6UXU/zLNxS/8omkmKquBw==
-X-Gm-Gg: AZuq6aLHwZiPwIBJ73RMgMuukJ4PdglyIoYxgDAXMC9qnu8xi5pIRTyHOhRaA9wBtv2
- ZvqiivX/WrOYCW+rMiBaSOQHFz639dFrI6Auyi2kLb7UsKVmtiiGrgtoX7fsZEh9RTAs3k1EgLh
- Eb3JhJkAD0jVSMZJIcAGFQVtcdmTqTKJ22h4jzYJWjh4T7sPf5L3BTCFuzBsbBMbzh+nLTX44dJ
- 4/hWLXYurhOxfvN1+rcNESy+A8lZ1pWG1qhjmC53KL62ew7699zppJ8FL7c9+ZB/se51IqlQQtM
- EaS8QBaROPAweFTj6YR1vlR4xJkhQl3Oxh3AibEctH9Wa9CZNPfHCzRo2a2mWtAI+y3pO8lo6zE
- iAA==
-X-Received: by 2002:a05:690e:128b:b0:63f:b4d8:1f32 with SMTP id
- 956f58d0204a3-64c55572233mr1785674d50.20.1771441311307; Wed, 18 Feb 2026
- 11:01:51 -0800 (PST)
+ bh=9W7gl2hVXplswO1QhVFR8xnttvo6FvyK8legK6LQVsY=;
+ b=Gau4rl43Xpsh4UJVZGLnpAmG75Vkm/f7gaHFolKvhk1/WFu/vza6m0fWo9Cd/tFHGS
+ IfRw8V5f4nZSkeWSicll9PDUqiOIGxiAxIRvEnLPJEpEDkvha3rrnr3h48StPyir7vpj
+ SsMltdTUqcRB/vXV/FOGL1sECpQawMrKcM2CLovovJLWwXp2KtjxFK0gQyeXK2niZQBH
+ e83XWAw3eq9TtS2Y9cH4xzytlAQbGKjR4MUu8kPmtRoSfgIBBUcSQltmqqPMX7YW3+j3
+ PpUHvq5Ht53ZB6cINEwM6goMApwRL8vKPH9cyAyoGhT5LySfh+w4DjE1ExHKhcCE5lBr
+ 2mqA==
+X-Gm-Message-State: AOJu0YzJJM1jo2gnPhokfOwMcM5mECbkUOAQoeCA/D1HnoD/Fc1shfxo
+ Dbbe5oE86EYwzy/XY0B3IZ/7TB8ewb0EIrsXjXnZTXRCRaVRHj8hUyIErpbeD3MMXFU/b0gRn/N
+ klwUyfVtMOl3FQv+f4T5gfr4Y5w7LY9+2rvhNIm0MbQ==
+X-Gm-Gg: AZuq6aKosEeVEWWdHXg/9XrNXCeNiR8NmI5MFAirOUrPxwz5GkBQBEypUj20BZHxbai
+ q3CqL+nzw+1tJVZJGsYioZHbOZ9RT/1v3QPDSgR4DCmklp8MZbxcCsFiOIPneg5HsLm/7ppVrUi
+ pTu6TLGzpJr7yaZ+0DGfb1m+xGxgLHmwIhEJsOTllxA3A4dcDdldHxf21X8yP+JBMyomUSpmaKi
+ 5USKuWOKw/r1JkVx17XUt5oMZhgVCB4IOLAecv3SaW4dZPZDUjWwu0CGG1ayc11pAWD8LQbaKVg
+ 2jkMRyzmKVaHF4AM5rK/ih+XVt9Ev7QaNBYHbxg1yo8Yi2iNfxMbcI1mBFIst8QwgCs=
+X-Received: by 2002:a53:e1d1:0:b0:649:c3be:a36b with SMTP id
+ 956f58d0204a3-64c14e04ea0mr11041986d50.94.1771441728546; Wed, 18 Feb 2026
+ 11:08:48 -0800 (PST)
 MIME-Version: 1.0
-References: <20260211122759.125094-1-mbawa@redhat.com>
-In-Reply-To: <20260211122759.125094-1-mbawa@redhat.com>
+References: <20260206131438.1857182-1-imammedo@redhat.com>
+ <20260206131438.1857182-9-imammedo@redhat.com>
+In-Reply-To: <20260206131438.1857182-9-imammedo@redhat.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Wed, 18 Feb 2026 19:01:38 +0000
-X-Gm-Features: AZwV_Qh5_c586UujLxy3iUnKdj9MHyuEGviGeKU4tVsmoNrMoXW92DIAY7ZL_SE
-Message-ID: <CAFEAcA_+eqfTy+7U9igTscue5SMURm3C9yUXvdFTon+ZgSJfAA@mail.gmail.com>
-Subject: Re: [PATCH] hw/arm/virt: Add virtio-transports property
-To: Mohammadfaiz Bawa <mbawa@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, alex.bennee@linaro.org, 
- philmd@linaro.org, cohuck@redhat.com, eric.auger@redhat.com, 
- sebott@redhat.com
+Date: Wed, 18 Feb 2026 19:08:36 +0000
+X-Gm-Features: AZwV_QjGHmkJIvlZIT7Few9fbvc6nK1MdW3kkZHc9FurM0wg2PtDFz478IiJxWE
+Message-ID: <CAFEAcA_QO_Pm5qKy2xOer+VmyMZ6KZ1KdUpf_ETV9fQu4YmaHg@mail.gmail.com>
+Subject: Re: [PATCH 08/11] arm: virt: create GWDT watchdog paired with WDAT
+ ACPI table
+To: Igor Mammedov <imammedo@redhat.com>
+Cc: qemu-devel@nongnu.org, mst@redhat.com, anisinha@redhat.com, 
+ pbonzini@redhat.com, shannon.zhaosl@gmail.com, philmd@linaro.org, 
+ zhao1.liu@intel.com, rad@semihalf.com, leif.lindholm@oss.qualcomm.com
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1131;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1131.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -116,30 +117,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 11 Feb 2026 at 12:28, Mohammadfaiz Bawa <mbawa@redhat.com> wrote:
+On Fri, 6 Feb 2026 at 13:15, Igor Mammedov <imammedo@redhat.com> wrote:
 >
-> Windows ARM64 guests detect virtio-mmio devices declared in ACPI
-> tables even when no backend is attached. This causes "Unknown
-> devices" (ACPI\LNRO0005) to appear in Device Manager.
+> Add SBSA generic watchdog to virt machine type with
+> all necessary wiring for ACPI watchdog. Which includes
+> setting its frequency to 1KHz (max that WDAT is able to handle).
 >
-> Until Windows fixes that by supporting, adding a new machine
-> property 'virtio-transports' to control the number of
-> virtio-mmio transports instantiated. The default remains
-> NUM_VIRTIO_TRANSPORTS (32) for backward compatibility.
-> Setting it to 0 allows users to disable virtio-mmio entirely.
->
-> Usage: -machine virt,virtio-transports=0
->
-> Signed-off-by: Mohammadfaiz Bawa <mbawa@redhat.com>
+> Signed-off-by: Igor Mammedov <imammedo@redhat.com>
+> ---
 
-Applied to target-arm.next, thanks -- but please could you check
-up with the ACPI spec about whether it says anything about what
-to report for empty transports? If it says we should or if it's
-just vague we should probably match the x86 microvm behaviour
-of not showing empty transports, since they can never be
-hotplugged after startup. (This might need to be tied to
-a machine-version, not sure.) Maybe we should also not report
-them in the dtb?
+> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+> index 390845c503..caf5700ed2 100644
+> --- a/hw/arm/virt.c
+> +++ b/hw/arm/virt.c
+> @@ -93,6 +93,7 @@
+>  #include "hw/cxl/cxl.h"
+>  #include "hw/cxl/cxl_host.h"
+>  #include "qemu/guest-random.h"
+> +#include "hw/watchdog/sbsa_gwdt.h"
+>
+>  static GlobalProperty arm_virt_compat[] = {
+>      { TYPE_VIRTIO_IOMMU_PCI, "aw-bits", "48" },
+> @@ -194,6 +195,8 @@ static const MemMapEntry base_memmap[] = {
+>      [VIRT_PVTIME] =             { 0x090a0000, 0x00010000 },
+>      [VIRT_SECURE_GPIO] =        { 0x090b0000, 0x00001000 },
+>      [VIRT_ACPI_PCIHP] =         { 0x090c0000, ACPI_PCIHP_SIZE },
+> +    [VIRT_GWDT_REFRESH] =       { 0x090d0000, 0x00001000 },
+> +    [VIRT_GWDT_CONTROL] =       { 0x090d1000, 0x00001000 },
+>      [VIRT_MMIO] =               { 0x0a000000, 0x00000200 },
+>      /* ...repeating for a total of NUM_VIRTIO_TRANSPORTS, each of that size */
+>      [VIRT_PLATFORM_BUS] =       { 0x0c000000, 0x02000000 },
+> @@ -245,12 +248,32 @@ static const int a15irqmap[] = {
+>      [VIRT_GPIO] = 7,
+>      [VIRT_UART1] = 8,
+>      [VIRT_ACPI_GED] = 9,
+> +    [VIRT_GWDT_WS0] = 10,
+>      [VIRT_MMIO] = 16, /* ...to 16 + NUM_VIRTIO_TRANSPORTS - 1 */
+>      [VIRT_GIC_V2M] = 48, /* ...to 48 + NUM_GICV2M_SPIS - 1 */
+>      [VIRT_SMMU] = 74,    /* ...to 74 + NUM_SMMU_IRQS - 1 */
+>      [VIRT_PLATFORM_BUS] = 112, /* ...to 112 + PLATFORM_BUS_NUM_IRQS -1 */
+>  };
+>
+> +static void create_wdt(const VirtMachineState *vms)
+> +{
+> +    hwaddr rbase = vms->memmap[VIRT_GWDT_REFRESH].base;
+> +    hwaddr cbase = vms->memmap[VIRT_GWDT_CONTROL].base;
+> +    int irq = vms->irqmap[VIRT_GWDT_WS0];
+> +    DeviceState *dev = qdev_new(TYPE_WDT_SBSA);
+> +    SysBusDevice *s = SYS_BUS_DEVICE(dev);
+> +
+> +    /*
+> +     * Set watchdog tick freq to 1Kz as it's the max WDAT driver
+> +     * is able to handle.
+> +     */
+> +    qdev_prop_set_uint64(dev, "clock-frequency", 1000 /* 1KHz */);
+> +    sysbus_realize_and_unref(s, &error_fatal);
+> +    sysbus_mmio_map(s, 0, rbase);
+> +    sysbus_mmio_map(s, 1, cbase);
+> +    sysbus_connect_irq(s, 0, qdev_get_gpio_in(vms->gic, irq));
+> +}
+
+Please can you also add support for exposing this device
+in the device tree ?
+
+> +
+>  static void create_randomness(MachineState *ms, const char *node)
+>  {
+>      struct {
+> @@ -2515,6 +2538,9 @@ static void machvirt_init(MachineState *machine)
+>      vms->highmem_ecam &= (!firmware_loaded || aarch64);
+>
+>      create_rtc(vms);
+> +    if (machine->acpi_watchdog) {
+> +        create_wdt(vms);
+> +    }
+
+Can we have a command line option name that isn't ACPI
+specific, please? There's nothing inherent to ACPI about
+"I would like a watchdog device".
 
 thanks
 -- PMM
