@@ -4,184 +4,127 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03AF5E9A04B
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 20:14:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D9D6E9A02C
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 20:26:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vsnwQ-0003dU-0N; Wed, 18 Feb 2026 15:14:34 -0500
+	id 1vso7d-0006OR-Dc; Wed, 18 Feb 2026 15:26:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1vsnwN-0003Yx-L4
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 15:14:32 -0500
-Received: from mout.gmx.net ([212.227.17.20])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1vso7Y-0006O0-46
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 15:26:05 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1vsnwL-0003Ke-Lk
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 15:14:31 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
- s=s31663417; t=1771445667; x=1772050467; i=deller@gmx.de;
- bh=OFPilNUOjaDHEebfl8aQB4Wm2mQXd9vIitVKCIdjuvY=;
- h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
- References:From:In-Reply-To:Content-Type:
- Content-Transfer-Encoding:cc:content-transfer-encoding:
- content-type:date:from:message-id:mime-version:reply-to:subject:
- to;
- b=lBCqDqnLzWWAzRmkPUJ5Llxzt/E+C3SmIYkdd9CmkBHy9SKeUMq95txL/vcxxpYJ
- 8jFEu8B7O1//LElHFAY6IKqWpiuUVAbLqjEicihVULFCz73OCCs9hRm80LCD0BWpf
- 8iBsFyaZ+H6BNVzs9mua1R4v53JpNwvf3h9oZAEfA2XeDZ0VzwDVZINC/k7qzRMNM
- bbtUZyrAnqrRiyNnZ/+RmbSwsYp6+U5ydwkSx3BrHOlCoaoz/xjPM1kDEU7VYPj31
- dq3x9mLvwanAFdHO5PPDGROq6cda+zW2aJ7ZLhB4PtmrrkLuiHMBfEJHstYFbM1nn
- G1I0x9a9A6kc57FVCA==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [192.168.20.55] ([109.250.50.198]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MGQj7-1vyaAJ41UL-00GBTV; Wed, 18
- Feb 2026 21:14:27 +0100
-Message-ID: <6b1b9515-09e6-4ae8-b752-56069e3aed16@gmx.de>
-Date: Wed, 18 Feb 2026 21:14:26 +0100
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1vso7V-0006ur-IN
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 15:26:03 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1771446359;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=6b7N0ixeHsL7m50yy6yXfXwrT486E7jL8RjlXCfvj+g=;
+ b=LPqVVFbbWN9vt212VzSvu0k9rF6tHFESEF4QJBP/Yi1zqNF0Db8uUa7js3sF2QleMCY6Z9
+ IhxszqP2TVG72IfLQ41PDxvmWHuxx92p8/q4BKwf8r9AfczD3LSKNOO6/TBOCMKoYXQ+S1
+ PEzynWZNSm+a8OP8IzU+BYZ7NeuTloA=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-581-VCMzlH42Pe-1-X6JfWwxAw-1; Wed, 18 Feb 2026 15:25:57 -0500
+X-MC-Unique: VCMzlH42Pe-1-X6JfWwxAw-1
+X-Mimecast-MFC-AGG-ID: VCMzlH42Pe-1-X6JfWwxAw_1771446356
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-436267b01c4so232481f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 18 Feb 2026 12:25:57 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1771446356; cv=none;
+ d=google.com; s=arc-20240605;
+ b=Nk2GblJt9IOdR+gdRGU+hrBUcETdfq0WPLIekkZKnCESSmZJ7xjVdX0PlmZXJyH1J/
+ 7J/iR+n72y0z+q0sRq14tjUKK7jBGIjyShLB8lZzWcebXmOfbftha8P5h5sOBxL5VsWw
+ eYEypFG/gWJX6YrZy/rUKZxGEzF2I49NZmm6qAQdhieJidbTR++te7ZR/4/YtXZgCIGF
+ lS0uAhjN7D1xP8tXZMjAjCAMHlsL09amxvAOiTOi0boG9YygI5kMPRmDWX3hKXDNdAd8
+ RsPIg12+tj4M4sLVHIe7l+d/gHPySdMuQDaLWk1aBfEUvlGUHSJxcCVaNTstYZciqIvs
+ YcsQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=6b7N0ixeHsL7m50yy6yXfXwrT486E7jL8RjlXCfvj+g=;
+ fh=x6Mz7LKFGI1fzytJYuqKohItrHWx+XZmCrvOrhhVxTE=;
+ b=diwNGR0YGEOKyKpWFqyGOaY16XWeobaZWaVdXF+n1yxfmAuwU61c5GJH20jpg/q0dk
+ TlhqCvrharq4Q7Do6fBT1xtpbWT57hgDFKOzE1s0skLzysQx0n2wCepxtgl7hV3H8bWu
+ zMBcCcsAeCoOfFPY/2BbuRH7dwnaxMXE0WPCS0Fqwx00pcQENXIkq/AzDO/WeNwTvSdw
+ /sMnvDH7sNZjpVpy5RVWMdGlVTWC9kcro2ntFEpNSqZmAA2rYLs1NuL1PDOFnJzORVxO
+ E1x8vOdEmcTGafzdgGKDDNUn2sxyCjFrXIuhRcVHl/Oc3HMV+FDF9sJR5luW5CsQWemV
+ 2Afg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1771446356; x=1772051156; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=6b7N0ixeHsL7m50yy6yXfXwrT486E7jL8RjlXCfvj+g=;
+ b=L8bH1S8uRnbIE2WRjGo1957ga1jN6TxSh0pC+fggcTnnOdB5T/ZJY/uqmlTbpOXsLT
+ sduo017C/g85yyE/sLzCY54REMLyWIHrEORS0szpSgECtrXKTIgKIPcrJ73r/x14SOyH
+ heUq+I09CPpsvQ+KB5L7Iw4tdDiU2pS8o9YMUeNVsScVYyJ4Lx3S+dHsqqKHkptFesKo
+ Lx3WuV2RX0u1C5n7Uu3EL3kK1YPWOQMArQpT4GVob2FO6eVydUjMrz/pOsxP72sO9KT5
+ EKSn1iUao3R4u+x/h4txpfI5fneB4E+d16BpVhX7193Eq6JpAgKmDnKEg3dFWxt6gwiT
+ 8kWQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1771446356; x=1772051156;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=6b7N0ixeHsL7m50yy6yXfXwrT486E7jL8RjlXCfvj+g=;
+ b=SM1uvWzsmlTE3RlbgewxdQJY/LUEyipR37doQ8Z2BIK4WwZqs7kRr13C+zEX2yMHR/
+ 21QExCMHjh/t6CODFF8Ny9lk50nnKG8aH+17VazPEQFDOMh2gXCaDMjoUvUEh9wTjQay
+ i8tY+ENzKrsFXShsAf1qjRz3lTsqsh2eFWc4mHBVl7mjlArGdB+aUvq8hxVYGUPD6cTF
+ dOUX6VmGUF+Sl8gj92yJ5FzB1ScyFgjPEr1Vuvci/sDI2ZoscERxb+zw0rdlP2zSNTL0
+ 8WCT9nGzdjUJP9Hp8WHZBjKKcFLr9FJjluswDjRvKM/Qi5LG7WbUyty1N5IFX/MQiHZy
+ RSCw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUbMoRZz7vtpU0zXzW1Q83fcC0DW+XjqPK5oCqU38p77US5jSk9rHYqQLyroWs/8cELJlLGa5UBnwGQ@nongnu.org
+X-Gm-Message-State: AOJu0YxhWI+XoSZNoZDfJeVbWcY5Mxx9miwhUR5JWRkca2L/G+FP8Y18
+ kZjNDekz0hWPP1CKG1oOqEHJdSVKlhuRoKm2CNTe6ekh6RzOsWzsVOnPBCm/sSGHFlEaIu4/9Kh
+ 20RpxUIdPGcfsiGWdT78Wy5stBVAmmbC8pS7pxQjEhL+HJEwbbGN2z2pG48aCUKxnyWQWe+tJ9P
+ YBckE0eGND1KQDcuyl672Rjo4PEZFOo7Q=
+X-Gm-Gg: AZuq6aILVsUCntqP+oEbLWtWnSTBB3ATVjqzM50kgTkghmbDOHRDO2FPE9DnnJNx3rx
+ lya8fz7mjyHKb1J3I7JfGQ14zHOQrifuvC5cqLpsQKmYTHVHupde7k/zf/73VlIN923C74wJb9t
+ HxBjj4ZtQwxy4UjENjDGfNaWBJsoO2TdDN0fujZEPB22OA9WH0TyYTssISFMUfeuWs5cXe5cn1d
+ pU0viXqaa7yqhZx+ghH8GIJ6HSEQ/1v3blYY++7wilk9ejRXTUnm95jRbLHtuDiklyWBesX/9/d
+ 2xRfe5k=
+X-Received: by 2002:a05:6000:2911:b0:437:71b2:6f34 with SMTP id
+ ffacd0b85a97d-43958df112cmr4836546f8f.1.1771446356045; 
+ Wed, 18 Feb 2026 12:25:56 -0800 (PST)
+X-Received: by 2002:a05:6000:2911:b0:437:71b2:6f34 with SMTP id
+ ffacd0b85a97d-43958df112cmr4836503f8f.1.1771446355481; Wed, 18 Feb 2026
+ 12:25:55 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/4] hppa: Add simple C3600 machine with PA-8600 CPU
-To: Anton Johansson <anjo@rev.ng>
-Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>
-References: <20260210-hppa-c3600-v2-0-9ca09c677012@rev.ng>
- <5ba38c75-e1c6-41cc-9a5d-b81c22527993@gmx.de>
- <aZYYIfiomDjmB-zn@hive.localdomain>
-Content-Language: en-US
-From: Helge Deller <deller@gmx.de>
-Autocrypt: addr=deller@gmx.de; keydata=
- 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
-In-Reply-To: <aZYYIfiomDjmB-zn@hive.localdomain>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:si2RQOtBTLj5zeWLUhrU6R4/ruU50XvLPqnr/tcYabxpOpLQmr4
- U1IXB6UAgXbgOK//Nle8eeezHRTi7ABUtb1+FdiUfadFAYUiNafONp2Vtk9VzXgSioSTcnq
- bub7IekEYZn8NPYB//ZRvqfDG7IFNzNwmEZrL7/g8RlnB4lSj58ciNsbCI/hjtcG5YAVjG9
- VlwllTnJWkFD219PAQGcw==
-UI-OutboundReport: notjunk:1;M01:P0:FIwelfrm9h4=;9hjdYAWC5YZrYRfIsXov7MQETzX
- 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
- wQrLTqos=
-Received-SPF: pass client-ip=212.227.17.20; envelope-from=deller@gmx.de;
- helo=mout.gmx.net
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+References: <CAFn=p-YGckyEF8GCOviMJ-FfWsM_dDa6nqEBJChPmUxP7Ydi_w@mail.gmail.com>
+ <87wm0afsnh.fsf@pond.sub.org>
+ <56a8affc-e786-4dc8-81bd-c1f78a224afd@redhat.com>
+ <CAFn=p-YqRu3eaR+RvpCi3uaq8Y7s0pGtXwOLztqMDCqYG6McPA@mail.gmail.com>
+In-Reply-To: <CAFn=p-YqRu3eaR+RvpCi3uaq8Y7s0pGtXwOLztqMDCqYG6McPA@mail.gmail.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Wed, 18 Feb 2026 21:25:44 +0100
+X-Gm-Features: AaiRm53HF6lV9A-Z1qwD-JzTYAWVJOyaanOd4uRXaCr9QLz2hW2NfRnY6PYkcZw
+Message-ID: <CABgObfaRzjaGTdXGHG=BeHFgGJaC4tt0eKOJu=L=SYWpQmm+6w@mail.gmail.com>
+Subject: Re: CentOS 9, Python, and other Fairytales
+To: John Snow <jsnow@redhat.com>
+Cc: Markus Armbruster <armbru@redhat.com>, qemu-devel <qemu-devel@nongnu.org>, 
+ =?UTF-8?Q?Daniel_Berrang=C3=A9?= <berrange@redhat.com>
+Content-Type: multipart/alternative; boundary="000000000000c1eac2064b1efe47"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.043,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -197,73 +140,238 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/18/26 20:55, Anton Johansson wrote:
-> On 10/02/26, Helge Deller wrote:
->> On 2/10/26 17:37, Anton Johansson via qemu development wrote:
->>> This patchset tries to address a discrepancy between the C3700 machine
->>> in QEMU/SeaBIOS and the documentation (chapter 5)
->>>
->>>     http://ftp.parisc-linux.org/docs/whitepapers/PA-8700wp.pdf
->>>
->>> where 40 bits of physical address space are used in SeaBISO compared
->>
->> SeaBIOS (typo)
->>
->>> to the 44 bits specified in the documentation.
->>>
->>> A PA-8600 CPU with 40 bits of physical address space is added along wi=
-th
->>> a C3600 machine using it by default.  AFAICT there are no major
->>> differences from QEMUs side between the PA-8600 and 8700 aside from th=
-e
->>> physical address space size.  The PA-8700 machine can then be
->>> moved to using 44 bits.  To account for the discrepancy with SeaBIOS, =
-the
->>> functional tests now run a C3700 but with a PA-8600 CPU.
->>>
->>> CPU model definitions now inherit from a TYPE_HPPA_CPU base class and
->>> use a HPPACPUDef sturct to provide model specifics, similar to the SPA=
-RC
->>> and RISCV targets.  This hopefully makes it easier to add other models=
-,
->>> such as the 8800/8900.
->>>
->>> Based on:
->>>     PATCH v4 0/8] single-binary: Drop TARGET_PHYS_ADDR_SPACE_BITS
->>>     (20260210-phys_addr-v4-0-725a589e83c8@rev.ng)
->>>
->>> Signed-off-by: Anton Johansson <anjo@rev.ng>
->>
->> I like your patchset.
->> I'm just wondering if we should merge it with my upcoming new SeaBIOS,
->> which adds support for an A400 machine (with a PA8500 CPU).
->> So, instead of adding a C3600 machine, we could add the A400 which
->> has 40-bit physical addresss space too.
->> See:
->> https://github.com/hdeller/seabios-hppa/branches -> devel-v22 branch
->> and
->> https://github.com/hdeller/qemu-hppa/commit/1c969c925fb76236e76b09e011f=
-07766ab4441cb
->>
->> In addition, I wonder what's necessary to change in SeaBIOS to fully
->> support the 40 and/or 44-bit case. It's easy to hand over the bits to
->> SeaBIOS, so SeaBIOS could do the right thing.
->>
->> Helge
->>
->=20
-> Hi Helge,
->=20
-> I submitted a rebased v3 with some minor spelling fixes.  If you want
-> you can pick up the series, otherwise I'll swap out the C3600/PA-8600
-> for a A400/PA-8500 and keep pushing it, whatever is easier for you.
->=20
-> I need to look into the A400, is there some other change from the C3600
-> I should be aware of?
+--000000000000c1eac2064b1efe47
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-I just sent out the patches. The qemu patches are trivial, and maybe
-if you could review them they could go in fast.
-IMHO it should be trivial to adjust your series to use the A400 instead.
+Il mer 18 feb 2026, 18:10 John Snow <jsnow@redhat.com> ha scritto:
 
-Helge
+>
+>
+> On Wed, Feb 18, 2026, 6:48=E2=80=AFAM Paolo Bonzini <pbonzini@redhat.com>=
+ wrote:
+>
+>> >> With most of the new sticking points being debian 12 (EOL in June) or
+>> >> FreeBSD (timeline uncertain for when they'll re-modernize their pytho=
+n
+>> >> stack)
+>> >>
+>> >> One edge case here, however, is Sphinx, which does not actually have =
+a
+>> >> modern package in centOS stream 9.
+>> >>
+>> >> CentOS currently ships 3.4.3, but it would not be usable if using the
+>> >> optional 3.12 upgrade. If we ignore this, both FreeBSD and Debian 12
+>> >> have sphinx 5.3.0 to offer us, which is a reasonable version jump, bu=
+t
+>> >> it means that CentOS would not be able to build docs unless you
+>> >> enabled `--online` for configuring QEMU or sideloaded Sphinx
+>> >> otherwise.
+>> >
+>> > CentOS 9 reaches end of life on May 31 next year.  I do not think
+>> > keeping its ability to build bleeding edge docs offline out of the box
+>> > for its final year (give or take) is worth your time, or anybody's.
+>>
+>> That's exactly the reason why we (John and I) introduced mkvenv.py,
+>> except it was CentOS 8 and SLES 15 at the time
+>> (https://www.qemu.org/2023/03/24/python/):
+>>
+>> "Some of these tools are run through the python3 executable, while
+>> others are invoked directly as sphinx-build or meson, and this can
+>> create inconsistencies. For example, QEMU=E2=80=99s configure script che=
+cks for
+>> a minimum version of Python and rejects too-old interpreters. However,
+>> what would happen if code run by Sphinx used a different version?
+>>
+>> This situation has been largely hypothetical until recently; QEMU=E2=80=
+=99s
+>> Python code is already tested with a wide range of versions of the
+>> interpreter, and it would not be a huge issue if Sphinx used a different
+>> version of Python as long as both of them were supported. This will
+>> change in version 8.1 of QEMU, which will bump the minimum supported
+>> version of Python from 3.6 to 3.8. While all the distros that QEMU
+>> supports have a recent-enough interpreter, the default on RHEL8 and
+>> SLES15 is still version 3.6, and that is what all binaries in /usr/bin
+>> use unconditionally."
+>>
+>> So yeah, there's precedent for doing this, and it's the right thing to
+>> do anyway.
+>>
+>> >> My plan:
+>> >> - Wait and see what happens after the current QEMU release
+>> >> - Gleefully drop Ubuntu 22.04 in April (Allows Python 3.11+)
+>> >> - Gleefully drop Debian 12 in June
+>> >> - Hold my breath and see if FreeBSD happens to modernize by this poin=
+t
+>> >> (They have until October 2027 to do so, so it's a dice roll if they
+>> >> will or not)
+>> >> - Do a big round of Python modernization all at once; either to 3.11
+>> >> or 3.12 depending, and either to Sphinx 5.x or 7.x depending, pray fo=
+r
+>> >> forgiveness that I am removing CentOS stream 9's ability to build doc=
+s
+>> >> offline so I don't have to wait another six months and then do anothe=
+r
+>> >> big cleanup round
+>>
+>> The main nice features of 3.12 are improved f-strings, which are nice
+>> but not really a necessity.
+>>
+>> If I read it correctly, https://www.freshports.org/lang/python says it
+>> has 3.9 on PPC and 3.11 elsewhere, but
+>> https://www.freshports.org/lang/python311 says 3.11 exists on PPC as
+>> well.
+>>
+>> I'd go for 3.11 and Sphinx 7.  For FreeBSD we can require Python from
+>> Ports.
+>>
+>
+> freebsd ports is currently at 3.11, which is the main reason I am saying
+> "see what freebsd does by June"
+>
+> if they update, we can have Python 3.12 and Sphinx 7.x. If they don't, we
+> get 3.11 and 5.x
+>
+
+Why can't we do 3.11 and 7.x, and let freebsd also get sphinx from pypi
+until they update?
+
+Paolo
+
+. Both are good jumps, but on the chance I can make the bigger jump, I'd
+> rather do it in one round instead of two.
+>
+>
+>> Paolo
+>>
+>>
+
+--000000000000c1eac2064b1efe47
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote gmail_quote_contai=
+ner"><div dir=3D"ltr" class=3D"gmail_attr">Il mer 18 feb 2026, 18:10 John S=
+now &lt;<a href=3D"mailto:jsnow@redhat.com">jsnow@redhat.com</a>&gt; ha scr=
+itto:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0p=
+x 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex"><div dir=
+=3D"auto"><div><br><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D=
+"gmail_attr">On Wed, Feb 18, 2026, 6:48=E2=80=AFAM Paolo Bonzini &lt;<a hre=
+f=3D"mailto:pbonzini@redhat.com" target=3D"_blank" rel=3D"noreferrer">pbonz=
+ini@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" st=
+yle=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padd=
+ing-left:1ex">&gt;&gt; With most of the new sticking points being debian 12=
+ (EOL in June) or<br>
+&gt;&gt; FreeBSD (timeline uncertain for when they&#39;ll re-modernize thei=
+r python<br>
+&gt;&gt; stack)<br>
+&gt;&gt;<br>
+&gt;&gt; One edge case here, however, is Sphinx, which does not actually ha=
+ve a<br>
+&gt;&gt; modern package in centOS stream 9.<br>
+&gt;&gt;<br>
+&gt;&gt; CentOS currently ships 3.4.3, but it would not be usable if using =
+the<br>
+&gt;&gt; optional 3.12 upgrade. If we ignore this, both FreeBSD and Debian =
+12<br>
+&gt;&gt; have sphinx 5.3.0 to offer us, which is a reasonable version jump,=
+ but<br>
+&gt;&gt; it means that CentOS would not be able to build docs unless you<br=
+>
+&gt;&gt; enabled `--online` for configuring QEMU or sideloaded Sphinx<br>
+&gt;&gt; otherwise.<br>
+&gt; <br>
+&gt; CentOS 9 reaches end of life on May 31 next year.=C2=A0 I do not think=
+<br>
+&gt; keeping its ability to build bleeding edge docs offline out of the box=
+<br>
+&gt; for its final year (give or take) is worth your time, or anybody&#39;s=
+.<br>
+<br>
+That&#39;s exactly the reason why we (John and I) introduced mkvenv.py, <br=
+>
+except it was CentOS 8 and SLES 15 at the time <br>
+(<a href=3D"https://www.qemu.org/2023/03/24/python/" rel=3D"noreferrer nore=
+ferrer noreferrer" target=3D"_blank">https://www.qemu.org/2023/03/24/python=
+/</a>):<br>
+<br>
+&quot;Some of these tools are run through the python3 executable, while <br=
+>
+others are invoked directly as sphinx-build or meson, and this can <br>
+create inconsistencies. For example, QEMU=E2=80=99s configure script checks=
+ for <br>
+a minimum version of Python and rejects too-old interpreters. However, <br>
+what would happen if code run by Sphinx used a different version?<br>
+<br>
+This situation has been largely hypothetical until recently; QEMU=E2=80=99s=
+ <br>
+Python code is already tested with a wide range of versions of the <br>
+interpreter, and it would not be a huge issue if Sphinx used a different <b=
+r>
+version of Python as long as both of them were supported. This will <br>
+change in version 8.1 of QEMU, which will bump the minimum supported <br>
+version of Python from 3.6 to 3.8. While all the distros that QEMU <br>
+supports have a recent-enough interpreter, the default on RHEL8 and <br>
+SLES15 is still version 3.6, and that is what all binaries in /usr/bin <br>
+use unconditionally.&quot;<br>
+<br>
+So yeah, there&#39;s precedent for doing this, and it&#39;s the right thing=
+ to <br>
+do anyway.<br>
+<br>
+&gt;&gt; My plan:<br>
+&gt;&gt; - Wait and see what happens after the current QEMU release<br>
+&gt;&gt; - Gleefully drop Ubuntu 22.04 in April (Allows Python 3.11+)<br>
+&gt;&gt; - Gleefully drop Debian 12 in June<br>
+&gt;&gt; - Hold my breath and see if FreeBSD happens to modernize by this p=
+oint<br>
+&gt;&gt; (They have until October 2027 to do so, so it&#39;s a dice roll if=
+ they<br>
+&gt;&gt; will or not)<br>
+&gt;&gt; - Do a big round of Python modernization all at once; either to 3.=
+11<br>
+&gt;&gt; or 3.12 depending, and either to Sphinx 5.x or 7.x depending, pray=
+ for<br>
+&gt;&gt; forgiveness that I am removing CentOS stream 9&#39;s ability to bu=
+ild docs<br>
+&gt;&gt; offline so I don&#39;t have to wait another six months and then do=
+ another<br>
+&gt;&gt; big cleanup round<br>
+<br>
+The main nice features of 3.12 are improved f-strings, which are nice <br>
+but not really a necessity.<br>
+<br>
+If I read it correctly, <a href=3D"https://www.freshports.org/lang/python" =
+rel=3D"noreferrer noreferrer noreferrer" target=3D"_blank">https://www.fres=
+hports.org/lang/python</a> says it <br>
+has 3.9 on PPC and 3.11 elsewhere, but <br>
+<a href=3D"https://www.freshports.org/lang/python311" rel=3D"noreferrer nor=
+eferrer noreferrer" target=3D"_blank">https://www.freshports.org/lang/pytho=
+n311</a> says 3.11 exists on PPC as well.<br>
+<br>
+I&#39;d go for 3.11 and Sphinx 7.=C2=A0 For FreeBSD we can require Python f=
+rom Ports.<br></blockquote></div></div><div dir=3D"auto"><br></div><div dir=
+=3D"auto">freebsd ports is currently at 3.11, which is the main reason I am=
+ saying &quot;see what freebsd does by June&quot;</div><div dir=3D"auto"><b=
+r></div><div dir=3D"auto">if they update, we can have Python 3.12 and Sphin=
+x 7.x. If they don&#39;t, we get 3.11 and 5.x</div></div></blockquote></div=
+></div><div dir=3D"auto"><br></div><div dir=3D"auto">Why can&#39;t we do 3.=
+11 and 7.x, and let freebsd also get sphinx from pypi until they update?</d=
+iv><div dir=3D"auto"><br></div><div dir=3D"auto">Paolo</div><div dir=3D"aut=
+o"><br></div><div dir=3D"auto"><div class=3D"gmail_quote gmail_quote_contai=
+ner"><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;bo=
+rder-left:1px solid rgb(204,204,204);padding-left:1ex"><div dir=3D"auto"><d=
+iv dir=3D"auto">. Both are good jumps, but on the chance I can make the big=
+ger jump, I&#39;d rather do it in one round instead of two.</div><div dir=
+=3D"auto"><br></div><div dir=3D"auto"><div class=3D"gmail_quote"><blockquot=
+e class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px s=
+olid rgb(204,204,204);padding-left:1ex">
+<br>
+Paolo<br>
+<br>
+</blockquote></div></div></div>
+</blockquote></div></div></div>
+
+--000000000000c1eac2064b1efe47--
+
 
