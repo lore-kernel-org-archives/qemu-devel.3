@@ -4,79 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C7F1E9A047
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 12:55:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 962EFE9A047
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 13:33:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vsh5P-0005A2-Dz; Wed, 18 Feb 2026 07:55:23 -0500
+	id 1vshfe-0004EG-3O; Wed, 18 Feb 2026 08:32:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vsh5L-00059V-Pv
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 07:55:19 -0500
-Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1vshfQ-0003xd-Bu
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 08:32:36 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vsh5J-00059t-6G
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 07:55:19 -0500
-Received: from mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
- [IPv6:2a02:6b8:c1f:3a87:0:640:845c:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 6BC2BC057C;
- Wed, 18 Feb 2026 15:55:11 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:53d::1:1b] (unknown
- [2a02:6bf:8080:53d::1:1b])
- by mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id 9tZQLl3Af4Y0-qfFxqomB; Wed, 18 Feb 2026 15:55:10 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1771419310;
- bh=G8VebO2XDlnCmoPGJpsn+Uv5rVG3nxJWif3juMCwFLs=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=dKUP6dvlrmZ8wiOJpOylATWEplTPQTzhUjsFkGTV2U5An4bkYL53foiSO9xP21wAJ
- pu387jovdXqfNz7ICXFrTevM+Kt8nLKeVh6fdO1k4/zBPhn+Y6ZZHIEuxqAw8GlZhA
- kI228vU19RCCbg1jVjaLc1ZHTE0HxFwqYrrYoNro=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <d8ee4d25-3abe-4e72-b39f-88a1a584d901@yandex-team.ru>
-Date: Wed, 18 Feb 2026 15:55:08 +0300
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1vshfA-0005R3-Ir
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 08:32:32 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1771421538;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=/GpJAltRXiG3BftU38An+U5DT1j7yTwOzEMSCvYcGWQ=;
+ b=JBSxTCCrVo/q/ifgCc9y+ootDlamQkUVvsLVCCoi7nZe+nPJmyJgz38hOKEThLQyMYT12r
+ pzIK582Bblq4a6gyQZGDxWLHwEGpj1wiveWuE7+jy7t4ou89qmjVAPL02/UGNzjljqCbGA
+ Kyzb/uKaOsJ4S1GLd1UyslGVrvTOQGM=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-256-d1ClUX85OmGkIDRkebFn7A-1; Wed, 18 Feb 2026 08:27:15 -0500
+X-MC-Unique: d1ClUX85OmGkIDRkebFn7A-1
+X-Mimecast-MFC-AGG-ID: d1ClUX85OmGkIDRkebFn7A_1771421234
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-4837a718f41so18968675e9.2
+ for <qemu-devel@nongnu.org>; Wed, 18 Feb 2026 05:27:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1771421234; x=1772026034; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=/GpJAltRXiG3BftU38An+U5DT1j7yTwOzEMSCvYcGWQ=;
+ b=Wuz/EEoZpsw6f46BaBB0BUZf+40AiNMuzJtdMoL07+bCAWWhQrUtznU39/nUvp13ZY
+ KFkg65FEAQa0DzK9+delkGTZhKmYPVQDI+eF4G/PU5o5ciR8M121SmSXar4hqgYEgN5j
+ 4d9uVUdLvVAxYyGaXpME9mEXIEY6hcdMONh8A+GWLhiL5GqxTEOOaNnn2WII95R9wRFI
+ L76bSSpbKykqgItj7TF/Cb4+n7n9Sn95z0JcUzadeIpdAsy9U3be7bBouEXB+7T86N8r
+ Jdw22nHN7k0dznmth/zUAn3v5flDrKFp6bu9uHq6pS9pQEbV0x2ImyKwrvnqiWTRzB7t
+ MbRw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1771421234; x=1772026034;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=/GpJAltRXiG3BftU38An+U5DT1j7yTwOzEMSCvYcGWQ=;
+ b=iRSDHP030Z/hfnUTJGweod4nLDUYKMKCKD0Ym3cneBYYz6y5+WC5uwZsvMdcP5eowB
+ skfdlOeUgg1EspsgsyWQVgKYROC1f0JYOyyHskk0pdQwEyPj7wGGPNBYyiv+Epzl26nj
+ K4D5cOWrUZz0x6T7d6uc/63Lm6oJOjvA649m3UtBa0PRc+9zDO6Ed2qEF8y/x0dyqz95
+ ZON9TrBcZ70+8+quZUUf5VjGK4Ls6lBhRxw7zbIrRnK/tzRb9PI5I77yG9bdyBxSA++6
+ spENe9KU/I6YigkfQaVg+Nd6ifFXJiAizeISLxaSUAcGXc+oBzN9oTjNQp66IC0dn1sD
+ pcCw==
+X-Gm-Message-State: AOJu0Yw4F/1HVNvvtfFUmthVakkWzgMeMazsiMkkiOUusMur36esiLCb
+ N30v6Lo7HBiWKry5/MzvCgPYisVKTREusCAa1MWhRzHMB6J9/hAgzrprMaqAGoDYpAnSOpBO/fx
+ sg/U8831zpLZBiDdeFCBpuFtQQwmfejhBQRENffcnuXFgAB0pMka2uCiQeqpD9XV/
+X-Gm-Gg: AZuq6aJL7ZzoEA+Xx0dI667HRclxYtA7zt4x/L4V1PREtxELYPn/oGv2HUe+1vHMUk9
+ cNoE657EUodEjSiqOQ+K6hG3p8035FlZA0GY72Ht7QB2e+2dZkE7aq7fvijpJHK3NXaqipRiLVc
+ 0fFjiPdrBp1617UwnQHxlcWZ+CcoEKGm8ip36DzJZPhtEoiiDOKOqeiMATZr89qxud0yYmTuMAZ
+ EJRWV+V4REfmbwmMzG98lI7b0LKFrSO0peGLvUSEimPPm2ohiZpNuhqxz1mNEnb+U0mpwUVZ1oX
+ O6yzfS2CttDt2caYTwGFFUwC9/GHrwPXUQXp+az1WHRV8pe7gc3pfRnqSLkplXuutigS16BUKYx
+ BNkNsOPo6RCUJ28UwW416mrSIMShAlS0apRCVrWhzGC8Grg+2u0EDgnreT3zmq7MquJ+yuebGxo
+ z6WFEw
+X-Received: by 2002:a05:600c:1c08:b0:47a:8cce:2940 with SMTP id
+ 5b1f17b1804b1-48379b991c6mr243244885e9.14.1771421233838; 
+ Wed, 18 Feb 2026 05:27:13 -0800 (PST)
+X-Received: by 2002:a05:600c:1c08:b0:47a:8cce:2940 with SMTP id
+ 5b1f17b1804b1-48379b991c6mr243244465e9.14.1771421233400; 
+ Wed, 18 Feb 2026 05:27:13 -0800 (PST)
+Received: from localhost
+ (p200300cfd737d029edef7b8da7441ac2.dip0.t-ipconnect.de.
+ [2003:cf:d737:d029:edef:7b8d:a744:1ac2])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4834d5ebd1bsm649071375e9.6.2026.02.18.05.27.12
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 18 Feb 2026 05:27:12 -0800 (PST)
+From: Hanna Czenczek <hreitz@redhat.com>
+To: qemu-block@nongnu.org
+Cc: qemu-devel@nongnu.org, Hanna Czenczek <hreitz@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, Brian Song <hibriansong@gmail.com>
+Subject: [PATCH v4 12/24] fuse: fuse_{read,write}: Rename length to blk_len
+Date: Wed, 18 Feb 2026 14:26:21 +0100
+Message-ID: <20260218132633.29748-13-hreitz@redhat.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260218132633.29748-1-hreitz@redhat.com>
+References: <20260218132633.29748-1-hreitz@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/8] audio: add `audio` build option for meson and Kconfig
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Sergei Heifetz <heifetz@yandex-team.com>
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Eric Blake <eblake@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Thomas Huth <thuth@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>
-References: <20260217052740.114117-1-heifetz@yandex-team.com>
- <20260217052740.114117-2-heifetz@yandex-team.com>
- <CAFEAcA9y-QEaiRZMrYadQWJ1KgnHxT8Fkqt1uS0PkbY0Sb-_3Q@mail.gmail.com>
- <d09950dc-dd3e-45ca-b54a-cbdff9f71e0d@redhat.com>
- <CAFEAcA_Q78GwXS0Uia1fFdPoDwkofD4Wr080EkG01gGD-d8Pgg@mail.gmail.com>
- <aZQ_bo7SvivJb7Sd@redhat.com>
- <8b4373d7-f065-4f66-ab81-bc83f970d5f7@yandex-team.com>
- <aZWZa8j8dPQG6BGM@redhat.com>
-Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <aZWZa8j8dPQG6BGM@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.154.239.72;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=hreitz@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.043,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,82 +122,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 18.02.26 13:50, Daniel P. Berrangé wrote:
-> On Wed, Feb 18, 2026 at 01:52:06PM +0500, Sergei Heifetz wrote:
->> On 2/17/26 15:14, Daniel P. Berrangé wrote:
->>> On Tue, Feb 17, 2026 at 10:06:19AM +0000, Peter Maydell wrote:
->>>> On Tue, 17 Feb 2026 at 09:42, Paolo Bonzini <pbonzini@redhat.com> wrote:
->>>>> On 2/17/26 10:31, Peter Maydell wrote:
->>>>>> On Tue, 17 Feb 2026 at 05:29, Sergei Heifetz <heifetz@yandex-team.com> wrote:
->>>>>>> This patch adds the `audio` option to meson_options.txt. It is
->>>>>>> propagated into Kconfig as AUDIO. It is enabled by default.
->>>>>>> The corresponding `--disable-audio` and `--enable-audio` options
->>>>>>> for `configure` are also added.
->>>>>>>
->>>>>>> For now, this option does nothing. In subsequent patches, it will
->>>>>>> gradually disable audio in different places. The final goal is to stop
->>>>>>> building sources from `audio/` and `hw/audio/` and other audio-related
->>>>>>> files (except for some stubs). Note that this intent is different from
->>>>>>> `-audio none`, which mutes audio but still compiles the audio subsystem.
->>>>>> Not building audio/ code makes sense, but do we really want to
->>>>>> stop building hw/audio code ? That's the guest facing audio
->>>>>> devices, and if for instance a machine type has an embedded
->>>>>> sound device that would require us to stop compiling that
->>>>>> machine. I think it would be very confusing for users if
->>>>>> --disable-audio meant "we will silently not build half the
->>>>>> Arm boards that have a pl041 in them".
->>>>>>
->>>>>> Maybe it would be better if "--disable-audio" meant "don't build
->>>>>> the audio backends, and everything behaves as if the user
->>>>>> passed -audio none" ?
->>>>> The problem is that "-audio none" uses a silent backend but still keeps
->>>>> all the audio/ code around.  If you prefer to keep the Arm boards
->>>>> around, the solution would be to disable the audio code in the
->>>>> individual pl041 devices with "#ifdef CONFIG_AUDIO", so that the
->>>>> "depends on AUDIO" for pl041 can be removed too.
->>>> This seems weird, though -- why would we put in a lot of ifdefs
->>>> in every single audio device, when we could instead say "if you
->>>> disable audio at build time what you get is something that presents
->>>> the same API as the existing audio backends but does nothing" ?
->>>>
->>>> Also, I think we should be consistent here, not put ifdefs in
->>>> some devices we think are "important" but skip it in others.
->>> If we consider our security boundary guidance, none of these boards
->>> with on-board audio frontends would be considered in scope for
->>> security.
->>>
->>> On arm, only the "virt" board is providing a secure deployment, and
->>> that does not require this --disable-audio functionality.
->>>
->>> The same applies broadly to other arch targets too, with perhaps the
->>> only exception being the "PC speaker" on x86, and a "none" audio
->>> backend should be sufficient there IMHO.
->>>
->>> With regards,
->>> Daniel
->> In some production environments, static analysers are used as part of
->> broader security measures. If such an analyser reports a problem in an
->> unused part of the code, you can’t simply ignore it because it’s unused: you
->> either fix the issue (which is a strange thing to do for unused code) or
->> remove the unused part. This is a general point about why such functionality
->> may be useful for some users.
-> 
-> IMHO "static analysers complain" is way too weak a justification
-> for taking on this work. Code analysers are always incredibly noisy
-> and reporting complaints about things that are not worth the cost
-> of addressing.
-> 
+The term "length" is ambiguous, use "blk_len" instead to be clear.
 
-Still we consider such complains as a good reason to drop extra code from
-our production build. If we have to spend some time handling Coverity
-complains, why not just drop extra parts we don't use, so that static
-analyzers will never disturb us about these parts since removal?
+Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
+---
+ block/export/fuse.c | 24 ++++++++++++------------
+ 1 file changed, 12 insertions(+), 12 deletions(-)
 
-Regardless static analyzers, I think it's always good to have a possibility
-to not build for production the code which you don't need and don't want to
-understand and support.
-
+diff --git a/block/export/fuse.c b/block/export/fuse.c
+index f6a5f4fa0a..d45c6b814f 100644
+--- a/block/export/fuse.c
++++ b/block/export/fuse.c
+@@ -637,7 +637,7 @@ static void fuse_read(fuse_req_t req, fuse_ino_t inode,
+                       size_t size, off_t offset, struct fuse_file_info *fi)
+ {
+     FuseExport *exp = fuse_req_userdata(req);
+-    int64_t length;
++    int64_t blk_len;
+     void *buf;
+     int ret;
+ 
+@@ -651,14 +651,14 @@ static void fuse_read(fuse_req_t req, fuse_ino_t inode,
+      * Clients will expect short reads at EOF, so we have to limit
+      * offset+size to the image length.
+      */
+-    length = blk_getlength(exp->common.blk);
+-    if (length < 0) {
+-        fuse_reply_err(req, -length);
++    blk_len = blk_getlength(exp->common.blk);
++    if (blk_len < 0) {
++        fuse_reply_err(req, -blk_len);
+         return;
+     }
+ 
+-    if (offset + size > length) {
+-        size = length - offset;
++    if (offset + size > blk_len) {
++        size = blk_len - offset;
+     }
+ 
+     buf = qemu_try_blockalign(blk_bs(exp->common.blk), size);
+@@ -685,7 +685,7 @@ static void fuse_write(fuse_req_t req, fuse_ino_t inode, const char *buf,
+ {
+     FuseExport *exp = fuse_req_userdata(req);
+     QEMU_AUTO_VFREE void *copied = NULL;
+-    int64_t length;
++    int64_t blk_len;
+     int ret;
+ 
+     /* Limited by max_write, should not happen */
+@@ -711,13 +711,13 @@ static void fuse_write(fuse_req_t req, fuse_ino_t inode, const char *buf,
+      * Clients will expect short writes at EOF, so we have to limit
+      * offset+size to the image length.
+      */
+-    length = blk_getlength(exp->common.blk);
+-    if (length < 0) {
+-        fuse_reply_err(req, -length);
++    blk_len = blk_getlength(exp->common.blk);
++    if (blk_len < 0) {
++        fuse_reply_err(req, -blk_len);
+         return;
+     }
+ 
+-    if (offset + size > length) {
++    if (offset + size > blk_len) {
+         if (exp->growable) {
+             ret = fuse_do_truncate(exp, offset + size, true, PREALLOC_MODE_OFF);
+             if (ret < 0) {
+@@ -725,7 +725,7 @@ static void fuse_write(fuse_req_t req, fuse_ino_t inode, const char *buf,
+                 return;
+             }
+         } else {
+-            size = length - offset;
++            size = blk_len - offset;
+         }
+     }
+ 
 -- 
-Best regards,
-Vladimir
+2.53.0
+
 
