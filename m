@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36364E9A04A
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 17:20:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48121E9A047
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 17:20:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vslCl-0005VV-DY; Wed, 18 Feb 2026 12:19:15 -0500
+	id 1vslCk-0005V1-EG; Wed, 18 Feb 2026 12:19:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vslCS-0005Q4-Ue
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 12:19:01 -0500
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vslCP-0005Pc-Uu
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 12:18:55 -0500
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vslCO-0005bB-6K
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 12:18:54 -0500
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vslCM-0005ao-8z
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 12:18:53 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=Cc:To:In-Reply-To:References:Message-Id:Content-Transfer-Encoding:
  Content-Type:MIME-Version:Subject:Date:From:Sender:Reply-To:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=j4vUtF2bTSisfTwWKQKqiQ0VOxfjv/5QD100QYYlQKQ=; b=G2ZtE3dlcsyAtDG
- QKrLSvcPtY0oNelWDX4Th/GGUfs4De9YHZOAGaRXDalzVCKsngRwWQ2rNE92qVFv44QfW3IvR99G2
- ApGpHLlf2gZ+PVIXVZVu5SRxZbECsmXAq7b4v/JnFUw6GHhHA4aQrVbJgUnuaCKUZe7UexV3K5tfO
- f4=;
-Date: Wed, 18 Feb 2026 18:21:29 +0100
-Subject: [PATCH v6 3/7] target/i386: Drop physical address range checks
+ List-Help; bh=l0HRAVma9ndkaSde+UB/ONObyP/1dQNd8nP9SB7nhk0=; b=DZAO9FzXzeXiaYn
+ RWkoAuJPpQDrxTFs3EDX1vSQrokZo0Fmh77nyoxlw9Q57QSA4QtZRA4HuBn+n+wiNZnRW9eo53WaU
+ 7GybmtE8hZT+glEOriOAe5f9onMb6fRyvh55fZ4/eXWJoGWAtxJYeT2C6qmjUpoxYuTnBZnJ2MZOa
+ k4=;
+Date: Wed, 18 Feb 2026 18:21:28 +0100
+Subject: [PATCH v6 2/7] hw/hppa: Use hppa_abs_to_phys_pa1x()
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260218-phys_addr-v6-3-a603bf363218@rev.ng>
+Message-Id: <20260218-phys_addr-v6-2-a603bf363218@rev.ng>
 References: <20260218-phys_addr-v6-0-a603bf363218@rev.ng>
 In-Reply-To: <20260218-phys_addr-v6-0-a603bf363218@rev.ng>
 To: qemu-devel@nongnu.org
@@ -45,11 +45,11 @@ Cc: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Alistair Francis <alistair.francis@wdc.com>, 
  Brian Cain <brian.cain@oss.qualcomm.com>, 
  Chao Liu <chao.liu.zevorn@gmail.com>, Anton Johansson <anjo@rev.ng>
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1771435335; l=2321;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1771435335; l=783;
  i=anjo@rev.ng; s=20260210; h=from:subject:message-id;
- bh=i23GXQKeS9TedGL1KxSFVh/SZoh3QgE6FHYttgcvJN4=;
- b=uD5qF35U5TpUnQKPYnui+qmqBlv1+rmQcSKoS3WZFI/0e6yVObZnosC451Ethk3U3SwsvHXB7
- vfr9DTiPQH6Ci971By48LehugUNYR9xrAZ1iV8Q/NF/W9WNzoRGO72G
+ bh=42KgcWQ/ftfrQLOF92oSXQz3WYbg/sVjiv4TZ+OpiWs=;
+ b=xSxs5raGvuRZN1PA8+y+yoj0ZO1/4MNbkCbSTLmrAuKQveAI88xkyt4OP6Wn8v7ZsFLu6ECma
+ 4JFjgokY8IlCgnngEvVd4C/rMzicOvakusn3SsJ6I4tZAAQL1SWbDou
 X-Developer-Key: i=anjo@rev.ng; a=ed25519;
  pk=dKsZvj/g3kgDxnV1/SWg8a0YNGSpWtFGNsWIepQYKow=
 Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
@@ -78,65 +78,28 @@ From:  Anton Johansson via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since TARGET_PHYS_ADDR_SPACE_BITS is now fixed to 64 bits for all
-targets we can remove range checks on cpu->phys_bits and
-TCG_PHYS_ADDR_BITS.
+Makes the physical address space conversion for 32 bit machines more
+explicit, using the translation function defined in mem_helper.c.
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Anton Johansson <anjo@rev.ng>
 ---
- target/i386/tcg/helper-tcg.h | 2 --
- target/i386/cpu.c            | 9 +++------
- target/i386/kvm/kvm.c        | 3 +--
- 3 files changed, 4 insertions(+), 10 deletions(-)
+ hw/hppa/machine.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/target/i386/tcg/helper-tcg.h b/target/i386/tcg/helper-tcg.h
-index e41cbda407..f4b2ff740d 100644
---- a/target/i386/tcg/helper-tcg.h
-+++ b/target/i386/tcg/helper-tcg.h
-@@ -31,8 +31,6 @@
- # define TCG_PHYS_ADDR_BITS 36
- #endif
+diff --git a/hw/hppa/machine.c b/hw/hppa/machine.c
+index c3680667ae..6b0f46c789 100644
+--- a/hw/hppa/machine.c
++++ b/hw/hppa/machine.c
+@@ -181,7 +181,7 @@ static uint64_t linux_kernel_virt_to_phys(void *opaque, uint64_t addr)
  
--QEMU_BUILD_BUG_ON(TCG_PHYS_ADDR_BITS > TARGET_PHYS_ADDR_SPACE_BITS);
--
- /**
-  * x86_cpu_do_interrupt:
-  * @cpu: vCPU the interrupt is to be handled by.
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index eaa01438c1..9b9ed2d1e3 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -9941,12 +9941,9 @@ static void x86_cpu_realizefn(DeviceState *dev, Error **errp)
-      * accel-specific code in cpu_exec_realizefn.
-      */
-     if (env->features[FEAT_8000_0001_EDX] & CPUID_EXT2_LM) {
--        if (cpu->phys_bits &&
--            (cpu->phys_bits > TARGET_PHYS_ADDR_SPACE_BITS ||
--            cpu->phys_bits < 32)) {
--            error_setg(errp, "phys-bits should be between 32 and %u "
--                             " (but is %u)",
--                             TARGET_PHYS_ADDR_SPACE_BITS, cpu->phys_bits);
-+        if (cpu->phys_bits && cpu->phys_bits < 32) {
-+            error_setg(errp, "phys-bits should be at least 32"
-+                             " (but is %u)", cpu->phys_bits);
-             return;
-         }
-         /*
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index 9f1a4d4cbb..3b66ec8c42 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -4983,8 +4983,7 @@ static int kvm_get_msrs(X86CPU *cpu)
-      */
+ static uint64_t translate_pa10(void *dummy, uint64_t addr)
+ {
+-    return (uint32_t)addr;
++    return hppa_abs_to_phys_pa1x(addr);
+ }
  
-     if (cpu->fill_mtrr_mask) {
--        QEMU_BUILD_BUG_ON(TARGET_PHYS_ADDR_SPACE_BITS > 52);
--        assert(cpu->phys_bits <= TARGET_PHYS_ADDR_SPACE_BITS);
-+        assert(cpu->phys_bits <= 52);
-         mtrr_top_bits = MAKE_64BIT_MASK(cpu->phys_bits, 52 - cpu->phys_bits);
-     } else {
-         mtrr_top_bits = 0;
+ static uint64_t translate_pa20(void *dummy, uint64_t addr)
 
 -- 
 2.52.0
