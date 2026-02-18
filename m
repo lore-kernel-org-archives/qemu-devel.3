@@ -4,78 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A5D2E9A02C
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 20:58:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06E04E9A04B
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 21:01:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vsocE-0002Na-Fq; Wed, 18 Feb 2026 15:57:46 -0500
+	id 1vsofj-0003QN-MT; Wed, 18 Feb 2026 16:01:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1vsocC-0002NK-Ds
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 15:57:44 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1vsoc8-00010G-LO
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 15:57:43 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771448259;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=3S6QgYvyE7fST3Zrje6faUrNVyABiu1wcdHyIzaAles=;
- b=aejFjt8oNA3sUXpl2uWN8KW8J0gfIgEGhsghSosRL+QJUx1mawfxGoMAPGWuNcWMO4N5ve
- xodI2UoP61OM6Rv7uPgZLzaO5iU1cQF/Vt1ut+iE38HeNP7khLTtqqgVw/LKOCHIN8OHEN
- KNToDwSJba93bXPm/nZeqMKtt6y3vm0=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-132-5WscsXqDNlqj4VQ3b157yg-1; Wed,
- 18 Feb 2026 15:57:36 -0500
-X-MC-Unique: 5WscsXqDNlqj4VQ3b157yg-1
-X-Mimecast-MFC-AGG-ID: 5WscsXqDNlqj4VQ3b157yg_1771448255
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 605E0195605A; Wed, 18 Feb 2026 20:57:34 +0000 (UTC)
-Received: from localhost (unknown [10.2.17.113])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 5D26D19560B7; Wed, 18 Feb 2026 20:57:32 +0000 (UTC)
-Date: Wed, 18 Feb 2026 15:57:31 -0500
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Jens Axboe <axboe@kernel.dk>
-Cc: Fiona Ebner <f.ebner@proxmox.com>, Kevin Wolf <kwolf@redhat.com>,
- qemu-block@nongnu.org, qemu-devel@nongnu.org, fam@euphon.net
-Subject: Re: [PATCH v2] aio-posix: notify main loop when SQEs are queued
-Message-ID: <20260218205731.GB605390@fedora>
-References: <20260213143225.161043-1-axboe@kernel.dk>
- <20260213143225.161043-2-axboe@kernel.dk>
- <aY9Lj1BTVRCFyfic@redhat.com>
- <c32915a9-33a2-47c5-a91b-27f01147918f@proxmox.com>
- <20260218161127.GC587447@fedora>
- <d729df1d-ba33-4cab-88c9-ba980cdaa37d@kernel.dk>
- <07d701b9-3039-4f9b-99a2-abeae51146a5@kernel.dk>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vsofC-0003MK-OS
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 16:01:02 -0500
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vsofB-0001mo-3G
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 16:00:50 -0500
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-483487335c2so2542355e9.2
+ for <qemu-devel@nongnu.org>; Wed, 18 Feb 2026 13:00:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1771448447; x=1772053247; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=byzLFJAG0gfqLw9mZdAWAdg1jHv/y0bfDofgRWMGFaA=;
+ b=Kx2dzMbobuujNuBs9BqXyyjpdyg3lvmDAed5nuTukMQIkXuwsOtK35xZS16EnYbN1Y
+ WR1/1vGLlyeU4XlE1aiS9bnxbZHPe/Hz4Khw3I+TXYgwzSYoDvfei+ejot+ldCVPC/MP
+ m1PuYeG7yZA7Xsl3EA281uXcuEQ1pLAcKHNCFIMNJQpS/d7OXzWEQLXluqum1vUq6VY3
+ m9Hox1HcEDCWj7XNhayEmnGXLAjVYbZ7AbmT7Axp9nva1Y8FljQ5geTU0iu/WFxiqrEc
+ is+YtnRdxsdsmIzhIVBikXez7Jn/croEc7lCUsJM5eqzj79+4ekFsJWFoiHa8TXgIOkt
+ cU3Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1771448447; x=1772053247;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=byzLFJAG0gfqLw9mZdAWAdg1jHv/y0bfDofgRWMGFaA=;
+ b=WoMMmgJ/O/FmEPMz+hERavjQ+ZojQck0qaiEyHxb2OrLmiw/wg4PVza7CWu11cY5el
+ jMGLIc8HucGaKkAQrf6OEHAOE3bJf7WzPmhHLBR1dEvNnCp2QBJEnd61dn5ghTHF8oPt
+ xuBD9hmciqbpT1LJqNP4qYGDEtMVUJsE+B/ZHeW5L+y3NC6sS0iHRhccRh2lH7zWCCEd
+ IXPzQqWOf3xuOdYkYAiuQIY+p/DK/k7vUBOZQeMJLhKnYqlQ5bVW6yw66lO24CtQpbYc
+ gKw3oxp+TZs6a4LFMQhiKDoMFjmj4gE3F30DKTH+2MigO/wGCzQmZuqchqFD1lUYfpDZ
+ RHPw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWI0g3td+xL9vuSVIjw7zd+hOS0FXXb9nC8YYxNUzKHBN3dxSQSr8pMWGcCpIO5KzkFhdMqzDh0EKp2@nongnu.org
+X-Gm-Message-State: AOJu0Yynd0O8Z7w3iu9fqpZefAH8GOfWMjLNyTkWfIzuqF5mCvMqohZP
+ XvswJW+J6rwHPb6UZlRZYiqc5124bEytYVy/xShW9SxlP1lmlK7y7Q510G8rjIiwYbs=
+X-Gm-Gg: AZuq6aK6Tig8c/vNjLJKlTNUeGzPa0VXn9+ggk1kid5z51cC9bAghV6H87IZBCw8ppO
+ fefmS8dWOXwOt2wM6SgdKGnd5GIQ6D+HPWlPmNGn9aahnFHm4oUyLgaG39YatsBdPi/vMFhsXcH
+ isTNsIGzF6Rb+2YH7OxUFk0jktIl6gi6d83Xy5I8plAOZvEiH1ZLGwroltzGWPiznSzqXht30VA
+ q75x0iusm6TlOe/Hffi3EfrM6ViUAfExwYjkzVzevgXSF+itYRSAGTQBeCklY03BCwHrIE7pKJJ
+ f7FXZXx+fSeMsUJr2tqaLAitjHjYk2SxC53Y1ev6BJQdwLOyDqnzcJx1thUEMzmOUfIupfia4tt
+ sb6gzxgjD42t8ffu441pR2Hsc4uKiB6Q+UrT3NIv4YAbmMeRHGOiKLgO/l8FR/fmmkz24ALtSfr
+ 7mBKRP7n4tizFpQrnSL3ppzAOxRuR07uJsuv0dcExWQvTpvAz3AaL37ozuk3ew9AXJwQ==
+X-Received: by 2002:a05:600c:83c6:b0:483:6f82:9719 with SMTP id
+ 5b1f17b1804b1-4839e6370d5mr5824175e9.2.1771448447292; 
+ Wed, 18 Feb 2026 13:00:47 -0800 (PST)
+Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4835d99497asm833014615e9.6.2026.02.18.13.00.46
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 18 Feb 2026 13:00:46 -0800 (PST)
+Message-ID: <02b667c5-da6a-4829-87f1-4b9ebc53d5a4@linaro.org>
+Date: Wed, 18 Feb 2026 22:00:45 +0100
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="DmP4SC3ByvkHy0qF"
-Content-Disposition: inline
-In-Reply-To: <07d701b9-3039-4f9b-99a2-abeae51146a5@kernel.dk>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/3] hw/virtio: add virtio_vdev_is_{modern, legacy}
+Content-Language: en-US
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Stefano Garzarella <sgarzare@redhat.com>, Jason Wang <jasowang@redhat.com>,
+ Nicholas Piggin <npiggin@gmail.com>, stefanha@redhat.com,
+ richard.henderson@linaro.org, "Michael S. Tsirkin" <mst@redhat.com>
+References: <20260212234602.338131-1-pierrick.bouvier@linaro.org>
+ <20260212234602.338131-2-pierrick.bouvier@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260212234602.338131-2-pierrick.bouvier@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.043,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,299 +106,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 13/2/26 00:46, Pierrick Bouvier wrote:
+> This simplifies code compared to having
+> virtio_vdev_has_feature(vdev, VIRTIO_F_VERSION_1) or
+> !virtio_vdev_has_feature(vdev, VIRTIO_F_VERSION_1).
+> 
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> ---
+>   include/hw/virtio/virtio-access.h |  3 +--
+>   include/hw/virtio/virtio.h        | 12 +++++++++++-
+>   hw/net/virtio-net.c               |  2 +-
+>   hw/virtio/vhost.c                 |  2 +-
+>   hw/virtio/virtio-pci.c            |  2 +-
+>   hw/virtio/virtio.c                | 16 ++++++++--------
+>   6 files changed, 23 insertions(+), 14 deletions(-)
 
---DmP4SC3ByvkHy0qF
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-On Wed, Feb 18, 2026 at 09:41:49AM -0700, Jens Axboe wrote:
-> On 2/18/26 9:19 AM, Jens Axboe wrote:
-> > On 2/18/26 9:11 AM, Stefan Hajnoczi wrote:
-> >> On Wed, Feb 18, 2026 at 10:57:02AM +0100, Fiona Ebner wrote:
-> >>> Am 13.02.26 um 5:05 PM schrieb Kevin Wolf:
-> >>>> Am 13.02.2026 um 15:26 hat Jens Axboe geschrieben:
-> >>>>> When a vCPU thread handles MMIO (holding BQL), aio_co_enter() runs =
-the
-> >>>>> block I/O coroutine inline on the vCPU thread because
-> >>>>> qemu_get_current_aio_context() returns the main AioContext when BQL=
- is
-> >>>>> held. The coroutine calls luring_co_submit() which queues an SQE via
-> >>>>> fdmon_io_uring_add_sqe(), but the actual io_uring_submit() only hap=
-pens
-> >>>>> in gsource_prepare() on the main loop thread.
-> >>>>
-> >>>> Ouch! Yes, looks like we completely missed I/O submitted in vCPU thr=
-eads
-> >>>> in the recent changes (or I guess worker threads in theory, but I do=
-n't
-> >>>> think there any that actually make use of aio_add_sqe()).
-> >>>>
-> >>>>> Since the coroutine ran inline (not via aio_co_schedule()), no BH is
-> >>>>> scheduled and aio_notify() is never called. The main loop remains a=
-sleep
-> >>>>> in ppoll() with up to a 499ms timeout, leaving the SQE unsubmitted =
-until
-> >>>>> the next timer fires.
-> >>>>>
-> >>>>> Fix this by calling aio_notify() after queuing the SQE. This wakes =
-the
-> >>>>> main loop via the eventfd so it can run gsource_prepare() and submi=
-t the
-> >>>>> pending SQE promptly.
-> >>>>>
-> >>>>> This is a generic fix that benefits all devices using aio=3Dio_urin=
-g.
-> >>>>> Without it, AHCI/SATA devices see MUCH worse I/O latency since they=
- use
-> >>>>> MMIO (not ioeventfd like virtio) and have no other mechanism to wak=
-e the
-> >>>>> main loop after queuing block I/O.
-> >>>>>
-> >>>>> This is usually a bit hard to detect, as it also relies on the ppoll
-> >>>>> loop not waking up for other activity, and micro benchmarks tend no=
-t to
-> >>>>> see it because they don't have any real processing time. With a
-> >>>>> synthetic test case that has a few usleep() to simulate processing =
-of
-> >>>>> read data, it's very noticeable. The below example reads 128MB with
-> >>>>> O_DIRECT in 128KB chunks in batches of 16, and has a 1ms delay befo=
-re
-> >>>>> each batch submit, and a 1ms delay after processing each completion.
-> >>>>> Running it on /dev/sda yields:
-> >>>>>
-> >>>>> time sudo ./iotest /dev/sda
-> >>>>>
-> >>>>> ________________________________________________________
-> >>>>> Executed in   25.76 secs      fish           external
-> >>>>>    usr time    6.19 millis  783.00 micros    5.41 millis
-> >>>>>    sys time   12.43 millis  642.00 micros   11.79 millis
-> >>>>>
-> >>>>> while on a virtio-blk or NVMe device we get:
-> >>>>>
-> >>>>> time sudo ./iotest /dev/vdb
-> >>>>>
-> >>>>> ________________________________________________________
-> >>>>> Executed in    1.25 secs      fish           external
-> >>>>>    usr time    1.40 millis    0.30 millis    1.10 millis
-> >>>>>    sys time   17.61 millis    1.43 millis   16.18 millis
-> >>>>>
-> >>>>> time sudo ./iotest /dev/nvme0n1
-> >>>>>
-> >>>>> ________________________________________________________
-> >>>>> Executed in    1.26 secs      fish           external
-> >>>>>    usr time    6.11 millis    0.52 millis    5.59 millis
-> >>>>>    sys time   13.94 millis    1.50 millis   12.43 millis
-> >>>>>
-> >>>>> where the latter are consistent. If we run the same test but keep t=
-he
-> >>>>> socket for the ssh connection active by having activity there, then
-> >>>>> the sda test looks as follows:
-> >>>>>
-> >>>>> time sudo ./iotest /dev/sda
-> >>>>>
-> >>>>> ________________________________________________________
-> >>>>> Executed in    1.23 secs      fish           external
-> >>>>>    usr time    2.70 millis   39.00 micros    2.66 millis
-> >>>>>    sys time    4.97 millis  977.00 micros    3.99 millis
-> >>>>>
-> >>>>> as now the ppoll loop is woken all the time anyway.
-> >>>>>
-> >>>>> After this fix, on an idle system:
-> >>>>>
-> >>>>> time sudo ./iotest /dev/sda
-> >>>>>
-> >>>>> ________________________________________________________
-> >>>>> Executed in    1.30 secs      fish           external
-> >>>>>    usr time    2.14 millis    0.14 millis    2.00 millis
-> >>>>>    sys time   16.93 millis    1.16 millis   15.76 millis
-> >>>>>
-> >>>>> Signed-off-by: Jens Axboe <axboe@kernel.dk>
-> >>>>> ---
-> >>>>>  util/fdmon-io_uring.c | 8 ++++++++
-> >>>>>  1 file changed, 8 insertions(+)
-> >>>>>
-> >>>>> diff --git a/util/fdmon-io_uring.c b/util/fdmon-io_uring.c
-> >>>>> index d0b56127c670..96392876b490 100644
-> >>>>> --- a/util/fdmon-io_uring.c
-> >>>>> +++ b/util/fdmon-io_uring.c
-> >>>>> @@ -181,6 +181,14 @@ static void fdmon_io_uring_add_sqe(AioContext =
-*ctx,
-> >>>>> =20
-> >>>>>      trace_fdmon_io_uring_add_sqe(ctx, opaque, sqe->opcode, sqe->fd=
-, sqe->off,
-> >>>>>                                   cqe_handler);
-> >>>>> +
-> >>>>> +    /*
-> >>>>> +     * Wake the main loop if it is sleeping in ppoll().  When a vC=
-PU thread
-> >>>>> +     * runs a coroutine inline (holding BQL), it queues SQEs here =
-but the
-> >>>>> +     * actual io_uring_submit() only happens in gsource_prepare().=
-  Without
-> >>>>> +     * this notify, ppoll() can sleep up to 499ms before submittin=
-g.
-> >>>>> +     */
-> >>>>> +    aio_notify(ctx);
-> >>>>>  }
-> >>>>
-> >>>> Makes sense to me.
-> >>>>
-> >>>> At first I wondered if we should use defer_call() for the aio_notify=
-()
-> >>>> to batch the submission, but of course holding the BQL will already =
-take
-> >>>> care of that. And in iothreads where there is no BQL, the aio_notify=
-()
-> >>>> shouldn't make a difference anyway because we're already in the right
-> >>>> thread.
-> >>>>
-> >>>> I suppose the other variation could be have another io_uring_enter()
-> >>>> call here (but then probably really through defer_call()) to avoid
-> >>>> waiting for another CPU to submit the request in its main loop. But I
-> >>>> don't really have an intuition if that would make things better or w=
-orse
-> >>>> in the common case.
-> >>>>
-> >>>> Fiona, does this fix your case, too?
-> >>>
-> >>> Yes, it does fix my issue [0] and the second patch gives another small
-> >>> improvement :)
-> >>>
-> >>> Would it be slightly cleaner to have aio_add_sqe() call aio_notify()
-> >>> itself? Since aio-posix.c calls downwards into fdmon-io_uring.c, it
-> >>> would feel nicer to me to not have fdmon-io_uring.c call "back up". I
-> >>> guess it also depends on whether we expect another future fdmon
-> >>> implementation with .add_sqe() to also benefit from it.
-> >>
-> >> Calling aio_notify() from aio-posix.c:aio_add_sqe() sounds better to me
-> >> because fdmon-io_uring.c has to be careful about calling aio_*() APIs =
-to
-> >> avoid loops.
-> >=20
-> > Would anyone care to make that edit? I'm on a plane and gone for a bit,
-> > so won't get back to this for the next week. But I would love to see a
-> > fix go in, as this issue has been plaguing me with test timeouts for
-> > quite a while on the CI front. And seems like I'm not alone, if the
-> > patches fix Fiona's issues as well.
->=20
-> Still on a plane but tested this one and it works for me too. Does seem
-> like a better approach, rather than stuff it in the fdmon part.
->=20
-> Feel free to run with this one and also to update the commit message if
-> you want. Thanks!
->=20
->=20
-> commit a8a94e7a05964d470b8fba50c9d4769489c21752
-> Author: Jens Axboe <axboe@kernel.dk>
-> Date:   Fri Feb 13 06:52:14 2026 -0700
->=20
->     aio-posix: notify main loop when SQEs are queued
->    =20
->     When a vCPU thread handles MMIO (holding BQL), aio_co_enter() runs the
->     block I/O coroutine inline on the vCPU thread because
->     qemu_get_current_aio_context() returns the main AioContext when BQL is
->     held. The coroutine calls luring_co_submit() which queues an SQE via
->     fdmon_io_uring_add_sqe(), but the actual io_uring_submit() only happe=
-ns
->     in gsource_prepare() on the main loop thread.
->    =20
->     Since the coroutine ran inline (not via aio_co_schedule()), no BH is
->     scheduled and aio_notify() is never called. The main loop remains asl=
-eep
->     in ppoll() with up to a 499ms timeout, leaving the SQE unsubmitted un=
-til
->     the next timer fires.
->    =20
->     Fix this by calling aio_notify() after queuing the SQE. This wakes the
->     main loop via the eventfd so it can run gsource_prepare() and submit =
-the
->     pending SQE promptly.
->    =20
->     This is a generic fix that benefits all devices using aio=3Dio_uring.
->     Without it, AHCI/SATA devices see MUCH worse I/O latency since they u=
-se
->     MMIO (not ioeventfd like virtio) and have no other mechanism to wake =
-the
->     main loop after queuing block I/O.
->    =20
->     This is usually a bit hard to detect, as it also relies on the ppoll
->     loop not waking up for other activity, and micro benchmarks tend not =
-to
->     see it because they don't have any real processing time. With a
->     synthetic test case that has a few usleep() to simulate processing of
->     read data, it's very noticeable. The below example reads 128MB with
->     O_DIRECT in 128KB chunks in batches of 16, and has a 1ms delay before
->     each batch submit, and a 1ms delay after processing each completion.
->     Running it on /dev/sda yields:
->    =20
->     time sudo ./iotest /dev/sda
->    =20
->     ________________________________________________________
->     Executed in   25.76 secs      fish           external
->        usr time    6.19 millis  783.00 micros    5.41 millis
->        sys time   12.43 millis  642.00 micros   11.79 millis
->    =20
->     while on a virtio-blk or NVMe device we get:
->    =20
->     time sudo ./iotest /dev/vdb
->    =20
->     ________________________________________________________
->     Executed in    1.25 secs      fish           external
->        usr time    1.40 millis    0.30 millis    1.10 millis
->        sys time   17.61 millis    1.43 millis   16.18 millis
->    =20
->     time sudo ./iotest /dev/nvme0n1
->    =20
->     ________________________________________________________
->     Executed in    1.26 secs      fish           external
->        usr time    6.11 millis    0.52 millis    5.59 millis
->        sys time   13.94 millis    1.50 millis   12.43 millis
->    =20
->     where the latter are consistent. If we run the same test but keep the
->     socket for the ssh connection active by having activity there, then
->     the sda test looks as follows:
->    =20
->     time sudo ./iotest /dev/sda
->    =20
->     ________________________________________________________
->     Executed in    1.23 secs      fish           external
->        usr time    2.70 millis   39.00 micros    2.66 millis
->        sys time    4.97 millis  977.00 micros    3.99 millis
->    =20
->     as now the ppoll loop is woken all the time anyway.
->    =20
->     After this fix, on an idle system:
->    =20
->     time sudo ./iotest /dev/sda
->    =20
->     ________________________________________________________
->     Executed in    1.30 secs      fish           external
->        usr time    2.14 millis    0.14 millis    2.00 millis
->        sys time   16.93 millis    1.16 millis   15.76 millis
->    =20
->     Signed-off-by: Jens Axboe <axboe@kernel.dk>
+> diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
+> index 27cd98d2fe1..8f1e4323599 100644
+> --- a/include/hw/virtio/virtio.h
+> +++ b/include/hw/virtio/virtio.h
+> @@ -468,9 +468,19 @@ static inline bool virtio_host_has_feature(VirtIODevice *vdev,
+>       return virtio_has_feature(vdev->host_features, fbit);
+>   }
+>   
+> +static inline bool virtio_vdev_is_modern(const VirtIODevice *vdev)
+> +{
+> +    return virtio_vdev_has_feature(vdev, VIRTIO_F_VERSION_1);
+> +}
+> +
+> +static inline bool virtio_vdev_is_legacy(const VirtIODevice *vdev)
+> +{
+> +    return !virtio_vdev_is_modern(vdev);
+> +}
 
-Thanks, applied to my block tree together with Patch 2 from v1:
-https://gitlab.com/stefanha/qemu/commits/block
+With retrospective, mentioning 'modern' was a mistake IMHO. But I
+understand it was simpler to add 'modern' code without updating the
+'legacy' code base. Today I'd rather have 'legacy' explicit in function
+names, everything else being the normal / current / modern version,
+without having to clarify it.
 
-Stefan
-
---DmP4SC3ByvkHy0qF
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmmWJ7sACgkQnKSrs4Gr
-c8gCHQf9GhGp7z7EOg6wRlwk8PfyRMcny0EzP2xkvvgWybGxPEzs1QF02qNivZD4
-AezaMcxht+bFprcZMC1hG2SvVzMI83aql/R/j/mOWs8/SZvW2RqdiOrZy5UYpzFr
-jbpAXuzEjsuSshLh0xUTu3xZDLGkj9al7zNGJ5c1qugOn6Qhv13c5+r+hDBsAZFc
-hAm0Y6LYTlDwcjIfkutmamLyYqRoJESje+PCf1CEutWQmBL+wTHN6U+XXtW7Eda0
-QqOuL+VlETd8FW1LfiREaxUCtGbnm/+BF6ZQ5l13c42qDKoQ7+CYwrH2UQ3D8RFn
-jDX48vOJGWzbkLzth7hun7BtiClg4g==
-=Tfgi
------END PGP SIGNATURE-----
-
---DmP4SC3ByvkHy0qF--
-
+Thus back to this series I'd rather not introduce virtio_vdev_is_modern
+and use !virtio_vdev_is_legacy instead.
 
