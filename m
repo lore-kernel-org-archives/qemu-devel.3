@@ -4,63 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDEE0E9A03B
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 08:24:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B225E9A04A
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 08:52:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vscr0-000320-OL; Wed, 18 Feb 2026 03:24:14 -0500
+	id 1vsdID-0006jy-31; Wed, 18 Feb 2026 03:52:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <heifetz@yandex-team.com>)
- id 1vscqy-00031m-In
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 03:24:12 -0500
+ id 1vsdIA-0006jl-Hu
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 03:52:18 -0500
 Received: from forwardcorp1b.mail.yandex.net
  ([2a02:6b8:c02:900:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <heifetz@yandex-team.com>)
- id 1vscqv-0007hz-VU
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 03:24:12 -0500
-Received: from mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
- [IPv6:2a02:6b8:c37:8aa5:0:640:e6ae:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 4F169807FE;
- Wed, 18 Feb 2026 11:24:04 +0300 (MSK)
+ id 1vsdI7-0003X2-FH
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 03:52:18 -0500
+Received: from mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
+ [IPv6:2a02:6b8:c0c:1e1e:0:640:c6a6:0])
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 57FF680633;
+ Wed, 18 Feb 2026 11:52:11 +0300 (MSK)
 Received: from [IPV6:2a02:6bf:8080:18e::1:1d] (unknown
  [2a02:6bf:8080:18e::1:1d])
- by mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id 1OVAxA3AtGk0-LUpMBKxC; Wed, 18 Feb 2026 11:24:03 +0300
+ by mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id 6qVE1E3ArSw0-E1FfjOLX; Wed, 18 Feb 2026 11:52:09 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.com;
- s=default; t=1771403043;
- bh=AQUj8eCfNgUWjsFIlC7JsjSFfoe0XQj1+3BhnxnR86w=;
+ s=default; t=1771404729;
+ bh=tW2mETiUeqEZ9gZZdlTslP6NPzwNEy9D3MGA/t7H+g4=;
  h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=A35F69a1PIlv7ddGTB+VHA01Zb4QhrTJqOSUFmDilsMgFiYW3t1S5WiqzLJiYFtmj
- LEjILh65YbRbwoC8Iy9Mp0sQCboKEc+d7oszQkP+opv/jTQO4MjyJU94t5ZlfkVdPe
- hH/OSHoIVTvXaoisu9c9voPcg4gO9CRGREpUUNUY=
-Authentication-Results: mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net;
+ b=FdVdr54Bz3Bp4xBwlAlsh2Or8+vOfL1ZHBpX4zQBCFTWBaSG0bICdzOAEPykyS0zP
+ v7QENLbcw7Luspp7L4zstjTJg9zaBjjEczS7qJGmFaWhXEZafAtmB2ybUotLsxcJ3S
+ 8LborCaFFaStaZzrH67oRDRk4o2ZLIQJ6aEHnCnw=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.com
-Message-ID: <481d1b00-d589-4344-80d5-f10b64b793d1@yandex-team.com>
-Date: Wed, 18 Feb 2026 13:24:00 +0500
+Message-ID: <8b4373d7-f065-4f66-ab81-bc83f970d5f7@yandex-team.com>
+Date: Wed, 18 Feb 2026 13:52:06 +0500
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/8] hw/audio/pcspk: change PCSPK behaviour with
- --disable-audio
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+Subject: Re: [PATCH 1/8] audio: add `audio` build option for meson and Kconfig
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Eric Blake <eblake@redhat.com>,
  =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  Markus Armbruster <armbru@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  Thomas Huth <thuth@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
  Laurent Vivier <lvivier@redhat.com>
 References: <20260217052740.114117-1-heifetz@yandex-team.com>
- <20260217052740.114117-5-heifetz@yandex-team.com>
- <d968e44a-953d-4fcd-8342-33e0f2a971b8@redhat.com>
+ <20260217052740.114117-2-heifetz@yandex-team.com>
+ <CAFEAcA9y-QEaiRZMrYadQWJ1KgnHxT8Fkqt1uS0PkbY0Sb-_3Q@mail.gmail.com>
+ <d09950dc-dd3e-45ca-b54a-cbdff9f71e0d@redhat.com>
+ <CAFEAcA_Q78GwXS0Uia1fFdPoDwkofD4Wr080EkG01gGD-d8Pgg@mail.gmail.com>
+ <aZQ_bo7SvivJb7Sd@redhat.com>
 Content-Language: en-US
 From: Sergei Heifetz <heifetz@yandex-team.com>
-In-Reply-To: <d968e44a-953d-4fcd-8342-33e0f2a971b8@redhat.com>
+In-Reply-To: <aZQ_bo7SvivJb7Sd@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
@@ -86,120 +89,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/17/26 14:56, Paolo Bonzini wrote:
-> On 2/17/26 06:27, Sergei Heifetz wrote:
->> PCSPK (PC Speaker) is an embedded audio device. We don't want it to 
->> use audio
->> when QEMU is configured with `--disable-audio`. This is achieved with 
->> minimal,
->> non-invasive changes to the code.
+On 2/17/26 15:14, Daniel P. Berrangé wrote:
+> On Tue, Feb 17, 2026 at 10:06:19AM +0000, Peter Maydell wrote:
+>> On Tue, 17 Feb 2026 at 09:42, Paolo Bonzini <pbonzini@redhat.com> wrote:
+>>> On 2/17/26 10:31, Peter Maydell wrote:
+>>>> On Tue, 17 Feb 2026 at 05:29, Sergei Heifetz <heifetz@yandex-team.com> wrote:
+>>>>> This patch adds the `audio` option to meson_options.txt. It is
+>>>>> propagated into Kconfig as AUDIO. It is enabled by default.
+>>>>> The corresponding `--disable-audio` and `--enable-audio` options
+>>>>> for `configure` are also added.
+>>>>>
+>>>>> For now, this option does nothing. In subsequent patches, it will
+>>>>> gradually disable audio in different places. The final goal is to stop
+>>>>> building sources from `audio/` and `hw/audio/` and other audio-related
+>>>>> files (except for some stubs). Note that this intent is different from
+>>>>> `-audio none`, which mutes audio but still compiles the audio subsystem.
+>>>> Not building audio/ code makes sense, but do we really want to
+>>>> stop building hw/audio code ? That's the guest facing audio
+>>>> devices, and if for instance a machine type has an embedded
+>>>> sound device that would require us to stop compiling that
+>>>> machine. I think it would be very confusing for users if
+>>>> --disable-audio meant "we will silently not build half the
+>>>> Arm boards that have a pl041 in them".
+>>>>
+>>>> Maybe it would be better if "--disable-audio" meant "don't build
+>>>> the audio backends, and everything behaves as if the user
+>>>> passed -audio none" ?
+>>> The problem is that "-audio none" uses a silent backend but still keeps
+>>> all the audio/ code around.  If you prefer to keep the Arm boards
+>>> around, the solution would be to disable the audio code in the
+>>> individual pl041 devices with "#ifdef CONFIG_AUDIO", so that the
+>>> "depends on AUDIO" for pl041 can be removed too.
+>> This seems weird, though -- why would we put in a lot of ifdefs
+>> in every single audio device, when we could instead say "if you
+>> disable audio at build time what you get is something that presents
+>> the same API as the existing audio backends but does nothing" ?
 >>
->> In essence, the changes ensure that PCSPK does not use the corresponding
->> audio backend, while functioning the same way in non-audio aspects.
->>
->> Signed-off-by: Sergei Heifetz <heifetz@yandex-team.com>
->> ---
->>   hw/audio/pcspk.c | 14 ++++++++++++++
->>   1 file changed, 14 insertions(+)
->>
->> diff --git a/hw/audio/pcspk.c b/hw/audio/pcspk.c
->> index 916c56fa4c..03fe816024 100644
->> --- a/hw/audio/pcspk.c
->> +++ b/hw/audio/pcspk.c
->> @@ -36,10 +36,12 @@
->>   #include "qom/object.h"
->>   #include "trace.h"
->>   +#ifdef CONFIG_AUDIO
->>   #define PCSPK_BUF_LEN 1792
->>   #define PCSPK_SAMPLE_RATE 32000
->>   #define PCSPK_MAX_FREQ (PCSPK_SAMPLE_RATE >> 1)
->>   #define PCSPK_MIN_COUNT DIV_ROUND_UP(PIT_FREQ, PCSPK_MAX_FREQ)
->> +#endif
+>> Also, I think we should be consistent here, not put ifdefs in
+>> some devices we think are "important" but skip it in others.
+> If we consider our security boundary guidance, none of these boards
+> with on-board audio frontends would be considered in scope for
+> security.
 >
-> Not needed.
-It certainly isn’t needed, but I thought it made sense to add it for 
-consistency. I’ll drop it.
+> On arm, only the "virt" board is providing a secure deployment, and
+> that does not require this --disable-audio functionality.
 >
->>     OBJECT_DECLARE_SIMPLE_TYPE(PCSpkState, PC_SPEAKER)
->>   @@ -48,18 +50,25 @@ struct PCSpkState {
->>         MemoryRegion ioport;
->>       uint32_t iobase;
->> +#ifdef CONFIG_AUDIO
->>       uint8_t sample_buf[PCSPK_BUF_LEN];
->> +#endif
->>       AudioBackend *audio_be;
->> +#ifdef CONFIG_AUDIO
->>       SWVoiceOut *voice;
->> +#endif
->>       PITCommonState *pit;
->> +#ifdef CONFIG_AUDIO
->>       unsigned int pit_count;
->>       unsigned int samples;
->>       unsigned int play_pos;
->> +#endif
+> The same applies broadly to other arch targets too, with perhaps the
+> only exception being the "PC speaker" on x86, and a "none" audio
+> backend should be sufficient there IMHO.
 >
-> Please reorder the fields to have a single #ifdef/#endif. 
+> With regards,
+> Daniel
+In some production environments, static analysers are used as part of 
+broader security measures. If such an analyser reports a problem in an 
+unused part of the code, you can’t simply ignore it because it’s unused: 
+you either fix the issue (which is a strange thing to do for unused 
+code) or remove the unused part. This is a general point about why such 
+functionality may be useful for some users.
 
-Ok.
-
->  Also leave out
->
-> DEFINE_AUDIO_PROPERTIES(PCSpkState, audio_be),
->
-> which lets you remove audio_be.
-
-The reason I didn't remove audio_be initially is that it would require 
-compiling out a few lines in `hw/i386/pc.c`:
-
-```
-     object_property_add_alias(OBJECT(pcms), "pcspk-audiodev",
-                               OBJECT(pcms->pcspk), "audiodev");
-
-```
-
-I don't see any problems with that, so I can do it as well.
-
->
-> Thanks,
->
-> Paolo
->
->>       uint8_t data_on;
->>       uint8_t dummy_refresh_clock;
->>       bool migrate;
->>   };
->>   +#ifdef CONFIG_AUDIO
->>   static const char *s_spk = "pcspk";
->>     static inline void generate_samples(PCSpkState *s)
->> @@ -131,6 +140,7 @@ static int pcspk_audio_init(PCSpkState *s)
->>         return 0;
->>   }
->> +#endif
->>     static uint64_t pcspk_io_read(void *opaque, hwaddr addr,
->>                                 unsigned size)
->> @@ -161,11 +171,13 @@ static void pcspk_io_write(void *opaque, hwaddr 
->> addr, uint64_t val,
->>         s->data_on = (val >> 1) & 1;
->>       pit_set_gate(s->pit, 2, gate);
->> +#ifdef CONFIG_AUDIO
->>       if (s->voice) {
->>           if (gate) /* restart */
->>               s->play_pos = 0;
->>           AUD_set_active_out(s->voice, gate & s->data_on);
->>       }
->> +#endif
->>   }
->>     static const MemoryRegionOps pcspk_io_ops = {
->> @@ -196,10 +208,12 @@ static void pcspk_realizefn(DeviceState *dev, 
->> Error **errp)
->>         isa_register_ioport(isadev, &s->ioport, s->iobase);
->>   +#ifdef CONFIG_AUDIO
->>       if (s->audio_be && AUD_backend_check(&s->audio_be, errp)) {
->>           pcspk_audio_init(s);
->>           return;
->>       }
->> +#endif
->>   }
->>     static bool migrate_needed(void *opaque)
->
+Other audio-specific reasons for having this option are already 
+described by Paolo: 
+https://mail.gnu.org/archive/html/qemu-devel/2026-02/msg04410.html.
 
