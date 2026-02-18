@@ -4,151 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DE04E9A047
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 16:09:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E9DAE9A047
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 16:12:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vsk7H-0005tl-1H; Wed, 18 Feb 2026 11:09:31 -0500
+	id 1vsk9Q-0007C5-BL; Wed, 18 Feb 2026 11:11:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vsk7F-0005t2-2c
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 11:09:29 -0500
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1vsk9K-00079y-7r
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 11:11:39 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vsk7B-0000ti-2z
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 11:09:28 -0500
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1vsk9I-0003LI-9G
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 11:11:37 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771430961;
+ s=mimecast20190719; t=1771431094;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=V3k52Pzm5kLbtMeSbaU0OcluFzwVGS8bZJfqcWD9Jq4=;
- b=VUdg54Ly1BseMX5YTbkWA4jjl72KZtODPa++9ms3XfHt+nFGFGudrYkqP7M4xLHAjrOiUd
- 3WQetrXFDOgzqEA8QurhEDyNW1zwehNmyOdelX/d3DcvEs8j9elkr0XpMZYwqbC5G8fqtJ
- 4Fn7q/COCKOOJrjbRyf2IFg10ESos58=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-122-NbHyg_eROOqY8u35_D18Fw-1; Wed, 18 Feb 2026 11:09:19 -0500
-X-MC-Unique: NbHyg_eROOqY8u35_D18Fw-1
-X-Mimecast-MFC-AGG-ID: NbHyg_eROOqY8u35_D18Fw_1771430959
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-4830e7c6131so53580765e9.2
- for <qemu-devel@nongnu.org>; Wed, 18 Feb 2026 08:09:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1771430958; x=1772035758; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=V3k52Pzm5kLbtMeSbaU0OcluFzwVGS8bZJfqcWD9Jq4=;
- b=cke/YbDOVK3IdXTtdKgOZMHZTY4llgb1ZchyyCOs4Fya6w8AEO5y0R44kpN2Awu1Hq
- g2IVB95oMyn0RDLnGYh5mT+OGXT3ieZbF6Lxdd0mu4WJr8H3P0awmQYOCTDTVXX+jvCj
- AOO+itjackOhyraZGcs++KtSi4waL6BPag1DF+r3KuIKrndhEuvTufpMlu7BamOICYMi
- qlsA/AlHIqLsMqoBWguGA867UYjMYVcrNL+OZPepHNr2ZnsePJcvjxbRZPpW7J7M9Ff/
- iaQkECB/wmPr/p8GTFrP6WDGjvUuA4oyoPnJnUv+UTQsYZg4fvC45RpKN5yh51Smn9d3
- 89DA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771430959; x=1772035759;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=V3k52Pzm5kLbtMeSbaU0OcluFzwVGS8bZJfqcWD9Jq4=;
- b=wZh+aYLKB0/8oNRtKcdSK2Vs2gFzx6sx57XQogG4uFlpJTlBMT4rEQ3Oh8qj6Tj1Gy
- +RbMYEdU4oReea3G7mrUWOjVAUTepXbEoquGZIIzD8ET5xBo52Gyj1gRzfMVEh90xlRB
- 2SU0bcZ6D+djbA2GkHGNb6MRbUybrS8J8C82zIa5L5D7mKLcTOU8g4vB7VppyCUfbIYK
- d+E7fl0gtCU0XQw1Gs4+0qTyJ6/4yIrfxGIPyPj6i6grBuojCMJTWGJD5N/etNQDpZaQ
- fa/gfVYfGiCMJ8XG/mC1jUqaIGOy0rX0HtEE/dy54b0ms5Ot2CDS+r3nRJt/K9Dta0Iz
- jNFw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWvADnK14cPY+YOb5KNlOn9LNffjEOY05/Z37LZrUlm2xsuJZ4Kyff3lRMRgUDA5bItzt1n3DdrZn8x@nongnu.org
-X-Gm-Message-State: AOJu0YxZD9BC/hy14vREoshycIuvhJamzW0kTzklPaYSVFq0ElDqxB8a
- f3fa9jyrTV566n4kq8Jg/+4aZVVApkM6FNYVoj4CEOZMp6rJKl9otpwwgG+sShW+b8OvDLjRFMO
- 99900VrJtajwrYatObMH6vt5kvU4qL+j0ezYvCZtpE1MMz2Z/JGESPx0D
-X-Gm-Gg: AZuq6aJibyzsrX5PisYrcHwgMbfdZfXSHr2KqssYWlborgpJdCFaR5gMQRJZ73q0XB1
- Wv+3lUUKq4NRmuswJ++d5dJZRTGmcNU1/dzPRFrrQ8DBXQmyyxv0gjkSml7+/RS2RJDaNCUMgE9
- xEcQ0TdnQKbz5TnxjX0EYHh8lvh/zxvTRpQF1UjLqvjTNeE4pb0s2tfc4dKZFJjzbLDhVbgb34E
- VJj2cO3gOFJhAJwdBNX9J44o28LAeSGVniJ7t1+0Ve/nc/hT/oJD0YXMhqYsSCEYhORM0pMxhx+
- VqjhoiJ4+iGIGETEzTvxvYz6yMNjWuniCpDmxvjOCwp0ELV8uG6QF2TIEM3n5e8uoNjYzkExrov
- LOiwz3Mk4Igi2y99RSPqEJA6NQS/1yMFiH9MphKCsQA9izYjinmxittYRY9pq
-X-Received: by 2002:a05:600c:c491:b0:47d:3ffa:5f03 with SMTP id
- 5b1f17b1804b1-48379be825emr270629945e9.21.1771430958543; 
- Wed, 18 Feb 2026 08:09:18 -0800 (PST)
-X-Received: by 2002:a05:600c:c491:b0:47d:3ffa:5f03 with SMTP id
- 5b1f17b1804b1-48379be825emr270629445e9.21.1771430958121; 
- Wed, 18 Feb 2026 08:09:18 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4836cd7af87sm470845025e9.1.2026.02.18.08.09.17
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 18 Feb 2026 08:09:17 -0800 (PST)
-Message-ID: <4db67973-3f88-442f-93c0-65629d74bf50@redhat.com>
-Date: Wed, 18 Feb 2026 17:09:16 +0100
+ in-reply-to:in-reply-to:references:references;
+ bh=XpBlXqzW2ADTtbw7gs2Ezu+2TnxL5xq1VVmHO8avErE=;
+ b=R2ZRDJwl6ej0B8EkqRKYIe9xKrTV4aOHQTMygrpEYH8DAmZiPCNsyUKlJmXZenJabpPTPX
+ A99nuUH76+7peAg2NKIAgopkWfY9zDWm/ly2lw5O+y7o95bHIyQXWaoUh5NZPZMRgTA+Bw
+ wGPr5MPc4/Q3FJWd+7uhjR3CfL6I+qM=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-16-ZkdIAesaNyK33-7frBzXiQ-1; Wed,
+ 18 Feb 2026 11:11:31 -0500
+X-MC-Unique: ZkdIAesaNyK33-7frBzXiQ-1
+X-Mimecast-MFC-AGG-ID: ZkdIAesaNyK33-7frBzXiQ_1771431090
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E94061955BC7; Wed, 18 Feb 2026 16:11:29 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.8])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id AB35819560B7; Wed, 18 Feb 2026 16:11:28 +0000 (UTC)
+Date: Wed, 18 Feb 2026 11:11:27 -0500
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Fiona Ebner <f.ebner@proxmox.com>
+Cc: Kevin Wolf <kwolf@redhat.com>, Jens Axboe <axboe@kernel.dk>,
+ qemu-block@nongnu.org, qemu-devel@nongnu.org, fam@euphon.net
+Subject: Re: [PATCH 1/2] fdmon-io_uring: notify main loop when SQEs are queued
+Message-ID: <20260218161127.GC587447@fedora>
+References: <20260213143225.161043-1-axboe@kernel.dk>
+ <20260213143225.161043-2-axboe@kernel.dk>
+ <aY9Lj1BTVRCFyfic@redhat.com>
+ <c32915a9-33a2-47c5-a91b-27f01147918f@proxmox.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 22/34] hw/vfio: generate new file fd for pseudo device
- and rebind existing descriptors
-To: Ani Sinha <anisinha@redhat.com>
-Cc: Alex Williamson <alex@shazbot.org>, Gerd Hoffmann <kraxel@redhat.com>,
- qemu-devel <qemu-devel@nongnu.org>
-References: <20260218114233.266178-1-anisinha@redhat.com>
- <20260218114233.266178-23-anisinha@redhat.com>
- <96665575-c28c-43fb-af7b-41be109dc959@redhat.com>
- <20472A29-B096-4407-B144-74C3804CC315@redhat.com>
- <0f5f1157-1ac4-472b-9c30-5e0c61d18f83@redhat.com>
- <CAK3XEhPVMABDZ85wiMMW7bVHzytaOrw=kf8avu7rNvqLiZnH0A@mail.gmail.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <CAK3XEhPVMABDZ85wiMMW7bVHzytaOrw=kf8avu7rNvqLiZnH0A@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="cas4ddH0getGnvbq"
+Content-Disposition: inline
+In-Reply-To: <c32915a9-33a2-47c5-a91b-27f01147918f@proxmox.com>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -173,68 +88,181 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/18/26 17:06, Ani Sinha wrote:
-> On Wed, Feb 18, 2026 at 9:00 PM Cédric Le Goater <clg@redhat.com> wrote:
->>
->> On 2/18/26 16:07, Ani Sinha wrote:
->>>
->>>
->>>> On 18 Feb 2026, at 7:37 PM, Cédric Le Goater <clg@redhat.com> wrote:
->>>>
->>>> On 2/18/26 12:42, Ani Sinha wrote:
->>>>> Normally the vfio pseudo device file descriptor lives for the life of the VM.
->>>>> However, when the kvm VM file descriptor changes, a new file descriptor
->>>>> for the pseudo device needs to be generated against the new kvm VM descriptor.
->>>>> Other existing vfio descriptors needs to be reattached to the new pseudo device
->>>>> descriptor. This change performs the above steps.
->>>>> Tested-by: Cédric Le Goater <clg@redhat.com>
->>>>
->>>> There is a regression since last version.
->>>>
->>>>
->>>> 'reboot' from the guest and command 'system_reset' from the QEMU
->>>> monitor now generate these outputs:
->>>>
->>>>    qemu-system-x86_64: info: virtual machine state has been rebuilt with new guest file handle.
->>>>    qemu-system-x86_64: info: virtual machine state has been rebuilt with new guest file handle.
->>>>    qemu-system-x86_64: info: virtual machine state has been rebuilt with new guest file handle.
->>>>    ...
->>>>
->>>> and QEMU exits after a while.
->>>
->>> I have only seen this in SEV-ES with more than one vcpus. Never with TDX or SEV-SNP (single or multiple cpus).
->>> On which host/guest type did you see this?
->>
->> SEV-SNP on a RHEL9 host. Same guest I used before and host says :
->>
->>     [1816531.409591] kvm_amd: SEV-ES guest requested termination: 0x0:0x0
-> 
-> Ok so the guest is SEV-ES. most likely you are also using > 1 vcpu.
-> Try with one vcpu and/or enabling SEV-SNP.
-> 
 
-The guest is SEV-SNP and has 2 cpus.
+--cas4ddH0getGnvbq
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-[root@vm12 ~]# dmesg  | grep SEV
-[    0.544608] Memory Encryption Features active: AMD SEV SEV-ES SEV-SNP
-[    0.545580] SEV: Status: SEV SEV-ES SEV-SNP
-[    0.663592] SEV: APIC: wakeup_secondary_cpu() replaced with wakeup_cpu_via_vmgexit()
-[    0.719630] SEV: Using SNP CPUID table, 32 entries present.
-[    0.719636] SEV: SNP running at VMPL0.
-[    1.043748] SEV: SNP guest platform devices initialized.
-[    4.530555] sev-guest sev-guest: Initialized SEV guest driver (using vmpck_id 0)
-vmpck_id 0)
-[root@vm12 ~]# lscpu
-Architecture:                x86_64
-   CPU op-mode(s):            32-bit, 64-bit
-   Address sizes:             40 bits physical, 48 bits virtual
-   Byte Order:                Little Endian
-CPU(s):                      2
-   On-line CPU(s) list:       0,1
-Vendor ID:                   AuthenticAMD
-   BIOS Vendor ID:            QEMU
-   Model name:                AMD EPYC-v4 Processor
-     BIOS Model name:         pc-q35-11.0
-     ....
+On Wed, Feb 18, 2026 at 10:57:02AM +0100, Fiona Ebner wrote:
+> Am 13.02.26 um 5:05 PM schrieb Kevin Wolf:
+> > Am 13.02.2026 um 15:26 hat Jens Axboe geschrieben:
+> >> When a vCPU thread handles MMIO (holding BQL), aio_co_enter() runs the
+> >> block I/O coroutine inline on the vCPU thread because
+> >> qemu_get_current_aio_context() returns the main AioContext when BQL is
+> >> held. The coroutine calls luring_co_submit() which queues an SQE via
+> >> fdmon_io_uring_add_sqe(), but the actual io_uring_submit() only happens
+> >> in gsource_prepare() on the main loop thread.
+> >=20
+> > Ouch! Yes, looks like we completely missed I/O submitted in vCPU threads
+> > in the recent changes (or I guess worker threads in theory, but I don't
+> > think there any that actually make use of aio_add_sqe()).
+> >=20
+> >> Since the coroutine ran inline (not via aio_co_schedule()), no BH is
+> >> scheduled and aio_notify() is never called. The main loop remains asle=
+ep
+> >> in ppoll() with up to a 499ms timeout, leaving the SQE unsubmitted unt=
+il
+> >> the next timer fires.
+> >>
+> >> Fix this by calling aio_notify() after queuing the SQE. This wakes the
+> >> main loop via the eventfd so it can run gsource_prepare() and submit t=
+he
+> >> pending SQE promptly.
+> >>
+> >> This is a generic fix that benefits all devices using aio=3Dio_uring.
+> >> Without it, AHCI/SATA devices see MUCH worse I/O latency since they use
+> >> MMIO (not ioeventfd like virtio) and have no other mechanism to wake t=
+he
+> >> main loop after queuing block I/O.
+> >>
+> >> This is usually a bit hard to detect, as it also relies on the ppoll
+> >> loop not waking up for other activity, and micro benchmarks tend not to
+> >> see it because they don't have any real processing time. With a
+> >> synthetic test case that has a few usleep() to simulate processing of
+> >> read data, it's very noticeable. The below example reads 128MB with
+> >> O_DIRECT in 128KB chunks in batches of 16, and has a 1ms delay before
+> >> each batch submit, and a 1ms delay after processing each completion.
+> >> Running it on /dev/sda yields:
+> >>
+> >> time sudo ./iotest /dev/sda
+> >>
+> >> ________________________________________________________
+> >> Executed in   25.76 secs      fish           external
+> >>    usr time    6.19 millis  783.00 micros    5.41 millis
+> >>    sys time   12.43 millis  642.00 micros   11.79 millis
+> >>
+> >> while on a virtio-blk or NVMe device we get:
+> >>
+> >> time sudo ./iotest /dev/vdb
+> >>
+> >> ________________________________________________________
+> >> Executed in    1.25 secs      fish           external
+> >>    usr time    1.40 millis    0.30 millis    1.10 millis
+> >>    sys time   17.61 millis    1.43 millis   16.18 millis
+> >>
+> >> time sudo ./iotest /dev/nvme0n1
+> >>
+> >> ________________________________________________________
+> >> Executed in    1.26 secs      fish           external
+> >>    usr time    6.11 millis    0.52 millis    5.59 millis
+> >>    sys time   13.94 millis    1.50 millis   12.43 millis
+> >>
+> >> where the latter are consistent. If we run the same test but keep the
+> >> socket for the ssh connection active by having activity there, then
+> >> the sda test looks as follows:
+> >>
+> >> time sudo ./iotest /dev/sda
+> >>
+> >> ________________________________________________________
+> >> Executed in    1.23 secs      fish           external
+> >>    usr time    2.70 millis   39.00 micros    2.66 millis
+> >>    sys time    4.97 millis  977.00 micros    3.99 millis
+> >>
+> >> as now the ppoll loop is woken all the time anyway.
+> >>
+> >> After this fix, on an idle system:
+> >>
+> >> time sudo ./iotest /dev/sda
+> >>
+> >> ________________________________________________________
+> >> Executed in    1.30 secs      fish           external
+> >>    usr time    2.14 millis    0.14 millis    2.00 millis
+> >>    sys time   16.93 millis    1.16 millis   15.76 millis
+> >>
+> >> Signed-off-by: Jens Axboe <axboe@kernel.dk>
+> >> ---
+> >>  util/fdmon-io_uring.c | 8 ++++++++
+> >>  1 file changed, 8 insertions(+)
+> >>
+> >> diff --git a/util/fdmon-io_uring.c b/util/fdmon-io_uring.c
+> >> index d0b56127c670..96392876b490 100644
+> >> --- a/util/fdmon-io_uring.c
+> >> +++ b/util/fdmon-io_uring.c
+> >> @@ -181,6 +181,14 @@ static void fdmon_io_uring_add_sqe(AioContext *ct=
+x,
+> >> =20
+> >>      trace_fdmon_io_uring_add_sqe(ctx, opaque, sqe->opcode, sqe->fd, s=
+qe->off,
+> >>                                   cqe_handler);
+> >> +
+> >> +    /*
+> >> +     * Wake the main loop if it is sleeping in ppoll().  When a vCPU =
+thread
+> >> +     * runs a coroutine inline (holding BQL), it queues SQEs here but=
+ the
+> >> +     * actual io_uring_submit() only happens in gsource_prepare().  W=
+ithout
+> >> +     * this notify, ppoll() can sleep up to 499ms before submitting.
+> >> +     */
+> >> +    aio_notify(ctx);
+> >>  }
+> >=20
+> > Makes sense to me.
+> >=20
+> > At first I wondered if we should use defer_call() for the aio_notify()
+> > to batch the submission, but of course holding the BQL will already take
+> > care of that. And in iothreads where there is no BQL, the aio_notify()
+> > shouldn't make a difference anyway because we're already in the right
+> > thread.
+> >=20
+> > I suppose the other variation could be have another io_uring_enter()
+> > call here (but then probably really through defer_call()) to avoid
+> > waiting for another CPU to submit the request in its main loop. But I
+> > don't really have an intuition if that would make things better or worse
+> > in the common case.
+> >=20
+> > Fiona, does this fix your case, too?
+>=20
+> Yes, it does fix my issue [0] and the second patch gives another small
+> improvement :)
+>=20
+> Would it be slightly cleaner to have aio_add_sqe() call aio_notify()
+> itself? Since aio-posix.c calls downwards into fdmon-io_uring.c, it
+> would feel nicer to me to not have fdmon-io_uring.c call "back up". I
+> guess it also depends on whether we expect another future fdmon
+> implementation with .add_sqe() to also benefit from it.
+
+Calling aio_notify() from aio-posix.c:aio_add_sqe() sounds better to me
+because fdmon-io_uring.c has to be careful about calling aio_*() APIs to
+avoid loops.
+
+Stefan
+
+>=20
+> [0]:
+> https://lore.kernel.org/qemu-devel/9901305b-fbdf-4893-8e80-3bc0d1d645b0@p=
+roxmox.com/
+>=20
+> Best Regards,
+> Fiona
+>=20
+
+--cas4ddH0getGnvbq
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmmV5K8ACgkQnKSrs4Gr
+c8hurQf/Taqi451e7m9/FOVHmoolHcbjb8MBrSHcKCs0101TE+q3YolK8f2o5PkP
+EtLq2J3AVocNE8NJFC17FsmggWGA22fMqYjiiumTBaEpPtcMlfbKjxucKZn3I+hN
+rZSH9E4dDYkglf8YAZff20+9r4ZV62SftQ9D8iqFKDuDplHSl8Qz6WbISOddJl21
+9OcSXEO0U4PxBmBXuCFjgbmgRxwB2cKUeNoamnYcGlJlxFSzds/AiCWryLGp1mFP
+W4+0ttOvGqzKWGmru4ZUqg8ccT1u6miXwuaLGoT44OgGpclFpiZtksR+v2igOHN4
+8berKxNL4652SWooyDs4C5Sdq5k/4w==
+=lRV2
+-----END PGP SIGNATURE-----
+
+--cas4ddH0getGnvbq--
 
 
