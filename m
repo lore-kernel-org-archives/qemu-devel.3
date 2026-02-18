@@ -4,43 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08A76E9A02C
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 19:47:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65FC3E9A04B
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 19:52:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vsnVz-0001QY-FR; Wed, 18 Feb 2026 14:47:16 -0500
+	id 1vsnaF-0002fp-S9; Wed, 18 Feb 2026 14:51:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vsnVt-0001Hq-KF
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 14:47:11 -0500
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vsnaE-0002fh-BC
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 14:51:38 -0500
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vsnVs-00027m-5P
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 14:47:09 -0500
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vsnaC-0000RT-Q5
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 14:51:38 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject
  :Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=o6xN62itcTikjTej258vkpWGDEkNJEIfYQGCXGo1UMU=; b=eAZ6zU0SYPdZHX7
- EH6elsu1mZlpYQ5tPrMrQS6Pq7w4J8SLyLz2FWpXg7g3qofMvQGAjRoF466UTNkY2PxnpeGh8RLFU
- jwwREAIg5Fn1RNDoiSceB8a/uqefYxOt8bYKb2vuz9pOC2lKWTQI/Sh95lxk3HS7+JDcuwHbM8MfJ
- Kk=;
-Date: Wed, 18 Feb 2026 20:50:41 +0100
-To: BALATON Zoltan <balaton@eik.bme.hu>
+ List-Help; bh=7RfK2ubIEvLD/tHpKyvSNaPEdsc2wHffz49yO7B5wGk=; b=bFHqyeq+Oog8YFZ
+ zIAuHGNYeIBEs7TvBgLtfiuJrzWgB3QeVAoeNinMytKr+8It+sRmgwO3rqKzeWyoOWF7ZRz4MAwvp
+ tzameSGvpfqk7NWfTDdfaxgszuN319KQW3+eLmclpUW+0DUm+KeQlfMHsYzW/GjOcDfrXmOZeaBEF
+ lI=;
+Date: Wed, 18 Feb 2026 20:55:10 +0100
+To: Helge Deller <deller@gmx.de>
 Cc: qemu-devel@nongnu.org, 
- Richard Henderson <richard.henderson@linaro.org>, Helge Deller <deller@gmx.de>
-Subject: Re: [PATCH v2 4/4] hppa: Add C3600 machine with PA-8600 CPU
-Message-ID: <aZYYABuzZT-yF0lR@hive.localdomain>
+	Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [PATCH v2 0/4] hppa: Add simple C3600 machine with PA-8600 CPU
+Message-ID: <aZYYIfiomDjmB-zn@hive.localdomain>
 References: <20260210-hppa-c3600-v2-0-9ca09c677012@rev.ng>
- <20260210-hppa-c3600-v2-4-9ca09c677012@rev.ng>
- <816b7e55-ce79-25f9-42ef-fab8a98a00d8@eik.bme.hu>
+ <5ba38c75-e1c6-41cc-9a5d-b81c22527993@gmx.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <816b7e55-ce79-25f9-42ef-fab8a98a00d8@eik.bme.hu>
+In-Reply-To: <5ba38c75-e1c6-41cc-9a5d-b81c22527993@gmx.de>
 Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
  helo=rev.ng
 X-Spam_score_int: -20
@@ -67,83 +66,62 @@ From:  Anton Johansson via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/02/26, BALATON Zoltan wrote:
-> On Tue, 10 Feb 2026, Anton Johansson via qemu development wrote:
-> > Adds a C3600/PA-8600 machine/CPU, which from the perspective of
-> > QEMU differ only in the size of the physical address, compared to
-> > C3700/PA-8700.
+On 10/02/26, Helge Deller wrote:
+> On 2/10/26 17:37, Anton Johansson via qemu development wrote:
+> > This patchset tries to address a discrepancy between the C3700 machine
+> > in QEMU/SeaBIOS and the documentation (chapter 5)
 > > 
-> > With this addition, PA-8700 is changed to use the correct 44 bit
-> > physical address space.
+> >    http://ftp.parisc-linux.org/docs/whitepapers/PA-8700wp.pdf
+> > 
+> > where 40 bits of physical address space are used in SeaBISO compared
+> 
+> SeaBIOS (typo)
+> 
+> > to the 44 bits specified in the documentation.
+> > 
+> > A PA-8600 CPU with 40 bits of physical address space is added along with
+> > a C3600 machine using it by default.  AFAICT there are no major
+> > differences from QEMUs side between the PA-8600 and 8700 aside from the
+> > physical address space size.  The PA-8700 machine can then be
+> > moved to using 44 bits.  To account for the discrepancy with SeaBIOS, the
+> > functional tests now run a C3700 but with a PA-8600 CPU.
+> > 
+> > CPU model definitions now inherit from a TYPE_HPPA_CPU base class and
+> > use a HPPACPUDef sturct to provide model specifics, similar to the SPARC
+> > and RISCV targets.  This hopefully makes it easier to add other models,
+> > such as the 8800/8900.
+> > 
+> > Based on:
+> >    PATCH v4 0/8] single-binary: Drop TARGET_PHYS_ADDR_SPACE_BITS
+> >    (20260210-phys_addr-v4-0-725a589e83c8@rev.ng)
 > > 
 > > Signed-off-by: Anton Johansson <anjo@rev.ng>
-> > ---
-> > target/hppa/cpu-qom.h                 |  1 +
-> > hw/hppa/machine.c                     | 41 ++++++++++++++++++++++++++++++-----
-> > target/hppa/cpu.c                     | 10 ++++++++-
-> > tests/functional/hppa/test_seabios.py |  3 +++
-> > 4 files changed, 48 insertions(+), 7 deletions(-)
-> > 
-> > diff --git a/target/hppa/cpu-qom.h b/target/hppa/cpu-qom.h
-> > index c6b82dc09b..078aa3b08a 100644
-> > --- a/target/hppa/cpu-qom.h
-> > +++ b/target/hppa/cpu-qom.h
-> > @@ -28,6 +28,7 @@
-> > #define HPPA_CPU_TYPE_NAME(name) (name HPPA_CPU_TYPE_SUFFIX)
-> > 
-> > #define TYPE_HPPA_CPU_PA_7300LC HPPA_CPU_TYPE_NAME("pa-7300lc")
-> > +#define TYPE_HPPA_CPU_PA_8600   HPPA_CPU_TYPE_NAME("pa-8600")
-> > #define TYPE_HPPA_CPU_PA_8700   HPPA_CPU_TYPE_NAME("pa-8700")
-> > 
-> > OBJECT_DECLARE_CPU_TYPE(HPPACPU, HPPACPUClass, HPPA_CPU)
-> > diff --git a/hw/hppa/machine.c b/hw/hppa/machine.c
-> > index 8246f6bf65..ab5b8b6422 100644
-> > --- a/hw/hppa/machine.c
-> > +++ b/hw/hppa/machine.c
-> > @@ -689,9 +689,9 @@ static AstroState *astro_init(void)
-> > }
-> > 
-> > /*
-> > - * Create HP C3700 workstation
-> > + * Create HP C3000 series workstation
-> >  */
-> > -static void machine_HP_C3700_init(MachineState *machine)
-> > +static void machine_HP_C3000_init(MachineState *machine)
-> > {
-> >     PCIBus *pci_bus;
-> >     AstroState *astro;
-> > @@ -804,9 +804,30 @@ static void HP_B160L_machine_init_class_init(ObjectClass *oc, const void *data)
-> >     mc->default_ram_size = 512 * MiB;
-> > }
-> > 
-> > +static void HP_C3600_machine_init_class_init(ObjectClass *oc, const void *data)
-> > +{
-> > +    static const char * const valid_cpu_types[] = {
-> > +        TYPE_HPPA_CPU_PA_8600,
-> > +        NULL
-> > +    };
-> > +    MachineClass *mc = MACHINE_CLASS(oc);
-> > +
-> > +    mc->desc = "HP C3600 workstation";
-> > +    mc->default_cpu_type = TYPE_HPPA_CPU_PA_8600;
-> > +    mc->valid_cpu_types = valid_cpu_types;
-> > +    mc->init = machine_HP_C3000_init;
-> > +    mc->max_cpus = HPPA_MAX_CPUS;
-> > +    mc->default_ram_size = 1024 * MiB;
-> > +}
-> > +
-> > static void HP_C3700_machine_init_class_init(ObjectClass *oc, const void *data)
-> > {
-> > +    /*
-> > +     * SeaBIOS for C3700 currently uses a 40 bit physical address space,
-> > +     * allow use of use the PA-8600.
 > 
-> Something seems to be missing from this comment or too many uses of "use"?
+> I like your patchset.
+> I'm just wondering if we should merge it with my upcoming new SeaBIOS,
+> which adds support for an A400 machine (with a PA8500 CPU).
+> So, instead of adding a C3600 machine, we could add the A400 which
+> has 40-bit physical addresss space too.
+> See:
+> https://github.com/hdeller/seabios-hppa/branches -> devel-v22 branch
+> and
+> https://github.com/hdeller/qemu-hppa/commit/1c969c925fb76236e76b09e011f07766ab4441cb
 > 
-> Regards,
-> BALATON Zoltan
+> In addition, I wonder what's necessary to change in SeaBIOS to fully
+> support the 40 and/or 44-bit case. It's easy to hand over the bits to
+> SeaBIOS, so SeaBIOS could do the right thing.
+> 
+> Helge
+> 
 
-Agh thanks, was a bit tired when writing these comments..
+Hi Helge,
+
+I submitted a rebased v3 with some minor spelling fixes.  If you want
+you can pick up the series, otherwise I'll swap out the C3600/PA-8600
+for a A400/PA-8500 and keep pushing it, whatever is easier for you.
+
+I need to look into the A400, is there some other change from the C3600
+I should be aware of?
 
 //Anton
 
