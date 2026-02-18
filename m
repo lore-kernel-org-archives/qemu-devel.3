@@ -4,80 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDC8AE9A02C
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 22:29:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DDBBBE9A02C
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 22:34:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vsq28-00088j-36; Wed, 18 Feb 2026 17:28:36 -0500
+	id 1vsq7G-0001hT-SH; Wed, 18 Feb 2026 17:33:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vsq26-00087u-3J
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 17:28:34 -0500
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ id 1vsq7E-0001gJ-GE
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 17:33:53 -0500
+Received: from mail-pg1-x52d.google.com ([2607:f8b0:4864:20::52d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vsq24-0000NN-KB
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 17:28:33 -0500
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-2a91215c158so1908015ad.0
- for <qemu-devel@nongnu.org>; Wed, 18 Feb 2026 14:28:32 -0800 (PST)
+ id 1vsq7C-00012s-O8
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 17:33:52 -0500
+Received: by mail-pg1-x52d.google.com with SMTP id
+ 41be03b00d2f7-c70942441ebso174426a12.1
+ for <qemu-devel@nongnu.org>; Wed, 18 Feb 2026 14:33:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771453711; x=1772058511; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1771454029; x=1772058829; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=6IFdcTrp9aJ9TfIYRuLMYS6d7a5qf5O6BB+ILdoBHIw=;
- b=yw4BKPTVZeHzpiHGxXC2uhnzTU9lermaVV9xUX8Yruv8s6kMK9SVA5xroIy72RVHuK
- 3kw6peJNQWiZsy+H8an2HtN6LB5FSkAmUN9XLwU+XobODS/InWchOQpEoh4CNFmKd0Kv
- OKO0QPlUWcUghjNlFbV2y/SeJv0fBc5QaPBIuyPH5NSxNWLwitNFLUmQffZRxZUkdykD
- 9vwOWzWELD3vjTw9hzE7LeOHvrhOwJ6cOVmzQE+urX3isFo/dEjTFhG4kj0M8kJWnGYy
- 9s+G7pgbcujg2bQllqsQzhybXEUEX+VwmkDiAaUs8EvEK0yZBkeXmHMT7HzIXagr2+nz
- vrmg==
+ bh=Sb+8RFm/1UbkPakTLvQ2Y8ca65Z3HvZhiKz/kGmxpbg=;
+ b=PPrh8ymDUsj6fwzyn9F0VfZQd0FZgOPvUSW/HShGUad5qoAYy+uegxQHw77XedXX9q
+ 5erRosEQe5Owi/XC3B9tFTE0QUOXQjsOQuwymUjYbhQzZjJZa91fT9m0XBkRty2pn5mn
+ yKiE5iIR1Oq+JY4pvc4fByS2tvk8Y9vUw3NKS/hWVD7T2r38IFPVvceR2QMkezj6BLzv
+ NvLJRCxOVzvk14lCiS7lOUVMy4E6iyTMbJwWHp7ozf58I4pBs11atHBNSEiG012vOmDE
+ 3jMaYwcn0pIaL88PCdmkVeFmmSwkFIWTm5gWVOhB5vuO6woS1dX0CqZAvMI223D5JoBF
+ bdhA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771453711; x=1772058511;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1771454029; x=1772058829;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=6IFdcTrp9aJ9TfIYRuLMYS6d7a5qf5O6BB+ILdoBHIw=;
- b=T5o010itsCJ027noH6PeQusVK38uamT+jSLFDT+nnmNdUjYVYzSZMYnrB2aF12zphr
- j0AgxpO0DOShIEKztwXaibF0r5qvlyT2pnY1O4OgoTXcSlMz/hIfSbDO3hi81atb+WbI
- HQVB9/hyT7BPvR+yOL78JVUSWtJqKe017E/jNgwFCKmgPyA6/3hMfTFgM0BXfrRgwSuu
- 8jflQf2hkqPjOmA+m34fm6kx2LNJ4Bc/th/Sn2geZO2IWzCRZeS30KL3geCoA/uqwUOe
- gFlN/a79ehJE9Erp/sbPIJgBGmr+CwIY+70nhn9btca5LEwdg7AsfEfXfImZSL8EKhR8
- BIeQ==
+ bh=Sb+8RFm/1UbkPakTLvQ2Y8ca65Z3HvZhiKz/kGmxpbg=;
+ b=SlxZRrluG2NxrUgm+5DEBPQV4WHiOSk7W5UN4m/MvjyocKnzEUatQ6s3LG7RZcynmO
+ U8D95BC8zkwu1/w8JPga5fPeQdiz9XfN37JLq1PdgPtiu/YBDblyA86lWq+5ap1hig6z
+ Q5kNU9bxKbPYxjbpFA/ReNfU5M1omH2CQFBFm/hqw+hz/Z+nPEtcHgPWk2Yhz4tGblAK
+ Uc+1sEE1OJlBmv+ELfx4kpB1n8CjdckQryWy21fcN3kJAanWCSBTOKnYMgjgJu10EAJh
+ +WlCYkqKnNrlWO2rLiFKyG0EQ6NjvT97JveEvWPTz2OjQG1ElL8AGcSfl+38tsvO6JhI
+ xF4Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVGVJ4HpXibptoKpuKJj1WCwxXi4eSMdof8zOXD9tluEUvlG+pdYb+SH4sTk6gWVxppm27wQOMuZbqr@nongnu.org
-X-Gm-Message-State: AOJu0Yz5hZdvPMPU3pdamLem3bx2uOhzT+aYyXzvlBBjJdr1ulhoSc34
- Ec1o08dGBD38Ukd4MmaYymrR6A59KujvBHHjkOsjAKrf9DAArT9BHjwR+0SKXkjt9ig=
-X-Gm-Gg: AZuq6aI+iP7LbG9XoNCPujcEyUmgbxx/fc3I7EBEtgQq+8BBgTzZUSBsiMvzNuFOj4T
- 7gkrn4u9xRTUY+GlgdCbxVxDnZFtatwDp/RQ3y2orIbAisZkxl7/DFFCv1GN5zi3shUDYo1/tqd
- oREn1lAu6xB8s5bod3hxNhPBXY+MIHPPtZvCCe5i/izXja1EGypYwM48XDRgxWOkB5gqHDbW//Y
- C9klYs43IN7S1t+ZfgV9KuB2/N0BabaBY2b+CEFkH4T308KrmoGJ0FXoJZ7R+1BQQOq+yBcpmgX
- YQoJVciv6d3VPs1aCVzK9aJq3HtjPtlnkTtwOj4yec2cecYdtZWtV5olACa4/7RgIvEG5cejFta
- eOAv5VucNUZaXKznp9CgrHR1aF8SKva3/jF1KB9FO1D2CBzwmAEooM+M/tiwhSZZUiXJHE7rNpg
- KkgF4oa0OI7Ub5YCUWClV19pPcaCurYVrrICYHxgC12oiOwVZ2VViW/MUpttUGNV+2P+Pu
-X-Received: by 2002:a17:902:ec8d:b0:2a9:5b28:94c0 with SMTP id
- d9443c01a7336-2ad50ed845bmr30790345ad.27.1771453711096; 
- Wed, 18 Feb 2026 14:28:31 -0800 (PST)
+ AJvYcCVeC6PlcRkxtja7fhqYXDjzMciJ9d0TTifvfmkssoEYTHf8kVmdkXWMPgtM7PAwUqE6WRXe1xSjUp8o@nongnu.org
+X-Gm-Message-State: AOJu0YznQ8TgVkY8btiCEtn5vqmX+rASvGgN0nIhLuoDkbtcp2Foxpcq
+ 9E3vvWr0x3hzsYrDK3YUt2EAwEDvZJHvokqwNgENgkABX2jScreyYrAJs8gyMRiyGv4=
+X-Gm-Gg: AZuq6aJPYZzcMrjyxDAcjpHzX+GWDiRuBm74g0SqqF27j7agiawN1eAFBMhYW3hyqul
+ 7Rhir5JKOaOM1S0zKJyJOiMN3P9FpQBxyHGlWK8Ms1FKy0nodJSHAMIm7V8Yutyox2Sb6q3U5N7
+ ZrbQ0Wqf0XspGskh+68cbOl983hHNpNa1Z98oHWhp6TwgyawqndfhPldExDf04Zo+tT0K7m2dxU
+ qh44GPhMCOIx5UiNBi7Qqr9LsaL0wXXFva0xGs2yqKWwWs06zgdRvJJvT4kImxZ7rnWq/tq0FjG
+ WFDdgb2k5Vh2EhgCc+kJZ/vTV2r2kX5ZKZtJaVl0wSN6uiDXq0d9ymlyNs4SKTeUKqVwz1VGlYK
+ 5NriHiqntqO7KxJ2Yk6fckRcN5q71BMRZMMSHdMOIWUAW0/8VT8ouvE18hoCPz6u4RQw0DL3vFh
+ jyUhuYnziVl1OJMF30kZDL1q4noajvlziTINRmiZ7peTjGkYtco5X4jfvQwhnzGN50Wmcz
+X-Received: by 2002:a17:90a:c2cb:b0:352:fa96:5137 with SMTP id
+ 98e67ed59e1d1-35844f9b711mr13127634a91.21.1771454029081; 
+ Wed, 18 Feb 2026 14:33:49 -0800 (PST)
 Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2ad1adef6e2sm139501965ad.2.2026.02.18.14.28.30
+ 98e67ed59e1d1-3567e9da8a2sm22958851a91.5.2026.02.18.14.33.48
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 18 Feb 2026 14:28:30 -0800 (PST)
-Message-ID: <e7467958-6593-48ab-bca2-2f9b4701b328@linaro.org>
-Date: Wed, 18 Feb 2026 14:28:30 -0800
+ Wed, 18 Feb 2026 14:33:48 -0800 (PST)
+Message-ID: <93c5afa3-baf8-4548-881d-d25a46e14daa@linaro.org>
+Date: Wed, 18 Feb 2026 14:33:48 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] target/arm: Don't require helper prototypes in
- helper.c
+Subject: Re: [PATCH 1/3] hw/virtio: add virtio_vdev_is_{modern, legacy}
 Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-References: <20260216160349.3079657-1-peter.maydell@linaro.org>
- <20260216160349.3079657-3-peter.maydell@linaro.org>
+To: BALATON Zoltan <balaton@eik.bme.hu>
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Stefano Garzarella <sgarzare@redhat.com>, Jason Wang <jasowang@redhat.com>,
+ Nicholas Piggin <npiggin@gmail.com>, stefanha@redhat.com,
+ richard.henderson@linaro.org, "Michael S. Tsirkin" <mst@redhat.com>
+References: <20260212234602.338131-1-pierrick.bouvier@linaro.org>
+ <20260212234602.338131-2-pierrick.bouvier@linaro.org>
+ <02b667c5-da6a-4829-87f1-4b9ebc53d5a4@linaro.org>
+ <332a3290-9ebe-404f-8b49-d09a83bd47cb@linaro.org>
+ <df5cca4c-4ea5-4284-8504-61854573435b@linaro.org>
+ <2fd7fa8d-ab3e-2051-7aae-ef676ff1eb35@eik.bme.hu>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  xsDNBGK9dgwBDACYuRpR31LD+BnJ0M4b5YnPZKbj+gyu82IDN0MeMf2PGf1sux+1O2ryzmnA
@@ -113,18 +121,18 @@ Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  5SYuJaKzCAgNeAy3gUVUUPrUsul1oe2PeWMFUhWKrqko0/Qo4HkwTZY6S16drTMncoUahSAl
  X4Z3BbSPXPq0v1JJBYNBL9qmjULEX+NbtRd3v0OfB5L49sSAC2zIO8S9Cufiibqx3mxZTaJ1
  ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <20260216160349.3079657-3-peter.maydell@linaro.org>
+In-Reply-To: <2fd7fa8d-ab3e-2051-7aae-ef676ff1eb35@eik.bme.hu>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x634.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52d;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x52d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -140,25 +148,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/16/26 8:03 AM, Peter Maydell wrote:
-> In arm_cpu_do_interrupt_aarch64() we call the TCG helper function
-> helper_rebuild_hflags_a64(), which requires helper.c to include the
-> TCG helper function prototypes even when this file is being compiled
-> with TCG disabled.
+On 2/18/26 2:28 PM, BALATON Zoltan wrote:
+> On Wed, 18 Feb 2026, Pierrick Bouvier wrote:
+>> On 2/18/26 2:17 PM, Pierrick Bouvier wrote:
+>>> On 2/18/26 1:00 PM, Philippe Mathieu-Daudé wrote:
+>>>> On 13/2/26 00:46, Pierrick Bouvier wrote:
+>>>>> This simplifies code compared to having
+>>>>> virtio_vdev_has_feature(vdev, VIRTIO_F_VERSION_1) or
+>>>>> !virtio_vdev_has_feature(vdev, VIRTIO_F_VERSION_1).
+>>>>>
+>>>>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>>>>> ---
+>>>>>      include/hw/virtio/virtio-access.h |  3 +--
+>>>>>      include/hw/virtio/virtio.h        | 12 +++++++++++-
+>>>>>      hw/net/virtio-net.c               |  2 +-
+>>>>>      hw/virtio/vhost.c                 |  2 +-
+>>>>>      hw/virtio/virtio-pci.c            |  2 +-
+>>>>>      hw/virtio/virtio.c                | 16 ++++++++--------
+>>>>>      6 files changed, 23 insertions(+), 14 deletions(-)
+>>>>
+>>>>
+>>>>> diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
+>>>>> index 27cd98d2fe1..8f1e4323599 100644
+>>>>> --- a/include/hw/virtio/virtio.h
+>>>>> +++ b/include/hw/virtio/virtio.h
+>>>>> @@ -468,9 +468,19 @@ static inline bool
+>>>>> virtio_host_has_feature(VirtIODevice *vdev,
+>>>>>          return virtio_has_feature(vdev->host_features, fbit);
+>>>>>      }
+>>>>>      +static inline bool virtio_vdev_is_modern(const VirtIODevice *vdev)
+>>>>> +{
+>>>>> +    return virtio_vdev_has_feature(vdev, VIRTIO_F_VERSION_1);
+>>>>> +}
+>>>>> +
+>>>>> +static inline bool virtio_vdev_is_legacy(const VirtIODevice *vdev)
+>>>>> +{
+>>>>> +    return !virtio_vdev_is_modern(vdev);
+>>>>> +}
+>>>>
+>>>> With retrospective, mentioning 'modern' was a mistake IMHO. But I
+>>>> understand it was simpler to add 'modern' code without updating the
+>>>> 'legacy' code base. Today I'd rather have 'legacy' explicit in function
+>>>> names, everything else being the normal / current / modern version,
+>>>> without having to clarify it.
+>>>>
+>>>
+>>> Agree.
+>>>
+>>>> Thus back to this series I'd rather not introduce virtio_vdev_is_modern
+>>>> and use !virtio_vdev_is_legacy instead.
+>>>
+>>> Sounds good. I feel it's still easier and clearer to read than
+>>> "!has_feature(1.0)". But as said in my previous answer to Zoltan, I
+>>> don't mind this patch too much, only 3rd one really matter.
+>>
+>> s/!has_feature(1.0)/has_feature(1.0), thus showing I've been confused once
+>> more :).
 > 
-> We don't actually need to do this -- because we have already written
-> the new EL into pstate and updated env->aarch64, we can call
-> aarch64_rebuild_hflags() to achieve the same effect. This is the
-> function we use everywhere else in this file to update hflags.
-> 
-> Switch to aarch64_rebuild_hflags() and drop the include of the
-> TCG helper headers.
-> 
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
->   target/arm/helper.c | 5 +----
->   1 file changed, 1 insertion(+), 4 deletions(-)
-> 
+> The has_feature(1.0) is more specific though. What if 1.0 becomes legacy
+> too? Then modern and legacy is more confusing than testing for a specific
+> feature. I still think not touching this would be the easiest as the
+> introduced legacy/modern does not seem to make it much clearer.
+>
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+As you can find in official Virtio spec, "legacy" is not a random name 
+or something I personally chose, it's the official term for pre 1.0 
+devices/interfaces.
+
+https://docs.oasis-open.org/virtio/virtio/v1.4/virtio-v1.4.html#x1-60001
+
+```
+1.3.1 Legacy Interface: Terminology
+
+Legacy Interface
+is an interface specified by an earlier draft of this specification 
+(before 1.0)
+
+Legacy Device
+is a device implemented before this specification was released, and 
+implementing a legacy interface on the host side
+```
+
+So even if VirtIO 2.0 comes out one day, they will have to define or 
+change term accordingly.
+
+Your comments are welcome also on patch 3 by the way.
+
+> Regards,
+> BALATON Zoltan
+
 
