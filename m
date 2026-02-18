@@ -4,40 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F81EE9A02C
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 20:28:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5E55E9A02C
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 20:29:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vsoA9-00075b-V1; Wed, 18 Feb 2026 15:28:45 -0500
+	id 1vsoAJ-00077A-CQ; Wed, 18 Feb 2026 15:28:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vsoA4-00074Y-1F
+ id 1vsoA3-00074V-Ui
  for qemu-devel@nongnu.org; Wed, 18 Feb 2026 15:28:40 -0500
-Received: from forwardcorp1a.mail.yandex.net
- ([2a02:6b8:c0e:500:1:45:d181:df01])
+Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vsoA2-0007ru-5O
+ id 1vsoA1-0007rl-2m
  for qemu-devel@nongnu.org; Wed, 18 Feb 2026 15:28:39 -0500
 Received: from mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
  [IPv6:2a02:6b8:c2d:3530:0:640:eca4:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id DE0DDC038D;
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 19593C038C;
  Wed, 18 Feb 2026 23:28:35 +0300 (MSK)
 Received: from vsementsov-lin (unknown [2a02:6bf:8080:53d::1:1b])
  by mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id VShB144A8iE0-dQpdG0mh; Wed, 18 Feb 2026 23:28:35 +0300
+ ESMTPSA id VShB144A8iE0-wOJUq9xJ; Wed, 18 Feb 2026 23:28:34 +0300
 Precedence: bulk
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1771446515;
- bh=i5eFvQ0MxbzUcT/0vb8vt3GzyP2XMPog1nxdutvP964=;
+ s=default; t=1771446514;
+ bh=5mIy1CyhCgoPLn4Qcg9Hf6mr1MP5XtgStzgPYFDTSFk=;
  h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=pMT0aW3m4MiDt16RdeD9uy72johFrFdw48vcOd6WzpxJiLTcbc9b2on8CcCBkqasN
- 1ChO3SMcrqM9eCB9Ml0lbO+WQDMsOsJsVAz4MGhRql+WLVb12b61XolmP5Ntx1xXVt
- Muwsmy3wjOUuludWzd23jQ6M17JFXJOGVf87cH+c=
+ b=QOOPDrDWbW2jxcx8KlUdYXo0cUTuGvMsEecMxXYpx6n26niKdkc7//pjrM47kLozI
+ LGuvXok7goCR7A4y5FDvmFB+lSwPzjuCK4WAhTLgQDAjQ9MloVMeY1305HzDE62RFY
+ x8vOuMf3374ZNFtvnAl5fUJ7VRjczpw8BZ358e6U=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
@@ -45,23 +44,24 @@ To: jasowang@redhat.com
 Cc: qemu-devel@nongnu.org, bchaney@akamai.com, yc-core@yandex-team.ru,
  d-tatianin@yandex-team.ru, davydov-max@yandex-team.ru,
  vsementsov@yandex-team.ru
-Subject: [PATCH v3 04/12] net/tap: net_init_tap(): refactor parameter checking
-Date: Wed, 18 Feb 2026 23:28:20 +0300
-Message-ID: <20260218202829.1322088-5-vsementsov@yandex-team.ru>
+Subject: [PATCH v3 03/12] net/tap: net_init_tap(): drop extra vhostfdname
+ variable
+Date: Wed, 18 Feb 2026 23:28:19 +0300
+Message-ID: <20260218202829.1322088-4-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260218202829.1322088-1-vsementsov@yandex-team.ru>
 References: <20260218202829.1322088-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:6b8:c0e:500:1:45:d181:df01;
+Received-SPF: pass client-ip=178.154.239.72;
  envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -76,100 +76,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Move checks to the top of the function to simplify further
-refactoring. Merge duplicated checks.
-
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 ---
- net/tap.c | 53 +++++++++++++++++++++++------------------------------
- 1 file changed, 23 insertions(+), 30 deletions(-)
+ net/tap.c | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
 diff --git a/net/tap.c b/net/tap.c
-index 55b8b33ea8..331a779585 100644
+index a389aec218..55b8b33ea8 100644
 --- a/net/tap.c
 +++ b/net/tap.c
-@@ -841,16 +841,30 @@ int net_init_tap(const Netdev *netdev, const char *name,
-         return -1;
-     }
+@@ -822,14 +822,12 @@ int net_init_tap(const Netdev *netdev, const char *name,
+     const NetdevTapOptions *tap;
+     int fd, vnet_hdr = 0, i = 0, queues;
+     /* for the no-fd, no-helper case */
+-    const char *vhostfdname;
+     char ifname[128];
+     int ret = 0;
  
--    if (tap->fd) {
--        if (tap->ifname || tap->script || tap->downscript ||
--            tap->has_vnet_hdr || tap->helper || tap->has_queues ||
--            tap->fds || tap->vhostfds) {
--            error_setg(errp, "ifname=, script=, downscript=, vnet_hdr=, "
--                       "helper=, queues=, fds=, and vhostfds= "
--                       "are invalid with fd=");
--            return -1;
--        }
-+    if (tap->has_queues + !!tap->helper + !!tap->fds + !!tap->fd > 1) {
-+        error_setg(errp, "queues=, helper=, fds= and fd= are mutual exclusive");
-+        return -1;
-+    }
+     assert(netdev->type == NET_CLIENT_DRIVER_TAP);
+     tap = &netdev->u.tap;
+     queues = tap->has_queues ? tap->queues : 1;
+-    vhostfdname = tap->vhostfd;
  
-+    if ((tap->fd || tap->fds || tap->helper) &&
-+        (tap->ifname || tap->script || tap->downscript ||
-+         tap->has_vnet_hdr)) {
-+        error_setg(errp, "ifname=, script=, downscript=, vnet_hdr= "
-+                   "are invalid with fd=/fds=/helper=");
-+        return -1;
-+    }
-+
-+    if (tap->vhostfds && !tap->fds) {
-+        error_setg(errp, "vhostfds= is invalid if fds= wasn't specified");
-+        return -1;
-+    }
-+
-+    if (tap->vhostfd && tap->fds) {
-+        error_setg(errp, "vhostfd= is invalid with fds=");
-+        return -1;
-+    }
-+
-+    if (tap->fd) {
-         fd = monitor_fd_param(monitor_cur(), tap->fd, errp);
-         if (fd == -1) {
+     /* QEMU hubs do not support multiqueue tap, in this case peer is set.
+      * For -netdev, peer is always NULL. */
+@@ -871,7 +869,7 @@ int net_init_tap(const Netdev *netdev, const char *name,
+ 
+         if (!net_init_tap_one(tap, peer, "tap", name, NULL,
+                               NULL, NULL,
+-                              vhostfdname, vnet_hdr, fd, errp)) {
++                              tap->vhostfd, vnet_hdr, fd, errp)) {
+             close(fd);
              return -1;
-@@ -878,15 +892,6 @@ int net_init_tap(const Netdev *netdev, const char *name,
-         char **vhost_fds;
-         int nfds = 0, nvhosts = 0;
+         }
+@@ -972,7 +970,7 @@ free_fail:
+         }
  
--        if (tap->ifname || tap->script || tap->downscript ||
--            tap->has_vnet_hdr || tap->helper || tap->has_queues ||
--            tap->vhostfd) {
--            error_setg(errp, "ifname=, script=, downscript=, vnet_hdr=, "
--                       "helper=, queues=, and vhostfd= "
--                       "are invalid with fds=");
--            return -1;
--        }
--
-         fds = g_new0(char *, MAX_TAP_QUEUES);
-         vhost_fds = g_new0(char *, MAX_TAP_QUEUES);
- 
-@@ -946,13 +951,6 @@ free_fail:
-         g_free(vhost_fds);
-         return ret;
-     } else if (tap->helper) {
--        if (tap->ifname || tap->script || tap->downscript ||
--            tap->has_vnet_hdr || tap->has_queues || tap->vhostfds) {
--            error_setg(errp, "ifname=, script=, downscript=, vnet_hdr=, "
--                       "queues=, and vhostfds= are invalid with helper=");
--            return -1;
--        }
--
-         fd = net_bridge_run_helper(tap->helper,
-                                    tap->br ?: DEFAULT_BRIDGE_INTERFACE,
-                                    errp);
-@@ -981,11 +979,6 @@ free_fail:
-         g_autofree char *downscript =
-             tap_parse_script(tap->downscript, DEFAULT_NETWORK_DOWN_SCRIPT);
- 
--        if (tap->vhostfds) {
--            error_setg(errp, "vhostfds= is invalid if fds= wasn't specified");
--            return -1;
--        }
--
-         if (tap->ifname) {
-             pstrcpy(ifname, sizeof ifname, tap->ifname);
-         } else {
+         if (!net_init_tap_one(tap, peer, "bridge", name, ifname,
+-                              NULL, NULL, vhostfdname,
++                              NULL, NULL, tap->vhostfd,
+                               vnet_hdr, fd, errp)) {
+             close(fd);
+             return -1;
+@@ -1012,7 +1010,7 @@ free_fail:
+             if (!net_init_tap_one(tap, peer, "tap", name, ifname,
+                                   i >= 1 ? NULL : script,
+                                   i >= 1 ? NULL : downscript,
+-                                  vhostfdname, vnet_hdr, fd, errp)) {
++                                  tap->vhostfd, vnet_hdr, fd, errp)) {
+                 close(fd);
+                 return -1;
+             }
 -- 
 2.52.0
 
