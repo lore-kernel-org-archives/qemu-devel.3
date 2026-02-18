@@ -4,66 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77E88E9A04D
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 19:32:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31201E9A02C
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 19:46:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vsnGl-00028U-7I; Wed, 18 Feb 2026 14:31:33 -0500
+	id 1vsnUj-0008B1-Cl; Wed, 18 Feb 2026 14:45:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vsnGh-000281-L4
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 14:31:28 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vsnUg-0008AI-T5
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 14:45:55 -0500
+Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vsnGf-0007hR-Em
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 14:31:27 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771443084;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=NArCG9I5YE66mSkiwKj3wX12DvxACB+8pnJnX+Zskfs=;
- b=MwLNBW8R8Cni43MpiU7X0co8niSipaAVKL+qR4ClbbGBfP4x7agO8bqoXKH2nhdkUQ9e2I
- ckJabdkHMKBIThPy6dSDr413YDqei412V+SOK8444lDKdDdg8Sf7ZlLTJtE49Pt68hRlKh
- TJat0zk05brHey5ayvBzw4JfIRVA/w4=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-424-3CkXEdiINX6YTHK66hlQRA-1; Wed,
- 18 Feb 2026 14:31:19 -0500
-X-MC-Unique: 3CkXEdiINX6YTHK66hlQRA-1
-X-Mimecast-MFC-AGG-ID: 3CkXEdiINX6YTHK66hlQRA_1771443078
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B7050180025A; Wed, 18 Feb 2026 19:31:18 +0000 (UTC)
-Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.65.233])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 65C641800361; Wed, 18 Feb 2026 19:31:17 +0000 (UTC)
-From: John Snow <jsnow@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>, John Snow <jsnow@redhat.com>
-Subject: [PATCH 0/2] tests: upgrade to debian 13
-Date: Wed, 18 Feb 2026 14:31:14 -0500
-Message-ID: <20260218193116.659213-1-jsnow@redhat.com>
-Content-Type: text/plain; charset="utf-8"
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vsnUb-0001vr-O1
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 14:45:54 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
+ s=dkim; h=Cc:To:In-Reply-To:References:Message-Id:Content-Transfer-Encoding:
+ Content-Type:MIME-Version:Subject:Date:From:Sender:Reply-To:Content-ID:
+ Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+ :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+ List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
+ List-Help; bh=lUkcrU80D84kEy+f49IIeMgMdyXVDIaNwZViozHQhu8=; b=eEeYoKG39Ti74M6
+ 4nuLCltfpRkWmnzw6e+ckNtgUg4rHEtqtzmnNN0zkxYVRVlX/z4PZariTizseVCYACQZsC5WvN5DU
+ ZTj1AbQb/tHFbNmf9q9XjPPaArtA/0Tdg7Lwji5k5+5axsump5OXzwMtTNE2FCbC9UjnhMk+glkA8
+ eU=;
+Date: Wed, 18 Feb 2026 20:48:58 +0100
+Subject: [PATCH v3 1/4] hppa: Prepare for additional CPU models
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260218-hppa-c3600-v3-1-b37ad58a20dd@rev.ng>
+References: <20260218-hppa-c3600-v3-0-b37ad58a20dd@rev.ng>
+In-Reply-To: <20260218-hppa-c3600-v3-0-b37ad58a20dd@rev.ng>
+To: qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>, 
+ Helge Deller <deller@gmx.de>, Anton Johansson <anjo@rev.ng>
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1771444170; l=5931;
+ i=anjo@rev.ng; s=20260210; h=from:subject:message-id;
+ bh=U0aGEkefPEzmEO6fJTiXurVDhO3I9fV+1TfWlmNKAyQ=;
+ b=EBzm9s38kpdrzkqw/SqHpiWgc4i4/yGhjCtC8Nhtpj1UwYShNz1NLQxM3/PA+Ls4Eiy6t0wj/
+ 2+TNEsyM4yJCs9zXZLl4QFyKjGGDEbcEJtYIenmomv4SOmvhkNAbDiL
+X-Developer-Key: i=anjo@rev.ng; a=ed25519;
+ pk=dKsZvj/g3kgDxnV1/SWg8a0YNGSpWtFGNsWIepQYKow=
+Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
+ helo=rev.ng
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.043,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -78,37 +67,179 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Anton Johansson <anjo@rev.ng>
+From:  Anton Johansson via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This mini-series upgrades everything except mipsel tests to Debian 13,=0D
-removing our usage of the EOL Debian 11. Our mipsel tests continue to=0D
-run Debian 12, which will be EOL in June.=0D
-=0D
-This is mostly helpful to me for being able to increase the minimum=0D
-version of Python modules like setuptools, pip and wheel as I ran into=0D
-while writing=0D
-https://patchew.org/QEMU/20260216212952.420120-1-jsnow@redhat.com/=0D
-=0D
-Tested as part of a larger chain of patches at=0D
-https://gitlab.com/jsnow/qemu/-/pipelines/2335060565 - though this=0D
-series is based directly on origin/master and I have not tested it=0D
-separately at this time.=0D
-=0D
-John Snow (2):=0D
-  tests: upgrade most non-lcitool debian tests to debian 13=0D
-  tests: upgrade debian-legacy-test-cross to debian 13=0D
-=0D
- .../dockerfiles/debian-hexagon-cross.docker      | 11 ++++++-----=0D
- .../dockerfiles/debian-legacy-test-cross.docker  | 16 +++++-----------=0D
- .../dockerfiles/debian-loongarch-cross.docker    | 10 +++++-----=0D
- tests/docker/dockerfiles/debian-toolchain.docker |  8 +++++---=0D
- .../dockerfiles/debian-tricore-cross.docker      |  5 ++---=0D
- .../dockerfiles/debian-xtensa-cross.docker       |  2 +-=0D
- 6 files changed, 24 insertions(+), 28 deletions(-)=0D
-=0D
--- =0D
-2.53.0=0D
-=0D
+Clarifies current CPU model names, assuming 32-bit HPPA runs a PA-7300LC
+whereas 64-bit runs a PA-8700.  Both CPU models are made into children
+of the now abstract TYPE_HPPA_CPU base class, simplifying the addition of
+other CPU models.
+
+References to "hppa/hppa64" models in test cases are also updated.
+
+Signed-off-by: Anton Johansson <anjo@rev.ng>
+---
+ target/hppa/cpu-qom.h           |  7 ++++++-
+ hw/hppa/machine.c               | 17 +++++++++++------
+ linux-user/hppa/elfload.c       |  2 +-
+ target/hppa/cpu.c               | 19 ++++++++++++++-----
+ tests/qtest/machine-none-test.c |  2 +-
+ 5 files changed, 33 insertions(+), 14 deletions(-)
+
+diff --git a/target/hppa/cpu-qom.h b/target/hppa/cpu-qom.h
+index 5c454bf543..c6b82dc09b 100644
+--- a/target/hppa/cpu-qom.h
++++ b/target/hppa/cpu-qom.h
+@@ -23,7 +23,12 @@
+ #include "hw/core/cpu.h"
+ 
+ #define TYPE_HPPA_CPU "hppa-cpu"
+-#define TYPE_HPPA64_CPU "hppa64-cpu"
++
++#define HPPA_CPU_TYPE_SUFFIX "-" TYPE_HPPA_CPU
++#define HPPA_CPU_TYPE_NAME(name) (name HPPA_CPU_TYPE_SUFFIX)
++
++#define TYPE_HPPA_CPU_PA_7300LC HPPA_CPU_TYPE_NAME("pa-7300lc")
++#define TYPE_HPPA_CPU_PA_8700   HPPA_CPU_TYPE_NAME("pa-8700")
+ 
+ OBJECT_DECLARE_CPU_TYPE(HPPACPU, HPPACPUClass, HPPA_CPU)
+ 
+diff --git a/hw/hppa/machine.c b/hw/hppa/machine.c
+index 6b0f46c789..2d3eeff1c2 100644
+--- a/hw/hppa/machine.c
++++ b/hw/hppa/machine.c
+@@ -791,13 +791,13 @@ static void hppa_machine_common_class_init(ObjectClass *oc, const void *data)
+ static void HP_B160L_machine_init_class_init(ObjectClass *oc, const void *data)
+ {
+     static const char * const valid_cpu_types[] = {
+-        TYPE_HPPA_CPU,
++        TYPE_HPPA_CPU_PA_7300LC,
+         NULL
+     };
+     MachineClass *mc = MACHINE_CLASS(oc);
+ 
+     mc->desc = "HP B160L workstation";
+-    mc->default_cpu_type = TYPE_HPPA_CPU;
++    mc->default_cpu_type = TYPE_HPPA_CPU_PA_7300LC;
+     mc->valid_cpu_types = valid_cpu_types;
+     mc->init = machine_HP_B160L_init;
+     mc->is_default = true;
+@@ -807,13 +807,13 @@ static void HP_B160L_machine_init_class_init(ObjectClass *oc, const void *data)
+ static void HP_C3700_machine_init_class_init(ObjectClass *oc, const void *data)
+ {
+     static const char * const valid_cpu_types[] = {
+-        TYPE_HPPA64_CPU,
++        TYPE_HPPA_CPU_PA_8700,
+         NULL
+     };
+     MachineClass *mc = MACHINE_CLASS(oc);
+ 
+     mc->desc = "HP C3700 workstation";
+-    mc->default_cpu_type = TYPE_HPPA64_CPU;
++    mc->default_cpu_type = TYPE_HPPA_CPU_PA_8700;
+     mc->valid_cpu_types = valid_cpu_types;
+     mc->init = machine_HP_C3700_init;
+     mc->max_cpus = HPPA_MAX_CPUS;
+@@ -823,13 +823,18 @@ static void HP_C3700_machine_init_class_init(ObjectClass *oc, const void *data)
+ static void HP_715_machine_init_class_init(ObjectClass *oc, const void *data)
+ {
+     static const char * const valid_cpu_types[] = {
+-        TYPE_HPPA_CPU,
++        TYPE_HPPA_CPU_PA_7300LC,
+         NULL
+     };
+     MachineClass *mc = MACHINE_CLASS(oc);
+ 
+     mc->desc = "HP 715/64 workstation";
+-    mc->default_cpu_type = TYPE_HPPA_CPU;
++    /*
++     * Although the 715 workstation should use a 7100LC, it can be safely
++     * modeled as a 7300LC as the difference is a moving of the L1 data cache
++     * to on-chip.
++     */
++    mc->default_cpu_type = TYPE_HPPA_CPU_PA_7300LC;
+     mc->valid_cpu_types = valid_cpu_types;
+     mc->init = machine_HP_715_init;
+     /* can only support up to max. 8 CPUs due inventory major numbers */
+diff --git a/linux-user/hppa/elfload.c b/linux-user/hppa/elfload.c
+index 4600708702..7f7ece6dc1 100644
+--- a/linux-user/hppa/elfload.c
++++ b/linux-user/hppa/elfload.c
+@@ -8,7 +8,7 @@
+ 
+ const char *get_elf_cpu_model(uint32_t eflags)
+ {
+-    return "hppa";
++    return "pa-7300lc";
+ }
+ 
+ const char *get_elf_platform(CPUState *cs)
+diff --git a/target/hppa/cpu.c b/target/hppa/cpu.c
+index 714f3bbdaf..c8079016bf 100644
+--- a/target/hppa/cpu.c
++++ b/target/hppa/cpu.c
+@@ -207,7 +207,7 @@ static void hppa_cpu_initfn(Object *obj)
+ {
+     CPUHPPAState *env = cpu_env(CPU(obj));
+ 
+-    env->is_pa20 = !!object_dynamic_cast(obj, TYPE_HPPA64_CPU);
++    env->is_pa20 = !!object_dynamic_cast(obj, TYPE_HPPA64_CPU_PA_8700);
+ }
+ 
+ static void hppa_cpu_reset_hold(Object *obj, ResetType type)
+@@ -236,9 +236,14 @@ static void hppa_cpu_reset_hold(Object *obj, ResetType type)
+ 
+ static ObjectClass *hppa_cpu_class_by_name(const char *cpu_model)
+ {
+-    g_autofree char *typename = g_strconcat(cpu_model, "-cpu", NULL);
++    ObjectClass *oc;
++    char *typename;
+ 
+-    return object_class_by_name(typename);
++    typename = g_strdup_printf(HPPA_CPU_TYPE_NAME("%s"), cpu_model);
++    oc = object_class_by_name(typename);
++    g_free(typename);
++
++    return oc;
+ }
+ 
+ #ifndef CONFIG_USER_ONLY
+@@ -314,12 +319,16 @@ static const TypeInfo hppa_cpu_type_infos[] = {
+         .instance_size = sizeof(HPPACPU),
+         .instance_align = __alignof(HPPACPU),
+         .instance_init = hppa_cpu_initfn,
+-        .abstract = false,
++        .abstract = true,
+         .class_size = sizeof(HPPACPUClass),
+         .class_init = hppa_cpu_class_init,
+     },
+     {
+-        .name = TYPE_HPPA64_CPU,
++        .name = TYPE_HPPA_CPU_PA_7300LC,
++        .parent = TYPE_HPPA_CPU,
++    },
++    {
++        .name = TYPE_HPPA_CPU_PA_8700,
+         .parent = TYPE_HPPA_CPU,
+     },
+ };
+diff --git a/tests/qtest/machine-none-test.c b/tests/qtest/machine-none-test.c
+index b6a87d27ed..f871056fa4 100644
+--- a/tests/qtest/machine-none-test.c
++++ b/tests/qtest/machine-none-test.c
+@@ -48,7 +48,7 @@ static struct arch2cpu cpus_map[] = {
+     { "tricore", "tc1796" },
+     { "xtensa", "dc233c" },
+     { "xtensaeb", "fsf" },
+-    { "hppa", "hppa" },
++    { "hppa", "pa-7300lc" },
+     { "riscv64", "rv64" },
+     { "riscv32", "rv32" },
+     { "rx", "rx62n" },
+
+-- 
+2.52.0
 
 
