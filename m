@@ -4,107 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF03BE9A02C
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 13:35:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C1CEE9A049
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 13:35:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vshfW-00040A-SS; Wed, 18 Feb 2026 08:32:42 -0500
+	id 1vshff-0004F3-Cv; Wed, 18 Feb 2026 08:32:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1vshfQ-0003xa-9z
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 08:32:36 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1vshfR-0003yM-0z
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 08:32:38 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1vshfA-0005J8-Gs
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1vshfA-0005GT-H7
  for qemu-devel@nongnu.org; Wed, 18 Feb 2026 08:32:32 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771421532;
+ s=mimecast20190719; t=1771421526;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=muqu2YymWMHLeGtaHW7SS1VV742IfcBS+uS47ikVE8o=;
- b=e02Y8LjI2RxtKD85DIy+v56MLqQ4+ZnO7q7U0OxnB3kqUYzxe7kSO7DEPk9qi0Ygqgn3Vo
- xxd4SPQ4BYkwnoO7I3o4MAYhwD0MxXeYoqq/Rb07GqYIRRcfklZYQcHcW5fmcLpH0nYAAr
- MNltzX8cEA1FQ1ckUuAQtjziAFp3jEw=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=gLvuW77pQ5x9M3qdYvEThGlMMRQ1FN319y82FStW6pw=;
+ b=IuK+oieRBPbAHZ/PdGTg3HOp3VIzRwcwpMpn+WcQLUcTALzHNTjbV4dy8VZCFIcBztjEma
+ F7eQfOBJAzZs54OdCKL5768EXo2ZzhUnwTnLIMe2/2aoRkIUUmpr5vWrVNYBRZvNTWH5Qv
+ 91BIoH3so7/vbaOAZ8ocUwmmM4sPUlo=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-25-BybK5eeIODuikDuU6cejDw-1; Wed, 18 Feb 2026 08:27:08 -0500
-X-MC-Unique: BybK5eeIODuikDuU6cejDw-1
-X-Mimecast-MFC-AGG-ID: BybK5eeIODuikDuU6cejDw_1771421227
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4836bf1a920so61261805e9.3
- for <qemu-devel@nongnu.org>; Wed, 18 Feb 2026 05:27:07 -0800 (PST)
+ us-mta-441-mM2CUbCqPAqmQL-72PjDug-1; Wed, 18 Feb 2026 08:27:03 -0500
+X-MC-Unique: mM2CUbCqPAqmQL-72PjDug-1
+X-Mimecast-MFC-AGG-ID: mM2CUbCqPAqmQL-72PjDug_1771421222
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-4362456500eso5072545f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 18 Feb 2026 05:27:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1771421226; x=1772026026; darn=nongnu.org;
+ d=redhat.com; s=google; t=1771421222; x=1772026022; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=muqu2YymWMHLeGtaHW7SS1VV742IfcBS+uS47ikVE8o=;
- b=Z3nfce7LEJ3MDE7lLXvSOEmOAxIE8Kp0vC6j2SLx+iTSG5onfaI2YijdKMHvYfMBjI
- lPF2Iw0vfaDO5T/9Bh+yD4kdOGpkKthIjKT5l5hk67inTFtE2rRo6OIC44CcR9+wqWso
- qfCk7VrROKcFALYc2D/ZVRktsYltA3Q5TlzDuxrUOoT3HxyrE2DoEOgX1r7P3vmoL6g1
- 3hLIL+MpGyWqNt1d2XBJgJR9SOseoTfU4sxn4rZs8C6XfXjSeN//kFblw7MXTlDSJ+IL
- HVEUjmt99VdZiVgPgfXMN0CTLbrOlu4ZDg3Oe2etMLjaXu3G50PBFCSZykt3ZxZExDHN
- uZ2w==
+ bh=gLvuW77pQ5x9M3qdYvEThGlMMRQ1FN319y82FStW6pw=;
+ b=kZeWtETweoTM0EvS4KMJRSPB84n6SdJafqNl7hBgDfygtwwN1n3mi7JMA6InRe4Vz+
+ HBcMHDDvt3WzXTrSXW/JAQw6H7cXhtHI8ZGxZjRtTtmhTw4Dzdyeli0MfQ5elmrw2hhu
+ OBB0pB3Wem/rgIme0KxLFBslPs9XYCZ5yLizQoxAhO3P1ktR4hyevjG3b4+kAzh9e0Nb
+ Ut/Snn+uH7f5FOwdFJQH2g/BV6ywZ1nDEPRohG6ArGYsdNB2dKbvmlWduNepP1yIaq3l
+ Rb6eiwzdsgFW6BIbx+9iAhS+DheenxesBjFGv3co/pfhOyGa6Ht8OxrL3JEPaju0meb0
+ VuMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771421226; x=1772026026;
+ d=1e100.net; s=20230601; t=1771421222; x=1772026022;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=muqu2YymWMHLeGtaHW7SS1VV742IfcBS+uS47ikVE8o=;
- b=TW+VAMgbdQg78oskHUDodt8gngfCmerl0id+XBqMOtFWovNWMq6GWuMa9NgcazCB2E
- gq0A65RmwkXkcxWt1TijJb6VuGSuRxSIBXYyiTwdNjSbr5UAJbdDiDk0LhNOzORdPfrl
- ol71kxlq8JbVxZULNWxsqOkUZzJUeXCbikpHFGqm3dMK547CBlm3wx0EuJnV6s4HMnRH
- 5ClB/bhkPTVtDbXJzGqAfzfSMWgJMyjUhzwOY91XDCEgKtekIpU5ZiBisol73bSP72wX
- iVGRPGJ4xP0NXDJXVFhq355CLY8OU4jc6Rxsl8g83+t2RCRgPHW+uaqmpJJSm6J3PqbP
- iOKQ==
-X-Gm-Message-State: AOJu0YyJL+s9GDpmim/NNihMw0G2X+du626k7WCjx2HezsElBmXigMFQ
- UikAD+yOgOKn/ttsL32qfNiHWjIxGm/xK+5M8/T1qSbfA3j/bKxXVIZLaeI45Q+kb1h8XJ5SCG9
- WUJ+nFkS0EXmm5AESUQ8thi+T74y0iGMHY9nxBJjMuvbN5BElWxqj5R7A2CAHdF+k
-X-Gm-Gg: AZuq6aLMe43z4SBU9OA5L7a2uDA2vfxHWYQRcRLLotfJzXGhJsHO0UkuTIwFI9DKA4g
- o/yqfzSHeyWlYnIlrLKFq39G1JUHDeXIAqRPw6E39r30kGoj2iMbDCW3iJ4HgBPqJCWus12qOhd
- kWRf+BPAXJQwla7riFGgw12DBZVkC465PlFHMHcpYLmzpzPMtgKkknPCcUOiBSsCH/3qE617cIN
- vemcEJcgQIa9VP27XOgNXkw7AFpgmVSd/ZjNchASiWcZ007omlRANBdUfTQZUo2r1VxaaTc3WQ2
- SFw4ihybjkUYZJhviwHYKa8/bhOVkORGsFm1cU53HZy7fN2FTZqmayb3WaJwi3kVH/n8sH4Qtfo
- mNsfYGWrdFKCecZyKeN2rGMAsZ1yW1bT7PYRJFABvVmFLn3yPAP+rjbHWajMQkuDeKslmM4bktW
- uH6wJf
-X-Received: by 2002:a05:600c:4744:b0:482:f564:d613 with SMTP id
- 5b1f17b1804b1-48379ba8f46mr247682125e9.15.1771421226446; 
- Wed, 18 Feb 2026 05:27:06 -0800 (PST)
-X-Received: by 2002:a05:600c:4744:b0:482:f564:d613 with SMTP id
- 5b1f17b1804b1-48379ba8f46mr247681715e9.15.1771421226021; 
- Wed, 18 Feb 2026 05:27:06 -0800 (PST)
+ bh=gLvuW77pQ5x9M3qdYvEThGlMMRQ1FN319y82FStW6pw=;
+ b=lerPWVB7Pu2Xx2RkzLw/2XwpW3c2R9KsVS9wzAQRhe2S9ukBfAAXMNdHV2j8qA0/aM
+ avo2HS/+2wa+cnkJ/pYrAVKMpyuox3OUA3vOVEURv4fSR39cxYpwV6kzzIwhuDytoLiS
+ rlvHVSRvWw8YFYgByFiC+SeDKbhbDkS7aOsB2MIe/RI2pqYp+4Z+nIm7lQQyx+hH/w+H
+ tA0QXXG792IU/Ha9S/AGy3/QwZ5OKMcBc1UOHwEldTAkQsVsRHTb2spm12oW3r3UAOuz
+ F5hkuym/r2EOsKDrNwHU8TEXFOhpvkMsVVhtU4oEdxe5Z+NIzk2UiJ0KpUxApTqJb8D/
+ liKQ==
+X-Gm-Message-State: AOJu0Yy+tXNgPXQ2RMpTKQDF2+bYxwwKBMk2W+nPubTea1EpNaL8gdOc
+ 2mkWL/+jsFtxlhy8LSaB6LxrqWJ+IAwSC+M9n72/2DWblRbjuUNjd0zVEoOYCYyxjwkFo09+KwN
+ g2viIQfX5076NYgSdSJNWUAF5AlQ2LEEEg0p1PsW4FnPIOSWTEy3kIxiT
+X-Gm-Gg: AZuq6aIs2fyCJnRltZRVN1tqUgGf4BQYcB0lqr5qe0lDNbOi0feOxFDGDRpspq7ULru
+ 4hbKyOgua33j7c7voYtdCvFtU4D2ZLDnoXVqVggyfEyyyCco/czvERE8G69afGU0yQMczR7zJLH
+ NyJT8vQ//WppU9pwxEVvKeUHjbtU9MvZAGluFMy4U3lDigWg06I40DEZnu4xZNcWLlLE893RAXy
+ e3iWWXRC7xbgjJ/IUURNnHXEUqp0x+FUOAcnPaGEqxGmjSrmR2go93jmYFp1H6SPJICcrMsPBqa
+ DXU6nZ8jOyVMW/6K71GnDluQxULEI0aTccbTb/d+/+QsOIUaNNtCMzxHIbExe8v+eWy8YgKns8R
+ rSbMH5Peen9kZkPsYMVmqbhoapWFZbtQb5gaUFhqHcwP3IMhX9L5dLFt95zGwNb+zFR0MYbZ7Le
+ pIn7KZ
+X-Received: by 2002:a05:6000:4387:b0:437:75c1:5777 with SMTP id
+ ffacd0b85a97d-43958e00726mr3005882f8f.16.1771421221778; 
+ Wed, 18 Feb 2026 05:27:01 -0800 (PST)
+X-Received: by 2002:a05:6000:4387:b0:437:75c1:5777 with SMTP id
+ ffacd0b85a97d-43958e00726mr3005839f8f.16.1771421221290; 
+ Wed, 18 Feb 2026 05:27:01 -0800 (PST)
 Received: from localhost
  (p200300cfd737d029edef7b8da7441ac2.dip0.t-ipconnect.de.
  [2003:cf:d737:d029:edef:7b8d:a744:1ac2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4839839d960sm29902525e9.3.2026.02.18.05.27.04
+ ffacd0b85a97d-43796ac8075sm40458516f8f.29.2026.02.18.05.26.59
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 18 Feb 2026 05:27:04 -0800 (PST)
+ Wed, 18 Feb 2026 05:26:59 -0800 (PST)
 From: Hanna Czenczek <hreitz@redhat.com>
 To: qemu-block@nongnu.org
 Cc: qemu-devel@nongnu.org, Hanna Czenczek <hreitz@redhat.com>,
  Kevin Wolf <kwolf@redhat.com>, Brian Song <hibriansong@gmail.com>
-Subject: [PATCH v4 09/24] fuse: Introduce fuse_{at,de}tach_handlers()
-Date: Wed, 18 Feb 2026 14:26:18 +0100
-Message-ID: <20260218132633.29748-10-hreitz@redhat.com>
+Subject: [PATCH v4 07/24] fuse: Fix mount options
+Date: Wed, 18 Feb 2026 14:26:16 +0100
+Message-ID: <20260218132633.29748-8-hreitz@redhat.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260218132633.29748-1-hreitz@redhat.com>
 References: <20260218132633.29748-1-hreitz@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=hreitz@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=hreitz@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.043,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -122,86 +122,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Pull setting up and tearing down the AIO context handlers into two
-dedicated functions.
+Since I actually took a look into how mounting with libfuse works[1], I
+now know that the FUSE mount options are not exactly standard mount
+system call options.  Specifically:
+- We should add "nosuid,nodev,noatime" because that is going to be
+  translated into the respective MS_ mount flags; and those flags make
+  sense for us.
+- We can set rw/ro to make the mount writable or not.  It makes sense to
+  set this flag to produce a better error message for read-only exports
+  (EROFS instead of EACCES).
+  This changes behavior as can be seen in iotest 308: It is no longer
+  possible to modify metadata of read-only exports.
+
+In addition, in the comment, we can note that the FUSE mount() system
+call actually expects some more parameters that we can omit because
+fusermount3 (i.e. libfuse) will figure them out by itself:
+- fd: /dev/fuse fd
+- rootmode: Inode mode of the root node
+- user_id/group_id: Mounter's UID/GID
+
+[1] It invokes fusermount3, an SUID libfuse helper program, which parses
+    and processes some mount options before actually invoking the
+    mount() system call.
 
 Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
 ---
- block/export/fuse.c | 32 ++++++++++++++++----------------
- 1 file changed, 16 insertions(+), 16 deletions(-)
+ block/export/fuse.c        | 14 +++++++++++---
+ tests/qemu-iotests/308     |  4 ++--
+ tests/qemu-iotests/308.out |  3 ++-
+ 3 files changed, 15 insertions(+), 6 deletions(-)
 
 diff --git a/block/export/fuse.c b/block/export/fuse.c
-index d0e3c6bf61..5953407f20 100644
+index 82560ca071..0422cf4b8a 100644
 --- a/block/export/fuse.c
 +++ b/block/export/fuse.c
-@@ -78,27 +78,34 @@ static void read_from_fuse_export(void *opaque);
- static bool is_regular_file(const char *path, Error **errp);
+@@ -246,10 +246,18 @@ static int mount_fuse_export(FuseExport *exp, Error **errp)
+     int ret;
  
+     /*
+-     * max_read needs to match what fuse_init() sets.
+-     * max_write need not be supplied.
++     * Note that these mount options differ from what we would pass to a direct
++     * mount() call:
++     * - nosuid, nodev, and noatime are not understood by the kernel; libfuse
++     *   uses those options to construct the mount flags (MS_*)
++     * - The FUSE kernel driver requires additional options (fd, rootmode,
++     *   user_id, group_id); these will be set by libfuse.
++     * Note that max_read is set here, while max_write is set via the FUSE INIT
++     * operation.
+      */
+-    mount_opts = g_strdup_printf("max_read=%zu,default_permissions%s",
++    mount_opts = g_strdup_printf("%s,nosuid,nodev,noatime,max_read=%zu,"
++                                 "default_permissions%s",
++                                 exp->writable ? "rw" : "ro",
+                                  FUSE_MAX_BOUNCE_BYTES,
+                                  exp->allow_other ? ",allow_other" : "");
  
--static void fuse_export_drained_begin(void *opaque)
-+static void fuse_attach_handlers(FuseExport *exp)
- {
--    FuseExport *exp = opaque;
-+    aio_set_fd_handler(exp->common.ctx,
-+                       fuse_session_fd(exp->fuse_session),
-+                       read_from_fuse_export, NULL, NULL, NULL, exp);
-+    exp->fd_handler_set_up = true;
-+}
+diff --git a/tests/qemu-iotests/308 b/tests/qemu-iotests/308
+index 6eced3aefb..033d5cbe22 100755
+--- a/tests/qemu-iotests/308
++++ b/tests/qemu-iotests/308
+@@ -178,7 +178,7 @@ stat -c 'Permissions pre-chmod: %a' "$EXT_MP"
+ chmod u+w "$EXT_MP" 2>&1 | _filter_testdir | _filter_imgfmt
+ stat -c 'Permissions post-+w: %a' "$EXT_MP"
  
-+static void fuse_detach_handlers(FuseExport *exp)
-+{
-     aio_set_fd_handler(exp->common.ctx,
-                        fuse_session_fd(exp->fuse_session),
-                        NULL, NULL, NULL, NULL, NULL);
-     exp->fd_handler_set_up = false;
- }
+-# But that we can set, say, +x (if we are so inclined)
++# Same for other flags, like, say +x
+ chmod u+x "$EXT_MP" 2>&1 | _filter_testdir | _filter_imgfmt
+ stat -c 'Permissions post-+x: %a' "$EXT_MP"
  
-+static void fuse_export_drained_begin(void *opaque)
-+{
-+    fuse_detach_handlers(opaque);
-+}
-+
- static void fuse_export_drained_end(void *opaque)
- {
-     FuseExport *exp = opaque;
+@@ -236,7 +236,7 @@ output=$($QEMU_IO -f raw -c 'write -P 42 1M 64k' "$TEST_IMG" 2>&1 \
  
-     /* Refresh AioContext in case it changed */
-     exp->common.ctx = blk_get_aio_context(exp->common.blk);
--
--    aio_set_fd_handler(exp->common.ctx,
--                       fuse_session_fd(exp->fuse_session),
--                       read_from_fuse_export, NULL, NULL, NULL, exp);
--    exp->fd_handler_set_up = true;
-+    fuse_attach_handlers(exp);
- }
+ # Expected reference output: Opening the file fails because it has no
+ # write permission
+-reference="Could not open 'TEST_DIR/t.IMGFMT': Permission denied"
++reference="Could not open 'TEST_DIR/t.IMGFMT': Read-only file system"
  
- static bool fuse_export_drained_poll(void *opaque)
-@@ -209,11 +216,7 @@ static int fuse_export_create(BlockExport *blk_exp,
+ if echo "$output" | grep -q "$reference"; then
+     echo "Writing to read-only export failed: OK"
+diff --git a/tests/qemu-iotests/308.out b/tests/qemu-iotests/308.out
+index e5e233691d..aa96faab6d 100644
+--- a/tests/qemu-iotests/308.out
++++ b/tests/qemu-iotests/308.out
+@@ -53,7 +53,8 @@ Images are identical.
+ Permissions pre-chmod: 400
+ chmod: changing permissions of 'TEST_DIR/t.IMGFMT.fuse': Read-only file system
+ Permissions post-+w: 400
+-Permissions post-+x: 500
++chmod: changing permissions of 'TEST_DIR/t.IMGFMT.fuse': Read-only file system
++Permissions post-+x: 400
  
-     g_hash_table_insert(exports, g_strdup(exp->mountpoint), NULL);
- 
--    aio_set_fd_handler(exp->common.ctx,
--                       fuse_session_fd(exp->fuse_session),
--                       read_from_fuse_export, NULL, NULL, NULL, exp);
--    exp->fd_handler_set_up = true;
--
-+    fuse_attach_handlers(exp);
-     return 0;
- 
- fail:
-@@ -335,10 +338,7 @@ static void fuse_export_shutdown(BlockExport *blk_exp)
-         fuse_session_exit(exp->fuse_session);
- 
-         if (exp->fd_handler_set_up) {
--            aio_set_fd_handler(exp->common.ctx,
--                               fuse_session_fd(exp->fuse_session),
--                               NULL, NULL, NULL, NULL, NULL);
--            exp->fd_handler_set_up = false;
-+            fuse_detach_handlers(exp);
-         }
-     }
- 
+ === Mount over existing file ===
+ {'execute': 'block-export-add',
 -- 
 2.53.0
 
