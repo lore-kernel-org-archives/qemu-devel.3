@@ -4,148 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91D13E9A03B
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 09:00:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B06C7E9A03B
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 09:04:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vsdPT-0008Gu-OF; Wed, 18 Feb 2026 03:59:51 -0500
+	id 1vsdTD-0000iB-S1; Wed, 18 Feb 2026 04:03:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vsdPQ-0008F7-Pv
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 03:59:48 -0500
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1vsdTB-0000hx-TC
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 04:03:41 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vsdPN-0007yW-2z
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 03:59:48 -0500
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1vsdT9-0008Ra-R2
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 04:03:41 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771405183;
+ s=mimecast20190719; t=1771405417;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=ICTrgTHNqq8iM/P8eMa+c5kjvoOZUF0p8ttYToUxfG0=;
- b=B4uDTdcNYbQBfeh4EsjbvmmfQjcOq4eqBcKimjB1ynKr9hnJCBsKB/qxsWqiQm2/UtRfhY
- gEixoHyFlvLuZs6r9aj1b/BjdErcV7pLIlw+1B3nX+RXm3rZIh11GcBMRWzsooCT8ySuWq
- X1queXsDgkILIgQFioG3uVxd3sdztko=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-357-R8tnN8gxO5uZ6i-phbA1Pg-1; Wed, 18 Feb 2026 03:59:41 -0500
-X-MC-Unique: R8tnN8gxO5uZ6i-phbA1Pg-1
-X-Mimecast-MFC-AGG-ID: R8tnN8gxO5uZ6i-phbA1Pg_1771405180
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4837b7903f3so45007385e9.2
- for <qemu-devel@nongnu.org>; Wed, 18 Feb 2026 00:59:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1771405180; x=1772009980; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=ICTrgTHNqq8iM/P8eMa+c5kjvoOZUF0p8ttYToUxfG0=;
- b=eV0W6bNLOQOykknGnfdb5UCCeMXbAGnT95KYvyenybCsFJD0FAopeL57TO5Dsfpqoq
- PlBgbwVxlfIVKLKsmQqDaUzr75KfrYH9Z3r6h3w9UO2wkcK+3jKkeLLWAqXQO2Gi4fKN
- 6Nl0/o68EaoUYlCEjKG91iPppIbci76xz5NDj6DJJCyMV41Lo0jS4HrIczL4QSbB7kHj
- c6tPlDqRbVeGxPEodNNwpMs+EdAc3cGje76RZY5dWFNFw//EqR7GAgXKnU0quO+1bTUO
- STcQ1/R+kVVVce9FEvVVw9NCY4HkJexBAGbf48aefxrXuXmKPhspIR2Vhu+XYioYmrDo
- qoeA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771405180; x=1772009980;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ICTrgTHNqq8iM/P8eMa+c5kjvoOZUF0p8ttYToUxfG0=;
- b=BypQMjVFB23Z7hxWAo5KcI9YZYPyChrirWPL0xvyDwkVkrZME2D6XmJeckuXk6Au0W
- npo7jz6SjGFsuQk8mEH+LRark5tP/Qn8EiRX3uuBy/bKXAOVbqmBmMZqArVWuHlNlnmk
- 0koKeT25GLrd+WhSF4uB1+fDyDxM2yy/WKKhUBvxQgO2Pl0MoUO0dixTLjTpTfQ/YrBg
- ITbFTAGH1P3jP0FTIPIm5D5gcZ/cH7XMYmNR5j81kIxxUjTrk1WICJWWJoJIW6MTCQE9
- uvmEUIBXQgESZsIl/N0cDrC8wtcpM4Ndx4H/EWCl6goTz+i5q880mxktElHhgOSBlH5t
- VxEg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXaIHyFLcvzIvT3aGPfZQdlVYErHugkneRdZadyg6XFRRhVkbtkxzId+cCI3gWA3lTzFkCyYRnn3DVP@nongnu.org
-X-Gm-Message-State: AOJu0YyACSc7NlNK+Eii2MlfV6ojw05uOezCTOqdlBB+V8t8nGwvyJMV
- nnaoj1Xthl5paoR34YJMuQI8+ADyAeBEyb7zJmdVZinlPBvnB77ZH/PqINz3QQ2z7ACXGmAJlW5
- 1awWsMtnUtcFpVRiDnLmtKaw/gGkbtekvlLU+CHvIIRTiSVKvbaWP4OGQ
-X-Gm-Gg: AZuq6aIepwCB2HVBx24G3zawvoCjp9dMO0WbZ1mzuNCmIV6Cy14lDKTmCvtHorPPD2f
- akd0XAqV0WgK4zo7LiHe+PeRLsYqgeqUKQ81XSODveqyHewGlt4RTlU7fWf/mAuVf/RDUnPebPh
- qCiQWHRJ/KN/tq1p+iS8CpVizXqnVwzkBE/KRcI2LVl5lWE7XBq3BzVFQdIa2mli4BaoWUXWdCY
- aI94Gpljbq8aXXXklnQuksx9Bgtj/tWfDkw46XJlUAEPYiLsivZBUpYVe8lXd5ZkmMEE2puu/uQ
- yOJzy6niDM0Qn6UPZk/sD568GFy62M4SlTn0tiK1C89AzrZG3vQcpX0ICbyzlrFgL+Cb8iz4t+y
- j3k7M3QXvKTU7hdFEakWQfdbO15hibJiOwCyBwUd2aejHVBxKgrV0pSj/BCnA
-X-Received: by 2002:a05:600c:64c5:b0:47e:e2ec:995b with SMTP id
- 5b1f17b1804b1-48398a7dd3amr24717125e9.9.1771405180059; 
- Wed, 18 Feb 2026 00:59:40 -0800 (PST)
-X-Received: by 2002:a05:600c:64c5:b0:47e:e2ec:995b with SMTP id
- 5b1f17b1804b1-48398a7dd3amr24716715e9.9.1771405179566; 
- Wed, 18 Feb 2026 00:59:39 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48397318a23sm26034915e9.2.2026.02.18.00.59.38
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 18 Feb 2026 00:59:39 -0800 (PST)
-Message-ID: <d9440811-0d9b-4f93-a5bd-3035e805b3e9@redhat.com>
-Date: Wed, 18 Feb 2026 09:59:37 +0100
+ content-transfer-encoding:content-transfer-encoding;
+ bh=au84Q8WCyn+EkfklO4m2zsYkunxuOqZSUmaIWybNfNk=;
+ b=JY81uq38K85J17rhXubuHpL0BwFl4geMO3lmBEQDESyxonQMAOVZ3REXtsFPDzCNRoMeip
+ j9hgAESx/yBtu3oaA+mRFIQFfNlOUnvkTTsVEQKsehIz//RVuACcVH17cifl+SXIfBTWch
+ V1Fjm9RMoknxb/TTQJJqrmmc+iJJ8Rs=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-693-w8V_evDEOQWcSX7SRUUvSA-1; Wed,
+ 18 Feb 2026 04:03:34 -0500
+X-MC-Unique: w8V_evDEOQWcSX7SRUUvSA-1
+X-Mimecast-MFC-AGG-ID: w8V_evDEOQWcSX7SRUUvSA_1771405413
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 367991800352; Wed, 18 Feb 2026 09:03:33 +0000 (UTC)
+Received: from localhost (unknown [10.45.242.26])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 797B51955F43; Wed, 18 Feb 2026 09:03:32 +0000 (UTC)
+From: marcandre.lureau@redhat.com
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
+Subject: [PULL 00/85] Audio patches
+Date: Wed, 18 Feb 2026 10:02:00 +0100
+Message-ID: <20260218090330.1476169-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 0/3] hw/vfio: Enable hugepfnmap for non-power-of-2
- device memory regions
-To: ankita@nvidia.com, vsethi@nvidia.com, jgg@nvidia.com,
- skolothumtho@nvidia.com, alex@shazbot.org
-Cc: aniketa@nvidia.com, cjia@nvidia.com, kwankhede@nvidia.com,
- targupta@nvidia.com, zhiw@nvidia.com, mochs@nvidia.com, kjaju@nvidia.com,
- qemu-devel@nongnu.org
-References: <20260217153010.408739-1-ankita@nvidia.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260217153010.408739-1-ankita@nvidia.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -170,74 +83,182 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/17/26 16:30, ankita@nvidia.com wrote:
-> From: Ankit Agrawal <ankita@nvidia.com>
-> 
-> This series enables hugepfnmap support in QEMU for VFIO device memory
-> regions that have non-power-of-2 sizes. This specifically addresses the
-> needs of Grace-based systems (GB200) where device memory is exposed
-> as a BAR.
-> 
-> ## Problem
-> 
-> On Grace-based systems, device memory regions can have sizes like
-> 0x2F00F00000 (not power-of-2). The current QEMU VFIO mapping code
-> aligns each sparse mmap area independently using the trailing zeros
-> of its size (ctz64), which results in suboptimal alignment for the
-> overall VMA.
-> 
-> This prevents the kernel from using hugepfnmap that enables huge
-> page mappings for device memory. Without proper alignment, the
-> mapping falls back to PTE, significantly impacting performance
-> due to increased TLB pressure and page table overhead for large
-> memory regions.
-> 
-> ## Solution
-> 
-> Patch 1: Sort sparse mmap regions by offset during setup and validate
->           that they don't overlap. This ensures predictable mapping
->           order and enables gap detection.
-> 
-> Patch 2: Adds Error parameter to vfio_region_setup() for better error
->           handling and reporting.
-> 
-> Patch 3: Change the alignment strategy from per-sparse-region to
->           whole-region alignment using pow2ceil(region->size). Create
->           a single aligned base mapping for the entire region, then
->           overlay sparse areas with MAP_FIXED. Gaps between sparse
->           regions are explicitly unmapped.
-> 
-> v4
-> * Replace lx with PRIx64 in the error in 1/3 (Cedric)
-> * Error** param for vfio_setup_region_sparse_mmaps in 2/3 (Cedric)
-> * Comment to notify that the mapping algorithm expect sorted offset.
->    (Cedric)
-> 
-> v3: https://lore.kernel.org/all/20260215084950.4657-1-ankita@nvidia.com/
-> * New patch 2/3 to add Error **param in vfio_region_setup (Cedric)
-> 
-> v2: https://lore.kernel.org/all/20260211030615.3202-1-ankita@nvidia.com/
-> * Fixed the code returning early without trace (Shameer, Alex)
-> 
-> v1: https://lore.kernel.org/all/20260130040649.42485-1-ankita@nvidia.com/
-> 
-> Ankit Agrawal (3):
->    hw/vfio: sort and validate sparse mmap regions by offset
->    vfio: Add Error ** parameter to vfio_region_setup()
->    hw/vfio: align mmap to power-of-2 of region size for hugepfnmap
-> 
->   hw/vfio/display.c     |   6 +-
->   hw/vfio/pci.c         |   3 +-
->   hw/vfio/region.c      | 140 ++++++++++++++++++++++++++++++++----------
->   hw/vfio/vfio-region.h |   2 +-
->   4 files changed, 114 insertions(+), 37 deletions(-)
-> 
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
+The following changes since commit ece408818d27f745ef1b05fb3cc99a1e7a5bf580:
 
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
+  Merge tag 'for-upstream' of https://gitlab.com/bonzini/qemu into staging (2026-02-13 10:30:08 +0000)
 
-Thanks,
+are available in the Git repository at:
 
-C.
+  https://gitlab.com/marcandre.lureau/qemu.git tags/audio-pull-request
+
+for you to fetch changes up to 671f6b05e8939f01621250446d6d9a71c7758254:
+
+  audio: fix leak of audio capture name (2026-02-18 09:56:43 +0100)
+
+----------------------------------------------------------------
+audio cleanups
+
+----------------------------------------------------------------
+
+Marc-André Lureau (85):
+  audio: remove obsolete/obscure functions
+  adlib: remove dead code
+  audio/adlib: drop ts_helper HWVoice field
+  audio/dbus: make "dbus" the default backend when using -display dbus
+  qemu-options.hx: clarify default audio backend selection
+  qemu-options.hx: document -audiodev dbus
+  audio: replace vm_running with runstate_is_running()
+  audio: list backends as modules
+  build-sys: create a libaudio
+  scripts/modinfo: add type annotations
+  scripts/modinfo: remove trailing ;
+  scripts/modinfo: use in instead of find()
+  scripts/modinfo: use f-strings
+  scripts/modinfo: use argparse
+  scripts/modinfo: make --devices optional
+  scripts/modinfo: add --skip-missing-deps
+  util: add some extra stubs for qemu modules initialization
+  tests: start manual audio backend test
+  audio: constify audsettings argument
+  audio: introduce AudioMixengBackend
+  audio: use DEFINE_TYPES
+  audio: simplify audio_init()
+  audio: move object creation to audio_driver_init()
+  audio: add QOM module-objects for each backend
+  audio: remove set_dbus_server from audio_driver
+  audio: lookup "audio-" object types, and realize them
+  audio: drop audio driver registration
+  module: remove audio module support
+  audio: replace type_init() with DEFINE_TYPES
+  audio: keep a strong reference on the backend
+  audio: make list type declaration private
+  audio: make create_pdos() private
+  replay: remove dependency on audio/
+  audio: make all the backend-specific APIs take the be
+  audio: make AudioBackend truly abstract
+  audio: split AudioBackend
+  audio: AUD_ -> audio_be_
+  audio-be: add common pre-conditions
+  audio-be: add some state trace for debugging
+  audio: split AudioMixengBackend code in audio-mixeng-be.c
+  audio: make audio_driver init() & fini() optional
+  audio/dbus: convert to QOM lifecycle methods
+  audio/spice: convert to QOM lifecycle methods
+  audio/wav: convert to QOM lifecycle methods
+  audio/noaudio: convert to QOM lifecycle methods
+  audio/alsa: convert to QOM lifecycle methods
+  audio/oss: convert to QOM lifecycle methods
+  audio/pa: convert to QOM lifecycle methods
+  audio/sdl: convert to QOM lifecycle methods
+  audio/pw: convert to QOM lifecycle methods
+  audio/jack: convert to QOM lifecycle methods
+  audio/sndio: convert to QOM lifecycle methods
+  audio/coreaudio: convert to QOM lifecycle methods
+  audio/dsound: convert to QOM lifecycle methods
+  audio: remove audio_driver init/fini/next
+  audio: remove audio_driver
+  audio: move pcm_ops into AudioMixengBackendClass
+  audio: constify some add_capture() arguments
+  audio/alsa: replace custom logging with error_report and trace events
+  audio/coreaudio: replace custom logging with error_report
+  audio/dbus: remove unused AUDIO_CAP macro
+  audio/dsound: replace custom logging with error_report & trace
+  audio/jack: replace custom logging with report & trace
+  audio/noaudio: remove unused AUDIO_CAP macro
+  audio/oss: replace custom logging with report & trace
+  audio/pa: replace custom logging with report & trace
+  audio/pw: replace custom logging with error_report
+  audio/sdl: replace custom logging with error_report
+  audio/sndio: replace custom logging with error_report
+  audio/spice: remove unused AUDIO_CAP macro
+  audio/wav: replace custom logging with error_report
+  audio/mixeng: replace redundant pcm_info fields with AudioFormat
+  audio: replace int endianness with bool big_endian in audsettings
+  audio: replace ldebug with trace events
+  audio: rework DEBUG_POLL
+  audio: replace DEBUG_CAPTURE with traces
+  audio: replace DEBUG_OUT with traces
+  audio: replace DEBUG_AUDIO with trace
+  tests/audio: add an invalid settings test
+  audio: rework invalid audsettings error
+  audio: rework audio_bug()
+  audio: replace remaining dolog() and AUD_log
+  audio: remove AUD_log/ldebug
+  audio: remove AudioMixengBackendClass.name
+  audio: fix leak of audio capture name
+
+ MAINTAINERS                                   |    1 +
+ meson.build                                   |   27 +-
+ audio/audio_int.h                             |  168 +-
+ audio/audio_template.h                        |  212 +-
+ audio/dsound_template.h                       |   89 +-
+ include/qemu/audio-capture.h                  |   28 +-
+ include/qemu/audio.h                          |  183 +-
+ include/qemu/module.h                         |    3 +-
+ include/qemu/timer.h                          |    1 +
+ include/system/replay.h                       |   11 +-
+ replay/replay-internal.h                      |    2 +
+ audio/alsaaudio.c                             |  273 +-
+ audio/audio-be.c                              |  274 ++
+ audio/audio-mixeng-be.c                       | 1770 +++++++++++++
+ audio/audio.c                                 | 2246 ++---------------
+ audio/audio_win_int.c                         |   31 +-
+ audio/dbusaudio.c                             |  168 +-
+ audio/dsoundaudio.c                           |  265 +-
+ audio/jackaudio.c                             |  127 +-
+ audio/mixeng.c                                |    1 -
+ audio/noaudio.c                               |   78 +-
+ audio/ossaudio.c                              |  300 ++-
+ audio/paaudio.c                               |  261 +-
+ audio/pwaudio.c                               |  214 +-
+ audio/sdlaudio.c                              |  176 +-
+ audio/sndioaudio.c                            |  108 +-
+ audio/spiceaudio.c                            |  113 +-
+ audio/wavaudio.c                              |  101 +-
+ audio/wavcapture.c                            |    9 +-
+ hw/audio/ac97.c                               |   44 +-
+ hw/audio/adlib.c                              |   33 +-
+ hw/audio/asc.c                                |   22 +-
+ hw/audio/cs4231a.c                            |   24 +-
+ hw/audio/es1370.c                             |   28 +-
+ hw/audio/gus.c                                |   13 +-
+ hw/audio/hda-codec.c                          |   36 +-
+ hw/audio/lm4549.c                             |   26 +-
+ hw/audio/pcspk.c                              |    8 +-
+ hw/audio/sb16.c                               |   30 +-
+ hw/audio/via-ac97.c                           |   22 +-
+ hw/audio/virtio-snd.c                         |   38 +-
+ hw/audio/wm8750.c                             |   47 +-
+ hw/display/xlnx_dp.c                          |   18 +-
+ hw/usb/dev-audio.c                            |   20 +-
+ replay/replay-audio.c                         |   51 +-
+ replay/replay.c                               |    2 +-
+ replay/stubs-system.c                         |    8 +-
+ system/vl.c                                   |    2 -
+ tests/audio/audio-stubs.c                     |   69 +
+ tests/audio/test-audio.c                      |  619 +++++
+ ui/dbus.c                                     |   20 +-
+ ui/vnc.c                                      |    6 +-
+ util/module.c                                 |    3 +
+ audio/coreaudio.m                             |  201 +-
+ audio/meson.build                             |   12 +-
+ audio/trace-events                            |   46 +
+ qemu-options.hx                               |   35 +-
+ .../codeconverter/test_regexps.py             |    1 -
+ scripts/modinfo-generate.py                   |  146 +-
+ tests/audio/meson.build                       |   23 +
+ tests/meson.build                             |    1 +
+ ui/meson.build                                |    3 +
+ 62 files changed, 4983 insertions(+), 3914 deletions(-)
+ create mode 100644 audio/audio-be.c
+ create mode 100644 audio/audio-mixeng-be.c
+ create mode 100644 tests/audio/audio-stubs.c
+ create mode 100644 tests/audio/test-audio.c
+ create mode 100644 tests/audio/meson.build
+
+-- 
+2.53.0
 
 
