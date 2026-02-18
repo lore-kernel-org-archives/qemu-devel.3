@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96B10E9A02C
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 21:37:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 555D3E9A049
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 21:37:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vspEk-0003wx-BE; Wed, 18 Feb 2026 16:37:34 -0500
+	id 1vspDu-0002Py-Ny; Wed, 18 Feb 2026 16:36:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vspE2-0002d9-AP
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 16:36:52 -0500
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vspDb-0001tt-B5
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 16:36:24 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vspE0-0002QD-P1
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 16:36:50 -0500
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vspDZ-0002MW-OX
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 16:36:23 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771450607;
+ s=mimecast20190719; t=1771450581;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=IvN3Q43Mkl9Sn7QFE0vvP2wV+qWGKGFO39MB4ivyLog=;
- b=KJDz3hxUMMbfRJOC3XWKg8JWC6apt3NI8uuPr2NzWsKffreAf88iIPEGMThrTGIr4la0hO
- SPYGSKW8O8HH7MrQbmdEOpnf32beOEc93VPCaPSNeLPKHi13L4zryEyK3/qw/NnGy9IcpQ
- 9mkoK2ZT1aDcDBtzD4uHfrFU4hW9IoQ=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=tIANyEMA3XwEynRRioMHnh6yRTat9EXJogpci0s8y+0=;
+ b=FrjAFGnD36UfibrdEmHX8YuhG0gMBF+xl9T119BLbPAYqkP3ed/iPGilfzhi++6b3DydZs
+ MRVeXB2q9mHIeHI45vIY7bxelhV0ZLFNrZG0OIbJK8xIAyGP5a6BRc/j5dnZ7ixaAyn0wh
+ 26Id7285Kan8Sz0HKM1X944Tit89jyY=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-217-hdAFjbW9MvuMyZwj0CRcBQ-1; Wed,
- 18 Feb 2026 16:36:44 -0500
-X-MC-Unique: hdAFjbW9MvuMyZwj0CRcBQ-1
-X-Mimecast-MFC-AGG-ID: hdAFjbW9MvuMyZwj0CRcBQ_1771450602
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-49-Zz8KLuTqM4adNcmYbOf03A-1; Wed,
+ 18 Feb 2026 16:36:17 -0500
+X-MC-Unique: Zz8KLuTqM4adNcmYbOf03A-1
+X-Mimecast-MFC-AGG-ID: Zz8KLuTqM4adNcmYbOf03A_1771450575
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E225D1955D80; Wed, 18 Feb 2026 21:36:41 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 592AC1955DDF; Wed, 18 Feb 2026 21:36:15 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.65.233])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 6398C19560BA; Wed, 18 Feb 2026 21:36:35 +0000 (UTC)
+ id D2BFE19560B8; Wed, 18 Feb 2026 21:36:08 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Kevin Wolf <kwolf@redhat.com>, Warner Losh <imp@bsdimp.com>,
@@ -66,9 +66,9 @@ Cc: Kevin Wolf <kwolf@redhat.com>, Warner Losh <imp@bsdimp.com>,
  Kyle Evans <kevans@freebsd.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Subject: [PATCH v8 20/20] python: add setuptools and wheel dependencies
-Date: Wed, 18 Feb 2026 16:34:15 -0500
-Message-ID: <20260218213416.674483-21-jsnow@redhat.com>
+Subject: [PATCH v8 16/20] tests: replace check-venv with vm-venv target
+Date: Wed, 18 Feb 2026 16:34:11 -0500
+Message-ID: <20260218213416.674483-17-jsnow@redhat.com>
 In-Reply-To: <20260218213416.674483-1-jsnow@redhat.com>
 References: <20260218213416.674483-1-jsnow@redhat.com>
 MIME-Version: 1.0
@@ -99,41 +99,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add setuptools and wheel packages to ease installation burden when
-internet access is allowed. When internet access is not allowed, this
-functions as a configure-time check ensuring that our environment has
-the necessary minimum viable versions for these packaging tools
-available.
+With the qemu.qmp and qemu.machine dependencies now installed by default
+at configure time and additional dependencies required by functional
+testing installed on demand, we do not need the explicit "check-venv" target.
 
-For detailed information on Python ecosystem versions, please see
-https://gitlab.com/jsnow/repology-dashboard#results-overview-as-of-2026-02-16
+...However, to facilitate running VM tests without running configure, we
+move some of the former logic into tests/vm/Makefile.include to create a
+new venv (vm-venv) on-demand when running VM tests from the source tree.
 
-Suggested-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: John Snow <jsnow@redhat.com>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
 ---
- pythondeps.toml | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ tests/Makefile.include    | 22 ++--------------------
+ tests/vm/Makefile.include | 20 ++++++++++++++++----
+ 2 files changed, 18 insertions(+), 24 deletions(-)
 
-diff --git a/pythondeps.toml b/pythondeps.toml
-index 89256132fee..a0717742423 100644
---- a/pythondeps.toml
-+++ b/pythondeps.toml
-@@ -38,6 +38,14 @@ sphinx_rtd_theme = { accepted = ">=0.5", installed = "1.2.2" }
- [tooling]
- "qemu.qmp" = { accepted = ">=0.0.5", installed = "0.0.5" }
- "qemu" = { path = "python/" }
-+# NB: The following dependencies should be a little bit more modern than
-+# the versions listed here, but we are still using Debian 11 for several
-+# GitLab CI tests, so we are further restricted.
-+"setuptools" = { accepted = ">=44.1.1" }
-+"wheel" = { accepted = ">=0.34.2" }
-+# pip should be guaranteed by mkvenv, this is merely a sanity check for
-+# which version we are counting on being present.
-+"pip" = { accepted = ">=20.3.4" }
+diff --git a/tests/Makefile.include b/tests/Makefile.include
+index 76d77545b71..59b9a4b9220 100644
+--- a/tests/Makefile.include
++++ b/tests/Makefile.include
+@@ -22,7 +22,6 @@ ifneq ($(filter $(all-check-targets), check-softfloat),)
+ endif
+ 	@echo
+ 	@echo " $(MAKE) check-report.junit.xml        Generates an aggregated XML test report"
+-	@echo " $(MAKE) check-venv                    Creates a Python venv for tests"
+ 	@echo " $(MAKE) check-clean                   Clean the tests and related data"
+ 	@echo
+ 	@echo "The following are useful for CI builds"
+@@ -93,33 +92,16 @@ clean-tcg: $(CLEAN_TCG_TARGET_RULES)
+ .PHONY: distclean-tcg
+ distclean-tcg: $(DISTCLEAN_TCG_TARGET_RULES)
  
- # This test group is for functional tests, and can include dependencies
- # fetched from PyPI.
+-# Python venv for running tests
+-
+-.PHONY: check-venv
+-
+ # Build up our target list from the filtered list of ninja targets
+ TARGETS=$(patsubst libqemu-%.a, %, $(filter libqemu-%.a, $(ninja-targets)))
+ 
+-TESTS_VENV_TOKEN=$(BUILD_DIR)/pyvenv/tests.group
+-
+-quiet-venv-pip = $(quiet-@)$(call quiet-command-run, \
+-    $(PYTHON) -m pip -q --disable-pip-version-check $1, \
+-    "VENVPIP","$1")
+-
+-$(TESTS_VENV_TOKEN): $(SRC_PATH)/pythondeps.toml
+-	$(call quiet-venv-pip,install -e "$(SRC_PATH)/python/")
+-	$(MKVENV_ENSUREGROUP) $< tooling functests
+-	$(call quiet-command, touch $@)
+-
+-check-venv: $(TESTS_VENV_TOKEN)
+-
+ FUNCTIONAL_TARGETS=$(patsubst %-softmmu,check-functional-%, $(filter %-softmmu,$(TARGETS)))
+ .PHONY: $(FUNCTIONAL_TARGETS)
+-$(FUNCTIONAL_TARGETS): check-venv
++$(FUNCTIONAL_TARGETS):
+ 	@$(MAKE) SPEED=thorough $(subst -functional,-func,$@)
+ 
+ .PHONY: check-functional
+-check-functional: check-venv
++check-functional:
+ 	@$(NINJA) precache-functional
+ 	@$(PYTHON) $(SRC_PATH)/scripts/clean_functional_cache.py
+ 	@QEMU_TEST_NO_DOWNLOAD=1 $(MAKE) SPEED=thorough check-func check-func-quick
+diff --git a/tests/vm/Makefile.include b/tests/vm/Makefile.include
+index 14188bba1c6..8a5aaedce7a 100644
+--- a/tests/vm/Makefile.include
++++ b/tests/vm/Makefile.include
+@@ -2,13 +2,25 @@
+ 
+ # Hack to allow running in an unconfigured build tree
+ ifeq ($(realpath $(SRC_PATH)),$(realpath .))
+-VM_PYTHON = PYTHONPATH=$(SRC_PATH)/python /usr/bin/env python3
+-VM_VENV =
++VM_PYTHON = $(SRC_PATH)/vm-venv/bin/python3
++VM_VENV = vm-venv
+ else
+ VM_PYTHON = $(PYTHON)
+-VM_VENV = check-venv
++VM_VENV =
+ endif
+ 
++VM_VENV_TOKEN=$(SRC_PATH)/vm-venv/tooling.group $(SRC_PATH)/vm-venv/functests.group
++
++$(VM_VENV_TOKEN): $(SRC_PATH)/pythondeps.toml
++	/usr/bin/env python3 $(SRC_PATH)/python/scripts/mkvenv.py create vm-venv
++	$(SRC_PATH)/vm-venv/bin/python3 \
++	$(SRC_PATH)/python/scripts/mkvenv.py ensuregroup --online \
++	$(SRC_PATH)/pythondeps.toml tooling functests
++
++.PHONY: vm-venv
++vm-venv: $(VM_VENV_TOKEN)
++# end hackery
++
+ .PHONY: vm-build-all vm-clean-all
+ 
+ EFI_AARCH64 = $(wildcard $(BUILD_DIR)/pc-bios/edk2-aarch64-code.fd)
+@@ -102,7 +114,7 @@ $(IMAGES_DIR)/%.img:	$(SRC_PATH)/tests/vm/% \
+ 		$(if $(LOG_CONSOLE),--log-console) \
+ 		--source-path $(SRC_PATH) \
+ 		--image "$@" \
+-		$(if $(filter-out check-venv, $?), --force) \
++		--force \
+ 		--build-image $@, \
+ 		"  VM-IMAGE $*")
+ 
 -- 
 2.53.0
 
