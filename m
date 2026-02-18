@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1E85E9A049
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DDBF9E9A047
 	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 01:52:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vsWjX-000776-Qg; Tue, 17 Feb 2026 20:52:07 -0500
+	id 1vsWjd-00078S-PE; Tue, 17 Feb 2026 20:52:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=502105d20=graf@amazon.de>)
- id 1vsWjV-00076S-Vu; Tue, 17 Feb 2026 20:52:06 -0500
-Received: from pdx-out-015.esa.us-west-2.outbound.mail-perimeter.amazon.com
- ([50.112.246.219])
+ id 1vsWjX-00077C-Ue; Tue, 17 Feb 2026 20:52:07 -0500
+Received: from pdx-out-008.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ ([52.42.203.116])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=502105d20=graf@amazon.de>)
- id 1vsWjT-0004Oh-9P; Tue, 17 Feb 2026 20:52:05 -0500
+ id 1vsWjW-0004Yc-FK; Tue, 17 Feb 2026 20:52:07 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazoncorp2;
- t=1771379523; x=1802915523;
- h=from:to:cc:subject:date:message-id:mime-version:
- content-transfer-encoding;
- bh=Bxk16uEB7hM1KBZH7q7qAvCsv9atjs2SuGxLa0iEh4U=;
- b=PtQYbxCIQEqcueiTDFbkZNO8A+E4gkLn184giFy11vN2oXKEChX5JGW+
- cFUZnOOo9ZcxJhOV89iPirpzwFy9W+KKihcfizSH6DIxs1D8YkoSDYt/L
- mfYybKs1SES59wHdMtfVm53jO0ag1xKSSyJmodbAnjPDXeCsG1rz0XSBc
- nJgldDS8osy5II8G/SapIgdk8NiiLMrvbK9Lq8+WSO4XWJMJfXLeZ/Ajl
- VxPuu5zNevYiqPjBjx8wNraba8tdWvINk0M6yNRJv/3QH6wNvWzaaH6A9
- l4db39EPRoV10HuS77FtUl0g4+YxY+k1iob8nb85SslFj0Wsipw8ZI1cI A==;
-X-CSE-ConnectionGUID: CqneEwfkRZCS8+CEGvd3CQ==
-X-CSE-MsgGUID: xh6P1TAEQx6LqlYzY8ukEA==
-X-IronPort-AV: E=Sophos;i="6.21,297,1763424000"; d="scan'208";a="13085242"
+ t=1771379526; x=1802915526;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=KCela8AQkLSev7ljQRFJIF4piqXcUABB/3Y09CBj+Qw=;
+ b=qI06WgzAD05VvYOYBy9QkwEwpCnXtbprIPupK7LPMBJ98LYoU4I2Ur5/
+ 1ouba5pW00TFDDJOIEs5GnnZAT8ne0tgjQrCP6B/V+3KxXQq3efq3a2/f
+ Yg1PlbYi/ldxkcUSVtyUNjinpCpvMNV0i+UsbocpTQ4KZj195rlzC2akc
+ DOL49o9DIhbgitqPN5glDeM/rWKIj3UdPJxJLEa9L+BH7ig33RPdvmbDp
+ F4vx03LF/3LMjrnou5IkGJtQaq6aHclrjCj3LfMQrF3Y8hIx0V1SnE6n7
+ SrTcXsjPsyQiSNmNaOoKU7J/TLqbTAahfr87yuKeBt8jqQDRDxvD0OiY8 w==;
+X-CSE-ConnectionGUID: aaDjGUVHTKCa6ysA55d1Zg==
+X-CSE-MsgGUID: dRogNnXWTeW1NoHKtcgtag==
+X-IronPort-AV: E=Sophos;i="6.21,297,1763424000"; d="scan'208";a="13254036"
 Received: from ip-10-5-6-203.us-west-2.compute.internal (HELO
  smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.6.203])
- by internal-pdx-out-015.esa.us-west-2.outbound.mail-perimeter.amazon.com with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Feb 2026 01:51:56 +0000
-Received: from EX19MTAUWB001.ant.amazon.com [205.251.233.51:4137]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.27.218:2525]
+ by internal-pdx-out-008.esa.us-west-2.outbound.mail-perimeter.amazon.com with
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Feb 2026 01:52:01 +0000
+Received: from EX19MTAUWC002.ant.amazon.com [205.251.233.111:17239]
+ by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.31.172:2525]
  with esmtp (Farcaster)
- id 7e2b54c3-e305-428d-9986-7ac32ff77d39; Wed, 18 Feb 2026 01:51:55 +0000 (UTC)
-X-Farcaster-Flow-ID: 7e2b54c3-e305-428d-9986-7ac32ff77d39
+ id ebc48b88-5297-4f9a-b24c-93ae3726705f; Wed, 18 Feb 2026 01:52:01 +0000 (UTC)
+X-Farcaster-Flow-ID: ebc48b88-5297-4f9a-b24c-93ae3726705f
 Received: from EX19D020UWC004.ant.amazon.com (10.13.138.149) by
- EX19MTAUWB001.ant.amazon.com (10.250.64.248) with Microsoft SMTP Server
+ EX19MTAUWC002.ant.amazon.com (10.250.64.143) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.35;
- Wed, 18 Feb 2026 01:51:55 +0000
+ Wed, 18 Feb 2026 01:51:58 +0000
 Received: from ip-10-253-83-51.amazon.com (172.19.99.218) by
  EX19D020UWC004.ant.amazon.com (10.13.138.149) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.35;
- Wed, 18 Feb 2026 01:51:53 +0000
+ Wed, 18 Feb 2026 01:51:55 +0000
 From: Alexander Graf <graf@amazon.com>
 To: <qemu-devel@nongnu.org>
 CC: <qemu-arm@nongnu.org>, Peter Maydell <peter.maydell@linaro.org>, "Thomas
@@ -60,19 +60,21 @@ CC: <qemu-arm@nongnu.org>, Peter Maydell <peter.maydell@linaro.org>, "Thomas
  <dorjoychy111@gmail.com>, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, Tyler Fanelli <tfanelli@redhat.com>,
  <mknaust@amazon.com>, <nh-open-source@amazon.com>
-Subject: [PATCH 00/10] Native Nitro Enclaves support
-Date: Wed, 18 Feb 2026 01:51:40 +0000
-Message-ID: <20260218015151.4052-1-graf@amazon.com>
+Subject: [PATCH 01/10] scripts/update-linux-headers: Add Nitro Enclaves header
+Date: Wed, 18 Feb 2026 01:51:41 +0000
+Message-ID: <20260218015151.4052-2-graf@amazon.com>
 X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20260218015151.4052-1-graf@amazon.com>
+References: <20260218015151.4052-1-graf@amazon.com>
 MIME-Version: 1.0
 X-Originating-IP: [172.19.99.218]
 X-ClientProxiedBy: EX19D046UWA001.ant.amazon.com (10.13.139.112) To
  EX19D020UWC004.ant.amazon.com (10.13.138.149)
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=50.112.246.219;
+Received-SPF: pass client-ip=52.42.203.116;
  envelope-from=prvs=502105d20=graf@amazon.de;
- helo=pdx-out-015.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ helo=pdx-out-008.esa.us-west-2.outbound.mail-perimeter.amazon.com
 X-Spam_score_int: -19
 X-Spam_score: -2.0
 X-Spam_bar: --
@@ -97,104 +99,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We had emulated Nitro Enclaves support in QEMU since 2024, but to launch
-a native Nitro Enclave, you could only use the AWS nitro-cli tooling.
+We want to enable QEMU to drive the /dev/nitro_enclaves device node. Add
+its UAPI header into our kernel sync so we have all defines we need to
+drive it.
 
-To simplify tooling and allow users to leverage the most convenient swiss
-army knife of virtualization known to mankind (QEMU!), add native support
-to launch a Nitro Enclave from within QEMU.
+Signed-off-by: Alexander Graf <graf@amazon.com>
+---
+ scripts/update-linux-headers.sh | 1 +
+ 1 file changed, 1 insertion(+)
 
-A Nitro Enclave is a Confidential Computing Virtual Machine spawned by
-the Nitro Hypervisor which has a very basic machine model, with
-virtio-vsock as the only real I/O between parent and enclave. This means
-the amount of interactions between QEMU and the VM are limited, but for
-debugging, experimentation and non-conventional use cases, it can be handy
-to spawn a Nitro Enclave directly in a more fully featured virtualization
-stack.
-
-Example invocation:
-
-  $ qemu-system-x86_64 -nographic -accel nitro,debug-mode=on -M nitro -kernel test.eif -smp 2
-  QEMU 10.2.50 monitor - type 'help' for more information
-  (qemu) [    0.000000] Linux version 4.14.256-209.484.amzn2.x86_64 (mockbuild@ip-10-0-50-84) (gcc version 7.3.1 20180712 (Red Hat 7.3.1-13) (GCC)) #1 SMP Tue Jan 11 21:47:36 UTC 2022
-  [    0.000000] Command line: reboot=k panic=30 pci=off nomodules console=ttyS0 i8042.noaux i8042.nomux i8042.nopnp i8042.dumbkbd random.trust_cpu=on virtio_mmio.device=4K@0xd0000000:5 virtio_mmio.device=4K@0xd0001000:6
-  [    0.000000] x86/fpu: Supporting XSAVE feature 0x001: 'x87 floating point registers'
-  [    0.000000] x86/fpu: Supporting XSAVE feature 0x002: 'SSE registers'
-  [    0.000000] x86/fpu: Supporting XSAVE feature 0x004: 'AVX registers'
-
-This patch set supports x86_64 as well as aarch64 Nitro Enclaves.
-Virtio-vsock communication with the Enclave is handled directly through the
-parent's virtio-vsock device.
-
-Alex
-
-Alexander Graf (10):
-  scripts/update-linux-headers: Add Nitro Enclaves header
-  linux-headers: Add nitro_enclaves.h
-  accel: Add Nitro Enclaves accelerator
-  hw/nitro/nitro-serial-vsock: Nitro Enclaves vsock console
-  hw/nitro: Introduce Nitro Enclave Heartbeat device
-  target/arm/cpu64: Allow -host for nitro
-  hw/nitro: Add nitro machine
-  hw/core/eif: Move definitions to header
-  hw/nitro: Enable direct kernel boot
-  docs: Add Nitro Enclaves documentation
-
- MAINTAINERS                                   |  12 +
- accel/Kconfig                                 |   3 +
- accel/meson.build                             |   1 +
- accel/nitro/meson.build                       |   3 +
- accel/nitro/nitro-accel.c                     | 334 ++++++++++++++++
- accel/nitro/trace-events                      |   6 +
- accel/nitro/trace.h                           |   2 +
- accel/stubs/meson.build                       |   1 +
- accel/stubs/nitro-stub.c                      |  11 +
- docs/system/confidential-guest-support.rst    |   1 +
- docs/system/index.rst                         |   1 +
- docs/system/nitro.rst                         | 114 ++++++
- hw/Kconfig                                    |   1 +
- hw/core/eif.c                                 |  38 --
- hw/core/eif.h                                 |  41 ++
- hw/meson.build                                |   1 +
- hw/nitro/Kconfig                              |  14 +
- hw/nitro/heartbeat.c                          | 118 ++++++
- hw/nitro/machine.c                            | 297 +++++++++++++++
- hw/nitro/meson.build                          |   3 +
- hw/nitro/serial-vsock.c                       | 155 ++++++++
- hw/nitro/trace-events                         |   8 +
- hw/nitro/trace.h                              |   1 +
- include/hw/nitro/heartbeat.h                  |  25 ++
- include/hw/nitro/machine.h                    |  20 +
- include/hw/nitro/serial-vsock.h               |  26 ++
- .../standard-headers/linux/nitro_enclaves.h   | 359 ++++++++++++++++++
- include/system/hw_accel.h                     |   1 +
- include/system/nitro-accel.h                  |  25 ++
- meson.build                                   |  12 +
- meson_options.txt                             |   2 +
- qemu-options.hx                               |   8 +-
- scripts/meson-buildoptions.sh                 |   3 +
- scripts/update-linux-headers.sh               |   1 +
- target/arm/cpu64.c                            |   8 +
- 35 files changed, 1614 insertions(+), 42 deletions(-)
- create mode 100644 accel/nitro/meson.build
- create mode 100644 accel/nitro/nitro-accel.c
- create mode 100644 accel/nitro/trace-events
- create mode 100644 accel/nitro/trace.h
- create mode 100644 accel/stubs/nitro-stub.c
- create mode 100644 docs/system/nitro.rst
- create mode 100644 hw/nitro/Kconfig
- create mode 100644 hw/nitro/heartbeat.c
- create mode 100644 hw/nitro/machine.c
- create mode 100644 hw/nitro/meson.build
- create mode 100644 hw/nitro/serial-vsock.c
- create mode 100644 hw/nitro/trace-events
- create mode 100644 hw/nitro/trace.h
- create mode 100644 include/hw/nitro/heartbeat.h
- create mode 100644 include/hw/nitro/machine.h
- create mode 100644 include/hw/nitro/serial-vsock.h
- create mode 100644 include/standard-headers/linux/nitro_enclaves.h
- create mode 100644 include/system/nitro-accel.h
-
+diff --git a/scripts/update-linux-headers.sh b/scripts/update-linux-headers.sh
+index d09d8cf4c6..386d7a38e7 100755
+--- a/scripts/update-linux-headers.sh
++++ b/scripts/update-linux-headers.sh
+@@ -254,6 +254,7 @@ for i in "$hdrdir"/include/linux/*virtio*.h \
+          "$hdrdir/include/linux/kvm_para.h" \
+          "$hdrdir/include/linux/vhost_types.h" \
+          "$hdrdir/include/linux/vmclock-abi.h" \
++         "$hdrdir/include/linux/nitro_enclaves.h" \
+          "$hdrdir/include/linux/sysinfo.h"; do
+     cp_portable "$i" "$output/include/standard-headers/linux"
+ done
 -- 
 2.47.1
 
