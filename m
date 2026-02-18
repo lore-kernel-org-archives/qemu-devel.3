@@ -4,63 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98222E9A03E
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C756BE9A03B
 	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 09:08:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vsdXG-0001vM-6p; Wed, 18 Feb 2026 04:07:54 -0500
+	id 1vsdXB-0001U6-Ja; Wed, 18 Feb 2026 04:07:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vsdWz-00011p-Po
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 04:07:39 -0500
+ id 1vsdWw-0000zj-8S
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 04:07:35 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vsdWx-0002UZ-2y
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 04:07:36 -0500
+ id 1vsdWr-0002T4-DB
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 04:07:33 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771405654;
+ s=mimecast20190719; t=1771405648;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Zz+Yiw3j6EwnZi+bj/J+8lAYZ4FYD5FVjkb0Yf+zwSY=;
- b=Jd4FrZINbbV16dvlJ19e0bkzigUYZswOg5EJ91ciJakVxRPbCMPn4iSUAdBlPIZvrAKGaR
- CKqyilcDpcpFU8h3KZYZ2jaaT/CnPoNw5fG138k+YoQ5Sqf69Cx3NNxx1xVqR460ITS/Mg
- ajQlNgc8LI6ozWtIkGI/aHNZopjoRmw=
+ bh=aSGwMcHbaVNmNkq5PewEZLomDYk0YM2vt8y6cmjQBeM=;
+ b=Bnc7MkcyU+qH2bDRRaYVPdsaCBfQqJypnbHhnYuOjbT3OUnAyLNi9p/8cK0T64QoJh9KYx
+ Jb09zZhblls8OX//ENUyzOFUhn3mB1d9smE+xMBCrk+fu4f6Pf9mMoF9hYzF01/gUasrT6
+ hwkE8E5bFWVLHDdGgysg0RGBi4TAWok=
 Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-606-GYx36QpUPlKyy4LiNgTLIA-1; Wed,
- 18 Feb 2026 04:07:31 -0500
-X-MC-Unique: GYx36QpUPlKyy4LiNgTLIA-1
-X-Mimecast-MFC-AGG-ID: GYx36QpUPlKyy4LiNgTLIA_1771405650
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-184-bCu0sJmaMXKE0_wTrNawjg-1; Wed,
+ 18 Feb 2026 04:07:25 -0500
+X-MC-Unique: bCu0sJmaMXKE0_wTrNawjg-1
+X-Mimecast-MFC-AGG-ID: bCu0sJmaMXKE0_wTrNawjg_1771405644
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 158301800348; Wed, 18 Feb 2026 09:07:30 +0000 (UTC)
+ id 716EE18002DE; Wed, 18 Feb 2026 09:07:24 +0000 (UTC)
 Received: from localhost (unknown [10.45.242.26])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 6EB07180066D; Wed, 18 Feb 2026 09:07:29 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 334041956095; Wed, 18 Feb 2026 09:07:22 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Gerd Hoffmann <kraxel@redhat.com>
-Subject: [PULL 79/85] tests/audio: add an invalid settings test
-Date: Wed, 18 Feb 2026 10:03:19 +0100
-Message-ID: <20260218090330.1476169-80-marcandre.lureau@redhat.com>
+Subject: [PULL 77/85] audio: replace DEBUG_OUT with traces
+Date: Wed, 18 Feb 2026 10:03:17 +0100
+Message-ID: <20260218090330.1476169-78-marcandre.lureau@redhat.com>
 In-Reply-To: <20260218090330.1476169-1-marcandre.lureau@redhat.com>
 References: <20260218090330.1476169-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -89,54 +89,108 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-As we are going to change the related code next.
-
 Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
 Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- tests/audio/test-audio.c | 21 +++++++++++++++++++++
- 1 file changed, 21 insertions(+)
+ audio/audio-mixeng-be.c | 32 ++++++++------------------------
+ audio/trace-events      |  5 +++++
+ 2 files changed, 13 insertions(+), 24 deletions(-)
 
-diff --git a/tests/audio/test-audio.c b/tests/audio/test-audio.c
-index b87a12eb55b..af8cf03d10e 100644
---- a/tests/audio/test-audio.c
-+++ b/tests/audio/test-audio.c
-@@ -534,6 +534,26 @@ static void test_audio_multiple_voices(void)
-     audio_be_close_out(be, out1);
+diff --git a/audio/audio-mixeng-be.c b/audio/audio-mixeng-be.c
+index 1963f3e5c79..3dd9d17dd25 100644
+--- a/audio/audio-mixeng-be.c
++++ b/audio/audio-mixeng-be.c
+@@ -29,8 +29,6 @@
+ #define AUDIO_CAP "audio"
+ #include "audio_int.h"
+ 
+-/* #define DEBUG_OUT */
+-
+ #define SW_NAME(sw) (sw)->name ? (sw)->name : "unknown"
+ 
+ const struct mixeng_volume nominal_volume = {
+@@ -568,9 +566,7 @@ static size_t audio_pcm_sw_write(SWVoiceOut *sw, void *buf, size_t buf_len)
+     }
+ 
+     if (live == hw->mix_buf.size) {
+-#ifdef DEBUG_OUT
+-        dolog ("%s is full %zu\n", sw->name, live);
+-#endif
++        trace_audio_out_full(sw->name, live);
+         return 0;
+     }
+ 
+@@ -618,15 +614,8 @@ static size_t audio_pcm_sw_write(SWVoiceOut *sw, void *buf, size_t buf_len)
+         sw->resample_buf.pos = 0;
+     }
+ 
+-#ifdef DEBUG_OUT
+-    dolog (
+-        "%s: write size %zu written %zu total mixed %zu\n",
+-        SW_NAME(sw),
+-        buf_len / sw->info.bytes_per_frame,
+-        total_in,
+-        sw->total_hw_samples_mixed
+-        );
+-#endif
++    trace_audio_sw_write(SW_NAME(sw), buf_len / sw->info.bytes_per_frame,
++                         total_in, sw->total_hw_samples_mixed);
+ 
+     return total_in * sw->info.bytes_per_frame;
  }
+@@ -900,10 +889,8 @@ static size_t audio_get_free(SWVoiceOut *sw)
  
-+static const struct audsettings invalid_test_settings = {
-+    .nchannels = 0,
-+    .freq = SAMPLE_RATE,
-+    .fmt = AUDIO_FORMAT_S16,
-+    .big_endian = false,
-+};
+     dead = sw->hw->mix_buf.size - live;
+ 
+-#ifdef DEBUG_OUT
+-    dolog("%s: get_free live %zu dead %zu frontend frames %u\n",
+-          SW_NAME(sw), live, dead, st_rate_frames_in(sw->rate, dead));
+-#endif
++    trace_audio_get_free(SW_NAME(sw), live, dead,
++                         st_rate_frames_in(sw->rate, dead));
+ 
+     return dead;
+ }
+@@ -1058,9 +1045,8 @@ static void audio_run_out(AudioMixengBackend *s)
+ 
+         if (hw->pending_disable && !nb_live) {
+             SWVoiceCap *sc;
+-#ifdef DEBUG_OUT
+-            dolog ("Disabling voice\n");
+-#endif
 +
-+static void test_audio_invalid_settings(void)
-+{
-+    AudioBackend *be = get_test_audio_backend();
-+    void *voice;
-+
-+    voice = audio_be_open_out(be, NULL, "invalid", NULL,
-+                              dummy_audio_callback, &invalid_test_settings);
-+    g_assert_null(voice);
-+    voice = audio_be_open_in(be, NULL, "invalid", NULL,
-+                             dummy_audio_callback, &invalid_test_settings);
-+    g_assert_null(voice);
-+}
-+
- int main(int argc, char **argv)
- {
-     GOptionContext *context;
-@@ -589,6 +609,7 @@ int main(int argc, char **argv)
++            trace_audio_out_disable();
+             hw->enabled = false;
+             hw->pending_disable = false;
+             if (k->enable_out) {
+@@ -1089,9 +1075,7 @@ static void audio_run_out(AudioMixengBackend *s)
+             hw->mix_buf.pos = 0;
+         }
  
-     g_test_add_func("/audio/null-handling", test_audio_null_handling);
-     g_test_add_func("/audio/multiple-voices", test_audio_multiple_voices);
-+    g_test_add_func("/audio/invalid-settings", test_audio_invalid_settings);
+-#ifdef DEBUG_OUT
+-        dolog("played=%zu\n", played);
+-#endif
++        trace_audio_out_played(played);
  
-     ret = g_test_run();
+         if (played) {
+             audio_capture_mix_and_clear (hw, prev_rpos, played);
+diff --git a/audio/trace-events b/audio/trace-events
+index 3f8ebf9c6cb..7a73d6eb84f 100644
+--- a/audio/trace-events
++++ b/audio/trace-events
+@@ -65,6 +65,11 @@ audio_capture_attach(const char *name, bool active) "capture %s active=%d"
+ audio_get_avail(const char *name, size_t live, uint32_t frontend_frames) "%s: get_avail live %zu frontend frames %u"
+ audio_run_poll(const char *msg, int64_t elapsed_us) "Elapsed since last %s: %" PRId64 " us"
+ audio_capture_free_sw(const char *name) "freeing %s"
++audio_out_full(const char *name, size_t live) "%s is full %zu"
++audio_sw_write(const char *name, size_t size, size_t written, size_t total_mixed) "%s: write size %zu written %zu total mixed %zu"
++audio_get_free(const char *name, size_t live, size_t dead, uint32_t frontend_frames) "%s: get_free live %zu dead %zu frontend frames %u"
++audio_out_disable(void) "Disabling voice"
++audio_out_played(size_t played) "played=%zu"
  
+ # audio_template.h
+ audio_open_out(const char *name, int freq, int nchannels, int fmt) "open %s, freq %d, nchannels %d, fmt %d"
 -- 
 2.53.0
 
