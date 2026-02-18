@@ -4,97 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DE66E9A03B
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 11:45:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9F4BE9A047
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 11:45:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vsfxu-0003KG-P0; Wed, 18 Feb 2026 06:43:34 -0500
+	id 1vsfxp-0003I0-Vn; Wed, 18 Feb 2026 06:43:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1vsfxb-000396-N8
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 06:43:16 -0500
+ id 1vsfxg-0003E9-Nn
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 06:43:20 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1vsfxU-0007oQ-O4
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 06:43:15 -0500
+ id 1vsfxd-0007qV-QU
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 06:43:20 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771414984;
+ s=mimecast20190719; t=1771414996;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=vfhdy46mQEUlcerqq6xzArv8NlC5Gx5+51xsaBuia6g=;
- b=Cnnm872SjsAj2hQt+Y6DX3UU9I5432aGIuUVygOXFkR+Zlbm1aitZAxnzjBiyEZOMHSxyd
- t808AFo2C8vWrF7N3tFs0+PUb6H3xqlFnmKXwDaq9bAfsVWdCoEN/brbxNIKKCIwTxPAFX
- EUgqy7ueFkiFAYFDgP0N0DX3ZwLxbok=
-Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com
- [209.85.214.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=8EBAMm0+61u9Fn6aJibmSGLnXTBDJJJE91zdBC7Xh+k=;
+ b=XjtOglj0GG7wlbQttPqWLfnAvNQaGBXsvNulnLJ1P3/6FPNA+1QkjR2LGBz/VeV10cNQPw
+ GwG3L7FVulAeK2DzxCaPmvb8X1RmkBJVMjU0GSuvkXMc+G7ibIxiy4E3dxWq3ufR5W9vfB
+ gYR62MM/gVlYdC78eKtS8asmKCOHfbM=
+Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com
+ [209.85.214.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-505-fkYppRocNDKHUs0nEAn8iA-1; Wed, 18 Feb 2026 06:43:03 -0500
-X-MC-Unique: fkYppRocNDKHUs0nEAn8iA-1
-X-Mimecast-MFC-AGG-ID: fkYppRocNDKHUs0nEAn8iA_1771414982
-Received: by mail-pl1-f199.google.com with SMTP id
- d9443c01a7336-2aae146bab0so63746785ad.0
- for <qemu-devel@nongnu.org>; Wed, 18 Feb 2026 03:43:03 -0800 (PST)
+ us-mta-509-1UQV6CdpPhiwupY3X3yUzQ-1; Wed, 18 Feb 2026 06:43:14 -0500
+X-MC-Unique: 1UQV6CdpPhiwupY3X3yUzQ-1
+X-Mimecast-MFC-AGG-ID: 1UQV6CdpPhiwupY3X3yUzQ_1771414994
+Received: by mail-pl1-f197.google.com with SMTP id
+ d9443c01a7336-2aad3380076so4965915ad.1
+ for <qemu-devel@nongnu.org>; Wed, 18 Feb 2026 03:43:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1771414982; x=1772019782; darn=nongnu.org;
+ d=redhat.com; s=google; t=1771414994; x=1772019794; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=vfhdy46mQEUlcerqq6xzArv8NlC5Gx5+51xsaBuia6g=;
- b=O/CK4/ZBETncYiP66mXMjSLcpUQYULPT5Kil8ArwWVNDCHVokyV1ABK8CyIuRt2YEm
- mJDUXIslKhqblpQ8WWAJzosBhMDc7s0s5ITuDDyof+1LHoSHeVvtWWPp3dartRsIV+3d
- J0uaOKVfC6rmzTvW9PHpNscp+HfUu0cGbUI20kK8iD77tR+Wq/pyYcjgF59ps5B0d3DN
- jC3/iX2jO7xRERnS0vmLhPy+BBG8Ov1VN8MWDbykbJXGuf8lM+2MOCFbY5lOzqGtMcuW
- EItjr7kISfQZRTs2K47sFLN6skUoKCZ/pUpQbreYPwLvToo92KlBz77hhihZ9Br6NRs6
- RWRg==
+ bh=8EBAMm0+61u9Fn6aJibmSGLnXTBDJJJE91zdBC7Xh+k=;
+ b=Q+C3vlNjS28b5ncwrthqBTeF1OZk4bHHM7i7iNRmN8M39auOw5O6OjgsE10mhTwRrJ
+ aLyzPkRjzmahBdiefbYW0bSm8QoXQP7EU61Qwa1L4603ueu8bDGCitkY2D7xy320vqtr
+ 8lTUU3A5jvs+gl7XIB33XXgJwkTr0tE1hrjO5d2ECtO5eDf8BSL8zVBJcNF752lo95RI
+ +MFgZKimABYcOTvbZt4LpRTqU86ihDJ9wSCQQeK0PlN3JKqZDIZVGlon1lU3A7IuSDsf
+ nvvrpQ3jXL9g5q5kzGu9nh52BN3eLnCxRhVmiH3736Rnyi6EwfMEPrW8Cufa75BQy5Oc
+ wAuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771414982; x=1772019782;
+ d=1e100.net; s=20230601; t=1771414994; x=1772019794;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=vfhdy46mQEUlcerqq6xzArv8NlC5Gx5+51xsaBuia6g=;
- b=a+JWxVsq7iuYTG9zOx9AmD503qkFghjAMQZXp/60HSpRtzvhbJL1cwcKgMFFVNa4Uq
- VT+0q2ExdeMDaCzAq8GXqa097dzUvy3Tgak7o61oThavUjs83gPl+ndQq4R4wc+H9IXS
- mfEt+3mW8Kv/ZGcqas8Jy46SyWZlLrGF3sdbP3XPXreGvNMTpSZFNAu3jXXlQpsKd5VL
- NBBx9SMuyb8y27l5JUKH2EAVryvwRRu+eyNMLpBj0XQWH/ip/CBnAJe7G0/NmnzyIeQ2
- jj2JycnUvX7nLGN8k3Jv6yy+Wdybie8WdmhqUL3FRmtZT2bxOJmcVnITj35ehBgnzdeh
- i5jQ==
+ bh=8EBAMm0+61u9Fn6aJibmSGLnXTBDJJJE91zdBC7Xh+k=;
+ b=YafyuyOsrEEVmRC8uG7AxkDxrgkpoasyjUrioK/5LE9ymGsmrbFEOoQLwtViCZNdXV
+ /+E1SP3lM1GwFyRLUdQoe6bljnvl2R1eRBx4oOJzX4LC533KXwqitz/NVgxSN6ItJZiu
+ z9RFsYKMrNgC3SqTuPyAJZEz0/gzFlM5YbhG47soydQUD1td1DP7KXfB41N2T1vWCSmK
+ ESOnkn8Z/DLV9hAFjlRgmp7ki169a+o7StZOsabgnvZsDvWEyd1O66i5aRbyedf088Md
+ vL73I5/nA7i6sP1LSwhRRN4QH+aMio5ApI6rO/jdNq8J47NLf/P0i3s7se1WgXxe/Hsk
+ gg6Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVjUlvEYN6p8bf+4rlERQ/RlIvVkFqrY7cua1WABR3ZpnrdAgvW8ihwFajMeSxnp/BEEHtlmvPS9Fi1@nongnu.org
-X-Gm-Message-State: AOJu0Yx4dMs3NckEgbn9AKOO7BZqbBDKnOBrpf3tEnpaZE5KstnmUBMl
- jIG4K9ubzMZrqkGFEmUVheRvzIk6xJXZ08PSWrwztaa5aNm8HSG/RpQWbCathMrHGawqDKq7k1U
- NLLX9RmYMYcPxORWKJEV1h8WYZU2KCq5qi+WziPbALkF17VXEdKus5rbcRdVbibJd
-X-Gm-Gg: AZuq6aLMBVxEO1bY0WdNUgsauS+szXnXmYH94VLV1MBrWkBbEcrLwY7URo2C8GJFbw4
- VSqajwS7FhRu1N6gbbhwStqa2D9kUU+TTCMbgkxg7iSbponyLrKs3MqNudRENsuWGVnoNjHFKL9
- VuLf8lb8VR+LX/tjXdycfep2Jg/UaOqAhWPcixgvC0anFIiNUfTmrHntNuSGk9sNUHF4Zg7NU3b
- sDBK+LQHyX0BDGjCHaoL33/stQwlUIHaadKZ0ZN6Qs2qE2+dRKTWF9YLPcPxA3jxC4PL9q2IsUl
- qOsERFyAFwkYVr4YvE85GRwtbY2qJvXkxhDXCezmzzGzcT7ESIQG0vOuS9pFuWZgOfQg9yrjU8s
- sdnxQNaJHl8q9io+iRtdkFsjO2+nfdG5q+x5GbKz/fb15nXuqSHFo
-X-Received: by 2002:a17:902:d509:b0:29f:301a:f6cf with SMTP id
- d9443c01a7336-2ab505c056emr182651445ad.35.1771414981952; 
- Wed, 18 Feb 2026 03:43:01 -0800 (PST)
-X-Received: by 2002:a17:902:d509:b0:29f:301a:f6cf with SMTP id
- d9443c01a7336-2ab505c056emr182651275ad.35.1771414981518; 
- Wed, 18 Feb 2026 03:43:01 -0800 (PST)
+ AJvYcCXthwwQ7zev1N8pf3E5vok3x5k1BNjIlyFlAh6KuXcc0HUdDJzyBtPCPihdIxXZq1Rw3dxnjhs7w1rX@nongnu.org
+X-Gm-Message-State: AOJu0YzE1EzTlhTgran0fmclNWgw0LyIknwwdN9fzdlPTmwLFmzZLtr9
+ ar3lwG2sSShLqeDVDKDogIYN0lNxIfQrzrmCtFDvQYePoqa1ZcLfC94FyeJT6UC5zkHfQjHnHXT
+ gU63ORsyeCXaTh/0AQzbLy8w/IrkrRYae0ypO5U2bECL3hXRQ1Bu9YzZr
+X-Gm-Gg: AZuq6aIV2NQBDC7aDuVBQ3ECwyhDZ+ZS85GlsihS+UfKm4NRWEQlvRyTxEEWsc9tLff
+ peFXLgBXWOtoXtDjZWK13MDGcpizYV/JOfQBZY58N7LksEddtW7iFkGwC3mBhtKaEjYpDZvzPeM
+ kPBxg4fYylu+64NCddrOf6QTaRgshEtwuY9cJ1eDmRo9PEqp/6Tc9YcI72JKST9WM1LyLQVGFjb
+ D9CI1+wNsf7564lutX5NFJF0r/GJdZ18/XXZ+eXDTYEuPZXc+t07RVsAGGekMZbfSOOTXMlGTtq
+ hv1yoqNyu4fp+yBh7We61zIwISfUEixXdrXLtPUHbL/H34+oihO3mVNKgk5qf+XNvbAaaEJC60y
+ DDlQU73lqjhnOiDbMJ4344gggHer6tOoQ6AkZZ0QkKneFmXCob6R0
+X-Received: by 2002:a17:902:d4d0:b0:2aa:e817:1bda with SMTP id
+ d9443c01a7336-2ad50b980dcmr15409665ad.12.1771414993680; 
+ Wed, 18 Feb 2026 03:43:13 -0800 (PST)
+X-Received: by 2002:a17:902:d4d0:b0:2aa:e817:1bda with SMTP id
+ d9443c01a7336-2ad50b980dcmr15409535ad.12.1771414993250; 
+ Wed, 18 Feb 2026 03:43:13 -0800 (PST)
 Received: from rhel9-box.lan ([117.99.83.54])
  by smtp.googlemail.com with ESMTPSA id
- d9443c01a7336-2ad1aaeab38sm127803425ad.82.2026.02.18.03.42.59
+ d9443c01a7336-2ad1aaeab38sm127803425ad.82.2026.02.18.03.43.10
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 18 Feb 2026 03:43:01 -0800 (PST)
+ Wed, 18 Feb 2026 03:43:12 -0800 (PST)
 From: Ani Sinha <anisinha@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- Marcelo Tosatti <mtosatti@redhat.com>
-Cc: kraxel@redhat.com,
-	qemu-devel@nongnu.org,
-	kvm@vger.kernel.org
-Subject: [PATCH v5 05/34] accel/kvm: add changes required to support KVM VM
+To: Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>
+Cc: Ani Sinha <anisinha@redhat.com>, kraxel@redhat.com, kvm@vger.kernel.org,
+ qemu-devel@nongnu.org
+Subject: [PATCH v5 09/34] kvm/i386: implement architecture support for kvm
  file descriptor change
-Date: Wed, 18 Feb 2026 17:11:58 +0530
-Message-ID: <20260218114233.266178-6-anisinha@redhat.com>
+Date: Wed, 18 Feb 2026 17:12:02 +0530
+Message-ID: <20260218114233.266178-10-anisinha@redhat.com>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20260218114233.266178-1-anisinha@redhat.com>
 References: <20260218114233.266178-1-anisinha@redhat.com>
@@ -125,245 +123,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This change adds common kvm specific support to handle KVM VM file descriptor
-change. KVM VM file descriptor can change as a part of confidential guest reset
-mechanism. A new function api kvm_arch_on_vmfd_change() per
-architecture platform is added in order to implement architecture specific
-changes required to support it. A subsequent patch will add x86 specific
-implementation for kvm_arch_on_vmfd_change() as currently only x86 supports
-confidential guest reset.
+When the kvm file descriptor changes as a part of confidential guest reset,
+some architecture specific setups including SEV/SEV-SNP/TDX specific setups
+needs to be redone. These changes are implemented as a part of the
+kvm_arch_on_vmfd_change() callback which was introduced previously.
 
 Signed-off-by: Ani Sinha <anisinha@redhat.com>
 ---
- MAINTAINERS            |  6 ++++
- accel/kvm/kvm-all.c    | 80 ++++++++++++++++++++++++++++++++++++++++--
- accel/kvm/trace-events |  1 +
- include/system/kvm.h   |  3 ++
- stubs/kvm.c            | 22 ++++++++++++
- stubs/meson.build      |  1 +
- target/i386/kvm/kvm.c  | 10 ++++++
- 7 files changed, 120 insertions(+), 3 deletions(-)
- create mode 100644 stubs/kvm.c
+ target/i386/kvm/kvm.c        | 49 ++++++++++++++++++++++++++++--------
+ target/i386/kvm/trace-events |  1 +
+ 2 files changed, 39 insertions(+), 11 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index d3aa6d6732..b0eb77c08f 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -152,6 +152,12 @@ F: tools/i386/
- F: tests/functional/i386/
- F: tests/functional/x86_64/
- 
-+X86 VM file descriptor change on reset test
-+M: Ani Sinha <anisinha@redhat.com>
-+M: Paolo Bonzini <pbonzini@redhat.com>
-+S: Maintained
-+F: stubs/kvm.c
-+
- Guest CPU cores (TCG)
- ---------------------
- Overall TCG CPUs
-diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-index 0d8b0c4347..14729666a0 100644
---- a/accel/kvm/kvm-all.c
-+++ b/accel/kvm/kvm-all.c
-@@ -2415,11 +2415,9 @@ void kvm_irqchip_set_qemuirq_gsi(KVMState *s, qemu_irq irq, int gsi)
-     g_hash_table_insert(s->gsimap, irq, GINT_TO_POINTER(gsi));
- }
- 
--static void kvm_irqchip_create(KVMState *s)
-+static void do_kvm_irqchip_create(KVMState *s)
- {
-     int ret;
--
--    assert(s->kernel_irqchip_split != ON_OFF_AUTO_AUTO);
-     if (kvm_check_extension(s, KVM_CAP_IRQCHIP)) {
-         ;
-     } else if (kvm_check_extension(s, KVM_CAP_S390_IRQCHIP)) {
-@@ -2452,7 +2450,13 @@ static void kvm_irqchip_create(KVMState *s)
-         fprintf(stderr, "Create kernel irqchip failed: %s\n", strerror(-ret));
-         exit(1);
-     }
-+}
- 
-+static void kvm_irqchip_create(KVMState *s)
-+{
-+    assert(s->kernel_irqchip_split != ON_OFF_AUTO_AUTO);
-+
-+    do_kvm_irqchip_create(s);
-     kvm_kernel_irqchip = true;
-     /* If we have an in-kernel IRQ chip then we must have asynchronous
-      * interrupt delivery (though the reverse is not necessarily true)
-@@ -2607,6 +2611,75 @@ static int kvm_setup_dirty_ring(KVMState *s)
-     return 0;
- }
- 
-+static int kvm_reset_vmfd(MachineState *ms)
-+{
-+    KVMState *s;
-+    KVMMemoryListener *kml;
-+    int ret = 0, type;
-+    Error *err = NULL;
-+
-+    /*
-+     * bail if the current architecture does not support VM file
-+     * descriptor change.
-+     */
-+    if (!kvm_arch_supports_vmfd_change()) {
-+        error_report("This target architecture does not support KVM VM "
-+                     "file descriptor change.");
-+        return -EOPNOTSUPP;
-+    }
-+
-+    s = KVM_STATE(ms->accelerator);
-+    kml = &s->memory_listener;
-+
-+    memory_listener_unregister(&kml->listener);
-+    memory_listener_unregister(&kvm_io_listener);
-+
-+    if (s->vmfd >= 0) {
-+        close(s->vmfd);
-+    }
-+
-+    type = find_kvm_machine_type(ms);
-+    if (type < 0) {
-+        return -EINVAL;
-+    }
-+
-+    ret = do_kvm_create_vm(s, type);
-+    if (ret < 0) {
-+        return ret;
-+    }
-+
-+    s->vmfd = ret;
-+
-+    kvm_setup_dirty_ring(s);
-+
-+    /* rebind memory to new vm fd */
-+    ret = ram_block_rebind(&err);
-+    if (ret < 0) {
-+        return ret;
-+    }
-+    assert(!err);
-+
-+    ret = kvm_arch_on_vmfd_change(ms, s);
-+    if (ret < 0) {
-+        return ret;
-+    }
-+
-+    if (s->kernel_irqchip_allowed) {
-+        do_kvm_irqchip_create(s);
-+    }
-+
-+    /* these can be only called after ram_block_rebind() */
-+    memory_listener_register(&kml->listener, &address_space_memory);
-+    memory_listener_register(&kvm_io_listener, &address_space_io);
-+
-+    /*
-+     * kvm fd has changed. Commit the irq routes to KVM once more.
-+     */
-+    kvm_irqchip_commit_routes(s);
-+    trace_kvm_reset_vmfd();
-+    return ret;
-+}
-+
- static int kvm_init(AccelState *as, MachineState *ms)
- {
-     MachineClass *mc = MACHINE_GET_CLASS(ms);
-@@ -4015,6 +4088,7 @@ static void kvm_accel_class_init(ObjectClass *oc, const void *data)
-     AccelClass *ac = ACCEL_CLASS(oc);
-     ac->name = "KVM";
-     ac->init_machine = kvm_init;
-+    ac->rebuild_guest = kvm_reset_vmfd;
-     ac->has_memory = kvm_accel_has_memory;
-     ac->allowed = &kvm_allowed;
-     ac->gdbstub_supported_sstep_flags = kvm_gdbstub_sstep_flags;
-diff --git a/accel/kvm/trace-events b/accel/kvm/trace-events
-index e43d18a869..e4beda0148 100644
---- a/accel/kvm/trace-events
-+++ b/accel/kvm/trace-events
-@@ -14,6 +14,7 @@ kvm_destroy_vcpu(int cpu_index, unsigned long arch_cpu_id) "index: %d id: %lu"
- kvm_park_vcpu(int cpu_index, unsigned long arch_cpu_id) "index: %d id: %lu"
- kvm_unpark_vcpu(unsigned long arch_cpu_id, const char *msg) "id: %lu %s"
- kvm_irqchip_commit_routes(void) ""
-+kvm_reset_vmfd(void) ""
- kvm_irqchip_add_msi_route(char *name, int vector, int virq) "dev %s vector %d virq %d"
- kvm_irqchip_update_msi_route(int virq) "Updating MSI route virq=%d"
- kvm_irqchip_release_virq(int virq) "virq %d"
-diff --git a/include/system/kvm.h b/include/system/kvm.h
-index 8f9eecf044..5fc7251fd9 100644
---- a/include/system/kvm.h
-+++ b/include/system/kvm.h
-@@ -456,6 +456,9 @@ int kvm_physical_memory_addr_from_host(KVMState *s, void *ram_addr,
- 
- #endif /* COMPILING_PER_TARGET */
- 
-+bool kvm_arch_supports_vmfd_change(void);
-+int kvm_arch_on_vmfd_change(MachineState *ms, KVMState *s);
-+
- void kvm_cpu_synchronize_state(CPUState *cpu);
- 
- void kvm_init_cpu_signals(CPUState *cpu);
-diff --git a/stubs/kvm.c b/stubs/kvm.c
-new file mode 100644
-index 0000000000..2db61d89a7
---- /dev/null
-+++ b/stubs/kvm.c
-@@ -0,0 +1,22 @@
-+/*
-+ * kvm target arch specific stubs
-+ *
-+ * Copyright (c) 2026 Red Hat, Inc.
-+ *
-+ * Author:
-+ *   Ani Sinha <anisinha@redhat.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+#include "qemu/osdep.h"
-+#include "system/kvm.h"
-+
-+int kvm_arch_on_vmfd_change(MachineState *ms, KVMState *s)
-+{
-+    abort();
-+}
-+
-+bool kvm_arch_supports_vmfd_change(void)
-+{
-+    return false;
-+}
-diff --git a/stubs/meson.build b/stubs/meson.build
-index 8a07059500..6ae478bacc 100644
---- a/stubs/meson.build
-+++ b/stubs/meson.build
-@@ -74,6 +74,7 @@ if have_system
-   if igvm.found()
-     stub_ss.add(files('igvm.c'))
-   endif
-+  stub_ss.add(files('kvm.c'))
-   stub_ss.add(files('target-get-monitor-def.c'))
-   stub_ss.add(files('target-monitor-defs.c'))
-   stub_ss.add(files('win32-kbd-hook.c'))
 diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index 6d823a7991..a4e18734b1 100644
+index 83657fe832..8679e7d3fa 100644
 --- a/target/i386/kvm/kvm.c
 +++ b/target/i386/kvm/kvm.c
-@@ -3389,6 +3389,16 @@ static int kvm_vm_enable_energy_msrs(KVMState *s)
-     return 0;
+@@ -3407,12 +3407,30 @@ static int kvm_vm_enable_energy_msrs(KVMState *s)
+ 
+ int kvm_arch_on_vmfd_change(MachineState *ms, KVMState *s)
+ {
+-    abort();
++    int ret;
++
++    ret = kvm_arch_init(ms, s);
++    if (ret < 0) {
++        return ret;
++    }
++
++    if (object_dynamic_cast(OBJECT(ms), TYPE_X86_MACHINE)) {
++        X86MachineState *x86ms = X86_MACHINE(ms);
++
++        if (x86_machine_is_smm_enabled(x86ms)) {
++            memory_listener_register(&smram_listener.listener,
++                                     &smram_address_space);
++        }
++        kvm_set_max_apic_id(x86ms->apic_id_limit);
++    }
++
++    trace_kvm_arch_on_vmfd_change();
++    return 0;
  }
  
-+int kvm_arch_on_vmfd_change(MachineState *ms, KVMState *s)
-+{
-+    abort();
-+}
-+
-+bool kvm_arch_supports_vmfd_change(void)
-+{
-+    return false;
-+}
-+
- int kvm_arch_init(MachineState *ms, KVMState *s)
+ bool kvm_arch_supports_vmfd_change(void)
  {
+-    return false;
++    return true;
+ }
+ 
+ int kvm_arch_init(MachineState *ms, KVMState *s)
+@@ -3420,6 +3438,7 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
      int ret;
+     struct utsname utsname;
+     Error *local_err = NULL;
++    static bool first = true;
+ 
+     /*
+      * Initialize confidential guest (SEV/TDX) context, if required
+@@ -3489,16 +3508,17 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
+         return ret;
+     }
+ 
+-    /* Tell fw_cfg to notify the BIOS to reserve the range. */
+-    e820_add_entry(KVM_IDENTITY_BASE, 0x4000, E820_RESERVED);
+-
++    if (first) {
++        /* Tell fw_cfg to notify the BIOS to reserve the range. */
++        e820_add_entry(KVM_IDENTITY_BASE, 0x4000, E820_RESERVED);
++    }
+     ret = kvm_vm_set_nr_mmu_pages(s);
+     if (ret < 0) {
+         return ret;
+     }
+ 
+     if (object_dynamic_cast(OBJECT(ms), TYPE_X86_MACHINE) &&
+-        x86_machine_is_smm_enabled(X86_MACHINE(ms))) {
++        x86_machine_is_smm_enabled(X86_MACHINE(ms)) && first) {
+         smram_machine_done.notify = register_smram_listener;
+         qemu_add_machine_init_done_notifier(&smram_machine_done);
+     }
+@@ -3545,16 +3565,23 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
+                 return ret;
+             }
+ 
+-            ret = kvm_msr_energy_thread_init(s, ms);
+-            if (ret < 0) {
+-                error_report("kvm : error RAPL feature requirement not met");
+-                return ret;
++            if (first) {
++                ret = kvm_msr_energy_thread_init(s, ms);
++                if (ret < 0) {
++                    error_report("kvm : "
++                                 "error RAPL feature requirement not met");
++                    return ret;
++                }
+             }
+         }
+     }
+ 
+     pmu_cap = kvm_check_extension(s, KVM_CAP_PMU_CAPABILITY);
+-    kvm_vmfd_add_change_notifier(&kvm_vmfd_change_notifier);
++
++    if (first) {
++        kvm_vmfd_add_change_notifier(&kvm_vmfd_change_notifier);
++    }
++    first = false;
+ 
+     return 0;
+ }
+diff --git a/target/i386/kvm/trace-events b/target/i386/kvm/trace-events
+index 74a6234ff7..2d213c9f9b 100644
+--- a/target/i386/kvm/trace-events
++++ b/target/i386/kvm/trace-events
+@@ -6,6 +6,7 @@ kvm_x86_add_msi_route(int virq) "Adding route entry for virq %d"
+ kvm_x86_remove_msi_route(int virq) "Removing route entry for virq %d"
+ kvm_x86_update_msi_routes(int num) "Updated %d MSI routes"
+ kvm_hc_map_gpa_range(uint64_t gpa, uint64_t size, uint64_t attributes, uint64_t flags) "gpa 0x%" PRIx64 " size 0x%" PRIx64 " attributes 0x%" PRIx64 " flags 0x%" PRIx64
++kvm_arch_on_vmfd_change(void) ""
+ 
+ # xen-emu.c
+ kvm_xen_hypercall(int cpu, uint8_t cpl, uint64_t input, uint64_t a0, uint64_t a1, uint64_t a2, uint64_t ret) "xen_hypercall: cpu %d cpl %d input %" PRIu64 " a0 0x%" PRIx64 " a1 0x%" PRIx64 " a2 0x%" PRIx64" ret 0x%" PRIx64
 -- 
 2.42.0
 
