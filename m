@@ -4,90 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0E5EE9A03B
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 09:21:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D606BE9A03E
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 09:22:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vsdjk-0001g0-2i; Wed, 18 Feb 2026 04:20:49 -0500
+	id 1vsdlY-0002dt-BK; Wed, 18 Feb 2026 04:22:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <prvs=502105d20=graf@amazon.de>)
- id 1vsdje-0001fD-7A; Wed, 18 Feb 2026 04:20:42 -0500
-Received: from pdx-out-001.esa.us-west-2.outbound.mail-perimeter.amazon.com
- ([44.245.243.92])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vsdlV-0002dX-Kg
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 04:22:37 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <prvs=502105d20=graf@amazon.de>)
- id 1vsdjb-00017M-Vj; Wed, 18 Feb 2026 04:20:41 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=amazon.com; i=@amazon.com; q=dns/txt; s=amazoncorp2;
- t=1771406440; x=1802942440;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=qoGnJZonRPfLVJUCYhWdxEpfJv69uikk6SbYk3FpHFA=;
- b=eZDils1aNhFl5bzRvc9UIUeo6MYxuqvaSwo8eyErD++HQjEWYFTW4jCn
- +egev0qPwhIzoCySbjYY8g1WxyHI+GMRiCsUOxdinQxZt3oNc5NaKPAzi
- UBtcuUrDzHbLA+ucN4iOQtj1GVP5F72tfRlzs+4+hWjxntg0FRCMxKCW+
- TPO21dx+kB+OauFz17QZVBqFfMhuRFGGuwasHNm2HqOJNlMWL5XCe3gTM
- NDI1CshAGAdhYUyetcKCtd56pEakXMCmOmMiCl14U+T0jTA+MPn6R38Cu
- inyXqu/bypzJauDING8FwRhHPi0pjR4B3sJ+Du6zBpuhkEpb6vDkA+ERl A==;
-X-CSE-ConnectionGUID: PHmf4ZwURAmE/l6HN1rEQA==
-X-CSE-MsgGUID: otFvaxQZQO+8iIfbiE9i1Q==
-X-IronPort-AV: E=Sophos;i="6.21,297,1763424000"; d="scan'208";a="12808045"
-Received: from ip-10-5-0-115.us-west-2.compute.internal (HELO
- smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.0.115])
- by internal-pdx-out-001.esa.us-west-2.outbound.mail-perimeter.amazon.com with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Feb 2026 09:20:34 +0000
-Received: from EX19MTAUWA001.ant.amazon.com [205.251.233.182:27918]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.55.107:2525]
- with esmtp (Farcaster)
- id 2e46c855-1d40-4161-9b1e-7fe89e8c3e32; Wed, 18 Feb 2026 09:20:34 +0000 (UTC)
-X-Farcaster-Flow-ID: 2e46c855-1d40-4161-9b1e-7fe89e8c3e32
-Received: from EX19D020UWC004.ant.amazon.com (10.13.138.149) by
- EX19MTAUWA001.ant.amazon.com (10.250.64.204) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.35;
- Wed, 18 Feb 2026 09:20:33 +0000
-Received: from [0.0.0.0] (172.19.99.218) by EX19D020UWC004.ant.amazon.com
- (10.13.138.149) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.35; Wed, 18 Feb 2026
- 09:20:29 +0000
-Message-ID: <8feaefae-42fe-470c-b839-19d356e5416c@amazon.com>
-Date: Wed, 18 Feb 2026 10:20:26 +0100
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vsdlU-0001Eq-4o
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 04:22:37 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1771406555;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=rTlZjec8Xj50tOBIWaRuloxUrOk6quVKUPSrTApi8+Y=;
+ b=MgHAhJROam6syDVp8BI24llmRNKtv9XUymkMpJG7QYG+SdQVhrEZN0Fd4M5UgKaQGjKUON
+ YfFXN8E/hLcOXsJlXNvhZkE5LSZeJmOhhwTNi/U/XE/ch3yu20fCSHGcp+5CP6kA8JeDvC
+ agovjvz2dWhfIRHg2ntspvLOznl3Vls=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-684-bkfG5EEROLOSXxl39HcyZg-1; Wed,
+ 18 Feb 2026 04:22:32 -0500
+X-MC-Unique: bkfG5EEROLOSXxl39HcyZg-1
+X-Mimecast-MFC-AGG-ID: bkfG5EEROLOSXxl39HcyZg_1771406551
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 85E55195608A; Wed, 18 Feb 2026 09:22:30 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.14])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id AC2C91800361; Wed, 18 Feb 2026 09:22:29 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 4C37321E692D; Wed, 18 Feb 2026 10:22:27 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org,  Manos Pitsidianakis
+ <manos.pitsidianakis@linaro.org>,  Stefan Weil <sw@weilnetz.de>,  "Dr.
+ David Alan Gilbert" <dave@treblig.org>,  Pierrick Bouvier
+ <pierrick.bouvier@linaro.org>,  devel@lists.libvirt.org,  Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  =?utf-8?Q?Marc-Andr?=
+ =?utf-8?Q?=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>,  Hanna Reitz <hreitz@redhat.com>,  Kevin
+ Wolf <kwolf@redhat.com>,  qemu-block@nongnu.org,  qemu-rust@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>,  Gerd Hoffmann <kraxel@redhat.com>,
+ Christian Schoenebeck <qemu_oss@crudebyte.com>,  Richard Henderson
+ <richard.henderson@linaro.org>
+Subject: Re: [PATCH v6 03/27] include: define constant for early constructor
+ priority
+In-Reply-To: <20260211152508.732487-4-berrange@redhat.com> ("Daniel
+ P. =?utf-8?Q?Berrang=C3=A9=22's?= message of "Wed, 11 Feb 2026 15:24:44
+ +0000")
+References: <20260211152508.732487-1-berrange@redhat.com>
+ <20260211152508.732487-4-berrange@redhat.com>
+Date: Wed, 18 Feb 2026 10:22:27 +0100
+Message-ID: <87342yflt8.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 07/10] hw/nitro: Add nitro machine
-To: Mohamed Mediouni <mohamed@unpredictable.fr>
-CC: <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>, Peter Maydell
- <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>,
- <alex.bennee@linaro.org>, <philmd@linaro.org>, <berrange@redhat.com>,
- <marcandre.lureau@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
- <mst@redhat.com>, Dorjoy Chowdhury <dorjoychy111@gmail.com>, Pierrick Bouvier
- <pierrick.bouvier@linaro.org>, Paolo Bonzini <pbonzini@redhat.com>, "Tyler
- Fanelli" <tfanelli@redhat.com>, <mknaust@amazon.com>,
- <nh-open-source@amazon.com>
-References: <20260218015151.4052-1-graf@amazon.com>
- <20260218015151.4052-8-graf@amazon.com>
- <D0E52BB9-72B7-4844-85D3-79A29F51AD17@unpredictable.fr>
-Content-Language: en-US
-From: Alexander Graf <graf@amazon.com>
-In-Reply-To: <D0E52BB9-72B7-4844-85D3-79A29F51AD17@unpredictable.fr>
-X-Originating-IP: [172.19.99.218]
-X-ClientProxiedBy: EX19D045UWA001.ant.amazon.com (10.13.139.83) To
- EX19D020UWC004.ant.amazon.com (10.13.138.149)
-Content-Type: text/plain; charset="utf-8"; format="flowed"
-Content-Transfer-Encoding: base64
-Received-SPF: pass client-ip=44.245.243.92;
- envelope-from=prvs=502105d20=graf@amazon.de;
- helo=pdx-out-001.esa.us-west-2.outbound.mail-perimeter.amazon.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.043,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, T_SPF_PERMERROR=0.01,
- UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -13
+X-Spam_score: -1.4
+X-Spam_bar: -
+X-Spam_report: (-1.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.043,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ GB_FAKE_RF=0.754, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,35 +100,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-SGkgTW9oYW1lZCwKCk9uIDE4LjAyLjI2IDA0OjI3LCBNb2hhbWVkIE1lZGlvdW5pIHdyb3RlOgo+
-PiBPbiAxOC4gRmViIDIwMjYsIGF0IDAyOjUxLCBBbGV4YW5kZXIgR3JhZiA8Z3JhZkBhbWF6b24u
-Y29tPiB3cm90ZToKPj4KPj4gQWRkIGEgbWFjaGluZSBtb2RlbCB0byBzcGF3biBhIE5pdHJvIEVu
-Y2xhdmUuIFVubGlrZSB0aGUgZXhpc3RpbmcgLU0KPj4gbml0cm8tZW5jbGF2ZSwgdGhpcyBtYWNo
-aW5lIG1vZGVsIHdvcmtzIGV4Y2x1c2l2ZWx5IHdpdGggdGhlIC1hY2NlbAo+PiBuaXRybyBhY2Nl
-bGVyYXRvciB0byBkcml2ZSByZWFsIE5pdHJvIEVuY2xhdmUgY3JlYXRpb24uIEl0IHN1cHBvcnRz
-Cj4+IG1lbW9yeSBhbGxvY2F0aW9uLCBudW1iZXIgb2YgQ1BVIHNlbGVjdGlvbiwgYm90aCB4ODZf
-NjQgYXMgd2VsbCBhcwo+PiBhYXJjaDY0LCBpbXBsZW1lbnRzIHRoZSBFbmNsYXZlIGhlYXJ0YmVh
-dCBsb2dpYyBhbmQgZGVidWcgc2VyaWFsCj4+IGNvbnNvbGUuCj4+Cj4+IFRvIHVzZSBpdCwgY3Jl
-YXRlIGFuIEVJRiBmaWxlIGFuZCBydW4KPj4KPj4gICAkIHFlbXUtc3lzdGVtLXg4Nl82NCAtYWNj
-ZWwgbml0cm8sZGVidWctbW9kZT1vbiAtTSBuaXRybyAtbm9ncmFwaGljIFwKPj4gICAgICAgICAg
-ICAgICAgICAgICAgICAta2VybmVsIHRlc3QuZWlmCj4+Cj4+IG9yCj4+Cj4+ICAgJCBxZW11LXN5
-c3RlbS1hYXJjaDY0IC1hY2NlbCBuaXRybyxkZWJ1Zy1tb2RlPW9uIC1NIG5pdHJvIC1ub2dyYXBo
-aWMgXAo+PiAgICAgICAgICAgICAgICAgICAgICAgIC1rZXJuZWwgdGVzdC5laWYKPj4KPj4gU2ln
-bmVkLW9mZi1ieTogQWxleGFuZGVyIEdyYWYgPGdyYWZAYW1hem9uLmNvbT4KPiBIaSwKPgo+IFRo
-ZSBzZXBhcmF0aW9uIGJldHdlZW4gLU0gbml0cm8gYW5kIC1NIG5pdHJvLWVuY2xhdmUgbG9va3Mg
-cG90ZW50aWFsbHkgY29uZnVzaW5nCj4gdG8gdXNlcnMuIENvdWxkIGl0IHBvdGVudGlhbGx5IG1h
-a2Ugc2Vuc2UgdG8gc2hhcmUgdGhlIG5hbWUgb3IgaXMgdGhhdCBhbiBvcHRpb24gbm90Cj4gb24g
-dGhlIGNhcmRzPwoKCkkgb3JpZ2luYWxseSBidWlsdCBhbGwgb2YgdGhpcyBpbnNpZGUgdGhlIG5p
-dHJvLWVuY2xhdmUgbWFjaGluZSwgYnV0IAp0aGF0IHR1cm5lZCBvdXQgc3VwZXIgYXdrd2FyZCBh
-cyB3ZWxsLCBiZWNhdXNlIGl0cyBjb21wbGV0ZSAKaW5pdGlhbGl6YXRpb24gaXMgZGlmZmVyZW50
-LiBUaGUgbml0cm8tZW5jbGF2ZSBtYWNoaW5lIGlzIGRlcml2ZWQgZnJvbSAKdGhlIE1pY3JvVk0g
-bWFjaGluZSB0eXBlLCB3aGljaCBpcyBub3QgYXQgYWxsIHdoYXQgd2UgbmVlZCBmb3IgdGhlIGFj
-Y2VsIApiYXNlZCB2YXJpYW50LiBBbmQgb24gdG9wIG9mIHRoYXQgbWFrZXMgaXQgc3VwZXIgZGlm
-ZmljdWx0IHRvIGVuYWJsZSAKYWFyY2g2NCBzdXBwb3J0LgoKU28gSSBvcHRlZCB0byBnbyB3aXRo
-IHRoZSBzZXBhcmF0ZSBtYWNoaW5lIG5hbWUgaW5zdGVhZC4KCgpBbGV4CgoKCgpBbWF6b24gV2Vi
-IFNlcnZpY2VzIERldmVsb3BtZW50IENlbnRlciBHZXJtYW55IEdtYkgKVGFtYXJhLURhbnotU3Ry
-LiAxMwoxMDI0MyBCZXJsaW4KR2VzY2hhZWZ0c2Z1ZWhydW5nOiBDaHJpc3RvZiBIZWxsbWlzLCBB
-bmRyZWFzIFN0aWVnZXIKRWluZ2V0cmFnZW4gYW0gQW10c2dlcmljaHQgQ2hhcmxvdHRlbmJ1cmcg
-dW50ZXIgSFJCIDI1Nzc2NCBCClNpdHo6IEJlcmxpbgpVc3QtSUQ6IERFIDM2NSA1MzggNTk3Cg==
+Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+
+> Functions marked with __attribute__((__constructor__)) will be
+> invoked in linker order. In theory this is well defined, but
+> in practice, it is hard to determine what this order will be
+> with the layers of indirection through meson, ninja and the
+> static libraries QEMU builds.
+>
+> Notably, the order currently appears different between Linux
+> and Windows (as tested with Wine on Linux). This can cause
+> problems when certain QEMU constructors have a dependancy on
+> other QEMU constructors.
+>
+> To address this define a QEMU_CONSTRUCTOR_EARLY constant which
+> provides a priority value that will run before other default
+> constructors. This is to be used for QEMU constructors that
+> are themselves self-contained, but may be relied upon by other
+> constructors.
+>
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> Reviewed-by: Dr. David Alan Gilbert <dave@treblig.org>
+> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+
+I'm no fan of doing non-trivial work in constructors.  We discussed
+possible alternatives in review of v5.  This is an opinion, not a
+demand.  And Paolo's opinion counts a lot more here.
+
+> ---
+>  include/qemu/compiler.h | 8 ++++++++
+>  1 file changed, 8 insertions(+)
+>
+> diff --git a/include/qemu/compiler.h b/include/qemu/compiler.h
+> index 1c2b673c05..4c49f52eb0 100644
+> --- a/include/qemu/compiler.h
+> +++ b/include/qemu/compiler.h
+> @@ -194,6 +194,14 @@
+>  # define QEMU_USED
+>  #endif
+>=20=20
+> +/*
+> + * A priority for __attribute__((constructor(...))) that
+> + * will run earlier than the default constructors. Must
+> + * only be used for functions that have no dependency
+> + * on global initialization of other QEMU subsystems.
+> + */
+> +#define QEMU_CONSTRUCTOR_EARLY 101
+> +
+>  /*
+>   * Disable -ftrivial-auto-var-init on a local variable.
+>   *
 
 
