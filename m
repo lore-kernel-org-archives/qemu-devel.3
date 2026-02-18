@@ -4,128 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26E30E9A04B
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 20:41:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17725E9A02C
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 20:54:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vsoML-0006KH-0O; Wed, 18 Feb 2026 15:41:21 -0500
+	id 1vsoYF-0000rd-6j; Wed, 18 Feb 2026 15:53:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vsoMK-0006K5-7Q
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 15:41:20 -0500
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1vsoYD-0000rP-Nu
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 15:53:37 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vsoMI-0003zX-Ck
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 15:41:19 -0500
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1vsoYB-00006c-Qs
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 15:53:37 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771447276;
+ s=mimecast20190719; t=1771448013;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=vN5lEzGTb0I8e+yC5843zEN0VCKqJ5uq81Enc0Gzxlw=;
- b=Gz/Uy8u3LA02fCaWgebDH9ti6m4fDyT7qllxovPugjw60wC0NanMIR/IwQleDIotAIIaac
- Gue6utE4qOoyP3ZriLtFzDRXsTBYXeDfqfqOFHwAkh7hvoCM0aU0/5vWTTYwgLmykOgurQ
- X22jWc8Rt5ixnT0BvHpBCDb32SzBrTY=
-Received: from mail-yx1-f71.google.com (mail-yx1-f71.google.com
- [74.125.224.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-596-dkXCUaR8MlSAP1VQvtStfg-1; Wed, 18 Feb 2026 15:41:14 -0500
-X-MC-Unique: dkXCUaR8MlSAP1VQvtStfg-1
-X-Mimecast-MFC-AGG-ID: dkXCUaR8MlSAP1VQvtStfg_1771447274
-Received: by mail-yx1-f71.google.com with SMTP id
- 956f58d0204a3-6445cf02fcbso261020d50.2
- for <qemu-devel@nongnu.org>; Wed, 18 Feb 2026 12:41:14 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1771447274; cv=none;
- d=google.com; s=arc-20240605;
- b=EED5qdhdDmgLnv5yYKUHNtvLv1LpiLVMI0LnTJXMaHYS/u+4GpsmAJnqbvP9XmGYs4
- gmxTFWrkkEvyILubPxcuAZqJDmAuLPeSt9qIoaQNHUSoVab/LQG/DYokOPYJxDZk4BtE
- 25wN1YS9AnFAnf14ypqFdy7frPoolJtcAmDPa1kXr4VW236fU84p3aUzRmZLzTV2YSI3
- yyWfQ3BRSdfcc4lEw5cQBlgYEZ1zvsS558mKsRcpJLKatPo/x2F0/uElroXFcznrMv8t
- NGvFZWL0qa07K6zrI1p11DMdPLs4D5LLfqRiollpjcOQHsbqSD1nlA8tnm5/1d3ncSzW
- gMTQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=vN5lEzGTb0I8e+yC5843zEN0VCKqJ5uq81Enc0Gzxlw=;
- fh=Ubek74/ERqoEnvcold+F5UyZ8yi7ORVmtBmAUr5TTKg=;
- b=VQG22bC475b6ubX/UsXSlgH54gBVt1UQqoCPRqp8SvEO0hBbi5LOpzWyeQ9nmb8YOV
- rAXRPqnZjS3FW6Lngs7aNmgn1TcLeDz9svr4MRQFOreHKkxtlxttz/pq4VNSnecpizTr
- xM2TyPHGsDYWXsR/oRxmZzpizKl8gd0/4duelEbU92gWiGtg/jB3LTATG9IY5U7FOdga
- nQKmnDOr+gstWHOIKUevPo3A0dJjB+r0MIaV/Hbw3vy0H6Omh6USMe0A/IMF7tJQ3zUb
- P2PjHF2CVA5dlikBOp9BiCb0VhPUqW25JDjQhEv8LJgcUjWLUXqXSXz95/qPMLLnN71m
- Im4w==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1771447274; x=1772052074; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=vN5lEzGTb0I8e+yC5843zEN0VCKqJ5uq81Enc0Gzxlw=;
- b=NwaoNOyXE5D+hgy66vMfE1X5eHV4w3NsfT1/bvIsKnNgXfdQup0bw2fbi+S5KWt01S
- 5gjnI+yMbs6LMXla65aFHtljAhXmDzJ6v4fEwlx0PNI9C/JCt392sdUROf5bAAfpLafU
- E8ZSNlNYpELN8MdjqB9YSyEIMf9bD4vyFbrrhGRgdXWCFPH54E8/uG/XFHYMuid5Awpk
- l05s76Wu20iW/OpRz70HEgpPy2Q2YrgpOF+oWsifLFcPZCJYmowpRdMTPXoJYPxVURem
- mwu68BSBtsKxBGMKUSeFKPBuBsgNHJNQpb9wJfRIPb+8WErxT4k49SATyHZxFY8NclUT
- 5AEg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771447274; x=1772052074;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=vN5lEzGTb0I8e+yC5843zEN0VCKqJ5uq81Enc0Gzxlw=;
- b=Clf8ZlqvyHj4mMpl45/l5FzbHZnNrKnw9rvLfhSpcpvBkXsFkpouyPFaYBuuIAg4aJ
- XStAiuKHciq5tNMZixFgS8QL/NZdOVWYG8G27ffC4fzX0HNSB060lxdsBz6fGOdCckor
- 7RqlU6rnVTyfjvr9qN/1vQ7vkPCWBFMc/9E96wFcyYP9W1F7/QBLMbRML2NdIKI+MSjk
- INj1149uBomBZfJRvPcyLLvVvP7iC0MwairhBA5S9lbn8U4U93m/OF2x+B2dXL90Rk0R
- k2OERnWIcB0dsE1vS9ebDgebe+dWx+sYGt1d9PaJyhwdo8/R1vDXWFdyE+qwOs6uuvRC
- p60w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU15NkMWasKYyTPKYOGSPhkJneUBxEdR+iND2AbLZAWKko8CiWzpXc/5zE4lU/Jg4UQ38slUe75gxnW@nongnu.org
-X-Gm-Message-State: AOJu0YzrgrHgiFFFmKV3TNppM97JgpYfwDEAp/TJ1o1cryxwV7YidL1w
- 60GDKFVQ07gxJtAR0EI7MnHSpN4YyVc2jZgRBgxUs2OAxE78kbiwbbVSySVpqFZpGULetnfmSQ+
- RtYgW2wIaezyyqSKgUo4gJWLwzJ1B/mScdT43LYKQOLEN+YPlTfwXIqDtERx82fRWbJ18/M+sSI
- yXrfvmAel58TGS9q4ZvHs1eH8X675Ra04=
-X-Gm-Gg: AZuq6aIobl+hsGSYBobGqaeenoo6q31S7sxP9uGl7CmKn7k6cHH4oeRuIlZZMS/FSYD
- KukqtsnqvnEpmpkAUYG2Ha/GRyGzX1uO91wLV6K5LsM9ZV9yCiV4w6otizTVK0HSFjxgGPSrFK8
- DRiASut1QnoHY6B5V0q5tXVDrteOuwUdbIiIxBPoXroCKoILSI9NHWHuHqx0KQCZLPztFRd0H/s
- Y+kgRL27zx02gmfKt6kudQYWtSIX8y96BFs5Q==
-X-Received: by 2002:a05:690e:bcc:b0:649:b9f3:9fb1 with SMTP id
- 956f58d0204a3-64c556d4517mr1932822d50.76.1771447274225; 
- Wed, 18 Feb 2026 12:41:14 -0800 (PST)
-X-Received: by 2002:a05:690e:bcc:b0:649:b9f3:9fb1 with SMTP id
- 956f58d0204a3-64c556d4517mr1932803d50.76.1771447273793; Wed, 18 Feb 2026
- 12:41:13 -0800 (PST)
+ bh=4poF0lYSmiKS2vQGo1O0CqqGVC0n49En/q2f+JQRULE=;
+ b=FLsOyXFaOCm8rgyXO8KZrymTGrARWTI6HX/CTak+RQqPHkn/XnIUkOKGmsMv0CQM0NrCvW
+ RmqYEMrQf+GuYg627eKG+yK/KcKqRqcujhNyZUsdklj0FC4khAay7GiOnunNsUje1+7rap
+ MPl3+WyV/cj9mHNHUORHMbFPNQhBCRM=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-674-6GT_c2YuPlKjNWJ0QbNEQg-1; Wed,
+ 18 Feb 2026 15:53:31 -0500
+X-MC-Unique: 6GT_c2YuPlKjNWJ0QbNEQg-1
+X-Mimecast-MFC-AGG-ID: 6GT_c2YuPlKjNWJ0QbNEQg_1771448011
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BD85A1955D8F; Wed, 18 Feb 2026 20:53:30 +0000 (UTC)
+Received: from localhost (unknown [10.2.17.113])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id E2AD51800670; Wed, 18 Feb 2026 20:53:29 +0000 (UTC)
+Date: Wed, 18 Feb 2026 15:53:28 -0500
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Zhang Chen <zhangckid@gmail.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>,
+ "Dr . David Alan Gilbert" <dave@treblig.org>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>
+Subject: Re: [PATCH V4 2/4] iothread: introduce iothread_ref/unref to track
+ attached devices
+Message-ID: <20260218205328.GB620422@fedora>
+References: <20260213171622.55629-1-zhangckid@gmail.com>
+ <20260213171622.55629-2-zhangckid@gmail.com>
 MIME-Version: 1.0
-References: <CAFn=p-YGckyEF8GCOviMJ-FfWsM_dDa6nqEBJChPmUxP7Ydi_w@mail.gmail.com>
- <87wm0afsnh.fsf@pond.sub.org>
- <56a8affc-e786-4dc8-81bd-c1f78a224afd@redhat.com>
- <CAFn=p-YqRu3eaR+RvpCi3uaq8Y7s0pGtXwOLztqMDCqYG6McPA@mail.gmail.com>
- <CABgObfaRzjaGTdXGHG=BeHFgGJaC4tt0eKOJu=L=SYWpQmm+6w@mail.gmail.com>
-In-Reply-To: <CABgObfaRzjaGTdXGHG=BeHFgGJaC4tt0eKOJu=L=SYWpQmm+6w@mail.gmail.com>
-From: John Snow <jsnow@redhat.com>
-Date: Wed, 18 Feb 2026 15:41:03 -0500
-X-Gm-Features: AaiRm524_j6NRbJvxZ1sBYkwMNRelHPMQgJgmPBgBsAhLnpmyoIaZk68ghH3MwI
-Message-ID: <CAFn=p-ZdzRuisd6g65A+VXyDKXnTuBc0gnt0ApbhVBZG5GhJZQ@mail.gmail.com>
-Subject: Re: CentOS 9, Python, and other Fairytales
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Markus Armbruster <armbru@redhat.com>, qemu-devel <qemu-devel@nongnu.org>, 
- =?UTF-8?Q?Daniel_Berrang=C3=A9?= <berrange@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="uM0gKk5omwSRYePj"
+Content-Disposition: inline
+In-Reply-To: <20260213171622.55629-2-zhangckid@gmail.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -7
-X-Spam_score: -0.8
-X-Spam_bar: /
-X-Spam_report: (-0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.043,
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.043,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_BL_SPAMCOP_NET=1.347, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -141,127 +89,179 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Feb 18, 2026 at 3:26=E2=80=AFPM Paolo Bonzini <pbonzini@redhat.com>=
- wrote:
->
->
->
-> Il mer 18 feb 2026, 18:10 John Snow <jsnow@redhat.com> ha scritto:
->>
->>
->>
->> On Wed, Feb 18, 2026, 6:48=E2=80=AFAM Paolo Bonzini <pbonzini@redhat.com=
-> wrote:
->>>
->>> >> With most of the new sticking points being debian 12 (EOL in June) o=
-r
->>> >> FreeBSD (timeline uncertain for when they'll re-modernize their pyth=
-on
->>> >> stack)
->>> >>
->>> >> One edge case here, however, is Sphinx, which does not actually have=
- a
->>> >> modern package in centOS stream 9.
->>> >>
->>> >> CentOS currently ships 3.4.3, but it would not be usable if using th=
-e
->>> >> optional 3.12 upgrade. If we ignore this, both FreeBSD and Debian 12
->>> >> have sphinx 5.3.0 to offer us, which is a reasonable version jump, b=
-ut
->>> >> it means that CentOS would not be able to build docs unless you
->>> >> enabled `--online` for configuring QEMU or sideloaded Sphinx
->>> >> otherwise.
->>> >
->>> > CentOS 9 reaches end of life on May 31 next year.  I do not think
->>> > keeping its ability to build bleeding edge docs offline out of the bo=
-x
->>> > for its final year (give or take) is worth your time, or anybody's.
->>>
->>> That's exactly the reason why we (John and I) introduced mkvenv.py,
->>> except it was CentOS 8 and SLES 15 at the time
->>> (https://www.qemu.org/2023/03/24/python/):
->>>
->>> "Some of these tools are run through the python3 executable, while
->>> others are invoked directly as sphinx-build or meson, and this can
->>> create inconsistencies. For example, QEMU=E2=80=99s configure script ch=
-ecks for
->>> a minimum version of Python and rejects too-old interpreters. However,
->>> what would happen if code run by Sphinx used a different version?
->>>
->>> This situation has been largely hypothetical until recently; QEMU=E2=80=
-=99s
->>> Python code is already tested with a wide range of versions of the
->>> interpreter, and it would not be a huge issue if Sphinx used a differen=
-t
->>> version of Python as long as both of them were supported. This will
->>> change in version 8.1 of QEMU, which will bump the minimum supported
->>> version of Python from 3.6 to 3.8. While all the distros that QEMU
->>> supports have a recent-enough interpreter, the default on RHEL8 and
->>> SLES15 is still version 3.6, and that is what all binaries in /usr/bin
->>> use unconditionally."
->>>
->>> So yeah, there's precedent for doing this, and it's the right thing to
->>> do anyway.
->>>
->>> >> My plan:
->>> >> - Wait and see what happens after the current QEMU release
->>> >> - Gleefully drop Ubuntu 22.04 in April (Allows Python 3.11+)
->>> >> - Gleefully drop Debian 12 in June
->>> >> - Hold my breath and see if FreeBSD happens to modernize by this poi=
-nt
->>> >> (They have until October 2027 to do so, so it's a dice roll if they
->>> >> will or not)
->>> >> - Do a big round of Python modernization all at once; either to 3.11
->>> >> or 3.12 depending, and either to Sphinx 5.x or 7.x depending, pray f=
-or
->>> >> forgiveness that I am removing CentOS stream 9's ability to build do=
-cs
->>> >> offline so I don't have to wait another six months and then do anoth=
-er
->>> >> big cleanup round
->>>
->>> The main nice features of 3.12 are improved f-strings, which are nice
->>> but not really a necessity.
->>>
->>> If I read it correctly, https://www.freshports.org/lang/python says it
->>> has 3.9 on PPC and 3.11 elsewhere, but
->>> https://www.freshports.org/lang/python311 says 3.11 exists on PPC as we=
-ll.
->>>
->>> I'd go for 3.11 and Sphinx 7.  For FreeBSD we can require Python from P=
-orts.
->>
->>
->> freebsd ports is currently at 3.11, which is the main reason I am saying=
- "see what freebsd does by June"
->>
->> if they update, we can have Python 3.12 and Sphinx 7.x. If they don't, w=
-e get 3.11 and 5.x
->
->
-> Why can't we do 3.11 and 7.x, and let freebsd also get sphinx from pypi u=
-ntil they update?
 
-Hm, I guess no reason, beyond my recalcitrance on breaking docs on a
-supported build platform unless absolutely necessary. It'd still be my
-preference to align with the native distro repo/ports versions if at
-all possible, but I suppose if FreeBSD doesn't fix itself by June or
-so that we can consider dropping docs support with ports packages at
-that time.
+--uM0gKk5omwSRYePj
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-(I think I just have Stockholm Syndrome from arguing for "unnecessary
-version bumps to get shiny new toys" and prefer to let those arguments
-come from my seniors ... so I stick with very safe changes when at all
-possible.)
+On Sat, Feb 14, 2026 at 01:16:20AM +0800, Zhang Chen wrote:
+> Currently, IOThreads do not maintain a record of which devices are
+> associated with them. This makes it difficult to monitor the
+> workload distribution of IOThreads, especially in complex
+> hotplug scenarios involving multiple virtio-blk or virtio-scsi devices.
+>=20
+> This patch introduces a reference counting and tracking mechanism
+> within the IOThread object:
+>=20
+> - iothread_ref(): Increments the attachment counter and prepends the
+>   device's QOM path to a list. Note: The IOThread takes ownership of
+>   the passed 'holder' string.
+> - iothread_unref(): Searches for the device path using a custom
+>   string comparison (g_strcmp0), decrements the counter, and
+>   releases the associated memory upon a successful match.
+> - attached_cnt: Tracks the number of active device attachments.
+> - attached_dev: A GList storing the QOM paths of attached devices
+>   for runtime introspection.
+>=20
+> This infrastructure allows management tools and QMP commands to
+> query the attachment status of IOThreads.
+>=20
+> Signed-off-by: Zhang Chen <zhangckid@gmail.com>
+> ---
+>  include/system/iothread.h |  4 ++++
+>  iothread.c                | 35 +++++++++++++++++++++++++++++++++++
+>  2 files changed, 39 insertions(+)
+>=20
+> diff --git a/include/system/iothread.h b/include/system/iothread.h
+> index e26d13c6c7..4a2ffdb9bd 100644
+> --- a/include/system/iothread.h
+> +++ b/include/system/iothread.h
+> @@ -33,6 +33,8 @@ struct IOThread {
+>      bool stopping;              /* has iothread_stop() been called? */
+>      bool running;               /* should iothread_run() continue? */
+>      int thread_id;
+> +    int attached_cnt;
 
->
-> Paolo
->
->> . Both are good jumps, but on the chance I can make the bigger jump, I'd=
- rather do it in one round instead of two.
->>
->>>
->>> Paolo
->>>
+Is this field necessary given that the user can see the list of holders?
+
+> +    GList *attached_dev;
+
+IOThreads are general eventloop concept in QEMU and not limited to
+device emulation. Non-device code may also wish to add itself (e.g.
+block/export/export.c). Please call this GList *holders.
+
+This raises questions:
+- Is it mandatory for users of the IOThread's AioContext to add
+  themselves?
+- How does it relate to object_ref()/object_unref()?
+
+I would prefer to set things up as follows:
+
+It is mandatory for users of the IOThread's AioContext to add
+themselves. This is enforced by modifying iothread_get_aio_context() to
+take a string argument with the name of the holder.
+
+iothread_get_aio_context() is also extended to call
+object_ref(OBJECT(iothread)). This guarantees that the IOThread and its
+AioContext remain alive as long as there is a holder. (Some users
+already do this themselves, so I think it makes sense to build this
+behavior into the API so that all users get it automatically.)
+
+A new iothread_put_aio_context() function is introduced to remove the
+hold and object_unref(OBJECT(iothread)).
+
+All existing callers of iothread_get_aio_context() need to be updated to
+pass in their QOM object path as the name of the holder, remove their own
+object_ref() call (if present), and call iothread_put_aio_context() at
+the appropriate point.
+
+> =20
+>      /* AioContext poll parameters */
+>      int64_t poll_max_ns;
+> @@ -48,6 +50,8 @@ char *iothread_get_id(IOThread *iothread);
+>  IOThread *iothread_by_id(const char *id);
+>  AioContext *iothread_get_aio_context(IOThread *iothread);
+>  GMainContext *iothread_get_g_main_context(IOThread *iothread);
+> +void iothread_ref(IOThread *iothread, const char* holder);
+> +void iothread_unref(IOThread *iothread, const char* holder);
+> =20
+>  /*
+>   * Helpers used to allocate iothreads for internal use.  These
+> diff --git a/iothread.c b/iothread.c
+> index caf68e0764..b869637497 100644
+> --- a/iothread.c
+> +++ b/iothread.c
+> @@ -36,6 +36,41 @@
+>  #define IOTHREAD_POLL_MAX_NS_DEFAULT 0ULL
+>  #endif
+> =20
+> +/*
+> + * Increment iothread's reference count,
+> + * and add holder device path to the list.
+> + */
+> +void iothread_ref(IOThread *iothread, const char *holder)
+> +{
+> +    iothread->attached_cnt++;
+> +    iothread->attached_dev =3D g_list_prepend(iothread->attached_dev,
+> +                                           (gpointer)holder);
+
+It's safer to g_strdup(holder) so the caller doesn't need to worry about
+the lifetime of the argument. This is not a performance-critical code
+path so the cost of the strdup is acceptable.
+
+> +}
+> +
+> +/*
+> + * Decrement iothread's reference count,
+> + * and delete holder device path from the list.
+> + */
+> +void iothread_unref(IOThread *iothread, const char *holder)
+> +{
+> +    if (iothread->attached_cnt > 0) {
+> +        GList *link =3D g_list_find_custom(iothread->attached_dev,
+> +                                         holder, (GCompareFunc)g_strcmp0=
+);
+> +
+> +        if (link) {
+> +            g_free(link->data);
+
+iothread_ref() originally took a _const_ char * so it must not free the
+pointer here. The reason why the compiler didn't complain was because
+iothread_ref() cast the pointer to non-const gpointer. In any case, as
+mentioned above, it's probably best to use g_strdup() and avoid placing
+constraints on the lifetime of the caller's string.
+
+> +            iothread->attached_dev =3D g_list_delete_link(iothread->atta=
+ched_dev,
+> +                                                        link);
+> +            iothread->attached_cnt--;
+> +        } else {
+> +            error_report("iohtread_unref can't find device. attached_dev=
+=3D%s",
+
+"iohtread" typo here and in the line below.
+
+> +                        holder);
+> +        }
+> +    } else {
+> +        error_report("iohtread_unref counter error. attached_dev=3D%s", =
+holder);
+> +    }
+> +}
+> +
+>  static void *iothread_run(void *opaque)
+>  {
+>      IOThread *iothread =3D opaque;
+> --=20
+> 2.49.0
+>=20
+
+--uM0gKk5omwSRYePj
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmmWJsgACgkQnKSrs4Gr
+c8gqNggAqJoQ6FaEtdhwXQZLKlVbVs+XT9sUhiWozwtvqqs3F4jLjFWDrJTiEplr
+HqYawe0/YoxZ0SwRSDyptOvyGC1poMvO9lqgtC1y6ZMXDgjQge08bXYbIO/ZwPUB
+Stzvszpah8L14JVEhmo9s6wMw8N9JhLg8e4DUY5Xq8TXraVMcR6wxZDwXsAMeYW7
+qtVnbYf630P8SOoMATcP+KXsK6t6U/LhVogW6UX2BIn0Ttjh89qgoIJwHpuZYKhH
+Sz7Fcf4XV7C9+RIzAAWL/CbZZIOHL+6xDPZv6NFi4VsezHSF7urITP97YQH1jUDS
+516yHVFFEJ+vW4Fieoqt4LbfEf5O0g==
+=wmEm
+-----END PGP SIGNATURE-----
+
+--uM0gKk5omwSRYePj--
 
 
