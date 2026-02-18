@@ -4,93 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBC35E9A047
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 13:34:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 132CBE9A02C
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 13:34:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vshfk-0004Kr-3t; Wed, 18 Feb 2026 08:32:56 -0500
+	id 1vshfD-0003tl-Pi; Wed, 18 Feb 2026 08:32:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1vshfY-00045f-EE
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 08:32:46 -0500
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1vshfB-0003po-K8
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 08:32:21 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1vshfF-0005UZ-5K
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 08:32:43 -0500
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1vshf4-00059P-Ir
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 08:32:21 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771421544;
+ s=mimecast20190719; t=1771421524;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Ua8eW642KP2nisR1pAUnxlQGxBu2aVkwwsqHEm2Vzkk=;
- b=JWUSo/tPlZyt2a1HiBdDvOqHndnxXiNlg/cl5uCiGSaPbeG5zeoS9jZItbwcxnyPftTzrD
- nx/6OtSirYH1rTdCFDvpL9ljlFCljvl1cJqRSpkvd4Jzl/QIrqz36VCTGV9gvz11ZvJKY9
- m/HYlREgjQYnhtCkiA0xD46lcpDhov4=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=FfndHSyArVwAQZsbpd1CUY8UJ74t3/0SFuGSjOnWRHI=;
+ b=brFqyAmEuT7Nmd2vgCuqJZLWdttdgIe+6DvEb+n4t/pnmfLsd0RCoZrdLMHKr3zEWougt+
+ ave2rZ1I1ceC+fMdCKlyRVatD8Vti8e58zMtq6Uj+qnhXRrRB0k2JVDEv0dAKEGZgMH0xi
+ /E1fPdLvttFncmLc4lVpoT6j5OE/9GY=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-489-9IfrJ_4SN8ejQo2y3m62dw-1; Wed, 18 Feb 2026 08:27:17 -0500
-X-MC-Unique: 9IfrJ_4SN8ejQo2y3m62dw-1
-X-Mimecast-MFC-AGG-ID: 9IfrJ_4SN8ejQo2y3m62dw_1771421236
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4806b12ad3fso63611365e9.0
- for <qemu-devel@nongnu.org>; Wed, 18 Feb 2026 05:27:17 -0800 (PST)
+ us-mta-153-xlGEiBKjNoq4TlYgOF-C1Q-1; Wed, 18 Feb 2026 08:26:59 -0500
+X-MC-Unique: xlGEiBKjNoq4TlYgOF-C1Q-1
+X-Mimecast-MFC-AGG-ID: xlGEiBKjNoq4TlYgOF-C1Q_1771421219
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-435af2d3144so3820864f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 18 Feb 2026 05:26:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1771421236; x=1772026036; darn=nongnu.org;
+ d=redhat.com; s=google; t=1771421218; x=1772026018; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Ua8eW642KP2nisR1pAUnxlQGxBu2aVkwwsqHEm2Vzkk=;
- b=jrki9SCTDRswe6WyJoFsVqp7DLjH8WqBb32aA2a/oeXBUbnNwucFSz6iDe0chwHHyR
- FVR35eTtgLH9avMu7sfOwbqN7SEoG6FNKs7jSg1hJhJmJfFdBX1wxQWHHN/AE6jR/JL0
- IEgnbHiMPcd6bklKrX0oKyGf1mkAyQM2ad1/qf2nkBGwPuEZnuvhK2AntlcxcVNBQhO8
- jmmKo2MhOQ1Q7g2eMcg6SYhA8EGF6A9Xj774grDQ0vaP3JQLTfCNFa+/w6Jw2NratTEt
- PRXfU2Qay4EhMfjHXn9jKc5YrO+B1XYuljmScC2vFGjiVmyvm5DXysTgBwvNZQ7IMPVR
- iEvw==
+ bh=FfndHSyArVwAQZsbpd1CUY8UJ74t3/0SFuGSjOnWRHI=;
+ b=WaZ6f8MhkBLaE4tqIpqNUYmYBehM+x/KALuPbiZYOLhs2bkhSZpO+Uw9eDS1Gd1B6h
+ vaGk4EBmdf/Qf9TJSSnp/jv0/NusH/yIa2mArI6ezNasZXb+GYYdGlK3Q5DwO/wjmVIG
+ lnyjcd/3UJNqvIg5xKQTHjdr8rGhxEHt4oZMUOhmwxtp3wk4+rFxmuvISossCDS4AyLi
+ 4/UFqCTLFzG459UxmtsYQqFGHRiuUZl9fP2KPyyV4puTVBOJ/jrpi1v2y75SEYL55YT/
+ NAXXy4ex4dl/it13ZwimCUVZyvIrZfHx7s1nqecNoo3//2TAt2U7Sl6o9LRqXmx7w2bE
+ PwLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771421236; x=1772026036;
+ d=1e100.net; s=20230601; t=1771421218; x=1772026018;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=Ua8eW642KP2nisR1pAUnxlQGxBu2aVkwwsqHEm2Vzkk=;
- b=K4XXo2NqBOplWLeY4iBgNvXlI4CuSY5gHs7hu7nG4lqwoWpJHb5fT8CfZVqmGdL5cq
- wmTkQZjmUOcExXrEv3GEFIC3zCq+plZ8tqqn84CvG5teFm7sH7CbODplvnSbqqSGtx8m
- Hex+dCTg1zAFU71U793gt3DoJbLI2OXgGX4tavKagfKTZwIZNaNvrnVTJ4lRcT+qP/81
- iBGUqzoGrCyFD7/Eg28GsI5MWDIsAP1KnsKMH15AbUzq6hz3aFbczVcdrNxfVBGbOsdY
- jU7Vn1Cv5elAToGNGjA9sExo33/4uOM6rfbuxakQQ8qqc0uFnxwQ8jnGsMHsvV+OT6JI
- gEBQ==
-X-Gm-Message-State: AOJu0YzeeGoOex5dKX0mKLeRZfrJsACbOAvo7Vc2K0LNSGTYGOARKI9x
- mglqXceJMO9opjQ4b4yrEb8cRk5VHJTUcPDiQ7lfJKxPBMsV1Q9SzPuRa1g2+it4zdOCPEm+WvA
- E4Stj6Y2fCn6D/QVx1b0yFhB5KXwyrDYEvUzKk6B1iqOHRxUBIj5Sdscy
-X-Gm-Gg: AZuq6aLnEiU/4b6jzosQT8lQagvTnTXXOi9j9rfdDk8TcQtATkaZ3J2kGWEm6AbhuxP
- aYOUDSksq1JFSYXFb4qydo7bRcAcu4ULG6T0v11hMFifhfnpq7kqeofKXpL2uQtYC9g0f6ztHpS
- ntOzuL1vv1uMdv/BxFE9eRFqDBYhHAE6mNc+b/bSVRCCDADRIjMMWvTzVCCizcioJ/cIoXurXQg
- hMGaoV533gYKqpejiGP1JrJruNUo2NeMfKYycOUEcYYwCp49cm7khqWF4EKOrYF9zOOkhx/zFT9
- ix748d4UILilhFowSgDaVRWRpPXgRh0dB1fyAfcS9iol19qF0yj3ZtfKWZsgK5ZuykZnQrOQvq5
- ZhRdlzJjNMjjZwrQT0D3zdjKGNxJE6q0L/YI/c2CUqIqcpxhdvCJnA6lpwp7c+tN1mTwds9X9wY
- DiPSot
-X-Received: by 2002:a05:600c:3f1b:b0:480:68ed:1e70 with SMTP id
- 5b1f17b1804b1-48371096d3amr298392045e9.35.1771421236143; 
- Wed, 18 Feb 2026 05:27:16 -0800 (PST)
-X-Received: by 2002:a05:600c:3f1b:b0:480:68ed:1e70 with SMTP id
- 5b1f17b1804b1-48371096d3amr298391535e9.35.1771421235710; 
- Wed, 18 Feb 2026 05:27:15 -0800 (PST)
+ bh=FfndHSyArVwAQZsbpd1CUY8UJ74t3/0SFuGSjOnWRHI=;
+ b=JasgSR6HEKXUUTtbax4+6AhYT0ezaLNTBpbaGArYzSOj/9ROBcoKXJw76h6Ywff9fG
+ ckaO0xaOX+Jmg2gRlEL+CmANcKgQaouk0V8JvK5arbvNUxCTH2fRG3TDxDUPcBTZSbH4
+ gXjpzla32SYUv9l9AUQ4wNqtyueRABnZFL7Cl2evzmADSnFvlMAAreXkdsZyP+tNegjh
+ pO1SxkLPl/R2y3Zlj/5WlG+aZuV6DEw+VJ8oSHpg0GnCn9qSYmuPKa9DsLKZ0qmbDox5
+ 1lpnNtglm2SCIhYSrOP8WObtYEKgevPTMYKSsDXcAGNYRXMlEfCwpVGM8OAjn+7w23To
+ EDVQ==
+X-Gm-Message-State: AOJu0Yxpsaq1itP5+b18MshIb4Q9fHzi/SyeTaMmCHrbVdVuAjfygZpG
+ 9ThGu+7zI7nuNU06t26A2g40YQ9wXM0RulsAdGPBDDfr9eDVytu4WN14XWpk73HcHI1ZipBf2PO
+ B5/2JMLkKSi3M7MBOQtbspU6an19SA36Nn8ph/j8ZMQ/fUUZ8pSL6rfcG
+X-Gm-Gg: AZuq6aLtKpTg0h4GoZgRQ5IM5iRVjWI73sdchPM/uWgjQ1uxCcaE3W+h71IGfEi58vh
+ zo1Bt1GuGYVWBCEkG4TSSBsjsIz/Z6f0uOQRmfqw8WMpStdmF8HhlMXxf0ZBxJeuHUb14h8lzZv
+ d+qEY6N73akcelFxIM2pDaX8V80WgAvZ+VfnUoCX58W7VeFkj44yqnPDpVNsnRbNHH4ffSnfQzb
+ FSgXyerOJ4wZytcoxNIg0+jUUjrGyPJ9O9NYgBl6NqqWtNW8iFaimtqmjxtzNKxzF6AF2YB+UG5
+ bdUKRn7PNsprQ8VvA6EtR7d1il2rx8x2e2ya3OUZ0/b5rBPn/527/VXnmkHDYkkD3vRi+7ncBZt
+ Fly2jXFVxvYLI1kGQRkrKDMD5087eoplLCDcu9Et4uHGbpKsaLCtE6y6OUwpUAgzkaYArw42xV9
+ w/7JYM
+X-Received: by 2002:a05:6000:248a:b0:436:38a4:2423 with SMTP id
+ ffacd0b85a97d-4379db66905mr26130217f8f.22.1771421218532; 
+ Wed, 18 Feb 2026 05:26:58 -0800 (PST)
+X-Received: by 2002:a05:6000:248a:b0:436:38a4:2423 with SMTP id
+ ffacd0b85a97d-4379db66905mr26130174f8f.22.1771421218078; 
+ Wed, 18 Feb 2026 05:26:58 -0800 (PST)
 Received: from localhost
  (p200300cfd737d029edef7b8da7441ac2.dip0.t-ipconnect.de.
  [2003:cf:d737:d029:edef:7b8d:a744:1ac2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-483983b7149sm39307845e9.4.2026.02.18.05.27.14
+ ffacd0b85a97d-43796abc9b2sm39075481f8f.21.2026.02.18.05.26.56
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 18 Feb 2026 05:27:14 -0800 (PST)
+ Wed, 18 Feb 2026 05:26:56 -0800 (PST)
 From: Hanna Czenczek <hreitz@redhat.com>
 To: qemu-block@nongnu.org
 Cc: qemu-devel@nongnu.org, Hanna Czenczek <hreitz@redhat.com>,
  Kevin Wolf <kwolf@redhat.com>, Brian Song <hibriansong@gmail.com>
-Subject: [PATCH v4 13/24] iotests/308: Use conv=notrunc to test growability
-Date: Wed, 18 Feb 2026 14:26:22 +0100
-Message-ID: <20260218132633.29748-14-hreitz@redhat.com>
+Subject: [PATCH v4 06/24] fuse: Destroy session on mount_fuse_export() fail
+Date: Wed, 18 Feb 2026 14:26:15 +0100
+Message-ID: <20260218132633.29748-7-hreitz@redhat.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260218132633.29748-1-hreitz@redhat.com>
 References: <20260218132633.29748-1-hreitz@redhat.com>
@@ -122,42 +122,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Without conv=notrunc, dd will automatically truncate the output file to
-the @seek value at least.  We want to test post-EOF I/O, not truncate,
-so pass conv=notrunc.
-
-(It does not make a difference in practice because we only seek to the
-EOF, so the truncate effectively does nothing, but this is still
-cleaner.)
+If mount_fuse_export() fails to mount the session, destroy it.
+Depending on the allow_other configuration, fuse_export_create() may
+retry this function on error, which may leak one session instance
+otherwise.
 
 Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
 ---
- tests/qemu-iotests/308 | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ block/export/fuse.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/tests/qemu-iotests/308 b/tests/qemu-iotests/308
-index 033d5cbe22..6ecb275555 100755
---- a/tests/qemu-iotests/308
-+++ b/tests/qemu-iotests/308
-@@ -296,7 +296,8 @@ orig_disk_usage=$(disk_usage "$TEST_IMG")
- # Should fail (exports are non-growable by default)
- # (Note that qemu-io can never write beyond the EOF, so we have to use
- # dd here)
--dd if=/dev/zero of="$EXT_MP" bs=1 count=64k seek=$orig_len 2>&1 \
-+dd if=/dev/zero of="$EXT_MP" bs=1 count=64k seek=$orig_len \
-+    conv=notrunc 2>&1 \
-     | _filter_testdir | _filter_imgfmt
+diff --git a/block/export/fuse.c b/block/export/fuse.c
+index 00bb2ffee4..82560ca071 100644
+--- a/block/export/fuse.c
++++ b/block/export/fuse.c
+@@ -270,11 +270,17 @@ static int mount_fuse_export(FuseExport *exp, Error **errp)
+     ret = fuse_session_mount(exp->fuse_session, exp->mountpoint);
+     if (ret < 0) {
+         error_setg(errp, "Failed to mount FUSE session to export");
+-        return -EIO;
++        ret = -EIO;
++        goto fail;
+     }
+     exp->mounted = true;
  
- echo
-@@ -333,7 +334,7 @@ fuse_export_add \
-     'node-protocol'
+     return 0;
++
++fail:
++    fuse_session_destroy(exp->fuse_session);
++    exp->fuse_session = NULL;
++    return ret;
+ }
  
- # Now we should be able to write beyond the EOF
--dd if=/dev/zero of="$EXT_MP" bs=1 count=64k seek=$new_len 2>&1 \
-+dd if=/dev/zero of="$EXT_MP" bs=1 count=64k seek=$new_len conv=notrunc 2>&1 \
-     | _filter_testdir | _filter_imgfmt
- 
- new_len=$(get_proto_len "$EXT_MP" "$TEST_IMG")
+ /**
 -- 
 2.53.0
 
