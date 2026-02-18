@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 652EFE9A04C
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 10:18:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F3B3E9A03E
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 10:18:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vsecv-0000Pk-EG; Wed, 18 Feb 2026 05:17:49 -0500
+	id 1vsect-0000PQ-70; Wed, 18 Feb 2026 05:17:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1vsecs-0000P9-IU
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 05:17:46 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1vsecr-0000Ol-Ll
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 05:17:45 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1vsecq-0005vJ-6y
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 05:17:46 -0500
+ id 1vseco-0005px-Rj
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 05:17:45 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771409863;
+ s=mimecast20190719; t=1771409862;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=HqDwu0T0oJAOwK1ffJHuITlC5Gc0NgpKr7ZD1XAqwTQ=;
- b=WrR8Q3yV+j7MP2C67FDDwXgBDcEA1k90EahCyK2trFnG706kE2XZiuOaqMrjq/aQKhRVTG
- 8NoqThfjetcaiq6P3FqGMfiEcjTLnnkh5FAywvlUKYYZzcTWp9c4Zhod844UJt7W8uB3cW
- 5rNEFEqkEET3S/mJudsh+8bAxcbsWts=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=C8rs4UIYOqQJ5dZaTVWTyVV+fDwqE9CQaogpGh9sLSM=;
+ b=W4ikXLBZp4+pYm8gKr3Z/BzGoqARHmxc4X/cxsY655n4LNftJBrOr/kqjoPvTqHcyNULtZ
+ wYiZ04fMhmYFEbzES71taotqcYwqr01eDovuoa7xbYO7m9lkHEiYL2z9/LlTrSyAD1yMd8
+ AWtiFgZWJ+tK4pDJNAqO2Xx1qHoAHIM=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-547-gUis1d5NO1C08-Q409XzpQ-1; Wed,
- 18 Feb 2026 05:17:39 -0500
-X-MC-Unique: gUis1d5NO1C08-Q409XzpQ-1
-X-Mimecast-MFC-AGG-ID: gUis1d5NO1C08-Q409XzpQ_1771409859
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-616-U9hM0osAPC-6CzVRNFOK6Q-1; Wed,
+ 18 Feb 2026 05:17:36 -0500
+X-MC-Unique: U9hM0osAPC-6CzVRNFOK6Q-1
+X-Mimecast-MFC-AGG-ID: U9hM0osAPC-6CzVRNFOK6Q_1771409855
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9DB1E1956053; Wed, 18 Feb 2026 10:17:38 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 393F918002E2; Wed, 18 Feb 2026 10:17:35 +0000 (UTC)
 Received: from srv1.redhat.com (unknown [10.45.224.201])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6725530001A5; Wed, 18 Feb 2026 10:17:37 +0000 (UTC)
+ id DCB0330001A5; Wed, 18 Feb 2026 10:17:33 +0000 (UTC)
 From: Kostiantyn Kostiuk <kkostiuk@redhat.com>
 To: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL v2 3/3] qga: Fix VSS provider GetSnapshotProperties return value
-Date: Wed, 18 Feb 2026 12:17:29 +0200
-Message-ID: <20260218101729.92630-4-kkostiuk@redhat.com>
+Subject: [PULL v2 1/3] qga: implement guest-network-get-route for Windows
+Date: Wed, 18 Feb 2026 12:17:27 +0200
+Message-ID: <20260218101729.92630-2-kkostiuk@redhat.com>
 In-Reply-To: <20260218101729.92630-1-kkostiuk@redhat.com>
 References: <20260218101729.92630-1-kkostiuk@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kkostiuk@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kkostiuk@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.043,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -85,33 +85,253 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Elizabeth Ashurov <eashurov@redhat.com>
 
-GetSnapshotProperties() returned VSS_E_OBJECT_NOT_FOUND causing
-"Snapshot id not found" errors during VSS operations.
+Add Windows implementation of guest-network-get-route command to provide
+network routing information on Windows guests.
 
-Any error in this function causes a similar error in Windows VSS,
-so we must return S_OK there.
+Features implemented:
+- IPv4 and IPv6 route information retrieval using GetIpForwardTable2
+- Human-readable interface names via GetAdaptersAddresses
+- Proper route metrics combining route and interface metrics
+- MTU information for network interfaces
+- Support for destination, gateway, mask, and metric fields for IPv4
+- Support for destination, nexthop, and desprefixlen fields for IPv6
+
+Implementation uses modern Windows IP Helper API (GetIpForwardTable2,
+GetIfEntry2).
 
 Signed-off-by: Elizabeth Ashurov <eashurov@redhat.com>
 Reviewed-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20260211101744.757548-2-eashurov@redhat.com
+Link: https://lore.kernel.org/qemu-devel/20251222144031.3115317-1-eashurov@redhat.com
 Signed-off-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
 ---
- qga/vss-win32/provider.cpp | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ qga/commands-win32.c | 172 +++++++++++++++++++++++++++++++++++++++++++
+ qga/qapi-schema.json |  11 +--
+ 2 files changed, 178 insertions(+), 5 deletions(-)
 
-diff --git a/qga/vss-win32/provider.cpp b/qga/vss-win32/provider.cpp
-index a102a23fbf..2b5c6f8e8e 100644
---- a/qga/vss-win32/provider.cpp
-+++ b/qga/vss-win32/provider.cpp
-@@ -263,7 +263,7 @@ STDMETHODIMP CQGAVssProvider::SetContext(LONG lContext)
- STDMETHODIMP CQGAVssProvider::GetSnapshotProperties(
-     VSS_ID SnapshotId, VSS_SNAPSHOT_PROP *pProp)
- {
--    return VSS_E_OBJECT_NOT_FOUND;
-+    return S_OK;
+diff --git a/qga/commands-win32.c b/qga/commands-win32.c
+index 0fd0c966e4..c0bf3467bd 100644
+--- a/qga/commands-win32.c
++++ b/qga/commands-win32.c
+@@ -2592,3 +2592,175 @@ GuestLoadAverage *qmp_guest_get_load(Error **errp)
+     ret->load15m = load_avg_15m;
+     return ret;
  }
++
++/* Helper function to get interface name with fallbacks */
++static char *get_interface_name(const MIB_IPFORWARD_ROW2 *row,
++                                IP_ADAPTER_ADDRESSES *adptr_addrs)
++{
++    IP_ADAPTER_ADDRESSES *adapter;
++    char *iface_name = NULL;
++
++    if (adptr_addrs) {
++        for (adapter = adptr_addrs; adapter; adapter = adapter->Next) {
++            if (adapter->Luid.Value == row->InterfaceLuid.Value) {
++                iface_name = guest_wctomb_dup(adapter->FriendlyName);
++                break;
++            }
++        }
++    }
++
++    if (!iface_name) {
++        iface_name = g_strdup_printf("if%lu", row->InterfaceIndex);
++    }
++
++    return iface_name;
++}
++
++/* Helper function to fill IPv4 route information */
++static void fill_ipv4_route_info(GuestNetworkRoute *route,
++                                 const MIB_IPFORWARD_ROW2 *row)
++{
++    struct sockaddr_in *addr_in;
++    char addr_str[INET_ADDRSTRLEN];
++
++    addr_in = (struct sockaddr_in *)&row->DestinationPrefix.Prefix;
++    if (inet_ntop(AF_INET, &addr_in->sin_addr, addr_str, INET_ADDRSTRLEN)) {
++        route->destination = g_strdup(addr_str);
++    } else {
++        route->destination = g_strdup("0.0.0.0");
++    }
++
++    if (row->DestinationPrefix.PrefixLength == 0) {
++        route->mask = g_strdup("0.0.0.0");
++    } else {
++        uint32_t mask = htonl(0xFFFFFFFF << (32 -
++                               row->DestinationPrefix.PrefixLength));
++        struct in_addr mask_addr = { .s_addr = mask };
++        route->mask = g_strdup(inet_ntoa(mask_addr));
++    }
++
++    addr_in = (struct sockaddr_in *)&row->NextHop;
++    if (inet_ntop(AF_INET, &addr_in->sin_addr, addr_str, INET_ADDRSTRLEN)) {
++        route->gateway = g_strdup(addr_str);
++    } else {
++        route->gateway = g_strdup("0.0.0.0");
++    }
++
++    route->version = 4;
++}
++
++/* Helper function to fill IPv6 route information */
++static void fill_ipv6_route_info(GuestNetworkRoute *route,
++                                 const MIB_IPFORWARD_ROW2 *row)
++{
++    struct sockaddr_in6 *addr_in6;
++    char addr_str[INET6_ADDRSTRLEN];
++
++    addr_in6 = (struct sockaddr_in6 *)&row->DestinationPrefix.Prefix;
++    if (inet_ntop(AF_INET6, &addr_in6->sin6_addr, addr_str, INET6_ADDRSTRLEN)) {
++        route->destination = g_strdup(addr_str);
++    } else {
++        route->destination = g_strdup("::");
++    }
++
++    addr_in6 = (struct sockaddr_in6 *)&row->NextHop;
++    if (inet_ntop(AF_INET6, &addr_in6->sin6_addr, addr_str, INET6_ADDRSTRLEN)) {
++        route->nexthop = g_strdup(addr_str);
++    } else {
++        route->nexthop = g_strdup("::");
++    }
++
++    route->desprefixlen = g_strdup_printf("%u",
++                                          row->DestinationPrefix.PrefixLength);
++    route->version = 6;
++}
++
++GuestNetworkRouteList *qmp_guest_network_get_route(Error **errp)
++{
++    GuestNetworkRouteList *head = NULL, **tail = &head;
++    PMIB_IPFORWARD_TABLE2 pIpForwardTable2;
++    DWORD dwRetVal = 0;
++    DWORD i;
++    PMIB_IPFORWARD_ROW2 row;
++    GuestNetworkRoute *route;
++    IP_ADAPTER_ADDRESSES *adptr_addrs;
++    MIB_IPINTERFACE_ROW ipifrow;
++    MIB_IF_ROW2 ifrow2;
++    Error *local_err = NULL;
++    GHashTable *interface_metric_cache;
++
++    dwRetVal = GetIpForwardTable2(AF_UNSPEC, &pIpForwardTable2);
++    if (dwRetVal != NO_ERROR) {
++        error_setg_win32(errp, dwRetVal, "failed to get IP routes");
++        return NULL;
++    }
++
++    interface_metric_cache = g_hash_table_new_full(g_str_hash, g_str_equal,
++                                                   g_free, NULL);
++    adptr_addrs = guest_get_adapters_addresses(&local_err);
++    if (local_err) {
++        error_free(local_err);
++        adptr_addrs = NULL;
++    }
++
++    for (i = 0; i < pIpForwardTable2->NumEntries; i++) {
++        row = &pIpForwardTable2->Table[i];
++
++        if (row->DestinationPrefix.Prefix.si_family == AF_INET) {
++            route = g_new0(GuestNetworkRoute, 1);
++            fill_ipv4_route_info(route, row);
++        } else if (row->DestinationPrefix.Prefix.si_family == AF_INET6) {
++            route = g_new0(GuestNetworkRoute, 1);
++            fill_ipv6_route_info(route, row);
++        } else {
++            continue;
++        }
++
++        route->iface = get_interface_name(row, adptr_addrs);
++
++        /*
++         * Get interface metric for combined route metric calculation.
++         * Windows calculates effective route metric as route + interface metric.
++         * This matches the values displayed by Windows 'route print' command.
++         * See:
++         * https://learn.microsoft.com/en-us/windows/win32/api/netioapi/ns-netioapi-mib_ipforward_row2
++         */
++        gchar *luid_key = g_strdup_printf("%" G_GUINT64_FORMAT,
++                                          row->InterfaceLuid.Value);
++        gpointer cached_metric = g_hash_table_lookup(interface_metric_cache,
++                                                     luid_key);
++
++        if (cached_metric) {
++            route->metric = (int)row->Metric + GPOINTER_TO_INT(cached_metric);
++            g_free(luid_key);
++        } else {
++            memset(&ipifrow, 0, sizeof(ipifrow));
++            InitializeIpInterfaceEntry(&ipifrow);
++            ipifrow.InterfaceLuid = row->InterfaceLuid;
++            ipifrow.Family = row->DestinationPrefix.Prefix.si_family;
++            if (GetIpInterfaceEntry(&ipifrow) == NO_ERROR) {
++                g_hash_table_insert(interface_metric_cache, luid_key,
++                                   GINT_TO_POINTER(ipifrow.Metric));
++                route->metric = (int)row->Metric + (int)ipifrow.Metric;
++            } else {
++                route->metric = (int)row->Metric;
++                g_free(luid_key);
++            }
++        }
++
++        memset(&ifrow2, 0, sizeof(ifrow2));
++        ifrow2.InterfaceLuid = row->InterfaceLuid;
++        if (GetIfEntry2(&ifrow2) == NO_ERROR) {
++            route->has_mtu = true;
++            route->mtu = (int)ifrow2.Mtu;
++        }
++
++        QAPI_LIST_APPEND(tail, route);
++        route = NULL;
++    }
++
++    FreeMibTable(pIpForwardTable2);
++    g_free(adptr_addrs);
++    g_hash_table_destroy(interface_metric_cache);
++    return head;
++}
+diff --git a/qga/qapi-schema.json b/qga/qapi-schema.json
+index 5791b49dde..c57bc9a02f 100644
+--- a/qga/qapi-schema.json
++++ b/qga/qapi-schema.json
+@@ -1879,7 +1879,8 @@
+ ##
+ # @GuestNetworkRoute:
+ #
+-# Route information, currently, only linux supported.
++# Route information.  Supported on Linux (since 9.1) and Windows
++# (since 11.0).
+ #
+ # @iface: The destination network or host's egress network interface
+ #     in the routing table
+@@ -1916,7 +1917,7 @@
+ #
+ # @version: IP version (4 or 6)
+ #
+-# Since: 9.1
++# Since: 9.1 (Linux only); 11.0 (Windows)
+ ##
+ { 'struct': 'GuestNetworkRoute',
+   'data': {'iface': 'str',
+@@ -1936,7 +1937,7 @@
+            '*nexthop': 'str',
+            'version': 'int'
+            },
+-  'if': 'CONFIG_LINUX' }
++  'if': { 'any': ['CONFIG_LINUX', 'CONFIG_WIN32'] } }
  
- STDMETHODIMP CQGAVssProvider::Query(
+ ##
+ # @guest-network-get-route:
+@@ -1945,9 +1946,9 @@
+ #
+ # Returns: List of route info of guest.
+ #
+-# Since: 9.1
++# Since: 9.1 (Linux only); 11.0 (Windows)
+ ##
+ { 'command': 'guest-network-get-route',
+   'returns': ['GuestNetworkRoute'],
+-  'if': 'CONFIG_LINUX'
++  'if': { 'any': ['CONFIG_LINUX', 'CONFIG_WIN32'] }
+ }
 -- 
 2.52.0
 
