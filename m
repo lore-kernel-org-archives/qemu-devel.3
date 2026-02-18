@@ -4,65 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09E21E9A047
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 10:18:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3211E9A03E
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 10:18:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vsecs-0000Os-A9; Wed, 18 Feb 2026 05:17:46 -0500
+	id 1vsecv-0000QF-HY; Wed, 18 Feb 2026 05:17:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1vseco-0000Nw-6p
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 05:17:43 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1vsecs-0000PI-Ua
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 05:17:46 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1vsecm-0005an-4R
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 05:17:41 -0500
+ id 1vsecp-0005qW-1j
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 05:17:46 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771409858;
+ s=mimecast20190719; t=1771409862;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=lg5FA2JQLWlSZ4H6+50PJYINC2+hef16WtTlpZ9+D+w=;
- b=Odn4GcJG3Xy7XwDU2LHkurPBN7RZj0gHiU56IkB3H1JH03bG/N4XQowv+VL5rZkOzm8+sN
- Q0KzTEEfv5Lr8+mWNZ9nynUw25J4nk7GeGczlgHHzpjHrHiR+qfo+WrMTPu/OP91lBOGVk
- dFfBTLuld6hXbvnw7uGbRoWFhDK9184=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=cRn1s4kAttQw1nbcEBQDiFcdN2d570X/bYyzLWn5q7Q=;
+ b=DsP2hTWek8Iemp5/iDjYvGzr8RO6XjUxEldJuN7ZDPHZJEchRhimVLnWru1iRnJPbJ5kMG
+ HbR1f4BR+dGVYkE9hdImouN8L3XFUdi8z9QH/dRpAxTq8ykEsYWY8SXCYaEtsh/Ax5HWlC
+ o2EkmEh0AEqvkZuX4dKW7I82JlWhHBw=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-417-ZJvMrG3bOn-G9KYXlCjUnQ-1; Wed,
- 18 Feb 2026 05:17:34 -0500
-X-MC-Unique: ZJvMrG3bOn-G9KYXlCjUnQ-1
-X-Mimecast-MFC-AGG-ID: ZJvMrG3bOn-G9KYXlCjUnQ_1771409853
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-610-YQaTkrRCP5O1U5KMZYubcw-1; Wed,
+ 18 Feb 2026 05:17:38 -0500
+X-MC-Unique: YQaTkrRCP5O1U5KMZYubcw-1
+X-Mimecast-MFC-AGG-ID: YQaTkrRCP5O1U5KMZYubcw_1771409857
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6CB63195605C; Wed, 18 Feb 2026 10:17:33 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id EB6E918002C3; Wed, 18 Feb 2026 10:17:36 +0000 (UTC)
 Received: from srv1.redhat.com (unknown [10.45.224.201])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2999A30001A5; Wed, 18 Feb 2026 10:17:31 +0000 (UTC)
+ id A8CE730001BB; Wed, 18 Feb 2026 10:17:35 +0000 (UTC)
 From: Kostiantyn Kostiuk <kkostiuk@redhat.com>
 To: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL v2 0/3] QGA misc fixes and improvements (2026-02-16)
-Date: Wed, 18 Feb 2026 12:17:26 +0200
-Message-ID: <20260218101729.92630-1-kkostiuk@redhat.com>
+Subject: [PULL v2 2/3] qga: Move CoInitialize/CoInitializeSecurity to main
+ process thread
+Date: Wed, 18 Feb 2026 12:17:28 +0200
+Message-ID: <20260218101729.92630-3-kkostiuk@redhat.com>
+In-Reply-To: <20260218101729.92630-1-kkostiuk@redhat.com>
+References: <20260218101729.92630-1-kkostiuk@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kkostiuk@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kkostiuk@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.043,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -80,37 +84,177 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit ece408818d27f745ef1b05fb3cc99a1e7a5bf580:
+From: Elizabeth Ashurov <eashurov@redhat.com>
 
-  Merge tag 'for-upstream' of https://gitlab.com/bonzini/qemu into staging (2026-02-13 10:30:08 +0000)
+Problem:
+Two issues with COM initialization:
 
-are available in the Git repository at:
+Issue #1: Incorrect call order
+- requester_init() called CoInitializeSecurity first
+- Per Microsoft documentation, CoInitialize() must be called BEFORE
+  CoInitializeSecurity()
 
-  https://github.com/kostyanf14/qemu.git tags/qga-pull-2026-02-16-2
+Issue #2: Incorrect call location
+- CoInitializeSecurity was called from dll instead of the main process
+- Per Microsoft documentation, CoInitializeSecurity() must be called exactly once per process from
+  the main executable, not from a DLL
 
-for you to fetch changes up to 374f4676788ca1f1c5a33670efeafff4ce936f79:
+Reference:
+https://learn.microsoft.com/en-us/windows/win32/api/combaseapi/nf-combaseapi-coinitializesecurity
+https://learn.microsoft.com/en-us/windows/win32/api/objbase/nf-objbase-coinitialize
 
-  qga: Fix VSS provider GetSnapshotProperties return value (2026-02-18 11:27:57 +0200)
+This caused incorrect COM initialization, preventing VSS Writers from
+calling back via IVssWriterCallback (hr = 0x80070005, Access denied,
+Event ID 8194).
 
-----------------------------------------------------------------
-qga-pull-2026-02-16-2
+Fix:
+- Initialize COM in main.c for both service and CLI modes
+- Call CoInitialize() followed by CoInitializeSecurity() in correct order
+  in the main thread before any VSS operations
+- Add proper CoUninitialize() cleanup
 
-v2: Rebased
+Result:
+VSS Writers can now successfully call back to the agent. Event ID 8194
+error is resolved.
 
-----------------------------------------------------------------
-Elizabeth Ashurov (3):
-      qga: implement guest-network-get-route for Windows
-      qga: Move CoInitialize/CoInitializeSecurity to main process thread
-      qga: Fix VSS provider GetSnapshotProperties return value
+Signed-off-by: Elizabeth Ashurov <eashurov@redhat.com>
+Reviewed-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
+Tested-by: Dehan Meng <demeng@redhat.com>
+Link: https://lore.kernel.org/qemu-devel/20260211101744.757548-1-eashurov@redhat.com
+Signed-off-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
+---
+ qga/main.c                  | 42 +++++++++++++++++++++++++++++++++++++
+ qga/vss-win32/requester.cpp | 13 ------------
+ 2 files changed, 42 insertions(+), 13 deletions(-)
 
- qga/commands-win32.c        | 172 ++++++++++++++++++++++++++++++++++++++++++++
- qga/main.c                  |  42 +++++++++++
- qga/qapi-schema.json        |  11 +--
- qga/vss-win32/provider.cpp  |   2 +-
- qga/vss-win32/requester.cpp |  13 ----
- 5 files changed, 221 insertions(+), 19 deletions(-)
-
---
+diff --git a/qga/main.c b/qga/main.c
+index dd1c216f9a..fd19c7037d 100644
+--- a/qga/main.c
++++ b/qga/main.c
+@@ -32,6 +32,8 @@
+ #include "qemu/systemd.h"
+ #include "qemu-version.h"
+ #ifdef _WIN32
++#include <windows.h>
++#include <objbase.h>
+ #include <dbt.h>
+ #include <pdh.h>
+ #include "qga/service-win32.h"
+@@ -830,6 +832,29 @@ DWORD WINAPI service_ctrl_handler(DWORD ctrl, DWORD type, LPVOID data,
+     return ret;
+ }
+ 
++/* Initialize COM for VSS operations */
++static HRESULT init_com(void)
++{
++    HRESULT hr;
++
++    hr = CoInitialize(NULL);
++    if (FAILED(hr)) {
++        return hr;
++    }
++
++    hr = CoInitializeSecurity(
++        NULL, -1, NULL, NULL,
++        RPC_C_AUTHN_LEVEL_PKT_PRIVACY,
++        RPC_C_IMP_LEVEL_IDENTIFY,
++        NULL, EOAC_NONE, NULL);
++    if (FAILED(hr)) {
++        CoUninitialize();
++        return hr;
++    }
++
++    return S_OK;
++}
++
+ VOID WINAPI service_main(DWORD argc, TCHAR *argv[])
+ {
+     GAService *service = &ga_state->service;
+@@ -842,6 +867,13 @@ VOID WINAPI service_main(DWORD argc, TCHAR *argv[])
+         return;
+     }
+ 
++    /* Initialize COM for VSS operations in the service thread */
++    HRESULT hr_com = init_com();
++    if (FAILED(hr_com)) {
++        g_critical("Failed to initialize COM in service thread: 0x%lx", hr_com);
++        return;
++    }
++
+     service->status.dwServiceType = SERVICE_WIN32;
+     service->status.dwCurrentState = SERVICE_RUNNING;
+     service->status.dwControlsAccepted = SERVICE_ACCEPT_STOP | SERVICE_ACCEPT_SHUTDOWN;
+@@ -866,6 +898,8 @@ VOID WINAPI service_main(DWORD argc, TCHAR *argv[])
+ 
+     run_agent(ga_state);
+ 
++    CoUninitialize();
++
+     UnregisterDeviceNotification(service->device_notification_handle);
+     service->status.dwCurrentState = SERVICE_STOPPED;
+     SetServiceStatus(service->status_handle, &service->status);
+@@ -1719,7 +1753,15 @@ int main(int argc, char **argv)
+         StartServiceCtrlDispatcher(service_table);
+         ret = EXIT_SUCCESS;
+     } else {
++        HRESULT hr_com = init_com();
++        if (FAILED(hr_com)) {
++            g_critical("Failed to initialize COM: 0x%lx", hr_com);
++            ret = EXIT_FAILURE;
++            goto end;
++        }
++
+         ret = run_agent(s);
++        CoUninitialize();
+     }
+ #else
+     ret = run_agent(s);
+diff --git a/qga/vss-win32/requester.cpp b/qga/vss-win32/requester.cpp
+index 74489fcd0a..626d6ab1ff 100644
+--- a/qga/vss-win32/requester.cpp
++++ b/qga/vss-win32/requester.cpp
+@@ -60,15 +60,6 @@ STDAPI requester_init(void)
+ {
+     qga_debug_begin;
+ 
+-    COMInitializer initializer; /* to call CoInitializeSecurity */
+-    HRESULT hr = CoInitializeSecurity(
+-        NULL, -1, NULL, NULL, RPC_C_AUTHN_LEVEL_PKT_PRIVACY,
+-        RPC_C_IMP_LEVEL_IDENTIFY, NULL, EOAC_NONE, NULL);
+-    if (FAILED(hr)) {
+-        qga_debug("failed to CoInitializeSecurity (error %lx)", hr);
+-        return hr;
+-    }
+-
+     hLib = LoadLibraryA("VSSAPI.DLL");
+     if (!hLib) {
+         qga_debug("failed to load VSSAPI.DLL");
+@@ -320,8 +311,6 @@ void requester_freeze(int *num_vols, void *mountpoints, ErrorSet *errset)
+         return;
+     }
+ 
+-    CoInitialize(NULL);
+-
+     /* Allow unrestricted access to events */
+     InitializeSecurityDescriptor(&sd, SECURITY_DESCRIPTOR_REVISION);
+     SetSecurityDescriptorDacl(&sd, TRUE, NULL, FALSE);
+@@ -562,7 +551,6 @@ out:
+ 
+ out1:
+     requester_cleanup();
+-    CoUninitialize();
+ 
+     qga_debug_end;
+ }
+@@ -643,7 +631,6 @@ void requester_thaw(int *num_vols, void *mountpints, ErrorSet *errset)
+     *num_vols = vss_ctx.cFrozenVols;
+     requester_cleanup();
+ 
+-    CoUninitialize();
+     StopService();
+ 
+     qga_debug_end;
+-- 
 2.52.0
 
 
