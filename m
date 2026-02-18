@@ -4,65 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 458ABE9A03B
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 09:07:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FCF6E9A03B
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 09:07:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vsdU0-0001vx-Bv; Wed, 18 Feb 2026 04:04:32 -0500
+	id 1vsdUg-0003fn-F1; Wed, 18 Feb 2026 04:05:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vsdTx-0001lt-5h
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 04:04:29 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1vsdUV-0002w1-Ed
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 04:05:04 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vsdTu-0008WK-Nu
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 04:04:28 -0500
+ id 1vsdUS-00008l-KD
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 04:05:03 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771405466;
+ s=mimecast20190719; t=1771405500;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=2klOYhoQ4fGAi4xB2sFPG+TEpv5+uqPlzGLBDNFYtXM=;
- b=W7R8MO5OeLcJ1QW+X335LbT2JVnqcOlInPvJs9Ko9xVKB5TYkRS8A1OtkfzXWif10JLuZD
- EX+xTlsSHVNNAfANs6GH+dZXmo8PWTfioPY9jrnHFlig2CIp0MYhlfmrfhrVOuKZ7aD8FU
- L5JgSntH7eqV3Rad3kW+b+W+C4ALyn0=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=e/lNqekkU0zmaz129+ZTshYIgpbjYvVcZpX5WuE9OxM=;
+ b=UY8NOV9RBVtpud/iTXAXdIpCAW4Q8ROJDsj7DXrn5dFbj//jMiiltnDrWHpmufATAvRb1o
+ nBoGBTA7dsqkfNBLlNGbE+HZIbQoXWgVtdzebY9NnBKhaAQ8R7x6tHV+0n86F80izKYRCk
+ 8WV6i+90hMJUn3B5FmmlvNGQWOlPlmI=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-685-SM-96X2-MFqOlVy_SRhZEg-1; Wed,
- 18 Feb 2026 04:04:24 -0500
-X-MC-Unique: SM-96X2-MFqOlVy_SRhZEg-1
-X-Mimecast-MFC-AGG-ID: SM-96X2-MFqOlVy_SRhZEg_1771405463
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-324-2Zae4jCePmSP2UhRgSScKA-1; Wed,
+ 18 Feb 2026 04:04:58 -0500
+X-MC-Unique: 2Zae4jCePmSP2UhRgSScKA-1
+X-Mimecast-MFC-AGG-ID: 2Zae4jCePmSP2UhRgSScKA_1771405497
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B5CAD1800451; Wed, 18 Feb 2026 09:04:23 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7DF7F1955BC7; Wed, 18 Feb 2026 09:04:57 +0000 (UTC)
 Received: from localhost (unknown [10.45.242.26])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id BDE021956095; Wed, 18 Feb 2026 09:04:22 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id D5F3330001A5; Wed, 18 Feb 2026 09:04:56 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PULL 17/85] util: add some extra stubs for qemu modules
- initialization
-Date: Wed, 18 Feb 2026 10:02:17 +0100
-Message-ID: <20260218090330.1476169-18-marcandre.lureau@redhat.com>
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
+Subject: [PULL 28/85] module: remove audio module support
+Date: Wed, 18 Feb 2026 10:02:28 +0100
+Message-ID: <20260218090330.1476169-29-marcandre.lureau@redhat.com>
 In-Reply-To: <20260218090330.1476169-1-marcandre.lureau@redhat.com>
 References: <20260218090330.1476169-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -70,7 +68,7 @@ X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.043,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -90,45 +88,36 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Avoid extra ifdef-ery when optionally supporting modules, as done in
-audio-test (and vl.c).
+It relies on dynamic object loading support instead.
 
+Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
 Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- system/vl.c   | 2 --
- util/module.c | 3 +++
- 2 files changed, 3 insertions(+), 2 deletions(-)
+ include/qemu/module.h | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/system/vl.c b/system/vl.c
-index aa9a1550417..3e341142a0c 100644
---- a/system/vl.c
-+++ b/system/vl.c
-@@ -2889,10 +2889,8 @@ void qemu_init(int argc, char **argv)
+diff --git a/include/qemu/module.h b/include/qemu/module.h
+index c37ce74b16f..9885ac9afb3 100644
+--- a/include/qemu/module.h
++++ b/include/qemu/module.h
+@@ -63,7 +63,6 @@ typedef enum {
+ #define migration_init(function) module_init(function, MODULE_INIT_MIGRATION)
+ #define block_module_load(lib, errp) module_load("block-", lib, errp)
+ #define ui_module_load(lib, errp) module_load("ui-", lib, errp)
+-#define audio_module_load(lib, errp) module_load("audio-", lib, errp)
  
-     os_setup_limits();
- 
--#ifdef CONFIG_MODULES
-     module_init_info(qemu_modinfo);
-     module_allow_arch(target_name());
--#endif
- 
-     qemu_init_subsystems();
- 
-diff --git a/util/module.c b/util/module.c
-index 1aa2079d013..09dc43f51eb 100644
---- a/util/module.c
-+++ b/util/module.c
-@@ -396,6 +396,9 @@ void qemu_load_module_for_opts(const char *group)
- 
- #else
- 
-+const QemuModinfo qemu_modinfo[] = {};
-+
-+void module_init_info(const QemuModinfo *info) {}
- void module_allow_arch(const char *arch) {}
- void qemu_load_module_for_opts(const char *group) {}
- int module_load(const char *prefix, const char *name, Error **errp) { return 2; }
+ void register_module_init(void (*fn)(void), module_init_type type);
+ void register_dso_module_init(void (*fn)(void), module_init_type type);
+@@ -78,7 +77,7 @@ void module_call_init(module_init_type type);
+  * - get_relocated_path(CONFIG_QEMU_MODDIR);
+  * - /var/run/qemu/${version_dir}
+  *
+- * prefix:         a subsystem prefix, or the empty string ("audio-", ..., "")
++ * prefix:         a subsystem prefix, or the empty string ("ui-", ..., "")
+  * name:           name of the module
+  * errp:           error to set in case the module is found, but load failed.
+  *
 -- 
 2.53.0
 
