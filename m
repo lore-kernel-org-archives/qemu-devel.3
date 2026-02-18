@@ -4,88 +4,131 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6F96E9A02C
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 21:37:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EC4AE9A02C
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 22:18:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vspEh-0003cQ-2i; Wed, 18 Feb 2026 16:37:32 -0500
+	id 1vsprr-0005Ap-Qk; Wed, 18 Feb 2026 17:18:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vspDi-00029P-4P
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 16:36:30 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vspDf-0002N6-HM
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 16:36:29 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771450586;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=UjdeyrAjANhlscv2cMRZSPPaeWyRzH5DdI+ljAZjH9Q=;
- b=WGYWQ5xi9LOgnUbp5EOiz/MjqN61zxtB2dtgxUs7XSdPa8GuJ2JCDsqneZT1Zpyde3aas+
- dC9VDqJmtjsl1xUfH3dgqJwK2GfcCwFzUYPKSfFrIHg8Msv6smjk5SVhSKTic5RscIP2G3
- GkyBe30ebfhenc7YtEydb3wirrCnoe8=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-283-Hrm8wg72NHycbLqaz_ac-Q-1; Wed,
- 18 Feb 2026 16:36:23 -0500
-X-MC-Unique: Hrm8wg72NHycbLqaz_ac-Q-1
-X-Mimecast-MFC-AGG-ID: Hrm8wg72NHycbLqaz_ac-Q_1771450581
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5CA1518003FC; Wed, 18 Feb 2026 21:36:21 +0000 (UTC)
-Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.65.233])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id ADCFB19560B5; Wed, 18 Feb 2026 21:36:15 +0000 (UTC)
-From: John Snow <jsnow@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Kevin Wolf <kwolf@redhat.com>, Warner Losh <imp@bsdimp.com>,
- Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- qemu-block@nongnu.org,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, John Snow <jsnow@redhat.com>,
- Michael Roth <michael.roth@amd.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Markus Armbruster <armbru@redhat.com>, Peter Xu <peterx@redhat.com>,
- Yonggang Luo <luoyonggang@gmail.com>, Hanna Reitz <hreitz@redhat.com>,
- Maksim Davydov <davydov-max@yandex-team.ru>,
- Thomas Huth <thuth@redhat.com>, Ed Maste <emaste@freebsd.org>,
- Alexandre Iooss <erdnaxe@crans.org>, Cleber Rosa <crosa@redhat.com>,
- Li-Wen Hsu <lwhsu@freebsd.org>, Mahmoud Mandour <ma.mandourr@gmail.com>,
- Kyle Evans <kevans@freebsd.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Subject: [PATCH v8 17/20] scripts: nudge users to use 'run' script for scripts
- that import qemu.qmp
-Date: Wed, 18 Feb 2026 16:34:12 -0500
-Message-ID: <20260218213416.674483-18-jsnow@redhat.com>
-In-Reply-To: <20260218213416.674483-1-jsnow@redhat.com>
-References: <20260218213416.674483-1-jsnow@redhat.com>
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vsprn-00059h-SR
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 17:17:57 -0500
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vsprm-0007I3-8I
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 17:17:55 -0500
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-2a79998d35aso1842175ad.0
+ for <qemu-devel@nongnu.org>; Wed, 18 Feb 2026 14:17:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1771453072; x=1772057872; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=IgbN+0+nZGvceT4qVDkyK0Z5yonnu9/EOzy5Ppa7sow=;
+ b=yCNXGFH+EDMEw/endjFk7KWV2t9CmNmq6xbpuvZlCGb4K9pTeN+srWkuEqbaOjW5kY
+ ySsfcMy82TTb/0IPZ6CmTtezEU2UxA6kf3ZNkTL3rAPd6ZMDiaHFODTJ3f2KYCL4mnwR
+ gEHEbV0GjuBl21gKs2Umbf2iY23J3eBlhenCyRmoYOMlm757/6kBG0Rc4htv3yjdkM9E
+ bwD/DlqO2RdNiqxR5FQM3DXz4v2dZJ1urRQ5+Ax1OXYzpw0LeNWqgdJaKfzKJMqUTxlv
+ XmZHmxEtynIJtDx3k+AxBY1xYmfeWWcs2K3cTeHZ9af74+gMDVSUT2oQFWRf5bpwC0Ro
+ Ixug==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1771453072; x=1772057872;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=IgbN+0+nZGvceT4qVDkyK0Z5yonnu9/EOzy5Ppa7sow=;
+ b=DRgI3D7KC/49CPFu9kgjKdCMtNKgKcBdXhF94c/S6xdMcMYhboawLTYzaLhYRZhH0V
+ Qx2+eCRefB3okTf0JyVxM+g4ffNSLBNM/iJa6+Bj10Nyjkf7JZ1prJSXHeyPDBXeJhC9
+ GN+NWQkKuzPqlGfdWp+W/VbYQmZ2vPr4enjVrWS1gAvKmTlyJnc5UC5EtB61yS68ymI9
+ jPB4wuLMVdSJTPu43xQk131jOFv7yF+DdIgf6KN5RQ7ZNh+H2rU4HYhHIcDwRdOmHZXk
+ qpdT4Hlqawg0+XoG5RmsAd+GdPvCgDULFyvLsVncIxuBjRuyyVcFywAozh5F6ROykM+Y
+ IByw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW12fk6eOqsIqoV4zMs/ZriECygxs+WXtiLquvRTpgwR5H4n6Ffwdi7juMcMBZTS2wZPGIFaSeL19tB@nongnu.org
+X-Gm-Message-State: AOJu0YzXNfFLtlXNwaTtSuBDr/aGv8+HRtu6+jK+C2X91lZO0tDLBPb2
+ a91vmvEclhCMHZXR4+IG0pdPT2AzdKF+TeJjXx6My8VW07SV6OQsLCDoVJREYQWCDH0=
+X-Gm-Gg: AZuq6aJWBC0ah3VAnKqOWICLk0R/Xmp58vQ+Ac8WbAcdnJNj2uSE4hvHNpmp2hFOU1G
+ oeMNeRovQ6l9O9sT/lowIx5G23g/g8DUIxg1k+XqDvNHMO/ySdaam0sJ5KpzVlVPtpEpEHrOEPB
+ Xy5juQgvPBjYqzXxt7jcK+fBd26ZAaxGQUZLUMPQksrskQIQzB4NmLL0d2/3NfP4RmNY+QVEGwt
+ 3oH1EOtnv4OcbeZierEGtSjgL7uzX3vlgUHmvrzNXkHzpLCUkxHfsByLnV5UHFPg+X6PdLJJN2F
+ JShFbHgWK9rv1JvvcYWaxG/ZgyZBUD/337a1BIgm5LMXKIZXFJKOuyAPCPaCtUMV6QoYo6+Qfrq
+ 6nk2fHyfSlaD0B/Yjqdd3qpT9T+qSwmyD7leZRBvMb66LD+bJKjBdU5NF4HoMyozGE3gqo7O2Bk
+ SAYMJmDK6kgR8EWtsWAyzCAghUpgM1cuBzQMeNhPHAxZc7gPHpby59z4oFJVyi2jxK9i+M
+X-Received: by 2002:a17:903:11d1:b0:2ab:2830:b03b with SMTP id
+ d9443c01a7336-2ad5b1b7053mr5750405ad.61.1771453072387; 
+ Wed, 18 Feb 2026 14:17:52 -0800 (PST)
+Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-3567ebc3508sm22569840a91.14.2026.02.18.14.17.51
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 18 Feb 2026 14:17:51 -0800 (PST)
+Message-ID: <332a3290-9ebe-404f-8b49-d09a83bd47cb@linaro.org>
+Date: Wed, 18 Feb 2026 14:17:51 -0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/3] hw/virtio: add virtio_vdev_is_{modern, legacy}
+Content-Language: en-US
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Stefano Garzarella <sgarzare@redhat.com>, Jason Wang <jasowang@redhat.com>,
+ Nicholas Piggin <npiggin@gmail.com>, stefanha@redhat.com,
+ richard.henderson@linaro.org, "Michael S. Tsirkin" <mst@redhat.com>
+References: <20260212234602.338131-1-pierrick.bouvier@linaro.org>
+ <20260212234602.338131-2-pierrick.bouvier@linaro.org>
+ <02b667c5-da6a-4829-87f1-4b9ebc53d5a4@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
+ xsDNBGK9dgwBDACYuRpR31LD+BnJ0M4b5YnPZKbj+gyu82IDN0MeMf2PGf1sux+1O2ryzmnA
+ eOiRCUY9l7IbtPYPHN5YVx+7W3vo6v89I7mL940oYAW8loPZRSMbyCiUeSoiN4gWPXetoNBg
+ CJmXbVYQgL5e6rsXoMlwFWuGrBY3Ig8YhEqpuYDkRXj2idO11CiDBT/b8A2aGixnpWV/s+AD
+ gUyEVjHU6Z8UervvuNKlRUNE0rUfc502Sa8Azdyda8a7MAyrbA/OI0UnSL1m+pXXCxOxCvtU
+ qOlipoCOycBjpLlzjj1xxRci+ssiZeOhxdejILf5LO1gXf6pP+ROdW4ySp9L3dAWnNDcnj6U
+ 2voYk7/RpRUTpecvkxnwiOoiIQ7BatjkssFy+0sZOYNbOmoqU/Gq+LeFqFYKDV8gNmAoxBvk
+ L6EtXUNfTBjiMHyjA/HMMq27Ja3/Y73xlFpTVp7byQoTwF4p1uZOOXjFzqIyW25GvEekDRF8
+ IpYd6/BomxHzvMZ2sQ/VXaMAEQEAAc0uUGllcnJpY2sgQm91dmllciA8cGllcnJpY2suYm91
+ dmllckBsaW5hcm8ub3JnPsLBDgQTAQoAOBYhBGa5lOyhT38uWroIH3+QVA0KHNAPBQJivXYM
+ AhsDBQsJCAcCBhUKCQgLAgQWAgMBAh4BAheAAAoJEH+QVA0KHNAPX58L/1DYzrEO4TU9ZhJE
+ tKcw/+mCZrzHxPNlQtENJ5NULAJWVaJ/8kRQ3Et5hQYhYDKK+3I+0Tl/tYuUeKNV74dFE7mv
+ PmikCXBGN5hv5povhinZ9T14S2xkMgym2T3DbkeaYFSmu8Z89jm/AQVt3ZDRjV6vrVfvVW0L
+ F6wPJSOLIvKjOc8/+NXrKLrV/YTEi2R1ovIPXcK7NP6tvzAEgh76kW34AHtroC7GFQKu/aAn
+ HnL7XrvNvByjpa636jIM9ij43LpLXjIQk3bwHeoHebkmgzFef+lZafzD+oSNNLoYkuWfoL2l
+ CR1mifjh7eybmVx7hfhj3GCmRu9o1x59nct06E3ri8/eY52l/XaWGGuKz1bbCd3xa6NxuzDM
+ UZU+b0PxHyg9tvASaVWKZ5SsQ5Lf9Gw6WKEhnyTR8Msnh8kMkE7+QWNDmjr0xqB+k/xMlVLE
+ uI9Pmq/RApQkW0Q96lTa1Z/UKPm69BMVnUvHv6u3n0tRCDOHTUKHXp/9h5CH3xawms7AzQRi
+ vXYMAQwAwXUyTS/Vgq3M9F+9r6XGwbak6D7sJB3ZSG/ZQe5ByCnH9ZSIFqjMnxr4GZUzgBAj
+ FWMSVlseSninYe7MoH15T4QXi0gMmKsU40ckXLG/EW/mXRlLd8NOTZj8lULPwg/lQNAnc7GN
+ I4uZoaXmYSc4eI7+gUWTqAHmESHYFjilweyuxcvXhIKez7EXnwaakHMAOzNHIdcGGs8NFh44
+ oPh93uIr65EUDNxf0fDjnvu92ujf0rUKGxXJx9BrcYJzr7FliQvprlHaRKjahuwLYfZK6Ma6
+ TCU40GsDxbGjR5w/UeOgjpb4SVU99Nol/W9C2aZ7e//2f9APVuzY8USAGWnu3eBJcJB+o9ck
+ y2bSJ5gmGT96r88RtH/E1460QxF0GGWZcDzZ6SEKkvGSCYueUMzAAqJz9JSirc76E/JoHXYI
+ /FWKgFcC4HRQpZ5ThvyAoj9nTIPI4DwqoaFOdulyYAxcbNmcGAFAsl0jJYJ5Mcm2qfQwNiiW
+ YnqdwQzVfhwaAcPVABEBAAHCwPYEGAEKACAWIQRmuZTsoU9/Llq6CB9/kFQNChzQDwUCYr12
+ DAIbDAAKCRB/kFQNChzQD/XaC/9MnvmPi8keFJggOg28v+r42P7UQtQ9D3LJMgj3OTzBN2as
+ v20Ju09/rj+gx3u7XofHBUj6BsOLVCWjIX52hcEEg+Bzo3uPZ3apYtIgqfjrn/fPB0bCVIbi
+ 0hAw6W7Ygt+T1Wuak/EV0KS/If309W4b/DiI+fkQpZhCiLUK7DrA97xA1OT1bJJYkC3y4seo
+ 0VHOnZTpnOyZ+8Ejs6gcMiEboFHEEt9P+3mrlVJL/cHpGRtg0ZKJ4QC8UmCE3arzv7KCAc+2
+ dRDWiCoRovqXGE2PdAW8788qH5DEXnwfzDhnCQ9Eot0Eyi41d4PWI8TWZFi9KzGXJO82O9gW
+ 5SYuJaKzCAgNeAy3gUVUUPrUsul1oe2PeWMFUhWKrqko0/Qo4HkwTZY6S16drTMncoUahSAl
+ X4Z3BbSPXPq0v1JJBYNBL9qmjULEX+NbtRd3v0OfB5L49sSAC2zIO8S9Cufiibqx3mxZTaJ1
+ ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
+In-Reply-To: <02b667c5-da6a-4829-87f1-4b9ebc53d5a4@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.043,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,324 +144,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Now that qmp has to be installed and isn't local, we can no longer offer
-a simple forwarder for these scripts (nor path hacks) and hope that it
-works. Encourage users to use the 'run' script to use these scripts
-instead.
+On 2/18/26 1:00 PM, Philippe Mathieu-Daudé wrote:
+> On 13/2/26 00:46, Pierrick Bouvier wrote:
+>> This simplifies code compared to having
+>> virtio_vdev_has_feature(vdev, VIRTIO_F_VERSION_1) or
+>> !virtio_vdev_has_feature(vdev, VIRTIO_F_VERSION_1).
+>>
+>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>> ---
+>>    include/hw/virtio/virtio-access.h |  3 +--
+>>    include/hw/virtio/virtio.h        | 12 +++++++++++-
+>>    hw/net/virtio-net.c               |  2 +-
+>>    hw/virtio/vhost.c                 |  2 +-
+>>    hw/virtio/virtio-pci.c            |  2 +-
+>>    hw/virtio/virtio.c                | 16 ++++++++--------
+>>    6 files changed, 23 insertions(+), 14 deletions(-)
+> 
+> 
+>> diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
+>> index 27cd98d2fe1..8f1e4323599 100644
+>> --- a/include/hw/virtio/virtio.h
+>> +++ b/include/hw/virtio/virtio.h
+>> @@ -468,9 +468,19 @@ static inline bool virtio_host_has_feature(VirtIODevice *vdev,
+>>        return virtio_has_feature(vdev->host_features, fbit);
+>>    }
+>>    
+>> +static inline bool virtio_vdev_is_modern(const VirtIODevice *vdev)
+>> +{
+>> +    return virtio_vdev_has_feature(vdev, VIRTIO_F_VERSION_1);
+>> +}
+>> +
+>> +static inline bool virtio_vdev_is_legacy(const VirtIODevice *vdev)
+>> +{
+>> +    return !virtio_vdev_is_modern(vdev);
+>> +}
+> 
+> With retrospective, mentioning 'modern' was a mistake IMHO. But I
+> understand it was simpler to add 'modern' code without updating the
+> 'legacy' code base. Today I'd rather have 'legacy' explicit in function
+> names, everything else being the normal / current / modern version,
+> without having to clarify it.
+>
 
-Signed-off-by: John Snow <jsnow@redhat.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
----
- scripts/compare-machine-types.py           |  7 ++-----
- scripts/qmp/qemu-ga-client                 | 13 ++++++-------
- scripts/qmp/qmp-shell                      | 13 ++++++-------
- scripts/qmp/qmp-shell-wrap                 | 13 ++++++-------
- scripts/qmp/qom-fuse                       | 13 ++++++-------
- scripts/qmp/qom-get                        | 13 ++++++-------
- scripts/qmp/qom-list                       | 13 ++++++-------
- scripts/qmp/qom-set                        | 13 ++++++-------
- scripts/qmp/qom-tree                       | 13 ++++++-------
- scripts/qmp_helper.py                      |  9 ++-------
- scripts/render_block_graph.py              | 10 +++++++---
- scripts/simplebench/bench_block_job.py     | 10 +++++++---
- tests/migration-stress/guestperf/engine.py | 15 ++++++++++++---
- 13 files changed, 78 insertions(+), 77 deletions(-)
+Agree.
 
-diff --git a/scripts/compare-machine-types.py b/scripts/compare-machine-types.py
-index b4f899082a7..83be361f4f6 100755
---- a/scripts/compare-machine-types.py
-+++ b/scripts/compare-machine-types.py
-@@ -27,19 +27,16 @@
- # along with this program; if not, see <http://www.gnu.org/licenses/>.
- 
- import sys
--from os import path
- from argparse import ArgumentParser, RawTextHelpFormatter, Namespace
- import pandas as pd
- from contextlib import ExitStack
- from typing import Optional, List, Dict, Generator, Tuple, Union, Any, Set
- 
- try:
--    qemu_dir = path.abspath(path.dirname(path.dirname(__file__)))
--    sys.path.append(path.join(qemu_dir, 'python'))
-     from qemu.machine import QEMUMachine
- except ModuleNotFoundError as exc:
--    print(f"Module '{exc.name}' not found.")
--    print("Try export PYTHONPATH=top-qemu-dir/python or run from top-qemu-dir")
-+    print(f"Module '{exc.name}' not found.", file=sys.stderr)
-+    print(f"Try $builddir/run {' '.join(sys.argv)}", file=sys.stderr)
-     sys.exit(1)
- 
- 
-diff --git a/scripts/qmp/qemu-ga-client b/scripts/qmp/qemu-ga-client
-index 56edd0234a6..7ea01b9a11d 100755
---- a/scripts/qmp/qemu-ga-client
-+++ b/scripts/qmp/qemu-ga-client
-@@ -1,11 +1,10 @@
- #!/usr/bin/env python3
- 
--import os
- import sys
- 
--sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..', 'python'))
--from qemu.utils import qemu_ga_client
--
--
--if __name__ == '__main__':
--    sys.exit(qemu_ga_client.main())
-+print(
-+    "This script has moved; after running configure,"
-+    " please use '$builddir/run qemu-ga-client [...]' instead.",
-+    file=sys.stderr
-+)
-+sys.exit(1)
-diff --git a/scripts/qmp/qmp-shell b/scripts/qmp/qmp-shell
-index 4a20f97db70..436c4940c26 100755
---- a/scripts/qmp/qmp-shell
-+++ b/scripts/qmp/qmp-shell
-@@ -1,11 +1,10 @@
- #!/usr/bin/env python3
- 
--import os
- import sys
- 
--sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..', 'python'))
--from qemu.qmp import qmp_shell
--
--
--if __name__ == '__main__':
--    qmp_shell.main()
-+print(
-+    "This script has moved; after running configure,"
-+    " please use '$builddir/run qmp-shell [...]' instead.",
-+    file=sys.stderr
-+)
-+sys.exit(1)
-diff --git a/scripts/qmp/qmp-shell-wrap b/scripts/qmp/qmp-shell-wrap
-index 9e94da114f5..f63dadad1ed 100755
---- a/scripts/qmp/qmp-shell-wrap
-+++ b/scripts/qmp/qmp-shell-wrap
-@@ -1,11 +1,10 @@
- #!/usr/bin/env python3
- 
--import os
- import sys
- 
--sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..', 'python'))
--from qemu.qmp import qmp_shell
--
--
--if __name__ == '__main__':
--    qmp_shell.main_wrap()
-+print(
-+    "This script has moved; after running configure,"
-+    " please use '$builddir/run qmp-shell-wrap [...]' instead.",
-+    file=sys.stderr
-+)
-+sys.exit(1)
-diff --git a/scripts/qmp/qom-fuse b/scripts/qmp/qom-fuse
-index d453807b273..7d4724a3710 100755
---- a/scripts/qmp/qom-fuse
-+++ b/scripts/qmp/qom-fuse
-@@ -1,11 +1,10 @@
- #!/usr/bin/env python3
- 
--import os
- import sys
- 
--sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..', 'python'))
--from qemu.utils.qom_fuse import QOMFuse
--
--
--if __name__ == '__main__':
--    sys.exit(QOMFuse.entry_point())
-+print(
-+    "This script has moved; after running configure,"
-+    " please use '$builddir/run qom-fuse [...]' instead.",
-+    file=sys.stderr
-+)
-+sys.exit(1)
-diff --git a/scripts/qmp/qom-get b/scripts/qmp/qom-get
-index 04ebe052e82..96363539624 100755
---- a/scripts/qmp/qom-get
-+++ b/scripts/qmp/qom-get
-@@ -1,11 +1,10 @@
- #!/usr/bin/env python3
- 
--import os
- import sys
- 
--sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..', 'python'))
--from qemu.utils.qom import QOMGet
--
--
--if __name__ == '__main__':
--    sys.exit(QOMGet.entry_point())
-+print(
-+    "This script has moved; after running configure,"
-+    " please use '$builddir/run qom-get [...]' instead.",
-+    file=sys.stderr
-+)
-+sys.exit(1)
-diff --git a/scripts/qmp/qom-list b/scripts/qmp/qom-list
-index 853b85a8d3f..e988274d1e7 100755
---- a/scripts/qmp/qom-list
-+++ b/scripts/qmp/qom-list
-@@ -1,11 +1,10 @@
- #!/usr/bin/env python3
- 
--import os
- import sys
- 
--sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..', 'python'))
--from qemu.utils.qom import QOMList
--
--
--if __name__ == '__main__':
--    sys.exit(QOMList.entry_point())
-+print(
-+    "This script has moved; after running configure,"
-+    " please use '$builddir/run qom-list [...]' instead.",
-+    file=sys.stderr
-+)
-+sys.exit(1)
-diff --git a/scripts/qmp/qom-set b/scripts/qmp/qom-set
-index 06820feec42..c2569afdcd7 100755
---- a/scripts/qmp/qom-set
-+++ b/scripts/qmp/qom-set
-@@ -1,11 +1,10 @@
- #!/usr/bin/env python3
- 
--import os
- import sys
- 
--sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..', 'python'))
--from qemu.utils.qom import QOMSet
--
--
--if __name__ == '__main__':
--    sys.exit(QOMSet.entry_point())
-+print(
-+    "This script has moved; after running configure,"
-+    " please use '$builddir/run qom-set [...]' instead.",
-+    file=sys.stderr
-+)
-+sys.exit(1)
-diff --git a/scripts/qmp/qom-tree b/scripts/qmp/qom-tree
-index 760e172277e..b3cd5ab6f82 100755
---- a/scripts/qmp/qom-tree
-+++ b/scripts/qmp/qom-tree
-@@ -1,11 +1,10 @@
- #!/usr/bin/env python3
- 
--import os
- import sys
- 
--sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..', 'python'))
--from qemu.utils.qom import QOMTree
--
--
--if __name__ == '__main__':
--    sys.exit(QOMTree.entry_point())
-+print(
-+    "This script has moved; after running configure,"
-+    " please use '$builddir/run qom-tree [...]' instead.",
-+    file=sys.stderr
-+)
-+sys.exit(1)
-diff --git a/scripts/qmp_helper.py b/scripts/qmp_helper.py
-index c1e7e0fd80c..521612fb946 100755
---- a/scripts/qmp_helper.py
-+++ b/scripts/qmp_helper.py
-@@ -13,17 +13,12 @@
- import sys
- 
- from datetime import datetime
--from os import path as os_path
- 
- try:
--    qemu_dir = os_path.abspath(os_path.dirname(os_path.dirname(__file__)))
--    sys.path.append(os_path.join(qemu_dir, 'python'))
--
-     from qemu.qmp.legacy import QEMUMonitorProtocol
--
- except ModuleNotFoundError as exc:
--    print(f"Module '{exc.name}' not found.")
--    print("Try export PYTHONPATH=top-qemu-dir/python or run from top-qemu-dir")
-+    print(f"Module '{exc.name}' not found.", file=sys.stderr)
-+    print(f"Try $builddir/run {' '.join(sys.argv)}", file=sys.stderr)
-     sys.exit(1)
- 
- from base64 import b64encode
-diff --git a/scripts/render_block_graph.py b/scripts/render_block_graph.py
-index 3e1a2e3fa71..b9079bbed52 100755
---- a/scripts/render_block_graph.py
-+++ b/scripts/render_block_graph.py
-@@ -24,9 +24,13 @@
- import json
- from graphviz import Digraph
- 
--sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'python'))
--from qemu.qmp import QMPError
--from qemu.qmp.legacy import QEMUMonitorProtocol
-+try:
-+    from qemu.qmp import QMPError
-+    from qemu.qmp.legacy import QEMUMonitorProtocol
-+except ModuleNotFoundError as exc:
-+    print(f"Module '{exc.name}' not found.", file=sys.stderr)
-+    print(f"Try $builddir/run {' '.join(sys.argv)}", file=sys.stderr)
-+    sys.exit(1)
- 
- 
- def perm(arr):
-diff --git a/scripts/simplebench/bench_block_job.py b/scripts/simplebench/bench_block_job.py
-index e575a3af10e..541a47e586d 100755
---- a/scripts/simplebench/bench_block_job.py
-+++ b/scripts/simplebench/bench_block_job.py
-@@ -25,9 +25,13 @@
- import socket
- import json
- 
--sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..', 'python'))
--from qemu.machine import QEMUMachine
--from qemu.qmp import ConnectError
-+try:
-+    from qemu.machine import QEMUMachine
-+    from qemu.qmp import ConnectError
-+except ModuleNotFoundError as exc:
-+    print(f"Module '{exc.name}' not found.", file=sys.stderr)
-+    print(f"Try $builddir/run {' '.join(sys.argv)}", file=sys.stderr)
-+    sys.exit(1)
- 
- 
- def bench_block_job(cmd, cmd_args, qemu_args):
-diff --git a/tests/migration-stress/guestperf/engine.py b/tests/migration-stress/guestperf/engine.py
-index d8462db7653..8d2ed757af3 100644
---- a/tests/migration-stress/guestperf/engine.py
-+++ b/tests/migration-stress/guestperf/engine.py
-@@ -27,9 +27,18 @@
- from guestperf.report import Report, ReportResult
- from guestperf.timings import TimingRecord, Timings
- 
--sys.path.append(os.path.join(os.path.dirname(__file__),
--                             '..', '..', '..', 'python'))
--from qemu.machine import QEMUMachine
-+try:
-+    from qemu.machine import QEMUMachine
-+except ModuleNotFoundError as exc:
-+    print(
-+        f"Module '{exc.name}' not found.\n"
-+        "It should be installed as part of the configure-time "
-+        "virtual environment in $builddir/pyvenv.\n"
-+        "Try re-running this script as:\n"
-+        f"> $builddir/run {' '.join(sys.argv)}",
-+        file=sys.stderr
-+    )
-+    sys.exit(1)
- 
- # multifd supported compression algorithms
- MULTIFD_CMP_ALGS = ("zlib", "zstd", "qpl", "uadk")
--- 
-2.53.0
+> Thus back to this series I'd rather not introduce virtio_vdev_is_modern
+> and use !virtio_vdev_is_legacy instead.
 
+Sounds good. I feel it's still easier and clearer to read than 
+"!has_feature(1.0)". But as said in my previous answer to Zoltan, I 
+don't mind this patch too much, only 3rd one really matter.
 
