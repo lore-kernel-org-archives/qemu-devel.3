@@ -4,69 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B813CE9A04A
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 17:19:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53606E9A02C
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 17:20:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vslCL-0005Ol-RU; Wed, 18 Feb 2026 12:18:50 -0500
+	id 1vslCj-0005UT-GZ; Wed, 18 Feb 2026 12:19:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vslCF-0005OF-UK
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 12:18:44 -0500
-Received: from forwardcorp1a.mail.yandex.net
- ([2a02:6b8:c0e:500:1:45:d181:df01])
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vslCS-0005Q3-UW
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 12:19:01 -0500
+Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vslCC-0005ad-OO
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 12:18:42 -0500
-Received: from mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
- [IPv6:2a02:6b8:c2d:3530:0:640:eca4:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 4CE74C0469;
- Wed, 18 Feb 2026 20:18:36 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:53d::1:1b] (unknown
- [2a02:6bf:8080:53d::1:1b])
- by mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id 6IeTUx3A6Ko0-uOyfyFtw; Wed, 18 Feb 2026 20:18:35 +0300
-Precedence: bulk
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1771435115;
- bh=Vx3PrjAqn3eIKvwy4bx3StkSfzpdGewgxfv0ikRJNZ4=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=msGXp41E9w7hdRxoI8L4qJLLjaHkNr2Kw/eNbFpNIXuwilf06ftFgI5m5IpfziX+C
- SzEkF/RW7OUpu7tR1B+RjBhFM83SOKBsfZDsJ+DCKJOVUntp/lezjR5KEs/lf7OF/l
- t9ZRynEZRbWLJUeT7PrTGSxe94r2dilmFkwhjHTE=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <2b6bd722-aee2-4569-81f5-d7c8d1bb5a48@yandex-team.ru>
-Date: Wed, 18 Feb 2026 20:18:06 +0300
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vslCO-0005bG-6R
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 12:18:55 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
+ s=dkim; h=Cc:To:In-Reply-To:References:Message-Id:Content-Transfer-Encoding:
+ Content-Type:MIME-Version:Subject:Date:From:Sender:Reply-To:Content-ID:
+ Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+ :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+ List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
+ List-Help; bh=qTdMzO8D+HpvpcqOqOp681WOkWmZdRJ71H1gRfIO0uw=; b=KBEsTCstmis+lc4
+ pUP+6WwBnacj7hK9udoGrWwliNMePy21gx/SSCUBHEjsfW8+GZNyg9OyK2JcDBZFhuFNKeo4rdEt1
+ DZfmctJo5K5dEM74z4S7dOG4QNzpu3jf2hoADFA0srevMG/xv8w5lHYAhoE6F9VjtDfB2niGA5d6j
+ AY=;
+Date: Wed, 18 Feb 2026 18:21:30 +0100
+Subject: [PATCH v6 4/7] target/loongarch: Introduce loongarch_palen_mask()
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 00/23] vhost refactoring and fixes
-To: mst@redhat.com
-Cc: sgarzare@redhat.com, raphael@enfabrica.net, qemu-devel@nongnu.org,
- yc-core@yandex-team.ru, d-tatianin@yandex-team.ru
-References: <20260206095258.894504-1-vsementsov@yandex-team.ru>
-Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <20260206095258.894504-1-vsementsov@yandex-team.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a02:6b8:c0e:500:1:45:d181:df01;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Message-Id: <20260218-phys_addr-v6-4-a603bf363218@rev.ng>
+References: <20260218-phys_addr-v6-0-a603bf363218@rev.ng>
+In-Reply-To: <20260218-phys_addr-v6-0-a603bf363218@rev.ng>
+To: qemu-devel@nongnu.org
+Cc: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Helge Deller <deller@gmx.de>, Paolo Bonzini <pbonzini@redhat.com>, 
+ Song Gao <gaosong@loongson.cn>, Bibo Mao <maobibo@loongson.cn>, 
+ Palmer Dabbelt <palmer@dabbelt.com>, 
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Brian Cain <brian.cain@oss.qualcomm.com>, 
+ Chao Liu <chao.liu.zevorn@gmail.com>, Anton Johansson <anjo@rev.ng>
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1771435335; l=6162;
+ i=anjo@rev.ng; s=20260210; h=from:subject:message-id;
+ bh=uZIdrFfRYeBc4gNAM/v/8l39gnpLMzbIHrnRvkKuCw8=;
+ b=JtuIvroywd7V7+EyD7SMeOnd2iOm2iWsR/MvYibqEKIe3MdVEfyXl4/eU9KoxOBJL5GoZaVUL
+ z/2xefalfZAAtWdoLfvOdp50CwGB+17X6JFNMXFGueaM5GAytDclcnJ
+X-Developer-Key: i=anjo@rev.ng; a=ed25519;
+ pk=dKsZvj/g3kgDxnV1/SWg8a0YNGSpWtFGNsWIepQYKow=
+Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
+ helo=rev.ng
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ T_FILL_THIS_FORM_SHORT=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
+Precedence: list
 List-Id: qemu development <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -75,17 +74,166 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Anton Johansson <anjo@rev.ng>
+From:  Anton Johansson via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Gently ping)
+In preparation for dropping TARGET_PHYS_ADDR_SPACE_BITS, define a
+runtime function to construct a mask from the PALEN cpucfg field.
+The mask is then used when converting from virtual to physical
+addresses.
 
-On 06.02.26 12:52, Vladimir Sementsov-Ogievskiy wrote:
-> Hi all. That's a preparation for vhost-user-blk backend-transfer
-> feature.
-> 
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Anton Johansson <anjo@rev.ng>
+---
+ target/loongarch/cpu-mmu.h        |  1 +
+ target/loongarch/internals.h      |  1 -
+ target/loongarch/cpu_helper.c     | 15 ++++++++++++---
+ target/loongarch/tcg/tlb_helper.c | 12 ++++++++----
+ 4 files changed, 21 insertions(+), 8 deletions(-)
+
+diff --git a/target/loongarch/cpu-mmu.h b/target/loongarch/cpu-mmu.h
+index 2259de9d36..3286accc14 100644
+--- a/target/loongarch/cpu-mmu.h
++++ b/target/loongarch/cpu-mmu.h
+@@ -98,5 +98,6 @@ TLBRet loongarch_ptw(CPULoongArchState *env, MMUContext *context,
+ void get_dir_base_width(CPULoongArchState *env, uint64_t *dir_base,
+                         uint64_t *dir_width, unsigned int level);
+ hwaddr loongarch_cpu_get_phys_page_debug(CPUState *cpu, vaddr addr);
++uint64_t loongarch_palen_mask(CPULoongArchState *env);
+ 
+ #endif  /* LOONGARCH_CPU_MMU_H */
+diff --git a/target/loongarch/internals.h b/target/loongarch/internals.h
+index 8793bd9df6..e01dbed40f 100644
+--- a/target/loongarch/internals.h
++++ b/target/loongarch/internals.h
+@@ -13,7 +13,6 @@
+ #define FCMP_UN   0b0100  /* unordered */
+ #define FCMP_GT   0b1000  /* fp0 > fp1 */
+ 
+-#define TARGET_PHYS_MASK MAKE_64BIT_MASK(0, TARGET_PHYS_ADDR_SPACE_BITS)
+ #define TARGET_VIRT_MASK MAKE_64BIT_MASK(0, TARGET_VIRT_ADDR_SPACE_BITS)
+ 
+ void loongarch_translate_init(void);
+diff --git a/target/loongarch/cpu_helper.c b/target/loongarch/cpu_helper.c
+index 51ad9ff2b4..6044168766 100644
+--- a/target/loongarch/cpu_helper.c
++++ b/target/loongarch/cpu_helper.c
+@@ -147,6 +147,7 @@ TLBRet loongarch_ptw(CPULoongArchState *env, MMUContext *context,
+ {
+     CPUState *cs = env_cpu(env);
+     hwaddr index = 0, phys = 0;
++    uint64_t palen_mask = loongarch_palen_mask(env);
+     uint64_t dir_base, dir_width;
+     uint64_t base, pte;
+     int level;
+@@ -154,13 +155,14 @@ TLBRet loongarch_ptw(CPULoongArchState *env, MMUContext *context,
+     TLBRet ret;
+     MemTxResult ret1;
+ 
++
+     address = context->addr;
+     if ((address >> 63) & 0x1) {
+         base = env->CSR_PGDH;
+     } else {
+         base = env->CSR_PGDL;
+     }
+-    base &= TARGET_PHYS_MASK;
++    base &= palen_mask;
+ 
+     for (level = 4; level >= 0; level--) {
+         get_dir_base_width(env, &dir_base, &dir_width, level);
+@@ -181,7 +183,7 @@ TLBRet loongarch_ptw(CPULoongArchState *env, MMUContext *context,
+                 break;
+             } else {
+                 /* Discard high bits with page directory table */
+-                base &= TARGET_PHYS_MASK;
++                base &= palen_mask;
+             }
+         }
+     }
+@@ -315,7 +317,7 @@ TLBRet get_physical_address(CPULoongArchState *env, MMUContext *context,
+     /* Check PG and DA */
+     address = context->addr;
+     if (da & !pg) {
+-        context->physical = address & TARGET_PHYS_MASK;
++        context->physical = address & loongarch_palen_mask(env);
+         context->prot = PAGE_READ | PAGE_WRITE | PAGE_EXEC;
+         context->mmu_index = MMU_DA_IDX;
+         return TLBRET_MATCH;
+@@ -364,3 +366,10 @@ hwaddr loongarch_cpu_get_phys_page_debug(CPUState *cs, vaddr addr)
+     }
+     return context.physical;
+ }
++
++uint64_t loongarch_palen_mask(CPULoongArchState *env)
++{
++    /* PALEN stores physical address bits - 1 */
++    uint64_t phys_bits = FIELD_EX32(env->cpucfg[1], CPUCFG1, PALEN) + 1;
++    return MAKE_64BIT_MASK(0, phys_bits);
++}
+diff --git a/target/loongarch/tcg/tlb_helper.c b/target/loongarch/tcg/tlb_helper.c
+index b6e9a3a3c7..c1dc77a8f8 100644
+--- a/target/loongarch/tcg/tlb_helper.c
++++ b/target/loongarch/tcg/tlb_helper.c
+@@ -692,8 +692,10 @@ target_ulong helper_lddir(CPULoongArchState *env, target_ulong base,
+     CPUState *cs = env_cpu(env);
+     uint64_t badvaddr;
+     hwaddr index, phys;
++    uint64_t palen_mask = loongarch_palen_mask(env);
+     uint64_t dir_base, dir_width;
+ 
++
+     if (unlikely((level == 0) || (level > 4))) {
+         qemu_log_mask(LOG_GUEST_ERROR,
+                       "Attepted LDDIR with level %u\n", level);
+@@ -715,11 +717,11 @@ target_ulong helper_lddir(CPULoongArchState *env, target_ulong base,
+     }
+ 
+     badvaddr = env->CSR_TLBRBADV;
+-    base = base & TARGET_PHYS_MASK;
++    base = base & palen_mask;
+     get_dir_base_width(env, &dir_base, &dir_width, level);
+     index = (badvaddr >> dir_base) & ((1 << dir_width) - 1);
+     phys = base | index << 3;
+-    return ldq_le_phys(cs->as, phys) & TARGET_PHYS_MASK;
++    return ldq_le_phys(cs->as, phys) & palen_mask;
+ }
+ 
+ void helper_ldpte(CPULoongArchState *env, target_ulong base, target_ulong odd,
+@@ -730,9 +732,11 @@ void helper_ldpte(CPULoongArchState *env, target_ulong base, target_ulong odd,
+     uint64_t badv;
+     uint64_t ptbase = FIELD_EX64(env->CSR_PWCL, CSR_PWCL, PTBASE);
+     uint64_t ptwidth = FIELD_EX64(env->CSR_PWCL, CSR_PWCL, PTWIDTH);
++    uint64_t palen_mask = loongarch_palen_mask(env);
+     uint64_t dir_base, dir_width;
+     uint8_t  ps;
+ 
++
+     /*
+      * The parameter "base" has only two types,
+      * one is the page table base address,
+@@ -740,7 +744,7 @@ void helper_ldpte(CPULoongArchState *env, target_ulong base, target_ulong odd,
+      * and the other is the huge page entry,
+      * whose bit 6 should be 1.
+      */
+-    base = base & TARGET_PHYS_MASK;
++    base = base & palen_mask;
+     if (FIELD_EX64(base, TLBENTRY, HUGE)) {
+         /*
+          * Gets the huge page level and Gets huge page size.
+@@ -781,7 +785,7 @@ void helper_ldpte(CPULoongArchState *env, target_ulong base, target_ulong odd,
+         ptoffset0 = ptindex << 3;
+         ptoffset1 = (ptindex + 1) << 3;
+         phys = base | (odd ? ptoffset1 : ptoffset0);
+-        tmp0 = ldq_le_phys(cs->as, phys) & TARGET_PHYS_MASK;
++        tmp0 = ldq_le_phys(cs->as, phys) & palen_mask;
+         ps = ptbase;
+     }
+ 
 
 -- 
-Best regards,
-Vladimir
+2.52.0
+
 
