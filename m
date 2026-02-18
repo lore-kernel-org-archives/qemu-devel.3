@@ -4,92 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF8FEE9A02C
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 16:19:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7949E9A047
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 16:20:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vskG0-0008Q7-QE; Wed, 18 Feb 2026 11:18:33 -0500
+	id 1vskHH-0000Nx-Sv; Wed, 18 Feb 2026 11:19:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <axboe@kernel.dk>) id 1vskFx-0008Pa-OZ
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 11:18:29 -0500
-Received: from mail-qv1-xf29.google.com ([2607:f8b0:4864:20::f29])
+ (Exim 4.90_1) (envelope-from <axboe@kernel.dk>) id 1vskH8-0000I6-5b
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 11:19:42 -0500
+Received: from mail-qk1-x734.google.com ([2607:f8b0:4864:20::734])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <axboe@kernel.dk>) id 1vskFm-0004ul-NQ
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 11:18:23 -0500
-Received: by mail-qv1-xf29.google.com with SMTP id
- 6a1803df08f44-89549b2f538so5012876d6.2
- for <qemu-devel@nongnu.org>; Wed, 18 Feb 2026 08:18:12 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <axboe@kernel.dk>) id 1vskH5-0005YZ-IQ
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 11:19:41 -0500
+Received: by mail-qk1-x734.google.com with SMTP id
+ af79cd13be357-8cb3a8494c5so487798385a.2
+ for <qemu-devel@nongnu.org>; Wed, 18 Feb 2026 08:19:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=kernel-dk.20230601.gappssmtp.com; s=20230601; t=1771431492; x=1772036292;
+ d=kernel-dk.20230601.gappssmtp.com; s=20230601; t=1771431567; x=1772036367;
  darn=nongnu.org; 
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=Xp7vQ0DUAAfOK5KgbDsk0O302+yuwl4xwmTcIOq8d0Y=;
- b=CHwvm4eS6SAHwjWv7n/1tNJnaGcTJc4YIM44kGDY3oGLiTqNkRqggd/4560rsLemXi
- tFSRKAe10KMzikerh0gvCnDSmQyvV3vYTfq18g5+n3o9eMHU9AIFvBmbjamIFtYpqLLg
- gArRlCQ+OfFWJ/bOmFDv3urwNvXsgZviPbjwqiN1SQlIqgot0Aa9fcrlSUwljHywFqJm
- yXKddqApXHPPK2yTDAU7lV2fWz9qKOEoswYDOgJgjSAawLf4F7ohvsyF1qOb6skpRse0
- NMh3U8I7GBycnC2573uu6n9frUS353+CwcqnP+Odd8WiEzKus6GpVYuyhFm6so7PQooy
- un8Q==
+ bh=qY1e9tdVMtgaq/2zP7f9Q8Qnw5Q3quaqtHRpNjjYfvo=;
+ b=BtZtWoTJiVBtjvLMbOqkGJqqn7sfeMOn8632Yxcaw8dRW0SaxC2pH5/tV1hBH6jl/7
+ u3tXn3wE7RrcNjAkLAyXNvqr+BF1XgoOP0cBhS+zqc8CbzNhoIpkdqGuMamyr9kR+wA4
+ HlJF5hA62heSobGBOIN2NnhFv9H8fi6AMWx0Xu5GioozO5nvKvyL1W5DZVDLLdicIufM
+ coN6kituS84w6ITVPljwuA+hoGjNgkaWrS2qc2u90JfTjo4/8XHCVR8u2v/lYU7cIFZm
+ ARYFarGxz4ru2uByzRF57YPKxNlqh3joIjdgvpjQDj7KWYIRcQMjAk+37IJ9k39PhqvL
+ eP9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771431492; x=1772036292;
+ d=1e100.net; s=20230601; t=1771431567; x=1772036367;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=Xp7vQ0DUAAfOK5KgbDsk0O302+yuwl4xwmTcIOq8d0Y=;
- b=mVHm7xz1B7cegLSspH1kMDX77PmOnGjRQTbBHSZ/1xAI1WibTHpDrCW4HQXguQcwl9
- YR6GZxm2Ftx5ehHtlvaDLZPYv6oWWQk0RmBPuvNwUxa8/sSlg4lf4Y6yikFEW5Vgwipl
- N8Fd6R24NP1jz3Ro+g5jeXwmGwkdWK6j6/BCQ2fP+DMaY8VubmBu84GlUBZgOWSUyIiX
- O62bPF4QqFjPJyDce/k2JUNtBL1p3iOmY/+Hj1f77a7HwJAJt/9jbePrvEW4Tqzz8KCP
- oqoWa9Jtby3tRMmAvZjndVRX/rO1nU0JJayaBOe8srmsw77DYqmr5rByf5jQCwMzwUir
- ReFA==
+ bh=qY1e9tdVMtgaq/2zP7f9Q8Qnw5Q3quaqtHRpNjjYfvo=;
+ b=lEWvT58jOz1VCOeu22911aAOy2k2YwsFEV48d59ZJ3IovyEuuAAKklvWrmU1fR7Yby
+ T2N8mSP//M88I4J7ECUoHAnaDZ97kr+P9LD6nBUku6POuJh+0B0LqZdfcpROLxnMrTYy
+ hdTNbiMtXLCaSeI/UcwXhV/mhh2qZCavAXlZ7rUQNm2MBxsFYx6uzNwSAagAcQ2CHkj3
+ hfKkRWUaqqfkg361Eby0iSjVGhkk90hcfbvgshthLlJl3tHP4ZUozmxQNcKutx+1+plb
+ D/pMUxrbil9M/PqLFWn9gxjXkQRhM6LrZj1PNjXhtIFs85k0lxawXO/s8Ounu5jDa/0O
+ 5bpw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUhoVUm35QfN488I4cz7gT9qrDsdk1WcAMMWlryCF3Lfl87zjlcxgPuwE5MvjE/aIo7WvuUFwN2WWrf@nongnu.org
-X-Gm-Message-State: AOJu0YzIAxZJevHoQjrR+ztwUE9G6sduGhYXNraFL0Q6IqhWw26kQNnt
- 6pY22txkvNN5tZVZ1n+bzgNdU7zxxYcnybfN64+f25QosADSkJJmABa/I1uwCQA4iZI=
-X-Gm-Gg: AZuq6aJqzG9tpcCKNlx9hXUF9ZTqf4Df8af/eMZY9TeL6953yiEWs8MN4Yc/N/s/49k
- 2e4vNYmVJjOGBMc9CT971ZOJVxQTxnLYZ202hsCTvj6m9vv+/UkjneZBjmlrZW+t5yddx6XtYw+
- KcBvvo+5fSw2gcgi3V0ZLeYUX3AJB9Ow1ORHig9NCPi9dBpLxNHmgZbJxbPGxyUHYR61w2TXZAe
- 90ISCRWpeYuEeyzwuye5wSV6AMX1iywLfiD6/Wg5mZWCcTOOpolc05KMVD+PrXQOKK+YgdtjS5Y
- gx5YDPDqJMaGX23aFbUSLRx3WCY/jaVOEzHluFHhAydQIx/sAQk4ZMnBAX9BFypyNPnqK1SWcDZ
- mMqZKoJofd5HGr1/5xNYSf6KJJr1dDE0LMSt4j/XKF/4EnqZQGRKeJGzZIe4RbusULQSUUZmgh6
- MEnmnNte1fB2czXV8fO6V51VSed+st9InPMrf1Cp7KebfRr1s=
-X-Received: by 2002:ac8:7c4a:0:b0:503:42a4:96fb with SMTP id
- d75a77b69052e-506b402067dmr192170731cf.65.1771431491766; 
- Wed, 18 Feb 2026 08:18:11 -0800 (PST)
+ AJvYcCVmNgKDhS4r9Ja7vIhpxM04VFZXvLCzuh4L4uu9YXMumsx/A14hlfZMVduDdoWRzm0wUonC40F2eQIo@nongnu.org
+X-Gm-Message-State: AOJu0Yw42t+23J/c/pUedEU6w3TrY8uHqkpqW8OkEXaGcA0pC77UZlmp
+ x+gcmp2sabj/B+wFDinjH3VpzPZUcggzQqh5NFOMDaJFDZlwsbS9efF/wuhM7RfOVz8=
+X-Gm-Gg: AZuq6aKRIKg8TEaeGzuzzu2hH5EzNOBgJkEEJe/bSRPZJaUSnyP69/ZzxFkCO0t+uEo
+ jDzhirbbmZDwNnYEorztXywnhf3JB/MpQLcb79leVCi7VThwnSlAmrXARVj0nj2AKmxtjKJZld0
+ +1N0VY38rhRtMplvekM9fKTnl9c4OHy2+HaZL/hR+MzVNPoxapN6P2XLmp3w2YgLrksOEudmvNb
+ CSiuk+Cu1LMf229kII51cIrTF6HiGG00ZXrBZ+F23Dy1wo/L7I2wXmq2g6lNvqDE7KlLAnvnCq3
+ mONy7SyHycYeNOI/sJQzDNWdwozSwBF235Fq7754QJyLPyR/3TE8PDy8H2YUht4jWLiEfHpNfAh
+ C7nDAnzRTyCJHVsRHgTzpXS4bJfXODjFSLf77VTEF0YriGrRgblvJrtv7vKKcpIsPkpVWk1dUSW
+ 1P2a468yzaNH/lkkUXKvNnkiZyrzP2MdclvUoYItCiFdRzJgk=
+X-Received: by 2002:a05:620a:28d0:b0:8c8:82a1:11bf with SMTP id
+ af79cd13be357-8cb7402bc96mr260637685a.2.1771431566466; 
+ Wed, 18 Feb 2026 08:19:26 -0800 (PST)
 Received: from [172.19.0.48] ([99.196.128.5]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-506847d78e1sm213902221cf.4.2026.02.18.08.18.03
+ af79cd13be357-8cb2b0db51fsm1836723885a.14.2026.02.18.08.19.19
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 18 Feb 2026 08:18:10 -0800 (PST)
-Message-ID: <7811fc80-b2a1-4857-95f5-4bf01c806d07@kernel.dk>
-Date: Wed, 18 Feb 2026 09:17:57 -0700
+ Wed, 18 Feb 2026 08:19:25 -0800 (PST)
+Message-ID: <d729df1d-ba33-4cab-88c9-ba980cdaa37d@kernel.dk>
+Date: Wed, 18 Feb 2026 09:19:13 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH 1/2] fdmon-io_uring: notify main loop when SQEs are queued
-To: Stefan Hajnoczi <stefanha@redhat.com>
+To: Stefan Hajnoczi <stefanha@redhat.com>, Fiona Ebner <f.ebner@proxmox.com>
 Cc: Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org,
- qemu-devel@nongnu.org, fam@euphon.net, Fiona Ebner <f.ebner@proxmox.com>
+ qemu-devel@nongnu.org, fam@euphon.net
 References: <20260213143225.161043-1-axboe@kernel.dk>
  <20260213143225.161043-2-axboe@kernel.dk> <aY9Lj1BTVRCFyfic@redhat.com>
  <c32915a9-33a2-47c5-a91b-27f01147918f@proxmox.com>
- <20260218160621.GB587447@fedora>
+ <20260218161127.GC587447@fedora>
 Content-Language: en-US
 From: Jens Axboe <axboe@kernel.dk>
-In-Reply-To: <20260218160621.GB587447@fedora>
+In-Reply-To: <20260218161127.GC587447@fedora>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::f29;
- envelope-from=axboe@kernel.dk; helo=mail-qv1-xf29.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::734;
+ envelope-from=axboe@kernel.dk; helo=mail-qk1-x734.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,7 +105,7 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/18/26 9:06 AM, Stefan Hajnoczi wrote:
+On 2/18/26 9:11 AM, Stefan Hajnoczi wrote:
 > On Wed, Feb 18, 2026 at 10:57:02AM +0100, Fiona Ebner wrote:
 >> Am 13.02.26 um 5:05 PM schrieb Kevin Wolf:
 >>> Am 13.02.2026 um 15:26 hat Jens Axboe geschrieben:
@@ -224,32 +224,27 @@ On 2/18/26 9:06 AM, Stefan Hajnoczi wrote:
 >>> waiting for another CPU to submit the request in its main loop. But I
 >>> don't really have an intuition if that would make things better or worse
 >>> in the common case.
+>>>
+>>> Fiona, does this fix your case, too?
+>>
+>> Yes, it does fix my issue [0] and the second patch gives another small
+>> improvement :)
+>>
+>> Would it be slightly cleaner to have aio_add_sqe() call aio_notify()
+>> itself? Since aio-posix.c calls downwards into fdmon-io_uring.c, it
+>> would feel nicer to me to not have fdmon-io_uring.c call "back up". I
+>> guess it also depends on whether we expect another future fdmon
+>> implementation with .add_sqe() to also benefit from it.
 > 
-> It's possible to call io_uring_enter(). QEMU currently doesn't use
-> IORING_SETUP_SINGLE_ISSUER, so it's okay for multiple threads to call
-> io_uring_enter() on the same io_uring fd.
+> Calling aio_notify() from aio-posix.c:aio_add_sqe() sounds better to me
+> because fdmon-io_uring.c has to be careful about calling aio_*() APIs to
+> avoid loops.
 
-I would not recommend that, see below.
-
-> I experimented with IORING_SETUP_SINGLE_ISSUER (as well as
-> IORING_SETUP_COOP_TASKRUN and IORING_SETUP_TASKRUN_FLAG) in the past and
-> didn't measure a performance improvement:
-> https://lore.kernel.org/qemu-devel/20250724204702.576637-1-stefanha@redhat.com/
-> 
-> Jens, any advice regarding these flags?
-
-None other than "yes you should use them" - it's an expanding area of
-"let's make that faster", so if you tested something older, then that
-may be why as we didn't have a lot earlier. We're toying with getting
-rid of the uring_lock for SINGLE_ISSUER, for example.
-
-Hence I think having multiple threads do enter is a design mistake, and
-one that might snowball down the line and make it harder to step back
-and make SINGLE_ISSUER work for you. Certain features also end up being
-gated behing DEFER_TASKRUN, which requires SINGLE_ISSUER as well.
-
-tldr - don't have multiple threads do enter on the same ring, ever, if
-it can be avoided. It's a design mistake.
+Would anyone care to make that edit? I'm on a plane and gone for a bit,
+so won't get back to this for the next week. But I would love to see a
+fix go in, as this issue has been plaguing me with test timeouts for
+quite a while on the CI front. And seems like I'm not alone, if the
+patches fix Fiona's issues as well.
 
 -- 
 Jens Axboe
