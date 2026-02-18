@@ -4,102 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9EC3CE9A02C
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 19:10:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 497FFE9A04C
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 19:25:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vsmwM-0003bn-Tv; Wed, 18 Feb 2026 14:10:27 -0500
+	id 1vsnAk-0007Sv-L3; Wed, 18 Feb 2026 14:25:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vsmwD-0003aR-2C
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 14:10:18 -0500
-Received: from mail-yx1-xb131.google.com ([2607:f8b0:4864:20::b131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vsmwB-0003vn-EB
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 14:10:16 -0500
-Received: by mail-yx1-xb131.google.com with SMTP id
- 956f58d0204a3-649278a69c5so137901d50.3
- for <qemu-devel@nongnu.org>; Wed, 18 Feb 2026 11:10:15 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1771441814; cv=none;
- d=google.com; s=arc-20240605;
- b=ZnC0JmfhxmuP9BrczCakCEKoy55I4Cl1TK1T5DchylS2RoHZZIamGnKpcDO/i1Hrc7
- ZWq8etv3zgjS2X7oLinEVtUh1zLeTrBPOoZeu4vtULM6pPre3j6+7taE1rY8km2WhYXn
- 3bUc5pTY2xI39NkSRlNSPmRFVYKcuecPLvGd+QgAOuuiO1j0JcH93Vi2k45pgoqANnC3
- ATpohsGFNHq28cfVWbd2rD1I4y/8piMdJLdayuj74Dj4pHa0IPAuxcWgKM/OHSnV6Tai
- f/D0bgOgDn7UUYekIJ7hcbOZCg5guJFNYCESVuYUQIWsegP3wrG0lSdt/jF9m1xp9Ryp
- W+7Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=nXz63d/gKZN17DMQFYFZCoYm6USju4qIdzs9GEUlCW0=;
- fh=ljsPVrMqM9WEgWa5yaVojVHzX4ehGvtuqRUN4Y5D7gg=;
- b=WMXa6iE9vOfHwZbbLOiBDtHYoifJoVGYmH6lEDLvmb4QWav6MiS7P/dhEF4ez+wBU7
- UD0DkBBZ+OEwfwuqlaBREt3W37SqJqKlT4mzX/KUStQnQJlA7mH1VTMJ3ooImVSZjFgE
- BE5ow4dhBm60FrPxERjXTO3PJ6H4mBoyDLWEbbnldSO1KgrodSzWaipCkabwW3F06T6P
- vmwPRr6irPQ4Xsp475z6ylsZcdgq66n/oG/uL9fdTmiN7umnP6FHeAqZrOTm6C5JJfl0
- kywuTgiqcKMtYvv2AhXusYAeHH3GYRPZTPecIBQRlwFz+i4W1LOm+ecEErT/m59mWDDK
- PBeQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771441814; x=1772046614; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=nXz63d/gKZN17DMQFYFZCoYm6USju4qIdzs9GEUlCW0=;
- b=ta7KJZYm/W5j7Yc2NCfNqIugh9EUUvN15kNIv/LW3nfHVUllWplSxPQp9F5XbDg/sH
- 9Hm0lUngoKRO4me8NVDwNnEJnpShJ5+aHnRgvGfSQM/iEMfqGLiiyYohmJYkNarjLVlj
- lG+DLHesEBlzsBwKI3lNcX25AEZjLPZlkCm/VySvulWc6EP8XXFHuFFZKI/kqIBsuhhc
- ZsAVlhWm71iJdNRWEboCQUh2pVpPmRe0bzctoQ1wRmgDlWi1ukqsm8ZcY9b/hs2w44K3
- sWumEH9Q7r39/MT5EeKauMzZEovNAivkTTjjPas2S7l2PzA9fcnKWX1VsQqXSJdvLmGC
- rXfg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771441814; x=1772046614;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=nXz63d/gKZN17DMQFYFZCoYm6USju4qIdzs9GEUlCW0=;
- b=uJgq+5TL7e5ZKvG8D8A6ltJrm2pOxsAn3JgivSOHJ04ZDa1vOd7fSI0mSJY1l6hH1d
- SRtKyiM/dqa0XnUBot5Hs5I2ryqijMVvbCUmrv/UaBjZmTT8Ey38UNa2pX4Ew1Cxy/kz
- 3PqJrPfZNRI1BI7GHdy0aS4K2mMik0iTtTTmuIrxqii6qR3Dk38+fnAzSehMclZmBkwI
- mxJnK6d82agQwCfHuAU33jdf1ecnRm6Good0mvcRh07Wb23fhnPwL41f96WzoACYB7gM
- Y1P7lx1UHDk4OnKGXqBwOfkcRUAYl5pjUfg0jcmUR4rXtREly03zsTElm0/yfcm1pktL
- lNfQ==
-X-Gm-Message-State: AOJu0Yx2KRpjEqhHNyFsh9RO10pgbube1Wwr1CH6JZ+dxICetMevIHEn
- 583DvkHiPiLh4rN1G+eZYfhh+fF8j9OmeVINyVSs/y7orUo0U5nY0DMMs8UWe3EWmJiOTIUZWBO
- o7Tz2r+SlGgop22eIz1d0zH+z7Ro1coP13TA6BqJt/Q==
-X-Gm-Gg: AZuq6aL4Z4lJAa6KtA0n0YQOfF0EsN35aggLk1PzRdxnfsAaZZGtB2FJtvz1kSY8awg
- H0G87tjJW0dJwlrguGWKYVtSOqp0gPBWE54xPAOSRVDoAL0aNpOyjWg6Mh3BA1yl26a+Wm49byn
- 6Kvha3umVup+08VzHIafTHN2haciisWwJ8LN4sEErXZXz+ChVznzjhsn39irQpScjTOSRGRkk7q
- UFma28KrBgW4dRY/5SpvRMWZMixh/B1NjmemwhVn9m65fikSM3fLy0ABzQHNdXRS8RdRVwfdOsK
- nvArqTFI0LWa5xIZNZvEzJqmEe1DcQsTusnqjdO2gdwcLEgNxP6R5qt8GjJeILDsSio=
-X-Received: by 2002:a05:690e:1515:b0:64a:d29c:e159 with SMTP id
- 956f58d0204a3-64c14dceacfmr13865906d50.82.1771441814231; Wed, 18 Feb 2026
- 11:10:14 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vsnAd-0007RB-P1
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 14:25:12 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vsnAX-0006Dt-7h
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 14:25:07 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1771442702;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=zBxegAmqhZ3qAC7xjo+MRLf7aiu/BUmApBQkPzMRUas=;
+ b=eWjotUoJlyz8SHaV2QloQ03yVQnZdG8GMftlk/k9KaxtrnP8xCdlmvj+PH7y4ibBZ6dpHz
+ cSPRZhXYLp6tVeVLAbrNChaiuQdON6F95tNmIghct9EbZMj/aevcT98TDRcEGH9XHzd1rM
+ jWfs9WH5aRS0wgBuquX9jgDYRtTRF8U=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-605-BUGQtmHhMjWrLNOrkuiMaA-1; Wed,
+ 18 Feb 2026 14:25:00 -0500
+X-MC-Unique: BUGQtmHhMjWrLNOrkuiMaA-1
+X-Mimecast-MFC-AGG-ID: BUGQtmHhMjWrLNOrkuiMaA_1771442699
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 34EE31955D42; Wed, 18 Feb 2026 19:24:59 +0000 (UTC)
+Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.65.233])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id C44D91956095; Wed, 18 Feb 2026 19:24:56 +0000 (UTC)
+From: John Snow <jsnow@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-rust@nongnu.org, Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ John Snow <jsnow@redhat.com>
+Subject: [PATCH 0/1] rust: use checked_div()
+Date: Wed, 18 Feb 2026 14:24:43 -0500
+Message-ID: <20260218192444.658046-1-jsnow@redhat.com>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-References: <20260206131438.1857182-1-imammedo@redhat.com>
-In-Reply-To: <20260206131438.1857182-1-imammedo@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Wed, 18 Feb 2026 19:10:02 +0000
-X-Gm-Features: AZwV_Qjxq9ubraA4U_y5tjXub_pbF0nmaBehX4vfQrLu9cly50eEJBcmtH413uk
-Message-ID: <CAFEAcA-jtOBvOs2dJkrd2vwHFj54m2jPKK9fLSBLptAVNorhSA@mail.gmail.com>
-Subject: Re: [PATCH 00/11] Introduce ACPI watchdog for Q35 and arm/virt boards
-To: Igor Mammedov <imammedo@redhat.com>
-Cc: qemu-devel@nongnu.org, mst@redhat.com, anisinha@redhat.com, 
- pbonzini@redhat.com, shannon.zhaosl@gmail.com, philmd@linaro.org, 
- zhao1.liu@intel.com, rad@semihalf.com, leif.lindholm@oss.qualcomm.com
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b131;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb131.google.com
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.043,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,25 +80,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 6 Feb 2026 at 13:14, Igor Mammedov <imammedo@redhat.com> wrote:
->
-> Windows doesn't ship built-in TCO watchdog driver, and users are
-> forced to install vendor specific driver(s) if such exists.
-> However OS provides a generic watchdog driver that uses
-> ACPI WDAT table [1] to abstract actual hardware behind it.
-> The same applies to ARM version of Windows.
->
-> This series adds
->  *  WDAT table tailored for TCO watchdog that Q35 already
->     has as part of ICH9 chipset and a knob to enable it.
->  *  SBSA GWDT to arm/vit machine with WDAT table tailored
->     for it and necessary tweaks to GWDT to make usable
->     with WDAT driver.
+When upgrading from Fedora 41 to Fedora 43 for our CI tests, (Which I do in=
+=0D
+https://patchew.org/QEMU/20260216212952.420120-1-jsnow@redhat.com/),=0D
+clippy begins complaining about not using checked_div instead of=0D
+manually checking divisors; see https://gitlab.com/jsnow/qemu/-/jobs/131691=
+93931=0D
+=0D
+This patch aims to make Clippy happy and prevent any regressions caused=0D
+by the lcitool refresh.=0D
+=0D
+(Tested only via GitLab CI, and I am not exactly a rust wizard...)=0D
+=0D
+John Snow (1):=0D
+  rust: use checked_div to make clippy happy=0D
+=0D
+ rust/hw/core/src/qdev.rs | 14 ++++++--------=0D
+ 1 file changed, 6 insertions(+), 8 deletions(-)=0D
+=0D
+-- =0D
+2.53.0=0D
+=0D
 
-> Also CCing SBSA folks to see if they are interested in adding it to their
-> reference machine
-
-The sbsa-ref machine already implements an sbsa-gwdt watchdog...
-
--- PMM
 
