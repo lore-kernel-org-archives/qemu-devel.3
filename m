@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DADDE9A03B
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 12:47:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7909E9A03B
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 12:48:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vsgxC-00035l-EV; Wed, 18 Feb 2026 07:46:54 -0500
+	id 1vsgy1-0003Xs-Vp; Wed, 18 Feb 2026 07:47:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vsgwM-0002vL-DZ
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 07:46:04 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vsgy0-0003X7-5v
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 07:47:44 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vsgwL-0001UK-0T
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 07:46:02 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vsgxy-0001ae-Md
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 07:47:43 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771418759;
+ s=mimecast20190719; t=1771418862;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=DyEfyRbcy2C+TTaR7sOWngqnVkpTbO8bpRi3N/UBO4Q=;
- b=LQ8RBdheddzm/8XkBGtw2v63+rig8qttuN+L8L7BJxxmm4OoCs3cYOZ2FQBEcKzi7ifa90
- BJtDa86bwJEs4us1TTzoW5UAOEcETsDaLeEc5+c8gB4y/NmA6leoItB9iPf6EJh1GVhae0
- 0PXPbTau/LdVjCZpHtPZ21vIHkjg5fo=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=2DTIgg4DtyxMR0x2nf7H4YzzQVN3NVFHNoatTHDgLEI=;
+ b=AaE0mhBX1xsPxXvPXpCbUhHKVb9ICrI6zdSVycbECiQbRbhS5Plqire0W0oeEYzHYNGovF
+ AXvvh7mOpeXNZuxGIK0S8r9EomULhxFr+SUQQwXQCHYYfmNBGez7ITlzsmLXzDGzb0P2EO
+ a7JSYBXQRsOQPsqUgUqUDEKg5MjCahE=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-373-NJLGHDRcO8C87ZQnhFz_3Q-1; Wed,
- 18 Feb 2026 07:45:55 -0500
-X-MC-Unique: NJLGHDRcO8C87ZQnhFz_3Q-1
-X-Mimecast-MFC-AGG-ID: NJLGHDRcO8C87ZQnhFz_3Q_1771418754
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-439-uVncnrSrMXCbKek6xJxfTg-1; Wed,
+ 18 Feb 2026 07:47:39 -0500
+X-MC-Unique: uVncnrSrMXCbKek6xJxfTg-1
+X-Mimecast-MFC-AGG-ID: uVncnrSrMXCbKek6xJxfTg_1771418857
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 95091195605B; Wed, 18 Feb 2026 12:45:53 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 063071955BD9; Wed, 18 Feb 2026 12:47:37 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.45.242.14])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EB42419560B5; Wed, 18 Feb 2026 12:45:52 +0000 (UTC)
+ id 7F05D19560B7; Wed, 18 Feb 2026 12:47:36 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 8EC7C21E692D; Wed, 18 Feb 2026 13:45:50 +0100 (CET)
+ id 39F0921E692D; Wed, 18 Feb 2026 13:47:34 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
 To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
 Cc: qemu-devel@nongnu.org,  Manos Pitsidianakis
@@ -60,14 +60,15 @@ Cc: qemu-devel@nongnu.org,  Manos Pitsidianakis
  Paolo Bonzini <pbonzini@redhat.com>,  Gerd Hoffmann <kraxel@redhat.com>,
  Christian Schoenebeck <qemu_oss@crudebyte.com>,  Richard Henderson
  <richard.henderson@linaro.org>
-Subject: Re: [PATCH v6 19/27] util: fix interleaving of error & trace output
-In-Reply-To: <20260211152508.732487-20-berrange@redhat.com> ("Daniel
- P. =?utf-8?Q?Berrang=C3=A9=22's?= message of "Wed, 11 Feb 2026 15:25:00
+Subject: Re: [PATCH v6 20/27] util: don't skip error prefixes when QMP is
+ active
+In-Reply-To: <20260211152508.732487-21-berrange@redhat.com> ("Daniel
+ P. =?utf-8?Q?Berrang=C3=A9=22's?= message of "Wed, 11 Feb 2026 15:25:01
  +0000")
 References: <20260211152508.732487-1-berrange@redhat.com>
- <20260211152508.732487-20-berrange@redhat.com>
-Date: Wed, 18 Feb 2026 13:45:50 +0100
-Message-ID: <87a4x6cj9d.fsf@pond.sub.org>
+ <20260211152508.732487-21-berrange@redhat.com>
+Date: Wed, 18 Feb 2026 13:47:33 +0100
+Message-ID: <875x7ucj6i.fsf@pond.sub.org>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -99,44 +100,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-One more...
-
 Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
-> The monitor_cur_hmp() function will acquire/release mutex locks, which
-> will trigger trace probes, which can in turn trigger qemu_log() calls.
-> vreport() calls monitor_cur() multiple times through its execution
-> both directly and indirectly via error_vprintf().
+> The vreport() function will print to HMP if available, otherwise
+> to stderr. In the event that vreport() is called during execution
+> of a QMP command, it will print to stderr, but mistakenly omit the
+> message prefixes (timestamp, guest name, program name).
 >
-> The result is that the prefix information printed by vreport() gets
-> interleaved with qemu_log() output, when run outside the context of
-> an HMP command dispatcher. This can be seen with:
-
-[...]
-
+> This new usage of monitor_is_cur_qmp() from vreport() requires that
+> we add a stub to satisfy linking of non-system emulator binaries.
+>
+> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+> ---
+>  stubs/monitor-core.c           | 5 +++++
+>  tests/unit/test-util-sockets.c | 1 +
+>  util/error-report.c            | 8 ++++++++
+>  3 files changed, 14 insertions(+)
+>
+> diff --git a/stubs/monitor-core.c b/stubs/monitor-core.c
+> index a7c32297c9..078a5012e9 100644
+> --- a/stubs/monitor-core.c
+> +++ b/stubs/monitor-core.c
+> @@ -7,6 +7,11 @@ Monitor *monitor_cur(void)
+>      return NULL;
+>  }
+>=20=20
+> +bool monitor_cur_is_qmp(void)
+> +{
+> +    return false;
+> +}
+> +
+>  Monitor *monitor_set_cur(Coroutine *co, Monitor *mon)
+>  {
+>      return NULL;
+> diff --git a/tests/unit/test-util-sockets.c b/tests/unit/test-util-socket=
+s.c
+> index ee66d727c3..b9f2453e29 100644
+> --- a/tests/unit/test-util-sockets.c
+> +++ b/tests/unit/test-util-sockets.c
+> @@ -74,6 +74,7 @@ int monitor_get_fd(Monitor *mon, const char *fdname, Er=
+ror **errp)
+>  Monitor *monitor_cur(void) { return cur_mon; }
+>  Monitor *monitor_set_cur(Coroutine *co, Monitor *mon) { abort(); }
+>  int monitor_vprintf(Monitor *mon, const char *fmt, va_list ap) { abort()=
+; }
+> +bool monitor_cur_is_qmp(void) { abort(); };
+>=20=20
+>  #ifndef _WIN32
+>  static void test_socket_fd_pass_name_good(void)
 > diff --git a/util/error-report.c b/util/error-report.c
-> index f3aa24ec22..b34a2bc7bc 100644
+> index b34a2bc7bc..052f0f68b8 100644
 > --- a/util/error-report.c
 > +++ b/util/error-report.c
+> @@ -227,6 +227,14 @@ static void vreport(report_type type, const char *fm=
+t, va_list ap)
+>      Monitor *cur =3D monitor_cur();
+>      gchar *timestr;
+>=20=20
+> +    /*
+> +     * When current monitor is QMP, messages must go to stderr
+> +     * and have prefixes added
 
-[...]
+Let's end the sentence with a period.
 
-> @@ -156,34 +176,34 @@ void loc_set_file(const char *fname, int lno)
->  /*
->   * Print current location to current monitor if we have one, else to std=
-err.
+> +     */
+> +    if (monitor_cur_is_qmp()) {
+> +        cur =3D NULL;
+> +    }
+> +
+>      if (message_with_timestamp && !cur) {
+>          timestr =3D real_time_iso8601();
+>          fprintf(stderr, "%s ", timestr);
 
-This is now misleading.  Let's use
-
-    * Print to @cur_mon if non-null, else to stderr.
-
->   */
-> -static void print_loc(void)
-> +static void print_loc(Monitor *cur)
->  {
->      const char *sep =3D "";
->      int i;
-
-[...]
+Reviewed-by: Markus Armbruster <armbru@redhat.com>
 
 
