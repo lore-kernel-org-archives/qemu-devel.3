@@ -4,90 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C266FE9A03B
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 11:07:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E31F7E9A04C
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 11:43:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vsfOT-0005jL-1T; Wed, 18 Feb 2026 06:06:57 -0500
+	id 1vsfxf-0003D9-Bu; Wed, 18 Feb 2026 06:43:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vsfOR-0005in-5u
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 06:06:55 -0500
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vsfOP-0003yJ-NI
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 06:06:54 -0500
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-4359a302794so3795671f8f.1
- for <qemu-devel@nongnu.org>; Wed, 18 Feb 2026 03:06:52 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1vsfxU-00037M-U7
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 06:43:10 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1vsfxL-0007mY-T4
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 06:43:01 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1771414978;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=ILLZe/318SI2fwBccfO7VLFYXHx8OHK07juZHL2pnss=;
+ b=ctz+YeRqqnGkx5QWnaOOt35xDpSVHsoakdEgUCbmbGL8Pun8Ntbiup/WU8Ekv7SrO8jJuy
+ RsanmjIn8BbkICwn0Cfyq6xkHzX8Uje8NLaYQVTc4+BfGVC3VM6G6HabJOpNLLpixByyPh
+ ZQ1L7s3KSe0MZhYbEqUq35UijpMYV5U=
+Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com
+ [209.85.214.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-412-SXFvyQPSODugeHa5r82fiA-1; Wed, 18 Feb 2026 06:42:56 -0500
+X-MC-Unique: SXFvyQPSODugeHa5r82fiA-1
+X-Mimecast-MFC-AGG-ID: SXFvyQPSODugeHa5r82fiA_1771414976
+Received: by mail-pl1-f197.google.com with SMTP id
+ d9443c01a7336-2aadeb3dee4so311566045ad.2
+ for <qemu-devel@nongnu.org>; Wed, 18 Feb 2026 03:42:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1771412812; x=1772017612; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
+ d=redhat.com; s=google; t=1771414976; x=1772019776; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=b87vLX9tTX1XT/JhPNlGCRIwLa50acRgBi249pX4ytE=;
- b=DoBLrCMQROfz3I2zVTj8fAG0qOSNtMA7XARLlBAn/ZhPJrG6jTOlyL23yRUwJvTbDB
- jAyUioQTjR+8QzjcSjGC6iOQ1rl6Y9ln8jq0SEGLJp0bXJN5ZogYev5z4Xyz8OuEnw4Q
- dRTQtoUSE5HRWJdpzj5IdCe4hZ33P527LmlmPLTC/1vD5msNJzcMiIHKTfmk2utry0OH
- 7en+k/j+n2AHz+c64Sqjw2gH3wc5iAq190G8sBdTu/iHdtqxMI5Bp25KWH+jNdLWSpeo
- E35Pw0RtD6CJy0vVJYZmAR5hD6pvDbI5Da9cefvIFPXZVfcxUjIE9y2yIr4nq5AK/dYW
- MTyg==
+ bh=ILLZe/318SI2fwBccfO7VLFYXHx8OHK07juZHL2pnss=;
+ b=olME3GTATuHySEZmGUz5Tl8bOjKT+T79OiEiauHoQnj874vINIoE9qzvFSfyVQn+sD
+ qLi7FbgMbLdIh8vU/kxfp7jiqZqVL/j0YPKKarf+0YovNd7pNsA5j8pMauVtlA2TZsBC
+ yE/GVS1CdmPNOVwhnbppVXKBbc57dAOSpy8y5yvFHEqgRZS8z5Wh7vYIPD0tH68Pmljp
+ F+pBcMGyaczq7A7Istms36iygYFgzqH1KZusOIKtfxHyr4dEwXgd7utYWIeLG4mjHBGp
+ IuCsinYd451ISoKoXw7VrGpNlGHpTQCJI6Q172u32KHFAtHHVP9vD/9P0AX5TyaqUhMZ
+ HNEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771412812; x=1772017612;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
+ d=1e100.net; s=20230601; t=1771414976; x=1772019776;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=b87vLX9tTX1XT/JhPNlGCRIwLa50acRgBi249pX4ytE=;
- b=WhfGtBSI4LpEkq+pcZnlAViRx52hgzewjc2H84gGsO1RfKW/9Z7O4E9PbJcwdWRu/9
- sZ7M0x8wVOgmEZ7s6Kdk+B9xG9V+HUEE3woGka7ApE1OuJ7/OIuawlxF6R05TJtwwUTe
- F5b80GQ68xsgbudKLxzH/prkmltcMN673NG6keqNQBOzqvfRBQvwLoGvJmMSNbsz/RyW
- CA85GgFXSiS1310vUlDoC9CdKW8wN4Lt8+95nnjEgVTnrw+KUdHm2W96e73fedB/Le4T
- jSPLxmwKRjf2HYnfEbfDO9XxHfRQVxVWIxzpnvWrrNIQV5hmaeG37o8gppUZscyhG5UX
- 8qtQ==
-X-Gm-Message-State: AOJu0YxHMiU+csKuRAKEk9HA6fKmHG/XFK24swZ+Rr4rluqAiCKsZer2
- vVDytMkAxa2/2zgdzxH9FutM5oj2Ajrx1sUznW+hWN6n4iQ90YHQwQs/
-X-Gm-Gg: AZuq6aInLy/SL/eJJHIRsm7aszOdMXu8wHiFuSh6B5/8A+wEj5kskQ54VflPewh5QpF
- cY2qaKoQhVQEBQG/3jHLFyoqQUm0UUrUueDCMEjiGLb3XIXNEwZLtV6i6mGvVQUuUbz9P8mAQCV
- ej1Ny/TBOsd3mWAsR6S1hH2IA87LrV/TOtNYs0YUmYOQrIeYLk3iZPaQwIBMD0hPBLo/tejOXAq
- 8wkMutFNfvWHJOqhZPSmb0L7DBXPej6iwtohleWZ0ux2L7LnljMb7v8ky1rZAnOw81sABG+LTj1
- l8BGZGHz4OVGEaJiqMZFLgaoqg45rI7nYUBwr8fX3flfI3HINqlwTtcMI0Mjk1o+ykzDze8+Wf2
- a6dLJuMH2c+Ls8Rm8a36g/+MVXD59c87+YWnJwzd0L3sQjv251fcaYkIa0OL0w/TgNMquJf5Nk5
- nTfI0pXiGOkoVcYRfburhjriGdtS00GMJVqQV5IcNY
-X-Received: by 2002:a05:600c:c095:b0:483:7f4e:fef4 with SMTP id
- 5b1f17b1804b1-4837f4f00dcmr181888305e9.25.1771412811425; 
- Wed, 18 Feb 2026 03:06:51 -0800 (PST)
-Received: from ehlo.thunderbird.net ([185.238.219.49])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-439567aad3csm6790373f8f.36.2026.02.18.03.06.50
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 18 Feb 2026 03:06:50 -0800 (PST)
-Date: Wed, 18 Feb 2026 11:06:48 +0000
-From: Bernhard Beschow <shentey@gmail.com>
-To: Wei Liu <wei.liu@kernel.org>
-CC: qemu-devel@nongnu.org, Cameron Esfahani <dirty@apple.com>,
- Magnus Kulke <magnuskulke@linux.microsoft.com>,
- Roman Bolshakov <rbolshakov@ddn.com>,
- Phil Dennis-Jordan <phil@philjordan.eu>,
- Mohamed Mediouni <mohamed@unpredictable.fr>
-Subject: Re: [PATCH 0/3] i386 emulate fixes
-In-Reply-To: <20260218063156.GC2236050@liuwe-devbox-debian-v2.local>
-References: <20260214131659.31378-1-shentey@gmail.com>
- <20260218063156.GC2236050@liuwe-devbox-debian-v2.local>
-Message-ID: <6A22CA41-E9E6-4767-A550-161EC472899E@gmail.com>
+ bh=ILLZe/318SI2fwBccfO7VLFYXHx8OHK07juZHL2pnss=;
+ b=Yso2k6wOwMrTMPMQpO8rWG7Xr6dv2yhO3wcKXb8lR6EB+pmok7XZTQsaF8ELCaW5Cr
+ ecLGPk5HT+1t9pO9EmT999LRHlZgfKm4V6BxEpj3MxMXyb4WXDlXwshG7stT1w7hUfNl
+ D8YJvLtnLfaqsT/VOOu9iZMCdW+fuEhD1M1wqyG5ZqZ7VNIa+u7SJ55qFUDC1HSOdyhz
+ AjY1nJLT8gViURVNbhMAgIWTCUglPxw8xdQHKsvTiNMzKcghV6ns+CDZV7oAnXnB3qOh
+ ZE/z5puHCmnbtOtlS23BQbQqtPslcT9O9A2Ugk31HqlPQSqlQ5EMxgi/+M1BCRgY4673
+ TTSg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWqZms6iwRZffCVSPsHLeq1W6VV84ggBS8K28TqOsAOiZM9azlOvAHn2y2dZb3ctEwQfAenAi8PdBQI@nongnu.org
+X-Gm-Message-State: AOJu0Yx5JB/i5e+a7JGj1kTqG6Nev3u+gzzoP3Uc7fYnbMq0MgTt7J6s
+ 721WpMSweJ4Xg07Csl1YW6on2Jku040i4MfTXlV92nMT31leUoQX1dx1vTDCpQ+l+GM4vqsI0y7
+ mzkSraOQWGS+lJEZRpfJogqUB1z+Cz7yArfXyaV7qwmDTKHvj8MkbTNTD
+X-Gm-Gg: AZuq6aK9xJhB9yrMYYqTKpo7JT5ys0D4jQl0r9FWWkCMLZrBnGAMGWddKvMdRJ2WSde
+ 0XwVj237XSufavN49eG5tZaPJuGgFSM1QIuGIRwW3kj76FFNtQbBMsy5bNlEPiPC+/I94vTYV6Q
+ khvgrofax5Ag2/htni8CqfrQg6NXSvuzj97FlPtS/iPiTCZ0O5NY8T+v3bvhyxK8Oc1ufRtT9+d
+ gQNAXRuX7w5lnU+8wAYlFL5cyxWrT+reOWNbowWsyvoGfXPzt8niCvZeO7w04A0CtYYP6H/Km0E
+ eTbQ7Ct0NMh2J0v+K2q96ANOXpKZVOT1T8TkaAwxFHqEetMn2BQt8yTUBIf47Mvj/E3HzVtqF03
+ rW1qIcGO9jzAyFOlXGiEtBCwoO2INkE9CUCDIeyigM9RhNtb8rheA
+X-Received: by 2002:a17:902:c94b:b0:2aa:cfee:a47b with SMTP id
+ d9443c01a7336-2ab4d09c4famr209209435ad.54.1771414975855; 
+ Wed, 18 Feb 2026 03:42:55 -0800 (PST)
+X-Received: by 2002:a17:902:c94b:b0:2aa:cfee:a47b with SMTP id
+ d9443c01a7336-2ab4d09c4famr209209245ad.54.1771414975453; 
+ Wed, 18 Feb 2026 03:42:55 -0800 (PST)
+Received: from rhel9-box.lan ([117.99.83.54])
+ by smtp.googlemail.com with ESMTPSA id
+ d9443c01a7336-2ad1aaeab38sm127803425ad.82.2026.02.18.03.42.52
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 18 Feb 2026 03:42:55 -0800 (PST)
+From: Ani Sinha <anisinha@redhat.com>
+To: Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: Ani Sinha <anisinha@redhat.com>, kraxel@redhat.com, qemu-devel@nongnu.org
+Subject: [PATCH v5 03/34] hw/accel: add a per-accelerator callback to change
+ VM accelerator handle
+Date: Wed, 18 Feb 2026 17:11:56 +0530
+Message-ID: <20260218114233.266178-4-anisinha@redhat.com>
+X-Mailer: git-send-email 2.42.0
+In-Reply-To: <20260218114233.266178-1-anisinha@redhat.com>
+References: <20260218114233.266178-1-anisinha@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=shentey@gmail.com; helo=mail-wr1-x42b.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=anisinha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.043,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,43 +124,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+When a confidential virtual machine is reset, a new guest context in the
+accelerator must be generated post reset. Therefore, the old accelerator guest
+file handle must be closed and a new one created. To this end, a per-accelerator
+callback, "rebuild_guest" is introduced that would get called when a confidential
+guest is reset. Subsequent patches will introduce specific implementation of
+this callback for KVM accelerator.
 
+Signed-off-by: Ani Sinha <anisinha@redhat.com>
+---
+ include/accel/accel-ops.h |  2 ++
+ system/runstate.c         | 38 +++++++++++++++++++++++++++++++++++++-
+ 2 files changed, 39 insertions(+), 1 deletion(-)
 
-Am 18=2E Februar 2026 06:31:56 UTC schrieb Wei Liu <wei=2Eliu@kernel=2Eorg=
->:
->On Sat, Feb 14, 2026 at 02:16:56PM +0100, Bernhard Beschow wrote:
->> When testing Mohamed's recent x86_64 WHPX updates [1] I encountered two
->> compilation issues under MSYS2/GCC which are fixed in this series=2E Th=
-e last
->> commit fixes a missed optimization opportunity in MSHV code=2E
->>=20
->> The MSHV code will be reused in WHPX [1] which allowed me to test it=2E=
- I
->> didn't notice any performance benefits, though in theory there should b=
-e some
->> due to less guest memory accesses=2E
->>=20
->> Testing done:
->> * Use a Linux VM for a couple of hours
->>=20
->> [1] https://lore=2Ekernel=2Eorg/qemu-devel/20260213034556=2E13471-1-moh=
-amed@unpredictable=2Efr/
->>=20
->> Bernhard Beschow (3):
->>   target/i386/emulate/x86_decode: Fix compiler warning
->>   target/i386/hvf/x86_mmu: Fix compiler warning
->>   target/i386/emulate/x86_decode: Actually use stream in
->>     decode_instruction_stream()
->
->Reviewed-by: Wei Liu (Microsoft) <wei=2Eliu@kernel=2Eorg>
+diff --git a/include/accel/accel-ops.h b/include/accel/accel-ops.h
+index 23a8c246e1..f46492e3fe 100644
+--- a/include/accel/accel-ops.h
++++ b/include/accel/accel-ops.h
+@@ -23,6 +23,8 @@ struct AccelClass {
+     AccelOpsClass *ops;
+ 
+     int (*init_machine)(AccelState *as, MachineState *ms);
++    /* used mainly by confidential guests to rebuild guest state upon reset */
++    int (*rebuild_guest)(MachineState *ms);
+     bool (*cpu_common_realize)(CPUState *cpu, Error **errp);
+     void (*cpu_common_unrealize)(CPUState *cpu);
+     /* get_stats: Append statistics to @buf */
+diff --git a/system/runstate.c b/system/runstate.c
+index 13f32bed8c..e7b50e6a3b 100644
+--- a/system/runstate.c
++++ b/system/runstate.c
+@@ -42,6 +42,7 @@
+ #include "qapi/qapi-commands-run-state.h"
+ #include "qapi/qapi-events-run-state.h"
+ #include "qemu/accel.h"
++#include "accel/accel-ops.h"
+ #include "qemu/error-report.h"
+ #include "qemu/job.h"
+ #include "qemu/log.h"
+@@ -509,6 +510,9 @@ void qemu_system_reset(ShutdownCause reason)
+ {
+     MachineClass *mc;
+     ResetType type;
++    AccelClass *ac = ACCEL_GET_CLASS(current_accel());
++    bool guest_state_rebuilt = false;
++    int ret;
+ 
+     mc = current_machine ? MACHINE_GET_CLASS(current_machine) : NULL;
+ 
+@@ -521,6 +525,29 @@ void qemu_system_reset(ShutdownCause reason)
+     default:
+         type = RESET_TYPE_COLD;
+     }
++
++    if (!cpus_are_resettable() &&
++        (reason == SHUTDOWN_CAUSE_GUEST_RESET ||
++         reason == SHUTDOWN_CAUSE_HOST_QMP_SYSTEM_RESET)) {
++        if (ac->rebuild_guest) {
++            ret = ac->rebuild_guest(current_machine);
++            if (ret < 0) {
++                error_report("unable to rebuild guest: %s(%d)",
++                             strerror(-ret), ret);
++                vm_stop(RUN_STATE_INTERNAL_ERROR);
++            } else {
++                info_report("virtual machine state has been rebuilt with new "
++                            "guest file handle.");
++                guest_state_rebuilt = true;
++            }
++        } else if (!cpus_are_resettable())  {
++            error_report("accelerator does not support reset!");
++        } else {
++            error_report("accelerator does not support rebuilding guest state,"
++                         " proceeding with normal reset!");
++        }
++    }
++
+     if (mc && mc->reset) {
+         mc->reset(current_machine, type);
+     } else {
+@@ -543,7 +570,16 @@ void qemu_system_reset(ShutdownCause reason)
+      * it does _more_  than cpu_synchronize_all_post_reset().
+      */
+     if (cpus_are_resettable()) {
+-        cpu_synchronize_all_post_reset();
++        if (guest_state_rebuilt) {
++            /*
++             * If guest state has been rebuilt, then we
++             * need to sync full cpu state for non confidential guests post
++             * reset.
++             */
++            cpu_synchronize_all_post_init();
++        } else {
++            cpu_synchronize_all_post_reset();
++        }
+     }
+ 
+     vm_set_suspended(false);
+-- 
+2.42.0
 
-Hi Wei,
-
-thanks for the tag! Note that there is a new series including this one: ht=
-tps://lore=2Ekernel=2Eorg/qemu-devel/20260215052225=2E22513-1-mohamed@unpre=
-dictable=2Efr/ So for the tag to be considered it should be added to the in=
-dividual patches there=2E
-
-Thanks,
-Bernhard
 
