@@ -4,107 +4,163 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8EF69E9A02C
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 21:23:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4D3EE9A02C
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 21:30:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vsp0x-0005Js-K5; Wed, 18 Feb 2026 16:23:19 -0500
+	id 1vsp7S-0007Av-8q; Wed, 18 Feb 2026 16:30:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1vsp0v-0005Ja-9z
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 16:23:17 -0500
-Received: from mail-pj1-x1036.google.com ([2607:f8b0:4864:20::1036])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1vsp0s-00018K-Mm
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 16:23:17 -0500
-Received: by mail-pj1-x1036.google.com with SMTP id
- 98e67ed59e1d1-3549bba5302so121952a91.1
- for <qemu-devel@nongnu.org>; Wed, 18 Feb 2026 13:23:13 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1771449793; cv=none;
- d=google.com; s=arc-20240605;
- b=Wc06RLdMvl2SjL51caReo7GFKCIqjnr+igMcsoD2FbcX8QE74d5jyJ3REWB2tzxrw4
- XqVaTOpwwHIT1+MgipnoUiW3Fz/bL7ThnIvEKJk4/dXJk311pbLqGHt0ExTC80nPSKAr
- NB9klFE0szqA7orAv8ZJ2RNk7zu1zyW4f/Oa3Elain9sP3dKeuYv8ZfnCx18gs1Tw9xG
- lpmtXYceJBv5djTTumPP81iUKG5kh/o07AfZuUMtNTycXPv0qu0EVgWf+wTTJ2JWWgSN
- n10ykdpymAsRscY7Q7qVyhMnXuc7sy3suxvsznoy3oUvPy5N0PtoxW3kQgffzV4gijvU
- ajPQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=3ONVMC2H9/apWAtHoVt7RWmqAYD48MskY4ITJEaGysw=;
- fh=iLzEtxmiNgCkCU6glI8f3s4x0sxyI9KGvh0S9V3ICRE=;
- b=b6/4wEXr2kBuk2JQ5OataD61rTaxvYaqvNI74oilMU0VcMLZTVAfFirAYpM0DBz0XX
- KFPfoJo5LX/NPsjg6aZYX44NxolK4g20cqmjf5RuLbUsMg92h7XyCg+jghg+QPLAHAwj
- MT16EHOxiXtC8fammn5yCmwfgwtdzxDi7eGkLtrRftXEaNLO87rUd69z9eD586olQ8hz
- ezloSfCKO7irLDjD+1Q50dYq1vWF4ZB9zoaZA3p9eIdbqccDD7ei4u9UpHnpzpGCbkQE
- GY8bUQrqX6aj9jrNbrpfXmwoWrrA1CkyrbJTwiBwDcw1sI3Zc0Fot4k+Jabl4LdRdg/b
- DV4g==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1771449793; x=1772054593;
- darn=nongnu.org; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=3ONVMC2H9/apWAtHoVt7RWmqAYD48MskY4ITJEaGysw=;
- b=BJ/R81pS2mk8PhqMAl8UwIQn4fSSCPEqwP39Q4zXw5N5wbssXa6sU8i0oxBV7JQwjw
- suEQ72S9MoiWLakpNF18//4OSAuSkr0kLfeoqHGhdtyUL5iNT1H8bzyFV0VI0DVp7wF7
- g9JvfTvaSVyfBNf3pi7iUQjh4c0cxpZG2dYc/o3+jNb+t9QccVBBaOS3wGjwisv8tMUj
- 2JZi++7SVa9ezayckANl2xJKmeYZ5CWyVUlaqIlq7Uxe406vchLAvX1IAODeIBu/6NYI
- P+Dj2aes9j298SFuJKN9VRC0EyNtYEi5pXBierJA82Vvzc/SjxSo+9MUjnRwYv1oJTKj
- XaDg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771449793; x=1772054593;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=3ONVMC2H9/apWAtHoVt7RWmqAYD48MskY4ITJEaGysw=;
- b=OuuRbFPJ/mUvQUxi90smLckOuUdBqRTRZtUhxBYpBdLAvmKxlcZAMZBsx7Tq5mT6AP
- sNbCEYJZZFjECbWW8q0ui3a17ER1Ru27hEaQSMS4mVpFpNUZ+TCXgiXbrV8RM5qdptNJ
- FC6qG1RURW0CHpDZ2vSAE8d+dKp7r+9Ew7mEqZdcaHKoIathHuErUw1+oyfxzxNBRP77
- ANVvi2hngtSwk5B/TNDDyTh8Cc0+Wmk23aKoMTueEw/40UF4jGbL48gS8CCyFoiYdWVx
- AlLvO0YkSdKsn4hdJ5AldL/LbsRUlLbweHpLmwjQ9eJqwpPG9MOakTWsPCAMpOACnJaF
- o3Zw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUjW9icjjNhHF6vuZxTKSQ+stbPtNNWU1xpwJ7wdC3/YT9obLESbTHNxWHJa04i5DZkOsfa18ZB4mY9@nongnu.org
-X-Gm-Message-State: AOJu0Yw2nuzn57VhoCTKMmE5oMtilfRiabRW9gwHu+2IISSahSOX3AVa
- VzHXlNFr0A3NPaQjxGYkFgkpdObZ0nB7szEnFqSjZatRRW3FAR4tI2Vhxn/u8BXYhyvRBzPH0UW
- pnYZMPXxMSNLZe/PeZ3iJ43aq6kgByCE/LArvS9hLG9oMc74KQ04+few=
-X-Gm-Gg: AZuq6aJzyWCH5hF3y8jLKUsYIUJ4/pNVWPvkqAeD0Rk9k1Kwov0yknNO/0gmkb0Zmq2
- scnhDGIwvGfZYUKD0ZJngzxlMGAKgAFpKQ5SE0FhLaL4rWZV8dG1DkV6xLyf6qHBM+o9ybGvZCR
- ql3uspn1a5TFazCdc4u1PEgnWJpSdVs3JVGd+4EyYtVBzjK+HLhZ466RagGbz/+3JklmFQqS8un
- fFnb66Da2hk1jDJo7fM6Ipn4R1UUOuwLJtlRyHsw40V+VXQYAFS7GpkPVYN/qo9F7Gmq45zdb7z
- gXSH5FFpRw7hiNtvow==
-X-Received: by 2002:a17:90b:52cf:b0:354:c6f3:d365 with SMTP id
- 98e67ed59e1d1-356aad5ef36mr16357566a91.17.1771449792689; Wed, 18 Feb 2026
- 13:23:12 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <lukasstraub2@web.de>)
+ id 1vsp7I-00078f-FT
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 16:29:52 -0500
+Received: from mout.web.de ([212.227.15.4])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <lukasstraub2@web.de>)
+ id 1vsp7G-0007NV-Gt
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 16:29:52 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+ s=s29768273; t=1771450178; x=1772054978; i=lukasstraub2@web.de;
+ bh=cKo1RcLXnUykLSWo5DXiqn6Y9pPE2FE/DD1aFztALAM=;
+ h=X-UI-Sender-Class:From:Date:Subject:MIME-Version:Content-Type:
+ Content-Transfer-Encoding:Message-Id:References:In-Reply-To:To:Cc:
+ cc:content-transfer-encoding:content-type:date:from:message-id:
+ mime-version:reply-to:subject:to;
+ b=HvgJMaTHbiTQ+BQlo6cHOlsftQdcsra2ue/p/iroxdKgoYN2oxjLU08n5UIxQRfv
+ Y8Rk2iWTtmkYnJqXDTHJn7SdriXc5YHrVa74+o1XVxM5eTDiO5gBfv1ilVxWDyR4f
+ r8mccjnk/vTGcIkfnWuR6wlCk8nRoa3P7icQRw/V7wcVJ0mn/2DVzBtNQxCI0X1tt
+ NoidiARzIDrr2nVHBKhTW8Hzu5uBmI8N2QGc2JmGLIx0AxijpzMVk1ZKxubR6Pbig
+ 0/WnosqwCMyovD1wVRS9zwnc8DH2jAAstvzCGOq1VZp9/CTb8LGR6BaDIs7JOUdhb
+ CDIhi7YvwcCfJ4bjlg==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [127.0.1.1] ([84.133.37.84]) by smtp.web.de (mrweb005
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1M8C07-1voA9R2ZZT-007x3g; Wed, 18
+ Feb 2026 22:29:38 +0100
+From: Lukas Straub <lukasstraub2@web.de>
+Date: Wed, 18 Feb 2026 22:29:24 +0100
+Subject: [PATCH v9 04/19] colo: Replace migration_incoming_colo_enabled()
+ with migrate_colo()
 MIME-Version: 1.0
-References: <CAFn=p-YGckyEF8GCOviMJ-FfWsM_dDa6nqEBJChPmUxP7Ydi_w@mail.gmail.com>
- <87wm0afsnh.fsf@pond.sub.org>
- <56a8affc-e786-4dc8-81bd-c1f78a224afd@redhat.com>
- <CAFn=p-YqRu3eaR+RvpCi3uaq8Y7s0pGtXwOLztqMDCqYG6McPA@mail.gmail.com>
- <CABgObfaRzjaGTdXGHG=BeHFgGJaC4tt0eKOJu=L=SYWpQmm+6w@mail.gmail.com>
- <CAFn=p-ZdzRuisd6g65A+VXyDKXnTuBc0gnt0ApbhVBZG5GhJZQ@mail.gmail.com>
-In-Reply-To: <CAFn=p-ZdzRuisd6g65A+VXyDKXnTuBc0gnt0ApbhVBZG5GhJZQ@mail.gmail.com>
-From: Warner Losh <imp@bsdimp.com>
-Date: Wed, 18 Feb 2026 14:23:01 -0700
-X-Gm-Features: AaiRm5264qt6za-ZpQow0MKlPYZZxLXgsl-SbvvOZISug_rzSy77SuMmNU-mqAY
-Message-ID: <CANCZdfr-ab65iUD488H8BVPUfCaNP2NP8HJGcQMZi5FSLNsNJw@mail.gmail.com>
-Subject: Re: CentOS 9, Python, and other Fairytales
-To: John Snow <jsnow@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- qemu-devel <qemu-devel@nongnu.org>,
- =?UTF-8?Q?Daniel_Berrang=C3=A9?= <berrange@redhat.com>
-Content-Type: multipart/alternative; boundary="000000000000a1851e064b1fcb77"
-Received-SPF: none client-ip=2607:f8b0:4864:20::1036;
- envelope-from=wlosh@bsdimp.com; helo=mail-pj1-x1036.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <20260218-colo_unit_test_multifd-v9-4-d8dbdb0ca6f6@web.de>
+References: <20260218-colo_unit_test_multifd-v9-0-d8dbdb0ca6f6@web.de>
+In-Reply-To: <20260218-colo_unit_test_multifd-v9-0-d8dbdb0ca6f6@web.de>
+To: qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>, 
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ Zhang Chen <zhangckid@gmail.com>, 
+ Hailiang Zhang <zhanghailiang@xfusion.com>, 
+ Markus Armbruster <armbru@redhat.com>, Li Zhijian <lizhijian@fujitsu.com>, 
+ "Dr. David Alan Gilbert" <dave@treblig.org>, 
+ Lukas Straub <lukasstraub2@web.de>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3533; i=lukasstraub2@web.de;
+ h=from:subject:message-id; bh=n0JNkGWwDvp69U+jS7cX+vJwFoFOUey0gb5uYJ0EtrM=;
+ b=owEBbQKS/ZANAwAKATWrCyicXbJYAcsmYgBpli8895dZBVsoIFEbDi6K0FBWYWDbOKdaY8RA0
+ e/OO0NTLOaJAjMEAAEKAB0WIQSD+rFYoNm4+3Jij6Q1qwsonF2yWAUCaZYvPAAKCRA1qwsonF2y
+ WHiXD/92pO+LrCiTNONors3BY3+Ki/D+VuI1Z6D5uQujemE6PcAPgh1knajBP4VZVo6M9hfClSW
+ QksLql2iFFYNZkb6dH172ErVGD85umJdQs4ThH7Z+12hQskdFsCW+N65P4bmuagp75cFF5WewoR
+ CTiJ64TPUfoNFRq+dFEVGXS244f7ijUTN94GW4uTu47xVTpp4s7KVaNkZwgxhj8BvTxNP9nHkSm
+ 0RTuaUO1RL1plD8/6LpTok/EK3uhVs5i/PkkycCZirPW/GeUqhjP/5uwhb+lU7gYjX2Zv1D0VKs
+ Y73HBAykFCWYPpkNsf4H7KzrP/mtlR7J8cqN/nfx/CF+jVVqfDhDD/lnur+T8DV0VzJxudniqxl
+ 1wgrjWvoLLaVFBLoIM9SDcIVMI+kOLGGXHUNREdIQIwxtROQ5IqijdAt1ie31uL5Dqdh6hZzKjN
+ w8TxkUDC5wsFKf7gBfz75iO7AFIkXd5Mi4gnGFpsYSS9HZG5itcRE0Wa45AP3qH477t+qyJBuFA
+ 9U7ff5zbCyq4VyIEgSOv/vYkFTb+vCWimdU4f5h18tPWTaiHNboQQ6IC9a1OL7P8zx8zZqqvS9n
+ 2v6BmIO3mH4YqrtMdCZhEzKxUIwLra2hfl3YKKhz4Mf3Brao/1vreTKBWxq0GmRNcARozXJPy0M
+ habCMI8Fztc4uRg==
+X-Developer-Key: i=lukasstraub2@web.de; a=openpgp;
+ fpr=83FAB158A0D9B8FB72628FA435AB0B289C5DB258
+X-Provags-ID: V03:K1:CbtSBdRekclbiXyfbLvxkVyOGOcMZMJpbzxtbnWBSHfq878Ov/b
+ Gx3P+BXAJpt/7BWU8Nb8D+X5giHBJVC4mp6A2iUTzQgZRt8dpnMENNVIJ/w+dxx6jK5mMlk
+ AbmXANnbmHSdtAcrrqCx6OaoryKlKp/F4/Ey0vp3d0XSAfF74JikHVM3Xh0wFX1brf58Ewo
+ h9NepsqsBMTLjJcdJK1Fw==
+UI-OutboundReport: notjunk:1;M01:P0:T1F/O8tuGKY=;8C3hDGFm2byWcFR6qaQV1xGG5eE
+ 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
+ 1LNZMUO+FYDUQ/nMlxKKGkrWgdpKQ
+Received-SPF: pass client-ip=212.227.15.4; envelope-from=lukasstraub2@web.de;
+ helo=mout.web.de
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,328 +176,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000a1851e064b1fcb77
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Since
+121ccedc2b migration: block incoming colo when capability is disabled
 
-On Wed, Feb 18, 2026 at 1:42=E2=80=AFPM John Snow <jsnow@redhat.com> wrote:
+x-colo capability needs to be always enabled on the incoming side.
+So migration_incoming_colo_enabled() and migrate_colo() are equivalent
+with migrate_colo() being easier to reason about since it is always true
+during the whole migration.
 
-> On Wed, Feb 18, 2026 at 3:26=E2=80=AFPM Paolo Bonzini <pbonzini@redhat.co=
-m> wrote:
-> >
-> >
-> >
-> > Il mer 18 feb 2026, 18:10 John Snow <jsnow@redhat.com> ha scritto:
-> >>
-> >>
-> >>
-> >> On Wed, Feb 18, 2026, 6:48=E2=80=AFAM Paolo Bonzini <pbonzini@redhat.c=
-om>
-> wrote:
-> >>>
-> >>> >> With most of the new sticking points being debian 12 (EOL in June)
-> or
-> >>> >> FreeBSD (timeline uncertain for when they'll re-modernize their
-> python
-> >>> >> stack)
-> >>> >>
-> >>> >> One edge case here, however, is Sphinx, which does not actually
-> have a
-> >>> >> modern package in centOS stream 9.
-> >>> >>
-> >>> >> CentOS currently ships 3.4.3, but it would not be usable if using
-> the
-> >>> >> optional 3.12 upgrade. If we ignore this, both FreeBSD and Debian =
-12
-> >>> >> have sphinx 5.3.0 to offer us, which is a reasonable version jump,
-> but
-> >>> >> it means that CentOS would not be able to build docs unless you
-> >>> >> enabled `--online` for configuring QEMU or sideloaded Sphinx
-> >>> >> otherwise.
-> >>> >
-> >>> > CentOS 9 reaches end of life on May 31 next year.  I do not think
-> >>> > keeping its ability to build bleeding edge docs offline out of the
-> box
-> >>> > for its final year (give or take) is worth your time, or anybody's.
-> >>>
-> >>> That's exactly the reason why we (John and I) introduced mkvenv.py,
-> >>> except it was CentOS 8 and SLES 15 at the time
-> >>> (https://www.qemu.org/2023/03/24/python/):
-> >>>
-> >>> "Some of these tools are run through the python3 executable, while
-> >>> others are invoked directly as sphinx-build or meson, and this can
-> >>> create inconsistencies. For example, QEMU=E2=80=99s configure script =
-checks for
-> >>> a minimum version of Python and rejects too-old interpreters. However=
-,
-> >>> what would happen if code run by Sphinx used a different version?
-> >>>
-> >>> This situation has been largely hypothetical until recently; QEMU=E2=
-=80=99s
-> >>> Python code is already tested with a wide range of versions of the
-> >>> interpreter, and it would not be a huge issue if Sphinx used a
-> different
-> >>> version of Python as long as both of them were supported. This will
-> >>> change in version 8.1 of QEMU, which will bump the minimum supported
-> >>> version of Python from 3.6 to 3.8. While all the distros that QEMU
-> >>> supports have a recent-enough interpreter, the default on RHEL8 and
-> >>> SLES15 is still version 3.6, and that is what all binaries in /usr/bi=
-n
-> >>> use unconditionally."
-> >>>
-> >>> So yeah, there's precedent for doing this, and it's the right thing t=
-o
-> >>> do anyway.
-> >>>
-> >>> >> My plan:
-> >>> >> - Wait and see what happens after the current QEMU release
-> >>> >> - Gleefully drop Ubuntu 22.04 in April (Allows Python 3.11+)
-> >>> >> - Gleefully drop Debian 12 in June
-> >>> >> - Hold my breath and see if FreeBSD happens to modernize by this
-> point
-> >>> >> (They have until October 2027 to do so, so it's a dice roll if the=
-y
-> >>> >> will or not)
-> >>> >> - Do a big round of Python modernization all at once; either to 3.=
-11
-> >>> >> or 3.12 depending, and either to Sphinx 5.x or 7.x depending, pray
-> for
-> >>> >> forgiveness that I am removing CentOS stream 9's ability to build
-> docs
-> >>> >> offline so I don't have to wait another six months and then do
-> another
-> >>> >> big cleanup round
-> >>>
-> >>> The main nice features of 3.12 are improved f-strings, which are nice
-> >>> but not really a necessity.
-> >>>
-> >>> If I read it correctly, https://www.freshports.org/lang/python says i=
-t
-> >>> has 3.9 on PPC and 3.11 elsewhere, but
-> >>> https://www.freshports.org/lang/python311 says 3.11 exists on PPC as
-> well.
-> >>>
-> >>> I'd go for 3.11 and Sphinx 7.  For FreeBSD we can require Python from
-> Ports.
-> >>
-> >>
-> >> freebsd ports is currently at 3.11, which is the main reason I am
-> saying "see what freebsd does by June"
-> >>
-> >> if they update, we can have Python 3.12 and Sphinx 7.x. If they don't,
-> we get 3.11 and 5.x
-> >
-> >
-> > Why can't we do 3.11 and 7.x, and let freebsd also get sphinx from pypi
-> until they update?
->
-> Hm, I guess no reason, beyond my recalcitrance on breaking docs on a
-> supported build platform unless absolutely necessary. It'd still be my
-> preference to align with the native distro repo/ports versions if at
-> all possible, but I suppose if FreeBSD doesn't fix itself by June or
-> so that we can consider dropping docs support with ports packages at
-> that time.
->
-> (I think I just have Stockholm Syndrome from arguing for "unnecessary
-> version bumps to get shiny new toys" and prefer to let those arguments
-> come from my seniors ... so I stick with very safe changes when at all
-> possible.)
->
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Reviewed-by: Peter Xu <peterx@redhat.com>
+Signed-off-by: Lukas Straub <lukasstraub2@web.de>
+=2D--
+ include/migration/colo.h | 1 -
+ migration/colo.c         | 2 +-
+ migration/migration.c    | 9 ++-------
+ migration/ram.c          | 2 +-
+ 4 files changed, 4 insertions(+), 10 deletions(-)
 
-When I asked a week or two ago, the FreeBSD python maintainers were busy
-upgrading, but there was too much fallout still going from 3.11 to 3.12,
-but they'd hope to work through it soon...   I didn't press them for a more
-refined version of 'soon'.
+diff --git a/include/migration/colo.h b/include/migration/colo.h
+index d4fe422e4d335d3bef4f860f56400fcd73287a0e..2496a968cc1ce709f706c0efe5=
+7e4f765f163d3c 100644
+=2D-- a/include/migration/colo.h
++++ b/include/migration/colo.h
+@@ -27,7 +27,6 @@ bool migration_in_colo_state(void);
+ /* loadvm */
+ int migration_incoming_enable_colo(Error **errp);
+ void migration_incoming_disable_colo(void);
+-bool migration_incoming_colo_enabled(void);
+ bool migration_incoming_in_colo_state(void);
+=20
+ COLOMode get_colo_mode(void);
+diff --git a/migration/colo.c b/migration/colo.c
+index f7a5bd3619a49a3b4a8306973de7a4411cc0df58..97a224c39c49ff2269f375db47=
+112458cab0b4cb 100644
+=2D-- a/migration/colo.c
++++ b/migration/colo.c
+@@ -935,7 +935,7 @@ void coroutine_fn colo_incoming_co(void)
+     QemuThread th;
+=20
+     assert(bql_locked());
+-    assert(migration_incoming_colo_enabled());
++    assert(migrate_colo());
+=20
+     qemu_thread_create(&th, MIGRATION_THREAD_DST_COLO,
+                        colo_process_incoming_thread,
+diff --git a/migration/migration.c b/migration/migration.c
+index c2b9621190f8678ac6b32d6794d9bcb6ffa5e402..ef6aac53343f2217cd1aa37e49=
+3483703068d1ff 100644
+=2D-- a/migration/migration.c
++++ b/migration/migration.c
+@@ -605,11 +605,6 @@ int migrate_send_rp_req_pages(MigrationIncomingState =
+*mis,
+ }
+=20
+ static bool migration_colo_enabled;
+-bool migration_incoming_colo_enabled(void)
+-{
+-    return migration_colo_enabled;
+-}
+-
+ void migration_incoming_disable_colo(void)
+ {
+     ram_block_discard_disable(false);
+@@ -739,7 +734,7 @@ static void process_incoming_migration_bh(void *opaque=
+)
+         } else {
+             runstate_set(RUN_STATE_PAUSED);
+         }
+-    } else if (migration_incoming_colo_enabled()) {
++    } else if (migrate_colo()) {
+         migration_incoming_disable_colo();
+         vm_start();
+     } else {
+@@ -807,7 +802,7 @@ process_incoming_migration_co(void *opaque)
+         goto fail;
+     }
+=20
+-    if (migration_incoming_colo_enabled()) {
++    if (migrate_colo()) {
+         /* yield until COLO exit */
+         colo_incoming_co();
+     }
+diff --git a/migration/ram.c b/migration/ram.c
+index fc7ece2c1a10f34aa5a91f58cbe42ea418d7c078..aebf77aa0b861e00516d6f1090=
+aebefdd0d97e54 100644
+=2D-- a/migration/ram.c
++++ b/migration/ram.c
+@@ -4370,7 +4370,7 @@ static int ram_load_precopy(QEMUFile *f)
+              * speed of the migration, but it obviously reduce the downti=
+me of
+              * back-up all SVM'S memory in COLO preparing stage.
+              */
+-            if (migration_incoming_colo_enabled()) {
++            if (migrate_colo()) {
+                 if (migration_incoming_in_colo_state()) {
+                     /* In COLO stage, put all pages into cache temporaril=
+y */
+                     host =3D colo_cache_from_block_offset(block, addr, tr=
+ue);
 
-Warner
+=2D-=20
+2.39.5
 
-
-> >
-> > Paolo
-> >
-> >> . Both are good jumps, but on the chance I can make the bigger jump,
-> I'd rather do it in one round instead of two.
-> >>
-> >>>
-> >>> Paolo
-> >>>
->
->
->
-
---000000000000a1851e064b1fcb77
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
-mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Wed, Feb 18,=
- 2026 at 1:42=E2=80=AFPM John Snow &lt;<a href=3D"mailto:jsnow@redhat.com">=
-jsnow@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" =
-style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);pa=
-dding-left:1ex">On Wed, Feb 18, 2026 at 3:26=E2=80=AFPM Paolo Bonzini &lt;<=
-a href=3D"mailto:pbonzini@redhat.com" target=3D"_blank">pbonzini@redhat.com=
-</a>&gt; wrote:<br>
-&gt;<br>
-&gt;<br>
-&gt;<br>
-&gt; Il mer 18 feb 2026, 18:10 John Snow &lt;<a href=3D"mailto:jsnow@redhat=
-.com" target=3D"_blank">jsnow@redhat.com</a>&gt; ha scritto:<br>
-&gt;&gt;<br>
-&gt;&gt;<br>
-&gt;&gt;<br>
-&gt;&gt; On Wed, Feb 18, 2026, 6:48=E2=80=AFAM Paolo Bonzini &lt;<a href=3D=
-"mailto:pbonzini@redhat.com" target=3D"_blank">pbonzini@redhat.com</a>&gt; =
-wrote:<br>
-&gt;&gt;&gt;<br>
-&gt;&gt;&gt; &gt;&gt; With most of the new sticking points being debian 12 =
-(EOL in June) or<br>
-&gt;&gt;&gt; &gt;&gt; FreeBSD (timeline uncertain for when they&#39;ll re-m=
-odernize their python<br>
-&gt;&gt;&gt; &gt;&gt; stack)<br>
-&gt;&gt;&gt; &gt;&gt;<br>
-&gt;&gt;&gt; &gt;&gt; One edge case here, however, is Sphinx, which does no=
-t actually have a<br>
-&gt;&gt;&gt; &gt;&gt; modern package in centOS stream 9.<br>
-&gt;&gt;&gt; &gt;&gt;<br>
-&gt;&gt;&gt; &gt;&gt; CentOS currently ships 3.4.3, but it would not be usa=
-ble if using the<br>
-&gt;&gt;&gt; &gt;&gt; optional 3.12 upgrade. If we ignore this, both FreeBS=
-D and Debian 12<br>
-&gt;&gt;&gt; &gt;&gt; have sphinx 5.3.0 to offer us, which is a reasonable =
-version jump, but<br>
-&gt;&gt;&gt; &gt;&gt; it means that CentOS would not be able to build docs =
-unless you<br>
-&gt;&gt;&gt; &gt;&gt; enabled `--online` for configuring QEMU or sideloaded=
- Sphinx<br>
-&gt;&gt;&gt; &gt;&gt; otherwise.<br>
-&gt;&gt;&gt; &gt;<br>
-&gt;&gt;&gt; &gt; CentOS 9 reaches end of life on May 31 next year.=C2=A0 I=
- do not think<br>
-&gt;&gt;&gt; &gt; keeping its ability to build bleeding edge docs offline o=
-ut of the box<br>
-&gt;&gt;&gt; &gt; for its final year (give or take) is worth your time, or =
-anybody&#39;s.<br>
-&gt;&gt;&gt;<br>
-&gt;&gt;&gt; That&#39;s exactly the reason why we (John and I) introduced m=
-kvenv.py,<br>
-&gt;&gt;&gt; except it was CentOS 8 and SLES 15 at the time<br>
-&gt;&gt;&gt; (<a href=3D"https://www.qemu.org/2023/03/24/python/" rel=3D"no=
-referrer" target=3D"_blank">https://www.qemu.org/2023/03/24/python/</a>):<b=
-r>
-&gt;&gt;&gt;<br>
-&gt;&gt;&gt; &quot;Some of these tools are run through the python3 executab=
-le, while<br>
-&gt;&gt;&gt; others are invoked directly as sphinx-build or meson, and this=
- can<br>
-&gt;&gt;&gt; create inconsistencies. For example, QEMU=E2=80=99s configure =
-script checks for<br>
-&gt;&gt;&gt; a minimum version of Python and rejects too-old interpreters. =
-However,<br>
-&gt;&gt;&gt; what would happen if code run by Sphinx used a different versi=
-on?<br>
-&gt;&gt;&gt;<br>
-&gt;&gt;&gt; This situation has been largely hypothetical until recently; Q=
-EMU=E2=80=99s<br>
-&gt;&gt;&gt; Python code is already tested with a wide range of versions of=
- the<br>
-&gt;&gt;&gt; interpreter, and it would not be a huge issue if Sphinx used a=
- different<br>
-&gt;&gt;&gt; version of Python as long as both of them were supported. This=
- will<br>
-&gt;&gt;&gt; change in version 8.1 of QEMU, which will bump the minimum sup=
-ported<br>
-&gt;&gt;&gt; version of Python from 3.6 to 3.8. While all the distros that =
-QEMU<br>
-&gt;&gt;&gt; supports have a recent-enough interpreter, the default on RHEL=
-8 and<br>
-&gt;&gt;&gt; SLES15 is still version 3.6, and that is what all binaries in =
-/usr/bin<br>
-&gt;&gt;&gt; use unconditionally.&quot;<br>
-&gt;&gt;&gt;<br>
-&gt;&gt;&gt; So yeah, there&#39;s precedent for doing this, and it&#39;s th=
-e right thing to<br>
-&gt;&gt;&gt; do anyway.<br>
-&gt;&gt;&gt;<br>
-&gt;&gt;&gt; &gt;&gt; My plan:<br>
-&gt;&gt;&gt; &gt;&gt; - Wait and see what happens after the current QEMU re=
-lease<br>
-&gt;&gt;&gt; &gt;&gt; - Gleefully drop Ubuntu 22.04 in April (Allows Python=
- 3.11+)<br>
-&gt;&gt;&gt; &gt;&gt; - Gleefully drop Debian 12 in June<br>
-&gt;&gt;&gt; &gt;&gt; - Hold my breath and see if FreeBSD happens to modern=
-ize by this point<br>
-&gt;&gt;&gt; &gt;&gt; (They have until October 2027 to do so, so it&#39;s a=
- dice roll if they<br>
-&gt;&gt;&gt; &gt;&gt; will or not)<br>
-&gt;&gt;&gt; &gt;&gt; - Do a big round of Python modernization all at once;=
- either to 3.11<br>
-&gt;&gt;&gt; &gt;&gt; or 3.12 depending, and either to Sphinx 5.x or 7.x de=
-pending, pray for<br>
-&gt;&gt;&gt; &gt;&gt; forgiveness that I am removing CentOS stream 9&#39;s =
-ability to build docs<br>
-&gt;&gt;&gt; &gt;&gt; offline so I don&#39;t have to wait another six month=
-s and then do another<br>
-&gt;&gt;&gt; &gt;&gt; big cleanup round<br>
-&gt;&gt;&gt;<br>
-&gt;&gt;&gt; The main nice features of 3.12 are improved f-strings, which a=
-re nice<br>
-&gt;&gt;&gt; but not really a necessity.<br>
-&gt;&gt;&gt;<br>
-&gt;&gt;&gt; If I read it correctly, <a href=3D"https://www.freshports.org/=
-lang/python" rel=3D"noreferrer" target=3D"_blank">https://www.freshports.or=
-g/lang/python</a> says it<br>
-&gt;&gt;&gt; has 3.9 on PPC and 3.11 elsewhere, but<br>
-&gt;&gt;&gt; <a href=3D"https://www.freshports.org/lang/python311" rel=3D"n=
-oreferrer" target=3D"_blank">https://www.freshports.org/lang/python311</a> =
-says 3.11 exists on PPC as well.<br>
-&gt;&gt;&gt;<br>
-&gt;&gt;&gt; I&#39;d go for 3.11 and Sphinx 7.=C2=A0 For FreeBSD we can req=
-uire Python from Ports.<br>
-&gt;&gt;<br>
-&gt;&gt;<br>
-&gt;&gt; freebsd ports is currently at 3.11, which is the main reason I am =
-saying &quot;see what freebsd does by June&quot;<br>
-&gt;&gt;<br>
-&gt;&gt; if they update, we can have Python 3.12 and Sphinx 7.x. If they do=
-n&#39;t, we get 3.11 and 5.x<br>
-&gt;<br>
-&gt;<br>
-&gt; Why can&#39;t we do 3.11 and 7.x, and let freebsd also get sphinx from=
- pypi until they update?<br>
-<br>
-Hm, I guess no reason, beyond my recalcitrance on breaking docs on a<br>
-supported build platform unless absolutely necessary. It&#39;d still be my<=
-br>
-preference to align with the native distro repo/ports versions if at<br>
-all possible, but I suppose if FreeBSD doesn&#39;t fix itself by June or<br=
->
-so that we can consider dropping docs support with ports packages at<br>
-that time.<br>
-<br>
-(I think I just have Stockholm Syndrome from arguing for &quot;unnecessary<=
-br>
-version bumps to get shiny new toys&quot; and prefer to let those arguments=
-<br>
-come from my seniors ... so I stick with very safe changes when at all<br>
-possible.)<br></blockquote><div><br></div><div>When I asked a week or two a=
-go, the FreeBSD python maintainers were busy upgrading, but there was too m=
-uch fallout still going from 3.11 to 3.12, but they&#39;d hope to work thro=
-ugh it soon...=C2=A0 =C2=A0I didn&#39;t press them for a more refined versi=
-on of &#39;soon&#39;.</div><div><br></div><div>Warner</div><div>=C2=A0</div=
-><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border=
--left:1px solid rgb(204,204,204);padding-left:1ex">
-&gt;<br>
-&gt; Paolo<br>
-&gt;<br>
-&gt;&gt; . Both are good jumps, but on the chance I can make the bigger jum=
-p, I&#39;d rather do it in one round instead of two.<br>
-&gt;&gt;<br>
-&gt;&gt;&gt;<br>
-&gt;&gt;&gt; Paolo<br>
-&gt;&gt;&gt;<br>
-<br>
-<br>
-</blockquote></div></div>
-
---000000000000a1851e064b1fcb77--
 
