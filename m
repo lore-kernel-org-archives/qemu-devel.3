@@ -4,96 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7425E9A049
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 11:45:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94FC5E9A04D
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 11:45:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vsfzB-0005B6-K3; Wed, 18 Feb 2026 06:44:53 -0500
+	id 1vsfzF-0005dX-IJ; Wed, 18 Feb 2026 06:44:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1vsfz0-0004Vx-Sl
+ id 1vsfz1-0004Vy-2r
  for qemu-devel@nongnu.org; Wed, 18 Feb 2026 06:44:45 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1vsfyo-0008VP-Qq
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 06:44:32 -0500
+ id 1vsfyp-0000DB-Th
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 06:44:33 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771415067;
+ s=mimecast20190719; t=1771415071;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=cQ9AmELqqNz5UNGo6YfAytDPC9vGP4ny5Z7LzeX7WVM=;
- b=RQ3IsEH7rQUHbbft5k8H/WeuPOFlvkPvqatQd2ufIidKsxLHba6W7WQg/kiTN4V0tSoqqo
- J7OEoqmuerHzaVYv00/2rj2Hsp09ksF3FWIwU69a7w5cN2T8q2K6F8lnOzL/GQdzrXTgnC
- fkIoGHSXMFEN20wK2zK+fgHK2ae7LrU=
-Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com
- [209.85.214.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=wNOtE9iAdY/fz5zXRGOHALzxPR6yavv/SKATwTTFh+E=;
+ b=TCM4Qtmw8H71yZo/+9Ch7r4JuaD6noICSCOb2PmrLNoKpkRYuOvKvE7Q+SLH4ARLb5jD8x
+ 9wq8tTUjma3fH2Q5uwV6mOaAwenakUFOL66AkIM5Yo0yFcJdtfNzYd0c/HiaMrWim5iY2l
+ 8ANJCOkDMb+KBLGR7yGaAcUdyEieULk=
+Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com
+ [209.85.214.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-530-2anBYWCsOoS4-79ME-kuFg-1; Wed, 18 Feb 2026 06:44:26 -0500
-X-MC-Unique: 2anBYWCsOoS4-79ME-kuFg-1
-X-Mimecast-MFC-AGG-ID: 2anBYWCsOoS4-79ME-kuFg_1771415065
-Received: by mail-pl1-f198.google.com with SMTP id
- d9443c01a7336-2a8f8c81d02so49766605ad.2
- for <qemu-devel@nongnu.org>; Wed, 18 Feb 2026 03:44:26 -0800 (PST)
+ us-mta-670-dfzRB1vKNK6m7qjMrTbauw-1; Wed, 18 Feb 2026 06:44:29 -0500
+X-MC-Unique: dfzRB1vKNK6m7qjMrTbauw-1
+X-Mimecast-MFC-AGG-ID: dfzRB1vKNK6m7qjMrTbauw_1771415069
+Received: by mail-pl1-f200.google.com with SMTP id
+ d9443c01a7336-2a7a98ba326so11896075ad.1
+ for <qemu-devel@nongnu.org>; Wed, 18 Feb 2026 03:44:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1771415065; x=1772019865; darn=nongnu.org;
+ d=redhat.com; s=google; t=1771415069; x=1772019869; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=cQ9AmELqqNz5UNGo6YfAytDPC9vGP4ny5Z7LzeX7WVM=;
- b=Y+vmUcFost92ev5Z70YK/vtnFozxt1rOd/xuvqjOc8AfguBF6eCrj+kLjS051GxZc0
- cH+wM6SxgJc7gqrcBQEZq7LcXe9OmXXz6NSxaT/rZHwz+HI/73uB5QbObKPewIgp6nLC
- W1AXGT0JLCdydysxiAeCiC792M4SlO2i39163lcPolAJzBCNvE49bu5eyQewTSpjUM4k
- XuhaRsEmBSvv+qpH3m7W4QAB9D22rL6ngtRL9nZCnDc6esvek9CKUiinudPPw8fOuXZV
- V0p5mKvmw6vUFuMDbF4SkBPIWO9MuGtpoRSPVT22vSQxFC0IjwTjSI2calCnKPWC3I3O
- wZmA==
+ bh=wNOtE9iAdY/fz5zXRGOHALzxPR6yavv/SKATwTTFh+E=;
+ b=LcZV4Gonm2W7NipZXPj/nC8KuJ+2U+8hqIWT+qBmm5T/bs25PKNXnP/gmwKB4fQpO4
+ Ijl1C4opcLc5DD+1PGwogedPqqelgjLPMWZpnWE0pXVac9KUSfUl2RkUEhsjda+Zavpu
+ arzfufpFQXLMp9cOiB0NgJlWpoTwWmR4JlcjwPL1ZJ3Op1FWbqP5WDj0Hd6NywvU6zlE
+ EnwyJxAG9TnapB+ZycxnJ2clMKogs7oazyRuN29v8OcGDtVutv8OYoWgkd2UgGuB1G+x
+ 5YSlCR3pnAdKlj/n281hKsgfKsflp8GxUCnuej5TMMa1JgrAVEXJN00+BOnuy9WPSumY
+ nAow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771415065; x=1772019865;
+ d=1e100.net; s=20230601; t=1771415069; x=1772019869;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=cQ9AmELqqNz5UNGo6YfAytDPC9vGP4ny5Z7LzeX7WVM=;
- b=opiVjo38JOefQUNICaREf0tGdU53Wb1uLb1xtseAFKxn04tDRtECktiul/EOnFvcFC
- 2/zEjZF8/bgET18z6uYzgGbilw/ItXtpShMltiy5H0o3aIfmLC7zbUpGAjcowKXG2iMT
- ztp49OaiXNwaaRvySkMY0P1FyhtQuh/SIIh8Y9AXvIXBbQlN2iApOg6gIhGAi8Z8f7Ez
- oPhwcGFBhvrBdoLeg5vjpmC3lL8QydFj1ddLnvWX+Y6p63XRcKu5rwkr86L0ZBmkVo9z
- hEytkqVFrnWVsekdAS0j76rYy9PezCOHeuiNREY2mm+4A7kb84A3tZop9lkk006qq+Xb
- c6Yg==
+ bh=wNOtE9iAdY/fz5zXRGOHALzxPR6yavv/SKATwTTFh+E=;
+ b=ARJPYsdY0Ve5cifAmtdz+NyNruE1CEmI1DGTPn7eHFpZTQWZ/9AWaeySDtdDqL6OQd
+ jays+Vsuwwf2yC8N2qGF6kOU1J1kOdv8k5AJ8wToC7mvGGP3u2gY0wHL6E/RkjeaQ6eR
+ dyAWGaVGSsZqkcYsLVpC3V+aDJWcGrXcbHnoP6UkB9ql0qAVCrJpVLM5ABbOvdZ6A0tc
+ e3GxnAfUhRP9TOsBK0RRpwhUpS3LHSSGZBFWFxCLzMm57ephv9UW0Wwrdv4qQPAKjeUs
+ NXvhHPm9pBiQvkV9LBHDLQmX7KXR7vAJjx8JCzQVK0p8aLJls1S3sAtORaFhXXOs/LDf
+ 0bBg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWgTTR734d28mFbmm54KXB8SAVKW8B53Tv/dtsgdgvXUvQImANxiHDFno4T3VfTcqv9V2V5cgIsqvMQ@nongnu.org
-X-Gm-Message-State: AOJu0YzMSQDCm48dNhFBKLprnI8oaDMINk1pH010NsvEjYoAZRpaw3FL
- w0qEJdeZMUW5MUjOz9UKS8UYhVJD1KVdC+d/WYxneAHXsZ42sEVDUXTjYk3KncXVwaNTVQOy248
- cqlTRjjDAKJqcjLY3YDLIb1SJvyXO3aCTukm8rgCtcPkxteaByxt/1FgX
-X-Gm-Gg: AZuq6aJedm0uCLRDG50mKWTXR5ISupf14qzyhdUsajSBaLAlKhjlPJ2ApOc/QBXBqhX
- OukIkcSKOjhYE4lDnAgwOB/lTRG9oEsCjX5FY1dTXiNTapoVGU40z8NqNUl8hUJ4ERgLTpmcFVr
- jQa4LeSiKeUTdfvAW82VWP+SxPLgz0xcrSN23fq1WRA+UvBPom+hlpmgBFARCSAfLMhaZLQlQuW
- JvgGV/AOkvEq6nwoJHhyjC4yXSFtOBIOI866RZO4tEbU20jozK5lyC0d7bHXoGMsfwK5iA2G28j
- 3ivYbo+rN+yz6pruKCyNWXbhtXGVNYmXNIQHY3dyxGftuEU7pMm2hN7ea4dSZoZl/+TjLcRJf26
- XmOOtqmATaHwQzR7wGL/xzX1XZzrsYaZ3G+uVwcZIogNKanjX3Mjz
-X-Received: by 2002:a17:902:ea0a:b0:2a9:63de:b374 with SMTP id
- d9443c01a7336-2ab50521f0dmr150977565ad.3.1771415065371; 
- Wed, 18 Feb 2026 03:44:25 -0800 (PST)
-X-Received: by 2002:a17:902:ea0a:b0:2a9:63de:b374 with SMTP id
- d9443c01a7336-2ab50521f0dmr150977465ad.3.1771415064954; 
- Wed, 18 Feb 2026 03:44:24 -0800 (PST)
+ AJvYcCUBjKONs6684XjQVVJqQXgJm4CrbBNEHKP5dBV0ZmKf+uMmWarfA01p7cjd95o6iTdWNS46g6gLMWKo@nongnu.org
+X-Gm-Message-State: AOJu0YySOUFU1xSaDIGlq60FlY35rS1Ugv8uDVAohyy9wwcic2l0Iq6h
+ CdSGPl18kZMK0A5r0sPIQ/k7y9kwjIU2J/r2SvT4G/ENXHlU30g+Ycbo+OCoA6rdi/h9PHnlWlV
+ 7ETkZH+C/zvLCFcIZTr5oHmZqyhIG0XpOrTfrocunstHNVDqOvUyZCICU
+X-Gm-Gg: AZuq6aK1HmbZnsws4AxRQVns8F68lUdNrRfOnn5WbQ7IjitVvgjCR+5lKKRmWIdI41g
+ LYvHHJxtU7nwuC3rinrhueMeeYtTA+34LM2r8S4VJXjDlvK7TwYk3ZAzqTYO+nRYsC6TOCIg8jz
+ e2fXkFTKMcgFMn5VqwYRCVawmQ8OcuqQY+F4B4OuZnOVkfNWupryjjSRaeJnEWJUbnxgQQ33s/+
+ J8y1TrzTy96rGNK5Vlq2M50TqWdiJ1Y3+rYTVxMrFTsSznMCd0SQAnhrtZLwf3cDcpf9Hi9EJCy
+ JN+5YhzeCnfqvEsoykv7P7+5LtDXYan8fsUYH6e0MDB7dfeJ+GTUB4ve0k4gHtbeksBOjvgSIiA
+ JhhaZGFobM/cYJr7Uxz4JBmUul13v0gmYNJlnqM/d1xEey6NrPPKg
+X-Received: by 2002:a17:902:ef03:b0:294:f6e5:b91a with SMTP id
+ d9443c01a7336-2ad50bbdcdcmr14727675ad.13.1771415068725; 
+ Wed, 18 Feb 2026 03:44:28 -0800 (PST)
+X-Received: by 2002:a17:902:ef03:b0:294:f6e5:b91a with SMTP id
+ d9443c01a7336-2ad50bbdcdcmr14727525ad.13.1771415068359; 
+ Wed, 18 Feb 2026 03:44:28 -0800 (PST)
 Received: from rhel9-box.lan ([117.99.83.54])
  by smtp.googlemail.com with ESMTPSA id
- d9443c01a7336-2ad1aaeab38sm127803425ad.82.2026.02.18.03.44.22
+ d9443c01a7336-2ad1aaeab38sm127803425ad.82.2026.02.18.03.44.25
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 18 Feb 2026 03:44:24 -0800 (PST)
+ Wed, 18 Feb 2026 03:44:28 -0800 (PST)
 From: Ani Sinha <anisinha@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
- Ani Sinha <anisinha@redhat.com>
-Cc: kraxel@redhat.com,
-	qemu-devel@nongnu.org
-Subject: [PATCH v5 32/34] tests/functional/x86_64: add functional test to
- exercise vm fd change on reset
-Date: Wed, 18 Feb 2026 17:12:25 +0530
-Message-ID: <20260218114233.266178-33-anisinha@redhat.com>
+To: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>, Eric Blake <eblake@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>
+Cc: Ani Sinha <anisinha@redhat.com>, kraxel@redhat.com, qemu-devel@nongnu.org
+Subject: [PATCH v5 33/34] qom: add 'confidential-guest-reset' property for x86
+ confidential vms
+Date: Wed, 18 Feb 2026 17:12:26 +0530
+Message-ID: <20260218114233.266178-34-anisinha@redhat.com>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20260218114233.266178-1-anisinha@redhat.com>
 References: <20260218114233.266178-1-anisinha@redhat.com>
@@ -125,187 +126,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-A new functional test is added that exercises the code changes related to
-closing of the old KVM VM file descriptor and opening a new one upon VM reset.
-This normally happens when confidential guests are reset but for
-non-confidential guests, we use a special machine specific debug/test parameter
-'x-change-vmfd-on-reset' to enable this behavior.
-Only specific code changes related to re-initialisation of SEV-ES, SEV-SNP and
-TDX platforms are not exercised in this test as they require hardware that
-supports running confidential guests.
+Through the new 'confidential-guest-reset' property, control plane should be
+able to detect if the hypervisor supports x86 confidential guest resets. Older
+hypervisors that do not support resets will not have this property populated.
 
+Suggested-by: Daniel P. Berrangé <berrange@redhat.com>
 Signed-off-by: Ani Sinha <anisinha@redhat.com>
 ---
- MAINTAINERS                                  |   1 +
- tests/functional/x86_64/meson.build          |   1 +
- tests/functional/x86_64/test_rebuild_vmfd.py | 136 +++++++++++++++++++
- 3 files changed, 138 insertions(+)
- create mode 100755 tests/functional/x86_64/test_rebuild_vmfd.py
+ qapi/qom.json | 16 ++++++++++++++--
+ 1 file changed, 14 insertions(+), 2 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index b0eb77c08f..de74d568e9 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -157,6 +157,7 @@ M: Ani Sinha <anisinha@redhat.com>
- M: Paolo Bonzini <pbonzini@redhat.com>
- S: Maintained
- F: stubs/kvm.c
-+F: tests/functional/x86_64/test_rebuild_vmfd.py
+diff --git a/qapi/qom.json b/qapi/qom.json
+index 6f5c9de0f0..c653248f85 100644
+--- a/qapi/qom.json
++++ b/qapi/qom.json
+@@ -1009,13 +1009,19 @@
+ #     designated guest firmware page for measured boot with -kernel
+ #     (default: false) (since 6.2)
+ #
++# Features:
++#
++# @confidential-guest-reset: If present, the hypervisor supports
++#     confidential guest resets (since 11.0).
++#
+ # Since: 9.1
+ ##
+ { 'struct': 'SevCommonProperties',
+   'data': { '*sev-device': 'str',
+             '*cbitpos': 'uint32',
+             'reduced-phys-bits': 'uint32',
+-            '*kernel-hashes': 'bool' } }
++            '*kernel-hashes': 'bool' },
++  'features': ['confidential-guest-reset']}
  
- Guest CPU cores (TCG)
- ---------------------
-diff --git a/tests/functional/x86_64/meson.build b/tests/functional/x86_64/meson.build
-index f78eec5e6c..c6553d922d 100644
---- a/tests/functional/x86_64/meson.build
-+++ b/tests/functional/x86_64/meson.build
-@@ -36,4 +36,5 @@ tests_x86_64_system_thorough = [
-   'vfio_user_client',
-   'virtio_balloon',
-   'virtio_gpu',
-+  'rebuild_vmfd',
- ]
-diff --git a/tests/functional/x86_64/test_rebuild_vmfd.py b/tests/functional/x86_64/test_rebuild_vmfd.py
-new file mode 100755
-index 0000000000..5a8e5fd89b
---- /dev/null
-+++ b/tests/functional/x86_64/test_rebuild_vmfd.py
-@@ -0,0 +1,136 @@
-+#!/usr/bin/env python3
+ ##
+ # @SevGuestProperties:
+@@ -1136,6 +1142,11 @@
+ #     it, the guest will not be able to get a TD quote for
+ #     attestation.
+ #
++# Features:
 +#
-+# Functional tests exercising guest KVM file descriptor change on reset.
++# @confidential-guest-reset: If present, the hypervisor supports
++#     confidential guest resets (since 11.0).
 +#
-+# Copyright © 2026 Red Hat, Inc.
-+#
-+# Author:
-+#  Ani Sinha <anisinha@redhat.com>
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+
-+import os
-+from qemu.machine import machine
-+
-+from qemu_test import QemuSystemTest, Asset, exec_command_and_wait_for_pattern
-+from qemu_test import wait_for_console_pattern
-+
-+class KVMGuest(QemuSystemTest):
-+
-+    # ASSET UKI was generated using
-+    # https://gitlab.com/kraxel/edk2-tests/-/blob/unittest/tools/make-supermin.sh
-+    ASSET_UKI = Asset('https://gitlab.com/anisinha/misc-artifacts/'
-+                      '-/raw/main/uki.x86-64.efi?ref_type=heads',
-+                      'e0f806bd1fa24111312e1fe849d2ee69808d4343930a5'
-+                      'dc8c1688da17c65f576')
-+    # ASSET_OVMF comes from /usr/share/edk2/ovmf/OVMF.stateless.fd of a
-+    # fedora core 43 distribution which in turn comes from the
-+    # edk2-ovmf-20251119-3.fc43.noarch rpm of that distribution.
-+    ASSET_OVMF = Asset('https://gitlab.com/anisinha/misc-artifacts/'
-+                       '-/raw/main/OVMF.stateless.fd?ref_type=heads',
-+                       '58a4275aafa8774bd6b1540adceae4ea434b8db75b476'
-+                       '11839ff47be88cfcf22')
-+
-+    def common_vm_setup(self, kvm_args=None, cpu_args=None):
-+        self.set_machine('q35')
-+        self.require_accelerator("kvm")
-+
-+        self.vm.set_console()
-+        if kvm_args:
-+            self.vm.add_args("-accel", "kvm,%s" %kvm_args)
-+        else:
-+            self.vm.add_args("-accel", "kvm")
-+        self.vm.add_args("-smp", "2")
-+        if cpu_args:
-+            self.vm.add_args("-cpu", "host,%s" %cpu_args)
-+        else:
-+            self.vm.add_args("-cpu", "host")
-+        self.vm.add_args("-m", "2G")
-+        self.vm.add_args("-nographic", "-nodefaults")
-+
-+
-+        self.uki_path = self.ASSET_UKI.fetch()
-+        self.ovmf_path = self.ASSET_OVMF.fetch()
-+
-+        self.vm.add_args('-kernel', self.uki_path)
-+        self.vm.add_args("-bios", self.ovmf_path)
-+        # enable KVM VMFD change on reset for a non-coco VM
-+        self.vm.add_args("-machine", "q35,x-change-vmfd-on-reset=on")
-+
-+        # enable tracing of basic vmfd change function
-+        self.vm.add_args("--trace", "kvm_reset_vmfd")
-+
-+    def launch_vm(self):
-+        try:
-+            self.vm.launch()
-+        except machine.VMLaunchFailure as e:
-+            if "Xen HVM guest support not present" in e.output:
-+                self.skipTest("KVM Xen support is not present "
-+                              "(need v5.12+ kernel with CONFIG_KVM_XEN)")
-+            elif "Property 'kvm-accel.xen-version' not found" in e.output:
-+                self.skipTest("QEMU not built with CONFIG_XEN_EMU support")
-+            else:
-+                raise e
-+
-+        self.log.info('VM launched')
-+        console_pattern = 'bash-5.1#'
-+        wait_for_console_pattern(self, console_pattern)
-+        self.log.info('VM ready with a bash prompt')
-+
-+    def vm_console_reset(self):
-+        exec_command_and_wait_for_pattern(self, '/usr/sbin/reboot -f',
-+                                          'reboot: machine restart')
-+        console_pattern = '# --- Hello world ---'
-+        wait_for_console_pattern(self, console_pattern)
-+        self.vm.shutdown()
-+
-+    def vm_qmp_reset(self):
-+        self.vm.qmp('system_reset')
-+        console_pattern = '# --- Hello world ---'
-+        wait_for_console_pattern(self, console_pattern)
-+        self.vm.shutdown()
-+
-+    def check_logs(self):
-+        self.assertRegex(self.vm.get_log(),
-+                         r'kvm_reset_vmfd')
-+        self.assertRegex(self.vm.get_log(),
-+                         r'virtual machine state has been rebuilt')
-+
-+    def test_reset_console(self):
-+        self.common_vm_setup()
-+        self.launch_vm()
-+        self.vm_console_reset()
-+        self.check_logs()
-+
-+    def test_reset_qmp(self):
-+        self.common_vm_setup()
-+        self.launch_vm()
-+        self.vm_qmp_reset()
-+        self.check_logs()
-+
-+    def test_reset_kvmpit(self):
-+        self.common_vm_setup()
-+        self.vm.add_args("--trace", "kvmpit_post_vmfd_change")
-+        self.launch_vm()
-+        self.vm_console_reset()
-+        self.assertRegex(self.vm.get_log(),
-+                         r'kvmpit_post_vmfd_change')
-+
-+    def test_reset_xen_emulation(self):
-+        self.common_vm_setup("xen-version=0x4000a,kernel-irqchip=split")
-+        self.launch_vm()
-+        self.vm_console_reset()
-+        self.check_logs()
-+
-+    def test_reset_hyperv_vmbus(self):
-+        self.common_vm_setup(None, "hv-syndbg,hv-relaxed,hv_time,hv-synic,"
-+                             "hv-vpindex,hv-runtime,hv-stimer")
-+        self.vm.add_args("-device", "vmbus-bridge,irq=15")
-+        self.vm.add_args("-trace", "vmbus_handle_vmfd_change")
-+        self.launch_vm()
-+        self.vm_console_reset()
-+        self.assertRegex(self.vm.get_log(),
-+                         r'vmbus_handle_vmfd_change')
-+
-+if __name__ == '__main__':
-+    QemuSystemTest.main()
+ # Since: 10.1
+ ##
+ { 'struct': 'TdxGuestProperties',
+@@ -1144,7 +1155,8 @@
+             '*mrconfigid': 'str',
+             '*mrowner': 'str',
+             '*mrownerconfig': 'str',
+-            '*quote-generation-socket': 'SocketAddress' } }
++            '*quote-generation-socket': 'SocketAddress' },
++   'features': ['confidential-guest-reset']}
+ 
+ ##
+ # @ThreadContextProperties:
 -- 
 2.42.0
 
