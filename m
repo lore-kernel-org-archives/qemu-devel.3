@@ -4,36 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A57EE9A047
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 17:20:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B4AAE9A047
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 17:20:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vslCk-0005VC-U3; Wed, 18 Feb 2026 12:19:14 -0500
+	id 1vslCl-0005VK-9O; Wed, 18 Feb 2026 12:19:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vslCS-0005Q1-U6
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vslCS-0005Q0-Sv
  for qemu-devel@nongnu.org; Wed, 18 Feb 2026 12:19:01 -0500
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vslCM-0005bU-Uc
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 12:18:55 -0500
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vslCM-0005ag-91
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 12:18:53 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=Cc:To:In-Reply-To:References:Message-Id:Content-Transfer-Encoding:
  Content-Type:MIME-Version:Subject:Date:From:Sender:Reply-To:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=4LkiTaljfkOqrefowX7cdd5uer+Jd06QUXUJdOltMMk=; b=pj7BtxBhEYx189M
- Lme4/kNkrfZ8RPJN530aj5/M4z9azx4Jdiuk8X+5rRNOLlAkwD/+DdrPvyCnOpNZWLyCZZ4elBGU7
- hKP9ICnZ4iMBy2WCAdTo+AV6VELY7lxDdYXojzWfOyJFvGlwZrKRcogkNM8viUL1lYHb03WTiVRDi
- Cs=;
-Date: Wed, 18 Feb 2026 18:21:31 +0100
-Subject: [PATCH v6 5/7] hw/loongarch: Use loongarch_palen_mask()
+ List-Help; bh=PbZj+MJ7ZvB1UDK3MKfN9VG/9j0a+ZXm8vyyR4l7ieE=; b=tbgZXNYZdkWttBU
+ rsOx/JdzST3P6BPKBTSk5gJtJjH5vPSiKecJP+0RLw0JoUptKjCLwwBbuCq47Se3V0tJrq9zZSu7D
+ KGJrqDOYkl50RaxzO8Fn5OSvtF7Fj6Hyy1qkcZvvPmSlBF9dztBf0EXgohkL6XNla46XYWE3z9R0e
+ vQ=;
+Date: Wed, 18 Feb 2026 18:21:27 +0100
+Subject: [PATCH v6 1/7] target/hppa: Define PA[20|1X] physical address
+ space size
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260218-phys_addr-v6-5-a603bf363218@rev.ng>
+Message-Id: <20260218-phys_addr-v6-1-a603bf363218@rev.ng>
 References: <20260218-phys_addr-v6-0-a603bf363218@rev.ng>
 In-Reply-To: <20260218-phys_addr-v6-0-a603bf363218@rev.ng>
 To: qemu-devel@nongnu.org
@@ -45,11 +46,11 @@ Cc: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Alistair Francis <alistair.francis@wdc.com>, 
  Brian Cain <brian.cain@oss.qualcomm.com>, 
  Chao Liu <chao.liu.zevorn@gmail.com>, Anton Johansson <anjo@rev.ng>
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1771435335; l=6394;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1771435335; l=3909;
  i=anjo@rev.ng; s=20260210; h=from:subject:message-id;
- bh=5MbRiX/4ApGQhlJ/njDl1vuK2WFfFk2T7B57kDt5a54=;
- b=IjK5A6YVSgglcH5kru7RfKl2D10X/wLMb2SB9/q0/YkB8/eykM/cKnTGw2qzMWKS4MlqBsbMx
- /Up8e7XFadQD8jjcZq4DGbuweRlm8G6F8JkflaSzHZpPyf0KDTpoZU0
+ bh=mJLHJbLS4Uz8+yGhmilwJgwYd61Krwd2i3KjZETkFK4=;
+ b=XdOLymSNvxPKK19UwTLDOjM3Y+iD6a7kX6krqLcQOE8nJcc2UhehN2ceG0wc72ZwhZ4gP7jaw
+ uYk5p555d0gDTXX+fOB99HhcvQf3GEO6Z7c8j2pWoNzjOWpWm+w4Sq7
 X-Developer-Key: i=anjo@rev.ng; a=ed25519;
  pk=dKsZvj/g3kgDxnV1/SWg8a0YNGSpWtFGNsWIepQYKow=
 Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
@@ -78,153 +79,107 @@ From:  Anton Johansson via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Replaces remaining uses of TARGET_PHYS_ADDR_SPACE_BITS with
-runtime calls to loongarch_palen_mask() to fetch the physical
-address mask from the cpucfg PALEN field.
+When converting virtual to physical addresses,
+TARGET_PHYS_ADDR_SPACE_BITS is used under PA-RISC 2.0, and an explicit
+cast to uint32_t is used under PA-RISC 1.X.  Replace the former with a
+more specific macro limited to mem_helper.c, and make the latter
+conversion explicit by defining the size of the physical address space
+for PA-RISC 1.X.
+
+Note: while 44 bits should be used for the 64-bit address space running
+a C3700, 40 bits is still chosen as this is expected by the SeaBIOS
+functional test.
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Anton Johansson <anjo@rev.ng>
 ---
- include/hw/loongarch/boot.h |  3 ++-
- hw/loongarch/boot.c         | 28 ++++++++++++++++------------
- hw/loongarch/virt.c         |  5 ++++-
- 3 files changed, 22 insertions(+), 14 deletions(-)
+ target/hppa/cpu.h        |  1 +
+ target/hppa/mem_helper.c | 32 +++++++++++++++++++++++++++-----
+ 2 files changed, 28 insertions(+), 5 deletions(-)
 
-diff --git a/include/hw/loongarch/boot.h b/include/hw/loongarch/boot.h
-index 9819f7fbe3..4984322f75 100644
---- a/include/hw/loongarch/boot.h
-+++ b/include/hw/loongarch/boot.h
-@@ -113,6 +113,7 @@ struct memmap_entry {
-     uint32_t reserved;
- };
- 
--void loongarch_load_kernel(MachineState *ms, struct loongarch_boot_info *info);
-+void loongarch_load_kernel(MachineState *ms, struct loongarch_boot_info *info,
-+                           uint64_t phys_addr_mask);
- 
- #endif /* HW_LOONGARCH_BOOT_H */
-diff --git a/hw/loongarch/boot.c b/hw/loongarch/boot.c
-index 711d5ffbbc..ef8eae237c 100644
---- a/hw/loongarch/boot.c
-+++ b/hw/loongarch/boot.c
-@@ -217,10 +217,12 @@ static void init_cmdline(struct loongarch_boot_info *info, void *p, void *start)
- 
- static uint64_t cpu_loongarch_virt_to_phys(void *opaque, uint64_t addr)
- {
--    return addr & MAKE_64BIT_MASK(0, TARGET_PHYS_ADDR_SPACE_BITS);
-+    uint64_t *phys_addr_mask = opaque;
-+    return addr & *phys_addr_mask;
+diff --git a/target/hppa/cpu.h b/target/hppa/cpu.h
+index 012e54f8f6..092e647ccf 100644
+--- a/target/hppa/cpu.h
++++ b/target/hppa/cpu.h
+@@ -336,6 +336,7 @@ static inline vaddr hppa_form_gva(CPUHPPAState *env, uint64_t spc,
+     return hppa_form_gva_mask(env->gva_offset_mask, spc, off);
  }
  
- static int64_t load_loongarch_linux_image(const char *filename,
-+                                          uint64_t phys_addr_mask,
-                                           uint64_t *kernel_entry,
-                                           uint64_t *kernel_low,
-                                           uint64_t *kernel_high)
-@@ -251,10 +253,8 @@ static int64_t load_loongarch_linux_image(const char *filename,
++hwaddr hppa_abs_to_phys_pa1x(vaddr addr);
+ hwaddr hppa_abs_to_phys_pa2_w0(vaddr addr);
+ hwaddr hppa_abs_to_phys_pa2_w1(vaddr addr);
+ 
+diff --git a/target/hppa/mem_helper.c b/target/hppa/mem_helper.c
+index cce82e6599..9199d1e06a 100644
+--- a/target/hppa/mem_helper.c
++++ b/target/hppa/mem_helper.c
+@@ -29,6 +29,28 @@
+ #include "hw/core/cpu.h"
+ #include "trace.h"
+ 
++/*
++ * 64-bit (PA-RISC 2.0) machines are assumed to run PA-8700, and 32-bit
++ * machines 7300LC.  This should give 44 and 32 bits of physical address
++ * space respectively.
++ *
++ *   CPU model        Physical address space bits
++ *   PA-7000--7300LC  32
++ *   PA-8000--8600    40
++ *   PA-8700--8900    44
++ *
++ * FIXME: However, the SeaBIOS firmware that is that tested against
++ * uses 40-bit physical addresses, despite supposedly running a C3700
++ * with a PA-8700 cpu, so use 40-bits for 64-bit.
++ */
++#define HPPA_PHYS_ADDR_SPACE_BITS_PA20 40
++#define HPPA_PHYS_ADDR_SPACE_BITS_PA1X 32
++
++hwaddr hppa_abs_to_phys_pa1x(vaddr addr)
++{
++    return extract64(addr, 0, HPPA_PHYS_ADDR_SPACE_BITS_PA1X);
++}
++
+ hwaddr hppa_abs_to_phys_pa2_w1(vaddr addr)
+ {
+     /*
+@@ -42,8 +64,8 @@ hwaddr hppa_abs_to_phys_pa2_w1(vaddr addr)
+      * Since the supported physical address space is below 54 bits, the
+      * H-8 algorithm is moot and all that is left is to truncate.
+      */
+-    QEMU_BUILD_BUG_ON(TARGET_PHYS_ADDR_SPACE_BITS > 54);
+-    return sextract64(addr, 0, TARGET_PHYS_ADDR_SPACE_BITS);
++    QEMU_BUILD_BUG_ON(HPPA_PHYS_ADDR_SPACE_BITS_PA20 > 54);
++    return sextract64(addr, 0, HPPA_PHYS_ADDR_SPACE_BITS_PA20);
+ }
+ 
+ hwaddr hppa_abs_to_phys_pa2_w0(vaddr addr)
+@@ -67,7 +89,7 @@ hwaddr hppa_abs_to_phys_pa2_w0(vaddr addr)
+          * is what can be seen on physical machines too.
+          */
+         addr = (uint32_t)addr;
+-        addr |= -1ull << (TARGET_PHYS_ADDR_SPACE_BITS - 4);
++        addr |= -1ull << (HPPA_PHYS_ADDR_SPACE_BITS_PA20 - 4);
      }
- 
-     /* Early kernel versions may have those fields in virtual address */
--    *kernel_entry = extract64(le64_to_cpu(hdr->kernel_entry),
--                              0, TARGET_PHYS_ADDR_SPACE_BITS);
--    *kernel_low = extract64(le64_to_cpu(hdr->load_offset),
--                            0, TARGET_PHYS_ADDR_SPACE_BITS);
-+    *kernel_entry = le64_to_cpu(hdr->kernel_entry) & phys_addr_mask;
-+    *kernel_low = le64_to_cpu(hdr->load_offset) & phys_addr_mask;
-     *kernel_high = *kernel_low + size;
- 
-     rom_add_blob_fixed(filename, buffer, size, *kernel_low);
-@@ -303,19 +303,21 @@ static ram_addr_t alloc_initrd_memory(struct loongarch_boot_info *info,
-     exit(1);
+     return addr;
  }
+@@ -217,7 +239,7 @@ int hppa_get_physical_address(CPUHPPAState *env, vaddr addr, int mmu_idx,
+             if (hppa_is_pa20(env)) {
+                 phys = hppa_abs_to_phys_pa2_w0(addr);
+             } else {
+-                phys = (uint32_t)addr;
++                phys = hppa_abs_to_phys_pa1x(addr);
+             }
+             break;
+         default:
+@@ -558,7 +580,7 @@ static void itlbt_pa20(CPUHPPAState *env, target_ulong r1,
+     /* Align per the page size. */
+     ent->pa &= TARGET_PAGE_MASK << mask_shift;
+     /* Ignore the bits beyond physical address space. */
+-    ent->pa = sextract64(ent->pa, 0, TARGET_PHYS_ADDR_SPACE_BITS);
++    ent->pa = sextract64(ent->pa, 0, HPPA_PHYS_ADDR_SPACE_BITS_PA20);
  
--static int64_t load_kernel_info(struct loongarch_boot_info *info)
-+static int64_t load_kernel_info(struct loongarch_boot_info *info,
-+                                uint64_t phys_addr_mask)
- {
-     uint64_t kernel_entry, kernel_low, kernel_high, initrd_offset = 0;
-     ssize_t kernel_size;
- 
-     kernel_size = load_elf(info->kernel_filename, NULL,
--                           cpu_loongarch_virt_to_phys, NULL,
-+                           cpu_loongarch_virt_to_phys, &phys_addr_mask,
-                            &kernel_entry, &kernel_low,
-                            &kernel_high, NULL, ELFDATA2LSB,
-                            EM_LOONGARCH, 1, 0);
--    kernel_entry = cpu_loongarch_virt_to_phys(NULL, kernel_entry);
-+    kernel_entry = cpu_loongarch_virt_to_phys(&phys_addr_mask, kernel_entry);
-     if (kernel_size < 0) {
-         kernel_size = load_loongarch_linux_image(info->kernel_filename,
-+                                                 phys_addr_mask,
-                                                  &kernel_entry, &kernel_low,
-                                                  &kernel_high);
-     }
-@@ -395,14 +397,15 @@ static void init_boot_rom(MachineState *ms,
- }
- 
- static void loongarch_direct_kernel_boot(MachineState *ms,
--                                         struct loongarch_boot_info *info)
-+                                         struct loongarch_boot_info *info,
-+                                         uint64_t phys_addr_mask)
- {
-     void *p, *bp;
-     int64_t kernel_addr = VIRT_FLASH0_BASE;
-     uint64_t *data;
- 
-     if (info->kernel_filename) {
--        kernel_addr = load_kernel_info(info);
-+        kernel_addr = load_kernel_info(info, phys_addr_mask);
-     } else {
-         if (!qtest_enabled()) {
-             warn_report("No kernel provided, booting from flash drive.");
-@@ -429,7 +432,8 @@ static void loongarch_direct_kernel_boot(MachineState *ms,
-     g_free(bp);
- }
- 
--void loongarch_load_kernel(MachineState *ms, struct loongarch_boot_info *info)
-+void loongarch_load_kernel(MachineState *ms, struct loongarch_boot_info *info,
-+                           uint64_t phys_addr_mask)
- {
-     LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(ms);
- 
-@@ -440,6 +444,6 @@ void loongarch_load_kernel(MachineState *ms, struct loongarch_boot_info *info)
-     if (lvms->bios_loaded) {
-         loongarch_firmware_boot(lvms, info);
-     } else {
--        loongarch_direct_kernel_boot(ms, info);
-+        loongarch_direct_kernel_boot(ms, info, phys_addr_mask);
-     }
- }
-diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
-index a75968e4c9..9e26c25c23 100644
---- a/hw/loongarch/virt.c
-+++ b/hw/loongarch/virt.c
-@@ -34,6 +34,7 @@
- #include "hw/misc/unimp.h"
- #include "hw/loongarch/fw_cfg.h"
- #include "target/loongarch/cpu.h"
-+#include "target/loongarch/cpu-mmu.h"
- #include "hw/firmware/smbios.h"
- #include "qapi/qapi-visit-common.h"
- #include "hw/acpi/generic_event_device.h"
-@@ -928,6 +929,7 @@ static void virt_init(MachineState *machine)
-     hwaddr base, size, ram_size = machine->ram_size;
-     MachineClass *mc = MACHINE_GET_CLASS(machine);
-     Object *cpuobj;
-+    uint64_t phys_addr_mask = 0;
- 
-     if (!cpu_model) {
-         cpu_model = LOONGARCH_CPU_TYPE_NAME("la464");
-@@ -1017,7 +1019,8 @@ static void virt_init(MachineState *machine)
-     qemu_register_powerdown_notifier(&lvms->powerdown_notifier);
- 
-     lvms->bootinfo.ram_size = ram_size;
--    loongarch_load_kernel(machine, &lvms->bootinfo);
-+    phys_addr_mask = loongarch_palen_mask(&LOONGARCH_CPU(first_cpu)->env);
-+    loongarch_load_kernel(machine, &lvms->bootinfo, phys_addr_mask);
- }
- 
- static void virt_get_acpi(Object *obj, Visitor *v, const char *name,
+     ent->t = extract64(r2, 61, 1);
+     ent->d = extract64(r2, 60, 1);
 
 -- 
 2.52.0
