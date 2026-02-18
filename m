@@ -4,109 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 962EFE9A047
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF54DE9A049
 	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 13:33:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vshfe-0004EG-3O; Wed, 18 Feb 2026 08:32:50 -0500
+	id 1vshfC-0003rZ-M3; Wed, 18 Feb 2026 08:32:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1vshfQ-0003xd-Bu
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 08:32:36 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1vshfB-0003pa-4L
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 08:32:21 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1vshfA-0005R3-Ir
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 08:32:32 -0500
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1vshf2-0005GZ-HR
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 08:32:16 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771421538;
+ s=mimecast20190719; t=1771421527;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=/GpJAltRXiG3BftU38An+U5DT1j7yTwOzEMSCvYcGWQ=;
- b=JBSxTCCrVo/q/ifgCc9y+ootDlamQkUVvsLVCCoi7nZe+nPJmyJgz38hOKEThLQyMYT12r
- pzIK582Bblq4a6gyQZGDxWLHwEGpj1wiveWuE7+jy7t4ou89qmjVAPL02/UGNzjljqCbGA
- Kyzb/uKaOsJ4S1GLd1UyslGVrvTOQGM=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=BOixUczgf/re8Xp6Djr53L45pCSu7AEC5w4EK2f/CNY=;
+ b=cAO5cgZRzvNYp9QZORU0O6EbC9d06zYUXCdWIxrd18bhWNJh1pY+QuNPQxBFguUoExcTE5
+ IsksItraou6oIRP9A9XTatwCzSL6OrzBZzh065Smq3YPAzij7FTKXUQXPPTJ1KZ0G8U95s
+ AFSYbOdrKbRByNJ9WHYSMv+nyjCwZFE=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-256-d1ClUX85OmGkIDRkebFn7A-1; Wed, 18 Feb 2026 08:27:15 -0500
-X-MC-Unique: d1ClUX85OmGkIDRkebFn7A-1
-X-Mimecast-MFC-AGG-ID: d1ClUX85OmGkIDRkebFn7A_1771421234
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-4837a718f41so18968675e9.2
- for <qemu-devel@nongnu.org>; Wed, 18 Feb 2026 05:27:15 -0800 (PST)
+ us-mta-685-MYc6KdwxPwWBjvj89X6qLw-1; Wed, 18 Feb 2026 08:26:57 -0500
+X-MC-Unique: MYc6KdwxPwWBjvj89X6qLw-1
+X-Mimecast-MFC-AGG-ID: MYc6KdwxPwWBjvj89X6qLw_1771421216
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-48379489438so43583655e9.2
+ for <qemu-devel@nongnu.org>; Wed, 18 Feb 2026 05:26:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1771421234; x=1772026034; darn=nongnu.org;
+ d=redhat.com; s=google; t=1771421216; x=1772026016; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=/GpJAltRXiG3BftU38An+U5DT1j7yTwOzEMSCvYcGWQ=;
- b=Wuz/EEoZpsw6f46BaBB0BUZf+40AiNMuzJtdMoL07+bCAWWhQrUtznU39/nUvp13ZY
- KFkg65FEAQa0DzK9+delkGTZhKmYPVQDI+eF4G/PU5o5ciR8M121SmSXar4hqgYEgN5j
- 4d9uVUdLvVAxYyGaXpME9mEXIEY6hcdMONh8A+GWLhiL5GqxTEOOaNnn2WII95R9wRFI
- L76bSSpbKykqgItj7TF/Cb4+n7n9Sn95z0JcUzadeIpdAsy9U3be7bBouEXB+7T86N8r
- Jdw22nHN7k0dznmth/zUAn3v5flDrKFp6bu9uHq6pS9pQEbV0x2ImyKwrvnqiWTRzB7t
- MbRw==
+ bh=BOixUczgf/re8Xp6Djr53L45pCSu7AEC5w4EK2f/CNY=;
+ b=d07ER0GU+tvnG9/0oDjiFekc5wUhaRtQ4GEqIlma1DjV1cVxO7lFx2wJyWkUd4znUR
+ k7CAkfLXNP6k8YUn0IrZobMnARZgJkT+0hUjjnNWNDVAcPwhYA4JOtheA/DtDeE67D+7
+ IAkdiHf14ATvgMWfq97BHgJHAg00QJ9tZghC2kSpuslzk7M+TS8TVGwKlLEjddtTdCrH
+ 8JKMG5xBTiTv39BtcXj+l9gzQEQqLjcutjly6MuQAYSr4cgWuktoFWpUCCUcX0I3JNS8
+ 82cFxlnacvbfOJNAPjc6e3t4PgdJqvxaJ6/qI/MhNRt6DUo0U623DP9Eet2T19mS9kgV
+ bRPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771421234; x=1772026034;
+ d=1e100.net; s=20230601; t=1771421216; x=1772026016;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=/GpJAltRXiG3BftU38An+U5DT1j7yTwOzEMSCvYcGWQ=;
- b=iRSDHP030Z/hfnUTJGweod4nLDUYKMKCKD0Ym3cneBYYz6y5+WC5uwZsvMdcP5eowB
- skfdlOeUgg1EspsgsyWQVgKYROC1f0JYOyyHskk0pdQwEyPj7wGGPNBYyiv+Epzl26nj
- K4D5cOWrUZz0x6T7d6uc/63Lm6oJOjvA649m3UtBa0PRc+9zDO6Ed2qEF8y/x0dyqz95
- ZON9TrBcZ70+8+quZUUf5VjGK4Ls6lBhRxw7zbIrRnK/tzRb9PI5I77yG9bdyBxSA++6
- spENe9KU/I6YigkfQaVg+Nd6ifFXJiAizeISLxaSUAcGXc+oBzN9oTjNQp66IC0dn1sD
- pcCw==
-X-Gm-Message-State: AOJu0Yw4F/1HVNvvtfFUmthVakkWzgMeMazsiMkkiOUusMur36esiLCb
- N30v6Lo7HBiWKry5/MzvCgPYisVKTREusCAa1MWhRzHMB6J9/hAgzrprMaqAGoDYpAnSOpBO/fx
- sg/U8831zpLZBiDdeFCBpuFtQQwmfejhBQRENffcnuXFgAB0pMka2uCiQeqpD9XV/
-X-Gm-Gg: AZuq6aJL7ZzoEA+Xx0dI667HRclxYtA7zt4x/L4V1PREtxELYPn/oGv2HUe+1vHMUk9
- cNoE657EUodEjSiqOQ+K6hG3p8035FlZA0GY72Ht7QB2e+2dZkE7aq7fvijpJHK3NXaqipRiLVc
- 0fFjiPdrBp1617UwnQHxlcWZ+CcoEKGm8ip36DzJZPhtEoiiDOKOqeiMATZr89qxud0yYmTuMAZ
- EJRWV+V4REfmbwmMzG98lI7b0LKFrSO0peGLvUSEimPPm2ohiZpNuhqxz1mNEnb+U0mpwUVZ1oX
- O6yzfS2CttDt2caYTwGFFUwC9/GHrwPXUQXp+az1WHRV8pe7gc3pfRnqSLkplXuutigS16BUKYx
- BNkNsOPo6RCUJ28UwW416mrSIMShAlS0apRCVrWhzGC8Grg+2u0EDgnreT3zmq7MquJ+yuebGxo
- z6WFEw
-X-Received: by 2002:a05:600c:1c08:b0:47a:8cce:2940 with SMTP id
- 5b1f17b1804b1-48379b991c6mr243244885e9.14.1771421233838; 
- Wed, 18 Feb 2026 05:27:13 -0800 (PST)
-X-Received: by 2002:a05:600c:1c08:b0:47a:8cce:2940 with SMTP id
- 5b1f17b1804b1-48379b991c6mr243244465e9.14.1771421233400; 
- Wed, 18 Feb 2026 05:27:13 -0800 (PST)
+ bh=BOixUczgf/re8Xp6Djr53L45pCSu7AEC5w4EK2f/CNY=;
+ b=eAHZuyH54f1mwV4HnAdqa33+3PT+m2fb4uILfB28oX6KHUVaicuUbxSOPVxiNnmbJ/
+ hzGGJ8H4oLu4BFh0tRv6P8am25A/UDayBCAvnltciNDML2DKCRFqUqJ+ii+2hHCU+ynM
+ oYcEpzTxBSULgE3hd+1XPkJo1Uax5Bo/9ZfK3aSPEnjFVu1Pw1huDmES/bp+zlN+aeaX
+ 5AsWb6NiGFrun8vA5yNBpO6NS4/q6JTFml/W0cOvLtifYsh2VxXQrvDN3vrQJExu94P8
+ 3+E9t0HnEpu3NPn+LbmmbWV6z+69Z7Q+NF27pFpy3tGcnDusgA4lbXIR7bOokgEz5SW0
+ r8Pg==
+X-Gm-Message-State: AOJu0YxyRwjeYK/YFZmqYaqb6/24JCOlBW+cbW5YqOHT/54hWO1CF0vv
+ 85SqwSddyoHvGthaWCyCk4MpLNcmQlyEXtCD1fWHEwBjiHr6Jj+NoNVeTZd0uOA1N21cFN4RwqY
+ eYhX0aphgXviXLgenQdKVklgRO80SclUt38hnTCq9VkUp6cRGPTB+RJaS
+X-Gm-Gg: AZuq6aJxiyoTDzKlDyHnFYNWe4MjPfauhrZ5wOs2w9uw6YNx1wKe7Af0K1WfSUYWQ/9
+ 5WO0P5O8urO3GDsRtLEVailhBKItUcvmkiec5G1qoqBMmhA1eykWFGM2N3npgsVbTDSgyenPWWN
+ xRMqF8k/yiDFEyHnY8dA7bwf679510cZIxVI/huhHp0envZtF0j+AN8bky97zzLGrQQUFbJXdw/
+ ydXPa0+iwwzHoZmsNbNzdGkH5qsfciiqgnf72/lvns0Jo24TWLHuOHB7OMzP6ygly+Wzyi/KzAB
+ MXz6sbEXFPPAv9+lZG6EDhgHaqEiTSNWe3vGatlgr2q4tfuS1EyvkJ+1s5c76c+Kx+h+aHw3VpD
+ 5S2Iu8doocsD/XgJiKPMrmOI1cm9wA3fLi9wXvniKZ9iTik5f4zjA7XrJCgJD+QC8P5AaS22rPz
+ VeYLM1
+X-Received: by 2002:a05:600c:5295:b0:483:9139:4c29 with SMTP id
+ 5b1f17b1804b1-48398a48450mr31689685e9.2.1771421215725; 
+ Wed, 18 Feb 2026 05:26:55 -0800 (PST)
+X-Received: by 2002:a05:600c:5295:b0:483:9139:4c29 with SMTP id
+ 5b1f17b1804b1-48398a48450mr31689335e9.2.1771421215201; 
+ Wed, 18 Feb 2026 05:26:55 -0800 (PST)
 Received: from localhost
  (p200300cfd737d029edef7b8da7441ac2.dip0.t-ipconnect.de.
  [2003:cf:d737:d029:edef:7b8d:a744:1ac2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4834d5ebd1bsm649071375e9.6.2026.02.18.05.27.12
+ 5b1f17b1804b1-4834d482480sm624827305e9.0.2026.02.18.05.26.53
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 18 Feb 2026 05:27:12 -0800 (PST)
+ Wed, 18 Feb 2026 05:26:54 -0800 (PST)
 From: Hanna Czenczek <hreitz@redhat.com>
 To: qemu-block@nongnu.org
 Cc: qemu-devel@nongnu.org, Hanna Czenczek <hreitz@redhat.com>,
  Kevin Wolf <kwolf@redhat.com>, Brian Song <hibriansong@gmail.com>
-Subject: [PATCH v4 12/24] fuse: fuse_{read,write}: Rename length to blk_len
-Date: Wed, 18 Feb 2026 14:26:21 +0100
-Message-ID: <20260218132633.29748-13-hreitz@redhat.com>
+Subject: [PATCH v4 05/24] fuse: Change setup_... to mount_fuse_export()
+Date: Wed, 18 Feb 2026 14:26:14 +0100
+Message-ID: <20260218132633.29748-6-hreitz@redhat.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260218132633.29748-1-hreitz@redhat.com>
 References: <20260218132633.29748-1-hreitz@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=hreitz@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=hreitz@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.043,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,82 +122,128 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The term "length" is ambiguous, use "blk_len" instead to be clear.
+There is no clear separation between what should go into
+setup_fuse_export() and what should stay in fuse_export_create().
 
+Make it clear that setup_fuse_export() is for mounting only.  Rename it,
+and move everything that has nothing to do with mounting up into
+fuse_export_create().
+
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
 ---
- block/export/fuse.c | 24 ++++++++++++------------
- 1 file changed, 12 insertions(+), 12 deletions(-)
+ block/export/fuse.c | 49 ++++++++++++++++++++-------------------------
+ 1 file changed, 22 insertions(+), 27 deletions(-)
 
 diff --git a/block/export/fuse.c b/block/export/fuse.c
-index f6a5f4fa0a..d45c6b814f 100644
+index a56f645c05..00bb2ffee4 100644
 --- a/block/export/fuse.c
 +++ b/block/export/fuse.c
-@@ -637,7 +637,7 @@ static void fuse_read(fuse_req_t req, fuse_ino_t inode,
-                       size_t size, off_t offset, struct fuse_file_info *fi)
- {
-     FuseExport *exp = fuse_req_userdata(req);
--    int64_t length;
-+    int64_t blk_len;
-     void *buf;
-     int ret;
+@@ -72,8 +72,7 @@ static void fuse_export_delete(BlockExport *exp);
  
-@@ -651,14 +651,14 @@ static void fuse_read(fuse_req_t req, fuse_ino_t inode,
-      * Clients will expect short reads at EOF, so we have to limit
-      * offset+size to the image length.
-      */
--    length = blk_getlength(exp->common.blk);
--    if (length < 0) {
--        fuse_reply_err(req, -length);
-+    blk_len = blk_getlength(exp->common.blk);
-+    if (blk_len < 0) {
-+        fuse_reply_err(req, -blk_len);
-         return;
-     }
+ static void init_exports_table(void);
  
--    if (offset + size > length) {
--        size = length - offset;
-+    if (offset + size > blk_len) {
-+        size = blk_len - offset;
-     }
+-static int setup_fuse_export(FuseExport *exp, const char *mountpoint,
+-                             bool allow_other, Error **errp);
++static int mount_fuse_export(FuseExport *exp, Error **errp);
+ static void read_from_fuse_export(void *opaque);
  
-     buf = qemu_try_blockalign(blk_bs(exp->common.blk), size);
-@@ -685,7 +685,7 @@ static void fuse_write(fuse_req_t req, fuse_ino_t inode, const char *buf,
- {
-     FuseExport *exp = fuse_req_userdata(req);
-     QEMU_AUTO_VFREE void *copied = NULL;
--    int64_t length;
-+    int64_t blk_len;
-     int ret;
+ static bool is_regular_file(const char *path, Error **errp);
+@@ -193,23 +192,32 @@ static int fuse_export_create(BlockExport *blk_exp,
+     exp->st_gid = getgid();
  
-     /* Limited by max_write, should not happen */
-@@ -711,13 +711,13 @@ static void fuse_write(fuse_req_t req, fuse_ino_t inode, const char *buf,
-      * Clients will expect short writes at EOF, so we have to limit
-      * offset+size to the image length.
-      */
--    length = blk_getlength(exp->common.blk);
--    if (length < 0) {
--        fuse_reply_err(req, -length);
-+    blk_len = blk_getlength(exp->common.blk);
-+    if (blk_len < 0) {
-+        fuse_reply_err(req, -blk_len);
-         return;
-     }
- 
--    if (offset + size > length) {
-+    if (offset + size > blk_len) {
-         if (exp->growable) {
-             ret = fuse_do_truncate(exp, offset + size, true, PREALLOC_MODE_OFF);
-             if (ret < 0) {
-@@ -725,7 +725,7 @@ static void fuse_write(fuse_req_t req, fuse_ino_t inode, const char *buf,
-                 return;
-             }
-         } else {
--            size = length - offset;
-+            size = blk_len - offset;
+     if (args->allow_other == FUSE_EXPORT_ALLOW_OTHER_AUTO) {
+-        /* Ignore errors on our first attempt */
+-        ret = setup_fuse_export(exp, args->mountpoint, true, NULL);
+-        exp->allow_other = ret == 0;
++        /* Try allow_other == true first, ignore errors */
++        exp->allow_other = true;
++        ret = mount_fuse_export(exp, NULL);
+         if (ret < 0) {
+-            ret = setup_fuse_export(exp, args->mountpoint, false, errp);
++            exp->allow_other = false;
++            ret = mount_fuse_export(exp, errp);
          }
+     } else {
+         exp->allow_other = args->allow_other == FUSE_EXPORT_ALLOW_OTHER_ON;
+-        ret = setup_fuse_export(exp, args->mountpoint, exp->allow_other, errp);
++        ret = mount_fuse_export(exp, errp);
+     }
+     if (ret < 0) {
+         goto fail;
      }
  
++    g_hash_table_insert(exports, g_strdup(exp->mountpoint), NULL);
++
++    aio_set_fd_handler(exp->common.ctx,
++                       fuse_session_fd(exp->fuse_session),
++                       read_from_fuse_export, NULL, NULL, NULL, exp);
++    exp->fd_handler_set_up = true;
++
+     return 0;
+ 
+ fail:
++    fuse_export_shutdown(blk_exp);
+     fuse_export_delete(blk_exp);
+     return ret;
+ }
+@@ -227,10 +235,10 @@ static void init_exports_table(void)
+ }
+ 
+ /**
+- * Create exp->fuse_session and mount it.
++ * Create exp->fuse_session and mount it.  Expects exp->mountpoint,
++ * exp->writable, and exp->allow_other to be set as intended for the mount.
+  */
+-static int setup_fuse_export(FuseExport *exp, const char *mountpoint,
+-                             bool allow_other, Error **errp)
++static int mount_fuse_export(FuseExport *exp, Error **errp)
+ {
+     const char *fuse_argv[4];
+     char *mount_opts;
+@@ -243,7 +251,7 @@ static int setup_fuse_export(FuseExport *exp, const char *mountpoint,
+      */
+     mount_opts = g_strdup_printf("max_read=%zu,default_permissions%s",
+                                  FUSE_MAX_BOUNCE_BYTES,
+-                                 allow_other ? ",allow_other" : "");
++                                 exp->allow_other ? ",allow_other" : "");
+ 
+     fuse_argv[0] = ""; /* Dummy program name */
+     fuse_argv[1] = "-o";
+@@ -256,30 +264,17 @@ static int setup_fuse_export(FuseExport *exp, const char *mountpoint,
+     g_free(mount_opts);
+     if (!exp->fuse_session) {
+         error_setg(errp, "Failed to set up FUSE session");
+-        ret = -EIO;
+-        goto fail;
++        return -EIO;
+     }
+ 
+-    ret = fuse_session_mount(exp->fuse_session, mountpoint);
++    ret = fuse_session_mount(exp->fuse_session, exp->mountpoint);
+     if (ret < 0) {
+         error_setg(errp, "Failed to mount FUSE session to export");
+-        ret = -EIO;
+-        goto fail;
++        return -EIO;
+     }
+     exp->mounted = true;
+ 
+-    g_hash_table_insert(exports, g_strdup(mountpoint), NULL);
+-
+-    aio_set_fd_handler(exp->common.ctx,
+-                       fuse_session_fd(exp->fuse_session),
+-                       read_from_fuse_export, NULL, NULL, NULL, exp);
+-    exp->fd_handler_set_up = true;
+-
+     return 0;
+-
+-fail:
+-    fuse_export_shutdown(&exp->common);
+-    return ret;
+ }
+ 
+ /**
 -- 
 2.53.0
 
