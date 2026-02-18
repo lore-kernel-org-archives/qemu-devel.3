@@ -4,98 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA231E9A03B
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 11:44:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0475EE9A049
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Feb 2026 11:44:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vsfxw-0003KT-AS; Wed, 18 Feb 2026 06:43:36 -0500
+	id 1vsfxp-0003Hb-ID; Wed, 18 Feb 2026 06:43:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1vsfxl-0003G2-3d
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 06:43:25 -0500
+ id 1vsfxa-00038H-3X
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 06:43:15 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1vsfxj-0007sE-BF
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 06:43:24 -0500
+ id 1vsfxP-0007nU-1N
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 06:43:09 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771415002;
+ s=mimecast20190719; t=1771414979;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=cB9YNQTiPMfXUb8pkRT8YklB7Tgf9L/mxZrNTbXVbIc=;
- b=ixQjjjYHXpLUPT/l92tHwqUk85UUzfNRRhrpIaRyXzQ+MnxADpueZbf6dodLUsfn+M+ako
- HMVB2qjzm4wEsTSD8f7T9OEzDBaNNhsSOXoS4jutEK4a+rdlvSPhCOMhbZPOURlpyxEFDG
- BAF+7E7/towtU729TzxnRX6D6rRJ9+E=
-Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com
- [209.85.214.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=p3brC6j5MVPRsa373EQ1kn7FdyUiGI8z9lGD92Jf5HY=;
+ b=I8r7EEGhWJ6WHL1kiAuj2c1XJO24RQHebfth62t4BFUFGK2RJ6iEVwwWskz9NInWS4eMDT
+ pn1NlnLtZ+ZwxLKke1YQ8TOcq0cE+MLJ3X7OAgJIOgsQTrGViKwxLIkFD3sy6DvlE78Hqy
+ kfasZJcwsApoKnOizy/vBZ5hj3Oivcs=
+Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com
+ [209.85.214.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-279-_hbWRvQiM0KOKH5pkISGog-1; Wed, 18 Feb 2026 06:43:21 -0500
-X-MC-Unique: _hbWRvQiM0KOKH5pkISGog-1
-X-Mimecast-MFC-AGG-ID: _hbWRvQiM0KOKH5pkISGog_1771415000
-Received: by mail-pl1-f200.google.com with SMTP id
- d9443c01a7336-29f2381ea85so275901515ad.0
- for <qemu-devel@nongnu.org>; Wed, 18 Feb 2026 03:43:20 -0800 (PST)
+ us-mta-587-yWDi5JaeMdqrNFKMvACZEw-1; Wed, 18 Feb 2026 06:42:55 -0500
+X-MC-Unique: yWDi5JaeMdqrNFKMvACZEw-1
+X-Mimecast-MFC-AGG-ID: yWDi5JaeMdqrNFKMvACZEw_1771414973
+Received: by mail-pl1-f197.google.com with SMTP id
+ d9443c01a7336-2aae0d40a47so261358055ad.2
+ for <qemu-devel@nongnu.org>; Wed, 18 Feb 2026 03:42:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1771415000; x=1772019800; darn=nongnu.org;
+ d=redhat.com; s=google; t=1771414973; x=1772019773; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=cB9YNQTiPMfXUb8pkRT8YklB7Tgf9L/mxZrNTbXVbIc=;
- b=QxvnOcuVPjSzUI51n36CP10bzb6vhGx3kkiENp97TuGiTDpX4BYNXg6zCFa5+Sg8qg
- jNKHF0O5hAAJvgOQ1Zk/jNRLC7FvPVKGzvPna7WopgdFxS0xYVOm0VLxQaTpbMWKfM0+
- OoW8s6GFMPRbaHTw4GC9TnAm+VJ2t0nfRhUQ/liaiWg/sCuLDr2T51sSAHw2qFDyPAgl
- HSXyMhNXeuwwbaCMPVWVoYISu8k2AC2+0IOYAy/OelZeHztj+bkVZqZPVBWpWNlS4IBL
- 8dDp6zByX3QlDoppWtgLB9QE2LX2MY3qwiM81XkN882GBPsGUMPQr5Y7eEuBaC2bN401
- Qoxw==
+ bh=p3brC6j5MVPRsa373EQ1kn7FdyUiGI8z9lGD92Jf5HY=;
+ b=IteESUMtUnMKTpgzkt5H5pq3e9OUm7MMk0uqXKHGIOLCSD6uunE0Pr2hJimhIDBzI8
+ iz+iw88GhXGGGZvEHYK7cEjLVWsplmAs+n1DF51yOjgk+cvW3bJ0UtrfqSQVdIYThFQ0
+ kmFrLC9ls/ijt6wWB2BVkAWPKYvnYnJbkk2yDVHGVXIycdtUGW5v1FEicX5gIslCzr9C
+ QBlwQk8lYYcfmykUsNw2j5qhsu9mi44gtNllRF2hGnJtXiuD0rzpV1puItbaXOomQEJi
+ 7UToI02vuE+BZ/GyaKjI61lNYlysfcpNtUuTNvpBMNsX0GhCWMPIel3yDZWEeFtpg6nS
+ vhTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771415000; x=1772019800;
+ d=1e100.net; s=20230601; t=1771414973; x=1772019773;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=cB9YNQTiPMfXUb8pkRT8YklB7Tgf9L/mxZrNTbXVbIc=;
- b=WPA9TODzLBuI/HtddS+Q6qMuer7YBvi0PtbUTa8FHAqIlDIegkOyBs1i2hY2tda4uc
- pClS+3ZUufJXn8mNAY0nJHGM/P+Mt5UxVqjsvdeMfXWLnGBNUdsmKn9Eci7CLKRV+PfC
- ggo1LXvv5q0lepiykvwFI4E+1XcZ9XVKtxzIE4GKjPHeZk0Z2MjGBwKyI14S8RrUuo4k
- 5p//Xi8f20LlLwcKj39fZs0USUsV+SC5JBZf3Qj+lzjiuB3Wvf6bF/ljXq8dj0iwz6pQ
- mFJIHXI9tli1+q/Xe4+Rumfx2+5Eg+qhK6IQBwyPclyP8muTbiTfLiPSrbT8SOKHq1Yh
- LSUQ==
+ bh=p3brC6j5MVPRsa373EQ1kn7FdyUiGI8z9lGD92Jf5HY=;
+ b=pKQoJ+dQSqimJnAnV+UaEE2bgThAHLh4TfQW1nFaaaApjBToGwqi7+7u6HKSRXFkl/
+ qZ0n03kix7mE1BP5i5uDyBaSNIy9J/Lw51MgYXlIWXb0qcYpPiy7Zwh0q50n7cEx+aw/
+ 1ovwRwTg8c650rm7WMBNWUTIdRfEJJBRoq3ZIHzCTwo3Ty6fj9Esi4VWxVpg++V2P3sf
+ ripsep8ZJkJEOONaJCkJd9kNn8zWICiiky6J7ng/UGmzYAk9u+uQutsZQYmZxhYO4YQF
+ 1zK/Gshwhtzb2Y96hCMVi9Tm8btcSX0iAs/43m1lnVYkn3oPncFgyBj/G/sLDvT8ZCZK
+ 8NIA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV93BWDrzSqsTsQIu8epEdwvQ0ul3hY6A6dJRIx2gUtIY2LhXfa11C580pD/AYLSMReG68Fvl1Yj+KL@nongnu.org
-X-Gm-Message-State: AOJu0YxiH35Ct1zFg/8A5cLxJGp1JHjQzci/TJrRjuEBAbNSjpSe9oeS
- 108OeTaa8m1Gjd0GaHmKPN0B+kt5bten9/ON4iF1lSePQNO8iSultvdheYHPp4x/kJ12yvurKHE
- XnjPQuS9jYm5sKrPaicv6bkVHfzlhU97NxKsqHWH70D5+xuYBmwrsB9Gf
-X-Gm-Gg: AZuq6aKUVRwVn3Ankw3aPujULc2BKGW0Vok8+Jr06QSq/8uXYZ1RRz2ni0ynawmvT+M
- xZNCHvLht4duPP0hLqQLod73TpH5/U6NaWmWc+xbGeSo3nKmBANTlL6BQwmgWOdsZ5r9lx4yNxO
- bpj/ZM5op6LfwNGmqxi4Cyp3ejeCL/jwYe4RJIluSK8Xf8uKRKltK1w0o7kaQBxuQZNyQxLfihh
- j/bEWPqTpBBF/HhAZZluCsmbwvTkCbcQ48rgT4UyJbYsa+4AUzGCgMgWBb+fhZkDHBBercsNuo5
- jxFxM3FzVMfbwT2eCWJe3abYsCVR6csYb24tdeRexZH0mDI+IVSoL/TQo7RjTEfCf3se/pzl5zh
- WexoKA04gaYtn8HqVNvyxg5JPOLd39BH20NU1xkPhi3VAh5kn+okH
-X-Received: by 2002:a17:902:e748:b0:2a0:acf6:3de9 with SMTP id
- d9443c01a7336-2ad175a51d3mr133355215ad.58.1771414999954; 
- Wed, 18 Feb 2026 03:43:19 -0800 (PST)
-X-Received: by 2002:a17:902:e748:b0:2a0:acf6:3de9 with SMTP id
- d9443c01a7336-2ad175a51d3mr133355055ad.58.1771414999587; 
- Wed, 18 Feb 2026 03:43:19 -0800 (PST)
+ AJvYcCWAzDHT0VNaT2n+BsMIN9oCtqAxb87D/Wl4Zi+jjRMVY2MWrLhuEQbzL0aJt/xA/AcfnMzp2fEn+HxQ@nongnu.org
+X-Gm-Message-State: AOJu0YwI4x5qRxflYcQ6dzwuDSW1GDtAedc2EymVcmWmIXvb0nA3Lvs/
+ wKUbMIYALmjqxJTW7pfBZ55ENuXCGeX6k2pkwJmSYEkHA3HuQYLRiIV5RAfw/z0xRRsojRtb+AO
+ 1sOaeiei1rWIW8N5oRF6uh7EWAQ0bvEzTKFdzQ1mxmgsNbwVGr9qqBQ4U
+X-Gm-Gg: AZuq6aJnp2+rJUVsXm7vyZv3GstsE2lIIGRyCplUTTfgwQUoCsUfRLoyFEyX0VAmK0q
+ v+6TPd1zvuvhgtilSX91QDnmfv2+dEFVO5drHA1T2vV1T893NBHo/dOl0Nya+LSkm3FhJSORaqW
+ JFjaB8cE++RMRIg/r0Qku2h8MIKXp1bB/fbfJSfkYP7zRysx1jFoJHsK5Rw/nf7HrRQlhIOBoXx
+ fgDXcBaR2kddlY0b50PDD1OJgym2nsI56eOnCiZaCRA27Mo1vgobUTgkSeZL7AfHWFCp1MoSiyw
+ C/awuMZRzOU6iu4g71oaMq4y2NRBGrfYMctRADpOrYZMWW811xiFtrMOA3asi44p0egW7X5zXiq
+ QhQ9FA98zyWJhLafSv8MBW+4Hp3LJk8jKEtuR11xnrzMdW11wAy3A
+X-Received: by 2002:a17:903:1b67:b0:2a0:c35c:572e with SMTP id
+ d9443c01a7336-2ad17501af0mr153308255ad.30.1771414972857; 
+ Wed, 18 Feb 2026 03:42:52 -0800 (PST)
+X-Received: by 2002:a17:903:1b67:b0:2a0:c35c:572e with SMTP id
+ d9443c01a7336-2ad17501af0mr153308155ad.30.1771414972496; 
+ Wed, 18 Feb 2026 03:42:52 -0800 (PST)
 Received: from rhel9-box.lan ([117.99.83.54])
  by smtp.googlemail.com with ESMTPSA id
- d9443c01a7336-2ad1aaeab38sm127803425ad.82.2026.02.18.03.43.16
+ d9443c01a7336-2ad1aaeab38sm127803425ad.82.2026.02.18.03.42.49
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 18 Feb 2026 03:43:19 -0800 (PST)
+ Wed, 18 Feb 2026 03:42:52 -0800 (PST)
 From: Ani Sinha <anisinha@redhat.com>
-To: "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>
-Cc: Ani Sinha <anisinha@redhat.com>, kraxel@redhat.com, qemu-devel@nongnu.org
-Subject: [PATCH v5 11/34] hw/i386: refactor x86_bios_rom_init for reuse in
- confidential guest reset
-Date: Wed, 18 Feb 2026 17:12:04 +0530
-Message-ID: <20260218114233.266178-12-anisinha@redhat.com>
+To: Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>
+Cc: Ani Sinha <anisinha@redhat.com>, kraxel@redhat.com, qemu-devel@nongnu.org,
+ kvm@vger.kernel.org
+Subject: [PATCH v5 02/34] accel/kvm: add confidential class member to indicate
+ guest rebuild capability
+Date: Wed, 18 Feb 2026 17:11:55 +0530
+Message-ID: <20260218114233.266178-3-anisinha@redhat.com>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20260218114233.266178-1-anisinha@redhat.com>
 References: <20260218114233.266178-1-anisinha@redhat.com>
@@ -126,99 +124,120 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-For confidential guests, bios image must be reinitialized upon reset. This
-is because bios memory is encrypted and hence once the old confidential
-kvm context is destroyed, it cannot be decrypted. It needs to be reinitilized.
-In order to do that, this change refactors x86_bios_rom_init() code so that
-parts of it can be called during confidential guest reset.
+As a part of the confidential guest reset process, the existing encrypted guest
+state must be made mutable since it would be discarded after reset. A new
+encrypted and locked guest state must be established after the reset. To this
+end, a new boolean member per confidential guest support class
+(eg, tdx or sev-snp) is added that will indicate whether its possible to
+rebuild guest state:
+
+bool can_rebuild_guest_state;
+
+This is true if rebuilding guest state is possible, false otherwise.
+A KVM based confidential guest reset is only possible when
+the existing state is locked but its possible to rebuild guest state.
+Otherwise, the guest is not resettable.
 
 Signed-off-by: Ani Sinha <anisinha@redhat.com>
 ---
- hw/i386/x86-common.c | 50 ++++++++++++++++++++++++++++++++------------
- 1 file changed, 37 insertions(+), 13 deletions(-)
+ include/system/confidential-guest-support.h | 20 ++++++++++++++++++++
+ system/runstate.c                           |  6 +++---
+ target/i386/kvm/tdx.c                       |  1 +
+ target/i386/sev.c                           |  1 +
+ 4 files changed, 25 insertions(+), 3 deletions(-)
 
-diff --git a/hw/i386/x86-common.c b/hw/i386/x86-common.c
-index de4cd7650a..c98abaf368 100644
---- a/hw/i386/x86-common.c
-+++ b/hw/i386/x86-common.c
-@@ -1020,17 +1020,11 @@ void x86_isa_bios_init(MemoryRegion *isa_bios, MemoryRegion *isa_memory,
-     memory_region_set_readonly(isa_bios, read_only);
+diff --git a/include/system/confidential-guest-support.h b/include/system/confidential-guest-support.h
+index 0cc8b26e64..5dca717308 100644
+--- a/include/system/confidential-guest-support.h
++++ b/include/system/confidential-guest-support.h
+@@ -152,6 +152,11 @@ typedef struct ConfidentialGuestSupportClass {
+      */
+     int (*get_mem_map_entry)(int index, ConfidentialGuestMemoryMapEntry *entry,
+                              Error **errp);
++
++    /*
++     * is it possible to rebuild the guest state?
++     */
++    bool can_rebuild_guest_state;
+ } ConfidentialGuestSupportClass;
+ 
+ static inline int confidential_guest_kvm_init(ConfidentialGuestSupport *cgs,
+@@ -167,6 +172,21 @@ static inline int confidential_guest_kvm_init(ConfidentialGuestSupport *cgs,
+     return 0;
  }
  
--void x86_bios_rom_init(X86MachineState *x86ms, const char *default_firmware,
--                       MemoryRegion *rom_memory, bool isapc_ram_fw)
-+static int get_bios_size(X86MachineState *x86ms,
-+                         const char *bios_name, char *filename)
++static inline bool
++confidential_guest_can_rebuild_state(ConfidentialGuestSupport *cgs)
++{
++    ConfidentialGuestSupportClass *klass;
++
++    if (!cgs) {
++        /* non-confidential guests */
++        return true;
++    }
++
++    klass = CONFIDENTIAL_GUEST_SUPPORT_GET_CLASS(cgs);
++    return klass->can_rebuild_guest_state;
++
++}
++
+ static inline int confidential_guest_kvm_reset(ConfidentialGuestSupport *cgs,
+                                                Error **errp)
  {
--    const char *bios_name;
--    char *filename;
-     int bios_size;
--    ssize_t ret;
+diff --git a/system/runstate.c b/system/runstate.c
+index d091a2bddd..13f32bed8c 100644
+--- a/system/runstate.c
++++ b/system/runstate.c
+@@ -57,6 +57,7 @@
+ #include "system/reset.h"
+ #include "system/runstate.h"
+ #include "system/runstate-action.h"
++#include "system/confidential-guest-support.h"
+ #include "system/system.h"
+ #include "system/tpm.h"
+ #include "trace.h"
+@@ -543,8 +544,6 @@ void qemu_system_reset(ShutdownCause reason)
+      */
+     if (cpus_are_resettable()) {
+         cpu_synchronize_all_post_reset();
+-    } else {
+-        assert(runstate_check(RUN_STATE_PRELAUNCH));
+     }
  
--    /* BIOS load */
--    bios_name = MACHINE(x86ms)->firmware ?: default_firmware;
--    filename = qemu_find_file(QEMU_FILE_TYPE_BIOS, bios_name);
-     if (filename) {
-         bios_size = get_image_size(filename, NULL);
+     vm_set_suspended(false);
+@@ -697,7 +696,8 @@ void qemu_system_reset_request(ShutdownCause reason)
+     if (reboot_action == REBOOT_ACTION_SHUTDOWN &&
+         reason != SHUTDOWN_CAUSE_SUBSYSTEM_RESET) {
+         shutdown_requested = reason;
+-    } else if (!cpus_are_resettable()) {
++    } else if (!cpus_are_resettable() &&
++               !confidential_guest_can_rebuild_state(current_machine->cgs)) {
+         error_report("cpus are not resettable, terminating");
+         shutdown_requested = reason;
      } else {
-@@ -1040,6 +1034,21 @@ void x86_bios_rom_init(X86MachineState *x86ms, const char *default_firmware,
-         (bios_size % 65536) != 0) {
-         goto bios_error;
-     }
-+
-+    return bios_size;
-+
-+ bios_error:
-+    fprintf(stderr, "qemu: could not load PC BIOS '%s'\n", bios_name);
-+    exit(1);
-+}
-+
-+static void load_bios_from_file(X86MachineState *x86ms, const char *bios_name,
-+                                char *filename, int bios_size,
-+                                bool isapc_ram_fw)
-+{
-+    ssize_t ret;
-+
-+    /* BIOS load */
-     if (machine_require_guest_memfd(MACHINE(x86ms))) {
-         memory_region_init_ram_guest_memfd(&x86ms->bios, NULL, "pc.bios",
-                                            bios_size, &error_fatal);
-@@ -1068,7 +1077,26 @@ void x86_bios_rom_init(X86MachineState *x86ms, const char *default_firmware,
-             goto bios_error;
-         }
-     }
--    g_free(filename);
-+
-+    return;
-+
-+ bios_error:
-+    fprintf(stderr, "qemu: could not load PC BIOS '%s'\n", bios_name);
-+    exit(1);
-+}
-+
-+void x86_bios_rom_init(X86MachineState *x86ms, const char *default_firmware,
-+                       MemoryRegion *rom_memory, bool isapc_ram_fw)
-+{
-+    int bios_size;
-+    const char *bios_name;
-+    g_autofree char *filename;
-+
-+    bios_name = MACHINE(x86ms)->firmware ?: default_firmware;
-+    filename = qemu_find_file(QEMU_FILE_TYPE_BIOS, bios_name);
-+
-+    bios_size = get_bios_size(x86ms, bios_name, filename);
-+    load_bios_from_file(x86ms, bios_name, filename, bios_size, isapc_ram_fw);
+diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
+index 0161985768..a3e81e1c0c 100644
+--- a/target/i386/kvm/tdx.c
++++ b/target/i386/kvm/tdx.c
+@@ -1543,6 +1543,7 @@ static void tdx_guest_class_init(ObjectClass *oc, const void *data)
+     X86ConfidentialGuestClass *x86_klass = X86_CONFIDENTIAL_GUEST_CLASS(oc);
  
-     if (!machine_require_guest_memfd(MACHINE(x86ms))) {
-         /* map the last 128KB of the BIOS in ISA space */
-@@ -1081,8 +1109,4 @@ void x86_bios_rom_init(X86MachineState *x86ms, const char *default_firmware,
-                                 (uint32_t)(-bios_size),
-                                 &x86ms->bios);
-     return;
--
--bios_error:
--    fprintf(stderr, "qemu: could not load PC BIOS '%s'\n", bios_name);
--    exit(1);
+     klass->kvm_init = tdx_kvm_init;
++    klass->can_rebuild_guest_state = true;
+     x86_klass->kvm_type = tdx_kvm_type;
+     x86_klass->cpu_instance_init = tdx_cpu_instance_init;
+     x86_klass->adjust_cpuid_features = tdx_adjust_cpuid_features;
+diff --git a/target/i386/sev.c b/target/i386/sev.c
+index acdcb9c4e6..66e38ca32e 100644
+--- a/target/i386/sev.c
++++ b/target/i386/sev.c
+@@ -2760,6 +2760,7 @@ sev_common_instance_init(Object *obj)
+     cgs->set_guest_state = cgs_set_guest_state;
+     cgs->get_mem_map_entry = cgs_get_mem_map_entry;
+     cgs->set_guest_policy = cgs_set_guest_policy;
++    cgs->can_rebuild_guest_state = true;
+ 
+     QTAILQ_INIT(&sev_common->launch_vmsa);
  }
 -- 
 2.42.0
