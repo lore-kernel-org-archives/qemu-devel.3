@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A3C4E9A048
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 10:15:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB1BCE9A048
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 10:17:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vt13s-0008HR-5Z; Thu, 19 Feb 2026 05:15:08 -0500
+	id 1vt15u-0000mu-SI; Thu, 19 Feb 2026 05:17:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vt13q-0008HB-Sm
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 05:15:07 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vt15r-0000kN-BN
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 05:17:12 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vt13o-0007yD-LF
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 05:15:06 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vt15p-0008MX-HR
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 05:17:10 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771496103;
+ s=mimecast20190719; t=1771496228;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=x62ZUzO8Kb3Te3uzAc93HO94tbcv+cSFLkmPd/ZgrJU=;
- b=KEVKW9jwC260F+4MqBmCD3BSt/QYwWZwVelqBpzSZjr0PB9CQazI4G3yRmFS1FNlnMFc4T
- cEeKKR9o/1ZfqUN2u362naCe3xC9lGsKipFYz7OY/+og14r5GQr2PTM+ZjxKU41pSH84Bz
- IQ8U6ojEO84/chh+LotwP04cGyoC4CU=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=WNbkZ2GAB+qliN/AEGyE0l6Bc+7o17g2sPOW7LT8/Bs=;
+ b=L/HLUzUGmHHBbfAZgTquWSwyrYVV8FXr1JfKBerTPr8NPHNXNF6ya5YPPMQhlz9MEyIWuV
+ MvGJbZhZ27Suo2pu35+jZjL1iVFV9x8uJOC7gH4aLPQgu7bn9JIciNOIxUoO2vs7N53IHv
+ wJO9DlAp2Muce0jr3gSLISkIiyVEiFg=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-628-GuITgzevPP6yBNNLxXJpKw-1; Thu,
- 19 Feb 2026 05:14:59 -0500
-X-MC-Unique: GuITgzevPP6yBNNLxXJpKw-1
-X-Mimecast-MFC-AGG-ID: GuITgzevPP6yBNNLxXJpKw_1771496097
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-614-rAP4gi25M_W4Zo62fmuGeg-1; Thu,
+ 19 Feb 2026 05:17:05 -0500
+X-MC-Unique: rAP4gi25M_W4Zo62fmuGeg-1
+X-Mimecast-MFC-AGG-ID: rAP4gi25M_W4Zo62fmuGeg_1771496223
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7A2081956094; Thu, 19 Feb 2026 10:14:57 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 47E0C195609E; Thu, 19 Feb 2026 10:17:03 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.45.242.14])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B9BA619560A7; Thu, 19 Feb 2026 10:14:56 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3DB4C1954111; Thu, 19 Feb 2026 10:17:02 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 5A64521E692D; Thu, 19 Feb 2026 11:14:54 +0100 (CET)
+ id CB7B021E692D; Thu, 19 Feb 2026 11:16:59 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
 To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
 Cc: qemu-devel@nongnu.org,  Manos Pitsidianakis
@@ -60,20 +60,20 @@ Cc: qemu-devel@nongnu.org,  Manos Pitsidianakis
  Paolo Bonzini <pbonzini@redhat.com>,  Gerd Hoffmann <kraxel@redhat.com>,
  Christian Schoenebeck <qemu_oss@crudebyte.com>,  Richard Henderson
  <richard.henderson@linaro.org>
-Subject: Re: [PATCH v6 26/27] util: add support for formatting thread info
- in messages
-In-Reply-To: <20260211152508.732487-27-berrange@redhat.com> ("Daniel
- P. =?utf-8?Q?Berrang=C3=A9=22's?= message of "Wed, 11 Feb 2026 15:25:07
+Subject: Re: [PATCH v6 27/27] util: add brackets around guest name in
+ message context
+In-Reply-To: <20260211152508.732487-28-berrange@redhat.com> ("Daniel
+ P. =?utf-8?Q?Berrang=C3=A9=22's?= message of "Wed, 11 Feb 2026 15:25:08
  +0000")
 References: <20260211152508.732487-1-berrange@redhat.com>
- <20260211152508.732487-27-berrange@redhat.com>
-Date: Thu, 19 Feb 2026 11:14:54 +0100
-Message-ID: <87ecmh3uqp.fsf@pond.sub.org>
+ <20260211152508.732487-28-berrange@redhat.com>
+Date: Thu, 19 Feb 2026 11:16:59 +0100
+Message-ID: <87a4x53un8.fsf@pond.sub.org>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -13
@@ -102,57 +102,59 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
-> The message context is now extended to be able to include the
-> thread ID and thread name, after the program name. On Linux
-> the thread ID will match the process TID visible in /proc,
-> while on other platforms it will merely be an integer repr
-> of the system thread object address/ID.
->
-> This changes the output for both error_report and qemu_log,
-> when running under the system emulators or the QEMU storage
-> daemon.
-
-Yes:
-
-    $ qemu-system-x86_64 -object tls-creds-x509,id=3Dt0
-    qemu-system-x86_64: (1116063:main): Missing 'dir' property value
-
-I do not like this change.  The part in (parenthesis) is gobbledygook
-for non-developers.  I feel it should be off by default.
-
-Making it on by default for log message (as shown below) is fine.
-
->         Other programs omit the thread information since
-> they are largely single threaded, though potentially it
-> would be useful to enable in all of them, given that the RCU
-> thread will always get spawned by a constructor function.
+> The message context can optionally include the guest name if the
+> argument '-msg guest-name=3Don' is given. The formatting, however,
+> does not look good if the guest name contains whitespace. Change
+> the output to include square brackets to demarcate the name.
 >
 > Before:
 >
 >   # qemu-system-x86_64 -object tls-creds-x509,id=3Dt0,dir=3Dfish -d 'trac=
-e:qcrypto*'
->   qemu-system-x86_64: qcrypto_tls_creds_x509_load TLS creds x509 load cre=
-ds=3D0x560db818e080 dir=3Dfish
->   qemu-system-x86_64: qcrypto_tls_creds_get_path TLS creds path creds=3D0=
-x560db818e080 filename=3Dca-cert.pem path=3D<none>
->   qemu-system-x86_64: Unable to access credentials fish/ca-cert.pem: No s=
-uch file or directory
+e:qcrypto*' -msg guest-name=3Don -name "fish food"
+>   fish food qemu-system-x86_64: (1146846:main): qcrypto_tls_creds_x509_lo=
+ad TLS creds x509 load creds=3D0x55657e94e690 dir=3Dfish
+>   fish food qemu-system-x86_64: (1146846:main): qcrypto_tls_creds_get_pat=
+h TLS creds path creds=3D0x55657e94e690 filename=3Dca-cert.pem path=3D<none>
+>   fish food qemu-system-x86_64: (1146846:main): Unable to access credenti=
+als fish/ca-cert.pem: No such file or directory
 >
 > After:
 >
 >   # qemu-system-x86_64 -object tls-creds-x509,id=3Dt0,dir=3Dfish -d 'trac=
-e:qcrypto*'
->   qemu-system-x86_64: (772366:main): qcrypto_tls_creds_x509_load TLS cred=
-s x509 load creds=3D0x560db818e080 dir=3Dfish
->   qemu-system-x86_64: (772366:main): qcrypto_tls_creds_get_path TLS creds=
- path creds=3D0x560db818e080 filename=3Dca-cert.pem path=3D<none>
->   qemu-system-x86_64: (772366:main): Unable to access credentials fish/ca=
--cert.pem: No such file or directory
->
-> The '-msg thread-info=3Don|off' argument is introduced to allow this
-> new default output to be supressed if desired.
+e:qcrypto*' -msg guest-name=3Don -name "fish food"
+>   [fish food] qemu-system-x86_64: (1144713:main): qcrypto_tls_creds_x509_=
+load TLS creds x509 load creds=3D0x5604ada2c950 dir=3Dfish
+>   [fish food] qemu-system-x86_64: (1144713:main): qcrypto_tls_creds_get_p=
+ath TLS creds path creds=3D0x5604ada2c950 filename=3Dca-cert.pem path=3D<no=
+ne>
+>   [fish food] qemu-system-x86_64: (1144713:main): Unable to access creden=
+tials fish/ca-cert.pem: No such file or directory
 >
 > Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 > Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+> ---
+>  util/message.c | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
+>
+> diff --git a/util/message.c b/util/message.c
+> index 9bf640c8c4..73af8e8ca4 100644
+> --- a/util/message.c
+> +++ b/util/message.c
+> @@ -29,8 +29,9 @@ void qmessage_context_print(FILE *fp)
+>=20=20
+>      if ((message_format & QMESSAGE_FORMAT_WORKLOAD_NAME) &&
+>          message_workloadname) {
+> +        fputc('[', fp);
+>          fputs(message_workloadname, fp);
+> -        fputc(' ', fp);
+> +        fputs("] ", fp);
+
+Again, I'd go for
+
+           fprintf(fp, "[%s] ", message_workloadname);
+
+>      }
+>=20=20
+>      if (message_format & QMESSAGE_FORMAT_PROGRAM_NAME) {
 
 
