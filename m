@@ -4,147 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FF7EE9A04A
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 13:57:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC666E9A04A
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 14:04:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vt4VO-0007RT-8b; Thu, 19 Feb 2026 08:55:46 -0500
+	id 1vt4cX-0004UM-DK; Thu, 19 Feb 2026 09:03:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Manali.Shukla@amd.com>)
- id 1vswpN-0006Nx-JB
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 00:43:53 -0500
-Received: from mail-westus3azlp170100009.outbound.protection.outlook.com
- ([2a01:111:f403:c107::9] helo=PH7PR06CU001.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Manali.Shukla@amd.com>)
- id 1vswpL-0007uG-UR
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 00:43:53 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=bguMqKQsAQA7hxaK8EfK4XWy1/ZwNDVNZ4DQvlXihunRnCOBr3tw0f3Dj+36Ozy6ZaRDpDfcw8XWnbgjeRS/hHP19ijTJVkhmXOsNx9R8fWX/1GO3gs5knz+XfvQwPittW4ObOeJgLntJj49yOK2ihfffZ4fL8wMwFiEa71jhRg9DqEnjAHA8qdRGL9PvKOlECj3udSsKDR8NP4X3LMjqv0QaT63Wl9w49MhHETKKrHtP7AEocWUOXCBeh+vJBN+3Bx9ADpU3N3EDzNaSBjejaXTsLp6y5OnIjIWWIiTmIdAqZW6yCCH2ICQ0alJaFvS5VCpEA7B4SIlEX2WdwbVyw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=DZEm9e4GVICj+l9f6e0apbmSyYBEM2DqI43+jVavfsA=;
- b=eQwrwkNjsOQeDLcXYoj7fmfnwXidDumb/eZe5GcUWbfjOxxgpPvKq0a1W3vHwUC53pKAyDC1xBWGl34FjUx4JOPWa4BwZ5dAm15Z1hlYzqhX+cK13mSL3iUKvAbecg95YclP55DbEuHM3rJ/Bs/we56z6ZeCpyNsnB7paoSySJ004ung7sJoETNQGDXaXh3EXIWXttLEnVw2Wqb307M9lGV9z2EECer9flz7gQtkNuzg148Rlg6LfhXKA0d9lRsC6h4HPLTlR9QZRnOxmAht8yu7imKNEvwj0dUX9Q3P2scVR1QP33CsTonjtZF4fZyB1fjN6jtD7IVaju0iEuNCCg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=DZEm9e4GVICj+l9f6e0apbmSyYBEM2DqI43+jVavfsA=;
- b=QQu0tEYRt/YzUmEiOcXRpmiZtWksSSmLWsnPMOLV9OSHpSKrTTpbNL7rB00bd+ZI+ByO5NtIqw7iqLJutRn3+HtIam7aceFXtniFQbF6eeYwKQZA4EtGTxiAsoKC7LJ9jMj9Ud8WaTXPGtNz63O2rfvm7d0hKvYVg3vZ12OawfM=
-Received: from SJ0PR13CA0110.namprd13.prod.outlook.com (2603:10b6:a03:2c5::25)
- by MN2PR12MB4488.namprd12.prod.outlook.com (2603:10b6:208:24e::19)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9632.15; Thu, 19 Feb
- 2026 05:43:45 +0000
-Received: from SJ1PEPF00001CDF.namprd05.prod.outlook.com
- (2603:10b6:a03:2c5:cafe::3d) by SJ0PR13CA0110.outlook.office365.com
- (2603:10b6:a03:2c5::25) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9632.15 via Frontend Transport; Thu,
- 19 Feb 2026 05:43:22 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
-Received: from satlexmb07.amd.com (165.204.84.17) by
- SJ1PEPF00001CDF.mail.protection.outlook.com (10.167.242.7) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9632.12 via Frontend Transport; Thu, 19 Feb 2026 05:43:44 +0000
-Received: from brahmaputra.amd.com (10.180.168.240) by satlexmb07.amd.com
- (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.17; Wed, 18 Feb
- 2026 23:43:40 -0600
-From: Manali Shukla <manali.shukla@amd.com>
-To: <qemu-devel@nongnu.org>
-CC: Cornelia Huck <cohuck@redhat.com>, Eduardo Habkost <eduardo@habkost.net>, 
- <kvm@vger.kernel.org>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- "Marcelo Tosatti" <mtosatti@redhat.com>, "Michael S . Tsirkin"
- <mst@redhat.com>, "Paolo Bonzini" <pbonzini@redhat.com>, Sean Christopherson
- <seanjc@google.com>, Richard Henderson <richard.henderson@linaro.org>, Naveen
- N Rao <naveen@kernel.org>, Nikunj Dadhaniya <nikunj@amd.com>,
- <manali.shukla@amd.com>
-Subject: [PATCH v1 7/8] apic_common: migrate extended APIC fields
-Date: Thu, 19 Feb 2026 05:42:06 +0000
-Message-ID: <20260219054207.471303-8-manali.shukla@amd.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260219054207.471303-1-manali.shukla@amd.com>
-References: <20260219054207.471303-1-manali.shukla@amd.com>
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1vt4cA-0004RW-Iz
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 09:02:49 -0500
+Received: from mail-vs1-xe33.google.com ([2607:f8b0:4864:20::e33])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1vt4c8-0008KT-Ju
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 09:02:46 -0500
+Received: by mail-vs1-xe33.google.com with SMTP id
+ ada2fe7eead31-5fdb47d6131so284618137.3
+ for <qemu-devel@nongnu.org>; Thu, 19 Feb 2026 06:02:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1771509763; x=1772114563; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=7ZNyPTPn/rVQB3CIZ0lj+N2kFtusV6S7CF2vv/Tsbpc=;
+ b=caFUskrfRqSChYv+7pohGpZ9T1KLZAWQKd+J2BnR7e4+B70AN/teA67JNwSRYvy1cB
+ tShK+Zti9imvhwxsf69/d4xB++axGA4OKPbdUbEI6D2W5oDe8YJpbMfl/qu3PSJbugG+
+ nb5mJJtV/1A0OQrGh2ntSPZbp2gj2MRPmQow0NNfqPpWAZfxZDqcUwAVxJaQmdBJMGqu
+ 7we6UFSbqb4iXj9ELYQp8DQVrCHpbAP1Ci4tSUKdruczFzKpII6kDz2XoWr0i5+RUwCb
+ 6CON+woQQIcTSaI4Yyh8U4+o8dKetI0MiyVY2YdKeThGaOqseniIXf2O+KdM+/eaYrSV
+ UJpg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1771509763; x=1772114563;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=7ZNyPTPn/rVQB3CIZ0lj+N2kFtusV6S7CF2vv/Tsbpc=;
+ b=ofRrhcrq84UVxSF0LM8jFgudqNNUcECO0jMzFxZXJYatJ9q2EVLRbS90ndc1Hl/kYX
+ tAkCgwrLru5DtdjbUttvBE4/LuXCUQ8Sr3J66UHuxsRG0ByOTszLfH2BoP8mg44G4qHE
+ iPjYuLXHzjGC8N1D+qaPnC10GS5fqGOvdvn6xYrZ/ZhQxI6b8QZvZ4vx01hrkrnE+19r
+ zWIhjFtX6USJuwiiBDq2v6yvFobDHQxvnSvsLgPvOSwvweB5MC5lkqzb70HB/nWTgFHW
+ cIqPJBlsYY3rlVIV0LTJfY3Mm8lzIJnWhciY8xKsMRxmM8LXJL72nAfACM21ZK4N4Wkc
+ k2bw==
+X-Gm-Message-State: AOJu0YzlnxBOiNIjSVtoHHc25qHWylGW07an1zv9HvhtRLYdjqHsG87g
+ rdHicMBFKfJ0bHnqGjBDtIlWaTJmCRsToK+Mtuj9r6RXqkOn/SVB1Ci0j0d7+SRf0uGlYfZ8QA5
+ sb+iG
+X-Gm-Gg: AZuq6aK02oGkUuyAHAeik35vQ8etkIMt420twmdG+zy826UhAoZNzagpeUu/a+MqLJu
+ 8VyZ++38aD4fqB2UO9kN2j6SrFTz0tCkgLMmw57ku9XJ1TOTars4bGtzMQ51QsK9xlpckSy8RHR
+ xB1mvf7PVmAdiFgKATt12TIC6EqvP7tq6mPnG0WPA3j+gRLkezrVxG4A+FWJ5MWFGKIA3+dILhf
+ sdWjCmIURsg+xK/Rquq4tzVZ9ojY5CYCUpY9O+pOhIuBhD3ISqbuhjXwwjj9a+zYyHyvONyKSms
+ 9nTDsbY97H09yhQ5XT6UJ2inmJJ3cf0FS1Ptl+4kyKFxBj+jJAvwE2wR49dLsyXvNEqZQEX53k5
+ CfrZdW5x9rhiEBjmjRaosH1ivAmYBAriDVYEJI+4uUK65gpruF2jxsOXWl7NQvkj+lNWNQyGzHl
+ D+IlIkcd37lDrzoihZ14KxgQnQF1NILr0MCsebMEllWz6D9JPYfG4EsOYcHKNp2HwhSew/
+X-Received: by 2002:a05:6102:3587:b0:5f5:40e5:24c7 with SMTP id
+ ada2fe7eead31-5fe8c7bf451mr912682137.7.1771509761069; 
+ Thu, 19 Feb 2026 06:02:41 -0800 (PST)
+Received: from gromero0.. (200-100-75-206.dial-up.telesp.net.br.
+ [200.100.75.206]) by smtp.gmail.com with ESMTPSA id
+ ada2fe7eead31-5fe902db070sm1656931137.3.2026.02.19.06.02.38
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 19 Feb 2026 06:02:40 -0800 (PST)
+From: Gustavo Romero <gustavo.romero@linaro.org>
+To: qemu-devel@nongnu.org, qemu-arm@nongnu.org, richard.henderson@linaro.org,
+ peter.maydell@linaro.org
+Cc: alex.bennee@linaro.org,
+	gustavo.romero@linaro.org
+Subject: [PATCH] target/arm/ptw: Clean up unused ARMMMUIdx
+Date: Thu, 19 Feb 2026 11:02:28 -0300
+Message-Id: <20260219140228.407513-1-gustavo.romero@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.180.168.240]
-X-ClientProxiedBy: satlexmb08.amd.com (10.181.42.217) To satlexmb07.amd.com
- (10.181.42.216)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ1PEPF00001CDF:EE_|MN2PR12MB4488:EE_
-X-MS-Office365-Filtering-Correlation-Id: 69dbbe61-126f-4998-f487-08de6f79d8b4
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|376014|7416014|36860700013|82310400026; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?CSP0l17PDwrvzqtw/cthxz4nYwtZrdehNyPjiQIEpnPWOD1Blht+FRCLM/8i?=
- =?us-ascii?Q?WXGncdPSREhp2YNxY/0LdrRM4yKPgAtrw6gpW5j03PQXKwt960+rE0PidHdj?=
- =?us-ascii?Q?FCaLDiFjSO/fnt4Qn5GeJ1GnsisdE/pgktPUql1oMw+E+XZYs1i9t8pjapdz?=
- =?us-ascii?Q?SXAubz5tT8L2jXTiLNdQgNoAg9C2Ro+p//7dOPF6bN6oFV76ZLK199Un37N5?=
- =?us-ascii?Q?z8iSOaacXQL8qZKlHLDzi2vl5hwwDD+MANI8B/0Qj+RUIBjrgRo7dQi4QVR7?=
- =?us-ascii?Q?iM6kygQlevLnMqUKbtSMyHzT3olIKzgaXffwBpyHqIBBfOLV2lCUxBKVM05q?=
- =?us-ascii?Q?AiWVI4Avjcc+V/XGAYZOOxk+pP09opZIF6r0EPMcDEhSlb55Rv0TUpA83bWO?=
- =?us-ascii?Q?AazvC/u3R/LCcHRK45YPSzAqIrj/4MWYazsEfjUkfruMFbl/9+MLOxXhk3NX?=
- =?us-ascii?Q?tDqxBgqmK2duS+eJEfjqfwh62p4KvJYiL9vFtDIwlAIPd/odan2AnIPxAoXt?=
- =?us-ascii?Q?bMbh6ZrGovZpeFfn63978vWMjS8mhExosyVzfUD+hbe0zN8ej+iumN9OhPqG?=
- =?us-ascii?Q?+ZUQZxS8Ji90ga642l6yYkgkb8bTgDzmZW+lKNBnB7BcVbBLDsHUiGxpoIqL?=
- =?us-ascii?Q?HuPHmZfX+6HhCcvnCEd7E5a2myXy4LW12Nb7842NgMPFzvfDkwbFkCpwuZnS?=
- =?us-ascii?Q?jVZ2a4wPrll+KMFCbY7hC+jjXFWUzJTEVvjgQE4emTHRIvmmWmYa875hAB8H?=
- =?us-ascii?Q?XvUeJXywCP8qYZhcispW4gbEeCRfLlL3eGdzoqO2kbJBNj6+1LCEOYUreqKI?=
- =?us-ascii?Q?k+6rKowBN03jWcB4jvH4YwWiZ2wEi+rcHSUQq/tzdDDSjHA5QuyBFZPTKIni?=
- =?us-ascii?Q?Gge6JqCkc78rTH6N8QkfQhKdWffiHpuDjshPIYW82dAFBt4Bll1+4DpPGjET?=
- =?us-ascii?Q?92/UV+ChP1iJm0HDQIjiqQuQperS/T+2FBFEWHGmrK0JdFhUF1WOU9Wfm0PU?=
- =?us-ascii?Q?/C5ohKcLtENM8UFNPHNhrkMEKi8SGP+xqRbfdD5sbh+XXJvNmFMfQ9xa1qEx?=
- =?us-ascii?Q?dIF/SGEKGjOvQxeInIr8mxkCWVxRdl/GuyrPp9l399I6/KRt6egxG3NPNbMs?=
- =?us-ascii?Q?LeCmL+J/0tAylclNuYB6nCBAcEQu7hS+GVMRTLK6s4ekjpYUJAj6XS5875zz?=
- =?us-ascii?Q?RKd8kJiL/xCv0+Z+kk6yi1R0DWE6S+hL8PTBCSZWnHCEn+GUnM0K84oJ4VIZ?=
- =?us-ascii?Q?dls3FoCXJ7RiiISr09X8NVCTIAmsBBsorPX/c3f+LvKVcDbq08PjJd7oK07D?=
- =?us-ascii?Q?yZtepPHXhaGrdXFoSZriFtJHM71MLgDByBDjydskQkHsfoPu4vhwIpKYjxiJ?=
- =?us-ascii?Q?0ekSXO3htpshskKYXAa6bxh99HVIWX/8egXyrka8Q4Ja+Dn1b8W8ranXjqzg?=
- =?us-ascii?Q?Jd3BC39neQFDlDw2XaIh5OeT9Lgm/0BvaMdJdVzuVY3Z7/fr60jskL1YHNFc?=
- =?us-ascii?Q?AjxkUKOoKycSBhISH9UYlgQq7hZlxbOQKor4n0sgeeXSIE/Lpr4hF9Z3BNuK?=
- =?us-ascii?Q?Axn8pw2zhUP5IKzEC6v4TePYu9iWu8SPdjfys9lpok7q1jORA1cna6y2Ii/D?=
- =?us-ascii?Q?8DwhQWeTh/8mgJJqaz6ibTLj4aM/kdL7fsglFFj42MYjbD+IGBD2q3gQ34XL?=
- =?us-ascii?Q?0yk6yQ=3D=3D?=
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(1800799024)(376014)(7416014)(36860700013)(82310400026); DIR:OUT;
- SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: NT5FiaZb/C328VzNmvz74ZP+Tt2tEJw4uIiquLwDRZFCsBgsZfpbzlV57f512DER92Xhy1NkW4LszGtywXWSOcYkDhxBt52+jRMLDx/I7o/GKxHiPcRc9xnM6oujyWx+JwVc/4hCt4ieSJC+KgU3YA59qozsfxNeDGobW+J6xl/J9689TjgB4ReLjdgYwnTHxgfNMRAXQdf+TiZfl0FMlhLHwYHZw2kD3EVuSZUkcaiJGLZ8hYEPvgMG81pIVWz4fj8P/HhzhOIMTMLBEwMKIs5IJ2Ih0YCEuBpFjW6G08SFqkEp9rD8N/1iD+QCxdX9JAXjmnV+c6196yF3d5EuDhu9v4elogvFiYEE9ma/H9hucP4UNIejO9vLGLFxd/drgx8CnTMUJ+Cgpu786aKdS3urHeuUgv7a99WQZJujAVhJ7ExDC62zh9vmHjj+yZij
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 Feb 2026 05:43:44.9397 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 69dbbe61-126f-4998-f487-08de6f79d8b4
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[satlexmb07.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: SJ1PEPF00001CDF.namprd05.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN2PR12MB4488
-Received-SPF: permerror client-ip=2a01:111:f403:c107::9;
- envelope-from=Manali.Shukla@amd.com;
- helo=PH7PR06CU001.outbound.protection.outlook.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::e33;
+ envelope-from=gustavo.romero@linaro.org; helo=mail-vs1-xe33.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.043,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Thu, 19 Feb 2026 08:55:36 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -159,63 +99,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch adds extended APIC fields like efeat, ectrl, variable sized
-array extlvt to a new subsection of the vmstate of the apic_common
-module. Saving and loading of these fields makes migration of the apic
-state deterministic when extapic is enabled.
+get_phys_addr_disabled() is called from only one function,
+get_phys_addr_nogpc(), and from two locations within it.
 
-Signed-off-by: Manali Shukla <manali.shukla@amd.com>
+The first call to get_phys_addr_disabled() occurs when mmu_idx is one of
+the following: ARMMMUIdx_Phys_S, ARMMMUIdx_Phys_NS, ARMMMUIdx_Phys_Root,
+or ARMMMUIdx_Phys_Realm. So, handling ARMMMUIdx_Stage2 or
+ARMMMUIdx_Stage2_S is not required in get_phys_addr_disabled() for this
+case.
+
+The second call to get_phys_addr_disabled(), with mmu_idx ==
+ARMMMUIdx_Stage2 (or ARMMMUIdx_Stage2_S), only would occur if
+regime_translation_disabled() returns
+true for these mmu indexes. However, mmu_idx == ARMMMUIdx_Stage2 (or
+ARMMMUIdx_Stage2_S) can only occur if get_phys_addr_twostage() was
+called, since it's the only place where ptw->in_mmu_idx is set to
+ARMMMUIdx_Stage2 (or ARMMMUIdx_Stage2_S) and that only happens if
+regime_translation_disabled() returns false.
+
+Therefore, at this second call site, get_phys_addr_disabled() is
+never invoked with mmu_idx == ARMMMUIdx_Stage2 or ARMMMUIdx_Stage2_S.
+
+Hence, since get_phys_addr_disabled() can never be called with
+mmu_idx == ARMMMUIdx_Stage2 or ARMMMUIdx_Stage2_S, removed these two
+cases from this function.
+
+CI: https://gitlab.com/gusbromero/qemu/-/pipelines/2335353022
+
+The failure in the "migration-compat-aarch64" test is also observed on
+"master", so the chance it's caused by this cleanup is very low. Also,
+it's a test marked as "allowed to fail".
+
+Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
 ---
- hw/intc/apic_common.c | 21 +++++++++++++++++++++
- 1 file changed, 21 insertions(+)
+ target/arm/ptw.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/hw/intc/apic_common.c b/hw/intc/apic_common.c
-index 37a7a7019d..cd4b480c8e 100644
---- a/hw/intc/apic_common.c
-+++ b/hw/intc/apic_common.c
-@@ -360,6 +360,12 @@ static bool apic_common_sipi_needed(void *opaque)
-     return s->wait_for_sipi != 0;
- }
+diff --git a/target/arm/ptw.c b/target/arm/ptw.c
+index 8b8dc09e72..b8a3150f14 100644
+--- a/target/arm/ptw.c
++++ b/target/arm/ptw.c
+@@ -3449,8 +3449,6 @@ static bool get_phys_addr_disabled(CPUARMState *env,
+     int r_el;
  
-+static bool apic_extended_needed(void *opaque)
-+{
-+    APICCommonState *s = opaque;
-+    return s->nr_extlvt > 0;
-+}
-+
- static const VMStateDescription vmstate_apic_common_sipi = {
-     .name = "apic_sipi",
-     .version_id = 1,
-@@ -372,6 +378,20 @@ static const VMStateDescription vmstate_apic_common_sipi = {
-     }
- };
- 
-+static const VMStateDescription vmstate_apic_extended = {
-+    .name = "apic_extended",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .needed = apic_extended_needed,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_UINT32(efeat, APICCommonState),
-+        VMSTATE_UINT32(ectrl, APICCommonState),
-+        VMSTATE_VARRAY_UINT32(extlvt, APICCommonState, nr_extlvt, 0,
-+                             vmstate_info_uint32, uint32_t),
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
-+
- static const VMStateDescription vmstate_apic_common = {
-     .name = "apic",
-     .version_id = 3,
-@@ -404,6 +424,7 @@ static const VMStateDescription vmstate_apic_common = {
-     },
-     .subsections = (const VMStateDescription * const []) {
-         &vmstate_apic_common_sipi,
-+        &vmstate_apic_extended,
-         NULL
-     }
- };
+     switch (mmu_idx) {
+-    case ARMMMUIdx_Stage2:
+-    case ARMMMUIdx_Stage2_S:
+     case ARMMMUIdx_Phys_S:
+     case ARMMMUIdx_Phys_NS:
+     case ARMMMUIdx_Phys_Root:
 -- 
-2.43.0
+2.34.1
 
 
