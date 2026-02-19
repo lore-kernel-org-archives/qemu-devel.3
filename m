@@ -4,76 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB1BCE9A048
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 10:17:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58679E9A03B
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 10:19:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vt15u-0000mu-SI; Thu, 19 Feb 2026 05:17:14 -0500
+	id 1vt17p-0001oc-AU; Thu, 19 Feb 2026 05:19:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vt15r-0000kN-BN
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 05:17:12 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vt17k-0001oA-Uv
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 05:19:08 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vt15p-0008MX-HR
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 05:17:10 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vt17j-0000F7-GC
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 05:19:08 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771496228;
+ s=mimecast20190719; t=1771496346;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=WNbkZ2GAB+qliN/AEGyE0l6Bc+7o17g2sPOW7LT8/Bs=;
- b=L/HLUzUGmHHBbfAZgTquWSwyrYVV8FXr1JfKBerTPr8NPHNXNF6ya5YPPMQhlz9MEyIWuV
- MvGJbZhZ27Suo2pu35+jZjL1iVFV9x8uJOC7gH4aLPQgu7bn9JIciNOIxUoO2vs7N53IHv
- wJO9DlAp2Muce0jr3gSLISkIiyVEiFg=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=iT9uT2DjY1b9HxSIgqLjLQwzwM6ZtyvFJonzoY7L4hk=;
+ b=DWVJuorubtgH6Y3vTQfBJwMaeW/kWqmKtEbFsbko7LOy7GH36CPuLxCEz0O3SHjcfCTkXX
+ bvpQA7c5/Bkwqjh3upb1GCdBysfBmyaUUfw3DwRPXwXrVpFEAQQFj0uHku2AEt19xl3eqa
+ OrcxpTNgT+ftO0lgYmIjwVkMlDAEZE4=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-614-rAP4gi25M_W4Zo62fmuGeg-1; Thu,
- 19 Feb 2026 05:17:05 -0500
-X-MC-Unique: rAP4gi25M_W4Zo62fmuGeg-1
-X-Mimecast-MFC-AGG-ID: rAP4gi25M_W4Zo62fmuGeg_1771496223
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-552-SRjL7uAUOmy-NLTF5aDOkw-1; Thu,
+ 19 Feb 2026 05:19:05 -0500
+X-MC-Unique: SRjL7uAUOmy-NLTF5aDOkw-1
+X-Mimecast-MFC-AGG-ID: SRjL7uAUOmy-NLTF5aDOkw_1771496344
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 47E0C195609E; Thu, 19 Feb 2026 10:17:03 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BFAFE1800282; Thu, 19 Feb 2026 10:19:04 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.45.242.14])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3DB4C1954111; Thu, 19 Feb 2026 10:17:02 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7DC543000C26; Thu, 19 Feb 2026 10:19:04 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id CB7B021E692D; Thu, 19 Feb 2026 11:16:59 +0100 (CET)
+ id 2C6B421E692D; Thu, 19 Feb 2026 11:19:02 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
-To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org,  Manos Pitsidianakis
- <manos.pitsidianakis@linaro.org>,  Stefan Weil <sw@weilnetz.de>,  "Dr.
- David Alan Gilbert" <dave@treblig.org>,  Pierrick Bouvier
- <pierrick.bouvier@linaro.org>,  devel@lists.libvirt.org,  Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  =?utf-8?Q?Marc-Andr?=
- =?utf-8?Q?=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>,  Hanna Reitz <hreitz@redhat.com>,  Kevin
- Wolf <kwolf@redhat.com>,  qemu-block@nongnu.org,  qemu-rust@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>,  Gerd Hoffmann <kraxel@redhat.com>,
- Christian Schoenebeck <qemu_oss@crudebyte.com>,  Richard Henderson
- <richard.henderson@linaro.org>
-Subject: Re: [PATCH v6 27/27] util: add brackets around guest name in
- message context
-In-Reply-To: <20260211152508.732487-28-berrange@redhat.com> ("Daniel
- P. =?utf-8?Q?Berrang=C3=A9=22's?= message of "Wed, 11 Feb 2026 15:25:08
- +0000")
-References: <20260211152508.732487-1-berrange@redhat.com>
- <20260211152508.732487-28-berrange@redhat.com>
-Date: Thu, 19 Feb 2026 11:16:59 +0100
-Message-ID: <87a4x53un8.fsf@pond.sub.org>
+To: Ani Sinha <anisinha@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,  Daniel Berrange
+ <berrange@redhat.com>,  Eduardo Habkost <eduardo@habkost.net>,  Eric Blake
+ <eblake@redhat.com>,  Gerd Hoffmann <kraxel@redhat.com>,  qemu-devel
+ <qemu-devel@nongnu.org>
+Subject: Re: [PATCH v5 33/34] qom: add 'confidential-guest-reset' property
+ for x86 confidential vms
+In-Reply-To: <DD830601-D059-4702-9D08-8A461A02A287@redhat.com> (Ani Sinha's
+ message of "Thu, 19 Feb 2026 14:59:02 +0530")
+References: <20260218114233.266178-1-anisinha@redhat.com>
+ <20260218114233.266178-34-anisinha@redhat.com>
+ <87wm093yer.fsf@pond.sub.org>
+ <ECE353A6-A0BC-4A3A-8D80-581CE9150C5D@redhat.com>
+ <87pl613wxi.fsf@pond.sub.org>
+ <DD830601-D059-4702-9D08-8A461A02A287@redhat.com>
+Date: Thu, 19 Feb 2026 11:19:02 +0100
+Message-ID: <87pl612fzd.fsf@pond.sub.org>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -13
@@ -100,61 +96,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+Ani Sinha <anisinha@redhat.com> writes:
 
-> The message context can optionally include the guest name if the
-> argument '-msg guest-name=3Don' is given. The formatting, however,
-> does not look good if the guest name contains whitespace. Change
-> the output to include square brackets to demarcate the name.
+>> On 19 Feb 2026, at 2:57=E2=80=AFPM, Markus Armbruster <armbru@redhat.com=
+> wrote:
+>>=20
+>> Ani Sinha <anisinha@redhat.com> writes:
+>>=20
+>>>> On 19 Feb 2026, at 2:25=E2=80=AFPM, Markus Armbruster <armbru@redhat.c=
+om> wrote:
+>>>>=20
+>>>> Ani Sinha <anisinha@redhat.com> writes:
+>>>>=20
+>>>>> Through the new 'confidential-guest-reset' property, control plane sh=
+ould be
+>>>>> able to detect if the hypervisor supports x86 confidential guest rese=
+ts. Older
+>>>>> hypervisors that do not support resets will not have this property po=
+pulated.
+>>>>=20
+>>>> Double-checking...  This is an static ability of QEMU, and QEMU alone.
+>>>> It does not depend on QEMU's run-time environment (host kernel, ...) or
+>>>> the guest.  Correct?
+>>>=20
+>>> The run time environment is the same as what is needed to spawn confide=
+ntial guests. That is, the host should support confidential technology. The=
+ host kernel/distribution should support confidential technologies. Plus th=
+e guest should support confidential technologies. There is nothing addition=
+ally needed to support resets. There are no additional dependencies with ho=
+st kernel/environment and/or the guest etc to support reset.
+>>=20
+>> So...  if a QEMU with this feature succeeded at starting a confidential
+>> guest, then x86 confidential guest reset is definitely supported for
+>> that guest.  Correct?
 >
-> Before:
->
->   # qemu-system-x86_64 -object tls-creds-x509,id=3Dt0,dir=3Dfish -d 'trac=
-e:qcrypto*' -msg guest-name=3Don -name "fish food"
->   fish food qemu-system-x86_64: (1146846:main): qcrypto_tls_creds_x509_lo=
-ad TLS creds x509 load creds=3D0x55657e94e690 dir=3Dfish
->   fish food qemu-system-x86_64: (1146846:main): qcrypto_tls_creds_get_pat=
-h TLS creds path creds=3D0x55657e94e690 filename=3Dca-cert.pem path=3D<none>
->   fish food qemu-system-x86_64: (1146846:main): Unable to access credenti=
-als fish/ca-cert.pem: No such file or directory
->
-> After:
->
->   # qemu-system-x86_64 -object tls-creds-x509,id=3Dt0,dir=3Dfish -d 'trac=
-e:qcrypto*' -msg guest-name=3Don -name "fish food"
->   [fish food] qemu-system-x86_64: (1144713:main): qcrypto_tls_creds_x509_=
-load TLS creds x509 load creds=3D0x5604ada2c950 dir=3Dfish
->   [fish food] qemu-system-x86_64: (1144713:main): qcrypto_tls_creds_get_p=
-ath TLS creds path creds=3D0x5604ada2c950 filename=3Dca-cert.pem path=3D<no=
-ne>
->   [fish food] qemu-system-x86_64: (1144713:main): Unable to access creden=
-tials fish/ca-cert.pem: No such file or directory
->
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
-> ---
->  util/message.c | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
->
-> diff --git a/util/message.c b/util/message.c
-> index 9bf640c8c4..73af8e8ca4 100644
-> --- a/util/message.c
-> +++ b/util/message.c
-> @@ -29,8 +29,9 @@ void qmessage_context_print(FILE *fp)
->=20=20
->      if ((message_format & QMESSAGE_FORMAT_WORKLOAD_NAME) &&
->          message_workloadname) {
-> +        fputc('[', fp);
->          fputs(message_workloadname, fp);
-> -        fputc(' ', fp);
-> +        fputs("] ", fp);
+> Yes :-)=20
 
-Again, I'd go for
+Thank you!
 
-           fprintf(fp, "[%s] ", message_workloadname);
-
->      }
->=20=20
->      if (message_format & QMESSAGE_FORMAT_PROGRAM_NAME) {
+Reviewed-by: Markus Armbruster <armbru@redhat.com>
 
 
