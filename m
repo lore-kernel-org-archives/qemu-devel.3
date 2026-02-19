@@ -4,121 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79C21E9A052
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 17:05:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 895F0E9A048
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 17:18:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vt7T1-00020n-4v; Thu, 19 Feb 2026 12:05:31 -0500
+	id 1vt7fR-0005Nt-Do; Thu, 19 Feb 2026 12:18:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vt7Su-0001rB-WE
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 12:05:26 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vt7Sr-0006ha-Bu
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 12:05:24 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771520717;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=4+KmzAu4+ybYUz0qFkRfQ96SFUwTEftZIh1X34TXIh8=;
- b=OT6kmUhxtNHzjw2Rg+8DSOkB5Db32928yqI9HFaqcRsrIFfi9M2NIzxaxhBixhO+oJ6iU/
- omoV+znMxGYrfdPEAPAApn8dW8wAgCHd2wUB/aicrfYJSocKYlIQ+0LN/vd/zenIhiD2Da
- lV7dDHBS03BBR9RpXaTkL8IKkyxfEqs=
-Received: from mail-yw1-f199.google.com (mail-yw1-f199.google.com
- [209.85.128.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-562-Ucwa2DnWMoirNSPV9A9bgA-1; Thu, 19 Feb 2026 12:05:15 -0500
-X-MC-Unique: Ucwa2DnWMoirNSPV9A9bgA-1
-X-Mimecast-MFC-AGG-ID: Ucwa2DnWMoirNSPV9A9bgA_1771520714
-Received: by mail-yw1-f199.google.com with SMTP id
- 00721157ae682-798080635ceso7777207b3.3
- for <qemu-devel@nongnu.org>; Thu, 19 Feb 2026 09:05:15 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1771520714; cv=none;
- d=google.com; s=arc-20240605;
- b=J3tENdfBCg7FMyCYJimeB2lU1cZyGW8xjmzDWTct9yOItKGGnlH7GrxgRZD3YnJCt6
- E3Bz+0wPZuC5KwfC5PaoYNulky+Mc9h7zGox+AlbBk5vPXZiGBLuPPk4gFS+O33WE05n
- jrHNFw3pwxptW9MDtgs1m2r/2SF8qGyeZT1+b9pbLu51y4YGhs+Br+D1aJBto3adqdaU
- yslEDfyS9SYP5Uzg9eMUuOaHs3/sKFFNdY3LPH9U5sgwVUOlQ+yc7QGWPgp45J1N4jds
- bh60HRiWAT0VsgMrex0/3jOksJH3E8SsVB6Txnp2MGhoJIPdUGid50BeJRfR2hT26iAs
- 5FHQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=4+KmzAu4+ybYUz0qFkRfQ96SFUwTEftZIh1X34TXIh8=;
- fh=/cYHESLrHbWEtKM+urYn1JV96YMPLAcipSOzHB1G12o=;
- b=XfDqKO9LZ0TSWxOZVpb5sVgRhiw8v6xL03xoAVc7gMrQUmEr0OpUR6h1hT4YOCWoGg
- fK/SbAfpzQnHZFCWV/MYdHkuVY7BmoM1H8tlDn+AywLW0Qf+3mapCnBkz48HDlQUDlGC
- NlRHJlcsePGPM/VEmGmqXQA2hdrprTp419JQXsq0o/oWEi7g9efR6fxHNUvRxXMNhT0U
- BoQr+NJcZWdNKSNi4jWyuh1aPDpRM5z2PMxQf+UwPGrDqAJrqBO3wFr/OQ3J4zALhKPS
- BCgWZuXy7yAHigNfqLECb8QNrB2qNKYQx/zs0TUOtyJRaW26bEvFuKOEYKIoniIAsypf
- Vilg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vt7fO-0005Lj-LK
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 12:18:18 -0500
+Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vt7fM-0000QV-TP
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 12:18:18 -0500
+Received: by mail-ed1-x52b.google.com with SMTP id
+ 4fb4d7f45d1cf-65808d08423so1724420a12.1
+ for <qemu-devel@nongnu.org>; Thu, 19 Feb 2026 09:18:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1771520714; x=1772125514; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=4+KmzAu4+ybYUz0qFkRfQ96SFUwTEftZIh1X34TXIh8=;
- b=WIPeWvjKGpQF/SEFglp1ZAXEX30Oh544TT4fsQMUXKN3vGveeDGlkKZ8MUgDWENoIb
- eQiCTPKqnklryhD9hhzCnLNbF8MhPWRDyYFodvCMqqkURw7JYQdvBrxsuJUf1goGPnyK
- uTntH+7kccEvRRfs6oA3vmEcMoenGN3NDRpVQGV+ddMZYXCIgn15zh78RSCk8qIIe692
- kSIeIS3fTW1mrKQ4Y2YrCmlYFdYX4MbZvt8CCFsuMTWE75uoeFSm33/WRLwOUn6w4CJn
- 3lfQzkKM2sQaodXKEO9fpQolYdN0Z8CeAxVfslA8KyVvAbOj0Tjhw0onLd4+tvkNNQG5
- 5HgQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771520714; x=1772125514;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1771521495; x=1772126295; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=4+KmzAu4+ybYUz0qFkRfQ96SFUwTEftZIh1X34TXIh8=;
- b=SxNs32rqcln0XLythVbfvaZ/JJYWzpxDICtJg0WvBLovwRlxITmLxDnJSBLGZI1IlA
- JcxZssiBed4ONtdtbwqctrG7lGtWAftSBHX/DlBapYKvajcB1PSya/JFprKa/7aRio6B
- aw8UA0QH5aIo9pCBjNrYaHVjlMO1lptyC9rAfVGWLooy1Ag2tv8HxQSSyouk2ez1jFVw
- /xZRf499QJ5WZWm2MDsE69hSoDsJGvHaJLyncwYwtXug3zURPsa2YnfM2+lOo2Xza2IR
- eyRSJL9LqqBI1/uaxs2z/NmFVAoJzvDWOAL+Gg7lo01oYAe8sCzvOkZioxLG8/ydZl+d
- SW6Q==
-X-Gm-Message-State: AOJu0YyDOIKzdSz5FU0xaFbU9tv1t8vL25NcLjPWz/hoar03N6brr8XH
- 19CBnvSd5LpIjR65G/qc7bIp/eAZ5Zc/z0FJzS89BSbyp7mszaBSIDlQ62ki19djjr9TMWn2QHS
- 1SxdmF70Nl/Bzoo1JOKwHmyWoB38YrSo6UUp5uUeFfWw0WQfe3cQbh9qvIYSapPxSTAK9rYMawz
- T0aKP88cwhBftgQI2pCsaC3k7ppEX0bUw=
-X-Gm-Gg: AZuq6aJ8LJKe1uQ5j51xzjT5xNAtUwJ2s7Yp07VFZxGtTZYhoRp0aZW0pQnBYOtfJkE
- 3b7T4/ig3Zz837Ansswur6MzxYtn7XA7v5jO9Vyi5IaaDRexQ+yuAPmKCoz6iBOgf4bvzH6U5bA
- fk5BxTtftGpCaAWFAXCIrKoGSe6p8FTdtWRR1hn9FlypRkhyRwD0oVXNMmpBT2DWXtrmb4Z/un0
- zit+VqAI5/byENT1gZuenJujfgTIdwqnVJYNQ==
-X-Received: by 2002:a05:690e:1382:b0:649:b216:c8b8 with SMTP id
- 956f58d0204a3-64c5557346dmr3830677d50.4.1771520714363; 
- Thu, 19 Feb 2026 09:05:14 -0800 (PST)
-X-Received: by 2002:a05:690e:1382:b0:649:b216:c8b8 with SMTP id
- 956f58d0204a3-64c5557346dmr3830630d50.4.1771520713739; Thu, 19 Feb 2026
- 09:05:13 -0800 (PST)
+ bh=2GGmWkjWz4puRqxAAWgWsdZGg7jCqrUwwLlCs/EENBI=;
+ b=Mm3T/3uQaIKRTqZ8YcIZ5tMR8BWeZhvz8n29B86ta1/5/PBzlBnxpOzDdVDnEAhUrX
+ SiJGO6l8/y5JmmJ6rLX5z6/7p/w/bs+Y8hJ6FqkFPpBSOBzZfNBdH0laj/9mnrUakK5w
+ +T42Vbo+nRgBQwZCQSmdnckZoN/IV21sMETor9dbsanHGWcJE0TRRRxdVg7hY7XTlO4H
+ KOddffcQr55MDydsL+IliL6dvovntmj9kIU+l0uFzLwhfO13gnKX//rKjiQwihIrt1Nd
+ kPQgAezBqFI9hOc8rqcoSSa9Et8cLWzUWT4MpUU160BKy1GYYSxFZheKqisYQo3pfI2b
+ vSnQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1771521495; x=1772126295;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=2GGmWkjWz4puRqxAAWgWsdZGg7jCqrUwwLlCs/EENBI=;
+ b=CWT6FOwc4HSwPtzZ+2rqyEl66kNGGG7uxvZZYg8CMA5Vd4+0PpULE6YYyCx/6RHBEX
+ vEY03ZUYn4z8iNqlauFC6WvCJ4Zv6gdZ4Og4ni6nG8jow0M06RQXK5+DgYqIIATQHr1R
+ EGUNZ25KtbUTNyKCMl9wHkzu6nubYkSuITcUnOYKzNnFrgoyqvngUEGONb7UJk4mtNHu
+ 4bs7ht9ZzpLrR13BQ/TxXP+b67VJSVPQXchnhrjRWvxdkS/EEOCA1ByDwh+k6cwngRFR
+ nl/ePBhqwjGi6/jBcbdkVXjBG9znP074itkeRVpDWiM85/tNiypK8aIqbxqMwZ0rghFE
+ ezTA==
+X-Gm-Message-State: AOJu0Yz1mZCYvSdvFmihQXR88b1Mmtj7sbdb1yaMEKRAU+BX0cKg9rGT
+ YSWf1F+5mBwr09X3seQkZfivN3GXIUHQIXPJCXz4IARz/jnNn0yZNcL3It1ohg5yvgY=
+X-Gm-Gg: AZuq6aKpPc8SzXKjfgDBGFB4jny0kCk3XTwNQedKo1ZvwCC0/hgsYLONe5vqdS9R4/3
+ +hrZOtbz9RdVV5CruBtZsRQSLzY/F6yDxxZytOPZKTbK9XaYjNzs2Jlpu358sqS30FQvKkh0ry2
+ zw0yR9+1/pc0Q5AYC2WmlIMeLaF6ZwoBsLYVb6Iw37Cd6s4431r7sjcJaeH31MnuyvSsCxH3ymz
+ CzBm2JPmN56uVamA3+0NCG7ufiRzN0kDq8R6Fit8gC+xV0RMY+O+WDRxFE+n6Qvi0YVMAphYXGy
+ V2n6siOrhQy0Z340u8J23Pn3GU47k+5GiNobJ1pG4QUNCvouiFJAmbVlZOuKvR2f2cUW+jpkQLI
+ 0ZxF0HdQt6ca4vnBwHCOMqeB0pS2VsNjyZe455RgUwhAyc4SgOtiNjHxWm/mwONT7O6OoH5lK60
+ BWAyc6lDk23u8M0RCRgqPPc/4=
+X-Received: by 2002:a05:6402:5186:b0:659:5c63:e0e0 with SMTP id
+ 4fb4d7f45d1cf-65c76a24826mr3305965a12.24.1771521495125; 
+ Thu, 19 Feb 2026 09:18:15 -0800 (PST)
+Received: from draig.lan ([185.124.0.126]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-65bad29d4afsm3912153a12.10.2026.02.19.09.18.11
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 19 Feb 2026 09:18:11 -0800 (PST)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 9F1355F877;
+ Thu, 19 Feb 2026 17:18:10 +0000 (GMT)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Yoshinori Sato <yoshinori.sato@nifty.com>, qemu-arm@nongnu.org,
+ Laurent Vivier <laurent@vivier.eu>, Thomas Huth <huth@tuxfamily.org>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Aurelien Jarno <aurelien@aurel32.net>,
+ Jim MacArthur <jim.macarthur@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Bastian Koppelmann <kbastian@rumtueddeln.de>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Aleksandar Rikalo <arikalo@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Yanan Wang <wangyanan55@huawei.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [RFC PATCH v2 01/14] target/m68k: clean-up includes in cpu.c
+Date: Thu, 19 Feb 2026 17:17:57 +0000
+Message-ID: <20260219171810.602667-2-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260219171810.602667-1-alex.bennee@linaro.org>
+References: <20260219171810.602667-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
-References: <20260218192444.658046-1-jsnow@redhat.com>
- <20260218192444.658046-2-jsnow@redhat.com>
- <118306d2-8c7f-4b8d-bba7-bf4529c3cc9b@linaro.org>
-In-Reply-To: <118306d2-8c7f-4b8d-bba7-bf4529c3cc9b@linaro.org>
-From: John Snow <jsnow@redhat.com>
-Date: Thu, 19 Feb 2026 12:05:02 -0500
-X-Gm-Features: AaiRm50TcxCjOe1-l__dLf1xzpiyjZHjYcHpjhFIABOiah4WVU69EHRogCWuwk0
-Message-ID: <CAFn=p-aDnE+YgE6e-cpLQZeNhG6Tw99jt6F_Gn5vz4_u4dZ7YQ@mail.gmail.com>
-Subject: Re: [PATCH 1/1] rust: use checked_div to make clippy happy
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel <qemu-devel@nongnu.org>, qemu-rust@nongnu.org, 
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Content-Type: multipart/alternative; boundary="000000000000db4e0b064b304e4d"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.045,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -134,127 +116,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000db4e0b064b304e4d
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+We don't need translation-block.h as the TB flags are local and the
+only bits needed come from cpu-ops.h. The vmstate is a system only
+concerns so we can guard against including it for linux-user.
 
-On Wed, Feb 18, 2026, 10:39=E2=80=AFPM Richard Henderson <
-richard.henderson@linaro.org> wrote:
+Finally tidy up the order to keep things together with the local cpu.h
+kept at the end.
 
-> On 2/19/26 05:24, John Snow wrote:
-> > When upgrading from Fedora 41 to Fedora 43 for CI tests, clippy begins
-> > complaining about not using checked_div instead of manually checking
-> > divisors. Make clippy happy and use checked_div() instead.
-> >
-> > Signed-off-by: John Snow <jsnow@redhat.com>
-> > ---
-> >   rust/hw/core/src/qdev.rs | 14 ++++++--------
-> >   1 file changed, 6 insertions(+), 8 deletions(-)
-> >
-> > diff --git a/rust/hw/core/src/qdev.rs b/rust/hw/core/src/qdev.rs
-> > index 145e20a984f..c4a7312168f 100644
-> > --- a/rust/hw/core/src/qdev.rs
-> > +++ b/rust/hw/core/src/qdev.rs
-> > @@ -425,18 +425,16 @@ pub const fn period_from_ns(ns: u64) -> u64 {
-> >       }
-> >
-> >       pub const fn period_from_hz(hz: u64) -> u64 {
-> > -        if hz =3D=3D 0 {
-> > -            0
-> > -        } else {
-> > -            Self::PERIOD_1SEC / hz
-> > +        match Self::PERIOD_1SEC.checked_div(hz) {
-> > +            Some(value) =3D> value,
-> > +            None =3D> 0,
-> >           }
-> >       }
-> >
-> >       pub const fn period_to_hz(period: u64) -> u64 {
-> > -        if period =3D=3D 0 {
-> > -            0
-> > -        } else {
-> > -            Self::PERIOD_1SEC / period
-> > +        match period.checked_div(Self::PERIOD_1SEC) {
-> > +            Some(value) =3D> value,
-> > +            None =3D> 0,
-> >           }
-> >       }
-> >
->
-> These conversions are inconsistent about the placement of divisor and
-> dividend.
->
-> r~
->
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+---
+ target/m68k/cpu.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-Whoops, fugue state. I'll fix.
-
---000000000000db4e0b064b304e4d
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote gmail_quote_contai=
-ner"><div dir=3D"ltr" class=3D"gmail_attr">On Wed, Feb 18, 2026, 10:39=E2=
-=80=AFPM Richard Henderson &lt;<a href=3D"mailto:richard.henderson@linaro.o=
-rg">richard.henderson@linaro.org</a>&gt; wrote:<br></div><blockquote class=
-=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padd=
-ing-left:1ex">On 2/19/26 05:24, John Snow wrote:<br>
-&gt; When upgrading from Fedora 41 to Fedora 43 for CI tests, clippy begins=
-<br>
-&gt; complaining about not using checked_div instead of manually checking<b=
-r>
-&gt; divisors. Make clippy happy and use checked_div() instead.<br>
-&gt; <br>
-&gt; Signed-off-by: John Snow &lt;<a href=3D"mailto:jsnow@redhat.com" targe=
-t=3D"_blank" rel=3D"noreferrer">jsnow@redhat.com</a>&gt;<br>
-&gt; ---<br>
-&gt;=C2=A0 =C2=A0rust/hw/core/src/qdev.rs | 14 ++++++--------<br>
-&gt;=C2=A0 =C2=A01 file changed, 6 insertions(+), 8 deletions(-)<br>
-&gt; <br>
-&gt; diff --git a/rust/hw/core/src/qdev.rs b/rust/hw/core/src/qdev.rs<br>
-&gt; index 145e20a984f..c4a7312168f 100644<br>
-&gt; --- a/rust/hw/core/src/qdev.rs<br>
-&gt; +++ b/rust/hw/core/src/qdev.rs<br>
-&gt; @@ -425,18 +425,16 @@ pub const fn period_from_ns(ns: u64) -&gt; u64 {=
-<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
-&gt;=C2=A0 =C2=A0<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0pub const fn period_from_hz(hz: u64) -&gt; u=
-64 {<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 if hz =3D=3D 0 {<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 0<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 } else {<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 Self::PERIOD_1SEC / hz<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 match Self::PERIOD_1SEC.checked_div(hz) {=
-<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 Some(value) =3D&gt; value,<=
-br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 None =3D&gt; 0,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
-&gt;=C2=A0 =C2=A0<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0pub const fn period_to_hz(period: u64) -&gt;=
- u64 {<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 if period =3D=3D 0 {<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 0<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 } else {<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 Self::PERIOD_1SEC / period<=
-br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 match period.checked_div(Self::PERIOD_1SE=
-C) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 Some(value) =3D&gt; value,<=
-br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 None =3D&gt; 0,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
-&gt;=C2=A0 =C2=A0<br>
-<br>
-These conversions are inconsistent about the placement of divisor and divid=
-end.<br>
-<br>
-r~<br></blockquote></div></div><div dir=3D"auto"><br></div><div dir=3D"auto=
-">Whoops, fugue state. I&#39;ll fix.</div></div>
-
---000000000000db4e0b064b304e4d--
+diff --git a/target/m68k/cpu.c b/target/m68k/cpu.c
+index c721a23b966..d849a4a90fc 100644
+--- a/target/m68k/cpu.c
++++ b/target/m68k/cpu.c
+@@ -19,12 +19,15 @@
+  */
+ 
+ #include "qemu/osdep.h"
++#include "accel/tcg/cpu-ops.h"
++#include "fpu/softfloat.h"
+ #include "qapi/error.h"
+-#include "cpu.h"
++
++#ifndef CONFIG_USER_ONLY
+ #include "migration/vmstate.h"
+-#include "fpu/softfloat.h"
+-#include "exec/translation-block.h"
+-#include "accel/tcg/cpu-ops.h"
++#endif
++
++#include "cpu.h"
+ 
+ static void m68k_cpu_set_pc(CPUState *cs, vaddr value)
+ {
+-- 
+2.47.3
 
 
