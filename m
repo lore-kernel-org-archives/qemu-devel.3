@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C51BFE9A04F
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 19:23:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD584E9A05A
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 19:23:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vt9cI-000425-9F; Thu, 19 Feb 2026 14:23:15 -0500
+	id 1vt9as-0002FY-P0; Thu, 19 Feb 2026 14:21:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vt9bC-0002lV-7z
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 14:22:08 -0500
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vt9ak-0001cy-DK
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 14:21:41 -0500
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vt9b8-00089P-Po
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 14:22:05 -0500
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-48069a48629so13215245e9.0
- for <qemu-devel@nongnu.org>; Thu, 19 Feb 2026 11:22:01 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vt9ah-00082n-8p
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 14:21:38 -0500
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-435f177a8f7so1253160f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 19 Feb 2026 11:21:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771528920; x=1772133720; darn=nongnu.org;
+ d=linaro.org; s=google; t=1771528892; x=1772133692; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=z4b7EKIXUxIIWUL8kF3shWPR4w8ejLWmhqz7rlqrrl8=;
- b=Ax/pqDxk48lkk1acsFj4LAVE/3O0I44CzFPYePBCsDH14stIZ9V7/4YlQ4hyNy6PdT
- JUgVD+K+Ah2cKfGjvHr7/STK1X/PtHHohyjEUJR94ipQkZDpKfDB0FPr2CkeKmfqBoV0
- jQSQzFWG46TKOvLhvvAdaTZ7mMVWcrLxv7WLLlC9gk48usHs2EgqvZxUR/XOrtrZC4II
- ph9qKM03Dli/KZqxHmFr9LC4Z5yyS+rdsQe4FKMpiO6joVQuJLEWrUOzCI5dSGNfVDxl
- 0S+YuebkOsZu32zswrdRTQG+9n8mmI6mmJG1ih2M0+LCOf9brQvTr2WcufNkrvspbQsg
- gZZQ==
+ bh=/AxnL6Dcwh80X5aK+BwWZTsOYv+DYNqwj0bbRKWucBU=;
+ b=fAEl9fZoD2Mgy6Wp70NG72YQN2OmH09Cs+5UV4+OCUCkqAmpQXItLDTlO9mWyZ1q5Y
+ w9aS/MR+uGFlrjbkHoNkS6ckY7yFNmzcxZvJcu2nswXkVquv3z4vnikzqi5PJaV7EGPw
+ mrA4FljO7C985X5Kb+VIRexiS9xmksCKPyeHVddurEl/rE3GMz5Kjrt+GqlqWaqkDr+H
+ /Ir+ipd4ofv4TrEL/y2pUNHBbu5wkW2Qbwvhqv1tuULaTInLmDmP2XpBrIsbu0fQaeOJ
+ g+GDIHvkzOe9dM1VBjd3it0lghIKm+h9KOu5Zm/APsw88hsw3OsgV0g6gwG8tgXyekWa
+ JCow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771528920; x=1772133720;
+ d=1e100.net; s=20230601; t=1771528892; x=1772133692;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=z4b7EKIXUxIIWUL8kF3shWPR4w8ejLWmhqz7rlqrrl8=;
- b=CVEDYfGjhmR05SSWuiQZHZINJJi9kfsPqqpiB2uK8c4sZyY9mGtOhQsQS3FzAVyoZ9
- JmTokmL8fjZkAPMGnyX/TVxc8Imwwr3mQErfMN+5urC+zQ8WepQsqxpoub5RX9V9y8De
- p7/+cKyvtR5ezWVb3fmUpGQYsU8dNbik2fTaaRzYryZzU28nV56WyzxIQV3MRi3vQeT9
- KwQJ7ZK5ExKg5oxskZYOCTus6MZBT/aLhVDxDE7fQgCTSSveoQGqghw9PD5cQ96GN2vC
- LzdoFvSB689s6SgHBWJDn4xlPatuD+CNPTNy7YFGVRoMCKmHe41TiA2534AsNVrpa6u2
- O0cw==
-X-Gm-Message-State: AOJu0YxjJ86sMBhPZHtgR1A3SwboD1oCxIPYbBY7+Rptm/VSvrfriBAZ
- /tZjnNudZH4DwYJQWXrMV0OZFqkLtT1Nean7rTrKjm/GpGDczOGtpHyjbv0v8nz8Oq+x3NfncoG
- q1OOK64sR6A==
-X-Gm-Gg: AZuq6aIcRmQXRaCklsirH2/zPDKCwRs4YZSkuFGU7XDZkxf2Gd6zn9OslNH55PB5+R+
- RJlCRpeQcFm8/JkODTDDMyHx1aKlSVTuzviSUg3Q3J/SNik/zqX9KXHGn+jCscyOv/5/qHyHLTp
- SQM2U2EcUg7SpHtjB+FQX/QWnj8j8mR2Z/3mj5/kwiV/pyeEAFdC+fQ/fUrn5eIxclalexLUPgS
- wT7Sqvm5uiLD6iOsSLx4ru8v2taSklqFwczRzb0tRjkivDqvgX/uv6TfRWIs5GmNZTYgFMmqlci
- gpTp04yZ1cAAuOqNolMlT0GRNvoXiR+mUoqcUhIJxmI5DNkn0eTdcZmg1d9ktPI0HKY+q5ANIIO
- cXx6KKVhXABZNR4SP1Ba/Ns6hi6e4pfPCckWwkevE20pq3/wOzNpnKDVRO0ltL0CzKTGBbr2ybn
- QlYKwNqPVrEUvR+b43b7k1nyzzQ0pnlEnSPJbRlMkOtW3NNZmjtAchQuiUy6qr9JgcTdCRxFev
-X-Received: by 2002:a05:600c:4e56:b0:480:20f1:7abd with SMTP id
- 5b1f17b1804b1-48373a58997mr405360645e9.31.1771528920276; 
- Thu, 19 Feb 2026 11:22:00 -0800 (PST)
+ bh=/AxnL6Dcwh80X5aK+BwWZTsOYv+DYNqwj0bbRKWucBU=;
+ b=s/2nn3ucM5/y4KJFzHEMR2ZTlkcH0futgZD0K2mRNuZ87CGBkhfHy1y8/3ixlJlFeB
+ wC10j6d6JgHvSiOJe/FH1zUspDThnXk3mWy0IPtpguoaKeQ9OT2aoEW3d3x8eaoomBBt
+ LvqG8/xcl3r00G5dRhWm8Byfb66ybkLaaTJ324Z7qMZc8MaflcWE1CHyQR7wcosZAJer
+ FcunaOcFZ0fQqejN40n9HH9n2h2drgR38AzZjK5cK/04pe2dkfVzHiYtzYzWLEzA4UYc
+ yE0tp4o2lOsuLT3n4Xi4u+tmwt5IwBoGYDxtKc4AkYWeA56hdBxBF4wgQMefBrdTK7Gj
+ 7ESA==
+X-Gm-Message-State: AOJu0YyvMr0rbJ7WIyT0f9PV9n4DEw50yzLImNGhkvRGxGp2zngMxHs9
+ bNSzdndGCbUMpljSMwVGFU22CPYaxZ+qNuY+GOcwWqtwdnTQVrzXHidlWrEXJP75MtMbiRZ/9bw
+ EoPZGXzS6dQ==
+X-Gm-Gg: AZuq6aJYfd3Znm4+JVc6IXhEQjPSMHGX5Jx3GTeuury2AHduXbaT+RmnF5/iFkNF6zK
+ Jr2M6PP26CT6SpQQvzZAJrchz2G3ADEuEtrwbr68TMzntJZCNu1HEybGwv9FlW3tRigKWXuaLDr
+ tWuXabM1QwsHoza+e9/o1MVcMtLL+V4azdoPK8zi8VXJilbiAUgU6NS0ifF96+tAXAp4922Gxyp
+ r+TS1G18YUZ1KEQX2waBVvwOWzkGIQZOnxxPWS13nB9cZN6PNHmOS1UiXR0uWWFDNg3+/7ijUFN
+ DERAsABUqJiAQDcLnt3tzkwxLKQez9X46tLEM+/hkbT2Pqv19zoYbFz1vTYKVSBsD2M9I6UG83E
+ hQ2Ay2mPmxj3eA38VEp+n//ythTuZ4snRmFLNb6BcRTsiE/X562m8x+UsI6kk5SzDURRxn8s8QP
+ Tx615Cl8AoYbsGQVMlMT+50nBF/GZX2L1x/ZcGUuyv2X8cy+cT8v0no+ckF8DBU7bkwDEbqJYi
+X-Received: by 2002:a5d:5d83:0:b0:436:1e6:e1d6 with SMTP id
+ ffacd0b85a97d-4379dba2cccmr37722432f8f.46.1771528892051; 
+ Thu, 19 Feb 2026 11:21:32 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-483a31ff4d7sm22156645e9.15.2026.02.19.11.21.59
+ ffacd0b85a97d-43796acf5b9sm50383680f8f.34.2026.02.19.11.21.30
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 19 Feb 2026 11:21:59 -0800 (PST)
+ Thu, 19 Feb 2026 11:21:31 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
@@ -70,20 +70,20 @@ Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  qemu-riscv@nongnu.org, qemu-ppc@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Laurent Vivier <laurent@vivier.eu>,
  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  Artyom Tarasenko <atar4qemu@gmail.com>
-Subject: [PATCH v2 17/50] target/sparc: Remove MonitorDef register entries
- available via gdbstub
-Date: Thu, 19 Feb 2026 20:19:19 +0100
-Message-ID: <20260219191955.83815-18-philmd@linaro.org>
+Subject: [PATCH v2 13/50] target/sparc: Restore 'gdb-xml/sparc64-cpu.xml'
+Date: Thu, 19 Feb 2026 20:19:15 +0100
+Message-ID: <20260219191955.83815-14-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260219191955.83815-1-philmd@linaro.org>
 References: <20260219191955.83815-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,142 +106,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-All these registers are already provided by via gdbstub parsed XML
-and handler by the gdb_get_register() helper in the monitor/hmp.c
-file. Remove as now unreachable code.
+Restore gdb-xml/sparc64-cpu.xml from mainstream binutils, tag
+'binutils-2_46', found in the gdb/features/sparc/folder [*].
+
+[*] https://sourceware.org/git/?p=binutils-gdb.git;a=tree;f=gdb/features/sparc;hb=refs/tags/binutils-2_46
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/sparc/monitor.c | 107 -----------------------------------------
- 1 file changed, 107 deletions(-)
+ configs/targets/sparc64-linux-user.mak        | 2 +-
+ configs/targets/sparc64-softmmu.mak           | 2 +-
+ target/sparc/cpu.c                            | 2 +-
+ gdb-xml/{sparc64-core.xml => sparc64-cpu.xml} | 4 ++--
+ 4 files changed, 5 insertions(+), 5 deletions(-)
+ rename gdb-xml/{sparc64-core.xml => sparc64-cpu.xml} (95%)
 
-diff --git a/target/sparc/monitor.c b/target/sparc/monitor.c
-index 73f15aa272d..a60671a60a4 100644
---- a/target/sparc/monitor.c
-+++ b/target/sparc/monitor.c
-@@ -39,114 +39,8 @@ void hmp_info_tlb(Monitor *mon, const QDict *qdict)
-     dump_mmu(env1);
- }
+diff --git a/configs/targets/sparc64-linux-user.mak b/configs/targets/sparc64-linux-user.mak
+index a5f8f8d51a2..81d18fcc85b 100644
+--- a/configs/targets/sparc64-linux-user.mak
++++ b/configs/targets/sparc64-linux-user.mak
+@@ -4,6 +4,6 @@ TARGET_ABI_DIR=sparc
+ TARGET_SYSTBL_ABI=common,64
+ TARGET_SYSTBL=syscall.tbl
+ TARGET_BIG_ENDIAN=y
+-TARGET_XML_FILES=gdb-xml/sparc64-core.xml gdb-xml/sparc64-fpu.xml gdb-xml/sparc64-cp0.xml
++TARGET_XML_FILES=gdb-xml/sparc64-cpu.xml gdb-xml/sparc64-fpu.xml gdb-xml/sparc64-cp0.xml
+ TARGET_LONG_BITS=64
+ TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API=y
+diff --git a/configs/targets/sparc64-softmmu.mak b/configs/targets/sparc64-softmmu.mak
+index c35b6b1bb8a..602783ef0f6 100644
+--- a/configs/targets/sparc64-softmmu.mak
++++ b/configs/targets/sparc64-softmmu.mak
+@@ -1,7 +1,7 @@
+ TARGET_ARCH=sparc64
+ TARGET_BASE_ARCH=sparc
+ TARGET_BIG_ENDIAN=y
+-TARGET_XML_FILES=gdb-xml/sparc64-core.xml gdb-xml/sparc64-fpu.xml gdb-xml/sparc64-cp0.xml
++TARGET_XML_FILES=gdb-xml/sparc64-cpu.xml gdb-xml/sparc64-fpu.xml gdb-xml/sparc64-cp0.xml
+ TARGET_LONG_BITS=64
+ TARGET_NOT_USING_LEGACY_LDST_PHYS_API=y
+ TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API=y
+diff --git a/target/sparc/cpu.c b/target/sparc/cpu.c
+index f688f07445c..d82f858efb1 100644
+--- a/target/sparc/cpu.c
++++ b/target/sparc/cpu.c
+@@ -1093,7 +1093,7 @@ static void sparc_cpu_class_init(ObjectClass *oc, const void *data)
+     cc->disas_set_info = cpu_sparc_disas_set_info;
  
--#ifndef TARGET_SPARC64
--static target_long monitor_get_psr(Monitor *mon, const struct MonitorDef *md,
--                                   int val)
--{
--    CPUArchState *env = mon_get_cpu_env(mon);
--
--    return cpu_get_psr(env);
--}
--#endif
--
--static target_long monitor_get_reg(Monitor *mon, const struct MonitorDef *md,
--                                   int val)
--{
--    CPUArchState *env = mon_get_cpu_env(mon);
--    return env->regwptr[val];
--}
--
- const MonitorDef monitor_defs[] = {
--    { "g0", offsetof(CPUSPARCState, gregs[0]) },
--    { "g1", offsetof(CPUSPARCState, gregs[1]) },
--    { "g2", offsetof(CPUSPARCState, gregs[2]) },
--    { "g3", offsetof(CPUSPARCState, gregs[3]) },
--    { "g4", offsetof(CPUSPARCState, gregs[4]) },
--    { "g5", offsetof(CPUSPARCState, gregs[5]) },
--    { "g6", offsetof(CPUSPARCState, gregs[6]) },
--    { "g7", offsetof(CPUSPARCState, gregs[7]) },
--    { "o0", 0, monitor_get_reg },
--    { "o1", 1, monitor_get_reg },
--    { "o2", 2, monitor_get_reg },
--    { "o3", 3, monitor_get_reg },
--    { "o4", 4, monitor_get_reg },
--    { "o5", 5, monitor_get_reg },
--    { "o6", 6, monitor_get_reg },
--    { "o7", 7, monitor_get_reg },
--    { "l0", 8, monitor_get_reg },
--    { "l1", 9, monitor_get_reg },
--    { "l2", 10, monitor_get_reg },
--    { "l3", 11, monitor_get_reg },
--    { "l4", 12, monitor_get_reg },
--    { "l5", 13, monitor_get_reg },
--    { "l6", 14, monitor_get_reg },
--    { "l7", 15, monitor_get_reg },
--    { "i0", 16, monitor_get_reg },
--    { "i1", 17, monitor_get_reg },
--    { "i2", 18, monitor_get_reg },
--    { "i3", 19, monitor_get_reg },
--    { "i4", 20, monitor_get_reg },
--    { "i5", 21, monitor_get_reg },
--    { "i6", 22, monitor_get_reg },
--    { "i7", 23, monitor_get_reg },
--    { "pc", offsetof(CPUSPARCState, pc) },
--    { "npc", offsetof(CPUSPARCState, npc) },
--    { "y", offsetof(CPUSPARCState, y) },
--#ifndef TARGET_SPARC64
--    { "psr", 0, &monitor_get_psr, },
--    { "wim", offsetof(CPUSPARCState, wim) },
--#endif
--    { "tbr", offsetof(CPUSPARCState, tbr) },
--    { "fsr", offsetof(CPUSPARCState, fsr) },
--    { "f0", offsetof(CPUSPARCState, fpr[0].l.upper) },
--    { "f1", offsetof(CPUSPARCState, fpr[0].l.lower) },
--    { "f2", offsetof(CPUSPARCState, fpr[1].l.upper) },
--    { "f3", offsetof(CPUSPARCState, fpr[1].l.lower) },
--    { "f4", offsetof(CPUSPARCState, fpr[2].l.upper) },
--    { "f5", offsetof(CPUSPARCState, fpr[2].l.lower) },
--    { "f6", offsetof(CPUSPARCState, fpr[3].l.upper) },
--    { "f7", offsetof(CPUSPARCState, fpr[3].l.lower) },
--    { "f8", offsetof(CPUSPARCState, fpr[4].l.upper) },
--    { "f9", offsetof(CPUSPARCState, fpr[4].l.lower) },
--    { "f10", offsetof(CPUSPARCState, fpr[5].l.upper) },
--    { "f11", offsetof(CPUSPARCState, fpr[5].l.lower) },
--    { "f12", offsetof(CPUSPARCState, fpr[6].l.upper) },
--    { "f13", offsetof(CPUSPARCState, fpr[6].l.lower) },
--    { "f14", offsetof(CPUSPARCState, fpr[7].l.upper) },
--    { "f15", offsetof(CPUSPARCState, fpr[7].l.lower) },
--    { "f16", offsetof(CPUSPARCState, fpr[8].l.upper) },
--    { "f17", offsetof(CPUSPARCState, fpr[8].l.lower) },
--    { "f18", offsetof(CPUSPARCState, fpr[9].l.upper) },
--    { "f19", offsetof(CPUSPARCState, fpr[9].l.lower) },
--    { "f20", offsetof(CPUSPARCState, fpr[10].l.upper) },
--    { "f21", offsetof(CPUSPARCState, fpr[10].l.lower) },
--    { "f22", offsetof(CPUSPARCState, fpr[11].l.upper) },
--    { "f23", offsetof(CPUSPARCState, fpr[11].l.lower) },
--    { "f24", offsetof(CPUSPARCState, fpr[12].l.upper) },
--    { "f25", offsetof(CPUSPARCState, fpr[12].l.lower) },
--    { "f26", offsetof(CPUSPARCState, fpr[13].l.upper) },
--    { "f27", offsetof(CPUSPARCState, fpr[13].l.lower) },
--    { "f28", offsetof(CPUSPARCState, fpr[14].l.upper) },
--    { "f29", offsetof(CPUSPARCState, fpr[14].l.lower) },
--    { "f30", offsetof(CPUSPARCState, fpr[15].l.upper) },
--    { "f31", offsetof(CPUSPARCState, fpr[15].l.lower) },
- #ifdef TARGET_SPARC64
--    { "f32", offsetof(CPUSPARCState, fpr[16]) },
--    { "f34", offsetof(CPUSPARCState, fpr[17]) },
--    { "f36", offsetof(CPUSPARCState, fpr[18]) },
--    { "f38", offsetof(CPUSPARCState, fpr[19]) },
--    { "f40", offsetof(CPUSPARCState, fpr[20]) },
--    { "f42", offsetof(CPUSPARCState, fpr[21]) },
--    { "f44", offsetof(CPUSPARCState, fpr[22]) },
--    { "f46", offsetof(CPUSPARCState, fpr[23]) },
--    { "f48", offsetof(CPUSPARCState, fpr[24]) },
--    { "f50", offsetof(CPUSPARCState, fpr[25]) },
--    { "f52", offsetof(CPUSPARCState, fpr[26]) },
--    { "f54", offsetof(CPUSPARCState, fpr[27]) },
--    { "f56", offsetof(CPUSPARCState, fpr[28]) },
--    { "f58", offsetof(CPUSPARCState, fpr[29]) },
--    { "f60", offsetof(CPUSPARCState, fpr[30]) },
--    { "f62", offsetof(CPUSPARCState, fpr[31]) },
-     { "asi", offsetof(CPUSPARCState, asi) },
-     { "pstate", offsetof(CPUSPARCState, pstate) },
-     { "cansave", offsetof(CPUSPARCState, cansave) },
-@@ -154,7 +48,6 @@ const MonitorDef monitor_defs[] = {
-     { "otherwin", offsetof(CPUSPARCState, otherwin) },
-     { "wstate", offsetof(CPUSPARCState, wstate) },
-     { "cleanwin", offsetof(CPUSPARCState, cleanwin) },
--    { "fprs", offsetof(CPUSPARCState, fprs), NULL, MD_I32 },
+ #if defined(TARGET_SPARC64) && !defined(TARGET_ABI32)
+-    cc->gdb_core_xml_file = "sparc64-core.xml";
++    cc->gdb_core_xml_file = "sparc64-cpu.xml";
+ #else
+     cc->gdb_num_core_regs = 72;
  #endif
-     { NULL },
- };
+diff --git a/gdb-xml/sparc64-core.xml b/gdb-xml/sparc64-cpu.xml
+similarity index 95%
+rename from gdb-xml/sparc64-core.xml
+rename to gdb-xml/sparc64-cpu.xml
+index 85b0820a408..a9bfc95ea65 100644
+--- a/gdb-xml/sparc64-core.xml
++++ b/gdb-xml/sparc64-cpu.xml
+@@ -1,12 +1,12 @@
+ <?xml version="1.0"?>
+-<!-- Copyright (C) 2013-2025 Free Software Foundation, Inc.
++<!-- Copyright (C) 2013-2026 Free Software Foundation, Inc.
+ 
+      Copying and distribution of this file, with or without modification,
+      are permitted in any medium without royalty provided the copyright
+      notice and this notice are preserved.  -->
+ 
+ <!DOCTYPE feature SYSTEM "gdb-target.dtd">
+-<feature name="org.gnu.gdb.sparc.core">
++<feature name="org.gnu.gdb.sparc.cpu">
+   <reg name="g0" bitsize="64" type="uint64" regnum="0"/>
+   <reg name="g1" bitsize="64" type="uint64" regnum="1"/>
+   <reg name="g2" bitsize="64" type="uint64" regnum="2"/>
 -- 
 2.52.0
 
