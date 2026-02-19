@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29400E9A048
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 13:04:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74C6FE9A048
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 13:04:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vt3hu-00007e-GN; Thu, 19 Feb 2026 08:04:38 -0500
+	id 1vt3hn-0008Gu-B9; Thu, 19 Feb 2026 08:04:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
- id 1vt3hs-0008U8-8h
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 08:04:36 -0500
+ id 1vt3hm-0008Gg-4Q
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 08:04:30 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
- id 1vt3hq-0006P4-ET
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 08:04:36 -0500
+ id 1vt3hk-0006O0-GD
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 08:04:29 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771506273;
+ s=mimecast20190719; t=1771506267;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=YgMuFHE4xgIPRrBqWIR+Qt/vy3i50/JPFOfHKHeqU+s=;
- b=JEC8NZCRia3p9IIdbz7MdeQe1SHCHxPpK0ArR9YkNIe4msJM5E04K5ygtLdRHFSLDwC/yC
- 2Fj7IlJ2qcco9Ld6HN2nu7OjkuJ5yPTHx/o5Bvwjo+hgkJbixXiaN1lQfDuOoFm9E+jkO6
- Ao2DnsuOnGOCGgWxBpQWliG5Zq8VNeY=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=kyVUlr96lyflj2tq4vVPK9UjthiNXKRXd3/BU7iC+Pg=;
+ b=d3VIztumQ1zSSsf3BjmSazjd0Nl6r4FavpffE/ojmz7FxcrusBGhZTMm+fgLMGyuAyzYzZ
+ WqU1/cQdzSIZRRqhNL6qA94viCSU3wAar4dztiCQV22+SBmqFAwfrY14hKeM3dowfqXe6j
+ d5wvgs4LisYfaVESfr1NnvHn/tvAYh8=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-491-r1sxKKX1PCS3tECIIoSdhg-1; Thu,
- 19 Feb 2026 08:04:30 -0500
-X-MC-Unique: r1sxKKX1PCS3tECIIoSdhg-1
-X-Mimecast-MFC-AGG-ID: r1sxKKX1PCS3tECIIoSdhg_1771506269
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-611-z3TLLxh5MRy3slJl-nt5qQ-1; Thu,
+ 19 Feb 2026 08:04:24 -0500
+X-MC-Unique: z3TLLxh5MRy3slJl-nt5qQ-1
+X-Mimecast-MFC-AGG-ID: z3TLLxh5MRy3slJl-nt5qQ_1771506263
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DD6C41800581; Thu, 19 Feb 2026 13:04:28 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DEF93195605A; Thu, 19 Feb 2026 13:04:22 +0000 (UTC)
 Received: from fedora.redhat.com (unknown [10.44.33.19])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 70B9019560A7; Thu, 19 Feb 2026 13:04:23 +0000 (UTC)
+ id 6641D1955F22; Thu, 19 Feb 2026 13:04:16 +0000 (UTC)
 From: Albert Esteve <aesteve@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>,
@@ -59,9 +59,9 @@ Cc: Peter Xu <peterx@redhat.com>,
  Stefano Garzarella <sgarzare@redhat.com>, jasowang@redhat.com,
  Laurent Vivier <lvivier@redhat.com>, slp@redhat.com, hi@alyssa.is,
  stevensd@chromium.org
-Subject: [PATCH v13 7/7] vhost-user-device: Add shared memory BAR
-Date: Thu, 19 Feb 2026 14:03:34 +0100
-Message-ID: <20260219130334.787858-8-aesteve@redhat.com>
+Subject: [PATCH v13 6/7] qmp: add shmem feature map
+Date: Thu, 19 Feb 2026 14:03:33 +0100
+Message-ID: <20260219130334.787858-7-aesteve@redhat.com>
 In-Reply-To: <20260219130334.787858-1-aesteve@redhat.com>
 References: <20260219130334.787858-1-aesteve@redhat.com>
 MIME-Version: 1.0
@@ -92,179 +92,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add shared memory BAR support to vhost-user-device-pci
-to enable direct file mapping for VIRTIO Shared
-Memory Regions.
-
-The implementation creates a consolidated shared
-memory BAR that contains all VIRTIO Shared
-Memory Regions as subregions. Each region is
-configured with its proper shmid, size, and
-offset within the BAR. The number and size of
-regions are retrieved via VHOST_USER_GET_SHMEM_CONFIG
-message sent by vhost-user-base during realization
-after virtio_init().
-
-Specifiically, it uses BAR 3 to avoid conflicts, as
-it is currently unused.
-
-The shared memory BAR is only created when the
-backend supports VHOST_USER_PROTOCOL_F_SHMEM and
-has configured shared memory regions. This maintains
-backward compatibility with backends that do not
-support shared memory functionality.
+Add new vhost-user protocol
+VHOST_USER_PROTOCOL_F_SHMEM feature to
+feature map.
 
 Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 Signed-off-by: Albert Esteve <aesteve@redhat.com>
 ---
- hw/virtio/vhost-user-base.c            | 46 ++++++++++++++++++++++++--
- hw/virtio/vhost-user-test-device-pci.c | 38 +++++++++++++++++++--
- 2 files changed, 79 insertions(+), 5 deletions(-)
+ hw/virtio/virtio-qmp.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/hw/virtio/vhost-user-base.c b/hw/virtio/vhost-user-base.c
-index 01ab9ca56b..e5e8abae96 100644
---- a/hw/virtio/vhost-user-base.c
-+++ b/hw/virtio/vhost-user-base.c
-@@ -16,6 +16,7 @@
- #include "hw/virtio/virtio-bus.h"
- #include "hw/virtio/vhost-user-base.h"
- #include "qemu/error-report.h"
-+#include "migration/blocker.h"
- 
- static void vub_start(VirtIODevice *vdev)
- {
-@@ -276,7 +277,8 @@ static void vub_device_realize(DeviceState *dev, Error **errp)
- {
-     VirtIODevice *vdev = VIRTIO_DEVICE(dev);
-     VHostUserBase *vub = VHOST_USER_BASE(dev);
--    int ret;
-+    uint64_t memory_sizes[VIRTIO_MAX_SHMEM_REGIONS];
-+    int i, ret, nregions, regions_processed = 0;
- 
-     if (!vub->chardev.chr) {
-         error_setg(errp, "vhost-user-base: missing chardev");
-@@ -319,7 +321,7 @@ static void vub_device_realize(DeviceState *dev, Error **errp)
- 
-     /* Allocate queues */
-     vub->vqs = g_ptr_array_sized_new(vub->num_vqs);
--    for (int i = 0; i < vub->num_vqs; i++) {
-+    for (i = 0; i < vub->num_vqs; i++) {
-         g_ptr_array_add(vub->vqs,
-                         virtio_add_queue(vdev, vub->vq_size,
-                                          vub_handle_output));
-@@ -333,11 +335,49 @@ static void vub_device_realize(DeviceState *dev, Error **errp)
-                          VHOST_BACKEND_TYPE_USER, 0, errp);
- 
-     if (ret < 0) {
--        do_vhost_user_cleanup(vdev, vub);
-+        goto err;
-+    }
-+
-+    ret = vub->vhost_dev.vhost_ops->vhost_get_shmem_config(&vub->vhost_dev,
-+                                                           &nregions,
-+                                                           memory_sizes,
-+                                                           errp);
-+
-+    if (ret < 0) {
-+        goto err;
-+    }
-+
-+    for (i = 0; i < VIRTIO_MAX_SHMEM_REGIONS && regions_processed < nregions; i++) {
-+        if (memory_sizes[i]) {
-+            regions_processed++;
-+            if (vub->vhost_dev.migration_blocker == NULL) {
-+                error_setg(&vub->vhost_dev.migration_blocker,
-+                       "Migration disabled: devices with VIRTIO Shared Memory "
-+                       "Regions do not support migration yet.");
-+                ret = migrate_add_blocker_normal(
-+                    &vub->vhost_dev.migration_blocker,
-+                    errp);
-+
-+                if (ret < 0) {
-+                    goto err;
-+                }
-+            }
-+
-+            if (memory_sizes[i] % qemu_real_host_page_size() != 0) {
-+                error_setg(errp, "Shared memory %d size must be a power of 2 "
-+                                 "no smaller than the page size", i);
-+                goto err;
-+            }
-+
-+            virtio_new_shmem_region(vdev, i, memory_sizes[i]);
-+        }
-     }
- 
-     qemu_chr_fe_set_handlers(&vub->chardev, NULL, NULL, vub_event, NULL,
-                              dev, NULL, true);
-+    return;
-+err:
-+    do_vhost_user_cleanup(vdev, vub);
- }
- 
- static void vub_device_unrealize(DeviceState *dev)
-diff --git a/hw/virtio/vhost-user-test-device-pci.c b/hw/virtio/vhost-user-test-device-pci.c
-index 7f6d751690..22678e3277 100644
---- a/hw/virtio/vhost-user-test-device-pci.c
-+++ b/hw/virtio/vhost-user-test-device-pci.c
-@@ -12,10 +12,13 @@
- #include "hw/virtio/vhost-user-base.h"
- #include "hw/virtio/virtio-pci.h"
- 
-+#define VIRTIO_DEVICE_PCI_SHMEM_BAR 4
-+
- struct VHostUserDevicePCI {
-     VirtIOPCIProxy parent_obj;
- 
-     VHostUserBase vub;
-+    MemoryRegion shmembar;
+diff --git a/hw/virtio/virtio-qmp.c b/hw/virtio/virtio-qmp.c
+index 968299fda0..e3d0a10a59 100644
+--- a/hw/virtio/virtio-qmp.c
++++ b/hw/virtio/virtio-qmp.c
+@@ -127,6 +127,9 @@ static const qmp_virtio_feature_map_t vhost_user_protocol_map[] = {
+     FEATURE_ENTRY(VHOST_USER_PROTOCOL_F_DEVICE_STATE, \
+             "VHOST_USER_PROTOCOL_F_DEVICE_STATE: Backend device state transfer "
+             "supported"),
++    FEATURE_ENTRY(VHOST_USER_PROTOCOL_F_SHMEM, \
++                "VHOST_USER_PROTOCOL_F_SHMEM: Backend shared memory mapping "
++                "supported"),
+     { -1, "" }
  };
  
- #define TYPE_VHOST_USER_TEST_DEVICE_PCI "vhost-user-test-device-pci-base"
-@@ -25,10 +28,41 @@ OBJECT_DECLARE_SIMPLE_TYPE(VHostUserDevicePCI, VHOST_USER_TEST_DEVICE_PCI)
- static void vhost_user_device_pci_realize(VirtIOPCIProxy *vpci_dev, Error **errp)
- {
-     VHostUserDevicePCI *dev = VHOST_USER_TEST_DEVICE_PCI(vpci_dev);
--    DeviceState *vdev = DEVICE(&dev->vub);
-+    DeviceState *dev_state = DEVICE(&dev->vub);
-+    VirtIODevice *vdev = VIRTIO_DEVICE(dev_state);
-+    VirtioSharedMemory *shmem, *next;
-+    uint64_t offset = 0, shmem_size = 0;
- 
-+    vpci_dev->modern_mem_bar_idx = 2;
-     vpci_dev->nvectors = 1;
--    qdev_realize(vdev, BUS(&vpci_dev->bus), errp);
-+    qdev_realize(dev_state, BUS(&vpci_dev->bus), errp);
-+
-+    QSIMPLEQ_FOREACH_SAFE(shmem, &vdev->shmem_list, entry, next) {
-+        if (shmem->mr.size > UINT64_MAX - shmem_size) {
-+            error_setg(errp, "Total shared memory required overflow");
-+            return;
-+        }
-+        shmem_size = shmem_size + shmem->mr.size;
-+    }
-+    if (shmem_size) {
-+        if (vpci_dev->flags & VIRTIO_PCI_FLAG_MODERN_PIO_NOTIFY) {
-+            error_setg(errp, "modern-pio-notify is not supported due to PCI BAR layout limitations");
-+            return;
-+        }
-+        memory_region_init(&dev->shmembar, OBJECT(vpci_dev),
-+                           "vhost-device-pci-shmembar", shmem_size);
-+        QSIMPLEQ_FOREACH_SAFE(shmem, &vdev->shmem_list, entry, next) {
-+            memory_region_add_subregion(&dev->shmembar, offset, &shmem->mr);
-+            virtio_pci_add_shm_cap(vpci_dev, VIRTIO_DEVICE_PCI_SHMEM_BAR,
-+                                   offset, shmem->mr.size, shmem->shmid);
-+            offset = offset + shmem->mr.size;
-+        }
-+        pci_register_bar(&vpci_dev->pci_dev, VIRTIO_DEVICE_PCI_SHMEM_BAR,
-+                        PCI_BASE_ADDRESS_SPACE_MEMORY |
-+                        PCI_BASE_ADDRESS_MEM_PREFETCH |
-+                        PCI_BASE_ADDRESS_MEM_TYPE_64,
-+                        &dev->shmembar);
-+    }
- }
- 
- static void vhost_user_device_pci_class_init(ObjectClass *klass,
 -- 
 2.52.0
 
