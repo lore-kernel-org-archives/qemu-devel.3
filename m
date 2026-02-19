@@ -4,67 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 278F8E9A053
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 17:19:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51BFEE9A053
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 17:20:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vt7fO-0005Lg-Gf; Thu, 19 Feb 2026 12:18:18 -0500
+	id 1vt7fY-0005TX-TK; Thu, 19 Feb 2026 12:18:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vt7fM-0005Kj-2S
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 12:18:16 -0500
-Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
+ id 1vt7fU-0005QF-8F
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 12:18:24 -0500
+Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vt7fK-0000Pw-1r
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 12:18:15 -0500
-Received: by mail-ej1-x62c.google.com with SMTP id
- a640c23a62f3a-b8850aa5b56so225137366b.2
- for <qemu-devel@nongnu.org>; Thu, 19 Feb 2026 09:18:13 -0800 (PST)
+ id 1vt7fS-0000TT-Lg
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 12:18:24 -0500
+Received: by mail-ej1-x62d.google.com with SMTP id
+ a640c23a62f3a-b884a84e622so189140366b.1
+ for <qemu-devel@nongnu.org>; Thu, 19 Feb 2026 09:18:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771521492; x=1772126292; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=gadO7bigcRDHgxevTilDA1AZWO5dSY59yjXY5cBcG9g=;
- b=dqebgeBIkKBnOw5Z7Suz5g2vi22QfU6GNWD1VRfnWcrsekI4m8d44r7xdmmq63ja1O
- U+kVXkHkPOQy/FBAQMDqymIRB9bUmcPQJsls0SWy2fLsJ6F2pTJ3FsoAB5glL3t/qeL7
- dusdOXhEx9wAG+rgFUpeC9olDF36qQ1t2MyULse7Qqp312dIa3KkX0BRjyz2woraXl1K
- dcX4stwFKbpHDQBuEJwvxsjzfVr8Hp9+obFK9/2TH1gq63FOB70Aj/ET/SC14vgWuu34
- 88zYEBrZYNvcOis7l14FlWa523VxnJ1kgdTpzlEWeoAaqv88fvfmA0DJALvkblb/+/xc
- Z2Kg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771521492; x=1772126292;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1771521501; x=1772126301; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=gadO7bigcRDHgxevTilDA1AZWO5dSY59yjXY5cBcG9g=;
- b=X9KU+IQHuBYcrZ6UBhoHYE95TiDcezzQsD5LwvKy4oZFyTrl9EpDNyGsATIIas4Ij+
- CxCKgNpGqa2Ua7X9shM37QEJk/hKhv/2kIUygaxD7cm3607oLRdYaQdUVWXywPH+mGCW
- A9BYOE4BahFaQ36ZSX7df+zjzWNZplJTMHENbnDbftTKW5qVaXInAjlwtGsG96CA2WJb
- CZN4muvS7qAqFTuoi+ycMAIcojF+TJ8lf6uZ3izYzIxQ1tlSVFYBxw+9IwX8OfXCngUG
- 13icLbDG/zaT82xl1a8ecJf8EqVZrk0W0MM9WrcAAmqdz2N06Ecp3hs19ya5CbdvcDUA
- BLmg==
-X-Gm-Message-State: AOJu0Yy5DNF91GV/JQfJeUOm7nXfqagSSvyjJjXDGIItAjbtIrSC+qDK
- XqYT8YHtd2xiqbgoMbcFJ9VtxgK6y7y7W2KMFPujAkvuJd77hSqX4WWaSX2hCi8Ox94=
-X-Gm-Gg: AZuq6aKZBLIGGb89efz53SH2e6LHe91yoKbqYb3BzKYmgmwbqA6RS7aBy8zapUPd99a
- CtUuDFKZjaz1EB2OJIZNZpo4qf620yAXJzS33h57fuceRuqEqBOpzQ5SH+D8GQ9q9R7qEdd1vob
- neIr9kIZQYb7Pn4nfKZ3cVcljzy8zmTnMxH/TSufpQfbfaztEJlkSEnhnMzAFecnsg11wOpUa3z
- QHzwJkfj9VarLornys50bESxD98rws6gdsX/yxLKQhxvnzHS0UAFFKuTB3snwkfr2R03+McHfPm
- wrO+srLnWEkua/sQIQFuGtvG2TCetNVEiw8trarup73q6Qds8/kwzLWbNSkE116gm6PtSPX6CCE
- 8mkOKZtWVeH/VKi9M+x7CPR0/m/7Yqk6So99mq370lLyF6Fvatho3zDHiJ4+T40Igc74lnFM4Ne
- cBHegK9Uc7lHiKIZpiXmiu3Oc=
-X-Received: by 2002:a17:907:7fa5:b0:b8e:fe3c:2264 with SMTP id
- a640c23a62f3a-b8face2498amr1270538066b.41.1771521492121; 
- Thu, 19 Feb 2026 09:18:12 -0800 (PST)
+ bh=lbJf3C90R3jDGQBcdsPQ9rdD2GJU3JqzF3kfy/njWjs=;
+ b=kxovPOtsfX6LK0xr4Hk3JBK70KSTuqzYuIFrAyBLazH1IxbVdJSQsdHsoWL5Sew3XV
+ 7WOvWoGM6pdGvadkdZyujp51ELpnIDyS3o0i704WxvUBYoLYmKZCJKreQ8tSwfbw/1UR
+ vEkOElgcovGPnojXC/oJnoPrvlcnoX3OAk3A9dWC4ra7++GZaFyUv4g9XvEg9xTe+mbS
+ fniEsxGaA8tm81LU1AGS3YAtck0Tv7JbI5G8YdIU+GhxHt3C7oPqFDBMoz4l4X5rjt+p
+ wVdGRB5RaQmaphrj3VndiX/lTlsk0NWTbMou4HJiK+84kvQy2vsfeQQl9X67PDmmtvMJ
+ XfUw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1771521501; x=1772126301;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=lbJf3C90R3jDGQBcdsPQ9rdD2GJU3JqzF3kfy/njWjs=;
+ b=A6pD0rj4dTakbygQchXJ9crWnse9GJONL6m9eLHHmbbmY4jRo7Q5WUGe43cLoCeafo
+ bspeibSAtZV/qOmdYVDoYAAyBUnN8yR4DZFdfG9SpF2Arceg7NwkDfT1i4/vAig0Le/D
+ rHoELZjtEVCgdiN+HQWOCqHjpvmFJfkC6HdgHz7iuo+NQGJ3wf2DAFlqVp45icglwCYf
+ 3F0z18YnPWY32QcIEhU3r4fFpWY2fpNnHHn5ZsjyUc3xlBCj7gYyuMruynO20t/S2Ln1
+ 6Z2x8bBGZAv20qmWQui4hDUAb0M4w4NHgGtMbfCx1sx+tw3bELMgc6j/QBogbpgOXP2e
+ 4TAA==
+X-Gm-Message-State: AOJu0YwQ6FkCGA6N7k58rjtwpfnuIwjml1FqWgFVmfQtTIX62d4PvoLG
+ Iq9KqxzgsfPVdaw2uASD2f2574WJOQkbGLz1RzzTf7hjkidos7uuhjO5ZMs5j09klM4=
+X-Gm-Gg: AZuq6aIzeQXaL18WaqA1iBrHpvvVSiszfuOZOfoTfG5MPQF0urZMqKdlzIID/KRiVF3
+ zCExOZIwzZRZ+vhN2z6GiAT+BihHeVVZc7w32NgyMY0xf0DF8cqYBD5KallAzcJoKyc3SGncsrt
+ cTJlu0RAgA461hIB//pYTnYrrFAGJIXaaEpbyS2hz7+q3K4dy94MIS6MZTEluPUid5ogzhiIOjB
+ jsAr8iTV2sIhlo03teNVx4aFssS1uGbVXSkYYyypHaVAJ6HeTnm/1YW8JIcZ2CyKyVlFQ7H5p5V
+ QLRHqoYItiOypAw7D4asdqWP9iRzmUpbJyq4uOegP/viHMhATcSO4jugzKH7zS3p2jHyFBCaAIg
+ B5Zh0xjqFMw143aazNQAEsDnDTE6siQ9itUSaOGS04JIXI4hJUWYTTJja6p0hbqqlyzrrb4Jjmw
+ jmR9tLsSC5wRcGvwYaAwn68po=
+X-Received: by 2002:a17:907:6d28:b0:b87:2fcd:1955 with SMTP id
+ a640c23a62f3a-b8face541famr1257006666b.50.1771521500922; 
+ Thu, 19 Feb 2026 09:18:20 -0800 (PST)
 Received: from draig.lan ([185.124.0.126]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b8fc735e4cbsm599432366b.13.2026.02.19.09.18.11
+ a640c23a62f3a-b8fc735d66esm564719366b.4.2026.02.19.09.18.15
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 19 Feb 2026 09:18:11 -0800 (PST)
+ Thu, 19 Feb 2026 09:18:20 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 898D05F818;
- Thu, 19 Feb 2026 17:18:10 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id A5C615F8D9;
+ Thu, 19 Feb 2026 17:18:11 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Yoshinori Sato <yoshinori.sato@nifty.com>, qemu-arm@nongnu.org,
@@ -82,16 +83,18 @@ Cc: Yoshinori Sato <yoshinori.sato@nifty.com>, qemu-arm@nongnu.org,
  Zhao Liu <zhao1.liu@intel.com>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
  Yanan Wang <wangyanan55@huawei.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [RFC PATCH v2 00/14] cpu_reset clean-ups for arm, alpha, mips,
- m68k and tricore
-Date: Thu, 19 Feb 2026 17:17:56 +0000
-Message-ID: <20260219171810.602667-1-alex.bennee@linaro.org>
+Subject: [RFC PATCH v2 13/14] target/alpha: move cpu reset into a proper reset
+ function
+Date: Thu, 19 Feb 2026 17:18:09 +0000
+Message-ID: <20260219171810.602667-14-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260219171810.602667-1-alex.bennee@linaro.org>
+References: <20260219171810.602667-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -114,70 +117,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We tend to apply cpu_reset inconsistently throughout our various
-models which leads to unintended ordering dependencies. This got in
-the way in my last plugins series:
+Now the alpha clipper machine will execute a proper reset we can use
+the reset mechanisms to reset the CPU.
 
-  https://patchew.org/QEMU/20251219190849.238323-1-alex.bennee@linaro.org/
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+---
+ target/alpha/cpu.h |  2 ++
+ target/alpha/cpu.c | 10 ++++++----
+ 2 files changed, 8 insertions(+), 4 deletions(-)
 
-where I needed to shuffle things around to ensure that gdb register
-creation was done after dependant peripherals had created their cpu
-interfaces.
-
-Regardless of that we do have a proper reset interface now and most
-architectures have moved to it. This series attempts to clean-up the
-remaining cases with proper qemu_register_reset() calls so reset is
-called when we intend to.
-
-v2
-
-I re-span this to address the missing cpu_reset Akihiko found
-troubling the alpha replay test:
-
-  Message-Id: <20260217-alpha-v1-0-0dcc708c9db3@rsg.ci.i.u-tokyo.ac.jp>
-  Date: Tue, 17 Feb 2026 15:34:28 +0900
-  Subject: [PATCH 0/2] Reapply "rcu: Unify force quiescent state"
-  From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-
-I also dropped the use of qemu_register_reset in favour of the proper
-3-phase APIs.
-
-Alex.
-
-Alex Bennée (14):
-  target/m68k: clean-up includes in cpu.c
-  target/m68k: initialise pc/sp vector during reset
-  hw/m68k: transition virt machine to multi-phase reset
-  hw/m68k: update nextcube to 3-phase reset
-  hw/m68k: update mcf5208evb to 3-phase reset
-  hw/m68k: update an5206 to 3-phase reset
-  hw/mips: defer finalising gcr_base until reset time
-  hw/mips: drop cpu_reset in mips_cpu_realizefn
-  target/tricore: move cpu_reset from tricore_cpu_realizefn
-  target/arm: remove extraneous cpu_reset from realizefn
-  hw/alpha: remove unused includes
-  hw/alpha: add a reset function for the clipper machine
-  target/alpha: move cpu reset into a proper reset function
-  include/hw: expand cpu_reset function docs
-
- include/hw/core/cpu.h |  3 +++
- include/hw/mips/cps.h | 14 +++++++++++++-
- target/alpha/cpu.h    |  2 ++
- target/m68k/cpu.h     |  2 ++
- hw/alpha/dp264.c      | 12 ++++++++++--
- hw/m68k/an5206.c      | 23 ++++++++++++++++-------
- hw/m68k/mcf5208.c     | 26 ++++++++++++--------------
- hw/m68k/next-cube.c   | 23 +++++++++++++++++------
- hw/m68k/virt.c        | 34 ++++++++++------------------------
- hw/mips/cps.c         | 26 +++++++++++++++++---------
- hw/misc/mips_cmgcr.c  |  1 -
- target/alpha/cpu.c    | 10 ++++++----
- target/arm/cpu.c      |  1 -
- target/m68k/cpu.c     | 41 +++++++++++++++++++++++++++++++++--------
- target/mips/cpu.c     |  1 -
- target/tricore/cpu.c  |  9 ++++++++-
- 16 files changed, 149 insertions(+), 79 deletions(-)
-
+diff --git a/target/alpha/cpu.h b/target/alpha/cpu.h
+index 45944e46b54..0da6a4a2f10 100644
+--- a/target/alpha/cpu.h
++++ b/target/alpha/cpu.h
+@@ -269,6 +269,7 @@ struct ArchCPU {
+ /**
+  * AlphaCPUClass:
+  * @parent_realize: The parent class' realize handler.
++ * @parent_phases: The parent class' reset phase handlers.
+  *
+  * An Alpha CPU model.
+  */
+@@ -276,6 +277,7 @@ struct AlphaCPUClass {
+     CPUClass parent_class;
+ 
+     DeviceRealize parent_realize;
++    ResettablePhases parent_phases;
+ };
+ 
+ #ifndef CONFIG_USER_ONLY
+diff --git a/target/alpha/cpu.c b/target/alpha/cpu.c
+index 1780db7d1e2..e225f11ac0a 100644
+--- a/target/alpha/cpu.c
++++ b/target/alpha/cpu.c
+@@ -202,12 +202,10 @@ static void ev67_cpu_initfn(Object *obj)
+     cpu_env(CPU(obj))->amask |= AMASK_CIX | AMASK_PREFETCH;
+ }
+ 
+-static void alpha_cpu_initfn(Object *obj)
++static void alpha_cpu_reset_exit(Object *obj, ResetType type)
+ {
+     CPUAlphaState *env = cpu_env(CPU(obj));
+ 
+-    /* TODO all this should be done in reset, not init */
+-
+     env->lock_addr = -1;
+ 
+     /*
+@@ -277,10 +275,15 @@ static void alpha_cpu_class_init(ObjectClass *oc, const void *data)
+     DeviceClass *dc = DEVICE_CLASS(oc);
+     CPUClass *cc = CPU_CLASS(oc);
+     AlphaCPUClass *acc = ALPHA_CPU_CLASS(oc);
++    ResettableClass *rc = RESETTABLE_CLASS(oc);
+ 
+     device_class_set_parent_realize(dc, alpha_cpu_realizefn,
+                                     &acc->parent_realize);
+ 
++    resettable_class_set_parent_phases(rc,
++                                       NULL, NULL, alpha_cpu_reset_exit,
++                                       &acc->parent_phases);
++
+     cc->class_by_name = alpha_cpu_class_by_name;
+     cc->dump_state = alpha_cpu_dump_state;
+     cc->set_pc = alpha_cpu_set_pc;
+@@ -311,7 +314,6 @@ static const TypeInfo alpha_cpu_type_infos[] = {
+         .parent = TYPE_CPU,
+         .instance_size = sizeof(AlphaCPU),
+         .instance_align = __alignof(AlphaCPU),
+-        .instance_init = alpha_cpu_initfn,
+         .abstract = true,
+         .class_size = sizeof(AlphaCPUClass),
+         .class_init = alpha_cpu_class_init,
 -- 
 2.47.3
 
