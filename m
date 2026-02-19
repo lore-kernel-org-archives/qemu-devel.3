@@ -4,84 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8792EE9A049
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 13:00:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4EE68E9A049
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 13:00:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vt3d6-0004yY-BW; Thu, 19 Feb 2026 07:59:46 -0500
+	id 1vt3dx-0005Wc-Ma; Thu, 19 Feb 2026 08:00:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <me@linux.beauty>)
- id 1vt3cg-0004x5-9C; Thu, 19 Feb 2026 07:59:14 -0500
-Received: from sender4-op-o12.zoho.com ([136.143.188.12])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <me@linux.beauty>)
- id 1vt3cd-0005IH-NS; Thu, 19 Feb 2026 07:59:14 -0500
-ARC-Seal: i=1; a=rsa-sha256; t=1771505919; cv=none; 
- d=zohomail.com; s=zohoarc; 
- b=U+UxkrG2TZyV+duaN3VQ4JmANVaaippkKGEbNDEhA/KvjGPI8h/PN8eFb4X77oyxbGtM6sqlr027hurU6cYM0cYJNq5fmprRG1qGqakQklWSgPXYs6msciRSIAWQsgINjf+OH0OsGs7fdZjqwT6CQTQf8sAbPs3E+gEp7EnkCpE=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1771505919;
- h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=Jg3y1Afucb+wp2hjaqNW8gwSaMOV5vrAlBPY/1CHAGo=; 
- b=JSGt+SVJC3tMUw1Fu7q75xrSdmfYZESOIYJ9Ww+1ODOEdSx71IS1LD5KakT1O/z9zkbewRG73SqrrCiYvZQqUU8CCioUzF0j3yAeaQiW7h8aTXhAw5vOeNFwDdKa00eUgguUxdoJOnB3ZU5yenzhVi2AfrTNDYRCv46bYC/0jkc=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
- dkim=pass  header.i=linux.beauty;
- spf=pass  smtp.mailfrom=me@linux.beauty;
- dmarc=pass header.from=<me@linux.beauty>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1771505919; 
- s=zmail; d=linux.beauty; i=me@linux.beauty;
- h=Date:Date:From:From:To:To:Cc:Cc:Message-ID:In-Reply-To:References:Subject:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
- bh=Jg3y1Afucb+wp2hjaqNW8gwSaMOV5vrAlBPY/1CHAGo=;
- b=BeBp0dBiU/3A7+pbqdbQNVEob9iRDXo4eCM28hyN0fu43JUQXyHf25IMcmPCf1Ms
- EohoGQ587gf9gf6sMIbKMyVA7JblS4OvmN+C8BLY79eu6neSLbTWFDKXL2/14jkn2w6
- AXfDy6XviJWpdA7cKM32UlKcmH2ZhXX6tqOV4+0I=
-Received: from mail.zoho.com by mx.zohomail.com
- with SMTP id 1771505917623460.8287282936018;
- Thu, 19 Feb 2026 04:58:37 -0800 (PST)
-Date: Thu, 19 Feb 2026 20:58:37 +0800
-From: Li Chen <me@linux.beauty>
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: "Igor Mammedov" <imammedo@redhat.com>,
- "Peter Maydell" <peter.maydell@linaro.org>,
- "Shannon Zhao" <shannon.zhaosl@gmail.com>,
- "Ani Sinha" <anisinha@redhat.com>, "Eduardo Habkost" <eduardo@habkost.net>,
- "Marcel Apfelbaum" <marcel.apfelbaum@gmail.com>,
- =?UTF-8?Q?=22Philippe_Mathieu-Daud=C3=A9=22?= <philmd@linaro.org>,
- "Yanan Wang" <wangyanan55@huawei.com>,
- "Zhao Liu" <zhao1.liu@intel.com>, "Song Gao" <gaosong@loongson.cn>,
- "Jiaxun Yang" <jiaxun.yang@flygoat.com>,
- "Sunil V L" <sunilvl@ventanamicro.com>,
- "Palmer Dabbelt" <palmer@dabbelt.com>,
- "Alistair Francis" <alistair.francis@wdc.com>,
- "Weiwei Li" <liwei1518@gmail.com>, "qemu-arm" <qemu-arm@nongnu.org>,
- "qemu-devel" <qemu-devel@nongnu.org>, "qemu-riscv" <qemu-riscv@nongnu.org>
-Message-ID: <19c75fb1e38.69887690841604.3016285282183736488@linux.beauty>
-In-Reply-To: <20260203112450-mutt-send-email-mst@kernel.org>
-References: <20251211102025.873506-1-me@linux.beauty>
- <20251211080811-mutt-send-email-mst@kernel.org>
- <19b104a617e.133b3feb891309.6986511857690603518@linux.beauty>
- <20251218161253.7f13038f@imammedo>
- <20260203112450-mutt-send-email-mst@kernel.org>
-Subject: Re: [PATCH v6] acpi/virt: suppress UART device & SPCR when guest
- has no serial hardware
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vt3dt-0005Qd-8F
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 08:00:29 -0500
+Received: from mail-yw1-x112f.google.com ([2607:f8b0:4864:20::112f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vt3dr-0005bT-EO
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 08:00:28 -0500
+Received: by mail-yw1-x112f.google.com with SMTP id
+ 00721157ae682-793fdbb8d3aso6989007b3.3
+ for <qemu-devel@nongnu.org>; Thu, 19 Feb 2026 05:00:27 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1771506026; cv=none;
+ d=google.com; s=arc-20240605;
+ b=F7P/DhIm/zVjgoFh6G3DWilLgAjqgQNRDnKXn0k1pBWEkUdvNGE/OFrbYVeU3yZayd
+ uNxI2IDczCKQ/ziXIWDCb5Vm6NNlbeC+SOKbmzbv+Ev7Aw67F3OD65GzQMTB1ZxZOugm
+ iCUXInu/jzznlsgpx6J5wgVoc8OWyLC2pQf/nrY7BDyNnq6KqUgsd1QLhyZNQ+DIM0/k
+ vOQ9S+AMBJx5DofkYsZ15hawB1G99kucboHFeCSNkbgbPP0SrLLfhqU/1wkWywlWDKWZ
+ n4EZ4SWiufHGQVN5tWyzSfmX0ooH+VIdSB2xv+vFS5xhBqIVTSGqc+Sg1MpcxzmsvdxS
+ +Mtg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=6f/cv+8SseqLRrX0F+EZo+zHcoceiYv1Ox6pEsi36q4=;
+ fh=QKWwYWnU74tEpagxyzKMxXfdzss8yZtT/YtRGw+kJm4=;
+ b=Krj9EVOtu3NuO8UBuCUZ9bU1nH+nquAIpJj/LwWHgz9W0+VVK32rISSdglBII7Tc+w
+ Y2rX6xvMLS9rN6hzY/xKhS1D8XANC4zpIFL/0lBjXdcJaVacXFAMuW1gHN4Mho568RLU
+ 4gZ5R5TNLjQVPWnlUaS2MM8gPYkYadrIAZfGV7c6P3hAfHKJbmndfDGmV5uEXx7lscUB
+ FS0oGRtRmYdL7833ctMJcBOsP0MDrJgWdxFECAx+foEjGOGJNGBU1cAIITeSBwHXiJKt
+ YfwFiyrAdmK8agB+4xsuvnPj0MKAEfmIGnucMxeOhkh11OEJSRtMfueFZWwGniazF0Eb
+ 5ZvA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1771506026; x=1772110826; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=6f/cv+8SseqLRrX0F+EZo+zHcoceiYv1Ox6pEsi36q4=;
+ b=qemoBINR3+UKDTPVas6bqCCLBSm5VAF/nR6E5sUBeyKAU2O3Y9cmXKp/jc0I8B3K2z
+ oPxKalXlOccE42WRtMrQj7Ct9VlIFDIwQyQkY8e4zWeIY9FJ9NnwN4UxCnUxX1bwZsia
+ rxGTLtufwWI6rqM5362/eLc61u6ohscE0cAlUPiX3lNzcurV+z1R/KH+TsDq3d3HjcTY
+ vQJOWubdStZIzQeeZn/7XukIawqxXab/5xLgaZYsdHNDHN4/pm+Aegv9w0SyL5JC/jsC
+ YID2pfAIBhN18b30qyapoOXktlMXFJUBoTO8lvL+XPSQt1CUVi1dtbSxQS4k4fJQ82uY
+ wn3g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1771506026; x=1772110826;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=6f/cv+8SseqLRrX0F+EZo+zHcoceiYv1Ox6pEsi36q4=;
+ b=NuO4/2corFDFoC3pO3zPwcwwbANIz3iqGm2TG5Byt1smvFXyD/JDWaohA0cNrbxvRG
+ wnvTBRg1fr0Bupn+DVcEtLOK+qT6mz4AsFf7Y+z1IMvMECt9zKAtxnxENCEF01Jb/h2k
+ +USZi2DKeLNcRA9KlUodofxqma/ydF0f3sMiqgJEw3dPPQBuNJ6f1JuPNlN8fUBZVV8e
+ lYEVoWf71LgVMrS8JbRkROSY7icfGYRUhKwK+ovcVUUwf+vBib28CRXPbIGUihruGfBL
+ +WZr+xQHgXhJTcuhB3SQmmCKuir2a7kW3f72vvFOFBLq0tHYCNUhvZx6OWYnEZJUMGXU
+ hhgg==
+X-Gm-Message-State: AOJu0Yx1PDnK1vzbPFqP6ATkW0orisNYUuF1qT/mkI6E09XSfxjGIhs/
+ 3+Qo86IIi5Ig+yqGuvPpqmqs9DoZwU3OZKoo9KZ4/1d7/Zenz0xb2Ma0GzzykPeQJEOGOMrGuLF
+ 6wwHpbpyPnjOZCIJf7xQby3uzZm8q4zAf9DI7gVBpxw==
+X-Gm-Gg: AZuq6aJLsgbZWn96Dr/O2y2DrB/zcWNHPOMTs3QoE3lon4HD/VYpDXn3XAkxMfLsMfl
+ 6/MwJ4YnySgavMgLtb8csE7qdJUXIiO31WIJ3fZsQHB+bRaeeabcok2OpLaR2rGGWfW//Z3szgk
+ oszznoBUiq5LzFsDagPZEZBobY6ChmmAf3kwAml0T7DVGcZuRMMle94RVJgwqfvMY2+5Uc9qbIl
+ 6M70jHSgxYA3Q95uijI/jAWGhLql2uCHVhBS8QSb2aqXdkSZy0EK8Y8SVq1Y/E+37IyBhf+C4DF
+ aW3Sqy4u/JNdOtwSTcKQKotan3hYKR7E0pUI8kzNiPyhxVdHC8MbJkoMwfOj34I20Sc=
+X-Received: by 2002:a05:690e:2545:b0:649:c7dd:d2ea with SMTP id
+ 956f58d0204a3-64c14b896f2mr14014752d50.39.1771506025538; Thu, 19 Feb 2026
+ 05:00:25 -0800 (PST)
 MIME-Version: 1.0
+References: <20260206131438.1857182-1-imammedo@redhat.com>
+ <20260206131438.1857182-9-imammedo@redhat.com>
+ <CAFEAcA_QO_Pm5qKy2xOer+VmyMZ6KZ1KdUpf_ETV9fQu4YmaHg@mail.gmail.com>
+ <20260219131751.4e4e4e0e@imammedo>
+In-Reply-To: <20260219131751.4e4e4e0e@imammedo>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 19 Feb 2026 13:00:13 +0000
+X-Gm-Features: AZwV_Qh7IKSBE9HvlvvZ4OpzeXRNav7wR-J006OU-6EbLgLx-VtnrgnHg12Levw
+Message-ID: <CAFEAcA-qaSRM9MJDk2nhDQKWoP7odcou2DXff-fuYPNEE=g6vg@mail.gmail.com>
+Subject: Re: [PATCH 08/11] arm: virt: create GWDT watchdog paired with WDAT
+ ACPI table
+To: Igor Mammedov <imammedo@redhat.com>
+Cc: qemu-devel@nongnu.org, mst@redhat.com, anisinha@redhat.com, 
+ pbonzini@redhat.com, shannon.zhaosl@gmail.com, philmd@linaro.org, 
+ zhao1.liu@intel.com, rad@semihalf.com, leif.lindholm@oss.qualcomm.com, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Importance: Medium
-User-Agent: Zoho Mail
-X-Mailer: Zoho Mail
-Received-SPF: pass client-ip=136.143.188.12; envelope-from=me@linux.beauty;
- helo=sender4-op-o12.zoho.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,142 +120,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Michael,
+On Thu, 19 Feb 2026 at 12:17, Igor Mammedov <imammedo@redhat.com> wrote:
+>
+> On Wed, 18 Feb 2026 19:08:36 +0000
+> Peter Maydell <peter.maydell@linaro.org> wrote:
 
- ---- On Wed, 04 Feb 2026 00:27:06 +0800  Michael S. Tsirkin <mst@redhat.co=
-m> wrote ---=20
- > On Thu, Dec 18, 2025 at 04:12:53PM +0100, Igor Mammedov wrote:
- > > On Fri, 12 Dec 2025 10:01:08 +0800
- > > Li Chen <me@linux.beauty> wrote:
- > >=20
- > > > Hi Michael,
- > > >=20
- > > >  ---- On Thu, 11 Dec 2025 21:10:18 +0800  Michael S. Tsirkin <mst@re=
-dhat.com> wrote ---=20
- > > >  > On Thu, Dec 11, 2025 at 06:20:25PM +0800, Li Chen wrote: =20
- > > >  > > From: Li Chen <chenl311@chinatelecom.cn>
- > > >  > >=20
- > > >  > > virt machines always instantiate a PL011/16550 UART at slot 0 a=
-nd describe
- > > >  > > it in ACPI (DSDT and optional SPCR table). When the command lin=
-e disables
- > > >  > > the serial backend (e.g. "-serial none"), the guest still sees =
-the UART as
- > > >  > > a preferred console even though it is not usable.
- > > >  > >=20
- > > >  > > Teach the virt ACPI code to omit the UART device and SPCR when =
-there is no
- > > >  > > serial backend attached. This matches the hardware that the gue=
-st can
- > > >  > > actually use and avoids confusing firmware or OS code that reli=
-es on SPCR.
- > > >  > >=20
- > > >  > > The bios-tables-test qtests rely on an ACPI UART node and SPCR =
-entry for
- > > >  > > UEFI-based virt machines. To keep those tests working we create=
- a UART
- > > >  > > with a "null" chardev backend instead. This preserves the ACPI =
-tables
- > > >  > > while discarding the firmware's serial output so it does not co=
-rrupt the
- > > >  > > TAP stdout stream.
- > > >  > >=20
- > > >  > > Suggested-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
- > > >  > > Signed-off-by: Li Chen <chenl311@chinatelecom.cn>
- > > >  > > Reviewed-by: Sunil V L <sunilvl@ventanamicro.com> =20
- > > >  >=20
- > > >  > This bothers me:
- > > >  > won't this mean number of serial devices changes silently?  So fo=
-r
- > > >  > example, if you install a guest, see that 1st serial device is br=
-oken,
- > > >  > configure it with 2nd one as a work around, now with your change =
-there
- > > >  > is no second one so guest will be broken?
- > > >  >=20
- > > >  >=20
- > > >  > I seems safer to have compat machinery around and avoid
- > > >  > changing this for old machine types. =20
- > > > =20
- > > > Thanks for pointing this out, you=E2=80=99re right that changing the=
- number of serial=20
- > > > devices that the guest sees is risky for existing machine types.
- > > >=20
- > > > For v7 I=E2=80=99m planning to take a more conservative approach and=
- only gate SPCR
- > > > on the presence of a backend for the primary UART, while  keeping th=
-e ACPI
- > > > UART devices in DSDT unchanged.=20
- > > > Concretely:
- > > > - virt ACPI DSDT will continue to unconditionally describe the UART(=
-s) as before,
- > > >    so the guest-visible UART topology doesn=E2=80=99t change for exi=
-sting virt-* machines.
- > > > - We only call spcr_setup() when there is a backend attached to UART=
-0 (e.g. serial_hd(0) !=3D NULL),
- > > >   so SPCR doesn=E2=80=99t point at a completely unusable console whe=
-n the user passes -serial none.
- > > >=20
- > > > In particular, for a command line like -serial none -serial pty, thi=
-s means SPCR would not be present
- > > > (rather than silently switching it to UART1/pty). My reasoning is th=
-at, for existing virt machines,
- > > > SPCR is meant to describe =E2=80=9Cthe board=E2=80=99s primary conso=
-le (UART0)=E2=80=9D, not =E2=80=9Cthe first UART that happens
- > > > to have a host backend=E2=80=9D, and changing that interpretation fe=
-els like it would need compat machinery
- > > > and a new machine type.
- > > >=20
- > > > The qtests already force -serial null for the UEFI-based virt tests,=
- so they will still exercise the SPCR path.
- > > >=20
- > > > Would this behaviour be acceptable for you, or would you prefer that=
- I go further and also add a compat
- > > > flag/new machine type where SPCR can follow =E2=80=9Cthe first UART =
-with a backend=E2=80=9D while old virt-* machines
- > > > keep the current UART/SPCR semantics?
- > >=20
- > >=20
- > > all described above looks complicated.
- > > In ACPI tables we usually try to avoid compat settings, and do them on=
-ly if we have to.
- > >=20
- > > So question is how guest enumerates serial ports when
- > >    '-nodefaults' is used _and_ there is a second serial port configure=
-d (is it even possible?)
- > > check it with and without you patch please, to see what difference the=
- patch makes.
- > >=20
- > > >=20
- > > > Regards,
- > > > Li=E2=80=8B
- > > >=20
- >=20
- > Looks like this got stuck.  I think what Igor and me are saying is, do
- > not rush to do compat, just test what happens and document. If guests
- > survive fine, then it's fine.
- >=20
- >=20
+> > Please can you also add support for exposing this device
+> > in the device tree ?
+>
+> It's possible,
+> but we probably should not enable it if acpi variant was requested,
+> to avoid confusion on guest side.
 
-I tested Igor's -nodefaults + second -serial case on aarch64 virt with
-UEFI pflash (ACPI enabled), both with and without the v6 patch. Without
-the patch, "-nodefaults -serial none" still generates a DSDT that
-contains COM0 and an SPCR table. Adding a second backend is also possible:
-"-nodefaults -serial none -serial null" generates COM0+COM1 in DSDT and
-SPCR is present.
+Why? Almost every other device on this board we advertise
+via DTB for device tree guests and via ACPI for ACPI guests.
+(The exceptions are things like the CXL handling that really
+only has an ACPI representation and can't be described in the DTB.)
 
-With the v6 patch applied, both command lines end up with no COMx nodes
-in DSDT and no SPCR, because the DSDT UART nodes are gated on
-serial_hd(0). So the v6 approach does change the guest-visible UART
-enumeration/topology in this setup.
+> For Windows it doesn't really mater, for linux it does.
+> on x86 linux guest uses a quirk to disable native iTCO watchdog
+> in favor of WDAT one if later is present.
+> I assume quirk is not desirable so we should expose only a preferred
+> variant.
 
-For v7 I'm planning to keep the DSDT UART description unchanged and only
-suppress SPCR when UART0 has no backend (serial_hd(0) =3D=3D NULL), so we d=
-o
-not advertise an unusable SPCR console without changing hardware
-enumeration.
+For this Arm board there is no watchdog except the one you're
+adding in this patch, though.
 
-Regards,
-Li=E2=80=8B
+> > Can we have a command line option name that isn't ACPI
+> > specific, please? There's nothing inherent to ACPI about
+> > "I would like a watchdog device".
+>
+> that is specifically asking for ACPI flavor being used/configured.
+> acpi specific option conflates 2 things:
+>    1. watchdog device creation (of the board choice) with properties tuned for WDAT usage
+>    2. how to expose it on firmware level (in this case ACPI WDAT table)
 
+Right, and I think that's the wrong way to approach this,
+at least for the virt board. We should either always create
+or allow the user to ask us to create a watchdog device.
+And then we should do what we do for all the other devices,
+which is expose it via both the mechanisms that we have
+for telling the guest about hardware (ACPI and DTB).
+
+thanks
+-- PMM
 
