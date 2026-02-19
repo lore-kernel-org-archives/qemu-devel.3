@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07202E9A04D
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 14:35:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94552E9A048
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 14:36:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vt57N-0000Ez-74; Thu, 19 Feb 2026 09:35:01 -0500
+	id 1vt57i-0000Ox-LV; Thu, 19 Feb 2026 09:35:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ruslichenko.r@gmail.com>)
- id 1vt57M-0000Eb-Hf
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 09:35:00 -0500
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ id 1vt57c-0000Mr-Jv
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 09:35:19 -0500
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <ruslichenko.r@gmail.com>)
- id 1vt57K-00031M-He
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 09:35:00 -0500
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-4376de3f128so694051f8f.0
- for <qemu-devel@nongnu.org>; Thu, 19 Feb 2026 06:34:58 -0800 (PST)
+ id 1vt57N-000324-BR
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 09:35:03 -0500
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-4362c635319so966912f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 19 Feb 2026 06:35:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1771511697; x=1772116497; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1771511699; x=1772116499; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=52LpKx5PjCvsBbUvDEQ/GR7vrZlvEyVnyZodnShE5dU=;
- b=Cj9JFUwZR4iAzbIIJGo0u+wbeIBEWQAp6vYA/xqn3+gBb5qqgqzn66gWUcnWn6y3X6
- 8ZJPED6LsFhsFH9C+DJzfupuRNMU4LbyLfanhwjccvwq1NxWH3DPx+Orisg643QBZToR
- dC6ymGAqVQOAfLaoSIGfcQtykydhrmwBNXCs4mbLHfiC1pci7PoThsEBuIm/oYEXPOgp
- t2PMTg+FsdvlfKlKaRsC7zwxEYwzgWHwRhos6TZirp0+AQNG5G0z8mr8H8nqXEZcW28w
- Z+Q6HF+2zDzqx3OIgDkgwL4u8WLDtMvsJq37lRUCbOL6mLcpFz5ZU/sPSStQHsZWS2NB
- JmTg==
+ bh=kBtU3uaEPwuPpRBvsvyPYMG98mE7sqDUzmaB8W9wpLg=;
+ b=IfoByRr/u5+unoFB/JOLfdTKk7IJmgkVx0Ag5eRE40zyk499SUVaRX8F21BccADkEi
+ TT+mIc4MIVesQp5eU8h6ay2U8hzueZGYVzV4r0DQlg1VymQnbucWkGpT+JR9Ygj1SK/K
+ 6liKALA5oELBCh+lLF9Jx7Spaj5xtKQTdeTlDssRV+y63hD84bKE37GW48kD6hy+63E8
+ kjDGtgdi/9bjBJx2D1XVV9HNHyfBdyMsoL93cdjzGLSxAL7YWnX5N7pObTho+2ECxsJY
+ Yv3vv5Duejgs7Sa6F+vpHmhkDq7jJhrQAYfysNvXLRaAI3xJciaL+VuKcePQ2zUE8suB
+ UIuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771511697; x=1772116497;
+ d=1e100.net; s=20230601; t=1771511699; x=1772116499;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=52LpKx5PjCvsBbUvDEQ/GR7vrZlvEyVnyZodnShE5dU=;
- b=V1P84oMu6oh1WRxn16XLgRzvogZJlfXtdOnOCCgDx+UBFclvDE+2kV3pzF3wGzqPgd
- 3AIN70smX6OIz+WLktglPgJP2hEYrBmVLK8uGAHzTmNk5XZofmH+JTsV/fkr5C4xxgGM
- qyCwIb9WZScgmG8VuPpOdJKsoV1wlM7qV8HxctIft6V7avUS18tldGIRPMAgv5V+01C/
- lWURCzYaMxtKeuaJoK42+xN8e9yFibvTYUPEt5hJnJHd0+Vtg5oZT/Eq6qatFjYS7pGI
- Nk5QLFlWA4Q9UK+Db+9WoCb+fUQ1FZlyWRFL1pD+VPA/794gHwDgWY4Uc2zc/Mj75ObC
- oh6A==
-X-Gm-Message-State: AOJu0YyBrrZjX0b2H1Bn5leUeIpD07euLZfudyRkI1sQaZpwimvMF4O+
- DoXvCEPfRfZPmOVs7pg0iq0Z1GiRgi8+iYoYE+JeGvSuz8VZKvUEUnDnDdNps7TI
-X-Gm-Gg: AZuq6aIa6qrMh/8X/CwTbL5yQrDbheJRUApDKCNP01osFhhV6qPZ2Izpk5dvn71emPn
- Gi4Dt/0+47PaSeaUSIdOUCIrAjp7X/sbfmp2fsHgSH1RlSlxupyvpscdgXiv9ZcjHdd3S1zZETI
- pXU6sGnw+lc0NBJ4OGQs9UwRRsRKhamOGwAlQrwjG+TDEQl/S3HXXc0xIMJBIhBksfqy3iNhOYp
- b+EjEbR+d/R8958+MVXU08Cj902WeFt5Gqxcic0P6pULgaRW8ASOmyJUYows2OHKe6W90xH8GUY
- 2pfmIN5YmW5nD1YIoOnrl52y4cT8XAiVIIlpqjd5Xew54bif5euHF5AZP4LB+jiDp3t/trCLeHp
- GG0uVyFkD7kZCyHXys08Tkkt7J29hLfJAH+195OtAI0nvNXX2QrJcBBKih7JTvCsIS+AiRn1smK
- 9vtEN+SlhNoq4gV8D6Mv70/gDMp+Bp/j9SGDkwpbDG5Phrggouc1DdPHDLP6ILEumWGp20
-X-Received: by 2002:a05:6000:1a8a:b0:437:6bcd:77f9 with SMTP id
- ffacd0b85a97d-4379db98640mr31342797f8f.40.1771511696540; 
- Thu, 19 Feb 2026 06:34:56 -0800 (PST)
+ bh=kBtU3uaEPwuPpRBvsvyPYMG98mE7sqDUzmaB8W9wpLg=;
+ b=P2SdNYY6Lh6mdDr6T1eZzcHvaZUzVFWEO2O+VapBHvkdMQCej9EgBFT7GnRRGX5hj/
+ X4L8OeEOn+3QnyfX3jzzIbnxOKwKuccb+OAAdgbaB/fBBgaCJqvhk3Dog/SeBcZS/PJ1
+ F++ij2W6HU8aMHGEh6sKZR5CTlyN1A//t70oZzaluApBWfcqNr0ysturPj/Wk87epmDD
+ C9R6LdRKq6n2+9Ul7Sdz+/TIXTD2PpYQ/gkWoGW/Pnt+zkkTLcY3C8qPgNrSvDhOko/z
+ viVZDRXvdJrKda/8RYxVWWQRAvBtkxH5+bW/HLgEosnZHHAsuP3IBAa2pPlUmSCLA8qH
+ 1w9w==
+X-Gm-Message-State: AOJu0Yw75xv9o+6Qqq8h+Clgxb5kp1ORBTx+wILh9sjkSef10fwIHptW
+ O7zItlq4FB290FdmXDDlz5Onr1fmJ1VjyzWWkGZPPDfPkRzKM4ycoeSzu5QSwkUu
+X-Gm-Gg: AZuq6aJx86njk0lpO4Q9ekkZdPCPcd68x6CN1UUIcGng9VoRq3hMxmbkFJn+G8aGNCG
+ 3F2mAR46LJBPLzXFn0UvHurS8Ffy2S0bGzP2LAdpBWYTaL8b0yDYOEluEFJrjfi+sypOv4qDU0d
+ 9RJle3LO+U17HBvv2gRr4ypxowU3kuVLMEVg75+3VdQQX13pd8HSe3p+J0fC3o1tN4lyZeJFzTT
+ 1YuldpNZA7jQxXL+9sxxG2WEXzDHsI/Domt5Si8lRp9yapue01xcUIkbjJBeNC8i0qWcliZ0NgR
+ saZQ53r8Kdhl2szTyKzInzJFIcP6gHCmWpqRIuZIJO+zP0daJ+H6DQqldLItUChA7AoM39gM9My
+ aHhuVM2YUtHHUPLEyRKc+JDAuxT8dBVhhR6deMe+5zxJq4WiNup7efg8S1bLtAetw+j+gaoHm1v
+ fWOTuaddD4ohl9LdZyIs2gZAAsJUPQPrFtnyUBwmPOX9SZ9cxHj5varSZUSFY/RGpri/GZ
+X-Received: by 2002:a05:6000:2f86:b0:437:722d:5c6b with SMTP id
+ ffacd0b85a97d-43958df34bbmr8901419f8f.9.1771511699392; 
+ Thu, 19 Feb 2026 06:34:59 -0800 (PST)
 Received: from thinkpad-t470s.. (93-143-129-182.adsl.net.t-com.hr.
  [93.143.129.182]) by smtp.googlemail.com with ESMTPSA id
- ffacd0b85a97d-43796abd259sm52022770f8f.24.2026.02.19.06.34.55
+ ffacd0b85a97d-43796abd259sm52022770f8f.24.2026.02.19.06.34.58
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 19 Feb 2026 06:34:55 -0800 (PST)
+ Thu, 19 Feb 2026 06:34:58 -0800 (PST)
 From: Ruslan Ruslichenko <ruslichenko.r@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, alex.bennee@linaro.org, peter.maydell@linaro.org,
@@ -71,17 +71,16 @@ Cc: qemu-arm@nongnu.org, alex.bennee@linaro.org, peter.maydell@linaro.org,
  takahiro.nakata.wr@renesas.com,
  "Edgar E . Iglesias" <edgar.iglesias@gmail.com>,
  Ruslan_Ruslichenko@epam.com, balaton@eik.bme.hu
-Subject: [PATCH v2 14/33] hw/core/fdt_generic_util: implement
- fdt_get_irq/_info API
-Date: Thu, 19 Feb 2026 15:33:13 +0100
-Message-ID: <20260219143332.3316679-15-ruslichenko.r@gmail.com>
+Subject: [PATCH v2 16/33] hw/core/fdt_generic_util: Connect device irqs
+Date: Thu, 19 Feb 2026 15:33:15 +0100
+Message-ID: <20260219143332.3316679-17-ruslichenko.r@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260219143332.3316679-1-ruslichenko.r@gmail.com>
 References: <20260219143332.3316679-1-ruslichenko.r@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=ruslichenko.r@gmail.com; helo=mail-wr1-x432.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=ruslichenko.r@gmail.com; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,331 +105,244 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
 
-Both interfaces may be used by devices to get IRQ information
-based device tree entry.
-Both methods will identify interrupt parent for a device and
-retrieve irq entry.
+The patch implements IRQ wiring logic for fdt created
+devices.
+
+The wiring performed in two stages. As devices are
+created, their IRQs saved in the list.
+After all devices processed, fdt_init_all_irqs() goes
+through all IRQs and does actual wiring. For IRQs
+which have multiple source, shared IRQ handler
+allocated.
+
+For interrupt controllers with auto_parent callback
+implemented and their fdt node has 'interrupt and
+'interrupts-extended' properties empty,
+the auto_parent() will be called to connect them
+to their interrupt-parent, for example to CPUs.
 
 Signed-off-by: Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
 ---
- hw/core/fdt_generic_util.c         | 267 +++++++++++++++++++++++++++++
- include/hw/core/fdt_generic_util.h |  18 ++
- 2 files changed, 285 insertions(+)
+ hw/core/fdt_generic_util.c    | 154 ++++++++++++++++++++++++++++++++++
+ include/hw/core/fdt_generic.h |  12 +++
+ 2 files changed, 166 insertions(+)
 
 diff --git a/hw/core/fdt_generic_util.c b/hw/core/fdt_generic_util.c
-index d1465eafc1..dcacc5033b 100644
+index 838ed9a85c..63390e2f17 100644
 --- a/hw/core/fdt_generic_util.c
 +++ b/hw/core/fdt_generic_util.c
-@@ -70,6 +70,11 @@ static int fdt_generic_num_cpus;
+@@ -75,6 +75,88 @@ static void fdt_get_irq_info_from_intc(FDTMachineInfo *fdti, qemu_irq *ret,
+                                        uint32_t *cells, uint32_t num_cells,
+                                        uint32_t max, Error **errp);
  
- static int simple_bus_fdt_init(char *bus_node_path, FDTMachineInfo *fdti);
- 
-+static void fdt_get_irq_info_from_intc(FDTMachineInfo *fdti, qemu_irq *ret,
-+                                       char *intc_node_path,
-+                                       uint32_t *cells, uint32_t num_cells,
-+                                       uint32_t max, Error **errp);
++typedef struct QEMUIRQSharedState {
++    qemu_irq sink;
++    int num;
++    bool (*merge_fn)(bool *, int);
++/* FIXME: remove artificial limit */
++#define MAX_IRQ_SHARED_INPUTS 256
++    bool inputs[MAX_IRQ_SHARED_INPUTS];
++} QEMUIRQSharedState;
++
++static bool qemu_irq_shared_or_handler(bool *inputs, int n)
++{
++    int i;
++
++    assert(n < MAX_IRQ_SHARED_INPUTS);
++
++    for (i = 0; i < n; ++i) {
++        if (inputs[i]) {
++            return true;
++        }
++    }
++    return false;
++}
++
++static void qemu_irq_shared_handler(void *opaque, int n, int level)
++{
++    QEMUIRQSharedState *s = opaque;
++
++    assert(n < MAX_IRQ_SHARED_INPUTS);
++    s->inputs[n] = level;
++    qemu_set_irq(s->sink, s->merge_fn(s->inputs, s->num));
++}
++
++static void fdt_init_all_irqs(FDTMachineInfo *fdti)
++{
++    while (fdti->irqs) {
++        FDTIRQConnection *first = fdti->irqs;
++        qemu_irq sink = first->irq;
++        bool (*merge_fn)(bool *, int) = first->merge_fn;
++        int num_sources = 0;
++        FDTIRQConnection *irq;
++
++        for (irq = first; irq; irq = irq->next) {
++            if (irq->irq == sink) { /* Same sink */
++                num_sources++;
++            }
++        }
++        if (num_sources > 1) {
++            QEMUIRQSharedState *s = g_malloc0(sizeof *s);
++            s->sink = sink;
++            s->merge_fn = merge_fn;
++            qemu_irq *sources = qemu_allocate_irqs(qemu_irq_shared_handler, s,
++                                                   num_sources);
++            for (irq = first; irq; irq = irq->next) {
++                if (irq->irq == sink) {
++                    char *shared_irq_name = g_strdup_printf("shared-irq-%p",
++                                                            *sources);
++
++                    if (irq->merge_fn != merge_fn) {
++                        fprintf(stderr, "ERROR: inconsistent IRQ merge fns\n");
++                        exit(1);
++                    }
++
++                    object_property_add_child(OBJECT(irq->dev), shared_irq_name,
++                                              OBJECT(*sources));
++                    g_free(shared_irq_name);
++                    irq->irq = *(sources++);
++                    s->num++;
++                }
++            }
++        }
++        DB_PRINT(0, "%s: connected to %s irq line %d (%s)\n",
++                 first->sink_info ? first->sink_info : "",
++                 object_get_canonical_path(OBJECT(first->dev)),
++                 first->i, first->name ? first->name : "");
++
++        qdev_connect_gpio_out_named(DEVICE(first->dev), first->name, first->i,
++                                    first->irq);
++        fdti->irqs = first->next;
++        g_free(first);
++    }
++}
 +
  FDTMachineInfo *fdt_generic_create_machine(void *fdt, qemu_irq *cpu_irq)
  {
      char node_path[DT_PATH_LENGTH];
-@@ -241,6 +246,268 @@ static int simple_bus_fdt_init(char *node_path, FDTMachineInfo *fdti)
-     return 0;
+@@ -90,6 +172,7 @@ FDTMachineInfo *fdt_generic_create_machine(void *fdt, qemu_irq *cpu_irq)
+         while (qemu_co_enter_next(fdti->cq, NULL)) {
+             ;
+         }
++        fdt_init_all_irqs(fdti);
+         memory_region_transaction_commit();
+     } else {
+         fprintf(stderr, "FDT: ERROR: cannot get root node from device tree %s\n"
+@@ -958,6 +1041,75 @@ exit_reg_parse:
+     return;
  }
  
-+static void fdt_get_irq_info_from_intc(FDTMachineInfo *fdti, qemu_irq *ret,
-+                                       char *intc_node_path,
-+                                       uint32_t *cells, uint32_t num_cells,
-+                                       uint32_t max, Error **errp)
++static void fdt_parse_node_irq_prop(FDTMachineInfo *fdti, char *node_path,
++                            Object *dev)
 +{
-+    FDTGenericIntcClass *intc_fdt_class;
-+    DeviceState *intc;
++    int is_intc;
++    int i, j;
 +
-+    while (!fdt_init_has_opaque(fdti, intc_node_path) &&
-+           qemu_in_coroutine()) {
-+        fdt_init_yield(fdti);
-+    }
-+    intc = DEVICE(fdt_init_get_opaque(fdti, intc_node_path));
-+
-+    if (!intc) {
-+        goto fail;
++    if (!object_dynamic_cast(dev, TYPE_SYS_BUS_DEVICE)) {
++        return;
 +    }
 +
-+    while (!intc->realized && qemu_in_coroutine()) {
-+        fdt_init_yield(fdti);
-+    }
-+
-+    if (!intc->realized) {
-+        goto fail;
-+    }
-+
-+    intc_fdt_class = FDT_GENERIC_INTC_GET_CLASS(intc);
-+    if (!intc_fdt_class) {
-+        goto fail;
-+    }
-+
-+    intc_fdt_class->get_irq(FDT_GENERIC_INTC(intc), ret, cells, num_cells,
-+                            max, errp);
-+
-+    return;
-+fail:
-+    error_setg(errp, "%s", __func__);
-+}
-+
-+static uint32_t imap_cache[32 * 1024];
-+static bool imap_cached;
-+
-+qemu_irq *fdt_get_irq_info(FDTMachineInfo *fdti, char *node_path, int irq_idx,
-+                          char *info, bool *map_mode) {
-+    void *fdt = fdti->fdt;
-+    uint32_t intc_phandle, intc_cells, cells[32];
-+    char intc_node_path[DT_PATH_LENGTH];
-+    qemu_irq *ret = NULL;
-+    int i;
-+    Error *errp = NULL;
-+
-+    intc_phandle = qemu_fdt_getprop_cell_inherited(fdt, node_path,
-+                                                   "interrupt-parent",
-+                                                   0, &errp);
-+    if (errp) {
-+        errp = NULL;
-+        intc_cells = qemu_fdt_getprop_cell_inherited(fdt, node_path,
-+                                           "#interrupt-cells", 0, &errp);
-+        *map_mode = true;
-+    } else {
-+        if (qemu_devtree_get_node_by_phandle(fdt, intc_node_path,
-+                                             intc_phandle)) {
-+            goto fail;
-+        }
-+
-+        /* Check if the device is using interrupt-maps */
-+        qemu_fdt_getprop_cell(fdt, node_path, "interrupt-map-mask", 0,
-+                              &errp);
-+        if (!errp) {
-+            errp = NULL;
-+            intc_cells = qemu_fdt_getprop_cell_inherited(fdt, node_path,
-+                                               "#interrupt-cells", 0,
-+                                               &errp);
-+            *map_mode = true;
-+        } else {
-+            errp = NULL;
-+            intc_cells = qemu_fdt_getprop_cell_inherited(fdt, intc_node_path,
-+                                               "#interrupt-cells", 0,
-+                                               &errp);
-+            *map_mode = false;
-+        }
-+    }
-+
-+    if (errp) {
-+        goto fail;
-+    }
-+
-+    DB_PRINT_NP(2, "%s intc_phandle: %d\n", node_path, intc_phandle);
-+
-+    for (i = 0; i < intc_cells; ++i) {
-+        cells[i] = qemu_fdt_getprop_cell(fdt, node_path, "interrupts",
-+                                        intc_cells * irq_idx + i, &errp);
-+        if (errp) {
-+            goto fail;
-+        }
-+    }
-+
-+    if (*map_mode) {
-+        int k;
-+        ret = g_new0(qemu_irq, 1);
-+        int num_matches = 0;
++    {
 +        int len;
-+        g_autofree uint32_t *imap_mask = g_new(uint32_t, intc_cells);
-+        const uint32_t *prop;
-+        uint32_t *imap;
-+        bool use_parent = false;
-+
-+        for (k = 0; k < intc_cells; ++k) {
-+            imap_mask[k] = qemu_fdt_getprop_cell_inherited(fdt, node_path,
-+                                                 "interrupt-map-mask", k + 2,
-+                                                 &errp);
-+            if (errp) {
-+                goto fail;
-+            }
-+        }
-+
-+        /* Check if the device has an interrupt-map property */
-+        prop = qemu_fdt_getprop(fdt, node_path, "interrupt-map", &len,
-+                                  &errp);
-+        imap = g_memdup2(prop, len);
-+        if (!imap || errp) {
-+            /*
-+             * If the device doesn't have an interrupt-map, try again with
-+             * inheritance. This will return the parents interrupt-map
-+             */
-+            use_parent = true;
-+            errp = NULL;
-+
-+            prop = qemu_fdt_getprop_inherited(fdt, node_path, "interrupt-map",
-+                                      &len, &errp);
-+            if (!imap_cached) {
-+                memcpy(imap_cache, prop, len);
-+                imap_cached = true;
-+            }
-+            imap = imap_cache;
-+
-+            if (errp) {
-+                goto fail;
-+            }
-+        }
-+
-+        len /= sizeof(uint32_t);
-+
-+        i = 0;
-+        assert(imap);
-+        while (i < len) {
-+            if (!use_parent) {
-+                /*
-+                 * Only re-sync the interrupt-map when the device has it's
-+                 * own map, to save time.
-+                 */
-+                prop = qemu_fdt_getprop(fdt, node_path, "interrupt-map", &len,
-+                                          &errp);
-+                if (imap != imap_cache) {
-+                    g_free(imap);
-+                }
-+                imap = g_memdup2(prop, len);
-+                if (errp) {
-+                    goto fail;
-+                }
-+
-+                len /= sizeof(uint32_t);
-+            }
-+
-+            bool match = true;
-+            uint32_t new_intc_cells, new_cells[32];
-+            i++; i++; /* FIXME: do address cells properly */
-+            for (k = 0; k < intc_cells; ++k) {
-+                uint32_t  map_val = be32_to_cpu(imap[i++]);
-+                if ((cells[k] ^ map_val) & imap_mask[k]) {
-+                    match = false;
-+                }
-+            }
-+            /*
-+             * when caching, we hackishly store the number of cells for
-+             * the parent in the MSB. +1, so zero MSB means non cachd
-+             * and the full lookup is needed.
-+             */
-+            intc_phandle = be32_to_cpu(imap[i++]);
-+            if (intc_phandle & (0xffu << 24)) {
-+                new_intc_cells = (intc_phandle >> 24) - 1;
++        fdt_get_property(fdti->fdt, fdt_path_offset(fdti->fdt, node_path),
++                                "interrupt-controller", &len);
++        is_intc = len >= 0;
++        DB_PRINT_NP(is_intc ? 0 : 1, "is interrupt controller: %c\n",
++                    is_intc ? 'y' : 'n');
++    }
++    /* connect irq */
++    j = 0;
++    for (i = 0;; i++) {
++        char irq_info[6 * 1024];
++        char *irq_info_p = irq_info;
++        bool map_mode;
++        int len = -1;
++        qemu_irq *irqs = fdt_get_irq_info(fdti, node_path, i, irq_info,
++                                            &map_mode);
++        /* INTCs inferr their top level, if no IRQ connection specified */
++        fdt_get_property(fdti->fdt, fdt_path_offset(fdti->fdt, node_path),
++                            "interrupts-extended", &len);
++        if (!irqs && is_intc && i == 0 && len <= 0) {
++            FDTGenericIntc *id = (FDTGenericIntc *)object_dynamic_cast(
++                                    dev, TYPE_FDT_GENERIC_INTC);
++            FDTGenericIntcClass *idc = FDT_GENERIC_INTC_GET_CLASS(id);
++            if (id && idc->auto_parent) {
++                Error *err = NULL;
++                idc->auto_parent(id, &err);
 +            } else {
-+                if (qemu_devtree_get_node_by_phandle(fdt, intc_node_path,
-+                                                     intc_phandle)) {
-+                    goto fail;
-+                }
-+                new_intc_cells = qemu_fdt_getprop_cell(fdt, intc_node_path,
-+                                                       "#interrupt-cells", 0,
-+                                                       &errp);
-+                imap[i - 1] = cpu_to_be32(intc_phandle |
-+                                            (new_intc_cells + 1) << 24);
-+                if (errp) {
-+                    goto fail;
-+                }
-+            }
-+            for (k = 0; k < new_intc_cells; ++k) {
-+                new_cells[k] = be32_to_cpu(imap[i++]);
-+            }
-+            if (match) {
-+                num_matches++;
-+                ret = g_renew(qemu_irq, ret, num_matches + 1);
-+                if (intc_phandle & (0xffu << 24)) {
-+                    if (qemu_devtree_get_node_by_phandle(fdt, intc_node_path,
-+                                                         intc_phandle &
-+                                                         ((1 << 24) - 1))) {
-+                        goto fail;
-+                    }
-+                }
-+
-+                DB_PRINT_NP(2, "Getting IRQ information: %s -> 0x%x (%s)\n",
-+                            node_path, intc_phandle, intc_node_path);
-+
-+                memset(&ret[num_matches], 0, sizeof(*ret));
-+                fdt_get_irq_info_from_intc(fdti, &ret[num_matches - 1],
-+                                           intc_node_path, new_cells,
-+                                           new_intc_cells, 1, NULL);
-+                if (info) {
-+                    sprintf(info, "%s", intc_node_path);
-+                    info += strlen(info) + 1;
-+                }
++                irqs = fdti->irq_base;
 +            }
 +        }
-+
-+        if (imap != imap_cache) {
-+            g_free(imap);
++        if (!irqs) {
++            break;
 +        }
-+        return ret;
++        while (*irqs) {
++            FDTIRQConnection *irq = g_new0(FDTIRQConnection, 1);
++            *irq = (FDTIRQConnection) {
++                .dev = DEVICE(dev),
++                .name = SYSBUS_DEVICE_GPIO_IRQ,
++                .merge_fn = qemu_irq_shared_or_handler,
++                .i = j,
++                .irq = *irqs,
++                .sink_info = g_strdup(irq_info_p),
++                .next = fdti->irqs
++            };
++            if (!map_mode) {
++                j++;
++            } else {
++                irq_info_p += strlen(irq_info_p) + 1;
++            }
++            fdti->irqs = irq;
++            irqs++;
++        }
++        if (map_mode) {
++            j++;
++        }
 +    }
-+
-+    DB_PRINT_NP(2, "Getting IRQ information: %s -> %s\n",
-+                node_path, intc_node_path);
-+
-+    ret = g_new0(qemu_irq, fdt_generic_num_cpus + 2);
-+    fdt_get_irq_info_from_intc(fdti, ret, intc_node_path, cells, intc_cells,
-+                               fdt_generic_num_cpus, &errp);
-+
-+    if (errp) {
-+        goto fail;
-+    }
-+
-+    /* FIXME: Phase out this info bussiness */
-+    if (info) {
-+        sprintf(info, "%s", intc_node_path);
-+    }
-+
-+    return ret;
-+
-+fail:
-+    if (errp) {
-+        sprintf(info, "%s", error_get_pretty(errp));
-+    } else {
-+        sprintf(info, "(none)");
-+    }
-+    return NULL;
 +}
 +
-+qemu_irq *fdt_get_irq(FDTMachineInfo *fdti, char *node_path, int irq_idx,
-+                      bool *map_mode)
-+{
-+    return fdt_get_irq_info(fdti, node_path, irq_idx, NULL, map_mode);
-+}
-+
- /* FIXME: figure out a real solution to this */
+ static int fdt_init_qdev(char *node_path, FDTMachineInfo *fdti, char *compat)
+ {
+     Object *dev, *parent;
+@@ -1101,6 +1253,8 @@ static int fdt_init_qdev(char *node_path, FDTMachineInfo *fdti, char *compat)
  
- #define DIGIT(a) ((a) >= '0' && (a) <= '9')
-diff --git a/include/hw/core/fdt_generic_util.h b/include/hw/core/fdt_generic_util.h
-index c5aaa58dd6..dfc9fa3632 100644
---- a/include/hw/core/fdt_generic_util.h
-+++ b/include/hw/core/fdt_generic_util.h
-@@ -16,6 +16,24 @@
+     fdt_parse_node_reg_prop(fdti, node_path, dev);
  
- FDTMachineInfo *fdt_generic_create_machine(void *fdt, qemu_irq *cpu_irq);
++    fdt_parse_node_irq_prop(fdti, node_path, dev);
++
+     g_free(dev_type);
+     g_free(props);
  
-+/*
-+ * get an irq for a device. The interrupt parent of a device is idenitified
-+ * and the specified irq (by the interrupts device-tree property) is retrieved
-+ */
-+
-+qemu_irq *fdt_get_irq(FDTMachineInfo *fdti, char *node_path, int irq_idx,
-+                      bool *map_mode);
-+
-+/*
-+ * same as above, but poulates err with non-zero if something goes wrong, and
-+ * populates info with a human readable string giving some basic information
-+ * about the interrupt connection found (or not found). Both arguments are
-+ * optional (i.e. can be NULL)
-+ */
-+
-+qemu_irq *fdt_get_irq_info(FDTMachineInfo *fdti, char *node_path, int irq_idx,
-+                           char *info, bool *map_mode);
-+
- #define TYPE_FDT_GENERIC_INTC "fdt-generic-intc"
+diff --git a/include/hw/core/fdt_generic.h b/include/hw/core/fdt_generic.h
+index 46b7dc084b..ad9e249156 100644
+--- a/include/hw/core/fdt_generic.h
++++ b/include/hw/core/fdt_generic.h
+@@ -24,6 +24,16 @@ typedef struct FDTCPUCluster {
+     bool user;
+ } FDTCPUCluster;
  
- #define FDT_GENERIC_INTC_CLASS(klass) \
++typedef struct FDTIRQConnection {
++    DeviceState *dev;
++    const char *name;
++    int i;
++    bool (*merge_fn)(bool *, int);
++    qemu_irq irq;
++    char *sink_info; /* Debug only */
++    void *next;
++} FDTIRQConnection;
++
+ typedef struct FDTMachineInfo {
+     /* the fdt blob */
+     void *fdt;
+@@ -33,6 +43,8 @@ typedef struct FDTMachineInfo {
+     FDTDevOpaque *dev_opaques;
+     /* recheck coroutine queue */
+     CoQueue *cq;
++    /* list of all IRQ connections */
++    FDTIRQConnection *irqs;
+     /* list of all CPU clusters */
+     FDTCPUCluster *clusters;
+ } FDTMachineInfo;
 -- 
 2.43.0
 
