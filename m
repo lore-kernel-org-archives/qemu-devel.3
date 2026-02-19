@@ -4,42 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E92FE9A048
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 12:11:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20DE4E9A048
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 12:12:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vt2rs-0002Uq-Qz; Thu, 19 Feb 2026 07:10:52 -0500
+	id 1vt2sg-00034Q-0p; Thu, 19 Feb 2026 07:11:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vt2rq-0002UI-2A
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 07:10:50 -0500
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vt2sb-000325-Sb
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 07:11:38 -0500
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vt2rn-0001qf-BN
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 07:10:49 -0500
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vt2sX-00022a-Cu
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 07:11:34 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject
  :Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=VKcZw4shJXaD3sECAVsM48iYTgcRMa3oDUvt25bGHY8=; b=Be+YDOuGo3ZYsYD
- n43Ds4bRqiW2xtFwI4f6PKf4Qkpnek2XU0cX7U3AqpNg0zl2SPLexDEUXRcSnMTK6lqwJpg9lktOr
- NbrZbSCqZF8/fc18eXyoDe53O6K5pwH4mL2bqJ0RZ+S8HTKVBYti/jaUO7eEvy0wWLrNriXqDhT+W
- G4=;
-Date: Thu, 19 Feb 2026 13:14:20 +0100
+ List-Help; bh=GFrWxH5OEo/gKSHj3RjiYKvQnbhJ9FS6qkEUWbaM748=; b=MBTqvBTWn/GqDhN
+ PChYFcDy7vsPtg36DLTh32i2EL9jmEC3jnfkXaHmqfKUrtXlf1kB+P0yHG88Eh6Ux0kUWfqZY7Cvw
+ ONPZTbE2okO/nCj7Hzno4A7Jex8jZH7WqJCwJt5xttsCTb4vSGHOAWwlQusulOLNJRB1s+4VF7oNb
+ zk=;
+Date: Thu, 19 Feb 2026 13:15:08 +0100
 To: deller@kernel.org
 Cc: Richard Henderson <richard.henderson@linaro.org>, 
  qemu-devel@nongnu.org, Helge Deller <deller@gmx.de>
-Subject: Re: [PATCH 1/4] hw/hppa: Add BMC on 64-bit machines only
-Message-ID: <aZb-gJgA9fHFrqc7@hive.localdomain>
+Subject: Re: [PATCH 2/4] target/hppa: Update SeaBIOS-hppa to version 22
+Message-ID: <aZb-q1ZALp2x_rVr@hive.localdomain>
 References: <20260218201221.20958-1-deller@kernel.org>
- <20260218201221.20958-2-deller@kernel.org>
+ <20260218201221.20958-3-deller@kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260218201221.20958-2-deller@kernel.org>
+In-Reply-To: <20260218201221.20958-3-deller@kernel.org>
 Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
  helo=rev.ng
 X-Spam_score_int: -20
@@ -69,34 +69,19 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 18/02/26, deller@kernel.org wrote:
 > From: Helge Deller <deller@gmx.de>
 > 
-> Prevent adding the BMC with it's serial ports on 32-bit machines, even
-> if they have a PCI bus like the B160L. This fixes boot problems with
-> HP-UX on B160L.
+> The new firmware includes support for an A400-44 machine
+> with initial functional 64-bit PAT PDC support:
+> - Linux 64-bit kernel runs nicely.
+> - ODE 2006 works nicely on 715, B160L, and A400, but has problems on C3700.
+> - MPE and 64-bit HP-UX11 need more work, although HP-UX11 boot up to a crash
+>   where it reports where it had problems.
 > 
 > Signed-off-by: Helge Deller <deller@gmx.de>
-> Fixes: 557bc5260cfd ("hw/hppa: PCI devices depend on availability of PCI bus")
-> Cc: qemu-stable@nongnu.org
 > ---
->  hw/hppa/machine.c | 2 ++
->  1 file changed, 2 insertions(+)
-> 
-> diff --git a/hw/hppa/machine.c b/hw/hppa/machine.c
-> index c3680667ae..d6aeb793c0 100644
-> --- a/hw/hppa/machine.c
-> +++ b/hw/hppa/machine.c
-> @@ -376,7 +376,9 @@ static void machine_HP_common_init_tail(MachineState *machine, PCIBus *pci_bus,
->  
->      if (pci_bus) {
->          pci_init_nic_devices(pci_bus, mc->default_nic);
-> +    }
->  
-> +    if (pci_bus && hppa_is_pa20(&cpu[0]->env)) {
->          /* BMC board: HP Diva GSP PCI card */
->          dev = qdev_new("diva-gsp");
->          if (dev && !object_property_get_bool(OBJECT(dev), "disable", NULL)) {
-> -- 
-> 2.53.0
-> 
+>  pc-bios/hppa-firmware.img   | Bin 628952 -> 632048 bytes
+>  pc-bios/hppa-firmware64.img | Bin 692032 -> 713608 bytes
+>  roms/seabios-hppa           |   2 +-
+>  3 files changed, 1 insertion(+), 1 deletion(-)
 
 Reviewed-by: Anton Johansson <anjo@rev.ng>
 
