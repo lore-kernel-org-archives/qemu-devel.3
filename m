@@ -4,70 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB82BC531D2
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 21:31:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5989C531D2
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 21:34:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vtBbu-0004fH-S0; Thu, 19 Feb 2026 16:31:02 -0500
+	id 1vtBef-0005xy-Mz; Thu, 19 Feb 2026 16:33:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vtBbW-0004am-Jk
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 16:30:39 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vtBeY-0005wz-Br
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 16:33:43 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vtBbT-0001Ib-7a
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 16:30:34 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vtBeW-0001s9-J2
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 16:33:42 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771536628;
+ s=mimecast20190719; t=1771536814;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=Emae6bdUu0wA2jiQSV6LiH8hLNGtgI8fNO/W8v6Cehg=;
- b=CtWLtfBq0vy0kqZn3Sd5xim/3IT9oP7v+160MfyxMbo9WUAdguqQSv9qQPu+n6GaRGbMpY
- 0NJ0/LrcO96j5GPi3lIfXuBhQWS/vED1MmyIBaVJ7zmtdrfFC6Ta+v8PqR80m6kTqOmO74
- jtPrIuaEK1lhF/d6nGkUruFWB7H1wjQ=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-218-nsPFSMGuNO6PY64vTfd4EQ-1; Thu,
- 19 Feb 2026 16:30:24 -0500
-X-MC-Unique: nsPFSMGuNO6PY64vTfd4EQ-1
-X-Mimecast-MFC-AGG-ID: nsPFSMGuNO6PY64vTfd4EQ_1771536623
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 957EC1956058; Thu, 19 Feb 2026 21:30:22 +0000 (UTC)
-Received: from redhat.com (unknown [10.45.224.47])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 378091955F01; Thu, 19 Feb 2026 21:30:18 +0000 (UTC)
-Date: Thu, 19 Feb 2026 22:30:16 +0100
-From: Kevin Wolf <kwolf@redhat.com>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- qemu-devel@nongnu.org, qemu-block@nongnu.org, eduardo@habkost.net,
- berrange@redhat.com, pbonzini@redhat.com, eblake@redhat.com,
- devel@lists.libvirt.org, hreitz@redhat.com
-Subject: Re: [PATCH v10 4/8] qapi: add blockdev-replace command
-Message-ID: <aZeA6GZQaRtqmzgv@redhat.com>
-References: <20260119144941.87936-1-vsementsov@yandex-team.ru>
- <20260119144941.87936-5-vsementsov@yandex-team.ru>
- <87wm0sy9s4.fsf@pond.sub.org>
- <739edd0f-8342-418e-96bb-01bc9bd3349e@yandex-team.ru>
- <87seb3zr7j.fsf@pond.sub.org>
- <f9aed7fd-2f56-4b54-bf4f-693e0c10fb38@yandex-team.ru>
- <87seazjz2q.fsf@pond.sub.org>
- <04575653-a2ba-4ef1-b1af-a514bec80a69@yandex-team.ru>
- <87a4x6h8kz.fsf@pond.sub.org>
+ bh=fbC6eOBUqBal7mrJSSO7E2pgE9D+Hs+CdZ1zBYccWwE=;
+ b=Z8qjX0UQ3XdKPdWUvDl0AkppyKz5wglou2BkAhI+yFOyXNyWjSlEEUOtASsQ+3ISt856bX
+ JZ/wzixkRD9AKlAGtGYmXdPbhlN7OQstpHEpMsrOFzLivly0zcSg+OFGJFB2EBWcroEtTl
+ 0VRzcd+uJDZT/QGRBxUNocYEhvch3zY=
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
+ [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-42-RrhMhBaNMx6ZmXiA7b0VOw-1; Thu, 19 Feb 2026 16:33:32 -0500
+X-MC-Unique: RrhMhBaNMx6ZmXiA7b0VOw-1
+X-Mimecast-MFC-AGG-ID: RrhMhBaNMx6ZmXiA7b0VOw_1771536812
+Received: by mail-qv1-f69.google.com with SMTP id
+ 6a1803df08f44-89470bda22aso138274246d6.1
+ for <qemu-devel@nongnu.org>; Thu, 19 Feb 2026 13:33:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1771536812; x=1772141612; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=fbC6eOBUqBal7mrJSSO7E2pgE9D+Hs+CdZ1zBYccWwE=;
+ b=kMkM+XqfQs41rVaHEWQME8DZy1RBDYgoBiNJptPoaa6AY1mSkM2YWiTWcvRehzfzcZ
+ If7aeb2PH7Yqx/hgmuBLjKhB+iziGb7bJ3fG9Gj23ywMjm6q7hjWLx1KBuYXE/Tv/hDQ
+ CKKNBW726YCVuZ4ZOhViTFZfJroHGrXnxtigZb925UraaytLZx3muz0FeHFCC4/yhcuo
+ Xu39X1opRoeDSGM08hyJgskCzjEq3nHvvHMpbeMHe591R0flzbKkKq0sZChpW79nMDhh
+ q7V6/vEfvDc5Oi8I1oLW/lTtHcn0pkAkAZVXTVuOXnTmowQxmwJwBo/2EIUiOG7+UWO+
+ 6LjA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1771536812; x=1772141612;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=fbC6eOBUqBal7mrJSSO7E2pgE9D+Hs+CdZ1zBYccWwE=;
+ b=YnkvwNTAN3HFAgJqMklIVAVJItNCWR21+hNLNpwTJFFEVB7phfqw8SF/+lZb5CTr51
+ yiRVI7mpJhvkcWFrnfqtR2X7gETBAXNWfWSWK6G8QniIbIZYdsvkYx6oOP/YoZ5fGgdT
+ c/t+YAq0oWy9ELdyrkLsafADCwE5AwgoCY61XB++95lyf29Kv+38/maTgwoJgvLVB6I5
+ 8jI/aOYw6999WSvrgoCHOqsvZvWig/Cse7HqN1kgePkYH01osv0AeR8qOFW7R+f7wJbY
+ /ngQCSbV3lNSeT9m5CVmH6vLstd+7Esw78UO7x/DHZo8JiNWjmNfprotZOkwhCYOKyyK
+ THVQ==
+X-Gm-Message-State: AOJu0Yx1t2769yBQOWaeVhM1UwHGH76e1Ip7vNqr+gsLL340fTD9V+eB
+ m31Cx6mgI5dSlqT8/z4T9QDQDqfaDRPdjvOLIDfhS4TgGtAGoZcHgTWEyNCMDLnZarJhEoLgcla
+ PoL7Bu7Ghi3USGJPmDcRvTC7mSySdaaIFdwwypp8yrwlZpkWlWolZ6b53
+X-Gm-Gg: AZuq6aIxIjDU3uLrVGuYkRer6AtBpPtuB19DOJzI17dBQcmYfwR9YYruKVzrqeqrksB
+ YvtUdpX7L3rz0g96rmmCQFdcX0gEIHHTQzjMVY2ldWOM5cFu0R9fzhpLj4+PIhsKiCO4tqUjgxW
+ cWBUiR++g4km83807vYBEu2BM8PP0TLAUEGEBCQb7YwhejlO/CNa4IQq8OkYLE3Z2sSPwZ+NaB+
+ FWWOi2tGuzFzFQgROZUsqYrdSp6xpIMcnn2/2OKtwtHm2Cna1Gg1ir3Epo1Ytt1dmQ7eENueS6N
+ ybzqPHtH76s+Ll3No+ZZZ+ZRuqQIFOCW6EuCkvipHDIEakvYT09kTSrQ5qvaXdcdLwXo3pPeTDV
+ 57FKrnR8E9VP14g==
+X-Received: by 2002:a05:6214:20a4:b0:896:f47e:fd4d with SMTP id
+ 6a1803df08f44-89962071054mr60367436d6.56.1771536811986; 
+ Thu, 19 Feb 2026 13:33:31 -0800 (PST)
+X-Received: by 2002:a05:6214:20a4:b0:896:f47e:fd4d with SMTP id
+ 6a1803df08f44-89962071054mr60366986d6.56.1771536811475; 
+ Thu, 19 Feb 2026 13:33:31 -0800 (PST)
+Received: from x1.local ([174.91.117.149]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-8971cca72e8sm227206706d6.20.2026.02.19.13.33.30
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 19 Feb 2026 13:33:31 -0800 (PST)
+Date: Thu, 19 Feb 2026 16:33:19 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Lukas Straub <lukasstraub2@web.de>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Zhang Chen <zhangckid@gmail.com>,
+ Hailiang Zhang <zhanghailiang@xfusion.com>,
+ Markus Armbruster <armbru@redhat.com>, Li Zhijian <lizhijian@fujitsu.com>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>
+Subject: Re: [PATCH v9 19/19] colo: Fix a rare crash during shutdown
+Message-ID: <aZeBn2MBKvQQYEAx@x1.local>
+References: <20260218-colo_unit_test_multifd-v9-0-d8dbdb0ca6f6@web.de>
+ <20260218-colo_unit_test_multifd-v9-19-d8dbdb0ca6f6@web.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <87a4x6h8kz.fsf@pond.sub.org>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
+In-Reply-To: <20260218-colo_unit_test_multifd-v9-19-d8dbdb0ca6f6@web.de>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -76,7 +104,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.045,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,135 +120,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 18.02.2026 um 07:25 hat Markus Armbruster geschrieben:
-> Block layer maintainers' advice sought:
+On Wed, Feb 18, 2026 at 10:29:39PM +0100, Lukas Straub wrote:
+> In the colo migration unit test, we shutdown all sockets with yank and
+> then stop qemu with SIGTERM. During shutdown migration_shutdown() calls
+> migration_cancel(). Now the colo thread frees s->rp_state.from_dst_file
+> which races with migration_cancel() checking for NULL and potentially calling
+> qemu_file_shutdown() on it.
 > 
-> Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
+> Fix this by taking the s->qemu_file_lock.
 > 
-> > On 17.02.26 16:10, Markus Armbruster wrote:
-> >> Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
-> >> 
-> >>> On 14.02.26 11:04, Markus Armbruster wrote:
-> 
-> [...]
-> 
-> >>>> This interface sort of overloads @parent and @child, and overloading the
-> >>>> former creates ambiguity that can make the command unusable.
-> >>>
-> >>> Is it a real problem if we do deprecate the thing, that leads to this
-> >>> ambiguity?
-> >>>
-> >>> If it is, we may mark the command "unstable" during the deprecation period.
-> >> 
-> >> By itself, the proposed command is a trap for the unwary.
-> >> 
-> >> Deprecating the usage that enables the trap makes the trap temporary.
-> >> 
-> >> Warning on (deprecated) usage that enables the trap helps users avoid
-> >> it.  Human users, mostly.
-> >> 
-> >> Marking the command "unstable" should ensure management application
-> >> avoid the command, and thus the trap.
-> >> 
-> >> All of the above together feels acceptable to me.  Can we do better?
-> >> Maybe, and that's discussed below.
-> >> 
-> >>> Or even postpone its addition up to the end of this period.
-> >> 
-> >> No trap, no problem :)
-> >> 
-> >>>> @parent's set of valid values is the union of QOM path, block node name,
-> >>>> block export ID with values occuring in more than one of them dropped.
-> >>>>
-> >>>> @child's set of valid values depends on @parent: child name when it's a
-> >>>> QOM path, else "root".
-> >>>>
-> >>>> The obvious non-overloaded interface is a union of three branches: QOM,
-> >>>> block node, block export.  The QOM branch has variant members @qom-path
-> >>>> and @child.  The block node branch has variant member @node-name.  The
-> >>>> block export branch has variant member @id.
-> >>>>
-> >>>> This is a bit more verbose: you have to specify the union tag[*].
-> >>>>
-> >>>> If we ever need to replace block nodes associated with additional
-> >>>> things, we simply more branches.  These branches can have arbitrary
-> >>>> members.  In your interface, we'd have to make do with @child, or maybe
-> >>>> add optional arguments.
-> >>>>
-> >>>> Thoughts?  Mind, this isn't a demand!  I'm exploring the design space.
-> >>>
-> >>> Union-based solution was v9: https://lore.kernel.org/qemu-devel/20240626115350.405778-5-vsementsov@yandex-team.ru/
-> >>>
-> >>> And there was a discussion, that we may try a way without a union. And that's
-> >>> this v10.
-> >> 
-> >> I see Kevin suggested to explore this approach.  I certainly respect his
-> >> judgement.
-> >> 
-> >>> Hmm, but that had different field names for parents: qdev-id, export-id and node-name.
-> >>>
-> >>> What you suggest is to keep one filed for parent - "parent", but also add a "parent-type"
-> >>> field. This way, we may deprecate and remove "parent-type" in future. Or, we may
-> >>> add it as deprecated now (together with deprecating non-unique IDs)
-> >> 
-> >> We can't deprecate the union tag right away: it is *required*.
-> >> 
-> >>>> [*] We could add a "may omit union tag when the tag value can be derived
-> >>>> from present variant members" convenience feature to QAPI, but I'm not
-> >>>> sure it's worth the complexity.
-> >>>>
-> >>>
-> >>> It also may be not a union, but a simple structure with optional fields:
-> >>>
-> >>> {
-> >>>      parent: str, required, qom-path, or node-name, or export name
-> >>>      child: str, optional, but required when parent is node-name, and must be 'root'
-> >>>             if present for other parent types
-> >>>      parent-type: str, optional, "qom-path" | "block-node" | "block-export", helps to
-> >>>             overcome parent ambiguity, deprecated
-> >>>      new-child: str, required node-name
-> >>> }
-> >> 
-> >> PRO union: which members are valid together is syntactically obvious.
-> >> With a bunch of optional members, that information is in the member
-> >> descriptions.
-> >> 
-> >> CON union: need to specify the union tag.  The verbosity is a non-issue
-> >> for management applications, and mildly bothersome for humans.
-> >> 
-> >> How important is keeping things terse for humans here?
-> >> 
-> >
-> > It's not very important. Mostly, I just want to make "nice" interface, and possibility to
-> > reference any supported object by one ID seemed very tempting to me.
-> >
-> > But to be honest, introducing such a precedent makes sense, if we have in mind more
-> > cases where such approach may be reused. Personally, I don't have them. If blockdev-replace
-> > command remains the only API for the ages, which allows to mix in one field different kinds
-> > of IDs, it becomes just an extra exclusion from common practices.
-> >
-> > Finally, I don't care too much, which interface we chose. I'm not sure now that unifying
-> > ids is better than union. So I'm OK to go back to union-based solution from v9, update and
-> > resend it as v11.
-> 
-> Hanna, Kevin, got a preference?
+> Signed-off-by: Lukas Straub <lukasstraub2@web.de>
 
-My stance is unchanged from v9. When Vladimir asked if we could somehow
-get rid of the union, I tried to help him find such a solution that
-might be acceptable, but also recommended to keep the union for now,
-simply because it raises a lot less questions and avoids the temporary
-trap, and to move to a unified ID only later.
+The whole patch taking the mutex is reasonable, but it didn't explain one
+thing, on why COLO is special here on managing the return path channel..
 
-Still, as I said, "I don't think such a state is very pretty, but it
-would be okay for me". So I wouldn't block the approach taken here in
-v10 if Vladimir prefers it (at least as far as I can say from the
-discussion; I didn't actually review it yet).
+colo_process_checkpoint() does re-opening of rp channel even if it was
+partially shutdown before:
 
-If you say that you really don't want to have the command fail on
-ambiguous IDs, we probably shouldn't do it. But as far as I am
-concerned, it seemed tolerable, so if you don't object, it remains
-Vladimir's decision.
+colo_process_checkpoint():
+    s->rp_state.from_dst_file = qemu_file_get_return_path(s->to_dst_file);
 
-Kevin
+Should we instead leave all these to migration core?
+E.g. migration_completion() will do close_return_path_on_source(), but I
+wonder if that should only shutdown & close the return path channel when
+without COLO running.  Then IIUC we can also leave the cleanup of the
+qemufiles to migration_cleanup(), as it's also not special to COLO IIUC.
+
+What do you think?
+
+Thanks,
+
+> ---
+>  migration/colo.c | 23 +++++++++++++++--------
+>  1 file changed, 15 insertions(+), 8 deletions(-)
+> 
+> diff --git a/migration/colo.c b/migration/colo.c
+> index ce02c71d8857d470be434bdf3a9cacad3baab0d5..180793fe3f25140fa10887acc3d87515ebf43ac9 100644
+> --- a/migration/colo.c
+> +++ b/migration/colo.c
+> @@ -173,11 +173,13 @@ static void primary_vm_do_failover(void)
+>       * The s->rp_state.from_dst_file and s->to_dst_file may use the
+>       * same fd, but we still shutdown the fd for twice, it is harmless.
+>       */
+> -    if (s->to_dst_file) {
+> -        qemu_file_shutdown(s->to_dst_file);
+> -    }
+> -    if (s->rp_state.from_dst_file) {
+> -        qemu_file_shutdown(s->rp_state.from_dst_file);
+> +    WITH_QEMU_LOCK_GUARD(&s->qemu_file_lock) {
+> +        if (s->to_dst_file) {
+> +            qemu_file_shutdown(s->to_dst_file);
+> +        }
+> +        if (s->rp_state.from_dst_file) {
+> +            qemu_file_shutdown(s->rp_state.from_dst_file);
+> +        }
+>      }
+>  
+>      old_state = failover_set_state(FAILOVER_STATUS_ACTIVE,
+> @@ -544,11 +546,14 @@ static void colo_process_checkpoint(MigrationState *s)
+>  
+>      failover_init_state();
+>  
+> +    qemu_mutex_lock(&s->qemu_file_lock);
+>      s->rp_state.from_dst_file = qemu_file_get_return_path(s->to_dst_file);
+>      if (!s->rp_state.from_dst_file) {
+> +        qemu_mutex_unlock(&s->qemu_file_lock);
+>          error_report("Open QEMUFile from_dst_file failed");
+>          goto out;
+>      }
+> +    qemu_mutex_unlock(&s->qemu_file_lock);
+>  
+>      packets_compare_notifier.notify = colo_compare_notify_checkpoint;
+>      colo_compare_register_notifier(&packets_compare_notifier);
+> @@ -640,9 +645,11 @@ out:
+>       * Or the failover BH may shutdown the wrong fd that
+>       * re-used by other threads after we release here.
+>       */
+> -    if (s->rp_state.from_dst_file) {
+> -        qemu_fclose(s->rp_state.from_dst_file);
+> -        s->rp_state.from_dst_file = NULL;
+> +    WITH_QEMU_LOCK_GUARD(&s->qemu_file_lock) {
+> +        if (s->rp_state.from_dst_file) {
+> +            qemu_fclose(s->rp_state.from_dst_file);
+> +            s->rp_state.from_dst_file = NULL;
+> +        }
+>      }
+>  }
+>  
+> 
+> -- 
+> 2.39.5
+> 
+
+-- 
+Peter Xu
 
 
