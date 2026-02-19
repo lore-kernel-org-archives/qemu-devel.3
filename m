@@ -4,50 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34E58E9A05A
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 18:35:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41311E9A059
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 18:54:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vt8rb-0002GQ-Vf; Thu, 19 Feb 2026 13:35:00 -0500
+	id 1vt9AN-0006mV-Mm; Thu, 19 Feb 2026 13:54:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1vt8rZ-0002GF-QF
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 13:34:57 -0500
-Received: from vps-ovh.mhejs.net ([145.239.82.108])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vt9AK-0006is-5N
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 13:54:20 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1vt8rX-0001va-QF
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 13:34:57 -0500
-Received: from MUA
- by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
- (Exim 4.98.2) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1vt8rN-0000000Cn3C-1whc; Thu, 19 Feb 2026 19:34:45 +0100
-Message-ID: <dc328350-91aa-40a7-a28a-2aa2e54ad132@maciej.szmigiero.name>
-Date: Thu, 19 Feb 2026 19:34:40 +0100
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vt9AI-0007EU-Dq
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 13:54:19 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1771527257;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=kG6tqJ+poxdKXWVKyIJeWPimfNoT+vWpMbh34v2EVHw=;
+ b=C1z5I54FZ8MW4497P3w2Lloj46VlVazpE5h0njywSPp3YUpYB0huGCyyg2hVEPLMlDF8bv
+ HRiGZRrO8yPsqj1aQqdJWnzI95LZOfy68bemq98sd7QSoHZLGM/xPpdi3txTmbFwBSYOmJ
+ KlC1sSy9Q8dVwb9AG+t1gdzmdobluMA=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-608-JXhK7ucUPg67aXm5xxy3OA-1; Thu,
+ 19 Feb 2026 13:54:16 -0500
+X-MC-Unique: JXhK7ucUPg67aXm5xxy3OA-1
+X-Mimecast-MFC-AGG-ID: JXhK7ucUPg67aXm5xxy3OA_1771527255
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C644F1956050; Thu, 19 Feb 2026 18:54:14 +0000 (UTC)
+Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.64.164])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 458DC195410F; Thu, 19 Feb 2026 18:54:12 +0000 (UTC)
+From: John Snow <jsnow@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-rust@nongnu.org, Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ John Snow <jsnow@redhat.com>
+Subject: [PATCH v2 1/1] rust: use checked_div to make clippy happy
+Date: Thu, 19 Feb 2026 13:54:09 -0500
+Message-ID: <20260219185409.708130-2-jsnow@redhat.com>
+In-Reply-To: <20260219185409.708130-1-jsnow@redhat.com>
+References: <20260219185409.708130-1-jsnow@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 26/34] hw/hyperv/vmbus: add support for confidential
- guest reset
-To: Ani Sinha <anisinha@redhat.com>
-Cc: kraxel@redhat.com, qemu-devel@nongnu.org
-References: <20260218114233.266178-1-anisinha@redhat.com>
- <20260218114233.266178-27-anisinha@redhat.com>
-From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
-Content-Language: en-US, pl-PL
-In-Reply-To: <20260218114233.266178-27-anisinha@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=145.239.82.108;
- envelope-from=mhej@vps-ovh.mhejs.net; helo=vps-ovh.mhejs.net
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.045,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -63,25 +82,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 18.02.2026 12:42, Ani Sinha wrote:
-> On confidential guests when the KVM virtual machine file descriptor changes as
-> a part of the reset process, event file descriptors needs to be reassociated
-> with the new KVM VM file descriptor. This is achieved with the help of a
-> callback handler that gets called when KVM VM file descriptor changes during
-> the confidential guest reset process.
-> 
-> This patch is tested on non-confidential platform only.
-> 
-> Signed-off-by: Ani Sinha <anisinha@redhat.com>
-> ---
+When upgrading from Fedora 41 to Fedora 43 for CI tests, clippy begins
+complaining about not using checked_div instead of manually checking
+divisors. Make clippy happy and use checked_div() instead.
 
-I have also tested this patch with a non-confidential Windows guest
-with VMBus, including live migrating it a few times.
+Signed-off-by: John Snow <jsnow@redhat.com>
+---
+ rust/hw/core/src/qdev.rs | 14 ++++++--------
+ 1 file changed, 6 insertions(+), 8 deletions(-)
 
-No regressions observed, so:
-Acked-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
-
-Thanks,
-Maciej
+diff --git a/rust/hw/core/src/qdev.rs b/rust/hw/core/src/qdev.rs
+index 145e20a984f..b2e5441079d 100644
+--- a/rust/hw/core/src/qdev.rs
++++ b/rust/hw/core/src/qdev.rs
+@@ -425,18 +425,16 @@ pub const fn period_from_ns(ns: u64) -> u64 {
+     }
+ 
+     pub const fn period_from_hz(hz: u64) -> u64 {
+-        if hz == 0 {
+-            0
+-        } else {
+-            Self::PERIOD_1SEC / hz
++        match Self::PERIOD_1SEC.checked_div(hz) {
++            Some(value) => value,
++            None => 0,
+         }
+     }
+ 
+     pub const fn period_to_hz(period: u64) -> u64 {
+-        if period == 0 {
+-            0
+-        } else {
+-            Self::PERIOD_1SEC / period
++        match Self::PERIOD_1SEC.checked_div(period) {
++            Some(value) => value,
++            None => 0,
+         }
+     }
+ 
+-- 
+2.53.0
 
 
