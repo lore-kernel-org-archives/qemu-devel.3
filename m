@@ -4,71 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 563BFE9A048
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 10:38:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00BDFE9A03B
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 10:38:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vt1MZ-0007BE-JN; Thu, 19 Feb 2026 05:34:27 -0500
+	id 1vt1Ml-0007Mq-39; Thu, 19 Feb 2026 05:34:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anirudh@anirudhrb.com>)
- id 1vt1MO-00074G-Su
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 05:34:18 -0500
-Received: from sender4-of-o54.zoho.com ([136.143.188.54])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anirudh@anirudhrb.com>)
- id 1vt1MJ-00061S-97
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 05:34:14 -0500
-ARC-Seal: i=1; a=rsa-sha256; t=1771497233; cv=none; 
- d=zohomail.com; s=zohoarc; 
- b=S23fA7GGIkPbz4YHihWwcX6k6o2tNz2d+bjUNgmmr3Pc5z1hN9sSF8/imWa6m/gUwRDqCOwFpayai6kp0AeEj4Q0tD7kmW/ZV71bBeoKgXDjhWmvU5WgDB9bOBa+Rfvc3IvfAKBY6PM6W3NczMgT2X4mR2rEe+V9ChlM565w2js=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1771497233;
- h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=oYrLU/d2EKxYh1FOQZ9q559V/3dQ1WZt1aKGNJfOQKE=; 
- b=YKcwNYJuVFvTXzDTK649SclxiGsixn9RlQrfrlGvuhD2jxtaujVMZjFf0yRCWWNAxUuXBbxyQ0WXlIKDdc8rIUZN+urLHmgoguWdBVWeYH5wwFRb0S+85CMM6RwG4ibNmW3j5OZdIDEvce0ZJTEb98hdRtTMFt8yPO4JcUI1LFk=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
- dkim=pass  header.i=anirudhrb.com;
- spf=pass  smtp.mailfrom=anirudh@anirudhrb.com;
- dmarc=pass header.from=<anirudh@anirudhrb.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1771497232; 
- s=zoho; d=anirudhrb.com; i=anirudh@anirudhrb.com;
- h=Date:Date:From:From:To:To:Cc:Cc:Subject:Subject:Message-ID:References:MIME-Version:Content-Type:In-Reply-To:Message-Id:Reply-To;
- bh=oYrLU/d2EKxYh1FOQZ9q559V/3dQ1WZt1aKGNJfOQKE=;
- b=NJKPNkX4qNaVkKfNjJ/01e4O707xBStcrK0jspz5uLhGX7VvYPtkYtJ6zQdyz98I
- BWKZ5DIBqjiz80MEmfiDcV3A/iqNcTo3BQ19YjRo30bFX770H3p1bKE+wfbqZJenSG8
- djzOypN270NKIdBMvVPZiKqF7mKQaFFQZ9rOScDc=
-Received: by mx.zohomail.com with SMTPS id 1771497228729933.5633510812086;
- Thu, 19 Feb 2026 02:33:48 -0800 (PST)
-Date: Thu, 19 Feb 2026 10:33:44 +0000
-From: Anirudh Rayabharam <anirudh@anirudhrb.com>
-To: Wei Liu <wei.liu@kernel.org>
-Cc: Magnus Kulke <magnuskulke@linux.microsoft.com>, qemu-devel@nongnu.org,
- Wei Liu <liuwe@microsoft.com>, Zhao Liu <zhao1.liu@intel.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Magnus Kulke <magnuskulke@microsoft.com>
-Subject: Re: [PATCH 03/10] accel/mshv: use mshv_create_partition_v2 payload
-Message-ID: <aZbnCCXdRrmrYRg-@anirudh-surface.localdomain>
-References: <20260211155410.203883-1-magnuskulke@linux.microsoft.com>
- <20260211155410.203883-4-magnuskulke@linux.microsoft.com>
- <aY3WZg1JedxHtze2@anirudh-surface.localdomain>
- <20260218062358.GA2236050@liuwe-devbox-debian-v2.local>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vt1Mj-0007Kq-02
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 05:34:37 -0500
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vt1Mf-00068R-JH
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 05:34:36 -0500
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-4806ce0f97bso5838885e9.0
+ for <qemu-devel@nongnu.org>; Thu, 19 Feb 2026 02:34:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1771497272; x=1772102072; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=uewsi/mPGL3ids9kCkc0fCnRUOxmgBIwrJlT0/lGETM=;
+ b=NTxlVJmlFHDLuylVPrG1qqPEOqGzJHf+wtZ1r2s+b/BbV+ZyNaPt/B+D/C7lFKOdtF
+ CmvSnSs2u0iU4dmMGS8OfKKJ0DQCCe7eluPSc8lNGMPLbjs+Exr8lgKf7YKn8buM8/bl
+ Il7jYNsDiLWlaYKdPw6AYZb0LKu3rZA3sWwQAUppOad15aJ0TL8izyYwQ7/czQYGjLPB
+ YJgWePSLYqKFdVmSrJvhjl+aBa2Z67bIMSBvXf8560MgR2Muhf2po/AuZgSvA+X0p4K2
+ cPzCxMK0rmpJFQOsNTKUVhya/zUpUNI13tNN7WKDBBp3rOkBvDg5R+0HOmn1YPBStTKa
+ jIIA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1771497272; x=1772102072;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=uewsi/mPGL3ids9kCkc0fCnRUOxmgBIwrJlT0/lGETM=;
+ b=wCkO+HnBhWYUE05OI0emtWKRRSAXcEhYZirP4a/5Hnoko3NNIn1aXUccaWDMUeIjgp
+ juDcLdQj59jI497N7RNEd7J9qzn3FBl9nD6dmg9iH+0JRhW0oVOLPoknBaKiJ7Folw56
+ k/d91hGsdP7gzxVQIWeL0T2lfaeXZDIgfpnjPnSEiDPMu6k5jCXBWu/AayhfRjRDwYra
+ DMfEOefzW/LeILoLj/Nt3Vg/uaJV8OsNGqYUxx/IPWcdKTBHQBX9X35vwpAtg9eaQqLy
+ h9KasmfHP+vjZa1m390Evy+7HJaL0saQvqu6K2I4YTAERk1X34knZms3YDmNtQds3sPX
+ 2Q8Q==
+X-Gm-Message-State: AOJu0YxvZQxFlI41U5fvKlIGTc8C9xtojXWYHoBcyaV0OpboEArmgDjy
+ fYips1z8lupnCWSDGoMg3niKhDyG/PBl/BUHE/+lPTHkYbDzkbios3MkgN6EWJjK7dEpyJc9YQY
+ cXkZu
+X-Gm-Gg: AZuq6aKrs6NeL2XIOsbPxfq0Wad+CRsS/ijsJxjAAQDBI4Dsjva4RXS3xTf6o6I+Uin
+ dNo4fmjwpaWIQcs5oDyC8FRpRWhHY3UPX0/IhqVOtZeSfsrHK2dRg2aHmkG+8LgQMuCM4kx0mno
+ rL24C2PpSmLsIQqogvuhkM603j/6ZmYu1twij5txdTz+2ZPIJvpvSv2LhMXo267tMV0m2APOYsl
+ zjVgWJ0MFnCVH4PQoMR/KqMIEha7hzk1ZvhVqNnCEj+8/3wki+s0uzjnE3NIM99Eu2y70PzkF0V
+ ss3Gmyi2iw7Iqav+3j13YhLHhxwtrtFlrf+6GcYiN1LWbvnemSoxKy/S+t81gjFlwUXQ6LK4v2Q
+ dfdtHwYHbRF1V2HXTIQzppjGR199X2lmm2IpMzfIkXQUOgStVABeJgFsIcNpBR9TaeL7q5OcyT2
+ /gToOTqbPTuJifTu05C9WHYcZNoMMiTUulmOENwIi5OZDCW8+xG5Ux/DcHP8+iisM9xaARyzX0f
+ uPsUSBa0fZvo8INlOyCTZY8e8ryQ3Q=
+X-Received: by 2002:a05:600c:8011:b0:483:7980:4687 with SMTP id
+ 5b1f17b1804b1-48398ad6e2bmr79086915e9.17.1771497271803; 
+ Thu, 19 Feb 2026 02:34:31 -0800 (PST)
+Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4834d5ebd34sm697630795e9.7.2026.02.19.02.34.31
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 19 Feb 2026 02:34:31 -0800 (PST)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-devel@nongnu.org
+Subject: [PULL 28/32] target/arm/tcg/cpu-v7m.c: make compilation unit common
+Date: Thu, 19 Feb 2026 10:34:01 +0000
+Message-ID: <20260219103405.3793357-29-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260219103405.3793357-1-peter.maydell@linaro.org>
+References: <20260219103405.3793357-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260218062358.GA2236050@liuwe-devbox-debian-v2.local>
-X-ZohoMailClient: External
-Received-SPF: pass client-ip=136.143.188.54;
- envelope-from=anirudh@anirudhrb.com; helo=sender4-of-o54.zoho.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ TVD_SPACE_RATIO=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,82 +101,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Feb 18, 2026 at 06:23:58AM +0000, Wei Liu wrote:
-> On Thu, Feb 12, 2026 at 01:32:22PM +0000, Anirudh Rayabharam wrote:
-> > On Wed, Feb 11, 2026 at 04:54:03PM +0100, Magnus Kulke wrote:
-> > > When using the extended request format we can instruct the hypervisor to
-> > > provision enough space for requested XSAVE features. This is required
-> > > for supporting QEMU models provided via the -cpu flag properly.
-> > > 
-> > > Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
-> > > ---
-> > >  accel/mshv/mshv-all.c          |  35 +++++--
-> > >  include/hw/hyperv/hvgdk_mini.h |   2 +
-> > >  include/hw/hyperv/hvhdk.h      | 185 +++++++++++++++++++++++++++++++++
-> > >  3 files changed, 214 insertions(+), 8 deletions(-)
-> > > 
-> > > diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
-> > > index bed0fa298e..8446f7128a 100644
-> > > --- a/accel/mshv/mshv-all.c
-> > > +++ b/accel/mshv/mshv-all.c
-> > > @@ -112,19 +112,38 @@ static int resume_vm(int vm_fd)
-> > >  
-> > >  static int create_partition(int mshv_fd, int *vm_fd)
-> > >  {
-> > > -    int ret;
-> > > -    struct mshv_create_partition args = {0};
-> > > +    int ret, i;
-> > > +    uint64_t pt_flags;
-> > > +    union hv_partition_processor_xsave_features disabled_xsave_features;
-> > > +    union hv_partition_processor_features disabled_processor_features;
-> > > +    struct mshv_create_partition_v2 args = {0};
-> > >  
-> > >      /* Initialize pt_flags with the desired features */
-> > > -    uint64_t pt_flags = (1ULL << MSHV_PT_BIT_LAPIC) |
-> > > -                        (1ULL << MSHV_PT_BIT_X2APIC) |
-> > > -                        (1ULL << MSHV_PT_BIT_GPA_SUPER_PAGES);
-> > > +    pt_flags = (1ULL << MSHV_PT_BIT_LAPIC) |
-> > > +               (1ULL << MSHV_PT_BIT_X2APIC) |
-> > > +               (1ULL << MSHV_PT_BIT_GPA_SUPER_PAGES) |
-> > > +               (1ULL << MSHV_PT_BIT_CPU_AND_XSAVE_FEATURES);
-> > >  
-> > > -    /* Set default isolation type */
-> > > -    uint64_t pt_isolation = MSHV_PT_ISOLATION_NONE;
-> > > +    /* enable all */
-> > > +    disabled_xsave_features.as_uint64 = 0;
-> > >  
-> > > +    /* Enable all proc features by default */
-> > 
-> > Instead of enabling all features by default, we could query which
-> > features are supported by the hypervisor on this host and enable only
-> > those.
-> > 
-> > To query supported features get the HvPartitionPropertyProcessorFeatures
-> > property via HvCallGetPartitionProperty (with HV_PARTITION_ID_SELF).
-> > 
-> > I think this would be more robust. This is what Cloud Hypervisor (well,
-> > technically, the mshv crate) does.
-> > 
-> 
-> While I think querying the hypervisor is the correct action, are we
-> sure this gives all the supported features on the host?
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-Yes, I confirmed this with the hypervisor team when implementing it in
-the mshv crate.
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Message-id: 20260219040150.2098396-11-pierrick.bouvier@linaro.org
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ target/arm/tcg/meson.build | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-> 
-> Is there a case that the Linux root partition  has a reduced set of
-> properties?
+diff --git a/target/arm/tcg/meson.build b/target/arm/tcg/meson.build
+index 85277dba8d..cabf65e623 100644
+--- a/target/arm/tcg/meson.build
++++ b/target/arm/tcg/meson.build
+@@ -49,7 +49,7 @@ arm_ss.add(when: 'TARGET_AARCH64', if_true: files(
+   'sve_helper.c',
+ ))
+ 
+-arm_system_ss.add(when: 'CONFIG_ARM_V7M', if_true: files('cpu-v7m.c'))
++arm_common_system_ss.add(when: 'CONFIG_ARM_V7M', if_true: files('cpu-v7m.c'))
+ arm_user_ss.add(when: 'TARGET_AARCH64', if_false: files('cpu-v7m.c'))
+ 
+ arm_common_ss.add(zlib)
+-- 
+2.43.0
 
-It is my understanding that the processor features we expose to a guest
-must always be a subset of the processor features of the root/parent
-partition. So, if some proc feature is not available for root, we cannot
-make it available for any guest partitions either.
-
-Thanks,
-Anirudh.
-
-> 
-> Wei
-> 
 
