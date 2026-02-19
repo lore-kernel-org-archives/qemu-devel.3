@@ -4,108 +4,132 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C288C531D1
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 21:23:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9695C531D1
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 21:29:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vtBUb-0001vO-Cu; Thu, 19 Feb 2026 16:23:25 -0500
+	id 1vtBZa-0003m3-S7; Thu, 19 Feb 2026 16:28:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vtBUZ-0001uw-OG
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 16:23:23 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vtBUX-0008Az-Dy
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 16:23:23 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771536199;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=XwEE9vCU5oXu2LlOS7AwD08Wz3vqIpSEQ4CVFUj1nuQ=;
- b=UiyBrTtUJC+i+elVx7IAI+aaXUIS05oBWe5U2e6GDmNCdL/nCZkwjBwJeetUSnSqRTezxZ
- uq/C1n9FYg4P1S1/YlJhD21tMdP7ky3bNFm3DCvWBtwjTwive5NQ4FutmP1sK26PjBZYyo
- R++32gM82IML9Iq3wTaYuRoHvmwxJj4=
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
- [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-295-UIZJBXTRMF2BSBoBNqkXFg-1; Thu, 19 Feb 2026 16:23:18 -0500
-X-MC-Unique: UIZJBXTRMF2BSBoBNqkXFg-1
-X-Mimecast-MFC-AGG-ID: UIZJBXTRMF2BSBoBNqkXFg_1771536197
-Received: by mail-qt1-f199.google.com with SMTP id
- d75a77b69052e-506c0da79c5so127362171cf.1
- for <qemu-devel@nongnu.org>; Thu, 19 Feb 2026 13:23:17 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vtBZY-0003l9-KV
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 16:28:32 -0500
+Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vtBZW-0000le-S9
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 16:28:32 -0500
+Received: by mail-pf1-x432.google.com with SMTP id
+ d2e1a72fcca58-8249aca0affso793636b3a.3
+ for <qemu-devel@nongnu.org>; Thu, 19 Feb 2026 13:28:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1771536197; x=1772140997; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=XwEE9vCU5oXu2LlOS7AwD08Wz3vqIpSEQ4CVFUj1nuQ=;
- b=uCBxADlLoDEvj31hKalRQoL16XoDK+ocZHFC4s9XuYQ09Dxn8JcmjwhY9AW9DWQxHX
- +JXy6waqebhD3S9c17NP6CS2oOzPEJdnqluN6mpRH9WBpeiUn203qoufF6nPBsR69DAl
- kN5OBejrlmyPV5pi2CNIAxRturbIaHmuMiyYOwcuf658muiftYQ1gIZ181nd4bSFknKF
- tcfCDu6XcpyytHLQbEOcWBt0OTWumDcAxoCeO/WhZVeznAeMmcCu9k/UnCO9uMa3wCGv
- URCsyCVqiispBiKLuolYCzXCN6Xl589jYz/xWXI9l1LhrMU/s+mMl1G28qhYQWNj52iz
- hxsg==
+ d=linaro.org; s=google; t=1771536509; x=1772141309; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=K2uJFligPrVHrfr6KHvU0T03PbZTs5EzdPGyoPKC60s=;
+ b=LPQkKBLrG7KG5XDwxNf+E39PkaHdUhNIeqeUD9fPrmq71od7vtFWM6d1PEEd27yLbS
+ wUsMiw4PMWBykTJcytSfQvahbtzMG+uc8UDXQej1sWF7TzP0QPo1js/VyKsTq5nNLw7Z
+ Djgr737iXHN39HteZkA3aSfVcBYrtM1XuXOkH2XEL3c+B3DtT3ZmlxADbA6G1UBQSDkI
+ VMwHqgfWyygDFcX8oJu1TmAOLKg6CyYjvbMxrB/leIZlCT9wbcW0PUfB4FJIzfGWDjc+
+ o3NHAju7UWZStX5oRJOXrmk6qlMlv4QsaH+MVTDe4vu8y5ami0y+R9I4egFRgHbVKPSe
+ hXLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771536197; x=1772140997;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=XwEE9vCU5oXu2LlOS7AwD08Wz3vqIpSEQ4CVFUj1nuQ=;
- b=qZFalFyW0B6xz3S4L2NqhRwDOksEj1f//lPLLfse4HDVdo9erN3YJjMAHN5W7mROmX
- 5OTyaf6t0/NYJ1AyxlIudgWTBaX+HvlLF5hd9BeUbH8kZU3wyNfU7kcDB6O0i7hwbGCy
- VrGT23xnaKyqILUOJOCOyuzXYL+yH1x7E4lEsvxDn6fKuvWuq2Wi3qgE0+5pK7dJPcKW
- 8h4HWaaZ6YF+aWtegv9MC/7xci5yINUT4t5aSgMQQjosTzkEkaBV3jczQqyjrspwDfP2
- u6+SW53DQB3chGt8U4C6XYaH7122wxGc/dJyl20nl/MwD9cG5fixo4n/xLzImwLf0eqY
- ZHAg==
-X-Gm-Message-State: AOJu0YxMTnzOcuKCKxuRmmnSNARcaxV1xmqv84i1Gc3vX7SS6rzdSxaB
- 3i7QPoUwsVHPQzngCs50KpVG9ZBVdPY3cunKSTxF/zwmfhlIXqZVs7j+uneOkOuXouD6S9GZv0n
- zzQPIcGDZ50AP/5QRdDxBfJw1Eaklw5UEQbbDGC7tW8g/p+ri1Uh6YYdr
-X-Gm-Gg: AZuq6aJ8d/wNZqQKerlBipkvn+obQu1Dla8wpBVz2riByDmHYht3pV1v2JKVNWqze/T
- JwdsmDYOPVPst2scR4afCR+LKk/OuP8nMf1tr5Q3+fkdNvT0ycPoOxg9ptFIHx+rFObhlcLqS4G
- k+Bo9SLVoT2Xdv0FenPb6zk4mI1Vc/9KubI3Lb9VInge51iXsD6HQQgFS98WCUGYyI75KQ2qZlM
- 5TZOeNg4Vn7lxRD+UR5tBcAaBAH+kYVAXadkASDv2SnsO1hwx0gHnXZuAWvU3CaoVQSbJTwFyc+
- PjmHceiE+yWUaY1qc4wvQpkOvY+yTE5a36uvGyXXoXUVfrS5njEheSe9Rym0D/BXl/21M5b6j6s
- R+Z9D91Pvb28c4Q==
-X-Received: by 2002:a05:622a:1910:b0:4ee:1ed1:43c6 with SMTP id
- d75a77b69052e-506b3f7e123mr256230911cf.10.1771536197337; 
- Thu, 19 Feb 2026 13:23:17 -0800 (PST)
-X-Received: by 2002:a05:622a:1910:b0:4ee:1ed1:43c6 with SMTP id
- d75a77b69052e-506b3f7e123mr256230521cf.10.1771536196815; 
- Thu, 19 Feb 2026 13:23:16 -0800 (PST)
-Received: from x1.local ([174.91.117.149]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-506847d77cesm217229351cf.3.2026.02.19.13.23.15
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 19 Feb 2026 13:23:16 -0800 (PST)
-Date: Thu, 19 Feb 2026 16:23:05 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Lukas Straub <lukasstraub2@web.de>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Zhang Chen <zhangckid@gmail.com>,
- Hailiang Zhang <zhanghailiang@xfusion.com>,
- Markus Armbruster <armbru@redhat.com>, Li Zhijian <lizhijian@fujitsu.com>,
- "Dr. David Alan Gilbert" <dave@treblig.org>
-Subject: Re: [PATCH v9 18/19] multifd: Fix hang if send thread errors during
- sync
-Message-ID: <aZd_OTfcrkRYQ-nt@x1.local>
-References: <20260218-colo_unit_test_multifd-v9-0-d8dbdb0ca6f6@web.de>
- <20260218-colo_unit_test_multifd-v9-18-d8dbdb0ca6f6@web.de>
+ d=1e100.net; s=20230601; t=1771536509; x=1772141309;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=K2uJFligPrVHrfr6KHvU0T03PbZTs5EzdPGyoPKC60s=;
+ b=BN/8OG3eNKAxkPJ06WZAOc5mk8Sm0jKgBlwXcRLb91Y10Qzkdlr+Q7EE0ej9B9D0GI
+ 5kJk0S4PyWmD+AG3NmTTDxZUAHCMxSSMrgVDSOuOgtN7/cvluuOm3O05d2AgXdYawEhR
+ RNSl9puoaxMAlcaIV0JkrYn+pH6ovmAcTxDJqa/jlEVLtxaSEuqpQpLJxlVj0MEjCQyh
+ 1B+PYOrLB87qQgCH5MfqAg/VPCiVe2WRshGHLZkkarapRjIgXbQCjGJlBAu75WiHunsN
+ X/yhqCOT2VIvuXE32I08jCXeJMBoC+K+q99DTXg9vAxhLlgomnoPLB1OisbS+4A8IfQn
+ +faQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWjmCFIg8JM5WCAd+K+XPk3WL7Hpeh1veI/heYUm3h6JGNVUMTJ+kj0htZqvXEtaH2n8xxdI8D2pANH@nongnu.org
+X-Gm-Message-State: AOJu0Ywe1yzCg9BZhMmjypEuSbFADNuT7k+mj/kOmduefNA+n6rfddRe
+ l3ZaAwiKL/VbqRClhXiX3xKEQWvv5GT9IWuLTnr5k94IfRWfKckPmPiudiEKNJ7o3Vk=
+X-Gm-Gg: AZuq6aLIeh0zHjLb13rzKLdVwEH0fmDN+/rHf53Hdd9pDfTXSLpG8oOLTV9I2EFfUKH
+ SVPhJFW+xsKiN5gIvMPWZLb+6ytOhEmqcwpZ+9BZrqB0c0CvfQC2IQ7VOsEi5Vl++JLRLUsjTPK
+ P5l0Gm9yH/mBHaww8kjhvxWdEBFI0ZV/aAr7ZiRLYXHipa7Oofy6AJGOIsZJ2Aonp4IhkzTlS17
+ tZbJHtfmCQnAd7mC94/3R7QSoIb/cFIFr9vjYSmyrY9eYxkP/CZ3biJuyn73jMLyjZWuERfBVPA
+ 5GU0WTi0T0PlC6QBIh+CCCkG0XSo2UjOUyNMDVBqUGFXNUUT0F8znCz6gGAQXim/O3axJ5P58PK
+ JZqNtkRjDD76cp8vOUY2TsomxlyR/2ydQHvZsy/ASk43chJn7qMd00NSeHNdiW0LlyydnP3BNXq
+ Fsm5emiE45DXt95rU4+S6ePIgiXHh68P71+m3Qi0ng7vKREVX1WxvyIlGlPuWekPRxsvOl
+X-Received: by 2002:a05:6a00:1c84:b0:81d:f938:800b with SMTP id
+ d2e1a72fcca58-824d9640796mr14947365b3a.61.1771536509008; 
+ Thu, 19 Feb 2026 13:28:29 -0800 (PST)
+Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-824c6a42688sm20255296b3a.21.2026.02.19.13.28.28
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 19 Feb 2026 13:28:28 -0800 (PST)
+Message-ID: <98776b81-9f5b-4924-827f-1f8fde2f299b@linaro.org>
+Date: Thu, 19 Feb 2026 13:28:28 -0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260218-colo_unit_test_multifd-v9-18-d8dbdb0ca6f6@web.de>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 24/50] target/sparc: Factor
+ sparc_cpu_gdb_write_register() out
+Content-Language: en-US
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>, qemu-s390x@nongnu.org,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-riscv@nongnu.org, qemu-ppc@nongnu.org,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Artyom Tarasenko <atar4qemu@gmail.com>
+References: <20260219191955.83815-1-philmd@linaro.org>
+ <20260219191955.83815-25-philmd@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
+ 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
+ ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
+In-Reply-To: <20260219191955.83815-25-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.045,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,47 +145,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Feb 18, 2026 at 10:29:38PM +0100, Lukas Straub wrote:
-> When a send thread encounters an error (as is the case with yank),
-> it sets multifd_send_state->exiting and the other threads exit too.
-> This races with multifd_send_sync_main() which now hangs at
-> qemu_sem_wait(&p->sem_sync) in multifd_send_sync_main() line 647
-> as it waits for threads that have exited.
+On 2/19/26 11:19 AM, Philippe Mathieu-Daudé wrote:
+> Factor sparc_cpu_gdb_write_register() out.
 > 
-> Fix this by kicking the semaphores when exiting the send threads.
+> Prefer ldn_p(target_long_bits/8) over target-specific ldtul_p().
 > 
-> I encountered this hang when stress testing the colo unit test,
-> though I was unable to write a migration test to reliably hit this.
-> 
-> Signed-off-by: Lukas Straub <lukasstraub2@web.de>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->  migration/multifd.c | 1 +
->  1 file changed, 1 insertion(+)
+>   target/sparc/gdbstub.c | 27 +++++++++++++--------------
+>   1 file changed, 13 insertions(+), 14 deletions(-)
 > 
-> diff --git a/migration/multifd.c b/migration/multifd.c
-> index 220ed8564960fdabc58e4baa069dd252c8ad293c..e8c85cb6c48deaee2c9bda7b821a976166d78c9c 100644
-> --- a/migration/multifd.c
-> +++ b/migration/multifd.c
-> @@ -677,6 +677,7 @@ static void *multifd_send_thread(void *opaque)
->          qemu_sem_wait(&p->sem);
->  
->          if (multifd_send_should_exit()) {
-> +            multifd_send_kick_main(p);
->              break;
->          }
 
-Looks like normal migration cancellation will only error out the main
-channel not multifd ones, hence the main sync will always properly done via
-the sem_sync.  So maybe yank behaves differently indeed and less people use
-yank in multifd migrations.  Looks fine to do extra kick for this path, as
-long as we'll destroy the two semaphores later for each migration attempt.
-
-Said that, special casing this path looks weird.
-
-We could move the kick main at the end to be out of "err" case, so we
-always kick it?  We can add a comment explaining that.
-
--- 
-Peter Xu
-
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
