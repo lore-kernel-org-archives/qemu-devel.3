@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A91AE9A05F
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 19:24:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64E4EE9A04F
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 19:24:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vt9ci-0005tK-8z; Thu, 19 Feb 2026 14:23:41 -0500
+	id 1vt9cq-0006OW-W9; Thu, 19 Feb 2026 14:23:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vt9bY-0002ys-SC
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 14:22:32 -0500
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vt9bk-0003Ga-8q
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 14:22:42 -0500
+Received: from mail-wm1-x344.google.com ([2a00:1450:4864:20::344])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vt9bP-0008Bp-86
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 14:22:22 -0500
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-483487335c2so12729205e9.2
- for <qemu-devel@nongnu.org>; Thu, 19 Feb 2026 11:22:15 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vt9bh-0008Fh-BP
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 14:22:39 -0500
+Received: by mail-wm1-x344.google.com with SMTP id
+ 5b1f17b1804b1-4806cc07ce7so10136835e9.1
+ for <qemu-devel@nongnu.org>; Thu, 19 Feb 2026 11:22:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771528934; x=1772133734; darn=nongnu.org;
+ d=linaro.org; s=google; t=1771528955; x=1772133755; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=DcFDo0OGdAbFK/LYHLtyhoYdjn54Jx25hy6jAoUO6d8=;
- b=SWxSnr7ve9X8MUXo9Ic69HSZ/gOCm3ML8lrMpN+d2eo59Ul/wp43oAn+z1+q4QHhoV
- NAierCJ83cLPal01cbU3nl2rvaNAlVfq5sZSYNU5dVO5bJNxjSVGj+Gat/EAmhaStdYo
- LqM2DCHbcqPE3cA0kfDb7nMIx85fAuoDSGHCQtEcEbj/wV3Y+q4B8nNK3e94GmdFdvdk
- uJWckr08bwc5cYw8vK4T38IygTkzJ2tnpySl5DToSEdXmkJ0v/xU0/6AYaii0yIe81uK
- 7FImTBrx6Qs6A7QY/Siz+2rhAwNxIcL+lgMvUjAnr5T0XhEqSm49Uz+skIw1pVhj+Djd
- MuAg==
+ bh=V9iEphdQeaiZaph+ao0QTT23RTfI+/n5dC07U1n0Jv0=;
+ b=yWDN2BicnBpyFy6LIcQPWUbkr2EnYOk+vvSSIiVHC6ecWwcy3KH3CQJOgPK17OX5b1
+ 8OF202/+Nfibb7HZtPgDp9eUI8HvDfzkaVo5AqTzImaQtR8hQFyzJaSxhhH2hjD93idU
+ mTJRj3khagdW84Zb3T4VwVWnE0SQKDXUfxYdU1WGhFLJqkk8VQk9FyXds+RQHQZnOEmF
+ 0Y7DTc4RGojIzjSkL3upENWb7xnMgP1+k5Ew9V7TyipFkQ0674wRET8Y93OOXwi/gb5d
+ Ej8zZWonKsiHyhx3iYU+es6BT6eSEFR45KlTVru0KUS6lYcBVdQGrAIcpmpzboo72vel
+ sDcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771528934; x=1772133734;
+ d=1e100.net; s=20230601; t=1771528955; x=1772133755;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=DcFDo0OGdAbFK/LYHLtyhoYdjn54Jx25hy6jAoUO6d8=;
- b=w32nDPp+g+KtIBE2SXjwcU43niMJN0TxGPMQddFg6Nz4OYpYv7UrhP2rYGT54VjSQJ
- ZLh/9bU6RNC6wpBHygD+aQmEI26I38AxuoRT0puDUKKdU4vpBzb7Ycahb7mrvfBUYFjN
- JTG1Lm6d0itIbTbZd3J1kNJkM4T9ok80CUZQPRzhMBpgx9Du54qFZoxuF4H0sKdqUECc
- JewX0twG+5iAvn2J5DqtKt++EkMJAI1+sN8ys5IQYoMDUrpuuMmoe+QRBzZjN6oXTC00
- YOUEE2CCKVrvJGfoTHcqnYMDnreu7Qp0JvXdwS08O83Ie8y9MSye3q35L4/BRT1XW/h5
- MoYQ==
-X-Gm-Message-State: AOJu0YyY7UaD4WtPa3eMHraRWK6nTVcdEs26Hp86o3kBpBF8UDrcf59L
- VTPbHnCNxAp4S6AS7Ev0HyvmBO0rUN+odUlMt11Qn1xhDwAAY1Ae/KslfS8cxoVw3+inKL7kmQY
- Qdjuhme86qQ==
-X-Gm-Gg: AZuq6aL8xVPOtLU+hj3ejTA9xXXO6wA/4PZ32LBV4mFX5dz/HWfybhNWMiS9/3839i3
- LCCp2F9HmmE6EvuBM2hZiTkhCt+XyAd4Pv/QhlC8xa1evO6j4pJUu3XBXQIeAVfxBuHzOYAwr66
- QK3IoV5/+i0FBEDZmqZ48pdaoJ4FjCIq2HfsAuE6QZqAQMdCpqPYT3SmMZXhZVdDT0qjPcz2UBV
- raJOOsj/55yMZeSAJcHvAQnpt2KtrWMIGce7wPxCBOVuUu8G6ILgllNHF1ZeFWnhxeavtN93Rg/
- hc/LZ3U0o9b+1mSaoOEcqcd1gMSrUrCIAZu6/gqsc+3zQlI0Mns4ahqOq6CY+5CXUrEVQv4F7PQ
- Lxi2yplVqeXoK+YRiD54130NXVbxIVSkU9WbIEtxo1rJsW/QMXQpGb7UVKWIPVOml2vqHdQYlcZ
- dGahsEHlSm2Rg0SkJMCe7cwwC88wDZpTRc3lJ3r2dWQmhOUcUwDvP7APpsK2SOuTPKWa8+A7dY
-X-Received: by 2002:a05:600c:5251:b0:47a:810f:1d06 with SMTP id
- 5b1f17b1804b1-4839e6370e0mr50122305e9.4.1771528934266; 
- Thu, 19 Feb 2026 11:22:14 -0800 (PST)
+ bh=V9iEphdQeaiZaph+ao0QTT23RTfI+/n5dC07U1n0Jv0=;
+ b=KTOwN80220oYDOTO/0swwUvOhyfwaXZ9km49F7XgZGAyb8pM4yo4nOemgSNMjT4yJI
+ SdG8+eUsS0i4yYTMlFtnB1H9CZqYZS9ah3PS2W56x0n2qsfOtUI2VmW7X/u8LRUujAu0
+ r3eJK0UVUUoLdsm5/jOt6+U8hnCBxkH8Ggp0+GHhqTE5O83Wp6XdM2r4pcadUkcJd+cI
+ auoruP5pQ50w1w/DPr65gJ1v+Z8yETizd/v6+DFOSJS2JODUOZS0kzzUvtki9V9H7bej
+ 0BrxsSDLpUoATW+OrxOxJmDfkAwmk5j9AW0dr9U1uX/DpzuYdaa01oD8iCYv46060iry
+ aejg==
+X-Gm-Message-State: AOJu0YxenNZB7icN02R7e8BaxOyVw2MHgyfFP39Z4bdo+3KrgB+FpZ9W
+ iiqd5nXuqgMWG2eu525fuvVHN8poU0gBCEJlYmLX9v2c6ELu1Xbwe2lp+BCSlFQufvGD2A77maF
+ hKOhtpejmN44M
+X-Gm-Gg: AZuq6aIwVZZwfv9k6ie2KkxdDg0VyUSI/8PNtsldYLcYFrSYNtCHR0XJte1xsaRIGny
+ wx8/hOPtRYjWkxpP4god5XCEm8gPy1LlfpAF73K1Z656PVayssl9HrcHaBMpPy9hHWFDHJjngSk
+ OQBQOQRaKi/t/8AmAAdFXym5L548Xi5l/7rKi0GhWSVVYOpY9JqmavppE/5DuHUiLnB3UFkR4vG
+ KicyuQ6BMduqdv4k9iOPWGWBLF2EZiRXiAdsWyNvKs0TiEM0RGlkdqkqtsliBIdt1U43t/A3Kt9
+ WpGwgMfHiYA+YeEXshFXChIQz8Ew1IxToLOlB3aqSANVcAVIZVdpy6+R5ceacq5f3t4wZx1tMfV
+ hB4BHFgFYI7G+VdVDeqXkMBrDWSblhlTmCzt8vouoFIZGeFcM2vSUYlJtQLmFqHN7kB9UY4TMg8
+ vzBm1TwM81oT7IMmKyigWYqWkpyOc+mPsku4QF9SUx+StkXdN5MJx+j3rz92h6f7iBLeBtlpqc
+X-Received: by 2002:a05:600c:8b70:b0:483:54cc:cd89 with SMTP id
+ 5b1f17b1804b1-48398a548c5mr122277135e9.9.1771528955411; 
+ Thu, 19 Feb 2026 11:22:35 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-483a424048fsm274925e9.0.2026.02.19.11.22.13
+ ffacd0b85a97d-43796ac8075sm48232894f8f.29.2026.02.19.11.22.34
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 19 Feb 2026 11:22:13 -0800 (PST)
+ Thu, 19 Feb 2026 11:22:34 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
@@ -70,19 +70,18 @@ Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  qemu-riscv@nongnu.org, qemu-ppc@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Laurent Vivier <laurent@vivier.eu>
-Subject: [PATCH v2 19/50] target/m68k: Remove MonitorDef register entries
- available via gdbstub
-Date: Thu, 19 Feb 2026 20:19:21 +0100
-Message-ID: <20260219191955.83815-20-philmd@linaro.org>
+ Laurent Vivier <laurent@vivier.eu>, Stafford Horne <shorne@gmail.com>
+Subject: [PATCH v2 22/50] target/or1k: Use XML register definitions from GDB
+Date: Thu, 19 Feb 2026 20:19:24 +0100
+Message-ID: <20260219191955.83815-23-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260219191955.83815-1-philmd@linaro.org>
 References: <20260219191955.83815-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::344;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x344.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,44 +104,133 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-All these registers are already provided by via gdbstub parsed XML
-and handler by the gdb_get_register() helper in the monitor/hmp.c
-file. Remove as now unreachable code.
+Import gdb-xml/or1k-fpu.xml from mainstream binutils, tag
+'binutils-2_46' [*]. Register as CPUClass::gdb_core_xml_file.
+
+[*] https://sourceware.org/git/?p=binutils-gdb.git;a=blob_plain;f=gdb/features/or1k-core.xml;h=0d13f355f5296ae426794eb3003dcc18fbbd49d5;hb=refs/tags/binutils-2_46
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/m68k/monitor.c | 18 ------------------
- 1 file changed, 18 deletions(-)
+ configs/targets/or1k-linux-user.mak |  1 +
+ configs/targets/or1k-softmmu.mak    |  1 +
+ target/or1k/cpu.c                   |  2 +-
+ gdb-xml/or1k-core.xml               | 65 +++++++++++++++++++++++++++++
+ 4 files changed, 68 insertions(+), 1 deletion(-)
+ create mode 100644 gdb-xml/or1k-core.xml
 
-diff --git a/target/m68k/monitor.c b/target/m68k/monitor.c
-index 6d101c75df0..08ced037b47 100644
---- a/target/m68k/monitor.c
-+++ b/target/m68k/monitor.c
-@@ -24,24 +24,6 @@ void hmp_info_tlb(Monitor *mon, const QDict *qdict)
+diff --git a/configs/targets/or1k-linux-user.mak b/configs/targets/or1k-linux-user.mak
+index 0ee3a05884d..9f8c178ef10 100644
+--- a/configs/targets/or1k-linux-user.mak
++++ b/configs/targets/or1k-linux-user.mak
+@@ -2,5 +2,6 @@ TARGET_ARCH=or1k
+ TARGET_BIG_ENDIAN=y
+ TARGET_SYSTBL_ABI=common,32,or1k,time32,stat64,rlimit,renameat
+ TARGET_SYSTBL=syscall.tbl
++TARGET_XML_FILES= gdb-xml/or1k-core.xml
+ TARGET_LONG_BITS=32
+ TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API=y
+diff --git a/configs/targets/or1k-softmmu.mak b/configs/targets/or1k-softmmu.mak
+index 204283d604f..24d89bc3e65 100644
+--- a/configs/targets/or1k-softmmu.mak
++++ b/configs/targets/or1k-softmmu.mak
+@@ -2,6 +2,7 @@ TARGET_ARCH=or1k
+ TARGET_BIG_ENDIAN=y
+ # needed by boot.c and all boards
+ TARGET_NEED_FDT=y
++TARGET_XML_FILES= gdb-xml/or1k-core.xml
+ TARGET_LONG_BITS=32
+ TARGET_NOT_USING_LEGACY_LDST_PHYS_API=y
+ TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API=y
+diff --git a/target/or1k/cpu.c b/target/or1k/cpu.c
+index c64542a59a2..3d1c22bf75d 100644
+--- a/target/or1k/cpu.c
++++ b/target/or1k/cpu.c
+@@ -288,13 +288,13 @@ static void openrisc_cpu_class_init(ObjectClass *oc, const void *data)
+     cc->dump_state = openrisc_cpu_dump_state;
+     cc->set_pc = openrisc_cpu_set_pc;
+     cc->get_pc = openrisc_cpu_get_pc;
++    cc->gdb_core_xml_file = "or1k-core.xml";
+     cc->gdb_read_register = openrisc_cpu_gdb_read_register;
+     cc->gdb_write_register = openrisc_cpu_gdb_write_register;
+ #ifndef CONFIG_USER_ONLY
+     dc->vmsd = &vmstate_openrisc_cpu;
+     cc->sysemu_ops = &openrisc_sysemu_ops;
+ #endif
+-    cc->gdb_num_core_regs = 32 + 3;
+     cc->disas_set_info = openrisc_disas_set_info;
+     cc->tcg_ops = &openrisc_tcg_ops;
  }
- 
- static const MonitorDef monitor_defs[] = {
--    { "d0", offsetof(CPUM68KState, dregs[0]), NULL, MD_I32 },
--    { "d1", offsetof(CPUM68KState, dregs[1]), NULL, MD_I32 },
--    { "d2", offsetof(CPUM68KState, dregs[2]), NULL, MD_I32 },
--    { "d3", offsetof(CPUM68KState, dregs[3]), NULL, MD_I32 },
--    { "d4", offsetof(CPUM68KState, dregs[4]), NULL, MD_I32 },
--    { "d5", offsetof(CPUM68KState, dregs[5]), NULL, MD_I32 },
--    { "d6", offsetof(CPUM68KState, dregs[6]), NULL, MD_I32 },
--    { "d7", offsetof(CPUM68KState, dregs[7]), NULL, MD_I32 },
--    { "a0", offsetof(CPUM68KState, aregs[0]), NULL, MD_I32 },
--    { "a1", offsetof(CPUM68KState, aregs[1]), NULL, MD_I32 },
--    { "a2", offsetof(CPUM68KState, aregs[2]), NULL, MD_I32 },
--    { "a3", offsetof(CPUM68KState, aregs[3]), NULL, MD_I32 },
--    { "a4", offsetof(CPUM68KState, aregs[4]), NULL, MD_I32 },
--    { "a5", offsetof(CPUM68KState, aregs[5]), NULL, MD_I32 },
--    { "a6", offsetof(CPUM68KState, aregs[6]), NULL, MD_I32 },
--    { "a7", offsetof(CPUM68KState, aregs[7]), NULL, MD_I32 },
--    { "pc", offsetof(CPUM68KState, pc), NULL, MD_I32 },
--    { "sr", offsetof(CPUM68KState, sr), NULL, MD_I32 },
-     { "ssp", offsetof(CPUM68KState, sp[0]), NULL, MD_I32 },
-     { "usp", offsetof(CPUM68KState, sp[1]), NULL, MD_I32 },
-     { "isp", offsetof(CPUM68KState, sp[2]), NULL, MD_I32 },
+diff --git a/gdb-xml/or1k-core.xml b/gdb-xml/or1k-core.xml
+new file mode 100644
+index 00000000000..0d13f355f52
+--- /dev/null
++++ b/gdb-xml/or1k-core.xml
+@@ -0,0 +1,65 @@
++<?xml version="1.0"?>
++<!-- Copyright (C) 2017-2026 Free Software Foundation, Inc.
++
++     Copying and distribution of this file, with or without modification,
++     are permitted in any medium without royalty provided the copyright
++     notice and this notice are preserved.  -->
++
++<!DOCTYPE feature SYSTEM "gdb-target.dtd">
++<feature name="org.gnu.gdb.or1k.group0">
++  <reg name="r0" bitsize="32" type="int"/>
++  <reg name="r1" bitsize="32" type="data_ptr"/>
++  <reg name="r2" bitsize="32" type="data_ptr"/>
++  <reg name="r3" bitsize="32" type="int"/>
++  <reg name="r4" bitsize="32" type="int"/>
++  <reg name="r5" bitsize="32" type="int"/>
++  <reg name="r6" bitsize="32" type="int"/>
++  <reg name="r7" bitsize="32" type="int"/>
++  <reg name="r8" bitsize="32" type="int"/>
++  <reg name="r9" bitsize="32" type="code_ptr"/>
++  <reg name="r10" bitsize="32" type="int"/>
++  <reg name="r11" bitsize="32" type="int"/>
++  <reg name="r12" bitsize="32" type="int"/>
++  <reg name="r13" bitsize="32" type="int"/>
++  <reg name="r14" bitsize="32" type="int"/>
++  <reg name="r15" bitsize="32" type="int"/>
++  <reg name="r16" bitsize="32" type="int"/>
++  <reg name="r17" bitsize="32" type="int"/>
++  <reg name="r18" bitsize="32" type="int"/>
++  <reg name="r19" bitsize="32" type="int"/>
++  <reg name="r20" bitsize="32" type="int"/>
++  <reg name="r21" bitsize="32" type="int"/>
++  <reg name="r22" bitsize="32" type="int"/>
++  <reg name="r23" bitsize="32" type="int"/>
++  <reg name="r24" bitsize="32" type="int"/>
++  <reg name="r25" bitsize="32" type="int"/>
++  <reg name="r26" bitsize="32" type="int"/>
++  <reg name="r27" bitsize="32" type="int"/>
++  <reg name="r28" bitsize="32" type="int"/>
++  <reg name="r29" bitsize="32" type="int"/>
++  <reg name="r30" bitsize="32" type="int"/>
++  <reg name="r31" bitsize="32" type="int"/>
++  <reg name="ppc" bitsize="32" type="code_ptr"/>
++  <reg name="npc" bitsize="32" type="code_ptr"/>
++  <flags id="sr_flags" size="4">
++    <field name="SM" start="0" end="0"/>
++    <field name="TEE" start="1" end="1"/>
++    <field name="IEE" start="2" end="2"/>
++    <field name="DCE" start="3" end="3"/>
++    <field name="ICE" start="4" end="4"/>
++    <field name="DME" start="5" end="5"/>
++    <field name="IME" start="6" end="6"/>
++    <field name="LEE" start="7" end="7"/>
++    <field name="CE" start="8" end="8"/>
++    <field name="F" start="9" end="9"/>
++    <field name="CY" start="10" end="10"/>
++    <field name="OV" start="11" end="11"/>
++    <field name="OVE" start="12" end="12"/>
++    <field name="DSX" start="13" end="13"/>
++    <field name="EPH" start="14" end="14"/>
++    <field name="FO" start="15" end="15"/>
++    <field name="SUMRA" start="16" end="16"/>
++    <field name="CID" start="28" end="31"/>
++  </flags>
++  <reg name="sr" bitsize="32" type="sr_flags"/>
++</feature>
 -- 
 2.52.0
 
