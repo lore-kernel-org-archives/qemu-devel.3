@@ -4,114 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FE27E9A05E
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 19:47:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE52FE9A05E
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 19:50:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vt9yu-0007OI-C1; Thu, 19 Feb 2026 14:46:36 -0500
+	id 1vtA1t-0008Af-SR; Thu, 19 Feb 2026 14:49:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vt9yr-0007O4-Si
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 14:46:33 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vtA1l-00088b-S2
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 14:49:36 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vt9yp-0006E9-I8
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 14:46:33 -0500
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vtA1k-0006jz-Bv
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 14:49:33 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771530390;
+ s=mimecast20190719; t=1771530571;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=grO1KrcP0Xk82oHicKubDcQrHT3B/k63JUfz8MfYh6k=;
- b=h6bATZ/itO3hFlhJaFNYWbvXj7tnxgjLgAbe8xOFJPC1yfrGgK2TbgnkT30LHg8m9cuIpI
- e/FceOTZUBGE9qxP0JdTj+x7oKzZn+LMOA93YAZ3EYf6oNpuwdhLUMKg/QJM/SMr1p1Jm2
- YYokFAUNsd1KVJuzWUSLSnmJcu2nb8Y=
-Received: from mail-yx1-f72.google.com (mail-yx1-f72.google.com
- [74.125.224.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=3w/nDo2pjgq2cNZmndgIWTj5G/TMoCC4ql/U8UAgL70=;
+ b=ggNRbS/CvvOL374JY78mdhaeIODFFj6RzWFtRKn94nbVVwpMxOMSjlnZRn+ZwBOZvGEfcj
+ QdK5a1F/u+MD0Md/Zi26gGTX8vnOLW6pDb3Fryp4+oeqCvSTGBCMPG28QW6PPWf1yPApZS
+ FsK9Y5qSGhygCVkHZceh0JGHhRXwaHw=
+Received: from mail-yx1-f71.google.com (mail-yx1-f71.google.com
+ [74.125.224.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-91-K5hGxQ0JMa2W-iG827pwRA-1; Thu, 19 Feb 2026 14:46:28 -0500
-X-MC-Unique: K5hGxQ0JMa2W-iG827pwRA-1
-X-Mimecast-MFC-AGG-ID: K5hGxQ0JMa2W-iG827pwRA_1771530388
-Received: by mail-yx1-f72.google.com with SMTP id
- 956f58d0204a3-64ad18e7ffaso1953709d50.2
- for <qemu-devel@nongnu.org>; Thu, 19 Feb 2026 11:46:28 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1771530388; cv=none;
+ us-mta-462-ltr1RllSPw-l9oGbYz-mAw-1; Thu, 19 Feb 2026 14:49:29 -0500
+X-MC-Unique: ltr1RllSPw-l9oGbYz-mAw-1
+X-Mimecast-MFC-AGG-ID: ltr1RllSPw-l9oGbYz-mAw_1771530569
+Received: by mail-yx1-f71.google.com with SMTP id
+ 956f58d0204a3-64adb64a043so2827232d50.3
+ for <qemu-devel@nongnu.org>; Thu, 19 Feb 2026 11:49:29 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1771530569; cv=none;
  d=google.com; s=arc-20240605;
- b=PkpG/gyDMfeOTuQDszxuSGB4y1sz3PmzQScV/vxRcV3Doasy1g2Pbi25kdIAp71xFk
- 5OFcojSxYwK160KZNzJ4jAoWwArEjweAmPRrW93AbH7RLwIzwZOxFyjPpNPFTUROvQzV
- bmxiyombqqljcrLzpbYz0qozzcy9Q9xbr/4Ir2wgODeHMhaikm00KCeGcRaF2N7/YDdm
- oRa0daFEaV1Os1/lh+qZkohz7lu1JUtQBGf44XxHCwUh9VHhAW1evlHMPJVNO7S3OTk1
- hfOtuYFMHQd6EbB0k8oP8+T3Yq4mRc2GZARFjxgtHWDwom1sR1qFnClX9Uz9QkmQtP0q
- Z4Zw==
+ b=SlKz7OzkSolbsn4TsSsocAhkoQkGRxHrubLvfK2QadyUlDkIOLF3otHnCLNaQs7CIE
+ g8wDc/ymKw6pjyPu2FIhb74oYXGSOE1DYTVIwAtKWeuhVrFkj5MGdstt0YiUPuXA9wQS
+ I7uf5GDBvAUwujtmyA3Oe0r8S+6u4OoEw4tjm6Clc985eZzBTgexCyzsMdfgULb9peRj
+ Ghk8/oGDbLedYvNDP5BmQFYWVc3kTv8TYpeSCJgiK6Lzic+SSX9wBiSZki9or2XzeU8C
+ KBoJda8k2XC7L6Exad0vyAK6C7bH+Z5C0yEocDa4ac/DCKX5GESrFm0TvnIXh8x3fWmg
+ sRYA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=grO1KrcP0Xk82oHicKubDcQrHT3B/k63JUfz8MfYh6k=;
- fh=BOrBKWTVXG66wETpXxZnic/GRcGQC/4mTcHPOlgdvK4=;
- b=CNoi++7vDjMIxl0Oms+71fipvSmuefo96JEtebvhr9PQjTNlPD18jmIS88d0adkypl
- ljbaw9Y4klQKNPqNEGZon85Ud6K5ZWn7vXxK0mRtRVl00j2x5kCpAsOBWJ55mR5/ynIT
- hPhsx+XI0k1umLKNsNd3gNwZRvFuX9kxB2pmO5Mrpb6Gj1GlYGi2bkIGcWqwDduUayAi
- 3RmpDhELTLiZ9ECIvVS/DfCFSSLAfOQvhUBPHXAiCPfgFFL4Lk9rZ2R0M1FVWwF7FVo/
- m0APTMrGXeIsLL4ZWQCTCI8HfDu9hTlQwxoWYCmj4+oKZ8+KOTb4518fhhDphdbeazDM
- zXTg==; darn=nongnu.org
+ bh=3w/nDo2pjgq2cNZmndgIWTj5G/TMoCC4ql/U8UAgL70=;
+ fh=vx0Tp3VJSo8e81n3LMN5/HaTS3Pu+3rsK1iF7VPu1EM=;
+ b=ldoWnptAc7uwxjZLi5HR6tFHbLUchTa5EcHHO1te+IzJmotXNATA0PhVZDtS4XKzD7
+ +ZIiuwd0CNOP2L/SZSW/vs6r5iwXDP1dALKLjoISH1aCjmgntpiWt004zeYM5iofPr47
+ AFPgxUG65kfL4V5Vrd58yYD87gTGu8VRrVTq3SuarCiR9MG3FnUWgQ1fIIo54m8hjoPt
+ mVrBeGj17VvrpMqvbBA+Ofg0ru4UpkFaWr+n5wEhmqUbYcuIfvPAuAw9elz90XGDK6j9
+ HcmzqPq/MatYDM6PmJkqi5FqUJ5LnNI8tUbANjAY+1jnZ1+6jaQzziPGbPYkLB3YilaH
+ El6A==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1771530388; x=1772135188; darn=nongnu.org;
+ d=redhat.com; s=google; t=1771530569; x=1772135369; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=grO1KrcP0Xk82oHicKubDcQrHT3B/k63JUfz8MfYh6k=;
- b=dDl2eY+3ujc1Y8aKRMMzaJyi+y1JjYU4AyMh9Y9zLXx0sVwHmcK0yhUb5azD5dzFTO
- pPQnv8oXuUic+AO+4zKLu2ZmX+WObSK8arwdKukbUXLYnf8uZqfgnqNrzlYRb6kIbmgj
- JLI9CLf4nGd03i7x9Ex+xHJZ8pAmOu6KfzYQMohezsIgH+xdUzk0I6nU4QSXsbDfOzqD
- sWraH6ck4mouQKYpqgIoQNkr3eY99svbdIc4N/QRNla10eUSGYN2zAtwxztZ1xtvS4+Y
- VnNQbavC15PB8uWN/eXXitGKI6rli5FKU3T14VukAs8ceRIde5Iy5BiNGcKdrczHuvjj
- wlEg==
+ bh=3w/nDo2pjgq2cNZmndgIWTj5G/TMoCC4ql/U8UAgL70=;
+ b=oPrbGAV4PsqbRek9def3lIfgNG+cFxjTeAhkwInsiPaiU0sZBWa/Kp1FNjWKfTHSTV
+ hy8j2CICxpvzWsoJaAu93bfhhc5zIFWEK51NqsfjxNhcZN7XBrsSsy63dYZrum1VFx+Q
+ 4xSyovZN8EcCVLqxbarZen9bGRngITXZFhKtBZ8VwDPs/9FhHTAYZFzL1GLP4Ecrq7M9
+ hDXjixbffQYgy2J+j/19YvRYEk3Vc9PSq+ONiha6mObwe/ypyxjTcgirCRzrczQxdX25
+ IQ/pANaFcP9yEP1mRTpg/BT4ujpdaUrHE9r4H7xz822SLzFs7a0DWZXIeMfE4NWYgHvj
+ KDOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771530388; x=1772135188;
+ d=1e100.net; s=20230601; t=1771530569; x=1772135369;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=grO1KrcP0Xk82oHicKubDcQrHT3B/k63JUfz8MfYh6k=;
- b=EK/0IEtEsr90wYo6K/jDwChzoPbWXIxfzPW9bTv5Ta7LBtT8kuiNqXXGkqTQ8iA/Ed
- keNCJeFPJuUm1cWib0KUzIi3eysFALOtD9W85k3yLDu2nMEL6DJzpk7VVlOO3rVP0XVP
- VgITdQJ5CTe8awl1oTziuvEf970HhXLMeahg9O/fsnTIvsc1Uh0ccEYUVT1SHPPvf8i4
- Gt7n0kvkq5qKunBE8jY0uLkenbd/DURqyrzWNRyXu3cmJHIIHHuNT4KPIBcFYNAX6dy8
- /wGoYhNzQTjHzC8WgI2erTQG8O1/E7moiivIdaCDhe5rtvWjg5xtFMFRE/cx2AOZ7RKa
- atBQ==
-X-Gm-Message-State: AOJu0YwtezwzwYctfyl9tkWPT4vCOBS56d3No+k5iQmx1NlBcXVBVEfX
- DCkWLopC1QAYfx8Tb4yazqbFyIL/CkZi/tcFft/6cgRdd//LQVjKX6rCeNvZysVhw1v1ldBc7dQ
- 4A3n57/Pk3P5zys2RzMn0hHebCxsAmXbV/Elk5QqaZitmtIDSRSyBBzNaagd1UpDnblqrDiWBTD
- s0IIgWOlWEvNKRhIBIvpT9uj2wA7ks2hI=
-X-Gm-Gg: AZuq6aJe2avIRffpiEfEfHk6ooimV8yhtSpANJRjG1hlGUY1TzGfaKUaRIECKNlSQiV
- l0nTNpRwPPmKcK6h4NiQr6jQMeqznmnBebKsLlQo8Sn6PHz/sxpxULQ0ml9u/fhNhbOKGT7Ndzq
- QhZklTgcrgyFREgJd71SKdJChgyJ2+flmhoS4LwGr4FEvIRbdzCnGcEQDHYRAHON4e4ONG/FhbF
- ZRB9fcoP/aaCAOG+XaM16EpTSrbsPfVpKKWzQ==
-X-Received: by 2002:a53:e008:0:b0:64a:db50:fab2 with SMTP id
- 956f58d0204a3-64c14dcbd3amr13643458d50.80.1771530387955; 
- Thu, 19 Feb 2026 11:46:27 -0800 (PST)
-X-Received: by 2002:a53:e008:0:b0:64a:db50:fab2 with SMTP id
- 956f58d0204a3-64c14dcbd3amr13643443d50.80.1771530387594; Thu, 19 Feb 2026
- 11:46:27 -0800 (PST)
+ bh=3w/nDo2pjgq2cNZmndgIWTj5G/TMoCC4ql/U8UAgL70=;
+ b=MCUoK3Mitf7vYgBBEgZjY/HwtwdaQeoqn2WoPNpy3jpNIWCNKLCD9Y8zIL+eT9/0OT
+ yYkOLaYA/onnTQZ709wkU0h8OjTQUyG09jkGLSTeplNlKMf9W8xREddjrWPHRUeuhXYS
+ noLt0WauKvowKPHZ9WCytrZejRs5dqpMLK7PtHZ7kr9sjgAAu0Z7JgmxpgOrUgrt5b+c
+ /XFJMCv/g0cFiTQaPEzirFCGUmMk3cXQlYd/s8aXK1akF5zebdxFAAG4Wl5pdKJDW8NY
+ QMkgfiUJoFdzePjq1UZ6A8YhRZTMrFxG/ES0QEdgVgMTfNiNmUsayRvwJSwJjNudwqU9
+ y4OA==
+X-Gm-Message-State: AOJu0YzvhCKM3ZfQuji4x1rKGMh/9Vfocp56bHyG5JAbDO6XEvIiRWoi
+ sGqUP0gvcNAJVMWPK5e28ex6SyZGsVJAvau7szwPVVsaiBdG8dVX5SZxcxIICGJEt+i9JUvYF11
+ VqWVnBkK7sWzsoFIl1O4r1Kp9OlNkKb+Gk6kCjCbYauelJTy+ITsBMdUA3kZykD7xAOVngVdnHN
+ NON2SBeqCZFNboe1Fwp1YanfHGxy0Wrws=
+X-Gm-Gg: AZuq6aL4R+/ibkUQimQpzZNQ/PgscL2v+PkbSYhMqLpbyKbkEM80hW5SHgQLdqsZ1Yh
+ 2M/vneb5WPwmybwINuk11Bl477l8qg4nLPmIfmS0FeU5f5PWchYmpNDaZ6pZFHRCUnV9JwJHoA2
+ JVYba4oR4laHlbC4LS3xGcGoSm++oe3EjbyKdfym8z0RouRvK+h3bSm3XZ7SIY1V8TvDGXC3lz0
+ nbUJcgEK4yb1X3jrZ+WITLa2cVk9o8MQJZMHA==
+X-Received: by 2002:a05:690e:d46:b0:64a:efe4:7b47 with SMTP id
+ 956f58d0204a3-64c21b821afmr11968318d50.83.1771530569242; 
+ Thu, 19 Feb 2026 11:49:29 -0800 (PST)
+X-Received: by 2002:a05:690e:d46:b0:64a:efe4:7b47 with SMTP id
+ 956f58d0204a3-64c21b821afmr11968299d50.83.1771530568872; Thu, 19 Feb 2026
+ 11:49:28 -0800 (PST)
 MIME-Version: 1.0
-References: <20260214061025.1239457-1-pierrick.bouvier@linaro.org>
-In-Reply-To: <20260214061025.1239457-1-pierrick.bouvier@linaro.org>
+References: <20251221105340.2699327-1-buenocalvachejoel@gmail.com>
+ <CAPDLHD5HGNAu1=JD=V-9YQMpR_8-tWjONex2jj4ZFHbNe9qVcg@mail.gmail.com>
+ <CAPDLHD4XhjpmiJPNJi5kO20bbe51=RBgDoy1LF2wJ7sCaLbCzQ@mail.gmail.com>
+In-Reply-To: <CAPDLHD4XhjpmiJPNJi5kO20bbe51=RBgDoy1LF2wJ7sCaLbCzQ@mail.gmail.com>
 From: John Snow <jsnow@redhat.com>
-Date: Thu, 19 Feb 2026 14:46:16 -0500
-X-Gm-Features: AZwV_QjAEFGM8U_Bs_XGooiPZ1nrVmqAXnLdsErc8CvLXTX2a6FuM1bEl1HQ1MQ
-Message-ID: <CAFn=p-ZUH+uG0mE_PGs-2Bwik+e_b0e5wf-bS4KKOE1SvP1=4g@mail.gmail.com>
-Subject: Re: [PATCH] contrib/plugins/cpp: use __has_include
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Mahmoud Mandour <ma.mandourr@gmail.com>, philmd@linaro.org, 
- Alexandre Iooss <erdnaxe@crans.org>
+Date: Thu, 19 Feb 2026 14:49:17 -0500
+X-Gm-Features: AaiRm52tppuT1ErIYZsL_cw4l3Etji_wR1_-SBViHWENfyzl2uD3jNAj0OURrA8
+Message-ID: <CAFn=p-ZS1_tEWK04smp7KSHrH4TH3GACvf59+ZHY=kp0PkeZkg@mail.gmail.com>
+Subject: Re: [PATCH] hw/block/m25p80: Fix Winbond Fast Read dummy cycles
+To: Joel Bueno <buenocalvachejoel@gmail.com>
+Cc: qemu-devel@nongnu.org, Alistair Francis <alistair@alistair23.me>, 
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>, 
+ "open list:Block layer core" <qemu-block@nongnu.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -7
 X-Spam_score: -0.8
@@ -119,7 +120,7 @@ X-Spam_bar: /
 X-Spam_report: (-0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.045,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_BL_SPAMCOP_NET=1.347, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -137,395 +138,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Feb 14, 2026 at 1:10=E2=80=AFAM Pierrick Bouvier
-<pierrick.bouvier@linaro.org> wrote:
+On Mon, Feb 9, 2026 at 5:10=E2=80=AFAM Joel Bueno <buenocalvachejoel@gmail.=
+com> wrote:
 >
-> This make sure we can include all possible headers without breaking
-> build for environments missing them. It fixes compilation on openbsd.
->
-> We don't want to pollute configure script, as it's really a special case
-> here to make sure we don't have a compilation regression with
-> qemu-plugins header.
->
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> Adding jsnow, I forgot to initially add him! Also, bumping again. Thanks =
+and sorry for the bumps.
 
-Tested-by: John Snow <jsnow@redhat.com>
+Hi, sorry, what's the context here? I don't believe I've worked on
+this device before, what type of review are you hoping for from me?
 
-Thanks!
-
-> ---
->  contrib/plugins/cpp.cpp | 261 +++++++++++++++++++++++++++++++++++++++-
->  1 file changed, 259 insertions(+), 2 deletions(-)
 >
-> diff --git a/contrib/plugins/cpp.cpp b/contrib/plugins/cpp.cpp
-> index 1ff54896d97..0673c4f074d 100644
-> --- a/contrib/plugins/cpp.cpp
-> +++ b/contrib/plugins/cpp.cpp
-> @@ -6,103 +6,360 @@
->
->  #include <qemu-plugin.h>
->
-> -/* https://en.cppreference.com/w/cpp/headers.html */
-> +/*
-> + * We include all C++ standard headers (without deprecated ones),
-> + * taken from: https://en.cppreference.com/w/cpp/headers.html
-> + *
-> + * To update, copy page text, and then:
-> + * grep '^<' |
-> + * sort -u |
-> + * grep -v strstream |
-> + * grep -v codecvt |
-> + * sed -e 's/\(.*\)/#if __has_include(\1)\n#include \1\n#endif/'
-> + */
-> +
-> +#if __has_include(<algorithm>)
->  #include <algorithm>
-> +#endif
-> +#if __has_include(<any>)
->  #include <any>
-> +#endif
-> +#if __has_include(<array>)
->  #include <array>
-> +#endif
-> +#if __has_include(<atomic>)
->  #include <atomic>
-> +#endif
-> +#if __has_include(<barrier>)
->  #include <barrier>
-> +#endif
-> +#if __has_include(<bit>)
->  #include <bit>
-> +#endif
-> +#if __has_include(<bitset>)
->  #include <bitset>
-> +#endif
-> +#if __has_include(<cassert>)
->  #include <cassert>
-> +#endif
-> +#if __has_include(<cctype>)
->  #include <cctype>
-> +#endif
-> +#if __has_include(<cerrno>)
->  #include <cerrno>
-> +#endif
-> +#if __has_include(<cfenv>)
->  #include <cfenv>
-> +#endif
-> +#if __has_include(<cfloat>)
->  #include <cfloat>
-> +#endif
-> +#if __has_include(<charconv>)
->  #include <charconv>
-> +#endif
-> +#if __has_include(<chrono>)
->  #include <chrono>
-> +#endif
-> +#if __has_include(<cinttypes>)
->  #include <cinttypes>
-> +#endif
-> +#if __has_include(<climits>)
->  #include <climits>
-> +#endif
-> +#if __has_include(<clocale>)
->  #include <clocale>
-> +#endif
-> +#if __has_include(<cmath>)
->  #include <cmath>
-> -#include <codecvt>
-> +#endif
-> +#if __has_include(<compare>)
->  #include <compare>
-> +#endif
-> +#if __has_include(<complex>)
->  #include <complex>
-> +#endif
-> +#if __has_include(<concepts>)
->  #include <concepts>
-> +#endif
-> +#if __has_include(<condition_variable>)
->  #include <condition_variable>
-> +#endif
-> +#if __has_include(<contracts>)
-> +#include <contracts>
-> +#endif
-> +#if __has_include(<coroutine>)
->  #include <coroutine>
-> +#endif
-> +#if __has_include(<csetjmp>)
->  #include <csetjmp>
-> +#endif
-> +#if __has_include(<csignal>)
->  #include <csignal>
-> +#endif
-> +#if __has_include(<cstdarg>)
->  #include <cstdarg>
-> +#endif
-> +#if __has_include(<cstddef>)
->  #include <cstddef>
-> +#endif
-> +#if __has_include(<cstdint>)
->  #include <cstdint>
-> +#endif
-> +#if __has_include(<cstdio>)
->  #include <cstdio>
-> +#endif
-> +#if __has_include(<cstdlib>)
->  #include <cstdlib>
-> +#endif
-> +#if __has_include(<cstring>)
->  #include <cstring>
-> +#endif
-> +#if __has_include(<ctime>)
->  #include <ctime>
-> +#endif
-> +#if __has_include(<cuchar>)
->  #include <cuchar>
-> +#endif
-> +#if __has_include(<cwchar>)
->  #include <cwchar>
-> +#endif
-> +#if __has_include(<cwctype>)
->  #include <cwctype>
-> +#endif
-> +#if __has_include(<debugging>)
-> +#include <debugging>
-> +#endif
-> +#if __has_include(<deque>)
->  #include <deque>
-> +#endif
-> +#if __has_include(<exception>)
->  #include <exception>
-> +#endif
-> +#if __has_include(<execution>)
->  #include <execution>
-> +#endif
-> +#if __has_include(<expected>)
-> +#include <expected>
-> +#endif
-> +#if __has_include(<filesystem>)
->  #include <filesystem>
-> +#endif
-> +#if __has_include(<flat_map>)
-> +#include <flat_map>
-> +#endif
-> +#if __has_include(<flat_set>)
-> +#include <flat_set>
-> +#endif
-> +#if __has_include(<format>)
-> +#include <format>
-> +#endif
-> +#if __has_include(<forward_list>)
->  #include <forward_list>
-> +#endif
-> +#if __has_include(<fstream>)
->  #include <fstream>
-> +#endif
-> +#if __has_include(<functional>)
->  #include <functional>
-> +#endif
-> +#if __has_include(<future>)
->  #include <future>
-> +#endif
-> +#if __has_include(<generator>)
-> +#include <generator>
-> +#endif
-> +#if __has_include(<hazard_pointer>)
-> +#include <hazard_pointer>
-> +#endif
-> +#if __has_include(<hive>)
-> +#include <hive>
-> +#endif
-> +#if __has_include(<initializer_list>)
->  #include <initializer_list>
-> +#endif
-> +#if __has_include(<inplace_vector>)
-> +#include <inplace_vector>
-> +#endif
-> +#if __has_include(<iomanip>)
->  #include <iomanip>
-> +#endif
-> +#if __has_include(<ios>)
->  #include <ios>
-> +#endif
-> +#if __has_include(<iosfwd>)
->  #include <iosfwd>
-> +#endif
-> +#if __has_include(<iostream>)
->  #include <iostream>
-> +#endif
-> +#if __has_include(<istream>)
->  #include <istream>
-> +#endif
-> +#if __has_include(<iterator>)
->  #include <iterator>
-> +#endif
-> +#if __has_include(<latch>)
->  #include <latch>
-> +#endif
-> +#if __has_include(<limits>)
->  #include <limits>
-> +#endif
-> +#if __has_include(<linalg>)
-> +#include <linalg>
-> +#endif
-> +#if __has_include(<list>)
->  #include <list>
-> +#endif
-> +#if __has_include(<locale>)
->  #include <locale>
-> +#endif
-> +#if __has_include(<map>)
->  #include <map>
-> +#endif
-> +#if __has_include(<mdspan>)
-> +#include <mdspan>
-> +#endif
-> +#if __has_include(<memory>)
->  #include <memory>
-> +#endif
-> +#if __has_include(<memory_resource>)
->  #include <memory_resource>
-> +#endif
-> +#if __has_include(<mutex>)
->  #include <mutex>
-> +#endif
-> +#if __has_include(<new>)
->  #include <new>
-> +#endif
-> +#if __has_include(<numbers>)
->  #include <numbers>
-> +#endif
-> +#if __has_include(<numeric>)
->  #include <numeric>
-> +#endif
-> +#if __has_include(<optional>)
->  #include <optional>
-> +#endif
-> +#if __has_include(<ostream>)
->  #include <ostream>
-> +#endif
-> +#if __has_include(<print>)
-> +#include <print>
-> +#endif
-> +#if __has_include(<queue>)
->  #include <queue>
-> +#endif
-> +#if __has_include(<random>)
->  #include <random>
-> +#endif
-> +#if __has_include(<ranges>)
->  #include <ranges>
-> +#endif
-> +#if __has_include(<ratio>)
->  #include <ratio>
-> +#endif
-> +#if __has_include(<rcu>)
-> +#include <rcu>
-> +#endif
-> +#if __has_include(<regex>)
->  #include <regex>
-> +#endif
-> +#if __has_include(<scoped_allocator>)
->  #include <scoped_allocator>
-> +#endif
-> +#if __has_include(<semaphore>)
->  #include <semaphore>
-> +#endif
-> +#if __has_include(<set>)
->  #include <set>
-> +#endif
-> +#if __has_include(<shared_mutex>)
->  #include <shared_mutex>
-> +#endif
-> +#if __has_include(<simd>)
-> +#include <simd>
-> +#endif
-> +#if __has_include(<source_location>)
->  #include <source_location>
-> +#endif
-> +#if __has_include(<span>)
->  #include <span>
-> +#endif
-> +#if __has_include(<spanstream>)
-> +#include <spanstream>
-> +#endif
-> +#if __has_include(<sstream>)
->  #include <sstream>
-> +#endif
-> +#if __has_include(<stack>)
->  #include <stack>
-> +#endif
-> +#if __has_include(<stacktrace>)
-> +#include <stacktrace>
-> +#endif
-> +#if __has_include(<stdexcept>)
->  #include <stdexcept>
-> +#endif
-> +#if __has_include(<stdfloat>)
-> +#include <stdfloat>
-> +#endif
-> +#if __has_include(<stop_token>)
->  #include <stop_token>
-> +#endif
-> +#if __has_include(<streambuf>)
->  #include <streambuf>
-> +#endif
-> +#if __has_include(<string>)
->  #include <string>
-> +#endif
-> +#if __has_include(<string_view>)
->  #include <string_view>
-> +#endif
-> +#if __has_include(<syncstream>)
->  #include <syncstream>
-> +#endif
-> +#if __has_include(<system_error>)
->  #include <system_error>
-> +#endif
-> +#if __has_include(<text_encoding>)
-> +#include <text_encoding>
-> +#endif
-> +#if __has_include(<thread>)
->  #include <thread>
-> +#endif
-> +#if __has_include(<tuple>)
->  #include <tuple>
-> +#endif
-> +#if __has_include(<typeindex>)
->  #include <typeindex>
-> +#endif
-> +#if __has_include(<typeinfo>)
->  #include <typeinfo>
-> +#endif
-> +#if __has_include(<type_traits>)
->  #include <type_traits>
-> +#endif
-> +#if __has_include(<unordered_map>)
->  #include <unordered_map>
-> +#endif
-> +#if __has_include(<unordered_set>)
->  #include <unordered_set>
-> +#endif
-> +#if __has_include(<utility>)
->  #include <utility>
-> +#endif
-> +#if __has_include(<valarray>)
->  #include <valarray>
-> +#endif
-> +#if __has_include(<variant>)
->  #include <variant>
-> +#endif
-> +#if __has_include(<vector>)
->  #include <vector>
-> +#endif
-> +#if __has_include(<version>)
->  #include <version>
-> +#endif
->
->  QEMU_PLUGIN_EXPORT int qemu_plugin_version =3D QEMU_PLUGIN_VERSION;
->
-> --
-> 2.47.3
->
+> On Wed, Jan 7, 2026 at 12:29 Joel Bueno <buenocalvachejoel@gmail.com> wro=
+te:
+>>
+>> Is there any feedback on this patch series?
+>>
+>> On Sun, Dec 21, 2025 at 11:53 Joel Bueno <buenocalvachejoel@gmail.com> w=
+rote:
+>>>
+>>> The Fast Read (0Bh) instruction requires 8 dummy clock cycles
+>>> according to Winbond datasheets (e.g., W25Q256JV Section 8.2.12).
+>>> However, the current code adds 8 to needed_bytes, which represents
+>>> bytes, not clock cycles. Since 8 clock cycles equals 1 byte in SPI
+>>> communication (1 bit per clock edge), this results in 64 dummy
+>>> clock cycles instead of 8.
+>>>
+>>> Change the Winbond case to add 1 byte (8 clocks) instead of 8 bytes
+>>> (64 clocks), matching the existing implementation for SST flash and
+>>> the datasheet specifications.
+>>>
+>>> Signed-off-by: Joel Bueno <buenocalvachejoel@gmail.com>
+>>> ---
+>>>  hw/block/m25p80.c | 2 +-
+>>>  1 file changed, 1 insertion(+), 1 deletion(-)
+>>>
+>>> diff --git a/hw/block/m25p80.c b/hw/block/m25p80.c
+>>> index a5336d92ff..21c2118b33 100644
+>>> --- a/hw/block/m25p80.c
+>>> +++ b/hw/block/m25p80.c
+>>> @@ -1001,7 +1001,7 @@ static void decode_fast_read_cmd(Flash *s)
+>>>          s->needed_bytes +=3D 1;
+>>>          break;
+>>>      case MAN_WINBOND:
+>>> -        s->needed_bytes +=3D 8;
+>>> +        s->needed_bytes +=3D 1;
+>>>          break;
+>>>      case MAN_NUMONYX:
+>>>          s->needed_bytes +=3D numonyx_extract_cfg_num_dummies(s);
+>>> --
+>>> 2.51.0
+>>>
 
 
