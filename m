@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EEC95E9A03B
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 07:24:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D0BDE9A04C
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 07:26:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vsyOF-0006je-QK; Thu, 19 Feb 2026 02:23:59 -0500
+	id 1vsyQa-0007jr-6Y; Thu, 19 Feb 2026 02:26:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
- id 1vsyOD-0006jP-EA
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 02:23:58 -0500
-Received: from mgamail.intel.com ([198.175.65.14])
+ id 1vsyQY-0007jY-2X
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 02:26:22 -0500
+Received: from mgamail.intel.com ([192.198.163.14])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
- id 1vsyOA-0004JY-ED
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 02:23:56 -0500
+ id 1vsyQV-0004l8-Or
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 02:26:21 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1771485834; x=1803021834;
+ t=1771485980; x=1803021980;
  h=from:to:cc:subject:date:message-id:references:
  in-reply-to:content-transfer-encoding:mime-version;
- bh=aYo6o9slJqZ+0ADuuXlHXmiApLlPc+nE4XmH3dMb/wg=;
- b=ZEVjnocLdbfE/WHK87MBCSIvo2bQMNTApE3AweD/CF3RaQn7/AswAdyC
- ZnHS1GhtZez1x318JHlN2lXzwCWDmM7Y+utbdkcDdhaI8kRQX7L1F2wG6
- DgWM0O7EwOv8q85yPICHrPB90ZwPjSofM7f2URjl2FFpPgutrXzrM+rX1
- +9GchTvAdQhtjKRbEDoThTO9rZx4bm+cr8sk/WnqESW5KJ48f5HFUcLoI
- +XsiYrEE0AGeglbFKJZTpMY/Dlnc4fOAaOIZX1AXPBEKY0Ohvb+VnA22o
- t3S7RXtRpk7IyI2ts3lQWY48uy/QPAPPuyio/BL5OY0c/iichfxBl8gzW g==;
-X-CSE-ConnectionGUID: ETee4tqrRC+itAqPF/78ZA==
-X-CSE-MsgGUID: vF5Pv1NiTJKIeq655RqxJw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11705"; a="76401588"
-X-IronPort-AV: E=Sophos;i="6.21,299,1763452800"; d="scan'208";a="76401588"
-Received: from fmviesa002.fm.intel.com ([10.60.135.142])
- by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 18 Feb 2026 23:23:50 -0800
-X-CSE-ConnectionGUID: 1ThGJmbjSnOq+5lj/UndJQ==
-X-CSE-MsgGUID: jSAjD0ZZQDeTVu8FfmGGPQ==
+ bh=QxxYD3/WiWQMK5aiYE20kVO9h+8LE+rA3YeBqbWIx+U=;
+ b=ag+gLYGEFx6VelqoXrWD7DiwObYgNxjolqp4DH5/yK9U6unu9aYWPPs0
+ XvKoBR2ZY1t/9S3kQGp+sVRxWdliuQxl3GVqSMcTLvFbNE27ksC/ITSw5
+ fgfXlVLaf/KBsEibBGDve/0T3tGQZLRH5u/FLcBM0L0qvd1Y4bFzB6pTO
+ 51hxMWqFK8WnvI6aPZzKafha33STqNXhBfJ1WVeXCi1zNZ1Rt5tkzN/CX
+ LhzcADuDwHWW4hMxRecMbnCMNrh6D0HTlPZytI+NSHyVk3dviQoo+xgNf
+ 0RnTYtIaVWRgwH9AexxaZorxtSmCD8X7B7InC0wy4kwAobIDX86FsFPCp Q==;
+X-CSE-ConnectionGUID: dPUSpPc1QaabOu38q2IptA==
+X-CSE-MsgGUID: VIuazyD7TyOiT7Af4e4ZHA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11705"; a="72631078"
+X-IronPort-AV: E=Sophos;i="6.21,299,1763452800"; d="scan'208";a="72631078"
+Received: from fmviesa010.fm.intel.com ([10.60.135.150])
+ by fmvoesa108.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 18 Feb 2026 23:26:17 -0800
+X-CSE-ConnectionGUID: 7d1lEBuwR96186oRdN8jtw==
+X-CSE-MsgGUID: VfcDu8+GSx2fb9MHHT7e5g==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.21,299,1763452800"; d="scan'208";a="237424719"
-Received: from fmsmsx903.amr.corp.intel.com ([10.18.126.92])
- by fmviesa002.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 18 Feb 2026 23:23:49 -0800
-Received: from FMSMSX901.amr.corp.intel.com (10.18.126.90) by
- fmsmsx903.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
+X-IronPort-AV: E=Sophos;i="6.21,299,1763452800"; d="scan'208";a="213136340"
+Received: from fmsmsx901.amr.corp.intel.com ([10.18.126.90])
+ by fmviesa010.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 18 Feb 2026 23:26:17 -0800
+Received: from FMSMSX903.amr.corp.intel.com (10.18.126.92) by
+ fmsmsx901.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.35; Wed, 18 Feb 2026 23:23:49 -0800
-Received: from fmsedg901.ED.cps.intel.com (10.1.192.143) by
- FMSMSX901.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
+ 15.2.2562.35; Wed, 18 Feb 2026 23:26:17 -0800
+Received: from fmsedg903.ED.cps.intel.com (10.1.192.145) by
+ FMSMSX903.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.35 via Frontend Transport; Wed, 18 Feb 2026 23:23:49 -0800
-Received: from PH7PR06CU001.outbound.protection.outlook.com (52.101.201.18) by
- edgegateway.intel.com (192.55.55.81) with Microsoft SMTP Server
+ 15.2.2562.35 via Frontend Transport; Wed, 18 Feb 2026 23:26:17 -0800
+Received: from PH7PR06CU001.outbound.protection.outlook.com (52.101.201.33) by
+ edgegateway.intel.com (192.55.55.83) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.35; Wed, 18 Feb 2026 23:23:49 -0800
+ 15.2.2562.35; Wed, 18 Feb 2026 23:26:17 -0800
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=VAA4m22//KE1nCEBWx7S4fwn9dXfeqKUcYAdy1iqmKulcAwFSkjgGI/AASN7oCF4U1DbspSP8FZvM6PDzF9+19dKoNSuOUbgpc98XWnh26fzu5SMFQjbbtOUW6x3Vec5BhQid7gX+2BJfTQeV+rToyMmzaCY/utiZeVHOImDl1MBgVSW4HhbuN7wxEVYODTCHztSOcznUUfCyb1rNQjrga49ngjuWQE8LqijhVFQOFaX0gZgDhUA1gRQCc3su+jUtNBLUx6fWeN02l2UuxSAGi4wxp6rEpo3uP/ZVjhmUWibMzucPslzZEgNzLKMc+Ihi7bjDAtw8MK1+QITns3ofQ==
+ b=F86XBUzm8cdOv9LV3fZ7xNrJixTVt0SXs+uE2ZcLuFFb5IFVw/L6nIZxdYBDyT6WcZBSRmAmeEFSf++AncjNGE7Dd/dbHdvymSkR94o0Bv0fKfTLgxUWHw0g5TY2gJSg8qKqVQUeHJk7MbLScwDn5HzY6D/9rYv4B3PS6lVtIfXKUwJww9IUBW1TFQkFrwqd7hYKQzVNvxx9NDXjv7Bq57KKWYmgciSXksDNN1nWkf7rWVwgV0zcE4iK8CEjVX0MTXtajcQWM6vZWNgKtA+6XkfkAHMHJRJHP/68i/eNwDmdVHbkk0YiTHH57Erv2TfvaW/cI3ZBYcxjzOlZG+/oZA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=IXblKK9Wz1Mh5tUc9h1Ng2iH8C4+5HDrUiSfmxLzxvY=;
- b=Xc+gHJCZSECxB1LA8RLs81w2MnZD12ZD3aYtsJ+aQXSBejy79b8r+NDq4Aon65RMJZ7qaKnZ66/8O8/iUXGmoXi2fCgfVwHwdgDiJ7YXQePTvUYi+/Vt7IoOdNoPvmJJgjoU5PuuNlpcDyHfwHtT+lJ6DETbbgrT0EkyJ6S+cauE3U8XA9d70Ud8I6U3LeB1EoY+4aQvh1whbSWx7193Pt1VVjNSr9s7vnni72Whm6GxGK/nYF6jn0cbVNSznPmiYV21Zcn0EvDHidKucEu1XXtJ+23Rokm9oQ6Il+53J9KXkCQgxZFevDfrldqtdx5rfH0S8J1to0x91GJAYKEEpQ==
+ bh=+KIPNhtYbs3w43HBaRjsq+cLBS962VxTp6EZlSAJyyM=;
+ b=suN9WTzq4Q5ALiCYL8eMAlzuvqAf5fDMJpR/WCLJLKaPR2lYjmnqSsmJekwNyuRat8a6NvAWZgpT9glUY96n6IfxJSkJWDp7Ai9yJkSCdDHz5bpxIt3gzddPm3SlsXNx+cx1PzoZHoCUExvtpyn6zEKj8/JrxtqLMUig7aQZvP2mDBskKD78OZzJjNWkKPWt2mBwYCPM233q3IJqeYczgbP6VoMRhIlQf0Qy7KvMbR5l4afr6izqh3kbKPX3VfSaHUY6qqQKvnzPtIxpg2/zSe4nvidGHGcyRSpoEKVThnW7eE+pT+mMfC9lWoU8v3PYzvoZSC2pTVpgqIqpVHf4gw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
  dkim=pass header.d=intel.com; arc=none
@@ -72,11 +72,11 @@ Received: from IA0PR11MB7185.namprd11.prod.outlook.com (2603:10b6:208:432::20)
  by SN7PR11MB6704.namprd11.prod.outlook.com (2603:10b6:806:267::9)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9632.13; Thu, 19 Feb
- 2026 07:23:42 +0000
+ 2026 07:26:15 +0000
 Received: from IA0PR11MB7185.namprd11.prod.outlook.com
  ([fe80::9f37:cb81:5463:300e]) by IA0PR11MB7185.namprd11.prod.outlook.com
  ([fe80::9f37:cb81:5463:300e%5]) with mapi id 15.20.9632.010; Thu, 19 Feb 2026
- 07:23:42 +0000
+ 07:26:14 +0000
 From: "Kasireddy, Vivek" <vivek.kasireddy@intel.com>
 To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, "qemu-devel@nongnu.org"
  <qemu-devel@nongnu.org>
@@ -84,19 +84,21 @@ CC: =?iso-8859-1?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>,
  =?iso-8859-1?Q?Alex_Benn=E9e?= <alex.bennee@linaro.org>, Dmitry Osipenko
  <dmitry.osipenko@collabora.com>, Alex Williamson <alex@shazbot.org>,
  =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@redhat.com>
-Subject: RE: [PATCH v6 11/11] virtio-gpu-dmabuf: Create dmabuf for blobs
- associated with VFIO devices
-Thread-Topic: [PATCH v6 11/11] virtio-gpu-dmabuf: Create dmabuf for blobs
- associated with VFIO devices
-Thread-Index: AQHcmls4q3luewSeSECtMA18foJZSbV74KeAgACEarCAAjb9AIAKp9Mg
-Date: Thu, 19 Feb 2026 07:23:42 +0000
-Message-ID: <IA0PR11MB71855A99CC24E9367DFC8223F86BA@IA0PR11MB7185.namprd11.prod.outlook.com>
+Subject: RE: [PATCH v6 06/11] virtio-gpu-dmabuf: Improve error handling by
+ introducing 'Error **'
+Thread-Topic: [PATCH v6 06/11] virtio-gpu-dmabuf: Improve error handling by
+ introducing 'Error **'
+Thread-Index: AQHcmls54ahhVqRkakqKCJgDMCalvLV7ikcAgAA+8QCAAJeAAIALpbhggAATe4CAASXyEA==
+Date: Thu, 19 Feb 2026 07:26:14 +0000
+Message-ID: <IA0PR11MB71853E15B09619C37085EA9FF86BA@IA0PR11MB7185.namprd11.prod.outlook.com>
 References: <20260210070155.1176081-1-vivek.kasireddy@intel.com>
- <20260210070155.1176081-12-vivek.kasireddy@intel.com>
- <c7c03384-4815-4032-89bd-de1ef90bb949@rsg.ci.i.u-tokyo.ac.jp>
- <IA0PR11MB71856CAA4507A8EFD5AF5F45F863A@IA0PR11MB7185.namprd11.prod.outlook.com>
- <a7b64dbd-9535-4927-bf36-e579b8bec4ca@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <a7b64dbd-9535-4927-bf36-e579b8bec4ca@rsg.ci.i.u-tokyo.ac.jp>
+ <20260210070155.1176081-7-vivek.kasireddy@intel.com>
+ <15ad210e-1464-461e-b113-7fa01f4ece3e@rsg.ci.i.u-tokyo.ac.jp>
+ <854a98ca-6282-4c51-ac8e-e89487412f6c@rsg.ci.i.u-tokyo.ac.jp>
+ <IA0PR11MB7185118B6112220F36B0E44DF863A@IA0PR11MB7185.namprd11.prod.outlook.com>
+ <IA0PR11MB71859E76A326DD910FE50D81F86AA@IA0PR11MB7185.namprd11.prod.outlook.com>
+ <ea14b035-c98c-4cc6-855f-52ea9d679a69@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <ea14b035-c98c-4cc6-855f-52ea9d679a69@rsg.ci.i.u-tokyo.ac.jp>
 Accept-Language: en-US
 Content-Language: en-US
 X-MS-Has-Attach: 
@@ -105,88 +107,88 @@ authentication-results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=intel.com;
 x-ms-publictraffictype: Email
 x-ms-traffictypediagnostic: IA0PR11MB7185:EE_|SN7PR11MB6704:EE_
-x-ms-office365-filtering-correlation-id: ffabac3e-0456-489e-1f89-08de6f87cf3e
+x-ms-office365-filtering-correlation-id: 7a7abc85-5e75-476b-49cf-08de6f882a3e
 x-ms-exchange-senderadcheck: 1
 x-ms-exchange-antispam-relay: 0
 x-microsoft-antispam: BCL:0; ARA:13230040|366016|376014|1800799024|38070700021;
-x-microsoft-antispam-message-info: =?iso-8859-1?Q?wPUy0STp+BL92fl9j3AL7ubSArhWvC5fxokBAIWSiTqSpb4zKFE8jRvgrB?=
- =?iso-8859-1?Q?jcGrE7VH/C38WFC5FkidMSrHKBLmhg5Y+n8VHNTCux5OGRX5CR4jU09eNB?=
- =?iso-8859-1?Q?9YJFSvPmwpPjK0099nPAX6T84A+An88ZtRVvMHrqxUJXnnJ7kc3WdGu/t+?=
- =?iso-8859-1?Q?n5AVWPLBTz8bTfVUO6s9knGvReTYe9pMu8+QF+WDOWD7a4xPlFezhifTh9?=
- =?iso-8859-1?Q?cxO0oGMXsd4TqZV06ipnbjutcBpPO0rIbVWaQyhkEhdUDc+9HFpVYFukYL?=
- =?iso-8859-1?Q?EX5xa7baoGpbaGeq6bmw9DcnrezFPGeduYbKtIAvs6ZAI3UNvwkSnWetYl?=
- =?iso-8859-1?Q?9+d2Z50qpjb9+Y5NTOW6I2dVVxfWcHI4HNEckQAVBWJT3YT90b9wyRDYSF?=
- =?iso-8859-1?Q?TPVvty+zeP+KAn8L3CGiv2Mno7cQztPK4ik77kF8/H8B97obixQOYk5Jme?=
- =?iso-8859-1?Q?5gib4Ecjw1KrozyFRrh+PvwcXYDtITzjDi8tWcSOo35N12ItnNfirbSB5e?=
- =?iso-8859-1?Q?y0JQRH8eIAOqEFkJclQ8aiDtQf6057Ew1BFcnmlrbRPftx3B02CHujvGos?=
- =?iso-8859-1?Q?zveSIbj2TPg1I0KEZnUqLEovqcnekoYCOxALeQCw7dJlDIxsgfJyucppmj?=
- =?iso-8859-1?Q?sfgQEMmIMvv6VjPKk8mDNemDDKhc8nSmVQzzPRlO1cA7haLM6Y7I4ma59v?=
- =?iso-8859-1?Q?q9A9VXugLvPCiXVAaqBzZW3KmNcU7CNvsFqaKVesYIWLuuf12HVDpYzaMs?=
- =?iso-8859-1?Q?mkVD5dx/ZNz0CwAVT7Dn12A9biZdc7Hbd1O8emsoM0fpPKf1BWBwemAh3s?=
- =?iso-8859-1?Q?zUrxWd+RoS/Y93ZXGNLofvdYFUSi/oVC1UCkOgS7JMu2LLgyQpHdQnDrdf?=
- =?iso-8859-1?Q?XSb0ee24AyYSWkySDmBwtdQo7d5FyjUTP+C5DtZXWcQ0V0xg38BnA3DSxl?=
- =?iso-8859-1?Q?EzReBvB7DWpfh2Vq90l2WPDJKua5AOdEaISQvfbHv5Hoh+1L0yVq4XfWuz?=
- =?iso-8859-1?Q?1gggicX4CJPnxVrwtq9tYJlxv53nKBWLscIu/OvOtA76ZWvd/m7Xc2Gt0C?=
- =?iso-8859-1?Q?NxvramRfwSekx28PyZ0FnUDZZX8TPqNUqmMXaobG1Pxm5yYKLNMCUbECyB?=
- =?iso-8859-1?Q?9VqXwXUrxwXr7AO0W92osfOvhnJ8xWN9MmDR8NpbU/aOY1bMsMvU3YotDD?=
- =?iso-8859-1?Q?j1c3XMPyLPwWT8VKu4CcxmxbGnyJZ3QsxMbhLwvrdee1OVbKC77q1H8V/t?=
- =?iso-8859-1?Q?kQxgwUv2WwLxz2BKyd0C7035D2MxhCa6hXBylj5tnz+EfJOqHKoeNmzx50?=
- =?iso-8859-1?Q?Fju70QlvirM0XhHJ6/Q+jEwTh9KmnY4ta3R81HQUQEhI19fnA2JUGP/Ahc?=
- =?iso-8859-1?Q?WnQJdRQeXFplwFQAij2wcUpg+G/byjzZfzeOag40luPNtmyR9AVZc/7F/j?=
- =?iso-8859-1?Q?raCnX9Z+vW1yKA5IqCovVLNSFB9dVD1ATFr682EWsNYIMormnhIzcu8mJJ?=
- =?iso-8859-1?Q?w/I4FHRRmT6cYEHU84r7Q2n2dQsGX/lBY9OV75YuZQXVzhElIQagbBkJni?=
- =?iso-8859-1?Q?FxCB+7moF1/Lf/PRmGIj9smSMt0GhMTFGWuA/5N5O/Q5khsXB99ptOH1uq?=
- =?iso-8859-1?Q?zquAfZOAK7M9uCBem2c2cFQN9whWlTBOL4tRQRLeb5gwwe7Kk5vmlz+ess?=
- =?iso-8859-1?Q?Uia8xXNpQiVBRRqI7tw=3D?=
+x-microsoft-antispam-message-info: =?iso-8859-1?Q?8fn3wE/VON6IqOw7cPWi9xJi/HdPaS++PVEmE8zh3NlSklu7R7vXt9BEEJ?=
+ =?iso-8859-1?Q?mJWKHT/UTfDFWgDrS/XS3jUZdFyyxvi4rGevjqb+0bGwGjIZX14+PdL9c5?=
+ =?iso-8859-1?Q?yh9g9FaOiZAqIqn8Qzci8ddOBbkUeZ2efMXifIDS6VBR3zmw+O7rJMUEyk?=
+ =?iso-8859-1?Q?pqhYNOnWjhMXPtE1HXdzP4P2g1KN89dvbv2We1BSHpRV5Xzwxpy1M3DxTo?=
+ =?iso-8859-1?Q?5WCZKvX1NC3WM3J/YjbGWLmY22jPXdu6UZaKff+9VTG/eFB08JuHOh4RFQ?=
+ =?iso-8859-1?Q?1iGCmrzXWivuI+53H4ZInwjIm30co919UxsxznCB4EY9U+tpEctL8YzAuW?=
+ =?iso-8859-1?Q?Y6ZfgHz7ziq0uVB7g4P8L2uUfUSN+N/Zuj9Hifd0bHOp3oS/zWEBtn/paQ?=
+ =?iso-8859-1?Q?DMmWl8++G1NbTZLJP7XDOrXbEKtNmllJObk+4TFP1ViF96kUgBHFvxhSxi?=
+ =?iso-8859-1?Q?alTwwZ6gNdC0P1LgYWHCQonWi/Z15yhgn6Sjn7DxiOzdb5zR1BBUXGvHRv?=
+ =?iso-8859-1?Q?6gBhR89govSUeW60ho97vLzpuztocYcm7HAJ6/EK/G4RkbVsBDfSdQdttM?=
+ =?iso-8859-1?Q?+5ii/8e/9MvzovQqyFYtXPptIPZ4iEBU7yb9xaR06ZmPppUkoP6Szi4+/G?=
+ =?iso-8859-1?Q?rJt8ip8mO/CKufNobO5w54ZrhHtobzxpTo9dGQmpHvIqeMz7Pqo95ptpJT?=
+ =?iso-8859-1?Q?di3ET5uwEt4GxbGnDxWW9+zFgwEHuasJ9HEXU+bywcPwM0/iEoorhJD6tm?=
+ =?iso-8859-1?Q?z4J4+Ecm7tx9vvmHg6SXrNQuRWzfnELco5WipswVk6YQToVLJKHcUlzOXH?=
+ =?iso-8859-1?Q?y/WmlaZo5InUdP4XzNuDn02P9T4tTGzOkvKCCGilaus7Dun7drUkG4IyRm?=
+ =?iso-8859-1?Q?unQ7KeqHzXk0j43QGpBPpvk9TSG7HrWLYxA+I6Vue8TIwZ9IZBPnr10Nip?=
+ =?iso-8859-1?Q?YGhSUfWffxES8bwBpnpKmqugAM8BztkhzeAGSaxgreSQcTEWFRHk5RZYdJ?=
+ =?iso-8859-1?Q?WevItZt7bgF+Qe5g8a4llkwhe0cIYhbG/ufGyA5kj5Qxrf09forCKDS/gx?=
+ =?iso-8859-1?Q?sFG/53JH6ci5XqReqO7b3XUx4SqG1mMF3Ntpp4C4bQGymTRJ5gr9UjrTHQ?=
+ =?iso-8859-1?Q?TUYIUOOdppP7Zl272I0XRetqEj7xFl+lSfjm3mBGBmrORRLd4O3FpBREQo?=
+ =?iso-8859-1?Q?C6ythNn/iolkDhhgoxU89b53Hm3wohu5XfgmthAmSZSFtEfh7moC/RQXUe?=
+ =?iso-8859-1?Q?BETCKuo8PEbkqL7UdVhU7QtNs1PO70y4zUHlPgOV0kAqmVfyPBapprd9dO?=
+ =?iso-8859-1?Q?85AhB817rU0NgNMlt89dSelgl6MpsSKLvKjBMnSBRVJ7XmiFVJBpBxQJEO?=
+ =?iso-8859-1?Q?3gRH5KaNQd1BlUqhYgE4jnBk+s4YbTBJk6A48Tbj4mrn+1kH6P3X+vP8mP?=
+ =?iso-8859-1?Q?hulWjadnd4fzi242qt9+nJwv95UjKxEOUETBME4UPlcA+ia8Qdxr5rrsgc?=
+ =?iso-8859-1?Q?Fp6+rkd0Zn5LtmWexcz9iB2xLcka9QiltUNaZyI+2ikFs7t8Sx0VaaGpoq?=
+ =?iso-8859-1?Q?otOb4JF7wNymWzSUJaZQItKwUmbMwnvsYsIQ6/rh9L8BiVWUbIQQdeQW/E?=
+ =?iso-8859-1?Q?vPVGjTCt7/tK96w0tm+zENJkbjH29HozOxAV0apIaGtUpcTMj+u81KfbqL?=
+ =?iso-8859-1?Q?OgW9m+99ePLg+3VVyLc=3D?=
 x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:IA0PR11MB7185.namprd11.prod.outlook.com; PTR:; CAT:NONE;
  SFS:(13230040)(366016)(376014)(1800799024)(38070700021); DIR:OUT; SFP:1101; 
 x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?IbRpS6HdJ18pUFrifOZ+06TlWeVdJGyfhq8WD/ZaYqBQ/E1AJ9YVLOpdar?=
- =?iso-8859-1?Q?n1/dv4WZ2HM88pWCLHQEOcXua9HmsAUR8Q1O4uf9r+Tx4OYfLr4VSeLmg3?=
- =?iso-8859-1?Q?rIbXyrbpOyDHdV9ZHWevmCqV6qdcfH1eXCJ2Ss+uOUUKoe+Zb0p/rVQgGd?=
- =?iso-8859-1?Q?eDX6p7g/gKGe6oZrsa76uuR5EzaA/nTxYg88d3oDdfXGUpQnn8VqHcxHkj?=
- =?iso-8859-1?Q?r7omrbZIyF8LWdRooYGcTLwpZ80Ai8v3pTLbxVx+55BnPIWc/s0qilRAvi?=
- =?iso-8859-1?Q?OVB+EXf03VqiBIYbH/aiURsDKBNj0H0doPlzX7dSQHWBO45tsnHpLV96iI?=
- =?iso-8859-1?Q?RFHU/Au3xoX1cAtipFlNTdfF/0fWLX2v26YM0jc/n7ZXtgsQ6nJAQjcamO?=
- =?iso-8859-1?Q?Yv/TNtS4SfLroSCtI0wkRrJLCvvsBvBlSRi8w7pHGiCBEDNhxg8+/IilmQ?=
- =?iso-8859-1?Q?hLfVdEYmxaTGmz0ngeYE987E5snundkq3zVWwHalhNLs+tZ5nX9UKzvmhS?=
- =?iso-8859-1?Q?I/JmAGACwH+d+pmCUhfMRVi0+WuvJpQhNsUKonj7GCqMjYvjGWZMK0SCMM?=
- =?iso-8859-1?Q?X7VXsiqIIakY3G4C7OG07s3cPOql64IWsUv7gaB1GHGBAqveOdgBJpHY5C?=
- =?iso-8859-1?Q?M/n4cUrQxpp5cxoKhinlWETi/vgGyYCvlo3GnD6iwAqV7eLsv46Pe73moZ?=
- =?iso-8859-1?Q?IIp6wG6Pw9iJQz3cS7gpVVIK2t75z9KBy/NAhpLN4qcS1vwSdrSFhLBrWP?=
- =?iso-8859-1?Q?L+iakVuGXuOFv/c2AZZjKhQkz55gplqhyod2E5qSHtVlSM3/d90nSEEXlV?=
- =?iso-8859-1?Q?Kn/rB2xUsZDOhYhTCLEWFlHKoteZJpVvuOaFSNd4c3AcM/6+Fyb6lGiruv?=
- =?iso-8859-1?Q?doglxjK4mIJWks6Zy1ig1VgNJrMWsE/y+y1uAR4nMcyIqyYNN+H2aG9iWZ?=
- =?iso-8859-1?Q?4G1ZKbYyQovwQUzQDJAS8TTBJeUt+DdnFivWHeyW4F02KOtbvLxaLRkOuU?=
- =?iso-8859-1?Q?5h3CHUBh5JyMfTJCqj3JnbeVoic8AYdEUAEF8PyfSDgAxOHDUIpatIz9k2?=
- =?iso-8859-1?Q?Hi8Zo0xckl3HWMOH1o3Z2l1sU0KPXKIlpHGvc4LUo969zJ93VvdcrUrxF+?=
- =?iso-8859-1?Q?c45ulznBen90GvFGs2KsmC2FxVpydvfbMMvhfIa0tXM0UZX8PZhTqIUcKc?=
- =?iso-8859-1?Q?ztJbyeGWDDCBHsTFFG7YJd7BZKkzJFwdtdFwoHKj8P0Or+59pXtVM4Iwkq?=
- =?iso-8859-1?Q?2nFJiLO3kiAdTtx3Mk1/DKnb7Z4ICfM9eIqYbFpVRX10CISt+qxdD9WWbp?=
- =?iso-8859-1?Q?oE8P1QUj+iBJuo3kXDgsO4rPG7xftq18ceccO/xeyTVilfm12NnuZumLra?=
- =?iso-8859-1?Q?CFjTGsx72mid6k8cG5TLE70ANfOVcOv9mgSGNf3Sl7plpNLvU+QNrbvcI8?=
- =?iso-8859-1?Q?p5aVh3OlJeQljuLdgMXWKHPpPm9VCVqhqUMcwctM/nlfIotkroN1FdF0Kn?=
- =?iso-8859-1?Q?rWuLID7gxWJSHp3qOTDyUd71RoY3himTXGSAPYtVgzkmi29Rn8shLJDYet?=
- =?iso-8859-1?Q?i/iJpBAs5Gw9Ll8rhF+fvlAe3+hGN/k6AfYtyzlBO/s+2BWrSIHhAwUB1P?=
- =?iso-8859-1?Q?A7NdQ4zSXafEe01xMQMzwcAVw4qL/yZ0IuGyjsOA2nr3dmblVPAb654iER?=
- =?iso-8859-1?Q?pBUXV1ndDs3rDAG8bkJ0bUVo6T9BZZRLoXHZCPva78M1X3ZdIYscd95ao7?=
- =?iso-8859-1?Q?WjC+3zM0NkW0zO90vWh0/fPcVIXYchTfX8hrfS6nQWr22FOmLtZr/xvCMg?=
- =?iso-8859-1?Q?EbyBCflqZA=3D=3D?=
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?m1mILO4g6uj3+VKszokaQqBgEdKhqk+TuE6+ud0NodozzVcjzLvs8hq0Bi?=
+ =?iso-8859-1?Q?wNUqrTCHQ5pEZDEXvrr234kqJc1kFwfYYWhICqV6Z0b+0JMCRNQWcdrvax?=
+ =?iso-8859-1?Q?eOtFmMx8G/ZEGOhiiLMirtnq/LjmgWaaDSWFrUphftApc0GPpyYOQCrIlh?=
+ =?iso-8859-1?Q?fOg2GF5SwDNdSs0dEwyRDvClpEo09OTk9Qes5VeVL/YvEeTuzUwxbrY6Z2?=
+ =?iso-8859-1?Q?mvy8ZdeJGjt3a5nbEvhBMPmiIjxOqwSh1GH+VXtVIIgWsUdi1U6hgjDL8s?=
+ =?iso-8859-1?Q?4mo/G2a1sQc42wcJCGhWsvc4yMKgTFNX1VuViavJmCdpkVXKUfK4ptqQFC?=
+ =?iso-8859-1?Q?SAq7yCDY0mW+/gU/Ih/jeekhCAsNv6DF6WidsKrC7orPDX+IZwiDBdZWQC?=
+ =?iso-8859-1?Q?xw91x08ZEJ6OtjHjskNTIOVdQbcPRzsqzAGUHMF7GBGmG9ucaRScqk5gCr?=
+ =?iso-8859-1?Q?RhUmZiOT9/v4/uEqJ75O5Mj6SaImg1eHMRPGxf0/7/fWDjMHpC/aWN8Lmn?=
+ =?iso-8859-1?Q?Drl+uRG0VvKMENwR/oF3FR5eP4UOswd0nLgGfLhSKPj36alKDuyfQ4QA9G?=
+ =?iso-8859-1?Q?UKm99IvKXT6W7Jpbd+tlC1S6vijUrHBtdaDaj9jfY5g/Sh3nPlB5coZdK3?=
+ =?iso-8859-1?Q?HRXV57S0HhDTS4kbUOCGadMi4atH3zcKmOXVKuMKCF23+x+s8md03KOyNj?=
+ =?iso-8859-1?Q?0s+xEFHvVZLZmmfNmcUT1CKtushou3MHR+L6eQjclW7wwfuG5Ajnwhtev6?=
+ =?iso-8859-1?Q?yL6qBfnQmDmIinGLLZvMOUyrURWExcb4BWND2JUdo3pqJcby8VF07JlLws?=
+ =?iso-8859-1?Q?KmdX7x3jQpoAh7emOt/9c60wirHNw69V6m/IH9+haYe8EKJmv4sQsubzjr?=
+ =?iso-8859-1?Q?22PAlcLsBZTwNeFCiLrl/7axS9niS/1VfpwEda59ZIs2bayebhnpy25IXS?=
+ =?iso-8859-1?Q?xjzhnBHLs0IDw45dX4cgQv40XPaExN10QVADB6jYkVEUgABVWLf5INDbzN?=
+ =?iso-8859-1?Q?K5iKbHjF+uG4JY9PCwcR6l2TG83zKKECSHs8KSRlWoLhdAGhvByDOnzw6U?=
+ =?iso-8859-1?Q?YbTJTwaoc1okWls0GutL3yh9XkwTG3XU6bsYoZzHyXpRvA4Y1o3z9Q/468?=
+ =?iso-8859-1?Q?HKdtlG20TLzyZczkIweCITzc8a/apYbR5fVRi88eQ2WNfw6AfOdITrRFie?=
+ =?iso-8859-1?Q?wv5oPYIOHDgpTLCR+1wS1AvObmKeNxS7vIMvm4llWXrwqiUggkMAm/X5KB?=
+ =?iso-8859-1?Q?F+OZU1GhTIbC6rqvPgO9g+Nkb5tUl3zxbQNgQWrCjXCsL91IVwQtNDu08+?=
+ =?iso-8859-1?Q?B6/k2KU2VFsKwb77xBPFTPjGoWp4/ApKMOI7LyvmM5owP9wvHbuP7dDYka?=
+ =?iso-8859-1?Q?E6QEL1JAHOXchxX68Dn5Gx3wJcNoaTR+RA6wwkaLadG+dyzOsgECZAk5WN?=
+ =?iso-8859-1?Q?lWWvFvattVK6uSINHm0HvWOqqH9ZWdwD1COSPVXiwpGVKD/s39M8pQVxlJ?=
+ =?iso-8859-1?Q?aA5vlpPY4K7KZV/i5iQCB5QPzlECpCGuJJj+S16iM2Hl/s1oAcWMlDDIYZ?=
+ =?iso-8859-1?Q?2E2s9FLAyMaCRseVH7qyVjSExeGWzYI4SzUhf1iLe1sUMR+i06ycHShZ9/?=
+ =?iso-8859-1?Q?FsWBCyYFeQXHa8kdwVVAcWLipAotxdIJpyhuEdSr+52aD6t4OltzoVfoLF?=
+ =?iso-8859-1?Q?k9zhdfGVC2bNW7x/RsClGLCUcSggacljiqVciY1m8Uobx0KoGuIsNe+bpP?=
+ =?iso-8859-1?Q?1J3vqQwk+f4Yb+BMqzkuveYlgNLNnb5wvygTvx3PgWZDy/g88Vv94ImF69?=
+ =?iso-8859-1?Q?TSGLTlLcmw=3D=3D?=
 Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
 X-MS-Exchange-CrossTenant-AuthAs: Internal
 X-MS-Exchange-CrossTenant-AuthSource: IA0PR11MB7185.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: ffabac3e-0456-489e-1f89-08de6f87cf3e
-X-MS-Exchange-CrossTenant-originalarrivaltime: 19 Feb 2026 07:23:42.0889 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 7a7abc85-5e75-476b-49cf-08de6f882a3e
+X-MS-Exchange-CrossTenant-originalarrivaltime: 19 Feb 2026 07:26:14.7845 (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: g/kWOJIeRNY5HoQikJbrTW9vTriYO8tbF/u5WEo0NgRUiRZfbo2w5ZMKns8zGxPQBkiig8wk7YCnzKilLZCDL7tUKT3RyS+grU//AlRe/GU=
+X-MS-Exchange-CrossTenant-userprincipalname: ncOcVcsirpFOs3wFou2f5Q5Mj+jh8H0kh90ZfgvJiKRcClxihshrP72gRQAgXWAGbROp4iOJPVBw463Nc5Gi4ogTGHy6DFGIemJIClLPM7s=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR11MB6704
 X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=198.175.65.14;
+Received-SPF: pass client-ip=192.198.163.14;
  envelope-from=vivek.kasireddy@intel.com; helo=mgamail.intel.com
 X-Spam_score_int: -43
 X-Spam_score: -4.4
@@ -213,228 +215,174 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Hi Akihiko,
 
-> Subject: Re: [PATCH v6 11/11] virtio-gpu-dmabuf: Create dmabuf for
-> blobs associated with VFIO devices
+> Subject: Re: [PATCH v6 06/11] virtio-gpu-dmabuf: Improve error
+> handling by introducing 'Error **'
 >=20
-> >>> In addition to memfd, a blob resource can also have its backing
-> >>> storage in a VFIO device region. Since, there is no effective way
-> >>> to determine where the backing storage is located, we first try to
-> >>> create a dmabuf assuming it is in memfd. If that fails, we try to
-> >>> create a dmabuf assuming it is in VFIO device region.
 > >>>
-> >>> So, we first call virtio_gpu_create_udmabuf() to check if the blob's
-> >>> backing storage is located in a memfd or not. If it is not, we invoke
-> >>> the vfio_device_create_dmabuf() API which identifies the right VFIO
-> >>> device and eventually creates a dmabuf fd.
-> >>>
-> >>> Note that in virtio_gpu_remap_dmabuf(), we first try to test if
-> >>> the VFIO dmabuf exporter supports mmap or not. If it doesn't, we
-> >>> fall back to the vfio_device_mmap_dmabuf() API to get a mapping
-> >>> created for the dmabuf.
-> >>>
-> >>> Cc: Marc-Andr=E9 Lureau <marcandre.lureau@redhat.com>
-> >>> Cc: Alex Benn=E9e <alex.bennee@linaro.org>
-> >>> Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-> >>> Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-> >>> Cc: Alex Williamson <alex@shazbot.org>
-> >>> Cc: C=E9dric Le Goater <clg@redhat.com>
-> >>> Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
-> >>> ---
-> >>>    hw/display/Kconfig             |  5 ++++
-> >>>    hw/display/virtio-gpu-dmabuf.c | 50
-> >> ++++++++++++++++++++++++++++------
-> >>>    2 files changed, 47 insertions(+), 8 deletions(-)
-> >>>
-> >>> diff --git a/hw/display/Kconfig b/hw/display/Kconfig
-> >>> index 1e95ab28ef..0d090f25f5 100644
-> >>> --- a/hw/display/Kconfig
-> >>> +++ b/hw/display/Kconfig
-> >>> @@ -106,6 +106,11 @@ config VIRTIO_VGA
-> >>>        depends on VIRTIO_PCI
-> >>>        select VGA
-> >>>
-> >>> +config VIRTIO_GPU_VFIO_BLOB
-> >>> +    bool
-> >>> +    default y
-> >>> +    depends on VFIO
-> >>> +
-> >>>    config VHOST_USER_GPU
-> >>>        bool
-> >>>        default y
-> >>> diff --git a/hw/display/virtio-gpu-dmabuf.c b/hw/display/virtio-gpu-
-> >> dmabuf.c
-> >>> index d9b2ecaf31..54d010b995 100644
-> >>> --- a/hw/display/virtio-gpu-dmabuf.c
-> >>> +++ b/hw/display/virtio-gpu-dmabuf.c
-> >>> @@ -18,6 +18,7 @@
-> >>>    #include "ui/console.h"
-> >>>    #include "hw/virtio/virtio-gpu.h"
-> >>>    #include "hw/virtio/virtio-gpu-pixman.h"
-> >>> +#include "hw/vfio/vfio-device.h"
-> >>>    #include "trace.h"
-> >>>    #include "system/ramblock.h"
-> >>>    #include "system/hostmem.h"
-> >>> @@ -27,6 +28,27 @@
-> >>>    #include "standard-headers/linux/udmabuf.h"
-> >>>    #include "standard-headers/drm/drm_fourcc.h"
-> >>>
-> >>> +static bool virtio_gpu_create_vfio_dmabuf(struct
-> >> virtio_gpu_simple_resource *r,
-> >>> +                                          Error **errp)
-> >>> +{
-> >>> +    bool ret =3D false;
-> >>> +#if defined(CONFIG_VIRTIO_GPU_VFIO_BLOB)
-> >>> +    Error *local_err =3D NULL;
-> >>> +    int fd;
-> >>> +
-> >>> +    if (!vfio_device_create_dmabuf(r->iov, r->iov_cnt, &fd,
-> &local_err))
-> >> {
-> >>> +        error_report_err(*errp);
-> >>> +        *errp =3D NULL;
-> >>> +        error_propagate(errp, local_err);
-> >>> +        return false;
-> >>> +    }
-> >>> +
-> >>> +    ret =3D true;
-> >>> +    r->dmabuf_fd =3D fd;
-> >>> +#endif
-> >>> +    return ret;
-> >>> +}
-> >>> +
-> >>>    static bool virtio_gpu_create_udmabuf(struct
-> >> virtio_gpu_simple_resource *res,
-> >>>                                          Error **errp)
-> >>>    {
-> >>> @@ -73,16 +95,28 @@ static bool
+> >>>>> Make the error handling more robust in
+> virtio_gpu_init_udmabuf()
+> >>>>> by passing in 'Error **' parameter to capture errors from
+> >>>>> virtio_gpu_create_udmabuf() and virtio_gpu_remap_dmabuf().
+> >>>>> And, since they now take in 'Error **' parameter, have them
+> >>>>> return a bool to adhere to best practices.
+> >>>>>
+> >>>>> Cc: Marc-Andr=E9 Lureau <marcandre.lureau@redhat.com>
+> >>>>> Cc: Alex Benn=E9e <alex.bennee@linaro.org>
+> >>>>> Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+> >>>>> Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+> >>>>> Cc: Alex Williamson <alex@shazbot.org>
+> >>>>> Cc: C=E9dric Le Goater <clg@redhat.com>
+> >>>>> Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
+> >>>>> ---
+> >>>>>  =A0 hw/display/virtio-gpu-dmabuf.c | 45 ++++++++++++++++++++++-
+> -----
+> >> -
+> >>> -----
+> >>>>>  =A0 1 file changed, 30 insertions(+), 15 deletions(-)
+> >>>>>
+> >>>>> diff --git a/hw/display/virtio-gpu-dmabuf.c b/hw/display/virtio-
+> gpu-
+> >>>>> dmabuf.c
+> >>>>> index 8d67ef7c2a..d9b2ecaf31 100644
+> >>>>> --- a/hw/display/virtio-gpu-dmabuf.c
+> >>>>> +++ b/hw/display/virtio-gpu-dmabuf.c
+> >>>>> @@ -27,7 +27,8 @@
+> >>>>>  =A0 #include "standard-headers/linux/udmabuf.h"
+> >>>>>  =A0 #include "standard-headers/drm/drm_fourcc.h"
+> >>>>> -static void virtio_gpu_create_udmabuf(struct
+> >>>>> virtio_gpu_simple_resource *res)
+> >>>>> +static bool virtio_gpu_create_udmabuf(struct
+> >>>>> virtio_gpu_simple_resource *res,
+> >>>>> +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
+=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 Error **errp)
+> >>>>>  =A0 {
+> >>>>>  =A0=A0=A0=A0=A0 g_autofree struct udmabuf_create_list *list =3D NU=
+LL;
+> >>>>>  =A0=A0=A0=A0=A0 RAMBlock *rb;
+> >>>>> @@ -36,7 +37,8 @@ static void
 > virtio_gpu_create_udmabuf(struct
-> >> virtio_gpu_simple_resource *res,
-> >>>    static bool virtio_gpu_remap_dmabuf(struct
-> >> virtio_gpu_simple_resource *res,
-> >>>                                        Error **errp)
-> >>>    {
-> >>> +    Error *local_err =3D NULL;
-> >>> +    bool ret =3D true;
-> >>>        void *map;
+> >>>>> virtio_gpu_simple_resource *res)
+> >>>>>  =A0=A0=A0=A0=A0 udmabuf =3D udmabuf_fd();
+> >>>>>  =A0=A0=A0=A0=A0 if (udmabuf < 0) {
+> >>>>> -=A0=A0=A0=A0=A0=A0=A0 return;
+> >>>>> +=A0=A0=A0=A0=A0=A0=A0 error_setg(errp, "udmabuf device not availab=
+le");
+> >>>>> +=A0=A0=A0=A0=A0=A0=A0 return false;
+> >>>>>  =A0=A0=A0=A0=A0 }
+> >>>>>  =A0=A0=A0=A0=A0 list =3D g_malloc0(sizeof(struct udmabuf_create_li=
+st) +
+> >>>>> @@ -45,7 +47,10 @@ static void
+> virtio_gpu_create_udmabuf(struct
+> >>>>> virtio_gpu_simple_resource *res)
+> >>>>>  =A0=A0=A0=A0=A0 for (i =3D 0; i < res->iov_cnt; i++) {
+> >>>>>  =A0=A0=A0=A0=A0=A0=A0=A0=A0 rb =3D qemu_ram_block_from_host(res->i=
+ov[i].iov_base,
+> false,
+> >>>>> &offset);
+> >>>>>  =A0=A0=A0=A0=A0=A0=A0=A0=A0 if (!rb || rb->fd < 0) {
+> >>>>> -=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 return;
+> >>>>> +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 qemu_log_mask(LOG_GUEST_ERROR,
+> >>>>> +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
+=A0=A0=A0 "%s: Could not find valid ramblock\n",
+> >>>>> +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
+=A0=A0=A0 __func__);
+> >>>>> +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 return false;
 > >>>
-> >>>        map =3D mmap(NULL, res->blob_size, PROT_READ, MAP_SHARED,
-> >> res->dmabuf_fd, 0);
-> >>>        if (map =3D=3D MAP_FAILED) {
-> >>>            error_setg_errno(errp, errno, "dmabuf mmap failed");
-> >>> -        res->remapped =3D NULL;
-> >>> -        return false;
-> >>> +        map =3D NULL;
-> >>> +        ret =3D false;
-> >>> +#if defined(CONFIG_VIRTIO_GPU_VFIO_BLOB)
-> >>> +        if (vfio_device_mmap_dmabuf(res->iov, res->iov_cnt, &map,
-> >>> +                                    res->blob_size, &local_err)) {
-> >>> +            ret =3D true;
-> >>> +        } else {
-> >>> +            error_report_err(*errp);
-> >>> +            *errp =3D NULL;
-> >>> +        }
-> >>> +#endif
-> >>> +        error_propagate(errp, local_err);
-> >>>        }
-> >>>        res->remapped =3D map;
-> >>> -    return true;
-> >>> +    return ret;
-> >>>    }
+> >>> include/qapi/error.h suggests the following error handling pattern:
+> >>>   > Call a function, receive an error from it, and pass it to the cal=
+ler
+> >>>   > - when the function returns a value that indicates failure, say
+> >>>   >   false:
+> >>>   >     if (!foo(arg, errp)) {
+> >>>   >         handle the error...
+> >>>   >     }
 > >>>
-> >>>    static void virtio_gpu_destroy_dmabuf(struct
-> >> virtio_gpu_simple_resource *res)
-> >>> @@ -145,8 +179,10 @@ void virtio_gpu_init_dmabuf(struct
-> >> virtio_gpu_simple_resource *res)
-> >>>            pdata =3D res->iov[0].iov_base;
-> >>>        } else {
-> >>>            if (!virtio_gpu_create_udmabuf(res, &local_err)) {
-> >>
-> >> virtio_gpu_create_udmabuf() will log "Could not find valid ramblock"
-> >> even for VFIO, which shouldn't happen.
-> > AFAICS, it won't log a failure here because rb->fd is valid in the VFIO
-> case
-> > especially after 8cfaf22668 ("Create dmabuf for PCI BAR per region").
-> > The failure would occur in UDMABUF_CREATE_LIST IOCTL most likely
-> > because rb->fd is not memfd in this case.
+> >>> Returning false without passing an error to the caller breaks it so
+> >>> please don't do that.
+> >> That's why I added an additional check in the caller:
+> >>                  if (local_err) {
+> >>                      error_report_err(local_err);
+> >>                  }
+> >> Having said that, I am not sure what is the right thing to do here.
+> >> IMO, the proper way would be to add error_setg() but you
+> mentioned
+> >> doing that would be incorrect given that this is a Guest error.
+> >> So, how should I proceed?
+> > Any further thoughts/comments here and below?
 >=20
-> It is still nice to ensure that the log will never be emitted in the
-> VFIO case without relying on the internal behavior of the VFIO device
-> code.
-Ok, got it.
+> Sorry, I missed them.
+>=20
+> Here, this function should not require its caller to have such an
+> additional check. Ideally, the idiom described in include/qapi/error.h
+> should work.
+>=20
+> include/qapi/error.h says:
+>  > - Whenever practical, also return a value that indicates success /
+>  >   failure.  This can make the error checking more concise, and can
+>  >   avoid useless error object creation and destruction.  Note that
+>  >   we still have many functions returning void.  We recommend
+>  >   . bool-valued functions return true on success / false on failure,
+>  >   . pointer-valued functions return non-null / null pointer, and
+>  >   . integer-valued functions return non-negative / negative.
+>=20
+> Since this function is deriving a file descriptor, it should return one.
+> The error condition should be represented by a negative value. It is a
+> common to return -errno and let the caller distinguish error conditions,
+> but the error conditions we care cannot properly represented with
+> -errno, so there should be an enum for the two error conditions: invalid
+> iov or anything else.
+Ok, I'll look into adding an enum but I feel like this is getting unnecessa=
+rily
+complex particularly with the introduction of 'Error *'. I think it might b=
+e
+easier to just not use 'Error *' in virtio_gpu_create_udmabuf() and elsewhe=
+re.
 
+> >>>>>  =A0=A0=A0=A0=A0=A0=A0=A0=A0 list->list[i].memfd=A0 =3D rb->fd;
+> >>>>> @@ -58,20 +63,26 @@ static void
+> virtio_gpu_create_udmabuf(struct
+> >>>>> virtio_gpu_simple_resource *res)
+> >>>>>  =A0=A0=A0=A0=A0 res->dmabuf_fd =3D ioctl(udmabuf, UDMABUF_CREATE_L=
+IST,
+> list);
+> >>>>>  =A0=A0=A0=A0=A0 if (res->dmabuf_fd < 0) {
+> >>>>> -=A0=A0=A0=A0=A0=A0=A0 warn_report("%s: UDMABUF_CREATE_LIST: %s", _=
+_func__,
+> >>>>> -=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 strerror=
+(errno));
+> >>>>> +=A0=A0=A0=A0=A0=A0=A0 error_setg_errno(errp, -res->dmabuf_fd,
+> >>>>> +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
+=A0=A0 "Could not create dmabuf fd via udmabuf
+> >>>>> driver");
+> >>>>
+> >>>> This is a guest error since it indicates that the guest specified
+> wrong
+> >>>> addresses.
+> >> I don't have a strong opinion here but my understanding is that this
+> >> should
+> >> not be considered a Guest error because the rb (which we obtained
+> using
+> >> Guest addresses) is valid at this point, so the
+> UDMABUF_CREATE_LIST
+> >> IOCTL
+> >> failure should be treated as a Host error.
+> >> Regardless, it is not clear how we can precisely determine who
+> (Guest or
+> >> Host)
+> >> is responsible for the failure here and in some other places.
 >=20
-> >
-> >>
-> >> This logic should look like as follows:
-> >>
-> >> virtio_gpu_create_udmabuf(res);
-> >> if (it turned out the memory is incompatible with udmabuf) {
-> >>       virtio_gpu_create_vfio_dmabuf(res);
-> >>       if (it turned out the memory is not backed by VFIO) {
-> >>           qemu_log_mask(LOG_GUEST_ERROR, "incompatible\n");
-> >>           return;
-> > I think this is mostly how I have it right now except that I am using
-> > error_report_err() instead of qemu_log_mask(). Do you want me
-> > to only use qemu_log_mask() when we cannot create a dmabuf via
-> > udmabuf and vfio?
+> rb->fd may still contain something other than memfd.
 >=20
-> More precisely, use LOG_GUEST_ERROR if and only if creating a DMA-
-> BUF
-> failed:
-> - in *both* virtio_gpu_create_udmabuf() and
->    virtio_gpu_create_vfio_dmabuf()
-Ok, but should we also set the 'Error *' when this failure occurs?
+> Assume anything the guest passes can be invalid. iov the guest passes
+> can be whatever you do not expect.
+Right, but my point is that, for example, if UDMABUF_CREATE_LIST IOCTL
+failure is due to -ENOMEM, then how can we distinguish this case and
+categorize it as Host error?
 
-> - and it is due to a guest's fault.
-I think the only case where we can consider Guest is at fault is invalid rb=
-/addr
-(i.e, qemu_ram_block_from_host() returning NULL). Can we limit it to just t=
-his
-particular case because in all other failure cases (for example, UDMABUF_CR=
-EATE_LIST
-IOCTL failure), I don't see any obvious way to deduce whether Guest or Host
-is at fault?
-
->=20
-> > As you can see, I am using a mix of error_report_err() and
-> qemu_log_mask()
-> > after Cedric suggested to improve error handling by using 'Error *'.
-> >
-> > On a slightly different note, do you (or Cedric/anyone) know how to
-> > properly include CONFIG_DEVICES header to fix the following error:
-> > ../hw/display/virtio-gpu-dmabuf.c: In function
-> 'virtio_gpu_create_vfio_dmabuf':
-> > ../hw/display/virtio-gpu-dmabuf.c:35:13: error: attempt to use
-> poisoned 'CONFIG_VIRTIO_GPU_VFIO_BLOB'
-> >     35 | #if defined(CONFIG_VIRTIO_GPU_VFIO_BLOB)
-> >
-> > Looks like I am missing some key detail as I have tried different thing=
-s
-> but
-> > have not been able to fix this compilation error.
->=20
-> I think you are supposed to add stubs. See hw/vfio/iommufd-stubs.c for
-> example.
-I have tried adding stubs following the example of:
-cca621c782 ("intel_iommu_accel: Check for compatibility with IOMMUFD backed=
- device when x-flts=3Don")
-but it doesn't help. I still get the following errors:
-In file included from ../hw/display/virtio-gpu-dmabuf.c:21:
-/media/myvdi/build/git-libs-64/cedric_qemu/qemu/hw/display/virtio-gpu-vfio-=
-dmabuf.h:14:10: error: '#include' expects '"FILENAME"' or '<FILENAME>'
-   14 | #include CONFIG_DEVICES
-      |          ^~~~~~~~~~~~~~
-/media/myvdi/build/git-libs-64/cedric_qemu/qemu/hw/display/virtio-gpu-vfio-=
-dmabuf.h:16:8: error: attempt to use poisoned 'CONFIG_VIRTIO_GPU_VFIO_BLOB'
-   16 | #ifdef CONFIG_VIRTIO_GPU_VFIO_BLOB
-      |        ^
-In file included from /media/myvdi/build/git-libs-64/cedric_qemu/qemu/inclu=
-de/exec/poison.h:7,
-                 from /media/myvdi/build/git-libs-64/cedric_qemu/qemu/inclu=
-de/qemu/osdep.h:38,
-                 from ../hw/display/virtio-gpu-dmabuf.c:14:
-./config-poison.h:233:20: note: poisoned here
-  233 | #pragma GCC poison CONFIG_VIRTIO_GPU_VFIO_BLOB
+And, similarly, rb->fd being something other than memfd does lead to
+UDMABUF_CREATE_LIST IOCTL failure and this needs to be categorized
+as Guest error. So, can we rely on errno being -EINVAL or -EBADFD to
+identify Guest errors and categorize all other errors as Host errors?
 
 Thanks,
 Vivek
@@ -442,4 +390,86 @@ Vivek
 >=20
 > Regards,
 > Akihiko Odaki
+>=20
+> >>
+> >> Thanks,
+> >> Vivek
+> >>
+> >>>>
+> >>>> Regards,
+> >>>> Akihiko Odaki
+> >>>>
+> >>>>> +=A0=A0=A0=A0=A0=A0=A0 return false;
+> >>>>>  =A0=A0=A0=A0=A0 }
+> >>>>> +=A0=A0=A0 return true;
+> >>>>>  =A0 }
+> >>>>> -static void virtio_gpu_remap_dmabuf(struct
+> >>> virtio_gpu_simple_resource
+> >>>>> *res)
+> >>>>> +static bool virtio_gpu_remap_dmabuf(struct
+> >>> virtio_gpu_simple_resource
+> >>>>> *res,
+> >>>>> +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
+=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 Error **errp)
+> >>>>>  =A0 {
+> >>>>> -=A0=A0=A0 res->remapped =3D mmap(NULL, res->blob_size, PROT_READ,
+> >>>>> -=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
+=A0=A0 MAP_SHARED, res->dmabuf_fd, 0);
+> >>>>> -=A0=A0=A0 if (res->remapped =3D=3D MAP_FAILED) {
+> >>>>> -=A0=A0=A0=A0=A0=A0=A0 warn_report("%s: dmabuf mmap failed: %s", __=
+func__,
+> >>>>> -=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 strerror=
+(errno));
+> >>>>> +=A0=A0=A0 void *map;
+> >>>>> +
+> >>>>> +=A0=A0=A0 map =3D mmap(NULL, res->blob_size, PROT_READ,
+> MAP_SHARED,
+> >>> res-
+> >>>>>> dmabuf_fd, 0);
+> >>>>> +=A0=A0=A0 if (map =3D=3D MAP_FAILED) {
+> >>>>> +=A0=A0=A0=A0=A0=A0=A0 error_setg_errno(errp, errno, "dmabuf mmap f=
+ailed");
+> >>>>>  =A0=A0=A0=A0=A0=A0=A0=A0=A0 res->remapped =3D NULL;
+> >>>>> +=A0=A0=A0=A0=A0=A0=A0 return false;
+> >>>>>  =A0=A0=A0=A0=A0 }
+> >>>>> +=A0=A0=A0 res->remapped =3D map;
+> >>>>> +=A0=A0=A0 return true;
+> >>>>>  =A0 }
+> >>>>>  =A0 static void virtio_gpu_destroy_dmabuf(struct
+> >>>>> virtio_gpu_simple_resource *res)
+> >>>>> @@ -125,6 +136,7 @@ bool virtio_gpu_have_udmabuf(void)
+> >>>>>  =A0 void virtio_gpu_init_dmabuf(struct virtio_gpu_simple_resource
+> >>> *res)
+> >>>>>  =A0 {
+> >>>>> +=A0=A0=A0 Error *local_err =3D NULL;
+> >>>>>  =A0=A0=A0=A0=A0 void *pdata =3D NULL;
+> >>>>>  =A0=A0=A0=A0=A0 res->dmabuf_fd =3D -1;
+> >>>>> @@ -132,12 +144,15 @@ void virtio_gpu_init_dmabuf(struct
+> >>>>> virtio_gpu_simple_resource *res)
+> >>>>>  =A0=A0=A0=A0=A0=A0=A0=A0=A0 res->iov[0].iov_len < 4096) {
+> >>>>>  =A0=A0=A0=A0=A0=A0=A0=A0=A0 pdata =3D res->iov[0].iov_base;
+> >>>>>  =A0=A0=A0=A0=A0 } else {
+> >>>>> -=A0=A0=A0=A0=A0=A0=A0 virtio_gpu_create_udmabuf(res);
+> >>>>> -=A0=A0=A0=A0=A0=A0=A0 if (res->dmabuf_fd < 0) {
+> >>>>> +=A0=A0=A0=A0=A0=A0=A0 if (!virtio_gpu_create_udmabuf(res, &local_e=
+rr)) {
+> >>>>> +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 if (local_err) {
+> >>>>> +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 error_report_err(loc=
+al_err);
+> >>>>> +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 }
+> >>>>>  =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 return;
+> >>>>>  =A0=A0=A0=A0=A0=A0=A0=A0=A0 }
+> >>>>> -=A0=A0=A0=A0=A0=A0=A0 virtio_gpu_remap_dmabuf(res);
+> >>>>> -=A0=A0=A0=A0=A0=A0=A0 if (!res->remapped) {
+> >>>>> +
+> >>>>> +=A0=A0=A0=A0=A0=A0=A0 if (!virtio_gpu_remap_dmabuf(res, &local_err=
+)) {
+> >>>>> +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 error_report_err(local_err);
+> >>>>>  =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 return;
+> >>>>>  =A0=A0=A0=A0=A0=A0=A0=A0=A0 }
+> >>>>>  =A0=A0=A0=A0=A0=A0=A0=A0=A0 pdata =3D res->remapped;
+> >>>>
+> >>
+> >
+
 
