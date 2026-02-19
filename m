@@ -4,95 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DFCAE9A048
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 10:36:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90A93E9A048
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 10:36:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vt1OC-0001eV-Fh; Thu, 19 Feb 2026 05:36:08 -0500
+	id 1vt1Mk-0007Mb-Jn; Thu, 19 Feb 2026 05:34:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vt1OA-0001S2-6N
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 05:36:06 -0500
-Received: from mail-yx1-xb136.google.com ([2607:f8b0:4864:20::b136])
+ id 1vt1MX-00078U-7J
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 05:34:25 -0500
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vt1O8-0006Te-3R
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 05:36:05 -0500
-Received: by mail-yx1-xb136.google.com with SMTP id
- 956f58d0204a3-64ae222d978so747204d50.1
- for <qemu-devel@nongnu.org>; Thu, 19 Feb 2026 02:36:03 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1771497363; cv=none;
- d=google.com; s=arc-20240605;
- b=cVGJX6BR3aX2PI2WgI9x7Kdkjpt0Ee50l77zC6/cDCkWzVXVZGUWQv56HgSSgstUP9
- ahPXxLAP5Tf9NpKcXUWzWXcvXCu0ZG69jjn0K71YdeOTWYFPU01UTX2bJQAivn0EbfqM
- 4EJcJ3I9BU0Pf7OFO5NQjZnpmeBHIe8BkIhhA73wnFGMem72xshnG9qO6f7W1Jt2sPgs
- Ilt6ichlOHivij8pFCfAj0wYNqYf5i3szJrTqLVaVOjIAxyb3nzZVoyr3fdsK/rnFxbf
- EgaVTN8fAz/SieIznm3SX6XwwVLTY/t9cZh+3/zKsLLYR9XOFibRwOXrZtKJgvl5a7B0
- dvsg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=dmp4uNRpCZz8PgHDTBq39Snqks/z+vXwoOxFYt9Oq40=;
- fh=e2eC8NuQ4/dcP/8/zm8PE7I9Ag9c/nkRlugmCPGBcpk=;
- b=QA2HujkMjGIfEFV5RoImEc68MA0CTVyVDlt062dEq7mFXvCjpTqhRykLc2ZyAfOJlm
- /d/fqcA40VFDNgYVfndzzxb4rChNGUDkFKVPBJ6TfA1C+kbP3fO8YbRRNUA2M1r9DZW4
- dvSanddILbYu2j0cJNMTE1nG40NOek0DPZe7SR48syOKHTU2yTKhne+7ZpMVwf2P3lRB
- /2/7kGVZ9PIT8f4oIvnbjTDDFWMP+4wOHSzLS3ybwVd1ZgEvp0fHLsHrLWnz4fP/4Slt
- 9Ej7U3MEl6r79cfR7iX6JycwPY+3wgx5Pt36Uo7Um+tiC7cK1o0N0kak+rc3dg9zpWEB
- /g5Q==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ id 1vt1MS-000644-RX
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 05:34:23 -0500
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-4836f4cbe0bso6185985e9.3
+ for <qemu-devel@nongnu.org>; Thu, 19 Feb 2026 02:34:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771497363; x=1772102163; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=dmp4uNRpCZz8PgHDTBq39Snqks/z+vXwoOxFYt9Oq40=;
- b=SwvGkQbU8qwrPObqhA2aZ+1B5384m0kD0/Q+WhvjdKdFV/xEr8Ezy1TJePyA4wwecU
- pzqWvkHrtW23hYA+29mV4GYF/k9MjZwxzaVigFlB9m0Fg3S2y4Qpx7CnP6sJmEd8gq8l
- JIIr8OtseXWScE/7FN/UMg5xr48osyD/05xw7eWPD7ma14YmY9s3e2fyXeEbHM0tNxOJ
- H1CwueyVfuUR8nkcDbYMXECAEubViMrACoXw5AGadsE6R/TDhJRx29GmACq9jlGWv0RX
- TjYdaZbt9gWnkzLKF8Anx6eQaXDIyc5yRJ4tbDKwDfy1f1stQYe0nyh3ArwGel2VniaX
- mKGQ==
+ d=linaro.org; s=google; t=1771497256; x=1772102056; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=L1ctnhdXePTfsqLLCfBe5tFGjQ3Y/lUw+bu7pneikjI=;
+ b=tolIJJiAUkaEmFdsm0rpWtzgR3r/TTIwF7EqXYWuZsoIRf6Zd4OsVE1//WJCIuk7kN
+ FONdgEFgYpRaV9fD1nLi2qu3GNjerSF1U2c1EREIFdXd1/ruXa/lYB03ZKWUxYy42I1p
+ vJCKMHAm8NoFz9mIgyMRm5WY9FxACxXZWqzChEpUqmLeEPbR/ynxr0yJ1fsr/gNsxxQr
+ HiiqOvBgkPDTbNy8hmsM9699mCWPJgkf5zSw/D7ctBWqBFnp4qEydSUPQ1Nz8Hgo5UcL
+ eVExzxbsckf8Okgw2NXDhVHmO19FkqFY0Jrnwp1shF1SmgBr42HNijQ9rNNRXocJ7wJF
+ CyzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771497363; x=1772102163;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=dmp4uNRpCZz8PgHDTBq39Snqks/z+vXwoOxFYt9Oq40=;
- b=N9BYYU9wH5Y6U9+MCAREDG4v4Rpm4wXJD5Xnqd327CWql8ermwa5FIkSkvcw8UjyCO
- NQ7JrL5Xpt+4jKcwHQ16Ii8Pg2woHFrRKxzEZG1hcsUP3UOS1Ok0KaS8Z8OGHmFqWwCj
- hcQzPiRnCiTgNHhEKufmpmY2mJI2UegZ9YVvJIHGBJeBzEC9HhR1GYhH/yId6iBBs49M
- 6bNHX7YFNjZhWX2GCeYAIAvz8K8e+5wKWXlo82X5VWJCKYP32Hr3rsByBqGlnF19Neup
- w/3C2r8sLtspyREqumsdOZDNTIQL76/R0cXiDgDSS6hGqVrTrhc0ISVW0rZpKY/rNqUD
- 3Ziw==
-X-Gm-Message-State: AOJu0YyZmK4qVJIar6QVl8A3Boxcez/s9HLhRilaUxPJkSkm+oocMlFg
- PjLtk4GAO5COZgyg4NeMQY5HHVxXbM9JzILfSNFrj2J0nHFrPi8F23PIJ+67jMhZ/k450N2Tzyp
- kixe0405yu2Q3L7s1k2WnHRv/EjVU+dq5Yw9aJ33y6e4j1Ypv/Tao
-X-Gm-Gg: AZuq6aIVq8+0MFoP8u3TSzeauYq36oeZX41x4fm+cSpVBC65tNThqRz2YNP1IBlBwNJ
- oXi0TP7lIkx0pW+zTB5eTVZYIp4TJIXBKJhRZW1XXTbEDBhtrlCdWeTnXn5xWa31PENl7K2Fk1D
- tfkmBt1iptELaZlK0x807Oubb6G5XsBjSGwu7Oh37mFdrRx4RdbxKrXdhkEAqL+KtnhYeGYayA5
- 0iw8CpTNzxI+RyTJdx0C61Bt1xhbOEVjg7GDZiSU+xSKYLLdGGpyZeABzJbCRk6tKSybli/QE66
- 2ugx4sZA0iG1YGHIpC+cUfkSXuNP833i8SF97/fmuiryF0OttzM+LltpAQ8pEqQPKpU=
-X-Received: by 2002:a53:ecd7:0:b0:63c:f5a6:f2ef with SMTP id
- 956f58d0204a3-64c614c352amr1397320d50.65.1771497362777; Thu, 19 Feb 2026
- 02:36:02 -0800 (PST)
-MIME-Version: 1.0
-References: <20260218140003.1554502-1-clg@redhat.com>
-In-Reply-To: <20260218140003.1554502-1-clg@redhat.com>
+ d=1e100.net; s=20230601; t=1771497256; x=1772102056;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=L1ctnhdXePTfsqLLCfBe5tFGjQ3Y/lUw+bu7pneikjI=;
+ b=cLXxCNcptDi4RCe0+EuB9x/xLCHuO2mOknXDYB725Eo569XC3Z9lzwS5ZuyOip1baF
+ Otd32oHH2EGkb/h7okY/wbj+6qQM54oAg6UoOvRpRoCojpXTv/uTmBNEGi5CXzr+r4Bl
+ o0QR6Lg0s9/X8LmoBMCKTbNc96hq6b6ZHBPdE6oForHN4BSFCKaJRHt7/HtWRIQGe+hX
+ exArFPtnRqqBwIZUsUFJay8yb/xShAZ++2KCFY8WM4LRdjwnjUKEiyo5gNaWlPWzkhJQ
+ sQ+mrDGUxuEQiLdqp+sBHIpSdv+7PXoEaXpCZVjUvBPNtwyr2dr58dXLhyph7d1EAyOW
+ +Gtw==
+X-Gm-Message-State: AOJu0YwtndntiAPEJCsWeYRUclLbfO0n1nNPBY/g4verUiALvUQJ2LpF
+ 5kZfx455O0dOvzZBbGlHlqB9DlHGRdw2M4MDtZFhfGhF5tVIvroX/FO+PUegt9helsFy4wTCuhU
+ ORuLA
+X-Gm-Gg: AZuq6aI9VlS6vO82M+70VHMyrE5FWaVetfAR5HtJT1lIcPUWsEykmAHd71+eFxSB8iv
+ NF/Iqy5AGqpEKnyrOLyn1C0k4xO67GXniEbP1C5aXvocFwWpCidNPQRyT6uU/gOvAlVj7AQJdgC
+ jIof+nM+bbXOGG/KthZL49nB5JkJmIIUdlCFg1S9fgGYZZmvBZspxPtwK5VPxO0K0Yohw2Ne4K6
+ RW02uNvmh9uTQbYKfaapJWsXKuuXMsQncunXn6A02LMO4+XPP0ercZwINpXbT7Lg2HFsP+gQ3N3
+ 8/eUAMfwSIDGbJm4QONm+96DXu1yy7X4UUht/dXdBWvJI0JZZz0yJChx0yEEDV3ZMy7YwzzaA/D
+ OWPCUwNNrG6myQBQun7PnQApJKWwLIDD7K7xv1PqYm7S+nE5KvL0w7kpipCMlP6q0c6kh06L9xg
+ KmYGouNhO5d+GrBQdutcIWGFO8q556WSOGYRjmR+oBZtMmJ9DQzBrJE/319DUY8uUuyOn77xil8
+ ZDb3vLj97RTx4aklzcCXcOr2ujh/pE=
+X-Received: by 2002:a05:600c:3b11:b0:480:6ab1:ed0d with SMTP id
+ 5b1f17b1804b1-48398a52be1mr97974545e9.9.1771497255666; 
+ Thu, 19 Feb 2026 02:34:15 -0800 (PST)
+Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4834d5ebd34sm697630795e9.7.2026.02.19.02.34.14
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 19 Feb 2026 02:34:15 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 19 Feb 2026 10:35:51 +0000
-X-Gm-Features: AZwV_Qh5erBfM_YG9m4r-WWrV9RqFLLBLauEVyusoUrh1fcOXAxJ7Es0LHa6byM
-Message-ID: <CAFEAcA8yBwdzj30sh54stRxZCsG-+dV4y8gti=BskvUbv2mqNA@mail.gmail.com>
-Subject: Re: [PULL 0/5] vfio queue
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Cc: qemu-devel@nongnu.org, Alex Williamson <alex@shazbot.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b136;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb136.google.com
+To: qemu-devel@nongnu.org
+Subject: [PULL 09/32] target/arm/tcg: Drop unnecessary aa64_sve check from
+ do_trans_pmull()
+Date: Thu, 19 Feb 2026 10:33:42 +0000
+Message-ID: <20260219103405.3793357-10-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260219103405.3793357-1-peter.maydell@linaro.org>
+References: <20260219103405.3793357-1-peter.maydell@linaro.org>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -115,37 +101,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 18 Feb 2026 at 14:01, C=C3=A9dric Le Goater <clg@redhat.com> wrote:
->
-> The following changes since commit ece408818d27f745ef1b05fb3cc99a1e7a5bf5=
-80:
->
->   Merge tag 'for-upstream' of https://gitlab.com/bonzini/qemu into stagin=
-g (2026-02-13 10:30:08 +0000)
->
-> are available in the Git repository at:
->
->   https://github.com/legoater/qemu/ tags/pull-vfio-20260218
->
-> for you to fetch changes up to 9757da895103709f94d7ffb6a2aef8cf4e25ddc9:
->
->   vfio: Document vfio_device_get_region_info() (2026-02-18 10:55:30 +0100=
-)
->
-> ----------------------------------------------------------------
-> vfio queue:
->
-> * Improves VFIO region mmap alignment for hugepfnmap support on
->   Grace-based systems (GB200)
-> * Documents vfio_device_get_region_info() API
-> * Adds a new VFIO_MIGRATION event notifying PRE_COPY_P2P transition
+Part of the logic inside do_trans_pmull() applies the aa64_sve
+feature check for the non-128-bit-element versions of these insns
+(PMULLB and PMULLT).  This is currently a redundant check because we
+only invoke this function via the macro invocation
+ TRANS_FEAT(..., aa64_sve2, do_trans_pmull, ...)
+and it's actively wrong for an SME-only CPU, because these insns
+are also available via SME. Remove the unnecessary logic.
 
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20260202133353.2231685-10-peter.maydell@linaro.org
+---
+ target/arm/tcg/translate-sve.c | 2 --
+ 1 file changed, 2 deletions(-)
 
+diff --git a/target/arm/tcg/translate-sve.c b/target/arm/tcg/translate-sve.c
+index e853b4dd0a..fe59126d2b 100644
+--- a/target/arm/tcg/translate-sve.c
++++ b/target/arm/tcg/translate-sve.c
+@@ -6782,8 +6782,6 @@ static bool do_trans_pmull(DisasContext *s, arg_rrr_esz *a, bool sel)
+             return false;
+         }
+         s->is_nonstreaming = true;
+-    } else if (!dc_isar_feature(aa64_sve, s)) {
+-        return false;
+     }
+     return gen_gvec_ool_arg_zzz(s, fns[a->esz], a, sel);
+ }
+-- 
+2.43.0
 
-Applied, thanks.
-
-Please update the changelog at https://wiki.qemu.org/ChangeLog/11.0
-for any user-visible changes.
-
--- PMM
 
