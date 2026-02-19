@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0D67E9A054
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 19:29:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 336F7E9A05A
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 19:29:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vt9e8-0002L6-Ux; Thu, 19 Feb 2026 14:25:09 -0500
+	id 1vt9dw-0001Mu-7f; Thu, 19 Feb 2026 14:24:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vt9dg-0000eU-7X
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 14:24:42 -0500
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vt9cS-0004RF-D0
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 14:23:24 -0500
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vt9de-0000Ib-7w
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 14:24:39 -0500
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-436309f1ad7so982575f8f.3
- for <qemu-devel@nongnu.org>; Thu, 19 Feb 2026 11:24:37 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vt9cP-0008Rl-3x
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 14:23:24 -0500
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-4838c15e3cbso10972775e9.3
+ for <qemu-devel@nongnu.org>; Thu, 19 Feb 2026 11:23:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771529076; x=1772133876; darn=nongnu.org;
+ d=linaro.org; s=google; t=1771528998; x=1772133798; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=uVulSuC4MUR7/tT6BM0faiGxtndCWhGDpB8XEO+sPBY=;
- b=fffT89uAHJ6I3V1qV0mQWxF4UwdSGPlUJGdDWqIpfx7ZMONgidOotMoE56yfol+6ST
- UiV9wOER4JbjaFjY6GP87ZuyAwHHtQ8QOdorheVZZhWWz+Ux7yIVsjHICScDz4f3UOpw
- UZHUQhquPjDYL0gmNwIG5qzWDYxVJHcBcmD9r6fN7688CUc5+uLrRjJfoToOfkKJ6UK3
- WOK7dkxqMCyoyaDcSTGERPx1hYHdh9S2wITCapr6I7zOz61OrKIZcsDDMBK39NqfGRL/
- aQ9y8sJL1zD3NUkZJW5W6qN/lk6tXSNZ3LVBGwQyd1W0xMMaVDi/3tWExxYfSY79faeH
- AAeA==
+ bh=bd+JFTRxY93XqgYZ2s6fGqp/CkjcYlTlJqxSz1umUY4=;
+ b=F4fyELqzTVWaa2ie4kIWCFEUbgyl7GB48NbzbHi+7hsJHlktxEi+/H8rEkqJHZkbwX
+ 9riKp2vQQDm4ibTOG8BHSrzcxhzJOGG1lZb6PfpeK1As5nklWK3v7H8R0R+2jvwDGuu8
+ 5ABIRQZ2hIN9k+vZhSoZJ0ucZHQIQr5w6JBdx3UpJjtBb0u60jjajUMEGFQ+ivxoNr2C
+ h+FpzeofT8/B4M0wrHHM2fXp8ZA0MCt32H5oin/6fWG6G91uD2v4Z4WsnIS3WghKnkis
+ fSfBcB0/EFUCdwahJessBSP+t89DQtBTB/iP01tFpbhWgrBVxyZlTzCaXOLq+hbXIvGY
+ bROw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771529076; x=1772133876;
+ d=1e100.net; s=20230601; t=1771528998; x=1772133798;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=uVulSuC4MUR7/tT6BM0faiGxtndCWhGDpB8XEO+sPBY=;
- b=NGImmGItf8moFFfJfI5KiYgkBvvw3w9kQC/9auGqbU0Undnix12ZUWe4dgPccIm5UI
- qqO5589jo6EEOxIRuZdcvC89xTabuNtxVWj8fQmX/iOviHjDLAF2wVPpPrX2ub/in5yo
- XpIqpCT2Utc/OKo60I9VUiE175SZKckctBxeL/77gOupTSj7ZL6EMLS64toOlpOejsfh
- v1hH6YkEdeVs/Ok+rxd7k37yxdDRFxfE8d9uRg0vcbfnxWWvlLGDyPXzsJv1aNGIN7uC
- nPTWuGpKC1KKoQyjEUjUhVQGq6kWZmxSR81iWogHNLJi/HeeGku97YUSD8gs34d39R/h
- X1/g==
-X-Gm-Message-State: AOJu0YwRf6zzyfUQl/F6SK7ROQVlCAgf8yPHOxmmh9lkailjK7I+KaBp
- JN+yigb9G+WfM2wvegPtezv3HxjsC7xBf6b/aLbfM39BAAUJJV7cToodo1SQIHZnZvtMp+PfK58
- 53SmdpBCuBQ==
-X-Gm-Gg: AZuq6aLOUlvPWoclL/aCot94YdP+zwwC6WAkw4F7rUhVBjBZpUhN9ioG2RIS1XU+A24
- hGLYBQQ6plLoJ3k5thPTrozp7UlsH3F+pX5zNpA8Ux7B3Mut2Xbw5KQybtKnIVm3tjIR4N1eSUE
- /nW5IVmbwOh27qMoc3IDx1iWQWquyP0lxgdi/VMxK/CCWZ286GHnxm/WJFd6uMI1VJHjk0IAuG5
- KM0AI9OlXfI16TnMkv4cu1G3qS0gXvNb+D9gYlRBhqrN8TVURibBCLnn4B38FY9bgHtmtiBI1GO
- eKZ/UP05cLqmDTNRiADnra/hfwWrqTIczDShKr7rtc23YpT86gCkTkMFxxUUJ2GCbNGWhcHu8lm
- hnsUTB0OdSSPk4OwY35CAPKRjBmZ1TX4boOqU6sSD49DenYAoToJDk6i61rrXbCd3Tl8vhoLKkv
- bKaTlhORYrnuJ+aW5k4dQi9ATK3g/R165fs+Y7eK27YRsu8PesAcSwDoA1vazNSq7UsmJvr7RR
-X-Received: by 2002:a05:6000:4310:b0:437:719d:a753 with SMTP id
- ffacd0b85a97d-4379db3414bmr37888770f8f.11.1771529076067; 
- Thu, 19 Feb 2026 11:24:36 -0800 (PST)
+ bh=bd+JFTRxY93XqgYZ2s6fGqp/CkjcYlTlJqxSz1umUY4=;
+ b=KnIcersNZj1qpF1IcViwzgc9JlZVpJQzpgy2zkqT4v2XqyuKkCz6gegOInkCd2vrJc
+ ADNC8fW4dL7D9ZQECPE2xLj6IilRFqi5B3+VMlRaW5GIaELmNDN1MIEQoXKTuEoBBmPJ
+ L2ocxQAdOe+oG3pUkapVNtrTdT7xgV261RXU410xRrL66Wxf6Cu0tqYRYVTjWzMerb4Q
+ Tuoegd7TkWpZnoP/2Cbxum2WA4nr6IbUSdONi+mHItMpcGLgX+68mTw1nyX9UPPhKdSj
+ KIZ4wCdCIqfzn96OSeekFNG1Ka2A2FWv2ZrC5VTWCP+SgFCfaJugeLuxLaz1DcxDk8Us
+ gygg==
+X-Gm-Message-State: AOJu0YxbuOmQBQHJVbkkaLIkwzgjRo0CyTRHYebsFcTXGTqoptOIg9IE
+ TZ31gtfgl7uApnWADunQovvigINfcIEBLhbwuR2EtzLXFc66neQkIw7fHtEDc/s3I8rN0UmADck
+ IffmIzOQN+w==
+X-Gm-Gg: AZuq6aIbJlAqN6I99TVU7g419g8eK4O2xb70bThivQ5+PJ8MY401xqp5vQrdNX7ayql
+ JSdwJ0NFzWSkSOOqGRGQ32GggUqp8RGYQFLNT6Od8GhYb/BubF/OKgbCfEDmfMExmOsf101mhTS
+ QEusM8EGArIbH4Mi7RVl+51rAUnBnhyq7voAVGGebMSlc1qU5sKhOFL+kQziT22IT4nsGf0Twaj
+ KNP7KIPNEGO7kJ/253Ce9gojVyEbj9ova+AzZ9tHQIYBQwBwtItECOW2LZdtj/AJ2PmcVQBkv1u
+ P0kEtyKSTI6z1zKjSDGX08yHo2pKDoIFonhYp30DaOXzGJEZQ9X6Kpst0Lw3tZdni9uRlVqZk1D
+ xkO9mC+RwV12aQCDeBczDvAbNHdT11VYLXs0qZDMBy+AA9eFFdMIkFEs+0i9BL1XwSm4SKhF+9G
+ 38dgtXarccQO880308mzOxW0UVYsAfYaU50LaoKoX6Vn83LiK6PX0GQ3vvavZxpgzetKbxjPkK
+X-Received: by 2002:a05:600c:3e14:b0:480:4a8f:2d5c with SMTP id
+ 5b1f17b1804b1-483710904ecmr337507715e9.29.1771528998317; 
+ Thu, 19 Feb 2026 11:23:18 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43796ad0166sm51766166f8f.35.2026.02.19.11.24.35
+ 5b1f17b1804b1-483a31bc068sm18755615e9.4.2026.02.19.11.23.17
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 19 Feb 2026 11:24:35 -0800 (PST)
+ Thu, 19 Feb 2026 11:23:17 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
@@ -70,19 +70,23 @@ Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  qemu-riscv@nongnu.org, qemu-ppc@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Yoshinori Sato <yoshinori.sato@nifty.com>
-Subject: [PATCH v2 39/50] target/sh4: Build 'monitor.c' once for system
- binaries
-Date: Thu, 19 Feb 2026 20:19:41 +0100
-Message-ID: <20260219191955.83815-40-philmd@linaro.org>
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+Subject: [PATCH v2 28/50] target/riscv: Remove unnecessary target_ulong type
+ uses
+Date: Thu, 19 Feb 2026 20:19:30 +0100
+Message-ID: <20260219191955.83815-29-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260219191955.83815-1-philmd@linaro.org>
 References: <20260219191955.83815-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,31 +109,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-'monitor.c' can be built once for all qemu-system-sh4* binaries.
-
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/sh4/meson.build | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ target/riscv/gdbstub.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/target/sh4/meson.build b/target/sh4/meson.build
-index 221700bcf8c..1327507dfc8 100644
---- a/target/sh4/meson.build
-+++ b/target/sh4/meson.build
-@@ -7,8 +7,10 @@ sh4_ss.add(files(
-   'translate.c',
- ))
+diff --git a/target/riscv/gdbstub.c b/target/riscv/gdbstub.c
+index f89b20ea84a..a053009ccd3 100644
+--- a/target/riscv/gdbstub.c
++++ b/target/riscv/gdbstub.c
+@@ -52,7 +52,7 @@ int riscv_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
+     RISCVCPUClass *mcc = RISCV_CPU_GET_CLASS(cs);
+     RISCVCPU *cpu = RISCV_CPU(cs);
+     CPURISCVState *env = &cpu->env;
+-    target_ulong tmp;
++    uint64_t tmp;
  
--sh4_system_ss = ss.source_set()
--sh4_system_ss.add(files('monitor.c'))
-+sh4_common_system_ss = ss.source_set()
-+sh4_common_system_ss.add(files(
-+  'monitor.c',
-+))
+     if (n < 32) {
+         tmp = env->gpr[n];
+@@ -80,7 +80,7 @@ int riscv_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
+     RISCVCPU *cpu = RISCV_CPU(cs);
+     CPURISCVState *env = &cpu->env;
+     int length = 0;
+-    target_ulong tmp;
++    uint64_t tmp;
  
- target_arch += {'sh4': sh4_ss}
--target_common_system_arch += {'sh4': sh4_system_ss}
-+target_common_system_arch += {'sh4': sh4_common_system_ss}
+     switch (mcc->def->misa_mxl_max) {
+     case MXL_RV32:
+@@ -194,7 +194,7 @@ static int riscv_gdb_set_csr(CPUState *cs, uint8_t *mem_buf, int n)
+     const unsigned regsz = riscv_cpu_is_32bit(cpu) ? 4 : 8;
+ 
+     if (n < CSR_TABLE_SIZE) {
+-        target_ulong val = ldn_p(mem_buf, regsz);
++        uint64_t val = ldn_p(mem_buf, regsz);
+         int result;
+ 
+         result = riscv_csrrw_debug(env, n, NULL, val, -1);
+@@ -215,7 +215,7 @@ static int riscv_gdb_get_virtual(CPUState *cs, GByteArray *buf, int n)
+         CPURISCVState *env = &cpu->env;
+ 
+         /* Per RiscV debug spec v1.0.0 rc4 */
+-        target_ulong vbit = (env->virt_enabled) ? BIT(2) : 0;
++        uint32_t vbit = (env->virt_enabled) ? BIT(2) : 0;
+ 
+         return gdb_get_regl(buf, env->priv | vbit);
+ #endif
 -- 
 2.52.0
 
