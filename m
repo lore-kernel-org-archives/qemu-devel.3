@@ -4,85 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EAFDE9A04C
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 10:38:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5C06E9A03B
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 10:46:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vt1Mm-0007Ni-5u; Thu, 19 Feb 2026 05:34:40 -0500
+	id 1vt1XX-000660-Qo; Thu, 19 Feb 2026 05:45:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vt1Mh-0007JS-DC
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 05:34:35 -0500
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <xadimgnik@gmail.com>)
+ id 1vt1XD-000657-PO
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 05:45:27 -0500
+Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vt1Mf-00067g-9n
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 05:34:35 -0500
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-48371119eacso7373325e9.2
- for <qemu-devel@nongnu.org>; Thu, 19 Feb 2026 02:34:27 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <xadimgnik@gmail.com>)
+ id 1vt1XC-0007kF-14
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 05:45:27 -0500
+Received: by mail-ed1-x535.google.com with SMTP id
+ 4fb4d7f45d1cf-65c4152313fso831247a12.1
+ for <qemu-devel@nongnu.org>; Thu, 19 Feb 2026 02:45:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771497267; x=1772102067; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=nvkJw8J3vcrGd+UNFhdHmV00xd3PQCgWpwerEwPNR8o=;
- b=jhaXaSTvVEsQXRaaIyM5a7zABK1c1/MkVtHqQKtXSphKZgHBilYgvorsC44rBi4rbI
- fhKXUeZiRMXFTmdrI26a19NXZMRbJQnCHT7jWLjzmZaVzlLDg+XF3jgWQsNEb311qBSe
- cLCYEnmhrzD6ABxeU6aE3KT1fhheedK/JZwXJyMpoeWvKdR1y5+B8l7CqNJ1IS4Jrr+e
- k26aMUwxsptVfKD0Adjbfc1q5ZWoROKfibh+34YQmUhEdnmeSHhZH50ECH32l7/x2dZU
- tS/AzVHZYrsSTNJL917gGD7QSaTguH6KmxE58WjmlkSB52ga80nZX4wIUy9gFp4pcKdB
- h4CQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771497267; x=1772102067;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
+ d=gmail.com; s=20230601; t=1771497924; x=1772102724; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:subject:user-agent:mime-version:date:message-id:from:from:to
  :cc:subject:date:message-id:reply-to;
- bh=nvkJw8J3vcrGd+UNFhdHmV00xd3PQCgWpwerEwPNR8o=;
- b=UfR0BVYpmAuOvqbk9TW4mS1WTHCzJy0T2ovFOWZrbifW1ULMHeeE3e8eXyWrrkhNZr
- /oZ6walmcyU0y+4cn5tA4aBdsBakB8t3qnVoFLvvI54/JpILOWKly+K0+JX6kjCW8d9P
- 25OiW806fgiknTV7ITB+BRtbOhGvs4dn3QtQKrItlMluZHvo4x600EMTX5aqTCR8Wcvn
- 9wLFmZYvupl4u2qqJsdmcE89FNKD21yH1STPZwfAyTTvkPHfhhdq6nEPdDmNqWr23mJ1
- 9nhqLoRBysllK7VNBAhY7LPVyr+EneCby1hbnRf4OeAG7eQMp6MWOLLDID1zp0i2+Kxy
- F2RA==
-X-Gm-Message-State: AOJu0YxiiG5CRgORH8Pt+o5YFGXMQdtZu0UCSPcIjOH+jLdYiONBxX6Z
- eRCv9d+h4N9WSxxh0u9KXAm06f97uVywkgweHs+MqRWRZVrCgRizoEhdO1PNK5ciNFIUKtkQ/r9
- lucAH
-X-Gm-Gg: AZuq6aLbs5s4S7lM2Pu7HETGmdICso0kfYQHElnORL8wDbR9ZF/t8kybqJKHPd8NOCp
- eBand+LujL6AZvm8eM8HR+U4C7TmaShqd+pa1y4dfnTR6eK6Vl4ccdIZQaHk8lo5h3tXyf2AkiV
- VG8M08khAbuqAUvQJebPZPtM/VlBHxJ5T+Oc7BDJIGr7jOK4US8EEAcANYr3iIoywAE1CKjEDAm
- Du5VtiDl0s4FkEY2eBbmR3alRRYQFi/6pbO6YV5RKpUp4x6e6ZzxSIsVmZJpohWnG0XiR1gkR+2
- xBb07oHe0ZwjqOdel5uygh9JKB7AP7fZRViOZ7JSMfYuyF7NxSDHn632HXcTUs7f0/Ee3ufvDiS
- LOVoNJyiVhU8X6413GMuORgIwVZa0cdX0kbvcdmpqjDB6WVpu/rTqpzLSelfr02S79ymTSCZn8X
- eVY+lZ9+yq66BpvNgZVyhD5WGgzpa3pHiOvsxFAsTGmTrPb7upiYQiRbkZccLKREjNKyXyESLAI
- RJ1rxkPG/J8r0var6dXvnBD5gyE4cA=
-X-Received: by 2002:a05:600c:3b01:b0:477:a36f:1a57 with SMTP id
- 5b1f17b1804b1-48398a678e6mr80611615e9.3.1771497266828; 
- Thu, 19 Feb 2026 02:34:26 -0800 (PST)
-Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4834d5ebd34sm697630795e9.7.2026.02.19.02.34.26
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 19 Feb 2026 02:34:26 -0800 (PST)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-devel@nongnu.org
-Subject: [PULL 22/32] target/arm: extract helper-a64.h from helper.h
-Date: Thu, 19 Feb 2026 10:33:55 +0000
-Message-ID: <20260219103405.3793357-23-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260219103405.3793357-1-peter.maydell@linaro.org>
-References: <20260219103405.3793357-1-peter.maydell@linaro.org>
+ bh=QeTdzGAJRlToFPZ2jrpBRauFpaCxe61uQC+bv+dMi6E=;
+ b=lA16FusbBWb2KHwwv5H+Wwx7CzaVXOVV0pJPs/wt+v4Ww4YVu+MAM7xGtfoSxLQ9DF
+ vx8MXRyCLQfU8TlupoS8r0HtkQOcOPoL6tRFH5JSQ0vJ7yt/WVcn3Pp5sHs9xyhCqdDq
+ 6q2aTqlQPf68kHSuVfq28nxaqpsNTbYqpH9yG2hQLQ1X9wlHBOK7Da3Kmfz4eSnnGYJY
+ qpmExAFK2pa7KuHXSpgqPixeajYGFk1gdYRBHRqO5aktP06CCsXYSCS3KCky3uG5+vvd
+ C2igGkgciL31iu8xDet7Ns12UvsfRhm9n6pEoAX+m4ODLsioE7z1EIIlL2Ai6/dPM4iZ
+ jwrw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1771497924; x=1772102724;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:subject:user-agent:mime-version:date:message-id:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=QeTdzGAJRlToFPZ2jrpBRauFpaCxe61uQC+bv+dMi6E=;
+ b=bwchD5S22himdE2GjHsrI0ADHTMMriRZvuNriknBueOPsSATvsNCqrtiAaz6Bmqqqx
+ Gc07tmEh4J9vvxKU4+E+NnIrymk7zzUYr9AxZobH2Op92fSsplMrX0NZjxefSZ9/QXpl
+ FoP5quAgqcMgeufmDY8grRaTcF5vmVmgaaxNpfZCpl/mzGIHwQbF39tfZbZvQGABdFkH
+ hyPQBs7PkSDU0c4OhNX6YqkFNPoQ4BBQNzil7W/ohWYs97+tv8eY3aoD3UkxMF+zed2L
+ yEgetSPx0kCJBge6I1nauVVW9ntQXlqTrFgb2Yu6FMz9EzdTMiJ2TyM6k8JKtipMC2jr
+ KBFw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXIfV5nOHUBkdgWeVkUDqaiaXRMTDyk2xqUMpDmu4eq3WmccejzNU8q2ukLMFp2Z9jKWNG2u7QFdcSM@nongnu.org
+X-Gm-Message-State: AOJu0YzpYhzMv7n1n/mBtEtSYnTIroJklGtWcmn7/UflH6WHDyDzz1m+
+ wGO+F/gjExzrIHOduPL+/yzGdyija0G2KCLC3cEo6tymE4Am90C+iUb1
+X-Gm-Gg: AZuq6aK2FZFPINlIgKMpcr7jqLK5e8cgLTl6mLFoS+VgGyaW3kTzb1cTwAzXNFGlRRc
+ hQQgMeFSwxCDnXDm6M2vmzbsum7Hb9PKZXz1T/ZSXiWufhhbIHM1KPx11ifvKqlJkaP1DHI9sFT
+ O1hjjqCjm6ddj/I3wJgz5eDUTLfLjI6qYKowAa2pttsT4nAds8S4hfyRwQfwQGI/jf8OcX7tIpj
+ m3p9K3WXFS+var0ToMY8TakB8MQjLu/7WdEgkjSFm5CJz+TY32imjNFa+tI/zy4qx43an4Y37Gx
+ FYTKB+dBEoI6MkVXbK9p7KD0enO2W5sMJY6HBSK5iuOsZbtO8AQkSdxLSHBM88r/nHepVcl7Ohd
+ FzE/AJSLtM2C5mqcm3rmr61+OAObZ2HhBN+2k9zkLwtjaaKa+j0ZFWWlsNZ7VjDVfEeJD4vpHxk
+ UzJsB0rOoRl0EZ9FUgJmUZxkePAaw7
+X-Received: by 2002:a17:907:3e20:b0:b8f:abff:9ce7 with SMTP id
+ a640c23a62f3a-b904dc6918bmr158508666b.32.1771497924100; 
+ Thu, 19 Feb 2026 02:45:24 -0800 (PST)
+Received: from [10.24.66.212] ([15.248.2.24]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-b8fc735d69esm551810766b.6.2026.02.19.02.45.22
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 19 Feb 2026 02:45:23 -0800 (PST)
+From: Paul Durrant <xadimgnik@gmail.com>
+X-Google-Original-From: Paul Durrant <paul@xen.org>
+Message-ID: <bb43a79b-9ca9-49c4-ae88-f71991c97a58@xen.org>
+Date: Thu, 19 Feb 2026 10:45:22 +0000
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 27/34] kvm/xen-emu: re-initialize capabilities during
+ confidential guest reset
+To: Ani Sinha <anisinha@redhat.com>, Paul Durrant <xadimgnik@gmail.com>
+Cc: David Woodhouse <dwmw2@infradead.org>, Paolo Bonzini
+ <pbonzini@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>,
+ Gerd Hoffmann <kraxel@redhat.com>, kvm@vger.kernel.org,
+ qemu-devel <qemu-devel@nongnu.org>
+References: <20260218114233.266178-1-anisinha@redhat.com>
+ <20260218114233.266178-28-anisinha@redhat.com>
+ <3b4b7b7b-7fcd-46ce-bdcb-cd1a30cf5276@xen.org>
+ <793B549F-F866-4BF5-ABAF-A0537BA8713B@redhat.com>
+Content-Language: en-US
+In-Reply-To: <793B549F-F866-4BF5-ABAF-A0537BA8713B@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::535;
+ envelope-from=xadimgnik@gmail.com; helo=mail-ed1-x535.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -100,145 +110,128 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+On 19/02/2026 10:31, Ani Sinha wrote:
+> 
+> 
+>> On 19 Feb 2026, at 3:09 PM, Paul Durrant <xadimgnik@gmail.com> wrote:
+>>
+>> On 18/02/2026 11:42, Ani Sinha wrote:
+>>> On confidential guests KVM virtual machine file descriptor changes as a
+>>> part of the guest reset process. Xen capabilities needs to be re-initialized in
+>>> KVM against the new file descriptor.
+>>> Signed-off-by: Ani Sinha <anisinha@redhat.com>
+>>> ---
+>>>   target/i386/kvm/xen-emu.c | 50 +++++++++++++++++++++++++++++++++++++--
+>>>   1 file changed, 48 insertions(+), 2 deletions(-)
+>>> diff --git a/target/i386/kvm/xen-emu.c b/target/i386/kvm/xen-emu.c
+>>> index 52de019834..69527145eb 100644
+>>> --- a/target/i386/kvm/xen-emu.c
+>>> +++ b/target/i386/kvm/xen-emu.c
+>>> @@ -44,9 +44,12 @@
+>>>     #include "xen-compat.h"
+>>>   +NotifierWithReturn xen_vmfd_change_notifier;
+>>> +static bool hyperv_enabled;
+>>>   static void xen_vcpu_singleshot_timer_event(void *opaque);
+>>>   static void xen_vcpu_periodic_timer_event(void *opaque);
+>>>   static int vcpuop_stop_singleshot_timer(CPUState *cs);
+>>> +static int do_initialize_xen_caps(KVMState *s, uint32_t hypercall_msr);
+>>>     #ifdef TARGET_X86_64
+>>>   #define hypercall_compat32(longmode) (!(longmode))
+>>> @@ -54,6 +57,30 @@ static int vcpuop_stop_singleshot_timer(CPUState *cs);
+>>>   #define hypercall_compat32(longmode) (false)
+>>>   #endif
+>>>   +static int xen_handle_vmfd_change(NotifierWithReturn *n,
+>>> +                                  void *data, Error** errp)
+>>> +{
+>>> +    int ret;
+>>> +
+>>> +    /* we are not interested in pre vmfd change notification */
+>>> +    if (((VmfdChangeNotifier *)data)->pre) {
+>>> +        return 0;
+>>> +    }
+>>> +
+>>> +    ret = do_initialize_xen_caps(kvm_state, XEN_HYPERCALL_MSR);
+>>> +    if (ret < 0) {
+>>> +        return ret;
+>>> +    }
+>>> +
+>>> +    if (hyperv_enabled) {
+>>> +        ret = do_initialize_xen_caps(kvm_state, XEN_HYPERCALL_MSR_HYPERV);
+>>> +        if (ret < 0) {
+>>> +            return ret;
+>>> +        }
+>>> +    }
+>>> +    return 0;
+>>
+>> This seems odd. Why use the hyperv_enabled boolean, rather than simply the msr value, since when hyperv_enabled is set you will be calling do_initialize_xen_caps() twice.
+> 
+> I am not sure of enabling capabilities for Xen. I assumed we need to call kvm_xen_init() twice, once normally with XEN_HYPERCALL_MSR and if hyper is enabled, again with XEN_HYPERCALL_MSR_HYPERV. Is that not the case? Is it one or the other but not both? It seems kvm_arch_init() calls kvm_xen_init() once with XEN_HYPERCALL_MSR and another time vcpu_arch_init() calls it again if hyperv is enabled with XEN_HYPERCALL_MSR_HYPERV .
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Message-id: 20260219040150.2098396-5-pierrick.bouvier@linaro.org
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- target/arm/helper-a64.h                            | 14 ++++++++++++++
- target/arm/helper.h                                |  1 -
- target/arm/tcg/{helper-a64.h => helper-a64-defs.h} |  0
- target/arm/tcg/helper-a64.c                        |  4 ++++
- target/arm/tcg/mte_helper.c                        |  1 +
- target/arm/tcg/pauth_helper.c                      |  1 +
- target/arm/tcg/sve_helper.c                        |  1 +
- target/arm/tcg/translate-a64.c                     |  1 +
- target/arm/tcg/vec_helper.c                        |  1 +
- 9 files changed, 23 insertions(+), 1 deletion(-)
- create mode 100644 target/arm/helper-a64.h
- rename target/arm/tcg/{helper-a64.h => helper-a64-defs.h} (100%)
+Yes, it has to be assumed that XEN_HYPERCALL_MSR is correct until 
+Hyper-V supported is enabled, which comes later, at which point the MSR 
+is changed. So you only need save the latest MSR value and use that in 
+xen_handle_vmfd_change().
 
-diff --git a/target/arm/helper-a64.h b/target/arm/helper-a64.h
-new file mode 100644
-index 0000000000..cda7e039b7
---- /dev/null
-+++ b/target/arm/helper-a64.h
-@@ -0,0 +1,14 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+
-+#ifndef HELPER_A64_H
-+#define HELPER_A64_H
-+
-+#include "exec/helper-proto-common.h"
-+#include "exec/helper-gen-common.h"
-+
-+#define HELPER_H "tcg/helper-a64-defs.h"
-+#include "exec/helper-proto.h.inc"
-+#include "exec/helper-gen.h.inc"
-+#undef HELPER_H
-+
-+#endif /* HELPER_A64_H */
-diff --git a/target/arm/helper.h b/target/arm/helper.h
-index 44c7f3ed75..79f8de1e16 100644
---- a/target/arm/helper.h
-+++ b/target/arm/helper.h
-@@ -3,7 +3,6 @@
- #include "tcg/helper.h"
- 
- #ifdef TARGET_AARCH64
--#include "tcg/helper-a64.h"
- #include "tcg/helper-sve.h"
- #include "tcg/helper-sme.h"
- #endif
-diff --git a/target/arm/tcg/helper-a64.h b/target/arm/tcg/helper-a64-defs.h
-similarity index 100%
-rename from target/arm/tcg/helper-a64.h
-rename to target/arm/tcg/helper-a64-defs.h
-diff --git a/target/arm/tcg/helper-a64.c b/target/arm/tcg/helper-a64.c
-index e4d2c2e392..07ddfb895d 100644
---- a/target/arm/tcg/helper-a64.c
-+++ b/target/arm/tcg/helper-a64.c
-@@ -22,6 +22,7 @@
- #include "cpu.h"
- #include "gdbstub/helpers.h"
- #include "exec/helper-proto.h"
-+#include "helper-a64.h"
- #include "qemu/host-utils.h"
- #include "qemu/log.h"
- #include "qemu/main-loop.h"
-@@ -43,6 +44,9 @@
- #endif
- #include "vec_internal.h"
- 
-+#define HELPER_H "tcg/helper-a64-defs.h"
-+#include "exec/helper-info.c.inc"
-+
- /* C2.4.7 Multiply and divide */
- /* special cases for 0 and LLONG_MIN are mandated by the standard */
- uint64_t HELPER(udiv64)(uint64_t num, uint64_t den)
-diff --git a/target/arm/tcg/mte_helper.c b/target/arm/tcg/mte_helper.c
-index 08b8e7176a..01b7f099f4 100644
---- a/target/arm/tcg/mte_helper.c
-+++ b/target/arm/tcg/mte_helper.c
-@@ -31,6 +31,7 @@
- #endif
- #include "accel/tcg/cpu-ldst.h"
- #include "accel/tcg/probe.h"
-+#include "helper-a64.h"
- #include "exec/helper-proto.h"
- #include "exec/tlb-flags.h"
- #include "accel/tcg/cpu-ops.h"
-diff --git a/target/arm/tcg/pauth_helper.c b/target/arm/tcg/pauth_helper.c
-index c591c3052c..5a20117ae8 100644
---- a/target/arm/tcg/pauth_helper.c
-+++ b/target/arm/tcg/pauth_helper.c
-@@ -22,6 +22,7 @@
- #include "internals.h"
- #include "cpu-features.h"
- #include "accel/tcg/cpu-ldst.h"
-+#include "helper-a64.h"
- #include "exec/helper-proto.h"
- #include "tcg/tcg-gvec-desc.h"
- #include "qemu/xxhash.h"
-diff --git a/target/arm/tcg/sve_helper.c b/target/arm/tcg/sve_helper.c
-index c442fcb540..0600eea47c 100644
---- a/target/arm/tcg/sve_helper.c
-+++ b/target/arm/tcg/sve_helper.c
-@@ -24,6 +24,7 @@
- #include "exec/helper-proto.h"
- #include "exec/target_page.h"
- #include "exec/tlb-flags.h"
-+#include "helper-a64.h"
- #include "tcg/tcg-gvec-desc.h"
- #include "fpu/softfloat.h"
- #include "tcg/tcg.h"
-diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index 7a8cd99e00..1a54337b6a 100644
---- a/target/arm/tcg/translate-a64.c
-+++ b/target/arm/tcg/translate-a64.c
-@@ -18,6 +18,7 @@
-  */
- #include "qemu/osdep.h"
- #include "exec/target_page.h"
-+#include "helper-a64.h"
- #include "translate.h"
- #include "translate-a64.h"
- #include "qemu/log.h"
-diff --git a/target/arm/tcg/vec_helper.c b/target/arm/tcg/vec_helper.c
-index 33a136b90a..7451a283ef 100644
---- a/target/arm/tcg/vec_helper.c
-+++ b/target/arm/tcg/vec_helper.c
-@@ -20,6 +20,7 @@
- #include "qemu/osdep.h"
- #include "cpu.h"
- #include "exec/helper-proto.h"
-+#include "helper-a64.h"
- #include "tcg/tcg-gvec-desc.h"
- #include "fpu/softfloat.h"
- #include "qemu/int128.h"
--- 
-2.43.0
+> 
+>>
+>>> +}
+>>> +
+>>>   static bool kvm_gva_to_gpa(CPUState *cs, uint64_t gva, uint64_t *gpa,
+>>>                              size_t *len, bool is_write)
+>>>   {
+>>> @@ -111,15 +138,16 @@ static inline int kvm_copy_to_gva(CPUState *cs, uint64_t gva, void *buf,
+>>>       return kvm_gva_rw(cs, gva, buf, sz, true);
+>>>   }
+>>>   -int kvm_xen_init(KVMState *s, uint32_t hypercall_msr)
+>>> +static int do_initialize_xen_caps(KVMState *s, uint32_t hypercall_msr)
+>>>   {
+>>> +    int xen_caps, ret;
+>>>       const int required_caps = KVM_XEN_HVM_CONFIG_HYPERCALL_MSR |
+>>>           KVM_XEN_HVM_CONFIG_INTERCEPT_HCALL | KVM_XEN_HVM_CONFIG_SHARED_INFO;
+>>> +
+>>
+>> Gratuitous whitespace change.
+>>
+>>>       struct kvm_xen_hvm_config cfg = {
+>>>           .msr = hypercall_msr,
+>>>           .flags = KVM_XEN_HVM_CONFIG_INTERCEPT_HCALL,
+>>>       };
+>>> -    int xen_caps, ret;
+>>>         xen_caps = kvm_check_extension(s, KVM_CAP_XEN_HVM);
+>>>       if (required_caps & ~xen_caps) {
+>>> @@ -143,6 +171,21 @@ int kvm_xen_init(KVMState *s, uint32_t hypercall_msr)
+>>>                        strerror(-ret));
+>>>           return ret;
+>>>       }
+>>> +    return xen_caps;
+>>> +}
+>>> +
+>>> +int kvm_xen_init(KVMState *s, uint32_t hypercall_msr)
+>>> +{
+>>> +    int xen_caps;
+>>> +
+>>> +    xen_caps = do_initialize_xen_caps(s, hypercall_msr);
+>>> +    if (xen_caps < 0) {
+>>> +        return xen_caps;
+>>> +    }
+>>> +
+>>
+>> Clearly here the code would be simpler here if you just saved the value of hypercall_msr which you have used in the call above.
+>>
+>>> +    if (!hyperv_enabled && (hypercall_msr == XEN_HYPERCALL_MSR_HYPERV)) {
+>>> +        hyperv_enabled = true;
+>>> +    }
+>>>         /* If called a second time, don't repeat the rest of the setup. */
+>>>       if (s->xen_caps) {
+>>> @@ -185,6 +228,9 @@ int kvm_xen_init(KVMState *s, uint32_t hypercall_msr)
+>>>       xen_primary_console_reset();
+>>>       xen_xenstore_reset();
+>>>   +    xen_vmfd_change_notifier.notify = xen_handle_vmfd_change;
+>>> +    kvm_vmfd_add_change_notifier(&xen_vmfd_change_notifier);
+>>> +
+>>>       return 0;
+>>>   }
+> 
+> 
 
 
