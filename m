@@ -4,110 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EAB84E9A03B
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 09:07:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FC02E9A04C
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 09:13:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vszze-0008FJ-4g; Thu, 19 Feb 2026 04:06:42 -0500
+	id 1vt05j-0001Zp-Ga; Thu, 19 Feb 2026 04:12:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1vszzc-0008Ew-Sr
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 04:06:40 -0500
+ id 1vt05i-0001Zh-9T
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 04:12:58 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1vszzY-0004EM-Ul
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 04:06:40 -0500
+ id 1vt05g-0005B1-M3
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 04:12:58 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771491995;
+ s=mimecast20190719; t=1771492374;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=//CLmZZ8qSIX6Fq2xQcNGyheAN6sXF/2VX1I8HuYAUI=;
- b=gZDC0fTlhnlWEzekPocl6pu06fdGdNCo+MtBrTX5KucO+ufVEOV1zufLXv9lAv+EeIQlS5
- wb7JOe0UDnvE0xZ+QbPKuNBRaYEGEb/abDJ7aWeictTF2fTAVHm9AmBzTms2oPx0yUKP4m
- Z1X90L4LvX2gGcXi/esgfXYfTYv4xY4=
-Received: from mail-pf1-f200.google.com (mail-pf1-f200.google.com
- [209.85.210.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=dnbmLaX+muEJFDc2ShQ4xB6f0qOb1zbRXm6geKgusZU=;
+ b=AkpLWBigY5X+VTPXYem2Rowdnpaf4KU+D+OdXOxtHiRFFuDfcCbhEGpWHlE3qMFlj8s8Uj
+ 7I8ZDti+XJaIShc1zSSgtECJG5OJFTrMa6euwma3O/mj0pmguu6WxVt9dNUNNLGNkME9hz
+ 6rCsoMmtIg1l9EMkD1wWrkwlQTAVO3s=
+Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com
+ [209.85.215.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-650-0_IOPN4BP_6dj19VjHF5-Q-1; Thu, 19 Feb 2026 04:06:33 -0500
-X-MC-Unique: 0_IOPN4BP_6dj19VjHF5-Q-1
-X-Mimecast-MFC-AGG-ID: 0_IOPN4BP_6dj19VjHF5-Q_1771491993
-Received: by mail-pf1-f200.google.com with SMTP id
- d2e1a72fcca58-824a0ea2025so386889b3a.3
- for <qemu-devel@nongnu.org>; Thu, 19 Feb 2026 01:06:33 -0800 (PST)
+ us-mta-512-_2Tz4MmfPRWFJCEvWFlmNw-1; Thu, 19 Feb 2026 04:12:53 -0500
+X-MC-Unique: _2Tz4MmfPRWFJCEvWFlmNw-1
+X-Mimecast-MFC-AGG-ID: _2Tz4MmfPRWFJCEvWFlmNw_1771492372
+Received: by mail-pg1-f197.google.com with SMTP id
+ 41be03b00d2f7-c61dee98720so451377a12.0
+ for <qemu-devel@nongnu.org>; Thu, 19 Feb 2026 01:12:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1771491993; x=1772096793; darn=nongnu.org;
+ d=redhat.com; s=google; t=1771492372; x=1772097172; darn=nongnu.org;
  h=to:references:message-id:content-transfer-encoding:cc:date
  :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=//CLmZZ8qSIX6Fq2xQcNGyheAN6sXF/2VX1I8HuYAUI=;
- b=qhVzMnp7+yFmixCnDZMpgXXwHsVyKK7/8QzjWlHIOK1uOOyZbmUvHyml/z8/ZRszQB
- HsI0KRoUjh+tL78MKTx5fhzgIEXui5VldBtrx2RaGk4UeGhmGZb8tyMi+bKcEwt4XB+R
- WmUgADKebufnuu18W5H/tuS+EYyUHlMEebEh7vk5E9er5VM2mupJh1uEtgXezHbZ5jrT
- mnOA5aAEE6gZ/4f26Z+X1N2jF4a7U20PCm+e5bYkWEvXTPjMarVn86zMtlDgYOjbnNNh
- 2Z3ryEddGWeflylABvqZEy6Zw3esMqiQggl9lNLBTVJp0nwfBJe+SJn1GyZCe4NWaA1Y
- lyxA==
+ bh=dnbmLaX+muEJFDc2ShQ4xB6f0qOb1zbRXm6geKgusZU=;
+ b=H/QNOl03ar3pB1m8yejv92wUT6bNJmjRYt3IRfyKoFEV+AB+V2uc4W0ecQrKqYDs9Y
+ NcS+REx/v2WTI/uJSKp6g0d2jlS+fLRT31+dwfKWtiv8Ezu/hmRZDobW3fk2lkRVpjQ6
+ wC8o5Qr2lV02q4T4rd71a/uMuM2iI/iRdpVJRCUWkBp/WFWLqYRhzAgu3jX7u6POlVGr
+ yqFDORp3/rKhrskX0O5N9sHxhfEULrqM26Ep9yYCYfCMz/20PDczLtvvWenvPTXWVBuv
+ 1RtX16/RzJwMJmoZTSeW3CdxBo7iTl8z8i6Gcrxoucv1QNbxJHZD5bvJ1P7lAJXXdYk9
+ VkQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771491993; x=1772096793;
+ d=1e100.net; s=20230601; t=1771492372; x=1772097172;
  h=to:references:message-id:content-transfer-encoding:cc:date
  :in-reply-to:from:subject:mime-version:x-gm-gg:x-gm-message-state
  :from:to:cc:subject:date:message-id:reply-to;
- bh=//CLmZZ8qSIX6Fq2xQcNGyheAN6sXF/2VX1I8HuYAUI=;
- b=lnS/k5pKlpBDGxjmy1UpjeuLgH+EvMBBv+/Aei65W2hUiar22H7ZzQ+U48IQJnHOFm
- v7S9LoJ20JpsS1CmhTUpPjCyPyS6dXP9ET+LJ6wEFGB0bcukULOtgk4DufuCW7bGk42G
- wu2Zoh/7IEpCdLT0EVO4y7ci+IX3mhXiwqr1vpdV8dUCDMG4gTOdg7d0rIejsODR1MvN
- pG4B+1xN65LHEs46+qtW9uRFpwO94BJaK1phcxaBtU4SHI9PLQeJksG/zAerbHWtihtL
- jp+RR8GTgd0Oaqnv1G3jdsxWCUUKTUU20eB8nHXQtoLOBISPZhgg7jFt9tuI/Pe5xY5g
- kKzA==
+ bh=dnbmLaX+muEJFDc2ShQ4xB6f0qOb1zbRXm6geKgusZU=;
+ b=JS7LrIU/SYeQqY9DEDpgPgtDCtriMZCeBfkEOzLEEhDECfGnIHMzc+Mv2OsoZ/fVO0
+ G8QlTcd011odTtuZSlNAhE34DHoj6EwF3Cdz1ht/V8xx9Do4CONr280NCv8qfL/BdXI3
+ U3NGe9e2oqD2veVPdGROpkjGZRPFLfek2LUrjz4PwjxSkSUUzAIaf+vru/jhOJ/lUSqO
+ nnHlBSiAaabVYpTwPAC5OxLcFuA/SICKyg3BlItqLaQQtIokasKjhhqekkmAHIMOHhJh
+ b7bcyUvBylH+GGVjNwl62+PzLWu6oleSzddick2xSQTbpo/I2AIN6jRQZoLnngrCC+dz
+ zf1Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVx+Bs8Hlcj+M4RoW6UkGLcEwsThFK6YWypJ1YWGrCSmHbVJGfQu7+4fOMKR/r5uRi85wEKuhC6xI7I@nongnu.org
-X-Gm-Message-State: AOJu0YyNYoyjp1ZLVjgsWytn4f2/bKhtbSXKbJrdu1qOLg5TXy3v3pry
- e/BcUaE5X1e9eu+Am2opcXdPFP4v1w8mXqhT3A0VUe7jThnqXqpt1y6sKkeGgf+ObOqtn7k3a9c
- H3xuZU789Tbymu9HcPU80q1qU/go/Wk7Uf1rNH9Mg/FkMww+jv3+iyFQB
-X-Gm-Gg: AZuq6aLL/chtiS2y0YzPuP0lijtG5ZewTnYWV9MkEbsAQO3WiOJSmFbmIj8EaOcr8zV
- fD/ShAmUZRtCistGeMGsTqPGDv+KGhu5D1zKofRGmU7SAWgVqOePNq8jQDY+hQuARFMel/7c5qJ
- 0Xqmko8PgSZ28baU1O5ZyAk1fUjZcMcbkTEpe/Vz5qUYuzzGxw4cxRTQ+4pCi3r5DwkbySuX7Qo
- pCFj0+XUFcftFuroeMY3Jn0dR5PBAa1K6442HQHm43BpMVgywL+orL1XSDXl149EIKPCq3hCNWh
- i9cdTblarz79/cyHHlzVTksputVmIC0SuhpPZk6wtc453b6BunnqyWZM61zeaTXzjxBrFl+JTG1
- drLml/YJSC+fyZWpXZ9VHB15rGWPYM560srck9ABpJYSb4U7OeL7+vuJBah5YjXz7j7g=
-X-Received: by 2002:a05:6a00:3cc9:b0:81f:3957:2770 with SMTP id
- d2e1a72fcca58-824d95f9e8cmr14770420b3a.38.1771491992791; 
- Thu, 19 Feb 2026 01:06:32 -0800 (PST)
-X-Received: by 2002:a05:6a00:3cc9:b0:81f:3957:2770 with SMTP id
- d2e1a72fcca58-824d95f9e8cmr14770401b3a.38.1771491992324; 
- Thu, 19 Feb 2026 01:06:32 -0800 (PST)
+ AJvYcCWkmg8la4WiFRkC0BNEa2MkNs+ujOGdEs2gQK+szgMus/61MimJayxrPdtHYXZJFi3V0M3g26CTBgYp@nongnu.org
+X-Gm-Message-State: AOJu0Yyz9iuChv3856beckHg7k3JHlJX8UZnWtWxaBbNDLDVSCNHgT09
+ or/E+gZceQa4Bvf3MrLvymiOO+2BLkp4HPr6k0QbWUGiUCnYdBi0wZUVh9JmvbCU5RPC3jZ8hg3
+ x3+S0SrFEQAefsi6F9Vs3/5GLLj+MqJv9RFVGZWcc5mSTVBxNbmQzCFLk
+X-Gm-Gg: AZuq6aK6JQy+bXRYT0Egg2vVl3z24uLhU1N6Iz7PMkm0YeFuSwgJtYvZUcSi+ei7GF7
+ RFCUH535p63eNyLWiyFwmSI3RkI7Qg7OfRJSD/L9Y6OzAbgFTz2LoU9J99VFWeTD9sxMNJhXCnf
+ LZ1i4Mhe+47vVIHdxRRE3IVTSdtj2yZ52Ei9wKBsbbyXCrqC+F9SzZokFifeyXUqJKdcGaP0GY/
+ hwRQtV6j9fmipAnEJ54iq0tOXtZda8EC/TpLXn2ryynrctMQuPTLa5GXLPveZpIBzE6M79btevU
+ dgAJiGRx0AwXYUjkZHyZ17BsIsB/VPsm0b3yB5Tl3aBFqKrR66FnwBPhfhU072Tw7VvYqTIog9E
+ sbK8/2LYnNB9K7o7iR79MLu0WQZZFzXK04/AH+QqzNh6SMIVgyh5hPhZ7oQCxMNezAkk=
+X-Received: by 2002:a05:6a21:398b:b0:366:14b0:4b02 with SMTP id
+ adf61e73a8af0-39483a7fe52mr15941898637.62.1771492371896; 
+ Thu, 19 Feb 2026 01:12:51 -0800 (PST)
+X-Received: by 2002:a05:6a21:398b:b0:366:14b0:4b02 with SMTP id
+ adf61e73a8af0-39483a7fe52mr15941877637.62.1771492371542; 
+ Thu, 19 Feb 2026 01:12:51 -0800 (PST)
 Received: from smtpclient.apple ([117.99.83.54])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-824c6b935c6sm20543872b3a.47.2026.02.19.01.06.30
+ 41be03b00d2f7-c6e52fcfc08sm15492542a12.1.2026.02.19.01.12.48
  (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Thu, 19 Feb 2026 01:06:31 -0800 (PST)
+ Thu, 19 Feb 2026 01:12:51 -0800 (PST)
 Content-Type: text/plain;
 	charset=utf-8
 Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81.1.4\))
-Subject: Re: [PATCH v5 22/34] hw/vfio: generate new file fd for pseudo device
- and rebind existing descriptors
+Subject: Re: [PATCH v5 33/34] qom: add 'confidential-guest-reset' property for
+ x86 confidential vms
 From: Ani Sinha <anisinha@redhat.com>
-In-Reply-To: <b7c1cb1e-7ca8-4d79-94f1-8f6e3bee4b65@redhat.com>
-Date: Thu, 19 Feb 2026 14:36:17 +0530
-Cc: Alex Williamson <alex@shazbot.org>, Gerd Hoffmann <kraxel@redhat.com>,
- qemu-devel <qemu-devel@nongnu.org>, Paolo Bonzini <pbonzini@redhat.com>
+In-Reply-To: <87wm093yer.fsf@pond.sub.org>
+Date: Thu, 19 Feb 2026 14:42:36 +0530
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Daniel Berrange <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>, Eric Blake <eblake@redhat.com>,
+ Gerd Hoffmann <kraxel@redhat.com>, qemu-devel <qemu-devel@nongnu.org>
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <D6CE0C83-89CD-4967-AD8F-E4CA2A5FB1B9@redhat.com>
+Message-Id: <ECE353A6-A0BC-4A3A-8D80-581CE9150C5D@redhat.com>
 References: <20260218114233.266178-1-anisinha@redhat.com>
- <20260218114233.266178-23-anisinha@redhat.com>
- <96665575-c28c-43fb-af7b-41be109dc959@redhat.com>
- <20472A29-B096-4407-B144-74C3804CC315@redhat.com>
- <0f5f1157-1ac4-472b-9c30-5e0c61d18f83@redhat.com>
- <CAK3XEhOFvXUEiO3z1MhGqjBQUH3hB_3u9suLpweBs9vaTr1zog@mail.gmail.com>
- <61f1dfa8-705e-4f2f-ac9c-35da4e8eac02@redhat.com>
- <3D89ED00-C696-4ECA-BE4C-7ADF04631900@redhat.com>
- <a03128b2-ce06-3e22-08f2-2eea68f0afe1@redhat.com>
- <b7c1cb1e-7ca8-4d79-94f1-8f6e3bee4b65@redhat.com>
-To: Cedric Le Goater <clg@redhat.com>
+ <20260218114233.266178-34-anisinha@redhat.com> <87wm093yer.fsf@pond.sub.org>
+To: Markus Armbruster <armbru@redhat.com>
 X-Mailer: Apple Mail (2.3826.700.81.1.4)
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=anisinha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -136,67 +129,36 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-> On 19 Feb 2026, at 1:44=E2=80=AFPM, C=C3=A9dric Le Goater =
-<clg@redhat.com> wrote:
+> On 19 Feb 2026, at 2:25=E2=80=AFPM, Markus Armbruster =
+<armbru@redhat.com> wrote:
 >=20
->> please try this patch on top of my v5. It should fix the issue. I =
-tested
->> on a RHEL 9 host and a fc43 SEV-SNP host, 1 or multiple vcpus, two
->> different guests and all looks good.
->> =46rom 26db44eba8c727160dd9e97c9d5582a0ddc5884d Mon Sep 17 00:00:00 =
-2001
->> From: Ani Sinha <anisinha@redhat.com>
->> Date: Thu, 19 Feb 2026 13:12:02 +0530
->> Subject: [PATCH] Call cpu_synchronize_all_post_init for coco as well
->> Fixes issue reported by Cedric
+> Ani Sinha <anisinha@redhat.com> writes:
+>=20
+>> Through the new 'confidential-guest-reset' property, control plane =
+should be
+>> able to detect if the hypervisor supports x86 confidential guest =
+resets. Older
+>> hypervisors that do not support resets will not have this property =
+populated.
+>=20
+> Double-checking...  This is an static ability of QEMU, and QEMU alone.
+> It does not depend on QEMU's run-time environment (host kernel, ...) =
+or
+> the guest.  Correct?
+
+The run time environment is the same as what is needed to spawn =
+confidential guests. That is, the host should support confidential =
+technology. The host kernel/distribution should support confidential =
+technologies. Plus the guest should support confidential technologies. =
+There is nothing additionally needed to support resets. There are no =
+additional dependencies with host kernel/environment and/or the guest =
+etc to support reset.
+
+>=20
+>> Suggested-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
 >> Signed-off-by: Ani Sinha <anisinha@redhat.com>
->> ---
->>  accel/kvm/kvm-all.c | 5 ++++-
->>  1 file changed, 4 insertions(+), 1 deletion(-)
->> diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
->> index d7ea60f582..0610bf8434 100644
->> --- a/accel/kvm/kvm-all.c
->> +++ b/accel/kvm/kvm-all.c
->> @@ -2816,7 +2816,7 @@ static int kvm_reset_vmfd(MachineState *ms)
->>      }
->>      s->vmfd =3D ret;
->> -
->> +    kvm_state->guest_state_protected =3D false;
->>      kvm_setup_dirty_ring(s);
->>      /* rebind memory to new vm fd */
->> @@ -2872,6 +2872,9 @@ static int kvm_reset_vmfd(MachineState *ms)
->>       * kvm fd has changed. Commit the irq routes to KVM once more.
->>       */
->>      kvm_irqchip_commit_routes(s);
->> +    if (ms->cgs) {
->> +        cpu_synchronize_all_post_init();
->> +    }
->>      trace_kvm_reset_vmfd();
->>      return ret;
->>  }
 >=20
-> Tested (OS reboot, system_reset) with a RHEL10 guest (2 vCPUs) on
-> a RHEL9 and a RHEL10 host, using a SATA device and active NIC VFs.
-> All Looks good.
-
-Excellent. Also tested on a TDX host with RHEL 9.6 and seems good as =
-well. Tested running my integration tests on non-coco and all is fine =
-there too.
-
-
->=20
-> There is still one message :
->=20
->  qemu-system-x86_64: info: virtual machine state has been rebuilt with =
-new guest file handle.
->=20
-> which seems normal.
->=20
-> Thanks,
->=20
-> C.
->=20
->=20
+> Patch looks sane.
 >=20
 
 
