@@ -4,87 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F429E9A048
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 10:09:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11AD8E9A03B
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 10:13:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vt0xw-0006lG-DV; Thu, 19 Feb 2026 05:09:00 -0500
+	id 1vt11x-0007lU-UW; Thu, 19 Feb 2026 05:13:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vt0xu-0006kY-LF
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 05:08:58 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vt0xs-0007GH-OP
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 05:08:58 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771495735;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=HJWtWOij5kqJDGKkuNkM74Y6CD4Ke1WY1t4YFenkbec=;
- b=ITHHCY1Yxjwnhu3JAHTefxj03BYuXv91aB/7h2dXD6gDOqA1hSCrx7Cd4+VEQfr1ZUHb7G
- GaSU+DQ5lUS7JWnZ6lKkb+QD8qHKo+fBnFbxSXDqCBYLqY8OyrSO4rQZaISaXcYuyfU27s
- 4j/KBmt4yrc2wVX1JlUoIqVWjIG3sLY=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-625-gbiC7Y9AOxq9_cevmG1lTA-1; Thu,
- 19 Feb 2026 05:08:52 -0500
-X-MC-Unique: gbiC7Y9AOxq9_cevmG1lTA-1
-X-Mimecast-MFC-AGG-ID: gbiC7Y9AOxq9_cevmG1lTA_1771495730
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8FDAF195605F; Thu, 19 Feb 2026 10:08:49 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.14])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 72553195410F; Thu, 19 Feb 2026 10:08:48 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id EFEAB21E692D; Thu, 19 Feb 2026 11:08:45 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org,  Manos Pitsidianakis
- <manos.pitsidianakis@linaro.org>,  Stefan Weil <sw@weilnetz.de>,  "Dr.
- David Alan Gilbert" <dave@treblig.org>,  Pierrick Bouvier
- <pierrick.bouvier@linaro.org>,  devel@lists.libvirt.org,  Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  =?utf-8?Q?Marc-Andr?=
- =?utf-8?Q?=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>,  Hanna Reitz <hreitz@redhat.com>,  Kevin
- Wolf <kwolf@redhat.com>,  qemu-block@nongnu.org,  qemu-rust@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>,  Gerd Hoffmann <kraxel@redhat.com>,
- Christian Schoenebeck <qemu_oss@crudebyte.com>,  Richard Henderson
- <richard.henderson@linaro.org>
-Subject: Re: [PATCH v6 25/27] util: add support for formatting a program
- name in messages
-In-Reply-To: <20260211152508.732487-26-berrange@redhat.com> ("Daniel
- P. =?utf-8?Q?Berrang=C3=A9=22's?= message of "Wed, 11 Feb 2026 15:25:06
- +0000")
-References: <20260211152508.732487-1-berrange@redhat.com>
- <20260211152508.732487-26-berrange@redhat.com>
-Date: Thu, 19 Feb 2026 11:08:45 +0100
-Message-ID: <87ikbt3v0y.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vt11v-0007l5-0n
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 05:13:07 -0500
+Received: from mail-yx1-xb12f.google.com ([2607:f8b0:4864:20::b12f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vt11s-0007q0-DH
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 05:13:06 -0500
+Received: by mail-yx1-xb12f.google.com with SMTP id
+ 956f58d0204a3-64ad8435f46so620076d50.1
+ for <qemu-devel@nongnu.org>; Thu, 19 Feb 2026 02:13:04 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1771495983; cv=none;
+ d=google.com; s=arc-20240605;
+ b=H5cXOWPPF25hHosAKXY9QDJFNR3I5BPaH5LTzOK+vE6tpw7nhAql2fAOXApqXTGD+k
+ AD4MRU3RGacpedjgkmRNsCZaL0UjLbqKe/FZONhrXc6Ci2/A/TdZuxgxmQVbVwIBVsks
+ G6B6U3gR+vqikDmnnEZiIRODRRZKTrfGHpJNHB8DnR6gb5lAPLdx4HheirtE9D7JBX2T
+ isZXrRcy3z3gGEd75UFT0IZrNJcCkRKfV+1pAK602xevaGfvQF3B3UfJzrd1j+uYRSki
+ cMzi4x4rQg+1L3lDakkTPXMH0FwlKD3EHqu9CHvcTQuzIumdq8283PgTso27X6svmxxu
+ 9wWQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=I1Xccy3fuo4NeBujNW8Yr112yKgANjPYkwu+AYvM1zk=;
+ fh=EW9hBPmu06DRmAd6hMxBcpY5XawM6U88N8rDhpCGN1w=;
+ b=XHt/HWJQFXwP+eX+l93/yZmD+ifAhr39pshtT4gkqxnYU/Ca6uMN++kSs4HtuoJs3A
+ q7ZfTcge19TuMUAV0G7N78ciGJO3zd/wER1hgV2NHvonQNZdcdQg5rqS8HckwO+nbBTC
+ DearVj1lcsDxpcv8VECacHZSJdse+PezEQIYC558ntrZxgKBULLlo3808BZIbGTphKFi
+ O3HpKT5+yulRUGGjh7GVr0OmjrLq+tRKm1PicUhqEVXg0lmafMBIhmecCcseX1FgZ6Ax
+ /IAcZhPWOCOFQafIlyXuUpEye0nswsXnEV0D0w5ZdSdKF5xEYl99roTIsapLXW61S8bL
+ Gqxg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1771495983; x=1772100783; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=I1Xccy3fuo4NeBujNW8Yr112yKgANjPYkwu+AYvM1zk=;
+ b=Tjj1g4UC6/+Ux3OTgK4u/CtJR+m9KdT8pChYqUyHn8q0jeUlXUUnIH9/IPhqIzALz/
+ HVXg6HgzOL6t9Pp2dEkGU1VlC0ilrmdGcOjoQsgxkDGh9AFo1+9nrXOjRPwqN2bDsWLI
+ 22jEdBXDUmZtHhuEmVONJrxXlJPc50k1f1dibcfJRy6oEaqFTYUYdBLsda9cxdFewntt
+ 9/RXJORt634ny5HVqNQ6Rv8yip+3UGqdFxyCmB1mZJ+hCpt90COGHfEKwY0S4z6HXh6P
+ K4/dYYtyT9Y5xzW0z74YWRZONSLdlBJekyNtXg6ImpQNobhJCk5aIfQ1m2C8hv+qUsjl
+ duCg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1771495983; x=1772100783;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=I1Xccy3fuo4NeBujNW8Yr112yKgANjPYkwu+AYvM1zk=;
+ b=V45Lb3aedl0V1Nr5TyScuK9AqvufNip2dUwAFhcO2Vc1897WEYZRaMDXQnxoUPQpjR
+ n5SpFlGaO1FvQdAGCO0LMWYnxQlJK4JSWuFFoIHTvwKN22t04Q6a0i60q8ts0XrEfYQI
+ dVBvNk8xQ7sZXaHxf7T7DIq9JwONAB/RsD7Po79CCFwKGEg2Tp/6HhjKOc9s4Sv7tGJj
+ 5cC733KNeM8xlkdDluKIboK3hfJHJSMnVZt/uanwqnrK2skNxRviOy1rymG1zKYgNICZ
+ nFG+Bk68Jb4xRu6KsrywgmOizd0bzmF7u3+KFgLHzhuAyz5qq6PTWgXhX4w0TTYRW68N
+ UN4Q==
+X-Gm-Message-State: AOJu0YzapSU2yMh04Ch31DIHVSPCdOuTQLxE6wG9ycZvgUo13TLX3RFt
+ blUelGeDzECaI9YU+7xFKy8+fCoQXsw5bcLVcwo6g9lhpD7gMAaqZK4353kabfXJJW+J2j5JTwx
+ CRdhjhEfKHZeI28PGUY5c3NyDs85NFy9RmVzwMGS+oQ==
+X-Gm-Gg: AZuq6aKTCUNhzgdKvpmV/1MBKDY1o58dMMa64t6YFgS8SqwvETc55ETkqZr2sSGVpR7
+ +pAvVG6g0vikymdNq3MBjkH3ayJ+nJnAX1Pc+w+dm9aIvQQHdrKqBmDJqMFy1Iss2FsXPQ9G280
+ bUF3iCjDUziTqxjgDiM4C9CxYljlziuvkg8JNLtU9aRwzMwRibHeohjoBcIlh8PQd9jnCs6ipTb
+ +KIHyKxpzvub0QSIZKz1lILIRyJCSSVjTIay4r04681dY50HWFTysZduF3yPvCPr4Uqux2GOZSm
+ aEzfnIGpu5XASfI8DUplEOnrx12z5yPrjjLoa+SvIxZ03tOqOlP66OUtYdwBkjfrhmg=
+X-Received: by 2002:a05:690e:1590:20b0:649:3e3d:327 with SMTP id
+ 956f58d0204a3-64c21abc466mr10458746d50.40.1771495983057; Thu, 19 Feb 2026
+ 02:13:03 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -13
-X-Spam_score: -1.4
-X-Spam_bar: -
-X-Spam_report: (-1.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.043,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- GB_FAKE_RF=0.754, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20260211122759.125094-1-mbawa@redhat.com>
+ <CAFEAcA_+eqfTy+7U9igTscue5SMURm3C9yUXvdFTon+ZgSJfAA@mail.gmail.com>
+In-Reply-To: <CAFEAcA_+eqfTy+7U9igTscue5SMURm3C9yUXvdFTon+ZgSJfAA@mail.gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 19 Feb 2026 10:12:51 +0000
+X-Gm-Features: AZwV_Qhabehe9XEqgx1hlH4Z2TOu_dd-y-R6Q2cllhzQweagDwcNI8TNXSoHquA
+Message-ID: <CAFEAcA_fR8gQc-f1qhcNb7tD0_EfqfNJEhS_tSg354Rhpb=fQw@mail.gmail.com>
+Subject: Re: [PATCH] hw/arm/virt: Add virtio-transports property
+To: Mohammadfaiz Bawa <mbawa@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, alex.bennee@linaro.org, 
+ philmd@linaro.org, cohuck@redhat.com, eric.auger@redhat.com, 
+ sebott@redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,57 +116,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+On Wed, 18 Feb 2026 at 19:01, Peter Maydell <peter.maydell@linaro.org> wrote:
+>
+> On Wed, 11 Feb 2026 at 12:28, Mohammadfaiz Bawa <mbawa@redhat.com> wrote:
+> >
+> > Windows ARM64 guests detect virtio-mmio devices declared in ACPI
+> > tables even when no backend is attached. This causes "Unknown
+> > devices" (ACPI\LNRO0005) to appear in Device Manager.
+> >
+> > Until Windows fixes that by supporting, adding a new machine
+> > property 'virtio-transports' to control the number of
+> > virtio-mmio transports instantiated. The default remains
+> > NUM_VIRTIO_TRANSPORTS (32) for backward compatibility.
+> > Setting it to 0 allows users to disable virtio-mmio entirely.
+> >
+> > Usage: -machine virt,virtio-transports=0
+> >
+> > Signed-off-by: Mohammadfaiz Bawa <mbawa@redhat.com>
+>
+> Applied to target-arm.next, thanks -- but please could you check
+> up with the ACPI spec about whether it says anything about what
+> to report for empty transports? If it says we should or if it's
+> just vague we should probably match the x86 microvm behaviour
+> of not showing empty transports, since they can never be
+> hotplugged after startup. (This might need to be tied to
+> a machine-version, not sure.) Maybe we should also not report
+> them in the dtb?
 
-> The error_report function can include the program name in any
-> messages it prints. The qemu_log function has no equivalent
-> behaviour.
->
-> This introduces support for a "program name" in the new
-> messages API, which will be included by default for all
-> binaries.
->
-> This change tweaks the output of the error_report function,
-> adding a space between the program name and the location
-> info.
+Looking again at this patch, I had a couple of niggles, so
+I've dropped this patch from target-arm.next for the moment.
 
-Why?
+(1) we need to document the new property in
+    docs/system/arm/virt.rst. Something like
 
->       The qemu_log function will gain the program name. This
-> can be easily seen with the 'log' trace backend, and how it
-> is now more closely matching error_report output.
->
-> Before:
->
->   # qemu-system-x86_64 -object tls-creds-x509,id=3Dt0,dir=3Dfish -d 'trac=
-e:qcrypto*'
->   qcrypto_tls_creds_x509_load TLS creds x509 load creds=3D0x5584e13937f0 =
-dir=3Dfish
->   qcrypto_tls_creds_get_path TLS creds path creds=3D0x5584e13937f0 filena=
-me=3Dca-cert.pem path=3D<none>
->   qemu-system-x86_64: Unable to access credentials fish/ca-cert.pem: No s=
-uch file or directory
->
-> After:
->
->   # qemu-system-x86_64 -object tls-creds-x509,id=3Dt0,dir=3Dfish -d 'trac=
-e:qcrypto*'
->   qemu-system-x86_64: qcrypto_tls_creds_x509_load TLS creds x509 load cre=
-ds=3D0x5584e13937f0 dir=3Dfish
->   qemu-system-x86_64: qcrypto_tls_creds_get_path TLS creds path creds=3D0=
-x5584e13937f0 filename=3Dca-cert.pem path=3D<none>
->   qemu-system-x86_64: Unable to access credentials fish/ca-cert.pem: No s=
-uch file or directory
->
-> When adding this the '-msg program-name=3Don|off' option is
-> introduced, so that the program name (which is enabled by
-> default) can be supressed if desired. This could be useful
-> if '-msg guest-name=3Don' is being used as a more informative
-> identifier.
+--- a/docs/system/arm/virt.rst
++++ b/docs/system/arm/virt.rst
+@@ -226,6 +226,11 @@ dtb-randomness
+ dtb-kaslr-seed
+   A deprecated synonym for dtb-randomness.
 
-Separate patch?
++virtio-transports
++  Set the number of virtio-mmio transports to create (between 0 and 32;
++  the default is 32).  Unused transports are harmless, but you can
++  use this property to avoid exposing them to the guest if you wish.
++
+ x-oem-id
+   Set string (up to 6 bytes) to override the default value of field
+OEMID in ACPI
+   table header.
 
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+would do.
 
+(2) I think we should call the property virtio-mmio-transports,
+to make it clearer to the user that this is MMIO-specific and
+nothing to do with the much more commonly used PCI virtio.
+What do you think?
+
+thanks
+-- PMM
 
