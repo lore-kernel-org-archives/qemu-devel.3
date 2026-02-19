@@ -4,66 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C5F4E9A04A
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 14:51:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78EE1E9A04C
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 14:51:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vt5MN-000456-Vj; Thu, 19 Feb 2026 09:50:32 -0500
+	id 1vt5MH-0003zd-8n; Thu, 19 Feb 2026 09:50:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ruslichenko.r@gmail.com>)
- id 1vt5MC-0003uy-P5
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 09:50:22 -0500
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ id 1vt5Lp-0003k3-LV
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 09:50:06 -0500
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <ruslichenko.r@gmail.com>)
- id 1vt5M6-00085L-Eh
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 09:50:19 -0500
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-4836f363d0dso9434375e9.3
- for <qemu-devel@nongnu.org>; Thu, 19 Feb 2026 06:49:55 -0800 (PST)
+ id 1vt5Lc-00082t-Go
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 09:49:53 -0500
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-4362d4050c1so1024335f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 19 Feb 2026 06:49:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1771512594; x=1772117394; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1771512581; x=1772117381; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=S8jISgrMRUU7GJEHRBKA1C6CwoQWVbq4rD3s2gB8p7Y=;
- b=JZp5ExZiWw+7p+F5STRP7lRL0TJz14IyH61HlyxfkGpB7G17aqv7DecrsBzpXNNJOo
- tTNiWyxQiyXh8DXk3a+t+man0mlKNx+5f+XFAVbY6faN1fmEuLvaK4LaENIRztAVjskF
- QyNfssUJbN9dgABIfJXpFt9P7eQk7CNs6QQWhiTx09hmttzEYx89ITGz8pI9rWeOq2Cq
- fRTTB9QxGETmXaMdLhg66M+UTN3e4BZH2e70F1EGN/4vytm9XCLp3kXRY7tU9Q99JurK
- awiU6PBhG20dH/Kast4FkQXDhnVqGasmnH17i1a3bANXj34czkX0RBUcvOogGHoJoOLD
- pijw==
+ bh=6UYWT62sEHBxv5crU/HblRe1sAfAFjgx1BptkDY9LkA=;
+ b=kKY2nR8Y4mK8gMzjWDzMU9lw3EYjBIMjS1wqtdzTtwYqYMfnYJGW1CitJUI5rv+o0o
+ mRVn9SqbCulUD9y1F/boYfwPJP7fmFRXRUXguPKA3XRxkQQTzB0YaBBUc6HblGzqwvzU
+ y5/5JOWd7fHtlVsW7JqySNpeAOGE7/rMR6CwgCUtm8jJX4O3jj2UwXOb+yELpwIjOSv6
+ fM0MMXPVHWvJf+DSGsEX6FN5SsQYQvGrqb86S7eRVC5z9JmQnQC3+ZyFBBY621F6bPh6
+ 8Txu/5hIR4vR9+TxDR5bjRZqaebBS+NVsFTBjIbxdTPjFV/pcACsnHxniuHFdJGuqXKd
+ 6mZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771512594; x=1772117394;
+ d=1e100.net; s=20230601; t=1771512581; x=1772117381;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=S8jISgrMRUU7GJEHRBKA1C6CwoQWVbq4rD3s2gB8p7Y=;
- b=DHI09ZnFnLd5qLUYOMshj9yJfGUBgT12+EMsUcQ9oowd1+g2OYzZSYYvenIeC+c7Y2
- g5MCpojYs0+hD2tcDgdnqFgVJ500B3GtF8NGKtMMdtuVT4d2YepI1TEzIZ7/y2Gj8Els
- Xu1wP9aXtr3bhYqAXM7j6PTsFEiky7qmiXjDwjt6yAAb4P2XhXYSOEyIxAO+qLP0+HCm
- ixSMEgYBATExp34X/XqaT348UvgSP2nmc+O2gI7iI7tE/oDKwKPZlSNUMEMDvBEiv3pp
- /dIz3Uaat/scLhvfB8wckqInsnv9AP92UCWmHNDqi4bFpbYHOn7priiHqERG0P5wdcCQ
- 3b3A==
-X-Gm-Message-State: AOJu0YwuAJkR+mJfC+NB/NgXdXvano2YH99UV1FUQWkRJnk7/KPhS83W
- oUYc1sGKFgBqjCt2+2yFVahyUP/UA+fgDdGJjJj1z25O/YEpud1qEJlyXD5FpcMt
-X-Gm-Gg: AZuq6aLVFOGhgO/9oLJ05QFNelaenZUxMw7ieWAKc+teAz1MzGO0+GeN23XCsJAfulR
- E4pFzrx1/tVlXO5y3YcmB9duCcha0NA43tm+2t091qUAVpE4os3O0x9k2CompU/rELzNnWtAOVu
- lMNb/YmstITFHvPJABMLHTBBNuzYfO1KUj60360sBGiCoKMfMdzIQWBxS2o5fV5Ikz8nvMKnIKI
- L81SjElw2BhhJZD0Djd976+CJpKmm4dPKSLO/GZpdJJb4reWtt//o8zCUyUT2ulj2fIctExGkCq
- unJtYm8yD8gbjT9XYKxBPxpdvOzaoW0tOJh7NN7xEgA/Z5zYZ5hPqYsGNmjAx4Uadz/gN2Gr/Xn
- t4kk8NSKn1qAyb6Bw1l03MM9shNh9NXfHVXXa8MxvfnDVagRX254xCqJRwb5cMJ7YYhBjWkoYQI
- GbG7jlc++mRrS+ftr4eubrqouqHzm8gMjiS7tUMkOp99on8UZT6ef2UMuPvoKZAW6sbhgT
-X-Received: by 2002:a05:600c:1f92:b0:47d:25ac:3a94 with SMTP id
- 5b1f17b1804b1-48379bfd727mr298943275e9.17.1771512594118; 
- Thu, 19 Feb 2026 06:49:54 -0800 (PST)
+ bh=6UYWT62sEHBxv5crU/HblRe1sAfAFjgx1BptkDY9LkA=;
+ b=mFn3jY2E1Uk7yo/0nbb4R2MiudVmHNeTC+rMZrbwNv6Lk3nfGiBhPL8FXECtO6Jce3
+ vuks/fhK+ApTm0aautBM7rFCkmgrwPQxlg3RIYSF1sAHzFdB9EkLatRRr27+KUKmeKEa
+ J5MMaWF6511o6NaT0GL66aQWeeLz0zi2f02OWObt9iOwjTyZbnLQz5C06qZfNJlYeRQZ
+ gFzP+EHqGXdNxisMZvjyH+Q//OUgT7nwiiuHpDU24pKxqRAgmb6HQFAzWx41P8HjHspz
+ DMdSti2G6vf89s8zP2C4hT5UcGNs8S7BEG3NGlgaGxchBu5X3S8QvfSEOi97TNNQ3/yB
+ S9iw==
+X-Gm-Message-State: AOJu0Yw3aCwGI8ZNX9woSAdI9CpGqxae2XE8wAEixg0M5qZs5lmAzolH
+ qZz93/gV9FO44N2jowdgdF6rnWBm6lNVm82fL9NKP8LApoi/TjweDFuq5mthfnxQ
+X-Gm-Gg: AZuq6aLFbPDrWEZfbpOUf3vwhj0bsRMsfWlmbcg+AhGAvca3yjmdxGwcLvrpys5DI9n
+ kSoYOAeO96t50RU6cqhbg3CZLDA4/IVRlLtGiCeRqWU0kFuAnmGgRCPoiibMlamjEd5lrW6WG8X
+ Xh4CzFmwpAkPvML/cbC4vFqFRzD5hMUZuwUPs7GPvPHQe4ZKdBQr8lgCoZmAB36lnF5PM4BGM5j
+ wwRsqo5ucOXnUsbVdVbA1U8ozP0g3iWqXLTiVrH0exy9Ywe/wZeSFX1k5UT3WBn6Udxzs6oQAMk
+ H7HxV1g7touTbHbUa97iSE3gIxir5lg+cn3Iccgq65JFT9LH2YGFrihpWobbZiwpRG71Jt3CzIp
+ nh77HoabZRUoSdUGEiIihm7op7F6KV7lfcQDp1HdFs46mCYuPssU2e2awRu1x9/LD6/vhH3t/Fr
+ an74HCTYMgtwhdcCw7vCcaFWFfGvvHw+8HylZMK7nbGg/Cwr2egtox+YHuEqz8nm6yypbYdSPES
+ ahw0kA=
+X-Received: by 2002:a05:6000:402b:b0:437:95d4:fcb3 with SMTP id
+ ffacd0b85a97d-43797913ce2mr37609847f8f.36.1771512581176; 
+ Thu, 19 Feb 2026 06:49:41 -0800 (PST)
 Received: from thinkpad-t470s.. (93-143-129-182.adsl.net.t-com.hr.
  [93.143.129.182]) by smtp.googlemail.com with ESMTPSA id
- ffacd0b85a97d-43796ac8d82sm50163087f8f.31.2026.02.19.06.49.52
+ ffacd0b85a97d-43796ac8d82sm50163087f8f.31.2026.02.19.06.49.39
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 19 Feb 2026 06:49:53 -0800 (PST)
+ Thu, 19 Feb 2026 06:49:40 -0800 (PST)
 From: Ruslan Ruslichenko <ruslichenko.r@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, alex.bennee@linaro.org, peter.maydell@linaro.org,
@@ -71,24 +72,24 @@ Cc: qemu-arm@nongnu.org, alex.bennee@linaro.org, peter.maydell@linaro.org,
  takahiro.nakata.wr@renesas.com,
  "Edgar E . Iglesias" <edgar.iglesias@gmail.com>,
  Ruslan_Ruslichenko@epam.com, balaton@eik.bme.hu
-Subject: [PATCH v2 29/33] hw/intc/arm_gicv3: Implement FDTGenericIntc interface
-Date: Thu, 19 Feb 2026 15:48:57 +0100
-Message-ID: <20260219144901.3317747-11-ruslichenko.r@gmail.com>
+Subject: [PATCH v2 20/33] hw/arm: add generic ARM machine initialized by FDT
+Date: Thu, 19 Feb 2026 15:48:48 +0100
+Message-ID: <20260219144901.3317747-2-ruslichenko.r@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260219144901.3317747-1-ruslichenko.r@gmail.com>
 References: <20260219143332.3316679-1-ruslichenko.r@gmail.com>
  <20260219144901.3317747-1-ruslichenko.r@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=ruslichenko.r@gmail.com; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=ruslichenko.r@gmail.com; helo=mail-wr1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,199 +107,222 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
 
-This patch implements the FDTGenericIntc interface for the
-ARM GICv3 interrupt controller.
+This patch introduces new ARM machine model, which is
+fully instantiated from a Device Tree description.
 
-This enables the generic FDT machine infrastructure to
-automatically wire up the GIC and resolve interrupts
-defined in the Device Tree.
+This model uses fdt_generic framework to dynamically
+construct system topology based on provided DTB, instead
+of standard machines which rely on hardcoded models in
+C files.
+
+This allows to contruct machines with custom memory maps,
+device structures without the need to modify and re-build
+QEMU sources each time.
 
 Signed-off-by: Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
 ---
- hw/intc/arm_gicv3.c        | 45 +++++++++++++++++++++++++
- hw/intc/arm_gicv3_common.c | 68 ++++++++++++++++++++++++++++++++++++++
- 2 files changed, 113 insertions(+)
+ hw/arm/arm_generic_fdt.c | 180 +++++++++++++++++++++++++++++++++++++++
+ hw/arm/meson.build       |   2 +
+ 2 files changed, 182 insertions(+)
+ create mode 100644 hw/arm/arm_generic_fdt.c
 
-diff --git a/hw/intc/arm_gicv3.c b/hw/intc/arm_gicv3.c
-index 542f81ea49..e7e98ef9a5 100644
---- a/hw/intc/arm_gicv3.c
-+++ b/hw/intc/arm_gicv3.c
-@@ -18,9 +18,13 @@
- #include "qemu/osdep.h"
- #include "qapi/error.h"
- #include "qemu/module.h"
-+#include "hw/core/cpu.h"
+diff --git a/hw/arm/arm_generic_fdt.c b/hw/arm/arm_generic_fdt.c
+new file mode 100644
+index 0000000000..49206269aa
+--- /dev/null
++++ b/hw/arm/arm_generic_fdt.c
+@@ -0,0 +1,180 @@
++// SPDX-License-Identifier: GPL-2.0-or-later
++/*
++ * Copyright (c) 2012 Xilinx. Inc
++ * Copyright (c) 2012 Peter A.G. Crosthwaite (peter.crosthwaite@xilinx.com)
++ *
++ * This program is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU General Public License
++ * as published by the Free Software Foundation; either version
++ * 2 of the License, or (at your option) any later version.
++ *
++ * You should have received a copy of the GNU General Public License along
++ * with this program; if not, see <http://www.gnu.org/licenses/>.
++ */
++
++#include "qemu/osdep.h"
++#include "cpu.h"
 +#include "hw/core/boards.h"
- #include "hw/intc/arm_gicv3.h"
- #include "gicv3_internal.h"
- 
++#include "hw/core/loader.h"
++#include "hw/core/hw-error.h"
++#include "qapi/error.h"
++#include "hw/block/flash.h"
++#include "qemu/error-report.h"
++#include "qemu/log.h"
++#include "qemu/config-file.h"
++#include "qemu/option.h"
++#include "system/system.h"
++#include "system/qtest.h"
++#include "hw/arm/boot.h"
++#include "hw/arm/machines-qom.h"
++
++#include <libfdt.h>
 +#include "hw/core/fdt_generic_util.h"
 +
- static bool irqbetter(GICv3CPUState *cs, int irq, uint8_t prio, bool nmi)
- {
-     /* Return true if this IRQ at this priority should take
-@@ -452,14 +456,55 @@ static void arm_gic_realize(DeviceState *dev, Error **errp)
-     gicv3_init_cpuif(s);
- }
- 
-+static void arm_gic_fdt_auto_parent(FDTGenericIntc *obj, Error **errp)
++#define GENERAL_MACHINE_NAME "arm-generic-fdt"
++
++#define QTEST_RUNNING (qtest_enabled() && qtest_driver())
++
++#define SMP_BOOT_ADDR 0xfffffff0
++/* Meaningless, but keeps arm boot happy */
++#define SMP_BOOTREG_ADDR 0xfffffffc
++
++static struct arm_boot_info arm_generic_fdt_binfo = {};
++
++typedef struct {
++    ram_addr_t ram_kernel_base;
++    ram_addr_t ram_kernel_size;
++} memory_info;
++
++typedef struct {
++    int fdt_size;
++    char *dtb;
++} FdtBlob;
++
++FdtBlob sw_fdt;
++
++static memory_info init_memory(void *fdt, ram_addr_t ram_size)
 +{
-+    GICv3State *s = ARM_GICV3(obj);
-+    SysBusDevice *sbd = SYS_BUS_DEVICE(obj);
-+    int num_cpus = s->num_cpu;
-+    CPUState *cs;
-+    int i = 0;
++    FDTMachineInfo *fdti;
++    MemoryRegion *mem_area;
++    memory_info kernel_info;
++    Error *errp = NULL;
++    char **node_path;
 +
-+    for (cs = first_cpu; cs; cs = CPU_NEXT(cs)) {
-+        if (i >= s->num_cpu) {
-+            break;
-+        }
-+
-+        sysbus_connect_irq(sbd, i,
-+                           qdev_get_gpio_in(DEVICE(cs), 0));
-+        sysbus_connect_irq(sbd, i + num_cpus,
-+                           qdev_get_gpio_in(DEVICE(cs), 1));
-+        sysbus_connect_irq(sbd, i + 2 * num_cpus,
-+                           qdev_get_gpio_in(DEVICE(cs), 2));
-+        sysbus_connect_irq(sbd, i + 3 * num_cpus,
-+                           qdev_get_gpio_in(DEVICE(cs), 3));
-+        sysbus_connect_irq(sbd, i + 4 * num_cpus,
-+                           qdev_get_gpio_in(DEVICE(cs), 4));
-+        sysbus_connect_irq(sbd, i + 5 * num_cpus,
-+                           qdev_get_gpio_in(DEVICE(cs), 5));
-+
-+        if (s->maint_irq) {
-+            int intbase = s->num_irq - GIC_INTERNAL + i * GIC_INTERNAL;
-+            qemu_irq irq = qdev_get_gpio_in(DEVICE(sbd),
-+                                intbase + s->maint_irq);
-+            qdev_connect_gpio_out_named(DEVICE(cs),
-+                                               "gicv3-maintenance-interrupt",
-+                                                0, irq);
-+        }
-+
-+        i++;
++    /* Find a memory node or add new one if needed */
++    node_path = qemu_fdt_node_unit_path(fdt, "memory", &errp);
++    if (errp) {
++        error_report_err(errp);
++        exit(1);
 +    }
++    if (!g_str_has_prefix(node_path[0], "/memory")) {
++        error_report("Failed to find /memory node");
++        exit(1);
++    }
++
++    /* Instantiate peripherals from the FDT.  */
++    fdti = fdt_generic_create_machine(fdt, NULL);
++
++    mem_area = MEMORY_REGION(object_resolve_path(node_path[0], NULL));
++
++    kernel_info.ram_kernel_base = object_property_get_int(OBJECT(mem_area),
++                                                            "addr", NULL);
++
++    kernel_info.ram_kernel_size = object_property_get_int(OBJECT(mem_area),
++                                                          "size", NULL);
++
++    if (kernel_info.ram_kernel_size == -1) {
++        kernel_info.ram_kernel_size = ram_size;
++    }
++
++    fdt_init_destroy_fdti(fdti);
++    g_strfreev(node_path);
++
++    return kernel_info;
 +}
 +
- static void arm_gicv3_class_init(ObjectClass *klass, const void *data)
- {
-     DeviceClass *dc = DEVICE_CLASS(klass);
-     ARMGICv3CommonClass *agcc = ARM_GICV3_COMMON_CLASS(klass);
-     ARMGICv3Class *agc = ARM_GICV3_CLASS(klass);
-+    FDTGenericIntcClass *fgic = FDT_GENERIC_INTC_CLASS(klass);
- 
-     agcc->post_load = arm_gicv3_post_load;
-     device_class_set_parent_realize(dc, arm_gic_realize, &agc->parent_realize);
-+    fgic->auto_parent = arm_gic_fdt_auto_parent;
- }
- 
- static const TypeInfo arm_gicv3_info = {
-diff --git a/hw/intc/arm_gicv3_common.c b/hw/intc/arm_gicv3_common.c
-index 9200671c7a..a393540825 100644
---- a/hw/intc/arm_gicv3_common.c
-+++ b/hw/intc/arm_gicv3_common.c
-@@ -34,6 +34,7 @@
- #include "system/kvm.h"
- #include "system/whpx.h"
- 
-+#include "hw/core/fdt_generic_util.h"
- 
- static void gicv3_gicd_no_migration_shift_bug_post_load(GICv3State *cs)
- {
-@@ -367,6 +368,69 @@ void gicv3_init_irqs_and_mmio(GICv3State *s, qemu_irq_handler handler,
-     }
- }
- 
-+#define FDT_GENERIC_GICV3_TYPE_AFFINITY_ALL 0x01000000U
-+#define FDT_GENERIC_GICV3_TYPE_AFFINITY_IDX 0x02000000U
-+
-+static int arm_gicv3_common_fdt_get_irq(FDTGenericIntc *obj, qemu_irq *irqs,
-+                                      uint32_t *cells, int ncells, int max,
-+                                      Error **errp)
++static void *get_ref_dtb(const struct arm_boot_info *binfo, int *fdt_size)
 +{
-+    GICv3State *gs = ARM_GICV3_COMMON(obj);
-+    int cpu = 0;
-+    uint32_t qemu_type;
-+    uint32_t cpu_mask;
-+    uint32_t idx;
-+
-+    if (ncells != 3) {
-+        error_setg(errp, "ARM GIC requires 3 interrupt cells, %d cells given",
-+                   ncells);
-+        return 0;
-+    }
-+    idx = cells[1];
-+    qemu_type = cells[0] & 0xff000000;
-+
-+    switch (cells[0] & 0x00ffffff) {
-+    case 0:
-+        if (idx >= gs->num_irq) {
-+            error_setg(errp, "ARM GIC SPI has maximum index of %" PRId32 ", "
-+                       "index %" PRId32 " given", gs->num_irq - 1, idx);
-+            return 0;
-+        }
-+        (*irqs) = qdev_get_gpio_in(DEVICE(obj), cells[1]);
-+        return 1;
-+    case 1: /* PPI */
-+        if (idx >= 16) {
-+            error_setg(errp, "ARM GIC PPI has maximum index of 15, "
-+                       "index %" PRId32 " given", idx);
-+            return 0;
-+        }
-+        if (qemu_type == FDT_GENERIC_GICV3_TYPE_AFFINITY_IDX) {
-+            cpu = cells[2] >> 8;
-+            *irqs = qdev_get_gpio_in(DEVICE(obj),
-+                                         gs->num_irq - 16 + idx + cpu * 32);
-+            return cpu;
-+        }
-+
-+        cpu_mask = cells[2] >> 8;
-+        while ((cpu_mask || qemu_type == FDT_GENERIC_GICV3_TYPE_AFFINITY_ALL)
-+               && cpu < max && cpu < gs->num_cpu) {
-+            if ((cpu_mask & 1) ||
-+                 qemu_type == FDT_GENERIC_GICV3_TYPE_AFFINITY_ALL) {
-+                *irqs = qdev_get_gpio_in(DEVICE(obj),
-+                                         gs->num_irq - 16 + idx + cpu * 32);
-+                irqs++;
-+            }
-+            cpu_mask >>= 1;
-+            cpu++;
-+        }
-+        return cpu;
-+    default:
-+        error_setg(errp, "Invalid cell 0 value in interrupt binding: %d",
-+                   cells[0]);
-+        return 0;
-+    }
++    *fdt_size = sw_fdt.fdt_size;
++    return sw_fdt.dtb;
 +}
 +
- static void arm_gicv3_common_realize(DeviceState *dev, Error **errp)
- {
-     GICv3State *s = ARM_GICV3_COMMON(dev);
-@@ -624,12 +688,15 @@ static void arm_gicv3_common_class_init(ObjectClass *klass, const void *data)
-     DeviceClass *dc = DEVICE_CLASS(klass);
-     ResettableClass *rc = RESETTABLE_CLASS(klass);
-     ARMLinuxBootIfClass *albifc = ARM_LINUX_BOOT_IF_CLASS(klass);
-+    FDTGenericIntcClass *fgic = FDT_GENERIC_INTC_CLASS(klass);
++static void arm_generic_fdt_init(MachineState *machine)
++{
++    void *fdt = NULL;
++    int fdt_size;
++    const char *hw_dtb_arg, *dtb_arg;
++    memory_info kernel_info;
 +
- 
-     rc->phases.hold = arm_gicv3_common_reset_hold;
-     dc->realize = arm_gicv3_common_realize;
-     device_class_set_props(dc, arm_gicv3_common_properties);
-     dc->vmsd = &vmstate_gicv3;
-     albifc->arm_linux_init = arm_gic_common_linux_init;
-+    fgic->get_irq = arm_gicv3_common_fdt_get_irq;
- }
- 
- static const TypeInfo arm_gicv3_common_type = {
-@@ -641,6 +708,7 @@ static const TypeInfo arm_gicv3_common_type = {
-     .abstract = true,
-     .interfaces = (const InterfaceInfo[]) {
-         { TYPE_ARM_LINUX_BOOT_IF },
-+        { TYPE_FDT_GENERIC_INTC },
-         { },
-     },
- };
++    dtb_arg = machine->dtb;
++    hw_dtb_arg = machine->hw_dtb;
++    if (!dtb_arg && !hw_dtb_arg) {
++        if (!QTEST_RUNNING) {
++            /*
++             * Just return without error if running qtest, as we never have a
++             * device tree
++             */
++            hw_error("DTB must be specified for %s machine model\n",
++                     MACHINE_GET_CLASS(machine)->name);
++        }
++        return;
++    }
++
++    /* Software dtb is always the -dtb arg */
++    if (dtb_arg) {
++        sw_fdt.dtb = load_device_tree(dtb_arg, &sw_fdt.fdt_size);
++        if (!sw_fdt.dtb) {
++            error_report("Error: Unable to load Device Tree %s", dtb_arg);
++            exit(1);
++        }
++    }
++
++    /* If the user provided a -hw-dtb, use it as the hw description.  */
++    if (hw_dtb_arg) {
++        fdt = load_device_tree(hw_dtb_arg, &fdt_size);
++        if (!fdt) {
++            error_report("Error: Unable to load Device Tree %s", hw_dtb_arg);
++            exit(1);
++        }
++    } else if (sw_fdt.dtb) {
++        fdt = sw_fdt.dtb;
++        fdt_size = sw_fdt.fdt_size;
++    }
++
++    kernel_info = init_memory(fdt, machine->ram_size);
++
++    arm_generic_fdt_binfo.get_dtb = get_ref_dtb;
++    arm_generic_fdt_binfo.ram_size = kernel_info.ram_kernel_size;
++    arm_generic_fdt_binfo.kernel_filename = machine->kernel_filename;
++    arm_generic_fdt_binfo.kernel_cmdline = machine->kernel_cmdline;
++    arm_generic_fdt_binfo.initrd_filename = machine->initrd_filename;
++    arm_generic_fdt_binfo.smp_loader_start = SMP_BOOT_ADDR;
++    arm_generic_fdt_binfo.smp_bootreg_addr = SMP_BOOTREG_ADDR;
++    arm_generic_fdt_binfo.board_id = 0xd32;
++    arm_generic_fdt_binfo.loader_start = kernel_info.ram_kernel_base;
++    arm_generic_fdt_binfo.psci_conduit = QEMU_PSCI_CONDUIT_SMC;
++
++    if (!machine->kernel_filename) {
++        arm_generic_fdt_binfo.firmware_loaded = true;
++        arm_generic_fdt_binfo.psci_conduit = QEMU_PSCI_CONDUIT_DISABLED;
++    }
++
++    arm_load_kernel(ARM_CPU(first_cpu), machine, &arm_generic_fdt_binfo);
++
++    return;
++}
++
++static void arm_generic_fdt_machine_init(MachineClass *mc)
++{
++    mc->desc = "ARM device tree driven machine model";
++    mc->init = arm_generic_fdt_init;
++    mc->max_cpus = 64;
++    mc->default_cpus = 4;
++
++    mc->pci_allow_0_address = true;
++    mc->minimum_page_bits = 12;
++    mc->smp_props.clusters_supported = true;
++
++}
++
++DEFINE_MACHINE_ARM("arm-generic-fdt", arm_generic_fdt_machine_init)
+diff --git a/hw/arm/meson.build b/hw/arm/meson.build
+index 47cdc51d13..1ef0b8c2c1 100644
+--- a/hw/arm/meson.build
++++ b/hw/arm/meson.build
+@@ -1,4 +1,6 @@
+ arm_ss = ss.source_set()
++arm_ss.add(files('arm_generic_fdt.c'))
++
+ arm_common_ss = ss.source_set()
+ arm_common_ss.add(when: 'CONFIG_ARM_VIRT', if_true: files('virt.c'))
+ arm_common_ss.add(when: 'CONFIG_ACPI', if_true: files('virt-acpi-build.c'))
 -- 
 2.43.0
 
