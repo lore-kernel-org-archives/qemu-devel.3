@@ -4,80 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89AEFE9A048
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 10:38:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA1AFE9A048
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 10:38:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vt1Mi-0007K2-6h; Thu, 19 Feb 2026 05:34:36 -0500
+	id 1vt1Qi-0002fd-ML; Thu, 19 Feb 2026 05:38:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vt1Mg-0007IP-2Y
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 05:34:34 -0500
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vt1QQ-00028W-3K
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 05:38:26 -0500
+Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vt1MZ-00067A-OQ
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 05:34:33 -0500
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-4807068eacbso6916565e9.2
- for <qemu-devel@nongnu.org>; Thu, 19 Feb 2026 02:34:27 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vt1QN-0006hG-6K
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 05:38:24 -0500
+Received: by mail-ej1-x62f.google.com with SMTP id
+ a640c23a62f3a-b8fbe5719ceso168240266b.1
+ for <qemu-devel@nongnu.org>; Thu, 19 Feb 2026 02:38:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771497266; x=1772102066; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=m8XAwLErH5Rcrg8uudfF2MM7yDSTJj5Y5UUFSlFxuTA=;
- b=XcGPTiiTd3faOn8bIRSRd4AG4trlt74Tdq4eZAIoLRRjYtjAT8XR1s8f0FjBJyZWGa
- c2fMJQhvzsHrkeAYryM1azAL5iM1cmnqYOJSfioRUd9bU8DiMr7/UBiqLAcSoC1EH7V7
- kQ9WRNeWyKXmg8rUr3roKVsc2ZqONfRwkdS/3Lx86L+NKOyyX7B5+lD8Zx2YQO8J1FMa
- 32tl/Z5RuC0qOCKunEyZ3bqXYKl6zeDJB3eVgdkGpoHDnj0jezJe8GGYqKb0DvDBGtIm
- Lii5nK/S3SnMW1TmZh455JtcFOjv6RXOrNy+79feoa8LDPwp6YL0yKU86GcqiR0ZuZKn
- cOog==
+ d=linaro.org; s=google; t=1771497501; x=1772102301; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=chsomSTiq2DFQ8k7peJmKeu4OQisuVdcYciTd1yL4pM=;
+ b=yPpuc0jZ0AePyUfTCqtdHtL8eu3ZxYHFjQ8YCj3QGHfnAkW9SmhrD3GFDTXsj9okmw
+ LJQKKvatzTV59f3aad4xr7xE0nbKECq/4tAbqaVdBc8DFKdM8o7y4LYaUbLScJQIzpJt
+ WqvL9ET/k0eJWTzLOYKOBHe4Bwdz5IFJd9nZ8FqVTgvY5qm/g0rxTEFYafTEVKHdxdFu
+ i9FUzKeRyLJnDd4XXvuXVDlNIys50y8IsbyKZRzqrbKWy0AEX8EAIHO79oy3+k7jhT1W
+ reqibNGNVsuWcw8vph+Jlj9kzKy6Yd/LhF76IxOlhMC0WP5koMSDPbS6vvl0Eb5etueh
+ jX8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771497266; x=1772102066;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=m8XAwLErH5Rcrg8uudfF2MM7yDSTJj5Y5UUFSlFxuTA=;
- b=n2Fr0BPO8jPEzS0swI9Aq/cZcVAub0ahDb9yprt5fG4RDTgvucwhyyPaRFdW8+cu9Z
- bl0xqfx2aVgIi32CwOjdMnSfnJf8uezase0NXz3SLRMEGRFbKTHzhZJw90Vi71FKHOPK
- wja1WhjybXYPrZbruQLNEM6XHVWA+4YmUqxjme1poaofFCXuDaSXgc7vGO2lu0s+E0NF
- cngoOedOspGoUyUDqIz9Qu79oS4pCPOFUX1MOcnANI0+kNEpRn672eN0KOScxAIg2ex4
- LpPgZrZZQmapWwdOficraGVYrvFZ97vRrdvLkx39/AgP/Zuv8ORhBuW8K0y5bbui50rx
- nQrg==
-X-Gm-Message-State: AOJu0YySrK8mjdcjTkMJ4BbhHxap7+Fa6qHtgp4HeASZ2mSjeUUpKsRR
- lQ2lnsRFfFj+TzlRL4MapVHGuDTnq13qHbvdvuLWYYIkc+KU1Lk1pL0hZC1Ll/DILeDlsow1toY
- 37dKx
-X-Gm-Gg: AZuq6aL5pe2+/6HXV4rYSm5IYnvEMlb+kCTuot/kXmD2zkOHo44pa/NgdADJvqUuQz1
- /xcbeekGSmKabG8eeISECOvCBKe97l5yuES+BU2fcXMzWE4Ifuok2kNIH9eYavdg1BW5sOHSrHW
- r3LikYOO2YZWVmGd1nkj4zCLhbEUD7eAwcKyQTuuCOhP0toMn3ueZQq1LUgRpOJAqdAlgBAdKgI
- SIO+aip2VlSonoeghLuveNIUfIEsqGPvN+SDpGfOfaRJsTx/yAwUFOr66IlsjgBeEtIYJ2gMzZi
- rjuP05gWXglO6NAGIzQ/G7hAA9qcM+O8DbPJ/LeBPt8nGWqkDiNrqqGuuNz1ZsZq4Qx+YKVwYRP
- QObSF9tguxUzzLOFMOcsgJIyhIUgDB+kzUbvInqDeh2vS4RcEOUq1GbIqtvxjzXcIxynxWOChU4
- tjFNnhOaYs4meOwOBwZwOKEpgQD8Df7/S4k2v4sQcq166tEL+gGQxHFub7kYNXNqMsNGdFUZ6Gi
- 7EUon9wKdrwUQpIElrprkqfVcxyqZU=
-X-Received: by 2002:a05:600c:c176:b0:483:6a8d:b2fc with SMTP id
- 5b1f17b1804b1-48398a425bbmr68682385e9.8.1771497265864; 
- Thu, 19 Feb 2026 02:34:25 -0800 (PST)
-Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4834d5ebd34sm697630795e9.7.2026.02.19.02.34.25
- for <qemu-devel@nongnu.org>
+ d=1e100.net; s=20230601; t=1771497501; x=1772102301;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=chsomSTiq2DFQ8k7peJmKeu4OQisuVdcYciTd1yL4pM=;
+ b=uP/O35ZoFzntP58ONcPDbQpm5UOtGpWJzXQ8+YCTA5FXaaaZ6h1HD20U8axrARRElX
+ 0gM81drKzefuNRxNZ46JnUV5FKY38rBY48c8FY89VkiWM9kreAFS2Idz6uEYwG7G2wso
+ EREvXAiP8OFWfC1AfBm6lTa41u7r0ghGColJLYG7+5vNk01TkJnDM/arn9yg7CTsVVqh
+ 8SA112fUQ9gB/+lJFIjureLy60SiYoEgTw7EXvLvSjUtQES7RZ04i+0wDhgRDQ8efwr5
+ ZjOml8A12JNxyNhKRqQ/19PChkh/zbrz6q3fBClR/dE6zM3Lr5u+QlBKYukZhv8LWOuV
+ lkYA==
+X-Gm-Message-State: AOJu0YxVag9DAyL2MykhL5NrKG34I49RNcA7ROqytTsjwjfUrPA6Ahtz
+ l7rGKs4RdG/268RcybvxI8fLdLSVCQ03lIfxIPECBtYnRB4EzXuPr6W3OavlNAl/IfbTzDiUl67
+ gK1J4
+X-Gm-Gg: AZuq6aKNNOo0DHw/+TkJD8zDd1SDe/jReq9gvrABYsLbsEg1m5ZFmCCvvNZIG5FW18L
+ UaZBupJVcMso0fFWLN3pf4g7+nZYP9rwYjybkcQe8qzOIEYADXidiX3jtsbYqf/RUDcRG1JPcK1
+ k/oIlvVzVC4fGBVRDihKL8LYvC+41jWXqSwsyAsfNvwl03yDea7WxmHP/c92Vhsc1PG4uGGc6SH
+ NinxIzJ7QVeg028+8S3f6k/NO159AXJeCD+qdjgJpRf3GiuA/zxAHpWEAdXZQ1njGqG5EJdwUdZ
+ JdmelKmrQhHkIDg+6ff4p1kSHiaoFpnN9iZi6usC9/AfaaktbNaNKC79knSWD2sfy/lRMs8+fmp
+ toUolUsWXpqz6qOqcpiKSE3rr6vlsGZZoC6gI0snboYHn8T/EpE2P7o7afLMMjuLInLMk4qUxZ0
+ VS/HsLcp4V6Q3sCgzFi0F+OF8=
+X-Received: by 2002:a17:906:eec9:b0:b83:95c8:15d0 with SMTP id
+ a640c23a62f3a-b904dea764bmr141004466b.52.1771497500874; 
+ Thu, 19 Feb 2026 02:38:20 -0800 (PST)
+Received: from draig.lan ([185.124.0.126]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-65bad19bfd3sm3860538a12.2.2026.02.19.02.38.16
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 19 Feb 2026 02:34:25 -0800 (PST)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-devel@nongnu.org
-Subject: [PULL 21/32] target/arm: extract helper-mve.h from helper.h
-Date: Thu, 19 Feb 2026 10:33:54 +0000
-Message-ID: <20260219103405.3793357-22-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260219103405.3793357-1-peter.maydell@linaro.org>
-References: <20260219103405.3793357-1-peter.maydell@linaro.org>
+ Thu, 19 Feb 2026 02:38:18 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 108FB5F805;
+ Thu, 19 Feb 2026 10:38:16 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: qemu-devel@nongnu.org,  Brad Smith <brad@comstyle.com>,  Warner Losh
+ <imp@bsdimp.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>,  Thomas
+ Huth <thuth@redhat.com>,  Kyle Evans <kevans@freebsd.org>,  Peter Maydell
+ <peter.maydell@linaro.org>,  qemu-arm@nongnu.org
+Subject: Re: [PATCH 6/6] tests/functional: add Arm VBSA uefi conformance test
+In-Reply-To: <82942191-d0a6-4393-846d-b04e3cb009ce@linaro.org> (Pierrick
+ Bouvier's message of "Fri, 13 Feb 2026 10:49:20 -0800")
+References: <20260213154859.1551283-1-alex.bennee@linaro.org>
+ <20260213154859.1551283-7-alex.bennee@linaro.org>
+ <82942191-d0a6-4393-846d-b04e3cb009ce@linaro.org>
+User-Agent: mu4e 1.14.0-pre1; emacs 30.1
+Date: Thu, 19 Feb 2026 10:38:15 +0000
+Message-ID: <87o6ll6mso.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x330.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,114 +110,178 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
 
-A few points to mention:
-- We mix helper prototypes and gen_helper definitions in a single header
-for convenience and to avoid headers boilerplate.
-- We rename existing tcg/helper-mve.h to helper-mve-defs.h to avoid
-conflict when including helper-mve.h.
-- We move mve helper_info definitions to tcg/mve_helper.c
+> On 2/13/26 7:48 AM, Alex Benn=C3=A9e wrote:
+>> The VBSA test is a subset of the wider Arm architecture compliance
+>> suites (ACS) which validate machines meet particular minimum set of
+>> requirements. The VBSA is for virtual machines so it makes sense we
+>> should check the -M virt machine is compliant.
+>> Fortunately there are prebuilt binaries published via github so all
+>> we
+>> need to do is build an EFI partition and place things in the right
+>> place.
+>> There are some additional Linux based tests which are left for
+>> later.
+>> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+>> ---
+>>   tests/functional/aarch64/meson.build       |  1 +
+>>   tests/functional/aarch64/test_virt_vbsa.py | 99 ++++++++++++++++++++++
+>>   2 files changed, 100 insertions(+)
+>>   create mode 100755 tests/functional/aarch64/test_virt_vbsa.py
+>> diff --git a/tests/functional/aarch64/meson.build
+>> b/tests/functional/aarch64/meson.build
+>> index 49eca120589..7ea8c22b048 100644
+>> --- a/tests/functional/aarch64/meson.build
+>> +++ b/tests/functional/aarch64/meson.build
+>> @@ -46,6 +46,7 @@ tests_aarch64_system_thorough =3D [
+>>     'tuxrun',
+>>     'virt',
+>>     'virt_gpu',
+>> +  'virt_vbsa',
+>>     'xen',
+>>     'xlnx_versal',
+>>   ]
+>> diff --git a/tests/functional/aarch64/test_virt_vbsa.py b/tests/function=
+al/aarch64/test_virt_vbsa.py
+>> new file mode 100755
+>> index 00000000000..53cabf9d6c5
+>> --- /dev/null
+>> +++ b/tests/functional/aarch64/test_virt_vbsa.py
+>> @@ -0,0 +1,99 @@
+>> +#!/usr/bin/env python3
+>> +#
+>> +# Functional test that runs the Arm VBSA conformance tests.
+>> +#
+>> +# Copyright (c) 2026 Linaro Ltd.
+>> +#
+>> +# Author:
+>> +#  Alex Benn=C3=A9e <alex.bennee@linaro.org>
+>> +#
+>> +# SPDX-License-Identifier: GPL-2.0-or-later
+>> +
+>> +import shutil
+>> +from subprocess import check_call, DEVNULL
+>> +
+>> +from qemu_test import QemuSystemTest, Asset
+>> +from qemu_test import wait_for_console_pattern, get_qemu_img, skipIfMis=
+singCommands
+>> +from qemu_test import exec_command_and_wait_for_pattern as ec_and_wait
+>> +
+>> +
+>> +@skipIfMissingCommands("mformat", "mcopy", "mmd")
+>> +class Aarch64VirtMachine(QemuSystemTest):
+>> +    KERNEL_COMMON_COMMAND_LINE =3D 'printk.time=3D0 '
+>> +    timeout =3D 360
+>> +
+>> +    def wait_for_console_pattern(self, success_message, vm=3DNone):
+>> +        wait_for_console_pattern(self, success_message,
+>> +                                 failure_message=3D'Kernel panic - not =
+syncing',
+>> +                                 vm=3Dvm)
+>> +
+>
+> May be worth adding a comment with README url:
+> https://github.com/ARM-software/sysarch-acs/blob/main/docs/vbsa/README.md
+>
+>> +    ASSET_VBSA_EFI =3D Asset('https://github.com/ARM-software/sysarch-a=
+cs/raw/refs/heads/main'
+>> +                           '/prebuilt_images/VBSA/v25.12_VBSA_0.7.0/Vbs=
+a.efi',
+>> +                           '80f37d2fb86d152d95dec4d05ff099c9e47ee8a8931=
+4268e08056b0e1359e1fa')
+>> +
+>> +    ASSET_BSA_SHELL =3D Asset('https://github.com/ARM-software/bsa-acs/=
+raw/refs/heads/main/'
+>> +                            'prebuilt_images/BSA_DT/v20.05_05_ALPHA/She=
+ll.efi',
+>> +                            '763e7b293fa9d1582153ea8fd0cf60e2a7a87d092d=
+35d342cf9b3b697f47b588')
+>> +
+>> +    def test_aarch64_vbsa_uefi_tests(self):
+>> +        """
+>> +        Launch the UEFI based VBSA test from an EFI file-system
+>> +        """
+>> +
+>> +        self.vm.set_console()
+>> +
+>> +        # virt machine wi
+>> +        self.set_machine('virt')
+>> +        self.vm.add_args('-M', 'virt,gic-version=3Dmax,virtualization=
+=3Don')
+>> +        self.vm.add_args('-cpu', 'max','-m', '1024')
+>> +
+>> +        # We will use the QEMU firmware blobs to boot
+>> +        code_path =3D self.build_file('pc-bios', 'edk2-aarch64-code.fd')
+>> +        vars_source =3D self.build_file('pc-bios', 'edk2-arm-vars.fd')
+>> +        vars_path =3D self.scratch_file('vars.fd')
+>> +        shutil.copy(vars_source, vars_path)
+>> +
+>> +        self.vm.add_args('-drive', f'if=3Dpflash,format=3Draw,readonly=
+=3Don,file=3D{code_path}')
+>> +        self.vm.add_args('-drive', f'if=3Dpflash,format=3Draw,file=3D{v=
+ars_path}')
+>> +
+>> +        # Build an EFI FAT32 file-system for the UEFI tests
+>> +        vbsa_efi =3D self.ASSET_VBSA_EFI.fetch()
+>> +        bsa_shell =3D self.ASSET_BSA_SHELL.fetch()
+>> +
+>> +        img_path =3D self.scratch_file('vbsa.img')
+>> +        qemu_img =3D get_qemu_img(self)
+>> +        check_call([qemu_img, 'create', '-f', 'raw', img_path, '64M'],
+>> +                   stdout=3DDEVNULL, stderr=3DDEVNULL)
+>> +
+>> +        check_call(['mformat', '-i', img_path, '-v', 'VBSA', '::'],
+>> +                   stdout=3DDEVNULL, stderr=3DDEVNULL)
+>> +
+>> +        check_call(['mmd', '-i', img_path, '::/EFI'],
+>> +                   stdout=3DDEVNULL, stderr=3DDEVNULL)
+>> +
+>> +        check_call(['mmd', '-i', img_path, '::/EFI/BOOT'],
+>> +                   stdout=3DDEVNULL, stderr=3DDEVNULL)
+>> +
+>> +        check_call(['mcopy', '-i', img_path, bsa_shell, '::/EFI/BOOT/BO=
+OTAA64.EFI'],
+>> +                   stdout=3DDEVNULL, stderr=3DDEVNULL)
+>> +
+>> +        check_call(['mcopy', '-i', img_path, vbsa_efi, '::/Vbsa.efi'],
+>> +                   stdout=3DDEVNULL, stderr=3DDEVNULL)
+>> +
+>> +        self.vm.add_args('-drive', f'file=3D{img_path},format=3Draw,if=
+=3Dnone,id=3Ddrive0')
+>> +        self.vm.add_args('-device', 'virtio-blk-pci,drive=3Ddrive0')
+>> +
+>> +        self.vm.launch()
+>> +
+>> +        # wait for EFI prompt
+>> +        self.wait_for_console_pattern('Shell>')
+>> +
+>> +        # Start the VBSA tests
+>> +        ec_and_wait(self, "FS0:Vbsa.efi", 'VBSA Architecture Compliance=
+ Suite')
+>> +
+>> +        # could we parse the summary somehow?
+>> +
+>> +        self.wait_for_console_pattern('VBSA tests complete. Reset the s=
+ystem.')
+>> +
+>
+> What happens in case there is an error, does the test app hangs, or
+> still exit with message under?
 
-We'll repeat the same for other helpers.
-This allow to get rid of TARGET_AARCH64 in target/arm/helper.h.
+The failures I had were generally hangs but ideally we would parse the
+the summary data and generate our response based on that. Unfortunately
+that is at odds with the current send/wait for pass/fail message
+infrastructure.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Message-id: 20260219040150.2098396-4-pierrick.bouvier@linaro.org
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- target/arm/helper-mve.h                            | 14 ++++++++++++++
- target/arm/helper.h                                |  2 --
- target/arm/tcg/{helper-mve.h => helper-mve-defs.h} |  0
- target/arm/tcg/mve_helper.c                        |  4 ++++
- target/arm/tcg/translate-mve.c                     |  1 +
- target/arm/tcg/translate.c                         |  1 +
- 6 files changed, 20 insertions(+), 2 deletions(-)
- create mode 100644 target/arm/helper-mve.h
- rename target/arm/tcg/{helper-mve.h => helper-mve-defs.h} (100%)
+>
+> If it always exit with this message, whether we have an error or not,
+> then the test is not really checking anything.
+>
+>> +if __name__ =3D=3D '__main__':
+>> +    QemuSystemTest.main()
 
-diff --git a/target/arm/helper-mve.h b/target/arm/helper-mve.h
-new file mode 100644
-index 0000000000..32ef3f6466
---- /dev/null
-+++ b/target/arm/helper-mve.h
-@@ -0,0 +1,14 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+
-+#ifndef HELPER_MVE_H
-+#define HELPER_MVE_H
-+
-+#include "exec/helper-proto-common.h"
-+#include "exec/helper-gen-common.h"
-+
-+#define HELPER_H "tcg/helper-mve-defs.h"
-+#include "exec/helper-proto.h.inc"
-+#include "exec/helper-gen.h.inc"
-+#undef HELPER_H
-+
-+#endif /* HELPER_MVE_H */
-diff --git a/target/arm/helper.h b/target/arm/helper.h
-index f340a49a28..44c7f3ed75 100644
---- a/target/arm/helper.h
-+++ b/target/arm/helper.h
-@@ -7,5 +7,3 @@
- #include "tcg/helper-sve.h"
- #include "tcg/helper-sme.h"
- #endif
--
--#include "tcg/helper-mve.h"
-diff --git a/target/arm/tcg/helper-mve.h b/target/arm/tcg/helper-mve-defs.h
-similarity index 100%
-rename from target/arm/tcg/helper-mve.h
-rename to target/arm/tcg/helper-mve-defs.h
-diff --git a/target/arm/tcg/mve_helper.c b/target/arm/tcg/mve_helper.c
-index 63ddcf3fec..f33642df1f 100644
---- a/target/arm/tcg/mve_helper.c
-+++ b/target/arm/tcg/mve_helper.c
-@@ -19,6 +19,7 @@
- 
- #include "qemu/osdep.h"
- #include "cpu.h"
-+#include "helper-mve.h"
- #include "internals.h"
- #include "vec_internal.h"
- #include "exec/helper-proto.h"
-@@ -27,6 +28,9 @@
- #include "fpu/softfloat.h"
- #include "crypto/clmul.h"
- 
-+#define HELPER_H "tcg/helper-mve-defs.h"
-+#include "exec/helper-info.c.inc"
-+
- static uint16_t mve_eci_mask(CPUARMState *env)
- {
-     /*
-diff --git a/target/arm/tcg/translate-mve.c b/target/arm/tcg/translate-mve.c
-index b1a8d6a65c..4ca88f4d3a 100644
---- a/target/arm/tcg/translate-mve.c
-+++ b/target/arm/tcg/translate-mve.c
-@@ -18,6 +18,7 @@
-  */
- 
- #include "qemu/osdep.h"
-+#include "helper-mve.h"
- #include "translate.h"
- #include "translate-a32.h"
- 
-diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
-index c90b0106f7..580ec86c68 100644
---- a/target/arm/tcg/translate.c
-+++ b/target/arm/tcg/translate.c
-@@ -28,6 +28,7 @@
- #include "cpregs.h"
- #include "exec/helper-proto.h"
- #include "exec/target_page.h"
-+#include "helper-mve.h"
- 
- #define HELPER_H "helper.h"
- #include "exec/helper-info.c.inc"
--- 
-2.43.0
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
