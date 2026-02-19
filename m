@@ -4,71 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68703E9A052
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 17:03:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46496E9A052
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 17:03:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vt7PU-0008By-Sl; Thu, 19 Feb 2026 12:01:52 -0500
+	id 1vt7PV-0008D9-9k; Thu, 19 Feb 2026 12:01:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vt7O3-0007Wm-B5
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 12:00:24 -0500
-Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+ id 1vt7PJ-0007z2-UM
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 12:01:42 -0500
+Received: from mail-pg1-x52c.google.com ([2607:f8b0:4864:20::52c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vt7O0-0005h9-1g
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 12:00:22 -0500
-Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-8230f8f27cfso606735b3a.0
- for <qemu-devel@nongnu.org>; Thu, 19 Feb 2026 09:00:17 -0800 (PST)
+ id 1vt7PB-0005qm-Fp
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 12:01:36 -0500
+Received: by mail-pg1-x52c.google.com with SMTP id
+ 41be03b00d2f7-c6f306faaffso470228a12.0
+ for <qemu-devel@nongnu.org>; Thu, 19 Feb 2026 09:01:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771520417; x=1772125217; darn=nongnu.org;
+ d=linaro.org; s=google; t=1771520491; x=1772125291; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=cRkr8n2EcL/przfhNkTTEW/9fgQb6mrOD1Vqtgwcq80=;
- b=p493ukZMgg4AV5M9wGWTbWoVphzs6bYOeCAt/3sskM3+KsvbCmwwNnc7lSsbm0M+4l
- HSC4QmMkVOgFJTodCgEwH4aDVx/3xPSviGiolhwPtSh4ofhpEZYI+WQfNl+YvhfKKCrx
- 8v+I0KsiqNXFVuiHnYL9B2GJDjyM6o0eGVgATVmLGxaRyO7V/fFvgfsgGvLLX9vkROgK
- gy7ix81VqTQUlYcB7UqohUKzazi9mEKsNs8Y5T9BMdPf+D57VLC37yr2pgB1ikHEt8qV
- pTi83bA/gcx5EQ0X8DQsfb6JzPCi9xpL9E9wFriZekjp7C6AD0vph81owUnSaxHeKUn2
- uxaw==
+ bh=uF8IXfTcMZlcG9O3xjIaK79vVL8RMlmGcHQGEryHElA=;
+ b=WTUHfKV9GZDp9dspTZiu6iE4nF/7cgMyykHXUhu/grP3eSgtnZE6TCXWfK0ihHLBBI
+ raIRtn0rBvXVmIdq1fNdOWejMMT0wrBNl5eoI2c/WfwCBObZcfyBt9uAGCcXv55gzdeK
+ y46uoCP6k4WvNWIY65EHrecrN3aa0V1W2UFCrrpKn+2Dq2l0bdpB94H9PWCC3dVNY8Fc
+ pI/qkhGGNTilFLz9Ht6J6FrGQVUOBXk5nna+6y2gcLHiMO8JuwPWckFkOZc/E06eG6ZH
+ zTmaRKS0hTCM5gw4ypHPscnK5oa5Q52oGMPZoxBVPGnHR/Z7hVfQOmdrBg/vZ4/vgOer
+ vaRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771520417; x=1772125217;
+ d=1e100.net; s=20230601; t=1771520491; x=1772125291;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=cRkr8n2EcL/przfhNkTTEW/9fgQb6mrOD1Vqtgwcq80=;
- b=PCZ9v2Pe4thg8/ZxDdJt5KeAwbQcVsb2Z/vOePkG5VwZ6ChZrWLIQfMgQXGIQhr6MS
- ojbMStZNg/51xSxK8YTs1AcyXq8CFzwIQr/XQNTbfp+yOPGukBJT9sJGu51QtY2/kJUN
- mIGFdtenRK+gmPA+iRtgkEf9shRN0v9aUxXT48XmM+uO3/9emQiW6y5mwW+kJApWA9Ku
- Uc6FDjva1c2NvqrUiWOwx3f/0WXQmtLhy8u8+rkRDS6iF+cbYFOm6OYg9Lo2ZU04KbT3
- k6/dzH8SiWxbGX5041dRLOwVNxkMN/2Uir01UEe9cK1gPy7oWwwrs5bLlFo12vUFpiny
- k/Gw==
+ bh=uF8IXfTcMZlcG9O3xjIaK79vVL8RMlmGcHQGEryHElA=;
+ b=Y7onv6Z3StXBF8yulnghOa0U7Hbd2ZwgaMAAFLABP4+pOYkUIvtt5OX0kpZptPhn+F
+ 89JWIZIVOQBPJDl/5F1n9OY4AKfITbU0GRDQuBiZHs0QGQB4jBiy0e4PjUlhf79Tfkw/
+ rmx+L0QksyEaybfDGl5MMwAUuX1EfPYNzt5IUeogJ8QCvpsOfOWUN0t5HhJ9Vp4iqdjO
+ iHOiF2qYgquhxx+OSWgP6i/yQNSDcxYbkAgnVbmLxTRLkRHI0on/pM8ayD4c70Gx0AXk
+ OmrcE0Hi1OPEDKG7spw8S4OHuZGx3263BuBjDmLf1XUCKJyO8BKdHZFnQ88EuMMJUqRF
+ 8UIw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXqHiVxO1GQ9WQ3ZUfilfl7t5V8aHA1V/amh82dTk2hG0G3Mbln0+pEdrRMwSScLo1Ewvd9/unoOLPJ@nongnu.org
-X-Gm-Message-State: AOJu0Ywfv3RKnafp/KOxLFwAsIOGuUfKZtX0a0h4ryhOo3AoGbClr5Uz
- bZ625oE854eXaz6/xxZbiAkFZkf9Y5aSq7fmlqD2f4scwd47BL6uQxF99uq8v+D7xXk=
-X-Gm-Gg: AZuq6aKiKJBOV4/G9hN/LWE175sopnmAJ+jNMQjbGu40zHJVQVS1A4GFONT8x0XfZbW
- VAh0BV09Rzjh9yONkP+pmeZjxqcLdS9KxgYVpPWWfeNojA4Q+TGHYFbGb6HCiuHO07B46boC4KI
- 3ugOJ6TusWNG221b9TaGN74XhQvovc7HJLsTpRc/C8viLz+W1ZW9Ol+//II9qFp04u49YS5rzBA
- 9dZhQsP2pp4YyhCqHoKxj0VjtaVutPPzXFSlxtavcgO9g7LfvNJ0mIo1vKOX8/1rDzAVRa4/6tY
- lVHywGIg7b7iSo5bPF4PsAvqEqcrjG1BIvwwuQPjM+EpSNWwKmrQLS/o8K1j+T+OayVf5MKUu46
- H0ZBo6nj6W71AKkYn8DdTSBsucWFKepxBmwKKFpnfTj6O5TnJHI5c3Zt2cjtw3qsXQB40wF40Pn
- 6nmVndMHf2QEaAm4zKaOmY6b7puCIZm0ngjr7AK/EGZrQ+RXqXeUlcrTTT1YJFuZoOODAV
-X-Received: by 2002:a05:6a00:849:b0:81f:4dc7:d31 with SMTP id
- d2e1a72fcca58-824c95a6236mr20012589b3a.33.1771520416479; 
- Thu, 19 Feb 2026 09:00:16 -0800 (PST)
+ AJvYcCXlOWbD1utBAJeLYNT1q1ukA5T4Y630sAEpsyttngW2/tPX0os0tMjkQNuCQDVctBFuGfCK9cANDnLE@nongnu.org
+X-Gm-Message-State: AOJu0YzUC1HR0IO0udEaft9MWimCRkVPFVgPyf2AQCzRAfBDi2GkWvlL
+ JM+k+U7haYrpHelE8hXBs72vDD5YMdL/Qc4MlphY7Kfh61kMikSDZaIPnW1hjfnThw8=
+X-Gm-Gg: AZuq6aJgWjGgyf/URbSoW2lDcvzKssqRfShqb+D0CEL+9BCic3PrmZymOxtcq25vfLS
+ 2PowBM88Kq7RT6Bk3rtL9B9EtuXa0K33vvSjeKuRQHGpVt55HTOzwEs01bIS/gV9ZyF/Tl+GiB3
+ +SeW6gsc6a2RocDq1mD52ZInC0xJKFAkdgSaACCsZzzEu3/pD7lAsAr40QRWJ1l3x7bjWHmpd+3
+ zROHtlDKhpwHZAA9LMr6UPesHRICDLdvR/mQjSRAz4cN1m6wve/izdppHdga2+1FAFGWXBH7v+O
+ M/plnjAlgTSzSF0tbnnCzTae3u/bTgfze9yk/Y1VhiS8bfCB7BjbrhM2hWgZosPG64coR1NutDh
+ Y0yM+g/xHxNAvssG9wu5mic7Yp826L/gpcfUDtQ4priknzdZhllKySqHEQHm/czcJIAaAq14k1i
+ lpb9Aeer/jIx+nxdNI37ohMg2cI59GeHD+QARWO81trsVcG4NWT1R+JlzFMVZW2R+idgE1
+X-Received: by 2002:a17:902:ce89:b0:2a8:7814:47d0 with SMTP id
+ d9443c01a7336-2ad1749829fmr171074845ad.22.1771520491050; 
+ Thu, 19 Feb 2026 09:01:31 -0800 (PST)
 Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-824c6a2e40bsm26452396b3a.11.2026.02.19.09.00.15
+ d9443c01a7336-2ad1a743570sm170091855ad.41.2026.02.19.09.01.30
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 19 Feb 2026 09:00:16 -0800 (PST)
-Message-ID: <b4ace858-6769-4a02-8114-1b0716ae86c2@linaro.org>
-Date: Thu, 19 Feb 2026 09:00:15 -0800
+ Thu, 19 Feb 2026 09:01:30 -0800 (PST)
+Message-ID: <27465be5-5964-4402-8034-f0c7c4edc3b1@linaro.org>
+Date: Thu, 19 Feb 2026 09:01:30 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v3 18/24] bsd-user: Add do_bsd___semctl implementation
@@ -120,8 +120,8 @@ Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
 In-Reply-To: <20260218-bsd-user-claude-v3-18-0137b37b221e@bsdimp.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52c;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x52c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -161,96 +161,8 @@ On 2/18/26 9:22 PM, Warner Losh wrote:
 > index e1e552b58f..cb7fe1d6d0 100644
 > --- a/bsd-user/bsd-misc.h
 > +++ b/bsd-user/bsd-misc.h
-> @@ -99,6 +99,122 @@ static inline abi_long do_bsd_semop(int semid, abi_long ptr, unsigned nsops)
->       return semop(semid, sops, nsops);
->   }
->   
-> +/* __semctl(2) */
-> +static inline abi_long do_bsd___semctl(int semid, int semnum, int target_cmd,
-> +                                       abi_ptr un_ptr)
-> +{
-> +    void *target_un;
-> +    union semun arg;
-> +    struct semid_ds dsarg;
-> +    unsigned short *array = NULL;
-> +    int host_cmd;
-> +    abi_long ret = 0;
-> +    abi_long err;
-> +    abi_ulong target_array, target_buffer;
-> +
-> +    switch (target_cmd) {
-> +    case TARGET_GETVAL:
-> +        host_cmd = GETVAL;
-> +        break;
-> +
-> +    case TARGET_SETVAL:
-> +        host_cmd = SETVAL;
-> +        break;
-> +
-> +    case TARGET_GETALL:
-> +        host_cmd = GETALL;
-> +        break;
-> +
-> +    case TARGET_SETALL:
-> +        host_cmd = SETALL;
-> +        break;
-> +
-> +    case TARGET_IPC_STAT:
-> +        host_cmd = IPC_STAT;
-> +        break;
-> +
-> +    case TARGET_IPC_SET:
-> +        host_cmd = IPC_SET;
-> +        break;
-> +
-> +    case TARGET_IPC_RMID:
-> +        host_cmd = IPC_RMID;
-> +        break;
-> +
-> +    case TARGET_GETPID:
-> +        host_cmd = GETPID;
-> +        break;
-> +
-> +    case TARGET_GETNCNT:
-> +        host_cmd = GETNCNT;
-> +        break;
-> +
-> +    case TARGET_GETZCNT:
-> +        host_cmd = GETZCNT;
-> +        break;
-> +
-> +    default:
-> +        return -TARGET_EINVAL;
-> +    }
-> +
-> +    /*
-> +     * Unlike Linux and the semctl system call, we take a pointer
-> +     * to the union arg here.
-> +     */
-> +    target_un = lock_user(VERIFY_READ, un_ptr, sizeof(union target_semun), 1);
-> +
-> +    switch (host_cmd) {
-> +    case GETVAL:
-> +    case SETVAL:
-> +        __get_user(arg.val, (abi_int *)target_un);
-> +        ret = get_errno(semctl(semid, semnum, host_cmd, arg));
-> +        break;
-> +
-> +    case GETALL:
-> +    case SETALL:
-> +        __get_user(target_array, (abi_ulong *)target_un);
-> +        err = target_to_host_semarray(semid, &array, target_array);
-> +        if (is_error(err)) {
-> +            return err;
-> +        }
-> +        arg.array = array;
-> +        ret = get_errno(semctl(semid, semnum, host_cmd, arg));
-> +        err = host_to_target_semarray(semid, target_array, &array);
-> +        if (is_error(err)) {
-> +            return err;
-> +        }
-> +        break;
-> +
+...
+
 > +    case IPC_STAT:
 > +    case IPC_SET:
 > +        __get_user(target_buffer, (abi_ulong *)target_un);
@@ -264,10 +176,17 @@ On 2/18/26 9:22 PM, Warner Losh wrote:
 > +        if (is_error(err)) {
 > +            return err;
 > +        }
-
-
 > +        break;
-> +
+>
+
+For all the cases using this pattern:
+
+```
+if (is_error(err)) {
+     return err;
+}
+```
+
 > +    case IPC_RMID:
 > +    case GETPID:
 > +    case GETNCNT:
@@ -279,14 +198,13 @@ On 2/18/26 9:22 PM, Warner Losh wrote:
 > +        ret = -TARGET_EINVAL;
 > +        break;
 > +    }
+
+Shouldn't we instead goto this epilogue to ensure we call unlock_user?
+
 > +    unlock_user(target_un, un_ptr, 1);
 > +    return ret;
 > +}
 > +
->   /* getdtablesize(2) */
->   static inline abi_long do_bsd_getdtablesize(void)
->   {
-> 
-
-Shouldn't we have a goto cleanup instead, to make sure with
+Regards,
+Pierrick
 
