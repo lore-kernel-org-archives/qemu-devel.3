@@ -4,103 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CB93E9A04C
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 15:18:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 894B6E9A03B
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 15:50:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vt5nV-0001di-Oz; Thu, 19 Feb 2026 10:18:33 -0500
+	id 1vt6HR-0003nk-9p; Thu, 19 Feb 2026 10:49:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1vt5nT-0001cF-O5
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 10:18:32 -0500
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vt6HP-0003nC-Dv
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 10:49:27 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1vt5nR-0000hj-96
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 10:18:31 -0500
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vt6HN-0002WZ-74
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 10:49:27 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771514308;
+ s=mimecast20190719; t=1771516164;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=O8Lo9PM7XK6Fl9O/nsfkvTWkKsEhvGhNTcgvPBEoP2o=;
- b=U5fGEXIDabV6p67CHyTcHppakrn2i1ej84sMUZjWudQCe0B5Y9fVdYCfJaqXG0q8sqBwFL
- Wi3wSr1tvvPlP9dias5V6TBLCLCM6XERRgq/TxRZsmlP4lbxqC9vKi7zz9k+8YKh90dnA3
- rNH6OT5NkqOU0hLwnjjEGIU9NeVuxss=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-640-8iFNnHeaPEmqIi78mYT1Rg-1; Thu, 19 Feb 2026 10:18:26 -0500
-X-MC-Unique: 8iFNnHeaPEmqIi78mYT1Rg-1
-X-Mimecast-MFC-AGG-ID: 8iFNnHeaPEmqIi78mYT1Rg_1771514305
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-43766514653so666888f8f.0
- for <qemu-devel@nongnu.org>; Thu, 19 Feb 2026 07:18:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1771514305; x=1772119105; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:from:to:cc:subject:date
- :message-id:reply-to;
- bh=O8Lo9PM7XK6Fl9O/nsfkvTWkKsEhvGhNTcgvPBEoP2o=;
- b=ONzEoLx/fne8Uy8gLBVbNs+XPDrXyYp0JbGCOBjDXxngX5B8i6QJMuqbyKTUeHIJj0
- DdkEDc1ejMLwldy7PdK20uwRp5upG8NxUNzV7PRtM9mR1/gBCMmgjoCN2F9oIs4RO/8t
- w89O66x03tu9zJRvDukI7W8alM+e1XIaJ/M9T5E5gbRAfKaSPC8Wy8CElZrxPwC67zEF
- Et+/OZpMGl1kekTZO5G7IqFtGxh4VFzbSoMuNrtyrTS2fLNAQRfvcVOYhV7jOyexr1EH
- tA6atmcMdVuxukSLe+dpGwHKjswF18AN/D3/bFh7mKrTnAaSZ4pYczrw/tSb/D2oseJ6
- 7ZuQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771514305; x=1772119105;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=O8Lo9PM7XK6Fl9O/nsfkvTWkKsEhvGhNTcgvPBEoP2o=;
- b=CT0VgBEfoxrtdPGCqRdk7gCgMuhJqwBfgBUxuGL5aAaDaICp7n0fpD6reCbLLJgsEv
- bjL++BgOcMAKC9th9tKyfhId65TdGA7lHudRMmUOCNJqlAFx5KiV0CiW0zjaWKt2nLEh
- 0cCQAj8+CuPrfIyxKmLYlhl+ba3jcLVjdv/IOFhjsZbZx5IFmlB6g9R7wdBW1SllhtS1
- ieglqy8g5jZyqszDAz/a9RICwuNm3h4NSSYkmBKc84/hEz/QnsY5ejoMgjMj1tHtuPec
- jRUjBhflLTMv7rakln+0fpXPP9NuEmB2P8/dkAIke7y8sZZh6DAUNf+5cT4usTYbdxnE
- qB2A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX4lL8Aj1uaRrWXag4aw8gdEPShb8m5jmUdVTQtHkh67x0JiNRFlA1jy1/2Yxo8l92dc41GKpBiPiwx@nongnu.org
-X-Gm-Message-State: AOJu0Yyyann23LFBNPDufZQ3CUJqpJqQuKOUqwV4ydD6Se+U4jPWAHA9
- uzNH2wZPrijVpMmfmrnphUCRihpKYniJk6Wj29XOL1Vcesfzn880Fe62xwC8y4KTB9fvCGJpOxm
- V8zkAaSzVf3bzUveklUIHyCmkNVhaedGRxf1rYP4QiW2o41zzMXIXzFm9
-X-Gm-Gg: AZuq6aJfQnVGbKzS2jKNDAoJu3fJnjM6eJZNngidHNcptJSgfIJBI9kffG/SDLrCFhU
- 3BuarZgaEGpcoFFhY8yLtzKIorAfIN7+DAcnIr9pzN8xZ8hgtlmTJIY1CzfhL6qB4vs/AZKW65w
- iHOBMySKLamkHw5KUesT5rj5yuN5q3bXb/yNlACeEBDM2KmT02f52FS04GA7Qo1xoU3cR3HD67Z
- j5v4qjnsRWFAQeWZtgvO8HvII+R+fTci6G5W8ySI/m05jHaa2+TRXYWLA6aBoyfDcvuyvkoVqfR
- 2sulrsXpHM+k/8Kz8SQRPO12phSLESPjKY3HlVZfRx2F/kWvmoJ6RvFuuTlkG9e/FEwaNqRxXr5
- 66/o88w==
-X-Received: by 2002:a05:6000:2585:b0:432:8504:8d5b with SMTP id
- ffacd0b85a97d-4395fd5c21emr5231840f8f.50.1771514304981; 
- Thu, 19 Feb 2026 07:18:24 -0800 (PST)
-X-Received: by 2002:a05:6000:2585:b0:432:8504:8d5b with SMTP id
- ffacd0b85a97d-4395fd5c21emr5231805f8f.50.1771514304532; 
- Thu, 19 Feb 2026 07:18:24 -0800 (PST)
-Received: from imammedo ([213.175.46.86]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43796a6c1bfsm50444935f8f.13.2026.02.19.07.18.23
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 19 Feb 2026 07:18:23 -0800 (PST)
-Date: Thu, 19 Feb 2026 16:18:22 +0100
-From: Igor Mammedov <imammedo@redhat.com>
-To: Thomas Huth <thuth@redhat.com>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org, Markus
- Armbruster <armbru@redhat.com>, Marcel Apfelbaum
- <marcel.apfelbaum@gmail.com>
-Subject: Re: [PATCH] hw/pci: Avoid adding PCI devices to the "unattached"
- QOM tree node
-Message-ID: <20260219161822.55e83382@imammedo>
-In-Reply-To: <20260219160641.6f63c27d@imammedo>
-References: <20260217065512.245237-1-thuth@redhat.com>
- <20260219160641.6f63c27d@imammedo>
-X-Mailer: Claws Mail 4.3.1 (GTK 3.24.51; x86_64-redhat-linux-gnu)
+ bh=MtgxNQdQJWLIUBtmn1jwh5WsRw1wET05NJnYGYnkKVA=;
+ b=Yh7p1AzX/LuBCZo7ezKmPwJun8e5AjfMesRC6Ci74fYVnRTVjSm/XXJI4Su3slVZX2o8JV
+ T/c5daQvlxa3vM7mFyw2ZUcKBNW3snLIeUN9n2uySXwdU/GsXaoe2OqTF02h5razsF4YBV
+ 8iAk6kfYwYbsLbW6pmmvpbe/9A+SjXo=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-434-zya2MBKYMxiuWhRe2v4ejg-1; Thu,
+ 19 Feb 2026 10:49:19 -0500
+X-MC-Unique: zya2MBKYMxiuWhRe2v4ejg-1
+X-Mimecast-MFC-AGG-ID: zya2MBKYMxiuWhRe2v4ejg_1771516157
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E3BEF18003F6; Thu, 19 Feb 2026 15:49:16 +0000 (UTC)
+Received: from redhat.com (unknown [10.45.224.47])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 050FF1954111; Thu, 19 Feb 2026 15:49:13 +0000 (UTC)
+Date: Thu, 19 Feb 2026 16:49:11 +0100
+From: Kevin Wolf <kwolf@redhat.com>
+To: Jens Axboe <axboe@kernel.dk>
+Cc: Stefan Hajnoczi <stefanha@redhat.com>,
+ Fiona Ebner <f.ebner@proxmox.com>, qemu-block@nongnu.org,
+ qemu-devel@nongnu.org, fam@euphon.net
+Subject: Re: [PATCH v2] aio-posix: notify main loop when SQEs are queued
+Message-ID: <aZcw911iCiDHKWCp@redhat.com>
+References: <20260213143225.161043-1-axboe@kernel.dk>
+ <20260213143225.161043-2-axboe@kernel.dk>
+ <aY9Lj1BTVRCFyfic@redhat.com>
+ <c32915a9-33a2-47c5-a91b-27f01147918f@proxmox.com>
+ <20260218161127.GC587447@fedora>
+ <d729df1d-ba33-4cab-88c9-ba980cdaa37d@kernel.dk>
+ <07d701b9-3039-4f9b-99a2-abeae51146a5@kernel.dk>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <07d701b9-3039-4f9b-99a2-abeae51146a5@kernel.dk>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -109,7 +73,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.045,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,90 +89,265 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 19 Feb 2026 16:06:41 +0100
-Igor Mammedov <imammedo@redhat.com> wrote:
-
-> On Tue, 17 Feb 2026 07:55:12 +0100
-> Thomas Huth <thuth@redhat.com> wrote:
-> 
-> > From: Thomas Huth <thuth@redhat.com>
+Am 18.02.2026 um 17:41 hat Jens Axboe geschrieben:
+> On 2/18/26 9:19 AM, Jens Axboe wrote:
+> > On 2/18/26 9:11 AM, Stefan Hajnoczi wrote:
+> >> On Wed, Feb 18, 2026 at 10:57:02AM +0100, Fiona Ebner wrote:
+> >>> Am 13.02.26 um 5:05 PM schrieb Kevin Wolf:
+> >>>> Am 13.02.2026 um 15:26 hat Jens Axboe geschrieben:
+> >>>>> When a vCPU thread handles MMIO (holding BQL), aio_co_enter() runs the
+> >>>>> block I/O coroutine inline on the vCPU thread because
+> >>>>> qemu_get_current_aio_context() returns the main AioContext when BQL is
+> >>>>> held. The coroutine calls luring_co_submit() which queues an SQE via
+> >>>>> fdmon_io_uring_add_sqe(), but the actual io_uring_submit() only happens
+> >>>>> in gsource_prepare() on the main loop thread.
+> >>>>
+> >>>> Ouch! Yes, looks like we completely missed I/O submitted in vCPU threads
+> >>>> in the recent changes (or I guess worker threads in theory, but I don't
+> >>>> think there any that actually make use of aio_add_sqe()).
+> >>>>
+> >>>>> Since the coroutine ran inline (not via aio_co_schedule()), no BH is
+> >>>>> scheduled and aio_notify() is never called. The main loop remains asleep
+> >>>>> in ppoll() with up to a 499ms timeout, leaving the SQE unsubmitted until
+> >>>>> the next timer fires.
+> >>>>>
+> >>>>> Fix this by calling aio_notify() after queuing the SQE. This wakes the
+> >>>>> main loop via the eventfd so it can run gsource_prepare() and submit the
+> >>>>> pending SQE promptly.
+> >>>>>
+> >>>>> This is a generic fix that benefits all devices using aio=io_uring.
+> >>>>> Without it, AHCI/SATA devices see MUCH worse I/O latency since they use
+> >>>>> MMIO (not ioeventfd like virtio) and have no other mechanism to wake the
+> >>>>> main loop after queuing block I/O.
+> >>>>>
+> >>>>> This is usually a bit hard to detect, as it also relies on the ppoll
+> >>>>> loop not waking up for other activity, and micro benchmarks tend not to
+> >>>>> see it because they don't have any real processing time. With a
+> >>>>> synthetic test case that has a few usleep() to simulate processing of
+> >>>>> read data, it's very noticeable. The below example reads 128MB with
+> >>>>> O_DIRECT in 128KB chunks in batches of 16, and has a 1ms delay before
+> >>>>> each batch submit, and a 1ms delay after processing each completion.
+> >>>>> Running it on /dev/sda yields:
+> >>>>>
+> >>>>> time sudo ./iotest /dev/sda
+> >>>>>
+> >>>>> ________________________________________________________
+> >>>>> Executed in   25.76 secs      fish           external
+> >>>>>    usr time    6.19 millis  783.00 micros    5.41 millis
+> >>>>>    sys time   12.43 millis  642.00 micros   11.79 millis
+> >>>>>
+> >>>>> while on a virtio-blk or NVMe device we get:
+> >>>>>
+> >>>>> time sudo ./iotest /dev/vdb
+> >>>>>
+> >>>>> ________________________________________________________
+> >>>>> Executed in    1.25 secs      fish           external
+> >>>>>    usr time    1.40 millis    0.30 millis    1.10 millis
+> >>>>>    sys time   17.61 millis    1.43 millis   16.18 millis
+> >>>>>
+> >>>>> time sudo ./iotest /dev/nvme0n1
+> >>>>>
+> >>>>> ________________________________________________________
+> >>>>> Executed in    1.26 secs      fish           external
+> >>>>>    usr time    6.11 millis    0.52 millis    5.59 millis
+> >>>>>    sys time   13.94 millis    1.50 millis   12.43 millis
+> >>>>>
+> >>>>> where the latter are consistent. If we run the same test but keep the
+> >>>>> socket for the ssh connection active by having activity there, then
+> >>>>> the sda test looks as follows:
+> >>>>>
+> >>>>> time sudo ./iotest /dev/sda
+> >>>>>
+> >>>>> ________________________________________________________
+> >>>>> Executed in    1.23 secs      fish           external
+> >>>>>    usr time    2.70 millis   39.00 micros    2.66 millis
+> >>>>>    sys time    4.97 millis  977.00 micros    3.99 millis
+> >>>>>
+> >>>>> as now the ppoll loop is woken all the time anyway.
+> >>>>>
+> >>>>> After this fix, on an idle system:
+> >>>>>
+> >>>>> time sudo ./iotest /dev/sda
+> >>>>>
+> >>>>> ________________________________________________________
+> >>>>> Executed in    1.30 secs      fish           external
+> >>>>>    usr time    2.14 millis    0.14 millis    2.00 millis
+> >>>>>    sys time   16.93 millis    1.16 millis   15.76 millis
+> >>>>>
+> >>>>> Signed-off-by: Jens Axboe <axboe@kernel.dk>
+> >>>>> ---
+> >>>>>  util/fdmon-io_uring.c | 8 ++++++++
+> >>>>>  1 file changed, 8 insertions(+)
+> >>>>>
+> >>>>> diff --git a/util/fdmon-io_uring.c b/util/fdmon-io_uring.c
+> >>>>> index d0b56127c670..96392876b490 100644
+> >>>>> --- a/util/fdmon-io_uring.c
+> >>>>> +++ b/util/fdmon-io_uring.c
+> >>>>> @@ -181,6 +181,14 @@ static void fdmon_io_uring_add_sqe(AioContext *ctx,
+> >>>>>  
+> >>>>>      trace_fdmon_io_uring_add_sqe(ctx, opaque, sqe->opcode, sqe->fd, sqe->off,
+> >>>>>                                   cqe_handler);
+> >>>>> +
+> >>>>> +    /*
+> >>>>> +     * Wake the main loop if it is sleeping in ppoll().  When a vCPU thread
+> >>>>> +     * runs a coroutine inline (holding BQL), it queues SQEs here but the
+> >>>>> +     * actual io_uring_submit() only happens in gsource_prepare().  Without
+> >>>>> +     * this notify, ppoll() can sleep up to 499ms before submitting.
+> >>>>> +     */
+> >>>>> +    aio_notify(ctx);
+> >>>>>  }
+> >>>>
+> >>>> Makes sense to me.
+> >>>>
+> >>>> At first I wondered if we should use defer_call() for the aio_notify()
+> >>>> to batch the submission, but of course holding the BQL will already take
+> >>>> care of that. And in iothreads where there is no BQL, the aio_notify()
+> >>>> shouldn't make a difference anyway because we're already in the right
+> >>>> thread.
+> >>>>
+> >>>> I suppose the other variation could be have another io_uring_enter()
+> >>>> call here (but then probably really through defer_call()) to avoid
+> >>>> waiting for another CPU to submit the request in its main loop. But I
+> >>>> don't really have an intuition if that would make things better or worse
+> >>>> in the common case.
+> >>>>
+> >>>> Fiona, does this fix your case, too?
+> >>>
+> >>> Yes, it does fix my issue [0] and the second patch gives another small
+> >>> improvement :)
+> >>>
+> >>> Would it be slightly cleaner to have aio_add_sqe() call aio_notify()
+> >>> itself? Since aio-posix.c calls downwards into fdmon-io_uring.c, it
+> >>> would feel nicer to me to not have fdmon-io_uring.c call "back up". I
+> >>> guess it also depends on whether we expect another future fdmon
+> >>> implementation with .add_sqe() to also benefit from it.
+> >>
+> >> Calling aio_notify() from aio-posix.c:aio_add_sqe() sounds better to me
+> >> because fdmon-io_uring.c has to be careful about calling aio_*() APIs to
+> >> avoid loops.
 > > 
-> > PCI devices that are added via pci_create_simple_multifunction(),
-> > pci_create_simple() or pci_init_nic_in_slot() currently show up
-> > under "/machine/unattached" in the QOM tree. This is somewhat ugly,
-> > the parent should rather be the PCI bus node instead, so let's add
-> > the proper relation here.
-> > 
-> > Signed-off-by: Thomas Huth <thuth@redhat.com>
-> > ---
-> >  hw/pci/pci.c | 14 ++++++++++++++
-> >  1 file changed, 14 insertions(+)
-> > 
-> > diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-> > index 90d6d71efdc..2f4d2be50fd 100644
-> > --- a/hw/pci/pci.c
-> > +++ b/hw/pci/pci.c
-> > @@ -2071,6 +2071,15 @@ const pci_class_desc *get_class_desc(int class)
-> >      return desc;
-> >  }
-> >  
-> > +static void pci_dev_property_add_child(PCIBus *bus, const char *name,
-> > +                                       PCIDevice *dev)
-> > +{
-> > +    g_autofree char *childname = g_strdup_printf("%s[%d.%d]", name,
-> > +                                                 PCI_SLOT(dev->devfn),
-> > +                                                 PCI_FUNC(dev->devfn));
-> > +    object_property_add_child(OBJECT(bus), childname, OBJECT(dev));
-> > +}
-> > +
-> >  void pci_init_nic_devices(PCIBus *bus, const char *default_model)
-> >  {
-> >      qemu_create_nic_bus_devices(&bus->qbus, TYPE_PCI_DEVICE, default_model,
-> > @@ -2114,6 +2123,7 @@ bool pci_init_nic_in_slot(PCIBus *rootbus, const char *model,
-> >  
-> >      pci_dev = pci_new(devfn, model);  
-> there are a few more places that have similar pattern, should we fix them to?
+> > Would anyone care to make that edit? I'm on a plane and gone for a bit,
+> > so won't get back to this for the next week. But I would love to see a
+> > fix go in, as this issue has been plaguing me with test timeouts for
+> > quite a while on the CI front. And seems like I'm not alone, if the
+> > patches fix Fiona's issues as well.
 > 
-> >      qdev_set_nic_properties(&pci_dev->qdev, nd);
-> > +    pci_dev_property_add_child(bus, model, pci_dev);  
+> Still on a plane but tested this one and it works for me too. Does seem
+> like a better approach, rather than stuff it in the fdmon part.
 > 
-> >      pci_realize_and_unref(pci_dev, bus, &error_fatal);  
-> this one also takes bus as an argument, and then goes down to
->  qdev_realize_and_unref->qdev_realize->qdev_set_parent_bus->bus_add_child
-> that eventually creates a link to device.
+> Feel free to run with this one and also to update the commit message if
+> you want. Thanks!
 > 
-> wouldn't pci_dev_property_add_child() create a duplicate entry
-> as a child with different name component there?
 > 
-> another question, should we 'fix' qdev_set_parent_bus->bus_add_child
-> to add a child instead of a link? That would do what patch intends
-> but consistently for all devices with parent bus.
+> commit a8a94e7a05964d470b8fba50c9d4769489c21752
+> Author: Jens Axboe <axboe@kernel.dk>
+> Date:   Fri Feb 13 06:52:14 2026 -0700
+> 
+>     aio-posix: notify main loop when SQEs are queued
+>     
+>     When a vCPU thread handles MMIO (holding BQL), aio_co_enter() runs the
+>     block I/O coroutine inline on the vCPU thread because
+>     qemu_get_current_aio_context() returns the main AioContext when BQL is
+>     held. The coroutine calls luring_co_submit() which queues an SQE via
+>     fdmon_io_uring_add_sqe(), but the actual io_uring_submit() only happens
+>     in gsource_prepare() on the main loop thread.
+>     
+>     Since the coroutine ran inline (not via aio_co_schedule()), no BH is
+>     scheduled and aio_notify() is never called. The main loop remains asleep
+>     in ppoll() with up to a 499ms timeout, leaving the SQE unsubmitted until
+>     the next timer fires.
+>     
+>     Fix this by calling aio_notify() after queuing the SQE. This wakes the
+>     main loop via the eventfd so it can run gsource_prepare() and submit the
+>     pending SQE promptly.
+>     
+>     This is a generic fix that benefits all devices using aio=io_uring.
+>     Without it, AHCI/SATA devices see MUCH worse I/O latency since they use
+>     MMIO (not ioeventfd like virtio) and have no other mechanism to wake the
+>     main loop after queuing block I/O.
+>     
+>     This is usually a bit hard to detect, as it also relies on the ppoll
+>     loop not waking up for other activity, and micro benchmarks tend not to
+>     see it because they don't have any real processing time. With a
+>     synthetic test case that has a few usleep() to simulate processing of
+>     read data, it's very noticeable. The below example reads 128MB with
+>     O_DIRECT in 128KB chunks in batches of 16, and has a 1ms delay before
+>     each batch submit, and a 1ms delay after processing each completion.
+>     Running it on /dev/sda yields:
+>     
+>     time sudo ./iotest /dev/sda
+>     
+>     ________________________________________________________
+>     Executed in   25.76 secs      fish           external
+>        usr time    6.19 millis  783.00 micros    5.41 millis
+>        sys time   12.43 millis  642.00 micros   11.79 millis
+>     
+>     while on a virtio-blk or NVMe device we get:
+>     
+>     time sudo ./iotest /dev/vdb
+>     
+>     ________________________________________________________
+>     Executed in    1.25 secs      fish           external
+>        usr time    1.40 millis    0.30 millis    1.10 millis
+>        sys time   17.61 millis    1.43 millis   16.18 millis
+>     
+>     time sudo ./iotest /dev/nvme0n1
+>     
+>     ________________________________________________________
+>     Executed in    1.26 secs      fish           external
+>        usr time    6.11 millis    0.52 millis    5.59 millis
+>        sys time   13.94 millis    1.50 millis   12.43 millis
+>     
+>     where the latter are consistent. If we run the same test but keep the
+>     socket for the ssh connection active by having activity there, then
+>     the sda test looks as follows:
+>     
+>     time sudo ./iotest /dev/sda
+>     
+>     ________________________________________________________
+>     Executed in    1.23 secs      fish           external
+>        usr time    2.70 millis   39.00 micros    2.66 millis
+>        sys time    4.97 millis  977.00 micros    3.99 millis
+>     
+>     as now the ppoll loop is woken all the time anyway.
+>     
+>     After this fix, on an idle system:
+>     
+>     time sudo ./iotest /dev/sda
+>     
+>     ________________________________________________________
+>     Executed in    1.30 secs      fish           external
+>        usr time    2.14 millis    0.14 millis    2.00 millis
+>        sys time   16.93 millis    1.16 millis   15.76 millis
+>     
+>     Signed-off-by: Jens Axboe <axboe@kernel.dk>
+> 
+> diff --git a/util/aio-posix.c b/util/aio-posix.c
+> index e24b955fd91a..8c7b3795c82d 100644
+> --- a/util/aio-posix.c
+> +++ b/util/aio-posix.c
+> @@ -813,5 +813,13 @@ void aio_add_sqe(void (*prep_sqe)(struct io_uring_sqe *sqe, void *opaque),
+>  {
+>      AioContext *ctx = qemu_get_current_aio_context();
+>      ctx->fdmon_ops->add_sqe(ctx, prep_sqe, opaque, cqe_handler);
+> +
+> +    /*
+> +     * Wake the main loop if it is sleeping in ppoll().  When a vCPU thread
+> +     * runs a coroutine inline (holding BQL), it queues SQEs here but the
 
-and then this rises a question if the bus should be a parent or
-the owner of the bus is the parent?
+I think the comment could even be more generic here. This is not
+specific to coroutines, but the scenario is just that a vCPU thread
+holding the BQL performs I/O.
 
-> 
-> 
-> >      return true;
-> >  }
-> > @@ -2412,6 +2422,8 @@ PCIDevice *pci_create_simple_multifunction(PCIBus *bus, int devfn,
-> >                                             const char *name)
-> >  {
-> >      PCIDevice *dev = pci_new_multifunction(devfn, name);
-> > +
-> > +    pci_dev_property_add_child(bus, name, dev);
-> >      pci_realize_and_unref(dev, bus, &error_fatal);
-> >      return dev;
-> >  }
-> > @@ -2419,6 +2431,8 @@ PCIDevice *pci_create_simple_multifunction(PCIBus *bus, int devfn,
-> >  PCIDevice *pci_create_simple(PCIBus *bus, int devfn, const char *name)
-> >  {
-> >      PCIDevice *dev = pci_new(devfn, name);
-> > +
-> > +    pci_dev_property_add_child(bus, name, dev);
-> >      pci_realize_and_unref(dev, bus, &error_fatal);
-> >      return dev;
-> >  }  
-> 
+> +     * actual io_uring_submit() only happens in gsource_prepare().  Without
+> +     * this notify, ppoll() can sleep up to 499ms before submitting.
+> +     */
+> +    aio_notify(ctx);
+>  }
+>  #endif /* CONFIG_LINUX_IO_URING */
+
+With or without a changed comment to that effect:
+
+Reviewed-by: Kevin Wolf <kwolf@redhat.com>
 
 
