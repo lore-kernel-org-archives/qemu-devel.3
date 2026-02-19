@@ -4,84 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F450E9A05E
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 19:30:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0E0CE9A054
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 19:31:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vt9e1-0001hd-4g; Thu, 19 Feb 2026 14:25:01 -0500
+	id 1vt9dy-0001TH-Us; Thu, 19 Feb 2026 14:24:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vt9dS-0000BR-DU
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 14:24:27 -0500
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vt9dL-000084-Rw
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 14:24:23 -0500
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vt9dQ-0000FJ-3f
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 14:24:25 -0500
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-482f454be5bso22520505e9.0
- for <qemu-devel@nongnu.org>; Thu, 19 Feb 2026 11:24:23 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vt9dJ-0000EB-Re
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 14:24:19 -0500
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-4362197d174so870999f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 19 Feb 2026 11:24:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771529062; x=1772133862; darn=nongnu.org;
+ d=linaro.org; s=google; t=1771529055; x=1772133855; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=OjVXShC1NZd4A4MSPAW7OCNU5rjrdaDfYPCeoCtFstk=;
- b=FlAdcjEA0vfUIpd/UL1/1VGWoAE46rcP0UvKkb2YhnXGL6znuadQsHhlYXh6vl3gS7
- 5YX8O8xMlUz9Q3Q7Dtf29JIzy2hjbJdrFl36Xh8vrRcse9PBcNjFQ380uElXns3MZuJN
- CrIuxKiwSMqREcMbVxUV2hMscp2xwDzWMpkwEO3r6g2phm+r6mk5Xyn5S95A+SOwG3SL
- DQzLFU6XNJWvFk+WchVe0gdmMR4lb19Ryf8qrINGurvcTuqu1qztE8L5d5/vn0etU59x
- DFVu0SDI66OHprWyw+idTArA/+wmPrrtkcxpozTuBq3S5WwqdZmvpaAu4VF46VBfY16x
- wygA==
+ bh=q+bm8Uli5keNN0nt9Uh3wdHMVxKvtg4uuGhjgMaQ9K4=;
+ b=yRlOV1sRJdvU/dSNT31m5ZGBTXGjqMgTxVzKDGoZpdtewX7W1qp1JHVmP9n2IRNr6c
+ 3OZYKK0TgaU021T+9oDGYTy7002SzfUDFg34oBLQl8zdkx1c2OPAGEUYIv9zUS0HbHpx
+ Ht1+h/zPEI5IIu5mXoyMdfpuGicrJsdkujLIlY/aF5fdWqshlgAWIIdFOXuWx9zBuFz4
+ mQqAjuaTfmvZqDY68IMq70L4NJxumjOfWC3Q71ct9XIx56MOVFqUrZHwt8JEgYvo+eHc
+ htZ3m2U7E3gRwItcM8Twomn8CYm/eC694LTaQJ6Go++imn564NGqoRm5DtqIy2NBn/hh
+ Yn9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771529062; x=1772133862;
+ d=1e100.net; s=20230601; t=1771529055; x=1772133855;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=OjVXShC1NZd4A4MSPAW7OCNU5rjrdaDfYPCeoCtFstk=;
- b=iDc2JJk8UbrIU8xeTCcQnuAYK24lKSUcFrR3PQXtFUqfrtcMgD9W7LcssWFcW/HqMH
- eiRkwlbYxJf5ql5n9x8XS3iaQAoi18A90x5OxI44t6kP8BVQn8rSpE9gDXboGKlYTh+3
- ywpHJ/foxn/CuzqlwAu27v9Bgin/wzMKYGNKZilfiNbG5CEKHksfklDHK64r2AtVK+HG
- zHA0bRL5XVN35CoXehljgqugupDd0aqf55tmqDc9QnKsWsb2KOQ0teZZN10Pp282bXgL
- 9waktH53fXdf1VTLSA4U1XPLZajwz9raQHuscBxADUp0GtD42oaHEArMJgDc8t9KF4BZ
- rDEg==
-X-Gm-Message-State: AOJu0YzBpb3wlDBS2oYVaBPUfsO0NYD5EsiU8+1maw/d/YsBHNEF7Se8
- tkOtsYQnvLZrqaLO4RTgYzVeQwxEEgmKqCA/HayIKxvoS+mPUYWYDICQv3W69XcCtdD+CjDkKup
- Vfv861GTYQQ==
-X-Gm-Gg: AZuq6aIsWvFVEervSZP2f7BEJrdYvGbCYknbpO5iAileAXTGejCWcShIsy+Oi1SYoAY
- zlvSvNWeTsqHJKkohWJ83pjoZU9QCeZ8Myt6tFABZQu0r7yvZA6nXvBL5yX9u2c75q9kJ4egc0Q
- rxtiO71h1S8wZZBWLHQaXNSt26PqPKygFhRctZE2tKmSx3lBswPp/FJJ4mMPKqxVMMJ3O7b/o0h
- NQmEb9kPbStYWfDCrXu1xfxuNf9rfQ6HSoAb817sZKhB9rA+o9nF+CZJLE4/X6KCbtCS9dk7vby
- C1G9Q6y0jxIG9h5Rot3pIfAb0YSLfyhP7T+7qVRhDdLmbS1DexNiQjXrxQzF/FoEZuluhyTfBJe
- PL98JclAYwbRGVx9npXHKvvSJVk8W2JbcqEzaS40mrhQg2Lbf02R5i7jUe3lR7sB0Kn2R48wLKA
- 4qXt19I8cob5GrwqKIEgG77bC+HxPwlsD5nnQYtJZE3dYsTTmzOrTzOMuobvheskxyzw9jUx2j
-X-Received: by 2002:a05:600c:468d:b0:477:9890:9ab8 with SMTP id
- 5b1f17b1804b1-4839fe96a50mr54337215e9.3.1771529062085; 
- Thu, 19 Feb 2026 11:24:22 -0800 (PST)
+ bh=q+bm8Uli5keNN0nt9Uh3wdHMVxKvtg4uuGhjgMaQ9K4=;
+ b=lqhMZR4loeo0s3viqlmnFDHqWvG0XiIyP5GDrE7fZsVfU7yOI4SEnwT2tci78070TF
+ o+pn+AYfOsIrPTHh0wy6mcjkx3FyvCqtu/0m6DEKxVBg0dpfSZmXk/Ttfi5IPVKMraFE
+ wMYEJ2Vt5/o9dwTZpvcC3W28YgTcXVsJxSSikvi/oBmmiULremrCsYRe+ffJLR6qpl8t
+ j4RZ7hjuwGv3QkzZFW/lKv8b4wmDo8UHeDXLvERLvCv21g3ZVjm5VeEKrcDEX4SFdUxK
+ WUtCQIoYBcJWUnZyhL9LZOAMEenFYBbkVqGpWbposinUSXRN8RZa4BXTDNzd6W2QATaz
+ lkCA==
+X-Gm-Message-State: AOJu0YzrK5Z3U4RJXjEm418jR7OHAjaPm9VcRhSthwYitro4mTnhUAkQ
+ JI/7D7ZfqinCM0q1soXGpygPX29MBFn22mL4wx9pVXPpHuTLYqiT5+DPhDtT8UKmfFv4dvj55Kj
+ i7wSRWwO8CA==
+X-Gm-Gg: AZuq6aKkbmAsafR3V3q2ulhOx5Rkg19RC20VFVWySY3WwXCs1XgbHa/SnS2QSTNjdNB
+ T67ejiuYKaIoFxdjeDWBoCIPlbvpOgXW3qlALI+H5x8Zdy8inD3DeQ2Eg7fbVVL2TTHlOLREDut
+ xqpeMzyaI5cxqH8QcxEdtEiqX9XFqiZva6TAjzDB3kSCJNX25Xf2LB92g8vwMC1FknShDZEhoQh
+ XV2u326YHb1ZLzAEtGLskgQZMmw4O3fO9PzW4HaNCl75EtCzGCF1LuQYPcaeUWATgFRt6O2wGPj
+ Vsjr6pd7Yk8euabrtktPd1qIg2VMisOc9hbfr0GdEV+TzJExnuCj/WUF3JlhGgdO28vD1XFF9Mm
+ Psj6qQofcSbjMPrpKaaVs1pembP/mQEwucpClDfIupIj+qurAr8Do4Bu3jhr2Ox9F8zps50LAfN
+ cD97GggryhDXX+vKbCRQ8HTaXLNQPr1ViR46kjRVauyR5xxysm/DGekxmnQwaGwP2+MbVdn/xq
+X-Received: by 2002:a05:6000:178d:b0:436:30b0:759f with SMTP id
+ ffacd0b85a97d-43958e0df09mr12837191f8f.27.1771529054997; 
+ Thu, 19 Feb 2026 11:24:14 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-483a31bac27sm23936975e9.5.2026.02.19.11.24.20
+ ffacd0b85a97d-43796a5ac7csm48899172f8f.7.2026.02.19.11.24.13
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 19 Feb 2026 11:24:21 -0800 (PST)
+ Thu, 19 Feb 2026 11:24:14 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>, qemu-s390x@nongnu.org,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  qemu-riscv@nongnu.org, qemu-ppc@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 37/50] gdbstub/helpers: Convert gdb_get_regl() macro to
- inlined helper
-Date: Thu, 19 Feb 2026 20:19:39 +0100
-Message-ID: <20260219191955.83815-38-philmd@linaro.org>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Artyom Tarasenko <atar4qemu@gmail.com>
+Subject: [PATCH v2 36/50] target/sparc: Expand gdb_get_regl() in gdb_get_rega()
+Date: Thu, 19 Feb 2026 20:19:38 +0100
+Message-ID: <20260219191955.83815-37-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260219191955.83815-1-philmd@linaro.org>
 References: <20260219191955.83815-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,52 +105,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Rather than checking TARGET_LONG_BITS at build time,
-check target_long_bits() at runtime.
+Convert the gdb_get_rega() macro to an inlined function,
+expanding gdb_get_regl() via a TARGET_SPARC64 definition check.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/gdbstub/helpers.h | 22 ++++++++++++++--------
- 1 file changed, 14 insertions(+), 8 deletions(-)
+ target/sparc/gdbstub.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/include/gdbstub/helpers.h b/include/gdbstub/helpers.h
-index 402514716d7..b2f41d6d280 100644
---- a/include/gdbstub/helpers.h
-+++ b/include/gdbstub/helpers.h
-@@ -88,6 +88,20 @@ static inline int gdb_get_zeroes(GByteArray *array, size_t len)
-     return len;
- }
+diff --git a/target/sparc/gdbstub.c b/target/sparc/gdbstub.c
+index d19819cd1a9..792bf70a145 100644
+--- a/target/sparc/gdbstub.c
++++ b/target/sparc/gdbstub.c
+@@ -22,11 +22,14 @@
+ #include "cpu.h"
+ #include "gdbstub/helpers.h"
  
-+/**
-+ * gdb_get_regl: append @val in @buf using 32 or 64-bit, depending on target
-+ *
-+ * This function is legacy and deprecated, thus should not be used in new code.
-+ */
-+static inline int gdb_get_regl(GByteArray *buf, uint64_t val)
+-#ifdef TARGET_ABI32
+-#define gdb_get_rega(buf, val) gdb_get_reg32(buf, val)
++static inline int gdb_get_rega(GByteArray *buf, uint64_t val)
 +{
-+    if (target_long_bits() == 64) {
-+        return gdb_get_reg64(buf, val);
-+    } else {
-+        return gdb_get_reg32(buf, val);
-+    }
++#if defined(TARGET_ABI32) || !defined(TARGET_SPARC64)
++    return gdb_get_reg32(buf, val);
+ #else
+-#define gdb_get_rega(buf, val) gdb_get_regl(buf, val)
++    return gdb_get_reg64(buf, val);
+ #endif
 +}
-+
- /**
-  * gdb_get_reg_ptr: get pointer to start of last element
-  * @len: length of element
-@@ -101,12 +115,4 @@ static inline uint8_t *gdb_get_reg_ptr(GByteArray *buf, int len)
-     return buf->data + buf->len - len;
- }
  
--#ifdef COMPILING_PER_TARGET
--#if TARGET_LONG_BITS == 64
--#define gdb_get_regl(buf, val) gdb_get_reg64(buf, val)
--#else
--#define gdb_get_regl(buf, val) gdb_get_reg32(buf, val)
--#endif
--#endif /* COMPILING_PER_TARGET */
--
- #endif /* _GDBSTUB_HELPERS_H_ */
+ int sparc_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
+ {
 -- 
 2.52.0
 
