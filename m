@@ -4,123 +4,128 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 911AAE9A04A
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 16:30:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFEF6E9A04A
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 16:32:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vt6uA-00068v-P2; Thu, 19 Feb 2026 11:29:30 -0500
+	id 1vt6wr-0007K2-TH; Thu, 19 Feb 2026 11:32:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vt6u3-00066E-FB
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 11:29:25 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vt6tw-0005eH-Gd
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 11:29:20 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771518553;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=XwD+0CQ3e63B6VTocbVysS2FDMDju3mAHzD6wESirjA=;
- b=K8s9Q19RmNbr1pCnPbmAk5TzLGFP7mVyhfuQXJ81mloQshPAkTOTqGA5zvTOQZQxY3qUnG
- 0sxaCPmXWrqUc5GRMXgVpGshGBucF5m4nE4S9+4S+ElJMiRLGP3MSwGgZL3/s/4KICwZhv
- 3/sD+whzfWfV7J8IP2qfgRljOHUtols=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-457-UpqZk7_2N8G-pMFFLjRAnQ-1; Thu, 19 Feb 2026 11:29:11 -0500
-X-MC-Unique: UpqZk7_2N8G-pMFFLjRAnQ-1
-X-Mimecast-MFC-AGG-ID: UpqZk7_2N8G-pMFFLjRAnQ_1771518551
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4839fc4cef6so6542875e9.0
- for <qemu-devel@nongnu.org>; Thu, 19 Feb 2026 08:29:11 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1771518550; cv=none;
- d=google.com; s=arc-20240605;
- b=FL2aLKXOdHUSO3JeyiEPxO5/olintskfitKVha5O9tBezJf6m5W+KyEXnD0L3tM/4b
- 1a8VHbxAUHHPmuA9vEj8Q1f4qVW/cvbFcusHmw6Vq/WEg97x4ZVEpSKblh6kFYoIsRNr
- FTBfQ0v/9jXYj8OkOnIOUB3XkISP00jxUKODRQOAujxn1f+9y+Wdjmm7NmP9CnyeIuNW
- 7+PP7z8RqcbPIW6FyMmgIIEiURDJHBvysGEuRT8mi/tbq4FcYJzr4CbVmwHKa3/mQ5yk
- 60BkeYApyjM313iTXO7sxsGmrjINafGvRqwhtwWmrTiIsIFk+vlvtwp3duDYZJnxtAvK
- bqCw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=XwD+0CQ3e63B6VTocbVysS2FDMDju3mAHzD6wESirjA=;
- fh=Mkkr66XCtiupVyLaeq0gy6M3nlaHK+QB/HhP1nhgLK4=;
- b=EJl1Yh7dMGbiYw1sb6kg7GsoMKzWiYjQVEl36s+mRTMyolUFCIoaFYFJt4iXIw8V9Y
- 1uACWwCPiTMlwiOvyQ/uv6C052WuPQwQrIH5Ziz1u5uwjs+fyiQI8e4rboHftkKd2PJR
- sJC8Jgwtc6cPQclB+6dKEouKqey7MMUSVZuFzfAhXG71isGmohD7kVtGLDXERVZw7TGw
- rcSENdTH6Om/3nViB3+Vs3WP3Qq6yn8yFIpczJY1ZpXH9DOQ79kJaQMneM8QOV9poPbJ
- aDRxYwtkeaaXVp0EGwpKyfwJqfNu0S6mg3Y4kjeWFdODvp73+KS4uBKLHH0jGIEvG8SS
- qMvg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vt6wq-0007JQ-9C
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 11:32:16 -0500
+Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vt6wn-0006He-Sn
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 11:32:16 -0500
+Received: by mail-pf1-x432.google.com with SMTP id
+ d2e1a72fcca58-82491fbf02cso603405b3a.1
+ for <qemu-devel@nongnu.org>; Thu, 19 Feb 2026 08:32:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1771518550; x=1772123350; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=XwD+0CQ3e63B6VTocbVysS2FDMDju3mAHzD6wESirjA=;
- b=QnCS/wOvuRFHJuHE+qypM+m+5pccnvusL7k7/ee3WBl8irKjfU9tJtfiiZkKZnMlnQ
- WR8AwDxg0ZsCiLuPB7gvne57vI1dats+oHuCPnD2LyklSZuuFjxqM1hcytgy2jLA6QO6
- +m2QhkRwSeN9zUQxaTbhqmeFALBqaGBlKv86aBbBAu1AFBiJJDPt5Nf3MfquxxZ6lBf7
- rsgNIG2QqrAoAzqtuZvhXGMQ91Ad7gt6bkTykGhfbHEVMSeoHzpV9oZyAmMyJz7SrJqN
- Cmv3g3385EtlNe0IhpoAqA3hCNObvFIinkJHOQpKMXWUWnLJ1Shq17C/2R6AjjrQyQLy
- BYKg==
+ d=linaro.org; s=google; t=1771518732; x=1772123532; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=BmTh0jnwm/7Hn5VDO6WKksEgvE6xJqIOQ06tdlnmZ2w=;
+ b=Se3y0N92jPQSS+xWtyIgORagBH0p32xoYgmeelMiI3KNaVqc5QuN56dPdiHcvWrExR
+ vYN7vTWbJSNMZOkKDVK2uLbBcVdhQpeWjPLbSYggRZbGNvoFDy93mFCSqXEqwmP34ZXs
+ lS5pblKsNYCnQRnnYXX+VRYkZyx5jQpmuTH5qcA7RTW9wVXpBKG1zq2NpnUWzh3wcA7j
+ eb0VdEhc53UEI+JuI+JN6fSno0xtSZkCO0/NoPo9OHaTyiMgjIaM+CRrTOrPxIcnDxTW
+ SseeAKREuFbwvpjyyI9x3vW8OaXSxjGI6pwv5pwzP3fGskIMvZyK767DHPheeKjt2Cfz
+ i6AQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771518550; x=1772123350;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=XwD+0CQ3e63B6VTocbVysS2FDMDju3mAHzD6wESirjA=;
- b=NWniJAeGavN0aotnzHJx0q1PmMr8p8xoriNSwtLrMv4tVXj8ELkCRMFqFuP66opv7R
- 8X7yXyLzsL9yoCeWTgOTH5juxtkc7gir5i5qSSvwQzq5Qn4wyvttsbiMGqiXs8JbP6n0
- JTsZ5i83hAXjB9BVP7c/XghNizeU1kgc1W9DqZaTujNVYNzJituAhPiCtkmvatTe2bw9
- WWZgJIDaW60YLswZz+zPibiE3sdyIi91AUYKK9awrnWkwDxMR2dongt0nIHSh89/goPV
- omWvhDuLkBYXuGtIRS6Tl5zsVizh5wpxWB5HEhyB2Vbwf6Bf7og7uFPdDnh1iGXRqLXm
- +8hQ==
-X-Gm-Message-State: AOJu0Yzo9D9MKYKU2/VYkhN1vAohqzjAKjoMVAB1IY2FJbMq6cPOdSdo
- BLXmTsSLWCJ1/BRMTGKT7EKvFP7ora1qbTtfSUHFD1EDsdgsfTiIczhNGKSng7GdNgZYLUcuMFc
- TrJYzJuRwzYXczWjeCCQU6CRRFezVA0hYz3bKy8eF4yufafFFXO5qyQT4BlQ967qfLzvVQBbEEh
- yrrMrcHDQ5T8hBvUrrM0oAbuVNVmcwH/U=
-X-Gm-Gg: AZuq6aKtwxK3jsmLNIjb7vH8W/5aWdmmZa/2iGcqtcbNayxlm51FzD/PBNEKK9nizUB
- Kxk56kIPYZvRQs6CO9M/9Ynjia2+N0pwXHj5bxZSQMGHAcp0R/hWBNb1w1yKrZ6ELhLJip5M6ma
- B5O3eA+oeljmW815pQ4Z0BOcBkL9avlXuNIToeVelo+TOEX7JVBGOVz+EgzPf2PbSwtsLjRNadO
- bqRyrj0Va2iLGsn01DhuilGXJuoYd1sPcoovAuy8OYZaBMakOEgBHRAmGpTmV8pdNKViEb0rv0D
- 3bXvOPA=
-X-Received: by 2002:a05:600c:491c:b0:483:7eeb:4558 with SMTP id
- 5b1f17b1804b1-4839fe8e8cdmr24246455e9.2.1771518550515; 
- Thu, 19 Feb 2026 08:29:10 -0800 (PST)
-X-Received: by 2002:a05:600c:491c:b0:483:7eeb:4558 with SMTP id
- 5b1f17b1804b1-4839fe8e8cdmr24246165e9.2.1771518549975; Thu, 19 Feb 2026
- 08:29:09 -0800 (PST)
+ d=1e100.net; s=20230601; t=1771518732; x=1772123532;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=BmTh0jnwm/7Hn5VDO6WKksEgvE6xJqIOQ06tdlnmZ2w=;
+ b=peJb/kkH2y7sQGDTXnx4v1iHR8M/vtoAFqsfzmkeaiCb6Bq/QOx5GRmMcrLg4qomZM
+ w45dfZdsUlZ1UDKj0VLhhof/HPajeXgo5ODnldtxcndjfWekqMZTPUQ7r8K+CWd6u/9s
+ VQ+YvR7qRKQcbqCjgEMkDIADORuHswAMEbU1A1krFnsj2U6wWfQtbEA13fQycfgfb0pD
+ qmW7lZgv3EbUJCI+wbjBWYauf5+8T5ssjOxHitCD5NRUD16gBlz1DlInPl5r0kX9x2tx
+ 5By0m0wmwnpI+OnsIpQswunF5vYbBFwZPGrJVuriCpuLtrpLqd5nsAbpvzyTyVBZlIf8
+ xh3g==
+X-Gm-Message-State: AOJu0YwMOT9vRZ6xOMtNs7h3xyNbVZJ3Opcu2AtsLdM0Mmk1wEze2Obd
+ k/WtPrxn+rBtOXaXgvI96qSM2GTaRHGs3J+GFh51voP5wGpsvSP+2HNKrrJNlxx5e6s=
+X-Gm-Gg: AZuq6aJZ5HD5k5VDZCBzX9UVcOzyMeGDt5SpQGL56XlRjLAaagK2YSuYB5pJ7CdFtaP
+ QmFibSdtL4LP7am49XzpG1b7n+B3rjEAltMvFSf4vlN++wKX+dwA1LUBwoVFXQp/4+CJjFl/R/M
+ I8psP/GBeztlOtdma+iRup1U1fDlyt9E6kRD3K6iNSrG8WTyNb6jbkc6Q2cS7xT9KRP7CRbe9Y3
+ G0QSCMunzH9zcE6derVNRmdgEqbfQMAI1vIvxxqYYRY2t7uAyhiQEZwDMdzijiJpRtrw0igOTZ8
+ XNXK06M2RKCPO9oPHkbW0pXBjwHmLWLmMoJ50VRlrbMuuiF9sP5bhnBVcZyvOLcPhDS24kFIan/
+ 1VhEt1oom/xVBWNq6TXAZebW1QCfzw1RnxEsMhWBpIUfdvLiOnyTJUD123spYAwVWl5OszmjEzJ
+ g/kEozJc6muznfOBtzgE3Xd4KWDp7PSyWGYaaoYju4ceTqB1nYLiCYMJuS7DVCP3B7dteI
+X-Received: by 2002:a05:6a00:6c83:b0:824:b1bb:f6b4 with SMTP id
+ d2e1a72fcca58-824d95f49dcmr15511190b3a.39.1771518731964; 
+ Thu, 19 Feb 2026 08:32:11 -0800 (PST)
+Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-824c6b69f14sm24859331b3a.35.2026.02.19.08.32.11
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 19 Feb 2026 08:32:11 -0800 (PST)
+Message-ID: <37acb360-6425-47c8-8452-cd0c610c2fed@linaro.org>
+Date: Thu, 19 Feb 2026 08:32:11 -0800
 MIME-Version: 1.0
-References: <20260108131043.490084-1-pbonzini@redhat.com>
- <877bs8rgwx.fsf@pond.sub.org>
-In-Reply-To: <877bs8rgwx.fsf@pond.sub.org>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Thu, 19 Feb 2026 17:28:58 +0100
-X-Gm-Features: AaiRm52hbEv2OYk4t7_dHMn2_YlDa02QhjIrHGlosPokXS_KprGZzx6uShFyOuE
-Message-ID: <CABgObfYEvZnTHBhz3VrN61Wqa21TV+JV_HF=1Y8iMzvx5LQ_RA@mail.gmail.com>
-Subject: Re: [PATCH v2 00/16] rust: QObject and QAPI bindings
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- "open list:Rust-related patc..." <qemu-rust@nongnu.org>
-Content-Type: multipart/alternative; boundary="000000000000e27a72064b2fcdb2"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 00/14] target/arm: single-binary
+Content-Language: en-US
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, Paolo Bonzini <pbonzini@redhat.com>,
+ qemu-arm@nongnu.org, kvm@vger.kernel.org,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, anjo@rev.ng,
+ Jim MacArthur <jim.macarthur@linaro.org>
+References: <20260219040150.2098396-1-pierrick.bouvier@linaro.org>
+ <CAFEAcA__tnvy9dUUPrEG8jynGGSp9iz0H7Q2MFGdw4--NDH-ng@mail.gmail.com>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
+ 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
+ ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
+In-Reply-To: <CAFEAcA__tnvy9dUUPrEG8jynGGSp9iz0H7Q2MFGdw4--NDH-ng@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.045,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -137,150 +142,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000e27a72064b2fcdb2
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On 2/19/26 1:38 AM, Peter Maydell wrote:
+> On Thu, 19 Feb 2026 at 04:02, Pierrick Bouvier
+> <pierrick.bouvier@linaro.org> wrote:
+>>
+>> This series continues cleaning target/arm, especially tcg folder.
+>>
+>> For now, it contains some cleanups in headers, and it splits helpers per
+>> category, thus removing several usage of TARGET_AARCH64.
+>> First version was simply splitting 32 vs 64-bit helpers, and Richard asked
+>> to split per sub category.
+> 
+> Thanks, I've applied this to target-arm.next. Patchew says the
+> last patch here is the same as it was in v4, so I've copied
+> the R-by tags from Richard and Philippe across.
+> 
+> -- PMM
 
-Il gio 19 feb 2026, 14:39 Markus Armbruster <armbru@redhat.com> ha scritto:
-
-> Paolo Bonzini <pbonzini@redhat.com> writes:
->
-> > This adds two related parts of the Rust bindings:
-> >
-> > - QAPI code generator that creates Rust structs from the JSON
-> >   description.  The structs are *not* ABI compatible with the
-> >   C ones, instead they use native Rust data types.
-> >
-> > - QObject bindings and (de)serialization support, which can be used to
-> >   convert QObjects to and from QAPI structs.
->
-> To and from generated Rust structs, I presume.
->
-
-Yes, or enums=E2=80=94and actually any (de)serializable Rust type, of which=
- QAPI
-structs should be the most common case.
-
-> As an example of how this would be used, the marshaling functions for
-> > QMP commands would look like this:
-> >
-> > fn qmp_marshal_query_stats(args: *mut QDict,
-> >     retp: *mut *mut QObject, errp: *mut *mut Error)
-> > {
-> >     let qobj =3D unsafe { QObject::cloned_from_raw(args.cast()) };
-> >
-> >     let result =3D from_qobject::<StatsFilter>(qobj)
-> >          .map_err(anyhow::Error::from)
-> >          .and_then(qmp_query_stats)
-> >          .and_then(|ret|
-> to_qobject::<Vec<StatsResult>>(ret).map_err(anyhow::Error::from));
-> >
-> >     match qmp_marshal_query_stats_rs(qobj) {
-> >         Ok(ret) =3D> unsafe { *retp =3D ret.into_raw(); },
-> >         Err(e) =3D> unsafe { crate::Error::from(e).propagate(errp) },
-> >     }
-> > }
->
-> Scoring 0.23 UOUPNBL (uses of unsafe per non-blank line).  SCNR!
->
-
-Well, that's why you automatically generate this! You could also use only
-one or two unsafe blocks but I preferred to mark explicitly the code that
-requires it.
-
-Paolo
-
-
-> > Despite the long v1->v2, the changes are mostly cosmetic; there are a f=
-ew
-> > small differences in the detection of types to be wrapped with Box<>,
-> > because Vec<> is now considered to break cycles.
-> >
-> > Available at branch rust-next of https://gitlab.com/bonzini/qemu (which
-> > is now almost empty other than this series, yay).
-> >
-> > Paolo
->
->
-
---000000000000e27a72064b2fcdb2
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote gmail_quote_contai=
-ner"><div dir=3D"ltr" class=3D"gmail_attr">Il gio 19 feb 2026, 14:39 Markus=
- Armbruster &lt;<a href=3D"mailto:armbru@redhat.com">armbru@redhat.com</a>&=
-gt; ha scritto:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:=
-0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">=
-Paolo Bonzini &lt;<a href=3D"mailto:pbonzini@redhat.com" target=3D"_blank" =
-rel=3D"noreferrer">pbonzini@redhat.com</a>&gt; writes:<br>
-<br>
-&gt; This adds two related parts of the Rust bindings:<br>
-&gt;<br>
-&gt; - QAPI code generator that creates Rust structs from the JSON<br>
-&gt;=C2=A0 =C2=A0description.=C2=A0 The structs are *not* ABI compatible wi=
-th the<br>
-&gt;=C2=A0 =C2=A0C ones, instead they use native Rust data types.<br>
-&gt;<br>
-&gt; - QObject bindings and (de)serialization support, which can be used to=
-<br>
-&gt;=C2=A0 =C2=A0convert QObjects to and from QAPI structs.<br>
-<br>
-To and from generated Rust structs, I presume.<br></blockquote></div></div>=
-<div dir=3D"auto"><br></div><div dir=3D"auto">Yes, or enums=E2=80=94and act=
-ually any (de)serializable Rust type, of which QAPI structs should be the m=
-ost common case.</div><div dir=3D"auto"><br></div><div dir=3D"auto"><div cl=
-ass=3D"gmail_quote gmail_quote_container"><blockquote class=3D"gmail_quote"=
- style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);p=
-adding-left:1ex">&gt; As an example of how this would be used, the marshali=
-ng functions for<br>
-&gt; QMP commands would look like this:<br>
-&gt;<br>
-&gt; fn qmp_marshal_query_stats(args: *mut QDict,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0retp: *mut *mut QObject, errp: *mut *mut Error)<br>
-&gt; {<br>
-&gt;=C2=A0 =C2=A0 =C2=A0let qobj =3D unsafe { QObject::cloned_from_raw(args=
-.cast()) };<br>
-&gt;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0let result =3D from_qobject::&lt;StatsFilter&gt;(qo=
-bj)<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 .map_err(anyhow::Error::from)<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 .and_then(qmp_query_stats)<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 .and_then(|ret| to_qobject::&lt;Vec&=
-lt;StatsResult&gt;&gt;(ret).map_err(anyhow::Error::from));<br>
-&gt;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0match qmp_marshal_query_stats_rs(qobj) {<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0Ok(ret) =3D&gt; unsafe { *retp =3D re=
-t.into_raw(); },<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0Err(e) =3D&gt; unsafe { crate::Error:=
-:from(e).propagate(errp) },<br>
-&gt;=C2=A0 =C2=A0 =C2=A0}<br>
-&gt; }<br>
-<br>
-Scoring 0.23 UOUPNBL (uses of unsafe per non-blank line).=C2=A0 SCNR!<br></=
-blockquote></div></div><div dir=3D"auto"><br></div><div dir=3D"auto">Well, =
-that&#39;s why you automatically generate this! You could also use only one=
- or two unsafe blocks but I preferred to mark explicitly the code that requ=
-ires it.</div><div dir=3D"auto"><br></div><div dir=3D"auto">Paolo</div><div=
- dir=3D"auto"><br></div><div dir=3D"auto"><div class=3D"gmail_quote gmail_q=
-uote_container"><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0=
-px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
-<br>
-&gt; Despite the long v1-&gt;v2, the changes are mostly cosmetic; there are=
- a few<br>
-&gt; small differences in the detection of types to be wrapped with Box&lt;=
-&gt;,<br>
-&gt; because Vec&lt;&gt; is now considered to break cycles.<br>
-&gt;<br>
-&gt; Available at branch rust-next of <a href=3D"https://gitlab.com/bonzini=
-/qemu" rel=3D"noreferrer noreferrer" target=3D"_blank">https://gitlab.com/b=
-onzini/qemu</a> (which<br>
-&gt; is now almost empty other than this series, yay).<br>
-&gt;<br>
-&gt; Paolo<br>
-<br>
-</blockquote></div></div></div>
-
---000000000000e27a72064b2fcdb2--
-
+Thanks.
+It's indeed the same, except patch 8 which has changes to accomodate the 
+two new patches in prelude.
 
