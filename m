@@ -4,67 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DD7FE9A03B
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 04:02:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F39BE9A03B
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 04:03:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vsvEz-0008Kl-TB; Wed, 18 Feb 2026 23:02:13 -0500
+	id 1vsvFS-00006V-0P; Wed, 18 Feb 2026 23:02:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vsvEy-0008KQ-Ey
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 23:02:12 -0500
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ id 1vsvFE-0008SF-5p
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 23:02:29 -0500
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vsvEw-0001Cn-JW
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 23:02:12 -0500
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-2ab232cc803so2156905ad.3
- for <qemu-devel@nongnu.org>; Wed, 18 Feb 2026 20:02:09 -0800 (PST)
+ id 1vsvFA-0001HC-2y
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 23:02:27 -0500
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-2a79ded11a2so2819845ad.3
+ for <qemu-devel@nongnu.org>; Wed, 18 Feb 2026 20:02:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771473729; x=1772078529; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=g+k/37VNyM44S8IKpnLIeLYphIGYrb6n3z+1yI/fqF0=;
- b=EbnrHnDwk059TaOP9tp8JOexZ2XpH5a71mv56lIowm3K/3Nm0YM5u85HO/eth/41jd
- VCZSaSnBsaPld8pWHYZAvgjxIdrUwRyRcSlUA1WQ1N7Ma/ONJDNKllECcVC4cnGC3nUd
- cGmnTxKyG+myszeRXniRB1VR/emWojXVO0pTGyFLKD8YCmxGjLdZ2ggZMnnv/tMaeMd7
- mG8QeqK5n0vagtGc4ByJTiYdj66C+gzfCUiyGFcCpjUd3et/GzKHGYfVd7om7So63/e+
- yOswwJ9l2nCvaoOMX+tKu3okRk6j7EHeoRiHQ6594K46Uu9IjidvP0r3124V6KqpsnmX
- lPkg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771473729; x=1772078529;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1771473743; x=1772078543; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=g+k/37VNyM44S8IKpnLIeLYphIGYrb6n3z+1yI/fqF0=;
- b=IqFxcqcv2rnJt2b69MkYymmhgmH3YMjBjKbT5PdLp3EAuQFKSWIeKPPFMFSXV3iFit
- wGXb3KzEcEB8NQD39n9uHYTMTMyu5owUNxOnrzSWtTTM1gr+31NWS4Aw4fvE0p+vgBxl
- Lm/zUmcVnWUo/f3sRkbVYXSLQ1I7VC2L8LVGhic+FHBrtGp0pYlV2iDdVAhNGl+QUjsL
- g/fn89dBt/MtIWKxckEsrh/DmD11gmR3upAgo6kD6YX5dIhTKgI3FuRdr4MKEIQlNcRa
- a7H/9nz5LReFwtlDOQ4PTIKjEihh0UGcUKcGgWFPvSBByPZFQX+dx9FzQjKRCwNJTL3T
- BQ+g==
-X-Gm-Message-State: AOJu0YzqsB4GBurkHvv0C6S1gXCoufT9d7GBYieSgiO7y//Atav8dmrn
- FTIVSQMTPXEXU7EwgEsm6Ff7milXq783BEtfWy0ivkGpQ430bBZiDSe3O3t0SoQkMYBq9fnXMUp
- 1Hegp
-X-Gm-Gg: AZuq6aKig76rODF+V/SG0amns21/9/AT1S0uiwdajrYMun1/CexhKJPz+uL8FaA6RiZ
- tveehtyCrkevV5aZP/bRAHib5xdqVd6M9+0R6Ch1T/q6NcLeFkdso1eG7LgJLqQMP+ezmHqTzVt
- NUhU96NwltwQhYuLMC95PLJb3z3Q6ouVJbsK7IlIbsLbZzf8WPjnfs6r1SwDjcb6Eqri0EWVGP6
- 8bSyYRrC68/vEvkYQtnlEMC/F8v+Cik4xrSkc96v0z8tPZyjE4t/6nYSXKpKbXlWVfhyEyYAEdh
- A61Pb2A4sNT3JyyQ97HusKzJYnGrW3uHXw4c7GTEOcoEih6G4NZ+oKr5lhk1GE28Fg7qtUUEKT7
- WAK/dKqHYgjvcM7rd82VZVSBLzQ7dc7bDwERIp4AhnaBRe3SSp3Gqfhcs/hgbQgHTYzOPs2dZws
- xxEw+I9JOXu3LmaAcD9jk3vnoHZk3SzBAHw87oGorBYSVdDy1efY9M2oHDpF9O2FVfMMP/Dtm5X
- HXW8JP3IvNUaOA=
-X-Received: by 2002:a17:903:2284:b0:2a9:2ab2:e50d with SMTP id
- d9443c01a7336-2ad17586af9mr127169705ad.51.1771473728472; 
- Wed, 18 Feb 2026 20:02:08 -0800 (PST)
+ bh=WTZflre1420AW/UKhqUXzYtghEaZbDSYkcNh+uvH6MI=;
+ b=trvaq29W0kiR2qsh0NIPeNP7FikZ6J50jHb107vvRqCB0POFopXfP8P9KtNJO1yw+r
+ gfbkJP69zFgX6HwiISxJe+T4hgsFqzB/W07Gfs9TFit7/SXdrvZBpda3PmZdt9YfpEXW
+ uscwWptcyLYq0CJYX+7cWzF4RGEsaMMMTpQid08P9FillVylPDfQEvGw4Goz2XRdRX0h
+ 7+/b1CDEu1q8gFVnqPfx3x2/JDygNvcSGexElJokg83Bn79zU6TYrP09HPRWfLqMegbQ
+ Bi/BGzK41VTViSUaJpqUKnDFaiLjBO+AUb2A+TyHAaG0py+n8Yi52zWrzX4oWNItPv2A
+ m3iw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1771473743; x=1772078543;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=WTZflre1420AW/UKhqUXzYtghEaZbDSYkcNh+uvH6MI=;
+ b=poScExQFun6uxr3Iv1oXsUX/mT8uUdw8LBfZAXSopsZGkoUPLmkrLrRoajVlIRFww9
+ OZeraTBrTlHJb1dmLxdQlogPhFk/UDF+zbVkkCKIm2034lQcxfCrOjbtUvfYHZU0tMj6
+ RSrcGjj5mZPEUyxkklLrKVLN+9inxruRwddW6s8UF5ZFl2EcorvsfnzlDO4OfSVcPokX
+ MzhjqMpX8dQWkWE2N6Z+e0dPHc49RT27orQaly/hy3QiifqM+AeUGaswIjFz+6yKskSt
+ RcmtBblOoBVvlW0t+4pAeHrOG09N3yMaw6bmptrQ9VQMTxDu21AUjyeMwkwI9OZFTflq
+ yEiw==
+X-Gm-Message-State: AOJu0Yxkba0CNA62+Ev5GNWvokdJLsbnJMPnN+7crt1jY5m0oy6xk/hA
+ 5oxxr4oW4eLYO0eHmUlOC88Ibg2JGxckg6ao8lYjPTBl3SkrjhhXiGxD9YSlGa9hRIpDSCpJ6f8
+ WrXY8
+X-Gm-Gg: AZuq6aLy9iXfg5QW8zqDlWvsZUTp/WW5W0K7AOdCy5VyWf7c4GYE+8Gcgh+koJ0UqJa
+ wCAk0wBY4pmZz1Vvhdqaq23Iqq7pzZdVmcr1ai3dBDh8y8az4GXIrgwToOcgHIy9FC6wSvk0rT4
+ 3sCI74fxH8ExVR1EKABkgqWu09zTyiaA2wJdcxD4HJ0VKu2yK6ZSTke0DXNfTmBfXV1GKsOBgmR
+ a0yfUXicTgOQ8Svj9IYvcdXuQDcoBi+Ik6XVbAVkWCT2iN2JsIZOPJ5azd/RbtOhHp0fhy4eJvz
+ D/BH9Ull+TMdokXS3E9cfTOgpK8BYbhoXOZGEQ0jq7/0hMCApeqK1E0U6XhC+0Mm2Yy1oRIhklZ
+ NrmSdCtXXqPwA+KN5XFN4MVXrJIj+ETfC4IX1jAFH+tpUnLwSVhazjJUXqi2La917k/1ktMFQB1
+ ILyC1LZYUCpkzABc1jQnDo+sHf3PJiRq4om1CRzqHYzBRqwPpT3yMSi1bQISbUaYorIpNdLxG+s
+ Os/
+X-Received: by 2002:a17:903:15ce:b0:2a9:47ff:101c with SMTP id
+ d9443c01a7336-2ad50fa0c97mr33807705ad.46.1771473742551; 
+ Wed, 18 Feb 2026 20:02:22 -0800 (PST)
 Received: from pc.taild8403c.ts.net (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2ad1a73200asm147636225ad.36.2026.02.18.20.02.07
+ d9443c01a7336-2ad1a73200asm147636225ad.36.2026.02.18.20.02.21
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 18 Feb 2026 20:02:07 -0800 (PST)
+ Wed, 18 Feb 2026 20:02:21 -0800 (PST)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -74,15 +75,17 @@ Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>, anjo@rev.ng,
  Peter Maydell <peter.maydell@linaro.org>,
  Jim MacArthur <jim.macarthur@linaro.org>
-Subject: [PATCH v4 00/14] target/arm: single-binary
-Date: Wed, 18 Feb 2026 20:01:36 -0800
-Message-ID: <20260219040150.2098396-1-pierrick.bouvier@linaro.org>
+Subject: [PATCH v4 14/14] include/tcg/tcg-op.h: eradicate
+ TARGET_INSN_START_EXTRA_WORDS
+Date: Wed, 18 Feb 2026 20:01:50 -0800
+Message-ID: <20260219040150.2098396-15-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260219040150.2098396-1-pierrick.bouvier@linaro.org>
+References: <20260219040150.2098396-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,150 +108,531 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series continues cleaning target/arm, especially tcg folder.
+This commit removes TARGET_INSN_START_EXTRA_WORDS and force all arch to
+call the same version of tcg_gen_insn_start, with additional 0 arguments
+if needed. Since all arch have a single call site (in translate.c), this
+is as good documentation as having a single define.
 
-For now, it contains some cleanups in headers, and it splits helpers per
-category, thus removing several usage of TARGET_AARCH64.
-First version was simply splitting 32 vs 64-bit helpers, and Richard asked
-to split per sub category.
+The notable exception is target/arm, which has two different translate
+files for 32/64 bits. Since it's the only one, we accept to have two
+call sites for this.
 
-v4
---
+As well, we update parameter type to use uint64_t instead of
+target_ulong, so it can be called from common code.
 
-- add two patches from Peter removing helper in non-tcg files
-  20260216160349.3079657-1-peter.maydell@linaro.org
-  This fixes build failure with kvm-only and xen-only builds on aarch64.
-  I didn't split helper and gen_helper headers. If that really matters, it can
-  be done in v5.
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+---
+ include/tcg/tcg-op-common.h      |  8 ++++++++
+ include/tcg/tcg-op.h             | 29 -----------------------------
+ target/alpha/cpu-param.h         |  2 --
+ target/arm/cpu-param.h           |  7 -------
+ target/avr/cpu-param.h           |  2 --
+ target/hexagon/cpu-param.h       |  2 --
+ target/hppa/cpu-param.h          |  2 --
+ target/i386/cpu-param.h          |  2 --
+ target/loongarch/cpu-param.h     |  2 --
+ target/m68k/cpu-param.h          |  2 --
+ target/microblaze/cpu-param.h    |  2 --
+ target/mips/cpu-param.h          |  2 --
+ target/or1k/cpu-param.h          |  2 --
+ target/ppc/cpu-param.h           |  2 --
+ target/riscv/cpu-param.h         |  7 -------
+ target/rx/cpu-param.h            |  2 --
+ target/s390x/cpu-param.h         |  2 --
+ target/sh4/cpu-param.h           |  2 --
+ target/sparc/cpu-param.h         |  2 --
+ target/tricore/cpu-param.h       |  2 --
+ target/xtensa/cpu-param.h        |  2 --
+ target/alpha/translate.c         |  4 ++--
+ target/avr/translate.c           |  2 +-
+ target/hexagon/translate.c       |  2 +-
+ target/i386/tcg/translate.c      |  2 +-
+ target/loongarch/tcg/translate.c |  2 +-
+ target/m68k/translate.c          |  2 +-
+ target/microblaze/translate.c    |  2 +-
+ target/or1k/translate.c          |  2 +-
+ target/ppc/translate.c           |  2 +-
+ target/rx/translate.c            |  2 +-
+ target/sh4/translate.c           |  4 ++--
+ target/sparc/translate.c         |  2 +-
+ target/tricore/translate.c       |  2 +-
+ target/xtensa/translate.c        |  2 +-
+ 35 files changed, 24 insertions(+), 93 deletions(-)
 
-v3
---
-
-- translate.h: missing vaddr replacement
-- move tcg_use_softmmu to tcg/tcg-internal.h to avoid duplicating compilation
-  units between system and user builds.
-- eradicate TARGET_INSN_START_EXTRA_WORDS by calling tcg_gen_insn_start with
-  additional 0 parameters if needed.
-
-v2
---
-
-- add missing kvm_enabled() in arm-qmp-cmds.c
-- didn't extract arm_wfi for tcg/psci.c. If that's a hard requirement, I can do
-  it in next version.
-- restricted scope of series to helper headers, so we can validate things one
-  step at a time. Series will keep on growing once all patches are reviewed.
-- translate.h: use vaddr where appropriate, as asked by Richard.
-
-Peter Maydell (2):
-  target/arm: Move TCG-specific code out of debug_helper.c
-  target/arm: Don't require helper prototypes in helper.c
-
-Pierrick Bouvier (12):
-  target/arm: extract helper-mve.h from helper.h
-  target/arm: extract helper-a64.h from helper.h
-  target/arm: extract helper-sve.h from helper.h
-  target/arm: extract helper-sme.h from helper.h
-  tcg: move tcg_use_softmmu to tcg/tcg-internal.h
-  target/arm: move exec/helper-* plumbery to helper.h
-  target/arm/tcg/psci.c: make compilation unit common
-  target/arm/tcg/cpu-v7m.c: make compilation unit common
-  target/arm/tcg/vec_helper.c: make compilation unit common
-  target/arm/tcg/translate.h: replace target_ulong with vaddr
-  target/arm/tcg/translate.h: replace target_long with int64_t
-  include/tcg/tcg-op.h: eradicate TARGET_INSN_START_EXTRA_WORDS
-
- include/tcg/tcg-op-common.h                   |   8 +
- include/tcg/tcg-op.h                          |  29 -
- include/tcg/tcg.h                             |   6 -
- target/alpha/cpu-param.h                      |   2 -
- target/arm/cpu-param.h                        |   7 -
- target/arm/helper-a64.h                       |  14 +
- target/arm/helper-mve.h                       |  14 +
- target/arm/helper-sme.h                       |  14 +
- target/arm/helper-sve.h                       |  14 +
- target/arm/helper.h                           |  17 +-
- .../tcg/{helper-a64.h => helper-a64-defs.h}   |   0
- target/arm/tcg/{helper.h => helper-defs.h}    |   0
- .../tcg/{helper-mve.h => helper-mve-defs.h}   |   0
- .../tcg/{helper-sme.h => helper-sme-defs.h}   |   0
- .../tcg/{helper-sve.h => helper-sve-defs.h}   |   0
- target/arm/tcg/translate-a32.h                |   2 +-
- target/arm/tcg/translate.h                    |  22 +-
- target/arm/tcg/vec_internal.h                 |  49 ++
- target/avr/cpu-param.h                        |   2 -
- target/hexagon/cpu-param.h                    |   2 -
- target/hppa/cpu-param.h                       |   2 -
- target/i386/cpu-param.h                       |   2 -
- target/loongarch/cpu-param.h                  |   2 -
- target/m68k/cpu-param.h                       |   2 -
- target/microblaze/cpu-param.h                 |   2 -
- target/mips/cpu-param.h                       |   2 -
- target/or1k/cpu-param.h                       |   2 -
- target/ppc/cpu-param.h                        |   2 -
- target/riscv/cpu-param.h                      |   7 -
- target/rx/cpu-param.h                         |   2 -
- target/s390x/cpu-param.h                      |   2 -
- target/sh4/cpu-param.h                        |   2 -
- target/sparc/cpu-param.h                      |   2 -
- target/tricore/cpu-param.h                    |   2 -
- target/xtensa/cpu-param.h                     |   2 -
- tcg/tcg-internal.h                            |   6 +
- target/alpha/translate.c                      |   4 +-
- target/arm/debug_helper.c                     | 769 -----------------
- target/arm/helper.c                           |   5 +-
- target/arm/tcg/arith_helper.c                 |   4 +-
- target/arm/tcg/crypto_helper.c                |   4 +-
- target/arm/tcg/debug.c                        | 780 ++++++++++++++++++
- target/arm/tcg/gengvec64.c                    |   3 +-
- target/arm/tcg/helper-a64.c                   |   6 +-
- target/arm/tcg/hflags.c                       |   4 +-
- target/arm/tcg/m_helper.c                     |   2 +-
- target/arm/tcg/mte_helper.c                   |   3 +-
- target/arm/tcg/mve_helper.c                   |   6 +-
- target/arm/tcg/neon_helper.c                  |   4 +-
- target/arm/tcg/op_helper.c                    |   2 +-
- target/arm/tcg/pauth_helper.c                 |   3 +-
- target/arm/tcg/psci.c                         |   4 +-
- target/arm/tcg/sme_helper.c                   |   5 +-
- target/arm/tcg/sve_helper.c                   |   6 +-
- target/arm/tcg/tlb_helper.c                   |   4 +-
- target/arm/tcg/translate-a64.c                |   3 +
- target/arm/tcg/translate-mve.c                |   1 +
- target/arm/tcg/translate-sme.c                |   3 +
- target/arm/tcg/translate-sve.c                |   3 +
- target/arm/tcg/translate.c                    |  28 +-
- target/arm/tcg/vec_helper.c                   | 224 +----
- target/arm/tcg/vec_helper64.c                 | 142 ++++
- target/arm/tcg/vfp_helper.c                   |   4 +-
- target/avr/translate.c                        |   2 +-
- target/hexagon/translate.c                    |   2 +-
- target/i386/tcg/translate.c                   |   2 +-
- target/loongarch/tcg/translate.c              |   2 +-
- target/m68k/translate.c                       |   2 +-
- target/microblaze/translate.c                 |   2 +-
- target/or1k/translate.c                       |   2 +-
- target/ppc/translate.c                        |   2 +-
- target/rx/translate.c                         |   2 +-
- target/sh4/translate.c                        |   4 +-
- target/sparc/translate.c                      |   2 +-
- target/tricore/translate.c                    |   2 +-
- target/xtensa/translate.c                     |   2 +-
- tcg/tcg.c                                     |   4 -
- target/arm/tcg/meson.build                    |  13 +-
- 78 files changed, 1165 insertions(+), 1149 deletions(-)
- create mode 100644 target/arm/helper-a64.h
- create mode 100644 target/arm/helper-mve.h
- create mode 100644 target/arm/helper-sme.h
- create mode 100644 target/arm/helper-sve.h
- rename target/arm/tcg/{helper-a64.h => helper-a64-defs.h} (100%)
- rename target/arm/tcg/{helper.h => helper-defs.h} (100%)
- rename target/arm/tcg/{helper-mve.h => helper-mve-defs.h} (100%)
- rename target/arm/tcg/{helper-sme.h => helper-sme-defs.h} (100%)
- rename target/arm/tcg/{helper-sve.h => helper-sve-defs.h} (100%)
- create mode 100644 target/arm/tcg/debug.c
- create mode 100644 target/arm/tcg/vec_helper64.c
-
+diff --git a/include/tcg/tcg-op-common.h b/include/tcg/tcg-op-common.h
+index f752ef440b2..e02f209c093 100644
+--- a/include/tcg/tcg-op-common.h
++++ b/include/tcg/tcg-op-common.h
+@@ -30,6 +30,14 @@ TCGv_i64 tcg_global_mem_new_i64(TCGv_ptr reg, intptr_t off, const char *name);
+ TCGv_ptr tcg_global_mem_new_ptr(TCGv_ptr reg, intptr_t off, const char *name);
+ 
+ /* Generic ops.  */
++static inline void tcg_gen_insn_start(uint64_t pc, uint64_t a1,
++                                      uint64_t a2)
++{
++    TCGOp *op = tcg_emit_op(INDEX_op_insn_start, INSN_START_WORDS);
++    tcg_set_insn_start_param(op, 0, pc);
++    tcg_set_insn_start_param(op, 1, a1);
++    tcg_set_insn_start_param(op, 2, a2);
++}
+ 
+ void gen_set_label(TCGLabel *l);
+ void tcg_gen_br(TCGLabel *l);
+diff --git a/include/tcg/tcg-op.h b/include/tcg/tcg-op.h
+index ee379994e76..7024be938e6 100644
+--- a/include/tcg/tcg-op.h
++++ b/include/tcg/tcg-op.h
+@@ -28,35 +28,6 @@
+ # error Mismatch with insn-start-words.h
+ #endif
+ 
+-#if TARGET_INSN_START_EXTRA_WORDS == 0
+-static inline void tcg_gen_insn_start(target_ulong pc)
+-{
+-    TCGOp *op = tcg_emit_op(INDEX_op_insn_start, INSN_START_WORDS);
+-    tcg_set_insn_start_param(op, 0, pc);
+-    tcg_set_insn_start_param(op, 1, 0);
+-    tcg_set_insn_start_param(op, 2, 0);
+-}
+-#elif TARGET_INSN_START_EXTRA_WORDS == 1
+-static inline void tcg_gen_insn_start(target_ulong pc, target_ulong a1)
+-{
+-    TCGOp *op = tcg_emit_op(INDEX_op_insn_start, INSN_START_WORDS);
+-    tcg_set_insn_start_param(op, 0, pc);
+-    tcg_set_insn_start_param(op, 1, a1);
+-    tcg_set_insn_start_param(op, 2, 0);
+-}
+-#elif TARGET_INSN_START_EXTRA_WORDS == 2
+-static inline void tcg_gen_insn_start(target_ulong pc, target_ulong a1,
+-                                      target_ulong a2)
+-{
+-    TCGOp *op = tcg_emit_op(INDEX_op_insn_start, INSN_START_WORDS);
+-    tcg_set_insn_start_param(op, 0, pc);
+-    tcg_set_insn_start_param(op, 1, a1);
+-    tcg_set_insn_start_param(op, 2, a2);
+-}
+-#else
+-#error Unhandled TARGET_INSN_START_EXTRA_WORDS value
+-#endif
+-
+ #if TARGET_LONG_BITS == 32
+ typedef TCGv_i32 TCGv;
+ #define tcg_temp_new() tcg_temp_new_i32()
+diff --git a/target/alpha/cpu-param.h b/target/alpha/cpu-param.h
+index a799f42db31..c9da620ab3e 100644
+--- a/target/alpha/cpu-param.h
++++ b/target/alpha/cpu-param.h
+@@ -24,6 +24,4 @@
+ # define TARGET_VIRT_ADDR_SPACE_BITS  (30 + TARGET_PAGE_BITS)
+ #endif
+ 
+-#define TARGET_INSN_START_EXTRA_WORDS 0
+-
+ #endif
+diff --git a/target/arm/cpu-param.h b/target/arm/cpu-param.h
+index 8b46c7c5708..7de0099cbfa 100644
+--- a/target/arm/cpu-param.h
++++ b/target/arm/cpu-param.h
+@@ -32,11 +32,4 @@
+ # define TARGET_PAGE_BITS_LEGACY 10
+ #endif /* !CONFIG_USER_ONLY */
+ 
+-/*
+- * ARM-specific extra insn start words:
+- * 1: Conditional execution bits
+- * 2: Partial exception syndrome for data aborts
+- */
+-#define TARGET_INSN_START_EXTRA_WORDS 2
+-
+ #endif
+diff --git a/target/avr/cpu-param.h b/target/avr/cpu-param.h
+index f74bfc25804..ea7887919a7 100644
+--- a/target/avr/cpu-param.h
++++ b/target/avr/cpu-param.h
+@@ -25,6 +25,4 @@
+ #define TARGET_PHYS_ADDR_SPACE_BITS 24
+ #define TARGET_VIRT_ADDR_SPACE_BITS 24
+ 
+-#define TARGET_INSN_START_EXTRA_WORDS 0
+-
+ #endif
+diff --git a/target/hexagon/cpu-param.h b/target/hexagon/cpu-param.h
+index 635d509e743..45ee7b46409 100644
+--- a/target/hexagon/cpu-param.h
++++ b/target/hexagon/cpu-param.h
+@@ -23,6 +23,4 @@
+ #define TARGET_PHYS_ADDR_SPACE_BITS 36
+ #define TARGET_VIRT_ADDR_SPACE_BITS 32
+ 
+-#define TARGET_INSN_START_EXTRA_WORDS 0
+-
+ #endif
+diff --git a/target/hppa/cpu-param.h b/target/hppa/cpu-param.h
+index 9bf7ac76d0c..e0b2c7c9157 100644
+--- a/target/hppa/cpu-param.h
++++ b/target/hppa/cpu-param.h
+@@ -19,6 +19,4 @@
+ 
+ #define TARGET_PAGE_BITS 12
+ 
+-#define TARGET_INSN_START_EXTRA_WORDS 2
+-
+ #endif
+diff --git a/target/i386/cpu-param.h b/target/i386/cpu-param.h
+index ebb844bcc83..909bc027923 100644
+--- a/target/i386/cpu-param.h
++++ b/target/i386/cpu-param.h
+@@ -22,6 +22,4 @@
+ #endif
+ #define TARGET_PAGE_BITS 12
+ 
+-#define TARGET_INSN_START_EXTRA_WORDS 1
+-
+ #endif
+diff --git a/target/loongarch/cpu-param.h b/target/loongarch/cpu-param.h
+index 58cc45a377e..071567712b3 100644
+--- a/target/loongarch/cpu-param.h
++++ b/target/loongarch/cpu-param.h
+@@ -13,6 +13,4 @@
+ 
+ #define TARGET_PAGE_BITS 12
+ 
+-#define TARGET_INSN_START_EXTRA_WORDS 0
+-
+ #endif
+diff --git a/target/m68k/cpu-param.h b/target/m68k/cpu-param.h
+index 256a2b5f8b2..7afbf6d302d 100644
+--- a/target/m68k/cpu-param.h
++++ b/target/m68k/cpu-param.h
+@@ -17,6 +17,4 @@
+ #define TARGET_PHYS_ADDR_SPACE_BITS 32
+ #define TARGET_VIRT_ADDR_SPACE_BITS 32
+ 
+-#define TARGET_INSN_START_EXTRA_WORDS 1
+-
+ #endif
+diff --git a/target/microblaze/cpu-param.h b/target/microblaze/cpu-param.h
+index e0a37945136..6a0714bb3d7 100644
+--- a/target/microblaze/cpu-param.h
++++ b/target/microblaze/cpu-param.h
+@@ -27,6 +27,4 @@
+ /* FIXME: MB uses variable pages down to 1K but linux only uses 4k.  */
+ #define TARGET_PAGE_BITS 12
+ 
+-#define TARGET_INSN_START_EXTRA_WORDS 1
+-
+ #endif
+diff --git a/target/mips/cpu-param.h b/target/mips/cpu-param.h
+index 58f450827f7..a71e7383d24 100644
+--- a/target/mips/cpu-param.h
++++ b/target/mips/cpu-param.h
+@@ -20,6 +20,4 @@
+ #endif
+ #define TARGET_PAGE_BITS 12
+ 
+-#define TARGET_INSN_START_EXTRA_WORDS 2
+-
+ #endif
+diff --git a/target/or1k/cpu-param.h b/target/or1k/cpu-param.h
+index b4f57bbe692..3011bf5fcca 100644
+--- a/target/or1k/cpu-param.h
++++ b/target/or1k/cpu-param.h
+@@ -12,6 +12,4 @@
+ #define TARGET_PHYS_ADDR_SPACE_BITS 32
+ #define TARGET_VIRT_ADDR_SPACE_BITS 32
+ 
+-#define TARGET_INSN_START_EXTRA_WORDS 1
+-
+ #endif
+diff --git a/target/ppc/cpu-param.h b/target/ppc/cpu-param.h
+index e4ed9080ee9..ca7602d8983 100644
+--- a/target/ppc/cpu-param.h
++++ b/target/ppc/cpu-param.h
+@@ -37,6 +37,4 @@
+ # define TARGET_PAGE_BITS 12
+ #endif
+ 
+-#define TARGET_INSN_START_EXTRA_WORDS 0
+-
+ #endif
+diff --git a/target/riscv/cpu-param.h b/target/riscv/cpu-param.h
+index cfdc67c258c..039e877891a 100644
+--- a/target/riscv/cpu-param.h
++++ b/target/riscv/cpu-param.h
+@@ -17,13 +17,6 @@
+ #endif
+ #define TARGET_PAGE_BITS 12 /* 4 KiB Pages */
+ 
+-/*
+- * RISC-V-specific extra insn start words:
+- * 1: Original instruction opcode
+- * 2: more information about instruction
+- */
+-#define TARGET_INSN_START_EXTRA_WORDS 2
+-
+ /*
+  * The current MMU Modes are:
+  *  - U mode 0b000
+diff --git a/target/rx/cpu-param.h b/target/rx/cpu-param.h
+index 84934f3bcaf..ef1970a09e9 100644
+--- a/target/rx/cpu-param.h
++++ b/target/rx/cpu-param.h
+@@ -24,6 +24,4 @@
+ #define TARGET_PHYS_ADDR_SPACE_BITS 32
+ #define TARGET_VIRT_ADDR_SPACE_BITS 32
+ 
+-#define TARGET_INSN_START_EXTRA_WORDS 0
+-
+ #endif
+diff --git a/target/s390x/cpu-param.h b/target/s390x/cpu-param.h
+index abfae3bedfb..a5f798eeae7 100644
+--- a/target/s390x/cpu-param.h
++++ b/target/s390x/cpu-param.h
+@@ -12,6 +12,4 @@
+ #define TARGET_PHYS_ADDR_SPACE_BITS 64
+ #define TARGET_VIRT_ADDR_SPACE_BITS 64
+ 
+-#define TARGET_INSN_START_EXTRA_WORDS 2
+-
+ #endif
+diff --git a/target/sh4/cpu-param.h b/target/sh4/cpu-param.h
+index f328715ee86..2b6e11dd0ac 100644
+--- a/target/sh4/cpu-param.h
++++ b/target/sh4/cpu-param.h
+@@ -16,6 +16,4 @@
+ # define TARGET_VIRT_ADDR_SPACE_BITS 32
+ #endif
+ 
+-#define TARGET_INSN_START_EXTRA_WORDS 1
+-
+ #endif
+diff --git a/target/sparc/cpu-param.h b/target/sparc/cpu-param.h
+index 45eea9d6bac..6e8e2a51469 100644
+--- a/target/sparc/cpu-param.h
++++ b/target/sparc/cpu-param.h
+@@ -21,6 +21,4 @@
+ # define TARGET_VIRT_ADDR_SPACE_BITS 32
+ #endif
+ 
+-#define TARGET_INSN_START_EXTRA_WORDS 1
+-
+ #endif
+diff --git a/target/tricore/cpu-param.h b/target/tricore/cpu-param.h
+index eb33a67c419..790242ef3d2 100644
+--- a/target/tricore/cpu-param.h
++++ b/target/tricore/cpu-param.h
+@@ -12,6 +12,4 @@
+ #define TARGET_PHYS_ADDR_SPACE_BITS 32
+ #define TARGET_VIRT_ADDR_SPACE_BITS 32
+ 
+-#define TARGET_INSN_START_EXTRA_WORDS 0
+-
+ #endif
+diff --git a/target/xtensa/cpu-param.h b/target/xtensa/cpu-param.h
+index 7a0c22c9005..06d85218b84 100644
+--- a/target/xtensa/cpu-param.h
++++ b/target/xtensa/cpu-param.h
+@@ -16,6 +16,4 @@
+ #define TARGET_VIRT_ADDR_SPACE_BITS 32
+ #endif
+ 
+-#define TARGET_INSN_START_EXTRA_WORDS 0
+-
+ #endif
+diff --git a/target/alpha/translate.c b/target/alpha/translate.c
+index 4442462891e..4d22d7d5a45 100644
+--- a/target/alpha/translate.c
++++ b/target/alpha/translate.c
+@@ -2899,9 +2899,9 @@ static void alpha_tr_insn_start(DisasContextBase *dcbase, CPUState *cpu)
+     DisasContext *ctx = container_of(dcbase, DisasContext, base);
+ 
+     if (ctx->pcrel) {
+-        tcg_gen_insn_start(dcbase->pc_next & ~TARGET_PAGE_MASK);
++        tcg_gen_insn_start(dcbase->pc_next & ~TARGET_PAGE_MASK, 0, 0);
+     } else {
+-        tcg_gen_insn_start(dcbase->pc_next);
++        tcg_gen_insn_start(dcbase->pc_next, 0, 0);
+     }
+ }
+ 
+diff --git a/target/avr/translate.c b/target/avr/translate.c
+index 78ae83df219..649dd4b0112 100644
+--- a/target/avr/translate.c
++++ b/target/avr/translate.c
+@@ -2689,7 +2689,7 @@ static void avr_tr_insn_start(DisasContextBase *dcbase, CPUState *cs)
+ {
+     DisasContext *ctx = container_of(dcbase, DisasContext, base);
+ 
+-    tcg_gen_insn_start(ctx->npc);
++    tcg_gen_insn_start(ctx->npc, 0, 0);
+ }
+ 
+ static void avr_tr_translate_insn(DisasContextBase *dcbase, CPUState *cs)
+diff --git a/target/hexagon/translate.c b/target/hexagon/translate.c
+index 2fdc956bf99..8a223f6e13e 100644
+--- a/target/hexagon/translate.c
++++ b/target/hexagon/translate.c
+@@ -998,7 +998,7 @@ static void hexagon_tr_insn_start(DisasContextBase *dcbase, CPUState *cpu)
+ {
+     DisasContext *ctx = container_of(dcbase, DisasContext, base);
+ 
+-    tcg_gen_insn_start(ctx->base.pc_next);
++    tcg_gen_insn_start(ctx->base.pc_next, 0, 0);
+ }
+ 
+ static bool pkt_crosses_page(CPUHexagonState *env, DisasContext *ctx)
+diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
+index 7186517239c..14210d569f7 100644
+--- a/target/i386/tcg/translate.c
++++ b/target/i386/tcg/translate.c
+@@ -3501,7 +3501,7 @@ static void i386_tr_insn_start(DisasContextBase *dcbase, CPUState *cpu)
+     if (tb_cflags(dcbase->tb) & CF_PCREL) {
+         pc_arg &= ~TARGET_PAGE_MASK;
+     }
+-    tcg_gen_insn_start(pc_arg, dc->cc_op);
++    tcg_gen_insn_start(pc_arg, dc->cc_op, 0);
+ }
+ 
+ static void i386_tr_translate_insn(DisasContextBase *dcbase, CPUState *cpu)
+diff --git a/target/loongarch/tcg/translate.c b/target/loongarch/tcg/translate.c
+index 30f375b33f0..b9ed13d19c6 100644
+--- a/target/loongarch/tcg/translate.c
++++ b/target/loongarch/tcg/translate.c
+@@ -159,7 +159,7 @@ static void loongarch_tr_insn_start(DisasContextBase *dcbase, CPUState *cs)
+ {
+     DisasContext *ctx = container_of(dcbase, DisasContext, base);
+ 
+-    tcg_gen_insn_start(ctx->base.pc_next);
++    tcg_gen_insn_start(ctx->base.pc_next, 0, 0);
+ }
+ 
+ /*
+diff --git a/target/m68k/translate.c b/target/m68k/translate.c
+index a0309939012..abc1c79f3cd 100644
+--- a/target/m68k/translate.c
++++ b/target/m68k/translate.c
+@@ -6041,7 +6041,7 @@ static void m68k_tr_tb_start(DisasContextBase *dcbase, CPUState *cpu)
+ static void m68k_tr_insn_start(DisasContextBase *dcbase, CPUState *cpu)
+ {
+     DisasContext *dc = container_of(dcbase, DisasContext, base);
+-    tcg_gen_insn_start(dc->base.pc_next, dc->cc_op);
++    tcg_gen_insn_start(dc->base.pc_next, dc->cc_op, 0);
+ }
+ 
+ static void m68k_tr_translate_insn(DisasContextBase *dcbase, CPUState *cpu)
+diff --git a/target/microblaze/translate.c b/target/microblaze/translate.c
+index 0be3c98dc17..2af67beecec 100644
+--- a/target/microblaze/translate.c
++++ b/target/microblaze/translate.c
+@@ -1630,7 +1630,7 @@ static void mb_tr_insn_start(DisasContextBase *dcb, CPUState *cs)
+ {
+     DisasContext *dc = container_of(dcb, DisasContext, base);
+ 
+-    tcg_gen_insn_start(dc->base.pc_next, dc->tb_flags & ~MSR_TB_MASK);
++    tcg_gen_insn_start(dc->base.pc_next, dc->tb_flags & ~MSR_TB_MASK, 0);
+ }
+ 
+ static void mb_tr_translate_insn(DisasContextBase *dcb, CPUState *cs)
+diff --git a/target/or1k/translate.c b/target/or1k/translate.c
+index ce2dc466dc7..de81dc6ef8d 100644
+--- a/target/or1k/translate.c
++++ b/target/or1k/translate.c
+@@ -1552,7 +1552,7 @@ static void openrisc_tr_insn_start(DisasContextBase *dcbase, CPUState *cs)
+     DisasContext *dc = container_of(dcbase, DisasContext, base);
+ 
+     tcg_gen_insn_start(dc->base.pc_next, (dc->delayed_branch ? 1 : 0)
+-                       | (dc->base.num_insns > 1 ? 2 : 0));
++                       | (dc->base.num_insns > 1 ? 2 : 0), 0);
+ }
+ 
+ static void openrisc_tr_translate_insn(DisasContextBase *dcbase, CPUState *cs)
+diff --git a/target/ppc/translate.c b/target/ppc/translate.c
+index e9acfa239ec..a09a6df93fd 100644
+--- a/target/ppc/translate.c
++++ b/target/ppc/translate.c
+@@ -6575,7 +6575,7 @@ static void ppc_tr_tb_start(DisasContextBase *db, CPUState *cs)
+ 
+ static void ppc_tr_insn_start(DisasContextBase *dcbase, CPUState *cs)
+ {
+-    tcg_gen_insn_start(dcbase->pc_next);
++    tcg_gen_insn_start(dcbase->pc_next, 0, 0);
+ }
+ 
+ static bool is_prefix_insn(DisasContext *ctx, uint32_t insn)
+diff --git a/target/rx/translate.c b/target/rx/translate.c
+index 26d41548294..a245b9db8fe 100644
+--- a/target/rx/translate.c
++++ b/target/rx/translate.c
+@@ -2217,7 +2217,7 @@ static void rx_tr_insn_start(DisasContextBase *dcbase, CPUState *cs)
+ {
+     DisasContext *ctx = container_of(dcbase, DisasContext, base);
+ 
+-    tcg_gen_insn_start(ctx->base.pc_next);
++    tcg_gen_insn_start(ctx->base.pc_next, 0, 0);
+ }
+ 
+ static void rx_tr_translate_insn(DisasContextBase *dcbase, CPUState *cs)
+diff --git a/target/sh4/translate.c b/target/sh4/translate.c
+index b3ae0a3814c..b1057727c55 100644
+--- a/target/sh4/translate.c
++++ b/target/sh4/translate.c
+@@ -2181,7 +2181,7 @@ static void decode_gusa(DisasContext *ctx, CPUSH4State *env)
+      * tb->icount * insn_start.
+      */
+     for (i = 1; i < max_insns; ++i) {
+-        tcg_gen_insn_start(pc + i * 2, ctx->envflags);
++        tcg_gen_insn_start(pc + i * 2, ctx->envflags, 0);
+         ctx->base.insn_start = tcg_last_op();
+     }
+ }
+@@ -2241,7 +2241,7 @@ static void sh4_tr_insn_start(DisasContextBase *dcbase, CPUState *cs)
+ {
+     DisasContext *ctx = container_of(dcbase, DisasContext, base);
+ 
+-    tcg_gen_insn_start(ctx->base.pc_next, ctx->envflags);
++    tcg_gen_insn_start(ctx->base.pc_next, ctx->envflags, 0);
+ }
+ 
+ static void sh4_tr_translate_insn(DisasContextBase *dcbase, CPUState *cs)
+diff --git a/target/sparc/translate.c b/target/sparc/translate.c
+index 57b50ff8b9a..7e8558dbbd8 100644
+--- a/target/sparc/translate.c
++++ b/target/sparc/translate.c
+@@ -5735,7 +5735,7 @@ static void sparc_tr_insn_start(DisasContextBase *dcbase, CPUState *cs)
+             g_assert_not_reached();
+         }
+     }
+-    tcg_gen_insn_start(dc->pc, npc);
++    tcg_gen_insn_start(dc->pc, npc, 0);
+ }
+ 
+ static void sparc_tr_translate_insn(DisasContextBase *dcbase, CPUState *cs)
+diff --git a/target/tricore/translate.c b/target/tricore/translate.c
+index 18d8726af6d..0eaf7a82f87 100644
+--- a/target/tricore/translate.c
++++ b/target/tricore/translate.c
+@@ -8410,7 +8410,7 @@ static void tricore_tr_insn_start(DisasContextBase *dcbase, CPUState *cpu)
+ {
+     DisasContext *ctx = container_of(dcbase, DisasContext, base);
+ 
+-    tcg_gen_insn_start(ctx->base.pc_next);
++    tcg_gen_insn_start(ctx->base.pc_next, 0, 0);
+ }
+ 
+ static bool insn_crosses_page(DisasContext *ctx, CPUTriCoreState *env)
+diff --git a/target/xtensa/translate.c b/target/xtensa/translate.c
+index bb8d2ed86cf..5e3707d3fdf 100644
+--- a/target/xtensa/translate.c
++++ b/target/xtensa/translate.c
+@@ -1159,7 +1159,7 @@ static void xtensa_tr_tb_start(DisasContextBase *dcbase, CPUState *cpu)
+ 
+ static void xtensa_tr_insn_start(DisasContextBase *dcbase, CPUState *cpu)
+ {
+-    tcg_gen_insn_start(dcbase->pc_next);
++    tcg_gen_insn_start(dcbase->pc_next, 0, 0);
+ }
+ 
+ static void xtensa_tr_translate_insn(DisasContextBase *dcbase, CPUState *cpu)
 -- 
 2.47.3
 
