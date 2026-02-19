@@ -4,200 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D0BDE9A04C
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 07:26:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55BEEE9A04C
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 07:30:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vsyQa-0007jr-6Y; Thu, 19 Feb 2026 02:26:24 -0500
+	id 1vsyU3-00008c-3f; Thu, 19 Feb 2026 02:29:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
- id 1vsyQY-0007jY-2X
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 02:26:22 -0500
-Received: from mgamail.intel.com ([192.198.163.14])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vsyU1-00008K-0E
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 02:29:57 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
- id 1vsyQV-0004l8-Or
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 02:26:21 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1771485980; x=1803021980;
- h=from:to:cc:subject:date:message-id:references:
- in-reply-to:content-transfer-encoding:mime-version;
- bh=QxxYD3/WiWQMK5aiYE20kVO9h+8LE+rA3YeBqbWIx+U=;
- b=ag+gLYGEFx6VelqoXrWD7DiwObYgNxjolqp4DH5/yK9U6unu9aYWPPs0
- XvKoBR2ZY1t/9S3kQGp+sVRxWdliuQxl3GVqSMcTLvFbNE27ksC/ITSw5
- fgfXlVLaf/KBsEibBGDve/0T3tGQZLRH5u/FLcBM0L0qvd1Y4bFzB6pTO
- 51hxMWqFK8WnvI6aPZzKafha33STqNXhBfJ1WVeXCi1zNZ1Rt5tkzN/CX
- LhzcADuDwHWW4hMxRecMbnCMNrh6D0HTlPZytI+NSHyVk3dviQoo+xgNf
- 0RnTYtIaVWRgwH9AexxaZorxtSmCD8X7B7InC0wy4kwAobIDX86FsFPCp Q==;
-X-CSE-ConnectionGUID: dPUSpPc1QaabOu38q2IptA==
-X-CSE-MsgGUID: VIuazyD7TyOiT7Af4e4ZHA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11705"; a="72631078"
-X-IronPort-AV: E=Sophos;i="6.21,299,1763452800"; d="scan'208";a="72631078"
-Received: from fmviesa010.fm.intel.com ([10.60.135.150])
- by fmvoesa108.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 18 Feb 2026 23:26:17 -0800
-X-CSE-ConnectionGUID: 7d1lEBuwR96186oRdN8jtw==
-X-CSE-MsgGUID: VfcDu8+GSx2fb9MHHT7e5g==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.21,299,1763452800"; d="scan'208";a="213136340"
-Received: from fmsmsx901.amr.corp.intel.com ([10.18.126.90])
- by fmviesa010.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 18 Feb 2026 23:26:17 -0800
-Received: from FMSMSX903.amr.corp.intel.com (10.18.126.92) by
- fmsmsx901.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.35; Wed, 18 Feb 2026 23:26:17 -0800
-Received: from fmsedg903.ED.cps.intel.com (10.1.192.145) by
- FMSMSX903.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.35 via Frontend Transport; Wed, 18 Feb 2026 23:26:17 -0800
-Received: from PH7PR06CU001.outbound.protection.outlook.com (52.101.201.33) by
- edgegateway.intel.com (192.55.55.83) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.35; Wed, 18 Feb 2026 23:26:17 -0800
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=F86XBUzm8cdOv9LV3fZ7xNrJixTVt0SXs+uE2ZcLuFFb5IFVw/L6nIZxdYBDyT6WcZBSRmAmeEFSf++AncjNGE7Dd/dbHdvymSkR94o0Bv0fKfTLgxUWHw0g5TY2gJSg8qKqVQUeHJk7MbLScwDn5HzY6D/9rYv4B3PS6lVtIfXKUwJww9IUBW1TFQkFrwqd7hYKQzVNvxx9NDXjv7Bq57KKWYmgciSXksDNN1nWkf7rWVwgV0zcE4iK8CEjVX0MTXtajcQWM6vZWNgKtA+6XkfkAHMHJRJHP/68i/eNwDmdVHbkk0YiTHH57Erv2TfvaW/cI3ZBYcxjzOlZG+/oZA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=+KIPNhtYbs3w43HBaRjsq+cLBS962VxTp6EZlSAJyyM=;
- b=suN9WTzq4Q5ALiCYL8eMAlzuvqAf5fDMJpR/WCLJLKaPR2lYjmnqSsmJekwNyuRat8a6NvAWZgpT9glUY96n6IfxJSkJWDp7Ai9yJkSCdDHz5bpxIt3gzddPm3SlsXNx+cx1PzoZHoCUExvtpyn6zEKj8/JrxtqLMUig7aQZvP2mDBskKD78OZzJjNWkKPWt2mBwYCPM233q3IJqeYczgbP6VoMRhIlQf0Qy7KvMbR5l4afr6izqh3kbKPX3VfSaHUY6qqQKvnzPtIxpg2/zSe4nvidGHGcyRSpoEKVThnW7eE+pT+mMfC9lWoU8v3PYzvoZSC2pTVpgqIqpVHf4gw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Received: from IA0PR11MB7185.namprd11.prod.outlook.com (2603:10b6:208:432::20)
- by SN7PR11MB6704.namprd11.prod.outlook.com (2603:10b6:806:267::9)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9632.13; Thu, 19 Feb
- 2026 07:26:15 +0000
-Received: from IA0PR11MB7185.namprd11.prod.outlook.com
- ([fe80::9f37:cb81:5463:300e]) by IA0PR11MB7185.namprd11.prod.outlook.com
- ([fe80::9f37:cb81:5463:300e%5]) with mapi id 15.20.9632.010; Thu, 19 Feb 2026
- 07:26:14 +0000
-From: "Kasireddy, Vivek" <vivek.kasireddy@intel.com>
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>
-CC: =?iso-8859-1?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>,
- =?iso-8859-1?Q?Alex_Benn=E9e?= <alex.bennee@linaro.org>, Dmitry Osipenko
- <dmitry.osipenko@collabora.com>, Alex Williamson <alex@shazbot.org>,
- =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@redhat.com>
-Subject: RE: [PATCH v6 06/11] virtio-gpu-dmabuf: Improve error handling by
- introducing 'Error **'
-Thread-Topic: [PATCH v6 06/11] virtio-gpu-dmabuf: Improve error handling by
- introducing 'Error **'
-Thread-Index: AQHcmls54ahhVqRkakqKCJgDMCalvLV7ikcAgAA+8QCAAJeAAIALpbhggAATe4CAASXyEA==
-Date: Thu, 19 Feb 2026 07:26:14 +0000
-Message-ID: <IA0PR11MB71853E15B09619C37085EA9FF86BA@IA0PR11MB7185.namprd11.prod.outlook.com>
-References: <20260210070155.1176081-1-vivek.kasireddy@intel.com>
- <20260210070155.1176081-7-vivek.kasireddy@intel.com>
- <15ad210e-1464-461e-b113-7fa01f4ece3e@rsg.ci.i.u-tokyo.ac.jp>
- <854a98ca-6282-4c51-ac8e-e89487412f6c@rsg.ci.i.u-tokyo.ac.jp>
- <IA0PR11MB7185118B6112220F36B0E44DF863A@IA0PR11MB7185.namprd11.prod.outlook.com>
- <IA0PR11MB71859E76A326DD910FE50D81F86AA@IA0PR11MB7185.namprd11.prod.outlook.com>
- <ea14b035-c98c-4cc6-855f-52ea9d679a69@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <ea14b035-c98c-4cc6-855f-52ea9d679a69@rsg.ci.i.u-tokyo.ac.jp>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: IA0PR11MB7185:EE_|SN7PR11MB6704:EE_
-x-ms-office365-filtering-correlation-id: 7a7abc85-5e75-476b-49cf-08de6f882a3e
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0; ARA:13230040|366016|376014|1800799024|38070700021;
-x-microsoft-antispam-message-info: =?iso-8859-1?Q?8fn3wE/VON6IqOw7cPWi9xJi/HdPaS++PVEmE8zh3NlSklu7R7vXt9BEEJ?=
- =?iso-8859-1?Q?mJWKHT/UTfDFWgDrS/XS3jUZdFyyxvi4rGevjqb+0bGwGjIZX14+PdL9c5?=
- =?iso-8859-1?Q?yh9g9FaOiZAqIqn8Qzci8ddOBbkUeZ2efMXifIDS6VBR3zmw+O7rJMUEyk?=
- =?iso-8859-1?Q?pqhYNOnWjhMXPtE1HXdzP4P2g1KN89dvbv2We1BSHpRV5Xzwxpy1M3DxTo?=
- =?iso-8859-1?Q?5WCZKvX1NC3WM3J/YjbGWLmY22jPXdu6UZaKff+9VTG/eFB08JuHOh4RFQ?=
- =?iso-8859-1?Q?1iGCmrzXWivuI+53H4ZInwjIm30co919UxsxznCB4EY9U+tpEctL8YzAuW?=
- =?iso-8859-1?Q?Y6ZfgHz7ziq0uVB7g4P8L2uUfUSN+N/Zuj9Hifd0bHOp3oS/zWEBtn/paQ?=
- =?iso-8859-1?Q?DMmWl8++G1NbTZLJP7XDOrXbEKtNmllJObk+4TFP1ViF96kUgBHFvxhSxi?=
- =?iso-8859-1?Q?alTwwZ6gNdC0P1LgYWHCQonWi/Z15yhgn6Sjn7DxiOzdb5zR1BBUXGvHRv?=
- =?iso-8859-1?Q?6gBhR89govSUeW60ho97vLzpuztocYcm7HAJ6/EK/G4RkbVsBDfSdQdttM?=
- =?iso-8859-1?Q?+5ii/8e/9MvzovQqyFYtXPptIPZ4iEBU7yb9xaR06ZmPppUkoP6Szi4+/G?=
- =?iso-8859-1?Q?rJt8ip8mO/CKufNobO5w54ZrhHtobzxpTo9dGQmpHvIqeMz7Pqo95ptpJT?=
- =?iso-8859-1?Q?di3ET5uwEt4GxbGnDxWW9+zFgwEHuasJ9HEXU+bywcPwM0/iEoorhJD6tm?=
- =?iso-8859-1?Q?z4J4+Ecm7tx9vvmHg6SXrNQuRWzfnELco5WipswVk6YQToVLJKHcUlzOXH?=
- =?iso-8859-1?Q?y/WmlaZo5InUdP4XzNuDn02P9T4tTGzOkvKCCGilaus7Dun7drUkG4IyRm?=
- =?iso-8859-1?Q?unQ7KeqHzXk0j43QGpBPpvk9TSG7HrWLYxA+I6Vue8TIwZ9IZBPnr10Nip?=
- =?iso-8859-1?Q?YGhSUfWffxES8bwBpnpKmqugAM8BztkhzeAGSaxgreSQcTEWFRHk5RZYdJ?=
- =?iso-8859-1?Q?WevItZt7bgF+Qe5g8a4llkwhe0cIYhbG/ufGyA5kj5Qxrf09forCKDS/gx?=
- =?iso-8859-1?Q?sFG/53JH6ci5XqReqO7b3XUx4SqG1mMF3Ntpp4C4bQGymTRJ5gr9UjrTHQ?=
- =?iso-8859-1?Q?TUYIUOOdppP7Zl272I0XRetqEj7xFl+lSfjm3mBGBmrORRLd4O3FpBREQo?=
- =?iso-8859-1?Q?C6ythNn/iolkDhhgoxU89b53Hm3wohu5XfgmthAmSZSFtEfh7moC/RQXUe?=
- =?iso-8859-1?Q?BETCKuo8PEbkqL7UdVhU7QtNs1PO70y4zUHlPgOV0kAqmVfyPBapprd9dO?=
- =?iso-8859-1?Q?85AhB817rU0NgNMlt89dSelgl6MpsSKLvKjBMnSBRVJ7XmiFVJBpBxQJEO?=
- =?iso-8859-1?Q?3gRH5KaNQd1BlUqhYgE4jnBk+s4YbTBJk6A48Tbj4mrn+1kH6P3X+vP8mP?=
- =?iso-8859-1?Q?hulWjadnd4fzi242qt9+nJwv95UjKxEOUETBME4UPlcA+ia8Qdxr5rrsgc?=
- =?iso-8859-1?Q?Fp6+rkd0Zn5LtmWexcz9iB2xLcka9QiltUNaZyI+2ikFs7t8Sx0VaaGpoq?=
- =?iso-8859-1?Q?otOb4JF7wNymWzSUJaZQItKwUmbMwnvsYsIQ6/rh9L8BiVWUbIQQdeQW/E?=
- =?iso-8859-1?Q?vPVGjTCt7/tK96w0tm+zENJkbjH29HozOxAV0apIaGtUpcTMj+u81KfbqL?=
- =?iso-8859-1?Q?OgW9m+99ePLg+3VVyLc=3D?=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:IA0PR11MB7185.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(376014)(1800799024)(38070700021); DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?m1mILO4g6uj3+VKszokaQqBgEdKhqk+TuE6+ud0NodozzVcjzLvs8hq0Bi?=
- =?iso-8859-1?Q?wNUqrTCHQ5pEZDEXvrr234kqJc1kFwfYYWhICqV6Z0b+0JMCRNQWcdrvax?=
- =?iso-8859-1?Q?eOtFmMx8G/ZEGOhiiLMirtnq/LjmgWaaDSWFrUphftApc0GPpyYOQCrIlh?=
- =?iso-8859-1?Q?fOg2GF5SwDNdSs0dEwyRDvClpEo09OTk9Qes5VeVL/YvEeTuzUwxbrY6Z2?=
- =?iso-8859-1?Q?mvy8ZdeJGjt3a5nbEvhBMPmiIjxOqwSh1GH+VXtVIIgWsUdi1U6hgjDL8s?=
- =?iso-8859-1?Q?4mo/G2a1sQc42wcJCGhWsvc4yMKgTFNX1VuViavJmCdpkVXKUfK4ptqQFC?=
- =?iso-8859-1?Q?SAq7yCDY0mW+/gU/Ih/jeekhCAsNv6DF6WidsKrC7orPDX+IZwiDBdZWQC?=
- =?iso-8859-1?Q?xw91x08ZEJ6OtjHjskNTIOVdQbcPRzsqzAGUHMF7GBGmG9ucaRScqk5gCr?=
- =?iso-8859-1?Q?RhUmZiOT9/v4/uEqJ75O5Mj6SaImg1eHMRPGxf0/7/fWDjMHpC/aWN8Lmn?=
- =?iso-8859-1?Q?Drl+uRG0VvKMENwR/oF3FR5eP4UOswd0nLgGfLhSKPj36alKDuyfQ4QA9G?=
- =?iso-8859-1?Q?UKm99IvKXT6W7Jpbd+tlC1S6vijUrHBtdaDaj9jfY5g/Sh3nPlB5coZdK3?=
- =?iso-8859-1?Q?HRXV57S0HhDTS4kbUOCGadMi4atH3zcKmOXVKuMKCF23+x+s8md03KOyNj?=
- =?iso-8859-1?Q?0s+xEFHvVZLZmmfNmcUT1CKtushou3MHR+L6eQjclW7wwfuG5Ajnwhtev6?=
- =?iso-8859-1?Q?yL6qBfnQmDmIinGLLZvMOUyrURWExcb4BWND2JUdo3pqJcby8VF07JlLws?=
- =?iso-8859-1?Q?KmdX7x3jQpoAh7emOt/9c60wirHNw69V6m/IH9+haYe8EKJmv4sQsubzjr?=
- =?iso-8859-1?Q?22PAlcLsBZTwNeFCiLrl/7axS9niS/1VfpwEda59ZIs2bayebhnpy25IXS?=
- =?iso-8859-1?Q?xjzhnBHLs0IDw45dX4cgQv40XPaExN10QVADB6jYkVEUgABVWLf5INDbzN?=
- =?iso-8859-1?Q?K5iKbHjF+uG4JY9PCwcR6l2TG83zKKECSHs8KSRlWoLhdAGhvByDOnzw6U?=
- =?iso-8859-1?Q?YbTJTwaoc1okWls0GutL3yh9XkwTG3XU6bsYoZzHyXpRvA4Y1o3z9Q/468?=
- =?iso-8859-1?Q?HKdtlG20TLzyZczkIweCITzc8a/apYbR5fVRi88eQ2WNfw6AfOdITrRFie?=
- =?iso-8859-1?Q?wv5oPYIOHDgpTLCR+1wS1AvObmKeNxS7vIMvm4llWXrwqiUggkMAm/X5KB?=
- =?iso-8859-1?Q?F+OZU1GhTIbC6rqvPgO9g+Nkb5tUl3zxbQNgQWrCjXCsL91IVwQtNDu08+?=
- =?iso-8859-1?Q?B6/k2KU2VFsKwb77xBPFTPjGoWp4/ApKMOI7LyvmM5owP9wvHbuP7dDYka?=
- =?iso-8859-1?Q?E6QEL1JAHOXchxX68Dn5Gx3wJcNoaTR+RA6wwkaLadG+dyzOsgECZAk5WN?=
- =?iso-8859-1?Q?lWWvFvattVK6uSINHm0HvWOqqH9ZWdwD1COSPVXiwpGVKD/s39M8pQVxlJ?=
- =?iso-8859-1?Q?aA5vlpPY4K7KZV/i5iQCB5QPzlECpCGuJJj+S16iM2Hl/s1oAcWMlDDIYZ?=
- =?iso-8859-1?Q?2E2s9FLAyMaCRseVH7qyVjSExeGWzYI4SzUhf1iLe1sUMR+i06ycHShZ9/?=
- =?iso-8859-1?Q?FsWBCyYFeQXHa8kdwVVAcWLipAotxdIJpyhuEdSr+52aD6t4OltzoVfoLF?=
- =?iso-8859-1?Q?k9zhdfGVC2bNW7x/RsClGLCUcSggacljiqVciY1m8Uobx0KoGuIsNe+bpP?=
- =?iso-8859-1?Q?1J3vqQwk+f4Yb+BMqzkuveYlgNLNnb5wvygTvx3PgWZDy/g88Vv94ImF69?=
- =?iso-8859-1?Q?TSGLTlLcmw=3D=3D?=
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vsyTx-0007mU-Cw
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 02:29:56 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1771486191;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=rqM4ppACFIOsS4lWIzT28TJ7L469u29AgRMeZ584hGM=;
+ b=aGpwgFZ9Ss6a1jl7uL6JS5icoSZEv5MQSlKOGjYUS4oJ0Zn9qUs8jkx4GtOW4r9q7xIV1k
+ 1o7YP0hm9YVZYnylH+VDjeXosGSCspMjY/B/QFDQKEHNQsRcpVJOHWPfoRySnC7a7IdKov
+ QkV+US90gleLU/Zu0zwg6RiOBkudLFM=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-495-P4F4nM-QOKG60ueSNkUzEw-1; Thu,
+ 19 Feb 2026 02:29:49 -0500
+X-MC-Unique: P4F4nM-QOKG60ueSNkUzEw-1
+X-Mimecast-MFC-AGG-ID: P4F4nM-QOKG60ueSNkUzEw_1771486189
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 283A7195608F
+ for <qemu-devel@nongnu.org>; Thu, 19 Feb 2026 07:29:49 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.14])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DB293180066B
+ for <qemu-devel@nongnu.org>; Thu, 19 Feb 2026 07:29:48 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 5E79A21E692D; Thu, 19 Feb 2026 08:29:46 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: John Snow <jsnow@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,  qemu-devel
+ <qemu-devel@nongnu.org>,  Daniel =?utf-8?Q?Berrang=C3=A9?=
+ <berrange@redhat.com>
+Subject: Re: CentOS 9, Python, and other Fairytales
+In-Reply-To: <CAFn=p-ZdzRuisd6g65A+VXyDKXnTuBc0gnt0ApbhVBZG5GhJZQ@mail.gmail.com>
+ (John Snow's message of "Wed, 18 Feb 2026 15:41:03 -0500")
+References: <CAFn=p-YGckyEF8GCOviMJ-FfWsM_dDa6nqEBJChPmUxP7Ydi_w@mail.gmail.com>
+ <87wm0afsnh.fsf@pond.sub.org>
+ <56a8affc-e786-4dc8-81bd-c1f78a224afd@redhat.com>
+ <CAFn=p-YqRu3eaR+RvpCi3uaq8Y7s0pGtXwOLztqMDCqYG6McPA@mail.gmail.com>
+ <CABgObfaRzjaGTdXGHG=BeHFgGJaC4tt0eKOJu=L=SYWpQmm+6w@mail.gmail.com>
+ <CAFn=p-ZdzRuisd6g65A+VXyDKXnTuBc0gnt0ApbhVBZG5GhJZQ@mail.gmail.com>
+Date: Thu, 19 Feb 2026 08:29:46 +0100
+Message-ID: <874ind6vit.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: IA0PR11MB7185.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 7a7abc85-5e75-476b-49cf-08de6f882a3e
-X-MS-Exchange-CrossTenant-originalarrivaltime: 19 Feb 2026 07:26:14.7845 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: ncOcVcsirpFOs3wFou2f5Q5Mj+jh8H0kh90ZfgvJiKRcClxihshrP72gRQAgXWAGbROp4iOJPVBw463Nc5Gi4ogTGHy6DFGIemJIClLPM7s=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR11MB6704
-X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=192.198.163.14;
- envelope-from=vivek.kasireddy@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.043,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -13
+X-Spam_score: -1.4
+X-Spam_bar: -
+X-Spam_report: (-1.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.043,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ GB_FAKE_RF=0.754, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -213,263 +96,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Akihiko,
+John Snow <jsnow@redhat.com> writes:
 
-> Subject: Re: [PATCH v6 06/11] virtio-gpu-dmabuf: Improve error
-> handling by introducing 'Error **'
->=20
-> >>>
-> >>>>> Make the error handling more robust in
-> virtio_gpu_init_udmabuf()
-> >>>>> by passing in 'Error **' parameter to capture errors from
-> >>>>> virtio_gpu_create_udmabuf() and virtio_gpu_remap_dmabuf().
-> >>>>> And, since they now take in 'Error **' parameter, have them
-> >>>>> return a bool to adhere to best practices.
-> >>>>>
-> >>>>> Cc: Marc-Andr=E9 Lureau <marcandre.lureau@redhat.com>
-> >>>>> Cc: Alex Benn=E9e <alex.bennee@linaro.org>
-> >>>>> Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-> >>>>> Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-> >>>>> Cc: Alex Williamson <alex@shazbot.org>
-> >>>>> Cc: C=E9dric Le Goater <clg@redhat.com>
-> >>>>> Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
-> >>>>> ---
-> >>>>>  =A0 hw/display/virtio-gpu-dmabuf.c | 45 ++++++++++++++++++++++-
-> -----
-> >> -
-> >>> -----
-> >>>>>  =A0 1 file changed, 30 insertions(+), 15 deletions(-)
-> >>>>>
-> >>>>> diff --git a/hw/display/virtio-gpu-dmabuf.c b/hw/display/virtio-
-> gpu-
-> >>>>> dmabuf.c
-> >>>>> index 8d67ef7c2a..d9b2ecaf31 100644
-> >>>>> --- a/hw/display/virtio-gpu-dmabuf.c
-> >>>>> +++ b/hw/display/virtio-gpu-dmabuf.c
-> >>>>> @@ -27,7 +27,8 @@
-> >>>>>  =A0 #include "standard-headers/linux/udmabuf.h"
-> >>>>>  =A0 #include "standard-headers/drm/drm_fourcc.h"
-> >>>>> -static void virtio_gpu_create_udmabuf(struct
-> >>>>> virtio_gpu_simple_resource *res)
-> >>>>> +static bool virtio_gpu_create_udmabuf(struct
-> >>>>> virtio_gpu_simple_resource *res,
-> >>>>> +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
-=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 Error **errp)
-> >>>>>  =A0 {
-> >>>>>  =A0=A0=A0=A0=A0 g_autofree struct udmabuf_create_list *list =3D NU=
-LL;
-> >>>>>  =A0=A0=A0=A0=A0 RAMBlock *rb;
-> >>>>> @@ -36,7 +37,8 @@ static void
-> virtio_gpu_create_udmabuf(struct
-> >>>>> virtio_gpu_simple_resource *res)
-> >>>>>  =A0=A0=A0=A0=A0 udmabuf =3D udmabuf_fd();
-> >>>>>  =A0=A0=A0=A0=A0 if (udmabuf < 0) {
-> >>>>> -=A0=A0=A0=A0=A0=A0=A0 return;
-> >>>>> +=A0=A0=A0=A0=A0=A0=A0 error_setg(errp, "udmabuf device not availab=
-le");
-> >>>>> +=A0=A0=A0=A0=A0=A0=A0 return false;
-> >>>>>  =A0=A0=A0=A0=A0 }
-> >>>>>  =A0=A0=A0=A0=A0 list =3D g_malloc0(sizeof(struct udmabuf_create_li=
-st) +
-> >>>>> @@ -45,7 +47,10 @@ static void
-> virtio_gpu_create_udmabuf(struct
-> >>>>> virtio_gpu_simple_resource *res)
-> >>>>>  =A0=A0=A0=A0=A0 for (i =3D 0; i < res->iov_cnt; i++) {
-> >>>>>  =A0=A0=A0=A0=A0=A0=A0=A0=A0 rb =3D qemu_ram_block_from_host(res->i=
-ov[i].iov_base,
-> false,
-> >>>>> &offset);
-> >>>>>  =A0=A0=A0=A0=A0=A0=A0=A0=A0 if (!rb || rb->fd < 0) {
-> >>>>> -=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 return;
-> >>>>> +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 qemu_log_mask(LOG_GUEST_ERROR,
-> >>>>> +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
-=A0=A0=A0 "%s: Could not find valid ramblock\n",
-> >>>>> +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
-=A0=A0=A0 __func__);
-> >>>>> +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 return false;
-> >>>
-> >>> include/qapi/error.h suggests the following error handling pattern:
-> >>>   > Call a function, receive an error from it, and pass it to the cal=
-ler
-> >>>   > - when the function returns a value that indicates failure, say
-> >>>   >   false:
-> >>>   >     if (!foo(arg, errp)) {
-> >>>   >         handle the error...
-> >>>   >     }
-> >>>
-> >>> Returning false without passing an error to the caller breaks it so
-> >>> please don't do that.
-> >> That's why I added an additional check in the caller:
-> >>                  if (local_err) {
-> >>                      error_report_err(local_err);
-> >>                  }
-> >> Having said that, I am not sure what is the right thing to do here.
-> >> IMO, the proper way would be to add error_setg() but you
-> mentioned
-> >> doing that would be incorrect given that this is a Guest error.
-> >> So, how should I proceed?
-> > Any further thoughts/comments here and below?
->=20
-> Sorry, I missed them.
->=20
-> Here, this function should not require its caller to have such an
-> additional check. Ideally, the idiom described in include/qapi/error.h
-> should work.
->=20
-> include/qapi/error.h says:
->  > - Whenever practical, also return a value that indicates success /
->  >   failure.  This can make the error checking more concise, and can
->  >   avoid useless error object creation and destruction.  Note that
->  >   we still have many functions returning void.  We recommend
->  >   . bool-valued functions return true on success / false on failure,
->  >   . pointer-valued functions return non-null / null pointer, and
->  >   . integer-valued functions return non-negative / negative.
->=20
-> Since this function is deriving a file descriptor, it should return one.
-> The error condition should be represented by a negative value. It is a
-> common to return -errno and let the caller distinguish error conditions,
-> but the error conditions we care cannot properly represented with
-> -errno, so there should be an enum for the two error conditions: invalid
-> iov or anything else.
-Ok, I'll look into adding an enum but I feel like this is getting unnecessa=
-rily
-complex particularly with the introduction of 'Error *'. I think it might b=
-e
-easier to just not use 'Error *' in virtio_gpu_create_udmabuf() and elsewhe=
-re.
+> On Wed, Feb 18, 2026 at 3:26=E2=80=AFPM Paolo Bonzini <pbonzini@redhat.co=
+m> wrote:
+>> Il mer 18 feb 2026, 18:10 John Snow <jsnow@redhat.com> ha scritto:
+>>> On Wed, Feb 18, 2026, 6:48=E2=80=AFAM Paolo Bonzini <pbonzini@redhat.co=
+m> wrote:
+>>>> Markus Armbruster <armbru@redhat.com> writes:
+>>>>
+>>>> > John Snow <jsnow@redhat.com> writes:
 
-> >>>>>  =A0=A0=A0=A0=A0=A0=A0=A0=A0 list->list[i].memfd=A0 =3D rb->fd;
-> >>>>> @@ -58,20 +63,26 @@ static void
-> virtio_gpu_create_udmabuf(struct
-> >>>>> virtio_gpu_simple_resource *res)
-> >>>>>  =A0=A0=A0=A0=A0 res->dmabuf_fd =3D ioctl(udmabuf, UDMABUF_CREATE_L=
-IST,
-> list);
-> >>>>>  =A0=A0=A0=A0=A0 if (res->dmabuf_fd < 0) {
-> >>>>> -=A0=A0=A0=A0=A0=A0=A0 warn_report("%s: UDMABUF_CREATE_LIST: %s", _=
-_func__,
-> >>>>> -=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 strerror=
-(errno));
-> >>>>> +=A0=A0=A0=A0=A0=A0=A0 error_setg_errno(errp, -res->dmabuf_fd,
-> >>>>> +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
-=A0=A0 "Could not create dmabuf fd via udmabuf
-> >>>>> driver");
-> >>>>
-> >>>> This is a guest error since it indicates that the guest specified
-> wrong
-> >>>> addresses.
-> >> I don't have a strong opinion here but my understanding is that this
-> >> should
-> >> not be considered a Guest error because the rb (which we obtained
-> using
-> >> Guest addresses) is valid at this point, so the
-> UDMABUF_CREATE_LIST
-> >> IOCTL
-> >> failure should be treated as a Host error.
-> >> Regardless, it is not clear how we can precisely determine who
-> (Guest or
-> >> Host)
-> >> is responsible for the failure here and in some other places.
->=20
-> rb->fd may still contain something other than memfd.
->=20
-> Assume anything the guest passes can be invalid. iov the guest passes
-> can be whatever you do not expect.
-Right, but my point is that, for example, if UDMABUF_CREATE_LIST IOCTL
-failure is due to -ENOMEM, then how can we distinguish this case and
-categorize it as Host error?
+[...]
 
-And, similarly, rb->fd being something other than memfd does lead to
-UDMABUF_CREATE_LIST IOCTL failure and this needs to be categorized
-as Guest error. So, can we rely on errno being -EINVAL or -EBADFD to
-identify Guest errors and categorize all other errors as Host errors?
+>>>> >> My plan:
+>>>> >> - Wait and see what happens after the current QEMU release
+>>>> >> - Gleefully drop Ubuntu 22.04 in April (Allows Python 3.11+)
+>>>> >> - Gleefully drop Debian 12 in June
+>>>> >> - Hold my breath and see if FreeBSD happens to modernize by this po=
+int
+>>>> >> (They have until October 2027 to do so, so it's a dice roll if they
+>>>> >> will or not)
+>>>> >> - Do a big round of Python modernization all at once; either to 3.11
+>>>> >> or 3.12 depending, and either to Sphinx 5.x or 7.x depending, pray =
+for
+>>>> >> forgiveness that I am removing CentOS stream 9's ability to build d=
+ocs
+>>>> >> offline so I don't have to wait another six months and then do anot=
+her
+>>>> >> big cleanup round
+>>>>
+>>>> The main nice features of 3.12 are improved f-strings, which are nice
+>>>> but not really a necessity.
+>>>>
+>>>> If I read it correctly, https://www.freshports.org/lang/python says it
+>>>> has 3.9 on PPC and 3.11 elsewhere, but
+>>>> https://www.freshports.org/lang/python311 says 3.11 exists on PPC as w=
+ell.
+>>>>
+>>>> I'd go for 3.11 and Sphinx 7.  For FreeBSD we can require Python from =
+Ports.
+>>>
+>>>
+>>> freebsd ports is currently at 3.11, which is the main reason I am sayin=
+g "see what freebsd does by June"
+>>>
+>>> if they update, we can have Python 3.12 and Sphinx 7.x. If they don't, =
+we get 3.11 and 5.x
+>>
+>>
+>> Why can't we do 3.11 and 7.x, and let freebsd also get sphinx from pypi =
+until they update?
+>
+> Hm, I guess no reason, beyond my recalcitrance on breaking docs on a
+> supported build platform unless absolutely necessary. It'd still be my
+> preference to align with the native distro repo/ports versions if at
+> all possible, but I suppose if FreeBSD doesn't fix itself by June or
+> so that we can consider dropping docs support with ports packages at
+> that time.
+>
+> (I think I just have Stockholm Syndrome from arguing for "unnecessary
+> version bumps to get shiny new toys" and prefer to let those arguments
+> come from my seniors ... so I stick with very safe changes when at all
+> possible.)
 
-Thanks,
-Vivek
+You do.  Please consider going to 7.x really, really seriously.
 
->=20
-> Regards,
-> Akihiko Odaki
->=20
-> >>
-> >> Thanks,
-> >> Vivek
-> >>
-> >>>>
-> >>>> Regards,
-> >>>> Akihiko Odaki
-> >>>>
-> >>>>> +=A0=A0=A0=A0=A0=A0=A0 return false;
-> >>>>>  =A0=A0=A0=A0=A0 }
-> >>>>> +=A0=A0=A0 return true;
-> >>>>>  =A0 }
-> >>>>> -static void virtio_gpu_remap_dmabuf(struct
-> >>> virtio_gpu_simple_resource
-> >>>>> *res)
-> >>>>> +static bool virtio_gpu_remap_dmabuf(struct
-> >>> virtio_gpu_simple_resource
-> >>>>> *res,
-> >>>>> +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
-=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 Error **errp)
-> >>>>>  =A0 {
-> >>>>> -=A0=A0=A0 res->remapped =3D mmap(NULL, res->blob_size, PROT_READ,
-> >>>>> -=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
-=A0=A0 MAP_SHARED, res->dmabuf_fd, 0);
-> >>>>> -=A0=A0=A0 if (res->remapped =3D=3D MAP_FAILED) {
-> >>>>> -=A0=A0=A0=A0=A0=A0=A0 warn_report("%s: dmabuf mmap failed: %s", __=
-func__,
-> >>>>> -=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 strerror=
-(errno));
-> >>>>> +=A0=A0=A0 void *map;
-> >>>>> +
-> >>>>> +=A0=A0=A0 map =3D mmap(NULL, res->blob_size, PROT_READ,
-> MAP_SHARED,
-> >>> res-
-> >>>>>> dmabuf_fd, 0);
-> >>>>> +=A0=A0=A0 if (map =3D=3D MAP_FAILED) {
-> >>>>> +=A0=A0=A0=A0=A0=A0=A0 error_setg_errno(errp, errno, "dmabuf mmap f=
-ailed");
-> >>>>>  =A0=A0=A0=A0=A0=A0=A0=A0=A0 res->remapped =3D NULL;
-> >>>>> +=A0=A0=A0=A0=A0=A0=A0 return false;
-> >>>>>  =A0=A0=A0=A0=A0 }
-> >>>>> +=A0=A0=A0 res->remapped =3D map;
-> >>>>> +=A0=A0=A0 return true;
-> >>>>>  =A0 }
-> >>>>>  =A0 static void virtio_gpu_destroy_dmabuf(struct
-> >>>>> virtio_gpu_simple_resource *res)
-> >>>>> @@ -125,6 +136,7 @@ bool virtio_gpu_have_udmabuf(void)
-> >>>>>  =A0 void virtio_gpu_init_dmabuf(struct virtio_gpu_simple_resource
-> >>> *res)
-> >>>>>  =A0 {
-> >>>>> +=A0=A0=A0 Error *local_err =3D NULL;
-> >>>>>  =A0=A0=A0=A0=A0 void *pdata =3D NULL;
-> >>>>>  =A0=A0=A0=A0=A0 res->dmabuf_fd =3D -1;
-> >>>>> @@ -132,12 +144,15 @@ void virtio_gpu_init_dmabuf(struct
-> >>>>> virtio_gpu_simple_resource *res)
-> >>>>>  =A0=A0=A0=A0=A0=A0=A0=A0=A0 res->iov[0].iov_len < 4096) {
-> >>>>>  =A0=A0=A0=A0=A0=A0=A0=A0=A0 pdata =3D res->iov[0].iov_base;
-> >>>>>  =A0=A0=A0=A0=A0 } else {
-> >>>>> -=A0=A0=A0=A0=A0=A0=A0 virtio_gpu_create_udmabuf(res);
-> >>>>> -=A0=A0=A0=A0=A0=A0=A0 if (res->dmabuf_fd < 0) {
-> >>>>> +=A0=A0=A0=A0=A0=A0=A0 if (!virtio_gpu_create_udmabuf(res, &local_e=
-rr)) {
-> >>>>> +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 if (local_err) {
-> >>>>> +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 error_report_err(loc=
-al_err);
-> >>>>> +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 }
-> >>>>>  =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 return;
-> >>>>>  =A0=A0=A0=A0=A0=A0=A0=A0=A0 }
-> >>>>> -=A0=A0=A0=A0=A0=A0=A0 virtio_gpu_remap_dmabuf(res);
-> >>>>> -=A0=A0=A0=A0=A0=A0=A0 if (!res->remapped) {
-> >>>>> +
-> >>>>> +=A0=A0=A0=A0=A0=A0=A0 if (!virtio_gpu_remap_dmabuf(res, &local_err=
-)) {
-> >>>>> +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 error_report_err(local_err);
-> >>>>>  =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 return;
-> >>>>>  =A0=A0=A0=A0=A0=A0=A0=A0=A0 }
-> >>>>>  =A0=A0=A0=A0=A0=A0=A0=A0=A0 pdata =3D res->remapped;
-> >>>>
-> >>
-> >
+>>
+>> Paolo
+>>
+>>> . Both are good jumps, but on the chance I can make the bigger jump, I'=
+d rather do it in one round instead of two.
+>>>
+>>>>
+>>>> Paolo
+>>>>
 
 
