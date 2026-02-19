@@ -4,105 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91691E9A04A
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 14:06:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28C76E9A048
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 14:15:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vt4fj-0006yN-1b; Thu, 19 Feb 2026 09:06:27 -0500
+	id 1vt4nZ-0000dx-OU; Thu, 19 Feb 2026 09:14:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vt4fR-0006rM-R8
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 09:06:11 -0500
-Received: from mail-yw1-x1135.google.com ([2607:f8b0:4864:20::1135])
+ id 1vt4n0-0000Zc-VS
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 09:14:13 -0500
+Received: from mail-yx1-xb134.google.com ([2607:f8b0:4864:20::b134])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vt4fQ-0000dB-8Y
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 09:06:09 -0500
-Received: by mail-yw1-x1135.google.com with SMTP id
- 00721157ae682-797de0727a4so9723607b3.0
- for <qemu-devel@nongnu.org>; Thu, 19 Feb 2026 06:06:06 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1771509965; cv=none;
+ id 1vt4mx-0002b2-LP
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 09:13:57 -0500
+Received: by mail-yx1-xb134.google.com with SMTP id
+ 956f58d0204a3-64ae5f0777dso721805d50.3
+ for <qemu-devel@nongnu.org>; Thu, 19 Feb 2026 06:13:55 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1771510434; cv=none;
  d=google.com; s=arc-20240605;
- b=Pogbjg3pI78P+lQTYe1t0jvyL6A4II3hy+cB3k8y9BfP5nUkZQtruSHFnquv041r3H
- DVy58VaUl7a5p8YCUK7p4m5Y48SL5EdOeYEqxERQH27Yt2A0f4TVLJKpR1NLSaCg89IH
- 3DnTcieSQvvThmrO14108znDE9Qcq0Y+KTPlWsznozOTEpAP82vtksMl6TijV0cRrCFR
- qUsdRMewpv24PJDzRj0g43Lf7J+Jtn660UXxHngnDhHYt0pykz+b6nYJ+YxdyF9TLqhu
- vFK1vaepdpRKFKKvwKxZhjEwxCYrPSwPPbW4bQ3ryMbmzax26xCg13T0L5j41BuGXH56
- Ly6Q==
+ b=X+HQwz2WXEwYQTbFOkU8juqMkodh/6CB563AwAXFzjmGoBqB/UoxvQShGs/0+h4Dcs
+ CbcLWfU4WWDheqVYVuov0Iy40JKpK3iEV5aw9r4apuuKKJWhhhLP2Ft4iQjHo6NR/Jrf
+ jkK1TK79g8JWfMg4b6Zvm5/Vz/vYhzDemZoijb8mofwddOPDrVZ71AIUMSJWingDFsr/
+ EN0ADJbsdfGBKJ4Fe3Oyc1g0khW8qO9qtqzIn7YrNW35jClQyV1/je5LlUS9WI4cStke
+ c6Lxld8z+M9PIECkuvGma1CkWPySAHRNMdXP/1Ver+qbP7ASGx89Ql7oR0HsETKdifqL
+ QvUA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=1uRVA/ilJQpQo+j1yGErgtYFcmf3MFrVl1a1lOJvd9M=;
- fh=ljsPVrMqM9WEgWa5yaVojVHzX4ehGvtuqRUN4Y5D7gg=;
- b=OXMfeExS6I818z2nPsr5QDfiaH0BsOE9r+syKy63JA9+0GCdDT3VCe8m8TmM3rMVvL
- ljc9ecCxfO7dwSGY6QvUWE7azXxHrz61Bg+iNp06gNECdeYOCPq2r5G4xnt6cz1xyOn7
- /P3Q8oeAGWEVF3gERINh24RSE47GF6I9t23SYhFObzQOPL5RSQkhNGc5LdPSiiBbgm+I
- xx5zrX6b93x3jj0vRsY9HVtPRKx1frGMkTyTMts1LQ4GBOunQiDrJJK25QeuMKb+I2vr
- MubCF1fBjxBRcBZfkCAb4/QD+VbFvnd4tzR9rJrILISPKZQdKUavwdTPsaYWiC2RuZ2q
- u2Zw==; darn=nongnu.org
+ bh=bgZ/TOT60vVArHneLQAX4i6WfPGeu3gy/NUr8DkNhIA=;
+ fh=R1r6CB1EzLFG6qA9Lv/lbb8sJBtnz4v/fkKb0onHZ3o=;
+ b=k7xg/uABcVGHWrQnODaUmuNG3TNkMNB5eZt3dmRby7lp7khVMWHNr7AKwfrwtj12b1
+ RWTYlyitnqn9TPSUnN1ro18BLceLf4zhZsxFm0TKGVQfOrjZSrcEMksVaDVq2DYKPlXQ
+ eWceeL1DVC1P5XypaQupkIv1iEfjUxpvLC8zZy4DFOf26ShZB1cD2gSbapRpV0oxj2ln
+ KvXgG62MbSbBQyXQjlQXpELtIsllG5JFeSeG7Xt/aV9xSj6yttisdF7EZgKtlZ0LSAw2
+ gMBjOx4BBbfGVnMngLgCdq0lV5rheCGFaUolP20UkGXu49WkrTE0CtkJmxJ7tDEPV0ky
+ roqw==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771509965; x=1772114765; darn=nongnu.org;
+ d=linaro.org; s=google; t=1771510434; x=1772115234; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=1uRVA/ilJQpQo+j1yGErgtYFcmf3MFrVl1a1lOJvd9M=;
- b=Q268tm8IFGeWQUmJhu2VBkv9yMRp1Dn1ez6+2IEVKqdAWGs+mgNLepcnO82EpnWsxW
- b3773XkzGABAd0NVV01ioG/kVCso0i0wtqi58QLJXXVLQRY78k+9q1KPFz/J0wFTGsp5
- V2HQDLFvgsdnDMbbioXQFGYLUXxpEo0AczAhTGv40Nm5t2TqcKYITs5vNyKUC71nqh5A
- 6cSCXKBcMDVJKAUHe7HDOEPhwFB2/dRNk2iadlru1HL1dA4HdoAymY8+FZcipwVAZ9ya
- VyLNHaAKGCE4IfsTSeQo2WVdF+vVEKn7iT1FsU1+sucKVG9LAe5BOpVBRAmSOCRYHAAb
- y1tQ==
+ bh=bgZ/TOT60vVArHneLQAX4i6WfPGeu3gy/NUr8DkNhIA=;
+ b=GMaMa5B5AtvAa6k8N1ULwkUnsmpQIlnhcEYuFsqVwAnYwxFd7Z+YOCNvxNkZ4IRGRp
+ ogjiTe3b8W5XbjBZAUgRe6ljSXnHwHQ7rtngpf07Ot+rirBl53smCPj/qw3Xcdv0WWxR
+ vqf96JNvwJfYU06q/NzPVIaqDg+7WArml9ZP8m+c9bIaVPwCRZwt3mHYSi4xwUJ4aq8c
+ 4lTokDfEKgc9RKv6/3nAOJrK1l75SAo3uM3vfRua56wvs6ds1N3iJdG6e3aIYY3lkfpv
+ h+s1PpQEG0n+G+kuBKIvWSo6fPvTvPCUcoIo8QTVs0TGCZ/BvrpQMXkCv8Th29wqQpCZ
+ Lgwg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771509965; x=1772114765;
+ d=1e100.net; s=20230601; t=1771510434; x=1772115234;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=1uRVA/ilJQpQo+j1yGErgtYFcmf3MFrVl1a1lOJvd9M=;
- b=nixKGP27sUiyxrvtFvw9u0ooByaOyskZVBSvrlZYJCi+YuPM/0hqrTBNOxkHGyEZpd
- 1gHWol69MFQtLOD1tqqkX6ExirRe4ntLiybxMETRlQ5NG/sKgP2DgOLQuEVBcmOhq+i8
- GPxH3b3CUqqzLxnx99920E0huuG1Ty16qKpDuULADSjVkt3/WTdEsphJQy4J5kiFoDcM
- lVv+iDOlQ6vLaCd0h6opgmBjm9OTTJnNeb58TofIAasL0RLfWhTWjWbd9eVfOlkSPdqi
- WG1WomsM+bRC5AuhyW9X1PjNA6CfU/dTU7USYX4BVI8JmWeepaSLvcL7fcAOjGtmIoIR
- Rd0Q==
-X-Gm-Message-State: AOJu0Yz/Q3pPJVYbjPQed9TXmAFRI9ZpTzBFm5CdEPsBNIVgt+RKhMD3
- GbkMYbZrUkqRHihTTlRQ0PLyk1/2+imAQJb3hRmauTjWrLOcAVSMQj9zv67FX6CEQmxllqVQxTD
- CU0atLxuFd3/bByells1Wnm71i7TXL6dK6uXuwWFHZQ==
-X-Gm-Gg: AZuq6aK+XrgoAPRVAuMcHs16TckzyqQa/WId9a0zDQ7gHaw0xRKTht3E5FLoY+0qXhj
- 0zkuqgYklTNj17j5IPaCWv9RgEnqsAVUVMoIfQiwbBhKm+5piCT8rn52zPhkfz9bw7k+cURo+tP
- cCG6WhJ0L31lTrMVm21B0nnQvEn/rfz7I7vLJySZDnUyV4ycMy3VcWPTPSW6ZjNUbJzw6jIsHid
- b7GD2y/yIZDspBFoiVNdZjv+5x95JXkRBzdKQHFDUUv8zb/WokklSqsdbjTQlhw4yucfq1YwQ3J
- IPvmtO1UMgJ7QRdMNPI3F+QnodVjuhFMJR5lSmRm6EhEiycAIYvkUub03WorjmjQJmYCeWZPhTt
- hvQ==
-X-Received: by 2002:a53:d016:0:b0:64c:2a4b:72f with SMTP id
- 956f58d0204a3-64c556b2d6emr3818234d50.44.1771509965445; Thu, 19 Feb 2026
- 06:06:05 -0800 (PST)
+ bh=bgZ/TOT60vVArHneLQAX4i6WfPGeu3gy/NUr8DkNhIA=;
+ b=SJBcMnF2BWyRhOi/QIf03ywfRaQ73EvKHtUF1WOViYJi0xEaHxZlYNkDXiHThHeHor
+ Qp25/grmZyn8WCAW0DhSR8Ly+Wy6PNYE5WF8Q3Dzc16izIsnGwvuoBwYi+QVM4+Q6J/7
+ 5tCsUXE9kg3n+SkPLC1uI1E2a9Tl1V9pHDFh2EGk15VZCsFNlYx79U2Xkn0l1UtCv8nG
+ bgUN3dQCxg9IsBxQI6MJNDDvywbV+MJVaE5BPM63JIRDO4732oBCqztgmbX9E5byRKZK
+ MT2rgyFCpyPA9iwjjPNQ52DjGGYOCGJgQ5fJSURsDbd+NgI8zyIXhsS8GgVW8ZEw7AHv
+ WLBw==
+X-Gm-Message-State: AOJu0YyTpS6P1++DrJsCaDjMV+q9T8I+zrz8csxgBQvVFQnT0euNb8aV
+ g3EvrXeRq3G1atNgVDLYKnZl34n1hn1307OzvCRxCSfJZ2VmITQeji8bbxMfPpEcLcaDB0cwqfX
+ S8ia9gMfvHH61I2cg9CtQQVAcqYizYokaLYtl/DlseQ==
+X-Gm-Gg: AZuq6aKnUWBMb2YYwttwGuYXCvCJG79hPZJZnbNZtdLSoE2ber0vjCIpD32YoM7gTtB
+ 5wPgDWsW40e2matnI/qVDOo/Y4KGNctAlmpYMNlRFcTGSJyDvM5BQi6BnnFRDTSE/VhjTNyZgNk
+ D4UBKU9iNFCpgF5VXt174vQem2wzprwK8GizHeyoNST2xQz3BEpOWrHG/SJ6sUHaRLGqLiNGrCL
+ mwH6FrXgV5cxq94N1U+niJkIAF5gmoefjAcRMMupsPs2ZH8gkc2wGjkJNcvRpQOWjj/s2yHzGdU
+ vBKykuUrpj5rLXJYjNg2Amuu3B9StMC6HNvUbK5SrYbHXMsUiloaELtZTitSevl3jge9Tpl67/2
+ XkA==
+X-Received: by 2002:a05:690e:e8a:b0:64a:fea4:fe6 with SMTP id
+ 956f58d0204a3-64c556e39e0mr3483068d50.92.1771510434335; Thu, 19 Feb 2026
+ 06:13:54 -0800 (PST)
 MIME-Version: 1.0
-References: <20260206131438.1857182-1-imammedo@redhat.com>
- <CAFEAcA-jtOBvOs2dJkrd2vwHFj54m2jPKK9fLSBLptAVNorhSA@mail.gmail.com>
- <20260219132729.1eb521cb@imammedo>
-In-Reply-To: <20260219132729.1eb521cb@imammedo>
+References: <20260219140228.407513-1-gustavo.romero@linaro.org>
+In-Reply-To: <20260219140228.407513-1-gustavo.romero@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 19 Feb 2026 14:05:53 +0000
-X-Gm-Features: AZwV_QgOfPuH3afTS6WkOEMc7rUP4YGrDr2OP9GiiuO1N377bQ-Kw8Jgpkqhd0s
-Message-ID: <CAFEAcA-PMj0iVB1r-_fYJZOz5RXtrsYzgMRPJMZOvptH_5TzpA@mail.gmail.com>
-Subject: Re: [PATCH 00/11] Introduce ACPI watchdog for Q35 and arm/virt boards
-To: Igor Mammedov <imammedo@redhat.com>
-Cc: qemu-devel@nongnu.org, mst@redhat.com, anisinha@redhat.com, 
- pbonzini@redhat.com, shannon.zhaosl@gmail.com, philmd@linaro.org, 
- zhao1.liu@intel.com, rad@semihalf.com, leif.lindholm@oss.qualcomm.com
+Date: Thu, 19 Feb 2026 14:13:42 +0000
+X-Gm-Features: AZwV_Qh6--QkokSaxBx2TwmZCgcqeQN3hwhjeC85q4T-C3wRfsZtTbKLFktjGOA
+Message-ID: <CAFEAcA_GdkVJbgGm2j8v15PM2ijKF2hYBAUKZ2_W=g6XasFvCA@mail.gmail.com>
+Subject: Re: [PATCH] target/arm/ptw: Clean up unused ARMMMUIdx
+To: Gustavo Romero <gustavo.romero@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, richard.henderson@linaro.org, 
+ alex.bennee@linaro.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1135;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1135.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b134;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb134.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,32 +115,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 19 Feb 2026 at 12:27, Igor Mammedov <imammedo@redhat.com> wrote:
+On Thu, 19 Feb 2026 at 14:02, Gustavo Romero <gustavo.romero@linaro.org> wrote:
 >
-> On Wed, 18 Feb 2026 19:10:02 +0000
-> Peter Maydell <peter.maydell@linaro.org> wrote:
-> > The sbsa-ref machine already implements an sbsa-gwdt watchdog...
+> get_phys_addr_disabled() is called from only one function,
+> get_phys_addr_nogpc(), and from two locations within it.
 >
-> yep, but not exposed as WDAT one. Hence the question.
-> It also would need clock-frequency tweak if we are expose it via ACPI.
+> The first call to get_phys_addr_disabled() occurs when mmu_idx is one of
+> the following: ARMMMUIdx_Phys_S, ARMMMUIdx_Phys_NS, ARMMMUIdx_Phys_Root,
+> or ARMMMUIdx_Phys_Realm. So, handling ARMMMUIdx_Stage2 or
+> ARMMMUIdx_Stage2_S is not required in get_phys_addr_disabled() for this
+> case.
 >
-> PS:
-> I don't even see DT mapping for it,
-> looks like sbsa-gwdt is just wired for the sake of compliance with the spec.
-> Well sbsa-ref specific firmware could just opencode it's mapping instead
-> of getting it from QEMU.
+> The second call to get_phys_addr_disabled(), with mmu_idx ==
+> ARMMMUIdx_Stage2 (or ARMMMUIdx_Stage2_S), only would occur if
+> regime_translation_disabled() returns
+> true for these mmu indexes. However, mmu_idx == ARMMMUIdx_Stage2 (or
+> ARMMMUIdx_Stage2_S) can only occur if get_phys_addr_twostage() was
+> called, since it's the only place where ptw->in_mmu_idx is set to
+> ARMMMUIdx_Stage2 (or ARMMMUIdx_Stage2_S) and that only happens if
+> regime_translation_disabled() returns false.
 
-The way the sbsa-ref board works is that it's supposed to be a reference
-system and software stack that behaves like a real hardware system would.
-So the "dtb" is not a proper DTB, it's just a way to tell the firmware
-a few key details (that on real hardware it would probably interrogate
-a BMC to find out). The firmware knows the memory map and what devices
-are present, and the ACPI tables to pass to the guest are entirely
-handled by the firmware, in the same way they are on real hardware.
-QEMU's ACPI-fragment handling mechanisms are not used at all.
+This is true, but only because we never call get_phys_addr_for_at()
+with an mmu_idx argument of Stage2, right?
 
-(This is noted in docs/system/arm/sbsa.rst.)
-
-thanks
 -- PMM
 
