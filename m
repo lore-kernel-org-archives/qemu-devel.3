@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DECBAE9A053
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7E8FE9A048
 	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 17:20:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vt7fV-0005QQ-13; Thu, 19 Feb 2026 12:18:25 -0500
+	id 1vt7fW-0005Rq-SN; Thu, 19 Feb 2026 12:18:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vt7fQ-0005NG-Rz
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 12:18:21 -0500
-Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
+ id 1vt7fN-0005L1-H2
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 12:18:17 -0500
+Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vt7fP-0000Rf-9W
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 12:18:20 -0500
-Received: by mail-ed1-x52e.google.com with SMTP id
- 4fb4d7f45d1cf-65c0d2f5fe1so1880986a12.3
- for <qemu-devel@nongnu.org>; Thu, 19 Feb 2026 09:18:18 -0800 (PST)
+ id 1vt7fL-0000QB-BI
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 12:18:17 -0500
+Received: by mail-ej1-x629.google.com with SMTP id
+ a640c23a62f3a-b8f97c626aaso163088066b.2
+ for <qemu-devel@nongnu.org>; Thu, 19 Feb 2026 09:18:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771521498; x=1772126298; darn=nongnu.org;
+ d=linaro.org; s=google; t=1771521494; x=1772126294; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=FPbEe6rl2yKmSfHI3D0ZBNoF06K4sgdbd3ruNGI9+Bw=;
- b=cyTJHChAA9BSydym/HDWkLwchNsFNwf8HrsxDyzqNViix6EQgr4kHtXCVMVMpOJdrU
- C9Du45n9FI3te4pFVuPozB6lnjYYh789yklfa+/2qJW7Y0Xq8Uc6oGK/HTtwQA5rqAc1
- PnPFqTOBMV6MJEZNpTlI8z+OjDEVy6p8bozx93sdPSId5q34TkE5shTMx+ChSG5g6I/4
- leGfF0eXJVBqXQSSUpgt7hPx7riSB/Gq1ga952D+XkiGpsViV8+MTNSxPJ8zAt3kTMM2
- Jspi6fuHCmgBIk3jSR4LZc0olvXFY8Jyj53OthUKifGXW62wceAj9DYRvftNjl8hItSJ
- RxcQ==
+ bh=SoUGojlUBFbeTt19n+1NScOu+57mMHlZ25AsG3U0eCQ=;
+ b=hO80TEESVkCxnoCOw4FWUWV3iI8z4zYFjRbfbQYiIP77CSqkqUavlS5F+emDaDHXsJ
+ tcw1B7VSESyIh0oykHPYlHLPvBRtFQWxHHrat6EG/4/nO6H1BnUimoG1bkl9xfJBsADn
+ M0wKxMiT0Ude8waNIrNIg9z7XMQBtQ4qRkE9BqLSUVOGlRFPnS7GVTLCKUUAU3pOcLxd
+ PMLB/zY5d+VhCeAf/AMbv6GxmqA48n33LkHI5Dtm0uRnfxtj0bTw3UyRT8djDCyyEqXc
+ TW9sSH6Ajv79CXHEQbezmuGoJwiL8BWAzjOs7f6+TaSPfQxoPpxguk72o5WBS0QMIlAC
+ oOFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771521498; x=1772126298;
+ d=1e100.net; s=20230601; t=1771521494; x=1772126294;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=FPbEe6rl2yKmSfHI3D0ZBNoF06K4sgdbd3ruNGI9+Bw=;
- b=OnOOa2rglGyrP5q0K+JuUHcyEcEq5VYHzIpqC9XJazYSHmpBsKb/VTqnQy9s65JpwW
- +wvGk0AIqxNVXRhvnUaPCv2TSGhFZt7e7v13kGFi/57TzlLP/2/S6EvBffY1b+iKsktJ
- 155VgEbPytQJUb6KwXu3DZqiT0RNC8zDtP6sik/u4RlM7UUVVVAFaoKPJcUAPV40YlCi
- zSzaXNsFAcLIuW+3dMhGBw8HdCu79WGtvuoAmKtxs6vSc59QdRR+GG3SINEbAVFam5Ob
- N/7iHepptHRmQ8KgtkZBpshZvQA7N2MePptczr9C3D/osUaM2znYoNLhCAvQFN+D9wy9
- Ba7g==
-X-Gm-Message-State: AOJu0YyHn+houi7dU4yKZwy9Ufs/leSMEokr3LnqcVCmbXOQsnaPzqiA
- 4yGjbrH+lRcqVm7Ec0hj07D2kQgWzzuVfUVOj8daHFmsyw5Fq2yyiT93jSbp5zmGie0=
-X-Gm-Gg: AZuq6aIxzoweGJinI/uU3FHw6+gjeIfbBxpXaTxVIWpW2+igiAsbIy6Svgjr/oJ+ON+
- 53f0MM2/BouDLu3XAP4qrAqgqtWbLGAwQAND6IA0R7RYhT+FSj5sH3k5GwopTZ/b+cp7BNJYBrc
- B2Fliyjg/uJUkq7GC5xlfuWoVbttL6pWrlQXbLcHjXXqNqaTcQjFgZMk+O9/f3byaKZ7OQgvZsw
- j6+DdHXCOatggSAq9YG8rfNxStThuKwKX/yJ+3oxREmdm0106LAqgx3VlUAYblveTey29okOFP2
- aVc12VRyp0o2JemkaMVZR2OvfBb3+ImLQlw7a6WH26yB3EaJv+AkXyWUG+YSDCQBOyOEz3ptn4x
- X34gAgyHy1kEbu3uviXmkod7NjDlr42lflyb3tc0/DvqA62io6h+O4EAqm8h/1LWcXtkqAjHuMg
- 2kWTcNN1JmVsZTza6uCVXm0WKmP75Yd2dfvw==
-X-Received: by 2002:a05:6402:2787:b0:658:11c3:4221 with SMTP id
- 4fb4d7f45d1cf-65c76959b25mr3583625a12.7.1771521497211; 
- Thu, 19 Feb 2026 09:18:17 -0800 (PST)
+ bh=SoUGojlUBFbeTt19n+1NScOu+57mMHlZ25AsG3U0eCQ=;
+ b=IgoaRgAnE3/aaOWT1KnBBuzBT0i/4tU0MO16l5d+AD7fWGEIyFIg4zfAKS54OnPipP
+ ez0pBQ7vILVomCosGy65kIqxMi4jS63n7sVwEdSfikRtakISuJNSw5/u7ZQdmReQEmij
+ G5Lqdw2CmbeMEmrYPxul9IDQCCxfICiBXpu9wDvev86XVAzc/I7H9Czz/12XUM5Q1kRs
+ P8gy93bQeYkVVLsIJNxsOYVnzQPpeuE7h5xLAewtjW+aAxk8kH1xmBNDeT/qxEP1gnei
+ Q4JJN9hULuS3uvdrOhxBBK45v1v4rZLONQD6MWetTfuV/UfNuKmeBUQnbw77Dd0ypIop
+ 6j3w==
+X-Gm-Message-State: AOJu0Ywc1ExqNgRyAPHCn9pyYKioV6F65vvGdJEH90BByM5jSn4KJNne
+ beOEQWAnmRx0pXhRcDO+OSetYzHUt9S1JrMZLfoGzHyjGrLqPwrnrxIe2TBC/D2gmQU=
+X-Gm-Gg: AZuq6aI7Mk2GXcuc9HJ0czwWpmklq8B1tA2jbwOOHWE+VinIxxczSO5yKBy8W5iXy7d
+ vLr3GtBzhPVMMyof7eQlXqpY1CQ2lpYZnrHQ2WRFyj4uLbRUr20f6KNG9b4g2N5zbiJX9kVDhWh
+ 11U0u3N2ofEf07TKKSB/yjPanGGEHBfPfSQy7z5fxc53cg89GTVdWdslA4DRlewm6D0DRgi3iaN
+ o2EIHQchDfEilJyucZq17/zAukSJEg38yMAbpGVvqtVb5XObBtx9Qy+ZoN8T/a17x+9T+o58waD
+ Kc1cfg+ydDSPz/wzI9GQDgTcFbwrNEQMgxoLpwFQQtvTm0dHLLUHDBtQjoUOsouQCQMK4DGGN2o
+ ycM+RbQFHFwH0hixLqiE3Es2Yny6vbO1bBm41RjjI/v8rNCb0bnrCa6k3FWY7cCBBhcVo7S0ykQ
+ 03IHvjJm554Y8OsbHYxJ1QI+k=
+X-Received: by 2002:a17:907:25c1:b0:b87:efa:8786 with SMTP id
+ a640c23a62f3a-b904deacd46mr211257966b.55.1771521493625; 
+ Thu, 19 Feb 2026 09:18:13 -0800 (PST)
 Received: from draig.lan ([185.124.0.126]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-65bad3e39bfsm4190716a12.22.2026.02.19.09.18.14
+ a640c23a62f3a-b8fc735d516sm596445866b.5.2026.02.19.09.18.11
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 19 Feb 2026 09:18:15 -0800 (PST)
+ Thu, 19 Feb 2026 09:18:11 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 534E35F8D3;
- Thu, 19 Feb 2026 17:18:11 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id CA2B35F8A4;
+ Thu, 19 Feb 2026 17:18:10 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Yoshinori Sato <yoshinori.sato@nifty.com>, qemu-arm@nongnu.org,
@@ -83,25 +83,25 @@ Cc: Yoshinori Sato <yoshinori.sato@nifty.com>, qemu-arm@nongnu.org,
  Zhao Liu <zhao1.liu@intel.com>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
  Yanan Wang <wangyanan55@huawei.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [RFC PATCH v2 09/14] target/tricore: move cpu_reset from
- tricore_cpu_realizefn
-Date: Thu, 19 Feb 2026 17:18:05 +0000
-Message-ID: <20260219171810.602667-10-alex.bennee@linaro.org>
+Subject: [RFC PATCH v2 03/14] hw/m68k: transition virt machine to multi-phase
+ reset
+Date: Thu, 19 Feb 2026 17:17:59 +0000
+Message-ID: <20260219171810.602667-4-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260219171810.602667-1-alex.bennee@linaro.org>
 References: <20260219171810.602667-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::629;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,49 +117,136 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Implement a proper cpu reset handler for tricore cpus.
+We don't need to re-create the architectural reset behaviour now it is
+handled in the core m68k CPU reset code. We do however need to add
+support for direct kernel booting so we stash that value in
+env->direct_kernel_boot_pc and enhance m68k_cpu_reset_exit() to use it
+if set.
 
-Message-ID: <20260108143423.1378674-11-alex.bennee@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
----
- target/tricore/cpu.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/target/tricore/cpu.c b/target/tricore/cpu.c
-index 04319e107ba..c3dda9f6a54 100644
---- a/target/tricore/cpu.c
-+++ b/target/tricore/cpu.c
-@@ -24,6 +24,7 @@
- #include "qemu/error-report.h"
- #include "tcg/debug-assert.h"
- #include "accel/tcg/cpu-ops.h"
-+#include "system/reset.h"
+---
+v2
+  - re-write to use proper 3-phase logic, so dropped all tags
+  - favour cpu_reset over resettable_reset(cs)
+---
+ target/m68k/cpu.h |  2 ++
+ hw/m68k/virt.c    | 34 ++++++++++------------------------
+ target/m68k/cpu.c |  5 +++++
+ 3 files changed, 17 insertions(+), 24 deletions(-)
+
+diff --git a/target/m68k/cpu.h b/target/m68k/cpu.h
+index 7911ab9de30..d3b604689ab 100644
+--- a/target/m68k/cpu.h
++++ b/target/m68k/cpu.h
+@@ -155,6 +155,8 @@ typedef struct CPUArchState {
  
- static inline void set_feature(CPUTriCoreState *env, int feature)
+     /* Fields from here on are preserved across CPU reset. */
+     uint64_t features;
++    /* Override the normal reset vector with a direct kernel boot */
++    uint32_t direct_kernel_boot_pc;
+ } CPUM68KState;
+ 
+ /*
+diff --git a/hw/m68k/virt.c b/hw/m68k/virt.c
+index e67900c727d..b2e651ebcfd 100644
+--- a/hw/m68k/virt.c
++++ b/hw/m68k/virt.c
+@@ -87,23 +87,6 @@
+ #define VIRT_VIRTIO_MMIO_BASE 0xff010000     /* MMIO: 0xff010000 - 0xff01ffff */
+ #define VIRT_VIRTIO_IRQ_BASE  PIC_IRQ(2, 1)  /* PIC: 2, 3, 4, 5, IRQ: ALL */
+ 
+-typedef struct {
+-    M68kCPU *cpu;
+-    hwaddr initial_pc;
+-    hwaddr initial_stack;
+-} ResetInfo;
+-
+-static void main_cpu_reset(void *opaque)
+-{
+-    ResetInfo *reset_info = opaque;
+-    M68kCPU *cpu = reset_info->cpu;
+-    CPUState *cs = CPU(cpu);
+-
+-    cpu_reset(cs);
+-    cpu->env.aregs[7] = reset_info->initial_stack;
+-    cpu->env.pc = reset_info->initial_pc;
+-}
+-
+ static void rerandomize_rng_seed(void *opaque)
  {
-@@ -81,6 +82,12 @@ static void tricore_cpu_reset_hold(Object *obj, ResetType type)
-     cpu_state_reset(cpu_env(cs));
+     struct bi_record *rng_seed = opaque;
+@@ -111,6 +94,14 @@ static void rerandomize_rng_seed(void *opaque)
+                                 be16_to_cpu(*(uint16_t *)rng_seed->data));
  }
  
-+static void tricore_cpu_reset(void *opaque)
++static void virt_machine_reset(MachineState *ms, ResetType type)
 +{
-+    CPUState *cs = opaque;
++    CPUState *cs = first_cpu;
++
++    qemu_devices_reset(type);
 +    cpu_reset(cs);
 +}
 +
- static bool tricore_cpu_has_work(CPUState *cs)
+ static void virt_init(MachineState *machine)
  {
-     return true;
-@@ -120,8 +127,8 @@ static void tricore_cpu_realizefn(DeviceState *dev, Error **errp)
-     if (tricore_has_feature(env, TRICORE_FEATURE_131)) {
-         set_feature(env, TRICORE_FEATURE_13);
-     }
--    cpu_reset(cs);
-     qemu_init_vcpu(cs);
-+    qemu_register_reset(tricore_cpu_reset, cs);
+     M68kCPU *cpu = NULL;
+@@ -129,7 +120,6 @@ static void virt_init(MachineState *machine)
+     SysBusDevice *sysbus;
+     hwaddr io_base;
+     int i;
+-    ResetInfo *reset_info;
+     uint8_t rng_seed[32];
  
-     tcc->parent_realize(dev, errp);
+     if (ram_size > 3399672 * KiB) {
+@@ -142,14 +132,9 @@ static void virt_init(MachineState *machine)
+         exit(1);
+     }
+ 
+-    reset_info = g_new0(ResetInfo, 1);
+-
+     /* init CPUs */
+     cpu = M68K_CPU(cpu_create(machine->cpu_type));
+ 
+-    reset_info->cpu = cpu;
+-    qemu_register_reset(main_cpu_reset, reset_info);
+-
+     /* RAM */
+     memory_region_add_subregion(get_system_memory(), 0, machine->ram);
+ 
+@@ -235,7 +220,7 @@ static void virt_init(MachineState *machine)
+             error_report("could not load kernel '%s'", kernel_filename);
+             exit(1);
+         }
+-        reset_info->initial_pc = elf_entry;
++        cpu->env.direct_kernel_boot_pc = elf_entry;
+         parameters_base = (high + 1) & ~1;
+         param_ptr = param_blob;
+ 
+@@ -315,6 +300,7 @@ static void virt_machine_class_init(ObjectClass *oc, const void *data)
+     MachineClass *mc = MACHINE_CLASS(oc);
+     mc->desc = "QEMU M68K Virtual Machine";
+     mc->init = virt_init;
++    mc->reset = virt_machine_reset;
+     mc->default_cpu_type = M68K_CPU_TYPE_NAME("m68040");
+     mc->max_cpus = 1;
+     mc->no_floppy = 1;
+diff --git a/target/m68k/cpu.c b/target/m68k/cpu.c
+index 0dce8ef282e..71393b9fa19 100644
+--- a/target/m68k/cpu.c
++++ b/target/m68k/cpu.c
+@@ -193,6 +193,11 @@ static void m68k_cpu_reset_exit(Object *obj, ResetType type)
+                                          MEMTXATTRS_UNSPECIFIED, NULL);
+     env->pc = address_space_ldl_be(cs->as, 4,
+                                    MEMTXATTRS_UNSPECIFIED, NULL);
++
++    /* some machine models support direct kernel boot */
++    if (env->direct_kernel_boot_pc) {
++        env->pc = env->direct_kernel_boot_pc;
++    }
+ #endif
  }
+ 
 -- 
 2.47.3
 
