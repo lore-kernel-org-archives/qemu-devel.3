@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08375E9A05A
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 19:28:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1989E9A05A
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 19:28:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vt9ed-0003td-GG; Thu, 19 Feb 2026 14:25:39 -0500
+	id 1vt9do-0000qU-Go; Thu, 19 Feb 2026 14:24:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vt9ea-0003kV-7R
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 14:25:36 -0500
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vt9d0-0007WN-N3
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 14:23:58 -0500
 Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vt9eY-0000oF-F4
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 14:25:35 -0500
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vt9cx-00008s-N8
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 14:23:58 -0500
 Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-4806ce0f97bso10381175e9.0
- for <qemu-devel@nongnu.org>; Thu, 19 Feb 2026 11:25:34 -0800 (PST)
+ 5b1f17b1804b1-48379a42f76so10337365e9.0
+ for <qemu-devel@nongnu.org>; Thu, 19 Feb 2026 11:23:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771529132; x=1772133932; darn=nongnu.org;
+ d=linaro.org; s=google; t=1771529034; x=1772133834; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=U5TB7v7tyHLBdJFOB1+obcBAq0Ula1l0DhGWQDiRy/A=;
- b=IJFC4yGDNs38vDmyL8XpWikdQKaWn4APZX1XJv+YW/qp0x4a7wVrIZ7+SOid0olMdz
- DtL4SatAvZvda4VwVSSAafPxb/gaBrm9MhZf/HNNC7Xw8lwyQ6lLpqlL9zYc5UzA30Rt
- M22qarFFTgUjKL040xl1FrhoEWx5TAsZttXEcilWC7E5KpeUkhljBMmXMYW1YJcgJdtb
- LgHppkMo10YMVaJ4zCmidBGguGmwKPMf6cRnDiET11mGRFVmgWAGKOs56YRNVqG2yDYn
- jRYvC++zE2if1ndRnu9i7Gdpf/8wWhHZIlyprGh4BsBd/zC6R7tFha+bFQDYk3Ax8WXB
- +gKQ==
+ bh=35EJSc4MAJTbE4qZx3wrJXdZgZzTvunYbbMbQ354pW4=;
+ b=Izp9H5q+6wqWPk64Jum02XsGBR0lNwQWs+qAPdg6dLXEnW2K6/dposMxNcxNZIsVwg
+ iVE3MMtu5iWqKN2ivsKoGabbKXaATSihlmJ88pdLODR64Xl+wGuXNYIGb/7y0+mqEFFr
+ 4H4LQvOEpSDEuCsueY027Qr/qnkJbcFpJQcVjfxisKAsTgACoSVMP5Hb2KY9KRyTkEq1
+ 0aIVH2nQEPrxSjbY0WNm9rzrpu0Q1u2V/SA1DKRy2GZXo9NT9z7WcRDZQhL+vejmgGph
+ MrMLjnc6CWuLqVrHTRKvv0EjgW1SpxiRaF0gDtFk5iIRKgkGOzTTAQilJvtBGwQf19qQ
+ MDYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771529132; x=1772133932;
+ d=1e100.net; s=20230601; t=1771529034; x=1772133834;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=U5TB7v7tyHLBdJFOB1+obcBAq0Ula1l0DhGWQDiRy/A=;
- b=Rws3NxGioqZm+HYaYLSvPlFPHWOR1M1PnlvkdEeeDZCf3lDaEJH9OkedBuVc070pWW
- 0nqqGIO8ieU9XkTpH5kRN68EgocQA+lLBihs4GoFAg7AWbg+JcKnYpI1AuHq4TZfVjDI
- JCBBkPlylfzDbxyeEboTC/vS+xI3MKjcmui5Ac1pxTGGP370Y5u1KhJ/djATIEuzLD1b
- 3Zpv+FZ5Ibx/uDrSCEj8u0A/MVnB0zurMC7OrT6ewM50IhlTTQQ1+sr0vnK0neJfNmb2
- y+MaA9q4NuIs6BNsDOGP8cCpKmWi+C5g7r6wcHOuHIFQtznSTQ6P2ycDgGSfLwiseniN
- 4y7A==
-X-Gm-Message-State: AOJu0YyvukITskg4SFoaq9ppp29ng989dE3aV/bvRfADAPKZ5NO/0fS6
- DCwcfE4LV/G3eYyW5Wevl9e/VUW0jC4KatyvdXBM4FLlURWIELU5D0nvdJw52162WFm2L12Ldgc
- E3hgX8MCUbA==
-X-Gm-Gg: AZuq6aJCzX57+N6UzrwSW/atrhl+5xIpatrEChMcKkyzjygqEyBPkK2aFuAYLEOMSyk
- 2ma34GeLwIWRBl5naN68AW6M5u0QNR8oaspWykeRAcDBzAv+qSOCSDmYnrX42LgJHekaNCb4aSW
- qSeBWGAVScdHAwl+i4N0U0uJFILqVGJ847PRqlM8cetW2BUzzobKQj+yyY3cQrhdbkCIPRkUVdR
- NRSPT7PjZ9NjR6zhIii9Myge7Qxp0Hrq5hrVoNh2RJIe2PWu9DKjVCU+NqD5Wavw9B4J/6RPLcX
- N90G5bRpqiNqDxvxRAhgYOjmnxpkqCI+TuWyIe3eXbchnzk8y+rzDvaR1v8ugMPou4oQepN2XDw
- uf4XiT+i03Fx7abbu60pMSnzjvXfXrODY51RmBWMz8BE0mOpYgf5TrWzDRiRmYklWkRbeM1Nnwg
- DDHipvRtuq5ZRuA6j6keQClMfeP9T+VavGNJ4Jbboet8PIIe1sBm2LXFcs7cDfmcTpknRPasSR
-X-Received: by 2002:a05:600c:310d:b0:483:2c98:435e with SMTP id
- 5b1f17b1804b1-48398aefddcmr103139015e9.34.1771529132467; 
- Thu, 19 Feb 2026 11:25:32 -0800 (PST)
+ bh=35EJSc4MAJTbE4qZx3wrJXdZgZzTvunYbbMbQ354pW4=;
+ b=A+/Qh4aG0x8a588Df/d2ZDNccXqN2yOI/4GRFWfhKI4s2nirY1ud4l0EU0ioaLs9JB
+ 8PIgpNTsW3lGH//FYNvkkQehibNxUYVATKRq/x0WzNWzXWnZaE5lV4uCHrpS33xfF9om
+ J6g7kBl4rFooadsezCF34V0g6lzDvgAul3Vw0G2EKdedY+FdTf0w42hJ1SqdiYW7AUid
+ +bbncYTPjSRGDF7vjiKpoQFz3C6zy1Ad3dgLVghTPSGb5IvBIJtuf5zLiecNp7NAFiOV
+ QLx6f8pRaiQBgtHg81LZ3kLFSHede2fZEulPH3u2jXoXhEoanQcsSey4eY4OHbFHM/9L
+ aAqw==
+X-Gm-Message-State: AOJu0Yxx3tsO5pZRkhAixL9JMYfiVBE1Ohn8qAV6OZPiw9BwA6ZN7gd1
+ RYYAWfc5Vm8CHVZjuQYcDf3xM+aphqU0N4PB8tUBlqD6Hv8j4hp8DpruyzGZZYrgm/YWHWMyrcY
+ g0PAElKkmhA==
+X-Gm-Gg: AZuq6aLgxITcggV67uW+fupaIbC6js0MDVhzadEt9fF4GmAF6blTa/CGzqOmWknTaDe
+ 8vCRiI5nxf3jpgwYMf9cLixLl6lqU7keTZnHQ5pTAjqcvkfSSXid29BL1mKY0l3q+EUpVqQgtc+
+ uafAUDqOZkybjsW2ooveJiFWixyndzythqfACE5yXy4UXOH1aVcextXkC327/WaXu0yHdSjbJy2
+ Kj/SjHySrEOJW3jmMZ4an9hgsdk96V5GpdAPXn/imOtEnd4xL3uB8m5Y8wOf6sxtELzqVn365Pl
+ RbFvonvZUA0WQqwGRJ/BFkXou5CkBPoORQCqODwQvb5SGUUrGcyoqRFBYMMT45od9V10kvXdkKd
+ xu5eDhSNxCN52XCE0u/Q6Q1gpZYyo+QwGCJPQKeXcrVP46cHEgXvSZ3eDAqG/ut3hqAybydomE1
+ 0pt92+M27u2SX23lAk6kgWfJQC3kyVBk4ITwLKqBDXknKJxL9y9o+nV1JMDtGF/TsPclsFEOIX
+X-Received: by 2002:a05:600c:1f92:b0:47d:25ac:3a94 with SMTP id
+ 5b1f17b1804b1-48379bfd727mr311617775e9.17.1771529033784; 
+ Thu, 19 Feb 2026 11:23:53 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-483a31f0370sm40122825e9.11.2026.02.19.11.25.31
+ 5b1f17b1804b1-483a31bac27sm23915875e9.5.2026.02.19.11.23.52
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 19 Feb 2026 11:25:32 -0800 (PST)
+ Thu, 19 Feb 2026 11:23:53 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
@@ -70,11 +70,11 @@ Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  qemu-riscv@nongnu.org, qemu-ppc@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Yoshinori Sato <yoshinori.sato@nifty.com>
-Subject: [PATCH v2 47/50] target/rx: Build 'gdbstub.c' once for system single
- binary
-Date: Thu, 19 Feb 2026 20:19:49 +0100
-Message-ID: <20260219191955.83815-48-philmd@linaro.org>
+ Brian Cain <brian.cain@oss.qualcomm.com>
+Subject: [PATCH v2 33/50] target/hexagon: Expand gdb_get_regl() ->
+ gdb_get_reg32()
+Date: Thu, 19 Feb 2026 20:19:35 +0100
+Message-ID: <20260219191955.83815-34-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260219191955.83815-1-philmd@linaro.org>
 References: <20260219191955.83815-1-philmd@linaro.org>
@@ -105,33 +105,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-There is a single qemu-system-rx binary, but by moving
-'gdbstub.c' in the target_common_system_arch[] source set
-the resulting object can be linked into a single qemu-sytem
-binary.
+The Hexagon target is only built as 32-bit:
+
+  $ git grep TARGET_LONG_BITS configs/targets/hexagon*
+  configs/targets/hexagon-linux-user.mak:5:TARGET_LONG_BITS=32
+
+Mechanically replace:
+
+  gdb_get_regl() -> gdb_get_reg32()
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/rx/meson.build | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ target/hexagon/gdbstub.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/target/rx/meson.build b/target/rx/meson.build
-index 86dc231eb0a..d80ced11e2f 100644
---- a/target/rx/meson.build
-+++ b/target/rx/meson.build
-@@ -9,8 +9,10 @@ rx_ss.add(files(
-   'op_helper.c',
-   'helper.c',
-   'cpu.c',
--  'gdbstub.c',
-   'disas.c'))
+diff --git a/target/hexagon/gdbstub.c b/target/hexagon/gdbstub.c
+index 12d6b3bbcbb..b9856cfc978 100644
+--- a/target/hexagon/gdbstub.c
++++ b/target/hexagon/gdbstub.c
+@@ -29,11 +29,11 @@ int hexagon_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
+         for (int i = 0; i < NUM_PREGS; i++) {
+             p3_0 = deposit32(p3_0, i * 8, 8, env->pred[i]);
+         }
+-        return gdb_get_regl(mem_buf, p3_0);
++        return gdb_get_reg32(mem_buf, p3_0);
+     }
  
-+rx_common_system_ss = ss.source_set()
-+rx_common_system_ss.add(files('gdbstub.c'))
-+
- target_arch += {'rx': rx_ss}
--target_common_system_arch += {'rx': ss.source_set()}
-+target_common_system_arch += {'rx': rx_common_system_ss}
+     if (n < TOTAL_PER_THREAD_REGS) {
+-        return gdb_get_regl(mem_buf, env->gpr[n]);
++        return gdb_get_reg32(mem_buf, env->gpr[n]);
+     }
+ 
+     n -= TOTAL_PER_THREAD_REGS;
+@@ -56,12 +56,12 @@ int hexagon_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
+         for (int i = 0; i < NUM_PREGS; i++) {
+             env->pred[i] = extract32(p3_0, i * 8, 8);
+         }
+-        return sizeof(target_ulong);
++        return 4;
+     }
+ 
+     if (n < TOTAL_PER_THREAD_REGS) {
+         env->gpr[n] = ldl_le_p(mem_buf);
+-        return sizeof(target_ulong);
++        return 4;
+     }
+ 
+     n -= TOTAL_PER_THREAD_REGS;
+@@ -81,7 +81,7 @@ static int gdb_get_vreg(CPUHexagonState *env, GByteArray *mem_buf, int n)
+     int total = 0;
+     int i;
+     for (i = 0; i < ARRAY_SIZE(env->VRegs[n].uw); i++) {
+-        total += gdb_get_regl(mem_buf, env->VRegs[n].uw[i]);
++        total += gdb_get_reg32(mem_buf, env->VRegs[n].uw[i]);
+     }
+     return total;
+ }
+@@ -91,7 +91,7 @@ static int gdb_get_qreg(CPUHexagonState *env, GByteArray *mem_buf, int n)
+     int total = 0;
+     int i;
+     for (i = 0; i < ARRAY_SIZE(env->QRegs[n].uw); i++) {
+-        total += gdb_get_regl(mem_buf, env->QRegs[n].uw[i]);
++        total += gdb_get_reg32(mem_buf, env->QRegs[n].uw[i]);
+     }
+     return total;
+ }
 -- 
 2.52.0
 
