@@ -4,67 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE139C531CC
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 20:26:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E48B7E9A05F
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 20:36:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vtAb3-0002YW-IO; Thu, 19 Feb 2026 15:26:02 -0500
+	id 1vtAk6-0004Pn-Bo; Thu, 19 Feb 2026 15:35:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vtAak-0002Tn-8e
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 15:25:44 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vtAab-00027x-Pn
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 15:25:40 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771532732;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=58qWb9R8ozlzmlYn0tL0BRCdKM9hBwD/n3rT+b7X6Dc=;
- b=Kv7WZLd0zvr3LusrWPF244xeLVjzt6TIZ7ok3ZRSwKlmahqDoA+8nGc15QfJn+uCWhEvb3
- HsCIlPI1eW8s6iCYtatHv9nd1mRpzOOmDcI9QttvP/4QUAHb2l3/DwaA8qw3u4aBtHuPAo
- EPprsm/3QwYUbYZ2/VRCQT/jSe8wj58=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-342-B1k2YI6lMYGzGOLMwmcfCg-1; Thu,
- 19 Feb 2026 15:25:30 -0500
-X-MC-Unique: B1k2YI6lMYGzGOLMwmcfCg-1
-X-Mimecast-MFC-AGG-ID: B1k2YI6lMYGzGOLMwmcfCg_1771532729
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5FB981955F21; Thu, 19 Feb 2026 20:25:28 +0000 (UTC)
-Received: from merkur.redhat.com (unknown [10.45.224.47])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 26391195410F; Thu, 19 Feb 2026 20:25:21 +0000 (UTC)
-From: Kevin Wolf <kwolf@redhat.com>
-To: qemu-block@nongnu.org
-Cc: kwolf@redhat.com, hreitz@redhat.com, f.ebner@proxmox.com,
- vsementsov@yandex-team.ru, jsnow@redhat.com, jean-louis@dupond.be,
- dionbosschieter@gmail.com, qemu-devel@nongnu.org, qemu-stable@nongnu.org
-Subject: [PATCH] mirror: Fix missed dirty bitmap writes during startup
-Date: Thu, 19 Feb 2026 21:24:46 +0100
-Message-ID: <20260219202446.312493-1-kwolf@redhat.com>
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vtAk2-0004NU-CB
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 15:35:18 -0500
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vtAjz-00058A-7F
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 15:35:17 -0500
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-2a8a7269547so13166225ad.0
+ for <qemu-devel@nongnu.org>; Thu, 19 Feb 2026 12:35:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1771533313; x=1772138113; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=97kyqO3kfQ/imXuTO9S5LMjAQyWRh+VXL02VgY/BK5E=;
+ b=svJBAtkOUKcWye18jaCXyGgMBEXfh3hTnCZBsFvRCmQWMCNBzlqcSWUC7n9VSQ+Tii
+ A37ArQfzTRtJMpXpUmAZlMaPxGPxeXFbANUNyYXjtK/OU3cGcsQgagKdfuMp+BO1sRiM
+ wGNj42Xq4hPBhilqmuKcA1CXS/aNP7zoBrYRlQOWA4rJY624CP8qpV8y7fsjv9l8vcN1
+ 2Z86SNWaUD5b/nse8zFYqhrNqyT4/OLAIcst7tQnkGrWaULNSRd/8Wc/8tS6GYMHVdqX
+ 90PlI9NdQ66gO2ORUa1zxXPf2KhX0tjYCgWe9aSk5IzFsuHqHX8nN4clzgbP1pHbGmBE
+ jU6Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1771533313; x=1772138113;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=97kyqO3kfQ/imXuTO9S5LMjAQyWRh+VXL02VgY/BK5E=;
+ b=ZwsUEGDYUppnXn1TaRPl4RgilymFzb3PALj1KBwx4tRIKgDkVKnNUcGuqP+gar6Dq+
+ O9oF/I82juTVgOx/heXxBSfBxvzxQ4gxTTMNce8ob0N+CjgFHWO9V8zJxOljM9Nn6FVN
+ o3ucWDWN5q4xJlstQpMtpEqs4cZ1w6XVT4Hr5Dp281m8f7Q7Y8k8NnGyWG3JS6h1CIYQ
+ DyCKW23awNXeCIiuOeS5eZpMCQNcdx2xRG6Iqw6FOI1liqbGY/CL3wb5XIQkWj5HfF07
+ cn8ZFV20FJj+vBxky4UX8cKUGx8umQHWtPtULSQB9qr0GA885z445bEmWbjysbjU5Zjd
+ pRRQ==
+X-Gm-Message-State: AOJu0YwIRMJfdT2/4Ypfe16SGNJCrcX4zHCkpLxUek564lk8q4209qI0
+ sTgz8UfQh4CWKfAibEUPXKXZtWm78NroO/Q5KaM2ZffQZxKPy4SZJY7eaVijp8gWbPBTz3UzKnC
+ HkSGz
+X-Gm-Gg: AZuq6aK4JYYU457xiB76Jl5YcsvILvMNUn5rwrGTsHIV/FuTx8PVmHjlnbYvDPb1wAl
+ Mi52mTdw8LupKjaG5/5s611QTPVIc057fsaPLnThAEvGBiE7tmRvD1QXDhLbpIdAS8r3hz9saml
+ ohFMGb8XtojFPeMvp/rBLBHaXVT9fS6V6hY+RB/ZSw3fC+tcifwzbz2uvWGEdKxdaewhdK1g70l
+ Zqy5oc4FvTilQYcgutU9mUDVrKhag6l9TJmMu/qfz8Hwqf3e23Y11KmlDH/2doEngnVwSIFX8xs
+ 1jNEXZW21UqA6o8KLp7XYFGdsUpksrnGQPX0daNrhJctiJ56G1PULrrJCaeszopWvYyNWxm9be/
+ j5CUPCJG6ONyhiPCrlMTK0nbRI4lxe+d421S1xbcvQjtXWTJMWvBWMsS7uwa0+Vwukv94AHaJlm
+ Kdv7gFgvQOUztNjrgD41ctAMkbKS0oFBlks1ukNPoll5I5lZOVJsY365krcRMLyZd5kLlZ9k6eK
+ hG0
+X-Received: by 2002:a17:903:124d:b0:2aa:d0ff:c3a3 with SMTP id
+ d9443c01a7336-2ab4d06d4e7mr223858405ad.47.1771533312993; 
+ Thu, 19 Feb 2026 12:35:12 -0800 (PST)
+Received: from pc.taild8403c.ts.net (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2ad1aadc7f8sm169325795ad.66.2026.02.19.12.35.12
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 19 Feb 2026 12:35:12 -0800 (PST)
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+To: qemu-devel@nongnu.org, peter.maydell@linaro.org,
+ richard.henderson@linaro.org, pbonzini@redhat.com, stefanha@redhat.com
+Cc: pierrick.bouvier@linaro.org
+Subject: [PULL 0/1] Plugins fix compilation for cpp plugin
+Date: Thu, 19 Feb 2026 12:35:06 -0800
+Message-ID: <20260219203507.3502009-1-pierrick.bouvier@linaro.org>
+X-Mailer: git-send-email 2.47.3
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.045,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,147 +100,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently, mirror disables the block layer's dirty bitmap before its own
-replacement is working. This means that during startup, there is a
-window in which the allocation status of blocks in the source has
-already been checked, but new writes coming in aren't tracked yet,
-resulting in a corrupted copy:
+The following changes since commit 07f97d5da04a9f97e273de85c76f5017d8135a6e:
 
-1. Dirty bitmap is disabled in mirror_start_job()
-2. Some request are started in mirror_top_bs while s->job == NULL
-3. mirror_dirty_init() -> bdrv_co_is_allocated_above() runs and because
-   the request hasn't completed yet, the block isn't allocated
-4. The request completes, still sees s->job == NULL and skips the
-   bitmap, and nothing else will mark it dirty either
+  Merge tag 'pull-target-arm-20260219' of https://gitlab.com/pm215/qemu into staging (2026-02-19 10:36:06 +0000)
 
-One ingredient is that mirror_top_opaque->job is only set after the
-job is fully initialized. For the rationale, see commit 32125b1460
-("mirror: Fix access of uninitialised fields during start").
+are available in the Git repository at:
 
-Fix this by giving mirror_top_bs access to dirty_bitmap and enabling it
-to track writes from the beginning. Disabling the block layer's tracking
-and enabling the mirror_top_bs one happens in a drained section, so
-there is no danger of races with in-flight requests any more. All of
-this happens well before the block allocation status is checked, so we
-can be sure that no writes will be missed.
+  https://gitlab.com/pbo-linaro/qemu tags/pr-plugins-20260219
 
-Cc: qemu-stable@nongnu.org
-Closes: https://gitlab.com/qemu-project/qemu/-/issues/3273
-Fixes: 32125b14606a ('mirror: Fix access of uninitialised fields during start')
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
----
-Supersedes: <20260212120411.369498-1-f.ebner@proxmox.com>
----
- block/mirror.c | 48 +++++++++++++++++++++++++++++-------------------
- 1 file changed, 29 insertions(+), 19 deletions(-)
+for you to fetch changes up to 396d005e4b83aa4a65d81778d180d545046ba0a8:
 
-diff --git a/block/mirror.c b/block/mirror.c
-index b344182c747..f38636e7457 100644
---- a/block/mirror.c
-+++ b/block/mirror.c
-@@ -99,6 +99,7 @@ typedef struct MirrorBlockJob {
- 
- typedef struct MirrorBDSOpaque {
-     MirrorBlockJob *job;
-+    BdrvDirtyBitmap *dirty_bitmap;
-     bool stop;
-     bool is_commit;
- } MirrorBDSOpaque;
-@@ -1672,9 +1673,9 @@ bdrv_mirror_top_do_write(BlockDriverState *bs, MirrorMethod method,
-         abort();
-     }
- 
--    if (!copy_to_target && s->job && s->job->dirty_bitmap) {
-+    if (!copy_to_target) {
-         qatomic_set(&s->job->actively_synced, false);
--        bdrv_set_dirty_bitmap(s->job->dirty_bitmap, offset, bytes);
-+        bdrv_set_dirty_bitmap(s->dirty_bitmap, offset, bytes);
-     }
- 
-     if (ret < 0) {
-@@ -1901,13 +1902,35 @@ static BlockJob *mirror_start_job(
- 
-     bdrv_drained_begin(bs);
-     ret = bdrv_append(mirror_top_bs, bs, errp);
--    bdrv_drained_end(bs);
--
-     if (ret < 0) {
-+        bdrv_drained_end(bs);
-+        bdrv_unref(mirror_top_bs);
-+        return NULL;
-+    }
-+
-+    bs_opaque->dirty_bitmap = bdrv_create_dirty_bitmap(mirror_top_bs,
-+                                                       granularity,
-+                                                       NULL, errp);
-+    if (!bs_opaque->dirty_bitmap) {
-+        bdrv_drained_end(bs);
-         bdrv_unref(mirror_top_bs);
-         return NULL;
-     }
- 
-+    /*
-+     * The mirror job doesn't use the block layer's dirty tracking because it
-+     * needs to be able to switch seemlessly between background copy mode (which
-+     * does need dirty tracking) and write blocking mode (which doesn't) and
-+     * doing that would require draining the node. Instead, mirror_top_bs takes
-+     * care of updating the dirty bitmap as appropriate.
-+     *
-+     * Note that write blocking mode only becomes effective after mirror_run()
-+     * sets mirror_top_opaque->job (see should_copy_to_target()). Until then,
-+     * we're still in background copy mode irrespective of @copy_mode.
-+     */
-+    bdrv_disable_dirty_bitmap(bs_opaque->dirty_bitmap);
-+    bdrv_drained_end(bs);
-+
-     /* Make sure that the source is not resized while the job is running */
-     s = block_job_create(job_id, driver, NULL, mirror_top_bs,
-                          BLK_PERM_CONSISTENT_READ,
-@@ -2002,24 +2025,13 @@ static BlockJob *mirror_start_job(
-     s->base_overlay = bdrv_find_overlay(bs, base);
-     s->granularity = granularity;
-     s->buf_size = ROUND_UP(buf_size, granularity);
-+    s->dirty_bitmap = bs_opaque->dirty_bitmap;
-     s->unmap = unmap;
-     if (auto_complete) {
-         s->should_complete = true;
-     }
-     bdrv_graph_rdunlock_main_loop();
- 
--    s->dirty_bitmap = bdrv_create_dirty_bitmap(s->mirror_top_bs, granularity,
--                                               NULL, errp);
--    if (!s->dirty_bitmap) {
--        goto fail;
--    }
--
--    /*
--     * The dirty bitmap is set by bdrv_mirror_top_do_write() when not in active
--     * mode.
--     */
--    bdrv_disable_dirty_bitmap(s->dirty_bitmap);
--
-     bdrv_graph_wrlock_drained();
-     ret = block_job_add_bdrv(&s->common, "source", bs, 0,
-                              BLK_PERM_WRITE_UNCHANGED | BLK_PERM_WRITE |
-@@ -2099,9 +2111,6 @@ fail:
-         g_free(s->replaces);
-         blk_unref(s->target);
-         bs_opaque->job = NULL;
--        if (s->dirty_bitmap) {
--            bdrv_release_dirty_bitmap(s->dirty_bitmap);
--        }
-         job_early_fail(&s->common.job);
-     }
- 
-@@ -2115,6 +2124,7 @@ fail:
-     bdrv_graph_wrunlock();
-     bdrv_drained_end(bs);
- 
-+    bdrv_release_dirty_bitmap(bs_opaque->dirty_bitmap);
-     bdrv_unref(mirror_top_bs);
- 
-     return NULL;
--- 
-2.53.0
+  contrib/plugins/cpp: use __has_include (2026-02-19 12:34:11 -0800)
 
+----------------------------------------------------------------
+Changes:
+- [PATCH] contrib/plugins/cpp: use __has_include (Pierrick Bouvier <pierrick.bouvier@linaro.org>)
+  Link: https://lore.kernel.org/qemu-devel/20260214061025.1239457-1-pierrick.bouvier@linaro.org
+
+----------------------------------------------------------------
+Pierrick Bouvier (1):
+      contrib/plugins/cpp: use __has_include
+
+ contrib/plugins/cpp.cpp | 261 +++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 259 insertions(+), 2 deletions(-)
 
