@@ -4,84 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E015E9A054
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 19:28:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A947E9A05A
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 19:28:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vt9eS-0002zc-Kk; Thu, 19 Feb 2026 14:25:28 -0500
+	id 1vt9fo-0005ga-ES; Thu, 19 Feb 2026 14:26:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vt9e8-0002KV-Gj
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 14:25:08 -0500
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vt9ep-0004Nh-8d
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 14:25:54 -0500
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vt9e5-0000dQ-PK
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 14:25:08 -0500
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-483a233819aso8359575e9.3
- for <qemu-devel@nongnu.org>; Thu, 19 Feb 2026 11:25:05 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vt9em-0000sR-DH
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 14:25:51 -0500
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-48378136adcso8202875e9.1
+ for <qemu-devel@nongnu.org>; Thu, 19 Feb 2026 11:25:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771529104; x=1772133904; darn=nongnu.org;
+ d=linaro.org; s=google; t=1771529146; x=1772133946; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=9OteUgf/09+ko5GX68lXkadYZUyVLKdfi6k6GY2WMzQ=;
- b=su6bWR6uMh7J8qYUmAnw06LkDTj9nCOWnQpE7cbkgPEhlQHHkwZqSTj1DrJqojDId5
- cH9RSNp3cIYQXa5Px52EUDU64rK4J0A0znfRmjCyad9UWMF85NkwOeYtdXcRyfKK40hM
- T7i4oM2j4fdBpkysrgXBHTX26zCghojVmxfidRv+mQXmQv5mSjVirrhtTK/wIJDurcNw
- J8ek+zhXIWBI5sgPhmzVR8vykdvxcPgDv9X/YLx2/oegxQu+EM6a/QeWTToA7E+Tlkiu
- 9Gtg9Ukm/vhqQQAopXR/A7zp0YsRUzQ8wBHzdGBNJumdrpiMASYr7ekGKNhWEJSDRCCS
- +TEQ==
+ bh=TPHwJ14d8QfT4gnGois680xmQQMotLsL72Vb2Wzxqpw=;
+ b=aL7GVTcsUDD6mmkV7Y5TcVNgMtZe5B8KG0RFbAtQ3keOMI/p8/Nhx/xbrRGP80ZxGc
+ v+yjy8tDwoR7cyjUIWeN9ag06JrUAoHD2tZh0WplfOIfqP3KYW/iWg05KNaFWv0pJe5r
+ 5HWMXB/nZCP2arwBgu/MlcoDyY7MX1c/+Xl1MLknckM/usJaseCfJ0oI8OUvKvQc4qPj
+ D9FvvWWt+ln/WYVTD4lvgNqhtLaYSpOzbDnxEV4At1095AWjufc0Rg8bR+3Ho1WdDMYN
+ X6ENE49LZLdQpnjm+/xfyk5DjscUg4jtFk28tgefeEP6aNVYB0y1YslhAOAbegTMJ7zM
+ MtJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771529104; x=1772133904;
+ d=1e100.net; s=20230601; t=1771529146; x=1772133946;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=9OteUgf/09+ko5GX68lXkadYZUyVLKdfi6k6GY2WMzQ=;
- b=hctNWtE42piGT2/0snHctkGFMT6B9rvI3S6kPcOti121I7F+EZ6o8JSma/lOLVLA4q
- o6ODn8SnglwD1xF7t/ATtLAifCK8GKp8aB8JauLU1hLC84YpCW8tiyL+eQfeF97P+cKq
- C0lXd6N1Wo9fd7fGqaGf9iwQGNckWs2Y0ICcs1Lha3zE8wH3XO3C2MhBooc7u7lg0Oge
- XiMQvYvmUFe5SjbYRx4jaf3WeumxlUvNPwur3xcWHGovTiVKuPqExrGQMyaemIwwO04T
- FQd/21lGmfMQLdc+GfZgwUX7j/gfgK2YA5HiScsOVzyOOkJWC5rd4buo0PY0ce3p5SrP
- 8iTg==
-X-Gm-Message-State: AOJu0YzE3cAi8RlqH9c3J0GTARbkSg6QJHNRj60CBrRcZ/ERDkEF+RfS
- 8BxCsf1mr+ZpGRqDffJrlkpdYSNQ8XtWfdDNAC+Bxa9Su6BLHyIjBaq3KV7nZo1ND0/tTl7UPp8
- xq3VjmXvltA==
-X-Gm-Gg: AZuq6aJdRPM/fs+AOuTwbvyWj/aHisq4xeUBMbg6rhj4ymq31J/syADoYJ0dLMXGV19
- CWCky6/och0y5raYYcjfHfCriyR9Fphts4GGE+DUfJev1Vlyt5VmIjIcmXetBbLGzsNq7QsvZYe
- wAoMRl8VIpaouxQYVlyxqAoU6PqoTCt2tzek93Za26j9vGtu/z0hm8fRTxyzHx3vtMIhDJK5fpK
- nru8gmbs9LeaiIA9rgANeIaxk6rKEpH+eiA4CVL7tqFrx1FV1jUrO0xCtUF75P7Pia51Q6Fkea8
- HaqAJkmyBL90M8lvN/ZDBkhC9a8BofoBgb/0HZewhfxKg1YfIQFSfW4JZoaRdzqzzQaWGq/alV8
- T/gBlyVzb6cCsScvMQzw9DU62kpayvznq2JIkZtQeXdcCYQpA5VU39EPrrqGUKLZQ240xgiAt9n
- CXIVJX8/RQDzO+8QOpa3Gd2OJLHPC0q+dFYVoIDG64d2MqbZUN/2ADJkhNQhOVHD7FqcjnA8eZ
-X-Received: by 2002:a05:600c:5289:b0:483:71f7:2782 with SMTP id
- 5b1f17b1804b1-48398b0990dmr98443465e9.12.1771529103948; 
- Thu, 19 Feb 2026 11:25:03 -0800 (PST)
+ bh=TPHwJ14d8QfT4gnGois680xmQQMotLsL72Vb2Wzxqpw=;
+ b=DoZ58OmpjPHf8rV9HfwyfYThV1VsO1BaI/5GelrEONGGyQQ++FYrvN9BubsL22+cUJ
+ JG6TWuQ3F1HFL6AZSuRrN0bhx5C3b50uoZ0z1SqgBHA9jMothc9yqlZsx6En5L83Itoa
+ 8gGkCVJugMVRWfe5+LpQ54k7Mi7i3hXh0+ynjkTibuxxO4euQLrJc1IuBtTnrIRG3emN
+ qM7aXmjmGLAlPi+ofwg/g7viVHxKOvJXTTlSqjRHZDONJzgMfH+Kw4IOxUprG2YMiKRS
+ eRUmzsOttdcQI9U14eiti6KP7a49JnztyyhmhO6sAMOKE11OJm9i8S/5GhMOHbNTtuji
+ CJtQ==
+X-Gm-Message-State: AOJu0Yz3vHMjk1jrIzuvJGzybHpNhgKiO8q1/t3lYLRlTfce5xeVpVxZ
+ km2MRW6rUg0LWyDi69NrpOYuj3ZL+NSJDpw8kAcZ2h0sGue+rafqzv7j9V4sVrceSaPVvLCcpoI
+ 3xAdmKdYoaA==
+X-Gm-Gg: AZuq6aLbyx0e7enC1YWCIAREBdgjCvX0AbtcAAUo7KL/j+U1FBu3iuwjbYgGseKcluR
+ pH6dGxojAydUSFRUywA8IHfHtEvdJDw2779UCXn4kPkiHndYHorTrlajyRtHAhkMLghjrxbjoUT
+ /moXHdun3QNxknoYdYGcuZHGJjAEUkRRYX2P52fFZ7XgvdeU5NzNFLTfQDrQW/FCogwbR6KUHLq
+ XcXCgo+bibe1fTPjMLqYNvgj6VSuTui2gvm0jZmbhSCHBQ81WSsTT4UcZhP9VzixrFr56jNsz/c
+ vpuqf0Rz4SwoYe4/6MYTehdUhPOUb3DHuzKBa/DDf2BjiuEFxjvxc1tOCvWtSOIogNa03+wx2EY
+ n0huj/0JUfnGF6+HvIMbHA5UCVhkawfGm26zkvwZNmhQZQVM8kgFSsuZdvaNgAGrRxE3Hn3dGHA
+ Y+OuqwnKT9djJ4+iE27IUKbozeL27mn7ufw7iotIv0e1bVLD5WiVVg6xYqp4GvSFXd9VWsfAjS
+X-Received: by 2002:a05:600c:8189:b0:483:6f37:1b61 with SMTP id
+ 5b1f17b1804b1-48379bac876mr298929425e9.4.1771529146609; 
+ Thu, 19 Feb 2026 11:25:46 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-483a31f9af5sm20031175e9.12.2026.02.19.11.25.02
+ ffacd0b85a97d-43796abc21dsm53588324f8f.20.2026.02.19.11.25.45
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 19 Feb 2026 11:25:03 -0800 (PST)
+ Thu, 19 Feb 2026 11:25:46 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>, qemu-s390x@nongnu.org,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  qemu-riscv@nongnu.org, qemu-ppc@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 43/50] target/alpha: Build 'gdbstub.c' once for system
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Bastian Koppelmann <kbastian@rumtueddeln.de>
+Subject: [PATCH v2 49/50] target/tricore: Build 'gdbstub.c' once for system
  single binary
-Date: Thu, 19 Feb 2026 20:19:45 +0100
-Message-ID: <20260219191955.83815-44-philmd@linaro.org>
+Date: Thu, 19 Feb 2026 20:19:51 +0100
+Message-ID: <20260219191955.83815-50-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260219191955.83815-1-philmd@linaro.org>
 References: <20260219191955.83815-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,50 +105,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-There is a single qemu-system-alpha binary, but by moving
+There is a single qemu-system-tricore binary, but by moving
 'gdbstub.c' in the target_common_system_arch[] source set
 the resulting object can be linked into a single qemu-sytem
 binary.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/alpha/meson.build | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ target/tricore/meson.build | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/target/alpha/meson.build b/target/alpha/meson.build
-index 9447f8020be..818256a1c31 100644
---- a/target/alpha/meson.build
-+++ b/target/alpha/meson.build
-@@ -2,7 +2,6 @@ alpha_ss = ss.source_set()
- alpha_ss.add(files(
-   'cpu.c',
-   'fpu_helper.c',
--  'gdbstub.c',
+diff --git a/target/tricore/meson.build b/target/tricore/meson.build
+index f40daee61ed..76cd78e990e 100644
+--- a/target/tricore/meson.build
++++ b/target/tricore/meson.build
+@@ -5,11 +5,15 @@ tricore_ss.add(files(
    'helper.c',
-   'clk_helper.c',
-   'int_helper.c',
-@@ -11,11 +10,18 @@ alpha_ss.add(files(
-   'vax_helper.c',
+   'op_helper.c',
+   'translate.c',
+-  'gdbstub.c',
  ))
+ tricore_ss.add(zlib)
  
--alpha_system_ss = ss.source_set()
--alpha_system_ss.add(files(
-+alpha_user_ss = ss.source_set()
-+alpha_user_ss.add(files(
-+  'gdbstub.c',
-+))
+-tricore_system_ss = ss.source_set()
++tricore_user_ss = ss.source_set()
++tricore_user_ss.add(files('gdbstub.c'))
 +
-+alpha_common_system_ss = ss.source_set()
-+alpha_common_system_ss.add(files(
-+  'gdbstub.c',
-   'machine.c',
-   'sys_helper.c',
- ))
++tricore_common_system_ss = ss.source_set()
++tricore_common_system_ss.add(files('gdbstub.c'))
  
- target_arch += {'alpha': alpha_ss}
--target_common_system_arch += {'alpha': alpha_system_ss}
-+target_user_arch += {'alpha': alpha_user_ss}
-+target_common_system_arch += {'alpha': alpha_common_system_ss}
+ target_arch += {'tricore': tricore_ss}
+-target_common_system_arch += {'tricore': tricore_system_ss}
++target_user_arch += {'tricore': tricore_user_ss}
++target_common_system_arch += {'tricore': tricore_common_system_ss}
 -- 
 2.52.0
 
