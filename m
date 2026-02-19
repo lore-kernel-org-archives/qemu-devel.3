@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C635E9A054
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 19:28:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4093AE9A05A
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 19:28:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vt9cv-0006m3-D1; Thu, 19 Feb 2026 14:23:53 -0500
+	id 1vt9dr-000169-PU; Thu, 19 Feb 2026 14:24:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vt9bh-0003BP-4H
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 14:22:39 -0500
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vt9cL-0004GR-Qp
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 14:23:21 -0500
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vt9bc-0008EF-Im
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 14:22:35 -0500
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-4837907f535so12131935e9.3
- for <qemu-devel@nongnu.org>; Thu, 19 Feb 2026 11:22:29 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vt9cH-0008QE-Jx
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 14:23:16 -0500
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-436317c80f7so1645968f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 19 Feb 2026 11:23:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771528948; x=1772133748; darn=nongnu.org;
+ d=linaro.org; s=google; t=1771528991; x=1772133791; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=H6kLOb5sf0oiOLXCKzf8ybfs57Z7nX4EwutnQcKt5Kc=;
- b=EHFCV6cupYgzCkdP0o96oG1NlGLHQk5dzjt4LQbjc0jhun8JlGKifZrTPaK3zHloaT
- GCexnzpPY6jwVlCtz5RW4Hs2N6tMFs8cG6geq8/mbFpeO/K7J0l1S5u8zMuN2WJwXAML
- k2Gy6Oo7xl+w6hqqo0trB+i/cVhG+dZRS4E59xHVdExXZrs1CmvPAqRPxU/QoOFvdI1G
- 3ifmVw+m96V2XXnk9iJcaLlFQK1vMJzVKv9Uosqp7M/SmklfLF7OqraUY6W4Ya1EAUah
- z7KaZpQL6MZMMfaGSbl5d0+GkLC+Cxs5CLjjOxW9RR8/E29t5hKL5euANAj7890ch80A
- uUlA==
+ bh=Pn9fqagd0imGfD7QUYCUzVToVzciz45s+Cv6BV4kKPU=;
+ b=aYLGkrvwDP7tgRau7CXPBusKK/uNAUAXiyBzcclpfc3jEd1Eo1hbLdHnhzwD0udoVb
+ 4nfrwzv2CFHo/bfkzHdjIV71Md3CkgYukim9TTUrSnvADESIr4D4t6k+DJFZOCL1XtXz
+ QyulMfJxr2fiUGQDk6Pd2CxW6671wwCUsAiPKSIgO+N4PS6PVoAPB1EO9kEGe85O5K3t
+ ssCXBhrcBO9TLBA+OiNwsX6JDyQGAj5vqKJVv0HV/lDD97mRxlB6/dfwQLgN0KbUIzMx
+ NQ0BDMey3vf4DdDfatg6zRGSGi77LnQD416GjR9J+T/Wqc8zVaZmYs3KAwQOAXfkhRSi
+ EPtQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771528948; x=1772133748;
+ d=1e100.net; s=20230601; t=1771528991; x=1772133791;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=H6kLOb5sf0oiOLXCKzf8ybfs57Z7nX4EwutnQcKt5Kc=;
- b=Flvbvk8NnN1G88N5KJPuEcGLu/uE4klPDzfbJfXD7Dy53u7YmTPkG1UTzSZlwHLmrN
- K80WXnA22k+oU51x5yhdUVy4IDHI6NRgmI+hYw/xcxuJ8azdgGjK7EpElgX1dq08V7+e
- e6JUaG9TZ44BYgLdNHybll5dV3K5FABsHZjf+cvZeZnWkFW8/7NLsiQmI/myS0UpWES0
- rdg1QejncuV0qhqDXvGXRQ7eFrca04k4pTdZiQltKnp1QQBwdLyb2bktnKEsBZ55pVLC
- C016EVSPpOXcVQ05+GraLBUVnFdMow6+EkIZEFuSWgbeFVI6KgKHOaUmnxuoO9rQJs4m
- 1a1w==
-X-Gm-Message-State: AOJu0YwUjhUu4dfABhb2iupuCZ/Naq+mxfwEuyyadn12O3ZgKr7Ho/gQ
- C6lUtzDBRR3LiJYIwl8hXJYeW/WHGuo+dIxyXK9HExXZQ/M6sbzHygmzmohDHpuqRTshzvmuWtY
- B3Wl0eVpaQw==
-X-Gm-Gg: AZuq6aLGFWVQtMRrIfXQdH2GZZ43cDXo4pd35AZWDclpk/pWx4UUzml+kOKAr9a8qNH
- 9AkR7zZVdyv+ojL65H8gIn9Ulhh8d/i1ohElArQMEt55WJoSsyWcMujG9LLTOhB0f9s4WpfOj6T
- zwAyNG/JhephDqO651GM/X1TxXhpmvAcfhr06Db+O6F8+0YEFF3PH1GorYMYMTLpSI2fcEYZZ5m
- heqjZcj73sivA9S4XwwjBP59ikxv6mG9Wk6neRl2Hu5Zo+FTjyj87vyDDJVPnfMaEOUWaeZ8BPJ
- //md6kv5EqE2lOZa/lHirRNEIEGUMpSfTZ+kc754/Ag45CW5/jj28crQWlPvX4SoZEE3aT2sBfd
- q69KS711wP67iceUE2RzlYOHr6UuUoJ6uJkGv/ObluemhaXTtjvOibsWqaEJDr60XtjgpD/mkve
- 606wZZrBhijUKAFH09BxMFN5Nw23t6YBXIUdnOwBh+UMqROJVYQRIeRTelTpwppem1gY9XXfDm
-X-Received: by 2002:a05:600c:8709:b0:480:1c53:2085 with SMTP id
- 5b1f17b1804b1-48379bd731emr310092395e9.19.1771528948321; 
- Thu, 19 Feb 2026 11:22:28 -0800 (PST)
+ bh=Pn9fqagd0imGfD7QUYCUzVToVzciz45s+Cv6BV4kKPU=;
+ b=E/43I+UKqvtmqXG1Jo0ryHDmEcC8ReCEZEcfiiXUEqmuJyA7B+1Da9gVYWGByefA3j
+ H2eXfBl9rfp6uGtSh+hZc532VzKIqE0k4NuIjnhFaMQTgm+A/f337c+AClA6pROig5NT
+ 5q1Uifu2bXkrtVa2tSlUTq4DvQn9QXvfl1SvrhxASHcJ5LD+2SrQ0YFrs/y4vqYZYo11
+ HEgNylshtQ8JtzsSATLCOmP7vjTge9eiV2q9Tph6XFnnNzpvjCUh26sUThDOSuE+mXkp
+ FIGTz5D4zWpmXb67zZHHLf9TaFPQRvTbm7/uw6WNOZ3aPe69hCQ6l9sI2qlMyOCzfOCn
+ PR9g==
+X-Gm-Message-State: AOJu0YwTmVcjg62g3nVcrFVNf44xOemfxKXB/duwHeFXuvAYCgAHQzb7
+ ShnZcNoIVX+SYmAi+961MqbYwq6a4i7g5gLtaxBMeIDbtnzG5zvydBK6x8j+C26lViR3PoB1qEV
+ 07PhatiUqWA==
+X-Gm-Gg: AZuq6aKmD6pDmcWJ/rPip+Skz5pPzD8aEH2/vXyOK/JyANZf13UrgVNWjhKRukIfPbr
+ +D/w7fZ0TJa2LVvdNKFRRTbZNILrqi6uJBRZL6DjHvn0Miwf3doEpBTJrhkz72YA8RVTm3Q5VvE
+ 1/xKiOj7q+jXsMP+im8tBxgcfyOi7iiPVZBx871bRtff7jQpCcramd+tW+T5w2oMD31GQ+yK4xK
+ mlQX/HL5eklC9qdRBfDTJ9eruxwlpccvEKXb7/CyGgxF99KFayiG7Ee+B73ma2S8fyOx8j6UBVb
+ isIXKpTpVTipGFTcRarlzT+MoZRCxHvblJIHj+y+no0IXsV6/Z6jZe9sPgAnkK10PJgpgYctRM7
+ m02oYO1PlmJVMfRD8RDbMM/GhDLmvbUb842krRInPwCywg+IYSH/i4yk0R9M2baU1UxjsuTseia
+ JV+XViAO7MTiHsM+pJPCbvPbfR0pnxW1RZb84mb9ZRr1gjWSG20oV2s0c3AKj6pvxUw2OPriIi
+X-Received: by 2002:a05:6000:290c:b0:437:71b2:6f1a with SMTP id
+ ffacd0b85a97d-43962540637mr5777238f8f.0.1771528991165; 
+ Thu, 19 Feb 2026 11:23:11 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-483a31d3ebbsm19849735e9.13.2026.02.19.11.22.27
+ ffacd0b85a97d-43796a5b4cdsm54476293f8f.8.2026.02.19.11.23.09
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 19 Feb 2026 11:22:27 -0800 (PST)
+ Thu, 19 Feb 2026 11:23:10 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
@@ -70,18 +70,22 @@ Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  qemu-riscv@nongnu.org, qemu-ppc@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Nicholas Piggin <npiggin@gmail.com>, Chinmay Rath <rathc@linux.ibm.com>
-Subject: [PATCH v2 21/50] target/ppc: Extract monitor-related code to monitor.c
-Date: Thu, 19 Feb 2026 20:19:23 +0100
-Message-ID: <20260219191955.83815-22-philmd@linaro.org>
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+Subject: [PATCH v2 27/50] target/riscv: Replace ldtul_p() -> ldn_p()
+Date: Thu, 19 Feb 2026 20:19:29 +0100
+Message-ID: <20260219191955.83815-28-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260219191955.83815-1-philmd@linaro.org>
 References: <20260219191955.83815-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,113 +108,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Keep ppc-qmp-cmds.c for QMP, use monitor.c for HMP.
+Prefer ldn_p(riscv_cpu_is_32bit) over target-specific ldtul_p().
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/ppc/monitor.c      | 41 +++++++++++++++++++++++++++++++++++++++
- target/ppc/ppc-qmp-cmds.c | 16 +--------------
- target/ppc/meson.build    |  1 +
- 3 files changed, 43 insertions(+), 15 deletions(-)
- create mode 100644 target/ppc/monitor.c
+ target/riscv/gdbstub.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/target/ppc/monitor.c b/target/ppc/monitor.c
-new file mode 100644
-index 00000000000..46c49e96236
---- /dev/null
-+++ b/target/ppc/monitor.c
-@@ -0,0 +1,41 @@
-+/*
-+ * QEMU PPC (monitor definitions)
-+ *
-+ * Copyright (c) 2003-2004 Fabrice Bellard
-+ *
-+ * Permission is hereby granted, free of charge, to any person obtaining a copy
-+ * of this software and associated documentation files (the "Software"), to deal
-+ * in the Software without restriction, including without limitation the rights
-+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-+ * copies of the Software, and to permit persons to whom the Software is
-+ * furnished to do so, subject to the following conditions:
-+ *
-+ * The above copyright notice and this permission notice shall be included in
-+ * all copies or substantial portions of the Software.
-+ *
-+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
-+ * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-+ * THE SOFTWARE.
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qemu/ctype.h"
-+#include "monitor/monitor.h"
-+#include "monitor/hmp-target.h"
-+#include "monitor/hmp.h"
-+#include "cpu.h"
-+
-+void hmp_info_tlb(Monitor *mon, const QDict *qdict)
-+{
-+    CPUArchState *env1 = mon_get_cpu_env(mon);
-+
-+    if (!env1) {
-+        monitor_printf(mon, "No CPU available\n");
-+        return;
-+    }
-+    dump_mmu(env1);
-+}
-diff --git a/target/ppc/ppc-qmp-cmds.c b/target/ppc/ppc-qmp-cmds.c
-index 66c3bcb2c38..96228919966 100644
---- a/target/ppc/ppc-qmp-cmds.c
-+++ b/target/ppc/ppc-qmp-cmds.c
-@@ -1,5 +1,5 @@
- /*
-- * QEMU PPC (monitor definitions)
-+ * QEMU PPC (QMP definitions)
-  *
-  * Copyright (c) 2003-2004 Fabrice Bellard
-  *
-@@ -24,26 +24,12 @@
+diff --git a/target/riscv/gdbstub.c b/target/riscv/gdbstub.c
+index 1934f919c01..f89b20ea84a 100644
+--- a/target/riscv/gdbstub.c
++++ b/target/riscv/gdbstub.c
+@@ -191,14 +191,15 @@ static int riscv_gdb_set_csr(CPUState *cs, uint8_t *mem_buf, int n)
+ {
+     RISCVCPU *cpu = RISCV_CPU(cs);
+     CPURISCVState *env = &cpu->env;
++    const unsigned regsz = riscv_cpu_is_32bit(cpu) ? 4 : 8;
  
- #include "qemu/osdep.h"
- #include "cpu.h"
--#include "monitor/monitor.h"
- #include "qemu/ctype.h"
--#include "monitor/hmp-target.h"
--#include "monitor/hmp.h"
- #include "qapi/error.h"
- #include "qapi/qapi-commands-machine.h"
- #include "cpu-models.h"
- #include "cpu-qom.h"
+     if (n < CSR_TABLE_SIZE) {
+-        target_ulong val = ldtul_p(mem_buf);
++        target_ulong val = ldn_p(mem_buf, regsz);
+         int result;
  
--void hmp_info_tlb(Monitor *mon, const QDict *qdict)
--{
--    CPUArchState *env1 = mon_get_cpu_env(mon);
--
--    if (!env1) {
--        monitor_printf(mon, "No CPU available\n");
--        return;
--    }
--    dump_mmu(env1);
--}
--
- CpuModelExpansionInfo *
- qmp_query_cpu_model_expansion(CpuModelExpansionType type,
-                               CpuModelInfo *model,
-diff --git a/target/ppc/meson.build b/target/ppc/meson.build
-index b0d708bb519..d4ebbaf0a19 100644
---- a/target/ppc/meson.build
-+++ b/target/ppc/meson.build
-@@ -43,6 +43,7 @@ ppc_system_ss.add(files(
-   'mmu-hash32.c',
-   'mmu-booke.c',
-   'mmu_common.c',
-+  'monitor.c',
-   'ppc-qmp-cmds.c',
- ))
- ppc_system_ss.add(when: 'CONFIG_TCG', if_true: files(
+         result = riscv_csrrw_debug(env, n, NULL, val, -1);
+         if (result == RISCV_EXCP_NONE) {
+-            return sizeof(target_ulong);
++            return regsz;
+         }
+     }
+     return 0;
+@@ -225,11 +226,12 @@ static int riscv_gdb_get_virtual(CPUState *cs, GByteArray *buf, int n)
+ static int riscv_gdb_set_virtual(CPUState *cs, uint8_t *mem_buf, int n)
+ {
+     if (n == 0) {
+-#ifndef CONFIG_USER_ONLY
+         RISCVCPU *cpu = RISCV_CPU(cs);
++        const unsigned regsz = riscv_cpu_is_32bit(cpu) ? 4 : 8;
++#ifndef CONFIG_USER_ONLY
+         CPURISCVState *env = &cpu->env;
+ 
+-        target_ulong new_priv = ldtul_p(mem_buf) & 0x3;
++        target_ulong new_priv = ldn_p(mem_buf, regsz) & 0x3;
+         bool new_virt = 0;
+ 
+         if (new_priv == PRV_RESERVED) {
+@@ -237,7 +239,7 @@ static int riscv_gdb_set_virtual(CPUState *cs, uint8_t *mem_buf, int n)
+         }
+ 
+         if (new_priv != PRV_M) {
+-            new_virt = (ldtul_p(mem_buf) & BIT(2)) >> 2;
++            new_virt = (ldn_p(mem_buf, regsz) & BIT(2)) >> 2;
+         }
+ 
+         if (riscv_has_ext(env, RVH) && new_virt != env->virt_enabled) {
+@@ -246,7 +248,7 @@ static int riscv_gdb_set_virtual(CPUState *cs, uint8_t *mem_buf, int n)
+ 
+         riscv_cpu_set_mode(env, new_priv, new_virt);
+ #endif
+-        return sizeof(target_ulong);
++        return regsz;
+     }
+     return 0;
+ }
 -- 
 2.52.0
 
