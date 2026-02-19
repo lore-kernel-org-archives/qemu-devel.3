@@ -4,90 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9C30E9A048
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 14:39:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7FD0E9A04A
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 14:40:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vt57j-0000PP-Bq; Thu, 19 Feb 2026 09:35:23 -0500
+	id 1vt59X-0002Lt-6n; Thu, 19 Feb 2026 09:37:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ruslichenko.r@gmail.com>)
- id 1vt57f-0000Ni-Jx
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 09:35:20 -0500
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ruslichenko.r@gmail.com>)
- id 1vt57c-00032i-Bf
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 09:35:19 -0500
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-4806ce0f97bso8068015e9.0
- for <qemu-devel@nongnu.org>; Thu, 19 Feb 2026 06:35:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1771511701; x=1772116501; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=1AeTxyxPl8LpE2VymYK8BbXAEvEM1cSusvtLGqxUHFw=;
- b=mYhu+2th7NbL1xJ97To50qUND7cZyVTaz3gYJnhWKj923m+WIeITTZK6o2VzmzDI7o
- Y39G4BZkyOKH8I/VivinDuVSZg1uHwRgFOCYXULnLgXglGwT27Za9CROf3wduvn2uUM5
- ummyl5/T9+Y2q87bvI7TLXPHsSLF7EmXBgxrbBQIZ5Vr+28YoJLqIJku+5oMb/NvhHSo
- 8lp/7T35xO7VGNbP/uVjiqIdfXeDRWvxNYyEX1yBIDORwAWybAncCM6hK0b+bOWOuBdh
- /q/xuzmfW5BhIoifJ1MqZuPOmnzTtMXxk6n6Jnr66D5MJNgkPQ4AfLkTYIzH+HPu2JYu
- B2KA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771511701; x=1772116501;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=1AeTxyxPl8LpE2VymYK8BbXAEvEM1cSusvtLGqxUHFw=;
- b=KitoO0Rhp4vudtJ/t81QYzDiQs6ALpHN6WO75cq8l9lkeGje1vJc+ixm/nomV0HOlH
- BO3KBygTDybXe3hvMyEUQUmODR5vorxb+RhPT4DsKw20VvybLuMo1+Ee2yz8uFv6VpN2
- 2LsC/xUhZdilj8mNwvtUiiZUc7uXm2ynn4Raoe4l0KeSL/Z/+aTPZAs12eQyQcLEwKou
- LvZwD21/Qch4Kq8HlhvFUyGFXQbjtfURPAPDfwqN1yao+rDH8v5+cYnz/N42v3LzTRic
- +PhE0ULh09WnBBgeRe71B58QsKP2hVwEtMhlp+8K0Uwm94JgMgj7VGUowFpfdiZZ0Qm7
- Hkcw==
-X-Gm-Message-State: AOJu0YwuAxPqSoxIJl6qyCtGHtnmP267W3Npq8IYprBPx8RIWnO77Rgl
- slDpyZfibIct4zhuQ5KCtwyumB3m77n18xdY6cdXoBJyV4cx2xtXXRyQ6Y8NoKiG
-X-Gm-Gg: AZuq6aInrYWJelmn96u5bjCN9cVl5CvGIrkgXF5mk/IItPOMS1nBcBZjPjCjaHAKL2o
- ddt0k8kUGNBv2IeC81wW1xGnxjnLN0pY1w4RcsvlnLqMeE2kQjrk616Z8Nsi165a4SFgsSmNNSB
- 3rfTk3vJKyXZSUmxP9bTaAPXvzonbYuDMoNmzHgtGF5ahA4J5Z2vKbNlEetaYtMpywKq+kcOuML
- KDV+NFIhZKknefi7FHoc8fkujID/koxgP2qLkrND3u/oXusZMReEBIrbeLLon+P3YKq/h8C8xu4
- drjBNtXTXAVSNs+mq5VvNXlF93BH6TNJqMMxllnwYyxSAINuK9BfkhS/6qf+9UMBNjtAD1kOg8m
- Mcls59G+MB7sGV7f9QXjX5CX+dfscohS7We9vPs+qd635E1YwxvDgUUI/QUgsHgJUf1iAeZe6OL
- /UuhcwqUYqKTPlcq2367A5fRW4uXOlpJygSdkeiVIl8NP8swLTKS5jyT4v9/9PS80X8ozG
-X-Received: by 2002:a05:600c:450c:b0:471:700:f281 with SMTP id
- 5b1f17b1804b1-48398ae4a01mr102282065e9.25.1771511700771; 
- Thu, 19 Feb 2026 06:35:00 -0800 (PST)
-Received: from thinkpad-t470s.. (93-143-129-182.adsl.net.t-com.hr.
- [93.143.129.182]) by smtp.googlemail.com with ESMTPSA id
- ffacd0b85a97d-43796abd259sm52022770f8f.24.2026.02.19.06.34.59
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 19 Feb 2026 06:35:00 -0800 (PST)
-From: Ruslan Ruslichenko <ruslichenko.r@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, alex.bennee@linaro.org, peter.maydell@linaro.org,
- artem_mygaiev@epam.com, volodymyr_babchuk@epam.com,
- takahiro.nakata.wr@renesas.com,
- "Edgar E . Iglesias" <edgar.iglesias@gmail.com>,
- Ruslan_Ruslichenko@epam.com, balaton@eik.bme.hu
-Subject: [PATCH v2 17/33] hw/core/fdt_generic_util: realize cpu clusters
-Date: Thu, 19 Feb 2026 15:33:16 +0100
-Message-ID: <20260219143332.3316679-18-ruslichenko.r@gmail.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260219143332.3316679-1-ruslichenko.r@gmail.com>
-References: <20260219143332.3316679-1-ruslichenko.r@gmail.com>
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1vt590-0001r8-64
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 09:36:43 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1vt58u-0003N6-24
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 09:36:38 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1771511792;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=9+tLD2muKLycvIdV0uhMhugIZqPTPjgoKPG+t+apmro=;
+ b=ZXD9BxrGHTWVPKLfZaXDRxHStpLhR2k+0F8aX9gWNwvBalvHlpRKwMEgPK1MfOeTxSGc2U
+ 8wnN2mOK52eWZG6ftVjKBNEMDfeyYOBfRu040hxlCta6aLsF+Wy2q00njW9LDXxlSsekDT
+ OPaFG6jD6wcjkE44MElJc+Xhl+/XWZM=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-227-k8SYSz7aPXqCJ1gyiE1FeA-1; Thu,
+ 19 Feb 2026 09:36:25 -0500
+X-MC-Unique: k8SYSz7aPXqCJ1gyiE1FeA-1
+X-Mimecast-MFC-AGG-ID: k8SYSz7aPXqCJ1gyiE1FeA_1771511783
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 036911800370; Thu, 19 Feb 2026 14:36:23 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.138])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 46D391800370; Thu, 19 Feb 2026 14:36:21 +0000 (UTC)
+Date: Thu, 19 Feb 2026 09:36:20 -0500
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: Lukas Straub <lukasstraub2@web.de>, qemu-devel@nongnu.org,
+ Peter Xu <peterx@redhat.com>, Zhang Chen <zhangckid@gmail.com>,
+ Hailiang Zhang <zhanghailiang@xfusion.com>,
+ Li Zhijian <lizhijian@fujitsu.com>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>
+Subject: Re: COLO concurrency issues
+Message-ID: <20260219143620.GC817358@fedora>
+References: <87ms1cn8n6.fsf@suse.de>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=ruslichenko.r@gmail.com; helo=mail-wm1-x32b.google.com
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="OfZLHe6izNeqKmof"
+Content-Disposition: inline
+In-Reply-To: <87ms1cn8n6.fsf@suse.de>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.045,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,47 +88,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
 
-Realize cpu clusters at the end of fdt machine creation
-process, as they need to be created after cpu's nodes
-are realized.
+--OfZLHe6izNeqKmof
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Signed-off-by: Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
----
- hw/core/fdt_generic_util.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+On Fri, Feb 13, 2026 at 09:13:49AM -0300, Fabiano Rosas wrote:
+> Hi, I've been following the qemu-colo.rst steps to test COLO and
+> encountered a couple of issues. Unfortunately, I don't have cycles to
+> investigate further. Happens with QEMU master (also tested some versions
+> back until the COLO fix 0b5bf4ea76).
+>=20
+> 1) Deadlock at fdmon_io_uring_wait:
+>=20
+> (steps from qemu-colo.rst)
+> - Secondary Failover
+> - Secondary resume replication
+> - Start the new Secondary
+> - Sync
+> - Wait until disk is synced, then:
+>=20
+>     {"execute": "stop"}
+>     {"execute": "block-job-cancel", "arguments":{ "device": "resync" } }
+>=20
+> The above results in the old secondary hanging indefinitely at:
+>=20
+>     do {
+>         ret =3D io_uring_submit_and_wait(&ctx->fdmon_io_uring, wait_nr);
+>     } while (ret =3D=3D -EINTR);
+>=20
+> (gdb) bt                                                                 =
+                                                                           =
+                         =20
+> #0  syscall () at ../sysdeps/unix/sysv/linux/x86_64/syscall.S:38
+> #1  0x00007f5519e0204e in ??? () at //usr/lib64/liburing.so.2
+> #2  0x00007f5519e01b00 in ??? () at //usr/lib64/liburing.so.2
+> #3  0x0000563c2dc06cc9 in fdmon_io_uring_wait (ctx=3D0x563c30411b00, read=
+y_list=3D0x7ffd0bad8f58, timeout=3D575708467831) at ../util/fdmon-io_uring.=
+c:416
+> #4  0x0000563c2dc00976 in aio_poll (ctx=3D0x563c30411b00, blocking=3Dtrue=
+) at ../util/aio-posix.c:699
+> #5  0x0000563c2daa01c6 in bdrv_drain_all_begin () at ../block/io.c:529
+> #6  0x0000563c2daa03d8 in bdrv_drain_all () at ../block/io.c:574
+> #7  0x0000563c2d764aae in do_vm_stop (state=3DRUN_STATE_PAUSED, send_stop=
+=3Dtrue) at ../system/cpus.c:312
+> #8  0x0000563c2d765964 in vm_stop (state=3DRUN_STATE_PAUSED) at ../system=
+/cpus.c:754
+> #9  0x0000563c2d7f3378 in qmp_stop (errp=3D0x7ffd0bad9080) at ../monitor/=
+qmp-cmds.c:62
+> #10 0x0000563c2dba7a72 in qmp_marshal_stop (args=3D0x563c306ac070, ret=3D=
+0x7f5518dffda8, errp=3D0x7f5518dffda0) at qapi/qapi-commands-misc.c:197
+> #11 0x0000563c2dbf1316 in do_qmp_dispatch_bh (opaque=3D0x7f5518dffe40) at=
+ ../qapi/qmp-dispatch.c:128
+> #12 0x0000563c2dc1de48 in aio_bh_call (bh=3D0x563c3040fef0) at ../util/as=
+ync.c:173
+> #13 0x0000563c2dc1df64 in aio_bh_poll (ctx=3D0x563c3040c070) at ../util/a=
+sync.c:220
+> #14 0x0000563c2dbffff0 in aio_dispatch (ctx=3D0x563c3040c070) at ../util/=
+aio-posix.c:389
+> #15 0x0000563c2dc1e3cd in aio_ctx_dispatch (source=3D0x563c3040c070, call=
+back=3D0x0, user_data=3D0x0) at ../util/async.c:365
+> #16 0x00007f551b114f4c in g_main_dispatch (context=3D0x563c304120f0) at .=
+=2E/glib/gmain.c:3476
+> #17 g_main_context_dispatch_unlocked (context=3Dcontext@entry=3D0x563c304=
+120f0) at ../glib/gmain.c:4284
+> #18 0x00007f551b1170c9 in g_main_context_dispatch (context=3D0x563c304120=
+f0) at ../glib/gmain.c:4272
+> #19 0x0000563c2dc1fa0b in glib_pollfds_poll () at ../util/main-loop.c:290
+> #20 0x0000563c2dc1fa85 in os_host_main_loop_wait (timeout=3D0) at ../util=
+/main-loop.c:313
+> #21 0x0000563c2dc1fb8a in main_loop_wait (nonblocking=3D0) at ../util/mai=
+n-loop.c:592
+> #22 0x0000563c2d78eb60 in qemu_main_loop () at ../system/runstate.c:903
+> #23 0x0000563c2db412fc in qemu_default_main (opaque=3D0x0) at ../system/m=
+ain.c:50
+> #24 0x0000563c2db413ab in main (argc=3D40, argv=3D0x7ffd0bad94d8) at ../s=
+ystem/main.c:93
 
-diff --git a/hw/core/fdt_generic_util.c b/hw/core/fdt_generic_util.c
-index 63390e2f17..3179248142 100644
---- a/hw/core/fdt_generic_util.c
-+++ b/hw/core/fdt_generic_util.c
-@@ -157,6 +157,16 @@ static void fdt_init_all_irqs(FDTMachineInfo *fdti)
-     }
- }
- 
-+static void fdt_init_cpu_clusters(FDTMachineInfo *fdti)
-+{
-+    FDTCPUCluster *cl = fdti->clusters;
-+
-+    while (cl) {
-+        qdev_realize(DEVICE(cl->cpu_cluster), NULL, &error_fatal);
-+        cl = cl->next;
-+    }
-+}
-+
- FDTMachineInfo *fdt_generic_create_machine(void *fdt, qemu_irq *cpu_irq)
- {
-     char node_path[DT_PATH_LENGTH];
-@@ -172,6 +182,7 @@ FDTMachineInfo *fdt_generic_create_machine(void *fdt, qemu_irq *cpu_irq)
-         while (qemu_co_enter_next(fdti->cq, NULL)) {
-             ;
-         }
-+        fdt_init_cpu_clusters(fdti);
-         fdt_init_all_irqs(fdti);
-         memory_region_transaction_commit();
-     } else {
--- 
-2.43.0
+Two ideas on how to debug further:
+
+1. Attach to the hung QEMU process with a debugger and inspect the
+block_backends global variable (see block/block-backends.c). The
+question is why bdrv_drain_all_begin() is not making progress. There are
+probably in-flight requests that can be observed in the
+BlockDriverState->tracked_requests list. Also check the BlockDriverState
+and BlockBackend in_flight fields. This will let you identify which
+block device is causing the hang and what it's doing during the hang.
+
+2. Try disabling io_uring on the host via `sudo sysctl
+kernel.io_uring_disabled=3D2` and then run QEMU again. If this is an issue
+with QEMU's recently-enabled io_uring event loop, then there will be no
+hang with io_uring disabled.
+
+Stefan
+
+--OfZLHe6izNeqKmof
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmmXH+QACgkQnKSrs4Gr
+c8hRqggAoQFLYTLVNK81cHT7fLOBzfiYHroeGzY86085YaGO23uOCZmnS9zncOc2
+sSGsOsxiMTx1iR+rRjYnF0LYCNsWyfsP1c/c+mIac9gGm5AlkTuh5svDc9OCmeJ1
+f9BMmLckO7Qe7A1htPiDz+FRPs0GREivbvhVwbl5/fUi1CQ9t5tvflAGS7IANlbC
+sLNfNOIKInShaQRa/TTzGkA2yKRxE+l/rFdECzsN6Qwzu0g3JnDXxB56Uwv/YjwM
+3HCaJtG5tte7Yyye9OzDxZrWw+DZEueYwjzOtk+YfIpXs+yAH+zIV0n2Ir1Hz9pQ
+pdITSY9k34QCo690bxuVjFfGKIHttA==
+=ciRN
+-----END PGP SIGNATURE-----
+
+--OfZLHe6izNeqKmof--
 
 
