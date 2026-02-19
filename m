@@ -4,95 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04FC5E9A048
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 13:02:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B557AE9A049
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 13:04:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vt3f5-0006JO-Dp; Thu, 19 Feb 2026 08:01:43 -0500
+	id 1vt3hC-0007X9-Pt; Thu, 19 Feb 2026 08:03:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
- id 1vt3ew-00065j-Ou
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 08:01:40 -0500
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
- id 1vt3ej-0005po-I0
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 08:01:25 -0500
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-483a233819aso4123275e9.3
- for <qemu-devel@nongnu.org>; Thu, 19 Feb 2026 05:01:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771506078; x=1772110878; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=O3uD2NPCSyNL69bl5PSjtdV8d7QWdzWlAsp+kcF85/g=;
- b=WDOEwr8c5c1YnVkgQ0tfjSTmZO+Scu31qfjRGH4I0seweM7EhU+IyphWEHjlgFZIMb
- H54hTXXdpbbxizW9mdLQI0mROkmjKoPS4LkyKMHqm9D7GN5x+EfyFt9lDHUUXOnZISks
- ogYRTGLqliYbKgJo9/BthiOgVjVFk3XMzwfIwd9gvvrGuyf5lyrq8tYf9ogPrGhz7Ncf
- SibnM2lgeRfMP5nkjZKbZHiHPMbo2loAAuWWO5p4oQ1R9nt/tRTUGYCTnosuO7U7bLJ1
- yTDfoZW1v6Q0RUO/5erqbATOssg/m3mmDIAkNNx5K5/+gNXjqd0TP/WwZvlbxKB16V+m
- 49FA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771506078; x=1772110878;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=O3uD2NPCSyNL69bl5PSjtdV8d7QWdzWlAsp+kcF85/g=;
- b=pwvBIRgaWpqZUT4gYWRZCNUotiqh4CFRJIBpuWor2nVY9OhtiUqQJFuM1ZYnBweUlI
- 1w14m+4hRCPIsFouDNnGV7jMS08FJHL3Egg+2/u5z/tfbsmFJrC3FByD3yUFmScR5alF
- pXhU1DICrq9Smi8g+geub1aB/9LD4ZxkWuKau4AEEUpYkW37ew3ijD4p+IHhhVN5kPjg
- 8EVCMBTXnTGzFQXmL9T5RdeK9BlZ56d3MK0pRm/1J5H6hV/QLXQhq9OLToAVS58wI69a
- jnTV8uqQiHF2Cv3phV5VU2SI4sYMFSaLftRrCnj3fZmVVXeDVFZXa9PLncO4sBcMA+7j
- RAOg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXvrC5ZeTwsFdDNaPUwaEYINXgrJpU62IT78fyuJfbheu5hb2x8WPv0clNxTQYlSMBOphtUCyOkWs+J@nongnu.org
-X-Gm-Message-State: AOJu0YyoZBClQH3whTuoz1R7y2fSV07Sbg98/cJeXGP2wJA/f+XnWC2L
- M4Zex7gAPIMcpxONlth5ENVWMTk+M7yBvKoJcjmLFMhJ8bk3QukYUp4YfHhGnbtUPeg=
-X-Gm-Gg: AZuq6aLwFVgtN7OZU2goEV+vBMUdrYwluP0by3wEFY0clLyrR0ejB1M8801XaFHQdR8
- 7R58ekbAPjVOAG+O1dIaundRJtEn7Afuhos9wnxh2tmyfs4uYzsq9EPsqxbWAo32g2Pajg7NSnR
- c/H8z25onXR4bxDMQKa7a7mz7exzXJsMi+5SBxP59g1ppSEUnMdLNW7Hk17X5QgPqrkkQ5svbut
- aDB4viAsO6oeoiZXwircmsEMKScC96Nkv8M54LSdAeqdB1fXCmxbV9airIrEFCSeLXHL1HVmOqf
- dMxJ4pB/92hr/eJlY5PegOTQXeGKRM6YvyQujpfv1dPjZiFdq2AJKQOLQYYIl3yGVApcs98xI9Y
- bVSKEuSwkwQD8+TEWMxOt2i4I7u1XUjWAnKz+cDpRk6C2GlJzXw85P038SVa3r3Y+NYQ8ikw4vQ
- kyCM+Y+c8hvIX7//DkHCAatsqW0/V91VYKVrsrClg4gVLaDyuoYR74he1Px1XluTRNMW8=
-X-Received: by 2002:a05:600c:8219:b0:477:6374:6347 with SMTP id
- 5b1f17b1804b1-48398b5d5bbmr88626175e9.22.1771506077522; 
- Thu, 19 Feb 2026 05:01:17 -0800 (PST)
-Received: from ?IPV6:2a10:d582:31e:0:afeb:9934:f5df:3905?
- ([2a10:d582:31e:0:afeb:9934:f5df:3905])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-437969fd36dsm51734521f8f.0.2026.02.19.05.01.16
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 19 Feb 2026 05:01:16 -0800 (PST)
-Message-ID: <4b9aa2cf-140f-4b3e-ae7c-224530f0e93e@linaro.org>
-Date: Thu, 19 Feb 2026 13:01:16 +0000
+ (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
+ id 1vt3hA-0007WV-HU
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 08:03:52 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
+ id 1vt3h8-0006GN-MP
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 08:03:52 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1771506229;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=GfnV/zKgRVgL1zzhb9CqiAMAu8czKO3LqF4YsD9cyIE=;
+ b=cqwUlWmewmo4lWGTUXZKdEyrSXOXlhoDm/H1M3dZtZXrm7GighzZbbSCbtRI6QPzJKEFdf
+ YgTNAoJwoCQQ5DQ9eVWNeOKePTKw8I8UjgNe2NqDxXEIQPwtRssdf3A/4DNJFBRawr0fSN
+ 08rwbqLS547QhZhzgwnEBfFkSfUWufg=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-121-QmxcmrIdNO6OljSux_ipZw-1; Thu,
+ 19 Feb 2026 08:03:45 -0500
+X-MC-Unique: QmxcmrIdNO6OljSux_ipZw-1
+X-Mimecast-MFC-AGG-ID: QmxcmrIdNO6OljSux_ipZw_1771506224
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 16AE01956088; Thu, 19 Feb 2026 13:03:43 +0000 (UTC)
+Received: from fedora.redhat.com (unknown [10.44.33.19])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 7609D1955F01; Thu, 19 Feb 2026 13:03:36 +0000 (UTC)
+From: Albert Esteve <aesteve@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, mst@redhat.com,
+ dbassey@redhat.com,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ stefanha@redhat.com, manos.pitsidianakis@linaro.org,
+ Stefano Garzarella <sgarzare@redhat.com>, jasowang@redhat.com,
+ Laurent Vivier <lvivier@redhat.com>, slp@redhat.com, hi@alyssa.is,
+ stevensd@chromium.org
+Subject: [PATCH v13 0/7] vhost-user: Add SHMEM_MAP/UNMAP requests
+Date: Thu, 19 Feb 2026 14:03:27 +0100
+Message-ID: <20260219130334.787858-1-aesteve@redhat.com>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] Reapply "rcu: Unify force quiescent state"
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Yodel Eldar <yodel.eldar@yodel.dev>
-References: <20260217-alpha-v1-0-0dcc708c9db3@rsg.ci.i.u-tokyo.ac.jp>
-Content-Language: en-US
-From: Jim MacArthur <jim.macarthur@linaro.org>
-In-Reply-To: <20260217-alpha-v1-0-0dcc708c9db3@rsg.ci.i.u-tokyo.ac.jp>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=jim.macarthur@linaro.org; helo=mail-wm1-x32e.google.com
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=aesteve@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.045,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,18 +90,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/17/26 06:34, Akihiko Odaki wrote:
-> I could not reproduce the alpha issue when I tried a bit while ago, but
-> trying on a more conventional setup (x86 without ASan where I usually
-> use Apple M2 with ASan) did a trick. So here is a fix for alpha and a
-> patch to reapply commit 55d98e3edeeb17dd8445db27605d2b34f4c3ba85. I
-> confirmed no failure occurs in 100 trials with the alpha fix.
+Hi all,
 
-Very glad to finally have a fix for this. Hopefully a suitable location 
-for the cpu_reset can be found. I just wanted to add that I've also run 
-the func-alpha-replay test 250 times with no failures whereas before I 
-was getting timeouts roughly 10% of the time.
+v12-v13
+- SMEM_UNMAP spec update to explicitly state the use of
+  VHOST_USER_PROTOCOL_F_REPLY_ACK for replies
+- Removed confusing remark for 0-sized regions in
+  GET_SHMEM_CONFIG
+v11->v12
+- Refined VIRTIO Shared Memory Region configuration mem size
+  spec description
+- Removed unused name in vhost-user-base's vub_device_realize to
+  avoid build error
+- Initialize shmem in vhost_user_backend_handle_shmem_unmap
+  to avoid compiler being confused
+- Added stub for memory_region_init_ram_from_fd in memory.h
+  for windows builds
+- Use memory_region_size for shmem_region handlers instead
+  of accessing size member directly in shmem mrs
+v10->v11
+- Rebase to grab commit fde5930cc37175cfcd0f03a089e26f4458a52311
+  and explicitly unset reply_ack on the SHMEM_MAP/UNMAP msg.
+- Mention mapping cleanup on device reset in the spec.
+v9->v10
+- Fix transaction_commit invoked without transaction_begin
+  on vhost_user_backend_handle_shmem_map() early errors
+- Removed fd tracking on VirtioSharedMemoryMapping, it
+  is handled by the RAMBlock
+- Reject invalid BAR configurations when VIRTIO Shared Memory
+  Regions are in use by vhost-user-test-device
 
-Jim
+This patch series implements dynamic fd-backed memory mapping support
+for vhost-user backends, enabling backends to dynamically request memory
+mappings and unmappings during runtime through the new
+VHOST_USER_BACKEND_SHMEM_MAP/UNMAP protocol messages.
+
+This feature benefits various VIRTIO devices that require dynamic shared
+memory management, including virtiofs (for DAX mappings), virtio-gpu
+(for resource sharing), and the recently standardized virtio-media.
+
+The implementation introduces a QOM-based architecture for managing
+shared memory lifecycle:
+
+- VirtioSharedMemoryMapping: an intermediate object that manages
+  individual memory mappings by acting as generic container for regions
+  declared in any vhost-user device type
+- Dynamic Mapping: backends can request mappings via SHMEM_MAP messages,
+  with the frontend creating MemoryRegions from the provided file
+  descriptors and adding them as subregions
+
+When a SHMEM_MAP request is received, the frontend:
+1. Creates VirtioSharedMemoryMapping to manage the mapping lifecycle
+2. Maps the provided fd with memory_region_init_ram_from_fd()
+3. Creates a MemoryRegion backed by the mapped memory
+4. Adds it as a subregion of the appropiate VIRTIO Shared Memory Region
+
+The QOM reference counting ensures automatic cleanup when mappings are
+removed or the device is destroyed.
+
+This patch also includes:
+- VHOST_USER_GET_SHMEM_CONFIG: a new frontend request allowing generic
+  vhost-user devices to query shared memory configuration from backends
+  at device initialization, enabling the generic vhost-user-device
+  frontend to work with any backend regardless of specific shared memory
+  requirements.
+
+The implementation has been tested with rust-vmm based backends.
+
+Albert Esteve (7):
+  vhost-user: Add VirtIO Shared Memory map request
+  vhost_user.rst: Align VhostUserMsg excerpt members
+  vhost_user.rst: Add SHMEM_MAP/_UNMAP to spec
+  vhost_user: Add frontend get_shmem_config command
+  vhost_user.rst: Add GET_SHMEM_CONFIG message
+  qmp: add shmem feature map
+  vhost-user-device: Add shared memory BAR
+
+ docs/interop/vhost-user.rst               | 104 +++++++++
+ hw/virtio/vhost-user-base.c               |  46 +++-
+ hw/virtio/vhost-user-test-device-pci.c    |  38 ++-
+ hw/virtio/vhost-user.c                    | 269 ++++++++++++++++++++++
+ hw/virtio/virtio-qmp.c                    |   3 +
+ hw/virtio/virtio.c                        | 201 ++++++++++++++++
+ include/hw/virtio/vhost-backend.h         |  10 +
+ include/hw/virtio/vhost-user.h            |   1 +
+ include/hw/virtio/virtio.h                | 137 +++++++++++
+ include/system/memory.h                   |  13 ++
+ subprojects/libvhost-user/libvhost-user.c |  70 ++++++
+ subprojects/libvhost-user/libvhost-user.h |  54 +++++
+ 12 files changed, 941 insertions(+), 5 deletions(-)
+
+-- 
+2.52.0
 
 
