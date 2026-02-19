@@ -4,39 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32378E9A048
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 11:57:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5EB15E9A048
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 11:57:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vt2dN-0004Pp-2X; Thu, 19 Feb 2026 06:55:53 -0500
+	id 1vt2dN-0004Po-1M; Thu, 19 Feb 2026 06:55:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vt2dD-0004Ne-4E
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 06:55:43 -0500
+ id 1vt2dG-0004OK-9h
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 06:55:47 -0500
 Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vt2d8-0006Bb-84
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 06:55:42 -0500
+ id 1vt2dD-0006EY-Ez
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 06:55:46 -0500
 Received: from mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
  [IPv6:2a02:6b8:c24:fa2:0:640:41ee:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 0D66780767;
- Thu, 19 Feb 2026 14:55:34 +0300 (MSK)
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id B841A808B7;
+ Thu, 19 Feb 2026 14:55:41 +0300 (MSK)
 Received: from vsementsov-lin (unknown [2a02:6bf:8080:192::1:26])
  by mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id VtZwpM4A6uQ0-ZUjJDPcM; Thu, 19 Feb 2026 14:55:33 +0300
+ ESMTPSA id VtZwpM4A6uQ0-URNphVNs; Thu, 19 Feb 2026 14:55:41 +0300
 Precedence: bulk
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1771502133;
- bh=pgiPm8c9aGbZjGQdmRm9kWER5Sk/17AC4zn2nbM8Ukw=;
- h=Message-ID:Date:Cc:Subject:To:From;
- b=0c7zaEhKkNaHPI8nlcrQfLUy335s3pi7L/bnBLmNZN10kMw9uaQozzoC78cfB5aSt
- qEbHHMF2POUw4exy8PBc2J2s3gx7Kx/R588oF0uEy12g1gswUl7EVf80FDszLLabU4
- HHrswIU02gj4/hTERpxAHXPQdA4IP+PzXS5GuN/8=
+ s=default; t=1771502141;
+ bh=FtthCjv4jZclLpHuxzc/o+cbJSRbpvzPto3AWwLXoAM=;
+ h=Cc:Message-ID:References:Date:In-Reply-To:Subject:To:From;
+ b=FKTCddc1za7lxH+MHZRflbpxV0KF69YpDikJLO+C12jLWpExHF+aVGCDGPfeiBNZc
+ /6YGEL4bRE4uU9ttN4F3SSzgh714qgUyJ/aRN+jxHILHJKNVi0wyngxRHle80IB/6k
+ ZTuH24LsKsqgGqz5b7Nqwj4F9KdOPxde5OJyY/7o=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
@@ -47,11 +47,14 @@ Cc: thuth@redhat.com, armbru@redhat.com, eblake@redhat.com, farosas@suse.de,
  philmd@linaro.org, marcel.apfelbaum@gmail.com, eduardo@habkost.net,
  davydov-max@yandex-team.ru, qemu-devel@nongnu.org,
  vsementsov@yandex-team.ru, yc-core@yandex-team.ru, leiyang@redhat.com,
- raphael.s.norwitz@gmail.com, bchaney@akamai.com
-Subject: [PATCH v11 0/8] virtio-net: live-TAP local migration
-Date: Thu, 19 Feb 2026 14:55:21 +0300
-Message-ID: <20260219115530.2019498-1-vsementsov@yandex-team.ru>
+ raphael.s.norwitz@gmail.com, bchaney@akamai.com,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH v11 7/8] tests/functional: add skipWithoutSudo() decorator
+Date: Thu, 19 Feb 2026 14:55:28 +0300
+Message-ID: <20260219115530.2019498-8-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20260219115530.2019498-1-vsementsov@yandex-team.ru>
+References: <20260219115530.2019498-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,52 +81,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi all!
+To be used in the next commit: that would be a test for TAP
+networking, and it will need to setup TAP device.
 
-Here is a new migration parameter "local", which allows to
-enable local migration of TAP virtio-net backend (and maybe other
-devices and backends in future), including its properties and open
-fds.
+Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Tested-by: Lei Yang <leiyang@redhat.com>
+Reviewed-by: Maksim Davydov <davydov-max@yandex-team.ru>
+---
+ tests/functional/qemu_test/decorators.py | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-With this new option, management software doesn't need to initialize
-new TAP and do a switch to it. Nothing should be done around
-virtio-net in local migration: it just migrates and continues to use
-same TAP device. So we avoid extra logic in management software, extra
-allocations in kernel (for new TAP), and corresponding extra delay in
-migration downtime.
-
-v11: rebranding "backend-transfer" -> "local"
-06: require script=no and downscript=no
-    instead of requiring absent options,
-    for future compatibility
-
-
-Vladimir Sementsov-Ogievskiy (8):
-  net/tap: move vhost-net open() calls to tap_parse_vhost_fds()
-  net/tap: move vhost initialization to tap_setup_vhost()
-  qapi: add local migration parameter
-  net: introduce vmstate_net_peer_backend
-  virtio-net: support local migration of backend
-  net/tap: support local migration with virtio-net
-  tests/functional: add skipWithoutSudo() decorator
-  tests/functional: add test_tap_migration
-
- hw/core/machine.c                             |   1 +
- hw/net/virtio-net.c                           | 137 +++++-
- include/hw/virtio/virtio-net.h                |   2 +
- include/migration/misc.h                      |   2 +
- include/net/net.h                             |   6 +
- migration/options.c                           |  18 +-
- net/net.c                                     |  47 ++
- net/tap.c                                     | 189 +++++++--
- qapi/migration.json                           |  14 +-
- qapi/net.json                                 |   6 +-
- tests/functional/qemu_test/decorators.py      |  16 +
- tests/functional/x86_64/meson.build           |   1 +
- tests/functional/x86_64/test_tap_migration.py | 401 ++++++++++++++++++
- 13 files changed, 795 insertions(+), 45 deletions(-)
- create mode 100755 tests/functional/x86_64/test_tap_migration.py
-
+diff --git a/tests/functional/qemu_test/decorators.py b/tests/functional/qemu_test/decorators.py
+index fcf236ecfd..aa135acc78 100644
+--- a/tests/functional/qemu_test/decorators.py
++++ b/tests/functional/qemu_test/decorators.py
+@@ -6,6 +6,7 @@
+ import os
+ import platform
+ import resource
++import subprocess
+ from unittest import skipIf, skipUnless
+ 
+ from .cmd import which
+@@ -177,3 +178,18 @@ def skipLockedMemoryTest(locked_memory):
+         ulimit_memory == resource.RLIM_INFINITY or ulimit_memory >= locked_memory * 1024,
+         f'Test required {locked_memory} kB of available locked memory',
+     )
++
++'''
++Decorator to skip execution of a test if passwordless
++sudo command is not available.
++'''
++def skipWithoutSudo():
++    proc = subprocess.run(["sudo", "-n", "/bin/true"],
++                          stdin=subprocess.PIPE,
++                          stdout=subprocess.PIPE,
++                          stderr=subprocess.STDOUT,
++                          universal_newlines=True,
++                          check=False)
++
++    return skipUnless(proc.returncode == 0,
++                      f'requires password-less sudo access: {proc.stdout}')
 -- 
 2.52.0
 
