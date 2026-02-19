@@ -4,106 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE63FC531CD
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 20:02:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CF40C531CC
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 20:16:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vtADQ-0003vu-Li; Thu, 19 Feb 2026 15:01:36 -0500
+	id 1vtAQS-0006H3-6O; Thu, 19 Feb 2026 15:15:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vtADO-0003vZ-Bq
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 15:01:34 -0500
-Received: from mail-yx1-xb12e.google.com ([2607:f8b0:4864:20::b12e])
+ (Exim 4.90_1) (envelope-from <buenocalvachejoel@gmail.com>)
+ id 1vtAQQ-0006Gi-Qx
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 15:15:02 -0500
+Received: from mail-pg1-x52d.google.com ([2607:f8b0:4864:20::52d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vtADM-0000G4-Mg
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 15:01:34 -0500
-Received: by mail-yx1-xb12e.google.com with SMTP id
- 956f58d0204a3-64ad8435f46so1188558d50.1
- for <qemu-devel@nongnu.org>; Thu, 19 Feb 2026 12:01:31 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1771531291; cv=none;
+ (Exim 4.90_1) (envelope-from <buenocalvachejoel@gmail.com>)
+ id 1vtAQP-0006za-4Q
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 15:15:02 -0500
+Received: by mail-pg1-x52d.google.com with SMTP id
+ 41be03b00d2f7-c6de5ea6879so105843a12.0
+ for <qemu-devel@nongnu.org>; Thu, 19 Feb 2026 12:15:00 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1771532099; cv=none;
  d=google.com; s=arc-20240605;
- b=lLoZNw30Cthsuz1AIaugdW4Ipu6PN2YwZfzzC8qpbj6pHvpSVh0snnfBvCkuAP7XlF
- /M4SuzVQd/8By+v4tZn2pgFP5gztUbEO5JUuf+s4Ig+ysIMxG/ZP77eLHesYDyEQT3Vl
- 6ajKgEtssh8O0NOKFQEroI1yx/in3ovNXSRfHXJvEYLTkYHafG8RMY40MOIEZOmrwZ5B
- fHCVlyGpujiiTRUQPEBUaAy22DO9piG/+Ktcnj0rXcWLX4cbsYiK+dEeHP7dljF6r9Zp
- Cq1WNykFaIu5h2y3bzMmbIU0/d1Pgzf13EQu4cGaJo2CdBEmUK01VFeIXjHyPR6glwI8
- guxg==
+ b=J6XnAe4mWlIQQapLaDjadvXzfSCoP7C9YXjeDjqojFs1nt0Evo+EJL5Ebv1HKAHmNG
+ t2qYqGJJoMsmJVUynZfAGXmNJBQe9srQWszBjXLm73rScxC0fq+G6BgST2Se8xCTVJwz
+ oLrgvt+JW8iRnfbUJjyXHbEbsLj906CSeV3kFewRR1hmc21/6iIjjikswX7dRMA7X+kI
+ BWCiG4RUhqFECCSjkHYudtph3ozUj88W3MC+RNd94fp/ft9S2EVAVHuHlg1wULt1IO87
+ fzBppxZfJwL/CZjy2L+/3JPRyaXYlERShAJdlAcXoNc5L6uS78HZP9VP8R7RkzpavWRD
+ 0lMw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=wB7mlzdxEqlEJN7lOXYnIKUh9JBThUAXicIuZcYrF28=;
- fh=DdF1/7YsBq/PoRLPiYXAMmBGVqpLABI7I/G0402L/go=;
- b=cLXsfGagmmNvXUgjTy9yr1/BNGxqYnf6LqyhoB/fErKT12Frqcu1zJ34levnd67jWd
- nvpP7FcjO9JdglWKZUM8fzYvxjAoDs8S9b7rEekoNiBOFOLYJee3DlrOkVqBvbqsPsW3
- Zha24sx38Z2qis3J5u4CrR1EIckWmHmTwFKF9Riq1SdI+JUOeHRXkCtS2AK/bCcuXNQG
- GVntmfpKhWsfGzMgDe4tZZgZawTvRJNt9S9fjcM8MReFpB8ohyIkFh/tyq9P8bI4n0Mk
- JYdYlINC5emNx2Z5xax70++5tnziPeojQbc9hMU/g5ITbouRz3ZnE4kyNIoTF9F4g8le
- 98xQ==; darn=nongnu.org
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=oMBPphu1KKb9RbA627PJDN/pd9c4/p9hxkKeEf8SKV0=;
+ fh=2NNGlmBlj/+wnfISg5bNet0Uar/QECWjmYeFAdH5Dac=;
+ b=E8cUoucKCQfMSYmGGQkIzGzYj+fACBsUKi4jM7gkRfgSLUz/8RG21YZunJQC6qsR3F
+ J6tDDw04/UKnSc9pfOO4AiHu+KZX4h4FHFoL8A/Jst0a0bLVPYorYkZjqBw5oqHB6Wrg
+ ws24u5PgY5prb868WzJhnoJdLxHNNEDuJU8jkeccHtD2p/qOX+dB69Bd3z894fbs6PrE
+ ZrHh8yfDvj6ocwuQ7NBDnsH9Vq6cV/7oD46kpO1u6RYNF51DauS1J4iYr7+ouct82zGf
+ XNWjXop9a9tlm8BORhSMQaVgpHKZGGQ0vRR2Ap9koNKtpmZj0bbxV95DkNY5XCgM9vUl
+ priA==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771531291; x=1772136091; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=wB7mlzdxEqlEJN7lOXYnIKUh9JBThUAXicIuZcYrF28=;
- b=P/PDuMnoaMLpfagxiOrt0LUfgBv3oXqv+IwEHvzrJRGIiSsnKlxv+wew9gJ5oyg4XG
- c7d90L+3Oj5ptaX9yF7m7FyjAcCrMWinFqVUlOMLQzdy+Z/oDOu3VtPE9RSqGM4oz0oW
- 9d6lsIUTf8HZHrjCJpTIb7YfKsFR5XndXTi/OS4kJY9rSep8OggS615gSyCRAgB8p0PM
- Y6f7h8o9G+x0srgEcChV27a78Qtjycpebg31LP1yeTVZ6nUg0EDBkhpqchNnhMaJLeQb
- GEEJ6KgtOxQlDfxWGVFabPR8RKmrlzQOschJdVntIM7WL6AtssEUbC/BloqSuHkbUM1w
- OdVQ==
+ d=gmail.com; s=20230601; t=1771532099; x=1772136899; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=oMBPphu1KKb9RbA627PJDN/pd9c4/p9hxkKeEf8SKV0=;
+ b=RgJII6V4r0ZV6CDWoWcNCRu7Am7iWuW1Rqma5BQi62YmbkADPO2CDnU6pIMNMMhpha
+ EXa7HWI0Nxw+3hmWmd5zs0n9bPfTemx5V+KHPUh8r6S25tX8IkBGshDb11D2N8H1v1gM
+ ctaQyt/mpnToWWoL0aT6SGqDMOaObhehuB+hCol2HEARiZS0BBFhS+gPPKq3zpGOevfS
+ xfX2Dbacb7WxUEj+hkg7JrkphBrokKewKo/wteI+++TAujvQb7rLKveiTFF7gCTmmOhL
+ qghWf73MbQ7ywn2ynCzHqRXITEG+rBOR73YTEbiIdAyb6fAA/PzimSqHhPErozmTETPF
+ Xzuw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771531291; x=1772136091;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=wB7mlzdxEqlEJN7lOXYnIKUh9JBThUAXicIuZcYrF28=;
- b=UMKRz2dNEwSTw59vNXDJ3TO9BHNOpKtkHF8r6vkiJtnEW6jthi5n2S9zt1gGmHsDu1
- P5WysARrQMinLeeWL4zmApAzxQFakGIndmH/PAHVcTOB4da6HXzjLtL70YHhZxnT88Zx
- lZV8sQMOldlCSf4a9m8NEsUH/vUzPxo9Zk+D5wSyAennGF10/2x2uyo+wCrDRR9HxYeh
- HbCtwDsqHZCOyQy9YOG1GpmvTAhltU2xUIQlHHLN4EQ25vj2bYUDq7+HA3T1BmBRrX6q
- 2AHlIwY23kniniLjxKT5ly3fAt8mJSZmuhWzQExxCI1R+WqsvUuzRN8u9jQ3KT2gdf77
- NncA==
-X-Gm-Message-State: AOJu0Ywn8EEcVShMetasRw4EKB1m0d6H2oTsuasHom1HPA9IngYxlend
- 456ULAZuuqHh4UfCop911ZFcebP2RZIFdOpKvDK/vGhvTrri+TvQiAdaH1Nips+n3zXlGXqK1xA
- iMEMyfYtGqwVPgV+0PHXRCVT6H+YU33nEw4wgLPtPbQ==
-X-Gm-Gg: AZuq6aLGZs5RSnZ+XG1/CQW0LVZQsL1t9O5FsJqjc340NoL/c3OaygbJhPEbDdtn1hb
- G/zvPPEX6rY/v/6027S+Eu89cVkrv2Yain2LkjGEFgmrQnDYavbGYGz/fmDYDAQCgR9igqJUG26
- pvACnFJO0+MMnL8WaO9wCTeEoMXmdkl7aKpywn19BNVypJO5PmX2rtv5Fs8TwgbTxYN+LPLkOf4
- viGfxw2DXo2KN6IbsrW9kN4luqI01A4mYF9MT6AcvNV1+qifqWtRZ9J8CdmnCjcyXtmkIhRqIxI
- doeB4toNPyHpHstDNZboTVYnbPJIi4IgXK5KY8W3irFJtRrdIq5nwWahAU69eYz2lDSDKYos0/h
- iXg==
-X-Received: by 2002:a05:690e:23db:b0:649:ccde:d6e0 with SMTP id
- 956f58d0204a3-64c21b915f1mr10588661d50.92.1771531291031; Thu, 19 Feb 2026
- 12:01:31 -0800 (PST)
+ d=1e100.net; s=20230601; t=1771532099; x=1772136899;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=oMBPphu1KKb9RbA627PJDN/pd9c4/p9hxkKeEf8SKV0=;
+ b=NK68cu/5wMwXRk+Gs9lBz0JFHiA8gNL9J7bPXW4EYDndtiHv/Jy8ox9YEZ5mQRYuVD
+ jsY6Gq/ezJrRApVov80/dgNQdk8HQm1+WyzIMT5GciBg/xY1TDZSAsSYqmBi4pRbWBPb
+ U7E7ZR7zTlTJ87AT0j8/iJ/Z1W96zkOv0Rn5gl92mBqizho5aEfbvKdp0XfvCxVIrRYj
+ C6iVmOhvAlPLFKQB3GDs1VbrfpbswKzWo6CmW2J+0XQascO1g0Qx3vUGghG2/mSoxlwK
+ mdexTqa0JDDhb69UoW16tz86F4cmx8pvlXH15qEsOYG52QOwTmJgYQwIGUr1SlDCOG8e
+ zurA==
+X-Gm-Message-State: AOJu0YyfCMOx7eibuF7H5L9YLQrQeU8dIRL97BIDb2lxCznQiZNIyclC
+ Z4KXnGvhgkn9gXAnpWaa6ehQSN5+UYW7MS2YL4gIyF7UtRZ7NKSmFB5Tbp41xtMQPGt3ns5/oTc
+ GIiG6DCQ8RjmsV08nFxPPpIzSTuqu0aQ=
+X-Gm-Gg: AZuq6aIqOHnLXAAj6/1oTDJumLCyBGrtwCSN4KEuGXIw0OM9qWpulMugzT/ouK4n6rN
+ OQqB+gRJYVn3QY6ignfmVHfdA2AIK1NqtTFtpNqMPpJqzUdeLv4D7ACutDAPihvnvbbytBsnWXg
+ aan3Gk25c7+zztDRijoguVhD+wF3VcpQTyHUUNhOp/Q6ASQztFar0sfTOZWQ0gSCI0YHr7GYMdY
+ bZEGIw+I8RQGtsfpTBin42/5umyQhoC0rRLLtIAsC2IHJCSfLviReCPNu43tSumG+Vm0r6yM+Yp
+ bc6mrZ9wGBISQmrZR6j8WL2EPJEuC4EjAcpsDQ4=
+X-Received: by 2002:a17:90b:47:b0:356:216c:ed64 with SMTP id
+ 98e67ed59e1d1-356a7a8adf3mr15356068a91.6.1771532098838; Thu, 19 Feb 2026
+ 12:14:58 -0800 (PST)
 MIME-Version: 1.0
 References: <20251221105340.2699327-1-buenocalvachejoel@gmail.com>
  <CAPDLHD5HGNAu1=JD=V-9YQMpR_8-tWjONex2jj4ZFHbNe9qVcg@mail.gmail.com>
-In-Reply-To: <CAPDLHD5HGNAu1=JD=V-9YQMpR_8-tWjONex2jj4ZFHbNe9qVcg@mail.gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 19 Feb 2026 20:01:19 +0000
-X-Gm-Features: AZwV_QhVXaNLuVQlWFg-34RZjjt04XsdWID_5WI7Fucscr-5oxz6F4ZQkwEYCMA
-Message-ID: <CAFEAcA8xsFeCAnvna4+mFQuZCx8gNEJX5BbFzTYkr6rcaX43Lw@mail.gmail.com>
+ <CAFEAcA8xsFeCAnvna4+mFQuZCx8gNEJX5BbFzTYkr6rcaX43Lw@mail.gmail.com>
+In-Reply-To: <CAFEAcA8xsFeCAnvna4+mFQuZCx8gNEJX5BbFzTYkr6rcaX43Lw@mail.gmail.com>
+From: Joel Bueno <buenocalvachejoel@gmail.com>
+Date: Thu, 19 Feb 2026 21:14:47 +0100
+X-Gm-Features: AaiRm50HAO3YHWRYvkyKVEUmPCfC4cEcXtS_zVXjwLb9gPYuijEcG5k6eV5zkIo
+Message-ID: <CAPDLHD5q2J_SV74Hnt3cPcwyrh7w=Rtz9w7y3H9ZVvse88UmOA@mail.gmail.com>
 Subject: Re: [PATCH] hw/block/m25p80: Fix Winbond Fast Read dummy cycles
-To: Joel Bueno <buenocalvachejoel@gmail.com>
+To: Peter Maydell <peter.maydell@linaro.org>
 Cc: qemu-devel@nongnu.org, Alistair Francis <alistair@alistair23.me>, 
  Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>, 
  "open list:Block layer core" <qemu-block@nongnu.org>,
  =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12e;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12e.google.com
+Content-Type: multipart/alternative; boundary="00000000000075a820064b32f5cf"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52d;
+ envelope-from=buenocalvachejoel@gmail.com; helo=mail-pg1-x52d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -120,50 +118,146 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 7 Jan 2026 at 11:30, Joel Bueno <buenocalvachejoel@gmail.com> wrote=
-:
+--00000000000075a820064b32f5cf
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+It=E2=80=99s a board we=E2=80=99re trying to bringup at my current company,=
+ we were trying
+to understand why the hardware was working fine but didn=E2=80=99t under QE=
+MU.
+
+Turns out the logic that was used to determine the timing value was
+slightly incorrect and was making the flash completely unresponsive under
+certain conditions early on the boot process.
+
+Thanks for adding C=C3=A9dric!
+
+On Thu, Feb 19, 2026 at 21:01 Peter Maydell <peter.maydell@linaro.org>
+wrote:
+
+> On Wed, 7 Jan 2026 at 11:30, Joel Bueno <buenocalvachejoel@gmail.com>
+> wrote:
+> >
+> > Is there any feedback on this patch series?
 >
-> Is there any feedback on this patch series?
+> Which board model(s) does this affect? You might have
+> some luck cc'ing their maintainers.
+>
+> I've cc'd C=C3=A9dric who has done review in m25p80.c in the past.
+>
+> > On Sun, Dec 21, 2025 at 11:53 Joel Bueno <buenocalvachejoel@gmail.com>
+> wrote:
+> >>
+> >> The Fast Read (0Bh) instruction requires 8 dummy clock cycles
+> >> according to Winbond datasheets (e.g., W25Q256JV Section 8.2.12).
+> >> However, the current code adds 8 to needed_bytes, which represents
+> >> bytes, not clock cycles. Since 8 clock cycles equals 1 byte in SPI
+> >> communication (1 bit per clock edge), this results in 64 dummy
+> >> clock cycles instead of 8.
+> >>
+> >> Change the Winbond case to add 1 byte (8 clocks) instead of 8 bytes
+> >> (64 clocks), matching the existing implementation for SST flash and
+> >> the datasheet specifications.
+> >>
+> >> Signed-off-by: Joel Bueno <buenocalvachejoel@gmail.com>
+> >> ---
+> >>  hw/block/m25p80.c | 2 +-
+> >>  1 file changed, 1 insertion(+), 1 deletion(-)
+> >>
+> >> diff --git a/hw/block/m25p80.c b/hw/block/m25p80.c
+> >> index a5336d92ff..21c2118b33 100644
+> >> --- a/hw/block/m25p80.c
+> >> +++ b/hw/block/m25p80.c
+> >> @@ -1001,7 +1001,7 @@ static void decode_fast_read_cmd(Flash *s)
+> >>          s->needed_bytes +=3D 1;
+> >>          break;
+> >>      case MAN_WINBOND:
+> >> -        s->needed_bytes +=3D 8;
+> >> +        s->needed_bytes +=3D 1;
+> >>          break;
+> >>      case MAN_NUMONYX:
+> >>          s->needed_bytes +=3D numonyx_extract_cfg_num_dummies(s);
+> >> --
+> >> 2.51.0
+>
+> -- PMM
+>
 
-Which board model(s) does this affect? You might have
-some luck cc'ing their maintainers.
+--00000000000075a820064b32f5cf
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-I've cc'd C=C3=A9dric who has done review in m25p80.c in the past.
+<div dir=3D"auto">It=E2=80=99s a board we=E2=80=99re trying to bringup at m=
+y current company, we were trying to understand why the hardware was workin=
+g fine but didn=E2=80=99t=C2=A0under QEMU.</div><div dir=3D"auto"><br></div=
+><div dir=3D"auto">Turns out the logic that was used to determine the timin=
+g value was slightly incorrect and was making the flash completely unrespon=
+sive under certain conditions early on the boot process.</div><div dir=3D"a=
+uto"><br></div><div dir=3D"auto">Thanks for adding C=C3=A9dric!</div><div><=
+br><div class=3D"gmail_quote gmail_quote_container"><div dir=3D"ltr" class=
+=3D"gmail_attr">On Thu, Feb 19, 2026 at 21:01 Peter Maydell &lt;<a href=3D"=
+mailto:peter.maydell@linaro.org">peter.maydell@linaro.org</a>&gt; wrote:<br=
+></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;=
+border-left-width:1px;border-left-style:solid;padding-left:1ex;border-left-=
+color:rgb(204,204,204)">On Wed, 7 Jan 2026 at 11:30, Joel Bueno &lt;<a href=
+=3D"mailto:buenocalvachejoel@gmail.com" target=3D"_blank">buenocalvachejoel=
+@gmail.com</a>&gt; wrote:<br>
+&gt;<br>
+&gt; Is there any feedback on this patch series?<br>
+<br>
+Which board model(s) does this affect? You might have<br>
+some luck cc&#39;ing their maintainers.<br>
+<br>
+I&#39;ve cc&#39;d C=C3=A9dric who has done review in m25p80.c in the past.<=
+br>
+<br>
+&gt; On Sun, Dec 21, 2025 at 11:53 Joel Bueno &lt;<a href=3D"mailto:buenoca=
+lvachejoel@gmail.com" target=3D"_blank">buenocalvachejoel@gmail.com</a>&gt;=
+ wrote:<br>
+&gt;&gt;<br>
+&gt;&gt; The Fast Read (0Bh) instruction requires 8 dummy clock cycles<br>
+&gt;&gt; according to Winbond datasheets (e.g., W25Q256JV Section 8.2.12).<=
+br>
+&gt;&gt; However, the current code adds 8 to needed_bytes, which represents=
+<br>
+&gt;&gt; bytes, not clock cycles. Since 8 clock cycles equals 1 byte in SPI=
+<br>
+&gt;&gt; communication (1 bit per clock edge), this results in 64 dummy<br>
+&gt;&gt; clock cycles instead of 8.<br>
+&gt;&gt;<br>
+&gt;&gt; Change the Winbond case to add 1 byte (8 clocks) instead of 8 byte=
+s<br>
+&gt;&gt; (64 clocks), matching the existing implementation for SST flash an=
+d<br>
+&gt;&gt; the datasheet specifications.<br>
+&gt;&gt;<br>
+&gt;&gt; Signed-off-by: Joel Bueno &lt;<a href=3D"mailto:buenocalvachejoel@=
+gmail.com" target=3D"_blank">buenocalvachejoel@gmail.com</a>&gt;<br>
+&gt;&gt; ---<br>
+&gt;&gt;=C2=A0 hw/block/m25p80.c | 2 +-<br>
+&gt;&gt;=C2=A0 1 file changed, 1 insertion(+), 1 deletion(-)<br>
+&gt;&gt;<br>
+&gt;&gt; diff --git a/hw/block/m25p80.c b/hw/block/m25p80.c<br>
+&gt;&gt; index a5336d92ff..21c2118b33 100644<br>
+&gt;&gt; --- a/hw/block/m25p80.c<br>
+&gt;&gt; +++ b/hw/block/m25p80.c<br>
+&gt;&gt; @@ -1001,7 +1001,7 @@ static void decode_fast_read_cmd(Flash *s)<b=
+r>
+&gt;&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 s-&gt;needed_bytes +=3D 1;<br>
+&gt;&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br>
+&gt;&gt;=C2=A0 =C2=A0 =C2=A0 case MAN_WINBOND:<br>
+&gt;&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 s-&gt;needed_bytes +=3D 8;<br>
+&gt;&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 s-&gt;needed_bytes +=3D 1;<br>
+&gt;&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br>
+&gt;&gt;=C2=A0 =C2=A0 =C2=A0 case MAN_NUMONYX:<br>
+&gt;&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 s-&gt;needed_bytes +=3D numonyx_=
+extract_cfg_num_dummies(s);<br>
+&gt;&gt; --<br>
+&gt;&gt; 2.51.0<br>
+<br>
+-- PMM<br>
+</blockquote></div></div>
 
-> On Sun, Dec 21, 2025 at 11:53 Joel Bueno <buenocalvachejoel@gmail.com> wr=
-ote:
->>
->> The Fast Read (0Bh) instruction requires 8 dummy clock cycles
->> according to Winbond datasheets (e.g., W25Q256JV Section 8.2.12).
->> However, the current code adds 8 to needed_bytes, which represents
->> bytes, not clock cycles. Since 8 clock cycles equals 1 byte in SPI
->> communication (1 bit per clock edge), this results in 64 dummy
->> clock cycles instead of 8.
->>
->> Change the Winbond case to add 1 byte (8 clocks) instead of 8 bytes
->> (64 clocks), matching the existing implementation for SST flash and
->> the datasheet specifications.
->>
->> Signed-off-by: Joel Bueno <buenocalvachejoel@gmail.com>
->> ---
->>  hw/block/m25p80.c | 2 +-
->>  1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/hw/block/m25p80.c b/hw/block/m25p80.c
->> index a5336d92ff..21c2118b33 100644
->> --- a/hw/block/m25p80.c
->> +++ b/hw/block/m25p80.c
->> @@ -1001,7 +1001,7 @@ static void decode_fast_read_cmd(Flash *s)
->>          s->needed_bytes +=3D 1;
->>          break;
->>      case MAN_WINBOND:
->> -        s->needed_bytes +=3D 8;
->> +        s->needed_bytes +=3D 1;
->>          break;
->>      case MAN_NUMONYX:
->>          s->needed_bytes +=3D numonyx_extract_cfg_num_dummies(s);
->> --
->> 2.51.0
-
--- PMM
+--00000000000075a820064b32f5cf--
 
