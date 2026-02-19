@@ -4,104 +4,141 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8FB9E9A052
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 17:33:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7FB3E9A056
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 17:34:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vt7uG-0001Aw-3H; Thu, 19 Feb 2026 12:33:40 -0500
+	id 1vt7uL-0001L1-Gm; Thu, 19 Feb 2026 12:33:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mbawa@redhat.com>) id 1vt7u2-00012f-V3
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 12:33:27 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mbawa@redhat.com>) id 1vt7u1-0004T9-20
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 12:33:26 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771522403;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=yAVzG0o86ycl8AVxd7PvcwR9rkF5ddTGG9+7DzM5edQ=;
- b=NQGwsfbaB4UUciAftVl0ZYM+HKyiJXlU+I5L59SQ2bs0ah0bsg8luuGyvE07VfiHzZrRwu
- iYBnkOp5mTo97VbNcbkMM9lpK6gPGzHlzTPW6hT/2IN5QAVmPO1Y0xcwcXaCljxKkinjAY
- MdDw9sh7BR2Ar6GXZjlotZt5eKdSfCA=
-Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com
- [209.85.214.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-687-0-DeFQNgN369SHClNXLOAg-1; Thu, 19 Feb 2026 12:33:22 -0500
-X-MC-Unique: 0-DeFQNgN369SHClNXLOAg-1
-X-Mimecast-MFC-AGG-ID: 0-DeFQNgN369SHClNXLOAg_1771522401
-Received: by mail-pl1-f199.google.com with SMTP id
- d9443c01a7336-2a7701b6353so13929095ad.3
- for <qemu-devel@nongnu.org>; Thu, 19 Feb 2026 09:33:21 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vt7u5-00014M-N5
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 12:33:29 -0500
+Received: from mail-pg1-x536.google.com ([2607:f8b0:4864:20::536])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vt7u4-0004YR-Cl
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 12:33:29 -0500
+Received: by mail-pg1-x536.google.com with SMTP id
+ 41be03b00d2f7-c54f700b5b1so785791a12.0
+ for <qemu-devel@nongnu.org>; Thu, 19 Feb 2026 09:33:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1771522401; x=1772127201; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=yAVzG0o86ycl8AVxd7PvcwR9rkF5ddTGG9+7DzM5edQ=;
- b=DGatYUEn3yTVcKUf/yxeuQSxE1G13GvThB6Un6aDS3cwogMXqzfgNNBjNjddQ3+3u6
- pESEuakdv/j+bxvecQpgyAnpIZmM1Ms4R2a/AisvA/cgnqDgojjhsn1hsfp9cUDeKzBb
- bciarg8DtbeOd4JTiuUH9VLWqgnVtx4eXdeTdgWtxk6rNGmcVXbREU98OO7vxTxtNQ2S
- paQBwCfbhuM9cINV6GunYcOU4EGbAkvaq2YtFwqMEICvvb5TB4cb3+1t5AGL2PqPSeB6
- PgVkf7apqL/N4jhZM6/+5kAuETrrOK8r31C4W2I3Yor+VdVQzaGGhKH6YmvgWo+Nf7yw
- KS5A==
+ d=linaro.org; s=google; t=1771522407; x=1772127207; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=6fzaLVbAzvXphrFz0vSLUIH731PzUKPMEw2H1Be8Cno=;
+ b=UkiDwlkOMWuGyZ1f1BoRO+PS7JE7FkZbWvCXdfMkkehxyAdDCa5XqNaWc3voYCcyqR
+ I2PveJu/D8IuFFbCRi43NAxZt3zpL8RtUBO5GKjfuqnu7Uls4h9ZoWZMdx8APEyJ6fsW
+ gnnmAGIzk3HQeubw6N63qG5Sgm3rS2hbEPMBuXTzOMlkCCBb7NNH+xl7A1gg2EYlwzQu
+ hxxqs3NNiglegvzv+hZQXEXOQ9dDW/qjm0C+Prc8cL/LtEfwXYEVZfUXj1wwwkdd6NO/
+ c2PbBC/d4m/lDJaI++EONQ5PDrUPizW/SID0CokMwHzA+IU9ICwrcTojBTetIPC2ft9S
+ qjcA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771522401; x=1772127201;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=yAVzG0o86ycl8AVxd7PvcwR9rkF5ddTGG9+7DzM5edQ=;
- b=w75/Ijp+gbMz1Pcp3L/gDdRVRD/8qJ37Cl8gvzqih1rs+7r2s723XGBeMBAcAoVfOQ
- YvQYmpCMa9ozoX7xx16d9xh5P4gkrBcBuGwyEPtgYSwC6kUbF7C/UT/uovXdSicTmBpL
- /5UDEAlMbEjtQXxpNd9GMaqTM+EBQncFK785uAhNAAd06TPiAS/aTr/nofsu++5Uo4z/
- AB2hSLqYUM+01JGePxW5vswgETfFxGmlQF24tq2M/kygkqdWzXjLT98ATx+qUMii0fto
- miNUkEXf/hWvog3tq22BLxFHn0pArQK0QlKE+n8I3pzpoUyNHFaJdUXgupwtPFjTWJ9E
- BSNA==
-X-Gm-Message-State: AOJu0YzRp/hLOiLdCViyAAaXiuiWaq5EsGVsPndzwKvgpS4L51r09HpE
- N6LQNFhbEJ8V5bXwkrgJziP6Ogjgl0kP0maEtDSL/KFa2VNaIhAZst4kuA92ONyXeS/aLILsUJn
- IkK3sjvArbEw7fYwzW01M4RzNVzjGGH4CSqy8djbAugSd735GoOFekA+ia7221zxQpkvtzfbcEA
- yUtq0vpna26qA1M4Gg6P9ZWRop/nL9f5IyPcQV
-X-Gm-Gg: AZuq6aLLnuLC+Xjd8V89V0DtXpEoSrFtQygdQtVHh6hqvCmKFWzVN8sfvFrDru05pDz
- bWM3Y2gm2xBEGNBnQ2/ivfjLwu33n9ScnW3NryaBpxOr1sXPu1+CFlE5MYZkjuHzJ0PDP/WmGa8
- k+Hzrkmm2VPrnhUaTgUG41XOlgtfXZF1oIT/eHRp9zUPG1fNIUfbwXnEEDCuCby3DCvpj83Pqez
- aRn0lOfIb/vVHbL7hj15oGUGvnQEds7T+5/i8YPPz3rTD1haggmbOReSl3K5fJJYgnLCXaCbrgy
- +GZkzOxUdjYVIbq/GEpFX9qOz2pz1+b1KkB8/lev4uBfDg3RS5n1Jmyrblzr+urhTxVjdN/xqzA
- M7HosgUCx/B3nu0UyupFcv180oc8y7BUvOMPTgnqZx6vJF2q4
-X-Received: by 2002:a17:903:22d2:b0:2aa:d674:a27e with SMTP id
- d9443c01a7336-2ad17431b8dmr189240065ad.10.1771522400695; 
- Thu, 19 Feb 2026 09:33:20 -0800 (PST)
-X-Received: by 2002:a17:903:22d2:b0:2aa:d674:a27e with SMTP id
- d9443c01a7336-2ad17431b8dmr189239585ad.10.1771522400042; 
- Thu, 19 Feb 2026 09:33:20 -0800 (PST)
-Received: from mbawa-thinkpadt14gen5.bengluru.csb
- ([2406:7400:51:d336:b064:aee8:1042:ba4c])
+ d=1e100.net; s=20230601; t=1771522407; x=1772127207;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=6fzaLVbAzvXphrFz0vSLUIH731PzUKPMEw2H1Be8Cno=;
+ b=PGHSi1NBOqnw73yhc0FxXnCEhn1gLAHRJqRITIssu2btE5thO7R9baEFJJHj2J+TTW
+ PFCRdKr6CjbBteA0fGK3xPm6ghHcj4VoH1Y2lIJMo9NLvayH3ien4x+i5jPVXlvsOLyI
+ SEFedfmMazdcyVhaJYTclAxC24t/WY0xano7ktv9qmOVv7dp1rpF67d+FSK4/FkLICsN
+ 4W5F+WWn72Pl60TqHAPTykRoTuaWmk+YWLclCTgTfoBBKMr2tRh88AAysuSQq6xn0uWG
+ iSzUr/QBedBAh0SxLz7Ps5syD5mq1sft1jfnIe/uqlPSmO2tIEVPGTeTO1VgX89D5Fw2
+ 2h6w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWAZO60abQQOaI1pPNA88MgDF5MOiYiR7YANhqU2XVLyhGHlonG53vIbKWEy6vx4kaE3XY7b7AgbBPV@nongnu.org
+X-Gm-Message-State: AOJu0YwQqhf5A59pU6sMWZgHDoqjgfoqbcd7fmaaMJEP848Scc9K1m8d
+ uwE33hYxUXyuSBeVq2zigsenr9+CXDUfiTant7I2QrqZOFXW85ct073FuA4Rj9tE1l0=
+X-Gm-Gg: AZuq6aJryXSWIuXxzgJRRfmKbAtQ4oAEkk8Dh+uZSZowqTp5mJlMABrs9v8uE5eEcyi
+ fB3rycsdqxwsx7QuBbrfKk9xSKXheA3iwj1cIlRqiRaMLg7ByGZ19z2SfZ7/gphtNQPuENkQNen
+ 7PONX6sen5ng665gn6fih++pmCQgXzUYrh64Q6m9eT/w/D54NGH0fcxp6Oz/ofxGzmTmwu6noI8
+ OOcJEloRc8YtYC4f8Br3jj0Vf6ktc7+ODytt34O/DtEJ1DuzvY+BWF+Zwd64IFScVFb73qKbvvr
+ GJ3Ww89oEATStPhE08UkXMDe2PL5LWXSjRAA4camE2tfFKaH1135A7dzLOFgwMkzbp5OqNOuF1Z
+ PZ37nTj69hdszLdZ84KI3Lj0WvrqpX5dovlz445nOTBsSTBc2OCnwl/q5IS1l9cSQDfRPw4c+NB
+ tBO4SqTOL/EThYrdaSYQZr4KxpoklljW7bUK0zUPEgzvpTqXiIfJ77Cen7C5Qzoi/bWh+x
+X-Received: by 2002:a17:902:fc85:b0:2a9:43b0:edd9 with SMTP id
+ d9443c01a7336-2ad175afad1mr182867365ad.60.1771522406849; 
+ Thu, 19 Feb 2026 09:33:26 -0800 (PST)
+Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2ad1aadce38sm177392115ad.71.2026.02.19.09.33.16
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 19 Feb 2026 09:33:19 -0800 (PST)
-From: Mohammadfaiz Bawa <mbawa@redhat.com>
-To: qemu-devel@nongnu.org, qemu-arm@nongnu.org, peter.maydell@linaro.org,
- alex.bennee@linaro.org, philmd@linaro.org
-Cc: pierrick.bouvier@linaro.org, shannon.zhaosl@gmail.com, mst@redhat.com,
- imammedo@redhat.com, anisinha@redhat.com
-Subject: [PATCH v2] hw/arm/virt: Add virtio-mmio-transports property
-Date: Thu, 19 Feb 2026 23:02:56 +0530
-Message-ID: <20260219173256.152743-1-mbawa@redhat.com>
-X-Mailer: git-send-email 2.53.0
+ d9443c01a7336-2ad1a71f1efsm175748455ad.32.2026.02.19.09.33.25
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 19 Feb 2026 09:33:26 -0800 (PST)
+Message-ID: <a966faac-6de8-44eb-a9dc-fe1a8509b75a@linaro.org>
+Date: Thu, 19 Feb 2026 09:33:24 -0800
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v2 13/14] target/alpha: move cpu reset into a proper
+ reset function
+Content-Language: en-US
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Yoshinori Sato <yoshinori.sato@nifty.com>, qemu-arm@nongnu.org,
+ Laurent Vivier <laurent@vivier.eu>, Thomas Huth <huth@tuxfamily.org>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Aurelien Jarno <aurelien@aurel32.net>,
+ Jim MacArthur <jim.macarthur@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Bastian Koppelmann <kbastian@rumtueddeln.de>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Aleksandar Rikalo <arikalo@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Yanan Wang <wangyanan55@huawei.com>
+References: <20260219171810.602667-1-alex.bennee@linaro.org>
+ <20260219171810.602667-14-alex.bennee@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
+ 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
+ ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
+In-Reply-To: <20260219171810.602667-14-alex.bennee@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mbawa@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::536;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x536.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.045,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,154 +154,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Windows ARM64 guests detect virtio-mmio devices declared in ACPI
-tables even when no backend is attached. This causes "Unknown
-devices" (ACPI\LNRO0005) to appear in Device Manager.
+On 2/19/26 9:18 AM, Alex Bennée wrote:
+> Now the alpha clipper machine will execute a proper reset we can use
+> the reset mechanisms to reset the CPU.
+> 
+> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+> ---
+>   target/alpha/cpu.h |  2 ++
+>   target/alpha/cpu.c | 10 ++++++----
+>   2 files changed, 8 insertions(+), 4 deletions(-)
+> 
 
-Until Windows fixes that by supporting, add a new machine
-property 'virtio-mmio-transports' to control the number of
-virtio-mmio transports instantiated. The default remains
-NUM_VIRTIO_TRANSPORTS (32) for backward compatibility.
-Setting it to 0 allows users to disable virtio-mmio entirely.
-
-Usage: -machine virt,virtio-mmio-transports=0
-
-Signed-off-by: Mohammadfaiz Bawa <mbawa@redhat.com>
----
-Changes in v2:
- - Renamed property from virtio-transports to virtio-mmio-transports
- - Added documentation in docs/system/arm/virt.rst
-
- docs/system/arm/virt.rst |  5 +++++
- hw/arm/virt-acpi-build.c |  2 +-
- hw/arm/virt.c            | 43 ++++++++++++++++++++++++++++++++++++++--
- include/hw/arm/virt.h    |  1 +
- 4 files changed, 48 insertions(+), 3 deletions(-)
-
-diff --git a/docs/system/arm/virt.rst b/docs/system/arm/virt.rst
-index e5570773ba..e037f2c269 100644
---- a/docs/system/arm/virt.rst
-+++ b/docs/system/arm/virt.rst
-@@ -212,6 +212,11 @@ dtb-randomness
- dtb-kaslr-seed
-   A deprecated synonym for dtb-randomness.
- 
-+virtio-mmio-transports
-+  Set the number of virtio-mmio transports to create (between 0 and 32;
-+  the default is 32).  Unused transports are harmless, but you can
-+  use this property to avoid exposing them to the guest if you wish.
-+
- x-oem-id
-   Set string (up to 6 bytes) to override the default value of field OEMID in ACPI
-   table header.
-diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
-index c145678185..27c007fd62 100644
---- a/hw/arm/virt-acpi-build.c
-+++ b/hw/arm/virt-acpi-build.c
-@@ -1150,7 +1150,7 @@ build_dsdt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
-     fw_cfg_acpi_dsdt_add(scope, &memmap[VIRT_FW_CFG]);
-     virtio_acpi_dsdt_add(scope, memmap[VIRT_MMIO].base, memmap[VIRT_MMIO].size,
-                          (irqmap[VIRT_MMIO] + ARM_SPI_BASE),
--                         0, NUM_VIRTIO_TRANSPORTS);
-+                         0, vms->virtio_transports);
-     acpi_dsdt_add_pci(scope, memmap, irqmap[VIRT_PCIE] + ARM_SPI_BASE, vms);
-     if (vms->acpi_dev) {
-         build_ged_aml(scope, "\\_SB."GED_DEVICE,
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index 390845c503..b1e8ce9723 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -1206,7 +1206,7 @@ static void create_virtio_devices(const VirtMachineState *vms)
-      * between kernel versions). For reliable and stable identification
-      * of disks users must use UUIDs or similar mechanisms.
-      */
--    for (i = 0; i < NUM_VIRTIO_TRANSPORTS; i++) {
-+    for (i = 0; i < vms->virtio_transports; i++) {
-         int irq = vms->irqmap[VIRT_MMIO] + i;
-         hwaddr base = vms->memmap[VIRT_MMIO].base + i * size;
- 
-@@ -1221,7 +1221,7 @@ static void create_virtio_devices(const VirtMachineState *vms)
-      * loop influences virtio device to virtio transport assignment, whereas
-      * this loop controls how virtio transports are laid out in the dtb.
-      */
--    for (i = NUM_VIRTIO_TRANSPORTS - 1; i >= 0; i--) {
-+    for (i = vms->virtio_transports - 1; i >= 0; i--) {
-         char *nodename;
-         int irq = vms->irqmap[VIRT_MMIO] + i;
-         hwaddr base = vms->memmap[VIRT_MMIO].base + i * size;
-@@ -2705,6 +2705,36 @@ static void virt_set_highmem_mmio_size(Object *obj, Visitor *v,
-     extended_memmap[VIRT_HIGH_PCIE_MMIO].size = size;
- }
- 
-+static void virt_get_virtio_transports(Object *obj, Visitor *v,
-+                                       const char *name, void *opaque,
-+                                       Error **errp)
-+{
-+    VirtMachineState *vms = VIRT_MACHINE(obj);
-+    uint8_t transports = vms->virtio_transports;
-+
-+    visit_type_uint8(v, name, &transports, errp);
-+}
-+
-+static void virt_set_virtio_transports(Object *obj, Visitor *v,
-+                                       const char *name, void *opaque,
-+                                       Error **errp)
-+{
-+    VirtMachineState *vms = VIRT_MACHINE(obj);
-+    uint8_t transports;
-+
-+    if (!visit_type_uint8(v, name, &transports, errp)) {
-+        return;
-+    }
-+
-+    if (transports > NUM_VIRTIO_TRANSPORTS) {
-+        error_setg(errp, "virtio-mmio-transports must not exceed %d",
-+                   NUM_VIRTIO_TRANSPORTS);
-+        return;
-+    }
-+
-+    vms->virtio_transports = transports;
-+}
-+
- static bool virt_get_its(Object *obj, Error **errp)
- {
-     VirtMachineState *vms = VIRT_MACHINE(obj);
-@@ -3427,6 +3457,13 @@ static void virt_machine_class_init(ObjectClass *oc, const void *data)
-                                           "Set the high memory region size "
-                                           "for PCI MMIO");
- 
-+    object_class_property_add(oc, "virtio-mmio-transports", "uint8",
-+                                   virt_get_virtio_transports,
-+                                   virt_set_virtio_transports,
-+                                   NULL, NULL);
-+    object_class_property_set_description(oc, "virtio-mmio-transports",
-+                                          "Set the number of virtio-mmio transports to instantiate");
-+
-     object_class_property_add_str(oc, "gic-version", virt_get_gic_version,
-                                   virt_set_gic_version);
-     object_class_property_set_description(oc, "gic-version",
-@@ -3540,6 +3577,8 @@ static void virt_instance_init(Object *obj)
- 
-     vms->irqmap = a15irqmap;
- 
-+    vms->virtio_transports = NUM_VIRTIO_TRANSPORTS;
-+
-     virt_flash_create(vms);
- 
-     vms->oem_id = g_strndup(ACPI_BUILD_APPNAME6, 6);
-diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
-index 3b382bdf49..f898afaa6e 100644
---- a/include/hw/arm/virt.h
-+++ b/include/hw/arm/virt.h
-@@ -169,6 +169,7 @@ struct VirtMachineState {
-     uint32_t msi_phandle;
-     uint32_t iommu_phandle;
-     int psci_conduit;
-+    uint8_t virtio_transports;
-     hwaddr highest_gpa;
-     DeviceState *gic;
-     DeviceState *acpi_dev;
--- 
-2.53.0
-
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
