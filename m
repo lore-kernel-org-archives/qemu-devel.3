@@ -4,42 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20DE4E9A048
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 12:12:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4FBAE9A03B
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 12:12:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vt2sg-00034Q-0p; Thu, 19 Feb 2026 07:11:42 -0500
+	id 1vt2tO-00041v-Jw; Thu, 19 Feb 2026 07:12:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vt2sb-000325-Sb
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 07:11:38 -0500
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vt2tN-0003zU-Gt
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 07:12:25 -0500
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vt2sX-00022a-Cu
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 07:11:34 -0500
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vt2tJ-0002C6-Ir
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 07:12:24 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject
  :Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=GFrWxH5OEo/gKSHj3RjiYKvQnbhJ9FS6qkEUWbaM748=; b=MBTqvBTWn/GqDhN
- PChYFcDy7vsPtg36DLTh32i2EL9jmEC3jnfkXaHmqfKUrtXlf1kB+P0yHG88Eh6Ux0kUWfqZY7Cvw
- ONPZTbE2okO/nCj7Hzno4A7Jex8jZH7WqJCwJt5xttsCTb4vSGHOAWwlQusulOLNJRB1s+4VF7oNb
- zk=;
-Date: Thu, 19 Feb 2026 13:15:08 +0100
+ List-Help; bh=YDuwdc5PEQfthRgPJJ+YiCxKomFYexVpfSEAjMWsCzI=; b=i9nUadBJGp3ZAbp
+ IeFBvalQqhvHK4yF0N4ik+CYY3TaFSEm1jwx3UFxZ0QCgSYbsCVeSzX1/qmPBE7uDwpdY9D22MEss
+ ZSvQoqVMnOaah7AcpZ5Cs81/oDRx/fGWOfPVCHPx1gWZzYHzNMt3KGYk0anYuY2T0rs9qFJcDb2j9
+ qE=;
+Date: Thu, 19 Feb 2026 13:15:56 +0100
 To: deller@kernel.org
 Cc: Richard Henderson <richard.henderson@linaro.org>, 
  qemu-devel@nongnu.org, Helge Deller <deller@gmx.de>
-Subject: Re: [PATCH 2/4] target/hppa: Update SeaBIOS-hppa to version 22
-Message-ID: <aZb-q1ZALp2x_rVr@hive.localdomain>
+Subject: Re: [PATCH 3/4] hw/hppa: Require SeaBIOS version 22 for A400 machine
+Message-ID: <aZb-2kFdUygdnoqC@hive.localdomain>
 References: <20260218201221.20958-1-deller@kernel.org>
- <20260218201221.20958-3-deller@kernel.org>
+ <20260218201221.20958-4-deller@kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260218201221.20958-3-deller@kernel.org>
+In-Reply-To: <20260218201221.20958-4-deller@kernel.org>
 Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
  helo=rev.ng
 X-Spam_score_int: -20
@@ -69,19 +69,32 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 18/02/26, deller@kernel.org wrote:
 > From: Helge Deller <deller@gmx.de>
 > 
-> The new firmware includes support for an A400-44 machine
-> with initial functional 64-bit PAT PDC support:
-> - Linux 64-bit kernel runs nicely.
-> - ODE 2006 works nicely on 715, B160L, and A400, but has problems on C3700.
-> - MPE and 64-bit HP-UX11 need more work, although HP-UX11 boot up to a crash
->   where it reports where it had problems.
+> Require at least SeaBIOS version 22 before adding the A400 machine.
+> This is required, because version 22 adds the A400 machine definition
+> and provides the necessary 64-bit PAT firmware. All other machines up to
+> now used only the 32- or 64-bit PDC firmware without the PAT extensions.
 > 
 > Signed-off-by: Helge Deller <deller@gmx.de>
 > ---
->  pc-bios/hppa-firmware.img   | Bin 628952 -> 632048 bytes
->  pc-bios/hppa-firmware64.img | Bin 692032 -> 713608 bytes
->  roms/seabios-hppa           |   2 +-
->  3 files changed, 1 insertion(+), 1 deletion(-)
+>  hw/hppa/machine.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/hw/hppa/machine.c b/hw/hppa/machine.c
+> index d6aeb793c0..5ce4a17915 100644
+> --- a/hw/hppa/machine.c
+> +++ b/hw/hppa/machine.c
+> @@ -45,7 +45,7 @@ struct HppaMachineState {
+>      MachineState parent_obj;
+>  };
+>  
+> -#define MIN_SEABIOS_HPPA_VERSION 19 /* require at least this fw version */
+> +#define MIN_SEABIOS_HPPA_VERSION 22 /* require at least this fw version */
+>  
+>  #define HPA_POWER_BUTTON        (FIRMWARE_END - 0x10)
+>  static hwaddr soft_power_reg;
+> -- 
+> 2.53.0
+> 
 
 Reviewed-by: Anton Johansson <anjo@rev.ng>
 
