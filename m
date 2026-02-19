@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBA26E9A04C
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 13:56:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E3C1E9A048
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 13:56:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vt4VS-0007Si-2Q; Thu, 19 Feb 2026 08:55:50 -0500
+	id 1vt4VP-0007S1-1t; Thu, 19 Feb 2026 08:55:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <Manali.Shukla@amd.com>)
- id 1vswpJ-0006NB-Ey
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 00:43:49 -0500
+ id 1vswxb-0008WK-Qt
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 00:52:23 -0500
 Received: from mail-eastusazlp17011000f.outbound.protection.outlook.com
  ([2a01:111:f403:c100::f] helo=BL2PR02CU003.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <Manali.Shukla@amd.com>)
- id 1vswpG-0007n1-KS
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 00:43:49 -0500
+ id 1vswxZ-0001El-V7
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 00:52:23 -0500
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=lsqh6jDo8HbpV1qpnElYxuQYDvkhmg0JZhC63T54fEXvof4SdZNr+dpUAJudYKrDy3M6VZ5dN5DEarwephK4QLumv1ot6/eVLxxuvf6x3FVUeJUkT/dlgvjx+iA/W8ydXiv2m0rkc2HQuFBNIRjZLQdb/9qzf/hygH/kDsRNt1DFkS5qDdbR6PR+TPELzR06WdPBIjKObnlANwcN9zeY77JzfItNaZVAfXYhNo7PdIhWHVVh5VjBe2sY7fTAyxDyrXi0RiuFyI8vfmeC43W0aVg2QhlTzQns+LZEPlBxrjX6nBjLOIsiWBVJQs0gv0pV+QJTxslcJbCeRbuOG1VXMw==
+ b=MRATiIePXUb4OoJymO9+uQHOcWCUlSAk1AjUukvnklXuPhALvd2Tk699fxSU/kHs2MVIKN7JBXlvlkzsS7rUQPqa5O9nLH52p880by3I5irvy7IZKvCVIYPeNnDc/XC67E+pkVk/qENHl6l/nO0P52ucJTPha6YcmNTWuJlh1ttVnPNaat4FblPWq1A0qkR1eUJ3UE4Z6Lcn4Dqslx6a1NdL6A9a1m0Jhb4iAhlDMYeYfSaptoKMKsrpAs12Cc7yXfU64gdsy9fKArE7/27TrQA3ThSN19F1jIUrA3j4Fyc1cs9+MF2iCEyeIlXZuqrfj4zw7E2oRYinVSDWSKOt8A==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Col43SzJeNwKuNZ6EMFerTnHD5qjf0AvUpZrXsGDfmk=;
- b=C+sTw3A6KbW+7+14EEMxMyHTZablvWmC6gFSM5AJEO79igZ3XCtOHfHxm7v0fs1ieW9Gn0XaenJVs8bOx5wZ7E3Ydf4mziyImBRk8/ON/uZ+nYrrHU49Vh+BnwLHXy157mXlrkfWk9zUzk8iQrt1SG2fONlyHOUGfqj7TU2Xu/el3hoDDN/6u4uD2fpzGL9BAHUnxdHV8Swi4YGT3OiRCGUAaoqGkzMuVls7AUFuxG75A/MLjeFThR5UKs+5v+7H1iSaYY+TyPJ9B/oJ+NHB3S07qIyanHIH9dZtwfeQwCBS952MaEQTvrcv/1CkMz+QUfz3qOVrF27nrGYHCkwoog==
+ bh=PaqBUQZTELNUDGR/wjWI62sCghUO+WS0939AmCwMZcU=;
+ b=ErTqjhw9Ynqmwu4D37PgwjmXTYEqIgNKnvj/lCW1Hdin6cOH/G1imQF6kroF24eYKn3+269m9MG9HU0ObvUZJsUCBPH6JANS4RIybqeIHDU2wAegZSerbg+Qv8/ULo0H6+Z+vmLNlmgGs9HyYAqslurSjxrxHBTfQFnf5kNLWKDrSOJrWVIKK3VjXOjDhbVqApQLT4tprfK/nLgtG9v8tRNJSSU7WSSs5lTpIw0aSvTCENrt/9SPHLUd4aTeOV476h9BLM3gV2UjaAv8ieXiDngH+/EhGvqtnQ+Vl4hiAtDIbjHCvaLfSr3VZhCZcvs3cldcjHv5nx8jOXSovXFazA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
  165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
  (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
  dkim=none (message not signed); arc=none (0)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Col43SzJeNwKuNZ6EMFerTnHD5qjf0AvUpZrXsGDfmk=;
- b=Y2X8kkl2oGKOsRRyw7SbX1gwYqYWNdtbu1pVkfAyZEjf9EI3Ke8kFyCNfWIc/N2ugmVQ6jah9nbMIm+6OHatnq64+aXzFm1d806w6u3J62f2afmMSbJlNCoweFuJaOEJBo4L7CFzogpSER7cDkJsnaKwSv9vrBPDQKqI5TlHObc=
-Received: from BY5PR03CA0005.namprd03.prod.outlook.com (2603:10b6:a03:1e0::15)
- by LV2PR12MB5919.namprd12.prod.outlook.com (2603:10b6:408:173::17)
+ bh=PaqBUQZTELNUDGR/wjWI62sCghUO+WS0939AmCwMZcU=;
+ b=tQcnuPD8OIn72Bs1bAInjetkUfs1nH8j2U6aIAkiYuLy58E2GrIhHq5mylUDLBYRVz0q3xUBTs8xKL4wRE4ix7LdO/fQy68IU5jzmkQnK1iVMI60LknH1wvA/e7K6eSlldFKniUXd1p47x/4SGN0t0OsHhkM3Li9U4+eAQVK4OE=
+Received: from SJ0PR03CA0123.namprd03.prod.outlook.com (2603:10b6:a03:33c::8)
+ by IA0PR12MB8745.namprd12.prod.outlook.com (2603:10b6:208:48d::11)
  with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9632.13; Thu, 19 Feb
- 2026 05:43:41 +0000
-Received: from SJ1PEPF00001CDE.namprd05.prod.outlook.com
- (2603:10b6:a03:1e0:cafe::81) by BY5PR03CA0005.outlook.office365.com
- (2603:10b6:a03:1e0::15) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9632.15; Thu, 19 Feb
+ 2026 05:52:17 +0000
+Received: from SJ5PEPF000001C9.namprd05.prod.outlook.com
+ (2603:10b6:a03:33c:cafe::19) by SJ0PR03CA0123.outlook.office365.com
+ (2603:10b6:a03:33c::8) with Microsoft SMTP Server (version=TLS1_3,
  cipher=TLS_AES_256_GCM_SHA384) id 15.20.9632.14 via Frontend Transport; Thu,
- 19 Feb 2026 05:43:40 +0000
+ 19 Feb 2026 05:52:05 +0000
 X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
  smtp.mailfrom=amd.com; dkim=none (message not signed)
  header.d=none;dmarc=pass action=none header.from=amd.com;
@@ -53,88 +53,97 @@ Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
  165.204.84.17 as permitted sender) receiver=protection.outlook.com;
  client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
 Received: from satlexmb07.amd.com (165.204.84.17) by
- SJ1PEPF00001CDE.mail.protection.outlook.com (10.167.242.6) with Microsoft
+ SJ5PEPF000001C9.mail.protection.outlook.com (10.167.242.37) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9632.12 via Frontend Transport; Thu, 19 Feb 2026 05:43:40 +0000
-Received: from brahmaputra.amd.com (10.180.168.240) by satlexmb07.amd.com
+ 15.20.9632.12 via Frontend Transport; Thu, 19 Feb 2026 05:52:16 +0000
+Received: from satlexmb07.amd.com (10.181.42.216) by satlexmb07.amd.com
  (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.17; Wed, 18 Feb
- 2026 23:43:37 -0600
-From: Manali Shukla <manali.shukla@amd.com>
-To: <qemu-devel@nongnu.org>
-CC: Cornelia Huck <cohuck@redhat.com>, Eduardo Habkost <eduardo@habkost.net>, 
- <kvm@vger.kernel.org>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- "Marcelo Tosatti" <mtosatti@redhat.com>, "Michael S . Tsirkin"
- <mst@redhat.com>, "Paolo Bonzini" <pbonzini@redhat.com>, Sean Christopherson
- <seanjc@google.com>, Richard Henderson <richard.henderson@linaro.org>, Naveen
- N Rao <naveen@kernel.org>, Nikunj Dadhaniya <nikunj@amd.com>,
- <manali.shukla@amd.com>
-Subject: [PATCH v1 6/8] i386/kvm: Add KVM_GET/SET_LAPIC2 support for extended
- APIC state
-Date: Thu, 19 Feb 2026 05:42:05 +0000
-Message-ID: <20260219054207.471303-7-manali.shukla@amd.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260219054207.471303-1-manali.shukla@amd.com>
-References: <20260219054207.471303-1-manali.shukla@amd.com>
+ 2026 23:52:16 -0600
+Received: from [10.143.194.143] (10.180.168.240) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server id 15.2.2562.17 via Frontend
+ Transport; Wed, 18 Feb 2026 23:52:12 -0600
+Message-ID: <70cc1005-301e-488b-9b52-0d6e4b3207f7@amd.com>
+Date: Thu, 19 Feb 2026 11:22:11 +0530
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.180.168.240]
-X-ClientProxiedBy: satlexmb08.amd.com (10.181.42.217) To satlexmb07.amd.com
- (10.181.42.216)
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 8/8] DO NOT MERGE: Temporary EXTAPIC UAPI definitions
+To: <qemu-devel@nongnu.org>, <kvm@vger.kernel.org>
+CC: Cornelia Huck <cohuck@redhat.com>, Eduardo Habkost <eduardo@habkost.net>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Marcelo Tosatti
+ <mtosatti@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>, Paolo Bonzini
+ <pbonzini@redhat.com>, Sean Christopherson <seanjc@google.com>, "Richard
+ Henderson" <richard.henderson@linaro.org>, Naveen N Rao <naveen@kernel.org>,
+ Nikunj Dadhaniya <nikunj@amd.com>
+References: <20260219054207.471303-1-manali.shukla@amd.com>
+ <20260219054207.471303-9-manali.shukla@amd.com>
+Content-Language: en-US
+From: Manali Shukla <manali.shukla@amd.com>
+In-Reply-To: <20260219054207.471303-9-manali.shukla@amd.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ1PEPF00001CDE:EE_|LV2PR12MB5919:EE_
-X-MS-Office365-Filtering-Correlation-Id: 9c3e571d-c970-4073-7456-08de6f79d63b
+X-MS-TrafficTypeDiagnostic: SJ5PEPF000001C9:EE_|IA0PR12MB8745:EE_
+X-MS-Office365-Filtering-Correlation-Id: 1e4b6372-d064-40e0-4f4f-08de6f7b09ad
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|82310400026|36860700013|7416014|1800799024; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?cmhgCUAEQ+PC8dRl9AhloeFmjPegeGYFWjljE6d/+saNCQ/bLzTf9MrV143c?=
- =?us-ascii?Q?m6Gz8/gMx6dAfFL1gAw6It7S3/1g16S4ia5xoxmOq+lWCu0C2fwqZwTodnb5?=
- =?us-ascii?Q?Ip6xHDyyoSyMO5CnrrR2R3Av1tI4g1PGNwEb416d6qLzc1A2xkqJmUO+6gTO?=
- =?us-ascii?Q?E22xEjWKbQTVvXJOoyl6M0nwX2IPqVu+7QIJwW8s2jLwaT34oee7BS4KPwij?=
- =?us-ascii?Q?7i2wLHmebMei6AZs4cVioGMEY4XyfGPex7Fv80Z+M7MOQrGXXMZdFX+hK/RR?=
- =?us-ascii?Q?AXGsfOSAnYpBndTkZOwF465PzTogIA5LSaoplHwQiRbrjMen0d8HsezWYK9F?=
- =?us-ascii?Q?wW96oTAfBNvYSkliWYcEJ3NW3/W0wLGQqpW1RAbAXAxWWo/B6Q+fXskAgQXw?=
- =?us-ascii?Q?PMdLrxPREI81S+htYJZPXtRgIq5L07Fc/jTS9Rh7khFb3KC72i70MTe3US+O?=
- =?us-ascii?Q?vaHqEZkknedzzujuWDezfnLPBw+MUEK9D7kCiy30bov3nddLxESbRU5qMH0J?=
- =?us-ascii?Q?B6ZcNdMS01gyjRRjjFTh+aqpnYwfekNUPiIZhaZRhLhpJB/5N6Lj6gw3VyoX?=
- =?us-ascii?Q?aO4zX6MW9XcratB4i2Vub+e84lg2d0Xr3jcJ623inrY9YSYl/c+EeE3YAIPk?=
- =?us-ascii?Q?zy/OvPXrNOPPviqUeanWJHeZju0+mY/DNhutDFKMolvreWEbtsXl8GVCg256?=
- =?us-ascii?Q?7O+w+ZRuvuNn9lBTytwIsR0429ixzminlumBk9D9ZZXTHUsIhQElEfAV5TF7?=
- =?us-ascii?Q?cZQamsxpzHsTqbsquEAfmQflziR1oSRq9eMupA0CYB3/YhFLQ7XM0vhJOAKZ?=
- =?us-ascii?Q?NXXbbi0QJOSPjzEJ/JVq1+ZP4XzapPQQCKNZTGW0AIEvQRBccYSZI4iYKTME?=
- =?us-ascii?Q?fPBVfNb2JVtlfCMRXPnlWW2yhSxeWcitM4Il6pB/u2lhSoCC009eRoAHpLVP?=
- =?us-ascii?Q?uPt2r20fdGHJJb432OthNPw4CS0pKgj11OuanrFFEGxtOBfwwpK7cVaj4Gxb?=
- =?us-ascii?Q?k6drJtUQYbr9ZijiRJi99UEb9NY/qBFciS9pXSXf9jrYiUA3rAcpMbQxUZfW?=
- =?us-ascii?Q?7X3IkNCm8Qg5mpphGYQHphSJy9GfoqoPtQr5vHZ4JLyOsQc/eO9cXFqwweG4?=
- =?us-ascii?Q?pzsfpvAzHx3+5SeQWHd6/ENwmVzsv0fYRHlGIlOVuDL8qvW1g4zqigRMIZ+n?=
- =?us-ascii?Q?RHeKVhezGCKkVYB8khT1bC/sg3hMa6L3frLO3NJhLdeBsCF//jXrLCS0IqzU?=
- =?us-ascii?Q?IKP1wDAt58B8W+YIh8gZigJlTH3q23sc1vp0HWIGO2F91wxLF2ltL4kzezgL?=
- =?us-ascii?Q?qlYN3hX04A1YaezC4ExeC5lx3ozVALuSIAGOlwnyDRH1oKnCkrF9sntLtag0?=
- =?us-ascii?Q?k0c4QeSnGQYJ3wtiRN7W7rNVxpgRvtNHqVWzeHNbHpwBa+5QVvNdsItyxC3Y?=
- =?us-ascii?Q?nt/wOIb49oEZotpBUtvzfE5VCVQJurWG97wJdDNGte9DuLbK8a0Rla70YhE+?=
- =?us-ascii?Q?3kQ90QaJQSBykfuhzCOTv7VkHU///XFdwD+HB7GLY3nCCjN+uKS/YQ7SP9/m?=
- =?us-ascii?Q?YuJTtNPAs4RbtDE2Rfa06d23z9IKSDbZZ68WYoJwlOBC3TjKXrC9IsZ0SCDn?=
- =?us-ascii?Q?dJ/Uqhkia9e8anAfhfMkt+6CY1u5EUmTFg14JL7Cu+3f6A26FCFT/GMHN0YL?=
- =?us-ascii?Q?6hn0Ig=3D=3D?=
+ ARA:13230040|82310400026|7416014|376014|36860700013|1800799024|13003099007; 
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?NUVtNExkV1BJUExzUjhXcFpNcWdRQlg1YW9XRFZvK3hpS0NlWHhhbnhWdFUx?=
+ =?utf-8?B?ZmhnQ3dnck9pNG9DZVZkaXE2Z0hOUFpRYXo2c1VTdmd5cjJERWp4YWNHRzdt?=
+ =?utf-8?B?ejBQNHVSaG1nRkR0SGVHczdxcjVTL2pLZUREeXVCL3h5aHMyVGludEVzSEcw?=
+ =?utf-8?B?OXJHSFlleHlhVFUzK2lJZ1J4Y0p2R0h1dEZtR1pPOGx6aXRxUEhUT1AwZDVF?=
+ =?utf-8?B?SXFYdXdoY0JGb0g2U3JHQTEraFdud2QwNkNHalJVajhHOUE5SHEzMVN6VHRz?=
+ =?utf-8?B?aGZkWEpVZTFKOVYvZGltVXdnck9Cai9QenVFYm82L3U3Q0wrenRCNk1NQVVW?=
+ =?utf-8?B?WWR2MGVRRkZDVkJIYWN0WHI2NDZCWlA1RlBaSUJOeFU2QWZndXVNc3pLa0I5?=
+ =?utf-8?B?OGhOb2tzMDR0SndJMXhnOU4wcThVc2o1NlFVNnlhZ2NDY0ZrTkRMR0FIL0Rx?=
+ =?utf-8?B?bVNrUFdCQ0g1bWM4eEZaQ0F0NHBFMHlUVFRJMjVoWGRIQko1YStNTEltZ1pW?=
+ =?utf-8?B?WHh1Mk1DWERyR1dUajdDaWhCYThnTXVqVnZIRjBGRjM3VXF5MFluM2hhczhS?=
+ =?utf-8?B?dGlobUdieEk2OHRMTW94RVI1S1dGYXNpam5yV1lFUkxacW5jMm5KS1RnQjla?=
+ =?utf-8?B?SFhhWjJMM1lUeVpuak5DMlZQaTdiRnN4M3ZlMkZUY2Y2ckRocXNYeHZMRWdh?=
+ =?utf-8?B?RCtyUTE5NlZsZ1lFdThDVUprK2NEdlFhclUxa1EvL1AzUk1aLzNNTklqU2p1?=
+ =?utf-8?B?RXdPeUJ5QnBjek9wQWp4NGljUGZxbXZuQVhndTIvS3hMSTRCTmpNNHQwTEpQ?=
+ =?utf-8?B?eHZkbyt4eGJEbk12S0ZlR0xUUjNISWZINVhNcFFVS01FaUpkOCt6aEZIVzgw?=
+ =?utf-8?B?OEpRemlMSTEwQjg2a3ZESndpUWNnMmR1NjluelFYNmxoK2xnVmRPMXdLZWhz?=
+ =?utf-8?B?bDFkd0hhZFhCS1E2TXVFVnpUbCtHdy9RcVZQV01BMm0yRnpCcVJYQkZBRkcw?=
+ =?utf-8?B?S00yK2tNTEhvbDFEeHRKZndneWQwYWZlVERaTGNMVExSL0V1b0Y4cFVycGFY?=
+ =?utf-8?B?amo0SUFVVFhleUs4WlpXaEc2cE9WeFhaMStDT243bE1lck12WmlFNW03eFds?=
+ =?utf-8?B?OFJwRGtwenFSdmpPQm9iQXRvcmRjU3dvUUxSa3BxaThtNzlYYTF0RXlnbVo1?=
+ =?utf-8?B?YkhYMXpYaUFQOGg4V3g0MW5GZjkxdFMvMTBiLzhHbVlsclMxN0xkeTAyemNh?=
+ =?utf-8?B?UVVHRmphTUI1cngrZ2g3YmV6U0twRkVGSk0wYW9lZVlJNTdtZlA2OXJESTFy?=
+ =?utf-8?B?bVB3WlE1UHl1VmtQc0hFWVUxa3V5WEhXSFRFYncreDhSalY1MmMvUExUOGpH?=
+ =?utf-8?B?c2ZDcVVMakcwTjV6NkNOYVFLMGVsQ2VLdDU4VHRDaFBPemc1QXZjVUI3S3lh?=
+ =?utf-8?B?bW9UdlFqZVNGOW1DOElremxpcVAvdDRPNll2M2YrbEtMNXdCRWh4ZCtWR0ls?=
+ =?utf-8?B?MEE0MzE4MUhTdGhGNm1zLzZqaFlNU084RW8vZXRrbkFLWElVQW9YUUxCMnBN?=
+ =?utf-8?B?MUE2bkxxc0paMkRBc0hITFJxQ2orbnJlQlY2OGtqdUtUeFZaNFIxUE9xRzhG?=
+ =?utf-8?B?enUyWGpqMWJpQjk2dHJjT0tVTmhRSnB6TFdsMjVyYWMvNlRwdnREY2VNYi9t?=
+ =?utf-8?B?QzZFWThtK0hpNFBYQUp6QXFma2Q5OWRJbk4rTE9jSmE0Nm9Wcnd6dG0zTGxD?=
+ =?utf-8?B?Q09GN1NKUFkrdnIwTGdVbGpNOFN6c3pDM2RCOHFVeTA2K3h6aWVtV2g3d3FK?=
+ =?utf-8?B?SzQrakJ2d1hDNEl1QVQxQVZNL3BRM1RkMFNjLzRWOUhqNFlBR2U5ZU5tN1Zr?=
+ =?utf-8?B?Y09LdzgvR08veWJQYndaSDdDZElmNDhpYWxkR1FiVEo3TzJvYXlmOEJUb1ox?=
+ =?utf-8?B?Q3hXbXpjVHhmaTFKRTFvNlhQV29lTnFWa254TFFLWjYzaEpvVGhlVXZaZFJS?=
+ =?utf-8?B?Z0tDa0grMlpZVTBlbFdlMUhOQ2ptM1lKTjJWR1NDS0kyOWJBdDBVUjI3UXBn?=
+ =?utf-8?B?TWU1RUVRSHk2emtCbDBZbTBvMnJ6M2Q1SzVCL1JrcVhJNUtLS0NDczhPOWtt?=
+ =?utf-8?B?L04wTHNtZ2tkaHlZSU9wUjZsdm9YYklvNllmYlBJSzBBZXZTNThDYVpTeSt2?=
+ =?utf-8?B?Y3lERnBQbmRiVWtnL0RoM0RGTXN4Yi9zN0xBdkNJUStTMWYvUXhlcWxJaVFO?=
+ =?utf-8?Q?X4o/ZMzREw9ZpkqJMz7S8wm8U4v4EwC66v5hjBAHMg=3D?=
 X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(376014)(82310400026)(36860700013)(7416014)(1800799024); DIR:OUT;
- SFP:1101; 
+ SFS:(13230040)(82310400026)(7416014)(376014)(36860700013)(1800799024)(13003099007);
+ DIR:OUT; SFP:1101; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: oi7nEDHQF4eDvrtz6FUzZLWhhI1aDEonPtbzoPNHizUU+RCq+r6HYITRxeQiqeQWAGNf5nMZ5qwiLqeIXoixWZ8Bx8CfJeHTDqIQEf7MSO7A79iNIlj40SvMlzubwcB97hMr7LyHKJip/nIi4KyV0FJDoLd/iC7CfI0rVZauRp7IjSXEmiQUHTLObVbbEZ8Yhg3NluBYJKTMkOONsl5s4Ac6zXurLT1dwCXggXioqqWpe0yIJdGIRXcj7EeBRuybxNNAemuGe05ABU5n7uTAZd1sydz0U3sdtFQlQDw04RYc5vC2SeYSk5EuvvWIawCcmrXyykP4p5Ac4jexu1Vt4GloRB32Kakyb+jWStUSz97CxTuABPEBWPlXQUriQBDqK14BdHzB824A/c5bNZIJvJysXZwit1c2je5z1bH+HOd/7u5hEHMtbFkK/J1H63iE
+X-MS-Exchange-AntiSpam-MessageData-0: euIbPCf1DW2eVXMkALvumwxLxE0jhDATwef8natBV7a1YBtuGvI+AVd3Twl4m+wZmCEddSWJVdnToBgrHN3R4FAaahJXtCN2lr1ZtRi6KNjGYg7P5ZtHArk5fvqhaL0WcWrWIPC5oUoF++CVMTGjdTgDpcUfxQECpECbwe3yLwlYsU4X1vzTq5bO2nCkpwr3+mGtpxpRSN+kBuAXcwgJaoudHEWKQQZa8hxui922o5ZJARmL8rnQTyJ5Il8luxbxOdz7jULm38np/njSvUzb4cJkGVjD/p5A1r4l/pnq5RjLgeJyBueNp/yQcMSR8PY+ABdkD+gin7pcJsegVlLCcCcq3B5FKYWji1HRQIR9J+mgUAp/qVlbp2R0ae13pODjgdHyqyouCwsKT82nbH2kRkNDYjPjQ9qsfbtKWzSC9o+i549sdByQ5RsRMecTRNIH
 X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 Feb 2026 05:43:40.8115 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 9c3e571d-c970-4073-7456-08de6f79d63b
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 Feb 2026 05:52:16.6478 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 1e4b6372-d064-40e0-4f4f-08de6f7b09ad
 X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
  Helo=[satlexmb07.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: SJ1PEPF00001CDE.namprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthSource: SJ5PEPF000001C9.namprd05.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV2PR12MB5919
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA0PR12MB8745
 Received-SPF: permerror client-ip=2a01:111:f403:c100::f;
  envelope-from=Manali.Shukla@amd.com;
  helo=BL2PR02CU003.outbound.protection.outlook.com
@@ -145,7 +154,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.043,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Thu, 19 Feb 2026 08:55:35 -0500
+X-Mailman-Approved-At: Thu, 19 Feb 2026 08:55:36 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -160,179 +169,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add support for KVM_GET_LAPIC2 and KVM_SET_LAPIC2 ioctls to synchronize
-extended APIC register state between QEMU and KVM.  The extended ioctls
-operate on a 4KB APIC page (struct kvm_lapic_state2) instead of the
-legacy 1KB. (struct kvm_lapic_state).
+On 2/19/2026 11:12 AM, Manali Shukla wrote:
+> This patch adds the minimal UAPI definitions required for extended
+> LAPIC support. These definitions will be imported via the standard
+> scripts/update-linux-headers.sh process once the kernel patches are
+> merged.
+> 
+> This patch is provided only for testing and review purposes and
+> should NOT be merged.
+> 
+> Kernel patches: https://lore.kernel.org/kvm/...
 
-Use the extended ioctls when KVM_CAP_LAPIC2 is enabled (has_lapic2),
-otherwise fall back to the legacy KVM_GET/SET_LAPIC ioctls to maintain
-compatibility with older KVM versions or when extended APIC is not
-negotiated.
+Sorry. I missed to add the correct link.
+Kernel patches for this changes are available at:
 
-When extended APIC is enabled (has_extapic) for AMD processors,
-synchronize the extended registers:
-  - APIC_EFEAT (offset 0x400): Extended Features register
-  - APIC_ECTRL (offset 0x410): Extended Control register
-  - APIC_EILVTn (offset 0x500+): Extended interrupt LVT entries
-Currently on 4 extended interrupt LVT entries are supported but future
-processors may support more.
+https://lore.kernel.org/kvm/20260219054207.471303-9-manali.shukla@amd.com/T/#u
 
-Add kvm_apic_put2() and kvm_get_apic2() is added to mirror kvm_apic_put()
-and kvm_get_apic() for the extended ioctl path. Route kvm_apic_post_load()
-, kvm_apic_reset(), kvm_arch_get_registers() through the appropriate
-put/get function based on has_lapic2.
+-Manali
 
-Signed-off-by: Manali Shukla <manali.shukla@amd.com>
----
- hw/i386/kvm/apic.c    | 55 ++++++++++++++++++++++++++++++++++++++++---
- target/i386/kvm/kvm.c | 24 ++++++++++++++++++-
- 2 files changed, 75 insertions(+), 4 deletions(-)
-
-diff --git a/hw/i386/kvm/apic.c b/hw/i386/kvm/apic.c
-index 7bec7909e9..f91af66116 100644
---- a/hw/i386/kvm/apic.c
-+++ b/hw/i386/kvm/apic.c
-@@ -33,7 +33,11 @@ static void kvm_put_apic_state(APICCommonState *s, void *regs)
- {
-     int i;
- 
--    memset(regs, 0, KVM_APIC_REG_SIZE);
-+    if (kvm_has_lapic2()) {
-+        memset(regs, 0, KVM_APIC_EXT_REG_SIZE);
-+    } else {
-+        memset(regs, 0, KVM_APIC_REG_SIZE);
-+    }
- 
-     if (kvm_has_x2apic_api() && s->apicbase & MSR_IA32_APICBASE_EXTD) {
-         kvm_apic_set_reg(regs, 0x2, s->initial_apic_id);
-@@ -58,6 +62,13 @@ static void kvm_put_apic_state(APICCommonState *s, void *regs)
-     kvm_apic_set_reg(regs, 0x38, s->initial_count);
-     kvm_apic_set_reg(regs, 0x3e, s->divide_conf);
- 
-+    if (kvm_has_extapic()) {
-+        kvm_apic_set_reg(regs, 0x40, s->efeat);
-+        kvm_apic_set_reg(regs, 0x41, s->ectrl);
-+        for (i = 0; i < s->nr_extlvt; i++) {
-+            kvm_apic_set_reg(regs, 0x50 + i, s->extlvt[i]);
-+        }
-+    }
- }
- 
- void kvm_get_apic_state(APICCommonState *s, void *kapic)
-@@ -91,6 +102,15 @@ void kvm_get_apic_state(APICCommonState *s, void *kapic)
-     v = (s->divide_conf & 3) | ((s->divide_conf >> 1) & 4);
-     s->count_shift = (v + 1) & 7;
- 
-+    if (kvm_has_extapic()) {
-+        s->efeat = kvm_apic_get_reg(kapic, 0x40);
-+        s->ectrl = kvm_apic_get_reg(kapic, 0x41);
-+
-+       for (i = 0; i < s->nr_extlvt; i++) {
-+            s->extlvt[i] = kvm_apic_get_reg(kapic, 0x50 + i);
-+        }
-+    }
-+
-     s->initial_count_load_time = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
-     apic_next_timer(s, s->initial_count_load_time);
- }
-@@ -156,6 +176,27 @@ void kvm_uninitialize_extlvt(X86CPU *cpu)
-     }
- }
- 
-+static void kvm_apic_put2(CPUState *cs, run_on_cpu_data data)
-+{
-+    APICCommonState *s = data.host_ptr;
-+    struct kvm_lapic_state2 kapic2;
-+    int ret;
-+
-+    if (is_tdx_vm()) {
-+        return;
-+    }
-+
-+    kvm_put_apicbase(s->cpu, s->apicbase);
-+    kvm_put_apic_state(s, &kapic2);
-+
-+    ret = kvm_vcpu_ioctl(CPU(s->cpu), KVM_SET_LAPIC2, &kapic2);
-+    if (ret < 0) {
-+        fprintf(stderr, "KVM_SET_LAPIC2 failed EXT: %s\n",
-+               strerror(-ret));
-+        abort();
-+    }
-+}
-+
- static void kvm_apic_put(CPUState *cs, run_on_cpu_data data)
- {
-     APICCommonState *s = data.host_ptr;
-@@ -178,7 +219,11 @@ static void kvm_apic_put(CPUState *cs, run_on_cpu_data data)
- 
- static void kvm_apic_post_load(APICCommonState *s)
- {
--    run_on_cpu(CPU(s->cpu), kvm_apic_put, RUN_ON_CPU_HOST_PTR(s));
-+    if (kvm_has_lapic2()) {
-+        run_on_cpu(CPU(s->cpu), kvm_apic_put2, RUN_ON_CPU_HOST_PTR(s));
-+    } else {
-+        run_on_cpu(CPU(s->cpu), kvm_apic_put, RUN_ON_CPU_HOST_PTR(s));
-+    }
- }
- 
- static void do_inject_external_nmi(CPUState *cpu, run_on_cpu_data data)
-@@ -247,7 +292,11 @@ static void kvm_apic_reset(APICCommonState *s)
-     /* Not used by KVM, which uses the CPU mp_state instead.  */
-     s->wait_for_sipi = 0;
- 
--    run_on_cpu(CPU(s->cpu), kvm_apic_put, RUN_ON_CPU_HOST_PTR(s));
-+    if (kvm_has_lapic2()) {
-+        run_on_cpu(CPU(s->cpu), kvm_apic_put2, RUN_ON_CPU_HOST_PTR(s));
-+    } else {
-+        run_on_cpu(CPU(s->cpu), kvm_apic_put, RUN_ON_CPU_HOST_PTR(s));
-+    }
- }
- 
- static void kvm_apic_realize(DeviceState *dev, Error **errp)
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index c9f4cb6430..ad7a4c3c5c 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -5069,6 +5069,28 @@ static int kvm_get_mp_state(X86CPU *cpu)
-     return 0;
- }
- 
-+static int kvm_get_apic2(X86CPU *cpu)
-+{
-+    APICCommonState *apic;
-+    struct kvm_lapic_state2 kapic2;
-+    int ret;
-+
-+    apic = APIC_COMMON(cpu->apic_state);
-+
-+    if (!apic || !kvm_irqchip_in_kernel()) {
-+        return 0;
-+    }
-+
-+    ret = kvm_vcpu_ioctl(CPU(cpu), KVM_GET_LAPIC2, &kapic2);
-+
-+    if (ret < 0) {
-+        return ret;
-+    }
-+
-+    kvm_get_apic_state(apic, &kapic2);
-+    return 0;
-+}
-+
- static int kvm_get_apic(X86CPU *cpu)
- {
-     APICCommonState *apic;
-@@ -5476,7 +5498,7 @@ int kvm_arch_get_registers(CPUState *cs, Error **errp)
-         error_setg_errno(errp, -ret, "Failed to get MSRs");
-         goto out;
-     }
--    ret = kvm_get_apic(cpu);
-+    ret = has_lapic2 ? kvm_get_apic2(cpu) : kvm_get_apic(cpu);
-     if (ret < 0) {
-         error_setg_errno(errp, -ret, "Failed to get APIC");
-         goto out;
--- 
-2.43.0
+> 
+> Signed-off-by: Manali Shukla <manali.shukla@amd.com>
+> 
+> ---
+> NOT-FOR-MERGE
+> ---
+> ---
+>  linux-headers/asm-x86/kvm.h | 7 +++++++
+>  linux-headers/linux/kvm.h   | 7 +++++++
+>  2 files changed, 14 insertions(+)
+> 
+> diff --git a/linux-headers/asm-x86/kvm.h b/linux-headers/asm-x86/kvm.h
+> index f0c1a730d9..04d1a1a527 100644
+> --- a/linux-headers/asm-x86/kvm.h
+> +++ b/linux-headers/asm-x86/kvm.h
+> @@ -124,6 +124,13 @@ struct kvm_lapic_state {
+>  	char regs[KVM_APIC_REG_SIZE];
+>  };
+>  
+> +
+> +/* for KVM_GET_LAPIC2 and KVM_SET_LAPIC2 */
+> +#define KVM_APIC_EXT_REG_SIZE 0x1000
+> +struct kvm_lapic_state2 {
+> +	char regs[KVM_APIC_EXT_REG_SIZE];
+> +};
+> +
+>  struct kvm_segment {
+>  	__u64 base;
+>  	__u32 limit;
+> diff --git a/linux-headers/linux/kvm.h b/linux-headers/linux/kvm.h
+> index 32c5885a3c..4e67281e99 100644
+> --- a/linux-headers/linux/kvm.h
+> +++ b/linux-headers/linux/kvm.h
+> @@ -637,6 +637,10 @@ struct kvm_ioeventfd {
+>  #define KVM_X86_DISABLE_EXITS_PAUSE          (1 << 2)
+>  #define KVM_X86_DISABLE_EXITS_CSTATE         (1 << 3)
+>  
+> +#define KVM_X86_NR_EXTLVT_DEFAULT		4
+> +#define KVM_LAPIC2_DEFAULT			(1 << 0)
+> +#define KVM_LAPIC2_AMD_DEFAULT			(1 << 1)
+> +
+>  /* for KVM_ENABLE_CAP */
+>  struct kvm_enable_cap {
+>  	/* in */
+> @@ -952,6 +956,7 @@ struct kvm_enable_cap {
+>  #define KVM_CAP_ARM_EL2 240
+>  #define KVM_CAP_ARM_EL2_E2H0 241
+>  #define KVM_CAP_RISCV_MP_STATE_RESET 242
+> +#define KVM_CAP_LAPIC2 247
+>  
+>  struct kvm_irq_routing_irqchip {
+>  	__u32 irqchip;
+> @@ -1308,6 +1313,8 @@ struct kvm_vfio_spapr_tce {
+>  #define KVM_SET_FPU               _IOW(KVMIO,  0x8d, struct kvm_fpu)
+>  #define KVM_GET_LAPIC             _IOR(KVMIO,  0x8e, struct kvm_lapic_state)
+>  #define KVM_SET_LAPIC             _IOW(KVMIO,  0x8f, struct kvm_lapic_state)
+> +#define KVM_GET_LAPIC2            _IOR(KVMIO,  0x8e, struct kvm_lapic_state2)
+> +#define KVM_SET_LAPIC2            _IOW(KVMIO,  0x8f, struct kvm_lapic_state2)
+>  #define KVM_SET_CPUID2            _IOW(KVMIO,  0x90, struct kvm_cpuid2)
+>  #define KVM_GET_CPUID2            _IOWR(KVMIO, 0x91, struct kvm_cpuid2)
+>  /* Available with KVM_CAP_VAPIC */
 
 
