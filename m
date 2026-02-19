@@ -4,131 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6252DC531CD
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 21:15:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B6FBC531D1
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 21:17:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vtBMl-00052U-CA; Thu, 19 Feb 2026 16:15:19 -0500
+	id 1vtBON-0005f9-0W; Thu, 19 Feb 2026 16:16:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vtBMj-00051p-KL
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 16:15:17 -0500
-Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vtBMh-0005Jq-4c
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 16:15:17 -0500
-Received: by mail-pf1-x436.google.com with SMTP id
- d2e1a72fcca58-8230d228372so703109b3a.1
- for <qemu-devel@nongnu.org>; Thu, 19 Feb 2026 13:15:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771535714; x=1772140514; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=L752PlMCdvgYChU7M+khxrpEX11Ndz0dIZDF2n9hdIY=;
- b=zQLXZUOHEBMGnOU/9pAyEtMHkqtwFcjQWeTxTwcgl1Ykyp372zoSSXPAHGlY0zGuhH
- ToLbZZ2lcEYeaie6iIydfqRmLug/bNpLIKtzp6jZbH/K0xgtmaeAB0yMXRTaxP8Ms9Mp
- sT4B0cj+GL5pYPQW4AUAFCQGrNew4BT1byT6PVInv85aAh9e34p/+y2JZcFi3Ww4j9mh
- 2NfDZTZXseh7kGSSweErwZ2oAodAPHV6DYUMIfiGULGEeGk4RI490tyjinNwgO8dutpk
- MEGeMSP6ok6ngSyeoCtRF/nwWGtZe1u/djmO1W6voKCzdvjM9DAiyNOqjjUj5skQTO5b
- YA4A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771535714; x=1772140514;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=L752PlMCdvgYChU7M+khxrpEX11Ndz0dIZDF2n9hdIY=;
- b=u4ZWLfHkRN+6GR89aQ7p8WblbxJv8UZTBSYSeALnSo5oZCTsHcTUZYO6TNNZY0MTmP
- RW+f8Ce6y6+OO5wANsudTB7uc2NfQAMPuG8LjRL/6e7VjAy6hzGMh4DFGMnKIS/6cS83
- G5GOCXJMeZWR10bSzwO13n3g0nrj+wMX0WwiEheKcUBfx7T6itmuUujGIsExatfwFUdl
- 8V/ueqQrOpgJDdn/0hD6xjgqjjyjjU5bZFkLjPhfW/X+v7p54xldS3CYZdSbjWP+ELTh
- 9UXAyk/nbAH45HD8UaUKyJRwfUWsp1t+22M/GQfhpfQIRdKIAA1/2y2FRCLHozuaq6dc
- d1RQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV862REAdj3EWizTEzt/tG6gBF/MwGIWvYVvWYpwdlpA3lmzX+ikTOaGM4tQuUslJw2Q01jujxdnmhX@nongnu.org
-X-Gm-Message-State: AOJu0YywaFpCq2QX4Pc5DTasoFprnOp1r10jsVzzJd8UIPfodj8ThGcv
- JhWMqj+Cuylqt3Zg/kTwwFDp4QP7PZeRU+oT8n/XCrqRv4q38Cb5uYCxswFIwMEcbvU=
-X-Gm-Gg: AZuq6aI4TU4JxGDONGepdtmW7IAWUpOc3+Wjqy7n3WBZ+hmN3zChLienFURBEwWQe5g
- r6DYof7M4GfhbgOBgBuPA0M+T/x6Pb9+pDpbGYq16L0deXZQsQg66QXExgFMU4uEmi5ss70v07j
- KVJySvxWLksDxsDrXB9GRBAQCd+o3/gGrcVA3icCe9YqEb88N2lKCunXOPvtUfYwyxSPHmQqcBh
- JkPjcVMSXrVyv2xUvysN1J9EyOeARR1+lAwjTckJsLmKgFdolxasMfRW0tTlkVzvSrc/LP9m8ga
- LrUCF9hZehThRyjXwKomygENgukwDXZDOVWjUXxX8m87ovtYj/jgTKW1ybj30b62yTE2O7lY3j1
- P45aoUS6FwSzzKqLK1wr07VTmpM0RnopDPT6+w8w+rWCLiKfq4VrPILRi5UVNrQm0Zkv0y3a7eM
- QLcnkk/b+OCZdJPxuqJ/sRbqXFjWHmPaNCNCmVNL8QH/DoKtleoCiFfJviAxZp4+Gvm7nC
-X-Received: by 2002:a05:6a21:1391:b0:371:8e6d:27fa with SMTP id
- adf61e73a8af0-395121d845emr3376169637.47.1771535713450; 
- Thu, 19 Feb 2026 13:15:13 -0800 (PST)
-Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-824c6bb5596sm20072903b3a.58.2026.02.19.13.15.12
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 19 Feb 2026 13:15:13 -0800 (PST)
-Message-ID: <6b90bb95-b965-41fd-ba4e-5ae45b5fd9d7@linaro.org>
-Date: Thu, 19 Feb 2026 13:15:12 -0800
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1vtBOJ-0005el-3o
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 16:16:55 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1vtBOF-0005X8-1x
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 16:16:53 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1771535808;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=S+5hQGGZywLI2PLtKdUE33CAXPAjE5523eM+4x4NpYA=;
+ b=Rk59B3zttho3REOFj/XTG0cFTDsXq6wGeclWuFu+lFgyRBT+dTdUze7nKWKUWdtp+nmGzw
+ aFeBV6+zte3erySeUvUZZHTfrfIsd2U2BGEkdC1bX7LIPlzljXkUcu8/epK5L4JMXOnh/o
+ 2zQTZC5S6h0DrPN84m34OYodbcEPFto=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-523-n6m1cz2jMsaI_ciIZxuqRA-1; Thu,
+ 19 Feb 2026 16:16:44 -0500
+X-MC-Unique: n6m1cz2jMsaI_ciIZxuqRA-1
+X-Mimecast-MFC-AGG-ID: n6m1cz2jMsaI_ciIZxuqRA_1771535803
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6916418002DE; Thu, 19 Feb 2026 21:16:42 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.138])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 1251819560A7; Thu, 19 Feb 2026 21:16:40 +0000 (UTC)
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Brian Song <hibriansong@gmail.com>
+Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, hreitz@redhat.com,
+ kwolf@redhat.com, eblake@redhat.com, armbru@redhat.com, fam@euphon.net,
+ bernd@bsbernd.com, Stefan Hajnoczi <stefanha@redhat.com>
+Subject: [PATCH] fuse: unify op_in for io_uring and classic FUSE
+Date: Thu, 19 Feb 2026 16:14:00 -0500
+Message-ID: <20260219211626.987027-1-stefanha@redhat.com>
+In-Reply-To: <96F8FC7D-C7B5-4346-8421-65173B0FAD1A@gmail.com>
+References: <96F8FC7D-C7B5-4346-8421-65173B0FAD1A@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 18/50] target/i386: Remove MonitorDef register entries
- available via gdbstub
-Content-Language: en-US
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>, qemu-s390x@nongnu.org,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-riscv@nongnu.org, qemu-ppc@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>
-References: <20260219191955.83815-1-philmd@linaro.org>
- <20260219191955.83815-19-philmd@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
- 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
- ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <20260219191955.83815-19-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x436.google.com
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.045,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -144,16 +85,281 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/19/26 11:19 AM, Philippe Mathieu-Daudé wrote:
-> All these registers are already provided by via gdbstub parsed XML
-> and handler by the gdb_get_register() helper in the monitor/hmp.c
-> file. Remove as now unreachable code.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   target/i386/monitor.c | 39 ---------------------------------------
->   1 file changed, 39 deletions(-)
-> 
+Handle the memory layout differences for op_in in
+fuse_co_process_request_common()'s callers. This way it's not necessary
+to check whether uring is started.
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+---
+ block/export/fuse.c | 118 ++++++++++++--------------------------------
+ 1 file changed, 32 insertions(+), 86 deletions(-)
+
+Hi Brian,
+You mentioned that FUSE_IN_OP_STRUCT_LEGACY() is harder to eliminate so
+I took a look at it this morning. This patch compiles but I have not
+tested it.
+
+If you like this approach, please include it in your series and write a
+similar patch for FUSE_OUT_OP_STRUCT_LEGACY().
+
+diff --git a/block/export/fuse.c b/block/export/fuse.c
+index e5b753e717..d4f393c2eb 100644
+--- a/block/export/fuse.c
++++ b/block/export/fuse.c
+@@ -137,8 +137,7 @@ struct FuseQueue {
+      * The request buffer must be able to hold a full write, and/or at least
+      * FUSE_MIN_READ_BUFFER (from linux/fuse.h) bytes.
+      * This however is just the first part of the buffer; every read is given
+-     * a vector of this buffer (which should be enough for all normal requests,
+-     * which we check via the static assertion in FUSE_IN_OP_STRUCT_LEGACY())
++     * a vector of this buffer (which should be enough for all normal requests)
+      * and the spill-over buffer below.
+      * Therefore, the size of this buffer plus FUSE_SPILLOVER_BUF_SIZE must be
+      * FUSE_MIN_READ_BUFFER or more (checked via static assertion below).
+@@ -1765,33 +1764,24 @@ static int fuse_write_buf_response(int fd, uint32_t req_id,
+ 
+ /*
+  * For use in fuse_co_process_request_common():
+- * Returns a pointer to the parameter object for the given operation (inside of
+- * in_buf, which is assumed to hold a fuse_in_header first).
+- * Verifies that the object is complete (in_buf is large enough to hold it in
+- * one piece, and the request length includes the whole object).
+- * Only performs verification for legacy FUSE.
++ * Returns a pointer to the parameter object for the given operation.
++ * Verifies that the object is complete (the request length includes the whole
++ * object).
+  *
+  * Note that queue->request_buf may be overwritten after yielding, so the
+  * returned pointer must not be used across a function that may yield!
+  */
+-#define FUSE_IN_OP_STRUCT_LEGACY(op_name, queue) \
++#define FUSE_IN_OP_STRUCT(op_name) \
+     ({ \
+-        const struct fuse_in_header *__in_hdr = \
+-            (const struct fuse_in_header *)(queue)->request_buf; \
+-        const struct fuse_##op_name##_in *__in = \
+-            (const struct fuse_##op_name##_in *)(__in_hdr + 1); \
+-        const size_t __param_len = sizeof(*__in_hdr) + sizeof(*__in); \
+-        \
+-        QEMU_BUILD_BUG_ON(sizeof((queue)->request_buf) < \
+-                          (sizeof(struct fuse_in_header) + \
+-                           sizeof(struct fuse_##op_name##_in))); \
+-        \
+-        uint32_t __req_len = __in_hdr->len; \
+-        if (__req_len < __param_len) { \
+-            warn_report("FUSE request truncated (%" PRIu32 " < %zu)", \
+-                        __req_len, __param_len); \
++        const struct fuse_##op_name##_in *__in = op_in; \
++        const size_t __needed = sizeof(struct fuse_in_header) + \
++                                sizeof(*__in); \
++        QEMU_BUILD_BUG_ON(sizeof(((FuseQueue *)0)->request_buf) < __needed); \
++        if (req_len < __needed) { \
++            warn_report("FUSE request with opcode %u truncated (%u < %zu)", \
++                        opcode, req_len, __needed); \
+             ret = -EINVAL; \
+-            __in = NULL; \
++            break; \
+         } \
+         __in; \
+     })
+@@ -1822,9 +1812,10 @@ static int fuse_write_buf_response(int fd, uint32_t req_id,
+  */
+ static void coroutine_fn fuse_co_process_request_common(
+     FuseExport *exp,
++    uint32_t req_len,
+     uint32_t opcode,
+     uint64_t req_id,
+-    void *in_buf,
++    const void *op_in,
+     void *spillover_buf,
+     void *out_buf,
+     void (*send_response)(void *opaque, uint32_t req_id, int ret,
+@@ -1849,13 +1840,7 @@ static void coroutine_fn fuse_co_process_request_common(
+ 
+     switch (opcode) {
+     case FUSE_INIT: {
+-        FuseQueue *q = opaque;
+-        const struct fuse_init_in *in =
+-            FUSE_IN_OP_STRUCT_LEGACY(init, q);
+-        if (!in) {
+-            break;
+-        }
+-
++        const struct fuse_init_in *in = FUSE_IN_OP_STRUCT(init);
+         struct fuse_init_out *out =
+             FUSE_OUT_OP_STRUCT_LEGACY(init, out_buf);
+ 
+@@ -1898,19 +1883,12 @@ static void coroutine_fn fuse_co_process_request_common(
+     }
+ 
+     case FUSE_SETATTR: {
+-        const struct fuse_setattr_in *in;
++        const struct fuse_setattr_in *in = FUSE_IN_OP_STRUCT(setattr);
+         struct fuse_attr_out *out;
+ 
+         if (exp->uring_started) {
+-            in = in_buf;
+             out = out_buf;
+         } else {
+-            FuseQueue *q = opaque;
+-            in = FUSE_IN_OP_STRUCT_LEGACY(setattr, q);
+-            if (!in) {
+-                break;
+-            }
+-
+             out = FUSE_OUT_OP_STRUCT_LEGACY(attr, out_buf);
+         }
+ 
+@@ -1920,24 +1898,13 @@ static void coroutine_fn fuse_co_process_request_common(
+     }
+ 
+     case FUSE_READ: {
+-        const struct fuse_read_in *in;
+-
+-        if (exp->uring_started) {
+-            in = in_buf;
+-        } else {
+-            FuseQueue *q = opaque;
+-            in = FUSE_IN_OP_STRUCT_LEGACY(read, q);
+-            if (!in) {
+-                break;
+-            }
+-        }
+-
++        const struct fuse_read_in *in = FUSE_IN_OP_STRUCT(read);
+         ret = fuse_co_read(exp, &out_data_buffer, in->offset, in->size);
+         break;
+     }
+ 
+     case FUSE_WRITE: {
+-        const struct fuse_write_in *in;
++        const struct fuse_write_in *in = FUSE_IN_OP_STRUCT(write);
+         struct fuse_write_out *out;
+         const void *in_place_buf;
+         const void *spill_buf;
+@@ -1945,7 +1912,6 @@ static void coroutine_fn fuse_co_process_request_common(
+         if (exp->uring_started) {
+             FuseUringEnt *ent = opaque;
+ 
+-            in = in_buf;
+             out = out_buf;
+ 
+             assert(in->size <= ent->req_header.ring_ent_in_out.payload_sz);
+@@ -1957,17 +1923,8 @@ static void coroutine_fn fuse_co_process_request_common(
+             in_place_buf = NULL;
+             spill_buf = out_buf;
+         } else {
+-            FuseQueue *q = opaque;
+-            in = FUSE_IN_OP_STRUCT_LEGACY(write, q);
+-            if (!in) {
+-                break;
+-            }
+-
+-            out = FUSE_OUT_OP_STRUCT_LEGACY(write, out_buf);
+-
+             /* Additional check for WRITE: verify the request includes data */
+-            uint32_t req_len =
+-                ((const struct fuse_in_header *)(q->request_buf))->len;
++            out = FUSE_OUT_OP_STRUCT_LEGACY(write, out_buf);
+ 
+             if (unlikely(req_len < sizeof(struct fuse_in_header) + sizeof(*in) +
+                         in->size)) {
+@@ -2002,18 +1959,7 @@ static void coroutine_fn fuse_co_process_request_common(
+     }
+ 
+     case FUSE_FALLOCATE: {
+-        const struct fuse_fallocate_in *in;
+-
+-        if (exp->uring_started) {
+-            in = in_buf;
+-        } else {
+-            FuseQueue *q = opaque;
+-            in = FUSE_IN_OP_STRUCT_LEGACY(fallocate, q);
+-            if (!in) {
+-                break;
+-            }
+-        }
+-
++        const struct fuse_fallocate_in *in = FUSE_IN_OP_STRUCT(fallocate);
+         ret = fuse_co_fallocate(exp, in->offset, in->length, in->mode);
+         break;
+     }
+@@ -2028,19 +1974,12 @@ static void coroutine_fn fuse_co_process_request_common(
+ 
+ #ifdef CONFIG_FUSE_LSEEK
+     case FUSE_LSEEK: {
+-        const struct fuse_lseek_in *in;
++        const struct fuse_lseek_in *in = FUSE_IN_OP_STRUCT(lseek);
+         struct fuse_lseek_out *out;
+ 
+         if (exp->uring_started) {
+-            in = in_buf;
+             out = out_buf;
+         } else {
+-            FuseQueue *q = opaque;
+-            in = FUSE_IN_OP_STRUCT_LEGACY(lseek, q);
+-            if (!in) {
+-                break;
+-            }
+-
+             out = FUSE_OUT_OP_STRUCT_LEGACY(lseek, out_buf);
+         }
+ 
+@@ -2081,6 +2020,7 @@ static void coroutine_fn fuse_co_process_request_common(
+     }
+ #endif
+ }
++
+ /* Helper to send response for legacy */
+ static void send_response_legacy(void *opaque, uint32_t req_id, int ret,
+                                  const void *buf, void *out_buf)
+@@ -2101,8 +2041,10 @@ static void coroutine_fn
+ fuse_co_process_request(FuseQueue *q, void *spillover_buf)
+ {
+     FuseExport *exp = q->exp;
++    uint32_t req_len;
+     uint32_t opcode;
+     uint64_t req_id;
++    const void *op_in;
+ 
+     /*
+      * Return buffer.  Must be large enough to hold all return headers, but does
+@@ -2134,12 +2076,15 @@ fuse_co_process_request(FuseQueue *q, void *spillover_buf)
+         const struct fuse_in_header *in_hdr =
+             (const struct fuse_in_header *)q->request_buf;
+ 
++        req_len = in_hdr->len;
+         opcode = in_hdr->opcode;
+         req_id = in_hdr->unique;
++        op_in = in_hdr + 1;
+     }
+ 
+-    fuse_co_process_request_common(exp, opcode, req_id, NULL, spillover_buf,
+-                                   out_buf, send_response_legacy, q);
++    fuse_co_process_request_common(exp, req_len, opcode, req_id, op_in,
++            spillover_buf, out_buf,
++            send_response_legacy, q);
+ }
+ 
+ #ifdef CONFIG_LINUX_IO_URING
+@@ -2196,6 +2141,7 @@ static void coroutine_fn fuse_uring_co_process_request(FuseUringEnt *ent)
+         (struct fuse_uring_ent_in_out *)&rrh->ring_ent_in_out;
+     struct fuse_in_header *in_hdr =
+         (struct fuse_in_header *)&rrh->in_out;
++    uint32_t req_len = in_hdr->len;
+     uint32_t opcode = in_hdr->opcode;
+     uint64_t req_id = in_hdr->unique;
+ 
+@@ -2208,7 +2154,7 @@ static void coroutine_fn fuse_uring_co_process_request(FuseUringEnt *ent)
+         return;
+     }
+ 
+-    fuse_co_process_request_common(exp, opcode, req_id, &rrh->op_in,
++    fuse_co_process_request_common(exp, req_len, opcode, req_id, &rrh->op_in,
+         NULL, ent->req_payload, send_response_uring, ent);
+ }
+ #endif /* CONFIG_LINUX_IO_URING */
+-- 
+2.53.0
+
 
