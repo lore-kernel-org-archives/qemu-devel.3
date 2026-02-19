@@ -4,92 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BAD0E9A054
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 19:31:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 191A5E9A05E
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 19:41:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vt9eW-0003O8-OI; Thu, 19 Feb 2026 14:25:32 -0500
+	id 1vt9tL-0005UY-1k; Thu, 19 Feb 2026 14:40:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vt9eT-00037y-Vc
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 14:25:30 -0500
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vt9eR-0000j3-98
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 14:25:29 -0500
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-4358fb60802so1046346f8f.1
- for <qemu-devel@nongnu.org>; Thu, 19 Feb 2026 11:25:26 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vt9st-0005T7-NF
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 14:40:25 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vt9sm-0004fY-3O
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 14:40:22 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1771530012;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=+I0GTYyR9NzqLZxw+F+YDaR+3n5QpSYWV3wkDlQpSA8=;
+ b=G5xlNycY2zVTJ1IKTZRxC2SLmoGqLnj5oKWL6S2WuLXgnnVLKiFBUUqVePEFZar3Pnn06v
+ rh7BFGG0W9+TjPDy1f1Ad4C0uja1wyL6neAXePekXWL1QLEf2sBfcXBgZM9Dmz8PDX3vVW
+ Ry2+vguz16h1n/ivHKaKtFm8rSmqEO4=
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-49-DgQRrCQtOzie71neKllU4Q-1; Thu, 19 Feb 2026 14:40:11 -0500
+X-MC-Unique: DgQRrCQtOzie71neKllU4Q-1
+X-Mimecast-MFC-AGG-ID: DgQRrCQtOzie71neKllU4Q_1771530010
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-8cb52a9c0eeso1698532785a.2
+ for <qemu-devel@nongnu.org>; Thu, 19 Feb 2026 11:40:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771529125; x=1772133925; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=cRrWfM810SbEXW6VfJTS6QM5Ed2OgRIX4ibNdi9Gsj0=;
- b=jHCzd9BehW2EFUhqtcIty/n7zrEI/fhDCxtel4B/Q5FIQAX0sP2HbG6NZEwkEW+cDA
- z7DsmIhIzTBk3VLddRVAcYd+ucPv2G+06gObnQWmEio3fpRLe0q0OnBOmS4II1jAVLcy
- XWPMQ8YX0zyChpEg3KPycfa1OYXPZS2r83N1rMDjvd85MdMrlEaAw9K7X5nOgv6Ke+wn
- CSzx/TzAT4YMHgxScNxiSSEjdM7Ac3yX7bxPGcSIwVyo9cI5gh6+iFoAKFzUvDx/YDDL
- Hq69vH8d+Ye0n/VPuH0AUkFXbC2sfE3gKXdT1C4ZsRttEwZn3CimV6cZ86nyfHLc2Fba
- ThYA==
+ d=redhat.com; s=google; t=1771530010; x=1772134810; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=+I0GTYyR9NzqLZxw+F+YDaR+3n5QpSYWV3wkDlQpSA8=;
+ b=A4XUPE907Dkx4AHgnr+mFFJXfdV+qrSfd+UMGF9wkSiQIWvdrVw1LJKe7ibmSoYHfK
+ Zy2u5nS99/Vv1oRcH+T39M3uZ5+1Xo6d2cN86jjIG1rg4BVY1m5YcIvqm6N+8S/YbeXj
+ cPMVNOVfjfRIZ8nHBi7j0SxYsdvLenwPIxqx4n1FQkkfCXkxdmuC9U9KawN3gaLsfYzR
+ vtYbpg9Qzm915Uh0ZVB5mPAix+u+T7fTYvBZc4KKSEWceBT3prWh3RS5FKnSqiCUX9tI
+ xjGGcF9s9YYGLMqTAG5yCsnJM3JtbYYLDCFJHngp5B2DnbhdtoOwEzqcZlOENMm0R/I/
+ P+bQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771529125; x=1772133925;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=cRrWfM810SbEXW6VfJTS6QM5Ed2OgRIX4ibNdi9Gsj0=;
- b=PqrKCRBlFaomrn8N/V/f0IFw8JhIAPyYKCVbScYpvdN0qftyISlnoomiyRdUgTWPvS
- 2OxdWHrIwoyVN8+9uDgWge2rrrirMXs+daG4XZS0BYCfOBfd98/IRpDByG2CEo2jjqLP
- bTN/rFjwW8jpHkccKViDPvF7MpxdaR/JixwsoEqmYIYa34pf0diFXoyj5Iof4Httnaug
- H71RtcxOn4qXGo2mNw75c+7crQRjWaiJg/yOMWYkI5aA1ngukBGiWH4f4jXNsupUBONB
- 3VDwmb7ep/6JP0PL4qiUMC5L7B9NM00sp2k/c3o7MP4A0k/rTtygsksKvHMNnLmAfPjE
- 5DuA==
-X-Gm-Message-State: AOJu0YxuouYys2VqZs+cRlxZtt2OY/6PnjguOV6wH7NxzzLCVzX7TEZZ
- jzDaPgkx7Yu3sc79Si+7zjxs7MZAkI4m+ykSTST2SphFYkPB2lYJAMLD5aIgpOplWmJpjhzxamP
- OHMRNXYuG9A==
-X-Gm-Gg: AZuq6aKXdHdYKyRVUMryi9me9TmJiXepupMnJPbTomFtAdFph38F/QMqio45bgPyoST
- mQX6ODjLE22d+4SAv3GbmDEZYGKFqv2hcouMDJ7KoowqVDvsLNXJqDdGj7xkbiCtJHH21HXVFCf
- lZm6xitqd6NQdyk+7IIFIQ8oa/eQgvUF2oIQHl6s6cZNxFrvXgOLXRg4jYtQ8l4rTX/aCr/lGtB
- pRSDWyUp/ozvog3YR5cqfvl3iJRPy6gm3gXVtK5OEx94t6ep/6EPK0GECvZIvKtqtuCnsRuXeOI
- womTN1RWYTWjYnk2tjOr8ARXY+N2G3F7LHulNrSfCdR9B2myhimR5h50uNTlnY3Ys5u2OTcTvIB
- l8MDqrfy61BV1yRD/0Gv/Fy882BKAzBVlbWOrV6tH0ZdKqml6SBvMnc6s+P1DQsWv0XAxltB2Fw
- eRLgy24slgvKHqJklnv9wiscj2dedAGj11gznNT3fog/Of3GUQ0htOJn0L14Sp/zAIPPV60BBq
-X-Received: by 2002:a05:6000:2306:b0:437:7010:1cfd with SMTP id
- ffacd0b85a97d-439625c6742mr5636833f8f.4.1771529125399; 
- Thu, 19 Feb 2026 11:25:25 -0800 (PST)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-439567aad3csm17182452f8f.36.2026.02.19.11.25.24
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 19 Feb 2026 11:25:24 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>, qemu-s390x@nongnu.org,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-riscv@nongnu.org, qemu-ppc@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Laurent Vivier <laurent@vivier.eu>
-Subject: [PATCH v2 46/50] target/m68k: Build 'gdbstub.c' once for system
- single binary
-Date: Thu, 19 Feb 2026 20:19:48 +0100
-Message-ID: <20260219191955.83815-47-philmd@linaro.org>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260219191955.83815-1-philmd@linaro.org>
-References: <20260219191955.83815-1-philmd@linaro.org>
+ d=1e100.net; s=20230601; t=1771530010; x=1772134810;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=+I0GTYyR9NzqLZxw+F+YDaR+3n5QpSYWV3wkDlQpSA8=;
+ b=qwvCinxk/opoUpsk63eDV+l9R1ACnblXbGw6DILMIEqXRo84JvQ+e5OQUapjwQEOAn
+ RbB44S+VlcrSRLPxV0rm5HlJCrYE4t3ShLoj7YeFi0o40vSSrPYpotv81rLlGon+cvUS
+ hSyVBMmdxigqQMkNJJFDS2Zs7eazANlGNBrDWKT0+uEkm7fbNd+iym6a83roWhHJH9AL
+ z82q+e9FrEvHcincZ6mXJdfYBn7eRWyQfeDGZA+P7PS4F/2NkCe4H0CWGasfAg2Q5MvJ
+ M541zIt8H+LR3xWaPc0agEiOdNCS7FapWd96oDiG13uu/dWmbMKR4tCoA9S4w+FhtfCO
+ BMuw==
+X-Gm-Message-State: AOJu0YwS+IxPNg4GzEIO2mnMG6gINFcnkd6UYzc6JoGHkilQqQXosOon
+ Nha2oK5Uzwwvk5rSqKfSTDzC67CbIPKzy8x/Y61N9o6kAusmLOX7uCB/qdSgDocEj5IOMPvm1oK
+ J8XZw3gCDtkeVDVprYv3f2wMZqiKHDvrFcz6zmN/1Ye2J8spHKHSH4faO
+X-Gm-Gg: AZuq6aLfh+2qFuaoTldjJGC+++gyC41zTcBQGU1C/6poOF3E8AZGBCzsLJbIksUh22/
+ VEajw9zzjYxQcfHg+MOm0huLOg+JnJC+N1UNHBYQ/2ec4P8vun522f1NSreYPgGKrp4K9qf84VH
+ BbWpv/0LxBPA9bi9j/b+6del4c7Qac83afFBhYs50ZKMkG8DtkjZy3XJIpmx3AHuiE0sY17x8YO
+ +zB7OJ2irhpaFrwjg7+VW1KwJeUyQtNtSoFsM5dQAgsO3osNY2GVlG3oYnAufl5D0dCGXo6h0/f
+ ZoKyMRCB1wOk3cALozvEQHBYQ7vxXXljXO5TMLrWLqvEoXi3qmgDKztoJ8O65H0SacHn/ActkJ2
+ 6/i/COpSoyuFShA==
+X-Received: by 2002:a05:620a:4d94:b0:8cb:50d6:18c3 with SMTP id
+ af79cd13be357-8cb50d61b3dmr1532721685a.1.1771530010534; 
+ Thu, 19 Feb 2026 11:40:10 -0800 (PST)
+X-Received: by 2002:a05:620a:4d94:b0:8cb:50d6:18c3 with SMTP id
+ af79cd13be357-8cb50d61b3dmr1532718185a.1.1771530009994; 
+ Thu, 19 Feb 2026 11:40:09 -0800 (PST)
+Received: from x1.local ([174.91.117.149]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-8cb2b0e12eesm2157317685a.15.2026.02.19.11.40.08
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 19 Feb 2026 11:40:09 -0800 (PST)
+Date: Thu, 19 Feb 2026 14:39:58 -0500
+From: Peter Xu <peterx@redhat.com>
+To: marcandre.lureau@redhat.com
+Cc: qemu-devel@nongnu.org, =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
+ kvm@vger.kernel.org, Alex Williamson <alex@shazbot.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Ben Chaney <bchaney@akamai.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ David Hildenbrand <david@kernel.org>, Fabiano Rosas <farosas@suse.de>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Mark Kanda <mark.kanda@oracle.com>
+Subject: Re: [PATCH 06/10] system/memory: split RamDiscardManager into source
+ and manager
+Message-ID: <aZdnDrs9ivLctEIj@x1.local>
+References: <20260204100708.724800-1-marcandre.lureau@redhat.com>
+ <20260204100708.724800-7-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
+In-Reply-To: <20260204100708.724800-7-marcandre.lureau@redhat.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.045,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,48 +125,123 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-There is a single qemu-system-m68k binary, but by moving
-'gdbstub.c' in the target_common_system_arch[] source set
-the resulting object can be linked into a single qemu-sytem
-binary.
+On Wed, Feb 04, 2026 at 02:07:02PM +0400, marcandre.lureau@redhat.com wrote:
+> From: Marc-André Lureau <marcandre.lureau@redhat.com>
+> 
+> Refactor the RamDiscardManager interface into two distinct components:
+> - RamDiscardSource: An interface that state providers (virtio-mem,
+>   RamBlockAttributes) implement to provide discard state information
+>   (granularity, populated/discarded ranges, replay callbacks).
+> - RamDiscardManager: A concrete QOM object that wraps a source, owns
+>   the listener list, and handles listener registration/unregistration
+>   and notifications.
+> 
+> This separation moves the listener management logic from individual
+> source implementations into the central RamDiscardManager, reducing
+> code duplication between virtio-mem and RamBlockAttributes.
+> 
+> The change prepares for future work where a RamDiscardManager could
+> aggregate multiple sources.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- target/m68k/meson.build | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+The split of sources v.s. manager makes sense to me.
 
-diff --git a/target/m68k/meson.build b/target/m68k/meson.build
-index 4d213daaf67..c36d817134b 100644
---- a/target/m68k/meson.build
-+++ b/target/m68k/meson.build
-@@ -2,13 +2,18 @@ m68k_ss = ss.source_set()
- m68k_ss.add(files(
-   'cpu.c',
-   'fpu_helper.c',
--  'gdbstub.c',
-   'helper.c',
-   'op_helper.c',
-   'softfloat.c',
-   'translate.c',
- ))
- 
-+m68k_user_ss = ss.source_set()
-+m68k_user_ss.add(files('gdbstub.c'))
-+
-+m68k_common_system_ss = ss.source_set()
-+m68k_common_system_ss.add(files('gdbstub.c'))
-+
- m68k_system_ss = ss.source_set()
- m68k_system_ss.add(files(
-   'monitor.c'
-@@ -19,4 +24,6 @@ m68k_system_ss.add(when: ['CONFIG_SEMIHOSTING'],
- )
- 
- target_arch += {'m68k': m68k_ss}
-+target_user_arch += {'m68k': m68k_user_ss}
- target_system_arch += {'m68k': m68k_system_ss}
-+target_common_system_arch += {'m68k': m68k_common_system_ss}
+I didn't follow the whole history of how the discard manager evolved, but
+IIUC it was called "discard manager" only because initially we were pretty
+much focused on the DONTNEED side of things so that when things got dropped
+we need to notify.
+
+However IIUC the current status quo of the discard manager covers both
+sides (population and discards).  It maintains what ranges of memory is
+available in general for consumption by listeners.
+
+For that, I wonder if during this major refactoring we should think about
+renaming this slightly misleading name.  Considering that the major
+difference of such special MR (either managed by virtio-mem or ramattr) is
+about its "sparseness": say, not all of the memory is used but only a
+portion of it to be used in a somehow sparsed fashion, maybe
+SparseRamSources / SparseRamManager?  Another option I thought about is
+DynamicRam*.
+
+No strong feelings on the namings.  But raising this up in case you also
+think it might be a good idea.
+
+[...]
+
+> @@ -699,50 +682,60 @@ struct RamDiscardManagerClass {
+>       * @replay_discarded:
+>       *
+>       * Call the #ReplayRamDiscardState callback for all discarded parts within
+> -     * the #MemoryRegionSection via the #RamDiscardManager.
+> +     * the #MemoryRegionSection via the #RamDiscardSource.
+>       *
+> -     * @rdm: the #RamDiscardManager
+> +     * @rds: the #RamDiscardSource
+>       * @section: the #MemoryRegionSection
+>       * @replay_fn: the #ReplayRamDiscardState callback
+>       * @opaque: pointer to forward to the callback
+>       *
+>       * Returns 0 on success, or a negative error if any notification failed.
+>       */
+> -    int (*replay_discarded)(const RamDiscardManager *rdm,
+> +    int (*replay_discarded)(const RamDiscardSource *rds,
+>                              MemoryRegionSection *section,
+>                              ReplayRamDiscardState replay_fn, void *opaque);
+
+A major question I have here is how we should process replay_populated()
+and replay_discarded() when split the class.
+
+I had a gut feeling that this should not belong to the *Source object,
+instead it might be more suitable for the manager?
+
+I read into some later patches and I fully agree with your definition of
+aggregations when there're multiple sources, which mentioned in the commit
+messsages later of this part:
+
+    The aggregation uses:
+    - Populated: ALL sources populated
+    - Discarded: ANY source discarded
+
+IOW, a piece of mem that is "private" in terms of ram attr manager, but
+"populated" in terms of virtio-mem, should be treated as discarded indeed.
+
+However I also saw that in some follow up patches the series did a trick to
+fetch the first Source then invoke the replay hook on the first source:
+
+int ram_discard_manager_replay_populated(const RamDiscardManager *rdm,
+                                         const MemoryRegionSection *section,
+                                         ReplayRamDiscardState replay_fn,
+                                         void *opaque)
+{
+    RamDiscardSourceEntry *first;
+    ReplayCtx ctx;
+
+    first = QLIST_FIRST(&rdm->source_list);
+    if (!first) {
+        return replay_fn(section, opaque);
+    }
+
+    ctx.rdm = rdm;
+    ctx.replay_fn = replay_fn;
+    ctx.user_opaque = opaque;
+
+    return ram_discard_source_replay_populated(first->rds, section,
+                                               aggregated_replay_populated_cb,
+                                               &ctx);
+}
+
+It seems to me that aggregated_replay_populated_cb() will indeed still do
+the proper aggregations, however if we could move the replay functions into
+the manager (or do we need it to be a hook at all?  Perhaps it will just be
+an API of the manager?), then we don't need this trick of fetching the 1st
+source, instead the manager should do the math of "AND all the sources on
+reported populated info" then invoke the listener handlers.  Maybe that'll
+be cleaner from the high level.
+
+What do you think?
+
+Thanks,
+
 -- 
-2.52.0
+Peter Xu
 
 
