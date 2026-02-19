@@ -4,65 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0A52C531BC
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 19:23:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7D34E9A05F
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 19:23:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vt9ci-0005tw-8l; Thu, 19 Feb 2026 14:23:41 -0500
+	id 1vt9ce-0005Qk-6q; Thu, 19 Feb 2026 14:23:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vt9bq-0003Yb-SW
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 14:22:49 -0500
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vt9bI-0002oR-7R
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 14:22:19 -0500
 Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vt9bo-0008JS-Dq
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 14:22:46 -0500
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vt9bG-0008As-Lq
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 14:22:11 -0500
 Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-4837907f535so12133525e9.3
- for <qemu-devel@nongnu.org>; Thu, 19 Feb 2026 11:22:43 -0800 (PST)
+ 5b1f17b1804b1-48371119eacso12117305e9.2
+ for <qemu-devel@nongnu.org>; Thu, 19 Feb 2026 11:22:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771528962; x=1772133762; darn=nongnu.org;
+ d=linaro.org; s=google; t=1771528927; x=1772133727; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=vg9Yq7RObwqMLng5EN2fLLbwzE+0UIOLuXSANKUubs0=;
- b=uH5ApPyiWuFWsqAIZsp88xmHtKK9ztvFKeO9L5dZUieyQVWbYdcR7FXh953d2q2qZd
- Az7HwUpGcGxMtSY5B+1Q4MLYRIsK79IrvUhp2rgQ5z8nRbwST/vJX6BlMxTSyqZCc9Ci
- trFoHEMslCID0FsxPb5/xNmG2/Ve6iKg5TJXHsffRE5tnb2b5xef+PtK5eQe6yGNhBG6
- 8HS1hxYK2gLeUjZ5nLgZoKxgegZjoyJO17/WKxSPVit9grWqEn1FrjmJsCvGWA+tASXo
- qaUYVXIolK3vkRYCrtxp27h/TkhxEgcjawbgo1aACm6PeErNHzMqRlydiZ4yjyERyGoa
- iKDA==
+ bh=9SDQ1L6BuuAO5wqEwdTuhkDGVq6EQ0d0AnGhnbOHbh8=;
+ b=HDfLowBJKYKX8KYWEWlF6l+hzaMO8Ch6SqfpRMay17WFL9lVpns9sWZKw7PgXqcRXF
+ 0MxqMFZuMMqJa2o2nbqu46XrIyjsIVmx78KVVCDqMifr2MO5suGt6pYx/scv+T9aTXdd
+ c0q4M8VTc6gXeMiU3j/dN9PGcT7L1s1Gw+iTwlysFIw/jThZaM17IZM9755XvGoha8MJ
+ WgArhPhk90adrHTy2mjbWMQuM5mjqNWc0B5rBU7PpHKgZRYuPb2bz+aBV4vMJfnPiHBA
+ Wr7TQFyNOC/6WV9v3M1H6KKWUs5vLOOqLyno05rbBFQNolMgm/WhP//F6TzB7IBedw5g
+ JoaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771528962; x=1772133762;
+ d=1e100.net; s=20230601; t=1771528927; x=1772133727;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=vg9Yq7RObwqMLng5EN2fLLbwzE+0UIOLuXSANKUubs0=;
- b=f2jbwurUEbXk/qfdPm88oK48l4UMvHf1fOgenR7bo6rooguIv4tbRLzYXB7bdLjUZo
- flaUYiiP5rk+j2gSOg/cCudNShczg2UC38ATSGO1nSXQc2AlH+Phlg9IZ9OkoxTxJOha
- S8Sux3zpaQ4GE3m5KeBXnoOIJp59CF5yrLlK0B7A/ULQ9TsFlV+AxyLUsOdtRv22Aqpa
- cPoRWUu6azXCTpgCzGJo9iwWUi46WXx8FPztEcjxpYfVI+z/8xdGQW/Vj+jQkOC/Hpv4
- DM8V966Kg1RNU3MV2lfnV3E6js7evE0/5jsZST8CG2BSTORZp7zHbOS7TAVC09M9OYD+
- SwHw==
-X-Gm-Message-State: AOJu0Ywdgr7bSfP49EYPslRhsbmZZ967Np3P6lQjG5Ve25MMGGurXKJW
- K2V3vWVjGz9MG9m+U+LgHSyeWlBjVIP/4ILi6vXkkl9+/K90dnlGvq6F4/iNl9jnn69/eoUPXs+
- IkFamDVl4qg==
-X-Gm-Gg: AZuq6aLqiU9o106aucL0C6SlDjCTlmhiznEOqLaTUtZUEvOpx4V+Q6VszF+UVRz5/8z
- GbXKstJITJQPt/RCYPb9QKuFESC2AcrHCfcMFgbCTbRBExiPZrbpSb69XZMeoYeYiSYXaZdVYlO
- jWPcy97o7fSM6U1ZTi8IzRvZxkhp/ppdM2Ah2Ef+N4C4NVqPgHA+EHQovJcupyufzCKLNa2iWA0
- faWiOUIENpzoUDx+dX6k7ZHtvXiCFqPS/Y8QqsLplWO+nR2BazJSmqXPR7FzGUFy0Q4uQq5Pou7
- x27FKJiiQ/YuYRSZwFgriB+3V7h7I7X/9lCIE2eJulwW37r1kMv+cpSHoEt6xF8bnyfT8MUazSn
- U6ORG9icvF3duu6Vvw7RLC6OWi+uId5ueKzKkX/tOsgrm5QTiXbTzMVQqfYs8PHv5WGbWUnw0dX
- n6lRe+aFd3DJHSURfHu3witVxDUEjVmfNPhdpLyJQxFj/O2Lak8pFBX8Kvlr4Tz9mi3iY7x19B
-X-Received: by 2002:a05:600c:444f:b0:475:de14:db1e with SMTP id
- 5b1f17b1804b1-48379bd742amr313079625e9.24.1771528962611; 
- Thu, 19 Feb 2026 11:22:42 -0800 (PST)
+ bh=9SDQ1L6BuuAO5wqEwdTuhkDGVq6EQ0d0AnGhnbOHbh8=;
+ b=Wergl/eEwSzqQHlMufkwvfWmq1j/8nlOg61aBsPtr5bebYWnLueGQoFb5fxmzRT44y
+ 4oM0iSOs3VWbnj3O8uh9N/3Kt1dVNOb16x6Q9VyeL11gQ+CvfJmBbTc+2ewFvJVOIGJG
+ CHAlwPIPx2NEsYC2n1SXKa8FVxalQ37j7vNPY6LQAsDxRK+Ey7UESSAD7qpy2OuwQs89
+ TWf5ORxE3VW3tSLq9N7k8+4/OFNnFkquf0w0IlN9kAHnHadZYczgkyztgox1FeXNAYvM
+ wv9jhWiQufVTmBsFXJUAAmLJbwj0kgxh+IgFYJL+mS5NCPre783dLnn0Lsvi4sA5/LCz
+ C+Bg==
+X-Gm-Message-State: AOJu0YycHsd8UA/tjHb4M/jYRqwHMGp9U46NMPAXwNghrYMQ6XmXaJ3T
+ VWd/jI734aiwRu8DPopsGvabV+GhjxRIIiEvas/vvAkDKvLt+u7McVpMJcHFQyMDID2wabAP3OX
+ Xbc0YXGm0Cg==
+X-Gm-Gg: AZuq6aIZuqzI+lqHjb1y0coK/vmn9xS3pdmwv/G4n8uERkoML6LpBtWWewzN4xWg5zi
+ uiC7xPMO1ciRvIpkPP/gXfbqs1wEGM/KqiqbERvgmZ4nx9P9WHnjWz/XhqCLbGOW6EhV/uVqn9i
+ HcFggdeyBWSUnQjrQFsf/vw0l0G7fW2iLEHZgt3uIx1xPPAAra+z4dEw8RguqCGTx17KBcTBYDv
+ UOoIYd4NL675Br4sE0g+3wiDxHNFbKWvSUcWQV49twyXfume6KqBCVFJmI8Brezo76/wkXqHRVo
+ 29VGURdAoterxCCb5ifP/FgXvKRh1lRP2jVs7ebj3NIFnv+mbzl2lngoU0pKgkdtK+klLowqmg5
+ ZaLCW6A/2uUze87JCow/JPYTrdgh8FxIWu28nbzIDiJYYlyVOhL5ES8MLnnUrG/ndptyusURc3r
+ Bz77vTd2Do/6vtkk5UhL3Tc3zv0SOKQMBRUGnGe/cLv4T/MpOXU2M1bj9fWEAUqHtL4YdppkOTL
+ oumfdrc5Nc=
+X-Received: by 2002:a05:600c:3e0c:b0:480:6b76:dfb4 with SMTP id
+ 5b1f17b1804b1-48398a65eefmr97540905e9.8.1771528927256; 
+ Thu, 19 Feb 2026 11:22:07 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-483a31bac27sm23862645e9.5.2026.02.19.11.22.41
+ 5b1f17b1804b1-483a31bac27sm23830395e9.5.2026.02.19.11.22.06
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 19 Feb 2026 11:22:42 -0800 (PST)
+ Thu, 19 Feb 2026 11:22:06 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
@@ -70,15 +71,11 @@ Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  qemu-riscv@nongnu.org, qemu-ppc@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-Subject: [PATCH v2 23/50] target/riscv: Remove empty target_monitor_defs()
- symbol
-Date: Thu, 19 Feb 2026 20:19:25 +0100
-Message-ID: <20260219191955.83815-24-philmd@linaro.org>
+ Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>
+Subject: [PATCH v2 18/50] target/i386: Remove MonitorDef register entries
+ available via gdbstub
+Date: Thu, 19 Feb 2026 20:19:20 +0100
+Message-ID: <20260219191955.83815-19-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260219191955.83815-1-philmd@linaro.org>
 References: <20260219191955.83815-1-philmd@linaro.org>
@@ -109,38 +106,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Prefer the stub target_monitor_defs() symbol introduced in commit
-bf957284006 ("monitor: remove target-specific code from monitor.c").
+All these registers are already provided by via gdbstub parsed XML
+and handler by the gdb_get_register() helper in the monitor/hmp.c
+file. Remove as now unreachable code.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/riscv/monitor.c | 13 -------------
- 1 file changed, 13 deletions(-)
+ target/i386/monitor.c | 39 ---------------------------------------
+ 1 file changed, 39 deletions(-)
 
-diff --git a/target/riscv/monitor.c b/target/riscv/monitor.c
-index ccb7eb44d02..a9d31114442 100644
---- a/target/riscv/monitor.c
-+++ b/target/riscv/monitor.c
-@@ -244,19 +244,6 @@ void hmp_info_mem(Monitor *mon, const QDict *qdict)
-     mem_info_svxx(mon, env);
- }
+diff --git a/target/i386/monitor.c b/target/i386/monitor.c
+index 99b32cb7b0f..446428602ef 100644
+--- a/target/i386/monitor.c
++++ b/target/i386/monitor.c
+@@ -602,46 +602,7 @@ static target_long monitor_get_pc(Monitor *mon, const struct MonitorDef *md,
  
--/*
-- * We have way too many potential CSRs and regs being added
-- * regularly to register them in a static array.
-- *
-- * Declare an empty array instead, making get_monitor_def() use
-- * the target_get_monitor_def() API directly.
-- */
--const MonitorDef monitor_defs[] = { { } };
--const MonitorDef *target_monitor_defs(void)
--{
--    return monitor_defs;
--}
+ const MonitorDef monitor_defs[] = {
+ #define SEG(name, seg) \
+-    { name, offsetof(CPUX86State, segs[seg].selector), NULL, MD_I32 },\
+-    { name ".base", offsetof(CPUX86State, segs[seg].base) },\
+     { name ".limit", offsetof(CPUX86State, segs[seg].limit), NULL, MD_I32 },
 -
- static bool reg_is_ulong_integer(CPURISCVState *env, const char *name,
-                                  target_ulong *val, bool is_gprh)
- {
+-    { "eax", offsetof(CPUX86State, regs[0]) },
+-    { "ecx", offsetof(CPUX86State, regs[1]) },
+-    { "edx", offsetof(CPUX86State, regs[2]) },
+-    { "ebx", offsetof(CPUX86State, regs[3]) },
+-    { "esp|sp", offsetof(CPUX86State, regs[4]) },
+-    { "ebp|fp", offsetof(CPUX86State, regs[5]) },
+-    { "esi", offsetof(CPUX86State, regs[6]) },
+-    { "edi", offsetof(CPUX86State, regs[7]) },
+-#ifdef TARGET_X86_64
+-    { "r8", offsetof(CPUX86State, regs[8]) },
+-    { "r9", offsetof(CPUX86State, regs[9]) },
+-    { "r10", offsetof(CPUX86State, regs[10]) },
+-    { "r11", offsetof(CPUX86State, regs[11]) },
+-    { "r12", offsetof(CPUX86State, regs[12]) },
+-    { "r13", offsetof(CPUX86State, regs[13]) },
+-    { "r14", offsetof(CPUX86State, regs[14]) },
+-    { "r15", offsetof(CPUX86State, regs[15]) },
+-    { "r16", offsetof(CPUX86State, regs[16]) },
+-    { "r17", offsetof(CPUX86State, regs[17]) },
+-    { "r18", offsetof(CPUX86State, regs[18]) },
+-    { "r19", offsetof(CPUX86State, regs[19]) },
+-    { "r20", offsetof(CPUX86State, regs[20]) },
+-    { "r21", offsetof(CPUX86State, regs[21]) },
+-    { "r22", offsetof(CPUX86State, regs[22]) },
+-    { "r23", offsetof(CPUX86State, regs[23]) },
+-    { "r24", offsetof(CPUX86State, regs[24]) },
+-    { "r25", offsetof(CPUX86State, regs[25]) },
+-    { "r26", offsetof(CPUX86State, regs[26]) },
+-    { "r27", offsetof(CPUX86State, regs[27]) },
+-    { "r28", offsetof(CPUX86State, regs[28]) },
+-    { "r29", offsetof(CPUX86State, regs[29]) },
+-    { "r30", offsetof(CPUX86State, regs[30]) },
+-    { "r31", offsetof(CPUX86State, regs[31]) },
+-#endif
+-    { "eflags", offsetof(CPUX86State, eflags) },
+-    { "eip", offsetof(CPUX86State, eip) },
+     SEG("cs", R_CS)
+     SEG("ds", R_DS)
+     SEG("es", R_ES)
 -- 
 2.52.0
 
