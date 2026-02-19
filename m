@@ -4,83 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35B00E9A050
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 16:40:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6855E9A048
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 16:56:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vt746-0001A0-NS; Thu, 19 Feb 2026 11:39:46 -0500
+	id 1vt7Jj-00060c-1n; Thu, 19 Feb 2026 11:55:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vt744-00019Q-Oi
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 11:39:44 -0500
-Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
+ id 1vt7JV-00060B-DV
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 11:55:41 -0500
+Received: from mail-pj1-x1031.google.com ([2607:f8b0:4864:20::1031])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vt741-0001EA-MT
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 11:39:43 -0500
-Received: by mail-pf1-x435.google.com with SMTP id
- d2e1a72fcca58-823081bb15fso638504b3a.3
- for <qemu-devel@nongnu.org>; Thu, 19 Feb 2026 08:39:40 -0800 (PST)
+ id 1vt7JQ-0004gN-37
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 11:55:38 -0500
+Received: by mail-pj1-x1031.google.com with SMTP id
+ 98e67ed59e1d1-356337f058aso530438a91.2
+ for <qemu-devel@nongnu.org>; Thu, 19 Feb 2026 08:55:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771519179; x=1772123979; darn=nongnu.org;
+ d=linaro.org; s=google; t=1771520134; x=1772124934; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=RZoB1oBYOGQngrzKIYH38IoVId5kzTyR78mCQhk+Iuk=;
- b=zIS0KW33ABir9gy75H9AOXvsv6pIy5ORIULWmKX8PzP4CXp4xjI+4VWDvKyveMdIw8
- Vs+cEdGRZK7nse15F6d/hJ7doqtw9Em5I2iUU0aQPmQ7/ozIBd90C6GZel2mhlQZ9xrg
- bcnvmNzKzSmtoc7HpP6ir/L6foy6MnOPeSLQ5c5uAuIOp9QGv1E+v5kD5vsiulbSSKvw
- xf0hCutTfFua3wfonP8oeMfYQMWPNmjLAT/XUiiMDrdH7FoYRIGzT/4C7X26e7Wyk/Ih
- uo97KnI4oWmAS7ZoM14/ogANcsYJjaOtUt6wHqyjynqSSkR/NgGLPUhn5/5GiNHJ5s+t
- HeqQ==
+ bh=Rsqd712YhPLDjHOYYlHwTM4paBxEH9Tt1EE1LGG3xlM=;
+ b=qsBmJxfr+RlkmzGJi7tjCfYrm2Eg6CgP8LV4b8v8Kv6mISCOdFKm6/Ccl0JyYBlPDS
+ 70vdAbFou13o7fpPM2f+c/MizwKekSkhYyV/d85T/y6vqqUhKTW/Y1vjF8SVzbFAeGPn
+ rTKHynfy+qoUctWn/Y5QU6MqCSHaEOdsPhjbqvMHpmZbVRGQqCn2FdH/n48e1NrqacJ/
+ M3HM9BwU7OiLfwGlF6tbcT9Lj9zcwL3cZxJf77P6pi5YwjbAyQOZujYnPwAVfjXfi6bY
+ JT2L/d+Vljn2gyS5k7fFlsXB7JssnWn7HMN3xGCuDLMN3jJlXJc+spGiDOWv12Lp8Vlj
+ s+yg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771519180; x=1772123980;
+ d=1e100.net; s=20230601; t=1771520134; x=1772124934;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=RZoB1oBYOGQngrzKIYH38IoVId5kzTyR78mCQhk+Iuk=;
- b=owWZrkUCzcTNs/e8Lov7tL+/7E6D8BdbGb+m3J6KXWzFYej7r19CDLR3Ko0XcAHgb6
- 38nZ0Z8uZPrzccM+319NgNaI1GZKVcSKKme48W0fTiQCqsNo5+MlTgwY4WutQsTW0zyz
- c8LPaCDCQi4ofc4jg2KtYBTUZMI+1IMTk4E8tUlzU1ibBYJ9gVKkIunJRZQHu2HLLGZt
- pNeybm7V1HAjNGcu1MJeBHguhX5cM63aGYeEgJaL4/TFEznpTrIhYmz8iRnGiB13KpjG
- jKfzAXUJsgF308XTHtqJZhsuuj2Hj+4Me2Q/8QS8oElUn1MhU91XWD+I87+dxOG3RyWq
- busQ==
-X-Gm-Message-State: AOJu0Yy3Pa8jF7V4HxkgKoQPkfN0M5QbpOQWVzQwENQvZS+det58qDdv
- GImqpgibxwZKDRKxdzNdIdp4nUnc0/Xo2AMnqk0zTJ54kPxSEbLrpJwRbkdcfx5EsZI=
-X-Gm-Gg: AZuq6aLlIAxSSjU2OQv7kuJfW817ocfS+9UXHo5bxCKRYxNSQUlD94mbSi3vFPENmAJ
- QBnXGCUCaQvV00SApLYzpFLdtLh4z7pvfJcklysAHiEaFcSSPkF8pQkFkW1ELfpltHZhx51cPNx
- Pdm4kL+ttxWzkIgyXj4Ri3bOards+trtoX45dgp/yJ40jAibwTlBCuIHfhG9jZ9PZyuo6rlSTEk
- YbOqGiSyZGjS12+4E0EwcHHHQFF7w8TvBMQtyqRY36nNFX53FqMcT69t3VvY24u1zaPb+Y/Vo8b
- OVXej6PUI9t5Nim8tsqBifehmJ0GE4E2iC2ddvzemjnA1QcrDwd/wYe3q2JeKy/Raa1FkZGdoxw
- O2YplVlJSG6/YFEZVBne3yMoBz5lVzmadECdjd4xISlFhbleCAUufC+1IkAUQ84jASARKh3Mn5a
- ILc3Rtp5S++tLgmaGU+hTz57c80CDm41E5yAD24JmtF+Ny4n+7orvQ+ONiC3+1SJJXP3PY
-X-Received: by 2002:a05:6a00:2e0d:b0:81f:4f05:4fe6 with SMTP id
- d2e1a72fcca58-824d94d001amr15793574b3a.1.1771519179418; 
- Thu, 19 Feb 2026 08:39:39 -0800 (PST)
+ bh=Rsqd712YhPLDjHOYYlHwTM4paBxEH9Tt1EE1LGG3xlM=;
+ b=O77xrFn8lKubiX1m5OhSwSqhqCq2d++Mcs06eqKGDU770ZulFXEhJitKyHIkZYdWNl
+ b2kSRkJpn5WW6GuPhsl/UTMV/xWoE0dM4qV+YYScfPor1aR0+lYEaPjYaxqQWG8IcDDB
+ E/qL9rkxlPSpq8noaz3NBGjuEQSXbUerGvxz6FEyVAXzQpcNOM6VV7whPrb57trMOeQ1
+ kbyq8jtQlPU1Ok2vP4aJB1KqXvdVDWJ/EibeZiIUfljMYY30UM13pAe6axOaFxjz+vje
+ /uef3mtOfv19n6g2u3Kss8x+UHFEsI2uJk/UYZ53bF9W7wxUG/gPcXzNXEK2mfq/jIG2
+ YEDA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVkvUI4tGU57QkmhR2/hJ/W4lVLgqyVXxhsOHL840MiCfshZoDmCkBvors0it0zdGqHStdgyJQejNEI@nongnu.org
+X-Gm-Message-State: AOJu0YxEZTcGAaTRCRRzzzLyhTW6BkvZcBv24iiaokihhapyxBRFAqF2
+ ZotrLgF3H6PV/gnHGRsOFoAb8cyjlidlv6Ev+ho/F5p0Z4kGajgPJ8trJMZ40qdtpfk=
+X-Gm-Gg: AZuq6aK8GPyO7armJDNjq8xwp8ofhzu41eEALR+ZNYC3VVuxSiMpn53YNZnVXQWEkzT
+ OBc65Qa3HYWjfF4+XMxHnj7VwAW80JdKOoULY9lCcS5+Kx8g3vpRDe9CMZnnbIeV1LhkVfv6alr
+ kel5tgR5FuV5cwbKpamlWhV3Ejciv52RPO9GX4qXU9Z0mgBKEBUdi7qBk0Mjdt9xTsDfE0JPxIB
+ ZOvakOy6fNShXf6pXn2ks3Lkbh6erHq4VS8whZux0cS/NZaxQWxJEjSYupiJsJr+SI0hCpEOkcj
+ 9qs5umjYC1rOwG+ZBXbMh7cCvQEIYDk1bk6YfIt0Xdtco36UaZle4h7bD60TLRYAL1w3FcW2Ahd
+ e+o0RBXiLtGkO9JI50MEX8iq5Sx70L/LGurywWEf2upaIvya3q/mhbYMDvqZKHsvqm5rsZ/8tHN
+ a2O1GCUckeCq1q1QhVJLDXZEjmxEAhcHrnv4kwXwZ0dcmh4gx4gdfXa3ibMSavQi6nBoQ2p3XpR
+ DFlP2w=
+X-Received: by 2002:a17:90b:2781:b0:356:21ff:623f with SMTP id
+ 98e67ed59e1d1-356aad5f5f1mr15156888a91.22.1771520134174; 
+ Thu, 19 Feb 2026 08:55:34 -0800 (PST)
 Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-824c6bb410csm19824324b3a.61.2026.02.19.08.39.38
+ 98e67ed59e1d1-3589700b49bsm1302529a91.3.2026.02.19.08.55.33
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 19 Feb 2026 08:39:39 -0800 (PST)
-Message-ID: <5befbd0e-5f0f-41c4-99a7-1cf17bfe5454@linaro.org>
-Date: Thu, 19 Feb 2026 08:39:39 -0800
+ Thu, 19 Feb 2026 08:55:33 -0800 (PST)
+Message-ID: <e736e2de-fa12-4974-a4e2-6b4761622806@linaro.org>
+Date: Thu, 19 Feb 2026 08:55:33 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6/6] tests/functional: add Arm VBSA uefi conformance test
+Subject: Re: [PATCH v3 15/24] bsd-user: Add do_bsd_uuidgen implementation
 Content-Language: en-US
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, Brad Smith <brad@comstyle.com>,
- Warner Losh <imp@bsdimp.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Thomas Huth <thuth@redhat.com>,
- Kyle Evans <kevans@freebsd.org>, Peter Maydell <peter.maydell@linaro.org>,
- qemu-arm@nongnu.org
-References: <20260213154859.1551283-1-alex.bennee@linaro.org>
- <20260213154859.1551283-7-alex.bennee@linaro.org>
- <82942191-d0a6-4393-846d-b04e3cb009ce@linaro.org>
- <87o6ll6mso.fsf@draig.linaro.org>
+To: Warner Losh <imp@bsdimp.com>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Kyle Evans <kevans@freebsd.org>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Riku Voipio <riku.voipio@iki.fi>, Stacey Son <sson@FreeBSD.org>
+References: <20260218-bsd-user-claude-v3-0-0137b37b221e@bsdimp.com>
+ <20260218-bsd-user-claude-v3-15-0137b37b221e@bsdimp.com>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  xsDNBGK9dgwBDACYuRpR31LD+BnJ0M4b5YnPZKbj+gyu82IDN0MeMf2PGf1sux+1O2ryzmnA
@@ -116,18 +118,18 @@ Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  5SYuJaKzCAgNeAy3gUVUUPrUsul1oe2PeWMFUhWKrqko0/Qo4HkwTZY6S16drTMncoUahSAl
  X4Z3BbSPXPq0v1JJBYNBL9qmjULEX+NbtRd3v0OfB5L49sSAC2zIO8S9Cufiibqx3mxZTaJ1
  ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <87o6ll6mso.fsf@draig.linaro.org>
+In-Reply-To: <20260218-bsd-user-claude-v3-15-0137b37b221e@bsdimp.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x435.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1031;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1031.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -143,167 +145,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/19/26 2:38 AM, Alex Bennée wrote:
-> Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
+On 2/18/26 9:22 PM, Warner Losh wrote:
+> From: Stacey Son <sson@FreeBSD.org>
 > 
->> On 2/13/26 7:48 AM, Alex Bennée wrote:
->>> The VBSA test is a subset of the wider Arm architecture compliance
->>> suites (ACS) which validate machines meet particular minimum set of
->>> requirements. The VBSA is for virtual machines so it makes sense we
->>> should check the -M virt machine is compliant.
->>> Fortunately there are prebuilt binaries published via github so all
->>> we
->>> need to do is build an EFI partition and place things in the right
->>> place.
->>> There are some additional Linux based tests which are left for
->>> later.
->>> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
->>> ---
->>>    tests/functional/aarch64/meson.build       |  1 +
->>>    tests/functional/aarch64/test_virt_vbsa.py | 99 ++++++++++++++++++++++
->>>    2 files changed, 100 insertions(+)
->>>    create mode 100755 tests/functional/aarch64/test_virt_vbsa.py
->>> diff --git a/tests/functional/aarch64/meson.build
->>> b/tests/functional/aarch64/meson.build
->>> index 49eca120589..7ea8c22b048 100644
->>> --- a/tests/functional/aarch64/meson.build
->>> +++ b/tests/functional/aarch64/meson.build
->>> @@ -46,6 +46,7 @@ tests_aarch64_system_thorough = [
->>>      'tuxrun',
->>>      'virt',
->>>      'virt_gpu',
->>> +  'virt_vbsa',
->>>      'xen',
->>>      'xlnx_versal',
->>>    ]
->>> diff --git a/tests/functional/aarch64/test_virt_vbsa.py b/tests/functional/aarch64/test_virt_vbsa.py
->>> new file mode 100755
->>> index 00000000000..53cabf9d6c5
->>> --- /dev/null
->>> +++ b/tests/functional/aarch64/test_virt_vbsa.py
->>> @@ -0,0 +1,99 @@
->>> +#!/usr/bin/env python3
->>> +#
->>> +# Functional test that runs the Arm VBSA conformance tests.
->>> +#
->>> +# Copyright (c) 2026 Linaro Ltd.
->>> +#
->>> +# Author:
->>> +#  Alex Bennée <alex.bennee@linaro.org>
->>> +#
->>> +# SPDX-License-Identifier: GPL-2.0-or-later
->>> +
->>> +import shutil
->>> +from subprocess import check_call, DEVNULL
->>> +
->>> +from qemu_test import QemuSystemTest, Asset
->>> +from qemu_test import wait_for_console_pattern, get_qemu_img, skipIfMissingCommands
->>> +from qemu_test import exec_command_and_wait_for_pattern as ec_and_wait
->>> +
->>> +
->>> +@skipIfMissingCommands("mformat", "mcopy", "mmd")
->>> +class Aarch64VirtMachine(QemuSystemTest):
->>> +    KERNEL_COMMON_COMMAND_LINE = 'printk.time=0 '
->>> +    timeout = 360
->>> +
->>> +    def wait_for_console_pattern(self, success_message, vm=None):
->>> +        wait_for_console_pattern(self, success_message,
->>> +                                 failure_message='Kernel panic - not syncing',
->>> +                                 vm=vm)
->>> +
->>
->> May be worth adding a comment with README url:
->> https://github.com/ARM-software/sysarch-acs/blob/main/docs/vbsa/README.md
->>
->>> +    ASSET_VBSA_EFI = Asset('https://github.com/ARM-software/sysarch-acs/raw/refs/heads/main'
->>> +                           '/prebuilt_images/VBSA/v25.12_VBSA_0.7.0/Vbsa.efi',
->>> +                           '80f37d2fb86d152d95dec4d05ff099c9e47ee8a89314268e08056b0e1359e1fa')
->>> +
->>> +    ASSET_BSA_SHELL = Asset('https://github.com/ARM-software/bsa-acs/raw/refs/heads/main/'
->>> +                            'prebuilt_images/BSA_DT/v20.05_05_ALPHA/Shell.efi',
->>> +                            '763e7b293fa9d1582153ea8fd0cf60e2a7a87d092d35d342cf9b3b697f47b588')
->>> +
->>> +    def test_aarch64_vbsa_uefi_tests(self):
->>> +        """
->>> +        Launch the UEFI based VBSA test from an EFI file-system
->>> +        """
->>> +
->>> +        self.vm.set_console()
->>> +
->>> +        # virt machine wi
->>> +        self.set_machine('virt')
->>> +        self.vm.add_args('-M', 'virt,gic-version=max,virtualization=on')
->>> +        self.vm.add_args('-cpu', 'max','-m', '1024')
->>> +
->>> +        # We will use the QEMU firmware blobs to boot
->>> +        code_path = self.build_file('pc-bios', 'edk2-aarch64-code.fd')
->>> +        vars_source = self.build_file('pc-bios', 'edk2-arm-vars.fd')
->>> +        vars_path = self.scratch_file('vars.fd')
->>> +        shutil.copy(vars_source, vars_path)
->>> +
->>> +        self.vm.add_args('-drive', f'if=pflash,format=raw,readonly=on,file={code_path}')
->>> +        self.vm.add_args('-drive', f'if=pflash,format=raw,file={vars_path}')
->>> +
->>> +        # Build an EFI FAT32 file-system for the UEFI tests
->>> +        vbsa_efi = self.ASSET_VBSA_EFI.fetch()
->>> +        bsa_shell = self.ASSET_BSA_SHELL.fetch()
->>> +
->>> +        img_path = self.scratch_file('vbsa.img')
->>> +        qemu_img = get_qemu_img(self)
->>> +        check_call([qemu_img, 'create', '-f', 'raw', img_path, '64M'],
->>> +                   stdout=DEVNULL, stderr=DEVNULL)
->>> +
->>> +        check_call(['mformat', '-i', img_path, '-v', 'VBSA', '::'],
->>> +                   stdout=DEVNULL, stderr=DEVNULL)
->>> +
->>> +        check_call(['mmd', '-i', img_path, '::/EFI'],
->>> +                   stdout=DEVNULL, stderr=DEVNULL)
->>> +
->>> +        check_call(['mmd', '-i', img_path, '::/EFI/BOOT'],
->>> +                   stdout=DEVNULL, stderr=DEVNULL)
->>> +
->>> +        check_call(['mcopy', '-i', img_path, bsa_shell, '::/EFI/BOOT/BOOTAA64.EFI'],
->>> +                   stdout=DEVNULL, stderr=DEVNULL)
->>> +
->>> +        check_call(['mcopy', '-i', img_path, vbsa_efi, '::/Vbsa.efi'],
->>> +                   stdout=DEVNULL, stderr=DEVNULL)
->>> +
->>> +        self.vm.add_args('-drive', f'file={img_path},format=raw,if=none,id=drive0')
->>> +        self.vm.add_args('-device', 'virtio-blk-pci,drive=drive0')
->>> +
->>> +        self.vm.launch()
->>> +
->>> +        # wait for EFI prompt
->>> +        self.wait_for_console_pattern('Shell>')
->>> +
->>> +        # Start the VBSA tests
->>> +        ec_and_wait(self, "FS0:Vbsa.efi", 'VBSA Architecture Compliance Suite')
->>> +
->>> +        # could we parse the summary somehow?
->>> +
->>> +        self.wait_for_console_pattern('VBSA tests complete. Reset the system.')
->>> +
->>
->> What happens in case there is an error, does the test app hangs, or
->> still exit with message under?
+> Add implementation of uuidgen(2) syscall that generates UUIDs and
+> converts them to target ABI format.
 > 
-> The failures I had were generally hangs but ideally we would parse the
-> the summary data and generate our response based on that. Unfortunately
-> that is at odds with the current send/wait for pass/fail message
-> infrastructure.
->
+> Signed-off-by: Stacey Son <sson@FreeBSD.org>
+> Signed-off-by: Warner Losh <imp@bsdimp.com>
+> ---
+>   bsd-user/bsd-misc.h | 33 +++++++++++++++++++++++++++++++++
+>   1 file changed, 33 insertions(+)
+> 
 
-I'm not sure you need something so complicated, all we needed is to 
-return an error if any test is failing,(assuming they all pass now?).
-I don't know the output format, but let's imagine a failure is reported 
-with "not ok ... details ...", all you need to modify is the final 
-wait_for_console_pattern:
-
-wait_for_console_pattern(self, 'VBSA tests complete. Reset the system.',
-                          failure_message='not ok')
-
-So it will catch any failure without having to parse anything.
-
-Regards,
-Pierrick
+I'm not familiar with it, but looks good to me.
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
