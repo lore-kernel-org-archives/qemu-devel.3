@@ -4,88 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62B53E9A03B
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 03:25:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E93ACE9A048
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 03:26:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vsufB-0002fy-F1; Wed, 18 Feb 2026 22:25:13 -0500
+	id 1vsufr-0002r5-Sw; Wed, 18 Feb 2026 22:25:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vsuf8-0002fg-VG
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 22:25:10 -0500
-Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
+ id 1vsufq-0002qj-3O
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 22:25:54 -0500
+Received: from mail-pg1-x529.google.com ([2607:f8b0:4864:20::529])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vsuf7-0006SV-Ds
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 22:25:10 -0500
-Received: by mail-pf1-x432.google.com with SMTP id
- d2e1a72fcca58-82318702afbso383167b3a.1
- for <qemu-devel@nongnu.org>; Wed, 18 Feb 2026 19:25:08 -0800 (PST)
+ id 1vsufo-0006V1-HX
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 22:25:53 -0500
+Received: by mail-pg1-x529.google.com with SMTP id
+ 41be03b00d2f7-c70378ddaafso272011a12.3
+ for <qemu-devel@nongnu.org>; Wed, 18 Feb 2026 19:25:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771471507; x=1772076307; darn=nongnu.org;
+ d=linaro.org; s=google; t=1771471551; x=1772076351; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=uiNPZJyr66Sd6j8uFapnK2mUV86r6wkw15Pmi0Z8chM=;
- b=B2+yiP2Q8uVmw5LiWWsN8BqIqH1O+WTIL/yHrUVPzqW7AG+lqQK5fmHAv/jKqGYtaZ
- XNB1hd3neRLyq4fl0ruv0va4oYvjiOK7+6VUmx4QmCWnz3F72Udrb3FpJxoYlj8t1mkR
- ce+SlcBoNIQiMMHQmC7UX4Bf/4XovYkfYvDemB5ispuQNe+M1hNFkIRNwc/McKW9oEAv
- 3QvKb8VmiR9sPhiRp3sSqubTtCyisLhhxxb8l6Ho9KupM/ny7zE2yNJxG1P3fIOMD7Wf
- +KfWh3JF9Ywx5DNX0FwcwTMv9Dvw9WLsmOuYcc4WBYLXbuVgFmFyD6O3gQi3SxXtByJT
- ccDQ==
+ bh=xZtMqoBM+JC6W7HM8lhkJa3WjrReTwoR/27QiAoEVv4=;
+ b=xtnm7ui27WX6EMsftbCiYtptlawXjVphO+HlcNQc/Q5nFsrvK3PY3G8fBnY1u3wi9p
+ P0n0plz1C/lt1WqfjgDCPGXk4bsmiQqTEkxOQQQwL8LaztYhkbFE0yR1tXywncmBLP1Q
+ oGU6/HgJFYoiPUEemuX/GOVRBuf/doDlAt11tFjDKQZjD4gYnRqw3P3v3CqtM8T5QTuP
+ wJpTG9o7StTbOAnFipVHmany6oFC15aup18oU8gZWSLt0rcHqaiipXknZurVoUc7M1I2
+ Ha3woaYv68QUQjAXwUU+oye1XDEtfDhGcxOMckoedCtOmGddL6XABR/ct6BrGtPKOusJ
+ L4BA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771471507; x=1772076307;
+ d=1e100.net; s=20230601; t=1771471551; x=1772076351;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=uiNPZJyr66Sd6j8uFapnK2mUV86r6wkw15Pmi0Z8chM=;
- b=gvXwa9h2/gbVpdRFpIL+0gWV5Le9pmMRLxU9dJE7xxqyTUEG97sriAThOnFxpOUWrx
- L89Y0p8vwGnbbBrzVZRCaRfVYk3l/VDQQc1vE1fCpKydWr1sTIQOGm8dFRJKaLQVw9q+
- NNKtpjEvf+9sYZNBhe3QdEYmO4DZ4xcyF9dprNlyq8k61OAQ8oHIjBuqKVGPZDlJqfOM
- RduhrYtS4kRDIEzJgTLpUdbz8Z1AUzaPGHmW2+D50+Hf1LvYL73w5XQu8Oilo8MOtHG/
- IFleW6rRXBiQDFtOl3G6XQNnnWMBB3znPj9cMYicfOkb2hmIDI9hkMENSSDRPvyeVKoX
- /viQ==
-X-Gm-Message-State: AOJu0YxiaiiBdK9ac796Fimy6nfN3aCBDPByU/vhP/vwWCn6kJESyyG4
- ng+x3ljboQ/nM45gsJuzd4sdQniO6dCcudz6EWH317xh/QpxMH0nDmq+8qO21UEpI+LNlHMOTQt
- zTXEY/Mk=
-X-Gm-Gg: AZuq6aLZhfYFy1p43f3Hn3W/lyIXSAyVb/UUUMzJfsEEAKaTCXope7+pSM7gGZYQcd0
- 0xhTTO2l33r+DgTZUcZ/hE/+DujRK/6tpzxAyVYNSIXH4zN+mJsbFHy0KO45mo9rTEvuthEhxo+
- Ah8VaA8Pfm2VIR6ztlzUs/J0S5Xml+a6LsYUVwXKtVMHvH4YLhXwt1dHkgfr6mvP9SWOmmLpTyy
- RltDO2EjaRTC4fTsYKAtd+ze0WqNMYkFVq/8g8nriFNvig4t41EEbs85FDXWEwku2vgozBowMku
- FIXr6uRWkmzo1tVRCDb7GoFrSnjq2FHqUbPSq/yNI33NKnf9G4nb2h5OcW+fG/H9nqhEyfbuOQn
- noZhVsOoUJFsmljOIsYjIfrH3nlu7oTMXpZMzjeE6eE2eoaT+ipwAGTBCG2KoN96YRw2Md2zP2h
- YGA66v+tLl/cDkxsIOPOCgXhWa2dnhlMX7uoaevpme436yHvtg8qXU30KhWpdmgh0jmKw9UheKk
- JjEvJSL0S2L1eH2ICRDE/dr1QlbWXq3Ba4GvNkCxjrsz19Y/NhN+F3lc8/gEtDS+XW8YCM2uFV/
- i2Q=
-X-Received: by 2002:a05:6a00:1d88:b0:81f:4566:cce6 with SMTP id
- d2e1a72fcca58-824d951a255mr15240131b3a.28.1771471506746; 
- Wed, 18 Feb 2026 19:25:06 -0800 (PST)
+ bh=xZtMqoBM+JC6W7HM8lhkJa3WjrReTwoR/27QiAoEVv4=;
+ b=DeZcFyKSBROXzBpkZzZxybRmpcnGMrgh8hLmlset8DFLkAMuD89cZQrOItjysI+Y4g
+ MUFmIgav0U3rlS54d7vx9m4FTCWK5VGSSaTXbGhkW1iDAYO0/XKxTHGNAwdaQpQJ26WN
+ 55TmJciGgqwqVFuz75344Jh3Zn6kow9iYi0hlH2XKACpxKVGuEtlmqTjI8NDwgotW/5p
+ 6KwuLbHO4MUBt+o5ByioF4egtFy8F9ud4yYA9JPQ0bUgygG4M4KBJrSlnvyffqO5ux1G
+ pp9htlsWnYn8lbubU44OOfZblPGJpa9uOjkylOs1csgwcL85OhnF5Z3PrL7RRuT7A9bb
+ l2mw==
+X-Gm-Message-State: AOJu0YxJVhQDcNpFofeDZJir3/w+o8ftkom+FEYNCJ7CQSRIlUh98t2i
+ NKFUaiQpmhhq9vE1ZMcu2QvG5tRDPgMogsNkIjVhbX4lYGKRweoWo+xIc7ZMOrnVOKO3A0bYNEs
+ UIckeS4I=
+X-Gm-Gg: AZuq6aLYg/c2mUDeT7IoMbqQBY6pZ7WioPku+G6y3g755h40OqM/MNt8mIuK+tgbqnl
+ P+ImbOSMOgITpeUUXfYdQjCa0LheCMsOgb279aLNPJNF8dZXknLmD0a3jiZTgXkXhz4W3r3xT7o
+ ayzcUVZt9MjgLD7CHU98wI+zLgeDze+hoIja3i/pMih/sa0S3RHC9/unElhNTWVSmSQR5xBkLnx
+ BDZSfSHFc2DPIq+kLKATduxDnNJhujj4ZA43ROq025dz/iSnYMtwgu90onIQd1McI4qxnAUPJym
+ 8WlIOv+Q+NyslcGNFHlJEVXwyVGTN5VrDW6gHTIPB1PR9/YmKwQJnudQ1KAVG483x4q2BluFN4a
+ EEvH6jFs34oPTgpBGTHdQOzrjBsmlj2LXLzjOAijXj1FcDbcH5t8FLa5/ue2d5ALlqulfGTVcox
+ aFMqT8BUqJ4ofPgbpEEF8PyscCzsWC6VnnuINHqHKC/whxscUgut6x1xQE/xJOHkWokIPxbgQQJ
+ XtoXlmCSE1V8zTrm+aTt3Y6IHFwim20Pr0f2EjjJD/pwW3NPs3BpJnTFaqwXHzqXUqQ
+X-Received: by 2002:a17:902:d2cd:b0:2a7:afb2:ce1c with SMTP id
+ d9443c01a7336-2ad175b9a93mr176896385ad.61.1771471550840; 
+ Wed, 18 Feb 2026 19:25:50 -0800 (PST)
 Received: from ?IPV6:2403:580b:742d:0:a224:e0c2:669c:b307?
  (2403-580b-742d-0-a224-e0c2-669c-b307.ip6.aussiebb.net.
  [2403:580b:742d:0:a224:e0c2:669c:b307])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-824c6a62c48sm17792607b3a.29.2026.02.18.19.25.04
+ d9443c01a7336-2ad1aaf5506sm141679655ad.87.2026.02.18.19.25.48
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 18 Feb 2026 19:25:05 -0800 (PST)
-Message-ID: <1cdf04bb-cea4-4e08-9df0-b9f77eefceea@linaro.org>
-Date: Thu, 19 Feb 2026 13:25:00 +1000
+ Wed, 18 Feb 2026 19:25:50 -0800 (PST)
+Message-ID: <8ac70bf7-2856-48d0-8451-770bb35d27c4@linaro.org>
+Date: Thu, 19 Feb 2026 13:25:45 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 7/8] hw/ppc: Set graphic display dimensions generically
+Subject: Re: [PATCH v2 8/8] system/globals: Build as common code
 To: qemu-devel@nongnu.org
 References: <20260216213121.47122-1-philmd@linaro.org>
- <20260216213121.47122-8-philmd@linaro.org>
+ <20260216213121.47122-9-philmd@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260216213121.47122-8-philmd@linaro.org>
+In-Reply-To: <20260216213121.47122-9-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x432.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::529;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x529.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,17 +108,21 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2/17/26 07:31, Philippe Mathieu-Daudé wrote:
-> If a dimension is not set, have the machine init code set
-> the default values.
+> Now that  all targets have the graphic dimension variables
+> initialized the same way, we can move them to the common
+> file unit, having them built once. Remove the now empty
+> globals-target.c file. The command line '-g WxH[xD]' option
+> is not changed and behaves the same.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
+> Reviewed-by: Pierrick Bouvier<pierrick.bouvier@linaro.org>
 > ---
->   hw/ppc/mac_newworld.c   | 9 +++++++++
->   hw/ppc/mac_oldworld.c   | 9 +++++++++
->   hw/ppc/prep.c           | 9 +++++++++
->   hw/ppc/spapr.c          | 9 +++++++++
->   system/globals-target.c | 6 ------
->   5 files changed, 36 insertions(+), 6 deletions(-)
+>   system/globals-target.c | 14 --------------
+>   system/globals.c        |  3 +++
+>   system/meson.build      |  4 ----
+>   3 files changed, 3 insertions(+), 18 deletions(-)
+>   delete mode 100644 system/globals-target.c
+
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
