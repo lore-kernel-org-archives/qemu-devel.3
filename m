@@ -4,84 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1266AC531D1
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 21:21:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2439C531D0
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 21:22:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vtBRk-0006Zy-Uo; Thu, 19 Feb 2026 16:20:29 -0500
+	id 1vtBRo-0006bN-CJ; Thu, 19 Feb 2026 16:20:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vtBRa-0006TA-Vs
+ id 1vtBRc-0006Tk-IA
  for qemu-devel@nongnu.org; Thu, 19 Feb 2026 16:20:20 -0500
-Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
+Received: from mail-pf1-x443.google.com ([2607:f8b0:4864:20::443])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vtBRX-0006qv-GQ
+ id 1vtBRY-0006rU-Nu
  for qemu-devel@nongnu.org; Thu, 19 Feb 2026 16:20:18 -0500
-Received: by mail-pf1-x436.google.com with SMTP id
- d2e1a72fcca58-8230c33f477so646076b3a.2
+Received: by mail-pf1-x443.google.com with SMTP id
+ d2e1a72fcca58-824a9348603so593902b3a.2
  for <qemu-devel@nongnu.org>; Thu, 19 Feb 2026 13:20:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771536014; x=1772140814; darn=nongnu.org;
+ d=linaro.org; s=google; t=1771536015; x=1772140815; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=lV3zZk9z8GWZs4Mcs9V/NSNPiXP8FQIN2O/qy6a5LZM=;
- b=bUkG0ejuUqvg0srUuakrUzeNwNXOs0K+Q3nrzihpw/GQOzqrRfriaAmZN+aEVRHeSV
- QxlUSaMf/Cf8KwL0Sw/C7mLEWsIThVCv52UTKl+POAc82LmvHNQTz/W/mgxU5kNJxcEM
- YHVCUax3cMSa/rZnEBF19BdNlTkZ8njsOvER9bhWGcYu2PldZZ8qcEoHGwKeQ1u4et0r
- IOaIkUdrDp4NE6X9rp+pe8nEZ14QVD//1z11ygaQteq4tzXehhPwDgRyMPHk6AaoiUri
- XeqfcNvthTSW7R3Ef8wsy2PE81vOEoOM/gn+ep4Mbb4T2g8pTnZzQT+RaGSbg6GEBkAl
- cZfA==
+ bh=GbL0/Cj+Zw2YLIYH9Ytjn4ztkg7Hzhqk4/xrgyfn7TE=;
+ b=cLPMJIY+d2mPN1yo1qYKE9ly0megTIhtT4ORHdA1ZXPKNG2W6/+0VrfxmUTtyxntAI
+ mAW8Qn/3u42R1/S8cBilK9UmEE5J/xL/IYs52gYTYkZmamz3ssRK6i1EYTufAHzIEam3
+ WX5abdIQcKPFxXQVBtK9FcsWOasNYUsrJOtdGlONg/cz6K4WXbnJN438ZU5OHDsKNjQ+
+ vprLnxp5SUmCRekh4okYCwFvk9XbSHWZrEzafcVRwmgfHBAkgVOXFkqOt8LFIiH+Om6P
+ F1aaeEBQ4JdVgtMBBuKf2U8OnRYobsFZ/sfvxu47erR0JeL00idawGYSxshT+K5aoeoa
+ aSGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771536014; x=1772140814;
+ d=1e100.net; s=20230601; t=1771536015; x=1772140815;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=lV3zZk9z8GWZs4Mcs9V/NSNPiXP8FQIN2O/qy6a5LZM=;
- b=api1/kGtPo82/V91J0ahmv6TctYlVkfZHccJOdGvZUPkRtVM/o2or5cCrvmqIPd0y2
- lw77BHQnT4DNRI5YOdM5MxJzq8xB0ILvKBS/osgBPltPmkViTIRyin6/sF2lkLTSpvlI
- vuh/5R9/BuSPiG8/ENJFfPO9dMXjSZmqq71MBpbmd3C1SSxZNvZmqlk9oisckdY1PqTm
- 67GckSuSPi5o19hkwxnV3AR9kREv1sDD2RpRK7uxtRRCDqDILo6ZFdLiRMlX7kpUgmum
- GQ6AlSesWXnx1yVBnK6w49utXh/3aoyrRrJyKqFdTGVgaIZlVO5BXQngNtPTzYeelZb/
- WUgA==
+ bh=GbL0/Cj+Zw2YLIYH9Ytjn4ztkg7Hzhqk4/xrgyfn7TE=;
+ b=Un1kwvC4kduInJMjNVCikF6EHIKZ2yBrcYHhKWW4cfaoUljv40LvjL2+tC+IX9UHEJ
+ XYCQg9Ia8jnSzI9z+QK3AQ0bi/UNFbb/jum7MLkaHRVoUc/G5pHNki54mO4hq1fUfw5/
+ +TXJ9KRP7goGI3VYuiABs0blT7ToIWAJTAgxpiTiWKprzkhAVIKbYjO1B9cb/5b4LLkS
+ HsRhOyX4+iyw1NoHlYl+oWIrvoPFz9LUxxDXQNmoegA+F3Ys7C8u9ODOc0qwDyh1FQVT
+ qgaZLiQrw/0srob2zz7oNXQzg/z5g4BbXcoJuL17IdUpLQ5w4vy+ybBHwahdxMepGG+l
+ gLrw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWCTj5rWFuGqqVEyT1g9rcyNkSwag96EL44nbJwNIuow4Cw/VULT9lGqASi/GRzYfWd+6vZ3dBWvG85@nongnu.org
-X-Gm-Message-State: AOJu0YxRx+egaScaTBLhdLoO+ljlx8tfcgo0EVaL9JzCK5M2QGsDY/M4
- 9RGcx8hSNvYnlsHIV85UKht60Sq4B8gzZzW4FLUl/Z6jFjXxY3EdvM3P6ar7pOqu8n0=
-X-Gm-Gg: AZuq6aLkM9LJtNrVB+OfzLtMlsJvb5zDfklUjGKGhCahBhnMu+UvLw30no+t1ce1ZjQ
- Nbx8JjKHNQG4rbt9CxvHd2oEy+0FIqf0cQh1NfZ/Pks2xMIlmkqIDW9taOwcL2ceV0nGb2I97Ml
- NK6t5bHlCad5Ycji6rtkMYldnyeKX/URb77tENFpSXOhF2DvYvjwEA0sXvcH+DLoES9DJZJ+YxB
- TTvN08xeaIFvtOESeHQgIEPS95i7C+ejpToK1AEQCaKDh0vC7kwldzoMwIXFyA99kQjSqRZHBuY
- P/v17QOvdUXpZHuc3035nS56EfJYzrL8MTtX/2uIXPW4qmqDXQ1piHTBdXmxa13M0GbF//O6He6
- ztt7yzVYEdD+nYWSKPHD5J2eG6QGAqZhgqCIXzjsT+PFtGESuyRclO309ugjkfuZiYYRM9G68CL
- 49mH3ai9ZZtq+kiFTU+In5WIaD3FMCOSmkbRAEKv2VgjW7XNZmwRR6vmlLSlG6D0dAGBym
-X-Received: by 2002:a05:6a20:6a1e:b0:393:2434:683a with SMTP id
- adf61e73a8af0-395122348ffmr4105489637.67.1771536014000; 
+ AJvYcCWxqjA2zEEMawLeDn2AxlisteB99PcX1LNQRjtMHCH/pKrzBx+44oMzeoYwgNTevTS56aINPZS6gno5@nongnu.org
+X-Gm-Message-State: AOJu0YyMdjQjx0Y1W6Eg0yveGkk2bG5XRtEzntmcnz+vlTfFyJMimC+B
+ PqxItZME/gBys74U9V4txYq9KeEWgHqc8UMs08hKSliAob96imGLIgR6FDkFPssxbll62MuBuso
+ B3ay6WrI=
+X-Gm-Gg: AZuq6aJTgFq8FKNALNPIOlqXr39TaBn2ujKLCfzagfqwWksIPMMA7ymAbdu/7oOmpPd
+ 2LQUqnM2wrjj3eE1z13UGTvYMJXHkCPKHO9171Nci/gOLl06zu5npusN3/B7hMlN2EF3RnQ6VJ6
+ Sfzd01cRbq7H0t2gPQ5R7s8btOhfOd+uTBoauahLhMfbSD2SL5WzC5MObEVpHH+EjJQC/hFkndM
+ Sj6fy/42FQqDw9NIwSy29DmHsI2fj/mL5D6YtajoU3jP7xqzRUvR5kTvX3rzNR+MDrDhZhLWbw8
+ W3puyNd4FvFxObVUgrVq3+u+E/1D8B/+bkIfVJFtDh1DM2lH8A7OLR0hLO/oezvVDA70tsVIgW2
+ UpdxIH833liJ2VA1zmkpeyvYh6+e9gs9+sDtHTl3QXS2Q/v/jXJpvEPAleZDXzYs78WavtMKbnL
+ tz7QNp4VgOYm0dNnNonG7ac/gVu2oTWFc9tK3inI2hofaJVGj4BzXAZFBQOeE8Ig5E6Pjy
+X-Received: by 2002:a05:6a00:cc7:b0:81f:23b5:dc33 with SMTP id
+ d2e1a72fcca58-824c94f9c21mr22036871b3a.30.1771536014850; 
  Thu, 19 Feb 2026 13:20:14 -0800 (PST)
 Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-824c6a2e936sm19782746b3a.6.2026.02.19.13.20.13
+ d2e1a72fcca58-824c6a2e936sm19782746b3a.6.2026.02.19.13.20.14
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 19 Feb 2026 13:20:13 -0800 (PST)
-Message-ID: <ac1073d8-8c2b-4293-b8b5-bf5b55133f1a@linaro.org>
-Date: Thu, 19 Feb 2026 13:19:12 -0800
+ Thu, 19 Feb 2026 13:20:14 -0800 (PST)
+Message-ID: <32932754-dc59-4393-99bb-d736dd11ad48@linaro.org>
+Date: Thu, 19 Feb 2026 13:19:20 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 21/50] target/ppc: Extract monitor-related code to
- monitor.c
+Subject: Re: [PATCH v2 22/50] target/or1k: Use XML register definitions from
+ GDB
 Content-Language: en-US
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>, qemu-s390x@nongnu.org,
  =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  qemu-riscv@nongnu.org, qemu-ppc@nongnu.org,
- Nicholas Piggin <npiggin@gmail.com>, Chinmay Rath <rathc@linux.ibm.com>
+ Laurent Vivier <laurent@vivier.eu>, Stafford Horne <shorne@gmail.com>
 References: <20260219191955.83815-1-philmd@linaro.org>
- <20260219191955.83815-22-philmd@linaro.org>
+ <20260219191955.83815-23-philmd@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  xsDNBGK9dgwBDACYuRpR31LD+BnJ0M4b5YnPZKbj+gyu82IDN0MeMf2PGf1sux+1O2ryzmnA
@@ -117,18 +118,18 @@ Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  5SYuJaKzCAgNeAy3gUVUUPrUsul1oe2PeWMFUhWKrqko0/Qo4HkwTZY6S16drTMncoUahSAl
  X4Z3BbSPXPq0v1JJBYNBL9qmjULEX+NbtRd3v0OfB5L49sSAC2zIO8S9Cufiibqx3mxZTaJ1
  ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <20260219191955.83815-22-philmd@linaro.org>
+In-Reply-To: <20260219191955.83815-23-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x436.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::443;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x443.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -145,15 +146,19 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2/19/26 11:19 AM, Philippe Mathieu-Daudé wrote:
-> Keep ppc-qmp-cmds.c for QMP, use monitor.c for HMP.
+> Import gdb-xml/or1k-fpu.xml from mainstream binutils, tag
+> 'binutils-2_46' [*]. Register as CPUClass::gdb_core_xml_file.
+> 
+> [*] https://sourceware.org/git/?p=binutils-gdb.git;a=blob_plain;f=gdb/features/or1k-core.xml;h=0d13f355f5296ae426794eb3003dcc18fbbd49d5;hb=refs/tags/binutils-2_46
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   target/ppc/monitor.c      | 41 +++++++++++++++++++++++++++++++++++++++
->   target/ppc/ppc-qmp-cmds.c | 16 +--------------
->   target/ppc/meson.build    |  1 +
->   3 files changed, 43 insertions(+), 15 deletions(-)
->   create mode 100644 target/ppc/monitor.c
+>   configs/targets/or1k-linux-user.mak |  1 +
+>   configs/targets/or1k-softmmu.mak    |  1 +
+>   target/or1k/cpu.c                   |  2 +-
+>   gdb-xml/or1k-core.xml               | 65 +++++++++++++++++++++++++++++
+>   4 files changed, 68 insertions(+), 1 deletion(-)
+>   create mode 100644 gdb-xml/or1k-core.xml
 > 
 
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
