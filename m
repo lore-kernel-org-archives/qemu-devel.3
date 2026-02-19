@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7D34E9A05F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD4EAE9A05A
 	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 19:23:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vt9ce-0005Qk-6q; Thu, 19 Feb 2026 14:23:36 -0500
+	id 1vt9c2-0003bs-88; Thu, 19 Feb 2026 14:23:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vt9bI-0002oR-7R
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 14:22:19 -0500
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vt9b6-0002hK-H5
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 14:22:03 -0500
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vt9bG-0008As-Lq
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 14:22:11 -0500
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-48371119eacso12117305e9.2
- for <qemu-devel@nongnu.org>; Thu, 19 Feb 2026 11:22:08 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vt9b3-00087i-Es
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 14:22:00 -0500
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-48371119eacso12115555e9.2
+ for <qemu-devel@nongnu.org>; Thu, 19 Feb 2026 11:21:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771528927; x=1772133727; darn=nongnu.org;
+ d=linaro.org; s=google; t=1771528913; x=1772133713; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=9SDQ1L6BuuAO5wqEwdTuhkDGVq6EQ0d0AnGhnbOHbh8=;
- b=HDfLowBJKYKX8KYWEWlF6l+hzaMO8Ch6SqfpRMay17WFL9lVpns9sWZKw7PgXqcRXF
- 0MxqMFZuMMqJa2o2nbqu46XrIyjsIVmx78KVVCDqMifr2MO5suGt6pYx/scv+T9aTXdd
- c0q4M8VTc6gXeMiU3j/dN9PGcT7L1s1Gw+iTwlysFIw/jThZaM17IZM9755XvGoha8MJ
- WgArhPhk90adrHTy2mjbWMQuM5mjqNWc0B5rBU7PpHKgZRYuPb2bz+aBV4vMJfnPiHBA
- Wr7TQFyNOC/6WV9v3M1H6KKWUs5vLOOqLyno05rbBFQNolMgm/WhP//F6TzB7IBedw5g
- JoaA==
+ bh=GIBF2HW/bZyg5pcbM7t2mPIZcp+EQrzY/Ap5rHYsQ+w=;
+ b=K3TJ2qUHPZudLtvUpjs6uPBNPyYDoaCvzTLbIymSUHCRT5GV4PbjzQlzP12ToLGCTW
+ 1vICEMunH2t0JjhEbOfu0bk4cTymrlEkOo1gMdlfuKAdtSFMsEYApPTutz964t1FySsF
+ sR6ZE7YGwx3WWu+ELUUkM088jZ/xbcViYLbbRLQz5QxU/JhpKea6la9IlfbVtEdYmMb8
+ GofaBU9yq0eOsGMk114ailZHRCTVxm9uj+TTw3MMPJQzxy1TQV++TJ05DyWzaZeDV3kp
+ 7bV3GdmMnBT7h/RUzBSw/Xc5caMAQcE/4C3Tm5l3rvzdwa1LNozy8X/UWtqy+DJv+Lib
+ LJ8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771528927; x=1772133727;
+ d=1e100.net; s=20230601; t=1771528913; x=1772133713;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=9SDQ1L6BuuAO5wqEwdTuhkDGVq6EQ0d0AnGhnbOHbh8=;
- b=Wergl/eEwSzqQHlMufkwvfWmq1j/8nlOg61aBsPtr5bebYWnLueGQoFb5fxmzRT44y
- 4oM0iSOs3VWbnj3O8uh9N/3Kt1dVNOb16x6Q9VyeL11gQ+CvfJmBbTc+2ewFvJVOIGJG
- CHAlwPIPx2NEsYC2n1SXKa8FVxalQ37j7vNPY6LQAsDxRK+Ey7UESSAD7qpy2OuwQs89
- TWf5ORxE3VW3tSLq9N7k8+4/OFNnFkquf0w0IlN9kAHnHadZYczgkyztgox1FeXNAYvM
- wv9jhWiQufVTmBsFXJUAAmLJbwj0kgxh+IgFYJL+mS5NCPre783dLnn0Lsvi4sA5/LCz
- C+Bg==
-X-Gm-Message-State: AOJu0YycHsd8UA/tjHb4M/jYRqwHMGp9U46NMPAXwNghrYMQ6XmXaJ3T
- VWd/jI734aiwRu8DPopsGvabV+GhjxRIIiEvas/vvAkDKvLt+u7McVpMJcHFQyMDID2wabAP3OX
- Xbc0YXGm0Cg==
-X-Gm-Gg: AZuq6aIZuqzI+lqHjb1y0coK/vmn9xS3pdmwv/G4n8uERkoML6LpBtWWewzN4xWg5zi
- uiC7xPMO1ciRvIpkPP/gXfbqs1wEGM/KqiqbERvgmZ4nx9P9WHnjWz/XhqCLbGOW6EhV/uVqn9i
- HcFggdeyBWSUnQjrQFsf/vw0l0G7fW2iLEHZgt3uIx1xPPAAra+z4dEw8RguqCGTx17KBcTBYDv
- UOoIYd4NL675Br4sE0g+3wiDxHNFbKWvSUcWQV49twyXfume6KqBCVFJmI8Brezo76/wkXqHRVo
- 29VGURdAoterxCCb5ifP/FgXvKRh1lRP2jVs7ebj3NIFnv+mbzl2lngoU0pKgkdtK+klLowqmg5
- ZaLCW6A/2uUze87JCow/JPYTrdgh8FxIWu28nbzIDiJYYlyVOhL5ES8MLnnUrG/ndptyusURc3r
- Bz77vTd2Do/6vtkk5UhL3Tc3zv0SOKQMBRUGnGe/cLv4T/MpOXU2M1bj9fWEAUqHtL4YdppkOTL
- oumfdrc5Nc=
-X-Received: by 2002:a05:600c:3e0c:b0:480:6b76:dfb4 with SMTP id
- 5b1f17b1804b1-48398a65eefmr97540905e9.8.1771528927256; 
- Thu, 19 Feb 2026 11:22:07 -0800 (PST)
+ bh=GIBF2HW/bZyg5pcbM7t2mPIZcp+EQrzY/Ap5rHYsQ+w=;
+ b=L3Hp3tpAYypN72jEgVusNVwLumP0zU//jXzFL2+K3g5pvFIqxlFt9+AQC63MVPWW5h
+ OP+pRoclX30Jz/mWszFjzWL3NTMaj2rDnd2sYXc5Sz+RXzOdhYLUvrnILD1OGHpDh43a
+ vslHKx3G7RaJS7lAhMJ33BYgz3kqLKnjHh5ttthJ3k5f3ugKk09OgrDRhvqIc0Imh7Pz
+ lnIKO1ADjm2QKSSYXOW5/GJKMqqMNFsdG94elVo8vkidnJ0pmGCyCFMqGgRK4lmnHEeo
+ 94pyNl65DQevK5wwwvnMXXT+tg6wsJIKFWYIkRmGHuq0uflhP4uRUPwHKgE16sAJrWq6
+ W+ew==
+X-Gm-Message-State: AOJu0YxXV1nVB/4eMiIt9za7JFghDU0b/SQLmMme0iZ2Iw6Iz+Vf1SRK
+ JYf7tBQMOKE8YkyIf28yemWV6GjQOlnlw9iaox1IvpAV7hT1SEVtmpbQbCORibajZ9wda6p5KhV
+ bfsCLBmeqpQ==
+X-Gm-Gg: AZuq6aJMZJi0nZj2r/bKbgv0hn4Ms04+qB/dMSZFly7CJHKhNdxTu1VNjKiZ8ayRdt4
+ kmTVh1wcCfecdW+jUFVwiu10cWP7vOfRJQsvgOWuA4MZjQUtXN6SDXIVlazq5P+NGs0QNKme4dO
+ CHrPuhunPM4hEkNHgI9neXivsoU2T1ddXvMjESOkYoMwVqfrJE2fP2zjh3Cz/w1RLcS9yy9MH7l
+ ELcyne+E6XRFZfoUtW7IETA204jYfE0RyyAyEgzUL9cKJZjcoY5pRrlLlxTVnc3vOXWxCjPIMZM
+ 9o8K7oECU/OCqLPkxHP9msvQYc0fmdS4J3JCC3+/euKdQzlVnAShpJjNtyGIK7ZM5cqClLlUh+8
+ TnU0vs8yNX0NrnF7JqB/LqfkDAhFhU3VrADnkh/6jbsfKPWE/npRzxDy+7nLPJ1gl35lLiyNV5z
+ 3UAYmqi6IGgCreF8uitkt+B3NUop2FD4GL+pGMgVvYPAG2/goV0KlrDd+gnHmGMc86K9wTZ8xTI
+ WsIT5VHPAQ=
+X-Received: by 2002:a05:600c:4e54:b0:480:4a90:1af2 with SMTP id
+ 5b1f17b1804b1-4839c002d65mr100597615e9.35.1771528913236; 
+ Thu, 19 Feb 2026 11:21:53 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-483a31bac27sm23830395e9.5.2026.02.19.11.22.06
+ 5b1f17b1804b1-483a31f9475sm18396265e9.14.2026.02.19.11.21.52
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 19 Feb 2026 11:22:06 -0800 (PST)
+ Thu, 19 Feb 2026 11:21:52 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
@@ -71,19 +71,19 @@ Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  qemu-riscv@nongnu.org, qemu-ppc@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH v2 18/50] target/i386: Remove MonitorDef register entries
- available via gdbstub
-Date: Thu, 19 Feb 2026 20:19:20 +0100
-Message-ID: <20260219191955.83815-19-philmd@linaro.org>
+ "Dr. David Alan Gilbert" <dave@treblig.org>
+Subject: [PATCH v2 16/50] monitor/hmp: Handle gdb-xml exposed registers via
+ gdb_get_register()
+Date: Thu, 19 Feb 2026 20:19:18 +0100
+Message-ID: <20260219191955.83815-17-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260219191955.83815-1-philmd@linaro.org>
 References: <20260219191955.83815-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,66 +106,151 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-All these registers are already provided by via gdbstub parsed XML
-and handler by the gdb_get_register() helper in the monitor/hmp.c
-file. Remove as now unreachable code.
+Implement the gdb_get_register() helper and call it before the
+regular get_monitor_def() one. Registers is exposed via the
+GDB XML files will be directly handled, possibily allowing new
+registers added to XML files to be automatically accessible in
+QEMU monitor. All targets having GDB XML files can now be used
+within the monitor.
 
+For example with Loongarch, before:
+
+  $ qemu-system-loongarch64 -M virt -S -monitor stdio
+  QEMU 10.2.0 monitor - type 'help' for more information
+
+  (qemu) info registers
+
+  CPU#0
+   PC=000000001c000000  FCSR0 0x00000000
+   ...
+
+  (qemu) p/x $pc
+  unknown register
+  Try "help p" for more information
+  (qemu)
+
+and after:
+
+  $ ./qemu-system-loongarch64 -M virt -S -monitor stdio
+  QEMU 10.2.50 monitor - type 'help' for more information
+  (qemu) p/x $pc
+  0x1c000000
+  (qemu)
+
+Similarly RISC-V:
+
+  QEMU 10.2.0 monitor - type 'help' for more information
+  (qemu) p/x $pc
+  unknown register
+  Try "help p" for more information
+
+VS
+
+  QEMU 10.2.50 monitor - type 'help' for more information
+  (qemu) p/x $pc
+  0x1000
+  (qemu)
+
+Reviewed-by: Dr. David Alan Gilbert <dave@treblig.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/i386/monitor.c | 39 ---------------------------------------
- 1 file changed, 39 deletions(-)
+TODO (Dave on v1):
+add more checks on the return size of
+gdb_read_register(..) just in case any arch is a bit screwy
+(e.g. if they're 0 for example?)
+---
+ monitor/hmp.c | 49 ++++++++++++++++++++++++++++++++++++++++++++++---
+ 1 file changed, 46 insertions(+), 3 deletions(-)
 
-diff --git a/target/i386/monitor.c b/target/i386/monitor.c
-index 99b32cb7b0f..446428602ef 100644
---- a/target/i386/monitor.c
-+++ b/target/i386/monitor.c
-@@ -602,46 +602,7 @@ static target_long monitor_get_pc(Monitor *mon, const struct MonitorDef *md,
+diff --git a/monitor/hmp.c b/monitor/hmp.c
+index 0a5bbf82197..0e5913fabb1 100644
+--- a/monitor/hmp.c
++++ b/monitor/hmp.c
+@@ -27,14 +27,18 @@
+ #include "hw/core/qdev.h"
+ #include "monitor-internal.h"
+ #include "monitor/hmp.h"
++#include "monitor/hmp-target.h"
+ #include "qobject/qdict.h"
+ #include "qobject/qnum.h"
++#include "qemu/bswap.h"
+ #include "qemu/config-file.h"
+ #include "qemu/ctype.h"
+ #include "qemu/cutils.h"
+ #include "qemu/log.h"
+ #include "qemu/option.h"
++#include "qemu/target-info.h"
+ #include "qemu/units.h"
++#include "exec/gdbstub.h"
+ #include "system/block-backend.h"
+ #include "trace.h"
  
- const MonitorDef monitor_defs[] = {
- #define SEG(name, seg) \
--    { name, offsetof(CPUX86State, segs[seg].selector), NULL, MD_I32 },\
--    { name ".base", offsetof(CPUX86State, segs[seg].base) },\
-     { name ".limit", offsetof(CPUX86State, segs[seg].limit), NULL, MD_I32 },
--
--    { "eax", offsetof(CPUX86State, regs[0]) },
--    { "ecx", offsetof(CPUX86State, regs[1]) },
--    { "edx", offsetof(CPUX86State, regs[2]) },
--    { "ebx", offsetof(CPUX86State, regs[3]) },
--    { "esp|sp", offsetof(CPUX86State, regs[4]) },
--    { "ebp|fp", offsetof(CPUX86State, regs[5]) },
--    { "esi", offsetof(CPUX86State, regs[6]) },
--    { "edi", offsetof(CPUX86State, regs[7]) },
--#ifdef TARGET_X86_64
--    { "r8", offsetof(CPUX86State, regs[8]) },
--    { "r9", offsetof(CPUX86State, regs[9]) },
--    { "r10", offsetof(CPUX86State, regs[10]) },
--    { "r11", offsetof(CPUX86State, regs[11]) },
--    { "r12", offsetof(CPUX86State, regs[12]) },
--    { "r13", offsetof(CPUX86State, regs[13]) },
--    { "r14", offsetof(CPUX86State, regs[14]) },
--    { "r15", offsetof(CPUX86State, regs[15]) },
--    { "r16", offsetof(CPUX86State, regs[16]) },
--    { "r17", offsetof(CPUX86State, regs[17]) },
--    { "r18", offsetof(CPUX86State, regs[18]) },
--    { "r19", offsetof(CPUX86State, regs[19]) },
--    { "r20", offsetof(CPUX86State, regs[20]) },
--    { "r21", offsetof(CPUX86State, regs[21]) },
--    { "r22", offsetof(CPUX86State, regs[22]) },
--    { "r23", offsetof(CPUX86State, regs[23]) },
--    { "r24", offsetof(CPUX86State, regs[24]) },
--    { "r25", offsetof(CPUX86State, regs[25]) },
--    { "r26", offsetof(CPUX86State, regs[26]) },
--    { "r27", offsetof(CPUX86State, regs[27]) },
--    { "r28", offsetof(CPUX86State, regs[28]) },
--    { "r29", offsetof(CPUX86State, regs[29]) },
--    { "r30", offsetof(CPUX86State, regs[30]) },
--    { "r31", offsetof(CPUX86State, regs[31]) },
--#endif
--    { "eflags", offsetof(CPUX86State, eflags) },
--    { "eip", offsetof(CPUX86State, eip) },
-     SEG("cs", R_CS)
-     SEG("ds", R_DS)
-     SEG("es", R_ES)
+@@ -306,6 +310,46 @@ void hmp_help_cmd(Monitor *mon, const char *name)
+     free_cmdline_args(args, nb_args);
+ }
+ 
++/*
++ * Set @pval to the value in the register identified by @name.
++ * return %true if the register is found, %false otherwise.
++ */
++static bool gdb_get_register(Monitor *mon, int64_t *pval, const char *name)
++{
++    g_autoptr(GArray) regs = NULL;
++    CPUState *cs = mon_get_cpu(mon);
++
++    if (cs == NULL) {
++        return false;
++    }
++
++    regs = gdb_get_register_list(cs);
++
++    for (int i = 0; i < regs->len; i++) {
++        GDBRegDesc *reg = &g_array_index(regs, GDBRegDesc, i);
++        g_autoptr(GByteArray) buf = NULL;
++        int reg_size;
++
++        if (!reg->name || g_strcmp0(name, reg->name)) {
++            continue;
++        }
++
++        buf = g_byte_array_new();
++        reg_size = gdb_read_register(cs, buf, reg->gdb_reg);
++        if (reg_size > sizeof(*pval)) {
++            return false;
++        }
++
++        if (target_big_endian()) {
++            *pval = ldn_be_p(buf->data, reg_size);
++        } else {
++            *pval = ldn_le_p(buf->data, reg_size);
++        }
++        return true;
++    }
++    return false;
++}
++
+ /*******************************************************************/
+ 
+ static const char *pch;
+@@ -338,7 +382,6 @@ static int64_t expr_unary(Monitor *mon)
+ {
+     int64_t n;
+     char *p;
+-    int ret;
+ 
+     switch (*pch) {
+     case '+':
+@@ -393,8 +436,8 @@ static int64_t expr_unary(Monitor *mon)
+                 pch++;
+             }
+             *q = 0;
+-            ret = get_monitor_def(mon, &reg, buf);
+-            if (ret < 0) {
++            if (!gdb_get_register(mon, &reg, buf)
++                && get_monitor_def(mon, &reg, buf) < 0) {
+                 expr_error(mon, "unknown register");
+             }
+             n = reg;
 -- 
 2.52.0
 
