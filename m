@@ -4,132 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9695C531D1
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 21:29:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB82BC531D2
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 21:31:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vtBZa-0003m3-S7; Thu, 19 Feb 2026 16:28:34 -0500
+	id 1vtBbu-0004fH-S0; Thu, 19 Feb 2026 16:31:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vtBZY-0003l9-KV
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 16:28:32 -0500
-Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vtBZW-0000le-S9
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 16:28:32 -0500
-Received: by mail-pf1-x432.google.com with SMTP id
- d2e1a72fcca58-8249aca0affso793636b3a.3
- for <qemu-devel@nongnu.org>; Thu, 19 Feb 2026 13:28:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771536509; x=1772141309; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=K2uJFligPrVHrfr6KHvU0T03PbZTs5EzdPGyoPKC60s=;
- b=LPQkKBLrG7KG5XDwxNf+E39PkaHdUhNIeqeUD9fPrmq71od7vtFWM6d1PEEd27yLbS
- wUsMiw4PMWBykTJcytSfQvahbtzMG+uc8UDXQej1sWF7TzP0QPo1js/VyKsTq5nNLw7Z
- Djgr737iXHN39HteZkA3aSfVcBYrtM1XuXOkH2XEL3c+B3DtT3ZmlxADbA6G1UBQSDkI
- VMwHqgfWyygDFcX8oJu1TmAOLKg6CyYjvbMxrB/leIZlCT9wbcW0PUfB4FJIzfGWDjc+
- o3NHAju7UWZStX5oRJOXrmk6qlMlv4QsaH+MVTDe4vu8y5ami0y+R9I4egFRgHbVKPSe
- hXLQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771536509; x=1772141309;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=K2uJFligPrVHrfr6KHvU0T03PbZTs5EzdPGyoPKC60s=;
- b=BN/8OG3eNKAxkPJ06WZAOc5mk8Sm0jKgBlwXcRLb91Y10Qzkdlr+Q7EE0ej9B9D0GI
- 5kJk0S4PyWmD+AG3NmTTDxZUAHCMxSSMrgVDSOuOgtN7/cvluuOm3O05d2AgXdYawEhR
- RNSl9puoaxMAlcaIV0JkrYn+pH6ovmAcTxDJqa/jlEVLtxaSEuqpQpLJxlVj0MEjCQyh
- 1B+PYOrLB87qQgCH5MfqAg/VPCiVe2WRshGHLZkkarapRjIgXbQCjGJlBAu75WiHunsN
- X/yhqCOT2VIvuXE32I08jCXeJMBoC+K+q99DTXg9vAxhLlgomnoPLB1OisbS+4A8IfQn
- +faQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWjmCFIg8JM5WCAd+K+XPk3WL7Hpeh1veI/heYUm3h6JGNVUMTJ+kj0htZqvXEtaH2n8xxdI8D2pANH@nongnu.org
-X-Gm-Message-State: AOJu0Ywe1yzCg9BZhMmjypEuSbFADNuT7k+mj/kOmduefNA+n6rfddRe
- l3ZaAwiKL/VbqRClhXiX3xKEQWvv5GT9IWuLTnr5k94IfRWfKckPmPiudiEKNJ7o3Vk=
-X-Gm-Gg: AZuq6aLIeh0zHjLb13rzKLdVwEH0fmDN+/rHf53Hdd9pDfTXSLpG8oOLTV9I2EFfUKH
- SVPhJFW+xsKiN5gIvMPWZLb+6ytOhEmqcwpZ+9BZrqB0c0CvfQC2IQ7VOsEi5Vl++JLRLUsjTPK
- P5l0Gm9yH/mBHaww8kjhvxWdEBFI0ZV/aAr7ZiRLYXHipa7Oofy6AJGOIsZJ2Aonp4IhkzTlS17
- tZbJHtfmCQnAd7mC94/3R7QSoIb/cFIFr9vjYSmyrY9eYxkP/CZ3biJuyn73jMLyjZWuERfBVPA
- 5GU0WTi0T0PlC6QBIh+CCCkG0XSo2UjOUyNMDVBqUGFXNUUT0F8znCz6gGAQXim/O3axJ5P58PK
- JZqNtkRjDD76cp8vOUY2TsomxlyR/2ydQHvZsy/ASk43chJn7qMd00NSeHNdiW0LlyydnP3BNXq
- Fsm5emiE45DXt95rU4+S6ePIgiXHh68P71+m3Qi0ng7vKREVX1WxvyIlGlPuWekPRxsvOl
-X-Received: by 2002:a05:6a00:1c84:b0:81d:f938:800b with SMTP id
- d2e1a72fcca58-824d9640796mr14947365b3a.61.1771536509008; 
- Thu, 19 Feb 2026 13:28:29 -0800 (PST)
-Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-824c6a42688sm20255296b3a.21.2026.02.19.13.28.28
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 19 Feb 2026 13:28:28 -0800 (PST)
-Message-ID: <98776b81-9f5b-4924-827f-1f8fde2f299b@linaro.org>
-Date: Thu, 19 Feb 2026 13:28:28 -0800
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vtBbW-0004am-Jk
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 16:30:39 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vtBbT-0001Ib-7a
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 16:30:34 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1771536628;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Emae6bdUu0wA2jiQSV6LiH8hLNGtgI8fNO/W8v6Cehg=;
+ b=CtWLtfBq0vy0kqZn3Sd5xim/3IT9oP7v+160MfyxMbo9WUAdguqQSv9qQPu+n6GaRGbMpY
+ 0NJ0/LrcO96j5GPi3lIfXuBhQWS/vED1MmyIBaVJ7zmtdrfFC6Ta+v8PqR80m6kTqOmO74
+ jtPrIuaEK1lhF/d6nGkUruFWB7H1wjQ=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-218-nsPFSMGuNO6PY64vTfd4EQ-1; Thu,
+ 19 Feb 2026 16:30:24 -0500
+X-MC-Unique: nsPFSMGuNO6PY64vTfd4EQ-1
+X-Mimecast-MFC-AGG-ID: nsPFSMGuNO6PY64vTfd4EQ_1771536623
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 957EC1956058; Thu, 19 Feb 2026 21:30:22 +0000 (UTC)
+Received: from redhat.com (unknown [10.45.224.47])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 378091955F01; Thu, 19 Feb 2026 21:30:18 +0000 (UTC)
+Date: Thu, 19 Feb 2026 22:30:16 +0100
+From: Kevin Wolf <kwolf@redhat.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ qemu-devel@nongnu.org, qemu-block@nongnu.org, eduardo@habkost.net,
+ berrange@redhat.com, pbonzini@redhat.com, eblake@redhat.com,
+ devel@lists.libvirt.org, hreitz@redhat.com
+Subject: Re: [PATCH v10 4/8] qapi: add blockdev-replace command
+Message-ID: <aZeA6GZQaRtqmzgv@redhat.com>
+References: <20260119144941.87936-1-vsementsov@yandex-team.ru>
+ <20260119144941.87936-5-vsementsov@yandex-team.ru>
+ <87wm0sy9s4.fsf@pond.sub.org>
+ <739edd0f-8342-418e-96bb-01bc9bd3349e@yandex-team.ru>
+ <87seb3zr7j.fsf@pond.sub.org>
+ <f9aed7fd-2f56-4b54-bf4f-693e0c10fb38@yandex-team.ru>
+ <87seazjz2q.fsf@pond.sub.org>
+ <04575653-a2ba-4ef1-b1af-a514bec80a69@yandex-team.ru>
+ <87a4x6h8kz.fsf@pond.sub.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 24/50] target/sparc: Factor
- sparc_cpu_gdb_write_register() out
-Content-Language: en-US
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>, qemu-s390x@nongnu.org,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-riscv@nongnu.org, qemu-ppc@nongnu.org,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Artyom Tarasenko <atar4qemu@gmail.com>
-References: <20260219191955.83815-1-philmd@linaro.org>
- <20260219191955.83815-25-philmd@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
- 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
- ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <20260219191955.83815-25-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x432.google.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <87a4x6h8kz.fsf@pond.sub.org>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.045,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -145,16 +92,135 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/19/26 11:19 AM, Philippe Mathieu-Daudé wrote:
-> Factor sparc_cpu_gdb_write_register() out.
+Am 18.02.2026 um 07:25 hat Markus Armbruster geschrieben:
+> Block layer maintainers' advice sought:
 > 
-> Prefer ldn_p(target_long_bits/8) over target-specific ldtul_p().
+> Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
 > 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   target/sparc/gdbstub.c | 27 +++++++++++++--------------
->   1 file changed, 13 insertions(+), 14 deletions(-)
+> > On 17.02.26 16:10, Markus Armbruster wrote:
+> >> Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
+> >> 
+> >>> On 14.02.26 11:04, Markus Armbruster wrote:
 > 
+> [...]
+> 
+> >>>> This interface sort of overloads @parent and @child, and overloading the
+> >>>> former creates ambiguity that can make the command unusable.
+> >>>
+> >>> Is it a real problem if we do deprecate the thing, that leads to this
+> >>> ambiguity?
+> >>>
+> >>> If it is, we may mark the command "unstable" during the deprecation period.
+> >> 
+> >> By itself, the proposed command is a trap for the unwary.
+> >> 
+> >> Deprecating the usage that enables the trap makes the trap temporary.
+> >> 
+> >> Warning on (deprecated) usage that enables the trap helps users avoid
+> >> it.  Human users, mostly.
+> >> 
+> >> Marking the command "unstable" should ensure management application
+> >> avoid the command, and thus the trap.
+> >> 
+> >> All of the above together feels acceptable to me.  Can we do better?
+> >> Maybe, and that's discussed below.
+> >> 
+> >>> Or even postpone its addition up to the end of this period.
+> >> 
+> >> No trap, no problem :)
+> >> 
+> >>>> @parent's set of valid values is the union of QOM path, block node name,
+> >>>> block export ID with values occuring in more than one of them dropped.
+> >>>>
+> >>>> @child's set of valid values depends on @parent: child name when it's a
+> >>>> QOM path, else "root".
+> >>>>
+> >>>> The obvious non-overloaded interface is a union of three branches: QOM,
+> >>>> block node, block export.  The QOM branch has variant members @qom-path
+> >>>> and @child.  The block node branch has variant member @node-name.  The
+> >>>> block export branch has variant member @id.
+> >>>>
+> >>>> This is a bit more verbose: you have to specify the union tag[*].
+> >>>>
+> >>>> If we ever need to replace block nodes associated with additional
+> >>>> things, we simply more branches.  These branches can have arbitrary
+> >>>> members.  In your interface, we'd have to make do with @child, or maybe
+> >>>> add optional arguments.
+> >>>>
+> >>>> Thoughts?  Mind, this isn't a demand!  I'm exploring the design space.
+> >>>
+> >>> Union-based solution was v9: https://lore.kernel.org/qemu-devel/20240626115350.405778-5-vsementsov@yandex-team.ru/
+> >>>
+> >>> And there was a discussion, that we may try a way without a union. And that's
+> >>> this v10.
+> >> 
+> >> I see Kevin suggested to explore this approach.  I certainly respect his
+> >> judgement.
+> >> 
+> >>> Hmm, but that had different field names for parents: qdev-id, export-id and node-name.
+> >>>
+> >>> What you suggest is to keep one filed for parent - "parent", but also add a "parent-type"
+> >>> field. This way, we may deprecate and remove "parent-type" in future. Or, we may
+> >>> add it as deprecated now (together with deprecating non-unique IDs)
+> >> 
+> >> We can't deprecate the union tag right away: it is *required*.
+> >> 
+> >>>> [*] We could add a "may omit union tag when the tag value can be derived
+> >>>> from present variant members" convenience feature to QAPI, but I'm not
+> >>>> sure it's worth the complexity.
+> >>>>
+> >>>
+> >>> It also may be not a union, but a simple structure with optional fields:
+> >>>
+> >>> {
+> >>>      parent: str, required, qom-path, or node-name, or export name
+> >>>      child: str, optional, but required when parent is node-name, and must be 'root'
+> >>>             if present for other parent types
+> >>>      parent-type: str, optional, "qom-path" | "block-node" | "block-export", helps to
+> >>>             overcome parent ambiguity, deprecated
+> >>>      new-child: str, required node-name
+> >>> }
+> >> 
+> >> PRO union: which members are valid together is syntactically obvious.
+> >> With a bunch of optional members, that information is in the member
+> >> descriptions.
+> >> 
+> >> CON union: need to specify the union tag.  The verbosity is a non-issue
+> >> for management applications, and mildly bothersome for humans.
+> >> 
+> >> How important is keeping things terse for humans here?
+> >> 
+> >
+> > It's not very important. Mostly, I just want to make "nice" interface, and possibility to
+> > reference any supported object by one ID seemed very tempting to me.
+> >
+> > But to be honest, introducing such a precedent makes sense, if we have in mind more
+> > cases where such approach may be reused. Personally, I don't have them. If blockdev-replace
+> > command remains the only API for the ages, which allows to mix in one field different kinds
+> > of IDs, it becomes just an extra exclusion from common practices.
+> >
+> > Finally, I don't care too much, which interface we chose. I'm not sure now that unifying
+> > ids is better than union. So I'm OK to go back to union-based solution from v9, update and
+> > resend it as v11.
+> 
+> Hanna, Kevin, got a preference?
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+My stance is unchanged from v9. When Vladimir asked if we could somehow
+get rid of the union, I tried to help him find such a solution that
+might be acceptable, but also recommended to keep the union for now,
+simply because it raises a lot less questions and avoids the temporary
+trap, and to move to a unified ID only later.
+
+Still, as I said, "I don't think such a state is very pretty, but it
+would be okay for me". So I wouldn't block the approach taken here in
+v10 if Vladimir prefers it (at least as far as I can say from the
+discussion; I didn't actually review it yet).
+
+If you say that you really don't want to have the command fail on
+ambiguous IDs, we probably shouldn't do it. But as far as I am
+concerned, it seemed tolerable, so if you don't object, it remains
+Vladimir's decision.
+
+Kevin
+
 
