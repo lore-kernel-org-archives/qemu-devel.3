@@ -4,71 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 787BEE9A04C
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 14:20:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 439D2E9A048
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 14:29:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vt4ss-0003TU-BT; Thu, 19 Feb 2026 09:20:02 -0500
+	id 1vt50n-0006lR-Uk; Thu, 19 Feb 2026 09:28:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1vt4sl-0003SK-Od
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 09:19:56 -0500
-Received: from frasgout.his.huawei.com ([185.176.79.56])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1vt4sg-0007Jd-Eo
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 09:19:55 -0500
-Received: from mail.maildlp.com (unknown [172.18.224.83])
- by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4fGwVG3kLfzHnGj5;
- Thu, 19 Feb 2026 22:19:02 +0800 (CST)
-Received: from dubpeml500005.china.huawei.com (unknown [7.214.145.207])
- by mail.maildlp.com (Postfix) with ESMTPS id B24FA40086;
- Thu, 19 Feb 2026 22:19:32 +0800 (CST)
-Received: from localhost (10.203.177.15) by dubpeml500005.china.huawei.com
- (7.214.145.207) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.11; Thu, 19 Feb
- 2026 14:19:32 +0000
-Date: Thu, 19 Feb 2026 14:19:30 +0000
-To: Gregory Price <gourry@gourry.net>
-CC: Andrew Morton <akpm@linux-foundation.org>, Cui Chao
- <cuichao1753@phytium.com.cn>, <dan.j.williams@intel.com>, Mike Rapoport
- <rppt@kernel.org>, Wang Yinfeng <wangyinfeng@phytium.com.cn>,
- <linux-cxl@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
- <linux-mm@kvack.org>, <qemu-devel@nongnu.org>, "David Hildenbrand (Arm)"
- <david@kernel.org>
-Subject: Re: [PATCH v2 1/1] mm: numa_memblks: Identify the accurate NUMA ID
- of CFMW
-Message-ID: <20260219141930.0000124a@huawei.com>
-In-Reply-To: <aYYXif7IPXnXZPnn@gourry-fedora-PF4VCD3F>
-References: <2d1e23ad-7ec1-483b-88b3-70ce19b69106@phytium.com.cn>
- <aXOl9CN_66HywIjZ@gourry-fedora-PF4VCD3F>
- <a90bc6f2-105c-4ffc-99d9-4fa5eaa79c45@phytium.com.cn>
- <20260205145842.efb90572a902ae4c481e6ef6@linux-foundation.org>
- <aYUjf0OrD8f_bJCy@gourry-fedora-PF4VCD3F>
- <20260206110305.00001fbb@huawei.com>
- <aYXtHa4Y2y_5xgcS@gourry-fedora-PF4VCD3F>
- <20260206150941.000028ae@huawei.com>
- <aYYOZ1TK5dpX_h_Q@gourry-fedora-PF4VCD3F>
- <20260206162644.000050fe@huawei.com>
- <aYYXif7IPXnXZPnn@gourry-fedora-PF4VCD3F>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <axboe@kernel.dk>) id 1vt50c-0006kZ-8t
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 09:28:03 -0500
+Received: from mail-oa1-x30.google.com ([2001:4860:4864:20::30])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <axboe@kernel.dk>) id 1vt50Z-0000q7-Sv
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 09:28:01 -0500
+Received: by mail-oa1-x30.google.com with SMTP id
+ 586e51a60fabf-4094b31a037so578876fac.1
+ for <qemu-devel@nongnu.org>; Thu, 19 Feb 2026 06:27:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=kernel-dk.20230601.gappssmtp.com; s=20230601; t=1771511277; x=1772116077;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=fV24LqBketLmQXEpDnJr5l+sg4uafkBtnDWCe8W1dWg=;
+ b=bpY8F/r/mueUwYSM4OyX65orL4wastZHlA0NXmX4XmEL1rDIfHcpFDDry2fLJJ1pyv
+ 5IF7nci3asVOy5FavnXGdpEwsl5E74huqXlusEOwyIYE3j4hH2frDa4ogeQLEUIKecaE
+ TW9K2By63NHKxmokO1lj1k0H/NHp6YK2ttP960yS07Ar9p7uU+jQCrXV682nKtFHuHUs
+ DGstBEKDaTvixgEdWSgZei3mR2LVWMxbqDJt/WDlfoPEX508zUgiCFAUcmVMSb+XxvRv
+ L/Hi6P8wYQoQvfFOMFPG40e6gNVQM52amr7wfh58yXqFX8h80MIG9Yzjph3/NbM43chy
+ +CIw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1771511277; x=1772116077;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=fV24LqBketLmQXEpDnJr5l+sg4uafkBtnDWCe8W1dWg=;
+ b=Qm1Y8G/uFNVSNuloLagi8vbgkEv9chKCjdZqHtgOZ01HBf3X73cyM/3nLJfTLYhVaU
+ pThZdiFUEkq7QH+eJfdb4NAF35WSKFwGB/8hXHMqwJN5voUvhvCD03YFNhGITE82AQwn
+ ed1EF/M48c1EJsC1KTBg95UGMvyP2jwpATmNj7/NtTiRs6VkVp8+33Z3oY+jX2RSfAsv
+ 7M+Dy2cS5y79p6FLufW6p/W9THAAVJHsxfZ2mFFjd/9m+EqjVVVgXLWFlX9brvdmTOie
+ HFxEWRZjEUeZTF/dyzq5chuTpHjQmiJ1w8vN7RpEaNKPQhPMjRDc1LIZSBdp98xTCrLm
+ 3lzQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXUlwku3IFH8y8CsI8Qg719vh6U9ON+2HZrCBOzz71IgKZ6w5U3vzvtOStMajvFRsHaZbfFKkHcKpk1@nongnu.org
+X-Gm-Message-State: AOJu0Yw/HdRBtfUonLYAS4Yx8nX0xZ6SM8Fa9YIYHJoIp70wI1uIZDEt
+ nGgnSz9SbPmXJr34ggH/K6trWa9Q+1ZK1Su04Vbk1Cqak5qIXRiSjnsIhryU6VqMxh0=
+X-Gm-Gg: AZuq6aIGm/In4c0gmUfwAF290rIsWkJeBtoC3APOXlRliUTiHJnrrLZKzvAXWvDUguy
+ E2okUHdh3I3yUv65w03ULqyDw/z1TBsCH9TrbRG9UadbiM7u7/hBzPajFaNcDBPy/jpxIqw38Jw
+ XLSMTSyFEdMZTCPtPC9BcollESlX2jpOuq6ZaKL5vmWblJnQi4T16IUrfyITsGNn2NeBOYbB/g1
+ svhfvedHNF2IkmbVtSourgyAfPQYrRep3PM8dQ/av7dtpClMuRDaMaDWvDkIfSz/d4adco9FkPh
+ zbxJdyxZah8qnNMmD8BDUZqesX46iqnGdEKhmCHp5ZSLAePjU7HgEe6iesV2v4wi0j08QeycYQY
+ Dw4wFIXcFGzxtDZZvzTZbzIr8P7ZPMdWEP8pvHuL5fxLsNObFzwDWLdMbhNBsnM1V1eNzPezbwP
+ P8r/9FPjcpNoetjnMb1R7KOtGy1fswSq/0QHLqA5Uv/XNe6EAWFjDKvK615niRlaGo5g8F0gfGF
+ gjL3xqYiYY=
+X-Received: by 2002:a05:6870:1714:b0:408:882c:90f6 with SMTP id
+ 586e51a60fabf-4153a28e368mr1888922fac.57.1771511277025; 
+ Thu, 19 Feb 2026 06:27:57 -0800 (PST)
+Received: from [172.25.209.35] ([187.199.77.89])
+ by smtp.gmail.com with ESMTPSA id
+ 586e51a60fabf-40f18df8a64sm15458632fac.14.2026.02.19.06.27.55
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 19 Feb 2026 06:27:56 -0800 (PST)
+Message-ID: <f4b12328-ef79-46a4-8a0b-0292d6b5ab3c@kernel.dk>
+Date: Thu, 19 Feb 2026 07:27:55 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] aio-posix: notify main loop when SQEs are queued
+To: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: Fiona Ebner <f.ebner@proxmox.com>, Kevin Wolf <kwolf@redhat.com>,
+ qemu-block@nongnu.org, qemu-devel@nongnu.org, fam@euphon.net
+References: <20260213143225.161043-1-axboe@kernel.dk>
+ <20260213143225.161043-2-axboe@kernel.dk> <aY9Lj1BTVRCFyfic@redhat.com>
+ <c32915a9-33a2-47c5-a91b-27f01147918f@proxmox.com>
+ <20260218161127.GC587447@fedora>
+ <d729df1d-ba33-4cab-88c9-ba980cdaa37d@kernel.dk>
+ <07d701b9-3039-4f9b-99a2-abeae51146a5@kernel.dk>
+ <20260218205731.GB605390@fedora>
+From: Jens Axboe <axboe@kernel.dk>
+Content-Language: en-US
+In-Reply-To: <20260218205731.GB605390@fedora>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.203.177.15]
-X-ClientProxiedBy: lhrpeml100012.china.huawei.com (7.191.174.184) To
- dubpeml500005.china.huawei.com (7.214.145.207)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2001:4860:4864:20::30;
+ envelope-from=axboe@kernel.dk; helo=mail-oa1-x30.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,45 +107,15 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <jonathan.cameron@huawei.com>
-From:  Jonathan Cameron via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 6 Feb 2026 11:32:09 -0500
-Gregory Price <gourry@gourry.net> wrote:
+On 2/18/26 1:57 PM, Stefan Hajnoczi wrote:
+> Thanks, applied to my block tree together with Patch 2 from v1:
+> https://gitlab.com/stefanha/qemu/commits/block
 
-> On Fri, Feb 06, 2026 at 04:26:44PM +0000, Jonathan Cameron wrote:
-> > > 
-> > > This should fall out cleanly.
-> > > 
-> > > The additional nodes won't be associated with anything, but could be
-> > > used for hotplug - I imagine.
-> > >   
-> > 
-> > That aligns with what I was thinking as a first solution to allowing this
-> > to be more dynamic.   We can get clever later if this doesn't prove sufficient.
-> >   
-> 
-> I can get this out pretty quickly, hopefully sometime next week.
-> 
-> I had a long talk with Dan about this topic previously, and I'm not sure
-> how we get more dynamic than this to be honest.  nr_possible_nodes is
-> *definitely* expected to be immutable after __init all over the kernel,
-> it's used to allocate a memory.
+Great, thank you!
 
-Indeed. But that doesn't mean to say they are all in use after __init.
-
-You end up allocating a bunch of space, that is not used until there
-is some memory there.  Not a problem.
-
-So dynamic nr_possible_nodes is tricky.  Dynamic allocation of stuff into
-those nodes is fine. That happens with memory hotplug today.
-
-J
-> 
-> Surface area is very large here.
-> 
-> ~Gregory
-
+-- 
+Jens Axboe
 
