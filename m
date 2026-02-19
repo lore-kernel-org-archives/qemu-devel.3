@@ -4,116 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 604E2E9A03B
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 09:29:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB451E9A03B
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 09:38:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vt0Lf-0004gW-O3; Thu, 19 Feb 2026 04:29:27 -0500
+	id 1vt0UD-0007n2-6u; Thu, 19 Feb 2026 04:38:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1vt0Lc-0004fw-N2
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 04:29:24 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1vt0La-00017a-J5
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 04:29:24 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771493360;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=R0rtI/blLUs66pfO4kMCG6WxO3rHZJx9W/TDUMhLZJY=;
- b=QXeSURC2l84TwJILsfh8GWQ2OLDpljo8FxuVXjSnWu7SIoLyjLsqratBH8TdWIE3QKY1Zh
- pEtD0uCADUr04pUSGBVQdc1SAq1z46Gl19mOJ6+6ooa/+mt1av82Y6Up/AZiY6lfCd6WAn
- pJEn99qOWGiDIKQZ+prS55eAaie+LaE=
-Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com
- [209.85.214.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-392-NMXn7YCDOYeA8il93wzFXg-1; Thu, 19 Feb 2026 04:29:19 -0500
-X-MC-Unique: NMXn7YCDOYeA8il93wzFXg-1
-X-Mimecast-MFC-AGG-ID: NMXn7YCDOYeA8il93wzFXg_1771493358
-Received: by mail-pl1-f198.google.com with SMTP id
- d9443c01a7336-2aad5fec175so28362705ad.2
- for <qemu-devel@nongnu.org>; Thu, 19 Feb 2026 01:29:19 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vt0UB-0007mf-Lg
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 04:38:15 -0500
+Received: from mail-yx1-xb12a.google.com ([2607:f8b0:4864:20::b12a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vt0UA-0005k9-5A
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 04:38:15 -0500
+Received: by mail-yx1-xb12a.google.com with SMTP id
+ 956f58d0204a3-649e97f1e99so589848d50.2
+ for <qemu-devel@nongnu.org>; Thu, 19 Feb 2026 01:38:13 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1771493893; cv=none;
+ d=google.com; s=arc-20240605;
+ b=XpUeA9eAdvSWu+WIx32cxUmjO/wD8U3mr+AfivPY+EG+NFr7ye9cLS9PwvEUT2KMfJ
+ 1x+rjaO6jERxfOgmZb9HHXOsI/eDriExb5ZznRmSjcQsT8ZZb5VFSYMcqC68M6IdqB3r
+ 1ySsBEcVDyIisa2dJu9L1Yl+U2RbC8Olyf6SQTU+HDqy0i9c8m/aMD0EcrkUm+OCFZfx
+ ycB14QI0JC7Ni5KADyOV3bXuWpjVmKcWz5d0HGSO0FtU8sK2RUwsZUYARFGnGmChcfBM
+ WZkvEvv1f5H2N81CX023SJu7CxDoR3D0ooZyI0L9HnXWksHAq2qKidzaBpKDL9l08xBk
+ JT/Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=gpuxha4eRNUboHr/8D8+pnu56CeGJjt6qpHHARu8F6s=;
+ fh=i4wshauNREuUPUWCN+OkRWXFCVYoSMN0/GGwAmMe7Uk=;
+ b=Jnyx61lMO5MxWv192wBGoaxeQhQq+rpcJMXoO2cKqMoedNZDR2IH2kFDnUZ6zQyPjP
+ pGkOdMbfHMsB72bLoPvYoRFa+TWNaMbNxRNyUuYrdIAlBLcouGI2heSQoJEjuGxFgFZm
+ Hi/3m1Y5D982dTWYZrK2uYx9bx3K+gYO11hKUa8HvzLaquBeg30gVH6GCA7YQwHLhdsd
+ npDIiZYeTlZ5KmCLVASca852Xl8XHNbYxEXDaJyzXjeVF43rJstxqB3017m02CawKmw2
+ tt2bNVkYVZRfX8KiZdG4I/M/l9jZ0fhcX4Pf9JtY4s1brkNBp+1LFot3ReMSozF0foD6
+ grXw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1771493358; x=1772098158; darn=nongnu.org;
- h=to:references:message-id:content-transfer-encoding:cc:date
- :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=R0rtI/blLUs66pfO4kMCG6WxO3rHZJx9W/TDUMhLZJY=;
- b=Cc4foxWG0FQbdCt9eBta8GoyDjMP0vCjRUto0KvtkYhB/5q+JmLzbiy4hAOmc274zP
- QNHZuDTFl9WhuPA02ze/VISoYTh61G+4BKh+uhJ12zKTY5DKQk9gSkyk0KfX71kIvWog
- leEBXTocrIzpW746HP0sRT0Q1ieQCU2CaTBFkd7beFNaNG+BNSV78T6NGIWYpFTs08o1
- UfC88EvzMmeio/Hoxo9ou9EeiM9A4GPSx6eOiUEbDqncYvNFX1BC1gi2SHDzoT8lCTrl
- nSzmBt4SZpqvrnS1a2Jm45hvzEStkMW4pW0+sBnRGERJQ3VwG+M8ABDVHgW2WgfXHpB8
- isIw==
+ d=linaro.org; s=google; t=1771493893; x=1772098693; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=gpuxha4eRNUboHr/8D8+pnu56CeGJjt6qpHHARu8F6s=;
+ b=cEXupcjhTEV3fblp62VxNHmBEQB/nFbV6XVCVl/9y2lgwCVLzTUoSarYQbDW7ClcbS
+ YcaWGsBvAaqnsIWVd/ufrYq3ehV98OndSTjnPzHLrA/VED9wb/Z2XnuTwe/UJCtrNXuw
+ N3LBYKk2GiRnXPDFoaKf+rVzE+zBOscbUqf9hroWSAKQr3DPKIEfLQlKtgn5RpfQ77RM
+ W1TqG7LUT0e5gxkkwbReQ6/uU6L+U+4Q68niN00pnz2t/SCskvoPn5heco41MNjF8F2E
+ bYQtzmKtAGNfjzA+Y521WoYBXX/yDlYtshyLvB1ZJQ7h5rc/5TnQZ6IxKneWZon/60GF
+ 9QPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771493358; x=1772098158;
- h=to:references:message-id:content-transfer-encoding:cc:date
- :in-reply-to:from:subject:mime-version:x-gm-gg:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=R0rtI/blLUs66pfO4kMCG6WxO3rHZJx9W/TDUMhLZJY=;
- b=lWJfM+KSJKR+CTP7czOs43g2uCvP5Peny/Hy8YDn8n5eqM3bJwQL86ZUqE4zwQShGO
- 4M6WyzHJwqcBUSPjUPUhJbz+YNQ9kweVu1+VpFo0gFbpM2DV32tyqn+bm/zwND8DXHKJ
- 59wCSUW/b45B7oVX5EJA6i8R3uQBBuOCn8/gFrGomkhWT+Krv7kWE4KZepI0Ff35uolI
- 2E9TPYskMKZwCeic/M1Q2RYcENJdoTik4qyRXTY5pEqbB+Hhefx1MebYHf4oVHVp7meY
- qcz3b0DNhv4KrQmi+En+Y6H4JySHnfvvsxQALJGuCymTzZUquqjh4/dD0MGcJTCJikf1
- 52Ig==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVCinTLT3w20mBdVoeweXoGktuonXH6p0MCP8sHJpIfDGMTCVsfilKxvan0LNQIxvtrx8U3RLUXjd1A@nongnu.org
-X-Gm-Message-State: AOJu0YxIojRBE5pB1CVcuSgBWPMxVhhXd1MxlnbYBZPuTR0faEXkBM5E
- iMcGSXuHRg9o4oRC6iwSX0zen8QF0UTbIXxX6oYFwJVibZfAwnBXvQVM1wKdAVYFYd3L/LSdNUs
- 0JzxmLuX243sBe4rHfaOtJiYL5vozesh4OsG/z/v3bSkuR9wda3y3s2op
-X-Gm-Gg: AZuq6aKc/OKHF8LUAMRj5C1cl5lxT4OGwv7MTeSTCi5DyyJ5aw+s1blItlH6I7i+v7Q
- J8Q1txoLMSRGapBGUAILW9x4NK18uKA3tLr08wpY4K4ydJLBBJvI9ubD/L9GN4JPO0e7xYGPSgJ
- fRMpUKRu5Zws39kwlMhdW7p6FrFB7PTC5diSuQ6vE3EL95V3A/wsIM6alX1E3iG2IE23BpY8GQQ
- WJ5SYIFDNJp0LshZ4fAtUihQOm5jTvayU0kBoxylcPv1XnaiASXEgWITKVhPTZMrc0s1IVGu6RR
- MYDehXXCOaCJbImkIkgs0gkEcNppoLO+w5SCAAZokscWI+i04SeOg6ttlitVCYmI1oBQqMapriN
- dc25TNjWBLuTM96rMT+/A+IyG4i+QQDtP0j6htNECoN2RmwhQP3CjBECyzEoxAyMlLrg=
-X-Received: by 2002:a17:902:d48c:b0:2aa:e6c8:2c73 with SMTP id
- d9443c01a7336-2ad50f33f69mr50788975ad.37.1771493358242; 
- Thu, 19 Feb 2026 01:29:18 -0800 (PST)
-X-Received: by 2002:a17:902:d48c:b0:2aa:e6c8:2c73 with SMTP id
- d9443c01a7336-2ad50f33f69mr50788715ad.37.1771493357903; 
- Thu, 19 Feb 2026 01:29:17 -0800 (PST)
-Received: from smtpclient.apple ([117.99.83.54])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2ad1a712ed9sm244490475ad.20.2026.02.19.01.29.15
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Thu, 19 Feb 2026 01:29:17 -0800 (PST)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81.1.4\))
-Subject: Re: [PATCH v5 33/34] qom: add 'confidential-guest-reset' property for
- x86 confidential vms
-From: Ani Sinha <anisinha@redhat.com>
-In-Reply-To: <87pl613wxi.fsf@pond.sub.org>
-Date: Thu, 19 Feb 2026 14:59:02 +0530
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Daniel Berrange <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>, Eric Blake <eblake@redhat.com>,
- Gerd Hoffmann <kraxel@redhat.com>, qemu-devel <qemu-devel@nongnu.org>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <DD830601-D059-4702-9D08-8A461A02A287@redhat.com>
-References: <20260218114233.266178-1-anisinha@redhat.com>
- <20260218114233.266178-34-anisinha@redhat.com> <87wm093yer.fsf@pond.sub.org>
- <ECE353A6-A0BC-4A3A-8D80-581CE9150C5D@redhat.com>
- <87pl613wxi.fsf@pond.sub.org>
-To: Markus Armbruster <armbru@redhat.com>
-X-Mailer: Apple Mail (2.3826.700.81.1.4)
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=anisinha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+ d=1e100.net; s=20230601; t=1771493893; x=1772098693;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=gpuxha4eRNUboHr/8D8+pnu56CeGJjt6qpHHARu8F6s=;
+ b=FLzTSYGaRmAcL6x1xSwY67PbVgR0mjqd4zFsnk3jBbEymMku8sQ90WqVrlnB8d8X95
+ 5NgWnA2OLqrEEmh667dJWZXiyU6riCXXwqivu1UsICjJvpTTK+WVdEt3MIcZV9iXZaSY
+ 7/o7FGg/X5sfQyO4T1RXvVPs5JDqYV3kimxoandgcxloj3lTSUHOGpOS6AK/QQIHgXJM
+ 1unktg7OYrFtFZJOHUVGHKsRzxkKfXAAVpPHubfiM7pjCKD7/dv3mWobl5narKqa3JAg
+ S8P+qvpGpGrdS0bUliNDNxkwOzTJttsZ+43BFSTJqBBFMGw3ZkCrcgnSUgQesevtIsbC
+ EfWw==
+X-Gm-Message-State: AOJu0YyhbTMQDAeXYNOl1cDrlICLEaKeGn6U89C2Evcb0SfktYUqP8Qb
+ My51bEWCyxBiRSCfFlrqUVB1OiBNo7pCUH/smadbmoYt5/e6XMG4Mdvi6dLsjly4T65XlhZxpJC
+ oLuAUVuQzz0b/k+zk8TOQvij0Yl/34T+F+ZiOODxgfg==
+X-Gm-Gg: AZuq6aL4WjwWknwqwcuu8H0FE+hzqCncGLST2+/CDjXOp9BYmtiCT6PX5lhHueWEXq5
+ IRRWxPlpybMWpWx3HJdrw9p/KIzW5CjUhGjwNZx3+TpAyLQ34JY6LzD+TCXXJlaUdZYYFfzNkFi
+ CrsJw1woTx2JrJFuZrS8nVP7/C5dUNMSPSp2go54P+kwAjdIQK+AHKbW/OmfXTwkLdmw7hFXDxd
+ hLiuafn46sTjQGuCWkQfPOQHy3CNVY+7PDMeXpgWG8wgNGSwyt8qC+VNadGiQHCxWzRQIoIqlXW
+ PF4NmWZz5ldDD3etv5DdPT7aCRWwI36nfMUoOwYivTTU4Qz5vKibv2LJXpW3q/QXvbErobf5ecN
+ fmQ==
+X-Received: by 2002:a53:b6d1:0:b0:64a:d607:30d7 with SMTP id
+ 956f58d0204a3-64c614c5a1emr1352603d50.78.1771493892946; Thu, 19 Feb 2026
+ 01:38:12 -0800 (PST)
+MIME-Version: 1.0
+References: <20260219040150.2098396-1-pierrick.bouvier@linaro.org>
+In-Reply-To: <20260219040150.2098396-1-pierrick.bouvier@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 19 Feb 2026 09:38:01 +0000
+X-Gm-Features: AZwV_QgPxQm_4WHz5YVXddgB8CRBzKT1jW4-rQRItT93j70YpskswASSwVfG8rI
+Message-ID: <CAFEAcA__tnvy9dUUPrEG8jynGGSp9iz0H7Q2MFGdw4--NDH-ng@mail.gmail.com>
+Subject: Re: [PATCH v4 00/14] target/arm: single-binary
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org, kvm@vger.kernel.org, 
+ Richard Henderson <richard.henderson@linaro.org>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, anjo@rev.ng, 
+ Jim MacArthur <jim.macarthur@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.043,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -129,44 +119,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Thu, 19 Feb 2026 at 04:02, Pierrick Bouvier
+<pierrick.bouvier@linaro.org> wrote:
+>
+> This series continues cleaning target/arm, especially tcg folder.
+>
+> For now, it contains some cleanups in headers, and it splits helpers per
+> category, thus removing several usage of TARGET_AARCH64.
+> First version was simply splitting 32 vs 64-bit helpers, and Richard asked
+> to split per sub category.
 
+Thanks, I've applied this to target-arm.next. Patchew says the
+last patch here is the same as it was in v4, so I've copied
+the R-by tags from Richard and Philippe across.
 
-> On 19 Feb 2026, at 2:57=E2=80=AFPM, Markus Armbruster =
-<armbru@redhat.com> wrote:
->=20
-> Ani Sinha <anisinha@redhat.com> writes:
->=20
->>> On 19 Feb 2026, at 2:25=E2=80=AFPM, Markus Armbruster =
-<armbru@redhat.com> wrote:
->>>=20
->>> Ani Sinha <anisinha@redhat.com> writes:
->>>=20
->>>> Through the new 'confidential-guest-reset' property, control plane =
-should be
->>>> able to detect if the hypervisor supports x86 confidential guest =
-resets. Older
->>>> hypervisors that do not support resets will not have this property =
-populated.
->>>=20
->>> Double-checking...  This is an static ability of QEMU, and QEMU =
-alone.
->>> It does not depend on QEMU's run-time environment (host kernel, ...) =
-or
->>> the guest.  Correct?
->>=20
->> The run time environment is the same as what is needed to spawn =
-confidential guests. That is, the host should support confidential =
-technology. The host kernel/distribution should support confidential =
-technologies. Plus the guest should support confidential technologies. =
-There is nothing additionally needed to support resets. There are no =
-additional dependencies with host kernel/environment and/or the guest =
-etc to support reset.
->=20
-> So...  if a QEMU with this feature succeeded at starting a =
-confidential
-> guest, then x86 confidential guest reset is definitely supported for
-> that guest.  Correct?
-
-Yes :-)=20
-
+-- PMM
 
