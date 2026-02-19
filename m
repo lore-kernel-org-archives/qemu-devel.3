@@ -4,100 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4EE68E9A049
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 13:00:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04FC5E9A048
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 13:02:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vt3dx-0005Wc-Ma; Thu, 19 Feb 2026 08:00:33 -0500
+	id 1vt3f5-0006JO-Dp; Thu, 19 Feb 2026 08:01:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vt3dt-0005Qd-8F
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 08:00:29 -0500
-Received: from mail-yw1-x112f.google.com ([2607:f8b0:4864:20::112f])
+ (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
+ id 1vt3ew-00065j-Ou
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 08:01:40 -0500
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vt3dr-0005bT-EO
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 08:00:28 -0500
-Received: by mail-yw1-x112f.google.com with SMTP id
- 00721157ae682-793fdbb8d3aso6989007b3.3
- for <qemu-devel@nongnu.org>; Thu, 19 Feb 2026 05:00:27 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1771506026; cv=none;
- d=google.com; s=arc-20240605;
- b=F7P/DhIm/zVjgoFh6G3DWilLgAjqgQNRDnKXn0k1pBWEkUdvNGE/OFrbYVeU3yZayd
- uNxI2IDczCKQ/ziXIWDCb5Vm6NNlbeC+SOKbmzbv+Ev7Aw67F3OD65GzQMTB1ZxZOugm
- iCUXInu/jzznlsgpx6J5wgVoc8OWyLC2pQf/nrY7BDyNnq6KqUgsd1QLhyZNQ+DIM0/k
- vOQ9S+AMBJx5DofkYsZ15hawB1G99kucboHFeCSNkbgbPP0SrLLfhqU/1wkWywlWDKWZ
- n4EZ4SWiufHGQVN5tWyzSfmX0ooH+VIdSB2xv+vFS5xhBqIVTSGqc+Sg1MpcxzmsvdxS
- +Mtg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=6f/cv+8SseqLRrX0F+EZo+zHcoceiYv1Ox6pEsi36q4=;
- fh=QKWwYWnU74tEpagxyzKMxXfdzss8yZtT/YtRGw+kJm4=;
- b=Krj9EVOtu3NuO8UBuCUZ9bU1nH+nquAIpJj/LwWHgz9W0+VVK32rISSdglBII7Tc+w
- Y2rX6xvMLS9rN6hzY/xKhS1D8XANC4zpIFL/0lBjXdcJaVacXFAMuW1gHN4Mho568RLU
- 4gZ5R5TNLjQVPWnlUaS2MM8gPYkYadrIAZfGV7c6P3hAfHKJbmndfDGmV5uEXx7lscUB
- FS0oGRtRmYdL7833ctMJcBOsP0MDrJgWdxFECAx+foEjGOGJNGBU1cAIITeSBwHXiJKt
- YfwFiyrAdmK8agB+4xsuvnPj0MKAEfmIGnucMxeOhkh11OEJSRtMfueFZWwGniazF0Eb
- 5ZvA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
+ id 1vt3ej-0005po-I0
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 08:01:25 -0500
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-483a233819aso4123275e9.3
+ for <qemu-devel@nongnu.org>; Thu, 19 Feb 2026 05:01:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771506026; x=1772110826; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=6f/cv+8SseqLRrX0F+EZo+zHcoceiYv1Ox6pEsi36q4=;
- b=qemoBINR3+UKDTPVas6bqCCLBSm5VAF/nR6E5sUBeyKAU2O3Y9cmXKp/jc0I8B3K2z
- oPxKalXlOccE42WRtMrQj7Ct9VlIFDIwQyQkY8e4zWeIY9FJ9NnwN4UxCnUxX1bwZsia
- rxGTLtufwWI6rqM5362/eLc61u6ohscE0cAlUPiX3lNzcurV+z1R/KH+TsDq3d3HjcTY
- vQJOWubdStZIzQeeZn/7XukIawqxXab/5xLgaZYsdHNDHN4/pm+Aegv9w0SyL5JC/jsC
- YID2pfAIBhN18b30qyapoOXktlMXFJUBoTO8lvL+XPSQt1CUVi1dtbSxQS4k4fJQ82uY
- wn3g==
+ d=linaro.org; s=google; t=1771506078; x=1772110878; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=O3uD2NPCSyNL69bl5PSjtdV8d7QWdzWlAsp+kcF85/g=;
+ b=WDOEwr8c5c1YnVkgQ0tfjSTmZO+Scu31qfjRGH4I0seweM7EhU+IyphWEHjlgFZIMb
+ H54hTXXdpbbxizW9mdLQI0mROkmjKoPS4LkyKMHqm9D7GN5x+EfyFt9lDHUUXOnZISks
+ ogYRTGLqliYbKgJo9/BthiOgVjVFk3XMzwfIwd9gvvrGuyf5lyrq8tYf9ogPrGhz7Ncf
+ SibnM2lgeRfMP5nkjZKbZHiHPMbo2loAAuWWO5p4oQ1R9nt/tRTUGYCTnosuO7U7bLJ1
+ yTDfoZW1v6Q0RUO/5erqbATOssg/m3mmDIAkNNx5K5/+gNXjqd0TP/WwZvlbxKB16V+m
+ 49FA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771506026; x=1772110826;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=6f/cv+8SseqLRrX0F+EZo+zHcoceiYv1Ox6pEsi36q4=;
- b=NuO4/2corFDFoC3pO3zPwcwwbANIz3iqGm2TG5Byt1smvFXyD/JDWaohA0cNrbxvRG
- wnvTBRg1fr0Bupn+DVcEtLOK+qT6mz4AsFf7Y+z1IMvMECt9zKAtxnxENCEF01Jb/h2k
- +USZi2DKeLNcRA9KlUodofxqma/ydF0f3sMiqgJEw3dPPQBuNJ6f1JuPNlN8fUBZVV8e
- lYEVoWf71LgVMrS8JbRkROSY7icfGYRUhKwK+ovcVUUwf+vBib28CRXPbIGUihruGfBL
- +WZr+xQHgXhJTcuhB3SQmmCKuir2a7kW3f72vvFOFBLq0tHYCNUhvZx6OWYnEZJUMGXU
- hhgg==
-X-Gm-Message-State: AOJu0Yx1PDnK1vzbPFqP6ATkW0orisNYUuF1qT/mkI6E09XSfxjGIhs/
- 3+Qo86IIi5Ig+yqGuvPpqmqs9DoZwU3OZKoo9KZ4/1d7/Zenz0xb2Ma0GzzykPeQJEOGOMrGuLF
- 6wwHpbpyPnjOZCIJf7xQby3uzZm8q4zAf9DI7gVBpxw==
-X-Gm-Gg: AZuq6aJLsgbZWn96Dr/O2y2DrB/zcWNHPOMTs3QoE3lon4HD/VYpDXn3XAkxMfLsMfl
- 6/MwJ4YnySgavMgLtb8csE7qdJUXIiO31WIJ3fZsQHB+bRaeeabcok2OpLaR2rGGWfW//Z3szgk
- oszznoBUiq5LzFsDagPZEZBobY6ChmmAf3kwAml0T7DVGcZuRMMle94RVJgwqfvMY2+5Uc9qbIl
- 6M70jHSgxYA3Q95uijI/jAWGhLql2uCHVhBS8QSb2aqXdkSZy0EK8Y8SVq1Y/E+37IyBhf+C4DF
- aW3Sqy4u/JNdOtwSTcKQKotan3hYKR7E0pUI8kzNiPyhxVdHC8MbJkoMwfOj34I20Sc=
-X-Received: by 2002:a05:690e:2545:b0:649:c7dd:d2ea with SMTP id
- 956f58d0204a3-64c14b896f2mr14014752d50.39.1771506025538; Thu, 19 Feb 2026
- 05:00:25 -0800 (PST)
+ d=1e100.net; s=20230601; t=1771506078; x=1772110878;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=O3uD2NPCSyNL69bl5PSjtdV8d7QWdzWlAsp+kcF85/g=;
+ b=pwvBIRgaWpqZUT4gYWRZCNUotiqh4CFRJIBpuWor2nVY9OhtiUqQJFuM1ZYnBweUlI
+ 1w14m+4hRCPIsFouDNnGV7jMS08FJHL3Egg+2/u5z/tfbsmFJrC3FByD3yUFmScR5alF
+ pXhU1DICrq9Smi8g+geub1aB/9LD4ZxkWuKau4AEEUpYkW37ew3ijD4p+IHhhVN5kPjg
+ 8EVCMBTXnTGzFQXmL9T5RdeK9BlZ56d3MK0pRm/1J5H6hV/QLXQhq9OLToAVS58wI69a
+ jnTV8uqQiHF2Cv3phV5VU2SI4sYMFSaLftRrCnj3fZmVVXeDVFZXa9PLncO4sBcMA+7j
+ RAOg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXvrC5ZeTwsFdDNaPUwaEYINXgrJpU62IT78fyuJfbheu5hb2x8WPv0clNxTQYlSMBOphtUCyOkWs+J@nongnu.org
+X-Gm-Message-State: AOJu0YyoZBClQH3whTuoz1R7y2fSV07Sbg98/cJeXGP2wJA/f+XnWC2L
+ M4Zex7gAPIMcpxONlth5ENVWMTk+M7yBvKoJcjmLFMhJ8bk3QukYUp4YfHhGnbtUPeg=
+X-Gm-Gg: AZuq6aLwFVgtN7OZU2goEV+vBMUdrYwluP0by3wEFY0clLyrR0ejB1M8801XaFHQdR8
+ 7R58ekbAPjVOAG+O1dIaundRJtEn7Afuhos9wnxh2tmyfs4uYzsq9EPsqxbWAo32g2Pajg7NSnR
+ c/H8z25onXR4bxDMQKa7a7mz7exzXJsMi+5SBxP59g1ppSEUnMdLNW7Hk17X5QgPqrkkQ5svbut
+ aDB4viAsO6oeoiZXwircmsEMKScC96Nkv8M54LSdAeqdB1fXCmxbV9airIrEFCSeLXHL1HVmOqf
+ dMxJ4pB/92hr/eJlY5PegOTQXeGKRM6YvyQujpfv1dPjZiFdq2AJKQOLQYYIl3yGVApcs98xI9Y
+ bVSKEuSwkwQD8+TEWMxOt2i4I7u1XUjWAnKz+cDpRk6C2GlJzXw85P038SVa3r3Y+NYQ8ikw4vQ
+ kyCM+Y+c8hvIX7//DkHCAatsqW0/V91VYKVrsrClg4gVLaDyuoYR74he1Px1XluTRNMW8=
+X-Received: by 2002:a05:600c:8219:b0:477:6374:6347 with SMTP id
+ 5b1f17b1804b1-48398b5d5bbmr88626175e9.22.1771506077522; 
+ Thu, 19 Feb 2026 05:01:17 -0800 (PST)
+Received: from ?IPV6:2a10:d582:31e:0:afeb:9934:f5df:3905?
+ ([2a10:d582:31e:0:afeb:9934:f5df:3905])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-437969fd36dsm51734521f8f.0.2026.02.19.05.01.16
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 19 Feb 2026 05:01:16 -0800 (PST)
+Message-ID: <4b9aa2cf-140f-4b3e-ae7c-224530f0e93e@linaro.org>
+Date: Thu, 19 Feb 2026 13:01:16 +0000
 MIME-Version: 1.0
-References: <20260206131438.1857182-1-imammedo@redhat.com>
- <20260206131438.1857182-9-imammedo@redhat.com>
- <CAFEAcA_QO_Pm5qKy2xOer+VmyMZ6KZ1KdUpf_ETV9fQu4YmaHg@mail.gmail.com>
- <20260219131751.4e4e4e0e@imammedo>
-In-Reply-To: <20260219131751.4e4e4e0e@imammedo>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 19 Feb 2026 13:00:13 +0000
-X-Gm-Features: AZwV_Qh7IKSBE9HvlvvZ4OpzeXRNav7wR-J006OU-6EbLgLx-VtnrgnHg12Levw
-Message-ID: <CAFEAcA-qaSRM9MJDk2nhDQKWoP7odcou2DXff-fuYPNEE=g6vg@mail.gmail.com>
-Subject: Re: [PATCH 08/11] arm: virt: create GWDT watchdog paired with WDAT
- ACPI table
-To: Igor Mammedov <imammedo@redhat.com>
-Cc: qemu-devel@nongnu.org, mst@redhat.com, anisinha@redhat.com, 
- pbonzini@redhat.com, shannon.zhaosl@gmail.com, philmd@linaro.org, 
- zhao1.liu@intel.com, rad@semihalf.com, leif.lindholm@oss.qualcomm.com, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112f;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112f.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/2] Reapply "rcu: Unify force quiescent state"
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Yodel Eldar <yodel.eldar@yodel.dev>
+References: <20260217-alpha-v1-0-0dcc708c9db3@rsg.ci.i.u-tokyo.ac.jp>
+Content-Language: en-US
+From: Jim MacArthur <jim.macarthur@linaro.org>
+In-Reply-To: <20260217-alpha-v1-0-0dcc708c9db3@rsg.ci.i.u-tokyo.ac.jp>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=jim.macarthur@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -120,48 +108,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 19 Feb 2026 at 12:17, Igor Mammedov <imammedo@redhat.com> wrote:
->
-> On Wed, 18 Feb 2026 19:08:36 +0000
-> Peter Maydell <peter.maydell@linaro.org> wrote:
+On 2/17/26 06:34, Akihiko Odaki wrote:
+> I could not reproduce the alpha issue when I tried a bit while ago, but
+> trying on a more conventional setup (x86 without ASan where I usually
+> use Apple M2 with ASan) did a trick. So here is a fix for alpha and a
+> patch to reapply commit 55d98e3edeeb17dd8445db27605d2b34f4c3ba85. I
+> confirmed no failure occurs in 100 trials with the alpha fix.
 
-> > Please can you also add support for exposing this device
-> > in the device tree ?
->
-> It's possible,
-> but we probably should not enable it if acpi variant was requested,
-> to avoid confusion on guest side.
+Very glad to finally have a fix for this. Hopefully a suitable location 
+for the cpu_reset can be found. I just wanted to add that I've also run 
+the func-alpha-replay test 250 times with no failures whereas before I 
+was getting timeouts roughly 10% of the time.
 
-Why? Almost every other device on this board we advertise
-via DTB for device tree guests and via ACPI for ACPI guests.
-(The exceptions are things like the CXL handling that really
-only has an ACPI representation and can't be described in the DTB.)
+Jim
 
-> For Windows it doesn't really mater, for linux it does.
-> on x86 linux guest uses a quirk to disable native iTCO watchdog
-> in favor of WDAT one if later is present.
-> I assume quirk is not desirable so we should expose only a preferred
-> variant.
-
-For this Arm board there is no watchdog except the one you're
-adding in this patch, though.
-
-> > Can we have a command line option name that isn't ACPI
-> > specific, please? There's nothing inherent to ACPI about
-> > "I would like a watchdog device".
->
-> that is specifically asking for ACPI flavor being used/configured.
-> acpi specific option conflates 2 things:
->    1. watchdog device creation (of the board choice) with properties tuned for WDAT usage
->    2. how to expose it on firmware level (in this case ACPI WDAT table)
-
-Right, and I think that's the wrong way to approach this,
-at least for the virt board. We should either always create
-or allow the user to ask us to create a watchdog device.
-And then we should do what we do for all the other devices,
-which is expose it via both the mechanisms that we have
-for telling the guest about hardware (ACPI and DTB).
-
-thanks
--- PMM
 
