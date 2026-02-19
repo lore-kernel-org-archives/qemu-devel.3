@@ -4,87 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E93ACE9A048
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 03:26:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D13C2E9A04C
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 03:39:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vsufr-0002r5-Sw; Wed, 18 Feb 2026 22:25:55 -0500
+	id 1vsusi-0005d5-9G; Wed, 18 Feb 2026 22:39:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vsufq-0002qj-3O
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 22:25:54 -0500
-Received: from mail-pg1-x529.google.com ([2607:f8b0:4864:20::529])
+ id 1vsusd-0005cH-7A
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 22:39:08 -0500
+Received: from mail-pg1-x52d.google.com ([2607:f8b0:4864:20::52d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vsufo-0006V1-HX
- for qemu-devel@nongnu.org; Wed, 18 Feb 2026 22:25:53 -0500
-Received: by mail-pg1-x529.google.com with SMTP id
- 41be03b00d2f7-c70378ddaafso272011a12.3
- for <qemu-devel@nongnu.org>; Wed, 18 Feb 2026 19:25:52 -0800 (PST)
+ id 1vsusb-00027h-OP
+ for qemu-devel@nongnu.org; Wed, 18 Feb 2026 22:39:06 -0500
+Received: by mail-pg1-x52d.google.com with SMTP id
+ 41be03b00d2f7-c47ee987401so288514a12.1
+ for <qemu-devel@nongnu.org>; Wed, 18 Feb 2026 19:39:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771471551; x=1772076351; darn=nongnu.org;
+ d=linaro.org; s=google; t=1771472344; x=1772077144; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=xZtMqoBM+JC6W7HM8lhkJa3WjrReTwoR/27QiAoEVv4=;
- b=xtnm7ui27WX6EMsftbCiYtptlawXjVphO+HlcNQc/Q5nFsrvK3PY3G8fBnY1u3wi9p
- P0n0plz1C/lt1WqfjgDCPGXk4bsmiQqTEkxOQQQwL8LaztYhkbFE0yR1tXywncmBLP1Q
- oGU6/HgJFYoiPUEemuX/GOVRBuf/doDlAt11tFjDKQZjD4gYnRqw3P3v3CqtM8T5QTuP
- wJpTG9o7StTbOAnFipVHmany6oFC15aup18oU8gZWSLt0rcHqaiipXknZurVoUc7M1I2
- Ha3woaYv68QUQjAXwUU+oye1XDEtfDhGcxOMckoedCtOmGddL6XABR/ct6BrGtPKOusJ
- L4BA==
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=2kMJJp1Ay+vZ6BV9uMuIB+sg9ZroJe3b/ivrbyxfHXg=;
+ b=lCN15oDA00Qdf0HxoxOTY8u62nEJKNFgs54jLhkNPS6ijAty2C5A9Y+BsCjmNXjDZ7
+ FbT0mwBbXa3c18paMLevhoff9qgR/canr0uVtLbWBddDjj839jpcds3h+4jEBK1/HBMV
+ X5JB18gzzqk2aWJ4+X8LsR5E8eEpl8Pb/Wps3vC4XRUe99ydHW/bdRXDzZoS/sWSnTf5
+ OD/+HwpynYF3lH8mCI2y4Wq1wbNA9inrz4gzsx9m/rEJ56ririhPdForUFf/64PwNwsU
+ ReKv6wToJ0zUgKD8PkCdGTslLJNlALiEfosiuy5wLOZcjSJWNj3cUG2Eo+KetN0hWzZ+
+ jOxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771471551; x=1772076351;
+ d=1e100.net; s=20230601; t=1771472344; x=1772077144;
  h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=xZtMqoBM+JC6W7HM8lhkJa3WjrReTwoR/27QiAoEVv4=;
- b=DeZcFyKSBROXzBpkZzZxybRmpcnGMrgh8hLmlset8DFLkAMuD89cZQrOItjysI+Y4g
- MUFmIgav0U3rlS54d7vx9m4FTCWK5VGSSaTXbGhkW1iDAYO0/XKxTHGNAwdaQpQJ26WN
- 55TmJciGgqwqVFuz75344Jh3Zn6kow9iYi0hlH2XKACpxKVGuEtlmqTjI8NDwgotW/5p
- 6KwuLbHO4MUBt+o5ByioF4egtFy8F9ud4yYA9JPQ0bUgygG4M4KBJrSlnvyffqO5ux1G
- pp9htlsWnYn8lbubU44OOfZblPGJpa9uOjkylOs1csgwcL85OhnF5Z3PrL7RRuT7A9bb
- l2mw==
-X-Gm-Message-State: AOJu0YxJVhQDcNpFofeDZJir3/w+o8ftkom+FEYNCJ7CQSRIlUh98t2i
- NKFUaiQpmhhq9vE1ZMcu2QvG5tRDPgMogsNkIjVhbX4lYGKRweoWo+xIc7ZMOrnVOKO3A0bYNEs
- UIckeS4I=
-X-Gm-Gg: AZuq6aLYg/c2mUDeT7IoMbqQBY6pZ7WioPku+G6y3g755h40OqM/MNt8mIuK+tgbqnl
- P+ImbOSMOgITpeUUXfYdQjCa0LheCMsOgb279aLNPJNF8dZXknLmD0a3jiZTgXkXhz4W3r3xT7o
- ayzcUVZt9MjgLD7CHU98wI+zLgeDze+hoIja3i/pMih/sa0S3RHC9/unElhNTWVSmSQR5xBkLnx
- BDZSfSHFc2DPIq+kLKATduxDnNJhujj4ZA43ROq025dz/iSnYMtwgu90onIQd1McI4qxnAUPJym
- 8WlIOv+Q+NyslcGNFHlJEVXwyVGTN5VrDW6gHTIPB1PR9/YmKwQJnudQ1KAVG483x4q2BluFN4a
- EEvH6jFs34oPTgpBGTHdQOzrjBsmlj2LXLzjOAijXj1FcDbcH5t8FLa5/ue2d5ALlqulfGTVcox
- aFMqT8BUqJ4ofPgbpEEF8PyscCzsWC6VnnuINHqHKC/whxscUgut6x1xQE/xJOHkWokIPxbgQQJ
- XtoXlmCSE1V8zTrm+aTt3Y6IHFwim20Pr0f2EjjJD/pwW3NPs3BpJnTFaqwXHzqXUqQ
-X-Received: by 2002:a17:902:d2cd:b0:2a7:afb2:ce1c with SMTP id
- d9443c01a7336-2ad175b9a93mr176896385ad.61.1771471550840; 
- Wed, 18 Feb 2026 19:25:50 -0800 (PST)
+ bh=2kMJJp1Ay+vZ6BV9uMuIB+sg9ZroJe3b/ivrbyxfHXg=;
+ b=OAcIuw+JeNLdVRsnHDlz9mN5UhZNZkgi6Fjny1fexHU7H+4McGz+PiNjYfxWmsFxNZ
+ ugxYKNIlYPDMkXTUwQ1pRUQaSKMaGetD6yGjWvlDJe45WA4zJIGKehdNt/vs3N/OWLh/
+ 4l/c5wFhsgdSjcWpz8kGpSQ5XpD2ZNepi905RQDa0NeUxgOxT3NS1J2FhSXSBqZmklSG
+ cXKBx0eukHzlWjZ4m1f1sCYedmic8AL622g6m8IJRuWiQJ6A1fwNIrJPp0Ab3jL5Bm0K
+ UCvRA98fWIGBYc98kP4mCpMWkRZiwWaDZ6Xer2RmTHA0rxnt+DKBrMAVb1zTHGh3lBjA
+ EB9A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUqWUdtbIhqJQqpfdTMrDopUqdO8tZxc4c0r7FtLTpYH1i3F7GbLBElQO7C2eiKKM3GRAV/hgx+Yxp4@nongnu.org
+X-Gm-Message-State: AOJu0YyodZbQ0uoj7INPrO3Mp9JQ8YR1IQLKYhYhlHDYqXtsmoYATpdw
+ QJKZ0gBUDoQcw+qrWEUtCzl+xBOfdp4l3vOMwt3ccWJr+GqR+muckxSSqpdArpu6u5OxKM3X52v
+ BBJRei7g=
+X-Gm-Gg: AZuq6aL+M6sRmEp4TpH06csi476DxfGicBwilJF5DPvbbArttwvFvSnJP2aoIi0JUOB
+ D/hOIMyef7FylIa0LXAh84QKIi/rqAq+ehUB275SsntLJOAjT4+AdVBzCR712ChEQw9w3j142ac
+ bhydrHIhXW8Eu06Q1pbWyyN/d4d1Q1WMtIwI8kXjhId3kiPzG7ACSylNxoqG5x0Nx5mHIsx689N
+ 0SIcSA5tftvokxrfXXackiDAtrhhr0yg/deoKt+US7nmGIDFZ1agY1wmkJjekQP+InrPB4M1Hi0
+ AjN0z36pyy5sZ3sXrBvIJVD1kcyPajG8bkU2yXQvsduiIvTgnUkqUcQyWN6dkDn5s4/rUBzxo9H
+ 3N9d9DQI4pl9SAOzbQhQytfkhkvdqfR6xmU2HedxLVR4iWCxS2iu0CVKJzvVo15FQe4l/5gQVsB
+ f+R3F3wzH/R9ewjEfQ7mxk+c6cxvUXlzU+NrZflNwF+t6oH24soBCOv+azj4ZvQONMZM6d2hOCR
+ +0n51tU7Gpe2qwieLtB8LrUTchrLQLhz8jhjYYF7pNp9yoc0WF1D7bpdeXEAV3Xk4AH
+X-Received: by 2002:a05:6a21:489:b0:38d:ec17:180 with SMTP id
+ adf61e73a8af0-39517c6e7fbmr508415637.5.1771472344159; 
+ Wed, 18 Feb 2026 19:39:04 -0800 (PST)
 Received: from ?IPV6:2403:580b:742d:0:a224:e0c2:669c:b307?
  (2403-580b-742d-0-a224-e0c2-669c-b307.ip6.aussiebb.net.
  [2403:580b:742d:0:a224:e0c2:669c:b307])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2ad1aaf5506sm141679655ad.87.2026.02.18.19.25.48
- for <qemu-devel@nongnu.org>
+ 41be03b00d2f7-c6e52fe2e75sm13803232a12.10.2026.02.18.19.39.01
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 18 Feb 2026 19:25:50 -0800 (PST)
-Message-ID: <8ac70bf7-2856-48d0-8451-770bb35d27c4@linaro.org>
-Date: Thu, 19 Feb 2026 13:25:45 +1000
+ Wed, 18 Feb 2026 19:39:03 -0800 (PST)
+Message-ID: <118306d2-8c7f-4b8d-bba7-bf4529c3cc9b@linaro.org>
+Date: Thu, 19 Feb 2026 13:38:57 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 8/8] system/globals: Build as common code
-To: qemu-devel@nongnu.org
-References: <20260216213121.47122-1-philmd@linaro.org>
- <20260216213121.47122-9-philmd@linaro.org>
+Subject: Re: [PATCH 1/1] rust: use checked_div to make clippy happy
+To: John Snow <jsnow@redhat.com>, qemu-devel@nongnu.org
+Cc: qemu-rust@nongnu.org, Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+References: <20260218192444.658046-1-jsnow@redhat.com>
+ <20260218192444.658046-2-jsnow@redhat.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260216213121.47122-9-philmd@linaro.org>
+In-Reply-To: <20260218192444.658046-2-jsnow@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::529;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x529.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,24 +109,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/17/26 07:31, Philippe Mathieu-Daudé wrote:
-> Now that  all targets have the graphic dimension variables
-> initialized the same way, we can move them to the common
-> file unit, having them built once. Remove the now empty
-> globals-target.c file. The command line '-g WxH[xD]' option
-> is not changed and behaves the same.
+On 2/19/26 05:24, John Snow wrote:
+> When upgrading from Fedora 41 to Fedora 43 for CI tests, clippy begins
+> complaining about not using checked_div instead of manually checking
+> divisors. Make clippy happy and use checked_div() instead.
 > 
-> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
-> Reviewed-by: Pierrick Bouvier<pierrick.bouvier@linaro.org>
+> Signed-off-by: John Snow <jsnow@redhat.com>
 > ---
->   system/globals-target.c | 14 --------------
->   system/globals.c        |  3 +++
->   system/meson.build      |  4 ----
->   3 files changed, 3 insertions(+), 18 deletions(-)
->   delete mode 100644 system/globals-target.c
+>   rust/hw/core/src/qdev.rs | 14 ++++++--------
+>   1 file changed, 6 insertions(+), 8 deletions(-)
+> 
+> diff --git a/rust/hw/core/src/qdev.rs b/rust/hw/core/src/qdev.rs
+> index 145e20a984f..c4a7312168f 100644
+> --- a/rust/hw/core/src/qdev.rs
+> +++ b/rust/hw/core/src/qdev.rs
+> @@ -425,18 +425,16 @@ pub const fn period_from_ns(ns: u64) -> u64 {
+>       }
+>   
+>       pub const fn period_from_hz(hz: u64) -> u64 {
+> -        if hz == 0 {
+> -            0
+> -        } else {
+> -            Self::PERIOD_1SEC / hz
+> +        match Self::PERIOD_1SEC.checked_div(hz) {
+> +            Some(value) => value,
+> +            None => 0,
+>           }
+>       }
+>   
+>       pub const fn period_to_hz(period: u64) -> u64 {
+> -        if period == 0 {
+> -            0
+> -        } else {
+> -            Self::PERIOD_1SEC / period
+> +        match period.checked_div(Self::PERIOD_1SEC) {
+> +            Some(value) => value,
+> +            None => 0,
+>           }
+>       }
+>   
 
-
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+These conversions are inconsistent about the placement of divisor and dividend.
 
 r~
 
