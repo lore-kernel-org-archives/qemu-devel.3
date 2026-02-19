@@ -4,106 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB451E9A03B
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 09:38:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9AEFDE9A048
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 09:40:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vt0UD-0007n2-6u; Thu, 19 Feb 2026 04:38:17 -0500
+	id 1vt0Vi-0008Tf-Fy; Thu, 19 Feb 2026 04:39:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vt0UB-0007mf-Lg
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 04:38:15 -0500
-Received: from mail-yx1-xb12a.google.com ([2607:f8b0:4864:20::b12a])
+ (Exim 4.90_1) (envelope-from <xadimgnik@gmail.com>)
+ id 1vt0Vg-0008TM-Tt
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 04:39:49 -0500
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vt0UA-0005k9-5A
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 04:38:15 -0500
-Received: by mail-yx1-xb12a.google.com with SMTP id
- 956f58d0204a3-649e97f1e99so589848d50.2
- for <qemu-devel@nongnu.org>; Thu, 19 Feb 2026 01:38:13 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1771493893; cv=none;
- d=google.com; s=arc-20240605;
- b=XpUeA9eAdvSWu+WIx32cxUmjO/wD8U3mr+AfivPY+EG+NFr7ye9cLS9PwvEUT2KMfJ
- 1x+rjaO6jERxfOgmZb9HHXOsI/eDriExb5ZznRmSjcQsT8ZZb5VFSYMcqC68M6IdqB3r
- 1ySsBEcVDyIisa2dJu9L1Yl+U2RbC8Olyf6SQTU+HDqy0i9c8m/aMD0EcrkUm+OCFZfx
- ycB14QI0JC7Ni5KADyOV3bXuWpjVmKcWz5d0HGSO0FtU8sK2RUwsZUYARFGnGmChcfBM
- WZkvEvv1f5H2N81CX023SJu7CxDoR3D0ooZyI0L9HnXWksHAq2qKidzaBpKDL9l08xBk
- JT/Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=gpuxha4eRNUboHr/8D8+pnu56CeGJjt6qpHHARu8F6s=;
- fh=i4wshauNREuUPUWCN+OkRWXFCVYoSMN0/GGwAmMe7Uk=;
- b=Jnyx61lMO5MxWv192wBGoaxeQhQq+rpcJMXoO2cKqMoedNZDR2IH2kFDnUZ6zQyPjP
- pGkOdMbfHMsB72bLoPvYoRFa+TWNaMbNxRNyUuYrdIAlBLcouGI2heSQoJEjuGxFgFZm
- Hi/3m1Y5D982dTWYZrK2uYx9bx3K+gYO11hKUa8HvzLaquBeg30gVH6GCA7YQwHLhdsd
- npDIiZYeTlZ5KmCLVASca852Xl8XHNbYxEXDaJyzXjeVF43rJstxqB3017m02CawKmw2
- tt2bNVkYVZRfX8KiZdG4I/M/l9jZ0fhcX4Pf9JtY4s1brkNBp+1LFot3ReMSozF0foD6
- grXw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <xadimgnik@gmail.com>)
+ id 1vt0Vf-0005q2-8q
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 04:39:48 -0500
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-4833115090dso7121035e9.3
+ for <qemu-devel@nongnu.org>; Thu, 19 Feb 2026 01:39:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771493893; x=1772098693; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=gpuxha4eRNUboHr/8D8+pnu56CeGJjt6qpHHARu8F6s=;
- b=cEXupcjhTEV3fblp62VxNHmBEQB/nFbV6XVCVl/9y2lgwCVLzTUoSarYQbDW7ClcbS
- YcaWGsBvAaqnsIWVd/ufrYq3ehV98OndSTjnPzHLrA/VED9wb/Z2XnuTwe/UJCtrNXuw
- N3LBYKk2GiRnXPDFoaKf+rVzE+zBOscbUqf9hroWSAKQr3DPKIEfLQlKtgn5RpfQ77RM
- W1TqG7LUT0e5gxkkwbReQ6/uU6L+U+4Q68niN00pnz2t/SCskvoPn5heco41MNjF8F2E
- bYQtzmKtAGNfjzA+Y521WoYBXX/yDlYtshyLvB1ZJQ7h5rc/5TnQZ6IxKneWZon/60GF
- 9QPA==
+ d=gmail.com; s=20230601; t=1771493985; x=1772098785; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:subject:user-agent:mime-version:date:message-id:from:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=0Qwt8Tz8tB4Obh3dtJ6HDehOvnoNxAwIhhD+tN8oggA=;
+ b=iG0gNZbHtwKR9Mpr6f/7dRp7667uuAURkW1VRQ7c2cMYuXNlwu2e8eSCeOrkP/vKaS
+ 9ZM2ORK/QKjy8hgZyG0MM43wO8CkgWQptEy2LBUHL+HVi70w6j+h34W3+MPtnrbk/5bM
+ kWMAlBmf4ABr2s56MhLseulLLAK0G/0ixyrR3sVrxCEFDD+dNc+ndPxfWv+L3WX7pZTM
+ SJC6froTyMyern88KYLpzji7ZtbfVy0hloSdKXI/wFeND4PHVL+MRMNerdA6SE537bg9
+ 0FFY7HS+hBOcJ7rlSDz6wD05XTFPoBBUfJlIbwBwkDnZ4f4SvQg1C194GsfibMAmLb1j
+ eMbA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771493893; x=1772098693;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=gpuxha4eRNUboHr/8D8+pnu56CeGJjt6qpHHARu8F6s=;
- b=FLzTSYGaRmAcL6x1xSwY67PbVgR0mjqd4zFsnk3jBbEymMku8sQ90WqVrlnB8d8X95
- 5NgWnA2OLqrEEmh667dJWZXiyU6riCXXwqivu1UsICjJvpTTK+WVdEt3MIcZV9iXZaSY
- 7/o7FGg/X5sfQyO4T1RXvVPs5JDqYV3kimxoandgcxloj3lTSUHOGpOS6AK/QQIHgXJM
- 1unktg7OYrFtFZJOHUVGHKsRzxkKfXAAVpPHubfiM7pjCKD7/dv3mWobl5narKqa3JAg
- S8P+qvpGpGrdS0bUliNDNxkwOzTJttsZ+43BFSTJqBBFMGw3ZkCrcgnSUgQesevtIsbC
- EfWw==
-X-Gm-Message-State: AOJu0YyhbTMQDAeXYNOl1cDrlICLEaKeGn6U89C2Evcb0SfktYUqP8Qb
- My51bEWCyxBiRSCfFlrqUVB1OiBNo7pCUH/smadbmoYt5/e6XMG4Mdvi6dLsjly4T65XlhZxpJC
- oLuAUVuQzz0b/k+zk8TOQvij0Yl/34T+F+ZiOODxgfg==
-X-Gm-Gg: AZuq6aL4WjwWknwqwcuu8H0FE+hzqCncGLST2+/CDjXOp9BYmtiCT6PX5lhHueWEXq5
- IRRWxPlpybMWpWx3HJdrw9p/KIzW5CjUhGjwNZx3+TpAyLQ34JY6LzD+TCXXJlaUdZYYFfzNkFi
- CrsJw1woTx2JrJFuZrS8nVP7/C5dUNMSPSp2go54P+kwAjdIQK+AHKbW/OmfXTwkLdmw7hFXDxd
- hLiuafn46sTjQGuCWkQfPOQHy3CNVY+7PDMeXpgWG8wgNGSwyt8qC+VNadGiQHCxWzRQIoIqlXW
- PF4NmWZz5ldDD3etv5DdPT7aCRWwI36nfMUoOwYivTTU4Qz5vKibv2LJXpW3q/QXvbErobf5ecN
- fmQ==
-X-Received: by 2002:a53:b6d1:0:b0:64a:d607:30d7 with SMTP id
- 956f58d0204a3-64c614c5a1emr1352603d50.78.1771493892946; Thu, 19 Feb 2026
- 01:38:12 -0800 (PST)
+ d=1e100.net; s=20230601; t=1771493985; x=1772098785;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:subject:user-agent:mime-version:date:message-id:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=0Qwt8Tz8tB4Obh3dtJ6HDehOvnoNxAwIhhD+tN8oggA=;
+ b=ZChhGiDmdcCRRZ5PiqmCQKRJqIrYDRr/VZtGz/hqx78OsGZtiCPHmDXne+j/LTKUyn
+ jwjcKHZLPWxVlDerH6To8uwR344jkWC97vl9RTlou8X6jxEtW8+LZwcxpE9uyYH35jSP
+ qfVUCAr47RQN77GVbja/uinCDB0Kibo1jmHIoVPrMD8jyGlxkLD5jmRQdeFu8Q7zJ7U2
+ JBq0VNBYcO24YWlroEKVtO1dWnzh03yWzeg852h8SEI3N4UaFZKnkn63vBC7Tq8vHIAG
+ dtSshq+qzcqxHexfM3/SZvNHoaqjtucGBogtHwXRLckpQ11VGbqdKPKz33I+P2Eh8hl4
+ 6OGw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXPVs7q1iUffPWW3Nnv5KqV6p835DW99y3E9YmpN/Je2Ho8sTNTginiVVOlVwzoKmjilO2+0xucCJwS@nongnu.org
+X-Gm-Message-State: AOJu0YzNe8o73MndDrPP/K+firaWfJoifI+0EY3N0jlwoHi72phb5BD9
+ dWGXVUrI2xRklUuCeKr6n1NGWaugWAKNOnUlTrPhlowBxSAe6naz557o
+X-Gm-Gg: AZuq6aL2fp9qCv/t8SNCBJHa+hkwnm3QdZ+xP5YT9hclEdn8kcAQSfa9X+2sxmpDrc8
+ ToLBjmtpM148U9LHj69mTuABI0VefW227mngPymK8cA9Akl4Caerbf0QDltoCOE7UIRu5cUlZ73
+ Orz7RCp0jwWxJ+kP548jHiuQyCwz27nf9ZHxp0BoLN+NiVNpl19fRwos1bChHZC3IGeLJwEGtSf
+ KG2BaOmqkKVCHI29DS9hlCeMt5kzXwTeEhdnocAoYBztFxLyU0+w4FMdwLa4pCFZ+0T2kmEA9bJ
+ kiaBoQEGEElV0B5u0ThSL1Bwxyz47+hZEA+mGAwqiR6nMYnlIJAOIrr/tDJETm9bCH9bceQfbsH
+ jzxqNjaDWLGaeZ1M9R+STiI2y3Masm7rp+qUdYsebW3OEJi0gZXKlF+vPbEDeT0KI1FuSExW0rH
+ GWVHYHbFeKZdQpUkYkwXvu45dYAtusWw==
+X-Received: by 2002:a05:600c:3e14:b0:47a:935f:61a0 with SMTP id
+ 5b1f17b1804b1-483989ca52emr75382465e9.0.1771493984819; 
+ Thu, 19 Feb 2026 01:39:44 -0800 (PST)
+Received: from [10.24.66.212] ([15.248.2.236])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4837a5d562esm336851535e9.15.2026.02.19.01.39.43
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 19 Feb 2026 01:39:44 -0800 (PST)
+From: Paul Durrant <xadimgnik@gmail.com>
+X-Google-Original-From: Paul Durrant <paul@xen.org>
+Message-ID: <3b4b7b7b-7fcd-46ce-bdcb-cd1a30cf5276@xen.org>
+Date: Thu, 19 Feb 2026 09:39:43 +0000
 MIME-Version: 1.0
-References: <20260219040150.2098396-1-pierrick.bouvier@linaro.org>
-In-Reply-To: <20260219040150.2098396-1-pierrick.bouvier@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 19 Feb 2026 09:38:01 +0000
-X-Gm-Features: AZwV_QgPxQm_4WHz5YVXddgB8CRBzKT1jW4-rQRItT93j70YpskswASSwVfG8rI
-Message-ID: <CAFEAcA__tnvy9dUUPrEG8jynGGSp9iz0H7Q2MFGdw4--NDH-ng@mail.gmail.com>
-Subject: Re: [PATCH v4 00/14] target/arm: single-binary
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org, kvm@vger.kernel.org, 
- Richard Henderson <richard.henderson@linaro.org>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, anjo@rev.ng, 
- Jim MacArthur <jim.macarthur@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12a;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12a.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 27/34] kvm/xen-emu: re-initialize capabilities during
+ confidential guest reset
+To: Ani Sinha <anisinha@redhat.com>, David Woodhouse <dwmw2@infradead.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>
+Cc: kraxel@redhat.com, kvm@vger.kernel.org, qemu-devel@nongnu.org
+References: <20260218114233.266178-1-anisinha@redhat.com>
+ <20260218114233.266178-28-anisinha@redhat.com>
+Content-Language: en-US
+In-Reply-To: <20260218114233.266178-28-anisinha@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=xadimgnik@gmail.com; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,19 +107,126 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 19 Feb 2026 at 04:02, Pierrick Bouvier
-<pierrick.bouvier@linaro.org> wrote:
->
-> This series continues cleaning target/arm, especially tcg folder.
->
-> For now, it contains some cleanups in headers, and it splits helpers per
-> category, thus removing several usage of TARGET_AARCH64.
-> First version was simply splitting 32 vs 64-bit helpers, and Richard asked
-> to split per sub category.
+On 18/02/2026 11:42, Ani Sinha wrote:
+> On confidential guests KVM virtual machine file descriptor changes as a
+> part of the guest reset process. Xen capabilities needs to be re-initialized in
+> KVM against the new file descriptor.
+> 
+> Signed-off-by: Ani Sinha <anisinha@redhat.com>
+> ---
+>   target/i386/kvm/xen-emu.c | 50 +++++++++++++++++++++++++++++++++++++--
+>   1 file changed, 48 insertions(+), 2 deletions(-)
+> 
+> diff --git a/target/i386/kvm/xen-emu.c b/target/i386/kvm/xen-emu.c
+> index 52de019834..69527145eb 100644
+> --- a/target/i386/kvm/xen-emu.c
+> +++ b/target/i386/kvm/xen-emu.c
+> @@ -44,9 +44,12 @@
+>   
+>   #include "xen-compat.h"
+>   
+> +NotifierWithReturn xen_vmfd_change_notifier;
+> +static bool hyperv_enabled;
+>   static void xen_vcpu_singleshot_timer_event(void *opaque);
+>   static void xen_vcpu_periodic_timer_event(void *opaque);
+>   static int vcpuop_stop_singleshot_timer(CPUState *cs);
+> +static int do_initialize_xen_caps(KVMState *s, uint32_t hypercall_msr);
+>   
+>   #ifdef TARGET_X86_64
+>   #define hypercall_compat32(longmode) (!(longmode))
+> @@ -54,6 +57,30 @@ static int vcpuop_stop_singleshot_timer(CPUState *cs);
+>   #define hypercall_compat32(longmode) (false)
+>   #endif
+>   
+> +static int xen_handle_vmfd_change(NotifierWithReturn *n,
+> +                                  void *data, Error** errp)
+> +{
+> +    int ret;
+> +
+> +    /* we are not interested in pre vmfd change notification */
+> +    if (((VmfdChangeNotifier *)data)->pre) {
+> +        return 0;
+> +    }
+> +
+> +    ret = do_initialize_xen_caps(kvm_state, XEN_HYPERCALL_MSR);
+> +    if (ret < 0) {
+> +        return ret;
+> +    }
+> +
+> +    if (hyperv_enabled) {
+> +        ret = do_initialize_xen_caps(kvm_state, XEN_HYPERCALL_MSR_HYPERV);
+> +        if (ret < 0) {
+> +            return ret;
+> +        }
+> +    }
+> +    return 0;
 
-Thanks, I've applied this to target-arm.next. Patchew says the
-last patch here is the same as it was in v4, so I've copied
-the R-by tags from Richard and Philippe across.
+This seems odd. Why use the hyperv_enabled boolean, rather than simply 
+the msr value, since when hyperv_enabled is set you will be calling 
+do_initialize_xen_caps() twice.
 
--- PMM
+> +}
+> +
+>   static bool kvm_gva_to_gpa(CPUState *cs, uint64_t gva, uint64_t *gpa,
+>                              size_t *len, bool is_write)
+>   {
+> @@ -111,15 +138,16 @@ static inline int kvm_copy_to_gva(CPUState *cs, uint64_t gva, void *buf,
+>       return kvm_gva_rw(cs, gva, buf, sz, true);
+>   }
+>   
+> -int kvm_xen_init(KVMState *s, uint32_t hypercall_msr)
+> +static int do_initialize_xen_caps(KVMState *s, uint32_t hypercall_msr)
+>   {
+> +    int xen_caps, ret;
+>       const int required_caps = KVM_XEN_HVM_CONFIG_HYPERCALL_MSR |
+>           KVM_XEN_HVM_CONFIG_INTERCEPT_HCALL | KVM_XEN_HVM_CONFIG_SHARED_INFO;
+> +
+
+Gratuitous whitespace change.
+
+>       struct kvm_xen_hvm_config cfg = {
+>           .msr = hypercall_msr,
+>           .flags = KVM_XEN_HVM_CONFIG_INTERCEPT_HCALL,
+>       };
+> -    int xen_caps, ret;
+>   
+>       xen_caps = kvm_check_extension(s, KVM_CAP_XEN_HVM);
+>       if (required_caps & ~xen_caps) {
+> @@ -143,6 +171,21 @@ int kvm_xen_init(KVMState *s, uint32_t hypercall_msr)
+>                        strerror(-ret));
+>           return ret;
+>       }
+> +    return xen_caps;
+> +}
+> +
+> +int kvm_xen_init(KVMState *s, uint32_t hypercall_msr)
+> +{
+> +    int xen_caps;
+> +
+> +    xen_caps = do_initialize_xen_caps(s, hypercall_msr);
+> +    if (xen_caps < 0) {
+> +        return xen_caps;
+> +    }
+> +
+
+Clearly here the code would be simpler here if you just saved the value 
+of hypercall_msr which you have used in the call above.
+
+> +    if (!hyperv_enabled && (hypercall_msr == XEN_HYPERCALL_MSR_HYPERV)) {
+> +        hyperv_enabled = true;
+> +    }
+>   
+>       /* If called a second time, don't repeat the rest of the setup. */
+>       if (s->xen_caps) {
+> @@ -185,6 +228,9 @@ int kvm_xen_init(KVMState *s, uint32_t hypercall_msr)
+>       xen_primary_console_reset();
+>       xen_xenstore_reset();
+>   
+> +    xen_vmfd_change_notifier.notify = xen_handle_vmfd_change;
+> +    kvm_vmfd_add_change_notifier(&xen_vmfd_change_notifier);
+> +
+>       return 0;
+>   }
+>   
+
 
