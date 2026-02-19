@@ -4,115 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CA83E9A03B
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 10:31:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1505CE9A048
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 10:31:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vt1It-0005Ii-TZ; Thu, 19 Feb 2026 05:30:40 -0500
+	id 1vt1Jl-0006TS-Go; Thu, 19 Feb 2026 05:31:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vt1IV-0005Fk-DO
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 05:30:18 -0500
-Received: from mail-yw1-x112d.google.com ([2607:f8b0:4864:20::112d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vt1IQ-00051X-5z
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 05:30:13 -0500
-Received: by mail-yw1-x112d.google.com with SMTP id
- 00721157ae682-794719afcd4so7520567b3.1
- for <qemu-devel@nongnu.org>; Thu, 19 Feb 2026 02:30:09 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1771497009; cv=none;
- d=google.com; s=arc-20240605;
- b=DVW0Flow9rccuDa09T8fwmi+7RM9CaNpV7jN2f89zvcW38I5I4JvpBP622X6XdfTDY
- Kv4DJodvgaq9f4pzo5OWSPXwuz3sFdleKottFJMP2kuErVtPePhVsezuin4iktK5EngK
- OK+jMsGjEDXpYdr/MYUUED8+1du41C9egdokHPAlb0pIFxiuXbhilWrjmBoSQQ/wd4Z2
- Ow8Wf+19g/2GvZx6uesO9q8VxZkNELuzS3h7all5Hy4S//pDt0BpWttdO9+7V1vChkVS
- NuJsxYezUOjzR0tluJn07bPCn9lC6rqb7dAMqyzONJlyU+ml3y242eEDZEOCoiT/RBA3
- OWPg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=+ebn6tOBtZqV9fwgzMapnao6wcIVQllIFXvo/tE4RGk=;
- fh=5Q281T3cc8WUg4epsyFmyhkHOeoXoHkugv2URdONmqQ=;
- b=FweGI3AbfuGf7AnxW40xTJ7Mu8++auf6FnC9sHUdvP4Y6BL/V1Ih0Ws5vcxwoBKD8p
- 0K8EoeQHBW/IL/xDhtrFihoxHjvTDwr2eHyONtQvuaeTrJozxLClv0fJizoBexby2+e9
- 8IYmXOgPkHXxJwvrffwly7JxEjCvslF7gvDUmxq6xANfmNvgl2ARkt+UehUplIGpJyJS
- sOyhPwmjMgvcWme9CwU/4UoviAl02CzRNYAifBET2iGAplUreYwUVN/P3gdogNupv+SW
- fZSGe1UK2uBjYKCu7mWLiacVH3s8CVSC2zhitSb565UDbxywCvRSeWwYBxGMbpoPoiEB
- ZcIg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1vt1Jd-0006SV-6L
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 05:31:26 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1vt1JZ-0005pw-Ou
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 05:31:24 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1771497080;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=LyQNA8MfxC+gdRaJejrXp5+qJYC1z7cZ1QgL2HRqhmA=;
+ b=a8rlNmhH6epL/5YdrPiWJnlZZG03pCBk9McpUxZfc6g8Lasj3UJqaB2Z6ZuzNqb5RsQhKz
+ ctQHMC4scPzFM2yzeNpjB2shPfD/SXa5lodbqXFe71wBGRTSB/u/TYJpc+DFSy824HGNS5
+ SmykSw5inTsQuj5ed/mtg/u4VVVnKAg=
+Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com
+ [209.85.214.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-9-BuIAEaYROIay_3UZ2QDx1w-1; Thu, 19 Feb 2026 05:31:18 -0500
+X-MC-Unique: BuIAEaYROIay_3UZ2QDx1w-1
+X-Mimecast-MFC-AGG-ID: BuIAEaYROIay_3UZ2QDx1w_1771497078
+Received: by mail-pl1-f197.google.com with SMTP id
+ d9443c01a7336-2aad6045810so7954255ad.3
+ for <qemu-devel@nongnu.org>; Thu, 19 Feb 2026 02:31:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771497009; x=1772101809; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
+ d=redhat.com; s=google; t=1771497077; x=1772101877; darn=nongnu.org;
+ h=to:references:message-id:content-transfer-encoding:cc:date
+ :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=+ebn6tOBtZqV9fwgzMapnao6wcIVQllIFXvo/tE4RGk=;
- b=LACkprfClg4RZ55oNDnluo7+3zvj/BeK6JYiS87cJsltkiCWFbvw/UTum9BTsk/wCg
- Ltl713eaGQVjao0FSs0qVYWbOnm4fGwYF+hOTUptAk8XonNYHZS9oSJAKRPO59nDIdhE
- d2wMq6gPn1HAXbqDtogu8r/jIJwmZpySvweSvloehXlA0XTEY158IiKhyWNX96Eb4bX9
- /z7LKeoymYXX1ylvw8fFkEHNr8YMSzH/rEntZBqo1tZYDdvENzmGT9v7ZNzBePk6R3yL
- xL6yAV2Fwxxdu6WZcrSgu/0uOWaG0RyMUi4oJ8es2sTu0U6lNIsq63fjBIFjlCFGb6kG
- MmEQ==
+ bh=LyQNA8MfxC+gdRaJejrXp5+qJYC1z7cZ1QgL2HRqhmA=;
+ b=M9aItRZfo1HRlh8cdsUhkyKFYs3gERe2Hiy/g5hX4vv5Eh3HA9YNS7OmKe1++e5KIz
+ 3fmIgIBziTNAoXS9iXYinBuM5WNYwg8lujP/uHnAp6h0KDETzHm4g7KxW4oV0jn+vQvp
+ nl+G9/C+lHe8pC3wf4t7ZKog1PTs9my2MnjmvAeUe7rGj0lQHyZntfYm5AXkIHKWrXm7
+ gKlySHZ38QiA2dPOFMI67P0R4F07Z/5FxHVnFzkKti4UiLD5asrTzvJIHCFDgaAQ88pX
+ u9bw8mEeiSRlyw5muRxk3W5/yQDa5PnWe++HX34W9/p0nzGRWSsExCzwd9BKe/CpaCF4
+ x4qA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771497009; x=1772101809;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=+ebn6tOBtZqV9fwgzMapnao6wcIVQllIFXvo/tE4RGk=;
- b=GL4sNMGTBUi7YVKJHaVBDuaCHDjYfyCXYVs/S+RC34SSQ6CCMjtpGg+p7nlmrdta+u
- l8cUOagbwcvHamcbuD5gZZfXk7yGNbiB/bKgYN1hs2U0dIj4/KEFHAjdTnfbiWm/KihQ
- z8Y06hhbZ9WMQjBsExbuIIJVklyQJYr9DTtqO/TmpFGNy9pK6bZN/Qixfusa9dQA+Bgq
- 5785sFjPeWwPNGJ8ffWx4k/d9+0z7mRJjHIV4pR1P5fyOxcspyOtrdqcbkFKwPz+yfcF
- L7ExKlUSEAQyykHZFLY1cs3hN+LFFM/qvyoGmDq957y1HxH59yQtbV4aLuurG2xS7O0Z
- Lt6w==
-X-Gm-Message-State: AOJu0YxBnJ2nBk2EvuLUkZ5zOr3AYN85YQulu86zDUlVWwJAxqwtGU23
- YcsaE8Mnun6FmLX4wLp4kLQiKauVHESc1JwDmIicX04WDozNFzjtyt8vT9wBR0wrSqnnCc5OL8x
- GIaEP/Q7YoD0SjBzDO+xkiI/D9OpiHmUsqlWzz+5KPA==
-X-Gm-Gg: AZuq6aIRoG977poCRJ3VxyDgOU9maKfSIU+Zu/KBjq1UeBT4/noCAjL61I68FM7PH+z
- bvHRl9xofHho4ffUXwb2KpoJIeDx3CSRVRl06TZ/JaOtofnO73UsawksZu4L1NP12AK+HhR6F+k
- d4OZTx2zzONnQ3pdO2K1oLlkG8yYGBK9x4Wp8XKai+JUnAWU4F6eQDjEw+O0vJgB9X/ZSOA8zi9
- OfoNt6Ns4gxoQ6I5XjUaloGZFqB6w6Vco/QN+XubT/8C50pPdghJWyefzhTxUjF5FRCHrMyH0PW
- IesMB0um3YHz4FQP8RMGMmHviOXUVyUluDjtDr51lh8JjsWOmiZ1zsh7MEsvZ19ZmD8=
-X-Received: by 2002:a05:690e:d58:b0:64a:d35e:d356 with SMTP id
- 956f58d0204a3-64c198c72e3mr14198316d50.30.1771497008664; Thu, 19 Feb 2026
- 02:30:08 -0800 (PST)
-MIME-Version: 1.0
-References: <20260211152508.732487-1-berrange@redhat.com>
- <20260211152508.732487-27-berrange@redhat.com>
-In-Reply-To: <20260211152508.732487-27-berrange@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 19 Feb 2026 10:29:56 +0000
-X-Gm-Features: AZwV_Qg_axfkx92o_MWe_VehT43BwlY0PdtMBFZkMa4fmyQ0hFJFoyCHoR5sUdk
-Message-ID: <CAFEAcA-08J-_dn22s858QtUPV32VM4OuAEgBV-WdmGGxvJSu0w@mail.gmail.com>
-Subject: Re: [PATCH v6 26/27] util: add support for formatting thread info in
- messages
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, 
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Stefan Weil <sw@weilnetz.de>, "Dr. David Alan Gilbert" <dave@treblig.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, devel@lists.libvirt.org, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Hanna Reitz <hreitz@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- qemu-block@nongnu.org, 
- qemu-rust@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
- Markus Armbruster <armbru@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>, 
- Christian Schoenebeck <qemu_oss@crudebyte.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+ d=1e100.net; s=20230601; t=1771497077; x=1772101877;
+ h=to:references:message-id:content-transfer-encoding:cc:date
+ :in-reply-to:from:subject:mime-version:x-gm-gg:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=LyQNA8MfxC+gdRaJejrXp5+qJYC1z7cZ1QgL2HRqhmA=;
+ b=qbzBJ4tqgfCTCVeI5ts373OWqGPLm519g4NQ3NcTmiTo8QvFU9865LVVl5uWJEofr6
+ dhNPUwYouW3HT8SNp+HHV9rQv8wo6XvK4BgSSiFGa4JU2BDCsHfR82JdvZ/XXD8Fs9jd
+ ZccGP1vXwkL4afKSHr3zxGhMTF8kODVNLS2zAgXWUnICfRnhK93hOrRGcAagtCEyLwTr
+ GqCstGFBTIz5SgFcaOi3CJANiet9jlD9hkxeuE4vQFIV0HC9sINSjkYNAuxUgZAyoCr2
+ 6g9Qitym6EeJxW6V+S28d0HtZkNRIITsvj5hmw+cjkkDNfIItrMq5RYhsx82axFCotxQ
+ 9djw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXIMcIK1gL5hD1rz7fKi69KWRdmZnWqcBZhA82KSiCym/UQIJEnr8RhjpWbbcmWOouYCGSKEIAaEQ7P@nongnu.org
+X-Gm-Message-State: AOJu0YweOPFciH3PN0MfPTxOH2NIf9sxOYH8IHCuCzH0zXylfvDfXF1x
+ d2Z7dfvV9EWM3/EBt6fLXEVv0Io6pNhePCgk07j494UYxFnDBbvT3KunWzdkfa7Ha676iXgHoWh
+ C6sDz6fJ9HzoS8QUVrhmomNaJR6bkJMIKPcg8Vov0PzBa9y1gqcsaEmxcCVL7Exim
+X-Gm-Gg: AZuq6aJ2sN8TtGBF3Oiji+uNfzGpg/niHkC7qC6gn0zztIS20Xj5pAxZ6W78+JLRZup
+ 61whogoGXmHklR9/EMsoVW2H/XS0joTok7pjB9bimJApgIZM/HkrZ7tW0REgR6fnMuC4zvxMFcz
+ nslgzARml5Ma/AkIR0rOE+ZAPAXOD0JKbqNFO6EUFN6G8yuBjyoCQKoS56cUiFJgbwpYxMqtKll
+ cPKeUYcB2leOextNLFVJr0QB+hxsxEfkJ3Qm+aaeAbSpQ8lSe0A/ryRarEg1wE8g3jAQKjg8x71
+ NypD0JbBfr52a4Q8VmCE3XVmbrSP6WMNjB94HpgMRaGqNPj+F5OWRCHUwdmp/G68j2tZOI4xfi6
+ SVroe45Hp7G98uDSlcgjAgp/eKzVUF+Bj8UZTU9Ej6QbNTRP/ve5xxr4UO6ZDI9YdDhw=
+X-Received: by 2002:a17:903:2a85:b0:2aa:e3f7:a945 with SMTP id
+ d9443c01a7336-2ad50fb5db7mr45393415ad.49.1771497077482; 
+ Thu, 19 Feb 2026 02:31:17 -0800 (PST)
+X-Received: by 2002:a17:903:2a85:b0:2aa:e3f7:a945 with SMTP id
+ d9443c01a7336-2ad50fb5db7mr45393105ad.49.1771497077034; 
+ Thu, 19 Feb 2026 02:31:17 -0800 (PST)
+Received: from smtpclient.apple ([117.99.83.54])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2ad1aaeab38sm157285875ad.82.2026.02.19.02.31.14
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Thu, 19 Feb 2026 02:31:16 -0800 (PST)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81.1.4\))
+Subject: Re: [PATCH v5 27/34] kvm/xen-emu: re-initialize capabilities during
+ confidential guest reset
+From: Ani Sinha <anisinha@redhat.com>
+In-Reply-To: <3b4b7b7b-7fcd-46ce-bdcb-cd1a30cf5276@xen.org>
+Date: Thu, 19 Feb 2026 16:01:02 +0530
+Cc: David Woodhouse <dwmw2@infradead.org>, Paolo Bonzini <pbonzini@redhat.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ kvm@vger.kernel.org, qemu-devel <qemu-devel@nongnu.org>
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112d;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112d.google.com
+Message-Id: <793B549F-F866-4BF5-ABAF-A0537BA8713B@redhat.com>
+References: <20260218114233.266178-1-anisinha@redhat.com>
+ <20260218114233.266178-28-anisinha@redhat.com>
+ <3b4b7b7b-7fcd-46ce-bdcb-cd1a30cf5276@xen.org>
+To: Paul Durrant <xadimgnik@gmail.com>
+X-Mailer: Apple Mail (2.3826.700.81.1.4)
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=anisinha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.043,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -128,24 +128,144 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 11 Feb 2026 at 15:29, Daniel P. Berrang=C3=A9 <berrange@redhat.com>=
- wrote:
-> After:
->
->   # qemu-system-x86_64 -object tls-creds-x509,id=3Dt0,dir=3Dfish -d 'trac=
-e:qcrypto*'
->   qemu-system-x86_64: (772366:main): qcrypto_tls_creds_x509_load TLS cred=
-s x509 load creds=3D0x560db818e080 dir=3Dfish
->   qemu-system-x86_64: (772366:main): qcrypto_tls_creds_get_path TLS creds=
- path creds=3D0x560db818e080 filename=3Dca-cert.pem path=3D<none>
->   qemu-system-x86_64: (772366:main): Unable to access credentials fish/ca=
--cert.pem: No such file or directory
 
-Even more output enabled by default that is pretty useless for most
-uses of tracepoints and debug logging :-(
 
-Please can we have this stuff all off-by-default? People
-who want this extra info can enable it.
+> On 19 Feb 2026, at 3:09=E2=80=AFPM, Paul Durrant <xadimgnik@gmail.com> =
+wrote:
+>=20
+> On 18/02/2026 11:42, Ani Sinha wrote:
+>> On confidential guests KVM virtual machine file descriptor changes as =
+a
+>> part of the guest reset process. Xen capabilities needs to be =
+re-initialized in
+>> KVM against the new file descriptor.
+>> Signed-off-by: Ani Sinha <anisinha@redhat.com>
+>> ---
+>>  target/i386/kvm/xen-emu.c | 50 =
++++++++++++++++++++++++++++++++++++++--
+>>  1 file changed, 48 insertions(+), 2 deletions(-)
+>> diff --git a/target/i386/kvm/xen-emu.c b/target/i386/kvm/xen-emu.c
+>> index 52de019834..69527145eb 100644
+>> --- a/target/i386/kvm/xen-emu.c
+>> +++ b/target/i386/kvm/xen-emu.c
+>> @@ -44,9 +44,12 @@
+>>    #include "xen-compat.h"
+>>  +NotifierWithReturn xen_vmfd_change_notifier;
+>> +static bool hyperv_enabled;
+>>  static void xen_vcpu_singleshot_timer_event(void *opaque);
+>>  static void xen_vcpu_periodic_timer_event(void *opaque);
+>>  static int vcpuop_stop_singleshot_timer(CPUState *cs);
+>> +static int do_initialize_xen_caps(KVMState *s, uint32_t =
+hypercall_msr);
+>>    #ifdef TARGET_X86_64
+>>  #define hypercall_compat32(longmode) (!(longmode))
+>> @@ -54,6 +57,30 @@ static int vcpuop_stop_singleshot_timer(CPUState =
+*cs);
+>>  #define hypercall_compat32(longmode) (false)
+>>  #endif
+>>  +static int xen_handle_vmfd_change(NotifierWithReturn *n,
+>> +                                  void *data, Error** errp)
+>> +{
+>> +    int ret;
+>> +
+>> +    /* we are not interested in pre vmfd change notification */
+>> +    if (((VmfdChangeNotifier *)data)->pre) {
+>> +        return 0;
+>> +    }
+>> +
+>> +    ret =3D do_initialize_xen_caps(kvm_state, XEN_HYPERCALL_MSR);
+>> +    if (ret < 0) {
+>> +        return ret;
+>> +    }
+>> +
+>> +    if (hyperv_enabled) {
+>> +        ret =3D do_initialize_xen_caps(kvm_state, =
+XEN_HYPERCALL_MSR_HYPERV);
+>> +        if (ret < 0) {
+>> +            return ret;
+>> +        }
+>> +    }
+>> +    return 0;
+>=20
+> This seems odd. Why use the hyperv_enabled boolean, rather than simply =
+the msr value, since when hyperv_enabled is set you will be calling =
+do_initialize_xen_caps() twice.
 
--- PMM
+I am not sure of enabling capabilities for Xen. I assumed we need to =
+call kvm_xen_init() twice, once normally with XEN_HYPERCALL_MSR and if =
+hyper is enabled, again with XEN_HYPERCALL_MSR_HYPERV. Is that not the =
+case? Is it one or the other but not both? It seems kvm_arch_init() =
+calls kvm_xen_init() once with XEN_HYPERCALL_MSR and another time =
+vcpu_arch_init() calls it again if hyperv is enabled with =
+XEN_HYPERCALL_MSR_HYPERV .
+
+>=20
+>> +}
+>> +
+>>  static bool kvm_gva_to_gpa(CPUState *cs, uint64_t gva, uint64_t =
+*gpa,
+>>                             size_t *len, bool is_write)
+>>  {
+>> @@ -111,15 +138,16 @@ static inline int kvm_copy_to_gva(CPUState *cs, =
+uint64_t gva, void *buf,
+>>      return kvm_gva_rw(cs, gva, buf, sz, true);
+>>  }
+>>  -int kvm_xen_init(KVMState *s, uint32_t hypercall_msr)
+>> +static int do_initialize_xen_caps(KVMState *s, uint32_t =
+hypercall_msr)
+>>  {
+>> +    int xen_caps, ret;
+>>      const int required_caps =3D KVM_XEN_HVM_CONFIG_HYPERCALL_MSR |
+>>          KVM_XEN_HVM_CONFIG_INTERCEPT_HCALL | =
+KVM_XEN_HVM_CONFIG_SHARED_INFO;
+>> +
+>=20
+> Gratuitous whitespace change.
+>=20
+>>      struct kvm_xen_hvm_config cfg =3D {
+>>          .msr =3D hypercall_msr,
+>>          .flags =3D KVM_XEN_HVM_CONFIG_INTERCEPT_HCALL,
+>>      };
+>> -    int xen_caps, ret;
+>>        xen_caps =3D kvm_check_extension(s, KVM_CAP_XEN_HVM);
+>>      if (required_caps & ~xen_caps) {
+>> @@ -143,6 +171,21 @@ int kvm_xen_init(KVMState *s, uint32_t =
+hypercall_msr)
+>>                       strerror(-ret));
+>>          return ret;
+>>      }
+>> +    return xen_caps;
+>> +}
+>> +
+>> +int kvm_xen_init(KVMState *s, uint32_t hypercall_msr)
+>> +{
+>> +    int xen_caps;
+>> +
+>> +    xen_caps =3D do_initialize_xen_caps(s, hypercall_msr);
+>> +    if (xen_caps < 0) {
+>> +        return xen_caps;
+>> +    }
+>> +
+>=20
+> Clearly here the code would be simpler here if you just saved the =
+value of hypercall_msr which you have used in the call above.
+>=20
+>> +    if (!hyperv_enabled && (hypercall_msr =3D=3D =
+XEN_HYPERCALL_MSR_HYPERV)) {
+>> +        hyperv_enabled =3D true;
+>> +    }
+>>        /* If called a second time, don't repeat the rest of the =
+setup. */
+>>      if (s->xen_caps) {
+>> @@ -185,6 +228,9 @@ int kvm_xen_init(KVMState *s, uint32_t =
+hypercall_msr)
+>>      xen_primary_console_reset();
+>>      xen_xenstore_reset();
+>>  +    xen_vmfd_change_notifier.notify =3D xen_handle_vmfd_change;
+>> +    kvm_vmfd_add_change_notifier(&xen_vmfd_change_notifier);
+>> +
+>>      return 0;
+>>  }
+
+
 
