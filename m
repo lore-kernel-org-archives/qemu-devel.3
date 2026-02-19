@@ -4,62 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA446E9A04A
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 14:15:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 111BDE9A04A
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 14:15:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vt4nd-0000fU-Es; Thu, 19 Feb 2026 09:14:37 -0500
+	id 1vt4nj-0000hJ-9p; Thu, 19 Feb 2026 09:14:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vt4nP-0000cY-VK; Thu, 19 Feb 2026 09:14:25 -0500
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vt4nC-0002dM-Ve; Thu, 19 Feb 2026 09:14:21 -0500
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 37E5D5969F0;
- Thu, 19 Feb 2026 15:14:00 +0100 (CET)
-X-Virus-Scanned: amavis at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id q723v3alWxa0; Thu, 19 Feb 2026 15:13:57 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id C832C597318; Thu, 19 Feb 2026 15:13:57 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id C5CB6597312;
- Thu, 19 Feb 2026 15:13:57 +0100 (CET)
-Date: Thu, 19 Feb 2026 15:13:57 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-cc: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>, 
- qemu-devel@nongnu.org, qemu-ppc@nongnu.org, 
- Harsh Prateek Bora <harshpb@linux.ibm.com>, 
- Stefano Garzarella <sgarzare@redhat.com>, Jason Wang <jasowang@redhat.com>, 
- Nicholas Piggin <npiggin@gmail.com>, stefanha@redhat.com, 
- richard.henderson@linaro.org, "Michael S. Tsirkin" <mst@redhat.com>
-Subject: Re: [PATCH 1/3] hw/virtio: add virtio_vdev_is_{modern, legacy}
-In-Reply-To: <2969b605-0297-41fc-9be7-2cdbee80ccf3@linaro.org>
-Message-ID: <dea7b54e-251c-6a7b-46c9-1c8b1b694338@eik.bme.hu>
-References: <20260212234602.338131-1-pierrick.bouvier@linaro.org>
- <20260212234602.338131-2-pierrick.bouvier@linaro.org>
- <02b667c5-da6a-4829-87f1-4b9ebc53d5a4@linaro.org>
- <332a3290-9ebe-404f-8b49-d09a83bd47cb@linaro.org>
- <df5cca4c-4ea5-4284-8504-61854573435b@linaro.org>
- <2fd7fa8d-ab3e-2051-7aae-ef676ff1eb35@eik.bme.hu>
- <93c5afa3-baf8-4548-881d-d25a46e14daa@linaro.org>
- <77d787a5-75fa-5732-71bb-d120b7065013@eik.bme.hu>
- <2969b605-0297-41fc-9be7-2cdbee80ccf3@linaro.org>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vt4nf-0000gs-GG
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 09:14:39 -0500
+Received: from mail-yx1-xb129.google.com ([2607:f8b0:4864:20::b129])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vt4nd-0003XJ-VY
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 09:14:39 -0500
+Received: by mail-yx1-xb129.google.com with SMTP id
+ 956f58d0204a3-649df393c04so831311d50.1
+ for <qemu-devel@nongnu.org>; Thu, 19 Feb 2026 06:14:37 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1771510477; cv=none;
+ d=google.com; s=arc-20240605;
+ b=a+9wrhZInGIuEm0oHPOEVzqhFZriCdRZsyOCXT/Fd25YHqC94WmpC/kDX1LiNjdcw/
+ yzyq2VHiQiBFmFycL09FBt3lbBlz2wA9gby266ICkQFT73lkTdTroFcZ2UGMg5pMdx3P
+ Qel+HfzW9+aMNY70mbadL1ll4IK5RnV5lXvfOTEB6Ofom9EF4gOUTHhCTaSFHsDJfW+l
+ pluiTXD8xs38rWkMxIIIu8R/HP6SMV6ceDQIJFP4sQUrh7pNjP3xBEDMElnoWovv23vR
+ Q3Aw9dWodJtmjLVDObgb5IgR8YgbOSDCLrrwyPhyJjZzCy3Acb9ODnegslyDpVMFnoGI
+ I2ZQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+ :dkim-signature;
+ bh=5gQYMFQhZ4N1Crffa8uzKSmHuvVt9aWe1ubXfuYXJ40=;
+ fh=PnYt+qEB9tAfMKoqBm2xjKOFpYyFFGPudh5cVIoieJM=;
+ b=eu3DsBERiksUHK9TCZGjgi3tOfVoyL5eehyhmhbLvvjqbI5dniyhbdrDDJR5mwITmh
+ bbQhxIVJfeGUqUwOscfd0eQoVIhJSaB4woSYnuC/xzzcNCm6W03vXwUd0+Mvakfeb6hI
+ 4DsbZwA8/++7QXeXIgFedM0/ffAEhFT7+wpp9/vGT32RAtYqv43wW6ZHmhOHmzF1pjWy
+ Nlnb2HweYI3A3TetdgdyDLtVK76I83JtR2+g6yG89x2Ez0mHuS720bkd23PscJazA1bq
+ GYkoAtrsodyX1/Vhd9XB03OrkLkXhfF34xmHcAsE/HsDuCTegCnEteNCg8XjvsKAiQkc
+ EIeA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1771510477; x=1772115277; darn=nongnu.org;
+ h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=5gQYMFQhZ4N1Crffa8uzKSmHuvVt9aWe1ubXfuYXJ40=;
+ b=jTLOPoywPh8UfE4hzzIFcbgMzfgBWSViitsMx2cxOkCTUzXWQ9LKeELFucDsy0AReT
+ StaiuKX3yE6bsuPoHBEkaRvSf79936batwZ8scECoYGlkplt2bzX2HarcuPX0P0sr9IS
+ N/T9YMjD1QxCmGKtDkZiWn2nUwOM58bxWA765Ns+mhaXen+yyquR+qBFdOJqIVoOZGQJ
+ twRDn9UvrpjMdiUPz3bQigziMw1LXwKqzCDMM3500Co/gWgpNmfLftK2bKcuJ6TLz2TL
+ wd67XotDQq4Hk/wgyy0isgpXazKROpQmXSLI9S26nMtzMsUAANBELDZAYRZPkOxu4Wui
+ ikWg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1771510477; x=1772115277;
+ h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=5gQYMFQhZ4N1Crffa8uzKSmHuvVt9aWe1ubXfuYXJ40=;
+ b=lN8QVN6GX55PxP5b67fpMY8YsstBUPTQP4dK0JzG2QBx8Cj17JkFpX0AcAGSMET9kU
+ ueo84pPph+f459Bf7XnX13KvbcwVzorOBJp5eMPdt2vtmQWVkDIz3do51rBaIA3wkol0
+ jINLXQ77QnQWk45Vmgx4mzU/Qw06pIooVeU5k8oWe5SwkUA7kKDxB/fj4EnWCSu9Kyrp
+ gUI3sSoRZFSseWa5zTvX1vfFFWYTLPO34P3KA33KVbEPJ7Q0u1pXNooaY81RCq/6r2fH
+ oYxMhO64caKD27nB+3oXNKT5hP7OShi3jui0c6sS7M6nBL8ZD7P1Jyo5riCk2D9RQ58O
+ PPGw==
+X-Gm-Message-State: AOJu0YxO8ag4HXIBvBljr0KMDJcia9mr8My2NYIuvyhtE6M+NCQJkvf2
+ jqJLZGsxsciEl0q2wIU/QxQr0gx7xVJ70rXLFNg3pid3EluouP9E4nkCYz0DcQ7izojFdWJXArJ
+ ItBGg2xidTyvZD3IfrBq2isAOlRrMomkoGQ+xoHGfBkhVlHKmMwvp
+X-Gm-Gg: AZuq6aJWBAWzZwjnaDjJLZV0xKNZYOx1iuN9eEItFfSWKJbDFrK8C4kQio28c2VjjCa
+ PfmS3NIT3NS9XCdwm/AgWqLuD5OVinkAUmyiV/jkg/sCKJvPY+z9mUffiWk667RAHJ+c9QeTafl
+ J4xaajFNLuxlRxfwU902OxvpXWrk0QtG35JEbBZgs8QbtoqXvI7gXuRd6t9kWfXGireWxag1e5g
+ bAqTEiGfduFSDPtJbfGiZkun55MC8J/V0pZDqSp9UYgPwx/RP4bnDmwi9wioM1FYGu/9q6oPKxA
+ svFv42O7Z6eWVJt2F7DCzymH7t91n7hS8sgk19jAI5ckOabGDE4ReCQa98DraRBbsbs=
+X-Received: by 2002:a05:690e:4005:b0:64a:f163:1554 with SMTP id
+ 956f58d0204a3-64c55562576mr3967426d50.14.1771510476904; Thu, 19 Feb 2026
+ 06:14:36 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="3866299591-1575163501-1771510437=:78001"
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+References: <20260219103405.3793357-1-peter.maydell@linaro.org>
+In-Reply-To: <20260219103405.3793357-1-peter.maydell@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 19 Feb 2026 14:14:25 +0000
+X-Gm-Features: AZwV_Qg8l_VpbXyvcyGWyvzs79fppsFHaAl0O45H1N7mI9NnwQUIzWtqPTjzjIc
+Message-ID: <CAFEAcA-gJQdCNfAuXHgPPmcz2qYQ8sJLSVbFyDBSEj_xyDnBcg@mail.gmail.com>
+Subject: Re: [PULL 00/32] target-arm queue
+To: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b129;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb129.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -76,150 +112,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
-
---3866299591-1575163501-1771510437=:78001
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8BIT
-
-On Wed, 18 Feb 2026, Pierrick Bouvier wrote:
-> On 2/18/26 3:46 PM, BALATON Zoltan wrote:
->> On Wed, 18 Feb 2026, Pierrick Bouvier wrote:
->>> On 2/18/26 2:28 PM, BALATON Zoltan wrote:
->>>> On Wed, 18 Feb 2026, Pierrick Bouvier wrote:
->>>>> On 2/18/26 2:17 PM, Pierrick Bouvier wrote:
->>>>>> On 2/18/26 1:00 PM, Philippe Mathieu-Daudé wrote:
->>>>>>> On 13/2/26 00:46, Pierrick Bouvier wrote:
->>>>>>>> This simplifies code compared to having
->>>>>>>> virtio_vdev_has_feature(vdev, VIRTIO_F_VERSION_1) or
->>>>>>>> !virtio_vdev_has_feature(vdev, VIRTIO_F_VERSION_1).
->>>>>>>> 
->>>>>>>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->>>>>>>> ---
->>>>>>>>       include/hw/virtio/virtio-access.h |  3 +--
->>>>>>>>       include/hw/virtio/virtio.h        | 12 +++++++++++-
->>>>>>>>       hw/net/virtio-net.c               |  2 +-
->>>>>>>>       hw/virtio/vhost.c                 |  2 +-
->>>>>>>>       hw/virtio/virtio-pci.c            |  2 +-
->>>>>>>>       hw/virtio/virtio.c                | 16 ++++++++--------
->>>>>>>>       6 files changed, 23 insertions(+), 14 deletions(-)
->>>>>>> 
->>>>>>> 
->>>>>>>> diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
->>>>>>>> index 27cd98d2fe1..8f1e4323599 100644
->>>>>>>> --- a/include/hw/virtio/virtio.h
->>>>>>>> +++ b/include/hw/virtio/virtio.h
->>>>>>>> @@ -468,9 +468,19 @@ static inline bool
->>>>>>>> virtio_host_has_feature(VirtIODevice *vdev,
->>>>>>>>           return virtio_has_feature(vdev->host_features, fbit);
->>>>>>>>       }
->>>>>>>>       +static inline bool virtio_vdev_is_modern(const VirtIODevice
->>>>>>>> *vdev)
->>>>>>>> +{
->>>>>>>> +    return virtio_vdev_has_feature(vdev, VIRTIO_F_VERSION_1);
->>>>>>>> +}
->>>>>>>> +
->>>>>>>> +static inline bool virtio_vdev_is_legacy(const VirtIODevice *vdev)
->>>>>>>> +{
->>>>>>>> +    return !virtio_vdev_is_modern(vdev);
->>>>>>>> +}
->>>>>>> 
->>>>>>> With retrospective, mentioning 'modern' was a mistake IMHO. But I
->>>>>>> understand it was simpler to add 'modern' code without updating the
->>>>>>> 'legacy' code base. Today I'd rather have 'legacy' explicit in 
->>>>>>> function
->>>>>>> names, everything else being the normal / current / modern version,
->>>>>>> without having to clarify it.
->>>>>>> 
->>>>>> 
->>>>>> Agree.
->>>>>> 
->>>>>>> Thus back to this series I'd rather not introduce 
->>>>>>> virtio_vdev_is_modern
->>>>>>> and use !virtio_vdev_is_legacy instead.
->>>>>> 
->>>>>> Sounds good. I feel it's still easier and clearer to read than
->>>>>> "!has_feature(1.0)". But as said in my previous answer to Zoltan, I
->>>>>> don't mind this patch too much, only 3rd one really matter.
->>>>> 
->>>>> s/!has_feature(1.0)/has_feature(1.0), thus showing I've been confused 
->>>>> once
->>>>> more :).
->>>> 
->>>> The has_feature(1.0) is more specific though. What if 1.0 becomes legacy
->>>> too? Then modern and legacy is more confusing than testing for a specific
->>>> feature. I still think not touching this would be the easiest as the
->>>> introduced legacy/modern does not seem to make it much clearer.
->>>> 
->>> 
->>> As you can find in official Virtio spec, "legacy" is not a random name or
->>> something I personally chose, it's the official term for pre 1.0
->>> devices/interfaces.
->>> 
->>> https://docs.oasis-open.org/virtio/virtio/v1.4/virtio-v1.4.html#x1-60001
->>> 
->>> ```
->>> 1.3.1 Legacy Interface: Terminology
->>> 
->>> Legacy Interface
->>> is an interface specified by an earlier draft of this specification 
->>> (before
->>> 1.0)
->>> 
->>> Legacy Device
->>> is a device implemented before this specification was released, and
->>> implementing a legacy interface on the host side
->>> ```
->>> 
->>> So even if VirtIO 2.0 comes out one day, they will have to define or 
->>> change
->>> term accordingly.
->> 
->> OK in that case it's better but modern would still be ambiguous. But as I
->> said I think current test for feature is OK in my opinion. That's all I
->> can add to this.
->> 
->>> Your comments are welcome also on patch 3 by the way.
->> 
->> Sorry I can't comment on that as I don't know this code. I also don't use
->> virtio with PPC machines but I know some people use it so they'll probably
->> complain if this broke something.
->> 
+On Thu, 19 Feb 2026 at 10:34, Peter Maydell <peter.maydell@linaro.org> wrote:
 >
-> I did my fair share of tests, including reproducing a ppc64el environment to 
-> make sure migration was not broken. I hope someone comfortable with this can 
-> give a reviewed-by and that Michael will happily pick the patch.
+> The following changes since commit 314f2d7fe601b8dba2a88ac4870469e9f6bb8464:
 >
->> But maybe everybody uses current virtio now and the old one is only there
->> for compatibility. Is this maybe referenced from hw/core/machine.c in a
->> compatibility property that could be removed or is it user settable and
->> still supported? There was another thread on these compatibility
->> properties and adding a way to mark and deprecate compatibility properties
->> for easier removal but that did not end yet. You'd probably just want to
->> make this series do the least changes needed and then move on.
->> 
+>   Merge tag 'qtest-20260217-pull-request' of https://gitlab.com/farosas/qemu into staging (2026-02-17 16:46:05 +0000)
 >
-> Philippe went down this way, trying to remove legacy support completely, but 
-> the community answered it had to stay and could not be deprecated/removed. 
-> This position might change in the future, but we need to find a solution now 
-> to remove target specifics, thus the current solution.
+> are available in the Git repository at:
+>
+>   https://gitlab.com/pm215/qemu.git tags/pull-target-arm-20260219
+>
+> for you to fetch changes up to 10059583c7bfea50c1596310b0639669e93ce1ee:
+>
+>   include/tcg/tcg-op.h: eradicate TARGET_INSN_START_EXTRA_WORDS (2026-02-19 10:12:25 +0000)
+>
+> ----------------------------------------------------------------
+> target-arm queue:
+>  * Allow TCG to emulate CPUs with SME but not SVE
+>  * Refactorings for single-binary
+>  * whpx: minor fixes
+>  * hw/usb/hcd-ohci: Implement frame number overflow event
+>
 
-I don't know if that's related but in hw/core/machine.c:
 
-GlobalProperty hw_compat_5_0[] = {
-...
-     { "virtio-device", "x-disable-legacy-check", "true" },
-};
 
-And the oldest visible machine is now 5.1 with everything older than 8.0 
-deprecated due to auto deprecation. But we're behind with removing older 
-code which is now at 2.8 so maybe we're deprecating things faster than we 
-can remove and clean up old code so that may cause users problems before 
-the code can benefit from it. Maybe we could slow down with auto 
-deprecation until removal of old machine is catching up?
+Applied, thanks.
 
-Regards,
-BALATON Zoltan
---3866299591-1575163501-1771510437=:78001--
+Please update the changelog at https://wiki.qemu.org/ChangeLog/11.0
+for any user-visible changes.
+
+-- PMM
 
