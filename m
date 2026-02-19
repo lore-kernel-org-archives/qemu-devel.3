@@ -4,75 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7FD0E9A04A
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 14:40:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85080E9A04A
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 14:41:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vt59X-0002Lt-6n; Thu, 19 Feb 2026 09:37:15 -0500
+	id 1vt57A-0008WC-Rr; Thu, 19 Feb 2026 09:34:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1vt590-0001r8-64
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 09:36:43 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1vt58u-0003N6-24
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 09:36:38 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771511792;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=9+tLD2muKLycvIdV0uhMhugIZqPTPjgoKPG+t+apmro=;
- b=ZXD9BxrGHTWVPKLfZaXDRxHStpLhR2k+0F8aX9gWNwvBalvHlpRKwMEgPK1MfOeTxSGc2U
- 8wnN2mOK52eWZG6ftVjKBNEMDfeyYOBfRu040hxlCta6aLsF+Wy2q00njW9LDXxlSsekDT
- OPaFG6jD6wcjkE44MElJc+Xhl+/XWZM=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-227-k8SYSz7aPXqCJ1gyiE1FeA-1; Thu,
- 19 Feb 2026 09:36:25 -0500
-X-MC-Unique: k8SYSz7aPXqCJ1gyiE1FeA-1
-X-Mimecast-MFC-AGG-ID: k8SYSz7aPXqCJ1gyiE1FeA_1771511783
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 036911800370; Thu, 19 Feb 2026 14:36:23 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.138])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 46D391800370; Thu, 19 Feb 2026 14:36:21 +0000 (UTC)
-Date: Thu, 19 Feb 2026 09:36:20 -0500
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: Lukas Straub <lukasstraub2@web.de>, qemu-devel@nongnu.org,
- Peter Xu <peterx@redhat.com>, Zhang Chen <zhangckid@gmail.com>,
- Hailiang Zhang <zhanghailiang@xfusion.com>,
- Li Zhijian <lizhijian@fujitsu.com>,
- "Dr. David Alan Gilbert" <dave@treblig.org>
-Subject: Re: COLO concurrency issues
-Message-ID: <20260219143620.GC817358@fedora>
-References: <87ms1cn8n6.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <ruslichenko.r@gmail.com>)
+ id 1vt578-0008Tq-Av
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 09:34:46 -0500
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <ruslichenko.r@gmail.com>)
+ id 1vt576-0002w7-AR
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 09:34:46 -0500
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-4362197d174so685712f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 19 Feb 2026 06:34:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1771511682; x=1772116482; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=MEJ+cQW0XDvgt8fKdFK82Ac1+oKK3ySwvUaxyxGmSvw=;
+ b=kecuM3vbUDbUxA2qAzdl4aKmtzLojYRKCVvsaZLzjLOwYKxxSkcyWgLhdrBJJ0kSrT
+ Yy+VRGIRJhpCFTl6DLkxFf2igrWhBBO1r2dMBTjU7LWvK9ojRgbXxLL9mpn18aMWEQ41
+ Vu9HBrN4x5+xuvmGgDGtp09YyEePMBEfPlPyA3OKbd8kXG4uoZTK3vchzW25fMcj3DtD
+ A2yjOsrYrWmGjxEDfsmzAIyeiuSutpLpXl82xKzN4xxrFT9/9MWtKc0gCv26Kitqub7O
+ /UpTqv99fvev9+ShIYXEZcm0Ns1yixjyb7Mrzs8U49wQkAKH7IxzxBZdt/MK9ZE+uFoq
+ d+vA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1771511682; x=1772116482;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=MEJ+cQW0XDvgt8fKdFK82Ac1+oKK3ySwvUaxyxGmSvw=;
+ b=NiVET8jP3QUMKIqD5QnrJFUPdQD1MK5yleaYYZtI7dku/v3uIUR19DqffquhZLrM9B
+ pXZHeMNl+dGstYCareev8nbSysZ/B9+G3hmZX470qHvGriFYUXrUvN4mA0lN0Sns1w96
+ JEYnpTuTSfoBBhW7J6/w85S5XW+QI+lgx6J6s9puKCsfeRGrovB7HiemBhuzs3bKs3tG
+ shbByU5Xh907usPuwFEH0Fyk6j989MZyR21b2LArY70AGrvjCm3xngq/5/caXYiTmoMN
+ +5d/cxr3rppkiTyXCyetiFj87bNsjATilqY8qSSFXua+8GWh6XFUyuYudoDUfIReEbbg
+ nfdA==
+X-Gm-Message-State: AOJu0YyW3kWAPFJUYoWmK5Snbby/XlqXwDKF5fQ6xUHGS7yTRbUvgwB3
+ 5v8XwXW5o1Gb8iwp7XKpTwiSvDfaBhgyPgBSmoiifnI2FZx8W7NQYZsVx7iQdWRd
+X-Gm-Gg: AZuq6aLpRvPQ5REpE8Go00ewqN6xPOj1aL2X6P0uGupUW2Xyn//ntyNG4RfH0yt8IvC
+ eLGLE+r+ywIue9nWucJNpViA+8nowEPwYLC4+R4abBnJkxP12MfTTtG+0OB0Ee3fbCcuWVy/wkz
+ SQjsjTotdNXXHHsrRH4dxpiD/9reoQOBkRMqZLtB8ZnoBSguSjcLr3yc0eLEFGW85GeExhfDr/m
+ uILkJoef/jsxXRT80si6mjrykAiu36D4Dkt+V6pUafhHDqkgVjMdsrlLrwFi4mNl/25QGuf2gVf
+ OKSY831IIAdgbLienMMJucTepwZaqxYi+i916ufeGej3OQzmRqjuiSP87srYvHaBZ6T78Axntpe
+ xvbUbDqpnBZfR5vYdSEEB2BHBKhfApQPmAYInor6UenA/EqwzRlVTWO2llrtHFHpFZTHtLKgbJ7
+ mizBSOv8amtdvl5Cw+f4i8SYMa5w4ggSyytPV/ibQvzGRyZv3munN0cpqqotZJPf4m69Lt
+X-Received: by 2002:a05:6000:4283:b0:435:e520:d1d7 with SMTP id
+ ffacd0b85a97d-43958e554a3mr9872115f8f.63.1771511682257; 
+ Thu, 19 Feb 2026 06:34:42 -0800 (PST)
+Received: from thinkpad-t470s.. (93-143-129-182.adsl.net.t-com.hr.
+ [93.143.129.182]) by smtp.googlemail.com with ESMTPSA id
+ ffacd0b85a97d-43796abd259sm52022770f8f.24.2026.02.19.06.34.40
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 19 Feb 2026 06:34:41 -0800 (PST)
+From: Ruslan Ruslichenko <ruslichenko.r@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, alex.bennee@linaro.org, peter.maydell@linaro.org,
+ artem_mygaiev@epam.com, volodymyr_babchuk@epam.com,
+ takahiro.nakata.wr@renesas.com,
+ "Edgar E . Iglesias" <edgar.iglesias@gmail.com>,
+ Ruslan_Ruslichenko@epam.com, balaton@eik.bme.hu
+Subject: [PATCH v2 04/33] hw/core: introduce generic FDT device model registry
+Date: Thu, 19 Feb 2026 15:33:03 +0100
+Message-ID: <20260219143332.3316679-5-ruslichenko.r@gmail.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260219143332.3316679-1-ruslichenko.r@gmail.com>
+References: <20260219143332.3316679-1-ruslichenko.r@gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="OfZLHe6izNeqKmof"
-Content-Disposition: inline
-In-Reply-To: <87ms1cn8n6.fsf@suse.de>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=ruslichenko.r@gmail.com; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.045,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,116 +103,259 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+From: Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
 
---OfZLHe6izNeqKmof
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Introduce infrastructure to instantiate device models
+directly from the device tree.
 
-On Fri, Feb 13, 2026 at 09:13:49AM -0300, Fabiano Rosas wrote:
-> Hi, I've been following the qemu-colo.rst steps to test COLO and
-> encountered a couple of issues. Unfortunately, I don't have cycles to
-> investigate further. Happens with QEMU master (also tested some versions
-> back until the COLO fix 0b5bf4ea76).
->=20
-> 1) Deadlock at fdmon_io_uring_wait:
->=20
-> (steps from qemu-colo.rst)
-> - Secondary Failover
-> - Secondary resume replication
-> - Start the new Secondary
-> - Sync
-> - Wait until disk is synced, then:
->=20
->     {"execute": "stop"}
->     {"execute": "block-job-cancel", "arguments":{ "device": "resync" } }
->=20
-> The above results in the old secondary hanging indefinitely at:
->=20
->     do {
->         ret =3D io_uring_submit_and_wait(&ctx->fdmon_io_uring, wait_nr);
->     } while (ret =3D=3D -EINTR);
->=20
-> (gdb) bt                                                                 =
-                                                                           =
-                         =20
-> #0  syscall () at ../sysdeps/unix/sysv/linux/x86_64/syscall.S:38
-> #1  0x00007f5519e0204e in ??? () at //usr/lib64/liburing.so.2
-> #2  0x00007f5519e01b00 in ??? () at //usr/lib64/liburing.so.2
-> #3  0x0000563c2dc06cc9 in fdmon_io_uring_wait (ctx=3D0x563c30411b00, read=
-y_list=3D0x7ffd0bad8f58, timeout=3D575708467831) at ../util/fdmon-io_uring.=
-c:416
-> #4  0x0000563c2dc00976 in aio_poll (ctx=3D0x563c30411b00, blocking=3Dtrue=
-) at ../util/aio-posix.c:699
-> #5  0x0000563c2daa01c6 in bdrv_drain_all_begin () at ../block/io.c:529
-> #6  0x0000563c2daa03d8 in bdrv_drain_all () at ../block/io.c:574
-> #7  0x0000563c2d764aae in do_vm_stop (state=3DRUN_STATE_PAUSED, send_stop=
-=3Dtrue) at ../system/cpus.c:312
-> #8  0x0000563c2d765964 in vm_stop (state=3DRUN_STATE_PAUSED) at ../system=
-/cpus.c:754
-> #9  0x0000563c2d7f3378 in qmp_stop (errp=3D0x7ffd0bad9080) at ../monitor/=
-qmp-cmds.c:62
-> #10 0x0000563c2dba7a72 in qmp_marshal_stop (args=3D0x563c306ac070, ret=3D=
-0x7f5518dffda8, errp=3D0x7f5518dffda0) at qapi/qapi-commands-misc.c:197
-> #11 0x0000563c2dbf1316 in do_qmp_dispatch_bh (opaque=3D0x7f5518dffe40) at=
- ../qapi/qmp-dispatch.c:128
-> #12 0x0000563c2dc1de48 in aio_bh_call (bh=3D0x563c3040fef0) at ../util/as=
-ync.c:173
-> #13 0x0000563c2dc1df64 in aio_bh_poll (ctx=3D0x563c3040c070) at ../util/a=
-sync.c:220
-> #14 0x0000563c2dbffff0 in aio_dispatch (ctx=3D0x563c3040c070) at ../util/=
-aio-posix.c:389
-> #15 0x0000563c2dc1e3cd in aio_ctx_dispatch (source=3D0x563c3040c070, call=
-back=3D0x0, user_data=3D0x0) at ../util/async.c:365
-> #16 0x00007f551b114f4c in g_main_dispatch (context=3D0x563c304120f0) at .=
-=2E/glib/gmain.c:3476
-> #17 g_main_context_dispatch_unlocked (context=3Dcontext@entry=3D0x563c304=
-120f0) at ../glib/gmain.c:4284
-> #18 0x00007f551b1170c9 in g_main_context_dispatch (context=3D0x563c304120=
-f0) at ../glib/gmain.c:4272
-> #19 0x0000563c2dc1fa0b in glib_pollfds_poll () at ../util/main-loop.c:290
-> #20 0x0000563c2dc1fa85 in os_host_main_loop_wait (timeout=3D0) at ../util=
-/main-loop.c:313
-> #21 0x0000563c2dc1fb8a in main_loop_wait (nonblocking=3D0) at ../util/mai=
-n-loop.c:592
-> #22 0x0000563c2d78eb60 in qemu_main_loop () at ../system/runstate.c:903
-> #23 0x0000563c2db412fc in qemu_default_main (opaque=3D0x0) at ../system/m=
-ain.c:50
-> #24 0x0000563c2db413ab in main (argc=3D40, argv=3D0x7ffd0bad94d8) at ../s=
-ystem/main.c:93
+This includes the registry of known device models with
+associated init functions and key API methods to
+operate it.
 
-Two ideas on how to debug further:
+The MIT license of fdt_generic.c preserved as in original
+file from https://github.com/Xilinx/qemu.git repo.
 
-1. Attach to the hung QEMU process with a debugger and inspect the
-block_backends global variable (see block/block-backends.c). The
-question is why bdrv_drain_all_begin() is not making progress. There are
-probably in-flight requests that can be observed in the
-BlockDriverState->tracked_requests list. Also check the BlockDriverState
-and BlockBackend in_flight fields. This will let you identify which
-block device is causing the hang and what it's doing during the hang.
+The license for fdt_generic.h derived from matching
+fdt_generic.c file.
 
-2. Try disabling io_uring on the host via `sudo sysctl
-kernel.io_uring_disabled=3D2` and then run QEMU again. If this is an issue
-with QEMU's recently-enabled io_uring event loop, then there will be no
-hang with io_uring disabled.
+Signed-off-by: Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
+---
+ hw/core/fdt_generic.c         | 139 ++++++++++++++++++++++++++++++++++
+ include/hw/core/fdt_generic.h |  78 +++++++++++++++++++
+ 2 files changed, 217 insertions(+)
+ create mode 100644 hw/core/fdt_generic.c
+ create mode 100644 include/hw/core/fdt_generic.h
 
-Stefan
-
---OfZLHe6izNeqKmof
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmmXH+QACgkQnKSrs4Gr
-c8hRqggAoQFLYTLVNK81cHT7fLOBzfiYHroeGzY86085YaGO23uOCZmnS9zncOc2
-sSGsOsxiMTx1iR+rRjYnF0LYCNsWyfsP1c/c+mIac9gGm5AlkTuh5svDc9OCmeJ1
-f9BMmLckO7Qe7A1htPiDz+FRPs0GREivbvhVwbl5/fUi1CQ9t5tvflAGS7IANlbC
-sLNfNOIKInShaQRa/TTzGkA2yKRxE+l/rFdECzsN6Qwzu0g3JnDXxB56Uwv/YjwM
-3HCaJtG5tte7Yyye9OzDxZrWw+DZEueYwjzOtk+YfIpXs+yAH+zIV0n2Ir1Hz9pQ
-pdITSY9k34QCo690bxuVjFfGKIHttA==
-=ciRN
------END PGP SIGNATURE-----
-
---OfZLHe6izNeqKmof--
+diff --git a/hw/core/fdt_generic.c b/hw/core/fdt_generic.c
+new file mode 100644
+index 0000000000..d3ab8f9132
+--- /dev/null
++++ b/hw/core/fdt_generic.c
+@@ -0,0 +1,139 @@
++// SPDX-License-Identifier: MIT
++/*
++ * Tables of FDT device models and their init functions. Keyed by compatibility
++ * strings, device instance names.
++ *
++ * Copyright (c) 2010 PetaLogix Qld Pty Ltd.
++ * Copyright (c) 2010 Peter A. G. Crosthwaite <peter.crosthwaite@petalogix.com>.
++ *
++ * Permission is hereby granted, free of charge, to any person obtaining a copy
++ * of this software and associated documentation files (the "Software"), to deal
++ * in the Software without restriction, including without limitation the rights
++ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
++ * copies of the Software, and to permit persons to whom the Software is
++ * furnished to do so, subject to the following conditions:
++ *
++ * The above copyright notice and this permission notice shall be included in
++ * all copies or substantial portions of the Software.
++ *
++ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
++ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
++ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
++ * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
++ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
++ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
++ * THE SOFTWARE.
++ */
++
++#include "qemu/osdep.h"
++#include "hw/core/fdt_generic.h"
++#include "hw/core/qdev-properties.h"
++#include "qemu/log.h"
++
++#ifndef FDT_GENERIC_ERR_DEBUG
++#define FDT_GENERIC_ERR_DEBUG 0
++#endif
++#define DB_PRINT(lvl, ...) do { \
++    if (FDT_GENERIC_ERR_DEBUG > (lvl)) { \
++        qemu_log_mask(LOG_FDT, ": %s: ", __func__); \
++        qemu_log_mask(LOG_FDT, ## __VA_ARGS__); \
++    } \
++} while (0)
++
++#define FDT_GENERIC_MAX_PATTERN_LEN 1024
++
++typedef struct TableListNode {
++    struct TableListNode *next;
++    char key[FDT_GENERIC_MAX_PATTERN_LEN];
++    FDTInitFn fdt_init;
++    void *opaque;
++} TableListNode;
++
++/* add a node to the table specified by *head_p */
++
++static void add_to_table(
++        FDTInitFn fdt_init,
++        const char *key,
++        void *opaque,
++        TableListNode **head_p)
++{
++    TableListNode *nn = malloc(sizeof(*nn));
++    nn->next = *head_p;
++    strcpy(nn->key, key);
++    nn->fdt_init = fdt_init;
++    nn->opaque = opaque;
++    *head_p = nn;
++}
++
++/* FIXME: add return codes that differentiate between not found and error */
++
++/*
++ * search a table for a key string and call the fdt init function if found.
++ * Returns 0 if a match is found, 1 otherwise
++ */
++
++static int fdt_init_search_table(
++        char *node_path,
++        FDTMachineInfo *fdti,
++        const char *key, /* string to match */
++        TableListNode **head) /* head of the list to search */
++{
++    TableListNode *iter;
++
++    for (iter = *head; iter != NULL; iter = iter->next) {
++        if (!strcmp(key, iter->key)) {
++            if (iter->fdt_init) {
++                return iter->fdt_init(node_path, fdti, iter->opaque);
++            }
++            return 0;
++        }
++    }
++
++    return 1;
++}
++
++TableListNode *compat_list_head;
++
++void add_to_compat_table(FDTInitFn fdt_init, const char *compat, void *opaque)
++{
++    add_to_table(fdt_init, compat, opaque, &compat_list_head);
++}
++
++int fdt_init_compat(char *node_path, FDTMachineInfo *fdti, const char *compat)
++{
++    return fdt_init_search_table(node_path, fdti, compat, &compat_list_head);
++}
++
++TableListNode *inst_bind_list_head;
++
++void add_to_inst_bind_table(FDTInitFn fdt_init, const char *name, void *opaque)
++{
++    add_to_table(fdt_init, name, opaque, &inst_bind_list_head);
++}
++
++int fdt_init_inst_bind(char *node_path, FDTMachineInfo *fdti,
++        const char *name)
++{
++    return fdt_init_search_table(node_path, fdti, name, &inst_bind_list_head);
++}
++
++static void dump_table(TableListNode *head)
++{
++    TableListNode *iter;
++
++    for (iter = head; iter != NULL; iter = iter->next) {
++        printf("key : %s, opaque data %p\n", head->key, head->opaque);
++    }
++}
++
++void dump_compat_table(void)
++{
++    printf("FDT COMPATIBILITY TABLE:\n");
++    dump_table(compat_list_head);
++}
++
++void dump_inst_bind_table(void)
++{
++    printf("FDT INSTANCE BINDING TABLE:\n");
++    dump_table(inst_bind_list_head);
++}
+diff --git a/include/hw/core/fdt_generic.h b/include/hw/core/fdt_generic.h
+new file mode 100644
+index 0000000000..614a234868
+--- /dev/null
++++ b/include/hw/core/fdt_generic.h
+@@ -0,0 +1,78 @@
++// SPDX-License-Identifier: MIT
++/*
++ * Tables of FDT device models and their init functions. Keyed by compatibility
++ * strings, device instance names.
++ */
++
++#ifndef FDT_GENERIC_H
++#define FDT_GENERIC_H
++
++#include "qemu/help-texts.h"
++#include "system/device_tree.h"
++
++typedef struct FDTMachineInfo FDTMachineInfo;
++
++typedef int (*FDTInitFn)(char *, FDTMachineInfo *, void *);
++
++/* associate a FDTInitFn with a FDT compatibility */
++
++void add_to_compat_table(FDTInitFn, const char *, void *);
++
++/*
++ * try and find a device model for a particular compatibility. If found,
++ * the FDTInitFn associated with the compat will be called and 0 will
++ * be returned. Returns non-zero on not found or error
++ */
++
++int fdt_init_compat(char *, FDTMachineInfo *, const char *);
++
++/* same as above, but associates with a FDT node name (rather than compat) */
++
++void add_to_inst_bind_table(FDTInitFn, const char *, void *);
++int fdt_init_inst_bind(char *, FDTMachineInfo *, const char *);
++
++void dump_compat_table(void);
++void dump_inst_bind_table(void);
++
++/*
++ * Called from FDTInitFn's to inform the framework that a dependency is
++ * unresolved and the calling context needs to wait for another device to
++ * instantiate first. The calling thread will suspend until a change in state
++ * in the argument fdt machine is detected.
++ */
++
++void fdt_init_yield(FDTMachineInfo *);
++
++/* set, check and get per device opaques. Keyed by fdt node_paths */
++
++void fdt_init_set_opaque(FDTMachineInfo *fdti, char *node_path, void *opaque);
++int fdt_init_has_opaque(FDTMachineInfo *fdti, char *node_path);
++void *fdt_init_get_opaque(FDTMachineInfo *fdti, char *node_path);
++
++/* statically register a FDTInitFn as being associate with a compatibility */
++
++#define fdt_register_compatibility_opaque(function, compat, n, opaque) \
++static void __attribute__((constructor)) \
++function ## n ## _register_imp(void) { \
++    add_to_compat_table(function, compat, opaque); \
++}
++
++#define fdt_register_compatibility_n(function, compat, n) \
++fdt_register_compatibility_opaque(function, compat, n, NULL)
++
++#define fdt_register_compatibility(function, compat) \
++fdt_register_compatibility_n(function, compat, 0)
++
++#define fdt_register_instance_opaque(function, inst, n, opaque) \
++static void __attribute__((constructor)) \
++function ## n ## _register_imp(void) { \
++    add_to_inst_bind_table(function, inst, opaque); \
++}
++
++#define fdt_register_instance_n(function, inst, n) \
++fdt_register_instance_opaque(function, inst, n, NULL)
++
++#define fdt_register_instance(function, inst) \
++fdt_register_instance_n(function, inst, 0)
++
++#endif /* FDT_GENERIC_H */
+-- 
+2.43.0
 
 
