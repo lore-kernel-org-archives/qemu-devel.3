@@ -4,65 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A88C6E9A04A
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 13:40:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03782E9A048
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 13:42:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vt4GE-00035l-6m; Thu, 19 Feb 2026 08:40:07 -0500
+	id 1vt4IY-0004d4-4x; Thu, 19 Feb 2026 08:42:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vt4G3-00034Y-LL
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 08:39:55 -0500
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1vt4IV-0004cL-Ui
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 08:42:27 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vt4G0-0007nM-4f
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 08:39:54 -0500
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1vt4IU-00009b-A3
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 08:42:27 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771508388;
+ s=mimecast20190719; t=1771508545;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=JaljMD62u0BYwZlmvd0GjRKdMofqd8/DmBFVgpaucWk=;
- b=adHh32eeAftS/DHjDWeoUv4ZjGPRAM0drX0yl9L9iQkskSLYo/VVAV+GlF0DeW0jfpgbJa
- C3ovs/ERLNuk0RGT5SSIdBPXDLbRBcQIdVBQoe/lB3UQFjUVgodkrJ7f/TkwQKpLoWjQ6X
- xoqMpOvLWWZTUWrQbMlAh5uOYEP731U=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-266-luGsydmJM8mg6WYdfBKfeQ-1; Thu,
- 19 Feb 2026 08:39:46 -0500
-X-MC-Unique: luGsydmJM8mg6WYdfBKfeQ-1
-X-Mimecast-MFC-AGG-ID: luGsydmJM8mg6WYdfBKfeQ_1771508386
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A6E5F1800451; Thu, 19 Feb 2026 13:39:45 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.14])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 49FA51954112; Thu, 19 Feb 2026 13:39:45 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id B8CD321E692D; Thu, 19 Feb 2026 14:39:42 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org,  armbru@redhat.com,  =?utf-8?Q?Marc-Andr=C3=A9?=
- Lureau <marcandre.lureau@redhat.com>,  qemu-rust@nongnu.org
-Subject: Re: [PATCH v2 00/16] rust: QObject and QAPI bindings
-In-Reply-To: <20260108131043.490084-1-pbonzini@redhat.com> (Paolo Bonzini's
- message of "Thu, 8 Jan 2026 14:10:27 +0100")
-References: <20260108131043.490084-1-pbonzini@redhat.com>
-Date: Thu, 19 Feb 2026 14:39:42 +0100
-Message-ID: <877bs8rgwx.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ bh=MJimJpf/jwlPEGTqFFiFulNWpE0P5w7dCdYaKuIjWlM=;
+ b=Fn+6XZFyW6y5Q30GS0sAlXgpakORW2lHu+VGwM+jPKMPDu61Pmp1ATuh5pvJ3RXDHmWLhu
+ ygSQflv+B6mRLvXQ7eI6OvGoJJAxDD30f5HkAoQmjyx6b+z8stfn2uMuNEnjmH1zwAUKxH
+ 55dxpLtaj4clL1hoSEKWup7UBGHKb/Y=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-602-FanRiBpHPQy8OriCNB3M8g-1; Thu, 19 Feb 2026 08:42:22 -0500
+X-MC-Unique: FanRiBpHPQy8OriCNB3M8g-1
+X-Mimecast-MFC-AGG-ID: FanRiBpHPQy8OriCNB3M8g_1771508541
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4836b7fbf4fso9200765e9.2
+ for <qemu-devel@nongnu.org>; Thu, 19 Feb 2026 05:42:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1771508541; x=1772113341; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=MJimJpf/jwlPEGTqFFiFulNWpE0P5w7dCdYaKuIjWlM=;
+ b=k/BE4GrWwivddv20XlycmzLYw7cVNNt62weCvMg9t0fz9Ocm6koEFsigashawq/zc+
+ rd30q8BK21Sgt9KnNvolhwzhR0ifNV3+Vk3HVxV8fZVaUvsYnxNKCRGbsujGEOvJedeL
+ NVJJ9PyW5UdWmxPHaKEyD3LJuSaSUP6Nzd2sOUU/k633aLVyrEQNlQTAsTLuptTbmExR
+ ORzieRMp7WMryMRv8xaHCKWVdumfp/2RNGkhaSp4jpALEHSwCQ2DCPTgds1/2uUDjaF8
+ d/PFlMdTknVh3lqzF8yywE71E/7BUfGAxr0NaOionT0H+RBv0CXSZlxRgw4SIoCE9XRb
+ mp4A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1771508541; x=1772113341;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=MJimJpf/jwlPEGTqFFiFulNWpE0P5w7dCdYaKuIjWlM=;
+ b=VlhmXzMe8/vf78A6Kd0nVT55+GICD+gukOXuLNaX/lBUdFOwp8q4HClYJzwFCd12TC
+ hnQ45ogZjtSZHQSREHdJaA00e+XCRvy+2j3NiIFaYbxChJE4ZdJHNc/dmwfo7dRgYhv9
+ jeKdFJZPYiNT4Zh3XwcRP/32XlTsiKM6eEBxQOEot2GICZ9gakXVPyz4y1FcAObPvpc0
+ 9WP8f+rrKKOkY0hQHUCnIJ6MyoRIIvS1+SDWUGqrOZE3aLmAiXelDSq3YzuXLOR79PjZ
+ qDYoS0HkFX3QiPILd4AJDFPmgcmlM96VujMPpDWyDbOnv9DBSXRZYsJ0/JXONxsZEynT
+ pohQ==
+X-Gm-Message-State: AOJu0YwOCFuRSgzcRPFG17C/SqpbvN5RQnfPARDUEIvN751BIjH/8xO3
+ Q2VEppYQplYlbImhl2KUz1/sO3UsYbAS97DHnRHPRyEbDpgPRQb4gBfbpOZi2mKp6rq34Ulxx9x
+ VJ/H7WoR2JNsivDZjqgNAE5zF1JuD3NLO3PyPQcSNASe7dgMPk78DRWRF
+X-Gm-Gg: AZuq6aK7Dmae+S9n05lUPUOtNGRrXx57YmmX6T+iwTq4dHQ443ZfhYFiTzRt1STZazC
+ O5r++hBVWmLLsB+dwt7P1mqoLXLLUcljauYzXaIgv9nDCwvSFHa26wtdTqga3j/D8WakZrzVOcF
+ 8SLRw6C6Wq3n20UKbRA9rlPfapkseQW84jcYW/xWHHCu0lDiTTRB2WMCXtTfq1DBLOiE7EUmRnO
+ oXkdrDyhVvgZEPiy2Yjr/O8dWgRQkckJHRZmuf9ijsSrgo1d0fcHMYAX9wmzbb/2zwK+SONStja
+ 3rXDjFza2fMCunTiOUpSOpNr2zmRS5yUi3OTg4U6OTefoTbFd7I7CvHktHmWw3Mhy44Rjizbow9
+ sqsCKAA==
+X-Received: by 2002:a05:600c:4e54:b0:483:75f1:54f with SMTP id
+ 5b1f17b1804b1-4839e668ac0mr45432805e9.31.1771508540944; 
+ Thu, 19 Feb 2026 05:42:20 -0800 (PST)
+X-Received: by 2002:a05:600c:4e54:b0:483:75f1:54f with SMTP id
+ 5b1f17b1804b1-4839e668ac0mr45432325e9.31.1771508540370; 
+ Thu, 19 Feb 2026 05:42:20 -0800 (PST)
+Received: from imammedo ([213.175.37.14]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-483a31c7774sm4176445e9.10.2026.02.19.05.42.18
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 19 Feb 2026 05:42:19 -0800 (PST)
+Date: Thu, 19 Feb 2026 14:42:17 +0100
+From: Igor Mammedov <imammedo@redhat.com>
+To: Li Chen <me@linux.beauty>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, qemu-riscv@nongnu.org,
+ "Michael S . Tsirkin" <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Shannon Zhao
+ <shannon.zhaosl@gmail.com>, Song Gao <gaosong@loongson.cn>, Bibo Mao
+ <maobibo@loongson.cn>, Jiaxun Yang <jiaxun.yang@flygoat.com>, Sunil V L
+ <sunilvl@ventanamicro.com>, Palmer Dabbelt <palmer@dabbelt.com>, Alistair
+ Francis <alistair.francis@wdc.com>, Weiwei Li <liwei1518@gmail.com>, Daniel
+ Henrique Barboza <dbarboza@ventanamicro.com>, Liu Zhiwei
+ <zhiwei_liu@linux.alibaba.com>, Philippe =?UTF-8?B?TWF0aGlldS1EYXVkw6k=?=
+ <philmd@linaro.org>
+Subject: Re: [PATCH v7 1/1] acpi/virt: suppress SPCR when UART0 has no
+ serial backend
+Message-ID: <20260219144217.0b755810@imammedo>
+In-Reply-To: <20260219130403.810220-1-me@linux.beauty>
+References: <20260219130403.810220-1-me@linux.beauty>
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.51; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -87,66 +129,160 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Paolo Bonzini <pbonzini@redhat.com> writes:
+On Thu, 19 Feb 2026 21:04:02 +0800
+Li Chen <me@linux.beauty> wrote:
 
-> This adds two related parts of the Rust bindings:
->
-> - QAPI code generator that creates Rust structs from the JSON
->   description.  The structs are *not* ABI compatible with the
->   C ones, instead they use native Rust data types.
->
-> - QObject bindings and (de)serialization support, which can be used to
->   convert QObjects to and from QAPI structs.
+> From: Li Chen <chenl311@chinatelecom.cn>
+>=20
+> virt machines always instantiate a PL011/16550 UART at slot 0 and describe
+> it in ACPI (DSDT and optional SPCR table). When the command line disables
+> the serial backend (e.g. "-serial none"), SPCR still points at UART0 and
+> the guest may pick it as the preferred console even though it is not
+> usable.
+>=20
+> Only generate SPCR when UART0 has a chardev backend attached. Keep the
+> UART device description in DSDT unchanged so the guest-visible UART
+> topology does not change.
+>=20
 
-To and from generated Rust structs, I presume.
+I've though consensus was, if device (frontend) exists,
+we should keep it described in ACPI (regardless of backend state).
 
-> Unfortunately Rust code is not able to use visitors, other than by
-> creating an intermediate QObject.  This is because of the different
-> architecture of serde vs. QAPI visitors, and because visitor's
-> dual-purpose functions, where the same function is used by both input and
-> output visitors, rely heavily on the structs using the same representation
-> as the visitor arguments (for example NUL-terminated strings).
+> The bios-tables-test qtests use "-serial null" to keep SPCR enabled while
+> discarding firmware serial output, avoiding TAP stdout corruption.
 
-Prior discussion of some aspects:
+It's tests issue, I'd say fix it there.
+See for more below.
 
-    Subject: Re: [PATCH preview 0/3] reviving minimal QAPI generation from =
-2021
-    Date: Mon, 23 Jun 2025 14:52:46 +0200
-    Message-ID: <877c1262n5.fsf@pond.sub.org>
-    https://lore.kernel.org/qemu-devel/877c1262n5.fsf@pond.sub.org/
+=20
+> Suggested-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> Signed-off-by: Li Chen <chenl311@chinatelecom.cn>
+> Reviewed-by: Sunil V L <sunilvl@ventanamicro.com>
+> ---
+> v6 -> v7:
+>   Do not gate DSDT UART devices on serial_hd(0); only gate SPCR.
+>   Drop the serial_exists() helper added by v6.
+>   Keep bios-tables-test using "-serial null" (comment wording update).
+>=20
+> v5 -> v6:
+>   Fix TAP parsing errors by using "-serial null" in bios-tables-test.
+>=20
+> v4 -> v5:
+>   Also suppress UART device & SPCR when guest has no serial hardware on
+>   loongarch.
+>   Rename serial_exist to serial_exists.
+>   Fix style issues.
+>=20
+>  hw/arm/virt-acpi-build.c       | 3 ++-
+>  hw/loongarch/virt-acpi-build.c | 2 +-
+>  hw/riscv/virt-acpi-build.c     | 3 ++-
+>  tests/qtest/bios-tables-test.c | 7 +++++--
+>  4 files changed, 10 insertions(+), 5 deletions(-)
+>=20
+> diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
+> index c145678185..1411f98ea1 100644
+> --- a/hw/arm/virt-acpi-build.c
+> +++ b/hw/arm/virt-acpi-build.c
+> @@ -64,6 +64,7 @@
+>  #include "hw/virtio/virtio-acpi.h"
+>  #include "target/arm/cpu.h"
+>  #include "target/arm/multiprocessing.h"
+> +#include "system/system.h"
+> =20
+>  #define ARM_SPI_BASE 32
+> =20
+> @@ -1291,7 +1292,7 @@ void virt_acpi_build(VirtMachineState *vms, AcpiBui=
+ldTables *tables)
+> =20
+>      acpi_add_table(table_offsets, tables_blob);
+> =20
+> -    if (ms->acpi_spcr_enabled) {
+> +    if (ms->acpio_spcr_enabled && serial_hd(0)) {
 
-> The serde format implementation was co-authored by me and Marc-Andr=C3=A9.
-> Marc-Andr=C3=A9 did all the bug fixing and integration testing.
->
-> As an example of how this would be used, the marshaling functions for
-> QMP commands would look like this:
->
-> fn qmp_marshal_query_stats(args: *mut QDict,
->     retp: *mut *mut QObject, errp: *mut *mut Error)
-> {
->     let qobj =3D unsafe { QObject::cloned_from_raw(args.cast()) };
->
->     let result =3D from_qobject::<StatsFilter>(qobj)
->          .map_err(anyhow::Error::from)
->          .and_then(qmp_query_stats)
->          .and_then(|ret| to_qobject::<Vec<StatsResult>>(ret).map_err(anyh=
-ow::Error::from));
->
->     match qmp_marshal_query_stats_rs(qobj) {
->         Ok(ret) =3D> unsafe { *retp =3D ret.into_raw(); },
->         Err(e) =3D> unsafe { crate::Error::from(e).propagate(errp) },
->     }
-> }
+if you really need to disable spcr,
+add a knob to do so instead of gating it on backend state.
 
-Scoring 0.23 UOUPNBL (uses of unsafe per non-blank line).  SCNR!
-
-> Despite the long v1->v2, the changes are mostly cosmetic; there are a few
-> small differences in the detection of types to be wrapped with Box<>,
-> because Vec<> is now considered to break cycles.
->
-> Available at branch rust-next of https://gitlab.com/bonzini/qemu (which
-> is now almost empty other than this series, yay).
->
-> Paolo
+Having serial console configured and sent to /dev/null
+is a legit config (ex: testing that writes to console do not explode machin=
+e,
+but not really caring where writes end up) =20
+=20
+>          spcr_setup(tables_blob, tables->linker, vms);
+>      }
+> =20
+> diff --git a/hw/loongarch/virt-acpi-build.c b/hw/loongarch/virt-acpi-buil=
+d.c
+> index 54ac94e17d..dc8bbb9fdc 100644
+> --- a/hw/loongarch/virt-acpi-build.c
+> +++ b/hw/loongarch/virt-acpi-build.c
+> @@ -546,7 +546,7 @@ static void acpi_build(AcpiBuildTables *tables, Machi=
+neState *machine)
+>      build_srat(tables_blob, tables->linker, machine);
+>      acpi_add_table(table_offsets, tables_blob);
+> =20
+> -    if (machine->acpi_spcr_enabled)
+> +    if (machine->acpi_spcr_enabled && serial_hd(0))
+>          spcr_setup(tables_blob, tables->linker, machine);
+> =20
+>      if (machine->numa_state->num_nodes) {
+> diff --git a/hw/riscv/virt-acpi-build.c b/hw/riscv/virt-acpi-build.c
+> index f1406cb683..29080d1125 100644
+> --- a/hw/riscv/virt-acpi-build.c
+> +++ b/hw/riscv/virt-acpi-build.c
+> @@ -39,6 +39,7 @@
+>  #include "qapi/error.h"
+>  #include "qemu/error-report.h"
+>  #include "system/reset.h"
+> +#include "system/system.h"
+> =20
+>  #define ACPI_BUILD_TABLE_SIZE             0x20000
+>  #define ACPI_BUILD_INTC_ID(socket, index) ((socket << 24) | (index))
+> @@ -890,7 +891,7 @@ static void virt_acpi_build(RISCVVirtState *s, AcpiBu=
+ildTables *tables)
+> =20
+>      acpi_add_table(table_offsets, tables_blob);
+> =20
+> -    if (ms->acpi_spcr_enabled) {
+> +    if (ms->acpi_spcr_enabled && serial_hd(0)) {
+>          spcr_setup(tables_blob, tables->linker, s);
+>      }
+> =20
+> diff --git a/tests/qtest/bios-tables-test.c b/tests/qtest/bios-tables-tes=
+t.c
+> index e489d94331..37f2b72d83 100644
+> --- a/tests/qtest/bios-tables-test.c
+> +++ b/tests/qtest/bios-tables-test.c
+> @@ -825,10 +825,13 @@ static char *test_acpi_create_args(test_data *data,=
+ const char *params)
+>          /*
+>           * TODO: convert '-drive if=3Dpflash' to new syntax (see e33763b=
+e7cd3)
+>           * when arm/virt boad starts to support it.
+> +         * NOTE: Explicitly add "-serial null" to keep SPCR enabled while
+> +         *       discarding firmware serial output (avoid corrupting TAP
+> +         *       stdout).
+>           */
+>          if (data->cd) {
+>              args =3D g_strdup_printf("-machine %s%s %s -accel tcg "
+> -                "-nodefaults -nographic "
+> +                "-nodefaults -serial null -nographic "
+>                  "-drive if=3Dpflash,format=3Draw,file=3D%s,readonly=3Don=
+ "
+>                  "-drive if=3Dpflash,format=3Draw,file=3D%s,snapshot=3Don=
+ -cdrom %s %s",
+>                  data->machine, data->machine_param ?: "",
+> @@ -836,7 +839,7 @@ static char *test_acpi_create_args(test_data *data, c=
+onst char *params)
+>                  data->uefi_fl1, data->uefi_fl2, data->cd, params ? param=
+s : "");
+>          } else {
+>              args =3D g_strdup_printf("-machine %s%s %s -accel tcg "
+> -                "-nodefaults -nographic "
+> +                "-nodefaults -serial null -nographic "
+>                  "-drive if=3Dpflash,format=3Draw,file=3D%s,readonly=3Don=
+ "
+>                  "-drive if=3Dpflash,format=3Draw,file=3D%s,snapshot=3Don=
+ %s",
+>                  data->machine, data->machine_param ?: "",
 
 
