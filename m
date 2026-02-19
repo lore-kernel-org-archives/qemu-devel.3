@@ -4,56 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A9F3E9A03B
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FD70E9A04C
 	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 12:45:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vt3OT-0007M9-4w; Thu, 19 Feb 2026 07:44:33 -0500
+	id 1vt3OT-0007M7-3x; Thu, 19 Feb 2026 07:44:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vt3OG-0007Kz-CK
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 07:44:22 -0500
-Received: from tor.source.kernel.org ([172.105.4.254])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vt3OF-0007Ks-73
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 07:44:19 -0500
+Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vt3OC-0008As-Fo
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 07:44:20 -0500
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vt3OB-0008An-K3
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 07:44:17 -0500
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by tor.source.kernel.org (Postfix) with ESMTP id 7754860054;
- Thu, 19 Feb 2026 12:44:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18B80C4CEF7;
+ by sea.source.kernel.org (Postfix) with ESMTP id BD22240706;
  Thu, 19 Feb 2026 12:44:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E8D9C4CEF7;
+ Thu, 19 Feb 2026 12:44:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1771505053;
- bh=B9qVYZiwKR+KMalwfv4UURWgIIX0zekfhi+LaKql/4M=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=jxoogA62XXkceYKiO1qNimU87xwb0AsUPmOdqlYHjUh7FVTrGckRkR8KnOAuSG8lC
- 8cRjg4TUVXpvc62yK6LI4LGdt0uv940bBHBgFbS/3OSt6AzK4OMxi04nu9RW01HJp5
- pvVbBi9htgrLu4wdI3dk70+9/dD1zYZ5f8zNeiN7NSobVF+12vHATKZun9HH+ug44w
- sWmgTObQVD6o9RHMup8JVNH+qqHc9/7Urx/YIe7UXgkqXxv8bjH4vSRJ+apb6rb1S2
- Q1Vh+L7RYtwHVvXTKz7/s6iOXo808WJymz6so/i0JZpV8b0YzJkzZDb1NHd2bBK0Bk
- P7IQXi4gPkeBA==
+ s=k20201202; t=1771505051;
+ bh=/2As5PAN1gRHlChXX9/XVd1aFluuu8PythyLY5m93J4=;
+ h=From:To:Cc:Subject:Date:From;
+ b=nHkSOeI+bpAS+ZUwOUWYQgLJ9ZTqLKf6BIOKkRBtLp5fP4iDTtsODpkn0BKHlFzVU
+ A91I959Lsj6JxyM0nDbTo2QCCySKws1V2ghINHUzuZGwI/w6yL0V5jdaT1js6PBVM/
+ 5HorR0pBHgPWZJh5pDyQzqcXPxuTC16+511qufhdv3sibo3Zt0K+GLh/2GlMoZAMBS
+ RUmiRHy1lrAn/b7wo88QI9qoX+k7xTW/pySMX4e3k9CMYODBD8dNRfCXDHzUJk5pxQ
+ AJW1sFqJv0aczAVKC2cu/BwwtfO6KJnyiE1pvQYbIMurNaXS+XY6Ih6lhQH+DaP/Xs
+ 4exM7wWs328gg==
 From: deller@kernel.org
 To: Richard Henderson <richard.henderson@linaro.org>,
 	qemu-devel@nongnu.org
 Cc: Anton Johansson <anjo@rev.ng>,
 	Helge Deller <deller@gmx.de>
-Subject: [PULL 1/4] hw/hppa: Add BMC on 64-bit machines only
-Date: Thu, 19 Feb 2026 13:44:05 +0100
-Message-ID: <20260219124408.3515-2-deller@kernel.org>
+Subject: [PULL 0/4] Hppa a400 patches
+Date: Thu, 19 Feb 2026 13:44:04 +0100
+Message-ID: <20260219124408.3515-1-deller@kernel.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260219124408.3515-1-deller@kernel.org>
-References: <20260219124408.3515-1-deller@kernel.org>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=172.105.4.254; envelope-from=deller@kernel.org;
- helo=tor.source.kernel.org
+Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
+ envelope-from=deller@kernel.org; helo=sea.source.kernel.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.045,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -72,32 +70,39 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Helge Deller <deller@gmx.de>
 
-Prevent adding the BMC with it's serial ports on 32-bit machines, even
-if they have a PCI bus like the B160L. This fixes boot problems with
-HP-UX on B160L.
+The following changes since commit ece408818d27f745ef1b05fb3cc99a1e7a5bf580:
 
-Signed-off-by: Helge Deller <deller@gmx.de>
-Fixes: 557bc5260cfd ("hw/hppa: PCI devices depend on availability of PCI bus")
-Cc: qemu-stable@nongnu.org
-Reviewed-by: Anton Johansson <anjo@rev.ng>
----
- hw/hppa/machine.c | 2 ++
- 1 file changed, 2 insertions(+)
+  Merge tag 'for-upstream' of https://gitlab.com/bonzini/qemu into staging (2026-02-13 10:30:08 +0000)
 
-diff --git a/hw/hppa/machine.c b/hw/hppa/machine.c
-index c3680667ae..d6aeb793c0 100644
---- a/hw/hppa/machine.c
-+++ b/hw/hppa/machine.c
-@@ -376,7 +376,9 @@ static void machine_HP_common_init_tail(MachineState *machine, PCIBus *pci_bus,
- 
-     if (pci_bus) {
-         pci_init_nic_devices(pci_bus, mc->default_nic);
-+    }
- 
-+    if (pci_bus && hppa_is_pa20(&cpu[0]->env)) {
-         /* BMC board: HP Diva GSP PCI card */
-         dev = qdev_new("diva-gsp");
-         if (dev && !object_property_get_bool(OBJECT(dev), "disable", NULL)) {
+are available in the Git repository at:
+
+  https://github.com/hdeller/qemu-hppa.git tags/hppa-a400-pull-request
+
+for you to fetch changes up to 9e59b112b6c0e24831e1f28926df0bc917b14902:
+
+  hw/hppa: Add emulation for the 64-bit A400 server (2026-02-19 13:41:21 +0100)
+
+----------------------------------------------------------------
+hppa a400 machine support
+
+Major enhancements to SeaBIOS-hppa to support an A400 server. This server
+requires 64-bit PAT firmware, so SeaBIOS-hppa was extendend a lot. PAT firmware
+is required as well to support 64-bit HP-UX 11i3 or MPE.
+
+----------------------------------------------------------------
+
+Helge Deller (4):
+  hw/hppa: Add BMC on 64-bit machines only
+  target/hppa: Update SeaBIOS-hppa to version 22
+  hw/hppa: Require SeaBIOS version 22 for A400 machine
+  hw/hppa: Add emulation for the 64-bit A400 server
+
+ hw/hppa/machine.c           |  32 +++++++++++++++++++++++++++++++-
+ pc-bios/hppa-firmware.img   | Bin 628952 -> 632048 bytes
+ pc-bios/hppa-firmware64.img | Bin 692032 -> 713608 bytes
+ roms/seabios-hppa           |   2 +-
+ 4 files changed, 32 insertions(+), 2 deletions(-)
+
 -- 
 2.53.0
 
