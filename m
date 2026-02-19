@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81C47E9A04A
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 14:51:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE740E9A048
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 14:51:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vt5MJ-00041c-Cs; Thu, 19 Feb 2026 09:50:27 -0500
+	id 1vt5MJ-00041d-UR; Thu, 19 Feb 2026 09:50:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ruslichenko.r@gmail.com>)
- id 1vt5Ly-0003lw-3Y
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 09:50:15 -0500
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ id 1vt5Lw-0003lm-GK
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 09:50:13 -0500
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <ruslichenko.r@gmail.com>)
- id 1vt5Lr-00086d-V6
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 09:50:03 -0500
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-4362507f0bcso807252f8f.0
- for <qemu-devel@nongnu.org>; Thu, 19 Feb 2026 06:49:58 -0800 (PST)
+ id 1vt5Lp-000852-Dc
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 09:50:00 -0500
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-4362197d174so697715f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 19 Feb 2026 06:49:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1771512597; x=1772117397; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1771512593; x=1772117393; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=QqBa/7C3Zm8WB1y+B8Ti6v5cmf7dq6/wP6QhxHVtEQs=;
- b=Aob3jCOBXfSl+s+hgNsVm3YZ37VW4sAetnUXkzmJu513h4zDoQgIl0Ts14KitStEnI
- 7OauYDDssrw+AxfnQiuPmHAmQzBDWQew8rnOlo9FuCsLKI6T/2nrRW+2sQaayevx+9AC
- nV4Osa8JNXoNJ04aO0lpZsPJlWQWBJzLrq3Ywi3xFrmX3cRERN53P6vOzSOietagfnaf
- 1lHcDn6SSteS4dyjSkb+i5jq7TMqBdL9qdliVYigWRYcau1Jg4ADZxnYRHejQ+Trt1YO
- 4kItzVTTaRCwFKl07eg2KxwU0/9lUv3CWciFVvlrvwMzqf+kUNSkiHi7XAe6/bIM9A1y
- yckg==
+ bh=1qjrmCbZ4irjeMgFjgDLjHWP5I2nb6lT5hUfv6l7aZI=;
+ b=amECIGVXw59IVC1MHNWZlzx19fhU+TIIoNvRVSP5OfsWJ0F/RTIzr6MiW52S6ZVvC0
+ GH0wvnyeD9Ql44sequU7BDbFgdphyxrj8tz1ypsTIJ3qoQsh8hWHNuS5oBQ7Pah/ioXi
+ jbvR0lNZnBxLR6y49XDVI0J9XXIFghJPPwxy6jXqTuB0T1thr5UZPyvMlatCQoG2wrZo
+ W85Hrilh4UHFn/tbKLXhq61JA4bSHOqS0i1H8GbuUm/mVt+jafQQUmr3DVANPoRE9Bz4
+ VvSwChVaU0Bb6w+W8ld8IWJ2HeJqwacsQuOxJ8Deuid8esTtAnex1QYMbIGi48AY3uTn
+ epvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771512597; x=1772117397;
+ d=1e100.net; s=20230601; t=1771512593; x=1772117393;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=QqBa/7C3Zm8WB1y+B8Ti6v5cmf7dq6/wP6QhxHVtEQs=;
- b=uEO7f38r46XN15MJ5Bzb3+X4e6yJnGGQCJa1EQ2Lzy2cDSLvnLqELcd8saS79d+H0f
- ceUlr1lIqx6/bt9XvQ/3GLn9CK2aHBKamvSxXJdEW1I39TaLErdCTqVpay6veWS3ui1H
- dDfFjoKQgAEWKIoIOuSBh7woYB5ovaOWY21wZ24cmzQdd5Ciuq/Q9FWt/zQ89Kd88aTv
- i0MkLST8Sjxn8QxE9EwHUprwUHw/B54JWqZUjHtu1u5ILV1NHoKR0f4aP2RnzMo3kj8B
- 3n+Ii8J9bfmJ7TdFLT0U8Zdz2LD2qK7YzOOUDQOBB+O/n8l11fIYcP4V8Y4+d+ocur03
- d2IQ==
-X-Gm-Message-State: AOJu0Yzqi6z8mrZkFmoCl0ztiAtheXkwj+2brc3LgoUKS4nGs8AY+Vua
- AjZPKixDXgSAmz8vE7tm8LbiYi/URkCOHveraFX/Ctj3ugiHWM+3fv4/PGfkt/v3
-X-Gm-Gg: AZuq6aIM/pJgHz7zBa8CgRS8qil1j6S4p5ypfSvwvTEh8yOUMmdCmRsMFWTmCdWdLjQ
- 6H9yqn3yxZx0nSk7H18i4tw1DtP2Ijk0bEwu2iC6zKk6Fd/OQwuLDWGnwqGpHYOa6JIv9erFHSM
- oeTAR85c6sGWXnYlSekEhvHCZMCRUr8XseY5DqZu49luH+wjPUu3itYcd1DiuFQZIiT9bX4SWrU
- qDZRGFUhqqSE7rkNc4/Qx0JY9Xok7sva66beBoPmpp8N3V6QeHo1v7i05cNFzGj6if4CNgusFyk
- C0PcAlpBQwkqzr2wrhMkjdmnc5DhgFS0HNeSKnD3Zn8qfJg9SOAxhOY3HVrw1r8JUks9X0ojcEQ
- PLUtn6bphqs5QDHn4RlLeUoZzwcK5bcEoHlF6mOYIz6lxzrtC9TRF8NX8J/31cDAX+rIIEsfy62
- KoIvXHGKDFqLFwrNZq2lTCI/+JJ/iMXoZ8L+wJFY33xDlyJ6QCudyU522DPGPlnO2Fe5h5
-X-Received: by 2002:a5d:4b09:0:b0:437:6bda:d979 with SMTP id
- ffacd0b85a97d-4396270852bmr2899449f8f.27.1771512597046; 
- Thu, 19 Feb 2026 06:49:57 -0800 (PST)
+ bh=1qjrmCbZ4irjeMgFjgDLjHWP5I2nb6lT5hUfv6l7aZI=;
+ b=ISnTwMWvuCoFkfRbFKdk4v7KJezcGzhBMsmrjGMbfHFCuddxpvKSFQ3ifhohnW0T2m
+ MJs/Cj4vJ1nPlfUPnnQ0hg1MRbLOoIekp5HwvD7EzPn4pvWOHPYmsHlMxSOTXwd1k19/
+ xIPkPCfJuSACZkpbYW+jD+6T1v1T5XwITdbdijhu4G3wwGbByZJ/SMlba+p2YIUOB7av
+ ORXfQbA8L83nLOmuM0lk1r9bPUBtV+9n9VxdZ/cO5Gl4SZNKsQeh72W6/VRzZZqcabjG
+ nuSMd1BuPJ676pmoLP3E8xEarXimg3ajYqI9Vj4AJN/2lhZWTzqDNwZS1RVUJF587D6S
+ /N4w==
+X-Gm-Message-State: AOJu0YzR+2hZS4eOvKAqvMahYIVfzNc+N9n08RYmUPBoHiAXZ0QtAodC
+ RTd2FGrNC7X2Pfnb+hGVLPYv80bZoCAo6JAEmPUDaZWRDW3s9gMGu8AEmhjVQGID
+X-Gm-Gg: AZuq6aK8MEPnaA6zZJXd+ZhU+yXdchpKilXMU6A/d09v+kJibNOmHfqlHDWlkRjJTvG
+ TpLSDuhBNcgbt3NmNlPYaI0E6ipTVacvYGj3ml+EfXDKKWEP//tfw0Gk2F0vtxKDeXY4E6rAVdg
+ WPlylRoq7B15wcE2h9O7zyi0c86CgadGddn/tR0GrVBhSL6bccbVX/IvHK+pJ2fVLEbkhzVHa4i
+ VYjSdJPop1Z1prQCZBg/0/PmHUj0DFwKAcBT9ONcdggsepUJ0STJ5np5seR7Mhjd35k5WgEYpfP
+ p/Euu1jzWoR7qezu4o7imjWik8s7VKEgZ+g9eDqVS1CeJFn2xITVqQaw5Cv380ByAGj13O6vviG
+ O0oz5+rgzo2zRbjuT5kkiEZlvmap9/VfnYbpy0DMX2IDSY4//gnOzIbvdc9P2nPsCc6cgQhfxot
+ 70/gZA8Uqjt1+P3tnpR/K87AOv95ba8JkyR0AkBVeHY07Wbciq/60R3y3HyQJd0E6PEl2/
+X-Received: by 2002:a05:6000:184e:b0:436:1a4b:de36 with SMTP id
+ ffacd0b85a97d-43958e0314amr9545077f8f.22.1771512592729; 
+ Thu, 19 Feb 2026 06:49:52 -0800 (PST)
 Received: from thinkpad-t470s.. (93-143-129-182.adsl.net.t-com.hr.
  [93.143.129.182]) by smtp.googlemail.com with ESMTPSA id
- ffacd0b85a97d-43796ac8d82sm50163087f8f.31.2026.02.19.06.49.55
+ ffacd0b85a97d-43796ac8d82sm50163087f8f.31.2026.02.19.06.49.51
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 19 Feb 2026 06:49:56 -0800 (PST)
+ Thu, 19 Feb 2026 06:49:52 -0800 (PST)
 From: Ruslan Ruslichenko <ruslichenko.r@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, alex.bennee@linaro.org, peter.maydell@linaro.org,
  artem_mygaiev@epam.com, volodymyr_babchuk@epam.com,
  takahiro.nakata.wr@renesas.com,
  "Edgar E . Iglesias" <edgar.iglesias@gmail.com>,
- Ruslan_Ruslichenko@epam.com, balaton@eik.bme.hu
-Subject: [PATCH v2 31/33] hw/core/fdt_generic_util: Add blockdev binding
- support
-Date: Thu, 19 Feb 2026 15:48:59 +0100
-Message-ID: <20260219144901.3317747-13-ruslichenko.r@gmail.com>
+ Ruslan_Ruslichenko@epam.com, balaton@eik.bme.hu,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v2 28/33] system/memory: add QOM aliases for fdt support
+Date: Thu, 19 Feb 2026 15:48:56 +0100
+Message-ID: <20260219144901.3317747-10-ruslichenko.r@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260219144901.3317747-1-ruslichenko.r@gmail.com>
 References: <20260219143332.3316679-1-ruslichenko.r@gmail.com>
  <20260219144901.3317747-1-ruslichenko.r@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=ruslichenko.r@gmail.com; helo=mail-wr1-x42c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=ruslichenko.r@gmail.com; helo=mail-wr1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,149 +107,131 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
 
-The path add possibility to bind to QEMU block backends
-via the blockdev-node-name property.
+The patch registers FDT compatibility handlers and
+QOM aliases of memory subsystem, so that memory
+regions can be created from a device tree model.
 
-This enables support for the modern -blockdev command line option.
+The alias 'qemu:system-memory' could be used to attach
+subregion to root address space.
+The system memory can also be attached to another
+container with other priority, which may be used
+for implementing secure memory structures.
+
+Also 'qemu-memory-region' types can be used to create
+new memory regions.
 
 Signed-off-by: Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
 ---
- hw/core/fdt_generic_util.c | 82 ++++++++++++++++++++++++++++++++++----
- 1 file changed, 75 insertions(+), 7 deletions(-)
+ system/memory.c | 99 +++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 99 insertions(+)
 
-diff --git a/hw/core/fdt_generic_util.c b/hw/core/fdt_generic_util.c
-index 4ed9602d47..68dfeee096 100644
---- a/hw/core/fdt_generic_util.c
-+++ b/hw/core/fdt_generic_util.c
-@@ -75,6 +75,8 @@ static void fdt_get_irq_info_from_intc(FDTMachineInfo *fdti, qemu_irq *ret,
-                                        char *intc_node_path,
-                                        uint32_t *cells, uint32_t num_cells,
-                                        uint32_t max, Error **errp);
-+static bool fdt_attach_blockdev(FDTMachineInfo *fdti,
-+                                const char *node_path, Object *dev);
+diff --git a/system/memory.c b/system/memory.c
+index 81e6846c60..66b5f6a484 100644
+--- a/system/memory.c
++++ b/system/memory.c
+@@ -4120,3 +4120,102 @@ static void memory_register_types(void)
+ }
  
- typedef struct QEMUIRQSharedState {
-     qemu_irq sink;
-@@ -241,6 +243,8 @@ FDTMachineInfo *fdt_generic_create_machine(void *fdt, qemu_irq *cpu_irq)
-     current_machine->smp.cpus = fdt_generic_num_cpus;
-     current_machine->smp.max_cpus = fdt_generic_num_cpus;
- 
-+    bdrv_drain_all();
+ type_init(memory_register_types)
 +
-     DB_PRINT(0, "FDT: Device tree scan complete\n");
-     return fdti;
- }
-@@ -987,6 +991,52 @@ static void fdt_init_qdev_array_prop(Object *obj,
-     DB_PRINT_NP(0, "set property %s propname to <list>\n", propname);
- }
- 
-+/*
-+ * Try to attach by matching drive created by '-blockdev node-name=LABEL'
-+ * iff the FDT node contains property 'blockdev-node-name=LABEL'.
-+ *
-+ * Return false unless the given node_path has the property.
-+ *
-+ * Presence of the property also disables the node from ever attached
-+ * to any drive created by the legacy '-drive' QEMU option.
-+ *
-+ * For more on '-blockdev', see:
-+ *   http://events17.linuxfoundation.org/sites/events/files/slides/talk_11.pdf
-+ */
-+static bool fdt_attach_blockdev(FDTMachineInfo *fdti,
-+                                const char *node_path, Object *dev)
++static int sysmem_fdt_init(char *node_path, FDTMachineInfo *fdti,
++                           void *priv)
 +{
-+    static const char propname[] = "blockdev-node-name";
-+    const char *label;
++    int priority = 0;
++    uint32_t container_phandle;
++    MemoryRegion *container;
++    char container_node_path[DT_PATH_LENGTH];
++    Error *errp = NULL;
 +
-+    /* Inspect FDT node for blockdev-only binding */
-+    label = qemu_fdt_getprop(fdti->fdt, node_path, propname,
-+                             NULL, NULL);
++    fdt_init_set_opaque(fdti, node_path, OBJECT(get_system_memory()));
 +
-+    /* Skip legacy node */
-+    if (!label) {
-+        return false;
-+    }
-+
-+    /*
-+     * Missing matching bdev is not an error: attachment is optional.
-+     *
-+     * error_setg() aborts, never returns: 'goto ret' is just sanity.
-+     */
-+    if (!label[0]) {
-+        error_setg(&error_abort, "FDT-node '%s': property '%s' = <empty>",
-+                   node_path, propname);
-+        return false;
-+    }
-+
-+    if (!bdrv_find_node(label)) {
-+        return false;
-+    }
-+
-+    object_property_set_str(OBJECT(dev), "drive", label, NULL);
-+    return true;
-+}
-+
- static void fdt_parse_node_reg_prop(FDTMachineInfo *fdti, char *node_path,
-                             Object *dev)
- {
-@@ -1173,6 +1223,7 @@ static int fdt_init_qdev(char *node_path, FDTMachineInfo *fdti, char *compat)
-     char *dev_type = NULL;
-     QEMUDevtreeProp *prop, *props;
-     char parent_node_path[DT_PATH_LENGTH];
-+    bool defer_realize = false;
- 
-     if (!compat) {
-         return 1;
-@@ -1289,6 +1340,11 @@ static int fdt_init_qdev(char *node_path, FDTMachineInfo *fdti, char *compat)
-             continue;
-         }
- 
-+        if (!strcmp(propname, "drive")) {
-+            defer_realize = true;
-+            continue;
++    /* allow to set system_memory region as subregion */
++    container_phandle = qemu_fdt_getprop_cell(fdti->fdt, node_path,
++                                            "container",
++                                            0, &errp);
++    if (!errp) {
++        /*
++         * TBD: move reg_info work to fdt_generic_util.c
++         */
++        int sc = 0;
++        sc = qemu_fdt_getprop_cell(fdti->fdt, node_path, "#address-cells",
++                                    0, &errp);
++        if (!errp && sc) {
++            error_report("can't change sysmem address");
++            return -1;
 +        }
 +
-         fdt_init_qdev_scalar_prop(OBJECT(dev), p, fdti, node_path, prop);
-     }
- 
-@@ -1307,18 +1363,30 @@ static int fdt_init_qdev(char *node_path, FDTMachineInfo *fdti, char *compat)
-              */
-             fdt_init_register_user_cpu_cluster(fdti, OBJECT(dev));
-         } else {
--            object_property_set_bool(OBJECT(dev), "realized", true,
--                                     &error_fatal);
--            if (dc->legacy_reset) {
--                qemu_register_reset((void (*)(void *))dc->legacy_reset,
--                                    dev);
-+            if (defer_realize) {
-+                FDTDeferredNode *dnode = g_new0(FDTDeferredNode, 1);
-+                *dnode = (FDTDeferredNode) {
-+                        .dev = DEVICE(dev),
-+                        .node_path = g_strdup(node_path),
-+                        .next = fdti->deferred
-+                };
-+                fdti->deferred = dnode;
-+            } else {
-+                object_property_set_bool(OBJECT(dev), "realized", true,
-+                                        &error_fatal);
-+                if (dc->legacy_reset) {
-+                    qemu_register_reset((void (*)(void *))dc->legacy_reset,
-+                                        dev);
-+                }
-             }
-         }
-     }
- 
--    fdt_parse_node_reg_prop(fdti, node_path, dev);
-+    if (!defer_realize) {
-+        fdt_parse_node_reg_prop(fdti, node_path, dev);
- 
--    fdt_parse_node_irq_prop(fdti, node_path, dev);
-+        fdt_parse_node_irq_prop(fdti, node_path, dev);
++        if (errp) {
++            error_free(errp); errp = NULL;
++        }
++
++        sc = qemu_fdt_getprop_cell(fdti->fdt, node_path,
++                                    "#size-cells", 0, &errp);
++        if (!errp && sc) {
++            error_report("can't change sysmem size");
++            return -1;
++        }
++
++        error_free(errp); errp = NULL;
++        /* Check for custom "#priority-cells" extension */
++        sc = qemu_fdt_getprop_cell(fdti->fdt, node_path,
++                                    "#priority-cells", 0, &errp);
++        if (errp) {
++            /* priotity is optional */
++            priority = 0;
++            error_free(errp); errp = NULL;
++        } else if (sc) {
++            priority = qemu_fdt_getprop_cell(fdti->fdt, node_path,
++                                    "reg", 0, &errp);
++            if (errp) {
++                error_report("failed to read priority from reg");
++                error_free(errp);
++                return -1;
++            }
++        }
++
++        if (qemu_devtree_get_node_by_phandle(fdti->fdt, container_node_path,
++                                             container_phandle)) {
++            error_report("failed to get contaier node");
++            return -1;
++        }
++
++        while (!fdt_init_has_opaque(fdti, container_node_path)) {
++            fdt_init_yield(fdti);
++        }
++
++        container = MEMORY_REGION(fdt_init_get_opaque(fdti,
++                                                      container_node_path));
++
++        memory_region_add_subregion_overlap(container, 0,
++                                            get_system_memory(), priority);
++    } else {
++        /* container is optional property */
++        error_free(errp);
++        errp = NULL;
 +    }
- 
-     g_free(dev_type);
-     g_free(props);
++
++    return 0;
++}
++
++
++fdt_register_compatibility(sysmem_fdt_init, "compatible:qemu:system-memory");
++
++static const TypeInfo fdt_qom_aliases[] = {
++    {   .name = "qemu-memory-region",       .parent = "memory-region"  },
++    {   .name = "simple-bus",               .parent = "memory-region"  },
++};
++
++static void fdt_memory_types(void)
++{
++    int i;
++
++    for (i = 0; i < ARRAY_SIZE(fdt_qom_aliases); ++i) {
++        type_register_static(&fdt_qom_aliases[i]);
++    }
++}
++
++type_init(fdt_memory_types)
 -- 
 2.43.0
 
