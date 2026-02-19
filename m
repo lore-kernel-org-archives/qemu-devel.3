@@ -4,85 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3644C531D0
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 21:21:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52B12C531D0
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 21:21:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vtBRk-0006Zt-9i; Thu, 19 Feb 2026 16:20:28 -0500
+	id 1vtBRg-0006YC-7Y; Thu, 19 Feb 2026 16:20:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vtBRY-0006On-Ts
+ id 1vtBRZ-0006Ox-5Q
  for qemu-devel@nongnu.org; Thu, 19 Feb 2026 16:20:18 -0500
-Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
+Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vtBRW-0006fW-91
+ id 1vtBRW-0006k5-QN
  for qemu-devel@nongnu.org; Thu, 19 Feb 2026 16:20:16 -0500
-Received: by mail-pf1-x434.google.com with SMTP id
- d2e1a72fcca58-82311f4070cso1024900b3a.0
- for <qemu-devel@nongnu.org>; Thu, 19 Feb 2026 13:20:13 -0800 (PST)
+Received: by mail-pf1-x430.google.com with SMTP id
+ d2e1a72fcca58-823210d1d8eso852167b3a.1
+ for <qemu-devel@nongnu.org>; Thu, 19 Feb 2026 13:20:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linaro.org; s=google; t=1771536013; x=1772140813; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=fXX94G1tIoTZ+ejx2XFCx/yNOtYTN3u6M84mKcTzssI=;
- b=YoryWiY9FW6xs+P0lWp3s1ZvRyWo5jmrI5l53CibR3+nBM9YJACWrT51VbXQp7so61
- CcPQRIWXp9CYYelHY722YOhwjqPwaslaZvrRplBkuJvtniS8+2hOkuQnDAAR0Hi6dLY5
- dvB/9h0sqbp0v9uUWEa2fLIzq+n2yc0C8NTvqcvNvSfsq+2614AMKYS20ZL25IsrSDbS
- 7C999NpriqGNJ7a6Sf/8hFgghc1L26fvZqfrLBFNrU/un9FqZKfNv5G1vkOiCYGgLxXu
- tUipSDmnGYL/Y67e89L6Hk4HWCpagPUMUH989hsf8SclyAQ364scrUO+B8J89u7bNhOu
- 2Hkg==
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=4qQxc/I4T7a020uM+A4PQOP6D/SkyUdalSDRNUC7x4o=;
+ b=YZDQWedtpV9lMmhhc+ocvC7Zf3ZD8iVpOdg2HHybsmyo/uymOV4woUcYYYhiVGaifI
+ 5vIZz8eIq9/1bqRcLqulmWcDMB2hRBr4FjiWWdeWPqY1flhTRTTgwQ0ONlNWiDSPYpWP
+ w8E6BNxLnIt0osa33wxZdpfyNBVlIY5O2Zy3m9tcEhETtub0a0yW0LNiFZjSnDRIwNKs
+ gZuYfGfA+4MLdoNqTyiImjGXoJs8UFrqEg59pRmb5uDD8sq4sgY2shlwxIgmDXXUQ9Kz
+ o3fpfwc+rciRjR+QfmCq/WL4H3V1Pzk5oaabMApCiPHzT/1nUb34EMlf+HFNgOyq2buv
+ 1KIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20230601; t=1771536013; x=1772140813;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=fXX94G1tIoTZ+ejx2XFCx/yNOtYTN3u6M84mKcTzssI=;
- b=ZOqZVtcB2aTmiuF51qRNCxy9x3kSjKEG7UMO/st1Er423k7ZRTPVS5DrC+8+9h021o
- kyPbnpHsOaBAbaMYEnfxENCZeWFZYDPPEKE7lmCkhRaqgqxxyjg52ozjybwY/cqF2TxU
- A7dur1IvnrijuS94L0OxyP2HUfrebamUL19zMONdIbqDExcB/J6pWtWKlSs0e5IuyRsK
- 95b1XMoYyHWPXkzbhWi4kCuTXVskXbm9SEiKf8dfiXcyj18W9s6c/SbIgNFIa8B/vV6t
- K6XJH6qhhP8enFJNFTHvyyYXAcHWO4QJdCr19ARQgRPD3ysXyv2jgSXUupgDnCEgt8fk
- BY3A==
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=4qQxc/I4T7a020uM+A4PQOP6D/SkyUdalSDRNUC7x4o=;
+ b=EarpjO1VbvoC/bId2OuVPJHpDTPHSznAn+7bLqW9q/8Ax0oUT13rKHHcX00iLABWNw
+ mTFOIGDBIELYjSFEiGT6PEcuqojy5vmInk52wbD5VI0H1rwXSDKlEdvK7jpU4ykR4zZ2
+ +HPZMTAAUbmoFHbzfxzvagvcuel3rAiPMqw7WDbRyjtI13nTPtIqUMQRJB7HqYvyzpUr
+ ZB+k7iOMCBP8EcqSMKMghVXIEOJC0LF9mRLfZiSPrdsgMelbJ8qw3iKhgURUc+vsGh/f
+ MS8g8m6cfx9Q3tRhkcmf3XkguV2JY8WijEya2u3ZI1x1ZOGxQ/mWFUlmLMkLDnGXl/Lg
+ cGAw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW9IKMD6NF9hf4Q2RF6vTfTuYrEi3euKcuWKkHuNDxvwKmI7AqHq0FFnY4XKWJUG8N6SJCW/eoh8aof@nongnu.org
-X-Gm-Message-State: AOJu0YwK6XSyXvuVp4cfyO6A5o5DpsYab8pXKNLo46bMVGk67y5skO+h
- 3UEaekXi7wLdnQ/8r+k1PxtfYDb16CPvzT5Ym4qzUY2f9nVIJFIptXJNK8oecoWq8R8=
-X-Gm-Gg: AZuq6aJV4yRuAvWisZCDVgODLD5AWODhWAhRnswuTSLqJyA+x7eCec7prO6LN7ZBcb+
- nvZtcYSkD8pz2QLfkIimIfw54PwjuNRi7y7vj579LPHzzzrnHKlQt/v67PIAgIsx/kf7OP4iK3M
- ofHh/KfOCzLjGvxDSuO+RuP3FBBhyLXddoLW1C6MJMM6cxFqT6F6hSZrzIh83X7rWowVNHX8G2A
- +DzhB4rJE5Vvq+5mnehiUe3eACnifaz2MQX5uXVSbpZDVT1uhdI/Z0Q0fJj8KD3HAlqo3yLJT+U
- 6B3Njh/dFP5DMPR0UUaX/bTU+WvVQ/SdjgZ1mUB6N+qgEfe7OX8FipvQhSutQOL+honRml1Yb/D
- yGASNDXYLV2xFyQfDudJYpL7ZqFVeVsUVARRo0+5SXt/ob+DxEcUk5Fqz+6xP+gGAAqhiY3bqNP
- 8pZ02rp8NmFazr0w5g0kTg0BIy+DnAlPKKhtge6o6d8lIVP+ehskIqiUxKgPfyvTqfcPaG
-X-Received: by 2002:a05:6a00:27ac:b0:821:8629:ef70 with SMTP id
- d2e1a72fcca58-826ba5fa962mr2997867b3a.0.1771536012408; 
- Thu, 19 Feb 2026 13:20:12 -0800 (PST)
+ AJvYcCWov5gq8HDlUBxeRByQfHnlmOyDQ0ALn1l2Jxeym0vLh90hTgh/6BkpYtUcpeMLmIhr7gsyaMYQ/wtr@nongnu.org
+X-Gm-Message-State: AOJu0YxMKsJKBaPxwDYEQ6vwi050d9ui1Up79hDPIT5xoZKo1XjO/I99
+ vulBC+sz18AEz39nPQJGXthAgSLClYqSLNcOgfDp3YfTS79SfY4Zicf/hBMgR4HkeNtCdory2Dt
+ srVPw
+X-Gm-Gg: AZuq6aL7rKlBmSCmlDOfYsKZJX0IFh901IRhTU6QE4+EG1Pb/BSRZ08YM7mQ6p7Bgrd
+ ucvyAJuzooyZBVJTipS4WxdI1nyN1ap1Ip8REJaSiHpbg/d3LvNT4a6cMqrepExBzUgRRLuleNo
+ hxAAL1aumZ+0Gi1hcFip+nGqNEJnEoOaNWm7QDMd4VwQxiX8K6E0eY0Fix96cygO2GbISRImvGh
+ oigKaAxdcpRv62Xzm/4kySsiXx96J/QTrAsX0AOhYMfm+Mzfa8HY6sIHbeah0yckvSWWErdHhFr
+ pkGOTgfS+keqPnCIrXPMKfBOl5SEIRXlgjijis9slnkCgOSz2bHE2pTMftmA3FYnC4xmxjd/W73
+ P9GCHuc+ooKcmbCB9ATAvHZ9R5EatULlvBJAO+OJH6HoADFAOVnhFNyuDxUP1nrAcGo2F02uy9M
+ aqXL8KJZn4oh+WwK9hcrvqs7Q4dh1QP0X0hDwgiHmnLKjkFIuSd3usCclmsSXvF6YcmqM5
+X-Received: by 2002:a05:6a00:4f81:b0:81f:528b:c091 with SMTP id
+ d2e1a72fcca58-824d9526c2cmr18608768b3a.22.1771536013276; 
+ Thu, 19 Feb 2026 13:20:13 -0800 (PST)
 Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-824c6a2e936sm19782746b3a.6.2026.02.19.13.20.11
+ d2e1a72fcca58-824c6a2e936sm19782746b3a.6.2026.02.19.13.20.12
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
  Thu, 19 Feb 2026 13:20:12 -0800 (PST)
-Message-ID: <dbf87008-31a9-43cb-91b9-42f9a3047da5@linaro.org>
-Date: Thu, 19 Feb 2026 13:18:39 -0800
+Message-ID: <f10f944e-9020-42c2-b985-71cdf63859dd@linaro.org>
+Date: Thu, 19 Feb 2026 13:18:52 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 19/50] target/m68k: Remove MonitorDef register entries
+Subject: Re: [PATCH v2 20/50] target/ppc: Remove MonitorDef register entries
  available via gdbstub
+Content-Language: en-US
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>, qemu-s390x@nongnu.org,
  =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  qemu-riscv@nongnu.org, qemu-ppc@nongnu.org,
- Laurent Vivier <laurent@vivier.eu>
+ Nicholas Piggin <npiggin@gmail.com>, Chinmay Rath <rathc@linux.ibm.com>
 References: <20260219191955.83815-1-philmd@linaro.org>
- <20260219191955.83815-20-philmd@linaro.org>
+ <20260219191955.83815-21-philmd@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Content-Language: en-US
 Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  xsDNBGK9dgwBDACYuRpR31LD+BnJ0M4b5YnPZKbj+gyu82IDN0MeMf2PGf1sux+1O2ryzmnA
  eOiRCUY9l7IbtPYPHN5YVx+7W3vo6v89I7mL940oYAW8loPZRSMbyCiUeSoiN4gWPXetoNBg
@@ -117,11 +118,11 @@ Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  5SYuJaKzCAgNeAy3gUVUUPrUsul1oe2PeWMFUhWKrqko0/Qo4HkwTZY6S16drTMncoUahSAl
  X4Z3BbSPXPq0v1JJBYNBL9qmjULEX+NbtRd3v0OfB5L49sSAC2zIO8S9Cufiibqx3mxZTaJ1
  ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <20260219191955.83815-20-philmd@linaro.org>
+In-Reply-To: <20260219191955.83815-21-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x434.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -151,8 +152,8 @@ On 2/19/26 11:19 AM, Philippe Mathieu-Daudé wrote:
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   target/m68k/monitor.c | 18 ------------------
->   1 file changed, 18 deletions(-)
+>   target/ppc/ppc-qmp-cmds.c | 132 --------------------------------------
+>   1 file changed, 132 deletions(-)
 > 
 
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
