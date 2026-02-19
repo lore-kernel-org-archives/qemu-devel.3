@@ -4,76 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F68EE9A05E
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 19:30:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D5A3E9A054
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 19:30:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vt9dW-0000G1-5s; Thu, 19 Feb 2026 14:24:30 -0500
+	id 1vt9e1-0001m1-QW; Thu, 19 Feb 2026 14:25:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vt9cY-0004dH-TA
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 14:23:30 -0500
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vt9cm-00069m-2I
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 14:23:45 -0500
 Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vt9cW-0008Sm-LT
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 14:23:30 -0500
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vt9cj-00005c-M1
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 14:23:43 -0500
 Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-483703e4b08so10276795e9.1
- for <qemu-devel@nongnu.org>; Thu, 19 Feb 2026 11:23:26 -0800 (PST)
+ 5b1f17b1804b1-4836e3288cdso9118865e9.0
+ for <qemu-devel@nongnu.org>; Thu, 19 Feb 2026 11:23:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771529005; x=1772133805; darn=nongnu.org;
+ d=linaro.org; s=google; t=1771529020; x=1772133820; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=G0Rz7JY0DaonFeqLZbihnIdjPgrN0/EIWDH+188DHGU=;
- b=tkw9ryv77d4EdDZOADteiYadw7CCWPS2fQlWo85G6SEaIRDWFKK5NEnjE6VH8RTvaK
- FXdT5TEbuRqhg2VHVX9Oyv2P/abc1+r9Qo34roFlp+SUguC+B6K0xiAxFqrlmOA4vQ9B
- rzrytMdxzCx0/M0y1UA8Ahkvs4httXa6jxUPNh3QBbSMqskvbRwEM2aVcdDloiO1boOc
- eD9KzkTw9M8XzmuiSoftSpLb6zYUVrb+vQfruj6Qr2Dmco4Cga+fSyagAG9wWWSLYYdX
- 0jAlS6bAGCvlZOVa0KAXQAaWQmbK3/Wlhpbj3CfjCQPDuDen1xWw0CMrsV+jH3Bu7ier
- IqmA==
+ bh=jBuLvfP85gCUOH798HTLwu05Ru1+gPxj8663x7rElnw=;
+ b=mQ/eElb1Evb4Zl5dquz7Y91TNdc7KbXIlo5Gjbkh9XorJ2TgSraGHoOEsPW8v9hi8m
+ 4NJI2S/cGn1mX5LTxWOHS0Tw5RrkcAVxVtUp/WH7qRkXYoWfs3E33sYWh4wpJ3JTCwis
+ bsOTSxl+GSNCp4EtJ9X41lNwFnAe6pFT18XgpGZoD4f10jjtIbmab7Ls5iYs20LfRBkz
+ PjBR80UYPY67P8B9J4xGrbihmfvmme9ZhaOPHCPsSOudCOVC2omGsSv/5yHamntLg6pr
+ u88+xRjpi/pEVkUSAubrB83srWuebrFEsU82fUlx1FuV1t5GaoJMaSERWTgzOtzmTf1i
+ RwSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771529005; x=1772133805;
+ d=1e100.net; s=20230601; t=1771529020; x=1772133820;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=G0Rz7JY0DaonFeqLZbihnIdjPgrN0/EIWDH+188DHGU=;
- b=rH3QiEh2KlyogQKGq2+Ff4UMwVHOyeibKLsTfjD9+LGy1WU5ecSGQS0HttdlBMO6tC
- Qdn5wp+UvLORtqVQ8ObtNhS3pT5QHOuQWcTY8X9uEOaPm9naTC6+tBlBeA1p9L0GHF5i
- WbaleZXtGp4vsgB8I/jikFPM5IzIVpX7F594jgKt5Lu8VHhxaWiI9UB8tG4ahe7FlEXx
- nB/lV5IJocXz392hmqQrrsPH7Q43aypdkvAbwgL1okKJJt7CUINRxy4d5arT2aC0vx89
- QP1aXQQcD5KvCUU2TikhYI2WJ/jTW8HCw/CsdSh9NgpyNXZUXLyUosDAwxT2xeEyQ0U9
- Ha1Q==
-X-Gm-Message-State: AOJu0YyrVzEEm2s864YyARs6eKpla5Pgattfu1ra5Sal9FJsF/AyDbhc
- Xtfd9HjlrUqVVP0VOZy3mD/oiqAEGFBD693l0eF9v0LF7N5bkp8zeNPHzhE3KkNF4ligUKhJJrD
- W+F+BeKitRQ==
-X-Gm-Gg: AZuq6aKEAXRC9HWCOtvESBNKH9pTXckMNc29a11lGndi01jtPrWNnm0COi8fgruDqJC
- Rk/spuTyFNiaGjfv5E2aCRa1EXZDNPn2fldCGmibuU9owdiR6DolUkEW41IQT4vz3Ss7r2bbSsG
- Rq31mewcHtqkvqsa9lPld8Q5ksh9Vo6pFunpAUHbFnkxEKVqsTtppMiYUjW0Zt1EBNt8LQnJKBy
- 4zJ8+T5f5ty305FOKJGhcqcVJZ4g/eyXxcCYL4K53lqvASVUdQ+dDb90HCLl5aPlwrXznZf8yzY
- RECpZfuNDJO7bxPJtsP1AIpGccId6V5483zmePhDUge5vdZkpR0Za/2xNFQxnyxu7+ohMGT2FlY
- SNdAk+UGFVlT2Kf8GjIoanhcUPJ3L9YRddbB0Fambw+5vYfE3U4Mv7cdB40vbQpQpw4oZBGBzeX
- Nz3MzQeNd+BZRF5tpDgv6P20w/k5YuP0CjpWEk3kMknwNZmj5NepHx0POweQNWZHyQ4Q/f9GZ6
-X-Received: by 2002:a05:600c:1d0b:b0:483:7b99:131d with SMTP id
- 5b1f17b1804b1-483a009b770mr51916175e9.16.1771529005377; 
- Thu, 19 Feb 2026 11:23:25 -0800 (PST)
+ bh=jBuLvfP85gCUOH798HTLwu05Ru1+gPxj8663x7rElnw=;
+ b=ozskxQgZMryWpGinirQO+jVQJy3/IgpiY8/fWbpcX/uomkyc8U3QOkWOpGOn1lR78v
+ +5YmdFZAauJRVyPhcmuaOHGBzEoASgdCtsF5pHQ43mIHcaQiX74qVgnxAQd02s42z6aS
+ wR2OWfMrAOIW7yMBrEygYP9v5FMU06QIaUaldjQrPkVeDcNb+tz1ZRpD9Fpqa386gs0h
+ tjI8meAnMdylpMRnX+DLADHTG0ye6HHl64JzrlfBo3Yp22Ek+sJokG/prypgwD7eTXtZ
+ LMahvaDFAZh2idsF050+mVJ7+2JAE397Vq3GYsmOFFFKbNYQXScq4+EBGS0Ei7f2lADL
+ gH3g==
+X-Gm-Message-State: AOJu0YzU7996/GqXAHLU2VPkaYm4L855OBZRJrAhUssTIDKkbsevll75
+ rUOBU1/rToSxpkfHD2sKfvWk4/WaVuz3JiX2IAn1KFmHRbLX1TJd4LlGeQUV4YEwATRsXkDCrgr
+ hm40FWnEf+g==
+X-Gm-Gg: AZuq6aJOxgQCgDH16udqtbNWftGwIg81OYJUV65yIFU8SIZSfgi1RZtqJ81tqweLDqv
+ U2IJ56hVnuRGfQeVQiTDveq8JsR/aPl7BQ2aXyA5v8Bj4Gi6/S6sg73v94MewDHKSQw/q7hKs86
+ EwN8kEvxgJfXkwmg3LBEZMN07nv6w6KQBVRzAUAXPNrIX9+30GWOMs2fHXqQt8CwRUsfR1BPdbS
+ 6IMZ5AeNGrmdr4FQJO9XrO5qk59MZQdVJminfNohfum7Oi+pEmEChb1c03EqNnZjkzS8YUrK6TP
+ Id+WdAxS2GN3jY3PwbP20cmLWE4e4Ueyx3JRQh+2rrnhPRXEwpoY4GyDWTxpNTbHy2dEn+0cNfq
+ uaDRVKoLBpDe5lTYBunN3tSuTV6UjhZzFf9ArA2l/xURjhzKuKuRvwRMv843Up8SSJhnqFNCZCo
+ RbgJCdNtXIH3zE/NAoX8vQTm8BOnt7JFOsCsL4wa7zL4LSSAwr3KtGM4h4x07H102aX5x4zXeX
+X-Received: by 2002:a05:600c:3b22:b0:477:9a61:fd06 with SMTP id
+ 5b1f17b1804b1-4839fe97501mr47832665e9.8.1771529019675; 
+ Thu, 19 Feb 2026 11:23:39 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-483a31d1e8esm35787745e9.12.2026.02.19.11.23.24
+ 5b1f17b1804b1-483a31c048bsm22220285e9.7.2026.02.19.11.23.38
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 19 Feb 2026 11:23:24 -0800 (PST)
+ Thu, 19 Feb 2026 11:23:39 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>, qemu-s390x@nongnu.org,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  qemu-riscv@nongnu.org, qemu-ppc@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH v2 29/50] target/i386: Replace ldtul_p() -> ldn_p()
-Date: Thu, 19 Feb 2026 20:19:31 +0100
-Message-ID: <20260219191955.83815-30-philmd@linaro.org>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v2 31/50] gdbstub: Remove ldtul*() macros
+Date: Thu, 19 Feb 2026 20:19:33 +0100
+Message-ID: <20260219191955.83815-32-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260219191955.83815-1-philmd@linaro.org>
 References: <20260219191955.83815-1-philmd@linaro.org>
@@ -104,43 +103,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Prefer ldn_p(target_long_bits) over target-specific ldtul_p().
+These macros aren't used anymore, remove them to avoid
+further uses creeping back in.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/i386/gdbstub.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ include/gdbstub/helpers.h | 6 ------
+ 1 file changed, 6 deletions(-)
 
-diff --git a/target/i386/gdbstub.c b/target/i386/gdbstub.c
-index 291d56b8e13..f358bcf9e86 100644
---- a/target/i386/gdbstub.c
-+++ b/target/i386/gdbstub.c
-@@ -459,6 +459,7 @@ static int i386_cpu_gdb_get_egprs(CPUState *cs, GByteArray *mem_buf, int n)
+diff --git a/include/gdbstub/helpers.h b/include/gdbstub/helpers.h
+index 197592036bf..402514716d7 100644
+--- a/include/gdbstub/helpers.h
++++ b/include/gdbstub/helpers.h
+@@ -104,14 +104,8 @@ static inline uint8_t *gdb_get_reg_ptr(GByteArray *buf, int len)
+ #ifdef COMPILING_PER_TARGET
+ #if TARGET_LONG_BITS == 64
+ #define gdb_get_regl(buf, val) gdb_get_reg64(buf, val)
+-#define ldtul_p(addr) ldq_p(addr)
+-#define ldtul_le_p(addr) ldq_le_p(addr)
+-#define ldtul_be_p(addr) ldq_be_p(addr)
+ #else
+ #define gdb_get_regl(buf, val) gdb_get_reg32(buf, val)
+-#define ldtul_p(addr) ldl_p(addr)
+-#define ldtul_le_p(addr) ldl_le_p(addr)
+-#define ldtul_be_p(addr) ldl_be_p(addr)
+ #endif
+ #endif /* COMPILING_PER_TARGET */
  
- static int i386_cpu_gdb_set_egprs(CPUState *cs, uint8_t *mem_buf, int n)
- {
-+    const unsigned regsz = target_long_bits() / 8;
-     CPUX86State *env = &X86_CPU(cs)->env;
- 
-     if (n >= 0 && n < EGPR_NUM) {
-@@ -467,7 +468,7 @@ static int i386_cpu_gdb_set_egprs(CPUState *cs, uint8_t *mem_buf, int n)
-          * XCR0[APX_F] (at least for modification in gdbstub) to be enabled.
-          */
-         if (env->hflags & HF_CS64_MASK && env->xcr0 & XSTATE_APX_MASK) {
--            env->regs[gpr_map[n + CPU_NB_REGS]] = ldtul_p(mem_buf);
-+            env->regs[gpr_map[n + CPU_NB_REGS]] = ldn_p(mem_buf, regsz);
- 
-             /*
-              * Per SDM Vol 1, "Processor Tracking of XSAVE-Managed State",
-@@ -486,7 +487,7 @@ static int i386_cpu_gdb_set_egprs(CPUState *cs, uint8_t *mem_buf, int n)
-                 env->xstate_bv |= XSTATE_APX_MASK;
-             }
-         }
--        return sizeof(target_ulong);
-+        return regsz;
-     }
-     return 0;
- }
 -- 
 2.52.0
 
