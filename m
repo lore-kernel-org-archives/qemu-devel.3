@@ -4,67 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D120BE9A04A
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 14:38:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9C30E9A048
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 14:39:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vt57j-0000PV-Lm; Thu, 19 Feb 2026 09:35:23 -0500
+	id 1vt57j-0000PP-Bq; Thu, 19 Feb 2026 09:35:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ruslichenko.r@gmail.com>)
- id 1vt57f-0000Nh-JJ
+ id 1vt57f-0000Ni-Jx
  for qemu-devel@nongnu.org; Thu, 19 Feb 2026 09:35:20 -0500
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <ruslichenko.r@gmail.com>)
- id 1vt57c-00038V-Bb
+ id 1vt57c-00032i-Bf
  for qemu-devel@nongnu.org; Thu, 19 Feb 2026 09:35:19 -0500
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-436263e31abso952006f8f.1
- for <qemu-devel@nongnu.org>; Thu, 19 Feb 2026 06:35:03 -0800 (PST)
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-4806ce0f97bso8068015e9.0
+ for <qemu-devel@nongnu.org>; Thu, 19 Feb 2026 06:35:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1771511702; x=1772116502; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1771511701; x=1772116501; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=52Rc446xe2dQaFht4UOxDu+6HVWFzHT4d7x+yDo+hRs=;
- b=PaBeCJeAwKUCuByZcsVmOrrvpXLslSybGu6GW402Krdy5eQiNEaZfOWDvU94+3xUYA
- sYDIrxBKqVvu6lteVqCREq2taTx27uVQM0iQPRf5AzYfNlvf3GLhszfQ5vrrvK15csPY
- k1C1w7VR0DxkalGbJUfqLF3Za1LtWpip5SjSjkWEJ9j0DwtQ2BHrqjvrPCa6q8cBxlXt
- 5UdyEjUULy2PtVhMGogLaz5mIWtpd0FSklJfnip+/yvcgznqKaG2LemNm4t8j24gLTaY
- JyepHV2Np/KRf95MvpqaZtmcALwZi+Islp2afpul/YyTpSvVfxNI9ym0/3Et1GSfNIbd
- OajA==
+ bh=1AeTxyxPl8LpE2VymYK8BbXAEvEM1cSusvtLGqxUHFw=;
+ b=mYhu+2th7NbL1xJ97To50qUND7cZyVTaz3gYJnhWKj923m+WIeITTZK6o2VzmzDI7o
+ Y39G4BZkyOKH8I/VivinDuVSZg1uHwRgFOCYXULnLgXglGwT27Za9CROf3wduvn2uUM5
+ ummyl5/T9+Y2q87bvI7TLXPHsSLF7EmXBgxrbBQIZ5Vr+28YoJLqIJku+5oMb/NvhHSo
+ 8lp/7T35xO7VGNbP/uVjiqIdfXeDRWvxNYyEX1yBIDORwAWybAncCM6hK0b+bOWOuBdh
+ /q/xuzmfW5BhIoifJ1MqZuPOmnzTtMXxk6n6Jnr66D5MJNgkPQ4AfLkTYIzH+HPu2JYu
+ B2KA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771511702; x=1772116502;
+ d=1e100.net; s=20230601; t=1771511701; x=1772116501;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=52Rc446xe2dQaFht4UOxDu+6HVWFzHT4d7x+yDo+hRs=;
- b=mN0WRTU0mfrFu05apv6V+38o0e2Hd0UwiMLM4BhYGXmYs5InEG40aW6aUN2QOIumTn
- eptXcptBG/l89HkogaZhy7hoVCVabipNiKJf3ewnpZYHfCfZxjf8meIKD4njogk28yb6
- rkB6aBlbiV45YJRdPOxRfhlvEmlE18qC85vKBGBSU1f25bAkdFVhpWo5mwmG4wEbQ+Zv
- KkJc96WTrgJZIn3OPxBYvREunBztzzMR7Zkvt0X/XIdYNl7dSU2Ks+mk30qckR9Ldv4C
- SGA+A7IKs1irEQE0NWq6IUMY6ju9cV1SPqRhZtKEMYs9guyUrmL6nFz9FgtdEPyDqj9z
- rLZw==
-X-Gm-Message-State: AOJu0YxyxMXLlEPmLAYUeKwx3bqAkgecEC8/HN4zcE9GXiCV1ILuhBiO
- S28cejaSDnQb8fHTDup8MO+RpIOyTeO3zI5kF1ByFk91vsqcBBQcSxY7nPErzK+8
-X-Gm-Gg: AZuq6aLqtr5ETeFQSMMjq6GvOjM7rCk7JlP+vKmsJ7dJgiVbRTG94F5d8U3zrTO/gbd
- Utckfljbk1iPR4087nCW8Qo11EO9XPdcQWJomm74R7gOhKZyb65JmloQRaPyr5IxNtfAxY++cR6
- +mypEinK5TSf7I+y8Opnw10sVlzX9/U4hZojmdTAVojnMqOIgEUAPz3sogOnnOxG+tnKwIwrpJ3
- XT6MV1G0qJJ2iRfG4KYeXIHhBlf1kOeUT7mr+O4+Cvu3PTbeoo2DkopM0rSar8er9vrf534K/Cv
- 9vQSMatogDzkIh+W8cP7YlJsD2zNvxXaeCkanXvoe/35IEWig7UWf+f4Zoey7WWoCDYQ+G+5Qu4
- 7bddgJcLzGPJrtO0GJ+rcSTR5T4wt6Ti1RJhAFQHcd31ka/zT7PGfPiZ5TbR5gKq3Q6eJZu6SxK
- AhYQXT43IZeC1PHAAuVvHC0ywMuU4/zCdkS3jYkXJqvC64He1g4Zbsy8MR0k7I71bQc2fw1BVh8
- Q/Ibl0=
-X-Received: by 2002:a05:6000:40cd:b0:42b:55a1:2158 with SMTP id
- ffacd0b85a97d-437978d4f1emr35148042f8f.17.1771511702220; 
- Thu, 19 Feb 2026 06:35:02 -0800 (PST)
+ bh=1AeTxyxPl8LpE2VymYK8BbXAEvEM1cSusvtLGqxUHFw=;
+ b=KitoO0Rhp4vudtJ/t81QYzDiQs6ALpHN6WO75cq8l9lkeGje1vJc+ixm/nomV0HOlH
+ BO3KBygTDybXe3hvMyEUQUmODR5vorxb+RhPT4DsKw20VvybLuMo1+Ee2yz8uFv6VpN2
+ 2LsC/xUhZdilj8mNwvtUiiZUc7uXm2ynn4Raoe4l0KeSL/Z/+aTPZAs12eQyQcLEwKou
+ LvZwD21/Qch4Kq8HlhvFUyGFXQbjtfURPAPDfwqN1yao+rDH8v5+cYnz/N42v3LzTRic
+ +PhE0ULh09WnBBgeRe71B58QsKP2hVwEtMhlp+8K0Uwm94JgMgj7VGUowFpfdiZZ0Qm7
+ Hkcw==
+X-Gm-Message-State: AOJu0YwuAxPqSoxIJl6qyCtGHtnmP267W3Npq8IYprBPx8RIWnO77Rgl
+ slDpyZfibIct4zhuQ5KCtwyumB3m77n18xdY6cdXoBJyV4cx2xtXXRyQ6Y8NoKiG
+X-Gm-Gg: AZuq6aInrYWJelmn96u5bjCN9cVl5CvGIrkgXF5mk/IItPOMS1nBcBZjPjCjaHAKL2o
+ ddt0k8kUGNBv2IeC81wW1xGnxjnLN0pY1w4RcsvlnLqMeE2kQjrk616Z8Nsi165a4SFgsSmNNSB
+ 3rfTk3vJKyXZSUmxP9bTaAPXvzonbYuDMoNmzHgtGF5ahA4J5Z2vKbNlEetaYtMpywKq+kcOuML
+ KDV+NFIhZKknefi7FHoc8fkujID/koxgP2qLkrND3u/oXusZMReEBIrbeLLon+P3YKq/h8C8xu4
+ drjBNtXTXAVSNs+mq5VvNXlF93BH6TNJqMMxllnwYyxSAINuK9BfkhS/6qf+9UMBNjtAD1kOg8m
+ Mcls59G+MB7sGV7f9QXjX5CX+dfscohS7We9vPs+qd635E1YwxvDgUUI/QUgsHgJUf1iAeZe6OL
+ /UuhcwqUYqKTPlcq2367A5fRW4uXOlpJygSdkeiVIl8NP8swLTKS5jyT4v9/9PS80X8ozG
+X-Received: by 2002:a05:600c:450c:b0:471:700:f281 with SMTP id
+ 5b1f17b1804b1-48398ae4a01mr102282065e9.25.1771511700771; 
+ Thu, 19 Feb 2026 06:35:00 -0800 (PST)
 Received: from thinkpad-t470s.. (93-143-129-182.adsl.net.t-com.hr.
  [93.143.129.182]) by smtp.googlemail.com with ESMTPSA id
- ffacd0b85a97d-43796abd259sm52022770f8f.24.2026.02.19.06.35.00
+ ffacd0b85a97d-43796abd259sm52022770f8f.24.2026.02.19.06.34.59
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 19 Feb 2026 06:35:01 -0800 (PST)
+ Thu, 19 Feb 2026 06:35:00 -0800 (PST)
 From: Ruslan Ruslichenko <ruslichenko.r@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, alex.bennee@linaro.org, peter.maydell@linaro.org,
@@ -72,23 +71,23 @@ Cc: qemu-arm@nongnu.org, alex.bennee@linaro.org, peter.maydell@linaro.org,
  takahiro.nakata.wr@renesas.com,
  "Edgar E . Iglesias" <edgar.iglesias@gmail.com>,
  Ruslan_Ruslichenko@epam.com, balaton@eik.bme.hu
-Subject: [PATCH v2 18/33] hw/core: add fdt_generic to the build
-Date: Thu, 19 Feb 2026 15:33:17 +0100
-Message-ID: <20260219143332.3316679-19-ruslichenko.r@gmail.com>
+Subject: [PATCH v2 17/33] hw/core/fdt_generic_util: realize cpu clusters
+Date: Thu, 19 Feb 2026 15:33:16 +0100
+Message-ID: <20260219143332.3316679-18-ruslichenko.r@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260219143332.3316679-1-ruslichenko.r@gmail.com>
 References: <20260219143332.3316679-1-ruslichenko.r@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=ruslichenko.r@gmail.com; helo=mail-wr1-x42c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=ruslichenko.r@gmail.com; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,27 +105,44 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
 
-Add `fdt_generic.c` and `fdt_generic_util.c` to build
-by default.
+Realize cpu clusters at the end of fdt machine creation
+process, as they need to be created after cpu's nodes
+are realized.
 
 Signed-off-by: Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
 ---
- hw/core/meson.build | 2 ++
- 1 file changed, 2 insertions(+)
+ hw/core/fdt_generic_util.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/hw/core/meson.build b/hw/core/meson.build
-index 8a96567de8..b5ba8160e6 100644
---- a/hw/core/meson.build
-+++ b/hw/core/meson.build
-@@ -29,6 +29,8 @@ system_ss.add(when: 'CONFIG_EIF', if_true: [files('eif.c'), zlib, libcbor, gnutl
+diff --git a/hw/core/fdt_generic_util.c b/hw/core/fdt_generic_util.c
+index 63390e2f17..3179248142 100644
+--- a/hw/core/fdt_generic_util.c
++++ b/hw/core/fdt_generic_util.c
+@@ -157,6 +157,16 @@ static void fdt_init_all_irqs(FDTMachineInfo *fdti)
+     }
+ }
  
- system_ss.add(files(
-   'cpu-system.c',
-+  'fdt_generic.c',
-+  'fdt_generic_util.c',
-   'fw-path-provider.c',
-   'hotplug.c',
-   'loader.c',
++static void fdt_init_cpu_clusters(FDTMachineInfo *fdti)
++{
++    FDTCPUCluster *cl = fdti->clusters;
++
++    while (cl) {
++        qdev_realize(DEVICE(cl->cpu_cluster), NULL, &error_fatal);
++        cl = cl->next;
++    }
++}
++
+ FDTMachineInfo *fdt_generic_create_machine(void *fdt, qemu_irq *cpu_irq)
+ {
+     char node_path[DT_PATH_LENGTH];
+@@ -172,6 +182,7 @@ FDTMachineInfo *fdt_generic_create_machine(void *fdt, qemu_irq *cpu_irq)
+         while (qemu_co_enter_next(fdti->cq, NULL)) {
+             ;
+         }
++        fdt_init_cpu_clusters(fdti);
+         fdt_init_all_irqs(fdti);
+         memory_region_transaction_commit();
+     } else {
 -- 
 2.43.0
 
