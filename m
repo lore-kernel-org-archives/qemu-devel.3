@@ -4,85 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 779BAC531D4
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F39BBC531E1
 	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 21:41:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vtBgi-0007ff-MF; Thu, 19 Feb 2026 16:35:56 -0500
+	id 1vtBg4-0006V4-98; Thu, 19 Feb 2026 16:35:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vtBgO-00071y-0h
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 16:35:37 -0500
-Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
+ id 1vtBg3-0006UI-8T
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 16:35:15 -0500
+Received: from mail-pg1-x531.google.com ([2607:f8b0:4864:20::531])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vtBgG-0002dd-H8
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 16:35:35 -0500
-Received: by mail-pf1-x42d.google.com with SMTP id
- d2e1a72fcca58-826c49b7628so405758b3a.0
- for <qemu-devel@nongnu.org>; Thu, 19 Feb 2026 13:35:27 -0800 (PST)
+ id 1vtBg0-0002NB-2d
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 16:35:14 -0500
+Received: by mail-pg1-x531.google.com with SMTP id
+ 41be03b00d2f7-c6e248aa446so591790a12.1
+ for <qemu-devel@nongnu.org>; Thu, 19 Feb 2026 13:35:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771536927; x=1772141727; darn=nongnu.org;
+ d=linaro.org; s=google; t=1771536910; x=1772141710; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=fuTPg39agQxvZ8X/n9GOAcfc2hXaZtEy9IqRumBUw0k=;
- b=ya/aO4yKx2arnK93Sv+6tMkSrC+liz3EU+8kt8LwHBD2SO5MyP1T9DQZm8EyBBF8dY
- yg1n7546GLDmPDnXJ8oFz+iHUOGh3FklNcTdfwXdTqw/c5QEEjh5jZbUL0BCGnMH0gAm
- Ihsdi7dtQn7lsZT3STXl0ORKjEG+RRHGxmCzuqFSrJV93WI8MfiN5CvKmMMtSoDpE3yU
- W3SR7UmBiHeyvH5qDcOiPVvLrk5BuKWvcJsurzH7/bnisOBgAfSi3pOqWDrOo0ks7WXW
- U9eEeZGqUg9PQCxj919q9tRF25XIobveMOTARrzPpJqOPAutB3jF/SI0dyutVLbGz4Y7
- xPQA==
+ bh=8Fd2wS+DSWa6Q3NlGtMzPEzT9l8wL7/82DrDuq8udzc=;
+ b=v5ZIyck4MYuPMMIiFxbr2kLOYPmwYwrKOaIvdqpHIOvYuRu/77z3FuIucBmlz9Z8Te
+ 7HLrOC5P+OTucC18ncoWB4Num0Ai33wUDq9wt3r3unN4vraN0xIlmyDI2+Rs02ys9kxW
+ s2w2pMVu4Yey5H90hb0vSGUaJxwKBaUBh2dIHTSY5ndjv9W+gG41ct7dah5Z/YRlou2T
+ cuqhaTDTXJoKAyQ1qHibGb/VX4QJjQ4xcijsezaoZfmqGaEpiSV3wNbHFiNtXp5A4mg/
+ 4nbnC7K9UuHOeO4g7HgOCC1/VajPR+WqxYmKn6SYk2hXGelzhmCuzJODukTrsIpw6NIg
+ TR/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771536927; x=1772141727;
+ d=1e100.net; s=20230601; t=1771536910; x=1772141710;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=fuTPg39agQxvZ8X/n9GOAcfc2hXaZtEy9IqRumBUw0k=;
- b=V6QB+/3I102D+c6ZOVeLXCPVkWcV/exIjx20cGl8TAjz56vWlT9MDiprJ64xzLoDHO
- 96OMGNh9RevXevT/molw6RVnDy7Mf+czVPHYQoTfuuUSyRLe6lUwldzfEYx21/jiz/MG
- //7wZzDOwWwqpnDCFxzVUd/6gkKgEgcYkczDrqe+yJP0kJQDSJqpaJP144JfSiaemq5o
- 2+sc/neYBmHNssbM9xCdAoji6Xq7cmOyII2nzp0otI4rvUAf9ynv3nVfMNLUqADznlCq
- 5QgDGvNhJuQWe7jbz2O2CjkXLm/4shKIx9Liu0vbpEoZq6U38HygjyyQbNjr1Nb96qSQ
- KWZg==
+ bh=8Fd2wS+DSWa6Q3NlGtMzPEzT9l8wL7/82DrDuq8udzc=;
+ b=NRCnZYaybLPZBAzv8/M090lKJYie8GL8tQk7rrmMQwtDDfVa9xDehqwHG24NZqZ81H
+ P8wcY5Prf4ROQSWLb6p9J/xpoA4FaEKGZvPtsVviQLwOObmOID93WCqFOAt0V88PZjez
+ ZJHl9k/fVA6uTkKXY3Cee20hLa1XUbS2NhxfzO8UPesrNZ1ItqKCXi83TcjcMv1u4A7E
+ vjGxKHD4vyvuhX+DjJ5dMR9wIgkwMbPeUo3rgkwEZnyH47giBLCfMA09iszKhadLi6M7
+ dDagRf6uOxrKyQwKOVmJhdk11peTJ5sURcAyVW/b2zXbqibGNX2XYKCf9vxbDTpWa2Eu
+ 8Xcw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWAmOV0ivXEubX78zB8uF6Mf2ovdOMC70NdBM/8oW0UsI6J6lFMvEXCkSF+ImyKyFVwXmCmpGuB61D4@nongnu.org
-X-Gm-Message-State: AOJu0Yx/fwIUGxndNQHIRL6vM4cWXO71G3I4m/7EszfLslvhxFxPKNYC
- TScqt2mY/1sPWi/YliT6XoaMl8dy/nOqR/CK5UaofFfQ1Ty9bspaySeNJXg2ErjywnY=
-X-Gm-Gg: AZuq6aIYjJNJT4Eiqu9Pj50Fh9YciwJrgeR2+eMAcIxqELCNEGkRp+v7cvo8uXwKX3j
- 06Imhtol4byVa2O7kPGth6YCgoKi1Af1TO8GxnswsuS3/x5eHl+qlSwK94Bo3cQWs3knWEYzLKw
- nIFozjFjgNhnvsjN8zD+xWx73H0VMf6tKYYYjf1d2Bqj63DrFtKNzrt55Wa8O1cOLtcut/HZL9J
- CoVCtm0+cdpf6M0aQ661nSdI9SS2sO+mtR5OSrLE+i8hQlesakIvsmbpF8366w/ly8Bjlwdtfzz
- /Bp7opEfpT0heZeZZY1QyvubPchnnZvB02reNRDbClJXFitFW1SNdxlcPej7mN91iFnqYOhFJyb
- 7joERlIXC2PH7MhW0F2sDmXcv4GGrf2ocYnI0eFxzp5fMN/vlwHw3ONb6WeN6kMngDPn+SaXf7o
- CO1PcQN2NanucfnAgVt86cu8MdffUdL/1bKBOecY9aGST7ULrC96F1RuU1aL+BUm8v2YC2xwBfG
- NfQYmk=
-X-Received: by 2002:a05:6a20:431e:b0:393:fb81:ac66 with SMTP id
- adf61e73a8af0-3948376c0ecmr18685955637.5.1771536926876; 
- Thu, 19 Feb 2026 13:35:26 -0800 (PST)
+ AJvYcCWUALs6vuUd6Gl9Uj1I5fSCjaVIPyvoCJCa26F1m38Cb0sdAcUEqDPxiG6shS1mm4X6nfh6AYC6wHIA@nongnu.org
+X-Gm-Message-State: AOJu0Yze6/WvDXouvDGEs3f6pfmya+EUAzAJxpd0wNsBEL7+DyCSr/l9
+ ruMZAnezA3GCiOmd9mNo0zcl6gloGyKiV3tfTMRML65ZsKfw1qNIv/eyMvtSDBpOymo=
+X-Gm-Gg: AZuq6aK2wP9qnDNN2E1ji1wxOh2xDfAfudNewswiDp80TwSTnIoXSZ/5JVTHO4o9ccv
+ ur8AU3ZmKn8NklIxhn8ZZ6rXivCPqTkeAH2AuEEnb5UegfeZ++F2bnRAnnEHnk1HOtG1Fg6g+Yz
+ fWTLg64b9ZJmYgPtQ+PaDWNapIazgPL44HopS5+t4lKQQzP+P0X0xUuabKPbsK4kahxijpLmCzb
+ FcHcaLR9SUgJEDuZwqGPo3AoyyKVZlAFvlCxaL0Mbp/WTZSnVq7ta3Cl1nLtf0SGFzKNc9Ny/XM
+ 1XxEHI/hjQBryW13M/VqIJyCky/TqwyBU/WryQec2TguejNOMHJRug988EXPUI0QIbRuSUKIdYj
+ DvKvk/Z/0ZKJfalWDksp3doyrXpzJCW9lnVkUnMjNgUAweMWRLJv3++gRJEXK7zcGC+A03oqHti
+ eejg1m7bXYIrH4kH12vIT9QWmsvXdJUipkmn/e5ZEcd5YTYOGfIoG1rIUbDm4C/pLstbW2
+X-Received: by 2002:a17:902:ef4c:b0:2a7:5171:9221 with SMTP id
+ d9443c01a7336-2ab505e4bddmr205472205ad.42.1771536910197; 
+ Thu, 19 Feb 2026 13:35:10 -0800 (PST)
 Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c6e52fcff01sm16619125a12.2.2026.02.19.13.35.26
+ d9443c01a7336-2ad1a9d58e7sm182774265ad.45.2026.02.19.13.35.09
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 19 Feb 2026 13:35:26 -0800 (PST)
-Message-ID: <c06341ab-007d-4216-bf35-93abd1edd20e@linaro.org>
-Date: Thu, 19 Feb 2026 13:34:52 -0800
+ Thu, 19 Feb 2026 13:35:09 -0800 (PST)
+Message-ID: <74eab6c4-395a-4f22-b2b7-d1462bb9da86@linaro.org>
+Date: Thu, 19 Feb 2026 13:30:08 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 48/50] target/s390x: Build 'gdbstub.c' once for system
- single binary
+Subject: Re: [PATCH v2 28/50] target/riscv: Remove unnecessary target_ulong
+ type uses
 Content-Language: en-US
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>, qemu-s390x@nongnu.org,
  =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-riscv@nongnu.org, qemu-ppc@nongnu.org, Thomas Huth <thuth@redhat.com>,
- Ilya Leoshkevich <iii@linux.ibm.com>, David Hildenbrand <david@kernel.org>
+ qemu-riscv@nongnu.org, qemu-ppc@nongnu.org,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
+ <liwei1518@gmail.com>, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
 References: <20260219191955.83815-1-philmd@linaro.org>
- <20260219191955.83815-49-philmd@linaro.org>
+ <20260219191955.83815-29-philmd@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  xsDNBGK9dgwBDACYuRpR31LD+BnJ0M4b5YnPZKbj+gyu82IDN0MeMf2PGf1sux+1O2ryzmnA
@@ -118,11 +120,11 @@ Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  5SYuJaKzCAgNeAy3gUVUUPrUsul1oe2PeWMFUhWKrqko0/Qo4HkwTZY6S16drTMncoUahSAl
  X4Z3BbSPXPq0v1JJBYNBL9qmjULEX+NbtRd3v0OfB5L49sSAC2zIO8S9Cufiibqx3mxZTaJ1
  ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <20260219191955.83815-49-philmd@linaro.org>
+In-Reply-To: <20260219191955.83815-29-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::531;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x531.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -146,15 +148,10 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2/19/26 11:19 AM, Philippe Mathieu-Daudé wrote:
-> There is a single qemu-system-s390x binary, but by moving
-> 'gdbstub.c' in the target_common_system_arch[] source set
-> the resulting object can be linked into a single qemu-sytem
-> binary.
-> 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   target/s390x/meson.build | 3 ++-
->   1 file changed, 2 insertions(+), 1 deletion(-)
+>   target/riscv/gdbstub.c | 8 ++++----
+>   1 file changed, 4 insertions(+), 4 deletions(-)
 > 
 
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
