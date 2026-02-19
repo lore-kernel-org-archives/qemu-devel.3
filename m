@@ -4,91 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23F58E9A04C
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 14:51:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81C47E9A04A
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 14:51:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vt5MH-0003zp-9p; Thu, 19 Feb 2026 09:50:25 -0500
+	id 1vt5MJ-00041c-Cs; Thu, 19 Feb 2026 09:50:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ruslichenko.r@gmail.com>)
- id 1vt5Lp-0003k5-LV
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 09:50:06 -0500
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ id 1vt5Ly-0003lw-3Y
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 09:50:15 -0500
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <ruslichenko.r@gmail.com>)
- id 1vt5Lc-00082S-HA
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 09:49:54 -0500
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-43591b55727so1037476f8f.3
- for <qemu-devel@nongnu.org>; Thu, 19 Feb 2026 06:49:41 -0800 (PST)
+ id 1vt5Lr-00086d-V6
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 09:50:03 -0500
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-4362507f0bcso807252f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 19 Feb 2026 06:49:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1771512580; x=1772117380; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1771512597; x=1772117397; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=G6XbuelDKSmKPy76y/o+J48D8IcTsclY45iaYUbWGUQ=;
- b=e+/6+Json03MK2xDlAS5eMQRT/kDZq1SPqMiHxlrJQrPcbb/PoEev/4iVeI0cb6/Rq
- RJc6NC4tMKONKV1Evhr18yz+BRPzzEHSvUXThCK2yiXg1NYEHZh3892YJc4bSt/CI3p8
- reAp91wdqUnM/qup0wrPxlYndqHwltt/Q7OJ2uYv8Yzb7q2M4vJyvN+gYhgEiLKbvnLh
- +pwEU96bFHC/mRG3HVFX9O+TEEotB2tQQY+9J4ZwWu806wCo+VAzdynY2BIgGQCsrZDW
- /q5mWSzbD1z1+38hHUoJ4Dyj4NHHAaQiB2h7PbBACSSjxCw9Z3sOhL3PZboC3wu5hX8H
- V2Jw==
+ bh=QqBa/7C3Zm8WB1y+B8Ti6v5cmf7dq6/wP6QhxHVtEQs=;
+ b=Aob3jCOBXfSl+s+hgNsVm3YZ37VW4sAetnUXkzmJu513h4zDoQgIl0Ts14KitStEnI
+ 7OauYDDssrw+AxfnQiuPmHAmQzBDWQew8rnOlo9FuCsLKI6T/2nrRW+2sQaayevx+9AC
+ nV4Osa8JNXoNJ04aO0lpZsPJlWQWBJzLrq3Ywi3xFrmX3cRERN53P6vOzSOietagfnaf
+ 1lHcDn6SSteS4dyjSkb+i5jq7TMqBdL9qdliVYigWRYcau1Jg4ADZxnYRHejQ+Trt1YO
+ 4kItzVTTaRCwFKl07eg2KxwU0/9lUv3CWciFVvlrvwMzqf+kUNSkiHi7XAe6/bIM9A1y
+ yckg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771512580; x=1772117380;
+ d=1e100.net; s=20230601; t=1771512597; x=1772117397;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=G6XbuelDKSmKPy76y/o+J48D8IcTsclY45iaYUbWGUQ=;
- b=aAhOg4WdULzvc2yAVM159VXY2w5JVeYF9L6LjqFGCyLhyuj/iLM0rSeO8iH96OtiM3
- w/gSGbXwn4TpP1rLfjykSzO7l2Vgqg096jGIdH7eU7jmdw9LR6q6K+S12aprWQDL9uTj
- oCe2J3+ZpZljMu5CwEthHEOEIEbYDoMr+cTxnT8OcCFsU2VwERyBsOiY/Pi5PwH2URwR
- yR3ufYUzAlQIEKj7KC3+bJ9Zz6mwH3SjD4ylcB/V4u0nGHgc0EdN7zVtnm5e0fpI5VZ/
- /bcdL2DV+mLFtyNDcJ4YWvITW4wDnoQ7FXbnvJrNf4GB21DcgWy7yE+IrzI8/au3Al/E
- By4A==
-X-Gm-Message-State: AOJu0YzjTMqREOrMKcfoT6g3td71hWE70BPI4OAmITcGz9Rf18zVQina
- cX8jGh+JROIweuGxIN5uGf3d8OzLGB59I3Ia9W1xmW6Zdm/AMqOWngDR0sxfUFXg
-X-Gm-Gg: AZuq6aIroXin2mYl4ARlGLZdgPGqa/+/vONo6NZoDZpkYlM1x2gIKer/3A5E8rcbMBd
- j0KxY4smAtymL8qMHJLb14J0TIADayR+isTEdttlONy4aU8pSagHZoelmvncN6HA+2deR2JOGgn
- wXVPndXVI7OuKHEpMpAzNGJqM2LJabFKohXM/q2MAbKMlQJnJbMbPlS76nd/w4BJAUFrUwFc5cb
- e9ZH5suyjcr/Krqj2Qatx4Vkln9aWO6qCSl3tQPCsRxqK4fVZKAIe2oO+5ftX3iWwCHDDSpXp1E
- A3pJBZGdRHoWv5E2ssk/H31tRp9/djlxjsn33qtgpRYef84JiS4hppFdR7JN0yIw+yyDSXcjHEo
- 1ieGVrY12yrvbWLe5voHo1fCqSp6w87Q928g2idN1sNXL2+lO8+Jq8ng44l6T8HrZsU72EBvNGo
- mFh/96wyvKdpA2cWs3fy5ZIMKCN1ntNRygvJoo/TiRLEpkVlZwXbQQpECim2JFZmt4j324
-X-Received: by 2002:a05:6000:26cf:b0:437:678b:83ca with SMTP id
- ffacd0b85a97d-4379dba36bamr30152921f8f.50.1771512579660; 
- Thu, 19 Feb 2026 06:49:39 -0800 (PST)
+ bh=QqBa/7C3Zm8WB1y+B8Ti6v5cmf7dq6/wP6QhxHVtEQs=;
+ b=uEO7f38r46XN15MJ5Bzb3+X4e6yJnGGQCJa1EQ2Lzy2cDSLvnLqELcd8saS79d+H0f
+ ceUlr1lIqx6/bt9XvQ/3GLn9CK2aHBKamvSxXJdEW1I39TaLErdCTqVpay6veWS3ui1H
+ dDfFjoKQgAEWKIoIOuSBh7woYB5ovaOWY21wZ24cmzQdd5Ciuq/Q9FWt/zQ89Kd88aTv
+ i0MkLST8Sjxn8QxE9EwHUprwUHw/B54JWqZUjHtu1u5ILV1NHoKR0f4aP2RnzMo3kj8B
+ 3n+Ii8J9bfmJ7TdFLT0U8Zdz2LD2qK7YzOOUDQOBB+O/n8l11fIYcP4V8Y4+d+ocur03
+ d2IQ==
+X-Gm-Message-State: AOJu0Yzqi6z8mrZkFmoCl0ztiAtheXkwj+2brc3LgoUKS4nGs8AY+Vua
+ AjZPKixDXgSAmz8vE7tm8LbiYi/URkCOHveraFX/Ctj3ugiHWM+3fv4/PGfkt/v3
+X-Gm-Gg: AZuq6aIM/pJgHz7zBa8CgRS8qil1j6S4p5ypfSvwvTEh8yOUMmdCmRsMFWTmCdWdLjQ
+ 6H9yqn3yxZx0nSk7H18i4tw1DtP2Ijk0bEwu2iC6zKk6Fd/OQwuLDWGnwqGpHYOa6JIv9erFHSM
+ oeTAR85c6sGWXnYlSekEhvHCZMCRUr8XseY5DqZu49luH+wjPUu3itYcd1DiuFQZIiT9bX4SWrU
+ qDZRGFUhqqSE7rkNc4/Qx0JY9Xok7sva66beBoPmpp8N3V6QeHo1v7i05cNFzGj6if4CNgusFyk
+ C0PcAlpBQwkqzr2wrhMkjdmnc5DhgFS0HNeSKnD3Zn8qfJg9SOAxhOY3HVrw1r8JUks9X0ojcEQ
+ PLUtn6bphqs5QDHn4RlLeUoZzwcK5bcEoHlF6mOYIz6lxzrtC9TRF8NX8J/31cDAX+rIIEsfy62
+ KoIvXHGKDFqLFwrNZq2lTCI/+JJ/iMXoZ8L+wJFY33xDlyJ6QCudyU522DPGPlnO2Fe5h5
+X-Received: by 2002:a5d:4b09:0:b0:437:6bda:d979 with SMTP id
+ ffacd0b85a97d-4396270852bmr2899449f8f.27.1771512597046; 
+ Thu, 19 Feb 2026 06:49:57 -0800 (PST)
 Received: from thinkpad-t470s.. (93-143-129-182.adsl.net.t-com.hr.
  [93.143.129.182]) by smtp.googlemail.com with ESMTPSA id
- ffacd0b85a97d-43796ac8d82sm50163087f8f.31.2026.02.19.06.49.38
+ ffacd0b85a97d-43796ac8d82sm50163087f8f.31.2026.02.19.06.49.55
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 19 Feb 2026 06:49:39 -0800 (PST)
+ Thu, 19 Feb 2026 06:49:56 -0800 (PST)
 From: Ruslan Ruslichenko <ruslichenko.r@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, alex.bennee@linaro.org, peter.maydell@linaro.org,
  artem_mygaiev@epam.com, volodymyr_babchuk@epam.com,
  takahiro.nakata.wr@renesas.com,
  "Edgar E . Iglesias" <edgar.iglesias@gmail.com>,
- Ruslan_Ruslichenko@epam.com, balaton@eik.bme.hu, philmd@linaro.org,
- wangyanan55@huawei.com, zhao1.liu@intel.com, pbonzini@redhat.com
-Subject: [PATCH v2 19/33] hw/core/machine: add '-hw-dtb' option for machine
-Date: Thu, 19 Feb 2026 15:48:47 +0100
-Message-ID: <20260219144901.3317747-1-ruslichenko.r@gmail.com>
+ Ruslan_Ruslichenko@epam.com, balaton@eik.bme.hu
+Subject: [PATCH v2 31/33] hw/core/fdt_generic_util: Add blockdev binding
+ support
+Date: Thu, 19 Feb 2026 15:48:59 +0100
+Message-ID: <20260219144901.3317747-13-ruslichenko.r@gmail.com>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260219143332.3316679-1-ruslichenko.r@gmail.com>
+In-Reply-To: <20260219144901.3317747-1-ruslichenko.r@gmail.com>
 References: <20260219143332.3316679-1-ruslichenko.r@gmail.com>
+ <20260219144901.3317747-1-ruslichenko.r@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=ruslichenko.r@gmail.com; helo=mail-wr1-x431.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=ruslichenko.r@gmail.com; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,103 +107,149 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
 
-Add new '-hw-dtb' command-line option and corresponding
-MachineState property.
-The 'hw-dtb' option allows to specify a Device tree
-binary with hardware description which Qemu should
-emulate.
+The path add possibility to bind to QEMU block backends
+via the blockdev-node-name property.
+
+This enables support for the modern -blockdev command line option.
 
 Signed-off-by: Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
 ---
- hw/core/machine.c        | 19 +++++++++++++++++++
- include/hw/core/boards.h |  1 +
- qemu-options.hx          |  9 +++++++++
- system/vl.c              |  3 +++
- 4 files changed, 32 insertions(+)
+ hw/core/fdt_generic_util.c | 82 ++++++++++++++++++++++++++++++++++----
+ 1 file changed, 75 insertions(+), 7 deletions(-)
 
-diff --git a/hw/core/machine.c b/hw/core/machine.c
-index d4ef620c17..affd24cd49 100644
---- a/hw/core/machine.c
-+++ b/hw/core/machine.c
-@@ -363,6 +363,20 @@ static void machine_set_dtb(Object *obj, const char *value, Error **errp)
-     ms->dtb = g_strdup(value);
+diff --git a/hw/core/fdt_generic_util.c b/hw/core/fdt_generic_util.c
+index 4ed9602d47..68dfeee096 100644
+--- a/hw/core/fdt_generic_util.c
++++ b/hw/core/fdt_generic_util.c
+@@ -75,6 +75,8 @@ static void fdt_get_irq_info_from_intc(FDTMachineInfo *fdti, qemu_irq *ret,
+                                        char *intc_node_path,
+                                        uint32_t *cells, uint32_t num_cells,
+                                        uint32_t max, Error **errp);
++static bool fdt_attach_blockdev(FDTMachineInfo *fdti,
++                                const char *node_path, Object *dev);
+ 
+ typedef struct QEMUIRQSharedState {
+     qemu_irq sink;
+@@ -241,6 +243,8 @@ FDTMachineInfo *fdt_generic_create_machine(void *fdt, qemu_irq *cpu_irq)
+     current_machine->smp.cpus = fdt_generic_num_cpus;
+     current_machine->smp.max_cpus = fdt_generic_num_cpus;
+ 
++    bdrv_drain_all();
++
+     DB_PRINT(0, "FDT: Device tree scan complete\n");
+     return fdti;
+ }
+@@ -987,6 +991,52 @@ static void fdt_init_qdev_array_prop(Object *obj,
+     DB_PRINT_NP(0, "set property %s propname to <list>\n", propname);
  }
  
-+static char *machine_get_hw_dtb(Object *obj, Error **errp)
++/*
++ * Try to attach by matching drive created by '-blockdev node-name=LABEL'
++ * iff the FDT node contains property 'blockdev-node-name=LABEL'.
++ *
++ * Return false unless the given node_path has the property.
++ *
++ * Presence of the property also disables the node from ever attached
++ * to any drive created by the legacy '-drive' QEMU option.
++ *
++ * For more on '-blockdev', see:
++ *   http://events17.linuxfoundation.org/sites/events/files/slides/talk_11.pdf
++ */
++static bool fdt_attach_blockdev(FDTMachineInfo *fdti,
++                                const char *node_path, Object *dev)
 +{
-+    MachineState *ms = MACHINE(obj);
++    static const char propname[] = "blockdev-node-name";
++    const char *label;
 +
-+    return g_strdup(ms->hw_dtb);
++    /* Inspect FDT node for blockdev-only binding */
++    label = qemu_fdt_getprop(fdti->fdt, node_path, propname,
++                             NULL, NULL);
++
++    /* Skip legacy node */
++    if (!label) {
++        return false;
++    }
++
++    /*
++     * Missing matching bdev is not an error: attachment is optional.
++     *
++     * error_setg() aborts, never returns: 'goto ret' is just sanity.
++     */
++    if (!label[0]) {
++        error_setg(&error_abort, "FDT-node '%s': property '%s' = <empty>",
++                   node_path, propname);
++        return false;
++    }
++
++    if (!bdrv_find_node(label)) {
++        return false;
++    }
++
++    object_property_set_str(OBJECT(dev), "drive", label, NULL);
++    return true;
 +}
 +
-+static void machine_set_hw_dtb(Object *obj, const char *value, Error **errp)
-+{
-+    MachineState *ms = MACHINE(obj);
-+
-+    ms->hw_dtb = g_strdup(value);
-+}
-+
- static char *machine_get_dumpdtb(Object *obj, Error **errp)
+ static void fdt_parse_node_reg_prop(FDTMachineInfo *fdti, char *node_path,
+                             Object *dev)
  {
-     MachineState *ms = MACHINE(obj);
-@@ -1145,6 +1159,11 @@ static void machine_class_init(ObjectClass *oc, const void *data)
-     object_class_property_set_description(oc, "dtb",
-         "Linux kernel device tree file");
+@@ -1173,6 +1223,7 @@ static int fdt_init_qdev(char *node_path, FDTMachineInfo *fdti, char *compat)
+     char *dev_type = NULL;
+     QEMUDevtreeProp *prop, *props;
+     char parent_node_path[DT_PATH_LENGTH];
++    bool defer_realize = false;
  
-+    object_class_property_add_str(oc, "hw-dtb",
-+                            machine_get_hw_dtb, machine_set_hw_dtb);
-+    object_class_property_set_description(oc, "hw-dtb",
-+                "A device tree binary used to describe the hardware to QEMU");
+     if (!compat) {
+         return 1;
+@@ -1289,6 +1340,11 @@ static int fdt_init_qdev(char *node_path, FDTMachineInfo *fdti, char *compat)
+             continue;
+         }
+ 
++        if (!strcmp(propname, "drive")) {
++            defer_realize = true;
++            continue;
++        }
 +
-     object_class_property_add_str(oc, "dumpdtb",
-         machine_get_dumpdtb, machine_set_dumpdtb);
-     object_class_property_set_description(oc, "dumpdtb",
-diff --git a/include/hw/core/boards.h b/include/hw/core/boards.h
-index edbe8d03e5..722b79b5e4 100644
---- a/include/hw/core/boards.h
-+++ b/include/hw/core/boards.h
-@@ -403,6 +403,7 @@ struct MachineState {
+         fdt_init_qdev_scalar_prop(OBJECT(dev), p, fdti, node_path, prop);
+     }
  
-     void *fdt;
-     char *dtb;
-+    char *hw_dtb;
-     char *dumpdtb;
-     int phandle_start;
-     char *dt_compatible;
-diff --git a/qemu-options.hx b/qemu-options.hx
-index 33fcfe7ce6..1568f3ce4c 100644
---- a/qemu-options.hx
-+++ b/qemu-options.hx
-@@ -4518,6 +4518,15 @@ SRST(initrd)
+@@ -1307,18 +1363,30 @@ static int fdt_init_qdev(char *node_path, FDTMachineInfo *fdti, char *compat)
+              */
+             fdt_init_register_user_cpu_cluster(fdti, OBJECT(dev));
+         } else {
+-            object_property_set_bool(OBJECT(dev), "realized", true,
+-                                     &error_fatal);
+-            if (dc->legacy_reset) {
+-                qemu_register_reset((void (*)(void *))dc->legacy_reset,
+-                                    dev);
++            if (defer_realize) {
++                FDTDeferredNode *dnode = g_new0(FDTDeferredNode, 1);
++                *dnode = (FDTDeferredNode) {
++                        .dev = DEVICE(dev),
++                        .node_path = g_strdup(node_path),
++                        .next = fdti->deferred
++                };
++                fdti->deferred = dnode;
++            } else {
++                object_property_set_bool(OBJECT(dev), "realized", true,
++                                        &error_fatal);
++                if (dc->legacy_reset) {
++                    qemu_register_reset((void (*)(void *))dc->legacy_reset,
++                                        dev);
++                }
+             }
+         }
+     }
  
- ERST
+-    fdt_parse_node_reg_prop(fdti, node_path, dev);
++    if (!defer_realize) {
++        fdt_parse_node_reg_prop(fdti, node_path, dev);
  
-+DEF("hw-dtb", HAS_ARG, QEMU_OPTION_hw_dtb, \
-+    "-hw-dtb file    use 'file' as device tree image\n", QEMU_ARCH_ALL)
-+SRST
-+``-hw-dtb file``
-+    Use <file> as a device tree binary (dtb) image used to create the
-+    emulated machine. This dtb will not be passed to the kernel, use -dtb
-+    for that.
-+ERST
-+
- DEF("dtb", HAS_ARG, QEMU_OPTION_dtb, \
-     "-dtb    file    use 'file' as device tree image\n", QEMU_ARCH_ALL)
- SRST
-diff --git a/system/vl.c b/system/vl.c
-index aa9a155041..c890da586c 100644
---- a/system/vl.c
-+++ b/system/vl.c
-@@ -3020,6 +3020,9 @@ void qemu_init(int argc, char **argv)
-             case QEMU_OPTION_dtb:
-                 qdict_put_str(machine_opts_dict, "dtb", optarg);
-                 break;
-+            case QEMU_OPTION_hw_dtb:
-+                qdict_put_str(machine_opts_dict, "hw-dtb", optarg);
-+                break;
-             case QEMU_OPTION_cdrom:
-                 drive_add(IF_DEFAULT, 2, optarg, CDROM_OPTS);
-                 break;
+-    fdt_parse_node_irq_prop(fdti, node_path, dev);
++        fdt_parse_node_irq_prop(fdti, node_path, dev);
++    }
+ 
+     g_free(dev_type);
+     g_free(props);
 -- 
 2.43.0
 
