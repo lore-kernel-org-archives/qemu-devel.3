@@ -4,70 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBF73E9A03B
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 11:57:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E92FE9A048
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 12:11:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vt2dV-0004Ry-45; Thu, 19 Feb 2026 06:56:01 -0500
+	id 1vt2rs-0002Uq-Qz; Thu, 19 Feb 2026 07:10:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vt2dD-0004Nh-N1
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 06:55:44 -0500
-Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vt2rq-0002UI-2A
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 07:10:50 -0500
+Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vt2dB-0006Du-Bh
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 06:55:43 -0500
-Received: from mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
- [IPv6:2a02:6b8:c24:fa2:0:640:41ee:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id DB13F808A6;
- Thu, 19 Feb 2026 14:55:38 +0300 (MSK)
-Received: from vsementsov-lin (unknown [2a02:6bf:8080:192::1:26])
- by mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id VtZwpM4A6uQ0-T5PuHanP; Thu, 19 Feb 2026 14:55:38 +0300
-Precedence: bulk
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1771502138;
- bh=uKqjTTla0ppSaS2iWSAYfvEBzwmJeIAv2EL1JoBxCqU=;
- h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=ndy7lZ53HSoiauG6hrkn+rAsgSzyXlUM14FHyYHosTi9Bz+dvEtlwOqtO+rUEPUHp
- urTLT7JfYYW+dF7/Raype//LiEG4wBt+R/NWUw7N2sHC6rjR81IjvOmc+ZAgJhxbaM
- B2e/xedsfOlunfaZe6tSKEXhTlmDXLU5aAV7iYFI=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-To: jasowang@redhat.com,
-	mst@redhat.com
-Cc: thuth@redhat.com, armbru@redhat.com, eblake@redhat.com, farosas@suse.de,
- peterx@redhat.com, zhao1.liu@intel.com, wangyanan55@huawei.com,
- philmd@linaro.org, marcel.apfelbaum@gmail.com, eduardo@habkost.net,
- davydov-max@yandex-team.ru, qemu-devel@nongnu.org,
- vsementsov@yandex-team.ru, yc-core@yandex-team.ru, leiyang@redhat.com,
- raphael.s.norwitz@gmail.com, bchaney@akamai.com
-Subject: [PATCH v11 4/8] net: introduce vmstate_net_peer_backend
-Date: Thu, 19 Feb 2026 14:55:25 +0300
-Message-ID: <20260219115530.2019498-5-vsementsov@yandex-team.ru>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260219115530.2019498-1-vsementsov@yandex-team.ru>
-References: <20260219115530.2019498-1-vsementsov@yandex-team.ru>
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vt2rn-0001qf-BN
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 07:10:49 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
+ s=dkim; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject
+ :Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
+ Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+ :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+ List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
+ List-Help; bh=VKcZw4shJXaD3sECAVsM48iYTgcRMa3oDUvt25bGHY8=; b=Be+YDOuGo3ZYsYD
+ n43Ds4bRqiW2xtFwI4f6PKf4Qkpnek2XU0cX7U3AqpNg0zl2SPLexDEUXRcSnMTK6lqwJpg9lktOr
+ NbrZbSCqZF8/fc18eXyoDe53O6K5pwH4mL2bqJ0RZ+S8HTKVBYti/jaUO7eEvy0wWLrNriXqDhT+W
+ G4=;
+Date: Thu, 19 Feb 2026 13:14:20 +0100
+To: deller@kernel.org
+Cc: Richard Henderson <richard.henderson@linaro.org>, 
+ qemu-devel@nongnu.org, Helge Deller <deller@gmx.de>
+Subject: Re: [PATCH 1/4] hw/hppa: Add BMC on 64-bit machines only
+Message-ID: <aZb-gJgA9fHFrqc7@hive.localdomain>
+References: <20260218201221.20958-1-deller@kernel.org>
+ <20260218201221.20958-2-deller@kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.154.239.136;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260218201221.20958-2-deller@kernel.org>
+Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
+ helo=rev.ng
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
+Precedence: list
 List-Id: qemu development <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -76,108 +61,42 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Anton Johansson <anjo@rev.ng>
+From:  Anton Johansson via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-To implement backend migration in virtio-net in the next commit, we need
-a generic API to migrate net backend. Here is it.
+On 18/02/26, deller@kernel.org wrote:
+> From: Helge Deller <deller@gmx.de>
+> 
+> Prevent adding the BMC with it's serial ports on 32-bit machines, even
+> if they have a PCI bus like the B160L. This fixes boot problems with
+> HP-UX on B160L.
+> 
+> Signed-off-by: Helge Deller <deller@gmx.de>
+> Fixes: 557bc5260cfd ("hw/hppa: PCI devices depend on availability of PCI bus")
+> Cc: qemu-stable@nongnu.org
+> ---
+>  hw/hppa/machine.c | 2 ++
+>  1 file changed, 2 insertions(+)
+> 
+> diff --git a/hw/hppa/machine.c b/hw/hppa/machine.c
+> index c3680667ae..d6aeb793c0 100644
+> --- a/hw/hppa/machine.c
+> +++ b/hw/hppa/machine.c
+> @@ -376,7 +376,9 @@ static void machine_HP_common_init_tail(MachineState *machine, PCIBus *pci_bus,
+>  
+>      if (pci_bus) {
+>          pci_init_nic_devices(pci_bus, mc->default_nic);
+> +    }
+>  
+> +    if (pci_bus && hppa_is_pa20(&cpu[0]->env)) {
+>          /* BMC board: HP Diva GSP PCI card */
+>          dev = qdev_new("diva-gsp");
+>          if (dev && !object_property_get_bool(OBJECT(dev), "disable", NULL)) {
+> -- 
+> 2.53.0
+> 
 
-Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
----
- include/net/net.h |  4 ++++
- net/net.c         | 47 +++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 51 insertions(+)
-
-diff --git a/include/net/net.h b/include/net/net.h
-index 45bc86fc86..aa34043b1a 100644
---- a/include/net/net.h
-+++ b/include/net/net.h
-@@ -5,6 +5,7 @@
- #include "qapi/qapi-types-net.h"
- #include "net/queue.h"
- #include "hw/core/qdev-properties-system.h"
-+#include "migration/vmstate.h"
- 
- #define MAC_FMT "%02X:%02X:%02X:%02X:%02X:%02X"
- #define MAC_ARG(x) ((uint8_t *)(x))[0], ((uint8_t *)(x))[1], \
-@@ -110,6 +111,7 @@ typedef struct NetClientInfo {
-     SetSteeringEBPF *set_steering_ebpf;
-     NetCheckPeerType *check_peer_type;
-     GetVHostNet *get_vhost_net;
-+    const VMStateDescription *backend_vmsd;
- } NetClientInfo;
- 
- struct NetClientState {
-@@ -354,4 +356,6 @@ static inline bool net_peer_needs_padding(NetClientState *nc)
-   return nc->peer && !nc->peer->do_not_pad;
- }
- 
-+extern const VMStateInfo vmstate_net_peer_backend;
-+
- #endif
-diff --git a/net/net.c b/net/net.c
-index a176936f9b..8d09754fa0 100644
---- a/net/net.c
-+++ b/net/net.c
-@@ -58,6 +58,7 @@
- #include "qapi/string-output-visitor.h"
- #include "qapi/qobject-input-visitor.h"
- #include "standard-headers/linux/virtio_net.h"
-+#include "migration/vmstate.h"
- 
- /* Net bridge is currently not supported for W32. */
- #if !defined(_WIN32)
-@@ -2173,3 +2174,49 @@ int net_fill_rstate(SocketReadState *rs, const uint8_t *buf, int size)
-     assert(size == 0);
-     return 0;
- }
-+
-+static int get_peer_backend(QEMUFile *f, void *pv, size_t size,
-+                            const VMStateField *field)
-+{
-+    NetClientState *nc = pv;
-+    Error *local_err = NULL;
-+    int ret;
-+
-+    if (!nc->peer) {
-+        return -EINVAL;
-+    }
-+    nc = nc->peer;
-+
-+    ret = vmstate_load_state(f, nc->info->backend_vmsd, nc, 0, &local_err);
-+    if (ret < 0) {
-+        error_report_err(local_err);
-+    }
-+
-+    return ret;
-+}
-+
-+static int put_peer_backend(QEMUFile *f, void *pv, size_t size,
-+                            const VMStateField *field, JSONWriter *vmdesc)
-+{
-+    NetClientState *nc = pv;
-+    Error *local_err = NULL;
-+    int ret;
-+
-+    if (!nc->peer) {
-+        return -EINVAL;
-+    }
-+    nc = nc->peer;
-+
-+    ret = vmstate_save_state(f, nc->info->backend_vmsd, nc, 0, &local_err);
-+    if (ret < 0) {
-+        error_report_err(local_err);
-+    }
-+
-+    return ret;
-+}
-+
-+const VMStateInfo vmstate_net_peer_backend = {
-+    .name = "virtio-net-nic-nc-backend",
-+    .get = get_peer_backend,
-+    .put = put_peer_backend,
-+};
--- 
-2.52.0
-
+Reviewed-by: Anton Johansson <anjo@rev.ng>
 
