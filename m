@@ -4,107 +4,131 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5989C531D2
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 21:34:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C060EC531D3
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 21:35:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vtBef-0005xy-Mz; Thu, 19 Feb 2026 16:33:49 -0500
+	id 1vtBg0-0006Qk-HV; Thu, 19 Feb 2026 16:35:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vtBeY-0005wz-Br
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 16:33:43 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vtBeW-0001s9-J2
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 16:33:42 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771536814;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=fbC6eOBUqBal7mrJSSO7E2pgE9D+Hs+CdZ1zBYccWwE=;
- b=Z8qjX0UQ3XdKPdWUvDl0AkppyKz5wglou2BkAhI+yFOyXNyWjSlEEUOtASsQ+3ISt856bX
- JZ/wzixkRD9AKlAGtGYmXdPbhlN7OQstpHEpMsrOFzLivly0zcSg+OFGJFB2EBWcroEtTl
- 0VRzcd+uJDZT/QGRBxUNocYEhvch3zY=
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
- [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-42-RrhMhBaNMx6ZmXiA7b0VOw-1; Thu, 19 Feb 2026 16:33:32 -0500
-X-MC-Unique: RrhMhBaNMx6ZmXiA7b0VOw-1
-X-Mimecast-MFC-AGG-ID: RrhMhBaNMx6ZmXiA7b0VOw_1771536812
-Received: by mail-qv1-f69.google.com with SMTP id
- 6a1803df08f44-89470bda22aso138274246d6.1
- for <qemu-devel@nongnu.org>; Thu, 19 Feb 2026 13:33:32 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vtBfz-0006QG-2Q
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 16:35:11 -0500
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vtBfx-0002MH-91
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 16:35:10 -0500
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-2a929245b6aso13540075ad.0
+ for <qemu-devel@nongnu.org>; Thu, 19 Feb 2026 13:35:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1771536812; x=1772141612; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=fbC6eOBUqBal7mrJSSO7E2pgE9D+Hs+CdZ1zBYccWwE=;
- b=kMkM+XqfQs41rVaHEWQME8DZy1RBDYgoBiNJptPoaa6AY1mSkM2YWiTWcvRehzfzcZ
- If7aeb2PH7Yqx/hgmuBLjKhB+iziGb7bJ3fG9Gj23ywMjm6q7hjWLx1KBuYXE/Tv/hDQ
- CKKNBW726YCVuZ4ZOhViTFZfJroHGrXnxtigZb925UraaytLZx3muz0FeHFCC4/yhcuo
- Xu39X1opRoeDSGM08hyJgskCzjEq3nHvvHMpbeMHe591R0flzbKkKq0sZChpW79nMDhh
- q7V6/vEfvDc5Oi8I1oLW/lTtHcn0pkAkAZVXTVuOXnTmowQxmwJwBo/2EIUiOG7+UWO+
- 6LjA==
+ d=linaro.org; s=google; t=1771536908; x=1772141708; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=V7R3e/e4LS2ryFQoDPSWr49ncIDOfVevFBz0q6M0arQ=;
+ b=FrS3wgOAErPeGNkSRPTJt0GpKo5Vw2jy3XtYwPEY/wim5zDZOnadeGapTwRoCxNCtW
+ OJqlT7gdOZXn/FdzPebej4p/3Xft2E1CWF7fAw5HvWn7hwWPwb2g444Ys4lYNz8Tjh/8
+ zuRAKfBB+PO+5UyCbYvk2e7RjjUoT+r9tsihpIysmUQXldaids1V6WwDDEE9OfOBkkfz
+ zgW0THn588TnBxbI2CFugmAVjIsAz7fgeAao4sgvn7wxGfu/KSFeeJ69rVG6F3m9+JTP
+ u2Wd8e7mZ9Y9PAR0n/FVxjoEWtan20lahjtaOlz374NlD4gG9bRQNuC9oL5hunYiFV1m
+ fBMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771536812; x=1772141612;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=fbC6eOBUqBal7mrJSSO7E2pgE9D+Hs+CdZ1zBYccWwE=;
- b=YnkvwNTAN3HFAgJqMklIVAVJItNCWR21+hNLNpwTJFFEVB7phfqw8SF/+lZb5CTr51
- yiRVI7mpJhvkcWFrnfqtR2X7gETBAXNWfWSWK6G8QniIbIZYdsvkYx6oOP/YoZ5fGgdT
- c/t+YAq0oWy9ELdyrkLsafADCwE5AwgoCY61XB++95lyf29Kv+38/maTgwoJgvLVB6I5
- 8jI/aOYw6999WSvrgoCHOqsvZvWig/Cse7HqN1kgePkYH01osv0AeR8qOFW7R+f7wJbY
- /ngQCSbV3lNSeT9m5CVmH6vLstd+7Esw78UO7x/DHZo8JiNWjmNfprotZOkwhCYOKyyK
- THVQ==
-X-Gm-Message-State: AOJu0Yx1t2769yBQOWaeVhM1UwHGH76e1Ip7vNqr+gsLL340fTD9V+eB
- m31Cx6mgI5dSlqT8/z4T9QDQDqfaDRPdjvOLIDfhS4TgGtAGoZcHgTWEyNCMDLnZarJhEoLgcla
- PoL7Bu7Ghi3USGJPmDcRvTC7mSySdaaIFdwwypp8yrwlZpkWlWolZ6b53
-X-Gm-Gg: AZuq6aIxIjDU3uLrVGuYkRer6AtBpPtuB19DOJzI17dBQcmYfwR9YYruKVzrqeqrksB
- YvtUdpX7L3rz0g96rmmCQFdcX0gEIHHTQzjMVY2ldWOM5cFu0R9fzhpLj4+PIhsKiCO4tqUjgxW
- cWBUiR++g4km83807vYBEu2BM8PP0TLAUEGEBCQb7YwhejlO/CNa4IQq8OkYLE3Z2sSPwZ+NaB+
- FWWOi2tGuzFzFQgROZUsqYrdSp6xpIMcnn2/2OKtwtHm2Cna1Gg1ir3Epo1Ytt1dmQ7eENueS6N
- ybzqPHtH76s+Ll3No+ZZZ+ZRuqQIFOCW6EuCkvipHDIEakvYT09kTSrQ5qvaXdcdLwXo3pPeTDV
- 57FKrnR8E9VP14g==
-X-Received: by 2002:a05:6214:20a4:b0:896:f47e:fd4d with SMTP id
- 6a1803df08f44-89962071054mr60367436d6.56.1771536811986; 
- Thu, 19 Feb 2026 13:33:31 -0800 (PST)
-X-Received: by 2002:a05:6214:20a4:b0:896:f47e:fd4d with SMTP id
- 6a1803df08f44-89962071054mr60366986d6.56.1771536811475; 
- Thu, 19 Feb 2026 13:33:31 -0800 (PST)
-Received: from x1.local ([174.91.117.149]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-8971cca72e8sm227206706d6.20.2026.02.19.13.33.30
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 19 Feb 2026 13:33:31 -0800 (PST)
-Date: Thu, 19 Feb 2026 16:33:19 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Lukas Straub <lukasstraub2@web.de>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Zhang Chen <zhangckid@gmail.com>,
- Hailiang Zhang <zhanghailiang@xfusion.com>,
- Markus Armbruster <armbru@redhat.com>, Li Zhijian <lizhijian@fujitsu.com>,
- "Dr. David Alan Gilbert" <dave@treblig.org>
-Subject: Re: [PATCH v9 19/19] colo: Fix a rare crash during shutdown
-Message-ID: <aZeBn2MBKvQQYEAx@x1.local>
-References: <20260218-colo_unit_test_multifd-v9-0-d8dbdb0ca6f6@web.de>
- <20260218-colo_unit_test_multifd-v9-19-d8dbdb0ca6f6@web.de>
+ d=1e100.net; s=20230601; t=1771536908; x=1772141708;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=V7R3e/e4LS2ryFQoDPSWr49ncIDOfVevFBz0q6M0arQ=;
+ b=CaZOb6CUzxGP71+R1BhtKef8aX99yc9He0rSUN6VQd4+hdwj9USCTq9ok2ZG3PqRqW
+ wvBLkhxbkmkhAh9rkDA8t8ubgJzDcQVtlAXTPjN4LU4WXOiu9YRQeV5p28Id7DIzwDbY
+ QQnQEdH8J6Ml6L1RpKAwft+U/pNe2tjA6+Ojmk9T7jLChPnMF/TH9gLwZR0E+xPmPK5r
+ 6hObUNxMu8gx4NUROZzSfGDJ+0PixBiVDfGvlwd70kv2VbU73x7xb4tCREiZ5DyLsF9f
+ Dx395J4IeeYwLwJHNBtFGX4g5O7mod+6lwbMdbqh0MzeF9IoM+MiX4D4y3xIJHMWxxEp
+ lg9Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWeMNoUzSfd9KB/agS8mMzJJ/R7ZILSvu7zQcobrhjQdWazLEb0P/c0psYgtw6UjZiIRsRCBznitMYT@nongnu.org
+X-Gm-Message-State: AOJu0YyepwMYjsZSW0eyDufwmtvE1Zm13owzkpHFvNQqO2rphSyiQxW2
+ llevfj5bHBrU+IL6MPTBhfaVPLuWfitFuo5/niFnSAtB3DZtbaZAhqIBM3kBhfSD97w=
+X-Gm-Gg: AZuq6aKM1RGcRJ/Zx2askISPLqkJwjqDMS3iNb/Q6IEiBEZj3WKZdkqaJhPo6pX0FEQ
+ Odi9XAkWEqyBZqGgtxDeJjWfLNGuDROQs7fDaELNXxykGpq58Z3W3ucnNRbWgq+I5GMwvN6xpQP
+ tLtVrQ+1vDNyxkqY5WkJYUjNX56v2ccB57nJiaBdTDJHESDP+HPNg9e3tYr01EyuEdpWVYmPkww
+ sIQeHSelFiXB+BUPnfQwiQ9vgfQrC1uzjUVOt52nkUgp0dR+Ph1XP946r7/AGxdvteb02aDHhFz
+ K82LxEITyw8fxBtXGqZlPHLdzMgjQx+ZdCBNpWVyF84qrLhnEvPB84tdgSIn+Akmdf6v35wblCJ
+ NJD1XpF9t7hEKbk7Rtyy0cVg0MWOcdUy+qa9nv5J9W8EsoJbSrDSiYAmVYwJIJoO1kt3lZXxZDk
+ CUGRC1QBM9XNKk5adffs/6FFjpvNFoVWMOtZUDzs4lMbwofHcaeJUQ4GqvA6MtEU4ZV/lobTKNn
+ gx0cFY=
+X-Received: by 2002:a17:902:eccf:b0:295:62d:5004 with SMTP id
+ d9443c01a7336-2ad174a34f3mr213061375ad.26.1771536907699; 
+ Thu, 19 Feb 2026 13:35:07 -0800 (PST)
+Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2ad1a9d58e7sm182774265ad.45.2026.02.19.13.35.07
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 19 Feb 2026 13:35:07 -0800 (PST)
+Message-ID: <0602beb0-c975-45fb-bed4-e0fb6c0fe033@linaro.org>
+Date: Thu, 19 Feb 2026 13:29:33 -0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260218-colo_unit_test_multifd-v9-19-d8dbdb0ca6f6@web.de>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 25/50] target/ppc: Replace ldtul_p() -> ldn_p()
+Content-Language: en-US
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>, qemu-s390x@nongnu.org,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-riscv@nongnu.org, qemu-ppc@nongnu.org,
+ Nicholas Piggin <npiggin@gmail.com>, Chinmay Rath <rathc@linux.ibm.com>
+References: <20260219191955.83815-1-philmd@linaro.org>
+ <20260219191955.83815-26-philmd@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
+ 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
+ ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
+In-Reply-To: <20260219191955.83815-26-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x630.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.045,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,99 +144,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Feb 18, 2026 at 10:29:39PM +0100, Lukas Straub wrote:
-> In the colo migration unit test, we shutdown all sockets with yank and
-> then stop qemu with SIGTERM. During shutdown migration_shutdown() calls
-> migration_cancel(). Now the colo thread frees s->rp_state.from_dst_file
-> which races with migration_cancel() checking for NULL and potentially calling
-> qemu_file_shutdown() on it.
+On 2/19/26 11:19 AM, Philippe Mathieu-Daudé wrote:
+> Prefer ldn_p(target_long_bits/8) over target-specific ldtul_p().
 > 
-> Fix this by taking the s->qemu_file_lock.
-> 
-> Signed-off-by: Lukas Straub <lukasstraub2@web.de>
-
-The whole patch taking the mutex is reasonable, but it didn't explain one
-thing, on why COLO is special here on managing the return path channel..
-
-colo_process_checkpoint() does re-opening of rp channel even if it was
-partially shutdown before:
-
-colo_process_checkpoint():
-    s->rp_state.from_dst_file = qemu_file_get_return_path(s->to_dst_file);
-
-Should we instead leave all these to migration core?
-E.g. migration_completion() will do close_return_path_on_source(), but I
-wonder if that should only shutdown & close the return path channel when
-without COLO running.  Then IIUC we can also leave the cleanup of the
-qemufiles to migration_cleanup(), as it's also not special to COLO IIUC.
-
-What do you think?
-
-Thanks,
-
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->  migration/colo.c | 23 +++++++++++++++--------
->  1 file changed, 15 insertions(+), 8 deletions(-)
-> 
-> diff --git a/migration/colo.c b/migration/colo.c
-> index ce02c71d8857d470be434bdf3a9cacad3baab0d5..180793fe3f25140fa10887acc3d87515ebf43ac9 100644
-> --- a/migration/colo.c
-> +++ b/migration/colo.c
-> @@ -173,11 +173,13 @@ static void primary_vm_do_failover(void)
->       * The s->rp_state.from_dst_file and s->to_dst_file may use the
->       * same fd, but we still shutdown the fd for twice, it is harmless.
->       */
-> -    if (s->to_dst_file) {
-> -        qemu_file_shutdown(s->to_dst_file);
-> -    }
-> -    if (s->rp_state.from_dst_file) {
-> -        qemu_file_shutdown(s->rp_state.from_dst_file);
-> +    WITH_QEMU_LOCK_GUARD(&s->qemu_file_lock) {
-> +        if (s->to_dst_file) {
-> +            qemu_file_shutdown(s->to_dst_file);
-> +        }
-> +        if (s->rp_state.from_dst_file) {
-> +            qemu_file_shutdown(s->rp_state.from_dst_file);
-> +        }
->      }
->  
->      old_state = failover_set_state(FAILOVER_STATUS_ACTIVE,
-> @@ -544,11 +546,14 @@ static void colo_process_checkpoint(MigrationState *s)
->  
->      failover_init_state();
->  
-> +    qemu_mutex_lock(&s->qemu_file_lock);
->      s->rp_state.from_dst_file = qemu_file_get_return_path(s->to_dst_file);
->      if (!s->rp_state.from_dst_file) {
-> +        qemu_mutex_unlock(&s->qemu_file_lock);
->          error_report("Open QEMUFile from_dst_file failed");
->          goto out;
->      }
-> +    qemu_mutex_unlock(&s->qemu_file_lock);
->  
->      packets_compare_notifier.notify = colo_compare_notify_checkpoint;
->      colo_compare_register_notifier(&packets_compare_notifier);
-> @@ -640,9 +645,11 @@ out:
->       * Or the failover BH may shutdown the wrong fd that
->       * re-used by other threads after we release here.
->       */
-> -    if (s->rp_state.from_dst_file) {
-> -        qemu_fclose(s->rp_state.from_dst_file);
-> -        s->rp_state.from_dst_file = NULL;
-> +    WITH_QEMU_LOCK_GUARD(&s->qemu_file_lock) {
-> +        if (s->rp_state.from_dst_file) {
-> +            qemu_fclose(s->rp_state.from_dst_file);
-> +            s->rp_state.from_dst_file = NULL;
-> +        }
->      }
->  }
->  
-> 
-> -- 
-> 2.39.5
+>   target/ppc/gdbstub.c | 22 +++++++++++-----------
+>   1 file changed, 11 insertions(+), 11 deletions(-)
 > 
 
--- 
-Peter Xu
-
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
