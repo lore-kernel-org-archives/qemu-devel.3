@@ -4,71 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72FA6E9A03B
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 05:23:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F504E9A04D
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Feb 2026 05:23:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vswVF-0002p1-Rl; Thu, 19 Feb 2026 00:23:05 -0500
+	id 1vswVN-0002yk-UM; Thu, 19 Feb 2026 00:23:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1vswVD-0002nw-DN
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 00:23:03 -0500
-Received: from mail-oa1-x31.google.com ([2001:4860:4864:20::31])
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1vswVM-0002y0-Bd
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 00:23:12 -0500
+Received: from mail-oo1-xc2a.google.com ([2607:f8b0:4864:20::c2a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1vswV9-0001xU-IK
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 00:23:01 -0500
-Received: by mail-oa1-x31.google.com with SMTP id
- 586e51a60fabf-40ee9b945d5so345187fac.0
- for <qemu-devel@nongnu.org>; Wed, 18 Feb 2026 21:22:59 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1vswVK-0002D2-5B
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 00:23:12 -0500
+Received: by mail-oo1-xc2a.google.com with SMTP id
+ 006d021491bc7-679aebf4e56so306215eaf.3
+ for <qemu-devel@nongnu.org>; Wed, 18 Feb 2026 21:23:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1771478578; x=1772083378;
+ d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1771478588; x=1772083388;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=iu6XADh6tBVGnb9s7zpQE7ccWgUjuPoiVdjFMev6W3c=;
- b=qBxZfdcOGXLM+2ZsBzyGpo/3IiU54oXk5KkAuBri24AfU4UH4pXwwBTcfI71bHUZoK
- AJMc5QLaGduEzT9A/xDVqa7gXpEpeIPJ89lVeJ979Rd3RjXHqHqCwWoTV7NWPsvbpQrz
- 6u8Kq/0HXEI8ykEeWlJFwD2RVlWXpKscH7XaS/lqKp4W5wgqtYlqNSuM/KZZvu5ZK+7m
- 39K/9tLsAIFtZa9IB6WliWUd5iQj/9sKe2ZQCh9TlghTJSpkgfnpX1hpDwyI7e1s3sNt
- 9gZK/dH1DfI29nKGRk7TghWbhwOj19CpacteNCf79CfkmPwpl23SggB7kYwVZ5H1fq/K
- 5LLw==
+ :reply-to; bh=jYGackA2bkmDICDd3P5+WxF3zAx2KI4dveSgUpAz0nQ=;
+ b=H6cajS+7sJ31pt68RYLKQ9YoqeQrHBVsizllN2Nb0rcAXQcXB2ZjTqz+gJamqjkZC9
+ DHtMTrfSqlBy2N0ML7GwqdjH3VxJKFI6h1rdxdlCnZ6uVRAJZUhbaAyKApMpQTlFQrJY
+ qc+liPNYi/YoIpZrLf/Lv/XK00XtSwRCVOJO/OaSUhoxs3ZJhSpA9MZTxXKKpt1si/cJ
+ wOLnEN0kGNWdL9v9bAnOizvpjUaLRmuG1keLDk21Rjr5kKqZ+6bzqwJ+l5LXavoPDFun
+ kCb+YQVW0g70Q+XkkTO/8f8vuYM5UqMYIBGS2UeoGzs5o/1h+Py+L0PsQq7nQbmqYSDF
+ mZIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771478578; x=1772083378;
+ d=1e100.net; s=20230601; t=1771478588; x=1772083388;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=iu6XADh6tBVGnb9s7zpQE7ccWgUjuPoiVdjFMev6W3c=;
- b=qemWM6PIUF4gEv7tEJsCcJdI5YXztw5xhk/MPsrIxXDW7lLyQCAGyGksEN6WWUi9WP
- OLnvCz8UKdlVtqcEGkw42L21EY2A3WCNqfhPmhNh7Y02q7cVFXR1Pp2yeALVGmJjEZ49
- snGCzmtjz10fya81E5b/FgF5jaLJeikZ1HZTPPScXUv45kJoSqdIWGSjBlOfR7TXVvQU
- EJ0czm9WbyeC3v6YK9tkSwZQFaBSocerouTuCEJQebE296XPW0SQZn+dy5GVLF5cDQcg
- fkOduafau3C0TOZXCmXTXlfHXtKbGfSO6V5/pQmoX/SuXpbQxOJk8TiCaP+SvRnmRdzP
- ESLg==
-X-Gm-Message-State: AOJu0YxCp4xT3Hk/l4LHZigt8wMZVq9FZNKC2yF16FLGAmHxke6dsXqy
- 62RBdfD30aBZbQ/JG//kRLmzuQcHdgtwOQZSl3uENepS1bTJyar42yQP+4cSHDPl9kQ=
-X-Gm-Gg: AZuq6aIsV4e+k53gqsLCLK3XjIwdhEgo5DGhuvamYIEEZ0bJpJHVvHTlBvpq75Nn8ll
- RBb+7rJ1W84ui5woTJ/wdBKAoSPfIVHbJvunp4n8pCIYxTi3kdvAk43da9Euhu860bLkAK0St4b
- DhTHV7QRkLVSI13j8XOkXOGP46ex/EQbWKCk4mEoSpeI1/BAdoKiwEjBKTEixbfHjTZ5xZJoCXn
- MtkqRBoHe4Q/M7BLOoyKPbIc/P4bnuMeB4tYk2c1P+5VOVxLgDWH+KpojZcvzO2u5G2OwIEGJag
- BSzg4dlFQw6Noy/lRqQPp0GdpAu5/44CjzjcsV8H6lFuw1IFuu7jHM0Lwk0mOmJ6rZ95fhZf07B
- rr8xAlk/+NiHqZvEN3uDcS5lbQW2PtF/qffUENLdWMf0hQ/f+6oFUicXen96boN3jbWlsFoYyoG
- Y8VwyTvEMsIw==
-X-Received: by 2002:a05:6820:160e:b0:662:c09a:903d with SMTP id
- 006d021491bc7-679a7477d8amr2498782eaf.79.1771478578511; 
- Wed, 18 Feb 2026 21:22:58 -0800 (PST)
+ bh=jYGackA2bkmDICDd3P5+WxF3zAx2KI4dveSgUpAz0nQ=;
+ b=Rm37w/eUoanoXhB8bSvebQ3IWNZrv9KN2pij6gshPB4s1khYcOPRZruCp7u/lRQj/p
+ +K0bOoHDk+5nnF+bDdRuDqjKjGv/oUXDyMfPKSBoYnCq/zEfJV9pKySrim0apyyfpziG
+ 1sYBepzwej6ZC2u364jPxq9ahVk6TFxnFpbQg8B8PJOrxN8UTHGA3usZTE48xRwljV5c
+ JZ9P8xvRWRYAs0Uel3vdHy1AJxWGHZPWdWppCib/w6iqiMr/CBZKSSXTlqyLdofyChv7
+ Fc2r6JmsJZd1+llKZPleEa+7kv0XU9mTwWpv4lNjHGsW+FXVu40+iJ9capcZaETIi3qg
+ GD4w==
+X-Gm-Message-State: AOJu0YwXkutWWcY++9+TLOhyz90NLInSmCxa4GQugZ9/vmdIBFx0EwkG
+ 0tXvmENR5tC0jQ+nm+2EC3iMNN6GYTlYITNPEJc2Yn1Cc7A1wfMqFOr7tB73CKjdOlo=
+X-Gm-Gg: AZuq6aJPhmmDEAXy0DmYJqjubcH9Es9Dgh/bKIEI3eaIgZ+FKMETEHz240zol1/NXGv
+ thyBnc8KnwG/bO8RAr9fpGzK+KwzMyiNdjVaJMjVPAXLFgwlZ+Rq7GuMgnuUgeZCMWWH+Bn0obE
+ Fp50wJW6SUpZ1noHjT/NYSG3NliiqZmJ/bYd4lT635KLiPevowIWyVO0o5kwtPcHczl4XBq8ny4
+ tWB8U4JqOOuqdJ9Dwwf260+Mol07qTVqS0A8PyEmXyaoQefPKcESw7dLKggh7XPELfvecDtWBxP
+ Qe97v5I9JHPAV87LyeYU0bSB9/Z1/fgUgn7kb41ITN9Cg5JNS+lTxUH1r7TH7nvnjrLFbF0nNN4
+ y0OSC2HMtSGQ4mHUm/0nu+zOyCN/FQAfOZugSIBsoZOdVe3VsaDiluGnUgXv1QRQIK5GEtGCcKJ
+ eiTFiigt4MRA==
+X-Received: by 2002:a05:6820:824:b0:662:bfe5:92f1 with SMTP id
+ 006d021491bc7-6785bc5fc8amr9232976eaf.65.1771478588579; 
+ Wed, 18 Feb 2026 21:23:08 -0800 (PST)
 Received: from rebo.bsdimp.com ([50.253.99.174])
  by smtp.gmail.com with ESMTPSA id
- 006d021491bc7-674758eb709sm14215326eaf.12.2026.02.18.21.22.57
+ 006d021491bc7-674758eb709sm14215326eaf.12.2026.02.18.21.23.07
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 18 Feb 2026 21:22:58 -0800 (PST)
+ Wed, 18 Feb 2026 21:23:07 -0800 (PST)
 From: Warner Losh <imp@bsdimp.com>
-Date: Wed, 18 Feb 2026 22:22:39 -0700
-Subject: [PATCH v3 16/24] bsd-user: Add do_bsd_semget implementation
+Date: Wed, 18 Feb 2026 22:22:46 -0700
+Subject: [PATCH v3 23/24] bsd-user: Add System V message queue syscalls
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260218-bsd-user-claude-v3-16-0137b37b221e@bsdimp.com>
+Message-Id: <20260218-bsd-user-claude-v3-23-0137b37b221e@bsdimp.com>
 References: <20260218-bsd-user-claude-v3-0-0137b37b221e@bsdimp.com>
 In-Reply-To: <20260218-bsd-user-claude-v3-0-0137b37b221e@bsdimp.com>
 To: qemu-devel@nongnu.org
@@ -81,24 +81,24 @@ Cc: =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  Stacey Son <sson@FreeBSD.org>, 
  Richard Henderson <richard.henderson@linaro.org>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=932; i=imp@bsdimp.com;
- h=from:subject:message-id; bh=SV0eNLU7fS1XVSTHoXjgS6GD2dK60TDF+cTpamGVRRE=;
- b=owEBbQKS/ZANAwAKAWwc0Sh9sBEAAcsmYgBplp4sQoccYgVjK9Wklsst9B+hEXmCTkbpcPflv
- f0ypbkIcOqJAjMEAAEKAB0WIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCaZaeLAAKCRBsHNEofbAR
- AKisEADhXgN1AI2SHLWgfJWMhWwG90EUCSJuETkekAaRjIl/ZsZ5/6+bAPf1IKlAmqYCkEeuRah
- MO9h4lb3hgwcjyo4HwZdq5MjpLfhS515I4AY1MMSZnxI0j4UmJyyVVdjbnRxwJycqbb0lbIFmqT
- amBeLrhPEaOLnLT7dit350i70VR76pzUt1UczSljguJ09uHmHM7faZoEU5yBv9eEIs89J0n4yRB
- +eSwwdj1lTjEpel51LRk48rcBY8ipuS6T19icKIULj9ujbZBOd7IvZJ+K2xqLW8tfAzFkj8WV/+
- jZiLDOJlCIlPM7Hwwc3lQxTc/DeE17/HvEr87F8Jex9/mMQ697ldmsuou5WsPIao58gUJ0ZAD9G
- MmBxhhb2tbLVtHGvZ9/QDO+l3tPgS7Zh9zSHdUMTQFjsfAz0UBxa8sU/r+gWBUYXjGxikLoT8x9
- 6cAk+48CHo5IIN+o0xOUkq3dc0xal/bxY61FC37A/W+AgiCsyvLzFLb15NRsGE9120YFWQxAH41
- zvSKey8pKGsE/8o+IqsNSLVlFFU0OJvTCxmdfTIlq62ftBBVLfZRCbCqnckjSnvNcozcgxG48ob
- afN0vJiOPY5On0DuTpczuH+gGkBsKo/FZxDjm1dSXLgXxLS6TeCaGQgDCmzEB8yuJPMIgsYURCR
- W93g7J1v+/SoqEg==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1499; i=imp@bsdimp.com;
+ h=from:subject:message-id; bh=D3JiUPWJcH+meC/cZI0h7d8iJS/d6/OFbVel+kBR+zg=;
+ b=owEBbQKS/ZANAwAKAWwc0Sh9sBEAAcsmYgBplp4tBhvV9QL5Sz8EE/iE97TkU+kxOUQKFHtIP
+ 0P15YzBHwWJAjMEAAEKAB0WIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCaZaeLQAKCRBsHNEofbAR
+ AKgbEACNJouG0eFgrrv7D/pxkJfOKdGdywShVFjVPAYflC6jGpL7ucwYtQg4F04cT7zweWJ8Dq2
+ obGnZcR7tNQxpiQQQNsMjoRWGgG/Fhav0m9zRYni/kdbW7OM6iTxkjo9TrXtikB06TYfHmbdxxp
+ UY92s0inrcZRPg0426SkiK662vxG5H9pb2nZax1YxACsjPVwxxJEPII7ygMH8XJwH+4cZBs1ozm
+ 8nQMn5lVc8GhdsU3o06aLUAUXra8CQYmGt/AYXZuCu4JbmAmVd6yu4Tj138zKQfeSmLYN6L8iOf
+ 2nsaaRKQUYL+bns7pfLgst9/nTRk0AevL35/Az9y1JI40Q5H9/LohtagAo++UsXP29EkfGJ+Vhw
+ +i264/LDPz9o2OZpJVJtmno0/jW6dVj89/3F4FHQ6ZSahkAJzYOVKgUZ19PtC00GX00jPmQ9ckM
+ TYAq5n7DHjaL8oysPUqBthLyVT3N+aX0pr4jor3tVb8dwZhIqbEJ0btSWIUMg7GraFS85JQPnY0
+ UDWzpsE999mbeKHtCy4Fs9qiq/MXcDR8V7OIay35j2qnIIcoRYalpbafzpObkJ3pf3OJck5tK08
+ cFIBPY0RMB3R36kbTFJvQUPKCiP0O7FO2pubm+NauTNCXs+3iJGZIplh0AKe7K6cMig4IpQWkRe
+ LtlnSbq2Brm2l4Q==
 X-Developer-Key: i=imp@bsdimp.com; a=openpgp;
  fpr=2035F894B00AA3CF7CCDE1B76C1CD1287DB01100
-Received-SPF: none client-ip=2001:4860:4864:20::31;
- envelope-from=imp@bsdimp.com; helo=mail-oa1-x31.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::c2a;
+ envelope-from=imp@bsdimp.com; helo=mail-oo1-xc2a.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -122,39 +122,50 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Stacey Son <sson@FreeBSD.org>
 
-Add implementation of semget(2) syscall to get System V semaphore set
-identifier. Converts target IPC flags to host format.
+Connect the System V IPC message queue syscalls:
+- msgctl(2): Message queue control
+- msgget(2): Get message queue identifier
+- msgsnd(2): Send message to queue
+- msgrcv(2): Receive message from queue
 
 Signed-off-by: Stacey Son <sson@FreeBSD.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Warner Losh <imp@bsdimp.com>
 ---
- bsd-user/bsd-misc.h | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ bsd-user/freebsd/os-syscall.c | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
-diff --git a/bsd-user/bsd-misc.h b/bsd-user/bsd-misc.h
-index 9f1cc8a0cd..3dffb977a5 100644
---- a/bsd-user/bsd-misc.h
-+++ b/bsd-user/bsd-misc.h
-@@ -65,6 +65,18 @@ out:
-     return ret;
- }
- 
-+/*
-+ * System V Semaphores
-+ */
+diff --git a/bsd-user/freebsd/os-syscall.c b/bsd-user/freebsd/os-syscall.c
+index 234bd78fd2..f39e521e42 100644
+--- a/bsd-user/freebsd/os-syscall.c
++++ b/bsd-user/freebsd/os-syscall.c
+@@ -894,6 +894,26 @@ static abi_long freebsd_syscall(void *cpu_env, int num, abi_long arg1,
+         ret = do_bsd___semctl(arg1, arg2, arg3, arg4);
+         break;
+     }
 +
-+/* semget(2) */
-+static inline abi_long do_bsd_semget(abi_long key, int nsems,
-+        int target_flags)
-+{
-+    return get_errno(semget(key, nsems,
-+                target_to_host_bitmask(target_flags, ipc_flags_tbl)));
-+}
++        /*
++         * System V Messages
++         */
++    case TARGET_FREEBSD_NR_msgctl: /* msgctl(2) */
++        ret = do_bsd_msgctl(arg1, arg2, arg3);
++        break;
 +
- /* getdtablesize(2) */
- static inline abi_long do_bsd_getdtablesize(void)
- {
++    case TARGET_FREEBSD_NR_msgget: /* msgget(2) */
++        ret = do_bsd_msgget(arg1, arg2);
++        break;
++
++    case TARGET_FREEBSD_NR_msgsnd: /* msgsnd(2) */
++        ret = do_bsd_msgsnd(arg1, arg2, arg3, arg4);
++        break;
++
++    case TARGET_FREEBSD_NR_msgrcv: /* msgrcv(2) */
++        ret = do_bsd_msgrcv(arg1, arg2, arg3, arg4, arg5);
++        break;
++
+     case TARGET_FREEBSD_NR_freebsd11_vadvise:
+         ret = do_bsd_vadvise();
+         break;
 
 -- 
 2.52.0
