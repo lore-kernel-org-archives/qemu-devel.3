@@ -4,157 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB4D1C53200
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Feb 2026 08:57:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A067C5516A
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Feb 2026 09:04:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vtMJL-0001m0-Pi; Fri, 20 Feb 2026 03:56:31 -0500
+	id 1vtMQX-000344-Rj; Fri, 20 Feb 2026 04:03:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vtMJI-0001l8-1R
- for qemu-devel@nongnu.org; Fri, 20 Feb 2026 03:56:28 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vtMJF-0005iM-83
- for qemu-devel@nongnu.org; Fri, 20 Feb 2026 03:56:27 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771577782;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=9YbtkG9/UhEyXP4cH/mUo9oadIiDz2QHrRBrlIl1lts=;
- b=cIXv9eIN1hGIcvMF+Cm6pOQ5LevxauwzMpSiNRf4SyKyTW4ID/HoP0mJLtD/AWFxB32c4Y
- TnzCUbbxP+paTndGIfB/W4PMzrVOHNnTf2LrdzBjMLmOyslUssGnPClV5YfOOSCYJZsK+Y
- HO/6oHi41+pzMYDBgfEKL3qpjXhusQ0=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-634-HFNKymdPN8a0um-0wBuG1Q-1; Fri, 20 Feb 2026 03:56:21 -0500
-X-MC-Unique: HFNKymdPN8a0um-0wBuG1Q-1
-X-Mimecast-MFC-AGG-ID: HFNKymdPN8a0um-0wBuG1Q_1771577780
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-483a2db68caso11680095e9.0
- for <qemu-devel@nongnu.org>; Fri, 20 Feb 2026 00:56:21 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <dmitry.guryanov@gmail.com>)
+ id 1vtMQT-00033b-9o
+ for qemu-devel@nongnu.org; Fri, 20 Feb 2026 04:03:53 -0500
+Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dmitry.guryanov@gmail.com>)
+ id 1vtMQQ-0006eX-Tb
+ for qemu-devel@nongnu.org; Fri, 20 Feb 2026 04:03:53 -0500
+Received: by mail-ed1-x529.google.com with SMTP id
+ 4fb4d7f45d1cf-65bfe9c585cso2903285a12.0
+ for <qemu-devel@nongnu.org>; Fri, 20 Feb 2026 01:03:49 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1771578228; cv=none;
+ d=google.com; s=arc-20240605;
+ b=FBjwruEvAARiDBjnvLdkG0p381grCJ6f8jaEv05Qc/Xcv2Alom9DZQotrCoV05kRZX
+ SgxYkuAblZn2BMYBYKanabxFeBiKfZZVkhx6ArjTXjWekJSuNB/3oITjTM/5gn/NdgYa
+ c1XWlAW4SZPhbNzyyqQHaGd0BeKPjlZssMFgs2q6h696P4suW9jj6qj3i76gfh+icj5x
+ F0smbyt45Uz7hfeUwWKRu727UOgGCXhJFaXsaoSUMemyH9iRqFg3ylSakV6mTnjLGT/f
+ izjubAyeLIG11t5xMTDtmfmiX60zcOqB6TeefthMhOkH7MMYLChqAV5UUlgERlqQep2i
+ c+kQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=/sYp3AdWj0r5JFfdOPYtFk26NN3xfa4h+fvRQB9xXZs=;
+ fh=wdIvRubVrD/8PBoRejL95i+yItihh//XehwG4cBMtpY=;
+ b=dKi6GvT54ggpS+73b9q/QnvNiNDnq15sH2F1C6fjjlZtSrEA75vYaxl/EJpGdiApEv
+ EF7ROF371FpdQCTl0FK1Qt4kr9uoVvOL0w8SQgR8YK37wt4Y7s6xJdORxnnRap3TswCt
+ xApi75UqqgXisscRPIUoTqXzmJ2cJsPuWe5SkjsQz68FiYhBCfQ4HJNh88pAKti445Kf
+ aRnCfbSMEAi1KtlvAlCeGYeRsbO1HlgkGBh92fMlDYgmKEk0xzNVTvwNOKUu/3u+m0Al
+ 246A38qKNW7mWyiYlF4Dj96hZo5BzKNpqep3M4E+OztNbepJYgEixiEOrj24bS324try
+ p7Fw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1771577780; x=1772182580; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=9YbtkG9/UhEyXP4cH/mUo9oadIiDz2QHrRBrlIl1lts=;
- b=gQHCIe6kA0eyNMMQ8NEnMe7mqN/ufTLb371r5DhpVXTcPb3NHQC04fwlpXWgAKNWy0
- IpmBI5KAtgaWlN5iOU1H40/ds/L3JUJEA4CgAOdclE6Nx9pviwStbXEcwCSd/DKDdk2T
- Zsa1n4D4NvbUKBGoJtAg9Vs+nqDfpjJGfvrcr5Rn4Hi1NOjTkAcypGH3haDPGkIBTF7B
- +0HqS2mjDN0YUNI/8svXssRmjuEVPDGYGK1D2mEdneroQi4qmJuSAu2Qe9xr1igEwllm
- j2CBTkqlxP9bq6p05ZmtqHEd8IYRYkd5P33HBii8KO8BtSXVZJY/uHs8Z4IDQb1JYrUZ
- tPMQ==
+ d=gmail.com; s=20230601; t=1771578228; x=1772183028; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=/sYp3AdWj0r5JFfdOPYtFk26NN3xfa4h+fvRQB9xXZs=;
+ b=ahXHcHeOfZwiaCjkV+4O9U+qKyMpZY9DWrD8PTN0jT6weaRQapQRPvGu6gpuUgsEUS
+ lCJQ9G8eMg2e3vKKhAKeID48wsi87IAgPUAmcTLHEcuBbEukalCUJHvu5uaHBcfrbPSx
+ JSs+JYbE9PMg+Lw/WuEUz+AAHfQ2cr/dp2TxktPuUOjjHjy2sA7z8m07i89Ktq6J8+kj
+ 0OnaG2qyHD7iJnuhFJ7bncWZrPvZCdk37D4vn6N9Gl0tfd0fCJbepD/VoMIFjzvf7zmA
+ 2TJBnHbm/asGC4tLUD2RAGgN92/PDAu0qoPiiiRca3GBVfRRn4b8/S1yaZ3fqR0ZD9WC
+ mR+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771577780; x=1772182580;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20230601; t=1771578228; x=1772183028;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=9YbtkG9/UhEyXP4cH/mUo9oadIiDz2QHrRBrlIl1lts=;
- b=M5MvOARb4lgxopmhRygIoVhM3QKsQbullzTVLUzPlcTTaD6x+RVRcw2hUdVeadSX2B
- P1uuwChjVSGDJqcWXqiUgBPhrW+o+yy7yWPl/BFtT1HdLauLLNFUzb+8DpzUh6msTmE6
- v2hEfNY2MmmRx1G8bwqeaxVuURvKFwJqnpjw45fN5s3LDFgZW0hXAqgVYQLnQUl9KoFS
- gRnIMYTRdNrQvykinxCMOedlWyB1/bgJmc9omhS1huCSvNpGfcHyj9oV1DWoRRDGj++7
- 5r/KgO9639XMpYwy+FVPV7A7pHr2+bwPI+ooqdUXNVK1Jzox37mQXrdb7zLaw6oZTrve
- 4/3w==
-X-Gm-Message-State: AOJu0YwEzTzgs3WSTRlzQDeFffqfSZB7Mfobt6nXf383AchHa5n57PS+
- W3Utus+Ce7jZZb9n5KWBTHgJAeh21o3Uwwocs4TGj026WqNfc8CtdEePPO7utCpCNFgUO09Texw
- yMr7vTLFrJHl/15Fv5PWF4fgpp44PpAggaskc/bONs/Z28iu4UJ+f1NnuhpIYTBKK
-X-Gm-Gg: AZuq6aKhpGQkkUnQRPRe5ZFmEJ+wur2Liv7fycO9lUHQADxKCWdWqk4pLrfcX4jvwSs
- +aQRHAoydNIrdQ0uR3wiAu+f5rMECoZRkNkM1lTttf++zxDb2qnEx1+09Be4Fysvgf/kcylk2+1
- dyXnUQ2gQLyN4kA/PE9XjK4Vl9ZqPKw9m2In8RGif7ZSq+64tVgmwyuewy7rfywNNvL3463lcTs
- D86NHHSYOKJqdCfnYB8iA+aQ+qDmVzIwRAGahK6tq+UjbrExZWCcpodV7/VN2+vOkWmBdXLSbLI
- UwYhAOAPsW8NW+Gouxhl58ZIgBsv5SaP5kjK47dTp4rGI6TXhAKIWqc68s9T/UllfVKLQk+yjMk
- H+F2o1VWUtqn1/NslluTfS+0f1YtrL5sVMDOOKRsK7+WqAJpahaLiQ7NXNVqO
-X-Received: by 2002:a05:600c:19d0:b0:46e:4e6d:79f4 with SMTP id
- 5b1f17b1804b1-48398a57fd9mr155918945e9.15.1771577779492; 
- Fri, 20 Feb 2026 00:56:19 -0800 (PST)
-X-Received: by 2002:a05:600c:19d0:b0:46e:4e6d:79f4 with SMTP id
- 5b1f17b1804b1-48398a57fd9mr155918565e9.15.1771577778985; 
- Fri, 20 Feb 2026 00:56:18 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-483a31b1d79sm110199965e9.3.2026.02.20.00.56.17
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 20 Feb 2026 00:56:18 -0800 (PST)
-Message-ID: <b780d16f-82ba-43e2-b189-ba70594c7d7a@redhat.com>
-Date: Fri, 20 Feb 2026 09:56:17 +0100
+ bh=/sYp3AdWj0r5JFfdOPYtFk26NN3xfa4h+fvRQB9xXZs=;
+ b=lNlRIZm9dEtWh11PMvBo2C9vFKodmwkmwn7CqNyFN2YI/I4BUlhbmCxVpruNNU1ceu
+ CrX3dUgh2ay1gqew9iBSnzEszgQZVxtCf3NA0rt105pSlI17QyZbtHHWcJmhYY1bPV7Q
+ XnYY76nkulUw6TXaIaHohqYdGhpaGJzhYCm6Cox4cbdmOwfToEfTbAXYSw+zmwsgKTwm
+ yViYLZofS8y79/GMXiocEsXJLXQKGY+raoaDDDuQFosjWEev4kVnirbdcL4poOMjlb7O
+ HQ9AURHjt8j5pZ/uNerrKT2QR8Upkg9A3ZF9tP6fW7XaVAX10N7kjYAwbIpAbd4cf1wo
+ aCpw==
+X-Gm-Message-State: AOJu0YwTY021qH2x9iL5pMHXgLAOKZwSsJ4nEIkg76W+E0mDjKSHw3LA
+ 1VpsjFX55aWX8gUxceZis0HxyDNZQ4WTktp7y9z+2kgVOKXQvdVS5NFL5qxcWHKcb3QJB761TTr
+ kGYVRrBqC/5BDyc0U9kSWUymITqoDPKJzHUZb
+X-Gm-Gg: AZuq6aJba87yMBmZspopqQJoMuQRluo2dc2UKmlHaW7FyNINfTIFPHHQzLQ9TbaTBWZ
+ poaAdoFJ2TbN+Rf8jRK7KIG86AttWMKsOVGTXaLJWB38fh5ofrhRzUCFlfHY3v8Ql5lfDG5MJcf
+ 46T2WB9cgxzow56HyQsfnznocjrq/enU0u+yKpAgsdf7QXRSN5MUfZbK7IurqTw+DcmHX/WWdnW
+ QDkK2B5aEA7WQYKQV/cFnja+Nh8ey8YsGMTCynBOVoRAnzr4/TwaZLXINXKnLTJ9rlmqdptxOU0
+ DKdPlE6EkPzplTLZJJfvMaZpRA==
+X-Received: by 2002:a17:907:d0e:b0:b89:fb0b:6602 with SMTP id
+ a640c23a62f3a-b8fc38f23d8mr1247655966b.4.1771578227673; Fri, 20 Feb 2026
+ 01:03:47 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/block/m25p80: Fix Winbond Fast Read dummy cycles
-To: Peter Maydell <peter.maydell@linaro.org>,
- Joel Bueno <buenocalvachejoel@gmail.com>
-Cc: qemu-devel@nongnu.org, Alistair Francis <alistair@alistair23.me>,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- "open list:Block layer core" <qemu-block@nongnu.org>,
- Marcin Krzeminski <marcin.krzeminski@nokia.com>
-References: <20251221105340.2699327-1-buenocalvachejoel@gmail.com>
- <CAPDLHD5HGNAu1=JD=V-9YQMpR_8-tWjONex2jj4ZFHbNe9qVcg@mail.gmail.com>
- <CAFEAcA8xsFeCAnvna4+mFQuZCx8gNEJX5BbFzTYkr6rcaX43Lw@mail.gmail.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <CAFEAcA8xsFeCAnvna4+mFQuZCx8gNEJX5BbFzTYkr6rcaX43Lw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20251208085528.890098-1-dmitry.guryanov@gmail.com>
+In-Reply-To: <20251208085528.890098-1-dmitry.guryanov@gmail.com>
+From: Dmitry Guryanov <dmitry.guryanov@gmail.com>
+Date: Fri, 20 Feb 2026 12:03:34 +0300
+X-Gm-Features: AaiRm50lLqe1iOYRRmVuLZ5SDhehP3hQ4Hmp3h7ZtscSIv2YEGa53dmc0G57CVk
+Message-ID: <CABOTTXu9OPtBHviGJnLQorddg7gzFE6_89VKD2TJw3s-0PXbDw@mail.gmail.com>
+Subject: Re: [PATCH resend] block/throttle-groups: fix deadlock with iolimits
+ and muliple iothreads
+To: qemu-block@nongnu.org
+Cc: qemu-devel@nongnu.org, Alberto Garcia <berto@igalia.com>,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>
+Content-Type: multipart/alternative; boundary="000000000000f3ce12064b3db224"
+Received-SPF: pass client-ip=2a00:1450:4864:20::529;
+ envelope-from=dmitry.guryanov@gmail.com; helo=mail-ed1-x529.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.045,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -170,102 +115,374 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello,
+--000000000000f3ce12064b3db224
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-+Marcin,
+Hi! Could, someone, please, comment? The issue in gitlab is still open.
 
-On 2/19/26 21:01, Peter Maydell wrote:
-> On Wed, 7 Jan 2026 at 11:30, Joel Bueno <buenocalvachejoel@gmail.com> wrote:
->>
->> Is there any feedback on this patch series?
-> 
-> Which board model(s) does this affect? You might have
-> some luck cc'ing their maintainers.
-AFAIR (10y ago ...), the dummy cycles in m25p80 are modeled as
-extra "dummy bytes" consumed before data phase begins. So,
-in QEMU : 8 cycles = 1 dummy byte.
+On Mon, Dec 8, 2025 at 11:55=E2=80=AFAM Dmitry Guryanov <dmitry.guryanov@gm=
+ail.com>
+wrote:
 
-There could be bugs in this area, but this case was supposedly
-fixed by commit 3830c7a460b8 ("m25p80: Fix WINBOND fast read
-command handling") and given the number of QEMU boards booting
-from a Winbond flash device :
+> Details: https://gitlab.com/qemu-project/qemu/-/issues/3144
+>
+> The function schedule_next_request is called with tg->lock held and
+> it may call throttle_group_co_restart_queue, which takes
+> tgm->throttled_reqs_lock, qemu_co_mutex_lock may leave current
+> coroutine if other iothread has taken the lock. If the next
+> coroutine will call throttle_group_co_io_limits_intercept - it
+> will try to take the mutex tg->lock which will never be released.
+>
+> Here is the backtrace of the iothread:
+> Thread 30 (Thread 0x7f8aad1fd6c0 (LWP 24240) "IO iothread2"):
+>  #0  futex_wait (futex_word=3D0x5611adb7d828, expected=3D2, private=3D0) =
+at
+> ../sysdeps/nptl/futex-internal.h:146
+>  #1  __GI___lll_lock_wait (futex=3Dfutex@entry=3D0x5611adb7d828, private=
+=3D0)
+> at lowlevellock.c:49
+>  #2  0x00007f8ab5a97501 in lll_mutex_lock_optimized (mutex=3D0x5611adb7d8=
+28)
+> at pthread_mutex_lock.c:48
+>  #3  ___pthread_mutex_lock (mutex=3D0x5611adb7d828) at
+> pthread_mutex_lock.c:93
+>  #4  0x00005611823f5482 in qemu_mutex_lock_impl (mutex=3D0x5611adb7d828,
+> file=3D0x56118289daca "../block/throttle-groups.c", line=3D372) at
+> ../util/qemu-thread-posix.c:94
+>  #5  0x00005611822b0b39 in throttle_group_co_io_limits_intercept
+> (tgm=3D0x5611af1bb4d8, bytes=3D4096, direction=3DTHROTTLE_READ) at
+> ../block/throttle-groups.c:372
+>  #6  0x00005611822473b1 in blk_co_do_preadv_part (blk=3D0x5611af1bb490,
+> offset=3D15972311040, bytes=3D4096, qiov=3D0x7f8aa4000f98, qiov_offset=3D=
+0,
+> flags=3DBDRV_REQ_REGISTERED_BUF) at ../block/block-backend.c:1354
+>  #7  0x0000561182247fa0 in blk_aio_read_entry (opaque=3D0x7f8aa4005910) a=
+t
+> ../block/block-backend.c:1619
+>  #8  0x000056118241952e in coroutine_trampoline (i0=3D-1543497424, i1=3D3=
+2650)
+> at ../util/coroutine-ucontext.c:175
+>  #9  0x00007f8ab5a56f70 in ?? () at
+> ../sysdeps/unix/sysv/linux/x86_64/__start_context.S:66 from
+> target:/lib64/libc.so.6
+>  #10 0x00007f8aad1ef190 in ?? ()
+>  #11 0x0000000000000000 in ?? ()
+>
+> The lock is taken in line 386:
+> (gdb) p tg.lock
+> $1 =3D {lock =3D {__data =3D {__lock =3D 2, __count =3D 0, __owner =3D 24=
+240, __nusers
+> =3D 1, __kind =3D 0, __spins =3D 0, __elision =3D 0, __list =3D {__prev =
+=3D 0x0, __next
+> =3D 0x0}},
+>     __size =3D "\002\000\000\000\000\000\000\000\260^\000\000\001", '\000=
+'
+> <repeats 26 times>, __align =3D 2}, file =3D 0x56118289daca
+> "../block/throttle-groups.c",
+>   line =3D 386, initialized =3D true}
+>
+> The solution is to use tg->lock to protect both ThreadGroup fields and
+> ThrottleGroupMember.throttled_reqs. It doesn't seem to be possible
+> to use separate locks because we need to first manipulate ThrottleGroup
+> fields, then schedule next coroutine using throttled_reqs and after than
+> update token field from ThrottleGroup depending on the throttled_reqs
+> state.
+>
+> Signed-off-by: Dmitry Guryanov <dmitry.guryanov@gmail.com>
+> ---
+>  block/throttle-groups.c         | 21 ++++++---------------
+>  include/block/throttle-groups.h |  1 -
+>  2 files changed, 6 insertions(+), 16 deletions(-)
+>
+> diff --git a/block/throttle-groups.c b/block/throttle-groups.c
+> index 66fdce9a90..bb01e52516 100644
+> --- a/block/throttle-groups.c
+> +++ b/block/throttle-groups.c
+> @@ -295,19 +295,15 @@ static bool
+> throttle_group_schedule_timer(ThrottleGroupMember *tgm,
+>  /* Start the next pending I/O request for a ThrottleGroupMember. Return
+> whether
+>   * any request was actually pending.
+>   *
+> + * This assumes that tg->lock is held.
+> + *
+>   * @tgm:       the current ThrottleGroupMember
+>   * @direction: the ThrottleDirection
+>   */
+>  static bool coroutine_fn
+> throttle_group_co_restart_queue(ThrottleGroupMember *tgm,
+>
+> ThrottleDirection direction)
+>  {
+> -    bool ret;
+> -
+> -    qemu_co_mutex_lock(&tgm->throttled_reqs_lock);
+> -    ret =3D qemu_co_queue_next(&tgm->throttled_reqs[direction]);
+> -    qemu_co_mutex_unlock(&tgm->throttled_reqs_lock);
+> -
+> -    return ret;
+> +    return qemu_co_queue_next(&tgm->throttled_reqs[direction]);;
+>  }
+>
+>  /* Look for the next pending I/O request and schedule it.
+> @@ -378,12 +374,8 @@ void coroutine_fn
+> throttle_group_co_io_limits_intercept(ThrottleGroupMember *tgm
+>      /* Wait if there's a timer set or queued requests of this type */
+>      if (must_wait || tgm->pending_reqs[direction]) {
+>          tgm->pending_reqs[direction]++;
+> -        qemu_mutex_unlock(&tg->lock);
+> -        qemu_co_mutex_lock(&tgm->throttled_reqs_lock);
+>          qemu_co_queue_wait(&tgm->throttled_reqs[direction],
+> -                           &tgm->throttled_reqs_lock);
+> -        qemu_co_mutex_unlock(&tgm->throttled_reqs_lock);
+> -        qemu_mutex_lock(&tg->lock);
+> +                           &tg->lock);
+>          tgm->pending_reqs[direction]--;
+>      }
+>
+> @@ -410,15 +402,15 @@ static void coroutine_fn
+> throttle_group_restart_queue_entry(void *opaque)
+>      ThrottleDirection direction =3D data->direction;
+>      bool empty_queue;
+>
+> +    qemu_mutex_lock(&tg->lock);
+>      empty_queue =3D !throttle_group_co_restart_queue(tgm, direction);
+>
+>      /* If the request queue was empty then we have to take care of
+>       * scheduling the next one */
+>      if (empty_queue) {
+> -        qemu_mutex_lock(&tg->lock);
+>          schedule_next_request(tgm, direction);
+> -        qemu_mutex_unlock(&tg->lock);
+>      }
+> +    qemu_mutex_unlock(&tg->lock);
+>
+>      g_free(data);
+>
+> @@ -569,7 +561,6 @@ void throttle_group_register_tgm(ThrottleGroupMember
+> *tgm,
+>                           read_timer_cb,
+>                           write_timer_cb,
+>                           tgm);
+> -    qemu_co_mutex_init(&tgm->throttled_reqs_lock);
+>  }
+>
+>  /* Unregister a ThrottleGroupMember from its group, removing it from the
+> list,
+> diff --git a/include/block/throttle-groups.h
+> b/include/block/throttle-groups.h
+> index 2355e8d9de..374c7c0215 100644
+> --- a/include/block/throttle-groups.h
+> +++ b/include/block/throttle-groups.h
+> @@ -36,7 +36,6 @@
+>  typedef struct ThrottleGroupMember {
+>      AioContext   *aio_context;
+>      /* throttled_reqs_lock protects the CoQueues for throttled requests.
+> */
+> -    CoMutex      throttled_reqs_lock;
+>      CoQueue      throttled_reqs[THROTTLE_MAX];
+>
+>      /* Nonzero if the I/O limits are currently being ignored; generally
+> --
+> 2.51.1
+>
+>
 
-   tests/functional/aarch64/test_aspeed_ast2700a1.py:        self.vm.set_machine('ast2700a1-evb,fmc-model=w25q512jv')
-   tests/functional/aarch64/test_aspeed_ast2700a2.py:        self.vm.set_machine('ast2700a2-evb,fmc-model=w25q512jv')
-   hw/arm/aspeed_ast10x0_evb.c:    amc->fmc_model = "w25q80bl";
-   hw/arm/aspeed_ast10x0_evb.c:    amc->spi_model = "w25q256";
-   hw/arm/aspeed_ast10x0_evb.c:    amc->fmc_model = "w25q80bl";
-   hw/arm/aspeed_ast10x0_evb.c:    amc->spi_model = "w25q02jvm";
-   hw/arm/aspeed_ast2600_bletchley.c:    amc->fmc_model = "w25q01jvq";
-   hw/arm/aspeed_ast2600_catalina.c:    amc->fmc_model = "w25q01jvq";
-   hw/arm/aspeed_ast2600_evb.c:    amc->fmc_model = "w25q512jv";
-   hw/arm/aspeed_ast2600_evb.c:    amc->spi_model = "w25q512jv";
-   hw/arm/aspeed_ast27x0_evb.c:    amc->fmc_model = "w25q01jvq";
-   hw/arm/aspeed_ast27x0_evb.c:    amc->spi_model = "w25q512jv";
-   hw/arm/aspeed_ast27x0_evb.c:    amc->fmc_model = "w25q01jvq";
-   hw/arm/aspeed_ast27x0_evb.c:    amc->spi_model = "w25q512jv";
-   hw/arm/aspeed_ast27x0-fc.c:#define AST2700FC_FMC_MODEL "w25q01jvq"
-   hw/arm/aspeed_ast27x0-fc.c:#define AST2700FC_SPI_MODEL "w25q512jv"
-   hw/arm/npcm7xx_boards.c:    npcm7xx_connect_flash(&soc->fiu[0], 0, "w25q256", drive_get(IF_MTD, 0, 0));
-   hw/arm/npcm8xx_boards.c:    npcm8xx_connect_flash(&soc->fiu[0], 0, "w25q256", drive_get(IF_MTD, 0, 0));
+--=20
+Dmitry Guryanov
 
-I doubt this change is correct or the issue is more complex
-than it seems. Please try to run the functional tests, all
-ast2600 machines seem to fail to boot with this patch.
+--000000000000f3ce12064b3db224
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+<div dir=3D"ltr"><div>Hi! Could, someone, please, comment? The issue in git=
+lab is still open.</div><br><div class=3D"gmail_quote gmail_quote_container=
+"><div dir=3D"ltr" class=3D"gmail_attr">On Mon, Dec 8, 2025 at 11:55=E2=80=
+=AFAM Dmitry Guryanov &lt;<a href=3D"mailto:dmitry.guryanov@gmail.com">dmit=
+ry.guryanov@gmail.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_qu=
+ote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,20=
+4);padding-left:1ex">Details: <a href=3D"https://gitlab.com/qemu-project/qe=
+mu/-/issues/3144" rel=3D"noreferrer" target=3D"_blank">https://gitlab.com/q=
+emu-project/qemu/-/issues/3144</a><br>
+<br>
+The function schedule_next_request is called with tg-&gt;lock held and<br>
+it may call throttle_group_co_restart_queue, which takes<br>
+tgm-&gt;throttled_reqs_lock, qemu_co_mutex_lock may leave current<br>
+coroutine if other iothread has taken the lock. If the next<br>
+coroutine will call throttle_group_co_io_limits_intercept - it<br>
+will try to take the mutex tg-&gt;lock which will never be released.<br>
+<br>
+Here is the backtrace of the iothread:<br>
+Thread 30 (Thread 0x7f8aad1fd6c0 (LWP 24240) &quot;IO iothread2&quot;):<br>
+=C2=A0#0=C2=A0 futex_wait (futex_word=3D0x5611adb7d828, expected=3D2, priva=
+te=3D0) at ../sysdeps/nptl/futex-internal.h:146<br>
+=C2=A0#1=C2=A0 __GI___lll_lock_wait (futex=3Dfutex@entry=3D0x5611adb7d828, =
+private=3D0) at lowlevellock.c:49<br>
+=C2=A0#2=C2=A0 0x00007f8ab5a97501 in lll_mutex_lock_optimized (mutex=3D0x56=
+11adb7d828) at pthread_mutex_lock.c:48<br>
+=C2=A0#3=C2=A0 ___pthread_mutex_lock (mutex=3D0x5611adb7d828) at pthread_mu=
+tex_lock.c:93<br>
+=C2=A0#4=C2=A0 0x00005611823f5482 in qemu_mutex_lock_impl (mutex=3D0x5611ad=
+b7d828, file=3D0x56118289daca &quot;../block/throttle-groups.c&quot;, line=
+=3D372) at ../util/qemu-thread-posix.c:94<br>
+=C2=A0#5=C2=A0 0x00005611822b0b39 in throttle_group_co_io_limits_intercept =
+(tgm=3D0x5611af1bb4d8, bytes=3D4096, direction=3DTHROTTLE_READ) at ../block=
+/throttle-groups.c:372<br>
+=C2=A0#6=C2=A0 0x00005611822473b1 in blk_co_do_preadv_part (blk=3D0x5611af1=
+bb490, offset=3D15972311040, bytes=3D4096, qiov=3D0x7f8aa4000f98, qiov_offs=
+et=3D0, flags=3DBDRV_REQ_REGISTERED_BUF) at ../block/block-backend.c:1354<b=
+r>
+=C2=A0#7=C2=A0 0x0000561182247fa0 in blk_aio_read_entry (opaque=3D0x7f8aa40=
+05910) at ../block/block-backend.c:1619<br>
+=C2=A0#8=C2=A0 0x000056118241952e in coroutine_trampoline (i0=3D-1543497424=
+, i1=3D32650) at ../util/coroutine-ucontext.c:175<br>
+=C2=A0#9=C2=A0 0x00007f8ab5a56f70 in ?? () at ../sysdeps/unix/sysv/linux/x8=
+6_64/__start_context.S:66 from target:/lib64/libc.so.6<br>
+=C2=A0#10 0x00007f8aad1ef190 in ?? ()<br>
+=C2=A0#11 0x0000000000000000 in ?? ()<br>
+<br>
+The lock is taken in line 386:<br>
+(gdb) p tg.lock<br>
+$1 =3D {lock =3D {__data =3D {__lock =3D 2, __count =3D 0, __owner =3D 2424=
+0, __nusers =3D 1, __kind =3D 0, __spins =3D 0, __elision =3D 0, __list =3D=
+ {__prev =3D 0x0, __next =3D 0x0}},<br>
+=C2=A0 =C2=A0 __size =3D &quot;\002\000\000\000\000\000\000\000\260^\000\00=
+0\001&quot;, &#39;\000&#39; &lt;repeats 26 times&gt;, __align =3D 2}, file =
+=3D 0x56118289daca &quot;../block/throttle-groups.c&quot;,<br>
+=C2=A0 line =3D 386, initialized =3D true}<br>
+<br>
+The solution is to use tg-&gt;lock to protect both ThreadGroup fields and<b=
+r>
+ThrottleGroupMember.throttled_reqs. It doesn&#39;t seem to be possible<br>
+to use separate locks because we need to first manipulate ThrottleGroup<br>
+fields, then schedule next coroutine using throttled_reqs and after than<br=
+>
+update token field from ThrottleGroup depending on the throttled_reqs<br>
+state.<br>
+<br>
+Signed-off-by: Dmitry Guryanov &lt;<a href=3D"mailto:dmitry.guryanov@gmail.=
+com" target=3D"_blank">dmitry.guryanov@gmail.com</a>&gt;<br>
+---<br>
+=C2=A0block/throttle-groups.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0| 21 ++++++-=
+--------------<br>
+=C2=A0include/block/throttle-groups.h |=C2=A0 1 -<br>
+=C2=A02 files changed, 6 insertions(+), 16 deletions(-)<br>
+<br>
+diff --git a/block/throttle-groups.c b/block/throttle-groups.c<br>
+index 66fdce9a90..bb01e52516 100644<br>
+--- a/block/throttle-groups.c<br>
++++ b/block/throttle-groups.c<br>
+@@ -295,19 +295,15 @@ static bool throttle_group_schedule_timer(ThrottleGro=
+upMember *tgm,<br>
+=C2=A0/* Start the next pending I/O request for a ThrottleGroupMember. Retu=
+rn whether<br>
+=C2=A0 * any request was actually pending.<br>
+=C2=A0 *<br>
++ * This assumes that tg-&gt;lock is held.<br>
++ *<br>
+=C2=A0 * @tgm:=C2=A0 =C2=A0 =C2=A0 =C2=A0the current ThrottleGroupMember<br=
+>
+=C2=A0 * @direction: the ThrottleDirection<br>
+=C2=A0 */<br>
+=C2=A0static bool coroutine_fn throttle_group_co_restart_queue(ThrottleGrou=
+pMember *tgm,<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ThrottleDirection d=
+irection)<br>
+=C2=A0{<br>
+-=C2=A0 =C2=A0 bool ret;<br>
+-<br>
+-=C2=A0 =C2=A0 qemu_co_mutex_lock(&amp;tgm-&gt;throttled_reqs_lock);<br>
+-=C2=A0 =C2=A0 ret =3D qemu_co_queue_next(&amp;tgm-&gt;throttled_reqs[direc=
+tion]);<br>
+-=C2=A0 =C2=A0 qemu_co_mutex_unlock(&amp;tgm-&gt;throttled_reqs_lock);<br>
+-<br>
+-=C2=A0 =C2=A0 return ret;<br>
++=C2=A0 =C2=A0 return qemu_co_queue_next(&amp;tgm-&gt;throttled_reqs[direct=
+ion]);;<br>
+=C2=A0}<br>
+<br>
+=C2=A0/* Look for the next pending I/O request and schedule it.<br>
+@@ -378,12 +374,8 @@ void coroutine_fn throttle_group_co_io_limits_intercep=
+t(ThrottleGroupMember *tgm<br>
+=C2=A0 =C2=A0 =C2=A0/* Wait if there&#39;s a timer set or queued requests o=
+f this type */<br>
+=C2=A0 =C2=A0 =C2=A0if (must_wait || tgm-&gt;pending_reqs[direction]) {<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0tgm-&gt;pending_reqs[direction]++;<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 qemu_mutex_unlock(&amp;tg-&gt;lock);<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 qemu_co_mutex_lock(&amp;tgm-&gt;throttled_reqs=
+_lock);<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0qemu_co_queue_wait(&amp;tgm-&gt;throttled=
+_reqs[direction],<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0&amp;tgm-&gt;throttled_reqs_lock);<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 qemu_co_mutex_unlock(&amp;tgm-&gt;throttled_re=
+qs_lock);<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 qemu_mutex_lock(&amp;tg-&gt;lock);<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0&amp;tg-&gt;lock);<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0tgm-&gt;pending_reqs[direction]--;<br>
+=C2=A0 =C2=A0 =C2=A0}<br>
+<br>
+@@ -410,15 +402,15 @@ static void coroutine_fn throttle_group_restart_queue=
+_entry(void *opaque)<br>
+=C2=A0 =C2=A0 =C2=A0ThrottleDirection direction =3D data-&gt;direction;<br>
+=C2=A0 =C2=A0 =C2=A0bool empty_queue;<br>
+<br>
++=C2=A0 =C2=A0 qemu_mutex_lock(&amp;tg-&gt;lock);<br>
+=C2=A0 =C2=A0 =C2=A0empty_queue =3D !throttle_group_co_restart_queue(tgm, d=
+irection);<br>
+<br>
+=C2=A0 =C2=A0 =C2=A0/* If the request queue was empty then we have to take =
+care of<br>
+=C2=A0 =C2=A0 =C2=A0 * scheduling the next one */<br>
+=C2=A0 =C2=A0 =C2=A0if (empty_queue) {<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 qemu_mutex_lock(&amp;tg-&gt;lock);<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0schedule_next_request(tgm, direction);<br=
+>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 qemu_mutex_unlock(&amp;tg-&gt;lock);<br>
+=C2=A0 =C2=A0 =C2=A0}<br>
++=C2=A0 =C2=A0 qemu_mutex_unlock(&amp;tg-&gt;lock);<br>
+<br>
+=C2=A0 =C2=A0 =C2=A0g_free(data);<br>
+<br>
+@@ -569,7 +561,6 @@ void throttle_group_register_tgm(ThrottleGroupMember *t=
+gm,<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 read_timer_cb,<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 write_timer_cb,<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 tgm);<br>
+-=C2=A0 =C2=A0 qemu_co_mutex_init(&amp;tgm-&gt;throttled_reqs_lock);<br>
+=C2=A0}<br>
+<br>
+=C2=A0/* Unregister a ThrottleGroupMember from its group, removing it from =
+the list,<br>
+diff --git a/include/block/throttle-groups.h b/include/block/throttle-group=
+s.h<br>
+index 2355e8d9de..374c7c0215 100644<br>
+--- a/include/block/throttle-groups.h<br>
++++ b/include/block/throttle-groups.h<br>
+@@ -36,7 +36,6 @@<br>
+=C2=A0typedef struct ThrottleGroupMember {<br>
+=C2=A0 =C2=A0 =C2=A0AioContext=C2=A0 =C2=A0*aio_context;<br>
+=C2=A0 =C2=A0 =C2=A0/* throttled_reqs_lock protects the CoQueues for thrott=
+led requests.=C2=A0 */<br>
+-=C2=A0 =C2=A0 CoMutex=C2=A0 =C2=A0 =C2=A0 throttled_reqs_lock;<br>
+=C2=A0 =C2=A0 =C2=A0CoQueue=C2=A0 =C2=A0 =C2=A0 throttled_reqs[THROTTLE_MAX=
+];<br>
+<br>
+=C2=A0 =C2=A0 =C2=A0/* Nonzero if the I/O limits are currently being ignore=
+d; generally<br>
+-- <br>
+2.51.1<br>
+<br>
+</blockquote></div><div><br clear=3D"all"></div><br><span class=3D"gmail_si=
+gnature_prefix">-- </span><br><div dir=3D"ltr" class=3D"gmail_signature">Dm=
+itry Guryanov<br></div></div>
 
-Thanks,
-
-C.
-
-
-For the records, fast read commands are used in the tests. See below.
-
-   [0x406c0641] : The second byte '6c' is the SPI operation.
-
-
-aarch64/test_aspeed_ast2600_sdk.AST2600Machine.test_arm_ast2600_evb_sdk/console.log:2026-02-11 13:22:45,545: [    0.510414] spi-aspeed-smc 1e620000.spi: CE0 read buswidth: 4 [0x406c0641]
-aarch64/test_aspeed_ast2600_sdk.AST2600Machine.test_arm_ast2600_evb_sdk/console.log:2026-02-11 13:22:45,713: [    0.650635] spi-aspeed-smc 1e630000.spi: CE0 read buswidth: 4 [0x406c0641]
-aarch64/test_aspeed_ast2700a1.AST2x00MachineSDK.test_aarch64_ast2700a1_evb_sdk_v11_00/console.log:2026-02-13 11:49:30,173: [    1.517517] spi-aspeed-smc 14000000.spi: CE0 read buswidth: 4 [0x406c0641]
-aarch64/test_aspeed_ast2700a1.AST2x00MachineSDK.test_aarch64_ast2700a1_evb_sdk_v11_00/console.log:2026-02-13 11:49:30,320: [    1.608993] spi-aspeed-smc 14000000.spi: CE1 read buswidth: 4 [0x406c0641]
-aarch64/test_aspeed_ast2700a1.AST2x00MachineSDK.test_aarch64_ast2700a1_evb_sdk_v11_00/console.log:2026-02-13 11:49:30,346: [    1.625580] spi-aspeed-smc 14010000.spi: CE0 read buswidth: 2 [0x203c0641]
-aarch64/test_aspeed_ast2700a2.AST2x00MachineSDK.test_aarch64_ast2700a2_evb_ioexp_v11_00/console.log:2026-02-13 15:50:03,329: [    4.852499] spi-aspeed-smc 14000000.spi: CE0 read buswidth: 4 [0x406c0041]
-aarch64/test_aspeed_ast2700a2.AST2x00MachineSDK.test_aarch64_ast2700a2_evb_ioexp_v11_00/console.log:2026-02-13 15:50:03,850: [    5.178221] spi-aspeed-smc 14010000.spi: CE0 read buswidth: 1 [0x000c0041]
-aarch64/test_aspeed_ast2700a2.AST2x00MachineSDK.test_aarch64_ast2700a2_evb_sdk_v11_00/console.log:2026-02-13 11:49:31,247: [    1.275618] spi-aspeed-smc 14000000.spi: CE0 read buswidth: 4 [0x406c0641]
-aarch64/test_aspeed_ast2700a2.AST2x00MachineSDK.test_aarch64_ast2700a2_evb_sdk_v11_00/console.log:2026-02-13 11:49:31,369: [    1.352064] spi-aspeed-smc 14000000.spi: CE1 read buswidth: 4 [0x406c0641]
-aarch64/test_aspeed_ast2700a2.AST2x00MachineSDK.test_aarch64_ast2700a2_evb_sdk_v11_00/console.log:2026-02-13 11:49:31,385: [    1.361942] spi-aspeed-smc 14010000.spi: CE0 read buswidth: 2 [0x203c0641]
-aarch64/test_aspeed_ast2700.AST2x00MachineSDK.test_aarch64_ast2700_evb_ioexp_v11_00/console.log:2026-02-10 16:47:50,922: [    3.123120] spi-aspeed-smc 14000000.spi: CE0 read buswidth: 4 [0x406c0041]
-aarch64/test_aspeed_ast2700.AST2x00MachineSDK.test_aarch64_ast2700_evb_ioexp_v11_00/console.log:2026-02-10 16:47:51,224: [    3.312014] spi-aspeed-smc 14010000.spi: CE0 read buswidth: 1 [0x000c0041]
-aarch64/test_aspeed_ast2700.AST2x00MachineSDK.test_aarch64_ast2700_evb_sdk_v11_00/console.log:2026-02-10 16:49:00,279: [    1.264763] spi-aspeed-smc 14000000.spi: CE0 read buswidth: 4 [0x406c0641]
-aarch64/test_aspeed_ast2700.AST2x00MachineSDK.test_aarch64_ast2700_evb_sdk_v11_00/console.log:2026-02-10 16:49:00,408: [    1.345588] spi-aspeed-smc 14000000.spi: CE1 read buswidth: 4 [0x406c0641]
-aarch64/test_aspeed_ast2700.AST2x00MachineSDK.test_aarch64_ast2700_evb_sdk_v11_00/console.log:2026-02-10 16:49:00,424: [    1.355559] spi-aspeed-smc 14010000.spi: CE0 read buswidth: 2 [0x203c0641]
-aarch64/test_aspeed_ast2700fc.AST2x00MachineSDK.test_aarch64_ast2700fc_sdk_vbootrom_v11_00/console.log:2026-02-13 11:49:40,859: [    1.568162] spi-aspeed-smc 14000000.spi: CE0 read buswidth: 4 [0x406c0641]
-aarch64/test_aspeed_ast2700fc.AST2x00MachineSDK.test_aarch64_ast2700fc_sdk_vbootrom_v11_00/console.log:2026-02-13 11:49:41,032: [    1.676511] spi-aspeed-smc 14000000.spi: CE1 read buswidth: 4 [0x406c0641]
-aarch64/test_aspeed_ast2700fc.AST2x00MachineSDK.test_aarch64_ast2700fc_sdk_vbootrom_v11_00/console.log:2026-02-13 11:49:41,069: [    1.699459] spi-aspeed-smc 14010000.spi: CE0 read buswidth: 2 [0x203c0641]
-arm/test_aspeed_ast2500_buildroot.AST2500Machine.test_arm_ast2500_evb_buildroot/console.log:2026-02-13 15:50:25,370: [    1.333537] spi-aspeed-smc 1e620000.spi: CE0 read buswidth:2 [0x203b0641]
-arm/test_aspeed_ast2500_buildroot.AST2500Machine.test_arm_ast2500_evb_buildroot/console.log:2026-02-13 15:50:25,659: [    1.625199] spi-aspeed-smc 1e630000.spi: CE0 read buswidth:2 [0x203c0041]
-arm/test_aspeed_ast2500_sdk.AST2500Machine.test_arm_ast2500_evb_sdk/console.log:2026-02-13 15:50:22,593: [    1.287417] spi-aspeed-smc 1e620000.spi: CE0 read buswidth: 2 [0x203b0641]
-arm/test_aspeed_ast2500_sdk.AST2500Machine.test_arm_ast2500_evb_sdk/console.log:2026-02-13 15:50:23,319: [    2.013603] spi-aspeed-smc 1e630000.spi: CE0 read buswidth: 2 [0x203c0741]
-arm/test_aspeed_ast2600_buildroot.AST2600Machine.test_arm_ast2600_evb_buildroot/console.log:2026-02-13 15:50:35,593: [    2.848343] spi-aspeed-smc 1e620000.spi: CE0 read buswidth:4 [0x406c0641]
-arm/test_aspeed_ast2600_buildroot.AST2600Machine.test_arm_ast2600_evb_buildroot/console.log:2026-02-13 15:50:35,876: [    3.086504] spi-aspeed-smc 1e630000.spi: CE0 read buswidth:4 [0x406c0041]
-arm/test_aspeed_ast2600_buildroot_tpm.AST2600Machine.test_arm_ast2600_evb_buildroot_tpm/console.log:2026-02-13 15:51:11,310: [    1.769397] spi-aspeed-smc 1e620000.spi: CE0 read buswidth:4 [0x406c0641]
-arm/test_aspeed_ast2600_buildroot_tpm.AST2600Machine.test_arm_ast2600_evb_buildroot_tpm/console.log:2026-02-13 15:51:11,400: [    1.844341] spi-aspeed-smc 1e630000.spi: CE0 read buswidth:4 [0x406c0041]
-arm/test_aspeed_ast2600_sdk.AST2600Machine.test_arm_ast2600_evb_sdk/console.log:2026-02-13 15:50:31,578: [    4.177582] spi-aspeed-smc 1e620000.spi: CE0 read buswidth: 4 [0x406c0641]
-arm/test_aspeed_ast2600_sdk.AST2600Machine.test_arm_ast2600_evb_sdk/console.log:2026-02-13 15:50:32,052: [    4.571849] spi-aspeed-smc 1e630000.spi: CE0 read buswidth: 4 [0x406c0641]
-arm/test_aspeed_ast2600_sdk_otp.AST2600Machine.test_arm_ast2600_otp_blockdev_device/console.log:2026-02-13 15:50:27,134: [    2.312565] spi-aspeed-smc 1e620000.spi: CE0 read buswidth: 4 [0x406c0641]
-arm/test_aspeed_ast2600_sdk_otp.AST2600Machine.test_arm_ast2600_otp_blockdev_device/console.log:2026-02-13 15:50:27,533: [    2.644716] spi-aspeed-smc 1e630000.spi: CE0 read buswidth: 4 [0x406c0641]
-arm/test_aspeed_bletchley.BletchleyMachine.test_arm_ast2600_bletchley_openbmc/console.log:2026-02-13 15:50:39,306: [    2.488488] spi-aspeed-smc 1e620000.spi: CE0 read buswidth:2 [0x203c0641]
-arm/test_aspeed_bletchley.BletchleyMachine.test_arm_ast2600_bletchley_openbmc/console.log:2026-02-13 15:50:46,183: [    8.220262] spi-aspeed-smc 1e620000.spi: CE1 read buswidth:2 [0x203c0041]
-arm/test_aspeed_catalina.CatalinaMachine.test_arm_ast2600_catalina_openbmc/console.log:2026-02-13 15:50:34,667: [    1.470919] spi-aspeed-smc 1e620000.spi: CE0 read buswidth:2 [0x203c0641]
-arm/test_aspeed_catalina.CatalinaMachine.test_arm_ast2600_catalina_openbmc/console.log:2026-02-13 15:50:41,745: [    7.369080] spi-aspeed-smc 1e620000.spi: CE1 read buswidth:2 [0x203c0041]
-arm/test_aspeed_gb200nvl_bmc.GB200Machine.test_arm_aspeed_gb200_openbmc/console.log:2026-02-13 15:50:22,255: [    1.277601] spi-aspeed-smc 1e620000.spi: CE0 read buswidth:4 [0x406c0641]
-arm/test_aspeed_gb200nvl_bmc.GB200Machine.test_arm_aspeed_gb200_openbmc/console.log:2026-02-13 15:50:22,589: [    1.558898] spi-aspeed-smc 1e630000.spi: CE0 read buswidth:4 [0x406c0041]
-arm/test_aspeed_palmetto.PalmettoMachine.test_arm_ast2400_palmetto_openbmc/console.log:2026-02-13 15:50:31,164: [    0.840722] spi-aspeed-smc 1e620000.spi: CE0 read buswidth:2 [0x203b0641]
-arm/test_aspeed_palmetto.PalmettoMachine.test_arm_ast2400_palmetto_openbmc/console.log:2026-02-13 15:50:31,405: [    1.082523] spi-aspeed-smc 1e630000.spi: CE0 read buswidth:2 [0x203c2041]
-arm/test_aspeed_romulus.RomulusMachine.test_arm_ast2500_romulus_openbmc/console.log:2026-02-13 15:50:35,622: [    1.281889] spi-aspeed-smc 1e620000.spi: CE0 read buswidth:2 [0x203b0641]
-arm/test_aspeed_romulus.RomulusMachine.test_arm_ast2500_romulus_openbmc/console.log:2026-02-13 15:50:35,832: [    1.491569] spi-aspeed-smc 1e630000.spi: CE0 read buswidth:2 [0x203c0041]
-arm/test_aspeed_witherspoon.WitherspoonMachine.test_arm_ast2500_witherspoon_openbmc/console.log:2026-02-13 15:50:44,149: [    0.885126] spi-aspeed-smc 1e620000.spi: CE0 read buswidth:2 [0x203c0641]
-arm/test_aspeed_witherspoon.WitherspoonMachine.test_arm_ast2500_witherspoon_openbmc/console.log:2026-02-13 15:50:44,193: [    0.932894] spi-aspeed-smc 1e620000.spi: CE1 read buswidth:2 [0x203c0041]
-arm/test_aspeed_witherspoon.WitherspoonMachine.test_arm_ast2500_witherspoon_openbmc/console.log:2026-02-13 15:50:44,242: [    0.982561] spi-aspeed-smc 1e630000.spi: CE0 read buswidth:2 [0x203c0041]
-
+--000000000000f3ce12064b3db224--
 
