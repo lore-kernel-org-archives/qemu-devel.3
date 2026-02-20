@@ -4,91 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDEECC56201
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Feb 2026 15:07:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61D88C56206
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Feb 2026 15:07:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vtS5c-0003av-A1; Fri, 20 Feb 2026 10:06:44 -0500
+	id 1vtS6W-0004br-J7; Fri, 20 Feb 2026 10:07:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vtS5K-0003Jb-CC
- for qemu-devel@nongnu.org; Fri, 20 Feb 2026 10:06:31 -0500
-Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vtS5I-0003v8-2U
- for qemu-devel@nongnu.org; Fri, 20 Feb 2026 10:06:25 -0500
-Received: by mail-ed1-x531.google.com with SMTP id
- 4fb4d7f45d1cf-65a40f3f048so3951697a12.3
- for <qemu-devel@nongnu.org>; Fri, 20 Feb 2026 07:06:23 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <prvs=50468f4b5=graf@amazon.de>)
+ id 1vtS6J-0004Ye-VM; Fri, 20 Feb 2026 10:07:29 -0500
+Received: from pdx-out-007.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ ([52.34.181.151])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <prvs=50468f4b5=graf@amazon.de>)
+ id 1vtS6G-0004P9-Rm; Fri, 20 Feb 2026 10:07:27 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771599982; x=1772204782; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=1hee/oRg14qzKO8J1dGh3sIJ/MTM+zj3eJ1EYC0Ozf0=;
- b=wNniWfPLHTPUXfEs1ILs7wYaAM4s2+BrkxF/5dwTF6ADfgxYiGU5gFpI+TVX3YQn4+
- LLsCcH4NSkSxVt4oGjqG9tnCEkSzuhAwEfIwekJAowPjp9rJwge6/ziWVwRWcXsxginF
- D2vN1iqAptSQ5/M23iPjih0y0KdRk1i/1VQs4Y4hV4w+XgAMDy1ulARlV5uf4abCVMeW
- G8cyEdZ9mrUfnDCQwWwOnF24VydtQbZl1IIgn7T/Otp70MXnNDrEiu+0Hcm5zj0VYWZf
- 3AXk5kPL2mTcFbBaNQM4b9aNL+uXQ0qdtxBOC5hvKIAUFRYTw3tnjSIwtvcO3uZ5w+tf
- 6ieQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771599982; x=1772204782;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=1hee/oRg14qzKO8J1dGh3sIJ/MTM+zj3eJ1EYC0Ozf0=;
- b=RnAkh0Yjf9zUu6NQXSjLqBya41SB2zkJhWwCXTGC5/0gHWJ7lPei95K7w5VhG8kObU
- rGPRHNgo54pNg/y7dnQrU+jQDs3pxlOGf8+4YKshjwzxGJWxZZ6VVrpSFQzKr/YfEJ4h
- mpNTgY/DbELjPyjBrxGyXMDt+M7xJgRMbcnlgRXz5yEtRiiDRCLV/gF6LKHaUGvJbyrS
- 3nd6M3yCBJ+2QyVBP0iUNcKWuAnJUtOyboaihLb9e3dFN69uqZT4IwzCRTeizxURvRwQ
- I+1PYQbTSxmqkkDBUeDQnRdLHZn0wt+jSDX+HGIuzBwKXqytaDnfbgpbXsFQpV06AR4M
- SJTA==
-X-Gm-Message-State: AOJu0Yw2VOqm99T4a21BFeqEVI+bnJkY4UW1TDL1bzCc5+L2kvNvFB7L
- ZqimR5whqmSjW3KeGQr6mtp2SJ4zv8zfOtyhwc+NPAYFPodmD5f0gmaFG9dRaADJPhkkQkKCJ3v
- uAlW7
-X-Gm-Gg: AZuq6aLmo6dM6sfl1C44Ppw53bdPen52BvYwsb8QLAUQlPEW4SmYBdfvRcav2nhsC4/
- EMpxt66XiObuOEnpdBlI/HQxdsO6aF1ODY4V+T9O85z9SvvdpfqHmsBtGmtvCzGD/SUSY67gsIb
- u0V70/rVN/pv6QeQJu0MleLKw7G5MKNCVztzVXQCvNdE3CHNj0w8wBhSp3tMQGTLlwEL21THdnZ
- a8mFHxDsUUoXLKoxCGNoKX8r3GVJqo5unXbX1VZPJWkQvHPtAWo8b6Gj7nG0CX3B/P25swlaeIV
- kiWaet5AveiGUf1RYrGB4tyKFK13ApdnjxwdhqAQvLwzxsyKzJgxn2hYQ804CKyDRuVThNvz1xB
- Lc1L6mhcXjPxuIX1xLT+IKED0D5d6jqVJBwLp60C5C0qF80S8UV2/ReR5xb2sXXxNWceIIs1rrK
- oZ8TRQMI2Fja1Z4PXD0wsyQZ0=
-X-Received: by 2002:a05:6402:1ec4:b0:65c:2120:4056 with SMTP id
- 4fb4d7f45d1cf-65dbd376345mr4198687a12.15.1771599982390; 
- Fri, 20 Feb 2026 07:06:22 -0800 (PST)
-Received: from draig.lan ([185.124.0.126]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-65bad29df12sm5016718a12.14.2026.02.20.07.06.21
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 20 Feb 2026 07:06:21 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id C01875F838;
- Fri, 20 Feb 2026 15:06:20 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Jim MacArthur <jim.macarthur@linaro.org>
-Cc: qemu-devel@nongnu.org,  richard.henderson@linaro.org
-Subject: Re: Record/replay thread determinism
-In-Reply-To: <aZhuzUi4P0-mB-FH@linaro.org> (Jim MacArthur's message of "Fri,
- 20 Feb 2026 14:25:17 +0000")
-References: <aZhuzUi4P0-mB-FH@linaro.org>
-User-Agent: mu4e 1.14.0-pre1; emacs 30.1
-Date: Fri, 20 Feb 2026 15:06:20 +0000
-Message-ID: <87zf534fpv.fsf@draig.linaro.org>
+ d=amazon.com; i=@amazon.com; q=dns/txt; s=amazoncorp2;
+ t=1771600044; x=1803136044;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=cjl2MgjXEErjFfKv+r56ubT5PuROvPF3mMZdX8Y44LU=;
+ b=Aw+9ikLOHTJEsZ3BwvahgyHa+GULqZQzqjkjnuj8tmyHiBzc11VE0/0s
+ SNijct+8lVAiJCcEopVqw7Jv76R/7/0mxVB3QRh+0Db5HvmckyMjEMaNT
+ dfQVIkYr/Qyoo0Dop6lCQYgMVraItFxetGwhKH2x0Og81lfpyUlFy5tuk
+ loXhtl4us/5wTl4/S9YDBKfYm1ZS1qjGShOwvlmuCjYhfZQJ9XQOKChq+
+ QV9jHiW7PvgvoaT0Fmb7ItdiWSicgsflip3uzt5pM3RQYU1fip0BWTEH1
+ MUi/Y+BaQER/f4PhGmuaGsut0n2csrYO7jKIcsLrkqBkuRd+ba/ywbtza g==;
+X-CSE-ConnectionGUID: aWwdUtHtTdG+2s7c2QjcaQ==
+X-CSE-MsgGUID: pzkamuDaTDaim8y4Ae+zRg==
+X-IronPort-AV: E=Sophos;i="6.21,302,1763424000"; d="scan'208";a="13432558"
+Received: from ip-10-5-6-203.us-west-2.compute.internal (HELO
+ smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.6.203])
+ by internal-pdx-out-007.esa.us-west-2.outbound.mail-perimeter.amazon.com with
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Feb 2026 15:07:17 +0000
+Received: from EX19MTAUWA002.ant.amazon.com [205.251.233.178:7790]
+ by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.45.60:2525]
+ with esmtp (Farcaster)
+ id 0dd3a033-595e-4278-b0b3-f6492765a07b; Fri, 20 Feb 2026 15:07:17 +0000 (UTC)
+X-Farcaster-Flow-ID: 0dd3a033-595e-4278-b0b3-f6492765a07b
+Received: from EX19D020UWC004.ant.amazon.com (10.13.138.149) by
+ EX19MTAUWA002.ant.amazon.com (10.250.64.202) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.35;
+ Fri, 20 Feb 2026 15:07:16 +0000
+Received: from [0.0.0.0] (172.19.99.218) by EX19D020UWC004.ant.amazon.com
+ (10.13.138.149) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.37; Fri, 20 Feb 2026
+ 15:07:12 +0000
+Message-ID: <85e58c20-dfc5-4bc2-911e-ecdac3b922c4@amazon.com>
+Date: Fri, 20 Feb 2026 16:07:10 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::531;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x531.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 07/10] hw/nitro: Add nitro machine
+To: "Michael S. Tsirkin" <mst@redhat.com>
+CC: <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>, Peter Maydell
+ <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>,
+ <alex.bennee@linaro.org>, <philmd@linaro.org>, <berrange@redhat.com>,
+ <marcandre.lureau@redhat.com>, Cornelia Huck <cohuck@redhat.com>, "Dorjoy
+ Chowdhury" <dorjoychy111@gmail.com>, Pierrick Bouvier
+ <pierrick.bouvier@linaro.org>, Paolo Bonzini <pbonzini@redhat.com>, "Tyler
+ Fanelli" <tfanelli@redhat.com>, <mknaust@amazon.com>,
+ <nh-open-source@amazon.com>
+References: <20260218015151.4052-1-graf@amazon.com>
+ <20260218015151.4052-8-graf@amazon.com>
+ <20260220095806-mutt-send-email-mst@kernel.org>
+Content-Language: en-US
+From: Alexander Graf <graf@amazon.com>
+In-Reply-To: <20260220095806-mutt-send-email-mst@kernel.org>
+X-Originating-IP: [172.19.99.218]
+X-ClientProxiedBy: EX19D033UWC002.ant.amazon.com (10.13.139.196) To
+ EX19D020UWC004.ant.amazon.com (10.13.138.149)
+Content-Type: text/plain; charset="utf-8"; format="flowed"
+Content-Transfer-Encoding: base64
+Received-SPF: pass client-ip=52.34.181.151;
+ envelope-from=prvs=50468f4b5=graf@amazon.de;
+ helo=pdx-out-007.esa.us-west-2.outbound.mail-perimeter.amazon.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.049,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, T_SPF_PERMERROR=0.01,
+ UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,57 +103,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Jim MacArthur <jim.macarthur@linaro.org> writes:
+SGV5IE1pY2hhZWwsCgpPbiAyMC4wMi4yNiAxNTo1OSwgTWljaGFlbCBTLiBUc2lya2luIHdyb3Rl
+Ogo+IE9uIFdlZCwgRmViIDE4LCAyMDI2IGF0IDAxOjUxOjQ3QU0gKzAwMDAsIEFsZXhhbmRlciBH
+cmFmIHdyb3RlOgo+PiBBZGQgYSBtYWNoaW5lIG1vZGVsIHRvIHNwYXduIGEgTml0cm8gRW5jbGF2
+ZS4gVW5saWtlIHRoZSBleGlzdGluZyAtTQo+PiBuaXRyby1lbmNsYXZlLCB0aGlzIG1hY2hpbmUg
+bW9kZWwgd29ya3MgZXhjbHVzaXZlbHkgd2l0aCB0aGUgLWFjY2VsCj4+IG5pdHJvIGFjY2VsZXJh
+dG9yIHRvIGRyaXZlIHJlYWwgTml0cm8gRW5jbGF2ZSBjcmVhdGlvbi4gSXQgc3VwcG9ydHMKPj4g
+bWVtb3J5IGFsbG9jYXRpb24sIG51bWJlciBvZiBDUFUgc2VsZWN0aW9uLCBib3RoIHg4Nl82NCBh
+cyB3ZWxsIGFzCj4+IGFhcmNoNjQsIGltcGxlbWVudHMgdGhlIEVuY2xhdmUgaGVhcnRiZWF0IGxv
+Z2ljIGFuZCBkZWJ1ZyBzZXJpYWwKPj4gY29uc29sZS4KPj4KPj4gVG8gdXNlIGl0LCBjcmVhdGUg
+YW4gRUlGIGZpbGUgYW5kIHJ1bgo+Pgo+PiAgICAkIHFlbXUtc3lzdGVtLXg4Nl82NCAtYWNjZWwg
+bml0cm8sZGVidWctbW9kZT1vbiAtTSBuaXRybyAtbm9ncmFwaGljIFwKPj4gICAgICAgICAgICAg
+ICAgICAgICAgICAgLWtlcm5lbCB0ZXN0LmVpZgo+Pgo+PiBvcgo+Pgo+PiAgICAkIHFlbXUtc3lz
+dGVtLWFhcmNoNjQgLWFjY2VsIG5pdHJvLGRlYnVnLW1vZGU9b24gLU0gbml0cm8gLW5vZ3JhcGhp
+YyBcCj4+ICAgICAgICAgICAgICAgICAgICAgICAgIC1rZXJuZWwgdGVzdC5laWYKPj4KPj4gU2ln
+bmVkLW9mZi1ieTogQWxleGFuZGVyIEdyYWYgPGdyYWZAYW1hem9uLmNvbT4KCgpbLi4uXQoKCj4+
+ICsKPj4gKyAgICAvKgo+PiArICAgICAqIEluIGRlYnVnIG1vZGUsIE5pdHJvIEVuY2xhdmVzIGV4
+cG9zZSB0aGUgZ3Vlc3QncyBzZXJpYWwgb3V0cHV0IHZpYQo+PiArICAgICAqIHZzb2NrLiBXaGVu
+IHRoZSBhY2NlbCBpcyBpbiBkZWJ1ZyBtb2RlLCB3aXJlIHRoZSB2c29jayBzZXJpYWwgdG8KPj4g
+KyAgICAgKiB0aGUgbWFjaGluZSdzIHNlcmlhbCBwb3J0IHNvIHRoYXQgLW5vZ3JhcGhpYyBhdXRv
+bWF0aWNhbGx5IHdvcmtzCj4+ICsgICAgICovCj4+ICsgICAgaWYgKG9iamVjdF9wcm9wZXJ0eV9n
+ZXRfYm9vbChPQkpFQ1QoY3VycmVudF9hY2NlbCgpKSwgImRlYnVnLW1vZGUiLCBOVUxMKSkgewo+
+PiArICAgICAgICBDaGFyZGV2ICpjaHIgPSBzZXJpYWxfaGQoMCk7Cj4+ICsKPj4gKyAgICAgICAg
+aWYgKGNocikgewo+PiArICAgICAgICAgICAgRGV2aWNlU3RhdGUgKmRldiA9IHFkZXZfbmV3KFRZ
+UEVfTklUUk9fU0VSSUFMX1ZTT0NLKTsKPj4gKwo+PiArICAgICAgICAgICAgcWRldl9wcm9wX3Nl
+dF9jaHIoZGV2LCAiY2hhcmRldiIsIGNocik7Cj4+ICsgICAgICAgICAgICBzeXNidXNfcmVhbGl6
+ZV9hbmRfdW5yZWYoU1lTX0JVU19ERVZJQ0UoZGV2KSwgJmVycm9yX2ZhdGFsKTsKPj4gKyAgICAg
+ICAgfQo+PiArICAgIH0KPgo+IFdvdWxkICByZXNwZWN0aW5nIC1ub2RlZmF1bHRzIGFuZCB0aGVu
+IG1heWJlIG5vdCB3aXJpbmcgdXAgYWxsIHRoZQo+IHZzb2NrIHRoaW5ncyBtYWtlIHNlbnNlPyBh
+bGxvd3MgdXNlcnMgdG8gc2V0IGl0IHVwIGFueSB3YXkKPiB0aGV5IHdhbnQgLi4uCgoKU28geW91
+IHdvdWxkIHNldCB1cCB0aGUgaW5kaXZpZHVhbCBzcGVjaWFsLXB1cnBvc2Ugbml0cm8gZGV2aWNl
+cyB2aWEgCi1kZXZpY2Ugb3IgaGFuZGxlIHRoZSByZXNwZWN0aXZlIHZpcnRpbyBzdHJlYW1zIGV4
+dGVybmFsbHkgaW5zdGVhZD8gVGhhdCAKZGVmaW5pdGVseSBtYWtlcyBhIGxvdCBvZiBzZW5zZSEg
+SGFwcHkgdG8gYWRkIGluIHYyLgoKCkFsZXgKCgoKCkFtYXpvbiBXZWIgU2VydmljZXMgRGV2ZWxv
+cG1lbnQgQ2VudGVyIEdlcm1hbnkgR21iSApUYW1hcmEtRGFuei1TdHIuIDEzCjEwMjQzIEJlcmxp
+bgpHZXNjaGFlZnRzZnVlaHJ1bmc6IENocmlzdG9mIEhlbGxtaXMsIEFuZHJlYXMgU3RpZWdlcgpF
+aW5nZXRyYWdlbiBhbSBBbXRzZ2VyaWNodCBDaGFybG90dGVuYnVyZyB1bnRlciBIUkIgMjU3NzY0
+IEIKU2l0ejogQmVybGluClVzdC1JRDogREUgMzY1IDUzOCA1OTcK
 
-> It looks like we have a solution to the RCU patch which was causing probl=
-ems with the func-alpha-replay test (see 20260217-alpha-v1-0-0dcc708c9db3@r=
-sg.ci.i.u-tokyo.ac.jp).
-> While this was going on I spent a bit of time investigating repeatability=
- in record/replay and I think there may be broader problems with record & r=
-eplay.
->
-> While running the func-alpha-replay test we have two threads reading
-> or writing the replay event log; the "main" thread running
-> qemu_main_loop and the "RR" (round robin) thread running
-> rr_cpu_thread_fn. Both of these use replay_mutex_lock() and bql_lock()
-> to synchronize some actions. There's a third thread running RCU
-> maintenance which also uses bql_lock(), but not replay_mutex_lock().
->
-> replay_mutex_lock() has some extra logic to improve fairness of
-> locking. This means that the first caller of replay_mutex_lock()
-> should obtain the lock first. However, so far as I can see, this
-> doesn't make the scheduling of the Main and RR threads deterministic.
-> I have observed times when neither of those threads holds the lock,
-> and as such, there's no way to predict which will call
-> replay_mutex_lock() first. This means the ordering of events during
-> either recording or replay is not deterministic.
-
-The replay_lock was a kludge we added when we did the original
-transition to multi-threaded TCG which involved nailing down the BQL
-calls that had previously kept everything in sync.
-
-However if we could keep all replay events in the single RR thread we
-could get rid of replay lock because everything should behave serially.
-
-> It is possible to alter the lock function such that the two threads
-> will run in lockstep; see
-> https://gitlab.com/jmacarthur/qemu-jmac-development/-/commits/jmac/replay=
--tick-tock
-> for a rough demonstration. Adding this significantly reduced timeouts
-> on func-alpha-replay; I can also see that the replay recordings are
-> much more consistent from one recording to the next; typically
-> diverging around the 380000th event, rather than the 20th event
-> without this hack.
-> This is not a good fix since it slows QEMU down significantly and may be =
-prone to deadlocks, but I think this demonstrates that the current system i=
-s not perfect.
->
-> Do you agree with my analysis above? Is there something I've missed which=
- is meant to deterministically schedule these two threads?
->
-> Jim MacArthur
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
