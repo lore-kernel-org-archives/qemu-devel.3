@@ -4,49 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CAA9EC5B55D
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Feb 2026 21:03:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFF24C5B56A
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Feb 2026 21:03:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vtXe3-0000GB-Pb; Fri, 20 Feb 2026 16:02:39 -0500
+	id 1vtXdq-00009V-J4; Fri, 20 Feb 2026 16:02:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vtXe1-0000FY-Rd
- for qemu-devel@nongnu.org; Fri, 20 Feb 2026 16:02:37 -0500
+ id 1vtXdo-00008z-E6
+ for qemu-devel@nongnu.org; Fri, 20 Feb 2026 16:02:24 -0500
 Received: from forwardcorp1a.mail.yandex.net
  ([2a02:6b8:c0e:500:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vtXe0-0002m6-0g
- for qemu-devel@nongnu.org; Fri, 20 Feb 2026 16:02:37 -0500
+ id 1vtXdl-0002kv-RH
+ for qemu-devel@nongnu.org; Fri, 20 Feb 2026 16:02:24 -0500
 Received: from mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
  [IPv6:2a02:6b8:c2d:3530:0:640:eca4:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 89E77C0231;
- Sat, 21 Feb 2026 00:02:24 +0300 (MSK)
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 50F50C0235;
+ Sat, 21 Feb 2026 00:02:19 +0300 (MSK)
 Received: from vsementsov-lin (unknown [2a02:6bf:8080:87::1:2c])
  by mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id G2kijG5A6qM0-RdlwdGLr; Sat, 21 Feb 2026 00:02:24 +0300
+ ESMTPSA id G2kijG5A6qM0-LtKTKSQ3; Sat, 21 Feb 2026 00:02:18 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1771621344;
- bh=cir+HmqdjCQ6n91gEEiXSMvR8BwBZ2eARQgWlmGuhiY=;
+ s=default; t=1771621338;
+ bh=R9WmjSoEPmublVvdQmK6qLIe2k5hIT0UZlVaPvk+d5I=;
  h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=xQrL1dXdY34ZDfeTDCPad4EJiyM6eLwqb/RgivEI0HPmcwEPZeDG8BMP9lzkqXjrg
- T5gNXi1XLYPZsE3hts+AknMTF2i/L3q1pCGKthBAjrWCr7OktD7V1Q8H7/0MGzDnP3
- kpsX4+eczil6L0uwDnk14FXmRQsZu96IJTcyBc4s=
+ b=HRjkmg24/yXaneikSuQUSHoUz9yGK5vT3cM+yC1l2qf3ybQec9KO4n3ppVGib32T6
+ 1T9++wkmZfUiuiI8fZMnoXdeykphQ3YxpznCUwBcH3Qk/zvU38sJPiQYDWR6Hmo9aY
+ QXHmlCfw+xu7wKomAtP7EjWNE8I41t/n3/0cRq+0=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 To: peterx@redhat.com
 Cc: farosas@suse.de, vsementsov@yandex-team.ru,
- Mark Kanda <mark.kanda@oracle.com>, Ben Chaney <bchaney@akamai.com>,
  qemu-devel@nongnu.org (open list:All patches CC here)
-Subject: [PATCH v2 14/16] migration/cpr: move to new migration APIs
-Date: Sat, 21 Feb 2026 00:02:12 +0300
-Message-ID: <20260220210214.800050-15-vsementsov@yandex-team.ru>
+Subject: [PATCH v2 04/16] migration: vmstate_load_state(): add some newlines
+Date: Sat, 21 Feb 2026 00:02:02 +0300
+Message-ID: <20260220210214.800050-5-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260220210214.800050-1-vsementsov@yandex-team.ru>
 References: <20260220210214.800050-1-vsementsov@yandex-team.ru>
@@ -76,104 +75,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Split logical blocks by newlines, that simplify reading the code.
+
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 ---
- include/migration/cpr.h |  2 +-
- migration/cpr.c         | 22 +++++++++-------------
- 2 files changed, 10 insertions(+), 14 deletions(-)
+ migration/vmstate.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/include/migration/cpr.h b/include/migration/cpr.h
-index 5850fd1788..96ce26e711 100644
---- a/include/migration/cpr.h
-+++ b/include/migration/cpr.h
-@@ -43,7 +43,7 @@ void cpr_set_incoming_mode(MigMode mode);
- bool cpr_is_incoming(void);
+diff --git a/migration/vmstate.c b/migration/vmstate.c
+index 5111e7a141..dd7cd27993 100644
+--- a/migration/vmstate.c
++++ b/migration/vmstate.c
+@@ -139,6 +139,7 @@ int vmstate_load_state(QEMUFile *f, const VMStateDescription *vmsd,
+     int ret = 0;
  
- bool cpr_state_save(MigrationChannel *channel, Error **errp);
--int cpr_state_load(MigrationChannel *channel, Error **errp);
-+bool cpr_state_load(MigrationChannel *channel, Error **errp);
- void cpr_state_close(void);
- struct QIOChannel *cpr_state_ioc(void);
- 
-diff --git a/migration/cpr.c b/migration/cpr.c
-index a0b37007f5..05266dfcfd 100644
---- a/migration/cpr.c
-+++ b/migration/cpr.c
-@@ -178,7 +178,6 @@ bool cpr_is_incoming(void)
- 
- bool cpr_state_save(MigrationChannel *channel, Error **errp)
- {
--    int ret;
-     QEMUFile *f;
-     MigMode mode = migrate_mode();
- 
-@@ -199,8 +198,7 @@ bool cpr_state_save(MigrationChannel *channel, Error **errp)
-     qemu_put_be32(f, QEMU_CPR_FILE_MAGIC);
-     qemu_put_be32(f, QEMU_CPR_FILE_VERSION);
- 
--    ret = vmstate_save_state(f, &vmstate_cpr_state, &cpr_state, 0, errp);
--    if (ret) {
-+    if (!vmstate_save_vmsd(f, &vmstate_cpr_state, &cpr_state, 0, errp)) {
-         qemu_fclose(f);
-         return false;
+     trace_vmstate_load_state(vmsd->name, version_id);
++
+     if (version_id > vmsd->version_id) {
+         error_setg(errp, "%s: incoming version_id %d is too new "
+                    "for local version_id %d",
+@@ -146,6 +147,7 @@ int vmstate_load_state(QEMUFile *f, const VMStateDescription *vmsd,
+         trace_vmstate_load_state_end(vmsd->name, "too new", -EINVAL);
+         return -EINVAL;
      }
-@@ -223,9 +221,8 @@ bool cpr_state_save(MigrationChannel *channel, Error **errp)
-     return true;
++
+     if  (version_id < vmsd->minimum_version_id) {
+         error_setg(errp, "%s: incoming version_id %d is too old "
+                    "for local minimum version_id %d",
+@@ -153,6 +155,7 @@ int vmstate_load_state(QEMUFile *f, const VMStateDescription *vmsd,
+         trace_vmstate_load_state_end(vmsd->name, "too old", -EINVAL);
+         return -EINVAL;
+     }
++
+     if (vmsd->pre_load_errp) {
+         if (!vmsd->pre_load_errp(opaque, errp)) {
+             error_prepend(errp, "pre load hook failed for: '%s', "
+@@ -171,9 +174,12 @@ int vmstate_load_state(QEMUFile *f, const VMStateDescription *vmsd,
+             return ret;
+         }
+     }
++
+     while (field->name) {
+         bool exists = vmstate_field_exists(vmsd, field, opaque, version_id);
++
+         trace_vmstate_load_state_field(vmsd->name, field->name, exists);
++
+         if (exists) {
+             void *first_elem = opaque + field->offset;
+             int i, n_elems = vmstate_n_elems(opaque, field);
+@@ -184,6 +190,7 @@ int vmstate_load_state(QEMUFile *f, const VMStateDescription *vmsd,
+                 first_elem = *(void **)first_elem;
+                 assert(first_elem || !n_elems || !size);
+             }
++
+             for (i = 0; i < n_elems; i++) {
+                 void *curr_elem = first_elem + size * i;
+                 const VMStateField *inner_field;
+@@ -235,6 +242,7 @@ int vmstate_load_state(QEMUFile *f, const VMStateDescription *vmsd,
+                                    vmsd->name, ret);
+                     }
+                 }
++
+                 if (ret < 0) {
+                     qemu_file_set_error(f, ret);
+                     trace_vmstate_load_field_error(field->name, ret);
+@@ -249,11 +257,13 @@ int vmstate_load_state(QEMUFile *f, const VMStateDescription *vmsd,
+         field++;
+     }
+     assert(field->flags == VMS_END);
++
+     ret = vmstate_subsection_load(f, vmsd, opaque, errp);
+     if (ret != 0) {
+         qemu_file_set_error(f, ret);
+         return ret;
+     }
++
+     if (vmsd->post_load_errp) {
+         if (!vmsd->post_load_errp(opaque, version_id, errp)) {
+             error_prepend(errp, "post load hook failed for: %s, version_id: "
+@@ -271,7 +281,9 @@ int vmstate_load_state(QEMUFile *f, const VMStateDescription *vmsd,
+                        ret);
+         }
+     }
++
+     trace_vmstate_load_state_end(vmsd->name, "end", ret);
++
+     return ret;
  }
  
--int cpr_state_load(MigrationChannel *channel, Error **errp)
-+bool cpr_state_load(MigrationChannel *channel, Error **errp)
- {
--    int ret;
-     uint32_t v;
-     QEMUFile *f;
-     MigMode mode = 0;
-@@ -241,10 +238,10 @@ int cpr_state_load(MigrationChannel *channel, Error **errp)
-         cpr_set_incoming_mode(mode);
-         f = cpr_transfer_input(channel, errp);
-     } else {
--        return 0;
-+        return true;
-     }
-     if (!f) {
--        return -1;
-+        return false;
-     }
- 
-     trace_cpr_state_load(MigMode_str(mode));
-@@ -254,19 +251,18 @@ int cpr_state_load(MigrationChannel *channel, Error **errp)
-     if (v != QEMU_CPR_FILE_MAGIC) {
-         error_setg(errp, "Not a migration stream (bad magic %x)", v);
-         qemu_fclose(f);
--        return -EINVAL;
-+        return false;
-     }
-     v = qemu_get_be32(f);
-     if (v != QEMU_CPR_FILE_VERSION) {
-         error_setg(errp, "Unsupported migration stream version %d", v);
-         qemu_fclose(f);
--        return -ENOTSUP;
-+        return false;
-     }
- 
--    ret = vmstate_load_state(f, &vmstate_cpr_state, &cpr_state, 1, errp);
--    if (ret) {
-+    if (!vmstate_load_vmsd(f, &vmstate_cpr_state, &cpr_state, 1, errp)) {
-         qemu_fclose(f);
--        return ret;
-+        return false;
-     }
- 
-     if (migrate_mode() == MIG_MODE_CPR_EXEC) {
-@@ -280,7 +276,7 @@ int cpr_state_load(MigrationChannel *channel, Error **errp)
-      */
-     cpr_state_file = f;
- 
--    return ret;
-+    return true;
- }
- 
- void cpr_state_close(void)
 -- 
 2.52.0
 
