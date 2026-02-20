@@ -4,50 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE0C9C56204
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Feb 2026 15:19:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C0C4C56204
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Feb 2026 15:19:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vtSGy-0003cU-AW; Fri, 20 Feb 2026 10:18:28 -0500
+	id 1vtSH3-0003cV-V5; Fri, 20 Feb 2026 10:18:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1vtSGw-0003bm-6p
+ id 1vtSGw-0003bx-HF
  for qemu-devel@nongnu.org; Fri, 20 Feb 2026 10:18:26 -0500
 Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1vtSGt-0000Xk-QT
- for qemu-devel@nongnu.org; Fri, 20 Feb 2026 10:18:25 -0500
-ARC-Seal: i=1; a=rsa-sha256; t=1771600676; cv=none; 
+ id 1vtSGt-0000XZ-LJ
+ for qemu-devel@nongnu.org; Fri, 20 Feb 2026 10:18:26 -0500
+ARC-Seal: i=1; a=rsa-sha256; t=1771600682; cv=none; 
  d=zohomail.com; s=zohoarc; 
- b=VL6h4zz5x5Z65mjPwTHbDuRLKrj8Qm+X8iKfnAhhBIEd5aEip71Rxus/7fDk4zGQJwa1A7ZcLJksbwXRTy5Llwf1wiN1/U4wO/R0hOcK6kRax5IeFCkiO+UyUK7xAS24VDW+49QJK9BkGq90n9snnJR0xVJ/nuxLrbcGWk/lPmI=
+ b=A5Bhu2p1NYYjHk9dF6/xocuY3SVrUr9Wi+HowH+7xk5n7eT1Gla1Vdw8+xqA63Al+IwrWL2ZC0YMp6xH2e1AEkLV09s5/2EI1UDzp2tQPy/Xh64QryhoK9RPGlq/GYtvahOQxiL0dx2UB5X0SPSuoMipLXeNnPhnDX5CvurqQ1s=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1771600676;
+ s=zohoarc; t=1771600682;
  h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=EEg+fthIlWbJHkGc7KYCeA+M97ARcTRLMcXOzAg/Ovs=; 
- b=W/ZUwxcxlIXjBV3/GYYv4iRg7ecaf86KIM6nT+YTP0D1iVUY6usi7ObNwocDG+1hLH0Nna/qXPABbFLsnQz1iPFKdyZK7vGwpp8hBu2VJcgWnpRDNrI90jRdVUK5eQTzlJlSU7D+mWu4bHVkjAUFLZRruThWuzwiG9FRGw5yJmw=
+ bh=d3PzrWIth4Oaj1xS7clknTJBmizDlisCQF4jQ457Qso=; 
+ b=ar+hBt24fUH0+wCWV8cqSnpD8hWBDo/GnD7e4rN6RI9+Q4Of6/Xt8HTL3t7LpG+c494x7d/j5JuahCOVu/zr66POlVuKU/FJauXg7TaHCu7k52uXj7ZY+ba5PXS5W2s1hMhn5MFinYDLyXCug3cCD3kWBShjKHjiaKdSyrKtpgU=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
  dkim=pass  header.i=collabora.com;
  spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
  dmarc=pass header.from=<dmitry.osipenko@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1771600676; 
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1771600682; 
  s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
  h=Message-ID:Date:Date:MIME-Version:Subject:Subject:To:To:Cc:Cc:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
- bh=EEg+fthIlWbJHkGc7KYCeA+M97ARcTRLMcXOzAg/Ovs=;
- b=fdDcn+sLCWelOBsjt6AswjDMvmIk1Fch80yWICr/iJuen3vNm3ECQZGYOVCJ0wPs
- 9LIZPTP0XHIpUvUmezDu+BDAUYgKPSpZkpv+36GiWTJ3BGDOtYA2ofolw6//RBpnYzw
- tBs7+ckg2pFm6pgXA+/st8SlVFp9SVkA+E8dVfGE=
-Received: by mx.zohomail.com with SMTPS id 1771600674034429.27829558068754;
- Fri, 20 Feb 2026 07:17:54 -0800 (PST)
-Message-ID: <d012a6ae-0754-42a8-ad07-9445ee4a9346@collabora.com>
-Date: Fri, 20 Feb 2026 18:17:43 +0300
+ bh=d3PzrWIth4Oaj1xS7clknTJBmizDlisCQF4jQ457Qso=;
+ b=cWhlGvqkuoDpHDbiTjRfxzKkXRahx9vDh8cpZc7qWyOD3aghOt/IhLVlLgA3DTGf
+ /X0PrWD+IxJtfO2AmQfnrTet3dlwQyTwAzFoGpsd+/lCi3I8pcPsgAaJLbsCp5284R0
+ 0sp9L7UgI7UC2EMEQo2t5GEob/DioTiWK1RfFNzc=
+Received: by mx.zohomail.com with SMTPS id 1771600680454389.45606860163275;
+ Fri, 20 Feb 2026 07:18:00 -0800 (PST)
+Message-ID: <3e42fc01-77da-4fd8-adc5-429e9ecf2430@collabora.com>
+Date: Fri, 20 Feb 2026 18:17:44 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v19 00/20] Support virtio-gpu DRM native context and
  MAP_FIXED API
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+To: Yiwei Zhang <zzyiwei@gmail.com>
+Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
  Huang Rui <ray.huang@amd.com>,
  =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
@@ -55,8 +56,8 @@ To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
  <alex.bennee@linaro.org>,
  Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
  "Michael S . Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Yiwei Zhang <zzyiwei@gmail.com>, Sergio Lopez Pascual <slp@redhat.com>
-Cc: Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
+ Sergio Lopez Pascual <slp@redhat.com>,
+ Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
  Gurchetan Singh <gurchetansingh@chromium.org>, Alyssa Ross <hi@alyssa.is>,
  =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger.pau@citrix.com>,
  Alex Deucher <alexander.deucher@amd.com>,
@@ -67,10 +68,10 @@ Cc: Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
  Chen Jiqian <Jiqian.Chen@amd.com>, Rob Clark <robdclark@gmail.com>,
  Robert Beckett <bob.beckett@collabora.com>
 References: <20260220001634.3579257-1-dmitry.osipenko@collabora.com>
- <271c635c-8c2c-48bc-b44f-91b9d268bbe2@rsg.ci.i.u-tokyo.ac.jp>
+ <CAJ+hS_gqFYgDqCehrpUh1CZq_V=nbyTnmfDYJesynRw9K7Vdwg@mail.gmail.com>
 From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 Content-Language: en-US
-In-Reply-To: <271c635c-8c2c-48bc-b44f-91b9d268bbe2@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <CAJ+hS_gqFYgDqCehrpUh1CZq_V=nbyTnmfDYJesynRw9K7Vdwg@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-ZohoMailClient: External
@@ -99,47 +100,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/20/26 11:35, Akihiko Odaki wrote:
-> On 2026/02/20 9:16, Dmitry Osipenko wrote:
+On 2/20/26 09:51, Yiwei Zhang wrote:
+> On Thu, Feb 19, 2026 at 4:20 PM Dmitry Osipenko
+> <dmitry.osipenko@collabora.com> wrote:
+>>
 >> Hello,
 >>
 >> This is follow up to DRM native context v16 [1] and MAP_FIXED API v10 [2]
 >> virtio-gpu patches that has been reviewed previously and were waiting for
 >> a new release of libvirglrenderer 1.3.0.
 >>
->> [1] https://lore.kernel.org/qemu-devel/20251116125641.2255794-1-
->> dmitry.osipenko@collabora.com/
->> [2] https://lore.kernel.org/qemu-devel/20260118162856.223796-1-
->> dmitry.osipenko@collabora.com/
+>> [1] https://lore.kernel.org/qemu-devel/20251116125641.2255794-1-dmitry.osipenko@collabora.com/
+>> [2] https://lore.kernel.org/qemu-devel/20260118162856.223796-1-dmitry.osipenko@collabora.com/
 >>
 >> Based-on: 20260214-region-v1-1-229f00ae1f38@rsg.ci.i.u-tokyo.ac.jp
 >>
 >> Changelog:
 >>
 >> v19:- Further improved improved naming of functions and terminology RE
->>        GL context binding. Suggested by Akihiko Odaki.
+>>       GL context binding. Suggested by Akihiko Odaki.
 >>
->>      - Added new patch "ui/gdk: Restore original context after new
->> context
->>        creation" in addition to improved "ui/sdl2: Restore original
->> context"
->>        that now getd actual bound GL context and restores to it instead
->>        of restoring to the console's ctx, for consistency with the rest
->>        of GL context management fixes that ensure context is bound only
->>        when necessary.
+>>     - Added new patch "ui/gdk: Restore original context after new context
+>>       creation" in addition to improved "ui/sdl2: Restore original context"
+>>       that now getd actual bound GL context and restores to it instead
+>>       of restoring to the console's ctx, for consistency with the rest
+>>       of GL context management fixes that ensure context is bound only
+>>       when necessary.
 >>
->>      - Improved virtio_gpu_virgl_update_render_state() with force_ctx_0()
->>        and unbind_ctx() to make deferred GPU resetting maintain bound GL
->>        context properly.
+>>     - Improved virtio_gpu_virgl_update_render_state() with force_ctx_0()
+>>       and unbind_ctx() to make deferred GPU resetting maintain bound GL
+>>       context properly.
+>>
+>> v18:- Changed dpy_gl_ctx_make_current() to use first scanout when unsetting
+>>       virgl's GL ctx0 and improved naming of cmd-processing function.
+>>       Suggested by Akihiko Odaki.
+>>
+>>     - Added "ui/gdk: Unset context after GL operations" patch after
+>>       realizing GDK/GL code needed more gdk_gl_context_clear_current().
+>>
+>> v17:- Rebased patches on recent upstream, updated doc patches with new
+>>       drm native contexts supported by libvirglrenderer.
+>>
+>>     - Applied minor change that was requested from Akihiko Odaki
+>>       by moving virtio_gpu_device_realize() for MAP_FIXED v10.
+>>
+>>     - Added virtio_gpu_virgl_update_render_state() to virtio_gpu_fence_poll()
+>>       that was missed in MAP_FIXED v10.
+>>
+>>     - Added new patches fixing another GL context switching problem I ran
+>>       into recently with virgl commands unexpectedly processed from CPU
+>>       thread instead main-loop:
+>>
+>>         ui/sdl2: Unset context after GL operations
+>>         ui/gtk-egl: Unset context after GL operations
+>>         virtio-gpu: Unset context after GL operations
+>>
+>> Alex Bennée (1):
+>>   docs/system: virtio-gpu: Document host/guest requirements
+>>
+>> Dmitry Osipenko (18):
+>>   ui/gdk: Restore original context after new context creation
+>>   ui/sdl2: Restore original context after new context creation
+>>   ui/sdl2: Don't disable scanout when display is refreshed
+>>   ui/gtk: Don't disable scanout when display is refreshed
+>>   ui/sdl2: Unbind context after GL operations
+>>   ui/gtk-egl: Unbind context after GL operations
+>>   ui/gdk: Unbind context after GL operations
+>>   virtio-gpu: Unbind context after GL operations
+>>   virtio-gpu: Handle virgl fence creation errors
+>>   virtio-gpu: Support asynchronous fencing
+>>   virtio-gpu: Support DRM native context
+>>   docs/system: virtio-gpu: Add link to Mesa VirGL doc
+>>   docs/system: virtio-gpu: Update Venus link
+>>   virtio-gpu: Remove superfluous memory_region_set_enabled()
+>>   virtio-gpu: Validate hostmem mapping offset
+>>   virtio-gpu: Replace finish_unmapping with mapping_state
+>>   virtio-gpu: Destroy virgl resources on virtio-gpu reset
+>>   virtio-gpu: Support mapping hostmem blobs with map_fixed
+>>
+>> Pierre-Eric Pelloux-Prayer (1):
+>>   ui/sdl2: Implement dpy dmabuf functions
+>>
+>>  docs/system/devices/virtio/virtio-gpu.rst | 121 +++++-
+>>  hw/display/trace-events                   |   2 +-
+>>  hw/display/virtio-gpu-gl.c                |  62 +++-
+>>  hw/display/virtio-gpu-virgl.c             | 427 ++++++++++++++++++++--
+>>  hw/display/virtio-gpu.c                   |  15 +
+>>  include/hw/virtio/virtio-gpu.h            |  23 +-
+>>  include/ui/sdl2.h                         |   7 +
+>>  meson.build                               |   8 +-
+>>  ui/gtk-egl.c                              |  17 +-
+>>  ui/gtk-gl-area.c                          |  28 +-
+>>  ui/sdl2-gl.c                              |  81 +++-
+>>  ui/sdl2.c                                 |  42 +++
+>>  12 files changed, 760 insertions(+), 73 deletions(-)
+>>
+>> --
+>> 2.52.0
+>>
 > 
-> Both the new context management improvement and the MAP_FIXED API
-> changes look good to me. For the whole series,
-> 
-> Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-> 
-> Thank you for completing this change.
+> My original r-b's still persist, and this PATCH v19 is t-b. Can't wait
+> to see this land ; )
 
-Thanks a lot for your help with the reviews!
+Thanks!
 
 -- 
 Best regards,
