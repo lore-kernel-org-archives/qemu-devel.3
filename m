@@ -4,95 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A8E8C55ABC
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Feb 2026 11:57:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E682C55ABC
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Feb 2026 11:57:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vtP89-0004Gx-JR; Fri, 20 Feb 2026 06:57:09 -0500
+	id 1vtP89-0004Gk-0m; Fri, 20 Feb 2026 06:57:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sebott@redhat.com>) id 1vtP87-0004GG-N0
+ (Exim 4.90_1) (envelope-from <sebott@redhat.com>) id 1vtP87-0004GN-Ux
  for qemu-devel@nongnu.org; Fri, 20 Feb 2026 06:57:07 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sebott@redhat.com>) id 1vtP85-0001ja-2u
+ (Exim 4.90_1) (envelope-from <sebott@redhat.com>) id 1vtP85-0001jr-QU
  for qemu-devel@nongnu.org; Fri, 20 Feb 2026 06:57:07 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771588623;
+ s=mimecast20190719; t=1771588625;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=f9Iq3P1+3CvjmPUgtUDKxrjal3kc2Xn/2NZQuVratlc=;
- b=dhYNhJaluRnpgzMyCZezjlqthdF0MBZkFLUHDqVG9QW5SSRfUD3Al7cCOUvQXc+0MslHwJ
- X8D0wE4A3njO+Oo1rPfRDNWUsXRnAeHSeswmfd8BLNeBuf2Ibh2czn2z3pv0PCe6kltZdx
- mlISc1dJpu5E2rIB2U8LbNPgA3KXIrE=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=pemrUBU8/rbjL9/zoZ7MkscMiByl7zJxATlK5nEq+x0=;
+ b=QLygrL0TLerEzkxui2QbWtXytAqrfG5undZnHEoD1njQdRnrmwPB1/wEmQRFpdglcG7XnZ
+ FSbxdJ4gycRf3m5ufDu4rMN8q1GV16WFUSgMU1dnhbr5s/++tnY2BZ56hgWXatF/a8S7GI
+ 5Iw5XFVnWs+W9BYQMpw6N6wFMadzbgQ=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-180-2M5eFbsJOtSh6Cj92C6Ehw-1; Fri, 20 Feb 2026 06:57:01 -0500
-X-MC-Unique: 2M5eFbsJOtSh6Cj92C6Ehw-1
-X-Mimecast-MFC-AGG-ID: 2M5eFbsJOtSh6Cj92C6Ehw_1771588621
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-4837246211bso21252755e9.0
- for <qemu-devel@nongnu.org>; Fri, 20 Feb 2026 03:57:01 -0800 (PST)
+ us-mta-218-RHRrsO1NMc2NH1ARmzoHAw-1; Fri, 20 Feb 2026 06:57:04 -0500
+X-MC-Unique: RHRrsO1NMc2NH1ARmzoHAw-1
+X-Mimecast-MFC-AGG-ID: RHRrsO1NMc2NH1ARmzoHAw_1771588623
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4836ff58111so25136455e9.1
+ for <qemu-devel@nongnu.org>; Fri, 20 Feb 2026 03:57:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1771588620; x=1772193420; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=f9Iq3P1+3CvjmPUgtUDKxrjal3kc2Xn/2NZQuVratlc=;
- b=Wzi3dMnNWa/0bv8Nf3SL2b01lHfBlcOg0v7kwmx9a4DvKjRSjWGNPolls5vT/ELTJB
- tpT+U4Z7tApdtdilIcelGmaPZzH8xsbI5MrlnOjWXB8ItVPd456guC4Zg6TMoH4G+qym
- ZDzx5j5LqgStQ5+Dvs0uZ+ud0j/Z2tDY81I9IK41y3lBXCFrSjCW+T3AgiKGgMg6T2DZ
- 4ydAnF28/jo10EA6MIHpwqunG9T5duTUq813b7rdmFIhANo/2mdBh2hnZvjx3llzl4fa
- Ys0Ht/Gy0TQJouUHU27tplirsSnH+435TFVidEuRYNVGmOi1+h7w/j4X8xAEzY0kXOtB
- z/UQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771588620; x=1772193420;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=redhat.com; s=google; t=1771588623; x=1772193423; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=f9Iq3P1+3CvjmPUgtUDKxrjal3kc2Xn/2NZQuVratlc=;
- b=GUM1pQfibiFzqdGqghaUoM6OdkBMOWMTCwCpL0+VMLVClF1R8A75kGGK8uUX7WIEab
- REpjvN3KZtw+2qVdU6J0MIoYWLf+xuqQKHfP3bnR56h/zDC074g0o7bs4T3Nb93keu/G
- oCMq4nFUL/lEwBX4B0Go5Gvy7XAzFYGfmpedRbEK+E/Pz9I1t8QaHssl+bl9DJVsZ+r+
- C4Ztr4ITzIm73mpaPpLO3Nwn2y2GSR2GZ0d+WuVUlK6Gzxmr3jV5ioC5fh8II/X6VNOW
- 8gzVTNXQh4nf6LzfxAGZAOtSp0RyzjiMC/+F/3FD8jA3yIPyFJr+vrGH/IJJ9naJsifB
- np5Q==
+ bh=pemrUBU8/rbjL9/zoZ7MkscMiByl7zJxATlK5nEq+x0=;
+ b=PSWvVhdSDCOchAv2ZzUrhItPTNSGSae8347hZQ55juPzuB/rXKvWHifXn6hF9Sm4Sq
+ g2RH49bmisMaRDXwx9KCX4Vi+dAZ7Gviu5rmd2ugZPGzfqK41qca3sgjWwr8K+vyrJVt
+ g/+PWvV4TgHSiI9VRiULQIOlYrQrfwY9QfxFA0xoiGeBQAC7qvKC0rNFllu+/WPT+CVD
+ l5rp55hK6Ou2fnRoNuYA/IOFXV9yxhnytWBMqlc1+DPH2bXKzYV5+VTRs3YkJokyTOr3
+ OAJWvBQkKfdVhBPq51ENWpBuQzXaGSJtMGwCYg6+U3H4gM+5JCSjNkETsPap8wByu3sX
+ Dc2A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1771588623; x=1772193423;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=pemrUBU8/rbjL9/zoZ7MkscMiByl7zJxATlK5nEq+x0=;
+ b=RO9xRye4PhcmNrQWnuakP9iGQXbZDU/mFcKUSZZKvr5XiaZwnr+mA/hdAHMS8Wm/gq
+ ydFwwRrrJ3RvuBFy1zCDPvboLnktK1SOGJ4aURUXnLcDubY73EltV/P5P3DKEImmX9tY
+ uLSH0XNErR+t782S/h3RbszZMKrsinZ2/W6PNoq41tNoXtUPdHV35QDqAIPaCMyv++rp
+ fSIV5lTNj9fnTnnjFxCc7g9Mn4lj1itGbHoQWiLxAq/sK4eEi3TKUgOeWlL0jMrp4LYn
+ Ho+e7+YY6G7B9GPqdrmH17SpVQWytUZmDd7W/0dATDWB+tB4hScRGq7Mn3E7zKrvS8Xe
+ n8Og==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUWcr/gtj5z6rGquuMR6Dhtcl55x1sSfjcl/twl5by84rpcppLLDHmZD8V8x4oLUGkK+S3JXHxqaONk@nongnu.org
-X-Gm-Message-State: AOJu0YwsaiNIa6CfjacS/gL7IRK5ZyHs8RkIKAsdk5OSg3NHOOdooF96
- 16h/59yzQplg5dg9WLtupuC4Ea7wKjyy/wZQZygf3QvmqlctLjJSzz6ErTDyIeg6OGEAdytHt98
- bu8yxjxzaBHbKFHdmob557gMAIsJ5Hhd1Vx9x02LVTW5TeWKrAUh6hTp8RT+QU4qY
-X-Gm-Gg: AZuq6aITfCEbcKoNxji+oypKtzyJ5vqOX5HBiRPA+qoJMdGeXupEh9gORzL40EF1o/l
- Rs1KdgNw0Z1PmvFE+MH3bwOnWJbpZoK/nTlXE5Cgh8SiuPRJ3a6geA+VOJf1uBZVQODcLRTCpd6
- bcIFEHe8Y0DduU0rBhqJNcRm+XimaWGe7XGXz8qVXcxJJZk+y3D49tOXqCgs3VwkrnmRrVpki7F
- 70VnE3zXsjrt1rkgCKSAsHJP0+96cf+c2jCgsCR7+p3+ibNylm4F4BlSYzVpQNsR+qK++jmEbWs
- L2GmMnDIubh+cNL5WiaqQDfNC4tsv++0qahYRWcx0yUlzYl5zHN3BDJP6SjNDIj6C/PwjOhoXFt
- adWJTsvGZvnB7oscY3QPtLuChKCeHlVxLjAqNCF5Ya8ZEcwGaeWE6neOueMH/EjTHrkIsiMaly+
- jKf/KBu0KL
-X-Received: by 2002:a05:600c:4fd5:b0:477:9fcf:3fe3 with SMTP id
- 5b1f17b1804b1-483989ca4e4mr142430025e9.0.1771588620340; 
- Fri, 20 Feb 2026 03:57:00 -0800 (PST)
-X-Received: by 2002:a05:600c:4fd5:b0:477:9fcf:3fe3 with SMTP id
- 5b1f17b1804b1-483989ca4e4mr142429585e9.0.1771588619823; 
- Fri, 20 Feb 2026 03:56:59 -0800 (PST)
+ AJvYcCU834aPgrJY3dKMdBEj/EBuX1h/D5vrQTRswBXGcKlP9L9oKnsh8Dc+kBLgMkQ55BOSHFDMb+K1AY/d@nongnu.org
+X-Gm-Message-State: AOJu0Yx6ZmwYDQo8M905jYzossxq6Vm8wRi/ABvl7m2kndMpSAFmvWCi
+ vMokRuAeUAwOOPTGmov48Msh9ZV+wUozRWN6ZB4W0m6/uxbG2lceU19iNM68GBSX4udsd7p3Fus
+ 0kjxodyUidqY796sU19+QSIHMrD25qAiZTq1YhAXOIe6iEgruLFvps5Bj
+X-Gm-Gg: AZuq6aLhS8juw3p36W2o6akMK0pq3mNxjFfB4v5U0lh62IfMSe0KsbQ7dH3Gam9NaLU
+ FwGIrJPxrc+ut3Yj85El9uadfYko1S9n9NIlZQNqNdoZqfZ393yKszlO7v/PncA+f6MdCFY9J8r
+ qeVy3aSnQkwvBnOOTS8q0RCPC8AsvunzfQCq2fQwwKSXUSiGqsHTAZ14JHYTD8PbxKmrwO+WfMj
+ yMAGvUb+Dknw4uNzdNwtR5VqPeIza0Lg4EnZsr08aXhSTMHPsDXSEtP1Mb9bWCqvJx2lcOZklyo
+ G7uJbN1npUqEFw9d8NRf4j4AEC+hSGVTv98pm2ZwHQops06gOySOKzxa9bfr7hOBdM5qj6+ZIci
+ 65q0GoBQ9I9VzBRmwXHfhGG7NIXcYBArhq3PJIU2Ky/AKvfaAmxxGEAxYDM2UFXiqkqS7gJ5wYZ
+ vfmKEQSZPd
+X-Received: by 2002:a05:600c:a087:b0:483:71f7:2794 with SMTP id
+ 5b1f17b1804b1-48398a54b94mr145228655e9.15.1771588622596; 
+ Fri, 20 Feb 2026 03:57:02 -0800 (PST)
+X-Received: by 2002:a05:600c:a087:b0:483:71f7:2794 with SMTP id
+ 5b1f17b1804b1-48398a54b94mr145228175e9.15.1771588622099; 
+ Fri, 20 Feb 2026 03:57:02 -0800 (PST)
 Received: from rh.fritz.box
  (p200300f6af2d8700b4c2d356c3fafe63.dip0.t-ipconnect.de.
  [2003:f6:af2d:8700:b4c2:d356:c3fa:fe63])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-483a316c2aasm66102295e9.0.2026.02.20.03.56.59
+ 5b1f17b1804b1-483a316c2aasm66102295e9.0.2026.02.20.03.57.01
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 20 Feb 2026 03:56:59 -0800 (PST)
+ Fri, 20 Feb 2026 03:57:01 -0800 (PST)
 From: Sebastian Ott <sebott@redhat.com>
 To: peter.maydell@linaro.org,
 	qemu-devel@nongnu.org
 Cc: eric.auger@redhat.com, kvm@vger.kernel.org, kvmarm@lists.linux.dev,
  pbonzini@redhat.com, qemu-arm@nongnu.org, Sebastian Ott <sebott@redhat.com>
-Subject: [PATCH v6 0/1] arm: add kvm-psci-version vcpu property
-Date: Fri, 20 Feb 2026 12:56:55 +0100
-Message-ID: <20260220115656.4831-1-sebott@redhat.com>
+Subject: [PATCH v6 1/1] target/arm/kvm: add kvm-psci-version vcpu property
+Date: Fri, 20 Feb 2026 12:56:56 +0100
+Message-ID: <20260220115656.4831-2-sebott@redhat.com>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260220115656.4831-1-sebott@redhat.com>
+References: <20260220115656.4831-1-sebott@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=sebott@redhat.com;
@@ -104,7 +108,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.045,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,47 +124,143 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series adds a vcpu knob to request a specific PSCI version
-from KVM via the KVM_REG_ARM_PSCI_VERSION FW register.
-
-The use case for this is to support migration between host kernels
-that differ in their default (a.k.a. most recent) PSCI version.
+Provide a kvm specific vcpu property to override the default
+(as of kernel v6.13 that would be PSCI v1.3) PSCI version emulated
+by kvm. Current valid values are: 0.1, 0.2, 1.0, 1.1, 1.2, and 1.3
 
 Note: in order to support PSCI v0.1 we need to drop vcpu
 initialization with KVM_CAP_ARM_PSCI_0_2 in that case.
-Alternatively we could limit support to versions >=0.2 .
 
-Changes since V5 [5]:
-* incorporated feedback from Peter
-* dropped patch that is already upstream
-Changes since V4 [4]:
-* incorporated feedback from Peter
-* added R-B, T-B
-Changes since V3 [3]:
-* changed variable name as requested by Eric
-* added R-B
-Changes since V2 [2]:
-* fix kvm_get_psci_version() when the prop is not specified - thanks Eric!
-* removed the assertion in kvm_get_psci_version() so that this also works
-  with a future kernel/psci version
-* added R-B
-Changes since V1 [1]:
-* incorporated feedback from Peter and Eric
-
-[1] https://lore.kernel.org/kvmarm/20250911144923.24259-1-sebott@redhat.com/
-[2] https://lore.kernel.org/kvmarm/20251030165905.73295-1-sebott@redhat.com/
-[3] https://lore.kernel.org/kvmarm/20251112181357.38999-1-sebott@redhat.com/
-[4] https://lore.kernel.org/kvmarm/20251202160853.22560-1-sebott@redhat.com/
-[5] https://lore.kernel.org/kvmarm/20260211153032.19327-1-sebott@redhat.com/
-
-Sebastian Ott (1):
-  target/arm/kvm: add kvm-psci-version vcpu property
-
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
+Tested-by: Eric Auger <eric.auger@redhat.com>
+Signed-off-by: Sebastian Ott <sebott@redhat.com>
+---
  docs/system/arm/cpu-features.rst | 11 ++++++++
  target/arm/cpu.c                 |  8 +++++-
  target/arm/kvm.c                 | 48 ++++++++++++++++++++++++++++++--
  3 files changed, 64 insertions(+), 3 deletions(-)
 
+diff --git a/docs/system/arm/cpu-features.rst b/docs/system/arm/cpu-features.rst
+index 3db1f19401..ce19ae6a04 100644
+--- a/docs/system/arm/cpu-features.rst
++++ b/docs/system/arm/cpu-features.rst
+@@ -204,6 +204,17 @@ the list of KVM VCPU features and their descriptions.
+   the guest scheduler behavior and/or be exposed to the guest
+   userspace.
+ 
++``kvm-psci-version``
++  Set the Power State Coordination Interface (PSCI) firmware ABI version
++  that KVM provides to the guest. By default KVM will use the newest
++  version that it knows about (which is PSCI v1.3 in Linux v6.13).
++
++  You only need to set this if you want to be able to migrate this
++  VM to a host machine running an older kernel that does not
++  recognize the PSCI version that this host's kernel defaults to.
++
++  Current valid values are: 0.1, 0.2, 1.0, 1.1, 1.2, and 1.3.
++
+ TCG VCPU Features
+ =================
+ 
+diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+index 10f8280eef..60f391651d 100644
+--- a/target/arm/cpu.c
++++ b/target/arm/cpu.c
+@@ -1144,7 +1144,13 @@ static void arm_cpu_initfn(Object *obj)
+      * picky DTB consumer will also provide a helpful error message.
+      */
+     cpu->dtb_compatible = "qemu,unknown";
+-    cpu->psci_version = QEMU_PSCI_VERSION_0_1; /* By default assume PSCI v0.1 */
++    if (!kvm_enabled()) {
++        /* By default KVM will use the newest PSCI version that it knows about.
++         * This can be changed using the kvm-psci-version property.
++         * For others assume PSCI v0.1 by default.
++         */
++        cpu->psci_version = QEMU_PSCI_VERSION_0_1;
++    }
+     cpu->kvm_target = QEMU_KVM_ARM_TARGET_NONE;
+ 
+     if (tcg_enabled() || hvf_enabled()) {
+diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+index ded582e0da..5453460965 100644
+--- a/target/arm/kvm.c
++++ b/target/arm/kvm.c
+@@ -485,6 +485,28 @@ static void kvm_steal_time_set(Object *obj, bool value, Error **errp)
+     ARM_CPU(obj)->kvm_steal_time = value ? ON_OFF_AUTO_ON : ON_OFF_AUTO_OFF;
+ }
+ 
++static char *kvm_get_psci_version(Object *obj, Error **errp)
++{
++    ARMCPU *cpu = ARM_CPU(obj);
++
++    return g_strdup_printf("%d.%d",
++                           (int) PSCI_VERSION_MAJOR(cpu->psci_version),
++                           (int) PSCI_VERSION_MINOR(cpu->psci_version));
++}
++
++static void kvm_set_psci_version(Object *obj, const char *value, Error **errp)
++{
++    ARMCPU *cpu = ARM_CPU(obj);
++    uint16_t maj, min;
++
++    if (sscanf(value, "%hd.%hd", &maj, &min) != 2) {
++        error_setg(errp, "Invalid PSCI version.");
++        return;
++    }
++
++    cpu->psci_version = PSCI_VERSION(maj, min);
++}
++
+ /* KVM VCPU properties should be prefixed with "kvm-". */
+ void kvm_arm_add_vcpu_properties(ARMCPU *cpu)
+ {
+@@ -506,6 +528,12 @@ void kvm_arm_add_vcpu_properties(ARMCPU *cpu)
+                              kvm_steal_time_set);
+     object_property_set_description(obj, "kvm-steal-time",
+                                     "Set off to disable KVM steal time.");
++
++    object_property_add_str(obj, "kvm-psci-version", kvm_get_psci_version,
++                            kvm_set_psci_version);
++    object_property_set_description(obj, "kvm-psci-version",
++                                    "Set PSCI version. "
++                                    "Valid values are 0.1, 0.2, 1.0, 1.1, 1.2, 1.3");
+ }
+ 
+ bool kvm_arm_pmu_supported(void)
+@@ -1976,8 +2004,12 @@ int kvm_arch_init_vcpu(CPUState *cs)
+     if (cs->start_powered_off) {
+         cpu->kvm_init_features[0] |= 1 << KVM_ARM_VCPU_POWER_OFF;
+     }
+-    if (kvm_check_extension(cs->kvm_state, KVM_CAP_ARM_PSCI_0_2)) {
+-        cpu->psci_version = QEMU_PSCI_VERSION_0_2;
++    if (cpu->psci_version != QEMU_PSCI_VERSION_0_1 &&
++        kvm_check_extension(cs->kvm_state, KVM_CAP_ARM_PSCI_0_2)) {
++        /*
++         * Versions >= v0.2 are backward compatible with v0.2
++         * omit the feature flag for v0.1 .
++         */
+         cpu->kvm_init_features[0] |= 1 << KVM_ARM_VCPU_PSCI_0_2;
+     }
+     if (!arm_feature(env, ARM_FEATURE_AARCH64)) {
+@@ -2015,6 +2047,18 @@ int kvm_arch_init_vcpu(CPUState *cs)
+         }
+     }
+ 
++    if (cpu->psci_version) {
++        psciver = cpu->psci_version;
++        ret = kvm_set_one_reg(cs, KVM_REG_ARM_PSCI_VERSION, &psciver);
++        if (ret) {
++            error_report("KVM in this kernel does not support PSCI version %d.%d",
++                         (int) PSCI_VERSION_MAJOR(psciver),
++                         (int) PSCI_VERSION_MINOR(psciver));
++            error_printf("Consider setting the kvm-psci-version property on the "
++                         "migration source.\n");
++            return ret;
++        }
++    }
+     /*
+      * KVM reports the exact PSCI version it is implementing via a
+      * special sysreg. If it is present, use its contents to determine
 -- 
 2.52.0
 
