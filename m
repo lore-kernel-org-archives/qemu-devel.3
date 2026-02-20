@@ -4,105 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E99BFC56205
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Feb 2026 15:00:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6796AC56205
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Feb 2026 15:02:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vtRzC-0006hP-Sz; Fri, 20 Feb 2026 10:00:06 -0500
+	id 1vtS16-0007Yf-Es; Fri, 20 Feb 2026 10:02:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vtRz9-0006gZ-FK
- for qemu-devel@nongnu.org; Fri, 20 Feb 2026 10:00:03 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vtS0f-0007Q6-7A
+ for qemu-devel@nongnu.org; Fri, 20 Feb 2026 10:01:41 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vtRz4-00016z-OT
- for qemu-devel@nongnu.org; Fri, 20 Feb 2026 10:00:02 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vtS0c-0001kI-Nb
+ for qemu-devel@nongnu.org; Fri, 20 Feb 2026 10:01:36 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771599596;
+ s=mimecast20190719; t=1771599693;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=WaceR6dm230qbEqVcg1fKMJzATvx1ZMDXaNGSn7OPKk=;
- b=X6/kymWsjMfTzMLvE3BxJeEKX9+TWGAC+AbHtYEE9qLYgQCXQYo/ZpjVZEQxTCydyyJiRv
- GgGp3itUuLLeBN4OluQTIhVZvorKs0wa2RX461mU2CUuA15dK1HP/Xy1YSV2ToUkq7QpIW
- 5iMP5Jhlj/qkGW4+jafDEdzNMaZIp58=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=dGGqV7kfdxRNr0N+CuOeNv8t5DH3fa+zrHbpB8i6iW4=;
+ b=fH+ipWl5X8rZa/0ZJpyphySGPEvq4Lg4EhXhM2PdzdO8ggjDQA2V5bVZvxbc3x4w5wj4Ak
+ 8MSlgO5dq8hOhf4TZNacFNclve/xXuziNwXtlg3PTvFknRACtsSyml/4HuarYfF3D0cTpH
+ jrwJ1ps7fRZYH0CYOLN6QVg0l95/TgY=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-356-_R8QiArnNZ2AtWNyZHyRhA-1; Fri, 20 Feb 2026 09:59:54 -0500
-X-MC-Unique: _R8QiArnNZ2AtWNyZHyRhA-1
-X-Mimecast-MFC-AGG-ID: _R8QiArnNZ2AtWNyZHyRhA_1771599593
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4837907ec88so30831775e9.0
- for <qemu-devel@nongnu.org>; Fri, 20 Feb 2026 06:59:54 -0800 (PST)
+ us-mta-622-2-FcKjVUPiK_ZdrgY9zhrA-1; Fri, 20 Feb 2026 10:01:32 -0500
+X-MC-Unique: 2-FcKjVUPiK_ZdrgY9zhrA-1
+X-Mimecast-MFC-AGG-ID: 2-FcKjVUPiK_ZdrgY9zhrA_1771599691
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-435add03f12so1465859f8f.3
+ for <qemu-devel@nongnu.org>; Fri, 20 Feb 2026 07:01:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1771599593; x=1772204393; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=WaceR6dm230qbEqVcg1fKMJzATvx1ZMDXaNGSn7OPKk=;
- b=drj2Xf1BUbtm989Tu35wBy4ovUFDwEVIaDrj4W4rA7n5Z/VqLArZN6+FvsjHTqA91j
- cQFMiMeIuz2QD6ZWK4i7uxnJF8sRM8tkZGUulSahXy1KDZiXw/oF/VwzeuCueau6Ca/e
- VbkfAlEjnFMogDwCPY2BGxOT01OYgM9Jy2R/5JONv/Kx66/hcVzYaHkI7NCYJkceSmAK
- Yuy/M552j4hxj7SmaWdlj1Ej4y4gxx/JgdDSi+TLQ15UzPcgmLUql6EwqVWDoJ5LJb7G
- EsUPx5gzr90yeGDTt14jbjq+hru7pNi74cYpPkivtvwj5Hn3e+7NGinBXL5cHZ90CUuW
- EyLw==
+ d=redhat.com; s=google; t=1771599690; x=1772204490; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=dGGqV7kfdxRNr0N+CuOeNv8t5DH3fa+zrHbpB8i6iW4=;
+ b=Ji2ZF7SWSt0ZiClq3cPmvg8+LO2N6JYtjjA2xTIEjAW8G9xXKpOh/Cczi3wXhWSU0o
+ 5BmQv5++t0W4xGTTVaS4CY8Cy/u1icxN1Tvt/tIaejWON/H79D1TY4M/yLPRSaVG2I6A
+ Wb4u30/vSXZsOA04NkeD2w2AyjlS1W/rlsiaqwsRI+amP7jFl/2sXvy9MBgr82/AEoRq
+ W3QRPHW0zW+VbNE47I6or+ORno7O6xZmOSRy/TO6ghdp47Yr0KZNXsHMUoRdH/g0eKQj
+ LskCuad566izmI09UTXTvL7FoJztznVTdP9idop+8Ro2U3LQPaBBrz+0MsyxUKkyLX+m
+ v/CA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771599593; x=1772204393;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=WaceR6dm230qbEqVcg1fKMJzATvx1ZMDXaNGSn7OPKk=;
- b=EM4W52JA8hsL0++fuG1ao7YFYppBgrqrSYLc/QiS5FtuGwdHhXzBgeC400aiAW2QhT
- /H8M20KA8Pu4/G7I0bSKGCGXqT5xVQY9lHMC+cHhaMlVzu87WYj34axhTvzM1nMgKsCo
- YM4B/M4P+fmOPCbdWAwLW9o4WKepaTMLSH5YAB10WP1ibmtJNpmZsfSaJYCFPrgyqojZ
- yE0/K5lHYxhUOrL+HW5xDQmTG6phFP1YtpSXL5D/ck7q5yXZIG7hff1358djOECKasyl
- dasIuE7fx3Z3WtZ77p7eawdcbf2VVrUAE1IOvP/TibvTph7ZN/mCrvVajhz6E+2BjtnU
- xRNw==
-X-Gm-Message-State: AOJu0Yz4+kGCEGV21ZbSmN8jQjLKBWxdGEU4K4lBJE35KbBEHt8+FMPV
- Y/awCMre93TlYVEg4BO56PaFfCJ0XjE2TyK3m1M8vVwKE34fkzB1+DwgOHvLV/BbCBukg00TNQA
- KI7oEp81PKnmh6bpwixh/sGSzsCIVmbeoyTRFDCvX35tceUIdRAotyMLA
-X-Gm-Gg: AZuq6aIMnroypYBLTf2F3rStxc9Vxp3EifnZV3o5AQdpPSzB3mDxiebH2+Ui+rBzJDU
- JZbbBwpjEzwZaYdOvPzFLBzLaZ4y5RrVGTsRrf45pbm8jfzml999h9+dblxMfifKiDGM1jb6rat
- jw5PsF1dwhnFC3yjSSFn4507PYzskrKUKWSGrhWejnnTs7CTgEwoOocyajOTO8PDrA4jd45SDKX
- gPGeTnt+jKy3LO9dixeYPbdyo0mjw8Ka1IDOe/PNT/V0hzFHQ8HjCntxIdf4K0RtkusTB/0Nspy
- KZ7gHtx1n6Lpuwiy1u5INvYQhRWUk20dlmnNkXafYjwuw5MS0vcZvl4yYa6DbJ0Y0M9GWVTldFT
- 4xa/bNCY214BhWL7msJK7sXveLdZhjUT85qBJd8YWmVDQPg==
-X-Received: by 2002:a05:600c:a407:b0:477:7bca:8b2b with SMTP id
- 5b1f17b1804b1-483a5e18c61mr32742165e9.15.1771599593279; 
- Fri, 20 Feb 2026 06:59:53 -0800 (PST)
-X-Received: by 2002:a05:600c:a407:b0:477:7bca:8b2b with SMTP id
- 5b1f17b1804b1-483a5e18c61mr32741635e9.15.1771599592730; 
- Fri, 20 Feb 2026 06:59:52 -0800 (PST)
+ d=1e100.net; s=20230601; t=1771599690; x=1772204490;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=dGGqV7kfdxRNr0N+CuOeNv8t5DH3fa+zrHbpB8i6iW4=;
+ b=Jx7t3x1tv1nc6Z9NztKx+pGCiC+q/XENkURoffyn0IvvIqn/dj4RdxUWr5I3yikAZC
+ 1tmEULbnCMxk8ntBjD09uXmmCoQJ3G0v8R8rjiZZDXOSlw8HbjfI+qj9uAePNZqb6bwU
+ hDz5RBhXOq8r27XA2A1VOzdxRd3CCHUFNJK0Z7ZSGSTToEURR6ndBoI+sRzbj39vti3p
+ 5XNAKUQgX4raWaKUfj2FqgpmuTWgSG42rAYz80gQpXufFOoSrpaFOeT8EdyS8pwG2Gn5
+ gyzr8IzHWBy6vyRpLJ3iMJ8aCb16oENYqqcG7z9adqhR6zaSELrTZwuMgy7DEcxAgoiS
+ NLyg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXLm/+0/i1KFTXiwyH0Q8CHIzgcF3MhhJuT38yc0qq4nCkPLVbJV3qStQh5IN8To7VqvwBn3T+Vhih+@nongnu.org
+X-Gm-Message-State: AOJu0YxipmEHs9tj20J6seFlvOCoTeZcujjDfMwgjuwXcB5sX9IYFLp1
+ qnKdTDZ0sxJwixF+Bhdy37LDZrgPqlW+E2tnwp7g8XabiALGf2dmwqA3MTijDDH5wCGtydWraM6
+ rQzMPrKaoHnFUG+leXBdeZdxdtK5lwf+0G9IzuWNMfBmDtn9B+fr9GJEX
+X-Gm-Gg: AZuq6aLmofqLPPCETAngAMUA8DzIAbqH7xZqASeGx18aEcS1/NNK7M3EO3/gc0xdekY
+ Zp8F4Do4dCOIKMGH8XmIXNrVkluRkaOH3QgwbD6Nrc9ruMzotQhW6RKspJVAvCGxptgTGdmV/1C
+ 1PTgfFvusaV4T5iHzZIRH9wjW4AtiZofyJGuYQUd9RdiW2M+3GSMRmBJ3Hj6wmxwc4UBvAQ6EiU
+ lYnkV0CfQyIZ2JvYbraPGHXWCimY7vgN2ebvwc/jO3D0VAW59/sF4tI/96HB0Qdbh7T/yb5t3UN
+ MNGibt7jgvwyXoVpnXDJvIjkiyb5Iu/d5izfV6jSOiuufEkwajAP4X28RtaIfvXbj3zTSu+WZAS
+ 3dVXq1MDPcWolrtIGR/rwIBcr0yQ+n38L3U4es3ZzoHgOuQ==
+X-Received: by 2002:a05:6000:230b:b0:437:71cc:a246 with SMTP id
+ ffacd0b85a97d-4396f153cd2mr449314f8f.10.1771599690293; 
+ Fri, 20 Feb 2026 07:01:30 -0800 (PST)
+X-Received: by 2002:a05:6000:230b:b0:437:71cc:a246 with SMTP id
+ ffacd0b85a97d-4396f153cd2mr449206f8f.10.1771599689681; 
+ Fri, 20 Feb 2026 07:01:29 -0800 (PST)
 Received: from redhat.com (IGLD-80-230-79-166.inter.net.il. [80.230.79.166])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-483a31ff4d7sm78554685e9.15.2026.02.20.06.59.50
+ ffacd0b85a97d-43796a74704sm60644897f8f.16.2026.02.20.07.01.28
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 20 Feb 2026 06:59:52 -0800 (PST)
-Date: Fri, 20 Feb 2026 09:59:48 -0500
+ Fri, 20 Feb 2026 07:01:29 -0800 (PST)
+Date: Fri, 20 Feb 2026 10:01:26 -0500
 From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Alexander Graf <graf@amazon.com>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>,
- Thomas Huth <thuth@redhat.com>, alex.bennee@linaro.org,
- philmd@linaro.org, berrange@redhat.com, marcandre.lureau@redhat.com,
- Cornelia Huck <cohuck@redhat.com>,
- Dorjoy Chowdhury <dorjoychy111@gmail.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+To: Ani Sinha <anisinha@redhat.com>
+Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
- Tyler Fanelli <tfanelli@redhat.com>, mknaust@amazon.com,
- nh-open-source@amazon.com
-Subject: Re: [PATCH 07/10] hw/nitro: Add nitro machine
-Message-ID: <20260220095806-mutt-send-email-mst@kernel.org>
-References: <20260218015151.4052-1-graf@amazon.com>
- <20260218015151.4052-8-graf@amazon.com>
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>, kraxel@redhat.com,
+ qemu-devel@nongnu.org
+Subject: Re: [PATCH v5 11/34] hw/i386: refactor x86_bios_rom_init for reuse
+ in confidential guest reset
+Message-ID: <20260220100116-mutt-send-email-mst@kernel.org>
+References: <20260218114233.266178-1-anisinha@redhat.com>
+ <20260218114233.266178-12-anisinha@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260218015151.4052-8-graf@amazon.com>
+In-Reply-To: <20260218114233.266178-12-anisinha@redhat.com>
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -112,7 +107,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.049,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -128,287 +123,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Feb 18, 2026 at 01:51:47AM +0000, Alexander Graf wrote:
-> Add a machine model to spawn a Nitro Enclave. Unlike the existing -M
-> nitro-enclave, this machine model works exclusively with the -accel
-> nitro accelerator to drive real Nitro Enclave creation. It supports
-> memory allocation, number of CPU selection, both x86_64 as well as
-> aarch64, implements the Enclave heartbeat logic and debug serial
-> console.
+On Wed, Feb 18, 2026 at 05:12:04PM +0530, Ani Sinha wrote:
+> For confidential guests, bios image must be reinitialized upon reset. This
+> is because bios memory is encrypted and hence once the old confidential
+> kvm context is destroyed, it cannot be decrypted. It needs to be reinitilized.
+> In order to do that, this change refactors x86_bios_rom_init() code so that
+> parts of it can be called during confidential guest reset.
 > 
-> To use it, create an EIF file and run
-> 
->   $ qemu-system-x86_64 -accel nitro,debug-mode=on -M nitro -nographic \
->                        -kernel test.eif
-> 
-> or
-> 
->   $ qemu-system-aarch64 -accel nitro,debug-mode=on -M nitro -nographic \
->                        -kernel test.eif
-> 
-> Signed-off-by: Alexander Graf <graf@amazon.com>
+> Signed-off-by: Ani Sinha <anisinha@redhat.com>
+
+
+just  a refactor:
+
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+
 > ---
->  hw/nitro/Kconfig           |   7 ++
->  hw/nitro/machine.c         | 180 +++++++++++++++++++++++++++++++++++++
->  hw/nitro/meson.build       |   1 +
->  include/hw/nitro/machine.h |  20 +++++
->  4 files changed, 208 insertions(+)
->  create mode 100644 hw/nitro/machine.c
->  create mode 100644 include/hw/nitro/machine.h
+>  hw/i386/x86-common.c | 50 ++++++++++++++++++++++++++++++++------------
+>  1 file changed, 37 insertions(+), 13 deletions(-)
 > 
-> diff --git a/hw/nitro/Kconfig b/hw/nitro/Kconfig
-> index 6fe050d35d..910068c23c 100644
-> --- a/hw/nitro/Kconfig
-> +++ b/hw/nitro/Kconfig
-> @@ -5,3 +5,10 @@ config NITRO_SERIAL_VSOCK
->  config NITRO_HEARTBEAT
->      bool
->      depends on NITRO
+> diff --git a/hw/i386/x86-common.c b/hw/i386/x86-common.c
+> index de4cd7650a..c98abaf368 100644
+> --- a/hw/i386/x86-common.c
+> +++ b/hw/i386/x86-common.c
+> @@ -1020,17 +1020,11 @@ void x86_isa_bios_init(MemoryRegion *isa_bios, MemoryRegion *isa_memory,
+>      memory_region_set_readonly(isa_bios, read_only);
+>  }
+>  
+> -void x86_bios_rom_init(X86MachineState *x86ms, const char *default_firmware,
+> -                       MemoryRegion *rom_memory, bool isapc_ram_fw)
+> +static int get_bios_size(X86MachineState *x86ms,
+> +                         const char *bios_name, char *filename)
+>  {
+> -    const char *bios_name;
+> -    char *filename;
+>      int bios_size;
+> -    ssize_t ret;
+>  
+> -    /* BIOS load */
+> -    bios_name = MACHINE(x86ms)->firmware ?: default_firmware;
+> -    filename = qemu_find_file(QEMU_FILE_TYPE_BIOS, bios_name);
+>      if (filename) {
+>          bios_size = get_image_size(filename, NULL);
+>      } else {
+> @@ -1040,6 +1034,21 @@ void x86_bios_rom_init(X86MachineState *x86ms, const char *default_firmware,
+>          (bios_size % 65536) != 0) {
+>          goto bios_error;
+>      }
 > +
-> +config NITRO_MACHINE
-> +    bool
-> +    default y
-> +    depends on NITRO
-> +    select NITRO_HEARTBEAT
-> +    select NITRO_SERIAL_VSOCK
-> diff --git a/hw/nitro/machine.c b/hw/nitro/machine.c
-> new file mode 100644
-> index 0000000000..197adfbdb5
-> --- /dev/null
-> +++ b/hw/nitro/machine.c
-> @@ -0,0 +1,180 @@
-> +/*
-> + * Nitro Enclaves (accel) machine
-> + *
-> + * Copyright © 2026 Amazon.com, Inc. or its affiliates. All Rights Reserved.
-> + *
-> + * Authors:
-> + *   Alexander Graf <graf@amazon.com>
-> + *
-> + * Nitro Enclaves machine model for -accel nitro. This machine behaves
-> + * like the nitro-enclave machine, but uses the real Nitro Enclaves
-> + * backend to launch the virtual machine. It requires use of the -accel
-> + * nitro.
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
+> +    return bios_size;
 > +
-> +#include "qemu/osdep.h"
-> +#include "qemu/error-report.h"
-> +#include "qapi/error.h"
-> +#include "qom/object_interfaces.h"
-> +#include "chardev/char.h"
-> +#include "hw/core/boards.h"
-> +#include "hw/core/cpu.h"
-> +#include "hw/core/sysbus.h"
-> +#include "hw/core/qdev-properties-system.h"
-> +#include "hw/nitro/heartbeat.h"
-> +#include "hw/nitro/machine.h"
-> +#include "hw/nitro/serial-vsock.h"
-> +#include "system/address-spaces.h"
-> +#include "system/hostmem.h"
-> +#include "system/system.h"
-> +#include "system/nitro-accel.h"
-> +#include "qemu/accel.h"
-> +#include "hw/arm/machines-qom.h"
-> +
-> +#define EIF_LOAD_ADDR   (8 * 1024 * 1024)
-> +
-> +static void nitro_create_cpu(const char *cpu_type, int index)
-> +{
-> +    Object *obj = object_new(cpu_type);
-> +
-> +    /* x86 CPUs require an apic-id before realize */
-> +    if (object_property_find(obj, "apic-id")) {
-> +        object_property_set_int(obj, "apic-id", index, &error_fatal);
-> +    }
-> +
-> +    qdev_realize(DEVICE(obj), NULL, &error_fatal);
+> + bios_error:
+> +    fprintf(stderr, "qemu: could not load PC BIOS '%s'\n", bios_name);
+> +    exit(1);
 > +}
 > +
-> +static void nitro_machine_init(MachineState *machine)
+> +static void load_bios_from_file(X86MachineState *x86ms, const char *bios_name,
+> +                                char *filename, int bios_size,
+> +                                bool isapc_ram_fw)
 > +{
-> +    const char *eif_path = machine->kernel_filename;
-> +    const char *cpu_type = machine->cpu_type;
-> +    g_autofree char *eif_data = NULL;
-> +    gsize eif_size;
-> +    int i;
+> +    ssize_t ret;
 > +
-> +    if (!nitro_enabled()) {
-> +        error_report("The 'nitro' machine requires -accel nitro");
-> +        exit(1);
-> +    }
+> +    /* BIOS load */
+>      if (machine_require_guest_memfd(MACHINE(x86ms))) {
+>          memory_region_init_ram_guest_memfd(&x86ms->bios, NULL, "pc.bios",
+>                                             bios_size, &error_fatal);
+> @@ -1068,7 +1077,26 @@ void x86_bios_rom_init(X86MachineState *x86ms, const char *default_firmware,
+>              goto bios_error;
+>          }
+>      }
+> -    g_free(filename);
 > +
-> +    if (!cpu_type) {
-> +        ObjectClass *oc = cpu_class_by_name(target_cpu_type(), "host");
+> +    return;
 > +
-> +        if (!oc) {
-> +            error_report("nitro: no 'host' CPU available");
-> +            exit(1);
-> +        }
-> +        cpu_type = object_class_get_name(oc);
-> +    }
-> +
-> +    if (!eif_path) {
-> +        error_report("nitro: -kernel <eif-file> is required");
-> +        exit(1);
-> +    }
-> +
-> +    /* Expose memory as normal QEMU RAM. Needs to be huge page backed. */
-> +    memory_region_add_subregion(get_system_memory(), 0, machine->ram);
-> +
-> +    /*
-> +     * Load EIF (-kernel) as raw blob at the EIF_LOAD_ADDR into guest RAM.
-> +     * The Nitro Hypervisor will extract its contents and bootstrap the
-> +     * Enclave from it.
-> +     */
-> +    if (!g_file_get_contents(eif_path, &eif_data, &eif_size, NULL)) {
-> +        error_report("nitro: failed to read EIF '%s'", eif_path);
-> +        exit(1);
-> +    }
-> +    address_space_write(&address_space_memory, EIF_LOAD_ADDR,
-> +                        MEMTXATTRS_UNSPECIFIED, eif_data, eif_size);
-> +
-> +    /* Nitro Enclaves require a heartbeat device. Provide one. */
-> +    sysbus_realize_and_unref(SYS_BUS_DEVICE(qdev_new(TYPE_NITRO_HEARTBEAT)),
-> +                             &error_fatal);
-> +
-> +    /*
-> +     * In debug mode, Nitro Enclaves expose the guest's serial output via
-> +     * vsock. When the accel is in debug mode, wire the vsock serial to
-> +     * the machine's serial port so that -nographic automatically works
-> +     */
-> +    if (object_property_get_bool(OBJECT(current_accel()), "debug-mode", NULL)) {
-> +        Chardev *chr = serial_hd(0);
-> +
-> +        if (chr) {
-> +            DeviceState *dev = qdev_new(TYPE_NITRO_SERIAL_VSOCK);
-> +
-> +            qdev_prop_set_chr(dev, "chardev", chr);
-> +            sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
-> +        }
-> +    }
-
-
-Would  respecting -nodefaults and then maybe not wiring up all the
-vsock things make sense? allows users to set it up any way
-they want ...
-
-> +
-> +    /*
-> +     * Spawn vCPUs. While the real Nitro Enclaves CPUs are owned by the
-> +     * underlying hypervisor, we still want to maintain a local view of
-> +     * them to trigger VM creation when vCPU 0 starts and to give us an
-> +     * object to interact with.
-> +     */
-> +    for (i = 0; i < machine->smp.cpus; i++) {
-> +        nitro_create_cpu(cpu_type, i);
-> +    }
+> + bios_error:
+> +    fprintf(stderr, "qemu: could not load PC BIOS '%s'\n", bios_name);
+> +    exit(1);
 > +}
 > +
-> +static bool nitro_create_memfd_backend(MachineState *ms, const char *path,
-> +                                       Error **errp)
+> +void x86_bios_rom_init(X86MachineState *x86ms, const char *default_firmware,
+> +                       MemoryRegion *rom_memory, bool isapc_ram_fw)
 > +{
-> +    MachineClass *mc = MACHINE_GET_CLASS(ms);
-> +    Object *root = object_get_objects_root();
-> +    Object *obj;
-> +    bool r = false;
+> +    int bios_size;
+> +    const char *bios_name;
+> +    g_autofree char *filename;
 > +
-> +    obj = object_new(TYPE_MEMORY_BACKEND_MEMFD);
+> +    bios_name = MACHINE(x86ms)->firmware ?: default_firmware;
+> +    filename = qemu_find_file(QEMU_FILE_TYPE_BIOS, bios_name);
 > +
-> +    /* Nitro Enclaves require huge page backing */
-> +    if (!object_property_set_int(obj, "size", ms->ram_size, errp) ||
-> +        !object_property_set_bool(obj, "hugetlb", true, errp)) {
-> +        goto out;
-> +    }
-> +
-> +    object_property_add_child(root, mc->default_ram_id, obj);
-> +
-> +    if (!user_creatable_complete(USER_CREATABLE(obj), errp)) {
-> +        goto out;
-> +    }
-> +    r = object_property_set_link(OBJECT(ms), "memory-backend", obj, errp);
-> +
-> +out:
-> +    object_unref(obj);
-> +    return r;
-> +}
-> +
-> +static void nitro_machine_class_init(ObjectClass *oc, const void *data)
-> +{
-> +    MachineClass *mc = MACHINE_CLASS(oc);
-> +
-> +    mc->desc = "Nitro Enclave";
-> +    mc->init = nitro_machine_init;
-> +    mc->create_default_memdev = nitro_create_memfd_backend;
-> +    mc->default_ram_id = "ram";
-> +    mc->max_cpus = 4096;
-> +}
-> +
-> +static const TypeInfo nitro_machine_info = {
-> +    .name = TYPE_NITRO_MACHINE,
-> +    .parent = TYPE_MACHINE,
-> +    .instance_size = sizeof(NitroMachineState),
-> +    .class_init = nitro_machine_class_init,
-> +    .interfaces = (const InterfaceInfo[]) {
-> +        /* x86_64 and aarch64 only */
-> +        { TYPE_TARGET_AARCH64_MACHINE },
-> +        { }
-> +    },
-> +};
-> +
-> +static void nitro_machine_register(void)
-> +{
-> +    type_register_static(&nitro_machine_info);
-> +}
-> +
-> +type_init(nitro_machine_register);
-> diff --git a/hw/nitro/meson.build b/hw/nitro/meson.build
-> index b921da2b97..813f5a9c87 100644
-> --- a/hw/nitro/meson.build
-> +++ b/hw/nitro/meson.build
-> @@ -1,2 +1,3 @@
->  system_ss.add(when: 'CONFIG_NITRO_SERIAL_VSOCK', if_true: files('serial-vsock.c'))
->  system_ss.add(when: 'CONFIG_NITRO_HEARTBEAT', if_true: files('heartbeat.c'))
-> +system_ss.add(when: 'CONFIG_NITRO_MACHINE', if_true: files('machine.c'))
-> diff --git a/include/hw/nitro/machine.h b/include/hw/nitro/machine.h
-> new file mode 100644
-> index 0000000000..d78ba7d6dc
-> --- /dev/null
-> +++ b/include/hw/nitro/machine.h
-> @@ -0,0 +1,20 @@
-> +/*
-> + * Nitro Enclaves (accel) machine
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +
-> +#ifndef HW_NITRO_MACHINE_H
-> +#define HW_NITRO_MACHINE_H
-> +
-> +#include "hw/core/boards.h"
-> +#include "qom/object.h"
-> +
-> +#define TYPE_NITRO_MACHINE MACHINE_TYPE_NAME("nitro")
-> +OBJECT_DECLARE_SIMPLE_TYPE(NitroMachineState, NITRO_MACHINE)
-> +
-> +struct NitroMachineState {
-> +    MachineState parent;
-> +};
-> +
-> +#endif /* HW_NITRO_MACHINE_H */
+> +    bios_size = get_bios_size(x86ms, bios_name, filename);
+> +    load_bios_from_file(x86ms, bios_name, filename, bios_size, isapc_ram_fw);
+>  
+>      if (!machine_require_guest_memfd(MACHINE(x86ms))) {
+>          /* map the last 128KB of the BIOS in ISA space */
+> @@ -1081,8 +1109,4 @@ void x86_bios_rom_init(X86MachineState *x86ms, const char *default_firmware,
+>                                  (uint32_t)(-bios_size),
+>                                  &x86ms->bios);
+>      return;
+> -
+> -bios_error:
+> -    fprintf(stderr, "qemu: could not load PC BIOS '%s'\n", bios_name);
+> -    exit(1);
+>  }
 > -- 
-> 2.47.1
-> 
-> 
-> 
-> 
-> Amazon Web Services Development Center Germany GmbH
-> Tamara-Danz-Str. 13
-> 10243 Berlin
-> Geschaeftsfuehrung: Christof Hellmis, Andreas Stieger
-> Eingetragen am Amtsgericht Charlottenburg unter HRB 257764 B
-> Sitz: Berlin
-> Ust-ID: DE 365 538 597
+> 2.42.0
 
 
