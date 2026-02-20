@@ -4,100 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0729C55AB9
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Feb 2026 12:50:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43244C55AB9
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Feb 2026 12:59:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vtPwx-0004WV-Jg; Fri, 20 Feb 2026 07:49:39 -0500
+	id 1vtQ63-0007uz-Li; Fri, 20 Feb 2026 07:59:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vtPwt-0004Vo-8W
- for qemu-devel@nongnu.org; Fri, 20 Feb 2026 07:49:35 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vtQ61-0007uq-Nd
+ for qemu-devel@nongnu.org; Fri, 20 Feb 2026 07:59:01 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vtPwp-0006BQ-IS
- for qemu-devel@nongnu.org; Fri, 20 Feb 2026 07:49:34 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vtQ5y-0007Wd-T9
+ for qemu-devel@nongnu.org; Fri, 20 Feb 2026 07:59:01 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771591769;
+ s=mimecast20190719; t=1771592336;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=kl2POBbCPeZ1XMKcJ8oGPKap8X7akNCGB6xdqZI5lCA=;
- b=PnF0o09NClAv/xr/KVuMOg082ecXpKxe0jzqr1dQnjX7JVvEGo6Pogg2vUSHjhjMYNGsjD
- qRPOaInygSB6ijcjfo1JMj6UOtZa5UbVlAW17bisfjZcX7NtRB2JPfbygxuFo4QeFDWqVv
- n/1chwDlyYC2Fp/8x0Kn+Hpl4yK2OSw=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=vkSNI3uLN6KRJsGjKA6J4qpWg+yqDGZlKCoW+0IJCbs=;
+ b=gJbnoraO+oOwkxer4CrDcs2qHR+qwyAq9jvYYsox8GAYjY/eucSLaeqaXXmTS5Ny3h5TWv
+ LXxBk9E9vLpwzG/+3kpy6opi1UBkOQSu+ok+sexXe1Rv2bI5Pmab27ieeH6Pvz38IxHb/6
+ zmkH3xkvy73KA68wHCr18+0kKpV/EYw=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-682-9Q7tSz8gOBijZWhGbXqT4A-1; Fri, 20 Feb 2026 07:49:28 -0500
-X-MC-Unique: 9Q7tSz8gOBijZWhGbXqT4A-1
-X-Mimecast-MFC-AGG-ID: 9Q7tSz8gOBijZWhGbXqT4A_1771591767
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4839fc4cef6so14972015e9.0
- for <qemu-devel@nongnu.org>; Fri, 20 Feb 2026 04:49:28 -0800 (PST)
+ us-mta-582-ZONSmFKWNhGDoGz1jYn_rA-1; Fri, 20 Feb 2026 07:58:54 -0500
+X-MC-Unique: ZONSmFKWNhGDoGz1jYn_rA-1
+X-Mimecast-MFC-AGG-ID: ZONSmFKWNhGDoGz1jYn_rA_1771592333
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-4836cc0b38eso21858015e9.2
+ for <qemu-devel@nongnu.org>; Fri, 20 Feb 2026 04:58:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1771591767; x=1772196567; darn=nongnu.org;
+ d=redhat.com; s=google; t=1771592333; x=1772197133; darn=nongnu.org;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=kl2POBbCPeZ1XMKcJ8oGPKap8X7akNCGB6xdqZI5lCA=;
- b=SAmKyNm2XST+KQZooMC1gxiwwuFW9W5Vsbs10qQLV4Ls5qtfBSi69ErGhyDyjeDpQx
- fq7kTwc3GCJynB2JOnllK9AJCUBFq6b+u5GLsnHC4vavK9cgBwQIG7AHpIKNeXSTZ0LV
- qHr1JX9fwtQJt5LkiQl3QC6jGfkoXOHaSi+2gKqutxVoo8FlyKGNzXq/FEi9Q/0iSI1x
- +N/ZY0pgTnkjOCAyBpvFwXx33oBohMaqmjJxjoET4ewK9w9JtG66TKa4tlYAiwnFoBND
- 0tvO+aG9WyEGBOB5bovGLJcXofSnqkFVo1FI8FKH39lJ5IF9iP7r8h1B78zaW2oiz/p/
- 1VbQ==
+ bh=vkSNI3uLN6KRJsGjKA6J4qpWg+yqDGZlKCoW+0IJCbs=;
+ b=nCqTUry2tM0Gl1rJN3oleuanMtQJ6liqbXLFbn/lb1T6oBv+DpnvIk0fzduXcX9jBj
+ MtQ5PQM5FQ8KxKdIDqKx5wK1j16FZAQbnYVD6LOwKM4WPbOFR1rmGBlNcbeET2MQTw8N
+ riXLi7xcK36iIGFe9yKPTt8U+uWfFF/q8yeB5PGL4sxq39FKWjWCSTceMWb+ULHRTvdn
+ MWMM2yP5pTlaDRO95jdOzL5BFUnKVlaCJXR5vYMRTgMAdCtPByKaYfGieZhly3DkMzw4
+ NFso1WCkefdg36vYw1BOEuIXXWF3jcS1iF2ZH/jzV3ChpeqaYzcw8XJEorq2x67FNudr
+ HtvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771591767; x=1772196567;
+ d=1e100.net; s=20230601; t=1771592333; x=1772197133;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=kl2POBbCPeZ1XMKcJ8oGPKap8X7akNCGB6xdqZI5lCA=;
- b=vGQHH+hMzYnZnA4yxejZP4jnGdgMs4sZ+h2O8EmmG9UqRNfLD6lBVCLEOytaHP/nti
- +k47zHH3Fy7En0vLMxsoM0PMnOAXpvfuxZn36klphpdkbumcgWJqgApeC4pcPPkDFCgo
- xS7caKCvKfbg+6HYRlWvxOvHgxF4bTNBqrjIIfDlrKzDvy1hQGtt0eTpejeNvqIg3fk9
- mJKaczfGT0WGrms9c6yI2ptyyypaujp2mXnzFhne1O8X6xsMjhYmyrN7w0fPkI9S4lVh
- 7sy41doBuk57g+pyuKJnJRx40TP7nmW9kwGDhAhzo0yPkMc/GTXXxqY7ABU6bEKxCBGW
- ziaw==
-X-Gm-Message-State: AOJu0YwNjJETk6NVs6BQHG+MfQfns/uWKCFt9ItLSOSEsgi4VLaLpp2M
- DCiTlnjIPD8hQeiVTWUAf7fLMITWzhfgVeTEpPOTedyGpmzYUcQ7Pvy34kab9qmqog3JlTnZ5aD
- 3mw4W7BFs8ppaYqO2SMydOJOLP24Edu0L/KTKEdLJ/LC1jMszoI38SdXW
-X-Gm-Gg: AZuq6aL6w3JEXXCZRWs9AECZr9pcZO39jBIpeWBqCqqZeBWkNLlJd0DI08Mv4NyXWB6
- V/qxRje3AHI1bXMa4y8DVpY3MOc3f1SPuu3QXiNNkmH5+phrqXax0JkWwJvUcWnHdezIKj9hx0A
- 6hTmWLtuvisYYR1ovCXntJpwUvMl6EP9OSpuqypzV7xnDmdAgCQP7T2PekkkTSNCzgLNJ5dKohO
- hadxsKL9ta+xXMprI4EJZmXyB4EIqNILY/C380EyU/qLensbY++Uj0rBm/dSSTLnTbwFSvCSxCh
- IIr/SvgoNsuU0zgwaX+ggbnI9lpYtVhlKuep4sDGh9FyxnOcqzxK0tIGaLLlETf1AlgQJ6Oq5hs
- HTg/eBCd3uBYvpUL9DpwuFEQiaUrmvH4hRF13jLf7/jFx5A==
-X-Received: by 2002:a5d:5d85:0:b0:439:5c07:fa4c with SMTP id
- ffacd0b85a97d-4396275a109mr10314919f8f.31.1771591766855; 
- Fri, 20 Feb 2026 04:49:26 -0800 (PST)
-X-Received: by 2002:a5d:5d85:0:b0:439:5c07:fa4c with SMTP id
- ffacd0b85a97d-4396275a109mr10314842f8f.31.1771591766205; 
- Fri, 20 Feb 2026 04:49:26 -0800 (PST)
+ bh=vkSNI3uLN6KRJsGjKA6J4qpWg+yqDGZlKCoW+0IJCbs=;
+ b=GRjJuNccmWJbdh5IP/W0SXzANzRyrJ1SQS5TKbE1jeZ7Q9Mj+qvSIU65ITPBmig/LI
+ 35HMTQ+TUCn+Ag6pEsbKrwrAAfe4acbQexCTvDu/3YekMvBeJWvQDuXneY3KvOhciXOh
+ HBqsiI56lXSQyP53hyg2kPVLfIbOy5StoRgr3AZDVQfIeWyonUCCE7BMG704DqhIGeso
+ kh5tZgtLRhe62LMoCIhUXhh+JyDOEQrHvc7mXUpCaZWtyeTxscanOA/3Z0SZDMsnL8WA
+ vi5zBom9EfMc0YmYxj5fDBdONsE78BTkkuPj1JQPOJEWr6k0jctg8i7C+LzK0e5J9tPu
+ risg==
+X-Gm-Message-State: AOJu0Yyv7QX6O1qgRwQmPgXPjjpR8EewydJWYW32AemrdtoUXOSa+hnL
+ vUfLuWTkbqI1Z6o1U2F3any/FPzxHYJlld0wq6A0vaHxd9T3tHhlp2Ma9kcWgJcgFPwAoIyAxmy
+ 2Mc0neVKB6nihFuO/4VTp/U0eArcH1Sw7n66Z12bEmjvawxjszIb6Mo9A
+X-Gm-Gg: AZuq6aJZea41Z6MLOJyHL5+sB5mYNMprHzmhGGBBdgKWPloVg2Qp3dzZTnZL1zKagYO
+ vnt2v+ElSELpHNFernTqX3OO/SjEHZvYN2unS0tIQA9RV2q8w9l59ASTOgic1GTwdhvoB1zU7lO
+ G20lQVZabivMw6NUdvryyqGC6ehq7bdA9pawl2S+UPQwgdaBJvC81yPxTxVbQiJcBaBxEoKLYsG
+ yjl50mp+L/YfR0DE6fpuvThK6TBX93SyuwdDrxI3jQwbs2YI9CN/gmtl8fwoD18qe1tO5sKJACL
+ RiAT5PR/HfNVNLpIvHWyPtcNXXosHsLuoLpracboHnIENaZGc+m4aiClkeiUXAEOOFc9Hpb4B3n
+ LmjomgikSjG/1/UjCS3X33yAghAsEPnRXbSuhRoD7Bo+gdQ==
+X-Received: by 2002:a05:600c:608a:b0:480:1e9e:f9b with SMTP id
+ 5b1f17b1804b1-48398a58488mr187082635e9.16.1771592333251; 
+ Fri, 20 Feb 2026 04:58:53 -0800 (PST)
+X-Received: by 2002:a05:600c:608a:b0:480:1e9e:f9b with SMTP id
+ 5b1f17b1804b1-48398a58488mr187082105e9.16.1771592332720; 
+ Fri, 20 Feb 2026 04:58:52 -0800 (PST)
 Received: from redhat.com (IGLD-80-230-79-166.inter.net.il. [80.230.79.166])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43796abd793sm54657034f8f.25.2026.02.20.04.49.23
+ ffacd0b85a97d-43796ac7d91sm58035586f8f.26.2026.02.20.04.58.51
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 20 Feb 2026 04:49:25 -0800 (PST)
-Date: Fri, 20 Feb 2026 07:49:21 -0500
+ Fri, 20 Feb 2026 04:58:52 -0800 (PST)
+Date: Fri, 20 Feb 2026 07:58:49 -0500
 From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Alireza Sanaee <alireza.sanaee@huawei.com>
-Cc: qemu-devel@nongnu.org, gustavo.romero@linaro.org, anisinha@redhat.com,
- armbru@redhat.com, berrange@redhat.com, dapeng1.mi@linux.intel.com,
- eric.auger@redhat.com, farman@linux.ibm.com, imammedo@redhat.com,
- jiangkunkun@huawei.com, maobibo@loongson.cn, mtosatti@redhat.com,
- peter.maydell@linaro.org, philmd@linaro.org, qemu-arm@nongnu.org,
- richard.henderson@linaro.org, shannon.zhaosl@gmail.com,
- yangyicong@hisilicon.com, jonathan.cameron@huawei.com,
- linuxarm@huawei.com, zhao1.liu@intel.com
-Subject: Re: [PATCH v17 6/8] hw/acpi: add cache hierarchy to pptt table
-Message-ID: <20260220074005-mutt-send-email-mst@kernel.org>
-References: <20260106155828.643-1-alireza.sanaee@huawei.com>
- <20260106155828.643-7-alireza.sanaee@huawei.com>
+To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Cc: qemu-devel@nongnu.org, Arpit Kumar <arpit1.kumar@samsung.com>,
+ linuxarm@huawei.com, linux-cxl@vger.kernel.org,
+ Ravi Shankar <venkataravis@micron.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Michael Roth <michael.roth@amd.com>
+Subject: Re: [PATCH qemu v5 0/3] hw/cxl: FM-API Physical Switch Command Set
+ Support.
+Message-ID: <20260220075818-mutt-send-email-mst@kernel.org>
+References: <20260204173223.44122-1-Jonathan.Cameron@huawei.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260106155828.643-7-alireza.sanaee@huawei.com>
+In-Reply-To: <20260204173223.44122-1-Jonathan.Cameron@huawei.com>
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -123,349 +120,123 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jan 06, 2026 at 03:58:25PM +0000, Alireza Sanaee wrote:
-> Add cache topology to PPTT table.
+On Wed, Feb 04, 2026 at 05:32:20PM +0000, Jonathan Cameron wrote:
+> Changes since v4:
+> https://lore.kernel.org/qemu-devel/20250916080736.1266083-1-arpit1.kumar@samsung.com/
+> - Dropped initial refactor. Reason being that it is not static enough
+>   for caching at boot to be appropriate.  Kept the spec update part
+>   of this.
+> - Added a patch to make sure the new flip mode stuff is reported in
+>   the Get Physical Port State command.
+> - Rebased Arpit's Physical Control Control FMAPI Command given drop
+>   of the major refactor from v4 patch 1.
 > 
-> Signed-off-by: Alireza Sanaee <alireza.sanaee@huawei.com>
-> ---
->  hw/acpi/aml-build.c      | 200 +++++++++++++++++++++++++++++++++++++--
->  hw/arm/virt-acpi-build.c |   8 +-
->  include/hw/acpi/cpu.h    |  10 ++
->  3 files changed, 209 insertions(+), 9 deletions(-)
+> I had taken this into my cxl staging tree thinking it only needed a few
+> minor tweaks.  Then whilst testing I realized it didn't work with hotplug
+> and that made me consider if Arpit's original approach made sense.
 > 
-> diff --git a/hw/acpi/aml-build.c b/hw/acpi/aml-build.c
-> index a711a9600e..580eceb24a 100644
-> --- a/hw/acpi/aml-build.c
-> +++ b/hw/acpi/aml-build.c
-> @@ -31,6 +31,7 @@
->  #include "hw/pci/pci_bus.h"
->  #include "hw/pci/pci_bridge.h"
->  #include "qemu/cutils.h"
-> +#include "hw/core/cpu.h"
->  
->  static GArray *build_alloc_array(void)
->  {
-> @@ -2140,6 +2141,104 @@ void build_spcr(GArray *table_data, BIOSLinker *linker,
->      }
->      acpi_table_end(linker, &table);
->  }
-> +
-> +static void build_cache_nodes(GArray *tbl, CPUCoreCaches *cache,
-> +                              uint32_t next_offset)
-> +{
-> +    int val;
-> +
-> +    /* Type 1 - cache */
-> +    build_append_byte(tbl, 1);
+> So this is my proposal on how to take this forwards. Note that this is
+> not ready for merge (probably) just yet as I'd like Arpit to take a
+> look at the changes.
 
-Standard format in acpi code is:
-    build_append_byte(tbl, 1); /* Type 1 - cache */
+I'd appreciate it if you add rfc in the subject in such cases.
+Thanks!
 
-same below
-
-> +    /* Length */
-> +    build_append_byte(tbl, 24);
-
-would be nice to validate. you can compare tbl->len before and after.
-
-
-> +    /* Reserved */
-> +    build_append_int_noprefix(tbl, 0, 2);
-> +    /* Flags */
-> +    build_append_int_noprefix(tbl, 0x7f, 4);
-
-document which flags are set.
-
-
-> +    /* Offset of next cache up */
-> +    build_append_int_noprefix(tbl, next_offset, 4);
-> +    build_append_int_noprefix(tbl, cache->size, 4);
-> +    build_append_int_noprefix(tbl, cache->sets, 4);
-> +    build_append_byte(tbl, cache->associativity);
-> +    val = 0x3;
-
-document what this is
-
-> +    switch (cache->type) {
-> +    case INSTRUCTION_CACHE:
-> +        val |= (1 << 2);
-
-document what this is.
-
-> +        break;
-> +    case DATA_CACHE:
-> +        val |= (0 << 2); /* Data */
-> +        break;
-> +    case UNIFIED_CACHE:
-> +        val |= (3 << 2); /* Unified */
-> +        break;
-> +    }
-> +    build_append_byte(tbl, val);
-> +    build_append_int_noprefix(tbl, cache->linesize, 2);
-> +}
-> +
-> +/*
-> + * builds caches from the top level (`level_high` parameter) to the bottom
-> + * level (`level_low` parameter).  It searches for caches found in
-> + * systems' registers, and fills up the table. Then it updates the
-> + * `data_offset` and `instr_offset` parameters with the offset of the data
-> + * and instruction caches of the lowest level, respectively.
-> + */
-> +static bool build_caches(GArray *table_data, uint32_t pptt_start,
-> +                         int num_caches, CPUCoreCaches *caches,
-> +                         uint8_t level_high, /* Inclusive */
-> +                         uint8_t level_low,  /* Inclusive */
-> +                         uint32_t *data_offset,
-> +                         uint32_t *instr_offset)
-> +{
-> +    uint32_t next_level_offset_data = 0, next_level_offset_instruction = 0;
-> +    uint32_t this_offset, next_offset = 0;
-> +    int c, level;
-> +    bool found_cache = false;
-> +
-> +    /* Walk caches from top to bottom */
-> +    for (level = level_high; level >= level_low; level--) {
-> +        for (c = 0; c < num_caches; c++) {
-> +            if (caches[c].level != level) {
-> +                continue;
-> +            }
-> +
-> +            /* Assume only unified above l1 for now */
-> +            this_offset = table_data->len - pptt_start;
-> +            switch (caches[c].type) {
-> +            case INSTRUCTION_CACHE:
-> +                next_offset = next_level_offset_instruction;
-> +                break;
-> +            case DATA_CACHE:
-> +                next_offset = next_level_offset_data;
-> +                break;
-> +            case UNIFIED_CACHE:
-> +                /* Either is fine here */
-> +                next_offset = next_level_offset_instruction;
-> +                break;
-> +            }
-> +            build_cache_nodes(table_data, &caches[c], next_offset);
-> +            switch (caches[c].type) {
-> +            case INSTRUCTION_CACHE:
-> +                next_level_offset_instruction = this_offset;
-> +                break;
-> +            case DATA_CACHE:
-> +                next_level_offset_data = this_offset;
-> +                break;
-> +            case UNIFIED_CACHE:
-> +                next_level_offset_instruction = this_offset;
-> +                next_level_offset_data = this_offset;
-> +                break;
-> +            }
-> +            *data_offset = next_level_offset_data;
-> +            *instr_offset = next_level_offset_instruction;
-> +
-> +            found_cache = true;
-> +        }
-> +    }
-> +
-> +    return found_cache;
-> +}
-> +
->  /*
->   * ACPI spec, Revision 6.3
->   * 5.2.29 Processor Properties Topology Table (PPTT)
-> @@ -2150,11 +2249,32 @@ void build_pptt(GArray *table_data, BIOSLinker *linker, MachineState *ms,
->  {
->      MachineClass *mc = MACHINE_GET_CLASS(ms);
->      CPUArchIdList *cpus = ms->possible_cpus;
-> -    int64_t socket_id = -1, cluster_id = -1, core_id = -1;
-> -    uint32_t socket_offset = 0, cluster_offset = 0, core_offset = 0;
-> +    uint32_t core_data_offset = 0;
-> +    uint32_t core_instr_offset = 0;
-> +    uint32_t cluster_instr_offset = 0;
-> +    uint32_t cluster_data_offset = 0;
-> +    uint32_t node_data_offset = 0;
-> +    uint32_t node_instr_offset = 0;
-> +    int top_node = 3;
-> +    int top_cluster = 3;
-> +    int top_core = 3;
-> +    int bottom_node = 3;
-> +    int bottom_cluster = 3;
-> +    int bottom_core = 3;
-> +    int64_t socket_id = -1;
-> +    int64_t cluster_id = -1;
-> +    int64_t core_id = -1;
-> +    uint32_t socket_offset = 0;
-> +    uint32_t cluster_offset = 0;
-> +    uint32_t core_offset = 0;
->      uint32_t pptt_start = table_data->len;
->      uint32_t root_offset;
->      int n;
-> +    uint32_t priv_rsrc[2];
-> +    uint32_t num_priv = 0;
-> +    bool cache_available;
-> +    bool llevel;
-> +
->      AcpiTable table = { .sig = "PPTT", .rev = 2,
->                          .oem_id = oem_id, .oem_table_id = oem_table_id };
->  
-> @@ -2184,11 +2304,30 @@ void build_pptt(GArray *table_data, BIOSLinker *linker, MachineState *ms,
->              socket_id = cpus->cpus[n].props.socket_id;
->              cluster_id = -1;
->              core_id = -1;
-> +            bottom_node = top_node;
-> +            num_priv = 0;
-> +            cache_available = machine_defines_cache_at_topo_level(
-> +                ms, CPU_TOPOLOGY_LEVEL_SOCKET);
-> +            llevel = machine_find_lowest_level_cache_at_topo_level(
-> +                ms, &bottom_node, CPU_TOPOLOGY_LEVEL_SOCKET);
-> +            if (cache_available && llevel) {
-> +                build_caches(table_data, pptt_start, num_caches, caches,
-> +                             top_node, bottom_node, &node_data_offset,
-> +                             &node_instr_offset);
-> +                priv_rsrc[0] = node_instr_offset;
-> +                priv_rsrc[1] = node_data_offset;
-> +                if (node_instr_offset || node_data_offset) {
-> +                    num_priv = node_instr_offset == node_data_offset ? 1 : 2;
-> +                }
-> +
-> +                top_cluster = bottom_node - 1;
-> +            }
-> +
->              socket_offset = table_data->len - pptt_start;
->              build_processor_hierarchy_node(table_data,
->                  (1 << 0) | /* Physical package */
->                  (1 << 4), /* Identical Implementation */
-> -                root_offset, socket_id, NULL, 0);
-> +                root_offset, socket_id, priv_rsrc, num_priv);
->          }
->  
->          if (mc->smp_props.clusters_supported && mc->smp_props.has_clusters) {
-> @@ -2196,21 +2335,68 @@ void build_pptt(GArray *table_data, BIOSLinker *linker, MachineState *ms,
->                  assert(cpus->cpus[n].props.cluster_id > cluster_id);
->                  cluster_id = cpus->cpus[n].props.cluster_id;
->                  core_id = -1;
-> +                bottom_cluster = top_cluster;
-> +                num_priv = 0;
-> +                cache_available = machine_defines_cache_at_topo_level(
-> +                    ms, CPU_TOPOLOGY_LEVEL_CLUSTER);
-> +                llevel = machine_find_lowest_level_cache_at_topo_level(
-> +                    ms, &bottom_cluster, CPU_TOPOLOGY_LEVEL_CLUSTER);
-> +
-> +                if (cache_available && llevel) {
-> +                    build_caches(table_data, pptt_start, num_caches, caches,
-> +                                 top_cluster, bottom_cluster,
-> +                                 &cluster_data_offset, &cluster_instr_offset);
-> +                    priv_rsrc[0] = cluster_instr_offset;
-> +                    priv_rsrc[1] = cluster_data_offset;
-> +                    if (cluster_instr_offset || cluster_data_offset) {
-> +                        num_priv =
-> +                            cluster_instr_offset == cluster_data_offset ? 1 : 2;
-> +                    }
-> +                    top_core = bottom_cluster - 1;
-> +                } else if (top_cluster == bottom_node - 1) {
-> +                    /* socket cache but no cluster cache */
-> +                    top_core = bottom_node - 1;
-> +                }
-> +
->                  cluster_offset = table_data->len - pptt_start;
->                  build_processor_hierarchy_node(table_data,
->                      (0 << 0) | /* Not a physical package */
->                      (1 << 4), /* Identical Implementation */
-> -                    socket_offset, cluster_id, NULL, 0);
-> +                    socket_offset, cluster_id, priv_rsrc, num_priv);
->              }
->          } else {
-> +            if (machine_defines_cache_at_topo_level(
-> +                    ms, CPU_TOPOLOGY_LEVEL_CLUSTER)) {
-> +                error_setg(&error_fatal, "Not clusters found for the cache");
-> +                return;
-> +            }
-> +
->              cluster_offset = socket_offset;
-> +            top_core = bottom_node - 1; /* there is no cluster */
-> +        }
-> +
-> +        if (cpus->cpus[n].props.core_id != core_id) {
-> +            bottom_core = top_core;
-> +            num_priv = 0;
-> +            cache_available = machine_defines_cache_at_topo_level(
-> +                ms, CPU_TOPOLOGY_LEVEL_CORE);
-> +            llevel = machine_find_lowest_level_cache_at_topo_level(
-> +                ms, &bottom_core, CPU_TOPOLOGY_LEVEL_CORE);
-> +            if (cache_available && llevel) {
-> +                build_caches(table_data, pptt_start, num_caches, caches,
-> +                             top_core, bottom_core, &core_data_offset,
-> +                             &core_instr_offset);
-> +                priv_rsrc[0] = core_instr_offset;
-> +                priv_rsrc[1] = core_data_offset;
-> +                num_priv = core_instr_offset == core_data_offset ? 1 : 2;
-> +            }
->          }
->  
->          if (ms->smp.threads == 1) {
->              build_processor_hierarchy_node(table_data,
->                  (1 << 1) | /* ACPI Processor ID valid */
-> -                (1 << 3),  /* Node is a Leaf */
-> -                cluster_offset, n, NULL, 0);
-> +                (1 << 3), /* Node is a Leaf */
-> +                cluster_offset, n, priv_rsrc, num_priv);
->          } else {
->              if (cpus->cpus[n].props.core_id != core_id) {
->                  assert(cpus->cpus[n].props.core_id > core_id);
-> @@ -2219,7 +2405,7 @@ void build_pptt(GArray *table_data, BIOSLinker *linker, MachineState *ms,
->                  build_processor_hierarchy_node(table_data,
->                      (0 << 0) | /* Not a physical package */
->                      (1 << 4), /* Identical Implementation */
-> -                    cluster_offset, core_id, NULL, 0);
-> +                    cluster_offset, core_id, priv_rsrc, num_priv);
->              }
->  
->              build_processor_hierarchy_node(table_data,
-> diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
-> index 8e7bc029f3..f4cbb71c90 100644
-> --- a/hw/arm/virt-acpi-build.c
-> +++ b/hw/arm/virt-acpi-build.c
-> @@ -1144,6 +1144,10 @@ void virt_acpi_build(VirtMachineState *vms, AcpiBuildTables *tables)
->      unsigned dsdt, xsdt;
->      GArray *tables_blob = tables->table_data;
->      MachineState *ms = MACHINE(vms);
-> +    CPUCoreCaches caches[CPU_MAX_CACHES];
-> +    unsigned int num_caches;
-> +
-> +    num_caches = virt_get_caches(vms, caches);
->  
->      table_offsets = g_array_new(false, true /* clear */,
->                                          sizeof(uint32_t));
-> @@ -1165,8 +1169,8 @@ void virt_acpi_build(VirtMachineState *vms, AcpiBuildTables *tables)
->  
->      if (!vmc->no_cpu_topology) {
->          acpi_add_table(table_offsets, tables_blob);
-> -        build_pptt(tables_blob, tables->linker, ms,
-> -                   vms->oem_id, vms->oem_table_id, 0, NULL);
-> +        build_pptt(tables_blob, tables->linker, ms, vms->oem_id,
-> +                   vms->oem_table_id, num_caches, caches);
->      }
->  
->      acpi_add_table(table_offsets, tables_blob);
-> diff --git a/include/hw/acpi/cpu.h b/include/hw/acpi/cpu.h
-> index 557219d2c6..87950eb787 100644
-> --- a/include/hw/acpi/cpu.h
-> +++ b/include/hw/acpi/cpu.h
-> @@ -70,6 +70,16 @@ void build_cpus_aml(Aml *table, MachineState *machine, CPUHotplugFeatures opts,
->  
->  void acpi_cpu_ospm_status(CPUHotplugState *cpu_st, ACPIOSTInfoList ***list);
->  
-> +struct CPUPPTTCaches {
-> +    enum CacheType type;
-> +    uint32_t sets;
-> +    uint32_t size;
-> +    uint32_t level;
-> +    uint16_t linesize;
-> +    uint8_t attributes; /* write policy: 0x0 write back, 0x1 write through */
-> +    uint8_t associativity;
-> +};
-> +
->  extern const VMStateDescription vmstate_cpu_hotplug;
->  #define VMSTATE_CPU_HOTPLUG(cpuhp, state) \
->      VMSTATE_STRUCT(cpuhp, state, 1, \
+>  I went through a version that had major refactors
+> to push the logic of building the records to the ports themselves, but
+> in the end don't think that brings enough benefits for the complexity.
+> 
+> Based on:
+> https://lore.kernel.org/qemu-devel/20260204170936.43959-1-Jonathan.Cameron@huawei.com/T/#t
+> (with all it's precursors, though hopefully they will all be in Michael's
+> next pull request)
+> 
+> I'll note this is an enormous foot gun as it lets you effectively trigger
+> surprise device resets.  However, it's only accessible if you are using
+> a configuration with the fabric management parts of the CXL emulation.
+> For now that is a switch-cci (MCTP over USB support is near the top
+> of my list of things to get ready for upstram.  I tested this with a
+> custom driver and if nothing else it exposed some gaps in Linux's
+> ability to rescan PCI buses after a perst event (even with drivers
+> unbound etc to make it safe).
+> 
+> Original cover letter:
+> 
+> This patch series refactor existing support for Identify Switch Device
+> and Get Physical Port State by utilizing physical ports (USP & DSP)
+> information stored during enumeration.
+> 
+> Additionally, it introduces new support for Physical Port Control
+> of Physical Switch Command Set as per CXL spec r3.2 Section 7.6.7.1.3.
+> It primarily constitutes two logic:
+>     -Assert-Deassert PERST: Assert PERST involves physical port to be in
+>      hold reset phase for minimum 100ms. No other physical port control
+>      request are entertained until Deassert PERST command for the given
+>      port is issued.
+>     -Reset PPB: cold reset of physical port (completing enter->hold->exit
+>      phases).
+> 
+> Tested using libcxl-mi interface[1]:
+> All active ports and all opcodes per active port is tested. Also, tested
+> against possible edge cases manually since the interface currently dosen't
+> support run time input.
+> 
+> Typical Qemu topology
+> (1 USP + 3 DSP's in a switch with 2 CXLType3 devices connected to the 2 DSP's):
+> FM="-object memory-backend-file,id=cxl-mem1,mem-path=$TMP_DIR/t3_cxl1.raw,size=256M \
+>     -object memory-backend-file,id=cxl-lsa1,mem-path=$TMP_DIR/t3_lsa1.raw,size=1M \
+>     -object memory-backend-file,id=cxl-mem2,mem-path=$TMP_DIR/t3_cxl2.raw,size=512M \
+>     -object memory-backend-file,id=cxl-lsa2,mem-path=$TMP_DIR/t3_lsa2.raw,size=512M \
+>     -device pxb-cxl,bus_nr=12,bus=pcie.0,id=cxl.1,hdm_for_passthrough=true \
+>     -device cxl-rp,port=0,bus=cxl.1,id=cxl_rp_port0,chassis=0,slot=2 \
+>     -device cxl-upstream,port=2,sn=1234,bus=cxl_rp_port0,id=us0,addr=0.0,multifunction=on, \
+>     -device cxl-switch-mailbox-cci,bus=cxl_rp_port0,addr=0.1,target=us0 \
+>     -device cxl-downstream,port=0,bus=us0,id=swport0,chassis=0,slot=4 \
+>     -device cxl-downstream,port=1,bus=us0,id=swport1,chassis=0,slot=5 \
+>     -device cxl-downstream,port=3,bus=us0,id=swport2,chassis=0,slot=6 \
+>     -device cxl-type3,bus=swport0,memdev=cxl-mem1,id=cxl-pmem1,lsa=cxl-lsa1,sn=3 \
+>     -device cxl-type3,bus=swport2,memdev=cxl-mem2,id=cxl-pmem2,lsa=cxl-lsa2,sn=4 \
+>     -machine cxl-fmw.0.targets.0=cxl.1,cxl-fmw.0.size=4G,cxl-fmw.0.interleave-granularity=1k \
+>     -device i2c_mctp_cxl,bus=aspeed.i2c.bus.0,address=4,target=us0 \
+>     -device i2c_mctp_cxl,bus=aspeed.i2c.bus.0,address=5,target=cxl-pmem1 \
+>     -device i2c_mctp_cxl,bus=aspeed.i2c.bus.0,address=6,target=cxl-pmem2 \
+>     -device virtio-rng-pci,bus=swport1"
+> 
+> Tested multiple Qemu topologies:
+>         -without any devices connected to downstream ports.
+>         -with virtio-rng-pci devices connected to downstream ports.
+>         -with CXLType3 devices connected to downstream ports.
+>         -with different unique values of ports (both upstream and downstream).
+> 
+> Changes from v3 (https://lore.kernel.org/qemu-devel/20250909160316.00000190@huawei.com/T/):
+>         -Namespaced the defines with cleaner prefix for Get Physical Port State 
+>          Port Information Block members.
+>         -switch CCI implementation instead of switch FM interface as per
+>          Jonathan's review comments, hence moved perst members initializations
+>          from: cxl_initialize_usp_mctpcci() -> cxl_initialize_mailbox_swcci().
+> 
+> [1] https://github.com/computexpresslink/libcxlmi/commit/35fe68bd9a31469f832a87694d7b18d2d50be5b8
+> 
+> 
+> Arpit Kumar (2):
+>   hw/cxl: Physical Port Info FMAPI - update to current spec and add
+>     defines.
+>   hw/cxl: Add Physical Port Control FMAPI Command (Opcode 5102h)
+> 
+> Jonathan Cameron (1):
+>   hw/cxl: Get Physical Port State - update for PCIe flit mode
+> 
+>  include/hw/cxl/cxl_port.h                   |  73 ++++++++
+>  include/hw/pci-bridge/cxl_downstream_port.h |  12 ++
+>  include/hw/pci-bridge/cxl_upstream_port.h   |   2 +
+>  hw/cxl/cxl-mailbox-utils.c                  | 183 ++++++++++++++++++--
+>  hw/pci-bridge/cxl_downstream.c              |   9 +
+>  hw/pci-bridge/cxl_upstream.c                |   1 +
+>  6 files changed, 268 insertions(+), 12 deletions(-)
+>  create mode 100644 include/hw/cxl/cxl_port.h
+>  create mode 100644 include/hw/pci-bridge/cxl_downstream_port.h
+> 
 > -- 
-> 2.43.0
+> 2.51.0
 
 
