@@ -4,48 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFF24C5B56A
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Feb 2026 21:03:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C77FC5B56A
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Feb 2026 21:03:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vtXdq-00009V-J4; Fri, 20 Feb 2026 16:02:26 -0500
+	id 1vtXdu-0000Cs-Ar; Fri, 20 Feb 2026 16:02:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vtXdo-00008z-E6
- for qemu-devel@nongnu.org; Fri, 20 Feb 2026 16:02:24 -0500
+ id 1vtXdr-0000As-K6
+ for qemu-devel@nongnu.org; Fri, 20 Feb 2026 16:02:27 -0500
 Received: from forwardcorp1a.mail.yandex.net
  ([2a02:6b8:c0e:500:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vtXdl-0002kv-RH
- for qemu-devel@nongnu.org; Fri, 20 Feb 2026 16:02:24 -0500
+ id 1vtXdp-0002ly-Gv
+ for qemu-devel@nongnu.org; Fri, 20 Feb 2026 16:02:27 -0500
 Received: from mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
  [IPv6:2a02:6b8:c2d:3530:0:640:eca4:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 50F50C0235;
- Sat, 21 Feb 2026 00:02:19 +0300 (MSK)
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 6EDE9C023B;
+ Sat, 21 Feb 2026 00:02:22 +0300 (MSK)
 Received: from vsementsov-lin (unknown [2a02:6bf:8080:87::1:2c])
  by mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id G2kijG5A6qM0-LtKTKSQ3; Sat, 21 Feb 2026 00:02:18 +0300
+ ESMTPSA id G2kijG5A6qM0-TrCOObtm; Sat, 21 Feb 2026 00:02:22 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1771621338;
- bh=R9WmjSoEPmublVvdQmK6qLIe2k5hIT0UZlVaPvk+d5I=;
+ s=default; t=1771621342;
+ bh=2Ngg7ropWNvignui+uuFgDvs/yQWft3KjqLwIk5+orM=;
  h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=HRjkmg24/yXaneikSuQUSHoUz9yGK5vT3cM+yC1l2qf3ybQec9KO4n3ppVGib32T6
- 1T9++wkmZfUiuiI8fZMnoXdeykphQ3YxpznCUwBcH3Qk/zvU38sJPiQYDWR6Hmo9aY
- QXHmlCfw+xu7wKomAtP7EjWNE8I41t/n3/0cRq+0=
+ b=B5K+/CUO70vQ2qsYFuq4ue6X25lhzSr3p/5/73wm67C2hyKf84A9RzpqasvYAihHX
+ RQPzOv2zi5jD2xLq2BCs23ZUD/OasHtVB3I5PwjqvgOnTop3YB6vp0nWx3IlOfIr4w
+ pyzaX8ZJ5ldeP9v3YwWpHR0tsywQVaHB5T4lHMLA=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 To: peterx@redhat.com
 Cc: farosas@suse.de, vsementsov@yandex-team.ru,
  qemu-devel@nongnu.org (open list:All patches CC here)
-Subject: [PATCH v2 04/16] migration: vmstate_load_state(): add some newlines
-Date: Sat, 21 Feb 2026 00:02:02 +0300
-Message-ID: <20260220210214.800050-5-vsementsov@yandex-team.ru>
+Subject: [PATCH v2 11/16] migration: convert vmstate_subsection_save/load
+ functions to bool
+Date: Sat, 21 Feb 2026 00:02:09 +0300
+Message-ID: <20260220210214.800050-12-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260220210214.800050-1-vsementsov@yandex-team.ru>
 References: <20260220210214.800050-1-vsementsov@yandex-team.ru>
@@ -75,94 +76,162 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Split logical blocks by newlines, that simplify reading the code.
+Convert them to bool return value, as preparation to further
+convertion of vmstate_save/load_state().
 
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 ---
- migration/vmstate.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ migration/vmstate.c | 57 +++++++++++++++++++++------------------------
+ 1 file changed, 26 insertions(+), 31 deletions(-)
 
 diff --git a/migration/vmstate.c b/migration/vmstate.c
-index 5111e7a141..dd7cd27993 100644
+index 8b31aa1c9f..69340036f0 100644
 --- a/migration/vmstate.c
 +++ b/migration/vmstate.c
-@@ -139,6 +139,7 @@ int vmstate_load_state(QEMUFile *f, const VMStateDescription *vmsd,
-     int ret = 0;
+@@ -21,11 +21,11 @@
+ #include "qemu/error-report.h"
+ #include "trace.h"
  
-     trace_vmstate_load_state(vmsd->name, version_id);
-+
-     if (version_id > vmsd->version_id) {
-         error_setg(errp, "%s: incoming version_id %d is too new "
-                    "for local version_id %d",
-@@ -146,6 +147,7 @@ int vmstate_load_state(QEMUFile *f, const VMStateDescription *vmsd,
-         trace_vmstate_load_state_end(vmsd->name, "too new", -EINVAL);
-         return -EINVAL;
-     }
-+
-     if  (version_id < vmsd->minimum_version_id) {
-         error_setg(errp, "%s: incoming version_id %d is too old "
-                    "for local minimum version_id %d",
-@@ -153,6 +155,7 @@ int vmstate_load_state(QEMUFile *f, const VMStateDescription *vmsd,
-         trace_vmstate_load_state_end(vmsd->name, "too old", -EINVAL);
-         return -EINVAL;
-     }
-+
-     if (vmsd->pre_load_errp) {
-         if (!vmsd->pre_load_errp(opaque, errp)) {
-             error_prepend(errp, "pre load hook failed for: '%s', "
-@@ -171,9 +174,12 @@ int vmstate_load_state(QEMUFile *f, const VMStateDescription *vmsd,
-             return ret;
-         }
-     }
-+
-     while (field->name) {
-         bool exists = vmstate_field_exists(vmsd, field, opaque, version_id);
-+
-         trace_vmstate_load_state_field(vmsd->name, field->name, exists);
-+
-         if (exists) {
-             void *first_elem = opaque + field->offset;
-             int i, n_elems = vmstate_n_elems(opaque, field);
-@@ -184,6 +190,7 @@ int vmstate_load_state(QEMUFile *f, const VMStateDescription *vmsd,
-                 first_elem = *(void **)first_elem;
-                 assert(first_elem || !n_elems || !size);
-             }
-+
-             for (i = 0; i < n_elems; i++) {
-                 void *curr_elem = first_elem + size * i;
-                 const VMStateField *inner_field;
-@@ -235,6 +242,7 @@ int vmstate_load_state(QEMUFile *f, const VMStateDescription *vmsd,
-                                    vmsd->name, ret);
-                     }
-                 }
-+
-                 if (ret < 0) {
-                     qemu_file_set_error(f, ret);
-                     trace_vmstate_load_field_error(field->name, ret);
-@@ -249,11 +257,13 @@ int vmstate_load_state(QEMUFile *f, const VMStateDescription *vmsd,
-         field++;
+-static int vmstate_subsection_save(QEMUFile *f, const VMStateDescription *vmsd,
+-                                   void *opaque, JSONWriter *vmdesc,
+-                                   Error **errp);
+-static int vmstate_subsection_load(QEMUFile *f, const VMStateDescription *vmsd,
+-                                   void *opaque, Error **errp);
++static bool vmstate_subsection_save(QEMUFile *f, const VMStateDescription *vmsd,
++                                    void *opaque, JSONWriter *vmdesc,
++                                    Error **errp);
++static bool vmstate_subsection_load(QEMUFile *f, const VMStateDescription *vmsd,
++                                    void *opaque, Error **errp);
+ static int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
+                                 void *opaque, JSONWriter *vmdesc,
+                                 int version_id, Error **errp);
+@@ -302,10 +302,9 @@ int vmstate_load_state(QEMUFile *f, const VMStateDescription *vmsd,
      }
      assert(field->flags == VMS_END);
-+
-     ret = vmstate_subsection_load(f, vmsd, opaque, errp);
-     if (ret != 0) {
-         qemu_file_set_error(f, ret);
-         return ret;
+ 
+-    ret = vmstate_subsection_load(f, vmsd, opaque, errp);
+-    if (ret != 0) {
+-        qemu_file_set_error(f, ret);
+-        return ret;
++    if (!vmstate_subsection_load(f, vmsd, opaque, errp)) {
++        qemu_file_set_error(f, -EINVAL);
++        return -EINVAL;
      }
-+
-     if (vmsd->post_load_errp) {
-         if (!vmsd->post_load_errp(opaque, version_id, errp)) {
-             error_prepend(errp, "post load hook failed for: %s, version_id: "
-@@ -271,7 +281,9 @@ int vmstate_load_state(QEMUFile *f, const VMStateDescription *vmsd,
-                        ret);
-         }
+ 
+     if (!vmstate_post_load(vmsd, opaque, version_id, errp)) {
+@@ -632,7 +631,7 @@ static int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
+         json_writer_end_array(vmdesc);
      }
-+
-     trace_vmstate_load_state_end(vmsd->name, "end", ret);
-+
-     return ret;
+ 
+-    ret = vmstate_subsection_save(f, vmsd, opaque, vmdesc, errp);
++    ret = vmstate_subsection_save(f, vmsd, opaque, vmdesc, errp) ? 0 : -EINVAL;
+ 
+ out:
+     if (vmsd->post_save) {
+@@ -662,15 +661,14 @@ int vmstate_save_state(QEMUFile *f, const VMStateDescription *vmsd,
+                                 errp);
  }
  
+-static int vmstate_subsection_load(QEMUFile *f, const VMStateDescription *vmsd,
+-                                   void *opaque, Error **errp)
++static bool vmstate_subsection_load(QEMUFile *f, const VMStateDescription *vmsd,
++                                    void *opaque, Error **errp)
+ {
+     ERRP_GUARD();
+     trace_vmstate_subsection_load(vmsd->name);
+ 
+     while (qemu_peek_byte(f, 0) == QEMU_VM_SUBSECTION) {
+         char idstr[256], *idstr_ret;
+-        int ret;
+         uint8_t version_id, len, size;
+         const VMStateDescription *sub_vmsd;
+ 
+@@ -678,12 +676,12 @@ static int vmstate_subsection_load(QEMUFile *f, const VMStateDescription *vmsd,
+         if (len < strlen(vmsd->name) + 1) {
+             /* subsection name has to be "section_name/a" */
+             trace_vmstate_subsection_load_bad(vmsd->name, "(short)", "");
+-            return 0;
++            return true;
+         }
+         size = qemu_peek_buffer(f, (uint8_t **)&idstr_ret, len, 2);
+         if (size != len) {
+             trace_vmstate_subsection_load_bad(vmsd->name, "(peek fail)", "");
+-            return 0;
++            return true;
+         }
+         memcpy(idstr, idstr_ret, size);
+         idstr[size] = 0;
+@@ -691,41 +689,39 @@ static int vmstate_subsection_load(QEMUFile *f, const VMStateDescription *vmsd,
+         if (strncmp(vmsd->name, idstr, strlen(vmsd->name)) != 0) {
+             trace_vmstate_subsection_load_bad(vmsd->name, idstr, "(prefix)");
+             /* it doesn't have a valid subsection name */
+-            return 0;
++            return true;
+         }
+         sub_vmsd = vmstate_get_subsection(vmsd->subsections, idstr);
+         if (sub_vmsd == NULL) {
+             trace_vmstate_subsection_load_bad(vmsd->name, idstr, "(lookup)");
+             error_setg(errp, "VM subsection '%s' in '%s' does not exist",
+                        idstr, vmsd->name);
+-            return -ENOENT;
++            return false;
+         }
+         qemu_file_skip(f, 1); /* subsection */
+         qemu_file_skip(f, 1); /* len */
+         qemu_file_skip(f, len); /* idstr */
+         version_id = qemu_get_be32(f);
+ 
+-        ret = vmstate_load_state(f, sub_vmsd, opaque, version_id, errp);
+-        if (ret) {
++        if (vmstate_load_state(f, sub_vmsd, opaque, version_id, errp) < 0) {
+             trace_vmstate_subsection_load_bad(vmsd->name, idstr, "(child)");
+             error_prepend(errp,
+-                          "Loading VM subsection '%s' in '%s' failed: %d: ",
+-                          idstr, vmsd->name, ret);
+-            return ret;
++                          "Loading VM subsection '%s' in '%s' failed: ",
++                          idstr, vmsd->name);
++            return false;
+         }
+     }
+ 
+     trace_vmstate_subsection_load_good(vmsd->name);
+-    return 0;
++    return true;
+ }
+ 
+-static int vmstate_subsection_save(QEMUFile *f, const VMStateDescription *vmsd,
+-                                   void *opaque, JSONWriter *vmdesc,
+-                                   Error **errp)
++static bool vmstate_subsection_save(QEMUFile *f, const VMStateDescription *vmsd,
++                                    void *opaque, JSONWriter *vmdesc,
++                                    Error **errp)
+ {
+     const VMStateDescription * const *sub = vmsd->subsections;
+     bool vmdesc_has_subsections = false;
+-    int ret = 0;
+ 
+     trace_vmstate_subsection_save_top(vmsd->name);
+     while (sub && *sub) {
+@@ -749,9 +745,8 @@ static int vmstate_subsection_save(QEMUFile *f, const VMStateDescription *vmsd,
+             qemu_put_byte(f, len);
+             qemu_put_buffer(f, (uint8_t *)vmsdsub->name, len);
+             qemu_put_be32(f, vmsdsub->version_id);
+-            ret = vmstate_save_state(f, vmsdsub, opaque, vmdesc, errp);
+-            if (ret) {
+-                return ret;
++            if (vmstate_save_state(f, vmsdsub, opaque, vmdesc, errp) < 0) {
++                return false;
+             }
+ 
+             if (vmdesc) {
+@@ -765,5 +760,5 @@ static int vmstate_subsection_save(QEMUFile *f, const VMStateDescription *vmsd,
+         json_writer_end_array(vmdesc);
+     }
+ 
+-    return ret;
++    return true;
+ }
 -- 
 2.52.0
 
