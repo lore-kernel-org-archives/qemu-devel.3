@@ -4,85 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C0C4C56204
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Feb 2026 15:19:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42428C5ACD4
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Feb 2026 16:21:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vtSH3-0003cV-V5; Fri, 20 Feb 2026 10:18:35 -0500
+	id 1vtTEw-0000Jp-UZ; Fri, 20 Feb 2026 11:20:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1vtSGw-0003bx-HF
- for qemu-devel@nongnu.org; Fri, 20 Feb 2026 10:18:26 -0500
-Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
+ (Exim 4.90_1) (envelope-from <davydov-max@yandex-team.ru>)
+ id 1vtTEs-0000Gd-9X
+ for qemu-devel@nongnu.org; Fri, 20 Feb 2026 11:20:23 -0500
+Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1vtSGt-0000XZ-LJ
- for qemu-devel@nongnu.org; Fri, 20 Feb 2026 10:18:26 -0500
-ARC-Seal: i=1; a=rsa-sha256; t=1771600682; cv=none; 
- d=zohomail.com; s=zohoarc; 
- b=A5Bhu2p1NYYjHk9dF6/xocuY3SVrUr9Wi+HowH+7xk5n7eT1Gla1Vdw8+xqA63Al+IwrWL2ZC0YMp6xH2e1AEkLV09s5/2EI1UDzp2tQPy/Xh64QryhoK9RPGlq/GYtvahOQxiL0dx2UB5X0SPSuoMipLXeNnPhnDX5CvurqQ1s=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1771600682;
- h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=d3PzrWIth4Oaj1xS7clknTJBmizDlisCQF4jQ457Qso=; 
- b=ar+hBt24fUH0+wCWV8cqSnpD8hWBDo/GnD7e4rN6RI9+Q4Of6/Xt8HTL3t7LpG+c494x7d/j5JuahCOVu/zr66POlVuKU/FJauXg7TaHCu7k52uXj7ZY+ba5PXS5W2s1hMhn5MFinYDLyXCug3cCD3kWBShjKHjiaKdSyrKtpgU=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
- dkim=pass  header.i=collabora.com;
- spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
- dmarc=pass header.from=<dmitry.osipenko@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1771600682; 
- s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
- h=Message-ID:Date:Date:MIME-Version:Subject:Subject:To:To:Cc:Cc:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
- bh=d3PzrWIth4Oaj1xS7clknTJBmizDlisCQF4jQ457Qso=;
- b=cWhlGvqkuoDpHDbiTjRfxzKkXRahx9vDh8cpZc7qWyOD3aghOt/IhLVlLgA3DTGf
- /X0PrWD+IxJtfO2AmQfnrTet3dlwQyTwAzFoGpsd+/lCi3I8pcPsgAaJLbsCp5284R0
- 0sp9L7UgI7UC2EMEQo2t5GEob/DioTiWK1RfFNzc=
-Received: by mx.zohomail.com with SMTPS id 1771600680454389.45606860163275;
- Fri, 20 Feb 2026 07:18:00 -0800 (PST)
-Message-ID: <3e42fc01-77da-4fd8-adc5-429e9ecf2430@collabora.com>
-Date: Fri, 20 Feb 2026 18:17:44 +0300
+ (Exim 4.90_1) (envelope-from <davydov-max@yandex-team.ru>)
+ id 1vtTEp-00013x-6l
+ for qemu-devel@nongnu.org; Fri, 20 Feb 2026 11:20:22 -0500
+Received: from mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
+ [IPv6:2a02:6b8:c37:8aa5:0:640:e6ae:0])
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id E5DBD8074A;
+ Fri, 20 Feb 2026 19:20:12 +0300 (MSK)
+Received: from davydov-max-lin.yandex.net (unknown
+ [2a02:6bf:8011:f00:b5ad:46f:80fc:2732])
+ by mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id vJfuXW4AvuQ0-b7UpRVyM; Fri, 20 Feb 2026 19:20:12 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1771604412;
+ bh=iFWgJ+SAcLn3qYBu6swnvadGHzGPwetwbHBxi6Gm8y8=;
+ h=Message-Id:Date:Cc:Subject:To:From;
+ b=qwwv/VuOWELJoly6iB9GMlopNa7UJbwXxZqKtu0syUtrYIdAV9eCFKbI5KfntgKNn
+ J+S9kAZryBSPsTMfIzbsSxt+NWY3OsfEhVx58b7ZNgQKE6wPi4uZlpYuxrkSGEfKTd
+ dS6QYJA4cU+K3gNjOzNesrnrUFaj1HjnlzC6iAos=
+Authentication-Results: mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+From: Maksim Davydov <davydov-max@yandex-team.ru>
+To: qemu-devel@nongnu.org
+Cc: crosa@redhat.com, jsnow@redhat.com, philmd@linaro.org,
+ vsementsov@yandex-team.ru, davydov-max@yandex-team.ru
+Subject: [PATCH v2 0/2] improve compare-machine-types.py
+Date: Fri, 20 Feb 2026 19:19:46 +0300
+Message-Id: <20260220161948.213380-1-davydov-max@yandex-team.ru>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v19 00/20] Support virtio-gpu DRM native context and
- MAP_FIXED API
-To: Yiwei Zhang <zzyiwei@gmail.com>
-Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Huang Rui <ray.huang@amd.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>,
- Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
- "Michael S . Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Sergio Lopez Pascual <slp@redhat.com>,
- Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
- Gurchetan Singh <gurchetansingh@chromium.org>, Alyssa Ross <hi@alyssa.is>,
- =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger.pau@citrix.com>,
- Alex Deucher <alexander.deucher@amd.com>,
- Stefano Stabellini <stefano.stabellini@amd.com>,
- =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
- Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
- Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
- Chen Jiqian <Jiqian.Chen@amd.com>, Rob Clark <robdclark@gmail.com>,
- Robert Beckett <bob.beckett@collabora.com>
-References: <20260220001634.3579257-1-dmitry.osipenko@collabora.com>
- <CAJ+hS_gqFYgDqCehrpUh1CZq_V=nbyTnmfDYJesynRw9K7Vdwg@mail.gmail.com>
-From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Content-Language: en-US
-In-Reply-To: <CAJ+hS_gqFYgDqCehrpUh1CZq_V=nbyTnmfDYJesynRw9K7Vdwg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-ZohoMailClient: External
-Received-SPF: pass client-ip=136.143.188.112;
- envelope-from=dmitry.osipenko@collabora.com; helo=sender4-pp-f112.zoho.com
+Received-SPF: pass client-ip=178.154.239.136;
+ envelope-from=davydov-max@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -100,111 +73,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/20/26 09:51, Yiwei Zhang wrote:
-> On Thu, Feb 19, 2026 at 4:20 PM Dmitry Osipenko
-> <dmitry.osipenko@collabora.com> wrote:
->>
->> Hello,
->>
->> This is follow up to DRM native context v16 [1] and MAP_FIXED API v10 [2]
->> virtio-gpu patches that has been reviewed previously and were waiting for
->> a new release of libvirglrenderer 1.3.0.
->>
->> [1] https://lore.kernel.org/qemu-devel/20251116125641.2255794-1-dmitry.osipenko@collabora.com/
->> [2] https://lore.kernel.org/qemu-devel/20260118162856.223796-1-dmitry.osipenko@collabora.com/
->>
->> Based-on: 20260214-region-v1-1-229f00ae1f38@rsg.ci.i.u-tokyo.ac.jp
->>
->> Changelog:
->>
->> v19:- Further improved improved naming of functions and terminology RE
->>       GL context binding. Suggested by Akihiko Odaki.
->>
->>     - Added new patch "ui/gdk: Restore original context after new context
->>       creation" in addition to improved "ui/sdl2: Restore original context"
->>       that now getd actual bound GL context and restores to it instead
->>       of restoring to the console's ctx, for consistency with the rest
->>       of GL context management fixes that ensure context is bound only
->>       when necessary.
->>
->>     - Improved virtio_gpu_virgl_update_render_state() with force_ctx_0()
->>       and unbind_ctx() to make deferred GPU resetting maintain bound GL
->>       context properly.
->>
->> v18:- Changed dpy_gl_ctx_make_current() to use first scanout when unsetting
->>       virgl's GL ctx0 and improved naming of cmd-processing function.
->>       Suggested by Akihiko Odaki.
->>
->>     - Added "ui/gdk: Unset context after GL operations" patch after
->>       realizing GDK/GL code needed more gdk_gl_context_clear_current().
->>
->> v17:- Rebased patches on recent upstream, updated doc patches with new
->>       drm native contexts supported by libvirglrenderer.
->>
->>     - Applied minor change that was requested from Akihiko Odaki
->>       by moving virtio_gpu_device_realize() for MAP_FIXED v10.
->>
->>     - Added virtio_gpu_virgl_update_render_state() to virtio_gpu_fence_poll()
->>       that was missed in MAP_FIXED v10.
->>
->>     - Added new patches fixing another GL context switching problem I ran
->>       into recently with virgl commands unexpectedly processed from CPU
->>       thread instead main-loop:
->>
->>         ui/sdl2: Unset context after GL operations
->>         ui/gtk-egl: Unset context after GL operations
->>         virtio-gpu: Unset context after GL operations
->>
->> Alex Bennée (1):
->>   docs/system: virtio-gpu: Document host/guest requirements
->>
->> Dmitry Osipenko (18):
->>   ui/gdk: Restore original context after new context creation
->>   ui/sdl2: Restore original context after new context creation
->>   ui/sdl2: Don't disable scanout when display is refreshed
->>   ui/gtk: Don't disable scanout when display is refreshed
->>   ui/sdl2: Unbind context after GL operations
->>   ui/gtk-egl: Unbind context after GL operations
->>   ui/gdk: Unbind context after GL operations
->>   virtio-gpu: Unbind context after GL operations
->>   virtio-gpu: Handle virgl fence creation errors
->>   virtio-gpu: Support asynchronous fencing
->>   virtio-gpu: Support DRM native context
->>   docs/system: virtio-gpu: Add link to Mesa VirGL doc
->>   docs/system: virtio-gpu: Update Venus link
->>   virtio-gpu: Remove superfluous memory_region_set_enabled()
->>   virtio-gpu: Validate hostmem mapping offset
->>   virtio-gpu: Replace finish_unmapping with mapping_state
->>   virtio-gpu: Destroy virgl resources on virtio-gpu reset
->>   virtio-gpu: Support mapping hostmem blobs with map_fixed
->>
->> Pierre-Eric Pelloux-Prayer (1):
->>   ui/sdl2: Implement dpy dmabuf functions
->>
->>  docs/system/devices/virtio/virtio-gpu.rst | 121 +++++-
->>  hw/display/trace-events                   |   2 +-
->>  hw/display/virtio-gpu-gl.c                |  62 +++-
->>  hw/display/virtio-gpu-virgl.c             | 427 ++++++++++++++++++++--
->>  hw/display/virtio-gpu.c                   |  15 +
->>  include/hw/virtio/virtio-gpu.h            |  23 +-
->>  include/ui/sdl2.h                         |   7 +
->>  meson.build                               |   8 +-
->>  ui/gtk-egl.c                              |  17 +-
->>  ui/gtk-gl-area.c                          |  28 +-
->>  ui/sdl2-gl.c                              |  81 +++-
->>  ui/sdl2.c                                 |  42 +++
->>  12 files changed, 760 insertions(+), 73 deletions(-)
->>
->> --
->> 2.52.0
->>
-> 
-> My original r-b's still persist, and this PATCH v19 is t-b. Can't wait
-> to see this land ; )
+Minor improvements of script for machine development: add support of
+new types and fix a bug with usage of global variables.
 
-Thanks!
+v2 -> v1:
+ * commit messages were changed
+
+Maksim Davydov (2):
+  scripts/compare-mt: add confidential computing getter
+  scripts/compare-mt: stop using global variables
+
+ scripts/compare-machine-types.py | 41 +++++++++++++++++++++++++-------
+ 1 file changed, 33 insertions(+), 8 deletions(-)
 
 -- 
-Best regards,
-Dmitry
+2.34.1
+
 
