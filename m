@@ -4,84 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A742EC531F3
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Feb 2026 00:22:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFBADC531F7
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Feb 2026 02:05:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vtEHr-00024X-W2; Thu, 19 Feb 2026 19:22:28 -0500
+	id 1vtFst-0002ue-HX; Thu, 19 Feb 2026 21:04:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1vtEHi-0001gx-3I
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 19:22:18 -0500
-Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1vtFsr-0002uV-WB
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 21:04:46 -0500
+Received: from mx.treblig.org ([2a00:1098:5b::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1vtEHf-0004wy-UD
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 19:22:17 -0500
-ARC-Seal: i=1; a=rsa-sha256; t=1771546917; cv=none; 
- d=zohomail.com; s=zohoarc; 
- b=bueRN9g1DAUg65jZvzDiw/0AwOzxQrnCDJahQVoT3f967vcutoL0MulYx8chLOb6ArR7XFE0wr+2djhfey7YJFs/FWS5sx7HwzaKHQe2CkECRGQLzHVb7FQGbTTW8QeDBhpFMUPGEzVsZWreBnIO8hI3H6yPrv/u1kry8/GR1sQ=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1771546917;
- h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=V/GiVR629chU6hsB3aWPefOk5lyYhy7Cqf6eODfvm8c=; 
- b=P4SZ0RS6Ud3NQxXCcif6oStsgsciGCJG9N1B4A4PwWsszYByfUFClxZIX3e0dibj5ScMBEcvTaUaH8t/pxYytbV1HkiIEi35m5UwFclIbVZDL2NgbzPHaeJrqDfAAq7dI0IY6HiuOLVM+RLcF1BzcEWsH/qotPfhEB+us/gyRGQ=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
- dkim=pass  header.i=collabora.com;
- spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
- dmarc=pass header.from=<dmitry.osipenko@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1771546917; 
- s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
- h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To;
- bh=V/GiVR629chU6hsB3aWPefOk5lyYhy7Cqf6eODfvm8c=;
- b=XOJ0cD0+zfcg0IoN+uj0LE8cHw6LL6PauF4nWpcvxm2ghft7mNMexgXgj8t0Bl6v
- QVlVpUhruJMxJyAXWeRBB4dpfg+vDfjhEy7ylik/RM98aquqBgVSJGsBmWUuE2nSjfw
- +kuNNqu33kWo7y8EXiQyKJQ+TLU02qEqD+Nm7+Fo=
-Received: by mx.zohomail.com with SMTPS id 1771546915529924.9627484088142;
- Thu, 19 Feb 2026 16:21:55 -0800 (PST)
-From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Huang Rui <ray.huang@amd.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Yiwei Zhang <zzyiwei@gmail.com>,
- Sergio Lopez Pascual <slp@redhat.com>
-Cc: Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
- Gurchetan Singh <gurchetansingh@chromium.org>, Alyssa Ross <hi@alyssa.is>,
- =?UTF-8?q?Roger=20Pau=20Monn=C3=A9?= <roger.pau@citrix.com>,
- Alex Deucher <alexander.deucher@amd.com>,
- Stefano Stabellini <stefano.stabellini@amd.com>,
- =?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
- Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
- Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
- Chen Jiqian <Jiqian.Chen@amd.com>, Rob Clark <robdclark@gmail.com>,
- Robert Beckett <bob.beckett@collabora.com>
-Subject: [PATCH v19 19/20] virtio-gpu: Destroy virgl resources on virtio-gpu
- reset
-Date: Fri, 20 Feb 2026 03:16:33 +0300
-Message-ID: <20260220001634.3579257-20-dmitry.osipenko@collabora.com>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260220001634.3579257-1-dmitry.osipenko@collabora.com>
-References: <20260220001634.3579257-1-dmitry.osipenko@collabora.com>
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1vtFso-00051p-Sr
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 21:04:45 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
+ ; s=bytemarkmx;
+ h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
+ :Subject; bh=cDcZHz3LojKpynFonONGOYDcQS9gnApYUIzMiAQIsYI=; b=iqD14VfqMGFzX2cR
+ QHmi+aVuwup78kyBed3F/BlPDmfWZvvCZCLFRFrzAwljqy8oOMDYdnm1JQauBVfGU2BqkzUuE7TbD
+ UV2mFoGX1nWJweU9UuD5JTdqszpDPpbAT6AX7yke1nbbP2xB6k2rir2gy8HDj3cW9HZS2HKrNtLZG
+ VzkDifoYyDVIAsz0a3yWPoCxFQe5vBsFgm7rPwqJYCG0h/IxtXVC3zehGUjgRGk5QIBsYGHreTEf4
+ wTBkxrOwmFRk5rKo/T8E8Ygir7I3WLhxINEbBUrx+Av4Iu/dcWNQroce8cWIhnKwu0H8Hs5DEr/3M
+ t4BY3Pguu2WNwdxCtQ==;
+Received: from dg by mx.treblig.org with local (Exim 4.98.2)
+ (envelope-from <dg@treblig.org>) id 1vtFsk-00000004PZJ-1Q0j;
+ Fri, 20 Feb 2026 02:04:38 +0000
+Date: Fri, 20 Feb 2026 02:04:38 +0000
+From: "Dr. David Alan Gilbert" <dave@treblig.org>
+To: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: Fabiano Rosas <farosas@suse.de>, Lukas Straub <lukasstraub2@web.de>,
+ qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>,
+ Zhang Chen <zhangckid@gmail.com>,
+ Hailiang Zhang <zhanghailiang@xfusion.com>,
+ Li Zhijian <lizhijian@fujitsu.com>
+Subject: Re: COLO concurrency issues
+Message-ID: <aZfBNug85Xn_j4o_@gallifrey>
+References: <87ms1cn8n6.fsf@suse.de>
+ <20260219143620.GC817358@fedora>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-ZohoMailClient: External
-Received-SPF: pass client-ip=136.143.188.112;
- envelope-from=dmitry.osipenko@collabora.com; helo=sender4-pp-f112.zoho.com
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+In-Reply-To: <20260219143620.GC817358@fedora>
+X-Chocolate: 70 percent or better cocoa solids preferably
+X-Operating-System: Linux/6.12.48+deb13-amd64 (x86_64)
+X-Uptime: 02:03:17 up 116 days,  1:39,  2 users,  load average: 0.00, 0.00,
+ 0.00
+User-Agent: Mutt/2.2.13 (2024-03-09)
+Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
+ helo=mx.treblig.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,266 +74,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Properly destroy virgl resources on virtio-gpu reset to not leak resources
-on a hot reboot of a VM.
+* Stefan Hajnoczi (stefanha@redhat.com) wrote:
+> On Fri, Feb 13, 2026 at 09:13:49AM -0300, Fabiano Rosas wrote:
+> > Hi, I've been following the qemu-colo.rst steps to test COLO and
+> > encountered a couple of issues. Unfortunately, I don't have cycles to
+> > investigate further. Happens with QEMU master (also tested some versions
+> > back until the COLO fix 0b5bf4ea76).
+> > 
+> > 1) Deadlock at fdmon_io_uring_wait:
+> > 
+> > (steps from qemu-colo.rst)
+> > - Secondary Failover
+> > - Secondary resume replication
+> > - Start the new Secondary
+> > - Sync
+> > - Wait until disk is synced, then:
+> > 
+> >     {"execute": "stop"}
+> >     {"execute": "block-job-cancel", "arguments":{ "device": "resync" } }
+> > 
+> > The above results in the old secondary hanging indefinitely at:
+> > 
+> >     do {
+> >         ret = io_uring_submit_and_wait(&ctx->fdmon_io_uring, wait_nr);
+> >     } while (ret == -EINTR);
+> > 
+> > (gdb) bt                                                                                                                                                                      
+> > #0  syscall () at ../sysdeps/unix/sysv/linux/x86_64/syscall.S:38
+> > #1  0x00007f5519e0204e in ??? () at //usr/lib64/liburing.so.2
+> > #2  0x00007f5519e01b00 in ??? () at //usr/lib64/liburing.so.2
+> > #3  0x0000563c2dc06cc9 in fdmon_io_uring_wait (ctx=0x563c30411b00, ready_list=0x7ffd0bad8f58, timeout=575708467831) at ../util/fdmon-io_uring.c:416
+> > #4  0x0000563c2dc00976 in aio_poll (ctx=0x563c30411b00, blocking=true) at ../util/aio-posix.c:699
+> > #5  0x0000563c2daa01c6 in bdrv_drain_all_begin () at ../block/io.c:529
+> > #6  0x0000563c2daa03d8 in bdrv_drain_all () at ../block/io.c:574
+> > #7  0x0000563c2d764aae in do_vm_stop (state=RUN_STATE_PAUSED, send_stop=true) at ../system/cpus.c:312
+> > #8  0x0000563c2d765964 in vm_stop (state=RUN_STATE_PAUSED) at ../system/cpus.c:754
+> > #9  0x0000563c2d7f3378 in qmp_stop (errp=0x7ffd0bad9080) at ../monitor/qmp-cmds.c:62
+> > #10 0x0000563c2dba7a72 in qmp_marshal_stop (args=0x563c306ac070, ret=0x7f5518dffda8, errp=0x7f5518dffda0) at qapi/qapi-commands-misc.c:197
+> > #11 0x0000563c2dbf1316 in do_qmp_dispatch_bh (opaque=0x7f5518dffe40) at ../qapi/qmp-dispatch.c:128
+> > #12 0x0000563c2dc1de48 in aio_bh_call (bh=0x563c3040fef0) at ../util/async.c:173
+> > #13 0x0000563c2dc1df64 in aio_bh_poll (ctx=0x563c3040c070) at ../util/async.c:220
+> > #14 0x0000563c2dbffff0 in aio_dispatch (ctx=0x563c3040c070) at ../util/aio-posix.c:389
+> > #15 0x0000563c2dc1e3cd in aio_ctx_dispatch (source=0x563c3040c070, callback=0x0, user_data=0x0) at ../util/async.c:365
+> > #16 0x00007f551b114f4c in g_main_dispatch (context=0x563c304120f0) at ../glib/gmain.c:3476
+> > #17 g_main_context_dispatch_unlocked (context=context@entry=0x563c304120f0) at ../glib/gmain.c:4284
+> > #18 0x00007f551b1170c9 in g_main_context_dispatch (context=0x563c304120f0) at ../glib/gmain.c:4272
+> > #19 0x0000563c2dc1fa0b in glib_pollfds_poll () at ../util/main-loop.c:290
+> > #20 0x0000563c2dc1fa85 in os_host_main_loop_wait (timeout=0) at ../util/main-loop.c:313
+> > #21 0x0000563c2dc1fb8a in main_loop_wait (nonblocking=0) at ../util/main-loop.c:592
+> > #22 0x0000563c2d78eb60 in qemu_main_loop () at ../system/runstate.c:903
+> > #23 0x0000563c2db412fc in qemu_default_main (opaque=0x0) at ../system/main.c:50
+> > #24 0x0000563c2db413ab in main (argc=40, argv=0x7ffd0bad94d8) at ../system/main.c:93
+> 
+> Two ideas on how to debug further:
+> 
+> 1. Attach to the hung QEMU process with a debugger and inspect the
+> block_backends global variable (see block/block-backends.c). The
+> question is why bdrv_drain_all_begin() is not making progress. There are
+> probably in-flight requests that can be observed in the
+> BlockDriverState->tracked_requests list. Also check the BlockDriverState
+> and BlockBackend in_flight fields. This will let you identify which
+> block device is causing the hang and what it's doing during the hang.
 
-Suggested-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
----
- hw/display/virtio-gpu-gl.c     |  18 +----
- hw/display/virtio-gpu-virgl.c  | 126 +++++++++++++++++++++++++++------
- include/hw/virtio/virtio-gpu.h |   6 +-
- 3 files changed, 110 insertions(+), 40 deletions(-)
+(I've not looked at this for ages)
+I'd guess it's probably the network block sync; the fun part of this test
+is it's where the secondary is being restarted after a failure; so is
+this blocking on the old sync connection or the new one?
+And if it's blocking on the new one, then is that because the secondary
+is blocked?
 
-diff --git a/hw/display/virtio-gpu-gl.c b/hw/display/virtio-gpu-gl.c
-index b941e9a4b789..8b71dd6fc26f 100644
---- a/hw/display/virtio-gpu-gl.c
-+++ b/hw/display/virtio-gpu-gl.c
-@@ -63,29 +63,14 @@ static void virtio_gpu_gl_flushed(VirtIOGPUBase *b)
- static void virtio_gpu_gl_handle_ctrl(VirtIODevice *vdev, VirtQueue *vq)
- {
-     VirtIOGPU *g = VIRTIO_GPU(vdev);
--    VirtIOGPUGL *gl = VIRTIO_GPU_GL(vdev);
-     struct virtio_gpu_ctrl_command *cmd;
- 
-     if (!virtio_queue_ready(vq)) {
-         return;
-     }
- 
--    switch (gl->renderer_state) {
--    case RS_RESET:
--        virtio_gpu_virgl_reset(g);
--        /* fallthrough */
--    case RS_START:
--        if (virtio_gpu_virgl_init(g)) {
--            gl->renderer_state = RS_INIT_FAILED;
--            return;
--        }
--
--        gl->renderer_state = RS_INITED;
--        break;
--    case RS_INIT_FAILED:
-+    if (!virtio_gpu_virgl_update_render_state(g)) {
-         return;
--    case RS_INITED:
--        break;
-     }
- 
-     cmd = virtqueue_pop(vq, sizeof(struct virtio_gpu_ctrl_command));
-@@ -201,6 +186,7 @@ static void virtio_gpu_gl_class_init(ObjectClass *klass, const void *data)
-     vgc->process_cmd = virtio_gpu_virgl_process_cmd;
-     vgc->update_cursor_data = virtio_gpu_gl_update_cursor_data;
- 
-+    vgc->resource_destroy = virtio_gpu_virgl_resource_destroy;
-     vdc->realize = virtio_gpu_gl_device_realize;
-     vdc->unrealize = virtio_gpu_gl_device_unrealize;
-     vdc->reset = virtio_gpu_gl_reset;
-diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
-index 1fcb0c2dc548..afb1425823fb 100644
---- a/hw/display/virtio-gpu-virgl.c
-+++ b/hw/display/virtio-gpu-virgl.c
-@@ -96,6 +96,10 @@ static void virtio_gpu_virgl_resume_cmdq_bh(void *opaque)
- {
-     VirtIOGPU *g = opaque;
- 
-+    if (!virtio_gpu_virgl_update_render_state(g)) {
-+        return;
-+    }
-+
-     virtio_gpu_process_cmdq(g);
- }
- 
-@@ -344,14 +348,46 @@ static void virgl_cmd_create_resource_3d(VirtIOGPU *g,
-     virgl_renderer_resource_create(&args, NULL, 0);
- }
- 
-+static int
-+virtio_gpu_virgl_resource_unref(VirtIOGPU *g,
-+                                struct virtio_gpu_virgl_resource *res,
-+                                bool *suspended)
-+{
-+    struct iovec *res_iovs = NULL;
-+    int num_iovs = 0;
-+#if VIRGL_VERSION_MAJOR >= 1
-+    int ret;
-+
-+    ret = virtio_gpu_virgl_unmap_resource_blob(g, res, suspended);
-+    if (ret) {
-+        return ret;
-+    }
-+    if (*suspended) {
-+        return 0;
-+    }
-+#endif
-+
-+    virgl_renderer_resource_detach_iov(res->base.resource_id,
-+                                       &res_iovs,
-+                                       &num_iovs);
-+    if (res_iovs != NULL && num_iovs != 0) {
-+        virtio_gpu_cleanup_mapping_iov(g, res_iovs, num_iovs);
-+    }
-+    virgl_renderer_resource_unref(res->base.resource_id);
-+
-+    QTAILQ_REMOVE(&g->reslist, &res->base, next);
-+
-+    g_free(res);
-+
-+    return 0;
-+}
-+
- static void virgl_cmd_resource_unref(VirtIOGPU *g,
-                                      struct virtio_gpu_ctrl_command *cmd,
-                                      bool *cmd_suspended)
- {
-     struct virtio_gpu_resource_unref unref;
-     struct virtio_gpu_virgl_resource *res;
--    struct iovec *res_iovs = NULL;
--    int num_iovs = 0;
- 
-     VIRTIO_GPU_FILL_CMD(unref);
-     trace_virtio_gpu_cmd_res_unref(unref.resource_id);
-@@ -364,27 +400,21 @@ static void virgl_cmd_resource_unref(VirtIOGPU *g,
-         return;
-     }
- 
--#if VIRGL_VERSION_MAJOR >= 1
--    if (virtio_gpu_virgl_unmap_resource_blob(g, res, cmd_suspended)) {
--        cmd->error = VIRTIO_GPU_RESP_ERR_UNSPEC;
--        return;
--    }
--    if (*cmd_suspended) {
--        return;
--    }
--#endif
-+    virtio_gpu_virgl_resource_unref(g, res, cmd_suspended);
-+}
- 
--    virgl_renderer_resource_detach_iov(unref.resource_id,
--                                       &res_iovs,
--                                       &num_iovs);
--    if (res_iovs != NULL && num_iovs != 0) {
--        virtio_gpu_cleanup_mapping_iov(g, res_iovs, num_iovs);
--    }
--    virgl_renderer_resource_unref(unref.resource_id);
-+void virtio_gpu_virgl_resource_destroy(VirtIOGPU *g,
-+                                       struct virtio_gpu_simple_resource *base,
-+                                       Error **errp)
-+{
-+    struct virtio_gpu_virgl_resource *res;
-+    bool suspended = false;
- 
--    QTAILQ_REMOVE(&g->reslist, &res->base, next);
-+    res = container_of(base, struct virtio_gpu_virgl_resource, base);
- 
--    g_free(res);
-+    if (virtio_gpu_virgl_resource_unref(g, res, &suspended)) {
-+        error_setg(errp, "failed to destroy virgl resource");
-+    }
- }
- 
- static void virgl_cmd_context_create(VirtIOGPU *g,
-@@ -1305,6 +1335,10 @@ static void virtio_gpu_fence_poll(void *opaque)
-     VirtIOGPU *g = opaque;
-     VirtIOGPUGL *gl = VIRTIO_GPU_GL(g);
- 
-+    if (!virtio_gpu_virgl_update_render_state(g)) {
-+        return;
-+    }
-+
-     virgl_renderer_force_ctx_0();
-     virgl_renderer_poll();
-     virtio_gpu_process_cmdq(g);
-@@ -1329,14 +1363,30 @@ void virtio_gpu_virgl_reset_scanout(VirtIOGPU *g)
-     }
- }
- 
--void virtio_gpu_virgl_reset(VirtIOGPU *g)
-+static bool virtio_gpu_virgl_reset(VirtIOGPU *g)
- {
-+    struct virtio_gpu_simple_resource *res, *tmp;
-+
-+    /*
-+     * Virgl blob resource unmapping can be suspended and
-+     * deferred on unref, ensure that destruction is completed.
-+     */
-+    QTAILQ_FOREACH_SAFE(res, &g->reslist, next, tmp) {
-+        virtio_gpu_virgl_resource_destroy(g, res, NULL);
-+    }
-+
-+    if (!QTAILQ_EMPTY(&g->reslist)) {
-+        return false;
-+    }
-+
-     virgl_renderer_reset();
- 
-     virtio_gpu_virgl_reset_async_fences(g);
-+
-+    return true;
- }
- 
--int virtio_gpu_virgl_init(VirtIOGPU *g)
-+static int virtio_gpu_virgl_init(VirtIOGPU *g)
- {
-     int ret;
-     uint32_t flags = 0;
-@@ -1414,6 +1464,38 @@ int virtio_gpu_virgl_init(VirtIOGPU *g)
-     return 0;
- }
- 
-+bool virtio_gpu_virgl_update_render_state(VirtIOGPU *g)
-+{
-+    VirtIOGPUGL *gl = VIRTIO_GPU_GL(g);
-+
-+    switch (gl->renderer_state) {
-+    case RS_RESET:
-+        virgl_renderer_force_ctx_0();
-+
-+        if (!virtio_gpu_virgl_reset(g)) {
-+            virtio_gpu_virgl_unbind_ctx(g);
-+            return false;
-+        }
-+        /* fallthrough */
-+    case RS_START:
-+        if (virtio_gpu_virgl_init(g)) {
-+            gl->renderer_state = RS_INIT_FAILED;
-+            return false;
-+        }
-+
-+        gl->renderer_state = RS_INITED;
-+
-+        virtio_gpu_virgl_unbind_ctx(g);
-+        break;
-+    case RS_INIT_FAILED:
-+        return false;
-+    case RS_INITED:
-+        break;
-+    }
-+
-+    return true;
-+}
-+
- static void virtio_gpu_virgl_add_capset(GArray *capset_ids, uint32_t capset_id)
- {
-     g_array_append_val(capset_ids, capset_id);
-diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gpu.h
-index 718332284305..1f509d0d5beb 100644
---- a/include/hw/virtio/virtio-gpu.h
-+++ b/include/hw/virtio/virtio-gpu.h
-@@ -389,9 +389,11 @@ void virtio_gpu_virgl_process_cmd(VirtIOGPU *g,
-                                   struct virtio_gpu_ctrl_command *cmd);
- void virtio_gpu_virgl_fence_poll(VirtIOGPU *g);
- void virtio_gpu_virgl_reset_scanout(VirtIOGPU *g);
--void virtio_gpu_virgl_reset(VirtIOGPU *g);
--int virtio_gpu_virgl_init(VirtIOGPU *g);
- GArray *virtio_gpu_virgl_get_capsets(VirtIOGPU *g);
- void virtio_gpu_virgl_reset_async_fences(VirtIOGPU *g);
-+void virtio_gpu_virgl_resource_destroy(VirtIOGPU *g,
-+                                       struct virtio_gpu_simple_resource *res,
-+                                       Error **errp);
-+bool virtio_gpu_virgl_update_render_state(VirtIOGPU *g);
- 
- #endif
+Dave
+
+> 2. Try disabling io_uring on the host via `sudo sysctl
+> kernel.io_uring_disabled=2` and then run QEMU again. If this is an issue
+> with QEMU's recently-enabled io_uring event loop, then there will be no
+> hang with io_uring disabled.
+> 
+> Stefan
+
+
 -- 
-2.52.0
-
+ -----Open up your eyes, open up your mind, open up your code -------   
+/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
+\        dave @ treblig.org |                               | In Hex /
+ \ _________________________|_____ http://www.treblig.org   |_______/
 
