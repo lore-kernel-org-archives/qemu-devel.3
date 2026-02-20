@@ -4,92 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4919DC5ACD9
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Feb 2026 16:35:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F66CC5AD2B
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Feb 2026 17:20:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vtTSt-00062E-Jx; Fri, 20 Feb 2026 11:34:51 -0500
+	id 1vtUAW-00057l-TR; Fri, 20 Feb 2026 12:19:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vtTSs-00061x-2C
- for qemu-devel@nongnu.org; Fri, 20 Feb 2026 11:34:50 -0500
-Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
+ id 1vtUAV-000573-0E
+ for qemu-devel@nongnu.org; Fri, 20 Feb 2026 12:19:55 -0500
+Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vtTSp-00046N-Qz
- for qemu-devel@nongnu.org; Fri, 20 Feb 2026 11:34:49 -0500
-Received: by mail-ed1-x52f.google.com with SMTP id
- 4fb4d7f45d1cf-65c187dfc82so2664002a12.2
- for <qemu-devel@nongnu.org>; Fri, 20 Feb 2026 08:34:46 -0800 (PST)
+ id 1vtUAT-0004cV-FG
+ for qemu-devel@nongnu.org; Fri, 20 Feb 2026 12:19:54 -0500
+Received: by mail-ej1-x633.google.com with SMTP id
+ a640c23a62f3a-b8fb6ad3243so373844266b.1
+ for <qemu-devel@nongnu.org>; Fri, 20 Feb 2026 09:19:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771605285; x=1772210085; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=wczBOvyJbz7JP+3E3wJjRaByMSjsbBRJyH/8kgk1/U8=;
- b=p9NI/fXo3bUJ13qCJz+pslBAMbG/gaHBaxdlgNB4oZTibzL8AfDHlBpCcU+NdnoKNo
- BqcGQHJcz/MgaAqpqKjYihgGk3DHV2QCjgRmc7RQA6+2FRi9sdczscbsmjiJoNBhOsL3
- FR6r6zZZyy9f6N1pPEj3Pw3IyGupPmpmvsMTgiDLaBmb1pT9teftS099hQVpOqmOPDY6
- MFpB0YO+p8lTMBx7gXKUxVL9lss2wTBwImvW1eRF3GTBx5wXOBmvY48w4CRMy/RQ1S35
- H9N46ndnJMBJKRGftH6f+cT/scvjv5Fnzqv0YdDUAB1TWNCZDiP/IAs0pzOGyA366MQ3
- X0NQ==
+ d=linaro.org; s=google; t=1771607992; x=1772212792; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=IRvKEquHoRhR9FTtoJbDGwgOdmk9XFImG/i1KpW6qVc=;
+ b=fY1Fo0wnLFC000kwePhPqPczt+tVCwcXgBrYfhni0LwWKJ80JGXehMPid8K8up5fCd
+ nBXwfs8D2vgqqddEK9umB2WnFzvc57QNz0157ozrb8fRoU17fs+AnOoRMTt7xiOMNIyL
+ 5X2oudyzTiX8Thvz8CyG87s2SNw3LjB7ZS+1txToMhxjRnNRpprp+QQwP31ub+t3EzXz
+ /NgnyroMY21AAoZYY4QWxVaY5dhNTL7bXOumK+BZ14p4ntGfl6oc4bsDH+LvtpuzmnEZ
+ XHI1KXV1fAG8QS5bctP2cQW3k8p+Ui8qTaSnBPf9ebMH1wIQG4H+r35iQBAULz1Ot0rb
+ /jJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771605285; x=1772210085;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=wczBOvyJbz7JP+3E3wJjRaByMSjsbBRJyH/8kgk1/U8=;
- b=E2HbI0AByYFjDRL43OHjQgjPsCn3fplWTN4/7KZkryCVzWJJjhXFNhMjjMMlBWmHqk
- mh5ZmBOoJEk6Z/5CHdCr9FQfK/v6HYQDobZZY3Ma9ECDVTt49sv/eYBPcsrcMubWRSwJ
- t6OGVosczaucg5icBZQjRkJgW3Xk+8Vmg1NWaVO64E7zmpUKaq/UuCnxNhbyv2+VwOQQ
- tay/ssSA7IZ/lF5hJBBAES70cm2P2umGEMgpOC4UoZnZ8q13jr4jpKDWXTfVdxsVRb8c
- mhZDjskrKC66gHsc3zFp3WRcPBmRMw+yjwzI8RXM1vh/LZzwyeymhf0QGFfyZeLL1s/k
- aKwg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVDWc83K7YWuJzneWvt9FqeTQGJv7gIS6agG2KN+qtare35GTvQ+f77tfBeNUM38HPE9w/61pFKcOLv@nongnu.org
-X-Gm-Message-State: AOJu0Ywlv4A9oFTH3bqM55qo3HvpV6FjPxM+E9ks0SG+KqftwmU3uBJD
- R3JxJAk422aIUB4CPdvFZhFLERGVBb2YfOYlLlDGLzztgcElpefPFekY3VYyh8jr1oY=
-X-Gm-Gg: AZuq6aJb2cr9nm/QqiPv0MAL1wLj6TkCGDct53oPELgiLqGPz+T2KU55qBTdkAtBlry
- DwkrvR6bgfjuZfJt+YHqla9nlq0HgYouTkWGTcrj7Vs4Rlxi20Ig3+WKAgX6GvQyKxJDZvdd+cq
- oK2H0sHyjiYq2tO2mnlzmyGc6d9oBZdboYl30tUPeygRY0i8eoIM4KTw7jHpxhdhaGJD0h3PTC/
- cDjHmBMKzFtdqtXbgmy9g8YyfNpG/crJSEBx7WBFEWqWs6nvZ+PFPRoaq6HGo1r2C0fDZnzWCc+
- dBlyKumNL6/wCaTV7r8iOQOecPeTPcEVpLe4Wuy2jm9iJnux+N0DIkZfyQIkReDqeXokozhZKKe
- aRCOehCHEEEzuzNu3/uLA2Y/i6R511xgqmGeOmD32JHG/jbDP9aAYMY9sc/GORmz/okbTc9+msm
- SmqNzX9qVuF08bzrS5Pj+MYY4=
-X-Received: by 2002:a17:907:c12:b0:b88:4c99:bc0e with SMTP id
- a640c23a62f3a-b9081a01b8bmr6359466b.26.1771605285390; 
- Fri, 20 Feb 2026 08:34:45 -0800 (PST)
+ d=1e100.net; s=20230601; t=1771607992; x=1772212792;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=IRvKEquHoRhR9FTtoJbDGwgOdmk9XFImG/i1KpW6qVc=;
+ b=Sf3GKKwb7ZYtCqNKppbgSyRqVQHTBDvBfCaPhkf9nNLEc9DuSJlXL9P14SjgCSom/I
+ VrrVVmVOS0FAdke4oINyz8oOtpm1kjRQrd/IlX3F0IQqtxcrRO7MOOAyvamv8WlGq5Hd
+ fkoIVbpoZ07iIh3Uni+gxxqXDotya8Wp/BPwJsa2x8VpE4iLHZkkbVpeuTu8H91GcTkP
+ GS0RaF1lnNx2kelXpXxK+AJVhaQypgWzByZ8mYGRlpc87Wg4HNOMlV07Uxl/3+8D7lxq
+ iyEkqDSBnZ9NVx0EtQyLAuK/JYHunpLDrUEnJ82WCcgOlO2vFzG5NfiYBKv3B7qE+53m
+ dayg==
+X-Gm-Message-State: AOJu0Yw8A/SJTsPqowzsLHOHXeKhnoQmfDyA680GkkXzbsH+TrTuXfhn
+ +mSpXuc7l1gp+vgxssFUrL7W4pwp39Rq5qjMlxWjtYAAHIogovDfrNQSOQeqK0i1AffV/BWre+c
+ ekIUN
+X-Gm-Gg: AZuq6aL7V1Zk25eBF6SFV3ZLno0taTGZVUsqbir3iV7UqQQj+POXFgvuPgyHgjktE/E
+ nd9SoJOKpwypaBGfk1hcJVnXOjP1bE8KjtCd5Lq1b3UJAVDyJnjX8Qcf3prjxMLCmifP2jbXklE
+ bGQcQnAggSX4+wgGrmcY2bKahrE4hrili+RH8oFtye2D7GABoRJe1n7AZp+0BjF+V1RkHcj/2ZX
+ POBtMXmuSs7eN7B5aUhC09pJi0Sh4dac7DHVDb7cgRbu8A7FfEuES64ueDWMYzQ+NVxkgbc4g9f
+ dE+3sgL0GjGusgp2PqYH2TT8wsUGBYNPgMKjsGliWpeqkqoCmUicpn1In1tuNV9oXhgQfFdIsy6
+ O1vtsJasZ3fvba2NYu3IVWOjnlYM0OcUxeDQAwh4/ORxt45Uab9A+zU0SjbsQ04OM8bujJiX8Vd
+ 1SCWMkOQ+qBYSjXospj540gzJuYcDcv3wKXQ==
+X-Received: by 2002:a17:907:1c82:b0:b8e:9d66:f5fb with SMTP id
+ a640c23a62f3a-b9081740d0dmr16747466b.0.1771607991738; 
+ Fri, 20 Feb 2026 09:19:51 -0800 (PST)
 Received: from draig.lan ([185.124.0.126]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b8fc7386b49sm694928666b.22.2026.02.20.08.34.44
+ a640c23a62f3a-b8fc7385d99sm672175366b.17.2026.02.20.09.19.50
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 20 Feb 2026 08:34:44 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id E5ECA5F838;
- Fri, 20 Feb 2026 16:34:43 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Florian Hofhammer <florian.hofhammer@epfl.ch>
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,  qemu-devel@nongnu.org,
- richard.henderson@linaro.org,  laurent@vivier.eu,  imp@bsdimp.com,
- berrange@redhat.com
-Subject: Re: [PATCH v3 2/5] plugins: add read-only property for registers
-In-Reply-To: <7fc71343-095c-4dad-9cda-4267fc49b64c@epfl.ch> (Florian
- Hofhammer's message of "Mon, 16 Feb 2026 13:54:06 +0100")
-References: <ef60bfbb-cc12-4411-acc1-8c131726f22e@epfl.ch>
- <8b36b6c1-83bd-462b-a346-f240dd17746d@epfl.ch>
- <871pjcdt5q.fsf@draig.linaro.org> <87pl6wcda9.fsf@draig.linaro.org>
- <878883e5-7100-48b7-bb44-e0728c93ae72@epfl.ch>
- <7137a1e3-9f07-4a6b-8507-35bbfa5324e7@linaro.org>
- <7fc71343-095c-4dad-9cda-4267fc49b64c@epfl.ch>
-User-Agent: mu4e 1.14.0-pre1; emacs 30.1
-Date: Fri, 20 Feb 2026 16:34:43 +0000
-Message-ID: <87tsvb4bmk.fsf@draig.linaro.org>
+ Fri, 20 Feb 2026 09:19:51 -0800 (PST)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 18DA55F838;
+ Fri, 20 Feb 2026 17:19:50 +0000 (GMT)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ qemu-arm@nongnu.org (open list:ARM TCG CPUs)
+Subject: [PATCH] target/arm: set the correct TI bits for WFIT traps
+Date: Fri, 20 Feb 2026 17:19:45 +0000
+Message-ID: <20260220171945.1065102-1-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.47.3
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52f.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::633;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,163 +102,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Florian Hofhammer <florian.hofhammer@epfl.ch> writes:
+The WFIT trap should be reported as 0b10.
 
-> On 13/02/2026 19:36, Pierrick Bouvier wrote:
->> On 2/13/26 5:38 AM, Florian Hofhammer wrote:
->>> On 26/01/2026 21:46, Alex Benn=C3=A9e wrote:> Alex Benn=C3=A9e <alex.be=
-nnee@linaro.org> writes:
->>>>
->>>>> Florian Hofhammer <florian.hofhammer@epfl.ch> writes:
->>>>>
->>>>>> Some registers should be marked as read-only from a plugin API
->>>>>> perspective, as writing to them via qemu_plugin_write_register has no
->>>>>> effect. This includes the program counter, and we expose this fact to
->>>>>> the plugins with this patch.
->>>>>>
->>>>>> Signed-off-by: Florian Hofhammer <florian.hofhammer@epfl.ch>
->>>>>> ---
->>>>>>   include/qemu/qemu-plugin.h |  2 ++
->>>>>>   plugins/api.c              | 17 +++++++++++++++++
->>>>>>   2 files changed, 19 insertions(+)
->>>>>>
->>>>>> diff --git a/include/qemu/qemu-plugin.h b/include/qemu/qemu-plugin.h
->>>>>> index f976b62030..1f25fb2b40 100644
->>>>>> --- a/include/qemu/qemu-plugin.h
->>>>>> +++ b/include/qemu/qemu-plugin.h
->>>>>> @@ -942,11 +942,13 @@ struct qemu_plugin_register;
->>>>>>    *          writing value with qemu_plugin_write_register
->>>>>>    * @name: register name
->>>>>>    * @feature: optional feature descriptor, can be NULL
->>>>>> + * @is_readonly: true if the register cannot be written via qemu_pl=
-ugin_write_register
->>>>>>    */
->>>>>>   typedef struct {
->>>>>>       struct qemu_plugin_register *handle;
->>>>>>       const char *name;
->>>>>>       const char *feature;
->>>>>> +    bool is_readonly;
->>>>>>   } qemu_plugin_reg_descriptor;
->>>>>>     /**
->>>>>> diff --git a/plugins/api.c b/plugins/api.c
->>>>>> index fc19bdb40b..de8c32db50 100644
->>>>>> --- a/plugins/api.c
->>>>>> +++ b/plugins/api.c
->>>>>> @@ -403,6 +403,12 @@ bool qemu_plugin_bool_parse(const char *name, c=
-onst char *value, bool *ret)
->>>>>>    * ancillary data the plugin might find useful.
->>>>>>    */
->>>>>>   +static const char pc_str[] =3D "pc"; // generic name for program =
-counter
->>>>>> +static const char eip_str[] =3D "eip"; // x86 specific name for pro=
-gram counter
->>>>>> +static const char rip_str[] =3D "rip"; // x86_64 specific name for =
-program counter
->>>>>> +static const char pswa_str[] =3D "pswa"; // s390x specific name for=
- program counter
->>>>>> +static const char iaoq_str[] =3D "iaoq"; // HP/PA specific name for=
- program counter
->>>>>> +static const char rpc_str[] =3D "rpc"; // microblaze specific name =
-for
->>>>>> program counter
->>>>>
->>>>> It's ugly but I can't think of anything better as you say in the comm=
-it message.
->>>>>
->>>>>>   static GArray *create_register_handles(GArray *gdbstub_regs)
->>>>>>   {
->>>>>>       GArray *find_data =3D g_array_new(true, true,
->>>>>> @@ -417,9 +423,20 @@ static GArray *create_register_handles(GArray *=
-gdbstub_regs)
->>>>>>               continue;
->>>>>>           }
->>>>>>   +        gint plugin_ro_bit =3D 0;
->>>>>>           /* Create a record for the plugin */
->>>>>>           desc.handle =3D GINT_TO_POINTER(grd->gdb_reg + 1);
->>>>>>           desc.name =3D g_intern_string(grd->name);
->>>>>
->>>>> Lets just set desc.is_readonly to false here.
->>>>>
->>>>>> +        if (!strcmp(desc.name, pc_str)
->>>>>> +            || !strcmp(desc.name, eip_str)
->>>>>> +            || !strcmp(desc.name, rip_str)
->>>>>> +            || !strcmp(desc.name, pswa_str)
->>>>>> +            || !strcmp(desc.name, iaoq_str)
->>>>>> +            || !strcmp(desc.name, rpc_str)
->>>>>> +           ) {
->>>>>> +            plugin_ro_bit =3D 1;
->>>>>> +        }
->>>>>> +        desc.is_readonly =3D plugin_ro_bit =3D=3D 1 ? true : false;
->>>>>
->>>>> And fold setting it to true into the if statement. I have a marginal
->>>>> preference for g_strcmp0(desc.name, eip_str) =3D=3D 0 style tests.
->>>>
->>>> The option of course would be to skip the register all together. Do we
->>>> have code which will have multiple vaddr's for the same TB where using
->>>> the TB data wouldn't be sufficient?
->>>
->>> Skipping the register altogether would basically make it invisible to
->>> plugins and therefore remove functionality. A plugin might want to get a
->>> list of all registers (which would not be complete anymore), or get the
->>> current PC value. If I didn't miss anything, the latter might not
->>> necessarily be possible anymore, as a callback (especially the simple
->>> callback type) doesn't have access to the current TB data and can't
->>> necessarily pass userdata to the callback, so it wouldn't be able to get
->>> the PC from there anymore.
->>>
->>>>>
->>>>>>           desc.feature =3D g_intern_string(grd->feature_name);
->>>>>>           g_array_append_val(find_data, desc);
->>>>>>       }
->>>>>
->>>>> Otherwise:
->>>>>
->>>>> Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
->>=20
->> Seeing there are some questions around this, I have another one.
->>=20
->> Does it really matter if a user can read/write pc register?
->
-> The idea of blocking writes to the PC via the register write API came up
-> in https://lists.gnu.org/archive/html/qemu-devel/2025-12/msg01671.html.
-> As it stands, writes to the PC are silently swallowed, and preventing
-> that could reduce confusion for plugin authors. It makes it clear why
-> there would be a special API for setting the PC instead of using the
-> generic register write API.
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+---
+ target/arm/tcg/op_helper.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Agreed.
+diff --git a/target/arm/tcg/op_helper.c b/target/arm/tcg/op_helper.c
+index 4d708635068..aa14f15eb62 100644
+--- a/target/arm/tcg/op_helper.c
++++ b/target/arm/tcg/op_helper.c
+@@ -448,7 +448,7 @@ void HELPER(wfit)(CPUARMState *env, uint64_t timeout)
+ 
+     if (target_el) {
+         env->pc -= 4;
+-        raise_exception(env, excp, syn_wfx(1, 0xe, 0, false), target_el);
++        raise_exception(env, excp, syn_wfx(1, 0xe, 2, false), target_el);
+     }
+ 
+     if (uadd64_overflow(timeout, offset, &nexttick)) {
+-- 
+2.47.3
 
->
->> It seems to bring a lot of complexity to prevent this (especially
->> the string per arch approach, even though that's the best we can
->> do), and I'm not sure what's the actual benefit. If someone tries
->> something QEMU plugins don't support in general, they can always
->> send a bug report, or even a patch.
->> I'm not really sure to why someone would have a bad idea mixing register=
- writes and pc diversion. And if they do, it would not be surprising it bre=
-aks things.
->
-> Alternatively, I could add a remark to the documentation for the
-> register write API that the PC can only be modified via the dedicated
-> API and not change the implementation at all. But I think I'll have to
-> defer that decision to you and Alex as the plugin subsystem
-> maintainers.
-
-We definitely want to make it clear to use the specific function. We
-just need a solution for making sure they can always find out the
-current pc when we have multiple virtual mappings to the same place.
-
->
->> So maybe we can just extend API with PC diversion, and not overthink too=
- much about potential consequences on registers.
->>=20
->> Regards,
->> Pierrick
->
-> Best,
-> Florian
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
