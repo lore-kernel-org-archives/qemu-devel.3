@@ -4,92 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B427C55843
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Feb 2026 11:03:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C184C55ABC
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Feb 2026 11:56:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vtOHS-0000kg-Kq; Fri, 20 Feb 2026 06:02:42 -0500
+	id 1vtP6O-0003ey-0w; Fri, 20 Feb 2026 06:55:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vtOHQ-0000kR-EG
- for qemu-devel@nongnu.org; Fri, 20 Feb 2026 06:02:41 -0500
-Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vtP6L-0003eZ-TU
+ for qemu-devel@nongnu.org; Fri, 20 Feb 2026 06:55:17 -0500
+Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vtOHN-0000mT-Hw
- for qemu-devel@nongnu.org; Fri, 20 Feb 2026 06:02:40 -0500
-Received: by mail-ed1-x530.google.com with SMTP id
- 4fb4d7f45d1cf-65a3527c5easo3462498a12.0
- for <qemu-devel@nongnu.org>; Fri, 20 Feb 2026 03:02:36 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vtP6J-0001VK-SE
+ for qemu-devel@nongnu.org; Fri, 20 Feb 2026 06:55:17 -0500
+Received: by mail-ed1-x52e.google.com with SMTP id
+ 4fb4d7f45d1cf-65c20dc9577so3594715a12.2
+ for <qemu-devel@nongnu.org>; Fri, 20 Feb 2026 03:55:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771585355; x=1772190155; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=RA85PjwVTKDqv7S0WOSbDO7sOanHYYfkUmPb0hIH6Sk=;
- b=LH5Fzbtu8whkmlKe4zw4txd2jnty9xmcX5gllAIniHGYv2AXBy/jmBw8SMMHjoIMT/
- iQ8pRFEjGHi112P8A9zE5q+Ttow6cZCDPdZ0ZxtdbvT6ZdsjT4D9mbl7feP/BjDbQ6Fa
- 9CmCXQR/yaJwgwIprIJwpo+BDeYNHLOVGUBbJqAEzZxmXRYhgdowaSsZQIpEWXy5ogcX
- g2SiJCYxT3jfwpQGxFOwWSXHvcfD2ruKa9QZHYan+kF41py52203VwvFqEy+Iz/ysF74
- yR67WKPGVKl1J+i0VvQvlkK+WrvQBhaUAXAOilpvMXUbwSGsinkRwdIexv81lDKiopHI
- CE5g==
+ d=linaro.org; s=google; t=1771588513; x=1772193313; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Z+ea69BD6Zx9C+7ujIFRrVS1k1IdY+Arhg1wnLwoi7E=;
+ b=u9iEWFRb8Az2wed487n8lHDNcJH4z/uQRNIWYaSJ1MgPMdCSJesvx7TY5O9iEiKedT
+ lHWI0TxPlzr1ME0uVWGkc9WgrfxPe2m0em7D33z14S6uCG6+Qm3FzdKS14z3xW7pRHgn
+ pBo3yTVFxZ7BWKqM4CvhC95s+zr+uDpaWtn5te/SFwKkUwnPp84Nu//bnsgPJMspsZcF
+ cScrCHEviEE161kOp+Ce2Lq3bo32uIVaChqeFHlvAR8rRWb8kn9C2XK6MkwCyq84lB39
+ w9mMZpCAR396Mzm5VjplLweYiyCOxlr1AEyH7lv2J8xt1Sd/kA9eGVBbvLoJOw6L9So1
+ gcSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771585355; x=1772190155;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=RA85PjwVTKDqv7S0WOSbDO7sOanHYYfkUmPb0hIH6Sk=;
- b=bTis+mMLwU6685XfoGw66eDwjTlzJ5Lv7RpxLdrX9hdZXET3ExdltBXrAJI9hI1KB3
- Su0RaVC9W/4z0k7XNhLEnz2XYOLtQ5N+OanyIukfM3lbV7vizPJHy5LefmsREEjwll3p
- WLvH8tXP+TF5Rhbr/tSd8K/u00bSccvAqFJwRgaKehgDs9PV7+47JnINNuNQm/h9igJc
- W7+MINOdHqXx9hAOdnXkyRkqJm9JNPZ4DyjeuJPGrRZKUTb0LwMOgjGrrhDCS9x2X5sM
- mtJUi49zFpuKDRdyBH7b75xe5wxb2tkcF4NCfpUQowZnp4u2YA819AapOkBGSh9ze+cK
- X0aw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUEJY+tiZMk8VNo4Xgpbat+kai1QJx5j4FD1rm4g6SsPc4YkZuhHHAXWuZinGhh2k6nEo/7pZRMyRAM@nongnu.org
-X-Gm-Message-State: AOJu0Yy2ivqL1uboItWcY5TAj1zBpNSSrlRd2c7lBYJZU0VIKs9Q7swW
- m+4WJ23qoOgO8oH6BBul9HiCxZWCliTpabT2JhDSpup87nisN5lyh/Fjj39bO0sOps4=
-X-Gm-Gg: AZuq6aKtl6WVwHiR0+NlVffMti+ih4zV+2M7/flYUmyq3ZKxRnVKYO2VNTVGnbqjm3x
- CuuciQlbJAIHJAH/S8O6LUgnFnxgLgC+CteXdoR162UC8G3gkAl33aqG++M9X4gWWwOfgdpCsuv
- NsKCuUGG/zXD46812Q3suAjua5Vn0lF5U3j28g0MMpTE/ZYdu0zX28X7kVe0hoysoDW6jgfrQWF
- vxp5aRBgDeIRDTWJ7vubhODIzdafCn27nLg8lXjPatR7cx6WMkcXpQy9S6o8YTJPafZYjGctMsy
- VredpER7QvFXitlTA0azH6lr8hFY6uWk+6VYy2DaVfLC/Sq8GRqWdi35oMDDu/AthOKKNTJjf1k
- FSd79A0X1RwpXqtsvu6qjBajCHKK5Z8D5S5V3QJLpw6hLMgogc0SGckeSNgIAXftLgdFehuOr8r
- HIOTwRHFLaROgu6fgqUivYTYzKXbJeOXQ7WyolIXonl8FFjK67WNRr/UkXQCN8hLdhVg==
-X-Received: by 2002:a17:907:3ccb:b0:b8f:9ba8:e512 with SMTP id
- a640c23a62f3a-b904dc686cfmr386739966b.30.1771585354629; 
- Fri, 20 Feb 2026 03:02:34 -0800 (PST)
-Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-483a31d3ebbsm61283185e9.13.2026.02.20.03.02.33
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 20 Feb 2026 03:02:34 -0800 (PST)
-Message-ID: <a38b2328-e877-4b19-8d3b-e5aaa0bae83c@linaro.org>
-Date: Fri, 20 Feb 2026 12:02:33 +0100
+ d=1e100.net; s=20230601; t=1771588513; x=1772193313;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Z+ea69BD6Zx9C+7ujIFRrVS1k1IdY+Arhg1wnLwoi7E=;
+ b=JsgV95wnMKmfErNOj+wnhrVRLNn1aafD2va3RgNhW2b7INm//MiZYwnW3Ebl8wDcZa
+ B7FfTHbsddO0fKVgwq7p3U1GiODUMfCmIakhVJtuXeB3plymYuOM2PTt9NHkMG6InPwD
+ M4TjhHf2hTJp+KW1nVZ/OLZ839UWz+7N0rBkrPs3WYWAK972hAAXtFDx8q/qDDjI5TCB
+ 5O9F3/6pZkEbq/v5e1rIRYRDagy66A6AsI3ROCamJArwDlUFa9wQ9/b2cjmRAKPVCdKv
+ zheTQ2O4Mfx0F6Zbe/O0YL64TXjiRFpLbW11sO66rI5wKQpiOea0oRG8cM/khOFfSQHX
+ l5iQ==
+X-Gm-Message-State: AOJu0Ywkooyxo4wcWxD/tHuy9RRQ2vGb/8MJa2ZJwfrtk3vn1/yXVqSe
+ 02Y8P3N+BiqDVI/UhkNrL6H42FOivNgrhhEuOrbGAP7m56EHUPHumPTxt3cHb7xWGuw=
+X-Gm-Gg: AZuq6aK6Q7HS4QoomXDa3YavKUOSHZ6GFLBC8LwYbjIfpPPlvtLK35coPJkNbJLk8TN
+ kj91/zpzK19gpbmBSuSie0hvzwjm0urp47VW12n+MwYKmnv1y7oK0dl74Jz37lG78JQVOzy9ivq
+ B+N0SDimu1G1Y2UYThNHk4y8gGx89Jl+HgZGsJ63AqRAGiqcitijzD3okv/RMDBgoHjxzaKB6im
+ UxjcdDdJqtidASQ4N6kUNg9N79jgliddesQMsH8qkzMf33ml1ETnL+27HoNk5wQcvUtSbMJDrWB
+ 9RUq3O/WyTCu2A+NuBl9VqnETFQz6OsPdqaN2dq1LiErqC4cdiFvuzfB284kj4zoZnscKGX0OlV
+ ICpXvczZUi45k9fa2xuruBp4aQHjTb5ysgCHbf36rL/7ao1YOynyQ/zeUV4+E55s2WkgPpt/r1l
+ 6ehYfp2dVIWE8wsV1oAzQnup4=
+X-Received: by 2002:a05:6402:3506:b0:658:d1b0:9970 with SMTP id
+ 4fb4d7f45d1cf-65e80499ce6mr1003597a12.5.1771588513514; 
+ Fri, 20 Feb 2026 03:55:13 -0800 (PST)
+Received: from draig.lan ([185.124.0.126]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-65bad3e356asm4719563a12.16.2026.02.20.03.55.10
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 20 Feb 2026 03:55:11 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 97C925F838;
+ Fri, 20 Feb 2026 11:55:09 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org,  Yoshinori Sato <yoshinori.sato@nifty.com>,
+ qemu-arm@nongnu.org,  Laurent Vivier <laurent@vivier.eu>,  Thomas Huth
+ <huth@tuxfamily.org>,  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,  Aurelien Jarno
+ <aurelien@aurel32.net>,  Jim MacArthur <jim.macarthur@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,  Peter Maydell
+ <peter.maydell@linaro.org>,  Bastian Koppelmann <kbastian@rumtueddeln.de>,
+ Aleksandar Rikalo <arikalo@gmail.com>,  Richard Henderson
+ <richard.henderson@linaro.org>,  Zhao Liu <zhao1.liu@intel.com>,  Jiaxun
+ Yang <jiaxun.yang@flygoat.com>,  Yanan Wang <wangyanan55@huawei.com>
+Subject: Re: [RFC PATCH v2 09/14] target/tricore: move cpu_reset from
+ tricore_cpu_realizefn
+In-Reply-To: <6e90ab90-f726-4fe3-83ba-cf3aa799062c@linaro.org> ("Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9=22's?= message of "Fri, 20 Feb 2026 11:56:11
+ +0100")
+References: <20260219171810.602667-1-alex.bennee@linaro.org>
+ <20260219171810.602667-10-alex.bennee@linaro.org>
+ <6e90ab90-f726-4fe3-83ba-cf3aa799062c@linaro.org>
+User-Agent: mu4e 1.14.0-pre1; emacs 30.1
+Date: Fri, 20 Feb 2026 11:55:09 +0000
+Message-ID: <87y0kn634y.fsf@draig.linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] contrib/plugins/uftrace_symbols.py: filter out some
- addr2line error messages
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: Mahmoud Mandour <ma.mandourr@gmail.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>
-References: <20260218172356.938236-1-pierrick.bouvier@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260218172356.938236-1-pierrick.bouvier@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::530;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x530.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,16 +116,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 18/2/26 18:23, Pierrick Bouvier wrote:
-> This was found when tracing Hafnium and SLOF binaries, and it's probably
-> related to a bug in toolchain used. It's safe to ignore those entries,
-> and related symbols will still be present in output, whether they can be
-> found or not.
-> 
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> ---
->   contrib/plugins/uftrace_symbols.py | 3 +++
->   1 file changed, 3 insertions(+)
+Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> On 19/2/26 18:18, Alex Benn=C3=A9e wrote:
+>> Implement a proper cpu reset handler for tricore cpus.
+>> Message-ID: <20260108143423.1378674-11-alex.bennee@linaro.org>
+>> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+>> ---
+>>   target/tricore/cpu.c | 9 ++++++++-
+>>   1 file changed, 8 insertions(+), 1 deletion(-)
+>
+>
+>>   static bool tricore_cpu_has_work(CPUState *cs)
+>>   {
+>>       return true;
+>> @@ -120,8 +127,8 @@ static void tricore_cpu_realizefn(DeviceState *dev, =
+Error **errp)
+>>       if (tricore_has_feature(env, TRICORE_FEATURE_131)) {
+>>           set_feature(env, TRICORE_FEATURE_13);
+>>       }
+>> -    cpu_reset(cs);
+>>       qemu_init_vcpu(cs);
+>> +    qemu_register_reset(tricore_cpu_reset, cs);
+>
+> Per commit 9f1c70a2543 ("hw/core: Add documentation and license comments
+> to reset.h"):
+>
+> "In general this function should not be used in new code where possible"
+>
+> Shouldn't we use qemu_register_resettable()?
+
+Yes - I thought I checked them all but I must of missed tricore - will
+fix on next iteration.
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
