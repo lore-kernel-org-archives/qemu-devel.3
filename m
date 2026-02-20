@@ -4,60 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFBADC531F7
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Feb 2026 02:05:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9FE07C531F8
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Feb 2026 03:03:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vtFst-0002ue-HX; Thu, 19 Feb 2026 21:04:47 -0500
+	id 1vtGn3-0005Es-94; Thu, 19 Feb 2026 22:02:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1vtFsr-0002uV-WB
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 21:04:46 -0500
-Received: from mx.treblig.org ([2a00:1098:5b::1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1vtFso-00051p-Sr
- for qemu-devel@nongnu.org; Thu, 19 Feb 2026 21:04:45 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
- ; s=bytemarkmx;
- h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
- :Subject; bh=cDcZHz3LojKpynFonONGOYDcQS9gnApYUIzMiAQIsYI=; b=iqD14VfqMGFzX2cR
- QHmi+aVuwup78kyBed3F/BlPDmfWZvvCZCLFRFrzAwljqy8oOMDYdnm1JQauBVfGU2BqkzUuE7TbD
- UV2mFoGX1nWJweU9UuD5JTdqszpDPpbAT6AX7yke1nbbP2xB6k2rir2gy8HDj3cW9HZS2HKrNtLZG
- VzkDifoYyDVIAsz0a3yWPoCxFQe5vBsFgm7rPwqJYCG0h/IxtXVC3zehGUjgRGk5QIBsYGHreTEf4
- wTBkxrOwmFRk5rKo/T8E8Ygir7I3WLhxINEbBUrx+Av4Iu/dcWNQroce8cWIhnKwu0H8Hs5DEr/3M
- t4BY3Pguu2WNwdxCtQ==;
-Received: from dg by mx.treblig.org with local (Exim 4.98.2)
- (envelope-from <dg@treblig.org>) id 1vtFsk-00000004PZJ-1Q0j;
- Fri, 20 Feb 2026 02:04:38 +0000
-Date: Fri, 20 Feb 2026 02:04:38 +0000
-From: "Dr. David Alan Gilbert" <dave@treblig.org>
-To: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: Fabiano Rosas <farosas@suse.de>, Lukas Straub <lukasstraub2@web.de>,
- qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>,
- Zhang Chen <zhangckid@gmail.com>,
- Hailiang Zhang <zhanghailiang@xfusion.com>,
- Li Zhijian <lizhijian@fujitsu.com>
-Subject: Re: COLO concurrency issues
-Message-ID: <aZfBNug85Xn_j4o_@gallifrey>
-References: <87ms1cn8n6.fsf@suse.de>
- <20260219143620.GC817358@fedora>
+ (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
+ id 1vtGn2-0005EW-8b
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 22:02:48 -0500
+Received: from mail-dl1-x1244.google.com ([2607:f8b0:4864:20::1244])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
+ id 1vtGmz-0002NJ-QU
+ for qemu-devel@nongnu.org; Thu, 19 Feb 2026 22:02:48 -0500
+Received: by mail-dl1-x1244.google.com with SMTP id
+ a92af1059eb24-12732165d1eso1916677c88.1
+ for <qemu-devel@nongnu.org>; Thu, 19 Feb 2026 19:02:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1771556564; x=1772161364; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=QXHvGCPMR5Qk7bz9vRV445xL5KVRDg7+LrA3vNLDxfc=;
+ b=KI3t7OkWA3BK2aAZpSQUNZl0XlXkgZJ8/HlztaG/JDpNsWfyouKZJXYh1FFfrSvsoq
+ sFt9M8R+56f8qlLHZbghohlz5cfyymkakFAjWiL1N6JVDzKhfOx2s5VZAmW+vmMl5XiE
+ Er5xAv9p4OttrIeCmUTsYylkcNS4T95AN/QwjEMMYl0aoyoMr9K7tSif+2cCfCB5AJDv
+ t5oudIUxLv6XjVBUjZUcUlsOj9WQKGxaJTbNdu1Xde74gR/P6uffqB21yvKhgTUylnEc
+ TivXyqOLj66yz7feJ1sFX4SzskQdHE05rfRzbjVHT+74CWq+QP5qeMTnpOSLC92QohUX
+ RosA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1771556564; x=1772161364;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=QXHvGCPMR5Qk7bz9vRV445xL5KVRDg7+LrA3vNLDxfc=;
+ b=L+HUmLX1FNvy2Ism6Vep393q4+HCtbcBynVuyqKq5DaxDIJei+sygUoqFLFU8AVK6O
+ d4wV+/qI0o3zuVJfW0R5Bl6HlM8IwQdB4ctjrg+l40b121SIUel1zXiLsnlyluELMf7k
+ 0ZCJ2pOCSVZnQLYGJNfbPm3jaDtN7+AW2yBmheaAU3zPjGWOtsURSKDLUT3Z4RI8+pYQ
+ sNSN+y2+7QKNd4m1hjeQSUBtrte/6G2KQXbql01Q9SwqZSQtbXRv2A9cioEDo8rD2xAM
+ Tzez+FjMGhDm+3PgD/n8RGckSaL9Wsupe/Wu1H07iqU3dzEV+Gey7XNCviJ/kCqMua6n
+ +RDg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX5qJLVfHI24YB6Kxu+EFU2nkob76+FalGhy5cQsvXFp8Gd5p6Qg18Ouqf2Tpp/7I3asNQ4vzpk859Y@nongnu.org
+X-Gm-Message-State: AOJu0YxFUQTa/uHTj9gRnXzgQsHffE1pOIQ0Fzs3C1M3aj83j2qCLxOn
+ vYcBnWnQL1wou5O+FtZ0F0kf4FZPIy63qYR/ACUTNSyjIYObKjLu4qMD
+X-Gm-Gg: AZuq6aIpGyPyNHhrzeHhUaaBnY1kP+AxYOVeIew5aSrOe8NPa+e1XszXsPfIrea98uH
+ Sid8rBDvVb5d2pCOjdpi/9R/RZ8R2Qa0dPwIJDw7stvQqB/jDjQ42gv4Su95ztqP+auSKHfdJ0m
+ 2hUSa/zrLXERXKnMZHM8YnSh2LbUWvD2dRLMW0QDaRkbEU34byQxx30qvn59LnxYmCX6RV/3SUy
+ ftJP74rojrvlBbtox+zgeleAmGbbrEC9PGMV4ai6ay/ddz2/ku1A2+PiozHrpc0MvjclhHLiKPa
+ 8sEq/HiAdyJRanb6iv7SsQHgsjHT4HpPamrL0XAYwQz806/SQq0BmHR4YnwygILy0XRV3z85Dzu
+ JdH44XWikOeRmSfg2UGiUUXC/lPkPz7WgjR6w3i0eG872wLDDc7fYASXQj+ps71X5OHxGNQ648V
+ G3DDOcfJXXZBBHpt2c0x6Pwg3t46k8+aAtcNA8w+KZdi+2ZvlShuOuPAhVSs4bfQ+sL2SQCNKCu
+ Fa1aaCo3/QicW492d/DSWLGUNJUxLk=
+X-Received: by 2002:a05:7022:68a7:b0:119:e56b:98b1 with SMTP id
+ a92af1059eb24-12759a60af4mr3740592c88.24.1771556563799; 
+ Thu, 19 Feb 2026 19:02:43 -0800 (PST)
+Received: from ZEVORN-PC.localdomain ([38.95.120.198])
+ by smtp.gmail.com with ESMTPSA id
+ a92af1059eb24-12742c6430asm25019049c88.6.2026.02.19.19.02.40
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 19 Feb 2026 19:02:43 -0800 (PST)
+Date: Fri, 20 Feb 2026 11:02:07 +0800
+From: Chao Liu <chao.liu.zevorn@gmail.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
+ Yodel Eldar <yodel.eldar@yodel.dev>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
+ qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>, 
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Jim MacArthur <jim.macarthur@linaro.org>
+Subject: Re: [PATCH 1/2] target/alpha: Reset CPU
+Message-ID: <aZe91c9A8bqKSG31@ZEVORN-PC.localdomain>
+References: <20260217-alpha-v1-0-0dcc708c9db3@rsg.ci.i.u-tokyo.ac.jp>
+ <20260217-alpha-v1-1-0dcc708c9db3@rsg.ci.i.u-tokyo.ac.jp>
+ <CAFEAcA_BJdifU=58m7ObeAe_ZByE6M-Zkg0cU70wP10+gpUkNg@mail.gmail.com>
+ <385d1a8e-c202-4d72-a24a-1e49478278b4@yodel.dev>
+ <28c7b18c-c998-4392-a1f2-9b287d7545c5@linaro.org>
+ <CAFEAcA9Aha1TtTZZuCONmPP+baRxr=VE49mFk4zXwvM9O4p8gQ@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <20260219143620.GC817358@fedora>
-X-Chocolate: 70 percent or better cocoa solids preferably
-X-Operating-System: Linux/6.12.48+deb13-amd64 (x86_64)
-X-Uptime: 02:03:17 up 116 days,  1:39,  2 users,  load average: 0.00, 0.00,
- 0.00
-User-Agent: Mutt/2.2.13 (2024-03-09)
-Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
- helo=mx.treblig.org
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAFEAcA9Aha1TtTZZuCONmPP+baRxr=VE49mFk4zXwvM9O4p8gQ@mail.gmail.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1244;
+ envelope-from=chao.liu.zevorn@gmail.com; helo=mail-dl1-x1244.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -74,88 +114,411 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-* Stefan Hajnoczi (stefanha@redhat.com) wrote:
-> On Fri, Feb 13, 2026 at 09:13:49AM -0300, Fabiano Rosas wrote:
-> > Hi, I've been following the qemu-colo.rst steps to test COLO and
-> > encountered a couple of issues. Unfortunately, I don't have cycles to
-> > investigate further. Happens with QEMU master (also tested some versions
-> > back until the COLO fix 0b5bf4ea76).
-> > 
-> > 1) Deadlock at fdmon_io_uring_wait:
-> > 
-> > (steps from qemu-colo.rst)
-> > - Secondary Failover
-> > - Secondary resume replication
-> > - Start the new Secondary
-> > - Sync
-> > - Wait until disk is synced, then:
-> > 
-> >     {"execute": "stop"}
-> >     {"execute": "block-job-cancel", "arguments":{ "device": "resync" } }
-> > 
-> > The above results in the old secondary hanging indefinitely at:
-> > 
-> >     do {
-> >         ret = io_uring_submit_and_wait(&ctx->fdmon_io_uring, wait_nr);
-> >     } while (ret == -EINTR);
-> > 
-> > (gdb) bt                                                                                                                                                                      
-> > #0  syscall () at ../sysdeps/unix/sysv/linux/x86_64/syscall.S:38
-> > #1  0x00007f5519e0204e in ??? () at //usr/lib64/liburing.so.2
-> > #2  0x00007f5519e01b00 in ??? () at //usr/lib64/liburing.so.2
-> > #3  0x0000563c2dc06cc9 in fdmon_io_uring_wait (ctx=0x563c30411b00, ready_list=0x7ffd0bad8f58, timeout=575708467831) at ../util/fdmon-io_uring.c:416
-> > #4  0x0000563c2dc00976 in aio_poll (ctx=0x563c30411b00, blocking=true) at ../util/aio-posix.c:699
-> > #5  0x0000563c2daa01c6 in bdrv_drain_all_begin () at ../block/io.c:529
-> > #6  0x0000563c2daa03d8 in bdrv_drain_all () at ../block/io.c:574
-> > #7  0x0000563c2d764aae in do_vm_stop (state=RUN_STATE_PAUSED, send_stop=true) at ../system/cpus.c:312
-> > #8  0x0000563c2d765964 in vm_stop (state=RUN_STATE_PAUSED) at ../system/cpus.c:754
-> > #9  0x0000563c2d7f3378 in qmp_stop (errp=0x7ffd0bad9080) at ../monitor/qmp-cmds.c:62
-> > #10 0x0000563c2dba7a72 in qmp_marshal_stop (args=0x563c306ac070, ret=0x7f5518dffda8, errp=0x7f5518dffda0) at qapi/qapi-commands-misc.c:197
-> > #11 0x0000563c2dbf1316 in do_qmp_dispatch_bh (opaque=0x7f5518dffe40) at ../qapi/qmp-dispatch.c:128
-> > #12 0x0000563c2dc1de48 in aio_bh_call (bh=0x563c3040fef0) at ../util/async.c:173
-> > #13 0x0000563c2dc1df64 in aio_bh_poll (ctx=0x563c3040c070) at ../util/async.c:220
-> > #14 0x0000563c2dbffff0 in aio_dispatch (ctx=0x563c3040c070) at ../util/aio-posix.c:389
-> > #15 0x0000563c2dc1e3cd in aio_ctx_dispatch (source=0x563c3040c070, callback=0x0, user_data=0x0) at ../util/async.c:365
-> > #16 0x00007f551b114f4c in g_main_dispatch (context=0x563c304120f0) at ../glib/gmain.c:3476
-> > #17 g_main_context_dispatch_unlocked (context=context@entry=0x563c304120f0) at ../glib/gmain.c:4284
-> > #18 0x00007f551b1170c9 in g_main_context_dispatch (context=0x563c304120f0) at ../glib/gmain.c:4272
-> > #19 0x0000563c2dc1fa0b in glib_pollfds_poll () at ../util/main-loop.c:290
-> > #20 0x0000563c2dc1fa85 in os_host_main_loop_wait (timeout=0) at ../util/main-loop.c:313
-> > #21 0x0000563c2dc1fb8a in main_loop_wait (nonblocking=0) at ../util/main-loop.c:592
-> > #22 0x0000563c2d78eb60 in qemu_main_loop () at ../system/runstate.c:903
-> > #23 0x0000563c2db412fc in qemu_default_main (opaque=0x0) at ../system/main.c:50
-> > #24 0x0000563c2db413ab in main (argc=40, argv=0x7ffd0bad94d8) at ../system/main.c:93
+Hi Peter,
+
+On Wed, Feb 18, 2026 at 04:47:50PM +0000, Peter Maydell wrote:
+> On Tue, 17 Feb 2026 at 21:42, Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
+> >
+> > On 17/2/26 20:12, Yodel Eldar wrote:
+> > > +Philippe
+> > >
+> > > Hi,
+> > >
+> > > On 17/02/2026 03:21, Peter Maydell wrote:
+> > >> On Tue, 17 Feb 2026 at 06:35, Akihiko Odaki
+> > >> <odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
+> > >>>
+> > >>> alpha_cpu_realizefn() did not properly call cpu_reset(), which
+> > >>> corrupted icount. Add the missing function call to fix icount.
+> > >>>
+> > >>> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+> > >>> ---
+> > >
+> > > So, the real culprit was hiding in plain sight in Alpha-specific code
+> > > all along? Congrats on finding it!
+> > >
+> > >>>   target/alpha/cpu.c | 1 +
+> > >>>   1 file changed, 1 insertion(+)
+> > >>>
+> > >>> diff --git a/target/alpha/cpu.c b/target/alpha/cpu.c
+> > >>> index 1780db7d1e29..74281ebdb367 100644
+> > >>> --- a/target/alpha/cpu.c
+> > >>> +++ b/target/alpha/cpu.c
+> > >>> @@ -124,6 +124,7 @@ static void alpha_cpu_realizefn(DeviceState *dev,
+> > >>> Error **errp)
+> > >>>       }
+> > >>>
+> > >>>       qemu_init_vcpu(cs);
+> > >>> +    cpu_reset(cs);
+> > >>>
+> > >>>       acc->parent_realize(dev, errp);
+> > >>>   }
+> > >>
+> > >> Realize functions shouldn't call reset on themselves.
+> > >> For CPU objects it is currently the responsibility of the
+> > >> board code to arrange that the CPU objects get reset.
 > 
-> Two ideas on how to debug further:
+> > > I think the following addresses Peter's remarks; it passed 100
+> > > repetitions of the Alpha replay test after reapplying the reverted
+> > > commit:
+> > >
+> > > diff --git hw/alpha/dp264.c hw/alpha/dp264.c
+> > > index 5e64528431..091ffc0085 100644
+> > > --- hw/alpha/dp264.c
+> > > +++ hw/alpha/dp264.c
+> > > @@ -68,5 +68,7 @@ static void clipper_init(MachineState *machine)
+> > >       memset(cpus, 0, sizeof(cpus));
+> > >       for (i = 0; i < smp_cpus; ++i) {
+> > > -        cpus[i] = ALPHA_CPU(cpu_create(machine->cpu_type));
+> > > +        CPUState *cpu = cpu_create(machine->cpu_type);
+> > > +        cpu_reset(cpu);
+> > > +        cpus[i] = ALPHA_CPU(cpu);
+> >
+> > Hmm this pattern is used a lot (creating CPUs in board_init without
+> > manually calling cpu_reset). If this is the simplest fix, maybe
+> > we could add a cpu_create_resetted() helper and use it where
+> > appropriate (i.e. not where qemu_register_reset is then called).
 > 
-> 1. Attach to the hung QEMU process with a debugger and inspect the
-> block_backends global variable (see block/block-backends.c). The
-> question is why bdrv_drain_all_begin() is not making progress. There are
-> probably in-flight requests that can be observed in the
-> BlockDriverState->tracked_requests list. Also check the BlockDriverState
-> and BlockBackend in_flight fields. This will let you identify which
-> block device is causing the hang and what it's doing during the hang.
-
-(I've not looked at this for ages)
-I'd guess it's probably the network block sync; the fun part of this test
-is it's where the secondary is being restarted after a failure; so is
-this blocking on the old sync connection or the new one?
-And if it's blocking on the new one, then is that because the secondary
-is blocked?
-
-Dave
-
-> 2. Try disabling io_uring on the host via `sudo sysctl
-> kernel.io_uring_disabled=2` and then run QEMU again. If this is an issue
-> with QEMU's recently-enabled io_uring event loop, then there will be no
-> hang with io_uring disabled.
+> Resetting the CPU either in realize or else in the machine
+> after create causes it to get reset once on startup. But
+> it doesn't do anything to cause it to be reset when the
+> user (or the guest) triggers a system reset. If the board
+> arranges for the CPUs to be reset during system reset then
+> that also works for the initial startup case.
 > 
-> Stefan
+> Reset is unfortunately a bit of a mess: I have periodically
+> thought about it but still don't have an overview of what
+> exactly it ought to be doing, let alone a plan (e.g. should
+
+I'm quite interested in the CPU reset flow, so I tried to analyze the
+related code across all architectures and organized my findings below.
 
 
--- 
- -----Open up your eyes, open up your mind, open up your code -------   
-/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
-\        dave @ treblig.org |                               | In Hex /
- \ _________________________|_____ http://www.treblig.org   |_______/
+== Current CPU Reset Strategies ==
+
+There are essentially five different patterns in use now:
+
+  Strategy | Who does it        | Initial | System  | Example
+  ---------+--------------------+---------+---------+------------------------
+  A        | realize only       | Yes     | No (*)  | x86
+           |                    |         |         |
+  ---------+--------------------+---------+---------+------------------------
+  B        | realize + board    | Yes x2  | Yes     | RISC-V, ARM, OpenRISC
+           | (simple wrapper)   |         |         |
+  ---------+--------------------+---------+---------+------------------------
+  C        | board only         | Yes     | Yes     | PPC, MIPS, SPARC, M68K,
+           | (custom logic)     |         |         | SH4, Xtensa, Microblaze
+  ---------+--------------------+---------+---------+------------------------
+  D        | nobody             | No      | No      | Alpha (bug)
+           |                    |         |         |
+  ---------+--------------------+---------+---------+------------------------
+  E        | board (SoC child   | Yes     | Yes     | MIPS CPS
+           | on qbus tree)      |         |         |
+  ---------+--------------------+---------+---------+------------------------
+
+    (*) x86 gets away with this because the reset vector is architecturally
+        fixed at 0xFFFFFFF0 and does not need board-level PC setup.
+
+The root cause of this inconsistency is that cpu_create() calls
+qdev_realize(dev, NULL, ...) with a NULL bus, so CPUs are not part of
+the qbus tree. The only thing registered into the root reset container
+in qemu_machine_creation_done() is sysbus_get_default():
+
+```
+  /* hw/core/machine.c */
+  qemu_register_resettable(OBJECT(sysbus_get_default()));
+```
+
+The comment right above it says it all:
+
+  "Note that this will *not* reset any Device objects
+   which are not attached to some part of the qbus tree."
+
+This means every board must independently arrange for CPU reset, and
+as Alpha demonstrates, it is easy to forget.
+
+
+== Per-Architecture Details ==
+
+
+--- Strategy A: realize-only reset (x86) ---
+
+x86_cpu_realizefn() calls cpu_reset() at the end of realize:
+
+```
+  /* target/i386/cpu.c */
+  cpu_reset(cs);
+  xcc->parent_realize(dev, &local_err);
+```
+
+But the board code in hw/i386/x86-common.c:x86_cpus_init() does NOT
+register any qemu_register_reset() callback for CPUs. The CPU is
+created with qdev_realize(DEVICE(cpu), NULL, errp) and is not on any
+bus.
+
+x86 has its own x86_cpu_reset_hold() (target/i386/cpu.c) which
+correctly resets all architectural state including segment registers,
+CR0, etc. But since the CPU object is not in the reset container,
+this method would not be called during qemu_system_reset() through
+the resettable framework alone.
+
+x86 "works" because:
+  1. The reset vector is hardwired (no board PC setup needed)
+  2. KVM may handle reset internally for KVM-accelerated guests
+  3. The firmware (SeaBIOS/OVMF) handles warm reboot via the
+     keyboard controller reset mechanism
+
+
+--- Strategy B: realize + board simple wrapper (RISC-V, ARM, OpenRISC) ---
+
+These targets call cpu_reset() in their realize function AND the board
+registers a qemu_register_reset() callback that also calls cpu_reset().
+This results in the CPU being reset twice at startup.
+
+RISC-V example:
+
+```
+  /* target/riscv/cpu.c - in riscv_cpu_realize() */
+  qemu_init_vcpu(cs);
+  cpu_reset(cs);                    /* first reset */
+
+  /* hw/riscv/riscv_hart.c - board callback */
+  static void riscv_harts_cpu_reset(void *opaque)
+  {
+      RISCVCPU *cpu = opaque;
+      cpu_reset(CPU(cpu)); /* second reset (at startup + system reset) */
+  }
+
+  /* hw/riscv/riscv_hart.c */
+  qemu_register_reset(riscv_harts_cpu_reset, &s->harts[idx]);
+  return qdev_realize(DEVICE(&s->harts[idx]), NULL, errp);
+```
+
+Note the ordering:
+
+qemu_register_reset() is called BEFORE qdev_realize(). So the
+sequence at startup is:
+  1. qdev_realize() -> riscv_cpu_realize() -> cpu_reset() [first]
+  2. qemu_machine_creation_done() -> qemu_system_reset()
+     -> LegacyReset callback -> cpu_reset()               [second]
+
+The board callback here is a pure wrapper with no extra logic, so the
+double reset is harmless but wasteful(we can use gdb to make sure).
+
+ARM is similar but the board callback has substantial custom logic
+(see Strategy C below). The realize-time cpu_reset() at
+target/arm/cpu.c is redundant with the one in do_cpu_reset().
+
+OpenRISC (target/openrisc/cpu.c) also calls cpu_reset() in
+realize, and boards like hw/openrisc/openrisc_sim.c register
+qemu_register_reset() with a simple wrapper.
+
+
+--- Strategy C: board-only with custom post-reset logic (PPC, MIPS...) ---
+
+These boards register qemu_register_reset() callbacks that first call
+cpu_reset() and then apply board-specific state (PC, registers, TLB).
+
+MIPS Malta (hw/mips/malta.c):
+
+```
+  static void main_cpu_reset(void *opaque)
+  {
+      MIPSCPU *cpu = opaque;
+      CPUMIPSState *env = &cpu->env;
+
+      cpu_reset(CPU(cpu));
+
+      /* Clear ERL bit when booting a kernel */
+      if (loaderparams.kernel_filename) {
+          env->CP0_Status &= ~(1 << CP0St_ERL);
+      }
+  }
+```
+
+PPC e500 (hw/ppc/e500.c) - distinguishes primary/secondary:
+
+```
+  static void ppce500_cpu_reset(void *opaque)       /* primary */
+  {
+      /* ... */
+      cpu_reset(cs);
+      cs->halted = 0;
+      env->gpr[1] = (16 * MiB) - 8;
+      env->gpr[3] = bi->dt_base;    /* device tree address */
+      /* ... sets up TLB mappings ... */
+  }
+
+  static void ppce500_cpu_reset_sec(void *opaque)   /* secondary */
+  {
+      cpu_reset(cs);
+      cs->exception_index = EXCP_HLT;  /* halt until kicked */
+  }
+
+  /* Registration distinguishes primary vs secondary */
+  if (!i) {
+      qemu_register_reset(ppce500_cpu_reset, cpu);
+  } else {
+      qemu_register_reset(ppce500_cpu_reset_sec, cpu);
+  }
+```
+
+SPARC sun4m (hw/sparc/sun4m.c) and about 30 other board
+files across PPC, M68K, SH4, Xtensa, Microblaze, and OpenRISC
+follow the same general pattern with varying amounts of custom
+post-reset logic.
+
+PS:
+
+In this case, we can also talk about ARM.
+
+ARM boot (hw/arm/boot.c) - the most complex case:
+
+```
+  static void do_cpu_reset(void *opaque)
+  {
+      ARMCPU *cpu = opaque;
+      /* ... */
+      cpu_reset(cs);
+      if (info) {
+          if (!info->is_linux) {
+              /* Set endianness, jump to entry */
+              cpu_set_pc(cs, info->entry);
+          } else {
+              /* Emulate firmware: set EL, configure SCTLR, ... */
+              arm_emulate_firmware_reset(cs, target_el);
+              if (cpu == info->primary_cpu) {
+                  cpu_set_pc(cs, info->loader_start);
+              } else if (info->secondary_cpu_reset_hook) {
+                  info->secondary_cpu_reset_hook(cpu, info);
+              }
+          }
+      }
+  }
+```
+
+ARM boards don't call qemu_register_reset() directly. Instead,
+arm_load_kernel() (hw/arm/boot.c) registers do_cpu_reset for
+all CPUs in a loop:
+
+```
+  for (cs = first_cpu; cs; cs = CPU_NEXT(cs)) {
+      qemu_register_reset(do_cpu_reset, ARM_CPU(cs));
+  }
+```
+
+
+--- Strategy D: no reset at all (Alpha - BUG) ---
+
+Alpha is the only architecture that neither calls cpu_reset() in
+realize nor registers a qemu_register_reset() callback:
+
+```
+  /* target/alpha/cpu.c */
+  static void alpha_cpu_realizefn(DeviceState *dev, Error **errp)
+  {
+      /* ... */
+      cpu_exec_realizefn(cs, &local_err);
+      /* ... */
+      qemu_init_vcpu(cs);
+      /* NO cpu_reset(cs) here! */
+      acc->parent_realize(dev, errp);
+  }
+
+  /* hw/alpha/dp264.c */
+  for (i = 0; i < smp_cpus; ++i) {
+      cpus[i] = ALPHA_CPU(cpu_create(machine->cpu_type));
+      /* NO qemu_register_reset() */
+  }
+
+  /* Later, board directly pokes env fields: */
+  cpus[i]->env.pc = palcode_entry;
+  cpus[i]->env.palbr = palcode_entry;
+```
+
+Alpha also has no target-specific reset_hold method -
+alpha_cpu_class_init() does not set rc->phases.hold, so it relies
+entirely on the parent cpu_common_reset_hold(). But since the CPU
+is not in the reset container, even that never runs during system
+reset.
+
+This is the bug that corrupted icount, as Akihiko's patch identified.
+
+
+--- Strategy E: SoC container on qbus tree (MIPS CPS) ---
+
+Some SoC-level container devices create CPUs as child objects:
+
+```
+  /* hw/mips/cps.c */
+  static void mips_cps_realize(DeviceState *dev, Error **errp)
+  {
+      for (i = 0; i < s->num_vp; i++) {
+          cpu = MIPS_CPU(object_new(s->cpu_type));
+          qdev_realize_and_unref(DEVICE(cpu), NULL, errp);
+          qemu_register_reset(main_cpu_reset, s->cpus[i]);
+      }
+  }
+```
+
+Even here, the CPU itself is realized with a NULL bus, so it still
+needs the explicit qemu_register_reset() call.
+
+
+== The Core Problem ==
+
+cpu_create() and most board code call qdev_realize(dev, NULL, ...)
+for CPUs, placing them outside the qbus tree. The comment in
+hw/core/cpu-common.c acknowledges this:
+
+```
+  /*
+   * Reason: CPUs still need special care by board code: wiring up
+   * IRQs, adding reset handlers, halting non-first CPUs, ...
+   */
+  dc->user_creatable = false;
+```
+
+The "adding reset handlers" part is exactly what is inconsistently
+done across the codebase.
+
+
+===
+
+As the analysis above shows, the current CPU reset situation is indeed
+quite messy -- multi different strategies across the codebase, with at
+least one outright bug (Alpha) and several cases of redundant double
+resets.
+
+I think Peter's ideas about rethinking the reset infrastructure
+are well worth pursuing. Whether that means cascading reset via the QOM
+tree, or a separate reset infrastructure that defaults to the QOM tree
+but allows SoC-level overrides, having a single consistent mechanism
+would eliminate this entire class of "forgot to register CPU reset"
+bugs.
+
+The tricky part, as Peter noted, is getting from here to there
+without breaking things or starting yet another never-completed API
+transition.
+
+If there is interest in moving forward with refactoring this area,
+I'd be happy to help contribute patches or review work. :)
+
+
+Thanks,
+Chao
+
+> we cascade reset via the QOM tree? or do we need a separate
+> reset infrastructure that defaults to the QOM tree but that
+> SoC objects can override if they have more complex reset
+> requirements? How does this interact with bus-reset (which is
+> definitely a thing for some buses? And once we've decided what
+> we want, how do we get from where we are right now to there
+> without breaking things and ideally without having another
+> of the long-drawn-out never-completed API transitions we're so
+> good at?)
+> 
+> thanks
+> -- PMM
+> 
 
