@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24918C5B56A
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Feb 2026 21:04:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE2D3C5B56A
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Feb 2026 21:04:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vtXds-0000BK-77; Fri, 20 Feb 2026 16:02:28 -0500
+	id 1vtXds-0000BM-TO; Fri, 20 Feb 2026 16:02:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vtXdp-00009T-Ju
- for qemu-devel@nongnu.org; Fri, 20 Feb 2026 16:02:26 -0500
+ id 1vtXdr-0000AT-46
+ for qemu-devel@nongnu.org; Fri, 20 Feb 2026 16:02:27 -0500
 Received: from forwardcorp1a.mail.yandex.net
  ([2a02:6b8:c0e:500:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vtXdl-0002l8-R6
- for qemu-devel@nongnu.org; Fri, 20 Feb 2026 16:02:25 -0500
+ id 1vtXdn-0002lY-5s
+ for qemu-devel@nongnu.org; Fri, 20 Feb 2026 16:02:26 -0500
 Received: from mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
  [IPv6:2a02:6b8:c2d:3530:0:640:eca4:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 330BDC0237;
- Sat, 21 Feb 2026 00:02:20 +0300 (MSK)
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id E8D3CC023A;
+ Sat, 21 Feb 2026 00:02:21 +0300 (MSK)
 Received: from vsementsov-lin (unknown [2a02:6bf:8080:87::1:2c])
  by mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id G2kijG5A6qM0-ZV5iEcFg; Sat, 21 Feb 2026 00:02:19 +0300
+ ESMTPSA id G2kijG5A6qM0-COjASV0Y; Sat, 21 Feb 2026 00:02:21 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1771621339;
- bh=WvJsBmdXvT7s9bJXj3GGrqfop7WiquRHmW5hvRh4/bs=;
+ s=default; t=1771621341;
+ bh=xLS0Fx5QPecQizLL9RmU1SXSaaiUs4EihpSOtFmju6w=;
  h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=CWGumWq7LpF7qpQ1Wy6BGBji5129KrpXLCxFoysssGQkOTajhCIPA7m26ijLl8xYF
- NWUbuZGjFXJCVte/v10IRrfcluEPII1CF5iAPw5vOZnP8ByFqpDwZ4uQeOfBdTHO++
- SylVty+xRV9Jv4FodPTHRnMClE4u5SJzn3gQlKqs=
+ b=w6XUvGwJ0aw0TCY2CDF4nGkfBF9SN75ZAKINBaru6hA/Antofm/y91SIZm5hVTjL6
+ KqK96/TFyLpEvmc6B4QpeuQEjtXI5ZK/30R79V8HyDvX09PUg9fJuHkCtQa6c9pL0J
+ r9/liFMrNz5pw3UZm+92aa0qelbPZbBQq942c3tc=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 To: peterx@redhat.com
 Cc: farosas@suse.de, vsementsov@yandex-team.ru,
  qemu-devel@nongnu.org (open list:All patches CC here)
-Subject: [PATCH v2 06/16] migration: factor out vmstate_pre_save() from
- vmstate_save_state()
-Date: Sat, 21 Feb 2026 00:02:04 +0300
-Message-ID: <20260220210214.800050-7-vsementsov@yandex-team.ru>
+Subject: [PATCH v2 10/16] migration: factor out vmstate_post_load() from
+ vmstate_load_state()
+Date: Sat, 21 Feb 2026 00:02:08 +0300
+Message-ID: <20260220210214.800050-11-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260220210214.800050-1-vsementsov@yandex-team.ru>
 References: <20260220210214.800050-1-vsementsov@yandex-team.ru>
@@ -76,35 +76,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Simplify vmstate_save_state() which is rather big, and simplify further
+Simplify vmstate_load_state() which is rather big, and simplify further
 refactoring.
 
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 ---
- migration/vmstate.c | 34 ++++++++++++++++++++++------------
- 1 file changed, 22 insertions(+), 12 deletions(-)
+ migration/vmstate.c | 46 ++++++++++++++++++++++++++++-----------------
+ 1 file changed, 29 insertions(+), 17 deletions(-)
 
 diff --git a/migration/vmstate.c b/migration/vmstate.c
-index b07bbdd366..810b131f18 100644
+index 7d776ce27a..8b31aa1c9f 100644
 --- a/migration/vmstate.c
 +++ b/migration/vmstate.c
-@@ -430,6 +430,26 @@ bool vmstate_section_needed(const VMStateDescription *vmsd, void *opaque)
+@@ -182,6 +182,33 @@ static bool vmstate_load_field(QEMUFile *f, void *pv, size_t size,
      return true;
  }
  
-+static bool vmstate_pre_save(const VMStateDescription *vmsd, void *opaque,
-+                             Error **errp)
++static bool vmstate_post_load(const VMStateDescription *vmsd,
++                              void *opaque, int version_id, Error **errp)
 +{
 +    ERRP_GUARD();
 +
-+    if (vmsd->pre_save_errp) {
-+        if (!vmsd->pre_save_errp(opaque, errp)) {
-+            error_prepend(errp, "pre-save for %s failed: ", vmsd->name);
++    if (vmsd->post_load_errp) {
++        if (!vmsd->post_load_errp(opaque, version_id, errp)) {
++            error_prepend(errp, "post load hook failed for: %s, version_id: "
++                          "%d, minimum_version: %d: ", vmsd->name,
++                          vmsd->version_id, vmsd->minimum_version_id);
 +            return false;
 +        }
-+    } else if (vmsd->pre_save) {
-+        if (vmsd->pre_save(opaque) < 0) {
-+            error_setg(errp, "pre-save failed: %s", vmsd->name);
++    } else if (vmsd->post_load) {
++        int ret = vmsd->post_load(opaque, version_id);
++        if (ret < 0) {
++            error_setg(errp,
++                       "post load hook failed for: %s, version_id: %d, "
++                       "minimum_version: %d, ret: %d",
++                       vmsd->name, vmsd->version_id, vmsd->minimum_version_id,
++                       ret);
 +            return false;
 +        }
 +    }
@@ -112,30 +119,35 @@ index b07bbdd366..810b131f18 100644
 +    return true;
 +}
 +
- static int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
-                                 void *opaque, JSONWriter *vmdesc,
-                                 int version_id, Error **errp)
-@@ -440,18 +460,8 @@ static int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
+ int vmstate_load_state(QEMUFile *f, const VMStateDescription *vmsd,
+                        void *opaque, int version_id, Error **errp)
+ {
+@@ -281,23 +308,8 @@ int vmstate_load_state(QEMUFile *f, const VMStateDescription *vmsd,
+         return ret;
+     }
  
-     trace_vmstate_save_state_top(vmsd->name);
- 
--    if (vmsd->pre_save_errp) {
--        ret = vmsd->pre_save_errp(opaque, errp) ? 0 : -EINVAL;
+-    if (vmsd->post_load_errp) {
+-        if (!vmsd->post_load_errp(opaque, version_id, errp)) {
+-            error_prepend(errp, "post load hook failed for: %s, version_id: "
+-                          "%d, minimum_version: %d: ", vmsd->name,
+-                          vmsd->version_id, vmsd->minimum_version_id);
+-            return -EINVAL;
+-        }
+-    } else if (vmsd->post_load) {
+-        ret = vmsd->post_load(opaque, version_id);
 -        if (ret < 0) {
--            error_prepend(errp, "pre-save for %s failed: ", vmsd->name);
+-            error_setg(errp,
+-                       "post load hook failed for: %s, version_id: %d, "
+-                       "minimum_version: %d, ret: %d",
+-                       vmsd->name, vmsd->version_id, vmsd->minimum_version_id,
+-                       ret);
 -            return ret;
 -        }
--    } else if (vmsd->pre_save) {
--        ret = vmsd->pre_save(opaque);
--        if (ret) {
--            error_setg(errp, "pre-save failed: %s", vmsd->name);
--            return ret;
--        }
-+    if (!vmstate_pre_save(vmsd, opaque, errp)) {
++    if (!vmstate_post_load(vmsd, opaque, version_id, errp)) {
 +        return -EINVAL;
      }
  
-     trace_vmstate_save_state_pre_save_done(vmsd->name);
+     trace_vmstate_load_state_end(vmsd->name);
 -- 
 2.52.0
 
