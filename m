@@ -4,73 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4863DC54FD0
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Feb 2026 07:57:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0D1DC55163
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Feb 2026 08:37:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vtLNm-0002h1-5F; Fri, 20 Feb 2026 02:57:02 -0500
+	id 1vtM0Z-000561-UM; Fri, 20 Feb 2026 03:37:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vtLNk-0002gm-I6
- for qemu-devel@nongnu.org; Fri, 20 Feb 2026 02:57:00 -0500
-Received: from forwardcorp1d.mail.yandex.net
- ([2a02:6b8:c41:1300:1:45:d181:df01])
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vtM0X-00054Z-FG
+ for qemu-devel@nongnu.org; Fri, 20 Feb 2026 03:37:05 -0500
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vtLNh-0008A7-Sk
- for qemu-devel@nongnu.org; Fri, 20 Feb 2026 02:57:00 -0500
-Received: from mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
- [IPv6:2a02:6b8:c42:94a9:0:640:a3fa:0])
- by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 800EF804EB;
- Fri, 20 Feb 2026 10:56:52 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:449::1:8] (unknown [2a02:6bf:8080:449::1:8])
- by mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id nuWOqj4A1qM0-F8ch0rQg; Fri, 20 Feb 2026 10:56:51 +0300
-Precedence: bulk
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1771574211;
- bh=tBeTsaAVDUBIhZZCOW5uK6CfhX8uDdqXNqQgj4CS8xQ=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=LaEWOgI6OY4MnGuAbE/p1pQHnMCxPcj5hBrfrEbTWuTqaJrphyO3BzS2GZakkt6F1
- 0p/nZ4lv4CJLFi/jB+hTcKL0p3/Pqf7OOd4+Nssde+8YHD+aWfMnveZtCZu5qXLolE
- 07Qsane+aftmyRFZm2QGj1jWSg3iEa7cTQndBIV8=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <b9957bbd-d673-4232-96e9-d13663033f62@yandex-team.ru>
-Date: Fri, 20 Feb 2026 10:56:50 +0300
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vtM0T-0005hk-JO
+ for qemu-devel@nongnu.org; Fri, 20 Feb 2026 03:37:05 -0500
+Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 61K8ZZYE083449
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Fri, 20 Feb 2026 17:36:26 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=JZEd39lwzjw4hqNWdxANAmz3TrVPYi43xCbZD7g4IWo=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=Message-ID:Date:Subject:To:From;
+ s=rs20250326; t=1771576587; v=1;
+ b=cMmdMlkmlF8VtLhAAhaBWiovpIEB4pzmRC7Zp5cNJUwWF3vUSm96l6GWFErl0RXa
+ HI0Ja0fZe/PX7zF8WkI079qeQHIJk66X72SeUhajlMdYwBJJ60Q1w/ALiu2vA89D
+ AdTVyOgFqU0GFcpjHrewczyOy0VYhTIoi6no0e7eVyucOl8qAsAzfQVLuforphr4
+ ZILcWjmLKU1IwBgO14JBNowwEB/yHrckLYtz+kXxfKt6COhjq7I34RGJ95p1XR+Q
+ fXuf5DGrb3LNjuKSiKnJgWfElThPqBV5kDDI3Sp/OGTpZtf0ug/6i/OJUmvExPkn
+ LbngQduE6w9OgfY2Ax+B1w==
+Message-ID: <271c635c-8c2c-48bc-b44f-91b9d268bbe2@rsg.ci.i.u-tokyo.ac.jp>
+Date: Fri, 20 Feb 2026 17:35:34 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v11 3/8] qapi: add local migration parameter
-To: Peter Xu <peterx@redhat.com>
-Cc: jasowang@redhat.com, mst@redhat.com, thuth@redhat.com, armbru@redhat.com, 
- eblake@redhat.com, farosas@suse.de, zhao1.liu@intel.com,
- wangyanan55@huawei.com, philmd@linaro.org, marcel.apfelbaum@gmail.com,
- eduardo@habkost.net, davydov-max@yandex-team.ru, qemu-devel@nongnu.org,
- yc-core@yandex-team.ru, leiyang@redhat.com, raphael.s.norwitz@gmail.com,
- bchaney@akamai.com
-References: <20260219115530.2019498-1-vsementsov@yandex-team.ru>
- <20260219115530.2019498-4-vsementsov@yandex-team.ru>
- <aZeEBqiocvOeutDn@x1.local>
+Subject: Re: [PATCH v19 00/20] Support virtio-gpu DRM native context and
+ MAP_FIXED API
+To: Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Huang Rui <ray.huang@amd.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>,
+ Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Yiwei Zhang <zzyiwei@gmail.com>,
+ Sergio Lopez Pascual <slp@redhat.com>
+Cc: Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
+ Gurchetan Singh <gurchetansingh@chromium.org>, Alyssa Ross <hi@alyssa.is>,
+ =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger.pau@citrix.com>,
+ Alex Deucher <alexander.deucher@amd.com>,
+ Stefano Stabellini <stefano.stabellini@amd.com>,
+ =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
+ Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
+ Honglei Huang <honglei1.huang@amd.com>,
+ Julia Zhang <julia.zhang@amd.com>, Chen Jiqian <Jiqian.Chen@amd.com>,
+ Rob Clark <robdclark@gmail.com>, Robert Beckett <bob.beckett@collabora.com>
+References: <20260220001634.3579257-1-dmitry.osipenko@collabora.com>
 Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <aZeEBqiocvOeutDn@x1.local>
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <20260220001634.3579257-1-dmitry.osipenko@collabora.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a02:6b8:c41:1300:1:45:d181:df01;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
+Precedence: list
 List-Id: qemu development <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -82,47 +92,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 20.02.26 00:43, Peter Xu wrote:
-> On Thu, Feb 19, 2026 at 02:55:24PM +0300, Vladimir Sementsov-Ogievskiy wrote:
->> We are going to implement local-migration feature: some devices will be
->> able to transfer open file descriptors through migration stream (which
->> must UNIX domain socket for that purpose).  This allows to transfer the
->> whole backend state without reconnecting and restarting the backend
->> service. For example, virtio-net will migrate its attached TAP netdev,
->> together with its connected file descriptors.
->>
->> In this commit we introduce a migration parameter, which enables
->> the feature for supporting devices (no one at the moment).
->>
->> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+On 2026/02/20 9:16, Dmitry Osipenko wrote:
+> Hello,
 > 
-> Reviewed-by: Peter Xu <peterx@redhat.com>
+> This is follow up to DRM native context v16 [1] and MAP_FIXED API v10 [2]
+> virtio-gpu patches that has been reviewed previously and were waiting for
+> a new release of libvirglrenderer 1.3.0.
 > 
-> PS: one nitpick is maybe we don't need to spell out the per-device option
-> in the doc of "local", it also doesn't need to be called "local-migration"
-> on every device if it will be presnet.. no strong feelings.
+> [1] https://lore.kernel.org/qemu-devel/20251116125641.2255794-1-dmitry.osipenko@collabora.com/
+> [2] https://lore.kernel.org/qemu-devel/20260118162856.223796-1-dmitry.osipenko@collabora.com/
+> 
+> Based-on: 20260214-region-v1-1-229f00ae1f38@rsg.ci.i.u-tokyo.ac.jp
+> 
+> Changelog:
+> 
+> v19:- Further improved improved naming of functions and terminology RE
+>        GL context binding. Suggested by Akihiko Odaki.
+> 
+>      - Added new patch "ui/gdk: Restore original context after new context
+>        creation" in addition to improved "ui/sdl2: Restore original context"
+>        that now getd actual bound GL context and restores to it instead
+>        of restoring to the console's ctx, for consistency with the rest
+>        of GL context management fixes that ensure context is bound only
+>        when necessary.
+> 
+>      - Improved virtio_gpu_virgl_update_render_state() with force_ctx_0()
+>        and unbind_ctx() to make deferred GPU resetting maintain bound GL
+>        context properly.
+
+Both the new context management improvement and the MAP_FIXED API 
+changes look good to me. For the whole series,
+
+Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+
+Thank you for completing this change.
+
+Regards,
+Akihiko Odaki
+
+> 
+> v18:- Changed dpy_gl_ctx_make_current() to use first scanout when unsetting
+>        virgl's GL ctx0 and improved naming of cmd-processing function.
+>        Suggested by Akihiko Odaki.
+> 
+>      - Added "ui/gdk: Unset context after GL operations" patch after
+>        realizing GDK/GL code needed more gdk_gl_context_clear_current().
+> 
+> v17:- Rebased patches on recent upstream, updated doc patches with new
+>        drm native contexts supported by libvirglrenderer.
+> 
+>      - Applied minor change that was requested from Akihiko Odaki
+>        by moving virtio_gpu_device_realize() for MAP_FIXED v10.
+> 
+>      - Added virtio_gpu_virgl_update_render_state() to virtio_gpu_fence_poll()
+>        that was missed in MAP_FIXED v10.
+> 
+>      - Added new patches fixing another GL context switching problem I ran
+>        into recently with virgl commands unexpectedly processed from CPU
+>        thread instead main-loop:
+> 
+>          ui/sdl2: Unset context after GL operations
+>          ui/gtk-egl: Unset context after GL operations
+>          virtio-gpu: Unset context after GL operations
+> 
+> Alex Bennée (1):
+>    docs/system: virtio-gpu: Document host/guest requirements
+> 
+> Dmitry Osipenko (18):
+>    ui/gdk: Restore original context after new context creation
+>    ui/sdl2: Restore original context after new context creation
+>    ui/sdl2: Don't disable scanout when display is refreshed
+>    ui/gtk: Don't disable scanout when display is refreshed
+>    ui/sdl2: Unbind context after GL operations
+>    ui/gtk-egl: Unbind context after GL operations
+>    ui/gdk: Unbind context after GL operations
+>    virtio-gpu: Unbind context after GL operations
+>    virtio-gpu: Handle virgl fence creation errors
+>    virtio-gpu: Support asynchronous fencing
+>    virtio-gpu: Support DRM native context
+>    docs/system: virtio-gpu: Add link to Mesa VirGL doc
+>    docs/system: virtio-gpu: Update Venus link
+>    virtio-gpu: Remove superfluous memory_region_set_enabled()
+>    virtio-gpu: Validate hostmem mapping offset
+>    virtio-gpu: Replace finish_unmapping with mapping_state
+>    virtio-gpu: Destroy virgl resources on virtio-gpu reset
+>    virtio-gpu: Support mapping hostmem blobs with map_fixed
+> 
+> Pierre-Eric Pelloux-Prayer (1):
+>    ui/sdl2: Implement dpy dmabuf functions
+> 
+>   docs/system/devices/virtio/virtio-gpu.rst | 121 +++++-
+>   hw/display/trace-events                   |   2 +-
+>   hw/display/virtio-gpu-gl.c                |  62 +++-
+>   hw/display/virtio-gpu-virgl.c             | 427 ++++++++++++++++++++--
+>   hw/display/virtio-gpu.c                   |  15 +
+>   include/hw/virtio/virtio-gpu.h            |  23 +-
+>   include/ui/sdl2.h                         |   7 +
+>   meson.build                               |   8 +-
+>   ui/gtk-egl.c                              |  17 +-
+>   ui/gtk-gl-area.c                          |  28 +-
+>   ui/sdl2-gl.c                              |  81 +++-
+>   ui/sdl2.c                                 |  42 +++
+>   12 files changed, 760 insertions(+), 73 deletions(-)
 > 
 
-I thought about it.. But couldn't come up with a more generic phrase.
-And I think it's bad to omit the fact that the parameter doesn't
-automatically enable the feature without some flag on device side.
-
-+#     channel.  Individual devices declare the support for local
-+#     migration by per-device local-migration option.  (Since 11.0)
-
-Hmm. After merging at least virtio-net/TAP migration we can write:
-
-     In general devices may have an option (like local-migration
-     for virtio-net) which in conjunction with "local" set to true
-     enables the local-migration feature for that device.
-
-And to be prepared for it now:
-
-     In general devices may have an option which in conjunction with
-     "local" set to true enables the local-migration feature for that
-     device.
-
--- 
-Best regards,
-Vladimir
 
