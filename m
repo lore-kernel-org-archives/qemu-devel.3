@@ -4,86 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B614C54F5F
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Feb 2026 06:44:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F52CC53216
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Feb 2026 06:50:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vtKFA-0000oU-O1; Fri, 20 Feb 2026 01:44:04 -0500
+	id 1vtKL5-0004tG-Uj; Fri, 20 Feb 2026 01:50:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1vtKF9-0000oM-Ck
- for qemu-devel@nongnu.org; Fri, 20 Feb 2026 01:44:03 -0500
-Received: from mail-qv1-xf41.google.com ([2607:f8b0:4864:20::f41])
+ (Exim 4.90_1) (envelope-from <zzyiwei@gmail.com>) id 1vtKL3-0004t5-GK
+ for qemu-devel@nongnu.org; Fri, 20 Feb 2026 01:50:09 -0500
+Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1vtKF6-0005MC-VZ
- for qemu-devel@nongnu.org; Fri, 20 Feb 2026 01:44:03 -0500
-Received: by mail-qv1-xf41.google.com with SMTP id
- 6a1803df08f44-8954a050c19so21264326d6.3
- for <qemu-devel@nongnu.org>; Thu, 19 Feb 2026 22:44:00 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <zzyiwei@gmail.com>) id 1vtKL1-0006a9-Jq
+ for qemu-devel@nongnu.org; Fri, 20 Feb 2026 01:50:09 -0500
+Received: by mail-ej1-x631.google.com with SMTP id
+ a640c23a62f3a-b8fbb24a9a9so392417666b.0
+ for <qemu-devel@nongnu.org>; Thu, 19 Feb 2026 22:50:05 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1771570204; cv=none;
+ d=google.com; s=arc-20240605;
+ b=Ljyde7Fyeijy+mSeQT/I9MFz+OivZ3IZyS26/py6OlOxFygQXHWRC1VfAKD9KvtLNr
+ m1zR22JGt5Id+iXnZvXTxukRj5yln0r1rdJ4erTc/Egln+yvUprWc1eLIFSrwd6xbdJp
+ V8Dv07Bwl6YSqh0vIejfG2FjY9sma6/6aM4F5Zo1BjN8HgIg1YYcWlrPAQA5rGK3G60W
+ ICdBkklh5cJ9LQwcQ7B7f/d5OMoA/w20d7ragtHjas/ASkp3Ph6XqowkBbW7d8qdWq5E
+ Few98mhksc3EApf8qjxweBsGFbrng2wu1IbYL/daM0SAuhbJ/5QPLQzyGaKJhrUPrq+U
+ d9DQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=9osPLZ479wPe7Q67dRooH/EexfD+Dh6lZlCQpZe3gjg=;
+ fh=D7KYN5Yi8IRoJ9tjm9M/DDAsgPjU7thY8IJu4dQ+bkY=;
+ b=AwdID57R18+CDmqkIxbB57V2qKJp4pubd8044s8DRdJBThcNjDKE6Q/XbO+ztBdJEs
+ q8kr+vlVIGSGFZ757u+GSgtzuGZJPxKXkFVX5ZvqTj4Zwnd3f4sM5rh8OOj9dYlskH1j
+ Q0yzuLqphCuGKOau9METXdGMTWiYC+43W7hRyA3T27k9CQDPuCDrdWivk6kGHGmZRQY+
+ 4mxjhPRUH8x+u+j7X3OIBPyi3Rvv3JllCVnSQih9JTpTVvqGnaaEqNDSKtqidRh2o0Pd
+ UcSnFd1C1LddssaxzeCSIlBj/2FjhcbtznE3QVCpUiXF9S0RnBh96Qd5uTYnBNKjuhRK
+ pNdA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1771569840; x=1772174640; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=IeL/h3q0xFKOJbLr/HDReueIN840huWo8F+fzoRQdT4=;
- b=MV0Vd2+GmN9eAlyfuGucFqZABLZDKxh/wsxT+qgBcnZZwZCnKbRWO7XMuk35epvxDa
- gixwFoViwOCYz2Jzrnlq/CX8jMbFDiSce0aDe2cHqmJpsjNZ0B9uqBkAI+xMElZI9sxO
- 3X6Cg86CiiN09OypZT5c1+xtKABx18AduMkSbgpv9Q/jN8y+d50zrMkEWeITE+cYgxy/
- w1cVl1Qe4R0+4xO459vgIRZuNtEq7D4d0ECq8OZW+UDvPpnLR16MlcJCMuqaZ+TOBY2R
- q6dEyap0Jnjo4CzCTlZMR2IW4EiavG70/bLYZ8G4fkFqxPMbSlnhBDjwyYXcb9XsFdqt
- 06Bg==
+ d=gmail.com; s=20230601; t=1771570204; x=1772175004; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=9osPLZ479wPe7Q67dRooH/EexfD+Dh6lZlCQpZe3gjg=;
+ b=FpAE6kT2nbok4UCyVZV2BtTRUGLBmTBP2Qm+66hCCqYJ10HSGsOjJkjk6tZWZqqbbr
+ Ipss/n4DeIdXo4Fn0+JhhjKuZY3WWRxaO024aNSIIAMpa6XRETfoh5t+NmiWjD3DS2Cy
+ 7jRDLEFoN+XFiVPCx6BjUMXKmmD//Q9Vym+6/KnqW0E6v9zT4h4UulRYC8uNODDvm46a
+ ZM5fRHstr2AymQN1pjhfMnG8e2emxW/8FM657UhqdNJlKM83L5hmbkiQwrGmvnsJ5lpg
+ x34P/WwgAaU8RU8UyBtUkr4AZ7+lryBWLaYVqtikUYIJ4rYS0Dm75Z2Aavf8C4VN5p6g
+ +zcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771569840; x=1772174640;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=IeL/h3q0xFKOJbLr/HDReueIN840huWo8F+fzoRQdT4=;
- b=Oqqluokzpie/ZV8KgQv/PG75CHwOciONpJ+YENEdurfH9TS/WAW2Hdc/E3gqLAqups
- uXo1DrG3goRg6l7ggIT2T6M8IeZMGwUJuVwCoVovZPGZj/nLHBPb+RCD4OhMinf4ik3N
- gL4k109TwCdU07wQbuj8Zf0J5yc+/md2vShB/ieCy7KNfoLQqhZ3dLHmZ3BDQ/4yPWoW
- QvH0x5GmCfUneq2Rs7JAh7M5EYS7KKO5Yb8ZagiFvA+VGXGn0TF/JoEYKlaw/LBMzn6q
- rApozVEAS2Pr1uyCFMVbrAyTegTaq+yb86PosF+asDRwxt3ijE2zm3MX9KOberhlX+8h
- 3Mpw==
+ d=1e100.net; s=20230601; t=1771570204; x=1772175004;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=9osPLZ479wPe7Q67dRooH/EexfD+Dh6lZlCQpZe3gjg=;
+ b=cjDjSlJjXsoiAGCIXKn4nBgnXHMkfsL1gv/T2J+IkXjUpdye5t+acRtIGBj84WwDMn
+ avOWKETb2lvd1skr4JOjet630PdsM5nGaKTLPv4m6P16UMahNueYfFzMxUoOJBDkwxXA
+ lgNciyUGZMXRuOGhiCRTx8vmhjhISJuGxk/N6tNTX5wiBryWNQANGUeD+lVIyNRwnDY5
+ Wtwu5Hu4wLwNU2H9rQBO+6AQ8XgyHe/8uaSQZrYbjxcX5ZWbkg8H0QH6Fx0F1/NjxAk+
+ Uv45gc9dIRecjQZpRwIAOmhZbbuUcxLXbE4ls9udHDuW1bQujq6yrFhsiPMUAgel7FjS
+ 66mg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUlLXjxgtducfF94yztR7VpsdXJ152jlmpYqT+AZRH6iVbYFP2W9tj5HwkVy8O3wYU06Z8jC4Swktda@nongnu.org
-X-Gm-Message-State: AOJu0Yz3m9xFSaaeWeHTiVVPiRjTnYLXW8AyjLsdJdQmLUUgrQ3otA1l
- mU8VYHGVJRWWwB64hp3C8cQjH+MzUzQrKDRlHGIXt5ngLfoPcrdJ8a71U/tQYhB/dd4=
-X-Gm-Gg: AZuq6aKzwVgerSEpAP8Y/8OTigL1l+Wc21wLA6DBaId/6KY1XzQr3muntb7Vb2B0C7/
- 3/B+Rc6lI3oIB2qhoIjtVaMf2N2kCEsqnUYOsAczfYVjuEw14Y56M9JpUEqxQNyNoRhK7HrlsNa
- lGz0yOgOkJhImZQEwSEF7n5fwpZCvbYVViQfRgM44CVeubae5Xnv6xi7T0WZfFtW+brK0jNfr7/
- BY325H+YVUovCOZMXkXvEhiETu3yZjundJValLvmpQCxlP6zD63pV9X8SoCKrm9gFvfiz7QxRv8
- xxLm+wTJj/z3hIta4sNWE6GSrDeMnJsNmvd3iIk2B1CsqZIlWqSwuT5Kont+b9xZg69GdtbJjvZ
- ekSbTIa9LykPfyko2K3/tj7rM4dlA6b4rrRmRY03vmjBZ8xpvSAqUUv0bw/PHP/qnHY+O9DeCOI
- tpMsaPnREphwIFgLAm8f9HGY4yDNh/DKjvU6zj3QiKqTqWejSJHxJ3sQQsApw8OT8sVZAM4enOM
- nyNMw4Pitii1I3SS+LR5MTHXOcOjMpf7T5BfRDYVQ==
-X-Received: by 2002:a05:7022:6629:b0:123:330b:3b5 with SMTP id
- a92af1059eb24-1276608097emr240796c88.30.1771569224801; 
- Thu, 19 Feb 2026 22:33:44 -0800 (PST)
-Received: from ZEVORN-PC.localdomain ([38.95.120.198])
- by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-12742cad9desm22997294c88.11.2026.02.19.22.33.40
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 19 Feb 2026 22:33:42 -0800 (PST)
-Date: Fri, 20 Feb 2026 14:33:07 +0800
-From: Chao Liu <chao.liu.zevorn@gmail.com>
-To: Max Chou <max.chou@sifive.com>
-Cc: Richard Henderson <richard.henderson@linaro.org>, 
-	qemu-devel@nongnu.org
-Subject: Re: [PATCH v4 8/9] fpu: Add conversion routines for OCP FP8 E4M3
-Message-ID: <aZf-LVVwnzJ4RSiD@ZEVORN-PC.localdomain>
-References: <20260205111622.461497-1-richard.henderson@linaro.org>
- <20260205111622.461497-9-richard.henderson@linaro.org>
- <aZKVxean7S9fkHHn@sifive.com>
- <695ae1da-8ca6-4966-87fa-5cd712cda59a@linaro.org>
- <aZfli2koayS41FRS@sifive.com>
+ AJvYcCXO82xNa3JQRYzQJApEKEs/1mSHN2tgtUOF7KOgu+D7gkuFJyVcwYeqxXHAacdjnGq5PyjCXjr0oxCs@nongnu.org
+X-Gm-Message-State: AOJu0YyZPqpInbjp8juDEx9SF4W2ggs1yupsaFcP4phDaVtOxcg03wuK
+ QLsN8UUMxq8iUyy2khJzxZdBJbv4/iigQzxKDq48lErv6PbmPTmDrMERnEgL48MGlcyZuIGB9Sr
+ OBQs++ggczeB0ytAZ4yILasnczCXbEzA=
+X-Gm-Gg: AZuq6aJu29Y2PfEN8dSEEREsrxNjHzWGsKOD631/CSGw1CFPOijtShLtWPBIFIedYnc
+ w/owAgbw6dOlFnVsop2RW3irRuH1omZOemiYYfzxXzh+rD5dv2hQPRyL+KaWXZxHa2/L+EQM6mF
+ wSKO+ewjKI0QHIV54TcpGx5bPg/19zPl9blGEJTylLfsmnBw8H1dH0btUBXRtm7QDacgEwMjDuL
+ XpD0KTW0dm7adWSEq3QQ6lOEg/eyTMI7bEwSHlBZpPBgQ1wcmAvOxTVZCv9cwWQcuFMvbRlD5Mm
+ dyo7aZK0YvBxFNBavlc=
+X-Received: by 2002:a17:907:1ca2:b0:b8f:e992:3fc9 with SMTP id
+ a640c23a62f3a-b905415c02bmr303535166b.6.1771570203713; Thu, 19 Feb 2026
+ 22:50:03 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aZfli2koayS41FRS@sifive.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::f41;
- envelope-from=chao.liu.zevorn@gmail.com; helo=mail-qv1-xf41.google.com
+References: <20260220001634.3579257-1-dmitry.osipenko@collabora.com>
+In-Reply-To: <20260220001634.3579257-1-dmitry.osipenko@collabora.com>
+From: Yiwei Zhang <zzyiwei@gmail.com>
+Date: Thu, 19 Feb 2026 22:51:22 -0800
+X-Gm-Features: AaiRm50bH0T2wZSkgZZ-T11UtFs-onBZQJEx673HpcwYiTD1zWy4U9abYwU6J80
+Message-ID: <CAJ+hS_gqFYgDqCehrpUh1CZq_V=nbyTnmfDYJesynRw9K7Vdwg@mail.gmail.com>
+Subject: Re: [PATCH v19 00/20] Support virtio-gpu DRM native context and
+ MAP_FIXED API
+To: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, Huang Rui <ray.huang@amd.com>,
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Gerd Hoffmann <kraxel@redhat.com>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Sergio Lopez Pascual <slp@redhat.com>, 
+ Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org, 
+ Gurchetan Singh <gurchetansingh@chromium.org>, Alyssa Ross <hi@alyssa.is>, 
+ =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger.pau@citrix.com>, 
+ Alex Deucher <alexander.deucher@amd.com>,
+ Stefano Stabellini <stefano.stabellini@amd.com>, 
+ =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>, 
+ Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
+ Honglei Huang <honglei1.huang@amd.com>, 
+ Julia Zhang <julia.zhang@amd.com>, Chen Jiqian <Jiqian.Chen@amd.com>, 
+ Rob Clark <robdclark@gmail.com>, Robert Beckett <bob.beckett@collabora.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::631;
+ envelope-from=zzyiwei@gmail.com; helo=mail-ej1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,58 +133,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Feb 20, 2026 at 01:44:27PM +0800, Max Chou wrote:
-> On 2026-02-16 15:30, Richard Henderson wrote:
-> > It doesn't feel right doing this here, because true overflow is handled
-> > elsewhere.  This is re-packing a FloatParts for a given FloatFmt.
-> > 
-> > Perhaps parts64_float_to_float() would be the proper place for this, as
-> > that's the conversion operation, and recognizing this overflow feels like
-> > part of a conversion.
-> 
-> Hmm, I agree with you. Maybe we could add a new float_to_e5m2 similar to
-> float_to_ahp and replacing the parts_float_to_float calls in
-> float32_to_float8_e5m2/bfloat16_to_float8_e5m2.
-> 
-> +static void parts_float_to_e5m2(FloatParts64 *a, float_status *s,
-> +                                bool saturate)
-> +{
-> +    switch (a->cls) {
-> +    case float_class_snan:
-> +    case float_class_qnan:
-> +        parts_return_nan(a, s);
-> +        break;
-> +    case float_class_inf:
-> +        if (saturate) {
-> +            float_raise(float_flag_invalid, s);
-> +            a->cls = float_class_normal;
-> +            a->exp = float8_e5m2_params.exp_max - 1;
-> +            a->frac = MAKE_64BIT_MASK(float8_e5m2_params.frac_shift,
-> +                                      float8_e5m2_params.frac_size + 1);
-> +        }
-> +        break;
-> +    case float_class_denormal:
-> +        float_raise(float_flag_input_denormal_used, s);
-> +        break;
-> +    case float_class_normal:
-> +    case float_class_zero:
-> +        break;
-> +    default:
-> +        g_assert_not_reached();
-> +    }
-> +}
-> 
-Hi rnax,
+On Thu, Feb 19, 2026 at 4:20=E2=80=AFPM Dmitry Osipenko
+<dmitry.osipenko@collabora.com> wrote:
+>
+> Hello,
+>
+> This is follow up to DRM native context v16 [1] and MAP_FIXED API v10 [2]
+> virtio-gpu patches that has been reviewed previously and were waiting for
+> a new release of libvirglrenderer 1.3.0.
+>
+> [1] https://lore.kernel.org/qemu-devel/20251116125641.2255794-1-dmitry.os=
+ipenko@collabora.com/
+> [2] https://lore.kernel.org/qemu-devel/20260118162856.223796-1-dmitry.osi=
+penko@collabora.com/
+>
+> Based-on: 20260214-region-v1-1-229f00ae1f38@rsg.ci.i.u-tokyo.ac.jp
+>
+> Changelog:
+>
+> v19:- Further improved improved naming of functions and terminology RE
+>       GL context binding. Suggested by Akihiko Odaki.
+>
+>     - Added new patch "ui/gdk: Restore original context after new context
+>       creation" in addition to improved "ui/sdl2: Restore original contex=
+t"
+>       that now getd actual bound GL context and restores to it instead
+>       of restoring to the console's ctx, for consistency with the rest
+>       of GL context management fixes that ensure context is bound only
+>       when necessary.
+>
+>     - Improved virtio_gpu_virgl_update_render_state() with force_ctx_0()
+>       and unbind_ctx() to make deferred GPU resetting maintain bound GL
+>       context properly.
+>
+> v18:- Changed dpy_gl_ctx_make_current() to use first scanout when unsetti=
+ng
+>       virgl's GL ctx0 and improved naming of cmd-processing function.
+>       Suggested by Akihiko Odaki.
+>
+>     - Added "ui/gdk: Unset context after GL operations" patch after
+>       realizing GDK/GL code needed more gdk_gl_context_clear_current().
+>
+> v17:- Rebased patches on recent upstream, updated doc patches with new
+>       drm native contexts supported by libvirglrenderer.
+>
+>     - Applied minor change that was requested from Akihiko Odaki
+>       by moving virtio_gpu_device_realize() for MAP_FIXED v10.
+>
+>     - Added virtio_gpu_virgl_update_render_state() to virtio_gpu_fence_po=
+ll()
+>       that was missed in MAP_FIXED v10.
+>
+>     - Added new patches fixing another GL context switching problem I ran
+>       into recently with virgl commands unexpectedly processed from CPU
+>       thread instead main-loop:
+>
+>         ui/sdl2: Unset context after GL operations
+>         ui/gtk-egl: Unset context after GL operations
+>         virtio-gpu: Unset context after GL operations
+>
+> Alex Benn=C3=A9e (1):
+>   docs/system: virtio-gpu: Document host/guest requirements
+>
+> Dmitry Osipenko (18):
+>   ui/gdk: Restore original context after new context creation
+>   ui/sdl2: Restore original context after new context creation
+>   ui/sdl2: Don't disable scanout when display is refreshed
+>   ui/gtk: Don't disable scanout when display is refreshed
+>   ui/sdl2: Unbind context after GL operations
+>   ui/gtk-egl: Unbind context after GL operations
+>   ui/gdk: Unbind context after GL operations
+>   virtio-gpu: Unbind context after GL operations
+>   virtio-gpu: Handle virgl fence creation errors
+>   virtio-gpu: Support asynchronous fencing
+>   virtio-gpu: Support DRM native context
+>   docs/system: virtio-gpu: Add link to Mesa VirGL doc
+>   docs/system: virtio-gpu: Update Venus link
+>   virtio-gpu: Remove superfluous memory_region_set_enabled()
+>   virtio-gpu: Validate hostmem mapping offset
+>   virtio-gpu: Replace finish_unmapping with mapping_state
+>   virtio-gpu: Destroy virgl resources on virtio-gpu reset
+>   virtio-gpu: Support mapping hostmem blobs with map_fixed
+>
+> Pierre-Eric Pelloux-Prayer (1):
+>   ui/sdl2: Implement dpy dmabuf functions
+>
+>  docs/system/devices/virtio/virtio-gpu.rst | 121 +++++-
+>  hw/display/trace-events                   |   2 +-
+>  hw/display/virtio-gpu-gl.c                |  62 +++-
+>  hw/display/virtio-gpu-virgl.c             | 427 ++++++++++++++++++++--
+>  hw/display/virtio-gpu.c                   |  15 +
+>  include/hw/virtio/virtio-gpu.h            |  23 +-
+>  include/ui/sdl2.h                         |   7 +
+>  meson.build                               |   8 +-
+>  ui/gtk-egl.c                              |  17 +-
+>  ui/gtk-gl-area.c                          |  28 +-
+>  ui/sdl2-gl.c                              |  81 +++-
+>  ui/sdl2.c                                 |  42 +++
+>  12 files changed, 760 insertions(+), 73 deletions(-)
+>
+> --
+> 2.52.0
+>
 
-This approach looks good to me. Adding a dedicated parts_float_to_e5m2
-following the float_to_ahp pattern makes sense -- it keeps the infinity
-saturation logic in the conversion path where it belongs, rather than in
-the generic uncanon_sat repacking.
-
-Thanks,
-Chao
-
-> Thanks for the feedbacks,
-> rnax
-> 
+My original r-b's still persist, and this PATCH v19 is t-b. Can't wait
+to see this land ; )
 
