@@ -4,70 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 988AEC56205
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Feb 2026 15:04:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDEECC56201
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Feb 2026 15:07:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vtS36-0000Vu-Qr; Fri, 20 Feb 2026 10:04:08 -0500
+	id 1vtS5c-0003av-A1; Fri, 20 Feb 2026 10:06:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <groug@kaod.org>) id 1vtS33-0000V7-7k
- for qemu-devel@nongnu.org; Fri, 20 Feb 2026 10:04:05 -0500
-Received: from smtpout2.mo529.mail-out.ovh.net ([79.137.123.220])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <groug@kaod.org>) id 1vtS2z-0002ee-TH
- for qemu-devel@nongnu.org; Fri, 20 Feb 2026 10:04:04 -0500
-Received: from mxplan5.mail.ovh.net (unknown [10.110.37.179])
- by mo529.mail-out.ovh.net (Postfix) with ESMTPS id 4fHYRV2nhQz5w1G;
- Fri, 20 Feb 2026 15:03:50 +0000 (UTC)
-Received: from kaod.org (37.59.142.100) by DAG13EX2.mxp5.local (172.16.2.132)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.35; Fri, 20 Feb
- 2026 16:03:49 +0100
-Authentication-Results: garm.ovh; auth=pass
- (GARM-100R0034a709c8d-400e-415d-92ad-322a0f5a26fd,
- AFFAC17DCC5F77700274900821995E29BD465B15) smtp.auth=groug@kaod.org
-X-OVh-ClientIp: 88.179.9.154
-Date: Fri, 20 Feb 2026 16:03:48 +0100
-From: Greg Kurz <groug@kaod.org>
-To: Christian Schoenebeck <qemu_oss@crudebyte.com>
-CC: <qemu-devel@nongnu.org>, Oliver Chang <ochang@google.com>, "Alexander
- Bulekov" <alxndr@bu.edu>, Mauro Matteo Cascella <mcascell@redhat.com>
-Subject: Re: [PATCH] hw/9pfs: fix missing EOPNOTSUPP on Twstat and Trenameat
- for fs synth driver
-Message-ID: <20260220160348.29a93709@bahia>
-In-Reply-To: <E1vrbaP-000Gqb-B3@kylie.crudebyte.com>
-References: <E1vrbaP-000Gqb-B3@kylie.crudebyte.com>
-X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vtS5K-0003Jb-CC
+ for qemu-devel@nongnu.org; Fri, 20 Feb 2026 10:06:31 -0500
+Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vtS5I-0003v8-2U
+ for qemu-devel@nongnu.org; Fri, 20 Feb 2026 10:06:25 -0500
+Received: by mail-ed1-x531.google.com with SMTP id
+ 4fb4d7f45d1cf-65a40f3f048so3951697a12.3
+ for <qemu-devel@nongnu.org>; Fri, 20 Feb 2026 07:06:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1771599982; x=1772204782; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=1hee/oRg14qzKO8J1dGh3sIJ/MTM+zj3eJ1EYC0Ozf0=;
+ b=wNniWfPLHTPUXfEs1ILs7wYaAM4s2+BrkxF/5dwTF6ADfgxYiGU5gFpI+TVX3YQn4+
+ LLsCcH4NSkSxVt4oGjqG9tnCEkSzuhAwEfIwekJAowPjp9rJwge6/ziWVwRWcXsxginF
+ D2vN1iqAptSQ5/M23iPjih0y0KdRk1i/1VQs4Y4hV4w+XgAMDy1ulARlV5uf4abCVMeW
+ G8cyEdZ9mrUfnDCQwWwOnF24VydtQbZl1IIgn7T/Otp70MXnNDrEiu+0Hcm5zj0VYWZf
+ 3AXk5kPL2mTcFbBaNQM4b9aNL+uXQ0qdtxBOC5hvKIAUFRYTw3tnjSIwtvcO3uZ5w+tf
+ 6ieQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1771599982; x=1772204782;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=1hee/oRg14qzKO8J1dGh3sIJ/MTM+zj3eJ1EYC0Ozf0=;
+ b=RnAkh0Yjf9zUu6NQXSjLqBya41SB2zkJhWwCXTGC5/0gHWJ7lPei95K7w5VhG8kObU
+ rGPRHNgo54pNg/y7dnQrU+jQDs3pxlOGf8+4YKshjwzxGJWxZZ6VVrpSFQzKr/YfEJ4h
+ mpNTgY/DbELjPyjBrxGyXMDt+M7xJgRMbcnlgRXz5yEtRiiDRCLV/gF6LKHaUGvJbyrS
+ 3nd6M3yCBJ+2QyVBP0iUNcKWuAnJUtOyboaihLb9e3dFN69uqZT4IwzCRTeizxURvRwQ
+ I+1PYQbTSxmqkkDBUeDQnRdLHZn0wt+jSDX+HGIuzBwKXqytaDnfbgpbXsFQpV06AR4M
+ SJTA==
+X-Gm-Message-State: AOJu0Yw2VOqm99T4a21BFeqEVI+bnJkY4UW1TDL1bzCc5+L2kvNvFB7L
+ ZqimR5whqmSjW3KeGQr6mtp2SJ4zv8zfOtyhwc+NPAYFPodmD5f0gmaFG9dRaADJPhkkQkKCJ3v
+ uAlW7
+X-Gm-Gg: AZuq6aLmo6dM6sfl1C44Ppw53bdPen52BvYwsb8QLAUQlPEW4SmYBdfvRcav2nhsC4/
+ EMpxt66XiObuOEnpdBlI/HQxdsO6aF1ODY4V+T9O85z9SvvdpfqHmsBtGmtvCzGD/SUSY67gsIb
+ u0V70/rVN/pv6QeQJu0MleLKw7G5MKNCVztzVXQCvNdE3CHNj0w8wBhSp3tMQGTLlwEL21THdnZ
+ a8mFHxDsUUoXLKoxCGNoKX8r3GVJqo5unXbX1VZPJWkQvHPtAWo8b6Gj7nG0CX3B/P25swlaeIV
+ kiWaet5AveiGUf1RYrGB4tyKFK13ApdnjxwdhqAQvLwzxsyKzJgxn2hYQ804CKyDRuVThNvz1xB
+ Lc1L6mhcXjPxuIX1xLT+IKED0D5d6jqVJBwLp60C5C0qF80S8UV2/ReR5xb2sXXxNWceIIs1rrK
+ oZ8TRQMI2Fja1Z4PXD0wsyQZ0=
+X-Received: by 2002:a05:6402:1ec4:b0:65c:2120:4056 with SMTP id
+ 4fb4d7f45d1cf-65dbd376345mr4198687a12.15.1771599982390; 
+ Fri, 20 Feb 2026 07:06:22 -0800 (PST)
+Received: from draig.lan ([185.124.0.126]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-65bad29df12sm5016718a12.14.2026.02.20.07.06.21
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 20 Feb 2026 07:06:21 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id C01875F838;
+ Fri, 20 Feb 2026 15:06:20 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Jim MacArthur <jim.macarthur@linaro.org>
+Cc: qemu-devel@nongnu.org,  richard.henderson@linaro.org
+Subject: Re: Record/replay thread determinism
+In-Reply-To: <aZhuzUi4P0-mB-FH@linaro.org> (Jim MacArthur's message of "Fri,
+ 20 Feb 2026 14:25:17 +0000")
+References: <aZhuzUi4P0-mB-FH@linaro.org>
+User-Agent: mu4e 1.14.0-pre1; emacs 30.1
+Date: Fri, 20 Feb 2026 15:06:20 +0000
+Message-ID: <87zf534fpv.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [37.59.142.100]
-X-ClientProxiedBy: DAG17EX1.mxp5.local (172.16.2.171) To DAG13EX2.mxp5.local
- (172.16.2.132)
-X-Ovh-Tracer-GUID: 3ece6ec1-4e2b-4b95-9e6f-329de1ead8c1
-X-Ovh-Tracer-Id: 8635089337469409699
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTE6cY6P+vkqFX3UPrqF3tjKWQcFNX1Z6NVbSEW60Xgni302YPyKLJAu8I0/G4o9sKwIl3n1QqZ56TpD19YH+uKDedfMFVol+7Z1y+swBUEqmVA9X+QtSJmOQZjej2nbzw09mekpmxuFzW8PMXJlyx6JqAgqYOHWaEEa2q96SizJXO4UFJtYOXOuDffiJ/M5ADFHc569OpYL486iAapmfFy2D9B07arUoDQDNTkdrMdA/YoSWljy0rmpMnjm8dzX4HF3b3xxL3tq+ipMcOEafGPo52D5mx7bu0P++pA6VyCJz27aTwJHherMBKKpWOHv6yqNka2spstqAv5Prj6msrPVjwbi2bJZg93lIHU5QSf3Tc/u3SPPWyAadx0qtk+yIf84xxjQ1xaj337M83Y/e22C3/Af7f7tF3r7SgYb0FFJ5EouJVe3CmnOyVOQbI3Ls6puSjMC8DrnXL9OFHCTd2yMDyS2w7U9VNdI6A9ifaayNcj9DCxWVvqV0b81YKn4sUnuSJnpR/ejvWusH2TWch48/kThmd1OsLQ5UW1gQUzw0usEWEpcY51cEjx5kCwldlMf1MwPXmmvEhhCK3ZO5H24ed3jDKbQ3DQErTD3x5nEEl+FBS3SIPUH9WqNOT2rhcWFaup6tCL892H6eN9Dv/7Hg5QPTjU+dJz6Wy9aO6mE5A
-DKIM-Signature: a=rsa-sha256; bh=4gg6XLQWCDVRFm8+5cU17gJva7oWfvusRQpgLggnftU=; 
- c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1771599830; v=1;
- b=EQpvDMVR7Ca+JyUKXuv3rlGQGL3TsR6SAtgSKq7MEIU5BeQ3kdLKb+RBOe5BSYmWV2bcGwe4
- 2FLWdadTEwFcR1hLMxydOOJFnOM5oMMYPFNdK371shn67I7jblq0ifzqXyaVVLj34nIDhbFs/gA
- /OFJP9dMn9mYLCXIs5hrODKsEPdt9n1dcvxdC3cBPVLkEgqoiEsMRNnk/Yl3O1Alrb4RafbCh62
- 2555gDQROkMpCftA/KDHe1BlkMOxWL1t+113BDlPRcPKXdISQrGc6YpgE5yBEmfxKSpfKWuere1
- wMb3g4zk0mr0o7kVKRWIrJqkZaY9cAVQevVrFLc3SqxzA==
-Received-SPF: pass client-ip=79.137.123.220; envelope-from=groug@kaod.org;
- helo=smtpout2.mo529.mail-out.ovh.net
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::531;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x531.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -84,73 +104,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 15 Feb 2026 13:44:50 +0100
-Christian Schoenebeck <qemu_oss@crudebyte.com> wrote:
+Jim MacArthur <jim.macarthur@linaro.org> writes:
 
-> Renaming files/dirs is only supported by path-based fs drivers. EOPNOTSUPP
-> should be returned on any renaming attempt for not path-based fs drivers.
-> This was already the case for 9p "Trename" request type. However for 9p
-> request types "Trenameat" and "Twstat" this was yet missing.
-> 
-> So fix this by checking in Twstat and Trenameat request handlers whether
-> the fs driver in use is really path based, if not return EOPNOTSUPP and
-> abort further handling of the request.
-> 
-> This fixes a crash with the 9p "synth" fs driver which is not path-based.
-> 
-> The crash happened because the synth driver stores and expects a raw
-> V9fsSynthNode pointer instead of a C-string on V9fsPath.data. So the
-> C-string delivered by 9p server to synth fs driver was incorrectly
-> casted to a V9fsSynthNode pointer, eventually causing a segfault.
-> 
+> It looks like we have a solution to the RCU patch which was causing probl=
+ems with the func-alpha-replay test (see 20260217-alpha-v1-0-0dcc708c9db3@r=
+sg.ci.i.u-tokyo.ac.jp).
+> While this was going on I spent a bit of time investigating repeatability=
+ in record/replay and I think there may be broader problems with record & r=
+eplay.
+>
+> While running the func-alpha-replay test we have two threads reading
+> or writing the replay event log; the "main" thread running
+> qemu_main_loop and the "RR" (round robin) thread running
+> rr_cpu_thread_fn. Both of these use replay_mutex_lock() and bql_lock()
+> to synchronize some actions. There's a third thread running RCU
+> maintenance which also uses bql_lock(), but not replay_mutex_lock().
+>
+> replay_mutex_lock() has some extra logic to improve fairness of
+> locking. This means that the first caller of replay_mutex_lock()
+> should obtain the lock first. However, so far as I can see, this
+> doesn't make the scheduling of the Main and RR threads deterministic.
+> I have observed times when neither of those threads holds the lock,
+> and as such, there's no way to predict which will call
+> replay_mutex_lock() first. This means the ordering of events during
+> either recording or replay is not deterministic.
 
-Ouch... yet another path of the synth driver that was never actioned ;-)
+The replay_lock was a kludge we added when we did the original
+transition to multi-threaded TCG which involved nailing down the BQL
+calls that had previously kept everything in sync.
 
-> Reported-by: Oliver Chang <ochang@google.com>
-> Fixes: https://issues.oss-fuzz.com/issues/477990727
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3298
-> Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
-> ---
+However if we could keep all replay events in the single RR thread we
+could get rid of replay lock because everything should behave serially.
 
-A bit late but
+> It is possible to alter the lock function such that the two threads
+> will run in lockstep; see
+> https://gitlab.com/jmacarthur/qemu-jmac-development/-/commits/jmac/replay=
+-tick-tock
+> for a rough demonstration. Adding this significantly reduced timeouts
+> on func-alpha-replay; I can also see that the replay recordings are
+> much more consistent from one recording to the next; typically
+> diverging around the 380000th event, rather than the 20th event
+> without this hack.
+> This is not a good fix since it slows QEMU down significantly and may be =
+prone to deadlocks, but I think this demonstrates that the current system i=
+s not perfect.
+>
+> Do you agree with my analysis above? Is there something I've missed which=
+ is meant to deterministically schedule these two threads?
+>
+> Jim MacArthur
 
-Reviewed-by: Greg Kurz <groug@kaod.org>
-
->  hw/9pfs/9p.c | 11 +++++++++++
->  1 file changed, 11 insertions(+)
-> 
-> diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
-> index 02366f43a8..e2713b9eee 100644
-> --- a/hw/9pfs/9p.c
-> +++ b/hw/9pfs/9p.c
-> @@ -3516,6 +3516,12 @@ static void coroutine_fn v9fs_renameat(void *opaque)
->          goto out_err;
->      }
->  
-> +    /* if fs driver is not path based, return EOPNOTSUPP */
-> +    if (!(s->ctx.export_flags & V9FS_PATHNAME_FSCONTEXT)) {
-> +        err = -EOPNOTSUPP;
-> +        goto out_err;
-> +    }
-> +
->      v9fs_path_write_lock(s);
->      err = v9fs_complete_renameat(pdu, olddirfid,
->                                   &old_name, newdirfid, &new_name);
-> @@ -3606,6 +3612,11 @@ static void coroutine_fn v9fs_wstat(void *opaque)
->          }
->      }
->      if (v9stat.name.size != 0) {
-> +        /* if fs driver is not path based, return EOPNOTSUPP */
-> +        if (!(s->ctx.export_flags & V9FS_PATHNAME_FSCONTEXT)) {
-> +            err = -EOPNOTSUPP;
-> +            goto out;
-> +        }
->          v9fs_path_write_lock(s);
->          err = v9fs_complete_rename(pdu, fidp, -1, &v9stat.name);
->          v9fs_path_unlock(s);
-
-
-
--- 
-Greg
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
