@@ -4,79 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0D1DC55163
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Feb 2026 08:37:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34397C54FCC
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Feb 2026 08:46:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vtM0Z-000561-UM; Fri, 20 Feb 2026 03:37:08 -0500
+	id 1vtM8f-0008GM-Od; Fri, 20 Feb 2026 03:45:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vtM0X-00054Z-FG
- for qemu-devel@nongnu.org; Fri, 20 Feb 2026 03:37:05 -0500
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1vtM8X-0008Fy-EQ
+ for qemu-devel@nongnu.org; Fri, 20 Feb 2026 03:45:22 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vtM0T-0005hk-JO
- for qemu-devel@nongnu.org; Fri, 20 Feb 2026 03:37:05 -0500
-Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 61K8ZZYE083449
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Fri, 20 Feb 2026 17:36:26 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=JZEd39lwzjw4hqNWdxANAmz3TrVPYi43xCbZD7g4IWo=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=Message-ID:Date:Subject:To:From;
- s=rs20250326; t=1771576587; v=1;
- b=cMmdMlkmlF8VtLhAAhaBWiovpIEB4pzmRC7Zp5cNJUwWF3vUSm96l6GWFErl0RXa
- HI0Ja0fZe/PX7zF8WkI079qeQHIJk66X72SeUhajlMdYwBJJ60Q1w/ALiu2vA89D
- AdTVyOgFqU0GFcpjHrewczyOy0VYhTIoi6no0e7eVyucOl8qAsAzfQVLuforphr4
- ZILcWjmLKU1IwBgO14JBNowwEB/yHrckLYtz+kXxfKt6COhjq7I34RGJ95p1XR+Q
- fXuf5DGrb3LNjuKSiKnJgWfElThPqBV5kDDI3Sp/OGTpZtf0ug/6i/OJUmvExPkn
- LbngQduE6w9OgfY2Ax+B1w==
-Message-ID: <271c635c-8c2c-48bc-b44f-91b9d268bbe2@rsg.ci.i.u-tokyo.ac.jp>
-Date: Fri, 20 Feb 2026 17:35:34 +0900
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1vtM8U-00033f-QZ
+ for qemu-devel@nongnu.org; Fri, 20 Feb 2026 03:45:21 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1771577118;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
+ b=e5K/6cG69ibU4D3z+25o9+2wa9BN+40WYf3ernetWeAYpYuX2TYP3UH6TUvRhVf0hseR37
+ wzNU37UmeDCXur+pf5YK5KlnOsPds8pIiSQA8M2R39qQ4eVj2oxFLFMZm5Oh8pqifXfj/W
+ swd2Lr5zvCAIcWt0pQNUkjYAXf2qaJc=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-505-xCUEo99TOkqSxU9mDmkZLw-1; Fri, 20 Feb 2026 03:45:16 -0500
+X-MC-Unique: xCUEo99TOkqSxU9mDmkZLw-1
+X-Mimecast-MFC-AGG-ID: xCUEo99TOkqSxU9mDmkZLw_1771577115
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-4836c819456so13067305e9.3
+ for <qemu-devel@nongnu.org>; Fri, 20 Feb 2026 00:45:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1771577114; x=1772181914; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
+ b=Jglw7CcwPnjepMpqosAmYoVadL9k1qJJX0aVoud0RuR1p35ta+nyrsgnH8Qm4vCCuX
+ 8JWxRf/tTW9Mr5/O7Y/oYNPzaVy/J1aInl2uMKPIPVlpYSU7psmTjoKE2EebyID2siTF
+ r1DNG2pzJp3+6koREp75PeN7YgiJLCD6/fuD5bZ1/U7RDg1e7zgt1VDuE0bgTrMWC39r
+ CdI0YJcRPco8atP5VBOEcJI8+/qerAKdVc8gIRu5eMB9AgTMVPq1M09qjzh2YgF8AtO/
+ C6JH3ZhOp79RCmp6NSerFf/2GpmQF+Ks+Z6T69505jEpflru1S4fsMKfIjirZHBz2wTj
+ lTSA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1771577114; x=1772181914;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
+ b=eDlqnwbakGCGfV23fPBhLMtfQd+JtBnZRUaRGO0zJFwEUgFeHMW4gzpUwEob3O+XKY
+ b1opXBNO0W734YmPYMh+mdm26+OIda0ZM+vrQyaqWvlPlqsqAT3lT/jKRDqYV3oxRkK3
+ LjnEezsWKST+b7xsXyjs3WQiufLdhH6UmvacT4udbq8Xw1IE6YqlcYSZ0R0iTXvW3rPe
+ zOd4aaYxjXk6LhRBW4YYbCTG2tcX8ZR847Ffb2RAOhPO/dWspcFyXG67Ec1+4HZnbULS
+ hDo/YZH0EEwFzLBXIv4DKEgsnThwx85lK9XeG0oQ+MPnphmda/5xAc7Sh1dRtZl/07G/
+ z9rA==
+X-Gm-Message-State: AOJu0YyQVb9HDv27b2T7hUGdF/AP1n4g0rrnIWjNPYi1dwZYaBvJPLvR
+ UfqbE1707L4GP56/g8LtgELNi0c5JxWLRkXnNgs62FPkNf3WnUbojk5jkhcEgV0E2sUvhhR8LS9
+ 1TFgtp1l9DyMnhBAeDK7m3b0XC5PX278Z0Xt/4TS6rC8J9Qe/NLe6qnp++aBS9ln1
+X-Gm-Gg: AZuq6aLHwZ6EvfGTYijaXf2T+zN7wgsBWYsYXL+6GMD+0M/n7tKN+NlC0Ud3qdV7jVt
+ 0XnRa8mS5QSXSBZ/lu0mtXpL8RJq8VB+u+ol7NrQUYDHQMibfU4yEfjTiSG2GW8InNuDp1lLJ04
+ gLzPwGCAeL4ruzmOhFvVZr/vEpbTgl5be+LwUMsYQ2CbyzWmy9kQbFNr0KjLeYOM/JteacICFMy
+ WMvPA/06/pa3n4++pfJ6Kd60g5LPUyD2SjNJMMd0V6Yigu1Q1HGcEXswuwMh9qq+VdPLRw/QoEm
+ keNgG3h9WZihlZv4j0byKzas/BJCWo9d93W3bKInf2xShFa1olPMIlznT5MPf4BZGZUidQnZ26G
+ +LT1CTIoFVkoFmZ/ET1q8rHy8uMuqgzyycI1AB6QT7LoRHtsMeG9ahXcmJjDj1aLQoMGWLsnYD2
+ 3gxHvL3KeZWLMNIfH79n4PvQk3tEc=
+X-Received: by 2002:a05:600c:548e:b0:483:456a:5146 with SMTP id
+ 5b1f17b1804b1-483a553babfmr16629325e9.25.1771577113677; 
+ Fri, 20 Feb 2026 00:45:13 -0800 (PST)
+X-Received: by 2002:a05:600c:548e:b0:483:456a:5146 with SMTP id
+ 5b1f17b1804b1-483a553babfmr16629025e9.25.1771577113295; 
+ Fri, 20 Feb 2026 00:45:13 -0800 (PST)
+Received: from [192.168.10.48] ([151.95.144.138])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-43796a6b563sm54245257f8f.12.2026.02.20.00.45.12
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 20 Feb 2026 00:45:12 -0800 (PST)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: John Snow <jsnow@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Subject: Re: [PATCH v2 0/1] rust: use checked_div()
+Date: Fri, 20 Feb 2026 09:45:02 +0100
+Message-ID: <20260220084502.212993-1-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20260219185409.708130-1-jsnow@redhat.com>
+References: 
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v19 00/20] Support virtio-gpu DRM native context and
- MAP_FIXED API
-To: Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Huang Rui <ray.huang@amd.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>,
- Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Yiwei Zhang <zzyiwei@gmail.com>,
- Sergio Lopez Pascual <slp@redhat.com>
-Cc: Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
- Gurchetan Singh <gurchetansingh@chromium.org>, Alyssa Ross <hi@alyssa.is>,
- =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger.pau@citrix.com>,
- Alex Deucher <alexander.deucher@amd.com>,
- Stefano Stabellini <stefano.stabellini@amd.com>,
- =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
- Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
- Honglei Huang <honglei1.huang@amd.com>,
- Julia Zhang <julia.zhang@amd.com>, Chen Jiqian <Jiqian.Chen@amd.com>,
- Rob Clark <robdclark@gmail.com>, Robert Beckett <bob.beckett@collabora.com>
-References: <20260220001634.3579257-1-dmitry.osipenko@collabora.com>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20260220001634.3579257-1-dmitry.osipenko@collabora.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.045,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,108 +121,8 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/02/20 9:16, Dmitry Osipenko wrote:
-> Hello,
-> 
-> This is follow up to DRM native context v16 [1] and MAP_FIXED API v10 [2]
-> virtio-gpu patches that has been reviewed previously and were waiting for
-> a new release of libvirglrenderer 1.3.0.
-> 
-> [1] https://lore.kernel.org/qemu-devel/20251116125641.2255794-1-dmitry.osipenko@collabora.com/
-> [2] https://lore.kernel.org/qemu-devel/20260118162856.223796-1-dmitry.osipenko@collabora.com/
-> 
-> Based-on: 20260214-region-v1-1-229f00ae1f38@rsg.ci.i.u-tokyo.ac.jp
-> 
-> Changelog:
-> 
-> v19:- Further improved improved naming of functions and terminology RE
->        GL context binding. Suggested by Akihiko Odaki.
-> 
->      - Added new patch "ui/gdk: Restore original context after new context
->        creation" in addition to improved "ui/sdl2: Restore original context"
->        that now getd actual bound GL context and restores to it instead
->        of restoring to the console's ctx, for consistency with the rest
->        of GL context management fixes that ensure context is bound only
->        when necessary.
-> 
->      - Improved virtio_gpu_virgl_update_render_state() with force_ctx_0()
->        and unbind_ctx() to make deferred GPU resetting maintain bound GL
->        context properly.
+Queued, thanks.
 
-Both the new context management improvement and the MAP_FIXED API 
-changes look good to me. For the whole series,
-
-Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-
-Thank you for completing this change.
-
-Regards,
-Akihiko Odaki
-
-> 
-> v18:- Changed dpy_gl_ctx_make_current() to use first scanout when unsetting
->        virgl's GL ctx0 and improved naming of cmd-processing function.
->        Suggested by Akihiko Odaki.
-> 
->      - Added "ui/gdk: Unset context after GL operations" patch after
->        realizing GDK/GL code needed more gdk_gl_context_clear_current().
-> 
-> v17:- Rebased patches on recent upstream, updated doc patches with new
->        drm native contexts supported by libvirglrenderer.
-> 
->      - Applied minor change that was requested from Akihiko Odaki
->        by moving virtio_gpu_device_realize() for MAP_FIXED v10.
-> 
->      - Added virtio_gpu_virgl_update_render_state() to virtio_gpu_fence_poll()
->        that was missed in MAP_FIXED v10.
-> 
->      - Added new patches fixing another GL context switching problem I ran
->        into recently with virgl commands unexpectedly processed from CPU
->        thread instead main-loop:
-> 
->          ui/sdl2: Unset context after GL operations
->          ui/gtk-egl: Unset context after GL operations
->          virtio-gpu: Unset context after GL operations
-> 
-> Alex Bennée (1):
->    docs/system: virtio-gpu: Document host/guest requirements
-> 
-> Dmitry Osipenko (18):
->    ui/gdk: Restore original context after new context creation
->    ui/sdl2: Restore original context after new context creation
->    ui/sdl2: Don't disable scanout when display is refreshed
->    ui/gtk: Don't disable scanout when display is refreshed
->    ui/sdl2: Unbind context after GL operations
->    ui/gtk-egl: Unbind context after GL operations
->    ui/gdk: Unbind context after GL operations
->    virtio-gpu: Unbind context after GL operations
->    virtio-gpu: Handle virgl fence creation errors
->    virtio-gpu: Support asynchronous fencing
->    virtio-gpu: Support DRM native context
->    docs/system: virtio-gpu: Add link to Mesa VirGL doc
->    docs/system: virtio-gpu: Update Venus link
->    virtio-gpu: Remove superfluous memory_region_set_enabled()
->    virtio-gpu: Validate hostmem mapping offset
->    virtio-gpu: Replace finish_unmapping with mapping_state
->    virtio-gpu: Destroy virgl resources on virtio-gpu reset
->    virtio-gpu: Support mapping hostmem blobs with map_fixed
-> 
-> Pierre-Eric Pelloux-Prayer (1):
->    ui/sdl2: Implement dpy dmabuf functions
-> 
->   docs/system/devices/virtio/virtio-gpu.rst | 121 +++++-
->   hw/display/trace-events                   |   2 +-
->   hw/display/virtio-gpu-gl.c                |  62 +++-
->   hw/display/virtio-gpu-virgl.c             | 427 ++++++++++++++++++++--
->   hw/display/virtio-gpu.c                   |  15 +
->   include/hw/virtio/virtio-gpu.h            |  23 +-
->   include/ui/sdl2.h                         |   7 +
->   meson.build                               |   8 +-
->   ui/gtk-egl.c                              |  17 +-
->   ui/gtk-gl-area.c                          |  28 +-
->   ui/sdl2-gl.c                              |  81 +++-
->   ui/sdl2.c                                 |  42 +++
->   12 files changed, 760 insertions(+), 73 deletions(-)
-> 
+Paolo
 
 
