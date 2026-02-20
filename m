@@ -4,108 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3822C5ACD9
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Feb 2026 16:22:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4919DC5ACD9
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Feb 2026 16:35:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vtTGs-0002DL-VN; Fri, 20 Feb 2026 11:22:26 -0500
+	id 1vtTSt-00062E-Jx; Fri, 20 Feb 2026 11:34:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vtTGs-0002D5-5h
- for qemu-devel@nongnu.org; Fri, 20 Feb 2026 11:22:26 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vtTGq-0001NV-He
- for qemu-devel@nongnu.org; Fri, 20 Feb 2026 11:22:25 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771604543;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Y+W5oQMDGwVl0qrxF+2WQeNVsk3fULyjvEKkCm5P42o=;
- b=RNHsHsjAkHN+eRnyuixjqR0hSLbnVKX12N1gt1RL5cd8BSHNadOAX4Ey7KwQ/qBHajVzTK
- Hch9ot4jVvTxbiIbodgK9tY1+LbZKQXkZs+1LiYLw0c+EpuqS5wYp8um3l4opFhKkpBFvu
- 8OGOzmRg9/nVgf/52lObCFQCR6r2nqI=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-647-ni0oBzLTPJO7Mh2Dl_AXbg-1; Fri, 20 Feb 2026 11:22:21 -0500
-X-MC-Unique: ni0oBzLTPJO7Mh2Dl_AXbg-1
-X-Mimecast-MFC-AGG-ID: ni0oBzLTPJO7Mh2Dl_AXbg_1771604541
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-43624564fc9so1979764f8f.2
- for <qemu-devel@nongnu.org>; Fri, 20 Feb 2026 08:22:21 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vtTSs-00061x-2C
+ for qemu-devel@nongnu.org; Fri, 20 Feb 2026 11:34:50 -0500
+Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vtTSp-00046N-Qz
+ for qemu-devel@nongnu.org; Fri, 20 Feb 2026 11:34:49 -0500
+Received: by mail-ed1-x52f.google.com with SMTP id
+ 4fb4d7f45d1cf-65c187dfc82so2664002a12.2
+ for <qemu-devel@nongnu.org>; Fri, 20 Feb 2026 08:34:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1771604540; x=1772209340; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=Y+W5oQMDGwVl0qrxF+2WQeNVsk3fULyjvEKkCm5P42o=;
- b=JhayPlKvspT4+Kg73hvIg8WE3pd5aMt2lXLR2yLRpDHQhWNlsnEnRbwYruRAqoVaqd
- YtrYNrQKNBvEL/lMGODP7+kmPzbnHXDfdZiL+hTnIA5jqO5ehzVg0CpbmS8B8lgdYsq4
- pYAg8ZjMRDdPZyhEdUR/yfdgx7mRTgzrIN5EgsFKElLyNYzsYfinGRY/x6tPN++hdEJ+
- ctJFcpJADjLFgscH6rty7J3ZgZWkwB+gYGkngphtLSU3gAOQyFB/k/ZBN9UoANVpl6eW
- 1PYpGADzjIT08biOnG6QL+lkUpTNGKQamSrvpt/ea+BYdRj97udNZyxK70w2TbEDXSzU
- tGZw==
+ d=linaro.org; s=google; t=1771605285; x=1772210085; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=wczBOvyJbz7JP+3E3wJjRaByMSjsbBRJyH/8kgk1/U8=;
+ b=p9NI/fXo3bUJ13qCJz+pslBAMbG/gaHBaxdlgNB4oZTibzL8AfDHlBpCcU+NdnoKNo
+ BqcGQHJcz/MgaAqpqKjYihgGk3DHV2QCjgRmc7RQA6+2FRi9sdczscbsmjiJoNBhOsL3
+ FR6r6zZZyy9f6N1pPEj3Pw3IyGupPmpmvsMTgiDLaBmb1pT9teftS099hQVpOqmOPDY6
+ MFpB0YO+p8lTMBx7gXKUxVL9lss2wTBwImvW1eRF3GTBx5wXOBmvY48w4CRMy/RQ1S35
+ H9N46ndnJMBJKRGftH6f+cT/scvjv5Fnzqv0YdDUAB1TWNCZDiP/IAs0pzOGyA366MQ3
+ X0NQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771604540; x=1772209340;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Y+W5oQMDGwVl0qrxF+2WQeNVsk3fULyjvEKkCm5P42o=;
- b=OEdAwFJQ5uFgR26X1/2aguB2xS7yqYbZl1/11b4+rUdowIlUDsGSmqCy1BAjGnug31
- z9oUbf1srfPkHIUyp/ZV5SpEm0xlrODpscduvw7pZhtjzr+Jon2dKCCnDWBuExmpPpF6
- DcK3pr5MmlwhUMDEeUQOGXKUcRxKnmF+ASAjAcflmFrOW9IjlXRA/x+oZB7Y0H+PqR6P
- RlDf9dDS4NMmPD05tIh1P9CVeDdv6+QjsY3LJFP11x9vtAnyRlyvxXPI4pWbNaWtngDt
- 1S39WscZ0MiPZ+1EmlLwPWsLywIKgrAq1+S7j9+lZ/GJgTFrW7cMXWodCaKyuoKrtKf5
- xD3w==
+ d=1e100.net; s=20230601; t=1771605285; x=1772210085;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=wczBOvyJbz7JP+3E3wJjRaByMSjsbBRJyH/8kgk1/U8=;
+ b=E2HbI0AByYFjDRL43OHjQgjPsCn3fplWTN4/7KZkryCVzWJJjhXFNhMjjMMlBWmHqk
+ mh5ZmBOoJEk6Z/5CHdCr9FQfK/v6HYQDobZZY3Ma9ECDVTt49sv/eYBPcsrcMubWRSwJ
+ t6OGVosczaucg5icBZQjRkJgW3Xk+8Vmg1NWaVO64E7zmpUKaq/UuCnxNhbyv2+VwOQQ
+ tay/ssSA7IZ/lF5hJBBAES70cm2P2umGEMgpOC4UoZnZ8q13jr4jpKDWXTfVdxsVRb8c
+ mhZDjskrKC66gHsc3zFp3WRcPBmRMw+yjwzI8RXM1vh/LZzwyeymhf0QGFfyZeLL1s/k
+ aKwg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVdtW/bmV6a/ztaN1l2H/m0+AxWf+J9UJ/spAZfytvrkMgwlmwsI27adYZg7jLGZKjBCkFsQb3JOjEn@nongnu.org
-X-Gm-Message-State: AOJu0Yz2TJxp3A+GSP45acPvM2EgFPZ32qVfrQhHr3EVyP29M7/Be8hx
- 1CXpe0VjPyPgE6ocxZDpCuAVPlN8E7dbwJH51dCFw7G1uWpW8DCCOkCoMUgTAIbA44hHzwWCEGS
- J+A/Axl0cuBHR3sJKz41gjHXV9Y9m+jNwlOf2kqeRJhiXnoI0/U0PnpBB
-X-Gm-Gg: AZuq6aLOcNPc8MktYu6ddZ7UmJdx8b3EXx19W39JCIK5JXzwLdigNO6fvCyGJCF5Tio
- 2COtOb63f7KftmYgkgX96DQlH3fxAvL1zA7XIONpFO9ungWcw4igH2gF17Rr04LYsDtcf3zKNOn
- o/B/Z1CO1yWV68Tuwl31DI6OfjKpJELaBiy4Ilbg85ZGUWMQ5RJcIT61yMqp53i4ZmjpjzaVJK5
- Vd8hM2Y04s4b561bPT7olnZKit4coap1fp25aMW0nrSa2sofwOFrm9uFolXqchTsLtcmMof6YRK
- nhscFuRZWEK2fu6gbAKO/iXUd+4oItdtswc4bkIGqsdSvpatjI7EDxG42UMSB/SKenAlWdOQR7/
- hXr+ti7WCzWS1n4VVVqJsDZ4bHrrkxsQYrfa9kZJO7tgm2A==
-X-Received: by 2002:a5d:5f52:0:b0:435:e060:8071 with SMTP id
- ffacd0b85a97d-4396f157d1fmr954245f8f.16.1771604540503; 
- Fri, 20 Feb 2026 08:22:20 -0800 (PST)
-X-Received: by 2002:a5d:5f52:0:b0:435:e060:8071 with SMTP id
- ffacd0b85a97d-4396f157d1fmr954183f8f.16.1771604539982; 
- Fri, 20 Feb 2026 08:22:19 -0800 (PST)
-Received: from redhat.com (IGLD-80-230-79-166.inter.net.il. [80.230.79.166])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43796ad0166sm57443419f8f.35.2026.02.20.08.22.18
+ AJvYcCVDWc83K7YWuJzneWvt9FqeTQGJv7gIS6agG2KN+qtare35GTvQ+f77tfBeNUM38HPE9w/61pFKcOLv@nongnu.org
+X-Gm-Message-State: AOJu0Ywlv4A9oFTH3bqM55qo3HvpV6FjPxM+E9ks0SG+KqftwmU3uBJD
+ R3JxJAk422aIUB4CPdvFZhFLERGVBb2YfOYlLlDGLzztgcElpefPFekY3VYyh8jr1oY=
+X-Gm-Gg: AZuq6aJb2cr9nm/QqiPv0MAL1wLj6TkCGDct53oPELgiLqGPz+T2KU55qBTdkAtBlry
+ DwkrvR6bgfjuZfJt+YHqla9nlq0HgYouTkWGTcrj7Vs4Rlxi20Ig3+WKAgX6GvQyKxJDZvdd+cq
+ oK2H0sHyjiYq2tO2mnlzmyGc6d9oBZdboYl30tUPeygRY0i8eoIM4KTw7jHpxhdhaGJD0h3PTC/
+ cDjHmBMKzFtdqtXbgmy9g8YyfNpG/crJSEBx7WBFEWqWs6nvZ+PFPRoaq6HGo1r2C0fDZnzWCc+
+ dBlyKumNL6/wCaTV7r8iOQOecPeTPcEVpLe4Wuy2jm9iJnux+N0DIkZfyQIkReDqeXokozhZKKe
+ aRCOehCHEEEzuzNu3/uLA2Y/i6R511xgqmGeOmD32JHG/jbDP9aAYMY9sc/GORmz/okbTc9+msm
+ SmqNzX9qVuF08bzrS5Pj+MYY4=
+X-Received: by 2002:a17:907:c12:b0:b88:4c99:bc0e with SMTP id
+ a640c23a62f3a-b9081a01b8bmr6359466b.26.1771605285390; 
+ Fri, 20 Feb 2026 08:34:45 -0800 (PST)
+Received: from draig.lan ([185.124.0.126]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-b8fc7386b49sm694928666b.22.2026.02.20.08.34.44
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 20 Feb 2026 08:22:19 -0800 (PST)
-Date: Fri, 20 Feb 2026 11:22:16 -0500
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Saif Abrar <saif.abrar@linux.vnet.ibm.com>
-Cc: qemu-ppc@nongnu.org, qemu-devel@nongnu.org, clg@kaod.org,
- npiggin@gmail.com, fbarrat@linux.ibm.com,
- marcel.apfelbaum@gmail.com, cohuck@redhat.com, pbonzini@redhat.com,
- thuth@redhat.com, lvivier@redhat.com, danielhb413@gmail.com
-Subject: Re: [PATCH v3 0/9] : pnv/phb4: Update PHB4 to the latest PHB5 spec
-Message-ID: <20260220112141-mutt-send-email-mst@kernel.org>
-References: <20251230102156.886288-1-saif.abrar@linux.vnet.ibm.com>
- <20260210134110.1515322-1-saif.abrar@linux.vnet.ibm.com>
+ Fri, 20 Feb 2026 08:34:44 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id E5ECA5F838;
+ Fri, 20 Feb 2026 16:34:43 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Florian Hofhammer <florian.hofhammer@epfl.ch>
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,  qemu-devel@nongnu.org,
+ richard.henderson@linaro.org,  laurent@vivier.eu,  imp@bsdimp.com,
+ berrange@redhat.com
+Subject: Re: [PATCH v3 2/5] plugins: add read-only property for registers
+In-Reply-To: <7fc71343-095c-4dad-9cda-4267fc49b64c@epfl.ch> (Florian
+ Hofhammer's message of "Mon, 16 Feb 2026 13:54:06 +0100")
+References: <ef60bfbb-cc12-4411-acc1-8c131726f22e@epfl.ch>
+ <8b36b6c1-83bd-462b-a346-f240dd17746d@epfl.ch>
+ <871pjcdt5q.fsf@draig.linaro.org> <87pl6wcda9.fsf@draig.linaro.org>
+ <878883e5-7100-48b7-bb44-e0728c93ae72@epfl.ch>
+ <7137a1e3-9f07-4a6b-8507-35bbfa5324e7@linaro.org>
+ <7fc71343-095c-4dad-9cda-4267fc49b64c@epfl.ch>
+User-Agent: mu4e 1.14.0-pre1; emacs 30.1
+Date: Fri, 20 Feb 2026 16:34:43 +0000
+Message-ID: <87tsvb4bmk.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260210134110.1515322-1-saif.abrar@linux.vnet.ibm.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.049,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,70 +112,163 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Feb 10, 2026 at 07:40:50AM -0600, Saif Abrar wrote:
-> Hello,
-> 
-> Addressing the review comments for the series v2:
-> https://lists.gnu.org/archive/html/qemu-devel/2025-12/msg03768.html
+Florian Hofhammer <florian.hofhammer@epfl.ch> writes:
 
+> On 13/02/2026 19:36, Pierrick Bouvier wrote:
+>> On 2/13/26 5:38 AM, Florian Hofhammer wrote:
+>>> On 26/01/2026 21:46, Alex Benn=C3=A9e wrote:> Alex Benn=C3=A9e <alex.be=
+nnee@linaro.org> writes:
+>>>>
+>>>>> Florian Hofhammer <florian.hofhammer@epfl.ch> writes:
+>>>>>
+>>>>>> Some registers should be marked as read-only from a plugin API
+>>>>>> perspective, as writing to them via qemu_plugin_write_register has no
+>>>>>> effect. This includes the program counter, and we expose this fact to
+>>>>>> the plugins with this patch.
+>>>>>>
+>>>>>> Signed-off-by: Florian Hofhammer <florian.hofhammer@epfl.ch>
+>>>>>> ---
+>>>>>>   include/qemu/qemu-plugin.h |  2 ++
+>>>>>>   plugins/api.c              | 17 +++++++++++++++++
+>>>>>>   2 files changed, 19 insertions(+)
+>>>>>>
+>>>>>> diff --git a/include/qemu/qemu-plugin.h b/include/qemu/qemu-plugin.h
+>>>>>> index f976b62030..1f25fb2b40 100644
+>>>>>> --- a/include/qemu/qemu-plugin.h
+>>>>>> +++ b/include/qemu/qemu-plugin.h
+>>>>>> @@ -942,11 +942,13 @@ struct qemu_plugin_register;
+>>>>>>    *          writing value with qemu_plugin_write_register
+>>>>>>    * @name: register name
+>>>>>>    * @feature: optional feature descriptor, can be NULL
+>>>>>> + * @is_readonly: true if the register cannot be written via qemu_pl=
+ugin_write_register
+>>>>>>    */
+>>>>>>   typedef struct {
+>>>>>>       struct qemu_plugin_register *handle;
+>>>>>>       const char *name;
+>>>>>>       const char *feature;
+>>>>>> +    bool is_readonly;
+>>>>>>   } qemu_plugin_reg_descriptor;
+>>>>>>     /**
+>>>>>> diff --git a/plugins/api.c b/plugins/api.c
+>>>>>> index fc19bdb40b..de8c32db50 100644
+>>>>>> --- a/plugins/api.c
+>>>>>> +++ b/plugins/api.c
+>>>>>> @@ -403,6 +403,12 @@ bool qemu_plugin_bool_parse(const char *name, c=
+onst char *value, bool *ret)
+>>>>>>    * ancillary data the plugin might find useful.
+>>>>>>    */
+>>>>>>   +static const char pc_str[] =3D "pc"; // generic name for program =
+counter
+>>>>>> +static const char eip_str[] =3D "eip"; // x86 specific name for pro=
+gram counter
+>>>>>> +static const char rip_str[] =3D "rip"; // x86_64 specific name for =
+program counter
+>>>>>> +static const char pswa_str[] =3D "pswa"; // s390x specific name for=
+ program counter
+>>>>>> +static const char iaoq_str[] =3D "iaoq"; // HP/PA specific name for=
+ program counter
+>>>>>> +static const char rpc_str[] =3D "rpc"; // microblaze specific name =
+for
+>>>>>> program counter
+>>>>>
+>>>>> It's ugly but I can't think of anything better as you say in the comm=
+it message.
+>>>>>
+>>>>>>   static GArray *create_register_handles(GArray *gdbstub_regs)
+>>>>>>   {
+>>>>>>       GArray *find_data =3D g_array_new(true, true,
+>>>>>> @@ -417,9 +423,20 @@ static GArray *create_register_handles(GArray *=
+gdbstub_regs)
+>>>>>>               continue;
+>>>>>>           }
+>>>>>>   +        gint plugin_ro_bit =3D 0;
+>>>>>>           /* Create a record for the plugin */
+>>>>>>           desc.handle =3D GINT_TO_POINTER(grd->gdb_reg + 1);
+>>>>>>           desc.name =3D g_intern_string(grd->name);
+>>>>>
+>>>>> Lets just set desc.is_readonly to false here.
+>>>>>
+>>>>>> +        if (!strcmp(desc.name, pc_str)
+>>>>>> +            || !strcmp(desc.name, eip_str)
+>>>>>> +            || !strcmp(desc.name, rip_str)
+>>>>>> +            || !strcmp(desc.name, pswa_str)
+>>>>>> +            || !strcmp(desc.name, iaoq_str)
+>>>>>> +            || !strcmp(desc.name, rpc_str)
+>>>>>> +           ) {
+>>>>>> +            plugin_ro_bit =3D 1;
+>>>>>> +        }
+>>>>>> +        desc.is_readonly =3D plugin_ro_bit =3D=3D 1 ? true : false;
+>>>>>
+>>>>> And fold setting it to true into the if statement. I have a marginal
+>>>>> preference for g_strcmp0(desc.name, eip_str) =3D=3D 0 style tests.
+>>>>
+>>>> The option of course would be to skip the register all together. Do we
+>>>> have code which will have multiple vaddr's for the same TB where using
+>>>> the TB data wouldn't be sufficient?
+>>>
+>>> Skipping the register altogether would basically make it invisible to
+>>> plugins and therefore remove functionality. A plugin might want to get a
+>>> list of all registers (which would not be complete anymore), or get the
+>>> current PC value. If I didn't miss anything, the latter might not
+>>> necessarily be possible anymore, as a callback (especially the simple
+>>> callback type) doesn't have access to the current TB data and can't
+>>> necessarily pass userdata to the callback, so it wouldn't be able to get
+>>> the PC from there anymore.
+>>>
+>>>>>
+>>>>>>           desc.feature =3D g_intern_string(grd->feature_name);
+>>>>>>           g_array_append_val(find_data, desc);
+>>>>>>       }
+>>>>>
+>>>>> Otherwise:
+>>>>>
+>>>>> Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+>>=20
+>> Seeing there are some questions around this, I have another one.
+>>=20
+>> Does it really matter if a user can read/write pc register?
+>
+> The idea of blocking writes to the PC via the register write API came up
+> in https://lists.gnu.org/archive/html/qemu-devel/2025-12/msg01671.html.
+> As it stands, writes to the PC are silently swallowed, and preventing
+> that could reduce confusion for plugin authors. It makes it clear why
+> there would be a special API for setting the PC instead of using the
+> generic register write API.
 
-breaks tsan build:
+Agreed.
 
+>
+>> It seems to bring a lot of complexity to prevent this (especially
+>> the string per arch approach, even though that's the best we can
+>> do), and I'm not sure what's the actual benefit. If someone tries
+>> something QEMU plugins don't support in general, they can always
+>> send a bug report, or even a patch.
+>> I'm not really sure to why someone would have a bad idea mixing register=
+ writes and pc diversion. And if they do, it would not be surprising it bre=
+aks things.
+>
+> Alternatively, I could add a remark to the documentation for the
+> register write API that the PC can only be modified via the dedicated
+> API and not change the implementation at all. But I think I'll have to
+> defer that decision to you and Alex as the plugin subsystem
+> maintainers.
 
-https://gitlab.com/mstredhat/qemu/-/jobs/13201554945
+We definitely want to make it clear to use the specific function. We
+just need a solution for making sure they can always find out the
+current pc when we have multiple virtual mappings to the same place.
 
-../hw/pci-host/pnv_phb4.c:968:9: error: expected expression
-        PCIHostState *pci = PCI_HOST_BRIDGE(phb->phb_base);
-        ^
-../hw/pci-host/pnv_phb4.c:969:43: error: use of undeclared identifier 'pci'
-        PCIDevice *pdev = pci_find_device(pci->bus, 0, 0);
-                                          ^
-../hw/pci-host/pnv_phb4.c:999:9: error: use of undeclared identifier 'pci'
-        pci = PCI_HOST_BRIDGE(phb->phb_base);
-        ^
-../hw/pci-host/pnv_phb4.c:1000:32: error: use of undeclared identifier 'pci'
-        pdev = pci_find_device(pci->bus, 0, 0);
-                               ^
-4 errors generated.
+>
+>> So maybe we can just extend API with PC diversion, and not overthink too=
+ much about potential consequences on registers.
+>>=20
+>> Regards,
+>> Pierrick
+>
+> Best,
+> Florian
 
-
-> This series updates the existing PHB4 model to the latest spec:
-> "Power Systems Host Bridge 5 (PHB5) Functional Specification Version 0.5_00".
-> 
-> Updates include the following:
-> - implemented sticky reset logic
-> - implemented read-only, write-only, W1C and WxC logic
-> - return all 1's on read to unimplemented registers
-> - update PCIE registers for link status, speed and width
-> - implement IODA PCT debug table without any functionality
-> - update LSI Source-ID register based on small/big PHB number of interrupts
-> 
-> Also, a new testbench for PHB4 model is added that does XSCOM read/writes
-> to various registers of interest and verifies the values.
-> 
-> Regards.
-> 
-> Saif Abrar (9):
->   qtest/phb4: Add testbench for PHB4
->   pnv/phb4: Add reset logic to PHB4
->   pnv/phb4: Implement sticky reset logic in PHB4
->   pnv/phb4: Implement read-only and write-only bits of registers
->   pnv/phb4: Implement write-clear and return 1's on unimplemented reg read
->   pnv/phb4: Set link-active status in HPSTAT and LMR registers
->   pnv/phb4: Set link speed and width in the DLP training control register
->   pnv/phb4: Implement IODA PCT table
->   pnv/phb4: Mask off LSI Source-ID based on number of interrupts
-> 
->  hw/pci-host/pnv_phb.c               |   1 +
->  hw/pci-host/pnv_phb4.c              | 583 +++++++++++++++++++++++++---
->  include/hw/pci-host/pnv_phb4.h      |  16 +-
->  include/hw/pci-host/pnv_phb4_regs.h |  66 +++-
->  tests/qtest/meson.build             |   1 +
->  tests/qtest/pnv-phb4-test.c         | 228 +++++++++++
->  6 files changed, 837 insertions(+), 58 deletions(-)
->  create mode 100644 tests/qtest/pnv-phb4-test.c
-> 
-> -- 
-> 2.47.3
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
