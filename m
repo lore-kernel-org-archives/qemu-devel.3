@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5EB0BC5B56A
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Feb 2026 21:03:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CAA9EC5B55D
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Feb 2026 21:03:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vtXdt-0000C2-M1; Fri, 20 Feb 2026 16:02:29 -0500
+	id 1vtXe3-0000GB-Pb; Fri, 20 Feb 2026 16:02:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vtXdr-0000Ao-Hq
- for qemu-devel@nongnu.org; Fri, 20 Feb 2026 16:02:27 -0500
+ id 1vtXe1-0000FY-Rd
+ for qemu-devel@nongnu.org; Fri, 20 Feb 2026 16:02:37 -0500
 Received: from forwardcorp1a.mail.yandex.net
  ([2a02:6b8:c0e:500:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vtXdp-0002lz-Gy
- for qemu-devel@nongnu.org; Fri, 20 Feb 2026 16:02:27 -0500
+ id 1vtXe0-0002m6-0g
+ for qemu-devel@nongnu.org; Fri, 20 Feb 2026 16:02:37 -0500
 Received: from mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
  [IPv6:2a02:6b8:c2d:3530:0:640:eca4:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id DF5F4C023C;
- Sat, 21 Feb 2026 00:02:22 +0300 (MSK)
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 89E77C0231;
+ Sat, 21 Feb 2026 00:02:24 +0300 (MSK)
 Received: from vsementsov-lin (unknown [2a02:6bf:8080:87::1:2c])
  by mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id G2kijG5A6qM0-b2wUajiP; Sat, 21 Feb 2026 00:02:22 +0300
+ ESMTPSA id G2kijG5A6qM0-RdlwdGLr; Sat, 21 Feb 2026 00:02:24 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1771621342;
- bh=K9X8twpFl4uRTfRXKZNsWhPiuYHOu4f5+6bxOjBGczU=;
+ s=default; t=1771621344;
+ bh=cir+HmqdjCQ6n91gEEiXSMvR8BwBZ2eARQgWlmGuhiY=;
  h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=IV0E1GPkCRUl+dlWyVgcDdQhzPpb2tVnjtE27JiL2FA4q4UA+vnWcRyeiTKpxmKDG
- PfpRdM2pPBfaR6Tii/R5RZUc8vUqzxIeLEspYGJmjmcQLVC9hM1wLSPPSM04ShoABa
- pKG7b+gZmacSZLec+/U0KhD9a7aDuGMrWR81ir1w=
+ b=xQrL1dXdY34ZDfeTDCPad4EJiyM6eLwqb/RgivEI0HPmcwEPZeDG8BMP9lzkqXjrg
+ T5gNXi1XLYPZsE3hts+AknMTF2i/L3q1pCGKthBAjrWCr7OktD7V1Q8H7/0MGzDnP3
+ kpsX4+eczil6L0uwDnk14FXmRQsZu96IJTcyBc4s=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 To: peterx@redhat.com
 Cc: farosas@suse.de, vsementsov@yandex-team.ru,
+ Mark Kanda <mark.kanda@oracle.com>, Ben Chaney <bchaney@akamai.com>,
  qemu-devel@nongnu.org (open list:All patches CC here)
-Subject: [PATCH v2 12/16] migration: VMStateInfo: introduce new handlers with
- errp
-Date: Sat, 21 Feb 2026 00:02:10 +0300
-Message-ID: <20260220210214.800050-13-vsementsov@yandex-team.ru>
+Subject: [PATCH v2 14/16] migration/cpr: move to new migration APIs
+Date: Sat, 21 Feb 2026 00:02:12 +0300
+Message-ID: <20260220210214.800050-15-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260220210214.800050-1-vsementsov@yandex-team.ru>
 References: <20260220210214.800050-1-vsementsov@yandex-team.ru>
@@ -76,75 +76,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add new APIs with errp, to allow handlers report good
-error messages. We'll convert existing handlers soon.
-
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 ---
- include/migration/vmstate.h | 17 ++++++++++++++---
- migration/vmstate.c         |  4 ++++
- 2 files changed, 18 insertions(+), 3 deletions(-)
+ include/migration/cpr.h |  2 +-
+ migration/cpr.c         | 22 +++++++++-------------
+ 2 files changed, 10 insertions(+), 14 deletions(-)
 
-diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
-index 15578b3e28..167b1aa9cf 100644
---- a/include/migration/vmstate.h
-+++ b/include/migration/vmstate.h
-@@ -32,12 +32,16 @@
- typedef struct VMStateInfo VMStateInfo;
- typedef struct VMStateField VMStateField;
+diff --git a/include/migration/cpr.h b/include/migration/cpr.h
+index 5850fd1788..96ce26e711 100644
+--- a/include/migration/cpr.h
++++ b/include/migration/cpr.h
+@@ -43,7 +43,7 @@ void cpr_set_incoming_mode(MigMode mode);
+ bool cpr_is_incoming(void);
  
--/* VMStateInfo allows customized migration of objects that don't fit in
-+/*
-+ * VMStateInfo allows customized migration of objects that don't fit in
-  * any category in VMStateFlags. Additional information is always passed
-- * into get and put in terms of field and vmdesc parameters. However
-+ * into load and save in terms of field and vmdesc parameters. However
-  * these two parameters should only be used in cases when customized
-  * handling is needed, such as QTAILQ. For primitive data types such as
-- * integer, field and vmdesc parameters should be ignored inside get/put.
-+ * integer, field and vmdesc parameters should be ignored inside load/save.
-+ *
-+ * @get and @put are deprecated copies of @load and @save. For new interfaces
-+ * use @load and @save.
-  */
- struct VMStateInfo {
-     const char *name;
-@@ -46,6 +50,13 @@ struct VMStateInfo {
-     int coroutine_mixed_fn (*put)(QEMUFile *f, void *pv, size_t size,
-                                   const VMStateField *field,
-                                   JSONWriter *vmdesc);
-+    bool coroutine_mixed_fn (*load)(QEMUFile *f, void *pv, size_t size,
-+                                    const VMStateField *field,
-+                                    Error **errp);
-+    bool coroutine_mixed_fn (*save)(QEMUFile *f, void *pv, size_t size,
-+                                    const VMStateField *field,
-+                                    JSONWriter *vmdesc,
-+                                    Error **errp);
- };
+ bool cpr_state_save(MigrationChannel *channel, Error **errp);
+-int cpr_state_load(MigrationChannel *channel, Error **errp);
++bool cpr_state_load(MigrationChannel *channel, Error **errp);
+ void cpr_state_close(void);
+ struct QIOChannel *cpr_state_ioc(void);
  
- enum VMStateFlags {
-diff --git a/migration/vmstate.c b/migration/vmstate.c
-index 69340036f0..efef4d0433 100644
---- a/migration/vmstate.c
-+++ b/migration/vmstate.c
-@@ -170,6 +170,8 @@ static bool vmstate_load_field(QEMUFile *f, void *pv, size_t size,
-     } else if (field->flags & VMS_VSTRUCT) {
-         return vmstate_load_state(f, field->vmsd, pv, field->struct_version_id,
-                                   errp) >= 0;
-+    } else if (field->info->load) {
-+        return field->info->load(f, pv, size, field, errp);
+diff --git a/migration/cpr.c b/migration/cpr.c
+index a0b37007f5..05266dfcfd 100644
+--- a/migration/cpr.c
++++ b/migration/cpr.c
+@@ -178,7 +178,6 @@ bool cpr_is_incoming(void)
+ 
+ bool cpr_state_save(MigrationChannel *channel, Error **errp)
+ {
+-    int ret;
+     QEMUFile *f;
+     MigMode mode = migrate_mode();
+ 
+@@ -199,8 +198,7 @@ bool cpr_state_save(MigrationChannel *channel, Error **errp)
+     qemu_put_be32(f, QEMU_CPR_FILE_MAGIC);
+     qemu_put_be32(f, QEMU_CPR_FILE_VERSION);
+ 
+-    ret = vmstate_save_state(f, &vmstate_cpr_state, &cpr_state, 0, errp);
+-    if (ret) {
++    if (!vmstate_save_vmsd(f, &vmstate_cpr_state, &cpr_state, 0, errp)) {
+         qemu_fclose(f);
+         return false;
+     }
+@@ -223,9 +221,8 @@ bool cpr_state_save(MigrationChannel *channel, Error **errp)
+     return true;
+ }
+ 
+-int cpr_state_load(MigrationChannel *channel, Error **errp)
++bool cpr_state_load(MigrationChannel *channel, Error **errp)
+ {
+-    int ret;
+     uint32_t v;
+     QEMUFile *f;
+     MigMode mode = 0;
+@@ -241,10 +238,10 @@ int cpr_state_load(MigrationChannel *channel, Error **errp)
+         cpr_set_incoming_mode(mode);
+         f = cpr_transfer_input(channel, errp);
+     } else {
+-        return 0;
++        return true;
+     }
+     if (!f) {
+-        return -1;
++        return false;
      }
  
-     if (field->info->get(f, pv, size, field) < 0) {
-@@ -491,6 +493,8 @@ static bool vmstate_save_field(QEMUFile *f, void *pv, size_t size,
-         return vmstate_save_state_v(f, field->vmsd, pv, vmdesc,
-                                     field->struct_version_id,
-                                     errp) >= 0;
-+    } else if (field->info->save) {
-+        return field->info->save(f, pv, size, field, vmdesc, errp);
+     trace_cpr_state_load(MigMode_str(mode));
+@@ -254,19 +251,18 @@ int cpr_state_load(MigrationChannel *channel, Error **errp)
+     if (v != QEMU_CPR_FILE_MAGIC) {
+         error_setg(errp, "Not a migration stream (bad magic %x)", v);
+         qemu_fclose(f);
+-        return -EINVAL;
++        return false;
+     }
+     v = qemu_get_be32(f);
+     if (v != QEMU_CPR_FILE_VERSION) {
+         error_setg(errp, "Unsupported migration stream version %d", v);
+         qemu_fclose(f);
+-        return -ENOTSUP;
++        return false;
      }
  
-     if (field->info->put(f, pv, size, field, vmdesc) < 0) {
+-    ret = vmstate_load_state(f, &vmstate_cpr_state, &cpr_state, 1, errp);
+-    if (ret) {
++    if (!vmstate_load_vmsd(f, &vmstate_cpr_state, &cpr_state, 1, errp)) {
+         qemu_fclose(f);
+-        return ret;
++        return false;
+     }
+ 
+     if (migrate_mode() == MIG_MODE_CPR_EXEC) {
+@@ -280,7 +276,7 @@ int cpr_state_load(MigrationChannel *channel, Error **errp)
+      */
+     cpr_state_file = f;
+ 
+-    return ret;
++    return true;
+ }
+ 
+ void cpr_state_close(void)
 -- 
 2.52.0
 
