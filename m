@@ -4,93 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4718DC61DC2
-	for <qemu-devel@archiver.kernel.org>; Sat, 21 Feb 2026 07:20:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E5EBC61DCB
+	for <qemu-devel@archiver.kernel.org>; Sat, 21 Feb 2026 10:04:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vthGx-0004UB-TV; Sat, 21 Feb 2026 02:19:28 -0500
+	id 1vtjpg-0005mJ-Mc; Sat, 21 Feb 2026 05:03:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vthGv-0004Ro-DU; Sat, 21 Feb 2026 02:19:25 -0500
-Received: from isrv.corpit.ru ([212.248.84.144])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vthGt-0003Oh-8d; Sat, 21 Feb 2026 02:19:25 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 7BA4B18B9E3;
- Sat, 21 Feb 2026 10:19:15 +0300 (MSK)
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id EA26F36BC6F;
- Sat, 21 Feb 2026 10:19:19 +0300 (MSK)
-Message-ID: <7ffe8bf6-bd94-4f7f-aa77-274c90d1aa78@tls.msk.ru>
-Date: Sat, 21 Feb 2026 10:19:19 +0300
+ (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
+ id 1vtjpd-0005kb-L6; Sat, 21 Feb 2026 05:03:25 -0500
+Received: from zg8tmtyylji0my4xnjqumte4.icoremail.net ([162.243.164.118])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <tangtao1634@phytium.com.cn>)
+ id 1vtjpZ-0005AF-Gt; Sat, 21 Feb 2026 05:03:24 -0500
+Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
+ by hzbj-icmmx-6 (Coremail) with SMTP id AQAAfwAn_UTngplpOxdzAA--.3071S2;
+ Sat, 21 Feb 2026 18:03:19 +0800 (CST)
+Received: from phytium.com.cn (unknown [218.76.62.144])
+ by mail (Coremail) with SMTP id AQAAfwD3TevcgplpBk4cAA--.34138S11;
+ Sat, 21 Feb 2026 18:03:16 +0800 (CST)
+From: Tao Tang <tangtao1634@phytium.com.cn>
+To: Eric Auger <eric.auger@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ Chen Baozi <chenbaozi@phytium.com.cn>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Mostafa Saleh <smostafa@google.com>, Chao Liu <chao.liu.zevorn@gmail.com>,
+ Tao Tang <tangtao1634@phytium.com.cn>
+Subject: [RFC v4 08/31] hw/arm/smmuv3: Plumb transaction attributes into
+ config helpers
+Date: Sat, 21 Feb 2026 18:02:27 +0800
+Message-Id: <20260221100250.2976287-9-tangtao1634@phytium.com.cn>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20260221100250.2976287-1-tangtao1634@phytium.com.cn>
+References: <20260221100250.2976287-1-tangtao1634@phytium.com.cn>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 05/15] target/arm: Don't let 'sme=on' downgrade SME
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-stable <qemu-stable@nongnu.org>
-References: <20260202133353.2231685-1-peter.maydell@linaro.org>
- <20260202133353.2231685-6-peter.maydell@linaro.org>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <20260202133353.2231685-6-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: AQAAfwD3TevcgplpBk4cAA--.34138S11
+X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQANBWmYzyUAJgAAs0
+Authentication-Results: hzbj-icmmx-6; spf=neutral smtp.mail=tangtao163
+ 4@phytium.com.cn;
+X-Coremail-Antispam: 1Uk129KBjvJXoW3uFy7XrWkXryDJF43Ww43trb_yoWDWw4xpF
+ ZrGFn0kws5tFWSvF9xXr4093W3J39YgFn8Gr9rKF9Ykw15Ar17Zr1DKw15CryDury8JFsF
+ vFWIgF4rurnrA3DanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
+ DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
+ UUUUU
+Received-SPF: pass client-ip=162.243.164.118;
+ envelope-from=tangtao1634@phytium.com.cn;
+ helo=zg8tmtyylji0my4xnjqumte4.icoremail.net
+X-Spam_score_int: -25
+X-Spam_score: -2.6
+X-Spam_bar: --
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -108,112 +78,279 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 02.02.2026 16:33, Peter Maydell wrote:
-> In our handling of the boolean 'sme' CPU property, we write this 0/1
-> value directly to ID_AA64PFR1_EL1.SME.  This worked when the only
-> valid values in that field were 0 (for no SME) and 1 (for SME1).
-> However, with the addition of SME2 the SME field can now also read 2.
-> This means that "-cpu max,sme=on" will result in an inconsistent set
-> of ID registers, where ID_AA64PFR1_EL1.SME claims SME1 but
-> ID_AA64SMFR0_EL1.SMEver claims SME2p1.  This isn't a valid thing to
-> report, and confuses Linux into reporting SME2 to userspace but not
-> actually enabling userspace access for it.
-> 
-> Fix this bug by having arm_cpu_sme_finalize() fix up the
-> ID_AA64PFR1_EL1.SME field to match ID_AA64SMFR0.SMEver.  This means
-> the "sme" property's semantics are "off" for "no SME" and "on" for
-> "enable at whatever the default SME version this CPU provides is".
-> 
-> Update the documentation to clarify what 'sve=on' and 'sme=on' do.
-> (We don't have the equivalent bug for 'sve=on' because
-> ID_AA64PFR0_EL1.SVE only has 0 and 1 as valid values, but the
-> semantics of the property are the same.)
-> 
-> Cc: qemu-stable@nongnu.org
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+As a preliminary step towards a multi-security-state configuration
+cache, introduce MemTxAttrs and AddressSpace * members to the
+SMMUTransCfg struct. The goal is to cache these attributes so that
+internal functions can use them directly.
 
-Hi!
+To facilitate this, hw/arm/arm-security.h is now included in
+smmu-common.h. This is a notable change, as it marks the first time
+these Arm CPU-specific security space definitions are used outside of
+cpu.h, making them more generally available for device models.
 
-I suppose this change makes sense for 10.0.x (LTS) series to.  There,
-since it lacks idregs conversion which happened during 10.1 development
-cycle, I had to adjust the change.
+The decode helpers (smmu_get_ste, smmu_get_cd, smmu_find_ste,
+smmuv3_get_config) are updated to use these new attributes for memory
+accesses. This ensures that reads of SMMU structures from memory, such
+as the Stream Table, use the correct security context.
 
-The result is at
-https://gitlab.com/mjt0k/qemu/-/commit/3c1f1b8065c625040787c2c89d22d5602100aeb4
-(I kept original code fragments - using idregs - in comments).
+For the special case of smmuv3-accel.c, we only support the NS-only path
+for now. Therefore, we initialize a minimal cfg with sec_sid, txattrs,
+and as for the NS-only accel path.
 
-Please let me know if I should've done something different here, for
-example not picking up this change for 10.0.x :)
+For now, the configuration cache lookup key remains unchanged and is
+still based solely on the SMMUDevice pointer. The new attributes are
+populated during a cache miss in smmuv3_get_config. And some paths still
+rely on the NS-only address_space_memory, for example smmuv3_notify_iova
+and get_pte(). These will be progressively converted in follow-up commits
+to use an AddressSpace selected according to SEC_SID.
 
-Thanks,
+Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
+---
+ hw/arm/smmu-common.c         | 19 ++++++++++++++++++
+ hw/arm/smmuv3-accel.c        | 12 +++++++++++-
+ hw/arm/smmuv3-internal.h     |  3 ++-
+ hw/arm/smmuv3.c              | 38 ++++++++++++++++++++++--------------
+ include/hw/arm/smmu-common.h | 12 ++++++++++++
+ 5 files changed, 67 insertions(+), 17 deletions(-)
 
-/mjt
-
-> ---
->   docs/system/arm/cpu-features.rst | 10 ++++++++++
->   target/arm/cpu64.c               | 15 +++++++++++++++
->   2 files changed, 25 insertions(+)
-> 
-> diff --git a/docs/system/arm/cpu-features.rst b/docs/system/arm/cpu-features.rst
-> index 37d5dfd15b..024119449c 100644
-> --- a/docs/system/arm/cpu-features.rst
-> +++ b/docs/system/arm/cpu-features.rst
-> @@ -318,6 +318,11 @@ SVE CPU Property Parsing Semantics
->        provided an error will be generated.  To avoid this error, one must
->        enable at least one vector length prior to enabling SVE.
->   
-> +  10) Enabling SVE (with ``sve=on`` or by default) enables all the SVE
-> +      sub-features that the CPU supports (for example, it may also
-> +      enable SVE2). There are not generally any lower-level controls
-> +      for disabling specific SVE sub-features.
-> +
->   SVE CPU Property Examples
->   -------------------------
->   
-> @@ -430,6 +435,11 @@ and all vector lengths must be powers of 2.  The maximum vector
->   length supported by qemu is 2048 bits.  Otherwise, there are no
->   additional constraints on the set of vector lengths supported by SME.
->   
-> +As with SVE, ``sme=on`` enables all the SME sub-features the CPU
-> +supports (for example, it may also enable SME2), and there are
-> +no lower-level controls for fine-grained disabling of specific
-> +SME sub-features.
-> +
->   SME User-mode Default Vector Length Property
->   --------------------------------------------
->   
-> diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
-> index 4dfc03973e..26873a39b4 100644
-> --- a/target/arm/cpu64.c
-> +++ b/target/arm/cpu64.c
-> @@ -363,6 +363,16 @@ void arm_cpu_sme_finalize(ARMCPU *cpu, Error **errp)
->   
->       cpu->sme_vq.map = vq_map;
->       cpu->sme_max_vq = 32 - clz32(vq_map);
-> +
-> +    /*
-> +     * The "sme" property setter writes a bool value into ID_AA64PFR1_EL1.SME
-> +     * (and at this point we know it's not 0). Correct that value to report
-> +     * the same SME version as ID_AA64SMFR0_EL1.SMEver.
-> +     */
-> +    if (FIELD_EX64_IDREG(&cpu->isar, ID_AA64SMFR0, SMEVER) != 0) {
-> +        /* SME2 or better */
-> +        FIELD_DP64_IDREG(&cpu->isar, ID_AA64PFR1, SME, 2);
-> +    }
->   }
->   
->   static bool cpu_arm_get_sme(Object *obj, Error **errp)
-> @@ -375,6 +385,11 @@ static void cpu_arm_set_sme(Object *obj, bool value, Error **errp)
->   {
->       ARMCPU *cpu = ARM_CPU(obj);
->   
-> +    /*
-> +     * For now, write 0 for "off" and 1 for "on" into the PFR1 field.
-> +     * We will correct this value to report the right SME
-> +     * level (SME vs SME2) in arm_cpu_sme_finalize() later.
-> +     */
->       FIELD_DP64_IDREG(&cpu->isar, ID_AA64PFR1, SME, value);
->   }
->   
+diff --git a/hw/arm/smmu-common.c b/hw/arm/smmu-common.c
+index 3baba2a4c8e..b320aec8c60 100644
+--- a/hw/arm/smmu-common.c
++++ b/hw/arm/smmu-common.c
+@@ -30,6 +30,25 @@
+ #include "hw/arm/smmu-common.h"
+ #include "smmu-internal.h"
+ 
++ARMSecuritySpace smmu_get_security_space(SMMUSecSID sec_sid)
++{
++    switch (sec_sid) {
++    case SMMU_SEC_SID_S:
++        return ARMSS_Secure;
++    case SMMU_SEC_SID_NS:
++    default:
++        return ARMSS_NonSecure;
++    }
++}
++
++MemTxAttrs smmu_get_txattrs(SMMUSecSID sec_sid)
++{
++    return (MemTxAttrs) {
++        .secure = sec_sid > SMMU_SEC_SID_NS ? 1 : 0,
++        .space = smmu_get_security_space(sec_sid),
++    };
++}
++
+ AddressSpace *smmu_get_address_space(SMMUState *s, SMMUSecSID sec_sid)
+ {
+     switch (sec_sid) {
+diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c
+index fdcb15005ea..9a41391826b 100644
+--- a/hw/arm/smmuv3-accel.c
++++ b/hw/arm/smmuv3-accel.c
+@@ -244,6 +244,16 @@ bool smmuv3_accel_install_ste(SMMUv3State *s, SMMUDevice *sdev, int sid,
+     const char *type;
+     STE ste;
+     SMMUSecSID sec_sid = SMMU_SEC_SID_NS;
++    /*
++     * smmu_find_ste() requires a SMMUTransCfg to provide address space and
++     * transaction attributes for DMA reads. Only NS state is supported here.
++     */
++    SMMUState *bc = &s->smmu_state;
++    SMMUTransCfg cfg = {
++        .sec_sid = sec_sid,
++        .txattrs = smmu_get_txattrs(sec_sid),
++        .as = smmu_get_address_space(bc, sec_sid),
++    };
+ 
+     if (!accel || !accel->viommu) {
+         return true;
+@@ -259,7 +269,7 @@ bool smmuv3_accel_install_ste(SMMUv3State *s, SMMUDevice *sdev, int sid,
+         return false;
+     }
+ 
+-    if (smmu_find_ste(sdev->smmu, sid, &ste, &event)) {
++    if (smmu_find_ste(sdev->smmu, sid, &ste, &event, &cfg)) {
+         /* No STE found, nothing to install */
+         return true;
+     }
+diff --git a/hw/arm/smmuv3-internal.h b/hw/arm/smmuv3-internal.h
+index a1071f7b689..6d29b9027f0 100644
+--- a/hw/arm/smmuv3-internal.h
++++ b/hw/arm/smmuv3-internal.h
+@@ -363,7 +363,8 @@ typedef struct SMMUEventInfo {
+     } while (0)
+ 
+ void smmuv3_record_event(SMMUv3State *s, SMMUEventInfo *event);
+-int smmu_find_ste(SMMUv3State *s, uint32_t sid, STE *ste, SMMUEventInfo *event);
++int smmu_find_ste(SMMUv3State *s, uint32_t sid, STE *ste, SMMUEventInfo *event,
++                  SMMUTransCfg *cfg);
+ 
+ static inline int oas2bits(int oas_field)
+ {
+diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
+index 3438adcecd2..2192bec2368 100644
+--- a/hw/arm/smmuv3.c
++++ b/hw/arm/smmuv3.c
+@@ -347,14 +347,13 @@ static void smmuv3_reset(SMMUv3State *s)
+ }
+ 
+ static int smmu_get_ste(SMMUv3State *s, dma_addr_t addr, STE *buf,
+-                        SMMUEventInfo *event)
++                        SMMUEventInfo *event, SMMUTransCfg *cfg)
+ {
+     int ret, i;
+ 
+     trace_smmuv3_get_ste(addr);
+     /* TODO: guarantee 64-bit single-copy atomicity */
+-    ret = dma_memory_read(&address_space_memory, addr, buf, sizeof(*buf),
+-                          MEMTXATTRS_UNSPECIFIED);
++    ret = dma_memory_read(cfg->as, addr, buf, sizeof(*buf), cfg->txattrs);
+     if (ret != MEMTX_OK) {
+         qemu_log_mask(LOG_GUEST_ERROR,
+                       "Cannot fetch pte at address=0x%"PRIx64"\n", addr);
+@@ -399,8 +398,7 @@ static int smmu_get_cd(SMMUv3State *s, STE *ste, SMMUTransCfg *cfg,
+     }
+ 
+     /* TODO: guarantee 64-bit single-copy atomicity */
+-    ret = dma_memory_read(&address_space_memory, addr, buf, sizeof(*buf),
+-                          MEMTXATTRS_UNSPECIFIED);
++    ret = dma_memory_read(cfg->as, addr, buf, sizeof(*buf), cfg->txattrs);
+     if (ret != MEMTX_OK) {
+         qemu_log_mask(LOG_GUEST_ERROR,
+                       "Cannot fetch pte at address=0x%"PRIx64"\n", addr);
+@@ -655,17 +653,19 @@ bad_ste:
+  * @sid: stream ID
+  * @ste: returned stream table entry
+  * @event: handle to an event info
++ * @cfg: translation configuration cache
+  *
+  * Supports linear and 2-level stream table
+  * Return 0 on success, -EINVAL otherwise
+  */
+-int smmu_find_ste(SMMUv3State *s, uint32_t sid, STE *ste, SMMUEventInfo *event)
++int smmu_find_ste(SMMUv3State *s, uint32_t sid, STE *ste, SMMUEventInfo *event,
++                  SMMUTransCfg *cfg)
+ {
+     dma_addr_t addr, strtab_base;
+     uint32_t log2size;
+     int strtab_size_shift;
+     int ret;
+-    SMMUSecSID sec_sid = SMMU_SEC_SID_NS;
++    SMMUSecSID sec_sid = cfg->sec_sid;
+     SMMUv3RegBank *bank = smmuv3_bank(s, sec_sid);
+ 
+     trace_smmuv3_find_ste(sid, bank->features, bank->sid_split);
+@@ -693,8 +693,8 @@ int smmu_find_ste(SMMUv3State *s, uint32_t sid, STE *ste, SMMUEventInfo *event)
+         l2_ste_offset = sid & ((1 << bank->sid_split) - 1);
+         l1ptr = (dma_addr_t)(strtab_base + l1_ste_offset * sizeof(l1std));
+         /* TODO: guarantee 64-bit single-copy atomicity */
+-        ret = dma_memory_read(&address_space_memory, l1ptr, &l1std,
+-                              sizeof(l1std), MEMTXATTRS_UNSPECIFIED);
++        ret = dma_memory_read(cfg->as, l1ptr, &l1std, sizeof(l1std),
++                              cfg->txattrs);
+         if (ret != MEMTX_OK) {
+             qemu_log_mask(LOG_GUEST_ERROR,
+                           "Could not read L1PTR at 0X%"PRIx64"\n", l1ptr);
+@@ -736,7 +736,7 @@ int smmu_find_ste(SMMUv3State *s, uint32_t sid, STE *ste, SMMUEventInfo *event)
+         addr = strtab_base + sid * sizeof(*ste);
+     }
+ 
+-    if (smmu_get_ste(s, addr, ste, event)) {
++    if (smmu_get_ste(s, addr, ste, event, cfg)) {
+         return -EINVAL;
+     }
+ 
+@@ -865,7 +865,7 @@ static int smmuv3_decode_config(IOMMUMemoryRegion *mr, SMMUTransCfg *cfg,
+     /* ASID defaults to -1 (if s1 is not supported). */
+     cfg->asid = -1;
+ 
+-    ret = smmu_find_ste(s, sid, &ste, event);
++    ret = smmu_find_ste(s, sid, &ste, event, cfg);
+     if (ret) {
+         return ret;
+     }
+@@ -899,7 +899,8 @@ static int smmuv3_decode_config(IOMMUMemoryRegion *mr, SMMUTransCfg *cfg,
+  * decoding under the form of an SMMUTransCfg struct. The hash table is indexed
+  * by the SMMUDevice handle.
+  */
+-static SMMUTransCfg *smmuv3_get_config(SMMUDevice *sdev, SMMUEventInfo *event)
++static SMMUTransCfg *smmuv3_get_config(SMMUDevice *sdev, SMMUEventInfo *event,
++                                       SMMUSecSID sec_sid)
+ {
+     SMMUv3State *s = sdev->smmu;
+     SMMUState *bc = &s->smmu_state;
+@@ -919,7 +920,14 @@ static SMMUTransCfg *smmuv3_get_config(SMMUDevice *sdev, SMMUEventInfo *event)
+                             100 * sdev->cfg_cache_hits /
+                             (sdev->cfg_cache_hits + sdev->cfg_cache_misses));
+         cfg = g_new0(SMMUTransCfg, 1);
+-        cfg->sec_sid = SMMU_SEC_SID_NS;
++        cfg->sec_sid = sec_sid;
++        cfg->txattrs = smmu_get_txattrs(sec_sid);
++        cfg->as = smmu_get_address_space(bc, sec_sid);
++        cfg->ns_as = (sec_sid > SMMU_SEC_SID_NS)
++                     ? smmu_get_address_space(bc, SMMU_SEC_SID_NS)
++                     : cfg->as;
++        /* AddressSpace must be available, assert if not. */
++        g_assert(cfg->as && cfg->ns_as);
+ 
+         if (!smmuv3_decode_config(&sdev->iommu, cfg, event)) {
+             g_hash_table_insert(bc->configs, sdev, cfg);
+@@ -1101,7 +1109,7 @@ static IOMMUTLBEntry smmuv3_translate(IOMMUMemoryRegion *mr, hwaddr addr,
+         goto epilogue;
+     }
+ 
+-    cfg = smmuv3_get_config(sdev, &event);
++    cfg = smmuv3_get_config(sdev, &event, sec_sid);
+     if (!cfg) {
+         status = SMMU_TRANS_ERROR;
+         goto epilogue;
+@@ -1183,7 +1191,7 @@ static void smmuv3_notify_iova(IOMMUMemoryRegion *mr,
+     SMMUSecSID sec_sid = SMMU_SEC_SID_NS;
+     SMMUEventInfo eventinfo = {.sec_sid = sec_sid,
+                                .inval_ste_allowed = true};
+-    SMMUTransCfg *cfg = smmuv3_get_config(sdev, &eventinfo);
++    SMMUTransCfg *cfg = smmuv3_get_config(sdev, &eventinfo, sec_sid);
+     IOMMUTLBEvent event;
+     uint8_t granule;
+ 
+diff --git a/include/hw/arm/smmu-common.h b/include/hw/arm/smmu-common.h
+index b3ca55effc5..7944e8d1b64 100644
+--- a/include/hw/arm/smmu-common.h
++++ b/include/hw/arm/smmu-common.h
+@@ -22,6 +22,7 @@
+ #include "hw/core/sysbus.h"
+ #include "hw/pci/pci.h"
+ #include "qom/object.h"
++#include "hw/arm/arm-security.h"
+ 
+ #define SMMU_PCI_BUS_MAX                    256
+ #define SMMU_PCI_DEVFN_MAX                  256
+@@ -47,6 +48,9 @@ typedef enum SMMUSecSID {
+     SMMU_SEC_SID_NUM,
+ } SMMUSecSID;
+ 
++MemTxAttrs smmu_get_txattrs(SMMUSecSID sec_sid);
++ARMSecuritySpace smmu_get_security_space(SMMUSecSID sec_sid);
++
+ /*
+  * Page table walk error types
+  */
+@@ -124,6 +128,14 @@ typedef struct SMMUTransCfg {
+     SMMUTransTableInfo tt[2];
+     /* Used by stage-2 only. */
+     struct SMMUS2Cfg s2cfg;
++    MemTxAttrs txattrs;        /* cached transaction attributes */
++    /*
++     * Cached AS related to the SEC_SID, which will be statically marked, and
++     * in future RME support it will be implemented as a dynamic switch.
++     */
++    AddressSpace *as;
++    /* Cached NS AS. It will be used if previous SEC_SID != SMMU_SEC_SID_NS. */
++    AddressSpace *ns_as;
+ } SMMUTransCfg;
+ 
+ typedef struct SMMUDevice {
+-- 
+2.34.1
 
 
