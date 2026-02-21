@@ -4,99 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FA18C61DE5
-	for <qemu-devel@archiver.kernel.org>; Sat, 21 Feb 2026 12:38:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80DC4C61DE7
+	for <qemu-devel@archiver.kernel.org>; Sat, 21 Feb 2026 13:55:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vtmEm-0001CN-4P; Sat, 21 Feb 2026 07:37:32 -0500
+	id 1vtnRy-0001w2-1e; Sat, 21 Feb 2026 08:55:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1vtmEk-0001C0-Sh
- for qemu-devel@nongnu.org; Sat, 21 Feb 2026 07:37:30 -0500
-Received: from mail-qv1-xf2a.google.com ([2607:f8b0:4864:20::f2a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1vtmEi-0007sd-T1
- for qemu-devel@nongnu.org; Sat, 21 Feb 2026 07:37:30 -0500
-Received: by mail-qv1-xf2a.google.com with SMTP id
- 6a1803df08f44-896f5af3d8aso42435696d6.1
- for <qemu-devel@nongnu.org>; Sat, 21 Feb 2026 04:37:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1771677448; x=1772282248; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=CEH12AtF9HPz0wJRDSQzSQPnGrKGrxPPiUk+KjVgvpI=;
- b=ISM2igSb4U7aAoYxQkErHstmz2tqL+2zvXjX1PstLSggItNmxLs2z6YQ6u0HR6m72t
- Yz7WxQzgy1QPxqwUSiveM55bCDLDNDzonvNCiIqEOS8zSRYnvr6JAAUaFi2tu89V7tkl
- mz2GpuUXUukiHGh/7xEdIiBUeTOXlEMtDF4HNtZ9uK01hKWBjTqV6UBeNJnlTsMM3Has
- R1T0Krm3gGU0nWdrIui1UgMq4Nc+KwXFe5z4KwahiIyQk7ovGa1lzayLOU3gJjOLNyl7
- HCNDwT97M8oJJUMQeJoEAVgeWTbFBOw/VHBNQixQH9TTBh9biIzgrrGk96icuz3anZi+
- /5UA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771677448; x=1772282248;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=CEH12AtF9HPz0wJRDSQzSQPnGrKGrxPPiUk+KjVgvpI=;
- b=mLrB8LDzU9VzkVyaJTwkNG7yC52Xdx4CdyQ/uagtM/TfrIvxnbezvI1G3hjcxU5auA
- KuhnskAOjBBjGsNsMqw5MI8Q5+t55sk6bFHPzygzRTBNfLBL3rF3OjkEcpHpp6FQ7lbz
- BTxsefxyKPGxxv2pF5/b4Skn1e64HGVeFJoYwSNyrLzE59FGaGg55dnU7dF5eYM/w8oV
- 2/sG0WuR2wb6NzEwwxdmL2HNvzDS/esZZeB/3NrpJVY+EXsTNLwEYEoxD1OELV8nJa2E
- CU6LSJ5VVM7MVudPJwp3eYS/wzxHA2y/RqXed24Ak6IITanhLdfhrhO3vxVfsB8qninJ
- T3eA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXa2djihC3xhJEGuQrk+bdYYNoHZeLW0z5o7G/AZnKiFEmp06riUPrFH48AG2kryQL0j0ayFuyfMRub@nongnu.org
-X-Gm-Message-State: AOJu0Yy2AuThIPQBagUme/2WKaP3EjHKzT7gZ2iM34NSl0pBl6e+YIzC
- IU4s3tzwTTcwKA5VHvPCZVzbMdaMI7BMIT+lICLyG0MWWzIb53Mrj18eUQRM9z7Kglk=
-X-Gm-Gg: AZuq6aLD/3n8hZUxqTVA79NXDjlpMt/k3BnsBWY6L+FxyjUv+P6TAZggtwLbs4l7C7O
- vQlt/f5yNVAvx9HYQBb8VUPioEBQVTk+/HOuvLNFRkuMR54MW2DShHe97UFqtegFUMA5ZC8r+KX
- sV3B/eFCZ/b24DqGy309hL5esSVcOla7BI7vRgteF4NAP0BnKadXAaAuMVxgEgOBxHl7DHMvg8L
- 9f55xrko2v3yEtmT+gv5Q0R1pvO8RiXOjiaIqUOr6ZAmIoooXwLpldOj9CwHv35GcIOiqqI/rRL
- Tu2a5aN2/WAZvKETt1liImgdCku1Y+SG+mRcw0cbEYYCHayKulzoqW1kG5qDCrCjtbRo3jZTYgd
- Q5gyB0vOafgkGkKR3jEHK4V7ExnjYemA/STALZxiMHPtP3U0HMl5r+AP8/NbVtZAA9Tv8/s7lm7
- IEfuVLsiicOV1Fs3P3BlwRZMEH3Jp2HALn9wubMu3Tu31vnYqH6A==
-X-Received: by 2002:a05:6214:268a:b0:896:f320:b189 with SMTP id
- 6a1803df08f44-89979c41fc6mr50892756d6.10.1771677447937; 
- Sat, 21 Feb 2026 04:37:27 -0800 (PST)
-Received: from [192.168.68.104] ([179.193.9.245])
- by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-8997c6b6af6sm17225096d6.12.2026.02.21.04.37.25
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 21 Feb 2026 04:37:27 -0800 (PST)
-Message-ID: <86208284-b07c-46d6-9010-896bc8ad149c@ventanamicro.com>
-Date: Sat, 21 Feb 2026 09:37:24 -0300
+ (Exim 4.90_1) (envelope-from <hi@alyssa.is>) id 1vtnRv-0001vN-OR
+ for qemu-devel@nongnu.org; Sat, 21 Feb 2026 08:55:12 -0500
+Received: from fout-a4-smtp.messagingengine.com ([103.168.172.147])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <hi@alyssa.is>) id 1vtnRs-0005vf-GJ
+ for qemu-devel@nongnu.org; Sat, 21 Feb 2026 08:55:11 -0500
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+ by mailfout.phl.internal (Postfix) with ESMTP id F3C69EC05B4;
+ Sat, 21 Feb 2026 08:55:05 -0500 (EST)
+Received: from phl-frontend-03 ([10.202.2.162])
+ by phl-compute-05.internal (MEProxy); Sat, 21 Feb 2026 08:55:06 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alyssa.is; h=cc
+ :cc:content-type:content-type:date:date:from:from:in-reply-to
+ :in-reply-to:message-id:mime-version:references:reply-to:subject
+ :subject:to:to; s=fm2; t=1771682105; x=1771768505; bh=4slj67GZVv
+ fKovDsD57P5OjSg0W1HXhWEDxoqRMI7VQ=; b=gYVP8UINu0CWqy1PdWMh3YNNJI
+ Z1Ropb2353MWbSn8V53XLjE/nNgR27P8oz9RpZh6hGvbTdbso8OZ3Rfpc3jbcqQS
+ z7SPDAruIxHOuuNQlBlRVXZIeKdBXoE85dE5ub25rPhdYVK3k0wTR1MeY2zGOBSl
+ 1Ugw4tUwNqETPe4dj+lJ/2jgUXZxd2fFRJdnngca/e2Oa00j9vNNmhbsoGyTgWQQ
+ h5sXOQTOcF29CfCpnR6oJtAx6zQXnmBCq7PbS0X0DppiCKBut0XCg6tmOXBJCf7K
+ SPk9khDabXR2Cd6oexTF+urF5VjPLGRUwOSQGC6NfMjdu7zKpBVBglYLWxFQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-type:content-type:date:date
+ :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+ :message-id:mime-version:references:reply-to:subject:subject:to
+ :to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+ 1771682105; x=1771768505; bh=4slj67GZVvfKovDsD57P5OjSg0W1HXhWEDx
+ oqRMI7VQ=; b=aciVPJf5XX/wva4cph5VhKGhoaNOsxbhBrX8HTRrevi5nkqvPK2
+ 2x1nquQjHCH/Szzgo/mYF3Gv4PM0FHRL410zhOqU5IWUOQHmRqM0E1DmZmVrZVOK
+ duplHC8mOwGBV+gq+AuqURDSEAcNu21P26IzPdtZFVfciouCU1uZ8VRCXqypN98F
+ nbxDw+o/dJ8eDdOV8wMKx7Lhad+vgWdRMmiH9+y2adbZMLgw22BD8qdHwUGXWXAw
+ Gy6bxnFsmlIch8p6ZmIZv3KSi8xgMU9ND8fQp//+o5yYoPhQSH0EW+ZexzV9IR0v
+ qk1z6jiZ97+ntkHYrIzhzA9cgl26XJQ0ZcQ==
+X-ME-Sender: <xms:ObmZaVtLvR14GQqu894PNdtvctoDGIO2G0QzRSZzd5Cjno5hMeaDaw>
+ <xme:ObmZaUA35NCDfJvupla1hKWKERV-y_REVbDpeUCZ64isBlpxIQbFx0YFs0RUoGurT
+ 7H9nJghxAcQyXtFnEtwVq2Pc_ly2Vxa5o0Zsq20TfZs3Znz-ZZI3A>
+X-ME-Received: <xmr:ObmZaSWOIH601IWsKX04YPaBpx7G-qfEqyYMGJr75A7qXrWwTcC4O1KOwGWER6POEwuVWB-B6Dwr>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvfeduheegucetufdoteggodetrf
+ dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+ rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+ gurhephffvvefujghffffkgggtsehgtderredttddtnecuhfhrohhmpeetlhihshhsrgcu
+ tfhoshhsuceohhhisegrlhihshhsrgdrihhsqeenucggtffrrghtthgvrhhnpeeiudffue
+ eilefgtefgtddttdekkeehkefgheekudefveetgeefiefftedvteeuveenucevlhhushht
+ vghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehhihesrghlhihsshgrrd
+ hishdpnhgspghrtghpthhtohepudejpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
+ pehsthgvvhgvnhhsugestghhrhhomhhiuhhmrdhorhhgpdhrtghpthhtoheprghlvgigrd
+ gsvghnnhgvvgeslhhinhgrrhhordhorhhgpdhrtghpthhtohepmhgrnhhoshdrphhithhs
+ ihguihgrnhgrkhhisheslhhinhgrrhhordhorhhgpdhrtghpthhtohepphhhihhlmhguse
+ hlihhnrghrohdrohhrghdprhgtphhtthhopehpihgvrhhrihgtkhdrsghouhhvihgvrhes
+ lhhinhgrrhhordhorhhgpdhrtghpthhtohepqhgvmhhuqdguvghvvghlsehnohhnghhnuh
+ drohhrghdprhgtphhtthhopegrvghsthgvvhgvsehrvgguhhgrthdrtghomhdprhgtphht
+ thhopegusggrshhsvgihsehrvgguhhgrthdrtghomhdprhgtphhtthhopehjrghsohifrg
+ hnghesrhgvughhrghtrdgtohhm
+X-ME-Proxy: <xmx:ObmZadEBNPOoZLsHRNr0vDmBGsz2OIsw88kFdIhRlJTfAAe8OHaZUw>
+ <xmx:ObmZadOnbqehbWnadoCM786hHYeDb4fjorQ8fcgm9pbqA256FBFB5g>
+ <xmx:ObmZaZVSzzZ4miHizTn7bPV-xX7pO8ajDMtMYUGJMip_ShbPFvsyQA>
+ <xmx:ObmZaUxF08EnxBbBsBY2Hws3Y4ZMAV861mewc60xRddjpXBLrbgVKw>
+ <xmx:ObmZaUGgweV07sEVfbmifiaqxOBG-BDkEXroWuhbDEItq2k-VZoh5O0L>
+Feedback-ID: i12284293:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
+ 21 Feb 2026 08:55:04 -0500 (EST)
+Received: by mbp.qyliss.net (Postfix, from userid 1000)
+ id E517E74FEC3D; Sat, 21 Feb 2026 14:54:58 +0100 (CET)
+From: Alyssa Ross <hi@alyssa.is>
+To: Albert Esteve <aesteve@redhat.com>, qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>, Pierrick Bouvier
+ <pierrick.bouvier@linaro.org>, mst@redhat.com, dbassey@redhat.com,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>, Alex
+ =?utf-8?Q?Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, Paolo Bonzini <pbonzini@redhat.com>, Fabiano
+ Rosas <farosas@suse.de>, stefanha@redhat.com,
+ manos.pitsidianakis@linaro.org, Stefano Garzarella <sgarzare@redhat.com>,
+ jasowang@redhat.com, Laurent Vivier <lvivier@redhat.com>, slp@redhat.com,
+ stevensd@chromium.org
+Subject: Re: [PATCH v13 3/7] vhost_user.rst: Add SHMEM_MAP/_UNMAP to spec
+In-Reply-To: <20260219130334.787858-4-aesteve@redhat.com>
+References: <20260219130334.787858-1-aesteve@redhat.com>
+ <20260219130334.787858-4-aesteve@redhat.com>
+Date: Sat, 21 Feb 2026 14:54:52 +0100
+Message-ID: <87tsvakxqr.fsf@alyssa.is>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 06/50] target/riscv: Extract monitor-related code to
- monitor.c
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>, qemu-s390x@nongnu.org,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-riscv@nongnu.org, qemu-ppc@nongnu.org,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
- <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-References: <20260219191955.83815-1-philmd@linaro.org>
- <20260219191955.83815-7-philmd@linaro.org>
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Content-Language: en-US
-In-Reply-To: <20260219191955.83815-7-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::f2a;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-qv1-xf2a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: multipart/signed; boundary="=-=-=";
+ micalg=pgp-sha512; protocol="application/pgp-signature"
+Received-SPF: pass client-ip=103.168.172.147; envelope-from=hi@alyssa.is;
+ helo=fout-a4-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -113,348 +120,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+--=-=-=
+Content-Type: text/plain
 
+Albert Esteve <aesteve@redhat.com> writes:
 
-On 2/19/2026 4:19 PM, Philippe Mathieu-Daudé wrote:
-> Keep riscv-qmp-cmds.c for QMP, use monitor.c for HMP.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Add SHMEM_MAP/_UNMAP request to the vhost-user
+> spec documentation.
+>
+> Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+> Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+> Signed-off-by: Albert Esteve <aesteve@redhat.com>
 > ---
+>  docs/interop/vhost-user.rst | 61 +++++++++++++++++++++++++++++++++++++
+>  1 file changed, 61 insertions(+)
 
+Reviewed-by: Alyssa Ross <hi@alyssa.is>
 
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+--=-=-=
+Content-Type: application/pgp-signature; name="signature.asc"
 
->   target/riscv/monitor.c        | 148 +++++++++++++++++++++++++++++++++
->   target/riscv/riscv-qmp-cmds.c | 150 ----------------------------------
->   2 files changed, 148 insertions(+), 150 deletions(-)
-> 
-> diff --git a/target/riscv/monitor.c b/target/riscv/monitor.c
-> index 478fd392ac6..ccb7eb44d02 100644
-> --- a/target/riscv/monitor.c
-> +++ b/target/riscv/monitor.c
-> @@ -19,6 +19,8 @@
->    */
->   
->   #include "qemu/osdep.h"
-> +#include "qemu/ctype.h"
-> +#include "qemu/qemu-print.h"
->   #include "cpu.h"
->   #include "cpu_bits.h"
->   #include "monitor/monitor.h"
-> @@ -241,3 +243,149 @@ void hmp_info_mem(Monitor *mon, const QDict *qdict)
->   
->       mem_info_svxx(mon, env);
->   }
-> +
-> +/*
-> + * We have way too many potential CSRs and regs being added
-> + * regularly to register them in a static array.
-> + *
-> + * Declare an empty array instead, making get_monitor_def() use
-> + * the target_get_monitor_def() API directly.
-> + */
-> +const MonitorDef monitor_defs[] = { { } };
-> +const MonitorDef *target_monitor_defs(void)
-> +{
-> +    return monitor_defs;
-> +}
-> +
-> +static bool reg_is_ulong_integer(CPURISCVState *env, const char *name,
-> +                                 target_ulong *val, bool is_gprh)
-> +{
-> +    const char * const *reg_names;
-> +    target_ulong *vals;
-> +
-> +    if (is_gprh) {
-> +        reg_names = riscv_int_regnamesh;
-> +        vals = env->gprh;
-> +    } else {
-> +        reg_names = riscv_int_regnames;
-> +        vals = env->gpr;
-> +    }
-> +
-> +    for (int i = 0; i < 32; i++) {
-> +        g_auto(GStrv) reg_name = g_strsplit(reg_names[i], "/", 2);
-> +
-> +        g_assert(reg_name[0]);
-> +        g_assert(reg_name[1]);
-> +
-> +        if (g_ascii_strcasecmp(reg_name[0], name) == 0 ||
-> +            g_ascii_strcasecmp(reg_name[1], name) == 0) {
-> +            *val = vals[i];
-> +            return true;
-> +        }
-> +    }
-> +
-> +    return false;
-> +}
-> +
-> +static bool reg_is_u64_fpu(CPURISCVState *env, const char *name, uint64_t *val)
-> +{
-> +    if (qemu_tolower(name[0]) != 'f') {
-> +        return false;
-> +    }
-> +
-> +    for (int i = 0; i < 32; i++) {
-> +        g_auto(GStrv) reg_name = g_strsplit(riscv_fpr_regnames[i], "/", 2);
-> +
-> +        g_assert(reg_name[0]);
-> +        g_assert(reg_name[1]);
-> +
-> +        if (g_ascii_strcasecmp(reg_name[0], name) == 0 ||
-> +            g_ascii_strcasecmp(reg_name[1], name) == 0) {
-> +            *val = env->fpr[i];
-> +            return true;
-> +        }
-> +    }
-> +
-> +    return false;
-> +}
-> +
-> +static bool reg_is_vreg(const char *name)
-> +{
-> +    if (qemu_tolower(name[0]) != 'v' || strlen(name) > 3) {
-> +        return false;
-> +    }
-> +
-> +    for (int i = 0; i < 32; i++) {
-> +        if (strcasecmp(name, riscv_rvv_regnames[i]) == 0) {
-> +            return true;
-> +        }
-> +    }
-> +
-> +    return false;
-> +}
-> +
-> +int target_get_monitor_def(CPUState *cs, const char *name, uint64_t *pval)
-> +{
-> +    CPURISCVState *env = &RISCV_CPU(cs)->env;
-> +    target_ulong val = 0;
-> +    uint64_t val64 = 0;
-> +    int i;
-> +
-> +    if (reg_is_ulong_integer(env, name, &val, false) ||
-> +        reg_is_ulong_integer(env, name, &val, true)) {
-> +        *pval = val;
-> +        return 0;
-> +    }
-> +
-> +    if (reg_is_u64_fpu(env, name, &val64)) {
-> +        *pval = val64;
-> +        return 0;
-> +    }
-> +
-> +    if (reg_is_vreg(name)) {
-> +        if (!riscv_cpu_cfg(env)->ext_zve32x) {
-> +            return -EINVAL;
-> +        }
-> +
-> +        qemu_printf("Unable to print the value of vector "
-> +                    "vreg '%s' from this API\n", name);
-> +
-> +        /*
-> +         * We're returning 0 because returning -EINVAL triggers
-> +         * an 'unknown register' message in exp_unary() later,
-> +         * which feels ankward after our own error message.
-> +         */
-> +        *pval = 0;
-> +        return 0;
-> +    }
-> +
-> +    for (i = 0; i < ARRAY_SIZE(csr_ops); i++) {
-> +        RISCVException res;
-> +        int csrno = i;
-> +
-> +        /*
-> +         * Early skip when possible since we're going
-> +         * through a lot of NULL entries.
-> +         */
-> +        if (csr_ops[csrno].predicate == NULL) {
-> +            continue;
-> +        }
-> +
-> +        if (strcasecmp(csr_ops[csrno].name, name) != 0) {
-> +            continue;
-> +        }
-> +
-> +        res = riscv_csrrw_debug(env, csrno, &val, 0, 0);
-> +
-> +        /*
-> +         * Rely on the smode, hmode, etc, predicates within csr.c
-> +         * to do the filtering of the registers that are present.
-> +         */
-> +        if (res == RISCV_EXCP_NONE) {
-> +            *pval = val;
-> +            return 0;
-> +        }
-> +    }
-> +
-> +    return -EINVAL;
-> +}
-> diff --git a/target/riscv/riscv-qmp-cmds.c b/target/riscv/riscv-qmp-cmds.c
-> index d5e9bec0f86..8a1856c50e0 100644
-> --- a/target/riscv/riscv-qmp-cmds.c
-> +++ b/target/riscv/riscv-qmp-cmds.c
-> @@ -31,10 +31,6 @@
->   #include "qapi/qobject-input-visitor.h"
->   #include "qapi/visitor.h"
->   #include "qom/qom-qobject.h"
-> -#include "qemu/ctype.h"
-> -#include "qemu/qemu-print.h"
-> -#include "monitor/hmp.h"
-> -#include "monitor/hmp-target.h"
->   #include "system/kvm.h"
->   #include "system/tcg.h"
->   #include "cpu-qom.h"
-> @@ -244,149 +240,3 @@ CpuModelExpansionInfo *qmp_query_cpu_model_expansion(CpuModelExpansionType type,
->   
->       return expansion_info;
->   }
-> -
-> -/*
-> - * We have way too many potential CSRs and regs being added
-> - * regularly to register them in a static array.
-> - *
-> - * Declare an empty array instead, making get_monitor_def() use
-> - * the target_get_monitor_def() API directly.
-> - */
-> -const MonitorDef monitor_defs[] = { { } };
-> -const MonitorDef *target_monitor_defs(void)
-> -{
-> -    return monitor_defs;
-> -}
-> -
-> -static bool reg_is_ulong_integer(CPURISCVState *env, const char *name,
-> -                                 target_ulong *val, bool is_gprh)
-> -{
-> -    const char * const *reg_names;
-> -    target_ulong *vals;
-> -
-> -    if (is_gprh) {
-> -        reg_names = riscv_int_regnamesh;
-> -        vals = env->gprh;
-> -    } else {
-> -        reg_names = riscv_int_regnames;
-> -        vals = env->gpr;
-> -    }
-> -
-> -    for (int i = 0; i < 32; i++) {
-> -        g_auto(GStrv) reg_name = g_strsplit(reg_names[i], "/", 2);
-> -
-> -        g_assert(reg_name[0]);
-> -        g_assert(reg_name[1]);
-> -
-> -        if (g_ascii_strcasecmp(reg_name[0], name) == 0 ||
-> -            g_ascii_strcasecmp(reg_name[1], name) == 0) {
-> -            *val = vals[i];
-> -            return true;
-> -        }
-> -    }
-> -
-> -    return false;
-> -}
-> -
-> -static bool reg_is_u64_fpu(CPURISCVState *env, const char *name, uint64_t *val)
-> -{
-> -    if (qemu_tolower(name[0]) != 'f') {
-> -        return false;
-> -    }
-> -
-> -    for (int i = 0; i < 32; i++) {
-> -        g_auto(GStrv) reg_name = g_strsplit(riscv_fpr_regnames[i], "/", 2);
-> -
-> -        g_assert(reg_name[0]);
-> -        g_assert(reg_name[1]);
-> -
-> -        if (g_ascii_strcasecmp(reg_name[0], name) == 0 ||
-> -            g_ascii_strcasecmp(reg_name[1], name) == 0) {
-> -            *val = env->fpr[i];
-> -            return true;
-> -        }
-> -    }
-> -
-> -    return false;
-> -}
-> -
-> -static bool reg_is_vreg(const char *name)
-> -{
-> -    if (qemu_tolower(name[0]) != 'v' || strlen(name) > 3) {
-> -        return false;
-> -    }
-> -
-> -    for (int i = 0; i < 32; i++) {
-> -        if (strcasecmp(name, riscv_rvv_regnames[i]) == 0) {
-> -            return true;
-> -        }
-> -    }
-> -
-> -    return false;
-> -}
-> -
-> -int target_get_monitor_def(CPUState *cs, const char *name, uint64_t *pval)
-> -{
-> -    CPURISCVState *env = &RISCV_CPU(cs)->env;
-> -    target_ulong val = 0;
-> -    uint64_t val64 = 0;
-> -    int i;
-> -
-> -    if (reg_is_ulong_integer(env, name, &val, false) ||
-> -        reg_is_ulong_integer(env, name, &val, true)) {
-> -        *pval = val;
-> -        return 0;
-> -    }
-> -
-> -    if (reg_is_u64_fpu(env, name, &val64)) {
-> -        *pval = val64;
-> -        return 0;
-> -    }
-> -
-> -    if (reg_is_vreg(name)) {
-> -        if (!riscv_cpu_cfg(env)->ext_zve32x) {
-> -            return -EINVAL;
-> -        }
-> -
-> -        qemu_printf("Unable to print the value of vector "
-> -                    "vreg '%s' from this API\n", name);
-> -
-> -        /*
-> -         * We're returning 0 because returning -EINVAL triggers
-> -         * an 'unknown register' message in exp_unary() later,
-> -         * which feels ankward after our own error message.
-> -         */
-> -        *pval = 0;
-> -        return 0;
-> -    }
-> -
-> -    for (i = 0; i < ARRAY_SIZE(csr_ops); i++) {
-> -        RISCVException res;
-> -        int csrno = i;
-> -
-> -        /*
-> -         * Early skip when possible since we're going
-> -         * through a lot of NULL entries.
-> -         */
-> -        if (csr_ops[csrno].predicate == NULL) {
-> -            continue;
-> -        }
-> -
-> -        if (strcasecmp(csr_ops[csrno].name, name) != 0) {
-> -            continue;
-> -        }
-> -
-> -        res = riscv_csrrw_debug(env, csrno, &val, 0, 0);
-> -
-> -        /*
-> -         * Rely on the smode, hmode, etc, predicates within csr.c
-> -         * to do the filtering of the registers that are present.
-> -         */
-> -        if (res == RISCV_EXCP_NONE) {
-> -            *pval = val;
-> -            return 0;
-> -        }
-> -    }
-> -
-> -    return -EINVAL;
-> -}
+-----BEGIN PGP SIGNATURE-----
 
+iHUEARYKAB0WIQRV/neXydHjZma5XLJbRZGEIw/wogUCaZm5LAAKCRBbRZGEIw/w
+ogaoAP46zbj68S052lT9BLsDODnFfe35kPWsbcEi130rfZDTJwEAqnF3nqBLw30X
+MkmGQbGhCRhukHfrTD6b1UyAG1S1lgw=
+=0e/z
+-----END PGP SIGNATURE-----
+--=-=-=--
 
