@@ -4,26 +4,26 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C2CFC61DE1
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2683C61DE3
 	for <qemu-devel@archiver.kernel.org>; Sat, 21 Feb 2026 10:19:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vtk4r-0003VR-LL; Sat, 21 Feb 2026 05:19:11 -0500
+	id 1vtk4j-0003Fd-Gi; Sat, 21 Feb 2026 05:19:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
- id 1vtk4d-0003Bi-4e; Sat, 21 Feb 2026 05:18:57 -0500
-Received: from sgoci-sdnproxy-4.icoremail.net ([129.150.39.64])
+ id 1vtk4V-0002zR-66; Sat, 21 Feb 2026 05:18:48 -0500
+Received: from zg8tmty1ljiyny4xntqumjca.icoremail.net ([165.227.154.27])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
  (envelope-from <tangtao1634@phytium.com.cn>)
- id 1vtk4b-0003Mt-0g; Sat, 21 Feb 2026 05:18:54 -0500
+ id 1vtk4T-0002n9-7G; Sat, 21 Feb 2026 05:18:46 -0500
 Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
- by hzbj-icmmx-6 (Coremail) with SMTP id AQAAfwCnftGIhplp3x9zAA--.745S2;
- Sat, 21 Feb 2026 18:18:48 +0800 (CST)
+ by hzbj-icmmx-6 (Coremail) with SMTP id AQAAfwAHXdCChplp0R9zAA--.3197S2;
+ Sat, 21 Feb 2026 18:18:42 +0800 (CST)
 Received: from phytium.com.cn (unknown [218.76.62.144])
- by mail (Coremail) with SMTP id AQAAfwDXMO6Ehplpf04cAA--.34422S3;
- Sat, 21 Feb 2026 18:18:45 +0800 (CST)
+ by mail (Coremail) with SMTP id AQAAfwDnP+1+hplpfU4cAA--.34781S3;
+ Sat, 21 Feb 2026 18:18:38 +0800 (CST)
 From: Tao Tang <tangtao1634@phytium.com.cn>
 To: Eric Auger <eric.auger@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>,
@@ -35,32 +35,32 @@ Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Mostafa Saleh <smostafa@google.com>, Chao Liu <chao.liu.zevorn@gmail.com>,
  Tao Tang <tangtao1634@phytium.com.cn>
-Subject: [RFC v4 26/31] hw/arm/smmuv3: Harden security checks in MMIO handlers
-Date: Sat, 21 Feb 2026 18:18:42 +0800
-Message-Id: <20260221101842.2996840-1-tangtao1634@phytium.com.cn>
+Subject: [RFC v4 25/31] hw/arm/smmuv3: Implement SMMU_S_INIT register
+Date: Sat, 21 Feb 2026 18:18:36 +0800
+Message-Id: <20260221101836.2996599-1-tangtao1634@phytium.com.cn>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260221100250.2976287-1-tangtao1634@phytium.com.cn>
 References: <20260221100250.2976287-1-tangtao1634@phytium.com.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAfwDXMO6Ehplpf04cAA--.34422S3
-X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQANBWmYzyUASQAAsb
+X-CM-TRANSID: AQAAfwDnP+1+hplpfU4cAA--.34781S3
+X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQANBWmYzyUARwAAsV
 Authentication-Results: hzbj-icmmx-6; spf=neutral smtp.mail=tangtao163
  4@phytium.com.cn;
-X-Coremail-Antispam: 1Uk129KBjvJXoWxGFykuF15Gw43Aw48Jw1kKrg_yoWrKr47pr
- 4kCr15Wr4DKa13Xan3Jw4DA3WFk3ykJrZxCrZxG3yUZayUGrs5JF10ka4YgFyDGryUZws7
- WF4SyrWfur1jy3DanT9S1TB71UUUUUJqnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
+X-Coremail-Antispam: 1Uk129KBjvJXoWxXF1UCw47Cr17uw47Wr43trb_yoWrWr1fpr
+ WDWr15Kw48A3WS9FnIkw4vyF15ua97Kry7CrZxGa4S9a4qyryqqF4DKrW7uFWDWr15Cay7
+ G3ySgFsrur1UX3DanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
  DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
  UUUUU
-Received-SPF: pass client-ip=129.150.39.64;
- envelope-from=tangtao1634@phytium.com.cn; helo=sgoci-sdnproxy-4.icoremail.net
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_MSPIKE_H3=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=165.227.154.27;
+ envelope-from=tangtao1634@phytium.com.cn;
+ helo=zg8tmty1ljiyny4xntqumjca.icoremail.net
+X-Spam_score_int: -25
+X-Spam_score: -2.6
+X-Spam_bar: --
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -76,137 +76,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch hardens the security validation within the main MMIO
-dispatcher functions (smmu_read_mmio and smmu_write_mmio).
+Implement read/write handlers for the SMMU_S_INIT secure-only register.
 
-First, accesses to the secure register space are now correctly gated by
-whether the SECURE_IMPL feature is enabled in the model. This prevents
-guest software from accessing the secure programming interface when it is
-disabled, though some registers are exempt from this check as per the
-architecture.
+Writing INV_ALL provides a mechanism for software to perform a global
+invalidation of ALL caches within the SMMU, including IOTLBs and
+configuration caches across all security states.
 
-Second, the check for the input stream's security is made more robust.
-It now validates not only the legacy MemTxAttrs.secure bit, but also
-the .space field. This improves compatibility with Arm security space
-handling.
+The MMIO dispatcher decodes the target register bank from the high bits
+of the offset and then switches on the 4KB page-local offset
+(offset & 0xfff), since registers that share the same function across
+banks use the same relative layout. S_INIT is a secure-only register and
+its A_S_INIT constant is currently defined as an absolute secure-window
+offset (0x803c), so it has no NS twin to reuse as a shared low-12-bit
+macro. As a one-off special case, the handler matches it via
+(A_S_INIT & 0xfff) to fit the relative-offset decode.
+
+This feature is critical for secure hypervisors like Hafnium, which use
+it as a final step in their SMMU initialization sequence to ensure a
+clean cache state before enabling translations.
 
 Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
 ---
- hw/arm/smmuv3.c | 80 +++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 80 insertions(+)
+ hw/arm/smmuv3.c     | 37 +++++++++++++++++++++++++++++++++++++
+ hw/arm/trace-events |  1 +
+ 2 files changed, 38 insertions(+)
 
 diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
-index 6fd664a000f..0b8ea922851 100644
+index d81485a6a46..6fd664a000f 100644
 --- a/hw/arm/smmuv3.c
 +++ b/hw/arm/smmuv3.c
-@@ -1503,6 +1503,12 @@ static bool smmu_eventq_irq_cfg_writable(SMMUv3State *s, SMMUSecSID sec_sid)
-     return (FIELD_EX32(s->bank[sec_sid].irq_ctrl, IRQ_CTRL, EVENTQ_IRQEN) == 0);
+@@ -373,6 +373,21 @@ static int smmu_get_ste(SMMUv3State *s, dma_addr_t addr, STE *buf,
+ 
  }
  
-+/* Check if the SMMU hardware itself implements secure state features */
-+static inline bool smmu_hw_secure_implemented(SMMUv3State *s)
++static void smmuv3_invalidate_all_caches(SMMUv3State *s)
 +{
-+    return FIELD_EX32(s->bank[SMMU_SEC_SID_S].idr[1], S_IDR1, SECURE_IMPL);
++    SMMUState *bs = &s->smmu_state;
++    trace_smmuv3_invalidate_all_caches();
++
++    /* Clear all cached configs including STE and CD */
++    if (bs->configs) {
++        g_hash_table_remove_all(bs->configs);
++    }
++
++    /* Invalidate all SMMU IOTLB entries */
++    smmu_inv_notifiers_all(&s->smmu_state);
++    smmu_iotlb_inv_all(bs, SMMU_SEC_SID_NUM);
 +}
 +
- static int smmuv3_cmdq_consume(SMMUv3State *s, Error **errp, SMMUSecSID sec_sid)
- {
-     SMMUState *bs = ARM_SMMU(s);
-@@ -1795,6 +1801,63 @@ static int smmuv3_cmdq_consume(SMMUv3State *s, Error **errp, SMMUSecSID sec_sid)
-     return 0;
- }
+ static SMMUTranslationStatus smmuv3_do_translate(SMMUv3State *s, hwaddr addr,
+                                                  SMMUTransCfg *cfg,
+                                                  SMMUEventInfo *event,
+@@ -2077,6 +2092,25 @@ static MemTxResult smmu_writel(SMMUv3State *s, hwaddr offset,
  
-+/*
-+ * Check if a register is exempt from the secure implementation check.
-+ *
-+ * The SMMU architecture specifies that certain secure registers, such as
-+ * the secure Event Queue IRQ configuration registers, must be accessible
-+ * even if the full secure hardware is not implemented. This function
-+ * identifies those registers.
-+ *
-+ * Returns true if the register is exempt, false otherwise.
-+ */
-+static bool is_secure_impl_exempt_reg(hwaddr offset)
-+{
-+    switch (offset) {
-+    case A_S_EVENTQ_IRQ_CFG0:
-+    case A_S_EVENTQ_IRQ_CFG1:
-+    case A_S_EVENTQ_IRQ_CFG2:
-+        return true;
-+    default:
-+        return false;
-+    }
-+}
-+
-+/*
-+ * Helper function for Secure register access validation.
-+ *
-+ * Follow S_IDR1.SECURE_IMPL accessibility rules for SMMU_S_*:
-+ *  - SECURE_IMPL == 0: Secure state is not implemented; SMMU_S_* are RAZ/WI to
-+ *    all accesses.
-+ *  - SECURE_IMPL == 1: Non-secure accesses to SMMU_S_* are RAZ/WI.
-+ */
-+static bool smmu_check_secure_access(SMMUv3State *s, MemTxAttrs attrs,
-+                                     hwaddr offset, bool is_read)
-+{
-+    /* Check if the access is secure */
-+    if (!(attrs.space == ARMSS_Secure ||
-+          attrs.secure == 1)) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+            "%s: Non-secure %s attempt at offset 0x%" PRIx64 " (%s)\n",
-+            __func__, is_read ? "read" : "write", offset,
-+            is_read ? "RAZ" : "WI");
-+        return false;
-+    }
-+
-+    /*
-+     * Check if the secure state is implemented. Some registers are exempted
-+     * from this check.
-+     */
-+    if (!is_secure_impl_exempt_reg(offset) && !smmu_hw_secure_implemented(s)) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+            "%s: Secure %s attempt at offset 0x%" PRIx64 ". But Secure state "
-+            "is not implemented (RES0)\n",
-+            __func__, is_read ? "read" : "write", offset);
-+        return false;
-+    }
-+    return true;
-+}
-+
- static MemTxResult smmu_writell(SMMUv3State *s, hwaddr offset,
-                                 uint64_t data, MemTxAttrs attrs,
-                                 SMMUSecSID reg_sec_sid)
-@@ -2140,6 +2203,18 @@ static MemTxResult smmu_write_mmio(void *opaque, hwaddr offset, uint64_t data,
-      * the same layout but is mapped starting at 0x8000(SMMU_SECURE_REG_START)
-      */
-     if (offset >= SMMU_SECURE_REG_START) {
-+        if (!smmu_check_secure_access(s, attrs, offset, false)) {
-+            trace_smmuv3_write_mmio(offset, data, size, MEMTX_OK);
+         bank->eventq_irq_cfg2 = data;
+         break;
++    /* S_INIT is Secure-only. So match it as a one-off via & 0xfff. */
++    case (A_S_INIT & 0xfff):
++        if (data & R_S_INIT_INV_ALL_MASK) {
 +            /*
-+             * RAZ/WI/RES0 are deterministic register-level behaviors and do not
-+             * imply a bus protocol error or abort. Therefore we acknowledge the
-+             * MMIO transaction with MEMTX_OK and implement
-+             * "Read-As-Zero / Write-Ignored" in the register model, instead of
-+             * returning MEMTX_*_ERROR which is reserved for real decode/access
-+             * failures.
++             * If SMMU_ROOT_CR0.GPCEN == 0, a write of 1 to INV_ALL when any
++             * SMMU_(*_)CR0.SMMUEN == 1, .... , is CONSTRAINED UNPREDICTABLE
++             * according to (IHI 0070G.b) 6.3.62 SMMU_S_INIT, Page 465.
 +             */
-+            return MEMTX_OK;
++            if (!smmuv3_smmu_disabled_stable(s, SMMU_SEC_SID_NS) ||
++                !smmuv3_smmu_disabled_stable(s, SMMU_SEC_SID_S)) {
++                /* CONSTRAINED UNPREDICTABLE behavior: Ignore this write */
++                qemu_log_mask(LOG_GUEST_ERROR, "S_INIT write ignored: "
++                              "(S_)CR0.SMMUEN or (S_)CR0ACK.SMMUEN is set\n");
++                return MEMTX_OK;
++            }
++            smmuv3_invalidate_all_caches(s);
 +        }
-         reg_sec_sid = SMMU_SEC_SID_S;
-     }
++        /* Synchronous emulation: invalidation completed instantly. */
++        break;
+     default:
+         qemu_log_mask(LOG_UNIMP,
+                       "%s Unexpected 32-bit access to 0x%"PRIx64" (WI)\n",
+@@ -2277,6 +2311,9 @@ static MemTxResult smmu_readl(SMMUv3State *s, hwaddr offset,
+     case A_EVENTQ_CONS:
+         *data = bank->eventq.cons;
+         return MEMTX_OK;
++    case (A_S_INIT & 0xfff):
++        *data = 0;
++        return MEMTX_OK;
+     default:
+         *data = 0;
+         qemu_log_mask(LOG_UNIMP,
+diff --git a/hw/arm/trace-events b/hw/arm/trace-events
+index 64f308a8d35..26f19f18cb7 100644
+--- a/hw/arm/trace-events
++++ b/hw/arm/trace-events
+@@ -64,6 +64,7 @@ smmuv3_cmdq_tlbi_s12_vmid(int vmid) "vmid=%d"
+ smmuv3_notify_flag_add(const char *iommu) "ADD SMMUNotifier node for iommu mr=%s"
+ smmuv3_notify_flag_del(const char *iommu) "DEL SMMUNotifier node for iommu mr=%s"
+ smmuv3_inv_notifiers_iova(const char *name, int asid, int vmid, uint64_t iova, uint8_t tg, uint64_t num_pages, int stage) "iommu mr=%s asid=%d vmid=%d iova=0x%"PRIx64" tg=%d num_pages=0x%"PRIx64" stage=%d"
++smmuv3_invalidate_all_caches(void) "Invalidate all SMMU caches and TLBs"
+ smmu_reset_exit(void) ""
  
-@@ -2334,6 +2409,11 @@ static MemTxResult smmu_read_mmio(void *opaque, hwaddr offset, uint64_t *data,
-     /* CONSTRAINED UNPREDICTABLE choice to have page0/1 be exact aliases */
-     offset &= ~0x10000;
-     if (offset >= SMMU_SECURE_REG_START) {
-+        if (!smmu_check_secure_access(s, attrs, offset, true)) {
-+            *data = 0;
-+            trace_smmuv3_read_mmio(offset, *data, size, MEMTX_OK);
-+            return MEMTX_OK;
-+        }
-         reg_sec_sid = SMMU_SEC_SID_S;
-     }
- 
+ #smmuv3-accel.c
 -- 
 2.34.1
 
