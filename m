@@ -4,35 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C8B3C61DC2
-	for <qemu-devel@archiver.kernel.org>; Sat, 21 Feb 2026 06:56:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96282C61DC2
+	for <qemu-devel@archiver.kernel.org>; Sat, 21 Feb 2026 07:15:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vtguS-0007Dr-Ir; Sat, 21 Feb 2026 01:56:12 -0500
+	id 1vthCU-0002KY-Kp; Sat, 21 Feb 2026 02:14:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1vtguQ-0007AT-Uf
- for qemu-devel@nongnu.org; Sat, 21 Feb 2026 01:56:10 -0500
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1vthCS-0002Jk-KJ; Sat, 21 Feb 2026 02:14:48 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1vtguO-0008AE-IQ
- for qemu-devel@nongnu.org; Sat, 21 Feb 2026 01:56:10 -0500
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1vthCQ-0002tj-5b; Sat, 21 Feb 2026 02:14:48 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id D278A18B9DC;
- Sat, 21 Feb 2026 09:55:51 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 76A9818B9E1;
+ Sat, 21 Feb 2026 10:14:37 +0300 (MSK)
 Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 81AEB36BC52;
- Sat, 21 Feb 2026 09:55:55 +0300 (MSK)
-Message-ID: <eabe1076-d30c-4454-8558-a231b9cb228d@tls.msk.ru>
-Date: Sat, 21 Feb 2026 09:55:55 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id EA82936BC6A;
+ Sat, 21 Feb 2026 10:14:41 +0300 (MSK)
+Message-ID: <de487ce6-8e8d-4f30-b4d7-cd55c488f36b@tls.msk.ru>
+Date: Sat, 21 Feb 2026 10:14:41 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 01/15] target/arm: Account for SME in
+ aarch64_sve_narrow_vq() assertion
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+References: <20260202133353.2231685-1-peter.maydell@linaro.org>
+ <20260202133353.2231685-2-peter.maydell@linaro.org>
 Content-Language: en-US, ru-RU
-To: QEMU Development <qemu-devel@nongnu.org>, Peter Xu <peterx@redhat.com>,
- Fabiano Rosas <farosas@suse.de>
 From: Michael Tokarev <mjt@tls.msk.ru>
-Subject: migration: stable machine types?
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
  xsFNBGYpLkcBEACsajkUXU2lngbm6RyZuCljo19q/XjZTMikctzMoJnBGVSmFV66kylUghxs
  HDQQF2YZJbnhSVt/mP6+V7gG6MKR5gYXYxLmypgu2lJdqelrtGf1XtMrobG6kuKFiD8OqV6l
@@ -76,10 +82,9 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-Cc: Christian Ehrhardt <christian.ehrhardt@canonical.com>,
- Peter Maydell <peter.maydell@linaro.org>
+In-Reply-To: <20260202133353.2231685-2-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
 X-Spam_score_int: -18
@@ -103,31 +108,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 02.02.2026 16:33, Peter Maydell wrote:
+> In aarch64_sve_narrow_vq() we assert that the new VQ is within
+> the maximum supported range for the CPU. We forgot to update
+> this to account for SME, which might have a different maximum.
+> 
+> Update the assert to permit any VQ which is valid for either
+> SVE or SME.
+> 
+> Cc: qemu-stable@nongnu.org
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+> CC stable on this one, because it might also be a problem for
+> a CPU with both SME and SVE but where the SVE max VL is less
+> than the SME max VL.
+
 Hi!
 
-We had a few examples when a bugfix required for a stable series
-but it can't be applied because it breaks migration.  One recent
-example is https://bugs.launchpad.net/ubuntu/+source/qemu/+bug/2131822 -
-the fix has been cherry-picked for 10.0.x but had to be reverted.
+I suppose this one makes sense for 10.0.x (LTS) series too. There,
+I had to cherry-pick another change for this one to work, -
+v10.0.0-1910-gc48d0471be "target/arm: Introduce ARMCPU.sme_max_vq" -
+it appears to be harmless for 10.0.x and makes this fix to work there.
 
-I wonder if we can, sometimes, introduce additional machine types
-for stable series.
+Please let me know if I should've resolved this in some different
+way, for example not picking up this change for 10.0.x :)
 
-In this case, it might've been an intermediate 10.0.4 machine type,
-which is between 10.0 and 10.1 - with this additional change included.
-
-If this machine is known to both 10.1-tobe and 10.0.4+, all migration
-should work fine in both directions.
-
-It is exactly the same situation and solution which has been implemented
-by ubuntu in the end, but using their own, distribution-specific,
-machine types.
-
-Why can't we do the same in upstream qemu?
-
-And yes, that would be a very rare case.
+The result are the topmost 2 commits at
+https://gitlab.com/mjt0k/qemu/-/commits/05271d6e00894ef47267133dedd6a69c2a3147a5
 
 Thanks,
 
-/mjt
+> ---
+>   target/arm/helper.c    | 2 +-
+>   target/arm/internals.h | 9 +++++++++
+>   2 files changed, 10 insertions(+), 1 deletion(-)
+> 
+> diff --git a/target/arm/helper.c b/target/arm/helper.c
+> index e86ceb130c..e7aa5ec2f2 100644
+> --- a/target/arm/helper.c
+> +++ b/target/arm/helper.c
+> @@ -10079,7 +10079,7 @@ void aarch64_sve_narrow_vq(CPUARMState *env, unsigned vq)
+>       uint64_t pmask;
+>   
+>       assert(vq >= 1 && vq <= ARM_MAX_VQ);
+> -    assert(vq <= env_archcpu(env)->sve_max_vq);
+> +    assert(vq <= arm_max_vq(env_archcpu(env)));
+>   
+>       /* Zap the high bits of the zregs.  */
+>       for (i = 0; i < 32; i++) {
+> diff --git a/target/arm/internals.h b/target/arm/internals.h
+> index f7b641342a..8ec2750847 100644
+> --- a/target/arm/internals.h
+> +++ b/target/arm/internals.h
+> @@ -1808,6 +1808,15 @@ static inline uint64_t arm_mdcr_el2_eff(CPUARMState *env)
+>       ((1 << (1 - 1)) | (1 << (2 - 1)) |                  \
+>        (1 << (4 - 1)) | (1 << (8 - 1)) | (1 << (16 - 1)))
+>   
+> +/*
+> + * Return the maximum SVE/SME VQ for this CPU. This defines
+> + * the maximum possible size of the Zn vector registers.
+> + */
+> +static inline int arm_max_vq(ARMCPU *cpu)
+> +{
+> +    return MAX(cpu->sve_max_vq, cpu->sme_max_vq);
+> +}
+> +
+>   /*
+>    * Return true if it is possible to take a fine-grained-trap to EL2.
+>    */
+
 
