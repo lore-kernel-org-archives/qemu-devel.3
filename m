@@ -4,26 +4,26 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37E64C61DCB
-	for <qemu-devel@archiver.kernel.org>; Sat, 21 Feb 2026 10:04:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54BACC61DE1
+	for <qemu-devel@archiver.kernel.org>; Sat, 21 Feb 2026 10:04:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vtjpe-0005kg-ST; Sat, 21 Feb 2026 05:03:27 -0500
+	id 1vtjpk-0005mx-QU; Sat, 21 Feb 2026 05:03:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
- id 1vtjpb-0005jJ-RA; Sat, 21 Feb 2026 05:03:23 -0500
+ id 1vtjpd-0005kZ-9Q; Sat, 21 Feb 2026 05:03:25 -0500
 Received: from zg8tmtyylji0my4xnjqumte4.icoremail.net ([162.243.164.118])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
  (envelope-from <tangtao1634@phytium.com.cn>)
- id 1vtjpZ-00056X-Or; Sat, 21 Feb 2026 05:03:23 -0500
+ id 1vtjpa-00057r-JU; Sat, 21 Feb 2026 05:03:24 -0500
 Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
- by hzbj-icmmx-7 (Coremail) with SMTP id AQAAfwB3f5vkgplpgqBVBw--.14095S2;
- Sat, 21 Feb 2026 18:03:16 +0800 (CST)
+ by hzbj-icmmx-7 (Coremail) with SMTP id AQAAfwC3v2PmgplpjqBVBw--.4384S2;
+ Sat, 21 Feb 2026 18:03:18 +0800 (CST)
 Received: from phytium.com.cn (unknown [218.76.62.144])
- by mail (Coremail) with SMTP id AQAAfwD3TevcgplpBk4cAA--.34138S10;
- Sat, 21 Feb 2026 18:03:15 +0800 (CST)
+ by mail (Coremail) with SMTP id AQAAfwD3TevcgplpBk4cAA--.34138S12;
+ Sat, 21 Feb 2026 18:03:17 +0800 (CST)
 From: Tao Tang <tangtao1634@phytium.com.cn>
 To: Eric Auger <eric.auger@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>,
@@ -35,22 +35,22 @@ Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Mostafa Saleh <smostafa@google.com>, Chao Liu <chao.liu.zevorn@gmail.com>,
  Tao Tang <tangtao1634@phytium.com.cn>
-Subject: [RFC v4 07/31] hw/arm/smmu-common: Add security-aware address space
- selector
-Date: Sat, 21 Feb 2026 18:02:26 +0800
-Message-Id: <20260221100250.2976287-8-tangtao1634@phytium.com.cn>
+Subject: [RFC v4 09/31] hw/arm/smmuv3: Enforce Secure stage 2 capability check
+ when decoding STE
+Date: Sat, 21 Feb 2026 18:02:28 +0800
+Message-Id: <20260221100250.2976287-10-tangtao1634@phytium.com.cn>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260221100250.2976287-1-tangtao1634@phytium.com.cn>
 References: <20260221100250.2976287-1-tangtao1634@phytium.com.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAfwD3TevcgplpBk4cAA--.34138S10
-X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQANBWmYzyUAJAAAs2
+X-CM-TRANSID: AQAAfwD3TevcgplpBk4cAA--.34138S12
+X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQANBWmYzyUAJgABs1
 Authentication-Results: hzbj-icmmx-7; spf=neutral smtp.mail=tangtao163
  4@phytium.com.cn;
-X-Coremail-Antispam: 1Uk129KBjvJXoW7try7XFW3Ary5WFy3Zw48tFb_yoW8ZrW5pa
- 97Ar95ZryqkF1IkrZ3ZrsI9Fy5Wan5WF1UGry7WFZ5Cw17trn3Aw17Kw1j9rZrCr4rXr47
- urZrXrs5WF1UtrJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
+X-Coremail-Antispam: 1Uk129KBjvJXoW7Ary5Xry7tw13Gw43AF4kCrg_yoW8JFWkpF
+ Z8GwsY9rWfJ3WfZrnruws2yrZ7WFWrGr9rGr1Ik343Z3WUAr1Dtr1IkF1agFyrXrWrXrW7
+ uan2qFZ5Xr4vyrJanT9S1TB71UUUUUDqnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
  DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
  UUUUU
 Received-SPF: pass client-ip=162.243.164.118;
@@ -78,66 +78,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Introduce SMMU_SEC_SID_S to represent SEC_SID == 1, meaning Secure. And
-then provide smmu_get_address_space, a SMMU instance-based address space
-selector. The helper now returns the per-device memory/secure-memory
-AddressSpace and reports missing spaces.
+When decoding a Stream Table Entry (STE) from the Secure stream table
+that enables stage-2 translation, verify that the SMMU implementation
+advertises Secure stage-2 support via S_IDR1.SEL2. If stage-2 is
+requested but S_IDR1.SEL2 is 0, mark the STE as ILLEGAL.
+
+This implements the requirement from the Arm SMMUv3 architecture
+specification (IHI 0070G.b, Section 5.2, Page 218) that a Secure STE
+with stage-2 enabled is only valid when the implementation supports
+Secure stage-2 translation.
 
 Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
 ---
- hw/arm/smmu-common.c         | 17 +++++++++++++++++
- include/hw/arm/smmu-common.h |  3 +++
- 2 files changed, 20 insertions(+)
+ hw/arm/smmuv3.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/hw/arm/smmu-common.c b/hw/arm/smmu-common.c
-index 58c4452b1f5..3baba2a4c8e 100644
---- a/hw/arm/smmu-common.c
-+++ b/hw/arm/smmu-common.c
-@@ -30,6 +30,23 @@
- #include "hw/arm/smmu-common.h"
- #include "smmu-internal.h"
- 
-+AddressSpace *smmu_get_address_space(SMMUState *s, SMMUSecSID sec_sid)
-+{
-+    switch (sec_sid) {
-+    case SMMU_SEC_SID_NS:
-+        return &s->memory_as;
-+    case SMMU_SEC_SID_S:
-+        if (!s->secure_memory || s->secure_memory_as.root == NULL) {
-+            warn_report("Secure address space requested but not available");
-+            return NULL;
+diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
+index 2192bec2368..d011357253e 100644
+--- a/hw/arm/smmuv3.c
++++ b/hw/arm/smmuv3.c
+@@ -623,6 +623,16 @@ static int decode_ste(SMMUv3State *s, SMMUTransCfg *cfg,
+         if (ret) {
+             goto bad_ste;
+         }
++
++        /*
++         * Stage 2 is implemented but Secure stage 2 is not supported while
++         * STE is from Secure stream table. STE is ILLEGAL in this case
++         * according to (IHI 0070G.b) 5.2 STE, Stream Table Entry, Page 218.
++         */
++        if ((cfg->sec_sid == SMMU_SEC_SID_S) &&
++            !(FIELD_EX32(s->bank[SMMU_SEC_SID_S].idr[1], S_IDR1, SEL2))) {
++            goto bad_ste;
 +        }
-+        return &s->secure_memory_as;
-+    default:
-+        warn_report("Unknown SEC_SID value %d", sec_sid);
-+        return NULL;
-+    }
-+}
-+
- /* IOTLB Management */
+     }
  
- static guint smmu_iotlb_key_hash(gconstpointer v)
-diff --git a/include/hw/arm/smmu-common.h b/include/hw/arm/smmu-common.h
-index ae1489717fe..b3ca55effc5 100644
---- a/include/hw/arm/smmu-common.h
-+++ b/include/hw/arm/smmu-common.h
-@@ -43,6 +43,7 @@
- /* StreamID Security state */
- typedef enum SMMUSecSID {
-     SMMU_SEC_SID_NS = 0,
-+    SMMU_SEC_SID_S,
-     SMMU_SEC_SID_NUM,
- } SMMUSecSID;
- 
-@@ -189,6 +190,8 @@ struct SMMUBaseClass {
- #define TYPE_ARM_SMMU "arm-smmu"
- OBJECT_DECLARE_TYPE(SMMUState, SMMUBaseClass, ARM_SMMU)
- 
-+AddressSpace *smmu_get_address_space(SMMUState *s, SMMUSecSID sec_sid);
-+
- /* Return the SMMUPciBus handle associated to a PCI bus number */
- SMMUPciBus *smmu_find_smmu_pcibus(SMMUState *s, uint8_t bus_num);
- 
+     /* Multiple context descriptors require SubstreamID support */
 -- 
 2.34.1
 
