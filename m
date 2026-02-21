@@ -4,26 +4,26 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25ECBC61DCB
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA217C61DE1
 	for <qemu-devel@archiver.kernel.org>; Sat, 21 Feb 2026 10:05:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vtjpn-0005o2-TW; Sat, 21 Feb 2026 05:03:35 -0500
+	id 1vtjpo-0005o4-1w; Sat, 21 Feb 2026 05:03:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
- id 1vtjpf-0005mN-RV; Sat, 21 Feb 2026 05:03:28 -0500
-Received: from zg8tmja5ljk3lje4ms43mwaa.icoremail.net ([209.97.181.73])
+ id 1vtjpg-0005mO-Dm; Sat, 21 Feb 2026 05:03:28 -0500
+Received: from sgoci-sdnproxy-4.icoremail.net ([129.150.39.64])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
  (envelope-from <tangtao1634@phytium.com.cn>)
- id 1vtjpd-00054P-QC; Sat, 21 Feb 2026 05:03:27 -0500
+ id 1vtjpe-00052J-0S; Sat, 21 Feb 2026 05:03:28 -0500
 Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
- by hzbj-icmmx-7 (Coremail) with SMTP id AQAAfwB3fJjjgplpbqBVBw--.3745S2;
- Sat, 21 Feb 2026 18:03:15 +0800 (CST)
+ by hzbj-icmmx-6 (Coremail) with SMTP id AQAAfwD3TNDfgplpDhdzAA--.3242S2;
+ Sat, 21 Feb 2026 18:03:11 +0800 (CST)
 Received: from phytium.com.cn (unknown [218.76.62.144])
- by mail (Coremail) with SMTP id AQAAfwD3TevcgplpBk4cAA--.34138S8;
- Sat, 21 Feb 2026 18:03:14 +0800 (CST)
+ by mail (Coremail) with SMTP id AQAAfwD3TevcgplpBk4cAA--.34138S3;
+ Sat, 21 Feb 2026 18:03:08 +0800 (CST)
 From: Tao Tang <tangtao1634@phytium.com.cn>
 To: Eric Auger <eric.auger@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>,
@@ -35,31 +35,27 @@ Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Mostafa Saleh <smostafa@google.com>, Chao Liu <chao.liu.zevorn@gmail.com>,
  Tao Tang <tangtao1634@phytium.com.cn>
-Subject: [RFC v4 05/31] hw/arm/smmuv3: Thread SEC_SID through helper APIs
-Date: Sat, 21 Feb 2026 18:02:24 +0800
-Message-Id: <20260221100250.2976287-6-tangtao1634@phytium.com.cn>
+Subject: [RFC v4 00/31] hw/arm/smmuv3: Support Secure state for SMMUv3
+Date: Sat, 21 Feb 2026 18:02:19 +0800
+Message-Id: <20260221100250.2976287-1-tangtao1634@phytium.com.cn>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260221100250.2976287-1-tangtao1634@phytium.com.cn>
-References: <20260221100250.2976287-1-tangtao1634@phytium.com.cn>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAfwD3TevcgplpBk4cAA--.34138S8
-X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQANBWmYzyUAHgABsN
-Authentication-Results: hzbj-icmmx-7; spf=neutral smtp.mail=tangtao163
+X-CM-TRANSID: AQAAfwD3TevcgplpBk4cAA--.34138S3
+X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQAJBWmTeekBBQAYs7
+Authentication-Results: hzbj-icmmx-6; spf=neutral smtp.mail=tangtao163
  4@phytium.com.cn;
-X-Coremail-Antispam: 1Uk129KBjvJXoW3XF1UXw1fuFyUuryfWFyUJrb_yoWxJrWrpw
- 4DJFn5KryDtasYgFW7J3y8C3W3Xw4fKrn8trn8Ga93C3WUAr1UXr1kG345Ka4Dury8Ca1a
- v3yfWF48uw42yrJanT9S1TB71UUUUUDqnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
+X-Coremail-Antispam: 1Uk129KBjvJXoW3Xw1rGF1kuw4DWry3Zr17trb_yoW3XryUpa
+ yfCF98KrWDCFyxZrWxZa10v3ZxKa93JF17trnxKryrZw1UAr95XrW0yr1rKFyDGry5AF47
+ u3WI9F4kXr1jyaDanT9S1TB71UUUUUDqnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
  DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
  UUUUU
-Received-SPF: pass client-ip=209.97.181.73;
- envelope-from=tangtao1634@phytium.com.cn;
- helo=zg8tmja5ljk3lje4ms43mwaa.icoremail.net
+Received-SPF: pass client-ip=129.150.39.64;
+ envelope-from=tangtao1634@phytium.com.cn; helo=sgoci-sdnproxy-4.icoremail.net
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_MSPIKE_H5=0.001,
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_MSPIKE_H3=0.001,
  RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
@@ -78,178 +74,180 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Extend the register and queue helper routines to accept an explicit
-SEC_SID argument instead of hard-coding the non-secure bank.
+Hi all,
 
-All existing callers are updated to pass SMMU_SEC_SID_NS, so the
-behavior remains identical. This prepares the code for handling
-additional security state banks in the future. So Non-secure state
-is the only state bank supported for now.
+This is v4 of the Secure SMMUv3 series.
 
-Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/3097d58e-3793-4434-8beb-2e4f4c52f772@redhat.com/
----
- hw/arm/smmuv3-accel.c    |  3 ++-
- hw/arm/smmuv3-internal.h | 21 +++++++++------------
- hw/arm/smmuv3.c          | 15 ++++++++-------
- 3 files changed, 19 insertions(+), 20 deletions(-)
+Many thanks to everyone who reviewed the earlier versions. This revision focuses
+on tightening architectural compliance, improving integration points, and making
+the SEC_SID plumbing complete across the fast paths.
 
-diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c
-index 30d4b38c0a3..fdcb15005ea 100644
---- a/hw/arm/smmuv3-accel.c
-+++ b/hw/arm/smmuv3-accel.c
-@@ -243,6 +243,7 @@ bool smmuv3_accel_install_ste(SMMUv3State *s, SMMUDevice *sdev, int sid,
-     SMMUS1Hwpt *s1_hwpt = NULL;
-     const char *type;
-     STE ste;
-+    SMMUSecSID sec_sid = SMMU_SEC_SID_NS;
- 
-     if (!accel || !accel->viommu) {
-         return true;
-@@ -272,7 +273,7 @@ bool smmuv3_accel_install_ste(SMMUv3State *s, SMMUDevice *sdev, int sid,
-      * attach/alloc fails, since the Guest–Host SID mapping stays
-      * valid as long as the device is behind the accelerated SMMUv3.
-      */
--    if (!smmu_enabled(s)) {
-+    if (!smmu_enabled(s, sec_sid)) {
-         hwpt_id = smmuv3_accel_gbpa_hwpt(s, accel);
-     } else {
-         config = STE_CONFIG(&ste);
-diff --git a/hw/arm/smmuv3-internal.h b/hw/arm/smmuv3-internal.h
-index deb1ef60e87..866d62257e3 100644
---- a/hw/arm/smmuv3-internal.h
-+++ b/hw/arm/smmuv3-internal.h
-@@ -39,9 +39,8 @@ typedef enum SMMUTranslationClass {
-     SMMU_CLASS_IN,
- } SMMUTranslationClass;
- 
--static inline int smmu_enabled(SMMUv3State *s)
-+static inline int smmu_enabled(SMMUv3State *s, SMMUSecSID sec_sid)
- {
--    SMMUSecSID sec_sid = SMMU_SEC_SID_NS;
-     SMMUv3RegBank *bank = smmuv3_bank(s, sec_sid);
-     return FIELD_EX32(bank->cr[0], CR0, SMMUEN);
- }
-@@ -69,16 +68,16 @@ static inline uint32_t smmuv3_idreg(int regoffset)
-     return smmuv3_ids[regoffset / 4];
- }
- 
--static inline bool smmuv3_eventq_irq_enabled(SMMUv3State *s)
-+static inline bool smmuv3_eventq_irq_enabled(SMMUv3State *s,
-+                                             SMMUSecSID sec_sid)
- {
--    SMMUSecSID sec_sid = SMMU_SEC_SID_NS;
-     SMMUv3RegBank *bank = smmuv3_bank(s, sec_sid);
-     return FIELD_EX32(bank->irq_ctrl, IRQ_CTRL, EVENTQ_IRQEN);
- }
- 
--static inline bool smmuv3_gerror_irq_enabled(SMMUv3State *s)
-+static inline bool smmuv3_gerror_irq_enabled(SMMUv3State *s,
-+                                             SMMUSecSID sec_sid)
- {
--    SMMUSecSID sec_sid = SMMU_SEC_SID_NS;
-     SMMUv3RegBank *bank = smmuv3_bank(s, sec_sid);
-     return FIELD_EX32(bank->irq_ctrl, IRQ_CTRL, GERROR_IRQEN);
- }
-@@ -123,23 +122,21 @@ static inline void queue_cons_incr(SMMUQueue *q)
-     q->cons = deposit32(q->cons, 0, q->log2size + 1, q->cons + 1);
- }
- 
--static inline bool smmuv3_cmdq_enabled(SMMUv3State *s)
-+static inline bool smmuv3_cmdq_enabled(SMMUv3State *s, SMMUSecSID sec_sid)
- {
--    SMMUSecSID sec_sid = SMMU_SEC_SID_NS;
-     SMMUv3RegBank *bank = smmuv3_bank(s, sec_sid);
-     return FIELD_EX32(bank->cr[0], CR0, CMDQEN);
- }
- 
--static inline bool smmuv3_eventq_enabled(SMMUv3State *s)
-+static inline bool smmuv3_eventq_enabled(SMMUv3State *s, SMMUSecSID sec_sid)
- {
--    SMMUSecSID sec_sid = SMMU_SEC_SID_NS;
-     SMMUv3RegBank *bank = smmuv3_bank(s, sec_sid);
-     return FIELD_EX32(bank->cr[0], CR0, EVENTQEN);
- }
- 
--static inline void smmu_write_cmdq_err(SMMUv3State *s, uint32_t err_type)
-+static inline void smmu_write_cmdq_err(SMMUv3State *s, uint32_t err_type,
-+                                       SMMUSecSID sec_sid)
- {
--    SMMUSecSID sec_sid = SMMU_SEC_SID_NS;
-     SMMUv3RegBank *bank = smmuv3_bank(s, sec_sid);
-     bank->cmdq.cons = FIELD_DP32(bank->cmdq.cons, CMDQ_CONS, ERR, err_type);
- }
-diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
-index 5511585601d..2c107724e77 100644
---- a/hw/arm/smmuv3.c
-+++ b/hw/arm/smmuv3.c
-@@ -59,7 +59,7 @@ static void smmuv3_trigger_irq(SMMUv3State *s, SMMUIrq irq,
- 
-     switch (irq) {
-     case SMMU_IRQ_EVTQ:
--        pulse = smmuv3_eventq_irq_enabled(s);
-+        pulse = smmuv3_eventq_irq_enabled(s, sec_sid);
-         break;
-     case SMMU_IRQ_PRIQ:
-         qemu_log_mask(LOG_UNIMP, "PRI not yet supported\n");
-@@ -79,7 +79,7 @@ static void smmuv3_trigger_irq(SMMUv3State *s, SMMUIrq irq,
-         bank->gerror ^= new_gerrors;
-         trace_smmuv3_write_gerror(new_gerrors, bank->gerror);
- 
--        pulse = smmuv3_gerror_irq_enabled(s);
-+        pulse = smmuv3_gerror_irq_enabled(s, sec_sid);
-         break;
-     }
-     }
-@@ -155,7 +155,7 @@ static MemTxResult smmuv3_write_eventq(SMMUv3State *s, Evt *evt)
-     SMMUQueue *q = &bank->eventq;
-     MemTxResult r;
- 
--    if (!smmuv3_eventq_enabled(s)) {
-+    if (!smmuv3_eventq_enabled(s, sec_sid)) {
-         return MEMTX_ERROR;
-     }
- 
-@@ -178,8 +178,9 @@ void smmuv3_record_event(SMMUv3State *s, SMMUEventInfo *info)
- {
-     Evt evt = {};
-     MemTxResult r;
-+    SMMUSecSID sec_sid = SMMU_SEC_SID_NS;
- 
--    if (!smmuv3_eventq_enabled(s)) {
-+    if (!smmuv3_eventq_enabled(s, sec_sid)) {
-         return;
-     }
- 
-@@ -1087,7 +1088,7 @@ static IOMMUTLBEntry smmuv3_translate(IOMMUMemoryRegion *mr, hwaddr addr,
- 
-     qemu_mutex_lock(&s->mutex);
- 
--    if (!smmu_enabled(s)) {
-+    if (!smmu_enabled(s, sec_sid)) {
-         if (FIELD_EX32(bank->gbpa, GBPA, ABORT)) {
-             status = SMMU_TRANS_ABORT;
-         } else {
-@@ -1317,7 +1318,7 @@ static int smmuv3_cmdq_consume(SMMUv3State *s, Error **errp)
-     SMMUQueue *q = &bank->cmdq;
-     SMMUCommandType type = 0;
- 
--    if (!smmuv3_cmdq_enabled(s)) {
-+    if (!smmuv3_cmdq_enabled(s, sec_sid)) {
-         return 0;
-     }
-     /*
-@@ -1568,7 +1569,7 @@ static int smmuv3_cmdq_consume(SMMUv3State *s, Error **errp)
- 
-     if (cmd_error) {
-         trace_smmuv3_cmdq_consume_error(smmu_cmd_string(type), cmd_error);
--        smmu_write_cmdq_err(s, cmd_error);
-+        smmu_write_cmdq_err(s, cmd_error, sec_sid);
-         smmuv3_trigger_irq(s, SMMU_IRQ_GERROR, R_GERROR_CMDQ_ERR_MASK);
-     }
- 
--- 
+This revision contains 31 commits in total. Only one patch touches hw/pci
+(patch #27); the remaining patches are confined to the Arm SMMUv3 model.
+
+Commits layout:
+---------------
+The commits are roughly grouped as follows:
+1. (#27, hw/pci only) Add a PCIDevice "sec-sid" property so boards can mark a
+  device's SEC_SID (system integration knob).
+2. (#1-4, #28-30) Core data-structure and plumbing refactors.
+3. (#5-10) Introduce SEC_SID through caches, notifiers, and helpers.
+4. (#11-16) Page table walk related updates (e.g. NSCFG/PTE helpers).
+5. (#17-20) EVTQ/CMDQ handling and invalidation paths.
+6. (#21-26) MMIO/register access checks and architectural corner cases.
+7. (#31) A temporary [NOT-MERGE] commit used with Hafnium to exercise
+  secure-bank register access.
+
+Main updates:
+-------------
+The main updates in v4 include:
+
+1. (#27, hw/pci only) Add a "sec-sid" property to PCIDevice and consume it from
+  the SMMU in #28 to select the security context and validate capabilities.
+
+  @Michael, @Marcel: could you please review the hw/pci change
+  ("hw/pci: Add sec-sid property to PCIDevice") and confirm this kind of
+  system-integration property is acceptable for the PCI subtree?
+
+  For context, I previously posted this as a standalone patch [1]:
+  [1] https://lore.kernel.org/qemu-devel/20251211102729.227376-1-tangtao1634@phytium.com.cn/
+
+  The commit in this v4 series is an updated version based on Pierrick's
+  feedback (notably switching sec-sid to a string property). We also discussed
+  the need for this knob as a prerequisite for accurately modelling SMMU secure
+  state here [2]:
+
+  [2] https://lore.kernel.org/qemu-devel/4870b7df-4cb3-457e-9a18-87f3558adf09@linaro.org/
+
+  We do need a stable way for boards to statically mark devices that may issue
+  Secure transactions.
+
+2. Add secure register-bank migration and a new "secure-impl" device property to
+  control S_IDR1.SECURE_IMPL.
+
+3. Strengthen and decompose MMIO access checks (CMDQ/EVENTQ, STRTAB_BASE/CR2,
+  GERROR IRQ cfg), and fix a few architectural corner cases (e.g. CFGI_CD
+  behaviour when stage-1 is unsupported, and SEL2 capability checks when
+  decoding STEs).
+
+4. Make invalidation and queue handling security-state aware end-to-end: CMDQ
+  invalidation paths carry the security context; SEC_SID is plumbed through cmdq
+  consumption, event production, and the IOMMU notifier path; and TLB entries
+  are tagged with SEC_SID to keep Secure vs Non-secure DMA isolated.
+
+5. Totally removed #8 in V3 [3]:
+  [3] https://lore.kernel.org/qemu-devel/20251012150701.4127034-9-tangtao1634@phytium.com.cn/
+
+  and use the merged patch "hw/arm/smmu: add memory regions as property for an
+  SMMU instance" which is committed by Pierrick, to handle the SMMU-internal
+  Secure/Non-Secure AddressSpace.
+
+6. Track NS/NSTable and CD.NSCFG translation attributes for correct Secure vs
+  Non-secure page-table interpretation.
+
+7. Note: the branch contains a `NOT-MERGE` bring-up commit for Hafnium test and
+  is not intended for upstream submission.
+
+
+Testing notes:
+--------------
+- Non-secure regression coverage
+  QEMU  CI already exercises the baseline (non-secure) SMMUv3 paths via
+  iommu-testdev + iommu-smmuv3-test and test_device_passthrough.py, and those
+  jobs are passing with this work applied.
+
+- Testing MMIO accesses
+  The branch currently contains one commit explicitly marked [NOT-MERGE]. It is
+  only used to cooperate with Hafnium to exercise and validate secure-bank
+  register read/write paths in a small, reproducible setup as described in [4]:
+  [4] https://hnusdr.github.io/2025/08/09/Test-Secure-SMMU-with-Hafnium-ENG/
+
+  This commit is not intended for upstream and will be dropped before posting
+  the final mergeable series.
+
+  For reference, the Hafnium test logs show the SMMU being initialized
+  successfully:
+
+  INFO: Loading VM id 0x8001: op-tee.
+  INFO: Loaded with 4 vCPUs, entry at 0xe300000.
+  INFO: Hafnium initialisation completed
+
+  With all smmu* traces enabled in QEMU, we can also observe secure-bank MMIO
+  accesses and secure CMDQ consumption (sec_sid=1), including CFGI invalidations
+  with ssec=1.
+
+- Testing translations
+  The translation/invalidation flows are exercised using qtest plus
+  iommu-testdev. The qtest/iommu-testdev extensions needed for the new
+  secure/space plumbing will be posted as a separate incremental series;
+  the current work-in-progress code is already available at [5]:
+  [5] https://github.com/hnusdr/qemu/tree/qtest-arm-secure-api
+
+  Secure Stage 1 translation can be tested with
+  /iommu-testdev/translation/secure-s1-only using the previous WIP branch.
+
+
+The patches are available in:
+https://github.com/hnusdr/qemu/tree/secure-smmu-v4-community
+
+CI result:
+https://gitlab.com/TaoTang/qemu/-/pipelines/2340976439
+
+Best regards,
+Tao
+
+
+Tao Tang (31):
+  hw/arm/smmuv3-common: Fix incorrect reserved mask for SMMU CR0
+    register
+  hw/arm/smmuv3: Correct SMMUEN field name in CR0
+  hw/arm/smmuv3: Introduce secure registers
+  hw/arm/smmuv3: Introduce banked registers for SMMUv3 state
+  hw/arm/smmuv3: Thread SEC_SID through helper APIs
+  hw/arm/smmuv3: Track SEC_SID in configs and events
+  hw/arm/smmu-common: Add security-aware address space selector
+  hw/arm/smmuv3: Plumb transaction attributes into config helpers
+  hw/arm/smmuv3: Enforce Secure stage 2 capability check when decoding
+    STE
+  hw/arm/smmu-common: Key configuration cache on SMMUDevice and SEC_SID
+  hw/arm/smmu: Add PTE NS/NSTable helpers
+  hw/arm/smmuv3: Store CD NSCFG in TT info
+  hw/arm/smmu-common: Add sec_sid field to TLB entries
+  hw/arm/smmu-common: Implement secure state handling in ptw
+  hw/arm/smmuv3: Tag IOTLB cache keys with SEC_SID
+  hw/arm/smmuv3: Plumb SEC_SID through IOMMU notifier path
+  hw/arm/smmuv3: Pass sec_sid into cmdq consume path
+  hw/arm/smmuv3: Make evtq producer use SEC_SID
+  hw/arm/smmuv3: Fix CFGI_CD handling when stage-1 is unsupported
+  hw/arm/smmu: Make CMDQ invalidation security-state aware
+  hw/arm/smmuv3: Add access checks for GERROR_IRQ_CFG registers
+  hw/arm/smmuv3: Add access checks for STRTAB_BASE and CR2 registers
+  hw/arm/smmuv3: Add access checks for CMDQ and EVENTQ registers
+  hw/arm/smmuv3: Determine register bank from MMIO offset
+  hw/arm/smmuv3: Implement SMMU_S_INIT register
+  hw/arm/smmuv3: Harden security checks in MMIO handlers
+  hw/pci: Add sec-sid property to PCIDevice
+  hw/arm/smmuv3: Select sec-sid from PCI property and validate
+    SECURE_IMPL
+  hw/arm/smmuv3: Initialize the secure register bank
+  hw/arm/smmuv3: Add secure bank migration and secure-impl property
+  [NOT-MERGE] hw/arm/smmuv3: temporarily enable SEL2 bit and sone other
+    features
+
+ hw/arm/smmu-common.c           |  340 +++++++--
+ hw/arm/smmu-internal.h         |   18 +-
+ hw/arm/smmuv3-accel.c          |   57 +-
+ hw/arm/smmuv3-internal.h       |   37 +-
+ hw/arm/smmuv3.c                | 1180 +++++++++++++++++++++++++-------
+ hw/arm/trace-events            |   23 +-
+ hw/pci/pci.c                   |    7 +
+ include/hw/arm/smmu-common.h   |   55 +-
+ include/hw/arm/smmuv3-common.h |   80 ++-
+ include/hw/arm/smmuv3.h        |   32 +-
+ include/hw/pci/pci_device.h    |    3 +
+ 11 files changed, 1462 insertions(+), 370 deletions(-)
+
+--
 2.34.1
 
 
