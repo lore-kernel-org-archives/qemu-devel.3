@@ -4,26 +4,26 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBECAC61DE1
-	for <qemu-devel@archiver.kernel.org>; Sat, 21 Feb 2026 10:16:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A53A1C61DE1
+	for <qemu-devel@archiver.kernel.org>; Sat, 21 Feb 2026 10:16:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vtk1q-0005Cw-El; Sat, 21 Feb 2026 05:16:02 -0500
+	id 1vtk2d-0006Ur-Cp; Sat, 21 Feb 2026 05:16:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
- id 1vtk1n-0005Au-6s; Sat, 21 Feb 2026 05:15:59 -0500
-Received: from zg8tmja5ljk3lje4ms43mwaa.icoremail.net ([209.97.181.73])
+ id 1vtk2T-0006SN-3a; Sat, 21 Feb 2026 05:16:41 -0500
+Received: from zg8tmtyylji0my4xnjqumte4.icoremail.net ([162.243.164.118])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
  (envelope-from <tangtao1634@phytium.com.cn>)
- id 1vtk1k-0002YA-QM; Sat, 21 Feb 2026 05:15:58 -0500
+ id 1vtk2R-0004h8-D0; Sat, 21 Feb 2026 05:16:40 -0500
 Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
- by hzbj-icmmx-6 (Coremail) with SMTP id AQAAfwCXntLVhZlpRh5zAA--.15216S2;
- Sat, 21 Feb 2026 18:15:49 +0800 (CST)
+ by hzbj-icmmx-7 (Coremail) with SMTP id AQAAfwCHj2MEhplp261VBw--.4778S2;
+ Sat, 21 Feb 2026 18:16:36 +0800 (CST)
 Received: from phytium.com.cn (unknown [218.76.62.144])
- by mail (Coremail) with SMTP id AQAAfwCX7erUhZlpYk4cAA--.34232S3;
- Sat, 21 Feb 2026 18:15:48 +0800 (CST)
+ by mail (Coremail) with SMTP id AQAAfwDXL+0DhplpZk4cAA--.34325S3;
+ Sat, 21 Feb 2026 18:16:35 +0800 (CST)
 From: Tao Tang <tangtao1634@phytium.com.cn>
 To: Eric Auger <eric.auger@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>,
@@ -35,33 +35,33 @@ Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Mostafa Saleh <smostafa@google.com>, Chao Liu <chao.liu.zevorn@gmail.com>,
  Tao Tang <tangtao1634@phytium.com.cn>
-Subject: [RFC v4 11/31] hw/arm/smmu: Add PTE NS/NSTable helpers
-Date: Sat, 21 Feb 2026 18:15:44 +0800
-Message-Id: <20260221101544.2992355-1-tangtao1634@phytium.com.cn>
+Subject: [RFC v4 12/31] hw/arm/smmuv3: Store CD NSCFG in TT info
+Date: Sat, 21 Feb 2026 18:16:32 +0800
+Message-Id: <20260221101632.2993305-1-tangtao1634@phytium.com.cn>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260221100250.2976287-1-tangtao1634@phytium.com.cn>
 References: <20260221100250.2976287-1-tangtao1634@phytium.com.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAfwCX7erUhZlpYk4cAA--.34232S3
-X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQANBWmYzyUAKwAAs5
-Authentication-Results: hzbj-icmmx-6; spf=neutral smtp.mail=tangtao163
+X-CM-TRANSID: AQAAfwDXL+0DhplpZk4cAA--.34325S3
+X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQANBWmYzyUALQAAs-
+Authentication-Results: hzbj-icmmx-7; spf=neutral smtp.mail=tangtao163
  4@phytium.com.cn;
-X-Coremail-Antispam: 1Uk129KBjvdXoW7Gr4DZw1DWw4fur43Kw17Wrg_yoWkKrbEqw
- 1kXaykWryjkF40kFWUCFZ7A3yY93yUAw18X3Z3X34akr9IvrW5JFnxGryku3Z5ZrWUK3W3
- Awnxtr4fWrn8GjkaLaAFLSUrUUUUbb8apTn2vfkv8UJUUUU8wcxFpf9Il3svdxBIdaVrnU
- Uv73VFW2AGmfu7jjvjm3AaLaJ3UjIYCTnIWjDUYxBIdaVFxhVjvjDU0xZFpf9x0zRUUUUU
- UUUU=
-Received-SPF: pass client-ip=209.97.181.73;
+X-Coremail-Antispam: 1Uk129KBjvJXoW7XF4xZFy7GFW5Gr4kGw1Utrb_yoW8JrWUpa
+ s7Ar1DKrWIk3W29r9rAr47uwnrWw4kWr4jkrW7Wr9avws8t39rJr1UK3Z8Kr97urW5Krsr
+ uF12qr95XF1Utr7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
+ DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
+ UUUUU
+Received-SPF: pass client-ip=162.243.164.118;
  envelope-from=tangtao1634@phytium.com.cn;
- helo=zg8tmja5ljk3lje4ms43mwaa.icoremail.net
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_MSPIKE_H5=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ helo=zg8tmtyylji0my4xnjqumte4.icoremail.net
+X-Spam_score_int: -25
+X-Spam_score: -2.6
+X-Spam_bar: --
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -77,49 +77,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add helper macros for NS and NSTable bits and group PTE attribute
-accessors for clarity. No functional change beyond the new helpers.
+With NSCFG definitions in place, record the per-table NSCFG bits
+in SMMUTransTableInfo during CD decode for later use.
 
 Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
 ---
- hw/arm/smmu-internal.h | 16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+ hw/arm/smmuv3.c              | 1 +
+ include/hw/arm/smmu-common.h | 1 +
+ 2 files changed, 2 insertions(+)
 
-diff --git a/hw/arm/smmu-internal.h b/hw/arm/smmu-internal.h
-index d143d296f34..a0454f720da 100644
---- a/hw/arm/smmu-internal.h
-+++ b/hw/arm/smmu-internal.h
-@@ -58,16 +58,28 @@
-     ((level == 3) &&                                                    \
-      ((pte & ARM_LPAE_PTE_TYPE_MASK) == ARM_LPAE_L3_PTE_TYPE_PAGE))
+diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
+index aa1a95a0093..b8f2fae9a1d 100644
+--- a/hw/arm/smmuv3.c
++++ b/hw/arm/smmuv3.c
+@@ -838,6 +838,7 @@ static int decode_cd(SMMUv3State *s, SMMUTransCfg *cfg,
+             tt->ttb = CACHED_ENTRY_TO_ADDR(entry, tt->ttb);
+         }
  
-+/* Block & page descriptor attributes */
-+/* Non-secure bit */
-+#define PTE_NS(pte) \
-+    (extract64(pte, 5, 1))
-+
- /* access permissions */
++        tt->nscfg = i ? CD_NSCFG(cd, 1) : CD_NSCFG(cd, 0);
+         tt->had = CD_HAD(cd, i);
+         trace_smmuv3_decode_cd_tt(i, tt->tsz, tt->ttb, tt->granule_sz, tt->had);
+     }
+diff --git a/include/hw/arm/smmu-common.h b/include/hw/arm/smmu-common.h
+index 9e44c9f7710..bd88e599c77 100644
+--- a/include/hw/arm/smmu-common.h
++++ b/include/hw/arm/smmu-common.h
+@@ -83,6 +83,7 @@ typedef struct SMMUTransTableInfo {
+     uint8_t tsz;               /* input range, ie. 2^(64 -tsz)*/
+     uint8_t granule_sz;        /* granule page shift */
+     bool had;                  /* hierarchical attribute disable */
++    int nscfg;                 /* Non-secure attribute of Starting-level TT */
+ } SMMUTransTableInfo;
  
- #define PTE_AP(pte) \
-     (extract64(pte, 6, 2))
- 
-+/* access flag */
-+#define PTE_AF(pte) \
-+    (extract64(pte, 10, 1))
-+
-+
-+/* Table descriptor attributes */
- #define PTE_APTABLE(pte) \
-     (extract64(pte, 61, 2))
- 
--#define PTE_AF(pte) \
--    (extract64(pte, 10, 1))
-+#define PTE_NSTABLE(pte) \
-+    (extract64(pte, 63, 1))
-+
- /*
-  * TODO: At the moment all transactions are considered as privileged (EL1)
-  * as IOMMU translation callback does not pass user/priv attributes.
+ typedef struct SMMUTLBEntry {
 -- 
 2.34.1
 
