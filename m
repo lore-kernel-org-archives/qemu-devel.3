@@ -4,107 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80DC4C61DE7
-	for <qemu-devel@archiver.kernel.org>; Sat, 21 Feb 2026 13:55:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D6E7C61DFF
+	for <qemu-devel@archiver.kernel.org>; Sun, 22 Feb 2026 03:27:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vtnRy-0001w2-1e; Sat, 21 Feb 2026 08:55:14 -0500
+	id 1vu06u-0001u5-MF; Sat, 21 Feb 2026 22:26:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hi@alyssa.is>) id 1vtnRv-0001vN-OR
- for qemu-devel@nongnu.org; Sat, 21 Feb 2026 08:55:12 -0500
-Received: from fout-a4-smtp.messagingengine.com ([103.168.172.147])
+ (Exim 4.90_1) (envelope-from <me@linux.beauty>)
+ id 1vu06u-0001sa-1y; Sat, 21 Feb 2026 22:26:20 -0500
+Received: from sender4-op-o12.zoho.com ([136.143.188.12])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hi@alyssa.is>) id 1vtnRs-0005vf-GJ
- for qemu-devel@nongnu.org; Sat, 21 Feb 2026 08:55:11 -0500
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
- by mailfout.phl.internal (Postfix) with ESMTP id F3C69EC05B4;
- Sat, 21 Feb 2026 08:55:05 -0500 (EST)
-Received: from phl-frontend-03 ([10.202.2.162])
- by phl-compute-05.internal (MEProxy); Sat, 21 Feb 2026 08:55:06 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alyssa.is; h=cc
- :cc:content-type:content-type:date:date:from:from:in-reply-to
- :in-reply-to:message-id:mime-version:references:reply-to:subject
- :subject:to:to; s=fm2; t=1771682105; x=1771768505; bh=4slj67GZVv
- fKovDsD57P5OjSg0W1HXhWEDxoqRMI7VQ=; b=gYVP8UINu0CWqy1PdWMh3YNNJI
- Z1Ropb2353MWbSn8V53XLjE/nNgR27P8oz9RpZh6hGvbTdbso8OZ3Rfpc3jbcqQS
- z7SPDAruIxHOuuNQlBlRVXZIeKdBXoE85dE5ub25rPhdYVK3k0wTR1MeY2zGOBSl
- 1Ugw4tUwNqETPe4dj+lJ/2jgUXZxd2fFRJdnngca/e2Oa00j9vNNmhbsoGyTgWQQ
- h5sXOQTOcF29CfCpnR6oJtAx6zQXnmBCq7PbS0X0DppiCKBut0XCg6tmOXBJCf7K
- SPk9khDabXR2Cd6oexTF+urF5VjPLGRUwOSQGC6NfMjdu7zKpBVBglYLWxFQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-type:content-type:date:date
- :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
- :message-id:mime-version:references:reply-to:subject:subject:to
- :to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
- 1771682105; x=1771768505; bh=4slj67GZVvfKovDsD57P5OjSg0W1HXhWEDx
- oqRMI7VQ=; b=aciVPJf5XX/wva4cph5VhKGhoaNOsxbhBrX8HTRrevi5nkqvPK2
- 2x1nquQjHCH/Szzgo/mYF3Gv4PM0FHRL410zhOqU5IWUOQHmRqM0E1DmZmVrZVOK
- duplHC8mOwGBV+gq+AuqURDSEAcNu21P26IzPdtZFVfciouCU1uZ8VRCXqypN98F
- nbxDw+o/dJ8eDdOV8wMKx7Lhad+vgWdRMmiH9+y2adbZMLgw22BD8qdHwUGXWXAw
- Gy6bxnFsmlIch8p6ZmIZv3KSi8xgMU9ND8fQp//+o5yYoPhQSH0EW+ZexzV9IR0v
- qk1z6jiZ97+ntkHYrIzhzA9cgl26XJQ0ZcQ==
-X-ME-Sender: <xms:ObmZaVtLvR14GQqu894PNdtvctoDGIO2G0QzRSZzd5Cjno5hMeaDaw>
- <xme:ObmZaUA35NCDfJvupla1hKWKERV-y_REVbDpeUCZ64isBlpxIQbFx0YFs0RUoGurT
- 7H9nJghxAcQyXtFnEtwVq2Pc_ly2Vxa5o0Zsq20TfZs3Znz-ZZI3A>
-X-ME-Received: <xmr:ObmZaSWOIH601IWsKX04YPaBpx7G-qfEqyYMGJr75A7qXrWwTcC4O1KOwGWER6POEwuVWB-B6Dwr>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvfeduheegucetufdoteggodetrf
- dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
- rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
- gurhephffvvefujghffffkgggtsehgtderredttddtnecuhfhrohhmpeetlhihshhsrgcu
- tfhoshhsuceohhhisegrlhihshhsrgdrihhsqeenucggtffrrghtthgvrhhnpeeiudffue
- eilefgtefgtddttdekkeehkefgheekudefveetgeefiefftedvteeuveenucevlhhushht
- vghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehhihesrghlhihsshgrrd
- hishdpnhgspghrtghpthhtohepudejpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
- pehsthgvvhgvnhhsugestghhrhhomhhiuhhmrdhorhhgpdhrtghpthhtoheprghlvgigrd
- gsvghnnhgvvgeslhhinhgrrhhordhorhhgpdhrtghpthhtohepmhgrnhhoshdrphhithhs
- ihguihgrnhgrkhhisheslhhinhgrrhhordhorhhgpdhrtghpthhtohepphhhihhlmhguse
- hlihhnrghrohdrohhrghdprhgtphhtthhopehpihgvrhhrihgtkhdrsghouhhvihgvrhes
- lhhinhgrrhhordhorhhgpdhrtghpthhtohepqhgvmhhuqdguvghvvghlsehnohhnghhnuh
- drohhrghdprhgtphhtthhopegrvghsthgvvhgvsehrvgguhhgrthdrtghomhdprhgtphht
- thhopegusggrshhsvgihsehrvgguhhgrthdrtghomhdprhgtphhtthhopehjrghsohifrg
- hnghesrhgvughhrghtrdgtohhm
-X-ME-Proxy: <xmx:ObmZadEBNPOoZLsHRNr0vDmBGsz2OIsw88kFdIhRlJTfAAe8OHaZUw>
- <xmx:ObmZadOnbqehbWnadoCM786hHYeDb4fjorQ8fcgm9pbqA256FBFB5g>
- <xmx:ObmZaZVSzzZ4miHizTn7bPV-xX7pO8ajDMtMYUGJMip_ShbPFvsyQA>
- <xmx:ObmZaUxF08EnxBbBsBY2Hws3Y4ZMAV861mewc60xRddjpXBLrbgVKw>
- <xmx:ObmZaUGgweV07sEVfbmifiaqxOBG-BDkEXroWuhbDEItq2k-VZoh5O0L>
-Feedback-ID: i12284293:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 21 Feb 2026 08:55:04 -0500 (EST)
-Received: by mbp.qyliss.net (Postfix, from userid 1000)
- id E517E74FEC3D; Sat, 21 Feb 2026 14:54:58 +0100 (CET)
-From: Alyssa Ross <hi@alyssa.is>
-To: Albert Esteve <aesteve@redhat.com>, qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Pierrick Bouvier
- <pierrick.bouvier@linaro.org>, mst@redhat.com, dbassey@redhat.com,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>, Alex
- =?utf-8?Q?Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Paolo Bonzini <pbonzini@redhat.com>, Fabiano
- Rosas <farosas@suse.de>, stefanha@redhat.com,
- manos.pitsidianakis@linaro.org, Stefano Garzarella <sgarzare@redhat.com>,
- jasowang@redhat.com, Laurent Vivier <lvivier@redhat.com>, slp@redhat.com,
- stevensd@chromium.org
-Subject: Re: [PATCH v13 3/7] vhost_user.rst: Add SHMEM_MAP/_UNMAP to spec
-In-Reply-To: <20260219130334.787858-4-aesteve@redhat.com>
-References: <20260219130334.787858-1-aesteve@redhat.com>
- <20260219130334.787858-4-aesteve@redhat.com>
-Date: Sat, 21 Feb 2026 14:54:52 +0100
-Message-ID: <87tsvakxqr.fsf@alyssa.is>
+ (Exim 4.90_1) (envelope-from <me@linux.beauty>)
+ id 1vu06s-0000lK-0p; Sat, 21 Feb 2026 22:26:19 -0500
+ARC-Seal: i=1; a=rsa-sha256; t=1771730740; cv=none; 
+ d=zohomail.com; s=zohoarc; 
+ b=cNbjaSH3ubSd076aKrNpCJxGltl+lAxhtMQGIp3QFETJd8OtuIGl/aZnKDOeuiPgSBa/u1YpOa529lLAQHeVN/sy4JYOTOv3/dKbbidhB9uXVZcO7AZSIAgzr2R6+jMg6mi00o9Ma8fLj31E0TGuhEMfnxywizTMpB+Qwt1qIZ0=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
+ s=zohoarc; t=1771730740;
+ h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
+ bh=tb6DnQ0GHeM9DHHwy+Tnu6i89ALnWqG24LeU9cSPQlg=; 
+ b=WHQPkiEmjhIOEGcvOkRtKNcWpAVFHjK+HDgrt+G2t4V6k0eFqPYSGTxzr1qrOcl6gJvBiVMV2AM4gk0IILnCcn0IlIDVzcBAyM3BnuXhLoAovruD2a/Ippt68CwhJ2TUXC6j/WCnV/ZVrViZ09MV3tDblCqTqQ8l8yC7OgEn8Mo=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+ dkim=pass  header.i=linux.beauty;
+ spf=pass  smtp.mailfrom=me@linux.beauty;
+ dmarc=pass header.from=<me@linux.beauty>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1771730740; 
+ s=zmail; d=linux.beauty; i=me@linux.beauty;
+ h=Date:Date:From:From:To:To:Cc:Cc:Message-ID:In-Reply-To:References:Subject:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+ bh=tb6DnQ0GHeM9DHHwy+Tnu6i89ALnWqG24LeU9cSPQlg=;
+ b=oO24DEHr78Wr7KQcq0Q6aq/DjbgqaSYr3y5BP98crH74gJ0zRnFbQXxWasXjQ7yI
+ CyKcNxEbHOUJmDoF1DyGJuvT5N5ebN40Oef27WB8LB/ZHSMOdCvW4ZgS+W14FJDWU1P
+ jBw0Hvz51mtItJH210fDQP7iJDYq18ChFcC82EPU=
+Received: from mail.zoho.com by mx.zohomail.com
+ with SMTP id 1771730737548421.65379763987494;
+ Sat, 21 Feb 2026 19:25:37 -0800 (PST)
+Date: Sun, 22 Feb 2026 11:25:37 +0800
+From: Li Chen <me@linux.beauty>
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: "qemu-devel" <qemu-devel@nongnu.org>, "qemu-arm" <qemu-arm@nongnu.org>,
+ "qemu-riscv" <qemu-riscv@nongnu.org>,
+ "Igor Mammedov" <imammedo@redhat.com>, "Ani Sinha" <anisinha@redhat.com>,
+ "Peter Maydell" <peter.maydell@linaro.org>,
+ "Shannon Zhao" <shannon.zhaosl@gmail.com>,
+ "Song Gao" <gaosong@loongson.cn>, "Bibo Mao" <maobibo@loongson.cn>,
+ "Jiaxun Yang" <jiaxun.yang@flygoat.com>,
+ "Sunil V L" <sunilvl@ventanamicro.com>,
+ "Palmer Dabbelt" <palmer@dabbelt.com>,
+ "Alistair Francis" <alistair.francis@wdc.com>,
+ "Weiwei Li" <liwei1518@gmail.com>,
+ "Daniel Henrique Barboza" <dbarboza@ventanamicro.com>,
+ "Liu Zhiwei" <zhiwei_liu@linux.alibaba.com>,
+ =?UTF-8?Q?=22Philippe_Mathieu-Daud=C3=A9=22?= <philmd@linaro.org>
+Message-ID: <19c8361997b.82077cee2137730.7750036902825910397@linux.beauty>
+In-Reply-To: <20260220094834-mutt-send-email-mst@kernel.org>
+References: <20260219130403.810220-1-me@linux.beauty>
+ <20260220094834-mutt-send-email-mst@kernel.org>
+Subject: Re: [PATCH v7 1/1] acpi/virt: suppress SPCR when UART0 has no
+ serial backend
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-=";
- micalg=pgp-sha512; protocol="application/pgp-signature"
-Received-SPF: pass client-ip=103.168.172.147; envelope-from=hi@alyssa.is;
- helo=fout-a4-smtp.messagingengine.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Importance: Medium
+User-Agent: Zoho Mail
+X-Mailer: Zoho Mail
+Received-SPF: pass client-ip=136.143.188.12; envelope-from=me@linux.beauty;
+ helo=sender4-op-o12.zoho.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,32 +94,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---=-=-=
-Content-Type: text/plain
+Hi Michael,
 
-Albert Esteve <aesteve@redhat.com> writes:
+ ---- On Fri, 20 Feb 2026 22:50:57 +0800  Michael S. Tsirkin <mst@redhat.co=
+m> wrote ---=20
+ > On Thu, Feb 19, 2026 at 09:04:02PM +0800, Li Chen wrote:
+ > > From: Li Chen <chenl311@chinatelecom.cn>
+ > >=20
+ > > virt machines always instantiate a PL011/16550 UART at slot 0 and desc=
+ribe
+ > > it in ACPI (DSDT and optional SPCR table). When the command line disab=
+les
+ > > the serial backend (e.g. "-serial none"), SPCR still points at UART0 a=
+nd
+ > > the guest may pick it as the preferred console even though it is not
+ > > usable.
+ > >=20
+ > > Only generate SPCR when UART0 has a chardev backend attached. Keep the
+ > > UART device description in DSDT unchanged so the guest-visible UART
+ > > topology does not change.
+ > >=20
+ > > The bios-tables-test qtests use "-serial null" to keep SPCR enabled wh=
+ile
+ > > discarding firmware serial output, avoiding TAP stdout corruption.
+ > >=20
+ > > Suggested-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+ > > Signed-off-by: Li Chen <chenl311@chinatelecom.cn>
+ > > Reviewed-by: Sunil V L <sunilvl@ventanamicro.com>
+ > > ---
+ >=20
+ > So -serial null gives a device -serial none hides it from guest.
+ > Sensible. And yet, out of abundance of caution, maybe keep
+ > the legacy behaviour for existing machine types. No?
 
-> Add SHMEM_MAP/_UNMAP request to the vhost-user
-> spec documentation.
->
-> Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-> Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-> Signed-off-by: Albert Esteve <aesteve@redhat.com>
-> ---
->  docs/interop/vhost-user.rst | 61 +++++++++++++++++++++++++++++++++++++
->  1 file changed, 61 insertions(+)
+Thanks. I see your point about being cautious with legacy behaviour.
+Given you and Igor's feedback, gating SPCR on chardev backend state is not =
+the
+right approach, so I'll drop this patch.
 
-Reviewed-by: Alyssa Ross <hi@alyssa.is>
+Regards,
+Li=E2=80=8B
 
---=-=-=
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEARYKAB0WIQRV/neXydHjZma5XLJbRZGEIw/wogUCaZm5LAAKCRBbRZGEIw/w
-ogaoAP46zbj68S052lT9BLsDODnFfe35kPWsbcEi130rfZDTJwEAqnF3nqBLw30X
-MkmGQbGhCRhukHfrTD6b1UyAG1S1lgw=
-=0e/z
------END PGP SIGNATURE-----
---=-=-=--
 
