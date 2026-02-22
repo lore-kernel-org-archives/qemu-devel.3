@@ -4,93 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF029C636B2
-	for <qemu-devel@archiver.kernel.org>; Sun, 22 Feb 2026 14:28:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80C87C636A1
+	for <qemu-devel@archiver.kernel.org>; Sun, 22 Feb 2026 14:29:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuARq-0007ye-QS; Sun, 22 Feb 2026 09:28:40 -0500
+	id 1vuASB-00084N-Ke; Sun, 22 Feb 2026 09:29:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vuARc-0007x9-P7
- for qemu-devel@nongnu.org; Sun, 22 Feb 2026 09:28:24 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vuARm-0007yi-0Y
+ for qemu-devel@nongnu.org; Sun, 22 Feb 2026 09:28:38 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vuARa-0006eB-Pg
- for qemu-devel@nongnu.org; Sun, 22 Feb 2026 09:28:24 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vuARk-0006fa-JM
+ for qemu-devel@nongnu.org; Sun, 22 Feb 2026 09:28:33 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771770500;
+ s=mimecast20190719; t=1771770511;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=BzXcCDGS741U4fZsHJm9feMPpS4qDCw7tbd57ymm+ro=;
- b=OJ4X5cLbowNmr0JVswCLgayJto/LpjdXo7cy6Gcwmahb+673AerMgfNRRZ7RPvWygq5Zgh
- HaIp2N0Dhc/dqyk2kWpNZZhlPLtjOU4jmYzNb23OHaKwHoBpk6eNYRgp9t38id3W6CsIJR
- TyXOsO6HuizTL4yH/tW/uGd+v3twKHE=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references;
+ bh=Im7oNw2Zu+WcIRrJsnueW164kyYoY+VkGWcj5I81nLU=;
+ b=BGsMLfqFQVXOztYiwPeZd/xxwYjVEYkCWybjlBFqEXtARYw+XgNCMMMNEPavcXM+0szrRJ
+ Et15+XN94Ur5bvNGOVpGQmcgiMFzidUqwLuKy6E6gdtJgi/54Xwc64CyPx6jt6k0tbg459
+ dl79g/lV4jfz+/FbWkjqPviNtGL8QnU=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-457-3Ow_2l99MFexqMqYgWXcuw-1; Sun, 22 Feb 2026 09:28:18 -0500
-X-MC-Unique: 3Ow_2l99MFexqMqYgWXcuw-1
-X-Mimecast-MFC-AGG-ID: 3Ow_2l99MFexqMqYgWXcuw_1771770498
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4836ff58111so46682255e9.1
- for <qemu-devel@nongnu.org>; Sun, 22 Feb 2026 06:28:18 -0800 (PST)
+ us-mta-591-RDFGr-yrMXGnbdGyRo9Yrw-1; Sun, 22 Feb 2026 09:28:30 -0500
+X-MC-Unique: RDFGr-yrMXGnbdGyRo9Yrw-1
+X-Mimecast-MFC-AGG-ID: RDFGr-yrMXGnbdGyRo9Yrw_1771770509
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4836cc0b38eso37563435e9.2
+ for <qemu-devel@nongnu.org>; Sun, 22 Feb 2026 06:28:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1771770497; x=1772375297; darn=nongnu.org;
- h=content-transfer-encoding:content-disposition:mime-version
- :message-id:subject:cc:to:from:date:from:to:cc:subject:date
- :message-id:reply-to;
- bh=BzXcCDGS741U4fZsHJm9feMPpS4qDCw7tbd57ymm+ro=;
- b=pFmo5alfJ/pk4oMZ1dGBgfSvEhF15PjdLbEWUpUD8QkToZcqXc9qFXKqXpWUWGOSKM
- oZhmCIM51cSaxJkyX0n57aEAZa3RsXm9HlnnTLa5Cd6MrV4HJXXKDxCEyg6dcK7B4/Kc
- zJh1F7LpBQiQpSfyVOOaqPNU/T86vSgNLzWpMSSL3Ii326nKE47LCE63Q6elsbY05XbN
- 99XQfR2eo6g7UtexaSIuSYQ9ar1srPvuSjsD6jRBhi/4ZJVGmoWXAsRyka6xuPrZi7la
- 3G8YV9DjG866phS3vlOE2JPZ7xlKFjccjWc5gIdRUhfq7CGbi5AxRiXmTbp4shy5M4Og
- ew/w==
+ d=redhat.com; s=google; t=1771770509; x=1772375309; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=Im7oNw2Zu+WcIRrJsnueW164kyYoY+VkGWcj5I81nLU=;
+ b=kV8RON78J4pC/v+lZ8qN17MtGBBSPeDww732yBa9PUN99Ps3EOJBVoFV0w/F1kviKn
+ qRnu8cy1Te4oT6BFs7Jei6BVGbodqOYzChJPGAJLkDWzgCQgZEj183zCQUgRJxdPY+WZ
+ SHlWXsacZb+yjdkPcYb0BSyDXrJV8OuMs72lIW8TN8x+mW0Obrm60Cy2AdH2syvPuU4d
+ iwxaDadjMfEYtgWGRkfV3prlBSfEtExyKeA8WNjJNhD4ZNZTOYGnRMwdiht0JTcYdqZn
+ S+O5Np6w6w0Oe1yHq6ou+QbKec0da31ssSGfKGwM7wMBo71aaov9/g4IkMVnPmjKglrB
+ fl1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771770497; x=1772375297;
- h=content-transfer-encoding:content-disposition:mime-version
- :message-id:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=BzXcCDGS741U4fZsHJm9feMPpS4qDCw7tbd57ymm+ro=;
- b=ie4XUPtq/mhHPslx5je4fygKaHf5NyA7kxvUrwSaRMi5ueInk0PJwotBW46Cx843ed
- 5nIcSL5/j/o6Y/q6biyAidN/pVLxvkc/3AGLnvsUepTsu5wnsaN4dudjwM9eqDE4uBKH
- +NRvPFssPuoWGV1BSv3B/yL2EBFaugrAmIBoRPi0yoRgO7R0fciPkdL+ckccMIoHmq7T
- jcoLdBKzKSp8A1ilQpYa3ARztTyIsrNflcQ6x1futOpJezOTtEtKjzdCVIm8a7TBk2e4
- CAT1/NgTMeyFU1Dq4874VvQyJ3DKfKMUvSfW6tEvCRmokN44MBvrDu7myteuZxYcmwmS
- 3Hig==
-X-Gm-Message-State: AOJu0Ywh+YPy1/b1edc6suVtNxMzj2kd91pRJaBk6JfjNUlDEDtNJ43B
- nC4UVCfm94GINz99kkEOJbQCgMjTL9AO98nLBg+bQFBq37LtdDTmO3Ic3didTwgke1KHqCveaWu
- Gu57EsLFsSMYKSGHWf43TPxzcCL9Y3ONOD8e7yEpjvKo804vE5odv+0K0BZo7HfGeoqeo9tHfYM
- S6cGrOVG459r7v8Z/IK1xRxeuHRlZ2Ye2MTg==
-X-Gm-Gg: AZuq6aIvTv0VhUbNkBl07a/vTMFETR9xcj0nTtYOE98WyWKjV4B9vOfbVzscu8eqLuv
- px2hMDPI7XxsseukdSb4wxUvGJN4D+tKJipinlxOzekhuKpVqqEE62t2HQB2gbEF8uSfDu4ZeS8
- rcA4i8EqybEaq7sczVojclf3XWI24evlozRtRB15RCFagLeNmP/Lo47C4laCtECYZn2hkaa1FM4
- DjnM2+qm1XrIFkb9KBmFIHEftRzpjT0jarWRpXQ63uTLVQvwp9dMiXyeOzrDo5hJyyuToVTIA8I
- +7loaSIUak25qG/GK73xBblZmuYAWWiYm43T9eguWKjbik8ONXmxHGERBVoEFsbP7Usyb8m+8xJ
- WbxMqBQ+hmgNEIEQr44dVMdgMJOKT0K/lBtQ1Mzp0U0TCZw==
-X-Received: by 2002:a05:600c:1386:b0:480:6c75:ddce with SMTP id
- 5b1f17b1804b1-483a9603cacmr84254545e9.33.1771770496998; 
- Sun, 22 Feb 2026 06:28:16 -0800 (PST)
-X-Received: by 2002:a05:600c:1386:b0:480:6c75:ddce with SMTP id
- 5b1f17b1804b1-483a9603cacmr84254275e9.33.1771770496475; 
- Sun, 22 Feb 2026 06:28:16 -0800 (PST)
+ d=1e100.net; s=20230601; t=1771770509; x=1772375309;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Im7oNw2Zu+WcIRrJsnueW164kyYoY+VkGWcj5I81nLU=;
+ b=KqTn8g3S4oeCmHH2P0WNbXYmAS4rGGYZoZ6nGPUEI6ZKe/+cydx1Syv+c3GklDiX6+
+ xeMY6osD3RtD5125t3f982rA+U1kEftGEY9Ux6F/A/jn5I6pMFRagLaY+FzzzpOlQI3e
+ nCwZWxqp37C7p4Y8+ZfKx+Yzcn7C/B1vKPMAx+SJEiVZxjx4rI9kzcLSo/6yfZgNPw1C
+ Phl7bJJdS6Yly9ri+J6lTN0cxlxj0rStssrkbH5XOgNzRSYpaU1dHC/IeZSAOSI36YPC
+ 7W2Dkqjv90ztbHE3JJOY0ulA5wb9Z71JqjzB/sdzkwoQixtx9XUNy+MJj2ObgzD+OXNh
+ 0Rzw==
+X-Gm-Message-State: AOJu0YxjV8i5hbCJ+JQNhxb6CTx4yOwK8rh+hOTj09E6Sl9cLjQAgeE9
+ t3v+cqi19WQCpyzgmpRM9KGPFd/87un8tPaWdDvviOk2kMcejULyeEZdWah9LADrnLaD4pFPTRB
+ cvOMrFm3HEKEamNhYyfyokXHEJGWRsOJsntD7BklvEUiy3lnHUn/soO6bBkibWaZ7u1x/dZcO+C
+ wij4aM+7G5QSTrgrQvJAui+dB3IVNzVhh1Iw==
+X-Gm-Gg: AZuq6aLa4uja/kq/gXL4MPKF0JrTHcM1vsK1+wGC/M9pu22dEBiIQMocuHgTAxeOdH8
+ W7Tresuf4XxZwD8yItNwJLd82QsYhCmYBKEVmR9jpG8X1RS+TvYTlEEZwCOznGbxVrWxh4z15TL
+ OghAUoeoOPHbSJs+VB5JQSjwScASdv4F4mwWYIufDF5vvfC+VJJySzOQTZhl7Hz07gUDwKU6g5I
+ iMn6U7albGz5J4lj/VQR7xQW+JxsATqrtiOnBc94ymjnApcnP/s02YlRdGhU5D5s+6+6jgsV4Jg
+ 1KvgWD/ST93TdrnZpWOotxlpLpKMvBA+ci+f6Dp6+svdQGunCDDrCXl+aqqreKT1bglCR8LsxTx
+ dOAntfcvmiY7cs43yoFzlF/YZl0DxJKXh6V4yUjgzW0vq9g==
+X-Received: by 2002:a05:600c:1f8f:b0:477:73e9:dc17 with SMTP id
+ 5b1f17b1804b1-483a95ee63amr123422505e9.35.1771770508608; 
+ Sun, 22 Feb 2026 06:28:28 -0800 (PST)
+X-Received: by 2002:a05:600c:1f8f:b0:477:73e9:dc17 with SMTP id
+ 5b1f17b1804b1-483a95ee63amr123422095e9.35.1771770508162; 
+ Sun, 22 Feb 2026 06:28:28 -0800 (PST)
 Received: from redhat.com (IGLD-80-230-79-166.inter.net.il. [80.230.79.166])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-483a9b6698asm213659225e9.2.2026.02.22.06.28.15
+ 5b1f17b1804b1-483a9b75b4dsm194822945e9.4.2026.02.22.06.28.27
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 22 Feb 2026 06:28:16 -0800 (PST)
-Date: Sun, 22 Feb 2026 09:28:14 -0500
+ Sun, 22 Feb 2026 06:28:27 -0800 (PST)
+Date: Sun, 22 Feb 2026 09:28:26 -0500
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>
-Subject: [PULL 00/33] virtio,pc,pci: features, fixes
-Message-ID: <cover.1771770471.git.mst@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Mohamed Mediouni <mohamed@unpredictable.fr>,
+ Ani Sinha <anisinha@redhat.com>, Igor Mammedov <imammedo@redhat.com>
+Subject: [PULL 05/33] tests/data/acpi: disassemble-aml: rename and change
+ interpreter line
+Message-ID: <4d0830ea34abed563f15d3a236bef83a9026a7e8.1771770471.git.mst@redhat.com>
+References: <cover.1771770471.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <cover.1771770471.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
@@ -118,141 +121,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 07f97d5da04a9f97e273de85c76f5017d8135a6e:
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
 
-  Merge tag 'pull-target-arm-20260219' of https://gitlab.com/pm215/qemu into staging (2026-02-19 10:36:06 +0000)
+/usr/bin/bash isn't guaranteed to be present. Switch
+to /usr/bin/env bash.
 
-are available in the Git repository at:
+Specifically, on Darwin/macOS:
 
-  https://git.kernel.org/pub/scm/virt/kvm/mst/qemu.git tags/for_upstream
+$ which bash
+/opt/homebrew/bin/bash
 
-for you to fetch changes up to 72f663f575ab5e0f31320d7c9f25cc1f086313bd:
+Rename disassemle to disassemble in the same commit (typo fix).
 
-  vhost: fix vhost_inflight_buffer_pre_load (2026-02-20 13:04:45 -0500)
+Adapt the correponding message in rebuild-expected-aml.
 
-----------------------------------------------------------------
-virtio,pc,pci: features, fixes
-
-cxl:
-    RAS features
-    Back-Invalidate
-    Flit mode
-    r3.2 spec event updates
-    FM-API Physical Switch Command Set support
-vhost-vdpa: allow GSO for SVQ
-
-misc fixes, cleanups in intel_iommu, vhost, virtio, acpi
-
+Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+Reviewed-by: Ani Sinha <anisinha@redhat.com>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-
-----------------------------------------------------------------
-Akihiko Odaki (1):
-      virtio-gpu-virgl: Add virtio-gpu-virgl-hostmem-region type
-
-Alexandr Moshkov (1):
-      vhost: fix vhost_inflight_buffer_pre_load
-
-Arpit Kumar (2):
-      hw/cxl: Physical Port Info FMAPI - update to current spec and add defines.
-      hw/cxl: Add Physical Port Control FMAPI Command (Opcode 5102h)
-
-Clément Mathieu--Drif (1):
-      intel_iommu: Do not report recoverable faults to host
-
-Davidlohr Bueso (4):
-      hw/cxl: Add support for Maintenance command and Post Package Repair (PPR)
-      hw/pcie: Support enabling flit mode
-      hw/cxl: Support type3 HDM-DB
-      hw/cxl: Remove register special_ops->read()
-
-Eugenio Pérez (1):
-      net/vhost-vdpa: Whitelist virtio-net GSO for shadow virtqueue
-
-Ira Weiny (1):
-      hw/cxl: Refactor component register initialization
-
-Jonathan Cameron (4):
-      tests/bios-tables-test: Excluded CEDT.cxl for BI restriction relaxation.
-      hw/cxl: Update CXL Fixed Memory Window ACPI description to include Back Invalidate support.
-      tests/acpi/cxl: Update CEDT.cxl to allow BI in CFWMS
-      hw/cxl: Get Physical Port State - update for PCIe flit mode
-
-Manos Pitsidianakis (5):
-      MAINTAINERS: add me as maintainer to virtio-snd
-      virtio-snd: remove TODO comments
-      virtio-snd: handle 5.14.6.2 for PCM_INFO properly
-      virtio-snd: fix max_size bounds check in input cb
-      virtio-snd: tighten read amount in in_cb
-
-Mohamed Mediouni (1):
-      tests/data/acpi: disassemble-aml: rename and change interpreter line
-
-Philippe Mathieu-Daudé (1):
-      hw/virtio: Pass VirtIODevice* to virtio_reset()
-
-Shiju Jose (7):
-      qapi: cxl: Refactor CXL event injection for common commands arguments
-      hw/cxl/events: Update for rev3.2 common event record format
-      hw/cxl/events: Updates for rev3.2 general media event record
-      hw/cxl/events: Updates for rev3.2 DRAM event record
-      hw/cxl/events: Updates for rev3.2 memory module event record
-      hw/cxl/cxl-mailbox-utils: Move declaration of scrub and ECS feature attributes in cmd_features_set_feature()
-      hw/cxl: Add emulation for memory sparing control feature
-
-Yanfeng Liu (1):
-      audio/virtio-snd: fix latency calc
-
-Yodel Eldar (3):
-      tests/vhost-user-bridge: Move to contrib/vhost-user-bridge/
-      tests/functional/x86_64: Add vhost-user-bridge test
-      contrib/vhost-user-bridge: Add UDP receive hexdump
-
- MAINTAINERS                                        |   3 +-
- contrib/vhost-user-bridge/meson.build              |   4 +
- .../vhost-user-bridge}/vhost-user-bridge.c         |   7 +
- docs/system/devices/cxl.rst                        |  23 +
- docs/system/devices/virtio/vhost-user-contrib.rst  |  39 ++
- hw/acpi/cxl.c                                      |   2 +-
- hw/audio/virtio-snd.c                              |  80 ++-
- hw/cxl/cxl-component-utils.c                       | 214 ++++--
- hw/cxl/cxl-events.c                                |   3 +-
- hw/cxl/cxl-mailbox-utils.c                         | 752 ++++++++++++++++++++-
- hw/display/virtio-gpu-virgl.c                      |  54 +-
- hw/i386/intel_iommu.c                              |  26 +-
- hw/mem/cxl_type3.c                                 | 349 +++++++++-
- hw/mem/cxl_type3_stubs.c                           |  41 +-
- hw/pci-bridge/cxl_downstream.c                     |  19 +-
- hw/pci-bridge/cxl_root_port.c                      |  11 +-
- hw/pci-bridge/cxl_upstream.c                       |  19 +-
- hw/pci-bridge/pci_expander_bridge.c                |   2 +-
- hw/pci/pcie.c                                      |  23 +-
- hw/virtio/vhost.c                                  |   4 +-
- hw/virtio/virtio.c                                 |   3 +-
- include/hw/audio/virtio-snd.h                      |   1 +
- include/hw/cxl/cxl_component.h                     |  87 ++-
- include/hw/cxl/cxl_device.h                        | 156 ++++-
- include/hw/cxl/cxl_events.h                        |  85 ++-
- include/hw/cxl/cxl_port.h                          |  73 ++
- include/hw/pci-bridge/cxl_downstream_port.h        |  12 +
- include/hw/pci-bridge/cxl_upstream_port.h          |   3 +
- include/hw/pci/pcie.h                              |   2 +-
- include/hw/pci/pcie_port.h                         |   1 +
- include/hw/virtio/virtio.h                         |   2 +-
- meson.build                                        |   1 +
- net/vhost-vdpa.c                                   |   1 +
- qapi/cxl.json                                      | 186 +++--
- .../acpi/{disassemle-aml.sh => disassemble-aml.sh} |   4 +-
- tests/data/acpi/rebuild-expected-aml.sh            |   2 +-
- tests/data/acpi/x86/q35/CEDT.cxl                   | Bin 184 -> 184 bytes
- tests/functional/x86_64/meson.build                |   1 +
- tests/functional/x86_64/test_vhost_user_bridge.py  | 147 ++++
- tests/meson.build                                  |   6 -
- 40 files changed, 2187 insertions(+), 261 deletions(-)
- create mode 100644 contrib/vhost-user-bridge/meson.build
- rename {tests => contrib/vhost-user-bridge}/vhost-user-bridge.c (98%)
- create mode 100644 include/hw/cxl/cxl_port.h
- create mode 100644 include/hw/pci-bridge/cxl_downstream_port.h
+Message-Id: <20260210041248.14701-1-mohamed@unpredictable.fr>
+---
+ tests/data/acpi/{disassemle-aml.sh => disassemble-aml.sh} | 4 ++--
+ tests/data/acpi/rebuild-expected-aml.sh                   | 2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
  rename tests/data/acpi/{disassemle-aml.sh => disassemble-aml.sh} (92%)
- create mode 100755 tests/functional/x86_64/test_vhost_user_bridge.py
+
+diff --git a/tests/data/acpi/disassemle-aml.sh b/tests/data/acpi/disassemble-aml.sh
+similarity index 92%
+rename from tests/data/acpi/disassemle-aml.sh
+rename to tests/data/acpi/disassemble-aml.sh
+index 89561d233d..62e1991ace 100755
+--- a/tests/data/acpi/disassemle-aml.sh
++++ b/tests/data/acpi/disassemble-aml.sh
+@@ -1,4 +1,4 @@
+-#!/usr/bin/bash
++#!/usr/bin/env bash
+ 
+ outdir=
+ while getopts "o:" arg; do
+@@ -7,7 +7,7 @@ while getopts "o:" arg; do
+         outdir=$OPTARG
+         ;;
+     \? )
+-        echo "Usage: ./tests/data/acpi/disassemle-aml.sh [-o <output-directory>]"
++        echo "Usage: ./tests/data/acpi/disassemble-aml.sh [-o <output-directory>]"
+         exit 1
+         ;;
+ 
+diff --git a/tests/data/acpi/rebuild-expected-aml.sh b/tests/data/acpi/rebuild-expected-aml.sh
+index cbf9ffe0dd..af45cf3007 100755
+--- a/tests/data/acpi/rebuild-expected-aml.sh
++++ b/tests/data/acpi/rebuild-expected-aml.sh
+@@ -57,7 +57,7 @@ old_allowed_dif=`grep -v -e 'List of comma-separated changed AML files to ignore
+ echo '/* List of comma-separated changed AML files to ignore */' > ${SRC_PATH}/tests/qtest/bios-tables-test-allowed-diff.h
+ 
+ echo "The files were rebuilt and can be added to git."
+-echo "You can use ${SRC_PATH}/tests/data/acpi/disassemle-aml.sh to disassemble them to ASL."
++echo "You can use ${SRC_PATH}/tests/data/acpi/disassemble-aml.sh to disassemble them to ASL."
+ 
+ if [ -z "$old_allowed_dif" ]; then
+     echo "Note! Please do not commit expected files with source changes"
+-- 
+MST
 
 
