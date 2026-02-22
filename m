@@ -4,79 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3CD2E68179
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CDD16C636C5
 	for <qemu-devel@archiver.kernel.org>; Sun, 22 Feb 2026 23:06:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuIWo-0001Qx-CO; Sun, 22 Feb 2026 18:06:18 -0500
+	id 1vuIWf-0001Qh-T1; Sun, 22 Feb 2026 18:06:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vuIWj-0001Qp-NV
- for qemu-devel@nongnu.org; Sun, 22 Feb 2026 18:06:13 -0500
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vuIWe-0001Pk-1H
+ for qemu-devel@nongnu.org; Sun, 22 Feb 2026 18:06:08 -0500
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vuIWi-0005vM-5N
- for qemu-devel@nongnu.org; Sun, 22 Feb 2026 18:06:13 -0500
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-48374014a77so38711345e9.3
- for <qemu-devel@nongnu.org>; Sun, 22 Feb 2026 15:06:11 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vuIWc-0005v7-7u
+ for qemu-devel@nongnu.org; Sun, 22 Feb 2026 18:06:07 -0500
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-4375d4fb4d4so2336535f8f.0
+ for <qemu-devel@nongnu.org>; Sun, 22 Feb 2026 15:06:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771801570; x=1772406370; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=G8n54m4QbMI8GF9i4s0xEOtozUsr7KAZ+nvUeoqm+sI=;
- b=b6KuEhjxS2mZMDReC1kaqAO6U3vAh1W6434cQQRQO2bd/NmUCmJFpYNDvUyyJJVFeq
- kuwlnuaYpBbz2YA1rtVoCNyyKYUKCYrEdhsEQi+7bpKtiVjusfhjnyelKArntx3lbTWE
- X6TZHtdDVMPm45SlQdgmHlp6djDXse/j3FU6Z91zNgVcTT2uWwN/njfLM51az3gdThJK
- m2gmVVsVCQiudoxGWjY/b4jTLJaQl1aLNM2ABNY+HOdqSkpvmYabtFGTp9feYgEzti5E
- RwW4vbpBLUYy2Yt7p/kSAG/1XkJazf3uOUpY+8ahpTTd3fQPJ0bR5aLWjodT64dQ9OiG
- pyDg==
+ d=linaro.org; s=google; t=1771801564; x=1772406364; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=CilXNfPct5/Yscu/2lF9wsbUq8NIRMavj9fub+QMthk=;
+ b=Re91SVvKpSFJWAUUr2qrfJwIbZ/UjXnDTOHFvBxuuXMGpdRDfUAcY7IboxIZfo9Mf0
+ yO8rZIa4tqPvLpOe9THSYhW9B8FIF0fmsWwlsKnQbpTCz2QANccqkKdxeGLbbkcl/6UQ
+ KhfQReopnSFezhrYoVPl0Osw72VbmRlXVaLwPEjbdB9lZEK4yc3MzDE4WIrPd0iwf1a3
+ /NbfaHelGXFFwh3Aysilfd50g6ft/GaS4GZSzaFXnIUBx7RBdcUhvWLuLQ9/kHLvdg5a
+ RwQY763QaU5SyQNqOmcIPepbZ5dLojKIqavjsw6xAhmwh4mri0+/yx2tmTQHhO/ZQHZp
+ KThQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771801570; x=1772406370;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=G8n54m4QbMI8GF9i4s0xEOtozUsr7KAZ+nvUeoqm+sI=;
- b=cVfjoIprh9g9YzDUjXWb7g5KQHTXPWKhtqQeasVfhWXfA1t3BLanfgpKGlj7giNq6j
- fd22QXH/ZYxkou5eA6FzhLwq7bOSzaMhtHmirRJqCVx6ETbx2PjSfvCaxC6HpnY4fhOA
- gNH6MPI0izeQpzL2vPr7G4ldECqsaOYNR62AaB/4sjTvAGDVH4F6Zg3tI08qHN5gj2sD
- 2pKdkan/7jKQJbLYLHBzaPk5ya++xMcr1V8pUx1bouosrM63QnbemzzEngxjOQNu5Tp6
- lsxKGngWFKL4WZYKijH5usnwK5hxfCRRWqqg/5haRmDKNyPwwM8Z8FyWDssSQD/R1hIM
- frPg==
-X-Gm-Message-State: AOJu0YyQnCqDntWihMUhxyeHguGP0yv8zZFrrtWlPnGFbM9WE5Ay/06x
- eAkVzFopMNfXptBnX6BBAsYPj1Hxijmzm11cSazVYFFIQlAyKXEJMF7B/8jmwg9SL9zpqalUnnJ
- oQVRPiUw=
-X-Gm-Gg: AZuq6aK1L4McD61jhJ5iT4X+x8Q0U0OERhGpiEGmkePBtfDtT39hCG2yoE22BiSIzp7
- LJVOQufJyU8SqQg750b89/ih9SdeJUVyJUILXlOQvnJ/aHRO3KAsD0b63c/gN/nONDuTIQLZ+Kf
- W7PgAsCruyKkmEjWDpTh3EsQa7TWkt14//dRmS7cKm1bQsz54B9QHVWlz3ooqBpYWrESn8/1qi5
- 3rPewmgH+4jJp+vLrhslmRBNHbXyknLFrYlq4OJVSHVWsohXIPMU9AKndKb65/MjDlG3Iyw5MkP
- NwPJjRMfjJBhpReXFT+IkY8Lx5jz19szDT0v4RVY6JKlc9YnyskYboPQjauuyqZCziv2d22MYdw
- A3w1Fr/BtWojmsy7h+ILv1G/7pfoAX0nr7SXWazBpzIsIdHALOC4xKF6qcR6pitdPpGyeKJhmRr
- lRof8auSqBFPrLeHZNMcn079T9VuxHPAEi7/P2+DPyhX2shK4UuDdvY9tmdkdCtfQgsN61320P
-X-Received: by 2002:a05:600c:4f8a:b0:480:1d0b:2d32 with SMTP id
- 5b1f17b1804b1-483a95beb5bmr122248265e9.12.1771801570219; 
- Sun, 22 Feb 2026 15:06:10 -0800 (PST)
+ d=1e100.net; s=20230601; t=1771801564; x=1772406364;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=CilXNfPct5/Yscu/2lF9wsbUq8NIRMavj9fub+QMthk=;
+ b=ZNOdZBJ4gfT3sbN6NFe7Ol2pET6JMAxQFN3Yh/AtIhw9lC+MwoB1EqWdI/eg/jDwUs
+ bHPtBNtwjCztOnuUQGGjBWGu2JWPNbOgEYG/fV4S2CjhNyogtEmbY3KiHCow+r4+QxS2
+ 4P+NfCpEZOKL2gxCHkb0fusnPWCS7gj/qgjSrGwX38KbbRgmi8sugyFYbAdHLANox0oH
+ fn+GBoAgrtOAGfP0/5kCikxi2SGg2SwXU2JrR3Fpo3wWc2YkR0mqWoOSIhFTgy9mTCWx
+ /Le6Ddo742luc+CjM/ejVq3gB6CmlQ6j1LOaVdroS8amA/ZyS6180UxQmUxOjLHgtcfR
+ Dr7Q==
+X-Gm-Message-State: AOJu0YwvQQw9Db2lgYd2v0MEALiu7v11FhHWvRYg64nh+vUutr+CJGZR
+ E39z7rZGvc6C+6E2KrREJxM4C6VgVCBX3fSRGxSjAm/Bg9aLwwrMQQ80B10EgWG0q51sYO3rlyR
+ Y5b4UT1Q=
+X-Gm-Gg: AZuq6aI+5CQOw74I21aTkR/95NMw79hhJYTwe2vaOhL5VXnF71ZCJ+3FtjxqLdUKaND
+ MerahN84wZ6W9ZgEcXqOLHQ/H720+OJXBb9mPFfQOUeVu+iazcXTHPpiLw4blQalXXthoSs2l3z
+ NtdGs6lBWc9jRb+VSUSrapKcDsH1yfzn/4wuVC9c2Ry7n02i6y2IDsM8V4GXiqoIHYgGxs2QRIW
+ LlRTH06HoHflp5YWvZdxXC92wRptY4NvQT+yk///IJJ9bB7CJBQmMQOeB60t3VVdYrVmsMIpz18
+ sqjZAPtVdKB56hM7xPsQr3EsHBbF5ZcJLM2h/0EMDRfARRU/qW5iCN+Ti1Ian5wnYYPHAwN4ZsC
+ cr5nmU7LpjaicTpVrLyp+HeUFYNgFGLIBPuCuThLgIMEWn3AQ8d04PU0hrUE7HGIef7bR8UnBe/
+ 47pPjbu3UFaOop7zAM08nH3OUI3Y1UmZFyVAXfYMbI+E9W9XGxHaLgCQmtLTo4wqWcOeBOawDh
+X-Received: by 2002:adf:f3d1:0:b0:439:7e1c:87b0 with SMTP id
+ ffacd0b85a97d-4397e1c8bafmr184328f8f.37.1771801563676; 
+ Sun, 22 Feb 2026 15:06:03 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43970d4c626sm16426705f8f.28.2026.02.22.15.06.09
+ ffacd0b85a97d-43970d4c626sm16426222f8f.28.2026.02.22.15.06.03
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 22 Feb 2026 15:06:09 -0800 (PST)
+ Sun, 22 Feb 2026 15:06:03 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 01/20] hw/misc/virt_ctrl: Fix incorrect trace event in read
- operation
-Date: Mon, 23 Feb 2026 00:05:42 +0100
-Message-ID: <20260222230602.5756-2-philmd@linaro.org>
+Subject: [PULL 00/20] Misc HW patches for 2026-02-22
+Date: Mon, 23 Feb 2026 00:05:41 +0100
+Message-ID: <20260222230602.5756-1-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260222230602.5756-1-philmd@linaro.org>
-References: <20260222230602.5756-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,38 +96,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Kuan-Wei Chiu <visitorckw@gmail.com>
+The following changes since commit 07f97d5da04a9f97e273de85c76f5017d8135a6e:
 
-The virt_ctrl_read() function currently invokes trace_virt_ctrl_write()
-instead of trace_virt_ctrl_read(). This results in read operations
-appearing as write operations in the trace output, which is misleading
-during debugging and analysis.
+  Merge tag 'pull-target-arm-20260219' of https://gitlab.com/pm215/qemu into staging (2026-02-19 10:36:06 +0000)
 
-Replace the incorrect trace call with the proper read-specific trace
-event to accurately reflect the hardware behavior.
+are available in the Git repository at:
 
-Fixes: 0791bc02b8fb ("m68k: add a system controller")
-Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20260111184915.1363318-1-visitorckw@gmail.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- hw/misc/virt_ctrl.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+  https://github.com/philmd/qemu.git tags/hw-misc-20260222
 
-diff --git a/hw/misc/virt_ctrl.c b/hw/misc/virt_ctrl.c
-index 40747925a29..9b82e97ffde 100644
---- a/hw/misc/virt_ctrl.c
-+++ b/hw/misc/virt_ctrl.c
-@@ -43,7 +43,7 @@ static uint64_t virt_ctrl_read(void *opaque, hwaddr addr, unsigned size)
-         break;
-     }
- 
--    trace_virt_ctrl_write(s, addr, size, value);
-+    trace_virt_ctrl_read(s, addr, size, value);
- 
-     return value;
- }
+for you to fetch changes up to ab39a5a46a411d7171192cf911d5e9465bd2e6b1:
+
+  net: mark struct tcp_header as QEMU_PACKED (2026-02-22 23:08:19 +0100)
+
+----------------------------------------------------------------
+Misc HW & Net patches
+
+- Fix trace event name in m68k system controller
+- Constify and rename virtio_is_big_endian()
+- Set graphic display dimensions generically (removing system/globals-target.c)
+- Mark eth_header, udp_header, tcp_header as packed structures
+- Minor doc / header cleanups
+----------------------------------------------------------------
+
+Alex Bennée (2):
+  hw/alpha: remove unused includes
+  hw/core/cpu: expand cpu_reset function docs
+
+BALATON Zoltan (1):
+  hw/net/rtl8139: Remove ineffective parameter
+
+Kuan-Wei Chiu (1):
+  hw/misc/virt_ctrl: Fix incorrect trace event in read operation
+
+Peter Maydell (5):
+  hw/net/rocker: Don't keep pointer to h_proto as uint16_t* in
+    OfDpaFlowPktFields
+  hw/net/rocker: Don't assume h_proto is aligned in eth_strip_vlan_ex()
+  net: mark struct eth_header as QEMU_PACKED
+  net: mark struct udp_header as QEMU_PACKED
+  net: mark struct tcp_header as QEMU_PACKED
+
+Philippe Mathieu-Daudé (9):
+  hw/virtio: Constify virtio_is_big_endian() argument
+  hw/display/macfb: Constify macfb_sense_table[] array
+  hw/display/macfb: Constify macfb_mode_table[] array
+  hw/m68k/q800: Use MacFbMode fields in q800_machine_init()
+  hw/m68k/q800: Set MACFB_DISPLAY_APPLE_21_COLOR within MacFrameBuffer
+  hw/m68k: Set graphic display dimensions generically
+  hw/sparc: Set graphic display dimensions generically
+  hw/ppc: Set graphic display dimensions generically
+  system/globals: Build as common code
+
+Pierrick Bouvier (2):
+  hw/virtio: rename virtio_is_big_endian to virtio_vdev_is_big_endian
+  hw/ppc/spapr: extract SPAPR_MAX_RAM_SLOTS in a new header
+
+ include/hw/core/cpu.h             |  3 +++
+ include/hw/display/macfb.h        |  2 +-
+ include/hw/ppc/ppc.h              |  2 ++
+ include/hw/ppc/spapr.h            |  8 +-------
+ include/hw/ppc/spapr_common.h     | 17 +++++++++++++++++
+ include/hw/virtio/virtio-access.h |  2 +-
+ include/hw/virtio/virtio.h        |  2 +-
+ include/net/eth.h                 |  6 +++---
+ hw/alpha/dp264.c                  |  2 --
+ hw/display/macfb.c                | 18 +++++++++++-------
+ hw/m68k/q800.c                    | 17 ++++++-----------
+ hw/misc/virt_ctrl.c               |  2 +-
+ hw/net/rocker/rocker_of_dpa.c     | 19 ++++++++++++-------
+ hw/net/rtl8139.c                  | 24 ++++++++----------------
+ hw/net/virtio-net.c               |  4 ++--
+ hw/ppc/mac_newworld.c             | 10 ++++++----
+ hw/ppc/mac_oldworld.c             | 10 ++++++----
+ hw/ppc/ppc.c                      |  8 ++++++++
+ hw/ppc/prep.c                     |  4 ++++
+ hw/ppc/spapr.c                    |  4 ++++
+ hw/sparc/sun4m.c                  |  9 +++++++++
+ hw/sparc64/sun4u.c                | 10 ++++++++++
+ hw/virtio/vhost.c                 |  4 ++--
+ hw/virtio/virtio-pci.c            |  8 ++++----
+ net/eth.c                         |  6 +++---
+ system/globals-target.c           | 24 ------------------------
+ system/globals.c                  |  3 +++
+ system/meson.build                |  1 -
+ 28 files changed, 128 insertions(+), 101 deletions(-)
+ create mode 100644 include/hw/ppc/spapr_common.h
+ delete mode 100644 system/globals-target.c
+
 -- 
 2.52.0
 
