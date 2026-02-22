@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE60FE7BDA2
-	for <qemu-devel@archiver.kernel.org>; Sun, 22 Feb 2026 23:08:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BC7CE6817A
+	for <qemu-devel@archiver.kernel.org>; Sun, 22 Feb 2026 23:08:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuIY5-0002t0-Qv; Sun, 22 Feb 2026 18:07:37 -0500
+	id 1vuIYb-0005bg-ET; Sun, 22 Feb 2026 18:08:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vuIY2-0002Zp-PD
- for qemu-devel@nongnu.org; Sun, 22 Feb 2026 18:07:36 -0500
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vuIYV-0005KZ-Ti
+ for qemu-devel@nongnu.org; Sun, 22 Feb 2026 18:08:04 -0500
+Received: from mail-wr1-x443.google.com ([2a00:1450:4864:20::443])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vuIY1-00060K-7v
- for qemu-devel@nongnu.org; Sun, 22 Feb 2026 18:07:34 -0500
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-4358fb60802so2737306f8f.1
- for <qemu-devel@nongnu.org>; Sun, 22 Feb 2026 15:07:32 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vuIYS-00064C-CL
+ for qemu-devel@nongnu.org; Sun, 22 Feb 2026 18:08:02 -0500
+Received: by mail-wr1-x443.google.com with SMTP id
+ ffacd0b85a97d-43767807da6so2714917f8f.2
+ for <qemu-devel@nongnu.org>; Sun, 22 Feb 2026 15:07:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771801650; x=1772406450; darn=nongnu.org;
+ d=linaro.org; s=google; t=1771801678; x=1772406478; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=G+Shgl9Yri5QWTxJtLwdRaSrm/tFNfZ+WrU+G3AQqME=;
- b=HlbSDKyyN4+AXz8xtPRMuJJL0v3+m5+s6XXdPZqyZGarcC97s1RWQ7OTCql69LJ42x
- YcQfq7dUuZVmCxtAMk2D4pRUA/zkz0h98L6fBs0fnKKXxeb9xbQuxTdolaAYGlLYKcu8
- FmwULieb5F/sNLSutJaTXKDXW38i23CuQVrdGAX4B12XJmZio8aW3njuNb8p/Fz0h/iq
- UYUveLpdHNUMM2/UhF1xBwrD/dq6PWxWMcMnRhdU1SjOVq73BciRSHhK7yQ/rJkH73oi
- 7Dpmd3/VUCrjPIu7g+TAxtY6+2P9A5eq+9sB781NBCiyWDv0gXlV5RXVJOpojw2v7g1f
- RIWA==
+ :reply-to; bh=aK+ULSuJrjq6iUTZBtmAVuymd25sCvXT9HOk0d4M3v0=;
+ b=NKjvDxRfGWDoiWNrsBxWIVJkezoRGcqxaWgLpsTFGQBYD0RDoInpa71dbHYLhitekF
+ ouhUwtCoHU1CwdZN9Ovw3PHrrBkQLh5/WNkpATxme9UEI380eLwqe058ofUG2ZPLKC3T
+ nwdUiTw3fEco9k5RIPO8d63Qbdd66CY9m9Y30QUJ1CogOHnwj2OtjoGbFUm3+dPO9P8/
+ obr+CBTZKnpPx+o7aGuSwYRAnb2+SAjCls3YJgt9Aa7hBIZLWwBlXYYKCM1zPEgZRHlH
+ NDMiHk5tA91S4KazmLyJPzMQqtut8Y2SuzdBFs/HZcPaCUj9nK7EY7G4FX8sPMQle+vb
+ 2c6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771801650; x=1772406450;
+ d=1e100.net; s=20230601; t=1771801678; x=1772406478;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=G+Shgl9Yri5QWTxJtLwdRaSrm/tFNfZ+WrU+G3AQqME=;
- b=p+LJFXAVZbKBh7x9Gx907itWzvBONR1JgSd1QmkrMM72XbZzb77Lx3HZ6QUP9CJWMx
- 45lJAhYwmfIW3Km4Ps5RYYFvhYRo6jP5m23RsM4QgksBVDk1EEZyNi5lY2B7REqJksQQ
- 9cVv4SFlwd0qD40VZjeTahtHS2qq1Z+PiW0S94tKM5EEGB15OQTShGER+67+ddkOwkkL
- GD/7nq6pEHgrP24rENYOpfQDaFfSnYzWCvjlqN7J8mtunmD7I8XvzhhPMwgGSgn2O7ZI
- KPMNbMO8jN0KaAYILZCbGXK0MZ/Pj/bJj4XA4YPUTU/XAMVcX3H3QS11gHlR7pkO9TVX
- cbzg==
-X-Gm-Message-State: AOJu0YxWxIFs0VjL5XJR84sY5LQDkIfP7BJczOep0UOj+2LteWYR3R/1
- s6NAXLCn0gbyIYw5Ei15+ucWHH0GC2Wf4HlB0/JSDrIsSaMeBTr0VFDDyPGdUReigHvY6mLY42f
- /wZz8BS4=
-X-Gm-Gg: AZuq6aJ8+rgst4pzisOXaRyeqTpJpZJxZSqCm+ky/sMVOkla/2B4vS/VvarV8UpeURh
- NdD7tG8ZDCBZU2PMIDtHNnYmc6eRBQ5HTUk7Od1209llgjSkmGeI1zTQ2Z7ofFNgZWgZ7qbMm9Z
- SkX45P+ylHJI0dIQmxmbqxQYemsu77k6jxXp9KHbQ5B6+1bMTZrMA+GV8jEULkswi0IoA7zvhzD
- 3qLK/WsjSXhr5Fcqz4kSxqCy+HolsI0wDQ2WBj1LDhPHhY0qGWddNJpO5T2UeOVw++2YCFiEfgz
- TWzhmcOFrTJQgb3XlovD6eGTQqrAJVRy9RdlaJcqvtG+r/VKbXCKTchEvHfMNVCra8v2s4zi9co
- n7SyGNkCuQB7ehaJdyAkRjZt2vMM0364QzK7WOaMX02eHGy9ks556KS9C2x+8eftXXdCmhBvYRj
- sCjzzBneuf1fPZI/M0MfIMRNeNrvJoMryFZ0d//uCorfipD790vfmzxLyMv+zeWHC2Z+ttVEZ+
-X-Received: by 2002:a5d:4e10:0:b0:435:96a1:ee4d with SMTP id
- ffacd0b85a97d-4396ffc46a8mr9588352f8f.14.1771801650428; 
- Sun, 22 Feb 2026 15:07:30 -0800 (PST)
+ bh=aK+ULSuJrjq6iUTZBtmAVuymd25sCvXT9HOk0d4M3v0=;
+ b=Vtba7nBBtShVBcg5qaaHF3sXPPCCuS/gXamuNjLtep9NX5/ToFH7YyZrCnZAIznvTx
+ XA6qrGUELs6oqj9GMxgb1mD1P9UdDbx+80uC1jZAleaNhkniTDUP6Gvj8ynhggee2K05
+ OdGAZulrsAy0Y3EMbpRpD1dPeKhw2PEvhd3f3ZJOAMAkvW1Rdf2UNsMnxaTh8vwcI5fh
+ ngtUQ1mn49xGsWKuhyr4kUEUg53ZBASga1suNYL120dL79lHBJoQEg8AWbuNylsspEQN
+ bys/wl3JZQ1dnlSxs7JeQbpn6m0YcNBd3JR2GK/S2umnHZWfT2Wg90DyTBHD9yQ/ON6S
+ X73w==
+X-Gm-Message-State: AOJu0YwXICu5C9dT3iv3WFtZX58zjpIywj8Mx/IStTRfGhag+qVDl6OF
+ W+E1DUZGnzCKBzLtiS5DYnrrTItBnoa0MvcVpE4gXhQ6/Wt3eNf4Wd/FVDRAHh+hCe6fGGVhF1R
+ X/NzRt+6WPw==
+X-Gm-Gg: AZuq6aJ92pmSRW0jSBajDp7IyPDzsuNJwmmrfuwkFjUfG3kzZgNRYAMLOcHobvzRmQZ
+ tQpzBeF497P9a/+9ODb7jHl6GcPis/gtVzQ1Sz4HDfYR2pNnXrljvU4vvFh6BAdcpRIZ+NGeYgs
+ iMlccgN3f79Z3FYWVzw+BY+jMGADovdhW5YxTuYBgUf8tal46PSqt8kY03ImcIv6Qx0BI9iVAji
+ CISbqs5vdpffmHxRK/x2b7bWRnPsBAjG14IXwLXVZRZq9urB8u8BVSd2URGQ0NlajMS1nMhjh93
+ WhpK79CeDpEL4o5E9dSxJys1BcRqSsQmShQx+oofOeWLg3BJOFwkXajLM2OfvbYhQNpHaNCrlPL
+ 6htdbgiTe4UGQO/5tawTPKx4Xpk1ltA8vpRalHrkGC0jQ8LUHBnnXW1K+/Rf8WjgColuLJpXSp5
+ PCkBFW9CUhS2NOptLQ03QEDdmPQd9yA6R3/r1t3cWR2/iIpdPEXDirq39h6+Uv7pTdpL/xmJQJ
+X-Received: by 2002:a05:600c:190f:b0:477:9a28:b0a4 with SMTP id
+ 5b1f17b1804b1-483a95574c5mr114461295e9.0.1771801678285; 
+ Sun, 22 Feb 2026 15:07:58 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43970d3ff27sm16316578f8f.22.2026.02.22.15.07.29
+ 5b1f17b1804b1-483a9b75e63sm256026795e9.6.2026.02.22.15.07.57
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 22 Feb 2026 15:07:29 -0800 (PST)
+ Sun, 22 Feb 2026 15:07:57 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 13/20] hw/alpha: remove unused includes
-Date: Mon, 23 Feb 2026 00:05:54 +0100
-Message-ID: <20260222230602.5756-14-philmd@linaro.org>
+Subject: [PULL 17/20] hw/net/rocker: Don't assume h_proto is aligned in
+ eth_strip_vlan_ex()
+Date: Mon, 23 Feb 2026 00:05:58 +0100
+Message-ID: <20260222230602.5756-18-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260222230602.5756-1-philmd@linaro.org>
 References: <20260222230602.5756-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::443;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x443.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,29 +99,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alex Bennée <alex.bennee@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Message-ID: <20260219171810.602667-12-alex.bennee@linaro.org>
+In eth_strip_vlan_ex() we take a pointer to the eth_header h_proto
+field into a local uint16_t* variable, and then later in the function
+we dereference that pointer.  This isn't safe, because the eth_header
+struct may not be aligned, and if we mark the struct as QEMU_PACKED
+then gcc will complain about taking the address of a field in a
+packed struct.
+
+Instead, make the local variable be a void* and use the appropriate
+functions for accessing 16 bits of possibly unaligned data through
+it.
+
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Message-ID: <20260212140917.1443253-3-peter.maydell@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/alpha/dp264.c | 2 --
- 1 file changed, 2 deletions(-)
+ net/eth.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/hw/alpha/dp264.c b/hw/alpha/dp264.c
-index 5e64528431e..98219f04569 100644
---- a/hw/alpha/dp264.c
-+++ b/hw/alpha/dp264.c
-@@ -16,8 +16,6 @@
- #include "hw/rtc/mc146818rtc.h"
- #include "hw/ide/pci.h"
- #include "hw/isa/superio.h"
--#include "net/net.h"
--#include "qemu/cutils.h"
- #include "qemu/datadir.h"
+diff --git a/net/eth.c b/net/eth.c
+index 3f680cc033a..12ec316e240 100644
+--- a/net/eth.c
++++ b/net/eth.c
+@@ -274,7 +274,7 @@ eth_strip_vlan_ex(const struct iovec *iov, int iovcnt, size_t iovoff, int index,
+                   uint16_t *payload_offset, uint16_t *tci)
+ {
+     struct vlan_header vlan_hdr;
+-    uint16_t *new_ehdr_proto;
++    void *new_ehdr_proto;
+     size_t new_ehdr_size;
+     size_t copied;
  
- static uint64_t cpu_alpha_superpage_to_phys(void *opaque, uint64_t addr)
+@@ -298,7 +298,7 @@ eth_strip_vlan_ex(const struct iovec *iov, int iovcnt, size_t iovoff, int index,
+         return 0;
+     }
+ 
+-    if (copied < new_ehdr_size || be16_to_cpu(*new_ehdr_proto) != vet) {
++    if (copied < new_ehdr_size || lduw_be_p(new_ehdr_proto) != vet) {
+         return 0;
+     }
+ 
+@@ -308,7 +308,7 @@ eth_strip_vlan_ex(const struct iovec *iov, int iovcnt, size_t iovoff, int index,
+         return 0;
+     }
+ 
+-    *new_ehdr_proto = vlan_hdr.h_proto;
++    stw_he_p(new_ehdr_proto, vlan_hdr.h_proto);
+     *payload_offset = iovoff + new_ehdr_size + sizeof(vlan_hdr);
+     *tci = be16_to_cpu(vlan_hdr.h_tci);
+ 
 -- 
 2.52.0
 
