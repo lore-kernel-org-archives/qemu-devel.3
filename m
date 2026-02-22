@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6723C636A0
-	for <qemu-devel@archiver.kernel.org>; Sun, 22 Feb 2026 18:04:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C42E0C636A0
+	for <qemu-devel@archiver.kernel.org>; Sun, 22 Feb 2026 18:05:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuDnf-0000OX-Iv; Sun, 22 Feb 2026 13:03:23 -0500
+	id 1vuDnb-0000Fv-8o; Sun, 22 Feb 2026 13:03:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vuDnd-0000MY-PH
- for qemu-devel@nongnu.org; Sun, 22 Feb 2026 13:03:21 -0500
-Received: from qs-2007a-snip4-3.eps.apple.com ([57.103.84.134]
+ id 1vuDnX-00005C-D7
+ for qemu-devel@nongnu.org; Sun, 22 Feb 2026 13:03:15 -0500
+Received: from qs-2007d-snip4-10.eps.apple.com ([57.103.84.170]
  helo=outbound.qs.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vuDnb-0000XI-8o
- for qemu-devel@nongnu.org; Sun, 22 Feb 2026 13:03:21 -0500
+ id 1vuDnU-0000UW-Ga
+ for qemu-devel@nongnu.org; Sun, 22 Feb 2026 13:03:15 -0500
 Received: from outbound.qs.icloud.com (unknown [127.0.0.2])
  by p00-icloudmta-asmtp-us-east-2d-100-percent-12 (Postfix) with ESMTPS id
- 5802818000F1; Sun, 22 Feb 2026 18:03:14 +0000 (UTC)
+ 02B281800506; Sun, 22 Feb 2026 18:03:09 +0000 (UTC)
 Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1771783398; x=1774375398;
- bh=op64aUwd3kHeSL+XTt7uxWfJ6n/JYbXZSlN/Ec+uOgk=;
+ s=sig1; t=1771783392; x=1774375392;
+ bh=Tz3bvcnMe5CE3w/zA9xLDVXBu2mGec3HnRSmhDH3Hu8=;
  h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
- b=aYvlitQHvu5K64rPZJmrzHfgkPVz/K6TuHJY2QskirR/lCsK/+NCR6X/Uim+6r9lq+uDo3ldqK4jz+gXOMtam5HzQA4OUCxedDq0eNBihVsAOhqvs/NcNxL4gTT11pukUT2pDmhz0fzYBNTgeZxEd1GzkVySg7u5Ipiu5GXhih4oJMjfP1zMNOucRwe24EzGXJ4OlduoWxFiMH9xeeuWHgFUq3DXJzoEVGpjDxVzTBZSiISOde2CDk4hm1AUyyRYShrVD/KwVi2QUmLSPcn7Q/vkwfNEPNn+w0oDWgz/L4liasfphe/3NOO4Ad9y36dUH2bHhJ7At5PLCXjS83swGQ==
+ b=XvFa6fjz5P7Ds8urOui9nMKP698tQEYn1J3eBiyok4+BKcHtFoQ3AqWZ3mZB9qQyBvbZNi6D+MeQfs32Cp5tYw0bL/beuPQA+R8OCLjbUUowpZKF957nkhmY2/dL9sV634TLZidjMJ1qpEo909MgHO6NSpzvFaIawg8DEZ6+uf8UyjUDSCmrGb1j9fwJX/d1woX2HiiR224JI5xfU5iGY90V6uyq9N894YI2Iux9EH0GS6zu34oZhwIWMzBpAy9OPVOcLnySCROOjPXqYfOuR2cJzLXa3A9AkDTYI4TrQuoK0p/Ywxc90iK65EOgLqh2Q1ajcxECerzp23SMTHfaSg==
 mail-alias-created-date: 1752046281608
 Received: from localhost.localdomain (unknown [17.57.155.37])
  by p00-icloudmta-asmtp-us-east-2d-100-percent-12 (Postfix) with ESMTPSA id
- 8758F180050F; Sun, 22 Feb 2026 18:03:11 +0000 (UTC)
+ 87CE718004DC; Sun, 22 Feb 2026 18:03:07 +0000 (UTC)
 From: Mohamed Mediouni <mohamed@unpredictable.fr>
 To: qemu-devel@nongnu.org
 Cc: Mohamed Mediouni <mohamed@unpredictable.fr>,
@@ -47,36 +47,37 @@ Cc: Mohamed Mediouni <mohamed@unpredictable.fr>,
  Phil Dennis-Jordan <phil@philjordan.eu>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Wei Liu <wei.liu@kernel.org>
-Subject: [PATCH v4 14/16] whpx: i386: remove CPUID trapping
-Date: Sun, 22 Feb 2026 19:02:38 +0100
-Message-ID: <20260222180241.14621-15-mohamed@unpredictable.fr>
+Subject: [PATCH v4 12/16] whpx: i386: remove remaining winhvemulation support
+ code
+Date: Sun, 22 Feb 2026 19:02:36 +0100
+Message-ID: <20260222180241.14621-13-mohamed@unpredictable.fr>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20260222180241.14621-1-mohamed@unpredictable.fr>
 References: <20260222180241.14621-1-mohamed@unpredictable.fr>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjIyMDE3NCBTYWx0ZWRfX1hL1m2B/UzN7
- ixsZEfNisziOPVtAP79lh0scM9sMNSfm00Dv+1qYbk3nQ+Lu5d5I/cXcRY0r3MZgNi51EOxYMO+
- nR2APkn2jmn/wpogxyW6res/0Ak49ZusrBj+vPUFrB66d3ZhNOAVgqTvBon1PLkXveSwYYBuTBs
- nEvnjaTfh27ZBQM2j+a5A0/owUwjMqc6TrS0/AsQc2M6DKVnweSyh8vSaqqp8OgKYDlCmsfL0FA
- 4Rmr48YwBj0qRa84J2QdHDXSVTgqUsr450R4+0Uj8XjGTVKNrt/tXz2LGjYVDmKl0j0giG3txZs
- mDyFVu2zFZEA4m1CuTC+6L5FeOAkY0nCp2thy87Oyh+7XdJV1ZX20Ydb2JQsps=
-X-Proofpoint-ORIG-GUID: L_olmCvjamoa2va_TP__cBeS0sJXUaFg
-X-Authority-Info-Out: v=2.4 cv=YOWSCBGx c=1 sm=1 tr=0 ts=699b44e4
+X-Proofpoint-ORIG-GUID: M3BW7qvUAXaLCIWiz5LnZMmgzUXIJkkJ
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjIyMDE3NCBTYWx0ZWRfXxqmum9okEUHl
+ opso1qi9/qKS+gWgW3xFDBht7YQzg7s4Vsf4tkXU0N6SzbK+bRg1txE62ZiSXfwXc8jDSW5YLLS
+ nDDSd9H1F/xPw8gboQtr3+P5KhYCDSG6lqAQXgvnvG3WGQlvyH7GmFzfE10JPUO1BuQdeHicIG+
+ gZSZI4tZvwyIOyNXi3Rpol1U/Fk94Dxe/vn/oX+grNFIHMDHcbceayk/k+HvFyzvO4B8r5cpJP2
+ IsnioWL1Tl15qzVmYfCbhR4WxcCzrVs+jRRnn3NjoFW2zt2twEo0RBWwJvGB14DMD+suFNWakwG
+ rBEPgjZt32BNCTe9z8/ja/0iSC20LvarF+cdxeEGyUp1AmhkpwJa8ppY7w/ouM=
+X-Authority-Info-Out: v=2.4 cv=AN8t5o3d c=1 sm=1 tr=0 ts=699b44df
  cx=c_apl:c_apl_out:c_pps a=bsP7O+dXZ5uKcj+dsLqiMw==:117
  a=bsP7O+dXZ5uKcj+dsLqiMw==:17 a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22 a=Gk9p9Fe9aJpBGj35TJ8A:9
-X-Proofpoint-GUID: L_olmCvjamoa2va_TP__cBeS0sJXUaFg
+ a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22 a=UBzWkQmmy9v7-gCQCgEA:9
+X-Proofpoint-GUID: M3BW7qvUAXaLCIWiz5LnZMmgzUXIJkkJ
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-02-22_04,2026-02-20_04,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 clxscore=1030
- malwarescore=0 lowpriorityscore=0 spamscore=0 mlxlogscore=999 phishscore=0
- mlxscore=0 suspectscore=0 bulkscore=0 adultscore=0 classifier=spam
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0
+ spamscore=0 mlxscore=0 suspectscore=0 mlxlogscore=999 bulkscore=0
+ lowpriorityscore=0 clxscore=1030 malwarescore=0 adultscore=0 classifier=spam
  authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
  definitions=main-2602220174
-X-JNJ: AAAAAAABBzGkQg3dunA9Q+MgspLNavd3TFxmlpZs0csvjSwIFCfiCxaefMKneULvfjY8pUb6XgZ1ShMLZpkZlO3MDchwE4/JeynaVnZZm7fHwPyj8YCkPjrzILlQNRgBaWntQXLeTBbLCTi0Wv/+kazaUm11zHL//KBCC4fB+bV5MUKPkk3zH1ZSyuDaBb1IEYnCElp7WJT70zKNsnTTTsWEtyd2PfgmPCWjPQ3lzg9Z3HrRLluo2MjtVv6pXxGnHn32/PE9ES4zHygcFOntd6pT3BJBVaGg1GyxW4fG6bqD3zljets9QoJV1ko+IQACbYkRWE0CMl76IsKWNA2w5OQzX5vJujZbJYNJJkhZEqkbmJAEv7UBWCVXmlvXliNw4INk/1jwtlZasKn2fNUDreGEOVVcI+reR5u2gBuWK914I0pb4NA+6cSNIpXIACt/fKmu65/7xMhISO9G6XaNvbBcPHSryfRpZEaotLBezU1XyUof9Tjd88q78KFX1lXORVVBg7Rr8x7RJLfk16ZhyIh3LqfK3LA4XhbUxKJtKOZjfP1+kP3iQrHl65XQWusUr9MGGWi16HE6OaZYQlHWOjZx6OLSNdRSnPq3AFpj1YiwfMdcPewNFdfUWrsqhilDaGWWiLoBTI9iIV0s8wVinzZ+s/kKfB0PrPkNYljdpYcYUsGefX1Gb9jsmzEnDf7qAo3GXl3SLosTWxg87wlF/eqEvshK+REp3gUeAhfLqhENAx4VDOrMTeZargimFe4AqDBJ21alZ8LvyH7lQ2DQLoOWFl3cDe8fsYuvPG+4RSGrdymmrvaOdVRe8wBd5P73IR4kIg==
-Received-SPF: pass client-ip=57.103.84.134;
+X-JNJ: AAAAAAABHLuELVn4Xzx4UzDhatAUI8OpQRPPo2ir/64sdbBD9BN9Jxhoyk44FfxBDULvFPq2McgtHhJ1+e4DHIBdNlQbLHXfz6uSwOQb4Q7zVZwlu3Ze+i9relf1FLMtlsms4B7Cd5/UUhn6VIfcLU8n0iG/mn6fFRPbsHY5e4ipkIA2kyX2fq1iqSEvLxJh+KRRnyJlLAB9UzWSOtv2ECrDahb2mdQfMaQzvbsUPBdZBMV06fTphxug53AgB3WTBvcnkevwIG4yprIIKBb7gE03zTKUr7tLZrqEgfqb6UJeujdao+igNUvo8ezddlgiZ7AAPur1lKSxxDes04g8PASwSm6mTENNRo5BTF4xTS4J5WzfesJ1PWXBKdCKzHpEBmlrwnjL3oBV/Nrtb1/+DtuxrfHrqjqoSTv63dfw2TaUM8NgcEnBGjODaE4sQPrLBKYT/og/6TrI2f604fUflCCRVoPi0SS5JveMKo6VlLmMjTrO5MxrgVSrc7S8A4mtIRWdOCN2VUBZ77fp8F4gZV6LHn+e9jydo5dJ1kl8dVSyJ0kvhXaHTKih4q1JkUzbt/s5TVHbqMf4g3oSXydYriVoiOG8ApmRiIz6MAR+9SOdlYl6kTtynm02hCoQbvGPZC1h4k4u9lTzgu0CjcgBr9hWqYZSTXV8tX/Iwjc5FpvnKSEWA2XBDbUWUHc9bNDW06p2YNgKM7VM6+aBxdbhHFMF22AMcBxUX7SXhdc74aMa1tNUDi4CIO/5cdK81+5UB/MdTRB7Busq7YEhq8rxNGesJs0TGzl+/B7OubidehqStYWTqkn2NfTTVA==
+Received-SPF: pass client-ip=57.103.84.170;
  envelope-from=mohamed@unpredictable.fr; helo=outbound.qs.icloud.com
 X-Spam_score_int: -4
 X-Spam_score: -0.5
@@ -100,157 +101,157 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Very partial in its current state and results in significantly inconsistent
-CPUID data. Remove it until it's reimplemented later.
+After moving away to target/i386/emulate, this is no longer necessary.
 
 Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
 ---
- target/i386/whpx/whpx-all.c | 104 ------------------------------------
- 1 file changed, 104 deletions(-)
+ accel/whpx/whpx-common.c       | 22 ----------------------
+ include/system/whpx-common.h   |  3 ---
+ include/system/whpx-internal.h | 16 ----------------
+ meson.build                    |  3 +--
+ 4 files changed, 1 insertion(+), 43 deletions(-)
 
-diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
-index 2f2c613eda..baa3169c55 100644
---- a/target/i386/whpx/whpx-all.c
-+++ b/target/i386/whpx/whpx-all.c
-@@ -1795,75 +1795,6 @@ int whpx_vcpu_run(CPUState *cpu)
-             ret = 0;
-             break;
-         }
--        case WHvRunVpExitReasonX64Cpuid: {
--            WHV_REGISTER_VALUE reg_values[5];
--            WHV_REGISTER_NAME reg_names[5];
--            UINT32 reg_count = 5;
--            UINT64 cpuid_fn, rip = 0, rax = 0, rcx = 0, rdx = 0, rbx = 0;
--            X86CPU *x86_cpu = X86_CPU(cpu);
--            CPUX86State *env = &x86_cpu->env;
--
--            memset(reg_values, 0, sizeof(reg_values));
--
--            rip = vcpu->exit_ctx.VpContext.Rip +
--                  vcpu->exit_ctx.VpContext.InstructionLength;
--            cpuid_fn = vcpu->exit_ctx.CpuidAccess.Rax;
--
--            /*
--             * Ideally, these should be supplied to the hypervisor during VCPU
--             * initialization and it should be able to satisfy this request.
--             * But, currently, WHPX doesn't support setting CPUID values in the
--             * hypervisor once the partition has been setup, which is too late
--             * since VCPUs are realized later. For now, use the values from
--             * QEMU to satisfy these requests, until WHPX adds support for
--             * being able to set these values in the hypervisor at runtime.
--             */
--            cpu_x86_cpuid(env, cpuid_fn, 0, (UINT32 *)&rax, (UINT32 *)&rbx,
--                (UINT32 *)&rcx, (UINT32 *)&rdx);
--            switch (cpuid_fn) {
--            case 0x40000000:
--                /* Expose the vmware cpu frequency cpuid leaf */
--                rax = 0x40000010;
--                rbx = rcx = rdx = 0;
--                break;
--
--            case 0x40000010:
--                rax = env->tsc_khz;
--                rbx = env->apic_bus_freq / 1000; /* Hz to KHz */
--                rcx = rdx = 0;
--                break;
--
--            case 0x80000001:
--                /* Remove any support of OSVW */
--                rcx &= ~CPUID_EXT3_OSVW;
--                break;
--            }
--
--            reg_names[0] = WHvX64RegisterRip;
--            reg_names[1] = WHvX64RegisterRax;
--            reg_names[2] = WHvX64RegisterRcx;
--            reg_names[3] = WHvX64RegisterRdx;
--            reg_names[4] = WHvX64RegisterRbx;
--
--            reg_values[0].Reg64 = rip;
--            reg_values[1].Reg64 = rax;
--            reg_values[2].Reg64 = rcx;
--            reg_values[3].Reg64 = rdx;
--            reg_values[4].Reg64 = rbx;
--
--            hr = whp_dispatch.WHvSetVirtualProcessorRegisters(
--                whpx->partition, cpu->cpu_index,
--                reg_names,
--                reg_count,
--                reg_values);
--
--            if (FAILED(hr)) {
--                error_report("WHPX: Failed to set CpuidAccess state registers,"
--                             " hr=%08lx", hr);
--            }
--            ret = 0;
--            break;
--        }
-         case WHvRunVpExitReasonException:
-             whpx_get_registers(cpu);
+diff --git a/accel/whpx/whpx-common.c b/accel/whpx/whpx-common.c
+index 21e9f1a178..88eef55799 100644
+--- a/accel/whpx/whpx-common.c
++++ b/accel/whpx/whpx-common.c
+@@ -39,9 +39,6 @@ bool whpx_allowed;
+ bool whpx_irqchip_in_kernel;
+ static bool whp_dispatch_initialized;
+ static HMODULE hWinHvPlatform;
+-#ifdef HOST_X86_64
+-static HMODULE hWinHvEmulation;
+-#endif
  
-@@ -2017,26 +1948,6 @@ int whpx_init_vcpu(CPUState *cpu)
-         }
-     }
+ struct whpx_state whpx_global;
+ struct WHPDispatch whp_dispatch;
+@@ -393,7 +390,6 @@ static bool load_whp_dispatch_fns(HMODULE *handle,
+     HMODULE hLib = *handle;
  
--    /*
--     * If the vmware cpuid frequency leaf option is set, and we have a valid
--     * tsc value, trap the corresponding cpuid's.
--     */
--    if (x86_cpu->vmware_cpuid_freq && env->tsc_khz) {
--        UINT32 cpuidExitList[] = {1, 0x80000001, 0x40000000, 0x40000010};
--
--        hr = whp_dispatch.WHvSetPartitionProperty(
--                whpx->partition,
--                WHvPartitionPropertyCodeCpuidExitList,
--                cpuidExitList,
--                RTL_NUMBER_OF(cpuidExitList) * sizeof(UINT32));
--
--        if (FAILED(hr)) {
--            error_report("WHPX: Failed to set partition CpuidExitList hr=%08lx",
--                        hr);
--            ret = -EINVAL;
--            goto error;
--        }
--    }
- 
-     vcpu->interruptable = true;
-     cpu->vcpu_dirty = true;
-@@ -2073,7 +1984,6 @@ int whpx_accel_init(AccelState *as, MachineState *ms)
-     WHV_CAPABILITY whpx_cap;
-     UINT32 whpx_cap_size;
-     WHV_PARTITION_PROPERTY prop;
--    UINT32 cpuidExitList[] = {1, 0x80000001};
-     WHV_CAPABILITY_FEATURES features = {0};
- 
-     whpx = &whpx_global;
-@@ -2183,7 +2093,6 @@ int whpx_accel_init(AccelState *as, MachineState *ms)
-     /* Register for MSR and CPUID exits */
-     memset(&prop, 0, sizeof(WHV_PARTITION_PROPERTY));
-     prop.ExtendedVmExits.X64MsrExit = 1;
--    prop.ExtendedVmExits.X64CpuidExit = 1;
-     prop.ExtendedVmExits.ExceptionExit = 1;
-     if (whpx_irqchip_in_kernel()) {
-         prop.ExtendedVmExits.X64ApicInitSipiExitTrap = 1;
-@@ -2200,19 +2109,6 @@ int whpx_accel_init(AccelState *as, MachineState *ms)
+     #define WINHV_PLATFORM_DLL "WinHvPlatform.dll"
+-    #define WINHV_EMULATION_DLL "WinHvEmulation.dll"
+     #define WHP_LOAD_FIELD_OPTIONAL(return_type, function_name, signature) \
+         whp_dispatch.function_name = \
+             (function_name ## _t)GetProcAddress(hLib, #function_name); \
+@@ -420,14 +416,6 @@ static bool load_whp_dispatch_fns(HMODULE *handle,
+         WHP_LOAD_LIB(WINHV_PLATFORM_DLL, hLib)
+         LIST_WINHVPLATFORM_FUNCTIONS(WHP_LOAD_FIELD)
+         break;
+-    case WINHV_EMULATION_FNS_DEFAULT:
+-#ifdef HOST_X86_64
+-        WHP_LOAD_LIB(WINHV_EMULATION_DLL, hLib)
+-        LIST_WINHVEMULATION_FUNCTIONS(WHP_LOAD_FIELD)
+-#else
+-        g_assert_not_reached();
+-#endif
+-        break;
+     case WINHV_PLATFORM_FNS_SUPPLEMENTAL:
+         WHP_LOAD_LIB(WINHV_PLATFORM_DLL, hLib)
+         LIST_WINHVPLATFORM_FUNCTIONS_SUPPLEMENTAL(WHP_LOAD_FIELD_OPTIONAL)
+@@ -543,11 +531,6 @@ bool init_whp_dispatch(void)
+     if (!load_whp_dispatch_fns(&hWinHvPlatform, WINHV_PLATFORM_FNS_DEFAULT)) {
          goto error;
      }
- 
--    hr = whp_dispatch.WHvSetPartitionProperty(
--        whpx->partition,
--        WHvPartitionPropertyCodeCpuidExitList,
--        cpuidExitList,
--        RTL_NUMBER_OF(cpuidExitList) * sizeof(UINT32));
--
--    if (FAILED(hr)) {
--        error_report("WHPX: Failed to set partition CpuidExitList hr=%08lx",
--                     hr);
--        ret = -EINVAL;
+-#ifdef HOST_X86_64
+-    if (!load_whp_dispatch_fns(&hWinHvEmulation, WINHV_EMULATION_FNS_DEFAULT)) {
 -        goto error;
 -    }
+-#endif
+     assert(load_whp_dispatch_fns(&hWinHvPlatform,
+         WINHV_PLATFORM_FNS_SUPPLEMENTAL));
+     whp_dispatch_initialized = true;
+@@ -557,11 +540,6 @@ error:
+     if (hWinHvPlatform) {
+         FreeLibrary(hWinHvPlatform);
+     }
+-#ifdef HOST_X86_64
+-    if (hWinHvEmulation) {
+-        FreeLibrary(hWinHvEmulation);
+-    }
+-#endif
+     return false;
+ }
+ 
+diff --git a/include/system/whpx-common.h b/include/system/whpx-common.h
+index a4e16e1309..04289afd97 100644
+--- a/include/system/whpx-common.h
++++ b/include/system/whpx-common.h
+@@ -3,9 +3,6 @@
+ #define SYSTEM_WHPX_COMMON_H
+ 
+ struct AccelCPUState {
+-#ifdef HOST_X86_64
+-    WHV_EMULATOR_HANDLE emulator;
+-#endif
+     bool window_registered;
+     bool interruptable;
+     bool ready_for_pic_interrupt;
+diff --git a/include/system/whpx-internal.h b/include/system/whpx-internal.h
+index ad6ade223e..7a1c9871f1 100644
+--- a/include/system/whpx-internal.h
++++ b/include/system/whpx-internal.h
+@@ -4,9 +4,6 @@
+ 
+ #include <windows.h>
+ #include <winhvplatform.h>
+-#ifdef HOST_X86_64
+-#include <winhvemulation.h>
+-#endif
+ #include "hw/i386/apic.h"
+ #include "exec/vaddr.h"
+ 
+@@ -89,12 +86,6 @@ void whpx_apic_get(APICCommonState *s);
+   X(HRESULT, WHvResetPartition, \
+         (WHV_PARTITION_HANDLE Partition)) \
+ 
+-#define LIST_WINHVEMULATION_FUNCTIONS(X) \
+-  X(HRESULT, WHvEmulatorCreateEmulator, (const WHV_EMULATOR_CALLBACKS* Callbacks, WHV_EMULATOR_HANDLE* Emulator)) \
+-  X(HRESULT, WHvEmulatorDestroyEmulator, (WHV_EMULATOR_HANDLE Emulator)) \
+-  X(HRESULT, WHvEmulatorTryIoEmulation, (WHV_EMULATOR_HANDLE Emulator, VOID* Context, const WHV_VP_EXIT_CONTEXT* VpContext, const WHV_X64_IO_PORT_ACCESS_CONTEXT* IoInstructionContext, WHV_EMULATOR_STATUS* EmulatorReturnStatus)) \
+-  X(HRESULT, WHvEmulatorTryMmioEmulation, (WHV_EMULATOR_HANDLE Emulator, VOID* Context, const WHV_VP_EXIT_CONTEXT* VpContext, const WHV_MEMORY_ACCESS_CONTEXT* MmioInstructionContext, WHV_EMULATOR_STATUS* EmulatorReturnStatus)) \
 -
-     /*
-      * We do not want to intercept any exceptions from the guest,
-      * until we actually start debugging with gdb.
+ #define WHP_DEFINE_TYPE(return_type, function_name, signature) \
+     typedef return_type (WINAPI *function_name ## _t) signature;
+ 
+@@ -103,16 +94,10 @@ void whpx_apic_get(APICCommonState *s);
+ 
+ /* Define function typedef */
+ LIST_WINHVPLATFORM_FUNCTIONS(WHP_DEFINE_TYPE)
+-#ifdef HOST_X86_64
+-LIST_WINHVEMULATION_FUNCTIONS(WHP_DEFINE_TYPE)
+-#endif
+ LIST_WINHVPLATFORM_FUNCTIONS_SUPPLEMENTAL(WHP_DEFINE_TYPE)
+ 
+ struct WHPDispatch {
+     LIST_WINHVPLATFORM_FUNCTIONS(WHP_DECLARE_MEMBER)
+-#ifdef HOST_X86_64
+-    LIST_WINHVEMULATION_FUNCTIONS(WHP_DECLARE_MEMBER)
+-#endif
+     LIST_WINHVPLATFORM_FUNCTIONS_SUPPLEMENTAL(WHP_DECLARE_MEMBER)
+ };
+ 
+@@ -122,7 +107,6 @@ bool init_whp_dispatch(void);
+ 
+ typedef enum WHPFunctionList {
+     WINHV_PLATFORM_FNS_DEFAULT,
+-    WINHV_EMULATION_FNS_DEFAULT,
+     WINHV_PLATFORM_FNS_SUPPLEMENTAL
+ } WHPFunctionList;
+ 
+diff --git a/meson.build b/meson.build
+index 4af32c3e1f..86bc807e56 100644
+--- a/meson.build
++++ b/meson.build
+@@ -865,8 +865,7 @@ if get_option('whpx').allowed() and host_os == 'windows'
+     endif
+    # Leave CONFIG_WHPX disabled
+   else
+-    if cc.has_header('winhvplatform.h', required: get_option('whpx')) and \
+-      cc.has_header('winhvemulation.h', required: get_option('whpx'))
++    if cc.has_header('winhvplatform.h', required: get_option('whpx'))
+       accelerators += 'CONFIG_WHPX'
+     endif
+   endif
 -- 
 2.50.1 (Apple Git-155)
 
