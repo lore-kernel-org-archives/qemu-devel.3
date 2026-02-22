@@ -4,91 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A87BC6369F
-	for <qemu-devel@archiver.kernel.org>; Sun, 22 Feb 2026 14:34:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78902C636A0
+	for <qemu-devel@archiver.kernel.org>; Sun, 22 Feb 2026 14:34:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuASu-0000nf-20; Sun, 22 Feb 2026 09:29:44 -0500
+	id 1vuAT7-0001DG-L2; Sun, 22 Feb 2026 09:29:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vuASZ-0008GL-QP
- for qemu-devel@nongnu.org; Sun, 22 Feb 2026 09:29:23 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vuASi-0008OA-16
+ for qemu-devel@nongnu.org; Sun, 22 Feb 2026 09:29:33 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vuASX-0006s4-82
- for qemu-devel@nongnu.org; Sun, 22 Feb 2026 09:29:23 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vuASf-0006we-4l
+ for qemu-devel@nongnu.org; Sun, 22 Feb 2026 09:29:30 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771770560;
+ s=mimecast20190719; t=1771770565;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=rnkI9nMTthY8p6DDwYIOuhFVQyTvRTqLVnh7owDEQ5U=;
- b=NyPO1M+fYjXQDucVPqeLuEKIM+s+tZRpmSsleCHrvIjLj0wf5FM2nAyjU5qKbNmhZz9L+n
- vGTvpnWr+RLi7Y7162zQDSyiA3wGbs0M349119ASp262YWrowtaGlfQGiJROlCh5XzDqTV
- wGZQfKMEYKQ0V36Am+qVWmJL7UKho9E=
+ bh=pMGbJNVQmmXj2XYsxDUgnIqhPUEYPSlhqr1KI3l+La8=;
+ b=G9vXIFc6FQjjjnnPiSuAjzkqRPBD3hXVp8s/KM9jR21cKdRxE+rCRogcA4vM0R7hnzOUu6
+ FCaM9ge/Sn2TKygv2sMMt4+l0oJ430yYM871TTDoelxsc5hc8n2ijiKTjxvjbmd9dtIfEI
+ If4djqEu3P1WejOMGS5a387Wk2zcsXo=
 Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
  [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-651-OfkyPjeHPbu7DfEjkY23qw-1; Sun, 22 Feb 2026 09:29:19 -0500
-X-MC-Unique: OfkyPjeHPbu7DfEjkY23qw-1
-X-Mimecast-MFC-AGG-ID: OfkyPjeHPbu7DfEjkY23qw_1771770558
+ us-mta-400-5kloRLARMJajr_XJhIloYg-1; Sun, 22 Feb 2026 09:29:22 -0500
+X-MC-Unique: 5kloRLARMJajr_XJhIloYg-1
+X-Mimecast-MFC-AGG-ID: 5kloRLARMJajr_XJhIloYg_1771770561
 Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4836b7c302fso31545745e9.1
- for <qemu-devel@nongnu.org>; Sun, 22 Feb 2026 06:29:18 -0800 (PST)
+ 5b1f17b1804b1-4836cc0b38eso37566925e9.2
+ for <qemu-devel@nongnu.org>; Sun, 22 Feb 2026 06:29:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1771770558; x=1772375358; darn=nongnu.org;
+ d=redhat.com; s=google; t=1771770561; x=1772375361; darn=nongnu.org;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=rnkI9nMTthY8p6DDwYIOuhFVQyTvRTqLVnh7owDEQ5U=;
- b=ddIM3Fcfr2LF8+AAA9p6M1EDLSxJmrbtxeVZC4NKS2SjFtdvUOjKH0SVMH5oS0ISi8
- d0k6LBLJyeZ8TP28XJJeJRJaGMMqa2XsibziR0Nz9t3y4Kg9a8+7ytfP1fww38MQfUOH
- FM1TADVoLvmwXz36Ud7zxGqHZUKDWU/mDPVssa947XGrX7zrwRH3CFc2q1GuI5OTlr+G
- 7y/Nl95hX/VUsOklMY63TqHOYBIfFLN6YYa0kd++YJIN4p/jmcmMuPk7cryaWQNkA8u6
- SkvNno38DMAyla6ip2/DpeNFmUQT/ne7Hhr622+BTHDrg5KTKWcxbLMq61BDj15Xiyb2
- SBcg==
+ bh=pMGbJNVQmmXj2XYsxDUgnIqhPUEYPSlhqr1KI3l+La8=;
+ b=LyUy9ZAabcpK15aGItakzqSJemdzrsvcz0WvH212d1LHpDfwjc/+mPPOSGwuc35PBy
+ km+BZ16/6M5WMFJEpcpBGh8Dwbr/kK8dVGGyJbaeInUjZeEAiBIgg+d+8hpSB8RIDB78
+ Oa585A7ynElUi3LCE6zHsNDE3NiUhLSz4b8QoYnt2RCTBXcWO4zE6jTKh2nu5/HysJJN
+ lvAnQh8nxdKnXE88MrjcA1m/GSSlg/8TCqAiIXI4KGFvKUNDjk94EaRu5MXx9OnHc0fF
+ ak7bVnJUpPpQLDC4bbd/6DTKJeujIck0bTw0/edPvm4xG2u0BU2/ZyWCHs9wJhHrcmA9
+ b3kg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771770558; x=1772375358;
+ d=1e100.net; s=20230601; t=1771770561; x=1772375361;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=rnkI9nMTthY8p6DDwYIOuhFVQyTvRTqLVnh7owDEQ5U=;
- b=lHkZEYrhG2rtt/Kyk3kw57vKyhZ4xs7S9V8/Gn5MmwUT2hiyZ37qUbEF1xzQ00qocE
- r111Mze7g+XIilCjJS67+X50TdV8gu8AI1RGxQ4wGRqsvXLxZUsonmOT4pFxdWpbor1y
- ArmkG2hPRW7pETSh9X+dDbh3Gs/ITV4RS+EbipEUmYjW1w24/mEVQvNQTDn7k3TOHLEr
- 7Ew82sqrEiKq8cQXc06TZ+SEP0RN3kaUdGOMFJoA7RRbpqJ5QrTIallB7EVxokosNSSu
- DxhYVaqH5J1vyQMBoQuc/PbAmKlgCh9idt0fZsm2TU/EtFi5RcWmgMwUJMivjDch1mb4
- iBrw==
-X-Gm-Message-State: AOJu0YxZMLHPp++RZ/3WMDm0Bj6FPXXNtLCpHEiyP3b4U/7f81zJHxsd
- wxGcXedHd5yAhe55FcFrSfWns2q8mK3HxHPqm09E5zbivwdrnM4o7MDmlRo7w3lsa0qVt7Z1V78
- G++lZzvbVtxG1dgk8pm65bNPr7BPnFLYgEoDOYgaDtvFbgDtYTH4syLw072MX/6jui56BMJK9bn
- viglp5xxPECzZR98dut/XB+JwZMdqnqT+3UQ==
-X-Gm-Gg: AZuq6aJTllDnX4b19jr0DeAZm2UJCRZaLzcAu1o7HvUpFy2gBCRmRuUb6ZElcXaadML
- 4ILa+6Eq6Fa4RW/TzEo/VTQDY6CruVMZhoyIzq1zGnBXMXqQmedLvv/7qftAqMvQgaG4aifLOnv
- kCQMy0e3+PRXZtlEHP9tKUdKQNv121LlcVY/pcC6Ms9wsAzQlUysZ36LlH0o8SgycZnVKo4BcsT
- b4BtGDJNJyP50+QmQCkfE9E1MS0/DuxKgitxhF3R2MXhhmUukrRkyl3DZVxPhhHS8BLH/cDFDcX
- XWzT86HyEDn8CbEvF3Ids3r+R1CoKmpiFo6bR7qlJFutli74X45gobbVcQUOjVI4mWxgsTsv2+N
- fP/CdbNtYerzX4IxqqhTx8y8AjJYLVQU4oVojLtxS5uJOHQ==
-X-Received: by 2002:a05:600c:3587:b0:483:a27e:6706 with SMTP id
- 5b1f17b1804b1-483a95fc063mr103109295e9.9.1771770557562; 
- Sun, 22 Feb 2026 06:29:17 -0800 (PST)
-X-Received: by 2002:a05:600c:3587:b0:483:a27e:6706 with SMTP id
- 5b1f17b1804b1-483a95fc063mr103108775e9.9.1771770556901; 
- Sun, 22 Feb 2026 06:29:16 -0800 (PST)
+ bh=pMGbJNVQmmXj2XYsxDUgnIqhPUEYPSlhqr1KI3l+La8=;
+ b=v0+gKyfWeLMjIYDDHrTSIL+/pqWvApXJkI1XMrHCSLQ7h9dMQZ2dJ7b+vQgdPjVTId
+ 4BnkO3b6hDlUcaIvzkIqK/+KKD+Gqq3DV1RQNTyvTNI/Xy4zCn8mpPcoME9TJX9EaStZ
+ xe6PvpYnZQooUkj+9ALFxLzFMR+Ldg8xeCSXySpQQMiMftqhkpXLIMRbN9bEhZuJ6hI5
+ ZjqzrXwgJbc6aRTh5MnLA0cs8REqZ8Oz9KVE33nS1J+A1XRTX+v66KKRBjPABMk4Br/k
+ /LKt4XrnZKvj+CGyeJl2ykZBabPabQ+OvN/AtZDOMMCQW/4n0jMo7Kzms6qbSMaOTc+7
+ bj/Q==
+X-Gm-Message-State: AOJu0YwuWSC0OL5jmyZIINKsfLp9M6whVecc9eyod9y6LX3V8j43U8F+
+ 5czS8SE3n7LzuWtomSasLDZD+hngaqyt2CCmiem1pmVDg6GoLLl+UWcPHqL61oNVXiNntp41/Ir
+ bVKB9YaqIQE2gGNwQ+e9lg/crIGUrK8pyBjpvpGnQUOuXMOag5CjLbnCB5BeO+1TOBYdpn0qY5T
+ 0QGazTfQgML9B1czLJNlXlIY9Jx4aeRJiY3Q==
+X-Gm-Gg: AZuq6aItlZPD/9FgdQHQThNPa6Tj27zXu1rI1X0n6V9nC853T81137iKB1RM10uiuH5
+ t1Bd7UYwHUUtrH++VVLwqd6PxFZLpZoSD4QCI07x24gj6bLJNyJK+TzBvWt9KqwizChnhsEkcmx
+ m9tHUflDnN5Gpp5ZQ6RgVhDtOfecRHFIAoRfBl+0A9bnAlc0hSsvAQbGrx7JrsphxitF+vFGyf6
+ UXEu9P+6QzQFu/iEwP2qiFi1aOVVgOL8/6k9iTQlV/0ifg53kk8Mn3/Af9ZVUsdfE+L0gNlZ2kr
+ 92dT5RSw6FzVqvZI+GUWXG4jk2tyaWgX57vP58QyFatBGfm6n7SaH2mnK9mBnfsbhz6VJvCKzrU
+ OXZW7MeSraVLznshH87QlYPht2ChtE5AHpuaLgETBzz4U6A==
+X-Received: by 2002:a05:600c:3b18:b0:483:64b4:79da with SMTP id
+ 5b1f17b1804b1-483a95e6b80mr82756985e9.26.1771770561057; 
+ Sun, 22 Feb 2026 06:29:21 -0800 (PST)
+X-Received: by 2002:a05:600c:3b18:b0:483:64b4:79da with SMTP id
+ 5b1f17b1804b1-483a95e6b80mr82756595e9.26.1771770560413; 
+ Sun, 22 Feb 2026 06:29:20 -0800 (PST)
 Received: from redhat.com (IGLD-80-230-79-166.inter.net.il. [80.230.79.166])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-483a42f7c4csm63521905e9.23.2026.02.22.06.29.15
+ 5b1f17b1804b1-483a42effe3sm90117165e9.8.2026.02.22.06.29.17
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 22 Feb 2026 06:29:16 -0800 (PST)
-Date: Sun, 22 Feb 2026 09:29:14 -0500
+ Sun, 22 Feb 2026 06:29:19 -0800 (PST)
+Date: Sun, 22 Feb 2026 09:29:17 -0500
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Arpit Kumar <arpit1.kumar@samsung.com>,
- Jonathan Cameron <jonathan.cameron@huawei.com>, Fan Ni <fan.ni@samsung.com>
-Subject: [PULL 25/33] hw/cxl: Physical Port Info FMAPI - update to current
- spec and add defines.
-Message-ID: <7df839591cf9354f7cc054ff6d01e16d46ff9f33.1771770471.git.mst@redhat.com>
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>, Fan Ni <fan.ni@samsung.com>
+Subject: [PULL 26/33] hw/cxl: Get Physical Port State - update for PCIe flit
+ mode
+Message-ID: <be7ce15d350bad8ca636921448807b562bfa47c0.1771770471.git.mst@redhat.com>
 References: <cover.1771770471.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -96,14 +95,14 @@ Content-Disposition: inline
 In-Reply-To: <cover.1771770471.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -4
-X-Spam_score: -0.5
-X-Spam_bar: /
-X-Spam_report: (-0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -14
+X-Spam_score: -1.5
+X-Spam_bar: -
+X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.798, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.79,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -121,165 +120,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Arpit Kumar <arpit1.kumar@samsung.com>
+From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 
-Add a new cxl/cxl_ports.h header for field definitions related only to port
-commands. Bring field naming up to date with spec as 'version' bitmasks
-have been replaced with bitmasks of the specific features.
+Recent support for 256B flits, was not accounted for in this FMAPI command
+that should be retrieving the current status of Physical Switch Ports.
 
-Fix a small issue where a reserved value for USP was set to 2 rather
-than 0.
+Note x-flit-mode control is via the downstream devices, so for USPs the
+property must be checked to establish support, but for DSPs this mode is
+always supported (control is with the next port downstream, typically the
+end point.  All cases the linksta2 register may be queried to obtain
+current status.  Note the PCI spec is a little confusing as it refers to
+this bit only being non 0 if Device Readiness Status (DRS) is in particular
+states (basically link trained) but Flit mode is a separate feature and DRS
+may not be present. It is not yet emulated in QEMU. So assume that we
+should reflect what states DRS would be reporting if it were actually
+present.
 
-Signed-off-by: Arpit Kumar <arpit1.kumar@samsung.com>
-Co-developed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+One small thing to note is that the current link width for a port with
+nothing connected reports the same as the capability. This is odd but valid
+because the value under these circumstances is undefined (PCIe r6.2 table
+7-26 Link Status Register - field Current Link Speed.)
+
 Signed-off-by: Jonathan Cameron <jonathan.cameron@huawei.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-Id: <20260204173223.44122-2-Jonathan.Cameron@huawei.com>
+Message-Id: <20260204173223.44122-3-Jonathan.Cameron@huawei.com>
 ---
- hw/cxl/cxl-mailbox-utils.c | 31 ++++++++++++++--------
- include/hw/cxl/cxl_port.h  | 53 ++++++++++++++++++++++++++++++++++++++
- 2 files changed, 73 insertions(+), 11 deletions(-)
- create mode 100644 include/hw/cxl/cxl_port.h
+ hw/cxl/cxl-mailbox-utils.c | 24 ++++++++++++++++++++++--
+ 1 file changed, 22 insertions(+), 2 deletions(-)
 
 diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
-index 2f449980cd..1c8cbe0f68 100644
+index 1c8cbe0f68..b6ac987ee0 100644
 --- a/hw/cxl/cxl-mailbox-utils.c
 +++ b/hw/cxl/cxl-mailbox-utils.c
-@@ -15,6 +15,7 @@
- #include "hw/cxl/cxl.h"
- #include "hw/cxl/cxl_events.h"
- #include "hw/cxl/cxl_mailbox.h"
-+#include "hw/cxl/cxl_port.h"
- #include "hw/pci/pci.h"
- #include "hw/pci-bridge/cxl_upstream_port.h"
- #include "qemu/cutils.h"
-@@ -565,16 +566,16 @@ static CXLRetCode cmd_get_physical_port_state(const struct cxl_cmd *cmd,
-     } QEMU_PACKED *in;
- 
-     /*
--     * CXL r3.1 Table 7-19: Get Physical Port State Port Information Block
-+     * CXL r3.2 Table 7-19: Get Physical Port State Port Information Block
-      * Format
-      */
-     struct cxl_fmapi_port_state_info_block {
-         uint8_t port_id;
-         uint8_t config_state;
--        uint8_t connected_device_cxl_version;
-+        uint8_t connected_device_mode;
-         uint8_t rsv1;
-         uint8_t connected_device_type;
--        uint8_t port_cxl_version_bitmask;
-+        uint8_t supported_cxl_mode_bitmask;
-         uint8_t max_link_width;
-         uint8_t negotiated_link_width;
-         uint8_t supported_link_speeds_vector;
-@@ -623,21 +624,30 @@ static CXLRetCode cmd_get_physical_port_state(const struct cxl_cmd *cmd,
-         if (port_dev) { /* DSP */
-             PCIDevice *ds_dev = pci_bridge_get_sec_bus(PCI_BRIDGE(port_dev))
-                 ->devices[0];
--            port->config_state = 3;
-+            port->config_state = CXL_PORT_CONFIG_STATE_DSP;
+@@ -627,9 +627,26 @@ static CXLRetCode cmd_get_physical_port_state(const struct cxl_cmd *cmd,
+             port->config_state = CXL_PORT_CONFIG_STATE_DSP;
              if (ds_dev) {
                  if (object_dynamic_cast(OBJECT(ds_dev), TYPE_CXL_TYPE3)) {
--                    port->connected_device_type = 5; /* Assume MLD for now */
-+                    /* Assume MLD for now */
-+                    port->connected_device_type =
-+                        CXL_PORT_CONNECTED_DEV_TYPE_3_MLD;
-                 } else {
--                    port->connected_device_type = 1;
-+                    port->connected_device_type =
-+                        CXL_PORT_CONNECTED_DEV_TYPE_PCIE;
-+                    port->connected_device_mode =
-+                        CXL_PORT_CONNECTED_DEV_MODE_NOT_CXL_OR_DISCONN;
++                    uint16_t lnksta2;
 +
-                 }
-             } else {
--                port->connected_device_type = 0;
-+                port->connected_device_type = CXL_PORT_CONNECTED_DEV_TYPE_NONE;
-+                port->connected_device_mode =
-+                    CXL_PORT_CONNECTED_DEV_MODE_NOT_CXL_OR_DISCONN;
++                    if (!port_dev->exp.exp_cap) {
++                        return CXL_MBOX_INTERNAL_ERROR;
++                    }
++
++                    lnksta2 = port_dev->config_read(port_dev,
++                                  port_dev->exp.exp_cap + PCI_EXP_LNKSTA2,
++                                  sizeof(lnksta2));
++
+                     /* Assume MLD for now */
+                     port->connected_device_type =
+                         CXL_PORT_CONNECTED_DEV_TYPE_3_MLD;
++                    if (lnksta2 & PCI_EXP_LNKSTA2_FLIT) {
++                        port->connected_device_mode =
++                            CXL_PORT_CONNECTED_DEV_MODE_256B;
++                    } else {
++                        port->connected_device_mode =
++                            CXL_PORT_CONNECTED_DEV_MODE_68B_VH;
++                    }
+                 } else {
+                     port->connected_device_type =
+                         CXL_PORT_CONNECTED_DEV_TYPE_PCIE;
+@@ -642,12 +659,17 @@ static CXLRetCode cmd_get_physical_port_state(const struct cxl_cmd *cmd,
+                 port->connected_device_mode =
+                     CXL_PORT_CONNECTED_DEV_MODE_NOT_CXL_OR_DISCONN;
              }
++            /* DSP currently always support modes implemented in QEMU */
++            port->supported_cxl_mode_bitmask = CXL_PORT_SUPPORTS_68B_VH |
++                CXL_PORT_SUPPORTS_256B;
              port->supported_ld_count = 3;
          } else if (usp->port == in->ports[i]) { /* USP */
              port_dev = PCI_DEVICE(usp);
--            port->config_state = 4;
--            port->connected_device_type = 0;
-+            port->config_state = CXL_PORT_CONFIG_STATE_USP;
-+            port->connected_device_type = 0; /* Reserved for USP */
-+            port->connected_device_mode = 0; /* Reserved for USP */
+             port->config_state = CXL_PORT_CONFIG_STATE_USP;
+             port->connected_device_type = 0; /* Reserved for USP */
+             port->connected_device_mode = 0; /* Reserved for USP */
++            port->supported_cxl_mode_bitmask = CXL_PORT_SUPPORTS_68B_VH |
++                (CXL_USP(usp)->flitmode ? CXL_PORT_SUPPORTS_256B : 0);
          } else {
              return CXL_MBOX_INVALID_INPUT;
          }
-@@ -667,8 +677,7 @@ static CXLRetCode cmd_get_physical_port_state(const struct cxl_cmd *cmd,
+@@ -676,8 +698,6 @@ static CXLRetCode cmd_get_physical_port_state(const struct cxl_cmd *cmd,
+         /* TODO: Track down if we can get the rest of the info */
          port->ltssm_state = 0x7;
          port->first_lane_num = 0;
-         port->link_state = 0;
--        port->port_cxl_version_bitmask = 0x2;
--        port->connected_device_cxl_version = 0x2;
-+        port->supported_cxl_mode_bitmask = CXL_PORT_SUPPORTS_68B_VH;
+-        port->link_state = 0;
+-        port->supported_cxl_mode_bitmask = CXL_PORT_SUPPORTS_68B_VH;
      }
  
      pl_size = sizeof(*out) + sizeof(*out->ports) * in->num_ports;
-diff --git a/include/hw/cxl/cxl_port.h b/include/hw/cxl/cxl_port.h
-new file mode 100644
-index 0000000000..04db60f7bc
---- /dev/null
-+++ b/include/hw/cxl/cxl_port.h
-@@ -0,0 +1,53 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+
-+#ifndef CXL_PORT_H
-+#define CXL_PORT_H
-+
-+/* CXL r3.2 Table 7-19: Get Physical Port State Port Information Block Format */
-+#define CXL_PORT_CONFIG_STATE_DISABLED           0x0
-+#define CXL_PORT_CONFIG_STATE_BIND_IN_PROGRESS   0x1
-+#define CXL_PORT_CONFIG_STATE_UNBIND_IN_PROGRESS 0x2
-+#define CXL_PORT_CONFIG_STATE_DSP                0x3
-+#define CXL_PORT_CONFIG_STATE_USP                0x4
-+#define CXL_PORT_CONFIG_STATE_FABRIC_PORT        0x5
-+#define CXL_PORT_CONFIG_STATE_INVALID_PORT_ID    0xF
-+
-+#define CXL_PORT_CONNECTED_DEV_MODE_NOT_CXL_OR_DISCONN 0x00
-+#define CXL_PORT_CONNECTED_DEV_MODE_RCD                0x01
-+#define CXL_PORT_CONNECTED_DEV_MODE_68B_VH             0x02
-+#define CXL_PORT_CONNECTED_DEV_MODE_256B               0x03
-+#define CXL_PORT_CONNECTED_DEV_MODE_LO_256B            0x04
-+#define CXL_PORT_CONNECTED_DEV_MODE_PBR                0x05
-+
-+#define CXL_PORT_CONNECTED_DEV_TYPE_NONE            0x00
-+#define CXL_PORT_CONNECTED_DEV_TYPE_PCIE            0x01
-+#define CXL_PORT_CONNECTED_DEV_TYPE_1               0x02
-+#define CXL_PORT_CONNECTED_DEV_TYPE_2_OR_HBR_SWITCH 0x03
-+#define CXL_PORT_CONNECTED_DEV_TYPE_3_SLD           0x04
-+#define CXL_PORT_CONNECTED_DEV_TYPE_3_MLD           0x05
-+#define CXL_PORT_CONNECTED_DEV_PBR_COMPONENT        0x06
-+
-+#define CXL_PORT_SUPPORTS_RCD        BIT(0)
-+#define CXL_PORT_SUPPORTS_68B_VH     BIT(1)
-+#define CXL_PORT_SUPPORTS_256B       BIT(2)
-+#define CXL_PORT_SUPPORTS_LO_256B    BIT(3)
-+#define CXL_PORT_SUPPORTS_PBR        BIT(4)
-+
-+#define CXL_PORT_LTSSM_DETECT        0x00
-+#define CXL_PORT_LTSSM_POLLING       0x01
-+#define CXL_PORT_LTSSM_CONFIGURATION 0x02
-+#define CXL_PORT_LTSSM_RECOVERY      0x03
-+#define CXL_PORT_LTSSM_L0            0x04
-+#define CXL_PORT_LTSSM_L0S           0x05
-+#define CXL_PORT_LTSSM_L1            0x06
-+#define CXL_PORT_LTSSM_L2            0x07
-+#define CXL_PORT_LTSSM_DISABLED      0x08
-+#define CXL_PORT_LTSSM_LOOPBACK      0x09
-+#define CXL_PORT_LTSSM_HOT_RESET     0x0A
-+
-+#define CXL_PORT_LINK_STATE_FLAG_LANE_REVERSED    BIT(0)
-+#define CXL_PORT_LINK_STATE_FLAG_PERST_ASSERTED   BIT(1)
-+#define CXL_PORT_LINK_STATE_FLAG_PRSNT            BIT(2)
-+#define CXL_PORT_LINK_STATE_FLAG_POWER_OFF        BIT(3)
-+
-+#endif /* CXL_PORT_H */
 -- 
 MST
 
