@@ -4,91 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80C87C636A1
-	for <qemu-devel@archiver.kernel.org>; Sun, 22 Feb 2026 14:29:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3960C636B2
+	for <qemu-devel@archiver.kernel.org>; Sun, 22 Feb 2026 14:29:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuASB-00084N-Ke; Sun, 22 Feb 2026 09:29:01 -0500
+	id 1vuASJ-000890-L8; Sun, 22 Feb 2026 09:29:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vuARm-0007yi-0Y
- for qemu-devel@nongnu.org; Sun, 22 Feb 2026 09:28:38 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vuARt-0007zU-R4
+ for qemu-devel@nongnu.org; Sun, 22 Feb 2026 09:28:42 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vuARk-0006fa-JM
- for qemu-devel@nongnu.org; Sun, 22 Feb 2026 09:28:33 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vuARr-0006gC-L4
+ for qemu-devel@nongnu.org; Sun, 22 Feb 2026 09:28:41 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771770511;
+ s=mimecast20190719; t=1771770519;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=Im7oNw2Zu+WcIRrJsnueW164kyYoY+VkGWcj5I81nLU=;
- b=BGsMLfqFQVXOztYiwPeZd/xxwYjVEYkCWybjlBFqEXtARYw+XgNCMMMNEPavcXM+0szrRJ
- Et15+XN94Ur5bvNGOVpGQmcgiMFzidUqwLuKy6E6gdtJgi/54Xwc64CyPx6jt6k0tbg459
- dl79g/lV4jfz+/FbWkjqPviNtGL8QnU=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Lh5AtZWWoRDP1dtYN9KUI+XYGg3AtIkXQ6gc+MiG9fI=;
+ b=JkkroC21P5Vfe6tfURzoA8/K/5+jBB+naSMF1HQkOCH+e+x2cpDmHOAHJ06HBUfrBUpknM
+ qMxfMDzdWOO2H45VwuaLmUxT4Mis4w7lyC6FXS/klt4nHLIhAhFgG4ALqgRQdUIgzAqh/3
+ 5L3P04gfDo1hbhDouugwJTR9O+NdQ0Y=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-591-RDFGr-yrMXGnbdGyRo9Yrw-1; Sun, 22 Feb 2026 09:28:30 -0500
-X-MC-Unique: RDFGr-yrMXGnbdGyRo9Yrw-1
-X-Mimecast-MFC-AGG-ID: RDFGr-yrMXGnbdGyRo9Yrw_1771770509
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4836cc0b38eso37563435e9.2
- for <qemu-devel@nongnu.org>; Sun, 22 Feb 2026 06:28:29 -0800 (PST)
+ us-mta-126-BeDsRQxyMS-356V3o_4Ohg-1; Sun, 22 Feb 2026 09:28:37 -0500
+X-MC-Unique: BeDsRQxyMS-356V3o_4Ohg-1
+X-Mimecast-MFC-AGG-ID: BeDsRQxyMS-356V3o_4Ohg_1771770516
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4837b9913c9so37782455e9.0
+ for <qemu-devel@nongnu.org>; Sun, 22 Feb 2026 06:28:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1771770509; x=1772375309; darn=nongnu.org;
+ d=redhat.com; s=google; t=1771770515; x=1772375315; darn=nongnu.org;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=Im7oNw2Zu+WcIRrJsnueW164kyYoY+VkGWcj5I81nLU=;
- b=kV8RON78J4pC/v+lZ8qN17MtGBBSPeDww732yBa9PUN99Ps3EOJBVoFV0w/F1kviKn
- qRnu8cy1Te4oT6BFs7Jei6BVGbodqOYzChJPGAJLkDWzgCQgZEj183zCQUgRJxdPY+WZ
- SHlWXsacZb+yjdkPcYb0BSyDXrJV8OuMs72lIW8TN8x+mW0Obrm60Cy2AdH2syvPuU4d
- iwxaDadjMfEYtgWGRkfV3prlBSfEtExyKeA8WNjJNhD4ZNZTOYGnRMwdiht0JTcYdqZn
- S+O5Np6w6w0Oe1yHq6ou+QbKec0da31ssSGfKGwM7wMBo71aaov9/g4IkMVnPmjKglrB
- fl1A==
+ bh=Lh5AtZWWoRDP1dtYN9KUI+XYGg3AtIkXQ6gc+MiG9fI=;
+ b=oz1JQq2XAXgjNvePmD7jPjQJtX2XAIcz+pdUgEWiRJktUyFkB8sCAvhhnV7akfOuTQ
+ QRjo5jO6FQzTj2nm5wVIvtjoaO1OhM6yYEtdg1hMc+z9rtoV1wk5bmfsZPio8UjCx6uT
+ mJ+tbt5ytu39QGuv1TLT8FwlqIoUQERT1h3yA2PuPesGx+08x3yVxLLwkzJZ9gvug7r3
+ 7MfGKhMal9eXx9me/npV2F0DKGpxHw07faD3RJ/+0Y4qcTpxx2BPtyMjtNJzZFYpQMy2
+ tX4RAwylGWPbv7VXR6tD+WEIIfe/56cpyzrnf91EC7jhJwObuq0+rXnppSgWXPj64VnT
+ C5MA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771770509; x=1772375309;
+ d=1e100.net; s=20230601; t=1771770515; x=1772375315;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Im7oNw2Zu+WcIRrJsnueW164kyYoY+VkGWcj5I81nLU=;
- b=KqTn8g3S4oeCmHH2P0WNbXYmAS4rGGYZoZ6nGPUEI6ZKe/+cydx1Syv+c3GklDiX6+
- xeMY6osD3RtD5125t3f982rA+U1kEftGEY9Ux6F/A/jn5I6pMFRagLaY+FzzzpOlQI3e
- nCwZWxqp37C7p4Y8+ZfKx+Yzcn7C/B1vKPMAx+SJEiVZxjx4rI9kzcLSo/6yfZgNPw1C
- Phl7bJJdS6Yly9ri+J6lTN0cxlxj0rStssrkbH5XOgNzRSYpaU1dHC/IeZSAOSI36YPC
- 7W2Dkqjv90ztbHE3JJOY0ulA5wb9Z71JqjzB/sdzkwoQixtx9XUNy+MJj2ObgzD+OXNh
- 0Rzw==
-X-Gm-Message-State: AOJu0YxjV8i5hbCJ+JQNhxb6CTx4yOwK8rh+hOTj09E6Sl9cLjQAgeE9
- t3v+cqi19WQCpyzgmpRM9KGPFd/87un8tPaWdDvviOk2kMcejULyeEZdWah9LADrnLaD4pFPTRB
- cvOMrFm3HEKEamNhYyfyokXHEJGWRsOJsntD7BklvEUiy3lnHUn/soO6bBkibWaZ7u1x/dZcO+C
- wij4aM+7G5QSTrgrQvJAui+dB3IVNzVhh1Iw==
-X-Gm-Gg: AZuq6aLa4uja/kq/gXL4MPKF0JrTHcM1vsK1+wGC/M9pu22dEBiIQMocuHgTAxeOdH8
- W7Tresuf4XxZwD8yItNwJLd82QsYhCmYBKEVmR9jpG8X1RS+TvYTlEEZwCOznGbxVrWxh4z15TL
- OghAUoeoOPHbSJs+VB5JQSjwScASdv4F4mwWYIufDF5vvfC+VJJySzOQTZhl7Hz07gUDwKU6g5I
- iMn6U7albGz5J4lj/VQR7xQW+JxsATqrtiOnBc94ymjnApcnP/s02YlRdGhU5D5s+6+6jgsV4Jg
- 1KvgWD/ST93TdrnZpWOotxlpLpKMvBA+ci+f6Dp6+svdQGunCDDrCXl+aqqreKT1bglCR8LsxTx
- dOAntfcvmiY7cs43yoFzlF/YZl0DxJKXh6V4yUjgzW0vq9g==
-X-Received: by 2002:a05:600c:1f8f:b0:477:73e9:dc17 with SMTP id
- 5b1f17b1804b1-483a95ee63amr123422505e9.35.1771770508608; 
- Sun, 22 Feb 2026 06:28:28 -0800 (PST)
-X-Received: by 2002:a05:600c:1f8f:b0:477:73e9:dc17 with SMTP id
- 5b1f17b1804b1-483a95ee63amr123422095e9.35.1771770508162; 
- Sun, 22 Feb 2026 06:28:28 -0800 (PST)
+ bh=Lh5AtZWWoRDP1dtYN9KUI+XYGg3AtIkXQ6gc+MiG9fI=;
+ b=LP1QOlQhmFhNJLY3umyyE8kZGaWT0Y+a7GBbiy58b3idRt0aJVTd8QLQKZ9XXRlqio
+ F3uPRO3Kf/fw2B/U4rqWCOHNXmIWGNRtiCxXCvBFyaJEGMh42lBvwHwDj7Esqs4q0Ntv
+ bMMHUVRdv56gzIdoXmaWg3qQqkicDmesmuCA72nGdNMIrQBYtA8hi7CF6qetToTU93yY
+ waeyLfTI6ZQI/fN69iSq1fLZy6XGx0ioIRBY4HW+n2ccamdWPW8TrZ1QVWjz5h9YUrFU
+ csVIOHPlbUQIeTkQVhPqJgl4/qf/6S2rmmLr11itqU0SiKVoQMdJ7dhnlXYCWo4rd3Ig
+ CG+g==
+X-Gm-Message-State: AOJu0YwYGvZG6+NRO3jlVpIndipIIy1NorEUh184SSRZFSOrFIDd7BGZ
+ S8B8j5M+H1Eg8IB3TwCvIL6n593LEDgK1qbKBTf1crWTfARRIyYtG7cJW1qlWblWqlegKy4TY5v
+ jRCHcZIGqByb4UajHA1N5Wc85MzqanPT+fp4HMEYau4r7OA2sYRsz/5oxICu9v08L15n8nAvfPy
+ I/mCGK5gPWnD6nhn1EgSSIJRS+wguoT5PR5Q==
+X-Gm-Gg: AZuq6aJetkJitVML5VKmTyhFUdfyt+PlW3XQXKaRS/aWIW011OnC+S/Cc+30ObP43AM
+ QAIgiwXY0cAoSOUHE9++f9kEQAQVWykm+SWJNZBH3gGteudXMMJ189JwPpnz9RAuMzQztE/azGn
+ IWj62gKkemRpQxVg4adnbQDQwtTVWNfBfwh1wGoukBjqkophs16qDtdcQ9locuEZ2AhclH+M3Wx
+ XQ9zm3kSzKB3gHCIguuF1mdr6816b31k/Mc+VJVaSKHg2bl16OPYPmuykMaTH0R9HYt8aLC6pvv
+ U8BtbYZttYhWj0ahMv14QZ3jc6CuR9UgcsiFeQu4fhFC/AFS2MchRohFYM7CGkNIPg+/PyaKHuJ
+ qvhbh4RmcXUvNdlo0y/7BJYysxC/MSl4LfOIXIyyYu9UH1Q==
+X-Received: by 2002:a05:600c:1c22:b0:483:79ad:f3b9 with SMTP id
+ 5b1f17b1804b1-483a95eada4mr99682655e9.28.1771770515276; 
+ Sun, 22 Feb 2026 06:28:35 -0800 (PST)
+X-Received: by 2002:a05:600c:1c22:b0:483:79ad:f3b9 with SMTP id
+ 5b1f17b1804b1-483a95eada4mr99682025e9.28.1771770514716; 
+ Sun, 22 Feb 2026 06:28:34 -0800 (PST)
 Received: from redhat.com (IGLD-80-230-79-166.inter.net.il. [80.230.79.166])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-483a9b75b4dsm194822945e9.4.2026.02.22.06.28.27
+ 5b1f17b1804b1-483a4e869a3sm116744085e9.1.2026.02.22.06.28.33
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 22 Feb 2026 06:28:27 -0800 (PST)
-Date: Sun, 22 Feb 2026 09:28:26 -0500
+ Sun, 22 Feb 2026 06:28:34 -0800 (PST)
+Date: Sun, 22 Feb 2026 09:28:32 -0500
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Mohamed Mediouni <mohamed@unpredictable.fr>,
- Ani Sinha <anisinha@redhat.com>, Igor Mammedov <imammedo@redhat.com>
-Subject: [PULL 05/33] tests/data/acpi: disassemble-aml: rename and change
- interpreter line
-Message-ID: <4d0830ea34abed563f15d3a236bef83a9026a7e8.1771770471.git.mst@redhat.com>
+ Shiju Jose <shiju.jose@huawei.com>, Markus Armbruster <armbru@redhat.com>,
+ Ravi Jonnalagadda <ravis.opensrc@gmail.com>,
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+ Fan Ni <fan.ni@samsung.com>, Eric Blake <eblake@redhat.com>
+Subject: [PULL 08/33] hw/cxl/events: Update for rev3.2 common event record
+ format
+Message-ID: <e5b7d31243dcd075f7f670bb105ac0f742176915.1771770471.git.mst@redhat.com>
 References: <cover.1771770471.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -96,14 +98,14 @@ Content-Disposition: inline
 In-Reply-To: <cover.1771770471.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -4
-X-Spam_score: -0.5
-X-Spam_bar: /
-X-Spam_report: (-0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -14
+X-Spam_score: -1.5
+X-Spam_bar: -
+X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.798, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.79,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -121,66 +123,333 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
+From: Shiju Jose <shiju.jose@huawei.com>
 
-/usr/bin/bash isn't guaranteed to be present. Switch
-to /usr/bin/env bash.
+CXL spec 3.2 section 8.2.9.2.1 Table 8-55, Common Event Record
+format has updated with optional Maintenance Operation Subclass,
+LD ID and ID of the device head information.
 
-Specifically, on Darwin/macOS:
+Add updates for the above optional parameters in the related
+CXL events reporting and in the QMP commands to inject CXL events.
 
-$ which bash
-/opt/homebrew/bin/bash
+Update all related specification references to CXL r3.2 to ensure
+one consistent source.
 
-Rename disassemle to disassemble in the same commit (typo fix).
-
-Adapt the correponding message in rebuild-expected-aml.
-
-Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-Reviewed-by: Ani Sinha <anisinha@redhat.com>
+Signed-off-by: Shiju Jose <shiju.jose@huawei.com>
+Acked-by: Markus Armbruster <armbru@redhat.com>
+Reviewed-by: Ravi Jonnalagadda <ravis.opensrc@gmail.com>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-Id: <20260210041248.14701-1-mohamed@unpredictable.fr>
+Message-Id: <20260205112350.60681-3-Jonathan.Cameron@huawei.com>
 ---
- tests/data/acpi/{disassemle-aml.sh => disassemble-aml.sh} | 4 ++--
- tests/data/acpi/rebuild-expected-aml.sh                   | 2 +-
- 2 files changed, 3 insertions(+), 3 deletions(-)
- rename tests/data/acpi/{disassemle-aml.sh => disassemble-aml.sh} (92%)
+ hw/cxl/cxl-events.c         |  3 +-
+ hw/cxl/cxl-mailbox-utils.c  |  3 +-
+ hw/mem/cxl_type3.c          | 70 ++++++++++++++++++++++++++++++++-----
+ hw/mem/cxl_type3_stubs.c    | 24 +++++++++++--
+ include/hw/cxl/cxl_device.h |  7 +++-
+ include/hw/cxl/cxl_events.h | 15 ++++++--
+ qapi/cxl.json               | 21 ++++++++---
+ 7 files changed, 122 insertions(+), 21 deletions(-)
 
-diff --git a/tests/data/acpi/disassemle-aml.sh b/tests/data/acpi/disassemble-aml.sh
-similarity index 92%
-rename from tests/data/acpi/disassemle-aml.sh
-rename to tests/data/acpi/disassemble-aml.sh
-index 89561d233d..62e1991ace 100755
---- a/tests/data/acpi/disassemle-aml.sh
-+++ b/tests/data/acpi/disassemble-aml.sh
-@@ -1,4 +1,4 @@
--#!/usr/bin/bash
-+#!/usr/bin/env bash
+diff --git a/hw/cxl/cxl-events.c b/hw/cxl/cxl-events.c
+index 7583dd9162..5356dfb5b3 100644
+--- a/hw/cxl/cxl-events.c
++++ b/hw/cxl/cxl-events.c
+@@ -271,7 +271,8 @@ void cxl_create_dc_event_records_for_extents(CXLType3Dev *ct3d,
+                             &dynamic_capacity_uuid,
+                             (1 << CXL_EVENT_TYPE_INFO),
+                             sizeof(event_rec),
+-                            cxl_device_get_timestamp(&ct3d->cxl_dstate));
++                            cxl_device_get_timestamp(&ct3d->cxl_dstate),
++                            0, 0, 0, 0, 0, 0, 0, 0);
+     event_rec.type = type;
+     event_rec.validity_flags = 1;
+     event_rec.host_id = 0;
+diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
+index 9b99d44a80..125f417aa4 100644
+--- a/hw/cxl/cxl-mailbox-utils.c
++++ b/hw/cxl/cxl-mailbox-utils.c
+@@ -3463,7 +3463,8 @@ static CXLRetCode cmd_fm_set_dc_region_config(const struct cxl_cmd *cmd,
+                             &dynamic_capacity_uuid,
+                             (1 << CXL_EVENT_TYPE_INFO),
+                             sizeof(dcEvent),
+-                            cxl_device_get_timestamp(&ct3d->cxl_dstate));
++                            cxl_device_get_timestamp(&ct3d->cxl_dstate),
++                            0, 0, 0, 0, 0, 0, 0, 0);
+     dcEvent.type = DC_EVENT_REGION_CONFIG_UPDATED;
+     dcEvent.validity_flags = 1;
+     dcEvent.host_id = 0;
+diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
+index 6eb20137a0..371bd4dc6a 100644
+--- a/hw/mem/cxl_type3.c
++++ b/hw/mem/cxl_type3.c
+@@ -1592,12 +1592,39 @@ void qmp_cxl_inject_correctable_error(const char *path, CxlCorErrorType type,
  
- outdir=
- while getopts "o:" arg; do
-@@ -7,7 +7,7 @@ while getopts "o:" arg; do
-         outdir=$OPTARG
-         ;;
-     \? )
--        echo "Usage: ./tests/data/acpi/disassemle-aml.sh [-o <output-directory>]"
-+        echo "Usage: ./tests/data/acpi/disassemble-aml.sh [-o <output-directory>]"
-         exit 1
-         ;;
+ void cxl_assign_event_header(CXLEventRecordHdr *hdr,
+                              const QemuUUID *uuid, uint32_t flags,
+-                             uint8_t length, uint64_t timestamp)
++                             uint8_t length, uint64_t timestamp,
++                             bool has_maint_op_class, uint8_t maint_op_class,
++                             bool has_maint_op_subclass,
++                             uint8_t maint_op_subclass,
++                             bool has_ld_id, uint16_t ld_id,
++                             bool has_head_id, uint8_t head_id)
+ {
+-    st24_le_p(&hdr->flags, flags);
+     hdr->length = length;
+     memcpy(&hdr->id, uuid, sizeof(hdr->id));
+     stq_le_p(&hdr->timestamp, timestamp);
++
++    if (has_maint_op_class) {
++        hdr->maint_op_class = maint_op_class;
++    } else {
++        hdr->maint_op_class = 0;
++    }
++
++    if (has_maint_op_subclass) {
++        flags |= CXL_EVENT_REC_FLAGS_MAINT_OP_SUBCLASS_VALID;
++        hdr->maint_op_subclass = maint_op_subclass;
++    }
++
++    if (has_ld_id) {
++        flags |= CXL_EVENT_REC_FLAGS_LD_ID_VALID;
++        stw_le_p(&hdr->ld_id, ld_id);
++    }
++
++    if (has_head_id) {
++        flags |= CXL_EVENT_REC_FLAGS_HEAD_ID_VALID;
++        hdr->head_id = head_id;
++    }
++
++    st24_le_p(&hdr->flags, flags);
+ }
  
-diff --git a/tests/data/acpi/rebuild-expected-aml.sh b/tests/data/acpi/rebuild-expected-aml.sh
-index cbf9ffe0dd..af45cf3007 100755
---- a/tests/data/acpi/rebuild-expected-aml.sh
-+++ b/tests/data/acpi/rebuild-expected-aml.sh
-@@ -57,7 +57,7 @@ old_allowed_dif=`grep -v -e 'List of comma-separated changed AML files to ignore
- echo '/* List of comma-separated changed AML files to ignore */' > ${SRC_PATH}/tests/qtest/bios-tables-test-allowed-diff.h
+ static const QemuUUID gen_media_uuid = {
+@@ -1637,7 +1664,13 @@ static int ct3d_qmp_cxl_event_log_enc(CxlEventLog log)
+ }
+ /* Component ID is device specific.  Define this as a string. */
+ void qmp_cxl_inject_general_media_event(const char *path, CxlEventLog log,
+-                                        uint8_t flags, uint64_t dpa,
++                                        uint32_t flags, bool has_maint_op_class,
++                                        uint8_t maint_op_class,
++                                        bool has_maint_op_subclass,
++                                        uint8_t maint_op_subclass,
++                                        bool has_ld_id, uint16_t ld_id,
++                                        bool has_head_id, uint8_t head_id,
++                                        uint64_t dpa,
+                                         uint8_t descriptor, uint8_t type,
+                                         uint8_t transaction_type,
+                                         bool has_channel, uint8_t channel,
+@@ -1675,7 +1708,10 @@ void qmp_cxl_inject_general_media_event(const char *path, CxlEventLog log,
  
- echo "The files were rebuilt and can be added to git."
--echo "You can use ${SRC_PATH}/tests/data/acpi/disassemle-aml.sh to disassemble them to ASL."
-+echo "You can use ${SRC_PATH}/tests/data/acpi/disassemble-aml.sh to disassemble them to ASL."
+     memset(&gem, 0, sizeof(gem));
+     cxl_assign_event_header(hdr, &gen_media_uuid, flags, sizeof(gem),
+-                            cxl_device_get_timestamp(&ct3d->cxl_dstate));
++                            cxl_device_get_timestamp(&ct3d->cxl_dstate),
++                            has_maint_op_class, maint_op_class,
++                            has_maint_op_subclass, maint_op_subclass,
++                            has_ld_id, ld_id, has_head_id, head_id);
  
- if [ -z "$old_allowed_dif" ]; then
-     echo "Note! Please do not commit expected files with source changes"
+     stq_le_p(&gem.phys_addr, dpa);
+     gem.descriptor = descriptor;
+@@ -1719,7 +1755,13 @@ void qmp_cxl_inject_general_media_event(const char *path, CxlEventLog log,
+ #define CXL_DRAM_VALID_COLUMN                           BIT(6)
+ #define CXL_DRAM_VALID_CORRECTION_MASK                  BIT(7)
+ 
+-void qmp_cxl_inject_dram_event(const char *path, CxlEventLog log, uint8_t flags,
++void qmp_cxl_inject_dram_event(const char *path, CxlEventLog log,
++                               uint32_t flags,
++                               bool has_maint_op_class, uint8_t maint_op_class,
++                               bool has_maint_op_subclass,
++                               uint8_t maint_op_subclass,
++                               bool has_ld_id, uint16_t ld_id,
++                               bool has_head_id, uint8_t head_id,
+                                uint64_t dpa, uint8_t descriptor,
+                                uint8_t type, uint8_t transaction_type,
+                                bool has_channel, uint8_t channel,
+@@ -1762,7 +1804,10 @@ void qmp_cxl_inject_dram_event(const char *path, CxlEventLog log, uint8_t flags,
+ 
+     memset(&dram, 0, sizeof(dram));
+     cxl_assign_event_header(hdr, &dram_uuid, flags, sizeof(dram),
+-                            cxl_device_get_timestamp(&ct3d->cxl_dstate));
++                            cxl_device_get_timestamp(&ct3d->cxl_dstate),
++                            has_maint_op_class, maint_op_class,
++                            has_maint_op_subclass, maint_op_subclass,
++                            has_ld_id, ld_id, has_head_id, head_id);
+     stq_le_p(&dram.phys_addr, dpa);
+     dram.descriptor = descriptor;
+     dram.type = type;
+@@ -1822,7 +1867,13 @@ void qmp_cxl_inject_dram_event(const char *path, CxlEventLog log, uint8_t flags,
+ }
+ 
+ void qmp_cxl_inject_memory_module_event(const char *path, CxlEventLog log,
+-                                        uint8_t flags, uint8_t type,
++                                        uint32_t flags, bool has_maint_op_class,
++                                        uint8_t maint_op_class,
++                                        bool has_maint_op_subclass,
++                                        uint8_t maint_op_subclass,
++                                        bool has_ld_id, uint16_t ld_id,
++                                        bool has_head_id, uint8_t head_id,
++                                        uint8_t type,
+                                         uint8_t health_status,
+                                         uint8_t media_status,
+                                         uint8_t additional_status,
+@@ -1861,7 +1912,10 @@ void qmp_cxl_inject_memory_module_event(const char *path, CxlEventLog log,
+ 
+     memset(&module, 0, sizeof(module));
+     cxl_assign_event_header(hdr, &memory_module_uuid, flags, sizeof(module),
+-                            cxl_device_get_timestamp(&ct3d->cxl_dstate));
++                            cxl_device_get_timestamp(&ct3d->cxl_dstate),
++                            has_maint_op_class, maint_op_class,
++                            has_maint_op_subclass, maint_op_subclass,
++                            has_ld_id, ld_id, has_head_id, head_id);
+ 
+     module.type = type;
+     module.health_status = health_status;
+diff --git a/hw/mem/cxl_type3_stubs.c b/hw/mem/cxl_type3_stubs.c
+index c1a5e4a7c1..91b1478114 100644
+--- a/hw/mem/cxl_type3_stubs.c
++++ b/hw/mem/cxl_type3_stubs.c
+@@ -14,7 +14,13 @@
+ #include "qapi/qapi-commands-cxl.h"
+ 
+ void qmp_cxl_inject_general_media_event(const char *path, CxlEventLog log,
+-                                        uint8_t flags, uint64_t dpa,
++                                        uint32_t flags, bool has_maint_op_class,
++                                        uint8_t maint_op_class,
++                                        bool has_maint_op_subclass,
++                                        uint8_t maint_op_subclass,
++                                        bool has_ld_id, uint16_t ld_id,
++                                        bool has_head_id, uint8_t head_id,
++                                        uint64_t dpa,
+                                         uint8_t descriptor, uint8_t type,
+                                         uint8_t transaction_type,
+                                         bool has_channel, uint8_t channel,
+@@ -23,7 +29,13 @@ void qmp_cxl_inject_general_media_event(const char *path, CxlEventLog log,
+                                         const char *component_id,
+                                         Error **errp) {}
+ 
+-void qmp_cxl_inject_dram_event(const char *path, CxlEventLog log, uint8_t flags,
++void qmp_cxl_inject_dram_event(const char *path, CxlEventLog log,
++                               uint32_t flags,
++                               bool has_maint_op_class, uint8_t maint_op_class,
++                               bool has_maint_op_subclass,
++                               uint8_t maint_op_subclass,
++                               bool has_ld_id, uint16_t ld_id,
++                               bool has_head_id, uint8_t head_id,
+                                uint64_t dpa, uint8_t descriptor,
+                                uint8_t type, uint8_t transaction_type,
+                                bool has_channel, uint8_t channel,
+@@ -38,7 +50,13 @@ void qmp_cxl_inject_dram_event(const char *path, CxlEventLog log, uint8_t flags,
+                                Error **errp) {}
+ 
+ void qmp_cxl_inject_memory_module_event(const char *path, CxlEventLog log,
+-                                        uint8_t flags, uint8_t type,
++                                        uint32_t flags, bool has_maint_op_class,
++                                        uint8_t maint_op_class,
++                                        bool has_maint_op_subclass,
++                                        uint8_t maint_op_subclass,
++                                        bool has_ld_id, uint16_t ld_id,
++                                        bool has_head_id, uint8_t head_id,
++                                        uint8_t type,
+                                         uint8_t health_status,
+                                         uint8_t media_status,
+                                         uint8_t additional_status,
+diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
+index 165355baf9..e461a824b6 100644
+--- a/include/hw/cxl/cxl_device.h
++++ b/include/hw/cxl/cxl_device.h
+@@ -723,7 +723,12 @@ bool ct3_test_region_block_backed(CXLType3Dev *ct3d, uint64_t dpa,
+                                   uint64_t len);
+ void cxl_assign_event_header(CXLEventRecordHdr *hdr,
+                              const QemuUUID *uuid, uint32_t flags,
+-                             uint8_t length, uint64_t timestamp);
++                             uint8_t length, uint64_t timestamp,
++                             bool has_maint_op_class, uint8_t maint_op_class,
++                             bool has_maint_op_subclass,
++                             uint8_t maint_op_subclass,
++                             bool has_ld_id, uint16_t ld_id,
++                             bool has_head_id, uint8_t head_id);
+ void cxl_create_dc_event_records_for_extents(CXLType3Dev *ct3d,
+                                              CXLDCEventType type,
+                                              CXLDCExtentRaw extents[],
+diff --git a/include/hw/cxl/cxl_events.h b/include/hw/cxl/cxl_events.h
+index 758b075a64..4d9cfdb621 100644
+--- a/include/hw/cxl/cxl_events.h
++++ b/include/hw/cxl/cxl_events.h
+@@ -29,9 +29,15 @@ typedef enum CXLEventLogType {
+ 
+ /*
+  * Common Event Record Format
+- * CXL r3.1 section 8.2.9.2.1: Event Records; Table 8-43
++ * CXL r3.2 section 8.2.10.2.1: Event Records; Table 8-55
+  */
+-#define CXL_EVENT_REC_HDR_RES_LEN 0xf
++#define CXL_EVENT_REC_FLAGS_PERMANENT_COND BIT(2)
++#define CXL_EVENT_REC_FLAGS_MAINT_NEEDED   BIT(3)
++#define CXL_EVENT_REC_FLAGS_PERF_DEGRADED  BIT(4)
++#define CXL_EVENT_REC_FLAGS_HW_REPLACEMENT_NEEDED BIT(5)
++#define CXL_EVENT_REC_FLAGS_MAINT_OP_SUBCLASS_VALID BIT(6)
++#define CXL_EVENT_REC_FLAGS_LD_ID_VALID BIT(7)
++#define CXL_EVENT_REC_FLAGS_HEAD_ID_VALID BIT(8)
+ typedef struct CXLEventRecordHdr {
+     QemuUUID id;
+     uint8_t length;
+@@ -40,7 +46,10 @@ typedef struct CXLEventRecordHdr {
+     uint16_t related_handle;
+     uint64_t timestamp;
+     uint8_t maint_op_class;
+-    uint8_t reserved[CXL_EVENT_REC_HDR_RES_LEN];
++    uint8_t maint_op_subclass;
++    uint16_t ld_id;
++    uint8_t head_id;
++    uint8_t reserved[0xb];
+ } QEMU_PACKED CXLEventRecordHdr;
+ 
+ #define CXL_EVENT_RECORD_DATA_LENGTH 0x50
+diff --git a/qapi/cxl.json b/qapi/cxl.json
+index 55a088586e..82001c0591 100644
+--- a/qapi/cxl.json
++++ b/qapi/cxl.json
+@@ -33,20 +33,33 @@
+ ##
+ # @CXLCommonEventBase:
+ #
+-# Common event base for a CXL Event (CXL r3.0 8.2.9.2.1
+-# Table 8-42 Common Event Record Format).
++# Common event base for a CXL Event (CXL r3.2 8.2.10.2.1
++# Table 8-55 Common Event Record Format).
+ #
+ # @path: CXL type 3 device canonical QOM path
+ #
+ # @log: event log to add the event to
+ #
+-# @flags: Event Record Flags.  See CXL r3.0 Table 8-42 Common Event
++# @flags: Event Record Flags.  See CXL r3.2 Table 8-55 Common Event
+ #     Record Format, Event Record Flags for subfield definitions.
+ #
++# @maint-op-class: Maintenance operation class the device requests to
++#     initiate.
++#
++# @maint-op-subclass: Maintenance operation subclass the device
++#     requests to initiate.
++#
++# @ld-id: Logical Device (LD) ID of LD from where the event
++#     originated.
++#
++# @head-id: ID of the device head from where the event originated.
++#
+ # Since: 8.1
+ ##
+ { 'struct': 'CXLCommonEventBase',
+-  'data': { 'path': 'str', 'log': 'CxlEventLog', 'flags': 'uint8' } }
++  'data': { 'path': 'str', 'log': 'CxlEventLog', 'flags': 'uint32',
++            '*maint-op-class':'uint8', '*maint-op-subclass':'uint8',
++            '*ld-id':'uint16', '*head-id':'uint8' } }
+ 
+ ##
+ # @CXLGeneralMediaEvent:
 -- 
 MST
 
