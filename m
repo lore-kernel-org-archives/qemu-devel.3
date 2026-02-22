@@ -4,94 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E8F6C636BA
-	for <qemu-devel@archiver.kernel.org>; Sun, 22 Feb 2026 21:17:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB37FC636B2
+	for <qemu-devel@archiver.kernel.org>; Sun, 22 Feb 2026 21:32:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuGp5-00030V-LR; Sun, 22 Feb 2026 16:17:04 -0500
+	id 1vuH3b-0005SP-1O; Sun, 22 Feb 2026 16:32:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1vuGp3-0002zt-OO
- for qemu-devel@nongnu.org; Sun, 22 Feb 2026 16:17:01 -0500
-Received: from isrv.corpit.ru ([212.248.84.144])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1vuGp1-0001y2-N7
- for qemu-devel@nongnu.org; Sun, 22 Feb 2026 16:17:01 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id B6D0518BE0F;
- Mon, 23 Feb 2026 00:16:39 +0300 (MSK)
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 0006C36D194;
- Mon, 23 Feb 2026 00:16:46 +0300 (MSK)
-Message-ID: <be650a77-3dbb-4c21-9af6-6b183ee92178@tls.msk.ru>
-Date: Mon, 23 Feb 2026 00:16:46 +0300
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vuH3Z-0005Rl-Ay
+ for qemu-devel@nongnu.org; Sun, 22 Feb 2026 16:32:01 -0500
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vuH3X-0004tz-UL
+ for qemu-devel@nongnu.org; Sun, 22 Feb 2026 16:32:01 -0500
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-48329eb96a7so20384275e9.3
+ for <qemu-devel@nongnu.org>; Sun, 22 Feb 2026 13:31:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1771795917; x=1772400717; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Rn2rO8jJswLS/t/Dr6eFLxD3NkZ038wxEV/XO69NTmo=;
+ b=WxPXjbV1NFV0JV6wZRoO9afQtP10x78pPNZILKka5aDGfjdyprYh0AxnFfyKXWZ3Mh
+ JVGSxPwhwQuTRyi9vRtovA3+ZNiaaaHTYBJ6NhXB6ddNsWoCNUL0xC2LfMKrtYRwCB/Z
+ y3ONZVeoybjt9vXp7U4CZftA8GBQiG5y7TfPK0mVTkMT8mBfXDy1fWQeUSiCrRu24h6j
+ 1gepbWgPkmNCZQexSqsgwSR9AZP00FoERblTzBjNS4GCsAIHJlqGqLaaDQtwuqsMyyWK
+ prFta9kpDUpsrpRVYN1ys6GbwrdeS1Jp3dxUw0159VMHB2X/3aBSLabUUbtGiTLmkENg
+ G2Ng==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1771795917; x=1772400717;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Rn2rO8jJswLS/t/Dr6eFLxD3NkZ038wxEV/XO69NTmo=;
+ b=LbZlB4aIFj3rpBNmvQQf6bbSfLXrrh4qbVDlumPPEU/3/+yRfjdmZUfFLJdnfB//1v
+ m1iP9mFdoiXIkX2bKirbyadaHeZFIELHUbZEfbwQjZHamsDDdKtTReUBvbzIENsv+Dbx
+ e+LTJF485GIzAVO4fsg8sFSJlRPffPGPFy2J3jjPC/qv5UDw/wShUmd4g9KP3WbL1B5+
+ mBs9AQRYUlzjMSmPF25Qq3wVxbj+3cDi9JTAXzZJzg1hptcK/Kt/fWV/5YEjOUVBzzdm
+ ub8UxVTYGBQ3bX31OA9S2L6lVO+WFS/mOfg6TPrU6XB3tvkIgPpUfA8YnO12qlquoqSQ
+ I6mA==
+X-Gm-Message-State: AOJu0Yyd/+9zc1lhdxgYUDz4J4fDWdPCTuhDrw5FW32SNkDaXPeqZMp2
+ 3dOjqbOgFjsVPEnuo0Tu6esZBU2NGi1D78b5GG1FLG6/S3xaMPjTxg5crYwd1NVmhgdfEFLO8/G
+ Lgoh6l4M=
+X-Gm-Gg: AZuq6aILT2Hk0Sm+zEWt/jWgC8F4luPOTOodYYWiR5AGwc8UNGetNAgkXgUwFvMmmZ/
+ Ln2zVbRT9fjscYnVr1fx/4PCLTLR4ejCmwc2B0AI4XjRd359NUcS7nxxoFTFQqz/5MDZ9l42ZXP
+ N6+eGhy+xQirWQ3onf0LBQ7cQEASlh9avAzO4PYzttcvSn3NhHWh7lvllMo14aLaHY8rqsqqvbP
+ XglLDwJNB6W/YC4O0QvJSTiGTA7PZAR+AmmV5bhvrfT1sPPgUsZ1IakY4W9DC3GdfnIYTu1aGRe
+ nSpy0n6xu3WEDWUHJlih/gRtXFcwvYiUFrCXIMBgSGpT+EtcRJM2tygIBUDKALDLGkXRWTFk6GO
+ SvMEdSr0zIHC6ClIzUvbAzBPWnhtn7FUUik9mylut4CGqI/w6SVRlWyNo/1VEXMHUxkdBd7vpvH
+ NVv2gHhaDazpVjcd4donk3ddRTqzk5PeGTpQPrANlZdF95ehzsnzT5dexvrqU4W5b5QQ==
+X-Received: by 2002:a05:6000:2301:b0:435:a501:359 with SMTP id
+ ffacd0b85a97d-4396f18a666mr12561054f8f.41.1771795917462; 
+ Sun, 22 Feb 2026 13:31:57 -0800 (PST)
+Received: from [192.168.69.200] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-43970bf9f77sm16365174f8f.5.2026.02.22.13.31.56
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 22 Feb 2026 13:31:56 -0800 (PST)
+Message-ID: <77076f22-d75f-434a-9cd0-e45502594514@linaro.org>
+Date: Sun, 22 Feb 2026 22:31:55 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 33/33] vhost: fix vhost_inflight_buffer_pre_load
-To: "Michael S. Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Alexandr Moshkov <dtalexundeer@yandex-team.ru>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Stefano Garzarella <sgarzare@redhat.com>
-References: <cover.1771770471.git.mst@redhat.com>
- <72f663f575ab5e0f31320d7c9f25cc1f086313bd.1771770471.git.mst@redhat.com>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <72f663f575ab5e0f31320d7c9f25cc1f086313bd.1771770471.git.mst@redhat.com>
+Subject: Re: [PATCH v2 0/8] system: Absorb globals-target.c within common
+ globals.c
+To: qemu-devel@nongnu.org
+Cc: Nicholas Piggin <npiggin@gmail.com>,
+ =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Chinmay Rath <rathc@linux.ibm.com>,
+ Artyom Tarasenko <atar4qemu@gmail.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Laurent Vivier <laurent@vivier.eu>, qemu-ppc@nongnu.org,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+References: <20260216213121.47122-1-philmd@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260216213121.47122-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -2
-X-Spam_score: -0.3
-X-Spam_bar: /
-X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.798, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.79,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,19 +109,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 22.02.2026 17:29, Michael S. Tsirkin wrote:
-> From: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
-> 
-> While I was rebasing my series about inflight migration, I missed a
-> small issue in vhost_inflight_buffer_preload:
-> 
-> * fix wrong return type in function
-> * fix error check
-> 
-> Signed-off-by: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
-> Fixes: tag pls?
+On 16/2/26 22:31, Philippe Mathieu-Daudé wrote:
 
-Is this intentional? :)
+> Philippe Mathieu-Daudé (8):
+>    hw/display/macfb: Constify macfb_sense_table[] array
+>    hw/display/macfb: Constify macfb_mode_table[] array
+>    hw/m68k/q800: Use MacFbMode fields in q800_machine_init()
+>    hw/m68k/q800: Set MACFB_DISPLAY_APPLE_21_COLOR within MacFrameBuffer
+>    hw/m68k: Set graphic display dimensions generically
+>    hw/sparc: Set graphic display dimensions generically
+>    hw/ppc: Set graphic display dimensions generically
+>    system/globals: Build as common code
 
-/mjt
+Series queued, thanks.
 
