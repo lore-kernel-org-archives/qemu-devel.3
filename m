@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07A55E6817A
-	for <qemu-devel@archiver.kernel.org>; Sun, 22 Feb 2026 23:07:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5590C636C5
+	for <qemu-devel@archiver.kernel.org>; Sun, 22 Feb 2026 23:07:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuIXP-0001k0-6M; Sun, 22 Feb 2026 18:06:55 -0500
+	id 1vuIY0-0002PF-7H; Sun, 22 Feb 2026 18:07:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vuIXN-0001jd-PH
- for qemu-devel@nongnu.org; Sun, 22 Feb 2026 18:06:53 -0500
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vuIXj-00020G-J4
+ for qemu-devel@nongnu.org; Sun, 22 Feb 2026 18:07:19 -0500
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vuIXM-0005wZ-8B
- for qemu-devel@nongnu.org; Sun, 22 Feb 2026 18:06:53 -0500
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-48375f10628so23004355e9.1
- for <qemu-devel@nongnu.org>; Sun, 22 Feb 2026 15:06:51 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vuIXh-0005yd-MA
+ for qemu-devel@nongnu.org; Sun, 22 Feb 2026 18:07:15 -0500
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-48373a4bca3so22360875e9.0
+ for <qemu-devel@nongnu.org>; Sun, 22 Feb 2026 15:07:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771801610; x=1772406410; darn=nongnu.org;
+ d=linaro.org; s=google; t=1771801631; x=1772406431; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=TRSLoEFEzwSsAV1OIyTMcpc9DCRIvmdEXunZ1hteP4g=;
- b=FPZHrQweBVBdM9IXymeE2ClWe74Lr5yc6h+2YyQX8/7M1YtknXfgOFAUnRzUviBnyc
- +pmLzBCoYApNlFWOOTe2diaeRe6O3XVgqqHH5xxzAoOucZfCXKS01lG3yUE4NFbDn6Um
- dpXtCxNtzh0Z/qP2qbCdVmO0SKW/QOVFM+nnB3DgHSWUmUBo/ElZz/vyNWoFw5hJ4SK5
- w6+VrR+xC5JeKpGidJ750xFJAHCSFFPfvWDJfnmzgqAyRYNtzr/eA+a+hn4hu1HEU8fP
- E15OR3pyRKHGLXfRfo5sXT09xQFzbQtOgJZVvyuOR3VjLGbo9mFdmA+PdzHIjFO/rvB4
- U8RA==
+ :reply-to; bh=qLCaZvgKAL4MCYLyu+xYgSzKOvD151aNu09KFmgjsEk=;
+ b=bIjVuzybo0IarjzWHsFjcTAd45EZmhEQkyXxj58ehkmy4m1QZ69B1wbP0aSURn+oih
+ 4qT2GFdS9fN7ukXjP7z/DxSwhSNnSnnQQlR1A9B7645brchjxQY9TwVhEX4k1EIfgIJV
+ mxWeow3S9QIatSHh50a4kXILpwln4XLwv6uxX84+AyYGTcahMn0jxSOEcsnJKVyV3Npu
+ wNDZ1e9JNbpSMyh5KIf5OAMzEnPwtmfebu1/yCxUtvKQLXdyrYyIXlkIeNLIcAmBo23W
+ MXzoLbs9kM8xXH2Q/n96ibGpTFhWNnTjwlyi4yjw98kSucjRKRqPLGw8w3IPpb8GQfkF
+ /blQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771801610; x=1772406410;
+ d=1e100.net; s=20230601; t=1771801631; x=1772406431;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=TRSLoEFEzwSsAV1OIyTMcpc9DCRIvmdEXunZ1hteP4g=;
- b=ozglqpFMQTPFykVO8FlJk74m6eKXNa6eGebeJvI6GOLQg/5Y8fg1zBxXnWwf1jHwTB
- uHw2L0GZbMVkldBPiMM90l0eTTcRnhqwP43BMtNGo2T3/PVWxnfarF3pAf6Mgjov4o/U
- 3jBVGD9yb7AAFlRD1w4cMjryYQt/Gmbm1lJRni2P2C2CiuV8kqCj3JQKqWbUlZX+dTjp
- PCoV2k+yQcZXSg8PgR18voigd+YJS5w/KSA6alubhwaerEIsyhU+uqNsHT5qc+qQd249
- EU/Owms1cAZrgTzltQ8KepFRoGzBxRhYujXRFsey0PS6aLayHcWQn5iUCkj3R5rDQv6q
- oPhg==
-X-Gm-Message-State: AOJu0YzK9Nto/WWUj0RJvNpidNrjICes42pZ/BDXcZEvxBipfFlyxEP1
- MuDft80PSa70VXSQEJXn7RRH21hyadhreoaZjhS5D78w3ZQM9oLIuHdb1cCD9kMGT9fkscSnNRd
- /nmm458I=
-X-Gm-Gg: AZuq6aLvwQNVPw5LjFHr7x+MIkGUVcnToRehZ+lRtVZZl+Agqr8tdN2tcUmxW+omvvv
- KNw4XtOSm0Yiudc2nVdEg1va6D1pemc0huxwdBAorQBvt+8EPX8h077hjkJDOZqVjijjqaSLQcb
- b8AWepRdGf/5f4VsIZahz8tXs4FgkXWN2uF2vPeLRjH2dFO2DSc+Qmt5HK1mRFgrwNhgmol4egy
- DlV5lP2JalOJlwOIH8CNRSU19jwho3jk59SLv4pQr5JUqUoISv5LAN3Lg3xgfsZcUS5p5jBJJYg
- DJZ0zl4OMttalzVeJX3qd+3EiCMj4HtfAyMijT48FSxlk7izV+lQQ3Nufzy+l2yUp/R1YpnZhFb
- ITzdEAFHXKc334HlyuxqkCgVgqgGidHrxqlqX5wNMWxT6PotAPdTCsJyMbit2iFul+6iGW5qNcr
- yWBupUQjUh5LSjTLJPj4xagH81msx+HqHYMRIszBNHjGCTpX6WpcE80USAhMErUOxEmg0AcUlP
-X-Received: by 2002:a05:600c:3b0a:b0:480:4ae2:def1 with SMTP id
- 5b1f17b1804b1-483a95be7c9mr129820765e9.13.1771801610524; 
- Sun, 22 Feb 2026 15:06:50 -0800 (PST)
+ bh=qLCaZvgKAL4MCYLyu+xYgSzKOvD151aNu09KFmgjsEk=;
+ b=D/hfEsB/Q5JMMLBHjw7PyZ4gpPgdLXbd20UNmOA9V+EDDl3QNeT4lx1InfHNuzHAwg
+ Pq5UXv7QWTkNKar+XlYYjWsfskxFl5veXnV+Om9v+cRco/B7JoVemJ1DiCVXeMrYplC9
+ YBWnTTk688ARC2aUft3n3CjiADBmO1PteRKsPswVfHT0L/45ljLrPInVSUgbiqrIH5qV
+ Vc2qmpbaekOwlKA/Ch+oYYDtnjUvPd+NlAhbDwRDtouFc8xD8TVhXlHOHfvSx/Z4ep5T
+ 8y6fgU7N3iiCkqgxIIMLooi996UlmM3Xf03kVCik2FZ2GkUlEtliDdC0K7Gqlq6N0pDF
+ DmEw==
+X-Gm-Message-State: AOJu0Yxw1suy3JOP+Cpgl+VYc4jj3KFM+JtkU66OXxTDeI1XNW4/rS9w
+ tZBIE2wdvUoYDCUJt7Ymp//yrU3k1wNASNMxbCWUmfjJJc0S/ntKbz7gSLEVGDddKK0i/tnFAzO
+ DyJHYIsI=
+X-Gm-Gg: AZuq6aJ4IIlapYuA0N3Ms0f3ocvnUVSrJgq6kUZoNNj5pUmMe/NwjziOsaNq+hORK5k
+ EBdbxnkrATV05HVa9LNwtSmkxiIzQ/fw2QsymOimGpOShlU+ireCjwyrvzaZ+LAswpFHYVqFLUh
+ ob+HdfsJPFN081vfDcx2BCVG3/MU58+eUWyzm5emSMT4tONtIZQWxtGL3Llgk70ENbSMTzVzLpY
+ v4uPq8me5LDlcZIXzWZsJrsUxvB/5t/EwCwsF2solQsH/7jEAAZNFwUZh8LThwTBgfg/SmG8DDq
+ 1inmHaC8KteNmK8lQwNR9f2xumOKJOoF9YS3sH+Vk5mtQD+RTALt45M7pH1m78IFh4BSfltb2T8
+ unZ1oHkAxgdKgS8WwYgGofWbx+QalBSYoB98qrWg+488sbF/yTvinSmnY08LdgsrQ6aB78rbkFD
+ HLSla2sOhOCQzNLP6XJh0RshraAVewh4yRIWbpVvjz/TGxrTqWyFPSYnKx3QTvWy0C6gY1G2Y4
+X-Received: by 2002:a05:600c:a03:b0:483:71f7:2796 with SMTP id
+ 5b1f17b1804b1-483a95c7116mr112821205e9.10.1771801630850; 
+ Sun, 22 Feb 2026 15:07:10 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43970c00d0csm15173759f8f.11.2026.02.22.15.06.49
+ 5b1f17b1804b1-483a316eb08sm250407225e9.0.2026.02.22.15.07.10
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 22 Feb 2026 15:06:50 -0800 (PST)
+ Sun, 22 Feb 2026 15:07:10 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 07/20] hw/m68k/q800: Set MACFB_DISPLAY_APPLE_21_COLOR within
- MacFrameBuffer
-Date: Mon, 23 Feb 2026 00:05:48 +0100
-Message-ID: <20260222230602.5756-8-philmd@linaro.org>
+Subject: [PULL 10/20] hw/ppc: Set graphic display dimensions generically
+Date: Mon, 23 Feb 2026 00:05:51 +0100
+Message-ID: <20260222230602.5756-11-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260222230602.5756-1-philmd@linaro.org>
 References: <20260222230602.5756-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,49 +98,198 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The MACFB_DISPLAY_APPLE_21_COLOR mode is not specific to the Q800
-machine. Check and set it once in the MacFB DeviceRealize handler.
+If a dimension is not set, have the machine init code set
+the default value by calling the ppc_graphic_dimensions()
+helper, common to all PowerPC machines. Declare local
+variables to avoid using the global ones.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Message-Id: <20260216213121.47122-5-philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-Id: <20260216213121.47122-8-philmd@linaro.org>
 ---
- hw/display/macfb.c | 4 ++++
- hw/m68k/q800.c     | 5 -----
- 2 files changed, 4 insertions(+), 5 deletions(-)
+ include/hw/ppc/ppc.h    |  2 ++
+ hw/ppc/mac_newworld.c   | 10 ++++++----
+ hw/ppc/mac_oldworld.c   | 10 ++++++----
+ hw/ppc/ppc.c            |  8 ++++++++
+ hw/ppc/prep.c           |  4 ++++
+ hw/ppc/spapr.c          |  4 ++++
+ system/globals-target.c |  6 ------
+ 7 files changed, 30 insertions(+), 14 deletions(-)
 
-diff --git a/hw/display/macfb.c b/hw/display/macfb.c
-index 8ef174dc6df..b8115c2be13 100644
---- a/hw/display/macfb.c
-+++ b/hw/display/macfb.c
-@@ -645,6 +645,10 @@ static bool macfb_common_realize(DeviceState *dev, MacfbState *s, Error **errp)
- {
-     DisplaySurface *surface;
+diff --git a/include/hw/ppc/ppc.h b/include/hw/ppc/ppc.h
+index cb51d704c6d..14cc09ab22b 100644
+--- a/include/hw/ppc/ppc.h
++++ b/include/hw/ppc/ppc.h
+@@ -102,6 +102,8 @@ enum {
+     ARCH_MAC99_U3,
+ };
  
-+    if (s->width == 1152 && s->height == 870) {
-+        s->type = MACFB_DISPLAY_APPLE_21_COLOR;
++void ppc_graphic_dimensions(int *width, int *height, int *depth);
++
+ #define FW_CFG_PPC_WIDTH        (FW_CFG_ARCH_LOCAL + 0x00)
+ #define FW_CFG_PPC_HEIGHT       (FW_CFG_ARCH_LOCAL + 0x01)
+ #define FW_CFG_PPC_DEPTH        (FW_CFG_ARCH_LOCAL + 0x02)
+diff --git a/hw/ppc/mac_newworld.c b/hw/ppc/mac_newworld.c
+index 7275563a155..daf0029c01a 100644
+--- a/hw/ppc/mac_newworld.c
++++ b/hw/ppc/mac_newworld.c
+@@ -156,6 +156,7 @@ static void ppc_core99_init(MachineState *machine)
+     DeviceState *uninorth_internal_dev = NULL, *uninorth_agp_dev = NULL;
+     hwaddr nvram_addr = 0xFFF04000;
+     uint64_t tbfreq = kvm_enabled() ? kvmppc_get_tbfreq() : TBFREQ;
++    int graphic_width, graphic_height, graphic_depth;
+ 
+     /* init CPUs */
+     for (i = 0; i < machine->smp.cpus; i++) {
+@@ -432,10 +433,6 @@ static void ppc_core99_init(MachineState *machine)
+ 
+     pci_vga_init(pci_bus);
+ 
+-    if (graphic_depth != 15 && graphic_depth != 32 && graphic_depth != 8) {
+-        graphic_depth = 15;
+-    }
+-
+     pci_init_nic_devices(pci_bus, mc->default_nic);
+ 
+     /* The NewWorld NVRAM is not located in the MacIO device */
+@@ -480,6 +477,11 @@ static void ppc_core99_init(MachineState *machine)
+     fw_cfg_add_i32(fw_cfg, FW_CFG_INITRD_SIZE, initrd_size);
+     fw_cfg_add_i16(fw_cfg, FW_CFG_BOOT_DEVICE, ppc_boot_device);
+ 
++    ppc_graphic_dimensions(&graphic_width, &graphic_height, &graphic_depth);
++    if (graphic_depth != 15 && graphic_depth != 32 && graphic_depth != 8) {
++        graphic_depth = 15;
 +    }
 +
-     s->mode = macfb_find_mode(s->type, s->width, s->height, s->depth);
-     if (!s->mode) {
-         gchar *list;
-diff --git a/hw/m68k/q800.c b/hw/m68k/q800.c
-index b55c03a90bf..ba32da2fa45 100644
---- a/hw/m68k/q800.c
-+++ b/hw/m68k/q800.c
-@@ -563,11 +563,6 @@ static void q800_machine_init(MachineState *machine)
-     qdev_prop_set_uint32(dev, "width", graphic_width);
-     qdev_prop_set_uint32(dev, "height", graphic_height);
-     qdev_prop_set_uint8(dev, "depth", graphic_depth);
--    if (graphic_width == 1152 && graphic_height == 870) {
--        qdev_prop_set_uint8(dev, "display", MACFB_DISPLAY_APPLE_21_COLOR);
--    } else {
--        qdev_prop_set_uint8(dev, "display", MACFB_DISPLAY_VGA);
--    }
-     qdev_realize(dev, BUS(nubus), &error_fatal);
+     fw_cfg_add_i16(fw_cfg, FW_CFG_PPC_WIDTH, graphic_width);
+     fw_cfg_add_i16(fw_cfg, FW_CFG_PPC_HEIGHT, graphic_height);
+     fw_cfg_add_i16(fw_cfg, FW_CFG_PPC_DEPTH, graphic_depth);
+diff --git a/hw/ppc/mac_oldworld.c b/hw/ppc/mac_oldworld.c
+index e679d338985..ea1f778877c 100644
+--- a/hw/ppc/mac_oldworld.c
++++ b/hw/ppc/mac_oldworld.c
+@@ -108,6 +108,7 @@ static void ppc_heathrow_init(MachineState *machine)
+     DriveInfo *dinfo, *hd[MAX_IDE_BUS * MAX_IDE_DEVS];
+     void *fw_cfg;
+     uint64_t tbfreq = kvm_enabled() ? kvmppc_get_tbfreq() : TBFREQ;
++    int graphic_width, graphic_height, graphic_depth;
  
-     macfb_mode = (NUBUS_MACFB(dev)->macfb).mode;
+     /* init CPUs */
+     for (i = 0; i < machine->smp.cpus; i++) {
+@@ -288,10 +289,6 @@ static void ppc_heathrow_init(MachineState *machine)
+         pci_create_simple(pci_bus, -1, "pci-ohci");
+     }
+ 
+-    if (graphic_depth != 15 && graphic_depth != 32 && graphic_depth != 8) {
+-        graphic_depth = 15;
+-    }
+-
+     /* No PCI init: the BIOS will do it */
+ 
+     dev = qdev_new(TYPE_FW_CFG_MEM);
+@@ -321,6 +318,11 @@ static void ppc_heathrow_init(MachineState *machine)
+     fw_cfg_add_i32(fw_cfg, FW_CFG_INITRD_SIZE, initrd_size);
+     fw_cfg_add_i16(fw_cfg, FW_CFG_BOOT_DEVICE, ppc_boot_device);
+ 
++    ppc_graphic_dimensions(&graphic_width, &graphic_height, &graphic_depth);
++    if (graphic_depth != 15 && graphic_depth != 32 && graphic_depth != 8) {
++        graphic_depth = 15;
++    }
++
+     fw_cfg_add_i16(fw_cfg, FW_CFG_PPC_WIDTH, graphic_width);
+     fw_cfg_add_i16(fw_cfg, FW_CFG_PPC_HEIGHT, graphic_height);
+     fw_cfg_add_i16(fw_cfg, FW_CFG_PPC_DEPTH, graphic_depth);
+diff --git a/hw/ppc/ppc.c b/hw/ppc/ppc.c
+index a512d4fa647..d7b4466d701 100644
+--- a/hw/ppc/ppc.c
++++ b/hw/ppc/ppc.c
+@@ -29,6 +29,7 @@
+ #include "qemu/timer.h"
+ #include "exec/cpu-interrupt.h"
+ #include "system/cpus.h"
++#include "system/system.h"
+ #include "qemu/log.h"
+ #include "qemu/main-loop.h"
+ #include "qemu/error-report.h"
+@@ -1557,3 +1558,10 @@ void ppc_irq_reset(PowerPCCPU *cpu)
+         kvmppc_set_interrupt(cpu, PPC_INTERRUPT_EXT, 0);
+     }
+ }
++
++void ppc_graphic_dimensions(int *width, int *height, int *depth)
++{
++    *width = graphic_width ?: 800;
++    *height = graphic_height ?: 600;
++    *depth = graphic_depth ?: 32;
++}
+diff --git a/hw/ppc/prep.c b/hw/ppc/prep.c
+index c4efd1d3908..7077b047b25 100644
+--- a/hw/ppc/prep.c
++++ b/hw/ppc/prep.c
+@@ -43,6 +43,7 @@
+ #include "exec/target_page.h"
+ #include "system/kvm.h"
+ #include "system/reset.h"
++#include "system/system.h"
+ #include "trace.h"
+ #include "elf.h"
+ #include "qemu/units.h"
+@@ -250,6 +251,7 @@ static void ibm_40p_init(MachineState *machine)
+     uint32_t kernel_base = 0, initrd_base = 0;
+     long kernel_size = 0, initrd_size = 0;
+     char boot_device;
++    int graphic_width, graphic_height, graphic_depth;
+ 
+     if (kvm_enabled()) {
+         error_report("machine %s does not support the KVM accelerator",
+@@ -412,6 +414,8 @@ static void ibm_40p_init(MachineState *machine)
+     fw_cfg_add_i64(fw_cfg, FW_CFG_RAM_SIZE, (uint64_t)machine->ram_size);
+     fw_cfg_add_i16(fw_cfg, FW_CFG_MACHINE_ID, ARCH_PREP);
+ 
++    ppc_graphic_dimensions(&graphic_width, &graphic_height, &graphic_depth);
++
+     fw_cfg_add_i16(fw_cfg, FW_CFG_PPC_WIDTH, graphic_width);
+     fw_cfg_add_i16(fw_cfg, FW_CFG_PPC_HEIGHT, graphic_height);
+     fw_cfg_add_i16(fw_cfg, FW_CFG_PPC_DEPTH, graphic_depth);
+diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
+index 274f38785f2..c50c7da34d5 100644
+--- a/hw/ppc/spapr.c
++++ b/hw/ppc/spapr.c
+@@ -1143,6 +1143,7 @@ static void spapr_dt_chosen(SpaprMachineState *spapr, void *fdt, bool reset)
+ {
+     MachineState *machine = MACHINE(spapr);
+     int chosen;
++    int graphic_width, graphic_height, graphic_depth;
+ 
+     _FDT(chosen = fdt_add_subnode(fdt, 0, "chosen"));
+ 
+@@ -1177,6 +1178,9 @@ static void spapr_dt_chosen(SpaprMachineState *spapr, void *fdt, bool reset)
+         if (machine->boot_config.has_menu && machine->boot_config.menu) {
+             _FDT((fdt_setprop_cell(fdt, chosen, "qemu,boot-menu", true)));
+         }
++
++        ppc_graphic_dimensions(&graphic_width, &graphic_height, &graphic_depth);
++
+         _FDT(fdt_setprop_cell(fdt, chosen, "qemu,graphic-width", graphic_width));
+         _FDT(fdt_setprop_cell(fdt, chosen, "qemu,graphic-height", graphic_height));
+         _FDT(fdt_setprop_cell(fdt, chosen, "qemu,graphic-depth", graphic_depth));
+diff --git a/system/globals-target.c b/system/globals-target.c
+index 17a27a06218..ffa6c308b59 100644
+--- a/system/globals-target.c
++++ b/system/globals-target.c
+@@ -9,12 +9,6 @@
+ #include "qemu/osdep.h"
+ #include "system/system.h"
+ 
+-#if defined(TARGET_SPARC) || defined(TARGET_M68K)
+ int graphic_width;
+ int graphic_height;
+ int graphic_depth;
+-#else
+-int graphic_width = 800;
+-int graphic_height = 600;
+-int graphic_depth = 32;
+-#endif
 -- 
 2.52.0
 
