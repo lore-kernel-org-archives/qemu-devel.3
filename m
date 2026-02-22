@@ -4,86 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 282D1C636C4
-	for <qemu-devel@archiver.kernel.org>; Sun, 22 Feb 2026 22:06:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3CD2E68179
+	for <qemu-devel@archiver.kernel.org>; Sun, 22 Feb 2026 23:06:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuHaF-0004w8-LX; Sun, 22 Feb 2026 17:05:48 -0500
+	id 1vuIWo-0001Qx-CO; Sun, 22 Feb 2026 18:06:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vuHa7-0004tF-FP
- for qemu-devel@nongnu.org; Sun, 22 Feb 2026 17:05:41 -0500
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vuIWj-0001Qp-NV
+ for qemu-devel@nongnu.org; Sun, 22 Feb 2026 18:06:13 -0500
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vuHa3-0000PS-QB
- for qemu-devel@nongnu.org; Sun, 22 Feb 2026 17:05:37 -0500
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-483703e4b08so29348295e9.1
- for <qemu-devel@nongnu.org>; Sun, 22 Feb 2026 14:05:35 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vuIWi-0005vM-5N
+ for qemu-devel@nongnu.org; Sun, 22 Feb 2026 18:06:13 -0500
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-48374014a77so38711345e9.3
+ for <qemu-devel@nongnu.org>; Sun, 22 Feb 2026 15:06:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771797933; x=1772402733; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=8xxQezrN1+oeCO2s+GJEytBSvyT8YSM1E5TN7wcEyvQ=;
- b=B5EVvnGZGIiScU3eKCIsfUK153AoFYEtEgsd5S6wm4F+lnjMR7hwsfBe7HsDHJChu8
- quJuKf2MmZTTUfONiN126lUUbuAuxudEsOVMG9E3E4oiCdhNH/MyYeJjmGd1y7OP+JWX
- jLU4dSMyvfIp+LL+IBFIn5mECCsu7IWTPSkLkj6eERdonNuAT5PL2FtyXiJWZPN8+sHr
- LjfncgB5KJ73LNX10PWVrlMNdkz2ymBv5HJgLTSzCzonMGBswrDoCRY+sg/Pq80vtDP2
- ApjJFUVXXqiSIqo+Qgm6E6Zwl2TAhcFlIdxcLsUGuv4xeWlBzYZsZRop+UDZ1zZijjS7
- kBew==
+ d=linaro.org; s=google; t=1771801570; x=1772406370; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=G8n54m4QbMI8GF9i4s0xEOtozUsr7KAZ+nvUeoqm+sI=;
+ b=b6KuEhjxS2mZMDReC1kaqAO6U3vAh1W6434cQQRQO2bd/NmUCmJFpYNDvUyyJJVFeq
+ kuwlnuaYpBbz2YA1rtVoCNyyKYUKCYrEdhsEQi+7bpKtiVjusfhjnyelKArntx3lbTWE
+ X6TZHtdDVMPm45SlQdgmHlp6djDXse/j3FU6Z91zNgVcTT2uWwN/njfLM51az3gdThJK
+ m2gmVVsVCQiudoxGWjY/b4jTLJaQl1aLNM2ABNY+HOdqSkpvmYabtFGTp9feYgEzti5E
+ RwW4vbpBLUYy2Yt7p/kSAG/1XkJazf3uOUpY+8ahpTTd3fQPJ0bR5aLWjodT64dQ9OiG
+ pyDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771797933; x=1772402733;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=8xxQezrN1+oeCO2s+GJEytBSvyT8YSM1E5TN7wcEyvQ=;
- b=G6zwaUbUEve4PZK6UoegK156/bcan5tD5QO6k0uWcYEpY+gI3wKFs4nH6mLiiAWssF
- Q3ZOCYyk7oy1RX0zgnFc98xf+NpXX3YDjSXIgPvNp0U50ZDpD28AF8zgIsO7kpKK0SH/
- rUgfoPG05zVVjZBgGC2aZTIuHljejCk0bzyJK/9/5qrQ1nCq8ntahLmzEQ7LuesDPjpq
- dRqCAhTtf6+XfZojrIQfU4Btu2py/K/1idrP3nSvqijPVJ5T5nfnxwRJYQ4AmJWPARu5
- 9nO7FDji1hoji+45gvYn+F8iTyyy+d+T/n1SfTHF81rieJjujdghH+OjqwEqglRgsAAc
- 8pGA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWSQ4r2u0IfXsulaJE/3bhp9R8dVpVIDFQm3v+oAhL+fFIl/JXmypNXNB11KTvCjmaI7BtUm+4tyEpq@nongnu.org
-X-Gm-Message-State: AOJu0Yzp4QTARZ5ippPx0waXagVvGOfOvxY2cRl+i1VgSGZ/cl1zTEgQ
- IIB3iw1L6U8gw66ItDwqfABln6mj3UqJvtn/UEI30Rqbmu0hgsZkvRwKk2WSd/nThzc=
-X-Gm-Gg: AZuq6aL8vdHCms/Fcnm5Fgliy5AgpniiNIPgoWLMXt3NvdStVDZc7St77UtPQ54c7Ah
- 7CF5f7DWdvaZdXKmjN5QiodlAfuoJr0qOX16DlHIqu8AoGHe0sDhco14wbkqCgcDExb5ZSEboUu
- b8K7r8PcDWFzlFGE6X0xd4iYs6niJJi/1cl+gPJFnW3NFEX77GlqvD+3y31rY37ZlyN4X//p93s
- nmyYyz4mTl6pjTdCwYO1A7OhrYZoIFMm9A+TFCEfI8krAuyu0Y1ZikhGc0VAEclXhhlx8p6ONh2
- 8lBIYY8qdC2hWvt8KZx6M87TF0XdJO7Fe0A/qkc0enaLQeT80E0ksS4FLtJAg4FuREoo00vuf7E
- 3DHzbmZtuIR4T7PTOB5ls4bTqqIRmfnMD84s1tK2ZByTGmLsMmHhaY8A4STjoGcHVWsIE+nSrH7
- BbraKbo+1X5YPckSSAWBkwmrZYMSV0sVb7fWDF30kycylon9UH3Qv0JBrR/jphs2aXHQ==
-X-Received: by 2002:a05:600c:1989:b0:479:1348:c63e with SMTP id
- 5b1f17b1804b1-483a94c99admr129135765e9.9.1771797933230; 
- Sun, 22 Feb 2026 14:05:33 -0800 (PST)
-Received: from [192.168.69.200] (88-187-86-199.subs.proxad.net.
+ d=1e100.net; s=20230601; t=1771801570; x=1772406370;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=G8n54m4QbMI8GF9i4s0xEOtozUsr7KAZ+nvUeoqm+sI=;
+ b=cVfjoIprh9g9YzDUjXWb7g5KQHTXPWKhtqQeasVfhWXfA1t3BLanfgpKGlj7giNq6j
+ fd22QXH/ZYxkou5eA6FzhLwq7bOSzaMhtHmirRJqCVx6ETbx2PjSfvCaxC6HpnY4fhOA
+ gNH6MPI0izeQpzL2vPr7G4ldECqsaOYNR62AaB/4sjTvAGDVH4F6Zg3tI08qHN5gj2sD
+ 2pKdkan/7jKQJbLYLHBzaPk5ya++xMcr1V8pUx1bouosrM63QnbemzzEngxjOQNu5Tp6
+ lsxKGngWFKL4WZYKijH5usnwK5hxfCRRWqqg/5haRmDKNyPwwM8Z8FyWDssSQD/R1hIM
+ frPg==
+X-Gm-Message-State: AOJu0YyQnCqDntWihMUhxyeHguGP0yv8zZFrrtWlPnGFbM9WE5Ay/06x
+ eAkVzFopMNfXptBnX6BBAsYPj1Hxijmzm11cSazVYFFIQlAyKXEJMF7B/8jmwg9SL9zpqalUnnJ
+ oQVRPiUw=
+X-Gm-Gg: AZuq6aK1L4McD61jhJ5iT4X+x8Q0U0OERhGpiEGmkePBtfDtT39hCG2yoE22BiSIzp7
+ LJVOQufJyU8SqQg750b89/ih9SdeJUVyJUILXlOQvnJ/aHRO3KAsD0b63c/gN/nONDuTIQLZ+Kf
+ W7PgAsCruyKkmEjWDpTh3EsQa7TWkt14//dRmS7cKm1bQsz54B9QHVWlz3ooqBpYWrESn8/1qi5
+ 3rPewmgH+4jJp+vLrhslmRBNHbXyknLFrYlq4OJVSHVWsohXIPMU9AKndKb65/MjDlG3Iyw5MkP
+ NwPJjRMfjJBhpReXFT+IkY8Lx5jz19szDT0v4RVY6JKlc9YnyskYboPQjauuyqZCziv2d22MYdw
+ A3w1Fr/BtWojmsy7h+ILv1G/7pfoAX0nr7SXWazBpzIsIdHALOC4xKF6qcR6pitdPpGyeKJhmRr
+ lRof8auSqBFPrLeHZNMcn079T9VuxHPAEi7/P2+DPyhX2shK4UuDdvY9tmdkdCtfQgsN61320P
+X-Received: by 2002:a05:600c:4f8a:b0:480:1d0b:2d32 with SMTP id
+ 5b1f17b1804b1-483a95beb5bmr122248265e9.12.1771801570219; 
+ Sun, 22 Feb 2026 15:06:10 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43970bf9fb2sm15336387f8f.1.2026.02.22.14.05.32
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 22 Feb 2026 14:05:32 -0800 (PST)
-Message-ID: <d0040a90-60ed-48df-90e7-3c882072f8b8@linaro.org>
-Date: Sun, 22 Feb 2026 23:05:31 +0100
+ ffacd0b85a97d-43970d4c626sm16426705f8f.28.2026.02.22.15.06.09
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Sun, 22 Feb 2026 15:06:09 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Subject: [PULL 01/20] hw/misc/virt_ctrl: Fix incorrect trace event in read
+ operation
+Date: Mon, 23 Feb 2026 00:05:42 +0100
+Message-ID: <20260222230602.5756-2-philmd@linaro.org>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20260222230602.5756-1-philmd@linaro.org>
+References: <20260222230602.5756-1-philmd@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/5] net: mark eth_header, udp_header, tcp_header as
- QEMU_PACKED
-Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-Cc: Jiri Pirko <jiri@resnulli.us>, Jason Wang <jasowang@redhat.com>,
- Dmitry Fleytman <dmitry.fleytman@gmail.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Patrick Venture <venture@google.com>
-References: <20260212140917.1443253-1-peter.maydell@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260212140917.1443253-1-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,20 +99,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/2/26 15:09, Peter Maydell wrote:
+From: Kuan-Wei Chiu <visitorckw@gmail.com>
 
-> Peter Maydell (5):
->    hw/net/rocker: Don't keep pointer to h_proto as uint16_t* in
->      OfDpaFlowPktFields
->    hw/net/rocker: Don't assume h_proto is aligned in eth_strip_vlan_ex()
->    net: mark struct eth_header as QEMU_PACKED
->    net: mark struct udp_header as QEMU_PACKED
->    net: mark struct tcp_header as QEMU_PACKED
+The virt_ctrl_read() function currently invokes trace_virt_ctrl_write()
+instead of trace_virt_ctrl_read(). This results in read operations
+appearing as write operations in the trace output, which is misleading
+during debugging and analysis.
 
-Jason, yet another sensible series I feel confident enough to queue
-via my hw-misc tree.
+Replace the incorrect trace call with the proper read-specific trace
+event to accurately reflect the hardware behavior.
 
-Regards,
+Fixes: 0791bc02b8fb ("m68k: add a system controller")
+Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20260111184915.1363318-1-visitorckw@gmail.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ hw/misc/virt_ctrl.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Phil.
+diff --git a/hw/misc/virt_ctrl.c b/hw/misc/virt_ctrl.c
+index 40747925a29..9b82e97ffde 100644
+--- a/hw/misc/virt_ctrl.c
++++ b/hw/misc/virt_ctrl.c
+@@ -43,7 +43,7 @@ static uint64_t virt_ctrl_read(void *opaque, hwaddr addr, unsigned size)
+         break;
+     }
+ 
+-    trace_virt_ctrl_write(s, addr, size, value);
++    trace_virt_ctrl_read(s, addr, size, value);
+ 
+     return value;
+ }
+-- 
+2.52.0
+
 
