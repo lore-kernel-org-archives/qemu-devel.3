@@ -4,91 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACBC0C6369F
-	for <qemu-devel@archiver.kernel.org>; Sun, 22 Feb 2026 14:34:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A87BC6369F
+	for <qemu-devel@archiver.kernel.org>; Sun, 22 Feb 2026 14:34:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuASl-00009S-GQ; Sun, 22 Feb 2026 09:29:35 -0500
+	id 1vuASu-0000nf-20; Sun, 22 Feb 2026 09:29:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vuASD-000856-HS
- for qemu-devel@nongnu.org; Sun, 22 Feb 2026 09:29:02 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vuASZ-0008GL-QP
+ for qemu-devel@nongnu.org; Sun, 22 Feb 2026 09:29:23 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vuASB-0006nX-N3
- for qemu-devel@nongnu.org; Sun, 22 Feb 2026 09:29:01 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vuASX-0006s4-82
+ for qemu-devel@nongnu.org; Sun, 22 Feb 2026 09:29:23 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771770539;
+ s=mimecast20190719; t=1771770560;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=NXf3I54LQjbQo5rdjnX8oUBXAUmrFhpR1xfT44HvLzM=;
- b=XNBPKSU0tq+rPMSN4D8uo5nSruN8Gq8ssxixfT4Smn/CLeOHlghoAPvSTPWnkEaT/3f5H8
- UoZy13nNPV+oF4CmVh/mJf3jauLbz+WeJrx36Pd8+RAYinl8cXZg84p5uPwBY0saV472H1
- osTaaI0C9QzNN15dcwkMaHY72GkEpXU=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=rnkI9nMTthY8p6DDwYIOuhFVQyTvRTqLVnh7owDEQ5U=;
+ b=NyPO1M+fYjXQDucVPqeLuEKIM+s+tZRpmSsleCHrvIjLj0wf5FM2nAyjU5qKbNmhZz9L+n
+ vGTvpnWr+RLi7Y7162zQDSyiA3wGbs0M349119ASp262YWrowtaGlfQGiJROlCh5XzDqTV
+ wGZQfKMEYKQ0V36Am+qVWmJL7UKho9E=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-55-fDOGoHU1OwSWoFr9kvKdSA-1; Sun, 22 Feb 2026 09:28:57 -0500
-X-MC-Unique: fDOGoHU1OwSWoFr9kvKdSA-1
-X-Mimecast-MFC-AGG-ID: fDOGoHU1OwSWoFr9kvKdSA_1771770537
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-4368060a5e5so3855502f8f.3
- for <qemu-devel@nongnu.org>; Sun, 22 Feb 2026 06:28:57 -0800 (PST)
+ us-mta-651-OfkyPjeHPbu7DfEjkY23qw-1; Sun, 22 Feb 2026 09:29:19 -0500
+X-MC-Unique: OfkyPjeHPbu7DfEjkY23qw-1
+X-Mimecast-MFC-AGG-ID: OfkyPjeHPbu7DfEjkY23qw_1771770558
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4836b7c302fso31545745e9.1
+ for <qemu-devel@nongnu.org>; Sun, 22 Feb 2026 06:29:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1771770536; x=1772375336; darn=nongnu.org;
+ d=redhat.com; s=google; t=1771770558; x=1772375358; darn=nongnu.org;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=NXf3I54LQjbQo5rdjnX8oUBXAUmrFhpR1xfT44HvLzM=;
- b=HYTMIdbnyDyHnXm/4eya1QNQHhKZ15tRbrYKfcTyE0+7On1fuBIQr8jyIpU8V/9dkS
- UypkxVHlcjkH5Tr32po4cX+f4yatIFSDSqMWWVm5wxHl2KISt3wnsF6u4wlxUczvzjOR
- Y22gA9OKvcKAG5z/Z0qKn00bsm7XyVn7TRd1klogUzCtWMNh5fpPgMRg9YE505MKWvKq
- /RLSkdsYBGMg9b73TKOuiN9DKFwm31NHdOh2hRbtx+Fh5eOL//3bnorA//IYB109Lv+g
- ywyYc22fR+NIhEtJtI1dWotEfb1eqhDi61BneonbeOiAKEMgcsQZEuY0L4QYIlE6cBAJ
- Lb4Q==
+ bh=rnkI9nMTthY8p6DDwYIOuhFVQyTvRTqLVnh7owDEQ5U=;
+ b=ddIM3Fcfr2LF8+AAA9p6M1EDLSxJmrbtxeVZC4NKS2SjFtdvUOjKH0SVMH5oS0ISi8
+ d0k6LBLJyeZ8TP28XJJeJRJaGMMqa2XsibziR0Nz9t3y4Kg9a8+7ytfP1fww38MQfUOH
+ FM1TADVoLvmwXz36Ud7zxGqHZUKDWU/mDPVssa947XGrX7zrwRH3CFc2q1GuI5OTlr+G
+ 7y/Nl95hX/VUsOklMY63TqHOYBIfFLN6YYa0kd++YJIN4p/jmcmMuPk7cryaWQNkA8u6
+ SkvNno38DMAyla6ip2/DpeNFmUQT/ne7Hhr622+BTHDrg5KTKWcxbLMq61BDj15Xiyb2
+ SBcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771770536; x=1772375336;
+ d=1e100.net; s=20230601; t=1771770558; x=1772375358;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=NXf3I54LQjbQo5rdjnX8oUBXAUmrFhpR1xfT44HvLzM=;
- b=G5QVI3JiGjvv/5dCkgeQuXEOCfQzDUbe+mCqTIipRPEb1TcxbrxsBSxrUeCMmOVq18
- 0ci3D7X6cfAfYkUsCqiKo01756TkZk7gSTmxNNaR4nGDOs0oAD90dIVU6PGr9R3qQt8c
- YcuqDxaktKW2dm0YtT0H7y2gqdSMH2DS19fJligwmTa7M+63Sj/Se92ATc3Yb0TYqXil
- 9UBawqwPLE1wEGaoA85Scv0W4KImVY5IpA9UzuB4qotYQGg47kaU2vnMr6tIpdrg5gUY
- OKSzCCBYlAJQDRGZK0k5mxp3nRSxbJcUfq+519a9yx/P2bCUE5s6YyavsALARWBcOvjk
- kCaw==
-X-Gm-Message-State: AOJu0YwtXt3sIFG1WvojEJVGd93buRh5SEBugsKT19g/EoAbpd8kyEuj
- e3OeufSCLPLdkCnu+RzdSynJWw3/M3RA4uABZ4gn868Qx6AuBw4+WL4YLTLc5RU2NS6Y9RT+3Bk
- RRQrqEnuMKIoh+0J0nqzY3vnTvf19a+/pCdegUEokMzM88mWLqYUqj143kMzm7kS71ZUy19ZiQR
- sW/WjIWF7JHJ9uARR6sxBfgQFaRY2Qi2365w==
-X-Gm-Gg: AZuq6aKJSxXe5Dqliwpe7vP8uBYpy4BbQfmu5ccSdU9fJ/l0iDltcQulUGijzQBqDgN
- 8l60uUYQ6jKYsvUQidudnBTeJjVyQ+t+YyUbyNe4YXjPER+A0DuvA6mGptSORdtuDb8XjeI/eBd
- orFi7vxz3ix73gxuisNgoICI4a+ofo8wSZi6WXG/PBLowOQjbu08VREP/BB6wt6Fa0mjiYpJ+SP
- HuY4a5UpBAbp/rHVNxzFR52MZfHmFzC4w6UUxdgyCEaR8ANSn/BCtw+oV5QSBfJ0qaFTAo17M2r
- /KPF1/tdkWOpy8lUUrHGKTuYv251CE4tUEx+QeLei0pm9ezmFMnKp7gGnsLvcOeHiioLZFx4C+F
- x/VSGA4NpoJCshwgtg2Dn1uhesYh7a1xWX4E+OBswln0sPQ==
-X-Received: by 2002:a05:6000:402b:b0:430:f5ed:83e3 with SMTP id
- ffacd0b85a97d-4396f150730mr10758321f8f.6.1771770536202; 
- Sun, 22 Feb 2026 06:28:56 -0800 (PST)
-X-Received: by 2002:a05:6000:402b:b0:430:f5ed:83e3 with SMTP id
- ffacd0b85a97d-4396f150730mr10758274f8f.6.1771770535531; 
- Sun, 22 Feb 2026 06:28:55 -0800 (PST)
+ bh=rnkI9nMTthY8p6DDwYIOuhFVQyTvRTqLVnh7owDEQ5U=;
+ b=lHkZEYrhG2rtt/Kyk3kw57vKyhZ4xs7S9V8/Gn5MmwUT2hiyZ37qUbEF1xzQ00qocE
+ r111Mze7g+XIilCjJS67+X50TdV8gu8AI1RGxQ4wGRqsvXLxZUsonmOT4pFxdWpbor1y
+ ArmkG2hPRW7pETSh9X+dDbh3Gs/ITV4RS+EbipEUmYjW1w24/mEVQvNQTDn7k3TOHLEr
+ 7Ew82sqrEiKq8cQXc06TZ+SEP0RN3kaUdGOMFJoA7RRbpqJ5QrTIallB7EVxokosNSSu
+ DxhYVaqH5J1vyQMBoQuc/PbAmKlgCh9idt0fZsm2TU/EtFi5RcWmgMwUJMivjDch1mb4
+ iBrw==
+X-Gm-Message-State: AOJu0YxZMLHPp++RZ/3WMDm0Bj6FPXXNtLCpHEiyP3b4U/7f81zJHxsd
+ wxGcXedHd5yAhe55FcFrSfWns2q8mK3HxHPqm09E5zbivwdrnM4o7MDmlRo7w3lsa0qVt7Z1V78
+ G++lZzvbVtxG1dgk8pm65bNPr7BPnFLYgEoDOYgaDtvFbgDtYTH4syLw072MX/6jui56BMJK9bn
+ viglp5xxPECzZR98dut/XB+JwZMdqnqT+3UQ==
+X-Gm-Gg: AZuq6aJTllDnX4b19jr0DeAZm2UJCRZaLzcAu1o7HvUpFy2gBCRmRuUb6ZElcXaadML
+ 4ILa+6Eq6Fa4RW/TzEo/VTQDY6CruVMZhoyIzq1zGnBXMXqQmedLvv/7qftAqMvQgaG4aifLOnv
+ kCQMy0e3+PRXZtlEHP9tKUdKQNv121LlcVY/pcC6Ms9wsAzQlUysZ36LlH0o8SgycZnVKo4BcsT
+ b4BtGDJNJyP50+QmQCkfE9E1MS0/DuxKgitxhF3R2MXhhmUukrRkyl3DZVxPhhHS8BLH/cDFDcX
+ XWzT86HyEDn8CbEvF3Ids3r+R1CoKmpiFo6bR7qlJFutli74X45gobbVcQUOjVI4mWxgsTsv2+N
+ fP/CdbNtYerzX4IxqqhTx8y8AjJYLVQU4oVojLtxS5uJOHQ==
+X-Received: by 2002:a05:600c:3587:b0:483:a27e:6706 with SMTP id
+ 5b1f17b1804b1-483a95fc063mr103109295e9.9.1771770557562; 
+ Sun, 22 Feb 2026 06:29:17 -0800 (PST)
+X-Received: by 2002:a05:600c:3587:b0:483:a27e:6706 with SMTP id
+ 5b1f17b1804b1-483a95fc063mr103108775e9.9.1771770556901; 
+ Sun, 22 Feb 2026 06:29:16 -0800 (PST)
 Received: from redhat.com (IGLD-80-230-79-166.inter.net.il. [80.230.79.166])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43970c00db8sm11909430f8f.12.2026.02.22.06.28.54
+ 5b1f17b1804b1-483a42f7c4csm63521905e9.23.2026.02.22.06.29.15
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 22 Feb 2026 06:28:55 -0800 (PST)
-Date: Sun, 22 Feb 2026 09:28:53 -0500
+ Sun, 22 Feb 2026 06:29:16 -0800 (PST)
+Date: Sun, 22 Feb 2026 09:29:14 -0500
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, Ira Weiny <ira.weiny@intel.com>,
- Dongjoo Seo <dongjoo.seo1@samsung.com>,
- Davidlohr Bueso <dave@stgolabs.net>,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>, Fan Ni <fan.ni@samsung.com>
-Subject: [PULL 16/33] hw/cxl: Refactor component register initialization
-Message-ID: <5729c01a600d62c19202936481b06e84a14236ba.1771770471.git.mst@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Arpit Kumar <arpit1.kumar@samsung.com>,
+ Jonathan Cameron <jonathan.cameron@huawei.com>, Fan Ni <fan.ni@samsung.com>
+Subject: [PULL 25/33] hw/cxl: Physical Port Info FMAPI - update to current
+ spec and add defines.
+Message-ID: <7df839591cf9354f7cc054ff6d01e16d46ff9f33.1771770471.git.mst@redhat.com>
 References: <cover.1771770471.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -121,205 +121,165 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ira Weiny <ira.weiny@intel.com>
+From: Arpit Kumar <arpit1.kumar@samsung.com>
 
-CXL 3.2 8.2.4 Table 8-22 defines which capabilities are mandatory, not
-permitted, or optional for each type of device.
+Add a new cxl/cxl_ports.h header for field definitions related only to port
+commands. Bring field naming up to date with spec as 'version' bitmasks
+have been replaced with bitmasks of the specific features.
 
-cxl_component_register_init_common() uses a rather odd 'fall through'
-mechanism to define each component register set.  This assumes that any
-device or capability being added builds on the previous devices
-capabilities.  This is not true as there are mutually exclusive
-capabilities defined.  For example, downstream ports can not have snoop
-but it can have Back Invalidate capable decoders.
+Fix a small issue where a reserved value for USP was set to 2 rather
+than 0.
 
-Refactor this code to make it easier to add individual capabilities as
-defined by a device type.  Any capability which is not specified by the
-type is left NULL'ed out which complies with the packed nature of the
-register array.
-
-Update all spec references to 3.2.
-
-No functional changes should be seen with this patch.
-
-Signed-off-by: Ira Weiny <ira.weiny@intel.com>
-Tested-by: Dongjoo Seo <dongjoo.seo1@samsung.com>
-[rebased, no RAS for HBs, r3.2 references]
-Signed-off-by: Davidlohr Bueso <dave@stgolabs.net>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Arpit Kumar <arpit1.kumar@samsung.com>
+Co-developed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+Signed-off-by: Jonathan Cameron <jonathan.cameron@huawei.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-Id: <20260204170936.43959-3-Jonathan.Cameron@huawei.com>
+Message-Id: <20260204173223.44122-2-Jonathan.Cameron@huawei.com>
 ---
- hw/cxl/cxl-component-utils.c   | 75 +++++++++++-----------------------
- include/hw/cxl/cxl_component.h | 33 ++++++++++-----
- 2 files changed, 46 insertions(+), 62 deletions(-)
+ hw/cxl/cxl-mailbox-utils.c | 31 ++++++++++++++--------
+ include/hw/cxl/cxl_port.h  | 53 ++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 73 insertions(+), 11 deletions(-)
+ create mode 100644 include/hw/cxl/cxl_port.h
 
-diff --git a/hw/cxl/cxl-component-utils.c b/hw/cxl/cxl-component-utils.c
-index 473895948b..91770f103a 100644
---- a/hw/cxl/cxl-component-utils.c
-+++ b/hw/cxl/cxl-component-utils.c
-@@ -284,32 +284,6 @@ void cxl_component_register_init_common(uint32_t *reg_state,
- {
-     int caps = 0;
+diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
+index 2f449980cd..1c8cbe0f68 100644
+--- a/hw/cxl/cxl-mailbox-utils.c
++++ b/hw/cxl/cxl-mailbox-utils.c
+@@ -15,6 +15,7 @@
+ #include "hw/cxl/cxl.h"
+ #include "hw/cxl/cxl_events.h"
+ #include "hw/cxl/cxl_mailbox.h"
++#include "hw/cxl/cxl_port.h"
+ #include "hw/pci/pci.h"
+ #include "hw/pci-bridge/cxl_upstream_port.h"
+ #include "qemu/cutils.h"
+@@ -565,16 +566,16 @@ static CXLRetCode cmd_get_physical_port_state(const struct cxl_cmd *cmd,
+     } QEMU_PACKED *in;
  
--    /*
--     * In CXL 2.0 the capabilities required for each CXL component are such
--     * that, with the ordering chosen here, a single number can be used to
--     * define which capabilities should be provided.
--     */
--    switch (type) {
--    case CXL2_DOWNSTREAM_PORT:
--    case CXL2_DEVICE:
--        /* RAS, Link */
--        caps = 2;
--        break;
--    case CXL2_UPSTREAM_PORT:
--    case CXL2_TYPE3_DEVICE:
--    case CXL2_LOGICAL_DEVICE:
--        /* + HDM */
--        caps = 3;
--        break;
--    case CXL2_ROOT_PORT:
--    case CXL2_RC:
--        /* + Extended Security, + Snoop */
--        caps = 5;
--        break;
--    default:
--        abort();
--    }
--
-     memset(reg_state, 0, CXL2_COMPONENT_CM_REGION_SIZE);
- 
-     /* CXL Capability Header Register */
-@@ -317,11 +291,12 @@ void cxl_component_register_init_common(uint32_t *reg_state,
-     ARRAY_FIELD_DP32(reg_state, CXL_CAPABILITY_HEADER, VERSION,
-         CXL_CAPABILITY_VERSION);
-     ARRAY_FIELD_DP32(reg_state, CXL_CAPABILITY_HEADER, CACHE_MEM_VERSION, 1);
--    ARRAY_FIELD_DP32(reg_state, CXL_CAPABILITY_HEADER, ARRAY_SIZE, caps);
- 
- #define init_cap_reg(reg, id, version)                                        \
-     do {                                                                      \
--        int which = R_CXL_##reg##_CAPABILITY_HEADER;                          \
-+        int which = CXL_##reg##_CAP_HDR_IDX;                                  \
-+        if (CXL_##reg##_CAP_HDR_IDX > caps)                                   \
-+            caps = CXL_##reg##_CAP_HDR_IDX;                                   \
-         reg_state[which] = FIELD_DP32(reg_state[which],                       \
-                                       CXL_##reg##_CAPABILITY_HEADER, ID, id); \
-         reg_state[which] =                                                    \
-@@ -332,37 +307,35 @@ void cxl_component_register_init_common(uint32_t *reg_state,
-                        CXL_##reg##_REGISTERS_OFFSET);                         \
-     } while (0)
- 
-+    /* CXL r3.2 8.2.4 Table 8-22 */
-     switch (type) {
--    case CXL2_DEVICE:
-+    case CXL2_ROOT_PORT:
-+    case CXL2_RC:
-+        /* + Extended Security, + Snoop */
-+        init_cap_reg(EXTSEC, 6, 1);
-+        init_cap_reg(SNOOP, 8, 1);
-+        /* fallthrough */
-+    case CXL2_UPSTREAM_PORT:
-     case CXL2_TYPE3_DEVICE:
-     case CXL2_LOGICAL_DEVICE:
--    case CXL2_ROOT_PORT:
--    case CXL2_UPSTREAM_PORT:
-+        /* + HDM */
-+        init_cap_reg(HDM, 5, 1);
-+        hdm_init_common(reg_state, write_msk, type);
-+        /* fallthrough */
-     case CXL2_DOWNSTREAM_PORT:
--    init_cap_reg(RAS, 2, CXL_RAS_CAPABILITY_VERSION);
--        ras_init_common(reg_state, write_msk);
-+    case CXL2_DEVICE:
-+        /* RAS, Link */
-+        if (type != CXL2_RC) {
-+            init_cap_reg(RAS, 2, 2);
-+            ras_init_common(reg_state, write_msk);
-+        }
-+        init_cap_reg(LINK, 4, 2);
-         break;
-     default:
--        break;
-+        abort();
+     /*
+-     * CXL r3.1 Table 7-19: Get Physical Port State Port Information Block
++     * CXL r3.2 Table 7-19: Get Physical Port State Port Information Block
+      * Format
+      */
+     struct cxl_fmapi_port_state_info_block {
+         uint8_t port_id;
+         uint8_t config_state;
+-        uint8_t connected_device_cxl_version;
++        uint8_t connected_device_mode;
+         uint8_t rsv1;
+         uint8_t connected_device_type;
+-        uint8_t port_cxl_version_bitmask;
++        uint8_t supported_cxl_mode_bitmask;
+         uint8_t max_link_width;
+         uint8_t negotiated_link_width;
+         uint8_t supported_link_speeds_vector;
+@@ -623,21 +624,30 @@ static CXLRetCode cmd_get_physical_port_state(const struct cxl_cmd *cmd,
+         if (port_dev) { /* DSP */
+             PCIDevice *ds_dev = pci_bridge_get_sec_bus(PCI_BRIDGE(port_dev))
+                 ->devices[0];
+-            port->config_state = 3;
++            port->config_state = CXL_PORT_CONFIG_STATE_DSP;
+             if (ds_dev) {
+                 if (object_dynamic_cast(OBJECT(ds_dev), TYPE_CXL_TYPE3)) {
+-                    port->connected_device_type = 5; /* Assume MLD for now */
++                    /* Assume MLD for now */
++                    port->connected_device_type =
++                        CXL_PORT_CONNECTED_DEV_TYPE_3_MLD;
+                 } else {
+-                    port->connected_device_type = 1;
++                    port->connected_device_type =
++                        CXL_PORT_CONNECTED_DEV_TYPE_PCIE;
++                    port->connected_device_mode =
++                        CXL_PORT_CONNECTED_DEV_MODE_NOT_CXL_OR_DISCONN;
++
+                 }
+             } else {
+-                port->connected_device_type = 0;
++                port->connected_device_type = CXL_PORT_CONNECTED_DEV_TYPE_NONE;
++                port->connected_device_mode =
++                    CXL_PORT_CONNECTED_DEV_MODE_NOT_CXL_OR_DISCONN;
+             }
+             port->supported_ld_count = 3;
+         } else if (usp->port == in->ports[i]) { /* USP */
+             port_dev = PCI_DEVICE(usp);
+-            port->config_state = 4;
+-            port->connected_device_type = 0;
++            port->config_state = CXL_PORT_CONFIG_STATE_USP;
++            port->connected_device_type = 0; /* Reserved for USP */
++            port->connected_device_mode = 0; /* Reserved for USP */
+         } else {
+             return CXL_MBOX_INVALID_INPUT;
+         }
+@@ -667,8 +677,7 @@ static CXLRetCode cmd_get_physical_port_state(const struct cxl_cmd *cmd,
+         port->ltssm_state = 0x7;
+         port->first_lane_num = 0;
+         port->link_state = 0;
+-        port->port_cxl_version_bitmask = 0x2;
+-        port->connected_device_cxl_version = 0x2;
++        port->supported_cxl_mode_bitmask = CXL_PORT_SUPPORTS_68B_VH;
      }
  
--    init_cap_reg(LINK, 4, CXL_LINK_CAPABILITY_VERSION);
--
--    if (caps < 3) {
--        return;
--    }
--
--    if (type != CXL2_ROOT_PORT) {
--        init_cap_reg(HDM, 5, CXL_HDM_CAPABILITY_VERSION);
--        hdm_init_common(reg_state, write_msk, type);
--    }
--    if (caps < 5) {
--        return;
--    }
--
--    init_cap_reg(EXTSEC, 6, CXL_EXTSEC_CAP_VERSION);
--    init_cap_reg(SNOOP, 8, CXL_SNOOP_CAP_VERSION);
--
-+    ARRAY_FIELD_DP32(reg_state, CXL_CAPABILITY_HEADER, ARRAY_SIZE, caps);
- #undef init_cap_reg
- }
- 
-diff --git a/include/hw/cxl/cxl_component.h b/include/hw/cxl/cxl_component.h
-index b0f2aa7914..1f167d3ef7 100644
---- a/include/hw/cxl/cxl_component.h
-+++ b/include/hw/cxl/cxl_component.h
-@@ -32,10 +32,20 @@ enum reg_type {
- };
- 
- /*
-- * Capability registers are defined at the top of the CXL.cache/mem region and
-- * are packed. For our purposes we will always define the caps in the same
-- * order.
-- * CXL r3.1 Table 8-22: CXL_CAPABILITY_ID Assignment for details.
-+ * CXL r3.2 - 8.2.4 Table 8-22 and 8-23
-+ *
-+ * Capability registers are defined at the top of the CXL.cache/mem region.
-+ * They are defined to be packed and at variable offsets.  However, NULL
-+ * capabilities can be added to the packed array.  To facilitate easier access
-+ * within the QEMU code, define these at specified offsets.  Then NULL out any
-+ * capabilities for devices which don't (or can't) have a particular capability
-+ * (see cxl_component_register_init_common).  NULL capabilities are to be
-+ * ignored by software.
-+ *
-+ * 'offsets' are based on index's which can then be used to report the array
-+ * size in CXL Capability Header Register (index/offset 0).
-+ *
-+ * See CXL r3.2 Table 8-25 for an example of allowing a 'NULL' header.
-  */
- 
- /* CXL r3.1 Section 8.2.4.1: CXL Capability Header Register */
-@@ -46,16 +56,17 @@ REG32(CXL_CAPABILITY_HEADER, 0)
-     FIELD(CXL_CAPABILITY_HEADER, CACHE_MEM_VERSION, 20, 4)
-     FIELD(CXL_CAPABILITY_HEADER, ARRAY_SIZE, 24, 8)
- 
--#define CXLx_CAPABILITY_HEADER(type, offset)                  \
--    REG32(CXL_##type##_CAPABILITY_HEADER, offset)             \
-+#define CXLx_CAPABILITY_HEADER(type, idx)                     \
-+    enum { CXL_##type##_CAP_HDR_IDX = idx };                  \
-+    REG32(CXL_##type##_CAPABILITY_HEADER, (idx * 0x4))        \
-         FIELD(CXL_##type##_CAPABILITY_HEADER, ID, 0, 16)      \
-         FIELD(CXL_##type##_CAPABILITY_HEADER, VERSION, 16, 4) \
-         FIELD(CXL_##type##_CAPABILITY_HEADER, PTR, 20, 12)
--CXLx_CAPABILITY_HEADER(RAS, 0x4)
--CXLx_CAPABILITY_HEADER(LINK, 0x8)
--CXLx_CAPABILITY_HEADER(HDM, 0xc)
--CXLx_CAPABILITY_HEADER(EXTSEC, 0x10)
--CXLx_CAPABILITY_HEADER(SNOOP, 0x14)
-+CXLx_CAPABILITY_HEADER(RAS, 1)
-+CXLx_CAPABILITY_HEADER(LINK, 2)
-+CXLx_CAPABILITY_HEADER(HDM, 3)
-+CXLx_CAPABILITY_HEADER(EXTSEC, 4)
-+CXLx_CAPABILITY_HEADER(SNOOP, 5)
- 
- /*
-  * Capability structures contain the actual registers that the CXL component
+     pl_size = sizeof(*out) + sizeof(*out->ports) * in->num_ports;
+diff --git a/include/hw/cxl/cxl_port.h b/include/hw/cxl/cxl_port.h
+new file mode 100644
+index 0000000000..04db60f7bc
+--- /dev/null
++++ b/include/hw/cxl/cxl_port.h
+@@ -0,0 +1,53 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++
++#ifndef CXL_PORT_H
++#define CXL_PORT_H
++
++/* CXL r3.2 Table 7-19: Get Physical Port State Port Information Block Format */
++#define CXL_PORT_CONFIG_STATE_DISABLED           0x0
++#define CXL_PORT_CONFIG_STATE_BIND_IN_PROGRESS   0x1
++#define CXL_PORT_CONFIG_STATE_UNBIND_IN_PROGRESS 0x2
++#define CXL_PORT_CONFIG_STATE_DSP                0x3
++#define CXL_PORT_CONFIG_STATE_USP                0x4
++#define CXL_PORT_CONFIG_STATE_FABRIC_PORT        0x5
++#define CXL_PORT_CONFIG_STATE_INVALID_PORT_ID    0xF
++
++#define CXL_PORT_CONNECTED_DEV_MODE_NOT_CXL_OR_DISCONN 0x00
++#define CXL_PORT_CONNECTED_DEV_MODE_RCD                0x01
++#define CXL_PORT_CONNECTED_DEV_MODE_68B_VH             0x02
++#define CXL_PORT_CONNECTED_DEV_MODE_256B               0x03
++#define CXL_PORT_CONNECTED_DEV_MODE_LO_256B            0x04
++#define CXL_PORT_CONNECTED_DEV_MODE_PBR                0x05
++
++#define CXL_PORT_CONNECTED_DEV_TYPE_NONE            0x00
++#define CXL_PORT_CONNECTED_DEV_TYPE_PCIE            0x01
++#define CXL_PORT_CONNECTED_DEV_TYPE_1               0x02
++#define CXL_PORT_CONNECTED_DEV_TYPE_2_OR_HBR_SWITCH 0x03
++#define CXL_PORT_CONNECTED_DEV_TYPE_3_SLD           0x04
++#define CXL_PORT_CONNECTED_DEV_TYPE_3_MLD           0x05
++#define CXL_PORT_CONNECTED_DEV_PBR_COMPONENT        0x06
++
++#define CXL_PORT_SUPPORTS_RCD        BIT(0)
++#define CXL_PORT_SUPPORTS_68B_VH     BIT(1)
++#define CXL_PORT_SUPPORTS_256B       BIT(2)
++#define CXL_PORT_SUPPORTS_LO_256B    BIT(3)
++#define CXL_PORT_SUPPORTS_PBR        BIT(4)
++
++#define CXL_PORT_LTSSM_DETECT        0x00
++#define CXL_PORT_LTSSM_POLLING       0x01
++#define CXL_PORT_LTSSM_CONFIGURATION 0x02
++#define CXL_PORT_LTSSM_RECOVERY      0x03
++#define CXL_PORT_LTSSM_L0            0x04
++#define CXL_PORT_LTSSM_L0S           0x05
++#define CXL_PORT_LTSSM_L1            0x06
++#define CXL_PORT_LTSSM_L2            0x07
++#define CXL_PORT_LTSSM_DISABLED      0x08
++#define CXL_PORT_LTSSM_LOOPBACK      0x09
++#define CXL_PORT_LTSSM_HOT_RESET     0x0A
++
++#define CXL_PORT_LINK_STATE_FLAG_LANE_REVERSED    BIT(0)
++#define CXL_PORT_LINK_STATE_FLAG_PERST_ASSERTED   BIT(1)
++#define CXL_PORT_LINK_STATE_FLAG_PRSNT            BIT(2)
++#define CXL_PORT_LINK_STATE_FLAG_POWER_OFF        BIT(3)
++
++#endif /* CXL_PORT_H */
 -- 
 MST
 
