@@ -4,76 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CDD16C636C5
-	for <qemu-devel@archiver.kernel.org>; Sun, 22 Feb 2026 23:06:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49AECC636C5
+	for <qemu-devel@archiver.kernel.org>; Sun, 22 Feb 2026 23:07:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuIWf-0001Qh-T1; Sun, 22 Feb 2026 18:06:09 -0500
+	id 1vuIXC-0001bU-Ko; Sun, 22 Feb 2026 18:06:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vuIWe-0001Pk-1H
- for qemu-devel@nongnu.org; Sun, 22 Feb 2026 18:06:08 -0500
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vuIXB-0001b9-50
+ for qemu-devel@nongnu.org; Sun, 22 Feb 2026 18:06:41 -0500
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vuIWc-0005v7-7u
- for qemu-devel@nongnu.org; Sun, 22 Feb 2026 18:06:07 -0500
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-4375d4fb4d4so2336535f8f.0
- for <qemu-devel@nongnu.org>; Sun, 22 Feb 2026 15:06:05 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vuIX9-0005w8-G0
+ for qemu-devel@nongnu.org; Sun, 22 Feb 2026 18:06:40 -0500
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-483abed83b6so7662755e9.0
+ for <qemu-devel@nongnu.org>; Sun, 22 Feb 2026 15:06:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771801564; x=1772406364; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=CilXNfPct5/Yscu/2lF9wsbUq8NIRMavj9fub+QMthk=;
- b=Re91SVvKpSFJWAUUr2qrfJwIbZ/UjXnDTOHFvBxuuXMGpdRDfUAcY7IboxIZfo9Mf0
- yO8rZIa4tqPvLpOe9THSYhW9B8FIF0fmsWwlsKnQbpTCz2QANccqkKdxeGLbbkcl/6UQ
- KhfQReopnSFezhrYoVPl0Osw72VbmRlXVaLwPEjbdB9lZEK4yc3MzDE4WIrPd0iwf1a3
- /NbfaHelGXFFwh3Aysilfd50g6ft/GaS4GZSzaFXnIUBx7RBdcUhvWLuLQ9/kHLvdg5a
- RwQY763QaU5SyQNqOmcIPepbZ5dLojKIqavjsw6xAhmwh4mri0+/yx2tmTQHhO/ZQHZp
- KThQ==
+ d=linaro.org; s=google; t=1771801598; x=1772406398; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=OLEzbZM328E3NSLw7igBEUpMihYAhPnmUCU+6xw7L88=;
+ b=oZkwAFb3H/i2D0pwYjK1OrFq6R7bdtnVIMO17rGAaTADbw1zgibSsGw1TVa6vXV2BR
+ 96hnP28taAltnVtflOsmde/8Ov6PiRghlEmj+5BpmBvkahjTGCzfMFyXQ8Aer31I+gH4
+ ZwBd4UCHRtYPVxIQ4SrOR0KI0Gs4DoiRatR/88bqUZ88tgXAc2oRxGeU3UdaIJ7xt7Rr
+ vCZB1I3W3fPm6Y6DCjFJQ/UxZgy6GyNAnA7DFL1LBPtavycH8dv0p858JF2S5HSKSNxs
+ MsNm3nM4QlfFMobY+iEJ38+TjC9u7/Pouq2xO9jTA+bE7TKcPaJmtzJFPioiOvavZ/En
+ iPOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771801564; x=1772406364;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=CilXNfPct5/Yscu/2lF9wsbUq8NIRMavj9fub+QMthk=;
- b=ZNOdZBJ4gfT3sbN6NFe7Ol2pET6JMAxQFN3Yh/AtIhw9lC+MwoB1EqWdI/eg/jDwUs
- bHPtBNtwjCztOnuUQGGjBWGu2JWPNbOgEYG/fV4S2CjhNyogtEmbY3KiHCow+r4+QxS2
- 4P+NfCpEZOKL2gxCHkb0fusnPWCS7gj/qgjSrGwX38KbbRgmi8sugyFYbAdHLANox0oH
- fn+GBoAgrtOAGfP0/5kCikxi2SGg2SwXU2JrR3Fpo3wWc2YkR0mqWoOSIhFTgy9mTCWx
- /Le6Ddo742luc+CjM/ejVq3gB6CmlQ6j1LOaVdroS8amA/ZyS6180UxQmUxOjLHgtcfR
- Dr7Q==
-X-Gm-Message-State: AOJu0YwvQQw9Db2lgYd2v0MEALiu7v11FhHWvRYg64nh+vUutr+CJGZR
- E39z7rZGvc6C+6E2KrREJxM4C6VgVCBX3fSRGxSjAm/Bg9aLwwrMQQ80B10EgWG0q51sYO3rlyR
- Y5b4UT1Q=
-X-Gm-Gg: AZuq6aI+5CQOw74I21aTkR/95NMw79hhJYTwe2vaOhL5VXnF71ZCJ+3FtjxqLdUKaND
- MerahN84wZ6W9ZgEcXqOLHQ/H720+OJXBb9mPFfQOUeVu+iazcXTHPpiLw4blQalXXthoSs2l3z
- NtdGs6lBWc9jRb+VSUSrapKcDsH1yfzn/4wuVC9c2Ry7n02i6y2IDsM8V4GXiqoIHYgGxs2QRIW
- LlRTH06HoHflp5YWvZdxXC92wRptY4NvQT+yk///IJJ9bB7CJBQmMQOeB60t3VVdYrVmsMIpz18
- sqjZAPtVdKB56hM7xPsQr3EsHBbF5ZcJLM2h/0EMDRfARRU/qW5iCN+Ti1Ian5wnYYPHAwN4ZsC
- cr5nmU7LpjaicTpVrLyp+HeUFYNgFGLIBPuCuThLgIMEWn3AQ8d04PU0hrUE7HGIef7bR8UnBe/
- 47pPjbu3UFaOop7zAM08nH3OUI3Y1UmZFyVAXfYMbI+E9W9XGxHaLgCQmtLTo4wqWcOeBOawDh
-X-Received: by 2002:adf:f3d1:0:b0:439:7e1c:87b0 with SMTP id
- ffacd0b85a97d-4397e1c8bafmr184328f8f.37.1771801563676; 
- Sun, 22 Feb 2026 15:06:03 -0800 (PST)
+ d=1e100.net; s=20230601; t=1771801598; x=1772406398;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=OLEzbZM328E3NSLw7igBEUpMihYAhPnmUCU+6xw7L88=;
+ b=D/z/I/NVygZ89V1o3VejutyZm3BbKeFZTPSkYu2R6lnQYxSgAcK0hD+a2VQMUjv8i9
+ i/kTRs2oU+JkpGre/yBcVsKJqxPQzfL9HjJlhJQCtn6CFwMZG1xt03jTYJTR7qafVF81
+ WHmBhSXzYElky8rekaQvNasUujriOL51f5ZMPT7s7nm8XAyAtUNB8zkbTAQ4jJoj2tZD
+ 9tj92frgbcX3Y5f1x42KpYPH6sVXxoJRJGGRM+uHmZMPN2Mx99BGDN89kXatW5dT7KhC
+ KLpxssjAGFQY5tUW2izHvSm3Uqg4vaw9BtwMnveBinrHjPC8l9XRqKkf4tdsy318qh7P
+ RdJQ==
+X-Gm-Message-State: AOJu0Ywy8oMsTC0ic5/UIhBMn9qsV4JMlmIlLCEXT4UZwnBGBgEL1ww3
+ R8UdlmnQw8X2FOMquQ+Njx3NlW8d+QruMOROOOP35eJJ4vhISn6sdQZ4vJhxAk32hDPZOuFpDwp
+ Q/q+FWc0=
+X-Gm-Gg: AZuq6aLonjXyWkosdq1kXqShRoyedMtTstCVkhqeGlP7K28T+/bk+iyXILj3fIKsAEa
+ ot9pVs5HKwCm+kOoLLg4wyCyMBT3/+YF2dpLw9rpo2mGTPxzQnAQtB+hUp73EgJH/WYjP6FfSMO
+ dZsR+vNXTaGAy9dgnOQI4DIerzTEEqenbDr8hlO8cfH0brOjc0re2NJwHdqu6QaxqCl4kvMep9Q
+ ak03Qt2IrnORLu86wpFwddifG0DGDXYqbPW28QSf6pCsfbMMv3kLWW57tNNb/CNkfk3SE5MBI2l
+ QuFhEoXxR0R/8CvK2PEZxPTISpEAb18XfkoyZLIEHK9R/XwABsdzhx0JiwbCkMV3/k4/rGM0yW4
+ /J/gwAq0IqFKZwwKw8FmUpTyKRhHZ/qzHNI70udv8eHGFoZ6w+HCrPgjVo3sxTETQF9IOFy3E2Q
+ tj+JipKczQATcer1faDEC5ptFUWeR/k665bLlVEQA2MYib62U2C7oeMjVQPMV0uLU6zqBzJtuZ
+X-Received: by 2002:a05:600c:8b44:b0:480:6852:8d94 with SMTP id
+ 5b1f17b1804b1-483a95eabccmr114440005e9.27.1771801597729; 
+ Sun, 22 Feb 2026 15:06:37 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43970d4c626sm16426222f8f.28.2026.02.22.15.06.03
+ 5b1f17b1804b1-483a9caadd4sm139296035e9.11.2026.02.22.15.06.37
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 22 Feb 2026 15:06:03 -0800 (PST)
+ Sun, 22 Feb 2026 15:06:37 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 00/20] Misc HW patches for 2026-02-22
-Date: Mon, 23 Feb 2026 00:05:41 +0100
-Message-ID: <20260222230602.5756-1-philmd@linaro.org>
+Subject: [PULL 05/20] hw/display/macfb: Constify macfb_mode_table[] array
+Date: Mon, 23 Feb 2026 00:05:46 +0100
+Message-ID: <20260222230602.5756-6-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20260222230602.5756-1-philmd@linaro.org>
+References: <20260222230602.5756-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,93 +98,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 07f97d5da04a9f97e273de85c76f5017d8135a6e:
+macfb_mode_table[] is only read, never updated, so can be const.
 
-  Merge tag 'pull-target-arm-20260219' of https://gitlab.com/pm215/qemu into staging (2026-02-19 10:36:06 +0000)
+Update the call sites accordingly.
+Make the MacfbState::mode pointer to const.
 
-are available in the Git repository at:
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-Id: <20260216213121.47122-3-philmd@linaro.org>
+---
+ include/hw/display/macfb.h |  2 +-
+ hw/display/macfb.c         | 10 +++++-----
+ hw/m68k/q800.c             |  2 +-
+ 3 files changed, 7 insertions(+), 7 deletions(-)
 
-  https://github.com/philmd/qemu.git tags/hw-misc-20260222
-
-for you to fetch changes up to ab39a5a46a411d7171192cf911d5e9465bd2e6b1:
-
-  net: mark struct tcp_header as QEMU_PACKED (2026-02-22 23:08:19 +0100)
-
-----------------------------------------------------------------
-Misc HW & Net patches
-
-- Fix trace event name in m68k system controller
-- Constify and rename virtio_is_big_endian()
-- Set graphic display dimensions generically (removing system/globals-target.c)
-- Mark eth_header, udp_header, tcp_header as packed structures
-- Minor doc / header cleanups
-----------------------------------------------------------------
-
-Alex Bennée (2):
-  hw/alpha: remove unused includes
-  hw/core/cpu: expand cpu_reset function docs
-
-BALATON Zoltan (1):
-  hw/net/rtl8139: Remove ineffective parameter
-
-Kuan-Wei Chiu (1):
-  hw/misc/virt_ctrl: Fix incorrect trace event in read operation
-
-Peter Maydell (5):
-  hw/net/rocker: Don't keep pointer to h_proto as uint16_t* in
-    OfDpaFlowPktFields
-  hw/net/rocker: Don't assume h_proto is aligned in eth_strip_vlan_ex()
-  net: mark struct eth_header as QEMU_PACKED
-  net: mark struct udp_header as QEMU_PACKED
-  net: mark struct tcp_header as QEMU_PACKED
-
-Philippe Mathieu-Daudé (9):
-  hw/virtio: Constify virtio_is_big_endian() argument
-  hw/display/macfb: Constify macfb_sense_table[] array
-  hw/display/macfb: Constify macfb_mode_table[] array
-  hw/m68k/q800: Use MacFbMode fields in q800_machine_init()
-  hw/m68k/q800: Set MACFB_DISPLAY_APPLE_21_COLOR within MacFrameBuffer
-  hw/m68k: Set graphic display dimensions generically
-  hw/sparc: Set graphic display dimensions generically
-  hw/ppc: Set graphic display dimensions generically
-  system/globals: Build as common code
-
-Pierrick Bouvier (2):
-  hw/virtio: rename virtio_is_big_endian to virtio_vdev_is_big_endian
-  hw/ppc/spapr: extract SPAPR_MAX_RAM_SLOTS in a new header
-
- include/hw/core/cpu.h             |  3 +++
- include/hw/display/macfb.h        |  2 +-
- include/hw/ppc/ppc.h              |  2 ++
- include/hw/ppc/spapr.h            |  8 +-------
- include/hw/ppc/spapr_common.h     | 17 +++++++++++++++++
- include/hw/virtio/virtio-access.h |  2 +-
- include/hw/virtio/virtio.h        |  2 +-
- include/net/eth.h                 |  6 +++---
- hw/alpha/dp264.c                  |  2 --
- hw/display/macfb.c                | 18 +++++++++++-------
- hw/m68k/q800.c                    | 17 ++++++-----------
- hw/misc/virt_ctrl.c               |  2 +-
- hw/net/rocker/rocker_of_dpa.c     | 19 ++++++++++++-------
- hw/net/rtl8139.c                  | 24 ++++++++----------------
- hw/net/virtio-net.c               |  4 ++--
- hw/ppc/mac_newworld.c             | 10 ++++++----
- hw/ppc/mac_oldworld.c             | 10 ++++++----
- hw/ppc/ppc.c                      |  8 ++++++++
- hw/ppc/prep.c                     |  4 ++++
- hw/ppc/spapr.c                    |  4 ++++
- hw/sparc/sun4m.c                  |  9 +++++++++
- hw/sparc64/sun4u.c                | 10 ++++++++++
- hw/virtio/vhost.c                 |  4 ++--
- hw/virtio/virtio-pci.c            |  8 ++++----
- net/eth.c                         |  6 +++---
- system/globals-target.c           | 24 ------------------------
- system/globals.c                  |  3 +++
- system/meson.build                |  1 -
- 28 files changed, 128 insertions(+), 101 deletions(-)
- create mode 100644 include/hw/ppc/spapr_common.h
- delete mode 100644 system/globals-target.c
-
+diff --git a/include/hw/display/macfb.h b/include/hw/display/macfb.h
+index 495dead44b5..cb7aac7a4dd 100644
+--- a/include/hw/display/macfb.h
++++ b/include/hw/display/macfb.h
+@@ -66,7 +66,7 @@ typedef struct MacfbState {
+     uint8_t type;
+ 
+     uint32_t regs[MACFB_NUM_REGS];
+-    MacFbMode *mode;
++    const MacFbMode *mode;
+ 
+     QEMUTimer *vbl_timer;
+     qemu_irq irq;
+diff --git a/hw/display/macfb.c b/hw/display/macfb.c
+index 57ad8ad5587..8ef174dc6df 100644
+--- a/hw/display/macfb.c
++++ b/hw/display/macfb.c
+@@ -100,7 +100,7 @@ static const MacFbSense macfb_sense_table[] = {
+     { MACFB_DISPLAY_SVGA, 0x7, 0x5 },
+ };
+ 
+-static MacFbMode macfb_mode_table[] = {
++static const MacFbMode macfb_mode_table[] = {
+     { MACFB_DISPLAY_VGA, 1, 0x100, 0x71e, 640, 480, 0x400, 0x1000 },
+     { MACFB_DISPLAY_VGA, 2, 0x100, 0x70e, 640, 480, 0x400, 0x1000 },
+     { MACFB_DISPLAY_VGA, 4, 0x100, 0x706, 640, 480, 0x400, 0x1000 },
+@@ -397,7 +397,7 @@ static void macfb_update_mode(MacfbState *s)
+ 
+ static void macfb_mode_write(MacfbState *s)
+ {
+-    MacFbMode *macfb_mode;
++    const MacFbMode *macfb_mode;
+     int i;
+ 
+     for (i = 0; i < ARRAY_SIZE(macfb_mode_table); i++) {
+@@ -418,11 +418,11 @@ static void macfb_mode_write(MacfbState *s)
+     }
+ }
+ 
+-static MacFbMode *macfb_find_mode(MacfbDisplayType display_type,
++static const MacFbMode *macfb_find_mode(MacfbDisplayType display_type,
+                                   uint16_t width, uint16_t height,
+                                   uint8_t depth)
+ {
+-    MacFbMode *macfb_mode;
++    const MacFbMode *macfb_mode;
+     int i;
+ 
+     for (i = 0; i < ARRAY_SIZE(macfb_mode_table); i++) {
+@@ -440,7 +440,7 @@ static MacFbMode *macfb_find_mode(MacfbDisplayType display_type,
+ static gchar *macfb_mode_list(void)
+ {
+     GString *list = g_string_new("");
+-    MacFbMode *macfb_mode;
++    const MacFbMode *macfb_mode;
+     int i;
+ 
+     for (i = 0; i < ARRAY_SIZE(macfb_mode_table); i++) {
+diff --git a/hw/m68k/q800.c b/hw/m68k/q800.c
+index 25ddddb5d9f..4767eb4298f 100644
+--- a/hw/m68k/q800.c
++++ b/hw/m68k/q800.c
+@@ -255,7 +255,7 @@ static void q800_machine_init(MachineState *machine)
+     int32_t initrd_size;
+     uint8_t *prom;
+     int i, checksum;
+-    MacFbMode *macfb_mode;
++    const MacFbMode *macfb_mode;
+     ram_addr_t ram_size = machine->ram_size;
+     const char *kernel_filename = machine->kernel_filename;
+     const char *initrd_filename = machine->initrd_filename;
 -- 
 2.52.0
 
