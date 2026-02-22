@@ -4,105 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B12C8C6369F
-	for <qemu-devel@archiver.kernel.org>; Sun, 22 Feb 2026 14:39:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 559FDC624DB
+	for <qemu-devel@archiver.kernel.org>; Sun, 22 Feb 2026 17:56:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuAbm-0006dT-4D; Sun, 22 Feb 2026 09:38:56 -0500
+	id 1vuDfz-0006lc-V2; Sun, 22 Feb 2026 12:55:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vuAbd-0006d7-Ts
- for qemu-devel@nongnu.org; Sun, 22 Feb 2026 09:38:46 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vuAbc-0000yb-5s
- for qemu-devel@nongnu.org; Sun, 22 Feb 2026 09:38:45 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771771122;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=2CvixHYiFxGT1HGlh4KsnMfZB7qT500eFCLdhvfHHe0=;
- b=F6NhvXdHxog9ocRDT8UKVjh/DrlJYJrFoG3YWOwmx5SM7DlnV9I8WFEW8UUPV4ad52h0gU
- LY61R7buk/ZgswqYWb1jT5yODsMfsLnxlGv4SQKwv9SKbTbZyHkrMahHi7wpAnFB6Kcz9p
- Ek1vjzgH4j2UAPBzXVOZaA/KITcVJkA=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-632-B9tK_TezOfikNCvgzyTJ9A-1; Sun, 22 Feb 2026 09:38:41 -0500
-X-MC-Unique: B9tK_TezOfikNCvgzyTJ9A-1
-X-Mimecast-MFC-AGG-ID: B9tK_TezOfikNCvgzyTJ9A_1771771120
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4836cd6dfe6so4842005e9.2
- for <qemu-devel@nongnu.org>; Sun, 22 Feb 2026 06:38:40 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <visitorckw@gmail.com>)
+ id 1vuDfy-0006kt-R6
+ for qemu-devel@nongnu.org; Sun, 22 Feb 2026 12:55:26 -0500
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <visitorckw@gmail.com>)
+ id 1vuDfx-0005Ly-F3
+ for qemu-devel@nongnu.org; Sun, 22 Feb 2026 12:55:26 -0500
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-2aad1dc8856so25139965ad.1
+ for <qemu-devel@nongnu.org>; Sun, 22 Feb 2026 09:55:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1771771119; x=1772375919; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1771782924; x=1772387724; darn=nongnu.org;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=2CvixHYiFxGT1HGlh4KsnMfZB7qT500eFCLdhvfHHe0=;
- b=RWBFZuJYyDH+EgNG8P+QoSG8HjPrZush5QdZwoftDooFoevg5TLFUsSuS0nnrQ9+HH
- 5JtQ1OqFnJPwZnzyVdhpu8xb4KSdxu/PUP3X4i+aSqOaSjaIIrJfENroCYH2WPwzIWdp
- 8uIfi0iRYCffwxO9uqUWuM7Aq1tyIY7mIt6T7yvjTqWar+muiDBjVrcsw1ERUzCvIrJr
- GZ1KL0Gvp5w0z6t5/VST833ZpM3paF/2zWV7UB983svggkVH/jj4vYUu70odlRkTI+vK
- q8NTQTTMwC5blKH6OPJGQtMonUnbrWYf4FcCxeOlhh19CAvN+211I1Onsp4UhmDtqUMI
- LeHg==
+ bh=IxWkRVySp2TN5N/hipXG08upqyJuHl6A+T8aoTQwk60=;
+ b=k1QxqfmxSXyGsjvwIRQh5hPQ4Z4prusTAfUmGBKGzP6PdZChdLQA+yV3/VP2CXQ2d6
+ Xb/ZEfevwWOTSnKUOt4Pzm8uzEkadzCF/MqHDmhGFMDYQrQycE5sMPF3hWzNWgvNK+c5
+ 5w7HLiebHEZS8Vb87Q7lcaOaxD7/mvxJPmJOJV+Rgu2Z3uU/EKNec33TL1cwI4R32+pB
+ 6CCJLcJ3hlVmd9rpKgD//RyBHr7dQ8Q5RaqORg49vr9GyASHugMvsjrZ7sFpczW9FHaM
+ FJa3esehP0Fstw/1IzUXK6lhH43mnY08Ynd87wQ0iFtxl4j21KGuJqAC//UfWDlEAlLZ
+ BbzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771771119; x=1772375919;
+ d=1e100.net; s=20230601; t=1771782924; x=1772387724;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=2CvixHYiFxGT1HGlh4KsnMfZB7qT500eFCLdhvfHHe0=;
- b=XAQBb4Zm3HYCSE31AgABsZeMryYa1n7WKnphByCFgs7JWyV6d93jFhRq3Tydm8wF7g
- 7iDG4qucTh2Gr6XUauZFxzXRLllsLqKLkSkEbXTxmc1P/t/XC7f0MI1vhWGnVTSe3CAb
- 1xqj0qVxQWHXpY8htjVAHasTTwU+ubicZy80EaZiqcoX7yv3jETZt8tgshTqTV4QSfyN
- cCTF/9xg//Zmj6ULOGdWxlqPtOauEjw+W7lds+YMLUYzgBIOraB4MxNFUN8lq1n9qQgm
- bTFpJ74vG6b6Wz1NMYhfIG/6wviRMcHQOWNFPlaL7CBRP7bvYgkstr/ARU7R/OsuFZt7
- 7SNA==
-X-Gm-Message-State: AOJu0Yxt9MGPpfdwKJy0nhpP2/uL584t9iutdDnyWzNJiIr91/djOxxt
- P0zbd0+EzMw6HDsXF5j703NaxuGfnna5t7lVIWkIoetlI91B7OePOyxILB2Y/QXOzVX1UNkyW7Q
- 08RaSTHforYdBi2vrWnVBLBZhUdAo63xDb4j8Tx6G8bJ5zcroH3V/zQJOeoFkD42n
-X-Gm-Gg: AZuq6aLwwsmMu3Iwps2Vku7S8hp5oLkFDK8uOJa778ZejdGuH8ScY6i9eTPhN9byqwX
- rkVi+EzZgh3grUrTXvZCZWqhFxvM43+Mnk9U/p2L3JF32hNVyRjoUHvTvay8beITxBtdltVmMQA
- e3mxbOLp0VV3RgownyOfeswBlDgXzRQehrdcG6oUHkx8EJAdYt8+Z8K3qvb33QKmkS6Q62yv21Q
- NcBHdvm8vcEYGy5CaKJ+z8FDn0LNlirYCb/bTydIPIZRu11i4ir86pE8XDxHNZn4c68NuC2/zA0
- NQMuQjBDDt5PydB4eQL+R226lkqO7oexS08WDk0xNCaJTYuKs/yLhfdyNmcY5mxk09mUIXKIRIp
- XPy4UfBWHQI4M8U8aToSn85D7uAU1P0pmcISvci+jMlSpgw==
-X-Received: by 2002:a05:600c:5020:b0:47a:814c:ee95 with SMTP id
- 5b1f17b1804b1-483a95fc1d3mr101790285e9.12.1771771119375; 
- Sun, 22 Feb 2026 06:38:39 -0800 (PST)
-X-Received: by 2002:a05:600c:5020:b0:47a:814c:ee95 with SMTP id
- 5b1f17b1804b1-483a95fc1d3mr101789855e9.12.1771771118870; 
- Sun, 22 Feb 2026 06:38:38 -0800 (PST)
-Received: from redhat.com (IGLD-80-230-79-166.inter.net.il. [80.230.79.166])
+ bh=IxWkRVySp2TN5N/hipXG08upqyJuHl6A+T8aoTQwk60=;
+ b=OEJv7NYxWkIjNfovpFiDrjmnAUdene7rviEbpsj3FQESJ2O/PWSRceHxaGV5vfxdEl
+ ev+h/Yp0+4yletq8c8t4D/6twzcUrXXPfNAvrqvgMhjk4Cyxe87G+dpX0tgh49McJMqy
+ FvMosRDKCTgVm7She1o0OJVhWj4/9iXAUvB3zxX9b95eAfgYGPlqHLDTmfhF/UTPaezo
+ lwiaCPW48kHIHjrSDssD011shz2yRDqaM3+rSGr1xbj+KmCtS+jMXQsMgiyMqIXtoFQf
+ MNOq64VWdkNzzJxttbXjp/NCqn0zpHZVpcGbsVhtFwYIonEP9v7AT4Udm9+ge2R2F1vV
+ taPg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXMxlm3OSjWjmB/iAFTI1w7yx6n81bRmEgvyxMVf4HweOGEGWSuKmHFpB62QK8W6qwy79GxSFDenTsu@nongnu.org
+X-Gm-Message-State: AOJu0Yzx1cCGvTVfkmKTdfUa8MEVXd7VcduA3mXXJh7Z6HFPic/XtG0Q
+ hW/4gjQVanPXgUEdBvWCJER5ELlm1afm+KeNJoU4XhK0CUjyVj5RKGpA
+X-Gm-Gg: AZuq6aJXGqHFPu3Fwzjv/0bYu8sz+dYOGqBW17oZngOMKX+fSIT9porx2vKgPhol0A0
+ MhOnyE6DMStRRh6E3oR4hDZ9X+w/PpWdrzMc011IpLYhjx56+Lxap6UGPwb17ilduoVdiVNrQGA
+ DC44z//TZoi54kU3WKEG91o9fjaB0AsEcD6yrUks0Peb5MSli60NuVpQ+xwtxL3zIuEiGz4ZiWm
+ qtKzG1kN2S2Kcxt3AXe7F+SEvQ8Qup0za6u3j8nrqkQJV5tpdtOK24D5PILB3BSQhtszGijNNCK
+ 98kyuIna9+enqUmNPkZwJ+PuTucvaPSznZ3+wZT0v+HgoqJgH+WDRD31UntIagUFVnR6/4hpp4J
+ 2wRx8bFMRkaM9tZOEZ8aYm6ZXjppjTv20qhLFUi4qcmzPHpmxJnJszLZ+pW1AjpBKpfEFfChhzI
+ lY/vq6KGBe4jn6f5q0+Cv1G5RVpH4r1hYNJddSpMua2vpfOPe8JLiKD+e31D+JsDbSn1k=
+X-Received: by 2002:a17:903:2283:b0:295:560a:e499 with SMTP id
+ d9443c01a7336-2ad74419fb9mr51734405ad.5.1771782923609; 
+ Sun, 22 Feb 2026 09:55:23 -0800 (PST)
+Received: from google.com (61-230-28-18.dynamic-ip.hinet.net. [61.230.28.18])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-483a31f0330sm175946375e9.9.2026.02.22.06.38.37
+ d9443c01a7336-2ad7500e2b2sm49389245ad.52.2026.02.22.09.55.21
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 22 Feb 2026 06:38:38 -0800 (PST)
-Date: Sun, 22 Feb 2026 09:38:36 -0500
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Saif Abrar <saif.abrar@linux.vnet.ibm.com>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH v3 0/9] : pnv/phb4: Update PHB4 to the latest PHB5 spec
-Message-ID: <20260222092651-mutt-send-email-mst@kernel.org>
-References: <20251230102156.886288-1-saif.abrar@linux.vnet.ibm.com>
- <20260210134110.1515322-1-saif.abrar@linux.vnet.ibm.com>
- <20260220112141-mutt-send-email-mst@kernel.org>
- <d65ab628-99e3-47af-839c-e059207b692e@linux.vnet.ibm.com>
+ Sun, 22 Feb 2026 09:55:22 -0800 (PST)
+Date: Mon, 23 Feb 2026 01:55:20 +0800
+From: Kuan-Wei Chiu <visitorckw@gmail.com>
+To: laurent@vivier.eu
+Cc: jserv@ccns.ncku.edu.tw, qemu-devel@nongnu.org
+Subject: Re: [PATCH] hw/misc/virt_ctrl: Fix incorrect trace event in read
+ operation
+Message-ID: <aZtDCIujj1OC-ol0@google.com>
+References: <20260111184915.1363318-1-visitorckw@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <d65ab628-99e3-47af-839c-e059207b692e@linux.vnet.ibm.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -14
-X-Spam_score: -1.5
-X-Spam_bar: -
-X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.798, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.79,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+In-Reply-To: <20260111184915.1363318-1-visitorckw@gmail.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
+ envelope-from=visitorckw@gmail.com; helo=mail-pl1-x630.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,93 +101,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Feb 21, 2026 at 12:35:15PM +0530, Saif Abrar wrote:
-> Hello Michael,
-> 
-> Thanks for informing!
-> 
-> Trying to understand why it's breaking now? (as it must be building earlier)
-> 
-> Any insights will be helpful.
-> 
-> Regards,
-> 
-> Saif
+Hi Laurent,
 
-I think clang rejects declarations placed directly after case labels in a switch.
-clang sees this pattern:
+On Sun, Jan 11, 2026 at 06:49:15PM +0000, Kuan-Wei Chiu wrote:
+> The virt_ctrl_read() function currently invokes trace_virt_ctrl_write()
+> instead of trace_virt_ctrl_read(). This results in read operations
+> appearing as write operations in the trace output, which is misleading
+> during debugging and analysis.
+> 
+> Replace the incorrect trace call with the proper read-specific trace
+> event to accurately reflect the hardware behavior.
+> 
+> Fixes: 0791bc02b8fb ("m68k: add a system controller")
+> Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
+> ---
+>  hw/misc/virt_ctrl.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 
-  case PHB_PCIE_DLP_TRAIN_CTL:
-      PCIHostState *pci = ...
+Any comments on this patch?
 
-as invalid, so it throws "expected expression"
-
+Regards,
+Kuan-Wei
 
 > 
-> On 20-02-2026 09:52 pm, Michael S. Tsirkin wrote:
-> > On Tue, Feb 10, 2026 at 07:40:50AM -0600, Saif Abrar wrote:
-> > > Hello,
-> > > 
-> > > Addressing the review comments for the series v2:
-> > > https://lists.gnu.org/archive/html/qemu-devel/2025-12/msg03768.html
-> > 
-> > breaks tsan build:
-> > 
-> > 
-> > https://gitlab.com/mstredhat/qemu/-/jobs/13201554945
-> > 
-> > ../hw/pci-host/pnv_phb4.c:968:9: error: expected expression
-> >          PCIHostState *pci = PCI_HOST_BRIDGE(phb->phb_base);
-> >          ^
-> > ../hw/pci-host/pnv_phb4.c:969:43: error: use of undeclared identifier 'pci'
-> >          PCIDevice *pdev = pci_find_device(pci->bus, 0, 0);
-> >                                            ^
-> > ../hw/pci-host/pnv_phb4.c:999:9: error: use of undeclared identifier 'pci'
-> >          pci = PCI_HOST_BRIDGE(phb->phb_base);
-> >          ^
-> > ../hw/pci-host/pnv_phb4.c:1000:32: error: use of undeclared identifier 'pci'
-> >          pdev = pci_find_device(pci->bus, 0, 0);
-> >                                 ^
-> > 4 errors generated.
-> > 
-> > 
-> > > This series updates the existing PHB4 model to the latest spec:
-> > > "Power Systems Host Bridge 5 (PHB5) Functional Specification Version 0.5_00".
-> > > 
-> > > Updates include the following:
-> > > - implemented sticky reset logic
-> > > - implemented read-only, write-only, W1C and WxC logic
-> > > - return all 1's on read to unimplemented registers
-> > > - update PCIE registers for link status, speed and width
-> > > - implement IODA PCT debug table without any functionality
-> > > - update LSI Source-ID register based on small/big PHB number of interrupts
-> > > 
-> > > Also, a new testbench for PHB4 model is added that does XSCOM read/writes
-> > > to various registers of interest and verifies the values.
-> > > 
-> > > Regards.
-> > > 
-> > > Saif Abrar (9):
-> > >    qtest/phb4: Add testbench for PHB4
-> > >    pnv/phb4: Add reset logic to PHB4
-> > >    pnv/phb4: Implement sticky reset logic in PHB4
-> > >    pnv/phb4: Implement read-only and write-only bits of registers
-> > >    pnv/phb4: Implement write-clear and return 1's on unimplemented reg read
-> > >    pnv/phb4: Set link-active status in HPSTAT and LMR registers
-> > >    pnv/phb4: Set link speed and width in the DLP training control register
-> > >    pnv/phb4: Implement IODA PCT table
-> > >    pnv/phb4: Mask off LSI Source-ID based on number of interrupts
-> > > 
-> > >   hw/pci-host/pnv_phb.c               |   1 +
-> > >   hw/pci-host/pnv_phb4.c              | 583 +++++++++++++++++++++++++---
-> > >   include/hw/pci-host/pnv_phb4.h      |  16 +-
-> > >   include/hw/pci-host/pnv_phb4_regs.h |  66 +++-
-> > >   tests/qtest/meson.build             |   1 +
-> > >   tests/qtest/pnv-phb4-test.c         | 228 +++++++++++
-> > >   6 files changed, 837 insertions(+), 58 deletions(-)
-> > >   create mode 100644 tests/qtest/pnv-phb4-test.c
-> > > 
-> > > -- 
-> > > 2.47.3
-
+> diff --git a/hw/misc/virt_ctrl.c b/hw/misc/virt_ctrl.c
+> index 40747925a2..9b82e97ffd 100644
+> --- a/hw/misc/virt_ctrl.c
+> +++ b/hw/misc/virt_ctrl.c
+> @@ -43,7 +43,7 @@ static uint64_t virt_ctrl_read(void *opaque, hwaddr addr, unsigned size)
+>          break;
+>      }
+>  
+> -    trace_virt_ctrl_write(s, addr, size, value);
+> +    trace_virt_ctrl_read(s, addr, size, value);
+>  
+>      return value;
+>  }
+> -- 
+> 2.52.0.457.g6b5491de43-goog
+> 
 
