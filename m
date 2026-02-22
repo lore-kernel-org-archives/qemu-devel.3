@@ -4,70 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46EAFE68179
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D5EDC636C5
 	for <qemu-devel@archiver.kernel.org>; Sun, 22 Feb 2026 23:08:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuIYM-0004ts-OL; Sun, 22 Feb 2026 18:07:56 -0500
+	id 1vuIY4-0002eE-Kk; Sun, 22 Feb 2026 18:07:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vuIYG-0004Yg-Sg
- for qemu-devel@nongnu.org; Sun, 22 Feb 2026 18:07:48 -0500
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vuIXv-0002Mr-55
+ for qemu-devel@nongnu.org; Sun, 22 Feb 2026 18:07:28 -0500
 Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vuIYE-00061E-S4
- for qemu-devel@nongnu.org; Sun, 22 Feb 2026 18:07:48 -0500
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vuIXt-0005zb-ME
+ for qemu-devel@nongnu.org; Sun, 22 Feb 2026 18:07:26 -0500
 Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-48329eb96a7so20555485e9.3
- for <qemu-devel@nongnu.org>; Sun, 22 Feb 2026 15:07:46 -0800 (PST)
+ 5b1f17b1804b1-4836d4c26d3so33379885e9.2
+ for <qemu-devel@nongnu.org>; Sun, 22 Feb 2026 15:07:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771801665; x=1772406465; darn=nongnu.org;
+ d=linaro.org; s=google; t=1771801644; x=1772406444; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=F9o91NXnN55Qgm8cd9PGuHzTDVifQlajjk4xjvK6WQo=;
- b=IgNgE9JzdldJ4fY11e8r0qsEMb8aqqpitz9tYqnMMG0SDKxVyMZb3wluvQSV659Ams
- PCJFYkf7Es6D6wWrn0KgHFc5clZFfp6R8mRCIb3BfIag8d8en2EvNezw1a/aZ81fx+Dg
- tmVD7tJ6n3nf+FWBT9sZMp2/RyOT7lfH8DgyHJpsRqcWArSYci0Vuun1AlRoWJSCxE4d
- 91uwUB0pe+o03G7oHbZTjtDG0Z0ufO4/8DDi5fO7MrRT6EAM8z85ebjIadeuNpqJpaPo
- n+MeWGIGDmTgPknfyMw5cneDBdDUD5YRWynUZ39gT50gYUFKANWfKjMn2ZbCqUtROrGo
- DeYA==
+ :reply-to; bh=Qd0G+nfyztxAJMOwNcY/97xGBoHYfcp5GPMnR6QZ8mk=;
+ b=DCFZ8x+/7Qs76cfHF4vkaDY1K8f2KnAQwd9nu9AfWulJ6RE6ua8FMxh5r6DISejpRK
+ YikBUUYLsEhfb4h3koktrCKJzvkQZFrHajS2m55JcKtnjNQrH1gnDDIYqqdgHx85VozA
+ oHfH1VgUj0lr4pVY0FayIIzzsrLjP9eH7Rdh/IUKBGShVU18DfzRaaG9J/3anjrJmbOW
+ u0N4WNvQQ1E2GhyQai081URpPeUR8d8EcFBkkqx126nRGZTIblV3yBXwzg8WWzMmv+Z3
+ 4ga9q8mwIBmby4RkYxBjrj4bPG60t/iI3GkEVQOGOKMlq8N1yOVoiQjafsUk3TXcZCQa
+ 5mVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771801665; x=1772406465;
+ d=1e100.net; s=20230601; t=1771801644; x=1772406444;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=F9o91NXnN55Qgm8cd9PGuHzTDVifQlajjk4xjvK6WQo=;
- b=N0r0SxBOxhjSpX2v/UrMzNxmGDyF8+jrVo6YT+NrQomqNmd3/YAFDCUSCsGNyIjrAJ
- SNWA8/prWdNzx4/rWFyStHUab8dnTcoJcd7dMjy/Wo+n1pV/kFg8Z7+KA6wwD23dThz/
- +Z0NCxrDcVaceCBGy4+aS5/ZBlfUThRyk2SACW2+vxM70XVRUYp60BCzhPcoB5Rm4/ji
- vlAepb9+QjkXkgypH3TnkCFOX361sQpLmqmTlzmI55ntVok2Ocx57SXM66esVOPgcN3C
- B+bz4qQL0qMep/Bz/UgKXVIj0tcyxLY1uibbiY9DVQvHl6iJYMBS/vOolPPyQjXTGOsO
- Ymug==
-X-Gm-Message-State: AOJu0Yw7KtDfGuLBCmYF3Oo+zbCqUuQQEYpSWsOo9hslb/oxocG2xnWL
- IkS8keefMHI5eGusXLIIa1HEBzwUl+k0eKp8jSDeg9hf/HtX6X6tJDeUltB0ANEwmr0dog1ALnq
- f9sDcFPU=
-X-Gm-Gg: AZuq6aIj/tCkU+d9e5EQzJx9CbIx8vN5cSugfRbjDj/0JCPNu+82/UQkdFf2lhYah+z
- xjQfKXhM8Whh2/MZh+i1rw9/6njLOfaXGtx8bUadePBsJLSnzeSQ4+Zbix7W+CCVgiVrrPrmZY3
- XQszLov2gSjWde8meHPOCenXef/m5kxnPlw6NBS9UxJBPigFnEn4l99e478YOrksutawfzUpIW6
- iK+DiyDWpZJYkVX31gE8A4ATXtVEPw943VfRn6igi+V530xETDUgDsOvShM9n3qj3lJJFyXslnm
- DcCevo+UQjs+9J13xw8mKOf7nKtkg1oxs4naos29LGX9WrfivS86RAZ4s3/0irPKdBaHaruAJZi
- rlauJyIFu/e0WBAfh9e8TjYBvTPgJf7e6Ujw4nijm3gqkEkR0MQBZCCvVdLjHd12M6iSjJuXrQX
- f0aKKG4ZDhIZyYS3A3JSqMcgVhRVBKEGKCGpGNCL6eVh9p5Xw6Rju71mCoIUqyjQC+g7F7pxEp
-X-Received: by 2002:a05:600c:8b82:b0:483:8062:b2f with SMTP id
- 5b1f17b1804b1-483a95b3e0dmr107278135e9.6.1771801664690; 
- Sun, 22 Feb 2026 15:07:44 -0800 (PST)
+ bh=Qd0G+nfyztxAJMOwNcY/97xGBoHYfcp5GPMnR6QZ8mk=;
+ b=a7jD5f0rEWPZ4cmY45sC44nNfHMnsEkPnfxlmOyXm5oCK+d/afDtoFJY1cLPAKv6u9
+ GVVL2EtEyQynKIwL6kCi5yLEVdBY8d5j3+CQrHELyLVRd57ZvHoF1ZVEcPMFYOigI7sx
+ a/7GL4gpADyqXaoanoKKGRy8dPJ5ajFM7eW8ZXYId9fji6MsPx948BbUi7e+6N+bIrO5
+ TzOZF+T1cToFeoHJNVogXjZ0+uL00mKjUSA3vORzs5hHNLd+72jTTuWxsSyGoCcgOB2q
+ a0ejdRwwjRbcNGL/WelyVyBFoY/a6mMMIC2BOZ1MXFVEdT9M9LfQTUg4OBt/strdLciB
+ fdAg==
+X-Gm-Message-State: AOJu0Yyra0AvbAhTwCpw8rdH1pywX6akjY5CksgEtanShrsLAPozW+EO
+ WZh3EALUe0BQiScyr0YzX99iEMOE8v8puFDjuBJcT4iSe//7inwTQvqB/vvLNChTPRrdBPNNCFj
+ KJ2/j1go=
+X-Gm-Gg: AZuq6aImlMwZohD/nqgFFkVf5yQxnDVplcg9ixc8lUhPwFMm5JiJORP8AS73CEtOHDt
+ 0+gA+bi6cxCNviDzGDI6wPy8gptMz1i12+LYCKNaN2vojLsLmmbXXz/YLctvah+jpyHxIP1BX/W
+ K2UtRC8esJFF/ETglP5iXfhzJyIZcvoKCVNSU75lEO+rwuz7d/drckHIA71T1balaqWm01M7hhO
+ e8Z/VgoMvd4y/47FQqbFYbv2GME/JYed/Dzcuf+9kJzpeDr6jYjoBndSs/K23DJPFw1ZktiHDuJ
+ fVaTTvx1bggR0/GTEaRj+5cCv3Ahu+1Ny3jQsJ8yLEFfGmkNW8DXTvLkC+GYC0aEzgQFH1vi2KW
+ KTaTZFT+PWZJh8bWIhnV2f3acV2/OFyo21uonEtujrf+ud1tAXHHqJDnEa4JrLcIgW75a7Jan5/
+ ONzp89xD/LiAS1NDl4ks9qLaKjCap8VYHQud7/lpTFB2CWQ3XfitZTAwTSyJYWnUfJWZzy6gxuv
+ rFcsgcV9kQ=
+X-Received: by 2002:a05:600c:c1c8:20b0:483:47ae:7c00 with SMTP id
+ 5b1f17b1804b1-483b1c6a605mr29498915e9.20.1771801644001; 
+ Sun, 22 Feb 2026 15:07:24 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-483a3df4859sm130017965e9.2.2026.02.22.15.07.43
+ 5b1f17b1804b1-483a42ea363sm74687245e9.18.2026.02.22.15.07.23
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 22 Feb 2026 15:07:44 -0800 (PST)
+ Sun, 22 Feb 2026 15:07:23 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 15/20] hw/net/rtl8139: Remove ineffective parameter
-Date: Mon, 23 Feb 2026 00:05:56 +0100
-Message-ID: <20260222230602.5756-16-philmd@linaro.org>
+Subject: [PULL 12/20] hw/ppc/spapr: extract SPAPR_MAX_RAM_SLOTS in a new header
+Date: Mon, 23 Feb 2026 00:05:53 +0100
+Message-ID: <20260222230602.5756-13-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260222230602.5756-1-philmd@linaro.org>
 References: <20260222230602.5756-1-philmd@linaro.org>
@@ -98,98 +99,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: BALATON Zoltan <balaton@eik.bme.hu>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-The do_interrupt parameter for rtl8139_do_receive was originally added
-in commit 6cadb320c7 to avoid generating interrupt when receiving in
-loopback mode. Later commit 5311fb805a changed this so that this
-parameter became ineffective and now this parameter is unused and
-always 1. If this turns out to be a problem maybe there's a better way
-to fix this so remove the do_interrupt parameter for now to simplify
-code.
+Allow to include it from common code (vhost-user, in next commit),
+else it pulls ppc/cpu.h which has target specifics.
 
-Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20260127173849.588F25969F0@zero.eik.bme.hu>
+Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-Id: <20260131020100.1115203-4-pierrick.bouvier@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/net/rtl8139.c | 24 ++++++++----------------
- 1 file changed, 8 insertions(+), 16 deletions(-)
+ include/hw/ppc/spapr.h        |  8 +-------
+ include/hw/ppc/spapr_common.h | 17 +++++++++++++++++
+ 2 files changed, 18 insertions(+), 7 deletions(-)
+ create mode 100644 include/hw/ppc/spapr_common.h
 
-diff --git a/hw/net/rtl8139.c b/hw/net/rtl8139.c
-index 9fd00574d29..2ad6338ebee 100644
---- a/hw/net/rtl8139.c
-+++ b/hw/net/rtl8139.c
-@@ -815,7 +815,8 @@ static bool rtl8139_can_receive(NetClientState *nc)
-     return avail == 0 || avail >= 1514 || (s->IntrMask & RxOverflow);
- }
+diff --git a/include/hw/ppc/spapr.h b/include/hw/ppc/spapr.h
+index 5476ac7ce7b..b022f8dd25d 100644
+--- a/include/hw/ppc/spapr.h
++++ b/include/hw/ppc/spapr.h
+@@ -4,6 +4,7 @@
+ #include "qemu/units.h"
+ #include "system/dma.h"
+ #include "hw/core/boards.h"
++#include "hw/ppc/spapr_common.h"
+ #include "hw/ppc/spapr_drc.h"
+ #include "hw/mem/pc-dimm.h"
+ #include "hw/ppc/spapr_ovec.h"
+@@ -946,13 +947,6 @@ int spapr_rtc_import_offset(SpaprRtcState *rtc, int64_t legacy_offset);
  
--static ssize_t rtl8139_do_receive(NetClientState *nc, const uint8_t *buf, size_t size_, int do_interrupt)
-+static ssize_t rtl8139_receive(NetClientState *nc,
-+                               const uint8_t *buf, size_t size_)
- {
-     RTL8139State *s = qemu_get_nic_opaque(nc);
-     PCIDevice *d = PCI_DEVICE(s);
-@@ -1173,20 +1174,11 @@ static ssize_t rtl8139_do_receive(NetClientState *nc, const uint8_t *buf, size_t
-     }
+ #define SPAPR_MEMORY_BLOCK_SIZE ((hwaddr)1 << 28) /* 256MB */
  
-     s->IntrStatus |= RxOK;
+-/*
+- * This defines the maximum number of DIMM slots we can have for sPAPR
+- * guest. This is not defined by sPAPR but we are defining it to 32 slots
+- * based on default number of slots provided by PowerPC kernel.
+- */
+-#define SPAPR_MAX_RAM_SLOTS     32
 -
--    if (do_interrupt)
--    {
--        rtl8139_update_irq(s);
--    }
-+    rtl8139_update_irq(s);
+ /* 1GB alignment for hotplug memory region */
+ #define SPAPR_DEVICE_MEM_ALIGN (1 * GiB)
  
-     return size_;
- }
- 
--static ssize_t rtl8139_receive(NetClientState *nc, const uint8_t *buf, size_t size)
--{
--    return rtl8139_do_receive(nc, buf, size, 1);
--}
--
- static void rtl8139_reset_rxring(RTL8139State *s, uint32_t bufferSize)
- {
-     s->RxBufferSize = bufferSize;
-@@ -1745,7 +1737,7 @@ static uint32_t rtl8139_RxConfig_read(RTL8139State *s)
- }
- 
- static void rtl8139_transfer_frame(RTL8139State *s, uint8_t *buf, int size,
--    int do_interrupt, const uint8_t *dot1q_buf)
-+                                   const uint8_t *dot1q_buf)
- {
-     struct iovec *iov = NULL;
-     struct iovec vlan_iov[3];
-@@ -1828,7 +1820,7 @@ static int rtl8139_transmit_one(RTL8139State *s, int descriptor)
-     s->TxStatus[descriptor] |= TxHostOwns;
-     s->TxStatus[descriptor] |= TxStatOK;
- 
--    rtl8139_transfer_frame(s, txbuffer, txsize, 0, NULL);
-+    rtl8139_transfer_frame(s, txbuffer, txsize, NULL);
- 
-     DPRINTF("+++ transmitted %d bytes from descriptor %d\n", txsize,
-         descriptor);
-@@ -2246,7 +2238,7 @@ static int rtl8139_cplus_transmit_one(RTL8139State *s)
-                     DPRINTF("+++ C+ mode TSO transferring packet size "
-                         "%d\n", tso_send_size);
-                     rtl8139_transfer_frame(s, saved_buffer, tso_send_size,
--                        0, (uint8_t *) dot1q_buffer);
-+                                           (uint8_t *)dot1q_buffer);
- 
-                     /* add transferred count to TCP sequence number */
-                     stl_be_p(&p_tcp_hdr->th_seq,
-@@ -2323,8 +2315,8 @@ skip_offload:
- 
-         DPRINTF("+++ C+ mode transmitting %d bytes packet\n", saved_size);
- 
--        rtl8139_transfer_frame(s, saved_buffer, saved_size, 1,
--            (uint8_t *) dot1q_buffer);
-+        rtl8139_transfer_frame(s, saved_buffer, saved_size,
-+                               (uint8_t *)dot1q_buffer);
- 
-         /* restore card space if there was no recursion and reset offset */
-         if (!s->cplus_txbuffer)
+diff --git a/include/hw/ppc/spapr_common.h b/include/hw/ppc/spapr_common.h
+new file mode 100644
+index 00000000000..a315b685805
+--- /dev/null
++++ b/include/hw/ppc/spapr_common.h
+@@ -0,0 +1,17 @@
++/*
++ * Common definitions for PPC sPAPR
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#ifndef HW_SPAPR_COMMON_H
++#define HW_SPAPR_COMMON_H
++
++/*
++ * The maximum number of DIMM slots we can have for sPAPR guest.
++ * This is not defined by sPAPR but we are defining it to 32 slots
++ * based on default number of slots provided by PowerPC kernel.
++ */
++#define SPAPR_MAX_RAM_SLOTS     32
++
++#endif /* HW_SPAPR_COMMON_H */
 -- 
 2.52.0
 
