@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6795E68179
-	for <qemu-devel@archiver.kernel.org>; Sun, 22 Feb 2026 23:08:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C46F5E68179
+	for <qemu-devel@archiver.kernel.org>; Sun, 22 Feb 2026 23:08:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuIYc-0005mm-JV; Sun, 22 Feb 2026 18:08:10 -0500
+	id 1vuIYj-0006dr-48; Sun, 22 Feb 2026 18:08:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vuIYa-0005Rf-3Y
- for qemu-devel@nongnu.org; Sun, 22 Feb 2026 18:08:08 -0500
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vuIYg-0006MQ-MF
+ for qemu-devel@nongnu.org; Sun, 22 Feb 2026 18:08:14 -0500
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vuIYY-00064l-Ga
- for qemu-devel@nongnu.org; Sun, 22 Feb 2026 18:08:07 -0500
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-4837907f535so33156115e9.3
- for <qemu-devel@nongnu.org>; Sun, 22 Feb 2026 15:08:06 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vuIYf-00065P-0N
+ for qemu-devel@nongnu.org; Sun, 22 Feb 2026 18:08:14 -0500
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-4806bf39419so34625075e9.1
+ for <qemu-devel@nongnu.org>; Sun, 22 Feb 2026 15:08:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771801685; x=1772406485; darn=nongnu.org;
+ d=linaro.org; s=google; t=1771801691; x=1772406491; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=EfTtfTTU3wlW3mcARDFC2+pUKQHiKvLPF7i7ypFyE5Q=;
- b=DujAFY4RksngvSuLrse5anQOYps/x1pO8B3xNU5kK6hSnpBcadmkbPssBsSXjIkZKf
- 6z2JHPiyHi8ZseJzcKTG9hB3Ya7lsyaZ1+DDFKmJrgRi1/4d8Y28LytgbEkjNtE1hYpP
- b8YTxjhUubtC9/upYR4YAnRyPM+OzPWfQc4sHOkB5wNyI+uCf781AMHXen9r8C3JMCIT
- U/FQyfJnZwqgrMlSFHsluWtFAOyXMnNPi9YvS0M0079z5RCK+5/RGWaaC/NmJTKjE6MS
- kr8FlNopeoUrCRT3uQsgTq6YjfUjUov7/Uvuu4RQZ9uHix9qdyEdUUw/7ywtaAFLK9nD
- pVpg==
+ :reply-to; bh=5dSZ2BRPb9a3u6TkdiLcs4w8cdPWRis2CRSgfa2M8O0=;
+ b=C6VEib7H8LRi/Wfvj1Xb9YivCLDv4Jgd+H3h7leC3WT1Y08PmupjX8VQNLuGhYxST8
+ 9ot9tiXnjhvVPudDE19LUx1XQ3kuYdmFJ3eL8zL7XXhv8MYPbgNLumUspOFLOzRRE/EW
+ 9mTODDyrNscuPGGr62dZDag47R/sECoDtGymKKu2eZkZv5sQ2qhEJK+N1/LBdN4GZdEb
+ +w3Q9eMNLbLAXbJxDf5/WmS4hEOus3I/P4SJk8VM9nLY/iyHz/M1gIgG7YMRC8uTXFY6
+ cHaFrpro38HO86l08ZbXV8W+FJdkE/1CnUY3DIadWk7zEy26I1JxRedgYnfrqi3V9SmS
+ +Fzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771801685; x=1772406485;
+ d=1e100.net; s=20230601; t=1771801691; x=1772406491;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=EfTtfTTU3wlW3mcARDFC2+pUKQHiKvLPF7i7ypFyE5Q=;
- b=i6jit8lzPRyaP1WFya6U6uVQq9ABZZk7DBb5Pu5WY3d3O0mougbBOoz4vgiR9bfQ1E
- UYqjk+7PKvQYMx1bNkGLfbhHTmH32snPlNiv+3mGf//4mUrx4lnqXSIGCwEFov2KUbYY
- +d7M9zqkgQDl1lNQuH5aOBYNO1YG/zvuTwgWBgRR9GiY2hrj/CFGLB6G2zr1QvB1Rzr3
- vGxPVlZrBxFaqg9JbWyXk0pU0jsINrGrW72/pta+TJKiJEzzFQWS7HVHwTHz6z+jn8k5
- zACtyB8y4vJlt33Hcgo2H2lBH+ERZAOldZ1M9jPuJXx9hDnxivHi7uJOA5Wil6sVrtfm
- D7Sw==
-X-Gm-Message-State: AOJu0YwgPY/xLuJJ8GRq2r/XPdrJhnCqWf4jkTkg4fHU4sJmV3B6oKSR
- JWez4+++PF1Qj0b7p32hlbNxkBXJniMQnf+rleLujZZpdndEBTtAUx8zbTY+SqU/RGSeBiotQ1B
- x4vCyW2o=
-X-Gm-Gg: AZuq6aIy1N4GW2dzDYTokJy8P/WjIrQFd7rNgd+eKRtcLPjL9bE0u3VpCQT6IcUXFGm
- bsofWWhtY+XjtZuO5SwdFFjt5AFC79VJwhU0kUQHwXIWepqDOqgrNzRoF2RclpmFvXktAJB4Vni
- kFucQQE617HG+I7fRqTCl9Ib0VmFUCCAMZYVn6V2xJtcgJ+E4oXBfJWQPKrcuVhE3Xs5gvaad0u
- uZLfDc4kAfjTajKn6RM3/LxdNQRhviFyUamzLJ5MfSK8+gVP+rhzmmrOF8Hr995iqop6XOZbHFT
- D6nrjx7s7uHBSaviUa+tSWk9XSUsKUDcgLgr9xyuqhANAsN1l7uTpygjxxhnaqLit7/BIgWTcrp
- 4HomBqZWJ+MmQQxrIzXqC3oV8UI1XCeP2zzI1P2/tvTnPmQu7+Sj3rb5v7CyvM8Anl2uaEdbN5C
- +bo/GZKGDT9qxUnSWVy2GpDWUmmp409aQtTiPPkAeODDVb4VN3lsEU1DEF3jYoXhqN2e8Rh/7/
-X-Received: by 2002:a05:600c:1e1d:b0:483:702f:4633 with SMTP id
- 5b1f17b1804b1-483a95bd8fdmr117245725e9.4.1771801684671; 
- Sun, 22 Feb 2026 15:08:04 -0800 (PST)
+ bh=5dSZ2BRPb9a3u6TkdiLcs4w8cdPWRis2CRSgfa2M8O0=;
+ b=YxgQo1h8NGHj+/xhWOPGX2gbh2PeDZRIy3ovyTtCx6G7R9P4pH815dQ2eLQN6XYxdk
+ IG01Kicbx761zxyqSBw673+U6XqHBwOtJa0OvJDeKC0ImzOmc/jNaPxw4uAfJ0J4CffP
+ 20v6BaevakSrJ3rztRRc6C7M06Tj/N/Gb72/C9H/d9RsItN6W1Lm3NOszpiPrzqv8kkf
+ XSa1GcNKKeUqkore3rfGjdLIMYrShjdD6CDzAxHUvb5ks/ib5qjo8QMrE4Bj7k/5YPGW
+ mGwTLnoQcalAbufq8IradV30f3TGzWSw5ajsOMDD6ClGDC3eKRiRx8+F1IeuKj9cmkjN
+ ijZg==
+X-Gm-Message-State: AOJu0YwDSCByUoWeAZmgXJsVKtZXhrp5DYMNCfZp3e3oFgwgpnTM4+Bj
+ B4fYi2/fykWB5V9mVu32NCbGNK4rizAMewJi9hH4Q/mCNpugV8I6LAFZcmuVwSdr3kP9xnMp/D7
+ Mm9nHqb4=
+X-Gm-Gg: AZuq6aJM644zr0F1sA3WkZP9EdL0q3DhVrLmfPndw5tQ6qM61Ns5XONDIwjE14FHTpU
+ k3SV6zUs/xtkaeo2q24LN96azLipTNiq+Sw4c3CX6VZYFdbLGmq5VqU1AxMo6n75Y6kpFcP7ccw
+ R8+okakmccwEyY4rs0zRw3fI0QZI8Iw0DXwlRPMgdYXWJe79xYWQ9k2pRPKgTsiyhXDsf04fvy7
+ 9hW+on6aBO4RcquWRC4dkCwSPLGV51tP5srT/rIQ8izHQOqiwQ4+uaDKO9mDWyozcIZPEoI+u6T
+ MX7xZauswS0FFT5fEToRIvlW7p75mQpeOa73wCBYtC69XcxvYcBonmDZDXqxKu0at+OGHC2+frA
+ 0DmgVh6CSd6M7dQCcShmfecmY0H8ZHWORW3Om7mnMljPvI4e9hWMIVJt7hoSQS0FJkDpHih4raX
+ 4z6srCDNoWA5PMGG0aeHzU05BiMxYYOKgjkG609a+pLgwEVn93YsnFaaPiUgSWLrz6BlovjMWep
+ FcShzVkzbY=
+X-Received: by 2002:a05:600c:4fc2:b0:481:a662:b3f3 with SMTP id
+ 5b1f17b1804b1-483a949f791mr107831785e9.7.1771801691187; 
+ Sun, 22 Feb 2026 15:08:11 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43970c09897sm15226445f8f.17.2026.02.22.15.08.04
+ ffacd0b85a97d-43970bf9fb2sm15623773f8f.1.2026.02.22.15.08.10
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 22 Feb 2026 15:08:04 -0800 (PST)
+ Sun, 22 Feb 2026 15:08:10 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 18/20] net: mark struct eth_header as QEMU_PACKED
-Date: Mon, 23 Feb 2026 00:05:59 +0100
-Message-ID: <20260222230602.5756-19-philmd@linaro.org>
+Subject: [PULL 19/20] net: mark struct udp_header as QEMU_PACKED
+Date: Mon, 23 Feb 2026 00:06:00 +0100
+Message-ID: <20260222230602.5756-20-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260222230602.5756-1-philmd@linaro.org>
 References: <20260222230602.5756-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,46 +109,40 @@ a misaligned struct is undefined behaviour.  The clang sanitizer will
 emit an error like this if you run the sifive_u_mmc functional test
 with sanitizers enabled:
 
-../../net/checksum.c:78:47: runtime error: member access within misaligned address 0x561f52f35011 for type 'struct eth_header', which requires 2 byte alignment
-0x561f52f35011: note: pointer points here
- 00 00 00  00 33 33 00 00 00 16 52  54 00 12 34 56 86 dd 60  00 00 00 00 24 00 01 00  00 00 00 00 00
+../../net/checksum.c:168:24: runtime error: member access within misaligned address 0x5b7a7f829033 for type 'udp_header' (aka 'struct udp_header'), which requires 2 byte alignment
+0x5b7a7f829033: note: pointer points here
+ ff  ff ff ff 00 44 00 43 01  34 58 54 01 01 06 00 85  95 80 60 00 00 00 00 00  00 00 00 00 00 00 00
               ^
-    #0 0x561f20608459 in net_checksum_calculate /home/pm215/qemu/build/clang/../../net/checksum.c:78:47
-    #1 0x561f20117bfa in gem_transmit /home/pm215/qemu/build/clang/../../hw/net/cadence_gem.c:1386:21
-    #2 0x561f20115c61 in gem_write /home/pm215/qemu/build/clang/../../hw/net/cadence_gem.c:1650:13
+    #0 0x5b7a71a5887e in net_checksum_calculate /home/pm215/qemu/build/clang/../../net/checksum.c:168:24
+    #1 0x5b7a7156819a in gem_transmit /home/pm215/qemu/build/clang/../../hw/net/cadence_gem.c:1386:21
+    #2 0x5b7a71566201 in gem_write /home/pm215/qemu/build/clang/../../hw/net/cadence_gem.c:1650:13
 
-SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior ../../net/checksum.c:78:47
-
-Fix this by marking the eth_header struct as QEMU_PACKED, so that the
-compiler knows it might be unaligned and will generate the right code
-for accessing fields.
-
-This is similar to commit f8b94b4c520 ("net: mark struct ip_header as
-QEMU_PACKED") where we fixed this for a different struct defined in
-this file.
+Fix this by marking the udp_header struct as QEMU_PACKED,
+so that the compiler knows it might be unaligned and will
+generate the right code for accessing fields.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Message-ID: <20260212140917.1443253-4-peter.maydell@linaro.org>
+Message-ID: <20260212140917.1443253-5-peter.maydell@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
  include/net/eth.h | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/include/net/eth.h b/include/net/eth.h
-index 14c34f530fe..63f598d7cdd 100644
+index 63f598d7cdd..df90ff08374 100644
 --- a/include/net/eth.h
 +++ b/include/net/eth.h
-@@ -39,7 +39,7 @@ struct eth_header {
-     uint8_t  h_dest[ETH_ALEN];   /* destination eth addr */
-     uint8_t  h_source[ETH_ALEN]; /* source ether addr    */
-     uint16_t h_proto;            /* packet type ID field */
--};
-+} QEMU_PACKED;
+@@ -85,7 +85,7 @@ typedef struct udp_header {
+     uint16_t uh_dport; /* destination port */
+     uint16_t uh_ulen;  /* udp length */
+     uint16_t uh_sum;   /* udp checksum */
+-} udp_header;
++} QEMU_PACKED udp_header;
  
- struct vlan_header {
-     uint16_t  h_tci;     /* priority and VLAN ID  */
+ typedef struct ip_pseudo_header {
+     uint32_t ip_src;
 -- 
 2.52.0
 
