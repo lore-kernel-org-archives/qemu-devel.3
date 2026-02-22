@@ -4,83 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99E3AC636BA
-	for <qemu-devel@archiver.kernel.org>; Sun, 22 Feb 2026 21:58:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 282D1C636C4
+	for <qemu-devel@archiver.kernel.org>; Sun, 22 Feb 2026 22:06:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuHSW-00027t-Ew; Sun, 22 Feb 2026 16:57:48 -0500
+	id 1vuHaF-0004w8-LX; Sun, 22 Feb 2026 17:05:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vuHST-00027D-2P
- for qemu-devel@nongnu.org; Sun, 22 Feb 2026 16:57:45 -0500
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vuHa7-0004tF-FP
+ for qemu-devel@nongnu.org; Sun, 22 Feb 2026 17:05:41 -0500
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vuHSR-0007O7-Dx
- for qemu-devel@nongnu.org; Sun, 22 Feb 2026 16:57:44 -0500
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-4837907f535so32913295e9.3
- for <qemu-devel@nongnu.org>; Sun, 22 Feb 2026 13:57:42 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vuHa3-0000PS-QB
+ for qemu-devel@nongnu.org; Sun, 22 Feb 2026 17:05:37 -0500
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-483703e4b08so29348295e9.1
+ for <qemu-devel@nongnu.org>; Sun, 22 Feb 2026 14:05:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771797461; x=1772402261; darn=nongnu.org;
+ d=linaro.org; s=google; t=1771797933; x=1772402733; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=9t3bdn96J9shGSR6jtPt8Uq3S8CknrUZoF0dq2ePH8w=;
- b=eOgmeF9/spfjTbKhJWmnlfYOt/DpMwhJqg5WwidrXXN+a+UnR/3Ukv7m5uo4SupncG
- KGRqI2NPdMRNiX3dsfoWtuYsuTWclmwo/fyTFfM0l3il1tqOOUQ6rVAFvE0Zjb1UAhwU
- gDTIIYPxELTwG/vfuIi/CEjPdO0L6JfAbGgic91esK9aFb2OMyhgPEEP878Gwn+wImPH
- liRKedzAAqYiwLmA932tfT3DjWjlxaf2ihjJVfOFHfPEMuq8nn4MyeYotPjCh4A5PDML
- I9c5q2SkCcIa6f+py3LWSye5Yij2IMlK+nMZTzIxPFdWk0+/sc94/fscClagarlaU5Rw
- lIVQ==
+ bh=8xxQezrN1+oeCO2s+GJEytBSvyT8YSM1E5TN7wcEyvQ=;
+ b=B5EVvnGZGIiScU3eKCIsfUK153AoFYEtEgsd5S6wm4F+lnjMR7hwsfBe7HsDHJChu8
+ quJuKf2MmZTTUfONiN126lUUbuAuxudEsOVMG9E3E4oiCdhNH/MyYeJjmGd1y7OP+JWX
+ jLU4dSMyvfIp+LL+IBFIn5mECCsu7IWTPSkLkj6eERdonNuAT5PL2FtyXiJWZPN8+sHr
+ LjfncgB5KJ73LNX10PWVrlMNdkz2ymBv5HJgLTSzCzonMGBswrDoCRY+sg/Pq80vtDP2
+ ApjJFUVXXqiSIqo+Qgm6E6Zwl2TAhcFlIdxcLsUGuv4xeWlBzYZsZRop+UDZ1zZijjS7
+ kBew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771797461; x=1772402261;
+ d=1e100.net; s=20230601; t=1771797933; x=1772402733;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=9t3bdn96J9shGSR6jtPt8Uq3S8CknrUZoF0dq2ePH8w=;
- b=qn/bEQ/ScC1NHkKW+E2gybYsOo7wYAufOCxE6a6D7X+1O5Gy1y+C7o5Dk2dMANFG0D
- wGGDxTfHoDXczEPf9gRHYk6wBa6UULJnJj9u4WVnVSS7tCHwsfrt6k0jrUcepWoIm6At
- 2jRcSjrc9JLiqa0eSISsp1kNmyrQLhs+Kxt3kNfoz/bJZ1fkoHB6S4chDT8uIUlOCzn+
- L7rjdpXK6PfVyyJCjADDVN78KxtK5FfR21u/q0q/t5WDNfN77O+2zwsv7R8qKhELKHh2
- tElLcAJaGuZKD1GfHVbog8/euug5Lfi2TNjiO7WoBtxz/U5WHPBzolNOv98L/DYWrYrp
- T8Rw==
+ bh=8xxQezrN1+oeCO2s+GJEytBSvyT8YSM1E5TN7wcEyvQ=;
+ b=G6zwaUbUEve4PZK6UoegK156/bcan5tD5QO6k0uWcYEpY+gI3wKFs4nH6mLiiAWssF
+ Q3ZOCYyk7oy1RX0zgnFc98xf+NpXX3YDjSXIgPvNp0U50ZDpD28AF8zgIsO7kpKK0SH/
+ rUgfoPG05zVVjZBgGC2aZTIuHljejCk0bzyJK/9/5qrQ1nCq8ntahLmzEQ7LuesDPjpq
+ dRqCAhTtf6+XfZojrIQfU4Btu2py/K/1idrP3nSvqijPVJ5T5nfnxwRJYQ4AmJWPARu5
+ 9nO7FDji1hoji+45gvYn+F8iTyyy+d+T/n1SfTHF81rieJjujdghH+OjqwEqglRgsAAc
+ 8pGA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX0JremQxXmjG1wI1SkELDV4p1W+uCQV7wYHVW9+Topx48Ma6nGlgYart8DzjsgiQu4n1bc3aBuya5Y@nongnu.org
-X-Gm-Message-State: AOJu0YxwxEYa4Nh3lnJVQgyj7GWAl6LyDRzwwdczHECN9tCV0sxIMkTF
- HCFJ8Kt7beh/TbL17/EtHiPiwNUww87yIb4M5FPkwZjv/6o7GZYsHyn19jNZ5dlmi+M=
-X-Gm-Gg: AZuq6aLZtwniEy2+ekAtFCbp8Zsx0nNv0Lv7Z/am2vJhgVBTTEZNaoH9HiheyRQ6lpJ
- dPCJZlFwfma+jo6Lz1Y13sEb7Od4968JiDkEzaH/upSfdPe9vQnzVlT1A3iPoRpeRuf+p2ga/rw
- WK37uvaEvdmQyP8ejy7h0DbPWtppPwEVQftCzC6SElS0q+JEbxSxtD7XhxCFxlzUtQJP4GtwUt5
- 0IhN643DDp7+4cUeezbrSwQ2jXhZNBLuMwqE0d8GVlOc4KyQLt0X5Fb0ssOATAiYwNFr2TDAW9Y
- 5lzQMf4/YBLvQs742N2QY5fzRN61mEyGnaLZctXZBDn/sywfz7Vg6ID764Qc6Ke4/ba9uN1aLbW
- p2xnPYCga3niQc1VAlDDybRHPkVsfAiAh8oYIhERkzed3iNdtRkex+KUSu67/xMbrkaLehZrmJ9
- iq2SPmU2Umte9gMrgRWZpgAnOPkPQ+P+r5i5USdpitGoAC/JmIoTXtP0x45RBSGTJF0Q==
-X-Received: by 2002:a05:600c:c8a:b0:483:96d8:9f75 with SMTP id
- 5b1f17b1804b1-483a9603b00mr100954865e9.28.1771797461358; 
- Sun, 22 Feb 2026 13:57:41 -0800 (PST)
+ AJvYcCWSQ4r2u0IfXsulaJE/3bhp9R8dVpVIDFQm3v+oAhL+fFIl/JXmypNXNB11KTvCjmaI7BtUm+4tyEpq@nongnu.org
+X-Gm-Message-State: AOJu0Yzp4QTARZ5ippPx0waXagVvGOfOvxY2cRl+i1VgSGZ/cl1zTEgQ
+ IIB3iw1L6U8gw66ItDwqfABln6mj3UqJvtn/UEI30Rqbmu0hgsZkvRwKk2WSd/nThzc=
+X-Gm-Gg: AZuq6aL8vdHCms/Fcnm5Fgliy5AgpniiNIPgoWLMXt3NvdStVDZc7St77UtPQ54c7Ah
+ 7CF5f7DWdvaZdXKmjN5QiodlAfuoJr0qOX16DlHIqu8AoGHe0sDhco14wbkqCgcDExb5ZSEboUu
+ b8K7r8PcDWFzlFGE6X0xd4iYs6niJJi/1cl+gPJFnW3NFEX77GlqvD+3y31rY37ZlyN4X//p93s
+ nmyYyz4mTl6pjTdCwYO1A7OhrYZoIFMm9A+TFCEfI8krAuyu0Y1ZikhGc0VAEclXhhlx8p6ONh2
+ 8lBIYY8qdC2hWvt8KZx6M87TF0XdJO7Fe0A/qkc0enaLQeT80E0ksS4FLtJAg4FuREoo00vuf7E
+ 3DHzbmZtuIR4T7PTOB5ls4bTqqIRmfnMD84s1tK2ZByTGmLsMmHhaY8A4STjoGcHVWsIE+nSrH7
+ BbraKbo+1X5YPckSSAWBkwmrZYMSV0sVb7fWDF30kycylon9UH3Qv0JBrR/jphs2aXHQ==
+X-Received: by 2002:a05:600c:1989:b0:479:1348:c63e with SMTP id
+ 5b1f17b1804b1-483a94c99admr129135765e9.9.1771797933230; 
+ Sun, 22 Feb 2026 14:05:33 -0800 (PST)
 Received: from [192.168.69.200] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-483a9b75e63sm250571955e9.6.2026.02.22.13.57.40
+ ffacd0b85a97d-43970bf9fb2sm15336387f8f.1.2026.02.22.14.05.32
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 22 Feb 2026 13:57:40 -0800 (PST)
-Message-ID: <35356f16-3a1f-4ba3-8d10-bece637d9c4e@linaro.org>
-Date: Sun, 22 Feb 2026 22:57:39 +0100
+ Sun, 22 Feb 2026 14:05:32 -0800 (PST)
+Message-ID: <d0040a90-60ed-48df-90e7-3c882072f8b8@linaro.org>
+Date: Sun, 22 Feb 2026 23:05:31 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] rtl8139: Remove ineffective parameter
+Subject: Re: [PATCH 0/5] net: mark eth_header, udp_header, tcp_header as
+ QEMU_PACKED
 Content-Language: en-US
-To: BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org
-Cc: Jason Wang <jasowang@redhat.com>, Peter Maydell <peter.maydell@linaro.org>
-References: <20260127173849.588F25969F0@zero.eik.bme.hu>
- <597883bc-c6a3-cd7f-42dc-1ee7fb8e213c@eik.bme.hu>
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Cc: Jiri Pirko <jiri@resnulli.us>, Jason Wang <jasowang@redhat.com>,
+ Dmitry Fleytman <dmitry.fleytman@gmail.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Patrick Venture <venture@google.com>
+References: <20260212140917.1443253-1-peter.maydell@linaro.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <597883bc-c6a3-cd7f-42dc-1ee7fb8e213c@eik.bme.hu>
+In-Reply-To: <20260212140917.1443253-1-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,118 +106,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/2/26 19:45, BALATON Zoltan wrote:
-> On Tue, 27 Jan 2026, BALATON Zoltan wrote:
->> The do_interrupt parameter for rtl8139_do_receive was originally added
->> in commit 6cadb320c7 to avoid generating interrupt when receiving in
->> loopback mode. Later commit 5311fb805a changed this so that this
->> parameter became ineffective and now this parameter is unused and
->> always 1. If this turns out to be a problem maybe there's a better way
->> to fix this so remove the do_interrupt parameter for now to simplify
->> code.
-> 
-> Ping?
+On 12/2/26 15:09, Peter Maydell wrote:
 
-Jason usually only does 1 pull request per dev cycle, close to soft
-freeze.
+> Peter Maydell (5):
+>    hw/net/rocker: Don't keep pointer to h_proto as uint16_t* in
+>      OfDpaFlowPktFields
+>    hw/net/rocker: Don't assume h_proto is aligned in eth_strip_vlan_ex()
+>    net: mark struct eth_header as QEMU_PACKED
+>    net: mark struct udp_header as QEMU_PACKED
+>    net: mark struct tcp_header as QEMU_PACKED
 
-Jason, since this patch is trivial enough, I'll take it via my
-hw-misc tree for convenience. Please object if you disagree :)
+Jason, yet another sensible series I feel confident enough to queue
+via my hw-misc tree.
 
 Regards,
 
 Phil.
-
-> 
->> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
->> ---
->> hw/net/rtl8139.c | 24 ++++++++----------------
->> 1 file changed, 8 insertions(+), 16 deletions(-)
->>
->> diff --git a/hw/net/rtl8139.c b/hw/net/rtl8139.c
->> index 9fd00574d2..2ad6338ebe 100644
->> --- a/hw/net/rtl8139.c
->> +++ b/hw/net/rtl8139.c
->> @@ -815,7 +815,8 @@ static bool rtl8139_can_receive(NetClientState *nc)
->>     return avail == 0 || avail >= 1514 || (s->IntrMask & RxOverflow);
->> }
->>
->> -static ssize_t rtl8139_do_receive(NetClientState *nc, const uint8_t 
->> *buf, size_t size_, int do_interrupt)
->> +static ssize_t rtl8139_receive(NetClientState *nc,
->> +                               const uint8_t *buf, size_t size_)
->> {
->>     RTL8139State *s = qemu_get_nic_opaque(nc);
->>     PCIDevice *d = PCI_DEVICE(s);
->> @@ -1173,20 +1174,11 @@ static ssize_t 
->> rtl8139_do_receive(NetClientState *nc, const uint8_t *buf, size_t
->>     }
->>
->>     s->IntrStatus |= RxOK;
->> -
->> -    if (do_interrupt)
->> -    {
->> -        rtl8139_update_irq(s);
->> -    }
->> +    rtl8139_update_irq(s);
->>
->>     return size_;
->> }
->>
->> -static ssize_t rtl8139_receive(NetClientState *nc, const uint8_t 
->> *buf, size_t size)
->> -{
->> -    return rtl8139_do_receive(nc, buf, size, 1);
->> -}
->> -
->> static void rtl8139_reset_rxring(RTL8139State *s, uint32_t bufferSize)
->> {
->>     s->RxBufferSize = bufferSize;
->> @@ -1745,7 +1737,7 @@ static uint32_t 
->> rtl8139_RxConfig_read(RTL8139State *s)
->> }
->>
->> static void rtl8139_transfer_frame(RTL8139State *s, uint8_t *buf, int 
->> size,
->> -    int do_interrupt, const uint8_t *dot1q_buf)
->> +                                   const uint8_t *dot1q_buf)
->> {
->>     struct iovec *iov = NULL;
->>     struct iovec vlan_iov[3];
->> @@ -1828,7 +1820,7 @@ static int rtl8139_transmit_one(RTL8139State *s, 
->> int descriptor)
->>     s->TxStatus[descriptor] |= TxHostOwns;
->>     s->TxStatus[descriptor] |= TxStatOK;
->>
->> -    rtl8139_transfer_frame(s, txbuffer, txsize, 0, NULL);
->> +    rtl8139_transfer_frame(s, txbuffer, txsize, NULL);
->>
->>     DPRINTF("+++ transmitted %d bytes from descriptor %d\n", txsize,
->>         descriptor);
->> @@ -2246,7 +2238,7 @@ static int 
->> rtl8139_cplus_transmit_one(RTL8139State *s)
->>                     DPRINTF("+++ C+ mode TSO transferring packet size "
->>                         "%d\n", tso_send_size);
->>                     rtl8139_transfer_frame(s, saved_buffer, 
->> tso_send_size,
->> -                        0, (uint8_t *) dot1q_buffer);
->> +                                           (uint8_t *)dot1q_buffer);
->>
->>                     /* add transferred count to TCP sequence number */
->>                     stl_be_p(&p_tcp_hdr->th_seq,
->> @@ -2323,8 +2315,8 @@ skip_offload:
->>
->>         DPRINTF("+++ C+ mode transmitting %d bytes packet\n", 
->> saved_size);
->>
->> -        rtl8139_transfer_frame(s, saved_buffer, saved_size, 1,
->> -            (uint8_t *) dot1q_buffer);
->> +        rtl8139_transfer_frame(s, saved_buffer, saved_size,
->> +                               (uint8_t *)dot1q_buffer);
->>
->>         /* restore card space if there was no recursion and reset 
->> offset */
->>         if (!s->cplus_txbuffer)
->>
-
 
