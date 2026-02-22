@@ -4,114 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7850BC6369F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF029C636B2
 	for <qemu-devel@archiver.kernel.org>; Sun, 22 Feb 2026 14:28:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuARi-0007xT-JG; Sun, 22 Feb 2026 09:28:30 -0500
+	id 1vuARq-0007ye-QS; Sun, 22 Feb 2026 09:28:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vuARd-0007xA-0z
- for qemu-devel@nongnu.org; Sun, 22 Feb 2026 09:28:26 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vuARc-0007x9-P7
+ for qemu-devel@nongnu.org; Sun, 22 Feb 2026 09:28:24 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vuARb-0006eV-H2
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vuARa-0006eB-Pg
  for qemu-devel@nongnu.org; Sun, 22 Feb 2026 09:28:24 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771770502;
+ s=mimecast20190719; t=1771770500;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=QbcvBNqbzFwjNeD7oZ2DnxvwurhyiDZl0WS2Ou2JOJE=;
- b=P9Mrrg0ANqp0ZigMQ65q3koXenvxLySBF3WHxI/blm4sBVXutHailnnfxbO2lrANC5QGnN
- ZlGGEyp2O5N2FldKzhi2YKC6owr9cUmbtZkzdr9m6jYoBrCPLLanjAK+mEN6e7VwtEVUlO
- iDVxFVkCLNDPrIQlAp6t8MbrKLNbB4E=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-transfer-encoding:content-transfer-encoding;
+ bh=BzXcCDGS741U4fZsHJm9feMPpS4qDCw7tbd57ymm+ro=;
+ b=OJ4X5cLbowNmr0JVswCLgayJto/LpjdXo7cy6Gcwmahb+673AerMgfNRRZ7RPvWygq5Zgh
+ HaIp2N0Dhc/dqyk2kWpNZZhlPLtjOU4jmYzNb23OHaKwHoBpk6eNYRgp9t38id3W6CsIJR
+ TyXOsO6HuizTL4yH/tW/uGd+v3twKHE=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-548-lT6AtbM_PxyYXtUVpr2qMg-1; Sun, 22 Feb 2026 09:28:21 -0500
-X-MC-Unique: lT6AtbM_PxyYXtUVpr2qMg-1
-X-Mimecast-MFC-AGG-ID: lT6AtbM_PxyYXtUVpr2qMg_1771770500
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-48079ae1001so6108915e9.0
- for <qemu-devel@nongnu.org>; Sun, 22 Feb 2026 06:28:20 -0800 (PST)
+ us-mta-457-3Ow_2l99MFexqMqYgWXcuw-1; Sun, 22 Feb 2026 09:28:18 -0500
+X-MC-Unique: 3Ow_2l99MFexqMqYgWXcuw-1
+X-Mimecast-MFC-AGG-ID: 3Ow_2l99MFexqMqYgWXcuw_1771770498
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4836ff58111so46682255e9.1
+ for <qemu-devel@nongnu.org>; Sun, 22 Feb 2026 06:28:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1771770500; x=1772375300; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=QbcvBNqbzFwjNeD7oZ2DnxvwurhyiDZl0WS2Ou2JOJE=;
- b=KLhH5PtN0BVHkBJgaFxNh9y7xNDJMUvATH+DlwbYeIrd/Erc0Zw6gN5ZSuHQEqQQdL
- M8POpYAfEHNatKLfedmDKbKTx4DvZjKSp0AASRmdPSjACMKoc9dt/f4bgMKX9roYf8pH
- BMXF2lkU1wyGfd+qOFitAFZgUHal9hwOM6+s4wmqhdhnZynJnO1dF3qSAa5KSJAXppN4
- pfBILlx5iWQrlmXK7p0R2OPqpHnbKVs0+VwNIsXI21Qx8mH0WKormKFmg/3L8i+MEfx9
- hQQvq0F879YvoJFZ9StxYkbqijyJQ7v+c43UDImRSzSCCYnMi9wX0brPBX8NBcNLE5QQ
- 7KIA==
+ d=redhat.com; s=google; t=1771770497; x=1772375297; darn=nongnu.org;
+ h=content-transfer-encoding:content-disposition:mime-version
+ :message-id:subject:cc:to:from:date:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=BzXcCDGS741U4fZsHJm9feMPpS4qDCw7tbd57ymm+ro=;
+ b=pFmo5alfJ/pk4oMZ1dGBgfSvEhF15PjdLbEWUpUD8QkToZcqXc9qFXKqXpWUWGOSKM
+ oZhmCIM51cSaxJkyX0n57aEAZa3RsXm9HlnnTLa5Cd6MrV4HJXXKDxCEyg6dcK7B4/Kc
+ zJh1F7LpBQiQpSfyVOOaqPNU/T86vSgNLzWpMSSL3Ii326nKE47LCE63Q6elsbY05XbN
+ 99XQfR2eo6g7UtexaSIuSYQ9ar1srPvuSjsD6jRBhi/4ZJVGmoWXAsRyka6xuPrZi7la
+ 3G8YV9DjG866phS3vlOE2JPZ7xlKFjccjWc5gIdRUhfq7CGbi5AxRiXmTbp4shy5M4Og
+ ew/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771770500; x=1772375300;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=QbcvBNqbzFwjNeD7oZ2DnxvwurhyiDZl0WS2Ou2JOJE=;
- b=WDwi/5a0PCUU9MB1THrw8SUL6+gpaD2hMXIsqftcWy7vTG0gibcHlUul21XYbnYNNh
- j66nLTxUbKQKhMiLiEcM2mfXe3dwGuP1qg47u+hBlSG2fqMGhVgM6JSuvbDmMSwTLF0N
- tJSCkjxgaJTDyToFrK18KNnE/bFVtqfq/dsqo7ZbalXqtQzFSHy0itD0bwk5rXL/79hX
- aPYcQrwQZa8FVP3KokTlFHUIxjXG4aRq350aM6ZsmR7BPdRPURqsa4VVytO9shz4jO1F
- 5L5pGxn9iEcDNBZHPv6WfoRC2c0OyGgiMJ7byFYxS/DDEZ1OdFcTXqoO5Qh0q5clBRv3
- 2h+g==
-X-Gm-Message-State: AOJu0YzJseWut6nz8skBNjDlYLD+VXDfixFi0zge9MqMy6O5nzgRwMOa
- Ez7yeRFeIIA3wRr0TMOlOAFuSbmLQ3h3XQWHHVfYK8CKqC2WtBAUMAxqAg7w/DKCxJIeFnscm/m
- tzr/qaxolZ4eyAJ2+B6xfXBV4luG/OnPJ8ivnk8hCCfPhzEfwBRpqWB0yd2I3mvoipB8xu5ylfI
- eeBlWJRLmTld/cYgR2lz65EXr1kNXQF8pIew==
-X-Gm-Gg: AZuq6aJUu/jE60ryrJJHBjHcmktEz5bCgSndLuGSVMr+kqzUd8aaUEd0ehsWj9urBR4
- eFPgTlJOCcnzEP0Skhy34laxCSHDFxFsHhRriBWva6HlFcFwLI/m06SHhsgK0Ie+ewLDys+ploF
- tdZsDFFHeGU29XpeA6SruorlKARAAQkzE0+f3ifZU0m0v3FU0sJ1+FjSoKyQsjVlR4bNvYxtAcu
- t894HjbUAs3abCT5WZE8/cKfEjrR1nH2CvEZpsf4QdtxTZV1JQJ+hyNWdvy/3OlnhIX7BfjWx41
- bljoOTWmz+e8dFDjgN7vWBDcXy8Cbdmi4OodplUiSklx3nMSG2WlOIq4hhcmGbK1vbHSibEAHqG
- Q2rHcCsS3x0/HryPC5ubpg6h/mEHUA7L3rZRfzR7cvNVp7Q==
-X-Received: by 2002:a05:6000:2485:b0:435:9cd5:bb2a with SMTP id
- ffacd0b85a97d-4396f15bd9cmr10795069f8f.24.1771770499530; 
- Sun, 22 Feb 2026 06:28:19 -0800 (PST)
-X-Received: by 2002:a05:6000:2485:b0:435:9cd5:bb2a with SMTP id
- ffacd0b85a97d-4396f15bd9cmr10795011f8f.24.1771770498845; 
- Sun, 22 Feb 2026 06:28:18 -0800 (PST)
+ d=1e100.net; s=20230601; t=1771770497; x=1772375297;
+ h=content-transfer-encoding:content-disposition:mime-version
+ :message-id:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=BzXcCDGS741U4fZsHJm9feMPpS4qDCw7tbd57ymm+ro=;
+ b=ie4XUPtq/mhHPslx5je4fygKaHf5NyA7kxvUrwSaRMi5ueInk0PJwotBW46Cx843ed
+ 5nIcSL5/j/o6Y/q6biyAidN/pVLxvkc/3AGLnvsUepTsu5wnsaN4dudjwM9eqDE4uBKH
+ +NRvPFssPuoWGV1BSv3B/yL2EBFaugrAmIBoRPi0yoRgO7R0fciPkdL+ckccMIoHmq7T
+ jcoLdBKzKSp8A1ilQpYa3ARztTyIsrNflcQ6x1futOpJezOTtEtKjzdCVIm8a7TBk2e4
+ CAT1/NgTMeyFU1Dq4874VvQyJ3DKfKMUvSfW6tEvCRmokN44MBvrDu7myteuZxYcmwmS
+ 3Hig==
+X-Gm-Message-State: AOJu0Ywh+YPy1/b1edc6suVtNxMzj2kd91pRJaBk6JfjNUlDEDtNJ43B
+ nC4UVCfm94GINz99kkEOJbQCgMjTL9AO98nLBg+bQFBq37LtdDTmO3Ic3didTwgke1KHqCveaWu
+ Gu57EsLFsSMYKSGHWf43TPxzcCL9Y3ONOD8e7yEpjvKo804vE5odv+0K0BZo7HfGeoqeo9tHfYM
+ S6cGrOVG459r7v8Z/IK1xRxeuHRlZ2Ye2MTg==
+X-Gm-Gg: AZuq6aIvTv0VhUbNkBl07a/vTMFETR9xcj0nTtYOE98WyWKjV4B9vOfbVzscu8eqLuv
+ px2hMDPI7XxsseukdSb4wxUvGJN4D+tKJipinlxOzekhuKpVqqEE62t2HQB2gbEF8uSfDu4ZeS8
+ rcA4i8EqybEaq7sczVojclf3XWI24evlozRtRB15RCFagLeNmP/Lo47C4laCtECYZn2hkaa1FM4
+ DjnM2+qm1XrIFkb9KBmFIHEftRzpjT0jarWRpXQ63uTLVQvwp9dMiXyeOzrDo5hJyyuToVTIA8I
+ +7loaSIUak25qG/GK73xBblZmuYAWWiYm43T9eguWKjbik8ONXmxHGERBVoEFsbP7Usyb8m+8xJ
+ WbxMqBQ+hmgNEIEQr44dVMdgMJOKT0K/lBtQ1Mzp0U0TCZw==
+X-Received: by 2002:a05:600c:1386:b0:480:6c75:ddce with SMTP id
+ 5b1f17b1804b1-483a9603cacmr84254545e9.33.1771770496998; 
+ Sun, 22 Feb 2026 06:28:16 -0800 (PST)
+X-Received: by 2002:a05:600c:1386:b0:480:6c75:ddce with SMTP id
+ 5b1f17b1804b1-483a9603cacmr84254275e9.33.1771770496475; 
+ Sun, 22 Feb 2026 06:28:16 -0800 (PST)
 Received: from redhat.com (IGLD-80-230-79-166.inter.net.il. [80.230.79.166])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43970d4cc81sm11791946f8f.26.2026.02.22.06.28.17
+ 5b1f17b1804b1-483a9b6698asm213659225e9.2.2026.02.22.06.28.15
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 22 Feb 2026 06:28:18 -0800 (PST)
-Date: Sun, 22 Feb 2026 09:28:16 -0500
+ Sun, 22 Feb 2026 06:28:16 -0800 (PST)
+Date: Sun, 22 Feb 2026 09:28:14 -0500
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Yodel Eldar <yodel.eldar@yodel.dev>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 01/33] tests/vhost-user-bridge: Move to
- contrib/vhost-user-bridge/
-Message-ID: <42d2c1cc9e89b77f1287ed433c655bc9e98bdc41.1771770471.git.mst@redhat.com>
-References: <cover.1771770471.git.mst@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>
+Subject: [PULL 00/33] virtio,pc,pci: features, fixes
+Message-ID: <cover.1771770471.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <cover.1771770471.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -14
-X-Spam_score: -1.5
-X-Spam_bar: -
-X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -4
+X-Spam_score: -0.5
+X-Spam_bar: /
+X-Spam_report: (-0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.798, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.79,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -129,124 +118,141 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Yodel Eldar <yodel.eldar@yodel.dev>
+The following changes since commit 07f97d5da04a9f97e273de85c76f5017d8135a6e:
 
-After the introduction of vhost-user-bridge and libvhost-user, we
-formed the convention of placing vhost-user daemons in eponymous subdirs
-of contrib/. Follow this convention.
+  Merge tag 'pull-target-arm-20260219' of https://gitlab.com/pm215/qemu into staging (2026-02-19 10:36:06 +0000)
 
-Create a contrib/vhost-user-bridge/ directory and move vhost-user-bridge
-into it. Extract its build target definition from tests/meson.build into
-the new directory, and include its subdir in the root-level meson.build.
+are available in the Git repository at:
 
-Add a section about it in the "vhost-user daemons in contrib" document.
+  https://git.kernel.org/pub/scm/virt/kvm/mst/qemu.git tags/for_upstream
 
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Signed-off-by: Yodel Eldar <yodel.eldar@yodel.dev>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+for you to fetch changes up to 72f663f575ab5e0f31320d7c9f25cc1f086313bd:
+
+  vhost: fix vhost_inflight_buffer_pre_load (2026-02-20 13:04:45 -0500)
+
+----------------------------------------------------------------
+virtio,pc,pci: features, fixes
+
+cxl:
+    RAS features
+    Back-Invalidate
+    Flit mode
+    r3.2 spec event updates
+    FM-API Physical Switch Command Set support
+vhost-vdpa: allow GSO for SVQ
+
+misc fixes, cleanups in intel_iommu, vhost, virtio, acpi
+
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-Id: <20260129133049.119829-2-yodel.eldar@yodel.dev>
----
- contrib/vhost-user-bridge/meson.build         |  4 ++
- .../vhost-user-bridge}/vhost-user-bridge.c    |  0
- .../devices/virtio/vhost-user-contrib.rst     | 39 +++++++++++++++++++
- meson.build                                   |  1 +
- tests/meson.build                             |  6 ---
- 5 files changed, 44 insertions(+), 6 deletions(-)
- create mode 100644 contrib/vhost-user-bridge/meson.build
- rename {tests => contrib/vhost-user-bridge}/vhost-user-bridge.c (100%)
 
-diff --git a/contrib/vhost-user-bridge/meson.build b/contrib/vhost-user-bridge/meson.build
-new file mode 100644
-index 0000000000..aa58c1df20
---- /dev/null
-+++ b/contrib/vhost-user-bridge/meson.build
-@@ -0,0 +1,4 @@
-+if have_tools and have_vhost_user and host_os == 'linux'
-+  executable('vhost-user-bridge', files('vhost-user-bridge.c'),
-+             dependencies: [qemuutil, vhost_user], install: false)
-+endif
-diff --git a/tests/vhost-user-bridge.c b/contrib/vhost-user-bridge/vhost-user-bridge.c
-similarity index 100%
-rename from tests/vhost-user-bridge.c
-rename to contrib/vhost-user-bridge/vhost-user-bridge.c
-diff --git a/docs/system/devices/virtio/vhost-user-contrib.rst b/docs/system/devices/virtio/vhost-user-contrib.rst
-index 48d04d2ade..660d29a700 100644
---- a/docs/system/devices/virtio/vhost-user-contrib.rst
-+++ b/docs/system/devices/virtio/vhost-user-contrib.rst
-@@ -85,3 +85,42 @@ vhost-user-scsi - SCSI controller
- 
- The vhost-user-scsi daemon can proxy iSCSI devices onto a virtualized
- SCSI controller.
-+
-+.. _vhost_user_bridge:
-+
-+vhost-user-bridge - Network bridge
-+==================================
-+
-+The vhost-user-bridge daemon serves as a development tool for testing real
-+internet traffic by providing a networking backend, i.e. server, for the
-+vhost-user protocol.
-+
-+Example
-+-------
-+For a single QEMU instance that both runs the user-mode net stack (slirp) and
-+serves as a vhost-user protocol frontend, i.e. client, simultaneously:
-+
-+First, start vhost-user-bridge:
-+
-+::
-+
-+  $ vhost-user-bridge -u /tmp/vubr.sock \
-+                      -l 127.0.0.1:4444 \
-+                      -r 127.0.0.1:5555
-+
-+Then, invoke QEMU:
-+
-+::
-+
-+  $ qemu-system-x86_64 \
-+        -m 4G \
-+        -object memory-backend-memfd,id=mem0,size=4G,share=on,prealloc=on \
-+        -numa node,memdev=mem0 \
-+        -chardev socket,id=char0,path=/tmp/vubr.sock \
-+        -netdev vhost-user,id=vhost0,chardev=char0,vhostforce=on \
-+        -device virtio-net-pci,netdev=vhost0 \
-+        -netdev socket,id=udp0,udp=localhost:4444,localaddr=localhost:5555 \
-+        -netdev user,id=user0 \
-+        -netdev hubport,id=hub0,hubid=0,netdev=udp0 \
-+        -netdev hubport,id=hub1,hubid=0,netdev=user0 \
-+        ...
-diff --git a/meson.build b/meson.build
-index 4af32c3e1f..620b2ad903 100644
---- a/meson.build
-+++ b/meson.build
-@@ -4504,6 +4504,7 @@ if have_tools
- 
-   if have_vhost_user
-     subdir('contrib/vhost-user-blk')
-+    subdir('contrib/vhost-user-bridge')
-     subdir('contrib/vhost-user-gpu')
-     subdir('contrib/vhost-user-input')
-     subdir('contrib/vhost-user-scsi')
-diff --git a/tests/meson.build b/tests/meson.build
-index cbe7916241..87861b2857 100644
---- a/tests/meson.build
-+++ b/tests/meson.build
-@@ -70,12 +70,6 @@ test_deps = {
-   'test-qht-par': qht_bench,
- }
- 
--if have_tools and have_vhost_user and host_os == 'linux'
--  executable('vhost-user-bridge',
--             sources: files('vhost-user-bridge.c'),
--             dependencies: [qemuutil, vhost_user])
--endif
--
- subdir('decode')
- 
- if 'CONFIG_TCG' in config_all_accel
--- 
-MST
+----------------------------------------------------------------
+Akihiko Odaki (1):
+      virtio-gpu-virgl: Add virtio-gpu-virgl-hostmem-region type
+
+Alexandr Moshkov (1):
+      vhost: fix vhost_inflight_buffer_pre_load
+
+Arpit Kumar (2):
+      hw/cxl: Physical Port Info FMAPI - update to current spec and add defines.
+      hw/cxl: Add Physical Port Control FMAPI Command (Opcode 5102h)
+
+Clément Mathieu--Drif (1):
+      intel_iommu: Do not report recoverable faults to host
+
+Davidlohr Bueso (4):
+      hw/cxl: Add support for Maintenance command and Post Package Repair (PPR)
+      hw/pcie: Support enabling flit mode
+      hw/cxl: Support type3 HDM-DB
+      hw/cxl: Remove register special_ops->read()
+
+Eugenio Pérez (1):
+      net/vhost-vdpa: Whitelist virtio-net GSO for shadow virtqueue
+
+Ira Weiny (1):
+      hw/cxl: Refactor component register initialization
+
+Jonathan Cameron (4):
+      tests/bios-tables-test: Excluded CEDT.cxl for BI restriction relaxation.
+      hw/cxl: Update CXL Fixed Memory Window ACPI description to include Back Invalidate support.
+      tests/acpi/cxl: Update CEDT.cxl to allow BI in CFWMS
+      hw/cxl: Get Physical Port State - update for PCIe flit mode
+
+Manos Pitsidianakis (5):
+      MAINTAINERS: add me as maintainer to virtio-snd
+      virtio-snd: remove TODO comments
+      virtio-snd: handle 5.14.6.2 for PCM_INFO properly
+      virtio-snd: fix max_size bounds check in input cb
+      virtio-snd: tighten read amount in in_cb
+
+Mohamed Mediouni (1):
+      tests/data/acpi: disassemble-aml: rename and change interpreter line
+
+Philippe Mathieu-Daudé (1):
+      hw/virtio: Pass VirtIODevice* to virtio_reset()
+
+Shiju Jose (7):
+      qapi: cxl: Refactor CXL event injection for common commands arguments
+      hw/cxl/events: Update for rev3.2 common event record format
+      hw/cxl/events: Updates for rev3.2 general media event record
+      hw/cxl/events: Updates for rev3.2 DRAM event record
+      hw/cxl/events: Updates for rev3.2 memory module event record
+      hw/cxl/cxl-mailbox-utils: Move declaration of scrub and ECS feature attributes in cmd_features_set_feature()
+      hw/cxl: Add emulation for memory sparing control feature
+
+Yanfeng Liu (1):
+      audio/virtio-snd: fix latency calc
+
+Yodel Eldar (3):
+      tests/vhost-user-bridge: Move to contrib/vhost-user-bridge/
+      tests/functional/x86_64: Add vhost-user-bridge test
+      contrib/vhost-user-bridge: Add UDP receive hexdump
+
+ MAINTAINERS                                        |   3 +-
+ contrib/vhost-user-bridge/meson.build              |   4 +
+ .../vhost-user-bridge}/vhost-user-bridge.c         |   7 +
+ docs/system/devices/cxl.rst                        |  23 +
+ docs/system/devices/virtio/vhost-user-contrib.rst  |  39 ++
+ hw/acpi/cxl.c                                      |   2 +-
+ hw/audio/virtio-snd.c                              |  80 ++-
+ hw/cxl/cxl-component-utils.c                       | 214 ++++--
+ hw/cxl/cxl-events.c                                |   3 +-
+ hw/cxl/cxl-mailbox-utils.c                         | 752 ++++++++++++++++++++-
+ hw/display/virtio-gpu-virgl.c                      |  54 +-
+ hw/i386/intel_iommu.c                              |  26 +-
+ hw/mem/cxl_type3.c                                 | 349 +++++++++-
+ hw/mem/cxl_type3_stubs.c                           |  41 +-
+ hw/pci-bridge/cxl_downstream.c                     |  19 +-
+ hw/pci-bridge/cxl_root_port.c                      |  11 +-
+ hw/pci-bridge/cxl_upstream.c                       |  19 +-
+ hw/pci-bridge/pci_expander_bridge.c                |   2 +-
+ hw/pci/pcie.c                                      |  23 +-
+ hw/virtio/vhost.c                                  |   4 +-
+ hw/virtio/virtio.c                                 |   3 +-
+ include/hw/audio/virtio-snd.h                      |   1 +
+ include/hw/cxl/cxl_component.h                     |  87 ++-
+ include/hw/cxl/cxl_device.h                        | 156 ++++-
+ include/hw/cxl/cxl_events.h                        |  85 ++-
+ include/hw/cxl/cxl_port.h                          |  73 ++
+ include/hw/pci-bridge/cxl_downstream_port.h        |  12 +
+ include/hw/pci-bridge/cxl_upstream_port.h          |   3 +
+ include/hw/pci/pcie.h                              |   2 +-
+ include/hw/pci/pcie_port.h                         |   1 +
+ include/hw/virtio/virtio.h                         |   2 +-
+ meson.build                                        |   1 +
+ net/vhost-vdpa.c                                   |   1 +
+ qapi/cxl.json                                      | 186 +++--
+ .../acpi/{disassemle-aml.sh => disassemble-aml.sh} |   4 +-
+ tests/data/acpi/rebuild-expected-aml.sh            |   2 +-
+ tests/data/acpi/x86/q35/CEDT.cxl                   | Bin 184 -> 184 bytes
+ tests/functional/x86_64/meson.build                |   1 +
+ tests/functional/x86_64/test_vhost_user_bridge.py  | 147 ++++
+ tests/meson.build                                  |   6 -
+ 40 files changed, 2187 insertions(+), 261 deletions(-)
+ create mode 100644 contrib/vhost-user-bridge/meson.build
+ rename {tests => contrib/vhost-user-bridge}/vhost-user-bridge.c (98%)
+ create mode 100644 include/hw/cxl/cxl_port.h
+ create mode 100644 include/hw/pci-bridge/cxl_downstream_port.h
+ rename tests/data/acpi/{disassemle-aml.sh => disassemble-aml.sh} (92%)
+ create mode 100755 tests/functional/x86_64/test_vhost_user_bridge.py
 
 
