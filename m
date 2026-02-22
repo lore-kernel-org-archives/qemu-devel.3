@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3A9DE68179
-	for <qemu-devel@archiver.kernel.org>; Sun, 22 Feb 2026 23:08:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4EF04C636C5
+	for <qemu-devel@archiver.kernel.org>; Sun, 22 Feb 2026 23:23:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuIYs-0007aQ-Pt; Sun, 22 Feb 2026 18:08:28 -0500
+	id 1vuImm-0003d3-E7; Sun, 22 Feb 2026 18:22:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vuIYn-0007KF-FP
- for qemu-devel@nongnu.org; Sun, 22 Feb 2026 18:08:22 -0500
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vuIml-0003ch-9i
+ for qemu-devel@nongnu.org; Sun, 22 Feb 2026 18:22:47 -0500
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vuIYl-00065v-Oa
- for qemu-devel@nongnu.org; Sun, 22 Feb 2026 18:08:21 -0500
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-48375f1defeso26497205e9.0
- for <qemu-devel@nongnu.org>; Sun, 22 Feb 2026 15:08:19 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vuImj-00014N-RH
+ for qemu-devel@nongnu.org; Sun, 22 Feb 2026 18:22:47 -0500
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-4836f363ad2so42017025e9.1
+ for <qemu-devel@nongnu.org>; Sun, 22 Feb 2026 15:22:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771801697; x=1772406497; darn=nongnu.org;
+ d=linaro.org; s=google; t=1771802563; x=1772407363; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=eG1Sb5LxM37W6z2kdxQTI7JotgScD5A/jNfnafdk044=;
- b=XnFtPXV7RKXjswTupGBxEasVKsMu+o+k8TNr6UJ8eGbnCbu1LkQnyKyK8wXByPDl5h
- 8mmdrclE3bT9AxFjdYG1qmUzmjLolM5Alda4KOi3QvHWZ/99k0XAHPu4FFj1UQL1xLSU
- 8CF0povij1vqMxmLJhmD46b/nT8hR8aGgpmRDHif01QMiAJqzMeWBOpDxycleW+72uY9
- IB/fneemGkOwU5Ax8/7Bx35KjeJwtdqiky7UiD3XyHQj9l27dFCKMkUCnd2eJ7l1k3IR
- ThmO3JAquOUTJ5FMk8x+L7kzLHKKX73hNL09PFQ5ZFx4l+Jy0Q+yADM08C0BnqVO7r/Q
- C7sQ==
+ :reply-to; bh=087qSz/jCIwXUcdBzZK1XLhNzn/+YyGzCz66jF2oWFw=;
+ b=K4/H9N+m5GkjKDF4M7lkTNCjcriEIT+wn5q9mqGjpQ2UQF5AvsdlLoLuRc5QOJgS8O
+ zv1Guwvkoz+zpNSQSXXMGeLWKB3d56l9+cq06KanM5UqVmpT7j4pwNs8i9Ir1u+rWtIB
+ euZdCfIym+delZMzgpVPYe/av3zKUR+coCPJlEyTMyDxD/D6J5UygEc70BX9MqZFkL5C
+ cO32cVty2Ozx5TpcrBqL1Fh0LiMqrUfbOmer0VX5XK+lMgVvcucfVMAxzgQxbYtD4FRS
+ iFMoADhzfX2bKdm1d3cha3Tp1qbXXa/z4PShGQyE7qTcyuwX/5z0b40tS9hX3TJgDrCp
+ 3+tA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771801697; x=1772406497;
+ d=1e100.net; s=20230601; t=1771802563; x=1772407363;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=eG1Sb5LxM37W6z2kdxQTI7JotgScD5A/jNfnafdk044=;
- b=SwL0CQ9YOaKhR/CRG4A4ukzV4cGKUzL9nu3LANiHhFeEzVgHpax3gKN3kSn25Yoq9g
- XX6+93kYV7LIWQDWvj/AQq3CPbewVIFlCcvKvZP0nZa2o3rBNmQ+tfT+DtmPrI4Fp0Zp
- WoR/RWJB8XX6eu+jy8d+9oazF9rXthpM95dIXtsgSeRHNlqiJCexP72hSnhV7ore85Qe
- xux1/qQOu49u70bUamnbzBnZ1t90nNnt7iVevRzuM5JUwxYYh2k5tTZrQJLUU6JWQTlE
- sB2xqPOTucQZ0LIKaYb0miq0moMapCvzw/DSbXdV9NvXU/vnizgIvSjEY56KR+8PL8r9
- imFQ==
-X-Gm-Message-State: AOJu0Yypw+oKreZ0DMh1t5edwjNFckCvXyru/Z5JXuSqzYjdkjRpj2pl
- s3mvZ1sVCnz8K2QwBo4nbbZwjMAYK06UyoHGQ11qTn148vzMEEA6tuhskMMqvLFJ5s30Wmn/zMb
- RY6kJq8I=
-X-Gm-Gg: AZuq6aLd3Ymnf2KsBreQVUD0DkW5yHb1BC6CIpKAjc7Bs4JjdjCFWAsRzUvawM2uQMh
- PUrH5TswLXiY/r90ImSupQ5tHtSScp3Y+t1KJrbrH/dCyZQnmOdiwuoGvwDhEGw6Hx08qYXKfYJ
- p9ojRsNqtMsTdDQsC4cp6voOXZErvRwEmb2x/XlTasjsIVdOkAGFYutWIghtx88bZ5yV/mhkJC2
- gE72yCAg5Fc7b0Wk3xqbkgMO5v+/utNX5KvGIxR7B61rTGHG5KoTr+mQlTHUUIr7QGO1fWdCViW
- 3HoMvSeD2HUC+vZvib4jynLfCKVW8ArkWC7s15CDG8JkQZOvZpn1hjOc0BHtBODjJEWi+VB7eOs
- YEujXHweQpYaTIcf642EPXdbBS8uF1A2JZNjx+GHez5Q/fuk3ZTihLI16bCqwVFGK2WudhJVVng
- LXWWGM3/SWPwPyyO+0TRV67/YPDQBVHwYmSUZYUtfDfFMaDlxZw1otjjm4QAaeVmYhfXYz52RB
-X-Received: by 2002:a05:600c:1d29:b0:477:5b0a:e616 with SMTP id
- 5b1f17b1804b1-483a95eb521mr122970295e9.5.1771801697561; 
- Sun, 22 Feb 2026 15:08:17 -0800 (PST)
+ bh=087qSz/jCIwXUcdBzZK1XLhNzn/+YyGzCz66jF2oWFw=;
+ b=eXT8EAB6GlchxnkbClJhyLTjZP/R+MK/rujg/jcL7JsFwTBze5y2IvmDUVHO9M30+K
+ A1JTlKlmZb6LoQtV7MNmS2vWar0Lzy79TVRRDeaJsBzl+JzyZE9tej7OOXFdoh7sRB7j
+ /x+6tsPqSapKM6PnaaHOnqsXY+nrjs0O6oHnd7mbhN/oSztGCDRaQodcAMOLaZ22yGsh
+ S1hIdZB+jwlzsKDwsY2gN4/aSOdnAV0pc5xqwwfT9DKHW7nTm/u6CYvLfod5ltoYg+A+
+ +7Dz2P9wu0cJJcQboRRNEWo9S5HrgVSEeWoQ6m4pCktJ3B8l6k3kNGndafO5hNz6LwgF
+ 2GUQ==
+X-Gm-Message-State: AOJu0Ywr+DFUpV1F+aM7sjd6DawJSFQSGIMw1GQTkMYpUujKIkE0ZowV
+ 0OBCLZ54c5b1QD/QCMUEvGFQVtWYusxq2HqAVHyJ9l/5axZslMlt+mlp12xyKuCZR/HGwemva+O
+ yG0VGug0=
+X-Gm-Gg: AZuq6aLrdgUMhR4aHAxZxJdGuiIAcah6b4uT88htmqtkNbqObxpOoxPddsFoEyv/+kO
+ sdAn+h3cDmAtBle6QKtMVnEZqxs7uGua7PP27E8zmOFHMMcVWd4v+DALU+h0kDpx3PabFmN7Cfk
+ riDjYjZDy6JGyefq5t5xezWq4Oi1eH3wHA8Bu4rtlLpQxAnrJcXcrH2KRaAnQnaP62R0axcIlmj
+ 0DAT8orupty9kPob7PgAm4mqUXA+1jMk+lex5GR9QsEcKAOETgclMnNU7wuDSZFWvSCCmPsnKQq
+ GxehnJbAQvsUtAA48elbIigmJSwZnMSz1ljmM59B8rNIuYqXSss/TwZCFSNMyItZA48D4Wl+vSh
+ xSmo0KgfOkuRP30rwf0i2SIKiaZMRp2sXcp/NLUn8SpZ0bnxelTuPmh0sQm8OOiRgZTfNlyW70h
+ 9CFsF0EkATzLblqVCcksJbBhrahtP1VeAOaIK+Tj/RL/ZOrmlCe5sil2iCCxi45168EkwJGQgg
+X-Received: by 2002:a05:600c:3484:b0:480:4b59:932e with SMTP id
+ 5b1f17b1804b1-483a95b58b7mr112601755e9.11.1771802563435; 
+ Sun, 22 Feb 2026 15:22:43 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-483a9cb3f31sm144097035e9.13.2026.02.22.15.08.16
+ 5b1f17b1804b1-483a31efe02sm244100265e9.10.2026.02.22.15.22.42
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 22 Feb 2026 15:08:17 -0800 (PST)
+ Sun, 22 Feb 2026 15:22:43 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 20/20] net: mark struct tcp_header as QEMU_PACKED
-Date: Mon, 23 Feb 2026 00:06:01 +0100
-Message-ID: <20260222230602.5756-21-philmd@linaro.org>
+Subject: [PULL v2 09/21] hw/m68k: Set graphic display dimensions generically
+Date: Mon, 23 Feb 2026 00:22:19 +0100
+Message-ID: <20260222232222.7183-4-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260222230602.5756-1-philmd@linaro.org>
-References: <20260222230602.5756-1-philmd@linaro.org>
+In-Reply-To: <20260222232222.7183-1-philmd@linaro.org>
+References: <20260222232222.7183-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,48 +98,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+If a dimension is not set, have the machine init code
+(q800_machine_init) set the default values.
 
-The eth_header is not actually guaranteed to be aligned.  We attempt
-to deal with this in some places such as net_checksum_calculate() by
-using lduw_be_p() and so on to access the fields, but this is not
-sufficient to be correct, because even accessing a byte member within
-a misaligned struct is undefined behaviour.  The clang sanitizer will
-emit an error like this if you run the sifive_u_mmc functional test
-with sanitizers enabled:
-
-../../net/checksum.c:144:24: runtime error: member access within misaligned address 0x619a74c32033 for type 'tcp_header' (aka 'struct tcp_header'), which requires 4 byte alignment
-0x619a74c32033: note: pointer points here
- 0a  00 02 02 86 aa 00 16 52  c1 d3 70 00 00 00 00 a0  02 fa f0 00 00 00 00 02  04 05 b4 04 02 08 0a
-              ^
-    #0 0x619a6ba84794 in net_checksum_calculate /home/pm215/qemu/build/clang/../../net/checksum.c:144:24
-    #1 0x619a6b5940da in gem_transmit /home/pm215/qemu/build/clang/../../hw/net/cadence_gem.c:1386:21
-    #2 0x619a6b592141 in gem_write /home/pm215/qemu/build/clang/../../hw/net/cadence_gem.c:1650:13
-
-Fix this by marking the tcp_header struct as QEMU_PACKED.
-
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Message-ID: <20260212140917.1443253-6-peter.maydell@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Message-Id: <20260216213121.47122-6-philmd@linaro.org>
 ---
- include/net/eth.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/m68k/q800.c          | 6 +++---
+ system/globals-target.c | 6 +++---
+ 2 files changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/include/net/eth.h b/include/net/eth.h
-index df90ff08374..efe270dbfe7 100644
---- a/include/net/eth.h
-+++ b/include/net/eth.h
-@@ -68,7 +68,7 @@ typedef struct tcp_header {
-     uint16_t th_win;            /* window */
-     uint16_t th_sum;            /* checksum */
-     uint16_t th_urp;            /* urgent pointer */
--} tcp_header;
-+} QEMU_PACKED tcp_header;
+diff --git a/hw/m68k/q800.c b/hw/m68k/q800.c
+index ba32da2fa45..ded531394e6 100644
+--- a/hw/m68k/q800.c
++++ b/hw/m68k/q800.c
+@@ -560,9 +560,9 @@ static void q800_machine_init(MachineState *machine)
+                             TYPE_NUBUS_MACFB);
+     dev = DEVICE(&m->macfb);
+     qdev_prop_set_uint32(dev, "slot", 9);
+-    qdev_prop_set_uint32(dev, "width", graphic_width);
+-    qdev_prop_set_uint32(dev, "height", graphic_height);
+-    qdev_prop_set_uint8(dev, "depth", graphic_depth);
++    qdev_prop_set_uint32(dev, "width", graphic_width ?: 800);
++    qdev_prop_set_uint32(dev, "height", graphic_height ?: 600);
++    qdev_prop_set_uint8(dev, "depth", graphic_depth ?: 8);
+     qdev_realize(dev, BUS(nubus), &error_fatal);
  
- #define TCP_FLAGS_ONLY(flags) ((flags) & 0x3f)
- 
+     macfb_mode = (NUBUS_MACFB(dev)->macfb).mode;
+diff --git a/system/globals-target.c b/system/globals-target.c
+index 989720591e7..e3f7d846ac0 100644
+--- a/system/globals-target.c
++++ b/system/globals-target.c
+@@ -14,9 +14,9 @@ int graphic_width = 1024;
+ int graphic_height = 768;
+ int graphic_depth = 8;
+ #elif defined(TARGET_M68K)
+-int graphic_width = 800;
+-int graphic_height = 600;
+-int graphic_depth = 8;
++int graphic_width;
++int graphic_height;
++int graphic_depth;
+ #else
+ int graphic_width = 800;
+ int graphic_height = 600;
 -- 
 2.52.0
 
