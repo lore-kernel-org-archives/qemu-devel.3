@@ -4,95 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9E6FC636A0
-	for <qemu-devel@archiver.kernel.org>; Sun, 22 Feb 2026 14:32:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 134CFC6369F
+	for <qemu-devel@archiver.kernel.org>; Sun, 22 Feb 2026 14:32:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuAT0-000114-Pw; Sun, 22 Feb 2026 09:29:50 -0500
+	id 1vuASK-000892-1c; Sun, 22 Feb 2026 09:29:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vuASq-0000ge-Me
- for qemu-devel@nongnu.org; Sun, 22 Feb 2026 09:29:40 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vuARk-0007yg-99
+ for qemu-devel@nongnu.org; Sun, 22 Feb 2026 09:28:38 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vuASp-000732-8U
- for qemu-devel@nongnu.org; Sun, 22 Feb 2026 09:29:40 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vuARh-0006fL-Us
+ for qemu-devel@nongnu.org; Sun, 22 Feb 2026 09:28:31 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771770578;
+ s=mimecast20190719; t=1771770509;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=5W+WCYaPcjw+DbTWpVRSi4jP+J/l9WZesscDdkfYgWk=;
- b=ZMx7xHUXCzv//kyVH59gD2H/PS0g8lWp7/aQVEL08UcHnx+mbAPgLey3cFjk4VTBnNhZIG
- XxOIUhtxLuCk8aden3sWFVYxGcLyC8j3Oa++8m8nnMya9NahdI3M/Tz8cWvI4qKZSXE8Br
- THf6CdyGJm7wn2W/bW19JFLNTttaxsU=
+ bh=6Vc1eHralXDftsudwcbcWVLtbmhHYnqnn64R5UkrMqM=;
+ b=AhrQ6SyZl1wRSjnBrWCCpDPOOlWV0L8a1q/yAY8N/ksX431LQcmXPdSza0Zy1oBs7EqgE0
+ Q7EzIcW7KtmfbS9ZZp7MtH6YjhaNcr4rITfeht33SYiRv9Z/tNqrEPwM/o0oFlkrB0gEK+
+ /qDf0GlLCl8RoGaE1IDOuq7uf0TBcdE=
 Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
  [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-461-147nBn5tOau-7jd7FsfDRQ-1; Sun, 22 Feb 2026 09:29:37 -0500
-X-MC-Unique: 147nBn5tOau-7jd7FsfDRQ-1
-X-Mimecast-MFC-AGG-ID: 147nBn5tOau-7jd7FsfDRQ_1771770576
+ us-mta-271-EQA39TiLOmOY8upekkxMTA-1; Sun, 22 Feb 2026 09:28:26 -0500
+X-MC-Unique: EQA39TiLOmOY8upekkxMTA-1
+X-Mimecast-MFC-AGG-ID: EQA39TiLOmOY8upekkxMTA_1771770505
 Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-482d8e6e13aso30577915e9.3
- for <qemu-devel@nongnu.org>; Sun, 22 Feb 2026 06:29:36 -0800 (PST)
+ 5b1f17b1804b1-4837246211bso38982345e9.0
+ for <qemu-devel@nongnu.org>; Sun, 22 Feb 2026 06:28:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1771770576; x=1772375376; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=5W+WCYaPcjw+DbTWpVRSi4jP+J/l9WZesscDdkfYgWk=;
- b=I2D+bgV7MAHX9NdwX/Y+YBNZ/qlMM6DyxU8zd9W2Nb9zfbJwe0xBuLDra/DFRAmQo0
- vGidOkpaMO/3kQg8ApjQPoxC7PkZ+ckS6loXQ2vjDveaetv0VFFlOp76QfMqsYSvFzV9
- Oc0bUvA7d/PQ9s2V7WOB9xctxWeozPzsoNgVrmvfqV7SCvewm/5t0iClKl36BzvmeIpR
- 1hBRL5isPY90hrdxblqgW/CYE2e5HmKg7oipqh1QCK/f6wwoy2NW1yu1UPwUy190/0c+
- y/rZCch0Ukt6f4iFH+B0CWkCOM1IRMX6sMrqNAZo/Gn1kfF6C7HJefXZat6OtZmYvq4O
- 3MdQ==
+ d=redhat.com; s=google; t=1771770505; x=1772375305; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=6Vc1eHralXDftsudwcbcWVLtbmhHYnqnn64R5UkrMqM=;
+ b=E/Sk0EePaC9gsRtgP5tHrgK+DoaiWhFPnDuKEU1Nv0aIqf0AK0uE7BBzSdOkD9+8vj
+ 0qcIFDOJutYqxoecNEjzW+To7EJhusGXMd/luJW5Fr/NKbmn5rxzlwDtBPiqE408yDye
+ 3V6VgC8xAB1Zc7KHmPL9x5BuGJr6FjploigbFcCVOXf3ne5DTYOu0W0dVd6Bmcb1s97i
+ 9ePEpDgoPM8JxH4BKex/n4IVE+nLmQ50fImRwccu0OQd4xpa0RQr0ji7Yp0USXkDija5
+ u19xYOAXvWy5ZypVPXek4uS/6egt0TEaXuwDE2jJW8+RxUFKMGm5lxpY4pink8OIyB8i
+ p2dA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771770576; x=1772375376;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=5W+WCYaPcjw+DbTWpVRSi4jP+J/l9WZesscDdkfYgWk=;
- b=urzkWptJpGiKPL2kOB6bYhSW5qIR+3aKNbMf21M4HMtn1F4lOzPstRrBzenn+sazVL
- gF6Ul0NNezm7G+y2KkjlJK7y42VXloGE31YrvTjSezFFjYNbFldKt+9HSzmA+a7b5KKm
- HAX4dTRyZYEc3eBDeXgL02mSjyiMwmiXKwGs1S6KXGjK9msTg64T2WmzT+HvXyYQsCwi
- 3SgGwQtiH5PUIpJGBZUEUA9GMkumpTiWNCuvuCY/ohFP+r2UPKHThz8kWI9o6yfQvFpg
- MdHie3XPaXsF2OYc9cxDqifWCRcD95IqY2zltpRxKycVLK6YeZ9camJleh8TkbB11IWf
- 8S1A==
-X-Gm-Message-State: AOJu0Yxr1Ju4oOsJ8eRWULeV5Gy8vm9UU8XCwUhmMgdQEZurjskRcqMY
- 66HhNSBAVYY3fQv6DX95P6aw5btDW9xldEAm96Ld1/AAdK1DmHMLKSs9LzEPq8iNXBn0Du32t88
- CTvxJFfxY6Y70aY0HFdwXxpzGEowcd0/5Q0TmAL5WdIndyekn+F6Xye88VcxTT00s6B3c1jr8g2
- CsehNMSBseNYuZ/NnJVwo/uQUJwkfN95vARw==
-X-Gm-Gg: AZuq6aIGRB2n8lq2gZuCcQYSI8fATBD70F3p2tz9rAC3AL9MHI8Wsu0/aWFc/fHRLEs
- FOZYuwnt/BioI+PPElXs7jhUxvX6yuov/9iCevO75mHuTVWH854y5nlqaCIiHt2UJt7d/ra2Un3
- f49qoRq77PTlVFG2naqtvOlQfAvpYcck1cLwgsWFdF75zY3LCzKpnH3yapS/j4FVL1MOU8/1oh0
- ATsafxbDPj2z8Grbs0JZrZnb8Yl6hy6Nq1kZCploNmCnCmg4XKIrK3VQAsIuiCsgYCSaRF4Of09
- l7n2OMOzaM6H64jMsrUQkf+wttPK1CppMqtMcicwKkBcYrdW6Zo43PwSb7fLh/3d8bEkW8GifnX
- pZjvXquGA3KQ886x5oBIII9GYFRD87vFGWOWUgEKndRbQYQ==
-X-Received: by 2002:a05:600c:314a:b0:47e:e2eb:bc22 with SMTP id
- 5b1f17b1804b1-483a95b3e62mr103736695e9.5.1771770575677; 
- Sun, 22 Feb 2026 06:29:35 -0800 (PST)
-X-Received: by 2002:a05:600c:314a:b0:47e:e2eb:bc22 with SMTP id
- 5b1f17b1804b1-483a95b3e62mr103736255e9.5.1771770575113; 
- Sun, 22 Feb 2026 06:29:35 -0800 (PST)
+ d=1e100.net; s=20230601; t=1771770505; x=1772375305;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=6Vc1eHralXDftsudwcbcWVLtbmhHYnqnn64R5UkrMqM=;
+ b=sYpfZUEfQiHEL6LxKKaP8OHV2qvHbMjtDim2x+2lpcsh0LBGQZ/b9uibzQqdzYJPVT
+ CdQuwB5H1Job19II9iDJbblxJeGFkymjGBWMuzX3F87Nud229Y8i1UNHUvJTiPTc5Vzt
+ QTo3czfVhL1Z+im6mEe7U6bizu3kmJNJPrRrIz2IbSjOZ7Aq3kE36TV5FEKp4CL8h0hj
+ tBs2AHWp9pJlm0DGswn66Y5bm9wBy9Ps0DZAv/LaoEGJa/Bnb0qDwwo53SZgBw/06kv/
+ IXLSNN2JwZYOqjYO5nR0xIYbwcqNmm+7LgqM9jfBcJ0AQ/2X6CiOSYeqJwP0RaZrElBO
+ 372Q==
+X-Gm-Message-State: AOJu0Yyl6bG8dviyEvbM6SdybdVqKee0DQ6SAcl41exB4BjtUmoYg/MC
+ 98OTYDJqUSixCfx86SBTZIP+lOYok++gEHQvJy9wlqregvacrQP3WwD6WP59XoVre/XBIVbJGbz
+ NdaSyequti/EZ0878uZoNsVPumQViBlQWbBf/yMoZls+dAm4FH5v2Foliuppj0yV/zCAF8Yfrci
+ RQh+beizzWDQKGZ/lwubh41i2Q1Nz3aPbojQ==
+X-Gm-Gg: AZuq6aLn0W+e3D/1gp26Hg0jE+Qtuzh+ZSsQuZvCHsvUNQiokNJXmdsN8rDbC7UIS4S
+ WyGhbe1pyr7d6mssDcus/4Ex2IAalomeI+r8oWQjdF1dKTI8xO9IA4LSkl8JZNDXrXEq1ZGjzvQ
+ P8nwwkS6dEQQ3+rZaTWakOwm2OD+c0bm9tmfoC853tciUmTra4z1k7FHZDRZrDP8cqsEcu/ufyI
+ Sn7kuf4EQ2/WscGQU2tMppTB3RVQ59KedTjyQdNy3Dsbjb1bKOkjdcr684UGFaNtp3udMA9ir1/
+ xGMEMi0BX/9jSkZfCn5jXcklo2wx24+8+XF1ATVZWqWQj5lEy9QmzJUkUSU76tMwvVktQXJYDD1
+ 9cYHEdP/20WPJVXwQj0qG0cfmCnxVtrNcxDIeGQC+mHmLtA==
+X-Received: by 2002:a05:600c:4e8a:b0:47e:e91d:73c0 with SMTP id
+ 5b1f17b1804b1-483a962e37emr87501395e9.19.1771770504485; 
+ Sun, 22 Feb 2026 06:28:24 -0800 (PST)
+X-Received: by 2002:a05:600c:4e8a:b0:47e:e91d:73c0 with SMTP id
+ 5b1f17b1804b1-483a962e37emr87500985e9.19.1771770503900; 
+ Sun, 22 Feb 2026 06:28:23 -0800 (PST)
 Received: from redhat.com (IGLD-80-230-79-166.inter.net.il. [80.230.79.166])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43970d4c626sm13729659f8f.28.2026.02.22.06.29.34
+ 5b1f17b1804b1-483a9b75b4dsm194818005e9.4.2026.02.22.06.28.22
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 22 Feb 2026 06:29:34 -0800 (PST)
-Date: Sun, 22 Feb 2026 09:29:33 -0500
+ Sun, 22 Feb 2026 06:28:23 -0800 (PST)
+Date: Sun, 22 Feb 2026 09:28:21 -0500
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- qemu-stable@nongnu.org, DARKNAVY <vr@darknavy.com>,
- Gerd Hoffmann <kraxel@redhat.com>
-Subject: [PULL 32/33] virtio-snd: tighten read amount in in_cb
-Message-ID: <7994203bb1b83a6604f3ab00fe9598909bb66164.1771770471.git.mst@redhat.com>
+ Yodel Eldar <yodel.eldar@yodel.dev>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>
+Subject: [PULL 03/33] contrib/vhost-user-bridge: Add UDP receive hexdump
+Message-ID: <fa33e6815ee3926b485a12a6b654c7edbac8b373.1771770471.git.mst@redhat.com>
 References: <cover.1771770471.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1771770471.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
@@ -121,52 +124,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+From: Yodel Eldar <yodel.eldar@yodel.dev>
 
-The amount of bytes to read passed to AUD_read() should never surpass
-the maximum available buffer length. Tighten the current amount by
-MIN(<amount>, max_size - <existing size>).
+vhost-user-bridge debug prints UDP TX hexdumps in its transmit handler,
+but does not for receives, even though they are beneficial for testing.
+Add an RX hexdump in the receive callback.
 
-Cc: qemu-stable@nongnu.org
-Fixes: 98e77e3dd8dd6e7aa9a7dffa60f49c8c8a49d4e3 ("virtio-snd: add max size bounds check in input cb")
-Reported-by: DARKNAVY <vr@darknavy.com>
-Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+To delineate between transmits and receives, also add a debug print
+indicating that the program is in the transmit handler.
+
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Signed-off-by: Yodel Eldar <yodel.eldar@yodel.dev>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-Id: <20260220-virtio-snd-series-v1-5-207c4f7200a2@linaro.org>
+Message-Id: <20260129133049.119829-4-yodel.eldar@yodel.dev>
 ---
- hw/audio/virtio-snd.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ contrib/vhost-user-bridge/vhost-user-bridge.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/hw/audio/virtio-snd.c b/hw/audio/virtio-snd.c
-index d1a46d47bc..d5d430ad65 100644
---- a/hw/audio/virtio-snd.c
-+++ b/hw/audio/virtio-snd.c
-@@ -1250,7 +1250,7 @@ static void virtio_snd_pcm_in_cb(void *data, int available)
- {
-     VirtIOSoundPCMStream *stream = data;
-     VirtIOSoundPCMBuffer *buffer;
--    size_t size, max_size;
-+    size_t size, max_size, to_read;
+diff --git a/contrib/vhost-user-bridge/vhost-user-bridge.c b/contrib/vhost-user-bridge/vhost-user-bridge.c
+index ce4c3426d3..3f0fd0fa49 100644
+--- a/contrib/vhost-user-bridge/vhost-user-bridge.c
++++ b/contrib/vhost-user-bridge/vhost-user-bridge.c
+@@ -179,6 +179,9 @@ vubr_handle_tx(VuDev *dev, int qidx)
  
-     WITH_QEMU_LOCK_GUARD(&stream->queue_mutex) {
-         while (!QSIMPLEQ_EMPTY(&stream->queue)) {
-@@ -1276,10 +1276,12 @@ static void virtio_snd_pcm_in_cb(void *data, int available)
-                     return_rx_buffer(stream, buffer);
-                     break;
-                 }
-+                to_read = stream->params.period_bytes - buffer->size;
-+                to_read = MIN(to_read, available);
-+                to_read = MIN(to_read, max_size - buffer->size);
-                 size = AUD_read(stream->voice.in,
--                        buffer->data + buffer->size,
--                        MIN(available, (stream->params.period_bytes -
--                                        buffer->size)));
-+                                buffer->data + buffer->size,
-+                                to_read);
-                 if (!size) {
-                     available = 0;
-                     break;
+     assert(qidx % 2);
+ 
++    DPRINT("\n\n   ***   IN UDP TRANSMIT HANDLER    ***\n\n");
++    DPRINT("    hdrlen = %d\n", hdrlen);
++
+     for (;;) {
+         ssize_t ret;
+         unsigned int out_num;
+@@ -333,6 +336,10 @@ vubr_backend_recv_cb(int sock, void *ctx)
+         };
+         ret = RETRY_ON_EINTR(recvmsg(vubr->backend_udp_sock, &msg, 0));
+ 
++        if (ret > 0 && VHOST_USER_BRIDGE_DEBUG) {
++            iov_hexdump(sg, num, stderr, "RX:", ret);
++        }
++
+         if (i == 0) {
+             iov_restore_front(elem->in_sg, sg, hdrlen);
+         }
 -- 
 MST
 
