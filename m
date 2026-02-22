@@ -4,98 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 134CFC6369F
-	for <qemu-devel@archiver.kernel.org>; Sun, 22 Feb 2026 14:32:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45E33C636A0
+	for <qemu-devel@archiver.kernel.org>; Sun, 22 Feb 2026 14:33:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuASK-000892-1c; Sun, 22 Feb 2026 09:29:08 -0500
+	id 1vuASK-00089l-UV; Sun, 22 Feb 2026 09:29:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vuARk-0007yg-99
- for qemu-devel@nongnu.org; Sun, 22 Feb 2026 09:28:38 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vuASH-00086e-Sx
+ for qemu-devel@nongnu.org; Sun, 22 Feb 2026 09:29:06 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vuARh-0006fL-Us
- for qemu-devel@nongnu.org; Sun, 22 Feb 2026 09:28:31 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vuASG-0006oa-GD
+ for qemu-devel@nongnu.org; Sun, 22 Feb 2026 09:29:05 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771770509;
+ s=mimecast20190719; t=1771770543;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=6Vc1eHralXDftsudwcbcWVLtbmhHYnqnn64R5UkrMqM=;
- b=AhrQ6SyZl1wRSjnBrWCCpDPOOlWV0L8a1q/yAY8N/ksX431LQcmXPdSza0Zy1oBs7EqgE0
- Q7EzIcW7KtmfbS9ZZp7MtH6YjhaNcr4rITfeht33SYiRv9Z/tNqrEPwM/o0oFlkrB0gEK+
- /qDf0GlLCl8RoGaE1IDOuq7uf0TBcdE=
+ bh=ip7Nftynx750AYFZGC7Njs3lqOYCdZvd4rGc6p0ItTQ=;
+ b=SZSvwQm/APvWKToIvAsMsAxlO78SRcfdVXl8927DbmrKx3iu2NihhZczQXmQVkElAjsxk1
+ yGb1BaUrXSWy0SpC8b96pc5JdzI1Krb/PZ5kKpc9TSLGWn9Cnyk6D+McvZrp+YED2VHLNX
+ 2zPLADbY2ZKonL0Xc9Wj+I9dYIEa4Fw=
 Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
  [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-271-EQA39TiLOmOY8upekkxMTA-1; Sun, 22 Feb 2026 09:28:26 -0500
-X-MC-Unique: EQA39TiLOmOY8upekkxMTA-1
-X-Mimecast-MFC-AGG-ID: EQA39TiLOmOY8upekkxMTA_1771770505
+ us-mta-131-u7fYPHlnOLyTlA_KoCDpdA-1; Sun, 22 Feb 2026 09:29:02 -0500
+X-MC-Unique: u7fYPHlnOLyTlA_KoCDpdA-1
+X-Mimecast-MFC-AGG-ID: u7fYPHlnOLyTlA_KoCDpdA_1771770541
 Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4837246211bso38982345e9.0
- for <qemu-devel@nongnu.org>; Sun, 22 Feb 2026 06:28:25 -0800 (PST)
+ 5b1f17b1804b1-4837b6f6b93so26138465e9.3
+ for <qemu-devel@nongnu.org>; Sun, 22 Feb 2026 06:29:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1771770505; x=1772375305; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=6Vc1eHralXDftsudwcbcWVLtbmhHYnqnn64R5UkrMqM=;
- b=E/Sk0EePaC9gsRtgP5tHrgK+DoaiWhFPnDuKEU1Nv0aIqf0AK0uE7BBzSdOkD9+8vj
- 0qcIFDOJutYqxoecNEjzW+To7EJhusGXMd/luJW5Fr/NKbmn5rxzlwDtBPiqE408yDye
- 3V6VgC8xAB1Zc7KHmPL9x5BuGJr6FjploigbFcCVOXf3ne5DTYOu0W0dVd6Bmcb1s97i
- 9ePEpDgoPM8JxH4BKex/n4IVE+nLmQ50fImRwccu0OQd4xpa0RQr0ji7Yp0USXkDija5
- u19xYOAXvWy5ZypVPXek4uS/6egt0TEaXuwDE2jJW8+RxUFKMGm5lxpY4pink8OIyB8i
- p2dA==
+ d=redhat.com; s=google; t=1771770541; x=1772375341; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=ip7Nftynx750AYFZGC7Njs3lqOYCdZvd4rGc6p0ItTQ=;
+ b=heB+nrecBcfA3nuWALQPnMbDLmYcrffcoMEW9MONsWykNvq8neq88dKYROkPT2+lAk
+ ohM9s9Yst25oU0bF/MIpvoHMx7+3BskHa58ZY93zeZnsts/tjBSqtMamgZ0C0H8+MCI9
+ IFPv298VpyVg9BH18VbPU84hFDq18gKPVF+HWDrnRzV5qg9zdiIay2O6o4ck9BjePM6w
+ Mz5C1lpFmP/qi9u524gcUWfbKCDszF2Z7biN4Uzaf6qFJzpd6+VcNv36q5DSMrsehknm
+ l1j8wdMpJVmRvDiwoU8RJMVbdrv2EDyuQ0Q4aCGlKe15BAA2xyBbgPKAWhup3sletYXU
+ InLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771770505; x=1772375305;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=6Vc1eHralXDftsudwcbcWVLtbmhHYnqnn64R5UkrMqM=;
- b=sYpfZUEfQiHEL6LxKKaP8OHV2qvHbMjtDim2x+2lpcsh0LBGQZ/b9uibzQqdzYJPVT
- CdQuwB5H1Job19II9iDJbblxJeGFkymjGBWMuzX3F87Nud229Y8i1UNHUvJTiPTc5Vzt
- QTo3czfVhL1Z+im6mEe7U6bizu3kmJNJPrRrIz2IbSjOZ7Aq3kE36TV5FEKp4CL8h0hj
- tBs2AHWp9pJlm0DGswn66Y5bm9wBy9Ps0DZAv/LaoEGJa/Bnb0qDwwo53SZgBw/06kv/
- IXLSNN2JwZYOqjYO5nR0xIYbwcqNmm+7LgqM9jfBcJ0AQ/2X6CiOSYeqJwP0RaZrElBO
- 372Q==
-X-Gm-Message-State: AOJu0Yyl6bG8dviyEvbM6SdybdVqKee0DQ6SAcl41exB4BjtUmoYg/MC
- 98OTYDJqUSixCfx86SBTZIP+lOYok++gEHQvJy9wlqregvacrQP3WwD6WP59XoVre/XBIVbJGbz
- NdaSyequti/EZ0878uZoNsVPumQViBlQWbBf/yMoZls+dAm4FH5v2Foliuppj0yV/zCAF8Yfrci
- RQh+beizzWDQKGZ/lwubh41i2Q1Nz3aPbojQ==
-X-Gm-Gg: AZuq6aLn0W+e3D/1gp26Hg0jE+Qtuzh+ZSsQuZvCHsvUNQiokNJXmdsN8rDbC7UIS4S
- WyGhbe1pyr7d6mssDcus/4Ex2IAalomeI+r8oWQjdF1dKTI8xO9IA4LSkl8JZNDXrXEq1ZGjzvQ
- P8nwwkS6dEQQ3+rZaTWakOwm2OD+c0bm9tmfoC853tciUmTra4z1k7FHZDRZrDP8cqsEcu/ufyI
- Sn7kuf4EQ2/WscGQU2tMppTB3RVQ59KedTjyQdNy3Dsbjb1bKOkjdcr684UGFaNtp3udMA9ir1/
- xGMEMi0BX/9jSkZfCn5jXcklo2wx24+8+XF1ATVZWqWQj5lEy9QmzJUkUSU76tMwvVktQXJYDD1
- 9cYHEdP/20WPJVXwQj0qG0cfmCnxVtrNcxDIeGQC+mHmLtA==
-X-Received: by 2002:a05:600c:4e8a:b0:47e:e91d:73c0 with SMTP id
- 5b1f17b1804b1-483a962e37emr87501395e9.19.1771770504485; 
- Sun, 22 Feb 2026 06:28:24 -0800 (PST)
-X-Received: by 2002:a05:600c:4e8a:b0:47e:e91d:73c0 with SMTP id
- 5b1f17b1804b1-483a962e37emr87500985e9.19.1771770503900; 
- Sun, 22 Feb 2026 06:28:23 -0800 (PST)
+ d=1e100.net; s=20230601; t=1771770541; x=1772375341;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=ip7Nftynx750AYFZGC7Njs3lqOYCdZvd4rGc6p0ItTQ=;
+ b=rJWCZKNmzc3H02P8AclXe8vKk3oCyvcDBfaD2dBVV1Ie7fRW9iHJr6oTJOukBLlRlA
+ Q3b6t8bscMHaichf0iC9asTG8CstlYLN17EavBww1Soh/3zheBKyeXdAKTQRt/3ZODPs
+ 8OmwPBB9xJ8cRcrGR50fOt7896h5qDRxeHMpgldqoiJnODgso2UKzLHTd8wiZXhVTlxi
+ OM9Py7ibQhQRVV//etDZf5sBaM5aT1g2M2N6/UHXWndZRgzQ/ydcavQg/F5MU00IXJos
+ aoo/FufY34tDDXGXsh1yldxHz6cpxZ724nDlOSyLzsA/rj4ZzGYlXY7nd7zNV0MXenu0
+ ejWg==
+X-Gm-Message-State: AOJu0Yy3ZgW+4Iu7m8q9WlYSkykFNSqaGn3CLQtBvSmXr7+I531Xc9qy
+ kn9vtSOUSmW5T5F/RwZ2e3z6OI+ntBIPILkGZxlhee/+DBs54N4e3BUt61KTDfqkzL3Ndc04GHH
+ pRiPX1opOgTQXnShQR+bIkqj6CPqyqLSgo1uriCH6fEQsKw3oTXq+wZF0K5efS0b7orzVsPp5hm
+ LPqidS2As3FsccGxush8T6tJEtJNXinmAqkA==
+X-Gm-Gg: AZuq6aKf3Q17VnWCFhHSdmSOl7X9vE+iq7Mw2HqkKkMZHhY+GJVVO86g7Dx9dblWJCK
+ JQmuYVS/HdeAjAAANroPnO23nKRQ0D3GIeP83CLo7rYdNyF6Ebns9pcSsHmTSXe5fo5aZNQ0oDb
+ RPFswVVNDRiAiPr81AoWtYdyHABFsxY11aExeArajhLa1LcktltwZb250TqNeryKaR6X81x4tIL
+ wD0IH1xW/vPBbPIJ+NMOlrJoOcxu0G9Gfj7JrKUdpi08OMJN+8JyvJK8mv03OEe2TDZQ8MmYgYM
+ Q6OMMYJbRmiDyIZmAPeDnnLlFzMBTPM6dtUBtIHkMVZLpi52OTt9W/hQiF4CQsPopwE25DGBm7t
+ 8nHncT/i8XUzEIJhUPbcqA9Hk59mafkWeDayMgrY8gWBzUw==
+X-Received: by 2002:a05:600c:3b08:b0:480:1c69:9d36 with SMTP id
+ 5b1f17b1804b1-483a95eacf7mr83579905e9.17.1771770541025; 
+ Sun, 22 Feb 2026 06:29:01 -0800 (PST)
+X-Received: by 2002:a05:600c:3b08:b0:480:1c69:9d36 with SMTP id
+ 5b1f17b1804b1-483a95eacf7mr83579475e9.17.1771770540516; 
+ Sun, 22 Feb 2026 06:29:00 -0800 (PST)
 Received: from redhat.com (IGLD-80-230-79-166.inter.net.il. [80.230.79.166])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-483a9b75b4dsm194818005e9.4.2026.02.22.06.28.22
+ 5b1f17b1804b1-483a3e01c27sm75074855e9.9.2026.02.22.06.28.58
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 22 Feb 2026 06:28:23 -0800 (PST)
-Date: Sun, 22 Feb 2026 09:28:21 -0500
+ Sun, 22 Feb 2026 06:29:00 -0800 (PST)
+Date: Sun, 22 Feb 2026 09:28:57 -0500
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Yodel Eldar <yodel.eldar@yodel.dev>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>
-Subject: [PULL 03/33] contrib/vhost-user-bridge: Add UDP receive hexdump
-Message-ID: <fa33e6815ee3926b485a12a6b654c7edbac8b373.1771770471.git.mst@redhat.com>
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+ Davidlohr Bueso <dave@stgolabs.net>, Igor Mammedov <imammedo@redhat.com>,
+ Ani Sinha <anisinha@redhat.com>
+Subject: [PULL 18/33] hw/cxl: Update CXL Fixed Memory Window ACPI description
+ to include Back Invalidate support.
+Message-ID: <e6742e71c24cf577a4677e9449269007c24ae4ab.1771770471.git.mst@redhat.com>
 References: <cover.1771770471.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1771770471.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
@@ -124,49 +122,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Yodel Eldar <yodel.eldar@yodel.dev>
+From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 
-vhost-user-bridge debug prints UDP TX hexdumps in its transmit handler,
-but does not for receives, even though they are beneficial for testing.
-Add an RX hexdump in the receive callback.
+Defaults for these windows has always been to enable anything QEMU supports.
+With the addition of back invalidate support it is necessary to specify that
+host windows support this.
 
-To delineate between transmits and receives, also add a debug print
-indicating that the program is in the transmit handler.
+CXL emulation is currently only suitable for software stack verification.
+The relaxation of the restrictions on this window to include BI have no
+affect on the OS until BI capable devices are added and until now these
+have not existed. As such no backwards compatibility impacts are expected
+from this change.
 
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Signed-off-by: Yodel Eldar <yodel.eldar@yodel.dev>
+Reviewed-by: Davidlohr Bueso <dave@stgolabs.net>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-Id: <20260129133049.119829-4-yodel.eldar@yodel.dev>
+Message-Id: <20260204170936.43959-5-Jonathan.Cameron@huawei.com>
 ---
- contrib/vhost-user-bridge/vhost-user-bridge.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ hw/acpi/cxl.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/contrib/vhost-user-bridge/vhost-user-bridge.c b/contrib/vhost-user-bridge/vhost-user-bridge.c
-index ce4c3426d3..3f0fd0fa49 100644
---- a/contrib/vhost-user-bridge/vhost-user-bridge.c
-+++ b/contrib/vhost-user-bridge/vhost-user-bridge.c
-@@ -179,6 +179,9 @@ vubr_handle_tx(VuDev *dev, int qidx)
+diff --git a/hw/acpi/cxl.c b/hw/acpi/cxl.c
+index 75edb2c0a6..f92f7fa3d5 100644
+--- a/hw/acpi/cxl.c
++++ b/hw/acpi/cxl.c
+@@ -172,7 +172,7 @@ static void cedt_build_cfmws(CXLFixedWindow *fw, Aml *cedt)
+     build_append_int_noprefix(table_data, fw->enc_int_gran, 4);
  
-     assert(qidx % 2);
+     /* Window Restrictions */
+-    build_append_int_noprefix(table_data, 0x0f, 2);
++    build_append_int_noprefix(table_data, 0x2f, 2);
  
-+    DPRINT("\n\n   ***   IN UDP TRANSMIT HANDLER    ***\n\n");
-+    DPRINT("    hdrlen = %d\n", hdrlen);
-+
-     for (;;) {
-         ssize_t ret;
-         unsigned int out_num;
-@@ -333,6 +336,10 @@ vubr_backend_recv_cb(int sock, void *ctx)
-         };
-         ret = RETRY_ON_EINTR(recvmsg(vubr->backend_udp_sock, &msg, 0));
- 
-+        if (ret > 0 && VHOST_USER_BRIDGE_DEBUG) {
-+            iov_hexdump(sg, num, stderr, "RX:", ret);
-+        }
-+
-         if (i == 0) {
-             iov_restore_front(elem->in_sg, sg, hdrlen);
-         }
+     /* QTG ID */
+     build_append_int_noprefix(table_data, 0, 2);
 -- 
 MST
 
