@@ -4,92 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45E33C636A0
-	for <qemu-devel@archiver.kernel.org>; Sun, 22 Feb 2026 14:33:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACBC0C6369F
+	for <qemu-devel@archiver.kernel.org>; Sun, 22 Feb 2026 14:34:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuASK-00089l-UV; Sun, 22 Feb 2026 09:29:08 -0500
+	id 1vuASl-00009S-GQ; Sun, 22 Feb 2026 09:29:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vuASH-00086e-Sx
- for qemu-devel@nongnu.org; Sun, 22 Feb 2026 09:29:06 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vuASD-000856-HS
+ for qemu-devel@nongnu.org; Sun, 22 Feb 2026 09:29:02 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vuASG-0006oa-GD
- for qemu-devel@nongnu.org; Sun, 22 Feb 2026 09:29:05 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vuASB-0006nX-N3
+ for qemu-devel@nongnu.org; Sun, 22 Feb 2026 09:29:01 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771770543;
+ s=mimecast20190719; t=1771770539;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=ip7Nftynx750AYFZGC7Njs3lqOYCdZvd4rGc6p0ItTQ=;
- b=SZSvwQm/APvWKToIvAsMsAxlO78SRcfdVXl8927DbmrKx3iu2NihhZczQXmQVkElAjsxk1
- yGb1BaUrXSWy0SpC8b96pc5JdzI1Krb/PZ5kKpc9TSLGWn9Cnyk6D+McvZrp+YED2VHLNX
- 2zPLADbY2ZKonL0Xc9Wj+I9dYIEa4Fw=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=NXf3I54LQjbQo5rdjnX8oUBXAUmrFhpR1xfT44HvLzM=;
+ b=XNBPKSU0tq+rPMSN4D8uo5nSruN8Gq8ssxixfT4Smn/CLeOHlghoAPvSTPWnkEaT/3f5H8
+ UoZy13nNPV+oF4CmVh/mJf3jauLbz+WeJrx36Pd8+RAYinl8cXZg84p5uPwBY0saV472H1
+ osTaaI0C9QzNN15dcwkMaHY72GkEpXU=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-131-u7fYPHlnOLyTlA_KoCDpdA-1; Sun, 22 Feb 2026 09:29:02 -0500
-X-MC-Unique: u7fYPHlnOLyTlA_KoCDpdA-1
-X-Mimecast-MFC-AGG-ID: u7fYPHlnOLyTlA_KoCDpdA_1771770541
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4837b6f6b93so26138465e9.3
- for <qemu-devel@nongnu.org>; Sun, 22 Feb 2026 06:29:02 -0800 (PST)
+ us-mta-55-fDOGoHU1OwSWoFr9kvKdSA-1; Sun, 22 Feb 2026 09:28:57 -0500
+X-MC-Unique: fDOGoHU1OwSWoFr9kvKdSA-1
+X-Mimecast-MFC-AGG-ID: fDOGoHU1OwSWoFr9kvKdSA_1771770537
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-4368060a5e5so3855502f8f.3
+ for <qemu-devel@nongnu.org>; Sun, 22 Feb 2026 06:28:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1771770541; x=1772375341; darn=nongnu.org;
+ d=redhat.com; s=google; t=1771770536; x=1772375336; darn=nongnu.org;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=ip7Nftynx750AYFZGC7Njs3lqOYCdZvd4rGc6p0ItTQ=;
- b=heB+nrecBcfA3nuWALQPnMbDLmYcrffcoMEW9MONsWykNvq8neq88dKYROkPT2+lAk
- ohM9s9Yst25oU0bF/MIpvoHMx7+3BskHa58ZY93zeZnsts/tjBSqtMamgZ0C0H8+MCI9
- IFPv298VpyVg9BH18VbPU84hFDq18gKPVF+HWDrnRzV5qg9zdiIay2O6o4ck9BjePM6w
- Mz5C1lpFmP/qi9u524gcUWfbKCDszF2Z7biN4Uzaf6qFJzpd6+VcNv36q5DSMrsehknm
- l1j8wdMpJVmRvDiwoU8RJMVbdrv2EDyuQ0Q4aCGlKe15BAA2xyBbgPKAWhup3sletYXU
- InLA==
+ bh=NXf3I54LQjbQo5rdjnX8oUBXAUmrFhpR1xfT44HvLzM=;
+ b=HYTMIdbnyDyHnXm/4eya1QNQHhKZ15tRbrYKfcTyE0+7On1fuBIQr8jyIpU8V/9dkS
+ UypkxVHlcjkH5Tr32po4cX+f4yatIFSDSqMWWVm5wxHl2KISt3wnsF6u4wlxUczvzjOR
+ Y22gA9OKvcKAG5z/Z0qKn00bsm7XyVn7TRd1klogUzCtWMNh5fpPgMRg9YE505MKWvKq
+ /RLSkdsYBGMg9b73TKOuiN9DKFwm31NHdOh2hRbtx+Fh5eOL//3bnorA//IYB109Lv+g
+ ywyYc22fR+NIhEtJtI1dWotEfb1eqhDi61BneonbeOiAKEMgcsQZEuY0L4QYIlE6cBAJ
+ Lb4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771770541; x=1772375341;
+ d=1e100.net; s=20230601; t=1771770536; x=1772375336;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ip7Nftynx750AYFZGC7Njs3lqOYCdZvd4rGc6p0ItTQ=;
- b=rJWCZKNmzc3H02P8AclXe8vKk3oCyvcDBfaD2dBVV1Ie7fRW9iHJr6oTJOukBLlRlA
- Q3b6t8bscMHaichf0iC9asTG8CstlYLN17EavBww1Soh/3zheBKyeXdAKTQRt/3ZODPs
- 8OmwPBB9xJ8cRcrGR50fOt7896h5qDRxeHMpgldqoiJnODgso2UKzLHTd8wiZXhVTlxi
- OM9Py7ibQhQRVV//etDZf5sBaM5aT1g2M2N6/UHXWndZRgzQ/ydcavQg/F5MU00IXJos
- aoo/FufY34tDDXGXsh1yldxHz6cpxZ724nDlOSyLzsA/rj4ZzGYlXY7nd7zNV0MXenu0
- ejWg==
-X-Gm-Message-State: AOJu0Yy3ZgW+4Iu7m8q9WlYSkykFNSqaGn3CLQtBvSmXr7+I531Xc9qy
- kn9vtSOUSmW5T5F/RwZ2e3z6OI+ntBIPILkGZxlhee/+DBs54N4e3BUt61KTDfqkzL3Ndc04GHH
- pRiPX1opOgTQXnShQR+bIkqj6CPqyqLSgo1uriCH6fEQsKw3oTXq+wZF0K5efS0b7orzVsPp5hm
- LPqidS2As3FsccGxush8T6tJEtJNXinmAqkA==
-X-Gm-Gg: AZuq6aKf3Q17VnWCFhHSdmSOl7X9vE+iq7Mw2HqkKkMZHhY+GJVVO86g7Dx9dblWJCK
- JQmuYVS/HdeAjAAANroPnO23nKRQ0D3GIeP83CLo7rYdNyF6Ebns9pcSsHmTSXe5fo5aZNQ0oDb
- RPFswVVNDRiAiPr81AoWtYdyHABFsxY11aExeArajhLa1LcktltwZb250TqNeryKaR6X81x4tIL
- wD0IH1xW/vPBbPIJ+NMOlrJoOcxu0G9Gfj7JrKUdpi08OMJN+8JyvJK8mv03OEe2TDZQ8MmYgYM
- Q6OMMYJbRmiDyIZmAPeDnnLlFzMBTPM6dtUBtIHkMVZLpi52OTt9W/hQiF4CQsPopwE25DGBm7t
- 8nHncT/i8XUzEIJhUPbcqA9Hk59mafkWeDayMgrY8gWBzUw==
-X-Received: by 2002:a05:600c:3b08:b0:480:1c69:9d36 with SMTP id
- 5b1f17b1804b1-483a95eacf7mr83579905e9.17.1771770541025; 
- Sun, 22 Feb 2026 06:29:01 -0800 (PST)
-X-Received: by 2002:a05:600c:3b08:b0:480:1c69:9d36 with SMTP id
- 5b1f17b1804b1-483a95eacf7mr83579475e9.17.1771770540516; 
- Sun, 22 Feb 2026 06:29:00 -0800 (PST)
+ bh=NXf3I54LQjbQo5rdjnX8oUBXAUmrFhpR1xfT44HvLzM=;
+ b=G5QVI3JiGjvv/5dCkgeQuXEOCfQzDUbe+mCqTIipRPEb1TcxbrxsBSxrUeCMmOVq18
+ 0ci3D7X6cfAfYkUsCqiKo01756TkZk7gSTmxNNaR4nGDOs0oAD90dIVU6PGr9R3qQt8c
+ YcuqDxaktKW2dm0YtT0H7y2gqdSMH2DS19fJligwmTa7M+63Sj/Se92ATc3Yb0TYqXil
+ 9UBawqwPLE1wEGaoA85Scv0W4KImVY5IpA9UzuB4qotYQGg47kaU2vnMr6tIpdrg5gUY
+ OKSzCCBYlAJQDRGZK0k5mxp3nRSxbJcUfq+519a9yx/P2bCUE5s6YyavsALARWBcOvjk
+ kCaw==
+X-Gm-Message-State: AOJu0YwtXt3sIFG1WvojEJVGd93buRh5SEBugsKT19g/EoAbpd8kyEuj
+ e3OeufSCLPLdkCnu+RzdSynJWw3/M3RA4uABZ4gn868Qx6AuBw4+WL4YLTLc5RU2NS6Y9RT+3Bk
+ RRQrqEnuMKIoh+0J0nqzY3vnTvf19a+/pCdegUEokMzM88mWLqYUqj143kMzm7kS71ZUy19ZiQR
+ sW/WjIWF7JHJ9uARR6sxBfgQFaRY2Qi2365w==
+X-Gm-Gg: AZuq6aKJSxXe5Dqliwpe7vP8uBYpy4BbQfmu5ccSdU9fJ/l0iDltcQulUGijzQBqDgN
+ 8l60uUYQ6jKYsvUQidudnBTeJjVyQ+t+YyUbyNe4YXjPER+A0DuvA6mGptSORdtuDb8XjeI/eBd
+ orFi7vxz3ix73gxuisNgoICI4a+ofo8wSZi6WXG/PBLowOQjbu08VREP/BB6wt6Fa0mjiYpJ+SP
+ HuY4a5UpBAbp/rHVNxzFR52MZfHmFzC4w6UUxdgyCEaR8ANSn/BCtw+oV5QSBfJ0qaFTAo17M2r
+ /KPF1/tdkWOpy8lUUrHGKTuYv251CE4tUEx+QeLei0pm9ezmFMnKp7gGnsLvcOeHiioLZFx4C+F
+ x/VSGA4NpoJCshwgtg2Dn1uhesYh7a1xWX4E+OBswln0sPQ==
+X-Received: by 2002:a05:6000:402b:b0:430:f5ed:83e3 with SMTP id
+ ffacd0b85a97d-4396f150730mr10758321f8f.6.1771770536202; 
+ Sun, 22 Feb 2026 06:28:56 -0800 (PST)
+X-Received: by 2002:a05:6000:402b:b0:430:f5ed:83e3 with SMTP id
+ ffacd0b85a97d-4396f150730mr10758274f8f.6.1771770535531; 
+ Sun, 22 Feb 2026 06:28:55 -0800 (PST)
 Received: from redhat.com (IGLD-80-230-79-166.inter.net.il. [80.230.79.166])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-483a3e01c27sm75074855e9.9.2026.02.22.06.28.58
+ ffacd0b85a97d-43970c00db8sm11909430f8f.12.2026.02.22.06.28.54
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 22 Feb 2026 06:29:00 -0800 (PST)
-Date: Sun, 22 Feb 2026 09:28:57 -0500
+ Sun, 22 Feb 2026 06:28:55 -0800 (PST)
+Date: Sun, 22 Feb 2026 09:28:53 -0500
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>,
- Davidlohr Bueso <dave@stgolabs.net>, Igor Mammedov <imammedo@redhat.com>,
- Ani Sinha <anisinha@redhat.com>
-Subject: [PULL 18/33] hw/cxl: Update CXL Fixed Memory Window ACPI description
- to include Back Invalidate support.
-Message-ID: <e6742e71c24cf577a4677e9449269007c24ae4ab.1771770471.git.mst@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>, Ira Weiny <ira.weiny@intel.com>,
+ Dongjoo Seo <dongjoo.seo1@samsung.com>,
+ Davidlohr Bueso <dave@stgolabs.net>,
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>, Fan Ni <fan.ni@samsung.com>
+Subject: [PULL 16/33] hw/cxl: Refactor component register initialization
+Message-ID: <5729c01a600d62c19202936481b06e84a14236ba.1771770471.git.mst@redhat.com>
 References: <cover.1771770471.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -122,40 +121,205 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From: Ira Weiny <ira.weiny@intel.com>
 
-Defaults for these windows has always been to enable anything QEMU supports.
-With the addition of back invalidate support it is necessary to specify that
-host windows support this.
+CXL 3.2 8.2.4 Table 8-22 defines which capabilities are mandatory, not
+permitted, or optional for each type of device.
 
-CXL emulation is currently only suitable for software stack verification.
-The relaxation of the restrictions on this window to include BI have no
-affect on the OS until BI capable devices are added and until now these
-have not existed. As such no backwards compatibility impacts are expected
-from this change.
+cxl_component_register_init_common() uses a rather odd 'fall through'
+mechanism to define each component register set.  This assumes that any
+device or capability being added builds on the previous devices
+capabilities.  This is not true as there are mutually exclusive
+capabilities defined.  For example, downstream ports can not have snoop
+but it can have Back Invalidate capable decoders.
 
-Reviewed-by: Davidlohr Bueso <dave@stgolabs.net>
+Refactor this code to make it easier to add individual capabilities as
+defined by a device type.  Any capability which is not specified by the
+type is left NULL'ed out which complies with the packed nature of the
+register array.
+
+Update all spec references to 3.2.
+
+No functional changes should be seen with this patch.
+
+Signed-off-by: Ira Weiny <ira.weiny@intel.com>
+Tested-by: Dongjoo Seo <dongjoo.seo1@samsung.com>
+[rebased, no RAS for HBs, r3.2 references]
+Signed-off-by: Davidlohr Bueso <dave@stgolabs.net>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-Id: <20260204170936.43959-5-Jonathan.Cameron@huawei.com>
+Message-Id: <20260204170936.43959-3-Jonathan.Cameron@huawei.com>
 ---
- hw/acpi/cxl.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/cxl/cxl-component-utils.c   | 75 +++++++++++-----------------------
+ include/hw/cxl/cxl_component.h | 33 ++++++++++-----
+ 2 files changed, 46 insertions(+), 62 deletions(-)
 
-diff --git a/hw/acpi/cxl.c b/hw/acpi/cxl.c
-index 75edb2c0a6..f92f7fa3d5 100644
---- a/hw/acpi/cxl.c
-+++ b/hw/acpi/cxl.c
-@@ -172,7 +172,7 @@ static void cedt_build_cfmws(CXLFixedWindow *fw, Aml *cedt)
-     build_append_int_noprefix(table_data, fw->enc_int_gran, 4);
+diff --git a/hw/cxl/cxl-component-utils.c b/hw/cxl/cxl-component-utils.c
+index 473895948b..91770f103a 100644
+--- a/hw/cxl/cxl-component-utils.c
++++ b/hw/cxl/cxl-component-utils.c
+@@ -284,32 +284,6 @@ void cxl_component_register_init_common(uint32_t *reg_state,
+ {
+     int caps = 0;
  
-     /* Window Restrictions */
--    build_append_int_noprefix(table_data, 0x0f, 2);
-+    build_append_int_noprefix(table_data, 0x2f, 2);
+-    /*
+-     * In CXL 2.0 the capabilities required for each CXL component are such
+-     * that, with the ordering chosen here, a single number can be used to
+-     * define which capabilities should be provided.
+-     */
+-    switch (type) {
+-    case CXL2_DOWNSTREAM_PORT:
+-    case CXL2_DEVICE:
+-        /* RAS, Link */
+-        caps = 2;
+-        break;
+-    case CXL2_UPSTREAM_PORT:
+-    case CXL2_TYPE3_DEVICE:
+-    case CXL2_LOGICAL_DEVICE:
+-        /* + HDM */
+-        caps = 3;
+-        break;
+-    case CXL2_ROOT_PORT:
+-    case CXL2_RC:
+-        /* + Extended Security, + Snoop */
+-        caps = 5;
+-        break;
+-    default:
+-        abort();
+-    }
+-
+     memset(reg_state, 0, CXL2_COMPONENT_CM_REGION_SIZE);
  
-     /* QTG ID */
-     build_append_int_noprefix(table_data, 0, 2);
+     /* CXL Capability Header Register */
+@@ -317,11 +291,12 @@ void cxl_component_register_init_common(uint32_t *reg_state,
+     ARRAY_FIELD_DP32(reg_state, CXL_CAPABILITY_HEADER, VERSION,
+         CXL_CAPABILITY_VERSION);
+     ARRAY_FIELD_DP32(reg_state, CXL_CAPABILITY_HEADER, CACHE_MEM_VERSION, 1);
+-    ARRAY_FIELD_DP32(reg_state, CXL_CAPABILITY_HEADER, ARRAY_SIZE, caps);
+ 
+ #define init_cap_reg(reg, id, version)                                        \
+     do {                                                                      \
+-        int which = R_CXL_##reg##_CAPABILITY_HEADER;                          \
++        int which = CXL_##reg##_CAP_HDR_IDX;                                  \
++        if (CXL_##reg##_CAP_HDR_IDX > caps)                                   \
++            caps = CXL_##reg##_CAP_HDR_IDX;                                   \
+         reg_state[which] = FIELD_DP32(reg_state[which],                       \
+                                       CXL_##reg##_CAPABILITY_HEADER, ID, id); \
+         reg_state[which] =                                                    \
+@@ -332,37 +307,35 @@ void cxl_component_register_init_common(uint32_t *reg_state,
+                        CXL_##reg##_REGISTERS_OFFSET);                         \
+     } while (0)
+ 
++    /* CXL r3.2 8.2.4 Table 8-22 */
+     switch (type) {
+-    case CXL2_DEVICE:
++    case CXL2_ROOT_PORT:
++    case CXL2_RC:
++        /* + Extended Security, + Snoop */
++        init_cap_reg(EXTSEC, 6, 1);
++        init_cap_reg(SNOOP, 8, 1);
++        /* fallthrough */
++    case CXL2_UPSTREAM_PORT:
+     case CXL2_TYPE3_DEVICE:
+     case CXL2_LOGICAL_DEVICE:
+-    case CXL2_ROOT_PORT:
+-    case CXL2_UPSTREAM_PORT:
++        /* + HDM */
++        init_cap_reg(HDM, 5, 1);
++        hdm_init_common(reg_state, write_msk, type);
++        /* fallthrough */
+     case CXL2_DOWNSTREAM_PORT:
+-    init_cap_reg(RAS, 2, CXL_RAS_CAPABILITY_VERSION);
+-        ras_init_common(reg_state, write_msk);
++    case CXL2_DEVICE:
++        /* RAS, Link */
++        if (type != CXL2_RC) {
++            init_cap_reg(RAS, 2, 2);
++            ras_init_common(reg_state, write_msk);
++        }
++        init_cap_reg(LINK, 4, 2);
+         break;
+     default:
+-        break;
++        abort();
+     }
+ 
+-    init_cap_reg(LINK, 4, CXL_LINK_CAPABILITY_VERSION);
+-
+-    if (caps < 3) {
+-        return;
+-    }
+-
+-    if (type != CXL2_ROOT_PORT) {
+-        init_cap_reg(HDM, 5, CXL_HDM_CAPABILITY_VERSION);
+-        hdm_init_common(reg_state, write_msk, type);
+-    }
+-    if (caps < 5) {
+-        return;
+-    }
+-
+-    init_cap_reg(EXTSEC, 6, CXL_EXTSEC_CAP_VERSION);
+-    init_cap_reg(SNOOP, 8, CXL_SNOOP_CAP_VERSION);
+-
++    ARRAY_FIELD_DP32(reg_state, CXL_CAPABILITY_HEADER, ARRAY_SIZE, caps);
+ #undef init_cap_reg
+ }
+ 
+diff --git a/include/hw/cxl/cxl_component.h b/include/hw/cxl/cxl_component.h
+index b0f2aa7914..1f167d3ef7 100644
+--- a/include/hw/cxl/cxl_component.h
++++ b/include/hw/cxl/cxl_component.h
+@@ -32,10 +32,20 @@ enum reg_type {
+ };
+ 
+ /*
+- * Capability registers are defined at the top of the CXL.cache/mem region and
+- * are packed. For our purposes we will always define the caps in the same
+- * order.
+- * CXL r3.1 Table 8-22: CXL_CAPABILITY_ID Assignment for details.
++ * CXL r3.2 - 8.2.4 Table 8-22 and 8-23
++ *
++ * Capability registers are defined at the top of the CXL.cache/mem region.
++ * They are defined to be packed and at variable offsets.  However, NULL
++ * capabilities can be added to the packed array.  To facilitate easier access
++ * within the QEMU code, define these at specified offsets.  Then NULL out any
++ * capabilities for devices which don't (or can't) have a particular capability
++ * (see cxl_component_register_init_common).  NULL capabilities are to be
++ * ignored by software.
++ *
++ * 'offsets' are based on index's which can then be used to report the array
++ * size in CXL Capability Header Register (index/offset 0).
++ *
++ * See CXL r3.2 Table 8-25 for an example of allowing a 'NULL' header.
+  */
+ 
+ /* CXL r3.1 Section 8.2.4.1: CXL Capability Header Register */
+@@ -46,16 +56,17 @@ REG32(CXL_CAPABILITY_HEADER, 0)
+     FIELD(CXL_CAPABILITY_HEADER, CACHE_MEM_VERSION, 20, 4)
+     FIELD(CXL_CAPABILITY_HEADER, ARRAY_SIZE, 24, 8)
+ 
+-#define CXLx_CAPABILITY_HEADER(type, offset)                  \
+-    REG32(CXL_##type##_CAPABILITY_HEADER, offset)             \
++#define CXLx_CAPABILITY_HEADER(type, idx)                     \
++    enum { CXL_##type##_CAP_HDR_IDX = idx };                  \
++    REG32(CXL_##type##_CAPABILITY_HEADER, (idx * 0x4))        \
+         FIELD(CXL_##type##_CAPABILITY_HEADER, ID, 0, 16)      \
+         FIELD(CXL_##type##_CAPABILITY_HEADER, VERSION, 16, 4) \
+         FIELD(CXL_##type##_CAPABILITY_HEADER, PTR, 20, 12)
+-CXLx_CAPABILITY_HEADER(RAS, 0x4)
+-CXLx_CAPABILITY_HEADER(LINK, 0x8)
+-CXLx_CAPABILITY_HEADER(HDM, 0xc)
+-CXLx_CAPABILITY_HEADER(EXTSEC, 0x10)
+-CXLx_CAPABILITY_HEADER(SNOOP, 0x14)
++CXLx_CAPABILITY_HEADER(RAS, 1)
++CXLx_CAPABILITY_HEADER(LINK, 2)
++CXLx_CAPABILITY_HEADER(HDM, 3)
++CXLx_CAPABILITY_HEADER(EXTSEC, 4)
++CXLx_CAPABILITY_HEADER(SNOOP, 5)
+ 
+ /*
+  * Capability structures contain the actual registers that the CXL component
 -- 
 MST
 
