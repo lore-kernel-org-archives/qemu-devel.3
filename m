@@ -4,98 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 423C6C636A0
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8192BC636B2
 	for <qemu-devel@archiver.kernel.org>; Sun, 22 Feb 2026 14:31:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuASo-0000Z1-LC; Sun, 22 Feb 2026 09:29:38 -0500
+	id 1vuASJ-00088z-AG; Sun, 22 Feb 2026 09:29:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vuASm-0000It-Jp
- for qemu-devel@nongnu.org; Sun, 22 Feb 2026 09:29:36 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vuARr-0007yr-2L
+ for qemu-devel@nongnu.org; Sun, 22 Feb 2026 09:28:40 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vuASk-00072A-Au
- for qemu-devel@nongnu.org; Sun, 22 Feb 2026 09:29:36 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vuARp-0006fz-3B
+ for qemu-devel@nongnu.org; Sun, 22 Feb 2026 09:28:38 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771770573;
+ s=mimecast20190719; t=1771770516;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=uKkPVQcUkW331rdfnbO03ZD7znaM0qOM81kMUIFvtcA=;
- b=iUr1kcJ6V/NCM/Ojk1/88ySMdyPnrHl/YEoD3evFhOQtd4JLNlaLdbSmbdKvRwDwG4Kyeo
- HrBx/shw1JcKv4jic71S3S0ZwF2dOVU5W57h4Sc2Jkkr9kv0pAZzbUAQvAjL0uFClRg845
- gmiyAFr1CDB+EnWJ2Iew0J9JKgTOWus=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=b7jj4bO0BpZFDJlcU0gJFZM3UtLcehjzveNq1sniWtA=;
+ b=T2w3YfxxtOLNZAFBdDhaePi3DdnuKy+0ZFjoDSHXwu3yHJcDKYxmuqBV812hjePtZghA2T
+ v+Vj4wC73Pbji5JIZ+XCgjwiEL37bcuRf3DmQmbUUC5lW8Ys0qZtOlIcYIY4vUc47gjWoT
+ UVQqA2XaCKOIdGbS6c4RtpGUM+M54rw=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-633-I4xSJUO3NmOe0VNpmagAOQ-1; Sun, 22 Feb 2026 09:29:32 -0500
-X-MC-Unique: I4xSJUO3NmOe0VNpmagAOQ-1
-X-Mimecast-MFC-AGG-ID: I4xSJUO3NmOe0VNpmagAOQ_1771770571
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-483786a09b1so38834705e9.3
- for <qemu-devel@nongnu.org>; Sun, 22 Feb 2026 06:29:32 -0800 (PST)
+ us-mta-503-9rBL1CbAOaCpCFzAABRvJQ-1; Sun, 22 Feb 2026 09:28:34 -0500
+X-MC-Unique: 9rBL1CbAOaCpCFzAABRvJQ-1
+X-Mimecast-MFC-AGG-ID: 9rBL1CbAOaCpCFzAABRvJQ_1771770513
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-43771113b3bso2858258f8f.0
+ for <qemu-devel@nongnu.org>; Sun, 22 Feb 2026 06:28:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1771770571; x=1772375371; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=uKkPVQcUkW331rdfnbO03ZD7znaM0qOM81kMUIFvtcA=;
- b=IX8rIribQt4qN3BuwcXUMIawjPk5wIOf7tP4ZEFm1Px/DjFD2MqED5Ligtpfe6nThq
- oyWv1sLdo3pC7rm9DE0+sxfOwH3+dhSjM3LHje6/vnK/LYc0juIGr7gkfEJzLmclYQMU
- ANz3uELgEZa6csKnxUZUjNDUSPLi1lXO+d1LP2xelRitl91eGH6A+00TeG+WLLFNwP8l
- obr/JkbXGBJgeAg1NiF3Z90Rrj2qZfstYBob3EaifqlIJU6isPWJOVEe2Q3rDWe1N9F7
- hm44flYtPiZDr4kiodRTcDKNnr8hdHFfR3xIpl8nJh5KVibOMKXDxrFz3TBzbvGcDIMn
- AF6g==
+ d=redhat.com; s=google; t=1771770513; x=1772375313; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=b7jj4bO0BpZFDJlcU0gJFZM3UtLcehjzveNq1sniWtA=;
+ b=i9MHyynbn3afcGRW4Xd6WrICe8PJ0WKNbvWs76z9+11baRC0sflBibwiEambmyj8Ci
+ qOZCTgpr/qNNX+KVCur12RfK/056DbXVb9k751tpxF6zpyGQbo2OPJlH6OorCZctjQgG
+ y/VYPZPZiefoRcwr27pek1IaPya5Y7i2uqZqVGS024j3pPpyA9th0gnUX6nQCmhAcedP
+ ykqrtHTAopWLr+4jCiprlirXvq+eC+1JrtxNrexNmY3zpWWtpAjf7zhe39iC0X65WSum
+ TMlqqHphQ1mqDuKlNJhP03uBItd1Eng45BeFYoWtIP/wh7xgxr8azZCcaRZ+tJBGzGLN
+ /Gbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771770571; x=1772375371;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=uKkPVQcUkW331rdfnbO03ZD7znaM0qOM81kMUIFvtcA=;
- b=JyaIbK4CzOmsIexcXFsxzCtZ8Wtc8JVVLwdsxIRlzE1vHpzzNQpy4givfMU0S7UK8D
- vPGS6EozhL3Ib14lAR48a8ADSeeZ7KOMceU2cGhtbhdy/5XN2oDIlXcymX3sg2ybGITp
- 7bmZEn+eK/EpsI6hCHW52xWa9IZafCal7JcaJgJo+RDIwXNmn2egfZSemKzbrGDB4qON
- cNLBq0LAWBurcwBijhx3EVaY1UWQyRroy1lr7v6k5PTqgUrf2ibHMe3RbkuDwkXHLdbR
- 3xIkWwKrC692Z7WtkEQPj7P5j8KKkki4atrRXa1aPJRNKMuRmCL7yz94VWlsBV+5+uzR
- u4yQ==
-X-Gm-Message-State: AOJu0YzFBMSAPhJj+IUsaMo7eoym0u76ORNxRd2OQH4h2fhKY26483Iw
- N6J1+5ByZpyK/yKc98nyJeCoTOv/GM9GrRFxo9F2PHQFV4KzFgWbve6a+fPOF8lWP8R79WSi4Mt
- LajTAau1j0NlHX04kqpWXe60f/B/uI7ao9t0EcsAcVlZtiDyMcuPOx2EnEic2had50ug+Vy2Jrb
- 0+vIHW10jAY2bq9BPpwhM36kWu4i0WBJJk9w==
-X-Gm-Gg: AZuq6aKtu+frS6hIzXoBSNc4o94b9KiNX+eG9vSuUHEN52PWK3YhHF68Gv03P8bavxp
- G5kff+Orc+0m5DHD7CvH3XiFjGeDf3zxMW/nhT6t1hKE0A0JY+rW5ElJhb7MX94Eu+ydYc3vSNl
- dwkarQ2TYAG+LqQnM8fqx6f8eIXQQi8hz/isIC0V8ojZ4ECmOfifaPz8GtWBUhxPzju/FaZoo/x
- Ka/Dd7Ivq7OrPxF6YlOQymdjp1aL3TbzEybGd6jZFPakq1OKEtwSYm0t4vbaWaJWOQDVedQXfus
- euWFs2MkeE8JXPDPdM9RjcHsCApkPdwAhmDQatCBQa3WbYjR70uzZdqTwl8b4h5p4PxoNv6qzdO
- s49RZ0+v1VK/7pEh2JKB3tH+DaJLJ+f3d2VweevLxK8ps4w==
-X-Received: by 2002:a05:600c:3b11:b0:483:79a6:e7e1 with SMTP id
- 5b1f17b1804b1-483a95b5a72mr99732165e9.7.1771770570811; 
- Sun, 22 Feb 2026 06:29:30 -0800 (PST)
-X-Received: by 2002:a05:600c:3b11:b0:483:79a6:e7e1 with SMTP id
- 5b1f17b1804b1-483a95b5a72mr99731805e9.7.1771770570290; 
- Sun, 22 Feb 2026 06:29:30 -0800 (PST)
+ d=1e100.net; s=20230601; t=1771770513; x=1772375313;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=b7jj4bO0BpZFDJlcU0gJFZM3UtLcehjzveNq1sniWtA=;
+ b=j3ca2zLItpzTHZsousM/NfLXkvegOSU6nvJYKl+3IgKF+aCsIPfw/qDzMNgIxi68qN
+ ctc5ZBi5YeMvsd4doeoW7QGNE2VOtRmOoNIwMqyPXmkz2FQgtzugXoqLgCfGV9t1qNfb
+ zr7++CNaoQyWVqOFC9vvYBsyGNXK2UC3NJTOIRCKTeOUmus9B9WyDB1jQCeZRoPiI0JQ
+ wz5sgvcQZeFyqdhEWesfTBHOcuCYPND4+h+d0FudbueJmMs0CakrL2LeyuKVkKfSjWU2
+ CPG8xHOYelWHqgdzk/1+aO0iMCW8s4SHZBYodrbp0rb4kgg4AwoLIlsNQS6HtoNa0Go2
+ B1KQ==
+X-Gm-Message-State: AOJu0YwaePKlVOBfWIJcWxGGRJP55IzJLJ5QFmh46qAsEJx7HFBnM4mA
+ t/RcoJ+eV9wExaCEW1U5CAXS6adDLyTtFnTxnHatkf0CAAbHX5TYByDl2T0eRVkznDN2H8gQ0Iv
+ zD+BWBj7yblsgoiXC5Ifok97y3/k9al7dwChO+W3TIa4mhZDQpNmNoHTaeZq+1F3jAdesqRILeG
+ UBqkPRIZoGMxMItwPEN1Wu9zwze+htOP22Sw==
+X-Gm-Gg: AZuq6aKgQGLeQThWIHvM41KmMZYuxJA1CYakxBwaMdMxXqY+nhb2vs6xbFKEhF7KfNf
+ 6BAYSFeKOP4j2e1zziwPEUMl+2UqsaZGZLtaZVEqzCbXH7HJo0KZ4mbfzvaHAPSeZOZ+vF0ZbJS
+ q5n5zJeSDqRpNNmVyiouU075I1/RgOh/irg9+0zz0Z+i4ajaBDSy4phDNmwkNfbO6nparhcrEQI
+ 0vOakk2CbR73q5mVb8Rz6UPzxBeOd4ctOhJcnMQiLNj25EpwMwFK6r4LBnhQmyrRmikFCfZWTov
+ IyWTY3Jht2ADIqV97is/E1xXOoDGVT+VWzKq5CzFA6S9P67rxDeMCI98MZaLid/MZrdlIw9kgS5
+ 4JuyA3TlEXIPeEnDbYXVgvb3a3UL53XG0cBq2nYemgcbbSQ==
+X-Received: by 2002:a5d:64e5:0:b0:435:e47b:e746 with SMTP id
+ ffacd0b85a97d-4396f17a9c6mr10329178f8f.36.1771770513036; 
+ Sun, 22 Feb 2026 06:28:33 -0800 (PST)
+X-Received: by 2002:a5d:64e5:0:b0:435:e47b:e746 with SMTP id
+ ffacd0b85a97d-4396f17a9c6mr10329133f8f.36.1771770512396; 
+ Sun, 22 Feb 2026 06:28:32 -0800 (PST)
 Received: from redhat.com (IGLD-80-230-79-166.inter.net.il. [80.230.79.166])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-483a9b66932sm134821565e9.1.2026.02.22.06.29.29
+ ffacd0b85a97d-43970bfa001sm13095460f8f.2.2026.02.22.06.28.31
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 22 Feb 2026 06:29:29 -0800 (PST)
-Date: Sun, 22 Feb 2026 09:29:28 -0500
+ Sun, 22 Feb 2026 06:28:31 -0800 (PST)
+Date: Sun, 22 Feb 2026 09:28:30 -0500
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- qemu-stable@nongnu.org, =?utf-8?B?572X6ZOt5rqQ?= <myluo24@m.fudan.edu.cn>,
- Gerd Hoffmann <kraxel@redhat.com>
-Subject: [PULL 30/33] virtio-snd: handle 5.14.6.2 for PCM_INFO properly
-Message-ID: <61679d7dcfa2dffc8fb115aa19b09e0e7cf5ea5c.1771770471.git.mst@redhat.com>
+ Shiju Jose <shiju.jose@huawei.com>, Markus Armbruster <armbru@redhat.com>,
+ Ravi Jonnalagadda <ravis.opensrc@gmail.com>,
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+ Eric Blake <eblake@redhat.com>, Fan Ni <fan.ni@samsung.com>
+Subject: [PULL 07/33] qapi: cxl: Refactor CXL event injection for common
+ commands arguments
+Message-ID: <2fc064e23ecb1e83c26c7146aaa71ca5adec573e.1771770471.git.mst@redhat.com>
 References: <cover.1771770471.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1771770471.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
@@ -124,87 +123,177 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+From: Shiju Jose <shiju.jose@huawei.com>
 
-The section 5.14.6.2 of the VIRTIO spec says:
+Refactor CXL event injection to use struct for common command
+arguments.
 
-  5.14.6.2 Driver Requirements: Item Information Request
-
-  - The driver MUST NOT set start_id and count such that start_id +
-    count is greater than the total number of particular items that is
-    indicated in the device configuration space.
-
-  - The driver MUST provide a buffer of sizeof(struct virtio_snd_hdr) +
-    count * size bytes for the response.
-
-While we performed some check for the second requirement, it failed to
-check for integer overflow.
-
-Add also a check for the first requirement, which should limit exposure
-to any overflow, since realistically the number of streams will be low
-enough in value such that overflow is improbable.
-
-Cc: qemu-stable@nongnu.org
-Reported-by: 罗铭源 <myluo24@m.fudan.edu.cn>
-Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Suggested-by: Markus Armbruster <armbru@redhat.com>
+Signed-off-by: Shiju Jose <shiju.jose@huawei.com>
+Acked-by: Markus Armbruster <armbru@redhat.com>
+Reviewed-by: Ravi Jonnalagadda <ravis.opensrc@gmail.com>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-Id: <20260220-virtio-snd-series-v1-3-207c4f7200a2@linaro.org>
+Message-Id: <20260205112350.60681-2-Jonathan.Cameron@huawei.com>
 ---
- hw/audio/virtio-snd.c | 31 +++++++++++++++++++++++++++----
- 1 file changed, 27 insertions(+), 4 deletions(-)
+ qapi/cxl.json | 89 +++++++++++++++++++++++++++++++++------------------
+ 1 file changed, 58 insertions(+), 31 deletions(-)
 
-diff --git a/hw/audio/virtio-snd.c b/hw/audio/virtio-snd.c
-index 232179a04a..ae8bfbca43 100644
---- a/hw/audio/virtio-snd.c
-+++ b/hw/audio/virtio-snd.c
-@@ -156,7 +156,7 @@ static virtio_snd_pcm_set_params *virtio_snd_pcm_get_params(VirtIOSound *s,
- static void virtio_snd_handle_pcm_info(VirtIOSound *s,
-                                        virtio_snd_ctrl_command *cmd)
- {
--    uint32_t stream_id, start_id, count, size;
-+    uint32_t stream_id, start_id, count, size, tmp;
-     virtio_snd_pcm_info val;
-     virtio_snd_query_info req;
-     VirtIOSoundPCMStream *stream = NULL;
-@@ -179,11 +179,34 @@ static void virtio_snd_handle_pcm_info(VirtIOSound *s,
-     count = le32_to_cpu(req.count);
-     size = le32_to_cpu(req.size);
+diff --git a/qapi/cxl.json b/qapi/cxl.json
+index eeddb58d1d..55a088586e 100644
+--- a/qapi/cxl.json
++++ b/qapi/cxl.json
+@@ -31,11 +31,10 @@
+  }
  
--    if (iov_size(cmd->elem->in_sg, cmd->elem->in_num) <
--        sizeof(virtio_snd_hdr) + size * count) {
-+    /*
-+     * 5.14.6.2 Driver Requirements: Item Information Request
-+     * "The driver MUST NOT set start_id and count such that start_id + count
-+     * is greater than the total number of particular items that is indicated
-+     * in the device configuration space."
-+     */
-+    if (start_id > s->snd_conf.streams
-+        || !g_uint_checked_add(&tmp, start_id, count)
-+        || start_id + count > s->snd_conf.streams) {
-+        error_report("pcm info: start_id + count is greater than the total "
-+                     "number of streams, got: start_id = %u, count = %u",
-+                     start_id, count);
-+        cmd->resp.code = cpu_to_le32(VIRTIO_SND_S_BAD_MSG);
-+        return;
-+    }
+ ##
+-# @cxl-inject-general-media-event:
++# @CXLCommonEventBase:
+ #
+-# Inject an event record for a General Media Event (CXL r3.0
+-# 8.2.9.2.1.1).  This event type is reported via one of the event logs
+-# specified via the log parameter.
++# Common event base for a CXL Event (CXL r3.0 8.2.9.2.1
++# Table 8-42 Common Event Record Format).
+ #
+ # @path: CXL type 3 device canonical QOM path
+ #
+@@ -44,6 +43,16 @@
+ # @flags: Event Record Flags.  See CXL r3.0 Table 8-42 Common Event
+ #     Record Format, Event Record Flags for subfield definitions.
+ #
++# Since: 8.1
++##
++{ 'struct': 'CXLCommonEventBase',
++  'data': { 'path': 'str', 'log': 'CxlEventLog', 'flags': 'uint8' } }
 +
-+    /*
-+     * 5.14.6.2 Driver Requirements: Item Information Request
-+     * "The driver MUST provide a buffer of sizeof(struct virtio_snd_hdr) +
-+     * count * size bytes for the response."
-+     */
-+    if (!g_uint_checked_mul(&tmp, size, count)
-+        || !g_uint_checked_add(&tmp, tmp, sizeof(virtio_snd_hdr))
-+        || iov_size(cmd->elem->in_sg, cmd->elem->in_num) <
-+           sizeof(virtio_snd_hdr) + size * count) {
-         error_report("pcm info: buffer too small, got: %zu, needed: %zu",
-                 iov_size(cmd->elem->in_sg, cmd->elem->in_num),
--                sizeof(virtio_snd_pcm_info));
-+                sizeof(virtio_snd_pcm_info) * count);
-         cmd->resp.code = cpu_to_le32(VIRTIO_SND_S_BAD_MSG);
-         return;
-     }
++##
++# @CXLGeneralMediaEvent:
++#
++# Event record for a General Media Event (CXL r3.0 8.2.9.2.1.1).
++#
+ # @dpa: Device Physical Address (relative to @path device).  Note
+ #     lower bits include some flags.  See CXL r3.0 Table 8-43 General
+ #     Media Event Record, Physical Address.
+@@ -74,26 +83,29 @@
+ #
+ # Since: 8.1
+ ##
+-{ 'command': 'cxl-inject-general-media-event',
+-  'data': { 'path': 'str', 'log': 'CxlEventLog', 'flags': 'uint8',
+-            'dpa': 'uint64', 'descriptor': 'uint8',
++{ 'struct': 'CXLGeneralMediaEvent',
++  'base': 'CXLCommonEventBase',
++  'data': { 'dpa': 'uint64', 'descriptor': 'uint8',
+             'type': 'uint8', 'transaction-type': 'uint8',
+             '*channel': 'uint8', '*rank': 'uint8',
+             '*device': 'uint32', '*component-id': 'str' } }
+ 
+ ##
+-# @cxl-inject-dram-event:
++# @cxl-inject-general-media-event:
+ #
+-# Inject an event record for a DRAM Event (CXL r3.0 8.2.9.2.1.2).
+-# This event type is reported via one of the event logs specified via
+-# the log parameter.
++# Inject an event record for a General Media Event (CXL r3.0
++# 8.2.9.2.1.1).  This event type is reported via one of the event
++# logs specified via the log parameter.
+ #
+-# @path: CXL type 3 device canonical QOM path
++# Since: 8.1
++##
++{ 'command': 'cxl-inject-general-media-event',
++  'data': 'CXLGeneralMediaEvent' }
++
++##
++# @CXLDRAMEvent:
+ #
+-# @log: Event log to add the event to
+-#
+-# @flags: Event Record Flags.  See CXL r3.0 Table 8-42 Common Event
+-#     Record Format, Event Record Flags for subfield definitions.
++# Event record for a DRAM Event (CXL r3.0 8.2.9.2.1.2).
+ #
+ # @dpa: Device Physical Address (relative to @path device).  Note
+ #     lower bits include some flags.  See CXL r3.0 Table 8-44 DRAM
+@@ -133,9 +145,9 @@
+ #
+ # Since: 8.1
+ ##
+-{ 'command': 'cxl-inject-dram-event',
+-  'data': { 'path': 'str', 'log': 'CxlEventLog', 'flags': 'uint8',
+-            'dpa': 'uint64', 'descriptor': 'uint8',
++{ 'struct': 'CXLDRAMEvent',
++  'base': 'CXLCommonEventBase',
++  'data': { 'dpa': 'uint64', 'descriptor': 'uint8',
+             'type': 'uint8', 'transaction-type': 'uint8',
+             '*channel': 'uint8', '*rank': 'uint8', '*nibble-mask': 'uint32',
+             '*bank-group': 'uint8', '*bank': 'uint8', '*row': 'uint32',
+@@ -143,18 +155,21 @@
+            }}
+ 
+ ##
+-# @cxl-inject-memory-module-event:
++# @cxl-inject-dram-event:
+ #
+-# Inject an event record for a Memory Module Event (CXL r3.0
+-# 8.2.9.2.1.3).  This event includes a copy of the Device Health info
+-# at the time of the event.
++# Inject an event record for a DRAM Event (CXL r3.0 8.2.9.2.1.2).
++# This event type is reported via one of the event logs
++# specified via the log parameter.
+ #
+-# @path: CXL type 3 device canonical QOM path
++# Since: 8.1
++##
++{ 'command': 'cxl-inject-dram-event',
++  'data': 'CXLDRAMEvent' }
++
++##
++# @CXLMemModuleEvent:
+ #
+-# @log: Event Log to add the event to
+-#
+-# @flags: Event Record Flags.  See CXL r3.0 Table 8-42 Common Event
+-#     Record Format, Event Record Flags for subfield definitions.
++# Event record for a Memory Module Event (CXL r3.0 8.2.9.2.1.3).
+ #
+ # @type: Device Event Type.  See CXL r3.0 Table 8-45 Memory Module
+ #     Event Record for bit definitions for bit definiions.
+@@ -185,9 +200,9 @@
+ #
+ # Since: 8.1
+ ##
+-{ 'command': 'cxl-inject-memory-module-event',
+-  'data': { 'path': 'str', 'log': 'CxlEventLog', 'flags' : 'uint8',
+-            'type': 'uint8', 'health-status': 'uint8',
++{ 'struct': 'CXLMemModuleEvent',
++  'base': 'CXLCommonEventBase',
++  'data': { 'type': 'uint8', 'health-status': 'uint8',
+             'media-status': 'uint8', 'additional-status': 'uint8',
+             'life-used': 'uint8', 'temperature' : 'int16',
+             'dirty-shutdown-count': 'uint32',
+@@ -195,6 +210,18 @@
+             'corrected-persistent-error-count': 'uint32'
+             }}
+ 
++##
++# @cxl-inject-memory-module-event:
++#
++# Inject an event record for a Memory Module Event (CXL r3.0
++# 8.2.9.2.1.3).  This event includes a copy of the Device Health info
++# at the time of the event.
++#
++# Since: 8.1
++##
++{ 'command': 'cxl-inject-memory-module-event',
++  'data': 'CXLMemModuleEvent' }
++
+ ##
+ # @cxl-inject-poison:
+ #
 -- 
 MST
 
