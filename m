@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79F35C636C5
-	for <qemu-devel@archiver.kernel.org>; Sun, 22 Feb 2026 23:23:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C17ACC6369E
+	for <qemu-devel@archiver.kernel.org>; Sun, 22 Feb 2026 23:23:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuIn5-0003g6-1d; Sun, 22 Feb 2026 18:23:07 -0500
+	id 1vuImy-0003ev-Ut; Sun, 22 Feb 2026 18:23:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vuIn4-0003fs-4G
- for qemu-devel@nongnu.org; Sun, 22 Feb 2026 18:23:06 -0500
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vuImy-0003ef-4t
+ for qemu-devel@nongnu.org; Sun, 22 Feb 2026 18:23:00 -0500
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vuIn2-00015z-L9
- for qemu-devel@nongnu.org; Sun, 22 Feb 2026 18:23:05 -0500
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-48069a48629so38419555e9.0
- for <qemu-devel@nongnu.org>; Sun, 22 Feb 2026 15:23:04 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vuImw-00015b-Ge
+ for qemu-devel@nongnu.org; Sun, 22 Feb 2026 18:22:59 -0500
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-48372efa020so29119845e9.2
+ for <qemu-devel@nongnu.org>; Sun, 22 Feb 2026 15:22:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771802583; x=1772407383; darn=nongnu.org;
+ d=linaro.org; s=google; t=1771802576; x=1772407376; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=mbYRL6ABvOtU3lbcSyBnxWPzihf6NMuNWsP1RdoVYmE=;
- b=vOSZW3ELPkU2z3uJTjT6PLY1IvE7qSsV1BW6CZvnyViuoAXCS8v0LZ9JUbNfBpe9Cv
- jH7gwFnerBS5ERCrFYvMyh8NdIYxjdN+lVbt5d2eM0eoBVkikqGGj0o912audAnF34g0
- bGyUrhWVNXQwNdsYQLnEwlwc5zzdyA3y2yljB3WLktICWBWnk1DdR9Hg4NaoOzR9175/
- EYQjiO+SzrR9nVTEx9jPauyETRRu6sd2hBaFKMQdbaMMmIO5oJUT7t5vQMVPfZCI2BXi
- vjsuenl/RXBukISiKrb85yQFPwGiDJoLwgNPJpjE5NKsflqeBdLQHD0ouLhPuxKlXVaM
- dOJQ==
+ :reply-to; bh=LyPAFfKaBurKN88V6LreaWGImyyKpmiLDGPyKjV7EJc=;
+ b=SGo0AosjRixQfiiLGl/hrHP/OrGobskSNWOuEx3RvFIt+kHtXD9/16UxeCRZqRrw5e
+ 5LD1KF05S8fZOkC5BBb4jn/3tmGsDVcKSKYrLk/erIDbrPLL9hw8AY4rfkg/TKjt4kBK
+ 68ePl/YdxHWGxO8cZYLKd6CVlJ7ZF5InhoezFCOtEpHf5vlqPAvUcphzoEF9UVcezn32
+ MKwlMZik5xUjO2g0eNb6lzSh/8iHH8+QOTCKtFuYMULtly7yCDg9E2R3mvqiCqS7C7ql
+ QobpWnEt3GjTC1UVgdzuO3+sb4hlXtV8oUdPntnW1//7nX4ba9vgUcvFPjEcue5MFd3M
+ MTYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771802583; x=1772407383;
+ d=1e100.net; s=20230601; t=1771802576; x=1772407376;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=mbYRL6ABvOtU3lbcSyBnxWPzihf6NMuNWsP1RdoVYmE=;
- b=aISkXy+fy6gPy5Xfp0yGfZqlEdP8URjCQQwqMfsch163mpJuEsThD8YsVCHoEJ67wg
- u3+E7nFl1Y05y1eXtpS1d2rG38s6+0ldaH+nBbVBAaFZ0t6SU0iCv9TrM2EuZ8YLjgCU
- WiF4vECDO1zFDxysq4HIhP/VwOBqp3lEl2wzjy0ZMibPJOS0Y1m/QPf/MrxOrRZ+TRWj
- 9ClwqEUkry1dKfzEXl5oeEb6EKRXFvhV8V//CmvHqlQO6pDUhs28TO5nVn+uLndGnhgZ
- c0f3nQLpj1LomtzKHrIRAVPFYtA3kql4h+uLg/Xje4jzE++mTIKa/rXzJNss/FITuLPI
- vfww==
-X-Gm-Message-State: AOJu0Yz1KellTr7DcMeK3S+q5f5FTGDxGTIw7mSTT5yW0wRqJilV+fB4
- LrdGwrp0OFgo5MJaVCr4zXlIsOmwnTUMQgPRoKlUMXHv3TuNsmJNKRzrtxejmXJCDTlXmh/z9Aw
- tYyTO5mE=
-X-Gm-Gg: AZuq6aIb29ixWojsd4uGnZwvO87xj4lEicA/xvoJhvbdlC0+Vf5IZqguhT1rqY2Hjm0
- O7h7+cLPQ+sQDrpzaWG78RLU/knOXpHtFJRGjhMxmdE/po/Mbl/f0gDC70kyIRsoJYGWD+w9r1M
- hVU3F5dX0A9G8iHgoTCpZpQXWYPaFZOMIl1AmqUe90eYXyPD9tpT7eIOUh+3r96Vx1KCvtYLN5U
- sjdbePc86KFQrfQPYm+W1nRQT1VpITfrTEyFq8OHHTXpdnFlNY64Epkl3lIIX/78y6d/V2Q0ylH
- pHEa7YIgP7GGVe0+DjwqUSYaUcxBn3fMBPj+NQqIbTHDTyJJ1dGci9p/X2naqXuEkV07yMo13mx
- 8BRHctkSK3eXtdEc1bQ+pFyWVM803Mzv9ng0ezPgwW9rRzPaROuJCL16LxqgWRUR+/sB98Dylfi
- tHdT262ecP0phP55pjIVO4AbMumTUwmwX8bXEMNAs0xQfR+GAabLvY+ENTjJw8AuAhZicFSjKV
-X-Received: by 2002:a05:600c:45cc:b0:483:6f37:1b33 with SMTP id
- 5b1f17b1804b1-483a95f5892mr107569195e9.30.1771802582733; 
- Sun, 22 Feb 2026 15:23:02 -0800 (PST)
+ bh=LyPAFfKaBurKN88V6LreaWGImyyKpmiLDGPyKjV7EJc=;
+ b=DXHlElQaRktSK7+lhASHOM5zQpcSTsl8i667UMm9EsWTK6q1k9zEYOJ7/YbSHGMssl
+ Th1+04W3/uepFQwiu3cf/zp5mawD+faGeHvRKCxCBpibg16YAXmggEwMvdWCW2d+AScV
+ JZ/npPYCKx5U5HE+TAFFofWTTMJeChOYtNdH5ogAFwblS9jvdz7lc2dSUrk8j8nDvdmh
+ cHLFLEZLPKd1Db/HV17qeH0LJDMhzy9a4ilQjw475Gyu8wjAAqdfcnZa22F06Fkyx6R+
+ sXCA1oCIe1X75rIvkcQKUrSEgiPauo/3uEyG/c7xRh/qUsGZTUupl0epLrM2067MqTI4
+ CvKg==
+X-Gm-Message-State: AOJu0YzxkhAqPCbe1WHJMIeE2+tZBWkXS4PUNLbi8g58MLqKzLxZOJbR
+ fT7dhxHZqQrDwSZAT3/cCeAK5OZZL3dWA2XjaoxD8G7HT1ZPOwWw1TkfsdUMnNuHrZLCaDaX8ur
+ K/RupoQI=
+X-Gm-Gg: AZuq6aI9bcVJr1Z0H2r3Pm44XxDG//3dfvcilHDmPHJwJHwnFBusZ7D52wqis85JRaa
+ +XytVLt+YHkbau/6iGze0mkimP2nVa+h+Qccthwz0indZCu1fZUx1pvMX3NDYn7UPgODJ5KElHz
+ x+GFcUg8uNoNydiW/emBn87zgsfu2hlU0tIfp7xBrNxzg6QEF+IUJrj7BxKwqeDoWbDnoQZSsZ1
+ aqmhuzbMN5Catu9yp6d8iBsfSbtfZZmt1AwEOnaN26uSUnC4GJZf6mEoCjlJkbkdolWuc+VJF1T
+ SlN7TPqXokcIzYX8OGi398f6R/QAhWb1o2WQtOl2H8S/slMNaPqKHWWjDKc9IGLOoTwzV/OgQOm
+ JHMlds8UkV5T4tBSiYfS2OptDMLzPqMKzJd8nRpGls52e07Gu2G3+XrjUGiu4bvHR4vgIwFUbyF
+ 23kc4Ll6BqeDAVQQhvwzVsdGXjGA/xxauJcUs7BYJBYA1QYjvX5GG0F+XdgzhN3HGxixGqgd+A
+X-Received: by 2002:a05:600c:37cd:b0:47d:586e:2fea with SMTP id
+ 5b1f17b1804b1-483a9605ce0mr129436955e9.15.1771802576379; 
+ Sun, 22 Feb 2026 15:22:56 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-483a8df83bcsm170863235e9.13.2026.02.22.15.23.02
+ ffacd0b85a97d-43970bf9f6csm16659875f8f.7.2026.02.22.15.22.55
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 22 Feb 2026 15:23:02 -0800 (PST)
+ Sun, 22 Feb 2026 15:22:55 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL v2 12/21] system/globals: Build as common code
-Date: Mon, 23 Feb 2026 00:22:22 +0100
-Message-ID: <20260222232222.7183-7-philmd@linaro.org>
+Subject: [PULL v2 11/21] hw/ppc: Set graphic display dimensions generically
+Date: Mon, 23 Feb 2026 00:22:21 +0100
+Message-ID: <20260222232222.7183-6-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260222232222.7183-1-philmd@linaro.org>
 References: <20260222232222.7183-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,68 +98,117 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Now that all targets have the graphic dimension variables
-initialized the same way, we can move them to the common
-file unit, having them built once. Remove the now empty
-globals-target.c file. The command line '-g WxH[xD]' option
-is not changed and behaves the same.
+If a dimension is not set, have the machine init code set
+the default values.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20260216213121.47122-9-philmd@linaro.org>
+Message-Id: <20260216213121.47122-8-philmd@linaro.org>
 ---
- system/globals-target.c | 14 --------------
- system/globals.c        |  3 +++
- system/meson.build      |  1 -
- 3 files changed, 3 insertions(+), 15 deletions(-)
- delete mode 100644 system/globals-target.c
+ hw/ppc/mac_newworld.c   | 9 +++++++++
+ hw/ppc/mac_oldworld.c   | 9 +++++++++
+ hw/ppc/prep.c           | 9 +++++++++
+ hw/ppc/spapr.c          | 9 +++++++++
+ system/globals-target.c | 6 ------
+ 5 files changed, 36 insertions(+), 6 deletions(-)
 
-diff --git a/system/globals-target.c b/system/globals-target.c
-deleted file mode 100644
-index ffa6c308b59..00000000000
---- a/system/globals-target.c
-+++ /dev/null
-@@ -1,14 +0,0 @@
--/*
-- * Global variables that should not exist (target specific)
-- *
-- * Copyright (c) 2003-2008 Fabrice Bellard
-- *
-- * SPDX-License-Identifier: MIT
-- */
--
--#include "qemu/osdep.h"
--#include "system/system.h"
--
--int graphic_width;
--int graphic_height;
--int graphic_depth;
-diff --git a/system/globals.c b/system/globals.c
-index c33f6ed3902..34fd3ce9c72 100644
---- a/system/globals.c
-+++ b/system/globals.c
-@@ -49,6 +49,9 @@ bool enable_cpu_pm;
- int autostart = 1;
- int vga_interface_type = VGA_NONE;
- bool vga_interface_created;
-+int graphic_width;
-+int graphic_height;
-+int graphic_depth;
- Chardev *parallel_hds[MAX_PARALLEL_PORTS];
- QEMUOptionRom option_rom[MAX_OPTION_ROMS];
- int nb_option_roms;
-diff --git a/system/meson.build b/system/meson.build
-index 4b69ef0f5fb..035f0ae7de4 100644
---- a/system/meson.build
-+++ b/system/meson.build
-@@ -1,6 +1,5 @@
- specific_ss.add(when: 'CONFIG_SYSTEM_ONLY', if_true: [files(
-   'arch_init.c',
--  'globals-target.c',
- )])
+diff --git a/hw/ppc/mac_newworld.c b/hw/ppc/mac_newworld.c
+index 7275563a155..3680d96ed39 100644
+--- a/hw/ppc/mac_newworld.c
++++ b/hw/ppc/mac_newworld.c
+@@ -432,6 +432,15 @@ static void ppc_core99_init(MachineState *machine)
  
- system_ss.add(files(
+     pci_vga_init(pci_bus);
+ 
++    if (!graphic_width) {
++        graphic_width = 800;
++    }
++    if (!graphic_height) {
++        graphic_height = 600;
++    }
++    if (!graphic_depth) {
++        graphic_depth = 32;
++    }
+     if (graphic_depth != 15 && graphic_depth != 32 && graphic_depth != 8) {
+         graphic_depth = 15;
+     }
+diff --git a/hw/ppc/mac_oldworld.c b/hw/ppc/mac_oldworld.c
+index e679d338985..24d9f2e3d5c 100644
+--- a/hw/ppc/mac_oldworld.c
++++ b/hw/ppc/mac_oldworld.c
+@@ -288,6 +288,15 @@ static void ppc_heathrow_init(MachineState *machine)
+         pci_create_simple(pci_bus, -1, "pci-ohci");
+     }
+ 
++    if (!graphic_width) {
++        graphic_width = 800;
++    }
++    if (!graphic_height) {
++        graphic_height = 600;
++    }
++    if (!graphic_depth) {
++        graphic_depth = 32;
++    }
+     if (graphic_depth != 15 && graphic_depth != 32 && graphic_depth != 8) {
+         graphic_depth = 15;
+     }
+diff --git a/hw/ppc/prep.c b/hw/ppc/prep.c
+index c4efd1d3908..e973b340992 100644
+--- a/hw/ppc/prep.c
++++ b/hw/ppc/prep.c
+@@ -412,6 +412,15 @@ static void ibm_40p_init(MachineState *machine)
+     fw_cfg_add_i64(fw_cfg, FW_CFG_RAM_SIZE, (uint64_t)machine->ram_size);
+     fw_cfg_add_i16(fw_cfg, FW_CFG_MACHINE_ID, ARCH_PREP);
+ 
++    if (!graphic_width) {
++        graphic_width = 800;
++    }
++    if (!graphic_height) {
++        graphic_height = 600;
++    }
++    if (!graphic_depth) {
++        graphic_depth = 32;
++    }
+     fw_cfg_add_i16(fw_cfg, FW_CFG_PPC_WIDTH, graphic_width);
+     fw_cfg_add_i16(fw_cfg, FW_CFG_PPC_HEIGHT, graphic_height);
+     fw_cfg_add_i16(fw_cfg, FW_CFG_PPC_DEPTH, graphic_depth);
+diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
+index 274f38785f2..0ab39dfea6b 100644
+--- a/hw/ppc/spapr.c
++++ b/hw/ppc/spapr.c
+@@ -1177,6 +1177,15 @@ static void spapr_dt_chosen(SpaprMachineState *spapr, void *fdt, bool reset)
+         if (machine->boot_config.has_menu && machine->boot_config.menu) {
+             _FDT((fdt_setprop_cell(fdt, chosen, "qemu,boot-menu", true)));
+         }
++        if (!graphic_width) {
++            graphic_width = 800;
++        }
++        if (!graphic_height) {
++            graphic_height = 600;
++        }
++        if (!graphic_depth) {
++            graphic_depth = 32;
++        }
+         _FDT(fdt_setprop_cell(fdt, chosen, "qemu,graphic-width", graphic_width));
+         _FDT(fdt_setprop_cell(fdt, chosen, "qemu,graphic-height", graphic_height));
+         _FDT(fdt_setprop_cell(fdt, chosen, "qemu,graphic-depth", graphic_depth));
+diff --git a/system/globals-target.c b/system/globals-target.c
+index 17a27a06218..ffa6c308b59 100644
+--- a/system/globals-target.c
++++ b/system/globals-target.c
+@@ -9,12 +9,6 @@
+ #include "qemu/osdep.h"
+ #include "system/system.h"
+ 
+-#if defined(TARGET_SPARC) || defined(TARGET_M68K)
+ int graphic_width;
+ int graphic_height;
+ int graphic_depth;
+-#else
+-int graphic_width = 800;
+-int graphic_height = 600;
+-int graphic_depth = 32;
+-#endif
 -- 
 2.52.0
 
