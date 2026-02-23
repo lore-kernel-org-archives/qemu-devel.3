@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0DD2E98E0A
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 08:23:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA38BE98E09
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 08:23:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuRCt-0001yk-JT; Mon, 23 Feb 2026 03:22:19 -0500
+	id 1vuRDM-0002Yy-Br; Mon, 23 Feb 2026 03:22:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vuRCs-0001yT-05
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 03:22:18 -0500
-Received: from mail-pg1-x52d.google.com ([2607:f8b0:4864:20::52d])
+ id 1vuRDD-0002Sr-82
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 03:22:40 -0500
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vuRCq-0007tL-72
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 03:22:17 -0500
-Received: by mail-pg1-x52d.google.com with SMTP id
- 41be03b00d2f7-c61343f82d7so1362680a12.1
- for <qemu-devel@nongnu.org>; Mon, 23 Feb 2026 00:22:15 -0800 (PST)
+ id 1vuRDB-0008Ll-NF
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 03:22:39 -0500
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-2a871daa98fso28459015ad.1
+ for <qemu-devel@nongnu.org>; Mon, 23 Feb 2026 00:22:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771834935; x=1772439735; darn=nongnu.org;
+ d=linaro.org; s=google; t=1771834956; x=1772439756; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=7P4L6KRGUfnJuZGklnenZefdnYuPN4EZ2NjRTD5rCHQ=;
- b=uAlhqBwF2zjMjg3UGjo76YPmeLQMPz6jx48Z81mnh1vnNt/iAMDtAaJHER6X0TR8Sd
- CPYL6Q0/Kpv4uy3kcQw4l7i2rcT2Ayn+z9nP9CUlrBAxiUvfWJAX66ABRs/GJBiuuXGE
- gtnSxBgOaeNG3FxltT6/dxv05gaUUuMlxaQaYOShwx01O9VoN/4Rd0nclO7WXeINDGJH
- 5/qHIBi9ZVjfpsvaGxhWgmlklhlx5yfCJOI4NKLwkMUQhPXX5OnFQa7Wm3wvbqhyVz5u
- +uGUUSU251FPRzms12FF6NdoexUHX+jYixaRVtV1Nj0Zlt6Xt+SoMJ3wfbEB4AMZtPZY
- lYaQ==
+ bh=IBmenqM3WCnGpamf2NpIeChrhVjPkJlu+S3ypFDoHA8=;
+ b=TQhVxrwBgoechY3RQ8kpPN6W/CbZfx6RgyBOr8Ufe4+SafjQhx6Ouc4tkYuYkgt9nG
+ FEwbYbc6JCIoNxxW+YyVV41YZK4GlBItpzQp/xaz4AhnZT+Zp1Lu+rkLMvia5gJMeSlJ
+ UxDPuUwWgsY1a8e+KZDGI7q7l7cveU2/oeqoBPV4erpaLouH3HRRY1t3WDHaBQtZZ/wu
+ JS+C7DDQa05YvGKDMGU/Aaqq7KNwIPAkVZ9PdfQG/ldlJRB+rSnof2nKMhG0L+6Rj0EC
+ A4Jq96c+IhDRstQegFbLnkagjRkYF7mrWQ1W+VpCCdLPQ+2wwG+n3adlrRgn+Qdy2tFf
+ eUQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771834935; x=1772439735;
+ d=1e100.net; s=20230601; t=1771834956; x=1772439756;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=7P4L6KRGUfnJuZGklnenZefdnYuPN4EZ2NjRTD5rCHQ=;
- b=a5TiMkBhUe5658bYfw+L71klPSqkp2XmbwMuAIB5QVd+0F/Xuk9f2XC2i7rDWSM6Fc
- 3LT38rfvnBtbNcrJ35/ATZbXlqQAsavcd91Tgn6Oa9l9HdmGzvUxwz2oa6Pp2wkM3QaD
- fmfGlg933s/i3mMufYfTeK1fO8uZTsfcAFYRmjj7XFdrUU0q6AovhTU6Xz6urveT2kE9
- 5/kcuOT1gufyTtoA3PH+xC8EeQNtCIBaFsjXDFtqQhzDFoHDtkb9Y1oTsZBvzaTc04dj
- yJ35R+vbtvUV0IEvPPtlDA12SbpTFWZhpbEzACwm4MTJPxWvLovpx1SR4NyIlPdhqOta
- Uj4g==
-X-Gm-Message-State: AOJu0YwTYFoYxPkUqHBzq9riLWzt5VMRYuts7wZLXRg3zrNEdNZzEoLT
- jtQsijSCbKWoXjY1kW8RFel8R1Kw9tVUe7V6EoNjXzGJ988K5tT0s+wDq+gMS+yQlf7kcijgFF0
- xnKgvdqk=
-X-Gm-Gg: ATEYQzxSO8pTRpFCMiDdcReWTVDwZ5sDJD044jXkaSm9ras/NjW0HXX9hHWOiOi3xyL
- FRIIjp+cBpGnhYvBRDWiW7pRYJD2gtU9oEN4hnS7ZuWhFNvuHGubiMZ/eMHrclMO0elm+pTefxZ
- ShK8ofoEVHRNPH+T1ycXofubnRao+wBRwSozfnSMR62RRjrU9tmNtGKkXXGuKqj58Z/gw6E4vs3
- R/Yimya/3nPm5ZQIAKlVdOakxDQ0kCh66Cw6Jz7mGGgxAbSibzb1I/cL6Ma680KgN1YceNI8pTG
- ZDNqmqzZyUOw/P8mHyy2RlTTlShKD18wBNZCGQ0nJbjHn5RgMq4gGBkJ+gPb4dRUYs6OZBzmV+G
- QaBFLB/XqOgB4LXIyzrbL0CinGSf3gUGmDb5XtKrMC87WZ6Rd9xnAKo65JwkrvC/l98cnnpkIQj
- PadGAA99FU57rgBr4km3Tr+6O7odZy/jrIH9VctXkOpKpSJEQXiMaZcFm7E5+T/rt4Xg==
-X-Received: by 2002:a17:902:cf10:b0:2ad:4029:9e01 with SMTP id
- d9443c01a7336-2ad74463f6fmr65391145ad.14.1771834934724; 
- Mon, 23 Feb 2026 00:22:14 -0800 (PST)
+ bh=IBmenqM3WCnGpamf2NpIeChrhVjPkJlu+S3ypFDoHA8=;
+ b=b5Urpr4gKOtvaj0c7LXfrIjBQ1+H9hCxw47Ps40msZM2pFCT9KgXo71EwZdCh3q6XH
+ rOQ7KSpaZkw6QRChjukMamtTJBnHOHiXek1iyyO6I6i9q3ja+wn89J/4W9gJweYVBjTf
+ ZptpCeAflaX4tdFEpt9tom5YzPoBb3K/izG6UKs2nxy+YaTDEUmwltojv8mcR1VciKfD
+ R1vHyNxHD2lSmbtSfM9DqRuRnNsaQP8Kz+9+AOy+kaR2iqhI+HkBo22zd0x5lHsArL3G
+ 89s5dX43jwpovj068kOBlTFGhw6NlXzr5SbeJD2EXHLdRDO+lAKtlOQI+DqL6xcaSuFm
+ lVQw==
+X-Gm-Message-State: AOJu0YwzroxULT/WIb4C56XZMbwj5gaphseXeOHPsAnI5yyDO7ib44eT
+ oD1f1YTkSe5pO4FDT3iUyk1gcIuxAZ25rTnBUfFLb4a3ki2Ufnx66mKBCf4WTiNH4pQeua+b5a3
+ IeLA0A78=
+X-Gm-Gg: ATEYQzyVS27yx4jiF1iwVNqmEvfp5hLA5waP8IlnJ+6LIexeeRxK4demK8ayiQxN6y7
+ 5lSP6ZNLn3wm5LqL+cXH4nP4dGeq1LIdQJTO/LKAspms8CR/3y7vUGt7wtA4+OkUQytO4xTgpUB
+ FFav8WmcfLyhd74xOUDqX70aaoz3ET8kNwpE+s0JQs99sADNBqFcakpbmXP8xJYeSXrZwmR/0kO
+ Me6lgEq76UFlkPQDm20cx7fFk9yErbj+jF3j2jroWO0hDYJ866dh2YRBw7vIl+5MkRZmzv9Tj9U
+ 05/SpXfZYAWMhwcdLZM90ycRyV7Vcg6gOxQEhApRkOIgsXnkIcr83eSlpvYEenpyIYMe3jbJEvV
+ C29gN+7WBeFDteCl8BER1rNSVQgAqYHWOTus4cBQbNJUvoi6E5k1AUtKdFCPYsjQIduRLbQPi8U
+ ju/5f/cGIvwCDrPGi7dof/CNK8BV2Lfut1W8JcIgdBH+0S/kT5c+DXi7XyYIeT8u7PeA==
+X-Received: by 2002:a17:903:2acc:b0:2a0:9755:2e97 with SMTP id
+ d9443c01a7336-2ad7444c497mr78249215ad.15.1771834956230; 
+ Mon, 23 Feb 2026 00:22:36 -0800 (PST)
 Received: from stoup.. (123-243-199-74.static.tpgi.com.au. [123.243.199.74])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2ad74f5dd7asm86543625ad.28.2026.02.23.00.22.11
+ d9443c01a7336-2ad74f5dd7asm86543625ad.28.2026.02.23.00.22.33
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 23 Feb 2026 00:22:14 -0800 (PST)
+ Mon, 23 Feb 2026 00:22:35 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: max.chou@sifive.com,
 	chao.liu.zevorn@gmail.com
-Subject: [PATCH v5 3/9] target/i386: Fix pseudo-NaN handling in
- FPATAN/FYL2XP1/FYL2X helpers
-Date: Mon, 23 Feb 2026 19:21:48 +1100
-Message-ID: <20260223082154.5623-4-richard.henderson@linaro.org>
+Subject: [PATCH v5 9/9] fpu: Add conversion routines for OCP FP4 E2M1
+Date: Mon, 23 Feb 2026 19:21:54 +1100
+Message-ID: <20260223082154.5623-10-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260223082154.5623-1-richard.henderson@linaro.org>
 References: <20260223082154.5623-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,98 +103,102 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Max Chou <max.chou@sifive.com>
 
-According to Intel's x87 FPU specification (Table 8-10, Vol. 1), arithmetic
-operations on operands in unsupported formats (including pseudo-NaNs) must
-return the QNaN floating-point indefinite value.
-
-The helper functions for FPATAN, FYL2XP1, and FYL2X incorrectly check for
-signaling NaN before checking for invalid encodings. This causes pseudo-NaNs
-to be treated as valid signaling NaNs and silenced, rather than being
-rejected as unsupported formats.
-
-Reorder the checks to test floatx80_invalid_encoding before
-floatx80_is_signaling_nan, matching the correct behavior already
-implemented in helper_fscale.
-
 Signed-off-by: Max Chou <max.chou@sifive.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
+[rth: Update for exp_max_kind]
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20260204051756.667397-5-max.chou@sifive.com>
 ---
- target/i386/tcg/fpu_helper.c | 30 +++++++++++++++---------------
- 1 file changed, 15 insertions(+), 15 deletions(-)
+ include/fpu/softfloat-types.h |  1 +
+ include/fpu/softfloat.h       |  4 +++-
+ fpu/softfloat.c               | 26 ++++++++++++++++++++++++++
+ 3 files changed, 30 insertions(+), 1 deletion(-)
 
-diff --git a/target/i386/tcg/fpu_helper.c b/target/i386/tcg/fpu_helper.c
-index b3b23823fd..37c83ded38 100644
---- a/target/i386/tcg/fpu_helper.c
-+++ b/target/i386/tcg/fpu_helper.c
-@@ -1377,16 +1377,16 @@ void helper_fpatan(CPUX86State *env)
-     int32_t arg1_exp = extractFloatx80Exp(ST1);
-     bool arg1_sign = extractFloatx80Sign(ST1);
+diff --git a/include/fpu/softfloat-types.h b/include/fpu/softfloat-types.h
+index 9c84a101e5..ead146c22d 100644
+--- a/include/fpu/softfloat-types.h
++++ b/include/fpu/softfloat-types.h
+@@ -122,6 +122,7 @@ typedef uint16_t bfloat16;
+ /*
+  * Open Compute Project (OCP) Microscaling Formats
+  */
++typedef uint8_t float4_e2m1;
+ typedef uint8_t float8_e4m3;
+ typedef uint8_t float8_e5m2;
  
--    if (floatx80_is_signaling_nan(ST0, &env->fp_status)) {
-+    if (floatx80_invalid_encoding(ST0, &env->fp_status) ||
-+        floatx80_invalid_encoding(ST1, &env->fp_status)) {
-+        float_raise(float_flag_invalid, &env->fp_status);
-+        ST1 = floatx80_default_nan(&env->fp_status);
-+    } else if (floatx80_is_signaling_nan(ST0, &env->fp_status)) {
-         float_raise(float_flag_invalid, &env->fp_status);
-         ST1 = floatx80_silence_nan(ST0, &env->fp_status);
-     } else if (floatx80_is_signaling_nan(ST1, &env->fp_status)) {
-         float_raise(float_flag_invalid, &env->fp_status);
-         ST1 = floatx80_silence_nan(ST1, &env->fp_status);
--    } else if (floatx80_invalid_encoding(ST0, &env->fp_status) ||
--               floatx80_invalid_encoding(ST1, &env->fp_status)) {
--        float_raise(float_flag_invalid, &env->fp_status);
--        ST1 = floatx80_default_nan(&env->fp_status);
-     } else if (floatx80_is_any_nan(ST0)) {
-         ST1 = ST0;
-     } else if (floatx80_is_any_nan(ST1)) {
-@@ -2061,16 +2061,16 @@ void helper_fyl2xp1(CPUX86State *env)
-     int32_t arg1_exp = extractFloatx80Exp(ST1);
-     bool arg1_sign = extractFloatx80Sign(ST1);
+diff --git a/include/fpu/softfloat.h b/include/fpu/softfloat.h
+index 31d3f76d3f..8389a07b04 100644
+--- a/include/fpu/softfloat.h
++++ b/include/fpu/softfloat.h
+@@ -190,9 +190,11 @@ float128 uint64_to_float128(uint64_t, float_status *status);
+ float128 uint128_to_float128(Int128, float_status *status);
  
--    if (floatx80_is_signaling_nan(ST0, &env->fp_status)) {
-+    if (floatx80_invalid_encoding(ST0, &env->fp_status) ||
-+        floatx80_invalid_encoding(ST1, &env->fp_status)) {
-+        float_raise(float_flag_invalid, &env->fp_status);
-+        ST1 = floatx80_default_nan(&env->fp_status);
-+    } else if (floatx80_is_signaling_nan(ST0, &env->fp_status)) {
-         float_raise(float_flag_invalid, &env->fp_status);
-         ST1 = floatx80_silence_nan(ST0, &env->fp_status);
-     } else if (floatx80_is_signaling_nan(ST1, &env->fp_status)) {
-         float_raise(float_flag_invalid, &env->fp_status);
-         ST1 = floatx80_silence_nan(ST1, &env->fp_status);
--    } else if (floatx80_invalid_encoding(ST0, &env->fp_status) ||
--               floatx80_invalid_encoding(ST1, &env->fp_status)) {
--        float_raise(float_flag_invalid, &env->fp_status);
--        ST1 = floatx80_default_nan(&env->fp_status);
-     } else if (floatx80_is_any_nan(ST0)) {
-         ST1 = ST0;
-     } else if (floatx80_is_any_nan(ST1)) {
-@@ -2159,16 +2159,16 @@ void helper_fyl2x(CPUX86State *env)
-     int32_t arg1_exp = extractFloatx80Exp(ST1);
-     bool arg1_sign = extractFloatx80Sign(ST1);
+ /*----------------------------------------------------------------------------
+-| OCP FP8 conversion routines.
++| OCP FP{4,8} conversion routines.
+ *----------------------------------------------------------------------------*/
  
--    if (floatx80_is_signaling_nan(ST0, &env->fp_status)) {
-+    if (floatx80_invalid_encoding(ST0, &env->fp_status) ||
-+        floatx80_invalid_encoding(ST1, &env->fp_status)) {
-+        float_raise(float_flag_invalid, &env->fp_status);
-+        ST1 = floatx80_default_nan(&env->fp_status);
-+    } else if (floatx80_is_signaling_nan(ST0, &env->fp_status)) {
-         float_raise(float_flag_invalid, &env->fp_status);
-         ST1 = floatx80_silence_nan(ST0, &env->fp_status);
-     } else if (floatx80_is_signaling_nan(ST1, &env->fp_status)) {
-         float_raise(float_flag_invalid, &env->fp_status);
-         ST1 = floatx80_silence_nan(ST1, &env->fp_status);
--    } else if (floatx80_invalid_encoding(ST0, &env->fp_status) ||
--               floatx80_invalid_encoding(ST1, &env->fp_status)) {
--        float_raise(float_flag_invalid, &env->fp_status);
--        ST1 = floatx80_default_nan(&env->fp_status);
-     } else if (floatx80_is_any_nan(ST0)) {
-         ST1 = ST0;
-     } else if (floatx80_is_any_nan(ST1)) {
++float8_e4m3 float4_e2m1_to_float8_e4m3(float4_e2m1, float_status *status);
++
+ bfloat16 float8_e4m3_to_bfloat16(float8_e4m3, float_status *status);
+ float8_e4m3 bfloat16_to_float8_e4m3(bfloat16, bool sat, float_status *status);
+ float8_e4m3 float32_to_float8_e4m3(float32, bool sat, float_status *status);
+diff --git a/fpu/softfloat.c b/fpu/softfloat.c
+index 6e21882ab2..91c34307c8 100644
+--- a/fpu/softfloat.c
++++ b/fpu/softfloat.c
+@@ -574,6 +574,11 @@ typedef struct {
+     .frac_shift     = (-F - 1) & 63,                    \
+     .round_mask     = (1ull << ((-F - 1) & 63)) - 1
+ 
++static const FloatFmt float4_e2m1_params = {
++    FLOAT_PARAMS(2, 1),
++    .exp_max_kind = float_expmax_normal,
++};
++
+ static const FloatFmt float8_e4m3_params = {
+     FLOAT_PARAMS(4, 3),
+     .exp_max_kind = float_expmax_e4m3
+@@ -641,6 +646,11 @@ static void unpack_raw64(FloatParts64 *r, const FloatFmt *fmt, uint64_t raw)
+     };
+ }
+ 
++static void QEMU_FLATTEN float4_e2m1_unpack_raw(FloatParts64 *p, float4_e2m1 f)
++{
++    unpack_raw64(p, &float4_e2m1_params, f);
++}
++
+ static void QEMU_FLATTEN float8_e4m3_unpack_raw(FloatParts64 *p, float8_e4m3 f)
+ {
+     unpack_raw64(p, &float8_e4m3_params, f);
+@@ -1709,6 +1719,13 @@ static const uint16_t rsqrt_tab[128] = {
+  * Pack/unpack routines with a specific FloatFmt.
+  */
+ 
++static void float4_e2m1_unpack_canonical(FloatParts64 *p, float4_e2m1 f,
++                                         float_status *s)
++{
++    float4_e2m1_unpack_raw(p, f);
++    parts_canonicalize(p, s, &float4_e2m1_params);
++}
++
+ static void float8_e4m3_unpack_canonical(FloatParts64 *p, float8_e4m3 f,
+                                          float_status *s)
+ {
+@@ -2929,6 +2946,15 @@ static void parts_float_to_float_widen(FloatParts128 *a, FloatParts64 *b,
+     }
+ }
+ 
++float8_e4m3 float4_e2m1_to_float8_e4m3(float4_e2m1 a, float_status *s)
++{
++    FloatParts64 p;
++
++    float4_e2m1_unpack_canonical(&p, a, s);
++    parts_float_to_float(&p, s);
++    return float8_e4m3_round_pack_canonical(&p, s, false);
++}
++
+ bfloat16 float8_e4m3_to_bfloat16(float8_e4m3 a, float_status *s)
+ {
+     FloatParts64 p;
 -- 
 2.43.0
 
