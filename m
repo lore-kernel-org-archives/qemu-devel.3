@@ -4,40 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02820EC112C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FD9DEC1126
 	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 20:26:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vucVE-0003gs-Ag; Mon, 23 Feb 2026 15:26:02 -0500
+	id 1vucVB-0003fd-3a; Mon, 23 Feb 2026 15:25:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <heifetz@yandex-team.com>)
- id 1vucV1-0003GF-Ty
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 15:25:48 -0500
+ id 1vucV0-0003Fz-Ut
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 15:25:47 -0500
 Received: from forwardcorp1d.mail.yandex.net
  ([2a02:6b8:c41:1300:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <heifetz@yandex-team.com>)
- id 1vucUv-0002R9-Mr
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 15:25:47 -0500
+ id 1vucUq-0002Q5-FH
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 15:25:41 -0500
 Received: from mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
  [IPv6:2a02:6b8:c0c:bf1f:0:640:c739:0])
- by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id E581982FC0;
- Mon, 23 Feb 2026 23:25:36 +0300 (MSK)
+ by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id E079982FAE;
+ Mon, 23 Feb 2026 23:25:33 +0300 (MSK)
 Received: from heifetz-lin.yandex-team.ru (unknown [2a02:6bf:8080:12d::1:2c])
  by mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
- (smtpcorp/Yandex) with ESMTPSA id CPmvPN6Ap8c0-KKDYrATx; 
- Mon, 23 Feb 2026 23:25:36 +0300
+ (smtpcorp/Yandex) with ESMTPSA id CPmvPN6Ap8c0-iKaPnRDF; 
+ Mon, 23 Feb 2026 23:25:33 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.com;
- s=default; t=1771878336;
- bh=79h67q6LX1lQ96c0uP4Rm18o9dNvSF7B8/1ghQcCkZY=;
+ s=default; t=1771878333;
+ bh=HUFhgKVNj/LZH5vB4eAuPYv3xept63cXyT7ucevHwAg=;
  h=Message-Id:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=uPtu32VNDHcPg1HQXyFbwffZEB2Nk2D4e7xQtdurF6hN06CiN0uV48Pc8b1ur4xie
- IgduYQ8DfG/WSW/syBV0Y+c9GBIawcWddKt88HcpQ2H4YFBiSOnafwiRWxrHITraCR
- JU2/2norgVhv3Rci8NuhCCvAlSL95+enFsKwH1YE=
+ b=0t0ZBXH4W/jCZ6G2A+P7koli0PUsLHu7uDBqL4LnwF2askcCq+7p2W/BcszVAois7
+ OyxtnJ0tQZ3m8flTdFAzG2ZAQXB945nK7br/9fiXix9LNrbfVL0neI/fAeHBzSzTCH
+ bz99vtAFzEYCPNlSU6W/+V6K7MSY0Cp9gW/Hny1o=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.com
 From: Sergei Heifetz <heifetz@yandex-team.com>
@@ -56,10 +56,10 @@ Cc: Gerd Hoffmann <kraxel@redhat.com>,
  "Michael S. Tsirkin" <mst@redhat.com>,
  Markus Armbruster <armbru@redhat.com>,
  "Dr. David Alan Gilbert" <dave@treblig.org>
-Subject: [PATCH v2 10/10] meson.build: ignore audio drivers when configured
- with --disable-audio
-Date: Tue, 24 Feb 2026 01:25:12 +0500
-Message-Id: <20260223202512.1308205-11-heifetz@yandex-team.com>
+Subject: [PATCH v2 09/10] audio: do not build audio-related sources with
+ --disable-audio
+Date: Tue, 24 Feb 2026 01:25:11 +0500
+Message-Id: <20260223202512.1308205-10-heifetz@yandex-team.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260223202512.1308205-1-heifetz@yandex-team.com>
 References: <20260223202512.1308205-1-heifetz@yandex-team.com>
@@ -88,119 +88,224 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When QEMU is configured with `--disable-audio`, we do not need to add the
-audio drivers list to config_host_data. We also do not need to print this
-list.
+When QEMU is configured with `--disable-audio`, do not build any
+audio-related sources.
+
+- audio/meson.build and replay/meson.build:
+  Exclude audio-related sources when audio is disabled.
+
+- audio/audio-stub.c:
+  Provide a minimal set of straightforward stubs.
+
+- replay/replay-audio-stub.c:
+  Move the existing stubs from replay/stubs-system.c into a separate
+  file.
+
+- qapi/audio.json:
+  Remove the QMP `query-audiodevs` command.
+
+- hmp-commands*.hx:
+  Remove the HMP `info capture`, `stopcapture` and `wavcapture`
+  commands.
 
 Signed-off-by: Sergei Heifetz <heifetz@yandex-team.com>
 ---
- meson.build | 80 ++++++++++++++++++++++++++++++-----------------------
- 1 file changed, 45 insertions(+), 35 deletions(-)
+ audio/audio-stub.c               | 22 ++++++++++++++++++++++
+ audio/meson.build                |  5 +++++
+ hmp-commands-info.hx             |  2 ++
+ hmp-commands.hx                  |  2 ++
+ hw/core/qdev-properties-system.c |  2 ++
+ qapi/audio.json                  |  3 ++-
+ replay/meson.build               |  9 ++++++++-
+ replay/replay-audio-stub.c       | 21 +++++++++++++++++++++
+ replay/stubs-system.c            | 12 ------------
+ 9 files changed, 64 insertions(+), 14 deletions(-)
+ create mode 100644 audio/audio-stub.c
+ create mode 100644 replay/replay-audio-stub.c
 
-diff --git a/meson.build b/meson.build
-index fdb2578447..ae71a0dd91 100644
---- a/meson.build
-+++ b/meson.build
-@@ -2272,46 +2272,55 @@ endif
- config_host_data = configuration_data()
+diff --git a/audio/audio-stub.c b/audio/audio-stub.c
+new file mode 100644
+index 0000000000..f58f88cd83
+--- /dev/null
++++ b/audio/audio-stub.c
+@@ -0,0 +1,22 @@
++/*
++ * Stub for audio.c
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "qapi/qapi-commands-audio.h"
++#include "qemu/audio.h"
++#include "qapi/error.h"
++
++void audio_cleanup(void) {}
++
++AudioBackend *audio_be_by_name(const char *name, Error **errp)
++{
++  error_setg(errp, "audio disabled");
++  return NULL;
++}
++
++void audio_init_audiodevs(void) {}
++
++void audio_create_default_audiodevs(void) {}
+diff --git a/audio/meson.build b/audio/meson.build
+index 0e33b6f983..19d43dc315 100644
+--- a/audio/meson.build
++++ b/audio/meson.build
+@@ -1,4 +1,9 @@
+ audio_ss = ss.source_set()
++if not have_audio
++  audio_ss.add(files('audio-stub.c'))
++  subdir_done()
++endif
++
+ audio_ss.add(files(
+   'audio.c',
+   'audio-be.c',
+diff --git a/hmp-commands-info.hx b/hmp-commands-info.hx
+index 74c741f80e..a959479024 100644
+--- a/hmp-commands-info.hx
++++ b/hmp-commands-info.hx
+@@ -364,6 +364,7 @@ SRST
+ ERST
  
- config_host_data.set('CONFIG_HAVE_RUST', have_rust)
--audio_drivers_selected = []
--if have_system
--  audio_drivers_available = {
--    'alsa': alsa.found(),
--    'coreaudio': coreaudio.found(),
--    'dsound': dsound.found(),
--    'jack': jack.found(),
--    'oss': oss.found(),
--    'pa': pulse.found(),
--    'pipewire': pipewire.found(),
--    'sdl': sdl.found(),
--    'sndio': sndio.found(),
--  }
--  foreach k, v: audio_drivers_available
--    config_host_data.set('CONFIG_AUDIO_' + k.to_upper(), v)
--  endforeach
-+config_host_data.set('CONFIG_AUDIO', have_audio)
+ /* BEGIN deprecated */
++#ifdef CONFIG_AUDIO
+     {
+         .name       = "capture",
+         .args_type  = "",
+@@ -376,6 +377,7 @@ SRST
+   ``info capture``
+     Show capture information (deprecated).
+ ERST
++#endif
+ /* END deprecated */
+ 
+     {
+diff --git a/hmp-commands.hx b/hmp-commands.hx
+index 5cc4788f12..e8b8175bb9 100644
+--- a/hmp-commands.hx
++++ b/hmp-commands.hx
+@@ -765,6 +765,7 @@ SRST
+ ERST
+ 
+ /* BEGIN deprecated */
++#ifdef CONFIG_AUDIO
+     {
+         .name       = "wavcapture",
+         .args_type  = "path:F,audiodev:s,freq:i?,bits:i?,nchannels:i?",
+@@ -802,6 +803,7 @@ SRST
+ 
+   Deprecated.
+ ERST
++#endif
+ /* END deprecated */
+ 
+     {
+diff --git a/hw/core/qdev-properties-system.c b/hw/core/qdev-properties-system.c
+index a402321f42..8679a71b53 100644
+--- a/hw/core/qdev-properties-system.c
++++ b/hw/core/qdev-properties-system.c
+@@ -483,6 +483,7 @@ const PropertyInfo qdev_prop_netdev = {
+ };
+ 
+ 
++#ifdef CONFIG_AUDIO
+ /* --- audiodev --- */
+ static void get_audiodev(Object *obj, Visitor *v, const char* name,
+                          void *opaque, Error **errp)
+@@ -519,6 +520,7 @@ const PropertyInfo qdev_prop_audiodev = {
+     .get = get_audiodev,
+     .set = set_audiodev,
+ };
++#endif
+ 
+ bool qdev_prop_set_drive_err(DeviceState *dev, const char *name,
+                              BlockBackend *value, Error **errp)
+diff --git a/qapi/audio.json b/qapi/audio.json
+index 2df87b9710..28fda7c8ac 100644
+--- a/qapi/audio.json
++++ b/qapi/audio.json
+@@ -540,4 +540,5 @@
+ # Since: 8.0
+ ##
+ { 'command': 'query-audiodevs',
+-  'returns': ['Audiodev'] }
++  'returns': ['Audiodev'],
++  'if': 'CONFIG_AUDIO' }
+diff --git a/replay/meson.build b/replay/meson.build
+index 4b4175e8dd..dc2e94e897 100644
+--- a/replay/meson.build
++++ b/replay/meson.build
+@@ -7,7 +7,14 @@ system_ss.add(when: 'CONFIG_TCG', if_true: files(
+   'replay-char.c',
+   'replay-snapshot.c',
+   'replay-net.c',
+-  'replay-audio.c',
+   'replay-random.c',
+   'replay-debugging.c',
+ ), if_false: files('stubs-system.c'))
++
 +if have_audio
-+  audio_drivers_selected = []
-+  if have_system
-+    audio_drivers_available = {
-+      'alsa': alsa.found(),
-+      'coreaudio': coreaudio.found(),
-+      'dsound': dsound.found(),
-+      'jack': jack.found(),
-+      'oss': oss.found(),
-+      'pa': pulse.found(),
-+      'pipewire': pipewire.found(),
-+      'sdl': sdl.found(),
-+      'sndio': sndio.found(),
-+    }
-+    foreach k, v: audio_drivers_available
-+      config_host_data.set('CONFIG_AUDIO_' + k.to_upper(), v)
-+    endforeach
- 
--  # Default to native drivers first, OSS second, SDL third
--  audio_drivers_priority = \
--    [ 'pa', 'coreaudio', 'dsound', 'sndio', 'oss' ] + \
--    (host_os == 'linux' ? [] : [ 'sdl' ])
--  audio_drivers_default = []
--  foreach k: audio_drivers_priority
--    if audio_drivers_available[k]
--      audio_drivers_default += k
--    endif
--  endforeach
-+    # Default to native drivers first, OSS second, SDL third
-+    audio_drivers_priority = \
-+      [ 'pa', 'coreaudio', 'dsound', 'sndio', 'oss' ] + \
-+      (host_os == 'linux' ? [] : [ 'sdl' ])
-+    audio_drivers_default = []
-+    foreach k: audio_drivers_priority
-+      if audio_drivers_available[k]
-+        audio_drivers_default += k
-+      endif
-+    endforeach
- 
-+    foreach k: get_option('audio_drv_list')
-+      if k == 'default'
-+        audio_drivers_selected += audio_drivers_default
-+      elif not audio_drivers_available[k]
-+        error('Audio driver "@0@" not available.'.format(k))
-+      else
-+        audio_drivers_selected += k
-+      endif
-+    endforeach
-+  endif
-+  config_host_data.set('CONFIG_AUDIO_DRIVERS',
-+                      '"' + '", "'.join(audio_drivers_selected) + '", ')
++  system_ss.add(when: 'CONFIG_TCG',
++  if_true: files('replay-audio.c'),
++  if_false: files('replay-audio-stub.c'))
 +else
-   foreach k: get_option('audio_drv_list')
--    if k == 'default'
--      audio_drivers_selected += audio_drivers_default
--    elif not audio_drivers_available[k]
--      error('Audio driver "@0@" not available.'.format(k))
--    else
--      audio_drivers_selected += k
-+    if k != 'default'
-+      error('Audio drivers are not supported because audio is disabled.')
-     endif
-   endforeach
- endif
--config_host_data.set('CONFIG_AUDIO_DRIVERS',
--                     '"' + '", "'.join(audio_drivers_selected) + '", ')
- 
- have_host_block_device = (host_os != 'darwin' or
-     cc.has_header('IOKit/storage/IOMedia.h'))
-@@ -4684,7 +4693,8 @@ if enable_modules
-   summary_info += {'alternative module path': get_option('module_upgrades')}
- endif
- summary_info += {'fuzzing support':   get_option('fuzzing')}
--if have_system
-+summary_info += {'Audio support':     have_audio}
-+if have_audio
-   summary_info += {'Audio drivers':     ' '.join(audio_drivers_selected)}
- endif
- summary_info += {'Trace backends':    ','.join(get_option('trace_backends'))}
++  system_ss.add(files('replay-audio-stub.c'))
++endif
+diff --git a/replay/replay-audio-stub.c b/replay/replay-audio-stub.c
+new file mode 100644
+index 0000000000..b3da8e1558
+--- /dev/null
++++ b/replay/replay-audio-stub.c
+@@ -0,0 +1,21 @@
++/*
++ * Stub for replay-audio.c
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "system/replay.h"
++
++void replay_audio_in_start(size_t *nsamples)
++{
++}
++void replay_audio_in_sample_lr(uint64_t *left, uint64_t *right)
++{
++}
++void replay_audio_in_finish(void)
++{
++}
++void replay_audio_out(size_t *played)
++{
++}
+diff --git a/replay/stubs-system.c b/replay/stubs-system.c
+index b2c52bc404..454415ae8e 100644
+--- a/replay/stubs-system.c
++++ b/replay/stubs-system.c
+@@ -15,18 +15,6 @@ void replay_input_sync_event(void)
+ void replay_add_blocker(const char *feature)
+ {
+ }
+-void replay_audio_in_start(size_t *nsamples)
+-{
+-}
+-void replay_audio_in_sample_lr(uint64_t *left, uint64_t *right)
+-{
+-}
+-void replay_audio_in_finish(void)
+-{
+-}
+-void replay_audio_out(size_t *played)
+-{
+-}
+ void replay_breakpoint(void)
+ {
+ }
 -- 
 2.34.1
 
