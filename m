@@ -4,116 +4,127 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F3CFE98E0F
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 09:44:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B68AE98E11
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 09:47:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuSUJ-00031y-IE; Mon, 23 Feb 2026 04:44:23 -0500
+	id 1vuSWh-0003oA-Np; Mon, 23 Feb 2026 04:46:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1vuSUH-00031T-0k
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 04:44:21 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1vuSWg-0003o0-Fo
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 04:46:50 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1vuSUF-0006Us-IK
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 04:44:20 -0500
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1vuSWe-0006nQ-84
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 04:46:49 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771839858;
+ s=mimecast20190719; t=1771840006;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=sgrtKjG0tM1s+uDhEp8gFwOFOgEyQb7jl9R2j0/djYk=;
- b=XNnLVXu+SpmCN/5QHicCRsCTt1M0hVs9JrdM09xP4/CTGwGJiQUYLr+XcLPjj6dmKx3gZo
- KQvqay3bt4e787MRy7Cq6OneOGPgTW4nu54bQMAhdHmCoaFU10QNGZ59fcmWiFxluGs2OT
- RxMqoyRLFSZiWprfqQTP5YOEldUJdFo=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Ox/IPWGrKCa7N0rSHx+auK9BIiVxLmC2hSVQmQoi+LU=;
+ b=Y50FySP1fZJu3pn/3wExt7gxvPKbYNa5YoLmGdthY8zqw4k0A7QwWcPTTWhn3Kz1ytHkSr
+ jAaOcunSFv4zmFUcCmOuAozKS9wW3l4Hhtq54TlpSNEg1rQtfMGyGUieOMKQ7vFUOimSfR
+ 1zXzW/ENGER1ccEAU3+Xj3EaD1kuO6U=
+Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com
+ [209.85.214.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-227-31M6b55lNR6vXS08_0rHQg-1; Mon, 23 Feb 2026 04:44:16 -0500
-X-MC-Unique: 31M6b55lNR6vXS08_0rHQg-1
-X-Mimecast-MFC-AGG-ID: 31M6b55lNR6vXS08_0rHQg_1771839855
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4837b6f6b93so30664225e9.3
- for <qemu-devel@nongnu.org>; Mon, 23 Feb 2026 01:44:16 -0800 (PST)
+ us-mta-442--pdr3DIxN8-wAu-zIcSMCg-1; Mon, 23 Feb 2026 04:46:44 -0500
+X-MC-Unique: -pdr3DIxN8-wAu-zIcSMCg-1
+X-Mimecast-MFC-AGG-ID: -pdr3DIxN8-wAu-zIcSMCg_1771840003
+Received: by mail-pl1-f197.google.com with SMTP id
+ d9443c01a7336-2a8fc061ce1so348692155ad.0
+ for <qemu-devel@nongnu.org>; Mon, 23 Feb 2026 01:46:44 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1771840003; cv=none;
+ d=google.com; s=arc-20240605;
+ b=jaoBzE1hqbTh0kJivGRg8J0FckgkWXW1/XlNfYROHC9H9au3ZP0iX+nKog0TPdtZbX
+ NFg/pLc2+Uq+C32CoXQ2mFZYitaM8QlCfqDp50IDCIpOH7OZgHnkqILo1Tw9N7vMxHQt
+ ys2W6YfUEGt+ykShO+DJYJtxsrPVyyeC/iPbF3vmbVPzG4ImEM2kQsnI7PGzCmZlRQHX
+ CdpuvWdPYXC1Cl18nCpjyJ8mpmWhp+Apb8dau5SXu4bUAKLRQUptl2AYftWTbxWVHdbe
+ XwimiuddRiB4Slqgy52YPErGqScYlZa6rbtPgGgcvgycnXTX7ysi1GVLfNgP+7IKr2z/
+ yYyw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=Ox/IPWGrKCa7N0rSHx+auK9BIiVxLmC2hSVQmQoi+LU=;
+ fh=HHMqO+ZOB2uMZktPXMWI+I2L7a0GwjV5KKUEbCTM83w=;
+ b=ibUpS2N0Rz3UJz6mrAQaMRn3gudbD/3nRaiCx8QcKMwkMuRiFGHJXVNPAPkd6VFLvG
+ a4q4xyuWoRRrmCjtL4WLu5YhCQbdk4rMGAlZh63XWDiPnbbbIF1tpjTFvyS1LmzSmHct
+ Vuc8N0G5kXakXGWsZesvk8n4WXXuBIeSSYC6bZ49HEf0FW7iOYV9DfSsScG5AtGkG3TY
+ O3cdRoj6YfIfSYLwj7NefoXF3SKeZD05iWXTlkrrTc+L7wTehUVOUTHD8xazIXIX6/m+
+ DHc9Uo/6UURQC0hNDB9LFIM7mVht1+O6a2ZF68/DLfCwPhPdY6UHgnyZp9XZo/+Wwjv5
+ FWXA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1771839855; x=1772444655; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:from:to:cc:subject:date
+ d=redhat.com; s=google; t=1771840003; x=1772444803; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=sgrtKjG0tM1s+uDhEp8gFwOFOgEyQb7jl9R2j0/djYk=;
- b=lspE7rprp1dQB07Ekiu3a8NIEuo9k6ha/pBWCST8CVe66GzzhRETQjGpzlhYXuAXwS
- f3z53gCl6VyjhC/18P4Sb8qSNPNPcvjBT8jUn2PdET8DNeWfBoXZrQtblZCC8QY6RGGy
- 4SeC/5p+OG9O7JdDgT9OjkoMNtqSZpX+us1qLQYpz7znNghoXhgDZu2XnPy5M0vPkRVh
- nxUEeAfeDk8rVNKT5sdUZYn5iQYFbAOcZ1U2YqStHBx7Qz92r/cRu2E1i2EgOGvF5Nsn
- D3F8uPZngVJDO3YVKpfuv+Z2CswYNfHG28oasiOxeTVub/O62XIY4o6mlS6LY0G0fBS3
- yi2w==
+ bh=Ox/IPWGrKCa7N0rSHx+auK9BIiVxLmC2hSVQmQoi+LU=;
+ b=BX6wAhihKQyxh4o8lwTThG8FCH1+36QtX+q7rBYw2zauKHc5TJFEBN7Z5XLXKNIPx9
+ g5+K6Q6vSMYHcC55zZIcgXJTXwunmcF2hzpT0qCqitbQj0IHnsWUf3GtiBFjeRixjew9
+ ceMnCwaJD4lyKsEppxB19Te6JSOnZqGq3tO1sxstUI7gmDdURF65qa0c/2msBBveD5gG
+ s3r5kmPFmJpm+LQEtF/n8+8RXXCiFcFvOC4mtcZSmUYSOuoWGYiFQ56zHDoqCI/nFeRL
+ Tnt67llTOzwwE1fTNIXmtJ4T6RlCK4FMxVNTCaxqfkxwD8AMYb8OCI/JWg+sy6an4tCw
+ 3AAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771839855; x=1772444655;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
+ d=1e100.net; s=20230601; t=1771840003; x=1772444803;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=sgrtKjG0tM1s+uDhEp8gFwOFOgEyQb7jl9R2j0/djYk=;
- b=qLLybFk/qCoMj80up8EPoap8kEnt0584j6R3mTfIKepZ3VR/OI2bWMckQ7IqE1bKfB
- qSYUC+zM5K4s4rJHh+yC43DffFfVtWuQD9/rHz5vy3+PiPurkx76b3HDLoPmFqTBZsaL
- Gd49kmXy3r3rQAu2lHQnz+jec9dTjMV9h67IE7U6DLVVQ5W3sUtO4HyrD30VOuNnHVH3
- IRZ0ieodbzZ01+WXxR6YVOkeOcEQ+V4dXP1xalCglUp/Osy1N+L4cRe+0kZhk3iUdEVl
- d1MOUaLEYT4pQlR01w4e3xYEOs8M19i/3XPNgFHTtuyT9D5qmhk0eNR/I5bGM5cKZaLe
- Y6NA==
+ bh=Ox/IPWGrKCa7N0rSHx+auK9BIiVxLmC2hSVQmQoi+LU=;
+ b=iY+E3bL5dIOx6SVm3Vm5TzomVVOejVI6abvFYB5zV2t0D3wR43W2XhNT/oH5mF8zPK
+ JC8WNDBvMXJ2HhZunZ2gN4Z/HH9GYF4Aup7GzCumNtmqymKWLsUraP+8qA2j2+CGMFLe
+ cXFMEGSHisS7Bh8K67MR9+DcTz0HUTECSyJKK8znk4JKXhIz7dQj3Guq4UNCbLsYe6+/
+ WJb5RcK5zNGfO8HiDL/n52+NFz0VUokjH5OibsN1gfRhNvxxLV5kOxAyLfodmnl61rfD
+ repUR0Zd3BZU7N3JdmtUjnwyQAglskhhCBgDAilLs8dkBxVdiV2aH65sKvzwc5HT2z1c
+ iYHQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVljIDS/czS7I6LbEy+TrrRJwbkD018/XIN6RzNHvxSH0MY03z/Sqou5Kwj+M+WZlY3wr93Kfw5QPZJ@nongnu.org
-X-Gm-Message-State: AOJu0YzuPeTOSHTJCqNw5TjCuOPPGu/hLNjipq8m0MDiXXyGDiieJwD0
- 32wZ5l6KDP23WoqK0C/PfDj8I4WERaZ9o1jgYWIVqff7KkB5gq176FqJzAzU7waYabY1Ex3uYzS
- Pl0vQqif8O0I8uE9Aft8wDsnGtHyiAXU4XgpkZDj9YcOYMzdmB1KB5pps
-X-Gm-Gg: AZuq6aJhMqJ5fUWrObt6XGxLu8gExhmcfK3vbFejWE7dNHb99jWtbpUj8Pxx8IIRm/c
- MQ2Ot6GsB2FyibW8bhSWwwDhcfXpScUloMMbXPGPhULWNmVLM+N0qlTbUjA4VqqMNMqrnldQ40v
- 6QuaR2tgukE7G6EbJk86WMUjYwp/NOrdyhP/Ozqtg/lsrFb+XnLabOCtKWshQNKYV0BMvE+o1mL
- dQquXmiyceKYu5F8KJBP+zXTr9ikM5ctKYS7E+CEkUdUQ5fTLhMtUZsbuu80FrPYEaXeE6zkHzk
- g/ZoxkMoSQVH6Z2hxqvQ5g1CbWYfP5tvwWjJMlI55VbW3DxpBFdeA4+gny4z+eik4TxwKbm4GR6
- uG+R1AQ==
-X-Received: by 2002:a05:600c:37cd:b0:483:6d4a:7e6d with SMTP id
- 5b1f17b1804b1-483a960604cmr114507545e9.30.1771839855371; 
- Mon, 23 Feb 2026 01:44:15 -0800 (PST)
-X-Received: by 2002:a05:600c:37cd:b0:483:6d4a:7e6d with SMTP id
- 5b1f17b1804b1-483a960604cmr114507005e9.30.1771839854883; 
- Mon, 23 Feb 2026 01:44:14 -0800 (PST)
-Received: from imammedo ([213.175.46.86]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-483a4293bdfsm135614265e9.3.2026.02.23.01.44.12
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 23 Feb 2026 01:44:14 -0800 (PST)
-Date: Mon, 23 Feb 2026 10:44:11 +0100
-From: Igor Mammedov <imammedo@redhat.com>
-To: Ankit Agrawal <ankita@nvidia.com>
-Cc: Vikram Sethi <vsethi@nvidia.com>, Jason Gunthorpe <jgg@nvidia.com>,
- Shameer Kolothum Thodi <skolothumtho@nvidia.com>, "alex@shazbot.org"
- <alex@shazbot.org>, "mst@redhat.com" <mst@redhat.com>,
- "anisinha@redhat.com" <anisinha@redhat.com>, Aniket Agashe
- <aniketa@nvidia.com>, Neo Jia <cjia@nvidia.com>, Kirti Wankhede
- <kwankhede@nvidia.com>, "Tarun Gupta (SW-GPU)" <targupta@nvidia.com>, Zhi
- Wang <zhiw@nvidia.com>, Matt Ochs <mochs@nvidia.com>, Krishnakant Jaju
- <kjaju@nvidia.com>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Subject: Re: [PATCH v1 1/1] hw/acpi/pci.c: preserve generic initiator
- insertion order
-Message-ID: <20260223104411.57a815fa@imammedo>
-In-Reply-To: <SA1PR12MB7199F0C2E1D2325B0062B004B077A@SA1PR12MB7199.namprd12.prod.outlook.com>
-References: <20260222020812.26475-1-ankita@nvidia.com>
- <20260223082804.0d293861@imammedo>
- <SA1PR12MB7199F0C2E1D2325B0062B004B077A@SA1PR12MB7199.namprd12.prod.outlook.com>
-X-Mailer: Claws Mail 4.3.1 (GTK 3.24.51; x86_64-redhat-linux-gnu)
+ AJvYcCWJ2nVIxjaXFYe0PiKT46J3KyoA7k+Hyp8bbTiZu9N90u5N/o1fTsTYFEaUjQahz9N4Vbl8ojx0ngMA@nongnu.org
+X-Gm-Message-State: AOJu0YzA8qmQcaFAkNnBeluvnNvz7TQlRYG3PGIC2iiDYBrRx64J+qCL
+ ls0FfaYJQAFxBdZh3Jd/u4N+bcMxGIqJna3jgIKqAHMN+hXOZ1CuPMc1WOIr4xzocyxw0vWoIwT
+ qKgvbzliUQHJ/lCYDynWk82UA+mjO3JtdB4p0Oo+lka7JZf49PTRR9gqb/kBj4W7/MCiX6+Lv6q
+ X3AMLfMD+ruJq2j9TvDbSx2mSHP4hLCxg=
+X-Gm-Gg: ATEYQzzKhAivE9QX3zgpI6OndVo6BfYsomuY2DzO+hlqxddncGaE/InEqputOQ5ROOB
+ Ge3eolO9bUIeTvXPKQEYvR5ZGmzIAbaFIXA7VgvXyKDOrHTYqPrEAJiXOhH2ALxi/qqVCkDqgTN
+ qaCu0Cf7F6wjtCWe5G158/MMungDaiE+1XWBHLsw4K3Nd6qrt5p2YVH+qo3/4WlWWYXjIzbNDTg
+ AHf0PUoHEKtjFBCPZfF7lfihFlErkbs9dg49g==
+X-Received: by 2002:a17:903:3545:b0:2aa:d333:ce86 with SMTP id
+ d9443c01a7336-2ad743e297amr72107415ad.6.1771840003310; 
+ Mon, 23 Feb 2026 01:46:43 -0800 (PST)
+X-Received: by 2002:a17:903:3545:b0:2aa:d333:ce86 with SMTP id
+ d9443c01a7336-2ad743e297amr72107235ad.6.1771840002937; Mon, 23 Feb 2026
+ 01:46:42 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
+References: <20260218090330.1476169-1-marcandre.lureau@redhat.com>
+ <CAFEAcA-Gg5pJW=SYV0xQX7tBz8XwVJT0pUbnJqwoBzhZ4Fwx+g@mail.gmail.com>
+ <CAMxuvazA6Cay33qNT=Y9jN+TgxSTkKZdNfSORkQBG=Nr_0ok9Q@mail.gmail.com>
+ <CAMxuvawjL=OV=doW5jqRBTBRhcF5DARUtgCN9hj4nyox_051Tg@mail.gmail.com>
+ <CAFEAcA8dCFY3FfreEAMAMJsU=7dqGV0DzrAqMVBrD-wkuGkxvQ@mail.gmail.com>
+In-Reply-To: <CAFEAcA8dCFY3FfreEAMAMJsU=7dqGV0DzrAqMVBrD-wkuGkxvQ@mail.gmail.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Date: Mon, 23 Feb 2026 10:46:31 +0100
+X-Gm-Features: AaiRm53-r8nRbFlDn0oQ8mcVhy0yWsx_9sIyw7n1IdHUsADZsBGgPh_y72K0C5M
+Message-ID: <CAMxuvawm_6D4DOLWRDwyVRMCMJRoEvLXo9YQLn=NHbHNqXazWQ@mail.gmail.com>
+Subject: Re: [PULL 00/85] Audio patches
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: =?UTF-8?Q?Benn=C3=A9e=2C_Alex?= <alex.bennee@linaro.org>, 
+ qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mlureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -4
-X-Spam_score: -0.5
-X-Spam_bar: /
-X-Spam_report: (-0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -14
+X-Spam_score: -1.5
+X-Spam_bar: -
+X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.798, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.79,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -131,43 +142,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 23 Feb 2026 07:49:51 +0000
-Ankit Agrawal <ankita@nvidia.com> wrote:
+Hi
 
-> >> During creation of the VM's SRAT table, the generic initiator entries
-> >> are added. Currently the order in the entries are not controllable from
-> >> the qemu command. This is due to the fact that the code queries the
-> >> object tree which may not be in the order objects were inserted.
-> >>
-> >> As a fix the patch maintains a GPtrArray of generic initiator objects
-> >> that preserves their insertion order. Objects are automatically added
-> >> to the array when initialized and removed when finalized. When building
-> >> the SRAT table, objects are processed in the order they were first
-> >> inserted.  
+On Thu, Feb 19, 2026 at 11:26=E2=80=AFAM Peter Maydell <peter.maydell@linar=
+o.org> wrote:
+> > +# EVENT_AUDIO_IN has changed
+> > +v13_event_table =3D v12_event_table
+> > +
+> >  def parse_arguments():
+> >      "Grab arguments for script"
+> >      parser =3D argparse.ArgumentParser()
+> > @@ -413,7 +416,10 @@ def decode_file(filename):
+> >      # see REPLAY_VERSION
+> >      print("HEADER: version 0x%x" % (version))
 > >
-> > so question would be, why does it matter?
-> > Is ther a requirement in spec for SRAT entries being put in a particular order?  
-> 
-> Hi Igor, reposting my response. I'll make this information as part of the next
-> version if and when I refresh.
-> 
-> VM's Linux kernel parses the generic initiator (GI) structures present in the SRAT
-> table sequentially in the order of their occurrence and assigns a numa node
-> id when a new proximity domain (that is part of the GI structure) is encountered.
-> A jumbled up entries in the VM's SRAT consequently results in the jumbled up
-> sequence on numa nodes v/s the ones intended to be assigned through the
-> qemu command line. This messes up the internode numa distances assignment
-> through the qemu command line as the VM's view of the corresponding nodes
-> is entirely different.
+> > -    if version =3D=3D 0xe0200c:
+> > +    if version =3D=3D 0xe0200d:
+> > +        event_decode_table =3D v13_event_table
+> > +        replay_state.checkpoint_start =3D 30
+> > +    elif version =3D=3D 0xe0200c:
+> >
+>
+> Yes, you'll need to resubmit, because I can't edit signed tags.
+>
+> Also, ideally somebody who understands the replay tests should
+> review that fix.
+>
 
-Assuming that QEMU CLI is correctly defined, above looks very much like a linux
-kernel bug.
+No comments so far, I am sending v2.
 
-Aka: if kernel is not mapping proximity ID to its internal node ids correctly
-and then links them with something else entirely, it's kernel in wrong
-and not ACPI tables QEMU provides.
-
-IMHO it should be fixed on kernel side. (unless you find statement in spec
-that mandates the particular ordering in SRAT)
+thanks
 
 
