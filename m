@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 833BCEC1120
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 18:30:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59677EC111E
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 18:30:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuagh-0001oh-QM; Mon, 23 Feb 2026 13:29:44 -0500
+	id 1vuagd-0001mn-E4; Mon, 23 Feb 2026 13:29:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vuagV-0001kZ-Ur
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 13:29:33 -0500
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vuagP-0001jT-Nr
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 13:29:27 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vuagT-0001cp-Ut
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 13:29:31 -0500
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vuagN-0001ae-VW
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 13:29:25 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771871368;
+ s=mimecast20190719; t=1771871362;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=7aAzAOGR7zNiNTmcHSmRZnp3HvNd+cc4V04Qe/6gcZg=;
- b=eYr1YRw56yPnNA7xIwUTvWTvde0iGgtV3Bzhz/1mMNStbzbK0s5VyJ+va1wKLQPHuo61k6
- G0kJnJzOAHwzEerhb1q1GX7bgtu1I2gSmUAcbp7tbn3ujC+c/niq9mes/ZIJ1mthQAVmmd
- iVAeMgq5lhAr5+yI4RKkQIaEJfRmErU=
+ bh=YP37idpAtkaeBPY9BY3rrBP/pVE3ULl+YFuGLN+GakM=;
+ b=f0idV2I1hpbq4Sup7FZOtWa6H8cjoXp18JrmuM/DvWX1Y8pJwvyZlWNSoPN/NBasgW4XrR
+ Qlu3YFbDHL/ypk9u75ZhqZbYoP8QlruIhpYiV/rh3KVLYQjCUoYrCGOohi4i66tmHjnLeI
+ cUHXBBMgLYeGUTY5CcNpQBRU2H87a/4=
 Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-237-y9RkVScUNhW5XBQtOlFUyA-1; Mon,
- 23 Feb 2026 13:29:25 -0500
-X-MC-Unique: y9RkVScUNhW5XBQtOlFUyA-1
-X-Mimecast-MFC-AGG-ID: y9RkVScUNhW5XBQtOlFUyA_1771871363
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-311-CPUa1wTcMsieC_wVCg1xhA-1; Mon,
+ 23 Feb 2026 13:29:19 -0500
+X-MC-Unique: CPUa1wTcMsieC_wVCg1xhA-1
+X-Mimecast-MFC-AGG-ID: CPUa1wTcMsieC_wVCg1xhA_1771871357
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B15861800464; Mon, 23 Feb 2026 18:29:22 +0000 (UTC)
+ id 028CE1800342; Mon, 23 Feb 2026 18:29:17 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.89.212])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 4939D195419A; Mon, 23 Feb 2026 18:29:17 +0000 (UTC)
+ id B5E951955D71; Mon, 23 Feb 2026 18:29:11 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Li-Wen Hsu <lwhsu@freebsd.org>,
@@ -65,9 +65,10 @@ Cc: Li-Wen Hsu <lwhsu@freebsd.org>,
  Yonggang Luo <luoyonggang@gmail.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PULL 02/19] python/mkvenv: bump 'qemu.qmp' dependency for testdeps
-Date: Mon, 23 Feb 2026 13:28:44 -0500
-Message-ID: <20260223182902.739189-3-jsnow@redhat.com>
+Subject: [PULL 01/19] python/mkvenv: create timestamp file for each group
+ "ensured"
+Date: Mon, 23 Feb 2026 13:28:43 -0500
+Message-ID: <20260223182902.739189-2-jsnow@redhat.com>
 In-Reply-To: <20260223182902.739189-1-jsnow@redhat.com>
 References: <20260223182902.739189-1-jsnow@redhat.com>
 MIME-Version: 1.0
@@ -98,30 +99,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-First up, use the newest v0.0.5 instead of the older v0.0.3.
-
-Secondly, the use of a period in the key name does not behave as
-expected when installing and checking for dependencies, so quote this
-string instead.
+Each group ensured by the mkvenv script will create an empty timestamp
+file named {groupname}.group which can be used to conditionally trigger
+dependency installation from various scripts and build machinery.
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
-Message-ID: <20260218213416.674483-4-jsnow@redhat.com>
+Message-ID: <20260218213416.674483-3-jsnow@redhat.com>
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- pythondeps.toml | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ python/scripts/mkvenv.py | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/pythondeps.toml b/pythondeps.toml
-index 9a096160e62..85220a36426 100644
---- a/pythondeps.toml
-+++ b/pythondeps.toml
-@@ -32,5 +32,5 @@ sphinx = { accepted = ">=3.4.3", installed = "6.2.1", canary = "sphinx-build" }
- sphinx_rtd_theme = { accepted = ">=0.5", installed = "1.2.2" }
+diff --git a/python/scripts/mkvenv.py b/python/scripts/mkvenv.py
+index 5cba5770d22..b4662d33e6e 100644
+--- a/python/scripts/mkvenv.py
++++ b/python/scripts/mkvenv.py
+@@ -838,6 +838,12 @@ def ensure_group(
+             raise Ouch(result[0])
+         raise SystemExit(f"\n{result[0]}\n\n")
  
- [testdeps]
--qemu.qmp = { accepted = ">=0.0.3", installed = "0.0.3" }
-+"qemu.qmp" = { accepted = ">=0.0.5", installed = "0.0.5" }
- pygdbmi = { accepted = ">=0.11.0.0", installed = "0.11.0.0" }
++    if inside_a_venv():
++        for group in groups:
++            path = Path(sys.prefix).joinpath(f"{group}.group")
++            with open(path, "w", encoding="UTF8"):
++                pass
++
+ 
+ def post_venv_setup() -> None:
+     """
 -- 
 2.53.0
 
