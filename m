@@ -4,64 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93BEBEA4FBB
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 13:50:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C63AEA4FBF
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 13:50:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuWJJ-0001lE-8R; Mon, 23 Feb 2026 08:49:17 -0500
+	id 1vuWJN-0002Gi-1Y; Mon, 23 Feb 2026 08:49:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vuWIK-0000F9-Q7
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 08:48:17 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1vuWIb-0000dV-EE
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 08:48:44 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vuWII-00070w-Uo
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 08:48:16 -0500
+ id 1vuWIY-00073C-GK
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 08:48:32 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771854494;
+ s=mimecast20190719; t=1771854509;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=5fyZcdE9s/wqXZGBK+GCcVOqAQZtud4UZZpyJvMPL/w=;
- b=FlWqbt5700E+sXTvHTpG0jRubkdItUf93k38BQOm0VwtvMmrsJKDu3PQbFrbVYpP0C/J6D
- sRXCiRHw0beV1b8NQrEj6tycwGS8nzciG/B29TuKveVNBXPy53zkMNWo77xgDbYUYqOfPs
- 7kqAyE1b5Ybb5OFVEXsRHBhBT3LwXQE=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=DfqZ6h7cKLR2svwZa0HiwkQaHr73PtF2978zuSWfcpI=;
+ b=LxU5vb3yL/nTCtgtj+E2AHGju4BeqAMQRtRRwmjNYQ7S9XY6pBxFwZe8t564YZ6GOSyU1p
+ wGwLKuhVyQX0Mw7FbKj9/MmgARb7mCXRulZ6tA/SV5oraE97Oe5CKVOIx5t/9lj4fAcI1/
+ 1b6TCQKZ3Uv7iJw3S+Fb0TxCXfSsdtw=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-381-OMTi_iPONDqoNwxcjDEWNg-1; Mon,
- 23 Feb 2026 08:48:12 -0500
-X-MC-Unique: OMTi_iPONDqoNwxcjDEWNg-1
-X-Mimecast-MFC-AGG-ID: OMTi_iPONDqoNwxcjDEWNg_1771854492
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-92-MTmSn90RO1yH0MWjFm_xwg-1; Mon,
+ 23 Feb 2026 08:48:26 -0500
+X-MC-Unique: MTmSn90RO1yH0MWjFm_xwg-1
+X-Mimecast-MFC-AGG-ID: MTmSn90RO1yH0MWjFm_xwg_1771854504
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E46C91956059; Mon, 23 Feb 2026 13:48:11 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BA7AE1800365; Mon, 23 Feb 2026 13:48:24 +0000 (UTC)
 Received: from localhost (unknown [10.45.242.25])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 6A2581800465; Mon, 23 Feb 2026 13:48:11 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 384A01955D71; Mon, 23 Feb 2026 13:48:23 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- John Snow <jsnow@redhat.com>, Cleber Rosa <crosa@redhat.com>
-Subject: [PULL v3 14/85] scripts/modinfo: use argparse
-Date: Mon, 23 Feb 2026 14:46:15 +0100
-Message-ID: <20260223134731.2377432-15-marcandre.lureau@redhat.com>
+ Gerd Hoffmann <kraxel@redhat.com>
+Subject: [PULL v3 19/85] audio: constify audsettings argument
+Date: Mon, 23 Feb 2026 14:46:20 +0100
+Message-ID: <20260223134731.2377432-20-marcandre.lureau@redhat.com>
 In-Reply-To: <20260223134731.2377432-1-marcandre.lureau@redhat.com>
 References: <20260223134731.2377432-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -1
@@ -69,7 +69,7 @@ X-Spam_score: -0.2
 X-Spam_bar: /
 X-Spam_report: (-0.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1.179, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.717,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -89,69 +89,124 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-This will allow to tweak argument handling more easily next.
+It shouldn't be modified by the audio functions.
 
-Acked-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
 Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- scripts/modinfo-generate.py | 23 ++++++++++++++---------
- 1 file changed, 14 insertions(+), 9 deletions(-)
+ audio/audio_int.h      | 2 +-
+ audio/audio_template.h | 6 +++---
+ include/qemu/audio.h   | 4 ++--
+ audio/audio.c          | 8 ++++----
+ 4 files changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/scripts/modinfo-generate.py b/scripts/modinfo-generate.py
-index 8011c842caf..777d419aa33 100644
---- a/scripts/modinfo-generate.py
-+++ b/scripts/modinfo-generate.py
-@@ -1,5 +1,6 @@
- #!/usr/bin/env python3
+diff --git a/audio/audio_int.h b/audio/audio_int.h
+index 25de0e3f9cf..a6276375887 100644
+--- a/audio/audio_int.h
++++ b/audio/audio_int.h
+@@ -265,7 +265,7 @@ extern const char *audio_prio_list[];
  
-+import argparse
- import os
- import sys
- from typing import Optional
-@@ -79,24 +80,28 @@ def print_post() -> None:
-     print("    /* end of list */")
-     print("}};")
+ void audio_driver_register(audio_driver *drv);
  
--def main(args: list[str]) -> None:
--    if len(args) < 3 or args[0] != '--devices':
--        print('Expected: modinfo-generate.py --devices '
--              'config-device.mak [modinfo files]', file=sys.stderr)
--        exit(1)
-+def main() -> None:
-+    parser = argparse.ArgumentParser(
-+        description='Generate C code for QEMU module info'
-+    )
-+    parser.add_argument('--devices', required=True,
-+                        help='path to config-device.mak')
-+    parser.add_argument('modinfo', nargs='+',
-+                        help='modinfo files to process')
-+    args = parser.parse_args()
+-void audio_pcm_init_info (struct audio_pcm_info *info, struct audsettings *as);
++void audio_pcm_init_info (struct audio_pcm_info *info, const struct audsettings *as);
+ void audio_pcm_info_clear_buf (struct audio_pcm_info *info, void *buf, int len);
  
-     # get all devices enabled in kconfig, from *-config-device.mak
-     enabled = set()
--    with open(args[1]) as file:
-+    with open(args.devices) as file:
-         for line in file.readlines():
-             config = line.split('=')
-             if config[1].rstrip() == 'y':
--                enabled.add(config[0][7:]) # remove CONFIG_
-+                enabled.add(config[0][7:])  # remove CONFIG_
+ int audio_bug (const char *funcname, int cond);
+diff --git a/audio/audio_template.h b/audio/audio_template.h
+index 1ab3c47fd76..e69e6e74570 100644
+--- a/audio/audio_template.h
++++ b/audio/audio_template.h
+@@ -159,7 +159,7 @@ static int glue (audio_pcm_sw_init_, TYPE) (
+     SW *sw,
+     HW *hw,
+     const char *name,
+-    struct audsettings *as
++    const struct audsettings *as
+     )
+ {
+     int err;
+@@ -426,7 +426,7 @@ static HW *glue(audio_pcm_hw_add_, TYPE)(AudioBackend *s, struct audsettings *as
+ static SW *glue(audio_pcm_create_voice_pair_, TYPE)(
+     AudioBackend *s,
+     const char *sw_name,
+-    struct audsettings *as
++    const struct audsettings *as
+     )
+ {
+     SW *sw;
+@@ -491,7 +491,7 @@ SW *glue (AUD_open_, TYPE) (
+     const char *name,
+     void *callback_opaque ,
+     audio_callback_fn callback_fn,
+-    struct audsettings *as
++    const struct audsettings *as
+     )
+ {
+     AudioBackend *s = be;
+diff --git a/include/qemu/audio.h b/include/qemu/audio.h
+index a1a64ad340d..370e993f080 100644
+--- a/include/qemu/audio.h
++++ b/include/qemu/audio.h
+@@ -58,7 +58,7 @@ SWVoiceOut *AUD_open_out (
+     const char *name,
+     void *callback_opaque,
+     audio_callback_fn callback_fn,
+-    struct audsettings *settings
++    const struct audsettings *settings
+     );
  
-     deps = set()
-     modules = set()
-     print_pre()
--    for modinfo in args[2:]:
-+    for modinfo in args.modinfo:
-         with open(modinfo) as f:
-             lines = f.readlines()
-         print(f"    /* {modinfo} */")
-@@ -116,4 +121,4 @@ def main(args: list[str]) -> None:
-         exit(1)
+ void AUD_close_out (AudioBackend *be, SWVoiceOut *sw);
+@@ -97,7 +97,7 @@ SWVoiceIn *AUD_open_in(
+     const char *name,
+     void *callback_opaque,
+     audio_callback_fn callback_fn,
+-    struct audsettings *settings
++    const struct audsettings *settings
+     );
  
- if __name__ == "__main__":
--    main(sys.argv[1:])
-+    main()
+ void AUD_close_in(AudioBackend *be, SWVoiceIn *sw);
+diff --git a/audio/audio.c b/audio/audio.c
+index 68698b13e15..5dccb9b0a36 100644
+--- a/audio/audio.c
++++ b/audio/audio.c
+@@ -170,7 +170,7 @@ void AUD_log (const char *cap, const char *fmt, ...)
+     va_end (ap);
+ }
+ 
+-static void audio_print_settings (struct audsettings *as)
++static void audio_print_settings (const struct audsettings *as)
+ {
+     dolog ("frequency=%d nchannels=%d fmt=", as->freq, as->nchannels);
+ 
+@@ -216,7 +216,7 @@ static void audio_print_settings (struct audsettings *as)
+     AUD_log (NULL, "\n");
+ }
+ 
+-static int audio_validate_settings (struct audsettings *as)
++static int audio_validate_settings (const struct audsettings *as)
+ {
+     int invalid;
+ 
+@@ -241,7 +241,7 @@ static int audio_validate_settings (struct audsettings *as)
+     return invalid ? -1 : 0;
+ }
+ 
+-static int audio_pcm_info_eq (struct audio_pcm_info *info, struct audsettings *as)
++static int audio_pcm_info_eq (struct audio_pcm_info *info, const struct audsettings *as)
+ {
+     int bits = 8;
+     bool is_signed = false, is_float = false;
+@@ -281,7 +281,7 @@ static int audio_pcm_info_eq (struct audio_pcm_info *info, struct audsettings *a
+         && info->swap_endianness == (as->endianness != HOST_BIG_ENDIAN);
+ }
+ 
+-void audio_pcm_init_info (struct audio_pcm_info *info, struct audsettings *as)
++void audio_pcm_init_info (struct audio_pcm_info *info, const struct audsettings *as)
+ {
+     int bits = 8, mul;
+     bool is_signed = false, is_float = false;
 -- 
 2.53.0
 
