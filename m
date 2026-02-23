@@ -4,40 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06E32EA4FB3
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 11:51:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C16CEA4FB2
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 11:51:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuUSi-0004Tr-7V; Mon, 23 Feb 2026 06:50:52 -0500
+	id 1vuUSV-0004Pj-OM; Mon, 23 Feb 2026 06:50:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1vuUSb-0004RI-11
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 06:50:45 -0500
+ id 1vuUSU-0004P9-A9
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 06:50:38 -0500
 Received: from sea.source.kernel.org ([172.234.252.31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1vuUSV-0004rq-Vh
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 06:50:43 -0500
+ id 1vuUSR-0004qs-1g
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 06:50:37 -0500
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sea.source.kernel.org (Postfix) with ESMTP id 2C7CC444BA;
- Mon, 23 Feb 2026 11:50:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B5E8C2BC9E;
- Mon, 23 Feb 2026 11:50:34 +0000 (UTC)
+ by sea.source.kernel.org (Postfix) with ESMTP id BC358440B7;
+ Mon, 23 Feb 2026 11:50:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97870C116C6;
+ Mon, 23 Feb 2026 11:50:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1771847434;
- bh=8uItO1tBCDK9cbJY1YqaD7Ae5ZOfPLv8XnCqS8/3E6M=;
+ s=k20201202; t=1771847433;
+ bh=TFn+oGlXTvEweHwQM+0j7k4x7K62+/n653dih5LjR+c=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=Rj22aF4YxlsgP5Zmk2lHWR2E2KCDe6VreJ1F6sMc+uSB9cukA6wdwVDSG5IUXKBEY
- UPJzOjhLWJbxVnRwGuZ4WNCcW5KWheofCqfx225SEMWZeb69DW8yWPUgPoFoXS5c//
- UnjCOzGF6EBy14e4a+zA3gLCRe0ER+zQzJym3DCVXdpF/+2ip3lnBgFEUk0KGbvA2Z
- B61NarZrLEv5Wr3uJVyOuyxNJAlymLrezUeNCXB9Ni1yKQw4ns2zn4EqzBETlLL75E
- ltYCc+8DfU/eiFMnStsFfBGSg5jFSqdxwWY4epvfgyZ7v+NyZoFHoZRt+dF5y5sYwf
- dQj04W3v1t1fw==
+ b=DvmOp8NM0XxyraCTeUpAY09ySPWLoImGzXFm38SZRv7UXd8cHQqkx2aNnS9aytRoB
+ LcdN8t7JRKnOClLn4a4mWgCkYP999t+25f0uGfWdJovbQNddE79Ky1rUi6ne1xznVi
+ GeJsAFZi8Nndv9aI70YgGMiUBUkQa1jdhNDrVUDu4QEzqwjNTcQT4Qwi8HKVs3xtnR
+ QHeSOR7785MfvwAi/JOhzMa6P0CAp5/YRWEnFKWjFK3KA2vvNl/U0ZnA1SwD2AXjE/
+ qyn++yGWIpu8ySZvV/aPV2kes1/lUDSdtXeryeVe5M+H8dUZi58nZ5QlmKAPO02b+r
+ me/pJuQlBsJpg==
 Received: from mchehab by mail.kernel.org with local (Exim 4.99.1)
  (envelope-from <mchehab+huawei@kernel.org>)
- id 1vuUSO-00000007Jp3-15C4; Mon, 23 Feb 2026 12:50:32 +0100
+ id 1vuUSN-00000007JnZ-3Ptw; Mon, 23 Feb 2026 12:50:31 +0100
 From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 To: Michael S Tsirkin <mst@redhat.com>
 Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
@@ -45,10 +45,9 @@ Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
  Igor Mammedov <imammedo@redhat.com>,
  Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
  Cleber Rosa <crosa@redhat.com>, John Snow <jsnow@redhat.com>
-Subject: [PATCH v3 13/14] scripts/ghes_inject: print help if no command
- specified
-Date: Mon, 23 Feb 2026 12:50:29 +0100
-Message-ID: <1d5de20e8059de8749694e18430eacfcc3f409e7.1771847176.git.mchehab+huawei@kernel.org>
+Subject: [PATCH v3 01/14] scripts/qmp_helper: add a return code to send_cper
+Date: Mon, 23 Feb 2026 12:50:17 +0100
+Message-ID: <2aa2c3565ceec788bcf637ce64454b7946e7d20c.1771847176.git.mchehab+huawei@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <cover.1771847176.git.mchehab+huawei@kernel.org>
 References: <cover.1771847176.git.mchehab+huawei@kernel.org>
@@ -79,28 +78,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The first positional argument (command) is mandatory. If not
-specified, instead of a simple error message, show help as well.
+When used inside a loop, it is interesting to have a return
+code to indicate weather a send cper command succedded or not.
 
 Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 ---
- scripts/ghes_inject.py | 3 +++
- 1 file changed, 3 insertions(+)
+ scripts/qmp_helper.py | 18 ++++++++++++++----
+ 1 file changed, 14 insertions(+), 4 deletions(-)
 
-diff --git a/scripts/ghes_inject.py b/scripts/ghes_inject.py
-index 781b37cc68af..4028fdb15582 100755
---- a/scripts/ghes_inject.py
-+++ b/scripts/ghes_inject.py
-@@ -52,6 +52,9 @@ def main():
-         if not args.func(args):
-             sys.exit(1)
-     else:
-+        print("Error: no command specified\n", file=sys.stderr)
-+        parser.print_help(file=sys.stderr)
-+        print(file=sys.stderr)
-         sys.exit(f"Please specify a valid command for {sys.argv[0]}")
+diff --git a/scripts/qmp_helper.py b/scripts/qmp_helper.py
+index c1e7e0fd80ce..249a8c7187d1 100755
+--- a/scripts/qmp_helper.py
++++ b/scripts/qmp_helper.py
+@@ -531,7 +531,11 @@ def __init__(self, host, port, debug=False):
+     # Socket QMP send command
+     #
+     def send_cper_raw(self, cper_data):
+-        """Send a raw CPER data to QEMU though QMP TCP socket"""
++        """
++        Send a raw CPER data to QEMU though QMP TCP socket.
++
++        Return True on success, False otherwise.
++        """
  
- if __name__ == "__main__":
+         data = b64encode(bytes(cper_data)).decode('ascii')
+ 
+@@ -543,9 +547,16 @@ def send_cper_raw(self, cper_data):
+ 
+         if self.send_cmd("inject-ghes-v2-error", cmd_arg):
+             print("Error injected.")
++            return True
++
++        return False
+ 
+     def send_cper(self, notif_type, payload):
+-        """Send commands to QEMU though QMP TCP socket"""
++        """
++        Send commands to QEMU though QMP TCP socket.
++
++        Return True on success, False otherwise.
++        """
+ 
+         # Fill CPER record header
+ 
+@@ -599,8 +610,7 @@ def send_cper(self, notif_type, payload):
+ 
+             util.dump_bytearray("Payload", payload)
+ 
+-        self.send_cper_raw(cper_data)
+-
++        return self.send_cper_raw(cper_data)
+ 
+     def search_qom(self, path, prop, regex):
+         """
 -- 
 2.53.0
 
