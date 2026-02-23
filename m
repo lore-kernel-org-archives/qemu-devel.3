@@ -4,75 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25F76EC112C
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 20:27:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E7EAEC113D
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 20:57:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vucVA-0003fP-Sp; Mon, 23 Feb 2026 15:25:56 -0500
+	id 1vucyz-0006dN-Fa; Mon, 23 Feb 2026 15:56:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <heifetz@yandex-team.com>)
- id 1vucUp-0003AA-4J
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 15:25:38 -0500
-Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <heifetz@yandex-team.com>)
- id 1vucUk-0002Oy-NN
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 15:25:32 -0500
-Received: from mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
- [IPv6:2a02:6b8:c0c:bf1f:0:640:c739:0])
- by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id E5A1182F9E;
- Mon, 23 Feb 2026 23:25:25 +0300 (MSK)
-Received: from heifetz-lin.yandex-team.ru (unknown [2a02:6bf:8080:12d::1:2c])
- by mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
- (smtpcorp/Yandex) with ESMTPSA id CPmvPN6Ap8c0-7a4poIKP; 
- Mon, 23 Feb 2026 23:25:25 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.com;
- s=default; t=1771878325;
- bh=hFepRe+ZWTO6AfdmQf/4gqWn3XAxk0Itxucc46LfZKU=;
- h=Message-Id:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=ZMUM1y1lqVf15JUFz13MElB5pOmqMCQicjC+8cZF44Q7T9Saao+hPk+/ggTcobL77
- Yz2t5hNL+K1TiITmGq6mS7/QFoyaoS0uneRRaC95Tmfr/4e+D9jD2oGakpTxfB1zm3
- xyurZ80oQvIElr/eJtti5HVNkKLPYi9yNEXOi2WM=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.com
-From: Sergei Heifetz <heifetz@yandex-team.com>
+ (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
+ id 1vucyx-0006bx-1P
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 15:56:43 -0500
+Received: from mail-ot1-x343.google.com ([2607:f8b0:4864:20::343])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
+ id 1vucyv-00082A-Ad
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 15:56:42 -0500
+Received: by mail-ot1-x343.google.com with SMTP id
+ 46e09a7af769-7d4cb7e10efso4075774a34.0
+ for <qemu-devel@nongnu.org>; Mon, 23 Feb 2026 12:56:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1771880200; x=1772485000; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=xzuHO+IhwGVY3r5JmSu9L2/YehPKWyCJ1AMe2LJrtU8=;
+ b=PWc1GjrgOZm6Hclrh/xmX4LyWGSPp2bEm8Fs62D4Rm3uEjFHa7Luli5SsFou/DZBKV
+ dg8eh3lXvFYVQx/GeamJyFrVlZ84gKkdS63Qp4oahhc+R9X6X+nhI7f2KYqcefaYV/xd
+ QudAJXnqlO/CEw507ZKV7eNxIZpFe4gq2Mz6Ei3s79k80YPIpyTlPdBRim8t+LdRfMpm
+ 5y37J1oqcud+vhm5naOK9YjxrJnt1ORXb73PPNg/SdNRl94o9DJFNYKAl3dI2CxS3jaj
+ nNAcUy32emXo8efOtRE2e9Xgwjr9NiGOjnejFQIHaD3K/QNS9wMHPZn+Vp9eD07ypdPT
+ nMrA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1771880200; x=1772485000;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=xzuHO+IhwGVY3r5JmSu9L2/YehPKWyCJ1AMe2LJrtU8=;
+ b=QltF04ZG+Mh3U4iyH6LqizoZ77kbtuYVXwj626Diy8c6JTrFEb0HiHaFfOPhA27pcx
+ +f45I3GCigKOfVD6cLp7NGkjd1FaQP60QesXCtiwRS+G6QHKnKZnmP8g8CCUo7JpEQ50
+ 05DO6R34fAJ4s4iUH7mvML2oVCeJ3vTHqPw0KJrXL9AhcISAS/6h+f3NR7epuX7sfgf1
+ FxdlY9XBRAxnxaj1/VFi5kUReOuhu6hrIMF3xDgaXfXtsWjG5Jg7nW6GSJRvvd286qck
+ R8IB6y1AcpxX9pS57hUEV46DTjQfy94TW5CKdw7HMQXudZ98CvNH4hDm4rlOmdOsI3xL
+ AP2Q==
+X-Gm-Message-State: AOJu0Yyesk4oorXE90Rxzf4JV17YiOwpLKjXgajiSQv+rdG9YQw111BR
+ 43mmJ8K5fXfYriswRG26qhixBDJhcOVmQyrmMv+dBVS71EBNofPJ3T0TEZ57CDMN
+X-Gm-Gg: AZuq6aJJyaG096odmfgwXytXHcoT36ZN0vwPcuhgEVPdhPHuwqJ+JDP5NqmLu7JmHrP
+ UvY1ez4z5yb2MZEDewOGUQXOWOLnwF+s93aD8Oo51A2p33s17gAx2TaDBcA/tdpmEj+5FaUhQms
+ MjfipU94II2hbwXMug2FQ/TBGQzqOIvYjDNnM54vmF6T4eTZJsIK8NssS7rwyy6R3y5aFyzTGlK
+ 6o7EpHf23UnOmCqM8HPM58wBoA4bBCeD5GqBX/4pB6Kh8gGPkMiW0RH8jfVCGCw2xHkkaEM0edQ
+ 21i0wkVrDDZ257/SRn4cCxGk+C2iNFy7civrJFtMGJPMR8nepdxbZBeM/ebMtRFBC5z2Q/E8KAo
+ 6aDS2Ci/2XgaLQ8UPJtfCZdS1HfDldaHQWYo4AD/535Ai2kwbfAYW2ToYBCtuJFsiRPyyw5xUY7
+ r4ZadzMQuJIK/VswAUKl7tkAsQRMEx9LyEOANOEeswe5sU3zGi4EgpVALehAPp95CH8/Erkl1aG
+ 8T11CTdBHj6+SUgTT2AUEji78SCVeBYNbZ7bvIslBA1q6Qf
+X-Received: by 2002:a05:6830:6aa3:b0:7d1:8ced:55f5 with SMTP id
+ 46e09a7af769-7d52bf93b2fmr5981462a34.34.1771880199821; 
+ Mon, 23 Feb 2026 12:56:39 -0800 (PST)
+Received: from taylor-ubuntu.hsd1.co.comcast.net
+ (c-75-70-169-246.hsd1.co.comcast.net. [75.70.169.246])
+ by smtp.gmail.com with ESMTPSA id
+ 46e09a7af769-7d52d04dbf1sm8011996a34.22.2026.02.23.12.56.39
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 23 Feb 2026 12:56:39 -0800 (PST)
+From: Taylor Simpson <ltaylorsimpson@gmail.com>
 To: qemu-devel@nongnu.org
-Cc: Gerd Hoffmann <kraxel@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Eric Blake <eblake@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- "Dr. David Alan Gilbert" <dave@treblig.org>
-Subject: [PATCH v2 05/10] Kconfig: add AUDIO dependency to audio-related
- devices
-Date: Tue, 24 Feb 2026 01:25:07 +0500
-Message-Id: <20260223202512.1308205-6-heifetz@yandex-team.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260223202512.1308205-1-heifetz@yandex-team.com>
-References: <20260223202512.1308205-1-heifetz@yandex-team.com>
+Cc: brian.cain@oss.qualcomm.com, matheus.bernardino@oss.qualcomm.com,
+ sid.manning@oss.qualcomm.com, marco.liebel@oss.qualcomm.com,
+ richard.henderson@linaro.org, philmd@linaro.org, ale@rev.ng, anjo@rev.ng,
+ ltaylorsimpson@gmail.com
+Subject: [PATCH 6/8] Hexagon (target/hexagon) Check for qreg multiwrite in
+ analyze_packet
+Date: Mon, 23 Feb 2026 13:56:30 -0700
+Message-ID: <20260223205632.223714-7-ltaylorsimpson@gmail.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260223205632.223714-1-ltaylorsimpson@gmail.com>
+References: <20260223205632.223714-1-ltaylorsimpson@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.154.239.200;
- envelope-from=heifetz@yandex-team.com; helo=forwardcorp1d.mail.yandex.net
-X-Spam_score_int: -1
-X-Spam_score: -0.2
-X-Spam_bar: /
-X-Spam_report: (-0.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1.179, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.717,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::343;
+ envelope-from=ltaylorsimpson@gmail.com; helo=mail-ot1-x343.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,113 +106,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The idea of the `--disable-audio` option is to stop building audio-related
-source files. Although this is not yet implemented, we can already make
-the existing AUDIO Kconfig option a dependency for a number of devices so
-that the build does not break when we remove `audio/` and other sources.
-
-Note that some machines have embedded audio devices and therefore cannot
-be used with `--disable-audio` at all. `-audio none` should be used for
-such machines if audio needs to be muted.
-
-The only device that is purposefully not included in this patch is PCSPK
-(PC speaker), because its code has already been modified to work with
-`--disable-audio`.
-
-Signed-off-by: Sergei Heifetz <heifetz@yandex-team.com>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Taylor Simpson <ltaylorsimpson@gmail.com>
 ---
- hw/audio/Kconfig | 21 ++++++++++++---------
- hw/usb/Kconfig   |  2 +-
- 2 files changed, 13 insertions(+), 10 deletions(-)
+ target/hexagon/translate.h | 7 ++++++-
+ target/hexagon/translate.c | 5 +++++
+ 2 files changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/hw/audio/Kconfig b/hw/audio/Kconfig
-index daf060e1be..0479818e3f 100644
---- a/hw/audio/Kconfig
-+++ b/hw/audio/Kconfig
-@@ -1,37 +1,37 @@
- config SB16
-     bool
-     default y
--    depends on ISA_BUS
-+    depends on ISA_BUS && AUDIO
+diff --git a/target/hexagon/translate.h b/target/hexagon/translate.h
+index 4ef9357aad..ab53d8b4d2 100644
+--- a/target/hexagon/translate.h
++++ b/target/hexagon/translate.h
+@@ -66,6 +66,7 @@ typedef struct DisasContext {
+     int qreg_log[NUM_QREGS];
+     int qreg_log_idx;
+     DECLARE_BITMAP(qregs_written, NUM_QREGS);
++    DECLARE_BITMAP(qregs_multi_write, NUM_QREGS);
+     DECLARE_BITMAP(insn_qregs_written, NUM_QREGS);
+     DECLARE_BITMAP(insn_qregs_read, NUM_QREGS);
+     bool pre_commit;
+@@ -264,7 +265,11 @@ static inline void ctx_log_qreg_write(DisasContext *ctx,
+             ctx->has_hvx_overlap = true;
+         }
+     }
+-    set_bit(rnum, ctx->qregs_written);
++    if (!test_bit(rnum, ctx->qregs_written)) {
++        set_bit(rnum, ctx->qregs_written);
++    } else {
++        set_bit(rnum, ctx->qregs_multi_write);
++    }
+     ctx->qreg_log[ctx->qreg_log_idx] = rnum;
+     ctx->qreg_log_idx++;
+ }
+diff --git a/target/hexagon/translate.c b/target/hexagon/translate.c
+index 9aea3e7ae4..32cb2e7fb4 100644
+--- a/target/hexagon/translate.c
++++ b/target/hexagon/translate.c
+@@ -433,6 +433,7 @@ static void clear_pkt_ctx(DisasContext *ctx)
+     bitmap_zero(ctx->vregs_multi_write, NUM_VREGS);
+     bitmap_zero(ctx->vregs_uncond, NUM_VREGS);
+     bitmap_zero(ctx->qregs_written, NUM_QREGS);
++    bitmap_zero(ctx->qregs_multi_write, NUM_QREGS);
+     ctx->qreg_log_idx = 0;
+     for (i = 0; i < STORES_MAX; i++) {
+         ctx->store_width[i] = 0;
+@@ -464,6 +465,10 @@ static bool pkt_has_write_conflict(DisasContext *ctx)
+         return true;
+     }
  
- config ES1370
-     bool
-     default y if PCI_DEVICES
--    depends on PCI
-+    depends on PCI && AUDIO
++    if (!bitmap_empty(ctx->qregs_multi_write, NUM_QREGS)) {
++        return true;
++    }
++
+     return false;
+ }
  
- config AC97
-     bool
-     default y if PCI_DEVICES
--    depends on PCI
-+    depends on PCI && AUDIO
- 
- config ADLIB
-     bool
-     default y
--    depends on ISA_BUS
-+    depends on ISA_BUS && AUDIO
- 
- config GUS
-     bool
-     default y
--    depends on ISA_BUS
-+    depends on ISA_BUS && AUDIO
- 
- config CS4231A
-     bool
-     default y
--    depends on ISA_BUS
-+    depends on ISA_BUS && AUDIO
- 
- config HDA
-     bool
-     default y if PCI_DEVICES
--    depends on PCI
-+    depends on PCI && AUDIO
- 
- config PCSPK
-     bool
-@@ -40,18 +40,21 @@ config PCSPK
- 
- config WM8750
-     bool
--    depends on I2C
-+    depends on I2C && AUDIO
- 
- config PL041
-     bool
-+    depends on AUDIO
- 
- config CS4231
-     bool
-+    depends on AUDIO
- 
- config ASC
-     bool
-+    depends on AUDIO
- 
- config VIRTIO_SND
-     bool
-     default y
--    depends on VIRTIO
-+    depends on VIRTIO && AUDIO
-diff --git a/hw/usb/Kconfig b/hw/usb/Kconfig
-index de95686720..e370585892 100644
---- a/hw/usb/Kconfig
-+++ b/hw/usb/Kconfig
-@@ -98,7 +98,7 @@ config USB_STORAGE_UAS
- config USB_AUDIO
-     bool
-     default y
--    depends on USB
-+    depends on USB && AUDIO
- 
- config USB_SERIAL
-     bool
 -- 
-2.34.1
+2.43.0
 
 
