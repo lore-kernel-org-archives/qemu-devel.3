@@ -4,64 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3ECA3EA4FC2
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2FD3EA4FC4
 	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 13:58:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuWMv-0001Ll-Oz; Mon, 23 Feb 2026 08:53:01 -0500
+	id 1vuWOC-0005Oc-8Y; Mon, 23 Feb 2026 08:54:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vuWKs-00069F-5T
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 08:51:04 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1vuWKe-0005rz-00
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 08:50:41 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vuWKo-0007Z8-QZ
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 08:50:53 -0500
+ id 1vuWKZ-0007WV-Vw
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 08:50:38 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771854649;
+ s=mimecast20190719; t=1771854633;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=sjruiADZLPP8r0KetuQzZJsFWpLAik5UDokSmcYCF4s=;
- b=P41txlu1GnfRRkr6/4Be8j/CmcBS2l/rH7oaChKSCcuEl98WafHvlaelKROSW1ghkHO86h
- UjpblnAB1n/LeRCJlbCE28koEkGHNQHuZ5q6iJ5ojEpuRPsuCho/TjkG/OOaYep/R5/sQq
- TQ5L0ZgchnDN+XRlk2PjjLW3CmbuTYs=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=tXlUokVOk05xaO6XwoA2MppkyQAliaUQDcaoGYgnaL4=;
+ b=YZulAvBamC27t7qZeMlTWqZRDufEJHIfZO06Q5vuQmMFDViKhmdEq1Wigr3glArkXBPihv
+ URbN1m/SeCqBVE5c+NNh3Y3fDf6k/b69FVBYJlNX7/Sn7O9yDZi+AutopCshHAHtfBoTFT
+ lbtdQoCyVa7XQxJ+jwRJUvoCT3xcksQ=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-637-lvMce6xvNTejgtcXPnUo0w-1; Mon,
- 23 Feb 2026 08:50:45 -0500
-X-MC-Unique: lvMce6xvNTejgtcXPnUo0w-1
-X-Mimecast-MFC-AGG-ID: lvMce6xvNTejgtcXPnUo0w_1771854644
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-376-eMkU2rObNTad6v56ytYWAw-1; Mon,
+ 23 Feb 2026 08:50:30 -0500
+X-MC-Unique: eMkU2rObNTad6v56ytYWAw-1
+X-Mimecast-MFC-AGG-ID: eMkU2rObNTad6v56ytYWAw_1771854629
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8451B1955F0E; Mon, 23 Feb 2026 13:50:44 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 16FE61800464; Mon, 23 Feb 2026 13:50:29 +0000 (UTC)
 Received: from localhost (unknown [10.45.242.25])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 0170619560A2; Mon, 23 Feb 2026 13:50:43 +0000 (UTC)
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 88845180066A; Mon, 23 Feb 2026 13:50:28 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Gerd Hoffmann <kraxel@redhat.com>, Alexandre Ratchov <alex@caoua.org>
-Subject: [PULL v3 69/85] audio/sndio: replace custom logging with error_report
-Date: Mon, 23 Feb 2026 14:47:10 +0100
-Message-ID: <20260223134731.2377432-70-marcandre.lureau@redhat.com>
+ Gerd Hoffmann <kraxel@redhat.com>,
+ Christian Schoenebeck <qemu_oss@crudebyte.com>
+Subject: [PULL v3 63/85] audio/jack: replace custom logging with report & trace
+Date: Mon, 23 Feb 2026 14:47:04 +0100
+Message-ID: <20260223134731.2377432-64-marcandre.lureau@redhat.com>
 In-Reply-To: <20260223134731.2377432-1-marcandre.lureau@redhat.com>
 References: <20260223134731.2377432-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -1
@@ -69,7 +70,7 @@ X-Spam_score: -0.2
 X-Spam_bar: /
 X-Spam_report: (-0.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1.179, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.717,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -89,103 +90,139 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Replace the custom audio logging infrastructure (dolog macro) with
-standard QEMU error reporting (error_report).
+Replace the custom audio logging infrastructure with standard QEMU
+error reporting and tracing.
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
 Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
 Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- audio/sndioaudio.c | 20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+ audio/jackaudio.c  | 29 +++++++++++++----------------
+ audio/trace-events |  9 +++++++++
+ 2 files changed, 22 insertions(+), 16 deletions(-)
 
-diff --git a/audio/sndioaudio.c b/audio/sndioaudio.c
-index 21f43836fd1..766eceeeefe 100644
---- a/audio/sndioaudio.c
-+++ b/audio/sndioaudio.c
-@@ -18,12 +18,12 @@
- #include <poll.h>
- #include <sndio.h>
+diff --git a/audio/jackaudio.c b/audio/jackaudio.c
+index e415e94e6e6..a2f725a3232 100644
+--- a/audio/jackaudio.c
++++ b/audio/jackaudio.c
+@@ -26,11 +26,11 @@
+ #include "qemu/module.h"
+ #include "qemu/atomic.h"
  #include "qemu/main-loop.h"
 +#include "qemu/error-report.h"
  #include "qemu/audio.h"
--#include "trace.h"
  #include "qom/object.h"
- 
--#define AUDIO_CAP "sndio"
+-
+-#define AUDIO_CAP "jack"
  #include "audio_int.h"
 +#include "trace.h"
  
- #define TYPE_AUDIO_SNDIO "audio-sndio"
- OBJECT_DECLARE_SIMPLE_TYPE(AudioSndio, AUDIO_SNDIO)
-@@ -348,7 +348,7 @@ static int sndio_init(SndioVoice *self,
-     /* open the device in non-blocking mode */
-     self->hdl = sio_open(dev_name, mode, 1);
-     if (self->hdl == NULL) {
--        dolog("failed to open device\n");
-+        error_report("sndio: failed to open device");
+ #include <jack/jack.h>
+ #include <jack/thread.h>
+@@ -343,7 +343,7 @@ static void qjack_client_recover(QJackClient *c)
+ 
+         /* if enabled then attempt to recover */
+         if (c->enabled) {
+-            dolog("attempting to reconnect to server\n");
++            trace_jack_client_recover();
+             qjack_client_init(c);
+         }
+     }
+@@ -399,10 +399,10 @@ static void qjack_client_connect_ports(QJackClient *c)
+         }
+ 
+         if (c->out) {
+-            dolog("connect %s -> %s\n", p, ports[i]);
++            trace_jack_connect(p, ports[i]);
+             jack_connect(c->client, p, ports[i]);
+         } else {
+-            dolog("connect %s -> %s\n", ports[i], p);
++            trace_jack_connect(ports[i], p);
+             jack_connect(c->client, ports[i], p);
+         }
+     }
+@@ -441,9 +441,9 @@ static int qjack_client_init(QJackClient *c)
+       c->opt->server_name);
+ 
+     if (c->client == NULL) {
+-        dolog("jack_client_open failed: status = 0x%2.0x\n", status);
++        error_report("jack: jack_client_open failed: status = 0x%2.0x", status);
+         if (status & JackServerFailed) {
+-            dolog("unable to connect to JACK server\n");
++            error_report("jack: unable to connect to JACK server");
+         }
          return -1;
      }
+@@ -451,12 +451,11 @@ static int qjack_client_init(QJackClient *c)
+     c->freq = jack_get_sample_rate(c->client);
  
-@@ -382,7 +382,7 @@ static int sndio_init(SndioVoice *self,
-         req.sig = 0;
-         break;
-     default:
--        dolog("unknown audio sample format\n");
-+        error_report("sndio: unknown audio sample format");
-         return -1;
+     if (status & JackServerStarted) {
+-        dolog("JACK server started\n");
++        trace_jack_server_started();
      }
  
-@@ -401,12 +401,12 @@ static int sndio_init(SndioVoice *self,
-     req.appbufsz = req.rate * latency / 1000000;
- 
-     if (!sio_setpar(self->hdl, &req)) {
--        dolog("failed set audio params\n");
-+        error_report("sndio: failed to set audio params");
-         goto fail;
+     if (status & JackNameNotUnique) {
+-        dolog("JACK unique name assigned %s\n",
+-          jack_get_client_name(c->client));
++        trace_jack_unique_name(jack_get_client_name(c->client));
      }
  
-     if (!sio_getpar(self->hdl, &self->par)) {
--        dolog("failed get audio params\n");
-+        error_report("sndio: failed to get audio params");
-         goto fail;
-     }
+     /* Allocate working buffer for process callback */
+@@ -536,8 +535,7 @@ static int qjack_init_out(HWVoiceOut *hw, struct audsettings *as)
+     };
+     audio_pcm_init_info(&hw->info, &os);
  
-@@ -419,7 +419,7 @@ static int sndio_init(SndioVoice *self,
-     if (self->par.bits != req.bits || self->par.bps != req.bits / 8 ||
-         self->par.sig != req.sig || (req.bits > 8 && self->par.le != req.le) ||
-         self->par.rate != as->freq || nch != as->nchannels) {
--        dolog("unsupported audio params\n");
-+        error_report("sndio: unsupported audio params");
-         goto fail;
-     }
+-    dolog("JACK output configured for %dHz (%d samples)\n",
+-        jo->c.freq, jo->c.buffersize);
++    trace_jack_out_init(jo->c.freq, jo->c.buffersize);
  
-@@ -431,7 +431,7 @@ static int sndio_init(SndioVoice *self,
+     return 0;
+ }
+@@ -572,8 +570,7 @@ static int qjack_init_in(HWVoiceIn *hw, struct audsettings *as)
+     };
+     audio_pcm_init_info(&hw->info, &is);
  
-     self->buf = g_malloc(self->buf_size);
-     if (self->buf == NULL) {
--        dolog("failed to allocate audio buffer\n");
-+        error_report("sndio: failed to allocate audio buffer");
-         goto fail;
-     }
+-    dolog("JACK input configured for %dHz (%d samples)\n",
+-        ji->c.freq, ji->c.buffersize);
++    trace_jack_in_init(ji->c.freq, ji->c.buffersize);
  
-@@ -439,13 +439,13 @@ static int sndio_init(SndioVoice *self,
+     return 0;
+ }
+@@ -654,12 +651,12 @@ static int qjack_thread_creator(jack_native_thread_t *thread,
  
-     self->pfds = g_malloc_n(nfds, sizeof(struct pollfd));
-     if (self->pfds == NULL) {
--        dolog("failed to allocate pollfd structures\n");
-+        error_report("sndio: failed to allocate pollfd structures");
-         goto fail;
-     }
+ static void qjack_error(const char *msg)
+ {
+-    dolog("E: %s\n", msg);
++    error_report("jack: %s", msg);
+ }
  
-     self->pindexes = g_malloc_n(nfds, sizeof(struct pollindex));
-     if (self->pindexes == NULL) {
--        dolog("failed to allocate pollindex structures\n");
-+        error_report("sndio: failed to allocate pollindex structures");
-         goto fail;
-     }
+ static void qjack_info(const char *msg)
+ {
+-    dolog("I: %s\n", msg);
++    trace_jack_info(msg);
+ }
  
+ static void audio_jack_class_init(ObjectClass *klass, const void *data)
+diff --git a/audio/trace-events b/audio/trace-events
+index b2f29666700..79744456cec 100644
+--- a/audio/trace-events
++++ b/audio/trace-events
+@@ -28,6 +28,15 @@ dsound_clear_sample(void *p1, uint32_t blen1, uint32_t len1, void *p2, uint32_t
+ dsound_wave_format(uint16_t wFormatTag, uint16_t nChannels, uint32_t nSamplesPerSec, uint32_t nAvgBytesPerSec, uint16_t nBlockAlign, uint16_t wBitsPerSample, uint16_t cbSize) "wFormatTag=%u, nChannels=%u, nSamplesPerSec=%u, nAvgBytesPerSec=%u, nBlockAlign=%u, wBitsPerSample=%u, cbSize=%u"
+ dsound_buffer_bytes(uint32_t caps_bytes, uint32_t desc_bytes) "caps_bytes=%u, desc_bytes=%u"
+ 
++# jackaudio.c
++jack_client_recover(void) "attempting to reconnect to server"
++jack_connect(const char *src, const char *dst) "connect %s -> %s"
++jack_server_started(void) "server started"
++jack_unique_name(const char *name) "unique name assigned %s"
++jack_out_init(uint32_t freq, int buffersize) "output configured for %uHz (%d samples)"
++jack_in_init(uint32_t freq, int buffersize) "input configured for %uHz (%d samples)"
++jack_info(const char *msg) "%s"
++
+ # pwaudio.c
+ pw_state_changed(int nodeid, const char *s) "node id: %d stream state: %s"
+ pw_read(int32_t avail, uint32_t index, size_t len) "avail=%d index=%u len=%zu"
 -- 
 2.53.0
 
