@@ -4,76 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B54EE98E10
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 09:52:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 584C7E98E10
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 09:52:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuSaD-0002I2-OM; Mon, 23 Feb 2026 04:50:32 -0500
+	id 1vuSZF-0000El-4L; Mon, 23 Feb 2026 04:49:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vuSZU-0000wp-9a
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 04:49:45 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1vuSYy-0007dw-5J
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 04:49:14 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vuSZS-00076I-3q
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 04:49:43 -0500
+ id 1vuSYw-000730-JW
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 04:49:11 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771840181;
+ s=mimecast20190719; t=1771840150;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=DT2hdPhk/th3jzqJns9or8rraYYLOeNrzepwoIXfIN0=;
- b=QCgpWcUJcHnItLox2ZzH8bRAJXRoNgtVjFWvhO05ft20UK2FRqy6X6hbRU4GUf39k6TcLq
- 0n5CSAVDQupllsUa1kTrs582VS2YSAECSyM3Jtysb+ZVd9OtWpW8jjsN2tq+WDrKaRnTBx
- JMLUBuu5B6qZ37Y0gG337ICihFETNsI=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=gk8z/yPZc780qIB6Fxp7tinO/ilEaeihoI2LilPTyNQ=;
+ b=dJHHvSUE5uic1MCn1pQstgFlnS+yZMfH0uokvydf5SX54UyKpLqzYvlSLhdVuLQKLL4axp
+ +eamHWs3ufzcmwQOB7jG92bgsp5KqNMILhMK4z1l5tkWhThxGZJSITThg5K2bYWu8k0DxR
+ d4yyDaYIVPwKSjpDT3IzXCewk3hqpJ4=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-479-At6Td93lMommCCTXAfQleQ-1; Mon,
- 23 Feb 2026 04:49:38 -0500
-X-MC-Unique: At6Td93lMommCCTXAfQleQ-1
-X-Mimecast-MFC-AGG-ID: At6Td93lMommCCTXAfQleQ_1771840176
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-674-xkDrZCnPNEGJ6q9qo2KsAg-1; Mon,
+ 23 Feb 2026 04:48:46 -0500
+X-MC-Unique: xkDrZCnPNEGJ6q9qo2KsAg-1
+X-Mimecast-MFC-AGG-ID: xkDrZCnPNEGJ6q9qo2KsAg_1771840125
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8EA7119560A3; Mon, 23 Feb 2026 09:49:36 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A035E195609D; Mon, 23 Feb 2026 09:48:45 +0000 (UTC)
 Received: from localhost (unknown [10.45.242.25])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 545681800676; Mon, 23 Feb 2026 09:49:35 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id A8FAC195419E; Mon, 23 Feb 2026 09:48:44 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Gerd Hoffmann <kraxel@redhat.com>,
- Christian Schoenebeck <qemu_oss@crudebyte.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Thomas Huth <huth@tuxfamily.org>, Alexandre Ratchov <alex@caoua.org>
-Subject: [PULL v2 55/85] audio: remove audio_driver init/fini/next
-Date: Mon, 23 Feb 2026 10:46:13 +0100
-Message-ID: <20260223094649.2005118-56-marcandre.lureau@redhat.com>
+ Gerd Hoffmann <kraxel@redhat.com>
+Subject: [PULL v2 38/85] audio-be: add common pre-conditions
+Date: Mon, 23 Feb 2026 10:45:56 +0100
+Message-ID: <20260223094649.2005118-39-marcandre.lureau@redhat.com>
 In-Reply-To: <20260223094649.2005118-1-marcandre.lureau@redhat.com>
 References: <20260223094649.2005118-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -4
-X-Spam_score: -0.5
-X-Spam_bar: /
-X-Spam_report: (-0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -14
+X-Spam_score: -1.5
+X-Spam_bar: -
+X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.798, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.79,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -93,392 +89,218 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-They are no longer used after conversion to QOM.
+assert() on valid values, and handle acceptable NULL arguments
+gracefully.
 
-Also removing the drv_opaque from a few of the pcm_ops methods.
+Note audio_driver_write() and audio_driver_read() used to return
+size (with a "XXX: Consider options") when sw was NULL. Imho, it is more
+correct to not pretend to have read/written anything by default in the
+AudioBackend base abstract class.
 
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- audio/audio_int.h       |  8 ++------
- audio/audio_template.h  |  2 +-
- audio/dsound_template.h |  6 ++----
- audio/alsaaudio.c       |  5 ++---
- audio/audio-mixeng-be.c | 15 +--------------
- audio/dbusaudio.c       |  4 ++--
- audio/jackaudio.c       |  6 ++----
- audio/noaudio.c         |  4 ++--
- audio/ossaudio.c        |  5 ++---
- audio/paaudio.c         |  5 ++---
- audio/pwaudio.c         |  4 ++--
- audio/sdlaudio.c        |  5 ++---
- audio/sndioaudio.c      |  4 ++--
- audio/spiceaudio.c      |  5 ++---
- audio/wavaudio.c        |  3 +--
- audio/coreaudio.m       |  3 +--
- 16 files changed, 28 insertions(+), 56 deletions(-)
+ audio/audio-be.c         | 61 ++++++++++++++++++++++++++++++++++++++++
+ tests/audio/test-audio.c |  8 ++----
+ 2 files changed, 64 insertions(+), 5 deletions(-)
 
-diff --git a/audio/audio_int.h b/audio/audio_int.h
-index 6ecd75c4fbf..fb5a9dd871e 100644
---- a/audio/audio_int.h
-+++ b/audio/audio_int.h
-@@ -139,18 +139,15 @@ struct SWVoiceIn {
- typedef struct audio_driver audio_driver;
- struct audio_driver {
-     const char *name;
--    void *(*init) (Audiodev *, Error **);
--    void (*fini) (void *);
-     struct audio_pcm_ops *pcm_ops;
-     int max_voices_out;
-     int max_voices_in;
-     size_t voice_size_out;
-     size_t voice_size_in;
--    QLIST_ENTRY(audio_driver) next;
- };
+diff --git a/audio/audio-be.c b/audio/audio-be.c
+index 4d3b1e2bafd..719dd8cac12 100644
+--- a/audio/audio-be.c
++++ b/audio/audio-be.c
+@@ -29,6 +29,10 @@ SWVoiceIn *audio_be_open_in(
+ {
+     AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
  
- struct audio_pcm_ops {
--    int    (*init_out)(HWVoiceOut *hw, audsettings *as, void *drv_opaque);
-+    int    (*init_out)(HWVoiceOut *hw, audsettings *as);
-     void   (*fini_out)(HWVoiceOut *hw);
-     size_t (*write)   (HWVoiceOut *hw, void *buf, size_t size);
-     void   (*run_buffer_out)(HWVoiceOut *hw);
-@@ -173,7 +170,7 @@ struct audio_pcm_ops {
-     void   (*enable_out)(HWVoiceOut *hw, bool enable);
-     void   (*volume_out)(HWVoiceOut *hw, Volume *vol);
- 
--    int    (*init_in) (HWVoiceIn *hw, audsettings *as, void *drv_opaque);
-+    int    (*init_in) (HWVoiceIn *hw, audsettings *as);
-     void   (*fini_in) (HWVoiceIn *hw);
-     size_t (*read)    (HWVoiceIn *hw, void *buf, size_t size);
-     void   (*run_buffer_in)(HWVoiceIn *hw);
-@@ -240,7 +237,6 @@ struct AudioMixengBackend {
- 
-     struct audio_driver *drv;
-     Audiodev *dev;
--    void *drv_opaque;
- 
-     QEMUTimer *ts;
-     QLIST_HEAD (hw_in_listhead, HWVoiceIn) hw_head_in;
-diff --git a/audio/audio_template.h b/audio/audio_template.h
-index 77a70d6e56a..6c2d2ad5dca 100644
---- a/audio/audio_template.h
-+++ b/audio/audio_template.h
-@@ -295,7 +295,7 @@ static HW *glue(audio_pcm_hw_add_new_, TYPE)(AudioMixengBackend *s,
- #ifdef DAC
-     QLIST_INIT (&hw->cap_head);
- #endif
--    if (glue (hw->pcm_ops->init_, TYPE) (hw, as, s->drv_opaque)) {
-+    if (glue (hw->pcm_ops->init_, TYPE) (hw, as)) {
-         goto err0;
-     }
- 
-diff --git a/audio/dsound_template.h b/audio/dsound_template.h
-index 7979773eb86..022a7307c99 100644
---- a/audio/dsound_template.h
-+++ b/audio/dsound_template.h
-@@ -157,11 +157,9 @@ static void dsound_fini_out (HWVoiceOut *hw)
++    assert(name != NULL);
++    assert(callback_fn != NULL);
++    assert(as != NULL);
++
+     return klass->open_in(be, sw, name, callback_opaque, callback_fn, as);
  }
  
- #ifdef DSBTYPE_IN
--static int dsound_init_in(HWVoiceIn *hw, struct audsettings *as,
--                          void *drv_opaque)
-+static int dsound_init_in(HWVoiceIn *hw, struct audsettings *as)
- #else
--static int dsound_init_out(HWVoiceOut *hw, struct audsettings *as,
--                           void *drv_opaque)
-+static int dsound_init_out(HWVoiceOut *hw, struct audsettings *as)
- #endif
+@@ -42,6 +46,10 @@ SWVoiceOut *audio_be_open_out(
  {
-     int err;
-diff --git a/audio/alsaaudio.c b/audio/alsaaudio.c
-index c2788606b28..0c63d133496 100644
---- a/audio/alsaaudio.c
-+++ b/audio/alsaaudio.c
-@@ -692,8 +692,7 @@ static void alsa_fini_out (HWVoiceOut *hw)
-     alsa_anal_close (&alsa->handle, &alsa->pollhlp);
+     AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
+ 
++    assert(name != NULL);
++    assert(callback_fn != NULL);
++    assert(as != NULL);
++
+     return klass->open_out(be, sw, name, callback_opaque, callback_fn, as);
  }
  
--static int alsa_init_out(HWVoiceOut *hw, struct audsettings *as,
--                         void *drv_opaque)
-+static int alsa_init_out(HWVoiceOut *hw, struct audsettings *as)
+@@ -49,6 +57,10 @@ void audio_be_close_out(AudioBackend *be, SWVoiceOut *sw)
  {
-     ALSAVoiceOut *alsa = (ALSAVoiceOut *) hw;
-     struct alsa_params_req req;
-@@ -779,7 +778,7 @@ static void alsa_enable_out(HWVoiceOut *hw, bool enable)
-     }
+     AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
+ 
++    if (!sw) {
++        return;
++    }
++
+     return klass->close_out(be, sw);
  }
  
--static int alsa_init_in(HWVoiceIn *hw, struct audsettings *as, void *drv_opaque)
-+static int alsa_init_in(HWVoiceIn *hw, struct audsettings *as)
+@@ -56,6 +68,10 @@ void audio_be_close_in(AudioBackend *be, SWVoiceIn *sw)
  {
-     ALSAVoiceIn *alsa = (ALSAVoiceIn *) hw;
-     struct alsa_params_req req;
-diff --git a/audio/audio-mixeng-be.c b/audio/audio-mixeng-be.c
-index 45873646b3c..ee593310180 100644
---- a/audio/audio-mixeng-be.c
-+++ b/audio/audio-mixeng-be.c
-@@ -1521,13 +1521,6 @@ static bool audio_mixeng_backend_realize(AudioBackend *abe,
-     audio_driver *drv = AUDIO_MIXENG_BACKEND_GET_CLASS(be)->driver;
+     AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
  
-     be->dev = dev;
--    if (drv->init != NULL) {
--        be->drv_opaque = drv->init(be->dev, errp);
--        if (!be->drv_opaque) {
--            return false;
--        }
--    }
--
-     if (!drv->pcm_ops->get_buffer_in) {
-         drv->pcm_ops->get_buffer_in = audio_generic_get_buffer_in;
-         drv->pcm_ops->put_buffer_in = audio_generic_put_buffer_in;
-@@ -1665,13 +1658,7 @@ static void audio_mixeng_backend_finalize(Object *obj)
-         QLIST_REMOVE(hwi, entries);
-     }
- 
--    if (s->drv) {
--        if (s->drv->fini) {
--            s->drv->fini (s->drv_opaque);
--        }
--        s->drv = NULL;
--    }
--
-+    s->drv = NULL;
-     if (s->dev) {
-         qapi_free_Audiodev(s->dev);
-         s->dev = NULL;
-diff --git a/audio/dbusaudio.c b/audio/dbusaudio.c
-index fb059815de9..9cc6e826b7e 100644
---- a/audio/dbusaudio.c
-+++ b/audio/dbusaudio.c
-@@ -173,7 +173,7 @@ dbus_audio_get_nsamples(AudioDbus *da)
++    if (!sw) {
++        return;
++    }
++
+     return klass->close_in(be, sw);
  }
  
- static int
--dbus_init_out(HWVoiceOut *hw, struct audsettings *as, void *drv_opaque)
-+dbus_init_out(HWVoiceOut *hw, struct audsettings *as)
+@@ -63,6 +79,10 @@ bool audio_be_is_active_out(AudioBackend *be, SWVoiceOut *sw)
  {
-     AudioDbus *da = AUDIO_DBUS(hw->s);
-     DBusVoiceOut *vo = container_of(hw, DBusVoiceOut, hw);
-@@ -287,7 +287,7 @@ dbus_init_in_listener(QemuDBusDisplay1AudioInListener *listener, HWVoiceIn *hw)
+     AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
+ 
++    if (!sw) {
++        return false;
++    }
++
+     return klass->is_active_out(be, sw);
  }
  
- static int
--dbus_init_in(HWVoiceIn *hw, struct audsettings *as, void *drv_opaque)
-+dbus_init_in(HWVoiceIn *hw, struct audsettings *as)
+@@ -70,6 +90,10 @@ bool audio_be_is_active_in(AudioBackend *be, SWVoiceIn *sw)
  {
-     AudioDbus *da = AUDIO_DBUS(hw->s);
-     DBusVoiceIn *vo = container_of(hw, DBusVoiceIn, hw);
-diff --git a/audio/jackaudio.c b/audio/jackaudio.c
-index 31e3da6a7fe..d1bf80f8b68 100644
---- a/audio/jackaudio.c
-+++ b/audio/jackaudio.c
-@@ -507,8 +507,7 @@ static int qjack_client_init(QJackClient *c)
-     return 0;
+     AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
+ 
++    if (!sw) {
++        return false;
++    }
++
+     return klass->is_active_in(be, sw);
  }
  
--static int qjack_init_out(HWVoiceOut *hw, struct audsettings *as,
--    void *drv_opaque)
-+static int qjack_init_out(HWVoiceOut *hw, struct audsettings *as)
+@@ -77,6 +101,10 @@ size_t audio_be_write(AudioBackend *be, SWVoiceOut *sw, void *buf, size_t size)
  {
-     QJackOut *jo  = (QJackOut *)hw;
-     Audiodev *dev = hw->s->dev;
-@@ -544,8 +543,7 @@ static int qjack_init_out(HWVoiceOut *hw, struct audsettings *as,
-     return 0;
+     AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
+ 
++    if (!sw) {
++        return 0;
++    }
++
+     return klass->write(be, sw, buf, size);
  }
  
--static int qjack_init_in(HWVoiceIn *hw, struct audsettings *as,
--    void *drv_opaque)
-+static int qjack_init_in(HWVoiceIn *hw, struct audsettings *as)
+@@ -84,6 +112,10 @@ size_t audio_be_read(AudioBackend *be, SWVoiceIn *sw, void *buf, size_t size)
  {
-     QJackIn  *ji  = (QJackIn *)hw;
-     Audiodev *dev = hw->s->dev;
-diff --git a/audio/noaudio.c b/audio/noaudio.c
-index 2bd110caac4..6016f516d4a 100644
---- a/audio/noaudio.c
-+++ b/audio/noaudio.c
-@@ -62,7 +62,7 @@ static size_t no_write(HWVoiceOut *hw, void *buf, size_t len)
-     return audio_rate_get_bytes(&no->rate, &hw->info, len);
+     AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
+ 
++    if (!sw) {
++        return 0;
++    }
++
+     return klass->read(be, sw, buf, size);
  }
  
--static int no_init_out(HWVoiceOut *hw, struct audsettings *as, void *drv_opaque)
-+static int no_init_out(HWVoiceOut *hw, struct audsettings *as)
+@@ -91,6 +123,10 @@ int audio_be_get_buffer_size_out(AudioBackend *be, SWVoiceOut *sw)
  {
-     NoVoiceOut *no = (NoVoiceOut *) hw;
+     AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
  
-@@ -86,7 +86,7 @@ static void no_enable_out(HWVoiceOut *hw, bool enable)
-     }
++    if (!sw) {
++        return 0;
++    }
++
+     return klass->get_buffer_size_out(be, sw);
  }
  
--static int no_init_in(HWVoiceIn *hw, struct audsettings *as, void *drv_opaque)
-+static int no_init_in(HWVoiceIn *hw, struct audsettings *as)
+@@ -98,6 +134,10 @@ void audio_be_set_active_out(AudioBackend *be, SWVoiceOut *sw, bool on)
  {
-     NoVoiceIn *no = (NoVoiceIn *) hw;
+     AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
  
-diff --git a/audio/ossaudio.c b/audio/ossaudio.c
-index fedd2bbd722..e6f8d6d41e5 100644
---- a/audio/ossaudio.c
-+++ b/audio/ossaudio.c
-@@ -493,8 +493,7 @@ static void oss_fini_out (HWVoiceOut *hw)
-     }
++    if (!sw) {
++        return;
++    }
++
+     return klass->set_active_out(be, sw, on);
  }
  
--static int oss_init_out(HWVoiceOut *hw, struct audsettings *as,
--                        void *drv_opaque)
-+static int oss_init_out(HWVoiceOut *hw, struct audsettings *as)
+@@ -105,6 +145,10 @@ void audio_be_set_active_in(AudioBackend *be, SWVoiceIn *sw, bool on)
  {
-     OSSVoiceOut *oss = (OSSVoiceOut *) hw;
-     struct oss_params req, obt;
-@@ -625,7 +624,7 @@ static void oss_enable_out(HWVoiceOut *hw, bool enable)
-     }
+     AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
+ 
++    if (!sw) {
++        return;
++    }
++
+     return klass->set_active_in(be, sw, on);
  }
  
--static int oss_init_in(HWVoiceIn *hw, struct audsettings *as, void *drv_opaque)
-+static int oss_init_in(HWVoiceIn *hw, struct audsettings *as)
+@@ -112,6 +156,10 @@ void audio_be_set_volume_out(AudioBackend *be, SWVoiceOut *sw, Volume *vol)
  {
-     OSSVoiceIn *oss = (OSSVoiceIn *) hw;
-     struct oss_params req, obt;
-diff --git a/audio/paaudio.c b/audio/paaudio.c
-index 97e6c0d1794..35818296282 100644
---- a/audio/paaudio.c
-+++ b/audio/paaudio.c
-@@ -518,8 +518,7 @@ fail:
-     return NULL;
+     AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
+ 
++    if (!sw) {
++        return;
++    }
++
+     klass->set_volume_out(be, sw, vol);
  }
  
--static int qpa_init_out(HWVoiceOut *hw, struct audsettings *as,
--                        void *drv_opaque)
-+static int qpa_init_out(HWVoiceOut *hw, struct audsettings *as)
+@@ -119,6 +167,10 @@ void audio_be_set_volume_in(AudioBackend *be, SWVoiceIn *sw, Volume *vol)
  {
-     AudioMixengBackend *amb = hw->s;
-     AudioPa *apa = AUDIO_PA(amb);
-@@ -570,7 +569,7 @@ static int qpa_init_out(HWVoiceOut *hw, struct audsettings *as,
-     return -1;
+     AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
+ 
++    if (!sw) {
++        return;
++    }
++
+     klass->set_volume_in(be, sw, vol);
  }
  
--static int qpa_init_in(HWVoiceIn *hw, struct audsettings *as, void *drv_opaque)
-+static int qpa_init_in(HWVoiceIn *hw, struct audsettings *as)
+@@ -130,6 +182,9 @@ CaptureVoiceOut *audio_be_add_capture(
  {
-     AudioMixengBackend *amb = hw->s;
-     AudioPa *apa = AUDIO_PA(amb);
-diff --git a/audio/pwaudio.c b/audio/pwaudio.c
-index ca61a1b4ef5..c668ef19a3e 100644
---- a/audio/pwaudio.c
-+++ b/audio/pwaudio.c
-@@ -524,7 +524,7 @@ qpw_set_position(uint32_t channels, uint32_t position[SPA_AUDIO_MAX_CHANNELS])
+     AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
+ 
++    assert(as != NULL);
++    assert(ops != NULL);
++
+     return klass->add_capture(be, as, ops, cb_opaque);
  }
  
- static int
--qpw_init_out(HWVoiceOut *hw, struct audsettings *as, void *drv_opaque)
-+qpw_init_out(HWVoiceOut *hw, struct audsettings *as)
+@@ -137,6 +192,10 @@ void audio_be_del_capture(AudioBackend *be, CaptureVoiceOut *cap, void *cb_opaqu
  {
-     AudioPw *c = AUDIO_PW(hw->s);
-     PWVoiceOut *pw = (PWVoiceOut *) hw;
-@@ -571,7 +571,7 @@ qpw_init_out(HWVoiceOut *hw, struct audsettings *as, void *drv_opaque)
+     AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
+ 
++    if (!cap) {
++        return;
++    }
++
+     klass->del_capture(be, cap, cb_opaque);
  }
  
- static int
--qpw_init_in(HWVoiceIn *hw, struct audsettings *as, void *drv_opaque)
-+qpw_init_in(HWVoiceIn *hw, struct audsettings *as)
+@@ -155,6 +214,8 @@ bool audio_be_set_dbus_server(AudioBackend *be,
  {
-     AudioPw *c = AUDIO_PW(hw->s);
-     PWVoiceIn *pw = (PWVoiceIn *) hw;
-diff --git a/audio/sdlaudio.c b/audio/sdlaudio.c
-index 0dfa3100828..a1d453aa307 100644
---- a/audio/sdlaudio.c
-+++ b/audio/sdlaudio.c
-@@ -345,8 +345,7 @@ static void sdl_fini_out(HWVoiceOut *hw)
-     sdl_close_out(sdl);
- }
+     AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
  
--static int sdl_init_out(HWVoiceOut *hw, struct audsettings *as,
--                        void *drv_opaque)
-+static int sdl_init_out(HWVoiceOut *hw, struct audsettings *as)
- {
-     SDLVoiceOut *sdl = (SDLVoiceOut *)hw;
-     SDL_AudioSpec req, obt;
-@@ -402,7 +401,7 @@ static void sdl_fini_in(HWVoiceIn *hw)
-     sdl_close_in(sdl);
- }
++    assert(server != NULL);
++
+     if (!audio_be_can_set_dbus_server(be)) {
+         error_setg(errp, "Audiodev '%s' is not compatible with DBus",
+                    audio_be_get_id(be));
+diff --git a/tests/audio/test-audio.c b/tests/audio/test-audio.c
+index 1827c084ac8..90d96ae0575 100644
+--- a/tests/audio/test-audio.c
++++ b/tests/audio/test-audio.c
+@@ -493,11 +493,9 @@ static void test_audio_null_handling(void)
+     /* audio_be_get_buffer_size_out(NULL) should return 0 */
+     g_assert_cmpint(audio_be_get_buffer_size_out(be, NULL), ==, 0);
  
--static int sdl_init_in(HWVoiceIn *hw, audsettings *as, void *drv_opaque)
-+static int sdl_init_in(HWVoiceIn *hw, audsettings *as)
- {
-     SDLVoiceIn *sdl = (SDLVoiceIn *)hw;
-     SDL_AudioSpec req, obt;
-diff --git a/audio/sndioaudio.c b/audio/sndioaudio.c
-index c15d8b6684a..77685e27cb1 100644
---- a/audio/sndioaudio.c
-+++ b/audio/sndioaudio.c
-@@ -495,7 +495,7 @@ static void sndio_enable_in(HWVoiceIn *hw, bool enable)
-     sndio_enable(self, enable);
- }
+-    /* audio_be_write/read(NULL, ...) should return size (no-op) */
+-    g_assert_cmpuint(audio_be_write(be, NULL, buffer, sizeof(buffer)), ==,
+-                     sizeof(buffer));
+-    g_assert_cmpuint(audio_be_read(be, NULL, buffer, sizeof(buffer)), ==,
+-                     sizeof(buffer));
++    /* audio_be_write/read(NULL, ...) should return 0 */
++    g_assert_cmpuint(audio_be_write(be, NULL, buffer, sizeof(buffer)), ==, 0);
++    g_assert_cmpuint(audio_be_read(be, NULL, buffer, sizeof(buffer)), ==, 0);
  
--static int sndio_init_out(HWVoiceOut *hw, struct audsettings *as, void *opaque)
-+static int sndio_init_out(HWVoiceOut *hw, struct audsettings *as)
- {
-     SndioVoice *self = (SndioVoice *) hw;
- 
-@@ -508,7 +508,7 @@ static int sndio_init_out(HWVoiceOut *hw, struct audsettings *as, void *opaque)
-     return 0;
- }
- 
--static int sndio_init_in(HWVoiceIn *hw, struct audsettings *as, void *opaque)
-+static int sndio_init_in(HWVoiceIn *hw, struct audsettings *as)
- {
-     SndioVoice *self = (SndioVoice *) hw;
- 
-diff --git a/audio/spiceaudio.c b/audio/spiceaudio.c
-index 953dbf6c308..cc6c5d7e287 100644
---- a/audio/spiceaudio.c
-+++ b/audio/spiceaudio.c
-@@ -108,8 +108,7 @@ static const SpiceRecordInterface record_sif = {
- 
- /* playback */
- 
--static int line_out_init(HWVoiceOut *hw, struct audsettings *as,
--                         void *drv_opaque)
-+static int line_out_init(HWVoiceOut *hw, struct audsettings *as)
- {
-     SpiceVoiceOut *out = container_of (hw, SpiceVoiceOut, hw);
-     struct audsettings settings;
-@@ -225,7 +224,7 @@ static void line_out_volume(HWVoiceOut *hw, Volume *vol)
- 
- /* record */
- 
--static int line_in_init(HWVoiceIn *hw, struct audsettings *as, void *drv_opaque)
-+static int line_in_init(HWVoiceIn *hw, struct audsettings *as)
- {
-     SpiceVoiceIn *in = container_of (hw, SpiceVoiceIn, hw);
-     struct audsettings settings;
-diff --git a/audio/wavaudio.c b/audio/wavaudio.c
-index f1a414f208c..f9a0484488b 100644
---- a/audio/wavaudio.c
-+++ b/audio/wavaudio.c
-@@ -78,8 +78,7 @@ static void le_store (uint8_t *buf, uint32_t val, int len)
-     }
- }
- 
--static int wav_init_out(HWVoiceOut *hw, struct audsettings *as,
--                        void *drv_opaque)
-+static int wav_init_out(HWVoiceOut *hw, struct audsettings *as)
- {
-     WAVVoiceOut *wav = (WAVVoiceOut *) hw;
-     int bits16 = 0, stereo = 0;
-diff --git a/audio/coreaudio.m b/audio/coreaudio.m
-index 4a0904f0073..a3a0b83eb9d 100644
---- a/audio/coreaudio.m
-+++ b/audio/coreaudio.m
-@@ -573,8 +573,7 @@ static OSStatus handle_voice_change(
-     return 0;
- }
- 
--static int coreaudio_init_out(HWVoiceOut *hw, struct audsettings *as,
--                              void *drv_opaque)
-+static int coreaudio_init_out(HWVoiceOut *hw, struct audsettings *as)
- {
-     OSStatus status;
-     coreaudioVoiceOut *core = (coreaudioVoiceOut *) hw;
+     /* These should not crash */
+     audio_be_set_active_out(be, NULL, true);
 -- 
 2.53.0
 
