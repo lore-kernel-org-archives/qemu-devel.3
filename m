@@ -4,56 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6E0AEA4FBA
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 14:22:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A2C8EA4FC7
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 14:22:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuWoE-0004I9-DL; Mon, 23 Feb 2026 09:21:14 -0500
+	id 1vuWo8-0004AX-Hp; Mon, 23 Feb 2026 09:21:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1vuWnq-00049c-S3
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 09:20:51 -0500
+ id 1vuWno-00049b-5R
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 09:20:49 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1vuWnl-0005WT-Cc
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 09:20:48 -0500
+ id 1vuWnl-0005WX-CY
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 09:20:47 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
  s=mimecast20190719; t=1771856442;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding;
- bh=Scm4DSpvW+xw8gpGKx93IH1GhSzVYPfAKpbLsLz6tuQ=;
- b=InEprPjWKbX/s98k57+SDC70UBEmeAsMr3qYPWANQ8te2rpQFC3VAqLkibQbzXoKHz6x/v
- AfLK1RqzgEM9a4njp6VoMKItEw5gaha9Y+h0zIClXxHEUfJM/A1jYrRCnhFhHHkHD7i++C
- XvQNoYf/2pspHNcZIeqJz3k9FR93VW8=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=0A2LiYh2vlj5lBn7KWNTBaejwqG3Wlgrft05nofg3dE=;
+ b=EdjWL7ebHJSZxhv03M+awRiqtBM2xvE5rSfGGbXmxjZReRv0C/lH6fGnjrYuboeAtEfc+b
+ 0HZe/yJNVFD6lB/DwFSLUQy071SmKKIfyaopGr69gLSKdWkX3AmO0+3wpeC+5rBfonKU29
+ jb4g5JJvivFZeBYNV+94rFc5MrqJ+pg=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-670-eqahkoVVPjSpEHo2_ocQEg-1; Mon,
- 23 Feb 2026 09:20:40 -0500
-X-MC-Unique: eqahkoVVPjSpEHo2_ocQEg-1
-X-Mimecast-MFC-AGG-ID: eqahkoVVPjSpEHo2_ocQEg_1771856440
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-616-Cx6KIMNaNmutByR0VbKfaw-1; Mon,
+ 23 Feb 2026 09:20:37 -0500
+X-MC-Unique: Cx6KIMNaNmutByR0VbKfaw-1
+X-Mimecast-MFC-AGG-ID: Cx6KIMNaNmutByR0VbKfaw_1771856436
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 23E4618002C1
- for <qemu-devel@nongnu.org>; Mon, 23 Feb 2026 14:20:40 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 477ED1956067; Mon, 23 Feb 2026 14:20:36 +0000 (UTC)
 Received: from localhost (unknown [10.2.16.160])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 4DB421800669; Mon, 23 Feb 2026 14:20:38 +0000 (UTC)
+ id DE02C1800668; Mon, 23 Feb 2026 14:20:34 +0000 (UTC)
 From: Stefan Hajnoczi <stefanha@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>
-Subject: [qemu-web PATCH] Announce Google Summer of Code 2026
-Date: Fri, 20 Feb 2026 16:20:12 -0500
-Message-ID: <20260220212012.1061595-1-stefanha@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
+ qemu-block@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: [PULL 0/2] Block patches
+Date: Mon, 23 Feb 2026 09:20:29 -0500
+Message-ID: <20260223142031.1397832-1-stefanha@redhat.com>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
@@ -82,58 +83,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Let people know that QEMU is participating in Google Summer of Code so
-that they can apply for an internship this summer.
+The following changes since commit 07f97d5da04a9f97e273de85c76f5017d8135a6e:
 
-Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
----
- _posts/2026-02-20-gsoc-2026.md | 37 ++++++++++++++++++++++++++++++++++
- 1 file changed, 37 insertions(+)
- create mode 100644 _posts/2026-02-20-gsoc-2026.md
+  Merge tag 'pull-target-arm-20260219' of https://gitlab.com/pm215/qemu into staging (2026-02-19 10:36:06 +0000)
 
-diff --git a/_posts/2026-02-20-gsoc-2026.md b/_posts/2026-02-20-gsoc-2026.md
-new file mode 100644
-index 0000000..a5df237
---- /dev/null
-+++ b/_posts/2026-02-20-gsoc-2026.md
-@@ -0,0 +1,37 @@
-+---
-+layout: post
-+title:  "Announcing QEMU Google Summer of Code 2026 internships"
-+date:   2026-02-20 07:00:00 +0000
-+categories: [internships, gsoc]
-+---
-+QEMU is participating in [Google Summer of
-+Code](https://summerofcode.withgoogle.com/) once again! Google Summer of Code
-+is an open source internship program with internships running May through
-+August. Would you like to experience contributing to an open source project?
-+This paid remote work internship opportunity is a great way to get involved!
-+
-+Interns work with experienced QEMU developers who mentor them during the
-+internship. Code is submitted through the same open source process that all
-+QEMU developers follow. This gives interns experience with contributing to open
-+source software.
-+
-+## Find out if you are eligible
-+Information on who can apply for Google Summer of Code is
-+[here](https://developers.google.com/open-source/gsoc/faq#what_are_the_eligibility_requirements_for_participation).
-+
-+## Select a project idea
-+Look through the the [list of QEMU project
-+ideas](https://wiki.qemu.org/Google_Summer_of_Code_2026) and see if there is
-+something you are interested in working on. Once you have found a project idea
-+you want to apply for, email the mentor for that project idea to ask any
-+questions you may have and discuss the idea further.
-+
-+## Submit your application
-+You can [apply for Google Summer of Code](https://summerofcode.withgoogle.com/)
-+from March 16th to 31st.
-+
-+Good luck with your applications!
-+
-+If you have questions about applying for QEMU GSoC, please email
-+[Stefan Hajnoczi](mailto:stefanha@gmail.com) or ask on the [#qemu-gsoc IRC
-+channel](https://webchat.oftc.net/?channels=qemu-gsoc).
+are available in the Git repository at:
+
+  https://gitlab.com/stefanha/qemu.git tags/block-pull-request
+
+for you to fetch changes up to 961fcc0f22768e7c3432fc645b93dc7cd4932fae:
+
+  fdmon-io_uring: check CQ ring directly in gsource_check (2026-02-23 08:50:04 -0500)
+
+----------------------------------------------------------------
+Pull request
+
+Jens Axboe's fixes for fdmon-io_uring.
+
+----------------------------------------------------------------
+
+Jens Axboe (2):
+  aio-posix: notify main loop when SQEs are queued
+  fdmon-io_uring: check CQ ring directly in gsource_check
+
+ util/aio-posix.c      |  9 +++++++++
+ util/fdmon-io_uring.c | 14 +++++++++++++-
+ 2 files changed, 22 insertions(+), 1 deletion(-)
+
 -- 
 2.53.0
 
