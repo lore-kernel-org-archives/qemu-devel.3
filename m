@@ -4,64 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06DEAEA4FC1
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9923EEA4FC2
 	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 13:56:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuWJg-0003FO-74; Mon, 23 Feb 2026 08:49:41 -0500
+	id 1vuWLX-0006j2-6U; Mon, 23 Feb 2026 08:51:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vuWHz-0008Pl-H5
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 08:47:58 -0500
+ id 1vuWJe-0003Ga-7B
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 08:49:40 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vuWHw-0006y1-KQ
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 08:47:55 -0500
+ id 1vuWJb-0007D1-GU
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 08:49:36 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771854470;
+ s=mimecast20190719; t=1771854574;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ujWq/rwNALQFkeirBbxCFeLO6/J9v14zN5YQDxoVzL8=;
- b=SEWgjNbUxuZnIlst+lJoSrT7c2b2YNI6EjXbKoKfeH3kct75Q7XGF+W8+TgrMcSvGyiiNe
- Qn4oUMEY562stFC6EWNW4OupLgLNwlMEssdWpNRw7wLbLzk0YSMvvnjxcm+k0TtqsdzFvw
- OinV51LaMulw4SUFU0y8We/KzdoIkOI=
+ bh=bAOgBxSVBxg4rG7YAbPn+jORLT0sScr7l61x0jGcsvw=;
+ b=b7LUTXhiWA+KOL5d9hT0vcRQH1InGGWRK3Qvdrl1YSiS32z4Ck26aqv3o/WfQC6nRYkmrw
+ f8BXxebsAai4+vV4qFu3MjvtSvdVXfPUcSsc4LiIUJUO1M2uC4Ny8pBwuyMWDHLzRrggAP
+ z/0PZ3wVdkzsLfBel/jKJ0xaDmdtLH0=
 Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-682-tFj2u4q6O6acPWAnVpka3Q-1; Mon,
- 23 Feb 2026 08:47:47 -0500
-X-MC-Unique: tFj2u4q6O6acPWAnVpka3Q-1
-X-Mimecast-MFC-AGG-ID: tFj2u4q6O6acPWAnVpka3Q_1771854466
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-44-pRBBmwlZMY6DYKKTowPz4Q-1; Mon,
+ 23 Feb 2026 08:49:33 -0500
+X-MC-Unique: pRBBmwlZMY6DYKKTowPz4Q-1
+X-Mimecast-MFC-AGG-ID: pRBBmwlZMY6DYKKTowPz4Q_1771854572
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 408CC18002C4; Mon, 23 Feb 2026 13:47:46 +0000 (UTC)
+ id 8778918005B0; Mon, 23 Feb 2026 13:49:32 +0000 (UTC)
 Received: from localhost (unknown [10.45.242.25])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 8999C3000C26; Mon, 23 Feb 2026 13:47:45 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id DC09F1955D85; Mon, 23 Feb 2026 13:49:31 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Gerd Hoffmann <kraxel@redhat.com>
-Subject: [PULL v3 04/85] audio/dbus: make "dbus" the default backend when
- using -display dbus
-Date: Mon, 23 Feb 2026 14:46:05 +0100
-Message-ID: <20260223134731.2377432-5-marcandre.lureau@redhat.com>
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
+Subject: [PULL v3 43/85] audio/spice: convert to QOM lifecycle methods
+Date: Mon, 23 Feb 2026 14:46:44 +0100
+Message-ID: <20260223134731.2377432-44-marcandre.lureau@redhat.com>
 In-Reply-To: <20260223134731.2377432-1-marcandre.lureau@redhat.com>
 References: <20260223134731.2377432-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -90,118 +88,90 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Set "using_dbus_display" during early_dbus_init(), so that we can try to
-create the "dbus" audio backend by default from audio_prio_list.
+Migrate the SPICE audio backend from the legacy driver init/fini
+callbacks to proper QOM realize method.
 
-This makes dbus audio work by default when using an audio device,
-without having to setup and wire up the -audiodev manually.
-
-The added FIXME is addressed in the following commits.
+The spice_audio_init() function is replaced with spice_audio_realize(),
+which validates that SPICE is enabled before delegating to the parent
+class realize method. The empty spice_audio_fini() is removed as no
+cleanup is needed.
 
 Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
 Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- audio/audio.c     |  3 +++
- audio/dbusaudio.c |  8 +++++++-
- ui/dbus.c         | 22 +++++++++++++++++-----
- 3 files changed, 27 insertions(+), 6 deletions(-)
+ audio/spiceaudio.c | 34 +++++++++++++++++-----------------
+ 1 file changed, 17 insertions(+), 17 deletions(-)
 
-diff --git a/audio/audio.c b/audio/audio.c
-index a218570a4f4..9563583cd1e 100644
---- a/audio/audio.c
-+++ b/audio/audio.c
-@@ -58,6 +58,9 @@
-     that we generate the list.
- */
- const char *audio_prio_list[] = {
-+#ifdef CONFIG_GIO
-+    "dbus",
-+#endif
-     "spice",
-     CONFIG_AUDIO_DRIVERS
-     "none",
-diff --git a/audio/dbusaudio.c b/audio/dbusaudio.c
-index d729a810aa6..1fe7c4ed647 100644
---- a/audio/dbusaudio.c
-+++ b/audio/dbusaudio.c
-@@ -32,6 +32,7 @@
- #endif
+diff --git a/audio/spiceaudio.c b/audio/spiceaudio.c
+index ad7cb69673b..953dbf6c308 100644
+--- a/audio/spiceaudio.c
++++ b/audio/spiceaudio.c
+@@ -33,16 +33,33 @@
+ #define TYPE_AUDIO_SPICE "audio-spice"
+ OBJECT_DECLARE_SIMPLE_TYPE(AudioSpice, AUDIO_SPICE)
  
- #include "ui/dbus.h"
-+#include "ui/dbus-display.h"
- #include "ui/dbus-display1.h"
++static AudioBackendClass *audio_spice_parent_class;
++
+ struct AudioSpice {
+     AudioMixengBackend parent_obj;
+ };
  
- #define AUDIO_CAP "dbus"
-@@ -408,8 +409,13 @@ dbus_enable_in(HWVoiceIn *hw, bool enable)
- static void *
- dbus_audio_init(Audiodev *dev, Error **errp)
- {
--    DBusAudio *da = g_new0(DBusAudio, 1);
-+    DBusAudio *da;
+ static struct audio_driver spice_audio_driver;
  
-+    if (!qemu_using_dbus_display(errp)) {
-+        return NULL;
++static bool spice_audio_realize(AudioBackend *abe, Audiodev *dev, Error **errp)
++{
++    if (!using_spice) {
++        error_setg(errp, "Cannot use spice audio without -spice");
++        qapi_free_Audiodev(dev);
++        return false;
 +    }
 +
-+    da = g_new0(DBusAudio, 1);
-     da->dev = dev;
-     da->out_listeners = g_hash_table_new_full(g_str_hash, g_str_equal,
-                                                 g_free, g_object_unref);
-diff --git a/ui/dbus.c b/ui/dbus.c
-index 31f6eb1189f..0be1931d208 100644
---- a/ui/dbus.c
-+++ b/ui/dbus.c
-@@ -35,6 +35,7 @@
- #include "ui/egl-context.h"
- #endif
- #include "qemu/audio.h"
-+#include "audio/audio_int.h" /* FIXME: use QOM dynamic cast instead of drv->name */
- #include "qapi/error.h"
- #include "trace.h"
- 
-@@ -218,9 +219,20 @@ dbus_display_complete(UserCreatable *uc, Error **errp)
-         return;
-     }
- 
--    if (dd->audiodev && *dd->audiodev) {
--        AudioBackend *audio_be = audio_be_by_name(dd->audiodev, errp);
--        if (!audio_be || !audio_be_set_dbus_server(audio_be, dd->server, dd->p2p, errp)) {
-+    {
-+        AudioBackend *audio_be = audio_get_default_audio_be(NULL);
++    return audio_spice_parent_class->realize(abe, dev, errp);
++}
 +
-+        if (audio_be && !g_str_equal(audio_be->drv->name, "dbus")) {
-+            audio_be = NULL;
-+        }
-+        if (dd->audiodev && *dd->audiodev) {
-+            audio_be = audio_be_by_name(dd->audiodev, errp);
-+            if (!audio_be) {
-+                return;
-+            }
-+        }
-+        if (audio_be &&
-+            !audio_be_set_dbus_server(audio_be, dd->server, dd->p2p, errp)) {
-             return;
-         }
-     }
-@@ -475,6 +487,8 @@ early_dbus_init(DisplayOptions *opts)
- #endif
-     }
+ static void audio_spice_class_init(ObjectClass *klass, const void *data)
+ {
++    AudioBackendClass *b = AUDIO_BACKEND_CLASS(klass);
+     AudioMixengBackendClass *k = AUDIO_MIXENG_BACKEND_CLASS(klass);
  
-+    using_dbus_display = 1;
++    audio_spice_parent_class = AUDIO_BACKEND_CLASS(object_class_get_parent(klass));
 +
-     type_register_static(&dbus_vc_type_info);
++    b->realize = spice_audio_realize;
+     k->driver = &spice_audio_driver;
  }
  
-@@ -488,8 +502,6 @@ dbus_init(DisplayState *ds, DisplayOptions *opts)
-         exit(1);
-     }
+@@ -89,21 +106,6 @@ static const SpiceRecordInterface record_sif = {
+     .base.minor_version = SPICE_INTERFACE_RECORD_MINOR,
+ };
  
--    using_dbus_display = 1;
+-static void *spice_audio_init(Audiodev *dev, Error **errp)
+-{
+-    if (!using_spice) {
+-        error_setg(errp, "Cannot use spice audio without -spice");
+-        return NULL;
+-    }
 -
-     object_new_with_props(TYPE_DBUS_DISPLAY,
-                           object_get_objects_root(),
-                           "dbus-display", &error_fatal,
+-    return &spice_audio_init;
+-}
+-
+-static void spice_audio_fini (void *opaque)
+-{
+-    /* nothing */
+-}
+-
+ /* playback */
+ 
+ static int line_out_init(HWVoiceOut *hw, struct audsettings *as,
+@@ -333,8 +335,6 @@ static struct audio_pcm_ops audio_callbacks = {
+ 
+ static struct audio_driver spice_audio_driver = {
+     .name           = "spice",
+-    .init           = spice_audio_init,
+-    .fini           = spice_audio_fini,
+     .pcm_ops        = &audio_callbacks,
+     .max_voices_out = 1,
+     .max_voices_in  = 1,
 -- 
 2.53.0
 
