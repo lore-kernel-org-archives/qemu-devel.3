@@ -4,72 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5132E98E10
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 09:52:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D64C3E98E13
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 09:53:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuScC-0005NC-Cz; Mon, 23 Feb 2026 04:52:32 -0500
+	id 1vuScH-0005wD-HW; Mon, 23 Feb 2026 04:52:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vuSah-0003U5-GZ
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 04:51:04 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1vuSac-0003Hm-TP
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 04:50:56 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vuSaf-0007Pp-L6
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 04:50:59 -0500
+ id 1vuSab-0007PX-0M
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 04:50:54 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771840257;
+ s=mimecast20190719; t=1771840252;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=LGq+VCEW90rvm6mfQdjwX9Xt4WycZSlTKQAB6s+z0Ro=;
- b=KGwk8VpB8TWktD0MXFBTjDCFge6+2zVd3IC6u+mHeC7b6LYV3jGRb/Gh/PGCHqHrrYgJOw
- ELXi75GCwHi9B6R8rtSaykToXruBOiCgH96H4AC0MXl0iqqueXIgEtfkr6fAWqVx0Jg+vq
- KIXbC2Bq82/ihHRnUnAk5y+UUHUN7PA=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=KcMrLyAIgOYdFY64yVHRXdrwUnIJyXUy4fcgyWcJqb8=;
+ b=BzMl1SGCUXBp5P3fT4pAiUCzMlzPNzxX+dluCtmiQ0DzEu8dLXCsj2mQzY5GX0Ihaev87e
+ 7onFShvfRROD2JnzxYfYkKL8Aup0yDNu5XgDsE06vJbtqRA+7j7GiMUROkauzjK9XpGKkz
+ 743dfbbPfHwQS7IYmzFq/TdizXZh9zg=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-100-OwjLCwyaOlewEOzlo_6dYA-1; Mon,
- 23 Feb 2026 04:50:53 -0500
-X-MC-Unique: OwjLCwyaOlewEOzlo_6dYA-1
-X-Mimecast-MFC-AGG-ID: OwjLCwyaOlewEOzlo_6dYA_1771840252
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-91-hvd66MFOPYWhf7peWCT0rg-1; Mon,
+ 23 Feb 2026 04:50:50 -0500
+X-MC-Unique: hvd66MFOPYWhf7peWCT0rg-1
+X-Mimecast-MFC-AGG-ID: hvd66MFOPYWhf7peWCT0rg_1771840249
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 485BA1956096; Mon, 23 Feb 2026 09:50:52 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6517A1800473; Mon, 23 Feb 2026 09:50:49 +0000 (UTC)
 Received: from localhost (unknown [10.45.242.25])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 2ACC71800674; Mon, 23 Feb 2026 09:50:50 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id C15813000C26; Mon, 23 Feb 2026 09:50:48 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Gerd Hoffmann <kraxel@redhat.com>
-Subject: [PULL v2 82/85] audio: replace remaining dolog() and AUD_log
-Date: Mon, 23 Feb 2026 10:46:40 +0100
-Message-ID: <20260223094649.2005118-83-marcandre.lureau@redhat.com>
+Subject: [PULL v2 81/85] audio: rework audio_bug()
+Date: Mon, 23 Feb 2026 10:46:39 +0100
+Message-ID: <20260223094649.2005118-82-marcandre.lureau@redhat.com>
 In-Reply-To: <20260223094649.2005118-1-marcandre.lureau@redhat.com>
 References: <20260223094649.2005118-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -14
-X-Spam_score: -1.5
-X-Spam_bar: -
-X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -4
+X-Spam_score: -0.5
+X-Spam_bar: /
+X-Spam_report: (-0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.798, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.79,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -89,133 +89,293 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Use warn_report/error_report and trace instead.
+audio_bug() is a bit unconventional, it is meant to be used as a
+condition expression, passing the actual condition as second argument
+(and __func__ as first argument).
+
+If the condition is true, it uses AUD_log() to print to stderr, and has
+some dubious recommendations printed only once.
+
+This change:
+- clears the control flow, and make the condition directly visible in
+  the 'if' statement.
+- uses standard QEMU error_report()
+- audio_bug() now captures __func__
+- remove the "Save all your work and restart..." once hint
 
 Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
 Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- audio/audio_template.h  | 19 ++++++++-----------
- audio/audio-mixeng-be.c | 14 ++++++--------
- audio/trace-events      |  1 +
- 3 files changed, 15 insertions(+), 19 deletions(-)
+ audio/audio_int.h       |  2 --
+ audio/audio_template.h  | 38 +++++++++++------------
+ audio/audio-mixeng-be.c | 69 ++++++++++++++++-------------------------
+ 3 files changed, 46 insertions(+), 63 deletions(-)
 
+diff --git a/audio/audio_int.h b/audio/audio_int.h
+index e0ed6af67ed..20ec7883aab 100644
+--- a/audio/audio_int.h
++++ b/audio/audio_int.h
+@@ -244,8 +244,6 @@ extern const char *audio_prio_list[];
+ void audio_pcm_init_info (struct audio_pcm_info *info, const struct audsettings *as);
+ void audio_pcm_info_clear_buf (struct audio_pcm_info *info, void *buf, int len);
+ 
+-int audio_bug (const char *funcname, int cond);
+-
+ void audio_run(AudioMixengBackend *s, const char *msg);
+ 
+ typedef struct RateCtl {
 diff --git a/audio/audio_template.h b/audio/audio_template.h
-index 9dde36738bc..760aaf5f31f 100644
+index 5711f4a26e1..9dde36738bc 100644
 --- a/audio/audio_template.h
 +++ b/audio/audio_template.h
-@@ -47,21 +47,19 @@ static void glue(audio_init_nb_voices_, TYPE)(AudioMixengBackend *s,
-     if (glue(s->nb_hw_voices_, TYPE) > max_voices) {
-         if (!max_voices) {
- #ifdef DAC
--            dolog("Driver `%s' does not support " NAME "\n", k->name);
-+            warn_report("audio: Driver '%s' does not support " NAME, k->name);
- #endif
-         } else {
--            dolog("Driver `%s' does not support %d " NAME " voices, max %d\n",
--                   k->name,
--                   glue(s->nb_hw_voices_, TYPE),
--                   max_voices);
-+            warn_report("audio: Driver '%s' does not support %d " NAME " voices, max %d",
-+                        k->name, glue(s->nb_hw_voices_, TYPE), max_voices);
-         }
-         glue(s->nb_hw_voices_, TYPE) = max_voices;
+@@ -64,15 +64,15 @@ static void glue(audio_init_nb_voices_, TYPE)(AudioMixengBackend *s,
+                min_voices);
      }
  
-     if (glue(s->nb_hw_voices_, TYPE) < min_voices) {
--        dolog("Bogus number of " NAME " voices %d, setting to %d\n",
--               glue(s->nb_hw_voices_, TYPE),
--               min_voices);
-+        warn_report("audio: Bogus number of " NAME " voices %d, setting to %d",
-+                    glue(s->nb_hw_voices_, TYPE),
-+                    min_voices);
+-    if (audio_bug(__func__, !voice_size && max_voices)) {
+-        dolog("drv=`%s' voice_size=0 max_voices=%d\n",
+-               k->name, max_voices);
++    if (!voice_size && max_voices) {
++        audio_bug("drv=`%s' voice_size=0 max_voices=%d",
++                  k->name, max_voices);
+         glue(s->nb_hw_voices_, TYPE) = 0;
      }
  
-     if (!voice_size && max_voices) {
-@@ -443,7 +441,7 @@ static SW *glue(audio_pcm_create_voice_pair_, TYPE)(
- 
-     hw = glue(audio_pcm_hw_add_, TYPE)(s, &hw_as);
-     if (!hw) {
--        dolog("Could not create a backend for voice `%s'\n", sw_name);
-+        error_report("audio: Could not create a backend for voice '%s'", sw_name);
-         goto err1;
+-    if (audio_bug(__func__, voice_size && !max_voices)) {
+-        dolog("drv=`%s' voice_size=%zu max_voices=0\n",
+-              k->name, voice_size);
++    if (voice_size && !max_voices) {
++        audio_bug("drv=`%s' voice_size=%zu max_voices=0",
++                  k->name, voice_size);
      }
+ }
  
-@@ -537,8 +535,7 @@ static SW *glue(audio_mixeng_backend_open_, TYPE) (
-         HW *hw = sw->hw;
- 
-         if (!hw) {
--            dolog("Internal logic error: voice `%s' has no backend\n",
--                  SW_NAME(sw));
-+            audio_bug("Internal logic error: voice '%s' has no backend", SW_NAME(sw));
-             goto fail;
+@@ -88,8 +88,8 @@ static void glue(audio_pcm_hw_alloc_resources_, TYPE)(HW *hw)
+ {
+     if (glue(audio_get_pdo_, TYPE)(hw->s->dev)->mixing_engine) {
+         size_t samples = hw->samples;
+-        if (audio_bug(__func__, samples == 0)) {
+-            dolog("Attempted to allocate empty buffer\n");
++        if (samples == 0) {
++            audio_bug("Attempted to allocate empty buffer");
          }
  
-diff --git a/audio/audio-mixeng-be.c b/audio/audio-mixeng-be.c
-index 45bcfb74338..87e5a2fc3af 100644
---- a/audio/audio-mixeng-be.c
-+++ b/audio/audio-mixeng-be.c
-@@ -654,7 +654,7 @@ static size_t audio_mixeng_backend_write(AudioBackend *be, SWVoiceOut *sw,
-     hw = sw->hw;
- 
-     if (!hw->enabled) {
--        dolog("Writing to disabled voice %s\n", SW_NAME(sw));
-+        warn_report("audio: Writing to disabled voice %s", SW_NAME(sw));
-         return 0;
-     }
- 
-@@ -677,7 +677,7 @@ static size_t audio_mixeng_backend_read(AudioBackend *be,
-     hw = sw->hw;
- 
-     if (!hw->enabled) {
--        dolog("Reading from disabled voice %s\n", SW_NAME(sw));
-+        warn_report("audio: Reading from disabled voice %s", SW_NAME(sw));
-         return 0;
-     }
- 
-@@ -874,9 +874,8 @@ static void audio_capture_mix_and_clear(HWVoiceOut *hw, size_t rpos,
-                 sw->empty = sw->total_hw_samples_mixed == 0;
- 
-                 if (to_read - frames_in) {
--                    dolog("Could not mix %zu frames into a capture "
--                          "buffer, mixed %zu\n",
--                          to_read, frames_in);
-+                    audio_bug("Could not mix %zu frames into a capture "
-+                              "buffer, mixed %zu", to_read, frames_in);
-                     break;
-                 }
-                 n -= to_read;
-@@ -1561,7 +1560,7 @@ static CaptureVoiceOut *audio_mixeng_backend_add_capture(
-     }
- 
-     if (!audio_get_pdo_out(s->dev)->mixing_engine) {
--        dolog("Can't capture with mixeng disabled\n");
-+        error_report("audio: Can't capture with mixeng disabled");
+         HWBUF.buffer = g_new0(st_sample, samples);
+@@ -275,8 +275,8 @@ static HW *glue(audio_pcm_hw_add_new_, TYPE)(AudioMixengBackend *s,
          return NULL;
      }
  
-@@ -1754,8 +1753,7 @@ size_t audio_rate_peek_bytes(RateCtl *rate, struct audio_pcm_info *info)
- void audio_rate_add_bytes(RateCtl *rate, size_t bytes_used)
- {
-     if (rate->peeked_frames < 0 || rate->peeked_frames > 65536) {
--        AUD_log(NULL, "Resetting rate control (%" PRId64 " frames)\n",
--                rate->peeked_frames);
-+        trace_audio_rate_reset(rate->peeked_frames);
-         audio_rate_start(rate);
+-    if (audio_bug(__func__, !glue(k->init_, TYPE))) {
+-        dolog("No host audio driver or missing init_%s\n", NAME);
++    if (!glue(k->init_, TYPE)) {
++        audio_bug("No host audio driver or missing init_%s", NAME);
+         return NULL;
      }
  
-diff --git a/audio/trace-events b/audio/trace-events
-index ed04792d508..222e73c7e88 100644
---- a/audio/trace-events
-+++ b/audio/trace-events
-@@ -70,6 +70,7 @@ audio_sw_write(const char *name, size_t size, size_t written, size_t total_mixed
- audio_get_free(const char *name, size_t live, size_t dead, uint32_t frontend_frames) "%s: get_free live %zu dead %zu frontend frames %u"
- audio_out_disable(void) "Disabling voice"
- audio_out_played(size_t played) "played=%zu"
-+audio_rate_reset(int64_t frames) "Resetting rate control (%" PRId64 " frames)"
+@@ -295,8 +295,8 @@ static HW *glue(audio_pcm_hw_add_new_, TYPE)(AudioMixengBackend *s,
+         goto err0;
+     }
  
- # audio_template.h
- audio_open_out(const char *name, int freq, int nchannels, int fmt) "open %s, freq %d, nchannels %d, fmt %d"
+-    if (audio_bug(__func__, hw->samples <= 0)) {
+-        dolog("hw->samples=%zd\n", hw->samples);
++    if (hw->samples <= 0) {
++        audio_bug("hw->samples=%zd", hw->samples);
+         goto err1;
+     }
+ 
+@@ -477,8 +477,8 @@ static void glue (audio_close_, TYPE) (SW *sw)
+ static void glue(audio_mixeng_backend_close_, TYPE)(AudioBackend *be, SW *sw)
+ {
+     if (sw) {
+-        if (audio_bug(__func__, !be)) {
+-            dolog("backend=%p\n", be);
++        if (!be) {
++            audio_bug("backend=%p", be);
+             return;
+         }
+ 
+@@ -498,9 +498,9 @@ static SW *glue(audio_mixeng_backend_open_, TYPE) (
+     AudioMixengBackendClass *k;
+     AudiodevPerDirectionOptions *pdo;
+ 
+-    if (audio_bug(__func__, !be || !name || !callback_fn || !as)) {
+-        dolog("backend=%p name=%p callback_fn=%p as=%p\n",
+-              be, name, callback_fn, as);
++    if (!be || !name || !callback_fn || !as) {
++        audio_bug("backend=%p name=%p callback_fn=%p as=%p",
++                  be, name, callback_fn, as);
+         goto fail;
+     }
+ 
+@@ -519,8 +519,8 @@ static SW *glue(audio_mixeng_backend_open_, TYPE) (
+         goto fail;
+     }
+ 
+-    if (audio_bug(__func__, !glue(k->init_, TYPE))) {
+-        dolog("Can not open `%s' (no host audio driver)\n", name);
++    if (!glue(k->init_, TYPE)) {
++        error_report("audio: Can not open `%s' (no host audio driver)", name);
+         goto fail;
+     }
+ 
+diff --git a/audio/audio-mixeng-be.c b/audio/audio-mixeng-be.c
+index bb8c0b56f78..45bcfb74338 100644
+--- a/audio/audio-mixeng-be.c
++++ b/audio/audio-mixeng-be.c
+@@ -31,6 +31,8 @@
+ 
+ #define SW_NAME(sw) (sw)->name ? (sw)->name : "unknown"
+ 
++#define audio_bug(fmt, ...) error_report("%s: " fmt, __func__, ##__VA_ARGS__)
++
+ const struct mixeng_volume nominal_volume = {
+     .mute = 0,
+ #ifdef FLOAT_MIXENG
+@@ -42,23 +44,6 @@ const struct mixeng_volume nominal_volume = {
+ #endif
+ };
+ 
+-int audio_bug (const char *funcname, int cond)
+-{
+-    if (cond) {
+-        static int shown;
+-
+-        AUD_log (NULL, "A bug was just triggered in %s\n", funcname);
+-        if (!shown) {
+-            shown = 1;
+-            AUD_log (NULL, "Save all your work and restart without audio\n");
+-            AUD_log (NULL, "I am sorry\n");
+-        }
+-        AUD_log (NULL, "Context:\n");
+-    }
+-
+-    return cond;
+-}
+-
+ /*
+  * Convert audio format to mixeng_clip index. Used by audio_pcm_sw_init_ and
+  * audio_mixeng_backend_add_capture()
+@@ -332,8 +317,8 @@ static size_t audio_pcm_hw_find_min_in (HWVoiceIn *hw)
+ static size_t audio_pcm_hw_get_live_in(HWVoiceIn *hw)
+ {
+     size_t live = hw->total_samples_captured - audio_pcm_hw_find_min_in (hw);
+-    if (audio_bug(__func__, live > hw->conv_buf.size)) {
+-        dolog("live=%zu hw->conv_buf.size=%zu\n", live, hw->conv_buf.size);
++    if (live > hw->conv_buf.size) {
++        audio_bug("live=%zu hw->conv_buf.size=%zu", live, hw->conv_buf.size);
+         return 0;
+     }
+     return live;
+@@ -402,8 +387,8 @@ static size_t audio_pcm_sw_read(SWVoiceIn *sw, void *buf, size_t buf_len)
+     if (!live) {
+         return 0;
+     }
+-    if (audio_bug(__func__, live > hw->conv_buf.size)) {
+-        dolog("live_in=%zu hw->conv_buf.size=%zu\n", live, hw->conv_buf.size);
++    if (live > hw->conv_buf.size) {
++        audio_bug("live=%zu hw->conv_buf.size=%zu", live, hw->conv_buf.size);
+         return 0;
+     }
+ 
+@@ -454,8 +439,8 @@ static size_t audio_pcm_hw_get_live_out (HWVoiceOut *hw, int *nb_live)
+     if (nb_live1) {
+         size_t live = smin;
+ 
+-        if (audio_bug(__func__, live > hw->mix_buf.size)) {
+-            dolog("live=%zu hw->mix_buf.size=%zu\n", live, hw->mix_buf.size);
++        if (live > hw->mix_buf.size) {
++            audio_bug("live=%zu hw->mix_buf.size=%zu", live, hw->mix_buf.size);
+             return 0;
+         }
+         return live;
+@@ -533,8 +518,8 @@ static size_t audio_pcm_sw_write(SWVoiceOut *sw, void *buf, size_t buf_len)
+     size_t frames_in_max, frames_out_max, total_in, total_out;
+ 
+     live = sw->total_hw_samples_mixed;
+-    if (audio_bug(__func__, live > hw->mix_buf.size)) {
+-        dolog("live=%zu hw->mix_buf.size=%zu\n", live, hw->mix_buf.size);
++    if (live > hw->mix_buf.size) {
++        audio_bug("live=%zu hw->mix_buf.size=%zu", live, hw->mix_buf.size);
+         return 0;
+     }
+ 
+@@ -824,9 +809,9 @@ static size_t audio_get_avail(SWVoiceIn *sw)
+     }
+ 
+     live = sw->hw->total_samples_captured - sw->total_hw_samples_acquired;
+-    if (audio_bug(__func__, live > sw->hw->conv_buf.size)) {
+-        dolog("live=%zu sw->hw->conv_buf.size=%zu\n", live,
+-              sw->hw->conv_buf.size);
++    if (live > sw->hw->conv_buf.size) {
++        audio_bug("live=%zu sw->hw->conv_buf.size=%zu", live,
++                  sw->hw->conv_buf.size);
+         return 0;
+     }
+ 
+@@ -845,9 +830,9 @@ static size_t audio_get_free(SWVoiceOut *sw)
+ 
+     live = sw->total_hw_samples_mixed;
+ 
+-    if (audio_bug(__func__, live > sw->hw->mix_buf.size)) {
+-        dolog("live=%zu sw->hw->mix_buf.size=%zu\n", live,
+-              sw->hw->mix_buf.size);
++    if (live > sw->hw->mix_buf.size) {
++        audio_bug("live=%zu sw->hw->mix_buf.size=%zu", live,
++                  sw->hw->mix_buf.size);
+         return 0;
+     }
+ 
+@@ -1002,8 +987,8 @@ static void audio_run_out(AudioMixengBackend *s)
+             live = 0;
+         }
+ 
+-        if (audio_bug(__func__, live > hw->mix_buf.size)) {
+-            dolog("live=%zu hw->mix_buf.size=%zu\n", live, hw->mix_buf.size);
++        if (live > hw->mix_buf.size) {
++            audio_bug("live=%zu hw->mix_buf.size=%zu", live, hw->mix_buf.size);
+             continue;
+         }
+ 
+@@ -1033,9 +1018,9 @@ static void audio_run_out(AudioMixengBackend *s)
+         prev_rpos = hw->mix_buf.pos;
+         played = audio_pcm_hw_run_out(hw, live);
+         replay_audio_out(&played);
+-        if (audio_bug(__func__, hw->mix_buf.pos >= hw->mix_buf.size)) {
+-            dolog("hw->mix_buf.pos=%zu hw->mix_buf.size=%zu played=%zu\n",
+-                  hw->mix_buf.pos, hw->mix_buf.size, played);
++        if (hw->mix_buf.pos >= hw->mix_buf.size) {
++            audio_bug("hw->mix_buf.pos=%zu hw->mix_buf.size=%zu played=%zu",
++                      hw->mix_buf.pos, hw->mix_buf.size, played);
+             hw->mix_buf.pos = 0;
+         }
+ 
+@@ -1050,9 +1035,9 @@ static void audio_run_out(AudioMixengBackend *s)
+                 continue;
+             }
+ 
+-            if (audio_bug(__func__, played > sw->total_hw_samples_mixed)) {
+-                dolog("played=%zu sw->total_hw_samples_mixed=%zu\n",
+-                      played, sw->total_hw_samples_mixed);
++            if (played > sw->total_hw_samples_mixed) {
++                audio_bug("played=%zu sw->total_hw_samples_mixed=%zu",
++                          played, sw->total_hw_samples_mixed);
+                 played = sw->total_hw_samples_mixed;
+             }
+ 
+@@ -1195,9 +1180,9 @@ static void audio_run_capture(AudioMixengBackend *s)
+                 continue;
+             }
+ 
+-            if (audio_bug(__func__, captured > sw->total_hw_samples_mixed)) {
+-                dolog("captured=%zu sw->total_hw_samples_mixed=%zu\n",
+-                      captured, sw->total_hw_samples_mixed);
++            if (captured > sw->total_hw_samples_mixed) {
++                audio_bug("captured=%zu sw->total_hw_samples_mixed=%zu",
++                          captured, sw->total_hw_samples_mixed);
+                 captured = sw->total_hw_samples_mixed;
+             }
+ 
 -- 
 2.53.0
 
