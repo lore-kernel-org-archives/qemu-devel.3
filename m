@@ -4,89 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CBCDEC1112
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 17:11:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 546A9EC1113
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 17:11:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuZKZ-0002CQ-Ro; Mon, 23 Feb 2026 12:02:48 -0500
+	id 1vuZKb-0002Ft-38; Mon, 23 Feb 2026 12:02:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vuZKY-00027Q-9y
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 12:02:46 -0500
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ id 1vuZKZ-00029M-3W
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 12:02:47 -0500
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vuZKV-0000Bu-RM
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 12:02:45 -0500
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-483703e4b08so36480915e9.1
- for <qemu-devel@nongnu.org>; Mon, 23 Feb 2026 09:02:43 -0800 (PST)
+ id 1vuZKW-0000Cg-Uu
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 12:02:46 -0500
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-48375f10628so29376405e9.1
+ for <qemu-devel@nongnu.org>; Mon, 23 Feb 2026 09:02:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771866162; x=1772470962; darn=nongnu.org;
+ d=linaro.org; s=google; t=1771866163; x=1772470963; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=cuGfpXqHYLjAz/e03DHfMF0KD4B4dSvsbR1oBLz0niE=;
- b=daXtnGVe/jTmdaKKipNh1JLTEZw7KdnqU/LFWsdz09Luf2qr4UX1fjtZ4BfxqofO2v
- DMy2TEHKRXmBNmDuKGM/7VQXRiaAYOIu4JIGb9BkT76PaiEq5CrVdr5qRFKIrnKdxTgF
- OsBS1LK2oM56HarAxE88Z+8WvWALwiRvEWxTkLKVWhJNI2VS806QSBX3eY1v+ttc/2EM
- q83bikdksbMH/3Nj3ii+wO6FyNXMGuccfkvPJrVyZd32zDei8rpk+9f1Jkl0XZHhPjcz
- JVil6eEquLxzPVOMK7+9aNkfuPEFVhYKYrhlIb5fdG/JSUl565ygqOAPWTZIFX0UTWtd
- CMkw==
+ :reply-to; bh=F/dI1qFmZ1RsBVXqA0SGOU0duWbHv0A4HX6TOb0/aiw=;
+ b=a2s1EFy9to+CR0rhLUtOz9XtH/nS0nsUo0e9P64+jFBvPmo6rIuDlKxzlTCT+YKhw1
+ 4tSkJ93rWI/kNCHQzpAjKUT8h9h+C4LMN5o49Vnjz91niuGc9svQicDTyIxm81ofgfjY
+ EpDax5y2WkNnH8EodSZG8Yjvq5c0uu6lLPgQm88LEUUP0l++XlsFW/J/J/nYKSoO+8uN
+ O397bdNeKHIXPWFTS+WyY6bkw3lMyd31f0b2ax7rBMfMKtAbUAbO1hfL1mr3JdkdY4gt
+ D+SFJqAiNvP2GIrPCGloy0Jz78CgYTIUjUvO8UpooI6BFX9rLwhG3KmzptZtOSPtcrjd
+ XZgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771866162; x=1772470962;
+ d=1e100.net; s=20230601; t=1771866163; x=1772470963;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=cuGfpXqHYLjAz/e03DHfMF0KD4B4dSvsbR1oBLz0niE=;
- b=pLCxHCPg+jNUoPmVtF+spZhC7iqkDcFv4LwLxYa9O/GexRJ4/bIHzA8ssEevn++JYf
- 8zme0WdgIvvy3fx70EjCuX1qcfu4d+sTHpwA26RjBg2BjO4EGyNGIEZVbRkvtvFFvZwh
- awVlFxpSpk7RaTwWa0dnNx3uD6RhNu+2tHEHV1Nqjmk+fXSUdWqcTLE25HapWQ/srpZx
- 6/+SkoZu2qdTTEfUFcz9znhsvHzzEBLnEp8eSR1Uu9xT+0CUy9BvlfOW9VZI7kz91tTW
- HNoa98El2sFeVEKQ6REM5uFkkfSnpveWmfH0h0yTDYRiSyniQUXDAJpsLiCmKwuVI8te
- fOXg==
+ bh=F/dI1qFmZ1RsBVXqA0SGOU0duWbHv0A4HX6TOb0/aiw=;
+ b=rUonMGHmagNQABMQD3RGNGk9WSm6ejMCckBvJMB+3lxkgyVcC4nuU3duGrxFklHDHu
+ ORn8+Ga/5c/QVdeAiP6F2353IcCciiCiMjC2GjwmUXu5t4JtuhvhMe1AbM2Vsqsnult4
+ gMHF1yyEFeYVGjaLrV812hkP7Gp4/K0OgOrgdRNpdCC2XcCLiH38FyDkKJAJzkPFyC8y
+ vXCiLChX3SL1v6Jq56h9cCS9R56GF2j4IXNkJkqEzFNA992t0TWRUMDc8UtsO3Wa4hX3
+ zVlMHDbLUc1i1mbMzGFYSAbm8efS6q/m6BpdSP7yX28rQieX12yx9SmgNGeNKx2M/Wet
+ JN9A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU50FJPJ1+As6nIAtUqIxj6v8V+Pb1xCOOvDbJPAgu0gIfbVAN5ABq8rSm1vUGKqXFmKSsQZ/Opn9/I@nongnu.org
-X-Gm-Message-State: AOJu0YwLf22VIgllDxghxjhe3VQbqkO1rV7NnW0Hg3B4xClT7nBgAKST
- gu8CZDra5gMvfzLuoUlRNtIPwrmFcnvTnpp/tVz3VHdrbIAf2cjOgmp7/nfmWG3focDb0Ha4jv+
- BYQtV
-X-Gm-Gg: AZuq6aLMmT+H2Ygw8eBJu5dLYhE0D5sajeLYOO+v5SNpaGnAPsUl3rNfeUxm1ZqLSAc
- x13C6fGcKacpOeHVOj+ZgLMTpeKkqDC2t1tKpZ6eFwxOSzEAIKbSLlbv5h1THBCimVDBCi1mJh8
- Pa3yzYaZ4ZmVnW+BaTQRxDSOEar6A8mmt9qAwBgKOWVR1rvOwocMpVWjjqg7pvVTT3uaeI11G80
- d3LnHrpDU9lgE9nmB1R5ZAnDHKjh2tzplolY6IQtzBBnFVUnbq9i+Mscz7dopo5a/opM/r4C0ro
- /JWmqv+/IfdI+wrOSNXflWPE73xUgxekQVd3lJRGZMH+hRlh68tkdp08oDvbG6l6j3hgnuPcv9H
- xVw5ESnujIxvtlzHOAZxeN8wCrl+I+SK9XlhEdvKfx3OsmIe6PlDs8qnYOEJfnMp2oPTJNLdqo5
- uqqMCafFp1PR8AOgiyiJOUZ0eDIjJxcsIYe3wgTgvvdwivZ/5rlrblB5kXcI+VI/oA+4je6m7pV
- 6wFgshGWLFnRj//o9zCn4RGeMq1+V4=
-X-Received: by 2002:a05:600c:1989:b0:479:1348:c63e with SMTP id
- 5b1f17b1804b1-483a94c99admr175465385e9.9.1771866162121; 
- Mon, 23 Feb 2026 09:02:42 -0800 (PST)
+ AJvYcCXwHHmfNzP0oCMnPVLLKkz99lz9hkzKnNiZHweyFBW7/tHWyWwfLgTeWStL1h/uWSRUO3pkZ+XFf6Zi@nongnu.org
+X-Gm-Message-State: AOJu0Yx/iamZUKeTaz6cezgvVKWND0pkfM0OhatWWveX/EwPqiVamnxv
+ qYZrthlYkkuJMf/6LbSQAiZSAqO6z44VsRnZKqU3iCX0lzjd762E+n0S0RTFdq7QNsk=
+X-Gm-Gg: AZuq6aIeitblKXxE21/ddorwrAwxZRXti7dqIMFawnU4+ANLknaoxn0ES0jtr+1Vqgu
+ huWyCFv03WI5C/d3TCZgwhycE8jD2Wf84c3M6boQwNa5VP/2N5K8kPnwI/9UpYujwlKbe1j1WyT
+ XdD9qxPE4VwcYaZjQGsCaZGDCoshGDYIH5ta9oWnVqtg3oDFVMxGM3cwk3fgYko4lHt7gTOovU/
+ BjJ/7eW0y7IER3XvTXm0OuPcoPMReHzMH6mH3N+cz3O7BWtWCElunME0eoQxxi2rgwP0sjxW3ub
+ MuMJ+rmFQXxLG67JoEkYfU4wgKW1YvUxZSxbdomNPuSXMlOv9c5S5wXiksspYLYWo9zualQzaiu
+ B2rg5u5doQBBA3nccS/bCWeshqS1wgp0Y61/SsJfCpH/qwR/CFavcGAM06WllpM3F/39BMmWhxO
+ PmHPc7EsSb5pznujuH0bwFip0kNl0dbzuhQNoLacEK22e/0I4qUHp+0m1m0VAapzlyQIXcQGSei
+ QzdgLn86TeWp2hhvNNBLNKT4EbWHFw=
+X-Received: by 2002:a05:600c:638d:b0:480:1e40:3d2 with SMTP id
+ 5b1f17b1804b1-483a95f5a62mr142636435e9.29.1771866163326; 
+ Mon, 23 Feb 2026 09:02:43 -0800 (PST)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-483a9b21ceasm200155625e9.0.2026.02.23.09.02.41
+ 5b1f17b1804b1-483a9b21ceasm200155625e9.0.2026.02.23.09.02.42
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 23 Feb 2026 09:02:41 -0800 (PST)
+ Mon, 23 Feb 2026 09:02:42 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Subject: [PATCH 24/65] hw/intc/arm_gicv5: Implement gicv5_request_config()
-Date: Mon, 23 Feb 2026 17:01:31 +0000
-Message-ID: <20260223170212.441276-25-peter.maydell@linaro.org>
+Subject: [PATCH 25/65] target/arm: GICv5 cpuif: Implement GIC CDRCFG and
+ ICC_ICSR_EL1
+Date: Mon, 23 Feb 2026 17:01:32 +0000
+Message-ID: <20260223170212.441276-26-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260223170212.441276-1-peter.maydell@linaro.org>
 References: <20260223170212.441276-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,175 +102,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Implement the gicv5_request_config() function, which corresponds to
-the RequestConfig command and its RequestConfigAck reply.
+Implement the GIC CDRCFG system instruction, which asks the IRS for
+the configuration of an interrupt, and the system register
+ICC_ICSR_EL1 which is where the answer is placed for the guest to
+read it.
 
-We provide read_l2_iste() as a separate function to keep the "access
-the in-guest-memory data structure" layer separate from the "operate
-on the L2_ISTE values" layer.
+We mark ICC_ICSR_EL1 as ARM_CP_NO_RAW, because we do not want to have
+this migrated as part of the generic "system register" migration
+arrays.  Instead we will do migration via a GICv5 cpuif vmstate
+section.  This is necessary because some of the cpuif registers are
+banked by interrupt domain and so need special handling to migrate
+the data in all the banks; it's also how we handle the gicv3 cpuif
+registers.  (We expect that KVM also will expose the cpuif registers
+via GIC-specific ioctls rather than as generic sysregs.) We'll mark
+all the GICv5 sysregs as NO_RAW.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/intc/arm_gicv5.c                | 92 ++++++++++++++++++++++++++++++
- hw/intc/trace-events               |  1 +
- include/hw/intc/arm_gicv5_stream.h | 24 ++++++++
- 3 files changed, 117 insertions(+)
+ target/arm/cpu.h             |  5 +++++
+ target/arm/tcg/gicv5-cpuif.c | 27 +++++++++++++++++++++++++++
+ 2 files changed, 32 insertions(+)
 
-diff --git a/hw/intc/arm_gicv5.c b/hw/intc/arm_gicv5.c
-index 4d99200122..51b25775c4 100644
---- a/hw/intc/arm_gicv5.c
-+++ b/hw/intc/arm_gicv5.c
-@@ -297,6 +297,19 @@ FIELD(L2_ISTE, HWU, 9, 2)
- FIELD(L2_ISTE, PRIORITY, 11, 5)
- FIELD(L2_ISTE, IAFFID, 16, 16)
+diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+index 16de0ebfa8..1fdfd91ba4 100644
+--- a/target/arm/cpu.h
++++ b/target/arm/cpu.h
+@@ -597,6 +597,11 @@ typedef struct CPUArchState {
+         uint64_t vmecid_a_el2;
+     } cp15;
  
-+/*
-+ * Format used for gicv5_request_config() return value, which matches
-+ * the ICC_ICSR_EL1 bit layout.
-+ */
-+FIELD(ICSR, F, 0, 1)
-+FIELD(ICSR, ENABLED, 1, 1)
-+FIELD(ICSR, PENDING, 2, 1)
-+FIELD(ICSR, IRM, 3, 1)
-+FIELD(ICSR, ACTIVE, 4, 1)
-+FIELD(ICSR, HM, 5, 1)
-+FIELD(ICSR, PRIORITY, 11, 5)
-+FIELD(ICSR, IAFFID, 32, 16)
++    struct {
++        /* GICv5 CPU interface data */
++        uint64_t icc_icsr_el1;
++    } gicv5_cpuif;
 +
- static MemTxAttrs irs_txattrs(GICv5Common *cs, GICv5Domain domain)
+     struct {
+         /* M profile has up to 4 stack pointers:
+          * a Main Stack Pointer and a Process Stack Pointer for each
+diff --git a/target/arm/tcg/gicv5-cpuif.c b/target/arm/tcg/gicv5-cpuif.c
+index c426e045d9..4420a44c71 100644
+--- a/target/arm/tcg/gicv5-cpuif.c
++++ b/target/arm/tcg/gicv5-cpuif.c
+@@ -35,6 +35,9 @@ FIELD(GIC_CDHM, ID, 0, 24)
+ FIELD(GIC_CDHM, TYPE, 29, 3)
+ FIELD(GIC_CDHM, HM, 32, 1)
+ 
++FIELD(GIC_CDRCFG, ID, 0, 24)
++FIELD(GIC_CDRCFG, TYPE, 29, 3)
++
+ static GICv5Common *gicv5_get_gic(CPUARMState *env)
  {
-     /*
-@@ -684,6 +697,85 @@ void gicv5_set_target(GICv5Common *cs, uint32_t id, uint32_t iaffid,
-     put_l2_iste(cs, cfg, &h);
+     return env->gicv5state;
+@@ -134,6 +137,19 @@ static void gic_cdpend_write(CPUARMState *env, const ARMCPRegInfo *ri,
+     gicv5_set_pending(gic, id, pending, domain, type, virtual);
  }
  
-+static uint64_t l2_iste_to_icsr(GICv5Common *cs, const GICv5ISTConfig *cfg,
-+                                uint32_t id)
++static void gic_cdrcfg_write(CPUARMState *env, const ARMCPRegInfo *ri,
++                             uint64_t value)
 +{
-+    uint64_t icsr = 0;
-+    const uint32_t *l2_iste_p;
-+    L2_ISTE_Handle h;
++    GICv5Common *gic = gicv5_get_gic(env);
++    GICv5IntType type = FIELD_EX64(value, GIC_CDRCFG, TYPE);
++    uint32_t id = FIELD_EX64(value, GIC_CDRCFG, ID);
++    bool virtual = false;
++    GICv5Domain domain = gicv5_current_phys_domain(env);
 +
-+    l2_iste_p = get_l2_iste(cs, cfg, id, &h);
-+    if (!l2_iste_p) {
-+        return R_ICSR_F_MASK;
-+    }
-+
-+    /*
-+     * The field locations in the L2 ISTE do not line up with the
-+     * corresponding fields in the ICC_ICSR_EL1 register, so we need to
-+     * extract and deposit them individually.
-+     */
-+    icsr = FIELD_DP64(icsr, ICSR, F, 0);
-+    icsr = FIELD_DP64(icsr, ICSR, ENABLED, FIELD_EX32(*l2_iste_p, L2_ISTE, ENABLE));
-+    icsr = FIELD_DP64(icsr, ICSR, PENDING, FIELD_EX32(*l2_iste_p, L2_ISTE, PENDING));
-+    icsr = FIELD_DP64(icsr, ICSR, IRM, FIELD_EX32(*l2_iste_p, L2_ISTE, IRM));
-+    icsr = FIELD_DP64(icsr, ICSR, ACTIVE, FIELD_EX32(*l2_iste_p, L2_ISTE, ACTIVE));
-+    icsr = FIELD_DP64(icsr, ICSR, HM, FIELD_EX32(*l2_iste_p, L2_ISTE, HM));
-+    icsr = FIELD_DP64(icsr, ICSR, PRIORITY, FIELD_EX32(*l2_iste_p, L2_ISTE, PRIORITY));
-+    icsr = FIELD_DP64(icsr, ICSR, IAFFID, FIELD_EX32(*l2_iste_p, L2_ISTE, IAFFID));
-+
-+    return icsr;
++    env->gicv5_cpuif.icc_icsr_el1 =
++        gicv5_request_config(gic, id, domain, type, virtual);
 +}
 +
-+static uint64_t spi_state_to_icsr(GICv5SPIState *spi)
-+{
-+    uint64_t icsr = 0;
-+
-+    icsr = FIELD_DP64(icsr, ICSR, F, 0);
-+    icsr = FIELD_DP64(icsr, ICSR, ENABLED, spi->enabled);
-+    icsr = FIELD_DP64(icsr, ICSR, PENDING, spi->pending);
-+    icsr = FIELD_DP64(icsr, ICSR, IRM, spi->irm);
-+    icsr = FIELD_DP64(icsr, ICSR, ACTIVE, spi->active);
-+    icsr = FIELD_DP64(icsr, ICSR, HM, spi->hm);
-+    icsr = FIELD_DP64(icsr, ICSR, PRIORITY, spi->priority);
-+    icsr = FIELD_DP64(icsr, ICSR, IAFFID, spi->iaffid);
-+
-+    return icsr;
-+}
-+
-+uint64_t gicv5_request_config(GICv5Common *cs, uint32_t id, GICv5Domain domain,
-+                              GICv5IntType type, bool virtual)
-+{
-+    const GICv5ISTConfig *cfg;
-+    GICv5 *s = ARM_GICV5(cs);
-+    uint64_t icsr;
-+
-+    if (virtual) {
-+        qemu_log_mask(LOG_GUEST_ERROR, "gicv5_request_config: tried to "
-+                      "read config of a virtual interrupt\n");
-+        return R_ICSR_F_MASK;
-+    }
-+    if (type == GICV5_SPI) {
-+        GICv5SPIState *spi = gicv5_spi_state(cs, id, domain);
-+
-+        if (!spi) {
-+            qemu_log_mask(LOG_GUEST_ERROR, "gicv5_request_config: tried to "
-+                          "read config of unreachable SPI %d\n", id);
-+            return R_ICSR_F_MASK;
-+        }
-+
-+        icsr = spi_state_to_icsr(spi);
-+        trace_gicv5_request_config(domain_name[domain], inttype_name(type),
-+                                   virtual, id, icsr);
-+        return icsr;
-+    }
-+    cfg = &s->phys_lpi_config[domain];
-+
-+    icsr = l2_iste_to_icsr(cs, cfg, id);
-+    trace_gicv5_request_config(domain_name[domain], inttype_name(type),
-+                               virtual, id, icsr);
-+    return icsr;
-+}
-+
- static void irs_map_l2_istr_write(GICv5 *s, GICv5Domain domain, uint64_t value)
+ static void gic_cdhm_write(CPUARMState *env, const ARMCPRegInfo *ri,
+                            uint64_t value)
  {
-     GICv5Common *cs = ARM_GICV5_COMMON(s);
-diff --git a/hw/intc/trace-events b/hw/intc/trace-events
-index 37ca6e8e12..409935e15a 100644
---- a/hw/intc/trace-events
-+++ b/hw/intc/trace-events
-@@ -240,6 +240,7 @@ gicv5_set_enabled(const char *domain, const char *type, bool virtual, uint32_t i
- gicv5_set_pending(const char *domain, const char *type, bool virtual, uint32_t id, bool pending) "GICv5 IRS SetPending %s %s virtual:%d ID %u pending %d"
- gicv5_set_handling(const char *domain, const char *type, bool virtual, uint32_t id, int handling) "GICv5 IRS SetHandling %s %s virtual:%d ID %u handling %d"
- gicv5_set_target(const char *domain, const char *type, bool virtual, uint32_t id, uint32_t iaffid, int irm) "GICv5 IRS SetTarget %s %s virtual:%d ID %u IAFFID %u routingmode %d"
-+gicv5_request_config(const char *domain, const char *type, bool virtual, uint32_t id, uint64_t icsr) "GICv5 IRS RequestConfig %s %s virtual:%d ID %u ICSR 0x%" PRIx64
+@@ -194,11 +210,22 @@ static const ARMCPRegInfo gicv5_cpuif_reginfo[] = {
+         .access = PL1_W, .type = ARM_CP_IO | ARM_CP_NO_RAW,
+         .writefn = gic_cdpend_write,
+     },
++    {   .name = "GIC_CDRCFG", .state = ARM_CP_STATE_AA64,
++        .opc0 = 1, .opc1 = 0, .crn = 12, .crm = 1, .opc2 = 5,
++        .access = PL1_W, .type = ARM_CP_IO | ARM_CP_NO_RAW,
++        .writefn = gic_cdrcfg_write,
++    },
+     {   .name = "GIC_CDHM", .state = ARM_CP_STATE_AA64,
+         .opc0 = 1, .opc1 = 0, .crn = 12, .crm = 2, .opc2 = 1,
+         .access = PL1_W, .type = ARM_CP_IO | ARM_CP_NO_RAW,
+         .writefn = gic_cdhm_write,
+     },
++    {   .name = "ICC_ICSR_EL1", .state = ARM_CP_STATE_AA64,
++        .opc0 = 3, .opc1 = 0, .crn = 12, .crm = 10, .opc2 = 4,
++        .access = PL1_RW, .type = ARM_CP_NO_RAW,
++        .fieldoffset = offsetof(CPUARMState, gicv5_cpuif.icc_icsr_el1),
++        .resetvalue = 0,
++    },
+ };
  
- # arm_gicv5_common.c
- gicv5_common_realize(uint32_t irsid, uint32_t num_cpus, uint32_t spi_base, uint32_t spi_irs_range, uint32_t spi_range) "GICv5 IRS realized: IRS ID %u, %u CPUs, SPI base %u, SPI IRS range %u, SPI range %u"
-diff --git a/include/hw/intc/arm_gicv5_stream.h b/include/hw/intc/arm_gicv5_stream.h
-index db0e3e01c6..1f00e8ffff 100644
---- a/include/hw/intc/arm_gicv5_stream.h
-+++ b/include/hw/intc/arm_gicv5_stream.h
-@@ -126,4 +126,28 @@ void gicv5_set_handling(GICv5Common *cs, uint32_t id,
- void gicv5_set_target(GICv5Common *cs, uint32_t id, uint32_t iaffid,
-                       GICv5RoutingMode irm, GICv5Domain domain,
-                       GICv5IntType type, bool virtual);
-+
-+/**
-+ * gicv5_request_config
-+ * @cs: GIC IRS to send command to
-+ * @id: interrupt ID
-+ * @domain: interrupt domain to act on
-+ * @type: interrupt type (LPI or SPI)
-+ * @virtual: true if this is a virtual interrupt
-+ *
-+ * Query the current configuration of an interrupt; matches stream
-+ * interface RequestConfig command from CPUIF to IRS and the RequestConfigAck
-+ * reply to it.
-+ *
-+ * In the real stream protocol, the RequestConfigAck packet has the same
-+ * information as the register but in a different order; we use the register
-+ * order, not the packet order, so we don't need to unpack and repack in
-+ * the cpuif.
-+ *
-+ * Returns: the config of the interrupt, in the format used by
-+ * ICC_ICSR_EL1.
-+ */
-+uint64_t gicv5_request_config(GICv5Common *cs, uint32_t id, GICv5Domain domain,
-+                              GICv5IntType type, bool virtual);
-+
- #endif
+ void define_gicv5_cpuif_regs(ARMCPU *cpu)
 -- 
 2.43.0
 
