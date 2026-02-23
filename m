@@ -4,53 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A21BEEA4FA0
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 11:16:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58F7EEA4FAE
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 11:17:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuTv5-0001wR-Fx; Mon, 23 Feb 2026 06:16:07 -0500
+	id 1vuTwc-0003GF-V0; Mon, 23 Feb 2026 06:17:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vuTuO-0001iz-CY
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 06:15:37 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vuTwJ-000380-5p
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 06:17:26 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vuTuD-0005YW-9E
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 06:15:23 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vuTwF-0006l9-4b
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 06:17:21 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771845267;
+ s=mimecast20190719; t=1771845437;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=QHM5NK+4Bo9lqUrZ8pOnykbpugPepnhzylDM+Kofdk4=;
- b=WYtyPcSfMcg73ybnBkGlWdl/egt6BHneHsMb5wJeUdWQ3q06EFRE1qEWhwcfSKWgJ886Vu
- e3kjS3luFllhAec6XV90erFHUwuIdGoFwzFY1G9S9WdBqj+zAeYFl4nqjcPMcFUJwSR/AV
- +yKBXQzsX6XxlS1mJDC0fgpu5EgsFjY=
+ bh=0bPe//mRGOeYemFTI7nfPLbLFWNbdZ5ljen+h2PzW8w=;
+ b=AFOicxzYditLK7UDPwLr/BavZFvonfYTr8iLLdcawuINgf/XJkUyW5wB6XtBEuAPZoS5JW
+ PZ7faFbpSKr16KQPNX10oMnA+fEjGj6KwWcecpXXK5FPpHCG9U8J83r0/jVkR9m+sBg+3q
+ CuwXAne/y9J4nf8YdfRzL1DUB/vy5zo=
 Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-540-ki-m0M9JPrmgBEoffS52ww-1; Mon,
- 23 Feb 2026 06:09:21 -0500
-X-MC-Unique: ki-m0M9JPrmgBEoffS52ww-1
-X-Mimecast-MFC-AGG-ID: ki-m0M9JPrmgBEoffS52ww_1771844959
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-94-9POoFkAENxWMfD3GRicnEA-1; Mon,
+ 23 Feb 2026 06:17:13 -0500
+X-MC-Unique: 9POoFkAENxWMfD3GRicnEA-1
+X-Mimecast-MFC-AGG-ID: 9POoFkAENxWMfD3GRicnEA_1771845431
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4F5021956094; Mon, 23 Feb 2026 11:09:18 +0000 (UTC)
+ id D670F1956096; Mon, 23 Feb 2026 11:17:10 +0000 (UTC)
 Received: from [10.45.224.205] (unknown [10.45.224.205])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 3BA371800465; Mon, 23 Feb 2026 11:09:06 +0000 (UTC)
-Message-ID: <2cf72eb5-059b-4b53-9208-303293e8de24@redhat.com>
-Date: Mon, 23 Feb 2026 12:09:05 +0100
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 8FF921955F22; Mon, 23 Feb 2026 11:16:59 +0000 (UTC)
+Message-ID: <60615536-0a70-4b20-bbc9-3e49c95fac17@redhat.com>
+Date: Mon, 23 Feb 2026 12:16:58 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 11/20] tests/lcitool: add python3 wheel and setuptools
- deps for qemu
+Subject: Re: [PATCH v8 16/20] tests: replace check-venv with vm-venv target
 To: John Snow <jsnow@redhat.com>, qemu-devel@nongnu.org
 Cc: Kevin Wolf <kwolf@redhat.com>, Warner Losh <imp@bsdimp.com>,
  Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
@@ -68,7 +67,7 @@ Cc: Kevin Wolf <kwolf@redhat.com>, Warner Losh <imp@bsdimp.com>,
  Kyle Evans <kevans@freebsd.org>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
  <philmd@linaro.org>, Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 References: <20260218213416.674483-1-jsnow@redhat.com>
- <20260218213416.674483-12-jsnow@redhat.com>
+ <20260218213416.674483-17-jsnow@redhat.com>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -113,18 +112,18 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20260218213416.674483-12-jsnow@redhat.com>
+In-Reply-To: <20260218213416.674483-17-jsnow@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -4
-X-Spam_score: -0.5
-X-Spam_bar: /
-X-Spam_report: (-0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -14
+X-Spam_score: -1.5
+X-Spam_bar: -
+X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.798, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.79,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -143,28 +142,21 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 18/02/2026 22.34, John Snow wrote:
-> Installing local dependencies while offline, without PyPI access,
-> requires the python3-setuptools and python3-wheel packages. Most
-> distributions have these available anyway for one reason or another, but
-> not all of them.
+> With the qemu.qmp and qemu.machine dependencies now installed by default
+> at configure time and additional dependencies required by functional
+> testing installed on demand, we do not need the explicit "check-venv" target.
 > 
-> If you are asking yourself "Wait, aren't these packages guaranteed via
-> installation of pip, via the ensurepip module, which mkvenv takes
-> immense pains to provide for us?" - Well... since Python 3.13, "pip"
-> does not actually come with "setuptools" or "wheel" anymore, and so if
-> we want to build and install a python package, we actually need these
-> available in the host environment.
-> 
-> (Note that you don't need these packages just to install a pre-built
-> package, you only need them to *build* a package. With cutting edge
-> setuptools and pip, all locally installed packages, even in editable
-> mode, must be "built" first before being installed. Thus, these
-> dependencies are being added specifically to facilitate installing
-> qemu.git/python/qemu to the configure-time venv.)
+> ...However, to facilitate running VM tests without running configure, we
+> move some of the former logic into tests/vm/Makefile.include to create a
+> new venv (vm-venv) on-demand when running VM tests from the source tree.
 > 
 > Signed-off-by: John Snow <jsnow@redhat.com>
 > ---
+>   tests/Makefile.include    | 22 ++--------------------
+>   tests/vm/Makefile.include | 20 ++++++++++++++++----
+>   2 files changed, 18 insertions(+), 24 deletions(-)
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
+
 
 
