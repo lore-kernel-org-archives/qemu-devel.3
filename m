@@ -4,90 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3A33EC1113
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 17:10:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7B5AEC110C
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 17:10:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuZKn-0002Wo-9w; Mon, 23 Feb 2026 12:03:01 -0500
+	id 1vuZKb-0002Gk-6T; Mon, 23 Feb 2026 12:02:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vuZKl-0002UF-C6
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 12:02:59 -0500
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ id 1vuZKY-00027a-FC
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 12:02:46 -0500
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vuZKj-0000Ii-OF
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 12:02:59 -0500
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-48336a6e932so28245685e9.3
- for <qemu-devel@nongnu.org>; Mon, 23 Feb 2026 09:02:57 -0800 (PST)
+ id 1vuZKV-0000C0-SH
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 12:02:46 -0500
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-483a233819aso44119505e9.3
+ for <qemu-devel@nongnu.org>; Mon, 23 Feb 2026 09:02:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771866176; x=1772470976; darn=nongnu.org;
+ d=linaro.org; s=google; t=1771866162; x=1772470962; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=HXAErUH26qog8NLwcGHpVWf2yib3kbn8Xkw9zUFi3XE=;
- b=n1BRVyzd3r3M5hMt0jlbZhSHfWAmwO4q6UUzNbtc9tG2x5HYPVE0ac7WMoak8qvcTg
- tgwi/t1zCct7Eom1vGNnKXIZpZavqTn+8yJWDrkKC5+rXc/2E8vXwzzYlcQFej6yq0tf
- Gd/xNLeF/J7GnRSNPYCexQQmLMP3bt2DPNQ1ZLLHxeDsoCNeE6qyNI0acSP5K+Zkn+YG
- yTArkkzdLdhpDrXsua3hUz773Uu8B/ARAYdDjN7MrKd8Ew9M45NzBZFvlwMkYe59UlI/
- f+PS0pAQqVr50l38IwaV/aGkLrPnctlW+dYp+kAnWGxcrETN4fwe8v4DAfDC9JbwWfyy
- 73aw==
+ :reply-to; bh=JwcHn/CjQkHfmGibiCn3O/oR20qiscSiOE7DixcXUno=;
+ b=lUaBDTDqUrWwC0ckv1WCsTRChyfWaIblI2vrbWiz2PdUdP419gKsPb3FjdtZKSgm+N
+ pRMsOwC0wBULgjaQ6hkVARDcGrqev4AcIAno+oDfsZRHMjiXLorebPYRpMX/nNeJayED
+ tE1irGwSEKSN9t8OotP61Q0lKHQJDmDJn93/Jhs2Kj6QVkrXgnaufMCAZ37ghIZEyH3p
+ dYb/V1l3e8v9v4Dfg3YhkuOCp6E9BM0SzLBa889bhc5g/LRxf08m8tzxE1kPW+xrSMPw
+ fxkbW7meoxfOfx+8ioCTnvtbZhCTgsxQBubKZcjnnc5pBFJDWZU0LMZk1Lr77h1PWDzD
+ qdJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771866176; x=1772470976;
+ d=1e100.net; s=20230601; t=1771866162; x=1772470962;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=HXAErUH26qog8NLwcGHpVWf2yib3kbn8Xkw9zUFi3XE=;
- b=dH0jNJ+H1ky2PcgdePmHicTVvYNUrMnt6M++0eqps0HifNNNX6NB8/nhatV38qKTW4
- u97WyXeFQhgutE4P0Wb7k/HW7YTH05fZ9vQQD1XnAogk155TnJPw/5qbrlaf1fzhiRCw
- KtsMlN6ZF8NTzCgMAYtqDqROqqOSY2d5coH+ISlCRh4PfxeyIHkBbX+q8qd+qcEvppCH
- 7TyZGZ0/VSgllyTqxqbiZ2CtfuqgqFaXl42zGKUiCHia7k9HYiUAb4lCJOXyoh4PE8sF
- DBRAmPGvLQAbqqDevMKXptbD0/CWcHEyT3FxG8HTKmiemem/ONJ+QT66OJFHyDPoP0WQ
- w0Ig==
+ bh=JwcHn/CjQkHfmGibiCn3O/oR20qiscSiOE7DixcXUno=;
+ b=eGWQR3cZ2vwb2Z/j859vTk1pCJDImcgI2c/2KxP9uLVa9CviwdXdRy6M7J9Z8hfv80
+ vfoXxy76mLuwfAm1upcrgrntKSpHR0cURwq4Ah7ESWn8sLWqy8ikUqVXSJDngAJLt+Dq
+ JzFIaEdxhldO/BrBAvvcvkonrfeXsER3AsE1Q8fnNOwHAsQiF8x/m2KB2P9kBIIAMZmf
+ CZbP2E/maTW8Xl6fqqr5KrtYUJx2Wt7lYx47c1rtq+sFU7/oZ5tw1TJaTBghjyQUQjOL
+ /MzNKq/wNSkU7/rH50tQKAMPlwaDMyBNXALQN8gHZdalJK42j+J4hq/+NhpVTIXSd6NT
+ YE8g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW3x14YApvrUtm1jA1W8Clnm/0+HPTbw/Wsgr45/QYVNPR+fgxCgW4RDAR8QopqdsO4f7MYyc8ZuY9f@nongnu.org
-X-Gm-Message-State: AOJu0Ywqvcva64IsnQRoWK5bJjbM8yqS6qtDJsntH/TrUmeT9t3Qgeku
- d0Tb0TVNrRp0NB9WpwO5mHjP7zHZcFAVaQpdf+bBeLnYhX60p4Gmqsh+q8VTN+Ec5I7RxngxlHQ
- KNOCp
-X-Gm-Gg: AZuq6aIIn5dIVDJep6twpI0F3vcqjzI4Wd6zg9CBhMyoJ80ay13Kz+WOMvJdzQA1VDo
- M8TmEFF5ntt9TNujTnp3VEnOl2a0Om2pUkVhGdYF2MGfD6NGA6zbpqLX0K3rCF0fHMuG0sTWcL+
- 1XC6NTdNkmM/kZHqifzp+ey5rdXdAoY2h0gsnTvIIdcQ16Gd72XfbebmmFxYEwan81YyrpsOTuF
- wdgVx5haZP5vsh2/o0nnY1YmD51S7vKQxgzprxBlrvgxEClz3WHpQ2KVvFlgA6TI9IMXC7Q3aaU
- OGuu7aWSHvCwu9vxspdslpbiXbpkzwGCHueWuAqiUmUhF1nehEEf6KJ+cesC4v2MrguSmESrTPw
- R3tYeSOpiw0HRtFZVSKrRU0DUgWRroZwz1sBVN7TVA+IXj4eZDNfGpptsGaumqNqB8l7Q5B0/iI
- K+R/OofLTg2fy8byj+sTLJ9ElXOKNtTP1DdIMOivIXzOSgK9NeFgpXjOTwiLjvrB7Zg/9L2uuvA
- dw5jnava5zdK+OW9UNroXEV/GGy5wI=
-X-Received: by 2002:a05:600c:3106:b0:483:afbb:a077 with SMTP id
- 5b1f17b1804b1-483afbba2afmr85773125e9.1.1771866176102; 
- Mon, 23 Feb 2026 09:02:56 -0800 (PST)
+ AJvYcCVfV0154MIOqS+QxtE52z6vdWZoWN3UGax4WjAuxyZwOw1mRwMjp/EhWhowoJcr5YkhOHkZpNDosBIV@nongnu.org
+X-Gm-Message-State: AOJu0YwGytjlG+DCFycsnNCK/813OlmV/Ck0dQ027kWPod8xWYhr+Z2n
+ SEeO4XtDvMRauCvcIf31zlzcErLhRYyHrpmxt5TOGe7J9McsCsM1LFgt0LR9LiZsNHQ=
+X-Gm-Gg: AZuq6aJ8/FHz7sM+nTXE1zrW6T2WMJSnt5zsIzE/JKloTOPD2wf84goXr6wmHZyf6W+
+ QH59QoD77eBBIFNOMUloeN/xkEsrNJ79qnmwjIadUxcBKpFSURvO6Z9t+ZqrviVpCMuGY2VRcbY
+ 67RKPYLN7N5fJ+3JqyCaFaN9D9TzYDAZwoI61kxf4/qdnHemnyFI8UlPjlpYEgTZVX+I87YT4wz
+ kpdlAmJtdkvX6aJSGOHg2SBt82kzZ7k/y66FJ2sAK445Ltb4KGg8TIiz2NTggiCvCbg50ZCuznq
+ 6vclPQl+bhpqWunqrimE+m552wyqx8/iti5yd+MryciLnOxghIbDfM5xOSaPYmP0DI9+GouFUCO
+ MOLM/fzqYLccedLQXTkBpsy3Bmb1ojGCidlABHuAbJ3PsubWKcdftUgZLZYbjqfUSzOffUgS3yg
+ rIJhlqaROqjGoFdTUapseiCV5ljKk8rVVe5NBy+y4bRK2W8CMGEwjeh4EeJtJEHZxdom4SRtPjc
+ ml33CwedClbMNnYoAuLfGLExZE9Lgw=
+X-Received: by 2002:a05:600c:3147:b0:477:6374:6347 with SMTP id
+ 5b1f17b1804b1-483a962e3e2mr138417725e9.22.1771866161175; 
+ Mon, 23 Feb 2026 09:02:41 -0800 (PST)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-483a9b21ceasm200155625e9.0.2026.02.23.09.02.54
+ 5b1f17b1804b1-483a9b21ceasm200155625e9.0.2026.02.23.09.02.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 23 Feb 2026 09:02:55 -0800 (PST)
+ Mon, 23 Feb 2026 09:02:40 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Subject: [PATCH 37/65] target/arm: GICv5 cpuif: Implement PPI pending status
- registers
-Date: Mon, 23 Feb 2026 17:01:44 +0000
-Message-ID: <20260223170212.441276-38-peter.maydell@linaro.org>
+Subject: [PATCH 23/65] hw/intc/arm_gicv5: Make gicv5_set_* update SPI state
+Date: Mon, 23 Feb 2026 17:01:30 +0000
+Message-ID: <20260223170212.441276-24-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260223170212.441276-1-peter.maydell@linaro.org>
 References: <20260223170212.441276-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,90 +101,163 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The GICv5 PPI pending status is handled by two registers, one of
-which is write-1-to-set and one of which is write-1-to-clear.  The
-pending state is read-only for PPIs where the handling mode is Edge.
+The GIC CD* insns that update interrupt state also work for SPIs.
+Instead of ignoring the GICV5_SPI type in gicv5_set_priority() and
+friends, update the state in our SPI state array.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/cpu.h             |  1 +
- target/arm/tcg/gicv5-cpuif.c | 44 ++++++++++++++++++++++++++++++++++++
- 2 files changed, 45 insertions(+)
+ hw/intc/arm_gicv5.c                | 59 ++++++++++++++++++++++++++++++
+ include/hw/intc/arm_gicv5_common.h | 40 ++++++++++++++++++++
+ 2 files changed, 99 insertions(+)
 
-diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index 4574f7005d..980abda3ca 100644
---- a/target/arm/cpu.h
-+++ b/target/arm/cpu.h
-@@ -606,6 +606,7 @@ typedef struct CPUArchState {
-         /* Most PPI registers have 1 bit per PPI, so 64 PPIs to a register */
-         uint64_t ppi_active[GICV5_NUM_PPIS / 64];
-         uint64_t ppi_hm[GICV5_NUM_PPIS / 64];
-+        uint64_t ppi_pend[GICV5_NUM_PPIS / 64];
-     } gicv5_cpuif;
+diff --git a/hw/intc/arm_gicv5.c b/hw/intc/arm_gicv5.c
+index 3c6ef17573..4d99200122 100644
+--- a/hw/intc/arm_gicv5.c
++++ b/hw/intc/arm_gicv5.c
+@@ -478,6 +478,18 @@ void gicv5_set_priority(GICv5Common *cs, uint32_t id,
+                       "priority of a virtual interrupt\n");
+         return;
+     }
++    if (type == GICV5_SPI) {
++        GICv5SPIState *spi = gicv5_spi_state(cs, id, domain);
++
++        if (!spi) {
++            qemu_log_mask(LOG_GUEST_ERROR, "gicv5_set_priority: tried to set "
++                          "priority of unreachable SPI %d\n", id);
++            return;
++        }
++
++        spi->priority = priority;
++        return;
++    }
+     if (type != GICV5_LPI) {
+         qemu_log_mask(LOG_GUEST_ERROR, "gicv5_set_priority: tried to set "
+                       "priority of bad interrupt type %d\n", type);
+@@ -508,6 +520,18 @@ void gicv5_set_enabled(GICv5Common *cs, uint32_t id,
+                       "enable state of a virtual interrupt\n");
+         return;
+     }
++    if (type == GICV5_SPI) {
++        GICv5SPIState *spi = gicv5_spi_state(cs, id, domain);
++
++        if (!spi) {
++            qemu_log_mask(LOG_GUEST_ERROR, "gicv5_set_enabled: tried to set "
++                          "enable state of unreachable SPI %d\n", id);
++            return;
++        }
++
++        spi->enabled = true;
++        return;
++    }
+     if (type != GICV5_LPI) {
+         qemu_log_mask(LOG_GUEST_ERROR, "gicv5_set_enabled: tried to set "
+                       "enable state of bad interrupt type %d\n", type);
+@@ -538,6 +562,18 @@ void gicv5_set_pending(GICv5Common *cs, uint32_t id,
+                       "pending state of a virtual interrupt\n");
+         return;
+     }
++    if (type == GICV5_SPI) {
++        GICv5SPIState *spi = gicv5_spi_state(cs, id, domain);
++
++        if (!spi) {
++            qemu_log_mask(LOG_GUEST_ERROR, "gicv5_set_pending: tried to set "
++                          "pending state of unreachable SPI %d\n", id);
++            return;
++        }
++
++        spi->pending = true;
++        return;
++    }
+     if (type != GICV5_LPI) {
+         qemu_log_mask(LOG_GUEST_ERROR, "gicv5_set_pending: tried to set "
+                       "pending state of bad interrupt type %d\n", type);
+@@ -568,6 +604,17 @@ void gicv5_set_handling(GICv5Common *cs, uint32_t id,
+                       "handling mode of a virtual interrupt\n");
+         return;
+     }
++    if (type == GICV5_SPI) {
++        GICv5SPIState *spi = gicv5_spi_state(cs, id, domain);
++
++        if (!spi) {
++            qemu_log_mask(LOG_GUEST_ERROR, "gicv5_set_handling: tried to set "
++                          "priority of unreachable SPI %d\n", id);
++        }
++
++        spi->hm = handling;
++        return;
++    }
+     if (type != GICV5_LPI) {
+         qemu_log_mask(LOG_GUEST_ERROR, "gicv5_set_handling: tried to set "
+                       "handling mode of bad interrupt type %d\n", type);
+@@ -607,6 +654,18 @@ void gicv5_set_target(GICv5Common *cs, uint32_t id, uint32_t iaffid,
+          * IRM=1 the same as IRM=0.
+          */
+     }
++    if (type == GICV5_SPI) {
++        GICv5SPIState *spi = gicv5_spi_state(cs, id, domain);
++
++        if (!spi) {
++            qemu_log_mask(LOG_GUEST_ERROR, "gicv5_set_target: tried to set "
++                          "target of unreachable SPI %d\n", id);
++            return;
++        }
++
++        spi->iaffid = iaffid;
++        return;
++    }
+     if (type != GICV5_LPI) {
+         qemu_log_mask(LOG_GUEST_ERROR, "gicv5_set_target: tried to set "
+                       "target of bad interrupt type %d\n", type);
+diff --git a/include/hw/intc/arm_gicv5_common.h b/include/hw/intc/arm_gicv5_common.h
+index c29eab2951..1a1d360c68 100644
+--- a/include/hw/intc/arm_gicv5_common.h
++++ b/include/hw/intc/arm_gicv5_common.h
+@@ -191,4 +191,44 @@ static inline bool gicv5_domain_implemented(GICv5Common *cs, GICv5Domain domain)
+  */
+ const char *gicv5_class_name(void);
  
-     struct {
-diff --git a/target/arm/tcg/gicv5-cpuif.c b/target/arm/tcg/gicv5-cpuif.c
-index 6fbc962131..4647fd40ba 100644
---- a/target/arm/tcg/gicv5-cpuif.c
-+++ b/target/arm/tcg/gicv5-cpuif.c
-@@ -199,6 +199,26 @@ static void gic_ppi_sactive_write(CPUARMState *env, const ARMCPRegInfo *ri,
-     raw_write(env, ri, old | value);
- }
- 
-+static void gic_ppi_cpend_write(CPUARMState *env, const ARMCPRegInfo *ri,
-+                                uint64_t value)
++/**
++ * gicv5_raw_spi_state
++ * @cs: GIC object
++ * @id: INTID of SPI to look up
++ *
++ * Return pointer to the GICv5SPIState for this SPI, or NULL if the
++ * interrupt ID is out of range. This does not do a check that the
++ * SPI is assigned to the right domain: generally you should call it
++ * via some other wrapper that performs an appropriate further check.
++ */
++static inline GICv5SPIState *gicv5_raw_spi_state(GICv5Common *cs, uint32_t id)
 +{
-+    uint64_t old = raw_read(env, ri);
-+    /* If ICC_PPI_HMR_EL1[n].HM is 1, PEND bits are RO */
-+    uint64_t hm = env->gicv5_cpuif.ppi_hm[ri->opc2 & 1];
-+    value &= ~hm;
-+    raw_write(env, ri, old & ~value);
++    if (id < cs->spi_base || id >= cs->spi_base + cs->spi_irs_range) {
++        return NULL;
++    }
++
++    return cs->spi + (id - cs->spi_base);
 +}
 +
-+static void gic_ppi_spend_write(CPUARMState *env, const ARMCPRegInfo *ri,
-+                                uint64_t value)
++/**
++ * gicv5_spi_state:
++ * @cs: GIC object
++ * @id: INTID of SPI to look up
++ * @domain: domain to check
++ *
++ * Return pointer to the GICv5SPIState for this SPI, or NULL if the
++ * interrupt is unreachable (which can be because the INTID is out
++ * of range, or because the SPI is configured for a different domain).
++ */
++static inline GICv5SPIState *gicv5_spi_state(GICv5Common *cs, uint32_t id,
++                                             GICv5Domain domain)
 +{
-+    uint64_t old = raw_read(env, ri);
-+    /* If ICC_PPI_HMR_EL1[n].HM is 1, PEND bits are RO */
-+    uint64_t hm = env->gicv5_cpuif.ppi_hm[ri->opc2 & 1];
-+    value &= ~hm;
-+    raw_write(env, ri, old | value);
++    GICv5SPIState *spi = gicv5_raw_spi_state(cs, id);
++
++    if (!spi || spi->domain != domain) {
++        return NULL;
++    }
++    return spi;
 +}
 +
- static const ARMCPRegInfo gicv5_cpuif_reginfo[] = {
-     /*
-      * Barrier: wait until the effects of a cpuif system register
-@@ -314,6 +334,30 @@ static const ARMCPRegInfo gicv5_cpuif_reginfo[] = {
-         .fieldoffset = offsetof(CPUARMState, gicv5_cpuif.ppi_hm[1]),
-         .resetvalue = PPI_HMR1_RESET,
-     },
-+    {   .name = "ICC_PPI_CPENDR0_EL1", .state = ARM_CP_STATE_AA64,
-+        .opc0 = 3, .opc1 = 0, .crn = 12, .crm = 13, .opc2 = 4,
-+        .access = PL1_RW, .type = ARM_CP_ALIAS | ARM_CP_IO | ARM_CP_NO_RAW,
-+        .fieldoffset = offsetof(CPUARMState, gicv5_cpuif.ppi_pend[0]),
-+        .writefn = gic_ppi_cpend_write,
-+    },
-+    {   .name = "ICC_PPI_CPENDR1_EL1", .state = ARM_CP_STATE_AA64,
-+        .opc0 = 3, .opc1 = 0, .crn = 12, .crm = 13, .opc2 = 5,
-+        .access = PL1_RW, .type = ARM_CP_ALIAS | ARM_CP_IO | ARM_CP_NO_RAW,
-+        .fieldoffset = offsetof(CPUARMState, gicv5_cpuif.ppi_pend[1]),
-+        .writefn = gic_ppi_cpend_write,
-+    },
-+    {   .name = "ICC_PPI_SPENDR0_EL1", .state = ARM_CP_STATE_AA64,
-+        .opc0 = 3, .opc1 = 0, .crn = 12, .crm = 13, .opc2 = 6,
-+        .access = PL1_RW, .type = ARM_CP_IO | ARM_CP_NO_RAW,
-+        .fieldoffset = offsetof(CPUARMState, gicv5_cpuif.ppi_pend[0]),
-+        .writefn = gic_ppi_spend_write,
-+    },
-+    {   .name = "ICC_PPI_SPENDR0_EL1", .state = ARM_CP_STATE_AA64,
-+        .opc0 = 3, .opc1 = 0, .crn = 12, .crm = 13, .opc2 = 7,
-+        .access = PL1_RW, .type = ARM_CP_IO | ARM_CP_NO_RAW,
-+        .fieldoffset = offsetof(CPUARMState, gicv5_cpuif.ppi_pend[1]),
-+        .writefn = gic_ppi_spend_write,
-+    },
- };
- 
- void define_gicv5_cpuif_regs(ARMCPU *cpu)
+ #endif
 -- 
 2.43.0
 
