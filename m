@@ -4,112 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CA7EEC1101
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 16:12:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B183EC1104
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 16:19:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuYXe-00020M-HG; Mon, 23 Feb 2026 11:12:14 -0500
+	id 1vuYe3-0003MY-M2; Mon, 23 Feb 2026 11:18:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vuYXb-0001z8-AK
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 11:12:12 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vuYXY-0005Xm-Vh
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 11:12:11 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771863127;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Ze/An/SOFIjsOjs+x6ZwwPrH9WzszpFw6b9TfdTWBjw=;
- b=fkQ0oZ5yyyhz746FhOfogCFcM384L3U3U7QEQ7r0iYAz2EGAOXtBZ+NMbj43P/VrvfXpKg
- GXZv5ulekSxa0jAxeQRfxDxjjqNzNeurKfVhfZhi+97bRiJ95W1nN0xQmNvVpDc4Aek2hw
- lIFvkUKrJWrBHSr6BBaX+z7GcgZ3aDk=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-230-U-bQpoqIPFSmUZARbzplqQ-1; Mon, 23 Feb 2026 11:12:04 -0500
-X-MC-Unique: U-bQpoqIPFSmUZARbzplqQ-1
-X-Mimecast-MFC-AGG-ID: U-bQpoqIPFSmUZARbzplqQ_1771863123
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-b8861544696so661669566b.3
- for <qemu-devel@nongnu.org>; Mon, 23 Feb 2026 08:12:03 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <arunkrishnak2407@gmail.com>)
+ id 1vuYe0-0003MH-5u
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 11:18:48 -0500
+Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <arunkrishnak2407@gmail.com>)
+ id 1vuYdy-0006sF-Gv
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 11:18:47 -0500
+Received: by mail-ej1-x630.google.com with SMTP id
+ a640c23a62f3a-b8d7f22d405so711326366b.0
+ for <qemu-devel@nongnu.org>; Mon, 23 Feb 2026 08:18:44 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1771863523; cv=none;
+ d=google.com; s=arc-20240605;
+ b=OK+Kki4xcvg6hSKg49xoF2c1VuQceZt3zRp9ify+s/YOS4Y+H+0cbZ5s4O3r7AOW9v
+ vjI1PV4K9+oxXb7b2QrelWjRH/yi5peWWEgHFqHXNtwvAp9UxwkR6+//Q3KrH+HhNtLZ
+ fpwnmu2RQYHrgBCr2YwIfDjJR2goU78QFLi9e32PXxpMgeQC/QrYL2thNwgr95t1EWOH
+ z8NgGGuKJrXCiiuou53Sv9PK/4ldsVXsucrUJYPv4yXHZS3NAR35spqcA14Qt0cg2cFN
+ fTNI52EWtLiacX7h/bwuy/kQx5H1LNU6AJZx0G4DiFyaOHd+uZ9/MVGZf2WIAyekswXt
+ PRYQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:mime-version:dkim-signature;
+ bh=lqKumOudaUOpfh0LtoujbZT9/vCspj5JPeOuIigzzs4=;
+ fh=JirxBaScZozn3BmdGRKDvComHK6cFh7juRbYj85p4cQ=;
+ b=WuViDkMb0/bOFnkBSGVksMnGC+A4wH0P5PShCwRFEoAyIimYkSxSN54AmuAW8qlX12
+ hMOf+Ps5skM3a9bc9QOH/5TUrvUwxGEhel2gFOujHvU/cd1wagSS95Xd1tfh23AdGoZ0
+ Cc2Ci+loA14uwFdz9VxgOU2Rnxst6tPmHDC1l7xKXxwHe/RfCd+SSahNDEtqPJlg/r26
+ SARD7yd1fgSGLwiomoMpEBMpNL+S5YOBxAZOaAByVBekRkZ6207MtsjGPEr//fMlZjda
+ NC4ejXJBgZbS0EZPq4Ae7h+J1LkQczRyg0vD634oeuF9yQCHFjPJD6HE48w+4bkbz0Kk
+ Ul4w==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1771863123; x=1772467923; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Ze/An/SOFIjsOjs+x6ZwwPrH9WzszpFw6b9TfdTWBjw=;
- b=OZc2iZzm8Pw1Crlm+SW6MHjFKt08I9dFEdjW81C0F0Tw30jCUencRunI8ZhRXvnevZ
- BMmMp5CPy2W/pQCqOmqm6EcMIFbBmEDqFnG9Eyl/sNPNXULP3IKF84nmLt9wen/2yoXb
- LRQ78rUIzuTOJrbk0yxBEUT0KtvjDGPYUrtRzejCL4sWdQk04EEEs1+iiXsAX3PXUXJJ
- q7gRZg/hy8QU9o4iIUnDekUSAz8tw/ZzrK8nfX+pmKeLEWWujsxDBoOGdp6/+ctlmNI7
- BZhOS40Bf0wJFJ7oZWB4V115z0yHi3KnXf+/R+YXau9qbGFs/ChyWAQEEUVMMkd75oQ4
- Zq9Q==
+ d=gmail.com; s=20230601; t=1771863523; x=1772468323; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=lqKumOudaUOpfh0LtoujbZT9/vCspj5JPeOuIigzzs4=;
+ b=YQePvqcrlJ9r9qQ1RvdXZuLnqkMG/RWaOABOsvdbmpHaEC150wEA20rchdtaB43kOk
+ NLnZPCnDV0v5hX5rVSS6Tseoo0AP0WeTwa7Xma24lYGEUK5ADQ/64q6zOJwDLjMaAvYP
+ Sx1RYAyTuk0KIrn/QAnlD6ms+20LnOnRaTwzzXA1I7sza+w2lP6yzjT4D8hyMckwdQej
+ W8yP4Yrbc1ldIhItV5zIstsC4IiPI53ikcsUd3UVZP2MPA42DYpnrTh/GR1twOgXgJ7P
+ t3PC1kbdnMmSMFAxdrRQTD2v/7PfqSANpgHrBZJZPZHcE+A60nmgMwqVzPxiVovMeCbD
+ a/eQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771863123; x=1772467923;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Ze/An/SOFIjsOjs+x6ZwwPrH9WzszpFw6b9TfdTWBjw=;
- b=Ya7nQUWfGZkqdECwSDwcVpQghNMrX9xpa3fiUyyOwSrZe/ea5XckF/jsj1SUymryw1
- dez/WQr7ZZtfimazFDsm+/yzxn5yfcsW77KPVggz70I12/QKfK8j77OyQ9813lKKKwsd
- lRlsS6JD5bjTJ53EKIesHFeeZ/8xPIc0NRBtVfCrgH2DlX3GTNmUuuL2rn64CVVWAoA4
- RGHOELDI6J9w+6m7v+clBy7BChDZKBYhzX/XgUIfPyM7E//HWP+SD3xVoejawtHoTmk3
- lhvZWpcOtOXLaWIrQ4o0kcD1jovFKZfmzMDlZZ/VrpDaFRKH1pfMXchI3hj4+Nu/sVbc
- Pwjg==
-X-Gm-Message-State: AOJu0YwWFV+Zp5urrFBt0DlBsPyI/PP83ZrWFCr+n2tuy+vOljpNf4Qn
- mA7YRHyXbhKOuBn2yTeyDvChlSe4Z+gZfY5FOCuMzZOLQX3aYmthz6ifTvA9a82f+FHUD2y3k/Q
- whNRl2W7B+8WpIjuny4pKf5wSBv1cZGlFh8sEmo6O99qBTAR5ooR+qiOv
-X-Gm-Gg: AZuq6aJUFUc7MLyb7c3u2MCXIR667aMRVGSK/pRH75E19KIeW7PkJuqaYOo7e+TPpXR
- JGElTAFEtDGLGnXe1cuTxUh81lrCYNyIMpknDrWcvaFVCvZYjvE9w22o3wnsRd36DVOOgtKs5W3
- MYJUQl7IU8I8ReCuNbV1kx/1FjfQZBvR8pzGUDZXHF2TaVNkbAthq0rk/6mGpv/BaSwijbR+paD
- fYCpLbXA9uF+mf3k81QkfYGB6KgBuRbRmyWUl0dzrK29UlvLo7BUDsx8AOZGAoHGUs+JIHiaRfz
- VkzHI4EZTsZ2QMIltI2dKuAr9gmfGPKBPtnCBJKmHFLtTx+P3v78Ga40CEXhDPOqOsPrDm4BV2q
- L5wuAjRhOQLHknCrJg3WZVKN7jqddygmzRo2meLnF5KcICcHfWomA1Svet1X2iD+l+ldquUdIYD
- 8aBNn/+uFTTEVQp9i0YEfx8onkRi4=
-X-Received: by 2002:a17:906:fe4d:b0:b43:b7ec:b8a1 with SMTP id
- a640c23a62f3a-b9081a4b105mr542935666b.24.1771863122842; 
- Mon, 23 Feb 2026 08:12:02 -0800 (PST)
-X-Received: by 2002:a17:906:fe4d:b0:b43:b7ec:b8a1 with SMTP id
- a640c23a62f3a-b9081a4b105mr542933566b.24.1771863122350; 
- Mon, 23 Feb 2026 08:12:02 -0800 (PST)
-Received: from [192.168.10.48] ([151.95.144.138])
- by smtp.googlemail.com with ESMTPSA id
- a640c23a62f3a-b9084eb912dsm345905066b.55.2026.02.23.08.12.00
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 23 Feb 2026 08:12:01 -0800 (PST)
-Message-ID: <80366391-ad17-4ed8-82d4-79a6168e374e@redhat.com>
-Date: Mon, 23 Feb 2026 17:11:59 +0100
+ d=1e100.net; s=20230601; t=1771863523; x=1772468323;
+ h=cc:to:subject:message-id:date:from:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=lqKumOudaUOpfh0LtoujbZT9/vCspj5JPeOuIigzzs4=;
+ b=Rr9JXygmHwOnhwAIO9e5TEMbpf11hLHs+NxRysjshYXjtP/pLm9HTw26RpuEVtqn2i
+ rlDkFSZt74P9sBh5IgkVkApY/+V6C44uN0b95UmaZaKKx/ijavGtIIwnKulhvPe8ukBU
+ z/e9Mv/PB+Y2BGKI6UTMwRmxXgNS8UPDBvjSdf6r+Vf4jHA2HsxJy9U7/zoWuhboiNRT
+ o5J+9ARoJfi2LJl/q9tvHLfCCOEzwtFG+he/PPDBnd7968A+N5cX5KwbM8KSeZ13R+RG
+ 7/MQPCPfKsmKh2+WIVPOwRkvAt4HnvLFk6HroGKdnVi/dhK3aKV20DO/98WetHQF5Rzc
+ wqKA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU56bNTBSrXotw0YEQFyTMgsTVUiTtyVl+6Hc/BVKAOZzXCqt6nX+IKbxd4/dXbhVRXZaX/LeFTUnn2@nongnu.org
+X-Gm-Message-State: AOJu0Yxu+0O5viG1PFlfR+6M8F1Pgar48m1p7Y9IAQY6hSQY+9q9lG5E
+ XTonqweTpPciDS4We4glDNSIwuKXuE4jVMw8hOsnR0Y06W61easD1Cf3DwiO1T7g1V1ZK8yqFOr
+ JIEvtEVNCJtjokO5duaSNdHS5/PCRGPM=
+X-Gm-Gg: AZuq6aI/+7ipZpCS8sRi457F3T956BrmLfMoUYFQYtKp2Mt1I//B9jQVWgLy5cKvHgP
+ KgRQwKwsFXlwmVuWHIIprUJOwy71vv1ZzkCGpGxeVZFX59zP6vQKibunTvn15h5oDM84NaqRiyC
+ Mc5f9B7CUdjmJpDV6mMNxPyd4m9SA3tjgGyFrvQan7rn1VM5x3y9VRDnMnQatxwG8u6aUhk+TfS
+ bLidxycy3VwYLzbnQrMovkQb+M4jsMzgnmxFHXIIXfgMV2vKPGIZNml5lA95TZMVNjwXpV/lG4e
+ +DP0y+D3TWRX0pyDg0tAWYBDRiR+WcpKxKlStG+fwRy4jRl5emrLzKDlqXDYpO4C3O/jnUN2CbM
+ 9n3FukPm5VjWuI7YucnldDmPwUNmT8rQmDaYFO4rSjFSZXXra7cFlSTKtgSHKUZ9K59m4WeuxDd
+ UhA1ddGEG/j8HjXdzpaHLNkQ==
+X-Received: by 2002:a17:907:25cd:b0:b8d:bcea:438 with SMTP id
+ a640c23a62f3a-b9081b9b91bmr630238866b.44.1771863523191; Mon, 23 Feb 2026
+ 08:18:43 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 12/16] scripts/qapi: generate high-level Rust bindings
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
- <marcandre.lureau@redhat.com>, qemu-rust@nongnu.org
-References: <20260108131043.490084-1-pbonzini@redhat.com>
- <20260108131043.490084-13-pbonzini@redhat.com> <87ms0z7i33.fsf@pond.sub.org>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Content-Language: en-US
-In-Reply-To: <87ms0z7i33.fsf@pond.sub.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -1
-X-Spam_score: -0.2
-X-Spam_bar: /
-X-Spam_report: (-0.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1.179, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.717,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+From: Arun Krishna K <arunkrishnak2407@gmail.com>
+Date: Mon, 23 Feb 2026 21:48:31 +0530
+X-Gm-Features: AaiRm53DjqfXAi-nLHBQUL0K4BhBX_qA65P8oWXo3nO67HRRI6LfJdHtBstzkCQ
+Message-ID: <CAFMJydMjLq+O+wuez_eSPYAqMgH9DPBXAW-o9zMZCSQVb_3e0w@mail.gmail.com>
+Subject: Re: Call for GSoC internship project ideas
+To: stefanha@gmail.com
+Cc: alex.bennee@linaro.org, danpb@redhat.com, deller@gmx.de, 
+ gmaglione@redhat.com, hreitz@redhat.com, kvm@vger.kernel.org, 
+ kwolf@redhat.com, marcandre.lureau@redhat.com, mark.cave-ayland@ilande.co.uk, 
+ mvaralar@redhat.com, osteffen@redhat.com, pbonzini@redhat.com, 
+ philmd@linaro.org, pierrick.bouvier@linaro.org, qemu-devel@nongnu.org, 
+ sgarzare@redhat.com, thuth@redhat.com
+Content-Type: multipart/alternative; boundary="000000000000e40364064b801f46"
+Received-SPF: pass client-ip=2a00:1450:4864:20::630;
+ envelope-from=arunkrishnak2407@gmail.com; helo=mail-ej1-x630.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,51 +119,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/23/26 13:36, Markus Armbruster wrote:
-> Paolo Bonzini <pbonzini@redhat.com> writes:
-> 
->> From: Marc-André Lureau <marcandre.lureau@redhat.com>
->>
->> Generate high-level native Rust declarations for the QAPI types.
->>
->> - char* is mapped to String, scalars to there corresponding Rust types
->>
->> - enums use #[repr(u32)] and can be transmuted to their C counterparts
->>
->> - has_foo/foo members are mapped to Option<T>
->>
->> - lists are represented as Vec<T>
->>
->> - structures map fields 1:1 to Rust
->>
->> - alternate are represented as Rust enum, each variant being a 1-element
->>    tuple
->>
->> - unions are represented in a similar way as in C: a struct S with a "u"
->>    member (since S may have extra 'base' fields). The discriminant
->>    isn't a member of S, since Rust enum already include it, but it can be
->>    recovered with "mystruct.u.into()"
->>
->> Anything that includes a recursive struct puts it in a Box.  Lists are
->> not considered recursive, because Vec breaks the recursion (it's possible
->> to construct an object containing an empty Vec of its own type).
->>
->> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
->> Link: https://lore.kernel.org/r/20210907121943.3498701-21-marcandre.lureau@redhat.com
->> [Paolo: rewrite conversion of schema types to Rust types]
->> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> 
-> Please mention how to actually generate Rust, because it's anything but
-> obvious: pass -B qapi.backend.QAPIRsBackend to qapi-gen.py.  Recommend
-> to mention it again in the cover letter.
-> 
-> Additionally, state that this is a hack we'll want to replace both in
-> the commit message and a TODO comment.  See review of v1's cover letter
-> for why.
+--000000000000e40364064b801f46
+Content-Type: text/plain; charset="UTF-8"
 
-Yes, the TODO comment is in patch 14 where the thing actually gets used. 
-  I can make it more prominent.
+I am reaching out to you regarding a potential GSoC project, as suggested
+by Warner Losh.
 
-Paolo
+I have been researching potential areas for contribution and noticed that
+QEMU currently has several missing ioctl calls. I am curious if
+implementing these would be a suitable topic for a GSoC project or a
+general contribution.
 
+I want to be clear that I am still evaluating this idea and am not entirely
+sure of its feasibility or scope. My current plan is to focus on the
+discrepancy between the ioctl headers and their actual implementations in
+linux-user/syscall.c to identify unimplemented ioctls. I also noticed that
+the current automation relies on regex, which I think can be improved in
+complex cases.
+
+I am interested in building a more reliable method to identify and address
+these gaps.
+If this is a viable path, I would appreciate your guidance on how to best
+approach it or if there are specific areas within this topic I should focus
+on.
+
+Thank you for your time.
+
+Best regards,
+Arun Krishna K
+
+--000000000000e40364064b801f46
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div>I am reaching out to you regarding a potential GSoC p=
+roject, as suggested by Warner Losh.</div><div><br></div><div>I
+ have been researching potential areas for contribution and noticed that
+ QEMU currently has several missing ioctl calls. I am curious if=20
+implementing these would be a suitable topic for a GSoC project or a=20
+general contribution.</div><div><br></div><div>I want to be clear that I am=
+ still evaluating this idea and am not entirely sure of its feasibility or=
+=20
+scope. My current plan is to focus on the discrepancy between the ioctl=20
+headers and their actual implementations in linux-user/syscall.c to=20
+identify unimplemented ioctls. I also noticed that the current=20
+automation relies on regex, which I think can be improved in complex=20
+cases.=C2=A0</div><div><br></div><div>I am interested in building a more re=
+liable method to identify=20
+and address these gaps.</div><div>If this is a viable path, I would=20
+appreciate your guidance on how to best approach it or if there are=20
+specific areas within this topic I should focus on.</div><div><br></div><di=
+v>Thank you for your time.</div><div><br></div><div>Best regards,</div><div=
+>Arun Krishna K</div><br></div>
+
+--000000000000e40364064b801f46--
 
