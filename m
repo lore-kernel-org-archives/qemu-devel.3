@@ -4,92 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC609EEC28E
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 21:54:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A766EEC2A2
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 22:21:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vudsR-0004NQ-K9; Mon, 23 Feb 2026 16:54:05 -0500
+	id 1vueI2-0000MQ-3b; Mon, 23 Feb 2026 17:20:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vudsP-0004NH-1D
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 16:54:01 -0500
-Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vudsN-0001BR-Ge
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 16:54:00 -0500
-Received: by mail-pf1-x434.google.com with SMTP id
- d2e1a72fcca58-824a829f9bbso2527302b3a.0
- for <qemu-devel@nongnu.org>; Mon, 23 Feb 2026 13:53:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771883637; x=1772488437; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=kTLOtO/RHLtE37NU+BLXdtADh+ZKDhQz9ZS6H6Y2nEM=;
- b=GkQ+XcW8kWqcOs5eJtovvpewpPyh6LFt6/FWtVnS8TOoOR87Zdp40WbdRt+yL/zeWt
- JN/vaeZjUolEpsqGT1rbBvH0tsfmSJ/BlX8po+7S16AJQ6HX9vYFnWEzsImegOLZHrqy
- 21MCnzNs3yTtNmfmBKN2ggM1KFPnkr/S1H57+0Aatlvas+CSok5fja5++uPzDQRvJJzo
- +e0Q4N1tyEKMbdbTlK/W1vf+Cb0cGgI681nwb+eRQvLLoGba+uUdemP1mFcS/qVbOmQF
- /0IuwYNYHLNxmazoFhhAw5u5pVVaRi8Yviw+w6y3mu9p8bY5oE9IVvEB5EfYY2wzMK5+
- hxiw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771883637; x=1772488437;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=kTLOtO/RHLtE37NU+BLXdtADh+ZKDhQz9ZS6H6Y2nEM=;
- b=C6vmnK7HW0paM0UcbvS5JfS6w/Iy7LPl1z3l6W/w9pisZG4MXP24IWrv+yeMCXL/Pr
- LoOaxGelJL4xYjYI1xJ5LPjNel0tG4G/eZWhTDbxgmejeQxHIlt3IqIM4BpsSXhnyLAW
- 2lH1v3Mw9641bJckijIssQmV9sNQ/fhHzL84jT2tsOCku32D4WJJxudLSIbDGIHLG0iz
- rS91QOD/puV5GHG4kvxmD8Ab4TH4EfppZU/xy40V0Ttugd/7DB5rYKSJOvTT4i9pUbjg
- QqFd91aje+SUSbKNBypFx6weUoY43vdF0kpevg8uUoFRNj/clANYoOOl2idBCdG1WFja
- mQGQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXYXTVyj4aLF/KYnUtssRptE4VkETXiijdrMZI2Mm/Luofdzj2YLRX5suJG1UN06SLYF4rWRUmXB80v@nongnu.org
-X-Gm-Message-State: AOJu0YxTpXIPMARUu1l9hoC6yVeSyaYewHKEsOYw80fSRAaQreGegpkK
- u9OMfKrQ7ivUEeZFJaGcoCbu4N5uPny0VXRfHKhKuRG+Jqxh+G/HeP1x5SB3GrfJFH/4INp3+Nu
- h6Ez+zoM=
-X-Gm-Gg: AZuq6aKiPI4MCV/7WQSUT3pTsdfg/WGVxPDlxBL6TsEvYdJT6JK5nC8cwtyqGIUkFd6
- zzFbX2yaf5YFPXH8/Dlm8AhxEdkRjoNqhMfXi8Si9evazqdu4LLAq+oiOuG4zI9ZhKH/KvAPJZ6
- zyvO8G5eod+bXYm0Ac/40GWRFXMxF1h1s5Q1uKKcyumckIJyYABtscjs2zGXluHVG6QoWwEWERT
- wC6E5SX11T6FhUTP/QNqetV1qcwkfhong24hB8W+/pBN95XtW9N3gvZBtiZgR2yP7rPr7VuMmXp
- F0ZoYc6z0Zw5vTXcVmNd4Tun4+yxMX1TgGaTpN/ZTjc/ZKbAdqnlv2HeQiis9AJPZAnSlY5UY/z
- gkKwTgtROedw0GifaZQaYmvy99EnggOfjrqTjtQJ+PiwZ4hwnVN6fvIrJj3RkyTRGDsykTZz8MN
- 3A7YQXhvGFtWdgZzVEN+x0puoVlqP9TCIRv7yQWEa5Mmjv0rn0MGYu2NhOyP0B3VrZOl4IuBBz/
- mzb
-X-Received: by 2002:a05:6a00:3999:b0:81f:9a5b:e8fc with SMTP id
- d2e1a72fcca58-826daa6eec8mr9040814b3a.54.1771883637290; 
- Mon, 23 Feb 2026 13:53:57 -0800 (PST)
-Received: from [10.34.149.227] (123-243-199-74.static.tpgi.com.au.
- [123.243.199.74]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-826dd6435c5sm9171789b3a.9.2026.02.23.13.53.55
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 23 Feb 2026 13:53:56 -0800 (PST)
-Message-ID: <5edd0981-2505-40b9-b8cf-542a1c1e438c@linaro.org>
-Date: Tue, 24 Feb 2026 07:53:50 +1000
+ (Exim 4.90_1) (envelope-from <mlevitsk@redhat.com>)
+ id 1vueI0-0000M7-CK
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 17:20:28 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mlevitsk@redhat.com>)
+ id 1vueHy-0006cs-By
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 17:20:28 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1771885225;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=DrxxrqBVYKc8B0xIp7sy3PR0C7uqzmLMHDNVqq2QdHs=;
+ b=dX4v+PWZvPLQXPVBFbx623iWG2Yqv9Ry0cHb9YEwElygyFQ96kbQrlt1znJKAgG3nuPWkg
+ 8fIvIhvoh3sWnmbSq1rp1rdZlKg86bsd39Tb7yqJcmTX/M1T05f9XfKL83gGz5VyAvGFtS
+ DBwfONnNr1yWQNlfsmP7rjJKrIBkD58=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-593-PWs3y4LPOO2ON-HM__iNVg-1; Mon,
+ 23 Feb 2026 17:19:12 -0500
+X-MC-Unique: PWs3y4LPOO2ON-HM__iNVg-1
+X-Mimecast-MFC-AGG-ID: PWs3y4LPOO2ON-HM__iNVg_1771885151
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2D36E1956094; Mon, 23 Feb 2026 22:19:11 +0000 (UTC)
+Received: from intellaptop.lan (unknown [10.22.65.168])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 834771955F43; Mon, 23 Feb 2026 22:19:09 +0000 (UTC)
+From: Maxim Levitsky <mlevitsk@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: kvm@vger.kernel.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>, Maxim Levitsky <mlevitsk@redhat.com>
+Subject: [PATCH] accel/kvm: Don't clear pending #SMI in kvm_get_vcpu_events
+Date: Mon, 23 Feb 2026 17:19:08 -0500
+Message-ID: <20260223221908.361456-1-mlevitsk@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] fix: copy paste bug
-To: Weixie Cui <cuiweixie@gmail.com>, qemu-devel@nongnu.org
-References: <20260223095436.61247-1-cuiweixie@gmail.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260223095436.61247-1-cuiweixie@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x434.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mlevitsk@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -1
+X-Spam_score: -0.2
+X-Spam_bar: /
+X-Spam_report: (-0.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1.179, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.717,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,35 +81,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/23/26 19:54, Weixie Cui wrote:
-> ---
->   hw/ssi/xilinx_spips.c | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/hw/ssi/xilinx_spips.c b/hw/ssi/xilinx_spips.c
-> index a4718fb72d..f6e717bc01 100644
-> --- a/hw/ssi/xilinx_spips.c
-> +++ b/hw/ssi/xilinx_spips.c
-> @@ -369,7 +369,7 @@ static void xilinx_spips_reset(DeviceState *d)
->       memset(s->regs, 0, sizeof(s->regs));
->   
->       fifo8_reset(&s->rx_fifo);
-> -    fifo8_reset(&s->rx_fifo);
-> +    fifo8_reset(&s->tx_fifo);
->       /* non zero resets */
->       s->regs[R_CONFIG] |= MODEFAIL_GEN_EN;
->       s->regs[R_SLAVE_IDLE_COUNT] = 0xFF;
-> @@ -397,7 +397,7 @@ static void xlnx_zynqmp_qspips_reset(DeviceState *d)
->       memset(s->regs, 0, sizeof(s->regs));
->   
->       fifo8_reset(&s->rx_fifo_g);
-> -    fifo8_reset(&s->rx_fifo_g);
-> +    fifo8_reset(&s->tx_fifo_g);
->       fifo32_reset(&s->fifo_g);
->       s->regs[R_INTR_STATUS] = R_INTR_STATUS_RESET;
->       s->regs[R_GPIO] = 1;
+The kvm_get_vcpu_events propogates the state of the pending smi
+from the kernel to the cpu->interrupt_request, with the intention
+of having un up to date migration state.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Later the opposite is done, the kvm_put_vcpu_events restores the state
+of the pending #SMI from the 'cs->interrupt_request'
 
-r~
+The only problem is that kvm_get_vcpu_events also resets the SMI
+in cpu->interrupt_request when there is no pending #SMI indicated by the kernel,
+and that is wrong as the SMI might be still raised by qemu.
+
+While at it, also fix a similar but more theoretical bug with regard to a
+latched #INIT while in SMM.
+
+A simple reproducer for this bug is to read an EFI variable in a loop
+from within a guest, while at the same time run 'info registers' on
+the qemu HMP monitor.
+
+The reads will, once in a while, fail with an 'Invalid argument' error.
+
+Signed-off-by: Maxim Levitsky <mlevitsk@redhat.com>
+---
+ target/i386/kvm/kvm.c | 4 ----
+ 1 file changed, 4 deletions(-)
+
+diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+index 9f1a4d4cbb26..bed7768c28d7 100644
+--- a/target/i386/kvm/kvm.c
++++ b/target/i386/kvm/kvm.c
+@@ -5502,8 +5502,6 @@ static int kvm_get_vcpu_events(X86CPU *cpu)
+         }
+         if (events.smi.pending) {
+             cpu_interrupt(CPU(cpu), CPU_INTERRUPT_SMI);
+-        } else {
+-            cpu_reset_interrupt(CPU(cpu), CPU_INTERRUPT_SMI);
+         }
+         if (events.smi.smm_inside_nmi) {
+             env->hflags2 |= HF2_SMM_INSIDE_NMI_MASK;
+@@ -5512,8 +5510,6 @@ static int kvm_get_vcpu_events(X86CPU *cpu)
+         }
+         if (events.smi.latched_init) {
+             cpu_interrupt(CPU(cpu), CPU_INTERRUPT_INIT);
+-        } else {
+-            cpu_reset_interrupt(CPU(cpu), CPU_INTERRUPT_INIT);
+         }
+     }
+ 
+-- 
+2.49.0
+
 
