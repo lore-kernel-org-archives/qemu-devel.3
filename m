@@ -4,72 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94952E98E11
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 09:51:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C92AE98E10
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 09:52:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuSXh-0004pl-SP; Mon, 23 Feb 2026 04:47:54 -0500
+	id 1vuSZB-0008Br-28; Mon, 23 Feb 2026 04:49:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vuSXe-0004gg-5u
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 04:47:50 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1vuSYn-0007Xo-8b
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 04:49:03 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vuSXX-0006rn-DO
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 04:47:49 -0500
+ id 1vuSYl-000723-RU
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 04:49:01 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771840059;
+ s=mimecast20190719; t=1771840139;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=EisfrH5uyaZ3Qtm/HElCzA94VR6sfQSsWLN8AQdU/No=;
- b=ZPYQ0hUvRm1Sml+wzo1p7MhpaMjB3+Uk8ymOsKpY9PHs2T7fY+utlGxh0GcQ7GvMcljgkr
- 8ZDh8YZ7I480cGgZhzwgFsAT/DCIkLrw2YeCs5ZAqU6FdpiG5+SBmjvPAcdC8RrMVYVjTX
- sCDkymxIkYJPMOQVAPxptsJ+eUSr8Xg=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=Ss9oHxzNE9nQ9jCG/M5jycsST569jt37+/YoOvR3kZY=;
+ b=HBHKaIQoSJqWewgijdBtLH/KcOX5mJx/OKQVTeoqFmmu/v8WV6dKXgXwplxFdYenJPgRwK
+ nraLtcj+ZBR3atM2gjYcvYlRYMS4hrjyCLU/EdpyacDOaY8ROz7XuEzSlVYJNAX93bhQO7
+ gArrySZTS008naezO1WdviokptMSRfw=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-421-ZNxTUrWPN_yWBQiMbcwnTg-1; Mon,
- 23 Feb 2026 04:47:37 -0500
-X-MC-Unique: ZNxTUrWPN_yWBQiMbcwnTg-1
-X-Mimecast-MFC-AGG-ID: ZNxTUrWPN_yWBQiMbcwnTg_1771840057
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-120-TdwJmP3fPkCzKwLGjFfn-A-1; Mon,
+ 23 Feb 2026 04:48:54 -0500
+X-MC-Unique: TdwJmP3fPkCzKwLGjFfn-A-1
+X-Mimecast-MFC-AGG-ID: TdwJmP3fPkCzKwLGjFfn-A_1771840134
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 053F61956096; Mon, 23 Feb 2026 09:47:37 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DF01618001F6; Mon, 23 Feb 2026 09:48:53 +0000 (UTC)
 Received: from localhost (unknown [10.45.242.25])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 760531955F22; Mon, 23 Feb 2026 09:47:36 +0000 (UTC)
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 391BD1800672; Mon, 23 Feb 2026 09:48:52 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- John Snow <jsnow@redhat.com>, Cleber Rosa <crosa@redhat.com>
-Subject: [PULL v2 16/85] scripts/modinfo: add --skip-missing-deps
-Date: Mon, 23 Feb 2026 10:45:34 +0100
-Message-ID: <20260223094649.2005118-17-marcandre.lureau@redhat.com>
+ Gerd Hoffmann <kraxel@redhat.com>
+Subject: [PULL v2 41/85] audio: make audio_driver init() & fini() optional
+Date: Mon, 23 Feb 2026 10:45:59 +0100
+Message-ID: <20260223094649.2005118-42-marcandre.lureau@redhat.com>
 In-Reply-To: <20260223094649.2005118-1-marcandre.lureau@redhat.com>
 References: <20260223094649.2005118-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -4
-X-Spam_score: -0.5
-X-Spam_bar: /
-X-Spam_report: (-0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -14
+X-Spam_score: -1.5
+X-Spam_bar: -
+X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.798, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.79,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -89,156 +89,46 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Add --skip-missing-deps flag that prints warnings for missing
-dependencies but continues without exiting with error code 1.
+The next patches are going to remove usage of the driver callbacks in
+favor of QOM realize/finalize.
 
-Acked-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
 Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- scripts/modinfo-generate.py | 94 ++++++++++++++++++++++++++++---------
- 1 file changed, 71 insertions(+), 23 deletions(-)
+ audio/audio-mixeng-be.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/scripts/modinfo-generate.py b/scripts/modinfo-generate.py
-index e7d35242414..e231c129196 100644
---- a/scripts/modinfo-generate.py
-+++ b/scripts/modinfo-generate.py
-@@ -34,7 +34,8 @@ def parse_line(line: str) -> tuple[str, str]:
-             continue
-     return (kind, data)
+diff --git a/audio/audio-mixeng-be.c b/audio/audio-mixeng-be.c
+index f906c84bf7c..45873646b3c 100644
+--- a/audio/audio-mixeng-be.c
++++ b/audio/audio-mixeng-be.c
+@@ -1521,9 +1521,11 @@ static bool audio_mixeng_backend_realize(AudioBackend *abe,
+     audio_driver *drv = AUDIO_MIXENG_BACKEND_GET_CLASS(be)->driver;
  
--def generate(name: str, lines: list[str], enabled: set[str]) -> Optional[set[str]]:
-+def parse_modinfo(name: str, lines: list[str], enabled: set[str]) -> Optional[dict]:
-+    """Parse a modinfo file and return module metadata, or None if disabled."""
-     arch = ""
-     objs = []
-     deps = []
-@@ -54,21 +55,39 @@ def generate(name: str, lines: list[str], enabled: set[str]) -> Optional[set[str
-                 # don't add a module which dependency is not enabled
-                 # in kconfig
-                 if data.strip() not in enabled:
--                    print(f"    /* module {data.strip()} isn't enabled in Kconfig. */")
--                    print("/* },{ */")
-                     return None
-             else:
-                 print("unknown:", kind)
-                 exit(1)
+     be->dev = dev;
+-    be->drv_opaque = drv->init(be->dev, errp);
+-    if (!be->drv_opaque) {
+-        return false;
++    if (drv->init != NULL) {
++        be->drv_opaque = drv->init(be->dev, errp);
++        if (!be->drv_opaque) {
++            return false;
++        }
+     }
  
--    print(f'    .name = "{name}",')
--    if arch != "":
--        print(f"    .arch = {arch},")
--    print_array("objs", objs)
--    print_array("deps", deps)
--    print_array("opts", opts)
-+    return {
-+        'name': name,
-+        'arch': arch,
-+        'objs': objs,
-+        'deps': deps,
-+        'opts': opts,
-+        'dep_names': {dep.strip('" ') for dep in deps}
-+    }
-+
-+def generate(modinfo: str, mod: Optional[dict],
-+             skip_reason: Optional[str]) -> None:
-+    """Generate C code for a module."""
-+    print(f"    /* {modinfo} */")
-+    if mod is None:
-+        if skip_reason == "missing_deps":
-+            print("    /* module has missing dependencies. */")
-+        else:
-+            print("    /* module isn't enabled in Kconfig. */")
-+        print("/* },{ */")
-+        return
-+
-+    print(f'    .name = "{mod["name"]}",')
-+    if mod['arch'] != "":
-+        print(f"    .arch = {mod['arch']},")
-+    print_array("objs", mod['objs'])
-+    print_array("deps", mod['deps'])
-+    print_array("opts", mod['opts'])
-     print("},{")
--    return {dep.strip('" ') for dep in deps}
+     if (!drv->pcm_ops->get_buffer_in) {
+@@ -1664,7 +1666,9 @@ static void audio_mixeng_backend_finalize(Object *obj)
+     }
  
- def print_pre() -> None:
-     print("/* generated by scripts/modinfo-generate.py */")
-@@ -86,6 +105,8 @@ def main() -> None:
-     )
-     parser.add_argument('--devices',
-                         help='path to config-device.mak')
-+    parser.add_argument('--skip-missing-deps', action='store_true',
-+                        help='warn if a dependency is missing and continue')
-     parser.add_argument('modinfo', nargs='+',
-                         help='modinfo files to process')
-     args = parser.parse_args()
-@@ -99,27 +120,54 @@ def main() -> None:
-                 if config[1].rstrip() == 'y':
-                     enabled.add(config[0][7:])  # remove CONFIG_
+     if (s->drv) {
+-        s->drv->fini (s->drv_opaque);
++        if (s->drv->fini) {
++            s->drv->fini (s->drv_opaque);
++        }
+         s->drv = NULL;
+     }
  
--    deps = set()
--    modules = set()
--    print_pre()
-+    # all_modules: modinfo path -> (basename, parsed module or None, skip_reason)
-+    all_modules = {}
-     for modinfo in args.modinfo:
-         with open(modinfo) as f:
-             lines = f.readlines()
--        print(f"    /* {modinfo} */")
-         (basename, _) = os.path.splitext(modinfo)
--        moddeps = generate(basename, lines, enabled)
--        if moddeps is not None:
--            modules.add(basename)
--            deps.update(moddeps)
--    print_post()
-+        mod = parse_modinfo(basename, lines, enabled)
-+        skip_reason = "kconfig" if mod is None else None
-+        all_modules[modinfo] = (basename, mod, skip_reason)
-+
-+    # Collect all available module names
-+    available = {basename for basename, mod, _ in all_modules.values()
-+                 if mod is not None}
- 
--    error = False
--    for dep in deps.difference(modules):
-+    # Collect all dependencies
-+    all_deps = set()
-+    for basename, mod, _ in all_modules.values():
-+        if mod is not None:
-+            all_deps.update(mod['dep_names'])
-+
-+    # Check for missing dependencies
-+    missing = all_deps.difference(available)
-+    for dep in missing:
-         print(f"Dependency {dep} cannot be satisfied", file=sys.stderr)
--        error = True
- 
--    if error:
-+    if missing and not args.skip_missing_deps:
-         exit(1)
- 
-+    # When skipping missing deps, iteratively remove modules with
-+    # unsatisfiable dependencies
-+    if args.skip_missing_deps and missing:
-+        changed = True
-+        while changed:
-+            changed = False
-+            for modinfo, (basename, mod, skip_reason) in list(all_modules.items()):
-+                if mod is None:
-+                    continue
-+                if not mod['dep_names'].issubset(available):
-+                    available.discard(basename)
-+                    all_modules[modinfo] = (basename, None, "missing_deps")
-+                    changed = True
-+
-+    # generate output
-+    print_pre()
-+    for modinfo in args.modinfo:
-+        (basename, mod, skip_reason) = all_modules[modinfo]
-+        generate(modinfo, mod, skip_reason)
-+    print_post()
-+
- if __name__ == "__main__":
-     main()
 -- 
 2.53.0
 
