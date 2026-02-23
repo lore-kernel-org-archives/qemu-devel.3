@@ -4,63 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E315EA4FC2
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 14:00:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD326EA4FC1
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 14:00:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuWMy-0001kJ-U1; Mon, 23 Feb 2026 08:53:04 -0500
+	id 1vuWO3-00054u-Aa; Mon, 23 Feb 2026 08:54:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vuWLA-0006Fr-D3
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 08:51:14 -0500
+ id 1vuWK1-0003N9-HE
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 08:50:03 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vuWL6-0007b4-HS
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 08:51:11 -0500
+ id 1vuWJp-0007Ei-7Q
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 08:49:50 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771854666;
+ s=mimecast20190719; t=1771854588;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=iolbSR7ouNZT1Z1A/hTnNFQIrAqvCIZOr9ITrRjYxKc=;
- b=RftLkQ9oAQ/T/VeNTHq4g8HLXfqSLrsCOZFevHlHJ2jkG4PZ2uGL03CFof0grukb3LQrSQ
- oxmQKyfvcNtH1u6jkVU2JzqtUZZnGRVWvnAQnqaTvYpFtzPQx0uDFbBXRW3WRir+AOsrDq
- 3D/n2r0pc6dtsDQMxFP8mM3YgOFuJoQ=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=GK+InVNU3f2hcJXrsb/od2DfNR27U7o4tVRJnn/aSD8=;
+ b=KtCoqvV5LcahykdvjQmmcALDn0oih+1TQaCDoZBMXNjfanfUXUAZJ42rEAENsO+wQ9CPYP
+ w4jXVFwx3ftvNzNc1qAQ/JWsQWja6ASDPf0+FlLv+dp3OR/baS6ovk7EAmEAV7u0R8j8Sa
+ m6RLW8IlfS26RRZUzpDB6cZOthqwiS8=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-434-d-DHmdP-Nwevi_XA0PrpKA-1; Mon,
- 23 Feb 2026 08:51:05 -0500
-X-MC-Unique: d-DHmdP-Nwevi_XA0PrpKA-1
-X-Mimecast-MFC-AGG-ID: d-DHmdP-Nwevi_XA0PrpKA_1771854664
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-402-Ta8TllbWNxCtE4NvQ2R0bg-1; Mon,
+ 23 Feb 2026 08:49:47 -0500
+X-MC-Unique: Ta8TllbWNxCtE4NvQ2R0bg-1
+X-Mimecast-MFC-AGG-ID: Ta8TllbWNxCtE4NvQ2R0bg_1771854586
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2FA651956052; Mon, 23 Feb 2026 13:51:04 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5BA42180025A; Mon, 23 Feb 2026 13:49:46 +0000 (UTC)
 Received: from localhost (unknown [10.45.242.25])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 474E01800286; Mon, 23 Feb 2026 13:51:03 +0000 (UTC)
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 8F3E71800370; Mon, 23 Feb 2026 13:49:45 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Gerd Hoffmann <kraxel@redhat.com>
-Subject: [PULL v3 76/85] audio: replace DEBUG_CAPTURE with traces
-Date: Mon, 23 Feb 2026 14:47:17 +0100
-Message-ID: <20260223134731.2377432-77-marcandre.lureau@redhat.com>
+Subject: [PULL v3 48/85] audio/pa: convert to QOM lifecycle methods
+Date: Mon, 23 Feb 2026 14:46:49 +0100
+Message-ID: <20260223134731.2377432-49-marcandre.lureau@redhat.com>
 In-Reply-To: <20260223134731.2377432-1-marcandre.lureau@redhat.com>
 References: <20260223134731.2377432-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -89,85 +89,295 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
+Migrate the PulseAudio backend from the legacy driver init/fini
+callbacks to proper QOM realize and finalize methods.
+
+The paaudio struct fields are now embedded directly in the AudioPa
+QOM object instead of being allocated separately as drv_opaque. This
+allows accessing the backend state through proper QOM type casting
+with AUDIO_PA() rather than casting drv_opaque pointers.
+
+The PulseAudio connection is now managed through the QOM lifecycle,
+with the connection reference acquired in realize and released in
+finalize.
+
 Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
 Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- audio/audio-mixeng-be.c | 20 +++++++-------------
- audio/trace-events      |  3 +++
- 2 files changed, 10 insertions(+), 13 deletions(-)
+ audio/paaudio.c | 109 +++++++++++++++++++++++++-----------------------
+ 1 file changed, 57 insertions(+), 52 deletions(-)
 
-diff --git a/audio/audio-mixeng-be.c b/audio/audio-mixeng-be.c
-index 2aeb05ba37e..1963f3e5c79 100644
---- a/audio/audio-mixeng-be.c
-+++ b/audio/audio-mixeng-be.c
-@@ -30,7 +30,6 @@
- #include "audio_int.h"
+diff --git a/audio/paaudio.c b/audio/paaudio.c
+index 331da4f2ed6..97e6c0d1794 100644
+--- a/audio/paaudio.c
++++ b/audio/paaudio.c
+@@ -14,19 +14,10 @@
+ #define TYPE_AUDIO_PA "audio-pa"
+ OBJECT_DECLARE_SIMPLE_TYPE(AudioPa, AUDIO_PA)
  
- /* #define DEBUG_OUT */
--/* #define DEBUG_CAPTURE */
+-struct AudioPa {
+-    AudioMixengBackend parent_obj;
+-};
++static AudioBackendClass *audio_pa_parent_class;
  
- #define SW_NAME(sw) (sw)->name ? (sw)->name : "unknown"
+ static struct audio_driver pa_audio_driver;
  
-@@ -249,9 +248,8 @@ static void audio_notify_capture (CaptureVoiceOut *cap, audcnotification_e cmd)
- {
-     struct capture_callback *cb;
+-static void audio_pa_class_init(ObjectClass *klass, const void *data)
+-{
+-    AudioMixengBackendClass *k = AUDIO_MIXENG_BACKEND_CLASS(klass);
+-
+-    k->driver = &pa_audio_driver;
+-}
+-
+ typedef struct PAConnection {
+     char *server;
+     int refcount;
+@@ -36,18 +27,19 @@ typedef struct PAConnection {
+     pa_context *context;
+ } PAConnection;
  
--#ifdef DEBUG_CAPTURE
--    dolog ("notification %d sent\n", cmd);
--#endif
-+    trace_audio_notify_capture(cmd);
+-static QTAILQ_HEAD(PAConnectionHead, PAConnection) pa_conns =
+-    QTAILQ_HEAD_INITIALIZER(pa_conns);
++struct AudioPa {
++    AudioMixengBackend parent_obj;
+ 
+-typedef struct {
+-    Audiodev *dev;
+     PAConnection *conn;
+-} paaudio;
++};
 +
-     for (cb = cap->cb_head.lh_first; cb; cb = cb->entries.le_next) {
-         cb->ops.notify (cb->opaque, cmd);
-     }
-@@ -333,12 +331,10 @@ static int audio_attach_capture (HWVoiceOut *hw)
-         sw->rate = st_rate_start (sw->info.freq, hw_cap->info.freq);
-         QLIST_INSERT_HEAD (&hw_cap->sw_head, sw, entries);
-         QLIST_INSERT_HEAD (&hw->cap_head, sc, entries);
--#ifdef DEBUG_CAPTURE
--        sw->name = g_strdup_printf ("for %p %d,%d,%d",
--                                    hw, sw->info.freq, sw->info.bits,
--                                    sw->info.nchannels);
--        dolog ("Added %s active = %d\n", sw->name, sw->active);
--#endif
-+        sw->name = g_strdup_printf("for %p %d,%s,%d",
-+                                   hw, sw->info.freq, AudioFormat_str(sw->info.af),
-+                                   sw->info.nchannels);
-+        trace_audio_capture_attach(sw->name, sw->active);
-         if (sw->active) {
-             audio_capture_maybe_changed (cap, 1);
++static QTAILQ_HEAD(PAConnectionHead, PAConnection) pa_conns =
++    QTAILQ_HEAD_INITIALIZER(pa_conns);
+ 
+ typedef struct {
+     HWVoiceOut hw;
+     pa_stream *stream;
+-    paaudio *g;
++    AudioPa *g;
+ } PAVoiceOut;
+ 
+ typedef struct {
+@@ -55,7 +47,7 @@ typedef struct {
+     pa_stream *stream;
+     const void *read_data;
+     size_t read_length;
+-    paaudio *g;
++    AudioPa *g;
+ } PAVoiceIn;
+ 
+ static void qpa_conn_fini(PAConnection *c);
+@@ -529,23 +521,25 @@ fail:
+ static int qpa_init_out(HWVoiceOut *hw, struct audsettings *as,
+                         void *drv_opaque)
+ {
++    AudioMixengBackend *amb = hw->s;
++    AudioPa *apa = AUDIO_PA(amb);
+     int error;
+     pa_sample_spec ss;
+     pa_buffer_attr ba;
+     struct audsettings obt_as = *as;
+     PAVoiceOut *pa = (PAVoiceOut *) hw;
+-    paaudio *g = pa->g = drv_opaque;
+-    AudiodevPaOptions *popts = &g->dev->u.pa;
++    AudiodevPaOptions *popts = &amb->dev->u.pa;
+     AudiodevPaPerDirectionOptions *ppdo = popts->out;
+-    PAConnection *c = g->conn;
++    PAConnection *c = apa->conn;
+ 
++    pa->g = apa;
+     ss.format = audfmt_to_pa (as->fmt, as->endianness);
+     ss.channels = as->nchannels;
+     ss.rate = as->freq;
+ 
+     ba.tlength = pa_usec_to_bytes(ppdo->latency, &ss);
+     ba.minreq = pa_usec_to_bytes(MIN(ppdo->latency >> 2,
+-                                     (g->dev->timer_period >> 2) * 3), &ss);
++                                     (amb->dev->timer_period >> 2) * 3), &ss);
+     ba.maxlength = -1;
+     ba.prebuf = -1;
+ 
+@@ -553,7 +547,7 @@ static int qpa_init_out(HWVoiceOut *hw, struct audsettings *as,
+ 
+     pa->stream = qpa_simple_new (
+         c,
+-        ppdo->stream_name ?: g->dev->id,
++        ppdo->stream_name ?: amb->dev->id,
+         PA_STREAM_PLAYBACK,
+         ppdo->name,
+         &ss,
+@@ -578,23 +572,25 @@ static int qpa_init_out(HWVoiceOut *hw, struct audsettings *as,
+ 
+ static int qpa_init_in(HWVoiceIn *hw, struct audsettings *as, void *drv_opaque)
+ {
++    AudioMixengBackend *amb = hw->s;
++    AudioPa *apa = AUDIO_PA(amb);
+     int error;
+     pa_sample_spec ss;
+     pa_buffer_attr ba;
+     struct audsettings obt_as = *as;
+     PAVoiceIn *pa = (PAVoiceIn *) hw;
+-    paaudio *g = pa->g = drv_opaque;
+-    AudiodevPaOptions *popts = &g->dev->u.pa;
++    AudiodevPaOptions *popts = &amb->dev->u.pa;
+     AudiodevPaPerDirectionOptions *ppdo = popts->in;
+-    PAConnection *c = g->conn;
++    PAConnection *c = apa->conn;
+ 
++    pa->g = apa;
+     ss.format = audfmt_to_pa (as->fmt, as->endianness);
+     ss.channels = as->nchannels;
+     ss.rate = as->freq;
+ 
+-    ba.fragsize = pa_usec_to_bytes((g->dev->timer_period >> 1) * 3, &ss);
++    ba.fragsize = pa_usec_to_bytes((amb->dev->timer_period >> 1) * 3, &ss);
+     ba.maxlength = pa_usec_to_bytes(
+-        MAX(ppdo->latency, g->dev->timer_period * 3), &ss);
++        MAX(ppdo->latency, amb->dev->timer_period * 3), &ss);
+     ba.minreq = -1;
+     ba.prebuf = -1;
+ 
+@@ -602,7 +598,7 @@ static int qpa_init_in(HWVoiceIn *hw, struct audsettings *as, void *drv_opaque)
+ 
+     pa->stream = qpa_simple_new (
+         c,
+-        ppdo->stream_name ?: g->dev->id,
++        ppdo->stream_name ?: amb->dev->id,
+         PA_STREAM_RECORD,
+         ppdo->name,
+         &ss,
+@@ -834,15 +830,20 @@ fail:
+     return NULL;
+ }
+ 
+-static void *qpa_audio_init(Audiodev *dev, Error **errp)
++static bool
++audio_pa_realize(AudioBackend *abe, Audiodev *dev, Error **errp)
+ {
+-    paaudio *g;
++    AudioPa *apa = AUDIO_PA(abe);
+     AudiodevPaOptions *popts = &dev->u.pa;
+     const char *server;
+     PAConnection *c;
+ 
+     assert(dev->driver == AUDIODEV_DRIVER_PA);
+ 
++    if (!audio_pa_parent_class->realize(abe, dev, errp)) {
++        return false;
++    }
++
+     if (!popts->server) {
+         char pidfile[64];
+         char *runtime;
+@@ -851,42 +852,38 @@ static void *qpa_audio_init(Audiodev *dev, Error **errp)
+         runtime = getenv("XDG_RUNTIME_DIR");
+         if (!runtime) {
+             error_setg(errp, "XDG_RUNTIME_DIR not set");
+-            return NULL;
++            return false;
          }
-@@ -1707,10 +1703,8 @@ static void audio_mixeng_backend_del_capture(
+         snprintf(pidfile, sizeof(pidfile), "%s/pulse/pid", runtime);
+         if (stat(pidfile, &st) != 0) {
+             error_setg_errno(errp, errno, "could not stat pidfile %s", pidfile);
+-            return NULL;
++            return false;
+         }
+     }
  
-                 while (sw) {
-                     SWVoiceCap *sc = (SWVoiceCap *) sw;
--#ifdef DEBUG_CAPTURE
--                    dolog ("freeing %s\n", sw->name);
--#endif
+     qpa_validate_per_direction_opts(dev, popts->in);
+     qpa_validate_per_direction_opts(dev, popts->out);
  
-+                    trace_audio_capture_free_sw(sw->name);
-                     sw1 = sw->entries.le_next;
-                     if (sw->rate) {
-                         st_rate_stop (sw->rate);
-diff --git a/audio/trace-events b/audio/trace-events
-index d66a712e871..3f8ebf9c6cb 100644
---- a/audio/trace-events
-+++ b/audio/trace-events
-@@ -58,10 +58,13 @@ audio_be_set_active_out(void *sw, bool on) "sw=%p, on=%d"
- audio_timer_start(int interval) "interval %d ms"
- audio_timer_stop(void) ""
- audio_timer_delayed(int interval) "interval %d ms"
-+audio_notify_capture(int cmd) "notification %d sent"
-+audio_capture_attach(const char *name, bool active) "capture %s active=%d"
+-    g = g_new0(paaudio, 1);
+     server = popts->server;
+-
+-    g->dev = dev;
+-
+     QTAILQ_FOREACH(c, &pa_conns, list) {
+         if (server == NULL || c->server == NULL ?
+             server == c->server :
+             strcmp(server, c->server) == 0) {
+-            g->conn = c;
++            apa->conn = c;
+             break;
+         }
+     }
+-    if (!g->conn) {
+-        g->conn = qpa_conn_init(server);
++    if (!apa->conn) {
++        apa->conn = qpa_conn_init(server);
+     }
+-    if (!g->conn) {
+-        g_free(g);
++    if (!apa->conn) {
+         error_setg(errp, "could not connect to PulseAudio server");
+-        return NULL;
++        return false;
+     }
  
- # audio-mixeng-be.c
- audio_get_avail(const char *name, size_t live, uint32_t frontend_frames) "%s: get_avail live %zu frontend frames %u"
- audio_run_poll(const char *msg, int64_t elapsed_us) "Elapsed since last %s: %" PRId64 " us"
-+audio_capture_free_sw(const char *name) "freeing %s"
+-    ++g->conn->refcount;
+-    return g;
++    ++apa->conn->refcount;
++
++    return true;
+ }
  
- # audio_template.h
- audio_open_out(const char *name, int freq, int nchannels, int fmt) "open %s, freq %d, nchannels %d, fmt %d"
+ static void qpa_conn_fini(PAConnection *c)
+@@ -908,16 +905,14 @@ static void qpa_conn_fini(PAConnection *c)
+     g_free(c);
+ }
+ 
+-static void qpa_audio_fini (void *opaque)
++static void audio_pa_finalize(Object *obj)
+ {
+-    paaudio *g = opaque;
+-    PAConnection *c = g->conn;
++    AudioPa *apa = AUDIO_PA(obj);
++    PAConnection *c = apa->conn;
+ 
+-    if (--c->refcount == 0) {
++    if (c && --c->refcount == 0) {
+         qpa_conn_fini(c);
+     }
+-
+-    g_free(g);
+ }
+ 
+ static struct audio_pcm_ops qpa_pcm_ops = {
+@@ -939,8 +934,6 @@ static struct audio_pcm_ops qpa_pcm_ops = {
+ 
+ static struct audio_driver pa_audio_driver = {
+     .name           = "pa",
+-    .init           = qpa_audio_init,
+-    .fini           = qpa_audio_fini,
+     .pcm_ops        = &qpa_pcm_ops,
+     .max_voices_out = INT_MAX,
+     .max_voices_in  = INT_MAX,
+@@ -948,12 +941,24 @@ static struct audio_driver pa_audio_driver = {
+     .voice_size_in  = sizeof (PAVoiceIn),
+ };
+ 
++static void audio_pa_class_init(ObjectClass *klass, const void *data)
++{
++    AudioBackendClass *b = AUDIO_BACKEND_CLASS(klass);
++    AudioMixengBackendClass *k = AUDIO_MIXENG_BACKEND_CLASS(klass);
++
++    audio_pa_parent_class = AUDIO_BACKEND_CLASS(object_class_get_parent(klass));
++
++    b->realize = audio_pa_realize;
++    k->driver = &pa_audio_driver;
++}
++
+ static const TypeInfo audio_types[] = {
+     {
+         .name = TYPE_AUDIO_PA,
+         .parent = TYPE_AUDIO_MIXENG_BACKEND,
+         .instance_size = sizeof(AudioPa),
+         .class_init = audio_pa_class_init,
++        .instance_finalize = audio_pa_finalize,
+     },
+ };
+ 
 -- 
 2.53.0
 
