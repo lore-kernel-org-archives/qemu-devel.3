@@ -4,90 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6037EEC2AE
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 23:43:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E3E3EEC2AE
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 23:48:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vufXV-0006wp-Bo; Mon, 23 Feb 2026 18:40:33 -0500
+	id 1vuff4-0001Au-46; Mon, 23 Feb 2026 18:48:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vufXT-0006w8-CD
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 18:40:31 -0500
-Received: from qs-2002i-snip4-6.eps.apple.com ([57.103.87.217]
- helo=outbound.qs.icloud.com)
+ id 1vuff2-00018A-8Q
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 18:48:20 -0500
+Received: from ci-2002b-snip4-11.eps.apple.com ([57.103.88.151]
+ helo=outbound.ci.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vufXR-0004Qu-Id
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 18:40:31 -0500
-Received: from outbound.qs.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-east-2d-60-percent-6 (Postfix) with ESMTPS id
- 53345180010D; Mon, 23 Feb 2026 23:40:24 +0000 (UTC)
+ id 1vufez-00067a-QU
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 18:48:19 -0500
+Received: from outbound.ci.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-central-1k-100-percent-6 (Postfix) with ESMTPS id
+ 07D8F180012A; Mon, 23 Feb 2026 23:48:14 +0000 (UTC)
 Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1771890029; x=1774482029;
- bh=tErMiEuDLXt0dMED3y+T60xeOyEgc7UicdCqP1DD7/0=;
- h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type:x-icloud-hme;
- b=CMiKQauZA1x+SK1kdmxSrE4+qqWQhXGztOd/cpOCq9KjvG9TcJ7QS5d/+Coy72Ct+3/LQxPMPLzeCXC8ws0TxeF26BBrz0UdodbzNSmNyWtQUaqJdhk7NP9CBvc/1llebz6jFTGQ8wylUOg+Tg7UasuCXii0UdpRWhyCnOrG/4REFRfauoil+FVSAwNSuvoUJujs5ZK8VywkXD9RZ6WOhHVpJnDQcnJv2JmV6L9FYaJ/U25ReDoAUR7trZ0clTUQKQEaXg3iPPBNmUFkz08/Y/+wpirHoDRG+8V/qUctSbhlmL1Owm+pBBsdXZZd2/B2xD14e/+T5QylcJUuxFT2/g==
+ s=sig1; t=1771890497; x=1774482497;
+ bh=pFQv9Rfm4AYozMTEgmSXV/riNdDHFakVBkK2Xow66sc=;
+ h=From:Message-Id:Content-Type:Mime-Version:Subject:Date:To:x-icloud-hme;
+ b=JWG6mAZT9RVLN/l7v2L9ut9LA6TWuGimYqNqW3E1gEK6FWSWdSLyOQ+OYRbShn78qPidAZMQA/YETluMK3ZPueAfDgawqXsWpMPFtme93yG2nwySThYK7o8ntXxlE26bTze+sj4qPLPIUuShGwTqzY6tDgBb2bSpG1Bpq11uxtWTkYus1aionxmeh8Cfw2aNh3n/mXCV7munfqiHS0auy/VcYoQ2a6xYPMC8IaAT6YRBmG8o72HGGNuEdnC/HGBBDHwCPna8+mg+kTcOL3JkZRe36SDPQ9XxqoKMtd8x2HhCycU+203uuddU9Liy0lFZOZhLXGvyed9XtYvUQefQsQ==
 mail-alias-created-date: 1752046281608
-Received: from localhost.localdomain (unknown [17.57.155.37])
- by p00-icloudmta-asmtp-us-east-2d-60-percent-6 (Postfix) with ESMTPSA id
- 7B12318003AE; Mon, 23 Feb 2026 23:40:22 +0000 (UTC)
+Received: from smtpclient.apple (unknown [17.57.156.36])
+ by p00-icloudmta-asmtp-us-central-1k-100-percent-6 (Postfix) with ESMTPSA id
+ BB2901800105; Mon, 23 Feb 2026 23:48:12 +0000 (UTC)
 From: Mohamed Mediouni <mohamed@unpredictable.fr>
-To: qemu-devel@nongnu.org
+Message-Id: <9B620619-368F-49DA-BC81-295DD1A95F4C@unpredictable.fr>
+Content-Type: multipart/alternative;
+ boundary="Apple-Mail=_106E73B2-3DBB-41EE-B298-B8A5291FA2A8"
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.400.21\))
+Subject: Re: [PATCH v6 00/28] whpx: x86 updates (2026-02)
+Date: Tue, 24 Feb 2026 00:48:00 +0100
+In-Reply-To: <20260223233950.96076-1-mohamed@unpredictable.fr>
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  Magnus Kulke <magnuskulke@linux.microsoft.com>,
- Mohamed Mediouni <mohamed@unpredictable.fr>,
  Bernhard Beschow <shentey@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Cameron Esfahani <dirty@apple.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?utf-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  Phil Dennis-Jordan <phil@philjordan.eu>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Pedro Barbuda <pbarbuda@microsoft.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?utf-8?B?IkRhbmllbCBQLiBCZXJyYW5nw6ki?= <berrange@redhat.com>,
  Zhao Liu <zhao1.liu@intel.com>, Wei Liu <wei.liu@kernel.org>,
  Roman Bolshakov <rbolshakov@ddn.com>
-Subject: [PATCH v6 15/28] whpx: common, i386, arm: rework state levels
-Date: Tue, 24 Feb 2026 00:39:37 +0100
-Message-ID: <20260223233950.96076-16-mohamed@unpredictable.fr>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20260223233950.96076-1-mohamed@unpredictable.fr>
+To: qemu-devel@nongnu.org
 References: <20260223233950.96076-1-mohamed@unpredictable.fr>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjIzMDIwNiBTYWx0ZWRfX0BmSDO/avJMf
- akjPdNOBEsijPSZ6iunMEqTzA+RYMJ9L8vnW41BKwx2Oe88YLz9MLBDb5ql6OFA9xEP8tmUCej2
- 73mcBC3SzZhScalDvzDfIw1Pb/MQAXQV25aQZyAKyaED68Wu+3t8cQP4rJxnzEMpdPF1T+rPk56
- 23tAfNYJ3syUXUF4D/6D5sBQ6TtW2OJEuv2qNfWvpU61N99aaFwTvONh8iXphUhaTuTF3aACvz1
- J7xgAgCecoqWGbRdBMKm90STctuDp/NzKENSYcx9Wj5kv796c4WH7rOhtI5KWYCwsLF+rx6P+Y9
- 1VhXxe0eqW9n3TYLqUT+CE0J57qBMTra8oib5ULFk7MgNyypm5CobQV5ej7MUI=
-X-Proofpoint-GUID: cEpz0EnJBBILq8oG7Ubcnr2G9BqKszF8
-X-Authority-Info-Out: v=2.4 cv=C/PkCAP+ c=1 sm=1 tr=0 ts=699ce56b
- cx=c_apl:c_apl_out:c_pps a=bsP7O+dXZ5uKcj+dsLqiMw==:117
- a=bsP7O+dXZ5uKcj+dsLqiMw==:17 a=IkcTkHD0fZMA:10 a=HzLeVaNsDn8A:10
- a=VkNPw1HP01LnGYTKEx00:22 a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22
- a=KKAkSRfTAAAA:8 a=N0RsYbKkH9eAvmUnK9wA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: cEpz0EnJBBILq8oG7Ubcnr2G9BqKszF8
+X-Mailer: Apple Mail (2.3864.400.21)
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjIzMDIwNyBTYWx0ZWRfX4/UZ+PV2O1NP
+ ZaB7do2u2o/PHak+UANsyH3t9M2o+PJUKPXLGauGTZYWJPjcLrOAvLZK+pprXoIohFOam9XNgUu
+ xQzZxukZXitv9zeRYqU1uoD8+ihgOge2bd7UIAjrk+M+k3y9neJv22kNjAZINKodTNLCc+Pl+Vc
+ SQBpjAbzmK40lT5Zj1Xj3mZXL6WSd8ClPFdlBlsW8O8ADJd7KMuEzSlnL9Jomhh9XVj55jsLuq0
+ JFGh8YZ+rhJUTJwDCBqaytlKK9vl6duLb9/UcCukb81QNZCUt1wV3K7ZNQwbu1yLHr5jg8ayFqF
+ akB7BEvkXnas9uhSdFZSTHg0DymIs1rAH461IDzidYMAtgaacjx/gGh6ZQQEUw=
+X-Authority-Info-Out: v=2.4 cv=JKk2csKb c=1 sm=1 tr=0 ts=699ce73f
+ cx=c_apl:c_apl_out:c_pps a=2G65uMN5HjSv0sBfM2Yj2w==:117
+ a=2G65uMN5HjSv0sBfM2Yj2w==:17 a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22 a=NEAV23lmAAAA:8
+ a=GaQpPoNlAAAA:8 a=VwQbUJbxAAAA:8 a=pGLkceISAAAA:8 a=AGh-_u6KpJHkCi6yoAAA:9
+ a=QEXdDO2ut3YA:10 a=s_n1PURgIh485HEq:21 a=_W_S_7VecoQA:10
+ a=xF5q_uoM5gZT5J3czcBi:22
+X-Proofpoint-GUID: 2eQsp3nUvJrj-_UsTnqmCLjAX-4UiwdV
+X-Proofpoint-ORIG-GUID: 2eQsp3nUvJrj-_UsTnqmCLjAX-4UiwdV
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-02-23_05,2026-02-23_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 clxscore=1030
- lowpriorityscore=0 spamscore=0 mlxlogscore=999 mlxscore=0 suspectscore=0
- adultscore=0 malwarescore=0 phishscore=0 bulkscore=0 classifier=spam
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
+ malwarescore=0 spamscore=0 bulkscore=0 suspectscore=0 lowpriorityscore=0
+ mlxscore=0 phishscore=0 mlxlogscore=999 clxscore=1030 classifier=spam
  authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
- definitions=main-2602230206
-X-JNJ: AAAAAAABSTk8mWwGNw6v4okc3k9lmwJ5aeYVyiRH/Ll3IH39ZQYpndN9n7HnZfnl9Q0q4Us55y+KezKVxpQFg9hRFYjqRKYFMzI1ZURCrl6sCk0OIw879neyIsaUIuXQRbFDIDWa6tKn8ACW3gFpKlIIMtts9Z6f1t4UIydEwze/3kOvL+MT5AFuTHvzSx4qwma1WFFGuTs90rf6ke7snk6voMJHvTziIfaBnGf2zmykXUjuXU52NBEYIW5VvvIF5mDzaSlaTbMBLwOBs6y6vunjSJsUq23i2a7kYP5XZa2SOQZHPv00EI/6TOxzi8PJAt8cIQuOj+6iCvhHS5iF7Ca8Et+I7escKczIvR8fq289tU5d7/v0aruEhj90qocetozPBapIIHBaq7DnRMesS9+auT/hpiGVWxud1tHQJKwaFR3UFhGkJkP9W7iWrViVXbyFfN1Sp3k/fmBHDKd5YnWoY1oreCUQfCiKGhEvQOEmzWkC9CD/nepvF84pnKcsfECP+rwBZsVsLHdz0usIYvrI0cbXyz8zDUc5+6CbtQZ+7q8vT3VfmoTrEDV+KejOb40T+/q4KqReXDQDoqexdxQAdv0BUbHBjC7Tzw65BC5UtFLU3+A3Vv/IRztCpvO57JP0RIRT9rgFmw+Ca4j/cfd5JwgcrbOrJ7lSYJh4KUW2gywC6nrbX3j/PD5qiEf5/wXiViE279by4qeMOHGnViodFTBxjxQ0D0IV5d3PvyJ0aIedWNk1atjVAESWc7wg9YIPLi6lVYTMMxbYIs8RaWH/jYv5
-Received-SPF: pass client-ip=57.103.87.217;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.qs.icloud.com
-X-Spam_score_int: -1
-X-Spam_score: -0.2
+ definitions=main-2602230207
+X-JNJ: AAAAAAABxcbSQCOT24Z8wD4RazgZwjnMwyX9EqBw8+h91hCk6FLdhIk2yZ0s+HQ8ttfDfGl1FCY99oBA4yA7k3S3HjhfazOlRHjW2zQByiQD4lTrQtP/oTTLQi6PwH0f5+rRZJ+NbAAIiUcr+EYiS7NBj9om13RRwkR8YJRPbnxNen/o8mpeWsj4XmjwKTmkE8llRqZyFqGXgMt2Kr48Dw6w8ixE5tA199POkitrLpaicrDd7YUmz6XIJUPptpq8v2ItNL+NoLsMqy1BnfgUjikXcUg+dCbXWzqwlTH/jQvnrp/eqkfe8+wfhiMHi1yM5TZORewUBm3J/tFhkxDGqTL3DIE77Rf/A+dc3d/NGartK3hQkMOYJ7nyedqAOn3RU1sNbVK5Ns1kwe4/NO1zuVmjciTdjZPab2gQphub9i7PyARXS45VkRS0IZv+GFMsz0Greyx1Eq11JyqqDQ2xc5UF2eP+HgeT0MTdmNsSxAFLzk0JQGDDk/iC88GBAakV45YjSiM7M2VqIBDIISTqXORC8qqOzWyvEJgZoHscWBZZqQW8vHLrihOENUO3PvqByMq33L3wtZTOD9TCWTpuOE6zfoiYfTSNDFSPmVb05zDQIweSIm83F2fsTLE1rkwitYVryw6fWssa02RhHRx7IjkMvic28QvH8a0d+TNrgcJqEqZDPnngpRbOMPrCYQC9/nI9YDj4Zma4hG1c8MmzHLp6/T2T90sAMOQzbszZVtx6M+ogvD+wn2j/HWcsgbWsQacvquSWmH6V/SnKsIKIEqn+6AodebU5OFaLEulPgMKGnq0GVmsA4bnwKQCkwjz1KBhqARzxMbVpeNU=
+Received-SPF: pass client-ip=57.103.88.151;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.ci.icloud.com
+X-Spam_score_int: -8
+X-Spam_score: -0.9
 X-Spam_bar: /
-X-Spam_report: (-0.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1.179, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.717,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Spam_report: (-0.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1.179,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.717, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,215 +104,382 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Change state levels from a set of ifdefs to an enum.
-Make register state loads use state levels too.
 
-Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- accel/whpx/whpx-common.c        |  8 ++++----
- include/system/whpx-accel-ops.h | 16 ++++++++++------
- include/system/whpx-all.h       |  6 ++++--
- target/arm/whpx/whpx-all.c      |  8 ++++----
- target/i386/whpx/whpx-all.c     | 16 ++++++++--------
- 5 files changed, 30 insertions(+), 24 deletions(-)
+--Apple-Mail=_106E73B2-3DBB-41EE-B298-B8A5291FA2A8
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=utf-8
 
-diff --git a/accel/whpx/whpx-common.c b/accel/whpx/whpx-common.c
-index 88eef55799..4863fc8663 100644
---- a/accel/whpx/whpx-common.c
-+++ b/accel/whpx/whpx-common.c
-@@ -46,7 +46,7 @@ struct WHPDispatch whp_dispatch;
- void whpx_flush_cpu_state(CPUState *cpu)
- {
-     if (cpu->vcpu_dirty) {
--        whpx_set_registers(cpu, WHPX_SET_RUNTIME_STATE);
-+        whpx_set_registers(cpu, WHPX_LEVEL_RUNTIME_STATE);
-         cpu->vcpu_dirty = false;
-     }
- }
-@@ -180,7 +180,7 @@ int whpx_last_vcpu_stopping(CPUState *cpu)
- static void do_whpx_cpu_synchronize_state(CPUState *cpu, run_on_cpu_data arg)
- {
-     if (!cpu->vcpu_dirty) {
--        whpx_get_registers(cpu);
-+        whpx_get_registers(cpu, WHPX_LEVEL_FULL_STATE);
-         cpu->vcpu_dirty = true;
-     }
- }
-@@ -188,14 +188,14 @@ static void do_whpx_cpu_synchronize_state(CPUState *cpu, run_on_cpu_data arg)
- static void do_whpx_cpu_synchronize_post_reset(CPUState *cpu,
-                                                run_on_cpu_data arg)
- {
--    whpx_set_registers(cpu, WHPX_SET_RESET_STATE);
-+    whpx_set_registers(cpu, WHPX_LEVEL_RESET_STATE);
-     cpu->vcpu_dirty = false;
- }
- 
- static void do_whpx_cpu_synchronize_post_init(CPUState *cpu,
-                                               run_on_cpu_data arg)
- {
--    whpx_set_registers(cpu, WHPX_SET_FULL_STATE);
-+    whpx_set_registers(cpu, WHPX_LEVEL_FULL_STATE);
-     cpu->vcpu_dirty = false;
- }
- 
-diff --git a/include/system/whpx-accel-ops.h b/include/system/whpx-accel-ops.h
-index ed9d4c49f4..4b2a732654 100644
---- a/include/system/whpx-accel-ops.h
-+++ b/include/system/whpx-accel-ops.h
-@@ -22,11 +22,15 @@ void whpx_cpu_synchronize_post_reset(CPUState *cpu);
- void whpx_cpu_synchronize_post_init(CPUState *cpu);
- void whpx_cpu_synchronize_pre_loadvm(CPUState *cpu);
- 
--/* state subset only touched by the VCPU itself during runtime */
--#define WHPX_SET_RUNTIME_STATE   1
--/* state subset modified during VCPU reset */
--#define WHPX_SET_RESET_STATE     2
--/* full state set, modified during initialization or on vmload */
--#define WHPX_SET_FULL_STATE      3
-+typedef enum WHPXStateLevel {
-+    /* subset of runtime state for faster returns from vmexit */
-+    WHPX_LEVEL_FAST_RUNTIME_STATE,
-+    /* state subset only touched by the VCPU itself during runtime */
-+    WHPX_LEVEL_RUNTIME_STATE,
-+    /* state subset modified during VCPU reset */
-+    WHPX_LEVEL_RESET_STATE,
-+    /* full state set, modified during initialization or on vmload */
-+    WHPX_LEVEL_FULL_STATE
-+} WHPXStateLevel;
- 
- #endif /* TARGET_I386_WHPX_ACCEL_OPS_H */
-diff --git a/include/system/whpx-all.h b/include/system/whpx-all.h
-index b831c463b0..2cbea71b14 100644
---- a/include/system/whpx-all.h
-+++ b/include/system/whpx-all.h
-@@ -2,10 +2,12 @@
- #ifndef SYSTEM_WHPX_ALL_H
- #define SYSTEM_WHPX_ALL_H
- 
-+#include "system/whpx-accel-ops.h"
-+
- /* Called by whpx-common */
- int whpx_vcpu_run(CPUState *cpu);
--void whpx_get_registers(CPUState *cpu);
--void whpx_set_registers(CPUState *cpu, int level);
-+void whpx_get_registers(CPUState *cpu, WHPXStateLevel level);
-+void whpx_set_registers(CPUState *cpu, WHPXStateLevel level);
- int whpx_accel_init(AccelState *as, MachineState *ms);
- void whpx_cpu_instance_init(CPUState *cs);
- HRESULT whpx_set_exception_exit_bitmap(UINT64 exceptions);
-diff --git a/target/arm/whpx/whpx-all.c b/target/arm/whpx/whpx-all.c
-index 9a9a19c196..a4d54b027f 100644
---- a/target/arm/whpx/whpx-all.c
-+++ b/target/arm/whpx/whpx-all.c
-@@ -418,7 +418,7 @@ int whpx_vcpu_run(CPUState *cpu)
-     do {
-         bool advance_pc = false;
-         if (cpu->vcpu_dirty) {
--            whpx_set_registers(cpu, WHPX_SET_RUNTIME_STATE);
-+            whpx_set_registers(cpu, WHPX_LEVEL_RUNTIME_STATE);
-             cpu->vcpu_dirty = false;
-         }
- 
-@@ -483,7 +483,7 @@ int whpx_vcpu_run(CPUState *cpu)
-         default:
-             error_report("WHPX: Unexpected VP exit code 0x%08x",
-                          vcpu->exit_ctx.ExitReason);
--            whpx_get_registers(cpu);
-+            whpx_get_registers(cpu, WHPX_LEVEL_FULL_STATE);
-             bql_lock();
-             qemu_system_guest_panicked(cpu_get_crash_info(cpu));
-             bql_unlock();
-@@ -517,7 +517,7 @@ static void clean_whv_register_value(WHV_REGISTER_VALUE *val)
-     memset(val, 0, sizeof(WHV_REGISTER_VALUE));
- }
- 
--void whpx_get_registers(CPUState *cpu)
-+void whpx_get_registers(CPUState *cpu, WHPXStateLevel level)
- {
-     ARMCPU *arm_cpu = ARM_CPU(cpu);
-     CPUARMState *env = &arm_cpu->env;
-@@ -564,7 +564,7 @@ void whpx_get_registers(CPUState *cpu)
-     aarch64_restore_sp(env, arm_current_el(env));
- }
- 
--void whpx_set_registers(CPUState *cpu, int level)
-+void whpx_set_registers(CPUState *cpu, WHPXStateLevel level)
- {
-     ARMCPU *arm_cpu = ARM_CPU(cpu);
-     CPUARMState *env = &arm_cpu->env;
-diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
-index baa3169c55..c09d9affef 100644
---- a/target/i386/whpx/whpx-all.c
-+++ b/target/i386/whpx/whpx-all.c
-@@ -367,7 +367,7 @@ static uint64_t whpx_cr8_to_apic_tpr(uint64_t cr8)
-     return cr8 << 4;
- }
- 
--void whpx_set_registers(CPUState *cpu, int level)
-+void whpx_set_registers(CPUState *cpu, WHPXStateLevel level)
- {
-     struct whpx_state *whpx = &whpx_global;
-     AccelCPUState *vcpu = cpu->accel;
-@@ -386,7 +386,7 @@ void whpx_set_registers(CPUState *cpu, int level)
-      * Following MSRs have side effects on the guest or are too heavy for
-      * runtime. Limit them to full state update.
-      */
--    if (level >= WHPX_SET_RESET_STATE) {
-+    if (level >= WHPX_LEVEL_RESET_STATE) {
-         whpx_set_tsc(cpu);
-     }
- 
-@@ -583,7 +583,7 @@ static void whpx_get_xcrs(CPUState *cpu)
-     cpu_env(cpu)->xcr0 = xcr0.Reg64;
- }
- 
--void whpx_get_registers(CPUState *cpu)
-+void whpx_get_registers(CPUState *cpu, WHPXStateLevel level)
- {
-     struct whpx_state *whpx = &whpx_global;
-     AccelCPUState *vcpu = cpu->accel;
-@@ -770,10 +770,10 @@ static int emulate_instruction(CPUState *cpu, const uint8_t *insn_bytes, size_t
-     struct x86_decode decode = { 0 };
-     x86_insn_stream stream = { .bytes = insn_bytes, .len = insn_len };
- 
--    whpx_get_registers(cpu);
-+    whpx_get_registers(cpu, WHPX_LEVEL_FAST_RUNTIME_STATE);
-     decode_instruction_stream(env, &decode, &stream);
-     exec_instruction(env, &decode);
--    whpx_set_registers(cpu, WHPX_SET_RUNTIME_STATE);
-+    whpx_set_registers(cpu, WHPX_LEVEL_FAST_RUNTIME_STATE);
- 
-     return 0;
- }
-@@ -1589,7 +1589,7 @@ int whpx_vcpu_run(CPUState *cpu)
- 
-     do {
-         if (cpu->vcpu_dirty) {
--            whpx_set_registers(cpu, WHPX_SET_RUNTIME_STATE);
-+            whpx_set_registers(cpu, WHPX_LEVEL_RUNTIME_STATE);
-             cpu->vcpu_dirty = false;
-         }
- 
-@@ -1796,7 +1796,7 @@ int whpx_vcpu_run(CPUState *cpu)
-             break;
-         }
-         case WHvRunVpExitReasonException:
--            whpx_get_registers(cpu);
-+            whpx_get_registers(cpu, WHPX_LEVEL_FULL_STATE);
- 
-             if ((vcpu->exit_ctx.VpException.ExceptionType ==
-                  WHvX64ExceptionTypeDebugTrapOrFault) &&
-@@ -1828,7 +1828,7 @@ int whpx_vcpu_run(CPUState *cpu)
-         default:
-             error_report("WHPX: Unexpected VP exit code %d",
-                          vcpu->exit_ctx.ExitReason);
--            whpx_get_registers(cpu);
-+            whpx_get_registers(cpu, WHPX_LEVEL_FULL_STATE);
-             bql_lock();
-             qemu_system_guest_panicked(cpu_get_crash_info(cpu));
-             bql_unlock();
--- 
-2.50.1 (Apple Git-155)
 
+
+> On 24. Feb 2026, at 00:39, Mohamed Mediouni <mohamed@unpredictable.fr> =
+wrote:
+>=20
+> It's a bit of a misnomer, but didn't rename this series to not cause =
+more confusion... should
+> probably have been named more like:
+>=20
+> whpx, target/i386/emulate: fixes for target/i386/emulate and move WHPX =
+x86 to it + WHPX misc fixes
+>=20
+> Should have probably put a bit less faith in the state of =
+target/i386/emulate from the get-go...
+>=20
+> In guest OSes compatibility: Win9x works now (but is not too =
+stable...). I probably recommend using -M kernel-irqchip=3Doff
+> for that case though as it apparently raises stability (a bit). Win9x =
+didn't work with winhvemulate.
+>=20
+> 32-bit Haiku didn't work for me with or without this, with an invalid =
+bit being there in the PTEs, but 64-bit Haiku works.
+>=20
+> On the bright side, this series should fix a lot on x86 HVF too=E2=80=A6=
+
+
+Tests on x86 HVF would be nice to have.
+
+> Some questions/notes for mshv:
+> - On the model of the "whpx: i386: inject exceptions" commit, also =
+have injection of raised exceptions for
+> the MSHV backend for this all to work as expected.
+> - I removed the reliance on the Hyper-V GVA translate call, which is a =
+very slow one. If you want to add it
+> back instead of using the QEMU target/i386/emulate page table walker, =
+there probably ought to be a way to reduce
+> the number of calls to that...
+> - but emul_ops has a new mmu_gva_to_gpa call to enable this case to be =
+implemented
+> - la57 code is not exactly tested
+>=20
+> And in missing things that are probably a better fit for a separate =
+patch (series) instead of this continously-growing one:
+> - I don't handle privileges for the page walker in target/i386/emulate
+> - and SMAP/SMEP for it, with complexity they might add to the picture
+> - and the same applies to putting the reserved bit on error_code for =
+erroneous PTEs
+>=20
+> Git: https://github.com/mediouni-m/qemu (tag for this revision: =
+whpx-x86-202502-v5, and yeah the 2025 is a typo=E2=80=A6)
+
+v6 instead of v5.
+
+I should perhaps send revisions a bit less often=E2=80=A6
+
+And the patchew link: =
+https://patchew.org/QEMU/20260223233950.96076-1-mohamed@unpredictable.fr/
+
+> This series contains:
+>=20
+> - target/i386/emulate fixes
+> - move HVF x86_mmu code to common code
+> - fixing debug support, which was broken since around: "gdbstub: move =
+guest debug support check to ops"
+> a48e7d9e52f8fe8b47f4c74f3e99d9d677b87fe5
+> - switch over from winhvemulation to common x86 VM exit emulation code
+> - remove some log lines
+> - Remove WHPX CPUID traps as they're currently quite broken
+> - Reworked implementation of the REP prefix for string instructions
+> - page table walker rework, error propagation for target/i386/emulate,
+> and injecting exceptions too
+> - bump the exposed interrupt controller to an X2APIC
+> - preemptively ignore interrupt requests to vector 0 instead of making =
+the HV do it
+>=20
+> Changes added since v5:
+> - Thorough propagation of memory error reads across =
+target/i386/emulate
+> - target/i386/emulate: warn on read/write from/to unmapped MMIO
+> - for an unmapped GPA, continue and 0xff the register
+>=20
+> Changes added since v4:
+> - MMU code rework
+> - page table walker rework, (some) error propagation for =
+target/i386/emulate,
+> and injecting exceptions too...
+> - all around cleanups around target/i386/emulate...
+> - bump the exposed interrupt controller to an X2APIC
+> - preemptively ignore interrupt requests to vector 0 instead of making =
+the HV do it
+>=20
+> Changes added since v3:
+> - Reworked implementation of the REP prefix for string instructions
+> - Pick up flags conversion for WHPX x86 (used by target/i386/emulate)
+> - get rid of the goto for the save/restore less state for WHPX patch
+>=20
+> Changes added since v2:
+> - Take target/i386/emulate patches from Bernhard Beschow
+> =
+https://lore.kernel.org/qemu-devel/20260214131659.31378-1-shentey@gmail.co=
+m/
+> - Rework state levels to an enum
+> - Skip some state loading on the registers save path too
+>=20
+> Changes added since v1:
+> - move HVF x86_mmu code to common code
+> - Use x86_mmu in WHPX MMIO exits
+> - Remove WHPX CPUID traps as they're currently quite broken
+> - Optimise MMIO vmexits by not restoring the full state
+>=20
+> Bernhard Beschow (3):
+>  target/i386/emulate/x86_decode: Fix compiler warning
+>  target/i386/hvf/x86_mmu: Fix compiler warning
+>  target/i386/emulate/x86_decode: Actually use stream in
+>    decode_instruction_stream()
+>=20
+> Mohamed Mediouni (25):
+>  target/i386/emulate: rework string_rep emulation
+>  target/i386: emulate, hvf: move x86_mmu to common code
+>  whpx: i386: re-enable guest debug support
+>  whpx: preparatory changes before switching over from winhvemulation
+>  whpx: refactor whpx_destroy_vcpu to arch-specific function
+>  whpx: move whpx_get_reg/whpx_set_reg to generic code
+>  whpx: i386: switch over from winhvemulation to target/i386/emulate
+>  whpx: i386: flags conversion for target/i386/emulate internal state
+>  whpx: i386: remove remaining winhvemulation support code
+>  whpx: i386: remove messages
+>  whpx: i386: remove CPUID trapping
+>  whpx: common, i386, arm: rework state levels
+>  whpx: i386: saving/restoring less state for
+>    WHPX_LEVEL_FAST_RUNTIME_STATE
+>  target/i386: mshv, emulate: move the generic x86 helpers to
+>    target/i386/emulate
+>  target/i386: emulate: 5-level paging for the page table walker
+>  target/i386: emulate, hvf, mshv: rework MMU code
+>  hvf: i386: save/restore CR0/2/3
+>  target/i386: emulate: get rid of write_val_to_mem() helper
+>  target/i386: emulate: raise an exception on translation fault
+>  target/i386: emulate: remove fetch_instruction helper too
+>  target/i386: emulate: propagate memory errors on most reads/writes
+>  whpx: i386: inject exceptions
+>  whpx: i386: bump to x2apic
+>  whpx: i386: ignore send_msi to interrupt vector 0
+>  target/i386: emulate: propagate errors all the way and stop early
+>=20
+> accel/whpx/whpx-accel-ops.c                   |   8 +
+> accel/whpx/whpx-common.c                      |  68 +-
+> include/system/whpx-accel-ops.h               |  16 +-
+> include/system/whpx-all.h                     |  11 +-
+> include/system/whpx-common.h                  |   6 +-
+> include/system/whpx-internal.h                |  16 -
+> meson.build                                   |   3 +-
+> target/arm/whpx/whpx-all.c                    |  43 +-
+> target/i386/cpu.h                             |   2 +-
+> target/i386/emulate/meson.build               |   9 +
+> target/i386/emulate/x86.h                     |   1 +
+> target/i386/emulate/x86_decode.c              |  12 +-
+> target/i386/emulate/x86_emu.c                 | 356 +++++++----
+> target/i386/emulate/x86_emu.h                 |  24 +-
+> .../{mshv/x86.c =3D> emulate/x86_helpers.c}     |  13 +-
+> target/i386/emulate/x86_mmu.c                 | 354 +++++++++++
+> target/i386/{hvf =3D> emulate}/x86_mmu.h        |  31 +-
+> target/i386/hvf/hvf.c                         |  40 +-
+> target/i386/hvf/meson.build                   |   1 -
+> target/i386/hvf/x86.c                         |  13 +-
+> target/i386/hvf/x86_mmu.c                     | 277 --------
+> target/i386/hvf/x86_task.c                    |  10 +-
+> target/i386/mshv/meson.build                  |   2 +-
+> target/i386/mshv/mshv-cpu.c                   |  71 ---
+> target/i386/whpx/whpx-all.c                   | 591 ++++++++----------
+> target/i386/whpx/whpx-apic.c                  |   5 +
+> 26 files changed, 1031 insertions(+), 952 deletions(-)
+> rename target/i386/{mshv/x86.c =3D> emulate/x86_helpers.c} (95%)
+> create mode 100644 target/i386/emulate/x86_mmu.c
+> rename target/i386/{hvf =3D> emulate}/x86_mmu.h (51%)
+> delete mode 100644 target/i386/hvf/x86_mmu.c
+>=20
+> --=20
+> 2.50.1 (Apple Git-155)
+>=20
+
+
+--Apple-Mail=_106E73B2-3DBB-41EE-B298-B8A5291FA2A8
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html;
+	charset=utf-8
+
+<html aria-label=3D"message body"><head><meta http-equiv=3D"content-type" =
+content=3D"text/html; charset=3Dutf-8"></head><body =
+style=3D"overflow-wrap: break-word; -webkit-nbsp-mode: space; =
+line-break: after-white-space;"><br =
+id=3D"lineBreakAtBeginningOfMessage"><div><br><blockquote =
+type=3D"cite"><div>On 24. Feb 2026, at 00:39, Mohamed Mediouni =
+&lt;mohamed@unpredictable.fr&gt; wrote:</div><br =
+class=3D"Apple-interchange-newline"><div><div>It's a bit of a misnomer, =
+but didn't rename this series to not cause more confusion... =
+should<br>probably have been named more like:<br><br>whpx, =
+target/i386/emulate: fixes for target/i386/emulate and move WHPX x86 to =
+it + WHPX misc fixes<br><br>Should have probably put a bit less faith in =
+the state of target/i386/emulate from the get-go...<br><br>In guest OSes =
+compatibility: Win9x works now (but is not too stable...). I probably =
+recommend using -M kernel-irqchip=3Doff<br>for that case though as it =
+apparently raises stability (a bit). Win9x didn't work with =
+winhvemulate.<br><br>32-bit Haiku didn't work for me with or without =
+this, with an invalid bit being there in the PTEs, but 64-bit Haiku =
+works.<br><br>On the bright side, this series should fix a lot on x86 =
+HVF too=E2=80=A6</div></div></blockquote><div><br></div>Tests on x86 HVF =
+would be nice to have.</div><div><br><blockquote =
+type=3D"cite"><div></div></blockquote><blockquote =
+type=3D"cite"><div><div>Some questions/notes for mshv:<br>- On the model =
+of the "whpx: i386: inject exceptions" commit, also have injection of =
+raised exceptions for<br>the MSHV backend for this all to work as =
+expected.<br>- I removed the reliance on the Hyper-V GVA translate call, =
+which is a very slow one. If you want to add it<br>back instead of using =
+the QEMU target/i386/emulate page table walker, there probably ought to =
+be a way to reduce<br>the number of calls to that...<br>- but emul_ops =
+has a new mmu_gva_to_gpa call to enable this case to be implemented<br>- =
+la57 code is not exactly tested<br><br>And in missing things that are =
+probably a better fit for a separate patch (series) instead of this =
+continously-growing one:<br>- I don't handle privileges for the page =
+walker in target/i386/emulate<br>- and SMAP/SMEP for it, with complexity =
+they might add to the picture<br>- and the same applies to putting the =
+reserved bit on error_code for erroneous PTEs<br><br>Git: =
+https://github.com/mediouni-m/qemu (tag for this revision: =
+whpx-x86-202502-v5, and yeah the 2025 is a =
+typo=E2=80=A6)<br></div></div></blockquote><div><br></div>v6 instead of =
+v5.</div><div><br></div><div>I should perhaps send revisions a bit less =
+often=E2=80=A6</div><div><br></div><div>And the patchew link:&nbsp;<a =
+href=3D"https://patchew.org/QEMU/20260223233950.96076-1-mohamed@unpredicta=
+ble.fr/">https://patchew.org/QEMU/20260223233950.96076-1-mohamed@unpredict=
+able.fr/</a></div><div><br><blockquote type=3D"cite"><div><div>This =
+series contains:<br><br>- target/i386/emulate fixes<br>- move HVF =
+x86_mmu code to common code<br>- fixing debug support, which was broken =
+since around: "gdbstub: move guest debug support check to =
+ops"<br>a48e7d9e52f8fe8b47f4c74f3e99d9d677b87fe5<br>- switch over from =
+winhvemulation to common x86 VM exit emulation code<br>- remove some log =
+lines<br>- Remove WHPX CPUID traps as they're currently quite =
+broken<br>- Reworked implementation of the REP prefix for string =
+instructions<br>- page table walker rework, error propagation for =
+target/i386/emulate,<br>and injecting exceptions too<br>- bump the =
+exposed interrupt controller to an X2APIC<br>- preemptively ignore =
+interrupt requests to vector 0 instead of making the HV do =
+it<br><br>Changes added since v5:<br>- Thorough propagation of memory =
+error reads across target/i386/emulate<br>- target/i386/emulate: warn on =
+read/write from/to unmapped MMIO<br>- for an unmapped GPA, continue and =
+0xff the register<br><br>Changes added since v4:<br>- MMU code =
+rework<br>- page table walker rework, (some) error propagation for =
+target/i386/emulate,<br>and injecting exceptions too...<br>- all around =
+cleanups around target/i386/emulate...<br>- bump the exposed interrupt =
+controller to an X2APIC<br>- preemptively ignore interrupt requests to =
+vector 0 instead of making the HV do it<br><br>Changes added since =
+v3:<br>- Reworked implementation of the REP prefix for string =
+instructions<br>- Pick up flags conversion for WHPX x86 (used by =
+target/i386/emulate)<br>- get rid of the goto for the save/restore less =
+state for WHPX patch<br><br>Changes added since v2:<br>- Take =
+target/i386/emulate patches from Bernhard =
+Beschow<br>https://lore.kernel.org/qemu-devel/20260214131659.31378-1-shent=
+ey@gmail.com/<br>- Rework state levels to an enum<br>- Skip some state =
+loading on the registers save path too<br><br>Changes added since =
+v1:<br>- move HVF x86_mmu code to common code<br>- Use x86_mmu in WHPX =
+MMIO exits<br>- Remove WHPX CPUID traps as they're currently quite =
+broken<br>- Optimise MMIO vmexits by not restoring the full =
+state<br><br>Bernhard Beschow (3):<br> =
+&nbsp;target/i386/emulate/x86_decode: Fix compiler warning<br> =
+&nbsp;target/i386/hvf/x86_mmu: Fix compiler warning<br> =
+&nbsp;target/i386/emulate/x86_decode: Actually use stream in<br> =
+&nbsp;&nbsp;&nbsp;decode_instruction_stream()<br><br>Mohamed Mediouni =
+(25):<br> &nbsp;target/i386/emulate: rework string_rep emulation<br> =
+&nbsp;target/i386: emulate, hvf: move x86_mmu to common code<br> =
+&nbsp;whpx: i386: re-enable guest debug support<br> &nbsp;whpx: =
+preparatory changes before switching over from winhvemulation<br> =
+&nbsp;whpx: refactor whpx_destroy_vcpu to arch-specific function<br> =
+&nbsp;whpx: move whpx_get_reg/whpx_set_reg to generic code<br> =
+&nbsp;whpx: i386: switch over from winhvemulation to =
+target/i386/emulate<br> &nbsp;whpx: i386: flags conversion for =
+target/i386/emulate internal state<br> &nbsp;whpx: i386: remove =
+remaining winhvemulation support code<br> &nbsp;whpx: i386: remove =
+messages<br> &nbsp;whpx: i386: remove CPUID trapping<br> &nbsp;whpx: =
+common, i386, arm: rework state levels<br> &nbsp;whpx: i386: =
+saving/restoring less state for<br> =
+&nbsp;&nbsp;&nbsp;WHPX_LEVEL_FAST_RUNTIME_STATE<br> &nbsp;target/i386: =
+mshv, emulate: move the generic x86 helpers to<br> =
+&nbsp;&nbsp;&nbsp;target/i386/emulate<br> &nbsp;target/i386: emulate: =
+5-level paging for the page table walker<br> &nbsp;target/i386: emulate, =
+hvf, mshv: rework MMU code<br> &nbsp;hvf: i386: save/restore CR0/2/3<br> =
+&nbsp;target/i386: emulate: get rid of write_val_to_mem() helper<br> =
+&nbsp;target/i386: emulate: raise an exception on translation fault<br> =
+&nbsp;target/i386: emulate: remove fetch_instruction helper too<br> =
+&nbsp;target/i386: emulate: propagate memory errors on most =
+reads/writes<br> &nbsp;whpx: i386: inject exceptions<br> &nbsp;whpx: =
+i386: bump to x2apic<br> &nbsp;whpx: i386: ignore send_msi to interrupt =
+vector 0<br> &nbsp;target/i386: emulate: propagate errors all the way =
+and stop early<br><br> accel/whpx/whpx-accel-ops.c =
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n=
+bsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| &nbsp;&nbsp;8 +<br> =
+accel/whpx/whpx-common.c =
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n=
+bsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| &nbsp;68 +-<br> =
+include/system/whpx-accel-ops.h =
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n=
+bsp;&nbsp;| &nbsp;16 +-<br> include/system/whpx-all.h =
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n=
+bsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| &nbsp;11 +-<br> =
+include/system/whpx-common.h =
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n=
+bsp;&nbsp;&nbsp;&nbsp;&nbsp;| &nbsp;&nbsp;6 +-<br> =
+include/system/whpx-internal.h =
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n=
+bsp;&nbsp;&nbsp;| &nbsp;16 -<br> meson.build =
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n=
+bsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
+p;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| &nbsp;&nbsp;3 =
++-<br> target/arm/whpx/whpx-all.c =
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n=
+bsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| &nbsp;43 +-<br> =
+target/i386/cpu.h =
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n=
+bsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
+p;&nbsp;&nbsp;&nbsp;| &nbsp;&nbsp;2 +-<br> =
+target/i386/emulate/meson.build =
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n=
+bsp;&nbsp;| &nbsp;&nbsp;9 +<br> target/i386/emulate/x86.h =
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n=
+bsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| &nbsp;&nbsp;1 +<br> =
+target/i386/emulate/x86_decode.c =
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n=
+bsp;| &nbsp;12 +-<br> target/i386/emulate/x86_emu.c =
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n=
+bsp;&nbsp;&nbsp;&nbsp;| 356 +++++++----<br> =
+target/i386/emulate/x86_emu.h =
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n=
+bsp;&nbsp;&nbsp;&nbsp;| &nbsp;24 +-<br> .../{mshv/x86.c =3D&gt; =
+emulate/x86_helpers.c} &nbsp;&nbsp;&nbsp;&nbsp;| &nbsp;13 +-<br> =
+target/i386/emulate/x86_mmu.c =
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n=
+bsp;&nbsp;&nbsp;&nbsp;| 354 +++++++++++<br> target/i386/{hvf =3D&gt; =
+emulate}/x86_mmu.h &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| &nbsp;31 =
++-<br> target/i386/hvf/hvf.c =
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n=
+bsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| =
+&nbsp;40 +-<br> target/i386/hvf/meson.build =
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n=
+bsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| &nbsp;&nbsp;1 -<br> =
+target/i386/hvf/x86.c =
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n=
+bsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| =
+&nbsp;13 +-<br> target/i386/hvf/x86_mmu.c =
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n=
+bsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| 277 --------<br> =
+target/i386/hvf/x86_task.c =
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n=
+bsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| &nbsp;10 +-<br> =
+target/i386/mshv/meson.build =
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n=
+bsp;&nbsp;&nbsp;&nbsp;&nbsp;| &nbsp;&nbsp;2 +-<br> =
+target/i386/mshv/mshv-cpu.c =
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n=
+bsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| &nbsp;71 ---<br> =
+target/i386/whpx/whpx-all.c =
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n=
+bsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| 591 ++++++++----------<br> =
+target/i386/whpx/whpx-apic.c =
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n=
+bsp;&nbsp;&nbsp;&nbsp;&nbsp;| &nbsp;&nbsp;5 +<br> 26 files changed, 1031 =
+insertions(+), 952 deletions(-)<br> rename target/i386/{mshv/x86.c =3D&gt;=
+ emulate/x86_helpers.c} (95%)<br> create mode 100644 =
+target/i386/emulate/x86_mmu.c<br> rename target/i386/{hvf =3D&gt; =
+emulate}/x86_mmu.h (51%)<br> delete mode 100644 =
+target/i386/hvf/x86_mmu.c<br><br>-- <br>2.50.1 (Apple =
+Git-155)<br><br></div></div></blockquote></div><br></body></html>=
+
+--Apple-Mail=_106E73B2-3DBB-41EE-B298-B8A5291FA2A8--
 
