@@ -4,72 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4876DE98E13
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 09:50:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF907E98E10
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 09:51:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuSZB-0008EV-BH; Mon, 23 Feb 2026 04:49:25 -0500
+	id 1vuSZM-0000dq-Qe; Mon, 23 Feb 2026 04:49:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vuSYY-00071z-7V
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 04:48:46 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1vuSZ9-00085p-QZ
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 04:49:24 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vuSYV-00070n-Qr
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 04:48:46 -0500
+ id 1vuSZ7-000744-TR
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 04:49:23 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771840122;
+ s=mimecast20190719; t=1771840161;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=mb5pHzNfJSpKQ6uJQFjOza9G7rq7AO5807bWCHM3ZPc=;
- b=Z7jhfVt9/bHPoOAbseSitgm+OQH1hJWQGogRRsiLSG657GSG7O4KYEdz0zroCOIjIwFi2Y
- Ssp6Wk99bzugjIeuF80OCC1wek32Me5tSYiUMCstSSZ54FFXOr3+Df3gSvhnQJ6PJwO2FS
- VWsp2rPTGh5H4C79aSusdCqyafz5pZg=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=GK+InVNU3f2hcJXrsb/od2DfNR27U7o4tVRJnn/aSD8=;
+ b=SNsy5a6wa8wlUyMML8mqkn9yywR76psej6atQDoW8BtPQFof49Rvyn+mojY7QD761FvorL
+ kpVjXsJzMCyi9GoqzwFz07LKXcUmibbVUoYJT6ImQ8mdCSFy1wFv11FP6BYm6uo4npA95o
+ DxOF5ftGsQQQEV3MS4FIxVHPGNxkpTw=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-347-4qejeqOgMtyRGOcl1K3y-Q-1; Mon,
- 23 Feb 2026 04:48:39 -0500
-X-MC-Unique: 4qejeqOgMtyRGOcl1K3y-Q-1
-X-Mimecast-MFC-AGG-ID: 4qejeqOgMtyRGOcl1K3y-Q_1771840118
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-464-KcKq0gYFONmHDfucINGfXA-1; Mon,
+ 23 Feb 2026 04:49:19 -0500
+X-MC-Unique: KcKq0gYFONmHDfucINGfXA-1
+X-Mimecast-MFC-AGG-ID: KcKq0gYFONmHDfucINGfXA_1771840158
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2C7461956059; Mon, 23 Feb 2026 09:48:38 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 67E311956096; Mon, 23 Feb 2026 09:49:18 +0000 (UTC)
 Received: from localhost (unknown [10.45.242.25])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 506601800465; Mon, 23 Feb 2026 09:48:36 +0000 (UTC)
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id B824C1800668; Mon, 23 Feb 2026 09:49:17 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Gerd Hoffmann <kraxel@redhat.com>
-Subject: [PULL v2 36/85] audio: split AudioBackend
-Date: Mon, 23 Feb 2026 10:45:54 +0100
-Message-ID: <20260223094649.2005118-37-marcandre.lureau@redhat.com>
+Subject: [PULL v2 48/85] audio/pa: convert to QOM lifecycle methods
+Date: Mon, 23 Feb 2026 10:46:06 +0100
+Message-ID: <20260223094649.2005118-49-marcandre.lureau@redhat.com>
 In-Reply-To: <20260223094649.2005118-1-marcandre.lureau@redhat.com>
 References: <20260223094649.2005118-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -4
-X-Spam_score: -0.5
-X-Spam_bar: /
-X-Spam_report: (-0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -14
+X-Spam_score: -1.5
+X-Spam_bar: -
+X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.798, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.79,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -89,576 +89,295 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Code clean-up, to allow building bare abstract class separately.
+Migrate the PulseAudio backend from the legacy driver init/fini
+callbacks to proper QOM realize and finalize methods.
 
-The original file is MIT-licensed.
+The paaudio struct fields are now embedded directly in the AudioPa
+QOM object instead of being allocated separately as drv_opaque. This
+allows accessing the backend state through proper QOM type casting
+with AUDIO_PA() rather than casting drv_opaque pointers.
+
+The PulseAudio connection is now managed through the QOM lifecycle,
+with the connection reference acquired in realize and released in
+finalize.
 
 Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
 Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- include/qemu/audio.h |   2 +
- audio/audio-be.c     | 206 ++++++++++++++++++++++++++++++++++++++++++
- audio/audio.c        | 209 +------------------------------------------
- audio/meson.build    |   1 +
- 4 files changed, 211 insertions(+), 207 deletions(-)
- create mode 100644 audio/audio-be.c
+ audio/paaudio.c | 109 +++++++++++++++++++++++++-----------------------
+ 1 file changed, 57 insertions(+), 52 deletions(-)
 
-diff --git a/include/qemu/audio.h b/include/qemu/audio.h
-index 4fae48886ba..9f85c6316a8 100644
---- a/include/qemu/audio.h
-+++ b/include/qemu/audio.h
-@@ -111,6 +111,8 @@ typedef struct AudioBackendClass {
+diff --git a/audio/paaudio.c b/audio/paaudio.c
+index 331da4f2ed6..97e6c0d1794 100644
+--- a/audio/paaudio.c
++++ b/audio/paaudio.c
+@@ -14,19 +14,10 @@
+ #define TYPE_AUDIO_PA "audio-pa"
+ OBJECT_DECLARE_SIMPLE_TYPE(AudioPa, AUDIO_PA)
  
- bool AUD_backend_check(AudioBackend **be, Error **errp);
+-struct AudioPa {
+-    AudioMixengBackend parent_obj;
+-};
++static AudioBackendClass *audio_pa_parent_class;
  
-+AudioBackend *audio_be_new(Audiodev *dev, Error **errp);
+ static struct audio_driver pa_audio_driver;
+ 
+-static void audio_pa_class_init(ObjectClass *klass, const void *data)
+-{
+-    AudioMixengBackendClass *k = AUDIO_MIXENG_BACKEND_CLASS(klass);
+-
+-    k->driver = &pa_audio_driver;
+-}
+-
+ typedef struct PAConnection {
+     char *server;
+     int refcount;
+@@ -36,18 +27,19 @@ typedef struct PAConnection {
+     pa_context *context;
+ } PAConnection;
+ 
+-static QTAILQ_HEAD(PAConnectionHead, PAConnection) pa_conns =
+-    QTAILQ_HEAD_INITIALIZER(pa_conns);
++struct AudioPa {
++    AudioMixengBackend parent_obj;
+ 
+-typedef struct {
+-    Audiodev *dev;
+     PAConnection *conn;
+-} paaudio;
++};
 +
- SWVoiceOut *AUD_open_out(
-     AudioBackend *be,
-     SWVoiceOut *sw,
-diff --git a/audio/audio-be.c b/audio/audio-be.c
-new file mode 100644
-index 00000000000..51fb124026a
---- /dev/null
-+++ b/audio/audio-be.c
-@@ -0,0 +1,206 @@
-+/* SPDX-License-Identifier: MIT */
-+
-+#include "qemu/osdep.h"
-+#include "qemu/audio.h"
-+#include "qemu/audio-capture.h"
-+#include "qapi/error.h"
-+
-+bool AUD_backend_check(AudioBackend **be, Error **errp)
-+{
-+    assert(be != NULL);
-+
-+    if (!*be) {
-+        *be = audio_get_default_audio_be(errp);
-+        if (!*be) {
-+            return false;
-+        }
-+    }
-+
-+    return true;
-+}
-+
-+SWVoiceIn *AUD_open_in(
-+    AudioBackend *be,
-+    SWVoiceIn *sw,
-+    const char *name,
-+    void *callback_opaque,
-+    audio_callback_fn callback_fn,
-+    const struct audsettings *as)
-+{
-+    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
-+
-+    return klass->open_in(be, sw, name, callback_opaque, callback_fn, as);
-+}
-+
-+SWVoiceOut *AUD_open_out(
-+    AudioBackend *be,
-+    SWVoiceOut *sw,
-+    const char *name,
-+    void *callback_opaque,
-+    audio_callback_fn callback_fn,
-+    const struct audsettings *as)
-+{
-+    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
-+
-+    return klass->open_out(be, sw, name, callback_opaque, callback_fn, as);
-+}
-+
-+void AUD_close_out(AudioBackend *be, SWVoiceOut *sw)
-+{
-+    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
-+
-+    return klass->close_out(be, sw);
-+}
-+
-+void AUD_close_in(AudioBackend *be, SWVoiceIn *sw)
-+{
-+    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
-+
-+    return klass->close_in(be, sw);
-+}
-+
-+bool AUD_is_active_out(AudioBackend *be, SWVoiceOut *sw)
-+{
-+    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
-+
-+    return klass->is_active_out(be, sw);
-+}
-+
-+bool AUD_is_active_in(AudioBackend *be, SWVoiceIn *sw)
-+{
-+    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
-+
-+    return klass->is_active_in(be, sw);
-+}
-+
-+size_t AUD_write(AudioBackend *be, SWVoiceOut *sw, void *buf, size_t size)
-+{
-+    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
-+
-+    return klass->write(be, sw, buf, size);
-+}
-+
-+size_t AUD_read(AudioBackend *be, SWVoiceIn *sw, void *buf, size_t size)
-+{
-+    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
-+
-+    return klass->read(be, sw, buf, size);
-+}
-+
-+int AUD_get_buffer_size_out(AudioBackend *be, SWVoiceOut *sw)
-+{
-+    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
-+
-+    return klass->get_buffer_size_out(be, sw);
-+}
-+
-+void AUD_set_active_out(AudioBackend *be, SWVoiceOut *sw, bool on)
-+{
-+    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
-+
-+    return klass->set_active_out(be, sw, on);
-+}
-+
-+void AUD_set_active_in(AudioBackend *be, SWVoiceIn *sw, bool on)
-+{
-+    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
-+
-+    return klass->set_active_in(be, sw, on);
-+}
-+
-+void AUD_set_volume_out(AudioBackend *be, SWVoiceOut *sw, Volume *vol)
-+{
-+    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
-+
-+    klass->set_volume_out(be, sw, vol);
-+}
-+
-+void AUD_set_volume_in(AudioBackend *be, SWVoiceIn *sw, Volume *vol)
-+{
-+    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
-+
-+    klass->set_volume_in(be, sw, vol);
-+}
-+
-+CaptureVoiceOut *AUD_add_capture(
-+    AudioBackend *be,
-+    struct audsettings *as,
-+    struct audio_capture_ops *ops,
-+    void *cb_opaque)
-+{
-+    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
-+
-+    return klass->add_capture(be, as, ops, cb_opaque);
-+}
-+
-+void AUD_del_capture(AudioBackend *be, CaptureVoiceOut *cap, void *cb_opaque)
-+{
-+    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
-+
-+    klass->del_capture(be, cap, cb_opaque);
-+}
-+
-+#ifdef CONFIG_GIO
-+bool audio_be_can_set_dbus_server(AudioBackend *be)
-+{
-+    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
-+
-+    return klass->set_dbus_server != NULL;
-+}
-+
-+bool audio_be_set_dbus_server(AudioBackend *be,
-+                              GDBusObjectManagerServer *server,
-+                              bool p2p,
-+                              Error **errp)
-+{
-+    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
-+
-+    if (!audio_be_can_set_dbus_server(be)) {
-+        error_setg(errp, "Audiodev '%s' is not compatible with DBus",
-+                   audio_be_get_id(be));
++static QTAILQ_HEAD(PAConnectionHead, PAConnection) pa_conns =
++    QTAILQ_HEAD_INITIALIZER(pa_conns);
+ 
+ typedef struct {
+     HWVoiceOut hw;
+     pa_stream *stream;
+-    paaudio *g;
++    AudioPa *g;
+ } PAVoiceOut;
+ 
+ typedef struct {
+@@ -55,7 +47,7 @@ typedef struct {
+     pa_stream *stream;
+     const void *read_data;
+     size_t read_length;
+-    paaudio *g;
++    AudioPa *g;
+ } PAVoiceIn;
+ 
+ static void qpa_conn_fini(PAConnection *c);
+@@ -529,23 +521,25 @@ fail:
+ static int qpa_init_out(HWVoiceOut *hw, struct audsettings *as,
+                         void *drv_opaque)
+ {
++    AudioMixengBackend *amb = hw->s;
++    AudioPa *apa = AUDIO_PA(amb);
+     int error;
+     pa_sample_spec ss;
+     pa_buffer_attr ba;
+     struct audsettings obt_as = *as;
+     PAVoiceOut *pa = (PAVoiceOut *) hw;
+-    paaudio *g = pa->g = drv_opaque;
+-    AudiodevPaOptions *popts = &g->dev->u.pa;
++    AudiodevPaOptions *popts = &amb->dev->u.pa;
+     AudiodevPaPerDirectionOptions *ppdo = popts->out;
+-    PAConnection *c = g->conn;
++    PAConnection *c = apa->conn;
+ 
++    pa->g = apa;
+     ss.format = audfmt_to_pa (as->fmt, as->endianness);
+     ss.channels = as->nchannels;
+     ss.rate = as->freq;
+ 
+     ba.tlength = pa_usec_to_bytes(ppdo->latency, &ss);
+     ba.minreq = pa_usec_to_bytes(MIN(ppdo->latency >> 2,
+-                                     (g->dev->timer_period >> 2) * 3), &ss);
++                                     (amb->dev->timer_period >> 2) * 3), &ss);
+     ba.maxlength = -1;
+     ba.prebuf = -1;
+ 
+@@ -553,7 +547,7 @@ static int qpa_init_out(HWVoiceOut *hw, struct audsettings *as,
+ 
+     pa->stream = qpa_simple_new (
+         c,
+-        ppdo->stream_name ?: g->dev->id,
++        ppdo->stream_name ?: amb->dev->id,
+         PA_STREAM_PLAYBACK,
+         ppdo->name,
+         &ss,
+@@ -578,23 +572,25 @@ static int qpa_init_out(HWVoiceOut *hw, struct audsettings *as,
+ 
+ static int qpa_init_in(HWVoiceIn *hw, struct audsettings *as, void *drv_opaque)
+ {
++    AudioMixengBackend *amb = hw->s;
++    AudioPa *apa = AUDIO_PA(amb);
+     int error;
+     pa_sample_spec ss;
+     pa_buffer_attr ba;
+     struct audsettings obt_as = *as;
+     PAVoiceIn *pa = (PAVoiceIn *) hw;
+-    paaudio *g = pa->g = drv_opaque;
+-    AudiodevPaOptions *popts = &g->dev->u.pa;
++    AudiodevPaOptions *popts = &amb->dev->u.pa;
+     AudiodevPaPerDirectionOptions *ppdo = popts->in;
+-    PAConnection *c = g->conn;
++    PAConnection *c = apa->conn;
+ 
++    pa->g = apa;
+     ss.format = audfmt_to_pa (as->fmt, as->endianness);
+     ss.channels = as->nchannels;
+     ss.rate = as->freq;
+ 
+-    ba.fragsize = pa_usec_to_bytes((g->dev->timer_period >> 1) * 3, &ss);
++    ba.fragsize = pa_usec_to_bytes((amb->dev->timer_period >> 1) * 3, &ss);
+     ba.maxlength = pa_usec_to_bytes(
+-        MAX(ppdo->latency, g->dev->timer_period * 3), &ss);
++        MAX(ppdo->latency, amb->dev->timer_period * 3), &ss);
+     ba.minreq = -1;
+     ba.prebuf = -1;
+ 
+@@ -602,7 +598,7 @@ static int qpa_init_in(HWVoiceIn *hw, struct audsettings *as, void *drv_opaque)
+ 
+     pa->stream = qpa_simple_new (
+         c,
+-        ppdo->stream_name ?: g->dev->id,
++        ppdo->stream_name ?: amb->dev->id,
+         PA_STREAM_RECORD,
+         ppdo->name,
+         &ss,
+@@ -834,15 +830,20 @@ fail:
+     return NULL;
+ }
+ 
+-static void *qpa_audio_init(Audiodev *dev, Error **errp)
++static bool
++audio_pa_realize(AudioBackend *abe, Audiodev *dev, Error **errp)
+ {
+-    paaudio *g;
++    AudioPa *apa = AUDIO_PA(abe);
+     AudiodevPaOptions *popts = &dev->u.pa;
+     const char *server;
+     PAConnection *c;
+ 
+     assert(dev->driver == AUDIODEV_DRIVER_PA);
+ 
++    if (!audio_pa_parent_class->realize(abe, dev, errp)) {
 +        return false;
 +    }
 +
-+    return klass->set_dbus_server(be, server, p2p, errp);
-+}
-+#endif
-+
-+const char *audio_be_get_id(AudioBackend *be)
-+{
-+    if (be) {
-+        return AUDIO_BACKEND_GET_CLASS(be)->get_id(be);
-+    } else {
-+        return "";
-+    }
-+}
-+
-+AudioBackend *audio_be_new(Audiodev *dev, Error **errp)
-+{
-+    const char *drvname = AudiodevDriver_str(dev->driver);
-+    g_autofree char *type = g_strconcat("audio-", drvname, NULL);
-+    AudioBackend *be = AUDIO_BACKEND(object_new(type));
-+
-+    if (!be) {
-+        error_setg(errp, "Unknown audio driver `%s'", drvname);
-+        return NULL;
-+    }
-+
-+    if (!AUDIO_BACKEND_GET_CLASS(be)->realize(be, dev, errp)) {
-+        object_unref(OBJECT(be));
-+        return NULL;
-+    }
-+
-+    return be;
-+}
-+
-+static const TypeInfo audio_types[] = {
-+    {
-+        .name = TYPE_AUDIO_BACKEND,
-+        .parent = TYPE_OBJECT,
-+        .instance_size = sizeof(AudioBackend),
-+        .abstract = true,
-+        .class_size = sizeof(AudioBackendClass),
-+    },
-+};
-+
-+DEFINE_TYPES(audio_types)
-diff --git a/audio/audio.c b/audio/audio.c
-index 32b2b882f80..22e55ac9758 100644
---- a/audio/audio.c
-+++ b/audio/audio.c
-@@ -870,15 +870,8 @@ static size_t audio_mixeng_backend_write(AudioBackend *be, SWVoiceOut *sw,
+     if (!popts->server) {
+         char pidfile[64];
+         char *runtime;
+@@ -851,42 +852,38 @@ static void *qpa_audio_init(Audiodev *dev, Error **errp)
+         runtime = getenv("XDG_RUNTIME_DIR");
+         if (!runtime) {
+             error_setg(errp, "XDG_RUNTIME_DIR not set");
+-            return NULL;
++            return false;
+         }
+         snprintf(pidfile, sizeof(pidfile), "%s/pulse/pid", runtime);
+         if (stat(pidfile, &st) != 0) {
+             error_setg_errno(errp, errno, "could not stat pidfile %s", pidfile);
+-            return NULL;
++            return false;
+         }
      }
- }
  
--size_t AUD_write(AudioBackend *be, SWVoiceOut *sw, void *buf, size_t size)
--{
--    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
--
--    return klass->write(be, sw, buf, size);
--}
--
--static size_t audio_mixeng_backend_read(AudioBackend *be, SWVoiceIn *sw,
--                                        void *buf, size_t size)
-+static size_t audio_mixeng_backend_read(AudioBackend *be,
-+                                        SWVoiceIn *sw, void *buf, size_t size)
- {
-     HWVoiceIn *hw;
+     qpa_validate_per_direction_opts(dev, popts->in);
+     qpa_validate_per_direction_opts(dev, popts->out);
  
-@@ -901,13 +894,6 @@ static size_t audio_mixeng_backend_read(AudioBackend *be, SWVoiceIn *sw,
- 
- }
- 
--size_t AUD_read(AudioBackend *be, SWVoiceIn *sw, void *buf, size_t size)
--{
--    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
+-    g = g_new0(paaudio, 1);
+     server = popts->server;
 -
--    return klass->read(be, sw, buf, size);
--}
+-    g->dev = dev;
 -
- static int audio_mixeng_backend_get_buffer_size_out(AudioBackend *be, SWVoiceOut *sw)
- {
-     if (!sw) {
-@@ -921,13 +907,6 @@ static int audio_mixeng_backend_get_buffer_size_out(AudioBackend *be, SWVoiceOut
-     return sw->hw->samples * sw->hw->info.bytes_per_frame;
- }
- 
--int AUD_get_buffer_size_out(AudioBackend *be, SWVoiceOut *sw)
--{
--    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
--
--    return klass->get_buffer_size_out(be, sw);
--}
--
- static void audio_mixeng_backend_set_active_out(AudioBackend *be, SWVoiceOut *sw,
-                                                 bool on)
- {
-@@ -978,13 +957,6 @@ static void audio_mixeng_backend_set_active_out(AudioBackend *be, SWVoiceOut *sw
- 
- }
- 
--void AUD_set_active_out(AudioBackend *be, SWVoiceOut *sw, bool on)
--{
--    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
--
--    return klass->set_active_out(be, sw, on);
--}
--
- static void audio_mixeng_backend_set_active_in(AudioBackend *be, SWVoiceIn *sw, bool on)
- {
-     HWVoiceIn *hw;
-@@ -1030,13 +1002,6 @@ static void audio_mixeng_backend_set_active_in(AudioBackend *be, SWVoiceIn *sw,
+     QTAILQ_FOREACH(c, &pa_conns, list) {
+         if (server == NULL || c->server == NULL ?
+             server == c->server :
+             strcmp(server, c->server) == 0) {
+-            g->conn = c;
++            apa->conn = c;
+             break;
+         }
      }
- }
- 
--void AUD_set_active_in(AudioBackend *be, SWVoiceIn *sw, bool on)
--{
--    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
--
--    return klass->set_active_in(be, sw, on);
--}
--
- static size_t audio_get_avail(SWVoiceIn *sw)
- {
-     size_t live;
-@@ -1643,25 +1608,6 @@ static bool audio_mixeng_backend_realize(AudioBackend *abe,
-     return true;
- }
- 
--static AudioBackend *audio_be_new(Audiodev *dev, Error **errp)
--{
--    const char *drvname = AudiodevDriver_str(dev->driver);
--    g_autofree char *type = g_strconcat("audio-", drvname, NULL);
--    AudioBackend *be = AUDIO_BACKEND(object_new(type));
--
--    if (!be) {
--        error_setg(errp, "Unknown audio driver `%s'", drvname);
+-    if (!g->conn) {
+-        g->conn = qpa_conn_init(server);
++    if (!apa->conn) {
++        apa->conn = qpa_conn_init(server);
+     }
+-    if (!g->conn) {
+-        g_free(g);
++    if (!apa->conn) {
+         error_setg(errp, "could not connect to PulseAudio server");
 -        return NULL;
--    }
--
--    if (!AUDIO_BACKEND_GET_CLASS(be)->realize(be, dev, errp)) {
--        object_unref(OBJECT(be));
--        return NULL;
--    }
--
--    return be;
--}
--
- static void audio_vm_change_state_handler (void *opaque, bool running,
-                                            RunState state)
- {
-@@ -1685,14 +1631,6 @@ static void audio_vm_change_state_handler (void *opaque, bool running,
- 
- static const VMStateDescription vmstate_audio;
- 
--static void audio_be_init(Object *obj)
--{
--}
--
--static void audio_be_finalize(Object *obj)
--{
--}
--
- static const char *audio_mixeng_backend_get_id(AudioBackend *be)
- {
-     return AUDIO_MIXENG_BACKEND(be)->dev->id;
-@@ -1714,60 +1652,6 @@ static void audio_mixeng_backend_set_volume_out(AudioBackend *be, SWVoiceOut *sw
- static void audio_mixeng_backend_set_volume_in(AudioBackend *be, SWVoiceIn *sw,
-                                                Volume *vol);
- 
--SWVoiceOut *AUD_open_out(
--    AudioBackend *be,
--    SWVoiceOut *sw,
--    const char *name,
--    void *callback_opaque,
--    audio_callback_fn callback_fn,
--    const struct audsettings *as)
--{
--    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
--
--    return klass->open_out(be, sw, name, callback_opaque, callback_fn, as);
--}
--
--SWVoiceIn *AUD_open_in(
--    AudioBackend *be,
--    SWVoiceIn *sw,
--    const char *name,
--    void *callback_opaque,
--    audio_callback_fn callback_fn,
--    const struct audsettings *as)
--{
--    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
--
--    return klass->open_in(be, sw, name, callback_opaque, callback_fn, as);
--}
--
--void AUD_close_out(AudioBackend *be, SWVoiceOut *sw)
--{
--    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
--
--    return klass->close_out(be, sw);
--}
--
--void AUD_close_in(AudioBackend *be, SWVoiceIn *sw)
--{
--    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
--
--    return klass->close_in(be, sw);
--}
--
--bool AUD_is_active_out(AudioBackend *be, SWVoiceOut *sw)
--{
--    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
--
--    return klass->is_active_out(be, sw);
--}
--
--bool AUD_is_active_in(AudioBackend *be, SWVoiceIn *sw)
--{
--    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
--
--    return klass->is_active_in(be, sw);
--}
--
- static void audio_mixeng_backend_class_init(ObjectClass *klass, const void *data)
- {
-     AudioBackendClass *be = AUDIO_BACKEND_CLASS(klass);
-@@ -1972,20 +1856,6 @@ AudioBackend *audio_get_default_audio_be(Error **errp)
-     return default_audio_be;
- }
- 
--bool AUD_backend_check(AudioBackend **be, Error **errp)
--{
--    assert(be != NULL);
--
--    if (!*be) {
--        *be = audio_get_default_audio_be(errp);
--        if (!*be) {
--            return false;
--        }
--    }
--
--    return true;
--}
--
- static struct audio_pcm_ops capture_pcm_ops;
- 
- static CaptureVoiceOut *audio_mixeng_backend_add_capture(
-@@ -2062,17 +1932,6 @@ static CaptureVoiceOut *audio_mixeng_backend_add_capture(
-     return cap;
- }
- 
--CaptureVoiceOut *AUD_add_capture(
--    AudioBackend *be,
--    struct audsettings *as,
--    struct audio_capture_ops *ops,
--    void *cb_opaque)
--{
--    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
--
--    return klass->add_capture(be, as, ops, cb_opaque);
--}
--
- static void audio_mixeng_backend_del_capture(
-     AudioBackend *be,
-     CaptureVoiceOut *cap,
-@@ -2115,13 +1974,6 @@ static void audio_mixeng_backend_del_capture(
++        return false;
      }
+ 
+-    ++g->conn->refcount;
+-    return g;
++    ++apa->conn->refcount;
++
++    return true;
  }
  
--void AUD_del_capture(AudioBackend *be, CaptureVoiceOut *cap, void *cb_opaque)
--{
--    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
--
--    klass->del_capture(be, cap, cb_opaque);
--}
--
- static void audio_mixeng_backend_set_volume_out(AudioBackend *be, SWVoiceOut *sw,
-                                                 Volume *vol)
+ static void qpa_conn_fini(PAConnection *c)
+@@ -908,16 +905,14 @@ static void qpa_conn_fini(PAConnection *c)
+     g_free(c);
+ }
+ 
+-static void qpa_audio_fini (void *opaque)
++static void audio_pa_finalize(Object *obj)
  {
-@@ -2139,13 +1991,6 @@ static void audio_mixeng_backend_set_volume_out(AudioBackend *be, SWVoiceOut *sw
+-    paaudio *g = opaque;
+-    PAConnection *c = g->conn;
++    AudioPa *apa = AUDIO_PA(obj);
++    PAConnection *c = apa->conn;
+ 
+-    if (--c->refcount == 0) {
++    if (c && --c->refcount == 0) {
+         qpa_conn_fini(c);
      }
+-
+-    g_free(g);
  }
  
--void AUD_set_volume_out(AudioBackend *be, SWVoiceOut *sw, Volume *vol)
--{
--    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
--
--    klass->set_volume_out(be, sw, vol);
--}
--
- static void audio_mixeng_backend_set_volume_in(AudioBackend *be, SWVoiceIn *sw,
-                                                Volume *vol)
- {
-@@ -2163,13 +2008,6 @@ static void audio_mixeng_backend_set_volume_in(AudioBackend *be, SWVoiceIn *sw,
-     }
- }
+ static struct audio_pcm_ops qpa_pcm_ops = {
+@@ -939,8 +934,6 @@ static struct audio_pcm_ops qpa_pcm_ops = {
  
--void AUD_set_volume_in(AudioBackend *be, SWVoiceIn *sw, Volume *vol)
--{
--    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
--
--    klass->set_volume_in(be, sw, vol);
--}
--
- static void audio_create_pdos(Audiodev *dev)
- {
-     switch (dev->driver) {
-@@ -2423,40 +2261,6 @@ AudioBackend *audio_be_by_name(const char *name, Error **errp)
-     }
- }
+ static struct audio_driver pa_audio_driver = {
+     .name           = "pa",
+-    .init           = qpa_audio_init,
+-    .fini           = qpa_audio_fini,
+     .pcm_ops        = &qpa_pcm_ops,
+     .max_voices_out = INT_MAX,
+     .max_voices_in  = INT_MAX,
+@@ -948,12 +941,24 @@ static struct audio_driver pa_audio_driver = {
+     .voice_size_in  = sizeof (PAVoiceIn),
+ };
  
--#ifdef CONFIG_GIO
--bool audio_be_can_set_dbus_server(AudioBackend *be)
--{
--    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
--
--    return klass->set_dbus_server != NULL;
--}
--
--bool audio_be_set_dbus_server(AudioBackend *be,
--                              GDBusObjectManagerServer *server,
--                              bool p2p,
--                              Error **errp)
--{
--    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
--
--    if (!audio_be_can_set_dbus_server(be)) {
--        error_setg(errp, "Audiodev '%s' is not compatible with DBus",
--                   audio_be_get_id(be));
--        return false;
--    }
--
--    return klass->set_dbus_server(be, server, p2p, errp);
--}
--#endif
--
--const char *audio_be_get_id(AudioBackend *be)
--{
--    if (be) {
--        return AUDIO_BACKEND_GET_CLASS(be)->get_id(be);
--    } else {
--        return "";
--    }
--}
--
- const char *audio_application_name(void)
- {
-     const char *vm_name;
-@@ -2521,15 +2325,6 @@ AudiodevList *qmp_query_audiodevs(Error **errp)
- }
- 
++static void audio_pa_class_init(ObjectClass *klass, const void *data)
++{
++    AudioBackendClass *b = AUDIO_BACKEND_CLASS(klass);
++    AudioMixengBackendClass *k = AUDIO_MIXENG_BACKEND_CLASS(klass);
++
++    audio_pa_parent_class = AUDIO_BACKEND_CLASS(object_class_get_parent(klass));
++
++    b->realize = audio_pa_realize;
++    k->driver = &pa_audio_driver;
++}
++
  static const TypeInfo audio_types[] = {
--    {
--        .name = TYPE_AUDIO_BACKEND,
--        .parent = TYPE_OBJECT,
--        .instance_size = sizeof(AudioBackend),
--        .instance_init = audio_be_init,
--        .instance_finalize = audio_be_finalize,
--        .abstract = true,
--        .class_size = sizeof(AudioBackendClass),
--    },
      {
-         .name = TYPE_AUDIO_MIXENG_BACKEND,
-         .parent = TYPE_AUDIO_BACKEND,
-diff --git a/audio/meson.build b/audio/meson.build
-index 55ee0bfc865..17f58369c20 100644
---- a/audio/meson.build
-+++ b/audio/meson.build
-@@ -1,6 +1,7 @@
- audio_ss = ss.source_set()
- audio_ss.add(files(
-   'audio.c',
-+  'audio-be.c',
-   'mixeng.c',
-   'noaudio.c',
-   'wavaudio.c',
+         .name = TYPE_AUDIO_PA,
+         .parent = TYPE_AUDIO_MIXENG_BACKEND,
+         .instance_size = sizeof(AudioPa),
+         .class_init = audio_pa_class_init,
++        .instance_finalize = audio_pa_finalize,
+     },
+ };
+ 
 -- 
 2.53.0
 
