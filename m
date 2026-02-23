@@ -4,89 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02ED5EC1111
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3068EEC110C
 	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 17:03:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuZKk-0002Tq-TJ; Mon, 23 Feb 2026 12:02:58 -0500
+	id 1vuZKA-0001Bf-8b; Mon, 23 Feb 2026 12:02:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vuZKj-0002S3-2Y
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 12:02:57 -0500
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ id 1vuZK8-0001AA-SZ
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 12:02:20 -0500
+Received: from mail-wm1-x342.google.com ([2a00:1450:4864:20::342])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vuZKh-0000Hg-Dq
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 12:02:56 -0500
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-48329eb96a7so26660115e9.3
- for <qemu-devel@nongnu.org>; Mon, 23 Feb 2026 09:02:55 -0800 (PST)
+ id 1vuZK6-0008UE-Bp
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 12:02:20 -0500
+Received: by mail-wm1-x342.google.com with SMTP id
+ 5b1f17b1804b1-4837907f535so41149275e9.3
+ for <qemu-devel@nongnu.org>; Mon, 23 Feb 2026 09:02:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771866174; x=1772470974; darn=nongnu.org;
+ d=linaro.org; s=google; t=1771866137; x=1772470937; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=/Mw22eOdEKGVrHgSJcdy0DJe9ef4kO7Rp5jrpc0VMn8=;
- b=qJADO7yvPw292zSD2Jkki4HHi5KIPUwQBhKxqg/tgZCsWlU7AkxDFc0X5Ygu8/6+nI
- YXgoUWDNb+UtCi8BTNvuv8q2Cx754s0F3wL6aNWOgaNiaLHbPGGsbVBptDXq9CPAb/DW
- CflsoIAZNOFPv+YCzdZPwRcfqMZN7A+Vp30CXTod8poK/DF9QaU15ysx6IZuTcipZJNQ
- mw1SnSoemNDke9RGey4JIsyDogkMjnxoTzpHFyUJ7txo7wfpezsPawThgpTyZwJqXiNG
- 4OzpNwH2xqefj3XNSLi49E2RdajjuLZPnf+xWySwypWrEIsux/Cp+x8SzcKcgOgtz4T3
- iXiw==
+ :reply-to; bh=QC2jCmUmDa22pq2M5e1IUAC/xLyvzU6A+/CopHKbGoc=;
+ b=r+jNM1/qTLbNKGTBa1+KkH5GxpFsJRaVb6+AKqUzF1tDdeegUVkPgHyDGLHyVhKjyF
+ CKvuOTJYjmsjLZ/SlKSwwLmje1E7bdyNdUK/axWINDiIzKQEV91POGAgYZXAdz2g4dDQ
+ K8lTsvH8jOMHSpCROlPO7H3sHRjwX+9cZWXmByTBkttxmlzIZ5PSBeYB8T5BRcz6eFJE
+ O3th+LeyaoAPR27Dg4N2sW1RaQ8nJUXhId0Pc5q3JrdFh+PP0KnjrcmSte6CvMfgM4Cd
+ ciEQP+XREEsTYj698PMlYiDYooiRtbT84GLcAHEbdbejgBhnAVi4BbGnG8NuSsi+PA92
+ IvSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771866174; x=1772470974;
+ d=1e100.net; s=20230601; t=1771866137; x=1772470937;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=/Mw22eOdEKGVrHgSJcdy0DJe9ef4kO7Rp5jrpc0VMn8=;
- b=YEQNCL7Yh9nAIK4KoCbkYlH7g/slW11ZWb/4jsuqvRySugRqmjjIF95tIVYphcYAb6
- nh1zJeBSFy6+YqmKTWOvmwxLB2mwsh3mRJ5PwFu4pczh0a/cTwmlySzo7mC61ajoOV3V
- /oTMKjWhutz/e2yOXXjd5TbovEgX7PektsZdo2h9oPxWjoi1vPQs1VtI0DFBekJ7prWJ
- vJUJsEMaVGWvmjocLY1niRfyq5P42kvtm0jVv4TIt94MshiW34vTdMT5WA62bqVLvya/
- rQCnEfeg3g3ClQ0UmnEDnjA85CYzsKqqPmpOyYgwOvbcEHbAQ57kSpi4eZYSbjQuObrY
- +krg==
+ bh=QC2jCmUmDa22pq2M5e1IUAC/xLyvzU6A+/CopHKbGoc=;
+ b=U8CjFi3d/he0RjIRTEz54zz2H9TTx8UZmjL/LYKYRVMGshTktMmIa3jqRv4BtwZBl3
+ 8T/xG1zYTGON82gTXdV9X+CJAq60wwGYBSlYfDFKYfuEQPAA1UEDt6/Rv/1O1BmwUKLw
+ bGZfd56zMO69WJ6ldK2/YAzMM5L/qpKVAzCeODrUp5Z/6kHVOAkloNhP3BVM0jYlQora
+ J+CDiyT3Q9FM16e7SDFNegQsNLGW5DPlvuV2DLSD2LgIitC1EPGo92K1oKMmo5BR6lmS
+ KFCthJ6bnsgk/WE2mFSQgGRmNwXo+U8h4+5phL9tcsAJZsNWr7v7XvIy24Bf54WCe7bD
+ d2vA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWpC1skLeZgKzDrq5k4el4r+jVySMZiSxTb+rEYvvRnlZB2HTzVfYeIO1BKAbKY1kEUutFr1PXnXe5c@nongnu.org
-X-Gm-Message-State: AOJu0YxYRZqxyqMyvCVPaGbMpo6fT0haEHlRry/YQW6QHMDg+R07slpG
- xkBqrZ9FSdqsJesmbHEPCJY4rdecdmRYw2Ev5yKGZWvgY6XtvmBEx0xAGid0s5mbZZ4=
-X-Gm-Gg: AZuq6aL+Yk3F0WO89XOXQtG+RZfrcXjedAt2bCEIPNlt8RrT+yG2OYUEQgyByu2Y9vU
- N+k/oqGdudb0SymB9g2J1S3ps/Uk/oEaEN6BCgjRTwXxTCjqaBfdV9vbozWINH2ve9BxVYWEGA/
- bxgYtRaQ46gJQ4S3NsHJwMqe3HjZkfcKOwvGbqQlXTjXPXfBX+PYvHgUy+6XcRvvibZPCrl7OWj
- 0qjqxMOGmq5xqKxT5qRvC0UG9KlOJToHxJ0hw0ddzKq8x14n84iiOzSXU3nN/FdsiSGeEf9b9OT
- zggZL1r7bi+lgSymot+5iAWAbpGCS2FxdT1p+6w2XuB0b/YkFETn7pcuSdk6c/s/vJ/BO9Hyv9G
- +XOU1m9VMe4at0xcXk9BgEUottxTrkPsQp1qp9AwZBzIYLfLE2ev/CbffIyWVuYcnKELQE8gOAa
- NgG733pfDfEjblISoZt/HWemGEenNwlYs8PuC9QE/G5W81JIlKmGrSt4P7aq0K62U1jSmoCdpC0
- t9nNZG/EM328enFVWGKzG/vdBo9zrLc4dE14eOxLA==
-X-Received: by 2002:a05:600c:1c22:b0:483:79ad:f3b9 with SMTP id
- 5b1f17b1804b1-483a95eada4mr163288105e9.28.1771866173689; 
- Mon, 23 Feb 2026 09:02:53 -0800 (PST)
+ AJvYcCUHtkhb80Ahq9f31w6HJTvx9qI6lsOozTbfMqYJI1XLlRwLP/djx7Fnkvn0GUzgnnudTnP6zwow5Wco@nongnu.org
+X-Gm-Message-State: AOJu0YyQfn3EuLufMlrfZIno+ND4gcNMpRlGT7mXRivzgfxSaZ3e0rpd
+ 5AJMgqUFessLnv+DJGaqsYK8h7sftUzqxH5u2BgOVbRKgavBBnY3s1hY0s+IsLqNdad9dyGbqr7
+ e/tvhLhE=
+X-Gm-Gg: AZuq6aKxj0pzX3y5g9yLedbbg8vF0HXuIOGR/AGYZx7vV/133psC/SVsi6ddBj6OV0A
+ I9OuzRlUw2e7OX481rq3aj8DrAzOwOFcjDZCkBBjVbsl4YR7q4payAhalf7xZTJ9+TBEbmi3ugk
+ ix341r9visLYygUllD3oWSMz9a0dcfNweMlo1PDGYDy1HCy+plcP5MdAPmzRtw8kAHmXUWXqVXP
+ CJgoG0tGfq3xJ4vfI5vHVPF8tXoPx+8jUzrT5lcI2or5Eapk5TiWsfDRbs3zoa1dAczrVgS3yu+
+ JlVVftTHd5eCLilv7qM4hgjRQQSykA2ndPBl+cKMW3iT5lh0EBWA3whl33pMA7+HHHB/kl8yXnV
+ puZAqJCgd4QXWdWWZW91aAj8gyzjs/nUIPAESOR97TrE6Oa2jpz7cqjhtEjbz9SxI7Ljot2wUSK
+ 0cU+uaxrn20mBEnNf5fEwt8YLhTxekwTsbBtyZLwUSPfrcNUe0Hd9yfNTLGZzO9i//tbAaex/BZ
+ c39S2q/oVMlT46ZR8cd03HqhjOe3R0=
+X-Received: by 2002:a05:600c:8b27:b0:480:69ae:f0e9 with SMTP id
+ 5b1f17b1804b1-483a95eb3bamr185842405e9.16.1771866136485; 
+ Mon, 23 Feb 2026 09:02:16 -0800 (PST)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-483a9b21ceasm200155625e9.0.2026.02.23.09.02.52
+ 5b1f17b1804b1-483a9b21ceasm200155625e9.0.2026.02.23.09.02.15
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 23 Feb 2026 09:02:52 -0800 (PST)
+ Mon, 23 Feb 2026 09:02:15 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Subject: [PATCH 35/65] target/arm: GICv5 cpuif: Implement GICv5 PPI active
- set/clear registers
-Date: Mon, 23 Feb 2026 17:01:42 +0000
-Message-ID: <20260223170212.441276-36-peter.maydell@linaro.org>
+Subject: [PATCH 02/65] hw/intc: Skeleton of GICv5 IRS classes
+Date: Mon, 23 Feb 2026 17:01:09 +0000
+Message-ID: <20260223170212.441276-3-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260223170212.441276-1-peter.maydell@linaro.org>
 References: <20260223170212.441276-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x329.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::342;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x342.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,104 +102,218 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In the GICv5 PPI state and control lives in the CPU interface; this
-is different from the GICv3 where this was all in the redistributor.
+This commit adds the skeleton of the classes for the GICv5 IRS
+(Interrupt Routing Service).  Since the IRS is the main (and only
+non-optional) part of the GICv5 outside the CPU, we call it simply
+"GICv5", in line with how we've handled the GICv3.
 
-Implement the access system registers for the PPI active state; this
-is a pair of registers, one of which has "write 1 to clear" behaviour
-and the other of which has "write 1 to set".  In both cases, reads
-return the current state.
-
-We start here by implementing the accessors for the underlying state;
-we don't yet attempt to do anything (e.g.  recalculating the highest
-priority pending PPI) when the state changes.  That will come in
-subsequent commits.
+Since we're definitely going to need to have support for KVM VMs
+where we present the guest with a GICv5, we use the same split
+between an abstract "common" and a concrete specific-to-TCG child
+class that we have for the various GICv3 components.  This avoids
+having to refactor out the base class later.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/cpu.h             |  5 +++++
- target/arm/tcg/gicv5-cpuif.c | 38 ++++++++++++++++++++++++++++++++++++
- 2 files changed, 43 insertions(+)
+ hw/intc/Kconfig                    |  4 +++
+ hw/intc/arm_gicv5.c                | 39 ++++++++++++++++++++++++++++++
+ hw/intc/arm_gicv5_common.c         | 31 ++++++++++++++++++++++++
+ hw/intc/meson.build                |  4 +++
+ include/hw/intc/arm_gicv5.h        | 32 ++++++++++++++++++++++++
+ include/hw/intc/arm_gicv5_common.h | 31 ++++++++++++++++++++++++
+ 6 files changed, 141 insertions(+)
+ create mode 100644 hw/intc/arm_gicv5.c
+ create mode 100644 hw/intc/arm_gicv5_common.c
+ create mode 100644 include/hw/intc/arm_gicv5.h
+ create mode 100644 include/hw/intc/arm_gicv5_common.h
 
-diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index a32c5f3ab1..dd4dc12feb 100644
---- a/target/arm/cpu.h
-+++ b/target/arm/cpu.h
-@@ -257,6 +257,9 @@ typedef enum ARMFPStatusFlavour {
- } ARMFPStatusFlavour;
- #define FPST_COUNT  10
+diff --git a/hw/intc/Kconfig b/hw/intc/Kconfig
+index 9f456d7e43..a3241fc1eb 100644
+--- a/hw/intc/Kconfig
++++ b/hw/intc/Kconfig
+@@ -35,6 +35,10 @@ config ARM_GIC_KVM
+     bool
+     depends on ARM_GIC && KVM
  
-+/* Architecturally there are 128 PPIs in a GICv5 */
-+#define GICV5_NUM_PPIS 128
++config ARM_GICV5
++    bool
++    select MSI_NONBROKEN
 +
- typedef struct CPUArchState {
-     /* Regs for current mode.  */
-     uint32_t regs[16];
-@@ -600,6 +603,8 @@ typedef struct CPUArchState {
-     struct {
-         /* GICv5 CPU interface data */
-         uint64_t icc_icsr_el1;
-+        /* Most PPI registers have 1 bit per PPI, so 64 PPIs to a register */
-+        uint64_t ppi_active[GICV5_NUM_PPIS / 64];
-     } gicv5_cpuif;
+ config XICS
+     bool
  
-     struct {
-diff --git a/target/arm/tcg/gicv5-cpuif.c b/target/arm/tcg/gicv5-cpuif.c
-index 36d1c196a8..0132b13853 100644
---- a/target/arm/tcg/gicv5-cpuif.c
-+++ b/target/arm/tcg/gicv5-cpuif.c
-@@ -175,6 +175,20 @@ static void gic_cdhm_write(CPUARMState *env, const ARMCPRegInfo *ri,
-     gicv5_set_handling(gic, id, hm, domain, type, virtual);
- }
- 
-+static void gic_ppi_cactive_write(CPUARMState *env, const ARMCPRegInfo *ri,
-+                                  uint64_t value)
+diff --git a/hw/intc/arm_gicv5.c b/hw/intc/arm_gicv5.c
+new file mode 100644
+index 0000000000..f9dab710d3
+--- /dev/null
++++ b/hw/intc/arm_gicv5.c
+@@ -0,0 +1,39 @@
++/*
++ * ARM GICv5 emulation: Interrupt Routing Service (IRS)
++ *
++ * Copyright (c) 2025 Linaro Limited
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "hw/intc/arm_gicv5.h"
++
++OBJECT_DEFINE_TYPE(GICv5, gicv5, ARM_GICV5, ARM_GICV5_COMMON)
++
++static void gicv5_reset_hold(Object *obj, ResetType type)
 +{
-+    uint64_t old = raw_read(env, ri);
-+    raw_write(env, ri, old & ~value);
++    GICv5 *s = ARM_GICV5(obj);
++    GICv5Class *c = ARM_GICV5_GET_CLASS(s);
++
++    if (c->parent_phases.hold) {
++        c->parent_phases.hold(obj, type);
++    }
 +}
 +
-+static void gic_ppi_sactive_write(CPUARMState *env, const ARMCPRegInfo *ri,
-+                                  uint64_t value)
++static void gicv5_init(Object *obj)
 +{
-+    uint64_t old = raw_read(env, ri);
-+    raw_write(env, ri, old | value);
 +}
 +
- static const ARMCPRegInfo gicv5_cpuif_reginfo[] = {
-     /*
-      * Barrier: wait until the effects of a cpuif system register
-@@ -254,6 +268,30 @@ static const ARMCPRegInfo gicv5_cpuif_reginfo[] = {
-          */
-         .resetfn = arm_cp_reset_ignore,
-     },
-+    {   .name = "ICC_PPI_CACTIVER0_EL1", .state = ARM_CP_STATE_AA64,
-+        .opc0 = 3, .opc1 = 0, .crn = 12, .crm = 13, .opc2 = 0,
-+        .access = PL1_RW, .type = ARM_CP_ALIAS | ARM_CP_IO | ARM_CP_NO_RAW,
-+        .fieldoffset = offsetof(CPUARMState, gicv5_cpuif.ppi_active[0]),
-+        .writefn = gic_ppi_cactive_write,
-+    },
-+    {   .name = "ICC_PPI_CACTIVER1_EL1", .state = ARM_CP_STATE_AA64,
-+        .opc0 = 3, .opc1 = 0, .crn = 12, .crm = 13, .opc2 = 1,
-+        .access = PL1_RW, .type = ARM_CP_ALIAS | ARM_CP_IO | ARM_CP_NO_RAW,
-+        .fieldoffset = offsetof(CPUARMState, gicv5_cpuif.ppi_active[1]),
-+        .writefn = gic_ppi_cactive_write,
-+    },
-+    {   .name = "ICC_PPI_SACTIVER0_EL1", .state = ARM_CP_STATE_AA64,
-+        .opc0 = 3, .opc1 = 0, .crn = 12, .crm = 13, .opc2 = 2,
-+        .access = PL1_RW, .type = ARM_CP_IO | ARM_CP_NO_RAW,
-+        .fieldoffset = offsetof(CPUARMState, gicv5_cpuif.ppi_active[0]),
-+        .writefn = gic_ppi_sactive_write,
-+    },
-+    {   .name = "ICC_PPI_SACTIVER1_EL1", .state = ARM_CP_STATE_AA64,
-+        .opc0 = 3, .opc1 = 0, .crn = 12, .crm = 13, .opc2 = 3,
-+        .access = PL1_RW, .type = ARM_CP_IO | ARM_CP_NO_RAW,
-+        .fieldoffset = offsetof(CPUARMState, gicv5_cpuif.ppi_active[1]),
-+        .writefn = gic_ppi_sactive_write,
-+    },
- };
- 
- void define_gicv5_cpuif_regs(ARMCPU *cpu)
++static void gicv5_finalize(Object *obj)
++{
++}
++
++static void gicv5_class_init(ObjectClass *oc, const void *data)
++{
++    ResettableClass *rc = RESETTABLE_CLASS(oc);
++    GICv5Class *gc = ARM_GICV5_CLASS(oc);
++
++    resettable_class_set_parent_phases(rc, NULL, gicv5_reset_hold, NULL,
++                                       &gc->parent_phases);
++}
+diff --git a/hw/intc/arm_gicv5_common.c b/hw/intc/arm_gicv5_common.c
+new file mode 100644
+index 0000000000..b0194f7f26
+--- /dev/null
++++ b/hw/intc/arm_gicv5_common.c
+@@ -0,0 +1,31 @@
++/*
++ * Common base class for GICv5 IRS
++ *
++ * Copyright (c) 2025 Linaro Limited
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "hw/intc/arm_gicv5_common.h"
++
++OBJECT_DEFINE_ABSTRACT_TYPE(GICv5Common, gicv5_common, ARM_GICV5_COMMON, SYS_BUS_DEVICE)
++
++static void gicv5_common_reset_hold(Object *obj, ResetType type)
++{
++}
++
++static void gicv5_common_init(Object *obj)
++{
++}
++
++static void gicv5_common_finalize(Object *obj)
++{
++}
++
++static void gicv5_common_class_init(ObjectClass *oc, const void *data)
++{
++    ResettableClass *rc = RESETTABLE_CLASS(oc);
++
++    rc->phases.hold = gicv5_common_reset_hold;
++}
+diff --git a/hw/intc/meson.build b/hw/intc/meson.build
+index 96742df090..e4ddc5107f 100644
+--- a/hw/intc/meson.build
++++ b/hw/intc/meson.build
+@@ -12,6 +12,10 @@ system_ss.add(when: 'CONFIG_ARM_GICV3', if_true: files(
+   'arm_gicv3_its.c',
+   'arm_gicv3_redist.c',
+ ))
++system_ss.add(when: 'CONFIG_ARM_GICV5', if_true: files(
++  'arm_gicv5_common.c',
++  'arm_gicv5.c',
++))
+ system_ss.add(when: 'CONFIG_ALLWINNER_A10_PIC', if_true: files('allwinner-a10-pic.c'))
+ system_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files('aspeed_vic.c'))
+ system_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files('aspeed_intc.c'))
+diff --git a/include/hw/intc/arm_gicv5.h b/include/hw/intc/arm_gicv5.h
+new file mode 100644
+index 0000000000..3cd9652f6f
+--- /dev/null
++++ b/include/hw/intc/arm_gicv5.h
+@@ -0,0 +1,32 @@
++/*
++ * ARM GICv5 emulation: Interrupt Routing Service (IRS)
++ *
++ * Copyright (c) 2025 Linaro Limited
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#ifndef HW_INTC_ARM_GICV5_H
++#define HW_INTC_ARM_GICV5_H
++
++#include "qom/object.h"
++#include "hw/core/sysbus.h"
++#include "hw/intc/arm_gicv5_common.h"
++
++#define TYPE_ARM_GICV5 "arm-gicv5"
++
++OBJECT_DECLARE_TYPE(GICv5, GICv5Class, ARM_GICV5)
++
++/*
++ * This class is for TCG-specific state for the GICv5.
++ */
++struct GICv5 {
++    GICv5Common parent_obj;
++};
++
++struct GICv5Class {
++    GICv5CommonClass parent_class;
++    ResettablePhases parent_phases;
++};
++
++#endif
+diff --git a/include/hw/intc/arm_gicv5_common.h b/include/hw/intc/arm_gicv5_common.h
+new file mode 100644
+index 0000000000..d2243c7660
+--- /dev/null
++++ b/include/hw/intc/arm_gicv5_common.h
+@@ -0,0 +1,31 @@
++/*
++ * Common base class for GICv5 IRS
++ *
++ * Copyright (c) 2025 Linaro Limited
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#ifndef HW_INTC_ARM_GICV5_COMMON_H
++#define HW_INTC_ARM_GICV5_COMMON_H
++
++#include "qom/object.h"
++#include "hw/core/sysbus.h"
++
++#define TYPE_ARM_GICV5_COMMON "arm-gicv5-common"
++
++OBJECT_DECLARE_TYPE(GICv5Common, GICv5CommonClass, ARM_GICV5_COMMON)
++
++/*
++ * This class is for common state that will eventually be shared
++ * between TCG and KVM implementations of the GICv5.
++ */
++struct GICv5Common {
++    SysBusDevice parent_obj;
++};
++
++struct GICv5CommonClass {
++    SysBusDeviceClass parent_class;
++};
++
++#endif
 -- 
 2.43.0
 
