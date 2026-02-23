@@ -4,89 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2309FEC1112
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 17:06:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A522FEC110C
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 17:06:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuZLz-0003dO-Tz; Mon, 23 Feb 2026 12:04:16 -0500
+	id 1vuZKj-0002SI-AK; Mon, 23 Feb 2026 12:02:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vuZKz-0002eQ-CX
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 12:03:17 -0500
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ id 1vuZKh-0002QX-TE
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 12:02:55 -0500
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vuZKv-0000N4-By
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 12:03:12 -0500
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-48329eb96a7so26662695e9.3
- for <qemu-devel@nongnu.org>; Mon, 23 Feb 2026 09:03:08 -0800 (PST)
+ id 1vuZKf-0000Gq-8B
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 12:02:55 -0500
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-48336a6e932so28245135e9.3
+ for <qemu-devel@nongnu.org>; Mon, 23 Feb 2026 09:02:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771866188; x=1772470988; darn=nongnu.org;
+ d=linaro.org; s=google; t=1771866172; x=1772470972; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=S8AwTy6f3L9trkb36+KIhDXHVhmdfQ2KBm07CMiwLbw=;
- b=MktcbywC2MTMRwaBntbfjyHF/IcItD0o0JC0XkyEyTqcRsgIeUn1SOeUJfvW7nFB2m
- dAuQdHnzs358TiL/6gYD5gerdqzXHI2vNMVdTbOqQ4xx3tqNviuVnwpjgRwKMiUZgRx2
- 6iGWqLFToWMY97R5/yNmV+soxR1AIjalYxcIaIpAPliegku4CL4ZsC01ccRfO/nOW5AE
- TW71l5HBiYp906pcAdsI7stF3NN7ALg+p8tc2lBAU0I0LoAT0dYkl90g+MYlE6DRNwWy
- JAO/bq4+6SW0VAko25w3Df+3fxjqMN1gFEmiI5ePKIGV56PYRl+Xy6HGkFFqH0b2RJ5d
- BiEQ==
+ :reply-to; bh=GFX2oLIEOhrVQeH0JfIITp46cEANNmny594ZuEVDUzo=;
+ b=EAW2xRRn/8MDYs1d+BmeePlqhzPA5jJm13tm4AKK3Uu/yY1LwQELJYOmrs8fZ0ic3c
+ lZXYzVC1d+xPthhBySoUu+szKdKZuVFgwDz+Pb5Qp2Ybu0t1hJ7XEslqJbTmox8rC3Jv
+ VC5M6BoFqm9WfWnpHF649Q2BwHVy9ZVM1i92mdl0vhaNJ498azyoqV4f/+vZUJ0S1Aks
+ r/kl7S/ToUpBdrHkWw8Eu3OwZIfH7raMTZatAFOTaPpiBGgLqNvFYdpmzwfwanjUcOrQ
+ itvlEtaxn5dsNlmrGSzGuHvtVEMDMYR6EbIFMZQ38y5YvR0wmeV6wkFUxStrrYWTRIQo
+ Bs5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771866188; x=1772470988;
+ d=1e100.net; s=20230601; t=1771866172; x=1772470972;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=S8AwTy6f3L9trkb36+KIhDXHVhmdfQ2KBm07CMiwLbw=;
- b=n5l15iDlNMuZPXtAH1KFx4+Q6NvdoUFa09RlIMPb957/Cs2JYbkiglemxEv+vgcmUR
- EBBrE+shEzs6pSf4dLNnfBxwek/KA3o6UQGo/UWNrg3UJv6X5FtlNUBV1EhjE6TlVzUZ
- rmv89CT+IKNIRYpCOx9z8BjnoDcVlGnzzTYiKjBhzl+F700AavWhqx6k3jiUtPnQ3lPn
- pVBrj9Vc9zlKcAupVC+UnCDunOancnGEQcXaB4r5ITLUrYsCjB0jitVyBbVXLCAil/S5
- TGlsXn/c5B6p/Shx66QX2knYkNR4XhMaDV/9yKVr/oPZstRVFnPEIijwbupjQH/ad3ne
- JHew==
+ bh=GFX2oLIEOhrVQeH0JfIITp46cEANNmny594ZuEVDUzo=;
+ b=bcN8+98yTnKFn96MYqD8o0Y2/EWzoqX/TKok6qqYofC14DderKdBLTlQqOZvz6tZJY
+ SWewHA+v5Q9GMneNH6WcfZ0/WaFD3u2CLZRo0Tngm4+pkVsziqyGxBIoUZbxFtuCZUDI
+ UU+8fE+ClrUVra9fYc4NzIS54faAw2jhrXoBXbhmuNur5L4HXhHlL5Ah1heXLhOmVszt
+ nS2fVuDzjCbwNlJ1Y530+ZyWqd1BBk4ToH1klkxzTh36nYOqvyNfEqX0wprJeVamezCd
+ 8GAsWXPjTp29WIr90GLE1Io7TAJZ88TuNTCQYA4y4ng8yUuWACPNFa+svNgdru/CKkTd
+ LYNg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXSfE5dRlan4xoiNmQp2Mb9ikcMvu0n+PeomncwNefE0VVoqiCO8i20+r+D6q0obzSvO0JHq+4brOmt@nongnu.org
-X-Gm-Message-State: AOJu0Yyn6K1JCjSXQKUu6wJT1qwHaU7wQPs/1EdhkiGJuRnk4faPiSne
- fovNjXBiaArHJqWJdAR/slp3/0i6UC2kFCIm9Bu0VaaWX/GVU0mTQj6u+5jzJUOrt/1Bdj0lZhg
- 21Rbf
-X-Gm-Gg: AZuq6aJ1dxNW2Vdu2xxl6fTxl9uH6M6qD+SQ/nyV1ZBxxUXNmF45flzyrhHGd8E28tz
- 9RqYOIAn1xAz0EYGwQ0pCcGp24WkUXy9xrQeFAJYqJD4X5PlfqVoU8fB7FIiX0JDlOEJftkefI/
- THgzwHVjsbgfI0Btq3/2JMYeu0kPr/s8tG+gzs5BhxoIxXSKCgk8f9z0o7PvWN9alOGw415TfUc
- Pp7cGPJaU+nawtfRFHsf/vHD08gFJNcC5AV7vc+g99smuW8PstvF9hOEF6r5Ih8m1DLjAJa1xkJ
- jSRokgB5i+53ATW0+C4a1OjsPhSEXpCLs1s/wTAkmrUqN6xfn3omd4Vrl0xkceP4WYDPDXMvUdX
- /4JCeN86wule6W+/z2h3Xm7SfqDBSHB4u3Cx3bDzIPb4JdZCQaFnq20NgOqsh0bYco+lV+/8WjE
- ZimKHwWF1714BXpLkbmUedds32dK6+N6+ECso2EpKePdbCYPHesxxXuGIy+755xSKZ/PwwL6xFt
- vlU697ya/D9D8xe5qdOyvIZVzhX7rg=
-X-Received: by 2002:a05:600c:8287:b0:480:3a71:92b2 with SMTP id
- 5b1f17b1804b1-483a95eab99mr130172325e9.26.1771866187726; 
- Mon, 23 Feb 2026 09:03:07 -0800 (PST)
+ AJvYcCW/ZxbUoqYfjACq04dPzxgkxBvD4zi4Cg6yi2GshwpsE+ssPlcBIN/GsSQIvGDw17RLPdkGBL+3AsgM@nongnu.org
+X-Gm-Message-State: AOJu0YyY9CGP+NrqeNtbHmF++siOoMEbTsHqWXEm0JuEIvXiT76jySlt
+ k7oCN5v9b+qwdya3M85Slqg2AMb/LmsxDT/BgoQh70++E7kHyeW1J8lxYEKkHt42L5mP2Hn2Lni
+ 9x707
+X-Gm-Gg: AZuq6aLbPowmQFXlnp+zOtD2aHCdxK0cmwjg/FKJYl9EKrQskPlk6ROd8s51n+GRQRb
+ oLL9RvzOPdzjz6nIGnCT9gwJNWNXqQXyGeMTKfbrYBEe3i7yCQ89ShI1xR4/gji9+cgosk1zLGc
+ ZztTnRj3Gl8VyNeTxef3+lTKLggJ+vrOgSha9I0igdB1yBKpPyvUNNQ9LuG20VrvPAJgKM6x2Kb
+ ExVWHFX1J6Dh8tdXPm6MW308qSE/fXmQWxn0Va+PR9puL6uFYglwFnk52N5E8XdEV0Qy/eof0Wp
+ FZIGByBvqlK3nwwT1Xgsb7r2GjM+epjE61JkVdl8xfAB6mpzWJCxdqerwIupBg9nECWotru1bpG
+ 2sHrMTKLgiz0vVKYJSEnzwQysA6MhxnqCKby7b2wv9dDQr7hGFn1Hi+HdTboVK/vGDiCfxmKEOK
+ p2gzbRBZTtj9NqXy0LKUHCI3j11SHevDpOBqTbSR4Rrdj5AsY8cvTb5nnFbU0UK43vcx2yPk+O3
+ sjRgWbRa+d8cgb12bVecvCI9JUjb0obppvxxBD6dg==
+X-Received: by 2002:a05:600c:3516:b0:477:9b4a:a82 with SMTP id
+ 5b1f17b1804b1-483a963df3cmr193925005e9.35.1771866171550; 
+ Mon, 23 Feb 2026 09:02:51 -0800 (PST)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-483a9b21ceasm200155625e9.0.2026.02.23.09.03.06
+ 5b1f17b1804b1-483a9b21ceasm200155625e9.0.2026.02.23.09.02.50
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 23 Feb 2026 09:03:06 -0800 (PST)
+ Mon, 23 Feb 2026 09:02:50 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Subject: [PATCH 47/65] target/arm: GICv5 cpuif: Implement GICR CDIA command
-Date: Mon, 23 Feb 2026 17:01:54 +0000
-Message-ID: <20260223170212.441276-48-peter.maydell@linaro.org>
+Subject: [PATCH 33/65] target/arm: GICv5 cpuif: Implement ICC_IAFFIDR_EL1
+Date: Mon, 23 Feb 2026 17:01:40 +0000
+Message-ID: <20260223170212.441276-34-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260223170212.441276-1-peter.maydell@linaro.org>
 References: <20260223170212.441276-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,154 +102,128 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The GICR CDIA system instruction is what the guest uses to
-acknowledge the highest priority pending interrupt.  It returns a
-value corresponding to the HPPI for the current physical interrupt
-domain, if any, and moves that interrupt to being Active.
+The CPU system register ICC_IAFFIDR_EL1 is a read-only register that
+tells the guest what the affinity ID of that CPU is.
+
+Implement this register.  In real hardware using the stream protocol,
+the IRS tells the CPU its IAFFID using a DownstreamControl command as
+part of the handshake process when the IRS-CPU link is brought
+online.  Our analogue of this is to pass the IAFFID as an extra
+argument to gicv5_set_gicv5state().  (We could have the CPU call into
+the GIC every time to ask for the value, but this would mean we had
+to search the cpus[] array for the right CPU to return its IAFFID.)
+
+Note that we don't put the IAFFID into the gicv5_cpuif sub-struct,
+because that part of the CPU struct is zeroed on reset, and we must
+keep the IAFFID across reset (we only set it up when the GIC device
+is created).
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/tcg/gicv5-cpuif.c | 102 +++++++++++++++++++++++++++++++++++
- target/arm/tcg/trace-events  |   2 +
- 2 files changed, 104 insertions(+)
+ hw/intc/arm_gicv5_common.c         |  5 +++--
+ include/hw/intc/arm_gicv5_stream.h |  3 ++-
+ target/arm/cpu.c                   |  5 +++--
+ target/arm/cpu.h                   |  2 ++
+ target/arm/tcg/gicv5-cpuif.c       | 11 +++++++++++
+ 5 files changed, 21 insertions(+), 5 deletions(-)
 
-diff --git a/target/arm/tcg/gicv5-cpuif.c b/target/arm/tcg/gicv5-cpuif.c
-index adb4d2018f..d32263a5b7 100644
---- a/target/arm/tcg/gicv5-cpuif.c
-+++ b/target/arm/tcg/gicv5-cpuif.c
-@@ -39,6 +39,10 @@ FIELD(GIC_CDHM, HM, 32, 1)
- FIELD(GIC_CDRCFG, ID, 0, 24)
- FIELD(GIC_CDRCFG, TYPE, 29, 3)
+diff --git a/hw/intc/arm_gicv5_common.c b/hw/intc/arm_gicv5_common.c
+index bcbe88cde7..8feb492a43 100644
+--- a/hw/intc/arm_gicv5_common.c
++++ b/hw/intc/arm_gicv5_common.c
+@@ -175,9 +175,10 @@ static void gicv5_common_realize(DeviceState *dev, Error **errp)
+     }
  
-+FIELD(GICR_CDIA, ID, 0, 24)
-+FIELD(GICR_CDIA, TYPE, 29, 3)
-+FIELD(GICR_CDIA, VALID, 32, 1)
-+
- FIELD(ICC_IDR0_EL1, ID_BITS, 0, 4)
- FIELD(ICC_IDR0_EL1, PRI_BITS, 4, 4)
- FIELD(ICC_IDR0_EL1, GCIE_LEGACY, 8, 4)
-@@ -464,6 +468,94 @@ static uint64_t gic_icc_hppir_el1_read(CPUARMState *env, const ARMCPRegInfo *ri)
-     return hppi.intid;
+     for (int i = 0; i < cs->num_cpus; i++) {
+-        if (!gicv5_set_gicv5state(cs->cpus[i], cs)) {
++        if (!gicv5_set_gicv5state(cs->cpus[i], cs, cs->cpu_iaffids[i])) {
+             error_setg(errp,
+-                       "CPU %d does not implement GICv5 CPU interface", i);
++                       "CPU %d (IAFFID 0x%x) does not implement GICv5 CPU interface",
++                       i, cs->cpu_iaffids[i]);
+             return;
+         }
+     }
+diff --git a/include/hw/intc/arm_gicv5_stream.h b/include/hw/intc/arm_gicv5_stream.h
+index 1f00e8ffff..7b5477c7f1 100644
+--- a/include/hw/intc/arm_gicv5_stream.h
++++ b/include/hw/intc/arm_gicv5_stream.h
+@@ -20,6 +20,7 @@ typedef struct GICv5Common GICv5Common;
+  * gicv5_set_gicv5state
+  * @cpu: CPU object to tell about its IRS
+  * @cs: the GIC IRS it is connected to
++ * @iaffid: the IAFFID of this CPU
+  *
+  * Set the CPU object's GICv5 pointer to point to this GIC IRS.
+  * The IRS must call this when it is realized, for each CPU it is
+@@ -28,7 +29,7 @@ typedef struct GICv5Common GICv5Common;
+  * Returns true on success, false if the CPU doesn't implement
+  * the GICv5 CPU interface.
+  */
+-bool gicv5_set_gicv5state(ARMCPU *cpu, GICv5Common *cs);
++bool gicv5_set_gicv5state(ARMCPU *cpu, GICv5Common *cs, uint32_t iaffid);
+ 
+ /*
+  * The architected Stream Protocol is asynchronous; commands can be
+diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+index ef2afca6b9..551be14e22 100644
+--- a/target/arm/cpu.c
++++ b/target/arm/cpu.c
+@@ -1087,16 +1087,17 @@ static void arm_cpu_dump_state(CPUState *cs, FILE *f, int flags)
  }
  
-+static bool gic_hppi_is_nmi(CPUARMState *env, GICv5PendingIrq hppi,
-+                            GICv5Domain domain)
-+{
-+    /*
-+     * For GICv5 an interrupt is an NMI if it is signaled with
-+     * Superpriority and SCTLR_ELx.NMI for the current EL is 1.
-+     * GICR CDIA/CDNMIA always work on the current interrupt domain,
-+     * so we do not need to consider preemptive interrupts. This
-+     * means that the interrupt has Superpriority if and only if it
-+     * has priority 0.
-+     */
-+    return hppi.prio == 0 && arm_sctlr(env, arm_current_el(env)) & SCTLR_NMI;
-+}
-+
-+static uint64_t gicr_cdia_read(CPUARMState *env, const ARMCPRegInfo *ri)
-+{
-+    /* Acknowledge HPPI in the current interrupt domain */
-+    GICv5Common *gic = gicv5_get_gic(env);
-+    GICv5Domain domain = gicv5_current_phys_domain(env);
-+    GICv5PendingIrq hppi = gic_hppi(env, domain);
-+    GICv5IntType type = FIELD_EX64(hppi.intid, INTID, TYPE);
-+    uint32_t id = FIELD_EX64(hppi.intid, INTID, ID);
-+
-+    bool cdnmia = ri->opc2 == 1;
-+
-+    if (!hppi.intid) {
-+        /* No interrupt available to acknowledge */
-+        trace_gicv5_gicr_cdia_fail(domain,
-+                                   "no available interrupt to acknowledge");
-+        return 0;
-+    }
-+    assert(hppi.prio != PRIO_IDLE);
-+
-+    if (gic_hppi_is_nmi(env, hppi, domain) != cdnmia) {
-+        /* GICR CDIA only acknowledges non-NMI; GICR CDNMIA only NMI */
-+        trace_gicv5_gicr_cdia_fail(domain,
-+                                   cdnmia ? "CDNMIA but HPPI is not NMI" :
-+                                   "CDIA but HPPI is NMI");
-+        return 0;
-+    }
-+
-+    trace_gicv5_gicr_cdia(domain, hppi.intid);
-+
-+    /*
-+     * The interrupt becomes Active. If the handling mode of the
-+     * interrupt is Edge then we also clear the pending state.
-+     */
-+
-+    /*
-+     * Set the appropriate bit in the APR to track active priorities.
-+     * We do this now so that when gic_recalc_ppi_hppi() or
-+     * gicv5_activate() cause a re-evaluation of HPPIs they
-+     * use the right (new) running priority.
-+     */
-+    env->gicv5_cpuif.icc_apr[domain] |= (1 << hppi.prio);
-+    switch (type) {
-+    case GICV5_PPI:
-+    {
-+        uint32_t ppireg, ppibit;
-+
-+        assert(id < GICV5_NUM_PPIS);
-+        ppireg = id / 64;
-+        ppibit = 1 << (id % 64);
-+
-+        env->gicv5_cpuif.ppi_active[ppireg] |= ppibit;
-+        if (!(env->gicv5_cpuif.ppi_hm[ppireg] & ppibit)) {
-+            /* handling mode is Edge: clear pending */
-+            env->gicv5_cpuif.ppi_pend[ppireg] &= ~ppibit;
-+        }
-+        gic_recalc_ppi_hppi(env);
-+        break;
-+    }
-+    case GICV5_LPI:
-+    case GICV5_SPI:
-+        /*
-+         * Send an Activate command to the IRS, which, despite the name
-+         * of the stream command, does both "set Active" and "maybe set
-+         * not Pending" as a single atomic action.
-+         */
-+        gicv5_activate(gic, id, domain, type, false);
-+        break;
-+    default:
-+        g_assert_not_reached();
-+    }
-+
-+    return hppi.intid | R_GICR_CDIA_VALID_MASK;
-+}
-+
- static const ARMCPRegInfo gicv5_cpuif_reginfo[] = {
+ #ifndef CONFIG_USER_ONLY
+-bool gicv5_set_gicv5state(ARMCPU *cpu, GICv5Common *cs)
++bool gicv5_set_gicv5state(ARMCPU *cpu, GICv5Common *cs, uint32_t iaffid)
+ {
      /*
-      * Barrier: wait until the effects of a cpuif system register
-@@ -521,6 +613,16 @@ static const ARMCPRegInfo gicv5_cpuif_reginfo[] = {
-         .access = PL1_W, .type = ARM_CP_IO | ARM_CP_NO_RAW,
-         .writefn = gic_cdhm_write,
+      * Set this CPU's gicv5state pointer to point to the GIC that we are
+-     * connected to.
++     * connected to, and record our IAFFID.
+      */
+     if (!cpu_isar_feature(aa64_gcie, cpu)) {
+         return false;
+     }
+     cpu->env.gicv5state = cs;
++    cpu->env.gicv5_iaffid = iaffid;
+     return true;
+ }
+ #endif
+diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+index 1fdfd91ba4..a32c5f3ab1 100644
+--- a/target/arm/cpu.h
++++ b/target/arm/cpu.h
+@@ -819,6 +819,8 @@ typedef struct CPUArchState {
+     void *gicv3state;
+     /* Similarly, for a GICv5Common */
+     void *gicv5state;
++    /* For GICv5, this CPU's IAFFID */
++    uint64_t gicv5_iaffid;
+ #else /* CONFIG_USER_ONLY */
+     /* For usermode syscall translation.  */
+     bool eabi;
+diff --git a/target/arm/tcg/gicv5-cpuif.c b/target/arm/tcg/gicv5-cpuif.c
+index 4420a44c71..c591e249b1 100644
+--- a/target/arm/tcg/gicv5-cpuif.c
++++ b/target/arm/tcg/gicv5-cpuif.c
+@@ -226,6 +226,17 @@ static const ARMCPRegInfo gicv5_cpuif_reginfo[] = {
+         .fieldoffset = offsetof(CPUARMState, gicv5_cpuif.icc_icsr_el1),
+         .resetvalue = 0,
      },
-+    {   .name = "GICR_CDIA", .state = ARM_CP_STATE_AA64,
-+        .opc0 = 1, .opc1 = 0, .crn = 12, .crm = 3, .opc2 = 0,
-+        .access = PL1_R, .type = ARM_CP_IO | ARM_CP_NO_RAW,
-+        .readfn = gicr_cdia_read,
++    {   .name = "ICC_IAFFIDR_EL1", .state = ARM_CP_STATE_AA64,
++        .opc0 = 3, .opc1 = 0, .crn = 12, .crm = 10, .opc2 = 5,
++        .access = PL1_R, .type = ARM_CP_NO_RAW,
++        /* ICC_IAFFIDR_EL1 holds the IAFFID only, in its low bits */
++        .fieldoffset = offsetof(CPUARMState, gicv5_iaffid),
++        /*
++         * The field is a constant value set in gicv5_set_gicv5state(),
++         * so don't allow it to be overwritten by reset.
++         */
++        .resetfn = arm_cp_reset_ignore,
 +    },
-+    {   .name = "GICR_CDNMIA", .state = ARM_CP_STATE_AA64,
-+        .opc0 = 1, .opc1 = 0, .crn = 12, .crm = 3, .opc2 = 1,
-+        .access = PL1_R, .type = ARM_CP_IO | ARM_CP_NO_RAW,
-+        .readfn = gicr_cdia_read,
-+    },
-     {   .name = "ICC_IDR0_EL1", .state = ARM_CP_STATE_AA64,
-         .opc0 = 3, .opc1 = 0, .crn = 12, .crm = 10, .opc2 = 2,
-         .access = PL1_R, .type = ARM_CP_CONST | ARM_CP_NO_RAW,
-diff --git a/target/arm/tcg/trace-events b/target/arm/tcg/trace-events
-index 7dc5f781c5..13e15cfcfc 100644
---- a/target/arm/tcg/trace-events
-+++ b/target/arm/tcg/trace-events
-@@ -3,3 +3,5 @@
+ };
  
- # gicv5-cpuif.c
- gicv5_recalc_ppi_hppi(int domain, uint32_t id, uint8_t prio) "domain %d new PPI HPPI id 0x%x prio %u"
-+gicv5_gicr_cdia_fail(int domain, const char *reason) "domain %d CDIA attempt failed: %s"
-+gicv5_gicr_cdia(int domain, uint32_t id) "domain %d CDIA acknowledge of interrupt 0x%x"
+ void define_gicv5_cpuif_regs(ARMCPU *cpu)
 -- 
 2.43.0
 
