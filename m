@@ -4,105 +4,126 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A156DEA4FCF
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 15:07:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B46EEA4FD8
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 15:29:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuXWW-00026T-Er; Mon, 23 Feb 2026 10:07:00 -0500
+	id 1vuXrn-000794-9I; Mon, 23 Feb 2026 10:29:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vuXWU-000266-Ne
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 10:06:59 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vuXWN-00080b-PV
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 10:06:56 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771859206;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=xY/wcur34uQA1AvHGkhB/JcgrRWsHx7BxLZBZEOFWao=;
- b=XHpz6xYq03fzbFRKNVkTHYUse33tQ9XPh4Z8XGWFgR3CBfEC6xHPOWJk+4opP+x3L9kq1m
- hSHqURdEdNIXKs1d0EbqyLfsmcvnIIdQbug8vP1dcksFx1gu0G2fSOpLxYQNM0/apcBzDM
- LAdlWsWlPZx5zzkudrPhF3a4EnvBaGo=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-686-W8WznhduOfaPNnZ2oBa_bg-1; Mon, 23 Feb 2026 10:06:44 -0500
-X-MC-Unique: W8WznhduOfaPNnZ2oBa_bg-1
-X-Mimecast-MFC-AGG-ID: W8WznhduOfaPNnZ2oBa_bg_1771859203
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-48071615686so43169745e9.1
- for <qemu-devel@nongnu.org>; Mon, 23 Feb 2026 07:06:44 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vuXrh-00078O-QB
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 10:28:54 -0500
+Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vuXra-0004bL-7y
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 10:28:50 -0500
+Received: by mail-pf1-x433.google.com with SMTP id
+ d2e1a72fcca58-82311f4070cso2669877b3a.0
+ for <qemu-devel@nongnu.org>; Mon, 23 Feb 2026 07:28:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1771859203; x=1772464003; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=xY/wcur34uQA1AvHGkhB/JcgrRWsHx7BxLZBZEOFWao=;
- b=m/3IM4L4wygIYwtmcY8xVoo20ydQRZ+8XiOJCrkRmUS3/MWvvmNE/FaOTqibJPO6xJ
- hnI8NCya/5la19kr77vdJP/NGiZFznMZq9YLniqXfOhcWNZ1ivOQet7966INavsGe4Ji
- /iPe2ptLxs642O6dElCISkxRBjaZ6/rELHvVm+faL4rKyLI14xlXcoMYdEufoBhfT1tD
- fFFl9KK0+1ae82kw3bvaJxCeQTQIZOIOw9nnxJ/9eMiRVU/SGmSFH96pF0/Mhe5YfIAM
- Nd5pxzsfdKTCoHOlu/TXN6EK8ulKBl8eeoNT0+RUQQQZ93yvhVWwJi4caNVTL8Lztw6j
- oTHw==
+ d=linaro.org; s=google; t=1771860521; x=1772465321; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=BflUOGO2dcVEM4Ee0/3WGOpxCbXUI0uGZ+hQkkW8b5E=;
+ b=N3gZojaUudm01tAk03cNdA8FTbmyOBAT8yMOwEWfGe/LP9QhpN77kQHzGrJnVJk+11
+ L6fdrybcyL7gMetqsA76y8U+spCot4hyagVl16/6mUjLCnX0sy2zz2J5F/wn+x/B9VHV
+ jixK6RH3sxyYiGTO1N1iuHSWRIxwRihpcGf8qjA7C5d5jeLiiZVXJ54ISH/1ng+QNyPj
+ ht1XdSsEDBpiZ3CLf9Fxpb3weTmlFRbD1+hKycoelAIrwintzxcQDxCOggt7QVP/qoYK
+ caGjCTj3BNmKevLYhNX92ffh9q3Z5qVFGBAi41TyNSH9qaEeMhP0VC5DLb8w6fqPTFQV
+ ds7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771859203; x=1772464003;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=xY/wcur34uQA1AvHGkhB/JcgrRWsHx7BxLZBZEOFWao=;
- b=v6iCK/HY/sG32mEVAw1s2l5lyV47HzplkUTiVSXikHDLBW9hbPFutRbpuom9T5nKXl
- QrHdF9JV8fOnjg1i3lyPJCyl88xR8jNNg1bTIUi6/1Z/ApMfJvqPOVUu9bMCCaIMo7bx
- qQtfdHXYoBwajRKRjobTGBt4dEyadbWF6Et08wUQr80i367gYYyMEekVFJkVfCAbw8QZ
- 4pjIoBXgNFg5XcADCe8t4BNnu51YX/WiGXZ29BJ5d+06blRcrR3fM5DrHYJNIUPSEnf+
- KURAxjdlJuMUp6n+zNLZsD+oDs4Hp34VHXdR+wJANaJ5UY+WJWomLK7m8WOc1QivnaTo
- t3lg==
-X-Gm-Message-State: AOJu0YxVmQflMhVW09t1I0N1XkrbJlY2BfBuiNA+E1L+dbVtZcxYUmvH
- na8sxKNNzj5AX6t+HibWjsTp2wfXx+IgH7N2UJpgTSEqyW6wN9a6zjltDUVcspZHQxFCh4P6Gdp
- EHVu0rM7A4NEro365InoobWi0ovucMffuU5/G1gRCm8eNs4bFw+4mztXz
-X-Gm-Gg: AZuq6aJ0gUMFQCERgnQTasyK7T+BKgmUAe5jb4UQtZY/C686Z40WoH09+TfqUA3B6OJ
- 4v77rh+mZFz54Xr3DrPFyKv5GDnXg2K7Iq87tS0i0jQXmExCghAP6l7Kxq9c1/PHzQL6uCr2ESh
- NGiceoSDlC4qTv3A8mJLDKLjsJ7KiLZL0ENjhVQ8khp+hSzlnrV5q+WAhNIG36rVWLsTganCahn
- z81ZMeZ6BKiy5CaD1SMVxJorQf07pcLKpdZ4VbG2MQkjFkA3ci2POROC5APCKJtzVMSDdy46a7s
- NIW2i/U0YIZzQ3BwD6lXv5q3WkQAzP2P+LDAyvxBHBTI3W1e4QpIzbJn7z1k3r2pSUmT3ZtLM5C
- H7byNx79xGro3xwkKfQ==
-X-Received: by 2002:a05:600c:5486:b0:483:709e:f239 with SMTP id
- 5b1f17b1804b1-483a95dea69mr128431775e9.22.1771859202658; 
- Mon, 23 Feb 2026 07:06:42 -0800 (PST)
-X-Received: by 2002:a05:600c:5486:b0:483:709e:f239 with SMTP id
- 5b1f17b1804b1-483a95dea69mr128431045e9.22.1771859202091; 
- Mon, 23 Feb 2026 07:06:42 -0800 (PST)
-Received: from redhat.com ([2a06:c701:73e3:8f00:866c:5eeb:fc46:7674])
+ d=1e100.net; s=20230601; t=1771860521; x=1772465321;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=BflUOGO2dcVEM4Ee0/3WGOpxCbXUI0uGZ+hQkkW8b5E=;
+ b=lD4z0R3N5rPEdoKULFpsH3G7nx59lLlyDNv6L/T8Q4bFE/ac/XoJKQxtqkPtowfVBU
+ qzHEroTQhIiEfftamMo6jRmYQcrKHf0l9VYdO0DHKiRnjgYelYszbMTozkYlimifBsR4
+ pieUdGSuy2IK5h4ChojbJNXKagMlwoE9XGkbmsk3h90lBcvEJL6iL7Cfnvg5F5q2oJo+
+ DeMWz46iaiX/p+mQpFBhX2orMdq0YBGNMqBZU4fTxaxPy6danYNb7gGoY1FG35OMJBZG
+ 2aWeCEtqweSG6Bj2Gv5IvT/efJS6FvNDfZugcJ3028KITv/IdWZOvHmymc3MObR1RKS3
+ YXYA==
+X-Gm-Message-State: AOJu0YybGG4XCh3xGOa8TafgpGA/ua0elkfHXWVD3EAxQbOHKut6zOpd
+ /S9tWWj4rRBvwl+PaAa1cv7RSGDAaby3ZYe4dmH+AmIJSJ80IMwAcFXkGm+reX1lz2hHyiovl6l
+ 0u6Mz
+X-Gm-Gg: AZuq6aK/G6W8salQGLS/EDzhVUd+HUy4MECXP2Uwjz7LXIXTnLYKrq9uNdFSl5M8dne
+ /y1kBX1DZ0AyBfX3SIDjxs+txJYex0HDZfEZozKylVhfK+2OxDMPUD7Ba1RBfdnj+7hMbv0aVgM
+ MH5VS+S0wrWKDF1CVyGOY2SQi96nE21zUidVAOkipt+NivlmUKT05D+sjzVZwb4D/bWXLk9T4BR
+ YFZq+fuTUGzlL+HSLbD7HhH9FwH+Heo2C+W8NwrO1ycb4oF7wb1zNyYOzqfvKb7IhJoa7/s5fWH
+ jI1RUtW/h7LdFvp7ujG2K+AJuoYrsgDN7JTDnL3OrzLvQvhDR0oyaynjeDbgsjhgz8vMuEUY7TR
+ Gefu2MPqmGz0dx8CXtHid6bQQzFonKOt34F+adELJJm7QYAF21nzR+2BsMbhrln9EpA5JFOvXXH
+ FPnbi1mzbbDIuCpY50VaaKQ8e45AxIa25nsJW2fZZMuM/UmL1X/2yhMgCmuz16VVc6dij+
+X-Received: by 2002:a05:6a00:6c90:b0:7e8:3fcb:9b09 with SMTP id
+ d2e1a72fcca58-826badeec68mr10788289b3a.31.1771860520973; 
+ Mon, 23 Feb 2026 07:28:40 -0800 (PST)
+Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-483a82d8c50sm78972825e9.6.2026.02.23.07.06.40
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 23 Feb 2026 07:06:41 -0800 (PST)
-Date: Mon, 23 Feb 2026 10:06:38 -0500
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Cc: qemu-devel@nongnu.org, Cleber Rosa <crosa@redhat.com>,
- John Snow <jsnow@redhat.com>
-Subject: Re: [PATCH v2 00/13] Add more commands to scripts/ghes_inject.py
-Message-ID: <20260223100423-mutt-send-email-mst@kernel.org>
-References: <cover.1769175069.git.mchehab+huawei@kernel.org>
- <20260220130241-mutt-send-email-mst@kernel.org>
- <20260223123940.2b668dfa@localhost>
+ d2e1a72fcca58-826dd68d450sm7944053b3a.18.2026.02.23.07.28.39
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 23 Feb 2026 07:28:40 -0800 (PST)
+Message-ID: <d8778ce4-6850-44c0-be82-b62c046b471b@linaro.org>
+Date: Mon, 23 Feb 2026 07:28:39 -0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260223123940.2b668dfa@localhost>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -1
-X-Spam_score: -0.2
-X-Spam_bar: /
-X-Spam_report: (-0.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1.179, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.717,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] contrib/plugins/cpp: use __has_include
+Content-Language: en-US
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>, philmd@linaro.org,
+ Alexandre Iooss <erdnaxe@crans.org>, jsnow@redhat.com
+References: <20260214061025.1239457-1-pierrick.bouvier@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
+ xsDNBGK9dgwBDACYuRpR31LD+BnJ0M4b5YnPZKbj+gyu82IDN0MeMf2PGf1sux+1O2ryzmnA
+ eOiRCUY9l7IbtPYPHN5YVx+7W3vo6v89I7mL940oYAW8loPZRSMbyCiUeSoiN4gWPXetoNBg
+ CJmXbVYQgL5e6rsXoMlwFWuGrBY3Ig8YhEqpuYDkRXj2idO11CiDBT/b8A2aGixnpWV/s+AD
+ gUyEVjHU6Z8UervvuNKlRUNE0rUfc502Sa8Azdyda8a7MAyrbA/OI0UnSL1m+pXXCxOxCvtU
+ qOlipoCOycBjpLlzjj1xxRci+ssiZeOhxdejILf5LO1gXf6pP+ROdW4ySp9L3dAWnNDcnj6U
+ 2voYk7/RpRUTpecvkxnwiOoiIQ7BatjkssFy+0sZOYNbOmoqU/Gq+LeFqFYKDV8gNmAoxBvk
+ L6EtXUNfTBjiMHyjA/HMMq27Ja3/Y73xlFpTVp7byQoTwF4p1uZOOXjFzqIyW25GvEekDRF8
+ IpYd6/BomxHzvMZ2sQ/VXaMAEQEAAc0uUGllcnJpY2sgQm91dmllciA8cGllcnJpY2suYm91
+ dmllckBsaW5hcm8ub3JnPsLBDgQTAQoAOBYhBGa5lOyhT38uWroIH3+QVA0KHNAPBQJivXYM
+ AhsDBQsJCAcCBhUKCQgLAgQWAgMBAh4BAheAAAoJEH+QVA0KHNAPX58L/1DYzrEO4TU9ZhJE
+ tKcw/+mCZrzHxPNlQtENJ5NULAJWVaJ/8kRQ3Et5hQYhYDKK+3I+0Tl/tYuUeKNV74dFE7mv
+ PmikCXBGN5hv5povhinZ9T14S2xkMgym2T3DbkeaYFSmu8Z89jm/AQVt3ZDRjV6vrVfvVW0L
+ F6wPJSOLIvKjOc8/+NXrKLrV/YTEi2R1ovIPXcK7NP6tvzAEgh76kW34AHtroC7GFQKu/aAn
+ HnL7XrvNvByjpa636jIM9ij43LpLXjIQk3bwHeoHebkmgzFef+lZafzD+oSNNLoYkuWfoL2l
+ CR1mifjh7eybmVx7hfhj3GCmRu9o1x59nct06E3ri8/eY52l/XaWGGuKz1bbCd3xa6NxuzDM
+ UZU+b0PxHyg9tvASaVWKZ5SsQ5Lf9Gw6WKEhnyTR8Msnh8kMkE7+QWNDmjr0xqB+k/xMlVLE
+ uI9Pmq/RApQkW0Q96lTa1Z/UKPm69BMVnUvHv6u3n0tRCDOHTUKHXp/9h5CH3xawms7AzQRi
+ vXYMAQwAwXUyTS/Vgq3M9F+9r6XGwbak6D7sJB3ZSG/ZQe5ByCnH9ZSIFqjMnxr4GZUzgBAj
+ FWMSVlseSninYe7MoH15T4QXi0gMmKsU40ckXLG/EW/mXRlLd8NOTZj8lULPwg/lQNAnc7GN
+ I4uZoaXmYSc4eI7+gUWTqAHmESHYFjilweyuxcvXhIKez7EXnwaakHMAOzNHIdcGGs8NFh44
+ oPh93uIr65EUDNxf0fDjnvu92ujf0rUKGxXJx9BrcYJzr7FliQvprlHaRKjahuwLYfZK6Ma6
+ TCU40GsDxbGjR5w/UeOgjpb4SVU99Nol/W9C2aZ7e//2f9APVuzY8USAGWnu3eBJcJB+o9ck
+ y2bSJ5gmGT96r88RtH/E1460QxF0GGWZcDzZ6SEKkvGSCYueUMzAAqJz9JSirc76E/JoHXYI
+ /FWKgFcC4HRQpZ5ThvyAoj9nTIPI4DwqoaFOdulyYAxcbNmcGAFAsl0jJYJ5Mcm2qfQwNiiW
+ YnqdwQzVfhwaAcPVABEBAAHCwPYEGAEKACAWIQRmuZTsoU9/Llq6CB9/kFQNChzQDwUCYr12
+ DAIbDAAKCRB/kFQNChzQD/XaC/9MnvmPi8keFJggOg28v+r42P7UQtQ9D3LJMgj3OTzBN2as
+ v20Ju09/rj+gx3u7XofHBUj6BsOLVCWjIX52hcEEg+Bzo3uPZ3apYtIgqfjrn/fPB0bCVIbi
+ 0hAw6W7Ygt+T1Wuak/EV0KS/If309W4b/DiI+fkQpZhCiLUK7DrA97xA1OT1bJJYkC3y4seo
+ 0VHOnZTpnOyZ+8Ejs6gcMiEboFHEEt9P+3mrlVJL/cHpGRtg0ZKJ4QC8UmCE3arzv7KCAc+2
+ dRDWiCoRovqXGE2PdAW8788qH5DEXnwfzDhnCQ9Eot0Eyi41d4PWI8TWZFi9KzGXJO82O9gW
+ 5SYuJaKzCAgNeAy3gUVUUPrUsul1oe2PeWMFUhWKrqko0/Qo4HkwTZY6S16drTMncoUahSAl
+ X4Z3BbSPXPq0v1JJBYNBL9qmjULEX+NbtRd3v0OfB5L49sSAC2zIO8S9Cufiibqx3mxZTaJ1
+ ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
+In-Reply-To: <20260214061025.1239457-1-pierrick.bouvier@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x433.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,145 +139,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Feb 23, 2026 at 12:39:40PM +0100, Mauro Carvalho Chehab wrote:
-> On Fri, 20 Feb 2026 13:03:01 -0500
-> "Michael S. Tsirkin" <mst@redhat.com> wrote:
+On 2/13/26 10:10 PM, Pierrick Bouvier wrote:
+> This make sure we can include all possible headers without breaking
+> build for environments missing them. It fixes compilation on openbsd.
 > 
-> > On Fri, Jan 23, 2026 at 02:35:14PM +0100, Mauro Carvalho Chehab wrote:
-> > > Now that we have the basic stuff merged on QEMU, add more
-> > > commands to scripts/ghes_inject.py. After this patch, this
-> > > tool will support the following commands:
-> > > 
-> > >     arm                 Inject an ARM processor error CPER, compatible with
-> > >                         UEFI 2.9A Errata.
-> > >     pcie-bus            Inject a PCIe bus error CPER
-> > >     fuzzy-test (fuzzy)  Inject fuzzy test CPER packets
-> > >     raw-error (raw)     Inject CPER records from previously recorded ones.
-> > > 
-> > > Where arm is a pre-existing one.
-> > > 
-> > > The pcie-bus command injects a PCIe bus error - currently not supported
-> > > on Linux (GUID: c5753963-3b84-4095-bf78-eddad3f9c9dd).
-> > > 
-> > > The fuzzy-test command allows injecting one or more CPER records
-> > > for all GUID types supported on UEFI 2.11, with its contents being
-> > > either zero or random, and with the payload size that can also be
-> > > random.
-> > > 
-> > > The raw-error command allow reproducing a CPER from a text file.
-> > > It is helpful in conjunction with fuzzy-test to re-test the OSPM
-> > > after some fixes.
-> > > 
-> > > Besides the commands, a new helper logic was added at
-> > > scripts/ghes_decode.py: when the tool is called with the
-> > > --debug command line argument, it will translate the injected
-> > > record, allowing to compare what it was injected with what
-> > > the OSPM/userspace tools would interpret.
-> > > 
-> > > The first 6 patches on this series improve the qmp_helper
-> > > logic to support the new functionality.
-> > > 
-> > > The next 6 patches add the extra functionality to ghes_inject.
-> > > 
-> > > The final patch improves its help message when called without
-> > > a command.  
-> > 
-> > 
-> > Pls run checkpatch on this and make sure the output is clean.
-> > Thanks!
+> We don't want to pollute configure script, as it's really a special case
+> here to make sure we don't have a compilation regression with
+> qemu-plugins header.
 > 
-> There are 3 warnings there due to the usage of the old SPDX "GPL2.0"
-> which is identical to "GPL2.0-only", but were deprecated on SPDX 3.0.
-> I'll fix those. 
-> 
-> The remaining ones are mainly due to long strings, or, on two
-> cases, related to very long class and/or method names that should be
-> passed as long name parmeters, like here (*):
-> 
->         parser = subparsers.add_parser("raw-error",  aliases=['raw'],
->                                        help=self.HELP, description=self.DESC,
->                                        formatter_class=argparse.RawTextHelpFormatter)
-> 
-> I'll be fixing the ones that won't require mangling strings nor
-> use some tricks that would otherwise make the source code for,
-> IMO, no good reason.
-> 
-> (*) on this specific case, the "fix" would be to create an
->     "alias" class:
-> 
-> 	class Formatter(argparse.RawTextHelpFormatter):
-> 	   pass
-> 
->     Just to make checkpatch happy. IMHO not worth it.
-
-
-Agreed.
-
-> 
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 > ---
+>   contrib/plugins/cpp.cpp | 261 +++++++++++++++++++++++++++++++++++++++-
+>   1 file changed, 259 insertions(+), 2 deletions(-)
 > 
-> On a side note, IMHO checkpatch should be using a better default for
-> Python, setting max columns max requirement to be 120 columns and
-> ignoring or relaxing such limits on triple-quoted strings like here:
-> 
-> 	ERROR: line over 90 characters
-> 	#83: FILE: scripts/arm_processor_error.py:83:
-> 	+[Hardware Error]:     bus error, operation type: Generic read (type of instruction or data request cannot be determined)
-> 
-> (this is part of a comment there describing the Linux Kernel
-> output for an ARM Processor Error - we should not enforce any
-> max column limit there)
 
+This was merged into master (a6ec632dca8c7d10743aff29345e5e9e5324228b).
 
-Linux switched to 100 for everything and I think we should, too.
-
-> 
-> > 
-> > > ---
-> > > 
-> > > v2:
-> > >   - the bus error injection is for PCI/PCI-X, not PCIe, so
-> > >     the command was renamed;
-> > >   - added notes that not all CXL types may occur in practice;
-> > >   - removed a field from common_fields at DecodeGhesEntry
-> > >     decode class and make it more robust;
-> > >   - some cleanups at patch description.
-> > > 
-> > > Mauro Carvalho Chehab (13):
-> > >   scripts/qmp_helper: add a return code to send_cper
-> > >   scripts/qmp_helper: add missing CXL UEFI GUID
-> > >   scripts/qmp_helper: add support for FRU Memory Poison
-> > >   scripts/qmp_helper: make send_cper() more generic
-> > >   scripts/qmp_helper: fix raw_data logic
-> > >   scripts/qmp_helper: add support for a timeout logic
-> > >   scripts/ghes_inject: add a logic to decode CPER
-> > >   scripts/ghes_inject: exit 1 if command was not sent
-> > >   scripts/ghes_inject: add a handler for PCI/PCI-X bus error
-> > >   scripts/ghes_inject: add support for fuzzy logic testing
-> > >   scripts/ghes_inject: add a raw error inject command
-> > >   scripts/ghes_inject: print help if no command specified
-> > >   scripts/ghes_inject: improve help message
-> > > 
-> > >  MAINTAINERS                    |    4 +
-> > >  scripts/arm_processor_error.py |    8 +-
-> > >  scripts/fuzzy_error.py         |  208 ++++++
-> > >  scripts/ghes_decode.py         | 1158 ++++++++++++++++++++++++++++++++
-> > >  scripts/ghes_inject.py         |   30 +-
-> > >  scripts/pci_bus_error.py       |  148 ++++
-> > >  scripts/qmp_helper.py          |  164 ++++-
-> > >  scripts/raw_error.py           |  175 +++++
-> > >  8 files changed, 1857 insertions(+), 38 deletions(-)
-> > >  create mode 100644 scripts/fuzzy_error.py
-> > >  create mode 100644 scripts/ghes_decode.py
-> > >  create mode 100644 scripts/pci_bus_error.py
-> > >  create mode 100644 scripts/raw_error.py
-> > > 
-> > > -- 
-> > > 2.52.  
-> 
-> 
-> -- 
-> Thanks,
-> Mauro
-
+Regards,
+Pierrick
 
