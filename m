@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 184D9EC110C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 704C8EC1112
 	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 17:13:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuZM4-0004I2-Tg; Mon, 23 Feb 2026 12:04:20 -0500
+	id 1vuZM5-0004ME-Un; Mon, 23 Feb 2026 12:04:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vuZL1-0002gC-45
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 12:03:17 -0500
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ id 1vuZL5-0002l6-2s
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 12:03:25 -0500
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vuZKz-0000OU-2O
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 12:03:14 -0500
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-4834826e5a0so57121375e9.2
- for <qemu-devel@nongnu.org>; Mon, 23 Feb 2026 09:03:12 -0800 (PST)
+ id 1vuZKz-0000Nw-2Z
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 12:03:15 -0500
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-4806f3fc50bso52101915e9.0
+ for <qemu-devel@nongnu.org>; Mon, 23 Feb 2026 09:03:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771866191; x=1772470991; darn=nongnu.org;
+ d=linaro.org; s=google; t=1771866190; x=1772470990; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=GhPKdeTRx8a+qCF0Q4nn5hRHL81i7jRy0/h8QpUlh60=;
- b=IhsYiE8VPtAC03VFotnJ3LDEb7oR4pL50VBnSw4P9gXD8DO9I9v4FHXKo1cwqONOPG
- ZdOqe9zFoDgliiHgHOgDUUhbEVALKeVDpUo9TPoKBA4K5rC6VD8F+Gxd9jULKuEpw1OD
- LcFnSOg00R2CO/jJRQ2ouEhHpRymr7R6m58mxNiTCFUkXE2kA8DnapJ+VvQPwasfL0uM
- Udb6Tj/p6LpanR9Q9dAumQb8ZDlve4yBtA91GzLsQOfzwM0xQ1ziCVSfZGPqcv3wOUZR
- UPcUsU6OovZNd+xoltZ2X6YMdv5OUdfS7LM6KmWMtZ88ZnV+Zxw4vHlJFqfnFyYgfeHu
- QmxA==
+ :reply-to; bh=61PvnFSHrTc5AGGW4jO3OHip56G19MgkDyLY5pjuMnQ=;
+ b=jjtGQOjPufAbM4bdmGwbUKIa8VuxXenOEacOerySz7EH2cnmyRg6HekyDf7gVET9yV
+ opQCPGNwYxC5kJYewChKbXr4rjjqENHjJWfTi3L3w4S2JjOHpRjMhg+3klj1RswhDAOW
+ aPGiU06c2Z/U5ABbaQjSeHTVLQ9xDwM4tdakWe7aTCLAufQ5X+pELflOJiFpYfefNcwz
+ +WXAk/sZfnD1sSMzZSJKslC418HsK9ztgjP9mAR2Ayz2PITfPs+yE2TjV/H5/tl7FnK3
+ Q+Kfk9NGeHtrJnWsf+TavSCxVx762EGE/uUEs0by5HSyx/dofswPfuyt77Uo/ngGUTsL
+ z2Cw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771866191; x=1772470991;
+ d=1e100.net; s=20230601; t=1771866190; x=1772470990;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=GhPKdeTRx8a+qCF0Q4nn5hRHL81i7jRy0/h8QpUlh60=;
- b=a1e4PCTVMcheL2zSb5CxBRL0xfsisM752yfKmPVlRH+FuNR1lXfOBY0L4xZo3LjM4g
- VxHsZQHOT/2oVAbnbKRiS0+WJNrQveOTL+xO2J2qro3leCu/F5gfUAKs1fwEvehxRjXz
- ZcJwomjfYT3hCuggsPk02GUnsKKRAQsoRmdFYtmEOO2NMFXXFcxsivzHsdEQga+ffQOB
- SRDdveOaa80zKnFcvcoVIR7P0pQAD3cCQSUtM54X9bxsTbF82Wy1p4PjAsPWvmQfDGR+
- UnxyV+nYjeKr96J1ZMHHGCLMXheufzg8MpSr0cXxvevYyVnY5xU2fHnUck4Kwtp5vtxR
- WM5A==
+ bh=61PvnFSHrTc5AGGW4jO3OHip56G19MgkDyLY5pjuMnQ=;
+ b=J2sx4YDw7Di483zbMoI4uyFNmvB6HmgfXUKiXN95Vi2zWgdCNOWrsUxM+LAm2NqYL3
+ rhfN6UECtz7D6hqRFlUCLj59HIvKTE2pVRJ/q2MHKoym+FQGrOUnh41EG3Y0FJ6C5tho
+ /O7UM8I4WyObX2X9SoV+WbRlTEprYlNZFKT/fn7WPk7rCQJ428oKGiKslzauz9XbDFao
+ N2YdD6nVGe9WrkIkouO9ghEfL3oGWNs7n5mqfnpl7rky6LZ9rhbd1k3KGuvZkJFbCUpb
+ 6UKKBUGtu3mMPO9OTeJuMlnkjVVKrKW7cmrQZFH9O+Hnjzc0lI8y/auH0BREmbYZLui/
+ vQsA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVBO2XkQWakqoAZFLv8lMH2DEdiBR7+SYnIVFs3zNFTz7RF0XsQXNwceHwlHRFGGxWy/iO8UvrR6LZ0@nongnu.org
-X-Gm-Message-State: AOJu0YyK6KR7Fg4q+DPgvqRnIQQTuIWL6egr+eYBJ9Ktae+dluwaBRQT
- LWIORgouBOwY/VipAZMZLHO8IiAcS2VP1p/vCStsi/ThtKip7j3RjFNLRV3h0InudQ4=
-X-Gm-Gg: AZuq6aIZaTw5920g+S4/kUlFs2Fn8fpfnsd9YT15IO0u4VPPIi/VhOCZfypn74n/88P
- u+fyIWtHjNu7nmwD8uYYA56CjedKkqVy6EeujI4FAnljfVstfMn1GzkH3x2Zi32W9VqJTf5wgbi
- +LK8TMYratoAyhtrHTzZsxEB5f9JYJguikHQUg5bTxoToR4cFRtl+YzJonc5uuZZ/OlSEvw5HeQ
- Hf8pqwRE8ppLi/NxvfW/n9tCo8ZyonHi9SwchLJ11dq6+TdUh40AkdAxC0lx/hplrTUEgOnykk5
- kGJTblplDWOPnGIY89TjMpSGTcnrICN0FXqZEHvVVW8FGdrlYUMZZsn6kb49Wpj3UQ8xgrVllqj
- DsTVQF9RTIc69fMCITYdXQY94p0cqCiAv5VcRYlRXqn9kvMez1x/4xPVp9rNbJrSgP2M6tOXg1a
- j7u+SfE5Fxc9e1tyvYT0qXBfddeXdA9h7pMs+EwU8XX6SqpeyGHS5XbmW5BA8C1JI+A5u8SU/Yr
- 2Yk+VaAIruOvwvdeB48xlSaMte3CwvSeeGmXd3hlw==
-X-Received: by 2002:a05:600c:1386:b0:483:887:59b0 with SMTP id
- 5b1f17b1804b1-483a960c879mr192253665e9.35.1771866190910; 
- Mon, 23 Feb 2026 09:03:10 -0800 (PST)
+ AJvYcCVWYS1x3vw42q1bZw/xfR6XV3nhfcuOIpzpUQ7r3gQNLru2mOjLXXxU/x7++n/kDD+T1uck0renSRVU@nongnu.org
+X-Gm-Message-State: AOJu0YzLuLKyKE+X8ymK8JRfMQ4Y15mQSJzg1KUStnCAJ10JidYyIT4P
+ Vo6LWgisk0mi5iYWI6k/XFF6S/6nfsjZY7+/+g8z3awBoi47Nf0CEaZRurHF1aBVORSEmH1m28n
+ j3KNq
+X-Gm-Gg: AZuq6aLcX+OGXeZOnSidOFCd6EmxAlBvXo0YvfsFUyIvyTG2SePTM+aof55PsLbpiIw
+ dFvTJlClwtJwcRZ5gUa6OpkRNI0w198v5Q8xrKF3+aHinjwc/1lCmegngeWMpUao10V/wzpE6bI
+ YQ5csjj9XwEIiepwEmxFwae3bU79mleWYYYeZHTle4RMjFcxPXylFWs6N7kYWCDx8G8SnK+xL6J
+ LpYLQf1ust6KOYw53keOR8K00PiwsS2milYAkYcXFcI2DhP6PjagfFIWe1TWf9WrSHiRaURF7PL
+ 30phplnuMExcVnl9u4BSdbaL+cQJjLyljmN8V91Mx7g5k8m+q7ZBWoqIJs8TOHIp6aTVoqqw88Z
+ z8SXNePmx/PweJb4DJ8sYuE7FTmdzwpEH5ipKyTAVDVK7myV066g5E+XGjGO1Gnbx/85AnFE7mF
+ WsoIE/51426+7+nILe8UGjwQ/jTvQllLn0flpg+oRZpjgVo2orPTqDgSoL0BC9jDbm+4ypBq0hA
+ Yw+8yUUsYmkgTBG5L4wK/oSSGZSFas=
+X-Received: by 2002:a05:600c:8b63:b0:47e:e87f:4bba with SMTP id
+ 5b1f17b1804b1-483a9637833mr144580555e9.29.1771866189893; 
+ Mon, 23 Feb 2026 09:03:09 -0800 (PST)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-483a9b21ceasm200155625e9.0.2026.02.23.09.03.09
+ 5b1f17b1804b1-483a9b21ceasm200155625e9.0.2026.02.23.09.03.08
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 23 Feb 2026 09:03:10 -0800 (PST)
+ Mon, 23 Feb 2026 09:03:08 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Subject: [PATCH 50/65] target/arm: GICv5 cpuif: Implement GIC CDDI
-Date: Mon, 23 Feb 2026 17:01:57 +0000
-Message-ID: <20260223170212.441276-51-peter.maydell@linaro.org>
+Subject: [PATCH 49/65] hw/intc/arm_gicv5: Implement Deactivate command
+Date: Mon, 23 Feb 2026 17:01:56 +0000
+Message-ID: <20260223170212.441276-50-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260223170212.441276-1-peter.maydell@linaro.org>
 References: <20260223170212.441276-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,98 +102,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Implement the GIC CDDI system instruction, which deactivates the
+Implement the equivalent of the GICv5 stream protocol's Deactivate
+command, which lets the cpuif tell the IRS to deactivate the
 specified interrupt.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/tcg/gicv5-cpuif.c | 49 ++++++++++++++++++++++++++++++++++++
- target/arm/tcg/trace-events  |  1 +
- 2 files changed, 50 insertions(+)
+ hw/intc/arm_gicv5.c                | 46 ++++++++++++++++++++++++++++++
+ hw/intc/trace-events               |  1 +
+ include/hw/intc/arm_gicv5_stream.h | 14 +++++++++
+ 3 files changed, 61 insertions(+)
 
-diff --git a/target/arm/tcg/gicv5-cpuif.c b/target/arm/tcg/gicv5-cpuif.c
-index c830938bdc..02129d5936 100644
---- a/target/arm/tcg/gicv5-cpuif.c
-+++ b/target/arm/tcg/gicv5-cpuif.c
-@@ -17,6 +17,9 @@ FIELD(GIC_CDPRI, ID, 0, 24)
- FIELD(GIC_CDPRI, TYPE, 29, 3)
- FIELD(GIC_CDPRI, PRIORITY, 35, 5)
- 
-+FIELD(GIC_CDDI, ID, 0, 24)
-+FIELD(GIC_CDDI, TYPE, 29, 3)
-+
- FIELD(GIC_CDDIS, ID, 0, 24)
- FIELD(GIC_CDDIS, TYPE, 29, 3)
- 
-@@ -572,6 +575,47 @@ static void gic_cdeoi_write(CPUARMState *env, const ARMCPRegInfo *ri,
-     *apr &= *apr - 1;
+diff --git a/hw/intc/arm_gicv5.c b/hw/intc/arm_gicv5.c
+index 6636a66976..0509a958ff 100644
+--- a/hw/intc/arm_gicv5.c
++++ b/hw/intc/arm_gicv5.c
+@@ -1113,6 +1113,52 @@ void gicv5_activate(GICv5Common *cs, uint32_t id, GICv5Domain domain,
+     irs_recalc_hppi(s, domain, iaffid);
  }
  
-+static void gic_cddi_write(CPUARMState *env, const ARMCPRegInfo *ri,
-+                           uint64_t value)
++void gicv5_deactivate(GICv5Common *cs, uint32_t id, GICv5Domain domain,
++                      GICv5IntType type, bool virtual)
 +{
-+    /*
-+     * Clear the Active state of the specified interrupt
-+     * in the current interrupt domain.
-+     */
-+    GICv5Common *gic = gicv5_get_gic(env);
-+    GICv5Domain domain = gicv5_current_phys_domain(env);
-+    GICv5IntType type = FIELD_EX64(value, GIC_CDDI, TYPE);
-+    uint32_t id = FIELD_EX64(value, GIC_CDDI, ID);
-+    bool virtual = false;
++    const GICv5ISTConfig *cfg;
++    GICv5 *s = ARM_GICV5(cs);
++    uint32_t *l2_iste_p;
++    L2_ISTE_Handle h;
++    uint32_t iaffid;
 +
-+    trace_gicv5_cddi(domain, value);
++    trace_gicv5_deactivate(domain_name[domain], inttype_name(type), virtual, id);
 +
-+    switch (type) {
-+    case GICV5_PPI:
-+    {
-+        uint32_t ppireg, ppibit;
++    if (virtual) {
++        qemu_log_mask(LOG_GUEST_ERROR, "gicv5_deactivate: tried to "
++                      "deactivate a virtual interrupt\n");
++        return;
++    }
++    if (type == GICV5_SPI) {
++        GICv5SPIState *spi = gicv5_spi_state(cs, id, domain);
 +
-+        if (id >= GICV5_NUM_PPIS) {
-+            break;
++        if (!spi) {
++            qemu_log_mask(LOG_GUEST_ERROR, "gicv5_deactivate: tried to "
++                          "deactivate unreachable SPI %d\n", id);
++            return;
 +        }
 +
-+        ppireg = id / 64;
-+        ppibit = 1 << (id % 64);
++        spi->active = false;
++        irs_recalc_hppi(s, domain, spi->iaffid);
++        return;
++    }
++    if (type != GICV5_LPI) {
++        qemu_log_mask(LOG_GUEST_ERROR, "gicv5_deactivate: tried to "
++                      "deactivate bad interrupt type %d\n", type);
++        return;
++    }
++    cfg = &s->phys_lpi_config[domain];
++    l2_iste_p = get_l2_iste(cs, cfg, id, &h);
++    if (!l2_iste_p) {
++        return;
++    }
++    *l2_iste_p = FIELD_DP32(*l2_iste_p, L2_ISTE, ACTIVE, false);
++    iaffid = FIELD_EX32(*l2_iste_p, L2_ISTE, IAFFID);
++    put_l2_iste(cs, cfg, &h);
 +
-+        env->gicv5_cpuif.ppi_active[ppireg] &= ~ppibit;
-+        gic_recalc_ppi_hppi(env);
-+        break;
-+    }
-+    case GICV5_LPI:
-+    case GICV5_SPI:
-+        /* Tell the IRS to deactivate this interrupt */
-+        gicv5_deactivate(gic, id, domain, type, virtual);
-+        break;
-+    default:
-+        break;
-+    }
++    irs_recalc_hppi(s, domain, iaffid);
 +}
 +
- static const ARMCPRegInfo gicv5_cpuif_reginfo[] = {
-     /*
-      * Barrier: wait until the effects of a cpuif system register
-@@ -629,6 +673,11 @@ static const ARMCPRegInfo gicv5_cpuif_reginfo[] = {
-         .access = PL1_W, .type = ARM_CP_IO | ARM_CP_NO_RAW,
-         .writefn = gic_cdeoi_write,
-     },
-+    {   .name = "GIC_CDDI", .state = ARM_CP_STATE_AA64,
-+        .opc0 = 1, .opc1 = 0, .crn = 12, .crm = 2, .opc2 = 0,
-+        .access = PL1_W, .type = ARM_CP_IO | ARM_CP_NO_RAW,
-+        .writefn = gic_cddi_write,
-+    },
-     {   .name = "GIC_CDHM", .state = ARM_CP_STATE_AA64,
-         .opc0 = 1, .opc1 = 0, .crn = 12, .crm = 2, .opc2 = 1,
-         .access = PL1_W, .type = ARM_CP_IO | ARM_CP_NO_RAW,
-diff --git a/target/arm/tcg/trace-events b/target/arm/tcg/trace-events
-index fcb3106a96..c60ce6834e 100644
---- a/target/arm/tcg/trace-events
-+++ b/target/arm/tcg/trace-events
-@@ -6,3 +6,4 @@ gicv5_recalc_ppi_hppi(int domain, uint32_t id, uint8_t prio) "domain %d new PPI
- gicv5_gicr_cdia_fail(int domain, const char *reason) "domain %d CDIA attempt failed: %s"
- gicv5_gicr_cdia(int domain, uint32_t id) "domain %d CDIA acknowledge of interrupt 0x%x"
- gicv5_cdeoi(int domain) "domain %d CDEOI performing priority drop"
-+gicv5_cddi(int domain, uint32_t id) "domain %d CDDI deactivating interrupt ID 0x%x"
+ static void irs_map_l2_istr_write(GICv5 *s, GICv5Domain domain, uint64_t value)
+ {
+     GICv5Common *cs = ARM_GICV5_COMMON(s);
+diff --git a/hw/intc/trace-events b/hw/intc/trace-events
+index 636c598970..c6696f0e0a 100644
+--- a/hw/intc/trace-events
++++ b/hw/intc/trace-events
+@@ -242,6 +242,7 @@ gicv5_set_handling(const char *domain, const char *type, bool virtual, uint32_t
+ gicv5_set_target(const char *domain, const char *type, bool virtual, uint32_t id, uint32_t iaffid, int irm) "GICv5 IRS SetTarget %s %s virtual:%d ID %u IAFFID %u routingmode %d"
+ gicv5_request_config(const char *domain, const char *type, bool virtual, uint32_t id, uint64_t icsr) "GICv5 IRS RequestConfig %s %s virtual:%d ID %u ICSR 0x%" PRIx64
+ gicv5_activate(const char *domain, const char *type, bool virtual, uint32_t id) "GICv5 IRS Activate %s %s virtual:%d ID %u"
++gicv5_deactivate(const char *domain, const char *type, bool virtual, uint32_t id) "GICv5 IRS Deactivate %s %s virtual:%d ID %u"
+ gicv5_spi_state(uint32_t spi_id, bool level, bool pending, bool active) "GICv5 IRS SPI ID %u now level %d pending %d active %d"
+ gicv5_irs_recalc_hppi_fail(const char *domain, uint32_t iaffid, const char *reason) "GICv5 IRS %s IAFFID %u: no HPPI: %s"
+ gicv5_irs_recalc_hppi(const char *domain, uint32_t iaffid, uint32_t id, uint8_t prio) "GICv5 IRS %s IAFFID %u: new HPPI ID 0x%x prio %u"
+diff --git a/include/hw/intc/arm_gicv5_stream.h b/include/hw/intc/arm_gicv5_stream.h
+index 7adb53c86d..f6783cc6b5 100644
+--- a/include/hw/intc/arm_gicv5_stream.h
++++ b/include/hw/intc/arm_gicv5_stream.h
+@@ -212,4 +212,18 @@ void gicv5_forward_interrupt(ARMCPU *cpu, GICv5Domain domain);
+ GICv5PendingIrq gicv5_get_hppi(GICv5Common *cs, GICv5Domain domain,
+                                uint32_t iaffid);
+ 
++/**
++ * gicv5_deactivate
++ * @cs: GIC IRS to send command to
++ * @id: interrupt ID
++ * @domain: interrupt Domain to act on
++ * @type: interrupt type (LPI or SPI)
++ * @virtual: true if this is a virtual interrupt
++ *
++ * Deactivate the specified interrupt. There is no report back
++ * of success/failure to the CPUIF in the protocol.
++ */
++void gicv5_deactivate(GICv5Common *cs, uint32_t id, GICv5Domain domain,
++                      GICv5IntType type, bool virtual);
++
+ #endif
 -- 
 2.43.0
 
