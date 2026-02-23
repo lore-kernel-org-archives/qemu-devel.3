@@ -4,78 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B3A1EC1128
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 20:08:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B55B3EC1130
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 20:26:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vucCx-0004DT-IR; Mon, 23 Feb 2026 15:07:07 -0500
+	id 1vucV9-0003Zm-PL; Mon, 23 Feb 2026 15:25:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vucCr-0004D7-OT
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 15:07:03 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <heifetz@yandex-team.com>)
+ id 1vucUp-0003A6-3Z
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 15:25:37 -0500
+Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vucCo-0007Ei-2o
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 15:07:00 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771877216;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=VL6VgyD5voTBjuNHnM1SEKYWuGgEgwCb9XdN4G3ySww=;
- b=EP8rfABJ4JIfK/s4IhtzKKjrDqkY/PCEotuw9McBggNuuAXVzeqJaYvxGE2hLb/M/7RdwM
- 5XqgsBarqZGKHagsTGA+ODH37ldYQzBVbQAkYaDeFKG3o4ewWMKVt2dVXVR+lM9x2y2ayC
- 9KUXzq2zNuvq0dxl9PrkAxN/aJ58OOw=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-696-Ibscjxo4Mqi3wgWSvW8VlQ-1; Mon,
- 23 Feb 2026 15:06:52 -0500
-X-MC-Unique: Ibscjxo4Mqi3wgWSvW8VlQ-1
-X-Mimecast-MFC-AGG-ID: Ibscjxo4Mqi3wgWSvW8VlQ_1771877211
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 48C24180025B; Mon, 23 Feb 2026 20:06:51 +0000 (UTC)
-Received: from redhat.com (unknown [10.45.226.11])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2AAD61800666; Mon, 23 Feb 2026 20:06:47 +0000 (UTC)
-Date: Mon, 23 Feb 2026 20:06:44 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Peter Xu <peterx@redhat.com>
-Cc: Michael Tokarev <mjt@tls.msk.ru>, QEMU Development <qemu-devel@nongnu.org>,
- Fabiano Rosas <farosas@suse.de>,
- Christian Ehrhardt <christian.ehrhardt@canonical.com>,
- Peter Maydell <peter.maydell@linaro.org>
-Subject: Re: migration: stable machine types?
-Message-ID: <aZyzVOZkeicX0lrS@redhat.com>
-References: <eabe1076-d30c-4454-8558-a231b9cb228d@tls.msk.ru>
- <aZwwGW7ERvH555zg@redhat.com> <aZysbHMzin4PYtIK@x1.local>
+ (Exim 4.90_1) (envelope-from <heifetz@yandex-team.com>)
+ id 1vucUi-0002Or-Qj
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 15:25:32 -0500
+Received: from mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
+ [IPv6:2a02:6b8:c0c:bf1f:0:640:c739:0])
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 2918B8E413;
+ Mon, 23 Feb 2026 23:25:24 +0300 (MSK)
+Received: from heifetz-lin.yandex-team.ru (unknown [2a02:6bf:8080:12d::1:2c])
+ by mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
+ (smtpcorp/Yandex) with ESMTPSA id CPmvPN6Ap8c0-rY4DI9og; 
+ Mon, 23 Feb 2026 23:25:23 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.com;
+ s=default; t=1771878323;
+ bh=Yq0CWubq2cVL00aDsB6wDvjl/NGJ8QzW3ZUX45lNfyg=;
+ h=Message-Id:Date:In-Reply-To:Cc:Subject:References:To:From;
+ b=lXJxtGdHcQuI9mHVb6hc1whmnGTlx8g1IBAHkB+6ZKItvYNLC8/HrdOnXLIt6zL2V
+ xNdGGBqp8UqTkPrWyhJSxi7lB7dB3X4wzAizfEj0bXrAuJXPxTd3rgUk/u/T/t86mJ
+ 3WbpgSDtONUUmQsZg2OUneN+5IdkIgEISjS83WbY=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.com
+From: Sergei Heifetz <heifetz@yandex-team.com>
+To: qemu-devel@nongnu.org
+Cc: Gerd Hoffmann <kraxel@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Eric Blake <eblake@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>
+Subject: [PATCH v2 04/10] hw/audio/pcspk: change PCSPK behaviour with
+ --disable-audio
+Date: Tue, 24 Feb 2026 01:25:06 +0500
+Message-Id: <20260223202512.1308205-5-heifetz@yandex-team.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20260223202512.1308205-1-heifetz@yandex-team.com>
+References: <20260223202512.1308205-1-heifetz@yandex-team.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <aZysbHMzin4PYtIK@x1.local>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=178.154.239.136;
+ envelope-from=heifetz@yandex-team.com; helo=forwardcorp1b.mail.yandex.net
 X-Spam_score_int: -1
 X-Spam_score: -0.2
 X-Spam_bar: /
-X-Spam_report: (-0.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-0.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1.179, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.717,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,101 +85,109 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Feb 23, 2026 at 02:37:16PM -0500, Peter Xu wrote:
-> On Mon, Feb 23, 2026 at 10:46:49AM +0000, Daniel P. Berrangé wrote:
-> > On Sat, Feb 21, 2026 at 09:55:55AM +0300, Michael Tokarev wrote:
-> > > Hi!
-> > > 
-> > > We had a few examples when a bugfix required for a stable series
-> > > but it can't be applied because it breaks migration.  One recent
-> > > example is https://bugs.launchpad.net/ubuntu/+source/qemu/+bug/2131822 -
-> > > the fix has been cherry-picked for 10.0.x but had to be reverted.
-> > > 
-> > > I wonder if we can, sometimes, introduce additional machine types
-> > > for stable series.
-> > > 
-> > > In this case, it might've been an intermediate 10.0.4 machine type,
-> > > which is between 10.0 and 10.1 - with this additional change included.
-> > > 
-> > > If this machine is known to both 10.1-tobe and 10.0.4+, all migration
-> > > should work fine in both directions.
-> > 
-> > Yep, any bug fix machine would need to be added to 'master' branch
-> > too, and any intermediate stable branches - though the latter probably
-> > wouldn't ever happen as machine version mistakes are usually discovered
-> > reasonably soon.
-> > 
-> > > It is exactly the same situation and solution which has been implemented
-> > > by ubuntu in the end, but using their own, distribution-specific,
-> > > machine types.
-> > > 
-> > > Why can't we do the same in upstream qemu?
-> > 
-> > There is no constraint from a technical POV. The macros I introduced
-> > for defining versioned machine types in a standardized manner, can
-> > have variants provided that define "bug fix" machines for stable
-> > branches. We have a pretty old example for Q35:
-> > 
-> >   hw/i386/pc_q35.c:DEFINE_Q35_MACHINE_BUGFIX(4, 0, 1);
-> > 
-> > We used to have another example for PPC, which used the _MACHINE_TAGGED
-> > variant, which added a string suffix instead of a micro version number,
-> > but I'd recommend we don't use string suffixes again, only micro versions.
-> > 
-> > The core reason we didn't do this in the past was the support workload,
-> > as every extra machine type we add is one more thing to maintain...
-> > previously this burden was forever, but at least now we have capped
-> > versioned machines at 6 years / 18 minor releases total lifetime.
-> > Thus if we did add bugfix machines, that burden is now capped and
-> > thus more tolerable.
-> > 
-> > 
-> > IOW, if you as stable maintainer want to add a bugfix machine, and
-> > the subsystem maintainer for that machine is aggreeable to adding
-> > it too, there is no fundamental blocker here.
-> 
-> Then does it mean we may sometimes need to add >1 new bugfix machine types
-> for one fix?
-> 
-> Consider if somethinig was broken in QEMU 10.0 release, then in 11.0 QEMU
-> we fixed it and marked backport (which will break guest ABI).
-> 
-> If we want to backport that change to older systems (that is, in this case
-> 10.0, 10.1, 10.2), IIUC we need to introduce three machines (for example,
-> 10.0.3, 10.1.2, 10.2.1), rather than one bugfix machine type.  IIUC we'll
-> need all these machine types available in master branch and intermediate
-> stable branches?
+PCSPK (PC Speaker) is an embedded audio device. We don't want it to use audio
+when QEMU is configured with `--disable-audio`. This is achieved with minimal,
+non-invasive changes to the code.
 
-If we cause a regression in an existing machine type via a backport,
-we should just fix that regression, not introduce a new machine type.
+In essence, the changes ensure that PCSPK does not have a corresponding
+audio backend, while functioning the same way in non-audio aspects.
 
+Signed-off-by: Sergei Heifetz <heifetz@yandex-team.com>
+---
+ hw/audio/pcspk.c | 12 +++++++++++-
+ hw/i386/pc.c     |  2 ++
+ 2 files changed, 13 insertions(+), 1 deletion(-)
 
-A new machine type in stable should only be considered where we need
-to backport a bugfix, and that fix was inherantly tied to a machine
-type that exists in master, but not in stable.
-
-Even if it is possible to do it, we should still consider each case
-to decide it is it desirable to do it, given the support burden.
-
-IOW, if we ended up with multiple bugfix machine types per stable
-stream, IMHO that would be a sign we were not being anywhere near
-strict enough.
-
-I was thinking this should be something where we have 0 or 1 bug
-fix machines introduced per year. ie most stable branches should
-not need bugfix machine types. Only the most significant of bugs
-should justify it.
-
-
-With regards,
-Daniel
+diff --git a/hw/audio/pcspk.c b/hw/audio/pcspk.c
+index 6b826507ce..54e1882265 100644
+--- a/hw/audio/pcspk.c
++++ b/hw/audio/pcspk.c
+@@ -48,17 +48,20 @@ struct PCSpkState {
+ 
+     MemoryRegion ioport;
+     uint32_t iobase;
++    PITCommonState *pit;
++#ifdef CONFIG_AUDIO
+     uint8_t sample_buf[PCSPK_BUF_LEN];
+     AudioBackend *audio_be;
+     SWVoiceOut *voice;
+-    PITCommonState *pit;
+     unsigned int pit_count;
+     unsigned int samples;
+     unsigned int play_pos;
++#endif
+     uint8_t data_on;
+     uint8_t dummy_refresh_clock;
+ };
+ 
++#ifdef CONFIG_AUDIO
+ static const char *s_spk = "pcspk";
+ 
+ static inline void generate_samples(PCSpkState *s)
+@@ -130,6 +133,7 @@ static int pcspk_audio_init(PCSpkState *s)
+ 
+     return 0;
+ }
++#endif
+ 
+ static uint64_t pcspk_io_read(void *opaque, hwaddr addr,
+                               unsigned size)
+@@ -160,11 +164,13 @@ static void pcspk_io_write(void *opaque, hwaddr addr, uint64_t val,
+ 
+     s->data_on = (val >> 1) & 1;
+     pit_set_gate(s->pit, 2, gate);
++#ifdef CONFIG_AUDIO
+     if (s->voice) {
+         if (gate) /* restart */
+             s->play_pos = 0;
+         audio_be_set_active_out(s->audio_be, s->voice, gate & s->data_on);
+     }
++#endif
+ }
+ 
+ static const MemoryRegionOps pcspk_io_ops = {
+@@ -195,10 +201,12 @@ static void pcspk_realizefn(DeviceState *dev, Error **errp)
+ 
+     isa_register_ioport(isadev, &s->ioport, s->iobase);
+ 
++#ifdef CONFIG_AUDIO
+     if (s->audio_be && audio_be_check(&s->audio_be, errp)) {
+         pcspk_audio_init(s);
+         return;
+     }
++#endif
+ }
+ 
+ static const VMStateDescription vmstate_spk = {
+@@ -213,7 +221,9 @@ static const VMStateDescription vmstate_spk = {
+ };
+ 
+ static const Property pcspk_properties[] = {
++#ifdef CONFIG_AUDIO
+     DEFINE_AUDIO_PROPERTIES(PCSpkState, audio_be),
++#endif
+     DEFINE_PROP_UINT32("iobase", PCSpkState, iobase,  0x61),
+     DEFINE_PROP_LINK("pit", PCSpkState, pit, TYPE_PIT_COMMON, PITCommonState *),
+ };
+diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+index 0dd3fd01d9..3992553c2a 100644
+--- a/hw/i386/pc.c
++++ b/hw/i386/pc.c
+@@ -1679,8 +1679,10 @@ static void pc_machine_initfn(Object *obj)
+ 
+     pc_system_flash_create(pcms);
+     pcms->pcspk = isa_new(TYPE_PC_SPEAKER);
++#ifdef CONFIG_AUDIO
+     object_property_add_alias(OBJECT(pcms), "pcspk-audiodev",
+                               OBJECT(pcms->pcspk), "audiodev");
++#endif
+     if (pcmc->pci_enabled) {
+         cxl_machine_init(obj, &pcms->cxl_devices_state);
+     }
 -- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+2.34.1
 
 
