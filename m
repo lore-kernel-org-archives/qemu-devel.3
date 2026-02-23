@@ -4,107 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53291E98DF9
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 07:58:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41DE1E98E00
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 08:04:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuQpm-0001TX-KN; Mon, 23 Feb 2026 02:58:27 -0500
+	id 1vuQvl-0002wP-HA; Mon, 23 Feb 2026 03:04:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vuQpi-0001TC-OG
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 02:58:23 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
+ id 1vuQvh-0002vD-Tx
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 03:04:36 -0500
+Received: from mgamail.intel.com ([192.198.163.18])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vuQph-0003ud-97
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 02:58:22 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771833500;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Ly4w5S41/HTGOi9TcEzh+zdTZ3EnizDatVSymlll210=;
- b=Uo7kD0CwEwlUPXC7beToGFtM5DHUH62tvsM/KSYNsMFyRkU0CAk9KfyGHau3qpiPBIRu0u
- 5XczmrLeeNXsHOLUUTd/3nS1sKWJLmPJxt8eAVJVEQZN0NmhiYLWUnZ/hAHwzwCBt6HHXv
- idY1HSXYvZj01TBtv6IbyJfB7sw6/MM=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-351-GV5IYtSmN56Eqj766t0qcA-1; Mon, 23 Feb 2026 02:58:18 -0500
-X-MC-Unique: GV5IYtSmN56Eqj766t0qcA-1
-X-Mimecast-MFC-AGG-ID: GV5IYtSmN56Eqj766t0qcA_1771833497
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-4837f288194so33868545e9.2
- for <qemu-devel@nongnu.org>; Sun, 22 Feb 2026 23:58:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1771833497; x=1772438297; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=Ly4w5S41/HTGOi9TcEzh+zdTZ3EnizDatVSymlll210=;
- b=UlSoxaysJiHYsk/r5PnLNQv8xuFHhsKzPjeiUUc9qdNQCZMjS/VUpgUYSnsHl5lKzU
- +ObKpEUhya8l1favXVqPbi/5RrVT/1Izb0v6sL6OAyU4brNfrYZUT8MZen7e5CPyp4Su
- qdgv6adhfiuU3SNIgsdOd8NFss/Fbhkw2mXTAdcurXenfnHNS90eZLKd6RVaCem2t1tc
- kjW/ZwGLRqjsr7ls/ZyNjnGzDYLY2aByKP1/QNL5K3fNjFR3w/ZgsZVY2wwMOcFUB1Eb
- JK5IpworjmNg+4nyVjzJSXTcA1g/S7B6dYywKo570dgml2v9+DzWEPWm0X+RIOL/TVgG
- na2w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771833497; x=1772438297;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Ly4w5S41/HTGOi9TcEzh+zdTZ3EnizDatVSymlll210=;
- b=gcBWfVDsxI8ZL7v6XP+uwMU/PGuNFNPFWtjdNiHfCEU9ufIsRX3o4c+PjUjUSaJh3m
- 6qeF8pG+S4vTDDSAH74JsB80roq/ez5btevqCZW/4FAmTkBbFYtdIRLhro9KUS5nDcAS
- E0Z1wlK8nflOt1s5mpJo1q9jZlQBClxVXNp7UrOcETAtppjM+NYKa9Ra8Dl32Ua4UwII
- VnwtLoZUGPB9gGJcgtS/WxxNoh3TYVwFLDQunhecKfq8P6kAU4qn+g2UnxnPCRyk8xuK
- 9mrjTBL3NhNbT01kWAiDZG2pt16aS2IZg9DPdKY+NMSl8TEL7MwSVc6IGMfPheG7Wye/
- Oo1g==
-X-Gm-Message-State: AOJu0YyjYkY7hwPmLpuUBP4Vio36K8cOrE3pzq/LOs/laScq8fYYwDIB
- BOZ/EzJWUYGY2B04ltHZc2XAy0/IgeSd5tKbcq7LZJVP1YMP5V4fx6+QJdH1Q7n6Fu4degA85Ja
- u8rRLSsrbYbntcb69sZhbcRsgaKq3r10iaj0Nn00vIZ+qaEE3kqSqnQMI
-X-Gm-Gg: AZuq6aKiXTDxeo4K2O0LMy91x0byc6FOUwrgRyB1o9E+2Hi/GC6E7ZXLp24EX9B5gLx
- SrL9AsWOTQ5OgtT2ViYhFT+fOxegw8Oi8j77Jx5kmDPjk4Hl0BRDvDZADYOcX4afX6hHOo8Yf8/
- SE1J5UIMFlhw8WEH4Mfr+wIgZvlqx0YQu3ArrX9j5OJSLGv3SkR0uKee9PhnSxv811IEgAcQLb6
- PhukPQ0B+jrC2MH/n0oY+3OiCVuMbiFckk2Br5qFvCm0G/Uy0eewzdSxuupI94WXoP48hqpc0uS
- H/Zah1pGwJBOQ6bm3EYNAu0GsToxo2Njogl+beUHMEuRZFA2QLbs/z9/+P7YN1y2og75nJh96rd
- j+G+OX0z8bTAgxJreauY7hkeLIvFMOMc8Y06bwLTXlDxXTg==
-X-Received: by 2002:a05:600c:6217:b0:471:14af:c715 with SMTP id
- 5b1f17b1804b1-483a95eb550mr111810085e9.3.1771833496734; 
- Sun, 22 Feb 2026 23:58:16 -0800 (PST)
-X-Received: by 2002:a05:600c:6217:b0:471:14af:c715 with SMTP id
- 5b1f17b1804b1-483a95eb550mr111809845e9.3.1771833496310; 
- Sun, 22 Feb 2026 23:58:16 -0800 (PST)
-Received: from redhat.com (IGLD-80-230-79-166.inter.net.il. [80.230.79.166])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-483a3db3369sm117218165e9.0.2026.02.22.23.58.14
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 22 Feb 2026 23:58:15 -0800 (PST)
-Date: Mon, 23 Feb 2026 02:58:12 -0500
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Michael Tokarev <mjt@tls.msk.ru>
-Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Alexandr Moshkov <dtalexundeer@yandex-team.ru>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Stefano Garzarella <sgarzare@redhat.com>
-Subject: Re: [PULL 33/33] vhost: fix vhost_inflight_buffer_pre_load
-Message-ID: <20260223025742-mutt-send-email-mst@kernel.org>
-References: <cover.1771770471.git.mst@redhat.com>
- <72f663f575ab5e0f31320d7c9f25cc1f086313bd.1771770471.git.mst@redhat.com>
- <be650a77-3dbb-4c21-9af6-6b183ee92178@tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
+ id 1vuQvf-0004L5-G5
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 03:04:32 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1771833871; x=1803369871;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=R+voCt8gQq6Y2SKx4ENrPxTbBWeBaPJn71IunQUW5Lg=;
+ b=eBnmcimXLwU0gWp4fwH2+Uysrrp/hWU7JFzNaDlZkOxBjwdyp+o199Cv
+ VckZwHXOgW7mc5lsRatwej0bCdzErCxFv4/BmOemDlyebvcYhdC8xd9PP
+ ttJi/qR64SDAWojxx/Ep+RZQpS4TuABWIrR8ef74Q/JO5dbkVRgb59pow
+ ZiB2yT+PiHzPgrvSdCES3Ds0CD0AtBmWXeWIqFLkKy8oB7PdUUggdS7MC
+ 0he8QoBYop9h1TAmcGEyIcYbSXaMunNCccb85GCbfdTrpOF+YojuXdUKX
+ Af1WBf/YEVW65v8zv/KbIDlh4yk6NWeqku1tO0r9pfcxuv2p/SHatXq4Z Q==;
+X-CSE-ConnectionGUID: FNO321T4SruAc7E44F24lg==
+X-CSE-MsgGUID: UQg5gxGlQqy6UoPynH7J0g==
+X-IronPort-AV: E=McAfee;i="6800,10657,11709"; a="72027125"
+X-IronPort-AV: E=Sophos;i="6.21,306,1763452800"; d="scan'208";a="72027125"
+Received: from orviesa002.jf.intel.com ([10.64.159.142])
+ by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 23 Feb 2026 00:04:23 -0800
+X-CSE-ConnectionGUID: FX8AKnfoT3GFwJoUb3gRJg==
+X-CSE-MsgGUID: 4lc9ounwRUuogFd7JK6biQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.21,306,1763452800"; d="scan'208";a="246079166"
+Received: from vkasired-desk2.fm.intel.com ([10.105.128.132])
+ by orviesa002-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 23 Feb 2026 00:04:23 -0800
+From: Vivek Kasireddy <vivek.kasireddy@intel.com>
+To: qemu-devel@nongnu.org
+Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Alex Williamson <alex@shazbot.org>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PATCH v7 05/10] virtio-gpu-dmabuf: Use g_autofree for the list
+ pointer
+Date: Mon, 23 Feb 2026 00:00:09 -0800
+Message-ID: <20260223080200.468558-6-vivek.kasireddy@intel.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260223080200.468558-1-vivek.kasireddy@intel.com>
+References: <20260223080200.468558-1-vivek.kasireddy@intel.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <be650a77-3dbb-4c21-9af6-6b183ee92178@tls.msk.ru>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -4
-X-Spam_score: -0.5
-X-Spam_bar: /
-X-Spam_report: (-0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=192.198.163.18;
+ envelope-from=vivek.kasireddy@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.798, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.79,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.798,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.79, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,23 +90,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Feb 23, 2026 at 12:16:46AM +0300, Michael Tokarev wrote:
-> On 22.02.2026 17:29, Michael S. Tsirkin wrote:
-> > From: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
-> > 
-> > While I was rebasing my series about inflight migration, I missed a
-> > small issue in vhost_inflight_buffer_preload:
-> > 
-> > * fix wrong return type in function
-> > * fix error check
-> > 
-> > Signed-off-by: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
-> > Fixes: tag pls?
-> 
-> Is this intentional? :)
-> 
-> /mjt
+Avoid the manual g_free() calls for the list pointer by using
+g_autofree in virtio_gpu_create_udmabuf().
 
-Ouch (
+Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
+Cc: Alex Bennée <alex.bennee@linaro.org>
+Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Cc: Alex Williamson <alex@shazbot.org>
+Cc: Cédric Le Goater <clg@redhat.com>
+Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
+---
+ hw/display/virtio-gpu-dmabuf.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
+
+diff --git a/hw/display/virtio-gpu-dmabuf.c b/hw/display/virtio-gpu-dmabuf.c
+index 0782bcf3a1..8d67ef7c2a 100644
+--- a/hw/display/virtio-gpu-dmabuf.c
++++ b/hw/display/virtio-gpu-dmabuf.c
+@@ -29,7 +29,7 @@
+ 
+ static void virtio_gpu_create_udmabuf(struct virtio_gpu_simple_resource *res)
+ {
+-    struct udmabuf_create_list *list;
++    g_autofree struct udmabuf_create_list *list = NULL;
+     RAMBlock *rb;
+     ram_addr_t offset;
+     int udmabuf, i;
+@@ -45,7 +45,6 @@ static void virtio_gpu_create_udmabuf(struct virtio_gpu_simple_resource *res)
+     for (i = 0; i < res->iov_cnt; i++) {
+         rb = qemu_ram_block_from_host(res->iov[i].iov_base, false, &offset);
+         if (!rb || rb->fd < 0) {
+-            g_free(list);
+             return;
+         }
+ 
+@@ -62,7 +61,6 @@ static void virtio_gpu_create_udmabuf(struct virtio_gpu_simple_resource *res)
+         warn_report("%s: UDMABUF_CREATE_LIST: %s", __func__,
+                     strerror(errno));
+     }
+-    g_free(list);
+ }
+ 
+ static void virtio_gpu_remap_dmabuf(struct virtio_gpu_simple_resource *res)
+-- 
+2.53.0
 
 
