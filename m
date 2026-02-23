@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7778AEEC2AE
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 23:41:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE266EEC2AE
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 23:41:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vufXm-0007NR-8B; Mon, 23 Feb 2026 18:40:50 -0500
+	id 1vufXb-00071k-Gz; Mon, 23 Feb 2026 18:40:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vufXh-0007DL-OO
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 18:40:45 -0500
-Received: from qs-2003j-snip4-6.eps.apple.com ([57.103.86.99]
+ id 1vufXY-0006zG-TW
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 18:40:36 -0500
+Received: from qs-2002h-snip4-4.eps.apple.com ([57.103.87.205]
  helo=outbound.qs.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vufXg-0004Sn-00
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 18:40:45 -0500
+ id 1vufXX-0004Re-BZ
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 18:40:36 -0500
 Received: from outbound.qs.icloud.com (unknown [127.0.0.2])
  by p00-icloudmta-asmtp-us-east-2d-60-percent-6 (Postfix) with ESMTPS id
- D11C2180010D; Mon, 23 Feb 2026 23:40:38 +0000 (UTC)
+ CCB3018003AE; Mon, 23 Feb 2026 23:40:30 +0000 (UTC)
 Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1771890042; x=1774482042;
- bh=/kVWj4k8zYPDJ4BsTjTUg1SFE+xR58WxAIkclcXxeAY=;
+ s=sig1; t=1771890033; x=1774482033;
+ bh=IYoDu1Lf/5IVuiCOr/JCatr7nNqgDdTH9YXn2YCe0wI=;
  h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
- b=TKN4k+6CMPdpU3L4hpXfb4BnTm9kjmt8b1xXwHJr0xwNFG72brsw8Jza+gRHoL+/uqx91ZCIiMTkV0u1HMowRe4ARZ0if/lqeVc2wV3vePqz8Set4I9TEMTs3IFKEPD4vS4qFNKhJ9ytRkw7fS0HGIgU+kmdRn6TnENHi7OTa12+MAvThOV+znm3TwfpV+kAKw2IBrd+rzvkn3qy/3tY9KLJSx6jEF9hMb24JPEBYun0qAGL69Km6fXFUTGaaXG1Bdh4S6WU9H73B/kusYdWEpD4G0afk9Jmrz1xFZ9PyZMkwA50iVkLPfDI+5nigtbhAR3b+Iy6BBwRK1cZg0YGqg==
+ b=ZCsEWU2WBjlJlJORXETj42gcYbQq/BTa/MPaVfdYJKq2o0gzFjA6RwCmCKzoVV0Jrxl1gRklYlUW4Y3Ia8aXncW0yAfI6vHiOZ9i91EfzzKfemWj01RkGTRevPX/KZZFKEL213OMxN4Sy5H15K1VBpvAJ+B/ANt9T5b/qwJKsT+HJX9gMsxruc6smqlJNJSiV2OXY6l64fPLvh4Xu7m7GXANV9sYH9IdMRQW4AlLp8NuhmXnCY6hguOpaU+q3CqUt/ScX/bKjoLYPMnqQjri+utzr1Xh/1xMoukfvKDy32yQJiiMD1z4gkf3EldJiQYVW7eYoxK95y1azcSF9HeShA==
 mail-alias-created-date: 1752046281608
 Received: from localhost.localdomain (unknown [17.57.155.37])
  by p00-icloudmta-asmtp-us-east-2d-60-percent-6 (Postfix) with ESMTPSA id
- 1C4311800149; Mon, 23 Feb 2026 23:40:36 +0000 (UTC)
+ 571571800395; Mon, 23 Feb 2026 23:40:28 +0000 (UTC)
 From: Mohamed Mediouni <mohamed@unpredictable.fr>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
@@ -47,38 +47,37 @@ Cc: Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Zhao Liu <zhao1.liu@intel.com>, Wei Liu <wei.liu@kernel.org>,
  Roman Bolshakov <rbolshakov@ddn.com>
-Subject: [PATCH v6 22/28] target/i386: emulate: raise an exception on
- translation fault
-Date: Tue, 24 Feb 2026 00:39:44 +0100
-Message-ID: <20260223233950.96076-23-mohamed@unpredictable.fr>
+Subject: [PATCH v6 18/28] target/i386: emulate: 5-level paging for the page
+ table walker
+Date: Tue, 24 Feb 2026 00:39:40 +0100
+Message-ID: <20260223233950.96076-19-mohamed@unpredictable.fr>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20260223233950.96076-1-mohamed@unpredictable.fr>
 References: <20260223233950.96076-1-mohamed@unpredictable.fr>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjIzMDIwNiBTYWx0ZWRfX8E7OxvzuXAPp
- A0dGCfxxai6TqHGEXmJYXX7uMCfwrzfozSoT7aHgsjGOcO7nywluokzTdA1Q95vtsIwN8EqdKtn
- 6oDQnsw44F4OLis7pxTZ8xzfVMDwkyVxf+RhAqIgoVLyg7Gf8BSO4gS77sOtohMVJwVWnhDsrQl
- M9C1fy92CMbbuCOCqe8rFXD5ULPDIoAqYhDi9pQecH7uFuilmst76lqNswLYtWxZx9aFhJpMt99
- T8kqu5st3Bv2dBqo/Yij0bk3Axr2HXt7ZsrhLAW5ilcBrrxvmz/NMNm23YL88z0BQ65fTWzfW6p
- dA8hqYbElKIYUAKQRcuuwHwY0W6O3/CCQD4s6hbXLvJBTzsGH8br3K/5kGXniY=
-X-Authority-Info-Out: v=2.4 cv=Lq2fC3dc c=1 sm=1 tr=0 ts=699ce578
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjIzMDIwNiBTYWx0ZWRfX0c2lWgE76uzI
+ 8wdeOUiounPL+tFOYmXImn6leI3RGDSr3zn94sELMY7WVEQzbBNXi0AxaGmhU0aTKZEI6ysduHC
+ EL7diL21PfNeHXFXqcgkJMiwzJq93A4wDM74o/688VofZDjJLb2xHUj8CxCMsndVbDduUUCkZt1
+ 9L9Ws5Kgb+I9GUcZPa7RBgMJUfuUd4G1Op2i3MPiR2FSpEQ/D3irKUYsHpiRJtgtZzPWoBfKggK
+ +Ymn2vG2HOmj0Bz5+rIbDzptVfbgeWlP0LHZOPZVoOANYGhCYBYQ6skKs7HluDEb5iS4vxoeT8E
+ h4S6bm7EttMGnLasoVAgu9++KQ2vls0UDppXitFlm5PnFxvRzzOhqtv1nhtOnM=
+X-Authority-Info-Out: v=2.4 cv=PZryRyhd c=1 sm=1 tr=0 ts=699ce56f
  cx=c_apl:c_apl_out:c_pps a=bsP7O+dXZ5uKcj+dsLqiMw==:117
  a=bsP7O+dXZ5uKcj+dsLqiMw==:17 a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22 a=L5enj1CBYy6CaSJ8q-IA:9
-X-Proofpoint-ORIG-GUID: dzRc6nKiRt-QYi1iehKvfYgBLvN-YnWA
-X-Proofpoint-GUID: dzRc6nKiRt-QYi1iehKvfYgBLvN-YnWA
+ a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22 a=A61MTNvy9Chr7HSFv3YA:9
+X-Proofpoint-ORIG-GUID: kI5Q1hNpvC8-IcxPw1xWngOrAhcIKrz0
+X-Proofpoint-GUID: kI5Q1hNpvC8-IcxPw1xWngOrAhcIKrz0
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-02-23_05,2026-02-23_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0
- spamscore=0 mlxscore=0 phishscore=0 adultscore=0
- suspectscore=0 bulkscore=0
- clxscore=1030 lowpriorityscore=0 mlxlogscore=794 classifier=spam authscore=0
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
+ mlxlogscore=999 malwarescore=0 suspectscore=0 mlxscore=0 phishscore=0
+ adultscore=0 clxscore=1030 lowpriorityscore=0 bulkscore=0 classifier=spam
+ authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
  definitions=main-2602230206
-X-JNJ: AAAAAAAB1yY9wUr2Yi0LqjD0CYnSMXwMtybEtLeFYKkjjoulRJ+lXBnPrAujg9G0nu/8pD2pEafnnwStEkjlDkQawwIJ6tQ1B5Ubbno3NRPb+WOC5ysUeNAckA9aqaIu+ET7Ui3lqv9O/yt3q+SNy9p9xzlgyTamlURot32e7vAISwSYpXIZCorBII1SEoJ3RGMMXcWoBzHZ3kWZm2YuHe3bybYCM5vI80tEvwmddClFe1WL9HUD/W72fSMJfGYBZlyr+cJ3f85P9tbxJrkEbuHP37XTZd0lHdmAAEotgoiSKUp0lppjpqoBzvz3gW1MZwceuuj+WXmogx03/SSEoAeeADDFQH+uY6+ZESnZmkvsRSLedhLqUnv02axhp3ydhCqFF1JlYpBF31bOtTSoeI1hZY1BwRG5OHafNz2g/oA6iwGAoMuQ8qGEAeEfXSLlAYGw/EPBQjf17PAkRdL9KA0XIO6WRnL8iXgjIImw+/BHD3kbnXBktZuMsgIVhOPJGy7r3YcIhzCBn57YgRz+g5HfNz5N5hIoH9oUiRxJpTu5Mp7z4IWY8NCmspj+5TSQUiFuWKTSVfBgqaXfGUqId15KUS5bekpofSHi05gQwxHdy52Dx+YGPXCrDfaZ5fjRTkydtcPJy6rIPQRo+3WrGhEDJfvHV+dRdjnJe//SlUhtNMi1LMmb+EVwi9XHyfd2GrE97Vj3g5mQld18qW8o8h5Y8Bh5lYAvqA7Yn2D2pR/Ss/A45hiH5I3NZ4nDPrDdbR41euOavnIXQcHRGPUpQAyATbgR/qFLxe4d
-Received-SPF: pass client-ip=57.103.86.99;
+X-JNJ: AAAAAAABdImDRWC7hS7H8K7QAMIo6Xhv69XRtQrowP88b0tU3I2PgigQdcpVUMCnMRswLD8CYEAd6aom9mRCKYa2VvABaYcrRDXEElepzbSsi+Dm59+VmYR9FLV9Tbg+QPKg7lq6caTEaoBI6oIuKUPLpVafsNXKVVNtg/X+cc6cbNBDEelSPBubW2wMjnzn8oMSBeZmJjFxVaM9Cfv3M8NDYq6O9ENjKGIhDJ5z9PFxi8vQ4ct/jX0l0O9fxXv6PYFHdHPfBnLQT95IFGBVxi5wgn4jsR0koPaLsizmBqzomV9ut7pxjG/Zs27iNVWU2ZLir+q4V9DcG2w2ezL4GNom/zy3MABhsM2F4almHqp8fDWOiD2runLSuMVXvfDcNjA1wPDaQIgRtwNUpSM3WzgmUBQjMFi3UEU3dR/25iWj0PQObtpXJO+HqDc+n/gjsco6ip5n83t2Z3BmcBCQnmWV6kF5lj9owGPBhB79CR55/kKGFefmCd3FAiuI922uu9Oo/rQg+ASL7z4r2Zq1YS6ATDbGROb/ofpzEQjK5Jo4Ec77f1vJ48OQJ3gCa+E1yb5NxOKyCCEGabgwyMPcvVOKNZaHZmdE0ihULbx5QskacXK335qmR4WIm6D2yAUCT6IORWoO6PO9J+txxC44B18qmjtdrwYCes8NPKfi0x7j5o/drI3g09Aj6EV35RlL6uxFrR3se645gLG5HVcb+uDdKhxXlDHg9TWfEo3euOAFDvl7who8f8Mo0uACFGgIxiWCNKNo8vrLcvcIsyR7lji3gRTT5nSYDLZzw2F1Ng==
+Received-SPF: pass client-ip=57.103.87.205;
  envelope-from=mohamed@unpredictable.fr; helo=outbound.qs.icloud.com
 X-Spam_score_int: -1
 X-Spam_score: -0.2
@@ -104,73 +103,73 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
 ---
- target/i386/emulate/x86_mmu.c | 30 ++++++++++++++++++++++++++++++
- 1 file changed, 30 insertions(+)
+ target/i386/emulate/x86.h         | 1 +
+ target/i386/emulate/x86_helpers.c | 8 ++++++++
+ target/i386/emulate/x86_mmu.c     | 3 +++
+ target/i386/hvf/x86.c             | 5 +++++
+ 4 files changed, 17 insertions(+)
 
-diff --git a/target/i386/emulate/x86_mmu.c b/target/i386/emulate/x86_mmu.c
-index f9ef1070fb..d30f6c4a3e 100644
---- a/target/i386/emulate/x86_mmu.c
-+++ b/target/i386/emulate/x86_mmu.c
-@@ -240,8 +240,29 @@ MMUTranslateResult mmu_gva_to_gpa(CPUState *cpu, target_ulong gva, uint64_t *gpa
-     return res;
+diff --git a/target/i386/emulate/x86.h b/target/i386/emulate/x86.h
+index 73edccfba0..caf0e3be50 100644
+--- a/target/i386/emulate/x86.h
++++ b/target/i386/emulate/x86.h
+@@ -263,6 +263,7 @@ bool x86_is_protected(CPUState *cpu);
+ bool x86_is_real(CPUState *cpu);
+ bool x86_is_v8086(CPUState *cpu);
+ bool x86_is_long_mode(CPUState *cpu);
++bool x86_is_la57(CPUState *cpu);
+ bool x86_is_long64_mode(CPUState *cpu);
+ bool x86_is_paging_mode(CPUState *cpu);
+ bool x86_is_pae_enabled(CPUState *cpu);
+diff --git a/target/i386/emulate/x86_helpers.c b/target/i386/emulate/x86_helpers.c
+index 0700cc05ef..7bdd7e4c2a 100644
+--- a/target/i386/emulate/x86_helpers.c
++++ b/target/i386/emulate/x86_helpers.c
+@@ -236,6 +236,14 @@ bool x86_is_long_mode(CPUState *cpu)
+     return ((efer & lme_lma) == lme_lma);
  }
  
-+static int translate_res_to_error_code(MMUTranslateResult res, bool is_write, bool is_user)
++bool x86_is_la57(CPUState *cpu)
 +{
-+    int error_code = 0;
-+    if (is_user) {
-+        error_code |= PG_ERROR_U_MASK;
-+    }
-+    if (!(res & MMU_TRANSLATE_PAGE_NOT_MAPPED)) {
-+        error_code |= PG_ERROR_P_MASK;
-+    }
-+    if (is_write && (res & MMU_TRANSLATE_PRIV_VIOLATION)) {
-+        error_code |= PG_ERROR_W_MASK;
-+    }
-+    if (res & MMU_TRANSLATE_INVALID_PT_FLAGS) {
-+        error_code |= PG_ERROR_RSVD_MASK;
-+    }
-+    return error_code;
++    X86CPU *x86_cpu = X86_CPU(cpu);
++    CPUX86State *env = &x86_cpu->env;
++    uint64_t is_la57 = env->cr[4] & CR4_LA57_MASK;
++    return is_la57;
 +}
 +
- static MMUTranslateResult x86_write_mem_ex(CPUState *cpu, void *data, target_ulong gva, int bytes, bool priv_check_exempt)
+ bool x86_is_long64_mode(CPUState *cpu)
  {
-+    X86CPU *x86_cpu = X86_CPU(cpu);
-+    CPUX86State *env = &x86_cpu->env;
+     error_report("unimplemented: is_long64_mode()");
+diff --git a/target/i386/emulate/x86_mmu.c b/target/i386/emulate/x86_mmu.c
+index b82a55a3da..35987a897a 100644
+--- a/target/i386/emulate/x86_mmu.c
++++ b/target/i386/emulate/x86_mmu.c
+@@ -56,6 +56,9 @@ static int gpt_top_level(CPUState *cpu, bool pae)
+         return 2;
+     }
+     if (x86_is_long_mode(cpu)) {
++        if (x86_is_la57(cpu)) {
++            return 5;
++        }
+         return 4;
+     }
+ 
+diff --git a/target/i386/hvf/x86.c b/target/i386/hvf/x86.c
+index 2fa210ff60..e98f480f41 100644
+--- a/target/i386/hvf/x86.c
++++ b/target/i386/hvf/x86.c
+@@ -138,6 +138,11 @@ bool x86_is_long_mode(CPUState *cpu)
+     return rvmcs(cpu->accel->fd, VMCS_GUEST_IA32_EFER) & MSR_EFER_LMA;
+ }
+ 
++bool x86_is_la57(CPUState *cpu)
++{
++    return false;
++}
 +
-     MMUTranslateResult translate_res = MMU_TRANSLATE_SUCCESS;
-     MemTxResult mem_tx_res;
-     uint64_t gpa;
-@@ -252,6 +273,9 @@ static MMUTranslateResult x86_write_mem_ex(CPUState *cpu, void *data, target_ulo
- 
-         translate_res = mmu_gva_to_gpa(cpu, gva, &gpa, MMU_TRANSLATE_VALIDATE_WRITE);
-         if (translate_res) {
-+            int error_code = translate_res_to_error_code(translate_res, true, is_user(cpu));
-+            env->cr[2] = gva;
-+            x86_emul_raise_exception(env, EXCP0E_PAGE, error_code);
-             return translate_res;
-         }
- 
-@@ -284,6 +308,9 @@ MMUTranslateResult x86_write_mem_priv(CPUState *cpu, void *data, target_ulong gv
- 
- static MMUTranslateResult x86_read_mem_ex(CPUState *cpu, void *data, target_ulong gva, int bytes, bool priv_check_exempt)
+ bool x86_is_long64_mode(CPUState *cpu)
  {
-+    X86CPU *x86_cpu = X86_CPU(cpu);
-+    CPUX86State *env = &x86_cpu->env;
-+
-     MMUTranslateResult translate_res = MMU_TRANSLATE_SUCCESS;
-     MemTxResult mem_tx_res;
-     uint64_t gpa;
-@@ -294,6 +321,9 @@ static MMUTranslateResult x86_read_mem_ex(CPUState *cpu, void *data, target_ulon
- 
-         translate_res = mmu_gva_to_gpa(cpu, gva, &gpa, 0);
-         if (translate_res) {
-+            int error_code = translate_res_to_error_code(translate_res, false, is_user(cpu));
-+            env->cr[2] = gva;
-+            x86_emul_raise_exception(env, EXCP0E_PAGE, error_code);
-             return translate_res;
-         }
-         mem_tx_res = address_space_read(&address_space_memory, gpa, MEMTXATTRS_UNSPECIFIED,
+     struct vmx_segment desc;
 -- 
 2.50.1 (Apple Git-155)
 
