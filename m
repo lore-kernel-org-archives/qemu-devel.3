@@ -4,162 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59CE8E98DEF
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 07:20:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4465E98DEF
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 07:28:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuQE2-0002sc-Ag; Mon, 23 Feb 2026 02:19:27 -0500
+	id 1vuQMa-0004Hw-Df; Mon, 23 Feb 2026 02:28:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaurav.sharma_7@nxp.com>)
- id 1vuQDy-0002rQ-S2
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 02:19:22 -0500
-Received: from mail-northeuropeazlp170120005.outbound.protection.outlook.com
- ([2a01:111:f403:c200::5] helo=DUZPR83CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1vuQMZ-0004Ho-9I
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 02:28:15 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaurav.sharma_7@nxp.com>)
- id 1vuQDp-0003nJ-8m
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 02:19:18 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=t4GnZNvDZeVR+MPuRLTDs2FPkY2uy34pRVGqZGDI7T2gdRviUz9ftxnGOhaOM/RV8hzkgSDSEjZD+SCK9bcyhLqtMVVNiTs7fO13tYR1XUCWHsaEwCMg0utgZzekjU1NF2bgFnaLqrSYWHoZap/W7LAVsm4wojH6OgItWe7caTXWsqmCDzae5OLOqtJDIdKg2q4Sc23RS2ltUUFJH8UWN5Qpp7slNQH3qNnVJZ/fke5ZyrqwgRT1T5MuM5ArXz7CydKtnIvE9iRyasXxUqdWzl1bubHI3JxA3HmEKSYGuUyMN7M9mvw+T0cIvOFIME/77XslRH65CIPUep3NZqjafg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=TXaMVsJOpuzSgpb5YeE08gKNdS7ArLGxn/l/PwXq4as=;
- b=OQwLyi1O1u65kQ/Mmiyq2Uh5CUZiEhjdtKDuE+JtqxU17rCdszGe9UsEgCyE5YtLaRQE8oLnwNVgclTPYR0hmfNiV7XdW+r4jeV1QAUGbZMRGF7+f2kD53P6Mkl1eiTp1/NmwSNKNEq/ks+1ZnDTEoyk14EwMEE9Iha1HR3TiVt7UmYIBHL3w6ikir3Ktggpw11ahFFLavND415XfL8gxvej8OYWYREUJ4vMNaQKof/xeZlQOgMi87A0vEj3lgdaGGytSibNYS8qtHNHxmqDtv8e34wCjKrIe7XiPX1AnYvXEEBTRwCVL4PiAbct5Q+GlAeJn4EJKwgrbl4ZkQqooQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
- header.d=nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=TXaMVsJOpuzSgpb5YeE08gKNdS7ArLGxn/l/PwXq4as=;
- b=YBkx67irHdOdfNm15hftJlmXl58fB0nwdHMfqVjm27ymR7SFRGPPQvt1wJBzlkM/0/rDOD6ReVqWMAnhRA7NrpHspEkmt39pyzUEjf+KneCyxs71QYsS6T0EFb9SwpmGZQoDer+Pu3logFim774xDR13fHOIVuDT3ciq8iBx8MJN9+PdFkM9pBCuW1ahfdvJfIR8BWvF2n+cX0sewhLRgt0hmpQP9VxQpTOdZfybFe6L0Eas8QK7yhOgX6eFT7n4PN5UcAU2GAz6l1Hr4S8LUqLpD0NC/8+Wa7+qr5exuP5aEOI17pcX8V0oZpjayYm0AooawgdOgOQlSuEFYOpZXA==
-Received: from AM9PR04MB8487.eurprd04.prod.outlook.com (2603:10a6:20b:41a::6)
- by PAXPR04MB8943.eurprd04.prod.outlook.com (2603:10a6:102:20e::14)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9632.21; Mon, 23 Feb
- 2026 07:08:01 +0000
-Received: from AM9PR04MB8487.eurprd04.prod.outlook.com
- ([fe80::1e08:e81f:d29:e1da]) by AM9PR04MB8487.eurprd04.prod.outlook.com
- ([fe80::1e08:e81f:d29:e1da%4]) with mapi id 15.20.9632.010; Mon, 23 Feb 2026
- 07:08:00 +0000
-From: Gaurav Sharma <gaurav.sharma_7@nxp.com>
-To: Bernhard Beschow <shentey@gmail.com>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>
-CC: "pbonzini@redhat.com" <pbonzini@redhat.com>, "peter.maydell@linaro.org"
- <peter.maydell@linaro.org>
-Subject: RE: [EXT] Re: [PATCHv4 01/15] hw/arm: Add the i.MX 8MM EVK(Evaluation
- Kit) board
-Thread-Topic: [EXT] Re: [PATCHv4 01/15] hw/arm: Add the i.MX 8MM
- EVK(Evaluation Kit) board
-Thread-Index: AQHcZalfx1wWExJ35kiD6NPzwhPS7LVOkXuAgCDRzGCAIPcuoA==
-Date: Mon, 23 Feb 2026 07:08:00 +0000
-Message-ID: <AM9PR04MB8487D41F72A61106DCDCA8F78777A@AM9PR04MB8487.eurprd04.prod.outlook.com>
-References: <20251205053819.2021772-1-gaurav.sharma_7@nxp.com>
- <20251205053819.2021772-2-gaurav.sharma_7@nxp.com>
- <61D6819C-96C4-4C7D-87CF-378F76E85C2A@gmail.com>
- <AM9PR04MB84877B347C79D69D43EEDD7E879AA@AM9PR04MB8487.eurprd04.prod.outlook.com>
-In-Reply-To: <AM9PR04MB84877B347C79D69D43EEDD7E879AA@AM9PR04MB8487.eurprd04.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-Mentions: shentey@gmail.com
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nxp.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: AM9PR04MB8487:EE_|PAXPR04MB8943:EE_
-x-ms-office365-filtering-correlation-id: c32bc6c3-ffc5-413f-1fc3-08de72aa47ae
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|366016|1800799024|19092799006|376014|38070700021; 
-x-microsoft-antispam-message-info: =?us-ascii?Q?RTx0ElFrxwIBaKXbIu305BvvjOSFlNUyajUmnjVw7YbNFS3GNreZ91jwf8W4?=
- =?us-ascii?Q?P4o4rFonE4hJK/C3NKjkG6ufKLHS7MLbiLUk+Ws5RMCsuBS0pcfDuTzjFpgs?=
- =?us-ascii?Q?mD0ONUn8VQlNeaYj5s70xGsuKLyvPF5pRANQkqF+nkrbZMqyk9/6I4V9MJA6?=
- =?us-ascii?Q?Y8YhzQprOzvMZcVokJ3dirCp1gSNSrp8DUL+0KNTsWMIAVvFBTFR36Bp6OrW?=
- =?us-ascii?Q?gJYg/niFcEG2QsinnmKmLywqhbAHNXokB5WVrKgGZ7TR3yLhAlwrjn0ddyV5?=
- =?us-ascii?Q?7W6b33w94ef2P6kyvy+3HfD026XjH0jBMB8itvU8j4PQEZ16cKEO6YPQww1a?=
- =?us-ascii?Q?IRFNxUy4YVvH8KB1epm3xuq8O4NdUID4Yp/CfjwdtPHu2z4zRRj5+ZhjLIEt?=
- =?us-ascii?Q?BYPCpTaBbTXb+0xhSf3ocT/pBhnDVjPOS/5zxHOLTaq4EIBPW/SMsS8FVgxb?=
- =?us-ascii?Q?MlaoYQJcIoNBfHyOLJZC9Qd12eZj1Uphq3RGG7FSVnufTy6vmNSE9Pul9AiD?=
- =?us-ascii?Q?lxyxPRSboIN0PVZq88WUNz2NIAA/uWxRwjGB5Uu2nUxQj2zj2H1E8yk5I2Tr?=
- =?us-ascii?Q?yu45+BD6W4nqRM52zWtW7ljh99zrYME9aoWFNUf49qjqGdNGIkpXtiaous3f?=
- =?us-ascii?Q?zTeFTScFfdma0ojFxn5SNY32HhaVhZ0GxdGpxIQ6/rH1MQSedN5Gl0Z4lnVg?=
- =?us-ascii?Q?gw0i0uAVSQHqd4XElSe1IW6iuBsbeVgce982Gpab2QnGdODv6TilmfY65gRM?=
- =?us-ascii?Q?nQyxIZYcJmcu8ztONpfGuF6cGQga+CVl+XuQtq9r9vjVHyrZNGPuYfOrGIab?=
- =?us-ascii?Q?iJ1C/dKxJBQsgbS/bnkdKOeqZWw6OcVwXdHtHtQHXnQo/X++86jcnhj/FDcE?=
- =?us-ascii?Q?rELkry+3QzfuG9xCn3mbYbmJJrfXSHbWS1Xe8saCAvD6wg2Md69nXQLJhhIh?=
- =?us-ascii?Q?RXDRVWSbSdFQdJl0DpdLKFFtqDWRRKAJUHUTOawK5XIknuZbaoV60LJn019S?=
- =?us-ascii?Q?Q+LOaWJphBq7kQAmbQfIkmTKfAfgVp7ZwxJ3N8OLu72vUrQGjuH3SOx9RHX4?=
- =?us-ascii?Q?ZJg3M54SkLbT/TyN8XnO30F51nLKgijukQHiPRhY/9yVSkijj2kR1PkXwp+e?=
- =?us-ascii?Q?jwtGhb7lOZqcbe5nLLi0Ti3US7tHZABUoap4i0/oXGj6zbsX4BZTwY3fE8B+?=
- =?us-ascii?Q?fbCGDkWruuYmr2srRZbIwWhxM6COGactKJvF7VbpUqR0iTH5CTX57F+CGVgO?=
- =?us-ascii?Q?//Kdetr4xVOgaxFQnM4vyfugxxTrK2OdYyMdvML/R7jDxYfHfXndjja/Azvh?=
- =?us-ascii?Q?gzT0DGP6kTjqmRoiuUs+fBuezLKLczX5wLoLJtBjMkYNRazCr0sWFfm0gNvq?=
- =?us-ascii?Q?71E/Kwks5CEdFMz+3fLdVAfWC/ieNYFy2xWKqqM5bjEK/oY/W7Yc969JtrND?=
- =?us-ascii?Q?izlwG7lc8AejJZGbmBmqrTl6W6ggD+0d17BsuI180Cij1yCjqJ6fYhQFRVCq?=
- =?us-ascii?Q?/B+5qsnmUQgeHe3TeUwUA2q7Pw7sAublL6LYjoiveCLxBya2wEDaKdhc7n+V?=
- =?us-ascii?Q?xa8Sw4eKXfifkFoXlqS1webI/2Cmyx1ZY9fkhQS6RsDXmL56hKjcmYG/8NPX?=
- =?us-ascii?Q?Hx3hV5nFd5b8Ck7DO6IofXA=3D?=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:AM9PR04MB8487.eurprd04.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(1800799024)(19092799006)(376014)(38070700021); DIR:OUT;
- SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?s/H3Fq7/E3BU5aN6b6QCGPLxd2hsHC9QpV/IA5A0d7/qreT75XPm8nbj+Bov?=
- =?us-ascii?Q?g303dSo4ziAwukrchERJDCvtAnwunugTktYXFMe/9HUxI7btjaVUPYWs73Rr?=
- =?us-ascii?Q?kP1TOdTXeOJNuw8hTeeH+l2AiOfxY42faHuwmGNmDC2a2k9WPT7YZYtD7kwN?=
- =?us-ascii?Q?MUcaMig4TnUNcgRyXjtn/lAf6ukThkHsdZx+qmWK+aymkCK03X70Y/O0tdb2?=
- =?us-ascii?Q?0RFpjDYc6QCKF+cm3k014OkrEmy3cjVkbO4bGnO4UdKeDm1VZ7ha6tE41xEP?=
- =?us-ascii?Q?J6IK12KAtG6XHVSBtuVPst9HAdpQDdcD0iMSpgzchvEjyPnubUorQFnbNNdY?=
- =?us-ascii?Q?ob9opp0g3DOWeN5v/mT5aR0D0VFlGJF0RR3y4vHBRYHv+X+LABG9KiS3BCB8?=
- =?us-ascii?Q?xZhhb/MgCB+Bkia6RLtx4wZZKFOXlOmjsbf/8FcPAFZ8LoPV48WoKp0W39dp?=
- =?us-ascii?Q?OTucqpmymlXnLZ85QgSTeoNXUqZzkUuMD8Ya3vfLgcSc+LVYMmUNya8miRqs?=
- =?us-ascii?Q?meFmyRtsx3QcOAvWRiCAMyoZvJg+pAbt16cg8IuA+KK86L23wOz7giVFQy1A?=
- =?us-ascii?Q?dwvKxZ/1nt8hhB9L8CCVAnRcyM9rZG+gO9eNo7TTuxge6NxZZqmJW8O3ujNA?=
- =?us-ascii?Q?t4Vp4b+EtbK2phgtuDZszTHVa/QwIXVXYMs4VKmWu1Vv6n3VL2ShLab29MiX?=
- =?us-ascii?Q?TPbIe6xGvk37CnwabIhfgEXSxh70NlY47ZJR6b9OtUwQZXFSlpxlNgeKILfg?=
- =?us-ascii?Q?ZbsgbFPIG1kDndoGNxaiVTPFI6q+BPZrCAQgxxNH6YQJrPP5SKTr9fjmbX3+?=
- =?us-ascii?Q?cXI7oGFYhTtzA9z55gECE8C2l1w+viCFZz81yNiaBkkhSz8i6i3z46EHFWMD?=
- =?us-ascii?Q?gIblthfOvPnuWMRmhvm24tLc9cf5jkTQo4YyDOUV+IIOHbS6JK9PUZe2A8AH?=
- =?us-ascii?Q?DGHNX/flkO8xHgezDMgYUHICJhcpYn1IRQLLeeNM0x1dEWOgQFNUgWImVijG?=
- =?us-ascii?Q?eDRkahnZx1HAE7IZwJvhe6MJgrMuUN2ljHbPk0KOqkqH9rGv+dtWtNFr5wz8?=
- =?us-ascii?Q?ERPcgld7WSr9nR15cbfLNj0S2rhPR2tJ8S96HLagL2F5e/MLkvlNi3rqzE+L?=
- =?us-ascii?Q?o4NrXQMMBKGBrE3/zsAY1N4LCtg73KR5oPbOLt6FQo2T4wYmP9Oqz4XX2MY0?=
- =?us-ascii?Q?gyVuRxEXIL0Hheo24c5wv93+Fj4f80MPGc9tKkXbk4RByIjIe8jErlVDLGMi?=
- =?us-ascii?Q?pxY/Q7YEJplpGsZvJQcN9DWdiHNpi05QuzyzhjMrkQhD2o4p3WoPbQmE51nb?=
- =?us-ascii?Q?S408rUcnUsPlb7VOwZHq0nHH4crohiIYnmCcaLw9Q1sQN/dzSHwS9Xyz4mKo?=
- =?us-ascii?Q?8vO0Vn4416mSIq0iGbJtZJSnzOEd13xU8uVF3SAVUTBlUIVHuf1mG5ar0oRe?=
- =?us-ascii?Q?LjIRLkY2R+kaVmCS1Chx+YEy8zYBGmO3O7VLGOWy2boXUJprsh347jqMamGw?=
- =?us-ascii?Q?+IWcKDiK8bEj22/rND1FN2Sfw+xiT/4XCq9LSlqvqOBSUmnOoniOs0XxGd7W?=
- =?us-ascii?Q?9F0xl51k3gds/aij0uVZRqZzVycWCQ4rNWDLCmIDfPQ47F4dn+lQ9RNkfSv4?=
- =?us-ascii?Q?c8Y/2gGyhj2Ol0UyPGK0VxnIIiOWj/JcQVyqJnKn3hHlwXCLZgyq4KVJhPm/?=
- =?us-ascii?Q?Gt57L5WH+0CbBFRTnJ6wfYq4ejbiPlw98RPQOwA56zcVd1tzn/b0bXjP6+Qc?=
- =?us-ascii?Q?Wh3S3ScIcw=3D=3D?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1vuQMX-0005kL-5c
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 02:28:14 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1771831690;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Ql62sgQpESqAHw8IeepxHilxQcPVR34tWpH69aNGeVA=;
+ b=HHWkjT/x57FSY4QZusN2ZOYUW+IWvhJJ/5F+RAhA6QFUHp4XI3uQ5iFCB8EUe2iqFg620+
+ rjRswvt/Yuqa8H0B5jjIW6P49WePjNUZXrdySywm6P06AUwaAQbCJ4MCMlAtC5jz63Zf4B
+ ctEYa6TT0nR9YtvpUs6G/Drc0HEQioo=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-297-ADg6lJLZOGGGFoQxsHMzaQ-1; Mon, 23 Feb 2026 02:28:08 -0500
+X-MC-Unique: ADg6lJLZOGGGFoQxsHMzaQ-1
+X-Mimecast-MFC-AGG-ID: ADg6lJLZOGGGFoQxsHMzaQ_1771831687
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4837b7903f3so49483245e9.2
+ for <qemu-devel@nongnu.org>; Sun, 22 Feb 2026 23:28:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1771831687; x=1772436487; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Ql62sgQpESqAHw8IeepxHilxQcPVR34tWpH69aNGeVA=;
+ b=a4BgD1Un2rDsIi9C5ZHOB14skFY+uM4xqi05SgRsdjlU/AkRXhNFcvwJs0deeRfcBK
+ cRuUv68GqM77hxPzwgRAVY09AOh6Dud0gMf1ufBI8aYFcub2DntVnxNLiNwVUZCektEJ
+ FbbNnWjySaop/1FoEcxRh1Y4hXWblEMZD92fCh852h9fKeV007F9J10W7nQGLST7psjk
+ ou5G5dn2b40Qq23DSSfVkh+lp1noKY6lMc0NQaxHLiLna0Y1tCv3dndmDkrvHCi1KrB/
+ SPUgBUNDQkrwa3QFayliMQJbcVoiDFEfwjqmk47ayjOaUwuHuno9xbaukad5Q6m+fomZ
+ jVrg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1771831687; x=1772436487;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=Ql62sgQpESqAHw8IeepxHilxQcPVR34tWpH69aNGeVA=;
+ b=lC4vvHNdYkyQJk1uC8B084nUt0LsZQg2cxtsAPr5co/TrQGafHn/XgxEpoWKKCL+Km
+ k9u1T0ylqGN57O7CE3HcVIpOmW1oa4fzNj5VrTSNiS86iV9jOjPFY1xNt10SRBhBwMlc
+ C8rVDdlotZakmNUb8AkAaJ16TGiWpGqDH+5PVIDfnuY7QsFtwRgKW4C47DqMGmTBNDN5
+ HC+19+8s9VAE/rd42tX8e0BF/GUv+OxmzlHCOdmZ9O2srYtSdpqDYcJL4+dm3Zkp8DbF
+ KJcsu1qu1gktntW+gnYWLf0b7PGj5sKn2eLa839uOTqb6XHMAC6aAtp39hmhKIZKaKxc
+ oEGQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU/vPHvYJ2/4oMI7XhGrVM7PnFTfnO/MDQ9eopsvLheQiD4R4i423buSzfnvB9CM/TXADbV0IH4oQBL@nongnu.org
+X-Gm-Message-State: AOJu0Yz0V7u6+PxBH1XPCN/+I4ADI2saiB5OUagWmwwEX00akY47ksqB
+ PXwZmeB1PpLa8Csj/KfgFzsE5TCbZidNpdtiNWU4NYfVApjcuHLYLuEIwJ+mCJGhhhtemx643Gg
+ aGperPYf7VFNiC9/AEAGchghRgg3ImRaSnfrzA3W9hRu1yK8TraUoRcBw
+X-Gm-Gg: AZuq6aLf0Py69RoXToG9fk6sX5+O+ms7XKoU+Grny60Arq3AiAw1EKHvARvZ7dGO7uS
+ yCyYtlLIVQ4fyVmgzk+UW+5s5EaJk6TegKFKdvlRNty3h7FD0LvYJq7bndJdIG0fyvnSjz5OU+W
+ ofaV4ljpjj2kxoKxdP0QwQaDreduyRRCzR3nzug7uIkgu/t4r5iRwfhk+XZRamZPWhYvbiPS2Cb
+ LmP9NDorwJ1DmmIURwwvhd6imeiKP3vzMZfDh7P8Q7lqUMXpSW5lJ5FlIlzPzg7jRwsR4Pvilrq
+ WZ5hP+wrenV7q+0y/6aEZDnxAQQIJpDLnZHYavRx6l5kte/W/kOpsM+sNBDFxqCFfcSonnrxmHG
+ 6/+66ug==
+X-Received: by 2002:a05:6000:40ca:b0:436:233c:c7c1 with SMTP id
+ ffacd0b85a97d-4396f15a797mr12818938f8f.23.1771831687007; 
+ Sun, 22 Feb 2026 23:28:07 -0800 (PST)
+X-Received: by 2002:a05:6000:40ca:b0:436:233c:c7c1 with SMTP id
+ ffacd0b85a97d-4396f15a797mr12818908f8f.23.1771831686540; 
+ Sun, 22 Feb 2026 23:28:06 -0800 (PST)
+Received: from imammedo ([213.175.46.86]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-43970d3fc12sm14960673f8f.24.2026.02.22.23.28.05
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 22 Feb 2026 23:28:06 -0800 (PST)
+Date: Mon, 23 Feb 2026 08:28:04 +0100
+From: Igor Mammedov <imammedo@redhat.com>
+To: <ankita@nvidia.com>
+Cc: <vsethi@nvidia.com>, <jgg@nvidia.com>, <skolothumtho@nvidia.com>,
+ <alex@shazbot.org>, <mst@redhat.com>, <anisinha@redhat.com>,
+ <aniketa@nvidia.com>, <cjia@nvidia.com>, <kwankhede@nvidia.com>,
+ <targupta@nvidia.com>, <zhiw@nvidia.com>, <mochs@nvidia.com>,
+ <kjaju@nvidia.com>, <qemu-devel@nongnu.org>
+Subject: Re: [PATCH v1 1/1] hw/acpi/pci.c: preserve generic initiator
+ insertion order
+Message-ID: <20260223082804.0d293861@imammedo>
+In-Reply-To: <20260222020812.26475-1-ankita@nvidia.com>
+References: <20260222020812.26475-1-ankita@nvidia.com>
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.51; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-X-OriginatorOrg: nxp.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: AM9PR04MB8487.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: c32bc6c3-ffc5-413f-1fc3-08de72aa47ae
-X-MS-Exchange-CrossTenant-originalarrivaltime: 23 Feb 2026 07:08:00.5720 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: NBcQGjfAU40oOjK3QX+dngSrPEgI3KQht29ZIa/rTlEwAxK0/4nqW4RB4GjqdlPGmJujfsYB38iI47E661/lhQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PAXPR04MB8943
-Received-SPF: permerror client-ip=2a01:111:f403:c200::5;
- envelope-from=gaurav.sharma_7@nxp.com;
- helo=DUZPR83CU001.outbound.protection.outlook.com
-X-Spam_score_int: -9
-X-Spam_score: -1.0
-X-Spam_bar: -
-X-Spam_report: (-1.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_SPF_HELO=1.082,
- SPF_HELO_PASS=-0.001, T_SPF_PERMERROR=0.01 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -4
+X-Spam_score: -0.5
+X-Spam_bar: /
+X-Spam_report: (-0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.798, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.79,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -175,999 +126,160 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-@Bernhard Beschow, so how shall we go ahead to enable imx8mm?=20
+On Sun, 22 Feb 2026 02:08:12 +0000
+<ankita@nvidia.com> wrote:
 
-> -----Original Message-----
-> From: Gaurav Sharma
-> Sent: 02 February 2026 13:14
-> To: Bernhard Beschow <shentey@gmail.com>; qemu-devel@nongnu.org
-> Cc: pbonzini@redhat.com; peter.maydell@linaro.org
-> Subject: RE: [EXT] Re: [PATCHv4 01/15] hw/arm: Add the i.MX 8MM
-> EVK(Evaluation Kit) board
->=20
-> Hey Bernhard,
->=20
-> Consolidating changes for imx8mp and imx8mm makes sense as it will reduce
-> the code footprint in the repo. However, is it possible that we take it u=
-p as
-> part of follow-up patches once the emulation support for 8MM gets
-> mainlined? If that sounds ok to you.
->=20
-> > -----Original Message-----
-> > From: Bernhard Beschow <shentey@gmail.com>
-> > Sent: 12 January 2026 16:00
-> > To: qemu-devel@nongnu.org; Gaurav Sharma
-> <gaurav.sharma_7@nxp.com>
-> > Cc: pbonzini@redhat.com; peter.maydell@linaro.org
-> > Subject: [EXT] Re: [PATCHv4 01/15] hw/arm: Add the i.MX 8MM
-> > EVK(Evaluation Kit) board
-> >
-> > Caution: This is an external email. Please take care when clicking
-> > links or opening attachments. When in doubt, report the message using
-> > the 'Report this email' button
-> >
-> >
-> > Am 5. Dezember 2025 05:38:05 UTC schrieb Gaurav Sharma
-> > <gaurav.sharma_7@nxp.com>:
-> > >Implemented CPUs, RAM, UARTs and Interrupt Controller Other
-> > >peripherals are represented as TYPE_UNIMPLEMENTED_DEVICE Complete
-> > >memory map
-> > of the
-> > >SoC is provided.
-> > >
-> > >Signed-off-by: Gaurav Sharma <gaurav.sharma_7@nxp.com>
-> > >---
-> > > MAINTAINERS                    |  10 +
-> > > docs/system/arm/imx8mm-evk.rst |  68 ++++++
-> > > docs/system/target-arm.rst     |   1 +
-> > > hw/arm/Kconfig                 |  12 ++
-> > > hw/arm/fsl-imx8mm.c            | 366
-> +++++++++++++++++++++++++++++++++
-> > > hw/arm/imx8mm-evk.c            | 110 ++++++++++
-> > > hw/arm/meson.build             |   2 +
-> > > include/hw/arm/fsl-imx8mm.h    | 157 ++++++++++++++
-> > > 8 files changed, 726 insertions(+)
-> > > create mode 100644 docs/system/arm/imx8mm-evk.rst  create mode
-> > 100644
-> > >hw/arm/fsl-imx8mm.c  create mode 100644 hw/arm/imx8mm-evk.c  create
-> > >mode 100644 include/hw/arm/fsl-imx8mm.h
-> > >
-> > >diff --git a/MAINTAINERS b/MAINTAINERS index be6efff80c..41f76c5bd0
-> > >100644
-> > >--- a/MAINTAINERS
-> > >+++ b/MAINTAINERS
-> > >@@ -884,6 +884,16 @@ F: hw/pci-host/designware.c
-> > > F: include/hw/pci-host/designware.h
-> > > F: docs/system/arm/mcimx7d-sabre.rst
-> > >
-> > >+MCIMX8MM-EVK / iMX8MM
-> > >+M: Gaurav Sharma <gaurav.sharma_7@nxp.com>
-> > >+L: qemu-arm@nongnu.org
-> > >+S: Maintained
-> > >+F: hw/arm/fsl-imx8mm.c
-> > >+F: hw/arm/imx8mm-evk.c
-> > >+F: include/hw/arm/fsl-imx8mm.h
-> > >+F: docs/system/arm/imx8mm-evk.rst
-> > >+F: tests/functional/aarch64/test_imx8mm_evk.py
-> > >+
-> > > MCIMX8MP-EVK / i.MX8MP
-> > > M: Bernhard Beschow <shentey@gmail.com>
-> > > L: qemu-arm@nongnu.org
-> > >diff --git a/docs/system/arm/imx8mm-evk.rst
-> > >b/docs/system/arm/imx8mm-evk.rst new file mode 100644 index
-> > >0000000000..408253193c
-> > >--- /dev/null
-> > >+++ b/docs/system/arm/imx8mm-evk.rst
-> > >@@ -0,0 +1,68 @@
-> > >+NXP i.MX 8MM Evaluation Kit (``imx8mm-evk``)
-> > >+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> > >+
-> > >+The ``imx8mm-evk`` machine models the i.MX 8M Mini Evaluation Kit,
-> > >+based on an i.MX 8MM SoC.
-> >
-> > This file is basically the one from imx8mp-evk with s/imx8mp/imx8mm/ .
-> > Perhaps we could just list both boards in this section there and
-> > mention somewhere.that all the commands apply to imx8mm in an
-> > analogous fashion? That way we won't have to update both documents
-> > when something changes.
-> >
-> > >+
-> > >+Supported devices
-> > >+-----------------
-> > >+
-> > >+The ``imx8mm-evk`` machine implements the following devices:
-> > >+
-> > >+ * Up to 4 Cortex-A53 cores
-> > >+ * Generic Interrupt Controller (GICv3)
-> > >+ * 4 UARTs
-> > >+
-> > >+Boot options
-> > >+------------
-> > >+
-> > >+The ``imx8mm-evk`` machine can start a Linux kernel directly using
-> > >+the standard ``-kernel`` functionality.
-> > >+
-> > >+Direct Linux Kernel Boot
-> > >+''''''''''''''''''''''''
-> > >+
-> > >+Probably the easiest way to get started with a whole Linux system on
-> > >+the machine is to generate an image with Buildroot. Version
-> > >+2024.11.1 is tested at the time of writing and involves two steps.
-> > >+First run the following commands in the toplevel directory of the
-> Buildroot source tree:
-> > >+
-> > >+.. code-block:: bash
-> > >+
-> > >+  $ make freescale_imx8mmevk_defconfig  $ make
-> > >+
-> > >+Once finished successfully there is an ``output/image`` subfolder.
-> > >+Navigate into it and resize the SD card image to a power of two:
-> > >+
-> > >+.. code-block:: bash
-> > >+
-> > >+  $ qemu-img resize sdcard.img 256M
-> > >+
-> > >+Now that everything is prepared the machine can be started as follows=
-:
-> > >+
-> > >+.. code-block:: bash
-> > >+
-> > >+  $ qemu-system-aarch64 -M imx8mm-evk -smp 4 -m 3G \
-> > >+      -display none -serial null -serial stdio \
-> > >+      -kernel Image \
-> > >+      -dtb imx8mm-evk.dtb \
-> > >+      -append "root=3D/dev/mmcblk2p2" \
-> > >+      -drive file=3Dsdcard.img,if=3Dsd,bus=3D2,format=3Draw,id=3Dmmcb=
-lk2
-> > >+
-> > >+
-> > >+KVM Acceleration
-> > >+----------------
-> > >+
-> > >+Be aware of the following limitations:
-> > >+
-> > >+* The ``imx8mm-evk`` machine is not included under the
-> > >+"virtualization use
-> > case"
-> > >+  of :doc:`QEMU's security policy </system/security>`. This means
-> > >+that you
-> > >+  should not trust that it can contain malicious guests, whether it
-> > >+is run
-> > >+  using TCG or KVM. If you don't trust your guests and you're
-> > >+relying on QEMU to
-> > >+  be the security boundary, you want to choose another machine such
-> > >+as
-> > ``virt``.
-> > >+* Rather than Cortex-A53 CPUs, the same CPU type as the host's will
-> > >+be
-> > used.
-> > >+  This is a limitation of KVM and may not work with guests with a
-> > >+tight
-> > >+  dependency on Cortex-A53.
-> > >+* No EL2 and EL3 exception levels are available which is also a KVM
-> > limitation.
-> > >+  Direct kernel boot should work but running U-Boot, TF-A, etc.
-> > >+ won't
-> > succeed.
-> > >diff --git a/docs/system/target-arm.rst b/docs/system/target-arm.rst
-> > >index a96d1867df..d6a4b5bb00 100644
-> > >--- a/docs/system/target-arm.rst
-> > >+++ b/docs/system/target-arm.rst
-> > >@@ -97,6 +97,7 @@ Board-specific documentation
-> > >    arm/mcimx6ul-evk
-> > >    arm/mcimx7d-sabre
-> > >    arm/imx8mp-evk
-> > >+   arm/imx8mm-evk
-> > >    arm/orangepi
-> > >    arm/raspi
-> > >    arm/collie
-> > >diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig index
-> > >0cdeb60f1f..be38c67a1c 100644
-> > >--- a/hw/arm/Kconfig
-> > >+++ b/hw/arm/Kconfig
-> > >@@ -626,6 +626,18 @@ config FSL_IMX8MP_EVK
-> > >     depends on TCG || KVM
-> > >     select FSL_IMX8MP
-> > >
-> > >+config FSL_IMX8MM
-> > >+    bool
-> > >+    select ARM_GIC
-> > >+    select IMX
-> > >+
-> > >+config FSL_IMX8MM_EVK
-> > >+    bool
-> > >+    default y
-> > >+    depends on AARCH64
-> > >+    depends on TCG
-> > >+    select FSL_IMX8MM
-> > >+
-> > > config ARM_SMMUV3
-> > >     bool
-> > >
-> > >diff --git a/hw/arm/fsl-imx8mm.c b/hw/arm/fsl-imx8mm.c new file mode
-> > >100644 index 0000000000..fb6a78adba
-> > >--- /dev/null
-> > >+++ b/hw/arm/fsl-imx8mm.c
-> > >@@ -0,0 +1,366 @@
-> > >+/*
-> > >+ * i.MX 8MM SoC Implementation
-> > >+ *
-> > >+ * Based on hw/arm/fsl-imx6.c
-> >
-> > s/imx6/imx8mp/ ?
-> >
-> > >+ *
-> > >+ * Copyright (c) 2025, NXP Semiconductors
-> > >+ * Author: Gaurav Sharma <gaurav.sharma_7@nxp.com>
-> > >+ *
-> > >+ * SPDX-License-Identifier: GPL-2.0-or-later
-> > >+ *
-> > >+ * iMX8MM Reference Manual -
-> > >+
-> > https://eur01.safelinks.protection.outlook.com/?url=3Dhttps%3A%2F%2Fwww
-> > >+ .nxp.com%2Fproducts%2Fi.MX8MMINI&data=3D05%7C02%7Cgaurav.shar
-> ma
-> > _7%40nxp
-> > >+ .com%7C7a050f54b27c4afe07b608de51c58b03%7C686ea1d3bc2b4c6fa9
-> 2c
-> > d99c5c3
-> > >+
-> >
-> 01635%7C0%7C0%7C639038106049104546%7CUnknown%7CTWFpbGZsb3d8
-> > eyJFbXB0eU
-> > >+
-> >
-> 1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsI
-> > ld
-> > >+
-> >
-> UIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=3Dp1OkZJs6ixqHT%2BlrwoGP0My19J
-> > oizYZfPS
-> > >+ vSqYpo%2Fwo%3D&reserved=3D0 -> Documentation */
-> > >+
-> > >+#include "qemu/osdep.h"
-> > >+#include "system/address-spaces.h"
-> > >+#include "hw/arm/bsa.h"
-> > >+#include "hw/arm/fsl-imx8mm.h"
-> > >+#include "hw/misc/unimp.h"
-> > >+#include "hw/boards.h"
-> > >+#include "system/kvm.h"
-> > >+#include "system/system.h"
-> > >+#include "target/arm/cpu.h"
-> > >+#include "target/arm/cpu-qom.h"
-> > >+#include "target/arm/kvm_arm.h"
-> > >+#include "qapi/error.h"
-> > >+#include "qobject/qlist.h"
-> > >+
-> > >+static const struct {
-> > >+    hwaddr addr;
-> > >+    size_t size;
-> > >+    const char *name;
-> > >+} fsl_imx8mm_memmap[] =3D {
-> > >+    [FSL_IMX8MM_RAM] =3D { FSL_IMX8MM_RAM_START,
-> > FSL_IMX8MM_RAM_SIZE_MAX, "ram" },
-> > >+    [FSL_IMX8MM_DDR_PHY_BROADCAST] =3D { 0x3dc00000, 4 * MiB,
-> > "ddr_phy_broadcast" },
-> > >+    [FSL_IMX8MM_DDR_PERF_MON] =3D { 0x3d800000, 4 * MiB,
-> > "ddr_perf_mon" },
-> > >+    [FSL_IMX8MM_DDR_CTL] =3D { 0x3d400000, 4 * MiB, "ddr_ctl" },
-> > >+    [FSL_IMX8MM_DDR_PHY] =3D { 0x3c000000, 16 * MiB, "ddr_phy" },
-> > >+    [FSL_IMX8MM_GIC_DIST] =3D { 0x38800000, 512 * KiB, "gic_dist" },
-> > >+    [FSL_IMX8MM_GIC_REDIST] =3D { 0x38880000, 512 * KiB, "gic_redist"=
- },
-> > >+    [FSL_IMX8MM_VPU] =3D { 0x38340000, 2 * MiB, "vpu" },
-> > >+    [FSL_IMX8MM_VPU_BLK_CTRL] =3D { 0x38330000, 2 * MiB,
-> "vpu_blk_ctrl" },
-> > >+    [FSL_IMX8MM_VPU_G2_DECODER] =3D { 0x38310000, 1 * MiB,
-> > "vpu_g2_decoder" },
-> > >+    [FSL_IMX8MM_VPU_G1_DECODER] =3D { 0x38300000, 1 * MiB,
-> > "vpu_g1_decoder" },
-> > >+    [FSL_IMX8MM_USB2_OTG] =3D { 0x32e50200, 0x200, "usb2_otg" },
-> > >+    [FSL_IMX8MM_USB2] =3D { 0x32e50000, 0x200, "usb2" },
-> > >+    [FSL_IMX8MM_USB1_OTG] =3D { 0x32e40200, 0x200, "usb1_otg" },
-> > >+    [FSL_IMX8MM_USB1] =3D { 0x32e40000, 0x200, "usb1" },
-> > >+    [FSL_IMX8MM_GPU2D] =3D { 0x38000000, 64 * KiB, "gpu2d" },
-> > >+    [FSL_IMX8MM_QSPI1_RX_BUFFER] =3D { 0x34000000, 32 * MiB,
-> > "qspi1_rx_buffer" },
-> > >+    [FSL_IMX8MM_PCIE1] =3D { 0x33800000, 4 * MiB, "pcie1" },
-> > >+    [FSL_IMX8MM_QSPI1_TX_BUFFER] =3D { 0x33008000, 32 * KiB,
-> > "qspi1_tx_buffer" },
-> > >+    [FSL_IMX8MM_APBH_DMA] =3D { 0x33000000, 32 * KiB, "apbh_dma" },
-> > >+
-> > >+    /* AIPS-4 Begin */
-> > >+    [FSL_IMX8MM_TZASC] =3D { 0x32f80000, 64 * KiB, "tzasc" },
-> > >+    [FSL_IMX8MM_PCIE_PHY1] =3D { 0x32f00000, 64 * KiB, "pcie_phy1" },
-> > >+    [FSL_IMX8MM_MEDIA_BLK_CTL] =3D { 0x32e28000, 256,
-> "media_blk_ctl" },
-> > >+    [FSL_IMX8MM_LCDIF] =3D { 0x32e00000, 64 * KiB, "lcdif" },
-> > >+    [FSL_IMX8MM_MIPI_DSI] =3D { 0x32e10000, 64 * KiB, "mipi_dsi" },
-> > >+    [FSL_IMX8MM_MIPI_CSI] =3D { 0x32e30000, 64 * KiB, "mipi_csi" },
-> > >+    [FSL_IMX8MM_AIPS4_CONFIGURATION] =3D { 0x32df0000, 64 * KiB,
-> > "aips4_configuration" },
-> > >+    /* AIPS-4 End */
-> > >+
-> > >+    [FSL_IMX8MM_INTERCONNECT] =3D { 0x32700000, 1 * MiB,
-> "interconnect"
-> > >+ },
-> > >+
-> > >+    /* AIPS-3 Begin */
-> > >+    [FSL_IMX8MM_ENET1] =3D { 0x30be0000, 64 * KiB, "enet1" },
-> > >+    [FSL_IMX8MM_SDMA1] =3D { 0x30bd0000, 64 * KiB, "sdma1" },
-> > >+    [FSL_IMX8MM_QSPI] =3D { 0x30bb0000, 64 * KiB, "qspi" },
-> > >+    [FSL_IMX8MM_USDHC3] =3D { 0x30b60000, 64 * KiB, "usdhc3" },
-> > >+    [FSL_IMX8MM_USDHC2] =3D { 0x30b50000, 64 * KiB, "usdhc2" },
-> > >+    [FSL_IMX8MM_USDHC1] =3D { 0x30b40000, 64 * KiB, "usdhc1" },
-> > >+    [FSL_IMX8MM_SEMAPHORE_HS] =3D { 0x30ac0000, 64 * KiB,
-> > "semaphore_hs" },
-> > >+    [FSL_IMX8MM_MU_B] =3D { 0x30ab0000, 64 * KiB, "mu_b" },
-> > >+    [FSL_IMX8MM_MU_A] =3D { 0x30aa0000, 64 * KiB, "mu_a" },
-> > >+    [FSL_IMX8MM_UART4] =3D { 0x30a60000, 64 * KiB, "uart4" },
-> > >+    [FSL_IMX8MM_I2C4] =3D { 0x30a50000, 64 * KiB, "i2c4" },
-> > >+    [FSL_IMX8MM_I2C3] =3D { 0x30a40000, 64 * KiB, "i2c3" },
-> > >+    [FSL_IMX8MM_I2C2] =3D { 0x30a30000, 64 * KiB, "i2c2" },
-> > >+    [FSL_IMX8MM_I2C1] =3D { 0x30a20000, 64 * KiB, "i2c1" },
-> > >+    [FSL_IMX8MM_AIPS3_CONFIGURATION] =3D { 0x309f0000, 64 * KiB,
-> > "aips3_configuration" },
-> > >+    [FSL_IMX8MM_CAAM] =3D { 0x30900000, 256 * KiB, "caam" },
-> > >+    [FSL_IMX8MM_SPBA1] =3D { 0x308f0000, 64 * KiB, "spba1" },
-> > >+    [FSL_IMX8MM_UART2] =3D { 0x30890000, 64 * KiB, "uart2" },
-> > >+    [FSL_IMX8MM_UART3] =3D { 0x30880000, 64 * KiB, "uart3" },
-> > >+    [FSL_IMX8MM_UART1] =3D { 0x30860000, 64 * KiB, "uart1" },
-> > >+    [FSL_IMX8MM_ECSPI3] =3D { 0x30840000, 64 * KiB, "ecspi3" },
-> > >+    [FSL_IMX8MM_ECSPI2] =3D { 0x30830000, 64 * KiB, "ecspi2" },
-> > >+    [FSL_IMX8MM_ECSPI1] =3D { 0x30820000, 64 * KiB, "ecspi1" },
-> > >+    /* AIPS-3 End */
-> > >+
-> > >+    /* AIPS-2 Begin */
-> > >+    [FSL_IMX8MM_QOSC] =3D { 0x307f0000, 64 * KiB, "qosc" },
-> > >+    [FSL_IMX8MM_PERFMON2] =3D { 0x307d0000, 64 * KiB, "perfmon2" },
-> > >+    [FSL_IMX8MM_PERFMON1] =3D { 0x307c0000, 64 * KiB, "perfmon1" },
-> > >+    [FSL_IMX8MM_GPT4] =3D { 0x30700000, 64 * KiB, "gpt4" },
-> > >+    [FSL_IMX8MM_GPT5] =3D { 0x306f0000, 64 * KiB, "gpt5" },
-> > >+    [FSL_IMX8MM_GPT6] =3D { 0x306e0000, 64 * KiB, "gpt6" },
-> > >+    [FSL_IMX8MM_SYSCNT_CTRL] =3D { 0x306c0000, 64 * KiB, "syscnt_ctrl=
-" },
-> > >+    [FSL_IMX8MM_SYSCNT_CMP] =3D { 0x306b0000, 64 * KiB, "syscnt_cmp" =
-},
-> > >+    [FSL_IMX8MM_SYSCNT_RD] =3D { 0x306a0000, 64 * KiB, "syscnt_rd" },
-> > >+    [FSL_IMX8MM_PWM4] =3D { 0x30690000, 64 * KiB, "pwm4" },
-> > >+    [FSL_IMX8MM_PWM3] =3D { 0x30680000, 64 * KiB, "pwm3" },
-> > >+    [FSL_IMX8MM_PWM2] =3D { 0x30670000, 64 * KiB, "pwm2" },
-> > >+    [FSL_IMX8MM_PWM1] =3D { 0x30660000, 64 * KiB, "pwm1" },
-> > >+    [FSL_IMX8MM_AIPS2_CONFIGURATION] =3D { 0x305f0000, 64 * KiB,
-> > "aips2_configuration" },
-> > >+    /* AIPS-2 End */
-> > >+
-> > >+    /* AIPS-1 Begin */
-> > >+    [FSL_IMX8MM_CSU] =3D { 0x303e0000, 64 * KiB, "csu" },
-> > >+    [FSL_IMX8MM_RDC] =3D { 0x303d0000, 64 * KiB, "rdc" },
-> > >+    [FSL_IMX8MM_SEMAPHORE2] =3D { 0x303c0000, 64 * KiB,
-> "semaphore2" },
-> > >+    [FSL_IMX8MM_SEMAPHORE1] =3D { 0x303b0000, 64 * KiB,
-> "semaphore1" },
-> > >+    [FSL_IMX8MM_GPC] =3D { 0x303a0000, 64 * KiB, "gpc" },
-> > >+    [FSL_IMX8MM_SRC] =3D { 0x30390000, 64 * KiB, "src" },
-> > >+    [FSL_IMX8MM_CCM] =3D { 0x30380000, 64 * KiB, "ccm" },
-> > >+    [FSL_IMX8MM_SNVS_HP] =3D { 0x30370000, 64 * KiB, "snvs_hp" },
-> > >+    [FSL_IMX8MM_ANA_PLL] =3D { 0x30360000, 64 * KiB, "ana_pll" },
-> > >+    [FSL_IMX8MM_OCOTP_CTRL] =3D { 0x30350000, 64 * KiB, "ocotp_ctrl" =
-},
-> > >+    [FSL_IMX8MM_IOMUXC_GPR] =3D { 0x30340000, 64 * KiB,
-> "iomuxc_gpr" },
-> > >+    [FSL_IMX8MM_IOMUXC] =3D { 0x30330000, 64 * KiB, "iomuxc" },
-> > >+    [FSL_IMX8MM_GPT3] =3D { 0x302f0000, 64 * KiB, "gpt3" },
-> > >+    [FSL_IMX8MM_GPT2] =3D { 0x302e0000, 64 * KiB, "gpt2" },
-> > >+    [FSL_IMX8MM_GPT1] =3D { 0x302d0000, 64 * KiB, "gpt1" },
-> > >+    [FSL_IMX8MM_SDMA2] =3D { 0x302c0000, 64 * KiB, "sdma2" },
-> > >+    [FSL_IMX8MM_SDMA3] =3D { 0x302b0000, 64 * KiB, "sdma3" },
-> > >+    [FSL_IMX8MM_WDOG3] =3D { 0x302a0000, 64 * KiB, "wdog3" },
-> > >+    [FSL_IMX8MM_WDOG2] =3D { 0x30290000, 64 * KiB, "wdog2" },
-> > >+    [FSL_IMX8MM_WDOG1] =3D { 0x30280000, 64 * KiB, "wdog1" },
-> > >+    [FSL_IMX8MM_ANA_OSC] =3D { 0x30270000, 64 * KiB, "ana_osc" },
-> > >+    [FSL_IMX8MM_ANA_TSENSOR] =3D { 0x30260000, 64 * KiB,
-> > "ana_tsensor" },
-> > >+    [FSL_IMX8MM_GPIO5] =3D { 0x30240000, 64 * KiB, "gpio5" },
-> > >+    [FSL_IMX8MM_GPIO4] =3D { 0x30230000, 64 * KiB, "gpio4" },
-> > >+    [FSL_IMX8MM_GPIO3] =3D { 0x30220000, 64 * KiB, "gpio3" },
-> > >+    [FSL_IMX8MM_GPIO2] =3D { 0x30210000, 64 * KiB, "gpio2" },
-> > >+    [FSL_IMX8MM_GPIO1] =3D { 0x30200000, 64 * KiB, "gpio1" },
-> > >+    [FSL_IMX8MM_AIPS1_CONFIGURATION] =3D { 0x301f0000, 64 * KiB,
-> > "aips1_configuration" },
-> > >+    [FSL_IMX8MM_SAI6] =3D { 0x30060000, 64 * KiB, "sai6" },
-> > >+    [FSL_IMX8MM_SAI5] =3D { 0x30050000, 64 * KiB, "sai5" },
-> > >+    [FSL_IMX8MM_SAI3] =3D { 0x30030000, 64 * KiB, "sai3" },
-> > >+    [FSL_IMX8MM_SAI2] =3D { 0x30020000, 64 * KiB, "sai2" },
-> > >+    [FSL_IMX8MM_SAI1] =3D { 0x30010000, 64 * KiB, "sai1" },
-> > >+
-> > >+    /* AIPS-1 End */
-> > >+
-> > >+    [FSL_IMX8MM_A53_DAP] =3D { 0x28000000, 16 * MiB, "a53_dap" },
-> > >+    [FSL_IMX8MM_PCIE1_MEM] =3D { 0x18000000, 128 * MiB,
-> "pcie1_mem" },
-> > >+    [FSL_IMX8MM_QSPI_MEM] =3D { 0x08000000, 256 * MiB, "qspi_mem" },
-> > >+    [FSL_IMX8MM_OCRAM] =3D { 0x00900000, 256 * KiB, "ocram" },
-> > >+    [FSL_IMX8MM_TCM_DTCM] =3D { 0x00800000, 128 * KiB, "tcm_dtcm" },
-> > >+    [FSL_IMX8MM_TCM_ITCM] =3D { 0x007e0000, 128 * KiB, "tcm_itcm" },
-> > >+    [FSL_IMX8MM_OCRAM_S] =3D { 0x00180000, 32 * KiB, "ocram_s" },
-> > >+    [FSL_IMX8MM_CAAM_MEM] =3D { 0x00100000, 32 * KiB, "caam_mem" },
-> > >+    [FSL_IMX8MM_BOOT_ROM_PROTECTED] =3D { 0x0003f000, 4 * KiB,
-> > "boot_rom_protected" },
-> > >+    [FSL_IMX8MM_BOOT_ROM] =3D { 0x00000000, 252 * KiB, "boot_rom" },
-> > >+ };
-> > >+
-> > >+static void fsl_imx8mm_init(Object *obj) {
-> > >+    MachineState *ms =3D MACHINE(qdev_get_machine());
-> > >+    FslImx8mmState *s =3D FSL_IMX8MM(obj);
-> > >+    const char *cpu_type =3D ms->cpu_type ?:
-> > ARM_CPU_TYPE_NAME("cortex-a53");
-> > >+    int i;
-> > >+
-> > >+    for (i =3D 0; i < MIN(ms->smp.cpus, FSL_IMX8MM_NUM_CPUS); i++) {
-> > >+        g_autofree char *name =3D g_strdup_printf("cpu%d", i);
-> > >+        object_initialize_child(obj, name, &s->cpu[i], cpu_type);
-> > >+    }
-> > >+
-> > >+    object_initialize_child(obj, "gic", &s->gic,
-> > >+ gicv3_class_name());
-> > >+
-> > >+    for (i =3D 0; i < FSL_IMX8MM_NUM_UARTS; i++) {
-> > >+        g_autofree char *name =3D g_strdup_printf("uart%d", i + 1);
-> > >+        object_initialize_child(obj, name, &s->uart[i], TYPE_IMX_SERI=
-AL);
-> > >+    }
-> > >+
-> > >+}
-> > >+
-> > >+static void fsl_imx8mm_realize(DeviceState *dev, Error **errp) {
-> > >+    MachineState *ms =3D MACHINE(qdev_get_machine());
-> > >+    FslImx8mmState *s =3D FSL_IMX8MM(dev);
-> > >+    DeviceState *gicdev =3D DEVICE(&s->gic);
-> > >+    int i;
-> > >+
-> > >+    if (ms->smp.cpus > FSL_IMX8MM_NUM_CPUS) {
-> > >+        error_setg(errp, "%s: Only %d CPUs are supported (%d requeste=
-d)",
-> > >+                   TYPE_FSL_IMX8MM, FSL_IMX8MM_NUM_CPUS, ms-
-> >smp.cpus);
-> > >+        return;
-> > >+    }
-> > >+
-> > >+    /* CPUs */
-> > >+    for (i =3D 0; i < ms->smp.cpus; i++) {
-> > >+        /* On uniprocessor, the CBAR is set to 0 */
-> > >+        if (ms->smp.cpus > 1 &&
-> > >+                object_property_find(OBJECT(&s->cpu[i]), "reset-cbar"=
-)) {
-> > >+            object_property_set_int(OBJECT(&s->cpu[i]), "reset-cbar",
-> > >+
-> fsl_imx8mm_memmap[FSL_IMX8MM_GIC_DIST].addr,
-> > >+                                    &error_abort);
-> > >+        }
-> > >+
-> > >+        /*
-> > >+         * CNTFID0 base frequency in Hz of system counter
-> > >+         */
-> > >+        object_property_set_int(OBJECT(&s->cpu[i]), "cntfrq", 8000000=
-,
-> > >+                                &error_abort);
-> > >+
-> > >+        if (object_property_find(OBJECT(&s->cpu[i]), "has_el2")) {
-> > >+            object_property_set_bool(OBJECT(&s->cpu[i]), "has_el2",
-> > >+                                     !kvm_enabled(), &error_abort);
-> > >+        }
-> > >+
-> > >+        if (object_property_find(OBJECT(&s->cpu[i]), "has_el3")) {
-> > >+            object_property_set_bool(OBJECT(&s->cpu[i]), "has_el3",
-> > >+                                     !kvm_enabled(), &error_abort);
-> > >+        }
-> > >+
-> > >+        if (i) {
-> > >+            /*
-> > >+             * Secondary CPUs start in powered-down state (and can be
-> > >+             * powered up via the SRC system reset controller)
-> > >+             */
-> > >+            object_property_set_bool(OBJECT(&s->cpu[i]), "start-power=
-ed-
-> off",
-> > >+                                     true, &error_abort);
-> > >+        }
-> > >+
-> > >+        if (!qdev_realize(DEVICE(&s->cpu[i]), NULL, errp)) {
-> > >+            return;
-> > >+        }
-> > >+    }
-> > >+
-> > >+    /* GIC */
-> > >+    {
-> > >+        SysBusDevice *gicsbd =3D SYS_BUS_DEVICE(&s->gic);
-> > >+        QList *redist_region_count;
-> > >+        bool pmu =3D object_property_get_bool(OBJECT(first_cpu),
-> > >+ "pmu", NULL);
-> > >+
-> > >+        qdev_prop_set_uint32(gicdev, "num-cpu", ms->smp.cpus);
-> > >+        qdev_prop_set_uint32(gicdev, "num-irq",
-> > >+                             FSL_IMX8MM_NUM_IRQS + GIC_INTERNAL);
-> > >+        redist_region_count =3D qlist_new();
-> > >+        qlist_append_int(redist_region_count, ms->smp.cpus);
-> > >+        qdev_prop_set_array(gicdev, "redist-region-count",
-> > redist_region_count);
-> > >+        object_property_set_link(OBJECT(&s->gic), "sysmem",
-> > >+                                 OBJECT(get_system_memory()), &error_=
-fatal);
-> > >+        if (!sysbus_realize(gicsbd, errp)) {
-> > >+            return;
-> > >+        }
-> > >+        sysbus_mmio_map(gicsbd, 0,
-> > fsl_imx8mm_memmap[FSL_IMX8MM_GIC_DIST].addr);
-> > >+        sysbus_mmio_map(gicsbd, 1,
-> > >+ fsl_imx8mm_memmap[FSL_IMX8MM_GIC_REDIST].addr);
-> > >+
-> > >+        /*
-> > >+         * Wire the outputs from each CPU's generic timer and the GIC=
-v3
-> > >+         * maintenance interrupt signal to the appropriate GIC PPI in=
-puts,
-> and
-> > >+         * the GIC's IRQ/FIQ interrupt outputs to the CPU's inputs.
-> > >+         */
-> > >+        for (i =3D 0; i < ms->smp.cpus; i++) {
-> > >+            DeviceState *cpudev =3D DEVICE(&s->cpu[i]);
-> > >+            int intidbase =3D FSL_IMX8MM_NUM_IRQS + i * GIC_INTERNAL;
-> > >+            qemu_irq irq;
-> > >+
-> > >+            /*
-> > >+             * Mapping from the output timer irq lines from the CPU t=
-o the
-> > >+             * GIC PPI inputs.
-> > >+             */
-> > >+            static const int timer_irqs[] =3D {
-> > >+                [GTIMER_PHYS] =3D ARCH_TIMER_NS_EL1_IRQ,
-> > >+                [GTIMER_VIRT] =3D ARCH_TIMER_VIRT_IRQ,
-> > >+                [GTIMER_HYP]  =3D ARCH_TIMER_NS_EL2_IRQ,
-> > >+                [GTIMER_SEC]  =3D ARCH_TIMER_S_EL1_IRQ,
-> > >+            };
-> > >+
-> > >+            for (int j =3D 0; j < ARRAY_SIZE(timer_irqs); j++) {
-> > >+                irq =3D qdev_get_gpio_in(gicdev, intidbase + timer_ir=
-qs[j]);
-> > >+                qdev_connect_gpio_out(cpudev, j, irq);
-> > >+            }
-> > >+
-> > >+            irq =3D qdev_get_gpio_in(gicdev, intidbase +
-> ARCH_GIC_MAINT_IRQ);
-> > >+            qdev_connect_gpio_out_named(cpudev, "gicv3-maintenance-
-> > interrupt",
-> > >+                                        0, irq);
-> > >+
-> > >+            irq =3D qdev_get_gpio_in(gicdev, intidbase + VIRTUAL_PMU_=
-IRQ);
-> > >+            qdev_connect_gpio_out_named(cpudev, "pmu-interrupt", 0,
-> > >+ irq);
-> > >+
-> > >+            sysbus_connect_irq(gicsbd, i,
-> > >+                               qdev_get_gpio_in(cpudev, ARM_CPU_IRQ))=
-;
-> > >+            sysbus_connect_irq(gicsbd, i + ms->smp.cpus,
-> > >+                               qdev_get_gpio_in(cpudev, ARM_CPU_FIQ))=
-;
-> > >+            sysbus_connect_irq(gicsbd, i + 2 * ms->smp.cpus,
-> > >+                               qdev_get_gpio_in(cpudev, ARM_CPU_VIRQ)=
-);
-> > >+            sysbus_connect_irq(gicsbd, i + 3 * ms->smp.cpus,
-> > >+                               qdev_get_gpio_in(cpudev,
-> > >+ ARM_CPU_VFIQ));
-> > >+
-> > >+            if (kvm_enabled()) {
-> > >+                if (pmu) {
-> > >+                    assert(arm_feature(&s->cpu[i].env, ARM_FEATURE_PM=
-U));
-> > >+                    if (kvm_irqchip_in_kernel()) {
-> > >+                        kvm_arm_pmu_set_irq(&s->cpu[i], VIRTUAL_PMU_I=
-RQ);
-> > >+                    }
-> > >+                    kvm_arm_pmu_init(&s->cpu[i]);
-> > >+                }
-> > >+            }
-> > >+        }
-> > >+    }
-> > >+
-> > >+    /* UARTs */
-> > >+    for (i =3D 0; i < FSL_IMX8MM_NUM_UARTS; i++) {
-> > >+        static const struct {
-> > >+            hwaddr addr;
-> > >+            unsigned int irq;
-> > >+        } serial_table[FSL_IMX8MM_NUM_UARTS] =3D {
-> > >+            { fsl_imx8mm_memmap[FSL_IMX8MM_UART1].addr,
-> > FSL_IMX8MM_UART1_IRQ },
-> > >+            { fsl_imx8mm_memmap[FSL_IMX8MM_UART2].addr,
-> > FSL_IMX8MM_UART2_IRQ },
-> > >+            { fsl_imx8mm_memmap[FSL_IMX8MM_UART3].addr,
-> > FSL_IMX8MM_UART3_IRQ },
-> > >+            { fsl_imx8mm_memmap[FSL_IMX8MM_UART4].addr,
-> > FSL_IMX8MM_UART4_IRQ },
-> > >+        };
-> > >+
-> > >+        qdev_prop_set_chr(DEVICE(&s->uart[i]), "chardev", serial_hd(i=
-));
-> > >+        if (!sysbus_realize(SYS_BUS_DEVICE(&s->uart[i]), errp)) {
-> > >+            return;
-> > >+        }
-> > >+
-> > >+        sysbus_mmio_map(SYS_BUS_DEVICE(&s->uart[i]), 0,
-> > serial_table[i].addr);
-> > >+        sysbus_connect_irq(SYS_BUS_DEVICE(&s->uart[i]), 0,
-> > >+                           qdev_get_gpio_in(gicdev, serial_table[i].i=
-rq));
-> > >+    }
-> > >+
-> > >+    /* Unimplemented devices */
-> > >+    for (i =3D 0; i < ARRAY_SIZE(fsl_imx8mm_memmap); i++) {
-> > >+        switch (i) {
-> > >+        case FSL_IMX8MM_GIC_DIST:
-> > >+        case FSL_IMX8MM_GIC_REDIST:
-> > >+        case FSL_IMX8MM_RAM:
-> > >+        case FSL_IMX8MM_UART1 ... FSL_IMX8MM_UART4:
-> > >+            /* device implemented and treated above */
-> > >+            break;
-> > >+
-> > >+        default:
-> > >+            create_unimplemented_device(fsl_imx8mm_memmap[i].name,
-> > >+                                        fsl_imx8mm_memmap[i].addr,
-> > >+                                        fsl_imx8mm_memmap[i].size);
-> > >+            break;
-> > >+        }
-> > >+    }
-> > >+}
-> > >+
-> > >+static void fsl_imx8mm_class_init(ObjectClass *oc, const void *data) =
-{
-> > >+    DeviceClass *dc =3D DEVICE_CLASS(oc);
-> > >+
-> > >+    dc->realize =3D fsl_imx8mm_realize;
-> > >+
-> > >+    dc->desc =3D "i.MX 8MM SoC";
-> > >+}
-> > >+
-> > >+static const TypeInfo fsl_imx8mm_types[] =3D {
-> > >+    {
-> > >+        .name =3D TYPE_FSL_IMX8MM,
-> > >+        .parent =3D TYPE_SYS_BUS_DEVICE,
-> > >+        .instance_size =3D sizeof(FslImx8mmState),
-> > >+        .instance_init =3D fsl_imx8mm_init,
-> > >+        .class_init =3D fsl_imx8mm_class_init,
-> > >+    },
-> > >+};
-> > >+
-> > >+DEFINE_TYPES(fsl_imx8mm_types)
-> > >diff --git a/hw/arm/imx8mm-evk.c b/hw/arm/imx8mm-evk.c new file
-> mode
-> > >100644 index 0000000000..ffc69f1050
-> > >--- /dev/null
-> > >+++ b/hw/arm/imx8mm-evk.c
-> > >@@ -0,0 +1,110 @@
-> > >+/*
-> > >+ * NXP i.MX 8MM Evaluation Kit System Emulation
-> > >+ *
-> > >+ * Copyright (c) 2025, NXP Semiconductors
-> > >+ * Author: Gaurav Sharma <gaurav.sharma_7@nxp.com>
-> > >+ *
-> > >+ * SPDX-License-Identifier: GPL-2.0-or-later  */
-> > >+
-> > >+#include "qemu/osdep.h"
-> > >+#include "system/address-spaces.h"
-> > >+#include "hw/arm/boot.h"
-> > >+#include "hw/arm/fsl-imx8mm.h"
-> > >+#include "hw/arm/machines-qom.h"
-> > >+#include "hw/boards.h"
-> > >+#include "hw/qdev-properties.h"
-> > >+#include "system/kvm.h"
-> > >+#include "system/qtest.h"
-> > >+#include "qemu/error-report.h"
-> > >+#include "qapi/error.h"
-> > >+#include <libfdt.h>
-> >
-> > Rather than introducing a new source file I think it should be
-> > possible to extend imx8mp-evk instead. More comments below.
-> >
-> > >+
-> > >+static void imx8mm_evk_modify_dtb(const struct arm_boot_info *info,
-> > >+void *fdt) {
-> > >+    int i, offset;
-> > >+
-> > >+    /* Temporarily disable following nodes until they are implemented=
- */
-> > >+    const char *nodes_to_remove[] =3D {
-> > >+        "nxp,imx8mm-fspi",
-> > >+        "fsl,imx8mm-mipi-csi",
-> > >+        "fsl,imx8mm-mipi-dsim"
-> >
-> > You could probably just add these nodes to the list in imx8mp-evk.
-> >
-> > >+    };
-> > >+
-> > >+    for (i =3D 0; i < ARRAY_SIZE(nodes_to_remove); i++) {
-> > >+        const char *dev_str =3D nodes_to_remove[i];
-> > >+
-> > >+        offset =3D fdt_node_offset_by_compatible(fdt, -1, dev_str);
-> > >+        while (offset >=3D 0) {
-> > >+            fdt_nop_node(fdt, offset);
-> > >+            offset =3D fdt_node_offset_by_compatible(fdt, offset, dev=
-_str);
-> > >+        }
-> > >+    }
-> > >+
-> > >+    /* Remove cpu-idle-states property from CPU nodes */
-> > >+    offset =3D fdt_node_offset_by_compatible(fdt, -1, "arm,cortex-a53=
-");
-> > >+    while (offset >=3D 0) {
-> > >+        fdt_nop_property(fdt, offset, "cpu-idle-states");
-> > >+        offset =3D fdt_node_offset_by_compatible(fdt, offset, "arm,co=
-rtex-
-> a53");
-> > >+    }
-> > >+
-> > >+    if (kvm_enabled()) {
-> > >+        /* Use system counter frequency from host CPU to fix time in =
-guest */
-> > >+        offset =3D fdt_node_offset_by_compatible(fdt, -1, "arm,armv8-=
-timer");
-> > >+        while (offset >=3D 0) {
-> > >+            fdt_nop_property(fdt, offset, "clock-frequency");
-> > >+            offset =3D fdt_node_offset_by_compatible(fdt, offset,
-> > >+ "arm,armv8-
-> > timer");
-> > >+        }
-> > >+    }
-> > >+}
-> > >+
-> > >+static void imx8mm_evk_init(MachineState *machine) {
-> > >+    static struct arm_boot_info boot_info;
-> > >+    FslImx8mmState *s;
-> > >+
-> >
-> > In this function it might be possible to perform an
-> > object_dynamic_cast() on the MachineState to check which machine was
-> requested by the user.
-> > Depending on that one could fill variables with SoC-specific values
-> > and use them below instead of hardcoded values.
-> >
-> > >+    if (machine->ram_size > FSL_IMX8MM_RAM_SIZE_MAX) {
-> > >+        error_report("RAM size " RAM_ADDR_FMT " above max supported
-> > (%08" PRIx64 ")",
-> > >+                     machine->ram_size, FSL_IMX8MM_RAM_SIZE_MAX);
-> > >+        exit(1);
-> > >+    }
-> > >+
-> > >+    boot_info =3D (struct arm_boot_info) {
-> > >+        .loader_start =3D FSL_IMX8MM_RAM_START,
-> > >+        .board_id =3D -1,
-> > >+        .ram_size =3D machine->ram_size,
-> > >+        .psci_conduit =3D QEMU_PSCI_CONDUIT_SMC,
-> > >+        .modify_dtb =3D imx8mm_evk_modify_dtb,
-> > >+    };
-> > >+
-> > >+    s =3D FSL_IMX8MM(object_new(TYPE_FSL_IMX8MM));
-> > >+    object_property_add_child(OBJECT(machine), "soc", OBJECT(s));
-> > >+    sysbus_realize_and_unref(SYS_BUS_DEVICE(s), &error_fatal);
-> > >+
-> > >+    memory_region_add_subregion(get_system_memory(),
-> > FSL_IMX8MM_RAM_START,
-> > >+                                machine->ram);
-> > >+
-> > >+    if (!qtest_enabled()) {
-> > >+        arm_load_kernel(&s->cpu[0], machine, &boot_info);
-> > >+    }
-> > >+}
-> > >+
-> > >+static const char *imx8mm_evk_get_default_cpu_type(const
-> > >+MachineState
-> > >+*ms) {
-> > >+    if (kvm_enabled()) {
-> > >+        return ARM_CPU_TYPE_NAME("host");
-> > >+    }
-> > >+
-> > >+    return ARM_CPU_TYPE_NAME("cortex-a53"); }
-> >
-> > The code below might just be able to copied over to imx8mp-evk.c.
-> >
-> > Does such consolidation work?
-> >
-> > Best regards,
-> > Bernhard
-> >
-> > >+
-> > >+static void imx8mm_evk_machine_init(MachineClass *mc) {
-> > >+    mc->desc =3D "NXP i.MX 8MM EVK Board";
-> > >+    mc->init =3D imx8mm_evk_init;
-> > >+    mc->max_cpus =3D FSL_IMX8MM_NUM_CPUS;
-> > >+    mc->default_ram_id =3D "imx8mm-evk.ram";
-> > >+    mc->get_default_cpu_type =3D imx8mm_evk_get_default_cpu_type; }
-> > >+
-> > >+DEFINE_MACHINE_AARCH64("imx8mm-evk",
-> imx8mm_evk_machine_init)
-> > >diff --git a/hw/arm/meson.build b/hw/arm/meson.build index
-> > >aeaf654790..12ecb824cc 100644
-> > >--- a/hw/arm/meson.build
-> > >+++ b/hw/arm/meson.build
-> > >@@ -84,6 +84,8 @@ arm_common_ss.add(when: 'CONFIG_ARMSSE',
-> > if_true:
-> > >files('armsse.c'))
-> > > arm_common_ss.add(when: 'CONFIG_FSL_IMX7', if_true:
-> > >files('fsl-imx7.c', 'mcimx7d-sabre.c'))
-> > > arm_common_ss.add(when: 'CONFIG_FSL_IMX8MP', if_true:
-> > >files('fsl-imx8mp.c'))
-> > > arm_common_ss.add(when: 'CONFIG_FSL_IMX8MP_EVK', if_true:
-> > >files('imx8mp-evk.c'))
-> > >+arm_common_ss.add(when: 'CONFIG_FSL_IMX8MM', if_true:
-> > >+files('fsl-imx8mm.c'))
-> > >+arm_common_ss.add(when: 'CONFIG_FSL_IMX8MM_EVK', if_true:
-> > >+files('imx8mm-evk.c'))
-> > > arm_common_ss.add(when: 'CONFIG_ARM_SMMUV3', if_true:
-> > >files('smmuv3.c'))
-> > > arm_common_ss.add(when: 'CONFIG_FSL_IMX6UL', if_true:
-> > >files('fsl-imx6ul.c', 'mcimx6ul-evk.c'))
-> > > arm_common_ss.add(when: 'CONFIG_NRF51_SOC', if_true:
-> > >files('nrf51_soc.c')) diff --git a/include/hw/arm/fsl-imx8mm.h
-> > >b/include/hw/arm/fsl-imx8mm.h new file mode 100644 index
-> > >0000000000..133f519b7c
-> > >--- /dev/null
-> > >+++ b/include/hw/arm/fsl-imx8mm.h
-> > >@@ -0,0 +1,157 @@
-> > >+/*
-> > >+ * i.MX 8MM SoC Definitions
-> > >+ *
-> > >+ * Copyright (c) 2025, NXP Semiconductors
-> > >+ * Author: Gaurav Sharma <gaurav.sharma_7@nxp.com>
-> > >+ *
-> > >+ * SPDX-License-Identifier: GPL-2.0-or-later  */
-> > >+
-> > >+#ifndef FSL_IMX8MM_H
-> > >+#define FSL_IMX8MM_H
-> > >+
-> > >+#include "cpu.h"
-> > >+#include "hw/char/imx_serial.h"
-> > >+#include "hw/intc/arm_gicv3_common.h"
-> > >+#include "qom/object.h"
-> > >+#include "qemu/units.h"
-> > >+
-> > >+#define TYPE_FSL_IMX8MM "fsl-imx8mm"
-> > >+OBJECT_DECLARE_SIMPLE_TYPE(FslImx8mmState, FSL_IMX8MM)
-> > >+
-> > >+#define FSL_IMX8MM_RAM_START        0x40000000
-> > >+#define FSL_IMX8MM_RAM_SIZE_MAX     (4 * GiB)
-> > >+
-> > >+enum FslImx8mmConfiguration {
-> > >+    FSL_IMX8MM_NUM_CPUS         =3D 4,
-> > >+    FSL_IMX8MM_NUM_IRQS         =3D 128,
-> > >+    FSL_IMX8MM_NUM_UARTS        =3D 4,
-> > >+};
-> > >+
-> > >+struct FslImx8mmState {
-> > >+    SysBusDevice   parent_obj;
-> > >+
-> > >+    ARMCPU             cpu[FSL_IMX8MM_NUM_CPUS];
-> > >+    GICv3State         gic;
-> > >+    IMXSerialState     uart[FSL_IMX8MM_NUM_UARTS];
-> > >+};
-> > >+
-> > >+enum FslImx8mmMemoryRegions {
-> > >+    FSL_IMX8MM_A53_DAP,
-> > >+    FSL_IMX8MM_AIPS1_CONFIGURATION,
-> > >+    FSL_IMX8MM_AIPS2_CONFIGURATION,
-> > >+    FSL_IMX8MM_AIPS3_CONFIGURATION,
-> > >+    FSL_IMX8MM_AIPS4_CONFIGURATION,
-> > >+    FSL_IMX8MM_ANA_OSC,
-> > >+    FSL_IMX8MM_ANA_PLL,
-> > >+    FSL_IMX8MM_ANA_TSENSOR,
-> > >+    FSL_IMX8MM_APBH_DMA,
-> > >+    FSL_IMX8MM_BOOT_ROM,
-> > >+    FSL_IMX8MM_BOOT_ROM_PROTECTED,
-> > >+    FSL_IMX8MM_CAAM,
-> > >+    FSL_IMX8MM_CAAM_MEM,
-> > >+    FSL_IMX8MM_CCM,
-> > >+    FSL_IMX8MM_CSU,
-> > >+    FSL_IMX8MM_DDR_CTL,
-> > >+    FSL_IMX8MM_DDR_PERF_MON,
-> > >+    FSL_IMX8MM_DDR_PHY,
-> > >+    FSL_IMX8MM_DDR_PHY_BROADCAST,
-> > >+    FSL_IMX8MM_ECSPI1,
-> > >+    FSL_IMX8MM_ECSPI2,
-> > >+    FSL_IMX8MM_ECSPI3,
-> > >+    FSL_IMX8MM_ENET1,
-> > >+    FSL_IMX8MM_GIC_DIST,
-> > >+    FSL_IMX8MM_GIC_REDIST,
-> > >+    FSL_IMX8MM_GPC,
-> > >+    FSL_IMX8MM_GPIO1,
-> > >+    FSL_IMX8MM_GPIO2,
-> > >+    FSL_IMX8MM_GPIO3,
-> > >+    FSL_IMX8MM_GPIO4,
-> > >+    FSL_IMX8MM_GPIO5,
-> > >+    FSL_IMX8MM_GPT1,
-> > >+    FSL_IMX8MM_GPT2,
-> > >+    FSL_IMX8MM_GPT3,
-> > >+    FSL_IMX8MM_GPT4,
-> > >+    FSL_IMX8MM_GPT5,
-> > >+    FSL_IMX8MM_GPT6,
-> > >+    FSL_IMX8MM_GPU2D,
-> > >+    FSL_IMX8MM_I2C1,
-> > >+    FSL_IMX8MM_I2C2,
-> > >+    FSL_IMX8MM_I2C3,
-> > >+    FSL_IMX8MM_I2C4,
-> > >+    FSL_IMX8MM_INTERCONNECT,
-> > >+    FSL_IMX8MM_IOMUXC,
-> > >+    FSL_IMX8MM_IOMUXC_GPR,
-> > >+    FSL_IMX8MM_MEDIA_BLK_CTL,
-> > >+    FSL_IMX8MM_LCDIF,
-> > >+    FSL_IMX8MM_MIPI_CSI,
-> > >+    FSL_IMX8MM_MIPI_DSI,
-> > >+    FSL_IMX8MM_MU_A,
-> > >+    FSL_IMX8MM_MU_B,
-> > >+    FSL_IMX8MM_OCOTP_CTRL,
-> > >+    FSL_IMX8MM_OCRAM,
-> > >+    FSL_IMX8MM_OCRAM_S,
-> > >+    FSL_IMX8MM_PCIE1,
-> > >+    FSL_IMX8MM_PCIE1_MEM,
-> > >+    FSL_IMX8MM_PCIE_PHY1,
-> > >+    FSL_IMX8MM_PERFMON1,
-> > >+    FSL_IMX8MM_PERFMON2,
-> > >+    FSL_IMX8MM_PWM1,
-> > >+    FSL_IMX8MM_PWM2,
-> > >+    FSL_IMX8MM_PWM3,
-> > >+    FSL_IMX8MM_PWM4,
-> > >+    FSL_IMX8MM_QOSC,
-> > >+    FSL_IMX8MM_QSPI,
-> > >+    FSL_IMX8MM_QSPI1_RX_BUFFER,
-> > >+    FSL_IMX8MM_QSPI1_TX_BUFFER,
-> > >+    FSL_IMX8MM_QSPI_MEM,
-> > >+    FSL_IMX8MM_RAM,
-> > >+    FSL_IMX8MM_RDC,
-> > >+    FSL_IMX8MM_SAI1,
-> > >+    FSL_IMX8MM_SAI2,
-> > >+    FSL_IMX8MM_SAI3,
-> > >+    FSL_IMX8MM_SAI5,
-> > >+    FSL_IMX8MM_SAI6,
-> > >+    FSL_IMX8MM_SDMA1,
-> > >+    FSL_IMX8MM_SDMA2,
-> > >+    FSL_IMX8MM_SDMA3,
-> > >+    FSL_IMX8MM_SEMAPHORE1,
-> > >+    FSL_IMX8MM_SEMAPHORE2,
-> > >+    FSL_IMX8MM_SEMAPHORE_HS,
-> > >+    FSL_IMX8MM_SNVS_HP,
-> > >+    FSL_IMX8MM_SPBA1,
-> > >+    FSL_IMX8MM_SRC,
-> > >+    FSL_IMX8MM_SYSCNT_CMP,
-> > >+    FSL_IMX8MM_SYSCNT_CTRL,
-> > >+    FSL_IMX8MM_SYSCNT_RD,
-> > >+    FSL_IMX8MM_TCM_DTCM,
-> > >+    FSL_IMX8MM_TCM_ITCM,
-> > >+    FSL_IMX8MM_TZASC,
-> > >+    FSL_IMX8MM_UART1,
-> > >+    FSL_IMX8MM_UART2,
-> > >+    FSL_IMX8MM_UART3,
-> > >+    FSL_IMX8MM_UART4,
-> > >+    FSL_IMX8MM_USB1,
-> > >+    FSL_IMX8MM_USB2,
-> > >+    FSL_IMX8MM_USB1_OTG,
-> > >+    FSL_IMX8MM_USB2_OTG,
-> > >+    FSL_IMX8MM_USDHC1,
-> > >+    FSL_IMX8MM_USDHC2,
-> > >+    FSL_IMX8MM_USDHC3,
-> > >+    FSL_IMX8MM_VPU,
-> > >+    FSL_IMX8MM_VPU_BLK_CTRL,
-> > >+    FSL_IMX8MM_VPU_G1_DECODER,
-> > >+    FSL_IMX8MM_VPU_G2_DECODER,
-> > >+    FSL_IMX8MM_WDOG1,
-> > >+    FSL_IMX8MM_WDOG2,
-> > >+    FSL_IMX8MM_WDOG3,
-> > >+};
-> > >+
-> > >+enum FslImx8mmIrqs {
-> > >+    FSL_IMX8MM_UART1_IRQ    =3D 26,
-> > >+    FSL_IMX8MM_UART2_IRQ    =3D 27,
-> > >+    FSL_IMX8MM_UART3_IRQ    =3D 28,
-> > >+    FSL_IMX8MM_UART4_IRQ    =3D 29,
-> > >+};
-> > >+
-> > >+#endif /* FSL_IMX8MM_H */
+> From: Ankit Agrawal <ankita@nvidia.com>
+> 
+> During creation of the VM's SRAT table, the generic initiator entries
+> are added. Currently the order in the entries are not controllable from
+> the qemu command. This is due to the fact that the code queries the
+> object tree which may not be in the order objects were inserted.
+> 
+> As a fix the patch maintains a GPtrArray of generic initiator objects
+> that preserves their insertion order. Objects are automatically added
+> to the array when initialized and removed when finalized. When building
+> the SRAT table, objects are processed in the order they were first
+> inserted.
+
+so question would be, why does it matter?
+Is ther a requirement in spec for SRAT entries being put in a particular order?
+
+> 
+> E.g. for the following qemu command.
+> ...
+>             -object acpi-generic-initiator,id=gi0,pci-dev=dev0,node=2 \
+>             -object acpi-generic-initiator,id=gi1,pci-dev=dev0,node=3 \
+>             -object acpi-generic-initiator,id=gi2,pci-dev=dev0,node=4 \
+>             -object acpi-generic-initiator,id=gi3,pci-dev=dev0,node=5 \
+>             -object acpi-generic-initiator,id=gi4,pci-dev=dev0,node=6 \
+>             -object acpi-generic-initiator,id=gi5,pci-dev=dev0,node=7 \
+>             -object acpi-generic-initiator,id=gi6,pci-dev=dev0,node=8 \
+>             -object acpi-generic-initiator,id=gi7,pci-dev=dev0,node=9 \
+> ...
+> 
+> Original PXM in the VM SRAT table:
+> [1A4h 0420 004h]            Proximity Domain : 00000007
+> [1C4h 0452 004h]            Proximity Domain : 00000006
+> [1E4h 0484 004h]            Proximity Domain : 00000005
+> [204h 0516 004h]            Proximity Domain : 00000004
+> [224h 0548 004h]            Proximity Domain : 00000003
+> [244h 0580 004h]            Proximity Domain : 00000009
+> [264h 0612 004h]            Proximity Domain : 00000002
+> [284h 0644 004h]            Proximity Domain : 00000008
+> [2A2h 0674 004h]            Proximity Domain : 00000009
+> 
+> After the patch (preserves insertion order):
+> [1A4h 0420 004h]            Proximity Domain : 00000002
+> [1C4h 0452 004h]            Proximity Domain : 00000003
+> [1E4h 0484 004h]            Proximity Domain : 00000004
+> [204h 0516 004h]            Proximity Domain : 00000005
+> [224h 0548 004h]            Proximity Domain : 00000006
+> [244h 0580 004h]            Proximity Domain : 00000007
+> [264h 0612 004h]            Proximity Domain : 00000008
+> [284h 0644 004h]            Proximity Domain : 00000009
+> 
+> cc: Shameer Kolothum <skolothumtho@nvidia.com>
+> Fixes: 0a5b5acdf2 ("hw/acpi: Implement the SRAT GI affinity structure")
+> Signed-off-by: Ankit Agrawal <ankita@nvidia.com>
+> ---
+>  hw/acpi/pci.c | 44 ++++++++++++++++++++++++++++++++------------
+>  1 file changed, 32 insertions(+), 12 deletions(-)
+> 
+> diff --git a/hw/acpi/pci.c b/hw/acpi/pci.c
+> index 8c7ed10479..d97e6e9105 100644
+> --- a/hw/acpi/pci.c
+> +++ b/hw/acpi/pci.c
+> @@ -88,18 +88,30 @@ OBJECT_DEFINE_TYPE_WITH_INTERFACES(AcpiGenericInitiator, acpi_generic_initiator,
+>  
+>  OBJECT_DECLARE_SIMPLE_TYPE(AcpiGenericInitiator, ACPI_GENERIC_INITIATOR)
+>  
+> +static GPtrArray *acpi_generic_initiator_list;
+> +
+>  static void acpi_generic_initiator_init(Object *obj)
+>  {
+>      AcpiGenericInitiator *gi = ACPI_GENERIC_INITIATOR(obj);
+>  
+>      gi->node = MAX_NODES;
+>      gi->pci_dev = NULL;
+> +
+> +    /* Initialize array on first use */
+> +    if (!acpi_generic_initiator_list) {
+> +        acpi_generic_initiator_list = g_ptr_array_new();
+> +    }
+> +
+> +    g_ptr_array_add(acpi_generic_initiator_list, gi);
+>  }
+>  
+>  static void acpi_generic_initiator_finalize(Object *obj)
+>  {
+>      AcpiGenericInitiator *gi = ACPI_GENERIC_INITIATOR(obj);
+>  
+> +    if (acpi_generic_initiator_list) {
+> +        g_ptr_array_remove(acpi_generic_initiator_list, gi);
+> +    }
+>      g_free(gi->pci_dev);
+>  }
+>  
+> @@ -145,20 +157,15 @@ static void acpi_generic_initiator_class_init(ObjectClass *oc, const void *data)
+>          "NUMA node associated with the PCI device");
+>  }
+>  
+> -static int build_acpi_generic_initiator(Object *obj, void *opaque)
+> +
+> +static void build_acpi_generic_initiator(AcpiGenericInitiator *gi,
+> +                                         GArray *table_data)
+>  {
+>      MachineState *ms = MACHINE(qdev_get_machine());
+> -    AcpiGenericInitiator *gi;
+> -    GArray *table_data = opaque;
+>      int32_t devfn;
+>      uint8_t bus;
+>      Object *o;
+>  
+> -    if (!object_dynamic_cast(obj, TYPE_ACPI_GENERIC_INITIATOR)) {
+> -        return 0;
+> -    }
+> -
+> -    gi = ACPI_GENERIC_INITIATOR(obj);
+>      if (gi->node >= ms->numa_state->num_nodes) {
+>          error_printf("%s: Specified node %d is invalid.\n",
+>                       TYPE_ACPI_GENERIC_INITIATOR, gi->node);
+> @@ -178,8 +185,22 @@ static int build_acpi_generic_initiator(Object *obj, void *opaque)
+>      assert(devfn >= 0 && devfn < PCI_DEVFN_MAX);
+>  
+>      build_srat_pci_generic_initiator(table_data, gi->node, 0, bus, devfn);
+> +}
+>  
+> -    return 0;
+> +static void build_all_acpi_generic_initiators(GArray *table_data)
+> +{
+> +    AcpiGenericInitiator *gi;
+> +    guint i;
+> +
+> +    if (!acpi_generic_initiator_list) {
+> +        return;
+> +    }
+> +
+> +    /* Iterate array in insertion order */
+> +    for (i = 0; i < acpi_generic_initiator_list->len; i++) {
+> +        gi = g_ptr_array_index(acpi_generic_initiator_list, i);
+> +        build_acpi_generic_initiator(gi, table_data);
+> +    }
+>  }
+>  
+>  typedef struct AcpiGenericPort {
+> @@ -295,9 +316,8 @@ static int build_acpi_generic_port(Object *obj, void *opaque)
+>  
+>  void build_srat_generic_affinity_structures(GArray *table_data)
+>  {
+> -    object_child_foreach_recursive(object_get_root(),
+> -                                   build_acpi_generic_initiator,
+> -                                   table_data);
+> +    build_all_acpi_generic_initiators(table_data);
+> +
+>      object_child_foreach_recursive(object_get_root(), build_acpi_generic_port,
+>                                     table_data);
+>  }
+
 
