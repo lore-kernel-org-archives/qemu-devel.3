@@ -4,75 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 704C8EC1112
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 17:13:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACF35EC1115
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 17:13:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuZM5-0004ME-Un; Mon, 23 Feb 2026 12:04:21 -0500
+	id 1vuZM5-0004LM-BH; Mon, 23 Feb 2026 12:04:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vuZL5-0002l6-2s
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 12:03:25 -0500
+ id 1vuZLD-0002vD-Vi
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 12:03:32 -0500
 Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vuZKz-0000Nw-2Z
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 12:03:15 -0500
+ id 1vuZL9-0000PY-Bf
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 12:03:27 -0500
 Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-4806f3fc50bso52101915e9.0
- for <qemu-devel@nongnu.org>; Mon, 23 Feb 2026 09:03:10 -0800 (PST)
+ 5b1f17b1804b1-48370174e18so24815725e9.2
+ for <qemu-devel@nongnu.org>; Mon, 23 Feb 2026 09:03:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771866190; x=1772470990; darn=nongnu.org;
+ d=linaro.org; s=google; t=1771866194; x=1772470994; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=61PvnFSHrTc5AGGW4jO3OHip56G19MgkDyLY5pjuMnQ=;
- b=jjtGQOjPufAbM4bdmGwbUKIa8VuxXenOEacOerySz7EH2cnmyRg6HekyDf7gVET9yV
- opQCPGNwYxC5kJYewChKbXr4rjjqENHjJWfTi3L3w4S2JjOHpRjMhg+3klj1RswhDAOW
- aPGiU06c2Z/U5ABbaQjSeHTVLQ9xDwM4tdakWe7aTCLAufQ5X+pELflOJiFpYfefNcwz
- +WXAk/sZfnD1sSMzZSJKslC418HsK9ztgjP9mAR2Ayz2PITfPs+yE2TjV/H5/tl7FnK3
- Q+Kfk9NGeHtrJnWsf+TavSCxVx762EGE/uUEs0by5HSyx/dofswPfuyt77Uo/ngGUTsL
- z2Cw==
+ :reply-to; bh=Oc4IQYy6jHc0YZ0doMPC3fB8hIXKqwZ6F4RE9AoioM0=;
+ b=Z+4NqwgNKHwCgXFwfU/6FvdMfunw6YwossNC/SPg/QmqpK+w2mSLfb5FL8y6Z0Hgei
+ lB0CcvdVVqboaGLNBWX1aByKFrBtUG0uPep/RKDDhNvvD50njI0rtqR6mFCsKxOj1bnf
+ jbibzy4COdxz1DXVX5q3h/yPRR2b4/t1LNi+GMB9pX+fpEkCjtavxNg2rpq1F4nIhwWW
+ ODhRfOtQXUWwXR567/vhqAecxlCz8GM9Vz799sQsgPMqsRUWhT3DZj8rHD68mVTxthpI
+ PFYYRMeBE5R4v40IqkrC/ALKHuxvnvuMWgjKXCUCqviiGkD9lZwoWaqs/7AiZiW46d8m
+ 5Fpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771866190; x=1772470990;
+ d=1e100.net; s=20230601; t=1771866194; x=1772470994;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=61PvnFSHrTc5AGGW4jO3OHip56G19MgkDyLY5pjuMnQ=;
- b=J2sx4YDw7Di483zbMoI4uyFNmvB6HmgfXUKiXN95Vi2zWgdCNOWrsUxM+LAm2NqYL3
- rhfN6UECtz7D6hqRFlUCLj59HIvKTE2pVRJ/q2MHKoym+FQGrOUnh41EG3Y0FJ6C5tho
- /O7UM8I4WyObX2X9SoV+WbRlTEprYlNZFKT/fn7WPk7rCQJ428oKGiKslzauz9XbDFao
- N2YdD6nVGe9WrkIkouO9ghEfL3oGWNs7n5mqfnpl7rky6LZ9rhbd1k3KGuvZkJFbCUpb
- 6UKKBUGtu3mMPO9OTeJuMlnkjVVKrKW7cmrQZFH9O+Hnjzc0lI8y/auH0BREmbYZLui/
- vQsA==
+ bh=Oc4IQYy6jHc0YZ0doMPC3fB8hIXKqwZ6F4RE9AoioM0=;
+ b=UanKQKkh79Dx3WVLLmYiTRlpCXIgJJD5wI+IgTHDOe49Z48D/oW06dzXQOPkxWZf8N
+ LIruLGJp4gvBZY63ocYcRgR9J7VNSofogXl56dLycHbtrAbi9PMCn9eNg2Rhi5ahZx4Q
+ 7l11NLEjY+5eUsxk9qvsTSIhEPssGo+bDlVC+hshkyG82GIvNOoKojnrBAnSPVSc3b0f
+ LOk/Lu/lTwzl2PfNvuoVE+pjo1lHBe0EcHxOC1zk8SJjGKIfxX/ngii2S054mnAh78Ag
+ CdUWCK5nviwC7e6/AZp/gwvPFYdFyyB52VBKGTUYwv3ecZOsA5HKb5Q3K3jEwNRCovkb
+ vXuQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVWYS1x3vw42q1bZw/xfR6XV3nhfcuOIpzpUQ7r3gQNLru2mOjLXXxU/x7++n/kDD+T1uck0renSRVU@nongnu.org
-X-Gm-Message-State: AOJu0YzLuLKyKE+X8ymK8JRfMQ4Y15mQSJzg1KUStnCAJ10JidYyIT4P
- Vo6LWgisk0mi5iYWI6k/XFF6S/6nfsjZY7+/+g8z3awBoi47Nf0CEaZRurHF1aBVORSEmH1m28n
- j3KNq
-X-Gm-Gg: AZuq6aLcX+OGXeZOnSidOFCd6EmxAlBvXo0YvfsFUyIvyTG2SePTM+aof55PsLbpiIw
- dFvTJlClwtJwcRZ5gUa6OpkRNI0w198v5Q8xrKF3+aHinjwc/1lCmegngeWMpUao10V/wzpE6bI
- YQ5csjj9XwEIiepwEmxFwae3bU79mleWYYYeZHTle4RMjFcxPXylFWs6N7kYWCDx8G8SnK+xL6J
- LpYLQf1ust6KOYw53keOR8K00PiwsS2milYAkYcXFcI2DhP6PjagfFIWe1TWf9WrSHiRaURF7PL
- 30phplnuMExcVnl9u4BSdbaL+cQJjLyljmN8V91Mx7g5k8m+q7ZBWoqIJs8TOHIp6aTVoqqw88Z
- z8SXNePmx/PweJb4DJ8sYuE7FTmdzwpEH5ipKyTAVDVK7myV066g5E+XGjGO1Gnbx/85AnFE7mF
- WsoIE/51426+7+nILe8UGjwQ/jTvQllLn0flpg+oRZpjgVo2orPTqDgSoL0BC9jDbm+4ypBq0hA
- Yw+8yUUsYmkgTBG5L4wK/oSSGZSFas=
-X-Received: by 2002:a05:600c:8b63:b0:47e:e87f:4bba with SMTP id
- 5b1f17b1804b1-483a9637833mr144580555e9.29.1771866189893; 
- Mon, 23 Feb 2026 09:03:09 -0800 (PST)
+ AJvYcCWlChNZFjwg4ESYXEwAN+hrd6+LZJa+z84Mj6tNXIVMawVasTUDgCvQQRQmTTlb3y5siVD2+CRDt/b2@nongnu.org
+X-Gm-Message-State: AOJu0Yw2nJ5uWKhSNH8As6UXRvMTqOlB8Dut0j7VgiCL3WFqU1kIHFwX
+ cVrgz7zI0iqM9Xa6TPDhBym18o4OqTYf/s9yUZZHD9Vxtrl1GENd33e+Ku+AAiIO6TE=
+X-Gm-Gg: AZuq6aKwvE4Mty1a2Dgy7DFHgIqoywio9NOAA8HT7fKlHTFdPUwjwReqgkEb4ZhjBaC
+ RgP/hnbTlDs05Oz4nTN/tq8GZv44Dp7lK5ZTb9JOQouh15hK8MZ+msFBEC4jU63C7UK/jMEs1/Y
+ A3YTh8bxQuV8Mpcd/jWZVHYI4etBzBGCZ4t9+qGdl9jRMXML8kxxlLnD568f9+3Bb4/o5imZpki
+ 0UcbzSpfss3u/0f6VROhG2gsseQCL0mTwdE0ZcuSKqEAmWQyP0X++2d/xdNgW10hdUwh5KV4r4Q
+ dD6W09ZdBbkSNQ8pRqTrveiGhIOGJOv9QKwr696GdYhAXHLrkpuj7PY0naeAUYlTGy74ZciwoGo
+ ++H16v+DbXqudPJilVxL5Ohh33eWdSPlNTh2oY3yMBi0+gK1dvf+5NoFoiiyf/7qAGaqhrLZm6m
+ PSoeSN/4gm+itfcTWBbvZXeSVc2GDcHEjKTVpQsURX4PJxPMDHdAlXBR9CxQumaH5vl4OaaCp4m
+ ACSZwdiqNTHRiHsCzFYCcHF14/jbxw=
+X-Received: by 2002:a05:600c:628d:b0:483:5a29:9678 with SMTP id
+ 5b1f17b1804b1-483a95bd8a7mr165353425e9.2.1771866193551; 
+ Mon, 23 Feb 2026 09:03:13 -0800 (PST)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-483a9b21ceasm200155625e9.0.2026.02.23.09.03.08
+ 5b1f17b1804b1-483a9b21ceasm200155625e9.0.2026.02.23.09.03.12
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 23 Feb 2026 09:03:08 -0800 (PST)
+ Mon, 23 Feb 2026 09:03:12 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Subject: [PATCH 49/65] hw/intc/arm_gicv5: Implement Deactivate command
-Date: Mon, 23 Feb 2026 17:01:56 +0000
-Message-ID: <20260223170212.441276-50-peter.maydell@linaro.org>
+Subject: [PATCH 53/65] target/arm: Add has_gcie property to enable FEAT_GCIE
+Date: Mon, 23 Feb 2026 17:02:00 +0000
+Message-ID: <20260223170212.441276-54-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260223170212.441276-1-peter.maydell@linaro.org>
 References: <20260223170212.441276-1-peter.maydell@linaro.org>
@@ -86,7 +85,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,109 +101,129 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Implement the equivalent of the GICv5 stream protocol's Deactivate
-command, which lets the cpuif tell the IRS to deactivate the
-specified interrupt.
+Add a has_gcie QOM property to the CPU which allows the board code to
+enable FEAT_GCIE, the GICv5 CPU interface.
+
+Enabling the GICv5 CPU interface comes with a significant
+restriction: because the GICv5 architecture is Armv9, it assumes the
+Armv9 requirement that only EL0 (userspace) may be in AArch32.  So
+there are no GIC control system registers defined for AArch32.  We
+force AArch32 at ELs 1, 2 and 3 to disabled, to avoid a guest being
+able to get into an EL where interrupts are completely broken.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/intc/arm_gicv5.c                | 46 ++++++++++++++++++++++++++++++
- hw/intc/trace-events               |  1 +
- include/hw/intc/arm_gicv5_stream.h | 14 +++++++++
- 3 files changed, 61 insertions(+)
+ target/arm/cpu-features.h |  5 +++++
+ target/arm/cpu.c          | 45 +++++++++++++++++++++++++++++++++++++++
+ target/arm/cpu.h          |  2 ++
+ 3 files changed, 52 insertions(+)
 
-diff --git a/hw/intc/arm_gicv5.c b/hw/intc/arm_gicv5.c
-index 6636a66976..0509a958ff 100644
---- a/hw/intc/arm_gicv5.c
-+++ b/hw/intc/arm_gicv5.c
-@@ -1113,6 +1113,52 @@ void gicv5_activate(GICv5Common *cs, uint32_t id, GICv5Domain domain,
-     irs_recalc_hppi(s, domain, iaffid);
+diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
+index e391b394ba..c0ba56f244 100644
+--- a/target/arm/cpu-features.h
++++ b/target/arm/cpu-features.h
+@@ -1072,6 +1072,11 @@ static inline bool isar_feature_aa64_aa32_el2(const ARMISARegisters *id)
+     return FIELD_EX64_IDREG(id, ID_AA64PFR0, EL2) >= 2;
  }
  
-+void gicv5_deactivate(GICv5Common *cs, uint32_t id, GICv5Domain domain,
-+                      GICv5IntType type, bool virtual)
++static inline bool isar_feature_aa64_aa32_el3(const ARMISARegisters *id)
 +{
-+    const GICv5ISTConfig *cfg;
-+    GICv5 *s = ARM_GICV5(cs);
-+    uint32_t *l2_iste_p;
-+    L2_ISTE_Handle h;
-+    uint32_t iaffid;
++    return FIELD_EX64_IDREG(id, ID_AA64PFR0, EL3) >= 2;
++}
 +
-+    trace_gicv5_deactivate(domain_name[domain], inttype_name(type), virtual, id);
+ static inline bool isar_feature_aa64_ras(const ARMISARegisters *id)
+ {
+     return FIELD_EX64_IDREG(id, ID_AA64PFR0, RAS) != 0;
+diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+index 551be14e22..7f67e8ae47 100644
+--- a/target/arm/cpu.c
++++ b/target/arm/cpu.c
+@@ -1191,6 +1191,9 @@ static const Property arm_cpu_has_el2_property =
+ 
+ static const Property arm_cpu_has_el3_property =
+             DEFINE_PROP_BOOL("has_el3", ARMCPU, has_el3, true);
 +
-+    if (virtual) {
-+        qemu_log_mask(LOG_GUEST_ERROR, "gicv5_deactivate: tried to "
-+                      "deactivate a virtual interrupt\n");
-+        return;
-+    }
-+    if (type == GICV5_SPI) {
-+        GICv5SPIState *spi = gicv5_spi_state(cs, id, domain);
++static const Property arm_cpu_has_gcie_property =
++            DEFINE_PROP_BOOL("has_gcie", ARMCPU, has_gcie, false);
+ #endif
+ 
+ static const Property arm_cpu_cfgend_property =
+@@ -1423,6 +1426,11 @@ static void arm_cpu_post_init(Object *obj)
+         object_property_add_uint64_ptr(obj, "rvbar",
+                                        &cpu->rvbar_prop,
+                                        OBJ_PROP_FLAG_READWRITE);
 +
-+        if (!spi) {
-+            qemu_log_mask(LOG_GUEST_ERROR, "gicv5_deactivate: tried to "
-+                          "deactivate unreachable SPI %d\n", id);
++        /* We only allow GICv5 on a 64-bit v8 CPU */
++        if (arm_feature(&cpu->env, ARM_FEATURE_AARCH64)) {
++            qdev_property_add_static(DEVICE(obj), &arm_cpu_has_gcie_property);
++        }
+     }
+ 
+     if (arm_feature(&cpu->env, ARM_FEATURE_EL3)) {
+@@ -1697,6 +1705,12 @@ static void arm_cpu_realizefn(DeviceState *dev, Error **errp)
+                        current_accel_name());
+             return;
+         }
++        if (cpu->has_gcie) {
++            error_setg(errp,
++                       "Cannot enable %s when guest CPU has GICv5 enabled",
++                       current_accel_name());
++            return;
++        }
+     }
+ #endif
+ 
+@@ -2020,6 +2034,37 @@ static void arm_cpu_realizefn(DeviceState *dev, Error **errp)
+         FIELD_DP32_IDREG(isar, ID_PFR1, VIRTUALIZATION, 0);
+     }
+ 
++    /* Report FEAT_GCIE in our ID registers if property was set */
++    FIELD_DP64_IDREG(isar, ID_AA64PFR2, GCIE, cpu->has_gcie);
++    if (cpu_isar_feature(aa64_gcie, cpu)) {
++        if (!arm_feature(env, ARM_FEATURE_AARCH64)) {
++            /*
++             * We only create the have_gcie property for AArch64 CPUs,
++             * but the user might have tried aarch64=off with has_gcie=on.
++             */
++            error_setg(errp, "Cannot both enable has_gcie and disable aarch64");
 +            return;
 +        }
 +
-+        spi->active = false;
-+        irs_recalc_hppi(s, domain, spi->iaffid);
-+        return;
++        /*
++         * FEAT_GCIE implies Armv9, which implies no AArch32 above EL0.
++         * Usually we don't strictly insist on this kind of feature
++         * dependency, but in this case we enforce it, because the
++         * GICv5 CPU interface has no AArch32 versions of its system
++         * registers, so interrupts wouldn't work if we allowed AArch32
++         * in EL1 or above. Downgrade "AArch32 and AArch64" to "AArch64".
++         */
++        if (cpu_isar_feature(aa64_aa32_el3, cpu)) {
++            FIELD_DP64_IDREG(isar, ID_AA64PFR0, EL3, 1);
++        }
++        if (cpu_isar_feature(aa64_aa32_el2, cpu)) {
++            FIELD_DP64_IDREG(isar, ID_AA64PFR0, EL2, 1);
++        }
++        if (cpu_isar_feature(aa64_aa32_el1, cpu)) {
++            FIELD_DP64_IDREG(isar, ID_AA64PFR0, EL1, 1);
++        }
 +    }
-+    if (type != GICV5_LPI) {
-+        qemu_log_mask(LOG_GUEST_ERROR, "gicv5_deactivate: tried to "
-+                      "deactivate bad interrupt type %d\n", type);
-+        return;
-+    }
-+    cfg = &s->phys_lpi_config[domain];
-+    l2_iste_p = get_l2_iste(cs, cfg, id, &h);
-+    if (!l2_iste_p) {
-+        return;
-+    }
-+    *l2_iste_p = FIELD_DP32(*l2_iste_p, L2_ISTE, ACTIVE, false);
-+    iaffid = FIELD_EX32(*l2_iste_p, L2_ISTE, IAFFID);
-+    put_l2_iste(cs, cfg, &h);
 +
-+    irs_recalc_hppi(s, domain, iaffid);
-+}
-+
- static void irs_map_l2_istr_write(GICv5 *s, GICv5Domain domain, uint64_t value)
- {
-     GICv5Common *cs = ARM_GICV5_COMMON(s);
-diff --git a/hw/intc/trace-events b/hw/intc/trace-events
-index 636c598970..c6696f0e0a 100644
---- a/hw/intc/trace-events
-+++ b/hw/intc/trace-events
-@@ -242,6 +242,7 @@ gicv5_set_handling(const char *domain, const char *type, bool virtual, uint32_t
- gicv5_set_target(const char *domain, const char *type, bool virtual, uint32_t id, uint32_t iaffid, int irm) "GICv5 IRS SetTarget %s %s virtual:%d ID %u IAFFID %u routingmode %d"
- gicv5_request_config(const char *domain, const char *type, bool virtual, uint32_t id, uint64_t icsr) "GICv5 IRS RequestConfig %s %s virtual:%d ID %u ICSR 0x%" PRIx64
- gicv5_activate(const char *domain, const char *type, bool virtual, uint32_t id) "GICv5 IRS Activate %s %s virtual:%d ID %u"
-+gicv5_deactivate(const char *domain, const char *type, bool virtual, uint32_t id) "GICv5 IRS Deactivate %s %s virtual:%d ID %u"
- gicv5_spi_state(uint32_t spi_id, bool level, bool pending, bool active) "GICv5 IRS SPI ID %u now level %d pending %d active %d"
- gicv5_irs_recalc_hppi_fail(const char *domain, uint32_t iaffid, const char *reason) "GICv5 IRS %s IAFFID %u: no HPPI: %s"
- gicv5_irs_recalc_hppi(const char *domain, uint32_t iaffid, uint32_t id, uint8_t prio) "GICv5 IRS %s IAFFID %u: new HPPI ID 0x%x prio %u"
-diff --git a/include/hw/intc/arm_gicv5_stream.h b/include/hw/intc/arm_gicv5_stream.h
-index 7adb53c86d..f6783cc6b5 100644
---- a/include/hw/intc/arm_gicv5_stream.h
-+++ b/include/hw/intc/arm_gicv5_stream.h
-@@ -212,4 +212,18 @@ void gicv5_forward_interrupt(ARMCPU *cpu, GICv5Domain domain);
- GICv5PendingIrq gicv5_get_hppi(GICv5Common *cs, GICv5Domain domain,
-                                uint32_t iaffid);
+     if (cpu_isar_feature(aa64_mte, cpu)) {
+         /*
+          * The architectural range of GM blocksize is 2-6, however qemu
+diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+index 651fccd59b..a5f27dfe0f 100644
+--- a/target/arm/cpu.h
++++ b/target/arm/cpu.h
+@@ -1032,6 +1032,8 @@ struct ArchCPU {
+     bool has_neon;
+     /* CPU has M-profile DSP extension */
+     bool has_dsp;
++    /* CPU has FEAT_GCIE GICv5 CPU interface */
++    bool has_gcie;
  
-+/**
-+ * gicv5_deactivate
-+ * @cs: GIC IRS to send command to
-+ * @id: interrupt ID
-+ * @domain: interrupt Domain to act on
-+ * @type: interrupt type (LPI or SPI)
-+ * @virtual: true if this is a virtual interrupt
-+ *
-+ * Deactivate the specified interrupt. There is no report back
-+ * of success/failure to the CPUIF in the protocol.
-+ */
-+void gicv5_deactivate(GICv5Common *cs, uint32_t id, GICv5Domain domain,
-+                      GICv5IntType type, bool virtual);
-+
- #endif
+     /* CPU has memory protection unit */
+     bool has_mpu;
 -- 
 2.43.0
 
