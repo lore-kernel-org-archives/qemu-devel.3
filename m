@@ -4,64 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5743EA4FC2
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 13:53:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BB4BEA4FC1
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 13:53:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuWKG-0004iH-4G; Mon, 23 Feb 2026 08:50:17 -0500
+	id 1vuWKC-0004M4-TI; Mon, 23 Feb 2026 08:50:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vuWK1-0003NB-HK
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 08:50:03 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1vuWK1-0003Lq-3q
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 08:50:01 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vuWJw-0007Fk-8y
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 08:49:58 -0500
+ id 1vuWJl-0007EH-7l
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 08:49:46 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771854595;
+ s=mimecast20190719; t=1771854584;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=J4SucUVkl0WRnnZuCp5t+N6kiYAKNSlru5EZCcCUPGM=;
- b=beQd5CAEckIpsyvAY5JvI665v7BWDjBuzt/OPMwi/kma5TJgNl3qxsRURlDjw8QukgbQok
- eC9DtzGmaYkJtAk4xXPk1Nr6rM8EpijLMMkrAavwS4TuhpIbA+F33NIgnw+QPh1zzir94t
- 7Wvu8tU/H14aq82+tRAvrWwDuIdH7nk=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=oaDmncSttA6yajhGZ9BDmb+LfKD4WjheIu/dDDpU9Z8=;
+ b=SV27FjslosQhMZPXQuBQfNni1aHEo+EHhpnmiiu4F3Io7b+trRkSA1NKWrDHICXNrE8d7S
+ rrxck66WY9/eM+aMnH0Gz6yIs7fN6BRoyjMlyI7ZwSd938t/GoxNj/DNF1gXLiGv7lYLN/
+ VfD4DfLPCv14ZQSevveV60ioR9uusCU=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-711-y0iDH5v5Mt2f3yw0IOkHyQ-1; Mon,
- 23 Feb 2026 08:49:52 -0500
-X-MC-Unique: y0iDH5v5Mt2f3yw0IOkHyQ-1
-X-Mimecast-MFC-AGG-ID: y0iDH5v5Mt2f3yw0IOkHyQ_1771854591
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-518-gu6x8lHyOpO8mFRkNW5Irw-1; Mon,
+ 23 Feb 2026 08:49:41 -0500
+X-MC-Unique: gu6x8lHyOpO8mFRkNW5Irw-1
+X-Mimecast-MFC-AGG-ID: gu6x8lHyOpO8mFRkNW5Irw_1771854580
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 542B618002FF; Mon, 23 Feb 2026 13:49:51 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8A0391955DC9; Mon, 23 Feb 2026 13:49:40 +0000 (UTC)
 Received: from localhost (unknown [10.45.242.25])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id B8BC61800370; Mon, 23 Feb 2026 13:49:50 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 9F9BF30001BE; Mon, 23 Feb 2026 13:49:39 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Gerd Hoffmann <kraxel@redhat.com>
-Subject: [PULL v3 50/85] audio/pw: convert to QOM lifecycle methods
-Date: Mon, 23 Feb 2026 14:46:51 +0100
-Message-ID: <20260223134731.2377432-51-marcandre.lureau@redhat.com>
+ Gerd Hoffmann <kraxel@redhat.com>,
+ Christian Schoenebeck <qemu_oss@crudebyte.com>
+Subject: [PULL v3 46/85] audio/alsa: convert to QOM lifecycle methods
+Date: Mon, 23 Feb 2026 14:46:47 +0100
+Message-ID: <20260223134731.2377432-47-marcandre.lureau@redhat.com>
 In-Reply-To: <20260223134731.2377432-1-marcandre.lureau@redhat.com>
 References: <20260223134731.2377432-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -1
@@ -69,7 +70,7 @@ X-Spam_score: -0.2
 X-Spam_bar: /
 X-Spam_report: (-0.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1.179, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.717,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -89,371 +90,167 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Migrate the PipeWire audio backend from the legacy driver init/fini
-callbacks to proper QOM realize and finalize methods.
+Migrate the ALSA audio backend from the legacy driver init/fini
+callbacks to proper QOM realize method.
 
-The pwaudio struct fields are now embedded directly in the AudioPw
-QOM object instead of being allocated separately as drv_opaque. This
-allows accessing the backend state through proper QOM type casting
-with AUDIO_PW() rather than casting drv_opaque pointers.
+The alsa_audio_init() function is replaced with audio_alsa_realize(),
+which performs the same ALSA option initialization before delegating
+to the parent class realize method. The empty alsa_audio_fini() is
+removed.
 
-The PipeWire thread loop and context are now managed through the QOM
-lifecycle, with initialization in realize and cleanup in finalize.
+The Audiodev pointer stored in ALSAVoiceOut and ALSAVoiceIn is removed
+as it can now be accessed through hw->s->dev.
 
 Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
 Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- audio/pwaudio.c | 119 +++++++++++++++++++++++-------------------------
- 1 file changed, 58 insertions(+), 61 deletions(-)
+ audio/alsaaudio.c | 43 ++++++++++++++++++++-----------------------
+ 1 file changed, 20 insertions(+), 23 deletions(-)
 
-diff --git a/audio/pwaudio.c b/audio/pwaudio.c
-index 3b524dfea5a..ca61a1b4ef5 100644
---- a/audio/pwaudio.c
-+++ b/audio/pwaudio.c
-@@ -31,36 +31,27 @@
- #define TYPE_AUDIO_PW "audio-pipewire"
- OBJECT_DECLARE_SIMPLE_TYPE(AudioPw, AUDIO_PW)
+diff --git a/audio/alsaaudio.c b/audio/alsaaudio.c
+index ae1cec6a36e..c2788606b28 100644
+--- a/audio/alsaaudio.c
++++ b/audio/alsaaudio.c
+@@ -40,19 +40,14 @@
+ #define TYPE_AUDIO_ALSA "audio-alsa"
+ OBJECT_DECLARE_SIMPLE_TYPE(AudioALSA, AUDIO_ALSA)
  
-+static AudioBackendClass *audio_pw_parent_class;
++static AudioBackendClass *audio_alsa_parent_class;
 +
- struct AudioPw {
+ struct AudioALSA {
      AudioMixengBackend parent_obj;
--};
+ };
  
--static struct audio_driver pw_audio_driver;
-+    struct pw_thread_loop *thread_loop;
-+    struct pw_context *context;
+ static struct audio_driver alsa_audio_driver;
  
--static void audio_pw_class_init(ObjectClass *klass, const void *data)
+-static void audio_alsa_class_init(ObjectClass *klass, const void *data)
 -{
 -    AudioMixengBackendClass *k = AUDIO_MIXENG_BACKEND_CLASS(klass);
-+    struct pw_core *core;
-+    struct spa_hook core_listener;
-+    int last_seq, pending_seq, error;
-+};
- 
--    k->driver = &pw_audio_driver;
+-
+-    k->driver = &alsa_audio_driver;
 -}
-+static struct audio_driver pw_audio_driver;
- 
- typedef struct pwvolume {
-     uint32_t channels;
-     float values[SPA_AUDIO_MAX_CHANNELS];
- } pwvolume;
- 
--typedef struct pwaudio {
+-
+ struct pollhlp {
+     snd_pcm_t *handle;
+     struct pollfd *pfds;
+@@ -65,14 +60,12 @@ typedef struct ALSAVoiceOut {
+     HWVoiceOut hw;
+     snd_pcm_t *handle;
+     struct pollhlp pollhlp;
 -    Audiodev *dev;
--    struct pw_thread_loop *thread_loop;
--    struct pw_context *context;
--
--    struct pw_core *core;
--    struct spa_hook core_listener;
--    int last_seq, pending_seq, error;
--} pwaudio;
--
- typedef struct PWVoice {
--    pwaudio *g;
-     struct pw_stream *stream;
-     struct spa_hook stream_listener;
-     struct spa_audio_info_raw info;
-@@ -236,9 +227,9 @@ static const struct pw_stream_events playback_stream_events = {
- static size_t
- qpw_read(HWVoiceIn *hw, void *data, size_t len)
- {
-+    AudioPw *c = AUDIO_PW(hw->s);
-     PWVoiceIn *pw = (PWVoiceIn *) hw;
-     PWVoice *v = &pw->v;
--    pwaudio *c = v->g;
-     const char *error = NULL;
-     size_t l;
-     int32_t avail;
-@@ -273,9 +264,9 @@ done_unlock:
+ } ALSAVoiceOut;
  
- static size_t qpw_buffer_get_free(HWVoiceOut *hw)
- {
-+    AudioPw *c = AUDIO_PW(hw->s);
-     PWVoiceOut *pw = (PWVoiceOut *)hw;
-     PWVoice *v = &pw->v;
--    pwaudio *c = v->g;
-     const char *error = NULL;
-     int32_t filled, avail;
-     uint32_t index;
-@@ -298,9 +289,9 @@ done_unlock:
- static size_t
- qpw_write(HWVoiceOut *hw, void *data, size_t len)
- {
-+    AudioPw *c = AUDIO_PW(hw->s);
-     PWVoiceOut *pw = (PWVoiceOut *) hw;
-     PWVoice *v = &pw->v;
--    pwaudio *c = v->g;
-     const char *error = NULL;
-     int32_t filled, avail;
-     uint32_t index;
-@@ -434,7 +425,7 @@ pw_to_audfmt(enum spa_audio_format fmt, int *endianness,
+ typedef struct ALSAVoiceIn {
+     HWVoiceIn hw;
+     snd_pcm_t *handle;
+     struct pollhlp pollhlp;
+-    Audiodev *dev;
+ } ALSAVoiceIn;
+ 
+ struct alsa_params_req {
+@@ -707,7 +700,7 @@ static int alsa_init_out(HWVoiceOut *hw, struct audsettings *as,
+     struct alsa_params_obt obt;
+     snd_pcm_t *handle;
+     struct audsettings obt_as;
+-    Audiodev *dev = drv_opaque;
++    Audiodev *dev = hw->s->dev;
+ 
+     req.fmt = aud_to_alsafmt (as->fmt, as->endianness);
+     req.freq = as->freq;
+@@ -727,7 +720,6 @@ static int alsa_init_out(HWVoiceOut *hw, struct audsettings *as,
+ 
+     alsa->pollhlp.s = hw->s;
+     alsa->handle = handle;
+-    alsa->dev = dev;
+     return 0;
  }
  
- static int
--qpw_stream_new(pwaudio *c, PWVoice *v, const char *stream_name,
-+qpw_stream_new(AudioPw *c, PWVoice *v, const char *stream_name,
-                const char *name, enum spa_direction dir)
+@@ -766,7 +758,7 @@ static int alsa_voice_ctl (snd_pcm_t *handle, const char *typ, int ctl)
+ static void alsa_enable_out(HWVoiceOut *hw, bool enable)
  {
-     int res;
-@@ -452,8 +443,8 @@ qpw_stream_new(pwaudio *c, PWVoice *v, const char *stream_name,
+     ALSAVoiceOut *alsa = (ALSAVoiceOut *) hw;
+-    AudiodevAlsaPerDirectionOptions *apdo = alsa->dev->u.alsa.out;
++    AudiodevAlsaPerDirectionOptions *apdo = hw->s->dev->u.alsa.out;
+ 
+     if (enable) {
+         bool poll_mode = apdo->try_poll;
+@@ -794,7 +786,7 @@ static int alsa_init_in(HWVoiceIn *hw, struct audsettings *as, void *drv_opaque)
+     struct alsa_params_obt obt;
+     snd_pcm_t *handle;
+     struct audsettings obt_as;
+-    Audiodev *dev = drv_opaque;
++    Audiodev *dev = hw->s->dev;
+ 
+     req.fmt = aud_to_alsafmt (as->fmt, as->endianness);
+     req.freq = as->freq;
+@@ -814,7 +806,6 @@ static int alsa_init_in(HWVoiceIn *hw, struct audsettings *as, void *drv_opaque)
+ 
+     alsa->pollhlp.s = hw->s;
+     alsa->handle = handle;
+-    alsa->dev = dev;
+     return 0;
+ }
+ 
+@@ -871,7 +862,7 @@ static size_t alsa_read(HWVoiceIn *hw, void *buf, size_t len)
+ static void alsa_enable_in(HWVoiceIn *hw, bool enable)
+ {
+     ALSAVoiceIn *alsa = (ALSAVoiceIn *) hw;
+-    AudiodevAlsaPerDirectionOptions *apdo = alsa->dev->u.alsa.in;
++    AudiodevAlsaPerDirectionOptions *apdo = hw->s->dev->u.alsa.in;
+ 
+     if (enable) {
+         bool poll_mode = apdo->try_poll;
+@@ -901,7 +892,8 @@ static void alsa_init_per_direction(AudiodevAlsaPerDirectionOptions *apdo)
      }
- 
-     /* 75% of the timer period for faster updates */
--    buf_samples = (uint64_t)v->g->dev->timer_period * v->info.rate
--                    * 3 / 4 / 1000000;
-+    buf_samples = (uint64_t)AUDIO_MIXENG_BACKEND(c)->dev->timer_period
-+        * v->info.rate * 3 / 4 / 1000000;
-     pw_properties_setf(props, PW_KEY_NODE_LATENCY, "%" PRIu64 "/%u",
-                        buf_samples, v->info.rate);
- 
-@@ -535,11 +526,11 @@ qpw_set_position(uint32_t channels, uint32_t position[SPA_AUDIO_MAX_CHANNELS])
- static int
- qpw_init_out(HWVoiceOut *hw, struct audsettings *as, void *drv_opaque)
- {
-+    AudioPw *c = AUDIO_PW(hw->s);
-     PWVoiceOut *pw = (PWVoiceOut *) hw;
-     PWVoice *v = &pw->v;
-     struct audsettings obt_as = *as;
--    pwaudio *c = v->g = drv_opaque;
--    AudiodevPipewireOptions *popts = &c->dev->u.pipewire;
-+    AudiodevPipewireOptions *popts = &AUDIO_MIXENG_BACKEND(c)->dev->u.pipewire;
-     AudiodevPipewirePerDirectionOptions *ppdo = popts->out;
-     int r;
- 
-@@ -554,11 +545,11 @@ qpw_init_out(HWVoiceOut *hw, struct audsettings *as, void *drv_opaque)
-         pw_to_audfmt(v->info.format, &obt_as.endianness, &v->frame_size);
-     v->frame_size *= as->nchannels;
- 
--    v->req = (uint64_t)c->dev->timer_period * v->info.rate
-+    v->req = (uint64_t)AUDIO_MIXENG_BACKEND(c)->dev->timer_period * v->info.rate
-         * 1 / 2 / 1000000 * v->frame_size;
- 
-     /* call the function that creates a new stream for playback */
--    r = qpw_stream_new(c, v, ppdo->stream_name ? : c->dev->id,
-+    r = qpw_stream_new(c, v, ppdo->stream_name ?: AUDIO_MIXENG_BACKEND(c)->dev->id,
-                        ppdo->name, SPA_DIRECTION_OUTPUT);
-     if (r < 0) {
-         pw_thread_loop_unlock(c->thread_loop);
-@@ -582,11 +573,11 @@ qpw_init_out(HWVoiceOut *hw, struct audsettings *as, void *drv_opaque)
- static int
- qpw_init_in(HWVoiceIn *hw, struct audsettings *as, void *drv_opaque)
- {
-+    AudioPw *c = AUDIO_PW(hw->s);
-     PWVoiceIn *pw = (PWVoiceIn *) hw;
-     PWVoice *v = &pw->v;
-     struct audsettings obt_as = *as;
--    pwaudio *c = v->g = drv_opaque;
--    AudiodevPipewireOptions *popts = &c->dev->u.pipewire;
-+    AudiodevPipewireOptions *popts = &AUDIO_MIXENG_BACKEND(c)->dev->u.pipewire;
-     AudiodevPipewirePerDirectionOptions *ppdo = popts->in;
-     int r;
- 
-@@ -602,7 +593,7 @@ qpw_init_in(HWVoiceIn *hw, struct audsettings *as, void *drv_opaque)
-     v->frame_size *= as->nchannels;
- 
-     /* call the function that creates a new stream for recording */
--    r = qpw_stream_new(c, v, ppdo->stream_name ? : c->dev->id,
-+    r = qpw_stream_new(c, v, ppdo->stream_name ? : AUDIO_MIXENG_BACKEND(c)->dev->id,
-                        ppdo->name, SPA_DIRECTION_INPUT);
-     if (r < 0) {
-         pw_thread_loop_unlock(c->thread_loop);
-@@ -621,10 +612,8 @@ qpw_init_in(HWVoiceIn *hw, struct audsettings *as, void *drv_opaque)
  }
  
- static void
--qpw_voice_fini(PWVoice *v)
-+qpw_voice_fini(AudioPw *c, PWVoice *v)
- {
--    pwaudio *c = v->g;
--
-     if (!v->stream) {
-         return;
-     }
-@@ -637,19 +626,18 @@ qpw_voice_fini(PWVoice *v)
- static void
- qpw_fini_out(HWVoiceOut *hw)
- {
--    qpw_voice_fini(&PW_VOICE_OUT(hw)->v);
-+    qpw_voice_fini(AUDIO_PW(hw->s), &PW_VOICE_OUT(hw)->v);
- }
- 
- static void
- qpw_fini_in(HWVoiceIn *hw)
- {
--    qpw_voice_fini(&PW_VOICE_IN(hw)->v);
-+    qpw_voice_fini(AUDIO_PW(hw->s), &PW_VOICE_IN(hw)->v);
- }
- 
- static void
--qpw_voice_set_enabled(PWVoice *v, bool enable)
-+qpw_voice_set_enabled(AudioPw *c, PWVoice *v, bool enable)
- {
--    pwaudio *c = v->g;
-     pw_thread_loop_lock(c->thread_loop);
-     pw_stream_set_active(v->stream, enable);
-     pw_thread_loop_unlock(c->thread_loop);
-@@ -658,19 +646,18 @@ qpw_voice_set_enabled(PWVoice *v, bool enable)
- static void
- qpw_enable_out(HWVoiceOut *hw, bool enable)
- {
--    qpw_voice_set_enabled(&PW_VOICE_OUT(hw)->v, enable);
-+    qpw_voice_set_enabled(AUDIO_PW(hw->s), &PW_VOICE_OUT(hw)->v, enable);
- }
- 
- static void
- qpw_enable_in(HWVoiceIn *hw, bool enable)
- {
--    qpw_voice_set_enabled(&PW_VOICE_IN(hw)->v, enable);
-+    qpw_voice_set_enabled(AUDIO_PW(hw->s), &PW_VOICE_IN(hw)->v, enable);
- }
- 
- static void
--qpw_voice_set_volume(PWVoice *v, Volume *vol)
-+qpw_voice_set_volume(AudioPw *c, PWVoice *v, Volume *vol)
- {
--    pwaudio *c = v->g;
-     int i, ret;
- 
-     pw_thread_loop_lock(c->thread_loop);
-@@ -693,16 +680,16 @@ qpw_voice_set_volume(PWVoice *v, Volume *vol)
- static void
- qpw_volume_out(HWVoiceOut *hw, Volume *vol)
- {
--    qpw_voice_set_volume(&PW_VOICE_OUT(hw)->v, vol);
-+    qpw_voice_set_volume(AUDIO_PW(hw->s), &PW_VOICE_OUT(hw)->v, vol);
- }
- 
- static void
- qpw_volume_in(HWVoiceIn *hw, Volume *vol)
- {
--    qpw_voice_set_volume(&PW_VOICE_IN(hw)->v, vol);
-+    qpw_voice_set_volume(AUDIO_PW(hw->s), &PW_VOICE_IN(hw)->v, vol);
- }
- 
--static int wait_resync(pwaudio *pw)
-+static int wait_resync(AudioPw *pw)
- {
-     int res;
-     pw->pending_seq = pw_core_sync(pw->core, PW_ID_CORE, pw->pending_seq);
-@@ -725,7 +712,7 @@ static int wait_resync(pwaudio *pw)
- static void
- on_core_error(void *data, uint32_t id, int seq, int res, const char *message)
- {
--    pwaudio *pw = data;
-+    AudioPw *pw = data;
- 
-     error_report("error id:%u seq:%d res:%d (%s): %s",
-                 id, seq, res, spa_strerror(res), message);
-@@ -737,7 +724,7 @@ on_core_error(void *data, uint32_t id, int seq, int res, const char *message)
- static void
- on_core_done(void *data, uint32_t id, int seq)
- {
--    pwaudio *pw = data;
-+    AudioPw *pw = data;
-     assert(id == PW_ID_CORE);
-     pw->last_seq = seq;
-     if (pw->pending_seq == seq) {
-@@ -752,17 +739,20 @@ static const struct pw_core_events core_events = {
-     .error = on_core_error,
- };
- 
--static void *
--qpw_audio_init(Audiodev *dev, Error **errp)
+-static void *alsa_audio_init(Audiodev *dev, Error **errp)
 +static bool
-+audio_pw_realize(AudioBackend *abe, Audiodev *dev, Error **errp)
++audio_alsa_realize(AudioBackend *abe, Audiodev *dev, Error **errp)
  {
--    g_autofree pwaudio *pw = g_new0(pwaudio, 1);
-+    AudioPw *pw = AUDIO_PW(abe);
- 
-     assert(dev->driver == AUDIODEV_DRIVER_PIPEWIRE);
-     trace_pw_audio_init();
- 
-+    if (!audio_pw_parent_class->realize(abe, dev, errp)) {
-+        return false;
-+    }
-+
-     pw_init(NULL, NULL);
- 
--    pw->dev = dev;
-     pw->thread_loop = pw_thread_loop_new("PipeWire thread loop", NULL);
-     if (pw->thread_loop == NULL) {
-         error_setg_errno(errp, errno, "Could not create PipeWire loop");
-@@ -801,8 +791,7 @@ qpw_audio_init(Audiodev *dev, Error **errp)
+     AudiodevAlsaOptions *aopts;
+     assert(dev->driver == AUDIODEV_DRIVER_ALSA);
+@@ -929,11 +921,7 @@ static void *alsa_audio_init(Audiodev *dev, Error **errp)
+         dev->u.alsa.in->buffer_length = 92880;
      }
  
-     pw_thread_loop_unlock(pw->thread_loop);
+-    return dev;
+-}
 -
--    return g_steal_pointer(&pw);
-+    return true;
- 
- fail:
-     if (pw->thread_loop) {
-@@ -810,13 +799,13 @@ fail:
-     }
-     g_clear_pointer(&pw->context, pw_context_destroy);
-     g_clear_pointer(&pw->thread_loop, pw_thread_loop_destroy);
--    return NULL;
-+    return false;
+-static void alsa_audio_fini (void *opaque)
+-{
++    return audio_alsa_parent_class->realize(abe, dev, errp);
  }
  
- static void
--qpw_audio_fini(void *opaque)
-+audio_pw_finalize(Object *obj)
- {
--    pwaudio *pw = opaque;
-+    AudioPw *pw = AUDIO_PW(obj);
+ static struct audio_pcm_ops alsa_pcm_ops = {
+@@ -953,8 +941,6 @@ static struct audio_pcm_ops alsa_pcm_ops = {
  
-     if (pw->thread_loop) {
-         pw_thread_loop_stop(pw->thread_loop);
-@@ -831,9 +820,7 @@ qpw_audio_fini(void *opaque)
-     if (pw->context) {
-         pw_context_destroy(pw->context);
-     }
--    pw_thread_loop_destroy(pw->thread_loop);
--
--    g_free(pw);
-+    g_clear_pointer(&pw->thread_loop, pw_thread_loop_destroy);
- }
- 
- static struct audio_pcm_ops qpw_pcm_ops = {
-@@ -855,8 +842,6 @@ static struct audio_pcm_ops qpw_pcm_ops = {
- 
- static struct audio_driver pw_audio_driver = {
-     .name = "pipewire",
--    .init = qpw_audio_init,
--    .fini = qpw_audio_fini,
-     .pcm_ops = &qpw_pcm_ops,
+ static struct audio_driver alsa_audio_driver = {
+     .name           = "alsa",
+-    .init           = alsa_audio_init,
+-    .fini           = alsa_audio_fini,
+     .pcm_ops        = &alsa_pcm_ops,
      .max_voices_out = INT_MAX,
-     .max_voices_in = INT_MAX,
-@@ -864,12 +849,24 @@ static struct audio_driver pw_audio_driver = {
-     .voice_size_in = sizeof(PWVoiceIn),
+     .max_voices_in  = INT_MAX,
+@@ -962,6 +948,17 @@ static struct audio_driver alsa_audio_driver = {
+     .voice_size_in  = sizeof (ALSAVoiceIn)
  };
  
-+static void audio_pw_class_init(ObjectClass *klass, const void *data)
++static void audio_alsa_class_init(ObjectClass *klass, const void *data)
 +{
 +    AudioBackendClass *b = AUDIO_BACKEND_CLASS(klass);
 +    AudioMixengBackendClass *k = AUDIO_MIXENG_BACKEND_CLASS(klass);
 +
-+    audio_pw_parent_class = AUDIO_BACKEND_CLASS(object_class_get_parent(klass));
++    audio_alsa_parent_class = AUDIO_BACKEND_CLASS(object_class_get_parent(klass));
 +
-+    b->realize = audio_pw_realize;
-+    k->driver = &pw_audio_driver;
++    b->realize = audio_alsa_realize;
++    k->driver = &alsa_audio_driver;
 +}
 +
  static const TypeInfo audio_types[] = {
      {
-         .name = TYPE_AUDIO_PW,
-         .parent = TYPE_AUDIO_MIXENG_BACKEND,
-         .instance_size = sizeof(AudioPw),
-         .class_init = audio_pw_class_init,
-+        .instance_finalize = audio_pw_finalize,
-     },
- };
- 
+         .name = TYPE_AUDIO_ALSA,
 -- 
 2.53.0
 
