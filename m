@@ -4,210 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BEF4EA4FB1
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 11:23:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2464EA4FAE
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 11:24:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuU27-00065u-5x; Mon, 23 Feb 2026 06:23:23 -0500
+	id 1vuU34-0006ch-Nn; Mon, 23 Feb 2026 06:24:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <flosch@nutanix.com>)
- id 1vuU24-00065H-Vs
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 06:23:21 -0500
-Received: from mx0a-002c1b01.pphosted.com ([148.163.151.68])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <flosch@nutanix.com>)
- id 1vuU23-0000LQ-4r
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 06:23:20 -0500
-Received: from pps.filterd (m0127837.ppops.net [127.0.0.1])
- by mx0a-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 61N5ecrO314591; Mon, 23 Feb 2026 03:23:14 -0800
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=
- proofpoint20171006; bh=u0jfK455GbR4vbg/PKeVatYV4ebsh/G6S0s8UWK/z
- BI=; b=mnQ6aKu6gSAKQZ3OX1+dslBO1FoQ2KImaOgvav+OYFvVIX5K2FF7VKNWb
- AVgUn32SLOa6Lu3iZXiXmD3v3BgvleyYOS3SKSVJlW3ePsbRt8ScTFNH8RcCLBl0
- BZYZxcpXiSvtk04RtcKXYuNXmdyK7gBtp5zclRlo4GkYEEzsOZ7K6K33JJWIvj3M
- OiDWPSynLz3FRZy2wRwiFUVVhZz8FI6JqTjViK9fr7Tr2X4GZSHneOoaJs0fu9BM
- mO2WkjIG3xXPbevbMKjvZj3/7xqhsczI4j2al89eU/WWab94nnUJKpYn/F4vH6aH
- aSf7MOSH/k8zvpwRDNowt/knPdrhQ==
-Received: from co1pr03cu002.outbound.protection.outlook.com
- (mail-westus2azon11020135.outbound.protection.outlook.com [52.101.46.135])
- by mx0a-002c1b01.pphosted.com (PPS) with ESMTPS id 4cf9g7kgfy-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Mon, 23 Feb 2026 03:23:14 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=CuW3nJDkJJEIvwCGAPmAqUvJbHacKrzK4aDxWOzuOjG4nYrYJ6nWyRMKtlRFvEQIuQOyfUdv6QNWphYDWeCodQJY3re+KVZPHxBzg0s3BHNi0TSim/bfcqNZ/gz1g2mPhTdSmc+oR7I6EbMWXUlgfaFFYIQTBY+tkS4x5lO/14Go8j7kPCD4VEDlbJwUdmkI442rAPvc7iekr+TeZtAZTLiNpIUhbzocRhYsaCsQJhsv/dFiv7TCKvTxbYTBiA9zoMtnnWk/zir/fsWpi6A++RqZwT1jzqXCbg2X522HM7r1dnf79SBeiS7QNJV0yazdNuiLbCCYNfVJ3yyvFe/BKg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=u0jfK455GbR4vbg/PKeVatYV4ebsh/G6S0s8UWK/zBI=;
- b=aVvpH1mRWHGIfwK9Lc2aAqP5Qu3QhLMkhv0Kf9WrytVOLAg0QJI5Xi/QUdP12TN4uFzkLDEXG7epz8Lzb4tbWSUxRoeLEwh+NvXTJehbAPsaIQNgpBokGGtawKVbufL76S4bXv2gk29WJzw7jKr1liunlJKd8pfRsw8f62bniXC4wuHeBAVrBqlI76XTqwKqUu5TkTT4QJiT646k7d0C4YmtwEFb+aNURtvEJMtDDBgzi5vw5FD/JoLbq+L4xTvwUMqpn9dlgzciPIKEeP2cfO7Ec+tYJtvNnPGRLxO+7nOMvxE3tMXDd9quvNjI8AxvRcASOIA4XpXUc3+WimNJWw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
- dkim=pass header.d=nutanix.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=u0jfK455GbR4vbg/PKeVatYV4ebsh/G6S0s8UWK/zBI=;
- b=RvX9TzYjEoevZHeXjIWIkZOKnCmzkV6k37siHq9RsOp5N78nuavn8WbZUUCDirMhPSGPTRkoK8SkOppax/Mae3eP4ZQc/7sroVdi3ZIlbQni5VARz3oqkBSpV8z9QH8V3SLOhYoLRQ236vxQHQ/OBeLOrC+fIDxrjMdirTZE/jTHwrQKPDA4PJlPP9TAwTBsl3VL46vsku28tgvnCChsRwKl11FUp8CQDTgUS/mZmHV0QCgXAPoFnAk2jRS8fgfgZxsxMkUfO3qgBl+sEcy1tkbmxqjl/FitJ/LHD8fsBl1S5h0FBN3S26s7BzENXJjenSedlcuGccZfNVcCcjFsJQ==
-Received: from PH7PR02MB9992.namprd02.prod.outlook.com (2603:10b6:510:2f5::16)
- by IA3PR02MB10602.namprd02.prod.outlook.com (2603:10b6:208:50c::16)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9632.21; Mon, 23 Feb
- 2026 11:23:12 +0000
-Received: from PH7PR02MB9992.namprd02.prod.outlook.com
- ([fe80::e2e9:fa4e:10d7:f7c1]) by PH7PR02MB9992.namprd02.prod.outlook.com
- ([fe80::e2e9:fa4e:10d7:f7c1%6]) with mapi id 15.20.9632.017; Mon, 23 Feb 2026
- 11:23:11 +0000
-Message-ID: <c095b2f9-fc5a-4a47-a78f-1359a7b27c33@nutanix.com>
-Date: Mon, 23 Feb 2026 11:23:04 +0000
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 0/2] Support for Hyper-V's
- HvExtCallGetBootZeroedMemory()
-Content-Language: en-GB
-From: Florian Schmidt <flosch@nutanix.com>
-To: Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
- Marcelo Tosatti <mtosatti@redhat.com>
-Cc: qemu-devel@nongnu.org
-References: <20260112113139.3762156-1-flosch@nutanix.com>
- <d4131a65-48a3-4da4-bd8d-c3a5991a2dae@nutanix.com>
-In-Reply-To: <d4131a65-48a3-4da4-bd8d-c3a5991a2dae@nutanix.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: AS4P195CA0033.EURP195.PROD.OUTLOOK.COM
- (2603:10a6:20b:65a::20) To PH7PR02MB9992.namprd02.prod.outlook.com
- (2603:10b6:510:2f5::16)
+ (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
+ id 1vuU31-0006cQ-5e
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 06:24:19 -0500
+Received: from mail-dy1-x1341.google.com ([2607:f8b0:4864:20::1341])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
+ id 1vuU2x-0000Od-Dk
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 06:24:18 -0500
+Received: by mail-dy1-x1341.google.com with SMTP id
+ 5a478bee46e88-2ba9d13f10eso6691443eec.0
+ for <qemu-devel@nongnu.org>; Mon, 23 Feb 2026 03:24:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1771845854; x=1772450654; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=NoyDrkWrjFAgYPx1W0Hxl4HBIQnq1Ru8TpIZSja3fmk=;
+ b=Q1N+WxysNyEz/89xXtJQ6Ex/ZXo4X8GAkhHKyYRgbDrgG7gYskpZ1qau0VcruSQt4o
+ lVyriFglXGmeqBvmLbJMubkmYdvt3KQrU/D1qnJV587bjxVENYGFnDgh1VRvLH+BLDQ+
+ h6JJhdMFmWdp8oslbGlEHwUqFD8YPqSNjZrk6DxrqFJj9O+JDZxY6pIeJz3JlcGruz3j
+ 4EeFfPZ9CqyRn3XhWuzAhgr1SM1skdMyyQCWgtEm1udt/Y94OvKS01e1PsUm6bbnuQl3
+ 0Uo4cLIQj9/tzUjY9EAVI9VpTRT3M7ak8JdFTYigcFuPj2MBnUG0bWJQdlstBB6Rh0W8
+ auCg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1771845854; x=1772450654;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=NoyDrkWrjFAgYPx1W0Hxl4HBIQnq1Ru8TpIZSja3fmk=;
+ b=n7GoRWIhiKWrWuUnQKCjeUObnFJtmZ83gAyODP+nOxX6uhppMiNMKX3E5Io/8mbPR8
+ a2IFNHkrmKc38reBKe/iY0e6NuYzCqrN7l4rQ449Af6IyOoe8oTidHnxEd5hPS/omkh0
+ 8wAiAwYPM8mLvynRY1F5tZelG/y0Io/bv4z5i+dmF9YMP8DoCzklkeiHVgKZfE24k/mA
+ T8EUrh2B5Gt+I4FdPycwQzlKwVawrD/zCRCFqOjjLecH6apiUFKrLdXjdmOMjtTMd/gu
+ dLQW6bbSbXSoPK49AJhs0WCI6ZoNeHgYJZsm5jTCBURB9owJ17RWAKGYn6TKpDvQuArv
+ AVsw==
+X-Gm-Message-State: AOJu0YxAp5f5yHTMmGs80ebWpS6PzWz7LvykvcaJDQRLddFvMQm+OCHE
+ 6qMNCRDBR8Mcaa+MzdfMtg4sgZHt3RP8J0E2vKkHvyBLP4qSV1IFM6R0
+X-Gm-Gg: ATEYQzzYydMHklpbsqIbFVJQiA/k39dwnjwZA/5WvBAJifU1/OEujKNQTR4fegBnL5E
+ 5aicV3d8P6ERzgTgct9a3m4LT7S2YTkhka/U0/Pb97HBQ5w6l9i7f7PxQJirqn0MIwmvoEfDLOo
+ eDYg9dcpWzarR4+wuoQs5oX0RLj1LLBrqnddob4PNd/q9Z2pKMZuUDaawTBrbglZYvyfhOwVz89
+ g2zef9+/4seCOTZdUacEJZOOJ/hK/jJKzcndmA5MK0iEveXOtFej7pSbUhWVavvYykFQ4tA9niL
+ +RlQDbTYMVM3YlAdZvErvznDSjHL+vNm3/LYLUZVf7jFEIfoM7fqt4j/TjMy022YTduKJiYddT0
+ FU32YozOb+6CYY6uySEtxxqXFxueTfD2zP9RbVGT9GeNRNaxiNLwylstsz3gH642VgHnRW7DSzP
+ hhscsKOBroJ/qN9kzbaDkz0pc1vw6icrwnkJXQb4HTW1yjg89qIyfXeEHz8lssWEwRChkjY+93u
+ uMvk2lY30rZzFzacfsaEwtf3tavIXg=
+X-Received: by 2002:a05:7301:5f08:b0:2ba:94c1:6c8c with SMTP id
+ 5a478bee46e88-2bd7bd74a05mr4240406eec.39.1771845853639; 
+ Mon, 23 Feb 2026 03:24:13 -0800 (PST)
+Received: from ZEVORN-PC.localdomain ([38.95.120.198])
+ by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-2bd7dc16203sm4600083eec.27.2026.02.23.03.24.10
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 23 Feb 2026 03:24:13 -0800 (PST)
+Date: Mon, 23 Feb 2026 19:23:23 +0800
+From: Chao Liu <chao.liu.zevorn@gmail.com>
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, max.chou@sifive.com
+Subject: Re: [PATCH v5 6/9] fpu: Add saturate parameter to parts_uncanon
+Message-ID: <aZw4m7gRHx61uxtR@ZEVORN-PC.localdomain>
+References: <20260223082154.5623-1-richard.henderson@linaro.org>
+ <20260223082154.5623-7-richard.henderson@linaro.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PH7PR02MB9992:EE_|IA3PR02MB10602:EE_
-X-MS-Office365-Filtering-Correlation-Id: 3d5599eb-10ce-4c58-a761-08de72cded52
-x-proofpoint-crosstenant: true
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|1800799024|366016;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?cGtxUVBkZFlYbGFMS3hBVlpaaURQRkpBYlp5WXN3SlZCVkxoWVcxVnIwc1ox?=
- =?utf-8?B?aFlPZG9OQkh4aWZSVzNVQ3pNa3J3SGVqUHR3YVdvajJTbkpnSWhzRnhtN2Fo?=
- =?utf-8?B?NmMwdm5ReHRPUnltN1dpTnUyK21iM0Q4UllaaFo1UHZjNWJMOVBYaXpVOWdj?=
- =?utf-8?B?aTRPbWRvMFRDMWkwbytmeWdqRXkzdkpWYTZIbi82QXdRTzZtYTd6VU1zdWlR?=
- =?utf-8?B?QmMvSG5qcGNxaTRsc1BKeVZpQ1RTdm8xUExBY3l1SDhzNGhoL1ZoUnJMNzhJ?=
- =?utf-8?B?M1RBQzFMK2FEMnhZZ1RvaUxra0FJUlYrTmltY1JteUIvcG8wYXV0TWtnekM4?=
- =?utf-8?B?UUwySGluVVpNNENzN0t5WXc3Q3E0UWFZR0dlRWh3US9PZTZ5M0Y1amh0Y2hy?=
- =?utf-8?B?KytiSExVS3dJMEVNNTU2dkxyOG5rUnVtQzJYMDRzTGRTL3R3VUdMMlJ0ZEMz?=
- =?utf-8?B?b0JjdGpyZmdQR1Y2MkQwV3Q5WjlzUEEzakttbUJ3Mys1R2ZyRlR4NzZaSGs0?=
- =?utf-8?B?a1RTeDBMdEM5VFFlNC9XZnZqOENxb3FQRHhhamttNmRCWGY3UGxPd3FoWlU5?=
- =?utf-8?B?NUxLUklWczhhOXgzcmM5RldmNG1ZQzJoczhDV0gycnkxQStlMVBobmE2WjVx?=
- =?utf-8?B?M0MxRjhxRng4L2lvcDdRY2ROT012V1pkSkF4V2VVTWh6ZUMraUJNZkRzYWtX?=
- =?utf-8?B?eTJOQ2krM1A0T0RkQTV1MWF2cDlPT2pvRHQ1eWgwVWVJYUFaUnlFVWZtbmE2?=
- =?utf-8?B?OHN6SU5aRmZEM2JMMEtPSTBkN2VXaEViQnhERXlia2VoZk9iVTVrRUwvTUw1?=
- =?utf-8?B?SEdGdkNRWjd3dTlsUCtBaFlNYkhFWGFEaVdHMmJOUXFjaUtDd25RZW92VnY4?=
- =?utf-8?B?cXlSb3FFODNWcW9ZVEdlNGpnM1RLTmw2M2N3VXZjRkVSUXUrUzFjdWl3dEU1?=
- =?utf-8?B?RWw4WC9NSGQ0TlQ0VEEySlNNb2hlMjFDRDFtbXF2eHZJQnAwRmNaU3lRS2My?=
- =?utf-8?B?OVdaRkVYcitZZnZTNU9KdWJyNjRZcy9TaStySDBFRmJoRU55SmcvdWdiQllv?=
- =?utf-8?B?dElIc1VkTlNNVURlRGZGSDZRdkIyNThKbDROMEZ0U284NG9Bci9lMlRoNlBI?=
- =?utf-8?B?OW5kckN1S0U2UG8vckIwVVJoazZzR2VZM0hHcHZTbzBuY3hlZEcxRi94djEr?=
- =?utf-8?B?b2hjWkhTMWZvY0R4d1RxYnVVNEhRV01SYk1IQVcxUXdRdDZ6akxJcmNkVjVk?=
- =?utf-8?B?YWdLeVhQQ0Mrc3REdVVnYUZOdG9ZNVNxSTMrNTdGaWhucURsR1p4Sm9BUUdF?=
- =?utf-8?B?SVR0ZU1oVDJndDdITHdCQlRlZWJKaUtxK01TMWphRU9YYkZiSzU0b2JCdnU0?=
- =?utf-8?B?WjZ1WVF4a2NyNEFkeGxDMWJCa3RQV0RNZFRqb2tDRUhzWm92M2t3SnZENUtO?=
- =?utf-8?B?NTl3TVh4OXoraUd5L1FUNW92Y1hNRTdjbVBQVzFCZHJPaHNyOU5PWGdKc2Rs?=
- =?utf-8?B?bXFJdU85cG1RNjJ1Z3VkRTdyRzQxeGVQNzJUSnlaaUluQ3Y1L1FNTzQ4QnZ1?=
- =?utf-8?B?V0sxaW92Z2tJZ1ZDdHQrQVYzcjhRaTl5R3J2SmxWWVJyVnpEWEs4RkVxNHR3?=
- =?utf-8?B?TjNQbWtycXVFUGt0UkFHRTJPZm9rRkFJdUJTUDJFZ25pK0hGSTZ1VEYzTHNZ?=
- =?utf-8?B?eFFJemhWR1ZGVHBTZWJWdG5iM2hEYllrVjZtMFU1ajIraWxReXZMbFJNbDli?=
- =?utf-8?B?MGhWZlhDYjZSQTNQUy9iTnpJMnRMUTRQQmJqWU5RUFhieVJjYXl5UkplamRW?=
- =?utf-8?B?THdqb2MxYjdROXprdkg1ZEhBZTlKUXdkRFVEUzdUVi9jTjVtRTFQM0FSM2NP?=
- =?utf-8?B?NHBVeGg4TmY1R0htaXV6MldvRXNaL2pWem9DTFdmeElORUhPNVdOTFJuUFRw?=
- =?utf-8?B?RjhzbmtFdFZQQkxWalFuWUxxVFZleEgwcHRzUkZPUEk2alJ5QnE3eUtjNnB0?=
- =?utf-8?B?SDlxcCttUTBKc2p4T3Y3cmlsS3c3NzU4Z3RQRHlqNkxKcFM1aEp4V2plbTgz?=
- =?utf-8?B?dEFGS3Z6cnAxMSt1OEs1dUJMTmducXFUVjRSWUg0NUFEeXZzbjZPTXFodGU1?=
- =?utf-8?Q?RHaI=3D?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:PH7PR02MB9992.namprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(1800799024)(366016); DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?eHNkeWtaNmo0WDViN2VoZmc5cFE1Y2FqRXZ0K21NcnQ1dm5IVWNuSTNSakRG?=
- =?utf-8?B?eHdPSndlbEV4S3Vxd210UHBNQVpzam5yNlFHRW80cGNLWWhoTUxQaHdFdVJI?=
- =?utf-8?B?a2xQV2FBeWl2RTY3NzlaUnJzV0YrWStJQU90Mkd1QTA2MlFOMVN2Zy9NQXh0?=
- =?utf-8?B?dTl6U216Q0dtbTdIUVp5TVNBWEJ1UWhBN2hJK1ZDMTdpTXJhZDdYZlZkUVhz?=
- =?utf-8?B?ZUJya2hjYUd3R0xmdXpHV0luUkJqNVpSaGtWVnAzeVlWTWV6SG0wTkw0NGNS?=
- =?utf-8?B?Q081WnpUbmpLcFhyYmwzMVhkQ2VxdUtVZUVWQlQvSDRXd0x4U3NIWHV5RDBl?=
- =?utf-8?B?N2RZTnlwZ0JrS3ZYdHdjUm1wZE12Q0VURlBtK0VQTU0waUhVSHluM1Vudmpj?=
- =?utf-8?B?UWxrWVozUUlUY2crNWg3R2w2cllQYmZtaXYxaFJXQXpJaWo4alBla1czWmRn?=
- =?utf-8?B?SlVmV2JUTDlNcWdpTWh6ZWZZeFVpUGlyNFpXOVdScHdLL21LckxDVDFJMldn?=
- =?utf-8?B?UklDMkE0aEYxd0w3Wk5yMnVWUW9qeHAyWUZHdGtjRm41VngrMjcwdE5pcCtV?=
- =?utf-8?B?UTBMdjZ1dzZ4bXlPeDhZZDB0Zkx4RE55aEJqcW9FRUlhWm1LZkwwaFN2Lzcv?=
- =?utf-8?B?MHlqbERrUk9lTjFEVmhJYmFpOTJwNEU5ZVhKYzZ4ekNDSjlKOXFlQWhGUlA5?=
- =?utf-8?B?TWxwa1ZCNGZ2YTNZSTg5Q3cxRFdpaHZkbkh1c2lyNTZjdGZPZUgwQ3A0TEky?=
- =?utf-8?B?THZmVXBJVG4vbVJ4YmVjaDMwdUJSWWhYQlRKODhTbi9Lcy9GTE1EQk9VTWEw?=
- =?utf-8?B?QVdaQ1FKWjRoaXhVRGtmWjRPVHQzTXNUcm5WY2liWVhWK2dLaEhZVVVJdndP?=
- =?utf-8?B?NjhVc0JhYnBtb0VQYUVjQ0k4SlJHY3hEMUs4ZDRaMXFJbmNVMUhMRlpKVEFC?=
- =?utf-8?B?Q2RwYXlJWS9kcGV3WE9McTlUMWx4VGpsaWJtb1QxTkVMYzNlMzJ0d1RibW16?=
- =?utf-8?B?VEovL3ZVRytpZTB3M3YvNVBjWTU3R28vNlUwa3Y0ek40blVoVUo0SkFUWjkv?=
- =?utf-8?B?aDhPNGFYYlEwODkvMWFxcDQvUk5NOUVMU0hoQ1pxQUtTR1AwZ0hSUkI1Y3RT?=
- =?utf-8?B?TXJrd09Pcksvb0cwWk9pdlZOZnNrUnRySHVuU0NFY21OYjVPc0V0aWUzYTMy?=
- =?utf-8?B?L2JkWlF5bmRHOEN2anFUWHY3ZlBRZzFIdjA5ZGk1NkxLYVFqbEVFZVlXU0Z4?=
- =?utf-8?B?RHN0UmpEU0FINXpsNEpPWktNaHdzVThoS2Zmd0EwaUlLZXhUeHBUY0hHOWRn?=
- =?utf-8?B?dUcvMVBDQzFpaUh1SjM1RzdBc3hZMGZnKzNxMTkwV3BCWWZSRVlXNnI2eTA1?=
- =?utf-8?B?YVRQSitWNmRyLzVIQWVtcjh3RStvUUUyTHBBQUxKbGgwTnFacHZQU29XSC92?=
- =?utf-8?B?UkcrV2tPNHlKVWsvei95TDlrcDFHM1JUV25HNFVCL0k2c0M3TU5HMkQ4QUhO?=
- =?utf-8?B?VGo0R0Z1alBjTE5CK2dmSHllYmZqeXdqN3EySjl3NHBBS3FPSmNpdFQzdXZL?=
- =?utf-8?B?OW5vc1ZtYlFRWmplOHA4QVE4U0pybmd0NmNsdkJ5S0xpRGYrcEJ5VWVvKzNU?=
- =?utf-8?B?TjJtUXprclREZTBDNEhGL21JVW9kQytENS96VTVicDZMZlBEdnczTzdRWkxx?=
- =?utf-8?B?Q2hoa045V1BOeGJHTTllQjBBcDVEZFptM3pneC9qUzFCRCtXanErQ0lySGdo?=
- =?utf-8?B?ZlV6RVJRTXlEaFZYZlFXVWdUbXNpMnNkZmJIcGd2MGtlT2U3dms3dzBVMk1G?=
- =?utf-8?B?MHF3c0d4d09VbWR5U0xHNUROL25PaUJoVldmMTNaVCtVbG1qQTlPY09RM0l2?=
- =?utf-8?B?UGVnMmZhRXlpeXczVnBvcnUvdk0zd00rVDk5a3VGKytGQlZvT1NzOFE3WDVU?=
- =?utf-8?B?M1doTkhxSTZxT2RoVTlYNGhQelZxbzRxY2dHZ2M2ZThwRThEK3kvNVhaNUpF?=
- =?utf-8?B?M3lCa3VUSllGSjUyRGVBU3BXRDltZ3FvdUJjZXJROThmR3M3MktEL0FURW9a?=
- =?utf-8?B?QW16a1FxSldRdytyaXRhQmpZUkpCMVl6WG5pWUg5Y1Rob3FNeXEwRTBqSktS?=
- =?utf-8?B?WEtqUEhBeGlSVGdLNmZ5dktDcGNIak5mY08rR0hNazNqblF6QkxsNVY3bktU?=
- =?utf-8?B?RkpJaHZrTDdEWU9PeXhvZ3c4TitHS2xxYVRaK05CKzkxdUw3bEYyK1lvQ3lV?=
- =?utf-8?B?Y3A1MFdvakNvQ3BOTFB3c3lxSTBiOGtPWUs0L1pGczJMQ1Z3cXZ1VEp3K3da?=
- =?utf-8?B?bzBuVGhwZWk2SkRSdkt5WmdMam1QeVgvNXY2UWZnL2o3S3ZXcHh0cU5ObURi?=
- =?utf-8?Q?zG+Ezl+HGMv3OSPE=3D?=
-X-OriginatorOrg: nutanix.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 3d5599eb-10ce-4c58-a761-08de72cded52
-X-MS-Exchange-CrossTenant-AuthSource: PH7PR02MB9992.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Feb 2026 11:23:11.1921 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: Xt4ZFAH5sGi71Rfz6iXSyFBhZUovaENIvm4P9l6RPWPIYg7WXqX97DqS0GnwquacUWuXSKSQ27WFWzKJLtnI2WOOzMBPxqLOmTwMtTCLAyc=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA3PR02MB10602
-X-Proofpoint-ORIG-GUID: jjtamgFBNd15a5LTkoe-ljNuuu1Ybhui
-X-Proofpoint-GUID: jjtamgFBNd15a5LTkoe-ljNuuu1Ybhui
-X-Authority-Analysis: v=2.4 cv=I4pohdgg c=1 sm=1 tr=0 ts=699c38a2 cx=c_pps
- a=5R5l3xa2V1v4tL9kvXelng==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
- a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
- a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10 a=HzLeVaNsDn8A:10 a=0kUYKlekyDsA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=VofLwUrZ8Iiv6rRUPXIb:22 a=Ap8k9tRZuQ82DLYWQqG7:22
- a=IdsrjC9UPjIfIsbShrEA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjIzMDA5NyBTYWx0ZWRfX09ivFQwUpHwa
- WU4bmkp6Lu6RA86yOF9Yt0K94y5bJ4gPsZD8k+Cnzq42ElqBi/GKfsFwegQcn1lPumy6Vebcmzh
- cPloszj3kLLKxK617OAwyhFB5DNIdPYnGgOXBEIOw3NktXg/bfWvycHdUxwNuIDx1v1HmPHexP5
- bUQhLRsaMLlc1Ihjrx37+UFWqvgt3zRb5d+7KjXksOaqFAF25+R+c/jfrjlCsxL0+IP7imaIC0a
- m3QNrRC59uq5WzldRCEl+kIddqNb/yzpqiTB3wdjgBO0eMO+fxM4DH3Ss/OSXEr0//JVv3dgFRC
- 02jf/EF7HLUSb/rC3iNOnE3NRES4WROhem1h2UHCXg8c4h4I1TEgEWdrSE+mu43HSCedYatDvoG
- MdI7NPW+A3jiIrAnqDQmccKmYXHaG2ZdNOVVjaC0/uNrCL2562wM7rR8buja2+IhgeS2jc8gnbm
- xq8dj+AG0tgtD2hoMRQ==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-02-23_02,2026-02-20_04,2025-10-01_01
-X-Proofpoint-Spam-Reason: safe
-Received-SPF: pass client-ip=148.163.151.68; envelope-from=flosch@nutanix.com;
- helo=mx0a-002c1b01.pphosted.com
-X-Spam_score_int: -11
-X-Spam_score: -1.2
-X-Spam_bar: -
-X-Spam_report: (-1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.798,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.79, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260223082154.5623-7-richard.henderson@linaro.org>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1341;
+ envelope-from=chao.liu.zevorn@gmail.com; helo=mail-dy1-x1341.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -223,24 +100,248 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026-02-02 14:26, Florian Schmidt wrote:
-> On 2026-01-12 11:31, Florian Schmidt wrote:
->> This patch series implements two new Hyper-V hypercalls. 
+On Mon, Feb 23, 2026 at 07:21:51PM +1100, Richard Henderson wrote:
+> From: Max Chou <max.chou@sifive.com>
 > 
-> Friendly ping on this. Any concerns, any suggestions about open 
-> questions such as these below?
+> The OCP FP8 conversion operations have a parameter to control
+> saturate vs overflow.  Add a parameter, currently always false.
 > 
->> Note that this is still an RFC series. There are a number of open 
->> questions,
->> most importantly, which memory areas to send back to the guest as
->> pre-zeroed.
+> Signed-off-by: Max Chou <max.chou@sifive.com>
+> [rth: Split out of a larger patch]
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>  fpu/softfloat.c           | 46 +++++++++++++++++++--------------------
+>  fpu/softfloat-parts.c.inc | 15 ++++++++-----
+>  2 files changed, 32 insertions(+), 29 deletions(-)
 > 
->> I also wonder whether HvExtCallQueryCapabilities() should have a prop 
->> bit,
+> diff --git a/fpu/softfloat.c b/fpu/softfloat.c
+> index 9d06a1bb59..b3c4104854 100644
+> --- a/fpu/softfloat.c
+> +++ b/fpu/softfloat.c
+> @@ -771,20 +771,20 @@ static void parts128_canonicalize(FloatParts128 *p, float_status *status,
+>      PARTS_GENERIC_64_128(canonicalize, A)(A, S, F)
+>  
+>  static void parts64_uncanon_normal(FloatParts64 *p, float_status *status,
+> -                                   const FloatFmt *fmt);
+> +                                   const FloatFmt *fmt, bool saturate);
+>  static void parts128_uncanon_normal(FloatParts128 *p, float_status *status,
+> -                                    const FloatFmt *fmt);
+> +                                    const FloatFmt *fmt, bool saturate);
+>  
+> -#define parts_uncanon_normal(A, S, F) \
+> -    PARTS_GENERIC_64_128(uncanon_normal, A)(A, S, F)
+> +#define parts_uncanon_normal(A, S, F, X) \
+> +    PARTS_GENERIC_64_128(uncanon_normal, A)(A, S, F, X)
+>  
+>  static void parts64_uncanon(FloatParts64 *p, float_status *status,
+> -                            const FloatFmt *fmt);
+> +                            const FloatFmt *fmt, bool saturate);
+>  static void parts128_uncanon(FloatParts128 *p, float_status *status,
+> -                             const FloatFmt *fmt);
+> +                             const FloatFmt *fmt, bool saturate);
+>  
+> -#define parts_uncanon(A, S, F) \
+> -    PARTS_GENERIC_64_128(uncanon, A)(A, S, F)
+> +#define parts_uncanon(A, S, F, X) \
+> +    PARTS_GENERIC_64_128(uncanon, A)(A, S, F, X)
+>  
+>  static void parts64_add_normal(FloatParts64 *a, FloatParts64 *b);
+>  static void parts128_add_normal(FloatParts128 *a, FloatParts128 *b);
+> @@ -1699,7 +1699,7 @@ static float16 float16a_round_pack_canonical(FloatParts64 *p,
+>                                               float_status *s,
+>                                               const FloatFmt *params)
+>  {
+> -    parts_uncanon(p, s, params);
+> +    parts_uncanon(p, s, params, false);
+>      return float16_pack_raw(p);
+>  }
+>  
+> @@ -1712,7 +1712,7 @@ static float16 float16_round_pack_canonical(FloatParts64 *p,
+>  static bfloat16 bfloat16_round_pack_canonical(FloatParts64 *p,
+>                                                float_status *s)
+>  {
+> -    parts_uncanon(p, s, &bfloat16_params);
+> +    parts_uncanon(p, s, &bfloat16_params, false);
+>      return bfloat16_pack_raw(p);
+>  }
+>  
+> @@ -1726,7 +1726,7 @@ static void float32_unpack_canonical(FloatParts64 *p, float32 f,
+>  static float32 float32_round_pack_canonical(FloatParts64 *p,
+>                                              float_status *s)
+>  {
+> -    parts_uncanon(p, s, &float32_params);
+> +    parts_uncanon(p, s, &float32_params, false);
+>      return float32_pack_raw(p);
+>  }
+>  
+> @@ -1740,7 +1740,7 @@ static void float64_unpack_canonical(FloatParts64 *p, float64 f,
+>  static float64 float64_round_pack_canonical(FloatParts64 *p,
+>                                              float_status *s)
+>  {
+> -    parts_uncanon(p, s, &float64_params);
+> +    parts_uncanon(p, s, &float64_params, false);
+>      return float64_pack_raw(p);
+>  }
+>  
+> @@ -1789,7 +1789,7 @@ static float64 float64r32_pack_raw(FloatParts64 *p)
+>  static float64 float64r32_round_pack_canonical(FloatParts64 *p,
+>                                                 float_status *s)
+>  {
+> -    parts_uncanon(p, s, &float32_params);
+> +    parts_uncanon(p, s, &float32_params, false);
+>      return float64r32_pack_raw(p);
+>  }
+>  
+> @@ -1803,7 +1803,7 @@ static void float128_unpack_canonical(FloatParts128 *p, float128 f,
+>  static float128 float128_round_pack_canonical(FloatParts128 *p,
+>                                                float_status *s)
+>  {
+> -    parts_uncanon(p, s, &float128_params);
+> +    parts_uncanon(p, s, &float128_params, false);
+>      return float128_pack_raw(p);
+>  }
+>  
+> @@ -1851,7 +1851,7 @@ static floatx80 floatx80_round_pack_canonical(FloatParts128 *p,
+>      case float_class_normal:
+>      case float_class_denormal:
+>          if (s->floatx80_rounding_precision == floatx80_precision_x) {
+> -            parts_uncanon_normal(p, s, fmt);
+> +            parts_uncanon_normal(p, s, fmt, false);
+>              frac = p->frac_hi;
+>              exp = p->exp;
+>          } else {
+> @@ -1860,7 +1860,7 @@ static floatx80 floatx80_round_pack_canonical(FloatParts128 *p,
+>              p64.sign = p->sign;
+>              p64.exp = p->exp;
+>              frac_truncjam(&p64, p);
+> -            parts_uncanon_normal(&p64, s, fmt);
+> +            parts_uncanon_normal(&p64, s, fmt, false);
+>              frac = p64.frac;
+>              exp = p64.exp;
+>          }
+> @@ -2258,7 +2258,7 @@ float16_muladd_scalbn(float16 a, float16 b, float16 c,
+>      pr = parts_muladd_scalbn(&pa, &pb, &pc, scale, flags, status);
+>  
+>      /* Round before applying negate result. */
+> -    parts_uncanon(pr, status, &float16_params);
+> +    parts_uncanon(pr, status, &float16_params, false);
+>      if ((flags & float_muladd_negate_result) && !is_nan(pr->cls)) {
+>          pr->sign ^= 1;
+>      }
+> @@ -2283,7 +2283,7 @@ float32_muladd_scalbn(float32 a, float32 b, float32 c,
+>      pr = parts_muladd_scalbn(&pa, &pb, &pc, scale, flags, status);
+>  
+>      /* Round before applying negate result. */
+> -    parts_uncanon(pr, status, &float32_params);
+> +    parts_uncanon(pr, status, &float32_params, false);
+>      if ((flags & float_muladd_negate_result) && !is_nan(pr->cls)) {
+>          pr->sign ^= 1;
+>      }
+> @@ -2302,7 +2302,7 @@ float64_muladd_scalbn(float64 a, float64 b, float64 c,
+>      pr = parts_muladd_scalbn(&pa, &pb, &pc, scale, flags, status);
+>  
+>      /* Round before applying negate result. */
+> -    parts_uncanon(pr, status, &float64_params);
+> +    parts_uncanon(pr, status, &float64_params, false);
+>      if ((flags & float_muladd_negate_result) && !is_nan(pr->cls)) {
+>          pr->sign ^= 1;
+>      }
+> @@ -2461,7 +2461,7 @@ float64 float64r32_muladd(float64 a, float64 b, float64 c,
+>      pr = parts_muladd_scalbn(&pa, &pb, &pc, 0, flags, status);
+>  
+>      /* Round before applying negate result. */
+> -    parts_uncanon(pr, status, &float32_params);
+> +    parts_uncanon(pr, status, &float32_params, false);
+>      if ((flags & float_muladd_negate_result) && !is_nan(pr->cls)) {
+>          pr->sign ^= 1;
+>      }
+> @@ -2479,7 +2479,7 @@ bfloat16 QEMU_FLATTEN bfloat16_muladd(bfloat16 a, bfloat16 b, bfloat16 c,
+>      pr = parts_muladd_scalbn(&pa, &pb, &pc, 0, flags, status);
+>  
+>      /* Round before applying negate result. */
+> -    parts_uncanon(pr, status, &bfloat16_params);
+> +    parts_uncanon(pr, status, &bfloat16_params, false);
+>      if ((flags & float_muladd_negate_result) && !is_nan(pr->cls)) {
+>          pr->sign ^= 1;
+>      }
+> @@ -2497,7 +2497,7 @@ float128 QEMU_FLATTEN float128_muladd(float128 a, float128 b, float128 c,
+>      pr = parts_muladd_scalbn(&pa, &pb, &pc, 0, flags, status);
+>  
+>      /* Round before applying negate result. */
+> -    parts_uncanon(pr, status, &float128_params);
+> +    parts_uncanon(pr, status, &float128_params, false);
+>      if ((flags & float_muladd_negate_result) && !is_nan(pr->cls)) {
+>          pr->sign ^= 1;
+>      }
+> @@ -5435,7 +5435,7 @@ static void parts_s390_divide_to_integer(FloatParts64 *a, FloatParts64 *b,
+>          /* Round remainder to the target format */
+>          *r = *r_precise;
+>          status->float_exception_flags = 0;
+> -        parts_uncanon(r, status, fmt);
+> +        parts_uncanon(r, status, fmt, false);
+>          r_flags = status->float_exception_flags;
+>          r->frac &= (1ULL << fmt->frac_size) - 1;
+>          parts_canonicalize(r, status, fmt);
+> diff --git a/fpu/softfloat-parts.c.inc b/fpu/softfloat-parts.c.inc
+> index 4909ff7418..09be686645 100644
+> --- a/fpu/softfloat-parts.c.inc
+> +++ b/fpu/softfloat-parts.c.inc
+> @@ -258,9 +258,12 @@ static void partsN(canonicalize)(FloatPartsN *p, float_status *status,
+>   * are FRAC_SHIFT bits that may require rounding at the bottom of the
+>   * fraction; these bits will be removed. The exponent will be biased
+>   * by EXP_BIAS and must be bounded by [EXP_MAX-1, 0].
+> + *
+> + * The saturate parameter controls saturation behavior for formats that
+> + * support it -- when true, overflow produces max normal instead of infinity.
+>   */
+>  static void partsN(uncanon_normal)(FloatPartsN *p, float_status *s,
+> -                                   const FloatFmt *fmt)
+> +                                   const FloatFmt *fmt, bool saturate)
+>  {
+>      const int exp_max = fmt->exp_max;
+>      const int frac_shift = fmt->frac_shift;
+> @@ -269,7 +272,7 @@ static void partsN(uncanon_normal)(FloatPartsN *p, float_status *s,
+>      const uint64_t frac_lsbm1 = round_mask ^ (round_mask >> 1);
+>      const uint64_t roundeven_mask = round_mask | frac_lsb;
+>      uint64_t inc;
+> -    bool overflow_norm = false;
+> +    bool overflow_norm = saturate;
+>      int exp, flags = 0;
+>  
+>      switch (s->float_rounding_mode) {
+> @@ -294,11 +297,11 @@ static void partsN(uncanon_normal)(FloatPartsN *p, float_status *s,
+>          break;
+>      case float_round_up:
+>          inc = p->sign ? 0 : round_mask;
+> -        overflow_norm = p->sign;
+> +        overflow_norm |= p->sign;
+>          break;
+>      case float_round_down:
+>          inc = p->sign ? round_mask : 0;
+> -        overflow_norm = !p->sign;
+> +        overflow_norm |= !p->sign;
+>          break;
+>      case float_round_to_odd:
+>          overflow_norm = true;
+> @@ -445,10 +448,10 @@ static void partsN(uncanon_normal)(FloatPartsN *p, float_status *s,
+>  }
+>  
+>  static void partsN(uncanon)(FloatPartsN *p, float_status *s,
+> -                            const FloatFmt *fmt)
+> +                            const FloatFmt *fmt, bool saturate)
+>  {
+>      if (likely(is_anynorm(p->cls))) {
+> -        parts_uncanon_normal(p, s, fmt);
+> +        parts_uncanon_normal(p, s, fmt, saturate);
+>      } else {
+>          switch (p->cls) {
+>          case float_class_zero:
+> -- 
+> 2.43.0
+> 
 
-Another ping. Does anybody have cycles to give me some feedback on the 
-RFC items, so I can start working towards a proper v1 version?
+Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
 
-Cheers,
-Florian
+Thanks,
+Chao
 
