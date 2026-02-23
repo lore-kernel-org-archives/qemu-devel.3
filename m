@@ -4,62 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47AAEEA4FBF
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 13:49:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13FC1EA4FBB
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 13:49:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuWJK-0001yT-U8; Mon, 23 Feb 2026 08:49:19 -0500
+	id 1vuWJJ-0001oP-Fu; Mon, 23 Feb 2026 08:49:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vuWI2-0008QX-FL
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 08:47:59 -0500
+ id 1vuWIW-0000Sa-3c
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 08:48:29 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vuWI0-0006yP-91
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 08:47:57 -0500
+ id 1vuWIS-00072Q-5l
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 08:48:26 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771854474;
+ s=mimecast20190719; t=1771854503;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=eqJqOaFBhQo9nD7FEbMCGjK4JwbAAf6+iYJVKsykfmQ=;
- b=R69rK5/FG+z4soxOi1EzLVpl0SJ+gKMsWOEdUUElTVK3w1grSNutzFE0Xk4pKH/oKrDlWf
- Dal5Xpfjrh2S7mXILQQTmGpuRc7RHCDGuwI4Q2Iq0eXoCkGdpPCpE4tp2BrxJJKErcncBO
- qFo5K8UtN+6lHsSBWk+kyM3VZQfIO2U=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=2klOYhoQ4fGAi4xB2sFPG+TEpv5+uqPlzGLBDNFYtXM=;
+ b=QowFK/35UtT3aiz62Rt7n0wuGcOuOyacdMtJRDOfHs8+5rYvR1icqFXPJ93akwXdKNkY14
+ KqZ870iVGqESRtEGf0lsfO8asd3uwEwKCh1wiWD1ww54OLAefYQuF1J/nNNOWaVZMh1OKT
+ aexcyNMH8F0TRM/EFSCwed1sSk7BJvg=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-524-RdlyhVTGMT-YGmVVsEuhjw-1; Mon,
- 23 Feb 2026 08:47:52 -0500
-X-MC-Unique: RdlyhVTGMT-YGmVVsEuhjw-1
-X-Mimecast-MFC-AGG-ID: RdlyhVTGMT-YGmVVsEuhjw_1771854471
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-550-CJmoz9aUMaaZvfrBMS7DNw-1; Mon,
+ 23 Feb 2026 08:48:20 -0500
+X-MC-Unique: CJmoz9aUMaaZvfrBMS7DNw-1
+X-Mimecast-MFC-AGG-ID: CJmoz9aUMaaZvfrBMS7DNw_1771854499
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 43A5E19560B2; Mon, 23 Feb 2026 13:47:51 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4CA5F180025E; Mon, 23 Feb 2026 13:48:19 +0000 (UTC)
 Received: from localhost (unknown [10.45.242.25])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id B68221800370; Mon, 23 Feb 2026 13:47:50 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 989A730001BE; Mon, 23 Feb 2026 13:48:18 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PULL v3 06/85] qemu-options.hx: document -audiodev dbus
-Date: Mon, 23 Feb 2026 14:46:07 +0100
-Message-ID: <20260223134731.2377432-7-marcandre.lureau@redhat.com>
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PULL v3 17/85] util: add some extra stubs for qemu modules
+ initialization
+Date: Mon, 23 Feb 2026 14:46:18 +0100
+Message-ID: <20260223134731.2377432-18-marcandre.lureau@redhat.com>
 In-Reply-To: <20260223134731.2377432-1-marcandre.lureau@redhat.com>
 References: <20260223134731.2377432-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -88,38 +90,45 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Document the backend introduced in commit 739362d420 ("audio: add dbus
-audio backend").
+Avoid extra ifdef-ery when optionally supporting modules, as done in
+audio-test (and vl.c).
 
-Reported-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
 Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- qemu-options.hx | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ system/vl.c   | 2 --
+ util/module.c | 3 +++
+ 2 files changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/qemu-options.hx b/qemu-options.hx
-index 15a6f82043a..4043e8ca22b 100644
---- a/qemu-options.hx
-+++ b/qemu-options.hx
-@@ -991,6 +991,16 @@ SRST
-     ``in|out.buffer-count=count``
-         Sets the count of the buffers.
+diff --git a/system/vl.c b/system/vl.c
+index aa9a1550417..3e341142a0c 100644
+--- a/system/vl.c
++++ b/system/vl.c
+@@ -2889,10 +2889,8 @@ void qemu_init(int argc, char **argv)
  
-+``-audiodev dbus,id=id[,prop[=value][,...]]``
-+    Creates a D-Bus backend. It must be associated with the display
-+    (as ``-display dbus,audiodev=id``). (Since 7.0)
+     os_setup_limits();
+ 
+-#ifdef CONFIG_MODULES
+     module_init_info(qemu_modinfo);
+     module_allow_arch(target_name());
+-#endif
+ 
+     qemu_init_subsystems();
+ 
+diff --git a/util/module.c b/util/module.c
+index 1aa2079d013..09dc43f51eb 100644
+--- a/util/module.c
++++ b/util/module.c
+@@ -396,6 +396,9 @@ void qemu_load_module_for_opts(const char *group)
+ 
+ #else
+ 
++const QemuModinfo qemu_modinfo[] = {};
 +
-+    D-Bus specific options are:
-+
-+    ``nsamples``
-+        Number of samples per read/write (default to 480, 10ms at 48kHz)
-+        (Since 10.0)
-+
- ``-audiodev dsound,id=id[,prop[=value][,...]]``
-     Creates a backend using Microsoft's DirectSound. This backend is
-     only available on Windows and only supports playback.
++void module_init_info(const QemuModinfo *info) {}
+ void module_allow_arch(const char *arch) {}
+ void qemu_load_module_for_opts(const char *group) {}
+ int module_load(const char *prefix, const char *name, Error **errp) { return 2; }
 -- 
 2.53.0
 
