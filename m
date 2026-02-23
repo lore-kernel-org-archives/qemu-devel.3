@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A1A6EA4FAE
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 11:19:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 814E6EA4FB0
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 11:22:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuTya-0004mY-AO; Mon, 23 Feb 2026 06:19:44 -0500
+	id 1vuU1L-0005Oq-Dh; Mon, 23 Feb 2026 06:22:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1vuTyZ-0004mM-CQ
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 06:19:43 -0500
-Received: from mail-dy1-x1344.google.com ([2607:f8b0:4864:20::1344])
+ id 1vuU1I-0005Oi-Uv
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 06:22:32 -0500
+Received: from mail-dy1-x1343.google.com ([2607:f8b0:4864:20::1343])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1vuTyX-0008Lx-Jk
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 06:19:43 -0500
-Received: by mail-dy1-x1344.google.com with SMTP id
- 5a478bee46e88-2bd8097c709so3326869eec.0
- for <qemu-devel@nongnu.org>; Mon, 23 Feb 2026 03:19:40 -0800 (PST)
+ id 1vuU1E-0000GJ-7U
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 06:22:31 -0500
+Received: by mail-dy1-x1343.google.com with SMTP id
+ 5a478bee46e88-2bd3b0bc201so2828067eec.1
+ for <qemu-devel@nongnu.org>; Mon, 23 Feb 2026 03:22:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1771845579; x=1772450379; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1771845746; x=1772450546; darn=nongnu.org;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=UWDYbFGbfMOHBnoz4H0gnyZfLSmLlay9dWzUDQeaCkM=;
- b=kQT5APFSp6FfBVYhsqKm0l9C5Lr4WGVmBj4aYVfahFwCIx/r9UvkjECq6lxFznpUx9
- P7vXs6xMunP1s039wkT8cir1eRK3vXDNT6YLJAsLWGNRgjPnZzwT1AIr/P/CgKtInVjr
- P4saBmwvXxZzqiezsN7eDdkfWny9jTwWPAHSc8uoIm7mjQbhoB3ZL7vcX4cJj0pQWM9k
- L9w78aZ7fD8MA59hQ7r/AD2WWR4ddnLGxBEOUrrNeKQKbsLZGQrYoYekyHqG8yF1ErZy
- RpSrCyw5EbZQShbGNneXnIPh0WfEIITvp1X/xV0LzapHgLQFb5ZvLNQZxdUogpeepI5P
- cPKQ==
+ bh=EQKmMH6RHymGiG1Qu4RQ6nX3lbg78gCpwVdoA5h3iCw=;
+ b=Bmf4i8H3OM+r2kVaGg6XyCKA9TCYlWQzJVzqv5+Ji+M+avAzh3ALuOUpFOuAFis1M5
+ UqPiSlS7Nqek5KK2ueCbCkbalmH9ymf12xqPMJC9pqcCWAnUBLM9hhMt6rqzUvzFR4lM
+ cJ0Y1I+Epnj8FkqpuOdbyUMGNoQMB6AuDpCQnEipE/5RgzyaYrpy12IAMGU1tp3zNkuy
+ 1WWXn687dyfjU4kFIqYQws5HjJSzw8SRYeaT5SARYXP1haXU+2o3exjuJMuSAfMhuJFd
+ mz80rXFuubOnyaHu0uMxbgvvym+DNhH/S6yPnijVk9kaaUIKGsBmf+VlZIQLRAC2q9+k
+ rbIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771845579; x=1772450379;
+ d=1e100.net; s=20230601; t=1771845746; x=1772450546;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=UWDYbFGbfMOHBnoz4H0gnyZfLSmLlay9dWzUDQeaCkM=;
- b=pvcxh6wokFcKvPjrsp0Z8tdxuYJuu2KlQEvE40nzRe6XvXCLXf+65akeTmqg7T+a/R
- /swvJGGJ98k7OxqpljP7v/3rJ3iiAhjG62gmqAr9noa59T/ENWGuNox4Idunbo2uh8yi
- F/L9sMbH+2CXuFd5e2k+S/YElgL2BWJlwb717Two4hsdKIWN1M5/pYhFt424OqxlXBCP
- 72oW1ICcMSvQosPV5e493shVR5fPADomDZ1HbsZ/UqUBZpY5KO1MPxZ4uxkbObGxImrK
- hQMn9B9fZdfMXFpyeKj1QRVklkynpdXQlLgEWa3Go5gPHPcSOxk6CfAhCGekQmk6Es5S
- nDxA==
-X-Gm-Message-State: AOJu0YyNVXA41mWAnvScwSfqnt4zLtawAILmBa+uDq6BDbMDIys50X/S
- /eC649MP5EE+Cue3pjlT9Kz5/p8T3Zeh6EhP3mT/CFt84E6uoN//UnAG
-X-Gm-Gg: ATEYQzxecTA6FfXMkZrKrliKEDFQ3XLgrD7ow7PFENBGTuezrauZvljgRk48ExabaAu
- r1bddKG9QHnY//o3EA4aofqqbdwjLbONhQsZpOSgpEX7FnN60M7/NbjXMFZm51Auysx1gVlQzoo
- Mi2jnLe0/gdb/LvlrzDbOg3Mri4KI+HYKttcXh1KKE3nIueDTC3+v1v2mbwN8vzrz6FExI2EUmA
- 63aDqd5XqHgmaadEO4OfGoJumQ7If1WS67yrw9Elk6g4Jh4+2HR0spGNnsVek/OIbioxknOESgW
- mPyhJ5JdcxVDhE8eQw6RXcV2HtPeB6wR4uY0GTrpA+1tKY6617tqE0+irAtdRxzQIynp3k3Y+Ly
- F/CY9flmJsKc7NZBVS6y1LsanIo7MXsmfhfU4mlHAYD5M06Fvbi8q6l9cVMJyqweWOW4cnaJ7y5
- Htv+awVTPVY5z8y+mkTYvIZlsUrfv+Eecfiq+AkSYXQ0pGkbDD+j9rw3WipksQgpqziQ542BfA9
- l7VpIIvYvgOVVviKubWj2ZTUSN/rdU=
-X-Received: by 2002:a05:7300:6144:b0:2ba:82f6:ccbd with SMTP id
- 5a478bee46e88-2bd7bdaebc5mr3519250eec.34.1771845579427; 
- Mon, 23 Feb 2026 03:19:39 -0800 (PST)
+ bh=EQKmMH6RHymGiG1Qu4RQ6nX3lbg78gCpwVdoA5h3iCw=;
+ b=A7t97DjOlXJDvOhORSsh0RJDpHXEgoq2aTF+OOJVjBMARH5KVSuhQezxEWy1PxzKKA
+ PDq3xGrv56MeHaOdE3CL0wQyw0F8G48mMkB4Z9uztrSWBNWjmF2uRKWi+KWQ3Ub5KQo6
+ NGS3ZHdvJyw/ErSzE3vS2nwn5eJiQ7cUt7QCWV3Zd85PrlyfKqxh8YIdW9gOGMj7axhi
+ Gjxs9gyJ2D1ALqNVAeRl72rQVuaNLlfFSsN7y6vEbfDZCayN+5Ta7ZrtHOr9O3L6iqWZ
+ s6IRW3OqpY/CsFalJhtI7JYicPKAsNkWXMkiwhdoWH5yhcGa62PcEJz3VOKGQQrxbLWw
+ iQdA==
+X-Gm-Message-State: AOJu0YzQ3G5kIrWeyK48rD8JTSEIX4Oqjo9ngbipHjP93eeCSG9F8L1P
+ 1/N9BabnjR6j6vcsYrb6QRVlDXmTNNhx/fVLoVTj2IOerzTV4Ss6Bj77CtMx/kuo
+X-Gm-Gg: ATEYQzyHibNluSbarcyrp+opCo6DFOcmvLknagLG907r6VriR9QS6rN4A4KXv4eejME
+ fjZMECV8ZKJ+tNfzUNVuQhCS7bMFBWXfDNmF/b9+BDVwVG4N8NyRFJUGL77f6B1UTIxSaYZmzb7
+ ayX6HzeSM9Bt4PPFHhEqjRZQzWICwG1BpsgCafATtOl604tQwoF850dZqoyfRQGp053S1FlQcN2
+ KTV4QdKe9FPEnA2VnbpYESPPi/fefhQs299W2PSBXIifj4V66xkNkNqKrpUnQGgrfmQxhKYPz65
+ 1u4Ptc+9G0x9e6S5LzNpSm9P8VYENTEaKi1lrsPc9L7Vwf9zi/TBqI19aOHO4a5xS+q9lI4pw7p
+ RR/ZJEwdEKr+DGytO5WMH/D08A0ChV9sBPz1e/N2JafpxL7OWq8DN/kGUVQZwO1+Gt04QhAfZJ4
+ QotQZfv5W00T+LN1jROSvjPw7bX6y9P1GLD0fqdq9bi/OdIJxHd9WEqFhNySIetoI7FdxUGbvyp
+ qOUpcXBCI3OHVXQbVEPPNsJPXWlw1k=
+X-Received: by 2002:a05:7300:8ca2:b0:2ba:9560:af0 with SMTP id
+ 5a478bee46e88-2bd7baed452mr3420646eec.14.1771845746024; 
+ Mon, 23 Feb 2026 03:22:26 -0800 (PST)
 Received: from ZEVORN-PC.localdomain ([38.95.120.198])
  by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-2bd7daa35f7sm4723788eec.8.2026.02.23.03.19.36
+ 5a478bee46e88-2bd7da45537sm4615082eec.7.2026.02.23.03.22.24
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 23 Feb 2026 03:19:38 -0800 (PST)
-Date: Mon, 23 Feb 2026 19:18:47 +0800
+ Mon, 23 Feb 2026 03:22:25 -0800 (PST)
+Date: Mon, 23 Feb 2026 19:21:37 +0800
 From: Chao Liu <chao.liu.zevorn@gmail.com>
 To: Richard Henderson <richard.henderson@linaro.org>
 Cc: qemu-devel@nongnu.org, max.chou@sifive.com
-Subject: Re: [PATCH v5 4/9] fpu: Introduce FloatFmtExpMaxKind
-Message-ID: <aZw2nu-G3d21yOsd@ZEVORN-PC.localdomain>
+Subject: Re: [PATCH v5 5/9] fpu: Add overflow_raises_invalid to FloatFmt
+Message-ID: <aZw4MaViI88M47i2@ZEVORN-PC.localdomain>
 References: <20260223082154.5623-1-richard.henderson@linaro.org>
- <20260223082154.5623-5-richard.henderson@linaro.org>
+ <20260223082154.5623-6-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260223082154.5623-5-richard.henderson@linaro.org>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1344;
- envelope-from=chao.liu.zevorn@gmail.com; helo=mail-dy1-x1344.google.com
+In-Reply-To: <20260223082154.5623-6-richard.henderson@linaro.org>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1343;
+ envelope-from=chao.liu.zevorn@gmail.com; helo=mail-dy1-x1343.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,190 +100,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Feb 23, 2026 at 07:21:49PM +1100, Richard Henderson wrote:
-> Generalize arm_althp to indicate how exp==max should
-> be handled for the format.  Reorganize canonicalize
-> and uncanon_normal to use a switch statement, allowing
-> more cases to be added trivially.
+On Mon, Feb 23, 2026 at 07:21:50PM +1100, Richard Henderson wrote:
+> From: Max Chou <max.chou@sifive.com>
 > 
+> ARM Alt HP raises different exceptions on overflow than is
+> standard for IEEE when saturating a value.  Add a flag to
+> control this effect.
+> 
+> Signed-off-by: Max Chou <max.chou@sifive.com>
+> [rth: Split out of a larger patch]
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->  fpu/softfloat.c           | 17 ++++++--
->  fpu/softfloat-parts.c.inc | 92 ++++++++++++++++++++++++---------------
->  2 files changed, 69 insertions(+), 40 deletions(-)
+>  fpu/softfloat.c           | 6 +++++-
+>  fpu/softfloat-parts.c.inc | 4 +++-
+>  2 files changed, 8 insertions(+), 2 deletions(-)
 > 
 > diff --git a/fpu/softfloat.c b/fpu/softfloat.c
-> index 8740975348..8d8e576757 100644
+> index 8d8e576757..9d06a1bb59 100644
 > --- a/fpu/softfloat.c
 > +++ b/fpu/softfloat.c
-> @@ -522,7 +522,16 @@ typedef struct {
->  #define DECOMPOSED_BINARY_POINT    63
->  #define DECOMPOSED_IMPLICIT_BIT    (1ull << DECOMPOSED_BINARY_POINT)
->  
-> -/* Structure holding all of the relevant parameters for a format.
-> +/* Format-specific handling of exp == exp_max */
-> +typedef enum __attribute__((__packed__)) {
-> +    /* exp==max, frac==0 ? infinity : nan; this is ieee standard. */
-> +    float_expmax_ieee,
-> +    /* exp==max is a normal number; no infinity or nan representation. */
-> +    float_expmax_normal,
-> +} FloatFmtExpMaxKind;
-> +
-> +/*
-> + * Structure holding all of the relevant parameters for a format.
->   *   exp_size: the size of the exponent field
->   *   exp_bias: the offset applied to the exponent field
->   *   exp_max: the maximum normalised exponent
-> @@ -531,7 +540,7 @@ typedef struct {
->   * The following are computed based the size of fraction
->   *   round_mask: bits below lsb which must be rounded
+> @@ -542,7 +542,9 @@ typedef enum __attribute__((__packed__)) {
 >   * The following optional modifiers are available:
-> - *   arm_althp: handle ARM Alternative Half Precision
-> + *   exp_max_kind: affects how exp == exp_max is interpreted
+>   *   exp_max_kind: affects how exp == exp_max is interpreted
 >   *   has_explicit_bit: has an explicit integer bit; this affects whether
->   *   the float_status floatx80_behaviour handling applies
+> - *   the float_status floatx80_behaviour handling applies
+> + *       the float_status floatx80_behaviour handling applies
+> + *   overflow_raises_invalid: for float_expmax_normal, raise invalid
+> + *       instead of overflow.
 >   */
-> @@ -542,7 +551,7 @@ typedef struct {
->      int exp_max;
->      int frac_size;
+>  typedef struct {
+>      int exp_size;
+> @@ -553,6 +555,7 @@ typedef struct {
 >      int frac_shift;
-> -    bool arm_althp;
-> +    FloatFmtExpMaxKind exp_max_kind;
+>      FloatFmtExpMaxKind exp_max_kind;
 >      bool has_explicit_bit;
+> +    bool overflow_raises_invalid;
 >      uint64_t round_mask;
 >  } FloatFmt;
-> @@ -566,7 +575,7 @@ static const FloatFmt float16_params = {
 >  
+> @@ -576,6 +579,7 @@ static const FloatFmt float16_params = {
 >  static const FloatFmt float16_params_ahp = {
 >      FLOAT_PARAMS(5, 10),
-> -    .arm_althp = true
-> +    .exp_max_kind = float_expmax_normal,
+>      .exp_max_kind = float_expmax_normal,
+> +    .overflow_raises_invalid = true,
 >  };
 >  
 >  static const FloatFmt bfloat16_params = {
 > diff --git a/fpu/softfloat-parts.c.inc b/fpu/softfloat-parts.c.inc
-> index 79b56014ab..455bbf281e 100644
+> index 455bbf281e..4909ff7418 100644
 > --- a/fpu/softfloat-parts.c.inc
 > +++ b/fpu/softfloat-parts.c.inc
-> @@ -227,18 +227,30 @@ static void partsN(canonicalize)(FloatPartsN *p, float_status *status,
->              p->exp = fmt->frac_shift - fmt->exp_bias
->                     - shift + !has_pseudo_denormals;
->          }
-> -    } else if (likely(p->exp < fmt->exp_max) || fmt->arm_althp) {
-> -        p->cls = float_class_normal;
-> -        p->exp -= fmt->exp_bias;
-> -        frac_shl(p, fmt->frac_shift);
-> -        p->frac_hi |= DECOMPOSED_IMPLICIT_BIT;
-> -    } else if (likely(frac_eqz(p))) {
-> -        p->cls = float_class_inf;
-> -    } else {
-> -        frac_shl(p, fmt->frac_shift);
-> -        p->cls = (parts_is_snan_frac(p->frac_hi, status)
-> -                  ? float_class_snan : float_class_qnan);
-> +        return;
->      }
-> +    if (unlikely(p->exp == fmt->exp_max)) {
-> +        switch (fmt->exp_max_kind) {
-> +        case float_expmax_ieee:
-> +            if (likely(frac_eqz(p))) {
-> +                p->cls = float_class_inf;
-> +            } else {
-> +                frac_shl(p, fmt->frac_shift);
-> +                p->cls = (parts_is_snan_frac(p->frac_hi, status)
-> +                          ? float_class_snan : float_class_qnan);
-> +            }
-> +            return;
-> +        case float_expmax_normal:
-> +            break;
-> +        default:
-> +            g_assert_not_reached();
-> +        }
-> +    }
-> +
-> +    p->cls = float_class_normal;
-> +    p->exp -= fmt->exp_bias;
-> +    frac_shl(p, fmt->frac_shift);
-> +    p->frac_hi |= DECOMPOSED_IMPLICIT_BIT;
->  }
->  
->  /*
-> @@ -314,29 +326,37 @@ static void partsN(uncanon_normal)(FloatPartsN *p, float_status *s,
->              p->frac_lo &= ~round_mask;
->          }
->  
-> -        if (fmt->arm_althp) {
-> -            /* ARM Alt HP eschews Inf and NaN for a wider exponent.  */
-> -            if (unlikely(exp > exp_max)) {
-> -                /* Overflow.  Return the maximum normal.  */
-> -                flags = float_flag_invalid;
-> -                exp = exp_max;
-> -                frac_allones(p);
-> -                p->frac_lo &= ~round_mask;
-> -            }
-> -        } else if (unlikely(exp >= exp_max)) {
-> -            flags |= float_flag_overflow;
-> -            if (s->rebias_overflow) {
-> -                exp -= fmt->exp_re_bias;
-> -            } else if (overflow_norm) {
-> -                flags |= float_flag_inexact;
-> -                exp = exp_max - 1;
-> -                frac_allones(p);
-> -                p->frac_lo &= ~round_mask;
-> -            } else {
-> -                flags |= float_flag_inexact;
-> -                p->cls = float_class_inf;
-> -                exp = exp_max;
-> -                frac_clear(p);
-> +        if (unlikely(exp >= exp_max)) {
-> +            switch (fmt->exp_max_kind) {
-> +            case float_expmax_ieee:
-> +                flags |= float_flag_overflow;
-> +                if (s->rebias_overflow) {
-> +                    exp -= fmt->exp_re_bias;
-> +                } else if (overflow_norm) {
-> +                    flags |= float_flag_inexact;
-> +                    exp = exp_max - 1;
-> +                    frac_allones(p);
-> +                    p->frac_lo &= ~round_mask;
-> +                } else {
-> +                    flags |= float_flag_inexact;
-> +                    p->cls = float_class_inf;
-> +                    exp = exp_max;
-> +                    frac_clear(p);
-> +                }
-> +                break;
-> +
-> +            case float_expmax_normal:
-> +                if (unlikely(exp > exp_max)) {
-> +                    /* Overflow.  Return the maximum normal.  */
-> +                    flags = float_flag_invalid;
-> +                    exp = exp_max;
-> +                    frac_allones(p);
-> +                    p->frac_lo &= ~round_mask;
-> +                }
-> +                break;
-> +
-> +            default:
-> +                g_assert_not_reached();
->              }
->          }
->          frac_shr(p, frac_shift);
-> @@ -434,13 +454,13 @@ static void partsN(uncanon)(FloatPartsN *p, float_status *s,
->              frac_clear(p);
->              return;
->          case float_class_inf:
-> -            g_assert(!fmt->arm_althp);
-> +            assert(fmt->exp_max_kind == float_expmax_ieee);
->              p->exp = fmt->exp_max;
->              frac_clear(p);
->              return;
->          case float_class_qnan:
->          case float_class_snan:
-> -            g_assert(!fmt->arm_althp);
-> +            assert(fmt->exp_max_kind != float_expmax_normal);
->              p->exp = fmt->exp_max;
->              frac_shr(p, fmt->frac_shift);
->              return;
+> @@ -348,7 +348,9 @@ static void partsN(uncanon_normal)(FloatPartsN *p, float_status *s,
+>              case float_expmax_normal:
+>                  if (unlikely(exp > exp_max)) {
+>                      /* Overflow.  Return the maximum normal.  */
+> -                    flags = float_flag_invalid;
+> +                    flags = (fmt->overflow_raises_invalid
+> +                             ? float_flag_invalid
+> +                             : float_flag_overflow | float_flag_inexact);
+>                      exp = exp_max;
+>                      frac_allones(p);
+>                      p->frac_lo &= ~round_mask;
 > -- 
 > 2.43.0
 > 
