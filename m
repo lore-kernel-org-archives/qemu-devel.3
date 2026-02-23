@@ -4,87 +4,156 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D6CAE98DFC
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 08:06:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7A01E98E06
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 08:21:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuQx1-000593-NK; Mon, 23 Feb 2026 03:05:55 -0500
+	id 1vuRBe-0001O8-IO; Mon, 23 Feb 2026 03:21:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vuQwy-0004rU-S1
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 03:05:52 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <Sairaj.ArunKodilkar@amd.com>)
+ id 1vuRBU-0001Nr-Vw
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 03:20:53 -0500
+Received: from mail-westus2azon11012046.outbound.protection.outlook.com
+ ([52.101.48.46] helo=MW6PR02CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vuQww-0004bT-Nz
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 03:05:52 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771833948;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- resent-to:resent-from:resent-message-id:in-reply-to:in-reply-to:
- references:references; bh=ypwNkF0BX2zR8xGYuB45Y8BWIUcrK7YDjluBT7kNmQI=;
- b=d9u3Z8pAeiwKggt7tkobCB3phYZjxzXXlqNHdUuAW04C1wfX3ydfb17KursIKuvWwl2IBS
- 0GEzq2AoBBFk0PvyGrON28XSFW40HwF6eybz+Ysznrb19TgyS/9JNRodFA4pylO1nTJHDb
- ernRX0niz3zOZRrWd2ax2dK2VkHWGmc=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-634-vt0JzBYqMIGHrsMMKrw7mw-1; Mon,
- 23 Feb 2026 03:05:45 -0500
-X-MC-Unique: vt0JzBYqMIGHrsMMKrw7mw-1
-X-Mimecast-MFC-AGG-ID: vt0JzBYqMIGHrsMMKrw7mw_1771833944
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8EAB018001F8; Mon, 23 Feb 2026 08:05:43 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.13])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4F8E030001BE; Mon, 23 Feb 2026 08:05:42 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id D8D8721E692D; Mon, 23 Feb 2026 09:05:39 +0100 (CET)
-Resent-To: eduardo@habkost.net, devel@lists.libvirt.org,
- qemu-block@nongnu.org, qemu-devel@nongnu.org, vsementsov@yandex-team.ru
-Resent-From: Markus Armbruster <armbru@redhat.com>
-Resent-Date: Mon, 23 Feb 2026 09:05:39 +0100
-Resent-Message-ID: <87ldgjanqk.fsf@pond.sub.org>
-From: Markus Armbruster <armbru@redhat.com>
-To: Kevin Wolf <kwolf@redhat.com>
-Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- qemu-devel@nongnu.org,  qemu-block@nongnu.org,  eduardo@habkost.net,
- berrange@redhat.com,  pbonzini@redhat.com,  eblake@redhat.com,
- devel@lists.libvirt.org,  hreitz@redhat.com
-Subject: Re: [PATCH v10 4/8] qapi: add blockdev-replace command
-In-Reply-To: <aZeA6GZQaRtqmzgv@redhat.com> (Kevin Wolf's message of "Thu, 19
- Feb 2026 22:30:16 +0100")
-References: <20260119144941.87936-1-vsementsov@yandex-team.ru>
- <20260119144941.87936-5-vsementsov@yandex-team.ru>
- <87wm0sy9s4.fsf@pond.sub.org>
- <739edd0f-8342-418e-96bb-01bc9bd3349e@yandex-team.ru>
- <87seb3zr7j.fsf@pond.sub.org>
- <f9aed7fd-2f56-4b54-bf4f-693e0c10fb38@yandex-team.ru>
- <87seazjz2q.fsf@pond.sub.org>
- <04575653-a2ba-4ef1-b1af-a514bec80a69@yandex-team.ru>
- <87a4x6h8kz.fsf@pond.sub.org> <aZeA6GZQaRtqmzgv@redhat.com>
-Date: Mon, 23 Feb 2026 08:21:48 +0100
-Message-ID: <87v7fnaprn.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <Sairaj.ArunKodilkar@amd.com>)
+ id 1vuRBT-0007gY-6f
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 03:20:52 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=AtQKvMKDShrv649/HAh42OLRQKmu0ypzEikgi/UbqEu6yBaLiloWZOgrsrelRPO/1DkGdNAklXmK5MW+fjCXSTnM4IjhIld31pUJq/EFF7g6kVvBNNoy/mQKP5v2g87eNm7Wc4f41f1b+iKddZpLeL6YpZzyNop2QuPecubr2UeEKKpsFSEhYahwdozvBOTIUZZkvlhxPl+l2WUWAPDZSGKYPRWJWNzrlWPbk8mZGG+hloJzOcbLroj7eUCzUy8cpYaAccG/H1WLVUFAGkx8KN6YMpFBtHFv0T8vuknLuho6+StzzCz1RZAp5Y9vYK6i/Rwt9PJgMFKXyfs+1XBAeA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=kwyyQ1xGbzElG+HhB7+sufULlPoCR0Xm/H7mMnT6jgw=;
+ b=YaA6AlqTJYrz571Ms5JqLuslCTCbvJCv7hQ0VnAzty3QJvu3QBXOfCMce1m86n+F43Xd6VKcTnVb2SMhr5M2Y79EJNAcXiNKrzbf8x3vqEtmXOIoNi/dJxqRg4ZRkaxPLgLfO5VNz2BS2SJIjlQ3nAO14UPLCRgo4VQa6R2MsYiHWXiB94N+mOtgi+890jsEzB7GfgpAwGbP5CRILxZQPmkKvQqXVt124/drerDxHSjJevmKi8KqaojKC/M9F+LOZCdZuxuneghwo5EFL8NfKzaPg1l6HTdQv+e95aNjG0kDOxGp2GHWr0pEd2rAHZu1hwc462JR4UaLl09/HcJE7A==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=demindiro.com smtp.mailfrom=amd.com;
+ dmarc=pass (p=quarantine sp=quarantine pct=100) action=none
+ header.from=amd.com; dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=kwyyQ1xGbzElG+HhB7+sufULlPoCR0Xm/H7mMnT6jgw=;
+ b=sV+rQZrqL8gPp5gycyEe3fy8tdVrBHIwQnhuGbmXsny6J4RN+pq3Dkt4wfT+npCt3r49UbPsNv3FOM5JnEy/ILjHrk9LxPTutRnzzWnqrhAXf721lRb2f3/AwpAJ9SkIHFDsWHgFPPMwj9gyYsA/3JmkhYK+Tf0yURjpSiglICY=
+Received: from CH2PR11CA0019.namprd11.prod.outlook.com (2603:10b6:610:54::29)
+ by SA5PPF8DEAB7A29.namprd12.prod.outlook.com
+ (2603:10b6:80f:fc04::8d4) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9611.12; Mon, 23 Feb
+ 2026 08:15:41 +0000
+Received: from DS2PEPF00003446.namprd04.prod.outlook.com
+ (2603:10b6:610:54:cafe::e6) by CH2PR11CA0019.outlook.office365.com
+ (2603:10b6:610:54::29) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9632.21 via Frontend Transport; Mon,
+ 23 Feb 2026 08:15:07 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
+Received: from satlexmb07.amd.com (165.204.84.17) by
+ DS2PEPF00003446.mail.protection.outlook.com (10.167.17.73) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9632.12 via Frontend Transport; Mon, 23 Feb 2026 08:15:40 +0000
+Received: from [10.252.204.230] (10.180.168.240) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.17; Mon, 23 Feb
+ 2026 02:15:36 -0600
+Message-ID: <dc1c709f-89a9-4d59-bbe8-f19020a380dc@amd.com>
+Date: Mon, 23 Feb 2026 13:45:27 +0530
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -14
-X-Spam_score: -1.5
-X-Spam_bar: -
-X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+User-Agent: Mozilla Thunderbird
+CC: <sarunkod@amd.com>, Eduardo Habkost <eduardo@habkost.net>, "Marcel
+ Apfelbaum" <marcel.apfelbaum@gmail.com>, Alejandro Jimenez
+ <alejandro.j.jimenez@oracle.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>, "Michael S. Tsirkin"
+ <mst@redhat.com>
+Subject: Re: [PATCH] hw/i386/amd_iommu.c: fix amdvi_unhandled_command logging
+ cmd ID
+Content-Language: en-US
+To: David Hoppenbrouwers <qemu@demindiro.com>, <qemu-devel@nongnu.org>
+References: <20260220181437.19338-1-qemu@demindiro.com>
+From: Sairaj Kodilkar <sarunkod@amd.com>
+In-Reply-To: <20260220181437.19338-1-qemu@demindiro.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.180.168.240]
+X-ClientProxiedBy: satlexmb07.amd.com (10.181.42.216) To satlexmb07.amd.com
+ (10.181.42.216)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DS2PEPF00003446:EE_|SA5PPF8DEAB7A29:EE_
+X-MS-Office365-Filtering-Correlation-Id: 0a121348-eb31-4ff9-1984-08de72b3bb8b
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|1800799024|82310400026|376014|36860700013|7053199007|13003099007;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?OFhpZVlUZUg2c0tsK3A3MEZxOFlCVnNFRjBMQTJGRW9pVzR0Q3Mwczg4bzN6?=
+ =?utf-8?B?U2ZYRkRJV2JqWVc3TWdxKzRBSGlKYVNxdDUyMkxiNDFyb0pDUCtjVHVXS3NF?=
+ =?utf-8?B?Uy9RT0I4RDhSUldFWkh5WTNtbFVvd0tFc1p3eTlTZ0c1eUZHM2o2MGloZUtM?=
+ =?utf-8?B?bVFNcitLSm84cThEYlg0bkowYXY2emNDYys5SXg2R0x1c2dzOUJ2aTRSNVhx?=
+ =?utf-8?B?TXNxMnBIMFI2emdQVVdoZWxkOGgzRjR0S3l4dzg2dTY3NmJPbWlUcWVyZUhY?=
+ =?utf-8?B?TGE5YkVxSGNxMWpKSWwzbitDa09hK1JhamNmTHdCOEsvVTFrSnFNekh5S3lm?=
+ =?utf-8?B?K3E2SWwzQXg2ZG9LZnlSZDY2NU4zNkpSQkxvN3R0WXNaVjN2bUlRU3Z2ZnlB?=
+ =?utf-8?B?blI2SVNmbklERUVtZGs4WGk2VkEvWi9IMktDQlNIRWVMV1kybjNkUjEzSE5K?=
+ =?utf-8?B?SzdPeW16MDFWMUJHQW9BUW83eUhsSkx1d0hIT0xkMCtiVC9Ob3JjOWpoTTBn?=
+ =?utf-8?B?WDR5bDNJQkVZeVdMeGNjYkJTSzU3b2Z3aE1aQVJLWnc3VVdMMkFIM2wzWlo3?=
+ =?utf-8?B?a3ArcDlScVJzUXArVnAyL0VpSWhtaUFwRUlJcThkYjM1TDBUK29jYWtpdGt1?=
+ =?utf-8?B?YXB2WE1aaUtDQ2xBMG8yd25JWmJBRHk3UTBsVWEyOWl6UVFjWWFIYjFiMENL?=
+ =?utf-8?B?eS9WYlB4QmNjUGdLNFNJdlExcXBlejB0ZjVnTmJxM2Nac3hhTENBZ2hLd3BE?=
+ =?utf-8?B?NUdjanlUOG5KK21lQ3JreE00V2F1eEJZaS9Zbm81RVIvQTJVdk0zbWhJUUhw?=
+ =?utf-8?B?S1dXajBHcnRKU1E0NjFiSGMzdHV1LzF4SnZiUmVFYy8wNk9GbThqZndkdVhD?=
+ =?utf-8?B?SVdGWW04VVJkWHBXRWRRSUdIRUZDQXJsMGh4SDI3c1Jpb1JFSDlPOVBuN1Mz?=
+ =?utf-8?B?dHRaSUVGc0wyU0hSdkE4cEowcGJUUkFrV0NDNjhqMjI4K1U5SWVROGhxeUFz?=
+ =?utf-8?B?Vks4OGd3Uk5sUUQ3Z0lISzFvM20zSTQyVUhUZUVIOHJjd2h4THBvRGtuUFh4?=
+ =?utf-8?B?NmMyV2JYbGFhVHIvUzV1Y2RHdE0vZFZhNjdRcFR1QWJoR3o0TVRYVlJGdURS?=
+ =?utf-8?B?ZkMvMUYzUjNIWEIwMXg2Lzk3SE1XZysvbkJCTW9OdHJPRVFFZ3FZUEEvRSto?=
+ =?utf-8?B?SzdET0dxbzZVRVY2eisyNzRNckMzK2pxeE9lQnZpZWdNQ3ZjbWxpRW9ReHV1?=
+ =?utf-8?B?a2hIRTJwTUJ2d2tqWk9ndDJ6Q0cxR3FQcjh5Ym1CQUxPZ0oxK1VRbk1FVUtk?=
+ =?utf-8?B?ZXJzK2JHMm43UTJuL2o3TmNyWFhDSVoxdm1Sd1hHUmRCcDAxSU5OaEVlcGRY?=
+ =?utf-8?B?RzdtRXN4OFpwYThxd2hRQnZlZUZpMTRVTFFaeHNjbGpMYW5GQ1g4ZFRYZXVZ?=
+ =?utf-8?B?L2ZsTlBSNjlHYXhwK2RrdXdCWmJPdHdJN1FSdGc4OUJ3WVpHalNrRDNpbnl5?=
+ =?utf-8?B?WWRjV01GNTdROHZ0aWtuMGpqdmo4MmJqSGgyUGhzZy9lNGZWL05mOE8wV3Jk?=
+ =?utf-8?B?SGZycUhlR0NEZ1owSlBCbERQOHFVNnZBazg4SDRyZ1NiVzU3d04xUER0bnpF?=
+ =?utf-8?B?YnlBdisxMjNOb0JsaEgwaUpiZ09BaElFazZNblJxUVRTMnV5QzZpWE1zR0RN?=
+ =?utf-8?B?bmlQbVgwM2ljM0haclZzMlhpeDdXRXVNZTNTcDZRVVdaNUd5eXV5Y29OQkVp?=
+ =?utf-8?B?OFFXcGxqV1NXaDhzZXcxd3lycGliZ0NqZE1tV0piY3VMbnF1bWxES2JLUXJW?=
+ =?utf-8?B?UXljSllWTENQSFZCN3VpSHE4bDNhcVgyWm5WR2E1UENRRTVBcDdXaDFMZXRj?=
+ =?utf-8?B?RHNYS0dpL0ovZmV6cnE2dHJDa0JQek02WlN3aFhjMkNaVENuaUVNeG5iVFFq?=
+ =?utf-8?B?cm5NbEVUWFk1VThscm9YWnhkTjlpam5iMll0WEEvL3g1WXBUaW9VYURsbU5N?=
+ =?utf-8?B?bHpucWl5eEQ2Sm1mb1QwNWorQ0YvS05EdXZKcW44NVQ3SW5iaXUwUHJpUGw2?=
+ =?utf-8?B?MDBlZ3E4V0dRR3RjYjVpY0wzOHdGdkxpbXp1S3VnazZJVEJkWks2bTdQU1Rl?=
+ =?utf-8?B?TTdnRU1DeGtGT1FUMHVhRWtNUm1ROUQ5czNDbkdSNVFCc2tKdVlnM1kxL2FH?=
+ =?utf-8?B?elBJeDhFQSsrVm50N0ltV2hpbUUyMlRFRWFGbFU3clpwZ01DSzhHeVUvWEtQ?=
+ =?utf-8?B?QUlxU2ZSN0REaFVJcDZSTnFWdlFnPT0=?=
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(1800799024)(82310400026)(376014)(36860700013)(7053199007)(13003099007);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: HHOInEfDgW/hrrvi8WUMCxnZEgmLk6pL4tw1845W6hvEljXaI71LjE+v8O1Nuw0vLVpUHE7Dbo0br0y9rMWOSvclgwiVpKTHxZaTJyVZ2ykgO6BNJKjr0N8uSQj/SyFmbiFO2SvxWAyl9I1Ii/xR5XrOQfajgrrxjGB5ZhPJOuj91k6aKBUwbUYby3ooo8MzPIuHAvm7IbrtO2mTkXRSRHszTetEL+1m5ynuIcy7TL7nkqec6wdrH+SP0lFjR2Jrk3J2fuzqzV+ANuSQ+NRbQo4VfoX9VBzycwbGIh2nSaDWOPF3zp/5nfhNccactIMdZV9OcISBI598pcr0tXS8XiDc+A7aGmuk7H3NLI1/im4MxX4bfZDBVcLzwZDM03U2f+QnXYECPrrklj4V8MLzy5qBex67EiEOYZGdwlbiLQbSLiY/z4yNgmSpi6kTpmoz
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Feb 2026 08:15:40.3559 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 0a121348-eb31-4ff9-1984-08de72b3bb8b
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[satlexmb07.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: DS2PEPF00003446.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA5PPF8DEAB7A29
+Received-SPF: permerror client-ip=52.101.48.46;
+ envelope-from=Sairaj.ArunKodilkar@amd.com;
+ helo=MW6PR02CU001.outbound.protection.outlook.com
+X-Spam_score_int: -4
+X-Spam_score: -0.5
+X-Spam_bar: /
+X-Spam_report: (-0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.798, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.79,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,155 +169,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Kevin Wolf <kwolf@redhat.com> writes:
 
-> Am 18.02.2026 um 07:25 hat Markus Armbruster geschrieben:
->> Block layer maintainers' advice sought:
->> 
->> Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
->> 
->> > On 17.02.26 16:10, Markus Armbruster wrote:
->> >> Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
->> >> 
->> >>> On 14.02.26 11:04, Markus Armbruster wrote:
->> 
->> [...]
->> 
->> >>>> This interface sort of overloads @parent and @child, and overloading the
->> >>>> former creates ambiguity that can make the command unusable.
->> >>>
->> >>> Is it a real problem if we do deprecate the thing, that leads to this
->> >>> ambiguity?
->> >>>
->> >>> If it is, we may mark the command "unstable" during the deprecation period.
->> >> 
->> >> By itself, the proposed command is a trap for the unwary.
->> >> 
->> >> Deprecating the usage that enables the trap makes the trap temporary.
->> >> 
->> >> Warning on (deprecated) usage that enables the trap helps users avoid
->> >> it.  Human users, mostly.
->> >> 
->> >> Marking the command "unstable" should ensure management application
->> >> avoid the command, and thus the trap.
->> >> 
->> >> All of the above together feels acceptable to me.  Can we do better?
->> >> Maybe, and that's discussed below.
->> >> 
->> >>> Or even postpone its addition up to the end of this period.
->> >> 
->> >> No trap, no problem :)
->> >> 
->> >>>> @parent's set of valid values is the union of QOM path, block node name,
->> >>>> block export ID with values occuring in more than one of them dropped.
->> >>>>
->> >>>> @child's set of valid values depends on @parent: child name when it's a
->> >>>> QOM path, else "root".
->> >>>>
->> >>>> The obvious non-overloaded interface is a union of three branches: QOM,
->> >>>> block node, block export.  The QOM branch has variant members @qom-path
->> >>>> and @child.  The block node branch has variant member @node-name.  The
->> >>>> block export branch has variant member @id.
->> >>>>
->> >>>> This is a bit more verbose: you have to specify the union tag[*].
->> >>>>
->> >>>> If we ever need to replace block nodes associated with additional
->> >>>> things, we simply more branches.  These branches can have arbitrary
->> >>>> members.  In your interface, we'd have to make do with @child, or maybe
->> >>>> add optional arguments.
->> >>>>
->> >>>> Thoughts?  Mind, this isn't a demand!  I'm exploring the design space.
->> >>>
->> >>> Union-based solution was v9: https://lore.kernel.org/qemu-devel/20240626115350.405778-5-vsementsov@yandex-team.ru/
->> >>>
->> >>> And there was a discussion, that we may try a way without a union. And that's
->> >>> this v10.
->> >> 
->> >> I see Kevin suggested to explore this approach.  I certainly respect his
->> >> judgement.
->> >> 
->> >>> Hmm, but that had different field names for parents: qdev-id, export-id and node-name.
->> >>>
->> >>> What you suggest is to keep one filed for parent - "parent", but also add a "parent-type"
->> >>> field. This way, we may deprecate and remove "parent-type" in future. Or, we may
->> >>> add it as deprecated now (together with deprecating non-unique IDs)
->> >> 
->> >> We can't deprecate the union tag right away: it is *required*.
->> >> 
->> >>>> [*] We could add a "may omit union tag when the tag value can be derived
->> >>>> from present variant members" convenience feature to QAPI, but I'm not
->> >>>> sure it's worth the complexity.
->> >>>>
->> >>>
->> >>> It also may be not a union, but a simple structure with optional fields:
->> >>>
->> >>> {
->> >>>      parent: str, required, qom-path, or node-name, or export name
->> >>>      child: str, optional, but required when parent is node-name, and must be 'root'
->> >>>             if present for other parent types
->> >>>      parent-type: str, optional, "qom-path" | "block-node" | "block-export", helps to
->> >>>             overcome parent ambiguity, deprecated
->> >>>      new-child: str, required node-name
->> >>> }
->> >> 
->> >> PRO union: which members are valid together is syntactically obvious.
->> >> With a bunch of optional members, that information is in the member
->> >> descriptions.
->> >> 
->> >> CON union: need to specify the union tag.  The verbosity is a non-issue
->> >> for management applications, and mildly bothersome for humans.
->> >> 
->> >> How important is keeping things terse for humans here?
->> >> 
->> >
->> > It's not very important. Mostly, I just want to make "nice" interface, and possibility to
->> > reference any supported object by one ID seemed very tempting to me.
->> >
->> > But to be honest, introducing such a precedent makes sense, if we have in mind more
->> > cases where such approach may be reused. Personally, I don't have them. If blockdev-replace
->> > command remains the only API for the ages, which allows to mix in one field different kinds
->> > of IDs, it becomes just an extra exclusion from common practices.
->> >
->> > Finally, I don't care too much, which interface we chose. I'm not sure now that unifying
->> > ids is better than union. So I'm OK to go back to union-based solution from v9, update and
->> > resend it as v11.
->> 
->> Hanna, Kevin, got a preference?
+
+On 2/20/2026 11:44 PM, David Hoppenbrouwers wrote:
+> [You don't often get email from qemu@demindiro.com. Learn why this is important at https://aka.ms/LearnAboutSenderIdentification ]
 >
-> My stance is unchanged from v9. When Vladimir asked if we could somehow
-> get rid of the union, I tried to help him find such a solution that
-> might be acceptable, but also recommended to keep the union for now,
-> simply because it raises a lot less questions and avoids the temporary
-> trap, and to move to a unified ID only later.
+> The command ID is in cmd[0], not cmd[1].
 >
-> Still, as I said, "I don't think such a state is very pretty, but it
-> would be okay for me". So I wouldn't block the approach taken here in
-> v10 if Vladimir prefers it (at least as far as I can say from the
-> discussion; I didn't actually review it yet).
+> Signed-off-by: David Hoppenbrouwers <qemu@demindiro.com>
+> ---
+>   hw/i386/amd_iommu.c | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
 >
-> If you say that you really don't want to have the command fail on
-> ambiguous IDs, we probably shouldn't do it. But as far as I am
-> concerned, it seemed tolerable, so if you don't object, it remains
-> Vladimir's decision.
-
-I don't object, I advise.
-
-Overall, the union approach seems cleaner, and more in line with
-existing interface practice, albeit a bit more verbose.  It avoids the
-ambiguous ID issue.  It's also a more flexible base for extensions: add
-a branch with whatever variant members are needed.  Whether we'll ever
-need the flexibility is uncertain.
-
-The non-union approach looks workable to me.  As long as ambiguous IDs
-remain possible, users can get their VMs into states where the command
-doesn't work.  Documentation must spell this out, which is a bit of a
-bother.  Experience has taught us that "don't do that" documentation
-reduces the likelihood of users doing it, but not nearly as much as we'd
-like.  Warnings are more effective, and I strongly recommend to add
-them.  More bother.  We should also consider to mark the interface
-unstable.  This would delay adoption, which may well be a reason not to
-mark.
-
-Independently, I find truly unique IDs desirable.
+> diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
+> index 789e09d6f2..2570a4701c 100644
+> --- a/hw/i386/amd_iommu.c
+> +++ b/hw/i386/amd_iommu.c
+> @@ -1456,9 +1456,9 @@ static void amdvi_cmdbuf_exec(AMDVIState *s)
+>           amdvi_inval_all(s, cmd);
+>           break;
+>       default:
+> -        trace_amdvi_unhandled_command(extract64(cmd[1], 60, 4));
+> +        trace_amdvi_unhandled_command(extract64(cmd[0], 60, 4));
+>           /* log illegal command */
+> -        amdvi_log_illegalcom_error(s, extract64(cmd[1], 60, 4),
+> +        amdvi_log_illegalcom_error(s, extract64(cmd[0], 60, 4),
+>                                      s->cmdbuf + s->cmdbuf_head);
+>       }
+>   }
+> --
+> 2.52.0
+Reviewed-by: Sairaj Kodilkar <sarunkod@amd.com>
 
 
