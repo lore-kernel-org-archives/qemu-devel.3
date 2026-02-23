@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F4145EC1112
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 17:07:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CAA2EC110C
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 17:08:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuZMf-000553-Af; Mon, 23 Feb 2026 12:04:59 -0500
+	id 1vuZK9-0001Ai-AP; Mon, 23 Feb 2026 12:02:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vuZLH-0002wt-3z
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 12:03:32 -0500
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ id 1vuZK7-00018d-Uv
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 12:02:19 -0500
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vuZL9-0000SL-Ta
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 12:03:29 -0500
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-483487335c2so42254275e9.2
- for <qemu-devel@nongnu.org>; Mon, 23 Feb 2026 09:03:20 -0800 (PST)
+ id 1vuZK4-0008Tr-TF
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 12:02:19 -0500
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-483abed83b6so14141625e9.0
+ for <qemu-devel@nongnu.org>; Mon, 23 Feb 2026 09:02:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771866199; x=1772470999; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=CoqKRxhjDS2lI+Y53YNGJHUzkXH7stjgCG6VH65poHk=;
- b=F7ORHXOGcVAMn2mLE+XsWIulVLu8F+QSWyH42y39NYs8/qmEVI0BakE0iAb0r2EwQ4
- 7Y3xc2AkSpAqMhMNTaZ4ncl8UgB7pP+hlX+eavOJfr9x3ERiYak3TccNGzZD7oja2NP9
- ld8fqQAkEOvAZF3SRKWwf3Dd8J9yz/PKrwuglm5ATfIr/WT6rznOboJi0GYhQUVWOOJ3
- RyE+XPOwB1Jjqt6NSrbajK8BO4dCKtxk1SZRe+XVgbHpNtWWmZ6aZJS4nhBb/UjfDSuR
- MBGMlF6jZhYGCogZpeHAMgvjkF8uKWzwaMHIR40zsMVkSb9I+3NzLC7t4TBDwZUvZUK0
- y4iA==
+ d=linaro.org; s=google; t=1771866135; x=1772470935; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=lkgXJFXZuKXmuat63r4N9pP/R4leNSm81JN3BlwDYMY=;
+ b=Ed/2iIJOx2/m/T1Mw1JwzAEIcrTtYl8pSM7kC7qJv2GLjcSpR2Mu2eX6WExAJ7razG
+ oIyTASDg0KXw3Bb57JPVLX9rWMI4mOcEEhRoQSnCt5J7rnzbPDo7B3Rp1j2+Icewjt8S
+ V5UvupHLKm56NX31RzHiiCbML5BNXD+YnKtvSVyBwPV4T9RlotCzlAZYETusTHQKNEcv
+ wwlOlQ0OgXXxPmaZGBtjr61een3rOqNQRlyIGdUI97YCOVqeZKDjTvX8jy68mw3Vk6fE
+ gmnw4KYh2y9w/u3xMGbv/x0MIQEZj+JXolEmhJxBDcx+RJTQhuSm00B5z/Jo+/PCBo4o
+ rhug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771866199; x=1772470999;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=CoqKRxhjDS2lI+Y53YNGJHUzkXH7stjgCG6VH65poHk=;
- b=vX2Mu+umvqwfZQVtfXVK6bkNRcqHo/QZIUGaR9NsMWAdvQfzKn9oGq3YFKTNsX/qlt
- V611p9MwXNsUo//w7l/uqq/vaF6FYDLy34OogFBGLEWKqZRLXCq0UImsekiUOhf3BHqA
- UxBZAayynTEHMadXgNBMtX5ti3YmdhvC/GMmDsdNebyMjA9JyhfXaZXg1Db30eBGu2AT
- Z0RV7ZuE/33yw3ci77oj7zV52kE4ORlfoyoYB9wliJMCOBUoOuxuLa1JkdHedTIixcyv
- 0znM8rgXnsMzohOC0RlNoJ5Gk6Wk2n+qBE61WcTNTpICZqZxAyvXfcZwnQ2kvqnhh6UC
- BrMA==
+ d=1e100.net; s=20230601; t=1771866135; x=1772470935;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=lkgXJFXZuKXmuat63r4N9pP/R4leNSm81JN3BlwDYMY=;
+ b=eMPrkZIGG5StOCqskgTFcfY2JUT8HUWP1eSWULNTf1b7fDPS3z979FaAhPlwizyBtP
+ id9pU32b2T/YdHuJ7aqRWcsJqcV50fh3MSieRU7nuL+ysA1/TO/Y8vACGLPU2B2SUo+Q
+ IfNtGtXKn58pHj2BkdFYvUJBPNgILX9wl26/FOhXVrvZdYxEUEig1+1etabixXQrsybX
+ 0pO0QM603ShfLKza9gop9uv/+x9q8tzaPGvhoUzAt8LoQawXv0JUWXq1fYzrhjbxpT0m
+ aVopzInULmyzxjeZuHRyb0tCQdQOrj3UM8Wq1MOKNxiEycs4Wkx66KUOjo76G0F4I0Q7
+ oy7w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVsx+5l2EO6mSeZI16OULGE/Cx1lOuugS3OR2sIubnxRQOggjcPQIu0vP7wpNr7+unUoQ/DI2GeLFDY@nongnu.org
-X-Gm-Message-State: AOJu0YyFoAqWx7PgD00yHPcMMO93Rt+BNnLhAsqEfh8HaYukOXSVkq5H
- A/3X1lEjTwr6H7JZ0CTNxK4XNnw5sIcKKNn6MytswTRYUQJAnvkzGjP/Hce5IUTio8wZRA4I2Jc
- ex2pa
-X-Gm-Gg: AZuq6aLV/H9j6zi62/sBq/TlWMvu3mTY1PvjBRmJvI7N44idge8WwnuH0mvDh1bCic0
- xmoy8lSroZLJPeO400ch9BtPn7v6qcaqga1XblWx8obbe6/L07UMCymQzGtZ2CLnhhAk+bW62LJ
- 9+OQrmEhcurk3en9d5pYjVfusA+J+8O7Mdl2o3cX4k7SfjL7JCBup4J8s4DVHF7t71KkrIe/HuU
- PmtG4cB0U5f+RUgOv2DusEy+Uhj9CvMtb4gw3/qSNBYr+8ggQqgrsW5o0f411jkOMPDsvuKU7gy
- Co32VKj4pZoIsmyAGsuRIAnwunAFoVGXgObSO2uzcitmo1WiDULSqSLfmp/s3spqVYfGT9FfDVD
- LtT0cNYCpxseuq/ZnbfKShvfRDJbwS4OYcQmivg5axIp2DBjz9BdSG7SS+0hFk8aKEkN4d5CzcB
- jE1jpEGtccpV//QHKXrAom++X5CEEM9dv6AfXlYl6/UaHxKfvnXxJDb50jQY3iW/oEf91lHjlrc
- hCE2hs15p8Kiz63gZUvxDQy5lPbM8M=
-X-Received: by 2002:a05:600c:3b0a:b0:480:4ae2:def1 with SMTP id
- 5b1f17b1804b1-483a95be7c9mr180051565e9.13.1771866199191; 
- Mon, 23 Feb 2026 09:03:19 -0800 (PST)
+ AJvYcCWrNAEAX3G7AEwmBEF1iQnd9jutiuU7HE6fhUrkhrVcDaCUgGHSG1uvHVv0/nNNoXo0575mJ3hA5Cma@nongnu.org
+X-Gm-Message-State: AOJu0YxL8BVsYFmmrlyGDaVM8bQxgx9V+PJTLeaLdWCNyojm3Vhf2viY
+ GYt9qUloJxxfNNePk7mC+N8GeBKn7xQmbtiaLvs4wRa/slpG7hFtTrp0rf1FioGGvzQ=
+X-Gm-Gg: AZuq6aKmyedIVDHcY00zQe3PlYTxAB4BrlM3HX2sLIKXK0DGm5YtJKQnqc2ecA0gxuT
+ TdQ789EtHJXXCKZNXalXCnQpLe3HQnt+9Juu/vxpvfFhCavvG0QT8C2DS4A25V4Pk7TjnldAKv/
+ PZtyN6AbcgAXcJ5/zzvDYT0Mr3IRmWvyD/ZnaiScGb1At+M4tt+/R69xLLks3o656PpYBrPujAT
+ 6bKtEnycmZUUm4JvaLCyG++K7Ou8d7x8AydeEN5K30cE7UIOcOwLsyj7Pdr2jOWBejEwh+U+4if
+ Gij8SzCrxF21Zv8QLGjqTGC8RBMyhqZnKlEBn9Bf7DW1gX1rHH2N7NhDaFoFHVFytfVj5dyUIh3
+ vhpnv6KzYc54JvVQ2W90LkqmPZSRzhbGXQfMGz3RmK7C4yTGM5NPVp/5QRfCf+lpvLi85bp7Iht
+ sZOqoQxpeBTNsbd8ljvnIZYJlMeTdF9tqmNSST4A9FM1KEOM9nNvGTlGdBDW+z851Bjp0ano6dr
+ t+oZYEnmelcR9I78fimTlOZLrFPydM=
+X-Received: by 2002:a05:600c:3b17:b0:46e:32dd:1b1a with SMTP id
+ 5b1f17b1804b1-483a95b15b6mr164546535e9.7.1771866134344; 
+ Mon, 23 Feb 2026 09:02:14 -0800 (PST)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-483a9b21ceasm200155625e9.0.2026.02.23.09.03.18
+ 5b1f17b1804b1-483a9b21ceasm200155625e9.0.2026.02.23.09.02.13
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 23 Feb 2026 09:03:18 -0800 (PST)
+ Mon, 23 Feb 2026 09:02:13 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Subject: [PATCH 59/65] hw/arm/virt: Split GICv2 and GICv3/4 creation
-Date: Mon, 23 Feb 2026 17:02:06 +0000
-Message-ID: <20260223170212.441276-60-peter.maydell@linaro.org>
+Subject: [PATCH 00/65] arm: Implement an emulation of GICv5 interrupt
+ controller
+Date: Mon, 23 Feb 2026 17:01:07 +0000
+Message-ID: <20260223170212.441276-1-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260223170212.441276-1-peter.maydell@linaro.org>
-References: <20260223170212.441276-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,208 +101,185 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently create_gic() handles GICv2 and GICv3/4 in a single
-function, with large sections that are conditional on the
-vms->gic_version.  GICv5 will be different to both.
+This patchset implements initial support of emulation of Arm's new
+interrupt controller architecture, GICv5.
 
-Refactor into create_gicv2() and create_gicv3().
+The most recent version of the GICv5 spec (currently 00EAC0) is at:
+https://developer.arm.com/documentation/aes0070/latest/
 
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- hw/arm/virt.c | 137 ++++++++++++++++++++++++++++++--------------------
- 1 file changed, 82 insertions(+), 55 deletions(-)
+The emulation is at an "experimental" level, both because the GICv5
+specification is still at an early-access level and minor changes are
+possible, and also because this emulation is missing some
+functionality which I plan to add later but which would have made this
+initial patchset even larger and later. To quote the docs patch:
 
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index ec6e49099a..3d19eb0fee 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -863,26 +863,58 @@ static void gic_connect_ppis(VirtMachineState *vms)
-     }
- }
- 
--static void create_gic(VirtMachineState *vms, MemoryRegion *mem)
-+static void create_gicv2(VirtMachineState *vms, MemoryRegion *mem)
-+{
-+    MachineState *ms = MACHINE(vms);
-+    /* We create a standalone GIC */
-+    SysBusDevice *gicbusdev;
-+    unsigned int smp_cpus = ms->smp.cpus;
-+
-+    if (kvm_enabled() && vms->virt) {
-+        error_report("KVM EL2 is only supported with in-kernel GICv3");
-+        exit(1);
-+    }
-+
-+    vms->gic = qdev_new(gic_class_name());
-+    qdev_prop_set_uint32(vms->gic, "revision", 2);
-+    qdev_prop_set_uint32(vms->gic, "num-cpu", smp_cpus);
-+    /*
-+     * Note that the num-irq property counts both internal and external
-+     * interrupts; there are always 32 of the former (mandated by GIC spec).
-+     */
-+    qdev_prop_set_uint32(vms->gic, "num-irq", NUM_IRQS + 32);
-+    if (!kvm_irqchip_in_kernel()) {
-+        qdev_prop_set_bit(vms->gic, "has-security-extensions", vms->secure);
-+        qdev_prop_set_bit(vms->gic, "has-virtualization-extensions", vms->virt);
-+    }
-+
-+    gicbusdev = SYS_BUS_DEVICE(vms->gic);
-+    sysbus_realize_and_unref(gicbusdev, &error_fatal);
-+    sysbus_mmio_map(gicbusdev, 0, vms->memmap[VIRT_GIC_DIST].base);
-+    sysbus_mmio_map(gicbusdev, 1, vms->memmap[VIRT_GIC_CPU].base);
-+    if (vms->virt) {
-+        sysbus_mmio_map(gicbusdev, 2, vms->memmap[VIRT_GIC_HYP].base);
-+        sysbus_mmio_map(gicbusdev, 3, vms->memmap[VIRT_GIC_VCPU].base);
-+    }
-+
-+    gic_connect_ppis(vms);
-+
-+    fdt_add_gic_node(vms);
-+}
-+
-+static void create_gicv3(VirtMachineState *vms, MemoryRegion *mem)
- {
-     MachineState *ms = MACHINE(vms);
-     /* We create a standalone GIC */
-     SysBusDevice *gicbusdev;
--    const char *gictype;
-     unsigned int smp_cpus = ms->smp.cpus;
-     uint32_t nb_redist_regions = 0;
-     int revision;
--
--    if (vms->gic_version == VIRT_GIC_VERSION_2) {
--        gictype = gic_class_name();
--    } else {
--        gictype = gicv3_class_name();
--    }
-+    QList *redist_region_count;
-+    uint32_t redist0_capacity = virt_redist_capacity(vms, VIRT_GIC_REDIST);
-+    uint32_t redist0_count = MIN(smp_cpus, redist0_capacity);
- 
-     switch (vms->gic_version) {
--    case VIRT_GIC_VERSION_2:
--        revision = 2;
--        break;
-     case VIRT_GIC_VERSION_3:
-         revision = 3;
-         break;
-@@ -899,10 +931,11 @@ static void create_gic(VirtMachineState *vms, MemoryRegion *mem)
-         exit(1);
-     }
- 
--    vms->gic = qdev_new(gictype);
-+    vms->gic = qdev_new(gicv3_class_name());
-     qdev_prop_set_uint32(vms->gic, "revision", revision);
-     qdev_prop_set_uint32(vms->gic, "num-cpu", smp_cpus);
--    /* Note that the num-irq property counts both internal and external
-+    /*
-+     * Note that the num-irq property counts both internal and external
-      * interrupts; there are always 32 of the former (mandated by GIC spec).
-      */
-     qdev_prop_set_uint32(vms->gic, "num-irq", NUM_IRQS + 32);
-@@ -910,40 +943,28 @@ static void create_gic(VirtMachineState *vms, MemoryRegion *mem)
-         qdev_prop_set_bit(vms->gic, "has-security-extensions", vms->secure);
-     }
- 
--    if (vms->gic_version != VIRT_GIC_VERSION_2) {
--        QList *redist_region_count;
--        uint32_t redist0_capacity = virt_redist_capacity(vms, VIRT_GIC_REDIST);
--        uint32_t redist0_count = MIN(smp_cpus, redist0_capacity);
-+    nb_redist_regions = virt_gicv3_redist_region_count(vms);
- 
--        nb_redist_regions = virt_gicv3_redist_region_count(vms);
-+    redist_region_count = qlist_new();
-+    qlist_append_int(redist_region_count, redist0_count);
-+    if (nb_redist_regions == 2) {
-+        uint32_t redist1_capacity =
-+            virt_redist_capacity(vms, VIRT_HIGH_GIC_REDIST2);
- 
--        redist_region_count = qlist_new();
--        qlist_append_int(redist_region_count, redist0_count);
--        if (nb_redist_regions == 2) {
--            uint32_t redist1_capacity =
--                virt_redist_capacity(vms, VIRT_HIGH_GIC_REDIST2);
-+        qlist_append_int(redist_region_count,
-+                         MIN(smp_cpus - redist0_count, redist1_capacity));
-+    }
-+    qdev_prop_set_array(vms->gic, "redist-region-count", redist_region_count);
- 
--            qlist_append_int(redist_region_count,
--                MIN(smp_cpus - redist0_count, redist1_capacity));
--        }
--        qdev_prop_set_array(vms->gic, "redist-region-count",
--                            redist_region_count);
--
--        if (!kvm_irqchip_in_kernel()) {
--            if (vms->tcg_its) {
--                object_property_set_link(OBJECT(vms->gic), "sysmem",
--                                         OBJECT(mem), &error_fatal);
--                qdev_prop_set_bit(vms->gic, "has-lpi", true);
--            }
--        } else if (vms->virt) {
--            qdev_prop_set_uint32(vms->gic, "maintenance-interrupt-id",
--                                 ARCH_GIC_MAINT_IRQ);
--        }
--    } else {
--        if (!kvm_irqchip_in_kernel()) {
--            qdev_prop_set_bit(vms->gic, "has-virtualization-extensions",
--                              vms->virt);
-+    if (!kvm_irqchip_in_kernel()) {
-+        if (vms->tcg_its) {
-+            object_property_set_link(OBJECT(vms->gic), "sysmem", OBJECT(mem),
-+                                     &error_fatal);
-+            qdev_prop_set_bit(vms->gic, "has-lpi", true);
-         }
-+    } else if (vms->virt) {
-+        qdev_prop_set_uint32(vms->gic, "maintenance-interrupt-id",
-+                             ARCH_GIC_MAINT_IRQ);
-     }
- 
-     if (gicv3_nmi_present(vms)) {
-@@ -953,18 +974,9 @@ static void create_gic(VirtMachineState *vms, MemoryRegion *mem)
-     gicbusdev = SYS_BUS_DEVICE(vms->gic);
-     sysbus_realize_and_unref(gicbusdev, &error_fatal);
-     sysbus_mmio_map(gicbusdev, 0, vms->memmap[VIRT_GIC_DIST].base);
--    if (vms->gic_version != VIRT_GIC_VERSION_2) {
--        sysbus_mmio_map(gicbusdev, 1, vms->memmap[VIRT_GIC_REDIST].base);
--        if (nb_redist_regions == 2) {
--            sysbus_mmio_map(gicbusdev, 2,
--                            vms->memmap[VIRT_HIGH_GIC_REDIST2].base);
--        }
--    } else {
--        sysbus_mmio_map(gicbusdev, 1, vms->memmap[VIRT_GIC_CPU].base);
--        if (vms->virt) {
--            sysbus_mmio_map(gicbusdev, 2, vms->memmap[VIRT_GIC_HYP].base);
--            sysbus_mmio_map(gicbusdev, 3, vms->memmap[VIRT_GIC_VCPU].base);
--        }
-+    sysbus_mmio_map(gicbusdev, 1, vms->memmap[VIRT_GIC_REDIST].base);
-+    if (nb_redist_regions == 2) {
-+        sysbus_mmio_map(gicbusdev, 2, vms->memmap[VIRT_HIGH_GIC_REDIST2].base);
-     }
- 
-     gic_connect_ppis(vms);
-@@ -972,6 +984,21 @@ static void create_gic(VirtMachineState *vms, MemoryRegion *mem)
-     fdt_add_gic_node(vms);
- }
- 
-+static void create_gic(VirtMachineState *vms, MemoryRegion *mem)
-+{
-+    switch (vms->gic_version) {
-+    case VIRT_GIC_VERSION_2:
-+        create_gicv2(vms, mem);
-+        break;
-+    case VIRT_GIC_VERSION_3:
-+    case VIRT_GIC_VERSION_4:
-+        create_gicv3(vms, mem);
-+        break;
-+    default:
-+        g_assert_not_reached();
-+    }
-+}
-+
- static void create_msi_controller(VirtMachineState *vms)
- {
-     switch (vms->msi_controller) {
+    - guest-visible behaviour may change when the final version of
+      the specification is released and QEMU implements it
+    - migration support is not yet implemented
+    - the GICv5 is not exposed to the guest via ACPI tables, only via DTB
+    - the way the interrupt controller is exposed to the guest and the
+      command line syntax for enabling it may change
+
+    The current implementation supports only an EL1 guest (no EL2 or
+    EL3 and no Realm support), and does not implement the ITS (no
+    MSI support).
+
+The GICv5 is supported by the "virt" board, and can be enabled with
+"-machine gic-version=x-5" (the 'x' standing for "experimental").
+
+Like the GICv3/v4, the GICv5 has both a system component part (the
+Interrupt Routing Service, IRS), and a part in the CPU itself (the CPU
+interface). Our GICv3 model puts both of these into code in hw/intc/,
+and has the cpuif part install itself into an existing CPU object by
+adding new system registers there. This works, but in retrospect I
+feel that it's a bit awkward and we would have done better to make our
+design a bit closer to the hardware setup, where the CPU interface is
+really part of the CPU and talks to the system component over an
+architected protocol. So for GICv5 I have taken that route: the IRS is
+in hw/intc/arm_gicv5.c, and the CPU interface is in
+target/arm/tcg/gicv5-cpuif.c. They communicate via a set of functions
+which loosely match the "stream protocol" defined in the GICv5
+architecture spec (with some simplifications that result from QEMU
+being strictly synchronous because we always hold the BQL when
+executing any GICv5 emulation code; the hardware has to handle the IRS
+and the CPU executing in parallel and the communications channel not
+being instantaneous transmission).
+
+Although the EL2/EL3/Realm functionality is not present in this
+patchset, I have implemented some of the foundations for it where I
+thought it made sense, to avoid having to refactor it later.
+Similarly, the class structure makes the usual "common baseclass + TCG
+subclass" split, as we are going to want a KVM subclass when we add
+KVM support.
+
+In a few places I have noted possible opportunities for performance
+optimisation; these are probably best left until we've done some
+analysis that shows them to be necessary.
+
+This patchset is sufficient to be able to boot a Linux guest at EL1
+(directly via -kernel): all the kernel support for GICv5 is upstream
+as of Linux 6.19.
+
+One or two of the patches in here have appeared on list separately;
+I've put in the Reviewed-by tags in those cases.
+
+I'm optimistic that we can get this into the upcoming 11.0
+release, but that will depend on how code review goes :-)
+
+thanks
+-- PMM
+
+Peter Maydell (65):
+  hw/core: Permit devices to define an array of link properties
+  hw/intc: Skeleton of GICv5 IRS classes
+  hw/arm/Kconfig: select ARM_GICV5 for ARM_VIRT board
+  hw/intc/arm_gicv5: Implement skeleton code for IRS register frames
+  hw/intc/arm_gicv5: Add migration blocker
+  hw/intc/arm_gicv5: Create and validate QOM properties
+  hw/intc/arm_gicv5: Create inbound GPIO lines for SPIs
+  hw/intc/arm_gicv5: Define macros for config frame registers
+  hw/intc/arm_gicv5: Implement IRS ID regs
+  hw/intc/arm_gicv5: Add link property for MemoryRegion for DMA
+  hw/intc/arm_gicv5: Implement gicv5_class_name()
+  hw/intc/arm_gicv5: Add defines for GICv5 architected PPIs
+  target/arm: GICv5 cpuif: Initial skeleton and GSB barrier insns
+  target/arm: Set up pointer to GICv5 in each CPU
+  hw/intc/arm_gicv5: Implement IRS_IST_{BASER, STATUSR, CFGR}
+  hw/intc/arm_gicv5: Cache LPI IST config in a struct
+  hw/intc/arm_gicv5: Implement gicv5_set_priority()
+  target/arm: GICv5 cpuif: Implement the GIC CDPRI instruction
+  hw/intc/arm_gicv5: Implement IRS_MAP_L2_ISTR
+  hw/intc/arm_gicv5: Implement remaining set-config functions
+  target/arm: GICv5 cpuif: Implement GIC CD* insns for setting config
+  hw/intc/arm_gicv5: Create backing state for SPIs
+  hw/intc/arm_gicv5: Make gicv5_set_* update SPI state
+  hw/intc/arm_gicv5: Implement gicv5_request_config()
+  target/arm: GICv5 cpuif: Implement GIC CDRCFG and ICC_ICSR_EL1
+  hw/intc/arm_gicv5: Implement IRS_SPI_{SELR,STATUSR,CFGR,DOMAINR}
+  hw/intc/arm_gicv5: Update SPI state for CLEAR/SET events
+  hw/intc/arm_gicv5: Implement IRS_CR0 and IRS_CR1
+  hw/intc/arm_gicv5: Implement IRS_SYNCR and IRS_SYNC_STATUSR
+  hw/intc/arm_gicv5: Implement IRS_PE_{CR0,SELR,STATUSR}
+  hw/intc/arm_gicv5: Implement CoreSight ID registers
+  hw/intc/arm_gicv5: Cache pending LPIs in a hash table
+  target/arm: GICv5 cpuif: Implement ICC_IAFFIDR_EL1
+  target/arm: GICv5 cpuif: Implement ICC_IDR0_EL1
+  target/arm: GICv5 cpuif: Implement GICv5 PPI active set/clear
+    registers
+  target/arm: GICv5 cpuif: Implement PPI handling mode register
+  target/arm: GICv5 cpuif: Implement PPI pending status registers
+  target/arm: GICv5 cpuif: Implement PPI enable register
+  target/arm: GICv5 cpuif: Implement PPI priority registers
+  target/arm: GICv5 cpuif: Implement ICC_APR_EL1 and ICC_HAPR_EL1
+  target/arm: GICv5 cpuif: Calculate the highest priority PPI
+  hw/intc/arm_gicv5: Calculate HPPI in the IRS
+  target/arm: GICv5 cpuif: Implement ICC_CR0_EL1
+  target/arm: GICv5 cpuif: Implement ICC_PCR_EL1
+  target/arm: GICv5 cpuif: Implement ICC_HPPIR_EL1
+  hw/intc/arm_gicv5: Implement Activate command
+  target/arm: GICv5 cpuif: Implement GICR CDIA command
+  target/arm: GICv5 cpuif: Implement GIC CDEOI
+  hw/intc/arm_gicv5: Implement Deactivate command
+  target/arm: GICv5 cpuif: Implement GIC CDDI
+  target/arm: GICv5 cpuif: Signal IRQ or FIQ
+  target/arm: Connect internal interrupt sources up as GICv5 PPIs
+  target/arm: Add has_gcie property to enable FEAT_GCIE
+  hw/intc/arm_gicv3_cpuif: Don't allow GICv3 if CPU has GICv5 cpuif
+  hw/arm/virt: Update error message for bad gic-version option
+  hw/arm/virt: Remember CPU phandles rather than looking them up by name
+  hw/arm/virt: Move MSI controller creation out of create_gic()
+  hw/arm/virt: Pull "wire CPU interrupts" out of create_gic()
+  hw/arm/virt: Split GICv2 and GICv3/4 creation
+  hw/arm/virt: Create and connect GICv5
+  hw/arm/virt: Advertise GICv5 in the DTB
+  hw/arm/virt: Handle GICv5 in interrupt bindings for PPIs
+  hw/arm/virt: Use correct interrupt type for GICv5 SPIs in the DTB
+  hw/arm/virt: Enable GICv5 CPU interface when using GICv5
+  hw/arm/virt: Allow user to select GICv5
+
+ docs/system/arm/virt.rst           |   19 +
+ hw/arm/Kconfig                     |    1 +
+ hw/arm/virt.c                      |  524 ++++++--
+ hw/core/qdev-properties.c          |   78 ++
+ hw/intc/Kconfig                    |    4 +
+ hw/intc/arm_gicv3.c                |    2 +-
+ hw/intc/arm_gicv3_cpuif.c          |   14 +-
+ hw/intc/arm_gicv5.c                | 1933 ++++++++++++++++++++++++++++
+ hw/intc/arm_gicv5_common.c         |  227 ++++
+ hw/intc/gicv3_internal.h           |    2 +-
+ hw/intc/meson.build                |    4 +
+ hw/intc/trace-events               |   23 +
+ include/hw/arm/fdt.h               |   10 +
+ include/hw/arm/virt.h              |   15 +
+ include/hw/core/qdev-properties.h  |   40 +
+ include/hw/intc/arm_gicv5.h        |   51 +
+ include/hw/intc/arm_gicv5_common.h |  238 ++++
+ include/hw/intc/arm_gicv5_stream.h |  229 ++++
+ include/hw/intc/arm_gicv5_types.h  |  111 ++
+ include/qom/object.h               |   19 +
+ meson.build                        |    1 +
+ qom/object.c                       |   42 +-
+ target/arm/cpregs-pmu.c            |    9 +-
+ target/arm/cpu-features.h          |   11 +
+ target/arm/cpu.c                   |   62 +
+ target/arm/cpu.h                   |   28 +
+ target/arm/helper.c                |   21 +
+ target/arm/internals.h             |    9 +
+ target/arm/tcg/gicv5-cpuif.c       |  958 ++++++++++++++
+ target/arm/tcg/meson.build         |    1 +
+ target/arm/tcg/trace-events        |   11 +
+ target/arm/tcg/trace.h             |    1 +
+ 32 files changed, 4542 insertions(+), 156 deletions(-)
+ create mode 100644 hw/intc/arm_gicv5.c
+ create mode 100644 hw/intc/arm_gicv5_common.c
+ create mode 100644 include/hw/intc/arm_gicv5.h
+ create mode 100644 include/hw/intc/arm_gicv5_common.h
+ create mode 100644 include/hw/intc/arm_gicv5_stream.h
+ create mode 100644 include/hw/intc/arm_gicv5_types.h
+ create mode 100644 target/arm/tcg/gicv5-cpuif.c
+ create mode 100644 target/arm/tcg/trace-events
+ create mode 100644 target/arm/tcg/trace.h
+
 -- 
 2.43.0
 
