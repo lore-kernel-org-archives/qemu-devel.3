@@ -4,57 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E982E98E11
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 09:50:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C534E98E10
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 09:50:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuSXu-0005E8-OV; Mon, 23 Feb 2026 04:48:06 -0500
+	id 1vuSXh-0004pk-RF; Mon, 23 Feb 2026 04:47:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vuSXl-0004zW-1a
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 04:47:58 -0500
+ id 1vuSXc-0004de-6G
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 04:47:49 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vuSXj-0006ts-OY
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 04:47:56 -0500
+ id 1vuSXU-0006rk-JR
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 04:47:46 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771840075;
+ s=mimecast20190719; t=1771840059;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=bmLE4PI4NiS4bmYyzdcYckwaqWftpyyj3Q24H/oUE1E=;
- b=MoGBLES/OQaUzfItIw1ngZQr2/PDWFx1SqB4QB1NUa6/YhJdxG7x6OnwkrucA1vySefZ+m
- yzVnoj8/uVljZGkfJFBz0cRQFrSUorXs5OQUakhDEla/w5QlDqg0N0bqrCUl3s+fKXnVdM
- heH9AdwUV5LAIeaJshnJoWLPw+aPtsI=
+ bh=u/09w0J2YpkpDAMjN66q20SGVs5ABPk/vfQW5xglbdY=;
+ b=dyA17Q47Jq/4SDYr3S1Tb/hEwN331msYNHybvo2jdV5jdvn8acv3HU7gKFrceXJlUYUNxt
+ 23zG+cR4770hysuZdk454nTsgjXDrlfLD2zT8KZZiJiAKm2pQmdnl2bsB6OsWAu36nZ+E7
+ arQOh1E9HgoWiVc+WdO/iAXxO9rfxiw=
 Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-613-JQUmWgcjOr61lPwchCG6Dw-1; Mon,
- 23 Feb 2026 04:47:51 -0500
-X-MC-Unique: JQUmWgcjOr61lPwchCG6Dw-1
-X-Mimecast-MFC-AGG-ID: JQUmWgcjOr61lPwchCG6Dw_1771840070
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-107-wF4H7SwxPF60xGHqM_ISLA-1; Mon,
+ 23 Feb 2026 04:47:35 -0500
+X-MC-Unique: wF4H7SwxPF60xGHqM_ISLA-1
+X-Mimecast-MFC-AGG-ID: wF4H7SwxPF60xGHqM_ISLA_1771840054
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6A68B1956095; Mon, 23 Feb 2026 09:47:50 +0000 (UTC)
+ id 919531956095; Mon, 23 Feb 2026 09:47:34 +0000 (UTC)
 Received: from localhost (unknown [10.45.242.25])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 8FA8430001BE; Mon, 23 Feb 2026 09:47:49 +0000 (UTC)
+ id 0C7163003D8F; Mon, 23 Feb 2026 09:47:33 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Gerd Hoffmann <kraxel@redhat.com>
-Subject: [PULL v2 21/85] audio: use DEFINE_TYPES
-Date: Mon, 23 Feb 2026 10:45:39 +0100
-Message-ID: <20260223094649.2005118-22-marcandre.lureau@redhat.com>
+ John Snow <jsnow@redhat.com>, Cleber Rosa <crosa@redhat.com>
+Subject: [PULL v2 15/85] scripts/modinfo: make --devices optional
+Date: Mon, 23 Feb 2026 10:45:33 +0100
+Message-ID: <20260223094649.2005118-16-marcandre.lureau@redhat.com>
 In-Reply-To: <20260223094649.2005118-1-marcandre.lureau@redhat.com>
 References: <20260223094649.2005118-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
@@ -89,70 +89,47 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-It's the "modern" way of registring the object TypeInfo.
+This will allow to use modinfo-generate in cases where devices aren't
+relevant (tests etc)
 
-Suggested-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+Acked-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>w
 Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- audio/audio.c | 45 ++++++++++++++++++++-------------------------
- 1 file changed, 20 insertions(+), 25 deletions(-)
+ scripts/modinfo-generate.py | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/audio/audio.c b/audio/audio.c
-index 75a7f694319..c4e4adec106 100644
---- a/audio/audio.c
-+++ b/audio/audio.c
-@@ -2366,30 +2366,25 @@ AudiodevList *qmp_query_audiodevs(Error **errp)
-     return ret;
- }
+diff --git a/scripts/modinfo-generate.py b/scripts/modinfo-generate.py
+index 777d419aa33..e7d35242414 100644
+--- a/scripts/modinfo-generate.py
++++ b/scripts/modinfo-generate.py
+@@ -84,7 +84,7 @@ def main() -> None:
+     parser = argparse.ArgumentParser(
+         description='Generate C code for QEMU module info'
+     )
+-    parser.add_argument('--devices', required=True,
++    parser.add_argument('--devices',
+                         help='path to config-device.mak')
+     parser.add_argument('modinfo', nargs='+',
+                         help='modinfo files to process')
+@@ -92,11 +92,12 @@ def main() -> None:
  
--static const TypeInfo audio_be_info = {
--    .name = TYPE_AUDIO_BACKEND,
--    .parent = TYPE_OBJECT,
--    .instance_size = sizeof(AudioBackend),
--    .instance_init = audio_be_init,
--    .instance_finalize = audio_be_finalize,
--    .abstract = true,
--    .class_size = sizeof(AudioBackendClass),
--};
--
--static const TypeInfo audio_mixeng_backend_info = {
--    .name = TYPE_AUDIO_MIXENG_BACKEND,
--    .parent = TYPE_AUDIO_BACKEND,
--    .instance_size = sizeof(AudioMixengBackend),
--    .instance_init = audio_mixeng_backend_init,
--    .instance_finalize = audio_mixeng_backend_finalize,
--    .class_size = sizeof(AudioMixengBackendClass),
--    .class_init = audio_mixeng_backend_class_init,
-+static const TypeInfo audio_types[] = {
-+    {
-+        .name = TYPE_AUDIO_BACKEND,
-+        .parent = TYPE_OBJECT,
-+        .instance_size = sizeof(AudioBackend),
-+        .instance_init = audio_be_init,
-+        .instance_finalize = audio_be_finalize,
-+        .abstract = true,
-+        .class_size = sizeof(AudioBackendClass),
-+    },
-+    {
-+        .name = TYPE_AUDIO_MIXENG_BACKEND,
-+        .parent = TYPE_AUDIO_BACKEND,
-+        .instance_size = sizeof(AudioMixengBackend),
-+        .instance_init = audio_mixeng_backend_init,
-+        .instance_finalize = audio_mixeng_backend_finalize,
-+        .class_size = sizeof(AudioMixengBackendClass),
-+        .class_init = audio_mixeng_backend_class_init,
-+    }
- };
+     # get all devices enabled in kconfig, from *-config-device.mak
+     enabled = set()
+-    with open(args.devices) as file:
+-        for line in file.readlines():
+-            config = line.split('=')
+-            if config[1].rstrip() == 'y':
+-                enabled.add(config[0][7:])  # remove CONFIG_
++    if args.devices:
++        with open(args.devices) as file:
++            for line in file.readlines():
++                config = line.split('=')
++                if config[1].rstrip() == 'y':
++                    enabled.add(config[0][7:])  # remove CONFIG_
  
--static void register_types(void)
--{
--    type_register_static(&audio_be_info);
--    type_register_static(&audio_mixeng_backend_info);
--}
--
--type_init(register_types);
-+DEFINE_TYPES(audio_types)
+     deps = set()
+     modules = set()
 -- 
 2.53.0
 
