@@ -4,102 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E827E98E10
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4494CE98E13
 	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 09:55:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuSf4-0002kn-Pd; Mon, 23 Feb 2026 04:55:30 -0500
+	id 1vuSc2-0005Bq-BI; Mon, 23 Feb 2026 04:52:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vuSf1-0002Jf-LF
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 04:55:28 -0500
-Received: from mail-yx1-xb133.google.com ([2607:f8b0:4864:20::b133])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vuSez-0007x1-Pj
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 04:55:27 -0500
-Received: by mail-yx1-xb133.google.com with SMTP id
- 956f58d0204a3-649dbff9727so3644118d50.3
- for <qemu-devel@nongnu.org>; Mon, 23 Feb 2026 01:55:25 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1771840524; cv=none;
- d=google.com; s=arc-20240605;
- b=h3pDy2aWERXnF03f+JAXMGnXSHT4L9p8hPHtj7GVKTEjqW+2/sdwD8J7zdGG+46w8w
- /kaka65OQU2aTrbv05i7CykDS5KK9zBbNUfpyjL7ls493+MXRsODilCxcF6pL/FA+ucC
- nh4NIIliE7UTuADk6Gj6nWM870/7+GRbupzf8k8nud36u0C89h4yd9miw5OWIxIRUtzq
- ImYDMuod+nTse8qoDVU+f58e49cLmXrLOszkKNEmSuzBBTizutVYaQMNs3w1gH7r4we7
- 37U/IfV6qCU4z3c9bn7rcM9opBWobloivIdvNjJqyWCoA5jZIsFyoiSFxCOzEpmu3arE
- H95g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=MzTHiok1vhJN1c4Ov4uL4bIGf+8tZDGQjoNL3JEpXKg=;
- fh=Ka5Fm2uGNoMN6LvftSCwVWZ6LDxGZumgYDW+5kU6bEI=;
- b=Yv9T6AfP75PlQpNxPdsRQxkJKktZh3SXJ1ugkkq/5IZCHo1qzfROzzzl6rg8+oA87s
- +nDOkRXd8BMhyfbhyfzlTKcyC7IC9ZJZ9kEVQssIrxMimlI4vmlughJ/lY9Tx17sOuov
- 8QYmbabwiB6JZedcq3BM4Fui3j9ryuHw4vwOYDGH7W/E0hUC/Vl2oJybDMUUBKIuW4Xf
- eBjozER2+QY9535YPX57c0YrQ/0R5CudqiVtf2sbGWn45bLPRhSFU+/AdosDVAoHmaYM
- OX4SsfVZvAT8UNKxEeHPsjbUVm/1cgs47XJhj5mm7Hnq5D0MptqdtpAGvsEgM1C69DG3
- MC9Q==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771840524; x=1772445324; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=MzTHiok1vhJN1c4Ov4uL4bIGf+8tZDGQjoNL3JEpXKg=;
- b=gMWfh9QcB12pD8FsO6uT4UUuRrg4fQ0UBVUjgFo8Xo/joi2w8aNeHSUTLDsLYX7q68
- OvyAVFcKYwEqA7E+8GJI3UBIeQ4ecWhUAfQgKzgQcdW+IESeX0Smoez3YJQZTRj9V/Q2
- DgW82GXtPbJ2jmf/m4rbnLwbnvf/9WDC8/1ghwaHGfVqrUvSNUeeIoQ3yssVE5P1bHr0
- LGbUGOqfqTSAv0fBrqqyl5rG+Ix1MOoaJIvl9PCUzUioy9Z7avqmx6OelL/n2qn1xDbr
- EKSsOPr9Ffas3Q8q6Le0RDVDyasD1RxfMY9ZJUT576vOs4DJBRbSE76gc5cnGc3G8Szr
- MSJQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771840524; x=1772445324;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=MzTHiok1vhJN1c4Ov4uL4bIGf+8tZDGQjoNL3JEpXKg=;
- b=hf4RsRDOw2cv0YEikSIwOmlDf0yQgCxZ6yoFBQ8PlhmrSwbLmfNXarSLSivbw3Bvej
- U+A3WdQqR2rCfwn/mTo5admCozTq20T+X5n9QCOi6NjVu3pXxkc15hGqRz1P0eWADu+/
- 6klKjH5Ck4HgIF9Qx+esXERn13vkk2TnGhKsKh7uGA40DUFRrBq1Hev4WI3uYu/GLePl
- 0TxheF7SsYitu7vMiangYTKbshb8N+eeBcVjdT4iAEKPamjg8vlEkgdDA1phUKeUdw6j
- PshaZ7DdQ5P8aaBMmdOuc2RIchZrjFnzHKlc98sZOo4tG/qQw7f81e5ytjm35WZAJxrS
- r+VQ==
-X-Gm-Message-State: AOJu0YwRGRjhyTDQA8rALmvpGYl7zuC61P/HQ4VYtAgD5BONblmgpCTt
- 7pmR5DVx1NjRgwk0Ky61wplDBeTqVU+wKbj1xRF/M/dnwxitxE+IdMNK6M/UaHRU8Y0i47LUY/a
- B4f9KehfvmkSl4rmPg62khEpksjy3Ru/QMNUahcMkIe4r4JstL8SC
-X-Gm-Gg: ATEYQzyG795VjgDykrCqlzUpHjpu5tQi7TEXPnKbNvwuRcX3Y/Oi0/qhFlPERoGYI5Y
- ZFpdXDzGeXzpz7kk/06RiuwryJhDCXdVfAtx0XubCE4pbSQCA7xMHw9DLswdAVV3ozDrFrqco+y
- mGNLYj77+OxeN0LX9iHV5jMdl8pgEn8gPKWvXg64vhQS+hRweJHL4uEYRrxJOV9OHIbgn7Qt5Bb
- ZhFZiU+J9QhJfaCvYaoeDjOIEEtjnJj1B9Btl3X2HGYRnL45ouZ+f4ekdaHfRAf17x338Fwu3oM
- m5mmR8ta3aHAB/+9uE/10gqcA3qH2wQ9ME2dXG0X6J1pQXn7tfVBwrVSr0aGsC0UK0bH8D1bZ+k
- 6jA==
-X-Received: by 2002:a05:690e:1517:b0:64a:d6fa:2c6b with SMTP id
- 956f58d0204a3-64c7906c424mr6708043d50.76.1771840524543; Mon, 23 Feb 2026
- 01:55:24 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1vuSa0-000290-PO
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 04:50:19 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1vuSZy-0007LX-Sq
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 04:50:16 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1771840214;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=PpbyI6BL5TUAi9nTekVnBuEQGB8f86bN7DiGo4Y665s=;
+ b=N4UCDTWRl36ThJdlwhlgYtr2JuLNNDhINVM02jHqtsP+Ow4P5pRraF9nFP9AG30yV999Gx
+ xnJ1RZ7ZvraR54MGZFWjTaarxvkFXz9TZWIEkq3qz5zm3KTdpPhXlgo5qVCNWkCR9vWc04
+ sD56SFgVsTdne7IC2SvaH6xRDbW85Ts=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-424-9zqphqsqOPqbVAjGgT7lSg-1; Mon,
+ 23 Feb 2026 04:50:10 -0500
+X-MC-Unique: 9zqphqsqOPqbVAjGgT7lSg-1
+X-Mimecast-MFC-AGG-ID: 9zqphqsqOPqbVAjGgT7lSg_1771840209
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 56E3B19560A5; Mon, 23 Feb 2026 09:50:09 +0000 (UTC)
+Received: from localhost (unknown [10.45.242.25])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id C5CF830001BE; Mon, 23 Feb 2026 09:50:08 +0000 (UTC)
+From: marcandre.lureau@redhat.com
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Gerd Hoffmann <kraxel@redhat.com>
+Subject: [PULL v2 66/85] audio/pa: replace custom logging with report & trace
+Date: Mon, 23 Feb 2026 10:46:24 +0100
+Message-ID: <20260223094649.2005118-67-marcandre.lureau@redhat.com>
+In-Reply-To: <20260223094649.2005118-1-marcandre.lureau@redhat.com>
+References: <20260223094649.2005118-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
-References: <20260219203507.3502009-1-pierrick.bouvier@linaro.org>
-In-Reply-To: <20260219203507.3502009-1-pierrick.bouvier@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 23 Feb 2026 09:55:13 +0000
-X-Gm-Features: AaiRm53E4FJMhF1bzN87GEQWvi4d7SeFbXXIr5HsDZxSOhFISnmMYJhZBca3tSo
-Message-ID: <CAFEAcA9VYs6vHH+jXhLBVfyYckHgc8Yu13h4M35SmOCVG9W37A@mail.gmail.com>
-Subject: Re: [PULL 0/1] Plugins fix compilation for cpp plugin
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: qemu-devel@nongnu.org, richard.henderson@linaro.org, pbonzini@redhat.com, 
- stefanha@redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b133;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb133.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=marcandre.lureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -14
+X-Spam_score: -1.5
+X-Spam_bar: -
+X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.798, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.79,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,35 +87,328 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 19 Feb 2026 at 20:35, Pierrick Bouvier
-<pierrick.bouvier@linaro.org> wrote:
->
-> The following changes since commit 07f97d5da04a9f97e273de85c76f5017d8135a6e:
->
->   Merge tag 'pull-target-arm-20260219' of https://gitlab.com/pm215/qemu into staging (2026-02-19 10:36:06 +0000)
->
-> are available in the Git repository at:
->
->   https://gitlab.com/pbo-linaro/qemu tags/pr-plugins-20260219
->
-> for you to fetch changes up to 396d005e4b83aa4a65d81778d180d545046ba0a8:
->
->   contrib/plugins/cpp: use __has_include (2026-02-19 12:34:11 -0800)
->
-> ----------------------------------------------------------------
-> Changes:
-> - [PATCH] contrib/plugins/cpp: use __has_include (Pierrick Bouvier <pierrick.bouvier@linaro.org>)
->   Link: https://lore.kernel.org/qemu-devel/20260214061025.1239457-1-pierrick.bouvier@linaro.org
->
-> ----------------------------------------------------------------
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
+Replace the custom audio logging infrastructure with standard QEMU
+error reporting and tracing.
 
+qpa_conn_init() is called during audio_pa_realize() and already reports
+an error through Error *.
 
+Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+---
+ audio/paaudio.c | 77 ++++++++++++++++++++++++-------------------------
+ 1 file changed, 38 insertions(+), 39 deletions(-)
 
-Applied, thanks.
+diff --git a/audio/paaudio.c b/audio/paaudio.c
+index b7826402e12..1501b26386a 100644
+--- a/audio/paaudio.c
++++ b/audio/paaudio.c
+@@ -3,14 +3,13 @@
+ #include "qemu/osdep.h"
+ #include "qemu/module.h"
+ #include "qemu/audio.h"
++#include "qemu/error-report.h"
+ #include "qapi/error.h"
+ #include "qom/object.h"
++#include "audio_int.h"
+ 
+ #include <pulse/pulseaudio.h>
+ 
+-#define AUDIO_CAP "pulseaudio"
+-#include "audio_int.h"
+-
+ #define TYPE_AUDIO_PA "audio-pa"
+ OBJECT_DECLARE_SIMPLE_TYPE(AudioPa, AUDIO_PA)
+ 
+@@ -51,15 +50,16 @@ typedef struct {
+ 
+ static void qpa_conn_fini(PAConnection *c);
+ 
+-static void G_GNUC_PRINTF (2, 3) qpa_logerr (int err, const char *fmt, ...)
++static void G_GNUC_PRINTF(2, 3) qpa_logerr(int err, const char *fmt, ...)
+ {
+     va_list ap;
+ 
+-    va_start (ap, fmt);
+-    AUD_vlog (AUDIO_CAP, fmt, ap);
+-    va_end (ap);
++    error_printf("pulseaudio: ");
++    va_start(ap, fmt);
++    error_vprintf(fmt, ap);
++    va_end(ap);
+ 
+-    AUD_log (AUDIO_CAP, "Reason: %s\n", pa_strerror (err));
++    error_printf(" Reason: %s\n", pa_strerror(err));
+ }
+ 
+ #ifndef PA_CONTEXT_IS_GOOD
+@@ -113,12 +113,12 @@ static void *qpa_get_buffer_in(HWVoiceIn *hw, size_t *size)
+     pa_threaded_mainloop_lock(c->mainloop);
+ 
+     CHECK_DEAD_GOTO(c, p->stream, unlock_and_fail,
+-                    "pa_threaded_mainloop_lock failed\n");
++                    "pa_threaded_mainloop_lock failed");
+ 
+     if (!p->read_length) {
+         r = pa_stream_peek(p->stream, &p->read_data, &p->read_length);
+         CHECK_SUCCESS_GOTO(c, r == 0, unlock_and_fail,
+-                           "pa_stream_peek failed\n");
++                           "pa_stream_peek failed");
+     }
+ 
+     *size = MIN(p->read_length, *size);
+@@ -141,7 +141,7 @@ static void qpa_put_buffer_in(HWVoiceIn *hw, void *buf, size_t size)
+     pa_threaded_mainloop_lock(c->mainloop);
+ 
+     CHECK_DEAD_GOTO(c, p->stream, unlock,
+-                    "pa_threaded_mainloop_lock failed\n");
++                    "pa_threaded_mainloop_lock failed");
+ 
+     assert(buf == p->read_data && size <= p->read_length);
+ 
+@@ -150,7 +150,7 @@ static void qpa_put_buffer_in(HWVoiceIn *hw, void *buf, size_t size)
+ 
+     if (size && !p->read_length) {
+         r = pa_stream_drop(p->stream);
+-        CHECK_SUCCESS_GOTO(c, r == 0, unlock, "pa_stream_drop failed\n");
++        CHECK_SUCCESS_GOTO(c, r == 0, unlock, "pa_stream_drop failed");
+     }
+ 
+ unlock:
+@@ -166,7 +166,7 @@ static size_t qpa_read(HWVoiceIn *hw, void *data, size_t length)
+     pa_threaded_mainloop_lock(c->mainloop);
+ 
+     CHECK_DEAD_GOTO(c, p->stream, unlock_and_fail,
+-                    "pa_threaded_mainloop_lock failed\n");
++                    "pa_threaded_mainloop_lock failed");
+     if (pa_stream_get_state(p->stream) != PA_STREAM_READY) {
+         /* wait for stream to become ready */
+         goto unlock;
+@@ -179,7 +179,7 @@ static size_t qpa_read(HWVoiceIn *hw, void *data, size_t length)
+         if (!p->read_length) {
+             r = pa_stream_peek(p->stream, &p->read_data, &p->read_length);
+             CHECK_SUCCESS_GOTO(c, r == 0, unlock_and_fail,
+-                               "pa_stream_peek failed\n");
++                               "pa_stream_peek failed");
+             if (!p->read_length) {
+                 /* buffer is empty */
+                 break;
+@@ -196,7 +196,7 @@ static size_t qpa_read(HWVoiceIn *hw, void *data, size_t length)
+         if (!p->read_length) {
+             r = pa_stream_drop(p->stream);
+             CHECK_SUCCESS_GOTO(c, r == 0, unlock_and_fail,
+-                               "pa_stream_drop failed\n");
++                               "pa_stream_drop failed");
+         }
+     }
+ 
+@@ -218,7 +218,7 @@ static size_t qpa_buffer_get_free(HWVoiceOut *hw)
+     pa_threaded_mainloop_lock(c->mainloop);
+ 
+     CHECK_DEAD_GOTO(c, p->stream, unlock_and_fail,
+-                    "pa_threaded_mainloop_lock failed\n");
++                    "pa_threaded_mainloop_lock failed");
+     if (pa_stream_get_state(p->stream) != PA_STREAM_READY) {
+         /* wait for stream to become ready */
+         l = 0;
+@@ -227,7 +227,7 @@ static size_t qpa_buffer_get_free(HWVoiceOut *hw)
+ 
+     l = pa_stream_writable_size(p->stream);
+     CHECK_SUCCESS_GOTO(c, l != (size_t) -1, unlock_and_fail,
+-                       "pa_stream_writable_size failed\n");
++                       "pa_stream_writable_size failed");
+ 
+ unlock:
+     pa_threaded_mainloop_unlock(c->mainloop);
+@@ -248,12 +248,12 @@ static void *qpa_get_buffer_out(HWVoiceOut *hw, size_t *size)
+     pa_threaded_mainloop_lock(c->mainloop);
+ 
+     CHECK_DEAD_GOTO(c, p->stream, unlock_and_fail,
+-                    "pa_threaded_mainloop_lock failed\n");
++                    "pa_threaded_mainloop_lock failed");
+ 
+     *size = -1;
+     r = pa_stream_begin_write(p->stream, &ret, size);
+     CHECK_SUCCESS_GOTO(c, r >= 0, unlock_and_fail,
+-                       "pa_stream_begin_write failed\n");
++                       "pa_stream_begin_write failed");
+ 
+     pa_threaded_mainloop_unlock(c->mainloop);
+     return ret;
+@@ -273,10 +273,10 @@ static size_t qpa_put_buffer_out(HWVoiceOut *hw, void *data, size_t length)
+     pa_threaded_mainloop_lock(c->mainloop);
+ 
+     CHECK_DEAD_GOTO(c, p->stream, unlock_and_fail,
+-                    "pa_threaded_mainloop_lock failed\n");
++                    "pa_threaded_mainloop_lock failed");
+ 
+     r = pa_stream_write(p->stream, data, length, NULL, 0LL, PA_SEEK_RELATIVE);
+-    CHECK_SUCCESS_GOTO(c, r >= 0, unlock_and_fail, "pa_stream_write failed\n");
++    CHECK_SUCCESS_GOTO(c, r >= 0, unlock_and_fail, "pa_stream_write failed");
+ 
+     pa_threaded_mainloop_unlock(c->mainloop);
+     return length;
+@@ -296,7 +296,7 @@ static size_t qpa_write(HWVoiceOut *hw, void *data, size_t length)
+     pa_threaded_mainloop_lock(c->mainloop);
+ 
+     CHECK_DEAD_GOTO(c, p->stream, unlock_and_fail,
+-                    "pa_threaded_mainloop_lock failed\n");
++                    "pa_threaded_mainloop_lock failed");
+     if (pa_stream_get_state(p->stream) != PA_STREAM_READY) {
+         /* wait for stream to become ready */
+         l = 0;
+@@ -306,14 +306,14 @@ static size_t qpa_write(HWVoiceOut *hw, void *data, size_t length)
+     l = pa_stream_writable_size(p->stream);
+ 
+     CHECK_SUCCESS_GOTO(c, l != (size_t) -1, unlock_and_fail,
+-                       "pa_stream_writable_size failed\n");
++                       "pa_stream_writable_size failed");
+ 
+     if (l > length) {
+         l = length;
+     }
+ 
+     r = pa_stream_write(p->stream, data, l, NULL, 0LL, PA_SEEK_RELATIVE);
+-    CHECK_SUCCESS_GOTO(c, r >= 0, unlock_and_fail, "pa_stream_write failed\n");
++    CHECK_SUCCESS_GOTO(c, r >= 0, unlock_and_fail, "pa_stream_write failed");
+ 
+ unlock:
+     pa_threaded_mainloop_unlock(c->mainloop);
+@@ -345,7 +345,7 @@ static pa_sample_format_t audfmt_to_pa(AudioFormat afmt, bool big_endian)
+         format = big_endian ? PA_SAMPLE_FLOAT32BE : PA_SAMPLE_FLOAT32LE;
+         break;
+     default:
+-        dolog ("Internal logic error: Bad audio format %d\n", afmt);
++        error_report("pulseaudio: Internal logic error: Bad audio format %d", afmt);
+         format = PA_SAMPLE_U8;
+         break;
+     }
+@@ -376,12 +376,12 @@ static AudioFormat pa_to_audfmt (pa_sample_format_t fmt, int *endianness)
+         *endianness = 0;
+         return AUDIO_FORMAT_F32;
+     default:
+-        dolog ("Internal logic error: Bad pa_sample_format %d\n", fmt);
++        error_report("pulseaudio: Internal logic error: Bad pa_sample_format %d", fmt);
+         return AUDIO_FORMAT_U8;
+     }
+ }
+ 
+-static void context_state_cb (pa_context *c, void *userdata)
++static void context_state_cb(pa_context *c, void *userdata)
+ {
+     PAConnection *conn = userdata;
+ 
+@@ -473,7 +473,7 @@ static pa_stream *qpa_simple_new (
+         break;
+ 
+     default:
+-        dolog("Internal error: unsupported channel count %d\n", ss->channels);
++        error_report("pulseaudio: unsupported channel count %d", ss->channels);
+         goto fail;
+     }
+ 
+@@ -553,7 +553,7 @@ static int qpa_init_out(HWVoiceOut *hw, struct audsettings *as)
+         &error
+         );
+     if (!pa->stream) {
+-        qpa_logerr (error, "pa_simple_new for playback failed\n");
++        qpa_logerr(error, "pa_simple_new for playback failed");
+         goto fail1;
+     }
+ 
+@@ -604,7 +604,7 @@ static int qpa_init_in(HWVoiceIn *hw, struct audsettings *as)
+         &error
+         );
+     if (!pa->stream) {
+-        qpa_logerr (error, "pa_simple_new for capture failed\n");
++        qpa_logerr(error, "pa_simple_new for capture failed");
+         goto fail1;
+     }
+ 
+@@ -633,7 +633,7 @@ static void qpa_simple_disconnect(PAConnection *c, pa_stream *stream)
+ 
+     err = pa_stream_disconnect(stream);
+     if (err != 0) {
+-        dolog("Failed to disconnect! err=%d\n", err);
++        error_report("pulseaudio: Failed to disconnect! err=%d", err);
+     }
+     pa_stream_unref(stream);
+ }
+@@ -664,7 +664,7 @@ static void qpa_fini_in (HWVoiceIn *hw)
+             int r = pa_stream_drop(pa->stream);
+             if (r) {
+                 qpa_logerr(pa_context_errno(c->context),
+-                           "pa_stream_drop failed\n");
++                           "pa_stream_drop failed");
+             }
+             pa->read_length = 0;
+         }
+@@ -698,7 +698,7 @@ static void qpa_volume_out(HWVoiceOut *hw, Volume *vol)
+                                           &v, NULL, NULL);
+     if (!op) {
+         qpa_logerr(pa_context_errno(c->context),
+-                   "set_sink_input_volume() failed\n");
++                   "set_sink_input_volume() failed");
+     } else {
+         pa_operation_unref(op);
+     }
+@@ -708,7 +708,7 @@ static void qpa_volume_out(HWVoiceOut *hw, Volume *vol)
+                                         vol->mute, NULL, NULL);
+     if (!op) {
+         qpa_logerr(pa_context_errno(c->context),
+-                   "set_sink_input_mute() failed\n");
++                   "set_sink_input_mute() failed");
+     } else {
+         pa_operation_unref(op);
+     }
+@@ -740,7 +740,7 @@ static void qpa_volume_in(HWVoiceIn *hw, Volume *vol)
+         &v, NULL, NULL);
+     if (!op) {
+         qpa_logerr(pa_context_errno(c->context),
+-                   "set_source_output_volume() failed\n");
++                   "set_source_output_volume() failed");
+     } else {
+         pa_operation_unref(op);
+     }
+@@ -750,7 +750,7 @@ static void qpa_volume_in(HWVoiceIn *hw, Volume *vol)
+         vol->mute, NULL, NULL);
+     if (!op) {
+         qpa_logerr(pa_context_errno(c->context),
+-                   "set_source_output_mute() failed\n");
++                   "set_source_output_mute() failed");
+     } else {
+         pa_operation_unref(op);
+     }
+@@ -788,7 +788,7 @@ static void *qpa_conn_init(const char *server)
+ 
+     if (pa_context_connect(c->context, server, 0, NULL) < 0) {
+         qpa_logerr(pa_context_errno(c->context),
+-                   "pa_context_connect() failed\n");
++                   "pa_context_connect() failed");
+         goto fail;
+     }
+ 
+@@ -809,7 +809,7 @@ static void *qpa_conn_init(const char *server)
+ 
+         if (!PA_CONTEXT_IS_GOOD(state)) {
+             qpa_logerr(pa_context_errno(c->context),
+-                       "Wrong context state\n");
++                       "Wrong context state");
+             goto unlock_and_fail;
+         }
+ 
+@@ -823,7 +823,6 @@ static void *qpa_conn_init(const char *server)
+ unlock_and_fail:
+     pa_threaded_mainloop_unlock(c->mainloop);
+ fail:
+-    AUD_log (AUDIO_CAP, "Failed to initialize PA context");
+     qpa_conn_fini(c);
+     return NULL;
+ }
+-- 
+2.53.0
 
-Please update the changelog at https://wiki.qemu.org/ChangeLog/11.0
-for any user-visible changes.
-
--- PMM
 
