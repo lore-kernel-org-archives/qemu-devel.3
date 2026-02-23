@@ -4,88 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B15C3EC110C
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 17:13:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF24EEC110E
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 17:19:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuZMr-0005l9-4y; Mon, 23 Feb 2026 12:05:09 -0500
+	id 1vuZaJ-0000dk-Jl; Mon, 23 Feb 2026 12:19:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vuZLE-0002vg-7Y
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 12:03:32 -0500
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ (Exim 4.90_1) (envelope-from <adamhet@scaleway.com>)
+ id 1vuZaG-0000dQ-Nw
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 12:19:01 -0500
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vuZL9-0000SU-D4
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 12:03:27 -0500
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-4837634de51so20468495e9.1
- for <qemu-devel@nongnu.org>; Mon, 23 Feb 2026 09:03:21 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <adamhet@scaleway.com>)
+ id 1vuZaE-0003Au-0A
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 12:19:00 -0500
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-43638a3330dso3889838f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 23 Feb 2026 09:18:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771866200; x=1772471000; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=W+SiJjnlnmDMFokE5A1Qunqp4HakTLA2MrS0hcnraE4=;
- b=CR7cJ1/LuPvzRnF2+2QEsFjnf5wvZqHNlHNTFHrjrvlChkQzveK0399aAa7XVGSv4w
- q+SY8y+FzMdC7jcuMq+NB6P5xj4xhNDkGqRFB8SbDY+ufSCKRvZ3YK+KvcJRf1+C7pBJ
- EVjFcLSo8vB/NJhABAiSM6TCiEJNWXyzXthwvd2phSLq+jPd9mGmIhz76kZjtMHifzz5
- FvG8OITcvb+fxATLSil4zOQDeUgcaMIerfanUBtR4GOwKePysLjTFef62kU9CEIk6oaA
- 2YQLfZ16EDTTuLv5t7axkOckUcmTYa9PUpjDjKP8iUa2O3c7VZFJYgAMpKITrJNpT4ce
- J/Ig==
+ d=scaleway.com; s=google; t=1771867135; x=1772471935; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=26u4wdZEurQqzy8HQlEYLxXXChO8F/C4CHKbjyTE1vA=;
+ b=WsjDdw2YqCO1GCzBlhVCR0LkzmF61GBjsQMNEDV2E0N5619m0rC6udKrO2JHsjF9bu
+ tHJO2ew5SazxPrlcWsPuFbQ1bjKCsU7pQ6vp6xAEOYa3uXJIyx7+ovb1LoXgn30nRfjM
+ KM0SZHNSYV3//sV8Ounu1g/ypCieHQtQW6LV9bVik4KHwwFpF6NTmlkc0CfGxA8PuvO3
+ C+Pztr6qglZv9UZXOJEHeRB5pLlSHSgZn18O4Nk8E4f9K6/QURjTf1lrN2j0zB/vsacn
+ 8evX3L5PEQyGyOLbwW9KNR9HnE4L0C1y87Blku+JK7Rm0Sek1rogGbjF9j7h9EJe/HES
+ HGdg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771866200; x=1772471000;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=W+SiJjnlnmDMFokE5A1Qunqp4HakTLA2MrS0hcnraE4=;
- b=CeAIrBl5AkBWogGO8Vr0nY8JQxVPB0f5+mfjQj2Uigaq3VJ1CUQktV+xC47WspGmgx
- YRKrWUMkJ7LYJWQUnY7fgavq79PWSkWk3BpZaGeoZCnrwklV5AGN6hze+fhf++z0QAIk
- 4UIXHupu6kguZH/rex+/zqji1HwASKDGYfulvEWshu45xeWX/p0fX3bR+7FjtWnKSaAE
- ODYEWUSdTnX/QYhZlpweV9qC2sTFpqDaxKtI3c92HVmtwvPY8LHbUZq3sl5ZQURtCtyP
- i0LgVrZYHE3+dcWYvnrNCIZ5zPJp5BpUmzZe+kByIN+bALhJYnMZHvyUZ5zPoLBM3Q7n
- BdmA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWMnq14ikJ2z3VPR1cCj4pSvuLfqqmV6DQsMHHfE2FWxo5qgzI2oMgs8/fdk29WLe0ozAbPyfMWRfwH@nongnu.org
-X-Gm-Message-State: AOJu0YxUqj222v1LJm5L9tysWS9WBlwYJ5LX5hHvfLULHHlf8zeIG0jn
- txU84H/Xy67z5Q7Mv3Wn8EWtC2vPEAO6LW/KSoYh5UEoCx7SkcWkD+Bkulbhykm1VTg=
-X-Gm-Gg: AZuq6aKbDztmVRnKii+x+4J7/7UG+6UWRx8AH4H1dNnbXOcARjxreWmzZVdL66lBnRd
- NQ6T3yX3FzCkkrryt+ZZA6tmXexuMnNp6w6mXNSPRkhRd2H+Qu53dTcPZQltfmsvYrpp61hr2dl
- Oj83GGRQCf4bvOL+S0DgFAShtVa1AMVjVfLmyxei5OzH2G0bTN1AGxUSR0yaX6GeDJ2SQu11dGN
- Ud3K2AaJhH+3irM45n2HUI7ljRmKlnlv6z1gbCGknMfn52hFfNSlRGX+qjT6sH91SdavRKP50LH
- 0L6IB7GJspXcxO1OFfH1cCAlPbvZ9744Mi8YolQpFqrHK7d9jrWoK1s/1n24sqTQYTJQ99T9h0a
- HT6BWEq8u82msjRs+N7X29BhcprvMP6VgdQcdsyW9Vd90i9QVmR74ug1SY6rZA53NEhhvY78yyk
- BSSXUnFNKkNV3WHQ7nPngbrzSzCQSLb3UmvhT7h2F8HSQ6167mlUxeZWm9yAyndroubB5ADzPug
- B18DFRXKyjnAoE5bK6ws4NKOE/Igpo=
-X-Received: by 2002:a05:600c:8b16:b0:480:68ed:1e70 with SMTP id
- 5b1f17b1804b1-483a963de73mr209947465e9.35.1771866200213; 
- Mon, 23 Feb 2026 09:03:20 -0800 (PST)
-Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
+ d=1e100.net; s=20230601; t=1771867135; x=1772471935;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=26u4wdZEurQqzy8HQlEYLxXXChO8F/C4CHKbjyTE1vA=;
+ b=ldCdCbWPEJ0TGkUHZoJA8KNdmqoRf0MZLtHEr4R9KzBMLPZJ94WRGyatlSCDLDXi4W
+ 6dH5pd9XLhOHJoGxTDqOgNiKEc5kbOkUYC9zSySer6XpsfjPjTfDoD9CKkaKkBXQQtCM
+ Tc/qU3J305gJojQ7axuDsBG6TXRI6w66G8Hzc08il5gc5DMCEHKKqmEEfirbuarVjIYM
+ vLp8KBnrXUqGZRQ3qzu6ibgCWiLsz0hGaIMQ0OcwnuFVYd6pfitnOhw/gVkzc/TU56HV
+ J4WK0VFvSAAKJ1FzhU/6E8Z+0SndzLRa5p3kszsDnEBsegKXevyafmDFE6TWevY3VHP5
+ kX8g==
+X-Gm-Message-State: AOJu0YzJjp+2aEZ7hkHaKAc7rDjE1oyo0Y0CjxYksUuldMdUowMIYp2D
+ CAKN/jS6v6dQPu5UYuSPX4wqXJmWc8BJRPOKeW0VG49Zlb4c2DVAS09RjECJM8kngYs=
+X-Gm-Gg: ATEYQzzUC/IhfqAjR8e0P2OtpNi10p0y1e6wKu07vdmHwBe1djeJmzBH4GTBEKBU0DX
+ CqEBFz1qUlR01NPI1P7jKBrOIhyOE4rlgRB00LMKGuzOIJmchbAMCedI6efvpRYehqgg/oyRFzi
+ M2p6xQm2gEeihQ990j8QqREbj3LTnm1C+Lvqg5M+S5yCAsyd5GCPyLOkpJ5nA/2006Lu+Ua44bB
+ d2BD3zolOnUYapeEBuK3SOPxTw/tB5qFS4rHlU61MlIhwfUwZTz/NR3Lazx/Hgir19Xh/PFkm2M
+ PsHotKg1JhRyw8RNYeIq12thoupKDTWj/dt36T0IIaVyy3kzGFo9Qn48SdAFixqg2gq9wID0cSK
+ lJAI1jjniPtIu2aeIyjzA8n2C7fO17wQd9sp68aa4f/+3N6WXMg43XpObl1cF5q3EUeJm8LC4S/
+ SM675q6QZDelJejy/zcDf/k6Raot7BUm2PIeTscb2768fY9Ige
+X-Received: by 2002:a05:6000:250a:b0:435:930a:658e with SMTP id
+ ffacd0b85a97d-4396f185229mr18321877f8f.53.1771867135165; 
+ Mon, 23 Feb 2026 09:18:55 -0800 (PST)
+Received: from localhost (710304585.box.freepro.com. [130.180.219.188])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-483a9b21ceasm200155625e9.0.2026.02.23.09.03.19
+ ffacd0b85a97d-43970d54c5csm20349421f8f.38.2026.02.23.09.18.54
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 23 Feb 2026 09:03:19 -0800 (PST)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-arm@nongnu.org,
-	qemu-devel@nongnu.org
-Subject: [PATCH 60/65] hw/arm/virt: Create and connect GICv5
-Date: Mon, 23 Feb 2026 17:02:07 +0000
-Message-ID: <20260223170212.441276-61-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260223170212.441276-1-peter.maydell@linaro.org>
-References: <20260223170212.441276-1-peter.maydell@linaro.org>
+ Mon, 23 Feb 2026 09:18:54 -0800 (PST)
+Date: Mon, 23 Feb 2026 18:18:50 +0100
+From: Antoine Damhet <adamhet@scaleway.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, 
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, Eric Blake <eblake@redhat.com>
+Subject: Re: [PATCH 2/2] block/curl: add support for S3 presigned URLs
+Message-ID: <aZwXB5uY1a9cWlvg@wellsley>
+References: <20260212162730.440855-1-adamhet@scaleway.com>
+ <20260212162730.440855-3-adamhet@scaleway.com>
+ <878qcroio8.fsf@pond.sub.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x335.google.com
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="s5ko24dehyyebxgk"
+Content-Disposition: inline
+In-Reply-To: <878qcroio8.fsf@pond.sub.org>
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=adamhet@scaleway.com; helo=mail-wr1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,271 +103,157 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In this commit we create and connect up the GICv5.  We do not
-advertise it in the ACPI tables or DTB; that will be done in a
-following commit.
 
-The user-facing gic-version property still only documents and permits
-in its setter function the existing set of possible values; we won't
-permit the user to select a GICv5 until all the code to handle it is
-in place.
+--s5ko24dehyyebxgk
+Content-Type: text/plain; protected-headers=v1; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [PATCH 2/2] block/curl: add support for S3 presigned URLs
+MIME-Version: 1.0
 
-Although we currently implement only the IRS, and only for EL1,
-we reserve space in the virt board's memory map now for all the
-register frames that the GICv5 may use. Each interrupt domain has:
- * one IRS config register frame
- * one ITS config register frame
- * one ITS translate register frame
-and each of these frames is 64K in size and 64K aligned and must be
-at a unique address (that is, it is not permitted to have all the IRS
-config register frames at the same physical address in the different
-S/NS/etc physical address spaces).
+On Tue, Feb 17, 2026 at 09:53:11AM +0100, Markus Armbruster wrote:
+> Antoine Damhet <adamhet@scaleway.com> writes:
+>=20
+> > S3 presigned URLs are signed for a specific HTTP method (typically GET
+> > for our use cases). The curl block driver currently issues a HEAD
+> > request to discover the backend features and the file size, which fails
+> > with 403.
+> >
+> > Add a 'force-range' option that skips the HEAD request and instead
+> > issues a minimal GET request (querying 1 byte from the server) to
+> > extract the file size from the 'Content-Range' response header. To
+> > achieve this the 'curl_header_cb' is redesigned to generically parse
+> > HTTP headers.
+> >
+> > $ $QEMU -drive driver=3Dhttp,\
+> >              'url=3Dhttps://s3.example.com/some.img?X-Amz-Security-Toke=
+n=3DXXX',
+> >              force-range=3Dtrue
+> >
+> > Enabling the 'force-range' option without the backend supporting it is
+> > undefined behavior and untested
+>=20
+> "Undefined behavior" suggests it could do anything, even destroy data.
+> I hope that's not the case.  What is the case?
+>=20
+> What is "the backend"?  The web server specified with @url?
 
-The addresses and layout of these frames are entirely up to the
-implementation: software will be passed their addresses via firmware
-data structures (ACPI or DTB).
+Undefined behavior was probably too strong of a wording. I have done way
+more tests and have a clearer picture of what happens:
 
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- hw/arm/virt.c         | 101 ++++++++++++++++++++++++++++++++++++++++++
- include/hw/arm/virt.h |  14 ++++++
- 2 files changed, 115 insertions(+)
+The web server for @url will respond with `HTTP 200` and try to send the
+whole file. Since we specified `CURLOPT_NOBODY` to the libcurl it stops
+reading the socket after the headers and justs shuts it down. The
+`force-range` mode is transparent for the user even if it can wastes a
+few TCP packets.
 
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index 3d19eb0fee..a9addf5ac0 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -69,6 +69,7 @@
- #include "hw/intc/arm_gic.h"
- #include "hw/intc/arm_gicv3_common.h"
- #include "hw/intc/arm_gicv3_its_common.h"
-+#include "hw/intc/arm_gicv5_common.h"
- #include "hw/core/irq.h"
- #include "kvm_arm.h"
- #include "hvf_arm.h"
-@@ -185,6 +186,19 @@ static const MemMapEntry base_memmap[] = {
-     [VIRT_GIC_ITS] =            { 0x08080000, 0x00020000 },
-     /* This redistributor space allows up to 2*64kB*123 CPUs */
-     [VIRT_GIC_REDIST] =         { 0x080A0000, 0x00F60000 },
-+    /* The GICv5 uses this address range differently from GICv2/v3/v4 */
-+    [VIRT_GICV5_IRS_S] =        { 0x08000000, 0x00010000 },
-+    [VIRT_GICV5_IRS_NS] =       { 0x08010000, 0x00010000 },
-+    [VIRT_GICV5_IRS_EL3] =      { 0x08020000, 0x00010000 },
-+    [VIRT_GICV5_IRS_REALM] =    { 0x08030000, 0x00010000 },
-+    [VIRT_GICV5_ITS_S] =        { 0x08040000, 0x00010000 },
-+    [VIRT_GICV5_ITS_NS] =       { 0x08050000, 0x00010000 },
-+    [VIRT_GICV5_ITS_EL3] =      { 0x08060000, 0x00010000 },
-+    [VIRT_GICV5_ITS_REALM] =    { 0x08070000, 0x00010000 },
-+    [VIRT_GICV5_ITS_TR_S] =     { 0x08080000, 0x00010000 },
-+    [VIRT_GICV5_ITS_TR_NS] =    { 0x08090000, 0x00010000 },
-+    [VIRT_GICV5_ITS_TR_EL3] =   { 0x080A0000, 0x00010000 },
-+    [VIRT_GICV5_ITS_TR_REALM] = { 0x080B0000, 0x00010000 },
-     [VIRT_UART0] =              { 0x09000000, 0x00001000 },
-     [VIRT_RTC] =                { 0x09010000, 0x00001000 },
-     [VIRT_FW_CFG] =             { 0x09020000, 0x00000018 },
-@@ -781,6 +795,49 @@ static void create_v2m(VirtMachineState *vms)
-     vms->msi_controller = VIRT_MSI_CTRL_GICV2M;
- }
- 
-+static void create_gicv5(VirtMachineState *vms, MemoryRegion *mem)
-+{
-+    MachineState *ms = MACHINE(vms);
-+    SysBusDevice *gicbusdev;
-+    const char *gictype = gicv5_class_name();
-+    QList *cpulist = qlist_new(), *iaffidlist = qlist_new();
-+
-+    vms->gic = qdev_new(gictype);
-+    qdev_prop_set_uint32(vms->gic, "spi-range", NUM_IRQS);
-+
-+    object_property_set_link(OBJECT(vms->gic), "sysmem",
-+                             OBJECT(mem), &error_fatal);
-+
-+    for (int i = 0; i < ms->smp.cpus; i++) {
-+        qlist_append_link(cpulist, OBJECT(qemu_get_cpu(i)));
-+        /*
-+         * GICv5 IAFFIDs must be system-wide unique across all GICs.
-+         * For virt we make them the same as the CPU index.
-+         */
-+        qlist_append_int(iaffidlist, i);
-+    }
-+    qdev_prop_set_array(vms->gic, "cpus", cpulist);
-+    qdev_prop_set_array(vms->gic, "cpu-iaffids", iaffidlist);
-+
-+    gicbusdev = SYS_BUS_DEVICE(vms->gic);
-+    sysbus_realize_and_unref(gicbusdev, &error_fatal);
-+
-+    /*
-+     * Map the IRS config frames for the interrupt domains.
-+     * At the moment we implement only the NS domain, so this is simple.
-+     */
-+    sysbus_mmio_map(gicbusdev, GICV5_ID_NS,
-+                    vms->memmap[VIRT_GICV5_IRS_NS].base);
-+
-+    /*
-+     * The GICv5 does not need to wire up CPU timer IRQ outputs to the GIC
-+     * because for the GICv5 those PPIs are entirely internal to the CPU.
-+     * Nor do we need to wire up GIC IRQ/FIQ signals to the CPUs, because
-+     * that information is communicated directly between a GICv5 IRS and
-+     * the GICv5 CPU interface via our equivalent of the stream protocol.
-+     */
-+}
-+
- /*
-  * If the CPU has FEAT_NMI, then turn on the NMI support in the GICv3 too.
-  * It's permitted to have a configuration with NMI in the CPU (and thus the
-@@ -994,6 +1051,9 @@ static void create_gic(VirtMachineState *vms, MemoryRegion *mem)
-     case VIRT_GIC_VERSION_4:
-         create_gicv3(vms, mem);
-         break;
-+    case VIRT_GIC_VERSION_5:
-+        create_gicv5(vms, mem);
-+        break;
-     default:
-         g_assert_not_reached();
-     }
-@@ -1929,6 +1989,11 @@ static uint64_t virt_cpu_mp_affinity(VirtMachineState *vms, int idx)
-     /*
-      * Adjust MPIDR to make TCG consistent (with 64-bit KVM hosts)
-      * and to improve SGI efficiency.
-+     * - GICv2 only supports 8 CPUs anyway
-+     * - GICv3 wants 16 CPUs per Aff0 because of an ICC_SGIxR
-+     *   register limitation
-+     * - GICv5 has no restrictions, so we retain the GICv3 16-per-Aff0
-+     *   layout because that's what KVM does
-      */
-     if (vms->gic_version == VIRT_GIC_VERSION_2) {
-         clustersz = GIC_TARGETLIST_BITS;
-@@ -2074,6 +2139,11 @@ static VirtGICType finalize_gic_version_do(const char *accel_name,
-         return finalize_gic_version_do(accel_name, VIRT_GIC_VERSION_MAX,
-                                        gics_supported, max_cpus);
-     case VIRT_GIC_VERSION_MAX:
-+        /*
-+         * We don't (currently) make 'max' select GICv5 as it is not
-+         * backwards compatible for system software with GICv3/v4 and
-+         * at time of writing not widely supported in guest kernels.
-+         */
-         if (gics_supported & VIRT_GIC_VERSION_4_MASK) {
-             gic_version = VIRT_GIC_VERSION_4;
-         } else if (gics_supported & VIRT_GIC_VERSION_3_MASK) {
-@@ -2102,6 +2172,7 @@ static VirtGICType finalize_gic_version_do(const char *accel_name,
-     case VIRT_GIC_VERSION_2:
-     case VIRT_GIC_VERSION_3:
-     case VIRT_GIC_VERSION_4:
-+    case VIRT_GIC_VERSION_5:
-         break;
-     }
- 
-@@ -2126,6 +2197,12 @@ static VirtGICType finalize_gic_version_do(const char *accel_name,
-             exit(1);
-         }
-         break;
-+    case VIRT_GIC_VERSION_5:
-+        if (!(gics_supported & VIRT_GIC_VERSION_5_MASK)) {
-+            error_report("%s does not support GICv5 emulation", accel_name);
-+            exit(1);
-+        }
-+        break;
-     default:
-         error_report("logic error in finalize_gic_version");
-         exit(1);
-@@ -2177,6 +2254,10 @@ static void finalize_gic_version(VirtMachineState *vms)
-                 gics_supported |= VIRT_GIC_VERSION_4_MASK;
-             }
-         }
-+        if (!hvf_enabled() && module_object_class_by_name("arm-gicv5")) {
-+            /* HVF doesn't have GICv5 support */
-+            gics_supported |= VIRT_GIC_VERSION_5_MASK;
-+        }
-     } else {
-         error_report("Unsupported accelerator, can not determine GIC support");
-         exit(1);
-@@ -2210,6 +2291,9 @@ static void finalize_msi_controller(VirtMachineState *vms)
-             vms->msi_controller = VIRT_MSI_CTRL_GICV2M;
-         } else if (whpx_enabled()) {
-             vms->msi_controller = VIRT_MSI_CTRL_GICV2M;
-+        } else if (vms->gic_version == VIRT_GIC_VERSION_5) {
-+            /* GICv5 ITS is not yet implemented */
-+            vms->msi_controller = VIRT_MSI_CTRL_NONE;
-         } else {
-             vms->msi_controller = VIRT_MSI_CTRL_ITS;
-         }
-@@ -2225,6 +2309,10 @@ static void finalize_msi_controller(VirtMachineState *vms)
-             error_report("GICv2 + ITS is an invalid configuration.");
-             exit(1);
-         }
-+        if (vms->gic_version == VIRT_GIC_VERSION_5) {
-+            error_report("GICv5 + ITS is not yet implemented.");
-+            exit(1);
-+        }
-         if (whpx_enabled()) {
-             error_report("ITS not supported on WHPX.");
-             exit(1);
-@@ -2397,6 +2485,13 @@ static void machvirt_init(MachineState *machine)
-      */
-     if (vms->gic_version == VIRT_GIC_VERSION_2) {
-         virt_max_cpus = GIC_NCPU;
-+    } else if (vms->gic_version == VIRT_GIC_VERSION_5) {
-+        /*
-+         * GICv5 imposes no CPU limit beyond the 16-bit IAFFID field.
-+         * The maximum number of CPUs will be limited not by this, but
-+         * by the MachineClass::max_cpus value we set earlier.
-+         */
-+        virt_max_cpus = 1 << QEMU_GICV5_IAFFID_BITS;
-     } else {
-         virt_max_cpus = virt_redist_capacity(vms, VIRT_GIC_REDIST);
-         if (vms->highmem_redists) {
-@@ -2442,6 +2537,12 @@ static void machvirt_init(MachineState *machine)
-         exit(1);
-     }
- 
-+    if ((vms->virt || vms->secure) &&
-+        vms->gic_version == VIRT_GIC_VERSION_5) {
-+        error_report("mach-virt: GICv5 currently supports EL1 only\n");
-+        exit(1);
-+    }
-+
-     create_fdt(vms);
- 
-     assert(possible_cpus->len == max_cpus);
-diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
-index 6b4691761e..34588747aa 100644
---- a/include/hw/arm/virt.h
-+++ b/include/hw/arm/virt.h
-@@ -63,6 +63,18 @@ enum {
-     VIRT_GIC_VCPU,
-     VIRT_GIC_ITS,
-     VIRT_GIC_REDIST,
-+    VIRT_GICV5_IRS_S,
-+    VIRT_GICV5_IRS_NS,
-+    VIRT_GICV5_IRS_EL3,
-+    VIRT_GICV5_IRS_REALM,
-+    VIRT_GICV5_ITS_S,
-+    VIRT_GICV5_ITS_NS,
-+    VIRT_GICV5_ITS_EL3,
-+    VIRT_GICV5_ITS_REALM,
-+    VIRT_GICV5_ITS_TR_S,
-+    VIRT_GICV5_ITS_TR_NS,
-+    VIRT_GICV5_ITS_TR_EL3,
-+    VIRT_GICV5_ITS_TR_REALM,
-     VIRT_SMMU,
-     VIRT_UART0,
-     VIRT_MMIO,
-@@ -116,12 +128,14 @@ typedef enum VirtGICType {
-     VIRT_GIC_VERSION_2 = 2,
-     VIRT_GIC_VERSION_3 = 3,
-     VIRT_GIC_VERSION_4 = 4,
-+    VIRT_GIC_VERSION_5 = 5,
-     VIRT_GIC_VERSION_NOSEL,
- } VirtGICType;
- 
- #define VIRT_GIC_VERSION_2_MASK BIT(VIRT_GIC_VERSION_2)
- #define VIRT_GIC_VERSION_3_MASK BIT(VIRT_GIC_VERSION_3)
- #define VIRT_GIC_VERSION_4_MASK BIT(VIRT_GIC_VERSION_4)
-+#define VIRT_GIC_VERSION_5_MASK BIT(VIRT_GIC_VERSION_5)
- 
- struct VirtMachineClass {
-     MachineClass parent;
--- 
-2.43.0
+I'll rewrite the commit message to reflect the actual behavior of the
+option in the v2.
 
+>=20
+> >                                 but the libcurl should ignore the body
+> > and stop reading after the HTTP headers then we would fail with the
+> > expected `Server does not support 'range' (byte ranges).` error.
+> >
+> > Signed-off-by: Antoine Damhet <adamhet@scaleway.com>
+> > ---
+>=20
+> [...]
+>=20
+> > diff --git a/qapi/block-core.json b/qapi/block-core.json
+> > index b82af7425614..ff018c2d6bfb 100644
+> > --- a/qapi/block-core.json
+> > +++ b/qapi/block-core.json
+> > @@ -4582,12 +4582,17 @@
+> >  # @cookie-secret: ID of a QCryptoSecret object providing the cookie
+> >  #     data in a secure way.  See @cookie for the format.  (since 2.10)
+> >  #
+> > +# @force-range: Don't issue a HEAD HTTP request to discover if the
+> > +#     backend supports range requests and rely only on GET requests.
+> > +#     This is especially useful for S3 presigned URLs.  (since 11.0)
+>=20
+> Unlike the commit message, this doesn't mention the need for "the
+> backend" (whatever that may be) supporting it.
+
+Will rephrase "the  backend" with "the http server". Should I document
+the behavior of the http server missing the range requests here or is
+the current description sufficient ?
+
+>=20
+> > +#
+> >  # Since: 2.9
+> >  ##
+> >  { 'struct': 'BlockdevOptionsCurlHttp',
+> >    'base': 'BlockdevOptionsCurlBase',
+> >    'data': { '*cookie': 'str',
+> > -            '*cookie-secret': 'str'} }
+> > +            '*cookie-secret': 'str',
+> > +            '*force-range': 'bool'} }
+> > =20
+> >  ##
+> >  # @BlockdevOptionsCurlHttps:
+> > @@ -4605,13 +4610,18 @@
+> >  # @cookie-secret: ID of a QCryptoSecret object providing the cookie
+> >  #     data in a secure way.  See @cookie for the format.  (since 2.10)
+> >  #
+> > +# @force-range: Don't issue a HEAD HTTP request to discover if the
+> > +#     backend supports range requests and rely only on GET requests.
+> > +#     This is especially useful for S3 presigned URLs.  (since 11.0)
+> > +#
+> >  # Since: 2.9
+> >  ##
+>=20
+> @force-range is is duplicated between BlockdevOptionsCurlHttp and
+> BlockdevOptionsCurlHttps.  @cookie and @cookie-secret is already
+> duplicated before the patch.  Time to factor out a common base type?
+
+This would be only on the QAPI ? looking something like:
+
+```
+ { 'struct': 'BlockdevOptionsCurlHttps',
+-  'base': 'BlockdevOptionsCurlBase',
+-  'data': { '*cookie': 'str',
+-            '*sslverify': 'bool',
+-            '*cookie-secret': 'str',
+-            '*force-range': 'bool'} }
++  'base': 'BlockdevOptionsCurlHttp',
++  'data': { '*sslverify': 'bool' } }
+```
+
+? Would you rather see this in a separate commit or is the same patch OK
+?
+
+--=20
+Antoine 'xdbob' Damhet
+Engineer @scaleway
+
+>=20
+> >  { 'struct': 'BlockdevOptionsCurlHttps',
+> >    'base': 'BlockdevOptionsCurlBase',
+> >    'data': { '*cookie': 'str',
+> >              '*sslverify': 'bool',
+> > -            '*cookie-secret': 'str'} }
+> > +            '*cookie-secret': 'str',
+> > +            '*force-range': 'bool'} }
+> > =20
+> >  ##
+> >  # @BlockdevOptionsCurlFtp:
+>=20
+
+--s5ko24dehyyebxgk
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEArm1WbQx2GmOsfF83AmjLzzljz4FAmmci/YACgkQ3AmjLzzl
+jz6K6wf/ZxOyaAZLokOcekJJixi3eo+BmLer/1VR5KNSCyL/1QPI+2xAw9F6Z2Ce
+hiwGjl4Bf/85Q1b+RpG7Y9wAsbKmPRPBYa0i3tXICDGkYenIdl1xYQwDwRyoKOLl
+8lO9n1JsitGFEa5Dfx7OHL8Qf2MYjgsbf4mSd6UXaOJV/sViSclSXHuNobm7LoVZ
+iWVkjCcQDBhRXTB1rDCjgqGxS573t0TCBBAWGMDSpjTjMRmCO0x4oq2IdaPK9oT9
+xuuGVVs5DKL1HFBDtPac/tiWq5GoTEYuGZcDbnwxDCvcbbJNPiRmaWmXxDqgN4fQ
+1bHWb6TUkdc8qi+ay9fWnxPBES/+xA==
+=yVqm
+-----END PGP SIGNATURE-----
+
+--s5ko24dehyyebxgk--
 
