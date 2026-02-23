@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7C7AEC111F
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 18:31:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C02FEC111D
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 18:32:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuahN-0002UC-Q2; Mon, 23 Feb 2026 13:30:25 -0500
+	id 1vuagu-00021m-Rv; Mon, 23 Feb 2026 13:29:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vuahL-0002SN-FJ
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 13:30:23 -0500
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vuagt-00021J-LD
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 13:29:55 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vuahJ-00022Q-E3
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 13:30:23 -0500
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vuags-0001lh-3O
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 13:29:55 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771871420;
+ s=mimecast20190719; t=1771871393;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=jLM7XicXeiX8hVCrKQSIeJW1a4jhgWhgGhHspAtLon4=;
- b=BpchEy6R7873pu8N6JXgs3tHvV8pJDA53a3XoYNTLJTy82vlK6wisz8Kvj8gMrxsUk9XIt
- 3c9O3qp8UT1OtJ4ypufIXA1OwCwPqwu+WTZqSayyoJbusMRVItJ1lZXUu8WK7+Nc/YY8Qc
- HolFHZRepDavSDnakxKD78RBWBAsaRA=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=BB6k1Yuqh8r2auHo9z9gtPD3srjd7Bdv67UXTNWqvGQ=;
+ b=aDknOLnNYvw+37y4uQrTF+4+a1+QYyrtMkcm92PFSYdpIcQXmoc5+eLR4U+Qi/FeFe/BHZ
+ wNUYVneen3udnxO9QssJv4RJDkcW8Lo5xkcwe4oIG4DjT3cLmaqKFxSVe1WmsEQ6ii54Z/
+ 9vZ43rXwEvBAUZakVNR5sormo+OTtko=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-161-9G7ePXD5N5utsUzaJoCleg-1; Mon,
- 23 Feb 2026 13:30:16 -0500
-X-MC-Unique: 9G7ePXD5N5utsUzaJoCleg-1
-X-Mimecast-MFC-AGG-ID: 9G7ePXD5N5utsUzaJoCleg_1771871414
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-443-a6T_Ik11O0qhxlCTVm4ftA-1; Mon,
+ 23 Feb 2026 13:29:50 -0500
+X-MC-Unique: a6T_Ik11O0qhxlCTVm4ftA-1
+X-Mimecast-MFC-AGG-ID: a6T_Ik11O0qhxlCTVm4ftA_1771871388
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6FA80180034D; Mon, 23 Feb 2026 18:30:14 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 59B261956072; Mon, 23 Feb 2026 18:29:48 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.89.212])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 002141955D71; Mon, 23 Feb 2026 18:30:08 +0000 (UTC)
+ id 108C4195419A; Mon, 23 Feb 2026 18:29:43 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Li-Wen Hsu <lwhsu@freebsd.org>,
@@ -65,14 +65,12 @@ Cc: Li-Wen Hsu <lwhsu@freebsd.org>,
  Yonggang Luo <luoyonggang@gmail.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PULL 12/19] meson,
- mkvenv: make functional tests depend on functests group
-Date: Mon, 23 Feb 2026 13:28:54 -0500
-Message-ID: <20260223182902.739189-13-jsnow@redhat.com>
+Subject: [PULL 07/19] iotests: tolerate being run outside of pyvenv
+Date: Mon, 23 Feb 2026 13:28:49 -0500
+Message-ID: <20260223182902.739189-8-jsnow@redhat.com>
 In-Reply-To: <20260223182902.739189-1-jsnow@redhat.com>
 References: <20260223182902.739189-1-jsnow@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
@@ -100,51 +98,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Note that only the thorough group requires the extra testing
-dependencies; the quick group will run with just the "tooling" group,
-which we intend to install by default at configure time in a forthcoming
-commit.
+Modify the iotests environment preparation so that it can detect when it
+is being run outside of the configure-time virtual environment and give
+a warning to the user, suggesting the use of the meson run script
+instead.
+
+As a bonus, since the test executor itself does not actually rely on
+anything in the configure-time venv in and of itself, it is possible to
+just modify the python executable it uses for launching tests to be the
+correct, configured venv that has access to qemu.qmp and other test
+dependencies.
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Message-ID: <20260218213416.674483-14-jsnow@redhat.com>
+Tested-by: Thomas Huth <thuth@redhat.com>
+Message-ID: <20260218213416.674483-9-jsnow@redhat.com>
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- tests/functional/meson.build | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ tests/qemu-iotests/testenv.py | 25 ++++++++++++++++++++++++-
+ 1 file changed, 24 insertions(+), 1 deletion(-)
 
-diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-index 725630d3082..e1f5c0e7678 100644
---- a/tests/functional/meson.build
-+++ b/tests/functional/meson.build
-@@ -57,6 +57,8 @@ foreach speed : ['quick', 'thorough']
-       continue
-     endif
- 
-+    test_deps = [roms, keymap_targets]
+diff --git a/tests/qemu-iotests/testenv.py b/tests/qemu-iotests/testenv.py
+index 29caaa8a349..c357e6ebf50 100644
+--- a/tests/qemu-iotests/testenv.py
++++ b/tests/qemu-iotests/testenv.py
+@@ -20,6 +20,7 @@
+ import sys
+ import tempfile
+ from pathlib import Path
++import shlex
+ import shutil
+ import collections
+ import contextlib
+@@ -140,7 +141,29 @@ def init_binaries(self) -> None:
+              PYTHON (for bash tests)
+              QEMU_PROG, QEMU_IMG_PROG, QEMU_IO_PROG, QEMU_NBD_PROG, QSD_PROG
+         """
+-        self.python = sys.executable
++        self.python = str(Path(sys.executable).absolute())
 +
-     if speed == 'quick'
-       suites = ['func-quick', 'func-' + target_base]
-       target_tests = get_variable('tests_' + target_base + '_' + sysmode + '_quick', []) \
-@@ -64,9 +66,9 @@ foreach speed : ['quick', 'thorough']
-     else
-       suites = ['func-' + speed, 'func-' + target_base + '-' + speed, speed]
-       target_tests = get_variable('tests_' + target_base + '_' + sysmode + '_' + speed, [])
-+      test_deps += [pyvenv_functests_group]
-     endif
++        # QEMU configure-time venv python executable
++        venv_python = Path(
++            os.path.join(self.build_root, "pyvenv", "bin", "python3")
++        ).absolute()
++
++        if self.python != str(venv_python):
++            runpath = os.path.join(self.build_root, "run")
++            cmd = ' '.join(shlex.quote(x) for x in sys.argv)
++            print(
++                "\n\033[93m\033[1mWARNING\033[0m: "
++                "iotests is being run from outside of the configure-time "
++                "python virtual environment\n\n"
++                f"current python: {self.python}\n"
++                f"pyvenv python:  {venv_python}\n\n"
++                "Individual python tests will be executed inside the pyvenv,\n"
++                "but the test runner will continue to run outside.\n\n"
++                "\033[1mPlease use the meson run script:\033[0m\n"
++                f"\t{runpath} {cmd}\n",
++                file=sys.stderr
++            )
++            self.python = str(venv_python)
  
--    test_deps = [roms, keymap_targets]
-     test_env = environment()
-     if have_tools
-       test_env.set('QEMU_TEST_QEMU_IMG', meson.global_build_root() / 'qemu-img')
-@@ -99,6 +101,7 @@ foreach speed : ['quick', 'thorough']
-       precache = custom_target('func-precache-' + testname,
-                                output: teststamp,
-                                command: [python, testpath],
-+                               depends: pyvenv_functests_group,
-                                depend_files: files(testpath),
-                                build_by_default: false,
-                                env: test_precache_env)
+         def root(*names: str) -> str:
+             return os.path.join(self.build_root, *names)
 -- 
 2.53.0
 
