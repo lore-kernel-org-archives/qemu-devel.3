@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2772EC111D
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 18:30:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78A6AEC111D
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 18:31:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuahS-0002hI-SK; Mon, 23 Feb 2026 13:30:30 -0500
+	id 1vuaib-0003iE-R1; Mon, 23 Feb 2026 13:31:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vuahO-0002XG-Nn
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 13:30:27 -0500
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vuahb-0002tQ-3i
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 13:30:42 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vuahN-00023L-9v
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 13:30:26 -0500
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vuahT-000248-JT
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 13:30:35 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771871424;
+ s=mimecast20190719; t=1771871430;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=E4UYjNzjB5FVj+PkdciGirVS/ADELTLS2viN5CP+Hus=;
- b=QOPyJw933eckx79kfk7Kzc/VY60Mzh2MaeWZnuYTnSqbACNHo5TzJCQfPQ/G0r3Fck+ntb
- 1KZX1P723G6kG0g22PzJeWxBFOlVQKYTQOWQtRAYV7iNn+YgOt69+5bMSNtEf3iowbyqlX
- Xxp7EijG6KYqzOPpYGpSlws07o/TmCo=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=U4Yxtls0c4Hl6zHuKEiGMtWtOdyTvhgDTplCXgQPhm0=;
+ b=IpwDuq+VofPy8H0SZureV2CXOADcycSIL+vtjcUln1n3EN3QsZ2PIP7jIKTPcTqysNyA50
+ eOoXIUKq8gEeDPFge8SjHh5NoMS6XnKOw+cQZkQUiI/q7er8Gx+8ZYoEV/c3Pvi8xMf5TF
+ HZ5huJKARTaWanW96FuJ17dMQCuHJVE=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-497-fBfXskVLNZqKcrzvldwMNw-1; Mon,
- 23 Feb 2026 13:30:21 -0500
-X-MC-Unique: fBfXskVLNZqKcrzvldwMNw-1
-X-Mimecast-MFC-AGG-ID: fBfXskVLNZqKcrzvldwMNw_1771871419
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-395-p7PkeTOlMhmUxnE767DXxQ-1; Mon,
+ 23 Feb 2026 13:30:26 -0500
+X-MC-Unique: p7PkeTOlMhmUxnE767DXxQ-1
+X-Mimecast-MFC-AGG-ID: p7PkeTOlMhmUxnE767DXxQ_1771871424
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 04F0B1956059; Mon, 23 Feb 2026 18:30:19 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C7ED41800352; Mon, 23 Feb 2026 18:30:24 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.89.212])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id A70A01955D71; Mon, 23 Feb 2026 18:30:14 +0000 (UTC)
+ id 4080D1955D71; Mon, 23 Feb 2026 18:30:19 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Li-Wen Hsu <lwhsu@freebsd.org>,
@@ -65,10 +65,9 @@ Cc: Li-Wen Hsu <lwhsu@freebsd.org>,
  Yonggang Luo <luoyonggang@gmail.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PULL 13/19] meson,
- mkvenv: add qemu.git/python/qemu package to pythondeps.toml
-Date: Mon, 23 Feb 2026 13:28:55 -0500
-Message-ID: <20260223182902.739189-14-jsnow@redhat.com>
+Subject: [PULL 14/19] configure: unconditionally install "tooling" group
+Date: Mon, 23 Feb 2026 13:28:56 -0500
+Message-ID: <20260223182902.739189-15-jsnow@redhat.com>
 In-Reply-To: <20260223182902.739189-1-jsnow@redhat.com>
 References: <20260223182902.739189-1-jsnow@redhat.com>
 MIME-Version: 1.0
@@ -100,30 +99,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add the local python package group into pythondeps.toml for the tooling
-group. This makes qemu.qmp, qemu.machine and qemu.utils packages
-unconditionally available for tests and scripts.
+Alongside meson, always ensure our in-tree tooling group and its
+out-of-tree dependency, qemu.qmp, is always installed.
+
+As a result, several "check-venv" invocations can be removed from
+various testing scripts.
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Message-ID: <20260218213416.674483-15-jsnow@redhat.com>
+Message-ID: <20260218213416.674483-16-jsnow@redhat.com>
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- pythondeps.toml | 1 +
- 1 file changed, 1 insertion(+)
+ configure                  | 2 +-
+ .gitlab-ci.d/buildtest.yml | 2 --
+ scripts/device-crash-test  | 3 +--
+ 3 files changed, 2 insertions(+), 5 deletions(-)
 
-diff --git a/pythondeps.toml b/pythondeps.toml
-index 743e2a8848c..89256132fee 100644
---- a/pythondeps.toml
-+++ b/pythondeps.toml
-@@ -37,6 +37,7 @@ sphinx_rtd_theme = { accepted = ">=0.5", installed = "1.2.2" }
- # system packages, or python packages we vendor.
- [tooling]
- "qemu.qmp" = { accepted = ">=0.0.5", installed = "0.0.5" }
-+"qemu" = { path = "python/" }
+diff --git a/configure b/configure
+index 4b61fd3bbf8..c4837eba2b1 100755
+--- a/configure
++++ b/configure
+@@ -966,7 +966,7 @@ mkvenv="$python ${source_path}/python/scripts/mkvenv.py"
+ # Finish preparing the virtual environment using vendored .whl files
  
- # This test group is for functional tests, and can include dependencies
- # fetched from PyPI.
+ $mkvenv ensuregroup --dir "${source_path}/python/wheels" \
+-     ${source_path}/pythondeps.toml meson || exit 1
++     ${source_path}/pythondeps.toml meson tooling || exit 1
+ 
+ # At this point, we expect Meson to be installed and available.
+ # We expect mkvenv or pip to have created pyvenv/bin/meson for us.
+diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
+index b2db70ff904..1b656b9eb08 100644
+--- a/.gitlab-ci.d/buildtest.yml
++++ b/.gitlab-ci.d/buildtest.yml
+@@ -101,7 +101,6 @@ crash-test-debian:
+     IMAGE: debian
+   script:
+     - cd build
+-    - make NINJA=":" check-venv
+     - ./run scripts/device-crash-test -q --tcg-only ./qemu-system-i386
+ 
+ build-system-fedora:
+@@ -158,7 +157,6 @@ crash-test-fedora:
+     IMAGE: fedora
+   script:
+     - cd build
+-    - make NINJA=":" check-venv
+     - ./run scripts/device-crash-test -q ./qemu-system-ppc
+     - ./run scripts/device-crash-test -q ./qemu-system-riscv32
+ 
+diff --git a/scripts/device-crash-test b/scripts/device-crash-test
+index 8a91dcaee31..fc86babdf43 100755
+--- a/scripts/device-crash-test
++++ b/scripts/device-crash-test
+@@ -40,8 +40,7 @@ try:
+ except ModuleNotFoundError as exc:
+     path = Path(__file__).resolve()
+     print(f"Module '{exc.name}' not found.")
+-    print("  Try 'make check-venv' from your build directory,")
+-    print("  and then one way to run this script is like so:")
++    print("  Try running this script like so:")
+     print(f'  > $builddir/run "{path}"')
+     sys.exit(1)
+ 
 -- 
 2.53.0
 
