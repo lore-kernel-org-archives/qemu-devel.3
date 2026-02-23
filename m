@@ -4,88 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACF35EC1115
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 17:13:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43DDEEC1113
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 17:13:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuZM5-0004LM-BH; Mon, 23 Feb 2026 12:04:21 -0500
+	id 1vuZMq-0005g0-9g; Mon, 23 Feb 2026 12:05:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vuZLD-0002vD-Vi
+ id 1vuZLH-0002wu-4U
  for qemu-devel@nongnu.org; Mon, 23 Feb 2026 12:03:32 -0500
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vuZL9-0000PY-Bf
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 12:03:27 -0500
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-48370174e18so24815725e9.2
- for <qemu-devel@nongnu.org>; Mon, 23 Feb 2026 09:03:14 -0800 (PST)
+ id 1vuZLB-0000TK-Dt
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 12:03:30 -0500
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-48375f10628so29382615e9.1
+ for <qemu-devel@nongnu.org>; Mon, 23 Feb 2026 09:03:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771866194; x=1772470994; darn=nongnu.org;
+ d=linaro.org; s=google; t=1771866203; x=1772471003; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=Oc4IQYy6jHc0YZ0doMPC3fB8hIXKqwZ6F4RE9AoioM0=;
- b=Z+4NqwgNKHwCgXFwfU/6FvdMfunw6YwossNC/SPg/QmqpK+w2mSLfb5FL8y6Z0Hgei
- lB0CcvdVVqboaGLNBWX1aByKFrBtUG0uPep/RKDDhNvvD50njI0rtqR6mFCsKxOj1bnf
- jbibzy4COdxz1DXVX5q3h/yPRR2b4/t1LNi+GMB9pX+fpEkCjtavxNg2rpq1F4nIhwWW
- ODhRfOtQXUWwXR567/vhqAecxlCz8GM9Vz799sQsgPMqsRUWhT3DZj8rHD68mVTxthpI
- PFYYRMeBE5R4v40IqkrC/ALKHuxvnvuMWgjKXCUCqviiGkD9lZwoWaqs/7AiZiW46d8m
- 5Fpg==
+ :reply-to; bh=ki1+Cj7hzmWIdImuSXSQEFK5DhzyzVZGm0uIPL+3K2k=;
+ b=oBQ1oAk7piCgStWUwtZLdLor84a6JCispFPajxKruT0+jTMTb5ueHdiJ3QT7Lvb5Vc
+ PzhYl2T2lJtersU5SS3D6iDGaDxAmiFToJ5qscMad0kUNH366F0LC18bNuWmmeF/bW9C
+ Fcy6TNiqrDpqD5JrAIwb/sEqY0qFItbJs2h4TUm8cd7BZiaywYtRSevJQgA09AzvM8FJ
+ yY2wUV12k1QurZl1t0VjclETJOLEs7wwoUxfKW+2DPz91YAj7aT4k2nsqtikl+T6axkD
+ qxDYwc/uSHjCdomZMj2HphQrtRv5y/tiYrerDWsBNDi9hGqLDWmKeOk95U23nIg4oIv1
+ wCIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771866194; x=1772470994;
+ d=1e100.net; s=20230601; t=1771866203; x=1772471003;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=Oc4IQYy6jHc0YZ0doMPC3fB8hIXKqwZ6F4RE9AoioM0=;
- b=UanKQKkh79Dx3WVLLmYiTRlpCXIgJJD5wI+IgTHDOe49Z48D/oW06dzXQOPkxWZf8N
- LIruLGJp4gvBZY63ocYcRgR9J7VNSofogXl56dLycHbtrAbi9PMCn9eNg2Rhi5ahZx4Q
- 7l11NLEjY+5eUsxk9qvsTSIhEPssGo+bDlVC+hshkyG82GIvNOoKojnrBAnSPVSc3b0f
- LOk/Lu/lTwzl2PfNvuoVE+pjo1lHBe0EcHxOC1zk8SJjGKIfxX/ngii2S054mnAh78Ag
- CdUWCK5nviwC7e6/AZp/gwvPFYdFyyB52VBKGTUYwv3ecZOsA5HKb5Q3K3jEwNRCovkb
- vXuQ==
+ bh=ki1+Cj7hzmWIdImuSXSQEFK5DhzyzVZGm0uIPL+3K2k=;
+ b=M1gOCkYBzFqtcdUPcBSG5YZVtSfGblrpYs0nZyhmAA0AO2qNPWlpPJjxWf0h3f+p0J
+ eqkuXqQeZuZeH9RR0tb0F6vz2mG0m/5ivtOjfF2wT2V4xSAb28WhmLI4EbmKZverQehT
+ 7CT3HqAjeG1/3InUgUmh4xdgus0no186/cipMTpeaBitbLXPT1GgUnfl4Crnah0WS0de
+ jVxf8/q+OiinHg7qkHMTKsfYgv+LjpdXyO/4w7RL0J5U6yc4/14JRB89iW/uuHLjswor
+ rsHQ8ERJt1wWF+Lgk+Yb0ez34hvgCNi1+82QEAg+z938sAO2BrWN3v3D5O4fS3xUKsmQ
+ 7+BA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWlChNZFjwg4ESYXEwAN+hrd6+LZJa+z84Mj6tNXIVMawVasTUDgCvQQRQmTTlb3y5siVD2+CRDt/b2@nongnu.org
-X-Gm-Message-State: AOJu0Yw2nJ5uWKhSNH8As6UXRvMTqOlB8Dut0j7VgiCL3WFqU1kIHFwX
- cVrgz7zI0iqM9Xa6TPDhBym18o4OqTYf/s9yUZZHD9Vxtrl1GENd33e+Ku+AAiIO6TE=
-X-Gm-Gg: AZuq6aKwvE4Mty1a2Dgy7DFHgIqoywio9NOAA8HT7fKlHTFdPUwjwReqgkEb4ZhjBaC
- RgP/hnbTlDs05Oz4nTN/tq8GZv44Dp7lK5ZTb9JOQouh15hK8MZ+msFBEC4jU63C7UK/jMEs1/Y
- A3YTh8bxQuV8Mpcd/jWZVHYI4etBzBGCZ4t9+qGdl9jRMXML8kxxlLnD568f9+3Bb4/o5imZpki
- 0UcbzSpfss3u/0f6VROhG2gsseQCL0mTwdE0ZcuSKqEAmWQyP0X++2d/xdNgW10hdUwh5KV4r4Q
- dD6W09ZdBbkSNQ8pRqTrveiGhIOGJOv9QKwr696GdYhAXHLrkpuj7PY0naeAUYlTGy74ZciwoGo
- ++H16v+DbXqudPJilVxL5Ohh33eWdSPlNTh2oY3yMBi0+gK1dvf+5NoFoiiyf/7qAGaqhrLZm6m
- PSoeSN/4gm+itfcTWBbvZXeSVc2GDcHEjKTVpQsURX4PJxPMDHdAlXBR9CxQumaH5vl4OaaCp4m
- ACSZwdiqNTHRiHsCzFYCcHF14/jbxw=
-X-Received: by 2002:a05:600c:628d:b0:483:5a29:9678 with SMTP id
- 5b1f17b1804b1-483a95bd8a7mr165353425e9.2.1771866193551; 
- Mon, 23 Feb 2026 09:03:13 -0800 (PST)
+ AJvYcCVhfrVucq/JBaSUdke7GJ6Ib4Vl9dF1/1etYZKm/jspjE1USeFc8XEmTFV3MGRggqIUX5gtT969SvEi@nongnu.org
+X-Gm-Message-State: AOJu0YwkvnAa3JUsDXp7UpxFnRfj19q2inDGgksgJFL6ww1pdVefAZeq
+ bO73juwNs1Wwf/oG4/HbPAg4eAcs4l0Zp7nVkXOFfA0ksg/3H8sfJxzbs9gXdnSmj1o=
+X-Gm-Gg: AZuq6aIxZ/sTRNMxX8dDuTmTBDwSNz7QMJ6kzx44rFuKDs+KxkPF66+l+6TAgpDmB2X
+ NRNM2RGSXKbCN+rYYklOPnWqRfKmMkOLqipCuvGlTOMpz59vd2MMSBpdMb23/yXH16JUy9YYvgs
+ OIlmpLswX7aoMaDLi9EUk7RDNmznV1DmjrWf6WAPJHJZZ81+Isw/eTvWSbxJxx6nmufYikzsx/z
+ PdbQICmNfT67pw25uP6p3l0YSH0+5AgnHRWBXjcyGZ8qQ0VMRyEOP/LpdnDv6oZjqfKnUGcT7ry
+ BhumXWC6aRSGtFg5fO6a4tknI5KQziK4JUgZqcyy/5ZHP9p6QVwk7CWTdpmMRAuv46gPQDMWNeP
+ 8WCwUsx8HG1TcSS9yQJcQqeZhIVpiw0A5ARfs5cEj145cUIMG99VCHQWtzr/KLIwS9Gm2b+GHQm
+ fdzKm5lH23bJI9kZLAtUFdvGULvYEIk1Mo3iUxlMU6v6Jnt0HcAA8GEWBY5xpr62uqipgeZvZp0
+ PxOPaN9KxeoOWcb0LsWHr7MOARJHe0=
+X-Received: by 2002:a05:600d:644d:20b0:47e:e7e5:ff32 with SMTP id
+ 5b1f17b1804b1-483a9605b19mr105039875e9.34.1771866203286; 
+ Mon, 23 Feb 2026 09:03:23 -0800 (PST)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-483a9b21ceasm200155625e9.0.2026.02.23.09.03.12
+ 5b1f17b1804b1-483a9b21ceasm200155625e9.0.2026.02.23.09.03.22
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 23 Feb 2026 09:03:12 -0800 (PST)
+ Mon, 23 Feb 2026 09:03:22 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Subject: [PATCH 53/65] target/arm: Add has_gcie property to enable FEAT_GCIE
-Date: Mon, 23 Feb 2026 17:02:00 +0000
-Message-ID: <20260223170212.441276-54-peter.maydell@linaro.org>
+Subject: [PATCH 63/65] hw/arm/virt: Use correct interrupt type for GICv5 SPIs
+ in the DTB
+Date: Mon, 23 Feb 2026 17:02:10 +0000
+Message-ID: <20260223170212.441276-64-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260223170212.441276-1-peter.maydell@linaro.org>
 References: <20260223170212.441276-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x329.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,129 +102,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a has_gcie QOM property to the CPU which allows the board code to
-enable FEAT_GCIE, the GICv5 CPU interface.
+The GICv5 devicetree binding specifies that the "interrupts" property
+for devices connected to it should use the architectural INTID.TYPE
+values to specify whether the interrupt is an SPI, LPI or PPI.  This
+is different to the GICv2 and GICv3, so instead of hardcoding the
+GIC_FDT_IRQ_TYPE_SPI constant when we create "interrupts" bindings,
+create a new function gic_fdt_irq_type_spi() that returns the right
+value for the interrupt controller in use.
 
-Enabling the GICv5 CPU interface comes with a significant
-restriction: because the GICv5 architecture is Armv9, it assumes the
-Armv9 requirement that only EL0 (userspace) may be in AArch32.  So
-there are no GIC control system registers defined for AArch32.  We
-force AArch32 at ELs 1, 2 and 3 to disabled, to avoid a guest being
-able to get into an EL where interrupts are completely broken.
+For SPIs, the INTID.ID and the trigger-mode fields of the
+"interrupts" property remain the same for GICv5 and the older GIC
+versions.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/cpu-features.h |  5 +++++
- target/arm/cpu.c          | 45 +++++++++++++++++++++++++++++++++++++++
- target/arm/cpu.h          |  2 ++
- 3 files changed, 52 insertions(+)
+ hw/arm/virt.c | 29 ++++++++++++++++++++---------
+ 1 file changed, 20 insertions(+), 9 deletions(-)
 
-diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
-index e391b394ba..c0ba56f244 100644
---- a/target/arm/cpu-features.h
-+++ b/target/arm/cpu-features.h
-@@ -1072,6 +1072,11 @@ static inline bool isar_feature_aa64_aa32_el2(const ARMISARegisters *id)
-     return FIELD_EX64_IDREG(id, ID_AA64PFR0, EL2) >= 2;
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index 05c92e8482..1b63338196 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -296,6 +296,16 @@ static bool ns_el2_virt_timer_present(void)
+         arm_feature(env, ARM_FEATURE_EL2) && cpu_isar_feature(aa64_vh, cpu);
  }
  
-+static inline bool isar_feature_aa64_aa32_el3(const ARMISARegisters *id)
++/*
++ * The correct value to use in a DTB "interrupts" property for an SPI
++ * depends on the GIC version.
++ */
++static int gic_fdt_irq_type_spi(const VirtMachineState *vms)
 +{
-+    return FIELD_EX64_IDREG(id, ID_AA64PFR0, EL3) >= 2;
++    return vms->gic_version == VIRT_GIC_VERSION_5 ?
++        GICV5_SPI : GIC_FDT_IRQ_TYPE_SPI;
 +}
 +
- static inline bool isar_feature_aa64_ras(const ARMISARegisters *id)
+ static void create_fdt(VirtMachineState *vms)
  {
-     return FIELD_EX64_IDREG(id, ID_AA64PFR0, RAS) != 0;
-diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-index 551be14e22..7f67e8ae47 100644
---- a/target/arm/cpu.c
-+++ b/target/arm/cpu.c
-@@ -1191,6 +1191,9 @@ static const Property arm_cpu_has_el2_property =
+     MachineState *ms = MACHINE(vms);
+@@ -1185,7 +1195,7 @@ static void create_uart(const VirtMachineState *vms, int uart,
+     qemu_fdt_setprop_sized_cells(ms->fdt, nodename, "reg",
+                                      2, base, 2, size);
+     qemu_fdt_setprop_cells(ms->fdt, nodename, "interrupts",
+-                               GIC_FDT_IRQ_TYPE_SPI, irq,
++                               gic_fdt_irq_type_spi(vms), irq,
+                                GIC_FDT_IRQ_FLAGS_LEVEL_HI);
+     qemu_fdt_setprop_cells(ms->fdt, nodename, "clocks",
+                                vms->clock_phandle, vms->clock_phandle);
+@@ -1227,7 +1237,7 @@ static void create_rtc(const VirtMachineState *vms)
+     qemu_fdt_setprop_sized_cells(ms->fdt, nodename, "reg",
+                                  2, base, 2, size);
+     qemu_fdt_setprop_cells(ms->fdt, nodename, "interrupts",
+-                           GIC_FDT_IRQ_TYPE_SPI, irq,
++                           gic_fdt_irq_type_spi(vms), irq,
+                            GIC_FDT_IRQ_FLAGS_LEVEL_HI);
+     qemu_fdt_setprop_cell(ms->fdt, nodename, "clocks", vms->clock_phandle);
+     qemu_fdt_setprop_string(ms->fdt, nodename, "clock-names", "apb_pclk");
+@@ -1346,7 +1356,7 @@ static void create_gpio_devices(const VirtMachineState *vms, int gpio,
+     qemu_fdt_setprop_cell(ms->fdt, nodename, "#gpio-cells", 2);
+     qemu_fdt_setprop(ms->fdt, nodename, "gpio-controller", NULL, 0);
+     qemu_fdt_setprop_cells(ms->fdt, nodename, "interrupts",
+-                           GIC_FDT_IRQ_TYPE_SPI, irq,
++                           gic_fdt_irq_type_spi(vms), irq,
+                            GIC_FDT_IRQ_FLAGS_LEVEL_HI);
+     qemu_fdt_setprop_cell(ms->fdt, nodename, "clocks", vms->clock_phandle);
+     qemu_fdt_setprop_string(ms->fdt, nodename, "clock-names", "apb_pclk");
+@@ -1427,7 +1437,7 @@ static void create_virtio_devices(const VirtMachineState *vms)
+         qemu_fdt_setprop_sized_cells(ms->fdt, nodename, "reg",
+                                      2, base, 2, size);
+         qemu_fdt_setprop_cells(ms->fdt, nodename, "interrupts",
+-                               GIC_FDT_IRQ_TYPE_SPI, irq,
++                               gic_fdt_irq_type_spi(vms), irq,
+                                GIC_FDT_IRQ_FLAGS_EDGE_LO_HI);
+         qemu_fdt_setprop(ms->fdt, nodename, "dma-coherent", NULL, 0);
+         g_free(nodename);
+@@ -1627,10 +1637,11 @@ static void create_pcie_irq_map(const MachineState *ms,
+     int devfn, pin;
+     uint32_t full_irq_map[4 * 4 * 10] = { 0 };
+     uint32_t *irq_map = full_irq_map;
++    const VirtMachineState *vms = VIRT_MACHINE(ms);
  
- static const Property arm_cpu_has_el3_property =
-             DEFINE_PROP_BOOL("has_el3", ARMCPU, has_el3, true);
-+
-+static const Property arm_cpu_has_gcie_property =
-+            DEFINE_PROP_BOOL("has_gcie", ARMCPU, has_gcie, false);
- #endif
+     for (devfn = 0; devfn <= 0x18; devfn += 0x8) {
+         for (pin = 0; pin < 4; pin++) {
+-            int irq_type = GIC_FDT_IRQ_TYPE_SPI;
++            int irq_type = gic_fdt_irq_type_spi(vms);
+             int irq_nr = first_irq + ((pin + PCI_SLOT(devfn)) % PCI_NUM_PINS);
+             int irq_level = GIC_FDT_IRQ_FLAGS_LEVEL_HI;
+             int i;
+@@ -1671,10 +1682,10 @@ static void create_smmuv3_dt_bindings(const VirtMachineState *vms, hwaddr base,
+     qemu_fdt_setprop_sized_cells(ms->fdt, node, "reg", 2, base, 2, size);
  
- static const Property arm_cpu_cfgend_property =
-@@ -1423,6 +1426,11 @@ static void arm_cpu_post_init(Object *obj)
-         object_property_add_uint64_ptr(obj, "rvbar",
-                                        &cpu->rvbar_prop,
-                                        OBJ_PROP_FLAG_READWRITE);
-+
-+        /* We only allow GICv5 on a 64-bit v8 CPU */
-+        if (arm_feature(&cpu->env, ARM_FEATURE_AARCH64)) {
-+            qdev_property_add_static(DEVICE(obj), &arm_cpu_has_gcie_property);
-+        }
-     }
+     qemu_fdt_setprop_cells(ms->fdt, node, "interrupts",
+-            GIC_FDT_IRQ_TYPE_SPI, irq    , GIC_FDT_IRQ_FLAGS_EDGE_LO_HI,
+-            GIC_FDT_IRQ_TYPE_SPI, irq + 1, GIC_FDT_IRQ_FLAGS_EDGE_LO_HI,
+-            GIC_FDT_IRQ_TYPE_SPI, irq + 2, GIC_FDT_IRQ_FLAGS_EDGE_LO_HI,
+-            GIC_FDT_IRQ_TYPE_SPI, irq + 3, GIC_FDT_IRQ_FLAGS_EDGE_LO_HI);
++            gic_fdt_irq_type_spi(vms), irq    , GIC_FDT_IRQ_FLAGS_EDGE_LO_HI,
++            gic_fdt_irq_type_spi(vms), irq + 1, GIC_FDT_IRQ_FLAGS_EDGE_LO_HI,
++            gic_fdt_irq_type_spi(vms), irq + 2, GIC_FDT_IRQ_FLAGS_EDGE_LO_HI,
++            gic_fdt_irq_type_spi(vms), irq + 3, GIC_FDT_IRQ_FLAGS_EDGE_LO_HI);
  
-     if (arm_feature(&cpu->env, ARM_FEATURE_EL3)) {
-@@ -1697,6 +1705,12 @@ static void arm_cpu_realizefn(DeviceState *dev, Error **errp)
-                        current_accel_name());
-             return;
-         }
-+        if (cpu->has_gcie) {
-+            error_setg(errp,
-+                       "Cannot enable %s when guest CPU has GICv5 enabled",
-+                       current_accel_name());
-+            return;
-+        }
-     }
- #endif
- 
-@@ -2020,6 +2034,37 @@ static void arm_cpu_realizefn(DeviceState *dev, Error **errp)
-         FIELD_DP32_IDREG(isar, ID_PFR1, VIRTUALIZATION, 0);
-     }
- 
-+    /* Report FEAT_GCIE in our ID registers if property was set */
-+    FIELD_DP64_IDREG(isar, ID_AA64PFR2, GCIE, cpu->has_gcie);
-+    if (cpu_isar_feature(aa64_gcie, cpu)) {
-+        if (!arm_feature(env, ARM_FEATURE_AARCH64)) {
-+            /*
-+             * We only create the have_gcie property for AArch64 CPUs,
-+             * but the user might have tried aarch64=off with has_gcie=on.
-+             */
-+            error_setg(errp, "Cannot both enable has_gcie and disable aarch64");
-+            return;
-+        }
-+
-+        /*
-+         * FEAT_GCIE implies Armv9, which implies no AArch32 above EL0.
-+         * Usually we don't strictly insist on this kind of feature
-+         * dependency, but in this case we enforce it, because the
-+         * GICv5 CPU interface has no AArch32 versions of its system
-+         * registers, so interrupts wouldn't work if we allowed AArch32
-+         * in EL1 or above. Downgrade "AArch32 and AArch64" to "AArch64".
-+         */
-+        if (cpu_isar_feature(aa64_aa32_el3, cpu)) {
-+            FIELD_DP64_IDREG(isar, ID_AA64PFR0, EL3, 1);
-+        }
-+        if (cpu_isar_feature(aa64_aa32_el2, cpu)) {
-+            FIELD_DP64_IDREG(isar, ID_AA64PFR0, EL2, 1);
-+        }
-+        if (cpu_isar_feature(aa64_aa32_el1, cpu)) {
-+            FIELD_DP64_IDREG(isar, ID_AA64PFR0, EL1, 1);
-+        }
-+    }
-+
-     if (cpu_isar_feature(aa64_mte, cpu)) {
-         /*
-          * The architectural range of GM blocksize is 2-6, however qemu
-diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index 651fccd59b..a5f27dfe0f 100644
---- a/target/arm/cpu.h
-+++ b/target/arm/cpu.h
-@@ -1032,6 +1032,8 @@ struct ArchCPU {
-     bool has_neon;
-     /* CPU has M-profile DSP extension */
-     bool has_dsp;
-+    /* CPU has FEAT_GCIE GICv5 CPU interface */
-+    bool has_gcie;
- 
-     /* CPU has memory protection unit */
-     bool has_mpu;
+     qemu_fdt_setprop(ms->fdt, node, "interrupt-names", irq_names,
+                      sizeof(irq_names));
 -- 
 2.43.0
 
