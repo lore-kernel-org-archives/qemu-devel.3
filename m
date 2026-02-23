@@ -4,52 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C076EA4FA0
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 11:16:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A21BEEA4FA0
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 11:16:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuTv3-0001uZ-Hd; Mon, 23 Feb 2026 06:16:05 -0500
+	id 1vuTv5-0001wR-Fx; Mon, 23 Feb 2026 06:16:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vuTuV-0001oM-S4
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vuTuO-0001iz-CY
  for qemu-devel@nongnu.org; Mon, 23 Feb 2026 06:15:37 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vuTuD-0005Um-Qn
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 06:15:30 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vuTuD-0005YW-9E
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 06:15:23 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771845151;
+ s=mimecast20190719; t=1771845267;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=SIngPvOZlrzUKaniU7QfcU1viMNyYeKBkUW64GD2qpI=;
- b=SHnBIHAfENKvkK2uHZyXE6UYk6mAgk3uQ82FA+AjJP8bAB5BhTfeE7VNAOx6gmwwwrXM5Z
- XfQnw98gjtw3cFFvHeuRB014S9AAjNhWCQ0CLg++jaj37vxbs0LaMBkYWrbPbLZ0o1h2aV
- 1E/uJpgCiURzBV3sRU1UoC5btChdBmI=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=QHM5NK+4Bo9lqUrZ8pOnykbpugPepnhzylDM+Kofdk4=;
+ b=WYtyPcSfMcg73ybnBkGlWdl/egt6BHneHsMb5wJeUdWQ3q06EFRE1qEWhwcfSKWgJ886Vu
+ e3kjS3luFllhAec6XV90erFHUwuIdGoFwzFY1G9S9WdBqj+zAeYFl4nqjcPMcFUJwSR/AV
+ +yKBXQzsX6XxlS1mJDC0fgpu5EgsFjY=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-541-J38HE0EsPXCWJlhnu9p0hg-1; Mon,
- 23 Feb 2026 06:12:27 -0500
-X-MC-Unique: J38HE0EsPXCWJlhnu9p0hg-1
-X-Mimecast-MFC-AGG-ID: J38HE0EsPXCWJlhnu9p0hg_1771845145
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-540-ki-m0M9JPrmgBEoffS52ww-1; Mon,
+ 23 Feb 2026 06:09:21 -0500
+X-MC-Unique: ki-m0M9JPrmgBEoffS52ww-1
+X-Mimecast-MFC-AGG-ID: ki-m0M9JPrmgBEoffS52ww_1771844959
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 29BFA180049D; Mon, 23 Feb 2026 11:12:25 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4F5021956094; Mon, 23 Feb 2026 11:09:18 +0000 (UTC)
 Received: from [10.45.224.205] (unknown [10.45.224.205])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 675C91800465; Mon, 23 Feb 2026 11:12:14 +0000 (UTC)
-Message-ID: <13873c48-451c-44f3-94f8-79461660dfc4@redhat.com>
-Date: Mon, 23 Feb 2026 12:12:13 +0100
+ id 3BA371800465; Mon, 23 Feb 2026 11:09:06 +0000 (UTC)
+Message-ID: <2cf72eb5-059b-4b53-9208-303293e8de24@redhat.com>
+Date: Mon, 23 Feb 2026 12:09:05 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 00/20] python: drop qemu.qmp from qemu.git tree
+Subject: Re: [PATCH v8 11/20] tests/lcitool: add python3 wheel and setuptools
+ deps for qemu
 To: John Snow <jsnow@redhat.com>, qemu-devel@nongnu.org
 Cc: Kevin Wolf <kwolf@redhat.com>, Warner Losh <imp@bsdimp.com>,
  Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
@@ -67,6 +68,7 @@ Cc: Kevin Wolf <kwolf@redhat.com>, Warner Losh <imp@bsdimp.com>,
  Kyle Evans <kevans@freebsd.org>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
  <philmd@linaro.org>, Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 References: <20260218213416.674483-1-jsnow@redhat.com>
+ <20260218213416.674483-12-jsnow@redhat.com>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -111,7 +113,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20260218213416.674483-1-jsnow@redhat.com>
+In-Reply-To: <20260218213416.674483-12-jsnow@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
@@ -140,20 +142,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 18/02/2026 22.33, John Snow wrote:
-...
-> v8:
+On 18/02/2026 22.34, John Snow wrote:
+> Installing local dependencies while offline, without PyPI access,
+> requires the python3-setuptools and python3-wheel packages. Most
+> distributions have these available anyway for one reason or another, but
+> not all of them.
 > 
->   - lcitool update patch(es):
->     - Fixed netbsd VM test
->     - Half-fixed Haiku VM test;
->       test fails now for reasons other than this patchset
+> If you are asking yourself "Wait, aren't these packages guaranteed via
+> installation of pip, via the ensurepip module, which mkvenv takes
+> immense pains to provide for us?" - Well... since Python 3.13, "pip"
+> does not actually come with "setuptools" or "wheel" anymore, and so if
+> we want to build and install a python package, we actually need these
+> available in the host environment.
+> 
+> (Note that you don't need these packages just to install a pre-built
+> package, you only need them to *build* a package. With cutting edge
+> setuptools and pip, all locally installed packages, even in editable
+> mode, must be "built" first before being installed. Thus, these
+> dependencies are being added specifically to facilitate installing
+> qemu.git/python/qemu to the configure-time venv.)
+> 
+> Signed-off-by: John Snow <jsnow@redhat.com>
+> ---
 
-FWIW, the Haiku VM image was never able to run "make check", there were 
-always issues that nobody ever tackled. The VM can currently only be used 
-for compile-testing. As long as your patch series does not break that, I 
-think you don't have to worry about non-functional tests here.
-
-  Thomas
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
