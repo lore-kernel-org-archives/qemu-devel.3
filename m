@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3C41EC111E
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 18:31:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7C7AEC111F
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 18:31:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuago-0001uS-8B; Mon, 23 Feb 2026 13:29:50 -0500
+	id 1vuahN-0002UC-Q2; Mon, 23 Feb 2026 13:30:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vuagn-0001tQ-6W
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 13:29:49 -0500
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vuahL-0002SN-FJ
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 13:30:23 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vuagl-0001k5-Nf
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 13:29:48 -0500
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vuahJ-00022Q-E3
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 13:30:23 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771871386;
+ s=mimecast20190719; t=1771871420;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=cxg4XbDyk9wo7rzoGwJmKfXpjv5zJCDjxCNW8g7xe0g=;
- b=DQN9iB1blRiiCrmVfFwGuZMkVTr3FJxvLFMZkoCaxavfYvMZmsPGzO1Vdw5Ukr1ayCkbEp
- 3jWfpjLJ3E0kP9vwvBq1ENKSrzL18YC2pMsjlzzc2+3KL0gSIzXDwjxFp0fXBCqpkcGIsf
- qp03kJsmt8y5QgQusQxlvmPV/0QsOBc=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=jLM7XicXeiX8hVCrKQSIeJW1a4jhgWhgGhHspAtLon4=;
+ b=BpchEy6R7873pu8N6JXgs3tHvV8pJDA53a3XoYNTLJTy82vlK6wisz8Kvj8gMrxsUk9XIt
+ 3c9O3qp8UT1OtJ4ypufIXA1OwCwPqwu+WTZqSayyoJbusMRVItJ1lZXUu8WK7+Nc/YY8Qc
+ HolFHZRepDavSDnakxKD78RBWBAsaRA=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-583-hSLv1oZcOD6Ocwh-hbhT4Q-1; Mon,
- 23 Feb 2026 13:29:40 -0500
-X-MC-Unique: hSLv1oZcOD6Ocwh-hbhT4Q-1
-X-Mimecast-MFC-AGG-ID: hSLv1oZcOD6Ocwh-hbhT4Q_1771871378
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-161-9G7ePXD5N5utsUzaJoCleg-1; Mon,
+ 23 Feb 2026 13:30:16 -0500
+X-MC-Unique: 9G7ePXD5N5utsUzaJoCleg-1
+X-Mimecast-MFC-AGG-ID: 9G7ePXD5N5utsUzaJoCleg_1771871414
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8902C1956056; Mon, 23 Feb 2026 18:29:38 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6FA80180034D; Mon, 23 Feb 2026 18:30:14 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.89.212])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id E867F1955D71; Mon, 23 Feb 2026 18:29:33 +0000 (UTC)
+ id 002141955D71; Mon, 23 Feb 2026 18:30:08 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Li-Wen Hsu <lwhsu@freebsd.org>,
@@ -65,12 +65,14 @@ Cc: Li-Wen Hsu <lwhsu@freebsd.org>,
  Yonggang Luo <luoyonggang@gmail.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PULL 05/19] meson, mkvenv: add functests custom target
-Date: Mon, 23 Feb 2026 13:28:47 -0500
-Message-ID: <20260223182902.739189-6-jsnow@redhat.com>
+Subject: [PULL 12/19] meson,
+ mkvenv: make functional tests depend on functests group
+Date: Mon, 23 Feb 2026 13:28:54 -0500
+Message-ID: <20260223182902.739189-13-jsnow@redhat.com>
 In-Reply-To: <20260223182902.739189-1-jsnow@redhat.com>
 References: <20260223182902.739189-1-jsnow@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
@@ -98,68 +100,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-add the "pyvenv_functests_group" target to meson. This target will
-invoke mkvenv.py to install the associated dependency group to the
-build/pyvenv directory.
-
-A "pyvenv_tooling_group" is not included here as it is the plan to
-always install this group by default, so it will not need an on-demand
-trigger.
+Note that only the thorough group requires the extra testing
+dependencies; the quick group will run with just the "tooling" group,
+which we intend to install by default at configure time in a forthcoming
+commit.
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
-Message-ID: <20260218213416.674483-7-jsnow@redhat.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Message-ID: <20260218213416.674483-14-jsnow@redhat.com>
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- meson.build        |  1 +
- pyvenv/meson.build | 27 +++++++++++++++++++++++++++
- 2 files changed, 28 insertions(+)
- create mode 100644 pyvenv/meson.build
+ tests/functional/meson.build | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/meson.build b/meson.build
-index 414c8ea7e28..59c8204d881 100644
---- a/meson.build
-+++ b/meson.build
-@@ -4580,6 +4580,7 @@ subdir('scripts')
- subdir('tools')
- subdir('pc-bios')
- subdir('docs')
-+subdir('pyvenv')
- # Tests are disabled on emscripten because they rely on host features that aren't
- # supported by emscripten (e.g. fork and unix socket).
- if host_os != 'emscripten'
-diff --git a/pyvenv/meson.build b/pyvenv/meson.build
-new file mode 100644
-index 00000000000..4e7d8d9fcc4
---- /dev/null
-+++ b/pyvenv/meson.build
-@@ -0,0 +1,27 @@
-+# Note that this file only controls "optional" dependency groups; groups
-+# unconditionally installed at configure time are handled in configure
-+# instead; namely: meson, sphinx, and the tooling groups.
+diff --git a/tests/functional/meson.build b/tests/functional/meson.build
+index 725630d3082..e1f5c0e7678 100644
+--- a/tests/functional/meson.build
++++ b/tests/functional/meson.build
+@@ -57,6 +57,8 @@ foreach speed : ['quick', 'thorough']
+       continue
+     endif
+ 
++    test_deps = [roms, keymap_targets]
 +
-+# Note that this command may or may not include the "--online" flag
-+# based on configuration.
-+ensuregroup_cmd = config_host['MKVENV_ENSUREGROUP'].split()
-+
-+pyvenv_common_deps = files(
-+    meson.project_source_root() + '/pythondeps.toml',
-+    meson.project_source_root() + '/python/scripts/mkvenv.py'
-+)
-+pyvenv_wheel_dir = meson.project_source_root() + '/python/wheels'
-+
-+# This group is allowed to (and must) rely on internet to fetch from
-+# PyPI. Force the use of the --online flag here.
-+pyvenv_functests_group = custom_target(
-+    'pyvenv_functests_group',
-+    output: 'functests.group',
-+    input: pyvenv_common_deps,
-+    command: ensuregroup_cmd + [
-+        '--online',
-+        '--dir', pyvenv_wheel_dir,
-+        '@INPUT0@',
-+        'functests',
-+    ],
-+)
+     if speed == 'quick'
+       suites = ['func-quick', 'func-' + target_base]
+       target_tests = get_variable('tests_' + target_base + '_' + sysmode + '_quick', []) \
+@@ -64,9 +66,9 @@ foreach speed : ['quick', 'thorough']
+     else
+       suites = ['func-' + speed, 'func-' + target_base + '-' + speed, speed]
+       target_tests = get_variable('tests_' + target_base + '_' + sysmode + '_' + speed, [])
++      test_deps += [pyvenv_functests_group]
+     endif
+ 
+-    test_deps = [roms, keymap_targets]
+     test_env = environment()
+     if have_tools
+       test_env.set('QEMU_TEST_QEMU_IMG', meson.global_build_root() / 'qemu-img')
+@@ -99,6 +101,7 @@ foreach speed : ['quick', 'thorough']
+       precache = custom_target('func-precache-' + testname,
+                                output: teststamp,
+                                command: [python, testpath],
++                               depends: pyvenv_functests_group,
+                                depend_files: files(testpath),
+                                build_by_default: false,
+                                env: test_precache_env)
 -- 
 2.53.0
 
