@@ -4,57 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E401E98E14
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 09:54:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90012E98E10
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 09:54:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuSXv-0005Ft-EW; Mon, 23 Feb 2026 04:48:08 -0500
+	id 1vuSYj-0007JO-FF; Mon, 23 Feb 2026 04:48:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vuSXr-00055O-IN
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 04:48:04 -0500
+ id 1vuSYF-0006dY-Og
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 04:48:30 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vuSXq-0006um-0X
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 04:48:03 -0500
+ id 1vuSYC-0006xR-1n
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 04:48:25 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771840081;
+ s=mimecast20190719; t=1771840103;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=6n0Nw4IjvpoGYNAliP9f9QdpiSJbuthryuT9oA6KUP4=;
- b=Ilo8tcNSyhFBFbG4+UVlG1rbGlyJ59SX1AxPaLFJ4CtvU7Bb7wk1nlM23aCyxCoS8RX2c4
- 7UGrbJAfxTC49BmY2siN1tRZa1F3n0XNDqVggBu8EbzeI4l78Giw/Y/Lmn84FB+k8KpZDI
- fUnNnqVQNs4nqUAr9Zo/VqkyUToTh44=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=TqhGjBY+mC3y4OSdljPQ85F3Z7Hx6fbG+VByjEnt370=;
+ b=cCkXuDb2d69TrDZ+ps42Ieu5KY+a0aMzs3jcshXEjzMJ/eRgib3bhtBQG8VIvA5u83ypiw
+ +KSna377aoIPCKHg6EnKm3YGF0nTbBtGe+ApU04x9nZBlJ4qRgT1yl5SaZgCcvl6UldzNv
+ 0jYrBX8Vg1kV+JsVvJbeOSCZK8LYT1Y=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-344-HculXjhiMF-hizM59llo1A-1; Mon,
- 23 Feb 2026 04:47:57 -0500
-X-MC-Unique: HculXjhiMF-hizM59llo1A-1
-X-Mimecast-MFC-AGG-ID: HculXjhiMF-hizM59llo1A_1771840076
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-170-lo7hqmk-POK-ylBdNfyrKA-1; Mon,
+ 23 Feb 2026 04:48:18 -0500
+X-MC-Unique: lo7hqmk-POK-ylBdNfyrKA-1
+X-Mimecast-MFC-AGG-ID: lo7hqmk-POK-ylBdNfyrKA_1771840097
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 95020195609F; Mon, 23 Feb 2026 09:47:56 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 924FB1800A3C; Mon, 23 Feb 2026 09:48:17 +0000 (UTC)
 Received: from localhost (unknown [10.45.242.25])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id E555A30001BE; Mon, 23 Feb 2026 09:47:55 +0000 (UTC)
+ id 00CCE3003D8F; Mon, 23 Feb 2026 09:48:16 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Gerd Hoffmann <kraxel@redhat.com>
-Subject: [PULL v2 23/85] audio: move object creation to audio_driver_init()
-Date: Mon, 23 Feb 2026 10:45:41 +0100
-Message-ID: <20260223094649.2005118-24-marcandre.lureau@redhat.com>
+Subject: [PULL v2 30/85] audio: keep a strong reference on the backend
+Date: Mon, 23 Feb 2026 10:45:48 +0100
+Message-ID: <20260223094649.2005118-31-marcandre.lureau@redhat.com>
 In-Reply-To: <20260223094649.2005118-1-marcandre.lureau@redhat.com>
 References: <20260223094649.2005118-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
@@ -89,141 +89,69 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-As we will allow other kind of AudioBackend objects to be instantiated,
-move the object allocation to a audio_driver_init() and rename it
-audio_be_new().
+Since we are going to convert audio_driver-based backends, we need to
+properly handle reference counting to allow for a different order of
+class finalization (for example, pulse class before base driver class).
 
-Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
 Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- audio/audio.c | 65 +++++++++++++++++++++++++++------------------------
- 1 file changed, 34 insertions(+), 31 deletions(-)
+ audio/audio_template.h | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/audio/audio.c b/audio/audio.c
-index 10e32bcbb1a..3e1cd988852 100644
---- a/audio/audio.c
-+++ b/audio/audio.c
-@@ -1562,19 +1562,24 @@ size_t audio_generic_read(HWVoiceIn *hw, void *buf, size_t size)
-     return total;
+diff --git a/audio/audio_template.h b/audio/audio_template.h
+index a1f78d8748b..512abbfe22f 100644
+--- a/audio/audio_template.h
++++ b/audio/audio_template.h
+@@ -231,6 +231,7 @@ static void glue (audio_pcm_hw_gc_, TYPE) (HW **hwp)
+         glue(hw->pcm_ops->fini_, TYPE) (hw);
+         glue(s->nb_hw_voices_, TYPE) += 1;
+         glue(audio_pcm_hw_free_resources_ , TYPE) (hw);
++        object_unref(hw->s);
+         g_free(hw);
+         *hwp = NULL;
+     }
+@@ -287,7 +288,7 @@ static HW *glue(audio_pcm_hw_add_new_, TYPE)(AudioMixengBackend *s,
+      * is guaranteed to be != 0. See the audio_init_nb_voices_* functions.
+      */
+     hw = g_malloc0(glue(drv->voice_size_, TYPE));
+-    hw->s = s;
++    hw->s = AUDIO_MIXENG_BACKEND(object_ref(s));
+     hw->pcm_ops = drv->pcm_ops;
+ 
+     QLIST_INIT (&hw->sw_head);
+@@ -335,6 +336,7 @@ static HW *glue(audio_pcm_hw_add_new_, TYPE)(AudioMixengBackend *s,
+  err1:
+     glue (hw->pcm_ops->fini_, TYPE) (hw);
+  err0:
++    object_unref(hw->s);
+     g_free (hw);
+     return NULL;
  }
- 
--static bool audio_driver_do_init(AudioMixengBackend *d, Error **errp)
-+static AudioBackend *audio_be_new(Audiodev *dev, Error **errp)
- {
--    const char *drvname = AudiodevDriver_str(d->dev->driver);
-+    const char *drvname = AudiodevDriver_str(dev->driver);
-     struct audio_driver *drv = audio_driver_lookup(drvname);
- 
-     if (!drv) {
-         error_setg(errp, "Unknown audio driver `%s'", drvname);
--        return false;
-+        qapi_free_Audiodev(dev);
-+        return NULL;
+@@ -441,7 +443,7 @@ static SW *glue(audio_pcm_create_voice_pair_, TYPE)(
      }
  
--    d->drv_opaque = drv->init(d->dev, errp);
--    if (!d->drv_opaque) {
--        return false;
-+    AudioMixengBackend *be = AUDIO_MIXENG_BACKEND(object_new(TYPE_AUDIO_MIXENG_BACKEND));
-+    be->dev = dev;
+     sw = g_new0(SW, 1);
+-    sw->s = s;
++    sw->s = AUDIO_MIXENG_BACKEND(object_ref(s));
+ 
+     hw = glue(audio_pcm_hw_add_, TYPE)(s, &hw_as);
+     if (!hw) {
+@@ -461,6 +463,7 @@ err2:
+     glue (audio_pcm_hw_del_sw_, TYPE) (sw);
+     glue (audio_pcm_hw_gc_, TYPE) (&hw);
+ err1:
++    object_unref(sw->s);
+     g_free(sw);
+     return NULL;
+ }
+@@ -470,6 +473,8 @@ static void glue (audio_close_, TYPE) (SW *sw)
+     glue (audio_pcm_sw_fini_, TYPE) (sw);
+     glue (audio_pcm_hw_del_sw_, TYPE) (sw);
+     glue (audio_pcm_hw_gc_, TYPE) (&sw->hw);
 +
-+    be->drv_opaque = drv->init(be->dev, errp);
-+    if (!be->drv_opaque) {
-+        object_unref(OBJECT(be));
-+        return NULL;
-     }
- 
-     if (!drv->pcm_ops->get_buffer_in) {
-@@ -1586,17 +1591,17 @@ static bool audio_driver_do_init(AudioMixengBackend *d, Error **errp)
-         drv->pcm_ops->put_buffer_out = audio_generic_put_buffer_out;
-     }
- 
--    audio_init_nb_voices_out(d, drv, 1);
--    audio_init_nb_voices_in(d, drv, 0);
--    d->drv = drv;
-+    audio_init_nb_voices_out(be, drv, 1);
-+    audio_init_nb_voices_in(be, drv, 0);
-+    be->drv = drv;
- 
--    if (d->dev->timer_period <= 0) {
--        d->period_ticks = 1;
-+    if (be->dev->timer_period <= 0) {
-+        be->period_ticks = 1;
-     } else {
--        d->period_ticks = d->dev->timer_period * (int64_t)SCALE_US;
-+        be->period_ticks = be->dev->timer_period * (int64_t)SCALE_US;
-     }
- 
--    return true;
-+    return AUDIO_BACKEND(be);
- }
- 
- static void audio_vm_change_state_handler (void *opaque, bool running,
-@@ -1793,41 +1798,39 @@ void audio_create_default_audiodevs(void)
-  */
- static AudioBackend *audio_init(Audiodev *dev, Error **errp)
- {
--    AudioMixengBackend *d;
-+    AudioBackend *be;
- 
--    d = AUDIO_MIXENG_BACKEND(object_new(TYPE_AUDIO_MIXENG_BACKEND));
--    d->dev = dev;
--    if (d->dev) {
--        if (!audio_driver_do_init(d, errp)) {
--            goto out;
-+    if (dev) {
-+        be = audio_be_new(dev, errp);
-+        if (!be) {
-+            return NULL;
-         }
-     } else {
-         assert(!default_audio_be);
-         for (;;) {
-             AudiodevListEntry *e = QSIMPLEQ_FIRST(&default_audiodevs);
-+
-             if (!e) {
-                 error_setg(errp, "no default audio driver available");
--                goto out;
-+                return NULL;
-             }
--            d->dev = e->dev;
-+            dev = e->dev;
-             QSIMPLEQ_REMOVE_HEAD(&default_audiodevs, next);
-             g_free(e);
--            if (audio_driver_do_init(d, NULL)) {
-+            be = audio_be_new(dev, NULL);
-+            if (be) {
-                 break;
-             }
-         }
-     }
- 
-     if (!object_property_try_add_child(get_audiodevs_root(),
--                                       d->dev->id, OBJECT(d), errp)) {
--        goto out;
-+                                       audio_be_get_id(be), OBJECT(be), errp)) {
-+        object_unref(be);
-+        return NULL;
-     }
--    object_unref(d);
--    return AUDIO_BACKEND(d);
--
--out:
--    object_unref(d);
--    return NULL;
-+    object_unref(be);
-+    return be;
- }
- 
- AudioBackend *audio_get_default_audio_be(Error **errp)
-@@ -2183,7 +2186,7 @@ void audio_init_audiodevs(void)
-     AudiodevListEntry *e;
- 
-     QSIMPLEQ_FOREACH(e, &audiodevs, next) {
--        audio_init(e->dev, &error_fatal);
-+        audio_init(QAPI_CLONE(Audiodev, e->dev), &error_fatal);
-     }
++    object_unref(sw->s);
+     g_free (sw);
  }
  
 -- 
