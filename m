@@ -4,89 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2132EC1112
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 17:05:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCB32EC110C
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 17:05:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuZL3-0002dc-Uu; Mon, 23 Feb 2026 12:03:22 -0500
+	id 1vuZKN-0001Va-LU; Mon, 23 Feb 2026 12:02:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vuZKp-0002YK-Mt
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 12:03:03 -0500
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ id 1vuZKK-0001RB-AH
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 12:02:32 -0500
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vuZKn-0000KR-LZ
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 12:03:03 -0500
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-48375f10628so29379235e9.1
- for <qemu-devel@nongnu.org>; Mon, 23 Feb 2026 09:03:01 -0800 (PST)
+ id 1vuZKI-00007c-Kj
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 12:02:31 -0500
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-48373a4bca3so27425535e9.0
+ for <qemu-devel@nongnu.org>; Mon, 23 Feb 2026 09:02:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771866180; x=1772470980; darn=nongnu.org;
+ d=linaro.org; s=google; t=1771866149; x=1772470949; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=AM/OI0jKVabZ0iq/CmOwmnbVdkGhhSHtAdP0sBiCNp4=;
- b=guECjS2X6yMGeGLohKhf+b6NxnJvmdwJB4MN8z9JGpJUIMUOEHhsPCvbsVtlZOgiY6
- UlXnsjjbjSb+NRyJPHucai4fLaNJuKN/vO2gAhi8P+sM+9r8hmfjkJ1U05sp33wkj1qS
- /7cTXyJ3n6kNgZaXNw7E4bK9J+UG6ZY1HaVwicJxid+r9YpGKSdxNIr9hZlnlRl5YOrH
- 8CPvpoG0l1tOEMpre5ffpcrZZX3i1iddOvrSjJzCMo5YxtZnUxUErRdUVWvR2qvuFeSh
- V3ysXDh1fehBY99FyDmNbBlY7JEd7WqyZBPNlLDkFxsAj+Kpw8E/xEYedGBZS/olTCsM
- CYeg==
+ :reply-to; bh=sngzmWpFYqov4tsRiPEbrCo+XLB7I8a4AeFdOGirVho=;
+ b=b46WDa7qPdAvTMHuoQPVU2eKaCo1w9pMyO79mXtdbEN+PggUqVE36pmuTC0AuWiFEQ
+ 0FaO6hLG5c5THhJNOes89tmbTEb3Y9+29dXe2BZrWPng+BE6oTptcWKuXnsTAxTeYD2f
+ vHu0/gSDE2npYNInWkYcx/tkYCaTkkYF2X93OsgXcekqjaqRlKZwCefnFU9Vr6Olaesj
+ eYl8tD9bF28RsgMUFrICKTYq/COBPKvHkzvWK2D1kUtQD8UkzdQuCmupVjis6Wi6f4R/
+ Ur3UMhNN0wQnbYz+1iI0S0nPTM6gLqux1TEDLRs/IhMzqg9MnrEbrC0cfl3rA0uJLJ2l
+ UGaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771866180; x=1772470980;
+ d=1e100.net; s=20230601; t=1771866149; x=1772470949;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=AM/OI0jKVabZ0iq/CmOwmnbVdkGhhSHtAdP0sBiCNp4=;
- b=wbLtnv++DtFt9Lis2Exbcf2At2f+6I1AKCS84Wy/U7Y+ktiaCBm5hJ1hMVRWO6ds8v
- 7W76f4DgquLS7OgXl4QYLBUQ5TGxwIg/sbvNh/AyAX7JTJ2UbxR7kfEwcFxNH/2tda3I
- St9DAuqDtGtCE4rkmWo6yKlhS0qUz086/VrDea7XTLKEj/ib/dD6Ht2Lboj6HvZ19tbZ
- RnfV785JDyjptj19fmBRLumcs4udOnWab0YhIFovTxSoVSobiT6VQyk2W8VebjaSPtn6
- eDNdUgQ1z+vERvFxFH714be3fQMX+UbyKvL7wTHNgIrqQLTLq74WJRdfkbYIGUByvo1n
- D59w==
+ bh=sngzmWpFYqov4tsRiPEbrCo+XLB7I8a4AeFdOGirVho=;
+ b=hj0DH5ikQJs/V/Pi57XM+HDPuOi5kn1BbH78xD6wuLj2Kc3u5MPz2Rw5sNDvwPVRWB
+ cOASWx+bP6dpMUh98c6KcGnI62WR3ErKez0Q88D+DV0H6QPqNWUz8HhOnYAFxAfI2dpS
+ i6zssFv9UL7MeCNwJU+/SWmZwriWQBeHDTJ5fhgtPYuVimb7mQM4YnBpJg32/QQf3tGX
+ S5CiPsi4dMlhaWK+Tr75kTkxRAMynPtdpus813dwSZ7k5yeR9OW5tm+z2av38YE0ndoG
+ Avo5wpQ0X6Sge2wSsW/gyCsxDaOTqxSKVLXi9Ppff16tJtm8wf3hW8Dh4jlT+t4dUpvy
+ zMrQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUsPn4/fs4tllYuQpDn1W/aeg7p58x1PW1gPg64aUaOLguGEwi2J2Hjv2N0/OkpmLB6dgOAPPCWIZ+0@nongnu.org
-X-Gm-Message-State: AOJu0YxDgW15jfEoe5r9M3WF/yFeQmMcPohTM6gSJR6yddsKndMtIzPo
- Rz2wf5lOnHLOKluLXjj49q1PBtQBB3NlPOUnxkTzeisZUK+ZL4rkaMlYMi5cSOfCpuA=
-X-Gm-Gg: AZuq6aL0lQ40nYqGUA/AhJZSwctoOTOayARju4ghRQWFLiVy7SBUqFU/iCPdUzalkqB
- +i+l1B+pE2gUkpKJjxysx4Uh6fTiJAWC7GONty0eV5rsSIaQr5VBtCvBeKYUhch7LOpLj2ifdx9
- +1+wT5qcKFyqoo4Fbbls2CVmLdFz71N9WaUR2FsQV5n9UBtubrZc4u+x9TACpUGJT2G6WvU3i4T
- bSH0qtMcStwJ2hfEDVNRQZ3tSK9hjpW8jPtO10SRw3vXAVn5bMX+4Oz4bdgTut0Zg9CN7ElmqIm
- qw6JinzI7wpPCemth2oF9wzVgNqlkaUxAK5BmaHeKfVpJtCNvJXEeF7e/E+0mL8rt5U+Ci4xdei
- 4EZiSrr4DWZB4NkPlLPgYh/Rb7JsCrgKZQ3cYWsbsAY1vT+vFC2FZAxY38wa4qqZsB+dvDfHAr/
- huZzg8i0+U0kSs66TaDhsrqkdUdaG5T/qibhB5gxv/eOtD5ErzXqdxxTzlH3R0LjF5woaQFe4YO
- z0wMPmI2Dhhhgi2Dx1Ajyb1TCsVdew=
-X-Received: by 2002:a05:600c:3b0a:b0:480:4ae2:def1 with SMTP id
- 5b1f17b1804b1-483a95be7c9mr180018785e9.13.1771866180089; 
- Mon, 23 Feb 2026 09:03:00 -0800 (PST)
+ AJvYcCULGl6eBxd0uBc9QRLr6H+/MY23H+4xnUCY0UVu9Pb/F3jm8NBsrblZ/LAwxt/TuCYP1NT36CJ6PkRb@nongnu.org
+X-Gm-Message-State: AOJu0YyV8QdBzW0k8WN0YUEaZyZle114IRO/5WdWpi+VX1ZjMpX1VyNc
+ uUOsSgTEhswVkBP9UcSso3AfgLFzFcoK7ecy8G0ir1TGkpf+oenoijx9liVwMr+XSdOVC0caVJo
+ ZgVPY
+X-Gm-Gg: AZuq6aKoM+DsQ78n/AAlvrL1cnIPI1CEos1K1YU9wvl96qOGL/AtfmpAqMPPfRzJfOA
+ pmQTrXsuy+jScJzVaaz1pZkLrboXUrVGfKMYsQvv5JOKZ79tvd/DT+grrvsVEXQawO8aKX7u7cv
+ 9vEJoxN6FI+vEtrlyjB7EUaZYdr4OwqqmChF3AHqB5zHJi5eWg5Kr5sGDbMPPUPV4MjhFhdrlup
+ 1A0DQ4Ld/20ZMcKbXhlvSphnfY0WZtAX04yKuv2tpgzY79vijVmk2HKs7/rBiDu2UShNCxnItlf
+ w6fTpxibmiso2hT5d+Vu7CPSVTAwuAwLLK4ha1FY/ydsHTUJdNn2iAc0Otc5bzfMSMyEQb/Up/H
+ cpGJeCp1UfWMPB1PgNkLeOeHlHKmviY1y9YW4Y4rvBon4JOZHZpvUL4s69kWcQ3Zmd/wzhyE36h
+ Ud9NnjEymB4OKKvlHRlAvOY7H98B7cnei2Wzl/arw3acgbqtqaVtfdSLCgOxyHmhq1HKWiZpzSJ
+ FAYvA/qGn91y7Z7bdH6ePWEjPe9YY4=
+X-Received: by 2002:a05:600c:6211:b0:477:54f9:6ac2 with SMTP id
+ 5b1f17b1804b1-483a9566b78mr139437995e9.0.1771866149008; 
+ Mon, 23 Feb 2026 09:02:29 -0800 (PST)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-483a9b21ceasm200155625e9.0.2026.02.23.09.02.58
+ 5b1f17b1804b1-483a9b21ceasm200155625e9.0.2026.02.23.09.02.28
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 23 Feb 2026 09:02:59 -0800 (PST)
+ Mon, 23 Feb 2026 09:02:28 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Subject: [PATCH 40/65] target/arm: GICv5 cpuif: Implement ICC_APR_EL1 and
- ICC_HAPR_EL1
-Date: Mon, 23 Feb 2026 17:01:47 +0000
-Message-ID: <20260223170212.441276-41-peter.maydell@linaro.org>
+Subject: [PATCH 12/65] hw/intc/arm_gicv5: Add defines for GICv5 architected
+ PPIs
+Date: Mon, 23 Feb 2026 17:01:19 +0000
+Message-ID: <20260223170212.441276-13-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260223170212.441276-1-peter.maydell@linaro.org>
 References: <20260223170212.441276-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,148 +103,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The ICC_APR_EL1 GICv5 cpuif register records the physical active
-priorities.  Since the GICv5 always uses 5 bits of priority, this
-register always has 32 non-RES0 bits, and we don't need the
-complicated GICv3 setup where there might be 1, 2 or 4 APR registers.
-
-ICC_HAPR_EL1 is a read-only register which reports the current
-running priority.  This is defined to be the lowest set bit (i.e.
-the highest priority) in the APR, or the Idle priority 0xff if there
-are no active interrupts, so it is effectively a convenience
-re-presentation of the APR register data.
-
-The APR register is banked per interrupt domain; ICC_APR_EL1 accesses
-the version of the register corresponding to the current logical
-interrupt domain.  The APR data for the final domain (EL3) is
-accessed via ICC_APR_EL3.  Although we are starting with an EL1-only
-implementation, we define the CPU state as banked here so we don't
-have to change our representation of it later when we add EL3 and RME
-support.
+The GICv5 defines architected numbers for the PPI sources like the
+generic timer and the PMU; these are different from the ones
+traditionally used by GICv2 and GICv3.  Add defines for them.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- include/hw/intc/arm_gicv5_types.h |  2 ++
- target/arm/cpu.h                  |  2 ++
- target/arm/tcg/gicv5-cpuif.c      | 60 +++++++++++++++++++++++++++++++
- 3 files changed, 64 insertions(+)
+ include/hw/intc/arm_gicv5_types.h | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
 diff --git a/include/hw/intc/arm_gicv5_types.h b/include/hw/intc/arm_gicv5_types.h
-index 30e1bc58cb..b69ad137aa 100644
+index 143dcdec28..9c7788b1e6 100644
 --- a/include/hw/intc/arm_gicv5_types.h
 +++ b/include/hw/intc/arm_gicv5_types.h
-@@ -85,4 +85,6 @@ typedef enum GICv5TriggerMode {
-     GICV5_TRIGGER_LEVEL = 1,
- } GICv5TriggerMode;
+@@ -25,4 +25,24 @@ typedef enum GICv5Domain {
  
-+#define PRIO_IDLE 0xff
+ #define NUM_GICV5_DOMAINS 4
+ 
++/* Architected GICv5 PPIs (as listed in R_XDVCM) */
++#define GICV5_PPI_S_DB_PPI 0
++#define GICV5_PPI_RL_DB_PPI 1
++#define GICV5_PPI_NS_DB_PPI 2
++#define GICV5_PPI_SW_PPI 3
++#define GICV5_PPI_HACDBSIRQ 15
++#define GICV5_PPI_CNTHVS 19
++#define GICV5_PPI_CNTHPS 20
++#define GICV5_PPI_PMBIRQ 21
++#define GICV5_PPI_COMMIRQ 22
++#define GICV5_PPI_PMUIRQ 23
++#define GICV5_PPI_CTIIRQ 24
++#define GICV5_PPI_GICMNT 25
++#define GICV5_PPI_CNTHP 26
++#define GICV5_PPI_CNTV 27
++#define GICV5_PPI_CNTHV 28
++#define GICV5_PPI_CNTPS 29
++#define GICV5_PPI_CNTP 30
++#define GICV5_PPI_TRBIRQ 31
 +
  #endif
-diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index b97f659352..6841b6748f 100644
---- a/target/arm/cpu.h
-+++ b/target/arm/cpu.h
-@@ -35,6 +35,7 @@
- #include "target/arm/gtimer.h"
- #include "target/arm/cpu-sysregs.h"
- #include "target/arm/mmuidx.h"
-+#include "hw/intc/arm_gicv5_types.h"
- 
- #define EXCP_UDEF            1   /* undefined instruction */
- #define EXCP_SWI             2   /* software interrupt */
-@@ -603,6 +604,7 @@ typedef struct CPUArchState {
-     struct {
-         /* GICv5 CPU interface data */
-         uint64_t icc_icsr_el1;
-+        uint64_t icc_apr[NUM_GICV5_DOMAINS];
-         /* Most PPI registers have 1 bit per PPI, so 64 PPIs to a register */
-         uint64_t ppi_active[GICV5_NUM_PPIS / 64];
-         uint64_t ppi_hm[GICV5_NUM_PPIS / 64];
-diff --git a/target/arm/tcg/gicv5-cpuif.c b/target/arm/tcg/gicv5-cpuif.c
-index 60b495dd8f..d0521ce7fd 100644
---- a/target/arm/tcg/gicv5-cpuif.c
-+++ b/target/arm/tcg/gicv5-cpuif.c
-@@ -95,6 +95,16 @@ static GICv5Domain gicv5_current_phys_domain(CPUARMState *env)
-     return gicv5_logical_domain(env);
- }
- 
-+static uint64_t gic_running_prio(CPUARMState *env, GICv5Domain domain)
-+{
-+    /*
-+     * Return the current running priority; this is the lowest set bit in
-+     * the Active Priority Register, or the idle priority if none (D_XMBQZ)
-+     */
-+    uint64_t hap = ctz64(env->gicv5_cpuif.icc_apr[domain]);
-+    return hap < 32 ? hap : PRIO_IDLE;
-+}
-+
- static void gic_cddis_write(CPUARMState *env, const ARMCPRegInfo *ri,
-                             uint64_t value)
- {
-@@ -231,6 +241,44 @@ static void gic_ppi_priority_write(CPUARMState *env, const ARMCPRegInfo *ri,
-     raw_write(env, ri, value);
- }
- 
-+/*
-+ * ICC_APR_EL1 is banked and reads/writes as the version for the
-+ * current logical interrupt domain.
-+ */
-+static void gic_icc_apr_el1_write(CPUARMState *env, const ARMCPRegInfo *ri,
-+                                  uint64_t value)
-+{
-+    /*
-+     * With an architectural 5 bits of priority, this register has
-+     * 32 non-RES0 bits
-+     */
-+    GICv5Domain domain = gicv5_logical_domain(env);
-+    value &= 0xffffffff;
-+    env->gicv5_cpuif.icc_apr[domain] = value;
-+}
-+
-+static uint64_t gic_icc_apr_el1_read(CPUARMState *env, const ARMCPRegInfo *ri)
-+{
-+    GICv5Domain domain = gicv5_logical_domain(env);
-+    return env->gicv5_cpuif.icc_apr[domain];
-+}
-+
-+static void gic_icc_apr_el1_reset(CPUARMState *env, const ARMCPRegInfo *ri)
-+{
-+    for (int i = 0; i < ARRAY_SIZE(env->gicv5_cpuif.icc_apr); i++) {
-+        env->gicv5_cpuif.icc_apr[i] = 0;
-+    }
-+}
-+
-+static uint64_t gic_icc_hapr_el1_read(CPUARMState *env, const ARMCPRegInfo *ri)
-+{
-+    /*
-+     * ICC_HAPR_EL1 reports the current running priority, which
-+     * can be calculated from the APR register.
-+     */
-+    return gic_running_prio(env, gicv5_current_phys_domain(env));
-+}
-+
- static const ARMCPRegInfo gicv5_cpuif_reginfo[] = {
-     /*
-      * Barrier: wait until the effects of a cpuif system register
-@@ -382,6 +430,18 @@ static const ARMCPRegInfo gicv5_cpuif_reginfo[] = {
-         .fieldoffset = offsetof(CPUARMState, gicv5_cpuif.ppi_pend[1]),
-         .writefn = gic_ppi_spend_write,
-     },
-+    {   .name = "ICC_APR_EL1", .state = ARM_CP_STATE_AA64,
-+        .opc0 = 3, .opc1 = 1, .crn = 12, .crm = 0, .opc2 = 0,
-+        .access = PL1_RW, .type = ARM_CP_IO | ARM_CP_NO_RAW,
-+        .readfn = gic_icc_apr_el1_read,
-+        .writefn = gic_icc_apr_el1_write,
-+        .resetfn = gic_icc_apr_el1_reset,
-+    },
-+    {   .name = "ICC_HAPR_EL1", .state = ARM_CP_STATE_AA64,
-+        .opc0 = 3, .opc1 = 1, .crn = 12, .crm = 0, .opc2 = 3,
-+        .access = PL1_R, .type = ARM_CP_IO | ARM_CP_NO_RAW,
-+        .readfn = gic_icc_hapr_el1_read, .raw_writefn = arm_cp_write_ignore,
-+    },
- };
- 
- void define_gicv5_cpuif_regs(ARMCPU *cpu)
 -- 
 2.43.0
 
