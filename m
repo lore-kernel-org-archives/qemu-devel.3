@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78D00E98E06
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0DD2E98E0A
 	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 08:23:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuRCq-0001xd-3e; Mon, 23 Feb 2026 03:22:16 -0500
+	id 1vuRCt-0001yk-JT; Mon, 23 Feb 2026 03:22:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vuRCo-0001uh-2l
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 03:22:14 -0500
-Received: from mail-pl1-x643.google.com ([2607:f8b0:4864:20::643])
+ id 1vuRCs-0001yT-05
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 03:22:18 -0500
+Received: from mail-pg1-x52d.google.com ([2607:f8b0:4864:20::52d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vuRCm-0007og-DJ
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 03:22:13 -0500
-Received: by mail-pl1-x643.google.com with SMTP id
- d9443c01a7336-2a8fba3f769so17821055ad.2
- for <qemu-devel@nongnu.org>; Mon, 23 Feb 2026 00:22:12 -0800 (PST)
+ id 1vuRCq-0007tL-72
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 03:22:17 -0500
+Received: by mail-pg1-x52d.google.com with SMTP id
+ 41be03b00d2f7-c61343f82d7so1362680a12.1
+ for <qemu-devel@nongnu.org>; Mon, 23 Feb 2026 00:22:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771834931; x=1772439731; darn=nongnu.org;
+ d=linaro.org; s=google; t=1771834935; x=1772439735; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=WILaMGNYgo59ciXOv8fCSdPpQjQ/av9tdzjHB1/JF6I=;
- b=lf384EcY1AT7BV1P5rip8nSAi4yqamo+4akZyRWPL+NzhefukGG3RAN0hsptElpVfN
- nqe562SY60rvHCuoBoq1VBNuH+YVExfcoC+svVw+m3sge5GTwyu0ZvgRlDGkjsxxN3gf
- JZhCour4EBezGj4SEDrx/p6vOrJ/XciPqsXfxbmDycKvILkKLK2yW5AISRMxLi+EDinb
- a7gU1ceJBqnN/ksNerux7b02R3pQ0dXD5uYU/UhrGvIgl7qioSwu/DHNPHk2Q4yABmbZ
- cA09ZBTWMBOow/AZBhNKwofWbvHC4PIyy7Kgc5PL6TP0j9IhX33X49T8zts+RpGs3H7c
- tsog==
+ bh=7P4L6KRGUfnJuZGklnenZefdnYuPN4EZ2NjRTD5rCHQ=;
+ b=uAlhqBwF2zjMjg3UGjo76YPmeLQMPz6jx48Z81mnh1vnNt/iAMDtAaJHER6X0TR8Sd
+ CPYL6Q0/Kpv4uy3kcQw4l7i2rcT2Ayn+z9nP9CUlrBAxiUvfWJAX66ABRs/GJBiuuXGE
+ gtnSxBgOaeNG3FxltT6/dxv05gaUUuMlxaQaYOShwx01O9VoN/4Rd0nclO7WXeINDGJH
+ 5/qHIBi9ZVjfpsvaGxhWgmlklhlx5yfCJOI4NKLwkMUQhPXX5OnFQa7Wm3wvbqhyVz5u
+ +uGUUSU251FPRzms12FF6NdoexUHX+jYixaRVtV1Nj0Zlt6Xt+SoMJ3wfbEB4AMZtPZY
+ lYaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771834931; x=1772439731;
+ d=1e100.net; s=20230601; t=1771834935; x=1772439735;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=WILaMGNYgo59ciXOv8fCSdPpQjQ/av9tdzjHB1/JF6I=;
- b=uwULEIEXX4QU9X+aBZAX9sq4Xr9YXXgQepEsVs15TOFvrVWMib8uB3DDG94YjbAgUU
- hX1vOABvxQUpTZKtVCuY6dkMZXCzbLNHldeB5YFySYBbQU4mQRurnKDnvkFw/L+eKHp5
- 02XclMCkKdsWsAMdhZOP+Qu9NNWV7DSm5MBk0VR2a3S+IfyvUIys9pKt0CsjKzURAYyg
- nTe4gtaLxr9S6tDUL4jAYj8gxOohlghD9Lq7GzmBXepAx3WoWHK/GPQz8QutTBGLhqtm
- kAVIBeSv+++cRU8K7iG75Zciv3jY/EE+x1a15zqp11Cwftp7wJjEmX20MkwvKaNzpl2S
- XhTQ==
-X-Gm-Message-State: AOJu0Yz9VxDdUztEy/5Rx6O1ckY1pCgZhnj7TgHuSLTyB5iRFCQ3pz0y
- +Ct3UQ5REUqBXVJ7sv0+OnqIEFc2xc6q+IOu9lnSUM7d7JKyF9TQR1P4Uf5WjR2HQtDKWODmNGp
- PvQ1vHONTyQ==
-X-Gm-Gg: ATEYQzxa1teJAm5F+UFknTXPszdajMbabEccJ6XwU/3Cz/y8/WlQJUUPdVWnfabkuCk
- yHFC0oi7nm1qJjVSUpNZE0TqbjdGQtJ9ttXA54eRzhnZyqqCHG4UQ8m4xrFQIRJ6fahA+g3k8NN
- c1UHzzcWwcMEiCu3xzEHoXAvuUK5ed0gfvpfdLXcDfV77mrqf3ghLD0otL4WqLqJcY7TV4B7OyK
- 7AAj9yldWzrn5WC84H/p5v6iI/FqJ3FSymAckVxicqY9zb2InZw23EpKH9D6BvC+IRNHE/ECscl
- bBuWmCu0KCAXs68422YJojaLiOjrzo5LUIOoyQNsKsPm05/erNqDQZLpih44X4NUqNyyf9/GL0/
- iULAspmnBkAhGS7rca38mzOyitIbSm0pQXjzNsZ4bdPfAU+wUGq+BAZeXyat6afnkhXTFi3sISa
- abTITHk9nt+PHbxhcIY5Hj/DMyOA3x/XYokVxzGVPafPbVWMcWzK+bLLTlBmsQZ5QWHg==
-X-Received: by 2002:a17:903:13d0:b0:2aa:d5e8:f4dd with SMTP id
- d9443c01a7336-2ad74463ebamr79008715ad.15.1771834930930; 
- Mon, 23 Feb 2026 00:22:10 -0800 (PST)
+ bh=7P4L6KRGUfnJuZGklnenZefdnYuPN4EZ2NjRTD5rCHQ=;
+ b=a5TiMkBhUe5658bYfw+L71klPSqkp2XmbwMuAIB5QVd+0F/Xuk9f2XC2i7rDWSM6Fc
+ 3LT38rfvnBtbNcrJ35/ATZbXlqQAsavcd91Tgn6Oa9l9HdmGzvUxwz2oa6Pp2wkM3QaD
+ fmfGlg933s/i3mMufYfTeK1fO8uZTsfcAFYRmjj7XFdrUU0q6AovhTU6Xz6urveT2kE9
+ 5/kcuOT1gufyTtoA3PH+xC8EeQNtCIBaFsjXDFtqQhzDFoHDtkb9Y1oTsZBvzaTc04dj
+ yJ35R+vbtvUV0IEvPPtlDA12SbpTFWZhpbEzACwm4MTJPxWvLovpx1SR4NyIlPdhqOta
+ Uj4g==
+X-Gm-Message-State: AOJu0YwTYFoYxPkUqHBzq9riLWzt5VMRYuts7wZLXRg3zrNEdNZzEoLT
+ jtQsijSCbKWoXjY1kW8RFel8R1Kw9tVUe7V6EoNjXzGJ988K5tT0s+wDq+gMS+yQlf7kcijgFF0
+ xnKgvdqk=
+X-Gm-Gg: ATEYQzxSO8pTRpFCMiDdcReWTVDwZ5sDJD044jXkaSm9ras/NjW0HXX9hHWOiOi3xyL
+ FRIIjp+cBpGnhYvBRDWiW7pRYJD2gtU9oEN4hnS7ZuWhFNvuHGubiMZ/eMHrclMO0elm+pTefxZ
+ ShK8ofoEVHRNPH+T1ycXofubnRao+wBRwSozfnSMR62RRjrU9tmNtGKkXXGuKqj58Z/gw6E4vs3
+ R/Yimya/3nPm5ZQIAKlVdOakxDQ0kCh66Cw6Jz7mGGgxAbSibzb1I/cL6Ma680KgN1YceNI8pTG
+ ZDNqmqzZyUOw/P8mHyy2RlTTlShKD18wBNZCGQ0nJbjHn5RgMq4gGBkJ+gPb4dRUYs6OZBzmV+G
+ QaBFLB/XqOgB4LXIyzrbL0CinGSf3gUGmDb5XtKrMC87WZ6Rd9xnAKo65JwkrvC/l98cnnpkIQj
+ PadGAA99FU57rgBr4km3Tr+6O7odZy/jrIH9VctXkOpKpSJEQXiMaZcFm7E5+T/rt4Xg==
+X-Received: by 2002:a17:902:cf10:b0:2ad:4029:9e01 with SMTP id
+ d9443c01a7336-2ad74463f6fmr65391145ad.14.1771834934724; 
+ Mon, 23 Feb 2026 00:22:14 -0800 (PST)
 Received: from stoup.. (123-243-199-74.static.tpgi.com.au. [123.243.199.74])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2ad74f5dd7asm86543625ad.28.2026.02.23.00.22.07
+ d9443c01a7336-2ad74f5dd7asm86543625ad.28.2026.02.23.00.22.11
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 23 Feb 2026 00:22:10 -0800 (PST)
+ Mon, 23 Feb 2026 00:22:14 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: max.chou@sifive.com,
 	chao.liu.zevorn@gmail.com
-Subject: [PATCH v5 2/9] fpu/softfloat: Refactor floatx80 format NaN
- classification to share code
-Date: Mon, 23 Feb 2026 19:21:47 +1100
-Message-ID: <20260223082154.5623-3-richard.henderson@linaro.org>
+Subject: [PATCH v5 3/9] target/i386: Fix pseudo-NaN handling in
+ FPATAN/FYL2XP1/FYL2X helpers
+Date: Mon, 23 Feb 2026 19:21:48 +1100
+Message-ID: <20260223082154.5623-4-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260223082154.5623-1-richard.henderson@linaro.org>
 References: <20260223082154.5623-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::643;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x643.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,115 +104,98 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Max Chou <max.chou@sifive.com>
 
-The floatx80_is_[quiet|signaling]_nan functions contain duplicated
-logic that should be shared.
-This commit introduces floatx80_nan_is_snan helper function that
-determine if a NaN is signaling and change the return type of
-floatx80_is_[signaling|quiet]_nan to bool.
+According to Intel's x87 FPU specification (Table 8-10, Vol. 1), arithmetic
+operations on operands in unsupported formats (including pseudo-NaNs) must
+return the QNaN floating-point indefinite value.
 
-Suggested-by: Richard Henderson <richard.henderson@linaro.org>
+The helper functions for FPATAN, FYL2XP1, and FYL2X incorrectly check for
+signaling NaN before checking for invalid encodings. This causes pseudo-NaNs
+to be treated as valid signaling NaNs and silenced, rather than being
+rejected as unsupported formats.
+
+Reorder the checks to test floatx80_invalid_encoding before
+floatx80_is_signaling_nan, matching the correct behavior already
+implemented in helper_fscale.
+
 Signed-off-by: Max Chou <max.chou@sifive.com>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20260204051756.667397-4-max.chou@sifive.com>
+Message-ID: <20260204051756.667397-5-max.chou@sifive.com>
 ---
- include/fpu/softfloat.h        |  4 +--
- fpu/softfloat-specialize.c.inc | 53 ++++++++++++----------------------
- 2 files changed, 21 insertions(+), 36 deletions(-)
+ target/i386/tcg/fpu_helper.c | 30 +++++++++++++++---------------
+ 1 file changed, 15 insertions(+), 15 deletions(-)
 
-diff --git a/include/fpu/softfloat.h b/include/fpu/softfloat.h
-index 66b0c47b5e..69b9041ef0 100644
---- a/include/fpu/softfloat.h
-+++ b/include/fpu/softfloat.h
-@@ -978,8 +978,8 @@ floatx80 floatx80_rem(floatx80, floatx80, float_status *status);
- floatx80 floatx80_sqrt(floatx80, float_status *status);
- FloatRelation floatx80_compare(floatx80, floatx80, float_status *status);
- FloatRelation floatx80_compare_quiet(floatx80, floatx80, float_status *status);
--int floatx80_is_quiet_nan(floatx80, float_status *status);
--int floatx80_is_signaling_nan(floatx80, float_status *status);
-+bool floatx80_is_quiet_nan(floatx80, float_status *status);
-+bool floatx80_is_signaling_nan(floatx80, float_status *status);
- floatx80 floatx80_silence_nan(floatx80, float_status *status);
- floatx80 floatx80_scalbn(floatx80, int, float_status *status);
+diff --git a/target/i386/tcg/fpu_helper.c b/target/i386/tcg/fpu_helper.c
+index b3b23823fd..37c83ded38 100644
+--- a/target/i386/tcg/fpu_helper.c
++++ b/target/i386/tcg/fpu_helper.c
+@@ -1377,16 +1377,16 @@ void helper_fpatan(CPUX86State *env)
+     int32_t arg1_exp = extractFloatx80Exp(ST1);
+     bool arg1_sign = extractFloatx80Sign(ST1);
  
-diff --git a/fpu/softfloat-specialize.c.inc b/fpu/softfloat-specialize.c.inc
-index 7d2515c1fa..9ed968c79b 100644
---- a/fpu/softfloat-specialize.c.inc
-+++ b/fpu/softfloat-specialize.c.inc
-@@ -357,53 +357,38 @@ bool float64_is_signaling_nan(float64 a_, float_status *status)
- }
+-    if (floatx80_is_signaling_nan(ST0, &env->fp_status)) {
++    if (floatx80_invalid_encoding(ST0, &env->fp_status) ||
++        floatx80_invalid_encoding(ST1, &env->fp_status)) {
++        float_raise(float_flag_invalid, &env->fp_status);
++        ST1 = floatx80_default_nan(&env->fp_status);
++    } else if (floatx80_is_signaling_nan(ST0, &env->fp_status)) {
+         float_raise(float_flag_invalid, &env->fp_status);
+         ST1 = floatx80_silence_nan(ST0, &env->fp_status);
+     } else if (floatx80_is_signaling_nan(ST1, &env->fp_status)) {
+         float_raise(float_flag_invalid, &env->fp_status);
+         ST1 = floatx80_silence_nan(ST1, &env->fp_status);
+-    } else if (floatx80_invalid_encoding(ST0, &env->fp_status) ||
+-               floatx80_invalid_encoding(ST1, &env->fp_status)) {
+-        float_raise(float_flag_invalid, &env->fp_status);
+-        ST1 = floatx80_default_nan(&env->fp_status);
+     } else if (floatx80_is_any_nan(ST0)) {
+         ST1 = ST0;
+     } else if (floatx80_is_any_nan(ST1)) {
+@@ -2061,16 +2061,16 @@ void helper_fyl2xp1(CPUX86State *env)
+     int32_t arg1_exp = extractFloatx80Exp(ST1);
+     bool arg1_sign = extractFloatx80Sign(ST1);
  
- /*----------------------------------------------------------------------------
--| Returns 1 if the extended double-precision floating-point value `a' is a
--| quiet NaN; otherwise returns 0. This slightly differs from the same
--| function for other types as floatx80 has an explicit bit.
-+| Determine if a floatx80 NaN is signaling NaN.
-+| The MSB of frac differs from the same function for other types as floatx80
-+| has an explicit bit.
- *----------------------------------------------------------------------------*/
+-    if (floatx80_is_signaling_nan(ST0, &env->fp_status)) {
++    if (floatx80_invalid_encoding(ST0, &env->fp_status) ||
++        floatx80_invalid_encoding(ST1, &env->fp_status)) {
++        float_raise(float_flag_invalid, &env->fp_status);
++        ST1 = floatx80_default_nan(&env->fp_status);
++    } else if (floatx80_is_signaling_nan(ST0, &env->fp_status)) {
+         float_raise(float_flag_invalid, &env->fp_status);
+         ST1 = floatx80_silence_nan(ST0, &env->fp_status);
+     } else if (floatx80_is_signaling_nan(ST1, &env->fp_status)) {
+         float_raise(float_flag_invalid, &env->fp_status);
+         ST1 = floatx80_silence_nan(ST1, &env->fp_status);
+-    } else if (floatx80_invalid_encoding(ST0, &env->fp_status) ||
+-               floatx80_invalid_encoding(ST1, &env->fp_status)) {
+-        float_raise(float_flag_invalid, &env->fp_status);
+-        ST1 = floatx80_default_nan(&env->fp_status);
+     } else if (floatx80_is_any_nan(ST0)) {
+         ST1 = ST0;
+     } else if (floatx80_is_any_nan(ST1)) {
+@@ -2159,16 +2159,16 @@ void helper_fyl2x(CPUX86State *env)
+     int32_t arg1_exp = extractFloatx80Exp(ST1);
+     bool arg1_sign = extractFloatx80Sign(ST1);
  
--int floatx80_is_quiet_nan(floatx80 a, float_status *status)
-+static bool floatx80_nan_is_snan(floatx80 a, float_status *status)
- {
-     if (no_signaling_nans(status)) {
--        return floatx80_is_any_nan(a);
--    } else {
--        if (snan_bit_is_one(status)) {
--            uint64_t aLow;
--
--            aLow = a.low & ~0x4000000000000000ULL;
--            return ((a.high & 0x7FFF) == 0x7FFF)
--                && (aLow << 1)
--                && (a.low == aLow);
--        } else {
--            return ((a.high & 0x7FFF) == 0x7FFF)
--                && (UINT64_C(0x8000000000000000) <= ((uint64_t)(a.low << 1)));
--        }
-+        return false;
-     }
-+    bool frac_msb_is_one = (a.low >> 62) & 1;
-+    return frac_msb_is_one == snan_bit_is_one(status);
- }
- 
- /*----------------------------------------------------------------------------
- | Returns 1 if the extended double-precision floating-point value `a' is a
--| signaling NaN; otherwise returns 0. This slightly differs from the same
--| function for other types as floatx80 has an explicit bit.
-+| quiet NaN; otherwise returns 0.
- *----------------------------------------------------------------------------*/
- 
--int floatx80_is_signaling_nan(floatx80 a, float_status *status)
-+bool floatx80_is_quiet_nan(floatx80 a, float_status *status)
- {
--    if (no_signaling_nans(status)) {
--        return 0;
--    } else {
--        if (snan_bit_is_one(status)) {
--            return ((a.high & 0x7FFF) == 0x7FFF)
--                && ((a.low << 1) >= 0x8000000000000000ULL);
--        } else {
--            uint64_t aLow;
-+    return floatx80_is_any_nan(a) && !floatx80_nan_is_snan(a, status);
-+}
- 
--            aLow = a.low & ~UINT64_C(0x4000000000000000);
--            return ((a.high & 0x7FFF) == 0x7FFF)
--                && (uint64_t)(aLow << 1)
--                && (a.low == aLow);
--        }
--    }
-+/*----------------------------------------------------------------------------
-+| Returns 1 if the extended double-precision floating-point value `a' is a
-+| signaling NaN; otherwise returns 0.
-+*----------------------------------------------------------------------------*/
-+
-+bool floatx80_is_signaling_nan(floatx80 a, float_status *status)
-+{
-+    return floatx80_is_any_nan(a) && floatx80_nan_is_snan(a, status);
- }
- 
- /*----------------------------------------------------------------------------
+-    if (floatx80_is_signaling_nan(ST0, &env->fp_status)) {
++    if (floatx80_invalid_encoding(ST0, &env->fp_status) ||
++        floatx80_invalid_encoding(ST1, &env->fp_status)) {
++        float_raise(float_flag_invalid, &env->fp_status);
++        ST1 = floatx80_default_nan(&env->fp_status);
++    } else if (floatx80_is_signaling_nan(ST0, &env->fp_status)) {
+         float_raise(float_flag_invalid, &env->fp_status);
+         ST1 = floatx80_silence_nan(ST0, &env->fp_status);
+     } else if (floatx80_is_signaling_nan(ST1, &env->fp_status)) {
+         float_raise(float_flag_invalid, &env->fp_status);
+         ST1 = floatx80_silence_nan(ST1, &env->fp_status);
+-    } else if (floatx80_invalid_encoding(ST0, &env->fp_status) ||
+-               floatx80_invalid_encoding(ST1, &env->fp_status)) {
+-        float_raise(float_flag_invalid, &env->fp_status);
+-        ST1 = floatx80_default_nan(&env->fp_status);
+     } else if (floatx80_is_any_nan(ST0)) {
+         ST1 = ST0;
+     } else if (floatx80_is_any_nan(ST1)) {
 -- 
 2.43.0
 
