@@ -4,74 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96622EC1112
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 17:08:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEE8AEC1112
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 17:08:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuZM2-00040G-LS; Mon, 23 Feb 2026 12:04:18 -0500
+	id 1vuZM9-0004ZT-4l; Mon, 23 Feb 2026 12:04:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vuZL8-0002lh-9P
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 12:03:25 -0500
+ id 1vuZLD-0002uS-Jw
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 12:03:30 -0500
 Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vuZL0-0000Ok-V9
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 12:03:19 -0500
+ id 1vuZL9-0000RO-BX
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 12:03:26 -0500
 Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-48370174e18so24815575e9.2
- for <qemu-devel@nongnu.org>; Mon, 23 Feb 2026 09:03:13 -0800 (PST)
+ 5b1f17b1804b1-4806cc07ce7so43136025e9.1
+ for <qemu-devel@nongnu.org>; Mon, 23 Feb 2026 09:03:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771866192; x=1772470992; darn=nongnu.org;
+ d=linaro.org; s=google; t=1771866198; x=1772470998; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=LsWZT0xdosvafwLgM597XKJG/8r1Q60yrGNVHaliPSM=;
- b=Fn8guHR19VRYYlO4Y+MoLw6RY5yx4U+o0urK4WZVHSZQljEhZaOL8iqcA/MfY7tiN4
- y/eCnoEDIDX3WDAx7i37p3qCGqLxTolENKIIMlsNYWFF7YZrQfZJAcW68iCifP1Dp3Xs
- VlQ9VcVAj8zXB2Xv6KkTl+lx9ec/9+JlMw2ILezlOfrFM3b6aOME47da/7PxPAkJqTOW
- FBwTDjNsicBphKl2stvsTeTUzaXrBIluoajaZval1trBW3YdbiZh7WaOjzAsevuJVaWh
- X61orN2mviSOCPdN6qs1PA9XBPG0+AgPKehryM3to1IPQHS+zQkUY1+sL1Rgzzr/xK02
- apYw==
+ :reply-to; bh=KnSBbwNAJz8jvmrJ0U5ORYLe/Et4GkGyZ62fZOOX4tE=;
+ b=myLcHvwpthYK/PxRjyWYj2RHt9EYCuIKvkdaLUoqboey1pvRsClSJT/HdEPsbyQ0eh
+ R+2iMl1eWyHnRopwnuG18vBSr1TBLiRRfc4ehxBCz8Korst6ukkLbeMf0YIjqbH69xdX
+ jdACsGf1ziu/yPAkyP2sWnzifFoQ0kzDUiMY37XgCniPfHETx76/FCDlofqdV9iLQvGx
+ kVm/suvGj/NjxRq86oA/DaSVILiIl0jg7MayrsVTzb/MN076W5pDTBL/Gq9BzQuijxDP
+ Nvno5bIrjeQIsk3ogFHd4+h6Aj9XbOVoEzUA34BW/ctj0OK0lbbf7+2PPUewTRHWtDSE
+ NrzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771866192; x=1772470992;
+ d=1e100.net; s=20230601; t=1771866198; x=1772470998;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=LsWZT0xdosvafwLgM597XKJG/8r1Q60yrGNVHaliPSM=;
- b=EeLc0ggxh0fDzs1wrpj9Bo/v1OBNzjzcnyttcMTfsus/m/DkcSb2B8FaUZy3Wh90eK
- TAso3OCGE2Vng+ro/vRaH5FcdJ8IWUP/nPaz+S1IjslBC4epZxmharEw3EQxjU5OytlP
- ZOu8SDBdA755rQVSCLH0R7CW5Jfl0C9gYFUqcedco3DBt20bDlBrbBBJ/SVZDA0So984
- vt9Eix+MlhSOWWPUnUd80wWH3QIUOS7mem0tHsNEkGYNG5P7pvvyjVj6WMl7lM3mvaKx
- hhXvya9bizmAmpqNueFrWh1WUq6oq5jWYGsbLcpQpXMJdYFhclSh5ljBaqR2yJhsKTA+
- 5Owg==
+ bh=KnSBbwNAJz8jvmrJ0U5ORYLe/Et4GkGyZ62fZOOX4tE=;
+ b=NEGUtUM1fAsVcR22JMY4K3VaI6L3c12TikZUsHE2SUkm4raZWW6hEJ4/bcGjOTb3ah
+ XjcIohGRgBwoCwK7arnvnlp6820lt6IruRdU3onJ1KMzlUDlSnW06eF53GrbXS3vAPR/
+ SFlCDse4kIMa8AUc8tbK1AdeGVTPCHfs/rpwU9NtuM8vTYerL5csl34/czmAOX9eKzQ9
+ 7kWE+ekiHMhdHVgr47gmL9rCoDVyJNP1onuxQp19K+A3EoCenNM5voemh5mBUTG08+zU
+ MhH1a+fa5UwJHUOoBaSmwCBZ0iSe9oPLNSrWOVHcOLth9CM/iINTpadT48c0YdCTnoD+
+ m/8g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV5nUPV+v9EU9nFYgS5ve8kf6zN1q/T6hGQ4JKCo31igt8Yro7w/aZO5CxR5jtH6PtQXTXwZ3Y0ODx2@nongnu.org
-X-Gm-Message-State: AOJu0YyW+oVSPAZcFSKzJVBMBdvbWXnO7851dmpvGsiBGBT/5iiUKbdp
- w9MGUX6enIfryeky1Y7XXHWO3hk/riOBRRm4rH3Nup6jyhAPXga8CXZe1T11FGNiu7g=
-X-Gm-Gg: AZuq6aLjQiq5djWo/FayDtj+CtaOrbpSipu439L2+HIL9UjNfy0ocJYlrGrWQBWu0Qu
- u1JDjyfO/OcSMCDihXzpjl+zROalhO5EcdQvygQi6Iqa70gQMO9ieaweG7mGtSLGdSKuJSYN5nG
- Fv0t/4hTUUYj9qugGsQxd861M0ZNsQjR9i1dZfdvEccgHubvPKX4bALInzhiUvg/OPWCSTWaRwp
- McewrCtgEkjWluXg2lRfIu70UYooDbhMIYWuJXjTKx0l8UhhUEklR0LvzCw6OJ7KarEDkeiVqNK
- 59pfzqiaGfiWWi2Ld+9122uRSDvvwQqIiUt+vFKHaUtOK97VmWNzgVxnJOAegiR6maF/NvWepMw
- 2JkgeAXQIIYIinwr90Kww+P4c1oUFC3yzX6CpheEt7/QGN9W9UcvagAcP6C+Uw7KRJQS+8qFvu9
- Ug7XdZGYvJTuM1lF43QDnuytLuezV9wgiq0ZBvqPhqr3wZiGBOvfLv7Zw6CNmtL1Zj2jU0/wkem
- 6DHLudAF89CJdPETLPtvDlCGgezOeo=
-X-Received: by 2002:a05:600c:8b01:b0:483:7f4e:fef4 with SMTP id
- 5b1f17b1804b1-483a95fb1e5mr166585915e9.25.1771866191807; 
- Mon, 23 Feb 2026 09:03:11 -0800 (PST)
+ AJvYcCVfob+KLcGWjVLsmZuwHbIJVj0kseKYduZbUXsG3qXmNx4Q2Hwrr67CmqpCDSzGNR/V+1/srUgj1fgq@nongnu.org
+X-Gm-Message-State: AOJu0YxFY1dHpkuHBZMgz2KvRIW4w5Gu2ebizQwW2VX7Z0dqTxwTjbJG
+ nBSVcxS9z40LLli2fxohGRSZa+r0bi2nLYwmcKzvrnJaWJinzJkZpgHxSJwl+BRz/FB31xgB103
+ Y4Hnv
+X-Gm-Gg: AZuq6aJ21MGkatkA0Fi0TIr04N+f3TUWcsUGBs35B3zDAfwIALRz5nORI/vSEnECvD8
+ 4PHCLk9AhsSCq6m3jHuP95YsZCcLuxzbct3gKwkWgjyG0v+40Rll0JkFgmIjBeB9IaSgAc/EWaD
+ IPsWw/K88MizfdDFBJPpVL97NrQweiXZUy0/utTzwYmAJ7nQncFwgQWLEzF9ru/R9HdFYdQdH8T
+ FIg9W2LnDAaZr/cSP2Qn/zmvzYChbyYjXwDDRnO4jmDs3pKvVcDSaNUAdbM45zGq5eXS9jCoocU
+ HdOPjn/uaVu6CXa2XYMGAfgE8BtFsKHb3BcpS0DpqS58j44Aasx5PL5YG35uP/f1xxWDgMhqpd9
+ raK/pD0PS/Du5VUPlrgJpHfFj5TX5dYH3b2cidj02rz/8NeuCnvpW1tQuxyr51hcdaj/2Ir9U0Y
+ mbNy4wlQD0b8oWVdYjOJ5qfkiH4/y1QKUSYo1goSPbzgwm0mNMXiW1qX0Ga9VtqIb91KiotOf9O
+ A4zFj8FaayK+QZZQA5AM4owBpZncJI=
+X-Received: by 2002:a05:600c:34cb:b0:479:1b0f:dfff with SMTP id
+ 5b1f17b1804b1-483a95bef2amr140499275e9.10.1771866197972; 
+ Mon, 23 Feb 2026 09:03:17 -0800 (PST)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-483a9b21ceasm200155625e9.0.2026.02.23.09.03.11
+ 5b1f17b1804b1-483a9b21ceasm200155625e9.0.2026.02.23.09.03.17
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 23 Feb 2026 09:03:11 -0800 (PST)
+ Mon, 23 Feb 2026 09:03:17 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Subject: [PATCH 51/65] target/arm: GICv5 cpuif: Signal IRQ or FIQ
-Date: Mon, 23 Feb 2026 17:01:58 +0000
-Message-ID: <20260223170212.441276-52-peter.maydell@linaro.org>
+Subject: [PATCH 58/65] hw/arm/virt: Pull "wire CPU interrupts" out of
+ create_gic()
+Date: Mon, 23 Feb 2026 17:02:05 +0000
+Message-ID: <20260223170212.441276-59-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260223170212.441276-1-peter.maydell@linaro.org>
 References: <20260223170212.441276-1-peter.maydell@linaro.org>
@@ -101,154 +103,169 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The CPU interface must signal IRQ or FIQ (possibly with
-superpriority) when there is a pending interrupt of sufficient
-priority available.  Implement this logic.
+create_gic() is quite long and mixes GICv2 and GICv3 even though
+they're mostly different in their creation.  As a preliminary to
+splitting it up, pull out the "wire the CPU interrupts to the GIC PPI
+inputs" code out into its own function.  This is a long and
+self-contained piece of code that is the main thing that we need to
+do basically the same way for GICv2 and GICv3.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/tcg/gicv5-cpuif.c | 91 ++++++++++++++++++++++++++++++++++--
- target/arm/tcg/trace-events  |  1 +
- 2 files changed, 89 insertions(+), 3 deletions(-)
+ hw/arm/virt.c | 127 +++++++++++++++++++++++++++-----------------------
+ 1 file changed, 69 insertions(+), 58 deletions(-)
 
-diff --git a/target/arm/tcg/gicv5-cpuif.c b/target/arm/tcg/gicv5-cpuif.c
-index 02129d5936..79203a3478 100644
---- a/target/arm/tcg/gicv5-cpuif.c
-+++ b/target/arm/tcg/gicv5-cpuif.c
-@@ -171,6 +171,88 @@ static GICv5PendingIrq gic_hppi(CPUARMState *env, GICv5Domain domain)
-     return best;
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index 3c318680f8..ec6e49099a 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -795,13 +795,80 @@ static bool gicv3_nmi_present(VirtMachineState *vms)
+            (vms->gic_version != VIRT_GIC_VERSION_2);
  }
  
-+static void cpu_interrupt_update(CPUARMState *env, int irqtype, bool new_state)
++static void gic_connect_ppis(VirtMachineState *vms)
 +{
-+    CPUState *cs = env_cpu(env);
-+
 +    /*
-+     * OPT: calling cpu_interrupt() and cpu_reset_interrupt()
-+     * has the correct behaviour, but is not optimal for the
-+     * case where we're setting the interrupt line to the same
-+     * level it already has.
-+     *
-+     * Clearing an already clear interrupt is free (it's just
-+     * doing an atomic AND operation). Signalling an already set
-+     * interrupt is a bit less ideal (it might unnecessarily kick
-+     * the CPU).
-+     *
-+     * We could potentially use cpu_test_interrupt(), like
-+     * arm_cpu_update_{virq,vfiq,vinmi,vserr}, since we always
-+     * hold the BQL here; or perhaps there is an abstraction
-+     * we could provide in the core code that all these places
-+     * could call.
-+     *
-+     * For now, this is simple and definitely correct.
++     * Wire the outputs from each CPU's generic timer and the GICv3
++     * maintenance interrupt signal to the appropriate GIC PPI inputs,
++     * and the GIC's IRQ/FIQ/VIRQ/VFIQ/NMI/VINMI interrupt outputs to the
++     * CPU's inputs.
 +     */
-+    if (new_state) {
-+        cpu_interrupt(cs, irqtype);
-+    } else {
-+        cpu_reset_interrupt(cs, irqtype);
++    MachineState *ms = MACHINE(vms);
++    int i;
++    unsigned int smp_cpus = ms->smp.cpus;
++    SysBusDevice *gicbusdev = SYS_BUS_DEVICE(vms->gic);
++
++    for (i = 0; i < smp_cpus; i++) {
++        DeviceState *cpudev = DEVICE(qemu_get_cpu(i));
++        int intidbase = NUM_IRQS + i * GIC_INTERNAL;
++        /*
++         * Mapping from the output timer irq lines from the CPU to the
++         * GIC PPI inputs we use for the virt board.
++         */
++        const int timer_irq[] = {
++            [GTIMER_PHYS] = ARCH_TIMER_NS_EL1_IRQ,
++            [GTIMER_VIRT] = ARCH_TIMER_VIRT_IRQ,
++            [GTIMER_HYP]  = ARCH_TIMER_NS_EL2_IRQ,
++            [GTIMER_SEC]  = ARCH_TIMER_S_EL1_IRQ,
++            [GTIMER_HYPVIRT] = ARCH_TIMER_NS_EL2_VIRT_IRQ,
++            [GTIMER_S_EL2_PHYS] = ARCH_TIMER_S_EL2_IRQ,
++            [GTIMER_S_EL2_VIRT] = ARCH_TIMER_S_EL2_VIRT_IRQ,
++        };
++
++        for (unsigned irq = 0; irq < ARRAY_SIZE(timer_irq); irq++) {
++            qdev_connect_gpio_out(cpudev, irq,
++                                  qdev_get_gpio_in(vms->gic,
++                                                   intidbase + timer_irq[irq]));
++        }
++
++        if (vms->gic_version != VIRT_GIC_VERSION_2) {
++            qemu_irq irq = qdev_get_gpio_in(vms->gic,
++                                            intidbase + ARCH_GIC_MAINT_IRQ);
++            qdev_connect_gpio_out_named(cpudev, "gicv3-maintenance-interrupt",
++                                        0, irq);
++        } else if (vms->virt) {
++            qemu_irq irq = qdev_get_gpio_in(vms->gic,
++                                            intidbase + ARCH_GIC_MAINT_IRQ);
++            sysbus_connect_irq(gicbusdev, i + 4 * smp_cpus, irq);
++        }
++
++        qdev_connect_gpio_out_named(cpudev, "pmu-interrupt", 0,
++                                    qdev_get_gpio_in(vms->gic, intidbase
++                                                     + VIRTUAL_PMU_IRQ));
++
++        sysbus_connect_irq(gicbusdev, i, qdev_get_gpio_in(cpudev, ARM_CPU_IRQ));
++        sysbus_connect_irq(gicbusdev, i + smp_cpus,
++                           qdev_get_gpio_in(cpudev, ARM_CPU_FIQ));
++        sysbus_connect_irq(gicbusdev, i + 2 * smp_cpus,
++                           qdev_get_gpio_in(cpudev, ARM_CPU_VIRQ));
++        sysbus_connect_irq(gicbusdev, i + 3 * smp_cpus,
++                           qdev_get_gpio_in(cpudev, ARM_CPU_VFIQ));
++
++        if (vms->gic_version != VIRT_GIC_VERSION_2) {
++            sysbus_connect_irq(gicbusdev, i + 4 * smp_cpus,
++                               qdev_get_gpio_in(cpudev, ARM_CPU_NMI));
++            sysbus_connect_irq(gicbusdev, i + 5 * smp_cpus,
++                               qdev_get_gpio_in(cpudev, ARM_CPU_VINMI));
++        }
 +    }
 +}
 +
-+static void gicv5_update_irq_fiq(CPUARMState *env)
-+{
-+    /*
-+     * Update whether we are signalling IRQ or FIQ based
-+     * on the current state of the CPU interface (and in
-+     * particular on the HPPI information from the IRS and
-+     * for the PPIs for each interrupt domain);
-+     *
-+     * The logic here for IRQ and FIQ is defined by rules R_QLGBG
-+     * and R_ZGHMN; whether to signal with superpriority is
-+     * defined by rule R_CSBDX.
-+     *
-+     * For the moment, we do not consider preemptive interrupts,
-+     * because these only occur when there is a HPPI of
-+     * sufficient priority for another interrupt domain, and
-+     * we only support EL1 and the NonSecure interrupt domain
-+     * currently.
-+     *
-+     * NB: when we handle more than just EL1 we will need to
-+     * arrange to call this function to re-evaluate the IRQ
-+     * and FIQ state when we change EL.
-+     */
-+    GICv5PendingIrq current_hppi;
-+    bool irq, fiq, superpriority;
-+
-+    /*
-+     * We will never signal FIQ because FIQ is for
-+     * preemptive interrupts or for EL3 HPPIs.
-+     */
-+    fiq = false;
-+
-+    /*
-+     * We signal IRQ when we are not signalling FIQ and there is a
-+     * HPPI of sufficient priority for the current domain. It
-+     * has Superpriority if its priority is 0 (in which case it
-+     * is CPU_INTERRUPT_NMI rather than CPU_INTERRUPT_HARD).
-+     */
-+    current_hppi = gic_hppi(env, gicv5_current_phys_domain(env));
-+    superpriority = current_hppi.prio == 0;
-+    irq = current_hppi.prio != PRIO_IDLE && !superpriority;
-+
-+    /*
-+     * Unlike a GICv3 or GICv2, there is no external IRQ or FIQ
-+     * line to the CPU. Instead we directly signal the interrupt
-+     * via cpu_interrupt()/cpu_reset_interrupt().
-+     */
-+    trace_gicv5_update_irq_fiq(irq, fiq, superpriority);
-+    cpu_interrupt_update(env, CPU_INTERRUPT_HARD, irq);
-+    cpu_interrupt_update(env, CPU_INTERRUPT_FIQ, fiq);
-+    cpu_interrupt_update(env, CPU_INTERRUPT_NMI, superpriority);
-+}
-+
- static void gic_recalc_ppi_hppi(CPUARMState *env)
+ static void create_gic(VirtMachineState *vms, MemoryRegion *mem)
  {
-     /*
-@@ -220,15 +302,16 @@ static void gic_recalc_ppi_hppi(CPUARMState *env)
-                                   env->gicv5_cpuif.ppi_hppi[i].intid,
-                                   env->gicv5_cpuif.ppi_hppi[i].prio);
+     MachineState *ms = MACHINE(vms);
+     /* We create a standalone GIC */
+     SysBusDevice *gicbusdev;
+     const char *gictype;
+-    int i;
+     unsigned int smp_cpus = ms->smp.cpus;
+     uint32_t nb_redist_regions = 0;
+     int revision;
+@@ -900,63 +967,7 @@ static void create_gic(VirtMachineState *vms, MemoryRegion *mem)
+         }
      }
-+    gicv5_update_irq_fiq(env);
+ 
+-    /* Wire the outputs from each CPU's generic timer and the GICv3
+-     * maintenance interrupt signal to the appropriate GIC PPI inputs,
+-     * and the GIC's IRQ/FIQ/VIRQ/VFIQ/NMI/VINMI interrupt outputs to the
+-     * CPU's inputs.
+-     */
+-    for (i = 0; i < smp_cpus; i++) {
+-        DeviceState *cpudev = DEVICE(qemu_get_cpu(i));
+-        int intidbase = NUM_IRQS + i * GIC_INTERNAL;
+-        /* Mapping from the output timer irq lines from the CPU to the
+-         * GIC PPI inputs we use for the virt board.
+-         */
+-        const int timer_irq[] = {
+-            [GTIMER_PHYS] = ARCH_TIMER_NS_EL1_IRQ,
+-            [GTIMER_VIRT] = ARCH_TIMER_VIRT_IRQ,
+-            [GTIMER_HYP]  = ARCH_TIMER_NS_EL2_IRQ,
+-            [GTIMER_SEC]  = ARCH_TIMER_S_EL1_IRQ,
+-            [GTIMER_HYPVIRT] = ARCH_TIMER_NS_EL2_VIRT_IRQ,
+-            [GTIMER_S_EL2_PHYS] = ARCH_TIMER_S_EL2_IRQ,
+-            [GTIMER_S_EL2_VIRT] = ARCH_TIMER_S_EL2_VIRT_IRQ,
+-        };
+-
+-        for (unsigned irq = 0; irq < ARRAY_SIZE(timer_irq); irq++) {
+-            qdev_connect_gpio_out(cpudev, irq,
+-                                  qdev_get_gpio_in(vms->gic,
+-                                                   intidbase + timer_irq[irq]));
+-        }
+-
+-        if (vms->gic_version != VIRT_GIC_VERSION_2) {
+-            qemu_irq irq = qdev_get_gpio_in(vms->gic,
+-                                            intidbase + ARCH_GIC_MAINT_IRQ);
+-            qdev_connect_gpio_out_named(cpudev, "gicv3-maintenance-interrupt",
+-                                        0, irq);
+-        } else if (vms->virt) {
+-            qemu_irq irq = qdev_get_gpio_in(vms->gic,
+-                                            intidbase + ARCH_GIC_MAINT_IRQ);
+-            sysbus_connect_irq(gicbusdev, i + 4 * smp_cpus, irq);
+-        }
+-
+-        qdev_connect_gpio_out_named(cpudev, "pmu-interrupt", 0,
+-                                    qdev_get_gpio_in(vms->gic, intidbase
+-                                                     + VIRTUAL_PMU_IRQ));
+-
+-        sysbus_connect_irq(gicbusdev, i, qdev_get_gpio_in(cpudev, ARM_CPU_IRQ));
+-        sysbus_connect_irq(gicbusdev, i + smp_cpus,
+-                           qdev_get_gpio_in(cpudev, ARM_CPU_FIQ));
+-        sysbus_connect_irq(gicbusdev, i + 2 * smp_cpus,
+-                           qdev_get_gpio_in(cpudev, ARM_CPU_VIRQ));
+-        sysbus_connect_irq(gicbusdev, i + 3 * smp_cpus,
+-                           qdev_get_gpio_in(cpudev, ARM_CPU_VFIQ));
+-
+-        if (vms->gic_version != VIRT_GIC_VERSION_2) {
+-            sysbus_connect_irq(gicbusdev, i + 4 * smp_cpus,
+-                               qdev_get_gpio_in(cpudev, ARM_CPU_NMI));
+-            sysbus_connect_irq(gicbusdev, i + 5 * smp_cpus,
+-                               qdev_get_gpio_in(cpudev, ARM_CPU_VINMI));
+-        }
+-    }
++    gic_connect_ppis(vms);
+ 
+     fdt_add_gic_node(vms);
  }
- 
- void gicv5_forward_interrupt(ARMCPU *cpu, GICv5Domain domain)
- {
-     /*
--     * For now, we do nothing. Later we will recalculate the overall
--     * HPPI by combining the IRS HPPI with the PPI HPPI, and possibly
--     * signal IRQ/FIQ.
-+     * IRS HPPI has changed: recalculate the IRQ/FIQ levels by
-+     * combining the IRS HPPI with the PPI HPPI.
-      */
-+    gicv5_update_irq_fiq(&cpu->env);
- }
- 
- static void gic_cddis_write(CPUARMState *env, const ARMCPRegInfo *ri,
-@@ -431,6 +514,7 @@ static void gic_icc_cr0_el1_write(CPUARMState *env, const ARMCPRegInfo *ri,
-     value |= R_ICC_CR0_LINK_MASK | R_ICC_CR0_LINK_IDLE_MASK;
- 
-     env->gicv5_cpuif.icc_cr0[domain] = value;
-+    gicv5_update_irq_fiq(env);
- }
- 
- static void gic_icc_cr0_el1_reset(CPUARMState *env, const ARMCPRegInfo *ri)
-@@ -573,6 +657,7 @@ static void gic_cdeoi_write(CPUARMState *env, const ARMCPRegInfo *ri,
- 
-     /* clear lowest bit, doing nothing if already zero */
-     *apr &= *apr - 1;
-+    gicv5_update_irq_fiq(env);
- }
- 
- static void gic_cddi_write(CPUARMState *env, const ARMCPRegInfo *ri,
-diff --git a/target/arm/tcg/trace-events b/target/arm/tcg/trace-events
-index c60ce6834e..2bfa8fc552 100644
---- a/target/arm/tcg/trace-events
-+++ b/target/arm/tcg/trace-events
-@@ -7,3 +7,4 @@ gicv5_gicr_cdia_fail(int domain, const char *reason) "domain %d CDIA attempt fai
- gicv5_gicr_cdia(int domain, uint32_t id) "domain %d CDIA acknowledge of interrupt 0x%x"
- gicv5_cdeoi(int domain) "domain %d CDEOI performing priority drop"
- gicv5_cddi(int domain, uint32_t id) "domain %d CDDI deactivating interrupt ID 0x%x"
-+gicv5_update_irq_fiq(bool irq, bool fiq, bool nmi) "now IRQ %d FIQ %d NMI %d"
 -- 
 2.43.0
 
