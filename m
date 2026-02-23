@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63D91EC1112
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 17:10:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B574EC1112
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 17:10:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuZKm-0002VS-Ac; Mon, 23 Feb 2026 12:03:00 -0500
+	id 1vuZM8-0004UG-A8; Mon, 23 Feb 2026 12:04:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vuZKj-0002SY-VA
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 12:02:57 -0500
+ id 1vuZL9-0002lp-Jh
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 12:03:27 -0500
 Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vuZKi-0000IC-BU
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 12:02:57 -0500
+ id 1vuZL4-0000Q9-P5
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 12:03:23 -0500
 Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-48069a48629so47256025e9.0
- for <qemu-devel@nongnu.org>; Mon, 23 Feb 2026 09:02:55 -0800 (PST)
+ 5b1f17b1804b1-4836f4cbe0bso34590135e9.3
+ for <qemu-devel@nongnu.org>; Mon, 23 Feb 2026 09:03:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771866175; x=1772470975; darn=nongnu.org;
+ d=linaro.org; s=google; t=1771866194; x=1772470994; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=+BKZSnMQQmK+RzmCczuCw9qZHXksHwgTCftkHrZV+kE=;
- b=K1JgSGymOW7RkBdVRyL3QXnDUA8RCEjUkJIfiYFa4zEuFRgUuUKsFscC5FVvK/NkVT
- +n7rKvSlTDBXIRhYauoBgf3F5nmKU7GIVzEiYe0zpm0csU3b8YEoflA/8bj7JoFX+q3J
- ot6lE4WYNZagc7izLHKFZcFUSjcBHi26qL9lcZl8XI/lgZKwY9nGdZdJEnlS6gTyiUhb
- /KyHDgFgfylzY6dz1w+cBkHlGYYg1B7FRQyK4d/7v50Y/r+TpavXMnCT/FOzt5VYVPPx
- THqu6oowIX9h08UOKaREdTFDlpeBRm0yXFFaeRlIcRDfPINMpzYtMahrVQTHWDrTeyw/
- xGeg==
+ :reply-to; bh=bURXc6DgG6dev9YjdHqHr0hS90pivhx67OlSlLCve5Y=;
+ b=nB11IaeEFXFieX+qXCkPoznjem/GEsMFU2AdKrcdZ9FN1YsSBNWSbw00wti8zdpfvw
+ 2TINHFkzTHxGHoYIlQ1m3TxILcsZFmLB7r13MLaiSVP253p9ATmiJNTo+i8zKd4zGOpH
+ f2bcjotoiSaOIDss2par9XQztHV5bXoN0m77b3gnmbRbrCCY4mgSQb8GRP6n0kadQ/BW
+ n/CfM0tgkztKVvahgoJHeOiCNZxFBV33CeBrvptayIyBTmoFyWMCc2/TSIKt9jG8ZlTs
+ 8x7x6qAPXNhFFTsmxOZOSR01PNK5TbLvAZcR1qhbp1bSytdgonEpYi1E0kAVA+TdIB4V
+ SQ9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771866175; x=1772470975;
+ d=1e100.net; s=20230601; t=1771866194; x=1772470994;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=+BKZSnMQQmK+RzmCczuCw9qZHXksHwgTCftkHrZV+kE=;
- b=OXXwVnupEfr5wnlRkAbDqRUQl5ZZz/qZALNXOzJvnqcdWevOpCzwvsltQ1s0voiwMW
- WgoAxRkFuquvr+Ptp1Bj7DjhwSylJ8VWVDveGI+ukzv/qrO2GVfqJ6N/syKaYq411LmN
- JZD9IF/BFUq4/1hZT0RfAIJc6MSVjUS3qEcMWqvryLUEBhdiljnrUneeKBJJbN2O9wdf
- XzURE0raD2+VJRIUq/NuMOzzt5hew9eCEba5BJpbr7NPDUgpw+kTLxgEr+YkLxLIynCb
- OJt/uTsJ8yEgMzTpQ35m8sV/zzYa8JX/eqB8amOEprpVEOmyKcW3/5cENEMdO4D+4rfx
- kekA==
+ bh=bURXc6DgG6dev9YjdHqHr0hS90pivhx67OlSlLCve5Y=;
+ b=Zf47mLRvXiVCZT4faXykirD2WrmC0OfvkzrckhC/xen9uKe19gIiHTDmLwbg3ZbB7r
+ PNDgMPi8y1MT26dNll6R1bj5PYF/hf46ZnBV41DSBFA6BhyJ7r12FKXf4Ko3/R1780GY
+ RwCe3uFa0dgqXpyTnvscDzNdbxxD6h9G4OYGIQdmWay7AaQ4mjGW/VOKeq9U3uTcR/Uu
+ EqXUi8kV3WIlAiMkwLJGh0mR9vPlkahlhUAuczMyI/89alJGfOJKKdBKAH+QdfYSNJEh
+ r0A1VLJ+Dc61DYlpTmvKAw740xAoYlZg+SHfTKmjAXApmw4Lnit76xx5rMLbG1PCBbHd
+ KEqg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUG1+qSVVY9yTJ/8eGTYgG0z3SiumjFMRJPTpzJvYY0bN2kd+JyP0p9YqzfkdThbBs0C8/AiYr0MvRE@nongnu.org
-X-Gm-Message-State: AOJu0YyasUp3VkgAtd3PKfE3efSGW1TelFghC6iqPiIblQ0KOyXmt8Is
- 7Evp4qYdB7jiepEY5j8oUFtOh00Il1NOL7f3gM9shNJfr4nW4lrJWyC7fZQlj89ArJn0+drkyco
- CyqvG
-X-Gm-Gg: AZuq6aLAKXNH7sDLHMhgaU8GH009KcsQFJbwgSt9AkjrCQdK0as+S+IN0OkHNbZbE5b
- L3UaBsW9op4W/SuKuWa+QT1nrd/PxZqWaMnexMk8eXS8+f7KWFCPsGjZ0iWG44iS3OnNTUlwNZE
- ODUEKKhqoF2gRh2kr+VUpXRZKJy4LgGltVmzA49XgzyC5+8TOu79giBwS3YM+nEERCb8j494guS
- nk6Peakx27xvyoqWczTUAUxDXu0m5rY3UdTQHsj1PjOUolVXPv3tyIpuBRdppBjkl0n6AZ6DXu0
- TIGmRiDMRInApkKBGBTURsNTIWmZsqMRBxDiLnA8HcIwTeDYTDdrhnHgzFTjBp8zlXsnXlwUrEZ
- v84qTui6TF4eePr7UBpMW+ln0Z7eegQ3DRRgzJPZcSI2Qk5DmgzsZFEEmQRr33bbpVag5yF79x1
- 44zjNKJd1WlIKOU0Oqd9pLl1apyE9tJ+iX4BhF1dhADPXfLT0BYiFfVZkaeC7Va9M2BEuAA1Aq1
- T5D6tBes/S0Xs8nxLXFZvMDLyJwYxY=
-X-Received: by 2002:a05:600c:1e28:b0:477:5af7:6fa with SMTP id
- 5b1f17b1804b1-483a95fe96bmr132780755e9.32.1771866174849; 
- Mon, 23 Feb 2026 09:02:54 -0800 (PST)
+ AJvYcCVSC/J7CET/32CPgQIoyW/ZKmZ7IiUO7KJ9Z5RbVpeavTfD/mbkZstD3QZI+nACN8AI9BICqxxlLQ3r@nongnu.org
+X-Gm-Message-State: AOJu0YzGDxIHs3g8/3hjPGsPKYLtGN9/otkHo9SdemLFVMZkvcIH01qV
+ reazRn734iDu19L2n5LCMAP/Z8LehtPtbiqG8h9L4324Qrtl5s9C3X2AjiFBN8lg39uOjnYnh+f
+ eCxrK
+X-Gm-Gg: AZuq6aLtJkBYvOg4rc5VbMSU5d0RH9z8XWpWSsaKWvkqoZKtnuiuOB3PoSZGxwXvphP
+ nmNILZhGa0tkyI1ZDNT/aKdtOvUS5j74ANi2wp28mkGaYfQFn/NIzw+iVzrgnf2iqLqfoqCYQLb
+ sSiaupFmjsuMqztzO5v79BNcd/YznKK13iEoMuqtp4433VO9iCAqlz26qS1sQO7LxIWRrYAC19S
+ rKgELHD9MvyrW/enfYP+HDDtgiiQRFlGyQMDVe8BfuPAood164gK98b4aDn4QtF/qtm6jjCurmb
+ rzk3zYaB+HqwQBakaiUyqF9rI/eiS3QFTTHQ0kvBCWVMSFZNn9YouXgSCReZeHSIaton7y3jdX2
+ lCC1G4e1qOB9ZfK1gBQ2N4ZZf/YpoEBiUn+aOQGMGiDXdRRRBTiwXntQtlzb9j2Yl3ieMvKBGBm
+ Qi6cY93nhXSffr09imOq5grkY7tNxo2XfZNbNLyh322EM5iwomj3WLkWEIRjC9ikGTLKl31ELFj
+ CVUyJsRTziWiAh4D4l4Y9R2mcpzD68=
+X-Received: by 2002:a05:600c:529b:b0:483:348a:d3f3 with SMTP id
+ 5b1f17b1804b1-483a95dde23mr171839585e9.18.1771866194355; 
+ Mon, 23 Feb 2026 09:03:14 -0800 (PST)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-483a9b21ceasm200155625e9.0.2026.02.23.09.02.53
+ 5b1f17b1804b1-483a9b21ceasm200155625e9.0.2026.02.23.09.03.13
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 23 Feb 2026 09:02:53 -0800 (PST)
+ Mon, 23 Feb 2026 09:03:13 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Subject: [PATCH 36/65] target/arm: GICv5 cpuif: Implement PPI handling mode
- register
-Date: Mon, 23 Feb 2026 17:01:43 +0000
-Message-ID: <20260223170212.441276-37-peter.maydell@linaro.org>
+Subject: [PATCH 54/65] hw/intc/arm_gicv3_cpuif: Don't allow GICv3 if CPU has
+ GICv5 cpuif
+Date: Mon, 23 Feb 2026 17:02:01 +0000
+Message-ID: <20260223170212.441276-55-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260223170212.441276-1-peter.maydell@linaro.org>
 References: <20260223170212.441276-1-peter.maydell@linaro.org>
@@ -103,68 +103,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In the GICv5 the handling mode of a PPI is not software configurable;
-it is reported via read-only CPU interface registers ICC_PPI_HMR0_EL1
-and ICC_PPI_HMR1_EL1.
+The GICv3 and GICv5 CPU interfaces are not compatible, and a CPU will
+only implement either one or the other.  If we find that we're trying
+to connect a GICv3 to a CPU that implements FEAT_GCIE, fail.  This
+will only happen if the board code has a bug and doesn't configure
+its CPUs and its GIC consistently.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/cpu.h             |  1 +
- target/arm/tcg/gicv5-cpuif.c | 22 ++++++++++++++++++++++
- 2 files changed, 23 insertions(+)
+ hw/intc/arm_gicv3.c       |  2 +-
+ hw/intc/arm_gicv3_cpuif.c | 14 +++++++++++++-
+ hw/intc/gicv3_internal.h  |  2 +-
+ 3 files changed, 15 insertions(+), 3 deletions(-)
 
-diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index dd4dc12feb..4574f7005d 100644
---- a/target/arm/cpu.h
-+++ b/target/arm/cpu.h
-@@ -605,6 +605,7 @@ typedef struct CPUArchState {
-         uint64_t icc_icsr_el1;
-         /* Most PPI registers have 1 bit per PPI, so 64 PPIs to a register */
-         uint64_t ppi_active[GICV5_NUM_PPIS / 64];
-+        uint64_t ppi_hm[GICV5_NUM_PPIS / 64];
-     } gicv5_cpuif;
+diff --git a/hw/intc/arm_gicv3.c b/hw/intc/arm_gicv3.c
+index 542f81ea49..e93c1df5b4 100644
+--- a/hw/intc/arm_gicv3.c
++++ b/hw/intc/arm_gicv3.c
+@@ -449,7 +449,7 @@ static void arm_gic_realize(DeviceState *dev, Error **errp)
  
-     struct {
-diff --git a/target/arm/tcg/gicv5-cpuif.c b/target/arm/tcg/gicv5-cpuif.c
-index 0132b13853..6fbc962131 100644
---- a/target/arm/tcg/gicv5-cpuif.c
-+++ b/target/arm/tcg/gicv5-cpuif.c
-@@ -50,6 +50,16 @@ FIELD(ICC_IDR0_EL1, GCIE_LEGACY, 8, 4)
-     ((4 << R_ICC_IDR0_EL1_PRI_BITS_SHIFT) |     \
-      (1 << R_ICC_IDR0_EL1_ID_BITS_SHIFT))
+     gicv3_init_irqs_and_mmio(s, gicv3_set_irq, gic_ops);
  
-+/*
-+ * PPI handling modes are fixed and not software configurable.
-+ * R_CFSKX defines them for the architected PPIs: they are all Level,
-+ * except that PPI 24 (CTIIRQ) is IMPDEF and PPI 3 (SW_PPI) is Edge.
-+ * For unimplemented PPIs the field is RES0.  The PPI register bits
-+ * are 1 for Level and 0 for Edge.
-+ */
-+#define PPI_HMR0_RESET (~(1ULL << GICV5_PPI_SW_PPI))
-+#define PPI_HMR1_RESET (~0ULL)
-+
- static GICv5Common *gicv5_get_gic(CPUARMState *env)
+-    gicv3_init_cpuif(s);
++    gicv3_init_cpuif(s, errp);
+ }
+ 
+ static void arm_gicv3_class_init(ObjectClass *klass, const void *data)
+diff --git a/hw/intc/arm_gicv3_cpuif.c b/hw/intc/arm_gicv3_cpuif.c
+index eaf1e512ed..73e06f87d4 100644
+--- a/hw/intc/arm_gicv3_cpuif.c
++++ b/hw/intc/arm_gicv3_cpuif.c
+@@ -16,6 +16,7 @@
+ #include "qemu/bitops.h"
+ #include "qemu/log.h"
+ #include "qemu/main-loop.h"
++#include "qapi/error.h"
+ #include "trace.h"
+ #include "gicv3_internal.h"
+ #include "hw/core/irq.h"
+@@ -3016,7 +3017,7 @@ static void gicv3_cpuif_el_change_hook(ARMCPU *cpu, void *opaque)
+     gicv3_cpuif_virt_irq_fiq_update(cs);
+ }
+ 
+-void gicv3_init_cpuif(GICv3State *s)
++void gicv3_init_cpuif(GICv3State *s, Error **errp)
  {
-     return env->gicv5state;
-@@ -292,6 +302,18 @@ static const ARMCPRegInfo gicv5_cpuif_reginfo[] = {
-         .fieldoffset = offsetof(CPUARMState, gicv5_cpuif.ppi_active[1]),
-         .writefn = gic_ppi_sactive_write,
-     },
-+    {   .name = "ICC_PPI_HMR0_EL1", .state = ARM_CP_STATE_AA64,
-+        .opc0 = 3, .opc1 = 0, .crn = 12, .crm = 10, .opc2 = 0,
-+        .access = PL1_R, .type = ARM_CP_IO | ARM_CP_NO_RAW,
-+        .fieldoffset = offsetof(CPUARMState, gicv5_cpuif.ppi_hm[0]),
-+        .resetvalue = PPI_HMR0_RESET,
-+    },
-+    {   .name = "ICC_PPI_HMR1_EL1", .state = ARM_CP_STATE_AA64,
-+        .opc0 = 3, .opc1 = 0, .crn = 12, .crm = 10, .opc2 = 1,
-+        .access = PL1_R, .type = ARM_CP_IO | ARM_CP_NO_RAW,
-+        .fieldoffset = offsetof(CPUARMState, gicv5_cpuif.ppi_hm[1]),
-+        .resetvalue = PPI_HMR1_RESET,
-+    },
- };
+     /* Called from the GICv3 realize function; register our system
+      * registers with the CPU
+@@ -3027,6 +3028,17 @@ void gicv3_init_cpuif(GICv3State *s)
+         ARMCPU *cpu = ARM_CPU(qemu_get_cpu(s->first_cpu_idx + i));
+         GICv3CPUState *cs = &s->cpu[i];
  
- void define_gicv5_cpuif_regs(ARMCPU *cpu)
++        if (cpu_isar_feature(aa64_gcie, cpu)) {
++            /*
++             * Attempt to connect GICv3 to a CPU with GICv5 cpuif
++             * (almost certainly a bug in the board code)
++             */
++            error_setg(errp,
++                       "Cannot connect GICv3 to CPU %d which has GICv5 cpuif",
++                       i);
++            return;
++        }
++
+         /*
+          * If the CPU doesn't define a GICv3 configuration, probably because
+          * in real hardware it doesn't have one, then we use default values
+diff --git a/hw/intc/gicv3_internal.h b/hw/intc/gicv3_internal.h
+index 880dbe52d8..c01be70464 100644
+--- a/hw/intc/gicv3_internal.h
++++ b/hw/intc/gicv3_internal.h
+@@ -722,7 +722,7 @@ void gicv3_redist_mov_vlpi(GICv3CPUState *src, uint64_t src_vptaddr,
+ void gicv3_redist_vinvall(GICv3CPUState *cs, uint64_t vptaddr);
+ 
+ void gicv3_redist_send_sgi(GICv3CPUState *cs, int grp, int irq, bool ns);
+-void gicv3_init_cpuif(GICv3State *s);
++void gicv3_init_cpuif(GICv3State *s, Error **errp);
+ 
+ /**
+  * gicv3_cpuif_update:
 -- 
 2.43.0
 
