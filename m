@@ -4,63 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8C77EA4FC1
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 13:58:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52A4CEA4FC1
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 13:58:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuWJz-0003KU-Pm; Mon, 23 Feb 2026 08:49:59 -0500
+	id 1vuWMo-0000W5-E3; Mon, 23 Feb 2026 08:52:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vuWIk-0000iI-35
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 08:48:46 -0500
+ id 1vuWKj-00065J-RC
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 08:50:49 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vuWIg-000744-V5
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 08:48:41 -0500
+ id 1vuWKi-0007YH-DT
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 08:50:45 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771854517;
+ s=mimecast20190719; t=1771854643;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=99d2Aunspa8tSdfszEIfDfTDk4GKioE/L+0EPViLRM0=;
- b=bt9+ZNIQLS+SG8+4hnQ1z+wXZydI1LyWAwYj+sLk5N3/n70+aIsnagsoD3NXIV3HMMn/Kw
- JZnYvEEZA/rUtS2VMcEYEdcrFsx0HJgq6ZWtwxBPWE73VQzs7UinXo5n39X33jihk6tLWK
- HDJbG5FOunid5dW9OMffHtZgG7/3tMQ=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=BlvSqwSi5p6HvV5NUZQ1P6/nC//iuZk8I7I3m6Rju4Y=;
+ b=e6R3uu5FzzcXx4FPQ/v91HEbXi41JLf5MjHEyAr5j0g75y63CTo4mzL55zA6m68nVn63EM
+ 6FG2nsg7MNFJO7iuRUY9/mnLrRaS0MVf36AW13qurdzl/p9N6eAdII4pWDiUB3flEIjvu2
+ bGxk9JYSe7/gE0E7vIPp1pMU/HWuGcE=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-629-y9WnFTt1PS-wFYyRPPMF-w-1; Mon,
- 23 Feb 2026 08:48:34 -0500
-X-MC-Unique: y9WnFTt1PS-wFYyRPPMF-w-1
-X-Mimecast-MFC-AGG-ID: y9WnFTt1PS-wFYyRPPMF-w_1771854513
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-395-Gfhr-RFbOPqTPV167CCcSg-1; Mon,
+ 23 Feb 2026 08:50:40 -0500
+X-MC-Unique: Gfhr-RFbOPqTPV167CCcSg-1
+X-Mimecast-MFC-AGG-ID: Gfhr-RFbOPqTPV167CCcSg_1771854639
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 79D3F1955F44; Mon, 23 Feb 2026 13:48:33 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6689D18002E6; Mon, 23 Feb 2026 13:50:39 +0000 (UTC)
 Received: from localhost (unknown [10.45.242.25])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 905E41800465; Mon, 23 Feb 2026 13:48:32 +0000 (UTC)
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 706C319560A3; Mon, 23 Feb 2026 13:50:38 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Gerd Hoffmann <kraxel@redhat.com>
-Subject: [PULL v3 22/85] audio: simplify audio_init()
-Date: Mon, 23 Feb 2026 14:46:23 +0100
-Message-ID: <20260223134731.2377432-23-marcandre.lureau@redhat.com>
+Subject: [PULL v3 67/85] audio/pw: replace custom logging with error_report
+Date: Mon, 23 Feb 2026 14:47:08 +0100
+Message-ID: <20260223134731.2377432-68-marcandre.lureau@redhat.com>
 In-Reply-To: <20260223134731.2377432-1-marcandre.lureau@redhat.com>
 References: <20260223134731.2377432-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -89,126 +89,63 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Factorize looking up the driver in audio_driver_init()
+Replace the custom audio logging infrastructure (dolog macro) with
+standard QEMU error reporting (error_report).
 
 Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- audio/audio.c | 66 ++++++++++++++++++++++-----------------------------
- 1 file changed, 29 insertions(+), 37 deletions(-)
+ audio/pwaudio.c | 11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
-diff --git a/audio/audio.c b/audio/audio.c
-index c4e4adec106..10e32bcbb1a 100644
---- a/audio/audio.c
-+++ b/audio/audio.c
-@@ -1562,11 +1562,18 @@ size_t audio_generic_read(HWVoiceIn *hw, void *buf, size_t size)
-     return total;
- }
+diff --git a/audio/pwaudio.c b/audio/pwaudio.c
+index 7a009a94f3a..6a80e5a333e 100644
+--- a/audio/pwaudio.c
++++ b/audio/pwaudio.c
+@@ -20,14 +20,13 @@
+ #include <spa/param/props.h>
  
--static bool audio_driver_do_init(AudioMixengBackend *s, struct audio_driver *drv,
--                                 Audiodev *dev, Error **errp)
-+static bool audio_driver_do_init(AudioMixengBackend *d, Error **errp)
- {
--    s->drv_opaque = drv->init(dev, errp);
--    if (!s->drv_opaque) {
-+    const char *drvname = AudiodevDriver_str(d->dev->driver);
-+    struct audio_driver *drv = audio_driver_lookup(drvname);
+ #include <pipewire/pipewire.h>
 +
-+    if (!drv) {
-+        error_setg(errp, "Unknown audio driver `%s'", drvname);
-+        return false;
-+    }
-+
-+    d->drv_opaque = drv->init(d->dev, errp);
-+    if (!d->drv_opaque) {
-         return false;
-     }
++#include "audio_int.h"
+ #include "trace.h"
  
-@@ -1579,14 +1586,14 @@ static bool audio_driver_do_init(AudioMixengBackend *s, struct audio_driver *drv
-         drv->pcm_ops->put_buffer_out = audio_generic_put_buffer_out;
-     }
+-#define AUDIO_CAP "pipewire"
+ #define RINGBUFFER_SIZE    (1u << 22)
+ #define RINGBUFFER_MASK    (RINGBUFFER_SIZE - 1)
  
--    audio_init_nb_voices_out(s, drv, 1);
--    audio_init_nb_voices_in(s, drv, 0);
--    s->drv = drv;
-+    audio_init_nb_voices_out(d, drv, 1);
-+    audio_init_nb_voices_in(d, drv, 0);
-+    d->drv = drv;
- 
--    if (dev->timer_period <= 0) {
--        s->period_ticks = 1;
-+    if (d->dev->timer_period <= 0) {
-+        d->period_ticks = 1;
-     } else {
--        s->period_ticks = dev->timer_period * (int64_t)SCALE_US;
-+        d->period_ticks = d->dev->timer_period * (int64_t)SCALE_US;
-     }
- 
-     return true;
-@@ -1786,24 +1793,12 @@ void audio_create_default_audiodevs(void)
-  */
- static AudioBackend *audio_init(Audiodev *dev, Error **errp)
- {
--    int done = 0;
--    const char *drvname;
--    AudioMixengBackend *s;
--    struct audio_driver *driver;
-+    AudioMixengBackend *d;
- 
--    s = AUDIO_MIXENG_BACKEND(object_new(TYPE_AUDIO_MIXENG_BACKEND));
+-#include "audio_int.h"
 -
--    if (dev) {
--        /* -audiodev option */
--        s->dev = dev;
--        drvname = AudiodevDriver_str(dev->driver);
--        driver = audio_driver_lookup(drvname);
--        if (driver) {
--            done = audio_driver_do_init(s, driver, dev, errp);
--        } else {
--            error_setg(errp, "Unknown audio driver `%s'", drvname);
--        }
--        if (!done) {
-+    d = AUDIO_MIXENG_BACKEND(object_new(TYPE_AUDIO_MIXENG_BACKEND));
-+    d->dev = dev;
-+    if (d->dev) {
-+        if (!audio_driver_do_init(d, errp)) {
-             goto out;
-         }
-     } else {
-@@ -1814,27 +1809,24 @@ static AudioBackend *audio_init(Audiodev *dev, Error **errp)
-                 error_setg(errp, "no default audio driver available");
-                 goto out;
-             }
--            s->dev = dev = e->dev;
-+            d->dev = e->dev;
-             QSIMPLEQ_REMOVE_HEAD(&default_audiodevs, next);
-             g_free(e);
--            drvname = AudiodevDriver_str(dev->driver);
--            driver = audio_driver_lookup(drvname);
--            if (audio_driver_do_init(s, driver, dev, NULL)) {
-+            if (audio_driver_do_init(d, NULL)) {
-                 break;
-             }
--            qapi_free_Audiodev(dev);
--            s->dev = NULL;
-         }
-     }
+ #define TYPE_AUDIO_PW "audio-pipewire"
+ OBJECT_DECLARE_SIMPLE_TYPE(AudioPw, AUDIO_PW)
  
--    if (!object_property_try_add_child(get_audiodevs_root(), dev->id, OBJECT(s), errp)) {
-+    if (!object_property_try_add_child(get_audiodevs_root(),
-+                                       d->dev->id, OBJECT(d), errp)) {
-         goto out;
+@@ -358,7 +357,7 @@ audfmt_to_pw(AudioFormat fmt, bool big_endian)
+         format = big_endian ? SPA_AUDIO_FORMAT_F32_BE : SPA_AUDIO_FORMAT_F32_LE;
+         break;
+     default:
+-        dolog("Internal logic error: Bad audio format %d\n", fmt);
++        error_report("pipewire: internal logic error: bad audio format %d", fmt);
+         format = SPA_AUDIO_FORMAT_U8;
+         break;
      }
--    object_unref(s);
--    return AUDIO_BACKEND(s);
-+    object_unref(d);
-+    return AUDIO_BACKEND(d);
- 
- out:
--    object_unref(s);
-+    object_unref(d);
-     return NULL;
+@@ -418,7 +417,7 @@ pw_to_audfmt(enum spa_audio_format fmt, int *endianness,
+         return AUDIO_FORMAT_F32;
+     default:
+         *sample_size = 1;
+-        dolog("Internal logic error: Bad spa_audio_format %d\n", fmt);
++        error_report("pipewire: internal logic error: bad spa_audio_format %d", fmt);
+         return AUDIO_FORMAT_U8;
+     }
+ }
+@@ -518,7 +517,7 @@ qpw_set_position(uint32_t channels, uint32_t position[SPA_AUDIO_MAX_CHANNELS])
+         position[0] = SPA_AUDIO_CHANNEL_MONO;
+         break;
+     default:
+-        dolog("Internal error: unsupported channel count %d\n", channels);
++        error_report("pipewire: unsupported channel count %d", channels);
+     }
  }
  
 -- 
