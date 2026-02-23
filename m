@@ -4,87 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF31AEC1112
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 17:10:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22A10EC1113
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 17:10:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuZMR-0004sN-IK; Mon, 23 Feb 2026 12:04:45 -0500
+	id 1vuZK0-00013O-0o; Mon, 23 Feb 2026 12:02:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vuZLI-0002xP-Kz
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 12:03:32 -0500
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ (Exim 4.90_1) (envelope-from <ruslichenko.r@gmail.com>)
+ id 1vuZJw-00010b-PG
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 12:02:09 -0500
+Received: from mail-ot1-x32f.google.com ([2607:f8b0:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vuZLD-0000UR-5M
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 12:03:30 -0500
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-4836f4cbe0bso34591755e9.3
- for <qemu-devel@nongnu.org>; Mon, 23 Feb 2026 09:03:26 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <ruslichenko.r@gmail.com>)
+ id 1vuZJv-0008SD-1k
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 12:02:08 -0500
+Received: by mail-ot1-x32f.google.com with SMTP id
+ 46e09a7af769-7d4ba9abbecso4493593a34.1
+ for <qemu-devel@nongnu.org>; Mon, 23 Feb 2026 09:02:06 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1771866125; cv=none;
+ d=google.com; s=arc-20240605;
+ b=X/lu4yCahYWaX4X7S7kC98LsfwnpDX2aXAEjXntM0xuyerQlM8LmuRQUPyTgirhjor
+ AiOP2JwTxvxR5O2+Fff+gzPW4aECayi7vhI8zhVdfxChwATlBJKWyL9mfsjAy1bda989
+ yHivQqL/sxXMM+LMkPngVpwMZfJq5huomlSBWrEjNaKHxorQNe6RxWp6VQJ9knfzBNXm
+ aBtRuEhrUbUB2DV9JnOfgGam4V56m6lvPzV9ZF+kHASaAHkqqD/N2oyhbCbkXmeiugWm
+ godPxNbJH+DTequhKAeLd1DezWxgI0srTSIyWU08fXw7OgSqOcllerYA2/RxlGjOR9Mc
+ mCCQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=uKapdWTYg4/AfpMV73PJXifaSo/eyOCqm8bePMIHZK4=;
+ fh=B++KEiJaXb1irhLEOnbL3jDVkfHm6w5AK4wSXrFqJyY=;
+ b=Vb3u/4OzwnQht0RwX7kz3/0JgXxkMlPukwyehGQ9BB7P+e9+JOaW5u3XYKGTq2x2ua
+ uPfUeWPyiiXQRk8zLrs9gW2rEDBWcAvoOpaiTxEFvy+NnoXTrCB/ehaXQjCGDGCheIWq
+ l2398W2x7PqTOrWgr+mjitszfgGkPp4Aw+i7Z03YwvCzeYEO+VAaYf2eKFENPhilJbYN
+ xIT/ad0e8gO8vZiMM0ABIrjr4t4AYEZtXDI2stmyvjX8ps70XRXQTbywch9pOolXDMc+
+ CfM1FuQcsSEGXT/90j50tJKGoY/bZmq2CCs9wipoYCPyV5y424VKMG6D+4d7OufE4QVo
+ zqZA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771866206; x=1772471006; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=VaAbltozh/selDM1um1aR8XySGP5uwpWPXsGLFrou/8=;
- b=zM/xMWzW0g6hTmso6UPZojM/LrzaSdKed9azJjG0X3+yUYZlDEwBmOCjCYIHFRRtxo
- zgvFuqn4Qh3bNLR7+BybmVcCm3kWlq4TXe4Cmo2RwseZ9q42PDW0bURpRtDOnmxE61dN
- FtIUtLnQwfHmvHs8KqRIHct9xwK2fmCepKQJN60ydPvHixz+AJwN9YJLSAj57eu9n41t
- 29Qk37XlWaqRNOp5v3hw9CFd13ZbIS9KZ7K1YhIwdc010H8Lxioujw5RdmJNb4wJNdpx
- Ykj0CGhpR8iPvBSnPwPToE/Vf8pPEIM6mI0Luf0PpIGBZkERxEsZl+8Tj8KvpXZ6R4jI
- 35Yg==
+ d=gmail.com; s=20230601; t=1771866125; x=1772470925; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=uKapdWTYg4/AfpMV73PJXifaSo/eyOCqm8bePMIHZK4=;
+ b=NDD2ZEOg+5E7s5QDgKgp29zncjsThfyJNpya0qVdS0Tj5pVeM3c+RUf5LzkfKxs20y
+ fWnNYS8fEKJeUKCQvUy5wwnHxPJoUZUGYby1gXqfF/JR56hAc6zxRZtF+cyupBG3jm+A
+ Zul26T4YQEyVDyK5JnwnRUIGcNSNrvTBvEpw2JItbw1/CRb2BJ51ZiuBlHvct2jTKj1W
+ dEZMGfgJK9ZSbID9YHarUO4blOgHmeSVGqocOAg3FfpTe+iG7PlA4okSfwgLoh1J4fYk
+ inrXPx4VPw0KZO/W4R+qhxzpuXtSzkJeqVGhQE39Apyyg1TincOAvs4kHkKlae5oiZxu
+ klAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771866206; x=1772471006;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=VaAbltozh/selDM1um1aR8XySGP5uwpWPXsGLFrou/8=;
- b=wVvvdobSlLhuZjMZCTTQlxnZyjNbJVIFFL7GyAJ/vQn2z9Z8Kwnd8kGZeZrvx6CheV
- 3HzhNfyl0U8vdBnRkIHf3drM1Hl5YCVwAS6rSpyB84IotM/crZTcH3/fWTIEq08cD9eR
- qcE3XKo7kSh7qFD8ws4Gnwy3Y6MuDh75Br6PrcSqY6ubKTKKFYTfIaXjYKtQlqndOWcW
- NWE26x8It5rqAln0pswFwcUes3siuz9qSed9rRq1pwIrjuQQo+xwRZBcpjnqlKYvbM8I
- c5TtM3+xymS7aX3/L3JsRDhr4858FOjwOdyzlw2kLN/IJ0Axp/X/nO0eHqq/cTjTcV1z
- AmDg==
+ d=1e100.net; s=20230601; t=1771866125; x=1772470925;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=uKapdWTYg4/AfpMV73PJXifaSo/eyOCqm8bePMIHZK4=;
+ b=Y7gvKJYvzPw1GU9jZZ9zAiUDU4HYL1EgpCP/tWZUugWNsXzVCsKaJ8Fh9yBsjEdZ+O
+ 8XfmwSl8EXE6Gf4z1LLRsLAFbmrAQsrCLkDF70ck340faiYrR0ixGpSN/nsuR0nGh/oj
+ zsVJdzxbQBImSa20Kx5t1gYIGF2N2fapvhQpu5aqfMOfFB4NZEwoIXt8d3mEEEFqtPeN
+ SaWo6Wctdb94Epy48pmvqJbvjSpI828+VYDkBtS9t8Z4ld5OvWcaaYbXm4jTEmLbT/8X
+ 92XhV6hrf6ltz+qy+Nwmb8KKdD4++7pPPmNfgI02xkeCD7lXACbY4BmCSIhPqhkDbYNk
+ OlqQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVYvNkJkh1OY8WI/blPY2KN7jqxo8xV6p949ee2MTwdRlOzcb3ZWbAgdXa5T1Qy32AfG6DDYZuSkeya@nongnu.org
-X-Gm-Message-State: AOJu0YweKqvOviQuzvjualg3T8ATXCsegkuxyq4yhSkSf5fd0Br8t3TJ
- HkqXshBSZPcbV2JIg9Oaty6MrxTCnbOcqoGyb8AyKE4KOasclhPjiwPuVBd1gYdy2KSlQezmsgb
- oTYfU
-X-Gm-Gg: AZuq6aIbgy7kwsfLosSmOVGgwx7vZUNSB77vkEK7GJZ4NMPDliIygpsoJWn3XbSvMZA
- 8nAcmT8kdZLevfYTnlj0tA4xozvCQBhiyhSg743EniQPRxg3vX4uDAyDkwH3Kule0tCurGIgNly
- 4ss2IegPMZWFRHLN9EGbNFTgdNQhbJGsdDvfu5jprZN9dHG7buZnY7OT2sScTH2hWY1ArrvU4nY
- 2qtuyMvI5LXX1cl4ptlL6fiK+5bTRxBzWWP4jyUhkihXDMHG6q9YTNeh2cx+lVWWAjM5TOF2yqH
- KvvksjB5LPI4uPlgWc4jInBwleXXZb+EyIf8LtMIjo+fPnZVhKR0C/RRP4Bw5C0j0sL/LYt0Wj4
- Nn9EY5zHXHEzk+8E/L1x7iT45P+u5TrYeWcx7hJl46/84KL7KJEuU5/1dEq3TjrMWn4sto19wlz
- EpKgSMz2VSfY1A4MvO3lBpfHvJ0jFSr3qcL7YhMqQDbLEsWtZKN+dqfMDt9Row//GMNODPeM8uu
- igjTYF8R5aKVz3yBCIvLxFukZMl414=
-X-Received: by 2002:a05:600c:4749:b0:480:69b6:dfed with SMTP id
- 5b1f17b1804b1-483a95e5ab8mr160471345e9.24.1771866205620; 
- Mon, 23 Feb 2026 09:03:25 -0800 (PST)
-Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-483a9b21ceasm200155625e9.0.2026.02.23.09.03.24
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 23 Feb 2026 09:03:24 -0800 (PST)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-arm@nongnu.org,
-	qemu-devel@nongnu.org
-Subject: [PATCH 65/65] hw/arm/virt: Allow user to select GICv5
-Date: Mon, 23 Feb 2026 17:02:12 +0000
-Message-ID: <20260223170212.441276-66-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260223170212.441276-1-peter.maydell@linaro.org>
-References: <20260223170212.441276-1-peter.maydell@linaro.org>
+ AJvYcCWPvM/8bFFwjNdj87i7yccmJ0ZSnnX2SRhDap1vQztRIB5H7AhbwNqbHJGDU73Y+dHi9s9l7vdJhTb4@nongnu.org
+X-Gm-Message-State: AOJu0Yy+Ch9cevO2K4uRCH5hklqki5Echk/4cIjdzKYvNkBkmgAukjfX
+ dQxeqQfks+lvJqsJJq+qvXGzJcE6zTDanAM+brJXQxbT7YYaQ1Rz/1BKzx9uLnJz5WjfkGPF1nv
+ H+sUGo0h63Ho+mkOkkmlUVwncWNF8X20=
+X-Gm-Gg: AZuq6aIe3zsRqzXMt6aLZz1R5ZnkR5wD4+mkxbZ1XtfznfCM6+C8NAx6rnp2cCvHWr0
+ DnIz24OtNxSPhSs8Qea9qAQ5/ZW1KWILk0hNbqRTSDLRokB2A1itI7cRVgCp2y7tSss4T0OXlfQ
+ CiW/NymJw5VWWI3VYkYxcV96qd1Y8Sy7mUzWBGEOnkj1nOfOqtnJS2IWJwdGG+gGk4Hn0MStUA7
+ 9tBBRvmbtWGr/R/ul7xfu+lhLBndp0hv2sOSwxNFqfhp557H11K0dA2FtSKtx2Fp4XpjTXg2+UD
+ SwAsO4uA
+X-Received: by 2002:a05:6808:2218:b0:44f:8b8b:5dcd with SMTP id
+ 5614622812f47-464463b79ffmr5266747b6e.50.1771866124696; Mon, 23 Feb 2026
+ 09:02:04 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32e.google.com
+References: <20260219143332.3316679-1-ruslichenko.r@gmail.com>
+ <20260219144901.3317747-1-ruslichenko.r@gmail.com>
+ <dd8a92cc-51d6-4404-bd09-75b1798f925a@redhat.com>
+ <87y0kj4mr3.fsf@draig.linaro.org>
+In-Reply-To: <87y0kj4mr3.fsf@draig.linaro.org>
+From: Ruslan Ruslichenko <ruslichenko.r@gmail.com>
+Date: Mon, 23 Feb 2026 18:01:52 +0100
+X-Gm-Features: AaiRm52B4c9_RLW6h7gTHr_vn_NiPc2ZIHBr-WJECHVBFGeX6hGcRqXhp9cgXbg
+Message-ID: <CAN-aV1H0_4LviryDEmDSN0TfdSit-uN31H8g87sRBkJAHYbrdQ@mail.gmail.com>
+Subject: Re: [PATCH v2 19/33] hw/core/machine: add '-hw-dtb' option for machine
+To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Cc: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ peter.maydell@linaro.org, artem_mygaiev@epam.com, volodymyr_babchuk@epam.com, 
+ takahiro.nakata.wr@renesas.com, 
+ "Edgar E . Iglesias" <edgar.iglesias@gmail.com>, Ruslan_Ruslichenko@epam.com,
+ balaton@eik.bme.hu, 
+ philmd@linaro.org, wangyanan55@huawei.com, zhao1.liu@intel.com, 
+ pbonzini@redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::32f;
+ envelope-from=ruslichenko.r@gmail.com; helo=mail-ot1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -102,110 +126,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Allow the user to select a GICv5 via '-machine gic-version=x-5', and
-document this.  The 'x-' prefix indicates that the emulation is still
-in an "experimental" state as far as QEMU is concerned; the
-documentation describes what "experimental" means for the user and
-what parts are not yet implemented.
+On Mon, Feb 23, 2026 at 2:23=E2=80=AFPM Alex Benn=C3=A9e <alex.bennee@linar=
+o.org> wrote:
+>
+> Thomas Huth <thuth@redhat.com> writes:
+>
+> >  Hi!
+> >
+> > On 19/02/2026 15.48, Ruslan Ruslichenko wrote:
+> >> From: Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
+> >> Add new '-hw-dtb' command-line option and corresponding
+> >> MachineState property.
+> >> The 'hw-dtb' option allows to specify a Device tree
+> >> binary with hardware description which Qemu should
+> >> emulate.
+> >> Signed-off-by: Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
+> >> ---
+> >>   hw/core/machine.c        | 19 +++++++++++++++++++
+> >>   include/hw/core/boards.h |  1 +
+> >>   qemu-options.hx          |  9 +++++++++
+> >>   system/vl.c              |  3 +++
+> >>   4 files changed, 32 insertions(+)
+> >> diff --git a/hw/core/machine.c b/hw/core/machine.c
+> >> index d4ef620c17..affd24cd49 100644
+> >> --- a/hw/core/machine.c
+> >> +++ b/hw/core/machine.c
+> >> @@ -363,6 +363,20 @@ static void machine_set_dtb(Object *obj, const ch=
+ar *value, Error **errp)
+> >>       ms->dtb =3D g_strdup(value);
+> >>   }
+> >>   +static char *machine_get_hw_dtb(Object *obj, Error **errp)
+> >> +{
+> >> +    MachineState *ms =3D MACHINE(obj);
+> >> +
+> >> +    return g_strdup(ms->hw_dtb);
+> >> +}
+> >> +
+> >> +static void machine_set_hw_dtb(Object *obj, const char *value, Error =
+**errp)
+> >> +{
+> >> +    MachineState *ms =3D MACHINE(obj);
+> >> +
+> >> +    ms->hw_dtb =3D g_strdup(value);
+> >> +}
+> >> +
+> >>   static char *machine_get_dumpdtb(Object *obj, Error **errp)
+> >>   {
+> >>       MachineState *ms =3D MACHINE(obj);
+> >> @@ -1145,6 +1159,11 @@ static void machine_class_init(ObjectClass *oc,=
+ const void *data)
+> >>       object_class_property_set_description(oc, "dtb",
+> >>           "Linux kernel device tree file");
+> >>   +    object_class_property_add_str(oc, "hw-dtb",
+> >> +                            machine_get_hw_dtb, machine_set_hw_dtb);
+> >> +    object_class_property_set_description(oc, "hw-dtb",
+> >> +                "A device tree binary used to describe the hardware t=
+o QEMU");
+> >
+> > Do the hardware dtbs differ from the ones that are passed to the Linux
+> > kernel? If not, I think you likely could use the existing "dtb"
+> > property for your new feature?
+>
+> They have to - the normal DTB cannot define the whole system because its
+> only concerned with reporting what the kernel can see to the kernel and
+> not defining the whole system including what the firmware sees.
+>
 
-We do not make 'gic-version=max' enable GICv5 here because:
+Yes, Indeed.
+Normal DTB was explored, but there is not enough information to create
+QEMU models from it.
+Thus we need to have a separate device tree.
 
- * the GICv5 architectural spec is still at the EAC level and
-   could have minor changes between now and its final version;
-   only users who specifically want to start working with the
-   GICv5 should select it
- * QEMU's implementation here is still not fully featured,
-   and selecting it instead of GICv3 will mean losing
-   functionality such as MSIs
- * the GICv5 is not backwards compatible with the GICv3/GICv4
-   for system software, so silently "upgrading" an existing
-   command line to GICv5 is just going to break existing guest
-   kernels
+> >
+> > ...
+> >> diff --git a/qemu-options.hx b/qemu-options.hx
+> >> index 33fcfe7ce6..1568f3ce4c 100644
+> >> --- a/qemu-options.hx
+> >> +++ b/qemu-options.hx
+> >> @@ -4518,6 +4518,15 @@ SRST(initrd)
+> >>     ERST
+> >>   +DEF("hw-dtb", HAS_ARG, QEMU_OPTION_hw_dtb, \
+> >> +    "-hw-dtb file    use 'file' as device tree image\n", QEMU_ARCH_AL=
+L)
+> >> +SRST
+> >> +``-hw-dtb file``
+> >> +    Use <file> as a device tree binary (dtb) image used to create the
+> >> +    emulated machine. This dtb will not be passed to the kernel, use =
+-dtb
+> >> +    for that.
+> >> +ERST
+> >
+> > Please don't add any new top level options if it is not really
+> > necessary. We already got too much duplicated logic in QEMU, so we try
+> > to avoid this nowadays. In your case here, it should be fine to simply
+> > configure the hw-dtb via the -machine property.
 
-The last one in particular suggests that even when the emulation
-moves out of "experimental" status we will probably not want to
-change "max".
+Agreed. As for now there is only one user of this hw option, we can move to=
+ the
+arm-generic-fdt machine option itself. I'll move this for the next version.
 
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- docs/system/arm/virt.rst | 19 +++++++++++++++++++
- hw/arm/virt.c            | 11 ++++++++---
- 2 files changed, 27 insertions(+), 3 deletions(-)
+> >
+> >  Thanks,
+> >   Thomas
+>
+> --
+> Alex Benn=C3=A9e
+> Virtualisation Tech Lead @ Linaro
 
-diff --git a/docs/system/arm/virt.rst b/docs/system/arm/virt.rst
-index f8148b5dcf..e38c567279 100644
---- a/docs/system/arm/virt.rst
-+++ b/docs/system/arm/virt.rst
-@@ -161,6 +161,25 @@ gic-version
-     GICv3. This allows up to 512 CPUs.
-   ``4``
-     GICv4. Requires ``virtualization`` to be ``on``; allows up to 317 CPUs.
-+  ``x-5``
-+    GICv5 (experimental). This is an experimental emulation of the GICv5,
-+    based on the EAC release of the GICv5 architecture specification.
-+    Experimental means:
-+
-+    - guest-visible behaviour may change when the final version of
-+      the specification is released and QEMU implements it
-+    - migration support is not yet implemented
-+    - the GICv5 is not exposed to the guest via ACPI tables, only via DTB
-+    - the way the interrupt controller is exposed to the guest and the
-+      command line syntax for enabling it may change
-+
-+    The current implementation supports only an EL1 guest (no EL2 or
-+    EL3 and no Realm support), and does not implement the ITS (no
-+    MSI support).
-+
-+    Note that as the GICv5 is an Armv9 feature, enabling it will
-+    automatically disable support for AArch32 at all exception levels
-+    except for EL0 (userspace).
-   ``host``
-     Use the same GIC version the host provides, when using KVM
-   ``max``
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index 1c684b59b4..ca95cc9f73 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -3195,6 +3195,9 @@ static char *virt_get_gic_version(Object *obj, Error **errp)
-     const char *val;
- 
-     switch (vms->gic_version) {
-+    case VIRT_GIC_VERSION_5:
-+        val = "x-5";
-+        break;
-     case VIRT_GIC_VERSION_4:
-         val = "4";
-         break;
-@@ -3212,7 +3215,9 @@ static void virt_set_gic_version(Object *obj, const char *value, Error **errp)
- {
-     VirtMachineState *vms = VIRT_MACHINE(obj);
- 
--    if (!strcmp(value, "4")) {
-+    if (!strcmp(value, "x-5")) {
-+        vms->gic_version = VIRT_GIC_VERSION_5;
-+    } else if (!strcmp(value, "4")) {
-         vms->gic_version = VIRT_GIC_VERSION_4;
-     } else if (!strcmp(value, "3")) {
-         vms->gic_version = VIRT_GIC_VERSION_3;
-@@ -3224,7 +3229,7 @@ static void virt_set_gic_version(Object *obj, const char *value, Error **errp)
-         vms->gic_version = VIRT_GIC_VERSION_MAX; /* Will probe later */
-     } else {
-         error_setg(errp, "Invalid gic-version value");
--        error_append_hint(errp, "Valid values are 2, 3, 4, host, and max.\n");
-+        error_append_hint(errp, "Valid values are 2, 3, 4, x-5, host, and max.\n");
-     }
- }
- 
-@@ -3792,7 +3797,7 @@ static void virt_machine_class_init(ObjectClass *oc, const void *data)
-                                   virt_set_gic_version);
-     object_class_property_set_description(oc, "gic-version",
-                                           "Set GIC version. "
--                                          "Valid values are 2, 3, 4, host and max");
-+                                          "Valid values are 2, 3, 4, x-5, host and max");
- 
-     object_class_property_add_str(oc, "iommu", virt_get_iommu, virt_set_iommu);
-     object_class_property_set_description(oc, "iommu",
--- 
-2.43.0
 
+--
+BR,
+Ruslan Ruslichenko
 
