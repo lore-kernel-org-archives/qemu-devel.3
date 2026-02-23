@@ -4,63 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7518E98E11
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 09:53:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C803CE98E10
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 09:53:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuScG-0005qD-QJ; Mon, 23 Feb 2026 04:52:36 -0500
+	id 1vuScF-0005ht-Mp; Mon, 23 Feb 2026 04:52:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vuSac-0003EJ-4X
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 04:50:55 -0500
+ id 1vuSaU-0002vn-Dl
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 04:50:47 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vuSaa-0007PR-Fh
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 04:50:53 -0500
+ id 1vuSaS-0007OW-HP
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 04:50:45 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771840251;
+ s=mimecast20190719; t=1771840243;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=3BzHio1y3pT17YOqFFK+PMBjalzrS7rqi2xWt3RdrZk=;
- b=AJzFRJFcKOnVRfBs3WHyc53gs63j/9U44fB19iJlpTYozWEQG0Ujq+02NE8/aGi7G0QZpn
- XwfwORY9ElB/D7HP7JaN/gpgCFp4Bl0CyJkCCON19M1cwLEupQG8MPaAx6RAQljyt2YvFO
- JVhYElF/jZ4PBdq8gl1T2Oi7DoXsSLM=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=7X/MNV4QeRkE7ESVqU7kS01nb2TKxx3gRC5LLeydeXo=;
+ b=byn2CDcVUdU7M2KinY06bVGX2HTiT0N5xb3smqClbNl28/LNUhN+1/DV8kphhN0IwrwD3i
+ GWj21HKhaPHdGe0A+itlUtXho416ZdQqTgBDiTQLdYmic9MKFb3tNYHGQyF/4tTEcN3CQy
+ Eiq8TK+U477zy85oHtnv4ibnnCIIQLg=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-223-euHVnqJtNtyzDFrxqi04dw-1; Mon,
- 23 Feb 2026 04:50:47 -0500
-X-MC-Unique: euHVnqJtNtyzDFrxqi04dw-1
-X-Mimecast-MFC-AGG-ID: euHVnqJtNtyzDFrxqi04dw_1771840246
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-477-aKqH-yHBPuGFOFwrHoJysQ-1; Mon,
+ 23 Feb 2026 04:50:42 -0500
+X-MC-Unique: aKqH-yHBPuGFOFwrHoJysQ-1
+X-Mimecast-MFC-AGG-ID: aKqH-yHBPuGFOFwrHoJysQ_1771840241
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D07241800365; Mon, 23 Feb 2026 09:50:46 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 68062195605F; Mon, 23 Feb 2026 09:50:41 +0000 (UTC)
 Received: from localhost (unknown [10.45.242.25])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id E12811800465; Mon, 23 Feb 2026 09:50:45 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id AA4F930001BE; Mon, 23 Feb 2026 09:50:40 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Gerd Hoffmann <kraxel@redhat.com>
-Subject: [PULL v2 80/85] audio: rework invalid audsettings error
-Date: Mon, 23 Feb 2026 10:46:38 +0100
-Message-ID: <20260223094649.2005118-81-marcandre.lureau@redhat.com>
+Subject: [PULL v2 78/85] audio: replace DEBUG_AUDIO with trace
+Date: Mon, 23 Feb 2026 10:46:36 +0100
+Message-ID: <20260223094649.2005118-79-marcandre.lureau@redhat.com>
 In-Reply-To: <20260223094649.2005118-1-marcandre.lureau@redhat.com>
 References: <20260223094649.2005118-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -89,101 +89,65 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Currently, when given invalid settings, QEMU will print to stderr:
-
-A bug was just triggered in audio_mixeng_backend_open_out
-Save all your work and restart without audio
-I am sorry
-Context:
-audio: frequency=44100 nchannels=0 fmt=S16 endianness=little
-
-Now it will use error_report() and simply report:
-audio: Invalid audio settings: frequency=44100 nchannels=0 fmt=s16 endian=little
-
 Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
 Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- audio/audio_template.h  |  5 +++--
- audio/audio-mixeng-be.c | 41 +++++++----------------------------------
- 2 files changed, 10 insertions(+), 36 deletions(-)
+ audio/audio_template.h  | 10 +++++-----
+ audio/audio-mixeng-be.c |  9 ---------
+ audio/trace-events      |  1 +
+ 3 files changed, 6 insertions(+), 14 deletions(-)
 
 diff --git a/audio/audio_template.h b/audio/audio_template.h
-index e884c8e9b1a..5711f4a26e1 100644
+index c47a2f202f0..e884c8e9b1a 100644
 --- a/audio/audio_template.h
 +++ b/audio/audio_template.h
-@@ -513,8 +513,9 @@ static SW *glue(audio_mixeng_backend_open_, TYPE) (
-     trace_audio_open_in(name, as->freq, as->nchannels, as->fmt);
- #endif
+@@ -556,11 +556,11 @@ static SW *glue(audio_mixeng_backend_open_, TYPE) (
+     sw->callback.fn = callback_fn;
+     sw->callback.opaque = callback_opaque;
  
--    if (audio_bug(__func__, audio_validate_settings(as))) {
--        audio_print_settings (as);
-+    if (audio_validate_settings(as)) {
-+        g_autofree char *str = audsettings_to_string(as);
-+        error_report("audio: Invalid audio settings: %s", str);
-         goto fail;
-     }
+-#ifdef DEBUG_AUDIO
+-    dolog ("%s\n", name);
+-    audio_pcm_print_info ("hw", &sw->hw->info);
+-    audio_pcm_print_info ("sw", &sw->info);
+-#endif
++    trace_audio_voice_pair(G_STRINGIFY(TYPE), name,
++                           AudioFormat_str(sw->hw->info.af),
++                           sw->hw->info.freq, sw->hw->info.nchannels,
++                           AudioFormat_str(sw->info.af),
++                           sw->info.freq, sw->info.nchannels);
+ 
+     return sw;
  
 diff --git a/audio/audio-mixeng-be.c b/audio/audio-mixeng-be.c
-index 7eabb1c2505..bb8c0b56f78 100644
+index 3dd9d17dd25..7eabb1c2505 100644
 --- a/audio/audio-mixeng-be.c
 +++ b/audio/audio-mixeng-be.c
-@@ -101,38 +101,11 @@ void AUD_log (const char *cap, const char *fmt, ...)
-     va_end (ap);
+@@ -620,15 +620,6 @@ static size_t audio_pcm_sw_write(SWVoiceOut *sw, void *buf, size_t buf_len)
+     return total_in * sw->info.bytes_per_frame;
  }
  
--static void audio_print_settings (const struct audsettings *as)
-+static char *audsettings_to_string(const struct audsettings *as)
- {
--    dolog ("frequency=%d nchannels=%d fmt=", as->freq, as->nchannels);
+-#ifdef DEBUG_AUDIO
+-static void audio_pcm_print_info (const char *cap, struct audio_pcm_info *info)
+-{
+-    dolog("%s: %s, freq %d, nchan %d\n",
+-          cap, AudioFormat_str(info->af), info->freq,
+-          info->nchannels);
+-}
+-#endif
 -
--    switch (as->fmt) {
--    case AUDIO_FORMAT_S8:
--        AUD_log (NULL, "S8");
--        break;
--    case AUDIO_FORMAT_U8:
--        AUD_log (NULL, "U8");
--        break;
--    case AUDIO_FORMAT_S16:
--        AUD_log (NULL, "S16");
--        break;
--    case AUDIO_FORMAT_U16:
--        AUD_log (NULL, "U16");
--        break;
--    case AUDIO_FORMAT_S32:
--        AUD_log (NULL, "S32");
--        break;
--    case AUDIO_FORMAT_U32:
--        AUD_log (NULL, "U32");
--        break;
--    case AUDIO_FORMAT_F32:
--        AUD_log (NULL, "F32");
--        break;
--    default:
--        AUD_log (NULL, "invalid(%d)", as->fmt);
--        break;
--    }
--
--    AUD_log (NULL, " endianness=%s\n", as->big_endian ? "big" : "little");
-+    return g_strdup_printf("frequency=%d nchannels=%d fmt=%s endian=%s",
-+                           as->freq, as->nchannels, AudioFormat_str(as->fmt),
-+                           as->big_endian ? "big" : "little");
- }
- 
- static int audio_validate_settings (const struct audsettings *as)
-@@ -1607,9 +1580,9 @@ static CaptureVoiceOut *audio_mixeng_backend_add_capture(
-         return NULL;
-     }
- 
--    if (audio_validate_settings (as)) {
--        dolog ("Invalid settings were passed when trying to add capture\n");
--        audio_print_settings (as);
-+    if (audio_validate_settings(as)) {
-+        g_autofree char *str = audsettings_to_string(as);
-+        error_report("audio: Invalid audio settings when trying to add capture: %s", str);
-         return NULL;
-     }
- 
+ #define DAC
+ #include "audio_template.h"
+ #undef DAC
+diff --git a/audio/trace-events b/audio/trace-events
+index 7a73d6eb84f..ed04792d508 100644
+--- a/audio/trace-events
++++ b/audio/trace-events
+@@ -74,3 +74,4 @@ audio_out_played(size_t played) "played=%zu"
+ # audio_template.h
+ audio_open_out(const char *name, int freq, int nchannels, int fmt) "open %s, freq %d, nchannels %d, fmt %d"
+ audio_open_in(const char *name, int freq, int nchannels, int fmt) "open %s, freq %d, nchannels %d, fmt %d"
++audio_voice_pair(const char *type, const char *name, const char *hw_fmt, int hw_freq, int hw_nchannels, const char *sw_fmt, int sw_freq, int sw_nchannels) "%s: name=%s hw=%s/%d/%d sw=%s/%d/%d"
 -- 
 2.53.0
 
