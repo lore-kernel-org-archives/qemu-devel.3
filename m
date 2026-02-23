@@ -4,63 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2370EA4FC0
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 13:48:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90432EA4FBF
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 13:48:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuWI2-0008OY-Ot; Mon, 23 Feb 2026 08:48:02 -0500
+	id 1vuWII-0008W1-7N; Mon, 23 Feb 2026 08:48:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vuWHm-0008Fl-6w
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 08:47:42 -0500
+ id 1vuWHy-0008P5-A7
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 08:47:55 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vuWHk-0006x1-Kh
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 08:47:41 -0500
+ id 1vuWHw-0006y7-LD
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 08:47:54 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771854459;
+ s=mimecast20190719; t=1771854471;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=LHlqBgh12YKNNRewWHcvCXhGSyIOzkU8EAa1DmmKP+0=;
- b=IgAVXhOj5Uo5ZESTM8V4UMO7WsfP1+6YoYqMylak/yOO7y+sFZOXqhx47by2ZoDbNPnH48
- mvCzoygJzEFhuVMYus3PkWug9wpqYrmylw5mys7mvlR5U5Q9MnmNIF+9ZsByosZHUBMFf8
- udf7DVyTvT3PGVhEoneRkrnjRXPGvMc=
+ bh=ukYPq8MtY8MhpchonEYSa7OftrFfRLjZUE2yTfR+prM=;
+ b=XpYQCUQTHqX6TBlyNlWtEOTIrvCQkyDDf4BTF6ef9KA+MNPLc3NoQ3ak2JcUyu3arENY4G
+ PKW1EqHk3XKiFZSYqNMgN1qmZin/0eWtbK2uzUGniyDO+VIWOy9TYAZUhrGb/28P43l6+6
+ +Dly1LDukM1sa4m/R6fVZIuCswpe2GQ=
 Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-339-0vlF68kuP9-7OjFb3h-2TA-1; Mon,
- 23 Feb 2026 08:47:38 -0500
-X-MC-Unique: 0vlF68kuP9-7OjFb3h-2TA-1
-X-Mimecast-MFC-AGG-ID: 0vlF68kuP9-7OjFb3h-2TA_1771854457
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-139-krQtQECUMGeAa97qxQfOKQ-1; Mon,
+ 23 Feb 2026 08:47:49 -0500
+X-MC-Unique: krQtQECUMGeAa97qxQfOKQ-1
+X-Mimecast-MFC-AGG-ID: krQtQECUMGeAa97qxQfOKQ_1771854468
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 449E1180049D; Mon, 23 Feb 2026 13:47:37 +0000 (UTC)
+ id C4A7A18002FF; Mon, 23 Feb 2026 13:47:48 +0000 (UTC)
 Received: from localhost (unknown [10.45.242.25])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 315401800465; Mon, 23 Feb 2026 13:47:35 +0000 (UTC)
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 30FE219560A2; Mon, 23 Feb 2026 13:47:47 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Gerd Hoffmann <kraxel@redhat.com>, Eduardo Habkost <eduardo@habkost.net>
-Subject: [PULL v3 01/85] audio: remove obsolete/obscure functions
-Date: Mon, 23 Feb 2026 14:46:02 +0100
-Message-ID: <20260223134731.2377432-2-marcandre.lureau@redhat.com>
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
+Subject: [PULL v3 05/85] qemu-options.hx: clarify default audio backend
+ selection
+Date: Mon, 23 Feb 2026 14:46:06 +0100
+Message-ID: <20260223134731.2377432-6-marcandre.lureau@redhat.com>
 In-Reply-To: <20260223134731.2377432-1-marcandre.lureau@redhat.com>
 References: <20260223134731.2377432-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -89,164 +89,63 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-AUD_init_time_stamp_{in,out} and AUD_get_elapsed_usec_{in,out} are only
-used by the adlib device. The result isn't actually being used since
-ADLIB_KILL_TIMERS was set some 20y ago. Let's drop this dead code now.
-
-Drop QEMUAudioTimeStamp as well as reported by Akihiko Odaki.
-
 Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
 Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- audio/audio_template.h                        | 34 -------------------
- include/qemu/audio.h                          | 10 ------
- hw/audio/adlib.c                              | 18 +---------
- .../codeconverter/test_regexps.py             |  1 -
- 4 files changed, 1 insertion(+), 62 deletions(-)
+ qemu-options.hx | 25 ++++++++++++++++++-------
+ 1 file changed, 18 insertions(+), 7 deletions(-)
 
-diff --git a/audio/audio_template.h b/audio/audio_template.h
-index 7a8c431f2d7..1ab3c47fd76 100644
---- a/audio/audio_template.h
-+++ b/audio/audio_template.h
-@@ -569,40 +569,6 @@ bool glue(AUD_is_active_, TYPE)(SW *sw)
-     return sw ? sw->active : 0;
- }
+diff --git a/qemu-options.hx b/qemu-options.hx
+index 33fcfe7ce66..15a6f82043a 100644
+--- a/qemu-options.hx
++++ b/qemu-options.hx
+@@ -896,11 +896,16 @@ DEF("audiodev", HAS_ARG, QEMU_OPTION_audiodev,
+     QEMU_ARCH_ALL)
+ SRST
+ ``-audiodev [driver=]driver,id=id[,prop[=value][,...]]``
+-    Adds a new audio backend driver identified by id. There are global
+-    and driver specific properties. Some values can be set differently
+-    for input and output, they're marked with ``in|out.``. You can set
+-    the input's property with ``in.prop`` and the output's property with
+-    ``out.prop``. For example:
++    Adds a new audio backend driver identified by id.
++
++    If no audio backend is specified, QEMU will attempt to select a
++    default one. The ``-display`` option may influence which backend is
++    selected.
++
++    There are global and driver specific properties. Some values can be
++    set differently for input and output, they're marked with ``in|out.``.
++    You can set the input's property with ``in.prop`` and the output's
++    property with ``out.prop``. For example:
  
--void glue (AUD_init_time_stamp_, TYPE) (SW *sw, QEMUAudioTimeStamp *ts)
--{
--    if (!sw) {
--        return;
--    }
--
--    ts->old_ts = sw->hw->ts_helper;
--}
--
--uint64_t glue (AUD_get_elapsed_usec_, TYPE) (SW *sw, QEMUAudioTimeStamp *ts)
--{
--    uint64_t delta, cur_ts, old_ts;
--
--    if (!sw) {
--        return 0;
--    }
--
--    cur_ts = sw->hw->ts_helper;
--    old_ts = ts->old_ts;
--    /* dolog ("cur %" PRId64 " old %" PRId64 "\n", cur_ts, old_ts); */
--
--    if (cur_ts >= old_ts) {
--        delta = cur_ts - old_ts;
--    } else {
--        delta = UINT64_MAX - old_ts + cur_ts;
--    }
--
--    if (!delta) {
--        return 0;
--    }
--
--    return muldiv64 (delta, sw->hw->info.freq, 1000000);
--}
--
- #undef TYPE
- #undef HW
- #undef SW
-diff --git a/include/qemu/audio.h b/include/qemu/audio.h
-index a92e0b70ef0..a1a64ad340d 100644
---- a/include/qemu/audio.h
-+++ b/include/qemu/audio.h
-@@ -50,10 +50,6 @@ struct AudioBackendClass {
+     ::
  
- typedef struct AudioBackend AudioBackend;
+@@ -2198,8 +2203,11 @@ DEF("display", HAS_ARG, QEMU_OPTION_display,
+     , QEMU_ARCH_ALL)
+ SRST
+ ``-display type``
+-    Select type of display to use. Use ``-display help`` to list the available
+-    display types. Valid values for type are
++    Select type of display to use. This may also influence the default
++    audio backend selection.
++
++    Use ``-display help`` to list the available display types. Valid values
++    for type are
  
--typedef struct QEMUAudioTimeStamp {
--    uint64_t old_ts;
--} QEMUAudioTimeStamp;
--
- bool AUD_backend_check(AudioBackend **be, Error **errp);
+     ``spice-app[,gl=on|off]``
+         Start QEMU as a Spice server and launch the default Spice client
+@@ -2209,6 +2217,9 @@ SRST
+     ``dbus``
+         Export the display over D-Bus interfaces. (Since 7.0)
  
- SWVoiceOut *AUD_open_out (
-@@ -71,9 +67,6 @@ int  AUD_get_buffer_size_out (SWVoiceOut *sw);
- void AUD_set_active_out(SWVoiceOut *sw, bool on);
- bool AUD_is_active_out(SWVoiceOut *sw);
++        If no audio backend is specified and the dbus display backend is
++        specified, the dbus audio backend is used by default.
++
+         The connection is registered with the "org.qemu" name (and queued when
+         already owned).
  
--void     AUD_init_time_stamp_out (SWVoiceOut *sw, QEMUAudioTimeStamp *ts);
--uint64_t AUD_get_elapsed_usec_out (SWVoiceOut *sw, QEMUAudioTimeStamp *ts);
--
- #define AUDIO_MAX_CHANNELS 16
- typedef struct Volume {
-     bool mute;
-@@ -112,9 +105,6 @@ size_t AUD_read (SWVoiceIn *sw, void *pcm_buf, size_t size);
- void AUD_set_active_in(SWVoiceIn *sw, bool on);
- bool AUD_is_active_in(SWVoiceIn *sw);
- 
--void     AUD_init_time_stamp_in (SWVoiceIn *sw, QEMUAudioTimeStamp *ts);
--uint64_t AUD_get_elapsed_usec_in (SWVoiceIn *sw, QEMUAudioTimeStamp *ts);
--
- void audio_cleanup(void);
- 
- typedef struct st_sample st_sample;
-diff --git a/hw/audio/adlib.c b/hw/audio/adlib.c
-index 8b9fe53e17b..efab5107a4c 100644
---- a/hw/audio/adlib.c
-+++ b/hw/audio/adlib.c
-@@ -34,8 +34,6 @@
- 
- #define DEBUG 0
- 
--#define ADLIB_KILL_TIMERS 1
--
- #define ADLIB_DESC "Yamaha YM3812 (OPL2)"
- 
- #if DEBUG
-@@ -71,7 +69,6 @@ struct AdlibState {
-     uint64_t dexp[2];
-     SWVoiceOut *voice;
-     int left, pos, samples;
--    QEMUAudioTimeStamp ats;
-     FM_OPL *opl;
-     PortioList port_list;
- };
-@@ -88,19 +85,7 @@ static void adlib_kill_timers (AdlibState *s)
- 
-     for (i = 0; i < 2; ++i) {
-         if (s->ticking[i]) {
--            uint64_t delta;
--
--            delta = AUD_get_elapsed_usec_out (s->voice, &s->ats);
--            ldebug (
--                "delta = %f dexp = %f expired => %d",
--                delta / 1000000.0,
--                s->dexp[i] / 1000000.0,
--                delta >= s->dexp[i]
--                );
--            if (ADLIB_KILL_TIMERS || delta >= s->dexp[i]) {
--                adlib_stop_opl_timer (s, i);
--                AUD_init_time_stamp_out (s->voice, &s->ats);
--            }
-+            adlib_stop_opl_timer(s, i);
-         }
-     }
- }
-@@ -149,7 +134,6 @@ static void timer_handler (void *opaque, int c, double interval_Sec)
- #endif
- 
-     s->dexp[n] = interval_Sec * 1000000.0;
--    AUD_init_time_stamp_out (s->voice, &s->ats);
- }
- 
- static int write_audio (AdlibState *s, int samples)
-diff --git a/scripts/codeconverter/codeconverter/test_regexps.py b/scripts/codeconverter/codeconverter/test_regexps.py
-index 2b9f5b80111..f92389e9618 100644
---- a/scripts/codeconverter/codeconverter/test_regexps.py
-+++ b/scripts/codeconverter/codeconverter/test_regexps.py
-@@ -202,7 +202,6 @@ def test_struct_re():
-     uint64_t dexp[2];
-     SWVoiceOut *voice;
-     int left, pos, samples;
--    QEMUAudioTimeStamp ats;
-     FM_OPL *opl;
-     PortioList port_list;
- } AdlibState;
 -- 
 2.53.0
 
