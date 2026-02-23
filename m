@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BCEAE98E09
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 08:23:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4DB5E98E0A
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 08:23:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuRDC-0002R1-0A; Mon, 23 Feb 2026 03:22:38 -0500
+	id 1vuRD5-0002He-EX; Mon, 23 Feb 2026 03:22:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vuRD9-0002Nx-Tt
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 03:22:36 -0500
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ id 1vuRD3-0002Dk-0y
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 03:22:29 -0500
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vuRD8-0008LR-0K
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 03:22:35 -0500
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-2aaf9191da3so25834375ad.2
- for <qemu-devel@nongnu.org>; Mon, 23 Feb 2026 00:22:33 -0800 (PST)
+ id 1vuRD1-0008DD-1a
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 03:22:28 -0500
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-2a91215c158so26961705ad.0
+ for <qemu-devel@nongnu.org>; Mon, 23 Feb 2026 00:22:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771834952; x=1772439752; darn=nongnu.org;
+ d=linaro.org; s=google; t=1771834946; x=1772439746; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=m2HI3H4nwt9bAmN3CqANUoXDWOZ0lwHr6G12QgBDepY=;
- b=KsX+Gdi8qT7yFu8wDpsDjqz6D2d/7Ut88wJfYWCYyZD8mniYO4Iss6jFQnhwOsaArT
- 5l4P9YH2aQkVmPpwXo4U2r7ge8zBcP5fwbwZaDzNQs255+Dv1A3JD+aFZez7SZhh1U15
- LIcUPz0UWhdEkYbOM2xdj7DGBcU9SkdCHDQPyanx9SHtHg6GBvN+Lnf1XmYqGvZTdmz9
- 5xnoaij0QG3wljDxmEJ+vbVRiP07onGBFQN3MWcOJ+zwppOmb4bv2dP3A3HtWE8OSScb
- 4CsBOUOtM+R4mSQGEkMI6TbBYrdVnOp5ULVEOx2XaPngrCIjx2M6JpmIm/wSnrl8gd9Z
- e8QA==
+ bh=7svS/Rh77Kfa8iIXf30fKW59Bgc3MJuDhuxENPk//BU=;
+ b=SKvabT0he+0zT8ve4GzO4XYfsa4gH3/nJsF4gZwJcIDYVeAfieJ9QKvAPY6omRzPHJ
+ +cVOTuFJMXhyXSmT0K5O5sIx+iZZmiXHlqZVPkIWy8H8Sq61WgBOtKclL/iNiLJyVID4
+ rj1bVoq23GSimzq1Wl2iEDjoecDIQ7VF5Sfhb0EhoX/ObD9/UlHFPPR0nMOFAyLc8730
+ UcspKSXkvXFxjrkrkBJlDJn5ZDUvJ24CDUVgAflzYMXlus34FzheW6Os1l3zT0HSHQL5
+ Kg8ZSDzNaCEnaoEG846UiTTggRNQNprqzVvGlhxSONCcHi6mlZvqgHTq9exhJMuXdTYP
+ yW4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771834952; x=1772439752;
+ d=1e100.net; s=20230601; t=1771834946; x=1772439746;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=m2HI3H4nwt9bAmN3CqANUoXDWOZ0lwHr6G12QgBDepY=;
- b=WJbX54O3K3n3A7MbVaw3jhcpioko7x8i/C2+i9k5BVwQFeLsjmGUCjtKdYfJKaZJfX
- RADFvl7i8Lm8jCVBsu2zXPQ2WAvDKG+6Mg0AWe6x6u8/qJkV6TgvFh3VQJo7L69l24jr
- w/9ajT4aPsPuTXsWf+G55m3DYKFHysSzLm0vnL0AQGKeCROrJbl8goGHRzcMxOWbLnWk
- aO+uttwR7K75o5I6dM0zQYCNPDfiY+DxN0dIoTAtQXQQ88vEMY9ghuSVZvnDcwZJNwJx
- 2zYtFs0XhH3vK5b8lIGKIY7EYe4YP8y8xvbslRXavwKvXVlulN/INmPjgwYMmJHikxXL
- ll7g==
-X-Gm-Message-State: AOJu0YyfzmxmEJw+/0V1w+vxRaG8tOWdjTkmzNpLFRF69nlmof8uWmff
- 2yt5bSfYWsugEFd6MOdDJ63iV6RBmAaGSghdrFfFKza1IWmT6TeCJ991kQtYja3m7qvsK/Yc/nT
- 4Wl/Dhos=
-X-Gm-Gg: ATEYQzy5ZRPXD0cv7dUayvpiMTv9vRMd2cJbVDVJl0tXG5s5UXoak34hg/kD+Ek7oRI
- 8SUEGXBT2PQ8v4RhGxOC/hjmYZBuWKpcc0GWrBRRqLQk4nrWgtymVxATZcdvK8ZECzYYSvIAEhZ
- v36prMyPedGAtsVVe46tC6KYFr/OndTYOb1TA0voaKUvCQUei+sr5K7CHrcSBc7tx4se3a9R5B2
- rIz22TZGcamVHtykyRJDPl3UnD/ZOUowljeMnkksj4NROn06HsgBN047V9BpGEa3mRe03ezHimI
- 2XFM7mzdgYYR2Rvs5JRxN9zZsRj5BlKZmTSwVlnLra6q8LBCOddZwDZHC+xFV/mF5FZ8RDgg6j0
- D56Ld+J9IFxGnUEvre2futD72oGvYrQeQbQCnWcyGUEnlcrwtNTzlwaDVbfgbMvcTNmxjLqhzge
- EM+BW6pZii40nYzq6850k7dOy7qKXhy7Og/Y4bxRRjfRTbS0JUgO+ZM+trXgNy4EbPwQ==
-X-Received: by 2002:a17:902:d4c8:b0:2ab:3ac6:8d03 with SMTP id
- d9443c01a7336-2ad744e2769mr79314305ad.36.1771834952436; 
- Mon, 23 Feb 2026 00:22:32 -0800 (PST)
+ bh=7svS/Rh77Kfa8iIXf30fKW59Bgc3MJuDhuxENPk//BU=;
+ b=cfwrK9jQmbLfihgTP1fKdmMz85jUwovg6Hb5bvd6V5VeEZSbEPbQChTIcaiTpxpwKt
+ G3K7yp62atkqqTRMs+WMiYLoP027yli4P1ba0D1zr0djW+wZkQ6QuBzT7T9MY42zBymF
+ V6CSdSiD8B3B/l8xupnb8r/nn6G+BSEgWfdXIlwWj/3dce4KSpRinFQX7WbdYwRlHiH0
+ NSdKUmibsJKU2xQ7KS60UKWsKLFjGxNsWTwuXXfd83HeunSkSsbicM4tNDNzye/UKokG
+ n9hyNmhe4CKeXBdCeLBhqjj7UCQcVdmB93Hx6paksUlZWXSBVqduzjFzaP8RYVaGtxXW
+ YaxQ==
+X-Gm-Message-State: AOJu0YwomffG1g/xN0NPo+4mrHEb6gd5nC0RLf5abkzZmfq33hq6W5Cp
+ ORpgpfa4fLovgFG2z8XVtuQbBHDga4TnQKE8j2PhDTVBxXDVgVT8jmZitJSXLIXLZdzkzm6e0Jr
+ 3bYMhxpE=
+X-Gm-Gg: ATEYQzxe6YK3HMOuA1XzMHlJIhFdoctbw5I/EjA4IuOpo9tYiNZCLqtyL9360Y3E9d/
+ mpeBSH1WomeiprUjZ7l8ChRP8p66hNred9bUWmqA12lY3uxsJmN1MQqMyikg3y7OH5EDz48x6uM
+ 5d7iPw7tBdaXLvtYgRF5XG2vVEYjBR5pmyFji217cbWnGVzE/lJW9L9Fv/lAYu+d6ssCZzxfUM6
+ +MCLMMzOb3u6ED6BrraLZ0nqsUtqOTg21uVabmULCQ0XM5ACDk9iEWvRXyWbV5K9X0WYF/HCrIN
+ gqY4IIYAsikaqzuy1UZZ5l684BCfqiQT5voBV1Mg90bRl+/onmFtlHiFm69pWPoJ/GayHeigif+
+ /IGPhGxA1L+qGZPfksm4cKRQ9FvY94C4TPUjmZCdgGv27pad+GkdloRQuv62ogSTsbAlQ7umrpO
+ 2KSptTboihlnSuOmlvFy29hQg0hKSnNbNZ6b2tAM5gL0Gc91VcVoZ4an9vimX1gAm0hA==
+X-Received: by 2002:a17:902:e787:b0:2aa:cfee:a47c with SMTP id
+ d9443c01a7336-2ad7456550emr67358325ad.52.1771834945381; 
+ Mon, 23 Feb 2026 00:22:25 -0800 (PST)
 Received: from stoup.. (123-243-199-74.static.tpgi.com.au. [123.243.199.74])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2ad74f5dd7asm86543625ad.28.2026.02.23.00.22.29
+ d9443c01a7336-2ad74f5dd7asm86543625ad.28.2026.02.23.00.22.22
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 23 Feb 2026 00:22:32 -0800 (PST)
+ Mon, 23 Feb 2026 00:22:25 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: max.chou@sifive.com,
 	chao.liu.zevorn@gmail.com
-Subject: [PATCH v5 8/9] fpu: Add conversion routines for OCP FP8 E4M3
-Date: Mon, 23 Feb 2026 19:21:53 +1100
-Message-ID: <20260223082154.5623-9-richard.henderson@linaro.org>
+Subject: [PATCH v5 6/9] fpu: Add saturate parameter to parts_uncanon
+Date: Mon, 23 Feb 2026 19:21:51 +1100
+Message-ID: <20260223082154.5623-7-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260223082154.5623-1-richard.henderson@linaro.org>
 References: <20260223082154.5623-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x629.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,249 +103,239 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Max Chou <max.chou@sifive.com>
 
+The OCP FP8 conversion operations have a parameter to control
+saturate vs overflow.  Add a parameter, currently always false.
+
 Signed-off-by: Max Chou <max.chou@sifive.com>
-[rth: Split out of a larger patch; adjust overflow detection.]
+[rth: Split out of a larger patch]
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/fpu/softfloat-types.h |  1 +
- include/fpu/softfloat.h       |  4 +++
- fpu/softfloat.c               | 62 +++++++++++++++++++++++++++++++++++
- fpu/softfloat-parts.c.inc     | 45 +++++++++++++++++++++++--
- 4 files changed, 109 insertions(+), 3 deletions(-)
+ fpu/softfloat.c           | 46 +++++++++++++++++++--------------------
+ fpu/softfloat-parts.c.inc | 15 ++++++++-----
+ 2 files changed, 32 insertions(+), 29 deletions(-)
 
-diff --git a/include/fpu/softfloat-types.h b/include/fpu/softfloat-types.h
-index be7e2de6e3..9c84a101e5 100644
---- a/include/fpu/softfloat-types.h
-+++ b/include/fpu/softfloat-types.h
-@@ -122,6 +122,7 @@ typedef uint16_t bfloat16;
- /*
-  * Open Compute Project (OCP) Microscaling Formats
-  */
-+typedef uint8_t float8_e4m3;
- typedef uint8_t float8_e5m2;
- 
- /*
-diff --git a/include/fpu/softfloat.h b/include/fpu/softfloat.h
-index 4385462992..31d3f76d3f 100644
---- a/include/fpu/softfloat.h
-+++ b/include/fpu/softfloat.h
-@@ -193,6 +193,10 @@ float128 uint128_to_float128(Int128, float_status *status);
- | OCP FP8 conversion routines.
- *----------------------------------------------------------------------------*/
- 
-+bfloat16 float8_e4m3_to_bfloat16(float8_e4m3, float_status *status);
-+float8_e4m3 bfloat16_to_float8_e4m3(bfloat16, bool sat, float_status *status);
-+float8_e4m3 float32_to_float8_e4m3(float32, bool sat, float_status *status);
-+
- bfloat16 float8_e5m2_to_bfloat16(float8_e5m2, float_status *status);
- float8_e5m2 bfloat16_to_float8_e5m2(bfloat16, bool sat, float_status *status);
- float8_e5m2 float32_to_float8_e5m2(float32, bool sat, float_status *status);
 diff --git a/fpu/softfloat.c b/fpu/softfloat.c
-index 0dc769283d..6e21882ab2 100644
+index 9d06a1bb59..b3c4104854 100644
 --- a/fpu/softfloat.c
 +++ b/fpu/softfloat.c
-@@ -528,6 +528,8 @@ typedef enum __attribute__((__packed__)) {
-     float_expmax_ieee,
-     /* exp==max is a normal number; no infinity or nan representation. */
-     float_expmax_normal,
-+    /* exp==max, frac==max ? nan : normal; no infinity representation. */
-+    float_expmax_e4m3,
- } FloatFmtExpMaxKind;
+@@ -771,20 +771,20 @@ static void parts128_canonicalize(FloatParts128 *p, float_status *status,
+     PARTS_GENERIC_64_128(canonicalize, A)(A, S, F)
  
- /*
-@@ -572,6 +574,14 @@ typedef struct {
-     .frac_shift     = (-F - 1) & 63,                    \
-     .round_mask     = (1ull << ((-F - 1) & 63)) - 1
+ static void parts64_uncanon_normal(FloatParts64 *p, float_status *status,
+-                                   const FloatFmt *fmt);
++                                   const FloatFmt *fmt, bool saturate);
+ static void parts128_uncanon_normal(FloatParts128 *p, float_status *status,
+-                                    const FloatFmt *fmt);
++                                    const FloatFmt *fmt, bool saturate);
  
-+static const FloatFmt float8_e4m3_params = {
-+    FLOAT_PARAMS(4, 3),
-+    .exp_max_kind = float_expmax_e4m3
-+};
-+
-+/* 110 << frac_shift, with the implicit bit set */
-+#define E4M3_NORMAL_FRAC_MAX  0xe000000000000000ull
-+
- static const FloatFmt float8_e5m2_params = {
-     FLOAT_PARAMS(5, 2)
- };
-@@ -631,6 +641,11 @@ static void unpack_raw64(FloatParts64 *r, const FloatFmt *fmt, uint64_t raw)
-     };
+-#define parts_uncanon_normal(A, S, F) \
+-    PARTS_GENERIC_64_128(uncanon_normal, A)(A, S, F)
++#define parts_uncanon_normal(A, S, F, X) \
++    PARTS_GENERIC_64_128(uncanon_normal, A)(A, S, F, X)
+ 
+ static void parts64_uncanon(FloatParts64 *p, float_status *status,
+-                            const FloatFmt *fmt);
++                            const FloatFmt *fmt, bool saturate);
+ static void parts128_uncanon(FloatParts128 *p, float_status *status,
+-                             const FloatFmt *fmt);
++                             const FloatFmt *fmt, bool saturate);
+ 
+-#define parts_uncanon(A, S, F) \
+-    PARTS_GENERIC_64_128(uncanon, A)(A, S, F)
++#define parts_uncanon(A, S, F, X) \
++    PARTS_GENERIC_64_128(uncanon, A)(A, S, F, X)
+ 
+ static void parts64_add_normal(FloatParts64 *a, FloatParts64 *b);
+ static void parts128_add_normal(FloatParts128 *a, FloatParts128 *b);
+@@ -1699,7 +1699,7 @@ static float16 float16a_round_pack_canonical(FloatParts64 *p,
+                                              float_status *s,
+                                              const FloatFmt *params)
+ {
+-    parts_uncanon(p, s, params);
++    parts_uncanon(p, s, params, false);
+     return float16_pack_raw(p);
  }
  
-+static void QEMU_FLATTEN float8_e4m3_unpack_raw(FloatParts64 *p, float8_e4m3 f)
-+{
-+    unpack_raw64(p, &float8_e4m3_params, f);
-+}
-+
- static void QEMU_FLATTEN float8_e5m2_unpack_raw(FloatParts64 *p, float8_e5m2 f)
+@@ -1712,7 +1712,7 @@ static float16 float16_round_pack_canonical(FloatParts64 *p,
+ static bfloat16 bfloat16_round_pack_canonical(FloatParts64 *p,
+                                               float_status *s)
  {
-     unpack_raw64(p, &float8_e5m2_params, f);
-@@ -693,6 +708,11 @@ static uint64_t pack_raw64(const FloatParts64 *p, const FloatFmt *fmt)
-     return ret;
+-    parts_uncanon(p, s, &bfloat16_params);
++    parts_uncanon(p, s, &bfloat16_params, false);
+     return bfloat16_pack_raw(p);
  }
  
-+static float8_e4m3 QEMU_FLATTEN float8_e4m3_pack_raw(const FloatParts64 *p)
-+{
-+    return pack_raw64(p, &float8_e4m3_params);
-+}
-+
- static float8_e5m2 QEMU_FLATTEN float8_e5m2_pack_raw(const FloatParts64 *p)
+@@ -1726,7 +1726,7 @@ static void float32_unpack_canonical(FloatParts64 *p, float32 f,
+ static float32 float32_round_pack_canonical(FloatParts64 *p,
+                                             float_status *s)
  {
-     return pack_raw64(p, &float8_e5m2_params);
-@@ -1689,6 +1709,13 @@ static const uint16_t rsqrt_tab[128] = {
-  * Pack/unpack routines with a specific FloatFmt.
-  */
- 
-+static void float8_e4m3_unpack_canonical(FloatParts64 *p, float8_e4m3 f,
-+                                         float_status *s)
-+{
-+    float8_e4m3_unpack_raw(p, f);
-+    parts_canonicalize(p, s, &float8_e4m3_params);
-+}
-+
- static void float8_e5m2_unpack_canonical(FloatParts64 *p, float8_e5m2 f,
-                                          float_status *s)
- {
-@@ -1716,6 +1743,14 @@ static void bfloat16_unpack_canonical(FloatParts64 *p, bfloat16 f,
-     parts_canonicalize(p, s, &bfloat16_params);
+-    parts_uncanon(p, s, &float32_params);
++    parts_uncanon(p, s, &float32_params, false);
+     return float32_pack_raw(p);
  }
  
-+static float8_e4m3 float8_e4m3_round_pack_canonical(FloatParts64 *p,
-+                                                    float_status *s,
-+                                                    bool saturate)
-+{
-+    parts_uncanon(p, s, &float8_e4m3_params, saturate);
-+    return float8_e4m3_pack_raw(p);
-+}
-+
- static float8_e5m2 float8_e5m2_round_pack_canonical(FloatParts64 *p,
-                                                     float_status *s,
-                                                     bool saturate)
-@@ -2894,6 +2929,15 @@ static void parts_float_to_float_widen(FloatParts128 *a, FloatParts64 *b,
+@@ -1740,7 +1740,7 @@ static void float64_unpack_canonical(FloatParts64 *p, float64 f,
+ static float64 float64_round_pack_canonical(FloatParts64 *p,
+                                             float_status *s)
+ {
+-    parts_uncanon(p, s, &float64_params);
++    parts_uncanon(p, s, &float64_params, false);
+     return float64_pack_raw(p);
+ }
+ 
+@@ -1789,7 +1789,7 @@ static float64 float64r32_pack_raw(FloatParts64 *p)
+ static float64 float64r32_round_pack_canonical(FloatParts64 *p,
+                                                float_status *s)
+ {
+-    parts_uncanon(p, s, &float32_params);
++    parts_uncanon(p, s, &float32_params, false);
+     return float64r32_pack_raw(p);
+ }
+ 
+@@ -1803,7 +1803,7 @@ static void float128_unpack_canonical(FloatParts128 *p, float128 f,
+ static float128 float128_round_pack_canonical(FloatParts128 *p,
+                                               float_status *s)
+ {
+-    parts_uncanon(p, s, &float128_params);
++    parts_uncanon(p, s, &float128_params, false);
+     return float128_pack_raw(p);
+ }
+ 
+@@ -1851,7 +1851,7 @@ static floatx80 floatx80_round_pack_canonical(FloatParts128 *p,
+     case float_class_normal:
+     case float_class_denormal:
+         if (s->floatx80_rounding_precision == floatx80_precision_x) {
+-            parts_uncanon_normal(p, s, fmt);
++            parts_uncanon_normal(p, s, fmt, false);
+             frac = p->frac_hi;
+             exp = p->exp;
+         } else {
+@@ -1860,7 +1860,7 @@ static floatx80 floatx80_round_pack_canonical(FloatParts128 *p,
+             p64.sign = p->sign;
+             p64.exp = p->exp;
+             frac_truncjam(&p64, p);
+-            parts_uncanon_normal(&p64, s, fmt);
++            parts_uncanon_normal(&p64, s, fmt, false);
+             frac = p64.frac;
+             exp = p64.exp;
+         }
+@@ -2258,7 +2258,7 @@ float16_muladd_scalbn(float16 a, float16 b, float16 c,
+     pr = parts_muladd_scalbn(&pa, &pb, &pc, scale, flags, status);
+ 
+     /* Round before applying negate result. */
+-    parts_uncanon(pr, status, &float16_params);
++    parts_uncanon(pr, status, &float16_params, false);
+     if ((flags & float_muladd_negate_result) && !is_nan(pr->cls)) {
+         pr->sign ^= 1;
      }
- }
+@@ -2283,7 +2283,7 @@ float32_muladd_scalbn(float32 a, float32 b, float32 c,
+     pr = parts_muladd_scalbn(&pa, &pb, &pc, scale, flags, status);
  
-+bfloat16 float8_e4m3_to_bfloat16(float8_e4m3 a, float_status *s)
-+{
-+    FloatParts64 p;
-+
-+    float8_e4m3_unpack_canonical(&p, a, s);
-+    parts_float_to_float(&p, s);
-+    return bfloat16_round_pack_canonical(&p, s);
-+}
-+
- bfloat16 float8_e5m2_to_bfloat16(float8_e5m2 a, float_status *s)
- {
-     FloatParts64 p;
-@@ -2923,6 +2967,15 @@ float64 float16_to_float64(float16 a, bool ieee, float_status *s)
-     return float64_round_pack_canonical(&p, s);
- }
+     /* Round before applying negate result. */
+-    parts_uncanon(pr, status, &float32_params);
++    parts_uncanon(pr, status, &float32_params, false);
+     if ((flags & float_muladd_negate_result) && !is_nan(pr->cls)) {
+         pr->sign ^= 1;
+     }
+@@ -2302,7 +2302,7 @@ float64_muladd_scalbn(float64 a, float64 b, float64 c,
+     pr = parts_muladd_scalbn(&pa, &pb, &pc, scale, flags, status);
  
-+float8_e4m3 float32_to_float8_e4m3(float32 a, bool saturate, float_status *s)
-+{
-+    FloatParts64 p;
-+
-+    float32_unpack_canonical(&p, a, s);
-+    parts_float_to_float(&p, s);
-+    return float8_e4m3_round_pack_canonical(&p, s, saturate);
-+}
-+
- float8_e5m2 float32_to_float8_e5m2(float32 a, bool saturate, float_status *s)
- {
-     FloatParts64 p;
-@@ -2999,6 +3052,15 @@ float32 float64_to_float32(float64 a, float_status *s)
-     return float32_round_pack_canonical(&p, s);
- }
+     /* Round before applying negate result. */
+-    parts_uncanon(pr, status, &float64_params);
++    parts_uncanon(pr, status, &float64_params, false);
+     if ((flags & float_muladd_negate_result) && !is_nan(pr->cls)) {
+         pr->sign ^= 1;
+     }
+@@ -2461,7 +2461,7 @@ float64 float64r32_muladd(float64 a, float64 b, float64 c,
+     pr = parts_muladd_scalbn(&pa, &pb, &pc, 0, flags, status);
  
-+float8_e4m3 bfloat16_to_float8_e4m3(bfloat16 a, bool saturate, float_status *s)
-+{
-+    FloatParts64 p;
-+
-+    bfloat16_unpack_canonical(&p, a, s);
-+    parts_float_to_float(&p, s);
-+    return float8_e4m3_round_pack_canonical(&p, s, saturate);
-+}
-+
- float8_e5m2 bfloat16_to_float8_e5m2(bfloat16 a, bool saturate, float_status *s)
- {
-     FloatParts64 p;
+     /* Round before applying negate result. */
+-    parts_uncanon(pr, status, &float32_params);
++    parts_uncanon(pr, status, &float32_params, false);
+     if ((flags & float_muladd_negate_result) && !is_nan(pr->cls)) {
+         pr->sign ^= 1;
+     }
+@@ -2479,7 +2479,7 @@ bfloat16 QEMU_FLATTEN bfloat16_muladd(bfloat16 a, bfloat16 b, bfloat16 c,
+     pr = parts_muladd_scalbn(&pa, &pb, &pc, 0, flags, status);
+ 
+     /* Round before applying negate result. */
+-    parts_uncanon(pr, status, &bfloat16_params);
++    parts_uncanon(pr, status, &bfloat16_params, false);
+     if ((flags & float_muladd_negate_result) && !is_nan(pr->cls)) {
+         pr->sign ^= 1;
+     }
+@@ -2497,7 +2497,7 @@ float128 QEMU_FLATTEN float128_muladd(float128 a, float128 b, float128 c,
+     pr = parts_muladd_scalbn(&pa, &pb, &pc, 0, flags, status);
+ 
+     /* Round before applying negate result. */
+-    parts_uncanon(pr, status, &float128_params);
++    parts_uncanon(pr, status, &float128_params, false);
+     if ((flags & float_muladd_negate_result) && !is_nan(pr->cls)) {
+         pr->sign ^= 1;
+     }
+@@ -5435,7 +5435,7 @@ static void parts_s390_divide_to_integer(FloatParts64 *a, FloatParts64 *b,
+         /* Round remainder to the target format */
+         *r = *r_precise;
+         status->float_exception_flags = 0;
+-        parts_uncanon(r, status, fmt);
++        parts_uncanon(r, status, fmt, false);
+         r_flags = status->float_exception_flags;
+         r->frac &= (1ULL << fmt->frac_size) - 1;
+         parts_canonicalize(r, status, fmt);
 diff --git a/fpu/softfloat-parts.c.inc b/fpu/softfloat-parts.c.inc
-index 09be686645..61b07307bf 100644
+index 4909ff7418..09be686645 100644
 --- a/fpu/softfloat-parts.c.inc
 +++ b/fpu/softfloat-parts.c.inc
-@@ -242,6 +242,15 @@ static void partsN(canonicalize)(FloatPartsN *p, float_status *status,
-             return;
-         case float_expmax_normal:
-             break;
-+        case float_expmax_e4m3:
-+            if (p->frac_hi == 0b111) {
-+                frac_shl(p, fmt->frac_shift);
-+                p->cls = (parts_is_snan_frac(p->frac_hi, status)
-+                          ? float_class_snan : float_class_qnan);
-+                return;
-+            }
-+            /* otherwise normal */
-+            break;
-         default:
-             g_assert_not_reached();
-         }
-@@ -262,6 +271,21 @@ static void partsN(canonicalize)(FloatPartsN *p, float_status *status,
-  * The saturate parameter controls saturation behavior for formats that
-  * support it -- when true, overflow produces max normal instead of infinity.
+@@ -258,9 +258,12 @@ static void partsN(canonicalize)(FloatPartsN *p, float_status *status,
+  * are FRAC_SHIFT bits that may require rounding at the bottom of the
+  * fraction; these bits will be removed. The exponent will be biased
+  * by EXP_BIAS and must be bounded by [EXP_MAX-1, 0].
++ *
++ * The saturate parameter controls saturation behavior for formats that
++ * support it -- when true, overflow produces max normal instead of infinity.
   */
-+
-+/* Helper for uncanon_normal and uncanon, for FP8 E4M3. */
-+static void partsN(uncanon_e4m3_overflow)(FloatPartsN *p, float_status *s,
-+                                          const FloatFmt *fmt, bool saturate)
-+{
-+    assert(N == 64);
-+    float_raise(float_flag_overflow | float_flag_inexact, s);
-+    if (saturate) {
-+        p->exp = fmt->exp_max;
-+        p->frac_hi = E4M3_NORMAL_FRAC_MAX;
-+    } else {
-+        parts_default_nan(p, s);
-+    }
-+}
-+
  static void partsN(uncanon_normal)(FloatPartsN *p, float_status *s,
-                                    const FloatFmt *fmt, bool saturate)
+-                                   const FloatFmt *fmt)
++                                   const FloatFmt *fmt, bool saturate)
  {
-@@ -360,6 +384,12 @@ static void partsN(uncanon_normal)(FloatPartsN *p, float_status *s,
-                 }
-                 break;
+     const int exp_max = fmt->exp_max;
+     const int frac_shift = fmt->frac_shift;
+@@ -269,7 +272,7 @@ static void partsN(uncanon_normal)(FloatPartsN *p, float_status *s,
+     const uint64_t frac_lsbm1 = round_mask ^ (round_mask >> 1);
+     const uint64_t roundeven_mask = round_mask | frac_lsb;
+     uint64_t inc;
+-    bool overflow_norm = false;
++    bool overflow_norm = saturate;
+     int exp, flags = 0;
  
-+            case float_expmax_e4m3:
-+                if (exp > exp_max || p->frac_hi > E4M3_NORMAL_FRAC_MAX) {
-+                    partsN(uncanon_e4m3_overflow)(p, s, fmt, overflow_norm);
-+                }
-+                break;
-+
-             default:
-                 g_assert_not_reached();
-             }
-@@ -459,9 +489,18 @@ static void partsN(uncanon)(FloatPartsN *p, float_status *s,
-             frac_clear(p);
-             return;
-         case float_class_inf:
--            assert(fmt->exp_max_kind == float_expmax_ieee);
--            p->exp = fmt->exp_max;
--            frac_clear(p);
-+            switch (fmt->exp_max_kind) {
-+            case float_expmax_ieee:
-+                p->exp = fmt->exp_max;
-+                frac_clear(p);
-+                break;
-+            case float_expmax_e4m3:
-+                partsN(uncanon_e4m3_overflow)(p, s, fmt, saturate);
-+                break;
-+            case float_expmax_normal:
-+            default:
-+                g_assert_not_reached();
-+            }
-             return;
-         case float_class_qnan:
-         case float_class_snan:
+     switch (s->float_rounding_mode) {
+@@ -294,11 +297,11 @@ static void partsN(uncanon_normal)(FloatPartsN *p, float_status *s,
+         break;
+     case float_round_up:
+         inc = p->sign ? 0 : round_mask;
+-        overflow_norm = p->sign;
++        overflow_norm |= p->sign;
+         break;
+     case float_round_down:
+         inc = p->sign ? round_mask : 0;
+-        overflow_norm = !p->sign;
++        overflow_norm |= !p->sign;
+         break;
+     case float_round_to_odd:
+         overflow_norm = true;
+@@ -445,10 +448,10 @@ static void partsN(uncanon_normal)(FloatPartsN *p, float_status *s,
+ }
+ 
+ static void partsN(uncanon)(FloatPartsN *p, float_status *s,
+-                            const FloatFmt *fmt)
++                            const FloatFmt *fmt, bool saturate)
+ {
+     if (likely(is_anynorm(p->cls))) {
+-        parts_uncanon_normal(p, s, fmt);
++        parts_uncanon_normal(p, s, fmt, saturate);
+     } else {
+         switch (p->cls) {
+         case float_class_zero:
 -- 
 2.43.0
 
