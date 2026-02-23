@@ -4,122 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CCF4E98E06
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 08:36:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4326DE98E08
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 08:38:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuRPf-0007ya-5N; Mon, 23 Feb 2026 03:35:31 -0500
+	id 1vuRS9-0000Ei-4t; Mon, 23 Feb 2026 03:38:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1vuRPc-0007yA-NY
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 03:35:28 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1vuRRz-0000Dx-SO
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 03:37:55 -0500
+Received: from p-east2-cluster4-host6-snip4-1.eps.apple.com ([57.103.78.202]
+ helo=outbound.st.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1vuRPZ-0001vD-KA
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 03:35:26 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771835723;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=ceGeNNSGKo1PTkpk+4J9sWT/pJvPHE6PrVKzVGMNjhc=;
- b=RPGl9/cdKTuks/xs0dx2iWFh92uEvThtoR30TwNT6FcPNXFgpuG9kZ7MZ2Z3KhGlXIlEdQ
- TKal7NnYrDjXgAB6yfJX18mTXty58lWV1r2zsjgPmRYJyjNQ1RxZuJLhEBECNZjvaYOwzf
- UE0C7THqooDXbuxo8JKjZCfyaZcnVEc=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-263-AulLGjnMMv69nnVN1TKeXA-1; Mon, 23 Feb 2026 03:35:21 -0500
-X-MC-Unique: AulLGjnMMv69nnVN1TKeXA-1
-X-Mimecast-MFC-AGG-ID: AulLGjnMMv69nnVN1TKeXA_1771835721
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4836b7c302fso35294325e9.1
- for <qemu-devel@nongnu.org>; Mon, 23 Feb 2026 00:35:21 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1771835720; cv=none;
- d=google.com; s=arc-20240605;
- b=OmsnJf5QPE4OFzZWhnuPhAMI1ZlrA/zXJT6Qr3DasZ7hoZUA6C3tRlzti4Lmeirasv
- SZw/9Z3dLKGVXCQsMSspxCbuYGMBb/+b1l1g8Ppzx26IOayFq5olDZ6kXqjtDxYqIt5B
- lTrTZ51R0nhxiTO1HPqCDOgjmJYlTtlKsGZ09bYHCVMVmBbSFu+lWJdEHII6sbi43aor
- TbKb+n03NcyHuW0YnB5YmsSwYliDaSOllbkLGHh9Nma/yPdC/5sJaxIgbnUry6ps/N1e
- 6WybEaFCQRTqzSOydVzXDdxkCwfIdZY1zMNJn5KvuhtF+0NzJ00SHCEwYrQ+kwmKHa7K
- x7pg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=ceGeNNSGKo1PTkpk+4J9sWT/pJvPHE6PrVKzVGMNjhc=;
- fh=93f3OhIPXpm67EjvkEZsIznV8lOd4WwUuUiNT0IVshE=;
- b=T9Pzp6mRNC2ukAO1ha6McGxQuVcqKuiWoZrye99ZzG5lDtBi4r4sBGHh7Q3AZoVkV/
- 49J4kGam/z0yqGfIptjbo9bmEXI/wg11qvtiH2DK7CaIyFbZc/qI5VeQEIR3EMa88HhX
- IOq/BMSOmY4WkF2tYOoXeE97J37huOABmYvcxZ7ivFTvf/Cn7d/HQOfkrHTc99MtQEIP
- Tdpth7kzxT5jlVCpuNkkB48BTuRWtf1QeidUKcEu9qNJTjy6BA3L0XG/Lfsj8a5UPprc
- FWSi2MSOW9HGVrVhFu5vpDG/uV+/Rc+g/3tPb2K96K3wONqtgg0MD1ATEeuGXd0ru2yP
- yHHA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1771835720; x=1772440520; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=ceGeNNSGKo1PTkpk+4J9sWT/pJvPHE6PrVKzVGMNjhc=;
- b=QdPmw65Ta5gi8kSIYyR2u5K7LtJFM/t3bcouWgIFNCedsOOEbDifgZWsvSkZCxFjNi
- l9gQkTdSCRK2tPWufsWndwA4pKnZQrst/uHLJRqYDm/E20vRYzrCIT3a0FhhhLcxJWRF
- CcBepG4ZMyi7pKpJHuYuu7W1N1ApxJaCrrMYPGhmMeOFPmZ66LaO4uHFN9wxDsk16el7
- F6+ItBj5lv20Hpl0DW6D9R5dD71DI2bYDubY/XSMsiV7oaQbdGbwLQtXj8wk2BlZR00T
- CRLXBb45UrBg7FK9lkX+NlYvK/PBExvXx8tlinbA5IFBwn8JZsxjwSGzSMmuHXs8Bk63
- 1RXQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771835720; x=1772440520;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ceGeNNSGKo1PTkpk+4J9sWT/pJvPHE6PrVKzVGMNjhc=;
- b=o/64ZtHLGK+lo1Uocc0AtyGL+UjPGQ9Pl5DzGe3XhCIOvJP30kGYaoropmb4fLtA9c
- N2hz89h14DNoSUR+Hx6EXq0ZgezMZ3WBVldHkqdhOvi4OZ5ps9MTwBW3+QkvFiUE+7hp
- HmYhdlaLezgzl5L5VHT1QRnpr8hrX9t5PzlNfIhIQW9bxWJXQwEStzuxo5QP4vwIJVAZ
- jPa6BmlZdHsTdCMVtSOOzX3WEJ+vKsYSVfVNCUXu5ZsFX91fKCQUxmuviAZ0kBpJiA87
- tWwyU1uY+7Mil5ZKSyv7WQkvOzB6sBkkqxGLuwFIszu5fSXipMFJNBmkdt3KjavpUEmS
- hhAw==
-X-Gm-Message-State: AOJu0Yxn7DaTIGb+ZOkKr9HTJ9+QhllHALSIKMeT0uJ3X/XDRSk3kNQy
- gCnW13S8NF7ahLu58OsnMhntQ2Fm1uS3JCOBVvxY16x+yATeF0+3ngY59iTpbxr+7vUTH1L5jUs
- 2+u188v3o5XgGxpGJ1hDR7WESoPmBGxlAVn89HP73Jma73sTuH6rvxPVUvBCUiSuXKmec8I2QsW
- IdijdqO+IQR1iy0A0eUWFU4ciT4j/KWyQ=
-X-Gm-Gg: AZuq6aLFTwd0cGxc2Vf78RyaUaqsOLTU5pv6NJKLP/zS6WKZoDn/JQjEUHAspWtvACR
- s9V3rGkYQIP1dkO/9JEo9vXAjyUwLffc5UShl07nAeyFDNd5TxqvTjAwIk3xhCn51htgXnML172
- MkF4r1YsrZfVB/2sF18OL+96VEmlnMhVo6TvhZRqBxlhJ9PK7tvSaHSL5wNBhNuLLPNNJDK1qPy
- meLliIZ1ekyq3cMsUn7ruFMnTUISaWlJ2sQUigcELqNkN3qT2dJjYN25p1DoxojCUsk
-X-Received: by 2002:a05:600c:450c:b0:480:4be7:4f53 with SMTP id
- 5b1f17b1804b1-483a963d656mr132164595e9.31.1771835720623; 
- Mon, 23 Feb 2026 00:35:20 -0800 (PST)
-X-Received: by 2002:a05:600c:450c:b0:480:4be7:4f53 with SMTP id
- 5b1f17b1804b1-483a963d656mr132164215e9.31.1771835720212; Mon, 23 Feb 2026
- 00:35:20 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1vuRRy-0002CG-A6
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 03:37:55 -0500
+Received: from outbound.st.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-east-1a-60-percent-12 (Postfix) with ESMTPS id
+ 31E3C1800168; Mon, 23 Feb 2026 08:37:48 +0000 (UTC)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; t=1771835873; x=1774427873;
+ bh=7itu/O5CELa9iPuSolCH3YRKKsdLS4pTb1/OCKKFmrA=;
+ h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
+ b=KuOgTakSONpfOg0EiMNahmp1PZHJk5rIFWrtJ4+zj6RVv+cZ1ksqQrpcZJrPlD5veCsZXkUp5OwtQsHfWPvEpgPuXWog3jq3cc6nEAobCkJW6fNobCJ1yCK2kgPOETlTAu+ztz7ksMMySaxdO7ODHKWEMYj4yiTEYL3PzoKd0HWdIzehIlKV1AM+kGZAfKdX0iWb64wavqPIOibDfMAqEssyEcDAjfcnYZ269J/f5t0XcGipyN3+RqxruBErVuaXxZjvmoAkms2WdPGcbGUP8DuAlsOGD3M6+GVYsCisTxA043GTLlASF7CrRVjghTuTOwxcxvGZB6M7XoyO4icklg==
+mail-alias-created-date: 1752046281608
+Received: from localhost.localdomain (unknown [17.42.251.67])
+ by p00-icloudmta-asmtp-us-east-1a-60-percent-12 (Postfix) with ESMTPSA id
+ 1A25118000B5; Mon, 23 Feb 2026 08:37:45 +0000 (UTC)
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+To: qemu-devel@nongnu.org
+Cc: Cameron Esfahani <dirty@apple.com>,
+ Magnus Kulke <magnuskulke@linux.microsoft.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Phil Dennis-Jordan <phil@philjordan.eu>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Wei Liu <wei.liu@kernel.org>, Roman Bolshakov <rbolshakov@ddn.com>,
+ Magnus Kulke <magnus.kulke@linux.microsoft.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Bernhard Beschow <shentey@gmail.com>, qemu-arm@nongnu.org,
+ Mohamed Mediouni <mohamed@unpredictable.fr>,
+ Pedro Barbuda <pbarbuda@microsoft.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>
+Subject: [PATCH v5 04/27] target/i386/emulate: rework string_rep emulation
+Date: Mon, 23 Feb 2026 09:37:10 +0100
+Message-ID: <20260223083734.48533-5-mohamed@unpredictable.fr>
+X-Mailer: git-send-email 2.50.1
+In-Reply-To: <20260223083734.48533-1-mohamed@unpredictable.fr>
+References: <20260223083734.48533-1-mohamed@unpredictable.fr>
 MIME-Version: 1.0
-References: <20260209132303.717784-1-ppandit@redhat.com>
- <aZd7HDcOa3R2wj8r@x1.local>
-In-Reply-To: <aZd7HDcOa3R2wj8r@x1.local>
-From: Prasad Pandit <ppandit@redhat.com>
-Date: Mon, 23 Feb 2026 14:05:02 +0530
-X-Gm-Features: AaiRm50db3Qy1MptvMsxRj9jhADcrTC991aY4zXX6GsfOneqZXttH-odluYf5oc
-Message-ID: <CAE8KmOzs7+pTGYjOc5AA-5rukwOzpEJepmyVCVYSr=bYy+AHpA@mail.gmail.com>
-Subject: Re: [PATCH v1] migration: introduce MIGRATION_STATUS_FAILING
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, farosas@suse.de, 
- Prasad Pandit <pjp@fedoraproject.org>, Eric Blake <eblake@redhat.com>, 
- Markus Armbruster <armbru@redhat.com>, Juraj Marcin <jmarcin@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=ppandit@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -4
-X-Spam_score: -0.5
-X-Spam_bar: /
-X-Spam_report: (-0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.798, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.79,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-GUID: NefzN70ZlL6Rnq_K8K5B1KJ3EVfllTcZ
+X-Authority-Info-Out: v=2.4 cv=FuQIPmrq c=1 sm=1 tr=0 ts=699c11df
+ cx=c_apl:c_apl_out:c_pps a=YrL12D//S6tul8v/L+6tKg==:117
+ a=YrL12D//S6tul8v/L+6tKg==:17 a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22 a=6_-HZhw-fp-CqYksV2EA:9
+X-Proofpoint-ORIG-GUID: NefzN70ZlL6Rnq_K8K5B1KJ3EVfllTcZ
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjIzMDA3NiBTYWx0ZWRfX/uycO2ZU5TTH
+ UBKc8P1olTHk22RtARjXsuSl5oEKsPriQAaQZKi8a66loEujzUMPlS7KDx1amaTM2i7BOsNt/OP
+ dIkMiDkVZ4ZEP880vxJVmB6ch+rqF73WNfNaUuDHoIBcPxO/8ZIY/Kaw8vgNzs+sEfEnuyHH/2H
+ 040T3szS1X6bZ3EmI8d41Krz5Oa7mw9wjdf1CJl96qmm4V8s66Idwr+DNsIWuO2RLIlBhQUTZMZ
+ gvsaggyeKAyRrmt2cMMaBA2Q2hYqC9Kj8KiYRbOiW+GYtfWTMVU87uKeHTUWHwi9AU9xXZfEmzn
+ THWMnJh6REDUZ4FVPbzNPy12hYnC3oUr/9sx7JcmD7Kw+gSNMWAxGvPxMdn32U=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-02-23_01,2026-02-20_04,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0
+ spamscore=0 suspectscore=0 adultscore=0
+ clxscore=1030 mlxlogscore=870
+ bulkscore=0 mlxscore=0 lowpriorityscore=0 phishscore=0 classifier=spam
+ authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
+ definitions=main-2602230076
+X-JNJ: AAAAAAAB+NMK96lWwLstnPjkwfOEP1/cEaebUSAu5fOmz7tJD0rpkUna2eNcEin12OGX8UyBieTJzKh+xWWn4TAIg2+SNN7pCYhvfXOYfFNG0Uz3T4ZgSw7qtoAPhKVyRRnUe1xuXZvW4bbyPDAR1MSs2POFTfG4O4DQkpLpjkjqG9DN8DJQgtq8CJ+q3HR72HHfuPmHnXNlnJn3UlrHoHnSbzKwCxOWiyLASX4mGvNbwUKO+w8fAAVDJmW9uX2itTmC0deaOqjW3VTs4MWvKr6j08ieU+Vr830VLmsZ/hbxvy5XDVido2dsocs1yQtFS+KM9TMOHVdVmmy5EvupIwpBpMRYHfKnRKCfunhSafhqpQ+JWV+JUedWA/VP7dojBRMQK0T8O2e5tq8FQtV0J0Tg+2pK7LbqEFhBrutmsDPb1or9xh/yN2jARzTuM6V5wJqqNro7rVfuTMEODki+qVKwPrZ2jhbsxAlRINMONDCoQ2NRL8JUA1pDl9ast6dA2TugNG5ZG/N5Cx+cykA08LBduaLVlOXtpIkmiqoFV+5aO1YFCthVglenNNR2mt9Jg2uej/QuggddGaCHm3as9lBjE4zWvf6QFQZ3/HrgACbf9K2TXuJ1j/26SwFFFIc+M3IJ2eZbqhOf0Ak2lNS/nuCMFRNNt1b6O8xBDad00a2Ht+J6duAf6Tko70d/CyIFcS6Sp05VDIxg9utKnB9txfuDYJSQ8vFwbTVTbTkR8UZFM34ANDa4tfZM8O3BF2RrOEDwlEFNRXgeSbmmnvKPxJ6pW2M9HsYCE2KpIn2MzuDjtg==
+Received-SPF: pass client-ip=57.103.78.202;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.st.icloud.com
+X-Spam_score_int: -11
+X-Spam_score: -1.2
+X-Spam_bar: -
+X-Spam_report: (-1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.798,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.79, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -135,26 +104,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 20 Feb 2026 at 02:35, Peter Xu <peterx@redhat.com> wrote:
-> Thanks for the lists, they all look correct to me.
-> I only have one trivial nitpick below,
-> > --- a/qapi/migration.json
-> > +++ b/qapi/migration.json
-> > @@ -158,7 +158,9 @@
-> >  #
-> >  # @completed: migration is finished.
-> >  #
-> > -# @failed: some error occurred during migration process.
-> > +# @failing: error occurred during migration, clean-up underway.
->
-> Let's add "(since 11.0)" for new status.
->
-> If you fix the qapi doc, feel free to add:
->
-> Reviewed-by: Peter Xu <peterx@redhat.com>
-
-* Okay, will do. Thank you.
+Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
 ---
-  - Prasad
+ target/i386/emulate/x86_emu.c | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
+
+diff --git a/target/i386/emulate/x86_emu.c b/target/i386/emulate/x86_emu.c
+index 4409f7bc13..bf96fe06b4 100644
+--- a/target/i386/emulate/x86_emu.c
++++ b/target/i386/emulate/x86_emu.c
+@@ -466,18 +466,25 @@ static inline void string_increment_reg(CPUX86State *env, int reg,
+     write_reg(env, reg, val, decode->addressing_size);
+ }
+ 
++static inline int get_ZF(CPUX86State *env) {
++    return env->cc_dst ? 0 : CC_Z;
++}
++
+ static inline void string_rep(CPUX86State *env, struct x86_decode *decode,
+                               void (*func)(CPUX86State *env,
+                                            struct x86_decode *ins), int rep)
+ {
+     target_ulong rcx = read_reg(env, R_ECX, decode->addressing_size);
+-    while (rcx--) {
++
++    while (rcx != 0) {
++        bool is_cmps_or_scas = decode->cmd == X86_DECODE_CMD_CMPS || decode->cmd == X86_DECODE_CMD_SCAS;
+         func(env, decode);
++        rcx--;
+         write_reg(env, R_ECX, rcx, decode->addressing_size);
+-        if ((PREFIX_REP == rep) && !env->cc_dst) {
++        if ((PREFIX_REP == rep) && !get_ZF(env) && is_cmps_or_scas) {
+             break;
+         }
+-        if ((PREFIX_REPN == rep) && env->cc_dst) {
++        if ((PREFIX_REPN == rep) && get_ZF(env)&& is_cmps_or_scas) {
+             break;
+         }
+     }
+-- 
+2.50.1 (Apple Git-155)
 
 
