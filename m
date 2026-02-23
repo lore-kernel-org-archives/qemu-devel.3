@@ -4,40 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FD9DEC1126
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 20:26:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04075EC1130
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 20:26:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vucVB-0003fd-3a; Mon, 23 Feb 2026 15:25:57 -0500
+	id 1vucV4-0003Kb-GS; Mon, 23 Feb 2026 15:25:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <heifetz@yandex-team.com>)
- id 1vucV0-0003Fz-Ut
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 15:25:47 -0500
-Received: from forwardcorp1d.mail.yandex.net
- ([2a02:6b8:c41:1300:1:45:d181:df01])
+ id 1vucUl-000388-0R
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 15:25:33 -0500
+Received: from forwardcorp1b.mail.yandex.net
+ ([2a02:6b8:c02:900:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <heifetz@yandex-team.com>)
- id 1vucUq-0002Q5-FH
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 15:25:41 -0500
+ id 1vucUh-0002Ny-0I
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 15:25:30 -0500
 Received: from mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
  [IPv6:2a02:6b8:c0c:bf1f:0:640:c739:0])
- by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id E079982FAE;
- Mon, 23 Feb 2026 23:25:33 +0300 (MSK)
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 04E938E410;
+ Mon, 23 Feb 2026 23:25:16 +0300 (MSK)
 Received: from heifetz-lin.yandex-team.ru (unknown [2a02:6bf:8080:12d::1:2c])
  by mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
- (smtpcorp/Yandex) with ESMTPSA id CPmvPN6Ap8c0-iKaPnRDF; 
- Mon, 23 Feb 2026 23:25:33 +0300
+ (smtpcorp/Yandex) with ESMTPSA id CPmvPN6Ap8c0-f5FUH7Xe; 
+ Mon, 23 Feb 2026 23:25:15 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.com;
- s=default; t=1771878333;
- bh=HUFhgKVNj/LZH5vB4eAuPYv3xept63cXyT7ucevHwAg=;
- h=Message-Id:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=0t0ZBXH4W/jCZ6G2A+P7koli0PUsLHu7uDBqL4LnwF2askcCq+7p2W/BcszVAois7
- OyxtnJ0tQZ3m8flTdFAzG2ZAQXB945nK7br/9fiXix9LNrbfVL0neI/fAeHBzSzTCH
- bz99vtAFzEYCPNlSU6W/+V6K7MSY0Cp9gW/Hny1o=
+ s=default; t=1771878315;
+ bh=VPml7AaDRpzOtpkQ0HhxWkUVk5Hf3ytuAQbBABOWWks=;
+ h=Message-Id:Date:Cc:Subject:To:From;
+ b=ljajALOKy8BUuL8ZMewFZ2i3aSZa4/HvlHULdc8f8tVu31vXF7Nr8EXFpeKtjiL9q
+ Pxrlb73Qf+vGbJ7jaW7MYB9wWc4YI5YyVyhEcRFHQwL7b2iLg2cy5pk5Srr4B2E8Rs
+ 0qELGGOUEJDV+gpf8XyCOZr3gTsNlS22T/88O7g4=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.com
 From: Sergei Heifetz <heifetz@yandex-team.com>
@@ -56,17 +56,15 @@ Cc: Gerd Hoffmann <kraxel@redhat.com>,
  "Michael S. Tsirkin" <mst@redhat.com>,
  Markus Armbruster <armbru@redhat.com>,
  "Dr. David Alan Gilbert" <dave@treblig.org>
-Subject: [PATCH v2 09/10] audio: do not build audio-related sources with
- --disable-audio
-Date: Tue, 24 Feb 2026 01:25:11 +0500
-Message-Id: <20260223202512.1308205-10-heifetz@yandex-team.com>
+Subject: [PATCH v2 00/10] add build option to disable audio subsystem
+Date: Tue, 24 Feb 2026 01:25:02 +0500
+Message-Id: <20260223202512.1308205-1-heifetz@yandex-team.com>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260223202512.1308205-1-heifetz@yandex-team.com>
-References: <20260223202512.1308205-1-heifetz@yandex-team.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:6b8:c41:1300:1:45:d181:df01;
- envelope-from=heifetz@yandex-team.com; helo=forwardcorp1d.mail.yandex.net
+Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
+ envelope-from=heifetz@yandex-team.com; helo=forwardcorp1b.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -88,224 +86,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When QEMU is configured with `--disable-audio`, do not build any
-audio-related sources.
+This series adds a compile-time option to disable building
+audio-related sources (mostly, files under `audio/` and `hw/audio/`).
+It adds `--disable-audio` and `--enable-audio` options to the
+`configure` script. Audio remains enabled by default, and the changes are
+harmless in that case.
 
-- audio/meson.build and replay/meson.build:
-  Exclude audio-related sources when audio is disabled.
+When audio is disabled, it may not be possible to build a number of
+devices and machines. This is expected, and can be addressed on a
+case-by-case basis if needed. For now, this is done only for the
+PC Speaker (PCSPK).
 
-- audio/audio-stub.c:
-  Provide a minimal set of straightforward stubs.
+This feature may be useful in production environments which only use a
+specific subset of QEMU’s functionality and, in particular, do not need
+the audio subsystem. In such environments it is generally beneficial to
+avoid building unused code, for both security and maintenance reasons
+(for example, to satisfy various static code analysers).
 
-- replay/replay-audio-stub.c:
-  Move the existing stubs from replay/stubs-system.c into a separate
-  file.
+Changes since v1:
+- Rebased onto the master branch (in particular, onto the changes from the
+  large series submitted by Marc-André Lureau).
+- D-Bus is now handled differently when audio is disabled: instead of
+  interrupting initialisation, we simply don’t initialise the audio
+  interface.
+- Incorporated a few changes suggested by Paolo Bonzini and Thomas Huth.
+  The main ones are:
+  - Cleaned up the PCSPK changes (removed redundant ifdefs and the
+    `audio_be` field).
+  - Removed the HMP commands rather than stubbing them out.
+  - Replaced the `configure` change with a change in
+    `scripts/meson-buildoptions.sh`.
+  - Removed `qdev_prop_audiodev` in `hw/core/qdev-properties-system.c`
+    rather than stubbing out `audio_be_get_id`.
+  (Here "removed" means adding an appropriate ifdef.)
 
-- qapi/audio.json:
-  Remove the QMP `query-audiodevs` command.
+Sergei Heifetz (10):
+  audio: add `audio` build option for meson and Kconfig
+  ui/vnc: disable audio feature when configured with --disable-audio
+  tests/qtest: remove -audio none when configured with --disable-audio
+  hw/audio/pcspk: change PCSPK behaviour with --disable-audio
+  Kconfig: add AUDIO dependency to audio-related devices
+  system/vl: remove audio and audiodev options when audio is disabled
+  ui/dbus: run without Audio interface when audio is disabled
+  tests/audio: do not compile if audio is disabled
+  audio: do not build audio-related sources with --disable-audio
+  meson.build: ignore audio drivers when configured with --disable-audio
 
-- hmp-commands*.hx:
-  Remove the HMP `info capture`, `stopcapture` and `wavcapture`
-  commands.
-
-Signed-off-by: Sergei Heifetz <heifetz@yandex-team.com>
----
- audio/audio-stub.c               | 22 ++++++++++++++++++++++
- audio/meson.build                |  5 +++++
- hmp-commands-info.hx             |  2 ++
- hmp-commands.hx                  |  2 ++
- hw/core/qdev-properties-system.c |  2 ++
- qapi/audio.json                  |  3 ++-
- replay/meson.build               |  9 ++++++++-
- replay/replay-audio-stub.c       | 21 +++++++++++++++++++++
- replay/stubs-system.c            | 12 ------------
- 9 files changed, 64 insertions(+), 14 deletions(-)
+ Kconfig.host                     |  3 ++
+ audio/audio-stub.c               | 22 +++++++++
+ audio/meson.build                |  5 ++
+ hmp-commands-info.hx             |  2 +
+ hmp-commands.hx                  |  2 +
+ hw/audio/Kconfig                 | 21 ++++----
+ hw/audio/pcspk.c                 | 12 ++++-
+ hw/core/qdev-properties-system.c |  2 +
+ hw/i386/pc.c                     |  2 +
+ hw/usb/Kconfig                   |  2 +-
+ meson.build                      | 83 ++++++++++++++++++--------------
+ meson_options.txt                |  3 ++
+ qapi/audio.json                  |  3 +-
+ replay/meson.build               |  9 +++-
+ replay/replay-audio-stub.c       | 21 ++++++++
+ replay/stubs-system.c            | 12 -----
+ scripts/meson-buildoptions.sh    |  3 ++
+ system/vl.c                      |  6 +++
+ tests/audio/meson.build          |  2 +-
+ tests/qtest/libqtest.c           |  2 +
+ ui/dbus.c                        |  2 +
+ ui/vnc.c                         | 31 ++++++++++--
+ 22 files changed, 186 insertions(+), 64 deletions(-)
  create mode 100644 audio/audio-stub.c
  create mode 100644 replay/replay-audio-stub.c
 
-diff --git a/audio/audio-stub.c b/audio/audio-stub.c
-new file mode 100644
-index 0000000000..f58f88cd83
---- /dev/null
-+++ b/audio/audio-stub.c
-@@ -0,0 +1,22 @@
-+/*
-+ * Stub for audio.c
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qapi/qapi-commands-audio.h"
-+#include "qemu/audio.h"
-+#include "qapi/error.h"
-+
-+void audio_cleanup(void) {}
-+
-+AudioBackend *audio_be_by_name(const char *name, Error **errp)
-+{
-+  error_setg(errp, "audio disabled");
-+  return NULL;
-+}
-+
-+void audio_init_audiodevs(void) {}
-+
-+void audio_create_default_audiodevs(void) {}
-diff --git a/audio/meson.build b/audio/meson.build
-index 0e33b6f983..19d43dc315 100644
---- a/audio/meson.build
-+++ b/audio/meson.build
-@@ -1,4 +1,9 @@
- audio_ss = ss.source_set()
-+if not have_audio
-+  audio_ss.add(files('audio-stub.c'))
-+  subdir_done()
-+endif
-+
- audio_ss.add(files(
-   'audio.c',
-   'audio-be.c',
-diff --git a/hmp-commands-info.hx b/hmp-commands-info.hx
-index 74c741f80e..a959479024 100644
---- a/hmp-commands-info.hx
-+++ b/hmp-commands-info.hx
-@@ -364,6 +364,7 @@ SRST
- ERST
- 
- /* BEGIN deprecated */
-+#ifdef CONFIG_AUDIO
-     {
-         .name       = "capture",
-         .args_type  = "",
-@@ -376,6 +377,7 @@ SRST
-   ``info capture``
-     Show capture information (deprecated).
- ERST
-+#endif
- /* END deprecated */
- 
-     {
-diff --git a/hmp-commands.hx b/hmp-commands.hx
-index 5cc4788f12..e8b8175bb9 100644
---- a/hmp-commands.hx
-+++ b/hmp-commands.hx
-@@ -765,6 +765,7 @@ SRST
- ERST
- 
- /* BEGIN deprecated */
-+#ifdef CONFIG_AUDIO
-     {
-         .name       = "wavcapture",
-         .args_type  = "path:F,audiodev:s,freq:i?,bits:i?,nchannels:i?",
-@@ -802,6 +803,7 @@ SRST
- 
-   Deprecated.
- ERST
-+#endif
- /* END deprecated */
- 
-     {
-diff --git a/hw/core/qdev-properties-system.c b/hw/core/qdev-properties-system.c
-index a402321f42..8679a71b53 100644
---- a/hw/core/qdev-properties-system.c
-+++ b/hw/core/qdev-properties-system.c
-@@ -483,6 +483,7 @@ const PropertyInfo qdev_prop_netdev = {
- };
- 
- 
-+#ifdef CONFIG_AUDIO
- /* --- audiodev --- */
- static void get_audiodev(Object *obj, Visitor *v, const char* name,
-                          void *opaque, Error **errp)
-@@ -519,6 +520,7 @@ const PropertyInfo qdev_prop_audiodev = {
-     .get = get_audiodev,
-     .set = set_audiodev,
- };
-+#endif
- 
- bool qdev_prop_set_drive_err(DeviceState *dev, const char *name,
-                              BlockBackend *value, Error **errp)
-diff --git a/qapi/audio.json b/qapi/audio.json
-index 2df87b9710..28fda7c8ac 100644
---- a/qapi/audio.json
-+++ b/qapi/audio.json
-@@ -540,4 +540,5 @@
- # Since: 8.0
- ##
- { 'command': 'query-audiodevs',
--  'returns': ['Audiodev'] }
-+  'returns': ['Audiodev'],
-+  'if': 'CONFIG_AUDIO' }
-diff --git a/replay/meson.build b/replay/meson.build
-index 4b4175e8dd..dc2e94e897 100644
---- a/replay/meson.build
-+++ b/replay/meson.build
-@@ -7,7 +7,14 @@ system_ss.add(when: 'CONFIG_TCG', if_true: files(
-   'replay-char.c',
-   'replay-snapshot.c',
-   'replay-net.c',
--  'replay-audio.c',
-   'replay-random.c',
-   'replay-debugging.c',
- ), if_false: files('stubs-system.c'))
-+
-+if have_audio
-+  system_ss.add(when: 'CONFIG_TCG',
-+  if_true: files('replay-audio.c'),
-+  if_false: files('replay-audio-stub.c'))
-+else
-+  system_ss.add(files('replay-audio-stub.c'))
-+endif
-diff --git a/replay/replay-audio-stub.c b/replay/replay-audio-stub.c
-new file mode 100644
-index 0000000000..b3da8e1558
---- /dev/null
-+++ b/replay/replay-audio-stub.c
-@@ -0,0 +1,21 @@
-+/*
-+ * Stub for replay-audio.c
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "system/replay.h"
-+
-+void replay_audio_in_start(size_t *nsamples)
-+{
-+}
-+void replay_audio_in_sample_lr(uint64_t *left, uint64_t *right)
-+{
-+}
-+void replay_audio_in_finish(void)
-+{
-+}
-+void replay_audio_out(size_t *played)
-+{
-+}
-diff --git a/replay/stubs-system.c b/replay/stubs-system.c
-index b2c52bc404..454415ae8e 100644
---- a/replay/stubs-system.c
-+++ b/replay/stubs-system.c
-@@ -15,18 +15,6 @@ void replay_input_sync_event(void)
- void replay_add_blocker(const char *feature)
- {
- }
--void replay_audio_in_start(size_t *nsamples)
--{
--}
--void replay_audio_in_sample_lr(uint64_t *left, uint64_t *right)
--{
--}
--void replay_audio_in_finish(void)
--{
--}
--void replay_audio_out(size_t *played)
--{
--}
- void replay_breakpoint(void)
- {
- }
 -- 
 2.34.1
 
