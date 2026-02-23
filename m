@@ -4,64 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C709EA4FC1
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 13:56:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06DEAEA4FC1
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 13:56:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuWJz-0003Jn-2s; Mon, 23 Feb 2026 08:49:59 -0500
+	id 1vuWJg-0003FO-74; Mon, 23 Feb 2026 08:49:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vuWJ2-0001Dq-JK
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 08:49:04 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1vuWHz-0008Pl-H5
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 08:47:58 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vuWJ1-000775-8K
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 08:49:00 -0500
+ id 1vuWHw-0006y1-KQ
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 08:47:55 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771854538;
+ s=mimecast20190719; t=1771854470;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=TqhGjBY+mC3y4OSdljPQ85F3Z7Hx6fbG+VByjEnt370=;
- b=TmNOtAdetsFOBp17v8PitxF0r6vAX9ckI9YvA2ujE/MSuhZ7mLJf1FOOrP/RPak+aWlctT
- WOpZcDksxpVNXApjhxwMED7vPkEZRmL7wvxVKlTKHYdRiXODtubJ+sT/toKGogHgSEdTSH
- QikJvgH/JnjXB11/z9xohgBxT71X1YQ=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=ujWq/rwNALQFkeirBbxCFeLO6/J9v14zN5YQDxoVzL8=;
+ b=SEWgjNbUxuZnIlst+lJoSrT7c2b2YNI6EjXbKoKfeH3kct75Q7XGF+W8+TgrMcSvGyiiNe
+ Qn4oUMEY562stFC6EWNW4OupLgLNwlMEssdWpNRw7wLbLzk0YSMvvnjxcm+k0TtqsdzFvw
+ OinV51LaMulw4SUFU0y8We/KzdoIkOI=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-633-1xFkVo6XNyGhITzt5xtmuQ-1; Mon,
- 23 Feb 2026 08:48:57 -0500
-X-MC-Unique: 1xFkVo6XNyGhITzt5xtmuQ-1
-X-Mimecast-MFC-AGG-ID: 1xFkVo6XNyGhITzt5xtmuQ_1771854536
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-682-tFj2u4q6O6acPWAnVpka3Q-1; Mon,
+ 23 Feb 2026 08:47:47 -0500
+X-MC-Unique: tFj2u4q6O6acPWAnVpka3Q-1
+X-Mimecast-MFC-AGG-ID: tFj2u4q6O6acPWAnVpka3Q_1771854466
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 84A91195608D; Mon, 23 Feb 2026 13:48:56 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 408CC18002C4; Mon, 23 Feb 2026 13:47:46 +0000 (UTC)
 Received: from localhost (unknown [10.45.242.25])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 8A0A719560A2; Mon, 23 Feb 2026 13:48:55 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 8999C3000C26; Mon, 23 Feb 2026 13:47:45 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Gerd Hoffmann <kraxel@redhat.com>
-Subject: [PULL v3 30/85] audio: keep a strong reference on the backend
-Date: Mon, 23 Feb 2026 14:46:31 +0100
-Message-ID: <20260223134731.2377432-31-marcandre.lureau@redhat.com>
+Subject: [PULL v3 04/85] audio/dbus: make "dbus" the default backend when
+ using -display dbus
+Date: Mon, 23 Feb 2026 14:46:05 +0100
+Message-ID: <20260223134731.2377432-5-marcandre.lureau@redhat.com>
 In-Reply-To: <20260223134731.2377432-1-marcandre.lureau@redhat.com>
 References: <20260223134731.2377432-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -1
@@ -69,7 +70,7 @@ X-Spam_score: -0.2
 X-Spam_bar: /
 X-Spam_report: (-0.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1.179, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.717,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -89,71 +90,118 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Since we are going to convert audio_driver-based backends, we need to
-properly handle reference counting to allow for a different order of
-class finalization (for example, pulse class before base driver class).
+Set "using_dbus_display" during early_dbus_init(), so that we can try to
+create the "dbus" audio backend by default from audio_prio_list.
 
+This makes dbus audio work by default when using an audio device,
+without having to setup and wire up the -audiodev manually.
+
+The added FIXME is addressed in the following commits.
+
+Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
 Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- audio/audio_template.h | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ audio/audio.c     |  3 +++
+ audio/dbusaudio.c |  8 +++++++-
+ ui/dbus.c         | 22 +++++++++++++++++-----
+ 3 files changed, 27 insertions(+), 6 deletions(-)
 
-diff --git a/audio/audio_template.h b/audio/audio_template.h
-index a1f78d8748b..512abbfe22f 100644
---- a/audio/audio_template.h
-+++ b/audio/audio_template.h
-@@ -231,6 +231,7 @@ static void glue (audio_pcm_hw_gc_, TYPE) (HW **hwp)
-         glue(hw->pcm_ops->fini_, TYPE) (hw);
-         glue(s->nb_hw_voices_, TYPE) += 1;
-         glue(audio_pcm_hw_free_resources_ , TYPE) (hw);
-+        object_unref(hw->s);
-         g_free(hw);
-         *hwp = NULL;
-     }
-@@ -287,7 +288,7 @@ static HW *glue(audio_pcm_hw_add_new_, TYPE)(AudioMixengBackend *s,
-      * is guaranteed to be != 0. See the audio_init_nb_voices_* functions.
-      */
-     hw = g_malloc0(glue(drv->voice_size_, TYPE));
--    hw->s = s;
-+    hw->s = AUDIO_MIXENG_BACKEND(object_ref(s));
-     hw->pcm_ops = drv->pcm_ops;
+diff --git a/audio/audio.c b/audio/audio.c
+index a218570a4f4..9563583cd1e 100644
+--- a/audio/audio.c
++++ b/audio/audio.c
+@@ -58,6 +58,9 @@
+     that we generate the list.
+ */
+ const char *audio_prio_list[] = {
++#ifdef CONFIG_GIO
++    "dbus",
++#endif
+     "spice",
+     CONFIG_AUDIO_DRIVERS
+     "none",
+diff --git a/audio/dbusaudio.c b/audio/dbusaudio.c
+index d729a810aa6..1fe7c4ed647 100644
+--- a/audio/dbusaudio.c
++++ b/audio/dbusaudio.c
+@@ -32,6 +32,7 @@
+ #endif
  
-     QLIST_INIT (&hw->sw_head);
-@@ -335,6 +336,7 @@ static HW *glue(audio_pcm_hw_add_new_, TYPE)(AudioMixengBackend *s,
-  err1:
-     glue (hw->pcm_ops->fini_, TYPE) (hw);
-  err0:
-+    object_unref(hw->s);
-     g_free (hw);
-     return NULL;
- }
-@@ -441,7 +443,7 @@ static SW *glue(audio_pcm_create_voice_pair_, TYPE)(
-     }
+ #include "ui/dbus.h"
++#include "ui/dbus-display.h"
+ #include "ui/dbus-display1.h"
  
-     sw = g_new0(SW, 1);
--    sw->s = s;
-+    sw->s = AUDIO_MIXENG_BACKEND(object_ref(s));
+ #define AUDIO_CAP "dbus"
+@@ -408,8 +409,13 @@ dbus_enable_in(HWVoiceIn *hw, bool enable)
+ static void *
+ dbus_audio_init(Audiodev *dev, Error **errp)
+ {
+-    DBusAudio *da = g_new0(DBusAudio, 1);
++    DBusAudio *da;
  
-     hw = glue(audio_pcm_hw_add_, TYPE)(s, &hw_as);
-     if (!hw) {
-@@ -461,6 +463,7 @@ err2:
-     glue (audio_pcm_hw_del_sw_, TYPE) (sw);
-     glue (audio_pcm_hw_gc_, TYPE) (&hw);
- err1:
-+    object_unref(sw->s);
-     g_free(sw);
-     return NULL;
- }
-@@ -470,6 +473,8 @@ static void glue (audio_close_, TYPE) (SW *sw)
-     glue (audio_pcm_sw_fini_, TYPE) (sw);
-     glue (audio_pcm_hw_del_sw_, TYPE) (sw);
-     glue (audio_pcm_hw_gc_, TYPE) (&sw->hw);
++    if (!qemu_using_dbus_display(errp)) {
++        return NULL;
++    }
 +
-+    object_unref(sw->s);
-     g_free (sw);
++    da = g_new0(DBusAudio, 1);
+     da->dev = dev;
+     da->out_listeners = g_hash_table_new_full(g_str_hash, g_str_equal,
+                                                 g_free, g_object_unref);
+diff --git a/ui/dbus.c b/ui/dbus.c
+index 31f6eb1189f..0be1931d208 100644
+--- a/ui/dbus.c
++++ b/ui/dbus.c
+@@ -35,6 +35,7 @@
+ #include "ui/egl-context.h"
+ #endif
+ #include "qemu/audio.h"
++#include "audio/audio_int.h" /* FIXME: use QOM dynamic cast instead of drv->name */
+ #include "qapi/error.h"
+ #include "trace.h"
+ 
+@@ -218,9 +219,20 @@ dbus_display_complete(UserCreatable *uc, Error **errp)
+         return;
+     }
+ 
+-    if (dd->audiodev && *dd->audiodev) {
+-        AudioBackend *audio_be = audio_be_by_name(dd->audiodev, errp);
+-        if (!audio_be || !audio_be_set_dbus_server(audio_be, dd->server, dd->p2p, errp)) {
++    {
++        AudioBackend *audio_be = audio_get_default_audio_be(NULL);
++
++        if (audio_be && !g_str_equal(audio_be->drv->name, "dbus")) {
++            audio_be = NULL;
++        }
++        if (dd->audiodev && *dd->audiodev) {
++            audio_be = audio_be_by_name(dd->audiodev, errp);
++            if (!audio_be) {
++                return;
++            }
++        }
++        if (audio_be &&
++            !audio_be_set_dbus_server(audio_be, dd->server, dd->p2p, errp)) {
+             return;
+         }
+     }
+@@ -475,6 +487,8 @@ early_dbus_init(DisplayOptions *opts)
+ #endif
+     }
+ 
++    using_dbus_display = 1;
++
+     type_register_static(&dbus_vc_type_info);
  }
  
+@@ -488,8 +502,6 @@ dbus_init(DisplayState *ds, DisplayOptions *opts)
+         exit(1);
+     }
+ 
+-    using_dbus_display = 1;
+-
+     object_new_with_props(TYPE_DBUS_DISPLAY,
+                           object_get_objects_root(),
+                           "dbus-display", &error_fatal,
 -- 
 2.53.0
 
