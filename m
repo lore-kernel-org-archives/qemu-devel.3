@@ -4,83 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7E9BEC113C
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 20:58:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 456D2EC113C
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 20:58:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vucyu-0006aX-5Z; Mon, 23 Feb 2026 15:56:40 -0500
+	id 1vucyx-0006cT-Va; Mon, 23 Feb 2026 15:56:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1vucys-0006Zz-AW
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 15:56:38 -0500
-Received: from mail-ot1-x342.google.com ([2607:f8b0:4864:20::342])
+ id 1vucyv-0006bU-Sd
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 15:56:41 -0500
+Received: from mail-ot1-x333.google.com ([2607:f8b0:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1vucyq-00080x-Mr
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 15:56:38 -0500
-Received: by mail-ot1-x342.google.com with SMTP id
- 46e09a7af769-7d4c307db9aso2476566a34.3
- for <qemu-devel@nongnu.org>; Mon, 23 Feb 2026 12:56:35 -0800 (PST)
+ id 1vucyu-00081t-7q
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 15:56:41 -0500
+Received: by mail-ot1-x333.google.com with SMTP id
+ 46e09a7af769-7d18a9d2b1aso4542579a34.2
+ for <qemu-devel@nongnu.org>; Mon, 23 Feb 2026 12:56:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1771880194; x=1772484994; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=VYiV3uUyJHz2/FR+sN3LP/IVCZ3NT54ZlyBYnhfbCto=;
- b=OhGMph9C414WqpE7WuDdtOyApClHaNzr2Kx+6ulZphIEsKPohCGh0ag6jvdtjo/EhP
- 3eEtLo/kfVN9N8S3t0XJvdUGQtZ1MF53F9sg6RUE0BwwY4mC51sZMmBWI8prhBZjzYvK
- lZTNSnL1ECbhe2x3RNLRcF7Hq7R1DGIbfNFJqnCWgOjO2D4ywvlmCxnwLv1+JHQY4E6R
- 5uF1hmEsAo0ULDsiZEhvInBbwNmTpQN7bJNcsAnmpCFqZhhUkd8E66MOrRuzUqAHYkFJ
- 22kOAiyeC5VgsKLTnOa9w+rJSKBgvTywfx+BZ/FM6pau6sDGf0pukfvzW2AxHCW/KV9k
- LRLg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771880194; x=1772484994;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1771880199; x=1772484999; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=VYiV3uUyJHz2/FR+sN3LP/IVCZ3NT54ZlyBYnhfbCto=;
- b=BPadzopKjMhjyyZkrAzbQwf7HZIHq58+n8jaL1b0ttEF3+1l3AQfbCUjRCovdoBsl/
- usKOCvQHtWGU0SpBslr2kCsJFZN42f83vOM/MXSqA6wgeIlOfxzQTfzNT021ebiNShfu
- vpa9FtHP2hS431XcTgy7DXkvQhXPcM1lT+djDUisCN8CoASXfoiLV/a7w1C45o0ApB0k
- Bsy9PALr4G0qU4eBvJ6lZVzyuXbbQ503CKlZ4feflGQovFZ2y2Al/35wg98c8CiNTRSj
- 5TdlwVoeekeRn/Vkh8C8LMcOizrMBkUpX3GXmnqOhluz7BSKTtBy2+FhhvXCqNJJ6SiE
- u0NQ==
-X-Gm-Message-State: AOJu0YxM+8iogqK5jaVM3NlA7IFiJ6sixGFFA2yiWyPxAEvqhN/lAb8T
- ohxCGrB/KOB2q3m/7uw4jeaXmQ67pcLdMFLQV0EJlvVWdhIPgQFjookzOJlZ1QS3
-X-Gm-Gg: AZuq6aKqBsNqykjZi8TyUZ0eh11NkARRg6cO+ZrOKelTVg7igwLUKqTWZPjAFSh+hqy
- tTm/mGd4oyL1K3kJQ6uhN5L7+eCZQ1zMBOhNX/PFHxp4Q8wqjj3kwJcw1nUeTgv+H9UpOoF95o6
- QK59JLfEvfhn4e7o7GBJxshpyQ3YEMuz1TgAdWt5NesVadQ881SRVxONfows4CQQWQBZKOz9DO+
- qUmNftgtyErMnLT19Of03EuUqbb5ORv3AuNEofIifbLg0QMsgjTHNVFeykibuPGFhmY0ydEBSk/
- u09At3+zkvfoLGRyCBVbPNPThXBrkKtqODU6sG/DAREHAOGZyoNXKHvVYBl0/C8O4Smb3eFihuL
- zNKELipJYxhlgWlTrMMWp0PAW2VUD7lgP3pIWT/qAFi/PBwsmakt+E7T+xt8TVcY8lFP0Hx3HBy
- +yAhrBH89FcxCC9a/JL3Rg1Pc1KJ0LE7kAUfghXeUO66PyUAwUgFHwv+FWmV8Slyp4NMWVYuHiz
- 5P81+QsLMm3oP6d72i4qPwh6ayfExuJjv+hXQ==
-X-Received: by 2002:a05:6830:210e:b0:7c7:32d:975d with SMTP id
- 46e09a7af769-7d52bfb0265mr5306113a34.31.1771880193984; 
- Mon, 23 Feb 2026 12:56:33 -0800 (PST)
+ bh=05BLbE1y2qcTIXCrfk6WLG4//N7sVc0Cn/mxSAr9j2s=;
+ b=AZiyJaQadNmN/jBxpY+emCjOMP3KX/v0Cz2SgY0O4lfxyq6lAq7Fl8wYM6spJ3Qpdq
+ ViGoOZ69DBu8KbiHWLyIuGI+IV+RvJt/vrjlqFNW0UZi+12+t4P7/EThezF0lYgoCqiR
+ L39U0VUjFIG+GK/WIPoa0mBJaWGrnp7CqEcxtSeQF5Ksh4uWo7NbwzNVeR30+0bW3DoO
+ 3blztA1EcjBXbDBOBWXKuRspSUoc2tpnYWhFvyW3kASGrf5KLFIzZiUPtvUAG/byTyX7
+ KZgyDy5OzpjaW7sqIfBw6b6XNn1DbfUJ181JuxZLbdgm8tCD279hSL+KD9L1ggTxU0Hq
+ esBg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1771880199; x=1772484999;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=05BLbE1y2qcTIXCrfk6WLG4//N7sVc0Cn/mxSAr9j2s=;
+ b=guyLF7DW37+UQwjJZePt2FyO0R9pHYlOVF92UOV1IJ/0SD55JuTcVFRxogE73GAAV1
+ m5K0usdEya9YbJV73ZoAXuqtHHVQ3qG5OhnDqzgdpjnTndBYfDGL/zehG/C3Iifchep+
+ QkdE/bQcXLg1a4S5jhkz8NeXSYB3EG403yIEuxFhlrXvEVu/cBdKM++s2yBL5jBqaL3Z
+ O/gHunBULs1fIm3bslmxA1age8XBcnTgMa5wNxecQZ6kmjYYKoz0oRPa2mr2f+JfqIsx
+ LqrQ9DPHTNTbukRR9PxqGMggrZM+cGPm8HOqIknd67/1OfHCY3O7UZz08cNdZv5Ya+z1
+ Xaug==
+X-Gm-Message-State: AOJu0Yxx6N6HjBzvJZwz+/YDuFKHGFIkbwKD8JQcwqM0UQsAiyutNeBY
+ EzGZ7cAKCYNlblMp1oSquhf9m81DIgTeOKZrPHxrSU9AOZ1DDqBgoVATSauDWQ==
+X-Gm-Gg: AZuq6aIjYGfC5G1OG7zuIRqHNze2T5+i42+z2pcOqqmY6vEoJ57GP/2MJK3PFYdl7Ar
+ 47QMtEZ1dpjcYMGZe85v+a45Hk++4JulfSV1cwIRu60b5WgTJbC1qx6V6Rg/mcA3fGhovL8iVd0
+ mQeChiaDRccQ8hrbC/w4B1CXoKjH/uy5hQsKj9neUj6zQe+M4fUdaKZTXK9Er3G/j7kA02wEUMI
+ PNX7TZuBXzEXB5I5YTbLa6QUdx5BzVefFas15/dTDucnZDrYjWbN3852PCq3K2rKj67TG7d8sUb
+ bHRPoIyNUHJAVsu/mIZVoDMj3/Xpu76seCXoqAnPc7pBYhDFTVahtPI1xgEzLI4oAUF4JqUgqbS
+ P+sSRGEyKcpwwSSZlyiCl6BkEHXrrFcAHfIj8tqQ7w1SUoAcbE4GEQ/WsGBz+yoDZfTn+Brj+Oy
+ sMrgQ4LoRgBLisF15ktg5/xoEKCPLkYpir4DRlK8YSX875rgclk7K5YVqH+iWnT/scpPQEehhBq
+ DJ9ohqUpDxQfylRyrNNg1cS6Yce+IPNKiqgwQ==
+X-Received: by 2002:a05:6830:850e:10b0:7d4:96c3:3f97 with SMTP id
+ 46e09a7af769-7d52bdf88a0mr4537396a34.2.1771880198887; 
+ Mon, 23 Feb 2026 12:56:38 -0800 (PST)
 Received: from taylor-ubuntu.hsd1.co.comcast.net
  (c-75-70-169-246.hsd1.co.comcast.net. [75.70.169.246])
  by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-7d52d04dbf1sm8011996a34.22.2026.02.23.12.56.33
+ 46e09a7af769-7d52d04dbf1sm8011996a34.22.2026.02.23.12.56.38
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 23 Feb 2026 12:56:33 -0800 (PST)
+ Mon, 23 Feb 2026 12:56:38 -0800 (PST)
 From: Taylor Simpson <ltaylorsimpson@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: brian.cain@oss.qualcomm.com, matheus.bernardino@oss.qualcomm.com,
  sid.manning@oss.qualcomm.com, marco.liebel@oss.qualcomm.com,
  richard.henderson@linaro.org, philmd@linaro.org, ale@rev.ng, anjo@rev.ng,
  ltaylorsimpson@gmail.com
-Subject: [PATCH 0/8] Hexagon (target/hexagon) Check for multiwrites in
- analyze_packet
-Date: Mon, 23 Feb 2026 13:56:24 -0700
-Message-ID: <20260223205632.223714-1-ltaylorsimpson@gmail.com>
+Subject: [PATCH 5/8] Hexagon (tests/tcg/hexagon) Add tests for vreg multiple
+ writes
+Date: Mon, 23 Feb 2026 13:56:29 -0700
+Message-ID: <20260223205632.223714-6-ltaylorsimpson@gmail.com>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260223205632.223714-1-ltaylorsimpson@gmail.com>
+References: <20260223205632.223714-1-ltaylorsimpson@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::342;
- envelope-from=ltaylorsimpson@gmail.com; helo=mail-ot1-x342.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::333;
+ envelope-from=ltaylorsimpson@gmail.com; helo=mail-ot1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,36 +106,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently, we check for register multiwrites during packet decode. The
-downside of this approach is that it only checks a single destination
-register for each instruction.  During analyze_packet, we can check
-for more than one instruction.  Further, we can check for different
-types of registers.  This series adds checks for HVX v-registers and
-q-registers.
+Signed-off-by: Taylor Simpson <ltaylorsimpson@gmail.com>
+---
+ tests/tcg/hexagon/multiple-writes.c | 46 +++++++++++++++++++++++++++++
+ tests/tcg/hexagon/Makefile.target   |  1 +
+ 2 files changed, 47 insertions(+)
 
-Note that multiple writes to a predicate register are allowed on Hexagon.
-
-Taylor Simpson (8):
-  Hexagon (target/hexagon) Move code out of gen_start_packet
-  Hexagon (target/hexagon) Check for GPR multiwrite in analyze_packet
-  Hexagon (tests/tcg/hexagon) Add tests for multi-destination
-    instructions
-  Hexagon (target/hexagon) Check for vreg multiwrite in analyze_packet
-  Hexagon (tests/tcg/hexagon) Add tests for vreg multiple writes
-  Hexagon (target/hexagon) Check for qreg multiwrite in analyze_packet
-  Hexagon (tests/tcg/hexagon) Add tests for qreg multiple writes
-  Hexagon (target/hexagon) Remove old way of detecting register
-    multiwrites
-
- target/hexagon/insn.h               |   4 -
- target/hexagon/translate.h          |  25 +++++-
- target/hexagon/decode.c             |  54 ------------
- target/hexagon/translate.c          |  77 ++++++++++++-----
- tests/tcg/hexagon/multiple-writes.c | 129 ++++++++++++++++++++++++++++
- target/hexagon/gen_trans_funcs.py   |  10 ---
- tests/tcg/hexagon/Makefile.target   |   1 +
- 7 files changed, 210 insertions(+), 90 deletions(-)
-
+diff --git a/tests/tcg/hexagon/multiple-writes.c b/tests/tcg/hexagon/multiple-writes.c
+index 4305903547..b93f2ab32e 100644
+--- a/tests/tcg/hexagon/multiple-writes.c
++++ b/tests/tcg/hexagon/multiple-writes.c
+@@ -199,6 +199,49 @@ static int test_post_increment3(void)
+     return sig;
+ }
+ 
++static int test_vreg_legal_predicated(void)
++{
++    int sig;
++
++    asm volatile(
++        "r0 = #0\n"
++        "r1 = ##1f\n"
++        "memw(%1) = r1\n"
++        "r2 = #7\n"
++        "r3 = #13\n"
++        "p0 = cmp.eq(r2, r3)\n"
++        "{\n"
++        "    if (p0) v0 = v1\n"
++        "    if (!p0) v0 = v2\n"
++        "}\n"
++        "1:\n"
++        "%0 = #23\n"
++        : "=r"(sig)
++        : "r"(&resume_pc)
++        : "r0", "r1", "r2", "r3", "p0", "v0", "v1", "memory");
++
++    return sig;
++}
++
++static int test_vreg_illegal(void)
++{
++    int sig;
++
++    asm volatile(
++        "r0 = #0\n"
++        "r1 = ##1f\n"
++        "memw(%1) = r1\n"
++        ".word 0x1e0361e0    /* { v0 = v1 */\n"
++        ".word 0x1e03e2e0    /*   v0 = v2  } */\n"
++        "1:\n"
++        "%0 = r0\n"
++        : "=r"(sig)
++        : "r"(&resume_pc)
++        : "r0", "r1", "memory");
++
++    return sig;
++}
++
+ int main()
+ {
+     struct sigaction act;
+@@ -224,6 +267,9 @@ int main()
+     assert(test_post_increment2() == SIGILL);
+     assert(test_post_increment3() == SIGILL);
+ 
++    assert(test_vreg_legal_predicated() == 23);
++    assert(test_vreg_illegal() == SIGILL);
++
+     puts("PASS");
+     return EXIT_SUCCESS;
+ }
+diff --git a/tests/tcg/hexagon/Makefile.target b/tests/tcg/hexagon/Makefile.target
+index f86f02bb31..ea73413bf4 100644
+--- a/tests/tcg/hexagon/Makefile.target
++++ b/tests/tcg/hexagon/Makefile.target
+@@ -118,6 +118,7 @@ vector_add_int: CFLAGS += -mhvx -fvectorize
+ hvx_misc: hvx_misc.c hvx_misc.h
+ hvx_misc: CFLAGS += -mhvx
+ hvx_histogram: CFLAGS += -mhvx -Wno-gnu-folding-constant
++multiple-writes: CFLAGS += -mhvx
+ v68_hvx: v68_hvx.c hvx_misc.h v6mpy_ref.c.inc
+ v68_hvx: CFLAGS += -mhvx -Wno-unused-function
+ v69_hvx: v69_hvx.c hvx_misc.h
 -- 
 2.43.0
 
