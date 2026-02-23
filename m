@@ -4,75 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20C9AEEC28E
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FF90EEC296
 	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 21:53:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vudr5-0003HO-Ku; Mon, 23 Feb 2026 16:52:39 -0500
+	id 1vudr6-0003HR-2f; Mon, 23 Feb 2026 16:52:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <3IsycaQcKCoEujktqj3lttlqj.htrvjrz-ij0jqstslsz.twl@flex--pefoley.bounces.google.com>)
- id 1vudr4-0003Ga-04
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 16:52:38 -0500
-Received: from mail-yw1-x114a.google.com ([2607:f8b0:4864:20::114a])
+ <3I8ycaQcKCoIvklurk4muumrk.iuswks0-jk1krtutmt0.uxm@flex--pefoley.bounces.google.com>)
+ id 1vudr4-0003Gz-W0
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 16:52:39 -0500
+Received: from mail-qt1-x84a.google.com ([2607:f8b0:4864:20::84a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from
- <3IsycaQcKCoEujktqj3lttlqj.htrvjrz-ij0jqstslsz.twl@flex--pefoley.bounces.google.com>)
- id 1vudr2-00012l-JE
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 16:52:37 -0500
-Received: by mail-yw1-x114a.google.com with SMTP id
- 00721157ae682-79801ac9355so85717997b3.0
- for <qemu-devel@nongnu.org>; Mon, 23 Feb 2026 13:52:35 -0800 (PST)
+ <3I8ycaQcKCoIvklurk4muumrk.iuswks0-jk1krtutmt0.uxm@flex--pefoley.bounces.google.com>)
+ id 1vudr3-00012v-KG
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 16:52:38 -0500
+Received: by mail-qt1-x84a.google.com with SMTP id
+ d75a77b69052e-506b3fb32a1so481533921cf.0
+ for <qemu-devel@nongnu.org>; Mon, 23 Feb 2026 13:52:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1771883554; x=1772488354; darn=nongnu.org;
- h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
- :date:message-id:reply-to;
- bh=JKjxyOc9+wLsReitGJcfoh57oopHS5EeiajHsmdnHG8=;
- b=s7V+w+rqBjYa1bOs8P5T6Bv42x8FptpSPczIYd/I6m8PaQ/3Vb5DS548QwDlBTTlfH
- skZUfq0nohyu7+4VERetGQmk9XhfHjYWMFbc9TfZ6BDDlQ5RYFVKTW6sD7lcR9ilbujk
- eMzxhXU+tn2eTABPmdnlLs3LTVL2SgBTz0ObC8uky+RPfXsKQl0xtkKVBnmjxHeZxJ2b
- l1lgvB/j51YsAkhNRvF6/4W5T6MrCdYkdKWC8c80VTd4tI8yMJP3gUpcldDPMurvJ968
- ScyDjcyk9YeJ8WOMmLVGJVIU/vnpaRbwWIeIuzCQ0zqaq8bkjBoaRZ3sS6aKGHeDnNmn
- 6T6A==
+ d=google.com; s=20230601; t=1771883556; x=1772488356; darn=nongnu.org;
+ h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+ :date:from:to:cc:subject:date:message-id:reply-to;
+ bh=RVEHEUapI70GpGB38m254iV9KetAM2LV4sSrD3wxneI=;
+ b=p2h6pV2TyKpwzOK3AtksxtdOA3ix9BwxDx5OOVbwLia8F8Yeh5XS8/ZrKVAOL6AbXr
+ FTPKxCXs4Is5Cw11i1bfBxHbOZ+QKDgyoP98jBKyLNCNUlUp0mA8TQgEpbfR4T/ulYoY
+ x54w3+e/VQItam4SdlCiPMvrMCN4Ybiu7lkXm5RVk8L5pqYBxa+NNyaYKnDibWMXJxUg
+ VfYN1myAW7WbTGVQrEpSW4IIiUWmvFeQSyuL7ZL3DcK0nzT+6I4WzYMmUPZXu8a+w12z
+ 7f8VSZThMq3q1JUCHHYMRhC50wzXrlgeufeXUX9Sk0TG5U5VkzSsyM8L+mtSTFL9lt1Z
+ 2xzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771883554; x=1772488354;
- h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=JKjxyOc9+wLsReitGJcfoh57oopHS5EeiajHsmdnHG8=;
- b=JZRAw98i2IBefSgEvnEr1M5rl2/FQzYL9aY4spTS/z/uvySI+hvJD3/lCqImzifR3s
- 9BUv2LPlQLZIHlvXu7ZNP3vzMsRZq64HnjpMvQfX7lmaEs7Rk77jxV15TyWAoRLfuaGz
- pvZ0QThZP9IXgEW19XdHX/3IXdu/EiDhtVAXq3ubFix/847iJjBG4y9Kw6EI1sskfzlz
- OpchuF4712kjflGfs4NqtBT4uBAIZtnHIgYBj37JnTBCB5rpyvirdlvrMuX4qUrpaKw2
- HeqGHOJtdIZ/ZOfCgxBFUCe7GhBQW4xfD432w0m93mg2pe/C05r3JOYxngP1WRFv4VtM
- SZ5A==
-X-Gm-Message-State: AOJu0YweCutmfB5eQNJSoBU28ltF77+GQace1/f1QI/7MaHcBGkTrwN9
- 5YgbpRS2wy04InBiT6gxPvYczXA8K0znv1rVj+60Zy5r0jJLlQ7K+Ou9aPqLa7Seq/ss4SEiUO7
- mmU+6Mz4KTJ/XTzyVxrrmq8Kfuv/Wvw4GKOe86a+AJCXgrcCEMIWfadK9DXsjKlNcg0IJLppY56
- ASzrcLMmWYq/C5wOoh3R18XmNvEDwIl4VXGff1u7O1
-X-Received: from ywbky11-n2.prod.google.com
- ([2002:a05:690c:530b:20b0:796:3e6f:2024])
+ d=1e100.net; s=20230601; t=1771883556; x=1772488356;
+ h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+ :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=RVEHEUapI70GpGB38m254iV9KetAM2LV4sSrD3wxneI=;
+ b=Cnmm4XvK95gbEQ2Ew8ALvh6CtIn/ZaD1L5zskuKxNDaA9z59IIerpn3DFFVDHzzJFq
+ c3wJelj+WDftwZ5piHEKh/0WQgoiPUIC9Et8ncAEMaELY2vgrHYG68bMpkqy15lUfLTM
+ o2fc9QC5E4A0eBe99TjpCtJmzfndNjs5YdCYzf6BiNdf7Nb1l2tZTSilaprTHZl3tuYQ
+ zkbhqq3aptctiNvIh4Ydi+dDXh0C3lhqkWJcTAtk4g9tQ74Gap+NMVTgh4RoMN2KH4Ma
+ MUxn5dx+qWB3PPL+v905rIh7ejDDW4LpQP5iXYwdBHoFt+L5qH9+SyXmimfnTpTmFrxw
+ Dhvg==
+X-Gm-Message-State: AOJu0YwsD4ybCv1lAt8/q/YRT3psBvHLZbNKUM8ge+JSbgrxwfDQdF9c
+ jGaImtwtimCJwU8WX6zSrX89sbNCPPiJv00z8o6oNlUSLSH4EFf7HegSoUlGAEmqO/xBl2OGCa/
+ WBbAh2gF5/lh4faE2qgJHeFgEOSwKsZDlUK+xijIOrAo0NVWINHzFVvn/0biAVhzPsAxmp4HhZP
+ VfEJIr4ZjdixoehvtvvXcTxdSccIXE0rV4UaiwxteU
+X-Received: from qtnz19.prod.google.com ([2002:ac8:4553:0:b0:503:2f52:46c5])
  (user=pefoley job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:690c:ec5:b0:798:5333:ce0d
- with SMTP id 00721157ae682-7985333d42emr22498037b3.4.1771883554361; Mon, 23
- Feb 2026 13:52:34 -0800 (PST)
-Date: Mon, 23 Feb 2026 16:52:23 -0500
+ 2002:ac8:7c55:0:b0:502:6312:8d6
+ with SMTP id d75a77b69052e-5070bba4c79mr167455861cf.12.1771883555650; Mon, 23
+ Feb 2026 13:52:35 -0800 (PST)
+Date: Mon, 23 Feb 2026 16:52:24 -0500
+In-Reply-To: <20260223-passt-v1-0-101c6ba1c88a@google.com>
 Mime-Version: 1.0
-X-B4-Tracking: v=1; b=H4sIABfMnGkC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDIzMDIyNj3YLE4uISXQNzAwszA+OUZBNLUyWg2oKi1LTMCrA50bG1tQCwhVR
- eVwAAAA==
-X-Change-Id: 20260223-passt-0708603dc495
+References: <20260223-passt-v1-0-101c6ba1c88a@google.com>
 X-Mailer: b4 0.14.3
-Message-ID: <20260223-passt-v1-0-101c6ba1c88a@google.com>
-Subject: [PATCH 0/2] Error-handling fixes for passt
+Message-ID: <20260223-passt-v1-1-101c6ba1c88a@google.com>
+Subject: [PATCH 1/2] Only kill passt if it wrote a pidfile
 From: Peter Foley <pefoley@google.com>
 To: qemu-devel@nongnu.org
 Cc: Jason Wang <jasowang@redhat.com>, Peter Foley <pefoley@google.com>
 Content-Type: text/plain; charset="utf-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::114a;
- envelope-from=3IsycaQcKCoEujktqj3lttlqj.htrvjrz-ij0jqstslsz.twl@flex--pefoley.bounces.google.com;
- helo=mail-yw1-x114a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::84a;
+ envelope-from=3I8ycaQcKCoIvklurk4muumrk.iuswks0-jk1krtutmt0.uxm@flex--pefoley.bounces.google.com;
+ helo=mail-qt1-x84a.google.com
 X-Spam_score_int: -95
 X-Spam_score: -9.6
 X-Spam_bar: ---------
@@ -95,23 +92,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Some fixes for passt error handling that showed up when
-trying to enable support with an internal Google framework.
+Avoid killing qemu if passt failed before writing a pidfile.
+
+pid is initialized to 0, so calling pid in this scenario would kill the
+entire process group.
 
 Signed-off-by: Peter Foley <pefoley@google.com>
 ---
-Peter Foley (2):
-      Only kill passt if it wrote a pidfile
-      Don't try to read the pidfile if passt got a signal
+ net/passt.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
- net/passt.c | 17 ++++++++++++++---
- 1 file changed, 14 insertions(+), 3 deletions(-)
----
-base-commit: afe653676dc6dfd49f0390239ff90b2f0052c2b8
-change-id: 20260223-passt-0708603dc495
+diff --git a/net/passt.c b/net/passt.c
+index 9ed811a514..b3d4b71314 100644
+--- a/net/passt.c
++++ b/net/passt.c
+@@ -102,7 +102,9 @@ static void net_passt_cleanup(NetClientState *nc)
+     }
+ #endif
+ 
+-    kill(s->pid, SIGTERM);
++    if (s->pid > 0) {
++        kill(s->pid, SIGTERM);
++    }
+     if (g_remove(s->pidfile) != 0) {
+         warn_report("Failed to remove passt pidfile %s: %s",
+                     s->pidfile, strerror(errno));
 
-Best regards,
 -- 
-Peter Foley <pefoley@google.com>
+2.53.0.371.g1d285c8824-goog
 
 
