@@ -4,92 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A393AEA4FBB
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 13:24:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C322EA4FBE
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 13:36:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuVuV-0008JZ-0a; Mon, 23 Feb 2026 08:23:39 -0500
+	id 1vuW6G-0002X2-Kg; Mon, 23 Feb 2026 08:35:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vuVuR-0008JA-2u
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 08:23:35 -0500
-Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
+ id 1vuW6E-0002Tj-K4
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 08:35:46 -0500
+Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vuVuP-0001c2-Dd
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 08:23:34 -0500
-Received: by mail-ed1-x529.google.com with SMTP id
- 4fb4d7f45d1cf-65a3fdeb7d9so6090389a12.0
- for <qemu-devel@nongnu.org>; Mon, 23 Feb 2026 05:23:32 -0800 (PST)
+ id 1vuW6C-0004Xv-O2
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 08:35:46 -0500
+Received: by mail-ej1-x632.google.com with SMTP id
+ a640c23a62f3a-b8871718b00so691214666b.3
+ for <qemu-devel@nongnu.org>; Mon, 23 Feb 2026 05:35:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771853011; x=1772457811; darn=nongnu.org;
+ d=linaro.org; s=google; t=1771853743; x=1772458543; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=+xAue9mhPwABCuGBhK6+ntcLVK7yBDT6Qs4uIDTyPVA=;
- b=kU7we5DGmxshrHyVm79tNa3FktaKvzDAvY0HY1cz4GF6DtPo85SBfqvpQg8Vn0YTLa
- Sq0IRnUIGbYeSPysiQUAvKjGwD9vQ1IV2JndsgLfA3wt0Gd4Kcl4AecUpw8+dY384B3g
- hwAsE4a7QWMxVlPvKQgFNqQlIhXSIasNR5MB1M2OJaLfNqbjZ3u+yjMbV1bITEydRvdc
- qyN0KesaUniyCJlBnjZWG3Vt9fmA9A9JgCt6o8A1sGtcrTQdcpreYgVQr1fMesgZ0Bss
- 2hoKdAS8nCTKBN+v+JgsuPRICbdDCFgyJRYxrPT32r12e+2bfgqX0VA6eDGEMdwwiPyx
- qQnw==
+ bh=59UeeZ1m+OC54KJ8qSW4tohupoJFstsD/bfvexILTfs=;
+ b=RVS3xrdlced5JsoMhbURK5syjof0TDwpY46CZEorUvJlsty9AjufVTc0q9ac5Pxmwy
+ v/kO8tRWlRNn4/mJ8ESppWkqlgRc+HH+CjNqzwtT3ajg7+dtLBTkUWOSNUtpAXp//xmz
+ LhbG2UZRdK7CDPLbDqkAUsjwyOFSOVydnVQEH+A+z4g2J+vlZ9lJP5L8RoAe4xOm1bGs
+ KvOIxcjQ2l4LU0H6cEI3UwNsS3ApIOIEkcJGPqJjzJRUy8S9KKDBdfdOHaGUdEvrvFOM
+ S74FbYGqbeu4x0lJ6x9vZL4zeMrrExEgj5wYEE6c8QmEU4tR6AojQw4phZh2nzSjOp9F
+ LV5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771853011; x=1772457811;
+ d=1e100.net; s=20230601; t=1771853743; x=1772458543;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=+xAue9mhPwABCuGBhK6+ntcLVK7yBDT6Qs4uIDTyPVA=;
- b=OrV/ObFEIBknzS9oGrKQx/MMZQj3lV8kGfyXVIflNC79F8S04VSKN0S8w5WOZnpew5
- +bv5JBOqFZ7KuazJTEQep5XsQsW4h2GaVkZawsFPZP45n29uOAChyGB0Wfy8o4xlwoCG
- mnzCYDPJ33v6junY3phDB+LZFhh51j1cGz1xqJpeHn+ug+phxFaLLknFgtHI07MXz/I/
- gfypbzm4uzOk0eAwA+jjGs+nuTxauTiTXuHAyablEds07fcRYTELmSAU5nonzAFnSW81
- u/5gb6bdEOgEbwcTHfwxyuxDfKl8fIOqzPQFfOUojX4dKaB0BGLec4OL+TevPvbzOLZ3
- wYyw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXFLbSIdYWY19DR7x3ts4ook9YZfniavNYwT8/E3zfK1nLOStNbBN6n41X6ApTDvUJZaxMJH+CFk/IH@nongnu.org
-X-Gm-Message-State: AOJu0Yxo3z/J7xBAO+sUN8UhGyd/JzpDnmH3BzRU3a1qJf5VNJk67YpC
- 2SG49pncXkK+4AYViL6sHQCjcW5yri7ciXxpQUMIVEZQbAN6u12znXWx/2ctFuav8d4=
-X-Gm-Gg: AZuq6aJAzQ7T5jVPxMm1lMDiz7Zwg/8l3S3pddRlMLGeFfWLGkLENp2EkIOHXzwsKok
- IPMwOyf5Ww1eCvUvqP0RNeaDS0wbb9dswNXb5jpEEziC1/X9q7EyGLuNkrXSQxaGSDvuw44bryF
- 3SMa7ob6m9qbBLlVV/X3XXpaABRCHRiCzmE44bxEgDd5a/OdGMnBNGgqo+nxiXTITXbq8vGHuZC
- dhkWYm3wCto1WERpLjWClXJ4aeZAE2K8lIsDBYA9bLBgcUl66eNjJHqted1nPEueoVqaMMC3hHX
- SthGhCilOSJBn/c6VLrhceKxPCRhNvitrSZ3orVJENrsns8jYYdygmsXji4uyXS1V22haLrly0c
- UJx4pu6Rgm0sNOpW1/VnhA1elR4uJDIWpVDIZlO7Q95vs5AoZMoN1AIx8gtYXG+ikyuuAOkm0hS
- nPdCEJOWbQgHIAKZt2SUGhv8hXcQMrFX5h4A==
-X-Received: by 2002:a17:907:1c22:b0:b73:8d2e:2d38 with SMTP id
- a640c23a62f3a-b9081bacc96mr509281566b.50.1771853010784; 
- Mon, 23 Feb 2026 05:23:30 -0800 (PST)
+ bh=59UeeZ1m+OC54KJ8qSW4tohupoJFstsD/bfvexILTfs=;
+ b=xQ+x5WZyNQqG/xWQsVsg3hRFAfGWK515lMiist0UknHm4wNpuLLdFBo+WB0F5xayBs
+ y9n22NFtnRNmpA5TOyqTSTwhvXw4dXRsf5NvQ34J3EfVJFs95B1gEpJxFP428h5c/Sbt
+ eZdVYd3rRDynjy/a55XuXzfWoukLUe34HA3mLA9IUB8hS0rpTHDTB3DCivhamu4+0sfj
+ bhnCT40k0wOxzy9fLTI1HL9PXguyXuy2frYrrv4ELoljwp/yWK77LOKu82lt4PTia2JQ
+ VitPX20umWeoPM7n6awvGmAdha3iI3p3h1SATAzbv3nBetcJOD/Lh4kfQ9ZgioC1ZQ5F
+ JHxg==
+X-Gm-Message-State: AOJu0Yw5C3FwJWYRVoMWN1qujyS0E5EJ0BRYb2VDgqvEW3lEnPCxgtWP
+ UnQmH09fjJl4tlm8uVXh5iGHscFhG0mbHnTRzTiOTicr5KDBCnlInSkT3m30mS8UvDyTkuP+55n
+ aIHJZ
+X-Gm-Gg: AZuq6aIp0ydKSXSGIIkZePA2mhveVR08Y2qxPHn3nL3Y+38J2HMILU1F4b/UUxK9G7E
+ BpBOeJzx1sKkIZ+/bMjPHAnXPRLVGXb8f43r0IRyPXPTaEIo9xwT5+ne3UFLpXNrUgoNrhJ6f6p
+ 3DCT1PHD448+oCVkZpCy6JQ1M3OLzU8sszejQAGsfbnHvUh8Bat/DtE3dyVJuGKeNtLbnzA1xfV
+ q7hQtPat2mYpdC6sr7G3uj1uBkVybW92635I1Liyjk/v/lRxZsgKV1u5N+mERYcKHOR/ExfOSUo
+ lMzpzX7X4Tb7a1AQeUvGUO+uQl4HNoqwCsBYIehXe7x8WFvodr7XXiQvw1qUWcPe/kZCk9fUtot
+ UihvoYmjeUGcsdlCCqKw7nY0g+DvQetTiZQ1fg96WmeBqyLp6h+Yxq8FdZy3y+/Zh33fkRJDKoW
+ DATphnvDwyl6pCU/y14vifIjA=
+X-Received: by 2002:a17:907:3d12:b0:b8f:a323:bda7 with SMTP id
+ a640c23a62f3a-b9081b9ba28mr549338866b.46.1771853742583; 
+ Mon, 23 Feb 2026 05:35:42 -0800 (PST)
 Received: from draig.lan ([185.124.0.126]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b9084c5cf1esm317330666b.7.2026.02.23.05.23.29
+ a640c23a62f3a-b9084e87c92sm329744566b.45.2026.02.23.05.35.41
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 23 Feb 2026 05:23:29 -0800 (PST)
+ Mon, 23 Feb 2026 05:35:42 -0800 (PST)
 Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id DFAFA5F88E;
- Mon, 23 Feb 2026 13:23:28 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 37B4E5F88E;
+ Mon, 23 Feb 2026 13:35:41 +0000 (GMT)
 From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Thomas Huth <thuth@redhat.com>
-Cc: Ruslan Ruslichenko <ruslichenko.r@gmail.com>,  qemu-devel@nongnu.org,
- qemu-arm@nongnu.org,  peter.maydell@linaro.org,  artem_mygaiev@epam.com,
- volodymyr_babchuk@epam.com,  takahiro.nakata.wr@renesas.com,  "Edgar E .
- Iglesias" <edgar.iglesias@gmail.com>,  Ruslan_Ruslichenko@epam.com,
- balaton@eik.bme.hu,  philmd@linaro.org,  wangyanan55@huawei.com,
- zhao1.liu@intel.com,  pbonzini@redhat.com
-Subject: Re: [PATCH v2 19/33] hw/core/machine: add '-hw-dtb' option for machine
-In-Reply-To: <dd8a92cc-51d6-4404-bd09-75b1798f925a@redhat.com> (Thomas Huth's
- message of "Mon, 23 Feb 2026 10:04:40 +0100")
-References: <20260219143332.3316679-1-ruslichenko.r@gmail.com>
- <20260219144901.3317747-1-ruslichenko.r@gmail.com>
- <dd8a92cc-51d6-4404-bd09-75b1798f925a@redhat.com>
+To: Gleb Popov <arrowd@freebsd.org>
+Cc: qemu-devel@nongnu.org
+Subject: Re: Upstreaming of the Elbrus2000 architecture support
+In-Reply-To: <CALH631=92UznqkD25FszdAAFdm_0GAvpM-m1qYW1yeyQ1Lm6Kg@mail.gmail.com>
+ (Gleb Popov's message of "Mon, 23 Feb 2026 10:44:34 +0300")
+References: <CALH631=92UznqkD25FszdAAFdm_0GAvpM-m1qYW1yeyQ1Lm6Kg@mail.gmail.com>
 User-Agent: mu4e 1.14.0-pre1; emacs 30.1
-Date: Mon, 23 Feb 2026 13:23:28 +0000
-Message-ID: <87y0kj4mr3.fsf@draig.linaro.org>
+Date: Mon, 23 Feb 2026 13:35:41 +0000
+Message-ID: <87sear4m6q.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::529;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x529.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::632;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,93 +104,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Thomas Huth <thuth@redhat.com> writes:
+Gleb Popov <arrowd@freebsd.org> writes:
 
->  Hi!
+> Hello QEMU devs.
 >
-> On 19/02/2026 15.48, Ruslan Ruslichenko wrote:
->> From: Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
->> Add new '-hw-dtb' command-line option and corresponding
->> MachineState property.
->> The 'hw-dtb' option allows to specify a Device tree
->> binary with hardware description which Qemu should
->> emulate.
->> Signed-off-by: Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
->> ---
->>   hw/core/machine.c        | 19 +++++++++++++++++++
->>   include/hw/core/boards.h |  1 +
->>   qemu-options.hx          |  9 +++++++++
->>   system/vl.c              |  3 +++
->>   4 files changed, 32 insertions(+)
->> diff --git a/hw/core/machine.c b/hw/core/machine.c
->> index d4ef620c17..affd24cd49 100644
->> --- a/hw/core/machine.c
->> +++ b/hw/core/machine.c
->> @@ -363,6 +363,20 @@ static void machine_set_dtb(Object *obj, const char=
- *value, Error **errp)
->>       ms->dtb =3D g_strdup(value);
->>   }
->>   +static char *machine_get_hw_dtb(Object *obj, Error **errp)
->> +{
->> +    MachineState *ms =3D MACHINE(obj);
->> +
->> +    return g_strdup(ms->hw_dtb);
->> +}
->> +
->> +static void machine_set_hw_dtb(Object *obj, const char *value, Error **=
-errp)
->> +{
->> +    MachineState *ms =3D MACHINE(obj);
->> +
->> +    ms->hw_dtb =3D g_strdup(value);
->> +}
->> +
->>   static char *machine_get_dumpdtb(Object *obj, Error **errp)
->>   {
->>       MachineState *ms =3D MACHINE(obj);
->> @@ -1145,6 +1159,11 @@ static void machine_class_init(ObjectClass *oc, c=
-onst void *data)
->>       object_class_property_set_description(oc, "dtb",
->>           "Linux kernel device tree file");
->>   +    object_class_property_add_str(oc, "hw-dtb",
->> +                            machine_get_hw_dtb, machine_set_hw_dtb);
->> +    object_class_property_set_description(oc, "hw-dtb",
->> +                "A device tree binary used to describe the hardware to =
-QEMU");
+> MCST, a company behind the Elbrus2000 (e2k) architecture has
+> open-sourced their QEMU fork that features e2k support [1]. I
+> volunteered to help them get their work merged upstream. I realize
+> that it might take a decent amount of time and labor, but I'm fully
+> committed to this. On the MCST part they dispatched a developer team
+> (CCed) to help in reviewing, answer questions and provide future code
+> maintenance once it gets merged.
 >
-> Do the hardware dtbs differ from the ones that are passed to the Linux
-> kernel? If not, I think you likely could use the existing "dtb"
-> property for your new feature?
+> So, if the whole idea sounds interesting to the QEMU community, what
+> would be our first steps?
 
-They have to - the normal DTB cannot define the whole system because its
-only concerned with reporting what the kernel can see to the kernel and
-not defining the whole system including what the firmware sees.
+I think your first problem is finding people that can review and merge
+the code. As MCST is on the sanctions list a potentially large section
+of the regular contributors can't be involved in code review.
+
+You may find a maintainer willing to process the PRs after they have
+been reviewed but IANAL so check with your own counsel. It would be
+worth making sure you have a plan before investing a lot of work into
+re-basing and posting.=20
 
 >
-> ...
->> diff --git a/qemu-options.hx b/qemu-options.hx
->> index 33fcfe7ce6..1568f3ce4c 100644
->> --- a/qemu-options.hx
->> +++ b/qemu-options.hx
->> @@ -4518,6 +4518,15 @@ SRST(initrd)
->>     ERST
->>   +DEF("hw-dtb", HAS_ARG, QEMU_OPTION_hw_dtb, \
->> +    "-hw-dtb file    use 'file' as device tree image\n", QEMU_ARCH_ALL)
->> +SRST
->> +``-hw-dtb file``
->> +    Use <file> as a device tree binary (dtb) image used to create the
->> +    emulated machine. This dtb will not be passed to the kernel, use -d=
-tb
->> +    for that.
->> +ERST
->
-> Please don't add any new top level options if it is not really
-> necessary. We already got too much duplicated logic in QEMU, so we try
-> to avoid this nowadays. In your case here, it should be fine to simply
-> configure the hw-dtb via the -machine property.
->
->  Thanks,
->   Thomas
+> [1] https://git.openelbrus.ru/mcst/qemu
 
 --=20
 Alex Benn=C3=A9e
