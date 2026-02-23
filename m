@@ -4,90 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 394E9EC110C
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 17:13:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44A65EC1112
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 17:13:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuZKJ-0001PM-Fp; Mon, 23 Feb 2026 12:02:31 -0500
+	id 1vuZM4-00049O-20; Mon, 23 Feb 2026 12:04:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vuZKE-0001Kg-Q1
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 12:02:26 -0500
-Received: from mail-wm1-x342.google.com ([2a00:1450:4864:20::342])
+ id 1vuZKz-0002eP-CA
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 12:03:17 -0500
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vuZKC-00005K-Tn
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 12:02:26 -0500
-Received: by mail-wm1-x342.google.com with SMTP id
- 5b1f17b1804b1-4837f27cf2dso39206455e9.2
- for <qemu-devel@nongnu.org>; Mon, 23 Feb 2026 09:02:24 -0800 (PST)
+ id 1vuZKw-0000NY-5n
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 12:03:12 -0500
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-482f454be5bso50776755e9.0
+ for <qemu-devel@nongnu.org>; Mon, 23 Feb 2026 09:03:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771866143; x=1772470943; darn=nongnu.org;
+ d=linaro.org; s=google; t=1771866189; x=1772470989; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=pqW9rM/0GD/85HW/dEUCbk4fqpodu9kP2QyiPy7FS58=;
- b=SqkqXLQq8NXEXv52hTgd4P71TPmdd9I8TvJfBGz4Rqsm2idEKwOhQhPsy2vX+eAIwG
- gjjk7ua6KWDqUB4tXcBxBYRDU4TWG+Vf4ZCslwFxQIlsyoZSNxXEw2jWgd2DckihVv5e
- h8PsxBjBQs/RGReEW3jk/HwblbEqPvM//tIW6LFDLCrkaY1b9yoQwAJ3NhQ70r0TN80d
- g0tHSkeYfIQ5ZuaRw8ja4odVcpyvjSUeaMnJ1O0fYTTru3Upu2z1CyTcgo+QuF5G24M5
- jqX9x/CqNTUd/QnLSoL2FfG5Z79wHkf1FhfkPQxvNgGJ17DPIbaRHZbz2XhPq2FdtmQo
- aHkw==
+ :reply-to; bh=MdqR4vhujZdCIee6J+u4O26y6fOSqJ7/xzfHb6eSoPU=;
+ b=IY4s16KgSvmOVsWtqYBgYlMK/KL25S0Qwkh+yF8p13FnRQpDMt5rVSDgz+74dTk/Tp
+ U4jkkQVDeQCgOP4gxfK58zfNQHcxEmCMJUaL6WkjdHCCdP1NWjUARVYcELGdzuQTycaK
+ PeaU/fdKOXNZX/LoGC2w2zs7UOO3/ImAA3UnCPWT+GLm+dE4hwXJZSq0N94wUsCj24FU
+ ar6kKIgOBfrg0OcAJWuW4WJiGu87WlK2uptPmvU+EbQPE5KsUMfFsh1A7vXVR9zu/Hzg
+ qSE5fW+W6PkCFvO4vMQzX//ikofrq3TpuwNam/G2E52e0BaDSU9poq8Ke1A4qDngD2v6
+ i/9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771866143; x=1772470943;
+ d=1e100.net; s=20230601; t=1771866189; x=1772470989;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=pqW9rM/0GD/85HW/dEUCbk4fqpodu9kP2QyiPy7FS58=;
- b=Ja2ufsW6OY8HwAl7uRYKSetmbBw7w/PKqoahCdyrtLYZ7dScsItRQc7VC4IRg4lyBL
- ElI3Mf8RNGzTfc0nK9m7dVeIpX4mqWpJuSK0YJ034ozXArl40UjBAPBUp5VfT3fCPj37
- jxBEGcSwDS4DMLhXTUGPOFX8TjT5QwV+sKAOOWy3ijbxotukcp5MfWL7N2XqF/Yv/V90
- 90E+0sNYeLT15kqUEQ2123MDjg3PK/cDgToJG7Nj1PAfz73oWaTFzxwHXw13ovZ7H6mG
- g2W8gzWIxDEFTvT8NqBOEON0lObLX55faYwbUiDNTCq/yMhXvxEZ++0fau1jShroZHes
- kPVw==
+ bh=MdqR4vhujZdCIee6J+u4O26y6fOSqJ7/xzfHb6eSoPU=;
+ b=QFi+QLw/N6LF8dAgW4NcnGTfR3zxRPntiXNZIOvyNf8XR8VVazwEPGdCRi/jGJSE4r
+ nyBoyTwxr/NrUh892YpfDJy+pwos0jLslgmr8cpe7D1sTG5Qj3STkhpMwv25Htn8STpu
+ 6dJXQYnKUkUP7Q0WeUv7w+0oRsWkFQIgZYKhDPq7dIRSmjY+3bdG4ZQ4hfsIfXxLG/hm
+ J4Z4jh0BL7mHqitLEijLCL+Wc9RLXitBukrWb0eLB0Ax1hmZPtGXpGYSf41YFRTSm0HI
+ YTbPZ2D+7xGCiTQnyn0TmV4QHETcs94CK7xAyJuTrbCszSLTwoAUkbNOZrhedKw/glYQ
+ yzzg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXT3bWXiysCWqFM9PeydjvsQHURytj5kU7go7GbXePc8CzcEFNDqx71gb0Qp9y3+tKrccm+Xm1IIHtC@nongnu.org
-X-Gm-Message-State: AOJu0Yx7caJXcZNT7B4x/VmPcCdHHuoEOfO2TnlaCQNCy5yOIiYkJxrX
- G3wWv3B6KeB0yq+j5nEVOrB9h3k4Nv6I9ehILL8sVBkWMga9JIGM7mAE5jkg6rZz1h8qRGD7+xO
- 2B/Ygp6g=
-X-Gm-Gg: AZuq6aJg0QkjK6oQm3IwHow20QNlgcwUEN01tLT7f8IOHYQKpZtn9dTO816tR03Vbqr
- NB3mx3U02VM1fMZ7XZlQf1xBquZ6N9IpOBHJxO5iTXQiH22uX1kGPYZin9oNiH+hrtz990AmTmz
- zxQc/2k/9cpIm6cI20iw2UZhAi/CXJ+pvCmEgTmzJ6q/eMW/SLyI3Z/oXXzMSo4+u6t8OHHMoGo
- DVxtEh7soBP+6thzot0FwqrdxpHtt8eW5wEAd+kHp6Ut9b8meUwjacM+6rc8hqpiobT8zlnQorc
- Z6CvVGVg7UKzLo9Ol1srtcouTNStGPn9LLjXlS7PnX41SgFjp3tg6EO/v+xb5VClXUxchoB0HRw
- 8Xxxv/H+1DdGK9aamvDwscS/tATjkc0BKuPXIjBpoyjM+daaLWXElqBpb4s6cl45vksO6sHpnBk
- wMz/991r25Wpaza8ebmsu5knhWXYq0u4exhSaPcsjZBQ3DWYOdq1J6wahU18t4fro7q3s+qAjt4
- YkRaXziEihv9dbF7wQT2SRM8iUKY7k=
-X-Received: by 2002:a05:600c:1386:b0:475:da1a:53f9 with SMTP id
- 5b1f17b1804b1-483a96087d8mr171816225e9.14.1771866143092; 
- Mon, 23 Feb 2026 09:02:23 -0800 (PST)
+ AJvYcCXFkYezvwAc/UlrLD9YBXoHqSjByKjIswbTCS8E7KvnktVmY7cKCn9ADvdrlgChCeBY1FJf4oFWkAxM@nongnu.org
+X-Gm-Message-State: AOJu0YyjAdrnhXBG0ngLmtLuItXCANrcisNsHLrsvL3HFL3DPKrEPYp+
+ nr/YEoGa9sAMe8fD9xkxRz+IhAAcf/3qMggSpX1GIDyKGoby6uK+w/kXxSNB+MGogG7WrS2VZNn
+ 0+wRa
+X-Gm-Gg: AZuq6aK+Gljf4EINqQf8ht0AbFw5yprrhOdSYqGlP6aFXVv+UOd3ade/PauVmPZPna5
+ l8dKNTjZ/zIjuP/X4LYBAMMcclNqqrTxAva5FtMS1LCKwi8pojrPd6zJBDxeduwxgR3nSHUkqdz
+ d0AmZ7McGU6+8wBfg6Lop1ubazxlELSeuEO0OQXQ97aLNSgb98KkAlesbGHdKb1DQsWv2qhXklC
+ cM3upEWXfzTMbEeRcN7syHQujgz7nqqijNlAdWmaFeIXVr/fQPk085xgc6QqCmnUs1Of+i4YAdm
+ K9F8FR04gkaKHUULUPldjaQkqndo1GLM2X1hsxMHIOm91HbctG7z0d7qFQWZNSJoCQuXHR8+X3a
+ gEcRT5oZkjnVp/bT8v6dcdCTfSu0FSblzPh9+NOLkS4dZKrnWsKq30kSIQq81UnGWvyQ3uyJpa/
+ KlG8LNSWWCCyw5MSfkAvfY2jfmBkr7SQrUysyzj8lOqvUaPyicS4SCYx75oXdG37NBc4btdSUM3
+ OiA+p8DZDafy0KoUkBGK4XEl/jXoz8=
+X-Received: by 2002:a05:600c:4f13:b0:483:7b99:131d with SMTP id
+ 5b1f17b1804b1-483a94d9b6cmr199133845e9.16.1771866188652; 
+ Mon, 23 Feb 2026 09:03:08 -0800 (PST)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-483a9b21ceasm200155625e9.0.2026.02.23.09.02.22
+ 5b1f17b1804b1-483a9b21ceasm200155625e9.0.2026.02.23.09.03.07
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 23 Feb 2026 09:02:22 -0800 (PST)
+ Mon, 23 Feb 2026 09:03:07 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Subject: [PATCH 08/65] hw/intc/arm_gicv5: Define macros for config frame
- registers
-Date: Mon, 23 Feb 2026 17:01:15 +0000
-Message-ID: <20260223170212.441276-9-peter.maydell@linaro.org>
+Subject: [PATCH 48/65] target/arm: GICv5 cpuif: Implement GIC CDEOI
+Date: Mon, 23 Feb 2026 17:01:55 +0000
+Message-ID: <20260223170212.441276-49-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260223170212.441276-1-peter.maydell@linaro.org>
 References: <20260223170212.441276-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::342;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x342.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UPPERCASE_50_75=0.008 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,275 +102,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Define constants for the various registers in the IRS config frame
-using the REG and FIELD macros.
+Implement the GIC CDEOI instruction, which performs a "priority
+drop", clearing the highest set bit in the APR register.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/intc/arm_gicv5.c | 243 ++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 243 insertions(+)
+ target/arm/tcg/gicv5-cpuif.c | 21 +++++++++++++++++++++
+ target/arm/tcg/trace-events  |  1 +
+ 2 files changed, 22 insertions(+)
 
-diff --git a/hw/intc/arm_gicv5.c b/hw/intc/arm_gicv5.c
-index 7ef48bb450..db754e7681 100644
---- a/hw/intc/arm_gicv5.c
-+++ b/hw/intc/arm_gicv5.c
-@@ -7,6 +7,7 @@
-  */
+diff --git a/target/arm/tcg/gicv5-cpuif.c b/target/arm/tcg/gicv5-cpuif.c
+index d32263a5b7..c830938bdc 100644
+--- a/target/arm/tcg/gicv5-cpuif.c
++++ b/target/arm/tcg/gicv5-cpuif.c
+@@ -556,6 +556,22 @@ static uint64_t gicr_cdia_read(CPUARMState *env, const ARMCPRegInfo *ri)
+     return hppi.intid | R_GICR_CDIA_VALID_MASK;
+ }
  
- #include "qemu/osdep.h"
-+#include "hw/core/registerfields.h"
- #include "hw/intc/arm_gicv5.h"
- #include "qapi/error.h"
- #include "qemu/log.h"
-@@ -22,6 +23,248 @@ static const char *domain_name[] = {
-     [GICV5_ID_REALM] = "Realm",
- };
- 
-+REG32(IRS_IDR0, 0x0)
-+    FIELD(IRS_IDR0, INT_DOM, 0, 2)
-+    FIELD(IRS_IDR0, PA_RANGE, 2, 5)
-+    FIELD(IRS_IDR0, VIRT, 6, 1)
-+    FIELD(IRS_IDR0, ONE_N, 7, 1)
-+    FIELD(IRS_IDR0, VIRT_ONE_N, 8, 1)
-+    FIELD(IRS_IDR0, SETLPI, 9, 1)
-+    FIELD(IRS_IDR0, MEC, 10, 1)
-+    FIELD(IRS_IDR0, MPAM, 11, 1)
-+    FIELD(IRS_IDR0, SWE, 12, 1)
-+    FIELD(IRS_IDR0, IRSID, 16, 16)
++static void gic_cdeoi_write(CPUARMState *env, const ARMCPRegInfo *ri,
++                            uint64_t value)
++{
++    /*
++     * Perform Priority Drop in the current interrupt domain.
++     * This is just clearing the lowest set bit in the APR.
++     */
++    GICv5Domain domain = gicv5_current_phys_domain(env);
++    uint64_t *apr = &env->gicv5_cpuif.icc_apr[domain];
 +
-+REG32(IRS_IDR1, 0x4)
-+    FIELD(IRS_IDR1, PE_CNT, 0, 16)
-+    FIELD(IRS_IDR1, IAFFID_BITS, 16, 4)
-+    FIELD(IRS_IDR1, PRI_BITS, 20, 3)
++    trace_gicv5_cdeoi(domain);
 +
-+REG32(IRS_IDR2, 0x8)
-+    FIELD(IRS_IDR2, ID_BITS, 0, 5)
-+    FIELD(IRS_IDR2, LPI, 5, 1)
-+    FIELD(IRS_IDR2, MIN_LPI_ID_BITS, 6, 4)
-+    FIELD(IRS_IDR2, IST_LEVELS, 10, 1)
-+    FIELD(IRS_IDR2, IST_L2SZ, 11, 3)
-+    FIELD(IRS_IDR2, IST_MD, 14, 1)
-+    FIELD(IRS_IDR2, ISTMD_SZ, 15, 5)
++    /* clear lowest bit, doing nothing if already zero */
++    *apr &= *apr - 1;
++}
 +
-+REG32(IRS_IDR3, 0xc)
-+    FIELD(IRS_IDR3, VMD, 0, 1)
-+    FIELD(IRS_IDR3, VMD_SZ, 1, 4)
-+    FIELD(IRS_IDR3, VM_ID_BITS, 5, 5)
-+    FIELD(IRS_IDR3, VMT_LEVELS, 10, 1)
-+
-+REG32(IRS_IDR4, 0x10)
-+    FIELD(IRS_IDR4, VPED_SZ, 0, 6)
-+    FIELD(IRS_IDR4, VPE_ID_BITS, 6, 4)
-+
-+REG32(IRS_IDR5, 0x14)
-+    FIELD(IRS_IDR5, SPI_RANGE, 0, 25)
-+
-+REG32(IRS_IDR6, 0x18)
-+    FIELD(IRS_IDR6, SPI_IRS_RANGE, 0, 25)
-+
-+REG32(IRS_IDR7, 0x1c)
-+    FIELD(IRS_IDR7, SPI_BASE, 0, 24)
-+
-+REG32(IRS_IIDR, 0x40)
-+    FIELD(IRS_IIDR, IMPLEMENTER, 0, 12)
-+    FIELD(IRS_IIDR, REVISION, 12, 4)
-+    FIELD(IRS_IIDR, VARIANT, 16, 4)
-+    FIELD(IRS_IIDR, PRODUCTID, 20, 12)
-+
-+REG32(IRS_AIDR, 0x44)
-+    FIELD(IRS_AIDR, ARCHMINORREV, 0, 4)
-+    FIELD(IRS_AIDR, ARCHMAJORREV, 4, 4)
-+    FIELD(IRS_AIDR, COMPONENT, 8, 4)
-+
-+REG32(IRS_CR0, 0x80)
-+    FIELD(IRS_CR0, IRSEN, 0, 1)
-+    FIELD(IRS_CR0, IDLE, 1, 1)
-+
-+REG32(IRS_CR1, 0x84)
-+    FIELD(IRS_CR1, SH, 0, 2)
-+    FIELD(IRS_CR1, OC, 2, 2)
-+    FIELD(IRS_CR1, IC, 4, 2)
-+    FIELD(IRS_CR1, IST_RA, 6, 1)
-+    FIELD(IRS_CR1, IST_WA, 7, 1)
-+    FIELD(IRS_CR1, VMT_RA, 8, 1)
-+    FIELD(IRS_CR1, VMT_WA, 9, 1)
-+    FIELD(IRS_CR1, VPET_RA, 10, 1)
-+    FIELD(IRS_CR1, VPET_WA, 11, 1)
-+    FIELD(IRS_CR1, VMD_RA, 12, 1)
-+    FIELD(IRS_CR1, VMD_WA, 13, 1)
-+    FIELD(IRS_CR1, VPED_RA, 14, 1)
-+    FIELD(IRS_CR1, VPED_WA, 15, 1)
-+
-+REG32(IRS_SYNCR, 0xc0)
-+    FIELD(IRS_SYNCR, SYNC, 31, 1)
-+
-+REG32(IRS_SYNC_STATUSR, 0xc4)
-+    FIELD(IRS_SYNC_STATUSR, IDLE, 0, 1)
-+
-+REG64(IRS_SPI_VMR, 0x100)
-+    FIELD(IRS_SPI_VMR, VM_ID, 0, 16)
-+    FIELD(IRS_SPI_VMR, VIRT, 63, 1)
-+
-+REG32(IRS_SPI_SELR, 0x108)
-+    FIELD(IRS_SPI_SELR, ID, 0, 24)
-+
-+REG32(IRS_SPI_DOMAINR, 0x10c)
-+    FIELD(IRS_SPI_DOMAINR, DOMAIN, 0, 2)
-+
-+REG32(IRS_SPI_RESAMPLER, 0x110)
-+    FIELD(IRS_SPI_RESAMPLER, SPI_ID, 0, 24)
-+
-+REG32(IRS_SPI_CFGR, 0x114)
-+    FIELD(IRS_SPI_CFGR, TM, 0, 1)
-+
-+REG32(IRS_SPI_STATUSR, 0x118)
-+    FIELD(IRS_SPI_STATUSR, IDLE, 0, 1)
-+    FIELD(IRS_SPI_STATUSR, V, 1, 1)
-+
-+REG32(IRS_PE_SELR, 0x140)
-+    FIELD(IRS_PE_SELR, IAFFID, 0, 16)
-+
-+REG32(IRS_PE_STATUSR, 0x144)
-+    FIELD(IRS_PE_STATUSR, IDLE, 0, 1)
-+    FIELD(IRS_PE_STATUSR, V, 1, 1)
-+    FIELD(IRS_PE_STATUSR, ONLINE, 2, 1)
-+
-+REG32(IRS_PE_CR0, 0x148)
-+    FIELD(IRS_PE_CR0, DPS, 0, 1)
-+
-+REG64(IRS_IST_BASER, 0x180)
-+    FIELD(IRS_IST_BASER, VALID, 0, 1)
-+    FIELD(IRS_IST_BASER, ADDR, 6, 50)
-+
-+REG32(IRS_IST_CFGR, 0x190)
-+    FIELD(IRS_IST_CFGR, LPI_ID_BITS, 0, 5)
-+    FIELD(IRS_IST_CFGR, L2SZ, 5, 2)
-+    FIELD(IRS_IST_CFGR, ISTSZ, 7, 2)
-+    FIELD(IRS_IST_CFGR, STRUCTURE, 16, 1)
-+
-+REG32(IRS_IST_STATUSR, 0x194)
-+    FIELD(IRS_IST_STATUSR, IDLE, 0, 1)
-+
-+REG32(IRS_MAP_L2_ISTR, 0x1c0)
-+    FIELD(IRS_MAP_L2_ISTR, ID, 0, 24)
-+
-+REG64(IRS_VMT_BASER, 0x200)
-+    FIELD(IRS_VMT_BASER, VALID, 0, 1)
-+    FIELD(IRS_VMT_BASER, ADDR, 3, 53)
-+
-+REG32(IRS_VMT_CFGR, 0x210)
-+    FIELD(IRS_VMT_CFGR, VM_ID_BITS, 0, 5)
-+    FIELD(IRS_VMT_CFGR, STRUCTURE, 16, 1)
-+
-+REG32(IRS_VMT_STATUSR, 0x124)
-+    FIELD(IRS_VMT_STATUSR, IDLE, 0, 1)
-+
-+REG64(IRS_VPE_SELR, 0x240)
-+    FIELD(IRS_VPE_SELR, VM_ID, 0, 16)
-+    FIELD(IRS_VPE_SELR, VPE_ID, 32, 16)
-+    FIELD(IRS_VPE_SELR, S, 63, 1)
-+
-+REG64(IRS_VPE_DBR, 0x248)
-+    FIELD(IRS_VPE_DBR, INTID, 0, 24)
-+    FIELD(IRS_VPE_DBR, DBPM, 32, 5)
-+    FIELD(IRS_VPE_DBR, REQ_DB, 62, 1)
-+    FIELD(IRS_VPE_DBR, DBV, 63, 1)
-+
-+REG32(IRS_VPE_HPPIR, 0x250)
-+    FIELD(IRS_VPE_HPPIR, ID, 0, 24)
-+    FIELD(IRS_VPE_HPPIR, TYPE, 29, 3)
-+    FIELD(IRS_VPE_HPPIR, HPPIV, 32, 1)
-+
-+REG32(IRS_VPE_CR0, 0x258)
-+    FIELD(IRS_VPE_CR0, DPS, 0, 1)
-+
-+REG32(IRS_VPE_STATUSR, 0x25c)
-+    FIELD(IRS_VPE_STATUSR, IDLE, 0, 1)
-+    FIELD(IRS_VPE_STATUSR, V, 1, 1)
-+
-+REG64(IRS_VM_DBR, 0x280)
-+    FIELD(IRS_VM_DBR, VPE_ID, 0, 16)
-+    FIELD(IRS_VM_DBR, EN, 63, 1)
-+
-+REG32(IRS_VM_SELR, 0x288)
-+    FIELD(IRS_VM_SELR, VM_ID, 0, 16)
-+
-+REG32(IRS_VM_STATUSR, 0x28c)
-+    FIELD(IRS_VM_STATUSR, IDLE, 0, 1)
-+    FIELD(IRS_VM_STATUSR, V, 1, 1)
-+
-+REG64(IRS_VMAP_L2_VMTR, 0x2c0)
-+    FIELD(IRS_VMAP_L2_VMTR, VM_ID, 0, 16)
-+    FIELD(IRS_VMAP_L2_VMTR, M, 63, 1)
-+
-+REG64(IRS_VMAP_VMR, 0x2c8)
-+    FIELD(IRS_VMAP_VMR, VM_ID, 0, 16)
-+    FIELD(IRS_VMAP_VMR, U, 62, 1)
-+    FIELD(IRS_VMAP_VMR, M, 63, 1)
-+
-+REG64(IRS_VMAP_VISTR, 0x2d0)
-+    FIELD(IRS_VMAP_VISTR, TYPE, 29, 3)
-+    FIELD(IRS_VMAP_VISTR, VM_ID, 32, 16)
-+    FIELD(IRS_VMAP_VISTR, U, 62, 1)
-+    FIELD(IRS_VMAP_VISTR, M, 63, 1)
-+
-+REG64(IRS_VMAP_L2_VISTR, 0x2d8)
-+    FIELD(IRS_VMAP_L2_VISTR, ID, 0, 24)
-+    FIELD(IRS_VMAP_L2_VISTR, TYPE, 29, 3)
-+    FIELD(IRS_VMAP_L2_VISTR, VM_ID, 32, 16)
-+    FIELD(IRS_VMAP_L2_VISTR, M, 63, 1)
-+
-+REG64(IRS_VMAP_VPER, 0x2e0)
-+    FIELD(IRS_VMAP_VPER, VPE_ID, 0, 16)
-+    FIELD(IRS_VMAP_VPER, VM_ID, 32, 16)
-+    FIELD(IRS_VMAP_VPER, M, 63, 1)
-+
-+REG64(IRS_SAVE_VMR, 0x300)
-+    FIELD(IRS_SAVE_VMR, VM_ID, 0, 16)
-+    FIELD(IRS_SAVE_VMR, Q, 62, 1)
-+    FIELD(IRS_SAVE_VMR, S, 63, 1)
-+
-+REG32(IRS_SAVE_VM_STATUSR, 0x308)
-+    FIELD(IRS_SAVE_VM_STATUSR, IDLE, 0, 1)
-+    FIELD(IRS_SAVE_VM_STATUSR, Q, 1, 1)
-+
-+REG32(IRS_MEC_IDR, 0x340)
-+    FIELD(IRS_MEC_IDR, MECIDSIZE, 0, 4)
-+
-+REG32(IRS_MEC_MECID_R, 0x344)
-+    FIELD(IRS_MEC_MICID_R, MECID, 0, 16)
-+
-+REG32(IRS_MPAM_IDR, 0x380)
-+    FIELD(IRS_MPAM_IDR, PARTID_MAX, 0, 16)
-+    FIELD(IRS_MPAM_IDR, PMG_MAX, 16, 8)
-+    FIELD(IRS_MPAM_IDR, HAS_MPAM_SP, 24, 1)
-+
-+REG32(IRS_MPAM_PARTID_R, 0x384)
-+    FIELD(IRS_MPAM_IDR, PARTID, 0, 16)
-+    FIELD(IRS_MPAM_IDR, PMG, 16, 8)
-+    FIELD(IRS_MPAM_IDR, MPAM_SP, 24, 2)
-+    FIELD(IRS_MPAM_IDR, IDLE, 31, 1)
-+
-+REG64(IRS_SWERR_STATUSR, 0x3c0)
-+    FIELD(IRS_SWERR_STATUSR, V, 0, 1)
-+    FIELD(IRS_SWERR_STATUSR, S0V, 1, 1)
-+    FIELD(IRS_SWERR_STATUSR, S1V, 2, 1)
-+    FIELD(IRS_SWERR_STATUSR, OF, 3, 1)
-+    FIELD(IRS_SWERR_STATUSR, EC, 16, 8)
-+    FIELD(IRS_SWERR_STATUSR, IMP_EC, 24, 8)
-+
-+REG64(IRS_SWERR_SYNDROMER0, 0x3c8)
-+    FIELD(IRS_SWERR_SYNDROMER0, VM_ID, 0, 16)
-+    FIELD(IRS_SWERR_SYNDROMER0, ID, 32, 24)
-+    FIELD(IRS_SWERR_SYNDROMER0, TYPE, 60, 3)
-+    FIELD(IRS_SWERR_SYNDROMER0, VIRTUAL, 63, 1)
-+
-+REG64(IRS_SWERR_SYNDROMER1, 0x3d0)
-+    FIELD(IRS_SWERR_SYNDROMER2, ADDR, 3, 53)
-+
- static bool config_readl(GICv5 *s, GICv5Domain domain, hwaddr offset,
-                          uint64_t *data, MemTxAttrs attrs)
- {
+ static const ARMCPRegInfo gicv5_cpuif_reginfo[] = {
+     /*
+      * Barrier: wait until the effects of a cpuif system register
+@@ -608,6 +624,11 @@ static const ARMCPRegInfo gicv5_cpuif_reginfo[] = {
+         .access = PL1_W, .type = ARM_CP_IO | ARM_CP_NO_RAW,
+         .writefn = gic_cdrcfg_write,
+     },
++    {   .name = "GIC_CDEOI", .state = ARM_CP_STATE_AA64,
++        .opc0 = 1, .opc1 = 0, .crn = 12, .crm = 1, .opc2 = 7,
++        .access = PL1_W, .type = ARM_CP_IO | ARM_CP_NO_RAW,
++        .writefn = gic_cdeoi_write,
++    },
+     {   .name = "GIC_CDHM", .state = ARM_CP_STATE_AA64,
+         .opc0 = 1, .opc1 = 0, .crn = 12, .crm = 2, .opc2 = 1,
+         .access = PL1_W, .type = ARM_CP_IO | ARM_CP_NO_RAW,
+diff --git a/target/arm/tcg/trace-events b/target/arm/tcg/trace-events
+index 13e15cfcfc..fcb3106a96 100644
+--- a/target/arm/tcg/trace-events
++++ b/target/arm/tcg/trace-events
+@@ -5,3 +5,4 @@
+ gicv5_recalc_ppi_hppi(int domain, uint32_t id, uint8_t prio) "domain %d new PPI HPPI id 0x%x prio %u"
+ gicv5_gicr_cdia_fail(int domain, const char *reason) "domain %d CDIA attempt failed: %s"
+ gicv5_gicr_cdia(int domain, uint32_t id) "domain %d CDIA acknowledge of interrupt 0x%x"
++gicv5_cdeoi(int domain) "domain %d CDEOI performing priority drop"
 -- 
 2.43.0
 
