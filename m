@@ -4,114 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E16F4EC110A
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 16:40:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 423A8EC110C
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 16:56:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuYyc-0003WT-QU; Mon, 23 Feb 2026 11:40:06 -0500
+	id 1vuZDY-0007uF-0s; Mon, 23 Feb 2026 11:55:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vuYyY-0003Rt-U2
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 11:40:03 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vuYyW-0002no-Hp
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 11:40:02 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771864797;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=kJXFMYwdic1zLv2K/zs0VPeImwmkbfrGXrctjOCW2Qo=;
- b=MqXIDjep7I9rBdpJUzftSBtX9qStrlxrzzI4ayWOHsJv8kqOpcmeScNigNDNtn/z9GXYfx
- 1UwNahkwPyO9Q5X4BHqm0XKfy1VyP8JGfhBscl2SiYOaZSkwBO7bR5kY1+Cwc1rbG7O83C
- bSrbL/XyftkRSnggPJUmziQ2iNCKbMY=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-549-FM-mTIMQMZ2Pf-TaFg2fig-1; Mon,
- 23 Feb 2026 11:39:55 -0500
-X-MC-Unique: FM-mTIMQMZ2Pf-TaFg2fig-1
-X-Mimecast-MFC-AGG-ID: FM-mTIMQMZ2Pf-TaFg2fig_1771864795
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C9F521956094
- for <qemu-devel@nongnu.org>; Mon, 23 Feb 2026 16:39:54 +0000 (UTC)
-Received: from [10.45.224.205] (unknown [10.45.224.205])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 7605E1800370; Mon, 23 Feb 2026 16:39:52 +0000 (UTC)
-Message-ID: <14b67ce9-1b84-4bc5-aff3-05ebdee3ca6c@redhat.com>
-Date: Mon, 23 Feb 2026 17:39:51 +0100
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vuZDX-0007tz-6D
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 11:55:31 -0500
+Received: from mail-yx1-xb12f.google.com ([2607:f8b0:4864:20::b12f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vuZDV-0006Yd-LX
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 11:55:30 -0500
+Received: by mail-yx1-xb12f.google.com with SMTP id
+ 956f58d0204a3-64ad79dfb6eso4346171d50.0
+ for <qemu-devel@nongnu.org>; Mon, 23 Feb 2026 08:55:25 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1771865725; cv=none;
+ d=google.com; s=arc-20240605;
+ b=BN9y3GoKHEvqako8IxZK6FUHZumgTtH4N1wr72H3jq6HtJ5+xkdVadkXN/9sHZGK1Q
+ O3O8I77rqnOeTl0qErXeSEgZCbUltd5oOEUuksJyGyvTFMYd5gCgJUgDIa6bUf6HDkvp
+ sZYVwn5naSPT5/1N7zyLTnJ3eDdHFK8K79RsAKm3XyipvQvKQnTsSqAqX5wh1bUmkC3P
+ eeJ2CWkV8um/QaGoa0kT9up7+OzBFamknTRqky+M2OghgXMic5yVVoftLoR9cPPdiX4w
+ 3LZh6j/A5KaPyR/x0S1yIwsubVefOpAY/TA6joVKvf8D8niJna/5kkIaX4gqOEmISW2v
+ SljA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=aJepDSuRG1MllzOFwjurKwv8XHuiMn1syxh0MnWKU1k=;
+ fh=a48Yz94NrSN1VfxXFKxdHg5tRcnTkBUqJPewYKl8hN0=;
+ b=JktbEob93LWqq3Ly/PoVyqgDoxl9mxKy1K5IIB324h8uyoWABwLF5g4D7eAIWBPoe2
+ /+FQslUCHF0NG5G8RONxcL5K3k9dFTncQQL500K7+7K4Ud49kIa5uX65tgiqwuIxf8OZ
+ pFcW2pQLAtT/v74it6jA+ZjiEnqINB0Fpz2+xXOKIxEe1TlHketnQGDnnSAaKQ1LJjBf
+ NN6oJvGhx8oVDbW+w/MeWCurDrIp9COTLSZF/8Cls4BZOQ11pf6PikCETPJhGzKJ1DWT
+ c/cGU/xTGn4KITMPjoe5ap+sw/yZTsQfRhqWbSna+UeEJ9IxHQMd3bFQcfpukJFj3dVV
+ d5Hw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1771865725; x=1772470525; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=aJepDSuRG1MllzOFwjurKwv8XHuiMn1syxh0MnWKU1k=;
+ b=PqaRF4eZ1jQSs2xU5b0h3EEIyN2vp4Ktl38BVrmDpRXeQ3uxM/0IcnAQRzBZGcLv9o
+ NJKg+RbeWxyOts4fT/qBl8W/jO96pBdWbBdy4/sODqZUctI/Xcte1fEnir1hWKrGRtPu
+ KXinO0MfoqIOBSy8k0GSsar2L2ebC1fCe48gF5v8wwrJJbB+pKI/BSCh9CZr/lGJSNTn
+ gk1T0X44E2w2tYBP/ixLT8jxCkJhiyTTEhbFfEsG+Q9ubMulGIEZLH8QMc8njcy0QydV
+ IFWUrxB8o4pdMmr2tnN7zxutn8BbcbZ7JY70G5vRm19o0SyghAY3JiSRDA1Dp2ecqKKs
+ MgOw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1771865725; x=1772470525;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=aJepDSuRG1MllzOFwjurKwv8XHuiMn1syxh0MnWKU1k=;
+ b=jZ+1S7hx+ZA66XepZdXXf9051yr1GyPYVz+kGXPxUg/7pwdtOjnOKBAGt2NyQfb1pC
+ B0jDypPar8GhSGmViXb8ZSWhI3NSXNf6b+S2Uti/7vAwGvaSSh5X6KVtsK/mRyZR99f+
+ WIR4z8Qcy3uFmaSdvQDCQIQntV7d6r3NAhFWe0afS0na5D/eA6QYp9bIRce0PqnqJ7oN
+ zeDVxsR6YT+N84uyRxSAGhyM+dZLbwW2FDB+mPnMiJs+MOkvJChQAFGqGOFn4FFlVrqE
+ KTgPL4Ix3+Irs4P5KP1JZRxT6ch8xc30HK/r8wrkrP3qZE34iQ7k+BLXk0kSUjPu3iW5
+ mmgA==
+X-Gm-Message-State: AOJu0YyCEnqjnVQlKdEDXl8K5cH47z7LByw3t0mzE5MvxXTeeLpBFbMD
+ H0McqbaRDxPqnOJS4MkOZieZUIPUVPmxbzhWVTi3z3/5kesKtIxWknGj0uT6DFEK4vGM3uGWcrK
+ dfxndoJub5MZgMlKyt9r0qZkiLYprtT01SSjFH2xbeQ==
+X-Gm-Gg: ATEYQzw3K9d4G99c65r4oCAePZ1l0N7oJduau/TifxTCMcz2VhbFGhV3GMAbhYWeLhs
+ TbEQYN5Zo0WQdi+JFP/BEQZTgiL7sULTy8QCDtkk8ZiJQhfGX6lHZ6WnhqVYv9a7+80s2B53wnA
+ S1+DPCxYAYdM2UVIIy6XiIt836FCl2Byz2ADWWfdWYW3LSjrSusMBr8I4hHsF6R+DxLI1LtSP0H
+ 1OtcmBW47/6rVWB3dQc7yaa96cKwtBiymmx+eY6C1Tu4eqrUbAa2ENcM/88lNEpUVOg7RcxCXB5
+ pEG7fzIibH1GS3PdKQtiPdl1ELgZ9HOeUq/YbRrdfSjYCUF9ssrscjx6uYstZ7tGQ18=
+X-Received: by 2002:a05:690e:4190:b0:640:cc09:b7c8 with SMTP id
+ 956f58d0204a3-64c787d5a2cmr7291668d50.23.1771865724929; Mon, 23 Feb 2026
+ 08:55:24 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [qemu-web PATCH] Announce Google Summer of Code 2026
-To: Stefan Hajnoczi <stefanha@redhat.com>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>
-References: <20260220212012.1061595-1-stefanha@redhat.com>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20260220212012.1061595-1-stefanha@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -1
-X-Spam_score: -0.2
-X-Spam_bar: /
-X-Spam_report: (-0.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1.179, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.717,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20260223134731.2377432-1-marcandre.lureau@redhat.com>
+In-Reply-To: <20260223134731.2377432-1-marcandre.lureau@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 23 Feb 2026 16:55:13 +0000
+X-Gm-Features: AaiRm53zbyoOS-lqmS6AbGoyh7uNFq6kxa-d9yJU2oHuDaIzc9NjJcOg_lqFe_8
+Message-ID: <CAFEAcA9nzD4C1jZDJpCZThWuUVDOcX+DniE64Dyp3DZA2BxnrQ@mail.gmail.com>
+Subject: Re: [PULL v3 00/85] Audio patches
+To: marcandre.lureau@redhat.com
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,20 +115,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 20/02/2026 22.20, Stefan Hajnoczi wrote:
-> Let people know that QEMU is participating in Google Summer of Code so
-> that they can apply for an internship this summer.
-> 
-> Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
-> ---
->   _posts/2026-02-20-gsoc-2026.md | 37 ++++++++++++++++++++++++++++++++++
->   1 file changed, 37 insertions(+)
->   create mode 100644 _posts/2026-02-20-gsoc-2026.md
+On Mon, 23 Feb 2026 at 13:47, <marcandre.lureau@redhat.com> wrote:
+>
+> From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+>
+> The following changes since commit a6ec632dca8c7d10743aff29345e5e9e532422=
+8b:
+>
+>   Merge tag 'hw-misc-20260223' of https://github.com/philmd/qemu into sta=
+ging (2026-02-23 09:56:00 +0000)
+>
+> are available in the Git repository at:
+>
+>   https://gitlab.com/marcandre.lureau/qemu.git tags/audio-pull-request
+>
+> for you to fetch changes up to d256efe6edab8129efb4d68a603ad1032bbe96fa:
+>
+>   audio: fix leak of audio capture name (2026-02-23 14:38:22 +0100)
+>
+> ----------------------------------------------------------------
+> audio cleanups
+>
+> ----------------------------------------------------------------
 
-Thanks, applied:
 
-https://www.qemu.org/2026/02/20/gsoc-2026/
 
-  Thomas
+Applied, thanks.
 
+Please update the changelog at https://wiki.qemu.org/ChangeLog/11.0
+for any user-visible changes.
+
+-- PMM
 
