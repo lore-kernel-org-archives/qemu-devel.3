@@ -4,90 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF24EEC110E
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 17:19:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FB54EC110E
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 17:25:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuZaJ-0000dk-Jl; Mon, 23 Feb 2026 12:19:03 -0500
+	id 1vuZg9-0002aT-Rk; Mon, 23 Feb 2026 12:25:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adamhet@scaleway.com>)
- id 1vuZaG-0000dQ-Nw
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 12:19:01 -0500
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vuZg7-0002Zr-Nm
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 12:25:04 -0500
+Received: from mail-yx1-xb129.google.com ([2607:f8b0:4864:20::b129])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <adamhet@scaleway.com>)
- id 1vuZaE-0003Au-0A
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 12:19:00 -0500
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-43638a3330dso3889838f8f.0
- for <qemu-devel@nongnu.org>; Mon, 23 Feb 2026 09:18:56 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vuZg6-0004XR-57
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 12:25:03 -0500
+Received: by mail-yx1-xb129.google.com with SMTP id
+ 956f58d0204a3-649b1ca87ddso3984923d50.3
+ for <qemu-devel@nongnu.org>; Mon, 23 Feb 2026 09:25:01 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1771867501; cv=none;
+ d=google.com; s=arc-20240605;
+ b=TsRRv7Qmsf/raw93fG/I2hwTYKe6XlMUzZSCB+ihWCENpGwhoc2bL0DjHnJWPjjibd
+ PS3b8u22uRhfHjMTQad36FXbNjYdjOswZnBfmj/H7/7XZwPw0NZXGoMTPwu5b1RsJ+YI
+ CKsKdrWa/RxwNTsOzD/3kenxBH2DbGX+BmWPNyhcSWi/1jFgU1ou7dEmSO/lpI//zFqM
+ XBIfQRzH0QaGve0ZC4CdXZN1savOfeaJ0IsMU99s07YlnOjeacqSASIsEbnmUDaSQGYQ
+ ht7TjbTSeWf0BjTXUO+nh1ti5EHpvhnLlj8uoogviOY+iv22zeRhYuyzzf14bS8B7jEu
+ ce7Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+ :dkim-signature;
+ bh=aF4nLYer1W1Plh9seuNY1nlMdTk4JdT0Dd9anPkXhLg=;
+ fh=vhHRca6DjLNIDmBO0eNpW6l6b7rpPbRHjL/Jym+cKZo=;
+ b=BWktpr5ga0wl0HmSG+fi1AGqlu+nWektPwCc7Fg58h59tYNTxiQbGxUSCFElVbY9g6
+ U2PYH9Q646NsQlbs9vnORy6bZNmH5ov1/hRbA9y01vsKsb4+DpSGwYbvmjMQUcm2muDF
+ vEVhg/MVRaXspAGbYx9WIjCFe3Q2BDICM/m63UdJxi70aSmF/4TmZnczEm6tgkJ1ITAH
+ sdQvFT9zV+k0c09sLdgvHp29VBpDfj5SlvmifVLaZ3lBL54ebZNgmQ2aH92F9BEvgL/k
+ 05kqu1wd+PjO+JnNDFMik8dQ8O2KnfuNVFBlvLH0kByhMoYH69ZKhEbGh8XuHukSLcHX
+ Helw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=scaleway.com; s=google; t=1771867135; x=1772471935; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=26u4wdZEurQqzy8HQlEYLxXXChO8F/C4CHKbjyTE1vA=;
- b=WsjDdw2YqCO1GCzBlhVCR0LkzmF61GBjsQMNEDV2E0N5619m0rC6udKrO2JHsjF9bu
- tHJO2ew5SazxPrlcWsPuFbQ1bjKCsU7pQ6vp6xAEOYa3uXJIyx7+ovb1LoXgn30nRfjM
- KM0SZHNSYV3//sV8Ounu1g/ypCieHQtQW6LV9bVik4KHwwFpF6NTmlkc0CfGxA8PuvO3
- C+Pztr6qglZv9UZXOJEHeRB5pLlSHSgZn18O4Nk8E4f9K6/QURjTf1lrN2j0zB/vsacn
- 8evX3L5PEQyGyOLbwW9KNR9HnE4L0C1y87Blku+JK7Rm0Sek1rogGbjF9j7h9EJe/HES
- HGdg==
+ d=linaro.org; s=google; t=1771867501; x=1772472301; darn=nongnu.org;
+ h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=aF4nLYer1W1Plh9seuNY1nlMdTk4JdT0Dd9anPkXhLg=;
+ b=mQlfavWTMAvLLTQ6t31Xrm4XrF1gSMSH+j76/Cvo7BmgqNuH6r93PaXXVeBhdk/wHm
+ 5FyBg/COUjpL3SwZnxj5XZPaH5V5E/Xho7xBJEXJNuvsu6P4hR3Z2jRWwYPMfImeCh81
+ ME3m/Km05KjAsCWyZvcGoh9BQqV0okhyvXadFOuibuTbhijXXfo4xc3bp2E3N/9L99RQ
+ /PNNjI6NTg2pM/sRhQ9G8g30iwjtKox7tahRmHh+4bTPdyCjUEzEtiUzYm+N6IV62OgS
+ FJWKeBugRZ4AqlkEfKwhQ+RTfrmu2/k9/9zVox34Qm1sg9cO91i5pzdwb/HXsF7OF0sp
+ 6u8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771867135; x=1772471935;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=26u4wdZEurQqzy8HQlEYLxXXChO8F/C4CHKbjyTE1vA=;
- b=ldCdCbWPEJ0TGkUHZoJA8KNdmqoRf0MZLtHEr4R9KzBMLPZJ94WRGyatlSCDLDXi4W
- 6dH5pd9XLhOHJoGxTDqOgNiKEc5kbOkUYC9zSySer6XpsfjPjTfDoD9CKkaKkBXQQtCM
- Tc/qU3J305gJojQ7axuDsBG6TXRI6w66G8Hzc08il5gc5DMCEHKKqmEEfirbuarVjIYM
- vLp8KBnrXUqGZRQ3qzu6ibgCWiLsz0hGaIMQ0OcwnuFVYd6pfitnOhw/gVkzc/TU56HV
- J4WK0VFvSAAKJ1FzhU/6E8Z+0SndzLRa5p3kszsDnEBsegKXevyafmDFE6TWevY3VHP5
- kX8g==
-X-Gm-Message-State: AOJu0YzJjp+2aEZ7hkHaKAc7rDjE1oyo0Y0CjxYksUuldMdUowMIYp2D
- CAKN/jS6v6dQPu5UYuSPX4wqXJmWc8BJRPOKeW0VG49Zlb4c2DVAS09RjECJM8kngYs=
-X-Gm-Gg: ATEYQzzUC/IhfqAjR8e0P2OtpNi10p0y1e6wKu07vdmHwBe1djeJmzBH4GTBEKBU0DX
- CqEBFz1qUlR01NPI1P7jKBrOIhyOE4rlgRB00LMKGuzOIJmchbAMCedI6efvpRYehqgg/oyRFzi
- M2p6xQm2gEeihQ990j8QqREbj3LTnm1C+Lvqg5M+S5yCAsyd5GCPyLOkpJ5nA/2006Lu+Ua44bB
- d2BD3zolOnUYapeEBuK3SOPxTw/tB5qFS4rHlU61MlIhwfUwZTz/NR3Lazx/Hgir19Xh/PFkm2M
- PsHotKg1JhRyw8RNYeIq12thoupKDTWj/dt36T0IIaVyy3kzGFo9Qn48SdAFixqg2gq9wID0cSK
- lJAI1jjniPtIu2aeIyjzA8n2C7fO17wQd9sp68aa4f/+3N6WXMg43XpObl1cF5q3EUeJm8LC4S/
- SM675q6QZDelJejy/zcDf/k6Raot7BUm2PIeTscb2768fY9Ige
-X-Received: by 2002:a05:6000:250a:b0:435:930a:658e with SMTP id
- ffacd0b85a97d-4396f185229mr18321877f8f.53.1771867135165; 
- Mon, 23 Feb 2026 09:18:55 -0800 (PST)
-Received: from localhost (710304585.box.freepro.com. [130.180.219.188])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43970d54c5csm20349421f8f.38.2026.02.23.09.18.54
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 23 Feb 2026 09:18:54 -0800 (PST)
-Date: Mon, 23 Feb 2026 18:18:50 +0100
-From: Antoine Damhet <adamhet@scaleway.com>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, 
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>, 
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, Eric Blake <eblake@redhat.com>
-Subject: Re: [PATCH 2/2] block/curl: add support for S3 presigned URLs
-Message-ID: <aZwXB5uY1a9cWlvg@wellsley>
-References: <20260212162730.440855-1-adamhet@scaleway.com>
- <20260212162730.440855-3-adamhet@scaleway.com>
- <878qcroio8.fsf@pond.sub.org>
+ d=1e100.net; s=20230601; t=1771867501; x=1772472301;
+ h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=aF4nLYer1W1Plh9seuNY1nlMdTk4JdT0Dd9anPkXhLg=;
+ b=OSlrj5RnoYRbKlg/CktNlZgqi2TejGWUy2blIphfUZlL7Bj1ZFdYFhoKSn6Q3yOpiM
+ 7mStzEfOCGt9bjSg3Szzdrozf2E7c4/8m2M+a20DPxNaWkcbpaJIn+nvLFtbtvFFbTgl
+ ee6o7Q9IojQe+nyWFOfWf/nLFPZ7FCv2BH9uETSX1Rimpa811tLSkrjI7sl1UUS9flg1
+ TfO5IjNGWbXmLAACitaaQvVN2yMan5Tvr4qyeukxy4miRpAdSoqC7c2/GHO820qk1PkX
+ QWqvVS7ET0JKrueKbu9pxEdHbf8/QglQY58pqHTjviJobXrd83kr8i8gYg4iKbqN+GkC
+ yz4A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUtw7wznQvol0FQ9ODl2Cff4BnN2CrVcJL+qNinTHh9atWyk8WQRif3EMUoPzynHME7DPklDMWznX5h@nongnu.org
+X-Gm-Message-State: AOJu0YziEBfhQrf08L4rdzeF58NTfO+5V9KSNFee+ZVvN60dk/PVcgap
+ e8CRZKMzHhCoqoypC5cobS5sHds5DvxteZf8JCIXPWMrze4/QcVvrcQE0VT4PBZYVItyZC8kKbc
+ xNA9HgvoObp+MaacBYjkS/QltELEJZLerluBAtCG0twyL0HrfoTpMpBM=
+X-Gm-Gg: ATEYQzw6vTT12zSZIVDuo/Y9OoVoxW8xkKsaxCfK0oD+npCLgYjvQi/AT/2QFmZqdnF
+ DhMMU2OOyzmA9kb6WPkaypK1p512Izvg3faOws26evlrHUnHDm0KUL6nZt8DsFBiWxnSr8J8JOE
+ pzAiLBD3yrm94mwe53UJUTVTiA5+jTSrTo67gvnNkt+hr7+4CIJR3/JZywcMhZKFySFpMsbj8TS
+ KZ+SDIzHWIlDwErJUjgUkt/LYZaoz5JjMZdqaun/3xhrxbuw8l1JQDPPLTuWcOKWXRnBCc2i75S
+ X4lb7cDWKALseF1GoRF91ZeIb1FcAB0qcRNWY4a7bx+7aRh0BBsPImRrIl0lTUbtH8s=
+X-Received: by 2002:a53:c589:0:b0:644:60d9:7514 with SMTP id
+ 956f58d0204a3-64c78f5ed96mr6173581d50.88.1771867500689; Mon, 23 Feb 2026
+ 09:25:00 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="s5ko24dehyyebxgk"
-Content-Disposition: inline
-In-Reply-To: <878qcroio8.fsf@pond.sub.org>
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=adamhet@scaleway.com; helo=mail-wr1-x42e.google.com
+References: <20260223170212.441276-1-peter.maydell@linaro.org>
+In-Reply-To: <20260223170212.441276-1-peter.maydell@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 23 Feb 2026 17:24:49 +0000
+X-Gm-Features: AaiRm51f0kcYPGySN4UXNcplzCOwp3QbERK55DXkVz-N5xuOxveUSTJWs1XpaTA
+Message-ID: <CAFEAcA9ciDOcF-jNa84QKxGFO27qgzpOn1TVVC+M28T_Ybh2MQ@mail.gmail.com>
+Subject: Re: [PATCH 00/65] arm: Implement an emulation of GICv5 interrupt
+ controller
+To: qemu-arm@nongnu.org, qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b129;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb129.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,157 +115,13 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Mon, 23 Feb 2026 at 17:02, Peter Maydell <peter.maydell@linaro.org> wrote:
+>
+> This patchset implements initial support of emulation of Arm's new
+> interrupt controller architecture, GICv5.
 
---s5ko24dehyyebxgk
-Content-Type: text/plain; protected-headers=v1; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [PATCH 2/2] block/curl: add support for S3 presigned URLs
-MIME-Version: 1.0
+...forgot to mention, but if you prefer a git tree you can find one at
+ https://gitlab.com/pm215/qemu/-/tree/gicv5-v1
 
-On Tue, Feb 17, 2026 at 09:53:11AM +0100, Markus Armbruster wrote:
-> Antoine Damhet <adamhet@scaleway.com> writes:
->=20
-> > S3 presigned URLs are signed for a specific HTTP method (typically GET
-> > for our use cases). The curl block driver currently issues a HEAD
-> > request to discover the backend features and the file size, which fails
-> > with 403.
-> >
-> > Add a 'force-range' option that skips the HEAD request and instead
-> > issues a minimal GET request (querying 1 byte from the server) to
-> > extract the file size from the 'Content-Range' response header. To
-> > achieve this the 'curl_header_cb' is redesigned to generically parse
-> > HTTP headers.
-> >
-> > $ $QEMU -drive driver=3Dhttp,\
-> >              'url=3Dhttps://s3.example.com/some.img?X-Amz-Security-Toke=
-n=3DXXX',
-> >              force-range=3Dtrue
-> >
-> > Enabling the 'force-range' option without the backend supporting it is
-> > undefined behavior and untested
->=20
-> "Undefined behavior" suggests it could do anything, even destroy data.
-> I hope that's not the case.  What is the case?
->=20
-> What is "the backend"?  The web server specified with @url?
-
-Undefined behavior was probably too strong of a wording. I have done way
-more tests and have a clearer picture of what happens:
-
-The web server for @url will respond with `HTTP 200` and try to send the
-whole file. Since we specified `CURLOPT_NOBODY` to the libcurl it stops
-reading the socket after the headers and justs shuts it down. The
-`force-range` mode is transparent for the user even if it can wastes a
-few TCP packets.
-
-I'll rewrite the commit message to reflect the actual behavior of the
-option in the v2.
-
->=20
-> >                                 but the libcurl should ignore the body
-> > and stop reading after the HTTP headers then we would fail with the
-> > expected `Server does not support 'range' (byte ranges).` error.
-> >
-> > Signed-off-by: Antoine Damhet <adamhet@scaleway.com>
-> > ---
->=20
-> [...]
->=20
-> > diff --git a/qapi/block-core.json b/qapi/block-core.json
-> > index b82af7425614..ff018c2d6bfb 100644
-> > --- a/qapi/block-core.json
-> > +++ b/qapi/block-core.json
-> > @@ -4582,12 +4582,17 @@
-> >  # @cookie-secret: ID of a QCryptoSecret object providing the cookie
-> >  #     data in a secure way.  See @cookie for the format.  (since 2.10)
-> >  #
-> > +# @force-range: Don't issue a HEAD HTTP request to discover if the
-> > +#     backend supports range requests and rely only on GET requests.
-> > +#     This is especially useful for S3 presigned URLs.  (since 11.0)
->=20
-> Unlike the commit message, this doesn't mention the need for "the
-> backend" (whatever that may be) supporting it.
-
-Will rephrase "the  backend" with "the http server". Should I document
-the behavior of the http server missing the range requests here or is
-the current description sufficient ?
-
->=20
-> > +#
-> >  # Since: 2.9
-> >  ##
-> >  { 'struct': 'BlockdevOptionsCurlHttp',
-> >    'base': 'BlockdevOptionsCurlBase',
-> >    'data': { '*cookie': 'str',
-> > -            '*cookie-secret': 'str'} }
-> > +            '*cookie-secret': 'str',
-> > +            '*force-range': 'bool'} }
-> > =20
-> >  ##
-> >  # @BlockdevOptionsCurlHttps:
-> > @@ -4605,13 +4610,18 @@
-> >  # @cookie-secret: ID of a QCryptoSecret object providing the cookie
-> >  #     data in a secure way.  See @cookie for the format.  (since 2.10)
-> >  #
-> > +# @force-range: Don't issue a HEAD HTTP request to discover if the
-> > +#     backend supports range requests and rely only on GET requests.
-> > +#     This is especially useful for S3 presigned URLs.  (since 11.0)
-> > +#
-> >  # Since: 2.9
-> >  ##
->=20
-> @force-range is is duplicated between BlockdevOptionsCurlHttp and
-> BlockdevOptionsCurlHttps.  @cookie and @cookie-secret is already
-> duplicated before the patch.  Time to factor out a common base type?
-
-This would be only on the QAPI ? looking something like:
-
-```
- { 'struct': 'BlockdevOptionsCurlHttps',
--  'base': 'BlockdevOptionsCurlBase',
--  'data': { '*cookie': 'str',
--            '*sslverify': 'bool',
--            '*cookie-secret': 'str',
--            '*force-range': 'bool'} }
-+  'base': 'BlockdevOptionsCurlHttp',
-+  'data': { '*sslverify': 'bool' } }
-```
-
-? Would you rather see this in a separate commit or is the same patch OK
-?
-
---=20
-Antoine 'xdbob' Damhet
-Engineer @scaleway
-
->=20
-> >  { 'struct': 'BlockdevOptionsCurlHttps',
-> >    'base': 'BlockdevOptionsCurlBase',
-> >    'data': { '*cookie': 'str',
-> >              '*sslverify': 'bool',
-> > -            '*cookie-secret': 'str'} }
-> > +            '*cookie-secret': 'str',
-> > +            '*force-range': 'bool'} }
-> > =20
-> >  ##
-> >  # @BlockdevOptionsCurlFtp:
->=20
-
---s5ko24dehyyebxgk
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEArm1WbQx2GmOsfF83AmjLzzljz4FAmmci/YACgkQ3AmjLzzl
-jz6K6wf/ZxOyaAZLokOcekJJixi3eo+BmLer/1VR5KNSCyL/1QPI+2xAw9F6Z2Ce
-hiwGjl4Bf/85Q1b+RpG7Y9wAsbKmPRPBYa0i3tXICDGkYenIdl1xYQwDwRyoKOLl
-8lO9n1JsitGFEa5Dfx7OHL8Qf2MYjgsbf4mSd6UXaOJV/sViSclSXHuNobm7LoVZ
-iWVkjCcQDBhRXTB1rDCjgqGxS573t0TCBBAWGMDSpjTjMRmCO0x4oq2IdaPK9oT9
-xuuGVVs5DKL1HFBDtPac/tiWq5GoTEYuGZcDbnwxDCvcbbJNPiRmaWmXxDqgN4fQ
-1bHWb6TUkdc8qi+ay9fWnxPBES/+xA==
-=yVqm
------END PGP SIGNATURE-----
-
---s5ko24dehyyebxgk--
+-- PMM
 
