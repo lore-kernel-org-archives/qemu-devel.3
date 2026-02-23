@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6D1EEC1112
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 17:07:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F4145EC1112
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 17:07:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuZM9-0004ZF-58; Mon, 23 Feb 2026 12:04:26 -0500
+	id 1vuZMf-000553-Af; Mon, 23 Feb 2026 12:04:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vuZLB-0002pj-Kh
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 12:03:28 -0500
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ id 1vuZLH-0002wt-3z
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 12:03:32 -0500
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vuZL8-0000RD-1b
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 12:03:24 -0500
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-48378136adcso27657965e9.1
- for <qemu-devel@nongnu.org>; Mon, 23 Feb 2026 09:03:18 -0800 (PST)
+ id 1vuZL9-0000SL-Ta
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 12:03:29 -0500
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-483487335c2so42254275e9.2
+ for <qemu-devel@nongnu.org>; Mon, 23 Feb 2026 09:03:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771866197; x=1772470997; darn=nongnu.org;
+ d=linaro.org; s=google; t=1771866199; x=1772470999; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=Aa0SLfc8fXsQ713SAbRbmhAS+wd4hTaQKfR4EPdmzFo=;
- b=uzsPBFvtVqWGzJof15XJF9AexqPBKXN+S2i9eHCZXyFkYZTE9K2F9LW5ebksM5ohYH
- Nu9S5XAy1NIj7Riq0j7Zav4DLmDzJzi/hlkIkKnmlnTH+X31BZWokTEoXcIR6IVZgAJ/
- jv/KtgHXjymVrRaXuVRx19erLt99mOpgZ3vRiGFPnIEuZgSucIKlHjfndgtF2lpoXDng
- ezUo8nY+cMlLC3WPjRtjJfoqnP1V+7jOXy9NrUf5CU3FoCws41AdirKMr1JvyrdtdYv6
- MqHHJN3lhNIa0IKV96VVvH0diOn+29U55wFP48192D6jb8PC20N5iKkuyPsEp4/qWEtJ
- ipTQ==
+ :reply-to; bh=CoqKRxhjDS2lI+Y53YNGJHUzkXH7stjgCG6VH65poHk=;
+ b=F7ORHXOGcVAMn2mLE+XsWIulVLu8F+QSWyH42y39NYs8/qmEVI0BakE0iAb0r2EwQ4
+ 7Y3xc2AkSpAqMhMNTaZ4ncl8UgB7pP+hlX+eavOJfr9x3ERiYak3TccNGzZD7oja2NP9
+ ld8fqQAkEOvAZF3SRKWwf3Dd8J9yz/PKrwuglm5ATfIr/WT6rznOboJi0GYhQUVWOOJ3
+ RyE+XPOwB1Jjqt6NSrbajK8BO4dCKtxk1SZRe+XVgbHpNtWWmZ6aZJS4nhBb/UjfDSuR
+ MBGMlF6jZhYGCogZpeHAMgvjkF8uKWzwaMHIR40zsMVkSb9I+3NzLC7t4TBDwZUvZUK0
+ y4iA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771866197; x=1772470997;
+ d=1e100.net; s=20230601; t=1771866199; x=1772470999;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=Aa0SLfc8fXsQ713SAbRbmhAS+wd4hTaQKfR4EPdmzFo=;
- b=SKT4vpZObEtOHeqszEpBBCgo0bMAzlT7xSdD8YIxS8acjCLnqThcnF6IjIWIS8jbs4
- 4OPXXC0H6NXypTWC1h2EAswGjE8f1n+cY2VUZO1GWELRNRxRnKbOsb1TQ0MPPLtHBEyN
- RTVslxdujauXpvpg86M2z3yzL0icdWd6EleUdBh2a9pYRO4mOjcjuMVvFm72ZfbLlRA8
- ZAJymm+ANkO1FVzvYaHblulp0GixO2WFgaW16dUcvNEjLDoTuLvpf/SV0fxq7p6q8RN6
- mCiqc70Mlr+la56gy0yGAuuh8eNbVP+zXilhWkYJRYBoCT+kZbJYK0XeWlvLTosOks1l
- jaaQ==
+ bh=CoqKRxhjDS2lI+Y53YNGJHUzkXH7stjgCG6VH65poHk=;
+ b=vX2Mu+umvqwfZQVtfXVK6bkNRcqHo/QZIUGaR9NsMWAdvQfzKn9oGq3YFKTNsX/qlt
+ V611p9MwXNsUo//w7l/uqq/vaF6FYDLy34OogFBGLEWKqZRLXCq0UImsekiUOhf3BHqA
+ UxBZAayynTEHMadXgNBMtX5ti3YmdhvC/GMmDsdNebyMjA9JyhfXaZXg1Db30eBGu2AT
+ Z0RV7ZuE/33yw3ci77oj7zV52kE4ORlfoyoYB9wliJMCOBUoOuxuLa1JkdHedTIixcyv
+ 0znM8rgXnsMzohOC0RlNoJ5Gk6Wk2n+qBE61WcTNTpICZqZxAyvXfcZwnQ2kvqnhh6UC
+ BrMA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXNYMZ/Xyuo/gtNxWWyhY/f0BsZd1qe6RCj4WvKDLl90k76x2w+qYHn8FQHByD3U6PPqNTQs6e4MS5P@nongnu.org
-X-Gm-Message-State: AOJu0Ywqvsw9btKfoUIjw7CxsoD1ABMqZZ7lwoEflHlvWlvQM+EZUfnf
- EPgZrIqGj5k9grtDpvyrLT7f18J0c2E4b12elo3IhnVMC8eMXTTEsTwLlPNV9lA6hY4=
-X-Gm-Gg: AZuq6aKSNolux6q49FR3ZI2g6qPuOetFubY/f60K32wW3AexfKWu749axMJqE/tIhUQ
- TWQNKqhZAYxSxjZ+5MaXpTGcktQ80vRXppNaoSpaUAqD1ew3x8YWMvu9EU7kjOGptF+I/nDjKxr
- K3f8c2rg5EaFVlZirFXryTS1ZmHNfNPr4H3WawUy0WaWSa6Qmaa8NbVV4Do2JOsr8M4EQYfyYhz
- SEIZbGu5gKw6LGG6VazG7VlhJYia5pst+zDYQEPzcm/ppGu+aLy/KQ0MAlmyG7id7DcO4n1vach
- zjl9DdEW6tuVCOHW2FFhk7+xr014fH75bhdKYzNYgJv3X+CIpSccsBF1SyArJ95zZHhZN1yjhKo
- OG7q0zQ37Ms/gqLUVCRExrIyIgGqD7Tg++mzbr8r/l6I+hZYYP8TMGkAJtu5pGCFNREFXMnryxl
- vtPQUsBzIwUTt+Jm60oBh8yqLP51pQ2mFoxCs9sYE2CkaqG5b3DSsAmoWzGL7KzHzzGJXD54msL
- QO6yOmiSPlWw2qJRZ4Q9wVoJwOth4c=
-X-Received: by 2002:a05:600c:350e:b0:477:2f7c:314f with SMTP id
- 5b1f17b1804b1-483a95f8af4mr145935825e9.10.1771866197155; 
- Mon, 23 Feb 2026 09:03:17 -0800 (PST)
+ AJvYcCVsx+5l2EO6mSeZI16OULGE/Cx1lOuugS3OR2sIubnxRQOggjcPQIu0vP7wpNr7+unUoQ/DI2GeLFDY@nongnu.org
+X-Gm-Message-State: AOJu0YyFoAqWx7PgD00yHPcMMO93Rt+BNnLhAsqEfh8HaYukOXSVkq5H
+ A/3X1lEjTwr6H7JZ0CTNxK4XNnw5sIcKKNn6MytswTRYUQJAnvkzGjP/Hce5IUTio8wZRA4I2Jc
+ ex2pa
+X-Gm-Gg: AZuq6aLV/H9j6zi62/sBq/TlWMvu3mTY1PvjBRmJvI7N44idge8WwnuH0mvDh1bCic0
+ xmoy8lSroZLJPeO400ch9BtPn7v6qcaqga1XblWx8obbe6/L07UMCymQzGtZ2CLnhhAk+bW62LJ
+ 9+OQrmEhcurk3en9d5pYjVfusA+J+8O7Mdl2o3cX4k7SfjL7JCBup4J8s4DVHF7t71KkrIe/HuU
+ PmtG4cB0U5f+RUgOv2DusEy+Uhj9CvMtb4gw3/qSNBYr+8ggQqgrsW5o0f411jkOMPDsvuKU7gy
+ Co32VKj4pZoIsmyAGsuRIAnwunAFoVGXgObSO2uzcitmo1WiDULSqSLfmp/s3spqVYfGT9FfDVD
+ LtT0cNYCpxseuq/ZnbfKShvfRDJbwS4OYcQmivg5axIp2DBjz9BdSG7SS+0hFk8aKEkN4d5CzcB
+ jE1jpEGtccpV//QHKXrAom++X5CEEM9dv6AfXlYl6/UaHxKfvnXxJDb50jQY3iW/oEf91lHjlrc
+ hCE2hs15p8Kiz63gZUvxDQy5lPbM8M=
+X-Received: by 2002:a05:600c:3b0a:b0:480:4ae2:def1 with SMTP id
+ 5b1f17b1804b1-483a95be7c9mr180051565e9.13.1771866199191; 
+ Mon, 23 Feb 2026 09:03:19 -0800 (PST)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-483a9b21ceasm200155625e9.0.2026.02.23.09.03.16
+ 5b1f17b1804b1-483a9b21ceasm200155625e9.0.2026.02.23.09.03.18
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 23 Feb 2026 09:03:16 -0800 (PST)
+ Mon, 23 Feb 2026 09:03:18 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Subject: [PATCH 57/65] hw/arm/virt: Move MSI controller creation out of
- create_gic()
-Date: Mon, 23 Feb 2026 17:02:04 +0000
-Message-ID: <20260223170212.441276-58-peter.maydell@linaro.org>
+Subject: [PATCH 59/65] hw/arm/virt: Split GICv2 and GICv3/4 creation
+Date: Mon, 23 Feb 2026 17:02:06 +0000
+Message-ID: <20260223170212.441276-60-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260223170212.441276-1-peter.maydell@linaro.org>
 References: <20260223170212.441276-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,52 +102,208 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The create_gic() function also creates the MSI controller; however
-there isn't really a strong linkage here, and for the GICv5 it will
-be more convenient to separate it out.  Move it to a new
-create_msi_controller() function.
+Currently create_gic() handles GICv2 and GICv3/4 in a single
+function, with large sections that are conditional on the
+vms->gic_version.  GICv5 will be different to both.
+
+Refactor into create_gicv2() and create_gicv3().
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/arm/virt.c | 15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
+ hw/arm/virt.c | 137 ++++++++++++++++++++++++++++++--------------------
+ 1 file changed, 82 insertions(+), 55 deletions(-)
 
 diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index 0d1032967c..3c318680f8 100644
+index ec6e49099a..3d19eb0fee 100644
 --- a/hw/arm/virt.c
 +++ b/hw/arm/virt.c
-@@ -959,11 +959,21 @@ static void create_gic(VirtMachineState *vms, MemoryRegion *mem)
-     }
- 
-     fdt_add_gic_node(vms);
-+}
- 
--    if (vms->msi_controller == VIRT_MSI_CTRL_ITS) {
-+static void create_msi_controller(VirtMachineState *vms)
-+{
-+    switch (vms->msi_controller) {
-+    case VIRT_MSI_CTRL_ITS:
-         create_its(vms);
--    } else if (vms->msi_controller == VIRT_MSI_CTRL_GICV2M) {
-+        break;
-+    case VIRT_MSI_CTRL_GICV2M:
-         create_v2m(vms);
-+        break;
-+    case VIRT_MSI_CTRL_NONE:
-+        break;
-+    default:
-+        g_assert_not_reached();
+@@ -863,26 +863,58 @@ static void gic_connect_ppis(VirtMachineState *vms)
      }
  }
  
-@@ -2515,6 +2525,7 @@ static void machvirt_init(MachineState *machine)
-     virt_flash_fdt(vms, sysmem, secure_sysmem ?: sysmem);
+-static void create_gic(VirtMachineState *vms, MemoryRegion *mem)
++static void create_gicv2(VirtMachineState *vms, MemoryRegion *mem)
++{
++    MachineState *ms = MACHINE(vms);
++    /* We create a standalone GIC */
++    SysBusDevice *gicbusdev;
++    unsigned int smp_cpus = ms->smp.cpus;
++
++    if (kvm_enabled() && vms->virt) {
++        error_report("KVM EL2 is only supported with in-kernel GICv3");
++        exit(1);
++    }
++
++    vms->gic = qdev_new(gic_class_name());
++    qdev_prop_set_uint32(vms->gic, "revision", 2);
++    qdev_prop_set_uint32(vms->gic, "num-cpu", smp_cpus);
++    /*
++     * Note that the num-irq property counts both internal and external
++     * interrupts; there are always 32 of the former (mandated by GIC spec).
++     */
++    qdev_prop_set_uint32(vms->gic, "num-irq", NUM_IRQS + 32);
++    if (!kvm_irqchip_in_kernel()) {
++        qdev_prop_set_bit(vms->gic, "has-security-extensions", vms->secure);
++        qdev_prop_set_bit(vms->gic, "has-virtualization-extensions", vms->virt);
++    }
++
++    gicbusdev = SYS_BUS_DEVICE(vms->gic);
++    sysbus_realize_and_unref(gicbusdev, &error_fatal);
++    sysbus_mmio_map(gicbusdev, 0, vms->memmap[VIRT_GIC_DIST].base);
++    sysbus_mmio_map(gicbusdev, 1, vms->memmap[VIRT_GIC_CPU].base);
++    if (vms->virt) {
++        sysbus_mmio_map(gicbusdev, 2, vms->memmap[VIRT_GIC_HYP].base);
++        sysbus_mmio_map(gicbusdev, 3, vms->memmap[VIRT_GIC_VCPU].base);
++    }
++
++    gic_connect_ppis(vms);
++
++    fdt_add_gic_node(vms);
++}
++
++static void create_gicv3(VirtMachineState *vms, MemoryRegion *mem)
+ {
+     MachineState *ms = MACHINE(vms);
+     /* We create a standalone GIC */
+     SysBusDevice *gicbusdev;
+-    const char *gictype;
+     unsigned int smp_cpus = ms->smp.cpus;
+     uint32_t nb_redist_regions = 0;
+     int revision;
+-
+-    if (vms->gic_version == VIRT_GIC_VERSION_2) {
+-        gictype = gic_class_name();
+-    } else {
+-        gictype = gicv3_class_name();
+-    }
++    QList *redist_region_count;
++    uint32_t redist0_capacity = virt_redist_capacity(vms, VIRT_GIC_REDIST);
++    uint32_t redist0_count = MIN(smp_cpus, redist0_capacity);
  
-     create_gic(vms, sysmem);
-+    create_msi_controller(vms);
+     switch (vms->gic_version) {
+-    case VIRT_GIC_VERSION_2:
+-        revision = 2;
+-        break;
+     case VIRT_GIC_VERSION_3:
+         revision = 3;
+         break;
+@@ -899,10 +931,11 @@ static void create_gic(VirtMachineState *vms, MemoryRegion *mem)
+         exit(1);
+     }
  
-     virt_post_cpus_gic_realized(vms, sysmem);
+-    vms->gic = qdev_new(gictype);
++    vms->gic = qdev_new(gicv3_class_name());
+     qdev_prop_set_uint32(vms->gic, "revision", revision);
+     qdev_prop_set_uint32(vms->gic, "num-cpu", smp_cpus);
+-    /* Note that the num-irq property counts both internal and external
++    /*
++     * Note that the num-irq property counts both internal and external
+      * interrupts; there are always 32 of the former (mandated by GIC spec).
+      */
+     qdev_prop_set_uint32(vms->gic, "num-irq", NUM_IRQS + 32);
+@@ -910,40 +943,28 @@ static void create_gic(VirtMachineState *vms, MemoryRegion *mem)
+         qdev_prop_set_bit(vms->gic, "has-security-extensions", vms->secure);
+     }
  
+-    if (vms->gic_version != VIRT_GIC_VERSION_2) {
+-        QList *redist_region_count;
+-        uint32_t redist0_capacity = virt_redist_capacity(vms, VIRT_GIC_REDIST);
+-        uint32_t redist0_count = MIN(smp_cpus, redist0_capacity);
++    nb_redist_regions = virt_gicv3_redist_region_count(vms);
+ 
+-        nb_redist_regions = virt_gicv3_redist_region_count(vms);
++    redist_region_count = qlist_new();
++    qlist_append_int(redist_region_count, redist0_count);
++    if (nb_redist_regions == 2) {
++        uint32_t redist1_capacity =
++            virt_redist_capacity(vms, VIRT_HIGH_GIC_REDIST2);
+ 
+-        redist_region_count = qlist_new();
+-        qlist_append_int(redist_region_count, redist0_count);
+-        if (nb_redist_regions == 2) {
+-            uint32_t redist1_capacity =
+-                virt_redist_capacity(vms, VIRT_HIGH_GIC_REDIST2);
++        qlist_append_int(redist_region_count,
++                         MIN(smp_cpus - redist0_count, redist1_capacity));
++    }
++    qdev_prop_set_array(vms->gic, "redist-region-count", redist_region_count);
+ 
+-            qlist_append_int(redist_region_count,
+-                MIN(smp_cpus - redist0_count, redist1_capacity));
+-        }
+-        qdev_prop_set_array(vms->gic, "redist-region-count",
+-                            redist_region_count);
+-
+-        if (!kvm_irqchip_in_kernel()) {
+-            if (vms->tcg_its) {
+-                object_property_set_link(OBJECT(vms->gic), "sysmem",
+-                                         OBJECT(mem), &error_fatal);
+-                qdev_prop_set_bit(vms->gic, "has-lpi", true);
+-            }
+-        } else if (vms->virt) {
+-            qdev_prop_set_uint32(vms->gic, "maintenance-interrupt-id",
+-                                 ARCH_GIC_MAINT_IRQ);
+-        }
+-    } else {
+-        if (!kvm_irqchip_in_kernel()) {
+-            qdev_prop_set_bit(vms->gic, "has-virtualization-extensions",
+-                              vms->virt);
++    if (!kvm_irqchip_in_kernel()) {
++        if (vms->tcg_its) {
++            object_property_set_link(OBJECT(vms->gic), "sysmem", OBJECT(mem),
++                                     &error_fatal);
++            qdev_prop_set_bit(vms->gic, "has-lpi", true);
+         }
++    } else if (vms->virt) {
++        qdev_prop_set_uint32(vms->gic, "maintenance-interrupt-id",
++                             ARCH_GIC_MAINT_IRQ);
+     }
+ 
+     if (gicv3_nmi_present(vms)) {
+@@ -953,18 +974,9 @@ static void create_gic(VirtMachineState *vms, MemoryRegion *mem)
+     gicbusdev = SYS_BUS_DEVICE(vms->gic);
+     sysbus_realize_and_unref(gicbusdev, &error_fatal);
+     sysbus_mmio_map(gicbusdev, 0, vms->memmap[VIRT_GIC_DIST].base);
+-    if (vms->gic_version != VIRT_GIC_VERSION_2) {
+-        sysbus_mmio_map(gicbusdev, 1, vms->memmap[VIRT_GIC_REDIST].base);
+-        if (nb_redist_regions == 2) {
+-            sysbus_mmio_map(gicbusdev, 2,
+-                            vms->memmap[VIRT_HIGH_GIC_REDIST2].base);
+-        }
+-    } else {
+-        sysbus_mmio_map(gicbusdev, 1, vms->memmap[VIRT_GIC_CPU].base);
+-        if (vms->virt) {
+-            sysbus_mmio_map(gicbusdev, 2, vms->memmap[VIRT_GIC_HYP].base);
+-            sysbus_mmio_map(gicbusdev, 3, vms->memmap[VIRT_GIC_VCPU].base);
+-        }
++    sysbus_mmio_map(gicbusdev, 1, vms->memmap[VIRT_GIC_REDIST].base);
++    if (nb_redist_regions == 2) {
++        sysbus_mmio_map(gicbusdev, 2, vms->memmap[VIRT_HIGH_GIC_REDIST2].base);
+     }
+ 
+     gic_connect_ppis(vms);
+@@ -972,6 +984,21 @@ static void create_gic(VirtMachineState *vms, MemoryRegion *mem)
+     fdt_add_gic_node(vms);
+ }
+ 
++static void create_gic(VirtMachineState *vms, MemoryRegion *mem)
++{
++    switch (vms->gic_version) {
++    case VIRT_GIC_VERSION_2:
++        create_gicv2(vms, mem);
++        break;
++    case VIRT_GIC_VERSION_3:
++    case VIRT_GIC_VERSION_4:
++        create_gicv3(vms, mem);
++        break;
++    default:
++        g_assert_not_reached();
++    }
++}
++
+ static void create_msi_controller(VirtMachineState *vms)
+ {
+     switch (vms->msi_controller) {
 -- 
 2.43.0
 
