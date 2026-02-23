@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88D4EEC110C
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 17:11:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CB60EC1115
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 17:11:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuZMh-000554-3X; Mon, 23 Feb 2026 12:04:59 -0500
+	id 1vuZKL-0001RD-1l; Mon, 23 Feb 2026 12:02:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vuZLH-0002ww-5h
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 12:03:32 -0500
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ id 1vuZKI-0001Or-U5
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 12:02:30 -0500
+Received: from mail-wm1-x343.google.com ([2a00:1450:4864:20::343])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vuZLB-0000Sy-AK
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 12:03:30 -0500
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-48374014a77so47458675e9.3
- for <qemu-devel@nongnu.org>; Mon, 23 Feb 2026 09:03:23 -0800 (PST)
+ id 1vuZKH-00007F-Fo
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 12:02:30 -0500
+Received: by mail-wm1-x343.google.com with SMTP id
+ 5b1f17b1804b1-48374014a77so47447265e9.3
+ for <qemu-devel@nongnu.org>; Mon, 23 Feb 2026 09:02:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771866202; x=1772471002; darn=nongnu.org;
+ d=linaro.org; s=google; t=1771866148; x=1772470948; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=xnLatPeKAUqiKYWLfB7xxZkhhx5vWjxgFw6UbAcOb1o=;
- b=nAI4tTixjMkYX72BZCq+KRXom+EnGvGzgrX/+cgGRtc3C8NB3Dd7GVBmQCHRuMDhh+
- ZHzKDB1nppfWVxx1hybS5pQ9jXvezI3K4scGBdmRW0vFZurG9SmOt2eu7IdHp4aUZsaI
- TkFPw6pyvjbfGG4xule4fTRdtUyQUtT1GZBB6H+xgN61XmnSAg+1tQxXhOnQiXa4NgDc
- e9zRi31KuhpTdOzipV1lKDT+BKAvkNudQK+oRye1q5AKncHslSn/sVsiG5ilOU2bTn1w
- +MnVq/J7MdPXY/bN5dNDZJDeEfM+Vn0+C705nmfyHggblEQx72/ohdiysCxTPjsf0y7x
- U3yA==
+ :reply-to; bh=ceChrM7CQ4Ylberwabnc+XrtHRBLvAP4BZtWSnP7bSk=;
+ b=RPf8I28jTmaDQcuIe4Sx2Z2PbVSLe173HQsfqWCDl36psZBP64lTe1E5XoWta2S/zH
+ LVcBeE1f89NGlcRf1RbPifxW4RrKS2lRpl/Gfjo7yOv+mfyA1+YuP83Z3dIQ3dx82fb8
+ tj3CF5oKltlMmnvczK+1BXPJaeHpUWAU9MYC1+b7xLDrO9jO0Phwpes9+uMjFpY9mjV2
+ sSOmJdaC+AUpLduv/htQtZf+TkoxuuFEA7vRtfuNQwmBS/EQlsYholcEohzXIMLoq7cN
+ +jm7WgsiutQIFwcU0Cw9hylj943/PnOwytIykpnuPGNhljga8NFDQ7hip0cUXyEOGWak
+ ZGww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771866202; x=1772471002;
+ d=1e100.net; s=20230601; t=1771866148; x=1772470948;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=xnLatPeKAUqiKYWLfB7xxZkhhx5vWjxgFw6UbAcOb1o=;
- b=oi7UtsJDmTnY3njZHiyHMb93ELjBdR/z5oG6oGFRAl0GBJKWHn8QJDENuc8geRrSGS
- VrtfvZ/0OaHAszLMfvLbDOIsNnzvxplvgzRuW3FPH8E/t5m/Je7zxF66izDON2+HXfTb
- rKjyoyzakrON9ygu3zYj5ninJLMPxKk6hjL0Z+4Xu3GFDZGrTbRYvUwZU3V/7fVhN2im
- cFaIVH2F+gWuS/G9AOkzvGJCGZPRaxtZGd0ZA0XmnHjmnZAt2xWB3lfNkcnNG2EAIlnW
- X3oA1U7ctl7o3xPNYfPKb/g1Lg7vl7D54KtQRCXkRTZ9ZQ1PgEpDjQGZrkSnZbZCoJWJ
- 8EqA==
+ bh=ceChrM7CQ4Ylberwabnc+XrtHRBLvAP4BZtWSnP7bSk=;
+ b=g3u0+sMCpJPbpZ4vzfyHQ3ZXDk8CoEGaFMNYlJJOar/eGJCsX8wV2TgBoxFE57D0hR
+ GPGg6OTvowhFmHGldGUvsp0LLhOqP2CZY22jl4XSdsI+akBX9+bC/ZI/LVP1Ck15O5zq
+ rma61+2uEgKc3IMXWBCSDJ9T/Jop2GUDFtg1NOGb7VcbCBhapiADz09x7dOTUNmmvl1y
+ LVVRH/Y1BZgoZXwN5lkvcq6HYHCebPmqnd1JO/benM6GPeNfTc1GUCQTtYCLjfSCMnPY
+ C7e8IYqQsHtn2WnzO/vyjiCVuHwkraYxXDtUcrWRFCk+jz8xDJqsZW40rGbFJQxZmHVt
+ KMTg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWlvsYF84qyy4OFPI6WDiHBqeFEgeB6Ry+SCwx+8lUaRxTVZQL+d7mXJWacobmv2s28O6ch/BpgGUG/@nongnu.org
-X-Gm-Message-State: AOJu0YzTbrLLYPcRDuRFFCLsY/A9Od//B8BQ7rbOx/AQ6drkrq4kuKr5
- zT6MIh4Crpa7c3lElzRgjGpMlaU9TvM0RfbBcFqiCQUiafoouSCzsIuYHRyr1s/w/TgsDlCmYcx
- WuG23
-X-Gm-Gg: AZuq6aIbuE/nTd6Z8eUuKnmjNWTA/wqfSMEkGNsa20/3NNYPYCUyiiOg2NoDt1oRdOn
- 6GF8WIO76m5MuEb8LOd9smFfJxn9Q1c14OFYsea9gRQUKi/mD/CpxiO3F70pwA+pD5i8Kf0IE0R
- qxBke8eA0FF97N8xdV7UqDvsO7uXksnq0LOiY6nt4wCA7rqclJn84w3l4Z2NxZJk8C5Q9srlDFG
- o860mtQR7tNUcHSzqC9ey6g3nY4me4lSgd1AC2evLMT4YJJYsgSKXxmmoMundEsFGY0OABgE02S
- pBgp8ollJSopHiRloBEPSDOWvypimcMgnaD7Z6U0RjFo1ycKGRWLGqZKvf/s4MkR4ZN4E5tPYwA
- H+aGnaC9e3NXAvZJMTMDpO+kKQ3QdEO0n3PzLIqI2JvMYlFB+t1kzSKmXVCJgtTRVEq4ks/tL1Q
- W6/SbcT6e0rO4G+7ep1rsZqQx87ENWkJDL+59icXSh4TaYZqWFevMsM16WLT8YQ23DlW+/VoyUa
- B7kS0l1lsJghxY3pN45LD396HTjNAg=
-X-Received: by 2002:a05:600c:1e1d:b0:480:6999:27ec with SMTP id
- 5b1f17b1804b1-483a95bebcdmr171943985e9.13.1771866202287; 
- Mon, 23 Feb 2026 09:03:22 -0800 (PST)
+ AJvYcCUOOEBZ7bXEry4rMSyNzhqSWy+CZlx5288h+Mgew/l7BQWWTYEo6oj/JhmUiWS4zAAsZN0r7aVtx4G3@nongnu.org
+X-Gm-Message-State: AOJu0YwcqWVOwOb2bD346NsjNpLFiKWDr/z1LKvmF8+Q6Hd0HXOnl8lA
+ 7dhDe+YoqA/VQF25xbloYd0M+45IROUvEIVlICDxvw4pMzNkdJkVEHZvdS7lCowc+30=
+X-Gm-Gg: AZuq6aIp5mvBkAkjVBr8C/VEzMaTabMS3XqwoppadDMPyV3FC+j+6TBjQuaHebAnlwL
+ fNx4r4sZzM/fk0g8ZHB/duScapO8YuP5LLDO42OX0ujEGOAU9EUz+zkXt3hvWnbv4xi31oooKuB
+ ywqozxA68xRnGlHl666zp9HMBYHbKXjMe5x9uETSXFie82s8VvndvWIMMVFZLavp7bSRbSJ3tI9
+ QC7m4jdrB83uLsp5QwPWWmXR+2UlLMHX+aXpEWDnTECaDbbMg9qTlJBDagc3OJHRZZSiwbkE+Ta
+ wl3EqAcYjPlcahivujTezqvO4pG5KeuRlpe3w8YSZFQz/LqcAp5aZAJb3QwNiKTaENwU/XxQB3r
+ zHdW4mJWg+ZdEXxC432t8GEftZu9GK/YCi+bv0MqlLDUhvvIDlcxnxqfFjYddUad0j1zi0C0ILh
+ np4OAvX+inpVxsu2LXVsGIGw0nuI/tpldnx88OtTBAPEV1tFXFyKoaBgA6aR70M2L7dLcUBlTSs
+ Jda61JPREMYPaW9cqbESa6Fm0mEetU=
+X-Received: by 2002:a05:600c:4452:b0:477:63b5:7148 with SMTP id
+ 5b1f17b1804b1-483a95a859dmr150164455e9.6.1771866147947; 
+ Mon, 23 Feb 2026 09:02:27 -0800 (PST)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-483a9b21ceasm200155625e9.0.2026.02.23.09.03.21
+ 5b1f17b1804b1-483a9b21ceasm200155625e9.0.2026.02.23.09.02.25
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 23 Feb 2026 09:03:21 -0800 (PST)
+ Mon, 23 Feb 2026 09:02:26 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Subject: [PATCH 62/65] hw/arm/virt: Handle GICv5 in interrupt bindings for PPIs
-Date: Mon, 23 Feb 2026 17:02:09 +0000
-Message-ID: <20260223170212.441276-63-peter.maydell@linaro.org>
+Subject: [PATCH 11/65] hw/intc/arm_gicv5: Implement gicv5_class_name()
+Date: Mon, 23 Feb 2026 17:01:18 +0000
+Message-ID: <20260223170212.441276-12-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260223170212.441276-1-peter.maydell@linaro.org>
 References: <20260223170212.441276-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::343;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x343.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,97 +101,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The GICv5 devicetree binding specifies the "interrupts" property
-differently to GICv2 and GICv3 for PPIs: the first field is the
-architectural INTID.TYPE, and the second is the architectural
-INTID.ID.  (The third field defining the level/edge trigger mode has
-the same values for GICv5 as it did for the older GICs.)
+Implement a gicv5_class_name() function that does the same job as
+gicv3_class_name(): allows board code to get the correct QOM type for
+the GIC at runtime depending on whether KVM is enabled or not.
 
-In the places in the virt board where we wire up PPIs (the timer and
-the PMU), handle the GICv5:
-
- * use the architectural constant GICV5_PPI for the type
- * use the architected GICv5 PPI numbers for the interrupt sources
-   (which differ from the old ones and don't need to be adjusted via
-   INTID_TO_PPI())
- * leave the irqflags as-is
-
-Add some commentary in our include/hw/arm/fdt.h file about what the
-the constants defined there are valid for.
+For the GICv5, we don't yet implement KVM support, so the KVM-enabled
+codepath is always an error.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/arm/virt.c        | 23 +++++++++++++++++++----
- include/hw/arm/fdt.h | 10 ++++++++++
- 2 files changed, 29 insertions(+), 4 deletions(-)
+ hw/intc/arm_gicv5_common.c         | 12 ++++++++++++
+ include/hw/intc/arm_gicv5_common.h | 10 ++++++++++
+ 2 files changed, 22 insertions(+)
 
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index 6775062c5d..05c92e8482 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -421,7 +421,15 @@ static void fdt_add_timer_nodes(const VirtMachineState *vms)
-                                 "arm,armv7-timer");
-     }
-     qemu_fdt_setprop(ms->fdt, "/timer", "always-on", NULL, 0);
--    if (vms->ns_el2_virt_timer_irq) {
-+    if (vms->gic_version == VIRT_GIC_VERSION_5) {
-+        /* The GICv5 architects the PPI numbers differently */
-+        qemu_fdt_setprop_cells(ms->fdt, "/timer", "interrupts",
-+                               GICV5_PPI, GICV5_PPI_CNTPS, irqflags,
-+                               GICV5_PPI, GICV5_PPI_CNTP, irqflags,
-+                               GICV5_PPI, GICV5_PPI_CNTV, irqflags,
-+                               GICV5_PPI, GICV5_PPI_CNTHP, irqflags,
-+                               GICV5_PPI, GICV5_PPI_CNTHV, irqflags);
-+    } else if (vms->ns_el2_virt_timer_irq) {
-         qemu_fdt_setprop_cells(ms->fdt, "/timer", "interrupts",
-                                GIC_FDT_IRQ_TYPE_PPI,
-                                INTID_TO_PPI(ARCH_TIMER_S_EL1_IRQ), irqflags,
-@@ -700,11 +708,18 @@ static void fdt_add_pmu_nodes(const VirtMachineState *vms)
-     qemu_fdt_add_subnode(ms->fdt, "/pmu");
-     if (arm_feature(&armcpu->env, ARM_FEATURE_V8)) {
-         const char compat[] = "arm,armv8-pmuv3";
+diff --git a/hw/intc/arm_gicv5_common.c b/hw/intc/arm_gicv5_common.c
+index 274d8cd255..620ae3b88f 100644
+--- a/hw/intc/arm_gicv5_common.c
++++ b/hw/intc/arm_gicv5_common.c
+@@ -11,6 +11,8 @@
+ #include "hw/core/qdev-properties.h"
+ #include "qapi/error.h"
+ #include "trace.h"
++#include "qemu/error-report.h"
++#include "system/kvm.h"
+ 
+ OBJECT_DEFINE_ABSTRACT_TYPE(GICv5Common, gicv5_common, ARM_GICV5_COMMON, SYS_BUS_DEVICE)
+ 
+@@ -157,3 +159,13 @@ static void gicv5_common_class_init(ObjectClass *oc, const void *data)
+     dc->realize = gicv5_common_realize;
+     device_class_set_props(dc, arm_gicv5_common_properties);
+ }
 +
-         qemu_fdt_setprop(ms->fdt, "/pmu", "compatible",
-                          compat, sizeof(compat));
--        qemu_fdt_setprop_cells(ms->fdt, "/pmu", "interrupts",
--                               GIC_FDT_IRQ_TYPE_PPI,
--                               INTID_TO_PPI(VIRTUAL_PMU_IRQ), irqflags);
-+        if (vms->gic_version == VIRT_GIC_VERSION_5) {
-+            qemu_fdt_setprop_cells(ms->fdt, "/pmu", "interrupts",
-+                                   GICV5_PPI, GICV5_PPI_PMUIRQ, irqflags);
-+        } else {
-+            qemu_fdt_setprop_cells(ms->fdt, "/pmu", "interrupts",
-+                                   GIC_FDT_IRQ_TYPE_PPI,
-+                                   INTID_TO_PPI(VIRTUAL_PMU_IRQ),
-+                                   irqflags);
-+        }
-     }
++const char *gicv5_class_name(void)
++{
++    /* When we implement KVM GICv5 we might return "kvm-arm-gicv5" here. */
++    if (kvm_enabled()) {
++        error_report("Userspace GICv5 is not supported with KVM");
++        exit(1);
++    }
++    return "arm-gicv5";
++}
+diff --git a/include/hw/intc/arm_gicv5_common.h b/include/hw/intc/arm_gicv5_common.h
+index 3bffa2cb1d..7db2c87ddc 100644
+--- a/include/hw/intc/arm_gicv5_common.h
++++ b/include/hw/intc/arm_gicv5_common.h
+@@ -150,4 +150,14 @@ static inline bool gicv5_domain_implemented(GICv5Common *cs, GICv5Domain domain)
+     return cs->implemented_domains & (1 << domain);
  }
  
-diff --git a/include/hw/arm/fdt.h b/include/hw/arm/fdt.h
-index c3d5015013..da5c9d4a8f 100644
---- a/include/hw/arm/fdt.h
-+++ b/include/hw/arm/fdt.h
-@@ -20,9 +20,19 @@
- #ifndef QEMU_ARM_FDT_H
- #define QEMU_ARM_FDT_H
- 
-+/*
-+ * These are for GICv2/v3/v4 only; GICv5 encodes the interrupt type in
-+ * the DTB "interrupts" properties differently, using constants that match
-+ * the architectural INTID.Type. In QEMU those are available as the
-+ * GICV5_PPI and GICV5_SPI enum values in arm_gicv5_types.h.
++/**
++ * gicv5_class_name
++ *
++ * Return name of GICv5 class to use depending on whether KVM acceleration is
++ * in use. May throw an error if the chosen implementation is not available.
++ *
++ * Returns: class name to use
 + */
- #define GIC_FDT_IRQ_TYPE_SPI 0
- #define GIC_FDT_IRQ_TYPE_PPI 1
- 
-+/*
-+ * The trigger type/level field in the DTB "interrupts" property
-+ * has the same encoding for GICv2/v3/v4 and v5.
-+ */
- #define GIC_FDT_IRQ_FLAGS_EDGE_LO_HI 1
- #define GIC_FDT_IRQ_FLAGS_EDGE_HI_LO 2
- #define GIC_FDT_IRQ_FLAGS_LEVEL_HI 4
++const char *gicv5_class_name(void);
++
+ #endif
 -- 
 2.43.0
 
