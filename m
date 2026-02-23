@@ -4,69 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA194EC1105
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 16:25:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38B87EC1106
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 16:26:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuYkF-0005gh-5I; Mon, 23 Feb 2026 11:25:15 -0500
+	id 1vuYlZ-0007AI-Eo; Mon, 23 Feb 2026 11:26:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vuYkD-0005er-39
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 11:25:13 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vuYlP-00072r-9g
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 11:26:32 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vuYkA-0000ps-Nq
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 11:25:12 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vuYlN-00010z-C0
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 11:26:27 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771863908;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
+ s=mimecast20190719; t=1771863984;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=6SWX5bxNN8QwbIb2BzT3lRnyYI6WRdyTch9E/k+gcl4=;
- b=ZYPFiIfQE17Xz0xprBao5+4vo4RSC2i91BzJIVhiGwUCrzPguc0uKSpV79kHHBygn3crkQ
- bO6qylgOu1Gy3Xmw2ZDZrxxNw6VEz3lYIPihCNzfDVNa1l4TiczzJ0kjRE9TwMpd3+w1aU
- poiCozcfZoXqCf5AQ8GLMDAYXglZ8z4=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=y8mECu8+ZWGJA7JGjU8lbyPSx2UnlkXZ8r71kPl1YoM=;
+ b=QBGf1x6KRJf0WvrPVZCXktlbd0Z/QRSpuVJEV/9mObAbV80SszkC1Q0O3vuXqSzctbKCbC
+ 1O2q4eol8Fjln9rQwlw2bwTvklw1KfwVQ3FjSF483gFPF13gVK/clLFeAZusPYumy8rb5v
+ SgN9MF6sXg5tSJwQJUFrypwtUeHH8Nc=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-371-B7anA2ZrPI-N_gOYWYbdXQ-1; Mon,
- 23 Feb 2026 11:25:06 -0500
-X-MC-Unique: B7anA2ZrPI-N_gOYWYbdXQ-1
-X-Mimecast-MFC-AGG-ID: B7anA2ZrPI-N_gOYWYbdXQ_1771863906
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-607-NrDWLf1VNum7NK4YD3J1Yw-1; Mon,
+ 23 Feb 2026 11:26:18 -0500
+X-MC-Unique: NrDWLf1VNum7NK4YD3J1Yw-1
+X-Mimecast-MFC-AGG-ID: NrDWLf1VNum7NK4YD3J1Yw_1771863977
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9EB6C180034D; Mon, 23 Feb 2026 16:25:05 +0000 (UTC)
-Received: from redhat.com (unknown [10.45.226.11])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7A7B619560A3; Mon, 23 Feb 2026 16:25:03 +0000 (UTC)
-Date: Mon, 23 Feb 2026 16:24:59 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, armbru@redhat.com,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- qemu-rust@nongnu.org
-Subject: Re: [PATCH v2 00/16] rust: QObject and QAPI bindings
-Message-ID: <aZx_Wy1-eBsTEB1s@redhat.com>
-References: <20260108131043.490084-1-pbonzini@redhat.com>
- <aZwjpfu-qCCSoHdx@redhat.com>
- <bedbf511-c46a-4468-bf65-cc452c621765@redhat.com>
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3EB3D195608D; Mon, 23 Feb 2026 16:26:17 +0000 (UTC)
+Received: from [10.45.224.205] (unknown [10.45.224.205])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id B865B1955F22; Mon, 23 Feb 2026 16:26:14 +0000 (UTC)
+Message-ID: <89379aba-1e0f-46d3-834a-2cb7d78c765c@redhat.com>
+Date: Mon, 23 Feb 2026 17:26:12 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] rtl8139: Remove ineffective parameter
+To: BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org
+Cc: Jason Wang <jasowang@redhat.com>, Peter Maydell
+ <peter.maydell@linaro.org>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, QEMU Trivial <qemu-trivial@nongnu.org>
+References: <20260127173849.588F25969F0@zero.eik.bme.hu>
+ <597883bc-c6a3-cd7f-42dc-1ee7fb8e213c@eik.bme.hu>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <597883bc-c6a3-cd7f-42dc-1ee7fb8e213c@eik.bme.hu>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <bedbf511-c46a-4468-bf65-cc452c621765@redhat.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -1
 X-Spam_score: -0.2
@@ -88,88 +126,112 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Feb 23, 2026 at 04:54:07PM +0100, Paolo Bonzini wrote:
-> On 2/23/26 10:53, Daniel P. Berrangé wrote:
-> > On Thu, Jan 08, 2026 at 02:10:27PM +0100, Paolo Bonzini wrote:
-> > > This adds two related parts of the Rust bindings:
-> > > 
-> > > - QAPI code generator that creates Rust structs from the JSON
-> > >    description.  The structs are *not* ABI compatible with the
-> > >    C ones, instead they use native Rust data types.
-> > > 
-> > > - QObject bindings and (de)serialization support, which can be used to
-> > >    convert QObjects to and from QAPI structs.
-> > > 
-> > > Unfortunately Rust code is not able to use visitors, other than by
-> > > creating an intermediate QObject.  This is because of the different
-> > > architecture of serde vs. QAPI visitors, and because visitor's
-> > > dual-purpose functions, where the same function is used by both input and
-> > > output visitors, rely heavily on the structs using the same representation
-> > > as the visitor arguments (for example NUL-terminated strings).
-> > > 
-> > > The serde format implementation was co-authored by me and Marc-André.
-> > > Marc-André did all the bug fixing and integration testing.
-> > > 
-> > > As an example of how this would be used, the marshaling functions for
-> > > QMP commands would look like this:
-> > 
-> > Can you give more of the big picture about what follows this ?  From
-> > this example you're showing, are you suggesting that you'll be soon
-> > moving QMP command impls from C to Rust ?
+On 12/02/2026 19.45, BALATON Zoltan wrote:
+> On Tue, 27 Jan 2026, BALATON Zoltan wrote:
+>> The do_interrupt parameter for rtl8139_do_receive was originally added
+>> in commit 6cadb320c7 to avoid generating interrupt when receiving in
+>> loopback mode. Later commit 5311fb805a changed this so that this
+>> parameter became ineffective and now this parameter is unused and
+>> always 1. If this turns out to be a problem maybe there's a better way
+>> to fix this so remove the do_interrupt parameter for now to simplify
+>> code.
 > 
-> The reasons for Marc-André and I to do this was just as an exploration. The
-> patches show a different way to do what he had already tackled in 2022, and
-> allow a direct comparison the relative benefits between a more Rust-focused
-> approach and a more direct translation of QEMU's C code.
+> Ping?
+
+... it's not a very complicated patch, so maybe this could also go via 
+qemu-trivial? (now on CC:)
+
+Anyway,
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+
+
+>> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+>> ---
+>> hw/net/rtl8139.c | 24 ++++++++----------------
+>> 1 file changed, 8 insertions(+), 16 deletions(-)
+>>
+>> diff --git a/hw/net/rtl8139.c b/hw/net/rtl8139.c
+>> index 9fd00574d2..2ad6338ebe 100644
+>> --- a/hw/net/rtl8139.c
+>> +++ b/hw/net/rtl8139.c
+>> @@ -815,7 +815,8 @@ static bool rtl8139_can_receive(NetClientState *nc)
+>>     return avail == 0 || avail >= 1514 || (s->IntrMask & RxOverflow);
+>> }
+>>
+>> -static ssize_t rtl8139_do_receive(NetClientState *nc, const uint8_t *buf, 
+>> size_t size_, int do_interrupt)
+>> +static ssize_t rtl8139_receive(NetClientState *nc,
+>> +                               const uint8_t *buf, size_t size_)
+>> {
+>>     RTL8139State *s = qemu_get_nic_opaque(nc);
+>>     PCIDevice *d = PCI_DEVICE(s);
+>> @@ -1173,20 +1174,11 @@ static ssize_t rtl8139_do_receive(NetClientState 
+>> *nc, const uint8_t *buf, size_t
+>>     }
+>>
+>>     s->IntrStatus |= RxOK;
+>> -
+>> -    if (do_interrupt)
+>> -    {
+>> -        rtl8139_update_irq(s);
+>> -    }
+>> +    rtl8139_update_irq(s);
+>>
+>>     return size_;
+>> }
+>>
+>> -static ssize_t rtl8139_receive(NetClientState *nc, const uint8_t *buf, 
+>> size_t size)
+>> -{
+>> -    return rtl8139_do_receive(nc, buf, size, 1);
+>> -}
+>> -
+>> static void rtl8139_reset_rxring(RTL8139State *s, uint32_t bufferSize)
+>> {
+>>     s->RxBufferSize = bufferSize;
+>> @@ -1745,7 +1737,7 @@ static uint32_t rtl8139_RxConfig_read(RTL8139State *s)
+>> }
+>>
+>> static void rtl8139_transfer_frame(RTL8139State *s, uint8_t *buf, int size,
+>> -    int do_interrupt, const uint8_t *dot1q_buf)
+>> +                                   const uint8_t *dot1q_buf)
+>> {
+>>     struct iovec *iov = NULL;
+>>     struct iovec vlan_iov[3];
+>> @@ -1828,7 +1820,7 @@ static int rtl8139_transmit_one(RTL8139State *s, int 
+>> descriptor)
+>>     s->TxStatus[descriptor] |= TxHostOwns;
+>>     s->TxStatus[descriptor] |= TxStatOK;
+>>
+>> -    rtl8139_transfer_frame(s, txbuffer, txsize, 0, NULL);
+>> +    rtl8139_transfer_frame(s, txbuffer, txsize, NULL);
+>>
+>>     DPRINTF("+++ transmitted %d bytes from descriptor %d\n", txsize,
+>>         descriptor);
+>> @@ -2246,7 +2238,7 @@ static int rtl8139_cplus_transmit_one(RTL8139State *s)
+>>                     DPRINTF("+++ C+ mode TSO transferring packet size "
+>>                         "%d\n", tso_send_size);
+>>                     rtl8139_transfer_frame(s, saved_buffer, tso_send_size,
+>> -                        0, (uint8_t *) dot1q_buffer);
+>> +                                           (uint8_t *)dot1q_buffer);
+>>
+>>                     /* add transferred count to TCP sequence number */
+>>                     stl_be_p(&p_tcp_hdr->th_seq,
+>> @@ -2323,8 +2315,8 @@ skip_offload:
+>>
+>>         DPRINTF("+++ C+ mode transmitting %d bytes packet\n", saved_size);
+>>
+>> -        rtl8139_transfer_frame(s, saved_buffer, saved_size, 1,
+>> -            (uint8_t *) dot1q_buffer);
+>> +        rtl8139_transfer_frame(s, saved_buffer, saved_size,
+>> +                               (uint8_t *)dot1q_buffer);
+>>
+>>         /* restore card space if there was no recursion and reset offset */
+>>         if (!s->cplus_txbuffer)
+>>
 > 
-> Marc-André indeed had command implementations in Rust and that would be an
-> obvious next step to continue on the QAPI side.  On the other hand, the
-> QObject part (without QAPI structs) also works as a step towards more QOM
-> integration, especially with respect to properties and backends.  Having a
-> full-blown QObject implementation to move around bools is perhaps
-> over-engineered, but is also an easy way to make a generic implementation
-> that works for all QAPI types.
-> 
-> The block layer also needs QAPI for option parsing, so Kevin's work on block
-> layer bindings would also benefit from having this integration.
-> 
-> In other words, there is no real big picture from me other than "someone
-> needs to do the hard part for others": QOM, QAPI and the build system are
-> the three central components from which all other bindings branch out.  Zhao
-> and Marc-André have helped a lot with this work, and they also showed how to
-> use these hard parts (see Zhao's vm-memory work and Marc-André's GStreamer
-> backend), now it's also time for others to try and to take inspiration from
-> Rust for improving the C side of things.
-
-I guess the thing I'm wondering about when I ask about the big picture
-is to understand tne interoperability implications of this impl approach,
-given the starting point that the Rust & C structs are *not* ABI compatible.
-
-
-If we're anticipating that the Rust usage flows up from a Rust QMP command
-handler, then the data is in the Rust struct right from the entry point
-and perhaps the interoperability needs are reduced in scope.
-
-If we're anticipating a calls back & forth between C & Rust code, that
-directly handle the deserialized structs, then we have an open interop
-question. Is the implication that we round-trip via JSON every time we
-need to swap between a Rust struct and C struct for a given type ? Or
-will we have a direct struct<->struct conversion mechanism ? Or is there
-something else entirely ?
-
-I feel a bit lost in how to evaluate this series without seeing some
-real world usage, in a way that exposes the possible implications of
-the lack of C/Rust ABI compat in the structs.
-
-With regards,
-Daniel
--- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 
 
