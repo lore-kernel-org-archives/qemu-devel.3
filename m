@@ -4,72 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90012E98E10
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 09:54:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19E05E98E11
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 09:54:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuSYj-0007JO-FF; Mon, 23 Feb 2026 04:48:57 -0500
+	id 1vuSbt-0004je-8x; Mon, 23 Feb 2026 04:52:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vuSYF-0006dY-Og
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 04:48:30 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1vuSa6-0002Fi-J9
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 04:50:23 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vuSYC-0006xR-1n
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 04:48:25 -0500
+ id 1vuSa5-0007ML-1e
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 04:50:22 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771840103;
+ s=mimecast20190719; t=1771840220;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=TqhGjBY+mC3y4OSdljPQ85F3Z7Hx6fbG+VByjEnt370=;
- b=cCkXuDb2d69TrDZ+ps42Ieu5KY+a0aMzs3jcshXEjzMJ/eRgib3bhtBQG8VIvA5u83ypiw
- +KSna377aoIPCKHg6EnKm3YGF0nTbBtGe+ApU04x9nZBlJ4qRgT1yl5SaZgCcvl6UldzNv
- 0jYrBX8Vg1kV+JsVvJbeOSCZK8LYT1Y=
+ bh=KVxGTqGui8DihhEqyeAGveMoKpNCaaSNpKNzs+Wt8ck=;
+ b=QxCiEzldx5Ng6mnjlcFlTvWnF/6XQzqChK9X9nN93dL463iganh3OzTpA6U5Hjr2OSnqTD
+ u7f2riG0BKwzF5LDI+XobUSrQJbu9K25b82z9uj3fwzAEUKinvRsYvc+AsnyRrTXNabKJ8
+ grXi6oyWQqEFEMRJGIs2I4Dik2GUfY4=
 Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-170-lo7hqmk-POK-ylBdNfyrKA-1; Mon,
- 23 Feb 2026 04:48:18 -0500
-X-MC-Unique: lo7hqmk-POK-ylBdNfyrKA-1
-X-Mimecast-MFC-AGG-ID: lo7hqmk-POK-ylBdNfyrKA_1771840097
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-437-raAN9YKhOwSmYr4e4hTVpA-1; Mon,
+ 23 Feb 2026 04:50:15 -0500
+X-MC-Unique: raAN9YKhOwSmYr4e4hTVpA-1
+X-Mimecast-MFC-AGG-ID: raAN9YKhOwSmYr4e4hTVpA_1771840214
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 924FB1800A3C; Mon, 23 Feb 2026 09:48:17 +0000 (UTC)
+ id A87CF1800464; Mon, 23 Feb 2026 09:50:14 +0000 (UTC)
 Received: from localhost (unknown [10.45.242.25])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 00CCE3003D8F; Mon, 23 Feb 2026 09:48:16 +0000 (UTC)
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 9A05B19560A2; Mon, 23 Feb 2026 09:50:13 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Gerd Hoffmann <kraxel@redhat.com>
-Subject: [PULL v2 30/85] audio: keep a strong reference on the backend
-Date: Mon, 23 Feb 2026 10:45:48 +0100
-Message-ID: <20260223094649.2005118-31-marcandre.lureau@redhat.com>
+ Gerd Hoffmann <kraxel@redhat.com>, Thomas Huth <huth@tuxfamily.org>
+Subject: [PULL v2 68/85] audio/sdl: replace custom logging with error_report
+Date: Mon, 23 Feb 2026 10:46:26 +0100
+Message-ID: <20260223094649.2005118-69-marcandre.lureau@redhat.com>
 In-Reply-To: <20260223094649.2005118-1-marcandre.lureau@redhat.com>
 References: <20260223094649.2005118-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -14
-X-Spam_score: -1.5
-X-Spam_bar: -
-X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -4
+X-Spam_score: -0.5
+X-Spam_bar: /
+X-Spam_report: (-0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.798, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.79,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -89,71 +89,133 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Since we are going to convert audio_driver-based backends, we need to
-properly handle reference counting to allow for a different order of
-class finalization (for example, pulse class before base driver class).
+Replace the custom audio logging infrastructure (dolog macro and
+AUD_log/AUD_vlog) with standard QEMU error reporting (error_report,
+error_printf, error_vprintf).
 
+Note that we also dropped the abort() call in DEBUG_AUDIO, as it is not
+usually compiled with, doesn't help much, and can easily be added back
+when doing development as needed.
+
+Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- audio/audio_template.h | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ audio/sdlaudio.c | 36 +++++++++---------------------------
+ 1 file changed, 9 insertions(+), 27 deletions(-)
 
-diff --git a/audio/audio_template.h b/audio/audio_template.h
-index a1f78d8748b..512abbfe22f 100644
---- a/audio/audio_template.h
-+++ b/audio/audio_template.h
-@@ -231,6 +231,7 @@ static void glue (audio_pcm_hw_gc_, TYPE) (HW **hwp)
-         glue(hw->pcm_ops->fini_, TYPE) (hw);
-         glue(s->nb_hw_voices_, TYPE) += 1;
-         glue(audio_pcm_hw_free_resources_ , TYPE) (hw);
-+        object_unref(hw->s);
-         g_free(hw);
-         *hwp = NULL;
+diff --git a/audio/sdlaudio.c b/audio/sdlaudio.c
+index d974d7eac46..5f332678209 100644
+--- a/audio/sdlaudio.c
++++ b/audio/sdlaudio.c
+@@ -26,6 +26,7 @@
+ #include <SDL.h>
+ #include <SDL_thread.h>
+ #include "qemu/module.h"
++#include "qemu/error-report.h"
+ #include "qapi/error.h"
+ #include "qemu/audio.h"
+ #include "qom/object.h"
+@@ -38,7 +39,6 @@
+ #endif
+ #endif
+ 
+-#define AUDIO_CAP "sdl"
+ #include "audio_int.h"
+ 
+ #define TYPE_AUDIO_SDL "audio-sdl"
+@@ -67,17 +67,6 @@ typedef struct SDLVoiceIn {
+     SDL_AudioDeviceID devid;
+ } SDLVoiceIn;
+ 
+-static void G_GNUC_PRINTF (1, 2) sdl_logerr (const char *fmt, ...)
+-{
+-    va_list ap;
+-
+-    va_start (ap, fmt);
+-    AUD_vlog (AUDIO_CAP, fmt, ap);
+-    va_end (ap);
+-
+-    AUD_log (AUDIO_CAP, "Reason: %s\n", SDL_GetError ());
+-}
+-
+ static int aud_to_sdlfmt (AudioFormat fmt)
+ {
+     switch (fmt) {
+@@ -102,10 +91,7 @@ static int aud_to_sdlfmt (AudioFormat fmt)
+         return AUDIO_F32LSB;
+ 
+     default:
+-        dolog ("Internal logic error: Bad audio format %d\n", fmt);
+-#ifdef DEBUG_AUDIO
+-        abort ();
+-#endif
++        error_report("sdl: internal logic error: bad audio format %d", fmt);
+         return AUDIO_U8;
      }
-@@ -287,7 +288,7 @@ static HW *glue(audio_pcm_hw_add_new_, TYPE)(AudioMixengBackend *s,
-      * is guaranteed to be != 0. See the audio_init_nb_voices_* functions.
-      */
-     hw = g_malloc0(glue(drv->voice_size_, TYPE));
--    hw->s = s;
-+    hw->s = AUDIO_MIXENG_BACKEND(object_ref(s));
-     hw->pcm_ops = drv->pcm_ops;
- 
-     QLIST_INIT (&hw->sw_head);
-@@ -335,6 +336,7 @@ static HW *glue(audio_pcm_hw_add_new_, TYPE)(AudioMixengBackend *s,
-  err1:
-     glue (hw->pcm_ops->fini_, TYPE) (hw);
-  err0:
-+    object_unref(hw->s);
-     g_free (hw);
-     return NULL;
  }
-@@ -441,7 +443,7 @@ static SW *glue(audio_pcm_create_voice_pair_, TYPE)(
+@@ -164,7 +150,7 @@ static int sdl_to_audfmt(int sdlfmt, AudioFormat *fmt, int *endianness)
+         break;
+ 
+     default:
+-        dolog ("Unrecognized SDL audio format %d\n", sdlfmt);
++        error_report("sdl: unrecognized audio format %d", sdlfmt);
+         return -1;
      }
  
-     sw = g_new0(SW, 1);
--    sw->s = s;
-+    sw->s = AUDIO_MIXENG_BACKEND(object_ref(s));
+@@ -182,27 +168,27 @@ static SDL_AudioDeviceID sdl_open(SDL_AudioSpec *req, SDL_AudioSpec *obt,
+     /* Make sure potential threads created by SDL don't hog signals.  */
+     err = sigfillset (&new);
+     if (err) {
+-        dolog ("sdl_open: sigfillset failed: %s\n", strerror (errno));
++        error_report("sdl: sigfillset failed: %s", strerror (errno));
+         return 0;
+     }
+     err = pthread_sigmask (SIG_BLOCK, &new, &old);
+     if (err) {
+-        dolog ("sdl_open: pthread_sigmask failed: %s\n", strerror (err));
++        error_report("sdl: pthread_sigmask failed: %s", strerror (err));
+         return 0;
+     }
+ #endif
  
-     hw = glue(audio_pcm_hw_add_, TYPE)(s, &hw_as);
-     if (!hw) {
-@@ -461,6 +463,7 @@ err2:
-     glue (audio_pcm_hw_del_sw_, TYPE) (sw);
-     glue (audio_pcm_hw_gc_, TYPE) (&hw);
- err1:
-+    object_unref(sw->s);
-     g_free(sw);
-     return NULL;
- }
-@@ -470,6 +473,8 @@ static void glue (audio_close_, TYPE) (SW *sw)
-     glue (audio_pcm_sw_fini_, TYPE) (sw);
-     glue (audio_pcm_hw_del_sw_, TYPE) (sw);
-     glue (audio_pcm_hw_gc_, TYPE) (&sw->hw);
-+
-+    object_unref(sw->s);
-     g_free (sw);
- }
+     devid = SDL_OpenAudioDevice(NULL, rec, req, obt, 0);
+     if (!devid) {
+-        sdl_logerr("SDL_OpenAudioDevice for %s failed\n",
+-                   rec ? "recording" : "playback");
++        error_report("SDL_OpenAudioDevice for %s failed: %s",
++                   rec ? "recording" : "playback", SDL_GetError());
+     }
  
+ #ifndef _WIN32
+     err = pthread_sigmask (SIG_SETMASK, &old, NULL);
+     if (err) {
+-        dolog ("sdl_open: pthread_sigmask (restore) failed: %s\n",
+-               strerror (errno));
++        error_report("sdl: pthread_sigmask (restore) failed: %s",
++                     strerror (errno));
+         /* We have failed to restore original signal mask, all bets are off,
+            so exit the process */
+         exit (EXIT_FAILURE);
+@@ -233,8 +219,6 @@ static void sdl_callback_out(void *opaque, Uint8 *buf, int len)
+ 
+     if (!sdl->exit) {
+ 
+-        /* dolog("callback_out: len=%d avail=%zu\n", len, hw->pending_emul); */
+-
+         while (hw->pending_emul && len) {
+             size_t write_len, start;
+ 
+@@ -283,8 +267,6 @@ static void sdl_callback_in(void *opaque, Uint8 *buf, int len)
+         return;
+     }
+ 
+-    /* dolog("callback_in: len=%d pending=%zu\n", len, hw->pending_emul); */
+-
+     while (hw->pending_emul < hw->size_emul && len) {
+         size_t read_len = MIN(len, MIN(hw->size_emul - hw->pos_emul,
+                                        hw->size_emul - hw->pending_emul));
 -- 
 2.53.0
 
