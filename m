@@ -4,99 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4465E98DEF
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 07:28:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6FD9E98DF5
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 07:33:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuQMa-0004Hw-Df; Mon, 23 Feb 2026 02:28:16 -0500
+	id 1vuQRK-00053A-R7; Mon, 23 Feb 2026 02:33:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1vuQMZ-0004Ho-9I
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 02:28:15 -0500
+ id 1vuQRG-00052f-BB
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 02:33:06 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1vuQMX-0005kL-5c
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 02:28:14 -0500
+ id 1vuQRE-0007ei-UC
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 02:33:06 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771831690;
+ s=mimecast20190719; t=1771831984;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Ql62sgQpESqAHw8IeepxHilxQcPVR34tWpH69aNGeVA=;
- b=HHWkjT/x57FSY4QZusN2ZOYUW+IWvhJJ/5F+RAhA6QFUHp4XI3uQ5iFCB8EUe2iqFg620+
- rjRswvt/Yuqa8H0B5jjIW6P49WePjNUZXrdySywm6P06AUwaAQbCJ4MCMlAtC5jz63Zf4B
- ctEYa6TT0nR9YtvpUs6G/Drc0HEQioo=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=HcGQz5UrdYbm+4/7S3bJAI8yW/MEbu30Z9EG8f7JjTM=;
+ b=Xa9KoN2uRt7xEiBWcleREyLLswrh9wXcZbozjTbCNmfQLnAf03AOj/pVEYAJBQaGhhcpJ/
+ c0/zIWSHio5IODYd0sxQUquMJ4n9RtNs09N1YsFFzRCs1KCWmLxR2t6qFUvGbSZdPSeO4M
+ YLr41pCm3cQufXIKS/x2Txk1qY6Ejuk=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-297-ADg6lJLZOGGGFoQxsHMzaQ-1; Mon, 23 Feb 2026 02:28:08 -0500
-X-MC-Unique: ADg6lJLZOGGGFoQxsHMzaQ-1
-X-Mimecast-MFC-AGG-ID: ADg6lJLZOGGGFoQxsHMzaQ_1771831687
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4837b7903f3so49483245e9.2
- for <qemu-devel@nongnu.org>; Sun, 22 Feb 2026 23:28:08 -0800 (PST)
+ us-mta-99-tgKrpQalP-S8fxkXoa9ykg-1; Mon, 23 Feb 2026 02:33:02 -0500
+X-MC-Unique: tgKrpQalP-S8fxkXoa9ykg-1
+X-Mimecast-MFC-AGG-ID: tgKrpQalP-S8fxkXoa9ykg_1771831981
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-483a2db68caso31034005e9.0
+ for <qemu-devel@nongnu.org>; Sun, 22 Feb 2026 23:33:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1771831687; x=1772436487; darn=nongnu.org;
+ d=redhat.com; s=google; t=1771831981; x=1772436781; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:subject:cc:to:from:date:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Ql62sgQpESqAHw8IeepxHilxQcPVR34tWpH69aNGeVA=;
- b=a4BgD1Un2rDsIi9C5ZHOB14skFY+uM4xqi05SgRsdjlU/AkRXhNFcvwJs0deeRfcBK
- cRuUv68GqM77hxPzwgRAVY09AOh6Dud0gMf1ufBI8aYFcub2DntVnxNLiNwVUZCektEJ
- FbbNnWjySaop/1FoEcxRh1Y4hXWblEMZD92fCh852h9fKeV007F9J10W7nQGLST7psjk
- ou5G5dn2b40Qq23DSSfVkh+lp1noKY6lMc0NQaxHLiLna0Y1tCv3dndmDkrvHCi1KrB/
- SPUgBUNDQkrwa3QFayliMQJbcVoiDFEfwjqmk47ayjOaUwuHuno9xbaukad5Q6m+fomZ
- jVrg==
+ bh=HcGQz5UrdYbm+4/7S3bJAI8yW/MEbu30Z9EG8f7JjTM=;
+ b=Kshg1gfHsu8pgrZdWx/vnTiprwvXTC2J+dawGgzjyvM9BYaEXaXd+Jl6Sp34HlBa7J
+ qHwtQ4DgCQpJn1iDJ/D0YhG5wM/CzrqQA6rBHkbQHJE1e7+M+ekOGEzf3dysRjbwWri7
+ +UrQLmf0iclGVUz8StKTme8oV6SmjucenSGHrYelYa0fQHiI2XPyeH+El5K3OWpvsGjk
+ J4VI5yMr8YT6b/lfXLtVTl7SXWI6iDDJ6cTdaZy6Dj3MeQ6BdiJF/Ulmzou7QJvsC9lj
+ AVqTDJUPvy33JWR5yX5ll6kOkaGmLgJSL5Zpw7dXalSg86gMOcI23Zcspzc6prZnA8/w
+ KPJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771831687; x=1772436487;
+ d=1e100.net; s=20230601; t=1771831981; x=1772436781;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=Ql62sgQpESqAHw8IeepxHilxQcPVR34tWpH69aNGeVA=;
- b=lC4vvHNdYkyQJk1uC8B084nUt0LsZQg2cxtsAPr5co/TrQGafHn/XgxEpoWKKCL+Km
- k9u1T0ylqGN57O7CE3HcVIpOmW1oa4fzNj5VrTSNiS86iV9jOjPFY1xNt10SRBhBwMlc
- C8rVDdlotZakmNUb8AkAaJ16TGiWpGqDH+5PVIDfnuY7QsFtwRgKW4C47DqMGmTBNDN5
- HC+19+8s9VAE/rd42tX8e0BF/GUv+OxmzlHCOdmZ9O2srYtSdpqDYcJL4+dm3Zkp8DbF
- KJcsu1qu1gktntW+gnYWLf0b7PGj5sKn2eLa839uOTqb6XHMAC6aAtp39hmhKIZKaKxc
- oEGQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU/vPHvYJ2/4oMI7XhGrVM7PnFTfnO/MDQ9eopsvLheQiD4R4i423buSzfnvB9CM/TXADbV0IH4oQBL@nongnu.org
-X-Gm-Message-State: AOJu0Yz0V7u6+PxBH1XPCN/+I4ADI2saiB5OUagWmwwEX00akY47ksqB
- PXwZmeB1PpLa8Csj/KfgFzsE5TCbZidNpdtiNWU4NYfVApjcuHLYLuEIwJ+mCJGhhhtemx643Gg
- aGperPYf7VFNiC9/AEAGchghRgg3ImRaSnfrzA3W9hRu1yK8TraUoRcBw
-X-Gm-Gg: AZuq6aLf0Py69RoXToG9fk6sX5+O+ms7XKoU+Grny60Arq3AiAw1EKHvARvZ7dGO7uS
- yCyYtlLIVQ4fyVmgzk+UW+5s5EaJk6TegKFKdvlRNty3h7FD0LvYJq7bndJdIG0fyvnSjz5OU+W
- ofaV4ljpjj2kxoKxdP0QwQaDreduyRRCzR3nzug7uIkgu/t4r5iRwfhk+XZRamZPWhYvbiPS2Cb
- LmP9NDorwJ1DmmIURwwvhd6imeiKP3vzMZfDh7P8Q7lqUMXpSW5lJ5FlIlzPzg7jRwsR4Pvilrq
- WZ5hP+wrenV7q+0y/6aEZDnxAQQIJpDLnZHYavRx6l5kte/W/kOpsM+sNBDFxqCFfcSonnrxmHG
- 6/+66ug==
-X-Received: by 2002:a05:6000:40ca:b0:436:233c:c7c1 with SMTP id
- ffacd0b85a97d-4396f15a797mr12818938f8f.23.1771831687007; 
- Sun, 22 Feb 2026 23:28:07 -0800 (PST)
-X-Received: by 2002:a05:6000:40ca:b0:436:233c:c7c1 with SMTP id
- ffacd0b85a97d-4396f15a797mr12818908f8f.23.1771831686540; 
- Sun, 22 Feb 2026 23:28:06 -0800 (PST)
+ bh=HcGQz5UrdYbm+4/7S3bJAI8yW/MEbu30Z9EG8f7JjTM=;
+ b=JKyeOgQ38V3es/5hxkeHea3KitaujduJv+iLWVuIj9K19lqGKcmJgMyMOvwNvi3iyy
+ 7XZk1G4yS/S7FOdV44lus9+GE7giwGHEePCZ6TT+l+ZntsneBwA4poiude/oEqy2i0NY
+ D79kSSpNsPc1farBK38ZJQze3T15YgPhzj1OPfYjZzoSvZ9S4vK8KOcQCqpRj9VEGHQO
+ pKdoUuzsw7O6xgbcNqMlfTK4CdRU69KMPKnRz0nyP9imCxWaEbKZzTP5ReKh2HT5lI0m
+ Ozt+v9O7Soi5gX5iAcrWCFHZIvQeczazKmpVd8c1sFm+TLIJ/jbNQx8pYtwok93bkaYd
+ pKcA==
+X-Gm-Message-State: AOJu0Yz+pL6gdMjJMAkbXCNRgCdK8G175nDlQF9KdbW31L4e37JDhtPW
+ +nLJ35lyWtFicLCVojsYxlD6gme0TDm3F7tbYXxPTVCsjj5aeHAiS8YFPXXIcdoIbDKF9t2zilr
+ 58wWPWmICP70Jq3W34T9iplXVxGaUxRaCTxd1UNKVX9bOEygc73mqACt0
+X-Gm-Gg: AZuq6aK4acI9z4xZyPMmLfzS1LJKdok8BLdeLPf99B76tKFLbC2gaPIiq74o0/JtC4i
+ 7ru7Vz0z3ww5YLhrKWBUuTpPv9amU1KTTUQHnyygb5O2IFPzzI83pk6a9HCD4l1Srs+fuxUB9AN
+ m7CWBnzv93NE4z6J1DaBaeQ8hOvhK1TGQ9NbUNuCNO55EoT4VmRlO/KDyj7w8tgL/daMDqjeN2k
+ dnihKhxkaMN1tR9N+HaYgsxzXDihYbn7gXMnfkftjfzVHgWlg/qzGtWwrhl27Z5U/RLvL70dgCA
+ jwy3FWzfcFnqD1b8LcPvkMPzM9vFj7tJ7XlDtmUMr4zSlCLZa/EwHUblcgzZ8YWtlxrUGGgSTzO
+ 5pQoaiQ==
+X-Received: by 2002:a05:600c:5394:b0:480:6ab1:ed0d with SMTP id
+ 5b1f17b1804b1-483a95b7180mr131929755e9.9.1771831980858; 
+ Sun, 22 Feb 2026 23:33:00 -0800 (PST)
+X-Received: by 2002:a05:600c:5394:b0:480:6ab1:ed0d with SMTP id
+ 5b1f17b1804b1-483a95b7180mr131929345e9.9.1771831980376; 
+ Sun, 22 Feb 2026 23:33:00 -0800 (PST)
 Received: from imammedo ([213.175.46.86]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43970d3fc12sm14960673f8f.24.2026.02.22.23.28.05
+ 5b1f17b1804b1-483a430927dsm103236585e9.31.2026.02.22.23.32.58
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 22 Feb 2026 23:28:06 -0800 (PST)
-Date: Mon, 23 Feb 2026 08:28:04 +0100
+ Sun, 22 Feb 2026 23:32:59 -0800 (PST)
+Date: Mon, 23 Feb 2026 08:32:57 +0100
 From: Igor Mammedov <imammedo@redhat.com>
-To: <ankita@nvidia.com>
-Cc: <vsethi@nvidia.com>, <jgg@nvidia.com>, <skolothumtho@nvidia.com>,
- <alex@shazbot.org>, <mst@redhat.com>, <anisinha@redhat.com>,
- <aniketa@nvidia.com>, <cjia@nvidia.com>, <kwankhede@nvidia.com>,
- <targupta@nvidia.com>, <zhiw@nvidia.com>, <mochs@nvidia.com>,
- <kjaju@nvidia.com>, <qemu-devel@nongnu.org>
-Subject: Re: [PATCH v1 1/1] hw/acpi/pci.c: preserve generic initiator
- insertion order
-Message-ID: <20260223082804.0d293861@imammedo>
-In-Reply-To: <20260222020812.26475-1-ankita@nvidia.com>
-References: <20260222020812.26475-1-ankita@nvidia.com>
+To: David Hoppenbrouwers <qemu@demindiro.com>
+Cc: qemu-devel@nongnu.org, Eduardo Habkost <eduardo@habkost.net>, Marcel
+ Apfelbaum <marcel.apfelbaum@gmail.com>, Alejandro Jimenez
+ <alejandro.j.jimenez@oracle.com>, Sairaj Kodilkar <sarunkod@amd.com>, Paolo
+ Bonzini <pbonzini@redhat.com>, Richard Henderson
+ <richard.henderson@linaro.org>, "Michael S. Tsirkin" <mst@redhat.com>
+Subject: Re: [PATCH] hw/i386/amd_iommu.c: fix amdvi_unhandled_command
+ logging cmd ID
+Message-ID: <20260223083257.423660c4@imammedo>
+In-Reply-To: <20260220181437.19338-1-qemu@demindiro.com>
+References: <20260220181437.19338-1-qemu@demindiro.com>
 X-Mailer: Claws Mail 4.3.1 (GTK 3.24.51; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
@@ -126,160 +124,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 22 Feb 2026 02:08:12 +0000
-<ankita@nvidia.com> wrote:
+On Fri, 20 Feb 2026 19:14:37 +0100
+David Hoppenbrouwers <qemu@demindiro.com> wrote:
 
-> From: Ankit Agrawal <ankita@nvidia.com>
-> 
-> During creation of the VM's SRAT table, the generic initiator entries
-> are added. Currently the order in the entries are not controllable from
-> the qemu command. This is due to the fact that the code queries the
-> object tree which may not be in the order objects were inserted.
-> 
-> As a fix the patch maintains a GPtrArray of generic initiator objects
-> that preserves their insertion order. Objects are automatically added
-> to the array when initialized and removed when finalized. When building
-> the SRAT table, objects are processed in the order they were first
-> inserted.
+> The command ID is in cmd[0], not cmd[1].
+pls add a reference to the spec,
+and if any what impact it does have on a guest/how it manifests.
 
-so question would be, why does it matter?
-Is ther a requirement in spec for SRAT entries being put in a particular order?
-
-> 
-> E.g. for the following qemu command.
-> ...
->             -object acpi-generic-initiator,id=gi0,pci-dev=dev0,node=2 \
->             -object acpi-generic-initiator,id=gi1,pci-dev=dev0,node=3 \
->             -object acpi-generic-initiator,id=gi2,pci-dev=dev0,node=4 \
->             -object acpi-generic-initiator,id=gi3,pci-dev=dev0,node=5 \
->             -object acpi-generic-initiator,id=gi4,pci-dev=dev0,node=6 \
->             -object acpi-generic-initiator,id=gi5,pci-dev=dev0,node=7 \
->             -object acpi-generic-initiator,id=gi6,pci-dev=dev0,node=8 \
->             -object acpi-generic-initiator,id=gi7,pci-dev=dev0,node=9 \
-> ...
-> 
-> Original PXM in the VM SRAT table:
-> [1A4h 0420 004h]            Proximity Domain : 00000007
-> [1C4h 0452 004h]            Proximity Domain : 00000006
-> [1E4h 0484 004h]            Proximity Domain : 00000005
-> [204h 0516 004h]            Proximity Domain : 00000004
-> [224h 0548 004h]            Proximity Domain : 00000003
-> [244h 0580 004h]            Proximity Domain : 00000009
-> [264h 0612 004h]            Proximity Domain : 00000002
-> [284h 0644 004h]            Proximity Domain : 00000008
-> [2A2h 0674 004h]            Proximity Domain : 00000009
-> 
-> After the patch (preserves insertion order):
-> [1A4h 0420 004h]            Proximity Domain : 00000002
-> [1C4h 0452 004h]            Proximity Domain : 00000003
-> [1E4h 0484 004h]            Proximity Domain : 00000004
-> [204h 0516 004h]            Proximity Domain : 00000005
-> [224h 0548 004h]            Proximity Domain : 00000006
-> [244h 0580 004h]            Proximity Domain : 00000007
-> [264h 0612 004h]            Proximity Domain : 00000008
-> [284h 0644 004h]            Proximity Domain : 00000009
-> 
-> cc: Shameer Kolothum <skolothumtho@nvidia.com>
-> Fixes: 0a5b5acdf2 ("hw/acpi: Implement the SRAT GI affinity structure")
-> Signed-off-by: Ankit Agrawal <ankita@nvidia.com>
+> Signed-off-by: David Hoppenbrouwers <qemu@demindiro.com>
 > ---
->  hw/acpi/pci.c | 44 ++++++++++++++++++++++++++++++++------------
->  1 file changed, 32 insertions(+), 12 deletions(-)
+>  hw/i386/amd_iommu.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
 > 
-> diff --git a/hw/acpi/pci.c b/hw/acpi/pci.c
-> index 8c7ed10479..d97e6e9105 100644
-> --- a/hw/acpi/pci.c
-> +++ b/hw/acpi/pci.c
-> @@ -88,18 +88,30 @@ OBJECT_DEFINE_TYPE_WITH_INTERFACES(AcpiGenericInitiator, acpi_generic_initiator,
->  
->  OBJECT_DECLARE_SIMPLE_TYPE(AcpiGenericInitiator, ACPI_GENERIC_INITIATOR)
->  
-> +static GPtrArray *acpi_generic_initiator_list;
-> +
->  static void acpi_generic_initiator_init(Object *obj)
->  {
->      AcpiGenericInitiator *gi = ACPI_GENERIC_INITIATOR(obj);
->  
->      gi->node = MAX_NODES;
->      gi->pci_dev = NULL;
-> +
-> +    /* Initialize array on first use */
-> +    if (!acpi_generic_initiator_list) {
-> +        acpi_generic_initiator_list = g_ptr_array_new();
-> +    }
-> +
-> +    g_ptr_array_add(acpi_generic_initiator_list, gi);
->  }
->  
->  static void acpi_generic_initiator_finalize(Object *obj)
->  {
->      AcpiGenericInitiator *gi = ACPI_GENERIC_INITIATOR(obj);
->  
-> +    if (acpi_generic_initiator_list) {
-> +        g_ptr_array_remove(acpi_generic_initiator_list, gi);
-> +    }
->      g_free(gi->pci_dev);
->  }
->  
-> @@ -145,20 +157,15 @@ static void acpi_generic_initiator_class_init(ObjectClass *oc, const void *data)
->          "NUMA node associated with the PCI device");
->  }
->  
-> -static int build_acpi_generic_initiator(Object *obj, void *opaque)
-> +
-> +static void build_acpi_generic_initiator(AcpiGenericInitiator *gi,
-> +                                         GArray *table_data)
->  {
->      MachineState *ms = MACHINE(qdev_get_machine());
-> -    AcpiGenericInitiator *gi;
-> -    GArray *table_data = opaque;
->      int32_t devfn;
->      uint8_t bus;
->      Object *o;
->  
-> -    if (!object_dynamic_cast(obj, TYPE_ACPI_GENERIC_INITIATOR)) {
-> -        return 0;
-> -    }
-> -
-> -    gi = ACPI_GENERIC_INITIATOR(obj);
->      if (gi->node >= ms->numa_state->num_nodes) {
->          error_printf("%s: Specified node %d is invalid.\n",
->                       TYPE_ACPI_GENERIC_INITIATOR, gi->node);
-> @@ -178,8 +185,22 @@ static int build_acpi_generic_initiator(Object *obj, void *opaque)
->      assert(devfn >= 0 && devfn < PCI_DEVFN_MAX);
->  
->      build_srat_pci_generic_initiator(table_data, gi->node, 0, bus, devfn);
-> +}
->  
-> -    return 0;
-> +static void build_all_acpi_generic_initiators(GArray *table_data)
-> +{
-> +    AcpiGenericInitiator *gi;
-> +    guint i;
-> +
-> +    if (!acpi_generic_initiator_list) {
-> +        return;
-> +    }
-> +
-> +    /* Iterate array in insertion order */
-> +    for (i = 0; i < acpi_generic_initiator_list->len; i++) {
-> +        gi = g_ptr_array_index(acpi_generic_initiator_list, i);
-> +        build_acpi_generic_initiator(gi, table_data);
-> +    }
->  }
->  
->  typedef struct AcpiGenericPort {
-> @@ -295,9 +316,8 @@ static int build_acpi_generic_port(Object *obj, void *opaque)
->  
->  void build_srat_generic_affinity_structures(GArray *table_data)
->  {
-> -    object_child_foreach_recursive(object_get_root(),
-> -                                   build_acpi_generic_initiator,
-> -                                   table_data);
-> +    build_all_acpi_generic_initiators(table_data);
-> +
->      object_child_foreach_recursive(object_get_root(), build_acpi_generic_port,
->                                     table_data);
+> diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
+> index 789e09d6f2..2570a4701c 100644
+> --- a/hw/i386/amd_iommu.c
+> +++ b/hw/i386/amd_iommu.c
+> @@ -1456,9 +1456,9 @@ static void amdvi_cmdbuf_exec(AMDVIState *s)
+>          amdvi_inval_all(s, cmd);
+>          break;
+>      default:
+> -        trace_amdvi_unhandled_command(extract64(cmd[1], 60, 4));
+> +        trace_amdvi_unhandled_command(extract64(cmd[0], 60, 4));
+>          /* log illegal command */
+> -        amdvi_log_illegalcom_error(s, extract64(cmd[1], 60, 4),
+> +        amdvi_log_illegalcom_error(s, extract64(cmd[0], 60, 4),
+>                                     s->cmdbuf + s->cmdbuf_head);
+>      }
 >  }
 
 
