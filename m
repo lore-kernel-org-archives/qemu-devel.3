@@ -4,65 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC684EA4FC1
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 13:55:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5843FEA4FC2
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 13:55:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuWMc-0008Uw-EP; Mon, 23 Feb 2026 08:52:47 -0500
+	id 1vuWNl-00048Y-Ms; Mon, 23 Feb 2026 08:53:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vuWKe-0005s1-Vx
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 08:50:42 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1vuWKW-0005pD-HE
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 08:50:35 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vuWKb-0007W1-4Z
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 08:50:40 -0500
+ id 1vuWKO-0007Uj-PV
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 08:50:29 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771854630;
+ s=mimecast20190719; t=1771854623;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=tU8A8yNmRs3t3CFeMlOVIUqpL4KeMsMPANcwdYdk6c0=;
- b=Io1h2jV+tJqA2KWvdyoBXDgtB9a2r4x167UU2iKxtTo80gXA9QsXYJCEnOdUH9QY+WJTrj
- XMN+X4xkh5GgPd6dZoUHc9yQ3ODfMw9giuEpJHP4hVnq+vppbrIi48DX2GUZOojwut2LKP
- fLCU+njrqamUVpwpOUHKnyPeI1ondK4=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=+Z5jcvVXOzhqc4lUNGAawG594MBKHCLsZuQLgSkTre0=;
+ b=XqepJbsfbX2jXGjxkfN+P2u7pnc6iNjuzqjmDQSazznXnfz7xXWPQYzzxfBK7PNzeolrDd
+ FPp3wA2O5ONKhesSJoGks8FWpDFSwmnfjeV0iUGpksz1YWUz0VQexKGjE48hj12bDSqIN3
+ PJI3jWa4adLR6DROwHd+TRRzkntOgXc=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-554-1Q4IRDfFOO-pJdu3W3SEHg-1; Mon,
- 23 Feb 2026 08:50:27 -0500
-X-MC-Unique: 1Q4IRDfFOO-pJdu3W3SEHg-1
-X-Mimecast-MFC-AGG-ID: 1Q4IRDfFOO-pJdu3W3SEHg_1771854626
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-683-NPIP436uOk6e4cdbveF5_Q-1; Mon,
+ 23 Feb 2026 08:50:22 -0500
+X-MC-Unique: NPIP436uOk6e4cdbveF5_Q-1
+X-Mimecast-MFC-AGG-ID: NPIP436uOk6e4cdbveF5_Q_1771854621
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A2B921955F3F; Mon, 23 Feb 2026 13:50:26 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5021D1800341; Mon, 23 Feb 2026 13:50:21 +0000 (UTC)
 Received: from localhost (unknown [10.45.242.25])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C21E91955F22; Mon, 23 Feb 2026 13:50:25 +0000 (UTC)
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 843A71955F29; Mon, 23 Feb 2026 13:50:20 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Gerd Hoffmann <kraxel@redhat.com>
-Subject: [PULL v3 62/85] audio/dsound: replace custom logging with
- error_report & trace
-Date: Mon, 23 Feb 2026 14:47:03 +0100
-Message-ID: <20260223134731.2377432-63-marcandre.lureau@redhat.com>
+ Gerd Hoffmann <kraxel@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Christian Schoenebeck <qemu_oss@crudebyte.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Subject: [PULL v3 60/85] audio/coreaudio: replace custom logging with
+ error_report
+Date: Mon, 23 Feb 2026 14:47:01 +0100
+Message-ID: <20260223134731.2377432-61-marcandre.lureau@redhat.com>
 In-Reply-To: <20260223134731.2377432-1-marcandre.lureau@redhat.com>
 References: <20260223134731.2377432-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -1
@@ -70,7 +73,7 @@ X-Spam_score: -0.2
 X-Spam_bar: /
 X-Spam_report: (-0.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1.179, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.717,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -90,602 +93,332 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-The DirectSound audio backend uses its own logging infrastructure
-(AUD_log, AUD_vlog, dolog) and the AUDIO_CAP macro. This approach is
-inconsistent with the rest of QEMU and makes the output harder to
-filter and configure.
+The CoreAudio backend uses its own logging infrastructure (AUD_log,
+AUD_vlog, dolog) and the AUDIO_CAP macro. This approach is inconsistent
+with the rest of QEMU and makes the output harder to filter and
+configure.
 
-Replace the custom logging with standard QEMU error reporting.
+Replace the custom logging with standard QEMU error reporting:
+- Use error_report() / error_printf() for errors
+- Use warn_report() for non-fatal warnings (buffer frame size
+  adjustments)
 
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
 Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- audio/dsound_template.h |  72 ++++++++++-----------
- audio/audio_win_int.c   |  31 +++++-----
- audio/dsoundaudio.c     | 134 ++++++++++++++++------------------------
- audio/trace-events      |   5 ++
- 4 files changed, 108 insertions(+), 134 deletions(-)
+ audio/coreaudio.m | 124 ++++++++++++++++++++++------------------------
+ 1 file changed, 60 insertions(+), 64 deletions(-)
 
-diff --git a/audio/dsound_template.h b/audio/dsound_template.h
-index 022a7307c99..af4019bcb34 100644
---- a/audio/dsound_template.h
-+++ b/audio/dsound_template.h
-@@ -53,9 +53,9 @@ static int glue (dsound_unlock_, TYPE) (
- {
-     HRESULT hr;
+diff --git a/audio/coreaudio.m b/audio/coreaudio.m
+index 561c08f47c1..0c0e8583c89 100644
+--- a/audio/coreaudio.m
++++ b/audio/coreaudio.m
+@@ -28,10 +28,9 @@
  
--    hr = glue (IFACE, _Unlock) (buf, p1, blen1, p2, blen2);
--    if (FAILED (hr)) {
--        dsound_logerr (hr, "Could not unlock " NAME "\n");
-+    hr = glue(IFACE, _Unlock)(buf, p1, blen1, p2, blen2);
-+    if (FAILED(hr)) {
-+        dsound_logerr(hr, "Could not unlock " NAME);
-         return -1;
-     }
- 
-@@ -85,35 +85,35 @@ static int glue (dsound_lock_, TYPE) (
- #endif
-     hr = glue(IFACE, _Lock)(buf, pos, len, p1p, blen1p, p2p, blen2p, flag);
- 
--    if (FAILED (hr)) {
-+    if (FAILED(hr)) {
- #ifndef DSBTYPE_IN
-         if (hr == DSERR_BUFFERLOST) {
--            if (glue (dsound_restore_, TYPE) (buf, s)) {
--                dsound_logerr (hr, "Could not lock " NAME "\n");
-+            if (glue(dsound_restore_, TYPE)(buf, s)) {
-+                dsound_logerr(hr, "Could not lock " NAME);
-             }
-             goto fail;
-         }
- #endif
--        dsound_logerr (hr, "Could not lock " NAME "\n");
-+        dsound_logerr(hr, "Could not lock " NAME);
-         goto fail;
-     }
- 
-     if ((p1p && *p1p && (*blen1p % info->bytes_per_frame)) ||
-         (p2p && *p2p && (*blen2p % info->bytes_per_frame))) {
--        dolog("DirectSound returned misaligned buffer %ld %ld\n",
--              *blen1p, *blen2p);
-+        error_report("dsound: returned misaligned buffer %ld %ld",
-+                     *blen1p, *blen2p);
-         glue(dsound_unlock_, TYPE)(buf, *p1p, p2p ? *p2p : NULL, *blen1p,
-                                    blen2p ? *blen2p : 0);
-         goto fail;
-     }
- 
-     if (p1p && !*p1p && *blen1p) {
--        dolog("warning: !p1 && blen1=%ld\n", *blen1p);
-+        warn_report("dsound: !p1 && blen1=%ld", *blen1p);
-         *blen1p = 0;
-     }
- 
-     if (p2p && !*p2p && *blen2p) {
--        dolog("warning: !p2 && blen2=%ld\n", *blen2p);
-+        warn_report("dsound: !p2 && blen2=%ld", *blen2p);
-         *blen2p = 0;
-     }
- 
-@@ -143,14 +143,14 @@ static void dsound_fini_out (HWVoiceOut *hw)
- #endif
- 
-     if (ds->FIELD) {
--        hr = glue (IFACE, _Stop) (ds->FIELD);
--        if (FAILED (hr)) {
--            dsound_logerr (hr, "Could not stop " NAME "\n");
-+        hr = glue(IFACE, _Stop)(ds->FIELD);
-+        if (FAILED(hr)) {
-+            dsound_logerr(hr, "Could not stop " NAME);
-         }
- 
--        hr = glue (IFACE, _Release) (ds->FIELD);
--        if (FAILED (hr)) {
--            dsound_logerr (hr, "Could not release " NAME "\n");
-+        hr = glue(IFACE, _Release)(ds->FIELD);
-+        if (FAILED(hr)) {
-+            dsound_logerr(hr, "Could not release " NAME);
-         }
-         ds->FIELD = NULL;
-     }
-@@ -182,7 +182,8 @@ static int dsound_init_out(HWVoiceOut *hw, struct audsettings *as)
- #endif
- 
-     if (!s->FIELD2) {
--        dolog ("Attempt to initialize voice without " NAME2 " object\n");
-+        error_report("dsound: Attempt to initialize voice without "
-+                     NAME2 " object");
-         return -1;
-     }
- 
-@@ -212,28 +213,28 @@ static int dsound_init_out(HWVoiceOut *hw, struct audsettings *as)
-         );
- #endif
- 
--    if (FAILED (hr)) {
--        dsound_logerr2 (hr, typ, "Could not create " NAME "\n");
-+    if (FAILED(hr)) {
-+        dsound_logerr2(hr, typ, "Could not create " NAME);
-         return -1;
-     }
- 
--    hr = glue (IFACE, _GetFormat) (ds->FIELD, &wfx, sizeof (wfx), NULL);
--    if (FAILED (hr)) {
--        dsound_logerr2 (hr, typ, "Could not get " NAME " format\n");
-+    hr = glue(IFACE, _GetFormat)(ds->FIELD, &wfx, sizeof(wfx), NULL);
-+    if (FAILED(hr)) {
-+        dsound_logerr2(hr, typ, "Could not get " NAME " format");
-         goto fail0;
-     }
- 
--#ifdef DEBUG_DSOUND
--    dolog (NAME "\n");
--    print_wave_format (&wfx);
--#endif
-+    trace_dsound_wave_format(
-+        wfx.wFormatTag, wfx.nChannels,
-+        wfx.nSamplesPerSec, wfx.nAvgBytesPerSec,
-+        wfx.nBlockAlign, wfx.wBitsPerSample, wfx.cbSize);
- 
-     memset (&bc, 0, sizeof (bc));
-     bc.dwSize = sizeof (bc);
- 
--    hr = glue (IFACE, _GetCaps) (ds->FIELD, &bc);
--    if (FAILED (hr)) {
--        dsound_logerr2 (hr, typ, "Could not get " NAME " format\n");
-+    hr = glue(IFACE, _GetCaps)(ds->FIELD, &bc);
-+    if (FAILED(hr)) {
-+        dsound_logerr2(hr, typ, "Could not get " NAME " caps");
-         goto fail0;
-     }
- 
-@@ -247,18 +248,13 @@ static int dsound_init_out(HWVoiceOut *hw, struct audsettings *as)
-     audio_pcm_init_info (&hw->info, &obt_as);
- 
-     if (bc.dwBufferBytes % hw->info.bytes_per_frame) {
--        dolog (
--            "GetCaps returned misaligned buffer size %ld, alignment %d\n",
--            bc.dwBufferBytes, hw->info.bytes_per_frame
--            );
-+        warn_report("dsound: GetCaps returned misaligned buffer size %ld, "
-+                    "alignment %d", bc.dwBufferBytes, hw->info.bytes_per_frame);
-     }
-     hw->size_emul = bc.dwBufferBytes;
-     hw->samples = bc.dwBufferBytes / hw->info.bytes_per_frame;
- 
--#ifdef DEBUG_DSOUND
--    dolog ("caps %ld, desc %ld\n",
--           bc.dwBufferBytes, bd.dwBufferBytes);
--#endif
-+    trace_dsound_buffer_bytes(bc.dwBufferBytes, bd.dwBufferBytes);
-     return 0;
- 
-  fail0:
-diff --git a/audio/audio_win_int.c b/audio/audio_win_int.c
-index 44a8ff24a6f..ecd599c87de 100644
---- a/audio/audio_win_int.c
-+++ b/audio/audio_win_int.c
-@@ -2,12 +2,12 @@
- 
- #include "qemu/osdep.h"
- 
--#define AUDIO_CAP "win-int"
- #include <windows.h>
- #include <mmreg.h>
- #include <mmsystem.h>
- 
- #include "qemu/audio.h"
-+#include "qemu/error-report.h"
- #include "audio_int.h"
- #include "audio_win_int.h"
- 
-@@ -53,7 +53,7 @@ int waveformat_from_audio_settings (WAVEFORMATEX *wfx,
-         break;
- 
-     default:
--        dolog("Internal logic error: Bad audio format %d\n", as->fmt);
-+        error_report("dsound: Internal logic error: Bad audio format %d", as->fmt);
-         return -1;
-     }
- 
-@@ -64,7 +64,7 @@ int waveformat_to_audio_settings (WAVEFORMATEX *wfx,
-                                   struct audsettings *as)
- {
-     if (!wfx->nSamplesPerSec) {
--        dolog ("Invalid wave format, frequency is zero\n");
-+        error_report("dsound: Invalid wave format, frequency is zero");
-         return -1;
-     }
-     as->freq = wfx->nSamplesPerSec;
-@@ -79,10 +79,9 @@ int waveformat_to_audio_settings (WAVEFORMATEX *wfx,
-         break;
- 
-     default:
--        dolog (
--            "Invalid wave format, number of channels is not 1 or 2, but %d\n",
--            wfx->nChannels
--            );
-+        error_report("dsound: Invalid wave format, "
-+                     "number of channels is not 1 or 2, but %d",
-+                     wfx->nChannels);
-         return -1;
-     }
- 
-@@ -101,9 +100,9 @@ int waveformat_to_audio_settings (WAVEFORMATEX *wfx,
-             break;
- 
-         default:
--            dolog("Invalid PCM wave format, bits per sample is not "
--                  "8, 16 or 32, but %d\n",
--                  wfx->wBitsPerSample);
-+            error_report("dsound: Invalid PCM wave format, bits per sample is not "
-+                         "8, 16 or 32, but %d",
-+                         wfx->wBitsPerSample);
-             return -1;
-         }
-     } else if (wfx->wFormatTag == WAVE_FORMAT_IEEE_FLOAT) {
-@@ -113,15 +112,15 @@ int waveformat_to_audio_settings (WAVEFORMATEX *wfx,
-             break;
- 
-         default:
--            dolog("Invalid IEEE_FLOAT wave format, bits per sample is not "
--                  "32, but %d\n",
--                  wfx->wBitsPerSample);
-+            error_report("dsound: Invalid IEEE_FLOAT wave format, "
-+                         "bits per sample is not 32, but %d",
-+                         wfx->wBitsPerSample);
-             return -1;
-         }
-     } else {
--        dolog("Invalid wave format, tag is not PCM and not IEEE_FLOAT, "
--              "but %d\n",
--              wfx->wFormatTag);
-+        error_report("dsound: Invalid wave format, "
-+                     "tag is not PCM and not IEEE_FLOAT, but %d",
-+                     wfx->wFormatTag);
-         return -1;
-     }
- 
-diff --git a/audio/dsoundaudio.c b/audio/dsoundaudio.c
-index 2c592c56663..704bc3da73b 100644
---- a/audio/dsoundaudio.c
-+++ b/audio/dsoundaudio.c
-@@ -28,8 +28,7 @@
- 
- #include "qemu/osdep.h"
- #include "qemu/audio.h"
--
--#define AUDIO_CAP "dsound"
-+#include "qemu/error-report.h"
- #include "audio_int.h"
+ #include "qemu/main-loop.h"
  #include "qemu/module.h"
- #include "qapi/error.h"
-@@ -40,6 +39,7 @@
- #include <objbase.h>
- #include <dsound.h>
- 
-+#include "trace.h"
- #include "audio_win_int.h"
- 
- #define TYPE_AUDIO_DSOUND "audio-dsound"
-@@ -55,9 +55,6 @@ struct AudioDsound {
-     struct audsettings settings;
- };
- 
++#include "qemu/error-report.h"
+ #include "qemu/audio.h"
+ #include "qom/object.h"
 -
--/* #define DEBUG_DSOUND */
--
- typedef struct {
-     HWVoiceOut hw;
-     LPDIRECTSOUNDBUFFER dsound_buffer;
-@@ -214,56 +211,37 @@ static void dsound_log_hresult(HRESULT hr)
-     const char *str = dserror(hr);
+-#define AUDIO_CAP "coreaudio"
+ #include "audio_int.h"
  
-     if (str) {
--        AUD_log (AUDIO_CAP, "Reason: %s\n", str);
-+        error_printf(" Reason: %s", str);
-     } else {
--        AUD_log (AUDIO_CAP, "Reason: Unknown (HRESULT: 0x%lx)\n", hr);
-+        error_printf(" Reason: Unknown (HRESULT: 0x%lx)", hr);
-     }
+ #define TYPE_AUDIO_COREAUDIO "audio-coreaudio"
+@@ -157,7 +156,7 @@ static OSStatus coreaudio_get_isrunning(AudioDeviceID id, UInt32 *result)
+                                       result);
  }
  
--static void G_GNUC_PRINTF (2, 3) dsound_logerr (
--    HRESULT hr,
+-static void coreaudio_logstatus (OSStatus status)
++static void coreaudio_logstatus(OSStatus status)
+ {
+     const char *str = "BUG";
+ 
+@@ -207,70 +206,64 @@ static void coreaudio_logstatus (OSStatus status)
+         break;
+ 
+     default:
+-        AUD_log (AUDIO_CAP, "Reason: status code %" PRId32 "\n", (int32_t)status);
++        error_printf(" Reason: status code %" PRId32, (int32_t)status);
+         return;
+     }
+ 
+-    AUD_log (AUDIO_CAP, "Reason: %s\n", str);
++    error_printf(" Reason: %s", str);
+ }
+ 
+-static void G_GNUC_PRINTF (2, 3) coreaudio_logerr (
+-    OSStatus status,
 -    const char *fmt,
 -    ...
 -    )
-+static void G_GNUC_PRINTF(2, 3) dsound_logerr(HRESULT hr, const char *fmt, ...)
++static void G_GNUC_PRINTF(2, 3) coreaudio_logerr(OSStatus status,
++                                                const char *fmt, ...)
  {
      va_list ap;
  
 -    va_start (ap, fmt);
--    AUD_vlog (AUDIO_CAP, fmt, ap);
+-    AUD_log (AUDIO_CAP, fmt, ap);
 -    va_end (ap);
 -
--    dsound_log_hresult (hr);
-+    error_printf("dsound: ");
+-    coreaudio_logstatus (status);
++    error_printf("coreaudio: ");
 +    va_start(ap, fmt);
 +    error_vprintf(fmt, ap);
 +    va_end(ap);
-+    dsound_log_hresult(hr);
++    coreaudio_logstatus(status);
 +    error_printf("\n");
  }
  
--static void G_GNUC_PRINTF (3, 4) dsound_logerr2 (
--    HRESULT hr,
+-static void G_GNUC_PRINTF (3, 4) coreaudio_logerr2 (
+-    OSStatus status,
 -    const char *typ,
 -    const char *fmt,
 -    ...
 -    )
-+static void G_GNUC_PRINTF(3, 4) dsound_logerr2(HRESULT hr, const char *typ,
-+                                               const char *fmt, ...)
++static void G_GNUC_PRINTF(3, 4) coreaudio_logerr2(OSStatus status,
++                                                  const char *typ,
++                                                  const char *fmt, ...)
  {
      va_list ap;
  
 -    AUD_log (AUDIO_CAP, "Could not initialize %s\n", typ);
+-
 -    va_start (ap, fmt);
 -    AUD_vlog (AUDIO_CAP, fmt, ap);
 -    va_end (ap);
 -
--    dsound_log_hresult (hr);
-+    error_printf("dsound: Could not initialize %s: ", typ);
+-    coreaudio_logstatus (status);
++    error_printf("coreaudio: Could not initialize %s: ", typ);
 +    va_start(ap, fmt);
 +    error_vprintf(fmt, ap);
 +    va_end(ap);
-+    dsound_log_hresult(hr);
++    coreaudio_logstatus(status);
 +    error_printf("\n");
  }
  
--#ifdef DEBUG_DSOUND
--static void print_wave_format (WAVEFORMATEX *wfx)
--{
--    dolog ("tag             = %d\n", wfx->wFormatTag);
--    dolog ("nChannels       = %d\n", wfx->nChannels);
--    dolog ("nSamplesPerSec  = %ld\n", wfx->nSamplesPerSec);
--    dolog ("nAvgBytesPerSec = %ld\n", wfx->nAvgBytesPerSec);
--    dolog ("nBlockAlign     = %d\n", wfx->nBlockAlign);
--    dolog ("wBitsPerSample  = %d\n", wfx->wBitsPerSample);
--    dolog ("cbSize          = %d\n", wfx->cbSize);
--}
--#endif
+ #define coreaudio_playback_logerr(status, ...) \
+     coreaudio_logerr2(status, "playback", __VA_ARGS__)
  
- static int dsound_restore_out (LPDIRECTSOUNDBUFFER dsb, AudioDsound *s)
+-static int coreaudio_buf_lock (coreaudioVoiceOut *core, const char *fn_name)
++static int coreaudio_buf_lock(coreaudioVoiceOut *core, const char *fn_name)
  {
-@@ -272,7 +250,7 @@ static int dsound_restore_out (LPDIRECTSOUNDBUFFER dsb, AudioDsound *s)
-     hr = IDirectSoundBuffer_Restore (dsb);
+     int err;
  
-     if (hr != DS_OK) {
--        dsound_logerr (hr, "Could not restore playback buffer\n");
-+        dsound_logerr(hr, "Could not restore playback buffer");
+-    err = pthread_mutex_lock (&core->buf_mutex);
++    err = pthread_mutex_lock(&core->buf_mutex);
+     if (err) {
+-        dolog ("Could not lock voice for %s\nReason: %s\n",
+-               fn_name, strerror (err));
++        error_report("coreaudio: Could not lock voice for %s: %s",
++                     fn_name, strerror(err));
          return -1;
      }
      return 0;
-@@ -290,7 +268,7 @@ static int dsound_get_status_out (LPDIRECTSOUNDBUFFER dsb, DWORD *statusp,
+ }
  
-     hr = IDirectSoundBuffer_GetStatus (dsb, statusp);
-     if (FAILED (hr)) {
--        dsound_logerr (hr, "Could not get playback buffer status\n");
-+        dsound_logerr(hr, "Could not get playback buffer status");
+-static int coreaudio_buf_unlock (coreaudioVoiceOut *core, const char *fn_name)
++static int coreaudio_buf_unlock(coreaudioVoiceOut *core, const char *fn_name)
+ {
+     int err;
+ 
+-    err = pthread_mutex_unlock (&core->buf_mutex);
++    err = pthread_mutex_unlock(&core->buf_mutex);
+     if (err) {
+-        dolog ("Could not unlock voice for %s\nReason: %s\n",
+-               fn_name, strerror (err));
++        error_report("coreaudio: Could not unlock voice for %s: %s",
++                     fn_name, strerror(err));
+         return -1;
+     }
+     return 0;
+@@ -378,12 +371,13 @@ static OSStatus init_out_device(coreaudioVoiceOut *core)
+ 
+     status = coreaudio_get_voice(&core->outputDeviceID);
+     if (status != kAudioHardwareNoError) {
+-        coreaudio_playback_logerr (status,
+-                                   "Could not get default output Device\n");
++        coreaudio_playback_logerr(status,
++                                  "Could not get default output device");
+         return status;
+     }
+     if (core->outputDeviceID == kAudioDeviceUnknown) {
+-        dolog ("Could not initialize playback - Unknown Audiodevice\n");
++        error_report("coreaudio: Could not initialize playback: "
++                     "Unknown audio device");
+         return status;
+     }
+ 
+@@ -394,17 +388,19 @@ static OSStatus init_out_device(coreaudioVoiceOut *core)
+         return 0;
+     }
+     if (status != kAudioHardwareNoError) {
+-        coreaudio_playback_logerr (status,
+-                                    "Could not get device buffer frame range\n");
++        coreaudio_playback_logerr(status,
++                                  "Could not get device buffer frame range");
+         return status;
+     }
+ 
+     if (frameRange.mMinimum > core->frameSizeSetting) {
+         core->audioDevicePropertyBufferFrameSize = (UInt32) frameRange.mMinimum;
+-        dolog ("warning: Upsizing Buffer Frames to %f\n", frameRange.mMinimum);
++        warn_report("coreaudio: Upsizing buffer frames to %f",
++                    frameRange.mMinimum);
+     } else if (frameRange.mMaximum < core->frameSizeSetting) {
+         core->audioDevicePropertyBufferFrameSize = (UInt32) frameRange.mMaximum;
+-        dolog ("warning: Downsizing Buffer Frames to %f\n", frameRange.mMaximum);
++        warn_report("coreaudio: Downsizing buffer frames to %f",
++                    frameRange.mMaximum);
+     } else {
+         core->audioDevicePropertyBufferFrameSize = core->frameSizeSetting;
+     }
+@@ -416,9 +412,9 @@ static OSStatus init_out_device(coreaudioVoiceOut *core)
+         return 0;
+     }
+     if (status != kAudioHardwareNoError) {
+-        coreaudio_playback_logerr (status,
+-                                    "Could not set device buffer frame size %" PRIu32 "\n",
+-                                    (uint32_t)core->audioDevicePropertyBufferFrameSize);
++        coreaudio_playback_logerr(status,
++                                  "Could not set device buffer frame size %" PRIu32,
++                                  (uint32_t)core->audioDevicePropertyBufferFrameSize);
+         return status;
+     }
+ 
+@@ -429,8 +425,8 @@ static OSStatus init_out_device(coreaudioVoiceOut *core)
+         return 0;
+     }
+     if (status != kAudioHardwareNoError) {
+-        coreaudio_playback_logerr (status,
+-                                    "Could not get device buffer frame size\n");
++        coreaudio_playback_logerr(status,
++                                  "Could not get device buffer frame size");
+         return status;
+     }
+     core->hw.samples = core->bufferCount * core->audioDevicePropertyBufferFrameSize;
+@@ -442,9 +438,9 @@ static OSStatus init_out_device(coreaudioVoiceOut *core)
+         return 0;
+     }
+     if (status != kAudioHardwareNoError) {
+-        coreaudio_playback_logerr (status,
+-                                   "Could not set samplerate %lf\n",
+-                                   streamBasicDescription.mSampleRate);
++        coreaudio_playback_logerr(status,
++                                  "Could not set samplerate %lf",
++                                  streamBasicDescription.mSampleRate);
+         core->outputDeviceID = kAudioDeviceUnknown;
+         return status;
+     }
+@@ -468,7 +464,7 @@ static OSStatus init_out_device(coreaudioVoiceOut *core)
+         return 0;
+     }
+     if (status != kAudioHardwareNoError || core->ioprocid == NULL) {
+-        coreaudio_playback_logerr (status, "Could not set IOProc\n");
++        coreaudio_playback_logerr(status, "Could not set IOProc");
+         core->outputDeviceID = kAudioDeviceUnknown;
+         return status;
+     }
+@@ -486,13 +482,13 @@ static void fini_out_device(coreaudioVoiceOut *core)
+     if (status != kAudioHardwareBadObjectError) {
+         if (status != kAudioHardwareNoError) {
+             coreaudio_logerr(status,
+-                             "Could not determine whether Device is playing\n");
++                             "Could not determine whether device is playing");
+         }
+ 
+         if (isrunning) {
+             status = AudioDeviceStop(core->outputDeviceID, core->ioprocid);
+             if (status != kAudioHardwareBadDeviceError && status != kAudioHardwareNoError) {
+-                coreaudio_logerr(status, "Could not stop playback\n");
++                coreaudio_logerr(status, "Could not stop playback");
+             }
+         }
+     }
+@@ -501,7 +497,7 @@ static void fini_out_device(coreaudioVoiceOut *core)
+     status = AudioDeviceDestroyIOProcID(core->outputDeviceID,
+                                         core->ioprocid);
+     if (status != kAudioHardwareBadDeviceError && status != kAudioHardwareNoError) {
+-        coreaudio_logerr(status, "Could not remove IOProc\n");
++        coreaudio_logerr(status, "Could not remove IOProc");
+     }
+     core->outputDeviceID = kAudioDeviceUnknown;
+ }
+@@ -515,7 +511,7 @@ static void update_device_playback_state(coreaudioVoiceOut *core)
+     if (status != kAudioHardwareNoError) {
+         if (status != kAudioHardwareBadObjectError) {
+             coreaudio_logerr(status,
+-                             "Could not determine whether Device is playing\n");
++                             "Could not determine whether device is playing");
+         }
+ 
+         return;
+@@ -526,7 +522,7 @@ static void update_device_playback_state(coreaudioVoiceOut *core)
+         if (!isrunning) {
+             status = AudioDeviceStart(core->outputDeviceID, core->ioprocid);
+             if (status != kAudioHardwareBadDeviceError && status != kAudioHardwareNoError) {
+-                coreaudio_logerr (status, "Could not resume playback\n");
++                coreaudio_logerr(status, "Could not resume playback");
+             }
+         }
+     } else {
+@@ -535,7 +531,7 @@ static void update_device_playback_state(coreaudioVoiceOut *core)
+             status = AudioDeviceStop(core->outputDeviceID,
+                                      core->ioprocid);
+             if (status != kAudioHardwareBadDeviceError && status != kAudioHardwareNoError) {
+-                coreaudio_logerr(status, "Could not pause playback\n");
++                coreaudio_logerr(status, "Could not pause playback");
+             }
+         }
+     }
+@@ -576,7 +572,7 @@ static int coreaudio_init_out(HWVoiceOut *hw, struct audsettings *as)
+     /* create mutex */
+     err = pthread_mutex_init(&core->buf_mutex, NULL);
+     if (err) {
+-        dolog("Could not create mutex\nReason: %s\n", strerror (err));
++        error_report("coreaudio: Could not create mutex: %s", strerror(err));
          return -1;
      }
  
-@@ -309,7 +287,7 @@ static int dsound_get_status_in (LPDIRECTSOUNDCAPTUREBUFFER dscb,
- 
-     hr = IDirectSoundCaptureBuffer_GetStatus (dscb, statusp);
-     if (FAILED (hr)) {
--        dsound_logerr (hr, "Could not get capture buffer status\n");
-+        dsound_logerr(hr, "Could not get capture buffer status");
+@@ -594,8 +590,8 @@ static int coreaudio_init_out(HWVoiceOut *hw, struct audsettings *as)
+                                             &voice_addr, handle_voice_change,
+                                             core);
+     if (status != kAudioHardwareNoError) {
+-        coreaudio_playback_logerr (status,
+-                                   "Could not listen to voice property change\n");
++        coreaudio_playback_logerr(status,
++                                  "Could not listen to voice property change");
          return -1;
      }
  
-@@ -340,11 +318,7 @@ static void dsound_clear_sample (HWVoiceOut *hw, LPDIRECTSOUNDBUFFER dsb,
-     len1 = blen1 / hw->info.bytes_per_frame;
-     len2 = blen2 / hw->info.bytes_per_frame;
+@@ -606,7 +602,7 @@ static int coreaudio_init_out(HWVoiceOut *hw, struct audsettings *as)
+                                                    core);
+         if (status != kAudioHardwareNoError) {
+             coreaudio_playback_logerr(status,
+-                                      "Could not remove voice property change listener\n");
++                                      "Could not remove voice property change listener");
+         }
  
--#ifdef DEBUG_DSOUND
--    dolog ("clear %p,%ld,%ld %p,%ld,%ld\n",
--           p1, blen1, len1,
--           p2, blen2, len2);
--#endif
-+    trace_dsound_clear_sample(p1, blen1, len1, p2, blen2, len2);
- 
-     if (p1 && len1) {
-         audio_pcm_info_clear_buf (&hw->info, p1, len1);
-@@ -366,40 +340,40 @@ static void dsound_enable_out(HWVoiceOut *hw, bool enable)
-     LPDIRECTSOUNDBUFFER dsb = ds->dsound_buffer;
- 
-     if (!dsb) {
--        dolog ("Attempt to control voice without a buffer\n");
-+        error_report("dsound: Attempt to control voice without a buffer");
-         return;
+         return -1;
+@@ -626,7 +622,7 @@ static void coreaudio_fini_out (HWVoiceOut *hw)
+                                                handle_voice_change,
+                                                core);
+     if (status != kAudioHardwareNoError) {
+-        coreaudio_logerr(status, "Could not remove voice property change listener\n");
++        coreaudio_logerr(status, "Could not remove voice property change listener");
      }
  
-     if (enable) {
--        if (dsound_get_status_out (dsb, &status, s)) {
-+        if (dsound_get_status_out(dsb, &status, s)) {
-             return;
-         }
- 
-         if (status & DSBSTATUS_PLAYING) {
--            dolog ("warning: Voice is already playing\n");
-+            warn_report("dsound: Voice is already playing");
-             return;
-         }
- 
--        dsound_clear_sample (hw, dsb, s);
-+        dsound_clear_sample(hw, dsb, s);
- 
--        hr = IDirectSoundBuffer_Play (dsb, 0, 0, DSBPLAY_LOOPING);
--        if (FAILED (hr)) {
--            dsound_logerr (hr, "Could not start playing buffer\n");
-+        hr = IDirectSoundBuffer_Play(dsb, 0, 0, DSBPLAY_LOOPING);
-+        if (FAILED(hr)) {
-+            dsound_logerr(hr, "Could not start playing buffer");
-             return;
-         }
-     } else {
--        if (dsound_get_status_out (dsb, &status, s)) {
-+        if (dsound_get_status_out(dsb, &status, s)) {
-             return;
-         }
- 
-         if (status & DSBSTATUS_PLAYING) {
--            hr = IDirectSoundBuffer_Stop (dsb);
--            if (FAILED (hr)) {
--                dsound_logerr (hr, "Could not stop playing buffer\n");
-+            hr = IDirectSoundBuffer_Stop(dsb);
-+            if (FAILED(hr)) {
-+                dsound_logerr(hr, "Could not stop playing buffer");
-                 return;
-             }
-         } else {
--            dolog ("warning: Voice is not playing\n");
-+            warn_report("dsound: Voice is not playing");
-         }
+     fini_out_device(core);
+@@ -634,7 +630,7 @@ static void coreaudio_fini_out (HWVoiceOut *hw)
+     /* destroy mutex */
+     err = pthread_mutex_destroy(&core->buf_mutex);
+     if (err) {
+-        dolog("Could not destroy mutex\nReason: %s\n", strerror (err));
++        error_report("coreaudio: Could not destroy mutex: %s", strerror(err));
      }
  }
-@@ -414,7 +388,7 @@ static size_t dsound_buffer_get_free(HWVoiceOut *hw)
-     hr = IDirectSoundBuffer_GetCurrentPosition(
-         dsb, &ppos, ds->first_time ? &wpos : NULL);
-     if (FAILED(hr)) {
--        dsound_logerr(hr, "Could not get playback buffer position\n");
-+        dsound_logerr(hr, "Could not get playback buffer position");
-         return 0;
-     }
  
-@@ -441,7 +415,7 @@ static void *dsound_get_buffer_out(HWVoiceOut *hw, size_t *size)
-     err = dsound_lock_out(dsb, &hw->info, hw->pos_emul, req_size, &ret, NULL,
-                           &act_size, NULL, false, AUDIO_DSOUND(hw->s));
-     if (err) {
--        dolog("Failed to lock buffer\n");
-+        error_report("dsound: Failed to lock buffer");
-         *size = 0;
-         return NULL;
-     }
-@@ -457,7 +431,7 @@ static size_t dsound_put_buffer_out(HWVoiceOut *hw, void *buf, size_t len)
-     int err = dsound_unlock_out(dsb, buf, NULL, len, 0);
- 
-     if (err) {
--        dolog("Failed to unlock buffer!!\n");
-+        error_report("dsound: Failed to unlock buffer");
-         return 0;
-     }
-     hw->pos_emul = (hw->pos_emul + len) % hw->size_emul;
-@@ -473,40 +447,40 @@ static void dsound_enable_in(HWVoiceIn *hw, bool enable)
-     LPDIRECTSOUNDCAPTUREBUFFER dscb = ds->dsound_capture_buffer;
- 
-     if (!dscb) {
--        dolog ("Attempt to control capture voice without a buffer\n");
-+        error_report("dsound: Attempt to control capture voice without a buffer");
-         return;
-     }
- 
-     if (enable) {
--        if (dsound_get_status_in (dscb, &status)) {
-+        if (dsound_get_status_in(dscb, &status)) {
-             return;
-         }
- 
-         if (status & DSCBSTATUS_CAPTURING) {
--            dolog ("warning: Voice is already capturing\n");
-+            warn_report("dsound: Voice is already capturing");
-             return;
-         }
- 
-         /* clear ?? */
- 
--        hr = IDirectSoundCaptureBuffer_Start (dscb, DSCBSTART_LOOPING);
--        if (FAILED (hr)) {
--            dsound_logerr (hr, "Could not start capturing\n");
-+        hr = IDirectSoundCaptureBuffer_Start(dscb, DSCBSTART_LOOPING);
-+        if (FAILED(hr)) {
-+            dsound_logerr(hr, "Could not start capturing");
-             return;
-         }
-     } else {
--        if (dsound_get_status_in (dscb, &status)) {
-+        if (dsound_get_status_in(dscb, &status)) {
-             return;
-         }
- 
-         if (status & DSCBSTATUS_CAPTURING) {
--            hr = IDirectSoundCaptureBuffer_Stop (dscb);
--            if (FAILED (hr)) {
--                dsound_logerr (hr, "Could not stop capturing\n");
-+            hr = IDirectSoundCaptureBuffer_Stop(dscb);
-+            if (FAILED(hr)) {
-+                dsound_logerr(hr, "Could not stop capturing");
-                 return;
-             }
-         } else {
--            dolog ("warning: Voice is not capturing\n");
-+            warn_report("dsound: Voice is not capturing");
-         }
-     }
- }
-@@ -523,7 +497,7 @@ static void *dsound_get_buffer_in(HWVoiceIn *hw, size_t *size)
- 
-     hr = IDirectSoundCaptureBuffer_GetCurrentPosition(dscb, NULL, &rpos);
-     if (FAILED(hr)) {
--        dsound_logerr(hr, "Could not get capture buffer position\n");
-+        dsound_logerr(hr, "Could not get capture buffer position");
-         *size = 0;
-         return NULL;
-     }
-@@ -544,7 +518,7 @@ static void *dsound_get_buffer_in(HWVoiceIn *hw, size_t *size)
-     err = dsound_lock_in(dscb, &hw->info, hw->pos_emul, req_size, &ret, NULL,
-                          &act_size, NULL, false, AUDIO_DSOUND(hw->s));
-     if (err) {
--        dolog("Failed to lock buffer\n");
-+        error_report("dsound: Failed to lock buffer");
-         *size = 0;
-         return NULL;
-     }
-@@ -560,7 +534,7 @@ static void dsound_put_buffer_in(HWVoiceIn *hw, void *buf, size_t len)
-     int err = dsound_unlock_in(dscb, buf, NULL, len, 0);
- 
-     if (err) {
--        dolog("Failed to unlock buffer!!\n");
-+        error_report("dsound: Failed to unlock buffer");
-         return;
-     }
-     hw->pos_emul = (hw->pos_emul + len) % hw->size_emul;
-@@ -577,7 +551,7 @@ static void audio_dsound_finalize(Object *obj)
- 
-     hr = IDirectSound_Release (s->dsound);
-     if (FAILED (hr)) {
--        dsound_logerr (hr, "Could not release DirectSound\n");
-+        dsound_logerr(hr, "Could not release DirectSound");
-     }
-     s->dsound = NULL;
- 
-@@ -587,7 +561,7 @@ static void audio_dsound_finalize(Object *obj)
- 
-     hr = IDirectSoundCapture_Release (s->dsound_capture);
-     if (FAILED (hr)) {
--        dsound_logerr (hr, "Could not release DirectSoundCapture\n");
-+        dsound_logerr(hr, "Could not release DirectSoundCapture");
-     }
-     s->dsound_capture = NULL;
- }
-diff --git a/audio/trace-events b/audio/trace-events
-index 737e3e60694..b2f29666700 100644
---- a/audio/trace-events
-+++ b/audio/trace-events
-@@ -23,6 +23,11 @@ dbus_audio_register(const char *s, const char *dir) "sender = %s, dir = %s"
- dbus_audio_put_buffer_out(size_t pos, size_t size) "buf_pos = %zu, buf_size = %zu"
- dbus_audio_read(size_t len) "len = %zu"
- 
-+# dsoundaudio.c
-+dsound_clear_sample(void *p1, uint32_t blen1, uint32_t len1, void *p2, uint32_t blen2, uint32_t len2) "p1=%p, blen1=%u, len1=%u, p2=%p, blen2=%u, len2=%u"
-+dsound_wave_format(uint16_t wFormatTag, uint16_t nChannels, uint32_t nSamplesPerSec, uint32_t nAvgBytesPerSec, uint16_t nBlockAlign, uint16_t wBitsPerSample, uint16_t cbSize) "wFormatTag=%u, nChannels=%u, nSamplesPerSec=%u, nAvgBytesPerSec=%u, nBlockAlign=%u, wBitsPerSample=%u, cbSize=%u"
-+dsound_buffer_bytes(uint32_t caps_bytes, uint32_t desc_bytes) "caps_bytes=%u, desc_bytes=%u"
-+
- # pwaudio.c
- pw_state_changed(int nodeid, const char *s) "node id: %d stream state: %s"
- pw_read(int32_t avail, uint32_t index, size_t len) "avail=%d index=%u len=%zu"
 -- 
 2.53.0
 
