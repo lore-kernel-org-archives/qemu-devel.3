@@ -4,72 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2EEB5EEC299
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20C9AEEC28E
 	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 21:53:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vudr6-0003Hs-Vw; Mon, 23 Feb 2026 16:52:41 -0500
+	id 1vudr5-0003HO-Ku; Mon, 23 Feb 2026 16:52:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <3JMycaQcKCoMwlmvsl5nvvnsl.jvtxlt1-kl2lsuvunu1.vyn@flex--pefoley.bounces.google.com>)
- id 1vudr6-0003HS-2R
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 16:52:40 -0500
-Received: from mail-yx1-xb149.google.com ([2607:f8b0:4864:20::b149])
+ <3IsycaQcKCoEujktqj3lttlqj.htrvjrz-ij0jqstslsz.twl@flex--pefoley.bounces.google.com>)
+ id 1vudr4-0003Ga-04
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 16:52:38 -0500
+Received: from mail-yw1-x114a.google.com ([2607:f8b0:4864:20::114a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from
- <3JMycaQcKCoMwlmvsl5nvvnsl.jvtxlt1-kl2lsuvunu1.vyn@flex--pefoley.bounces.google.com>)
- id 1vudr4-000138-OO
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 16:52:39 -0500
-Received: by mail-yx1-xb149.google.com with SMTP id
- 956f58d0204a3-64c98481d1eso1178788d50.2
- for <qemu-devel@nongnu.org>; Mon, 23 Feb 2026 13:52:38 -0800 (PST)
+ <3IsycaQcKCoEujktqj3lttlqj.htrvjrz-ij0jqstslsz.twl@flex--pefoley.bounces.google.com>)
+ id 1vudr2-00012l-JE
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 16:52:37 -0500
+Received: by mail-yw1-x114a.google.com with SMTP id
+ 00721157ae682-79801ac9355so85717997b3.0
+ for <qemu-devel@nongnu.org>; Mon, 23 Feb 2026 13:52:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1771883557; x=1772488357; darn=nongnu.org;
- h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
- :date:from:to:cc:subject:date:message-id:reply-to;
- bh=lgAJpfn5j58COsJrDstrt2K24M7TO3WOwb+h1bXRCsg=;
- b=mmuOLPgC5ekDag6CH3o5myJ/YEWxgJSmEDGdL4g7bU4A6GCfhidUl3lgoeoXtCCCJE
- X+GStEjBCPHYOV9314gxu5iv5ai7KAUahBd+Jvgx5ugVvZNiCZ1f9p86kvxMHYeCLMUj
- laS5XSZjG+L9fXhd00r05yH8zx6dhuoL7rb+L0/YMjwiOWx4X5vwW/5eJGd1SEy0SGaW
- eMKoLkSZRD/QNreUFAKjvTqyOQI59UUK1tyqzKsB/ExFfEkmkGb/chjNLC/NG781reDO
- SFzwBb7BTu4Dwq+W1Q+k7YgS5aTUeGp70jT+HLLpPBbxWIy2ce4EX/87KC0mrmPjbTMD
- tOSQ==
+ d=google.com; s=20230601; t=1771883554; x=1772488354; darn=nongnu.org;
+ h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=JKjxyOc9+wLsReitGJcfoh57oopHS5EeiajHsmdnHG8=;
+ b=s7V+w+rqBjYa1bOs8P5T6Bv42x8FptpSPczIYd/I6m8PaQ/3Vb5DS548QwDlBTTlfH
+ skZUfq0nohyu7+4VERetGQmk9XhfHjYWMFbc9TfZ6BDDlQ5RYFVKTW6sD7lcR9ilbujk
+ eMzxhXU+tn2eTABPmdnlLs3LTVL2SgBTz0ObC8uky+RPfXsKQl0xtkKVBnmjxHeZxJ2b
+ l1lgvB/j51YsAkhNRvF6/4W5T6MrCdYkdKWC8c80VTd4tI8yMJP3gUpcldDPMurvJ968
+ ScyDjcyk9YeJ8WOMmLVGJVIU/vnpaRbwWIeIuzCQ0zqaq8bkjBoaRZ3sS6aKGHeDnNmn
+ 6T6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771883557; x=1772488357;
- h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
- :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=lgAJpfn5j58COsJrDstrt2K24M7TO3WOwb+h1bXRCsg=;
- b=iOeKSUJ5sWVIzIlAw7MUNf1pbONSMMYahV2PHVXjWQRTKAXygWMd+oLdebb3rbYCZU
- qyr5j9+NqTXM67AMHqfA6qE1heoRY0RMriHoyiBrNugC3fhf9aXDExukmjdxmJZlFq2a
- oCxGL+pmkY/P07jcDsxRfXqis11nkhsWQYe/19jK5+9BnVOUx/ypmCGtHC/ADvWjcT4C
- RNHCCYSgdwWgDQJibs6bEENW7Sds80njWK4bXK1QXmHReswceViA3H8ecBM7c+0E5591
- 89UPWQ3UY25xgU7z8LngGmir0sKgRmhdeGI1yaj67alpy5Xs/C4oColDnOTTsyWzrN+n
- go+Q==
-X-Gm-Message-State: AOJu0YxT9CiCruavuistFiK9AKf9BpQ8K1xUDdTNP+Y83cqb+Kj/ipOH
- DrpPj2x928+ZBEJTHkieMqOuv262oJt7LkL6PMZ3v0YLZuB1MS5Fs8iEhQilfa+lM9zpflZt+o7
- Kjck3u9dBeoUO1YoRrtq4sC5g2HPm7IZdmEd321m1aVyR54/J+IVnqyGl0YWdMmKjalN+waXfMB
- 5Quq0LsWWu+DMVPXlY6xI2UNZai/aUjN08rFTn009n
-X-Received: from yxn3.prod.google.com ([2002:a05:690e:83:b0:64a:d018:2e1c])
+ d=1e100.net; s=20230601; t=1771883554; x=1772488354;
+ h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=JKjxyOc9+wLsReitGJcfoh57oopHS5EeiajHsmdnHG8=;
+ b=JZRAw98i2IBefSgEvnEr1M5rl2/FQzYL9aY4spTS/z/uvySI+hvJD3/lCqImzifR3s
+ 9BUv2LPlQLZIHlvXu7ZNP3vzMsRZq64HnjpMvQfX7lmaEs7Rk77jxV15TyWAoRLfuaGz
+ pvZ0QThZP9IXgEW19XdHX/3IXdu/EiDhtVAXq3ubFix/847iJjBG4y9Kw6EI1sskfzlz
+ OpchuF4712kjflGfs4NqtBT4uBAIZtnHIgYBj37JnTBCB5rpyvirdlvrMuX4qUrpaKw2
+ HeqGHOJtdIZ/ZOfCgxBFUCe7GhBQW4xfD432w0m93mg2pe/C05r3JOYxngP1WRFv4VtM
+ SZ5A==
+X-Gm-Message-State: AOJu0YweCutmfB5eQNJSoBU28ltF77+GQace1/f1QI/7MaHcBGkTrwN9
+ 5YgbpRS2wy04InBiT6gxPvYczXA8K0znv1rVj+60Zy5r0jJLlQ7K+Ou9aPqLa7Seq/ss4SEiUO7
+ mmU+6Mz4KTJ/XTzyVxrrmq8Kfuv/Wvw4GKOe86a+AJCXgrcCEMIWfadK9DXsjKlNcg0IJLppY56
+ ASzrcLMmWYq/C5wOoh3R18XmNvEDwIl4VXGff1u7O1
+X-Received: from ywbky11-n2.prod.google.com
+ ([2002:a05:690c:530b:20b0:796:3e6f:2024])
  (user=pefoley job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:690e:d56:b0:64a:f0cd:d41
- with SMTP id 956f58d0204a3-64c7906b06dmr8208121d50.87.1771883556878; Mon, 23
- Feb 2026 13:52:36 -0800 (PST)
-Date: Mon, 23 Feb 2026 16:52:25 -0500
-In-Reply-To: <20260223-passt-v1-0-101c6ba1c88a@google.com>
+ 2002:a05:690c:ec5:b0:798:5333:ce0d
+ with SMTP id 00721157ae682-7985333d42emr22498037b3.4.1771883554361; Mon, 23
+ Feb 2026 13:52:34 -0800 (PST)
+Date: Mon, 23 Feb 2026 16:52:23 -0500
 Mime-Version: 1.0
-References: <20260223-passt-v1-0-101c6ba1c88a@google.com>
+X-B4-Tracking: v=1; b=H4sIABfMnGkC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDIzMDIyNj3YLE4uISXQNzAwszA+OUZBNLUyWg2oKi1LTMCrA50bG1tQCwhVR
+ eVwAAAA==
+X-Change-Id: 20260223-passt-0708603dc495
 X-Mailer: b4 0.14.3
-Message-ID: <20260223-passt-v1-2-101c6ba1c88a@google.com>
-Subject: [PATCH 2/2] Don't try to read the pidfile if passt got a signal
+Message-ID: <20260223-passt-v1-0-101c6ba1c88a@google.com>
+Subject: [PATCH 0/2] Error-handling fixes for passt
 From: Peter Foley <pefoley@google.com>
 To: qemu-devel@nongnu.org
 Cc: Jason Wang <jasowang@redhat.com>, Peter Foley <pefoley@google.com>
 Content-Type: text/plain; charset="utf-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b149;
- envelope-from=3JMycaQcKCoMwlmvsl5nvvnsl.jvtxlt1-kl2lsuvunu1.vyn@flex--pefoley.bounces.google.com;
- helo=mail-yx1-xb149.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::114a;
+ envelope-from=3IsycaQcKCoEujktqj3lttlqj.htrvjrz-ij0jqstslsz.twl@flex--pefoley.bounces.google.com;
+ helo=mail-yw1-x114a.google.com
 X-Spam_score_int: -95
 X-Spam_score: -9.6
 X-Spam_bar: ---------
@@ -92,41 +95,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-g_subprocess_get_if_exited returns false if passt was killed by a signal, so we fall through to trying to read the pidfile.
-
-Update the error when passt exits to include the exit code.
+Some fixes for passt error handling that showed up when
+trying to enable support with an internal Google framework.
 
 Signed-off-by: Peter Foley <pefoley@google.com>
 ---
- net/passt.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+Peter Foley (2):
+      Only kill passt if it wrote a pidfile
+      Don't try to read the pidfile if passt got a signal
 
-diff --git a/net/passt.c b/net/passt.c
-index b3d4b71314..053c2f5f57 100644
---- a/net/passt.c
-+++ b/net/passt.c
-@@ -270,8 +270,17 @@ static int net_passt_start_daemon(NetPasstState *s, int sock, Error **errp)
-         return -1;
-     }
- 
--    if (g_subprocess_get_if_exited(daemon) &&
--        g_subprocess_get_exit_status(daemon)) {
-+    if (g_subprocess_get_if_exited(daemon)) {
-+        gint status = g_subprocess_get_exit_status(daemon);
-+        if (status) {
-+            error_setg(errp, "Passt exited with code %d", status);
-+            return -1;
-+      }
-+    }
-+
-+    if (g_subprocess_get_if_signaled(daemon)) {
-+        error_setg(errp, "Passt killed with signal %d",
-+                   g_subprocess_get_term_sig(daemon));
-         return -1;
-     }
- 
+ net/passt.c | 17 ++++++++++++++---
+ 1 file changed, 14 insertions(+), 3 deletions(-)
+---
+base-commit: afe653676dc6dfd49f0390239ff90b2f0052c2b8
+change-id: 20260223-passt-0708603dc495
 
+Best regards,
 -- 
-2.53.0.371.g1d285c8824-goog
+Peter Foley <pefoley@google.com>
 
 
