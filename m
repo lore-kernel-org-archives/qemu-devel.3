@@ -4,82 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B36EEC1112
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 17:06:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D461BEC110C
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 17:06:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuZKj-0002SE-9J; Mon, 23 Feb 2026 12:02:57 -0500
+	id 1vuZMG-0004l3-7f; Mon, 23 Feb 2026 12:04:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vuZKh-0002QS-Rq
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 12:02:55 -0500
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ id 1vuZLB-0002pq-Lw
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 12:03:28 -0500
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vuZKg-0000HK-9Z
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 12:02:55 -0500
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-48371119eacso52939055e9.2
- for <qemu-devel@nongnu.org>; Mon, 23 Feb 2026 09:02:53 -0800 (PST)
+ id 1vuZL4-0000QU-Q0
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 12:03:24 -0500
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-4359249bbacso3365436f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 23 Feb 2026 09:03:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771866173; x=1772470973; darn=nongnu.org;
+ d=linaro.org; s=google; t=1771866195; x=1772470995; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=2coO5QjLP0oc9KsM/+Txuq5tlHPzzz+22aLdjZKCFt4=;
- b=QwW8NC2Q5ypGAhzcYos7AtqSq7YNYH17WPTX5XN1lECE+Ft9sX2D2W902hOwGWrGHm
- v8FDek4Nile60ixjoyPOEF/x8osVcUBkWyR17pq/6c2jrUovA+iOMjLRn4HTeewhyr1D
- O/1YHuoTnTQhoZAHbFqy9KVQDCmafApqFHSX0aTM2c7FPUPKYsT9FUoDfzvvrOT1gBQu
- ehUA3UXXrMBBo2wRjwolfZj4+gqK2hzIaIIMVPlogiXr5z+VNHJHsokiIOsvQIFh4fFx
- pVXJFxFguU+0Qt4/ehe9x5jIeXAdRdYNc3qfxWh3uW4vYI/EcrA7ndxzKh08x0khJS9P
- qpNw==
+ :reply-to; bh=cwI7KECXfXNz5KI7P3D4TAbbo3v+8W/zQ7gFbJfb+Z4=;
+ b=oEh9X+SZMbhnsOSo/S09eriZbqI2Tv+F6wJIRtRRpdZ0znaIRGa5ulZ8KSYnKlGpbk
+ xkCJAIPSdmOyELBvheKN9N1KjiT00YaVG4BwRBzPiKQWUInArZ/4S+KuDqMtL7ROr9aC
+ Ys3NoLuzRdFtSamSozVzwkWzkGgVFKl522x5UcVBTBFZeVSsSYrZYPwzyQTB0apu/o8e
+ GRC8tkpTJI5/nhBRal0iqJxeXcQ0XVLa4LaWsQEGvQWIc8vbeb99piVmay6rBx8zIZbL
+ DjKus3b7eIqiG0dhJLcbbXX57xy0cOnNWVaBGPm+08C83C1FHpjNXphrXTGvYZhoPISJ
+ yYbw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771866173; x=1772470973;
+ d=1e100.net; s=20230601; t=1771866195; x=1772470995;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=2coO5QjLP0oc9KsM/+Txuq5tlHPzzz+22aLdjZKCFt4=;
- b=ILMHsK/LrsS44AcxX507yUWqrf9MEbikw3/93zyl4kfnfvi1ZgALF8iDNTGJKmPkEG
- Y0+1ywOG5EGM4sojispZyaU9jfXiC4IUF4ElgQTqBAcgMe/V2Rt22u6afjV+79pkAxd5
- iCAJfRlGNY8UpIjNlTERXMKKYmwOggoKrdG+EdgWHUQ/qZwGmlYVUxcvXXa4DY2fGvqF
- SyhGW3HwMz26Q1c063gjDRgujDpnIcjs8SE95ocMgXKycHgfzBrZdaeo7OAb1WY14amt
- Zc8B5ucjbGTmWxsD11odqO6yFlv9oAtJJ1odwiSJnx/0GlFPwEoMdnBYrHRSi5RAIhlN
- eVRg==
+ bh=cwI7KECXfXNz5KI7P3D4TAbbo3v+8W/zQ7gFbJfb+Z4=;
+ b=HmvMttV8dE9e26nD1NuESqz7P0YBBJlRbs0+ytyxyd/O9ThXP+yrtvjbFwWFqMkIMc
+ my7BhAgFk/YfyhuSacAYWRvnDa0xquwmO/yNus2OaVMYTyuk8hGKi68ZdjWHtN2WI52h
+ tpCHavSSEAxZyt1oH8VipsabphOjPB5T4lh3JsYXiec4lhZWmbm16Wx4od9FI96ySeEp
+ 16sHs44CdsErJ47iD8i+sbXRj5wtoI26tQkIGh5W9Z8kmBP/Xv1mBOp/AavkgjH1DiRM
+ jKlmQZ8JFDkOWBQoMRlPwvk7iCJmAfKfpEjdMeWj/vTMfOB3w862Yy1OO7Xzf6k+UTtb
+ seeA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUCSPIPSgCyFXri9SNuCBVxiZU8AndjNSxfy2/04pWLh/QPERzESu6me61zc4V/YcGx3LP25Ky9VADJ@nongnu.org
-X-Gm-Message-State: AOJu0YzttRExnbu3vojiyF3GM4uU1h5v5ia6aPoweoDVjMEdk+vA8V9m
- frY2Lrn2sHjLhXSxbzS1HzRJeEMf7f2jjk4b6H9FBAF+NuE9AzHTfngfd7ePucMOPXrr+grMkEZ
- l4X7s
-X-Gm-Gg: AZuq6aKNb4MJ1QVGFHUXDnObZNbvugsVHEV/cGKzMmlnU54n1MwXH4ianqVSplT8gtP
- YeYOjXtxoK9X1/F+J6k89nFv82/WwNdTlR5IL6hN9+eTam0h9WooWSdV9IcprcdjmqH2utNQcL3
- oVZsk204KoCbyf2KBcb+i80pCC1kWY08jyW2nexTvW62bRD0dBvXrRfCXL3yH1bi+31SPwgiGAj
- 5ZDtwAXF/maFFt+7Tyeo/mkfjaoYlnFTiWJ5cRnDZRsxXF5EmU12lOzAYp/IG4+eVMMwnpsxYjh
- yf9LvPBOmkTIqyDCjecMNSl+khAi9BxubxxVOjhc4+FGXHqUkGoj5N8dOA40+KDQTFqWemDUl7h
- wD9mKHtgHauv9V7Ar657uAPVazudwqRcVjQQkm5ZmNB+S+2FnzCAj//4prFsNhdtR3xcZ/wAiSo
- cx7Pqu4bWhwDBSNPzJ9nu87VFIvyuy/9YEthw9cpQX8yIfU9kj61M2mbwyTLd2Y0Qw+CmqX8WYh
- Au9AgA007jllXH1pti/vhobAt/s4KIAnc7irVoFNw==
-X-Received: by 2002:a05:600c:c166:b0:483:8e67:e696 with SMTP id
- 5b1f17b1804b1-483a96088eamr162999475e9.15.1771866172677; 
- Mon, 23 Feb 2026 09:02:52 -0800 (PST)
+ AJvYcCX2azodbkwCA9GR8rzG1FEL/MVhkqmZyKLxPamL2a8ZJva4CJ50Hl/EasYWph8Qtnhj2OgiPeSeekjc@nongnu.org
+X-Gm-Message-State: AOJu0YzcB582Ilh21pLPOe64p20BLmvWc6QOwnZncUi2D73Trjl2dOVq
+ lVdA9k8CCW0Q4JfrteeoVnPCGerMPzzY68wD1Tn42KiVXpO7SnnR+je4kdbFdrvRc10=
+X-Gm-Gg: AZuq6aINQUpC11tyyqYSX356ou9nRvGwTBiozxiExKLAG+0ipRwkRpVepz8B0ScYh2D
+ 2zDxhfdJl465lqoR/GFeeLYYejUzFiAhWcKn2MpjcA6NsH8qJ5RFnsE0QqgiIOweKjFw8NHFWM9
+ D+TCnUe8GYneIX+6UaPVRETpb70ZGvKrz1C7go6WgvKzuWrFjI28w4McPYlUoFiC4l99202OYDO
+ 8ua0ddL/TJ7kJNTyP3FGw/aO6m1UTOAV9hpm1nHnl+e5q+RFVz/yAKy+QAB5RjcHQlKBKEV/x0g
+ PRcEwE0Vgr4xUJ87W9c4idFi6qsTuanh6HoxKIMFJOLxm44g5crtF+ADdUOTWhwRg1BrJS3Sy23
+ JFLLsrgHQUiLcASixB26k0CFfIKwtor7ASqzT7DAYtoj32l49S8ISImmpITE6fGn1e7bomiJINn
+ COH4aO3LehEI2UKfyJ/u1AC6Fh8/V2yv8myT+2np3YfP0rUGqr660MVgMIhkPMgfFMIdBcCNPgx
+ kgZdwJUho1hXPmursQXn8egNwzNy9s=
+X-Received: by 2002:a05:600c:1989:b0:479:1348:c63e with SMTP id
+ 5b1f17b1804b1-483a94c99admr175517055e9.9.1771866195261; 
+ Mon, 23 Feb 2026 09:03:15 -0800 (PST)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-483a9b21ceasm200155625e9.0.2026.02.23.09.02.51
+ 5b1f17b1804b1-483a9b21ceasm200155625e9.0.2026.02.23.09.03.14
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 23 Feb 2026 09:02:51 -0800 (PST)
+ Mon, 23 Feb 2026 09:03:14 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Subject: [PATCH 34/65] target/arm: GICv5 cpuif: Implement ICC_IDR0_EL1
-Date: Mon, 23 Feb 2026 17:01:41 +0000
-Message-ID: <20260223170212.441276-35-peter.maydell@linaro.org>
+Subject: [PATCH 55/65] hw/arm/virt: Update error message for bad gic-version
+ option
+Date: Mon, 23 Feb 2026 17:02:02 +0000
+Message-ID: <20260223170212.441276-56-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260223170212.441276-1-peter.maydell@linaro.org>
 References: <20260223170212.441276-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,49 +103,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-ICC_IDR0_EL1 is an identification register; we can implement this as
-a simple constant value.
+As we added different valid gic-version option settings,
+we forgot to update the hint in the error message produced
+when the user specifies an invalid value:
 
+$ qemu-system-aarch64 -M virt,help | grep gic-version
+  gic-version=<string>   - Set GIC version. Valid values are 2, 3, 4, host and max
+$ qemu-system-aarch64 -M virt,gic-version=bang
+qemu-system-aarch64: Invalid gic-version value
+Valid values are 3, 2, host, max.
+
+Update the error string to match the one we use in the help text
+for the option.
+
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Mohamed Mediouni <mohamed@unpredictable.fr>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/tcg/gicv5-cpuif.c | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ hw/arm/virt.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/target/arm/tcg/gicv5-cpuif.c b/target/arm/tcg/gicv5-cpuif.c
-index c591e249b1..36d1c196a8 100644
---- a/target/arm/tcg/gicv5-cpuif.c
-+++ b/target/arm/tcg/gicv5-cpuif.c
-@@ -38,6 +38,18 @@ FIELD(GIC_CDHM, HM, 32, 1)
- FIELD(GIC_CDRCFG, ID, 0, 24)
- FIELD(GIC_CDRCFG, TYPE, 29, 3)
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index 50865e8115..8dc999712c 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -2971,7 +2971,7 @@ static void virt_set_gic_version(Object *obj, const char *value, Error **errp)
+         vms->gic_version = VIRT_GIC_VERSION_MAX; /* Will probe later */
+     } else {
+         error_setg(errp, "Invalid gic-version value");
+-        error_append_hint(errp, "Valid values are 3, 2, host, max.\n");
++        error_append_hint(errp, "Valid values are 2, 3, 4, host, and max.\n");
+     }
+ }
  
-+FIELD(ICC_IDR0_EL1, ID_BITS, 0, 4)
-+FIELD(ICC_IDR0_EL1, PRI_BITS, 4, 4)
-+FIELD(ICC_IDR0_EL1, GCIE_LEGACY, 8, 4)
-+
-+/*
-+ * We implement 24 bits of interrupt ID, the mandated 5 bits of priority,
-+ * and no legacy GICv3.3 vcpu interface (yet)
-+ */
-+#define QEMU_ICC_IDR0 \
-+    ((4 << R_ICC_IDR0_EL1_PRI_BITS_SHIFT) |     \
-+     (1 << R_ICC_IDR0_EL1_ID_BITS_SHIFT))
-+
- static GICv5Common *gicv5_get_gic(CPUARMState *env)
- {
-     return env->gicv5state;
-@@ -220,6 +232,11 @@ static const ARMCPRegInfo gicv5_cpuif_reginfo[] = {
-         .access = PL1_W, .type = ARM_CP_IO | ARM_CP_NO_RAW,
-         .writefn = gic_cdhm_write,
-     },
-+    {   .name = "ICC_IDR0_EL1", .state = ARM_CP_STATE_AA64,
-+        .opc0 = 3, .opc1 = 0, .crn = 12, .crm = 10, .opc2 = 2,
-+        .access = PL1_R, .type = ARM_CP_CONST | ARM_CP_NO_RAW,
-+        .resetvalue = QEMU_ICC_IDR0,
-+    },
-     {   .name = "ICC_ICSR_EL1", .state = ARM_CP_STATE_AA64,
-         .opc0 = 3, .opc1 = 0, .crn = 12, .crm = 10, .opc2 = 4,
-         .access = PL1_RW, .type = ARM_CP_NO_RAW,
 -- 
 2.43.0
 
