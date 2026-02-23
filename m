@@ -4,57 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52A4CEA4FC1
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3ECA3EA4FC2
 	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 13:58:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuWMo-0000W5-E3; Mon, 23 Feb 2026 08:52:54 -0500
+	id 1vuWMv-0001Ll-Oz; Mon, 23 Feb 2026 08:53:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vuWKj-00065J-RC
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 08:50:49 -0500
+ id 1vuWKs-00069F-5T
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 08:51:04 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vuWKi-0007YH-DT
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 08:50:45 -0500
+ id 1vuWKo-0007Z8-QZ
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 08:50:53 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771854643;
+ s=mimecast20190719; t=1771854649;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=BlvSqwSi5p6HvV5NUZQ1P6/nC//iuZk8I7I3m6Rju4Y=;
- b=e6R3uu5FzzcXx4FPQ/v91HEbXi41JLf5MjHEyAr5j0g75y63CTo4mzL55zA6m68nVn63EM
- 6FG2nsg7MNFJO7iuRUY9/mnLrRaS0MVf36AW13qurdzl/p9N6eAdII4pWDiUB3flEIjvu2
- bGxk9JYSe7/gE0E7vIPp1pMU/HWuGcE=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=sjruiADZLPP8r0KetuQzZJsFWpLAik5UDokSmcYCF4s=;
+ b=P41txlu1GnfRRkr6/4Be8j/CmcBS2l/rH7oaChKSCcuEl98WafHvlaelKROSW1ghkHO86h
+ UjpblnAB1n/LeRCJlbCE28koEkGHNQHuZ5q6iJ5ojEpuRPsuCho/TjkG/OOaYep/R5/sQq
+ TQ5L0ZgchnDN+XRlk2PjjLW3CmbuTYs=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-395-Gfhr-RFbOPqTPV167CCcSg-1; Mon,
- 23 Feb 2026 08:50:40 -0500
-X-MC-Unique: Gfhr-RFbOPqTPV167CCcSg-1
-X-Mimecast-MFC-AGG-ID: Gfhr-RFbOPqTPV167CCcSg_1771854639
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-637-lvMce6xvNTejgtcXPnUo0w-1; Mon,
+ 23 Feb 2026 08:50:45 -0500
+X-MC-Unique: lvMce6xvNTejgtcXPnUo0w-1
+X-Mimecast-MFC-AGG-ID: lvMce6xvNTejgtcXPnUo0w_1771854644
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6689D18002E6; Mon, 23 Feb 2026 13:50:39 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8451B1955F0E; Mon, 23 Feb 2026 13:50:44 +0000 (UTC)
 Received: from localhost (unknown [10.45.242.25])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 706C319560A3; Mon, 23 Feb 2026 13:50:38 +0000 (UTC)
+ id 0170619560A2; Mon, 23 Feb 2026 13:50:43 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Gerd Hoffmann <kraxel@redhat.com>
-Subject: [PULL v3 67/85] audio/pw: replace custom logging with error_report
-Date: Mon, 23 Feb 2026 14:47:08 +0100
-Message-ID: <20260223134731.2377432-68-marcandre.lureau@redhat.com>
+ Gerd Hoffmann <kraxel@redhat.com>, Alexandre Ratchov <alex@caoua.org>
+Subject: [PULL v3 69/85] audio/sndio: replace custom logging with error_report
+Date: Mon, 23 Feb 2026 14:47:10 +0100
+Message-ID: <20260223134731.2377432-70-marcandre.lureau@redhat.com>
 In-Reply-To: <20260223134731.2377432-1-marcandre.lureau@redhat.com>
 References: <20260223134731.2377432-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
@@ -92,61 +92,99 @@ From: Marc-André Lureau <marcandre.lureau@redhat.com>
 Replace the custom audio logging infrastructure (dolog macro) with
 standard QEMU error reporting (error_report).
 
-Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
 Reviewed-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
 Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- audio/pwaudio.c | 11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ audio/sndioaudio.c | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/audio/pwaudio.c b/audio/pwaudio.c
-index 7a009a94f3a..6a80e5a333e 100644
---- a/audio/pwaudio.c
-+++ b/audio/pwaudio.c
-@@ -20,14 +20,13 @@
- #include <spa/param/props.h>
+diff --git a/audio/sndioaudio.c b/audio/sndioaudio.c
+index 21f43836fd1..766eceeeefe 100644
+--- a/audio/sndioaudio.c
++++ b/audio/sndioaudio.c
+@@ -18,12 +18,12 @@
+ #include <poll.h>
+ #include <sndio.h>
+ #include "qemu/main-loop.h"
++#include "qemu/error-report.h"
+ #include "qemu/audio.h"
+-#include "trace.h"
+ #include "qom/object.h"
  
- #include <pipewire/pipewire.h>
-+
-+#include "audio_int.h"
- #include "trace.h"
+-#define AUDIO_CAP "sndio"
+ #include "audio_int.h"
++#include "trace.h"
  
--#define AUDIO_CAP "pipewire"
- #define RINGBUFFER_SIZE    (1u << 22)
- #define RINGBUFFER_MASK    (RINGBUFFER_SIZE - 1)
+ #define TYPE_AUDIO_SNDIO "audio-sndio"
+ OBJECT_DECLARE_SIMPLE_TYPE(AudioSndio, AUDIO_SNDIO)
+@@ -348,7 +348,7 @@ static int sndio_init(SndioVoice *self,
+     /* open the device in non-blocking mode */
+     self->hdl = sio_open(dev_name, mode, 1);
+     if (self->hdl == NULL) {
+-        dolog("failed to open device\n");
++        error_report("sndio: failed to open device");
+         return -1;
+     }
  
--#include "audio_int.h"
--
- #define TYPE_AUDIO_PW "audio-pipewire"
- OBJECT_DECLARE_SIMPLE_TYPE(AudioPw, AUDIO_PW)
- 
-@@ -358,7 +357,7 @@ audfmt_to_pw(AudioFormat fmt, bool big_endian)
-         format = big_endian ? SPA_AUDIO_FORMAT_F32_BE : SPA_AUDIO_FORMAT_F32_LE;
+@@ -382,7 +382,7 @@ static int sndio_init(SndioVoice *self,
+         req.sig = 0;
          break;
      default:
--        dolog("Internal logic error: Bad audio format %d\n", fmt);
-+        error_report("pipewire: internal logic error: bad audio format %d", fmt);
-         format = SPA_AUDIO_FORMAT_U8;
-         break;
+-        dolog("unknown audio sample format\n");
++        error_report("sndio: unknown audio sample format");
+         return -1;
      }
-@@ -418,7 +417,7 @@ pw_to_audfmt(enum spa_audio_format fmt, int *endianness,
-         return AUDIO_FORMAT_F32;
-     default:
-         *sample_size = 1;
--        dolog("Internal logic error: Bad spa_audio_format %d\n", fmt);
-+        error_report("pipewire: internal logic error: bad spa_audio_format %d", fmt);
-         return AUDIO_FORMAT_U8;
+ 
+@@ -401,12 +401,12 @@ static int sndio_init(SndioVoice *self,
+     req.appbufsz = req.rate * latency / 1000000;
+ 
+     if (!sio_setpar(self->hdl, &req)) {
+-        dolog("failed set audio params\n");
++        error_report("sndio: failed to set audio params");
+         goto fail;
      }
- }
-@@ -518,7 +517,7 @@ qpw_set_position(uint32_t channels, uint32_t position[SPA_AUDIO_MAX_CHANNELS])
-         position[0] = SPA_AUDIO_CHANNEL_MONO;
-         break;
-     default:
--        dolog("Internal error: unsupported channel count %d\n", channels);
-+        error_report("pipewire: unsupported channel count %d", channels);
+ 
+     if (!sio_getpar(self->hdl, &self->par)) {
+-        dolog("failed get audio params\n");
++        error_report("sndio: failed to get audio params");
+         goto fail;
      }
- }
+ 
+@@ -419,7 +419,7 @@ static int sndio_init(SndioVoice *self,
+     if (self->par.bits != req.bits || self->par.bps != req.bits / 8 ||
+         self->par.sig != req.sig || (req.bits > 8 && self->par.le != req.le) ||
+         self->par.rate != as->freq || nch != as->nchannels) {
+-        dolog("unsupported audio params\n");
++        error_report("sndio: unsupported audio params");
+         goto fail;
+     }
+ 
+@@ -431,7 +431,7 @@ static int sndio_init(SndioVoice *self,
+ 
+     self->buf = g_malloc(self->buf_size);
+     if (self->buf == NULL) {
+-        dolog("failed to allocate audio buffer\n");
++        error_report("sndio: failed to allocate audio buffer");
+         goto fail;
+     }
+ 
+@@ -439,13 +439,13 @@ static int sndio_init(SndioVoice *self,
+ 
+     self->pfds = g_malloc_n(nfds, sizeof(struct pollfd));
+     if (self->pfds == NULL) {
+-        dolog("failed to allocate pollfd structures\n");
++        error_report("sndio: failed to allocate pollfd structures");
+         goto fail;
+     }
+ 
+     self->pindexes = g_malloc_n(nfds, sizeof(struct pollindex));
+     if (self->pindexes == NULL) {
+-        dolog("failed to allocate pollindex structures\n");
++        error_report("sndio: failed to allocate pollindex structures");
+         goto fail;
+     }
  
 -- 
 2.53.0
