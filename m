@@ -4,87 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8597EA4FAE
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 11:29:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2657EEA4FAD
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 11:40:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuU7V-0008Ui-Vq; Mon, 23 Feb 2026 06:28:58 -0500
+	id 1vuUIC-0002Yf-HW; Mon, 23 Feb 2026 06:40:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1vuU7R-0008Tk-5j
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 06:28:53 -0500
-Received: from mail-dl1-x1241.google.com ([2607:f8b0:4864:20::1241])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1vuU7P-0000wT-E0
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 06:28:52 -0500
-Received: by mail-dl1-x1241.google.com with SMTP id
- a92af1059eb24-1275750cf9cso3391814c88.0
- for <qemu-devel@nongnu.org>; Mon, 23 Feb 2026 03:28:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1771846130; x=1772450930; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=3N5y0O6SZJdGXwK0Tt3gMaNOkZ3hwe3A185OO8wRXgs=;
- b=JFIdIhgFEvyJOf+xbxMCabU8Za9wqbf0jqarcxj6heWdov8xc4V9QV8Fzr5RkbKQ30
- 6PgGK2Gg/sQ5wrBF5b5NitGLMP13x/U/JhaETfZ9vIZamNKNmYau2sYC/p5fysGONO2i
- klRa0xszRfVN2yHy1wwzk6TIlXG8iGYaplqfdX5NsBeLHeH0e7XiWSBuWp+0px0Vq5qK
- iR3DiFBEQFKTSXp+GvfRalsUTAhfhf4QdlGCsSnCtI7/oT/jnzNaZmGKwnJCNGW2xQQ5
- qhCTUKIpdND10bCPXhENkocGV51T63FqUoktRgxY1PyWwkG1HbN1eooiPugmQ2rZRfJQ
- dSfw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771846130; x=1772450930;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=3N5y0O6SZJdGXwK0Tt3gMaNOkZ3hwe3A185OO8wRXgs=;
- b=syMyAhO7HbEClfWDynTasAcIo8csNgoSdVWqhnMOf+QZkVpjeFENlSn9BJz84L0+NB
- pJsboje//GlCcAO4rUQpgAf3Nu2ArwbnBVXZwLa7g2w5XBb4nHU70tlPmZUg/Je5EOKR
- rCmFJ7oL8MeXah1Z89uWCELEiQWR26Lnz+2A6FgtjZk1Y0VInDRfuvgHdeg4C97eIFFb
- SgAGHyx557rKBtT0x5KwJmK68Ikc7yO10ub+M0888csQemrZp7JNw3QWNJN7C0HRCSIl
- +/k5PtiyNddD/VI9QJTOpQ+9kQb/nol6A1xxH2rJS6EHtk+oubMqU3LnAYPk7A3V9Kil
- Bibw==
-X-Gm-Message-State: AOJu0YyXSQW0Zbnbf6b6seVo1c9NXIqSb5Fr52W/4nZcXeMJabywLFfK
- uEzch5SST+9IrIhvva2fGgXbn79p2w5HDfnI0Zwzj+ixnmSMPthoRFUy
-X-Gm-Gg: AZuq6aI5cQ6+WENEMy0faeWYzVYPQYTv/+ljqsTmJUprqj8B4I6mExgLFg5Z5cPCPIZ
- 9r33kPhGbsR7B8BwwAXGdrg9A9auBtrehzLfEh63a+JMvuErohlbPWdLOlAgT6W1J7+lCmKXDrD
- /MBGrF2m+fvJ6XphG9riOL04laqclvOCJSkmdOpHmOcXHW68KZQ5iZcMvsWbZIyv/chqovk+vhc
- vnYDBYbyBuJLtlAmhKMasbw/QFZ3TrwgiUO5MRx6JW1bmvZRocd6zoUGlB7n6vM0qMIwPWEsNqm
- ELh0djMskfZcW0J1BjFYk9WTKVBQKOeAjcHJcyhvnC+MheYPc9CeGxRJ2rflWuYDhQGwd2JUi2L
- nZCVjfW6noJYkQmrKpqAGRz5NVdFnzky8ttfLsgvscyQKEPdUq5o+YwwGTHAA9bzb/ORLjPChGQ
- OtoXxUeBGssl8mNm7WR04mt/kMi+XAeItGZouXAD4qnTToeRSTO+a7P9gU+WNPM3ATad5f/e43L
- 7F2k3m47YDHW729jKbb22gBLUIjyGs=
-X-Received: by 2002:a05:7022:603:b0:119:e56c:18ae with SMTP id
- a92af1059eb24-1276ad182a5mr3257191c88.22.1771846129897; 
- Mon, 23 Feb 2026 03:28:49 -0800 (PST)
-Received: from ZEVORN-PC.localdomain ([38.95.120.198])
- by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-1276af7b4c7sm7649536c88.9.2026.02.23.03.28.47
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 23 Feb 2026 03:28:49 -0800 (PST)
-Date: Mon, 23 Feb 2026 19:28:00 +0800
-From: Chao Liu <chao.liu.zevorn@gmail.com>
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, max.chou@sifive.com
-Subject: Re: [PATCH v5 9/9] fpu: Add conversion routines for OCP FP4 E2M1
-Message-ID: <aZw5sjJBIIT4oDCr@ZEVORN-PC.localdomain>
-References: <20260223082154.5623-1-richard.henderson@linaro.org>
- <20260223082154.5623-10-richard.henderson@linaro.org>
+ (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
+ id 1vuUI7-0002YJ-Oj
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 06:39:56 -0500
+Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
+ id 1vuUI5-0003GN-UL
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 06:39:55 -0500
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by sea.source.kernel.org (Postfix) with ESMTP id 20D30418EC;
+ Mon, 23 Feb 2026 11:39:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDC6CC116C6;
+ Mon, 23 Feb 2026 11:39:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1771846784;
+ bh=5gghoDvFll5rJRWoJA25CjvdJ3sRTIFQTQVzD2X+Kgs=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+ b=REo9wr/QrPdkhvZ+GL9+hadi4oa8XCkmgJJeNMyQfJ9ugNmw6QTSvCUiH/Tnmi3Nu
+ r2It2XgKjQsNNIFOjsRdOewWOtL/tDDqf20aXyDLVtU742bcGU+j08iikCyILk+/RI
+ oo49KOxlEXJUj+8Va7Nww++anJETQ+6U1x8AUR2XZeiUoJFEIILx5HmXTmj9JBKR1z
+ sPoxBt3jcTw9co9p+fvjLJ21djLEA0ynRuV9CVhqdWEMBJLD8MoKwEP0UPXkI/eK8i
+ Lm/6cZ2r9Al/Uib8SdTt5yKtLB1JTcv1fEI4KqaxASXoXGcVsBLIpn1u6AtjkWBHwD
+ gSs81c761KvqA==
+Received: from localhost ([::1]) by mail.kernel.org with esmtp (Exim 4.99.1)
+ (envelope-from <mchehab+huawei@kernel.org>)
+ id 1vuUHt-000000073FT-3GQ6; Mon, 23 Feb 2026 12:39:41 +0100
+Date: Mon, 23 Feb 2026 12:39:40 +0100
+From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: qemu-devel@nongnu.org, Cleber Rosa <crosa@redhat.com>, John Snow
+ <jsnow@redhat.com>
+Subject: Re: [PATCH v2 00/13] Add more commands to scripts/ghes_inject.py
+Message-ID: <20260223123940.2b668dfa@localhost>
+In-Reply-To: <20260220130241-mutt-send-email-mst@kernel.org>
+References: <cover.1769175069.git.mchehab+huawei@kernel.org>
+ <20260220130241-mutt-send-email-mst@kernel.org>
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.51; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260223082154.5623-10-richard.henderson@linaro.org>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1241;
- envelope-from=chao.liu.zevorn@gmail.com; helo=mail-dl1-x1241.google.com
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
+ envelope-from=mchehab+huawei@kernel.org; helo=sea.source.kernel.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,111 +75,136 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Feb 23, 2026 at 07:21:54PM +1100, Richard Henderson wrote:
-> From: Max Chou <max.chou@sifive.com>
-> 
-> Signed-off-by: Max Chou <max.chou@sifive.com>
-> [rth: Update for exp_max_kind]
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->  include/fpu/softfloat-types.h |  1 +
->  include/fpu/softfloat.h       |  4 +++-
->  fpu/softfloat.c               | 26 ++++++++++++++++++++++++++
->  3 files changed, 30 insertions(+), 1 deletion(-)
-> 
-> diff --git a/include/fpu/softfloat-types.h b/include/fpu/softfloat-types.h
-> index 9c84a101e5..ead146c22d 100644
-> --- a/include/fpu/softfloat-types.h
-> +++ b/include/fpu/softfloat-types.h
-> @@ -122,6 +122,7 @@ typedef uint16_t bfloat16;
->  /*
->   * Open Compute Project (OCP) Microscaling Formats
->   */
-> +typedef uint8_t float4_e2m1;
->  typedef uint8_t float8_e4m3;
->  typedef uint8_t float8_e5m2;
->  
-> diff --git a/include/fpu/softfloat.h b/include/fpu/softfloat.h
-> index 31d3f76d3f..8389a07b04 100644
-> --- a/include/fpu/softfloat.h
-> +++ b/include/fpu/softfloat.h
-> @@ -190,9 +190,11 @@ float128 uint64_to_float128(uint64_t, float_status *status);
->  float128 uint128_to_float128(Int128, float_status *status);
->  
->  /*----------------------------------------------------------------------------
-> -| OCP FP8 conversion routines.
-> +| OCP FP{4,8} conversion routines.
->  *----------------------------------------------------------------------------*/
->  
-> +float8_e4m3 float4_e2m1_to_float8_e4m3(float4_e2m1, float_status *status);
-> +
->  bfloat16 float8_e4m3_to_bfloat16(float8_e4m3, float_status *status);
->  float8_e4m3 bfloat16_to_float8_e4m3(bfloat16, bool sat, float_status *status);
->  float8_e4m3 float32_to_float8_e4m3(float32, bool sat, float_status *status);
-> diff --git a/fpu/softfloat.c b/fpu/softfloat.c
-> index 6e21882ab2..91c34307c8 100644
-> --- a/fpu/softfloat.c
-> +++ b/fpu/softfloat.c
-> @@ -574,6 +574,11 @@ typedef struct {
->      .frac_shift     = (-F - 1) & 63,                    \
->      .round_mask     = (1ull << ((-F - 1) & 63)) - 1
->  
-> +static const FloatFmt float4_e2m1_params = {
-> +    FLOAT_PARAMS(2, 1),
-> +    .exp_max_kind = float_expmax_normal,
-> +};
-> +
->  static const FloatFmt float8_e4m3_params = {
->      FLOAT_PARAMS(4, 3),
->      .exp_max_kind = float_expmax_e4m3
-> @@ -641,6 +646,11 @@ static void unpack_raw64(FloatParts64 *r, const FloatFmt *fmt, uint64_t raw)
->      };
->  }
->  
-> +static void QEMU_FLATTEN float4_e2m1_unpack_raw(FloatParts64 *p, float4_e2m1 f)
-> +{
-> +    unpack_raw64(p, &float4_e2m1_params, f);
-> +}
-> +
->  static void QEMU_FLATTEN float8_e4m3_unpack_raw(FloatParts64 *p, float8_e4m3 f)
->  {
->      unpack_raw64(p, &float8_e4m3_params, f);
-> @@ -1709,6 +1719,13 @@ static const uint16_t rsqrt_tab[128] = {
->   * Pack/unpack routines with a specific FloatFmt.
->   */
->  
-> +static void float4_e2m1_unpack_canonical(FloatParts64 *p, float4_e2m1 f,
-> +                                         float_status *s)
-> +{
-> +    float4_e2m1_unpack_raw(p, f);
-> +    parts_canonicalize(p, s, &float4_e2m1_params);
-> +}
-> +
->  static void float8_e4m3_unpack_canonical(FloatParts64 *p, float8_e4m3 f,
->                                           float_status *s)
->  {
-> @@ -2929,6 +2946,15 @@ static void parts_float_to_float_widen(FloatParts128 *a, FloatParts64 *b,
->      }
->  }
->  
-> +float8_e4m3 float4_e2m1_to_float8_e4m3(float4_e2m1 a, float_status *s)
-> +{
-> +    FloatParts64 p;
-> +
-> +    float4_e2m1_unpack_canonical(&p, a, s);
-> +    parts_float_to_float(&p, s);
-> +    return float8_e4m3_round_pack_canonical(&p, s, false);
-> +}
-> +
->  bfloat16 float8_e4m3_to_bfloat16(float8_e4m3 a, float_status *s)
->  {
->      FloatParts64 p;
-> -- 
-> 2.43.0
-> 
+On Fri, 20 Feb 2026 13:03:01 -0500
+"Michael S. Tsirkin" <mst@redhat.com> wrote:
 
-Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
+> On Fri, Jan 23, 2026 at 02:35:14PM +0100, Mauro Carvalho Chehab wrote:
+> > Now that we have the basic stuff merged on QEMU, add more
+> > commands to scripts/ghes_inject.py. After this patch, this
+> > tool will support the following commands:
+> > 
+> >     arm                 Inject an ARM processor error CPER, compatible with
+> >                         UEFI 2.9A Errata.
+> >     pcie-bus            Inject a PCIe bus error CPER
+> >     fuzzy-test (fuzzy)  Inject fuzzy test CPER packets
+> >     raw-error (raw)     Inject CPER records from previously recorded ones.
+> > 
+> > Where arm is a pre-existing one.
+> > 
+> > The pcie-bus command injects a PCIe bus error - currently not supported
+> > on Linux (GUID: c5753963-3b84-4095-bf78-eddad3f9c9dd).
+> > 
+> > The fuzzy-test command allows injecting one or more CPER records
+> > for all GUID types supported on UEFI 2.11, with its contents being
+> > either zero or random, and with the payload size that can also be
+> > random.
+> > 
+> > The raw-error command allow reproducing a CPER from a text file.
+> > It is helpful in conjunction with fuzzy-test to re-test the OSPM
+> > after some fixes.
+> > 
+> > Besides the commands, a new helper logic was added at
+> > scripts/ghes_decode.py: when the tool is called with the
+> > --debug command line argument, it will translate the injected
+> > record, allowing to compare what it was injected with what
+> > the OSPM/userspace tools would interpret.
+> > 
+> > The first 6 patches on this series improve the qmp_helper
+> > logic to support the new functionality.
+> > 
+> > The next 6 patches add the extra functionality to ghes_inject.
+> > 
+> > The final patch improves its help message when called without
+> > a command.  
+> 
+> 
+> Pls run checkpatch on this and make sure the output is clean.
+> Thanks!
 
+There are 3 warnings there due to the usage of the old SPDX "GPL2.0"
+which is identical to "GPL2.0-only", but were deprecated on SPDX 3.0.
+I'll fix those. 
+
+The remaining ones are mainly due to long strings, or, on two
+cases, related to very long class and/or method names that should be
+passed as long name parmeters, like here (*):
+
+        parser = subparsers.add_parser("raw-error",  aliases=['raw'],
+                                       help=self.HELP, description=self.DESC,
+                                       formatter_class=argparse.RawTextHelpFormatter)
+
+I'll be fixing the ones that won't require mangling strings nor
+use some tricks that would otherwise make the source code for,
+IMO, no good reason.
+
+(*) on this specific case, the "fix" would be to create an
+    "alias" class:
+
+	class Formatter(argparse.RawTextHelpFormatter):
+	   pass
+
+    Just to make checkpatch happy. IMHO not worth it.
+
+---
+
+On a side note, IMHO checkpatch should be using a better default for
+Python, setting max columns max requirement to be 120 columns and
+ignoring or relaxing such limits on triple-quoted strings like here:
+
+	ERROR: line over 90 characters
+	#83: FILE: scripts/arm_processor_error.py:83:
+	+[Hardware Error]:     bus error, operation type: Generic read (type of instruction or data request cannot be determined)
+
+(this is part of a comment there describing the Linux Kernel
+output for an ARM Processor Error - we should not enforce any
+max column limit there)
+
+
+> 
+> > ---
+> > 
+> > v2:
+> >   - the bus error injection is for PCI/PCI-X, not PCIe, so
+> >     the command was renamed;
+> >   - added notes that not all CXL types may occur in practice;
+> >   - removed a field from common_fields at DecodeGhesEntry
+> >     decode class and make it more robust;
+> >   - some cleanups at patch description.
+> > 
+> > Mauro Carvalho Chehab (13):
+> >   scripts/qmp_helper: add a return code to send_cper
+> >   scripts/qmp_helper: add missing CXL UEFI GUID
+> >   scripts/qmp_helper: add support for FRU Memory Poison
+> >   scripts/qmp_helper: make send_cper() more generic
+> >   scripts/qmp_helper: fix raw_data logic
+> >   scripts/qmp_helper: add support for a timeout logic
+> >   scripts/ghes_inject: add a logic to decode CPER
+> >   scripts/ghes_inject: exit 1 if command was not sent
+> >   scripts/ghes_inject: add a handler for PCI/PCI-X bus error
+> >   scripts/ghes_inject: add support for fuzzy logic testing
+> >   scripts/ghes_inject: add a raw error inject command
+> >   scripts/ghes_inject: print help if no command specified
+> >   scripts/ghes_inject: improve help message
+> > 
+> >  MAINTAINERS                    |    4 +
+> >  scripts/arm_processor_error.py |    8 +-
+> >  scripts/fuzzy_error.py         |  208 ++++++
+> >  scripts/ghes_decode.py         | 1158 ++++++++++++++++++++++++++++++++
+> >  scripts/ghes_inject.py         |   30 +-
+> >  scripts/pci_bus_error.py       |  148 ++++
+> >  scripts/qmp_helper.py          |  164 ++++-
+> >  scripts/raw_error.py           |  175 +++++
+> >  8 files changed, 1857 insertions(+), 38 deletions(-)
+> >  create mode 100644 scripts/fuzzy_error.py
+> >  create mode 100644 scripts/ghes_decode.py
+> >  create mode 100644 scripts/pci_bus_error.py
+> >  create mode 100644 scripts/raw_error.py
+> > 
+> > -- 
+> > 2.52.  
+
+
+-- 
 Thanks,
-Chao
+Mauro
 
