@@ -4,95 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F2ABEA4FBA
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 12:55:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A393AEA4FBB
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 13:24:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuVSl-0001uh-1d; Mon, 23 Feb 2026 07:54:59 -0500
+	id 1vuVuV-0008JZ-0a; Mon, 23 Feb 2026 08:23:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vuVSd-0001sx-H4
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 07:54:53 -0500
-Received: from mail-yx1-xb131.google.com ([2607:f8b0:4864:20::b131])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vuVuR-0008JA-2u
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 08:23:35 -0500
+Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vuVSb-0004OH-RJ
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 07:54:51 -0500
-Received: by mail-yx1-xb131.google.com with SMTP id
- 956f58d0204a3-64ae5f0777dso3870303d50.3
- for <qemu-devel@nongnu.org>; Mon, 23 Feb 2026 04:54:49 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1771851288; cv=none;
- d=google.com; s=arc-20240605;
- b=ZuZooDu/vEHVrLTYCgQYCebJede3tbGCPCyOu3XicZwzqfhxWB77MCeUCVWS+ogRbB
- oQVumlL/LVkjHHmqrITRMCZWREqIpqOcfPCKjJsV83K3A9+1VZr7rV3//Wp+FBu6c+HH
- eIAAEmQJt4i+nnASaO0uSkzGJst55z/gbQbRF5aj9uPCU3z0T60SScBQlhSEMghYT3aq
- zuCLQOBhBADSE1sXgHiMn4FkOmtfgojOkhgrxRPV+d3c0jCL8vDNxMsg3z3hRxKzUquv
- pKcDuYrXjSku8DXDrn/NENUrM+B/i+LvvhQ52nEkrogjYAmEh7rup+ve/sx8Pckv17Di
- iTbQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=E866oXhIkLAr76uuZwByzzVSn0J4cbqAu5Ex6C4iawU=;
- fh=a48Yz94NrSN1VfxXFKxdHg5tRcnTkBUqJPewYKl8hN0=;
- b=Eh0MEnnI/PpstPrJPeN/UiHEsfls3/FrzhNfRo5dngorJIrh/ZFp02hSEETh9uMKto
- 28blCZTuVdabtJKilqd/uhkAFGf/kWAuk0DpGt2jMO/sXLY8OcqKdGTa77g3bzWZpZ8K
- zI349KtCPzX4stKuZlaJDtwdivS3fMOJSqaTMML8bUGOtUK1P5aLkZUFc/ktki9PvE3d
- 9w7HvFsoP8qmJ/U8EAZG/OEX+AZL/iEKhd3ZyE0RGq6+NxkNV8yhcnIZphbhZIwC1t8a
- UjCgS7KW9VWvMAZwvMpdhNd1MHTEG/n2n7DO5NjWOUuHlHuWPydXUe6KWW4Hv2mLOGA/
- urQQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vuVuP-0001c2-Dd
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 08:23:34 -0500
+Received: by mail-ed1-x529.google.com with SMTP id
+ 4fb4d7f45d1cf-65a3fdeb7d9so6090389a12.0
+ for <qemu-devel@nongnu.org>; Mon, 23 Feb 2026 05:23:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771851288; x=1772456088; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1771853011; x=1772457811; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=E866oXhIkLAr76uuZwByzzVSn0J4cbqAu5Ex6C4iawU=;
- b=JL12VpHqFa3NBVFdpSgo+kFaGUwodaS4ajOERB1Kzfv+bOL/WD5nvL5i7krbzfUN/p
- DwTp2ak5P6Ll4hm9G9xp+bXzmvrYW+ybKHL3jQ5++71CSCspgq3yMvr83HIa5z2aqg78
- 3wTr101NF+yW0xuRaKjXnrHk2OWRLhyl5PRP4WZ67ZcI4GxzN8qAtWCAKP9SdXzEhNGi
- AH+zigrs0vCpKhHrnmLg4KrIK2g8K36lmFZ3wssRW3tzR4zab1RTmjuqqzQEd20R3LIJ
- S7nSEC4/WkFnoyPFpT3mjkM6/hq4e1/0cwC7m5RBh9Ac7OYW5PEKQNDF7i5UE6baoJ8Z
- fkJg==
+ bh=+xAue9mhPwABCuGBhK6+ntcLVK7yBDT6Qs4uIDTyPVA=;
+ b=kU7we5DGmxshrHyVm79tNa3FktaKvzDAvY0HY1cz4GF6DtPo85SBfqvpQg8Vn0YTLa
+ Sq0IRnUIGbYeSPysiQUAvKjGwD9vQ1IV2JndsgLfA3wt0Gd4Kcl4AecUpw8+dY384B3g
+ hwAsE4a7QWMxVlPvKQgFNqQlIhXSIasNR5MB1M2OJaLfNqbjZ3u+yjMbV1bITEydRvdc
+ qyN0KesaUniyCJlBnjZWG3Vt9fmA9A9JgCt6o8A1sGtcrTQdcpreYgVQr1fMesgZ0Bss
+ 2hoKdAS8nCTKBN+v+JgsuPRICbdDCFgyJRYxrPT32r12e+2bfgqX0VA6eDGEMdwwiPyx
+ qQnw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771851288; x=1772456088;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=E866oXhIkLAr76uuZwByzzVSn0J4cbqAu5Ex6C4iawU=;
- b=llp4rnwxs291vJt76Bt/CcU6W85iPPZh5cs2oT3mXZmZObnFb+iO0HlPTHoGnrt1Pe
- akkALP0WPiVwmdO88iwnerwnl0HgTi6VTx6FxDC+VJqx+yFnQga6ezOtU5yh/UVNyAcK
- LwwJF0JvRMCZ4HyNxzfkme/z6Wr4YhEW4m4L6fvzNq9cUfpt2Vm0op2KLQL+M11IHbnf
- bZcXrVEbttxkemvynMolpdPpxMuzC33M0eNv2GihCS7/Qxc0QFHG91fTe0+V/LD3tQjq
- AdSvBdJYPZBt9GdFKonUdQhkz81il7VrzNrTcNxf0dJr8u8L+UzOIjWxQ33hVJSg7kI2
- NjmQ==
-X-Gm-Message-State: AOJu0YybvYyaK3irBCzzcF9mHh2Sd4HSFJaFZlsdTW5kzq0HMxpGYbrm
- mfr5ZFzTWEoA8ZeeR9kwcgPbh1dfwfOHIAgkGr/IXH76YsvV9WosCf3LJ8l43RMjVG5zWq00gRM
- +aNxPQuS9NSRbBvmrUhl0uMxJ63iuwFrzJRtOyRKfJw==
-X-Gm-Gg: ATEYQzxGT4PKUkuW1lqSVLDL30HMs1ToaH7hEkz86+Tg6sVFeP8T3RkZrOXyOxJQB5w
- 6tiq5YPUdFinPtw31JYmZ3HVbO/2/1nMdsJPlWT0KsyqKIVd3st0GU19isTWxv08n85xyJH7oPV
- 2HiMWWb3ABJWJO37nv2nZ3lmLbvTwKPomHgrWGIdXTo01xmaa23GcmMoj5V6imCymP4mOsv2EKk
- pYF4u7fPhvJ6YAxQr669NliTm1IH0CsdiBRLRzAEef9fOozFhxHhlTtsw/qyfkiVt5VIycZlH2+
- JsOLxnDKx6F4tqYfAdIrbcGL3hYrQJdf3yxiCtW/0mCaI9dmt56YA628Zeo7TbHHwW0=
-X-Received: by 2002:a53:b009:0:b0:64a:dce4:8416 with SMTP id
- 956f58d0204a3-64c787d6f5fmr5530718d50.18.1771851288524; Mon, 23 Feb 2026
- 04:54:48 -0800 (PST)
+ d=1e100.net; s=20230601; t=1771853011; x=1772457811;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=+xAue9mhPwABCuGBhK6+ntcLVK7yBDT6Qs4uIDTyPVA=;
+ b=OrV/ObFEIBknzS9oGrKQx/MMZQj3lV8kGfyXVIflNC79F8S04VSKN0S8w5WOZnpew5
+ +bv5JBOqFZ7KuazJTEQep5XsQsW4h2GaVkZawsFPZP45n29uOAChyGB0Wfy8o4xlwoCG
+ mnzCYDPJ33v6junY3phDB+LZFhh51j1cGz1xqJpeHn+ug+phxFaLLknFgtHI07MXz/I/
+ gfypbzm4uzOk0eAwA+jjGs+nuTxauTiTXuHAyablEds07fcRYTELmSAU5nonzAFnSW81
+ u/5gb6bdEOgEbwcTHfwxyuxDfKl8fIOqzPQFfOUojX4dKaB0BGLec4OL+TevPvbzOLZ3
+ wYyw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXFLbSIdYWY19DR7x3ts4ook9YZfniavNYwT8/E3zfK1nLOStNbBN6n41X6ApTDvUJZaxMJH+CFk/IH@nongnu.org
+X-Gm-Message-State: AOJu0Yxo3z/J7xBAO+sUN8UhGyd/JzpDnmH3BzRU3a1qJf5VNJk67YpC
+ 2SG49pncXkK+4AYViL6sHQCjcW5yri7ciXxpQUMIVEZQbAN6u12znXWx/2ctFuav8d4=
+X-Gm-Gg: AZuq6aJAzQ7T5jVPxMm1lMDiz7Zwg/8l3S3pddRlMLGeFfWLGkLENp2EkIOHXzwsKok
+ IPMwOyf5Ww1eCvUvqP0RNeaDS0wbb9dswNXb5jpEEziC1/X9q7EyGLuNkrXSQxaGSDvuw44bryF
+ 3SMa7ob6m9qbBLlVV/X3XXpaABRCHRiCzmE44bxEgDd5a/OdGMnBNGgqo+nxiXTITXbq8vGHuZC
+ dhkWYm3wCto1WERpLjWClXJ4aeZAE2K8lIsDBYA9bLBgcUl66eNjJHqted1nPEueoVqaMMC3hHX
+ SthGhCilOSJBn/c6VLrhceKxPCRhNvitrSZ3orVJENrsns8jYYdygmsXji4uyXS1V22haLrly0c
+ UJx4pu6Rgm0sNOpW1/VnhA1elR4uJDIWpVDIZlO7Q95vs5AoZMoN1AIx8gtYXG+ikyuuAOkm0hS
+ nPdCEJOWbQgHIAKZt2SUGhv8hXcQMrFX5h4A==
+X-Received: by 2002:a17:907:1c22:b0:b73:8d2e:2d38 with SMTP id
+ a640c23a62f3a-b9081bacc96mr509281566b.50.1771853010784; 
+ Mon, 23 Feb 2026 05:23:30 -0800 (PST)
+Received: from draig.lan ([185.124.0.126]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-b9084c5cf1esm317330666b.7.2026.02.23.05.23.29
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 23 Feb 2026 05:23:29 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id DFAFA5F88E;
+ Mon, 23 Feb 2026 13:23:28 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Thomas Huth <thuth@redhat.com>
+Cc: Ruslan Ruslichenko <ruslichenko.r@gmail.com>,  qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org,  peter.maydell@linaro.org,  artem_mygaiev@epam.com,
+ volodymyr_babchuk@epam.com,  takahiro.nakata.wr@renesas.com,  "Edgar E .
+ Iglesias" <edgar.iglesias@gmail.com>,  Ruslan_Ruslichenko@epam.com,
+ balaton@eik.bme.hu,  philmd@linaro.org,  wangyanan55@huawei.com,
+ zhao1.liu@intel.com,  pbonzini@redhat.com
+Subject: Re: [PATCH v2 19/33] hw/core/machine: add '-hw-dtb' option for machine
+In-Reply-To: <dd8a92cc-51d6-4404-bd09-75b1798f925a@redhat.com> (Thomas Huth's
+ message of "Mon, 23 Feb 2026 10:04:40 +0100")
+References: <20260219143332.3316679-1-ruslichenko.r@gmail.com>
+ <20260219144901.3317747-1-ruslichenko.r@gmail.com>
+ <dd8a92cc-51d6-4404-bd09-75b1798f925a@redhat.com>
+User-Agent: mu4e 1.14.0-pre1; emacs 30.1
+Date: Mon, 23 Feb 2026 13:23:28 +0000
+Message-ID: <87y0kj4mr3.fsf@draig.linaro.org>
 MIME-Version: 1.0
-References: <20260223094649.2005118-1-marcandre.lureau@redhat.com>
-In-Reply-To: <20260223094649.2005118-1-marcandre.lureau@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 23 Feb 2026 12:54:36 +0000
-X-Gm-Features: AaiRm51PNRv1gwXv7pyTuCTv-c-OBJqx8o36HcM5bsHK_T_29s1h6oKJKrZ06B4
-Message-ID: <CAFEAcA8QGU=Y=RmW9tGx8Jp=YzvFok_41K6ijFNuWXM7tV+K8w@mail.gmail.com>
-Subject: Re: [PULL v2 00/85] Audio patches
-To: marcandre.lureau@redhat.com
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b131;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb131.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::529;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x529.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -115,58 +112,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 23 Feb 2026 at 09:46, <marcandre.lureau@redhat.com> wrote:
->
-> From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
->
-> The following changes since commit 07f97d5da04a9f97e273de85c76f5017d8135a=
-6e:
->
->   Merge tag 'pull-target-arm-20260219' of https://gitlab.com/pm215/qemu i=
-nto staging (2026-02-19 10:36:06 +0000)
->
-> are available in the Git repository at:
->
->   https://gitlab.com/marcandre.lureau/qemu.git tags/audio-pull-request
->
-> for you to fetch changes up to 8699fab503fb06ecb8ea21ec1af99d85f28b4508:
->
->   audio: fix leak of audio capture name (2026-02-22 13:54:40 +0100)
->
-> ----------------------------------------------------------------
-> audio cleanups
->
+Thomas Huth <thuth@redhat.com> writes:
 
-Hi -- this has a conflict on merge:
+>  Hi!
+>
+> On 19/02/2026 15.48, Ruslan Ruslichenko wrote:
+>> From: Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
+>> Add new '-hw-dtb' command-line option and corresponding
+>> MachineState property.
+>> The 'hw-dtb' option allows to specify a Device tree
+>> binary with hardware description which Qemu should
+>> emulate.
+>> Signed-off-by: Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
+>> ---
+>>   hw/core/machine.c        | 19 +++++++++++++++++++
+>>   include/hw/core/boards.h |  1 +
+>>   qemu-options.hx          |  9 +++++++++
+>>   system/vl.c              |  3 +++
+>>   4 files changed, 32 insertions(+)
+>> diff --git a/hw/core/machine.c b/hw/core/machine.c
+>> index d4ef620c17..affd24cd49 100644
+>> --- a/hw/core/machine.c
+>> +++ b/hw/core/machine.c
+>> @@ -363,6 +363,20 @@ static void machine_set_dtb(Object *obj, const char=
+ *value, Error **errp)
+>>       ms->dtb =3D g_strdup(value);
+>>   }
+>>   +static char *machine_get_hw_dtb(Object *obj, Error **errp)
+>> +{
+>> +    MachineState *ms =3D MACHINE(obj);
+>> +
+>> +    return g_strdup(ms->hw_dtb);
+>> +}
+>> +
+>> +static void machine_set_hw_dtb(Object *obj, const char *value, Error **=
+errp)
+>> +{
+>> +    MachineState *ms =3D MACHINE(obj);
+>> +
+>> +    ms->hw_dtb =3D g_strdup(value);
+>> +}
+>> +
+>>   static char *machine_get_dumpdtb(Object *obj, Error **errp)
+>>   {
+>>       MachineState *ms =3D MACHINE(obj);
+>> @@ -1145,6 +1159,11 @@ static void machine_class_init(ObjectClass *oc, c=
+onst void *data)
+>>       object_class_property_set_description(oc, "dtb",
+>>           "Linux kernel device tree file");
+>>   +    object_class_property_add_str(oc, "hw-dtb",
+>> +                            machine_get_hw_dtb, machine_set_hw_dtb);
+>> +    object_class_property_set_description(oc, "hw-dtb",
+>> +                "A device tree binary used to describe the hardware to =
+QEMU");
+>
+> Do the hardware dtbs differ from the ones that are passed to the Linux
+> kernel? If not, I think you likely could use the existing "dtb"
+> property for your new feature?
 
-diff --cc hw/audio/virtio-snd.c
-index d5d430ad65,8b94914646..0000000000
---- a/hw/audio/virtio-snd.c
-+++ b/hw/audio/virtio-snd.c
-@@@ -1276,12 -1259,11 +1277,20 @@@ static void virtio_snd_pcm_in_cb(void *
-                      return_rx_buffer(stream, buffer);
-                      break;
-                  }
-++<<<<<<< HEAD
- +                to_read =3D stream->params.period_bytes - buffer->size;
- +                to_read =3D MIN(to_read, available);
- +                to_read =3D MIN(to_read, max_size - buffer->size);
- +                size =3D AUD_read(stream->voice.in,
- +                                buffer->data + buffer->size,
- +                                to_read);
-++=3D=3D=3D=3D=3D=3D=3D
-+                 size =3D audio_be_read(stream->s->audio_be,
-+                         stream->voice.in,
-+                         buffer->data + buffer->size,
-+                         MIN(available, (stream->params.period_bytes -
-+                                         buffer->size)));
-++>>>>>>> 42769ad0c1871228f1f4ee3d2bf41ed71389df01
-                  if (!size) {
-                      available =3D 0;
-                      break;
+They have to - the normal DTB cannot define the whole system because its
+only concerned with reporting what the kernel can see to the kernel and
+not defining the whole system including what the firmware sees.
 
-Could you fix up and resend, please?
+>
+> ...
+>> diff --git a/qemu-options.hx b/qemu-options.hx
+>> index 33fcfe7ce6..1568f3ce4c 100644
+>> --- a/qemu-options.hx
+>> +++ b/qemu-options.hx
+>> @@ -4518,6 +4518,15 @@ SRST(initrd)
+>>     ERST
+>>   +DEF("hw-dtb", HAS_ARG, QEMU_OPTION_hw_dtb, \
+>> +    "-hw-dtb file    use 'file' as device tree image\n", QEMU_ARCH_ALL)
+>> +SRST
+>> +``-hw-dtb file``
+>> +    Use <file> as a device tree binary (dtb) image used to create the
+>> +    emulated machine. This dtb will not be passed to the kernel, use -d=
+tb
+>> +    for that.
+>> +ERST
+>
+> Please don't add any new top level options if it is not really
+> necessary. We already got too much duplicated logic in QEMU, so we try
+> to avoid this nowadays. In your case here, it should be fine to simply
+> configure the hw-dtb via the -machine property.
+>
+>  Thanks,
+>   Thomas
 
-thanks
--- PMM
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
