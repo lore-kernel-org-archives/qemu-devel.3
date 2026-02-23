@@ -4,63 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C803CE98E10
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 09:53:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB4B7E98E10
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Feb 2026 09:53:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuScF-0005ht-Mp; Mon, 23 Feb 2026 04:52:35 -0500
+	id 1vuScG-0005qk-RM; Mon, 23 Feb 2026 04:52:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vuSaU-0002vn-Dl
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 04:50:47 -0500
+ id 1vuSZm-0001vW-N4
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 04:50:06 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vuSaS-0007OW-HP
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 04:50:45 -0500
+ id 1vuSZk-00077k-R4
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 04:50:01 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771840243;
+ s=mimecast20190719; t=1771840200;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=7X/MNV4QeRkE7ESVqU7kS01nb2TKxx3gRC5LLeydeXo=;
- b=byn2CDcVUdU7M2KinY06bVGX2HTiT0N5xb3smqClbNl28/LNUhN+1/DV8kphhN0IwrwD3i
- GWj21HKhaPHdGe0A+itlUtXho416ZdQqTgBDiTQLdYmic9MKFb3tNYHGQyF/4tTEcN3CQy
- Eiq8TK+U477zy85oHtnv4ibnnCIIQLg=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=Qe/NKZtpuOPVFCVSXFuizpRBF5ZXWhkVFvUnqc8g7tc=;
+ b=KkBq4nH8hR0HVQ7fly6MhHr6ojF1Z34q8ejgHbt0u/IBFO+iGnjezJBhgOHS0RZb2kApdr
+ T2GrlAHpCfDE6E+4FoklS2GI/+VDPzbRan7a3DcRVVkJ/YLd9sCIKNOQpEOaoarl7ScJqY
+ daYInm76rvl9WRMnSsB+/2j4NyEkRhA=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-477-aKqH-yHBPuGFOFwrHoJysQ-1; Mon,
- 23 Feb 2026 04:50:42 -0500
-X-MC-Unique: aKqH-yHBPuGFOFwrHoJysQ-1
-X-Mimecast-MFC-AGG-ID: aKqH-yHBPuGFOFwrHoJysQ_1771840241
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-537-1_Z0yA_LPw6u3aVQiIc4Lg-1; Mon,
+ 23 Feb 2026 04:49:57 -0500
+X-MC-Unique: 1_Z0yA_LPw6u3aVQiIc4Lg-1
+X-Mimecast-MFC-AGG-ID: 1_Z0yA_LPw6u3aVQiIc4Lg_1771840196
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 68062195605F; Mon, 23 Feb 2026 09:50:41 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1DAF0195608E; Mon, 23 Feb 2026 09:49:56 +0000 (UTC)
 Received: from localhost (unknown [10.45.242.25])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id AA4F930001BE; Mon, 23 Feb 2026 09:50:40 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 843851955D71; Mon, 23 Feb 2026 09:49:54 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Gerd Hoffmann <kraxel@redhat.com>
-Subject: [PULL v2 78/85] audio: replace DEBUG_AUDIO with trace
-Date: Mon, 23 Feb 2026 10:46:36 +0100
-Message-ID: <20260223094649.2005118-79-marcandre.lureau@redhat.com>
+Subject: [PULL v2 61/85] audio/dbus: remove unused AUDIO_CAP macro
+Date: Mon, 23 Feb 2026 10:46:19 +0100
+Message-ID: <20260223094649.2005118-62-marcandre.lureau@redhat.com>
 In-Reply-To: <20260223094649.2005118-1-marcandre.lureau@redhat.com>
 References: <20260223094649.2005118-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -89,65 +89,29 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
+The DBus audio backend already uses error_report() for error logging.
+Remove the unused AUDIO_CAP macro which was left over from the old
+logging infrastructure.
+
 Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
 Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- audio/audio_template.h  | 10 +++++-----
- audio/audio-mixeng-be.c |  9 ---------
- audio/trace-events      |  1 +
- 3 files changed, 6 insertions(+), 14 deletions(-)
+ audio/dbusaudio.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/audio/audio_template.h b/audio/audio_template.h
-index c47a2f202f0..e884c8e9b1a 100644
---- a/audio/audio_template.h
-+++ b/audio/audio_template.h
-@@ -556,11 +556,11 @@ static SW *glue(audio_mixeng_backend_open_, TYPE) (
-     sw->callback.fn = callback_fn;
-     sw->callback.opaque = callback_opaque;
+diff --git a/audio/dbusaudio.c b/audio/dbusaudio.c
+index d8e548bf469..5f65c043c16 100644
+--- a/audio/dbusaudio.c
++++ b/audio/dbusaudio.c
+@@ -36,7 +36,6 @@
+ #include "ui/dbus-display.h"
+ #include "ui/dbus-display1.h"
  
--#ifdef DEBUG_AUDIO
--    dolog ("%s\n", name);
--    audio_pcm_print_info ("hw", &sw->hw->info);
--    audio_pcm_print_info ("sw", &sw->info);
--#endif
-+    trace_audio_voice_pair(G_STRINGIFY(TYPE), name,
-+                           AudioFormat_str(sw->hw->info.af),
-+                           sw->hw->info.freq, sw->hw->info.nchannels,
-+                           AudioFormat_str(sw->info.af),
-+                           sw->info.freq, sw->info.nchannels);
- 
-     return sw;
- 
-diff --git a/audio/audio-mixeng-be.c b/audio/audio-mixeng-be.c
-index 3dd9d17dd25..7eabb1c2505 100644
---- a/audio/audio-mixeng-be.c
-+++ b/audio/audio-mixeng-be.c
-@@ -620,15 +620,6 @@ static size_t audio_pcm_sw_write(SWVoiceOut *sw, void *buf, size_t buf_len)
-     return total_in * sw->info.bytes_per_frame;
- }
- 
--#ifdef DEBUG_AUDIO
--static void audio_pcm_print_info (const char *cap, struct audio_pcm_info *info)
--{
--    dolog("%s: %s, freq %d, nchan %d\n",
--          cap, AudioFormat_str(info->af), info->freq,
--          info->nchannels);
--}
--#endif
--
- #define DAC
- #include "audio_template.h"
- #undef DAC
-diff --git a/audio/trace-events b/audio/trace-events
-index 7a73d6eb84f..ed04792d508 100644
---- a/audio/trace-events
-+++ b/audio/trace-events
-@@ -74,3 +74,4 @@ audio_out_played(size_t played) "played=%zu"
- # audio_template.h
- audio_open_out(const char *name, int freq, int nchannels, int fmt) "open %s, freq %d, nchannels %d, fmt %d"
- audio_open_in(const char *name, int freq, int nchannels, int fmt) "open %s, freq %d, nchannels %d, fmt %d"
-+audio_voice_pair(const char *type, const char *name, const char *hw_fmt, int hw_freq, int hw_nchannels, const char *sw_fmt, int sw_freq, int sw_nchannels) "%s: name=%s hw=%s/%d/%d sw=%s/%d/%d"
+-#define AUDIO_CAP "dbus"
+ #include "qemu/audio.h"
+ #include "audio_int.h"
+ #include "trace.h"
 -- 
 2.53.0
 
