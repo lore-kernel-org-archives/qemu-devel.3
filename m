@@ -4,93 +4,117 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DAB15F4BB65
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 17:42:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C236F4BB65
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 17:44:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuwQ6-0000aX-Aa; Tue, 24 Feb 2026 12:42:02 -0500
+	id 1vuwRy-0001Bc-Iy; Tue, 24 Feb 2026 12:43:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vuwQ4-0000aM-TW
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 12:42:00 -0500
-Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vuwRx-0001BC-6D
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 12:43:57 -0500
+Received: from mail-yx1-xb12c.google.com ([2607:f8b0:4864:20::b12c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vuwQ2-0004gk-IT
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 12:42:00 -0500
-Received: by mail-ej1-x62e.google.com with SMTP id
- a640c23a62f3a-b8fbb24a9a9so8131666b.0
- for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 09:41:57 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vuwRu-0004mV-No
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 12:43:56 -0500
+Received: by mail-yx1-xb12c.google.com with SMTP id
+ 956f58d0204a3-64ca1ba0089so659445d50.1
+ for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 09:43:54 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1771955033; cv=none;
+ d=google.com; s=arc-20240605;
+ b=Rz3C+5FhIW72XxK7bcuCdCpe9h2mCNWhSVYSmbZMv+YoPZc7WV5KVHu2Ka2wVfxSZL
+ MHpUH+GTBtDkmDgCyCnQRzfapSQkW2cFv+c+NpOM6o+NoRC+FzM9mHqNZI5mnmJxAH2e
+ NKJrZXFzzfHcH9YmYf/H5jeY0yNSJVTeWLAhPA9zYkDKUCagN5UJkDNRxD3PJta/Q5Ba
+ /YJnvQ2dd0swiRCfY7nB5vkM2AL73MjBtsMWODsqrQdHBoEUGdXTOtYL5dS3DO8PyjDD
+ h7X/dUBKgkUQ/tM9C/qwEZ4Y5F8f7fS/IjgyxT4LSoYFaJ0Rjcl3kbf4vxX4+IH94FkD
+ L9KQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=bvlXZJbrhd0UjHZmAuDCJh18ioMIHHmNpbs0qCxkYDY=;
+ fh=R84pXDYvJznuJb5dunrikqaEeI9MgwuEGgEYHxBIZ1A=;
+ b=askScvQtI6VCI7p/hyq/73DReStX7O8uaDqxVs8ejz7R0n9GgAF3VpRXAdG5utDNcO
+ ZuaHj1GMdhn0E8OZuPS3dXAf9BI03BKhpQz3ncXMs4P9dewXjVBE4hJY79q7EO2pudTQ
+ wnjVgA0GR1JpisCShHxkG4mYAPvJVKIuatV//gHkl76YcZYcKMixoE3YxV30ZC0F+yUA
+ WxaYnhCIoqg3xOenWUO/FlN+mTAZW6NzCsSELFo3VEbsxfOWiMTJtA4sbcdqr2o09uQr
+ ghSpIn+eytruGIGx6IYiTa3RZ6YBYstry0ujJi3A7wDFFKkIXMeJsI7ePXYfjoHYv7CO
+ R8Dg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771954916; x=1772559716; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1771955033; x=1772559833; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=c73tMjZaLaW0cvtYDRwIEKRne7mCeOyd8ZOQSJHGn2U=;
- b=BNV6QS+kqQB0oleP0/OGFddFyN90RKBOom9aL3W7YUBA9UNLac+4hQGZurc1pvqCIQ
- dQlmIA+byto+/ZARe1eKqXbRH0g4TYtv2XZfMdozd3TkWXXLsowjkwqWH6I54k+7eK6Q
- u8btjT28+NceSBIvSGikEOs04k/zOFW5tGzHCf8aAqIeQ4eFtZOcUfiB7a04ITFKwabp
- eMuOe6o0MM1vBVn8R9ZoIQyT0lgv8Td+VNeEK9OWL3JpNqOTESLuAPjnXFgsTiHa6dB1
- 2ISq75euEGD+3MHNexBFuAupogWGFxwupB7yuS3bVoRvHPN0PGpdNcAzuo7b7M4vvFJ2
- dCsA==
+ bh=bvlXZJbrhd0UjHZmAuDCJh18ioMIHHmNpbs0qCxkYDY=;
+ b=q6Gwzop6na32UIGFha/no5yqlLIL0RBSkaoVfILWdr++3Pa/IzDyZ2c5AL7t6dJRpn
+ 3w3Gx6GHqqKhYJBGdlkkoKgIuOUcEctIBsVy49ovv2m4UIPCungWDXdGZfmCoMdRmS9M
+ 6abHaaYzZq5+lNvMMMSymWBbyOKh8ErKz8fzE9pd7Lq6Jz8Y7l+v079FsdTEJyOOMTrZ
+ dRgryh62V3oOPRAEZUM0J2+Bq4K2o9s2Xtau0rUwgNmXTuk/kTG+xq6LJ3Skn9U3VDHM
+ rXRFofOJXV5bHWhcdKx+6xaNlFo+/e2hffPt4aTrHmHUZthgD8zOfrRGdmyM07RjMD5j
+ pG9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771954916; x=1772559716;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=c73tMjZaLaW0cvtYDRwIEKRne7mCeOyd8ZOQSJHGn2U=;
- b=COUY4xDbml5b0KEl9IGBOmqRfg/vfVLSQJlfO7mtVosgWAUtZSuu9rUwlmP0i9WXO/
- XtWhQ72ZxdtITpQthTkat4YQydn6wUzZKlXwJzOESJi0pN2cls4UCSEyIT8AAWpYVQmB
- ufVIYZwYjk62SnWir6//djrozSvHoVw7KxXOm2uCEgetp98AsrJwe84bfcZeREJ9oT5V
- o+xe+J4COg0RqKQDii4ZLD211DUcWFtXNpr6Ea6SKmjohcZaT13lqbgaDIL89hB7bsBm
- xZfrgERuWJwcpwwaq1Fvy0tAxSJtQqTUTPc6IpgGwmzqVXT1YBkfi7UGCmvTmDJkjEjG
- oH/Q==
-X-Gm-Message-State: AOJu0YxOfgWVU62fz9xWwu1a9rPvvZlfclNYRxU6/vSZuKrEIg5djYYA
- VWdpFZ7pShb6TZjZ5Rc2mcbHltJpS0H9DiZz2e6DrV+5WV2ANDD4p4W/u2rA7DxL+8M=
-X-Gm-Gg: ATEYQzy7//Fvjr+YLQsGnfjYzG89TuQRAbNUawQT4n+QXzvY73SceX33Lf6MjH9yeEI
- trOcX/fTwT5k7vbeJYYS7p/BYGmFUK8UB7OypGc4UxUnDhvDkeNeqtWco9a/q6+A3OogmjKV4er
- ab2CiXBPaxBHYBk/4T43BIlpaCA6gFWGeCYmpBEsG5+4orx88/vxM5LzyaJ6bTl8QtCLPGDxZkF
- sTSLtlMnCk8V4j+n63B/22OoH6P8zWv1//lh21qCKKDSBGpQ1stvg+99VDTkMbvaDrxfVGvP4FK
- 3ZPrItdZi+KkLcBrejXwKdTyf3j1KjeOw9YFv+pPS7k0hMgA1jg7+4GjdOHMrA0EEsH4MTXfky2
- U917rxUwFkxRSO0+VO5DNRi72B5c/YPTTBW6IGk6ZOFCxqHo4Jg80qC/LvGyMLMR+tiJKFkma54
- UXlWf5rZv2Qhywxsx7hjTqm50=
-X-Received: by 2002:a17:906:9fc8:b0:b8e:7e21:133e with SMTP id
- a640c23a62f3a-b933cd86d28mr39275566b.27.1771954916509; 
- Tue, 24 Feb 2026 09:41:56 -0800 (PST)
-Received: from draig.lan ([185.124.0.126]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b9084f191b9sm430466966b.67.2026.02.24.09.41.55
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 24 Feb 2026 09:41:55 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 0621A5F7B4;
- Tue, 24 Feb 2026 17:41:55 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Florian Hofhammer <florian.hofhammer@epfl.ch>
-Cc: qemu-devel@nongnu.org,  pierrick.bouvier@linaro.org,
- richard.henderson@linaro.org,  laurent@vivier.eu,  imp@bsdimp.com,
- berrange@redhat.com
-Subject: Re: [PATCH v4 1/7] plugins: add flag to specify whether PC is rw
-In-Reply-To: <8dad9153-1e97-4087-a243-3e40cee83572@epfl.ch> (Florian
- Hofhammer's message of "Tue, 24 Feb 2026 16:48:24 +0100")
-References: <909b0a4f-9759-4e27-bba8-997ae2f41bd6@epfl.ch>
- <8dad9153-1e97-4087-a243-3e40cee83572@epfl.ch>
-User-Agent: mu4e 1.14.0-pre1; emacs 30.1
-Date: Tue, 24 Feb 2026 17:41:54 +0000
-Message-ID: <87342q3uot.fsf@draig.linaro.org>
+ d=1e100.net; s=20230601; t=1771955033; x=1772559833;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=bvlXZJbrhd0UjHZmAuDCJh18ioMIHHmNpbs0qCxkYDY=;
+ b=kewNxHaecajZMhEasaEWGyyo5MElZbrSb3m3oa9Vpeg9Ex+md/Ptw7ZVE4ZXqJhRrN
+ Bp1ST12mfrToP3Jl6Vr250u1j/Fl2YTnFHXJ8gt2XA15W4r8ZnQh+iJJgoGD6kEywdkw
+ 1ExIzwkSs0+8Udj+mQy9Em0PnjxBO+vN/GiRruOS+2fQP65/ZwMMMqzQkBCRG3ldi/ba
+ L71pWL3vABGP/+dSu/aK62cHZu2wmvtn/Sj0GnGoDSxMHwyK2FNMZt2IgD9PmLAVFii2
+ YvEOZJGyn3GSdLA+x1qGFmmiCO0ZbAuvDpZf7cpllnnwZ/PClUvoks152hCMyCqrw/Tc
+ Xm7A==
+X-Gm-Message-State: AOJu0YwdZkOYqk/qItww9ikgo9zGzgoKKKONFe6rdpxnfzhlMPkyDuu2
+ qxAxWhQYsqL9sSSNkrQmHVyZW6JY/wu/CE6xYGhtaC834WZpEuaqoDGfOKmp4fTmVLAD+b6tjyr
+ qKaQkv2dw71VDN29bfWr3KIlKTUMxt2387oozpa5Dhg==
+X-Gm-Gg: ATEYQzzrtOiEGHHs+YmebO+jSjrLvAVZHrzkSeqDcLuMikYmJzclY5HkXYnRITGmkT/
+ Yp5A66b9C9/QJWZWkFlMrpYbunNLTBKbgj+I4HsesYsSfLE7SgHhoIxUxm7D0Kmv992hdLXHICg
+ s0W+mMEEtXj9bTv120QEiW4INuxht5rWMLHnKy+075Z7DLKhLFACHhxJmc2p7cUUXgaSavkmgVq
+ 4vw0IyUhR9idtI+Wz1lzBeaVq2RnMpFYBccUNoJE1rkHBs3hZQSwTDjtW/LyFnjdHL2rWiUj+ze
+ XXwOaK/Zt/P+q8Dl05IAKaEwchUsK56knHnyeDLlBy50xFBWUCRA0nfPlNbUjbERPDKATDau5Km
+ R5g==
+X-Received: by 2002:a53:cdcb:0:b0:64a:f2dc:2863 with SMTP id
+ 956f58d0204a3-64c78e3f4b2mr8694716d50.47.1771955033419; Tue, 24 Feb 2026
+ 09:43:53 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+References: <20260219171810.602667-1-alex.bennee@linaro.org>
+ <20260219171810.602667-11-alex.bennee@linaro.org>
+In-Reply-To: <20260219171810.602667-11-alex.bennee@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 24 Feb 2026 17:43:41 +0000
+X-Gm-Features: AaiRm52TuCRfIzNNGpZsyRSrbSfYPgjiMv87KBHufhgW597nJjYYrby_ozTNI9w
+Message-ID: <CAFEAcA8gvXGAhTZ+PuegZJucBHa6pYcDPxZYfUJfUjSKBme9TQ@mail.gmail.com>
+Subject: Re: [RFC PATCH v2 10/14] target/arm: remove extraneous cpu_reset from
+ realizefn
+To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, Yoshinori Sato <yoshinori.sato@nifty.com>,
+ qemu-arm@nongnu.org, 
+ Laurent Vivier <laurent@vivier.eu>, Thomas Huth <huth@tuxfamily.org>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
+ Aurelien Jarno <aurelien@aurel32.net>, Jim MacArthur <jim.macarthur@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Bastian Koppelmann <kbastian@rumtueddeln.de>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Aleksandar Rikalo <arikalo@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Zhao Liu <zhao1.liu@intel.com>, Jiaxun Yang <jiaxun.yang@flygoat.com>, 
+ Yanan Wang <wangyanan55@huawei.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,19 +130,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Florian Hofhammer <florian.hofhammer@epfl.ch> writes:
-
-> In addition to the flags specifying whether general-purpose registers
-> are read-write (rw) during a plugin callback, we add an additional flag
-> explicitly stating whether the PC is writable. This is in preparation of
-> a patch that allows to explicitly set the PC to divert control flow from
-> within a plugin callback, which is currently not possible.
+On Thu, 19 Feb 2026 at 17:18, Alex Benn=C3=A9e <alex.bennee@linaro.org> wro=
+te:
 >
-> Signed-off-by: Florian Hofhammer <florian.hofhammer@epfl.ch>
+> We already have do_cpu_reset called when the system is reset so there
+> is no need to do it here.
+>
+> By removing this we now only do (smp*2)-1 calls to cpu_reset. Once per
+> core as part of qemu_system_reset and then once per secondary core as
+> PSCI calls are made to reset them.
+>
+> Message-ID: <20260108143423.1378674-12-alex.bennee@linaro.org>
+> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+> ---
+>  target/arm/cpu.c | 1 -
+>  1 file changed, 1 deletion(-)
+>
+> diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+> index 10f8280eef2..dadc48e06e5 100644
+> --- a/target/arm/cpu.c
+> +++ b/target/arm/cpu.c
+> @@ -2198,7 +2198,6 @@ static void arm_cpu_realizefn(DeviceState *dev, Err=
+or **errp)
+>      }
+>
+>      qemu_init_vcpu(cs);
+> -    cpu_reset(cs);
+>
+>      acc->parent_realize(dev, errp);
+>  }
 
-Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+though it would not surprise me if there was some obscure ordering
+requirement that we run into by removing this. I guess we'll have
+to wait for the bug reports :-)
+
+thanks
+-- PMM
 
