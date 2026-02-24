@@ -4,54 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F295F3C9BE
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 16:38:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 171ACF3C9BE
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 16:41:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuvQT-0008Od-Qy; Tue, 24 Feb 2026 11:38:21 -0500
+	id 1vuvTa-0001Kz-Hn; Tue, 24 Feb 2026 11:41:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vuvQR-0008OB-F1
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 11:38:19 -0500
-Received: from rev.ng ([94.130.142.21])
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1vuvTX-0001K0-KN
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 11:41:31 -0500
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vuvQP-0007bz-AG
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 11:38:18 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
- s=dkim; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject
- :Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
- Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
- :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
- List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=N7Xstt61CslkDZpb0iL2mo1xoQ8LKB1NJ0gZt3ku/C4=; b=lJb91zoolVIkrOI
- xzJeMasKPf5ZaPd8EaQFsJdi35lK8IKUnz7iZzqnuFe0af68ZUFvXvMP7mmMB30W1YH3ZzcPtamtB
- ZcDIJ9LhL/Xu7ZPD6dRGjgPAnymj7krSz3R/HlfxB+XGN/aXZ7fEpN1DZfiaD8uOUSVuhg0pTFFtt
- vk=;
-Date: Tue, 24 Feb 2026 17:41:50 +0100
-To: Taylor Simpson <ltaylorsimpson@gmail.com>
-Cc: qemu-devel@nongnu.org, brian.cain@oss.qualcomm.com, 
- matheus.bernardino@oss.qualcomm.com, sid.manning@oss.qualcomm.com,
- marco.liebel@oss.qualcomm.com, 
- richard.henderson@linaro.org, philmd@linaro.org, ale@rev.ng
-Subject: Re: [PATCH v3 5/8] Hexagon (target/hexagon) Check each opcode
- against current CPU definition
-Message-ID: <aZ3Uv2nfgZekDuud@hive.localdomain>
-References: <20260217212245.95321-1-ltaylorsimpson@gmail.com>
- <20260217212245.95321-6-ltaylorsimpson@gmail.com>
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1vuvTU-0008Tf-2M
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 11:41:31 -0500
+Received: from mail.maildlp.com (unknown [172.18.224.83])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4fL3Ph5sGLzJ46BR;
+ Wed, 25 Feb 2026 00:40:56 +0800 (CST)
+Received: from dubpeml500005.china.huawei.com (unknown [7.214.145.207])
+ by mail.maildlp.com (Postfix) with ESMTPS id A361C40569;
+ Wed, 25 Feb 2026 00:41:18 +0800 (CST)
+Received: from localhost (10.203.177.15) by dubpeml500005.china.huawei.com
+ (7.214.145.207) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.11; Tue, 24 Feb
+ 2026 16:41:17 +0000
+Date: Tue, 24 Feb 2026 16:41:16 +0000
+To: Ankit Agrawal <ankita@nvidia.com>
+CC: Jason Gunthorpe <jgg@nvidia.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>, Vikram Sethi <vsethi@nvidia.com>,
+ Shameer Kolothum Thodi <skolothumtho@nvidia.com>, "alex@shazbot.org"
+ <alex@shazbot.org>, "anisinha@redhat.com" <anisinha@redhat.com>, "Aniket
+ Agashe" <aniketa@nvidia.com>, Neo Jia <cjia@nvidia.com>, Kirti Wankhede
+ <kwankhede@nvidia.com>, "Tarun Gupta (SW-GPU)" <targupta@nvidia.com>, "Zhi
+ Wang" <zhiw@nvidia.com>, Matt Ochs <mochs@nvidia.com>, Krishnakant Jaju
+ <kjaju@nvidia.com>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Subject: Re: [PATCH v1 1/1] hw/acpi/pci.c: preserve generic initiator
+ insertion order
+Message-ID: <20260224164116.00003fc0@huawei.com>
+In-Reply-To: <SA1PR12MB71991611FEAA1B2D6A5171DFB074A@SA1PR12MB7199.namprd12.prod.outlook.com>
+References: <20260222020812.26475-1-ankita@nvidia.com>
+ <20260223082804.0d293861@imammedo>
+ <SA1PR12MB7199F0C2E1D2325B0062B004B077A@SA1PR12MB7199.namprd12.prod.outlook.com>
+ <20260223104411.57a815fa@imammedo>
+ <20260223111302.00000081@huawei.com> <aZ2sylCydE9Js1ec@nvidia.com>
+ <20260224085955-mutt-send-email-mst@kernel.org>
+ <aZ2449e8ucB8e3AJ@nvidia.com>
+ <SA1PR12MB7199847A879D66527B03DB1CB074A@SA1PR12MB7199.namprd12.prod.outlook.com>
+ <aZ28qvehl7Lleo2a@nvidia.com>
+ <SA1PR12MB71991611FEAA1B2D6A5171DFB074A@SA1PR12MB7199.namprd12.prod.outlook.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260217212245.95321-6-ltaylorsimpson@gmail.com>
-Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
- helo=rev.ng
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.203.177.15]
+X-ClientProxiedBy: lhrpeml500011.china.huawei.com (7.191.174.215) To
+ dubpeml500005.china.huawei.com (7.214.145.207)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -31
+X-Spam_score: -3.2
+X-Spam_bar: ---
+X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.358, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.659,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -64,22 +82,72 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Anton Johansson <anjo@rev.ng>
-From:  Anton Johansson via qemu development <qemu-devel@nongnu.org>
+Reply-to:  Jonathan Cameron <jonathan.cameron@huawei.com>
+From:  Jonathan Cameron via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 17/02/26, Taylor Simpson wrote:
-> During decoding, check that the opcode is supported in the current
-> Hexagon CPU definition
-> 
-> Co-authored-by: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
-> Co-authored-by: Brian Cain <brian.cain@oss.qualcomm.com>
-> Signed-off-by: Taylor Simpson <ltaylorsimpson@gmail.com>
-> ---
->  target/hexagon/decode.h |  2 ++
->  target/hexagon/decode.c | 27 +++++++++++++++++++++++++++
->  2 files changed, 29 insertions(+)
+On Tue, 24 Feb 2026 16:22:56 +0000
+Ankit Agrawal <ankita@nvidia.com> wrote:
 
-Reviewed-by: Anton Johansson <anjo@rev.ng>
+> >> Now the kernel parse it in the sequence of their occurrence. A jumbled up
+> >> sequence thus results in a jumbled up assignment.  
+> >
+> > But what is the actual failure mode here? So the numa IDs are all in a
+> > weird order, what goes wrong from that?  
+> 
+> This interferes with the ability to replicate the numa distance topology
+> on host in the VM through qemu command line.
+> 
+> E.g. consider a NUMA system with 2 sockets each with a GPU.
+> 0,1 are the node ids for the sysmem on socket 0,1 respectively and
+> 2,3 are the node ids for the GPU memory on socket 0,1 respectively
+> dist(0,2) = X
+> dist(0,3) = Y
+> 
+> If we try to replicate this for the VM by passing qemu arguments with
+> 4 numa nodes and assign numa distances similar to host, and for the
+> sake of example qemu mixes up by putting GI for 3 over 2. The SLIT
+> which sets up the distances do it considering the original order in the
+> qemu command line.
+> https://github.com/qemu/qemu/blob/stable-10.2/hw/acpi/aml-build.c#L2040
+> 
+> This would lead to a different numa config in terms of distance within
+> the VM that the one intended through the qemu command line.
+
+This is the case where I'd like to see an example of the tables before
+and after your patch.  If the SLIT is not correctly created wrt to PXMs
+(rather than the order of the commands) then we indeed have a QEMU bug that
+needs fixing.  However, I'm confused as SLIT should also not be ordered
+by command line if the say the command line was:
+
+       -object acpi-generic-initiator,id=gi0,pci-dev=dev0,node=3 \
+       -object acpi-generic-initiator,id=gi1,pci-dev=dev0,node=4 \
+       -object acpi-generic-initiator,id=gi2,pci-dev=dev0,node=6 \
+       -object acpi-generic-initiator,id=gi3,pci-dev=dev0,node=5 \
+       -object acpi-generic-initiator,id=gi4,pci-dev=dev0,node=2 \
+       -object acpi-generic-initiator,id=gi5,pci-dev=dev0,node=7 \
+       -object acpi-generic-initiator,id=gi6,pci-dev=dev0,node=8 \
+       -object acpi-generic-initiator,id=gi7,pci-dev=dev0,node=9 \
+
+and numa stuff was something like
+       -numa dist,src=3,dst=0,val=100
+       -numa dist,src=4,dst=0,val=200
+       -numa dist,src=5,dst=0,val=300
+       -numa dist,src=6,dst=0,val=100
+       -numa dist,src=7,dst=0,val=200
+       -numa dist,src=8,dst=0,val=300
+       -numa dist,src=9,dst=0,val=100
+
+Then it should be matching src numbers here to node in the GIs whatever the order.
+
+Thanks,
+
+Jonathan
+
+
+> 
+> Thanks
+> Ankit Agrawal
+
 
