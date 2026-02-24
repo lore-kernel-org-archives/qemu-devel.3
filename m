@@ -4,112 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5EC0EF4BB7F
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 19:09:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A688F4BB7F
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 19:20:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuxlU-0008Oy-Gg; Tue, 24 Feb 2026 14:08:12 -0500
+	id 1vuxx5-00039a-9Q; Tue, 24 Feb 2026 14:20:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vuxlS-0008Ol-Rk
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 14:08:10 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vuxlR-0004Kz-2u
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 14:08:10 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771960088;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=dO7zBnW+cAdEFBEwg4nbMEzPjjSirhfoIZZkP25AF4Q=;
- b=im0D3Q4x6rsqHbxQP3WQ3LBPRvxBXigXjUv93SrAvgMt0M8nJ9pZo3X3yh9SswaJyCM69J
- XWRHEhIU/7wLjJOH4dhvj/5diy1ECy86mGo7mERmsuqV+v8+gRmVAeYPv+qiMWS0pJ8Qcy
- jvt8JOJW0SCkUcJ1AM6kSPT8se/HcXQ=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-606-NyM_fKahNj2WqRjDp5D0Yw-1; Tue, 24 Feb 2026 14:08:05 -0500
-X-MC-Unique: NyM_fKahNj2WqRjDp5D0Yw-1
-X-Mimecast-MFC-AGG-ID: NyM_fKahNj2WqRjDp5D0Yw_1771960084
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-483a24db6ecso64343435e9.1
- for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 11:08:04 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vuxx3-00037g-PB
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 14:20:09 -0500
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vuxx0-0006rC-Lz
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 14:20:09 -0500
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-43638a33157so5492346f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 11:20:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1771960084; x=1772564884; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=dO7zBnW+cAdEFBEwg4nbMEzPjjSirhfoIZZkP25AF4Q=;
- b=YMywXeYp9D9esgBTDs+wQLrJaTFwGkJcqThkaXJd/Yyytf+pTlUHqS1K2peuwtM8ag
- 72Yqfqj9HI+RRwk+Fx7N8M7CM727sBgDJtEq8bKmXykmKKi6D8VW0B/5whXmrfgXgRtb
- B+nBzXuRZs2uJJR9G32UGDVcrAPyb/MEqdbQO5ukhaAjzHnzc3GLePS8lln1yzt3NdIt
- basn9s0IzK8ckT63Npo30TO6aRyBsERE8e1LWY5GdsZrkLVPtqK+si89Kk+929+RfSEn
- /XuRpS6QxT5HZYAEWAgv6JZoSuGK3QSFc3dhyR/i4yC7+7NTWKoEGRI0xxRNOOC2PJlt
- IP/A==
+ d=linaro.org; s=google; t=1771960805; x=1772565605; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=b5BYHve34Gr4m6COmESIyRNQJUMygD4tF25AUIydfN8=;
+ b=tls8oV5rfQPXNhD555BmyrHYxD7mjfgaiMMxm9t4LRIHTBnRBlPdYcZJW+XWFkq6Tc
+ dmJ2M4LwSkjxr+cXHJ9B+TWSkGVwQJX9ROxblYoMhU7mgw8Md+1E0wUV1EAST4AX9ZPr
+ 7MvQFL24SmjCZdH+JurIjoaHF4dXN6xiZk75KT0EOcd5AKflH1rvEoet5fzDrINQYW/y
+ YtrJ+VRH1Q4Qyo8ZbnYXx1xJ821ur0ZW9B9uxASvF8aKfzP5Z073Y/WM0vnrZ+RwEU3t
+ MpRN7iCNIELaURkrCq3NREzg0+l4UuVshNSDyO3kw/0F29tz6twqG0UUG9sUyrynywpI
+ C3eg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771960084; x=1772564884;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=dO7zBnW+cAdEFBEwg4nbMEzPjjSirhfoIZZkP25AF4Q=;
- b=oxHV1KxTaED6fLpDrru8ENJxs52QMAQq7y+ZOOfArzN4ubuGiEt/ZwfTncaB7cVSh5
- SFlpp4cRPL7prWJyimsldM/mHShwb5lNj/20r8zDwrL7y3vjaG0mej9lBMgp9UCXVZTo
- PnUGcMPJiQZ5xWqg7i28efsOQM90FsMwGGqQ69cZesTiK5DHVPtCUaSI4HDAtTBHzyZb
- gzOIyQA82QoSQqQ4dM8/2i1G7vaAok7WRxPo9plObhHeXysZhmdKAKZfBGGXADFG9gQU
- CJHC7pUKZd/gDevSueadTONp07wVSwhnoOGvRCLFNyDnQhMnxFjKSLAR5v4qEK8kMAS1
- 7haQ==
+ d=1e100.net; s=20230601; t=1771960805; x=1772565605;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=b5BYHve34Gr4m6COmESIyRNQJUMygD4tF25AUIydfN8=;
+ b=W0KHM7Cqc3NtYLCYP758Vdiplqk8gRszZS7vLapSDshv5iaxnTsFahsL8B/C1+aUc5
+ BEDIq9fYDlwB7+d/bjbUR772nw6QNOg5nHVXlREO5vezlw96zLbj8gkP3nPmRg/YiRS9
+ 93Oez4kW1O9nXzZKthZa6ifko6vQAWIiuDEFqGM5z3d5fOgqgdCwEmdIXJpWD4TzHZ2r
+ DCRKAYR7iDtxmjPzUkjRk+HwAEUXrU7bAznwh5FowmVhD249jLnEwRZgJivlWPUw40o2
+ xucv7mKLU+e0pQMSuVlQ9ja958R0t3WinLxcf75qeyapmBo0SIDFAczdmgBdzp0kfdZI
+ 4pkA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVHFO8JB2XLaB0KVm3zGDCYEqLF+/DZrJZWzfJdkB9col1tq+rAFjY73oqTUxgqH47d4UlurjvmCPCm@nongnu.org
-X-Gm-Message-State: AOJu0Yz4rm18SCdMdYqlEZyn5fwrwTlQxo1qRR23aYjX/2t3BJ+HVc+x
- nB+rwMAa9oR4P+3UGykkb94Jgwvq6hHMqYYsCinErR8617zdUd3umPnYerQxhJekdl3LSjFLydm
- 0HiL2TlreTQgLc9B0AG/8JuOuQb9lyK0vn1TwfuXadDJ6yESfDLdxtETG
-X-Gm-Gg: AZuq6aLW8ucoyNcULto/oEB+JMmB5SN6IVgLqFT/p9DSCzqt+cVYwuBmqnxwg/F+4gg
- v9N/Tlq9P8tIIhGXEwcJMlIyt/a6hRvmcStUXJTyALMF8iSIC+XMKnudpKTVFISv5wQa+gInTub
- ZeXwwyOhoXxNXO2GwHoMCmCl/UBYQhBeqhDczxtlmKszCJq411LQvYiE8XbsmYIDRsvFuXvzY1y
- RRgkCuKFjygfpJfC/Sp656tDA7T/QF+ULWUt56LOmNFFOkwfRn72fVYAGMx5MWGVl8UWeG2P0eA
- 2ZmtiKkq0ZsHw8D9VMZh0x9mUrM0Xpx08Q4mKY47ULkjXHDK2KDaHonID3CDLA4kmK3Vya9VXoP
- 9JYw3WeLQ2+/byF1K2adxiSZ2Awa9hhBe3ml85+WS+Mf+NA==
-X-Received: by 2002:a05:600c:6298:b0:477:5c58:3d42 with SMTP id
- 5b1f17b1804b1-483a95fb23amr217986655e9.10.1771960083766; 
- Tue, 24 Feb 2026 11:08:03 -0800 (PST)
-X-Received: by 2002:a05:600c:6298:b0:477:5c58:3d42 with SMTP id
- 5b1f17b1804b1-483a95fb23amr217986045e9.10.1771960083227; 
- Tue, 24 Feb 2026 11:08:03 -0800 (PST)
-Received: from redhat.com (IGLD-80-230-79-166.inter.net.il. [80.230.79.166])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-483bd70e6c9sm13261865e9.8.2026.02.24.11.08.01
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 24 Feb 2026 11:08:02 -0800 (PST)
-Date: Tue, 24 Feb 2026 14:07:59 -0500
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org,
- qemu-ppc@nongnu.org, Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Stefano Garzarella <sgarzare@redhat.com>, Jason Wang <jasowang@redhat.com>,
- Nicholas Piggin <npiggin@gmail.com>, stefanha@redhat.com,
- richard.henderson@linaro.org, BALATON Zoltan <balaton@eik.bme.hu>
-Subject: Re: [PATCH 0/3] hw/virtio/virtio-access.h: remove target specific code
-Message-ID: <20260224134436-mutt-send-email-mst@kernel.org>
-References: <20260212234602.338131-1-pierrick.bouvier@linaro.org>
- <967c35ff-0630-4ca7-847e-04a918c93e7d@linaro.org>
+ AJvYcCW/668Oy0qiC03Hnub2JctrOGpcj6+bYgjLgklcl+zgdL3Zhb7khG4kCvvuhAdVdO3TtMBJUiZhS1T2@nongnu.org
+X-Gm-Message-State: AOJu0Yw7Uk2JElzJn31VEk35cy8BMieRV9/hWlExQK/a83WXp5RpBqIa
+ 2rMBjM3f1wpJC3ZO1OBmhW/cHnDfwqxIH/ccbZy5yvagXD7c+/ufW6h4+L54dWZL3KQ=
+X-Gm-Gg: ATEYQzzKZx3EuxtcldMQrtuRG2hILfYICy3yAeqiV8KHc/YA+eQlosMWp3L6NrcFxo6
+ iaBOicOhLajAZjpCSIM4xjTq2pmUnvsZJnhvpnI/8fc8grzaBLsgcKeBn5irk0+9ju5bGzUlIE1
+ +Fh4WC6veSdnGE7nWo0wY64soM+IrwcvNMTyWbIa33N04z5FMA/bRcFTjcWVk6lDMdIZpzmf8E+
+ 17I5hmM9TL2l95+OL94bcTGkh7sspCo+avhlqqvSQAzRLc8cuti2G7DGajILB6C4SYvN22eeG8r
+ bFsuL7UCXZHbAtvwa6HS7xYjFj91EHVuPHwYCYHABTl/lcvA6f1ecHavvGTdORSJYUpBuVeO7o8
+ yGBDryvQwvPdN8L4WawY+zno6DjhIQXYOGQb9e97W5Bg3xA8ZwMoyxpjG6pb5ye91zHVTPL6w7I
+ bY/SHomkySnejRWJKG3NqZRxEkkUji3vkHxRuNvy6YvnN4RLkVExCCZaRCJ8jtOtK2iA==
+X-Received: by 2002:a5d:5d11:0:b0:435:a2f8:151c with SMTP id
+ ffacd0b85a97d-4396f175439mr23415544f8f.28.1771960803930; 
+ Tue, 24 Feb 2026 11:20:03 -0800 (PST)
+Received: from [192.168.69.200] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-43970bf9f77sm29537621f8f.5.2026.02.24.11.20.02
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 24 Feb 2026 11:20:03 -0800 (PST)
+Message-ID: <07184078-fd62-438d-ae60-47c71ba46fbe@linaro.org>
+Date: Tue, 24 Feb 2026 20:20:02 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <967c35ff-0630-4ca7-847e-04a918c93e7d@linaro.org>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.358, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.659,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 7/7] Drop TARGET_PHYS_ADDR_SPACE_BITS
+Content-Language: en-US
+To: Anton Johansson <anjo@rev.ng>, qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Helge Deller <deller@gmx.de>, Paolo Bonzini <pbonzini@redhat.com>,
+ Song Gao <gaosong@loongson.cn>, Bibo Mao <maobibo@loongson.cn>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Brian Cain <brian.cain@oss.qualcomm.com>,
+ Chao Liu <chao.liu.zevorn@gmail.com>
+References: <20260218-phys_addr-v6-0-a603bf363218@rev.ng>
+ <20260218-phys_addr-v6-7-a603bf363218@rev.ng>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260218-phys_addr-v6-7-a603bf363218@rev.ng>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,38 +109,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Feb 24, 2026 at 07:33:14PM +0100, Philippe Mathieu-Daudé wrote:
-> Hi Pierrick,
+Hi Anton,
+
+On 18/2/26 18:21, Anton Johansson wrote:
+> The macro is no longer in use and can safely be dropped.
 > 
-> On 13/2/26 00:45, Pierrick Bouvier wrote:
-> > This series eliminates some target specifics in hw/virtio and replace them with
-> > runtime functions where needed, to be able to link virtio code in single-binary.
-> > After a first try on a series [0] doing this change and making all virtio files
-> > common, Richard asked to refactor this part, thus this independent series.
-> 
-> > Pierrick Bouvier (3):
-> >    hw/virtio: add virtio_vdev_is_{modern, legacy}
-> >    hw/virtio: rename virtio_is_big_endian to virtio_vdev_is_big_endian
-> >    hw/virtio: remove virtio_access_is_big_endian
-> 
-> Patch #2 has been merged as commit 6325407f67d.
-> 
-> Since we don't have feedback from the maintainers Cc'ed, I took
-> the liberty to rebase your series, trying to address Zoltan's
-> concerns on patch #1. 
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> Reviewed-by: Brian Cain <brian.cain@oss.qualcomm.com>
+> Signed-off-by: Anton Johansson <anjo@rev.ng>
+> ---
+>   include/exec/cpu-defs.h       | 3 ---
+>   include/exec/poison.h         | 2 --
+>   target/alpha/cpu-param.h      | 3 ---
+>   target/arm/cpu-param.h        | 2 --
+>   target/avr/cpu-param.h        | 1 -
+>   target/hexagon/cpu-param.h    | 1 -
+>   target/hppa/cpu-param.h       | 3 ---
+>   target/i386/cpu-param.h       | 2 --
+>   target/loongarch/cpu-param.h  | 1 -
+>   target/m68k/cpu-param.h       | 1 -
+>   target/microblaze/cpu-param.h | 2 --
+>   target/mips/cpu-param.h       | 2 --
+>   target/or1k/cpu-param.h       | 1 -
+>   target/ppc/cpu-param.h        | 7 -------
+>   target/riscv/cpu-param.h      | 2 --
+>   target/rx/cpu-param.h         | 1 -
+>   target/s390x/cpu-param.h      | 1 -
+>   target/sh4/cpu-param.h        | 1 -
+>   target/sparc/cpu-param.h      | 2 --
+>   target/tricore/cpu-param.h    | 1 -
+>   target/xtensa/cpu-param.h     | 1 -
+>   21 files changed, 40 deletions(-)
 
 
-So as I said, main use-case where we would worry about perf is
-virtio storage. So it's mostly for storage guys to ack.
-Did not get Stefan's feedback yet on whether he is happy.
+> diff --git a/include/exec/poison.h b/include/exec/poison.h
+> index 21eed4c54f..ffb34faf28 100644
+> --- a/include/exec/poison.h
+> +++ b/include/exec/poison.h
+> @@ -43,8 +43,6 @@
+>   #pragma GCC poison TARGET_FMT_ld
+>   #pragma GCC poison TARGET_FMT_lu
+>   
+> -#pragma GCC poison TARGET_PHYS_ADDR_SPACE_BITS
 
-I don't understand if we always want to build a single binary though.
-If not we could address all perf worries by having both  generic
-and target specific implementations by using linker tricks (weak symbols or
-whatnot).
+I'll keep this line for now: it might be useful for rebased forks,
+helping them to notice they need to update their cpu-param.h (we
+can always remove it later).
 
-
--- 
-MST
-
+>   #pragma GCC poison CONFIG_ALPHA_DIS
+>   #pragma GCC poison CONFIG_HPPA_DIS
+>   #pragma GCC poison CONFIG_I386_DIS
 
