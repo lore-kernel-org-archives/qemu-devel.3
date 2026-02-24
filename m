@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 404C0F4BB86
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 20:17:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC668F4BB82
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 20:24:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuyqW-00028q-6v; Tue, 24 Feb 2026 15:17:30 -0500
+	id 1vuywy-0003Ck-4K; Tue, 24 Feb 2026 15:24:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vuyqR-00028Z-N6
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 15:17:24 -0500
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
+ id 1vuywu-0003CI-Tn
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 15:24:04 -0500
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vuyqP-0007WO-TD
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 15:17:23 -0500
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-2aaf9191da3so38448075ad.2
- for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 12:17:21 -0800 (PST)
+ id 1vuywt-0000wC-4X
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 15:24:04 -0500
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-2aad1dc8856so44412085ad.1
+ for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 12:24:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771964240; x=1772569040; darn=nongnu.org;
+ d=linaro.org; s=google; t=1771964641; x=1772569441; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=MbSACKEyZKX18CDdz8H88eTcevbsXKp5IRYpQJMzGes=;
- b=JCcc3wgum+1TF2ucB4fwEB/koYND0sXynYbHSxRWymEHbDzOPeyKDXGZoYlsVM/NH2
- ZJ5OkY8/phczfqAS4uQb6X9ZmTNLxeWhra5yY/BUFMe3TF66yhRfVkJ8mPti6ooyOrV7
- junXX2IoROOO5SOzrIJqBQNKeVn3SNtSM9WteIviF+UcMGYXcBhlEeG/J3m4omgCN2Ky
- 0n7qUfJUH6fs7pJl8LyUs0jnnqxLQqy/D2pS58v2zwfSk2knltpJ1e71tkIgmOfYH7+c
- GsrLHtapnKhDEsycEm7kJqTjJHbhRU+RiI9GMBaxr+Phs7rcaSqx1uYBKJnR0+xdELva
- IWcw==
+ bh=OGWiDgsFCzJohYc2RZnEhnXFjmgy9mLVruNWJM5VPX0=;
+ b=unOYrRhc2kfryodqqP4xrwfF74z2IHrRomk9f65hbcNSMwdBA7DvV9FqsxjoekSzwm
+ U3mFe67nRwhcKPMboBeeZbaupvxfDgY4BjJoBSR4EWS+OmP1UwPzA9w0vK9ScCsvZxbm
+ xiMTq/mACGMBAGrIcwOtAE7v20kk4ck+4gQkJQjy30m7XWx3wOI3dPjSMm9yX8gNTVfp
+ AVYtnak2dbdJSI5DxIrrie7mqVPuAwoSHWBy1537hiw770ao2Ju1Pk3xX8brOarQfg3I
+ 1avoQGgyvj2pYwD01NgaAzpkvT/Tij+yOj3pUBAHeBM32xIqGNp/edwIRUxBMT3o9t13
+ XtAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771964240; x=1772569040;
+ d=1e100.net; s=20230601; t=1771964641; x=1772569441;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=MbSACKEyZKX18CDdz8H88eTcevbsXKp5IRYpQJMzGes=;
- b=SYe4eJkzmB+ARW7gI8beo519gNGu8+7ONNni5cZhoeGv0HEqN3550or8lTc8iKSDRp
- LX3Plyvq98t+2kFoaCL8Oxz8gU9t6fAkBQNKkA7cOBL76/CCLDKvjbKPC87szoLjGD1f
- S0aobnJC5ufRKfqIGXYQl9D72/tqLPhdd07HncC+QqUZc6LROjORrcAUezJPhy9p1Utm
- 1+Qv+2kKElydLCpkEav/yTo0Iky3aRt1t3rrJiLHX7rZ4N/lkJA4Ttq/v/XUuwScCI45
- XbN8IxECWq8op/86aFsmAM+R/HSNL4VIB1Lx6TLklaBVrImRk2nidS44bl80iNuoRbwu
- 5R/g==
+ bh=OGWiDgsFCzJohYc2RZnEhnXFjmgy9mLVruNWJM5VPX0=;
+ b=GHXOYjaetjwh9YXGyRo2D6iLNgafTLeGr3QJDY3gnJbkB33kM3KrX42WjJuy3/Gm/Y
+ fGmEqujviU+INcRqUn/MmlxzHfXZpzjxF2iS7kR1jvVjsxCTjIgF81dIhd/Z3q0DveKC
+ 3AI1/a4pYE83sM9TOz8x6UYuAF9fhODL2Yx3cgJHKjj5hm5hFXRg5HhqsDx5+3NMApgh
+ VY0pve+Ae3XTYCopgp4HG2c+E6Bn1yAWG8Ph3J/vl+rJCeeI02kc3tz5GN/yOSwR8QW9
+ zNLlxXn2xwWhjT1QKGS4tSNSNM/g1JOTtneT2HAHTN0Dlc6w7uwlQvdIOLUCxCPuVWoW
+ LxPA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVMG4IjCq42YyQDF37cVRn/IecHias4JeWzFmBDqPfvHD9HGLgiw61QcS9PoS8BR7VyzR2pDKPwTpTk@nongnu.org
-X-Gm-Message-State: AOJu0YxfMvQH2uqMdiGJToKzQsq/4uV/ZJVy2DLHIUP29bvbXpmw2xJE
- 589HhK3RJbzyCDOR7S/7jbsLOuKvqNB33VquwLF7lZ5MnTqhxrPwZ2fqCDI9XwelJdA=
-X-Gm-Gg: ATEYQzwhIoXfz09fOVCbyxIF68aKQNWq1wOjqVozor0VbK4NBq1T1JrNJDCdF+EhC6W
- rhjvygX+93IeMNBiWdIvfPoOYTWX+FtKEMHCDvbgWdJc960JoVQs1YtMRZu7sKGDVEeLwJ4jdMP
- ANTBZTkDPYDyyX+gm/raMHENozs34jEaMKnoK63tZQhzTQ+9UsvamJpqpFt15FjXpckP3AiJZfS
- pEwDdkgdHlGb9zasFug+eUSfYsgMOn39ojhrQiRuoghvoYIFjTc4yLpRuhsEgqzWzSECju4KaPs
- 5z5Caws9R897JI7VE9rXU84bD1g0aXfUz5YghsLju9lC2eISIzXcNDgEXa1hu+kj/VndMT2QQhC
- ZLeh59qg76lrx0+c5Z0rnBWQzrX7ypOGmsQ9kLl7tm5zQtVarKfK4pFvBjvOAvkSUWxOijN3Z8c
- 6HUnhKfJTdRrSHgnfAkdNoeV/OmP0KVcz4GnRLvCyTdtrqlRlM9bgdxwD2CsPM3L1B+ab6
-X-Received: by 2002:a17:902:f652:b0:2a9:5f11:3a34 with SMTP id
- d9443c01a7336-2ad7441c3c4mr99658185ad.13.1771964240129; 
- Tue, 24 Feb 2026 12:17:20 -0800 (PST)
+ AJvYcCUsnKO4T74g0RdAh0ymVQ6aKXCTo0Wejuu8eyctLQXxUP+nkLTkcnBUCEi7Qsld5CMM+JqW70/5Y4v8@nongnu.org
+X-Gm-Message-State: AOJu0Ywl7OqkvBxJjSYfvuyK07QT9jh3ZFHZRj6CgS5nvAA3qtMRGCPq
+ Obb67Q56ApsmeQ7kvoDGYy/WEAxPERxTpT282OrdsgoYrhTEdyKN3OaMUlzHFMe/FBc=
+X-Gm-Gg: ATEYQzyL2TzUqmX8vNfyXGi1g8artrh4MeMHhG/p/ya2h2Okw35cfUHsh78S9itVTCp
+ PvEgjLiPyRqmO1RcOxxhrhWqP5wjWJLWeFKVMkdTEDjq41mwaU1uUH48u3eE2jOOhJ+hclQ6Arw
+ 9/aVYVCHknY4RCRgwa3EvgRp1D/dCx/EH59Nb7d3u+72Xl9SCokw+0Al+xg7jcn2O2z4mrbkwC9
+ 2m/anWB0y5MPyPKUl/XdiF/76Xj3gMQqWMJPfaauAgMIKHr0Lj4uyjFMkIzb73DWzj9okjxd3d1
+ gTnZlWwcKaEDawHc1kBTk3nRvQQtnoWcQ1wmNLm7KDHYL4WuFBE+NoEmWJ2502/WI3w9Bo6Ptoy
+ FjuywNqc2FnCkZY+ghfaGwcu85nIlxcpL4XKOBiyR7EnGV7jXWTK0ZFlPJe39LsjrkVHZB6W1h6
+ /l3RwA4dOL+FxirtBWqxD0kjFssCvoKf1dhXGgHzmfPe/s93W6rzVv+IwKc1dA3EZ7OLQQ
+X-Received: by 2002:a17:903:185:b0:2a9:484c:ff2f with SMTP id
+ d9443c01a7336-2ad7449af32mr109516795ad.23.1771964641014; 
+ Tue, 24 Feb 2026 12:24:01 -0800 (PST)
 Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2ad74e350a9sm113785985ad.15.2026.02.24.12.17.19
+ 41be03b00d2f7-c70b726b1d1sm11072315a12.31.2026.02.24.12.24.00
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 24 Feb 2026 12:17:19 -0800 (PST)
-Message-ID: <889129d1-0f0e-4f89-83b0-aa9415f636fc@linaro.org>
-Date: Tue, 24 Feb 2026 12:17:19 -0800
+ Tue, 24 Feb 2026 12:24:00 -0800 (PST)
+Message-ID: <7615cede-426b-4547-8878-c57ec08e8ba1@linaro.org>
+Date: Tue, 24 Feb 2026 12:24:00 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 7/7] tests/tcg/plugins: test register readonly feature
+Subject: Re: [PATCH v4 4/7] tests/tcg: add test for qemu_plugin_set_pc API
 Content-Language: en-US
 To: Florian Hofhammer <florian.hofhammer@epfl.ch>, qemu-devel@nongnu.org
 Cc: alex.bennee@linaro.org, richard.henderson@linaro.org, laurent@vivier.eu,
  imp@bsdimp.com, berrange@redhat.com
 References: <909b0a4f-9759-4e27-bba8-997ae2f41bd6@epfl.ch>
- <e6be7001-491f-4f5b-9aeb-3d27727d7b9a@epfl.ch>
+ <2ccc79ee-48ab-4097-a9cc-4d2b79ab9a8a@epfl.ch>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  xsDNBGK9dgwBDACYuRpR31LD+BnJ0M4b5YnPZKbj+gyu82IDN0MeMf2PGf1sux+1O2ryzmnA
@@ -113,11 +113,11 @@ Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  5SYuJaKzCAgNeAy3gUVUUPrUsul1oe2PeWMFUhWKrqko0/Qo4HkwTZY6S16drTMncoUahSAl
  X4Z3BbSPXPq0v1JJBYNBL9qmjULEX+NbtRd3v0OfB5L49sSAC2zIO8S9Cufiibqx3mxZTaJ1
  ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <e6be7001-491f-4f5b-9aeb-3d27727d7b9a@epfl.ch>
+In-Reply-To: <2ccc79ee-48ab-4097-a9cc-4d2b79ab9a8a@epfl.ch>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -140,105 +140,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/24/26 7:58 AM, Florian Hofhammer wrote:
-> This commit tests the readonly feature for registers exposed via the
-> plugin API introduced earlier in the patch series.
+On 2/24/26 7:52 AM, Florian Hofhammer wrote:
+> The test executes a non-existent syscall, which the syscall plugin
+> intercepts and redirects to a clean exit.
+> Due to architecture-specific quirks, the architecture-specific Makefiles
+> require setting specific compiler and linker flags in some cases.
 > 
 > Signed-off-by: Florian Hofhammer <florian.hofhammer@epfl.ch>
 > ---
->   tests/tcg/plugins/meson.build |  1 +
->   tests/tcg/plugins/registers.c | 68 +++++++++++++++++++++++++++++++++++
->   2 files changed, 69 insertions(+)
->   create mode 100644 tests/tcg/plugins/registers.c
+>   tests/tcg/arm/Makefile.target                 |  6 +++++
+>   tests/tcg/hexagon/Makefile.target             |  7 +++++
+>   tests/tcg/mips/Makefile.target                |  6 ++++-
+>   tests/tcg/mips64/Makefile.target              | 15 +++++++++++
+>   tests/tcg/mips64el/Makefile.target            | 15 +++++++++++
+>   tests/tcg/mipsel/Makefile.target              | 15 +++++++++++
+>   tests/tcg/multiarch/Makefile.target           | 22 ++++++++++++++--
+>   .../{ => plugin}/check-plugin-output.sh       |  0
+>   .../{ => plugin}/test-plugin-mem-access.c     |  0
+>   .../plugin/test-plugin-skip-syscalls.c        | 26 +++++++++++++++++++
+>   tests/tcg/plugins/syscall.c                   |  6 +++++
+>   tests/tcg/sparc64/Makefile.target             | 16 ++++++++++++
+>   12 files changed, 131 insertions(+), 3 deletions(-)
+>   create mode 100644 tests/tcg/mips64/Makefile.target
+>   create mode 100644 tests/tcg/mips64el/Makefile.target
+>   create mode 100644 tests/tcg/mipsel/Makefile.target
+>   rename tests/tcg/multiarch/{ => plugin}/check-plugin-output.sh (100%)
+>   rename tests/tcg/multiarch/{ => plugin}/test-plugin-mem-access.c (100%)
+>   create mode 100644 tests/tcg/multiarch/plugin/test-plugin-skip-syscalls.c
+>   create mode 100644 tests/tcg/sparc64/Makefile.target
 > 
-> diff --git a/tests/tcg/plugins/meson.build b/tests/tcg/plugins/meson.build
-> index c5e49753fd..5005aa8dc9 100644
-> --- a/tests/tcg/plugins/meson.build
-> +++ b/tests/tcg/plugins/meson.build
-> @@ -6,6 +6,7 @@ test_plugins = [
->   'insn.c',
->   'mem.c',
->   'patch.c',
-> +'registers.c',
->   'reset.c',
->   'syscall.c',
->   ]
-> diff --git a/tests/tcg/plugins/registers.c b/tests/tcg/plugins/registers.c
-> new file mode 100644
-> index 0000000000..a7bd692225
-> --- /dev/null
-> +++ b/tests/tcg/plugins/registers.c
-> @@ -0,0 +1,68 @@
-> +/*
-> + * Copyright (C) 2026, Florian Hofhammer <florian.hofhammer@epfl.ch>
-> + *
-> + * License: GNU GPL, version 2 or later.
-> + *   See the COPYING file in the top-level directory.
-> + */
-> +#include "glib.h"
-> +#include <inttypes.h>
-> +#include <assert.h>
-> +#include <stdlib.h>
-> +#include <string.h>
-> +#include <unistd.h>
-> +#include <stdio.h>
+> diff --git a/tests/tcg/mips/Makefile.target b/tests/tcg/mips/Makefile.target
+> index 5d17c1706e..d08138f17b 100644
+> --- a/tests/tcg/mips/Makefile.target
+> +++ b/tests/tcg/mips/Makefile.target
+> @@ -9,11 +9,15 @@ MIPS_SRC=$(SRC_PATH)/tests/tcg/mips
+>   VPATH 		+= $(MIPS_SRC)
+>   
+>   # hello-mips is 32 bit only
+> -ifeq ($(findstring 64,$(TARGET_NAME)),)
+>   MIPS_TESTS=hello-mips
+>   
+>   TESTS += $(MIPS_TESTS)
+>   
+>   hello-mips: CFLAGS+=-mno-abicalls -fno-PIC -fno-stack-protector -mabi=32
+>   hello-mips: LDFLAGS+=-nostdlib
 > +
-> +#include <qemu-plugin.h>
-> +
-> +QEMU_PLUGIN_EXPORT int qemu_plugin_version = QEMU_PLUGIN_VERSION;
-> +
-> +/*
-> + * This callback is called when a vCPU is initialized. It tests whether we
-> + * successfully read from a register and write value back to it. It also tests
-> + * that read-only registers cannot be written to, i.e., we can read a read-only
-> + * register but writing to it fails.
-> + */
-> +static void vcpu_init_cb(qemu_plugin_id_t id, unsigned int vcpu_index)
-> +{
-> +    g_autoptr(GArray) regs = qemu_plugin_get_registers();
-> +    g_autoptr(GByteArray) buf = g_byte_array_sized_new(0);
-> +    bool success = false;
-> +
-> +    /* Make sure we can read and write an arbitrary register */
-> +    qemu_plugin_reg_descriptor *reg_desc = &g_array_index(regs,
-> +            qemu_plugin_reg_descriptor, 0);
-> +    g_assert(reg_desc->is_readonly == false);
-> +    success = qemu_plugin_read_register(reg_desc->handle, buf);
-> +    g_assert(success);
-> +    success = qemu_plugin_write_register(reg_desc->handle, buf);
-> +    g_assert(success);
-> +
-> +    /*
-> +     * Reset the buffer and find a read-only register. On each architecture, at
-> +     * least the PC should be read-only because it's only supposed to be
-> +     * modified via the qemu_plugin_set_pc() function.
-> +     */
-> +    g_byte_array_set_size(buf, 0);
-> +    for (size_t i = 0; i < regs->len; i++) {
-> +        reg_desc = &g_array_index(regs, qemu_plugin_reg_descriptor, i);
-> +        if (reg_desc->is_readonly) {
-> +            success = qemu_plugin_read_register(reg_desc->handle, buf);
-> +            g_assert(success);
-> +            break;
-> +        } else {
-> +            reg_desc = NULL;
-> +        }
-> +    }
-> +    /* Make sure there is a read-only register and we cannot write to it */
-> +    g_assert(reg_desc != NULL);
-> +    success = qemu_plugin_write_register(reg_desc->handle, buf);
-> +    g_assert(!success);
-> +}
-> +
-> +QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
-> +                                           const qemu_info_t *info,
-> +                                           int argc, char **argv)
-> +{
-> +    qemu_plugin_register_vcpu_init_cb(id, vcpu_init_cb);
-> +    return 0;
-> +}
+> +ifeq ($(CONFIG_PLUGIN),y)
+> +# qemu-mips(el) returns ENOSYS without triggering syscall plugin callbacks
+> +run-plugin-test-plugin-skip-syscalls-with-libsyscall.so:
+> +	$(call skip-test, $<, "qemu-mips does not execute invalid syscalls")
 
-Looks great, and nice to have a test for this.
+I ran into this while pulling syscall filter API recently, and found 
+4096 as syscall number, which seems to make all architectures happy.
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+See 948ffdd79b78702239aace2d32d4f581913299b3 for more details.
 
