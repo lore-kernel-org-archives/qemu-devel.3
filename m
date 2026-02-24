@@ -4,67 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0FDEE9B250
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 10:30:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B2EDE9B24D
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 10:36:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vupg1-0001Aq-IP; Tue, 24 Feb 2026 05:30:01 -0500
+	id 1vuplf-0002Sz-5Q; Tue, 24 Feb 2026 05:35:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vupfw-00017i-U1
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 05:29:57 -0500
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1vuplY-0002Rt-CH
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 05:35:44 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vupfu-0008RU-Cl
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 05:29:56 -0500
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1vuplW-0001SA-Ov
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 05:35:44 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771928992;
+ s=mimecast20190719; t=1771929336;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=W46JeZ5dUBnZZzFMZ69ZeK7yRi3zGQxQwvHoeHtInHo=;
- b=c2uyk2BIbSmcHAdy0HuQoiOWUhdyw0y77We57ELv2B7s7PVwayKSZ5PRxeboYn6F87tK+p
- 3dQHDxGWjFCd/6UaqFB43CAwag6L1mQW3He99QausneActbQrslkeaBj9jJshuNEvm/RE4
- s2wg7hQHlKu+ItRgSHvR3ras50ibB1E=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-408-x5qXump9M9m0WrVLpAYbng-1; Tue,
- 24 Feb 2026 05:29:49 -0500
-X-MC-Unique: x5qXump9M9m0WrVLpAYbng-1
-X-Mimecast-MFC-AGG-ID: x5qXump9M9m0WrVLpAYbng_1771928988
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A6CC1195605A; Tue, 24 Feb 2026 10:29:48 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.13])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0215419560A2; Tue, 24 Feb 2026 10:29:48 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 926E721E692D; Tue, 24 Feb 2026 11:29:45 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>,
- qemu-rust@nongnu.org,  Zhao Liu <zhao1.liu@intel.com>
-Subject: Re: [PATCH v2 03/16] rust/qobject: add Serialize implementation
-In-Reply-To: <20260108131043.490084-4-pbonzini@redhat.com> (Paolo Bonzini's
- message of "Thu, 8 Jan 2026 14:10:30 +0100")
-References: <20260108131043.490084-1-pbonzini@redhat.com>
- <20260108131043.490084-4-pbonzini@redhat.com>
-Date: Tue, 24 Feb 2026 11:29:45 +0100
-Message-ID: <87ecma4ep2.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ bh=xqFJfQHPbulPlJYBrN55uvOiR5BILMKoAp+8A07i238=;
+ b=UAK6x+sRpuKzzz+WJc3mi/kiVzaIiWnHk5odGxshbqbCUSNowosBPVccmO96AWtSduCdhr
+ RMcnA3AY2PIcjl7SYRjUInJjEwCAv7sD4Rlqj0XRSDwgvWlnRzbNBqp3vEq1E87OY+A6cL
+ 66zRmDl/GNEh5mkk50gzZxFXrlSdiAY=
+Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
+ [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-316-gWpRJFK0NeqRcWvbFog1sQ-1; Tue, 24 Feb 2026 05:35:34 -0500
+X-MC-Unique: gWpRJFK0NeqRcWvbFog1sQ-1
+X-Mimecast-MFC-AGG-ID: gWpRJFK0NeqRcWvbFog1sQ_1771929334
+Received: by mail-ed1-f71.google.com with SMTP id
+ 4fb4d7f45d1cf-65bf3ab6e7eso5287016a12.0
+ for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 02:35:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1771929333; x=1772534133; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=xqFJfQHPbulPlJYBrN55uvOiR5BILMKoAp+8A07i238=;
+ b=ZPdWfBL/ynIz1EYvm69Qt3529tFOsCmwYgBpnEdC00bAnIm913U1DVtaCu13mFRkR1
+ EWVjj/2SQacFcmzv+5MmocG52Tfh4fHztlqKHFxfhUMOWkhjXnc6uTjD3Mx+BsjLt+aC
+ GnYJqAAtrJHj0TXlqmZTfq+/JPOeOwCyb4l65TqBpvJ8i8tkztLk4G/FtJedb08ojcRy
+ FvOfV5awo43xA//2V7Jx7+zQ52aG7YjThC8k8QaPenWBxdCcYTxt1ZPnbqHlv7uEjbw3
+ BQsgE0qqg3/PjC+8om/dECsVmoy6QeZ8t2tmzmN6+soTWZxkO5VSeuczn5e1xIV9SunW
+ hrjA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1771929333; x=1772534133;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=xqFJfQHPbulPlJYBrN55uvOiR5BILMKoAp+8A07i238=;
+ b=YEUDLA6Th0kvU/V0auO+uKpaBKoJHX4tfARqw+eRVJlV47WOxGfRO0UDrYcneEOQ+o
+ RzK2zCSi4gvDAFAKolMp/jpUKIi9nqOQ1Cl+HGLa/q2ppk+tvU1ldmn+BahpvbPxx2wc
+ cOvIwNNOFxgCPc6gWdS91RZ4dZ0vKXWbibkRJ/keR3qC+81c/rjecSKDrDhG032jX5vH
+ BhbxZ6Wfewt3TQ2V3GtG3lfBZanpYhL1qQPFSQU5d25GYzrw6hrQOp+30njWSlm1pJ2a
+ QW+0bNItki/eJJpYJ3YN0Fjpb6DVdzpkNS+3IKFDDa2EvAPzJDSXY/8eSdrw/9D1MSVC
+ 9exg==
+X-Gm-Message-State: AOJu0YxyGosUnvcrIEnf7lJT3Wov49Kn8PDC+zF6YuxauYSulxelvDXC
+ 6KIxfI6eHjArDEpE+bD+FApx8XnQeBCikXrmhJ/k7kCg5Jb/oKv+o3boI8ZzTNMLYGf7t500aDW
+ Ok0YHz8WW2jOyCEmSE2l+ZQ0+nlJauV6Kz5ktKzi7czNnkTbPv9COzC3P
+X-Gm-Gg: ATEYQzxJ9FmMEJSzmLcYbVagJpV2vuhy8RJtiAr+9ECzdPjm6qZYuYAHvbqCJpwtCvh
+ 5+s2UvaNFb8pEG/mVBLHdbG5C9Cye+PERl8b/B/75l0IoERU5lGvfsLyKfmStEFYEpIwRe1wI/E
+ uh1ZGPZZAfiLpvwF/BSNFYLp2keCDmSHyZLIMIFEayk3fI0A5klu51RIgfhpvv095EXbT85xmEc
+ XUK9YBC+jYXlbDWFoDXc7uB7nmlfUl8uqfSzRjZjHYMuO7KOmYL1hjmiKVn7pkFX238kLWVVd9N
+ VMB76TQwAG3h4ul7OJLuP6TnRCzB9qenQ6k1yAXVJU+1C4+L2dz0XsDIlMbpMdhYJbbHVNbJNn1
+ /VE/jJUK71bTmyqJdfA0tmCUF5Q41I8Ng+Cjv5o+Vcrxv4T+PLKPhiWZk29QfFKOjb6go6WZPL8
+ VwU5Zb48rt3tHO64h9n3X3tJ7xtM0=
+X-Received: by 2002:a05:6402:3645:b0:659:405b:547c with SMTP id
+ 4fb4d7f45d1cf-65ea4ef7b1dmr4804844a12.19.1771929333588; 
+ Tue, 24 Feb 2026 02:35:33 -0800 (PST)
+X-Received: by 2002:a05:6402:3645:b0:659:405b:547c with SMTP id
+ 4fb4d7f45d1cf-65ea4ef7b1dmr4804831a12.19.1771929333122; 
+ Tue, 24 Feb 2026 02:35:33 -0800 (PST)
+Received: from [192.168.10.81] ([151.95.144.138])
+ by smtp.googlemail.com with ESMTPSA id
+ 4fb4d7f45d1cf-65eab9a08edsm3327454a12.5.2026.02.24.02.35.32
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 24 Feb 2026 02:35:32 -0800 (PST)
+Message-ID: <58720d10-5613-4235-b47f-939e9a8d3096@redhat.com>
+Date: Tue, 24 Feb 2026 11:35:31 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 01/16] rust/qobject: add basic bindings
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
+ <marcandre.lureau@redhat.com>, qemu-rust@nongnu.org,
+ Zhao Liu <zhao1.liu@intel.com>
+References: <20260108131043.490084-1-pbonzini@redhat.com>
+ <20260108131043.490084-2-pbonzini@redhat.com> <87jyw24fw5.fsf@pond.sub.org>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Content-Language: en-US
+In-Reply-To: <87jyw24fw5.fsf@pond.sub.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -1
 X-Spam_score: -0.2
@@ -89,122 +126,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Paolo Bonzini <pbonzini@redhat.com> writes:
+On 2/24/26 11:03, Markus Armbruster wrote:
+>> diff --git a/rust/util/wrapper.h b/rust/util/wrapper.h
+>> index b9ed68a01d8..0907dd59142 100644
+>> --- a/rust/util/wrapper.h
+>> +++ b/rust/util/wrapper.h
+>> @@ -30,3 +30,10 @@ typedef enum memory_order {
+>>   #include "qemu/log.h"
+>>   #include "qemu/module.h"
+>>   #include "qemu/timer.h"
+>> +#include "qobject/qnull.h"
+>> +#include "qobject/qbool.h"
+>> +#include "qobject/qnum.h"
+>> +#include "qobject/qstring.h"
+>> +#include "qobject/qobject.h"
+>> +#include "qobject/qlist.h"
+>> +#include "qobject/qdict.h"
+> 
+> Is this file just for bindgen, and never actually fed to the C compiler?
 
-> This allows QObject to be converted to other formats, for example
-> JSON via serde_json.
->
-> This is not too useful, since QObjects are consumed by
-> C code or deserialized into structs, but it can be used for testing
-> and it is part of the full implementation of a serde format.
->
-> Co-authored-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Yes.
 
-[...]
+>> +impl From<()> for QObject {
+>> +    fn from(_null: ()) -> Self {
+>> +        // Conversion of the C inline `qnull` function
+>> +        unsafe { QObject::cloned_from_base(addr_of!(bindings::qnull_.base)) }
+>> +    }
+>> +}
+> 
+> Could we call C qnull() instead of using qnull_.base?
 
-> diff --git a/rust/util/src/qobject/serialize.rs b/rust/util/src/qobject/s=
-erialize.rs
-> new file mode 100644
-> index 00000000000..34ec3847c1d
-> --- /dev/null
-> +++ b/rust/util/src/qobject/serialize.rs
-> @@ -0,0 +1,59 @@
-> +//! `QObject` serialization
-> +//!
-> +//! This module implements the [`Serialize`] trait for `QObject`,
-> +//! allowing it to be converted to other formats, for example
-> +//! JSON.
-> +
-> +use std::{ffi::CStr, mem::ManuallyDrop, ptr::addr_of};
-> +
-> +use serde::ser::{self, Serialize, SerializeMap, SerializeSeq};
-> +
-> +use super::{match_qobject, QObject};
-> +use crate::bindings;
-> +
-> +impl Serialize for QObject {
-> +    #[inline]
-> +    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
-> +    where
-> +        S: ::serde::Serializer,
-> +    {
-> +        match_qobject! { (self) =3D>
-> +            () =3D> serializer.serialize_unit(),
-> +            bool(b) =3D> serializer.serialize_bool(b),
-> +            i64(i) =3D> serializer.serialize_i64(i),
-> +            u64(u) =3D> serializer.serialize_u64(u),
-> +            f64(f) =3D> serializer.serialize_f64(f),
-> +            CStr(cstr) =3D> cstr.to_str().map_or_else(
-> +                |_| Err(ser::Error::custom("invalid UTF-8 in QString")),
+See v1 review - no, because qnull() is inline.  I can make it not 
+inline, of course.
 
-.to_str() fails when its argument is invalid UTF-8.  It returns "an
-error with details of where UTF-8 validation failed."[1]
-
-Why are we replacing this error with a custom one?  I guess we add the
-clue "in QString".  We also lose the details of where.  Feels like a
-questionable trade.
-
-Moreover, I believe this is a programming error: QString is not meant to
-wrap arbitrary byte sequences, it's meant to wrap UTF-8 strings.
-Programming errors should panic.
-
-Can we use .expect()?  It panics "if the value is an Err, with a panic
-message including the passed message, and the content of the Err."[2]
-
-If we decide this isn't a programming error (because QString may contain
-arbitrary zero-terminated byte sequences[3]): can we combine all the
-readily available information like .expect() does?
-
-In review of v2, you wrote
-
-    I'd rather not special case this into the only abort (see the
-    "#![deny(clippy::unwrap_used)]" in patch 4).
-
-Is this an argument for pretending this isn't a programming error?  If
-yes, I need a bit more help to understand it.
-
-> +                |s| serializer.serialize_str(s),
-> +            ),
-> +            QList(l) =3D> {
-> +                let mut node_ptr =3D unsafe { l.head.tqh_first };
-> +                let mut state =3D serializer.serialize_seq(None)?;
-> +                while !node_ptr.is_null() {
-> +                    let node =3D unsafe { &*node_ptr };
-> +                    let elem =3D unsafe { ManuallyDrop::new(QObject::fro=
-m_raw(addr_of!(*node.value))) };
-> +                    state.serialize_element(&*elem)?;
-> +                    node_ptr =3D unsafe { node.next.tqe_next };
-> +                }
-> +                state.end()
-> +            },
-> +            QDict(d) =3D> {
-> +                let mut state =3D serializer.serialize_map(Some(d.size))=
-?;
-> +                let mut e_ptr =3D unsafe { bindings::qdict_first(d) };
-> +                while !e_ptr.is_null() {
-> +                    let e =3D unsafe { &*e_ptr };
-> +                    let key =3D unsafe { CStr::from_ptr(e.key) };
-> +                    key.to_str().map_or_else(
-> +                        |_| Err(ser::Error::custom("invalid UTF-8 in key=
-")),
-> +                        |k| state.serialize_key(k),
-> +                    )?;
-> +                    let value =3D unsafe { ManuallyDrop::new(QObject::fr=
-om_raw(addr_of!(*e.value))) };
-> +                    state.serialize_value(&*value)?;
-> +                    e_ptr =3D unsafe { bindings::qdict_next(d, e) };
-> +                }
-> +                state.end()
-> +            }
-> +        }
-> +    }
-> +}
-
-[1] https://doc.rust-lang.org/std/ffi/struct.CStr.html#method.to_str
-[2] https://doc.rust-lang.org/std/result/enum.Result.html#method.expect
-[3] Feels like a problematic idea to me.
+Paolo
 
 
