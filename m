@@ -4,95 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DAA4EFB81C
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 17:04:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9042F357C5
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 17:09:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuvos-0007jQ-6J; Tue, 24 Feb 2026 12:03:34 -0500
+	id 1vuvtq-0001jR-SU; Tue, 24 Feb 2026 12:08:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vuvoe-0007gC-0s
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 12:03:20 -0500
-Received: from mail-yx1-xb12c.google.com ([2607:f8b0:4864:20::b12c])
+ id 1vuvtm-0001j3-Kf
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 12:08:38 -0500
+Received: from mail-yx1-xb12f.google.com ([2607:f8b0:4864:20::b12f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vuvoc-0005Rd-7W
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 12:03:19 -0500
-Received: by mail-yx1-xb12c.google.com with SMTP id
- 956f58d0204a3-64c9707fc11so1371930d50.2
- for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 09:03:17 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1771952596; cv=none;
+ id 1vuvtk-00068L-Ro
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 12:08:38 -0500
+Received: by mail-yx1-xb12f.google.com with SMTP id
+ 956f58d0204a3-64c9707fc11so1377799d50.2
+ for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 09:08:36 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1771952915; cv=none;
  d=google.com; s=arc-20240605;
- b=MVmBOT0jbOtfMue5Ars/ZxDR2+2D/BBvXNP3/efYLa3xdQQEu5hu4L9AxRad+qnobm
- VW0oYeg4Y251ByYEVWzPApjtDS4OO8C6Ddz0nqoPD1X36EuHWahPgmvnyL4JuRs7YZKJ
- q23EIzPox91U7UicnMeiHiyVVHWI1wXHQfOD4GpTSqSTCKccMPS4FhDx537Z5mwozLtE
- iLecHKZx7egTA83djnjBCzIFHVXL6rdB3PLvewHdVmAt02ubdrh6KQH7X0/s2MJ5eqA+
- 8Eh4R+5cl/NMNhUTomTrvihQnAopWBWkWwRb8LOdRPpArfp62oCHsxo3n+/Q9pND4pBt
- 2oQw==
+ b=j3UpECmE5S9vguaJ3ON3aRZhF0uUUfgG1v033Oe4IhS2v6nlKlsDaXT4GImFkHUPFL
+ 8I40pWuvmZpSIVqruazoFw3vswkTmJ8KfrdhMVEKNaAUPyJmlksKj+8mdEoY4gxL3l+d
+ g2kKdvlH1wWA6CDI3bRDk2Wj7jdAFoHi1vKluNfPB+SwODGCK1j8PhmmRxTgoj/Ft2pC
+ rPnkyF/9sUK6yIrQWBjjp4QnfucJYsBCVHm2R49ULwT/kyM0xhs1j2fhp4GEFsmMtlM5
+ gatllOo9dWu8NCDPz97OmrcVR8T48ZJA6yPhtmkOfkqd6LJQnHpdEoVfH2lJuCQgnQv8
+ Dp7A==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=7GjgLz0SAV0Mo5iX/SOiMEIb9K+tU1ziK2Qcu7Q3Ckk=;
+ bh=JCK2+HRfzyKjKq4I9ueyjdjn4gWopG0uuA219YFZRAI=;
  fh=GI2e/SBiq4MTIPc9mHou6R6WJe3VvhdDMWKbaXflkfU=;
- b=GDH4TR88Et7RqDjYkM9fkWhyLqKcOYHsxE4Zm1yhQvxbGHiHE0wLNOhqn8BnygHb6o
- vlhya3PlB5wrMs9THsmSkLOxaoCV4ntEwv5zXh5V3509vf2rS/stcKzjCN2AYKpp9Z3g
- lpwUS6mNNlcAuND1SqoH8IJBAPM6jhW91Pvhf6RzrdONarDkDlb7pgjEmrgJjfFZ/22g
- ZlZpHmvYQXo3HsJuxZhnvaBFAMutJKHn1VJwyLEK7Iv90k+Y5QISxtR98sYLfYM6iUMg
- RnE+RT4tEtARZ4oHt0Tokn97s5yhOdQPkYp2uh/2oxL0H+mTRjncsgWZbwdGfqwCUAoB
- W3ZQ==; darn=nongnu.org
+ b=gGSb2jsFEKDLB/ABdYkq8Fmm4wvxYvFlw9fWKitFtjccVStPO9njudmzwO0f8hCVmd
+ ommM5Zc9lh5lZNdO8tOgpVDR6EwbziJuEmh+IwVkKqblWd/Bgy+y5fDZa6B984Z//Hme
+ B31xGxMWyDSW+H2/2VqnjwPzTknE5mmAysjK73HHpvfZ0ZzJ6saDCEIIqivXXtt620RY
+ TfSLCvk7wflT9JDXBn3szXUQ7rTq/1YE6OsAxpeEllHhSMUxPVMWn2Q3K2GUf2Td+Oe5
+ SWu7oKJDYRFE+RbqsTzW85OePeUGBdATzuKaUy0nF9mNOa15LG5L7FPPagGYN1+rOxPY
+ 0V1w==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771952596; x=1772557396; darn=nongnu.org;
+ d=linaro.org; s=google; t=1771952915; x=1772557715; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=7GjgLz0SAV0Mo5iX/SOiMEIb9K+tU1ziK2Qcu7Q3Ckk=;
- b=wMBCoh3smVXs6U84p5GcjQdPyMTHynq0383Q2XcwD1yS0uixDABZ+Uo/a2wAYsbyPu
- sj4bFoyaz1TsBbHGZslYwBCcVLQrz28HKAwu89GTgCitX4V3YGYjqC3JV0wxMUKF8cW4
- b+czxZT7nI6pgjGBWQRoNYIZj29xa2xsSGvFXaS0s4VRmmhS9m8LFO937X13qSw7kPwU
- cihuLYF9tusZ91kvaXoG10+6uxBP2BFzlLSPs4aRerWcNUDV7nD3+J5WMY8IHz+HNB5y
- 95JEii+xx5bUWG3MIdgZRaaoU4d1aZwmP1CtPgDx8jewOewSdlqxWcvMn+Khy5xX02r9
- c5XQ==
+ bh=JCK2+HRfzyKjKq4I9ueyjdjn4gWopG0uuA219YFZRAI=;
+ b=zm/eM33j1UFxQLZQPA/nb7MFCPOEkrSbAFDx+v2PjyJaT3ydBK6CGafbgwIrVyPGR+
+ 4eX8LN0DRdV8lqnphHkdSS2Vf+5LOJiYUHgZLA0r6KzY2V/pijs9w2A9nXv65TgIvOF8
+ dM61IsQuGTE2sy6khxMUn5NrkpujuW4NC8Jdknd0QBua9wudDAfB8bvdKSB136V1ijYl
+ uA/y9SyAJilAsQtsFGZTHdmY6/8HfFskYE4p4LWISd2A/zfqrq70vh38DgJbKOhOEIWN
+ AbrYOb0FHCPIBIKbYLW+pCNcHqGGnLlwPLwWarNizuHXvz14alLAmVhybcwmuYtL6fKT
+ 9uMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771952596; x=1772557396;
+ d=1e100.net; s=20230601; t=1771952915; x=1772557715;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=7GjgLz0SAV0Mo5iX/SOiMEIb9K+tU1ziK2Qcu7Q3Ckk=;
- b=LGW4D1u1rg08Ugdsqe8hTV0sZ5Xn+8w66Zij1J0pa+x1+bV93QCDnbZaGMgtTJY/gA
- AkDKmPn1ARsDxj5Cux15EwYps+4nN+/Fl5A8hCQWdR5xTcgKqi6Ehh6Z4my8/aawGZS5
- tLnEH8uDEWvYKNT04O2+XPU46MdpdCLE53FdqxVyhB4CP3Cz3gBW9typ6s3YZjEKS5Yy
- 2yEIBYufDLDVHxNufk3gn+KaZPqhMdqORObjQvn+mKHIJ4T9MBA/3pc2CB2uoDWrdZGw
- 71+s252GEyQ9jVAV5xIJv7Gfn2mgwNZCBELMvGVKm5IhfCYB/GyxeJhSffPoxGGarptx
- toRg==
-X-Gm-Message-State: AOJu0Yzc3NQqxxgBINuPB7mEGF1FnBvh15ebPugsXtQgPybw3HKMPr0z
- w60SIlVtFsG+nUMqvTHadqWdIhwkRT8WahMpJRhXpFjwk7vpiRxQWyxSO3HwZA9H1jODkxBVq7i
- QaV7wuZ35AmD4ZZVJ8qC59f44GZrxYbxNxhzNDHk3On4IgZGFqyq1
-X-Gm-Gg: ATEYQzx9lu4hD9WmN7a+Bc1sAVhPKeugsRj4foSoyyNcn/ekWN49mWA22+yfdlViHRr
- UHf+o+yscpA8pdy5zvUkEjqJ12aU956EFbv5Xp13EQNoGNvGGSKVfFwBL4dnqedwJszjD3ysu3h
- c4s6Q7jK+Omdp14TJzLaVAx0CxNzFHWwlaHYWhto/i+fGBTKX2zSL0d97AhM0WP3L2NXEOKaYWN
- SzpssNc+SZv+muPw8qtHaPUB40UbjPKyaW9PLCGcSDBtmn7BMoF55uG8OB4LbRESTz6qOjBmW4I
- 34Qf/PP4w6at4/rTdlKPwgnHt1ZDbOUiJ6eXoRusfq2+un0jG3vgvfZQVlSpJDD83wM=
-X-Received: by 2002:a05:690e:144d:b0:64c:9ec3:d71a with SMTP id
- 956f58d0204a3-64c9ec3d885mr2724073d50.48.1771952596251; Tue, 24 Feb 2026
- 09:03:16 -0800 (PST)
+ bh=JCK2+HRfzyKjKq4I9ueyjdjn4gWopG0uuA219YFZRAI=;
+ b=IMsFGWZG2lbI8mnzEWm77ZsI8ssC0SywUzDsS3pxiih2B9Y8tWkg3vlepgOIPG2znb
+ k+t+XfoaaPqWgpFe3W71fsX7UvTecNB20P6cI4n3j650cMUN0seljS7ui0iF1ZAeqsX2
+ 9rEBlTFfvRST6ecstN5lkU4chVp5pwiNuzyPF/4hSgUhPyB/9doyzkmibVN/QBNFPUq8
+ nHS+j4CgyDgAhpFTcAPWbGVXEQyV9eAdqEHLViyF562MJsLsv7YvTU3uAGEHni31scx6
+ J6seeEePSBcCz6yuVe8uoDIbOjk/75p82lvknWw6qmPciB0++YuX2JP7EPoDQ1ZaYwzg
+ iq5g==
+X-Gm-Message-State: AOJu0YyfchkKVNHy7ifEEeOpTFM/RgQ9CsOBpfjdUCtwcrnuGNFWqhDa
+ oMDroiaEBGh/LwhH1b3MMOJtesA+HLip9gwMNapUqjZsF6RlK4xoYaEHJxqeJC4EvAlgFZLJFiX
+ wErounBjGPPmlN9gcwr3TgHL8dQvl/Iq0epzg0trSVP0Srii+a3qd
+X-Gm-Gg: ATEYQzz6AkH59DSwvgmnVoXHq0hOOE2yfwHvtOfRWwrD1BeH3ITOp03Y55QD/b3TJem
+ gws3EOd+H/VKQiS7pEfVlp5YUjdERHaLwbjl6FCa8uYzXBZ4RixICIY07utlZGLpPd8ifjFB2/H
+ bmrilGBhznwIuP6s2/JuthYpAJKT3hE4VJqUKaRe7ILL85aS2r2NrabZiX0d3XcL2PF1dIm2o5i
+ dDeX1cpucLTtN7/9nNuS0LGlY136ik8KXDTcztr/on9BixJRNWxixeeXTNJUtsoizG23ud/M/bE
+ gLelTqiZEOCy1aZIHlrET1CNFb163i6eC1m+Zvd8ysPZXZH1GfC428N0q3rkdka+mOU=
+X-Received: by 2002:a05:690e:142:b0:649:44ac:cc01 with SMTP id
+ 956f58d0204a3-64c78e3f96dmr8772857d50.55.1771952915034; Tue, 24 Feb 2026
+ 09:08:35 -0800 (PST)
 MIME-Version: 1.0
 References: <20260216034432.23912-1-richard.henderson@linaro.org>
- <20260216034432.23912-5-richard.henderson@linaro.org>
-In-Reply-To: <20260216034432.23912-5-richard.henderson@linaro.org>
+In-Reply-To: <20260216034432.23912-1-richard.henderson@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 24 Feb 2026 17:03:04 +0000
-X-Gm-Features: AaiRm50my_TpEu0wJ2qOWpgeWkf5A7hITHpqp3xpTnSkjVEMlDqaFUOqMj_BzfY
-Message-ID: <CAFEAcA9ji1xKA=zi9S1+Ow0SSp=kFCrcZspFV5Lktc-ZwMTkkQ@mail.gmail.com>
-Subject: Re: [RFC PATCH 04/13] target/arm: Init sve_vq in
- kvm_arm_set_cpu_features_from_host
+Date: Tue, 24 Feb 2026 17:08:23 +0000
+X-Gm-Features: AaiRm501BahcmULcmfIJZ3y0p9lNL_gR3riUsdu855FJHnJvyh_Ku4aBWK_k_fQ
+Message-ID: <CAFEAcA9ChSZchdz+17-ee3CzWK6g_BsbEz9_DQ--F+Ek037JLA@mail.gmail.com>
+Subject: Re: [RFC PATCH 00/13] target/arm: Support SME for KVM
 To: Richard Henderson <richard.henderson@linaro.org>
 Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12c;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -118,15 +116,29 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Mon, 16 Feb 2026 at 03:45, Richard Henderson
 <richard.henderson@linaro.org> wrote:
 >
-> Probe for SVE vector sizes with the same scratch vm that
-> we use for probing other features.  Remove a separate
-> initialization path in arm_cpu_sve_finalize.
-> Unexport kvm_arm_sve_get_vls.
+> RFC mostly because the kernel support is not yet upsteam.
+> This is based on
 >
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
+> https://lore.kernel.org/linux-arm-kernel/20251223-kvm-arm64-sme-v9-0-8be3867cb883@kernel.org/
+>
+> Properly testing this will take more time.  I'm not 100%
+> sure how to confirm that the SME registers have the correct
+> value across migration.
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Am I right that patches 2-8 in here:
+
+>   target/arm: Remove aarch64 test for kvm
+>   target/arm: Move kvm_arm_sve_get_vls within kvm.c
+>   target/arm: Init sve_vq in kvm_arm_set_cpu_features_from_host
+>   target/arm: Move kvm test out of cpu_arm_set_sve
+>   target/arm: Drop kvm_arm_sve_supported
+>   target/arm: Remove kvm test in arm_set_pmu
+>   target/arm: Drop kvm_arm_pmu_supported
+
+are preparatory cleanups that don't depend on the new
+linux-headers changes?
+
+(also maybe 10 and 11)
 
 thanks
 -- PMM
