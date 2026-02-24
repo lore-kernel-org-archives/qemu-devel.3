@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9510F3C9AC
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 16:01:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 041A0F3C9A9
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 16:02:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuuqA-0000Tz-7n; Tue, 24 Feb 2026 11:00:50 -0500
+	id 1vuurE-0001AP-EQ; Tue, 24 Feb 2026 11:01:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <florian.hofhammer@epfl.ch>)
- id 1vuuq6-0000Tj-4t
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 11:00:46 -0500
+ id 1vuuqq-00012p-4U
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 11:01:33 -0500
 Received: from
- mail-switzerlandwestazlp170100001.outbound.protection.outlook.com
- ([2a01:111:f403:c214::1] helo=GVAP278CU002.outbound.protection.outlook.com)
+ mail-switzerlandnorthazlp170120005.outbound.protection.outlook.com
+ ([2a01:111:f403:c213::5] helo=ZR1P278CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <florian.hofhammer@epfl.ch>)
- id 1vuuq2-0001WE-5J
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 11:00:45 -0500
+ id 1vuuqo-0001kk-3O
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 11:01:31 -0500
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=FKSiKWTFCeXw4UP4lSpKc4EN7MvZx4HvlaXNnwZNPVFnvisNbe4OkAnI1GT/yryYET8vThXcF4rs7OWKYy/S+dhsOJ5Gv//aX5SvghsyNMdod1zT1V0KAZB6lcXBX6Tk1xTYboZXhjNfLoCt3bv5qBi0YL0LSDA0GH2xopzhtmUcEM1f0ZOxpnmAGdPuPhMH4M3A0cJOAzOoYQn7YI2rlL5L2P09+xkh8eKOmv8l2a3arfR8iXB6AlkWppXyTNPJ5psaWho5fxD2jDxYmf7pX59nLbp0GASnW5c2IFjBEbRJnoXKVENnxJFtKDx93yKMPmCjHSFLtfFa4gqRNA10Ig==
+ b=pUqzuQRZJFOirXuOU8dfsSF2ODb26v2YmukbuLOR2rnGR+n4wcR5qVTb0l8xVmT5wZsd03y/hBzPN21/I8+qKvfUfnWQufRQ5cLcGonG6Hz4hGN8tvS9OgJDP6hIy8rtOjxmy0s5c9YyAVCYHbFm9J5EaX/inobSZ5CTvxHRzLJc6RBOj6pA/Nf1ouaJl2xqi3shkJpHnPW4fUDdIU8OUXRu1q2gW7pWVhxJPNc54DN7d9wWitMnW4QDDMivL79fOVXikyiuM/eHyMLvYDYOlvdy2ebuaFgytQfmWEzfUHDm07B4ARhs97EhH0Rwh7n9YCojYflHFj5UGYUKkwE5Ow==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=q69hNXwawucHKJ50UCJzoh38UoKFwQt2bN7/DFlbp1A=;
- b=JU1NlssrUSxua753rgiq/OMeR991CSdqjrye/SqzgOX60Dvl46DzYML2t8SmO7kGBEcZ4+OPTDV5GtbHLhgw4Pm2xwqw1wiZwMZv/D2mUUBTTp2x0Fk0+Fqo8+AgHlDOdoFUJHW9O4rbmllxlgArpAJuN6MTAXQC3FRE702u8gsO8UfT8GaQQYQeaZ2Hsx7QNfzASHEGvFMzqG1TkasdnGLxXk1DI/4pZJ0/0rVHHoBG2OISSxbS3UBs0mnGlKxo/ZPh/NMih87jv7u+VEeB92ob9+RXsXW+C3nBhgfsdxiqHzt3arXTgdlX/ILqDZpB3gmnWurkNTUNE8BvWqpWgg==
+ bh=S6DfXDfhuroFuxhVAxX4MVTUfm2LCO68zdW0qY5Vh6E=;
+ b=s0apR2wc7E3gzfj+UAQfY5qVoTvvdQxGNTWh2C75KhgeZzpHBy5NYX3CABeAoBVqllQDi/svKn/vPlnEPPX82j+I2T/PvAsn6Ljt9eJDKqp9pH/cFlHI7BR1ovD5FsWTBNwn1SEeJp2qz+Q9FpT9kohq6zFS+Ms4Ubl4aHpyFTysoOvTtg2r5fxdtmBHKdDo58gMIgRPV4YYNJbzBc66DYG/63b5gzMwF9XjU2CjCxyzONTUkLuDvumk43djWfTeTIeiwSc4W8AYChR4nbjVedQa3PbAdQkAwbuDCc5gvfvc3YeVCE2r9mCagbTbf1Yskvfe1G/+0vmPdGb+wwQjpg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=epfl.ch; dmarc=pass action=none header.from=epfl.ch; dkim=pass
  header.d=epfl.ch; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=epfl.ch; s=selector1; 
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=q69hNXwawucHKJ50UCJzoh38UoKFwQt2bN7/DFlbp1A=;
- b=fy1HAgPmqms66dfdKs1Dh4FuM2mzg9valRYXdp9s6L3gAuzmwNN4/ZcG2E5MHFVOwwyx+SgQUymBvnJ0O19ccC7H/RNT9QkY7XZaI6B0TOaV43fjuE0pPZEGOdHero0Bbo9ZFXPOZri6XScMn683A3J/BD8O9bSae9yNvrJ2p0Q=
+ bh=S6DfXDfhuroFuxhVAxX4MVTUfm2LCO68zdW0qY5Vh6E=;
+ b=lECT0JUa4gCg4etLJwfQG0G1T3tn25WTpLfR95bwFiM2qbPb7d6ep4+RyLyGHrKjnaOgOmonT3TojQQ1z4qZz9tZ5lnY9m80s+8fqoEmY/iN138/55s0n6hbbz2GBcVPbA3QTmIxtUG+GwDTQHgikau/TVipnhIKakkE0hbMISU=
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=epfl.ch;
 Received: from ZRH2PFAD84B9AF9.CHEP278.PROD.OUTLOOK.COM (2603:10a6:918::220)
  by ZR3P278MB1305.CHEP278.PROD.OUTLOOK.COM (2603:10a6:910:72::13) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9632.22; Tue, 24 Feb
- 2026 16:00:30 +0000
+ 2026 16:00:34 +0000
 Received: from ZRH2PFAD84B9AF9.CHEP278.PROD.OUTLOOK.COM
  ([fe80::80ea:3d03:40bf:998c]) by ZRH2PFAD84B9AF9.CHEP278.PROD.OUTLOOK.COM
  ([fe80::80ea:3d03:40bf:998c%6]) with mapi id 15.20.9632.017; Tue, 24 Feb 2026
- 16:00:30 +0000
-Message-ID: <8096590c-bf13-4e5e-8167-ab38a37180bc@epfl.ch>
-Date: Tue, 24 Feb 2026 16:50:59 +0100
+ 16:00:34 +0000
+Message-ID: <cc5b7b1a-b562-4376-8e4c-f01607bbcf9b@epfl.ch>
+Date: Tue, 24 Feb 2026 16:57:21 +0100
 User-Agent: Mozilla Thunderbird
-Subject: [PATCH v4 2/7] linux-user: make syscall emulation interruptible
+Subject: [PATCH v4 6/7] plugins: prohibit writing to read-only registers
 From: Florian Hofhammer <florian.hofhammer@epfl.ch>
 To: qemu-devel@nongnu.org
 Cc: alex.bennee@linaro.org, pierrick.bouvier@linaro.org,
@@ -111,109 +111,109 @@ X-ClientProxiedBy: GV0P278CA0016.CHEP278.PROD.OUTLOOK.COM
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: ZRH2PFAD84B9AF9:EE_|ZR3P278MB1305:EE_
-X-MS-Office365-Filtering-Correlation-Id: cfd94c19-6fca-4ad2-0d01-08de73bdd554
+X-MS-Office365-Filtering-Correlation-Id: 118110e7-fe58-483a-1e89-08de73bdd6cf
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|366016|376014|786006|19092799006|1800799024|13003099007; 
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?ZHlaQ2oweWZ0N2xlbnlsbEZoUE5yQnpHVjlvS01MTG1McVhjUHlQM25mUUpr?=
- =?utf-8?B?VWUyS1orRXJTTjZhNkd1Z3JCVDBTN0lYMEt5NUxRZndSRHl4LzVINWhwOE1n?=
- =?utf-8?B?clVVZ1YzOGxibzRJcTBtSWNGcmJVOFh1a1c2YnZKbElQRHM4ZVBaRnFSbW9m?=
- =?utf-8?B?bnY5UmVjN0xTWHVreDcyMlVpL011R0FLdWFnbHAyM3lTZU0vNnpqSGJ4UCtk?=
- =?utf-8?B?NU9RWXpYK3hoUmtPRnhVN3hPejN0WlZhNENZL3lyeFVuZ1RxZTY5K21ML3dr?=
- =?utf-8?B?RitjRGZ2UGJpd2IzVVVSd2toZlU1b2MwTjU4MUVISDlVMEZHNkhzdHBxYU1B?=
- =?utf-8?B?ZGZQcXRJdFdlVFVUSUV5UzNZbll6MGcrZXZwaFRMd1FCWEQva1JBZEFLbFFP?=
- =?utf-8?B?YzdKcGpvUlZBUENhY0JveVBaU0VFSmJEYUsrK0kvSU9PeG1USy9TbCt5eHhh?=
- =?utf-8?B?Qm0xMWpKL3JIdDl5K0pFaXhZMm1qZkI4R1ovenMvelRZUm1oZGhjSFhwTjBC?=
- =?utf-8?B?cXlYTzRRRkRVdUkzWnN3UDZOV2twNGtGYXpaNEhWTDVWRUhFVmdLMlkrcFFY?=
- =?utf-8?B?Z3RHWFBhQi9tai9zQXRRaHFsSzVZY1hLc1Nrd0NRZlJtZnJxU1pub3Y2YThF?=
- =?utf-8?B?L24wRWVIalliSU4wdTVLQlQycURidHNZTGZ1bUtuaDdWMEFjYUF1ZGc0ZVBM?=
- =?utf-8?B?UFRQSUFlOEpTR0lsVGc4TllKMmllM0FpWTJjR3UybHFGVnVRdUkvVkdLeTlq?=
- =?utf-8?B?ck4vR0l6ZkxTWU9Od1hSRmpkY3NqZkZ6RUI4QmpSNHNXWVFsU2o4YjlBaUc0?=
- =?utf-8?B?RzBBWjN5SnRyU3QwcktpcVlqY0pVWXUvbEdyMjR2VnRGNUFRK2hFc0JQVFNU?=
- =?utf-8?B?YVZ4WTNxN2JnbUZiYUwxT0NZN01HVzlQSlBaclRjWGVQMi9Wc1hOcWJmNG5a?=
- =?utf-8?B?bXJWSndjQjBCeEQydXBvcVduSTM2M3dZdkFmUW9TeFp1OXJVY2Q3NWhFMTU0?=
- =?utf-8?B?M0g1ZjZtZjdyN2hQMzZRU2Rzc0dQWHVJS2pPdU9FRDUrZCtSU09QOHJBZVZ3?=
- =?utf-8?B?citxcHRUdjlwcThnR2JGejE3RUh6ek1DTzZQV1h4Q0FiVWR2cmFyaEpRSVJw?=
- =?utf-8?B?UE1HVW90dVRralhzNGpiNmlZQ1pyVXRiek5YKy9Qckk3OHlBSUEzbEhmOHRU?=
- =?utf-8?B?TGVXWmlpTmJETGt1dnZySUpPWXBWeUxzWHBwajdhR1JxY29CeWthSDA5VTdL?=
- =?utf-8?B?R3BFRHFKWWN2dXJGdVZrY0hoLytvS1ZzMVVXNjVwNnl2NTgzVGRlVnlYUHBO?=
- =?utf-8?B?RE05THJBeGl2L3g3UmFCQ0w2R3l3aTArLzFWVFRLNWExTDM0TEc3VEljZHVN?=
- =?utf-8?B?RnBkcHU2UmRwU1B0Rm9TOFZGT3paeE1uZEFUeXFRdXgwNkNCQWZhek51cjFw?=
- =?utf-8?B?dGNHZHJkdW1pSEc4TnFhTHZ5ZVh3NzVzZnQ5dGc4Mzk0dzRoRzBYNXRDUE5Y?=
- =?utf-8?B?V0I2VWY1Zjd6T0ZUSVFtN1k4bzBTYTczOTZ3SUozOHpjRzV1WEZUWGNZS2c4?=
- =?utf-8?B?OEtzSVQ1cHJqcitUWTBIdmlEMXVSSytyYi9PUU94Wnc0Q24zb3FCWUgrK2xi?=
- =?utf-8?B?R1V6NjFJbmF5Q0RhdlBodUQ4ajNibTljY0krVUIwMDZqSEI5Rm5YM25BSHBU?=
- =?utf-8?B?QzFWOW1IV3NFNkZ0NzBtWUpyc0tQZzkzZjZvRjU5SVRsUW9xOG00MXJBTlUr?=
- =?utf-8?B?RDYvNWdIZDJBM3p1YlEvbW94OGcyV2hOV01KR3MreElmcldJMk80RjcxbjdN?=
- =?utf-8?B?NEJlMGxJWEJMeldpbTJYaGNrUFZXMkNqdzdWVktZM3J5emIvNUdtbXg1NEdR?=
- =?utf-8?B?RWMyNEdrRm80OGtodDI4UGFPc0I1TjVvUzZrNGhYQXJNdFNxMDVLRVdmdW9l?=
- =?utf-8?B?YmRqcXFRTFlNSEZEVU1CR2pLdkowaHRLMjdzOWFQa3JBWDhjQlJJKzlCM2Z6?=
- =?utf-8?B?dmRhd1Q5UVk2MWVYaXlyYm9KYlU4aWhlVWpiZlpFVkp4VnBzNktjRnFTdThN?=
- =?utf-8?B?MmZnRmJKSWFvdmRqRkVVTGd0N244eXhZK0pPVm10STlTbWNaelY4NzlpT3ZC?=
- =?utf-8?Q?Q0ss=3D?=
+ ARA:13230040|366016|376014|786006|19092799006|1800799024; 
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?SGVIdU85Vkd4ckMxbjlJWTVqNS85MGFFVUR5S0Y2cW5LVmlXRUJLb2JiL01z?=
+ =?utf-8?B?a2FDNVpraUluRHp3dS9EUVNSd2diLzd4R3Z4d3Jpb3ZEeFZ6U1FQVVQ4Nnhw?=
+ =?utf-8?B?Q2pzQ3ZCQTh1NVh1TUdpU2x3bUxEM25FbStJQndnWHVHN0tpSW45RVBLL1hT?=
+ =?utf-8?B?S0NhNzgzZ3d6MDJwam83R3VLaTl2aUVLUEhnK29WNFhBc29IS29YdlpBME03?=
+ =?utf-8?B?R25CcXZtODB1VVo3eldsczBFSnFvL1puUEk0Z2RiYlQybDUwWXpFS3dpRmNX?=
+ =?utf-8?B?OVN5aGNIYmEwRnFvRHNhclUvc0pwS0FmYVhKZFdETVhwV3hGcUlNcmU3eDBX?=
+ =?utf-8?B?M0daMkpWMlRIWGUxTUxoSHJjNTBiYnlIRmdQazhxWjBJbmdSSnVHTFZtVmtZ?=
+ =?utf-8?B?MmVrK3FDVlNuaVpja3I4K2FUT3BpVlNZU09NaDlCK0dFWEJEWm8xbDk1U1BO?=
+ =?utf-8?B?RUFkRStXZFFsbEJkc3pCY0U4SU5seWhNaVFpZGYvM09OWHU0M0c2ZWs5S3Zy?=
+ =?utf-8?B?cFRjakpaTTJQU21QbDFPcXV5WVJJSE92aVNwRkkwR1cxNTBaUGtkSjVYb0dv?=
+ =?utf-8?B?d0JjeHoxYjhVa0lGYnNxd1lwMExaVjVIWjNweWVvQ1F4cENKMm4xRUdOd0Fx?=
+ =?utf-8?B?NE5zdDVRa3RYSTZkeFdyMWxsNzlWTnBseXFLNmxpSmZvdXBOSGVEUm5jMjRm?=
+ =?utf-8?B?TFdRdkZ1VFludUJOanJRNHJOK1IrNzV2TTFBWU1XK05kSlNVU2FEZHFSUStq?=
+ =?utf-8?B?TjdVS1hPWGoyT2E5YVQ4bExJZTBOL25OMnZxRTVDdWMxcFhUSVkrRnpKN0VB?=
+ =?utf-8?B?aTA2eWRyY2lvRDZaTHlMV0Y5b2M4ZUFRbDZNU2Uxb2paZWNWN1A2OHFVQ2k5?=
+ =?utf-8?B?Z2hkNlBQRk5lM0Z5YUp6a25xU0VVb0wzSzEya1VCdGVoY0hwNmF3ZjhQSW90?=
+ =?utf-8?B?SExQQ2Fjak9XVmJOcnRjcWlXVHhPZnBHcjMyK01PRmlWcjNCcWJOMS9nKzdS?=
+ =?utf-8?B?czU5YUJMKzRoUnlxT1BmYlZHWHAxYXNHNXNGbXppS2xxZ2tTcjl0L0RpQ05L?=
+ =?utf-8?B?SDlHa1pNZ1ZIeFJjSUEwOVNyU3Nka0tpWTI5ekQ0VVBnakZQZ3dkRmpsbW1H?=
+ =?utf-8?B?eW9WZllSRFF4Z29lWko2Z2VLajZiRkR6RmxycC9Vc0M5T3lWNStTTkZUdjRZ?=
+ =?utf-8?B?WmpjVm9ZUHpTUENYbHBLcWV4Y2hDMWxRenFTZ1VLTGNJcXBsSnQrSi9IVUVP?=
+ =?utf-8?B?S01VQlV2dU04dzVIc0M2SDhjVTBmNS9wU2RLMm9RRTM2Q2VOTXg3MUxTMWU3?=
+ =?utf-8?B?QmV2dSt0cWNCWm1rOWdDdmNKb0dqbXlKV1N0S1BUaXdrY0lTVGY5V0l6WlVw?=
+ =?utf-8?B?TDJPV013RHJmaVdGR0xLSVlXUDJDZkh2UU40QjhoVjJvSzdaMGVoZS9vdkxw?=
+ =?utf-8?B?ZHV4WjBDdHZ1K1g2VmtiQld1MFRKNWVrYjdPUmd1a09kdWM2NlVBSlN2dGNH?=
+ =?utf-8?B?OTBvTTJYeC84d21CZEczTFI2cXByWFFLK0RkdHZhV0VKNk14b0NEODRLSVpH?=
+ =?utf-8?B?YnVNZ28xU3VPdXhaN1JTTjNTRlM4ZzlDS2hWaXM1NzF3OVZJOHBIb2tzdm5m?=
+ =?utf-8?B?VEVOOVB0SXVmdlI5RlVETGpRbDh4dWtKdFdPUkNPT0cxMVAvcFZGNnpKblNM?=
+ =?utf-8?B?bG05Z1l5eUFxNjFEamhMQk9LQ09WdkZqWGo4a0ZONnNnWi8yN2NhWnk4cHVq?=
+ =?utf-8?B?Unp6UDBmV0FueFJDb2lpQUhVR2J6YWNIR1lXTjMzeXQ4VWl3VzBDUTUxWXF0?=
+ =?utf-8?B?SnpOUU0veVlPU3M4b3gvb0dQSS96OW42MGlVeUIwL3lpbzdIamgxNlhZZ2Y1?=
+ =?utf-8?B?QVoxVEJMd0tnUmU1bjdBR2RYNHlwcG9QdWpvR0dKbTdpaVI1NEhtL0R1K0JU?=
+ =?utf-8?B?UkcvM0RqbUFUK1hKdDRPNHFmb3Q3L1hPL1NZcDhPTTJIMFFscHkrcjY4Qk5t?=
+ =?utf-8?B?SElkOG5GV0JuelUzbGRiakE2eUVKcGdTUkpDeC9EUTUxbm9oSGNabUxxSVhG?=
+ =?utf-8?B?MHFlZkYrNkVrMTRqWnRsRVhDdmdNNTFWQVJ4aTRNRDdySWkwNlh1c1ZwdjJs?=
+ =?utf-8?Q?yMOw=3D?=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:ZRH2PFAD84B9AF9.CHEP278.PROD.OUTLOOK.COM; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(376014)(786006)(19092799006)(1800799024)(13003099007);
- DIR:OUT; SFP:1102; 
+ SFS:(13230040)(366016)(376014)(786006)(19092799006)(1800799024); DIR:OUT;
+ SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?VTdOdnpoTWtrVStkODRsT2ZGU1REVjZYbXdscVlwMlJMWFNzVTZnZTc0T0NZ?=
- =?utf-8?B?dWpydEFWQXZxcUd6UFhsbStlMEZ4VHZIMnZEOG5uQXZXc3RxQWhyYlA5ZWo1?=
- =?utf-8?B?UFlTOURHcW5pRVY5djJ0dE1DejRRdVZ4bS82MzlMazY0RVY3citjSWNzR0pM?=
- =?utf-8?B?OXlFWktTcHVCRTgxUG0xS0dQc3h4QW5ndWdGUzdPMjFHVFJqckFNMjRaVzZP?=
- =?utf-8?B?NUo1Z3ROK1NXL2hWdTNyVStzcHVpZnFLSStkMGhBOVVrb1VqZi9SUm5keEJ6?=
- =?utf-8?B?MFNTV2lTSDNNU3FPSFFTRkU2MnRjTW5lc0JEeDh4dTVIODF3dUQ4bzhhRytF?=
- =?utf-8?B?T20xK2tOemdMOTVRcGZON2J2RzZiV2JFb082Q1VxQW9JQ2l6dTB5c3FVT1N2?=
- =?utf-8?B?OWZMR05XZVFWY0JpNDRiU2ZmdUNNdVFjb1RTeElpRGVDNFRWbTEwTWFFVFMv?=
- =?utf-8?B?M2FCTE4yelErRmwzMWZZZTZFckRWT24zdllPeTJwTzVmYno0emJiUXJaL2RO?=
- =?utf-8?B?MEh5MXJOQXYxMlRLS2JPTmpjVm1IaUkreWhCc0pZYVduMzQzSW5IcFUrSGFG?=
- =?utf-8?B?aFdBTFZwcmFCTTh6dDNUY1gzN0YrSXNIS214Q1Bjb2JVbVJXM051VUpSOWVU?=
- =?utf-8?B?Q1FldjdsSFV1WnhEVWUyZ0xyeFQwYzFJNVlvYm5qNC9qY25mTkJIY2VPdGl2?=
- =?utf-8?B?dmpqOHZENDdqQjMrRmlMVHMxS3M2NFhxVXpqOUpVWWt4WXE4QzNEY3BGZEdP?=
- =?utf-8?B?cmhtT2dJenVTcmMvb0xrK3BraUw2ODZCSGZtQ25QMWVzNDJaMkhxWFA2Z0No?=
- =?utf-8?B?dUhMTWhNQlBMNndhMURwdWVJdEJWcmtmSlVUM0dWdjRiVndzMjdKL1IrR29v?=
- =?utf-8?B?ZGhNWURHaEIyYzQ4bjBRR2NaT0V5d0JxSWpYMi84bFVMWWl1NHlWcDNHVU1u?=
- =?utf-8?B?VzlvT0Foa1NnWS9IM3NvNm1qcDhJTnRXWVNCWmJ3MGVkRWJxa0t5UDFFYUtY?=
- =?utf-8?B?VVlxbFY4c0dGWFdTZlA2eVE4cTllT202aThOVWdtdlcwWGh0eERleG5QZDh2?=
- =?utf-8?B?Nll6L3pvYUpIOVQxeFhZVUVDQ1RBSVpnL1dsREVkaVRwdmVkSjVURG9wazZB?=
- =?utf-8?B?c29mZFZJdVFJejNEWkdJTTJzaWF6a295VjEvNlZrR2d6MlJiZ1N1N1hLdVA0?=
- =?utf-8?B?OWNiQlMxQ1k1UHNkdW5HOUJiRG8rLzZlTC9VL0d6VnNHOGhhTzhZL1o5M3dN?=
- =?utf-8?B?c29HTnNtS1BtNm5aQWVOdTE5VnRBZGdHSGpEOFlnb0ZROUlJS0VCM2ZJbHVy?=
- =?utf-8?B?OFY1aEFyQmFuUC9PN0hGYjVxa1RYUHErNHpuSWJ6UG85MEI0NXV0eUhqL0Y3?=
- =?utf-8?B?TVNwbXdOQUNaREZvQnIwaC8yc3FyNlV4cVFqUWZQNHBsU09VbVByMDllTUFm?=
- =?utf-8?B?WmRyc0wyMnFsS1dXekd1SGRvUnZwSkFoU29QODkxTXFRaG9JWFpxSUpZVlpE?=
- =?utf-8?B?YmlyZElIT3NWdVBQZXQyRXAzS2lFVGdaVFhUTE02TmlwUXFtY1Q1dXZObUxN?=
- =?utf-8?B?THhtQmx5VmtnV1JHdEJ3ZDhrMEdrN1FibjlySnVaekExYlZpM3pmL1NvRThQ?=
- =?utf-8?B?bW1iU0FraTRnRmN4WXlzUmprNkJBZ3VqTzZYREdXeitBZk1TYy93QmQ2bnIv?=
- =?utf-8?B?RGg2bDEvYTBlYi8xNjFLQ3owRncyY1BzVHlXZUJNSVBrY2pRODRKd2M1Y0hr?=
- =?utf-8?B?ZjA5NC9GcVRpSk9GNDFyYkxwQ3MzTjhPMnVpOWJuNzZRK0hHOXl0MG5mVHNY?=
- =?utf-8?B?dFU2VDVNTjBkNjdsN2tiTWJSdzh4Q3l5aTkxQUNFZndndUE5WllCcEs1Q2M5?=
- =?utf-8?B?bnl1Sk9pRGpDR085K0FUUDJyQkI1aHJaVk5wejlURURuaHg2OHhGVHJTSVNC?=
- =?utf-8?B?b2tQd041ckwwSUxCcXdvSTZETXo1U3ZVMEUxUVdjTkFWR1d1d1FzY0JhWWJD?=
- =?utf-8?B?R3FxMmxUM1ZXRnZQTVdKVVkrMDBJdWJ2ZktLYThMc2p3KzMzZmJ5NWdPYzdo?=
- =?utf-8?B?UXMrajVsVW80a1ZpalptMHptZzBUTzV4UE9xWjdWNEZHQmhudDBpNTVIM09C?=
- =?utf-8?B?eWZCUGFaamdyN29OUVVqOHZZMzFCSWRJOTNoVnNzTTFweEcrRVN3NkZ6VmhD?=
- =?utf-8?B?NDNWaytOTnpnR21CQlBkWEFZQkI0N1FueFFGWkZMc1l5bWtFSXpoSmRMcWt4?=
- =?utf-8?B?aWoxWnp2Q0F6bEFUUDdiQ0VrUUNmNGt0VHAyZ1hRR3pLZFFPKy83bnl0MGtB?=
- =?utf-8?B?TUJUV05nL1M2YkRTeU5nQ0kydzhjTGZLT2ZtQ2l4dC9lL0ZvZlhOdz09?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?QUdyb0JCU3poQjMyRzQ3RnJpdnVRdkxZNDdURmhxY2VtRFhldCtaQTdzalFF?=
+ =?utf-8?B?eEFnR0F2WFQzYjhLc3NUeU9lSUtJWFJoUUZkWThoWmgzQXh3WWZQVUJNUUkv?=
+ =?utf-8?B?TWlMK1RtbXBja3NUWGNKSFp6dW5qWm1oS1ZzUzZreks2dnR3RzFhYnB0QVRK?=
+ =?utf-8?B?YS9Td2NpSFJoSWFqL1RJSXZWRE1JeW1PNnNXMTJsM01QeU85eE11ZDZhYzlj?=
+ =?utf-8?B?aU4rcS94TVc1eFNmb3AzUlBTcFlWQ3MxSWlQSlMxZkt4eVFVUTRveWY1c2tK?=
+ =?utf-8?B?dWtzYy9WWStpVER5TlBDdlo5NHRpb0RiMTVsS1VRbUY5ZTRQNUZmRHBIMWgz?=
+ =?utf-8?B?TFFQWVVDTVZsUm1zUzd5SXRaRmxOMDRYR1ZyblhhQnZYbVVtTDNLZVU5aktD?=
+ =?utf-8?B?NlVCMitaWVFUTExnU1VjR0xPSUptdmRiOTVyZHNjUDJJaW5ZVlY0SVRRbEw0?=
+ =?utf-8?B?M3hRTXgxTEJvMGh5dVpnVlNIZUpXS3dtM1ZQcDR0Y09tV0FXVVVHMC8weGNy?=
+ =?utf-8?B?V0k4WXZoUWozY0lyMGxjSGRsajd5MjVCbXdSTUlPbldvd2swNndtOXdRNjRq?=
+ =?utf-8?B?cjZ6bVduYk5xamcvQ1lpOGxuYnRxdU5TWE5tU1VoWWtsR1lydzBNaW1wZVhs?=
+ =?utf-8?B?NVdtNytQeENmZ2ozV0FQSmd4T1greENBa05VRlhMcVlTWkdCdThVZHZFVk9Z?=
+ =?utf-8?B?RVNpVUNvcExsejRpMWROdDVWelZVam9CalpMQmJTWEFCSHVROEJmT3FLVFVR?=
+ =?utf-8?B?NFF4d3B5dVcvWUswTStiMDYxUWc4WXVaWjkwekQ5WkNHSUpQb3NoWlVZSTN0?=
+ =?utf-8?B?NzVpYzYxRGszbTlueUczYlhtWWJUejZxb1lBZ0N0TFpJQzhSaEZmUmVmWUpy?=
+ =?utf-8?B?QWJGMDhGd3l6U3lrblVidVloYkdGZlJRbjc2Q3lGeWF0U1ZZQ1RKd3RncmYz?=
+ =?utf-8?B?S1U2WWpDMXlYcXU1eHB2V0dsT1hUdUg1OVJGeFhRSHVrM0NuSTJURms2NkJE?=
+ =?utf-8?B?bjVFWTNOdDhleGNNbEpkeDlMcldNTHRZM1BXMmtRVDk0S1hPTGY1TDVjWi9I?=
+ =?utf-8?B?MVJ2eTBYOXNZdG54Si9Bdk9wR25BcGtJTFlSb09qazVGQmZhR3VHc0phZlpY?=
+ =?utf-8?B?K1dsVHNSMlM2SWhNTklzSjBtTEpJS2VLUWRMTGNmejNDZTZybXZLeVNGSEg5?=
+ =?utf-8?B?bFN1dlFVNkhtdlB6bDZTMW83Ymt3bnptc09ocCt2Q2Eva3lZY3p3ZWVpcnpL?=
+ =?utf-8?B?cnkwNDZGbUNYYWNYL2l4UE51OTAwamdGaXRDK21EODVpMFg4aE1ZMHJMT0hv?=
+ =?utf-8?B?Y2pXRlE2WkpPMUdKWStmM3B3Yk1vNTNwMzVrZkhJaVYxZWoyc1oyc29yNndy?=
+ =?utf-8?B?eDRKZHVDQlJUYjd1d3ZBMlpaV1IrSStvMVZORzZzQTRKaGdTQ3R0WC9KWFAz?=
+ =?utf-8?B?ODB4aVBId3JPdm9jeEc1L2NsdXJiSU5qTERsb1RQNHAvRlF6aWNBN09kSW9t?=
+ =?utf-8?B?WXk5dlV3emtiZ2NnY053eTU2ekhpZm0xNkdCSG1rYm1QYzU2eHUySzJQOGNS?=
+ =?utf-8?B?eFdETnBhUG03cFFVNUs2RmxJTFBkVkxmYVhtMVdQd1REZUVBdlk0eUV1T1Vn?=
+ =?utf-8?B?Z2IwTGtCc004d1VaNGdjWDNjY2ZKOU56T01DNkZXdFVpaXFrV3VqWjd1bm5n?=
+ =?utf-8?B?THJ2bFM0WlplNGlwQ2wzMHVnOEJDTnFzaCthQittRTZQSG5YaitXcXo3LzAz?=
+ =?utf-8?B?Tnp6dmYzZGV0ZHZwMHVFelp2cWJBNXdYeHRZZDM2WGNZaDl3dVBydlhWTG80?=
+ =?utf-8?B?aEdoYWFobjU1Q3N4NnlmMVJOSExIOGpiSmUyLzI0SER2VjV2U3lPSXJpQTJa?=
+ =?utf-8?B?Njh4OW90T1orVUFjTXFENE9WUTFKSkJqQkwzSE54RWljVFMyT3RiL0QrUW02?=
+ =?utf-8?B?N3hiQmZkTldzamZFb3o3b1U1c1NVS1FaRTNSVmNycExacWdOdEZxZVgyWTZX?=
+ =?utf-8?B?K3FsaTVkYVpSNUZOejVCZVFDV2NNZW9sRjBmL2Y2aUJqQkQ1bldOT2phWjdl?=
+ =?utf-8?B?Q3kwYlJVcW50bkEzYUpTaHU4TnpJZkJ6cUxDR2JCMjVrOHoxZldOMmg4dHc4?=
+ =?utf-8?B?UjlzaHJtVW9mVlZxNHBQd0tDL29oWk56S0ZlV0RTMmJ1cjF2M0M0RnpDQ3R0?=
+ =?utf-8?B?UkVpcmhjK0UxTmUvbFVUTUV2OU1PWW8zMHMyY1JJa1ZtMEcwT1VmSkVNSjRu?=
+ =?utf-8?B?SFlxUWZSb1BwbTI3VGJySVN2eExYaWI4KzJ4aCsyVjVoZWNycnRZQS9iYmh5?=
+ =?utf-8?B?dmxxbEo4RUtNaUZ1TmZtMCswRHdpTkxaOXBjWWkwRnZGWHNnUzhGdz09?=
 X-OriginatorOrg: epfl.ch
-X-MS-Exchange-CrossTenant-Network-Message-Id: cfd94c19-6fca-4ad2-0d01-08de73bdd554
+X-MS-Exchange-CrossTenant-Network-Message-Id: 118110e7-fe58-483a-1e89-08de73bdd6cf
 X-MS-Exchange-CrossTenant-AuthSource: ZRH2PFAD84B9AF9.CHEP278.PROD.OUTLOOK.COM
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Feb 2026 16:00:29.9809 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Feb 2026 16:00:32.4505 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: f6c2556a-c4fb-4ab1-a2c7-9e220df11c43
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 9+fg9Sz3zVvcBqKodw6hp52vCiFFPeC1poOeKT7xpQYkuR3OkokoV+BbCbJF/E23mHBdP5hCm8OfbvW59oxyv/93ns1cIXOODps8+mmJ8yA=
+X-MS-Exchange-CrossTenant-UserPrincipalName: CLM6YWAgB5ks9A2ec9wuN2YxCFd0/9CcNSPNtZqzM7KaqWD8n+LoCusHddtMTL14Na8Ca3eTYsf7pOhqPnDr9IZyPLtP3zF54iq77yhmnuw=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: ZR3P278MB1305
-Received-SPF: pass client-ip=2a01:111:f403:c214::1;
+Received-SPF: pass client-ip=2a01:111:f403:c213::5;
  envelope-from=florian.hofhammer@epfl.ch;
- helo=GVAP278CU002.outbound.protection.outlook.com
+ helo=ZR1P278CU001.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -230,366 +230,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The syscall emulation code previously wasn't interruptible via
-cpu_loop_exit(), as this construct relies on a longjmp target that is not
-live anymore in the syscall handling code. Consequently, longjmp() would
-operate on a (potentially overwritten) stale jump buffer. This patch adds an additional
-setjmp and the necessary handling around it to make longjmp() (and by
-proxy cpu_loop_exit() safe to call even within a syscall context.
+The opaque register handle encodes whether a register is read-only in
+the lowest bit and prevents writing to the register via the plugin API
+in this case.
 
 Signed-off-by: Florian Hofhammer <florian.hofhammer@epfl.ch>
 ---
- linux-user/aarch64/cpu_loop.c      |  2 +-
- linux-user/alpha/cpu_loop.c        |  2 +-
- linux-user/arm/cpu_loop.c          |  2 +-
- linux-user/hexagon/cpu_loop.c      |  2 +-
- linux-user/hppa/cpu_loop.c         |  4 ++++
- linux-user/i386/cpu_loop.c         |  8 +++++---
- linux-user/include/special-errno.h |  8 ++++++++
- linux-user/loongarch64/cpu_loop.c  |  5 +++--
- linux-user/m68k/cpu_loop.c         |  2 +-
- linux-user/microblaze/cpu_loop.c   |  2 +-
- linux-user/mips/cpu_loop.c         |  5 +++--
- linux-user/or1k/cpu_loop.c         |  2 +-
- linux-user/ppc/cpu_loop.c          |  6 ++++--
- linux-user/riscv/cpu_loop.c        |  2 +-
- linux-user/s390x/cpu_loop.c        |  2 +-
- linux-user/sh4/cpu_loop.c          |  2 +-
- linux-user/sparc/cpu_loop.c        |  4 +++-
- linux-user/syscall.c               | 16 ++++++++++++++++
- linux-user/xtensa/cpu_loop.c       |  3 +++
- 19 files changed, 59 insertions(+), 20 deletions(-)
+ plugins/api.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/linux-user/aarch64/cpu_loop.c b/linux-user/aarch64/cpu_loop.c
-index 7f66a879ea..e7f643d69d 100644
---- a/linux-user/aarch64/cpu_loop.c
-+++ b/linux-user/aarch64/cpu_loop.c
-@@ -181,7 +181,7 @@ void cpu_loop(CPUARMState *env)
-                              0, 0);
-             if (ret == -QEMU_ERESTARTSYS) {
-                 env->pc -= 4;
--            } else if (ret != -QEMU_ESIGRETURN) {
-+            } else if (ret != -QEMU_ESIGRETURN && ret != -QEMU_ESETPC) {
-                 env->xregs[0] = ret;
-             }
-             break;
-diff --git a/linux-user/alpha/cpu_loop.c b/linux-user/alpha/cpu_loop.c
-index f93597c400..bef196b1f5 100644
---- a/linux-user/alpha/cpu_loop.c
-+++ b/linux-user/alpha/cpu_loop.c
-@@ -82,7 +82,7 @@ void cpu_loop(CPUAlphaState *env)
-                     env->pc -= 4;
-                     break;
-                 }
--                if (sysret == -QEMU_ESIGRETURN) {
-+                if (sysret == -QEMU_ESIGRETURN || sysret == -QEMU_ESETPC) {
-                     break;
-                 }
-                 /* Syscall writes 0 to V0 to bypass error check, similar
-diff --git a/linux-user/arm/cpu_loop.c b/linux-user/arm/cpu_loop.c
-index 40aefc4c1d..19874f4c72 100644
---- a/linux-user/arm/cpu_loop.c
-+++ b/linux-user/arm/cpu_loop.c
-@@ -399,7 +399,7 @@ void cpu_loop(CPUARMState *env)
-                                      0, 0);
-                     if (ret == -QEMU_ERESTARTSYS) {
-                         env->regs[15] -= env->thumb ? 2 : 4;
--                    } else if (ret != -QEMU_ESIGRETURN) {
-+                    } else if (ret != -QEMU_ESIGRETURN && ret != -QEMU_ESETPC) {
-                         env->regs[0] = ret;
-                     }
-                 }
-diff --git a/linux-user/hexagon/cpu_loop.c b/linux-user/hexagon/cpu_loop.c
-index 5711055aff..9464246e9e 100644
---- a/linux-user/hexagon/cpu_loop.c
-+++ b/linux-user/hexagon/cpu_loop.c
-@@ -56,7 +56,7 @@ void cpu_loop(CPUHexagonState *env)
-                              0, 0);
-             if (ret == -QEMU_ERESTARTSYS) {
-                 env->gpr[HEX_REG_PC] -= 4;
--            } else if (ret != -QEMU_ESIGRETURN) {
-+            } else if (ret != -QEMU_ESIGRETURN && ret != -QEMU_ESETPC) {
-                 env->gpr[0] = ret;
-             }
-             break;
-diff --git a/linux-user/hppa/cpu_loop.c b/linux-user/hppa/cpu_loop.c
-index 972e85c487..bd3b67059b 100644
---- a/linux-user/hppa/cpu_loop.c
-+++ b/linux-user/hppa/cpu_loop.c
-@@ -17,6 +17,7 @@
-  *  along with this program; if not, see <http://www.gnu.org/licenses/>.
-  */
+diff --git a/plugins/api.c b/plugins/api.c
+index b2c52d2a09..3a8479ddce 100644
+--- a/plugins/api.c
++++ b/plugins/api.c
+@@ -424,6 +424,7 @@ static GArray *create_register_handles(GArray *gdbstub_regs)
+     for (int i = 0; i < gdbstub_regs->len; i++) {
+         GDBRegDesc *grd = &g_array_index(gdbstub_regs, GDBRegDesc, i);
+         qemu_plugin_reg_descriptor desc;
++        gint plugin_ro_bit = 0;
  
-+#include "qemu/compiler.h"
- #include "qemu/osdep.h"
- #include "qemu.h"
- #include "user-internals.h"
-@@ -123,7 +124,10 @@ void cpu_loop(CPUHPPAState *env)
-                 env->iaoq_b = env->iaoq_f + 4;
-                 break;
-             case -QEMU_ERESTARTSYS:
-+                QEMU_FALLTHROUGH;
-             case -QEMU_ESIGRETURN:
-+                QEMU_FALLTHROUGH;
-+            case -QEMU_ESETPC:
-                 break;
-             }
-             break;
-diff --git a/linux-user/i386/cpu_loop.c b/linux-user/i386/cpu_loop.c
-index f3f58576af..fe922fceb5 100644
---- a/linux-user/i386/cpu_loop.c
-+++ b/linux-user/i386/cpu_loop.c
-@@ -181,7 +181,9 @@ static void emulate_vsyscall(CPUX86State *env)
-     if (ret == -TARGET_EFAULT) {
-         goto sigsegv;
+         /* skip "un-named" regs */
+         if (!grd->name) {
+@@ -431,7 +432,6 @@ static GArray *create_register_handles(GArray *gdbstub_regs)
+         }
+ 
+         /* Create a record for the plugin */
+-        desc.handle = GINT_TO_POINTER(grd->gdb_reg + 1);
+         desc.name = g_intern_string(grd->name);
+         desc.is_readonly = false;
+         if (g_strcmp0(desc.name, pc_str) == 0
+@@ -442,7 +442,9 @@ static GArray *create_register_handles(GArray *gdbstub_regs)
+             || g_strcmp0(desc.name, rpc_str) == 0
+            ) {
+             desc.is_readonly = true;
++            plugin_ro_bit = 1;
+         }
++        desc.handle = GINT_TO_POINTER((grd->gdb_reg << 1) | plugin_ro_bit);
+         desc.feature = g_intern_string(grd->feature_name);
+         g_array_append_val(find_data, desc);
      }
--    env->regs[R_EAX] = ret;
-+    if (ret != -QEMU_ESETPC) {
-+        env->regs[R_EAX] = ret;
-+    }
- 
-     /* Emulate a ret instruction to leave the vsyscall page.  */
-     env->eip = caller;
-@@ -234,7 +236,7 @@ void cpu_loop(CPUX86State *env)
-                              0, 0);
-             if (ret == -QEMU_ERESTARTSYS) {
-                 env->eip -= 2;
--            } else if (ret != -QEMU_ESIGRETURN) {
-+            } else if (ret != -QEMU_ESIGRETURN && ret != -QEMU_ESETPC) {
-                 env->regs[R_EAX] = ret;
-             }
-             break;
-@@ -253,7 +255,7 @@ void cpu_loop(CPUX86State *env)
-                              0, 0);
-             if (ret == -QEMU_ERESTARTSYS) {
-                 env->eip -= 2;
--            } else if (ret != -QEMU_ESIGRETURN) {
-+            } else if (ret != -QEMU_ESIGRETURN && ret != -QEMU_ESETPC) {
-                 env->regs[R_EAX] = ret;
-             }
-             break;
-diff --git a/linux-user/include/special-errno.h b/linux-user/include/special-errno.h
-index 4120455baa..1db757241a 100644
---- a/linux-user/include/special-errno.h
-+++ b/linux-user/include/special-errno.h
-@@ -29,4 +29,12 @@
-  */
- #define QEMU_ESIGRETURN   513
- 
-+/*
-+ * This is returned after a plugin has used the qemu_plugin_set_pc API, to
-+ * indicate that the plugin deliberately changed the PC and potentially
-+ * modified the register values. The main loop should not touch the guest
-+ * registers for this reason.
-+ */
-+#define QEMU_ESETPC       514
-+
- #endif /* SPECIAL_ERRNO_H */
-diff --git a/linux-user/loongarch64/cpu_loop.c b/linux-user/loongarch64/cpu_loop.c
-index 26a5ce3a93..603fcc39c7 100644
---- a/linux-user/loongarch64/cpu_loop.c
-+++ b/linux-user/loongarch64/cpu_loop.c
-@@ -44,9 +44,10 @@ void cpu_loop(CPULoongArchState *env)
-                 env->pc -= 4;
-                 break;
-             }
--            if (ret == -QEMU_ESIGRETURN) {
-+            if (ret == -QEMU_ESIGRETURN || ret == -QEMU_ESETPC) {
-                 /*
--                 * Returning from a successful sigreturn syscall.
-+                 * Returning from a successful sigreturn syscall or from
-+                 * control flow diversion in a plugin callback.
-                  * Avoid clobbering register state.
-                  */
-                 break;
-diff --git a/linux-user/m68k/cpu_loop.c b/linux-user/m68k/cpu_loop.c
-index 2c9f628241..b98ca8ff7b 100644
---- a/linux-user/m68k/cpu_loop.c
-+++ b/linux-user/m68k/cpu_loop.c
-@@ -66,7 +66,7 @@ void cpu_loop(CPUM68KState *env)
-                                  0, 0);
-                 if (ret == -QEMU_ERESTARTSYS) {
-                     env->pc -= 2;
--                } else if (ret != -QEMU_ESIGRETURN) {
-+                } else if (ret != -QEMU_ESIGRETURN && ret != -QEMU_ESETPC) {
-                     env->dregs[0] = ret;
-                 }
-             }
-diff --git a/linux-user/microblaze/cpu_loop.c b/linux-user/microblaze/cpu_loop.c
-index 78506ab23d..06d92c0b90 100644
---- a/linux-user/microblaze/cpu_loop.c
-+++ b/linux-user/microblaze/cpu_loop.c
-@@ -54,7 +54,7 @@ void cpu_loop(CPUMBState *env)
-             if (ret == -QEMU_ERESTARTSYS) {
-                 /* Wind back to before the syscall. */
-                 env->pc -= 4;
--            } else if (ret != -QEMU_ESIGRETURN) {
-+            } else if (ret != -QEMU_ESIGRETURN && ret != -QEMU_ESETPC) {
-                 env->regs[3] = ret;
-             }
-             /* All syscall exits result in guest r14 being equal to the
-diff --git a/linux-user/mips/cpu_loop.c b/linux-user/mips/cpu_loop.c
-index 2365de1de1..af98138eb2 100644
---- a/linux-user/mips/cpu_loop.c
-+++ b/linux-user/mips/cpu_loop.c
-@@ -140,8 +140,9 @@ done_syscall:
-                 env->active_tc.PC -= 4;
-                 break;
-             }
--            if (ret == -QEMU_ESIGRETURN) {
--                /* Returning from a successful sigreturn syscall.
-+            if (ret == -QEMU_ESIGRETURN || ret == -QEMU_ESETPC) {
-+                /* Returning from a successful sigreturn syscall or from
-+                   control flow diversion in a plugin callback.
-                    Avoid clobbering register state.  */
-                 break;
-             }
-diff --git a/linux-user/or1k/cpu_loop.c b/linux-user/or1k/cpu_loop.c
-index 2167d880d5..e7e9929e6f 100644
---- a/linux-user/or1k/cpu_loop.c
-+++ b/linux-user/or1k/cpu_loop.c
-@@ -48,7 +48,7 @@ void cpu_loop(CPUOpenRISCState *env)
-                              cpu_get_gpr(env, 8), 0, 0);
-             if (ret == -QEMU_ERESTARTSYS) {
-                 env->pc -= 4;
--            } else if (ret != -QEMU_ESIGRETURN) {
-+            } else if (ret != -QEMU_ESIGRETURN && ret != -QEMU_ESETPC) {
-                 cpu_set_gpr(env, 11, ret);
-             }
-             break;
-diff --git a/linux-user/ppc/cpu_loop.c b/linux-user/ppc/cpu_loop.c
-index b0b0cb14b4..1f8aae14bb 100644
---- a/linux-user/ppc/cpu_loop.c
-+++ b/linux-user/ppc/cpu_loop.c
-@@ -340,8 +340,10 @@ void cpu_loop(CPUPPCState *env)
-                 env->nip -= 4;
-                 break;
-             }
--            if (ret == (target_ulong)(-QEMU_ESIGRETURN)) {
--                /* Returning from a successful sigreturn syscall.
-+            if (ret == (target_ulong)(-QEMU_ESIGRETURN)
-+                    || ret == (target_ulong)(-QEMU_ESETPC)) {
-+                /* Returning from a successful sigreturn syscall or from
-+                   control flow diversion in a plugin callback.
-                    Avoid corrupting register state.  */
-                 break;
-             }
-diff --git a/linux-user/riscv/cpu_loop.c b/linux-user/riscv/cpu_loop.c
-index ce542540c2..eecc8d1517 100644
---- a/linux-user/riscv/cpu_loop.c
-+++ b/linux-user/riscv/cpu_loop.c
-@@ -65,7 +65,7 @@ void cpu_loop(CPURISCVState *env)
-             }
-             if (ret == -QEMU_ERESTARTSYS) {
-                 env->pc -= 4;
--            } else if (ret != -QEMU_ESIGRETURN) {
-+            } else if (ret != -QEMU_ESIGRETURN && ret != -QEMU_ESETPC) {
-                 env->gpr[xA0] = ret;
-             }
-             if (cs->singlestep_enabled) {
-diff --git a/linux-user/s390x/cpu_loop.c b/linux-user/s390x/cpu_loop.c
-index 4929b32e1f..67d2a803fb 100644
---- a/linux-user/s390x/cpu_loop.c
-+++ b/linux-user/s390x/cpu_loop.c
-@@ -83,7 +83,7 @@ void cpu_loop(CPUS390XState *env)
-                              env->regs[6], env->regs[7], 0, 0);
-             if (ret == -QEMU_ERESTARTSYS) {
-                 env->psw.addr -= env->int_svc_ilen;
--            } else if (ret != -QEMU_ESIGRETURN) {
-+            } else if (ret != -QEMU_ESIGRETURN && ret != -QEMU_ESETPC) {
-                 env->regs[2] = ret;
-             }
- 
-diff --git a/linux-user/sh4/cpu_loop.c b/linux-user/sh4/cpu_loop.c
-index 0c9d7e9c46..ee2958d0d9 100644
---- a/linux-user/sh4/cpu_loop.c
-+++ b/linux-user/sh4/cpu_loop.c
-@@ -50,7 +50,7 @@ void cpu_loop(CPUSH4State *env)
-                              0, 0);
-             if (ret == -QEMU_ERESTARTSYS) {
-                 env->pc -= 2;
--            } else if (ret != -QEMU_ESIGRETURN) {
-+            } else if (ret != -QEMU_ESIGRETURN && ret != -QEMU_ESETPC) {
-                 env->gregs[0] = ret;
-             }
-             break;
-diff --git a/linux-user/sparc/cpu_loop.c b/linux-user/sparc/cpu_loop.c
-index 7391e2add8..f054316dce 100644
---- a/linux-user/sparc/cpu_loop.c
-+++ b/linux-user/sparc/cpu_loop.c
-@@ -229,7 +229,9 @@ void cpu_loop (CPUSPARCState *env)
-                               env->regwptr[2], env->regwptr[3],
-                               env->regwptr[4], env->regwptr[5],
-                               0, 0);
--            if (ret == -QEMU_ERESTARTSYS || ret == -QEMU_ESIGRETURN) {
-+            if (ret == -QEMU_ERESTARTSYS
-+                    || ret == -QEMU_ESIGRETURN
-+                    || ret == -QEMU_ESETPC) {
-                 break;
-             }
-             if ((abi_ulong)ret >= (abi_ulong)(-515)) {
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index d466d0e32f..99e1ed97d9 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -43,6 +43,7 @@
- #include <linux/capability.h>
- #include <sched.h>
- #include <sys/timex.h>
-+#include <setjmp.h>
- #include <sys/socket.h>
- #include <linux/sockios.h>
- #include <sys/un.h>
-@@ -600,6 +601,9 @@ const char *target_strerror(int err)
-     if (err == QEMU_ESIGRETURN) {
-         return "Successful exit from sigreturn";
+@@ -467,7 +469,7 @@ bool qemu_plugin_read_register(struct qemu_plugin_register *reg,
+         return false;
      }
-+    if (err == QEMU_ESETPC) {
-+        return "Successfully redirected control flow";
-+    }
  
-     return strerror(target_to_host_errno(err));
+-    return (gdb_read_register(current_cpu, buf, GPOINTER_TO_INT(reg) - 1) > 0);
++    return (gdb_read_register(current_cpu, buf, GPOINTER_TO_INT(reg) >> 1) > 0);
  }
-@@ -14410,6 +14414,18 @@ abi_long do_syscall(CPUArchState *cpu_env, int num, abi_long arg1,
-         return -QEMU_ESIGRETURN;
+ 
+ bool qemu_plugin_write_register(struct qemu_plugin_register *reg,
+@@ -476,11 +478,12 @@ bool qemu_plugin_write_register(struct qemu_plugin_register *reg,
+     g_assert(current_cpu);
+ 
+     if (buf->len == 0 || (qemu_plugin_get_cb_flags() != QEMU_PLUGIN_CB_RW_REGS &&
+-                          qemu_plugin_get_cb_flags() != QEMU_PLUGIN_CB_RW_REGS_PC)) {
++                          qemu_plugin_get_cb_flags() != QEMU_PLUGIN_CB_RW_REGS_PC)
++        || (GPOINTER_TO_INT(reg) & 1)) {
+         return false;
      }
  
-+    /*
-+     * Set up a longjmp target here so that we can call cpu_loop_exit to
-+     * redirect control flow back to the main loop even from within
-+     * syscall-related plugin callbacks.
-+     * For other types of callbacks or longjmp call sites, the longjmp target
-+     * is set up in the cpu loop itself but in syscalls the target is not live
-+     * anymore.
-+     */
-+    if (unlikely(sigsetjmp(cpu->jmp_env, 0) != 0)) {
-+        return -QEMU_ESETPC;
-+    }
-+
-     record_syscall_start(cpu, num, arg1,
-                          arg2, arg3, arg4, arg5, arg6, arg7, arg8);
+-    return (gdb_write_register(current_cpu, buf->data, GPOINTER_TO_INT(reg) - 1) > 0);
++    return (gdb_write_register(current_cpu, buf->data, GPOINTER_TO_INT(reg) >> 1) > 0);
+ }
  
-diff --git a/linux-user/xtensa/cpu_loop.c b/linux-user/xtensa/cpu_loop.c
-index a0ff10eff8..7680e243bb 100644
---- a/linux-user/xtensa/cpu_loop.c
-+++ b/linux-user/xtensa/cpu_loop.c
-@@ -17,6 +17,7 @@
-  *  along with this program; if not, see <http://www.gnu.org/licenses/>.
-  */
- 
-+#include "qemu/compiler.h"
- #include "qemu/osdep.h"
- #include "qemu.h"
- #include "user-internals.h"
-@@ -185,6 +186,8 @@ void cpu_loop(CPUXtensaState *env)
-                     env->pc -= 3;
-                     break;
- 
-+                case -QEMU_ESETPC:
-+                    QEMU_FALLTHROUGH;
-                 case -QEMU_ESIGRETURN:
-                     break;
-                 }
+ void qemu_plugin_set_pc(uint64_t vaddr)
 -- 
 2.53.0
 
