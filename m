@@ -4,72 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 171ACF3C9BE
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 16:41:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59638F3C9AF
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 16:47:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuvTa-0001Kz-Hn; Tue, 24 Feb 2026 11:41:35 -0500
+	id 1vuvYo-0003Pz-NL; Tue, 24 Feb 2026 11:46:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1vuvTX-0001K0-KN
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 11:41:31 -0500
-Received: from frasgout.his.huawei.com ([185.176.79.56])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1vuvTU-0008Tf-2M
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 11:41:31 -0500
-Received: from mail.maildlp.com (unknown [172.18.224.83])
- by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4fL3Ph5sGLzJ46BR;
- Wed, 25 Feb 2026 00:40:56 +0800 (CST)
-Received: from dubpeml500005.china.huawei.com (unknown [7.214.145.207])
- by mail.maildlp.com (Postfix) with ESMTPS id A361C40569;
- Wed, 25 Feb 2026 00:41:18 +0800 (CST)
-Received: from localhost (10.203.177.15) by dubpeml500005.china.huawei.com
- (7.214.145.207) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.11; Tue, 24 Feb
- 2026 16:41:17 +0000
-Date: Tue, 24 Feb 2026 16:41:16 +0000
-To: Ankit Agrawal <ankita@nvidia.com>
-CC: Jason Gunthorpe <jgg@nvidia.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>, Vikram Sethi <vsethi@nvidia.com>,
- Shameer Kolothum Thodi <skolothumtho@nvidia.com>, "alex@shazbot.org"
- <alex@shazbot.org>, "anisinha@redhat.com" <anisinha@redhat.com>, "Aniket
- Agashe" <aniketa@nvidia.com>, Neo Jia <cjia@nvidia.com>, Kirti Wankhede
- <kwankhede@nvidia.com>, "Tarun Gupta (SW-GPU)" <targupta@nvidia.com>, "Zhi
- Wang" <zhiw@nvidia.com>, Matt Ochs <mochs@nvidia.com>, Krishnakant Jaju
- <kjaju@nvidia.com>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Subject: Re: [PATCH v1 1/1] hw/acpi/pci.c: preserve generic initiator
- insertion order
-Message-ID: <20260224164116.00003fc0@huawei.com>
-In-Reply-To: <SA1PR12MB71991611FEAA1B2D6A5171DFB074A@SA1PR12MB7199.namprd12.prod.outlook.com>
-References: <20260222020812.26475-1-ankita@nvidia.com>
- <20260223082804.0d293861@imammedo>
- <SA1PR12MB7199F0C2E1D2325B0062B004B077A@SA1PR12MB7199.namprd12.prod.outlook.com>
- <20260223104411.57a815fa@imammedo>
- <20260223111302.00000081@huawei.com> <aZ2sylCydE9Js1ec@nvidia.com>
- <20260224085955-mutt-send-email-mst@kernel.org>
- <aZ2449e8ucB8e3AJ@nvidia.com>
- <SA1PR12MB7199847A879D66527B03DB1CB074A@SA1PR12MB7199.namprd12.prod.outlook.com>
- <aZ28qvehl7Lleo2a@nvidia.com>
- <SA1PR12MB71991611FEAA1B2D6A5171DFB074A@SA1PR12MB7199.namprd12.prod.outlook.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vuvYm-0003Ni-6V
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 11:46:56 -0500
+Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vuvYk-00028L-LH
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 11:46:55 -0500
+Received: by mail-ej1-x62b.google.com with SMTP id
+ a640c23a62f3a-b884d5c787bso921012166b.0
+ for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 08:46:54 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1771951613; cv=none;
+ d=google.com; s=arc-20240605;
+ b=fNGKknpBeKNspjpm9k+G0v2ZUQghNFZqMyCXK05P0iBrTivldZzbicvzMmHc96xgz9
+ lAZGgjip/wls7Lv016jIBOvmA7E38oEk1dDJ2sFOoxulH5S+fmPxioYezReGqRWS+Ibm
+ Z1t9aCshehQq/WsdVsV2jUFLqLuVTMjLG/F2UiuavWd5fxDqXmDGN/druJzFRIhTr1On
+ bjhN5uZg3vorzhlt9I2JIRwyJEm9IaOI1aWtLk2s19IWtOtSXLacxVBBfHYtU0Nm+Jfw
+ 1lJZzofSaD93XMWwy8qn1KRK5L6okz/TNTYWwa7IKulE/RB5MclfrOnPs12YWXt/tDt6
+ s4EA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=GYj7Ej3Sl2ORXW9spqON4Wq5UccehnD4DXMFcmnE6Ic=;
+ fh=GI2e/SBiq4MTIPc9mHou6R6WJe3VvhdDMWKbaXflkfU=;
+ b=KwhZdc3Ur8Bnc9XlQjYm2tzEPYUoExwuCHwnyy1zbKE/1WbAhavYS3k/6Wg7r4Tqg2
+ envg9OGio+10l7A8do6xu3/uthhwOuPwIBeP7gVdPgq7SvahPsU6c/dHSOmQKOTz2xpS
+ ayhdJ2eXMnbps90LUj3dvcGnPf7FvgW/skuAhl2nhUUOIgtbKF9pk1x0Xn5v+xb6FoVL
+ I+UIVyCaB/QJNFk06LE7+CbVcq7lXfgBP5XqclZhiOEU1JIsHR6V5tm2Kfgxq3b/pj1P
+ w28EzQhCL5lmbY0kbRm3XXM/DXvU7O12fD17kvbg7sjgohWiR/hdvTOy3/c/KrlYbDV0
+ bTTg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1771951613; x=1772556413; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=GYj7Ej3Sl2ORXW9spqON4Wq5UccehnD4DXMFcmnE6Ic=;
+ b=cLDDHTk2cyd/e0b9s/ylVWdmPu8mG5rvOt4XvVtyfuoKaPK2x/oagOlWlua3ztCSOL
+ F255VH7HT1jLN9SUgQqxY/N7QJZzzm5yWj4OEXL9gN7cVSACIQ744s1bqWoiEKDN1AaY
+ t9I/lQi6+ZhwQjE+/aGffBUEP039D+CdgDU+MNtjxucllgCxFy02+wfuSBOxyMBz5COm
+ YDtnWTcTyeYU+NV7m+6nRM2aQroWPfqgxJymvTh0V9oSCnS0jYcVS9J+8c0CWeIjAHaK
+ XUxIOIxFXKTwEGMzHeLx05VYmUf76iYv0cCAqabzcuf5WffGwkBGJhvDr9PN0ILpXyWK
+ SAdA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1771951613; x=1772556413;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=GYj7Ej3Sl2ORXW9spqON4Wq5UccehnD4DXMFcmnE6Ic=;
+ b=Wuur82taL9/4anRisp0coNboM7AfUUZ0Z40k58xEW6fCAvUfPrxVt7qmcJi4rLbdbk
+ SSDXwd71bddj9tvdQzAxt6mjyVOVYkTJBB2TznM5fVZ1xHbY6KmVdyYc31IB0v2Nr2vq
+ TrYHN0TKgzH06h2CpcHAJU46V+je1x3K+N/6wi3yUT65zIFF9jwlpmTxtkN6SrqjOncT
+ o6ZAueUTvpG2s2ghSlqRwIxBy9GvnRwjKbqq++XPLRIFQaltQQPOKcUvg+zxDeKVLhV0
+ hw7xtw+vzPKPAvNuiInrT2zc5BCNHW3U5KzA1Men6Po3AKWsbGbeLhL6x8XR+LqRXhbO
+ H9Cw==
+X-Gm-Message-State: AOJu0YwmhhDtYjPsLpFQ1PyXR8GzBLPz+ycGCB2lHHJy8pwj0Es5/hMr
+ pFoiah4wmL9ua9oNjcF8+DVvB1vRhLEDnIhRE6yruoxhXWhmb/3QGUnMNCySGyNMJ8JSRdM84yp
+ My6RtHqA9vXdYSIHvqYBxMlcKDSvckC12oC8hf6CP8A==
+X-Gm-Gg: ATEYQzwvCqudAZzAnL4GLFz6exaLF9h4grjCaGFDAHbwa2K5+VhH9g60GtpzMfLIFim
+ kjRsISD8jbaGCi+XcWW7t7PQErKlpi2F6XcXosnIAcsTwkVyaq5RLZiuQUy047KupfQ6kCHzM3l
+ 89eo58aw9CCTfqE76ijsC9DE8Vha4jEWuoO0Yjvf74HcNmWCdui/pCRZq7imsoIp+hIkiMozpky
+ Tvl02Qklsi1ER0SQCCmK9cyddk1UEZ0of7ARpw/Zcm+FyDiEfR0CQ4bX/sNWzYkhsC37hPLln0b
+ rFokk+bCRHP+rOo+qF8PsDqE5TzEps2Q8YATh1yq8cVliU0AwWQh93/FO7p9Jvv6hJw=
+X-Received: by 2002:a17:907:3d12:b0:b86:ecfe:b3d with SMTP id
+ a640c23a62f3a-b9081b22197mr857470566b.43.1771951612936; Tue, 24 Feb 2026
+ 08:46:52 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.203.177.15]
-X-ClientProxiedBy: lhrpeml500011.china.huawei.com (7.191.174.215) To
- dubpeml500005.china.huawei.com (7.214.145.207)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -31
-X-Spam_score: -3.2
-X-Spam_bar: ---
-X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.358, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.659,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20260216034432.23912-1-richard.henderson@linaro.org>
+ <20260216034432.23912-3-richard.henderson@linaro.org>
+In-Reply-To: <20260216034432.23912-3-richard.henderson@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 24 Feb 2026 16:46:40 +0000
+X-Gm-Features: AaiRm50Y_pZ9etaFmDwvgeY0VXVpR2Yh1jThV1sB9Av2EYwnO8srq1B-_RdPk_A
+Message-ID: <CAFEAcA-Mi1+S3JpCFqyYo=uQsX6dRhdtj2Vt1S81yAGmCEyG7A@mail.gmail.com>
+Subject: Re: [RFC PATCH 02/13] target/arm: Remove aarch64 test for kvm
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x62b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,72 +111,39 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <jonathan.cameron@huawei.com>
-From:  Jonathan Cameron via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 24 Feb 2026 16:22:56 +0000
-Ankit Agrawal <ankita@nvidia.com> wrote:
-
-> >> Now the kernel parse it in the sequence of their occurrence. A jumbled up
-> >> sequence thus results in a jumbled up assignment.  
-> >
-> > But what is the actual failure mode here? So the numa IDs are all in a
-> > weird order, what goes wrong from that?  
-> 
-> This interferes with the ability to replicate the numa distance topology
-> on host in the VM through qemu command line.
-> 
-> E.g. consider a NUMA system with 2 sockets each with a GPU.
-> 0,1 are the node ids for the sysmem on socket 0,1 respectively and
-> 2,3 are the node ids for the GPU memory on socket 0,1 respectively
-> dist(0,2) = X
-> dist(0,3) = Y
-> 
-> If we try to replicate this for the VM by passing qemu arguments with
-> 4 numa nodes and assign numa distances similar to host, and for the
-> sake of example qemu mixes up by putting GI for 3 over 2. The SLIT
-> which sets up the distances do it considering the original order in the
-> qemu command line.
-> https://github.com/qemu/qemu/blob/stable-10.2/hw/acpi/aml-build.c#L2040
-> 
-> This would lead to a different numa config in terms of distance within
-> the VM that the one intended through the qemu command line.
-
-This is the case where I'd like to see an example of the tables before
-and after your patch.  If the SLIT is not correctly created wrt to PXMs
-(rather than the order of the commands) then we indeed have a QEMU bug that
-needs fixing.  However, I'm confused as SLIT should also not be ordered
-by command line if the say the command line was:
-
-       -object acpi-generic-initiator,id=gi0,pci-dev=dev0,node=3 \
-       -object acpi-generic-initiator,id=gi1,pci-dev=dev0,node=4 \
-       -object acpi-generic-initiator,id=gi2,pci-dev=dev0,node=6 \
-       -object acpi-generic-initiator,id=gi3,pci-dev=dev0,node=5 \
-       -object acpi-generic-initiator,id=gi4,pci-dev=dev0,node=2 \
-       -object acpi-generic-initiator,id=gi5,pci-dev=dev0,node=7 \
-       -object acpi-generic-initiator,id=gi6,pci-dev=dev0,node=8 \
-       -object acpi-generic-initiator,id=gi7,pci-dev=dev0,node=9 \
-
-and numa stuff was something like
-       -numa dist,src=3,dst=0,val=100
-       -numa dist,src=4,dst=0,val=200
-       -numa dist,src=5,dst=0,val=300
-       -numa dist,src=6,dst=0,val=100
-       -numa dist,src=7,dst=0,val=200
-       -numa dist,src=8,dst=0,val=300
-       -numa dist,src=9,dst=0,val=100
-
-Then it should be matching src numbers here to node in the GIs whatever the order.
-
-Thanks,
-
-Jonathan
+On Mon, 16 Feb 2026 at 03:45, Richard Henderson
+<richard.henderson@linaro.org> wrote:
+>
+> We no longer support kvm for aarch32, therefore the aarch64
+> test is trivially true.
+>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>  target/arm/cpu64.c | 4 +---
+>  1 file changed, 1 insertion(+), 3 deletions(-)
+>
+> diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
+> index 5d7c6b7fbb..10c6796548 100644
+> --- a/target/arm/cpu64.c
+> +++ b/target/arm/cpu64.c
+> @@ -767,9 +767,7 @@ static void aarch64_host_initfn(Object *obj)
+>      ARMCPU *cpu = ARM_CPU(obj);
+>  #if defined(CONFIG_KVM)
+>      kvm_arm_set_cpu_features_from_host(cpu);
+> -    if (arm_feature(&cpu->env, ARM_FEATURE_AARCH64)) {
+> -        aarch64_add_sve_properties(obj);
+> -    }
+> +    aarch64_add_sve_properties(obj);
+>  #elif defined(CONFIG_HVF)
+>      hvf_arm_set_cpu_features_from_host(cpu);
+>  #elif defined(CONFIG_WHPX)
 
 
-> 
-> Thanks
-> Ankit Agrawal
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
+thanks
+-- PMM
 
