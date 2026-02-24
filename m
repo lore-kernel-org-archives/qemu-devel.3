@@ -4,106 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FF26F3C9AD
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 16:09:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9938AF3C9AC
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 16:15:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuuyg-0006sA-Cu; Tue, 24 Feb 2026 11:09:38 -0500
+	id 1vuv3b-0008CQ-97; Tue, 24 Feb 2026 11:14:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1vuuyc-0006rd-UV
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 11:09:36 -0500
-Received: from mail-pj1-x1036.google.com ([2607:f8b0:4864:20::1036])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1vuuyb-0003YI-1w
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 11:09:34 -0500
-Received: by mail-pj1-x1036.google.com with SMTP id
- 98e67ed59e1d1-354c67da885so4743774a91.3
- for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 08:09:32 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1771949371; cv=none;
- d=google.com; s=arc-20240605;
- b=AsHgWgUa6IXGrU3WBJSYmHj4y3R/IaI1Vd2NeSHmTL8wQb58hPFvAvNAcG+yqF4tGN
- CYWdwfayT71AqToAR7gGNz/LzWs8z0JJ1fsQRLuSSI6DFeGRxSQslCFwf02Pi0rUM7lp
- QoL7ZCoOhr/T+FMCK022qey5FmkBoFw0Ch77yMYWNPRI1095l2WMOXlAcJ55t3o+PcjF
- GwrcARulZe034WhreUvTUsAK8M6fW2Fb47bkdSc1Uz+cCSnotD2s0oELmynerEgCEgBb
- 8WFrQtPWmeieX37LFMyF4X+WqdmACmuO9b+9FfW4gPMVNQHCJkT6HA3RejnIP7G4fB6B
- 286A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=motxCK9yDFPIaQvbXIzaV3OCNQZ3ww1nprdEgekDRwc=;
- fh=1CYvNObfo4jq90HtGYf42Wh+iAUT/qO8Wac6PonGhMA=;
- b=IserecDzOUjUAfOvozf/fo+6BhEtWkiw74dW0NUp2eti88SGUcpsRoaa4bJVGb1B61
- WOY7QxecPbGyWuuI+FeLHkR5Js3yD3FWrp7cHUVr3Dy8NBBNSSpPLs+7CP/3tds584oq
- GQiNV7Eo6FaXUPevs8PGGBxkbm/Ot3yvU9ZNg1+wOXVIiocwTUt92zPDSziusvKiIKEb
- GDiXKDBrNez74ceEMiz1Ee9NhYW82vH42Opz6WBvrNYkhPhZ5KC/1/qgO7odpG3V51Xz
- nd/adB2QM9UJ5xDIjzAAN9+celCe+cR8zdaoeDy2AMTMeQ4aK/TL70YwTGTL7MEX+DNk
- u1ng==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vuv3Q-0008BL-8k
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 11:14:33 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vuv3L-0004Aq-3g
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 11:14:30 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1771949647;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=6sqZD2vdxCrLNXIIlwNiVUG7wmOMqkwMVvr8a527eUM=;
+ b=fvI/B+kKdKWGUm67Dn8RIodcIWVr8DaCa7w69qMo59KxoC3ipTYQVm55d8Ia4a1dixGW0A
+ hA/yCm+FUp+SYYtAKYG2GhW4Nmbp7zpU1l/OcT5/xiqMY6Em6T2M9AK2wbk6oiL5VRcjmo
+ eyIlLxz8iZ8RykfB8iu1xoGqCh9nleY=
+Received: from mail-ua1-f70.google.com (mail-ua1-f70.google.com
+ [209.85.222.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-587-qrbLPNYvPBKRBmmgkM1W7A-1; Tue, 24 Feb 2026 11:14:06 -0500
+X-MC-Unique: qrbLPNYvPBKRBmmgkM1W7A-1
+X-Mimecast-MFC-AGG-ID: qrbLPNYvPBKRBmmgkM1W7A_1771949645
+Received: by mail-ua1-f70.google.com with SMTP id
+ a1e0cc1a2514c-948e77990c7so7827808241.2
+ for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 08:14:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1771949371; x=1772554171; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=motxCK9yDFPIaQvbXIzaV3OCNQZ3ww1nprdEgekDRwc=;
- b=CuD1pUirdWK+sq+3kVBn//Cszue4ndqCAMgBWYWhWsMkLS8wf1z7TNtXfMxWNZxlQL
- CbUQT35kb43abHSLwmbrnXanQV8RXlVp+6gBmYIYgOvDbfhXHqYIlQ9iDGIlZWcp0kHD
- IT9EZhu4yfaLdOFG6/k1lIS3uKE0UJdZCZFDZ0uxHlOJNwjXPWIeSvm1isCXT1aaJOB9
- bXOl/QQVau5Av5/ve/DCMIzribe8jO9meTUx+Npfh93wgoyPZeGVsLYByynrLeJHY9qj
- eipHUxQf0PmqSCSfGAATUkAA+aSdkk6krqFWvkfZzTxGPi0qfebVA+e2tDAbggnaE1ZV
- voSg==
+ d=redhat.com; s=google; t=1771949645; x=1772554445; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=6sqZD2vdxCrLNXIIlwNiVUG7wmOMqkwMVvr8a527eUM=;
+ b=jEofJ4AA7aQyCoYS/gaxBM+XRV/UP3LtSs7GN6z27eaP6Nyko2wTm5Nqvt3YKZfWzd
+ OGpz8aALQ7VGWXUIAnZhgoZZwrQg04UAvKQPqsPX5ElH4kQuoHSgkCkAGAjHSVEGvNE8
+ bYSKV9AVlqC8+uZmfKosOiK5BBvXgPkk7pPl4hEGuBc8GlF0tiRgM2H/iHHDgLF7L4yX
+ FTkCc5jD+/TvsgMukomU8mG6jm/AMWFKou70Wgg/NpUSC/pV9MhsF/abZCQ1XSrzC2cd
+ HDOdayCquXJzXv9NeWfUS3nKybAS7jgz6KTqziY0SU6i9EW/aiHWPY4JlmrukLOxJOmh
+ gI6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771949371; x=1772554171;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=motxCK9yDFPIaQvbXIzaV3OCNQZ3ww1nprdEgekDRwc=;
- b=SVsIGqX5dnrd196IYMIXhtOV5hRHiJpL8ydXBIeDo/qM1OtB8d10kVtWb70XCM9cE0
- ZWiOT/dI68gaJqwPxSmKwpx+ig4e1FUeWMKj5JsnfuJex3S5zViO0N+9kR8wfNYVFETF
- OzPN6517cVFM80MklOAwnc2Xe/3KV+yMePzKGJ/g5hLyfHQV8Oi8511UBobs/olpzqMQ
- 4wGxZ38cYpeGEC5PWletrCDhnxOVhA1COoDjuo0y/EmdTxHRMnSTEELXbiFS3YuTwMMQ
- nAytPvLtkNwgLSDGA/RDpRgennu1ABRkg1gXR2NT4ihiZFvc+PQhe0tEVKLNIO6NGELj
- QQkA==
-X-Gm-Message-State: AOJu0YxdQOOHYYGon5GlpWlrAykdyNs+xAlW3qLMXGgqd/L4VliaiHyM
- TW6fV5zeSGSkTdaN174Sf3E1xs6baFPYeL2lVxnGVnxrtCkN37o/h6aMcj6CBxG5RTipNPeAuvo
- 9/z9p57vTjeD4aZ/FiCXPWaQnfv3UCvI=
-X-Gm-Gg: ATEYQzzKKZ6Lxdv3vEgRvMtfpEXEiSxYLl6L7zxEDPosnfrCqrYkcZJWH6w/DiaFuZz
- usCI8n4Dm/96Z6KrE+9TuMG4jh8djNTeglidG7UP+tYhqT350x8nHPttPNh9OZN+BkRLyEX9gA0
- +LPLMPUNghUOvsc/Vbsji7HgufEKEVWTySQ3kTHL7xPPtHnHdh4E/9CV23oX1s6/000QMR6Lyrf
- nqyq8e+L3ZjB2KMC3vAVH+faP26yTWbWlhCGnP6vPGne6u611BPNpel+jJK36dUT7QX0OgDh73C
- h9+DOSqYOycffMFe5CoHMpGYHP8h2LB1FqiVBq0c
-X-Received: by 2002:a17:90a:e187:b0:34c:a29d:992f with SMTP id
- 98e67ed59e1d1-358ae8d612fmr9952604a91.31.1771949371243; Tue, 24 Feb 2026
- 08:09:31 -0800 (PST)
+ d=1e100.net; s=20230601; t=1771949645; x=1772554445;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=6sqZD2vdxCrLNXIIlwNiVUG7wmOMqkwMVvr8a527eUM=;
+ b=rFZZbI9ObM2qwkv1Kb4Lcw1BjnyEy5+d5igNr3T6yuYWZxaNXL2BCHrcavbBnyRRfI
+ poOXQmZLzdX7uhfMemXEPvHtg8Ui0guDXiytgTZR2SlYJ72GiR+1ULPDo44ug/+Evakl
+ Vc2J+4blzTJom5Y3d9Egzp0PcCSZxCsE6PQStfHCKgHCyHrxNcli3B1cfFu3+3LqZUmT
+ ADGRpXx1K6AsLM+HxWicdbdupcdJv86q3xegUbBcqU30rTg5P6RT2z/BOPUdPXngQEpB
+ 3JeY/WH+DsJJ769aR/MmgMwLlw5jtxdw2pH0VGbFbdDfV0xX23HOyv93TUdPRW63Jpc+
+ 8VZg==
+X-Gm-Message-State: AOJu0YzK0IkgcB/LLgZ40ot7tGrx3ucQrII0KSFjIfHrVs19QGNzGWOg
+ gTt6MUrkRZKvM3S4Qtr/0VspGp7TXvCErNojYbrbe4s6Bbh0LpIim68D8ZxW9ReY6BGJD7CMOv6
+ /97F3gs3Xd1wRdlsWwefnU0iFTrxtf5IgmpQBe3FTW4Qr66WLhghnLZXA
+X-Gm-Gg: ATEYQzy65LVBlOhQXM+8JCuuOjWQOkaLHgJd5DyDMDYWgtAOUOXo4s/1rqdujLFzhLH
+ zzNHBEOQhByimWe4fkTob42KDNmcrqNVmuAWggrOv8QieRVKQTTyLdYP7nx/JZMhPtGOOX4TYQV
+ OPUCW+EcDa7JgpwiUvksqurG1M1KmxAx3ZjHK8L0mSLGNhX7PwIultB8Rj/qncAJqFamUS7U/wP
+ O2hn5nfROoIBpcax7q1ppxyRvO+l6PUR9JsWsuilsoC6mWjVB0oyRUxXAeFR+kbAqPSAXuOuo4t
+ /XJ7TzJUPPauJ1hrk4oSfPldvyPbwaNxtJCpiS30gSfTIOsricVDwh9JZhC3/eLNnZtXYl9tw6r
+ HtKJXFl+hTI4I1A==
+X-Received: by 2002:a05:6122:1d53:b0:55f:c41f:e841 with SMTP id
+ 71dfb90a1353d-568e4904ef1mr4861999e0c.19.1771949645294; 
+ Tue, 24 Feb 2026 08:14:05 -0800 (PST)
+X-Received: by 2002:a05:6122:1d53:b0:55f:c41f:e841 with SMTP id
+ 71dfb90a1353d-568e4904ef1mr4861980e0c.19.1771949644674; 
+ Tue, 24 Feb 2026 08:14:04 -0800 (PST)
+Received: from x1.local ([174.91.117.149]) by smtp.gmail.com with ESMTPSA id
+ 71dfb90a1353d-568e58080d6sm12768735e0c.9.2026.02.24.08.14.03
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 24 Feb 2026 08:14:04 -0800 (PST)
+Date: Tue, 24 Feb 2026 11:13:52 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ "yc-core@yandex-team.ru" <yc-core@yandex-team.ru>
+Subject: Re: [PATCH v1] vmstate: fix subsection load name check
+Message-ID: <aZ3OQLHuYy0zEK76@x1.local>
+References: <20260220102628.459681-1-dtalexundeer@yandex-team.ru>
+ <aZyjaw8Pz-xvZ3AZ@x1.local>
+ <f4e728fc-40a7-4c25-8681-ca64eb1657f2@yandex-team.ru>
 MIME-Version: 1.0
-References: <20260217212245.95321-1-ltaylorsimpson@gmail.com>
- <20260217212245.95321-5-ltaylorsimpson@gmail.com>
- <aZ2mJz01cxh7PdLy@hive.localdomain>
-In-Reply-To: <aZ2mJz01cxh7PdLy@hive.localdomain>
-From: Taylor Simpson <ltaylorsimpson@gmail.com>
-Date: Tue, 24 Feb 2026 09:09:20 -0700
-X-Gm-Features: AaiRm50xB4UGt5yxJ1oMZtRi3fz0K5AugLslAgmDCucC9eU-ttSlL3_4H3CQUv8
-Message-ID: <CAATN3Nqb5zN8r2twoDLp3eaBYXOmemO6dzhLTXuw+EVfm0jYxg@mail.gmail.com>
-Subject: Re: [PATCH v3 4/8] Hexagon (target/hexagon) Introduce
- tag_rev_info.c.inc
-To: Anton Johansson <anjo@rev.ng>
-Cc: qemu-devel@nongnu.org, brian.cain@oss.qualcomm.com, 
- matheus.bernardino@oss.qualcomm.com, sid.manning@oss.qualcomm.com, 
- marco.liebel@oss.qualcomm.com, richard.henderson@linaro.org, 
- philmd@linaro.org, ale@rev.ng
-Content-Type: multipart/alternative; boundary="000000000000d5432e064b941cce"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1036;
- envelope-from=ltaylorsimpson@gmail.com; helo=mail-pj1-x1036.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <f4e728fc-40a7-4c25-8681-ca64eb1657f2@yandex-team.ru>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.358, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.659,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,184 +120,132 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000d5432e064b941cce
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-On Tue, Feb 24, 2026 at 6:20=E2=80=AFAM Anton Johansson <anjo@rev.ng> wrote=
-:
-
-> On 17/02/26, Taylor Simpson wrote:
-> > From: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
-> >
-> > Table that records which CPU revision introduced or removed
-> > for each opcode
-> >
-> > Co-authored-by: Brian Cain <brian.cain@oss.qualcomm.com>
-> > Co-authored-by: Taylor Simpson <ltaylorsimpson@gmail.com>
-> > Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
-> > Signed-off-by: Taylor Simpson <ltaylorsimpson@gmail.com>
-> > ---
-> >  target/hexagon/tag_rev_info.c.inc | 613 ++++++++++++++++++++++++++++++
-> >  1 file changed, 613 insertions(+)
-> >  create mode 100644 target/hexagon/tag_rev_info.c.inc
-> >
-> > diff --git a/target/hexagon/tag_rev_info.c.inc
-> b/target/hexagon/tag_rev_info.c.inc
-> > new file mode 100644
-> > index 0000000000..11c90f86ad
-> > --- /dev/null
-> > +++ b/target/hexagon/tag_rev_info.c.inc
-> > @@ -0,0 +1,613 @@
-> > +/*
-> > + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-> > + * SPDX-License-Identifier: GPL-2.0-or-later
-> > + */
-> > +
-> > +#ifndef HEXAGON_TAG_ARCH_TABLE_H
-> > +#define HEXAGON_TAG_ARCH_TABLE_H
-> > +
-> > +struct tag_rev_info { HexagonVersion introduced, removed; };
-> > +
-> > +static const struct tag_rev_info tag_rev_info[XX_LAST_OPCODE] =3D {
-> > +    [A5_ACS] =3D { .introduced =3D HEX_VER_V55, .removed =3D HEX_VER_N=
-ONE },
->
-> ...
->
-> > +
-> > +    [A7_clip] =3D { .introduced =3D HEX_VER_V67, .removed =3D HEX_VER_=
-NONE },
-> > +    [A7_croundd_ri] =3D { .introduced =3D HEX_VER_V67, .removed =3D
-> HEX_VER_NONE },
-> > +    [A7_croundd_rr] =3D { .introduced =3D HEX_VER_V67, .removed =3D
-> HEX_VER_NONE },
-> > +    [A7_vclip] =3D { .introduced =3D HEX_VER_V67, .removed =3D HEX_VER=
-_NONE },
-> > +    [F2_dfmax] =3D { .introduced =3D HEX_VER_V67, .removed =3D HEX_VER=
-_NONE },
-> > +    [F2_dfmin] =3D { .introduced =3D HEX_VER_V67, .removed =3D HEX_VER=
-_NONE },
-> > +    [F2_dfmpyfix] =3D { .introduced =3D HEX_VER_V67, .removed =3D
-> HEX_VER_NONE },
-> > +    [F2_dfmpyhh] =3D { .introduced =3D HEX_VER_V67, .removed =3D HEX_V=
-ER_NONE
+On Tue, Feb 24, 2026 at 12:10:20PM +0500, Alexandr Moshkov wrote:
+> 
+> On 2/23/26 23:58, Peter Xu wrote:
+> > On Fri, Feb 20, 2026 at 03:26:29PM +0500, Alexandr Moshkov wrote:
+> > > When loading a subset, its name is checked for the parent prefix. The
+> > > following bug may occur here:
+> > > 
+> > > Let's say there is a vmstate named "virtio-blk", it has a subsection
+> > > named "virtio-blk/subsection", and it also has another vmstate named
+> > > "virtio" in the fields.
+> > > Then, during the migration, when trying to load this subsection for
+> > > "virtio", the prefix condition will pass for "virtio-blk/subsection" and
+> > > then the migration will break, because this vmstate does not have such a
+> > > subsection.
+> > > 
+> > > In other words, if a field inside vmstate1 is set via vmstate2 with a
+> > > name that is a prefix of the parent vmstate, then the field can "steal"
+> > > a subsection belonging to the parent state.
+> > > 
+> > > Fix it by checking `/` at the end of idstr.
+> > Checking versus '\' looks reasonable, however I'm still confused on the
+> > example given, and what problem you hit.
+> > 
+> > Here, your concern seems to be that vmstate_subsection_load() can
+> > accidentally load a FIELD of the parent VMSD whose name is exactly the name
+> > of the parent VMSD (which will be the prefix of all subsections).
+> 
+> Thanks for reply,
+> 
+> vmstate_subsection_load() while trying to load a FIELD (whose name is prefix
+> of parent name) of the parent VMSD will try to load parent subsection.
+> 
+> > 
+> > Now my question is, when reaching the line you modified below, it needs to
+> > be prefixed with QEMU_VM_SUBSECTION.  It means the src QEMU is dumping a
+> > subsection rather than a field.  OTOH, when dumping a field, we never dump
+> > any name; I don't think we name FIELD at all..
+> > 
+> > Could you share the failure you hit in real life?  That might help to
+> > understand the problem on its own.
+> 
+> Here is code example:
+> 
+> ```
+> 
+> static const VMStateDescription vmstate_vhost_user_virtio_blk_inflight = {
+> .name = "virtio-blk/inflight",
+> .version_id = 2,
+> .needed = vhost_user_blk_inflight_needed,
+> .fields = (const VMStateField[]) {
+> VMSTATE_VHOST_INFLIGHT_REGION(inflight, VHostUserBlk),
+> VMSTATE_END_OF_LIST()
+> }
+> };
+> 
+> 
+> static const VMStateDescription vmstate_vhost_user_virtio_blk = {
+> .name = "virtio-blk",
+> .minimum_version_id = 2,
+> .version_id = 2,
+> .fields = (VMStateField[]) {
+> VMSTATE_VIRTIO_DEVICE,
+> VMSTATE_END_OF_LIST()
 > },
-> > +    [F2_dfmpylh] =3D { .introduced =3D HEX_VER_V67, .removed =3D HEX_V=
-ER_NONE
-> },
-> > +    [F2_dfmpyll] =3D { .introduced =3D HEX_VER_V67, .removed =3D HEX_V=
-ER_NONE
-> },
-> > +    [J2_callrh] =3D { .introduced =3D 0x73, .removed =3D HEX_VER_NONE =
-},
-> > +    [J2_jumprh] =3D { .introduced =3D 0x73, .removed =3D HEX_VER_NONE =
-},
->
-> I assume you missed HEX_VER_V73 here
->
+> .subsections = (const VMStateDescription * []) {
+> &vmstate_vhost_user_virtio_blk_inflight,
+> NULL
+> }
+> };
+> 
+> ```
+> 
+> VMSTATE_VIRTIO_DEVICE is
+> 
+> ```
+> 
+> #define VMSTATE_VIRTIO_DEVICE \
+> { \
+> .name = "virtio", \
+> .info = &virtio_vmstate_info, \
+> .flags = VMS_SINGLE, \
+> }
+> ```
+> So here is "virtio-blk" vmsd that have "virtio" vmsd field and
+> "virtio-blk/inflight" subsection. This configuration will result in the fact
+> that inflight vmsd will not be loaded at all (assuming that it met all the
+> requirements). Qemu logs will contain trace_vmstate_subsection_load_bad
+> (lookup) error for "virtio" vmstate when loading "virtio-blk/inflight"
+> subsection.
 
-Good catch!  Fixed.
+Thanks for the details.  However it didn't resolve my confusion.  Let me
+ask more explicitly.
 
+In this case, VMSTATE_VIRTIO_DEVICE will be a single field in the parent
+vmsd of "virtio-blk".  Meanwhile, "virtio-blk/inflight" will be the only
+subsection.
 
->
-> With that fixed
->
-> Reviewed-by: Anton Johansson <anjo@rev.ng>
->
+Now, if you hit a LOOKUP error of trace_vmstate_subsection_load_bad(), it
+means the dst QEMU hits this:
 
---000000000000d5432e064b941cce
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+vmstate_subsection_load():
+        sub_vmsd = vmstate_get_subsection(vmsd->subsections, idstr);
+        if (sub_vmsd == NULL) {
+            trace_vmstate_subsection_load_bad(vmsd->name, idstr, "(lookup)");
+            error_setg(errp, "VM subsection '%s' in '%s' does not exist",
+                       idstr, vmsd->name);
+            return -ENOENT;
+        }
 
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
-mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Feb 24,=
- 2026 at 6:20=E2=80=AFAM Anton Johansson &lt;<a href=3D"mailto:anjo@rev.ng"=
->anjo@rev.ng</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" styl=
-e=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);paddin=
-g-left:1ex">On 17/02/26, Taylor Simpson wrote:<br>
-&gt; From: Matheus Tavares Bernardino &lt;<a href=3D"mailto:matheus.bernard=
-ino@oss.qualcomm.com" target=3D"_blank">matheus.bernardino@oss.qualcomm.com=
-</a>&gt;<br>
-&gt; <br>
-&gt; Table that records which CPU revision introduced or removed<br>
-&gt; for each opcode<br>
-&gt; <br>
-&gt; Co-authored-by: Brian Cain &lt;<a href=3D"mailto:brian.cain@oss.qualco=
-mm.com" target=3D"_blank">brian.cain@oss.qualcomm.com</a>&gt;<br>
-&gt; Co-authored-by: Taylor Simpson &lt;<a href=3D"mailto:ltaylorsimpson@gm=
-ail.com" target=3D"_blank">ltaylorsimpson@gmail.com</a>&gt;<br>
-&gt; Signed-off-by: Brian Cain &lt;<a href=3D"mailto:brian.cain@oss.qualcom=
-m.com" target=3D"_blank">brian.cain@oss.qualcomm.com</a>&gt;<br>
-&gt; Signed-off-by: Taylor Simpson &lt;<a href=3D"mailto:ltaylorsimpson@gma=
-il.com" target=3D"_blank">ltaylorsimpson@gmail.com</a>&gt;<br>
-&gt; ---<br>
-&gt;=C2=A0 target/hexagon/tag_rev_info.c.inc | 613 ++++++++++++++++++++++++=
-++++++<br>
-&gt;=C2=A0 1 file changed, 613 insertions(+)<br>
-&gt;=C2=A0 create mode 100644 target/hexagon/tag_rev_info.c.inc<br>
-&gt; <br>
-&gt; diff --git a/target/hexagon/tag_rev_info.c.inc b/target/hexagon/tag_re=
-v_info.c.inc<br>
-&gt; new file mode 100644<br>
-&gt; index 0000000000..11c90f86ad<br>
-&gt; --- /dev/null<br>
-&gt; +++ b/target/hexagon/tag_rev_info.c.inc<br>
-&gt; @@ -0,0 +1,613 @@<br>
-&gt; +/*<br>
-&gt; + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.=
-<br>
-&gt; + * SPDX-License-Identifier: GPL-2.0-or-later<br>
-&gt; + */<br>
-&gt; +<br>
-&gt; +#ifndef HEXAGON_TAG_ARCH_TABLE_H<br>
-&gt; +#define HEXAGON_TAG_ARCH_TABLE_H<br>
-&gt; +<br>
-&gt; +struct tag_rev_info { HexagonVersion introduced, removed; };<br>
-&gt; +<br>
-&gt; +static const struct tag_rev_info tag_rev_info[XX_LAST_OPCODE] =3D {<b=
-r>
-&gt; +=C2=A0 =C2=A0 [A5_ACS] =3D { .introduced =3D HEX_VER_V55, .removed =
-=3D HEX_VER_NONE },<br>
-<br>
-...<br>
-<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 [A7_clip] =3D { .introduced =3D HEX_VER_V67, .removed =
-=3D HEX_VER_NONE },<br>
-&gt; +=C2=A0 =C2=A0 [A7_croundd_ri] =3D { .introduced =3D HEX_VER_V67, .rem=
-oved =3D HEX_VER_NONE },<br>
-&gt; +=C2=A0 =C2=A0 [A7_croundd_rr] =3D { .introduced =3D HEX_VER_V67, .rem=
-oved =3D HEX_VER_NONE },<br>
-&gt; +=C2=A0 =C2=A0 [A7_vclip] =3D { .introduced =3D HEX_VER_V67, .removed =
-=3D HEX_VER_NONE },<br>
-&gt; +=C2=A0 =C2=A0 [F2_dfmax] =3D { .introduced =3D HEX_VER_V67, .removed =
-=3D HEX_VER_NONE },<br>
-&gt; +=C2=A0 =C2=A0 [F2_dfmin] =3D { .introduced =3D HEX_VER_V67, .removed =
-=3D HEX_VER_NONE },<br>
-&gt; +=C2=A0 =C2=A0 [F2_dfmpyfix] =3D { .introduced =3D HEX_VER_V67, .remov=
-ed =3D HEX_VER_NONE },<br>
-&gt; +=C2=A0 =C2=A0 [F2_dfmpyhh] =3D { .introduced =3D HEX_VER_V67, .remove=
-d =3D HEX_VER_NONE },<br>
-&gt; +=C2=A0 =C2=A0 [F2_dfmpylh] =3D { .introduced =3D HEX_VER_V67, .remove=
-d =3D HEX_VER_NONE },<br>
-&gt; +=C2=A0 =C2=A0 [F2_dfmpyll] =3D { .introduced =3D HEX_VER_V67, .remove=
-d =3D HEX_VER_NONE },<br>
-&gt; +=C2=A0 =C2=A0 [J2_callrh] =3D { .introduced =3D 0x73, .removed =3D HE=
-X_VER_NONE },<br>
-&gt; +=C2=A0 =C2=A0 [J2_jumprh] =3D { .introduced =3D 0x73, .removed =3D HE=
-X_VER_NONE },<br>
-<br>
-I assume you missed HEX_VER_V73 here<br></blockquote><div><br></div><div>Go=
-od catch!=C2=A0 Fixed.</div><div>=C2=A0</div><blockquote class=3D"gmail_quo=
-te" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204=
-);padding-left:1ex">
-<br>
-With that fixed <br>
-<br>
-Reviewed-by: Anton Johansson &lt;<a href=3D"mailto:anjo@rev.ng" target=3D"_=
-blank">anjo@rev.ng</a>&gt;<br>
-</blockquote></div></div>
+IIUC, when reaching here, the load of VMSTATE_VIRTIO_DEVICE should have
+been completed, because we always load fields before subsections.
 
---000000000000d5432e064b941cce--
+Meanwhile, when reaching here, "idstr" should be "virtio-blk/inflight",
+because that's essentailly the only subsection this parent VMSD has.
+
+vmstate_get_subsection() should try to lookup all subsections matching it,
+and it should find it.
+
+I do not yet get why the VMSTATE_VIRTIO_DEVICE can get involved in the
+lookup (e.g. it is not on vmsd->subsections), and why it caused failure.
+
+Could you help me to find where I missed?
+
+Thanks,
+
+-- 
+Peter Xu
+
 
