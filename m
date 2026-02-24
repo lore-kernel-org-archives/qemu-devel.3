@@ -4,95 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13F31EF5862
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 16:53:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CD35F3C9AF
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 16:54:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuveb-00010v-U1; Tue, 24 Feb 2026 11:52:57 -0500
+	id 1vuvfV-0001TE-Tf; Tue, 24 Feb 2026 11:53:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vuvea-00010L-He
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 11:52:56 -0500
-Received: from mail-yx1-xb130.google.com ([2607:f8b0:4864:20::b130])
+ id 1vuvfV-0001S6-79
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 11:53:53 -0500
+Received: from mail-yx1-xb129.google.com ([2607:f8b0:4864:20::b129])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vuveY-0002wv-0t
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 11:52:56 -0500
-Received: by mail-yx1-xb130.google.com with SMTP id
- 956f58d0204a3-64c9cabfe5dso7648d50.0
- for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 08:52:53 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1771951973; cv=none;
+ id 1vuvfT-0003Hv-Tz
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 11:53:52 -0500
+Received: by mail-yx1-xb129.google.com with SMTP id
+ 956f58d0204a3-64ada2c30a1so4951795d50.0
+ for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 08:53:51 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1771952031; cv=none;
  d=google.com; s=arc-20240605;
- b=Lz7RowpTck/sVw3D47f3tlNuJInBce6qsIsFd6PkkylBg0piQyHQz+MNJZ2tZdxp4P
- +6JX3LoN3l/HfyoyfpIqYT87nnb0fFerfAba8T4Yz6+UcmROlBlJKOpzNFWTmNCjAMNn
- UZzXm0CXCbbzIkCrY/Sp4ynTbzwWipPV7ooL+Ax3cdgjtM9ZUV3bt4T5tZhKho5fP425
- 1cMpw9pIlNX6+MqXKIXHZh6iBROG6UmiS1MmMJpDQibRuiRfA2FllnnvKjO8HSpu0PDa
- 230fMb2i3i7jpto6Q7DzW+JPJfLAq06hzebCaF/G+2z2XmGCTcA44T/akFjmGTZ9dnYK
- z01A==
+ b=bxeZLSHe8t8b19virPAuBirZLIGC4M9MQ7oFVaj+5dlKAB0ALomwC7xuaIylXPf0zP
+ 85rP9L1onJ11HOsRldxDHKqMop9GIjlkKecsfVY3jJFPuzvxJIuzYonpEkEUaulE++Cx
+ Pon158dMmflAWDdUiUnJiq06+EgDyv1Z7gF8aGG7rYvPy4uqYZrq7W7k1BLPwltzp5+Q
+ V6korCd+cieKVS/iK8OLgkYVRNaHZHXPKPAUBvhSxusNTsFsBbFGzhMTvIIxmW9jSVNE
+ PJi9M6D/VNYFLZLnyWgv1AzFjUdF841sy6qsOuHJEEAzxVjSzIHmymQf1VWf4bQnqGbz
+ PboA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=PsaKSKL3Vyo7u3RWSyHSRYQELZxA2qZeIsk8CpalaQA=;
+ bh=aPOykGTE5Ha5nYzLfR5Q8IwVEp75sHBjcqiZSuhKhrE=;
  fh=GI2e/SBiq4MTIPc9mHou6R6WJe3VvhdDMWKbaXflkfU=;
- b=gIb83vqpP29SLHjVryYhjfn4rL/ZEirkIuYSWQtvo3RAdgLZlMhD4/ruD3RkVpjdW2
- LzSzJ+8KS7j1PqVabnFGmezz1StPNW+roGo8oPUA8IJrec+/Apsw4xcXfXdtK9Djz/yF
- kxJfOgpGrucxUjLwd4TKvulkzqREDCaEUOaSWtYclXnOLz3/CJXxmyO2B/yFMf189EBG
- QGkdk6yebrXxkJRiHyHzcpUBAlzRhBETUj4jhN+dFt7Uf1ht5hC3tVIHOuRvYv5ozGer
- Fw+EN35Ph0OdsbVwxiB+Wpg2L3SfJIXP1TKn0QKvUm3W1sMsCo/WldEUN8QY5AHjDPIM
- Pv+g==; darn=nongnu.org
+ b=bnEoGcceIquehApO4UqmArHlqjiv0Ovl4Fkze78Tpe6ikggxlYnIUDvIvQ9ZAAw4va
+ 7eD+If0i94eTJjgdw6hh+ZYwOhFOsZEvelp6SUq/vbnaUIyoxACrcZs4n/c2MxJXLMDs
+ NMMnjNtlwdQaAIZBROpPVhJvuHpBwb6G6yxKf61cwAjGUpZYWUIk3wX3WRZcdII3MUCi
+ Otkh90faz7rcGlhZYK+1rhc94iGOCjk50GWAS1QpBZrPSt3FcyOudNcnzprzHv1gYuPa
+ xADD+mcajKCoNltz6fMRbkr8R3tGHWPkmA3QmzCLkvw4GoswsYoSGjbqTD4gCE6Mwf7p
+ zRwA==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771951973; x=1772556773; darn=nongnu.org;
+ d=linaro.org; s=google; t=1771952031; x=1772556831; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=PsaKSKL3Vyo7u3RWSyHSRYQELZxA2qZeIsk8CpalaQA=;
- b=Fgfaq/y89tRGt8Zcum+tSwEnqFldDIEgnxJwUStdtHlbomVREt+y+uyWU5W7rQ0yVs
- u3O+UxzE/HIsLpmiS8MzKE9WgQt+GIWQkjXhm2XV8qWG70pQqLg7RYFzUXcuOEml3qat
- jiqrFBcEcXxRTtK0ZnPN3liy306WAQ9qRL9EmEOCWqFcNMOjB9RpMvo83W9xGHDmBiTw
- TScwV7o4z3+vuIjX3YU+mL9xSvmxl3+ima6E4rjGqLGZ7lnb/9Hmz2nykEwti4Qq10Ep
- hR87oCYa86+gnufKp7pBv7B0sniyTZ1CwGCLCOW0CNVOqgdyXfKAPlwyhupSD59wyY90
- GOAQ==
+ bh=aPOykGTE5Ha5nYzLfR5Q8IwVEp75sHBjcqiZSuhKhrE=;
+ b=YN/ciSyn+ogQCfcM8XYx+1ZhxTO57BD00RLoNJCNR0wCOsHmMqLXpMEBncGkerwM0f
+ FC3wbupZl0IovCcsM9esweuQ88fFwMNIYeuimmHTDt2G2GssaMMuV+aiLzaNP9jJTsiu
+ hkHFOTom6dfgqvk4Gx+MsUE/imy3HGpRrglZqw5DH5/LETKg46uXqgGWQLzLBE6ikqqb
+ pic/FbJi+cJMGuxJGgdEX8fuIl7fnA+1ZIJ0VPpJXFcZWuVPYgDSpcG2VvE9uh9MUit8
+ XHRPEjrIep0Mi9Lcigh9Jibknw+0cq5B0ixqGGL6q3/6dfvHmuZWYdWRFxyCJi5O6nwc
+ yYUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771951973; x=1772556773;
+ d=1e100.net; s=20230601; t=1771952031; x=1772556831;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=PsaKSKL3Vyo7u3RWSyHSRYQELZxA2qZeIsk8CpalaQA=;
- b=Czxwmvs+7P2nhsxstiRcLgmvo1A3rkgN3+6SaeM7CLPCcVJP7OVvZfL0LnjozSe3ay
- nFqyU18f5LWtrif/HYTzSoKps2PSFg3tOsYcQhuSsdtPW7LjNL3Hm2TOtlP1AgEIeaIH
- KdvKVkwVhfk4seIXotALZZIxeJHUJnKggAcHWmEra6NInIX+0cVioDcKearjnkH32LFI
- PXsL7k9zkn8Of5f4gX1i2haIdFVTMvtF0PL2W6gLoaCRmLrEIwchaUt4LC0SbI0JETi3
- Yl+pZbWkEO4lsQnGXlx94pu8tC8Wam4j0c7p4otYw+O5XBDZVQMyjSbmMAs6X9hA6MaF
- alxw==
-X-Gm-Message-State: AOJu0YzE6U+gXxxTD4g+CdISh0HryiqK5hNe28KOX8FPMGjIWdamapQx
- Ki6tFYaAdJunfxeHEGCRZGXkb4eUVfDG0eBgXuLouTVPLw1XH32fWxyHbTSreBWwavBje+njLJ1
- 1WHaZxKijb3OMDlwfTTDFKUSc9WmyPCye5n9oFeE4jOo2yPMZ7yHF
-X-Gm-Gg: ATEYQzxNTJzhZKU4OL6WYNJ/22mYpDtNHEQFZElJHJdh6j26tc100gDwogiu2jTr3vS
- y5LicetQkDnmSX092WfsSSOQSBUs9Kcbb6Sea6qqc5zVSPPUyu6CF0ms8wqbHDBVnFstCq8/DHU
- ZUwXc3Lj2NzBT4bibV4wkPOfbEyTytM3FF4PZ5I3N3C8hw5yFcyS9wqBO/Aaqlk/Rn8BFI5867X
- I+kB/vj5/kN2FqF0cQEQdbO8dT6g5lI5iTRhyDbiGitKrsm70Pi/y77KxwiV0pQggXj6zqbLuKe
- 9O5GAxQoJpq6Iw8T3GHMlj/0Dmj0Df9zTX1hgjr3MmYslPPU/mDMVnIlc/oY0AcmI8o=
-X-Received: by 2002:a05:690e:138a:b0:649:6644:7964 with SMTP id
- 956f58d0204a3-64ca61a29f4mr492321d50.22.1771951972759; Tue, 24 Feb 2026
- 08:52:52 -0800 (PST)
+ bh=aPOykGTE5Ha5nYzLfR5Q8IwVEp75sHBjcqiZSuhKhrE=;
+ b=IDoIk/LRtVZoFd7YG0orafUQiHfHCXwFwJmmcG9RLGrnPjZwg11EqPIdzLojWsoUzH
+ ykfhGyhgnAmGWK2UofXgqOk7VKGrpaNBg0VqkvG6apq0Zf0U7DwcFa7PSzaGapxgVg7K
+ /NEOFcOhpks+ifakJNf6/vLdp+eEWVAINvdw83oqtN/SHbU/vCEgsxRGOMu8CdGgLLrS
+ zn2zthUIlTwEvyRUwnHHEhIA/3iwpMYaD6tUv6Y1I7XBLHGBor4nRrzZAOY7x3VbTGfx
+ Ln1rrx5EdrWuWVXYjJXDOdUkZy1Po/e+47BpV8FZHJJoufIbdX7xorrpCa3pOTc0t5lO
+ xHFA==
+X-Gm-Message-State: AOJu0YzUyXKt33992cq3uOwJFbaALyEj94BhWHiBSAPTHBoPVJmjpTHa
+ ZWdS/tN4wpACWV09fvsQcCHgPlIP9NbgjdX+fWssQqDxclVbg/JPhMToXM/dNEKjtW7EjWLLDZw
+ 7hIg77AP9BVWvnml2QhZpkFL7mGcVEVM8TIdFIlDdCxaywx6vyqDM
+X-Gm-Gg: ATEYQzwftuno2MFyfvBL218Xkhj5Cb5TLipY9urj5VkQZ/ZGtxsZGeIxEBZX2Mz7Kgm
+ 9cs7gxqob06aErr7HRWZ9lkhNBkn7Km5Jmao8b+Hpm2tcIHSA7DFO2ypoZyhnlrhcG6cBz4ei0P
+ bcbBXgeaPmSjFIQfF+WTPXQg2+WtBo6JQ/FhxfP0skQHIYF8S6LUxe1Pqmo5EUP5dSDyFmQ37Mg
+ 1X/zoZ709NV0ah9TwJlRgoek1t7hOAvvgp/i+rqO8UQml07xukt+CXf0/uW0pozyGAbjFNKhpYJ
+ FezYo+MuW2jmHmKbj7kCuktprg9qBWqWKFMx4XtTSFPlmctPSNmv91RxIetm6B41bQM=
+X-Received: by 2002:a05:690e:140d:b0:64c:a37b:53cf with SMTP id
+ 956f58d0204a3-64ca37b551dmr1195675d50.77.1771952030621; Tue, 24 Feb 2026
+ 08:53:50 -0800 (PST)
 MIME-Version: 1.0
 References: <20260216034432.23912-1-richard.henderson@linaro.org>
- <20260216034432.23912-11-richard.henderson@linaro.org>
-In-Reply-To: <20260216034432.23912-11-richard.henderson@linaro.org>
+ <20260216034432.23912-12-richard.henderson@linaro.org>
+In-Reply-To: <20260216034432.23912-12-richard.henderson@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 24 Feb 2026 16:52:40 +0000
-X-Gm-Features: AaiRm51InR1Rhy_EEBPGLNlfgpsVRtOzWDkIz51aop8g5Z0-TRANtXEhCP4SI4w
-Message-ID: <CAFEAcA_0ueuehtayiK5svZEDos_3FdjXwg58-vHef+ZTGpVW9Q@mail.gmail.com>
-Subject: Re: [RFC PATCH 10/13] target/arm: Add vq argument to kvm_arch_{get,
- put}_sve
+Date: Tue, 24 Feb 2026 16:53:39 +0000
+X-Gm-Features: AaiRm507lf37kI1MDomHH95cfbjz-aPojLU_H_zJHmUpyPQsHs_3R1dtp9EP1aE
+Message-ID: <CAFEAcA8bDw57hc30bHH9hDpL_sXfE3XQ6Ob4AOjo9WzW5U3ubA@mail.gmail.com>
+Subject: Re: [RFC PATCH 11/13] target/arm: Add have_ffr argument to
+ kvm_arch_{get, put}_sve
 To: Richard Henderson <richard.henderson@linaro.org>
 Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b130;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb130.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b129;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb129.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -115,31 +115,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 16 Feb 2026 at 03:46, Richard Henderson
+On Mon, 16 Feb 2026 at 03:45, Richard Henderson
 <richard.henderson@linaro.org> wrote:
 >
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->  target/arm/kvm.c | 27 ++++++++++++---------------
->  1 file changed, 12 insertions(+), 15 deletions(-)
+>  target/arm/kvm.c | 32 ++++++++++++++++++--------------
+>  1 file changed, 18 insertions(+), 14 deletions(-)
 
-
-
-> @@ -2139,8 +2138,7 @@ static int kvm_arch_put_sve(CPUState *cs)
->      }
->
->      for (n = 0; n < KVM_ARM64_SVE_NUM_PREGS; ++n) {
-> -        r = sve_bswap64(tmp, r = &env->vfp.pregs[n].p[0],
-> -                        DIV_ROUND_UP(cpu->sve_max_vq * 2, 8));
-
-What was going on with the double assignment to 'r' in the old code ??
-
-> +        r = sve_bswap64(tmp, &env->vfp.pregs[n].p[0], DIV_ROUND_UP(vq * 2, 8));
->          ret = kvm_set_one_reg(cs, KVM_REG_ARM64_SVE_PREG(n, 0), r);
->          if (ret) {
->              return ret;
-
-Anyway
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
 thanks
