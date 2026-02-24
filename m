@@ -4,106 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73B4EF3C9A9
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 16:03:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27B91F3C9A9
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 16:03:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuusL-0002iQ-Pn; Tue, 24 Feb 2026 11:03:05 -0500
+	id 1vuusU-0003dN-9c; Tue, 24 Feb 2026 11:03:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vuusH-0002XX-NQ
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 11:03:01 -0500
-Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vuusC-0001pD-Qo
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 11:03:00 -0500
-Received: by mail-ej1-x630.google.com with SMTP id
- a640c23a62f3a-b79f8f7ea43so924348066b.2
- for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 08:02:46 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1771948965; cv=none;
- d=google.com; s=arc-20240605;
- b=cdFGEezL0tbHNJWD2CAfmqfAxDIIKzfJ5CR5NwFzBkYoyiFaGdoXa+1ymlF2XigWcw
- kFksecqe+UUJP7LXIQkuH39UFlUrJE9WLq3XGFOk8fjARE8QzWmFi4+W8JjyJSJTUvga
- 7KGtxt3AgMe615idg/OpWULCRLXE/+7/Ps9XsAM4oRkiYW6mBXbqyRrXts3rSyANH5+F
- pEPuGywFhnBaKB93e66joj02gmxQqVWUPkletirP/5rQsADAz34xERgnCV82jlS6SZjj
- E6wI/PWd2dZgNTScM6DT1JB3XDI0/GnsfkrlZuPJ+h6TSoJmaX3fmhf0tIkxM1caVYQi
- tv2A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=u7sPKV3brofakR1UEqXphmFxjaegh21/9ejPoGpH5zM=;
- fh=DaSAIivXX/C4o8kfUhBlmXGwFHGIlaD/jncWGJseTBA=;
- b=MbjnYTaLpTn5X6LYittUuy7XVB0a6X/DNsTCO0FgLdnrT/bQxZs4MznuBA799K4A6d
- sYA76pJ+Ni+/J09xMcWaMej1fVEM0PZ3dUAec3HzMSeC+hA3m6FKdjx3nAYMk/UC+O/e
- AzMcFYnbE0MozXdYt31nBPBnjDBsyE3dA4lQZtvKyQcoqC389fN9Nul7qpoFpGOsW91K
- 0Q/BY5Er0ZYfGZY7F4vWCxYsvbmZcul7CHBAL8yRRqnqfH8ff9od7jx9HhE3Vxl8A6Hq
- 9ZiuabzJX/Ar8La5QHIHUGpqdwwkHTjttwGlAABMRbRDzHJx0ENcT1U1zDYW0fSiysBq
- D9ww==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771948965; x=1772553765; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=u7sPKV3brofakR1UEqXphmFxjaegh21/9ejPoGpH5zM=;
- b=rPVxuaPrlEInPAFq4x44mAi3Hjb4Y70TLfvzpM/QT7fw0m/Knp+SNeOcQ7FH1zMBfw
- 84kMaY61X5LfQ7PuP85AN06YvvUO5HawF90HRhfmeRVdC4QfT0mPGGH9b+aQTuzjSURN
- eKILpjh2eFSTVQspNWHlLKqLSFQWlBj07c1Z5rgHgmJBuPHxcbVDLoGm1a1HVrXjzAt6
- NawWtaO+VSScR0xaiOgvTO+zKT9dOsrCaNY/MJAL7XhbyWXJ0ib+A4PBrYIb7ApK3r8q
- yivVXNuHmH7sUamBv2au/hYm4FqSaL5+61aepWW4GqWwSxqOE2qSu2F6XgOu/+QxXuAV
- VQKA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771948965; x=1772553765;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=u7sPKV3brofakR1UEqXphmFxjaegh21/9ejPoGpH5zM=;
- b=G38kMH2RATeeGVujuTTu/D+5Drf8pZDYKQFnaQmh8sfQJkda9aXFiGsO/meF8JjOMR
- BxYmbeZRHMaiU0dVaUh1ygpypPDeda91+N1fN2xvsfkmTTEgee0UjOKjAcZ+n+bdbfa8
- xY1eWrgFw+HRxmSFQGYx2p/bnX5TD0XIT1UWyRRELoZeHnMBEGE5bWMhHSaBx+Hm6PHk
- fEkZzczMiSlkRgyj0gf+tmT6p6X0BGIF3j/1McJyWBzXBlWJ1MdZ9Uc5SAjwohL68mfS
- 69fyZdYKxQRr4ckQTiVc14yqq7RR0dogJDk568SF6of8cnhv6dbDc7Z+x8wJ77RJsx9t
- E1tw==
-X-Gm-Message-State: AOJu0YzGEQqM+8R0wbgi06toKGNusOlANTFIGUFPUAJD/5P68LYEJtuR
- UoSiryLcahK4IRzIYzYEYDhHOzBYKAXBvnWPZmWeUPknUoGYrdvzMubPJarsCKrKNWayVzqt7dW
- MzMQNg7bPa1m4hv1UopAnI0I29JCRa896LB1O/HUwjA==
-X-Gm-Gg: ATEYQzxlcDdvfPftqntE6/dqBGYpCwX0gNoSGcufbFHLcxJ8aT2Oc5pGHUdNSRrn73A
- 5j4DEsvOPg09iI1R7mE3P81FdYBYVKyEVltQ8AIF/UQRzIINhwt2baWkmWnU5j698VXpTSxkeNg
- +IhCAmSZY7EjsyIOoc/jISKm3t9YvobzAKEsPH6ZH+soQpkKlIVohgTri8QMcWS9SF7Zc+ZZlga
- fieoCac81TCjLAef1MICNqOzuYckWYyPQ0rJvrJ41CbXn1TijefjXt/hC7plsadobeRW+M8h7re
- 7RHRRUEvxyHwQKhhodE4uR5p26V1rBLUX/tZscXGLGa9GPldB8udaYBgMfO7qceDyFs=
-X-Received: by 2002:a17:906:ccc7:b0:b8e:12fa:ff2b with SMTP id
- a640c23a62f3a-b9081b4d924mr570141566b.37.1771948963351; Tue, 24 Feb 2026
- 08:02:43 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1vuusO-00033G-4l; Tue, 24 Feb 2026 11:03:10 -0500
+Received: from frasgout.his.huawei.com ([185.176.79.56])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1vuusH-0001pw-QL; Tue, 24 Feb 2026 11:03:07 -0500
+Received: from mail.maildlp.com (unknown [172.18.224.83])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4fL2YR4jGXzJ46bH;
+ Wed, 25 Feb 2026 00:02:35 +0800 (CST)
+Received: from dubpeml500005.china.huawei.com (unknown [7.214.145.207])
+ by mail.maildlp.com (Postfix) with ESMTPS id 728B340572;
+ Wed, 25 Feb 2026 00:02:57 +0800 (CST)
+Received: from localhost (10.203.177.15) by dubpeml500005.china.huawei.com
+ (7.214.145.207) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.11; Tue, 24 Feb
+ 2026 16:02:56 +0000
+Date: Tue, 24 Feb 2026 16:02:55 +0000
+To: Shameer Kolothum Thodi <skolothumtho@nvidia.com>
+CC: "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>, "eric.auger@redhat.com" <eric.auger@redhat.com>,
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>, Nicolin Chen
+ <nicolinc@nvidia.com>, Nathan Chen <nathanc@nvidia.com>, Matt Ochs
+ <mochs@nvidia.com>, Jiandi An <jan@nvidia.com>, Jason Gunthorpe
+ <jgg@nvidia.com>, "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>,
+ "zhenzhong.duan@intel.com" <zhenzhong.duan@intel.com>, Krishnakant Jaju
+ <kjaju@nvidia.com>
+Subject: Re: [PATCH v7 3/5] hw/arm/smmuv3-accel: Allocate vEVENTQ for
+ accelerated SMMUv3 devices
+Message-ID: <20260224160255.000076e6@huawei.com>
+In-Reply-To: <CH3PR12MB754814ECFD29951EFB571585AB74A@CH3PR12MB7548.namprd12.prod.outlook.com>
+References: <20260219090103.33697-1-skolothumtho@nvidia.com>
+ <20260219090103.33697-4-skolothumtho@nvidia.com>
+ <20260224142857.00005fb6@huawei.com>
+ <CH3PR12MB75483EAD05125D5FD3998474AB74A@CH3PR12MB7548.namprd12.prod.outlook.com>
+ <20260224150154.0000074f@huawei.com>
+ <CH3PR12MB754814ECFD29951EFB571585AB74A@CH3PR12MB7548.namprd12.prod.outlook.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
-References: <20260215112543.4817-1-mohamed@unpredictable.fr>
- <20260215112543.4817-2-mohamed@unpredictable.fr>
-In-Reply-To: <20260215112543.4817-2-mohamed@unpredictable.fr>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 24 Feb 2026 16:02:30 +0000
-X-Gm-Features: AaiRm53uaqUzd4MwsSPn8k1-CBW-0DmoQs0pO6vJXn01wDPs4seH__B43Cfv4rE
-Message-ID: <CAFEAcA9VjwDW8qdR3xQaqaJqge6LP_fvuBg15N9N09JcOsR8cg@mail.gmail.com>
-Subject: Re: [PATCH v10 01/14] Revert "target/arm/hvf: Sync CNTV_CTL_EL0 &
- CNTV_CVAL_EL0"
-To: Mohamed Mediouni <mohamed@unpredictable.fr>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, Mads Ynddal <mads@ynddal.dk>, 
- Roman Bolshakov <rbolshakov@ddn.com>,
- Phil Dennis-Jordan <phil@philjordan.eu>, 
- Alexander Graf <agraf@csgraf.de>, Paolo Bonzini <pbonzini@redhat.com>, 
- Cameron Esfahani <dirty@apple.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::630;
- envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x630.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.203.177.15]
+X-ClientProxiedBy: lhrpeml100011.china.huawei.com (7.191.174.247) To
+ dubpeml500005.china.huawei.com (7.214.145.207)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -31
+X-Spam_score: -3.2
+X-Spam_bar: ---
+X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.358, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.659,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,24 +76,124 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <jonathan.cameron@huawei.com>
+From:  Jonathan Cameron via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 15 Feb 2026 at 11:25, Mohamed Mediouni <mohamed@unpredictable.fr> wrote:
->
-> This reverts commit bfbea371ef2cabc47effac5a286e2644d727a8d6.
->
-> This commit breaks VM save/restore:
->
-> Assertion failed: (b), function hvf_arch_get_registers, file hvf.c, line 667.
-> zsh: abort      ./qemu-system-aarch64 -m 8192 -M virt,accel=hvf -cdrom  -device virtio-gpu
->
-> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-> --
+On Tue, 24 Feb 2026 15:18:00 +0000
+Shameer Kolothum Thodi <skolothumtho@nvidia.com> wrote:
 
-As this patch is a revert to fix a regression, I've picked it
-up for target-arm.next so it isn't held up by review of the
-rest of this series. Let me know if you'd rather I didn't do that.
+> > -----Original Message-----
+> > From: Jonathan Cameron <jonathan.cameron@huawei.com>
+> > Sent: 24 February 2026 15:02
+> > To: Shameer Kolothum Thodi <skolothumtho@nvidia.com>
+> > Cc: qemu-arm@nongnu.org; qemu-devel@nongnu.org;
+> > eric.auger@redhat.com; peter.maydell@linaro.org; Nicolin Chen
+> > <nicolinc@nvidia.com>; Nathan Chen <nathanc@nvidia.com>; Matt Ochs
+> > <mochs@nvidia.com>; Jiandi An <jan@nvidia.com>; Jason Gunthorpe
+> > <jgg@nvidia.com>; zhangfei.gao@linaro.org; zhenzhong.duan@intel.com;
+> > Krishnakant Jaju <kjaju@nvidia.com>
+> > Subject: Re: [PATCH v7 3/5] hw/arm/smmuv3-accel: Allocate vEVENTQ for
+> > accelerated SMMUv3 devices
+> > 
+> > External email: Use caution opening links or attachments
+> > 
+> > 
+> > On Tue, 24 Feb 2026 14:41:08 +0000
+> > Shameer Kolothum Thodi <skolothumtho@nvidia.com> wrote:
+> >   
+> > > > -----Original Message-----
+> > > > From: Jonathan Cameron <jonathan.cameron@huawei.com>
+> > > > Sent: 24 February 2026 14:29
+> > > > To: Shameer Kolothum Thodi <skolothumtho@nvidia.com>
+> > > > Cc: qemu-arm@nongnu.org; qemu-devel@nongnu.org;
+> > > > eric.auger@redhat.com; peter.maydell@linaro.org; Nicolin Chen
+> > > > <nicolinc@nvidia.com>; Nathan Chen <nathanc@nvidia.com>; Matt Ochs
+> > > > <mochs@nvidia.com>; Jiandi An <jan@nvidia.com>; Jason Gunthorpe
+> > > > <jgg@nvidia.com>; zhangfei.gao@linaro.org; zhenzhong.duan@intel.com;
+> > > > Krishnakant Jaju <kjaju@nvidia.com>
+> > > > Subject: Re: [PATCH v7 3/5] hw/arm/smmuv3-accel: Allocate vEVENTQ for
+> > > > accelerated SMMUv3 devices
+> > > >
+> > > > External email: Use caution opening links or attachments
+> > > >
+> > > >
+> > > > On Thu, 19 Feb 2026 09:01:01 +0000
+> > > > Shameer Kolothum <skolothumtho@nvidia.com> wrote:
+> > > >  
+> > > > > From: Nicolin Chen <nicolinc@nvidia.com>
+> > > > >
+> > > > > When the guest enables the Event Queue and a vIOMMU is present,
+> > > > > allocate a vEVENTQ object so that host-side events related to the
+> > > > > vIOMMU can be received and propagated back to the guest.
+> > > > >
+> > > > > For cold-plugged devices using SMMUv3 acceleration, the vIOMMU is
+> > > > > created before the guest boots. In this case, the vEVENTQ is allocated
+> > > > > when the guest writes to SMMU_CR0 and sets EVENTQEN = 1.
+> > > > >
+> > > > > If no cold-plugged device exists at boot (i.e. no vIOMMU initially),
+> > > > > the vEVENTQ is allocated when a vIOMMU is created, i.e. during the
+> > > > > first device hot-plug.  
+> > > >
+> > > > Why do it differently?  
+> > >
+> > > This is because a vEVENTQ must be associated with a vIOMMU, and
+> > > iommufd_backend_alloc_veventq() requires a valid viommu_id.
+> > >
+> > > A vIOMMU is only created once at least one vfio-pci device is
+> > > attached. If the VM boots without any cold-plugged devices, no
+> > > vIOMMU exists at that point.
+> > >
+> > > In that case, the vIOMMU is created during the first device
+> > > hot-plug, so we allocate the vEVENTQ at that time instead.
+> > >
+> > > So, the difference in behaviour simply follows when the vIOMMU
+> > > becomes available.
+> > >
+> > > Hope that is clear now.  
+> > Ok.  So maybe this is just a description thing that was confusing me.
+> > The key to my mental model is that both conditions must be met. That
+> > is SMMU_CR0 has EVENTQEN = 1 set and there is a VFIO device present.
+> > They happen in different orders in the two cases?  
+> 
+> Yes.  And EVENTQEN is set by Guest ARM SMMUv3 driver probe time.
+> 
+> > 
+> > What guarantees we don't get a hotplug event before the guest has
+> > set EVENTQEN = 1?  
+> 
+>  vEVENTQ needs two things:
+> 
+> 1) The guest must set EVENTQEN=1.
+> 2) A vIOMMU must already exist (which happens when a VFIO device is attached).
+> 
+> EVENTQEN=1 is set by the guest when the SMMUv3 driver probes.
+> 
+> These two things can happen in either order.
+> 
+> In the cold-plug case, the vIOMMU already exists before the guest driver
+> probes. So when the guest sets EVENTQEN=1 during driver probe, we
+> allocate the vEVENTQ at that time.
+> 
+> In the hot-plug-first case, the first VFIO hotplug creates the vIOMMU,
+> possibly before the guest has loaded the SMMUv3 driver. In that case,
+> we wait until the guest sets EVENTQEN=1 during driver probe, and then
+> allocate the vEVENTQ.
+> 
+> So we do not depend on ordering. We just check that both conditions
+> are true, and allocate when the second one becomes true.
 
--- PMM
+Perfect.  That explanation works for me. If you respin maybe start
+the explanation with the full conditions that must be met, then break
+down why they occur in different orders in the cold and hotplug
+(after we reach a particular point in guest boot) cases.
+
+Jonathan
+
+> 
+> Thanks,
+> Shameer
+> 
+
 
