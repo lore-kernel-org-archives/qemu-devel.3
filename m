@@ -4,91 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48338E9B24D
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FE28E9B250
 	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 11:06:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuqF0-0001nB-EY; Tue, 24 Feb 2026 06:06:10 -0500
+	id 1vuqEr-0001fp-Bj; Tue, 24 Feb 2026 06:06:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1vuqEm-0001ds-LZ
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 06:05:57 -0500
-Received: from mail-qt1-x82b.google.com ([2607:f8b0:4864:20::82b])
+ id 1vuqEh-0001b2-8P
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 06:05:51 -0500
+Received: from mail-qv1-xf2e.google.com ([2607:f8b0:4864:20::f2e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1vuqEf-0006mb-Er
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 06:05:51 -0500
-Received: by mail-qt1-x82b.google.com with SMTP id
- d75a77b69052e-506a6cf8242so44476451cf.1
- for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 03:05:48 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1771931148; cv=none;
+ id 1vuqEd-0006mH-An
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 06:05:49 -0500
+Received: by mail-qv1-xf2e.google.com with SMTP id
+ 6a1803df08f44-897002b7576so71044166d6.3
+ for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 03:05:43 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1771931143; cv=none;
  d=google.com; s=arc-20240605;
- b=cMytfp4fv5weNCvjJvtzdj8X9enqiTCRAJLl71R83V4QQcCMnD2xdwn7PzLQcXkQyj
- r/PkxwCNlMN4+Uy/lAa297s6JLw4VCzA4U5u9fJJvOng5VfXK5OPc3Ts+cKABTkMT8Ch
- TXO1IeFsQfBldv+fcekCV6QXaPMZ/G41EU+BOVHLnZMPbXkGA2OlYD2fGP5d3SXLjuLP
- 1z1z/Rolp9pEfiOFLPjrKd7nm3RDKRUt0E068lsrNX07QBqwGgOrRPFvuWnXKi/ku75u
- camCLER1TAEIW0yUY4Njoq+90i2BPk8cBSBt1Whsmojqs97SvXLntMtHj3UtZaIfd7sW
- 8VUw==
+ b=A9D0isXXOWfwtVAIBnK666jfdYwW+eFXZ6LeQWzCyiJNxU20uf7eTHpghiQAFCluIE
+ xrMSZsA3wwwF4aduzfAo8D4m/xbwhJtCLbFYpakJt+apQ/D3iKlQXj7W09IgTA2CzX2q
+ RiqUhiCAO7j/b1IlkJvLDwxVucnZqWA8VzWKJk/euC880FWFPjwG4xZtbpW5+qn5n+lT
+ C/2E4vM0vgAn0YsvU0hZN+D4RW0WNO57rmB63aQyOy5g0CgCRyk34y91Dd7eyZzt4/AX
+ FdTVa9MrchIbEsmr+JMXPwGG7v1+yNkgmBHrXJdU80wVbgw6ZxRQvOk1Xm+rrkZVWw4e
+ lLtg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=1EHsAvYpCS6f/WEySJiD1cD5dVAQMZVfAXyNDCrzFGA=;
+ bh=P7VObRBrTIKmHY6Mq/ISv9kSvW4SBkC7ODol1rClFAg=;
  fh=9dqpPjrtVfoOV99Cw5UPSTWOClvvkBcwaQUCMmBtLzk=;
- b=hztzz6JKLFMmfHYrx9E6ZfeI8Q0KY62OYWHK4CLtqsKDP7bTb89hzj8ZlFMCoFmdwz
- xQSawbx+d+JQqofZ6CW6rc1tvhKnG9UY8o48P10BFGMsTTEtHgvAG03vVKv1cn7FYQJU
- hExpeeLxiHV12xi0USAyX+wQZviUhlrohXM8VPD78dFPPt2rXlze0mYJP0LlnF+4mxl4
- eSDLZNc29hMBtaV5aJinRsUnhS9OVNXiFgO/FjcOjjbt9o6lMrlHAsykTmGt6tCKq2gC
- TRkqKXuwOOzpPqoL95bMeFhR6hQnLyWFM2wpZYwMdmzrxcl7+xToiAG/tokQ+8M0OCVD
- kj+Q==; darn=nongnu.org
+ b=GPJz3V3hYDQr6+3l0EiNOG6RwONJlxLTikR+hoZtazLD1VjKowePZyMvmY9oQVDAqM
+ jmC6wJMW05jJK3PH1F0MjPJHVh1mSzgF/WUMuDYeg6coKYF1uczfonWdE0Nf68Q8GhXx
+ i3TYA9EJwVxBR9uOb5M3gFRgbZRSWH3I7ei7l6R7NN0+81E145auqy7EP0xXHTPKp9OR
+ PmlWVWJkDglsK5I0hTOWOP2QVu1mk79wOqL+7OxevsHrSJUHuiMFF3c+DQOV+y/6q2cr
+ diZigH5vfi92d8W0eVj+bHrDszwzyFoOatskelg5NMG0QBJo2iNDAQs+trmSxpwkZWKB
+ kAFg==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1771931148; x=1772535948; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1771931143; x=1772535943; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=1EHsAvYpCS6f/WEySJiD1cD5dVAQMZVfAXyNDCrzFGA=;
- b=M1n8oaaJSWhCXFdEE2yMCezBjfzZnssaP/UbeXb6u0mB35J7WDBz/QRqlZtxHnlzQv
- KxiCfAa2jPAvmGoe/Fo7Aftev3HIoEIqh8CKmUJkzv1HEJMgNtzgfvFn+GT1Ado7TJzo
- kmQ1bURZd1uipp31JR+sFAasNhGswufM3ricgFBUCrWIPnRFo4Ps0iH7oh6zmQGd2IgD
- Vw9oKhA4Zq45FLwoeeM2/UJn7Xu4F8qfkSR4OXZimgQoV2EQp0yAbazMSWHik0PdF5Xp
- 2azEVtdjSVIa6uymOKEgb7dpDkjCVJe70GPNwgb3idvgVI+YH00Rzm0pwXLEBz9S1q+2
- ToTw==
+ bh=P7VObRBrTIKmHY6Mq/ISv9kSvW4SBkC7ODol1rClFAg=;
+ b=kbVZPLuW4mQ32gsj5qNyAgdFzfb4d9hrQLxrzaU65YZ3gcEWQqr3iCFWD8kvNjGTNd
+ Q9BisHFPuCLCApeTaNkaE/9EZom5Bggcg98HbB3JQ/QxHv+4ri9/22wwUorZ16KZIIcx
+ wrB0FzHG/0rgHuOzdTeFh/ykRpvbd/F134N6WCFmCUHT/Ah3POO2Vi2JBqxD7Q3AjdcA
+ NAf9iwwASAq8PjQ1Y45aZrzWW5oc4qUfUL0YwLKOU8eCu2zhOdBYEF8zFU7ndJ8qf+Tn
+ QS/UUSsmJ/stWv7ekH5uqmLAW08gX/MWxyj+wCK8K3bLdeefQaA09duZcin2ssesS1li
+ iiVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771931148; x=1772535948;
+ d=1e100.net; s=20230601; t=1771931143; x=1772535943;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=1EHsAvYpCS6f/WEySJiD1cD5dVAQMZVfAXyNDCrzFGA=;
- b=ibdr9xFF84ngDisjpP5tzwvJeUb1+eNubPC8Bn2k7/mbwBg/ASfVK4HUnypRgrVx7t
- BJAHAHi39ukVszWPJLMVUctnl62bliqy/E1nhpHiG/EuCjM78iv4/1Y4O4Cd407Y+ysy
- 4rAfg0OBjlWZAnoRYVfzSDNGETafIRaLPhF1a3j2OIMh+EgefT6Spsz1v/zpLM4URUjA
- BD+oeuM1WUrD/hXlRPs/mU/maATje99Dsve4GVdH+SVMDYGeRkdeW2OuqFB26/QE46tJ
- eKiDcm7x14W2eTJ7Kt3dg8n8326lHjYbD4uGK9NFCHn06o5HTUbH0W0h9Ssr748QQjoJ
- Tj5Q==
-X-Gm-Message-State: AOJu0Yzf2cp66fcKq5g8Wy2yrUBOt/zwn5EFOPsSQuvIZBZE9fTXG6AC
- D3NWmjV4jfp4pzID74H/IAhIpJCAm5k5TgLr0u0djG39rQZLOE3mQPlKj+Hlnbm1+JQ4BLBdTar
- nYpncSGgxZbIzIHI4N6nx+0dr1z5k9hs=
-X-Gm-Gg: AZuq6aJ2UmRNgJsS/IBvHOc6/9y1uOq7/NNJjNbgn2unDLqfmya7t17RaTqNlaV3zZB
- v4lMR3LgO7Wd7R7OSEq/eubh/7UXfMrFY2+2eDNeEL0xbTHCh2DkejuZDGF0JYif/qDT8xxyFs6
- 6XnQDaxMhp8KmgVcm6YAL0xsBDKmve70ieve30xsqjvY1rl23vR0sKI+QVKnqZXt994DwEpvTfl
- iu0u1fTeyuU+xdNzU9uAV5YtRBGzjyaU6vIPDbpKl0tEDvF02Wj85HyB712rZnSpuUjTSddIcB2
- H7LA9c4=
-X-Received: by 2002:a05:622a:1646:b0:506:9d3e:67ee with SMTP id
- d75a77b69052e-5070bced339mr154351691cf.71.1771931147596; Tue, 24 Feb 2026
- 03:05:47 -0800 (PST)
+ bh=P7VObRBrTIKmHY6Mq/ISv9kSvW4SBkC7ODol1rClFAg=;
+ b=vAL1a+vVzWaMKVAZgPbt2s7kUKGTvpp9omFtprPgDkGvho9e/d3N67TY+YnIICjxnL
+ u2jeAup4Z9GiARG5h/j2CYpui8hLkCWEHlwzGhFYmp4kyD2jHJXP1FAW5b9EImODqV9A
+ T3Hjb/+ltT8WIxncny/5FHvT0ykDGh6/jIfmHa7ZnfnHLM3BmjbI+PoQK419nOLgHOd1
+ b9VdOMVRVxr5uwHulZugJlGQBGNDzVR7+SaOvRKCD+CqQIOYy0AfckVoP1Lh0L9kqI78
+ IcIdeAwcXyl3blgAyFgyL4Wfyph0+vf1Fiyn3WSb4b5HIVkbmrFeJe+yhJcBbxDjk6LM
+ rpDw==
+X-Gm-Message-State: AOJu0YzWaNnMwmwj7A4KjXT/eDbrtsuziSjpo9t92S1Z5noiozyLxEnZ
+ 5XCi1IlKbxf9KIdl92R8NNvMQLmicoy/qm6xLzCp0WD2tStO/gMNh38GFSZx7hMmNcvUQ20xRc2
+ D0EmxI/wBhLcXbTIl56wbBCZzLR5QotM=
+X-Gm-Gg: AZuq6aJgqx27S7rVpIbDk9fZHU1eiSpzFQ/6J1S9CEhvgb8l3ERW1yZZjGyUJ/MmJ6U
+ 5lHE6aCf3Pn7ORmLaRE6G5U/6FLKB1W843mSAnhBPlU+Vv/fD0C2iQm56oMFCN8P1tl8H8FhACH
+ Gcn6Y33xLtFT5WujfQN/QXBcAaVApgA+VXqo4axbpcUMAMCrb/A75TY2yV/KtcMOZrdLdkTP4j1
+ qZM9HiRn8tRjsXK8A1bZJMqNWeyp79q95SO35tW5y40EwErVymTkWA5g64heKvLsfAMaUINDcal
+ oWgO8dw=
+X-Received: by 2002:a05:622a:1987:b0:4f1:be34:aa09 with SMTP id
+ d75a77b69052e-5070bbd9f55mr164062841cf.23.1771931142801; Tue, 24 Feb 2026
+ 03:05:42 -0800 (PST)
 MIME-Version: 1.0
 References: <20260223202512.1308205-1-heifetz@yandex-team.com>
- <20260223202512.1308205-2-heifetz@yandex-team.com>
-In-Reply-To: <20260223202512.1308205-2-heifetz@yandex-team.com>
+ <20260223202512.1308205-11-heifetz@yandex-team.com>
+In-Reply-To: <20260223202512.1308205-11-heifetz@yandex-team.com>
 From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Tue, 24 Feb 2026 12:05:36 +0100
-X-Gm-Features: AaiRm51cmw3U8PWn8F02qCNPKXPD8aDagwpyTAIkY0F0HLjObOVJqkYYyEjfBCg
-Message-ID: <CAJ+F1CJZ8YqXKUcX_4k22W5xO4MvmyyH-bkVWCdcasEUMRs9TA@mail.gmail.com>
-Subject: Re: [PATCH v2 01/10] audio: add `audio` build option for meson and
- Kconfig
+Date: Tue, 24 Feb 2026 12:05:30 +0100
+X-Gm-Features: AaiRm52ZoqZwsjdqDnBiIaIEzNrYt2kbbaZLgdkCWtLP3G79oBIjvnLtl1uHpAc
+Message-ID: <CAJ+F1CJ3tH3woNihc8-3bt8KEFmCqdP4d6WJ-=x7Mx70gaKNew@mail.gmail.com>
+Subject: Re: [PATCH v2 10/10] meson.build: ignore audio drivers when
+ configured with --disable-audio
 To: Sergei Heifetz <heifetz@yandex-team.com>
 Cc: qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>, 
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
@@ -105,8 +105,8 @@ Cc: qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>,
  "Dr. David Alan Gilbert" <dave@treblig.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::82b;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x82b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::f2e;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-qv1-xf2e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -129,113 +129,135 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
-
 On Mon, Feb 23, 2026 at 9:27=E2=80=AFPM Sergei Heifetz <heifetz@yandex-team=
 .com> wrote:
 >
-> This patch adds the `audio` option to meson_options.txt. It is
-> propagated into Kconfig as AUDIO. It is enabled by default.
-> The corresponding `--disable-audio` and `--enable-audio` options
-> for `configure` are also added.
->
-> For now, this option does nothing. In subsequent patches, it will
-> gradually disable audio in different places. The final goal is to stop
-> building sources from `audio/` and `hw/audio/` and other audio-related
-> files (except for some stubs). Note that this intent is different from
-> `-audio none`, which mutes audio but still compiles the audio subsystem.
+> When QEMU is configured with `--disable-audio`, we do not need to add the
+> audio drivers list to config_host_data. We also do not need to print this
+> list.
 >
 > Signed-off-by: Sergei Heifetz <heifetz@yandex-team.com>
 
 Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
 
-
 > ---
->  Kconfig.host                  | 3 +++
->  meson.build                   | 3 +++
->  meson_options.txt             | 3 +++
->  scripts/meson-buildoptions.sh | 3 +++
->  4 files changed, 12 insertions(+)
->
-> diff --git a/Kconfig.host b/Kconfig.host
-> index 933425c74b..ec129aa4fc 100644
-> --- a/Kconfig.host
-> +++ b/Kconfig.host
-> @@ -29,6 +29,9 @@ config IVSHMEM
->  config TPM
->      bool
->
-> +config AUDIO
-> +    bool
-> +
->  config FDT
->      bool
+>  meson.build | 80 ++++++++++++++++++++++++++++++-----------------------
+>  1 file changed, 45 insertions(+), 35 deletions(-)
 >
 > diff --git a/meson.build b/meson.build
-> index 414c8ea7e2..fdb2578447 100644
+> index fdb2578447..ae71a0dd91 100644
 > --- a/meson.build
 > +++ b/meson.build
-> @@ -68,6 +68,8 @@ foreach target : target_dirs
->  endforeach
->  have_user =3D have_linux_user or have_bsd_user
+> @@ -2272,46 +2272,55 @@ endif
+>  config_host_data =3D configuration_data()
 >
-> +have_audio =3D get_option('audio').disable_auto_if(not have_system).allo=
-wed()
-> +
->  ############
->  # Programs #
->  ############
-> @@ -3250,6 +3252,7 @@ disassemblers =3D {
->  have_ivshmem =3D config_host_data.get('CONFIG_EVENTFD')
->  host_kconfig =3D \
->    (get_option('fuzzing') ? ['CONFIG_FUZZ=3Dy'] : []) + \
-> +  (have_audio ? ['CONFIG_AUDIO=3Dy'] : []) + \
->    (have_tpm ? ['CONFIG_TPM=3Dy'] : []) + \
->    (pixman.found() ? ['CONFIG_PIXMAN=3Dy'] : []) + \
->    (spice.found() ? ['CONFIG_SPICE=3Dy'] : []) + \
-> diff --git a/meson_options.txt b/meson_options.txt
-> index 2836156257..d7c94e6d6d 100644
-> --- a/meson_options.txt
-> +++ b/meson_options.txt
-> @@ -71,6 +71,9 @@ option('malloc_trim', type : 'feature', value : 'auto',
->  option('malloc', type : 'combo', choices : ['system', 'tcmalloc', 'jemal=
-loc'],
->         value: 'system', description: 'choose memory allocator to use')
+>  config_host_data.set('CONFIG_HAVE_RUST', have_rust)
+> -audio_drivers_selected =3D []
+> -if have_system
+> -  audio_drivers_available =3D {
+> -    'alsa': alsa.found(),
+> -    'coreaudio': coreaudio.found(),
+> -    'dsound': dsound.found(),
+> -    'jack': jack.found(),
+> -    'oss': oss.found(),
+> -    'pa': pulse.found(),
+> -    'pipewire': pipewire.found(),
+> -    'sdl': sdl.found(),
+> -    'sndio': sndio.found(),
+> -  }
+> -  foreach k, v: audio_drivers_available
+> -    config_host_data.set('CONFIG_AUDIO_' + k.to_upper(), v)
+> -  endforeach
+> +config_host_data.set('CONFIG_AUDIO', have_audio)
+> +if have_audio
+> +  audio_drivers_selected =3D []
+> +  if have_system
+> +    audio_drivers_available =3D {
+> +      'alsa': alsa.found(),
+> +      'coreaudio': coreaudio.found(),
+> +      'dsound': dsound.found(),
+> +      'jack': jack.found(),
+> +      'oss': oss.found(),
+> +      'pa': pulse.found(),
+> +      'pipewire': pipewire.found(),
+> +      'sdl': sdl.found(),
+> +      'sndio': sndio.found(),
+> +    }
+> +    foreach k, v: audio_drivers_available
+> +      config_host_data.set('CONFIG_AUDIO_' + k.to_upper(), v)
+> +    endforeach
 >
-> +option('audio', type: 'feature', value: 'auto',
-> +       description: 'Audio support')
-> +
->  option('kvm', type: 'feature', value: 'auto',
->         description: 'KVM acceleration support')
->  option('mshv', type: 'feature', value: 'auto',
-> diff --git a/scripts/meson-buildoptions.sh b/scripts/meson-buildoptions.s=
-h
-> index e8edc5252a..642f06efc5 100644
-> --- a/scripts/meson-buildoptions.sh
-> +++ b/scripts/meson-buildoptions.sh
-> @@ -96,6 +96,7 @@ meson_options_help() {
->    printf "%s\n" '  af-xdp          AF_XDP network backend support'
->    printf "%s\n" '  alsa            ALSA sound support'
->    printf "%s\n" '  attr            attr/xattr support'
-> +  printf "%s\n" '  audio           Audio support'
->    printf "%s\n" '  auth-pam        PAM access control'
->    printf "%s\n" '  blkio           libblkio block device driver'
->    printf "%s\n" '  bochs           bochs image format support'
-> @@ -242,6 +243,8 @@ _meson_option_parse() {
->      --disable-asan) printf "%s" -Dasan=3Dfalse ;;
->      --enable-attr) printf "%s" -Dattr=3Denabled ;;
->      --disable-attr) printf "%s" -Dattr=3Ddisabled ;;
-> +    --enable-audio) printf "%s" -Daudio=3Denabled ;;
-> +    --disable-audio) printf "%s" -Daudio=3Ddisabled ;;
->      --audio-drv-list=3D*) quote_sh "-Daudio_drv_list=3D$2" ;;
->      --enable-auth-pam) printf "%s" -Dauth_pam=3Denabled ;;
->      --disable-auth-pam) printf "%s" -Dauth_pam=3Ddisabled ;;
+> -  # Default to native drivers first, OSS second, SDL third
+> -  audio_drivers_priority =3D \
+> -    [ 'pa', 'coreaudio', 'dsound', 'sndio', 'oss' ] + \
+> -    (host_os =3D=3D 'linux' ? [] : [ 'sdl' ])
+> -  audio_drivers_default =3D []
+> -  foreach k: audio_drivers_priority
+> -    if audio_drivers_available[k]
+> -      audio_drivers_default +=3D k
+> -    endif
+> -  endforeach
+> +    # Default to native drivers first, OSS second, SDL third
+> +    audio_drivers_priority =3D \
+> +      [ 'pa', 'coreaudio', 'dsound', 'sndio', 'oss' ] + \
+> +      (host_os =3D=3D 'linux' ? [] : [ 'sdl' ])
+> +    audio_drivers_default =3D []
+> +    foreach k: audio_drivers_priority
+> +      if audio_drivers_available[k]
+> +        audio_drivers_default +=3D k
+> +      endif
+> +    endforeach
+>
+> +    foreach k: get_option('audio_drv_list')
+> +      if k =3D=3D 'default'
+> +        audio_drivers_selected +=3D audio_drivers_default
+> +      elif not audio_drivers_available[k]
+> +        error('Audio driver "@0@" not available.'.format(k))
+> +      else
+> +        audio_drivers_selected +=3D k
+> +      endif
+> +    endforeach
+> +  endif
+> +  config_host_data.set('CONFIG_AUDIO_DRIVERS',
+> +                      '"' + '", "'.join(audio_drivers_selected) + '", ')
+> +else
+>    foreach k: get_option('audio_drv_list')
+> -    if k =3D=3D 'default'
+> -      audio_drivers_selected +=3D audio_drivers_default
+> -    elif not audio_drivers_available[k]
+> -      error('Audio driver "@0@" not available.'.format(k))
+> -    else
+> -      audio_drivers_selected +=3D k
+> +    if k !=3D 'default'
+> +      error('Audio drivers are not supported because audio is disabled.'=
+)
+>      endif
+>    endforeach
+>  endif
+> -config_host_data.set('CONFIG_AUDIO_DRIVERS',
+> -                     '"' + '", "'.join(audio_drivers_selected) + '", ')
+>
+>  have_host_block_device =3D (host_os !=3D 'darwin' or
+>      cc.has_header('IOKit/storage/IOMedia.h'))
+> @@ -4684,7 +4693,8 @@ if enable_modules
+>    summary_info +=3D {'alternative module path': get_option('module_upgra=
+des')}
+>  endif
+>  summary_info +=3D {'fuzzing support':   get_option('fuzzing')}
+> -if have_system
+> +summary_info +=3D {'Audio support':     have_audio}
+> +if have_audio
+>    summary_info +=3D {'Audio drivers':     ' '.join(audio_drivers_selecte=
+d)}
+>  endif
+>  summary_info +=3D {'Trace backends':    ','.join(get_option('trace_backe=
+nds'))}
 > --
 > 2.34.1
 >
 >
 
 
---
+--=20
 Marc-Andr=C3=A9 Lureau
 
