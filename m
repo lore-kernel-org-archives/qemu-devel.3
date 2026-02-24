@@ -4,138 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 733ACEFB817
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 08:34:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF79BEFB810
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 08:44:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vunrb-0004pp-9m; Tue, 24 Feb 2026 03:33:51 -0500
+	id 1vuo0W-0006DG-8V; Tue, 24 Feb 2026 03:43:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vunrX-0004pQ-JV
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 03:33:47 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vuo0T-0006Ce-2W
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 03:43:01 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vunrV-000540-0L
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 03:33:46 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vuo0R-0006Nl-1E
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 03:43:00 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771922024;
+ s=mimecast20190719; t=1771922576;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=AdFoPgIQKqnRgMfivwhu4uO+ZXYtI2SR4MwtJqMuTGU=;
- b=AkstSZSF5eiXG9n8XiruFaESnWuWUQGa3rPV67027CWV8V79FBUqaTHXwENSUNQ7NDPsYn
- SzfNgWrqwo0DQxDiD4hX0xIqBvd5iT11FaiGaBgUh5AbmIhMJXfwO1zJh2xmA9t9hKrJtP
- +mZdtQ2In+CpyXiPfrjpd7qOsut9JAM=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-636-jm9o7RFeNoWSANw2484Cfg-1; Tue, 24 Feb 2026 03:33:42 -0500
-X-MC-Unique: jm9o7RFeNoWSANw2484Cfg-1
-X-Mimecast-MFC-AGG-ID: jm9o7RFeNoWSANw2484Cfg_1771922021
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-435af2d3144so3048234f8f.3
- for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 00:33:42 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1771922021; cv=none;
- d=google.com; s=arc-20240605;
- b=bhh1hONjnao9sQ9sfzWgAw4zsUzKLNFOBbPxtmvTpaSWWzKxTD3m5Jz/ojO+/JzO6W
- nWgi3uOwQznRKpyQl3M3r1irdldY82xwQQnHPig93nK2lM6pR8qENc5af6CfdMH7aeFz
- fn+5i8YMl3u848J0pVbh/VOouQNyiwU6HBBBmiUnp1rdN+G3wf177I17sAR5d8v0nDO7
- GFdkXFTt87Bcv8IAwUE5UYqoMgyHHzLrkbLTbQPF4uQAoROZ7PGeBcryJYe9Z94TdDBT
- rsUbvhdc2llchjfQkvuwz5GPq5hrFE5xSLCfdwxfKYwMAFlEC9aYbXnHUTQizt5Yetjw
- TQtQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=AdFoPgIQKqnRgMfivwhu4uO+ZXYtI2SR4MwtJqMuTGU=;
- fh=EbdhaRkUFk/a+E/+UKSWFKaXy3eMUSUnS7kutR18yu4=;
- b=PzV1bH0LIMgGxn3iLGLIeKSX3x1Xd0bS22UI3jb8pmu3GYaPIlnFbtUtZ3hhMk9N2c
- u8In6zJTrprr5jhKFNyslPN1uAiOn6ZJI+o/2Jg/IbIy0BjvOvy+OoSUdP7Iy3a0lcPs
- PksUlBkwk1fEuvuT2e6OxFzChGD7T0IKH1oq09UkO3R0rywaPGY7LkBwfO6US96nIelc
- 425UEzjsNkW+3E0Zw+er9L/H/SlBOEWkBhJFwpGTbc2jhCBkUnrnoPOUnuyxmfxTNrco
- QNKbRKYpBagt96D/3VG4h2l0Eo4eKj8nudxDWZD+LjneSK2h11nYh+/JVjU5AGJxzzfk
- OsPw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1771922021; x=1772526821; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=AdFoPgIQKqnRgMfivwhu4uO+ZXYtI2SR4MwtJqMuTGU=;
- b=CTZUW8oQJUwAgL05H4V/Jp6ccC4DMK8UbC7JC4XoC0FfrtyDt+bb9+6id9bj3Q7F9x
- c8Sy7Kt4+dJ2ZDPmjSUdJkA3VnWm9bCh2L6JlmB+3N5/5eM0BvWC0EkfG5RIqCZqT6y7
- 9KNEfyarfKyZJOnIGgNvyEuyXDvge39RoO8TqYrnghV3XUsznRaqhzuV44E/CoNUgwP5
- jejSgaDZtQsF9ebazEKt3EJaMLtYpKMlfv+tpkK3my3HqU9n4dFgrW4PqQUtRLljQ9hm
- WlNFKPCBuABJpVfEnQvaC1d9qPxcKkTA15FFpqk+clR3Lz+KffrxEDCoWRfJLx7sSsjE
- A6Lg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771922021; x=1772526821;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=AdFoPgIQKqnRgMfivwhu4uO+ZXYtI2SR4MwtJqMuTGU=;
- b=hFOmpQOqWQssUu5BVJUNNzCPs7WxOwxu48eB4v9rT6ksQFTaGcMEa1uCRsNUAEIBtz
- 5c8g2CWTtZiO+lgms+Mv1JikKKF/nW0a5LAiYCZJPkn/yQLfyXBHkFIWUPLO2CByhWlj
- DolQnDJ6iYkhPHvVLWi2izBgA2Jnh0LG0mG5VT49Zx1bqHpSwF3eDumsvAA4AvCqHy4m
- MtUKiCNj5l0lYAMCQ/0UpmyPel1C7u0pCxhRYmFCakVQvikvU7mYdSGGVZ9uKQSUdut1
- wJyuKG6zZNMIVerCPHje2c7BICgMsNSUC9vnoeLOhbhsbrN7ydjOO2G298gGPCImlxnY
- oJFQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV73vKLvkSx1k8dgGRK1a0kUpyXgbeUBgHLc0o1GUuVRkDJAIcvr11fu6J9fWPiioKSA4OdWHSwSDMW@nongnu.org
-X-Gm-Message-State: AOJu0Yy03G8qt0vYtOAqDKcVQO3qS3eIzxYYX4Eu/JCSFFWUpRvfeWxL
- 795ZzUSaH+sZKbeXvqYtZFAGpvqN+WYA/k4raR0dXNqLE90CuKUcx1crUdUucXAnopx3frjrLCl
- 2lgHSlXX0/RcWpQjCyZDoiMICkzkX4mpV5MItW0HUMQP+V1SvPS72utQcxD4bK5TKDP+sMJEgam
- ARf4IyJM92qRyV+JCuVNpEtuFUEx7UQLA=
-X-Gm-Gg: ATEYQzxLWZKaKPyMXJFmGuZ1sctab/8CDABQjGUOqvpn7hQH5x2fHntHNQbI5OJC3eD
- A2qPqEO0NlT9SIeQZyccMMH0UBeMOZAcQPN6RKzGfxND4ap7szmMlDcs4JwcMwyZYcDgIn9Jy99
- 9F/kaoLS9AuT3V6RzWtU3M+ws/ywHINaw+kRVGG5+/LAzgVC2bt6fp4Fnz5iGwWSaYMKliee4eF
- PyRvob5X/pm4xOxCbIdxWRpFodAxR/cIdcznN6bGTBbDUcREgPZ9vdh1i50MZWX874/9GPXzzx9
- +tjmraQ=
-X-Received: by 2002:a05:6000:402b:b0:435:975a:131c with SMTP id
- ffacd0b85a97d-4396f17e214mr19017597f8f.36.1771922020960; 
- Tue, 24 Feb 2026 00:33:40 -0800 (PST)
-X-Received: by 2002:a05:6000:402b:b0:435:975a:131c with SMTP id
- ffacd0b85a97d-4396f17e214mr19017556f8f.36.1771922020465; Tue, 24 Feb 2026
- 00:33:40 -0800 (PST)
+ bh=NP0F3hHDXEGmveKxj/AudgtlRQuzFBgzQWgOKdkd3+g=;
+ b=VSqNzMivH9M2KxyH+M+Tmz1UhrMdGRGcRACsyGGAPuRJ/rl/nZ/W+F5g5YZd+TT1zVr1Ny
+ gz3vvoT3RThybTF6kN3m1pAloTLdb9lbcG3CwLrRDJK+Y6LQWqv8xC0uDJEBQICPo8ae0X
+ nehkHvDGkpv+wH/A+PXh2TC2FTxQsdI=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-592-3ym2HmZ3OoOpYNK5-Nd4BQ-1; Tue,
+ 24 Feb 2026 03:42:53 -0500
+X-MC-Unique: 3ym2HmZ3OoOpYNK5-Nd4BQ-1
+X-Mimecast-MFC-AGG-ID: 3ym2HmZ3OoOpYNK5-Nd4BQ_1771922572
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BECB018005B7; Tue, 24 Feb 2026 08:42:51 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.13])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0BB7219560A2; Tue, 24 Feb 2026 08:42:51 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id A633221E692D; Tue, 24 Feb 2026 09:42:48 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Zhang Chen <zhangckid@gmail.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>,  "Dr . David Alan Gilbert"
+ <dave@treblig.org>,  Eric Blake <eblake@redhat.com>,  "Michael S .
+ Tsirkin" <mst@redhat.com>,  Stefan Hajnoczi <stefanha@redhat.com>
+Subject: Re: [PATCH V4 4/4] qapi: examine IOThread attachment status via
+ query-iothreads
+In-Reply-To: <CAK3tnvKEJSDMVC4bkEbhfsVXpp7nVbq+Kue9fFVmOrd5f_ugCg@mail.gmail.com>
+ (Zhang Chen's message of "Tue, 24 Feb 2026 10:42:42 +0800")
+References: <20260213171622.55629-1-zhangckid@gmail.com>
+ <20260213171622.55629-4-zhangckid@gmail.com>
+ <87wm0bq047.fsf@pond.sub.org>
+ <CAK3tnvKEJSDMVC4bkEbhfsVXpp7nVbq+Kue9fFVmOrd5f_ugCg@mail.gmail.com>
+Date: Tue, 24 Feb 2026 09:42:48 +0100
+Message-ID: <874in65y7r.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-References: <20260223202512.1308205-1-heifetz@yandex-team.com>
- <20260223202512.1308205-10-heifetz@yandex-team.com>
- <87o6le602l.fsf@pond.sub.org>
-In-Reply-To: <87o6le602l.fsf@pond.sub.org>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Tue, 24 Feb 2026 09:33:26 +0100
-X-Gm-Features: AaiRm527EiB-baxA2erLdmvmk_lotkVAdwmRl7LRvD14L2gL6PVmrQ4cDDYYGL0
-Message-ID: <CABgObfbB_Dr=u1M8meZ7-cdfuppSFAY9ktuuOZSq7cftNom5Cw@mail.gmail.com>
-Subject: Re: [PATCH v2 09/10] audio: do not build audio-related sources with
- --disable-audio
-To: Markus Armbruster <armbru@redhat.com>
-Cc: Sergei Heifetz <heifetz@yandex-team.com>,
- qemu-devel <qemu-devel@nongnu.org>, Gerd Hoffmann <kraxel@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Eric Blake <eblake@redhat.com>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Richard Henderson <richard.henderson@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>, 
- "Dr. David Alan Gilbert" <dave@treblig.org>
-Content-Type: multipart/alternative; boundary="00000000000099a0cd064b8dbe72"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -1
 X-Spam_score: -0.2
 X-Spam_bar: /
 X-Spam_report: (-0.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1.179,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.717, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1.179, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.717,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -151,393 +92,184 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000099a0cd064b8dbe72
-Content-Type: text/plain; charset="UTF-8"
+Zhang Chen <zhangckid@gmail.com> writes:
 
-Il mar 24 feb 2026, 09:02 Markus Armbruster <armbru@redhat.com> ha scritto:
+> On Tue, Feb 17, 2026 at 3:51=E2=80=AFPM Markus Armbruster <armbru@redhat.=
+com> wrote:
+>>
+>> Zhang Chen <zhangckid@gmail.com> writes:
+>>
+>> > Extend the 'IOThreadInfo' structure to include attachment metrics.
+>> > This allows users to monitor how many devices are associated with
+>> > a specific IOThread and identify them by their QOM paths.
+>> >
+>> > New fields added to IOThreadInfo:
+>> > - @attached-cnt: An integer representing the number of devices
+>> >   currently using this IOThread's AioContext.
+>> > - @attached-dev: A string containing a delimited list ("|") of
+>> >   QOM paths for the attached devices.
+>> >
+>> > These fields are also exposed via the Human Monitor Interface (HMP)
+>> > command 'info iothreads' to assist with manual debugging and
+>> > performance tuning.
+>> >
+>> > Example QMP output:
+>> > {
+>> >     "id": "iothread0",
+>> >     "thread-id": 3134,
+>> >     "attached-cnt": 2,
+>> >     "attached-dev": "/machine/peripheral/blk1/virtio-backend | /machin=
+e/peripheral/blk0/virtio-backend",
+>> >     ...
+>> > }
+>> >
+>> > Signed-off-by: Zhang Chen <zhangckid@gmail.com>
+>>
+>> [...]
+>>
+>> > diff --git a/qapi/misc.json b/qapi/misc.json
+>> > index 1f5062df2a..ca53638684 100644
+>> > --- a/qapi/misc.json
+>> > +++ b/qapi/misc.json
+>> > @@ -76,6 +76,19 @@
+>> >  #
+>> >  # @thread-id: ID of the underlying host thread
+>> >  #
+>> > +# @attached-cnt: The parameter is a counter indicating how many
+>> > +#     active devices are currently associated with this iothread
+>> > +#     (e.g. virtio-blk).  In hotplug scenarios, users can
+>> > +#     pre-allocate multiple iothread objects to serve as a persistent
+>> > +#     thread pool.  When a device is hot-unplugged, the corresponding
+>> > +#     IOThread is released but remains available, allowing subsequent
+>> > +#     hot-plugged devices to attach to and reuse the existing thread.
+>> > +#     (since 11.0)
+>> > +#
+>> > +# @attached-dev: A list of QOM paths for the devices currently
+>> > +#     associated with this IOThread, delimited by " | ".
+>> > +#     Returns "none" if no devices are attached. (since 11.0)
 
-> Sergei Heifetz <heifetz@yandex-team.com> writes:
->
-> > When QEMU is configured with `--disable-audio`, do not build any
-> > audio-related sources.
-> >
-> > - audio/meson.build and replay/meson.build:
-> >   Exclude audio-related sources when audio is disabled.
-> >
-> > - audio/audio-stub.c:
-> >   Provide a minimal set of straightforward stubs.
-> >
-> > - replay/replay-audio-stub.c:
-> >   Move the existing stubs from replay/stubs-system.c into a separate
-> >   file.
-> >
-> > - qapi/audio.json:
-> >   Remove the QMP `query-audiodevs` command.
-> >
-> > - hmp-commands*.hx:
-> >   Remove the HMP `info capture`, `stopcapture` and `wavcapture`
-> >   commands.
-> >
-> > Signed-off-by: Sergei Heifetz <heifetz@yandex-team.com>
->
-> [...]
->
-> diff --git a/include/qemu/audio-capture.h b/include/qemu/audio-capture.h
-> index f1319c9002..f80f6c98d4 100644
-> --- a/include/qemu/audio-capture.h
-> +++ b/include/qemu/audio-capture.h
-> @@ -8,6 +8,8 @@
->
->  #include "audio.h"
->
-> +#ifdef CONFIG_AUDIO
-> +
->  struct capture_ops {
->      void (*info) (void *opaque);
->      void (*destroy) (void *opaque);
-> @@ -30,4 +32,6 @@ void audio_be_del_capture(
->      CaptureVoiceOut *cap,
->      void *cb_opaque);
->
-> +#endif
-> +
->  #endif /* QEMU_AUDIO_CAPTURE_H */
-> diff --git a/include/qemu/audio.h b/include/qemu/audio.h
-> index cff8a334f3..552689116c 100644
-> --- a/include/qemu/audio.h
-> +++ b/include/qemu/audio.h
-> @@ -32,6 +32,8 @@
->  #include "gio/gio.h"
->  #endif
->
-> +#ifdef CONFIG_AUDIO
-> +
->  typedef void (*audio_callback_fn) (void *opaque, int avail);
->
->  typedef struct audsettings {
-> @@ -240,4 +242,7 @@ static inline bool audio_format_is_signed(AudioFormat
-> fmt)
->  #define TYPE_AUDIO_BACKEND "audio-backend"
->  OBJECT_DECLARE_TYPE(AudioBackend, AudioBackendClass, AUDIO_BACKEND)
->
-> +#else
-> +#define audio_cleanup() ((void)0)
-> +#endif
->  #endif /* QEMU_AUDIO_H */
-> diff --git a/ui/vnc.h b/ui/vnc.h
-> index ec8d0c91b5..89e0199be1 100644
-> --- a/ui/vnc.h
-> +++ b/ui/vnc.h
-> @@ -184,7 +184,9 @@ struct VncDisplay
->      VncDisplaySASL sasl;
->  #endif
->
-> +#ifdef CONFIG_AUDIO
->      AudioBackend *audio_be;
-> +#endif
->
->      VMChangeStateEntry *vmstate_handler_entry;
->  };
-> @@ -325,8 +327,10 @@ struct VncState
->      pixman_format_code_t client_format;
->      int client_endian; /* G_LITTLE_ENDIAN or G_BIG_ENDIAN */
->
-> +#ifdef CONFIG_AUDIO
->      CaptureVoiceOut *audio_cap;
->      struct audsettings as;
-> +#endif
->
->      VncReadEvent *read_handler;
->      size_t read_handler_expect;
-> diff --git a/audio/audio-stub.c b/audio/audio-stub.c
-> index f58f88cd83..e69de29bb2 100644
-> --- a/audio/audio-stub.c
-> +++ b/audio/audio-stub.c
-> @@ -1,22 +0,0 @@
-> -/*
-> - * Stub for audio.c
-> - *
-> - * SPDX-License-Identifier: GPL-2.0-or-later
-> - */
-> -
-> -#include "qemu/osdep.h"
-> -#include "qapi/qapi-commands-audio.h"
-> -#include "qemu/audio.h"
-> -#include "qapi/error.h"
-> -
-> -void audio_cleanup(void) {}
-> -
-> -AudioBackend *audio_be_by_name(const char *name, Error **errp)
-> -{
-> -  error_setg(errp, "audio disabled");
-> -  return NULL;
-> -}
-> -
-> -void audio_init_audiodevs(void) {}
-> -
-> -void audio_create_default_audiodevs(void) {}
-> diff --git a/hw/core/machine.c b/hw/core/machine.c
-> index d4ef620c17..12fbe0b0a6 100644
-> --- a/hw/core/machine.c
-> +++ b/hw/core/machine.c
-> @@ -750,6 +750,7 @@ static char *machine_get_audiodev(Object *obj, Error
-> **errp)
->  static void machine_set_audiodev(Object *obj, const char *value,
->                                   Error **errp)
->  {
-> +#ifdef CONFIG_AUDIO
->      MachineState *ms = MACHINE(obj);
->
->      if (!audio_be_by_name(value, errp)) {
-> @@ -758,6 +759,9 @@ static void machine_set_audiodev(Object *obj, const
-> char *value,
->
->      g_free(ms->audiodev);
->      ms->audiodev = g_strdup(value);
-> +#else
-> +    error_setg(errp, "audio disabled");
-> +#endif
->  }
->
->  HotpluggableCPUList *machine_query_hotpluggable_cpus(MachineState
-> *machine)
-> diff --git a/system/vl.c b/system/vl.c
-> index 1034a4688f..6b2e7bc26e 100644
-> --- a/system/vl.c
-> +++ b/system/vl.c
-> @@ -2067,10 +2067,12 @@ static void qemu_create_early_backends(void)
->       * setting machine properties, so they can be referred to.
->       */
->      configure_blockdev(&bdo_queue, machine_class, snapshot);
-> +#ifdef CONFIG_AUDIO
->      audio_init_audiodevs();
->      if (default_audio) {
->          audio_create_default_audiodevs();
->      }
-> +#endif
->  }
->
->
-> diff --git a/ui/dbus.c b/ui/dbus.c
-> index 60c8e0b473..2354e5d805 100644
-> --- a/ui/dbus.c
-> +++ b/ui/dbus.c
-> @@ -35,7 +35,9 @@
->  #include "ui/egl-context.h"
->  #endif
->  #include "qemu/audio.h"
-> +#ifdef CONFIG_AUDIO
->  #include "audio/audio_int.h" /* FIXME: use QOM dynamic cast instead of
-> drv->name */
-> +#endif
->  #include "qapi/error.h"
->  #include "trace.h"
->
->
->
+Does not compile:
 
---00000000000099a0cd064b8dbe72
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+    In file included from ../qapi/qapi-schema.json:66:
+    ../qapi/misc.json:90:49: Use two spaces between sentences
+    If this not the end of a sentence, please report a bug.
 
-<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote gmail_quote_contai=
-ner"><div dir=3D"ltr" class=3D"gmail_attr">Il mar 24 feb 2026, 09:02 Markus=
- Armbruster &lt;<a href=3D"mailto:armbru@redhat.com">armbru@redhat.com</a>&=
-gt; ha scritto:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:=
-0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">=
-Sergei Heifetz &lt;<a href=3D"mailto:heifetz@yandex-team.com" target=3D"_bl=
-ank" rel=3D"noreferrer">heifetz@yandex-team.com</a>&gt; writes:<br>
-<br>
-&gt; When QEMU is configured with `--disable-audio`, do not build any<br>
-&gt; audio-related sources.<br>
-&gt;<br>
-&gt; - audio/meson.build and replay/meson.build:<br>
-&gt;=C2=A0 =C2=A0Exclude audio-related sources when audio is disabled.<br>
-&gt;<br>
-&gt; - audio/audio-stub.c:<br>
-&gt;=C2=A0 =C2=A0Provide a minimal set of straightforward stubs.<br>
-&gt;<br>
-&gt; - replay/replay-audio-stub.c:<br>
-&gt;=C2=A0 =C2=A0Move the existing stubs from replay/stubs-system.c into a =
-separate<br>
-&gt;=C2=A0 =C2=A0file.<br>
-&gt;<br>
-&gt; - qapi/audio.json:<br>
-&gt;=C2=A0 =C2=A0Remove the QMP `query-audiodevs` command.<br>
-&gt;<br>
-&gt; - hmp-commands*.hx:<br>
-&gt;=C2=A0 =C2=A0Remove the HMP `info capture`, `stopcapture` and `wavcaptu=
-re`<br>
-&gt;=C2=A0 =C2=A0commands.<br>
-&gt;<br>
-&gt; Signed-off-by: Sergei Heifetz &lt;<a href=3D"mailto:heifetz@yandex-tea=
-m.com" target=3D"_blank" rel=3D"noreferrer">heifetz@yandex-team.com</a>&gt;=
-<br>
-<br>
-[...]<br>
-<br></blockquote></div></div><div dir=3D"auto"><div class=3D"gmail_quote gm=
-ail_quote_container"><blockquote class=3D"gmail_quote" style=3D"margin:0px =
-0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
-diff --git a/include/qemu/audio-capture.h b/include/qemu/audio-capture.h<br=
+This error has been in master for almost three months.  Is your tree
+that far behind?
+
+>>
+>> QAPI schema design maxim: do not encode structured data as strings.
+>> @attached-devs should be an array of QOM paths instead.
 >
-index f1319c9002..f80f6c98d4 100644<br>
---- a/include/qemu/audio-capture.h<br>
-+++ b/include/qemu/audio-capture.h<br>
-@@ -8,6 +8,8 @@<br>
-<br>
-=C2=A0#include &quot;audio.h&quot;<br>
-<br>
-+#ifdef CONFIG_AUDIO<br>
-+<br>
-=C2=A0struct capture_ops {<br>
-=C2=A0 =C2=A0 =C2=A0void (*info) (void *opaque);<br>
-=C2=A0 =C2=A0 =C2=A0void (*destroy) (void *opaque);<br>
-@@ -30,4 +32,6 @@ void audio_be_del_capture(<br>
-=C2=A0 =C2=A0 =C2=A0CaptureVoiceOut *cap,<br>
-=C2=A0 =C2=A0 =C2=A0void *cb_opaque);<br>
-<br>
-+#endif<br>
-+<br>
-=C2=A0#endif /* QEMU_AUDIO_CAPTURE_H */<br>
-diff --git a/include/qemu/audio.h b/include/qemu/audio.h<br>
-index cff8a334f3..552689116c 100644<br>
---- a/include/qemu/audio.h<br>
-+++ b/include/qemu/audio.h<br>
-@@ -32,6 +32,8 @@<br>
-=C2=A0#include &quot;gio/gio.h&quot;<br>
-=C2=A0#endif<br>
-<br>
-+#ifdef CONFIG_AUDIO<br>
-+<br>
-=C2=A0typedef void (*audio_callback_fn) (void *opaque, int avail);<br>
-<br>
-=C2=A0typedef struct audsettings {<br>
-@@ -240,4 +242,7 @@ static inline bool audio_format_is_signed(AudioFormat f=
-mt)<br>
-=C2=A0#define TYPE_AUDIO_BACKEND &quot;audio-backend&quot;<br>
-=C2=A0OBJECT_DECLARE_TYPE(AudioBackend, AudioBackendClass, AUDIO_BACKEND)<b=
-r>
-<br>
-+#else<br>
-+#define audio_cleanup() ((void)0)<br>
-+#endif<br>
-=C2=A0#endif /* QEMU_AUDIO_H */<br>
-diff --git a/ui/vnc.h b/ui/vnc.h<br>
-index ec8d0c91b5..89e0199be1 100644<br>
---- a/ui/vnc.h<br>
-+++ b/ui/vnc.h<br>
-@@ -184,7 +184,9 @@ struct VncDisplay<br>
-=C2=A0 =C2=A0 =C2=A0VncDisplaySASL sasl;<br>
-=C2=A0#endif<br>
-<br>
-+#ifdef CONFIG_AUDIO<br>
-=C2=A0 =C2=A0 =C2=A0AudioBackend *audio_be;<br>
-+#endif<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0VMChangeStateEntry *vmstate_handler_entry;<br>
-=C2=A0};<br>
-@@ -325,8 +327,10 @@ struct VncState<br>
-=C2=A0 =C2=A0 =C2=A0pixman_format_code_t client_format;<br>
-=C2=A0 =C2=A0 =C2=A0int client_endian; /* G_LITTLE_ENDIAN or G_BIG_ENDIAN *=
-/<br>
-<br>
-+#ifdef CONFIG_AUDIO<br>
-=C2=A0 =C2=A0 =C2=A0CaptureVoiceOut *audio_cap;<br>
-=C2=A0 =C2=A0 =C2=A0struct audsettings as;<br>
-+#endif<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0VncReadEvent *read_handler;<br>
-=C2=A0 =C2=A0 =C2=A0size_t read_handler_expect;<br>
-diff --git a/audio/audio-stub.c b/audio/audio-stub.c<br>
-index f58f88cd83..e69de29bb2 100644<br>
---- a/audio/audio-stub.c<br>
-+++ b/audio/audio-stub.c<br>
-@@ -1,22 +0,0 @@<br>
--/*<br>
-- * Stub for audio.c<br>
-- *<br>
-- * SPDX-License-Identifier: GPL-2.0-or-later<br>
-- */<br>
--<br>
--#include &quot;qemu/osdep.h&quot;<br>
--#include &quot;qapi/qapi-commands-audio.h&quot;<br>
--#include &quot;qemu/audio.h&quot;<br>
--#include &quot;qapi/error.h&quot;<br>
--<br>
--void audio_cleanup(void) {}<br>
--<br>
--AudioBackend *audio_be_by_name(const char *name, Error **errp)<br>
--{<br>
--=C2=A0 error_setg(errp, &quot;audio disabled&quot;);<br>
--=C2=A0 return NULL;<br>
--}<br>
--<br>
--void audio_init_audiodevs(void) {}<br>
--<br>
--void audio_create_default_audiodevs(void) {}<br>
-diff --git a/hw/core/machine.c b/hw/core/machine.c<br>
-index d4ef620c17..12fbe0b0a6 100644<br>
---- a/hw/core/machine.c<br>
-+++ b/hw/core/machine.c<br>
-@@ -750,6 +750,7 @@ static char *machine_get_audiodev(Object *obj, Error **=
-errp)<br>
-=C2=A0static void machine_set_audiodev(Object *obj, const char *value,<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 Error **errp)<br>
-=C2=A0{<br>
-+#ifdef CONFIG_AUDIO<br>
-=C2=A0 =C2=A0 =C2=A0MachineState *ms =3D MACHINE(obj);<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0if (!audio_be_by_name(value, errp)) {<br>
-@@ -758,6 +759,9 @@ static void machine_set_audiodev(Object *obj, const cha=
-r *value,<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0g_free(ms-&gt;audiodev);<br>
-=C2=A0 =C2=A0 =C2=A0ms-&gt;audiodev =3D g_strdup(value);<br>
-+#else<br>
-+=C2=A0 =C2=A0 error_setg(errp, &quot;audio disabled&quot;);<br>
-+#endif<br>
-=C2=A0}<br>
-<br>
-=C2=A0HotpluggableCPUList *machine_query_hotpluggable_cpus(MachineState *ma=
-chine)<br>
-diff --git a/system/vl.c b/system/vl.c<br>
-index 1034a4688f..6b2e7bc26e 100644<br>
---- a/system/vl.c<br>
-+++ b/system/vl.c<br>
-@@ -2067,10 +2067,12 @@ static void qemu_create_early_backends(void)<br>
-=C2=A0 =C2=A0 =C2=A0 * setting machine properties, so they can be referred =
-to.<br>
-=C2=A0 =C2=A0 =C2=A0 */<br>
-=C2=A0 =C2=A0 =C2=A0configure_blockdev(&amp;bdo_queue, machine_class, snaps=
-hot);<br>
-+#ifdef CONFIG_AUDIO<br>
-=C2=A0 =C2=A0 =C2=A0audio_init_audiodevs();<br>
-=C2=A0 =C2=A0 =C2=A0if (default_audio) {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0audio_create_default_audiodevs();<br>
-=C2=A0 =C2=A0 =C2=A0}<br>
-+#endif<br>
-=C2=A0}<br>
-<br>
-<br>
-diff --git a/ui/dbus.c b/ui/dbus.c<br>
-index 60c8e0b473..2354e5d805 100644<br>
---- a/ui/dbus.c<br>
-+++ b/ui/dbus.c<br>
-@@ -35,7 +35,9 @@<br>
-=C2=A0#include &quot;ui/egl-context.h&quot;<br>
-=C2=A0#endif<br>
-=C2=A0#include &quot;qemu/audio.h&quot;<br>
-+#ifdef CONFIG_AUDIO<br>
-=C2=A0#include &quot;audio/audio_int.h&quot; /* FIXME: use QOM dynamic cast=
- instead of drv-&gt;name */<br>
-+#endif<br>
-=C2=A0#include &quot;qapi/error.h&quot;<br>
-=C2=A0#include &quot;trace.h&quot;<br>
-<br>
-<br>
-</blockquote></div></div></div>
+> OK, will fix in next version.
 
---00000000000099a0cd064b8dbe72--
+Thanks!
+
+>> Unless I misunderstand your docs, @attached-cnt is the number of QOM
+>> paths in @attached-dev, i.e. @attached-dev is redundant.  If this is the
+>> case, drop it.  If it isn't, educate me :)
+>
+> As Stefan's comments, I try to address more specific needs:
+> https://mail.gnu.org/archive/html/qemu-devel/2026-02/msg01892.html
+
+As far as I can tell, Stefan asked for the QOM paths of attached
+devices.  @attached-dev provides it.  Good.  Why have @attached-cnt as
+well?
+
+>> We generally avoid abbreviations in the QAPI schema: @attached-count,
+>> @attached-devices.
+>>
+>> > +#
+>> >  # @poll-max-ns: maximum polling time in ns, 0 means polling is
+>> >  #     disabled (since 2.9)
+>> >  #
+>> > @@ -93,6 +106,8 @@
+>> >  { 'struct': 'IOThreadInfo',
+>> >    'data': {'id': 'str',
+>> >             'thread-id': 'int',
+>> > +           'attached-cnt': 'int',
+>> > +           'attached-dev': 'str',
+>> >             'poll-max-ns': 'int',
+>> >             'poll-grow': 'int',
+>> >             'poll-shrink': 'int',
+>> > @@ -118,6 +133,8 @@
+>> >  #              {
+>> >  #                 "id":"iothread0",
+>> >  #                 "thread-id":3134,
+>> > +#                 "attached-cnt":2,
+>> > +#                 "attached-dev":/machine/peripheral/blk1/virtio-back=
+end | /machine/peripheral/blk0/virtio-backend,
+>>
+>> Once again, the example is syntactically incorrect (the value lacks
+>> double quotes), and once again I recommend to create example I/O by
+>> actually running a test.  Getting tired of this, to be frank.
+>
+> Sorry for that again. Will fix in next version.
+> And I tested this series before send the mail like this:
+>
+> (qemu) info iothreads
+> iothread2:
+>   thread_id=3D434428
+>   attached-cnt=3D0
+>   attached-dev=3Dnone
+>   poll-max-ns=3D32768
+>   poll-grow=3D0
+>   poll-shrink=3D0
+>   aio-max-batch=3D0
+> iothread1:
+>   thread_id=3D434427
+>   attached-cnt=3D2
+>   attached-dev=3D/machine/peripheral/blk1/virtio-backend |
+> /machine/peripheral/blk0/virtio-backend
+>   poll-max-ns=3D32768
+>   poll-grow=3D0
+>   poll-shrink=3D0
+>   aio-max-batch=3D0
+
+You can manually test QMP like this:
+
+    $ qemu-system-x86_64 -S -display none -chardev socket,id=3Dqmp,path=3Dt=
+est-qmp,server=3Don,wait=3Doff -mon mode=3Dcontrol,chardev=3Dqmp -object io=
+thread,id=3Diot0
+
+In another terminal:
+
+    $ socat "READLINE,history=3D$HOME/.qmp_history,prompt=3DQMP> " UNIX-CON=
+NECT:test-qmp=20
+    {"QMP": {"version": {"qemu": {"micro": 50, "minor": 2, "major": 10}, "p=
+ackage": "v10.2.0-1533-g627cf8d1ed-dirty"}, "capabilities": ["oob"]}}
+    QMP> {"execute": "qmp_capabilities", "arguments": {"enable": ["oob"]}}
+    {"return": {}}
+    QMP> {"execute": "query-iothreads"}
+    {"return": [{"poll-shrink": 0, "thread-id": 2140323, "aio-max-batch": 0=
+, "attached-dev": "none", "poll-grow": 0, "attached-cnt": 0, "poll-max-ns":=
+ 32768, "id": "iot0"}]}
+    QMP> {"execute": "quit"}
+    {"timestamp": {"seconds": 1771922506, "microseconds": 801687}, "event":=
+ "SHUTDOWN", "data": {"guest": false, "reason": "host-qmp-quit"}}
+    {"return": {}}
+
+
+>> >  #                 "poll-max-ns":32768,
+>> >  #                 "poll-grow":0,
+>> >  #                 "poll-shrink":0,
+>> > @@ -126,6 +143,8 @@
+>> >  #              {
+>> >  #                 "id":"iothread1",
+>> >  #                 "thread-id":3135,
+>> > +#                 "attached-cnt":1,
+>> > +#                 "attached-dev":/machine/peripheral/blk3/virtio-back=
+end,
+>>
+>> Likewise.
+>
+> Thanks
+> Chen
+>
+>>
+>> >  #                 "poll-max-ns":32768,
+>> >  #                 "poll-grow":0,
+>> >  #                 "poll-shrink":0,
+>>
 
 
