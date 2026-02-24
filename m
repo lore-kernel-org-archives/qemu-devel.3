@@ -4,86 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 950C1F4BB65
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 17:50:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5B7FF4BB6B
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 17:57:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuwXv-0004vh-Fa; Tue, 24 Feb 2026 12:50:09 -0500
+	id 1vuwej-00087E-HX; Tue, 24 Feb 2026 12:57:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vuwXo-0004vA-Nt
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 12:50:01 -0500
-Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vuwei-00086y-66
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 12:57:08 -0500
+Received: from mail-yx1-xb12e.google.com ([2607:f8b0:4864:20::b12e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vuwXh-0005fr-BU
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 12:49:56 -0500
-Received: by mail-ej1-x62b.google.com with SMTP id
- a640c23a62f3a-b79f8f7ea43so941066166b.2
- for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 09:49:52 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vuweg-0007q1-7O
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 12:57:07 -0500
+Received: by mail-yx1-xb12e.google.com with SMTP id
+ 956f58d0204a3-64ae222d87dso5251169d50.2
+ for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 09:57:05 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1771955825; cv=none;
+ d=google.com; s=arc-20240605;
+ b=RasRYBhqsArGv1XJjVeciUQEjW+4qhScSm6yH7wVYwbmp08h+0rLJ5LBzymAqBqxdm
+ lDlji9xkm56CFwxyMazyHuoRKWKsBh4NUG42gQSLYBTornnmQ5dHkYdwtEZ5DJL6ajEg
+ GPUT2k0pWrzcvb2bLnJ5Tsxh6wnXkCXZFhIjaIL0DmkXB3kkr/1YN2iBwucQrBYBGaAQ
+ HJ6sTSBaUpCHr6mnaRSk8RWQ/ndeCjm6CT6H4z0UZ5zvLFgS81dEiRa1m5CeVetDOxQp
+ RXD6/8e6GWceYENiLplMDHGezgNjZUljSXgHBC0yxal6vNkewxUYjKudQhgUI2Ejz5RH
+ 09mg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=AeUfhO9UW6TQFC0dOdBcr5wjEXoxdisHitpRcJO+Ehk=;
+ fh=R84pXDYvJznuJb5dunrikqaEeI9MgwuEGgEYHxBIZ1A=;
+ b=lHFKfAX+cJSD4M7RdWxNaHp+Fp+65CnSL57EobG22SCJfwHvAN360RDdCpo5zVy5fK
+ zluwz95V0QfPjFMWu7sStwco9WDdlgXgfPJxzi5SA9rdych8zz9mMaL/GjuQCdR0/cXC
+ MRHYh0Tw0aatzehYFW/dZno9TMddPQQ3aWPuQUk3wzOUEWhlpJalJOldWqWI93q3Pb7F
+ aAAqRppvutFZc+L46aieWAje/itvLo01lvyFz1nk2zvS5Fv0w69USaLZJKfjR9V/TGxC
+ BHetiLVeHuI/ZQFLK/rTXWapUsvU6gl9MY69pLJXx79qSPRTXbE7CAiGm6USwJ201MaZ
+ dc7w==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771955391; x=1772560191; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1771955825; x=1772560625; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=fS8ze4JVTDCO/dgO2JejC8ZtIyG0TxH4O/d6/cq2RWA=;
- b=SwHI+anvaYqirUsjwP0F7cPd+NsvUt0GS8FOVKaWGyNQqBv68p3XaGD4uMoTT55ZtC
- dcx+nS1MWiRzfwRY0HB0WGYKQRasQzYlYkbj7G2QvpOv9to5nD6X2bQtV41B0FOg1rtp
- CO69a9X6g3zwDigY1lBL8Ai50MjszRhzFuq7ehP/36yVspRdsSVCrCwNqg0vZcHiFAh5
- FKvClc93xE6UM8tvXheZQfP4CgT1mxnyVUle3UJlRKFILDspqYAzkrgD1TkLrDvI7R16
- DNKshqQiTuSHNLHSwBa9L0+dxZ9ep3On3g5I8teg/mhPgcw/N/CsigprYPKJLNgA1Mid
- XbMA==
+ bh=AeUfhO9UW6TQFC0dOdBcr5wjEXoxdisHitpRcJO+Ehk=;
+ b=NFVopUEQEhQz05h1baGXuYvADc+1iGPrvDwNrXkTP0d4e4Fy6hntxaxh6y7q1eWF1h
+ myvWrxAxr7fdL0o28u48q9TfgHkklgS7DeUFz8UQCxy+TlmXfNPLtSNl3TEcywdJzIaG
+ WKcjIVXDYXn/piicD2zrUNLR6KsIP8pqk6bbm3+Em4y+RbzEotLzmdx/BGUkzXWUxxAm
+ SzdhwBnBJXaSJXqfGV08BAa/S2gY9NwWLGAD2Q5ZLeJJIr+L+dYSKickIQ90vGTj0i36
+ evpVMRBh+wbZlUMjilR9kfvF5axDFwNf31yzclEtFuNHfU3oJ+dboJUc1RPtz86VPnRP
+ /BSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771955391; x=1772560191;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=fS8ze4JVTDCO/dgO2JejC8ZtIyG0TxH4O/d6/cq2RWA=;
- b=YXa/F2wFYLWeGxadowAkt46CdC/AOlXwbwaCIqBNu31tiYNMzfE2VijNEZS6JdqQIZ
- mCfiBKtf7qj6q53Td7cw2rwFdfdyBRKywshGvrtl1RDJ3UnxoLpK/4Ps7UDrPhruNGUx
- thHbymCLDvszAB2dmQ0yrD6fO6540gndJN+meBA2r55g+VkuQeDiNt9rqE3uFkiJdWj1
- +TAtCcfcPHnc0tPuiqLYrujVrQNIwmZVcEfmGLSHVok1I4WA9TZ2rybbRRcqJtg3X3PE
- cFV7vJpygwa7N1iQGkjgeYwey4LP0ApZE9Jv0QIEUEzEA1hF6nkEgRs+cvymo46bkbc2
- 5T7Q==
-X-Gm-Message-State: AOJu0YwG3B+NnJ4Lbrfnw4YBXccltmSdu44L3c83gkJZMTPCP7//R8co
- N/3QkVigSHCirYSL1+QQRiGpYWCe3VmcnQQ9cZkAztZj/LERWS/qVEyYYdIvVDqfX7M=
-X-Gm-Gg: AZuq6aJlXdMV3k8zWzn7lDU2BL25QULlJ2HLB1NQq1pbOzXqWPrD8H/FnwixMfU/XG6
- 2ZIMKo27zNUP8HKImdI8P/P6wTYtECaUMArFdb5KRb1rzSXtu9jJqJ/gjS6wACL7pa6GCmizWNi
- 69Ge2IVFumqEi6rQWAY9CR/fhFkY3rshnP557QpEqbMAzzGWD7ZkWFR+mQRmNM6J12uZeRny5YF
- uelsjSWf1wmP3eGvm74icMB7LqjuvlgJd/KviyXVupocSJ7Wk338A7x5zMdr693rOz/OK27u9aS
- tR+7JuSDhDBnD9h868bKccONZfze2fMxMCIVIiSYszlQkmEketGsCK0KEIdMluihCn+wiRz66t9
- 1xitAImVvLf5YOQ4chiq6jPd5ue2Ux1W+8umv3mBP3huMq1KEVNxrfHMtxZD21GpbbYLm9PKee6
- gcaZ7vlu/y7qfRHiHQOoqK+MI=
-X-Received: by 2002:a17:907:98d:b0:b8f:8660:3caf with SMTP id
- a640c23a62f3a-b908196f4ecmr931213266b.5.1771955391402; 
- Tue, 24 Feb 2026 09:49:51 -0800 (PST)
-Received: from draig.lan ([185.124.0.126]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b9084cad8ebsm445252066b.27.2026.02.24.09.49.49
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 24 Feb 2026 09:49:49 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id E4EEB5F7B4;
- Tue, 24 Feb 2026 17:49:48 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Florian Hofhammer <florian.hofhammer@epfl.ch>
-Cc: qemu-devel@nongnu.org,  pierrick.bouvier@linaro.org,
- richard.henderson@linaro.org,  laurent@vivier.eu,  imp@bsdimp.com,
- berrange@redhat.com
-Subject: Re: [PATCH v4 6/7] plugins: prohibit writing to read-only registers
-In-Reply-To: <cc5b7b1a-b562-4376-8e4c-f01607bbcf9b@epfl.ch> (Florian
- Hofhammer's message of "Tue, 24 Feb 2026 16:57:21 +0100")
-References: <909b0a4f-9759-4e27-bba8-997ae2f41bd6@epfl.ch>
- <cc5b7b1a-b562-4376-8e4c-f01607bbcf9b@epfl.ch>
-User-Agent: mu4e 1.14.0-pre1; emacs 30.1
-Date: Tue, 24 Feb 2026 17:49:48 +0000
-Message-ID: <87ldgi2fr7.fsf@draig.linaro.org>
+ d=1e100.net; s=20230601; t=1771955825; x=1772560625;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=AeUfhO9UW6TQFC0dOdBcr5wjEXoxdisHitpRcJO+Ehk=;
+ b=fc0pWRL/f0nFc07aFzAkOdtulMxRGv5GggjQV+dxsP64kfcff+bAE8ESPUPHwXibZL
+ 7rRlRU7GHjESWZWVYaD2DadG4aTpYz7HFOVkz4ufCwDmcukueE65GP9kH7Chm0Jt2nFF
+ kK+3zuiF36bjj0zgWfmeDsCUqz59vIkuXQ5JCkXDmeEZvSku4sUOldWeuZrORAfjf57E
+ j8RaWUMc2FgY2Mm55mqtH6ijcka7wbmTdn4m6i/oone6Vs/GU/rk+5oDIaOLcOI+m289
+ LawKm7zM0dtoptM8pnAMu6K3qJVzu/zoPhKL6yzKYHO1puDJqPpBWLzoXcbYiIxt6ZU7
+ 6Kiw==
+X-Gm-Message-State: AOJu0YzzUcVJvo5OSEFjDSRI9CIeqWuuDEYKfu6z81wn2wELpoW05OM+
+ oOKHnutgomM1Tdptsrz8lRN2tM+ztVnm4HGguIDIHdZ8A2fmWoxzv1/93Rk6eIntD/7lvNVxUX3
+ sfbgQJ/4Ln8gEFv5wM7MEoAfz1wy22m4eUIB7CHo3nw==
+X-Gm-Gg: ATEYQzz2eMcGvSr6veOvmcxEL2N7ycrhIRUo+1zw+N+EsQAGeiivfx2Jzsj7j+SYZhe
+ nEtCCHpLHO8iYCFIQcdQR6Ane2pLiXid8Vo6DECet8n38/p0JMApFUHozEfxC54XxwgpGacIn8q
+ YokzCyezhSGGx1wdsSizG7QaXyVifZOh3EnwqUjbWyC0yFSO+pQJWjn50spiacx816vBdS+FvYe
+ Yijf8fDgxcGF6iunLYhKYNq5FzKBsFosjyEOtUWEemlDBK3Cm+DqHCCfz/cxG+CSoQ7Bf6efuDh
+ EcQPD/ejk+WR/Dn2RsAPfcRzcDlzgRQD8PaFmXwZcCR/27tAGV2MTjxSywkOl+vbv7c=
+X-Received: by 2002:a05:690e:1447:b0:64a:f0cd:d47 with SMTP id
+ 956f58d0204a3-64c78e5987cmr11083078d50.84.1771955824692; Tue, 24 Feb 2026
+ 09:57:04 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+References: <20260219171810.602667-1-alex.bennee@linaro.org>
+ <20260219171810.602667-8-alex.bennee@linaro.org>
+In-Reply-To: <20260219171810.602667-8-alex.bennee@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 24 Feb 2026 17:56:53 +0000
+X-Gm-Features: AaiRm51620G_UI-4oTZzZTam6sQ4dpDFeeZbSdJRqXMq_KZwqAV4ImnEWAYP9zM
+Message-ID: <CAFEAcA_d87=weQS4+s5X6fPGNOGBNyWzq7V4EgFE=HDsyK95ug@mail.gmail.com>
+Subject: Re: [RFC PATCH v2 07/14] hw/mips: defer finalising gcr_base until
+ reset time
+To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, Yoshinori Sato <yoshinori.sato@nifty.com>,
+ qemu-arm@nongnu.org, 
+ Laurent Vivier <laurent@vivier.eu>, Thomas Huth <huth@tuxfamily.org>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
+ Aurelien Jarno <aurelien@aurel32.net>, Jim MacArthur <jim.macarthur@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Bastian Koppelmann <kbastian@rumtueddeln.de>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Aleksandar Rikalo <arikalo@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Zhao Liu <zhao1.liu@intel.com>, Jiaxun Yang <jiaxun.yang@flygoat.com>, 
+ Yanan Wang <wangyanan55@huawei.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,96 +129,135 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Florian Hofhammer <florian.hofhammer@epfl.ch> writes:
-
-> The opaque register handle encodes whether a register is read-only in
-> the lowest bit and prevents writing to the register via the plugin API
-> in this case.
+On Thu, 19 Feb 2026 at 17:18, Alex Benn=C3=A9e <alex.bennee@linaro.org> wro=
+te:
 >
-> Signed-off-by: Florian Hofhammer <florian.hofhammer@epfl.ch>
+> Currently the cpu_reset() in mips_cpu_realizefn() hides an implicit
+> sequencing requirement when setting gcr_base. Without it we barf
+> because we end up setting the region between 0x0-0x000000001fbfffff
+> which trips over a qtest that accesses the GCR during "memsave 0 4096
+> /dev/null".
+>
+> By moving to the reset phase we have to drop the property lest we are
+> admonished for "Attempting to set...after it was realized" but there
+> doesn't seem to be a need to expose the property anyway.
+>
+> NB: it would be safer if I could guarantee the place in the reset tree
+> but I haven't quite grokked how to do that yet. Currently I see this
+> sequence when testing:
+>
+>   env MALLOC_PERTURB_=3D43 G_TEST_DBUS_DAEMON=3D/home/alex/lsrc/qemu.git/=
+tests/dbus-vmstate-daemon.sh UBSAN_OPTIONS=3Dhalt_on_error=3D1:abort_on_err=
+or=3D1:print_summary=3D1:print_stacktrace=3D1 QTEST_QEMU_IMG=3D./qemu-img Q=
+TEST_QEMU_BINARY=3D./qemu-system-mips64el SPEED=3Dthorough MESON_TEST_ITERA=
+TION=3D1 MSAN_OPTIONS=3Dhalt_on_error=3D1:abort_on_error=3D1:print_summary=
+=3D1:print_stacktrace=3D1 PYTHON=3D/home/alex/lsrc/qemu.git/builds/all/pyve=
+nv/bin/python3 QTEST_QEMU_STORAGE_DAEMON_BINARY=3D./storage-daemon/qemu-sto=
+rage-daemon ASAN_OPTIONS=3Dhalt_on_error=3D1:abort_on_error=3D1:print_summa=
+ry=3D1 G_TEST_SLOW=3D1 RUST_BACKTRACE=3D1 /home/alex/lsrc/qemu.git/builds/a=
+ll/tests/qtest/test-hmp --tap -p /mips64el/hmp/boston
+>   TAP version 14
+>   # random seed: R02S0d3b1a4f1aef5198107851bdee539e7d
+>   # Start of mips64el tests
+>   # Start of hmp tests
+>   # starting QEMU: exec ./qemu-system-mips64el -qtest unix:/tmp/qtest-530=
+181.sock -qtest-log /dev/null -chardev socket,path=3D/tmp/qtest-530181.qmp,=
+id=3Dchar0 -mon chardev=3Dchar0,mode=3Dcontrol -display none -audio none -r=
+un-with exit-with-parent=3Don -S -M boston -accel qtest
+>   main_cpu_reset: dbg
+>   mips_gcr_reset: dbg
+>   mps_reset_exit: dbg
+
+This works because we call reset hooks in the order
+they're registered, and clearly the qemu_register_reset()
+in mips_cps_realize() gets in first.
+
+To actually get the three-phase ordering so that the
+'exit' phase hook you add in this patch definitely
+runs after the 'hold' phase of the CPU, you would need
+to stop using cpu_reset() and instead use
+use qemu_register_resettable(OBJ(cpu));.
+
+>   ok 1 /mips64el/hmp/boston
+>   # End of hmp tests
+>   # End of mips64el tests
+>   1..1
+>
+> Cc: Peter Maydell <peter.maydell@linaro.org>
+> Message-ID: <20260108143423.1378674-9-alex.bennee@linaro.org>
+> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+>
 > ---
->  plugins/api.c | 11 +++++++----
->  1 file changed, 7 insertions(+), 4 deletions(-)
+> v2
+>   - use proper 3-phase reset
+> ---
+>  include/hw/mips/cps.h | 14 +++++++++++++-
+>  hw/mips/cps.c         | 26 +++++++++++++++++---------
+>  hw/misc/mips_cmgcr.c  |  1 -
+>  3 files changed, 30 insertions(+), 11 deletions(-)
 >
-> diff --git a/plugins/api.c b/plugins/api.c
-> index b2c52d2a09..3a8479ddce 100644
-> --- a/plugins/api.c
-> +++ b/plugins/api.c
-> @@ -424,6 +424,7 @@ static GArray *create_register_handles(GArray *gdbstu=
-b_regs)
->      for (int i =3D 0; i < gdbstub_regs->len; i++) {
->          GDBRegDesc *grd =3D &g_array_index(gdbstub_regs, GDBRegDesc, i);
->          qemu_plugin_reg_descriptor desc;
-> +        gint plugin_ro_bit =3D 0;
->=20=20
->          /* skip "un-named" regs */
->          if (!grd->name) {
-> @@ -431,7 +432,6 @@ static GArray *create_register_handles(GArray *gdbstu=
-b_regs)
->          }
->=20=20
->          /* Create a record for the plugin */
-> -        desc.handle =3D GINT_TO_POINTER(grd->gdb_reg + 1);
->          desc.name =3D g_intern_string(grd->name);
->          desc.is_readonly =3D false;
->          if (g_strcmp0(desc.name, pc_str) =3D=3D 0
-> @@ -442,7 +442,9 @@ static GArray *create_register_handles(GArray *gdbstu=
-b_regs)
->              || g_strcmp0(desc.name, rpc_str) =3D=3D 0
->             ) {
->              desc.is_readonly =3D true;
-> +            plugin_ro_bit =3D 1;
->          }
-> +        desc.handle =3D GINT_TO_POINTER((grd->gdb_reg << 1) | plugin_ro_=
-bit);
->          desc.feature =3D g_intern_string(grd->feature_name);
->          g_array_append_val(find_data, desc);
->      }
-> @@ -467,7 +469,7 @@ bool qemu_plugin_read_register(struct qemu_plugin_reg=
-ister *reg,
->          return false;
->      }
->=20=20
-> -    return (gdb_read_register(current_cpu, buf, GPOINTER_TO_INT(reg) - 1=
-) > 0);
-> +    return (gdb_read_register(current_cpu, buf, GPOINTER_TO_INT(reg) >> =
-1) > 0);
+> diff --git a/include/hw/mips/cps.h b/include/hw/mips/cps.h
+> index 878b4d819f4..1084a10de0f 100644
+> --- a/include/hw/mips/cps.h
+> +++ b/include/hw/mips/cps.h
+> @@ -30,7 +30,7 @@
+>  #include "qom/object.h"
+>
+>  #define TYPE_MIPS_CPS "mips-cps"
+> -OBJECT_DECLARE_SIMPLE_TYPE(MIPSCPSState, MIPS_CPS)
+> +OBJECT_DECLARE_TYPE(MIPSCPSState, MIPSCPSClass, MIPS_CPS)
+>
+>  struct MIPSCPSState {
+>      SysBusDevice parent_obj;
+> @@ -48,6 +48,18 @@ struct MIPSCPSState {
+>      Clock *clock;
+>  };
+>
+> +/*
+> + * MIPSCPSClass:
+> + * @parent_phases: The parent class' reset phase handlers.
+> + *
+> + * A Coherent Processing System model.
+> + */
+> +struct MIPSCPSClass {
+> +    SysBusDeviceClass parent_class;
+> +
+> +    ResettablePhases parent_phases;
+> +};
+> +
+>  qemu_irq get_cps_irq(MIPSCPSState *cps, int pin_number);
+>
+>  #endif
+> diff --git a/hw/mips/cps.c b/hw/mips/cps.c
+> index 620ee972f8f..23918147276 100644
+> --- a/hw/mips/cps.c
+> +++ b/hw/mips/cps.c
+> @@ -55,6 +55,17 @@ static void main_cpu_reset(void *opaque)
+>      cpu_reset(cs);
 >  }
->=20=20
->  bool qemu_plugin_write_register(struct qemu_plugin_register *reg,
-> @@ -476,11 +478,12 @@ bool qemu_plugin_write_register(struct qemu_plugin_=
-register *reg,
->      g_assert(current_cpu);
->=20=20
->      if (buf->len =3D=3D 0 || (qemu_plugin_get_cb_flags() !=3D QEMU_PLUGI=
-N_CB_RW_REGS &&
-> -                          qemu_plugin_get_cb_flags() !=3D QEMU_PLUGIN_CB=
-_RW_REGS_PC)) {
-> +                          qemu_plugin_get_cb_flags() !=3D QEMU_PLUGIN_CB=
-_RW_REGS_PC)
-> +        || (GPOINTER_TO_INT(reg) & 1)) {
+>
+> +static void mps_reset_exit(Object *obj, ResetType type)
+> +{
+> +    MIPSCPSState *s =3D MIPS_CPS(obj);
+> +    hwaddr gcr_base;
+> +
+> +    /* Global Configuration Registers - only valid once the CPU has been=
+ reset */
+> +    gcr_base =3D MIPS_CPU(first_cpu)->env.CP0_CMGCRBase << 4;
+> +    memory_region_add_subregion(&s->container, gcr_base,
+> +                            sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->gc=
+r), 0));
 
-Maybe this is better as:
+It still seems odd to me that we are messing with the GCR device
+in this CPS reset method. The TYPE_MIPS_GCR device (in hw/misc/mips_cmgcr.c=
+)
+is the one that owns these memory regions and it has code that
+adjusts their addresses at runtime based on guest register writes.
+It would seem more logical to have the CPs code just set things up
+(e.g. map them at address 0) in realize, and then have the GCR
+device's reset (exit phase) set the address/enabled of the MRs
+according to their required state at reset.
 
-      g_assert(GPOINTER_TO_INT(reg) & 1 =3D=3D 0);
-
-      if (buf->len =3D=3D 0 || (qemu_plugin_get_cb_flags() !=3D QEMU_PLUGIN=
-_CB_RW_REGS &&...
-
-again the plugin is trying to do something it shouldn't.
-
->          return false;
->      }
->=20=20
-> -    return (gdb_write_register(current_cpu, buf->data, GPOINTER_TO_INT(r=
-eg) - 1) > 0);
-> +    return (gdb_write_register(current_cpu, buf->data, GPOINTER_TO_INT(r=
-eg) >> 1) > 0);
->  }
->=20=20
->  void qemu_plugin_set_pc(uint64_t vaddr)
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+thanks
+-- PMM
 
