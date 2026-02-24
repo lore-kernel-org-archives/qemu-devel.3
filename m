@@ -4,66 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D37FEFB7F5
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 04:00:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57190EFB7EF
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 04:25:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vujau-0000cg-CD; Mon, 23 Feb 2026 23:00:21 -0500
+	id 1vujyQ-0002v3-S8; Mon, 23 Feb 2026 23:24:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vujas-0000Yw-5K
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 23:00:18 -0500
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1vujyO-0002uj-Ly
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 23:24:36 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vujao-0002ke-3k
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 23:00:17 -0500
-Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 61O3waqY018807
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Tue, 24 Feb 2026 13:00:08 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=EmQRl0e+mzV4f7eg6AK40QtUyAgqmljOcRMgTOa82/o=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=Message-ID:Date:Subject:To:From;
- s=rs20250326; t=1771905608; v=1;
- b=qks5KE80LzMg8k3QydgIw8P/fIWUD4J7sBG+IBnOButP9vY2FdYDxqREbZ8mjAvv
- 6K4zMQo9szn9qrf6B9L8pJVU+YwfNi2uU6pQROtxPXlHeaUff65WDAFkGDSetJBw
- R/Qt8KrbFCH+zvkHNDaEtk3qGAVnIBfYHNQWWlwjqc6a74Zud2ALE/stoHX7Na0C
- ZEBE7vNck615T51yQTUZ5hT100TDOTcHBP1yFdVBZOyX4ifgZ/7zauDTiFl4Jd0y
- jujYECl7+HRt4YGFqJofFxXwCWg7yU88L4Ug14DWX+lYZBgO+cRwxIVYlRawDSAi
- kIsbia2ateQ8DBTaW4mLEw==
-Message-ID: <829317cc-551b-457d-a27f-9db0fc749c52@rsg.ci.i.u-tokyo.ac.jp>
-Date: Tue, 24 Feb 2026 12:58:36 +0900
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1vujyL-0006Ju-88
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 23:24:36 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1771907071;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=/ddbWTMKVbD43VgAqMVpdyVheLSSkIncF4HgxqE9WjQ=;
+ b=bvWr+0b0yuasi+1whiLRbE0fJVF5I+f38TU89QB8ejiW2xFLYwX0ut5NSiSwGOk0NIx3CR
+ rHbElTgEExT2Rwz0JwyiSwxASeWJDsyYXPDlUdHJTDHf4leGYCJrXH+SAbQnTkLs3bFNNO
+ So3bfFp/lpoGGdbxa9x1jURcjq/0zCk=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-387-AXY4UpbPPyuB54EEm_KnNw-1; Mon,
+ 23 Feb 2026 23:24:27 -0500
+X-MC-Unique: AXY4UpbPPyuB54EEm_KnNw-1
+X-Mimecast-MFC-AGG-ID: AXY4UpbPPyuB54EEm_KnNw_1771907066
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BC0D218004A9; Tue, 24 Feb 2026 04:24:25 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.27])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id E75333003D91; Tue, 24 Feb 2026 04:24:23 +0000 (UTC)
+Date: Tue, 24 Feb 2026 12:24:21 +0800
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: JAEHOON KIM <jhkim@linux.ibm.com>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, pbonzini@redhat.com,
+ fam@euphon.net, armbru@redhat.com, eblake@redhat.com,
+ berrange@redhat.com, eduardo@habkost.net, dave@treblig.org, sw@weilnetz.de
+Subject: Re: [PATCH RFC v1 0/3] aio-poll: improve aio-polling efficiency
+Message-ID: <20260224042421.GA1446053@fedora>
+References: <20260113174824.464720-1-jhkim@linux.ibm.com>
+ <20260219222717.GA1011077@fedora>
+ <79c89de8-68f4-46ff-bcce-dcb817d04ad5@linux.ibm.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 06/10] virtio-gpu-dmabuf: Improve error handling with
- 'Error **' and err enum
-To: Vivek Kasireddy <vivek.kasireddy@intel.com>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Alex Williamson <alex@shazbot.org>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
- <clg@redhat.com>
-References: <20260223080200.468558-1-vivek.kasireddy@intel.com>
- <20260223080200.468558-7-vivek.kasireddy@intel.com>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20260223080200.468558-7-vivek.kasireddy@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: 2
-X-Spam_score: 0.2
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="Fzyg9qdQRgEcAh0C"
+Content-Disposition: inline
+In-Reply-To: <79c89de8-68f4-46ff-bcce-dcb817d04ad5@linux.ibm.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -1
+X-Spam_score: -0.2
 X-Spam_bar: /
-X-Spam_report: (0.2 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1.179,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.717, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Spam_report: (-0.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1.179, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.717,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -79,169 +88,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/02/23 17:00, Vivek Kasireddy wrote:
-> Make the error handling more robust in virtio_gpu_init_udmabuf()
-> by introducing 'Error **' parameter to capture errors and an enum
-> to categorize Guest and Host errors. This allows for better error
-> reporting and handling of errors from virtio_gpu_create_udmabuf()
-> and virtio_gpu_remap_dmabuf().
-> 
-> Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
-> Cc: Alex Bennée <alex.bennee@linaro.org>
-> Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-> Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-> Cc: Alex Williamson <alex@shazbot.org>
-> Cc: Cédric Le Goater <clg@redhat.com>
-> Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
-> ---
->   hw/display/virtio-gpu-dmabuf.c | 65 +++++++++++++++++++++++++---------
->   1 file changed, 48 insertions(+), 17 deletions(-)
-> 
-> diff --git a/hw/display/virtio-gpu-dmabuf.c b/hw/display/virtio-gpu-dmabuf.c
-> index 8d67ef7c2a..fdcf8e53a2 100644
-> --- a/hw/display/virtio-gpu-dmabuf.c
-> +++ b/hw/display/virtio-gpu-dmabuf.c
-> @@ -27,7 +27,17 @@
->   #include "standard-headers/linux/udmabuf.h"
->   #include "standard-headers/drm/drm_fourcc.h"
->   
-> -static void virtio_gpu_create_udmabuf(struct virtio_gpu_simple_resource *res)
-> +typedef enum VirtIOGPUErrorType {
-> +    VIRTIO_GPU_NO_ERROR = 0,
-> +    /* Guest is responsible for this error */
-> +    VIRTIO_GPU_GUEST_ERROR = 1,
-> +    /* Host is at fault for this error */
-> +    VIRTIO_GPU_HOST_ERROR = 2,
 
-include/qapi/error.h says:
- > - Whenever practical, also return a value that indicates success /
- >   failure.  This can make the error checking more concise, and can
- >   avoid useless error object creation and destruction.  Note that
- >   we still have many functions returning void.  We recommend
- >   • bool-valued functions return true on success / false on failure,
- >   • pointer-valued functions return non-null / null pointer, and
- >   • integer-valued functions return non-negative / negative.
+--Fzyg9qdQRgEcAh0C
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Do what it says. Non-negative if *errp is set. Negative otherwise.
+On Fri, Feb 20, 2026 at 01:00:16PM -0600, JAEHOON KIM wrote:
+> On 2/19/2026 4:27 PM, Stefan Hajnoczi wrote:
+> > Hi Jaehoon,
+> > Following the call earlier this week I ran a single fio job to get a
+> > clearer picture of:
+> > 1. The QEMU 10.0.0 regression that prompted you to optimize AioContext
+> >     polling.
+> > 2. How the poll-weight parameter affects IOPS.
+> >=20
+> > run      rw        bs   numjobs iothreads iops   diff
+> > v9.2.0   randread  8k   1       1         174944 3.6%
+> > v10.0.0  randread  8k   1       1         174285 3.2%
+> > baseline randread  8k   1       1         168908 0.0%
+> > w2       randread  8k   1       1         163718 -3.1%
+> > w3       randread  8k   1       1         165805 -1.8%
+> > w4       randread  8k   1       1         167388 -0.9%
+> >=20
+> > This time I only ran randread bs=3D8k iodepth=3D8 numjobs=3D1 with a si=
+ngle
+> > IOThread.
+> >=20
+> > Observations:
+> >=20
+> > - There might be an IOPS regression between v10.0.0 and the baseline
+> >    (9ad7f544c696) that your patches apply on top of. This is different
+> >    from the CPU utilization regression that you found in v9.2.0 ->
+> >    v10.0.0. I will bisect it.
 
-> +} VirtIOGPUErrorType;
-> +
-> +static VirtIOGPUErrorType
-> +virtio_gpu_create_udmabuf(struct virtio_gpu_simple_resource *res, int *fd,
-> +                          Error **errp)
->   {
->       g_autofree struct udmabuf_create_list *list = NULL;
->       RAMBlock *rb;
-> @@ -36,7 +46,8 @@ static void virtio_gpu_create_udmabuf(struct virtio_gpu_simple_resource *res)
->   
->       udmabuf = udmabuf_fd();
->       if (udmabuf < 0) {
-> -        return;
-> +        error_setg(errp, "udmabuf device not available");
-> +        return VIRTIO_GPU_HOST_ERROR;
->       }
->   
->       list = g_malloc0(sizeof(struct udmabuf_create_list) +
-> @@ -45,7 +56,8 @@ static void virtio_gpu_create_udmabuf(struct virtio_gpu_simple_resource *res)
->       for (i = 0; i < res->iov_cnt; i++) {
->           rb = qemu_ram_block_from_host(res->iov[i].iov_base, false, &offset);
->           if (!rb || rb->fd < 0) {
-> -            return;
-> +            error_setg(errp, "Could not find valid ramblock");
+I reran v10.0.0, v10.1.0, and the baseline to check for a regression.
+The fio results came back not showing a regression. It's weird that the
+results I previously posted showed a change, but there doesn't seem to
+be a reproducible issue after all.
 
-It is a valid ramblock even if rb->fd < 0. It is just "incompatible" 
-with udmabuf.
+Stefan
 
-> +            return VIRTIO_GPU_GUEST_ERROR;
->           }
->   
->           list->list[i].memfd  = rb->fd;
-> @@ -56,22 +68,30 @@ static void virtio_gpu_create_udmabuf(struct virtio_gpu_simple_resource *res)
->       list->count = res->iov_cnt;
->       list->flags = UDMABUF_FLAGS_CLOEXEC;
->   
-> -    res->dmabuf_fd = ioctl(udmabuf, UDMABUF_CREATE_LIST, list);
-> -    if (res->dmabuf_fd < 0) {
-> -        warn_report("%s: UDMABUF_CREATE_LIST: %s", __func__,
-> -                    strerror(errno));
-> +    *fd = ioctl(udmabuf, UDMABUF_CREATE_LIST, list);
-> +    if (*fd < 0) {
-> +        error_setg_errno(errp, errno, "UDMABUF_CREATE_LIST: ioctl failed");
-> +        if (errno == EINVAL || errno == EBADFD) {
-> +            return VIRTIO_GPU_GUEST_ERROR;
-> +        }
-> +        return VIRTIO_GPU_HOST_ERROR;
->       }
-> +    return VIRTIO_GPU_NO_ERROR;
->   }
->   
-> -static void virtio_gpu_remap_dmabuf(struct virtio_gpu_simple_resource *res)
-> +static bool virtio_gpu_remap_dmabuf(struct virtio_gpu_simple_resource *res,
-> +                                    Error **errp)
->   {
-> -    res->remapped = mmap(NULL, res->blob_size, PROT_READ,
-> -                         MAP_SHARED, res->dmabuf_fd, 0);
-> -    if (res->remapped == MAP_FAILED) {
-> -        warn_report("%s: dmabuf mmap failed: %s", __func__,
-> -                    strerror(errno));
-> +    void *map;
-> +
-> +    map = mmap(NULL, res->blob_size, PROT_READ, MAP_SHARED, res->dmabuf_fd, 0);
-> +    if (map == MAP_FAILED) {
-> +        error_setg_errno(errp, errno, "dmabuf mmap failed");
->           res->remapped = NULL;
-> +        return false;
->       }
-> +    res->remapped = map;
-> +    return true;
->   }
->   
->   static void virtio_gpu_destroy_dmabuf(struct virtio_gpu_simple_resource *res)
-> @@ -125,19 +145,30 @@ bool virtio_gpu_have_udmabuf(void)
->   
->   void virtio_gpu_init_dmabuf(struct virtio_gpu_simple_resource *res)
->   {
-> +    Error *local_err = NULL;
-> +    VirtIOGPUErrorType err;
->       void *pdata = NULL;
-> +    int fd;
->   
->       res->dmabuf_fd = -1;
->       if (res->iov_cnt == 1 &&
->           res->iov[0].iov_len < 4096) {
->           pdata = res->iov[0].iov_base;
->       } else {
-> -        virtio_gpu_create_udmabuf(res);
-> -        if (res->dmabuf_fd < 0) {
-> +        err = virtio_gpu_create_udmabuf(res, &fd, &local_err);
-> +        if (err != VIRTIO_GPU_NO_ERROR) {
-> +            error_prepend(&local_err, "Cannot create dmabuf: ");
-> +            if (err == VIRTIO_GPU_GUEST_ERROR) {
-> +                qemu_log_mask(LOG_GUEST_ERROR,
-> +                              "Cannot create dmabuf: incompatible mem\n");
+--Fzyg9qdQRgEcAh0C
+Content-Type: application/pgp-signature; name=signature.asc
 
-s/mem/memory/
+-----BEGIN PGP SIGNATURE-----
 
-The log is not that long so we can have a full correct spelling.
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmmdJ/QACgkQnKSrs4Gr
+c8h0UAgAwL4xuXyhjE8t0jwm6nil9sBfqpTwhkI6MQz/skHZrYHkk5+Eoh9//nLJ
+iSdD80U1eW/w24MWgZGrsdIG01rhS6RWKvIxOB/7xeA9xfIws/4V3oBzCDIoLqnu
+8sfKlgrS1/EOF884Hlr/MEIrNMNfhP+VQLyMX/Yi60TDtKm6NeqZ32FpIEYjGeyq
+05l3Bt+trD7Qz2+ULVY/rizgn8Hbnq3ROqWJX0L90IeYAsoevTQGriBQ1u/peJ1+
+JDzV/QwLfhanF6FXUQIi/lpJvPh5Kwkbew3YMhMTRM9ruuwWwKac4v5PBtDSi0Px
+3rQkVr7dRxxOc0HqDB8yc2RoDdzNXw==
+=uPqw
+-----END PGP SIGNATURE-----
 
-> +            }
-> +            error_report_err(local_err);
-
-This prints a message even for a guest error.
-
-Regards,
-Akihiko Odaki
-
->               return;
->           }
-> -        virtio_gpu_remap_dmabuf(res);
-> -        if (!res->remapped) {
-> +
-> +        res->dmabuf_fd = fd;
-> +        if (!virtio_gpu_remap_dmabuf(res, &local_err)) {
-> +            error_report_err(local_err);
->               return;
->           }
->           pdata = res->remapped;
+--Fzyg9qdQRgEcAh0C--
 
 
