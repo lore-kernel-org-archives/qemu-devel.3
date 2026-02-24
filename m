@@ -4,100 +4,117 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E36B2F4BB67
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 17:37:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB555F4BB65
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 17:38:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuwKz-0006vr-9t; Tue, 24 Feb 2026 12:36:45 -0500
+	id 1vuwM2-0007CJ-FH; Tue, 24 Feb 2026 12:37:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vuwKq-0006vW-QY
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 12:36:37 -0500
-Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vuwLy-00075j-Cp
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 12:37:48 -0500
+Received: from mail-yx1-xb136.google.com ([2607:f8b0:4864:20::b136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vuwKo-0003kL-OB
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 12:36:36 -0500
-Received: by mail-ed1-x533.google.com with SMTP id
- 4fb4d7f45d1cf-65f812e0c83so234337a12.2
- for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 09:36:33 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vuwLw-0003qb-ER
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 12:37:46 -0500
+Received: by mail-yx1-xb136.google.com with SMTP id
+ 956f58d0204a3-64c9707fc11so1404909d50.2
+ for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 09:37:44 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1771954663; cv=none;
+ d=google.com; s=arc-20240605;
+ b=Pm+UD2g2Cuv64FlS+8j6TjjHUrnaw7wfpYqeTQM/omzmZmuwjmOOUHk/br5vcHzP/y
+ p0llm94/zzVQ/efALKFSkb5lhrWmqS2UV9n0oSqlj1YOemci9xqSJPM7FE8jKjNwVhIe
+ s2L3/apdNh8sAfYx+flecGqP90bn4dcoTNRIjr48h5/L6LtVhBJBR6qn41D19rTytYPm
+ pHmhgiJ69+vKTdb+5vvIQTk1FjYwtTY/6rxo8KodHeyF+D9jY8hx6uAWOLGO+6cQ9jCt
+ YGEJSosfc7NpALojQbPLN6UpiF3l90deg47WX/8LVl6J3nRmfE4EsCioxYVWcJOppU24
+ pi3Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=Tdh36pSD+tLfnMZN3vf5DS5AcaUa9J8WbbRp77AylTg=;
+ fh=R84pXDYvJznuJb5dunrikqaEeI9MgwuEGgEYHxBIZ1A=;
+ b=V/TKSkscs+G5BkgGujM6w/wuBBKKL37KhaYyc0Zdk+Lq9Vq4Y2oBtyrnjdJx8MHPsB
+ 4Mp9ZDte6/7gygdpoV1CXiWlhfNgWUvnK7TLsiuVSZ1hSVGxttxthaSxNiYQ4csM1ed8
+ EWsDohwvIiUEVY9fHOQiLMwErkfB/Bs+UF3WfwAIfBzIKo2dFWVPnHPir3OKSJGOP739
+ mnw5tgam4555f3YS4AlsOKmlp1RB8OZxUL+bwTLajLt2sDm9HeIh0XGonw8jLAQQ/x1X
+ 2cAS1cJtNl0sco5mt2VxbCOJnB/ZqItYkR68zD9pfC8eMguNn+9yosMvgyOLHkLWP+7Z
+ cCTg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771954593; x=1772559393; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1771954663; x=1772559463; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=V8Mb7JJ31wJsv3i9pLvO2NVdO67ZDNDABuR6kkDT74s=;
- b=WjA+Y+kuq9Hf6+mso1JjK3ZeHd3MDVSTzjPnX5rQPqP8oE4tS5VKA1TqN52jQtBQcu
- I9oCORxiSagXjU4vd7q98BeoJzqcL+2ZnS5jcvYRF3rXZmvOy37rxr0/DiPLgpzTVRWs
- HWW0XoZuaGFRPT9YgZtLPFgS4krVhgRq/O+LC8ATsEh2YVoq48ctKp/CrbFwnG4D78H2
- trRZtmrqQK4BxtZuzbaYKu26Cy8VrxCKf2RHVpVx04C6KpJkcAQfxn/7V0mz/8btFzd/
- FdWwK/SDCE6Tn9D2Pc9GEVi5gaN/zI5OsQC+mJd0y7s6Bqi8r8uFv3PZzR7h9N8MFu6c
- myRQ==
+ bh=Tdh36pSD+tLfnMZN3vf5DS5AcaUa9J8WbbRp77AylTg=;
+ b=UV9SIGjdAjBAkZ4qmnOk8rbpvq2rjkkkCJVUBKPsCDMa0A7v4l7aKMN7ZGZ4b3dhdt
+ 6lCmYFuULI0xLHBq2gJQ5aJT88N5csVXUSBtR3/kpRis9zS3aqqMuUmfAJHun0/TJ7nt
+ e4MYtN3+rUh/T07pD/bhDqNO/FPoSbVgTRcSxN4LJH19ab5aRmOgqQzFUO1pD3fXLd1w
+ Nb9FZYIIw+wNGhl3qphUHQ5FDA1MqZBrAd1xLzI3PUJUsmotbGFMltqZEB4pU9qGWe2U
+ JypgkhSQmlrGOOGBiRu4bumw+LzS8MWIts13AdtT1Y889JfiCl5nAucW7pVMDnCrIXU+
+ 2COA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771954593; x=1772559393;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=V8Mb7JJ31wJsv3i9pLvO2NVdO67ZDNDABuR6kkDT74s=;
- b=Vw0Fkx+QamOJxDDbfoXyjeKB8pPSHay1/R3eIrybzymRD0Baq3qEBRpKcn7oUk4ySb
- 10I8sHJ+9N4wMHiLIq4eEWNdjERh0uqpQdPK0OS4EdG6qZc6Cf3ZqJGQI/jxzWUn4bYg
- GUygyTIRttW9y5iRVxEruBmwVl8vQBCfkF/EPLFT/0/WEBUMqW3bpTk0TZK6dlvPztZj
- sDaC0WggcEO4MygrmiJtP8RBWWd8+xyb7HTvGJaB/GCyp9uHhY/r0hIC6DrkvbxHHuvf
- IhvjF69wzyb3QSjE9ZGro70ehS7TIF/3KLFHds1d6s4ubTIIfcfJA1swXrSIhYvnLrbp
- eZcQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXtDS2NF74QiLpFWUb8JYrHN4DvFCsxIYwZxmwxezxnx1OO7NUx2e/qa5NM2u0D363s9U9n1FqKOTrh@nongnu.org
-X-Gm-Message-State: AOJu0Yw61gVdSHJ/hNJgGpvjwoGTEJTiM1tARLFNgffJRTI8eGY3Ww43
- g9dRUOMe2m5vl5/4xY61dGCY+dfEzDoaz0+b0XNoQVPrS/ZcJj+LXyY0vZz4QODf1F4=
-X-Gm-Gg: AZuq6aJ/a4xGXKL1DLcu0cFU0saZTcdvQZjkXDQLMVdQisCtF0clS0T8dn4jLM+7vSn
- vnlpZOFUXrdTneUE8j2MRHUG7szSWSQL6q/L/aeRSlGwee4K6v4DNR5BnojJQPflk1MZJ469xUR
- /6fo3rqscX8/a2qOQPrTWcEgn/Cs20B13XlmaefW6oRGWx+hmG762FBBKaXS/XGlgE6H0J/J1sT
- SFn/jtkb8XT0UVDvP4jeuUmv/J76jpor/+0IKwYOM9KW9ttbgHGdChE8JNce9ky87pWF6x1gCgD
- jUtXYODzysTqMVKqZwPjauu0/5oJZP7UH+b/yvAuLVYIM4m6jnzh+P3WBwdbuPT8w34xweGfgUx
- qGjixAVzofL2wbBv2WahBASUMzc2NHLEAyK7ZgUd14eV/2ddOK2O95Dpwkysw8w32YNfzOkTLj8
- gCeTYb0CeOn0PR3MTo1LowXIo=
-X-Received: by 2002:a17:907:9620:b0:b88:9760:2df9 with SMTP id
- a640c23a62f3a-b90819717edmr791318966b.11.1771954592522; 
- Tue, 24 Feb 2026 09:36:32 -0800 (PST)
-Received: from draig.lan ([185.124.0.126]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b9084a4d6e1sm447803266b.0.2026.02.24.09.36.31
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 24 Feb 2026 09:36:31 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 0712A5F7B4;
- Tue, 24 Feb 2026 17:36:31 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: =?utf-8?Q?Kr=C3=B6ning?= Martin <martin.kroening@eonerc.rwth-aachen.de>
-Cc: Peter Maydell <peter.maydell@linaro.org>,  Philippe =?utf-8?Q?Mathieu-?=
- =?utf-8?Q?Daud=C3=A9?=
- <philmd@linaro.org>,  "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Subject: Re: [PATCH 1/2] include/exec: Provide the cpu_tswap() functions
-In-Reply-To: <0DF0CF94-9EA0-4AE7-A0BD-49D4217C6837@eonerc.rwth-aachen.de>
- (=?utf-8?Q?Kr=C3=B6ning's?= message of "Tue, 24 Feb 2026 16:07:58 +0000")
-References: <20260106-semihosting-cpu-tswap-v1-0-646576c25f56@eonerc.rwth-aachen.de>
- <20260106-semihosting-cpu-tswap-v1-1-646576c25f56@eonerc.rwth-aachen.de>
- <ee9a0216-0a1a-46ec-b647-64045c892af3@linaro.org>
- <FDDAA4F9-C389-4E63-8DEB-B0FBE38FE5CE@eonerc.rwth-aachen.de>
- <CAFEAcA-P2xqNO21rMyt2VA_tRf9yzWh8qtJFggGr4Mn-AWjj5g@mail.gmail.com>
- <00BB587B-792D-4725-A42C-AE87A201C2E2@eonerc.rwth-aachen.de>
- <0DF0CF94-9EA0-4AE7-A0BD-49D4217C6837@eonerc.rwth-aachen.de>
-User-Agent: mu4e 1.14.0-pre1; emacs 30.1
-Date: Tue, 24 Feb 2026 17:36:30 +0000
-Message-ID: <878qci3uxt.fsf@draig.linaro.org>
+ d=1e100.net; s=20230601; t=1771954663; x=1772559463;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=Tdh36pSD+tLfnMZN3vf5DS5AcaUa9J8WbbRp77AylTg=;
+ b=OqZUgk9hGOlxb3llWLUUxP/ni4loN7ydSYn8cPQTsqil83dKik1oZkCvkEviMYD4/z
+ uKzMDxq/akPAzM2U+mb44zWd+a7iPkCKA1wOhWHSrpQ7/bKco7e7vpr/spJkZONRLdTy
+ HLgSuNqP7eU2FHi1e9KZJcX6r/8FjlIjSKA0Q7cEkQ4ObW6x7rGLTsP9PiLqisi5vE4A
+ D2Mxq1q9RPpKiOfWxCKCv9+I5X0sB2BOK2EHOSlpGtu3XP0q01SkxswAQTtuOIQ7h8+M
+ COvxGsAqFOsypxdf7/JfKHAnAnXhFDSIpcEZm9fGp6CDgU8imFNrrl4yvLZ7sD8NUFv/
+ e1OA==
+X-Gm-Message-State: AOJu0YwVRSvM2J7pEvQvhAUhKFa/dkhjQLDFVj/GuERwPBHOk9IL3rtF
+ eKvZRWJX/oGoXN9tPy7hCNHbUkrDo/rBqqrjvdfou+IdKzyq2lMNB1jimBnMFzD9hoN1G45WzJ5
+ BSfeh7nkrgPrqkB1+Cm6bVBWn1ZcQXB/O4UCclJTIaA==
+X-Gm-Gg: ATEYQzzlK6fZ5d7QKSvMHE/0lsbARSL2lrOuQaJwF/SaWZIibw1MB5YJf/TXI490Noy
+ oktHL4flxS0pJs6/4QDlDaa181BFWtL3PYqu7lM2bGDAxGl+BtXNbJhttIVmT3If7qX04nitphd
+ Tuz/SHKvnoeDxgk8DZ8V7W+Dr87A5UZiFrxapYMeOoZMpxUQ69QdpDbcpA3sMjSjE6PzscGnWRP
+ Yo4/WZsFe/GH0zWJPjR5Nq0HmV7g042169aKAb366tp2RMHsMkZqDigvGhhQtMCivRuV+TnXf3Z
+ Ebo+/wVsT51jiyaCu0p878MYIfO8WJGVvuVvga6dSRKCKpWV6ngTL+nLGJFq2L4awx2YLvakGxF
+ wUA==
+X-Received: by 2002:a05:690e:d4c:b0:64a:ced1:4fa6 with SMTP id
+ 956f58d0204a3-64c788d282cmr9683307d50.12.1771954663283; Tue, 24 Feb 2026
+ 09:37:43 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+References: <20260219171810.602667-1-alex.bennee@linaro.org>
+ <20260219171810.602667-4-alex.bennee@linaro.org>
+In-Reply-To: <20260219171810.602667-4-alex.bennee@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 24 Feb 2026 17:37:31 +0000
+X-Gm-Features: AaiRm51OBLSPJe1_nI5Tcc3wkfFFTGvqTYeKCQ4XRDuIx756xp6sVyNLXUQUg_s
+Message-ID: <CAFEAcA_gi319MwW8pV0doMxpvKx6H4pCeMA=0vmFm8ynyWP5Uw@mail.gmail.com>
+Subject: Re: [RFC PATCH v2 03/14] hw/m68k: transition virt machine to
+ multi-phase reset
+To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, Yoshinori Sato <yoshinori.sato@nifty.com>,
+ qemu-arm@nongnu.org, 
+ Laurent Vivier <laurent@vivier.eu>, Thomas Huth <huth@tuxfamily.org>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
+ Aurelien Jarno <aurelien@aurel32.net>, Jim MacArthur <jim.macarthur@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Bastian Koppelmann <kbastian@rumtueddeln.de>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Aleksandar Rikalo <arikalo@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Zhao Liu <zhao1.liu@intel.com>, Jiaxun Yang <jiaxun.yang@flygoat.com>, 
+ Yanan Wang <wangyanan55@huawei.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::533;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x533.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b136;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb136.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,78 +130,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Kr=C3=B6ning, Martin <martin.kroening@eonerc.rwth-aachen.de> writes:
-
->> On 22.01.26, 14:16, Martin Kr=C3=B6ning wrote:
->>=20
->> On 19.01.26, 10:39, Peter Maydell wrote:
->>=20
->> > On (2):
->> >=20
->> > > Alex was worried about expanding the use of `virtio_is_big_endian`:
->> > >
->> > > > Hmm looking at the description:
->> > > >
->> > > > /**
->> > > > * @virtio_is_big_endian: Callback to return %true if a CPU which s=
-upports
->> > > > * runtime configurable endianness is currently big-endian.
->> > > > * Non-configurable CPUs can use the default implementation of this=
- method.
->> > > > * This method should not be used by any callers other than the pre=
--1.0
->> > > > * virtio devices.
->> > > > */
->> > > > bool (*virtio_is_big_endian)(CPUState *cpu);
->> > > >
->> > > > I'm not sure if we want to expand the usage of this hack. I think
->> > > > Philippe is hoping to get rid of these warts eventually. Of course=
- we
->> > > > could rename the method and just provide a way to get the current
->> > > > systems endianess.
->> > >
->> > > While not being very familiar with QEMU's source code, something lik=
-e this
->> > > seems necessary to me. I can rename `virtio_is_big_endian` to `is_bi=
-g_endian`
->> > > and `cpu_virtio_is_big_endian` to `cpu_is_big_endian` if you prefer =
-that.
->> >=20
->> > The reason for naming these functions the way we have now is
->> > that we really didn't want them to be a "this looks like the
->> > right function to use for my purpose" general name like
->> > "is_big_endian". Almost nothing in QEMU outside the CPU itself
->> > should need to know about the data endianness of the CPU,
->> > because in real hardware the devices can't tell what the CPU
->> > is set up as, they just get/send data. The exceptions are
->> > legacy virtio (which is a mistake that was made because nobody
->> > was thinking about it in the original virtio device design)
->> > and some oddball interfaces like semihosting. So the name is
->> > intended to push people away from using it (and towards e.g.
->> > target_big_endian()).
->>=20
->> That makes sense. How about something like `internal_is_big_endian` and=
-=20
->> `cpu_internal_is_big_endian`, then? I am just making things up, though.
->> Given my limited experience with QEMU internals, I am not really qualifi=
-ed
->> to choose any name.
+On Thu, 19 Feb 2026 at 17:18, Alex Benn=C3=A9e <alex.bennee@linaro.org> wro=
+te:
 >
-> Is there anything I can do to help move this forward?
-> Should I send a new series that also changes the names to
-> `internal_is_big_endian`?
-
-Sounds like a plan, also make it clear the very limited use cases for
-using this helper.
-
-> To me it sounded like the technical details are fine to all of you.
-> If this needs further internal discussions, though, I am happy to wait, o=
-f course.
+> We don't need to re-create the architectural reset behaviour now it is
+> handled in the core m68k CPU reset code. We do however need to add
+> support for direct kernel booting so we stash that value in
+> env->direct_kernel_boot_pc and enhance m68k_cpu_reset_exit() to use it
+> if set.
 >
-> Cheers,
-> Martin
+> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+>
+> ---
+> v2
+>   - re-write to use proper 3-phase logic, so dropped all tags
+>   - favour cpu_reset over resettable_reset(cs)
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+The commit message says it's doing three-phase reset, but
+the actual code is not:
+
+> +static void virt_machine_reset(MachineState *ms, ResetType type)
+> +{
+> +    CPUState *cs =3D first_cpu;
+> +
+> +    qemu_devices_reset(type);
+> +    cpu_reset(cs);
+
+This first resets the whole system (going through its
+three phases) and then the CPU (which does its phases
+separately). Three-phase support would imply having the
+CPU do its enter phase at the same time as the other devices,
+its hold phase with the others, and so on.
+
+If you wanted that you could do it by using
+qemu_register_resettable(OBJECT(cpu)) instead of having
+a MachineClass::reset method, given that the only two
+things you're doing in it are the default thing and a
+cpu_reset() call.
+
+> @@ -315,6 +300,7 @@ static void virt_machine_class_init(ObjectClass *oc, =
+const void *data)
+>      MachineClass *mc =3D MACHINE_CLASS(oc);
+>      mc->desc =3D "QEMU M68K Virtual Machine";
+>      mc->init =3D virt_init;
+> +    mc->reset =3D virt_machine_reset;
+>      mc->default_cpu_type =3D M68K_CPU_TYPE_NAME("m68040");
+>      mc->max_cpus =3D 1;
+>      mc->no_floppy =3D 1;
+
+I did have a plan to look at making MachineClass a subset of
+Device so that it could be three-phase-reset aware rather than
+having its own special-snowflake reset method.
+
+thanks
+-- PMM
 
