@@ -4,74 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B147F4BB7F
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 19:24:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 807A2F4BB80
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 19:24:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuy0s-0005Bk-54; Tue, 24 Feb 2026 14:24:06 -0500
+	id 1vuy0z-0005Et-G3; Tue, 24 Feb 2026 14:24:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vuy0n-0005BA-MV
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 14:24:01 -0500
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ id 1vuy0w-0005Cd-7J
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 14:24:10 -0500
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vuy0k-00076o-US
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 14:24:01 -0500
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-2aae4816912so40924745ad.2
- for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 11:23:58 -0800 (PST)
+ id 1vuy0u-00077L-OS
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 14:24:09 -0500
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-2ad617d5b80so37205765ad.1
+ for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 11:24:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771961033; x=1772565833; darn=nongnu.org;
+ d=linaro.org; s=google; t=1771961045; x=1772565845; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=w9DCFgZvgaQj0c8LldvL0MBbBGlu4vW2aSWbuBovBUs=;
- b=I53dqNv8z7eqOFftKD67csps7ZFBgAAEifLeDzunr0uZ6zG4GqML4VCfwj5LxgX96o
- mOmmdekhJtz9x+M/uAprchEnvKYUw418hdPp/lNWEGQHyeqTcVcWyYrA4zzuMJ1zu5PM
- oRsSmohioOxp9Lc/k45HezjHT7Jex+in1bECauAspXeWT/Cz2Na5xp62xw6WcQBZNlqf
- XPA8oUtvtUcG0HyGHJGJN1FzERXrwK9VwGuNRnPSNimbkRSVf5OUHgWECQ9kfA2hQ+zC
- THhf/tmZJvCL+r9XtL+Ur7IA2ntc07NEFMYxHYwLqgSr5mEoYTo1XaJY96zX+W+p2BR7
- nFUg==
+ bh=eagVLoxMWOWmtOhyFJWEn9M28bclixHLYPSQppDqYEc=;
+ b=Y+BP3hpINlqY2wlkWqiiH+Ke2u8WkhblKX3T7RWDT8+Fy8L99muE/3c5vsckLPa+eM
+ LenawgFP5aKLsfilymqhQ7RniEFIK6YrCQEly343InTZC7Q8TYixyxHJGslwBIisWPJl
+ feM1pIlscJORSmnxOiC6SH1zu/8VVGYEoQsmbIy2tn9iMjKweRzIvliHuAGVD1kBrqeX
+ uyMw9PvcZqaflFSsIavvWTZMv+RHVjR4aNIAWUn4fj9z0caQmaK/scI3viACDMe9/jo9
+ gtoRw7gP5rIjuAcNV0zKLgsxuivfv4GvN9oyxe9SGGGoKKhDP3mQwZlxRS4jZJg0MClu
+ r1SQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771961033; x=1772565833;
+ d=1e100.net; s=20230601; t=1771961045; x=1772565845;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=w9DCFgZvgaQj0c8LldvL0MBbBGlu4vW2aSWbuBovBUs=;
- b=eLVdDeiu1znHIXwKMBqWv66CpMvhWytRiHUA6PG7+cXfgzR32liKxz2AXPDYu13ClQ
- Daalfuc43BaYp6/VROl2niYdGmK9PlkjFlfxHxS0zjTv/H6JOnaVebU73q7lZcj5Ugo2
- 96zHBNNj0UfPdUpy5e2dh7wFHAnYcdkbVuSKjmlPV8JBelVlsS0nQfSu7JCijJEKLaBl
- P6p/UH92iLasAGUloNMJ/556R8heZSb+Gv9f2FB7HhNSFQL9vnYIw1qc2ZB4sTuyPGz1
- 5Npr26/0B09xxvZd1S+5Xf/MtMXb2otaC7Zb82RC6W/HYj6u8eDWBXSPhP7eE4qAxyuv
- Q9kg==
+ bh=eagVLoxMWOWmtOhyFJWEn9M28bclixHLYPSQppDqYEc=;
+ b=UH027YkHSYTxn0EnvJ1Kv2LyADsdlz0E1r4fMuzLZWMML4qIteg2nb+U3s5v8UuqYw
+ VsrEvnb9YEwEEi+3WqhLF9qzsBGiAmeAN78cisqjXjq5w4etYKArRv4sg28KiYSp6p8Y
+ BjXNdN1RqqzCskerL6+RxCYgfHxrjv5in7CiQkB6HL0m7z6hR4oq3Dswvo+x/H0edpP7
+ 5PXBDFk6xDE/Gnlgtg2ATeLZcERVj7FVsyPlqVXFG1N457ylYrgmVH7AGsVAdM5IDzHX
+ IUtDZTeTvUfovOY4hXO+RUopFNVAv1R6ETZ55FNjzAaaHK8fUr+mUovknwKscstlNIfu
+ Sgbw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWWAJ+yYGXJlAGRZ9nrBNyYIJdk6V+zcdr5qjnvJ8VkK6Xc0aInSn7PAP/Fo40rIjF52ugrl6Q5WBuY@nongnu.org
-X-Gm-Message-State: AOJu0YzA4q3b6//ELREaQ/gED4l3MaP9kqkfzzgfU8r1OtOy1VNnTscu
- R69r0gSBuVAy35kIpgKn6oYxrQ0WBsU1j8yaqH0RZp0Kz85vANKiyU/FEXLmWzsODDs=
-X-Gm-Gg: ATEYQzxzC0mByD1fc5xdlV9BtqZ7khdOLotIyLnxu2zqVAQhwS7E+e9H8xgBGuAnmn7
- iRD+PsxcepvkKGRkuSSNBOnqf7rGzDglQ3/MFl5xSYUYWC2FVpHh3CRFbG0VVqi6WU70q85aUZc
- bAGduabMLaRMEtsglMCLGu1iQC1dC5lfnbeuIM1e9AOeAjc24h2I75L6hmKBCaaNknMasQxrSKD
- 4zFJl7s6UdCJ26J/t9BY8a1hA29Mc1pTcegMbd392m1K0B2igcxkL42oF+SmO8Egw/nT8E7WLG8
- 5kAp54U/xZPc9AeDHVNQsXJvDfUPpf0KEPVkD6mGl1zPvcgMTIs9WlIGPtTVSn7rW/vNDD1suYh
- +coWM8+xAsg3hqL66Y1+MiwhVQrcUh/XEPIb5De6FZ1/W/E+kIBHj2c8n5OiuT3CnVrCu09ZjNN
- BUG7Y2+ju9Wha+f3Dx4oviArgF9Cu9uZ1XD5n7EQrv5zaPMjBBqvtAS4FXDaKfaZfNtcGu
-X-Received: by 2002:a17:903:9cc:b0:2ad:b97b:be88 with SMTP id
- d9443c01a7336-2adb97bc2ecmr15670105ad.32.1771961032642; 
- Tue, 24 Feb 2026 11:23:52 -0800 (PST)
+ AJvYcCWv0SsEwRDdadcO7QLG0UQHP7BHuHNZufoMnT6sqUbuKS/9VThywTrNHalWbQpIqeVO/Ri+41OSKuvA@nongnu.org
+X-Gm-Message-State: AOJu0YxKXC30HOxuIkYH91Zfk46q0nflsvilx4u/ftdPW4g/YdBB16n/
+ CaEdfL8bKqD3P4Dn5Yh0FO3VYvPGTGjy+oy5C4wYvu7Tz24bziPAkgzxa++oEAUIaFA=
+X-Gm-Gg: ATEYQzx5EJZVUA8jwz/B5jLCuEIK6BIkEx9n9SJn21HVSqiPkxccY/sQIWW9KszU4aO
+ SHOUl3yPvh5zEGpzRmyabjZ8ZqwNhws3GSB2vWWHtpVt6v8tmxyJui7dwiwntnr7NDQMudvC8gk
+ Flm//K93MFumnNMvAt9L52hiE2bghgXz8WO7SRUaw7p7CW5bRiwZ5/WgrZf3a4vgoHFeC7ESss1
+ U4rTmx1sS0aFylJ3zmKP45pEUaHBufDfASqynKuC+xlxALXMJFwzzeS4jHJAWj30rApEZpA6Nct
+ mG8z72c28CICqcoVZr0Ydqtin8IoZWjCILqT8k+Vcl6pvTsLI9YF4TjIDoWb4Foib/K2GYCm11w
+ UJqh0X6PgzgigFmuWQ996YD79KQfWbi5EbGfk0j2AWZnalVbsZLK++4HaedCRXgMzIrz03zn4FM
+ OiyrqxV98xx1JiXWlthuGistq626mRMJXao7fQ3LD+C+LScGA67ix0suzl8mCBLznJHdJ2MERt4
+ NS4C7o=
+X-Received: by 2002:a17:903:2388:b0:2aa:fc73:98ac with SMTP id
+ d9443c01a7336-2ad7455f3d6mr112791305ad.49.1771961045453; 
+ Tue, 24 Feb 2026 11:24:05 -0800 (PST)
 Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2ad75173903sm108444195ad.81.2026.02.24.11.23.52
+ d9443c01a7336-2ad7505bf1asm114922025ad.92.2026.02.24.11.24.04
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 24 Feb 2026 11:23:52 -0800 (PST)
-Message-ID: <42588a53-5f23-41da-966e-f6e2c2568162@linaro.org>
-Date: Tue, 24 Feb 2026 11:23:51 -0800
+ Tue, 24 Feb 2026 11:24:04 -0800 (PST)
+Message-ID: <6a23d2e2-3e58-46ec-a574-5a0facf0ea14@linaro.org>
+Date: Tue, 24 Feb 2026 11:24:04 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 02/10] hw/acpi: Move acpi_send_event() function out of
+Subject: Re: [PATCH 03/10] hw/acpi: Move qbus_build_aml() function out of
  acpi_interface.c
 Content-Language: en-US
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
@@ -80,7 +81,7 @@ Cc: Richard Henderson <richard.henderson@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
  Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>
 References: <20260224182017.99865-1-philmd@linaro.org>
- <20260224182017.99865-3-philmd@linaro.org>
+ <20260224182017.99865-4-philmd@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  xsDNBGK9dgwBDACYuRpR31LD+BnJ0M4b5YnPZKbj+gyu82IDN0MeMf2PGf1sux+1O2ryzmnA
@@ -116,11 +117,11 @@ Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  5SYuJaKzCAgNeAy3gUVUUPrUsul1oe2PeWMFUhWKrqko0/Qo4HkwTZY6S16drTMncoUahSAl
  X4Z3BbSPXPq0v1JJBYNBL9qmjULEX+NbtRd3v0OfB5L49sSAC2zIO8S9Cufiibqx3mxZTaJ1
  ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <20260224182017.99865-3-philmd@linaro.org>
+In-Reply-To: <20260224182017.99865-4-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x629.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -145,16 +146,15 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2/24/26 10:20 AM, Philippe Mathieu-Daudé wrote:
 > acpi_interface.c should only register QOM interfaces. Move
-> the acpi_send_event() function to core.c with the other
-> event handlers.
+> the qbus_build_aml() function to aml-build.c with the other
+> AML build-related helpers.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   hw/acpi/acpi_interface.c |  9 ---------
->   hw/acpi/core.c           | 10 ++++++++++
->   2 files changed, 10 insertions(+), 9 deletions(-)
+>   hw/acpi/acpi_interface.c | 10 ----------
+>   hw/acpi/aml-build.c      | 11 +++++++++++
+>   2 files changed, 11 insertions(+), 10 deletions(-)
 > 
 
-Should you move the function declaration to hw/acpi/acpi.h in this case?
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
