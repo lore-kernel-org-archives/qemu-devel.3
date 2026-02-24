@@ -4,83 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F9ACF4BB7F
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 19:21:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B102FF4BB7F
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 19:23:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuxy7-0003O3-Lr; Tue, 24 Feb 2026 14:21:15 -0500
+	id 1vuxzi-0004qN-2Q; Tue, 24 Feb 2026 14:22:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vuxy6-0003Nh-8j
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 14:21:14 -0500
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ id 1vuxzY-0004pl-Sd
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 14:22:46 -0500
+Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vuxy4-0006wh-77
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 14:21:13 -0500
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-2aad1dc8856so43924285ad.1
- for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 11:21:11 -0800 (PST)
+ id 1vuxzX-00074A-D9
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 14:22:44 -0500
+Received: by mail-pf1-x42b.google.com with SMTP id
+ d2e1a72fcca58-8230c33f477so2583528b3a.2
+ for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 11:22:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771960870; x=1772565670; darn=nongnu.org;
+ d=linaro.org; s=google; t=1771960962; x=1772565762; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=0LtQRU59z92zSvn1k6+1ozxiKNm7wG6Dtg5eNj+CyUQ=;
- b=mpfm/gnK6XxGtwOConNrjG7CYveOiJqZd98TgQ609CgymKedeuu87uCr2EifZyKjFN
- 7dNZt4m5mmeP/XAFb/uWLnenVVyUbegCn1fXcqNngCtqT3CjfiSsfHeHSf9gWB9yj9Eb
- o2s8oNH5Gw90PSX5ywoMjb9NLsGpNSVca+3n4r3xZH2wCU5hfj2HNQOGPKbWcfgWhGIv
- 62TBQzYKx/y/0HyX4ryt5wIXKHIqKHcGqWOMOsdCJrDB5AIaWqT2lqvtfOsAwAm1odKU
- McmIEPwnrQN6Lj4Vn2/SoSvnC2Vy/RISVkTQURf1BOjwW6SMnOMxVxo9fe6anmNhchaL
- UU2g==
+ bh=X4kUcOWVAIl3IqUKaunzAVpfcCafFwNv+CwIyGS9m44=;
+ b=ILkK93KMrhgYls20MzyRSoybxjkTHKP0vZxPhH+R5VAziD/9RT344ULUS1rtfSpNED
+ SS/PZx2cwjfMk+nWgRiPwSzCZZqdpJNH8oW1J3BoVbETQqhHdW+1Zn8OUESzXiLeaQPD
+ KdkwnNXnV1BNgVMbAGkBaXooqQ/7FkJl5hacgc9HpFNVpFzxxkEm5ysM9kqsywlSJGtN
+ hmwxfcwSmOrarda3enM8L7BLxns1QEw3SnPaY9spg2+GQvW1zyoFFmQpCp0oJGFnLX36
+ FUZ2zPkTOQnZnm3CO62yQRAgCvRzOe3fTj7PBhASpSPaaOa/1plZznFI2Qh8hqcCaxG4
+ d8/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771960870; x=1772565670;
+ d=1e100.net; s=20230601; t=1771960962; x=1772565762;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=0LtQRU59z92zSvn1k6+1ozxiKNm7wG6Dtg5eNj+CyUQ=;
- b=mQrwenOnmNS10cv2Cb46WInlzkFSmC6i+0wIalTU+1YEcnLJISJFak+mCKomUIlIac
- mwGnXYh0U98UyBTcyN/cd1iBoWhciqfsUdCT6K+5+JDM1fwxzIjmQOPgHVwk0i/pd5q8
- 6r2TndwW5uvukPJRdNTOPWLcUBHtR327Xv+c8gfr+K262NFPJsHVZcnFemQ4deAGOVw9
- xytJAumnichh5CBSk6Zm+9BGp82TqdWGpwIgRpSW/56kzd/YOoVmktajHfX039TOcpxE
- qAZjdI2XW0tOjXezze7R94ucm4xuIRANvQmTARqgMDB+sNFRzHKUPORc6xH3l37LPGII
- Af2Q==
-X-Gm-Message-State: AOJu0YybQ2Yrxp5jXu86WV0Dy5b6Q5wvZh+xrHGufi7lSLIvEeVReYUZ
- pzH5Fb1k5OJOqbRsBDecAhnXnPyOCbQ0Sc2oQC/qnW41xtQEo2LdHOoYgALkKCNkpFc=
-X-Gm-Gg: ATEYQzxlPmV7akZXb9mxPKJDceSlGUpI/LMauZVUAAY9i3+BICfYJdus4DKlFVsSUMc
- t0KGfPtS2ETNPVPOoZhZ2omdKwaBT7XDkXnCjHNOu+TrOr2tx20PazYRsw3Y5Y0ZtTYmEs6i+BV
- Zp+TnBNbyCYIlxTOWfimxi/TVWC5WKeO2aAoIE3hnqJGn7Xf20omHIfUzxKc8de91u/zbCNB0kQ
- A+QL0pB0ZhxR+uCwfugkS+8y6txQ174p4y5GQZ5ou69AE0VjpcZhbMSG/Y/Rm9kELPE8oRhpOmo
- 3Zqfqu2fjuUO1ua3qgBVFQYiJHjEbPXFxbe3IWTUmdtXYInS3Lvi9q9BCs07XVw9FWtUSHZJLJN
- /jtWHBMwY6LCsL1+sIr4qiz/V6jO5fgkDa2J2awy2I1dH3Q8qHSU7z+6xgk5Ewi+oNF0tkLmcs/
- FX3z2Pwmybn/bxWJLWFU89fr03/Qr4p4HV1muFJNoId1GVmJ6N2toYwd8z2v4whEgMJ9s9
-X-Received: by 2002:a17:903:11cc:b0:2ab:344e:1400 with SMTP id
- d9443c01a7336-2ad74515cccmr131804005ad.37.1771960870147; 
- Tue, 24 Feb 2026 11:21:10 -0800 (PST)
+ bh=X4kUcOWVAIl3IqUKaunzAVpfcCafFwNv+CwIyGS9m44=;
+ b=PyzukMIQ50F/1w0MNvV8owEJlAZDdiF5s4NdWMuxDe2dfdWgZKF81pdZnx9d7Y18AN
+ tXvOBPgeUv9Ot30KU2lpLmOHAOi8OM650wy4xxjIfr5SR2MIUtMbUPQdxpzIigukxWMX
+ 81sYJGpe32BdP4faYEluMZl4AdfAAQnYmwPV3w61yLCKkHX06AVvavUlem4xtgnpWP6t
+ H4wQEXA3yTk93OrL/pRBbf6YbQl1DfClrHiloLhPfVxl+sVfQ4gRe/C9nRAxowomEroJ
+ ZZJoaGxTMaCm1TiVse1tXhgFHKEvxb50meLGlIuEV/MYnXlVtVeTZMr5SoG9W8wB3sAc
+ C1jQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUVPkPzAdrTs9bp0xJTDPEj09qLvmuPNB3/JJrGj0XR7fGVE+Si6zLnflc/gsqqW7Ymp/yyKokStarD@nongnu.org
+X-Gm-Message-State: AOJu0YxiSveUc5ILs0l7G0neXXVXMGlU00mKY2CaICoT6678R72+K09t
+ E99QMiHADI1ppjvPFARGr5AL0ZA9zGEjunE1zTaNnxiG1O6VglRNfHZZD6HbY7GYEYw=
+X-Gm-Gg: ATEYQzzeETtLlQH4Mpav1UKzWbtT4R/jCgNGfzUaPGwEbf2RK00de4raAyvlSizBETL
+ XcBQnBLR862i1qmYrcT5yJoV+kS6eAsidvU/Dmq/2i9fhCLT6a9fZa0RJGeY/gn/1/e1nB9Zo6a
+ cGnKZ/fI57tzq+YXhafgSfNg9eZk/1ms/yh9RPdLUfpzbP0GEtdv/GuNn2YqY6k/w75j74g8DKk
+ cFHC6N/CKkhn71q132PWXEJU16dpK3+MHIB6ER8OPCSd2rgEr7HWChcruon8pQiK8gYsjl1xrBQ
+ 0H3WiEtOo9jUNcJWZGNVHeTaLtwMgTu3Q1/3jNSRLkD4tNgXPtDOUesShAPnkeCxG9aiQAhqQYU
+ 9NGCqUUciAu/wQXXzCaFyk55fqIS/bTQkbwFN6oJ5n+9DeEtt/gXY67OW7giWfiYUubCv91FIr1
+ EdUffl4GUovS4BLVW/yWvd5EhtCntfpjfpOrRFPe0F0dWCmBNZgFpRkJOk3Jkv0BWRgbEA
+X-Received: by 2002:a05:6a00:1acd:b0:81f:9907:e503 with SMTP id
+ d2e1a72fcca58-826da9070fbmr9950953b3a.16.1771960961781; 
+ Tue, 24 Feb 2026 11:22:41 -0800 (PST)
 Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2ad74e34fdcsm106645925ad.19.2026.02.24.11.21.09
+ d2e1a72fcca58-826dd8cbb02sm11890643b3a.57.2026.02.24.11.22.41
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 24 Feb 2026 11:21:09 -0800 (PST)
-Message-ID: <c8e97ad8-e54c-4134-a7d8-cbc91f7f4bae@linaro.org>
-Date: Tue, 24 Feb 2026 11:21:09 -0800
+ Tue, 24 Feb 2026 11:22:41 -0800 (PST)
+Message-ID: <e40d079e-90fc-49b7-bfbd-b8460e7e16f2@linaro.org>
+Date: Tue, 24 Feb 2026 11:22:40 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/3] hw/virtio/virtio-access.h: remove target specific code
+Subject: Re: [PATCH 01/10] meson: Include various directories providing stubs
+ before libqemuutil
 Content-Language: en-US
-To: "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Stefano Garzarella <sgarzare@redhat.com>, Jason Wang <jasowang@redhat.com>,
- Nicholas Piggin <npiggin@gmail.com>, stefanha@redhat.com,
- richard.henderson@linaro.org, BALATON Zoltan <balaton@eik.bme.hu>
-References: <20260212234602.338131-1-pierrick.bouvier@linaro.org>
- <967c35ff-0630-4ca7-847e-04a918c93e7d@linaro.org>
- <20260224134436-mutt-send-email-mst@kernel.org>
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+References: <20260224182017.99865-1-philmd@linaro.org>
+ <20260224182017.99865-2-philmd@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  xsDNBGK9dgwBDACYuRpR31LD+BnJ0M4b5YnPZKbj+gyu82IDN0MeMf2PGf1sux+1O2ryzmnA
@@ -116,11 +117,11 @@ Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  5SYuJaKzCAgNeAy3gUVUUPrUsul1oe2PeWMFUhWKrqko0/Qo4HkwTZY6S16drTMncoUahSAl
  X4Z3BbSPXPq0v1JJBYNBL9qmjULEX+NbtRd3v0OfB5L49sSAC2zIO8S9Cufiibqx3mxZTaJ1
  ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <20260224134436-mutt-send-email-mst@kernel.org>
+In-Reply-To: <20260224182017.99865-2-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x634.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -143,57 +144,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/24/26 11:07 AM, Michael S. Tsirkin wrote:
-> On Tue, Feb 24, 2026 at 07:33:14PM +0100, Philippe Mathieu-Daudé wrote:
->> Hi Pierrick,
->>
->> On 13/2/26 00:45, Pierrick Bouvier wrote:
->>> This series eliminates some target specifics in hw/virtio and replace them with
->>> runtime functions where needed, to be able to link virtio code in single-binary.
->>> After a first try on a series [0] doing this change and making all virtio files
->>> common, Richard asked to refactor this part, thus this independent series.
->>
->>> Pierrick Bouvier (3):
->>>     hw/virtio: add virtio_vdev_is_{modern, legacy}
->>>     hw/virtio: rename virtio_is_big_endian to virtio_vdev_is_big_endian
->>>     hw/virtio: remove virtio_access_is_big_endian
->>
->> Patch #2 has been merged as commit 6325407f67d.
->>
->> Since we don't have feedback from the maintainers Cc'ed, I took
->> the liberty to rebase your series, trying to address Zoltan's
->> concerns on patch #1.
+On 2/24/26 10:20 AM, Philippe Mathieu-Daudé wrote:
+> Stubs are provided by libqemuutil. We want to use the generic meson
+> machinery to provide stubs once, instead of per sub-directories. Move
+> the 'subdir' calls earlier so when these directories are processed
+> they can add units to the global stub_ss[] source set.
 > 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   meson.build | 14 +++++++-------
+>   1 file changed, 7 insertions(+), 7 deletions(-)
 > 
-> So as I said, main use-case where we would worry about perf is
-> virtio storage. So it's mostly for storage guys to ack.
-> Did not get Stefan's feedback yet on whether he is happy.
-> 
-> I don't understand if we always want to build a single binary though.
-> If not we could address all perf worries by having both  generic
-> and target specific implementations by using linker tricks (weak symbols or
-> whatnot).
->
 
-This is not possible unfortunately, since concerned function is declared 
-static inline. If we want to follow the linker approach, we would still 
-have to pay for an indirect function call. That's why we insist so much 
-to change the current definition, as it's the only way to move forward.
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-The other solution is to exclude virtio completely from single-binary, 
-but we don't want to have specific config for this, and we worked hard 
-to keep our promise over all other subsystems we touched with satisfying 
-compromises for concerned maintainers.
-Virtio and vfio are the last two left. After that, there is nothing 
-really blocking the path towards the goal.
-
-I invite you to watch the presentation we did with Philippe in latest 
-KVM Forum, it will probably answers on some of your questions.
-
-Especially, you'll see we insist on single binary being a recollection 
-of existing compilation units, and not yet another configuration to 
-build (and potentially fail).
-
-Regards,
-Pierrick
 
