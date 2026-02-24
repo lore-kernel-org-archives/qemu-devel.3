@@ -4,80 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C8EBF4BB8B
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 21:29:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB926F4BB8B
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 21:32:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuzxM-00051h-TW; Tue, 24 Feb 2026 16:28:37 -0500
+	id 1vv019-000644-Sf; Tue, 24 Feb 2026 16:32:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vuzxI-00051K-Ga
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 16:28:32 -0500
-Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
+ id 1vv00x-00061G-GP
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 16:32:20 -0500
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vuzxG-0003yS-L3
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 16:28:32 -0500
-Received: by mail-pg1-x530.google.com with SMTP id
- 41be03b00d2f7-c70c112cb61so1804180a12.0
- for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 13:28:29 -0800 (PST)
+ id 1vv00v-0005f7-II
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 16:32:19 -0500
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-2ad9f316d68so6216505ad.2
+ for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 13:32:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771968508; x=1772573308; darn=nongnu.org;
+ d=linaro.org; s=google; t=1771968735; x=1772573535; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=MEKcIzCZCZxoqSgvGqdR8lMiwGjdHjq58Plzf/DoDSY=;
- b=iWCWtjqj1c6uvKe72xD037kUs8lrXY1jmeRUidqAyxZtmAQKo9Qo5SKi6b7F76waZu
- kuBblhqplR4NPEQvR0MGlArb1TsUuSJ/gBuRb3MCFbwL5v8sGNwibPY/0Id+HxYmcFV7
- XFt1BfWzocWfrJphJiCCMDksoNoP1eSNQmeT2g9FU+nuLN4c+OVP4YnxMs3EKlGDRgHV
- SlBFkytQ5SW8v8THUsdXt+Oiv9dGdd/WWoVU+pQoSoV26XpIIsmUCvTDM/XpQF01YSNq
- 44BU7WwHaiVcTT6yor3KV2EPmbyrXGyRYME3K80wz1vkS0DYlJFdlNAZvCVl1WNTEAdW
- dbGw==
+ bh=VdVc/jPBAC5SlysNLIH40TGkdFUx9emiFP4FTzh5d3w=;
+ b=dJGj7D+AaqmbuJI4dkxqWQmR8+0q03Mo8s67VMN2CWTlO0vL5OFrqtfF3duCuJ8/64
+ NE91hNYAhBerL46W6mbbxhpe5h84szrBZfjAoDkipYvJslWhpKJd8bwHj4P72iw3ZefN
+ O0dRC4L9mdC03dtfs4Czkm1n9QMObn+p+L7iK22LFR0C3IDca2qheLgiqYJ/XwdNaFcO
+ 3JhtY8ASo3p775uqWZpFDrmeZSibycRavUjmvl8a4Rets13OUcg0KYSCpFuSxdot6YQA
+ LZTWysxn8E+t/9pwNd/FikKRkjrUDUniN/7OexC/VQvr0U6+p9beTrAC8sdeNG1/o/Bc
+ RQVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771968508; x=1772573308;
+ d=1e100.net; s=20230601; t=1771968735; x=1772573535;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=MEKcIzCZCZxoqSgvGqdR8lMiwGjdHjq58Plzf/DoDSY=;
- b=tsXWKu/4nR8kd6/hoffkavRCPCCzUQ8gN2d6t0MY78FVTztLpg7XzPOqYf7hWqza93
- WBi3jV5EzinDFU6Vrrg3f6zml31qY5ejExBtLc5PWGrwLAu22/gamT20t0+rxNGmloTU
- pYerQsuV6hQ7S//9H+4OD1dIoyF9m5fZL2uXqT1p4PGuUDQqAigrFFXcUfFTQuB5I4hW
- l5fVC+GbFBiviD2fSFO/CDW0q0pXud+62aVZBtK4I/lqOxusA3z7GJr/V1qu+/Mq9P6K
- FlMicH49ThuYbKcSS2xuqx57ZQRvz6xyEddX1sQx4qvazDm/TSQir7Gotrl1wtR5qjNe
- 7q+w==
+ bh=VdVc/jPBAC5SlysNLIH40TGkdFUx9emiFP4FTzh5d3w=;
+ b=cxsVgWsnX5BKLtY5C2Xgevop6SXQo6AsyXm/qH4CwF/QEytueawxkU9der02abdT7s
+ HOqSgVSMX7KH/WF5n7sSKF9ey044aQ8BTGO36ecsi7uIoqJ4PO9l2h/6HXhK7NU2w5cE
+ 5rCMiw+7w5dKm+XavQ334oDvajArI6WefLzKahWsMFzsg/ia/SMwH8mTzujJyKuLh9d8
+ pyge+ewu755rvSzHlyEW52gCvjIed5ljoaDRqWQL55HK1vxXCD8jKRpz91WxS2fUhjxM
+ 3p4plh2zt5FVcVUgM+M0P5VIEDyGuhrzeWeNY2PqBBSimCbY41WhCw7EAzxXoYIpNSga
+ a44Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXFOYBdlg8f6M9OshkVkt/LKMrkKZXoz0LEdJ/oveTaaUmt0v4PX5mHWNAezYQUT2Deh03ANyg/t8to@nongnu.org
-X-Gm-Message-State: AOJu0YzFFXVqtI/CGfhoVH5p2K087cJajjk1GRr1FBQTzuaKlj3oujxT
- LhoSfxFxFknEC6MvtmPQuv35SBCt89DoQ7txQJbq8sFAVrQs52IjfuMf34zMNHw5wUo=
-X-Gm-Gg: ATEYQzzYxvvtksvailLBSxWdjE1C60oXq5W2PxzqOWfeaO9ERCDKq9ndibGhjJfCV9h
- rEQ+UhPsZIjfBhfel8+7YgyWMjWdbwJG5EoernI5q251edXlC72672nwcPNrEujV9ioh0TrHvT8
- CubmAlzCp3jAl3IpdhkfliX+CIvKWphVFnABwRwquEcMGQnjxnztEGQ5CSi7GdusV4asBb6Z7uG
- K0U0dgrcaF2nAJyYs6Ic4ov/QWQotpkIltSq6BXE/w2G/kyvnbj9h3My1OsDRssaDoKo8s6VqM7
- dQoXisrf8vewFO9RU1zV7wntfQYtvAvJ/93kIpCzh/U2o/6poEWPFeGm8PdVkYAr8J/NhUk9Ykg
- Ma8c7JTSK19PyrVpAnylEViwSiBdi6g2waT4f1G8Oqzt4l++vvLesRSthjHp0E1cd8F7TIjC+fn
- 15ooD9ScZiZrpmb6+Njq5Dh04haz8HQjbYigPSNMeRhwxj0nkvvYYJWIQay/RlGWSuO5l8
-X-Received: by 2002:a17:90b:17c8:b0:354:a284:3fff with SMTP id
- 98e67ed59e1d1-358ae8cfe96mr10409117a91.25.1771968508337; 
- Tue, 24 Feb 2026 13:28:28 -0800 (PST)
+ AJvYcCXvU+x8kgJ9Fg3plil/6EcGiDPlNsP4XTs2YD9CYniCRzY33cd3Bc8Y0FFX9kBxnBuMET+ybYFiLyDI@nongnu.org
+X-Gm-Message-State: AOJu0Yx/NOhrFYWKIiTQNbVx8w4AWcLxMTUvk9zFXlCKpXXgYdnTqvpU
+ diqmDaYR4SSTgTBMT93WanQ8nS0NdZoY5YRGO07GsW3Pv16Syg1NOYT7yeyxBHQxjG4=
+X-Gm-Gg: ATEYQzymYhODNTbmUyCxlySLLpgEB+syOBeeFnvuKgSEh8/GWTE5dtTu2C3akBe6J7G
+ n3V5u2piS5Rr5h/zIikA0Kz6dYN+A1RVnyw2/Xx5Z+ZHM8oF5X7RWBGDUtNHJhUbAjIbde8SXJG
+ BHfDj8P8W+GVj4uN0HONs183NaHlHolS2wWIU7lQruWVHxnW69N51Vky0Q/8njuGzSnllOyL2Fj
+ uVzoq9iQ5DzxaQOQHiV632IicKOBa5Ky0dl0QdqWPd75jX33VC+u77ecweHO2ruJGXE7vSmQfuZ
+ dznqFkZYPhxnMSZvLfsvU2RAoJglr4az5BFg7tafB5veEy9qYzY49XcCAbpro5dnCXZT/NdYkry
+ IgvY31mgK3lDww1xBW/QtG0djbVzljRSy3OVELISNPAajtBIlbWd//5qXtzImMY2OxGt/OT9e6K
+ RY0jjWCB9CFnB6imWHFnFrXgiGYeWdmOqJjiQoZDX61dVv7GSvODS/XJs+eXykMFOBunfW
+X-Received: by 2002:a17:903:2f8c:b0:2a9:451b:422 with SMTP id
+ d9443c01a7336-2ad74439669mr117654705ad.14.1771968735296; 
+ Tue, 24 Feb 2026 13:32:15 -0800 (PST)
 Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-35902bdaffdsm718264a91.17.2026.02.24.13.28.27
+ d9443c01a7336-2ad74f637easm112817875ad.37.2026.02.24.13.32.14
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 24 Feb 2026 13:28:27 -0800 (PST)
-Message-ID: <e39a559d-337a-48a5-8e68-27d494ad1ec8@linaro.org>
-Date: Tue, 24 Feb 2026 13:28:27 -0800
+ Tue, 24 Feb 2026 13:32:14 -0800 (PST)
+Message-ID: <2a5a9e47-08d8-4719-987c-7f872ffeccb0@linaro.org>
+Date: Tue, 24 Feb 2026 13:32:14 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 4/7] tests/tcg: add test for qemu_plugin_set_pc API
+Subject: Re: [RFC PATCH 0/5] target/tcg: Rename some helpers common to various
+ targets
 Content-Language: en-US
-To: Florian Hofhammer <florian.hofhammer@epfl.ch>, qemu-devel@nongnu.org
-Cc: alex.bennee@linaro.org, richard.henderson@linaro.org, laurent@vivier.eu,
- imp@bsdimp.com, berrange@redhat.com
-References: <909b0a4f-9759-4e27-bba8-997ae2f41bd6@epfl.ch>
- <2ccc79ee-48ab-4097-a9cc-4d2b79ab9a8a@epfl.ch>
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org,
+ qemu-riscv@nongnu.org, qemu-ppc@nongnu.org
+References: <20260224193028.2370-1-philmd@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  xsDNBGK9dgwBDACYuRpR31LD+BnJ0M4b5YnPZKbj+gyu82IDN0MeMf2PGf1sux+1O2ryzmnA
@@ -113,18 +116,18 @@ Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  5SYuJaKzCAgNeAy3gUVUUPrUsul1oe2PeWMFUhWKrqko0/Qo4HkwTZY6S16drTMncoUahSAl
  X4Z3BbSPXPq0v1JJBYNBL9qmjULEX+NbtRd3v0OfB5L49sSAC2zIO8S9Cufiibqx3mxZTaJ1
  ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <2ccc79ee-48ab-4097-a9cc-4d2b79ab9a8a@epfl.ch>
+In-Reply-To: <20260224193028.2370-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::530;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x530.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -140,104 +143,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/24/26 7:52 AM, Florian Hofhammer wrote:
-> The test executes a non-existent syscall, which the syscall plugin
-> intercepts and redirects to a clean exit.
-> Due to architecture-specific quirks, the architecture-specific Makefiles
-> require setting specific compiler and linker flags in some cases.
+On 2/24/26 11:30 AM, Philippe Mathieu-Daudé wrote:
+> TCG helpers are declared using the DEF_HELPER*() macros
+> which imply global symbol scope. Unfortunately when building
+> a single binary (containing multiple TCG 'target' frontends)
+> these symbols clash.
 > 
-> Signed-off-by: Florian Hofhammer <florian.hofhammer@epfl.ch>
-> ---
->   tests/tcg/arm/Makefile.target                 |  6 +++++
->   tests/tcg/hexagon/Makefile.target             |  7 +++++
->   tests/tcg/mips/Makefile.target                |  6 ++++-
->   tests/tcg/mips64/Makefile.target              | 15 +++++++++++
->   tests/tcg/mips64el/Makefile.target            | 15 +++++++++++
->   tests/tcg/mipsel/Makefile.target              | 15 +++++++++++
->   tests/tcg/multiarch/Makefile.target           | 22 ++++++++++++++--
->   .../{ => plugin}/check-plugin-output.sh       |  0
->   .../{ => plugin}/test-plugin-mem-access.c     |  0
->   .../plugin/test-plugin-skip-syscalls.c        | 26 +++++++++++++++++++
->   tests/tcg/plugins/syscall.c                   |  6 +++++
->   tests/tcg/sparc64/Makefile.target             | 16 ++++++++++++
->   12 files changed, 131 insertions(+), 3 deletions(-)
->   create mode 100644 tests/tcg/mips64/Makefile.target
->   create mode 100644 tests/tcg/mips64el/Makefile.target
->   create mode 100644 tests/tcg/mipsel/Makefile.target
->   rename tests/tcg/multiarch/{ => plugin}/check-plugin-output.sh (100%)
->   rename tests/tcg/multiarch/{ => plugin}/test-plugin-mem-access.c (100%)
->   create mode 100644 tests/tcg/multiarch/plugin/test-plugin-skip-syscalls.c
->   create mode 100644 tests/tcg/sparc64/Makefile.target
+> This series takes the dumbest approach, renaming the symbols.
 > 
-> +++ b/tests/tcg/multiarch/plugin/test-plugin-skip-syscalls.c
-> @@ -0,0 +1,26 @@
-> +/*
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + *
-> + * This test attempts to execute an invalid syscall. The syscall test plugin
-> + * should intercept this.
-> + */
-> +#include <stdint.h>
-> +#include <stdio.h>
-> +#include <stdlib.h>
-> +#include <unistd.h>
-> +
-> +void exit_success(void) __attribute__((section(".redirect"), noinline,
-> +                                       noreturn, used));
-> +
-> +void exit_success(void) {
-> +    _exit(EXIT_SUCCESS);
-> +}
-> +
-> +int main(int argc, char *argv[]) {
-> +    long ret = syscall(0xc0deUL);
-> +    if (ret != 0L) {
-> +        perror("");
-> +    }
-> +    /* We should never get here */
-> +    return EXIT_FAILURE;
-> +}
-After reviewing patch 2, I think it could be nice to test also the path 
-redirecting pc not from a syscall, in addition to what this test already 
-does.
+> There are still around 20 symbol clashes (usually FPU helpers),
+> but this series is good for my proof-of-concept.
+> 
+> Philippe Mathieu-Daudé (5):
+>    target/tcg: Rename bitswap() helpers
+>    target/tcg: Rename crc32*() helpers
+>    target/tcg: Rename unaligned_access() helpers
+>    target/tcg: Rename raise_exception() helpers
+>    target/tcg: Rename set_rounding_mode() helpers
+> 
+>   target/arm/tcg/helper-a64-defs.h                 |  2 +-
+>   target/arm/tcg/helper-defs.h                     |  4 ++--
+>   target/hexagon/gen_tcg.h                         |  2 +-
+>   target/hexagon/helper.h                          |  2 +-
+>   target/i386/helper.h                             |  2 +-
+>   target/i386/ops_sse.h                            |  2 +-
+>   target/loongarch/tcg/helper.h                    |  8 ++++----
+>   target/m68k/helper.h                             |  2 +-
+>   target/microblaze/helper.h                       |  4 ++--
+>   target/mips/helper.h                             |  6 +++---
+>   target/ppc/helper.h                              |  2 +-
+>   target/riscv/helper.h                            |  2 +-
+>   target/sparc/helper.h                            |  2 +-
+>   target/i386/tcg/ops_sse_header.h.inc             |  2 +-
+>   target/arm/tcg/arith_helper.c                    |  4 ++--
+>   target/arm/tcg/helper-a64.c                      |  4 ++--
+>   target/arm/tcg/translate-a64.c                   |  4 ++--
+>   target/arm/tcg/translate.c                       |  4 ++--
+>   target/hexagon/op_helper.c                       |  2 +-
+>   target/hexagon/translate.c                       |  2 +-
+>   target/i386/tcg/excp_helper.c                    |  2 +-
+>   target/i386/tcg/translate.c                      |  2 +-
+>   target/loongarch/tcg/fpu_helper.c                |  2 +-
+>   target/loongarch/tcg/op_helper.c                 |  6 +++---
+>   target/m68k/op_helper.c                          |  2 +-
+>   target/m68k/translate.c                          |  2 +-
+>   target/microblaze/helper.c                       |  2 +-
+>   target/microblaze/op_helper.c                    |  2 +-
+>   target/microblaze/translate.c                    |  4 ++--
+>   target/mips/tcg/op_helper.c                      |  6 +++---
+>   target/mips/tcg/translate.c                      |  6 +++---
+>   target/ppc/tcg-excp_helper.c                     |  2 +-
+>   target/ppc/translate.c                           |  6 +++---
+>   target/riscv/fpu_helper.c                        |  2 +-
+>   target/riscv/translate.c                         |  2 +-
+>   target/sparc/helper.c                            |  2 +-
+>   target/sparc/translate.c                         |  6 +++---
+>   target/i386/tcg/emit.c.inc                       |  2 +-
+>   target/loongarch/tcg/insn_trans/trans_bit.c.inc  |  4 ++--
+>   .../loongarch/tcg/insn_trans/trans_extra.c.inc   | 16 ++++++++--------
+>   target/loongarch/tcg/insn_trans/trans_fmov.c.inc |  2 +-
+>   41 files changed, 71 insertions(+), 71 deletions(-)
+> 
 
-You can reuse syscall mechanic to communicate with plugin to share 
-address that should crash and which destination it should reach instead.
+It seems to be the best and easiest way to deal with it.
 
-And while at it, you can add the same thing from a signal handler 
-(reusing syscall trick), so it should cover most of "special" cases.
-
-You can merge all test cases in a single test.c.
-Also, you can create a new set_pc plugin combining all this, because 
-other test cases don't really belong to tests/tcg/plugins/syscall.c.
-
-test.c:
-int main(int argc, char *argv[]) {
-   syscall(..., &&skip, &&dest);
-error:
-   g_assert_not_reached();
-dest:
-   return EXIT_SUCCESS;
-}
-
-plugin.c:
-static void* error;
-static void* dest;
-
-void on_syscall(num, a1, a2) {
-   if (num == magic) {
-     error = a1;
-     dest = a2;
-   }
-   return true;
-}
-
-void insn_exec(..., void* pc) {
-   if (pc == error) {
-     qemu_plugin_set_pc(dest);
-   }
-}
-
-Regards,
-Pierrick
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
