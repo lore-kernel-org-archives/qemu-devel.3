@@ -4,113 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66572E9B249
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 10:49:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C598E9B24E
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 10:50:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vupxp-0005Mr-7M; Tue, 24 Feb 2026 05:48:25 -0500
+	id 1vupz5-0005ai-1N; Tue, 24 Feb 2026 05:49:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vupxi-0005KA-Lg
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 05:48:18 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vupxf-00044p-4M
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 05:48:16 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771930093;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=fI0+FKAuy64qy7I8iClE651uCbkhETRDAcOhEnpyQ6o=;
- b=ZU8xrCmfJG3hhXbgELfgbgARESF4LStCHwZ5DmKDr5xbYFkVLBYcNlsifb4TlIPtXheZp0
- +boqOXAwhiN19qjZQi02XsDf+9ZCjpJeOUUrAKQGs8vbvtMeT2MIFyLQ0M7953pGy4U/5h
- 9nsLPjW0S2sfqCFWGSYYfrLpaYO1YNk=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-78-W-s-or2FOmu1NruL_bHDeg-1; Tue, 24 Feb 2026 05:48:11 -0500
-X-MC-Unique: W-s-or2FOmu1NruL_bHDeg-1
-X-Mimecast-MFC-AGG-ID: W-s-or2FOmu1NruL_bHDeg_1771930091
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4806b12ad3fso40345665e9.0
- for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 02:48:11 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vupz1-0005YA-Re
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 05:49:40 -0500
+Received: from mail-yx1-xb134.google.com ([2607:f8b0:4864:20::b134])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vupyz-00047C-UK
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 05:49:39 -0500
+Received: by mail-yx1-xb134.google.com with SMTP id
+ 956f58d0204a3-64c9a6d6b70so762569d50.3
+ for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 02:49:35 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1771930174; cv=none;
+ d=google.com; s=arc-20240605;
+ b=fKFKEhUjDnCKtOK/tn71z2CP0XWdlJFiMR9RYUMhmp8vWHhycQdqwAQuEHaFx8XF1J
+ fd68g5yyGO+QdyKFQ7L6SpgdTXBVe26tjdrlpglzHumRkqyKo4Nt2YjNL1nZOgfKa0HS
+ GR+MXv86gwYbKg4ChR3/BvZFqtTLGPLD92bZBKxpbiCEnmhnCW49FR6f4CoIdGF7/szD
+ th5zlmjttLIRNEwkOHP8eSSRXaHnG8HIk/TuerpPfvcBm87BFOMoEiAtON0ymvLv7tb+
+ MlTWU4IVwgka1LlAdBiObjht5MUVAYD6xvLerxBGunpLW0vMAKd8u4giNuv8Uj04vLCZ
+ BfIA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=3dGSMmqYWMJT8MyYbiGibh3BNEh8FgrkWKcRPtqxlX8=;
+ fh=6/PW2K+EINSFuO+9vXfQvnewM1RRi5NRep8wBgTt+Dw=;
+ b=WCAxPb4+UQhr77rzp0rMF6/EtyHhQJV66Od1qO/dng/HvvBNdwitdmIe2/47wx62yt
+ MZRC5DrQkGx2fELM7A0OlfCkLL4A46Ym8qfDklt6dXBZCxWwuxi2C/gs8og+mDKayV2b
+ whooU28scN/TVamiunMf0dPL2PuBfQadS9nSdxBcGovniKGRFkKWG3z/u8M+iZIzb9/N
+ owAyZUcIye7qhBz0QuRyTw9gQf8yQIKjykgiq8/djQ6FvQ946REcPtoP6Su9oP0Et3ge
+ Z1Cxt62+TYWfU7IiT4fTHRvELOWFRb1Vx4ZwLyjhih8A8iA5gtHWcdhxUuPJbBA6W8ph
+ gpAw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1771930090; x=1772534890; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=fI0+FKAuy64qy7I8iClE651uCbkhETRDAcOhEnpyQ6o=;
- b=F+H5BtTS5nW3tYvjsULl45in7uwi90eQiqAf6eNSzL6MvmJTi6gHI47ZdWcJJQH9TF
- Cn80uKa5ejvbt+wKs+IxQsbRnWt6h9U0fwfJK6kbIcb9NTmrx4GUXNhEdvG7I+rXN+5v
- aMQbZwHisEu08dE3jGVmAczbqok65vLe/JcN2aOdeQEphEpFsw60Q9s5HMX8gaVkxhyk
- gY3kku2nSqmCh6BXB0WMsRRZkYXyO8nHzEroiB05xmg84G8Or0l62IZg/ry/JoSa+qIf
- X2chcTthkebSh18btBN6+Z/FusYL4ZF2MfkyK5G9+A5Z4ZGnSxAY1VEviPe6fl4XDno9
- e0Ag==
+ d=linaro.org; s=google; t=1771930174; x=1772534974; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=3dGSMmqYWMJT8MyYbiGibh3BNEh8FgrkWKcRPtqxlX8=;
+ b=Mox/gm2fr8xFVkoITCPyFic/1VQW1TYLmNNvyKzgheBbL3c/HZmuQaFtLgXuWovMtF
+ lLZ88673sfdRcqWJv7L+sURchCS1UxXiwmJauaJPl7m/hAaXQG3ztc5jyy5CYIrBBb3C
+ 64uyOD5n1HONu9jV9YCKX6QuResqNKIbx9FCSFG/TRkyE/sUb5K0tOxOyGBFXD5I4mvv
+ /oQwz3MYBcAiXcygDJlbkTsJL9gphKhBFUpuytS0YxTjYeWPlqSurZUE17fOTtoVzcDh
+ 0xU3yVt0H/TrWQZN+zbKDP3r3S2tnM8qB4zJ1sXcEzwX6YmpKw8ppMV3gF7TwieF/T/X
+ auYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771930090; x=1772534890;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=fI0+FKAuy64qy7I8iClE651uCbkhETRDAcOhEnpyQ6o=;
- b=XbtK1ii51jVjgEYfb7y88XyuUvSgAHtEEKHYILvPaC/wbrGxhA+IE7NSJRD3hdQ78R
- aKnFsUmmrsLNhtgCBqhytdJBS9CrHbZpAF6SMSLRMn2Vv8T/KJL4MYSkuvP+KSemuulO
- 4FI//TI7ovG1gcwCUQ4duqu23cgPtyfGnXH1f7I1XzZBMmzgEd4tqVWdCYSfjdHyhjIs
- 9bY0fHcctTDXLAF+LCM6yUgXFEyui4x10NWORfmglRDocsr+iMIxl05vuYKgTxL/t1dH
- pbVBwfK8P0hPZSLFy2VGiLGWulUiaN5MD3LbBNONU2EipzzUoQ04PqddyZCRdQuTWRQD
- fgUw==
-X-Gm-Message-State: AOJu0YzJOjkgVtPVXN0DsmQUtyv2KFX/9JnvanExb4Z5lhAUIA9sI0uX
- RrgS/h0lR7nvOeHb7IWTbKWtP73HWdN8mAd3wUtgiEZb9d7867KMZtn+iz8e+Dxvk+iGdwn49GJ
- O13MBLAbGabd+Ybxa2DHexIhXpZSRajiWWsryA8tDtbxvrSE3qdDdyXCa
-X-Gm-Gg: AZuq6aKEoKzuIsLRIpDd/440Levt/8y/iYq9E5ZbVJOFia6NkxtzruVsNYa7lvrpmfT
- jGSnfr7Fn/nYuq8iOcVc5FzmySlKksF8qlEmdBkyPnuMKAQZARIoFeNuSCXrCBcg/n7agp8bQpI
- EqNYnRD86qZL1rkNf3rD+ZAOUTjYSHt0p1dOJQYxoalD44dSIAqsir/De2xJyOR2hGBfXNm8myd
- 6Zb4SDbmw/cRXm4lK491TSKl0gKCbuoAc2m7MvI0sdQi3Pztb8D3t5kUs0++sdib2LaWnY1HnMB
- wO/7IqZvbRkSmnWqmG05516eNTpBKgBnHwcqWBwx8H94atvX/zeF7ry/Hj8uJrvhjA/qvpYJ8Ky
- /7iKukReHSOkTpE/p9rTeDMPyTRmfvtd1K11rEW6zWrpJzu1GWycc1NyyWhHI2/JPHuKvVyINMp
- Si9LYx99N/WNif+cc+KKAYbAx1dJo=
-X-Received: by 2002:a05:600c:6298:b0:480:3bba:1cac with SMTP id
- 5b1f17b1804b1-483a95eb81fmr179791005e9.6.1771930090558; 
- Tue, 24 Feb 2026 02:48:10 -0800 (PST)
-X-Received: by 2002:a05:600c:6298:b0:480:3bba:1cac with SMTP id
- 5b1f17b1804b1-483a95eb81fmr179790725e9.6.1771930090070; 
- Tue, 24 Feb 2026 02:48:10 -0800 (PST)
-Received: from [192.168.10.81] ([151.95.144.138])
- by smtp.googlemail.com with ESMTPSA id
- 5b1f17b1804b1-483a9b75b4dsm426146145e9.4.2026.02.24.02.48.09
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 24 Feb 2026 02:48:09 -0800 (PST)
-Message-ID: <a7521b49-432a-4e60-8446-93338c61caff@redhat.com>
-Date: Tue, 24 Feb 2026 11:48:08 +0100
+ d=1e100.net; s=20230601; t=1771930174; x=1772534974;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=3dGSMmqYWMJT8MyYbiGibh3BNEh8FgrkWKcRPtqxlX8=;
+ b=CWemIdRTiJ6bcvSJONijhj/H40fEipHmJjSwEF2ajbVHPNK4EbtvXE8ZLMVoGXKOdq
+ c/Mq5lhAxjoPsnE21ZA9uQ4rnSEbEo2ZMzy3uiEsoZ49J4i0abZTlII4IKXKKWXPplZl
+ BbYscadEle8KULJa45UmfLna4wbC8H+lgZ1FKv1ZQm21UIIUNm6v0bD7W8STUNiXxO6d
+ IsMy6SMvY60eCtH4q1iIQk1nzmvoqzU2EW1HWrqGS2r1V7XVHiZAmI04HdSWDWPT+gSl
+ BvzaOSDy6Cr/dT7VJlSjufpZbyByT59p+T/hEWKzzvdOHb+lYvQrYJOZYJ6vYqePNJuD
+ qALg==
+X-Gm-Message-State: AOJu0Yzr/FlZxuG+KXwzblo0hwRSqgFMWh759rYCqgyxcGqImgZhBMup
+ JZB2X/KqCkt1qQUpchrGZR6dnyOtqXsjcDcbxW/UNqAb3Q5dlopU4jEu3K1xxPU6pUKJOBCTTVU
+ 3k3zHuzWbfZHc2JbWS6a0Pts1oYaxFFCQc0/MQ1Vv5w==
+X-Gm-Gg: ATEYQzzqNnYB9v0jZeueSxuCzU1yxUFQxx4ij/FAALUzUPCo55V+hGzHFbvZAEIjfc1
+ Ao4FEFRPpSsZwvz8GxWmMLIF/8Gb4xqaJPkDp4G7eamXM/XKWv2bJlQC9F4v+BheJr/lcN++qdV
+ Wk2aZUZIzy21s4G6aWVzRJkHQM3E8v1fEA1cWcbWBgsG8g9p1hTKIf2uxx6+Tsbq/sJUzs4SyCV
+ b/8ll56wB1ALjYBxcME4MZD1tso5Cx6TzxrtqhjL28M/D4+pflZ57xzO5/o2/J6o+NBuAXgodJg
+ jdHtuWkEsUyAS5ZUj4AwzOah4vxkdRZ1TB31rUsytSWE4ysTgkcBCHhAsa27iUOYFkQ=
+X-Received: by 2002:a53:ee41:0:b0:64a:e959:b3c0 with SMTP id
+ 956f58d0204a3-64c78d2492emr6825357d50.54.1771930174322; Tue, 24 Feb 2026
+ 02:49:34 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 03/16] rust/qobject: add Serialize implementation
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
- <marcandre.lureau@redhat.com>, qemu-rust@nongnu.org,
- Zhao Liu <zhao1.liu@intel.com>
-References: <20260108131043.490084-1-pbonzini@redhat.com>
- <20260108131043.490084-4-pbonzini@redhat.com> <87ecma4ep2.fsf@pond.sub.org>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Content-Language: en-US
-In-Reply-To: <87ecma4ep2.fsf@pond.sub.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -1
-X-Spam_score: -0.2
-X-Spam_bar: /
-X-Spam_report: (-0.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1.179, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.717,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <cover.1771770471.git.mst@redhat.com>
+ <5e5a86bab8308a9d5db09cbfdf12cc3751dce0f7.1771770471.git.mst@redhat.com>
+In-Reply-To: <5e5a86bab8308a9d5db09cbfdf12cc3751dce0f7.1771770471.git.mst@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 24 Feb 2026 10:49:23 +0000
+X-Gm-Features: AaiRm53rLSNXP-fDJQ4EIIkqEdz64vTfiw-xJT_4LzdhJCJPM5GgavCsFCN7Z6E
+Message-ID: <CAFEAcA_CsVe4TUVm3o_-BA4hXvi2xAThGX5T97amgTQKW_kiYA@mail.gmail.com>
+Subject: Re: [PULL 13/33] hw/cxl: Add support for Maintenance command and Post
+ Package Repair (PPR)
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: qemu-devel@nongnu.org, Davidlohr Bueso <dave@stgolabs.net>, 
+ Shiju Jose <shiju.jose@huawei.com>,
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>, 
+ Fan Ni <fan.ni@samsung.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b134;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb134.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,74 +118,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/24/26 11:29, Markus Armbruster wrote:
-> Paolo Bonzini <pbonzini@redhat.com> writes:
-> 
->> This allows QObject to be converted to other formats, for example
->> JSON via serde_json.
->>
->> This is not too useful, since QObjects are consumed by
->> C code or deserialized into structs, but it can be used for testing
->> and it is part of the full implementation of a serde format.
->>
->> Co-authored-by: Marc-André Lureau <marcandre.lureau@redhat.com>
->> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
->> Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
->> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> 
-> [...]
-> 
->> diff --git a/rust/util/src/qobject/serialize.rs b/rust/util/src/qobject/serialize.rs
->> new file mode 100644
->> index 00000000000..34ec3847c1d
->> --- /dev/null
->> +++ b/rust/util/src/qobject/serialize.rs
->> @@ -0,0 +1,59 @@
->> +//! `QObject` serialization
->> +//!
->> +//! This module implements the [`Serialize`] trait for `QObject`,
->> +//! allowing it to be converted to other formats, for example
->> +//! JSON.
->> +
->> +use std::{ffi::CStr, mem::ManuallyDrop, ptr::addr_of};
->> +
->> +use serde::ser::{self, Serialize, SerializeMap, SerializeSeq};
->> +
->> +use super::{match_qobject, QObject};
->> +use crate::bindings;
->> +
->> +impl Serialize for QObject {
->> +    #[inline]
->> +    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
->> +    where
->> +        S: ::serde::Serializer,
->> +    {
->> +        match_qobject! { (self) =>
->> +            () => serializer.serialize_unit(),
->> +            bool(b) => serializer.serialize_bool(b),
->> +            i64(i) => serializer.serialize_i64(i),
->> +            u64(u) => serializer.serialize_u64(u),
->> +            f64(f) => serializer.serialize_f64(f),
->> +            CStr(cstr) => cstr.to_str().map_or_else(
->> +                |_| Err(ser::Error::custom("invalid UTF-8 in QString")),
-> 
-> .to_str() fails when its argument is invalid UTF-8.  It returns "an
-> error with details of where UTF-8 validation failed."[1]
-> 
-> Why are we replacing this error with a custom one?  I guess we add the
-> clue "in QString".  We also lose the details of where.  Feels like a
-> questionable trade.
+On Sun, 22 Feb 2026 at 14:28, Michael S. Tsirkin <mst@redhat.com> wrote:
+>
+> From: Davidlohr Bueso <dave@stgolabs.net>
+>
+> This adds initial support for the Maintenance command, specifically
+> the soft and hard PPR operations on a dpa. The implementation allows
+> to be executed at runtime, therefore semantically, data is retained
+> and CXL.mem requests are correctly processed.
 
-Changing the error is required in order to return an S::Error (that is, 
-the serializer asks for a type of error that it understands).  I can 
-also preserve the message with "|e| Err(ser::Error::custom(e))" or 
-something like that.
+Hi; Coverity emits a warning here (CID 1645325) for use of strncpy():
 
-While it is undoubtedly a programming error, I didn't like that the 
-error (and thus the panic) happens in a different place than where the 
-QString is constructed.  I like panicking for *my* programming errors, 
-but not for someone else's :) especially if I can recover easily.
+> +static void cxl_mbox_create_mem_sparing_event_records(CXLType3Dev *ct3d,
+> +                            uint8_t maint_op_class, uint8_t maint_op_sub_class,
+> +                            CXLMaintenance *ent)
+> +{
+> +    CXLEventSparing event_rec = {};
+> +
+> +    cxl_assign_event_header(&event_rec.hdr,
+> +                            &sparing_uuid,
+> +                            (1 << CXL_EVENT_TYPE_INFO),
+> +                            sizeof(event_rec),
+> +                            cxl_device_get_timestamp(&ct3d->cxl_dstate),
+> +                            1, maint_op_class, 1, maint_op_sub_class,
+> +                            0, 0, 0, 0);
+> +    if (ent) {
+> +        event_rec.flags = 0;
+> +        event_rec.result = 0;
+> +        stw_le_p(&event_rec.res_avail, 2);
+> +        stw_le_p(&event_rec.validity_flags, ent->validity_flags);
+> +        event_rec.channel = ent->channel;
+> +        event_rec.rank = ent->rank;
+> +        st24_le_p(event_rec.nibble_mask, ent->nibble_mask);
+> +        event_rec.bank_group = ent->bank_group;
+> +        event_rec.bank = ent->bank;
+> +        st24_le_p(event_rec.row, ent->row);
+> +        stw_le_p(&event_rec.column, ent->column);
+> +        event_rec.sub_channel = ent->sub_channel;
+> +        if (ent->validity_flags & CXL_MSER_VALID_COMP_ID) {
+> +            strncpy((char *)event_rec.component_id, (char *)ent->component_id,
+> +                    sizeof(event_rec.component_id));
 
-Paolo
+Since this does a strncpy() with a length parameter equal to the
+full size of the struct array field:
 
+> +    uint8_t component_id[CXL_EVENT_GEN_MED_COMP_ID_SIZE];
+
+it might result in there being no NUL terminator on the end.
+
+Is that the intended behaviour ?
+
+Conversely, in this function:
+
+> +static void cxl_maintenance_insert(CXLType3Dev *ct3d, uint64_t dpa,
+> +                                   bool has_channel, uint8_t channel,
+> +                                   bool has_rank, uint8_t rank,
+> +                                   bool has_nibble_mask, uint32_t nibble_mask,
+> +                                   bool has_bank_group, uint8_t bank_group,
+> +                                   bool has_bank, uint8_t bank,
+> +                                   bool has_row, uint32_t row,
+> +                                   bool has_column, uint16_t column,
+> +                                   const char *component_id,
+> +                                   bool has_comp_id_pldm, bool is_comp_id_pldm,
+> +                                   bool has_sub_channel, uint8_t sub_channel)
+> +{
+> +    CXLMaintenance *ent, *m;
+> +
+> +    QLIST_FOREACH(ent, &ct3d->maint_list, node) {
+> +        if (dpa == ent->dpa) {
+> +            return;
+> +        }
+> +    }
+> +    m = g_new0(CXLMaintenance, 1);
+> +    memset(m, 0, sizeof(*m));
+
+(Side note: this memset() is not wanted, because g_new0() is
+specifically "allocate and zero this".)
+
+> +    if (component_id) {
+> +        strncpy((char *)m->component_id, component_id,
+> +                sizeof(m->component_id) - 1);
+
+...here we do limit the strncpy size to one less than the array
+size, which (together with the fact we're doing it into zeroed
+memory) means it will always be NUL terminated.
+
+Are these two things really supposed to be handled differently ?
+
+> +        m->validity_flags |= CXL_MSER_VALID_COMP_ID;
+> +        if (has_comp_id_pldm && is_comp_id_pldm) {
+> +            m->validity_flags |= CXL_MSER_VALID_COMP_ID_FORMAT;
+> +        }
+> +    }
+> +
+> +    QLIST_INSERT_HEAD(&ct3d->maint_list, m, node);
+> +}
+
+thanks
+-- PMM
 
