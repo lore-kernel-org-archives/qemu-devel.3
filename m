@@ -4,92 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFF7FF4BB8B
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 21:06:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B50FF4BB8D
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 21:24:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuzbV-0008Fj-Sy; Tue, 24 Feb 2026 16:06:02 -0500
+	id 1vuzsK-0002sK-Ix; Tue, 24 Feb 2026 16:23:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vuzbV-0008FM-0I
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 16:06:01 -0500
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <dahamilt0@gmail.com>)
+ id 1vuxeM-00073U-5i
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 14:00:50 -0500
+Received: from mail-qk1-x733.google.com ([2607:f8b0:4864:20::733])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vuzbT-0000p6-GC
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 16:06:00 -0500
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-482f454be5bso2069945e9.0
- for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 13:05:59 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <dahamilt0@gmail.com>)
+ id 1vuxeK-0003Jz-Q7
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 14:00:49 -0500
+Received: by mail-qk1-x733.google.com with SMTP id
+ af79cd13be357-8cb48234b08so616485885a.1
+ for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 11:00:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771967157; x=1772571957; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=D/2lqpZhgmRhDxp+pMZqmirh1bSZYNZelyrwGfa4ezM=;
- b=u58m6gsBfbrND3OpCJRMvkFxH/BBDDcS4/g/v4Yqs9xiX3rvQ4CK/jMael3Q1swV0u
- lgtEHUKpvgLTsERxJ9pdOtFOxvs1NP1tMFAcywpToR1rkjJ+q56n1agUHx9y47AEBHa9
- 4a0+xbN2lyydz1iVo3rVmeuBWGiuL5wCqAXD4byGNI9uacCX471aZKACAIeEAC+IbbFM
- Jm+jwmid9EWTvsM3k/oTfx25z2UYmjF0Bu7ZTifD5UxqjQSlO5em0eHAC2ta3RG0kgNV
- 3ElOtIoy+A529BzYu9oQY8qnS+MVayDZFLlG2a2gvJrU27hakoF+1oJobnXB93P9YEPL
- QVnA==
+ d=gmail.com; s=20230601; t=1771959647; x=1772564447; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=bk/eXpdbcN7o/uDfc/Kx0OpCs/nYFAS5JbHpc51C+sk=;
+ b=kvnZk8ItMxGFS9m25ZuNNtIeJW//z0Q50hA31ONVjEDMOx6q/vE+oWKT74RP+nc3MR
+ FQ99XGat6Khy/p8h1tyPPvMbk9BmK7TY13Vwv07aYnbWxL4oGZAO+iOwOwRJ/mku5sJB
+ chIYdNO8rEWbrIquLwNbNfeAsNxcrQXCvy3wjdVU6fFnK9jq6Cr+zUFmEo2OtPv7XMnF
+ k8TOYrxc/Sk87lAio80Ff14+YfK5hd94CT3XQMZSL6IC126UyTlfVOF+yV7fdLm1/A6V
+ cVkDy0EukKCpLJxgdRFEYmV5k3nS8ILo1WDIc4Uv/wp7wKC7RBgFjj76aIx50eHlU0/6
+ nXbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771967157; x=1772571957;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=D/2lqpZhgmRhDxp+pMZqmirh1bSZYNZelyrwGfa4ezM=;
- b=dNTAK1Li2z6+CXj66aopImIEIgnl96vuPQM7LkCoFThvHIwKSbtmHbcB4z436Zbmm8
- AGzb+Lm+tc0x/jh5BZGRxcg57VO4OBnMr2avwO90+sIyKm4+fR9mUPZQxzn5xwi/W1yJ
- vIq4E8PVMy6XA5AEqE2uJHc2R7V/6eupe5JyuEm2PpR6nI+fB3XHs6Hmgw0DUKLtSTx2
- MtUOsqbWbFUMetLLumgBUHLJIGD9PTaWnoehn/L40DH/NaPNoU45d69ChUAtNsCVlD1Y
- K69y/0S4OP0wC0ES1uobb9BarBVfOOMttSDurTzUwIV+8shgXifAFXDucIFxB4scJjmL
- A0MA==
-X-Gm-Message-State: AOJu0Yz38PEwIDNIS2Zh6L2EzQ+dpe0JAUvFVSOY/dVATBy7GCtCJxKb
- ruCoovaNIvEKGJ3zu/Pg9MMpN+LvRBibCHK0kAzXl5fUjmYyrk4r2zvdgdplgb3Exin4hmYkKvS
- qU/57md0=
-X-Gm-Gg: AZuq6aJHStiXHRZUZLNVdA3ODwCaUxqIP69s482HGf7vt71JVy6jQ04bg+UhrJr5h/+
- AnwLit/LwAQKotiCEx+Qn9Pop8zGz1ZXhcJGRmCvJwFlwFALaFQiytfIC42fQXPF4mFlBYv21xT
- g2uJYtrjoKBVY1vc+UQamJ2W/47XqjhNy9k199lMX+hEnden4oD1hLFPn6eM2qmYvs1tdP6AKzA
- 2ubxPEVeaALsVjwGpe3W53D4cedrfqwAu6vH1p1QuqpU+MQpETdQ6c4KaFvpAUYtXUBBaDVNDSU
- ZlWdBdOk6VCUIlLqrRGeLMjH8RFrr5pblTiESeyYGHhydzz+36872pIjIe5VdYQPTLYvZaoY8fL
- K4kcEq1UDmJP9xMPVBiV+wfDnUu5D2s29Z8RBtKxr8yPoRNrpq3Hyu1Bw80hO7EdWuW2zXa2UOg
- NLTpuZr5l61/LgJIArRv9IlCjRJTq2Nw4qk3Q4kdMNFindXJyWVVwI2REcf9zb93pHLA==
-X-Received: by 2002:a05:600c:314a:b0:479:1348:c63e with SMTP id
- 5b1f17b1804b1-483bd7429acmr22256085e9.9.1771967157585; 
- Tue, 24 Feb 2026 13:05:57 -0800 (PST)
-Received: from [192.168.69.200] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-483beb430ffsm3080025e9.7.2026.02.24.13.05.56
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 24 Feb 2026 13:05:56 -0800 (PST)
-Message-ID: <747ef1bc-68cd-49f4-b93e-a16fba9003cf@linaro.org>
-Date: Tue, 24 Feb 2026 22:05:56 +0100
+ d=1e100.net; s=20230601; t=1771959647; x=1772564447;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=bk/eXpdbcN7o/uDfc/Kx0OpCs/nYFAS5JbHpc51C+sk=;
+ b=EizHaxOAeF3ghU6VutTFQ9ESBWThGu0dVvODWwvkiSE+Rl+QO4JPTGYtpUQbJwv2im
+ B6af4evSDhU0zmkplfGfdZpvrDRV0fq0k//tIKbn++JAeqibRMfZOFb66/p3UsPpbsbN
+ qC7tr8DchiTDpZTeSlpOyatH+Zekj+wDbNIe+jhOSPGx/tegb3jE90TPe3NDVd7PJ6BU
+ OIxOL4npFNhpIcRc2Pbl91KcP56rMbfxrky5YWizONMLO8/oUNyh9E5OOq+T8LSFhhss
+ hEQjEuG6uIBAFOP8zAh+niylcfeA5TyMZEqrQK6iaBaH/CNGUf0y9CFlk+lbnT2LBx/p
+ d7ig==
+X-Gm-Message-State: AOJu0YxGRH1TNO1x5X9BTXDoTk7MRL/jMXeVChHkSJjEG2RZpugF6ak9
+ lRrf8k8YlW0l4KQ8SIaKGC9tOvqRFroIyOXsmRNWB0swZslkiwS6z8OhI9zUaA==
+X-Gm-Gg: AZuq6aL6KL6go32/WfZQe7Q/ruxAdbNgVVkt8uNBQgyn0+O1Orc0CP3auhiqKd4N4Ux
+ Q5sSwwk7etlUADkLWcsMi2sncvBPzjYBnMLzz382qYFmQey4O+JwfAJ1WWSmpex/EwqUuObAIgf
+ YDGnTH+M9YN8vJVwso3/K5dXKKLv5QB8ahpMI8LP1LGnJpk6mDxfOMspigaCeuIC71CdzOuQmSU
+ HCWvGo1NAdYpbppii1pANMmkE48HMmawgSpb972m5NQquzi3pynbnMRiFbJDMM5j7Dk3edou0vd
+ YiKJ/i8qEn7AxcxqxsQmgcW29dAN862e8hb9iLUFlghBzXb3wkEKOe0CiblpIag/wZBobm/Z1l0
+ TkTzv8vz28TWXgGYkxjsT96sxESwpbDMc7hDPI7NOYYlmJcqOtiO6U7+G2IMIivzuSCA+qnL7wx
+ nqZ1UgSjls7M82t54FyoVztoH9qth4hoLULAsjiPWmHXBczRMBDgo=
+X-Received: by 2002:a05:622a:10c:b0:506:a617:175a with SMTP id
+ d75a77b69052e-5070bbd9882mr188919981cf.22.1771959645901; 
+ Tue, 24 Feb 2026 11:00:45 -0800 (PST)
+Received: from localhost.localdomain ([207.98.184.46])
+ by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-5070d3a2dc8sm102616291cf.0.2026.02.24.11.00.45
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 24 Feb 2026 11:00:45 -0800 (PST)
+From: David Hamilton <dahamilt0@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: David Hamilton <dahamilt0@gmail.com>
+Subject: [PATCH 0/2] hw/misc/ivshmem-pci: Improve error handling
+Date: Tue, 24 Feb 2026 14:00:02 -0500
+Message-ID: <20260224190004.84187-1-dahamilt0@gmail.com>
+X-Mailer: git-send-email 2.50.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 10/20] hw/ppc: Set graphic display dimensions generically
-Content-Language: en-US
-To: BALATON Zoltan <balaton@eik.bme.hu>
-Cc: qemu-devel@nongnu.org
-References: <20260222230602.5756-1-philmd@linaro.org>
- <20260222230602.5756-11-philmd@linaro.org>
- <2671f32a-0881-c2fc-7cd4-5c684a4ac43e@eik.bme.hu>
- <80eace1c-1624-1397-f39a-ca31fe6096d4@eik.bme.hu>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <80eace1c-1624-1397-f39a-ca31fe6096d4@eik.bme.hu>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::733;
+ envelope-from=dahamilt0@gmail.com; helo=mail-qk1-x733.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Tue, 24 Feb 2026 16:23:21 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -104,58 +98,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 23/2/26 00:50, BALATON Zoltan wrote:
-> On Mon, 23 Feb 2026, BALATON Zoltan wrote:
->> On Mon, 23 Feb 2026, Philippe Mathieu-Daudé wrote:
->>> If a dimension is not set, have the machine init code set
->>> the default value by calling the ppc_graphic_dimensions()
->>> helper, common to all PowerPC machines. Declare local
->>> variables to avoid using the global ones.
->>>
->>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
->>> Message-Id: <20260216213121.47122-8-philmd@linaro.org>
->>> ---
->>> include/hw/ppc/ppc.h    |  2 ++
->>> hw/ppc/mac_newworld.c   | 10 ++++++----
->>> hw/ppc/mac_oldworld.c   | 10 ++++++----
->>> hw/ppc/ppc.c            |  8 ++++++++
->>> hw/ppc/prep.c           |  4 ++++
->>> hw/ppc/spapr.c          |  4 ++++
->>> system/globals-target.c |  6 ------
->>> 7 files changed, 30 insertions(+), 14 deletions(-)
+This series addresses two error handling issues in the ivshmem
+PCI device:
 
+1. Handle the return value of kvm_irqchip_add_irqfd_notifier_gsi()
+   which was being silently ignored.
 
->>> diff --git a/hw/ppc/ppc.c b/hw/ppc/ppc.c
->>> index a512d4fa647..d7b4466d701 100644
->>> --- a/hw/ppc/ppc.c
->>> +++ b/hw/ppc/ppc.c
->>> @@ -29,6 +29,7 @@
->>> #include "qemu/timer.h"
->>> #include "exec/cpu-interrupt.h"
->>> #include "system/cpus.h"
->>> +#include "system/system.h"
->>> #include "qemu/log.h"
->>> #include "qemu/main-loop.h"
->>> #include "qemu/error-report.h"
->>> @@ -1557,3 +1558,10 @@ void ppc_irq_reset(PowerPCCPU *cpu)
->>>         kvmppc_set_interrupt(cpu, PPC_INTERRUPT_EXT, 0);
->>>     }
->>> }
->>> +
->>> +void ppc_graphic_dimensions(int *width, int *height, int *depth)
->>> +{
->>> +    *width = graphic_width ?: 800;
->>> +    *height = graphic_height ?: 600;
->>> +    *depth = graphic_depth ?: 32;
->>> +}
->>
->> Sorry but didn't we say that there should be no common 
->> ppc_graphic_dimensions function but each board should set its own 
->> defaults?
-> 
-> OK I see there's a v2 with the correct patches.
+2. Check for errors from setup_interrupt() in process_msg_connect()
+   before continuing to ioeventfd setup. Add ERRP_GUARD() to make
+   the errp dereference safe.
 
-Yeah sorry I swiched back in the older branch to check something
-and forgot to go to the newer again before posting the PR!
+David Hamilton (2):
+  hw/misc/ivshmem-pci: Handle error from
+    kvm_irqchip_add_irqfd_notifier_gsi()
+  hw/misc/ivshmem-pci: Check error after setup_interrupt() in
+    process_msg_connect()
+
+ hw/misc/ivshmem-pci.c | 14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
+
+-- 
+2.50.1 (Apple Git-155)
+
 
