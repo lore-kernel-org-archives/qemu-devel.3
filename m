@@ -4,85 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47942EEC2B7
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 01:34:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D1DFEFB7EA
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 02:44:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuhJH-0007y6-PL; Mon, 23 Feb 2026 20:33:59 -0500
+	id 1vuiOU-0007Wh-I6; Mon, 23 Feb 2026 21:43:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vuhJA-0007xX-8k
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 20:33:52 -0500
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
+ id 1vuiOS-0007WW-U5
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 21:43:24 -0500
+Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vuhJ8-0001Re-DE
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 20:33:51 -0500
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-2aad1dc8856so35904045ad.1
- for <qemu-devel@nongnu.org>; Mon, 23 Feb 2026 17:33:49 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
+ id 1vuiOQ-0005JW-9I
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 21:43:24 -0500
+Received: by mail-ed1-x52d.google.com with SMTP id
+ 4fb4d7f45d1cf-65be78011c8so6874939a12.3
+ for <qemu-devel@nongnu.org>; Mon, 23 Feb 2026 18:43:20 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1771900999; cv=none;
+ d=google.com; s=arc-20240605;
+ b=CUnYsyX3ILtCCLXT0oczPPK5JOm2xzksJjdCP+KP9IdLv4M2+6yC5ySZsaWmI/dmVf
+ 26t0bu+rz400ttUROyjrr5IxEnrjwOCxA3rpBL4hfEWpGbnbV/9nv1vh6050nkeWARUa
+ f4zgTr0hoLtpqRQQ/wqdQoXX3YT2JtFRWFfoORDBhvvXAANNpWoNB6ZrUGDqfadITW7g
+ EWDfZ8cXHbHOS53g28LcK9Br1l1p83B7GfnrWv1feVfMCpX021QgGdEe9nu9qSIlh5sm
+ gNe8JNsJHLa7vzZgCsNB0E68f+CCgVsU/qFX7mdtXiPdlrblL+fzDkQ8IJN36FAWNPv6
+ /s6A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=afNVBl3XrVTLOD+fEl7GE2dkMy82gTpmhi08/NSzHhk=;
+ fh=2vCTedxg5r0JPg5LnC8s7len6poc60rIFIIE/ngH4cY=;
+ b=j31IZjjYAf+cMSTvWP2VNQNcSuR3p8TZuPCuHu2a2lN78PvcsxAo0C9fSIva31MXem
+ pt5p+Z2w0fac9h/FzcjI9jtOxwtPDbi6tB0FVH5r96jzWWk4ryeZovqqDym6wtEZxyyG
+ 2lualVX5ZOfCckrJKkHGk/G0j11ZtElDYnAqbMGm+xY5GoKu38Xx10hvW1SA5RafuhSY
+ ssHmPO+GxJSGeC2/wHxaWhJ1eD+GbpTu+FPyasPbKBWPl4AftOhoNxeiwmSNefy2Wfyw
+ OWLS/TFsJhZIn931HyhYbSJGGNfwgRZAeDzqIdM2Nb0t9i2ym04iLw4Uyw2LjHq6FFUK
+ P69w==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771896828; x=1772501628; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=zVvJ0JS9T3OxrmvJhyE51viE0cls1f/Ts048p5Cxx+c=;
- b=SpqH/eIIgGQtQGMiAFMjEcUm3haetqvpXqwGy6BIecu60SfjEBpdbpv73YpJebjsfi
- p31nARxl5KzQLh7M+5Vvuts8uYcsGo3TrxQphF8jkiTsmso1o9ojkv0yqo3Zy0u4vMuP
- Doe23wE64CVFr13Fb+jAECvuVCnIHS0rAOnn6j2C7uY//VOj4eJpBVh/Cb2BwyNYA/Qf
- SCDd0tkxu8LRf/tDpxYDdDN50L06zYATGlVS4/6L48ATnz3DRqHAhF57QLp25R9SBlF/
- vc6QZG//oUMDlwqKXrTgdwmdW+SNFBz08SJdCVcZV5VWbcIV7Qiz94j+++xsLrWk3DQ2
- U2/Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771896828; x=1772501628;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1771900999; x=1772505799; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=zVvJ0JS9T3OxrmvJhyE51viE0cls1f/Ts048p5Cxx+c=;
- b=kEiofvvLhw1MdYRhstPdegFgCbvRDDeK7hFepnuU+pUefKBtrEefSOZTb0Y+tT7zIR
- LmZxW3IuS8ZS7nuOlZ2V8LSDsQ46ALLH8Jwtjz1vMWhTLEAgEh/evMzWuVlCwtT2o3z1
- oP+7vm8g77Y5G4IjAW1c6VgzF7V/8ouwUmFkmxfsdAkjCzupFdbEJBOy09sR5Y2oWR3K
- 4DVLqiP2p9vuyoGAxFjol/p2vJj/aFokarsLHSQY5mS9rezcgZcYiijHAKO5EUA+r5aW
- qBJrp1/KVHCeWumZACSUIF4wv+XN1H/3GwJ0PW/ma/11hYQTvAoNyfIEwe3ghT1N/gfm
- NkyQ==
-X-Gm-Message-State: AOJu0YwJZJX9v26hpfSsS2BYO2dzlnuT3LuAnEQorPaHm45R0XI3DMOE
- T+I1WgBznKEp2uDk7AHNXC69k3vT6UD6SliRsv7Wt/SmCBxyL3A5wcPnUJe0zSpHwAXjZiyQisb
- s918S
-X-Gm-Gg: ATEYQzwYn6gwswnPvPEfsMkhTHS5wwqFHZtglsX6rYpjX/0w08eCUx8tSfFfzc2rpG+
- 0YKMPeR8JOLeYZv3t8xacoGM0WWbfYsoR41RinPQKdj3rWXzTvMSXS+nOUi2Qd4umbblvmx3uBf
- 0cbeOeqsd1SkrlimEXkJ12roo8VftdOr1kk9KGPCfy1nKbMwpOOKi4UcarQr8zixG8JNe6PE0I6
- IDcA456JjbKI11ZoAPuVSbaBelH9z8AMIeIGT0LOTGaQS0gdTbybnndLQqeo8ZA68SRqyjQSw2B
- ti8RGB74oJ8yuY9UhocK9muFdziUaKIvgSK8Z36D5EWgeOGxK8WLkCnb8JJFMlxkRyEVAn9y8Ie
- XJqMBe5DJOGJPh3zfHXRAZiauCB3RsdrDEqh9TJdMRqITjdVtHle3AZIU7zi89MAFX+/3hoCmKn
- YKiz3Bvbpz0w/JmmbFoJMNe9LxQ9WFY3ASB+nWltRP3yieSuPNX1WOTSB5Hwj4DwFLCbS5slKER
- 7PvuafY0SYGl1s=
-X-Received: by 2002:a17:903:1b66:b0:2a7:9163:8e68 with SMTP id
- d9443c01a7336-2ad7441990emr96950965ad.6.1771896828407; 
- Mon, 23 Feb 2026 17:33:48 -0800 (PST)
-Received: from pc.taild8403c.ts.net (216-71-219-44.dyn.novuscom.net.
- [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2ad7503fcc5sm87006115ad.76.2026.02.23.17.33.47
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 23 Feb 2026 17:33:47 -0800 (PST)
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-To: qemu-devel@nongnu.org, peter.maydell@linaro.org,
- richard.henderson@linaro.org, pbonzini@redhat.com, stefanha@redhat.com
-Cc: pierrick.bouvier@linaro.org
-Subject: [PULL 0/1] Plugins update for 2026-02-23
-Date: Mon, 23 Feb 2026 17:33:41 -0800
-Message-ID: <20260224013342.2470297-1-pierrick.bouvier@linaro.org>
-X-Mailer: git-send-email 2.47.3
+ bh=afNVBl3XrVTLOD+fEl7GE2dkMy82gTpmhi08/NSzHhk=;
+ b=Tns6/qSEGmEA3tulus0yzFOKB49lL3LWu3cuJGqPk+1yE0ZWpukXGDUJjOs7wHdjZL
+ FDAqWe9YEC8y3T6JnbBXMkCvHdjX1QpAoOdl2e3sL2p6lPK/6Irs1eacXvQWYO6wOJL4
+ ytJ/GYlxunkkbH1+oDmc9QRxJtJprUhsSNTUBTXO1aXxdY13LjQFqSzMLuzfQeAiOstL
+ Ea68/5cTiVaeuXo+tq+Crb4AS2g2wmb4CXloMZ0Ba/sUUGy4DGKvnDL6jy7zr0y8VY8g
+ 15bB5KXPvbbVGmvU1d4GtLI+FOY+JR6S9J7cxTcd//CzFF3mEQQ9u5dg/bkVFFTMEZaS
+ uqkg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1771900999; x=1772505799;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=afNVBl3XrVTLOD+fEl7GE2dkMy82gTpmhi08/NSzHhk=;
+ b=kTF8TRylwzPaEfTMu2UXXEqS0PDoNsfWHvslr9iMJSJkYo10jbgHYiUqiZGdWjb+uU
+ ENZBR1/PXrsp4EtviJhjSRxtVgZaUtEDmyaoj7YN+7JeL/flprCzAhMrzx9Bcr5GewHW
+ dg95uXEchkuh8oXwwMuNK+9qD+sOfBhRCY5y82QOanpWwX5ZsokADpX6qQzJgIo3A4rr
+ N7LHh7FM0flk8gcm6ttsVTJLWGIR+LOC8dNs7A/B3bvCFY3tZwHn3fXdkuSBW4+S+WC6
+ JdPpAyHFQBSAkLff2QUymFEWHPm2EnQTYW8EwjitY15YOqcWBcnUlLxTycfmVoZ7uJji
+ VBjQ==
+X-Gm-Message-State: AOJu0Yx6COSFtWgIcqfgdKo8VdXsUtt+F37c08quqGN0Je9rXiYdYQNg
+ K7vcDuMxhZNb6h7Vk44MnMX+Vbwyg/wRe+UCT6UBgumY5XwJlrHBAre2RpBUnsKdhINuSq8PMBH
+ 7WcTkNsYJRXRC5j0liZIHulIoVJzG7b0=
+X-Gm-Gg: ATEYQzwIMYFzW9MUWHl6YL+bGpNFe3FOnKW9VeCJ3JnpzHhDgh/5guteQ83mrdtpZgq
+ rg7LGcBgFFIKYNo1vI88vN1DcJpezgyu1J5EJ/2fzXoVt37TCdJzc2cZ+hukPjU6F4yx4UMdYz0
+ 6LvjVLLdZGU4ZW3egctq6ES641sXswg2a/kmmF4NYeVBo3GVJHPxufzJAejhvBZEGoq+LC5Uw5O
+ oaG+xfVsLio+LzF7OMRS+zJodAEF8ygvfWI7k0gaFdrC2gC6/tz7euCApWIYEC6PqQJGaP7hRZp
+ r8gv7XA=
+X-Received: by 2002:a05:6402:5189:b0:65c:354e:94f0 with SMTP id
+ 4fb4d7f45d1cf-65ea4ee7aa1mr6114445a12.8.1771900998958; Mon, 23 Feb 2026
+ 18:43:18 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62b.google.com
+References: <20260213171622.55629-1-zhangckid@gmail.com>
+ <20260213171622.55629-4-zhangckid@gmail.com>
+ <87wm0bq047.fsf@pond.sub.org>
+In-Reply-To: <87wm0bq047.fsf@pond.sub.org>
+From: Zhang Chen <zhangckid@gmail.com>
+Date: Tue, 24 Feb 2026 10:42:42 +0800
+X-Gm-Features: AaiRm53nzclE7tYyzUX9fykz8uY-v2FG95vWPxTikaGxQGz2Xc4aJTZRrJARur8
+Message-ID: <CAK3tnvKEJSDMVC4bkEbhfsVXpp7nVbq+Kue9fFVmOrd5f_ugCg@mail.gmail.com>
+Subject: Re: [PATCH V4 4/4] qapi: examine IOThread attachment status via
+ query-iothreads
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>,
+ "Dr . David Alan Gilbert" <dave@treblig.org>, 
+ Eric Blake <eblake@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>, 
+ Stefan Hajnoczi <stefanha@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
+ envelope-from=zhangckid@gmail.com; helo=mail-ed1-x52d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -100,27 +121,146 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit afe653676dc6dfd49f0390239ff90b2f0052c2b8:
+On Tue, Feb 17, 2026 at 3:51=E2=80=AFPM Markus Armbruster <armbru@redhat.co=
+m> wrote:
+>
+> Zhang Chen <zhangckid@gmail.com> writes:
+>
+> > Extend the 'IOThreadInfo' structure to include attachment metrics.
+> > This allows users to monitor how many devices are associated with
+> > a specific IOThread and identify them by their QOM paths.
+> >
+> > New fields added to IOThreadInfo:
+> > - @attached-cnt: An integer representing the number of devices
+> >   currently using this IOThread's AioContext.
+> > - @attached-dev: A string containing a delimited list ("|") of
+> >   QOM paths for the attached devices.
+> >
+> > These fields are also exposed via the Human Monitor Interface (HMP)
+> > command 'info iothreads' to assist with manual debugging and
+> > performance tuning.
+> >
+> > Example QMP output:
+> > {
+> >     "id": "iothread0",
+> >     "thread-id": 3134,
+> >     "attached-cnt": 2,
+> >     "attached-dev": "/machine/peripheral/blk1/virtio-backend | /machine=
+/peripheral/blk0/virtio-backend",
+> >     ...
+> > }
+> >
+> > Signed-off-by: Zhang Chen <zhangckid@gmail.com>
+>
+> [...]
+>
+> > diff --git a/qapi/misc.json b/qapi/misc.json
+> > index 1f5062df2a..ca53638684 100644
+> > --- a/qapi/misc.json
+> > +++ b/qapi/misc.json
+> > @@ -76,6 +76,19 @@
+> >  #
+> >  # @thread-id: ID of the underlying host thread
+> >  #
+> > +# @attached-cnt: The parameter is a counter indicating how many
+> > +#     active devices are currently associated with this iothread
+> > +#     (e.g. virtio-blk).  In hotplug scenarios, users can
+> > +#     pre-allocate multiple iothread objects to serve as a persistent
+> > +#     thread pool.  When a device is hot-unplugged, the corresponding
+> > +#     IOThread is released but remains available, allowing subsequent
+> > +#     hot-plugged devices to attach to and reuse the existing thread.
+> > +#     (since 11.0)
+> > +#
+> > +# @attached-dev: A list of QOM paths for the devices currently
+> > +#     associated with this IOThread, delimited by " | ".
+> > +#     Returns "none" if no devices are attached. (since 11.0)
+>
+> QAPI schema design maxim: do not encode structured data as strings.
+> @attached-devs should be an array of QOM paths instead.
 
-  Merge tag 'audio-pull-request' of https://gitlab.com/marcandre.lureau/qemu into staging (2026-02-23 14:03:50 +0000)
+OK, will fix in next version.
 
-are available in the Git repository at:
+>
+> Unless I misunderstand your docs, @attached-cnt is the number of QOM
+> paths in @attached-dev, i.e. @attached-dev is redundant.  If this is the
+> case, drop it.  If it isn't, educate me :)
 
-  https://gitlab.com/pbo-linaro/qemu tags/pr-plugins-20260223
+As Stefan's comments, I try to address more specific needs:
+https://mail.gnu.org/archive/html/qemu-devel/2026-02/msg01892.html
 
-for you to fetch changes up to bd3d912b77b5d2b13ac7b055cb5ad33d5a86dcb8:
 
-  contrib/plugins/uftrace_symbols.py: filter out some addr2line error messages (2026-02-23 17:32:40 -0800)
+>
+> We generally avoid abbreviations in the QAPI schema: @attached-count,
+> @attached-devices.
+>
+> > +#
+> >  # @poll-max-ns: maximum polling time in ns, 0 means polling is
+> >  #     disabled (since 2.9)
+> >  #
+> > @@ -93,6 +106,8 @@
+> >  { 'struct': 'IOThreadInfo',
+> >    'data': {'id': 'str',
+> >             'thread-id': 'int',
+> > +           'attached-cnt': 'int',
+> > +           'attached-dev': 'str',
+> >             'poll-max-ns': 'int',
+> >             'poll-grow': 'int',
+> >             'poll-shrink': 'int',
+> > @@ -118,6 +133,8 @@
+> >  #              {
+> >  #                 "id":"iothread0",
+> >  #                 "thread-id":3134,
+> > +#                 "attached-cnt":2,
+> > +#                 "attached-dev":/machine/peripheral/blk1/virtio-backe=
+nd | /machine/peripheral/blk0/virtio-backend,
+>
+> Once again, the example is syntactically incorrect (the value lacks
+> double quotes), and once again I recommend to create example I/O by
+> actually running a test.  Getting tired of this, to be frank.
 
-----------------------------------------------------------------
-Changes:
-- [PATCH] contrib/plugins/uftrace_symbols.py: filter out some addr2line (Pierrick Bouvier <pierrick.bouvier@linaro.org>)
-  Link: https://lore.kernel.org/qemu-devel/20260218172356.938236-1-pierrick.bouvier@linaro.org
+Sorry for that again. Will fix in next version.
+And I tested this series before send the mail like this:
 
-----------------------------------------------------------------
-Pierrick Bouvier (1):
-      contrib/plugins/uftrace_symbols.py: filter out some addr2line error messages
+(qemu) info iothreads
+iothread2:
+  thread_id=3D434428
+  attached-cnt=3D0
+  attached-dev=3Dnone
+  poll-max-ns=3D32768
+  poll-grow=3D0
+  poll-shrink=3D0
+  aio-max-batch=3D0
+iothread1:
+  thread_id=3D434427
+  attached-cnt=3D2
+  attached-dev=3D/machine/peripheral/blk1/virtio-backend |
+/machine/peripheral/blk0/virtio-backend
+  poll-max-ns=3D32768
+  poll-grow=3D0
+  poll-shrink=3D0
+  aio-max-batch=3D0
 
- contrib/plugins/uftrace_symbols.py | 3 +++
- 1 file changed, 3 insertions(+)
+
+>
+> >  #                 "poll-max-ns":32768,
+> >  #                 "poll-grow":0,
+> >  #                 "poll-shrink":0,
+> > @@ -126,6 +143,8 @@
+> >  #              {
+> >  #                 "id":"iothread1",
+> >  #                 "thread-id":3135,
+> > +#                 "attached-cnt":1,
+> > +#                 "attached-dev":/machine/peripheral/blk3/virtio-backe=
+nd,
+>
+> Likewise.
+
+Thanks
+Chen
+
+>
+> >  #                 "poll-max-ns":32768,
+> >  #                 "poll-grow":0,
+> >  #                 "poll-shrink":0,
+>
 
