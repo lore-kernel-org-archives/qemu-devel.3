@@ -4,38 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF277EFB813
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 07:52:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47886EFB811
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 07:52:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vunCk-00041s-EN; Tue, 24 Feb 2026 02:51:38 -0500
+	id 1vunCj-00041G-KQ; Tue, 24 Feb 2026 02:51:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dtalexundeer@yandex-team.ru>)
- id 1vunCU-0003yx-QU; Tue, 24 Feb 2026 02:51:25 -0500
-Received: from forwardcorp1b.mail.yandex.net
- ([2a02:6b8:c02:900:1:45:d181:df01])
+ id 1vunCR-0003wk-RZ; Tue, 24 Feb 2026 02:51:21 -0500
+Received: from forwardcorp1d.mail.yandex.net
+ ([2a02:6b8:c41:1300:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dtalexundeer@yandex-team.ru>)
- id 1vunCQ-0006Vs-9q; Tue, 24 Feb 2026 02:51:20 -0500
+ id 1vunCM-0006VQ-R0; Tue, 24 Feb 2026 02:51:19 -0500
 Received: from mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
  [IPv6:2a02:6b8:c0c:1e1e:0:640:c6a6:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id D6054808F0;
- Tue, 24 Feb 2026 10:51:15 +0300 (MSK)
+ by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 20B6E80C6B;
+ Tue, 24 Feb 2026 10:51:05 +0300 (MSK)
 Received: from dtalexundeer-nx.yandex-team.ru (unknown
  [2a02:6bf:8080:515::1:1d])
  by mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id uoat9O6Am8c0-fCWuIHaQ; Tue, 24 Feb 2026 10:51:15 +0300
+ ESMTPSA id uoat9O6Am8c0-MXFLhXTQ; Tue, 24 Feb 2026 10:51:04 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1771919475;
- bh=s8Mhu3rvPCe/9cEIkSGWUVgs1v5Ac7g2d4QYfePZHl0=;
- h=Message-Id:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=sSvSIg8UZRftLLnu+vBW3EChK0wvh7wAxUqA4VUNLJT/C/V9B4u39YAtGnELlGoT5
- RAZiae8j25ReAfcKXtLzC3e8L4L3nMpPM1c1J2mK/tghy7vvtvF+JyLBXdfIFquCpO
- WDfk9VBAQm6lZbrXY0tnDBqfLNTjsa1Qt/vuFXI0=
+ s=default; t=1771919464;
+ bh=i6hS/8iYe2gFCgfPXNEGfPg7PpWZzPYMO5TSY+voERg=;
+ h=Message-Id:Date:Cc:Subject:To:From;
+ b=vME65MnxKjTqAzL/Fy+742o9BEQrtkAS7zwjX8cDJtRnh2tLC0Q4N4WZ86x5tJTXE
+ 8Ix9j23YTERLs7pkBW7ArPe7VEBCUdXDTZ3RudFotsZqRReaPbYQ8qiAM5pEpMLfc2
+ K+V7z9P8RJe9ScIp1+Gu3xGpthEIocxE2nVJhUQM=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
@@ -51,17 +51,14 @@ Cc: Raphael Norwitz <rnorwitz@nvidia.com>, virtio-fs@lists.linux.dev,
  Paolo Bonzini <pbonzini@redhat.com>,
  Stefano Garzarella <sgarzare@redhat.com>, Fam Zheng <fam@euphon.net>,
  qemu-block@nongnu.org, Alexandr Moshkov <dtalexundeer@yandex-team.ru>
-Subject: [PATCH 4/4] vhost-user-blk: make inflight migration throught
- skip_drain
-Date: Tue, 24 Feb 2026 12:50:55 +0500
-Message-Id: <20260224075055.863068-5-dtalexundeer@yandex-team.ru>
+Subject: [PATCH 0/4] vhost-user-blk: fix compatibility with older qemu versions
+Date: Tue, 24 Feb 2026 12:50:51 +0500
+Message-Id: <20260224075055.863068-1-dtalexundeer@yandex-team.ru>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260224075055.863068-1-dtalexundeer@yandex-team.ru>
-References: <20260224075055.863068-1-dtalexundeer@yandex-team.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
- envelope-from=dtalexundeer@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
+Received-SPF: pass client-ip=2a02:6b8:c41:1300:1:45:d181:df01;
+ envelope-from=dtalexundeer@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -83,68 +80,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use skip_drain on GET_VRING_BASE to suspend in-flight I/O requests, and
-then migrate them throught inflight subsection.
+This is a small continuation of my series about inflight migration for vhost-user-blk.
 
-Signed-off-by: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
----
- hw/block/vhost-user-blk.c | 25 ++++++++++++++-----------
- 1 file changed, 14 insertions(+), 11 deletions(-)
+This series is designed to solve the problem of compatibility with older versions of qemu, where this feature has not yet been introduced (for example, if we want to downgrade versions due to some problems).
 
-diff --git a/hw/block/vhost-user-blk.c b/hw/block/vhost-user-blk.c
-index 3421145f23..4e606fd0fc 100644
---- a/hw/block/vhost-user-blk.c
-+++ b/hw/block/vhost-user-blk.c
-@@ -130,6 +130,17 @@ const VhostDevConfigOps blk_ops = {
-     .vhost_dev_config_notifier = vhost_user_blk_handle_config_change,
- };
- 
-+static bool vhost_user_blk_inflight_needed(void *opaque)
-+{
-+    struct VHostUserBlk *s = opaque;
-+
-+    bool inflight_migration = virtio_has_feature(s->dev.protocol_features,
-+                               VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT);
-+
-+    return inflight_migration && s->inflight_migration;
-+}
-+
-+
- static int vhost_user_blk_start(VirtIODevice *vdev, Error **errp)
- {
-     VHostUserBlk *s = VHOST_USER_BLK(vdev);
-@@ -221,11 +232,13 @@ static int vhost_user_blk_stop(VirtIODevice *vdev)
-         return 0;
-     }
- 
-+    bool skip_drain = vhost_user_blk_inflight_needed(s);
-+
-     force_stop = s->skip_get_vring_base_on_force_shutdown &&
-                  qemu_force_shutdown_requested();
- 
-     ret = force_stop ? vhost_dev_force_stop(&s->dev, vdev, true) :
--                       vhost_dev_stop(&s->dev, vdev, true, false);
-+                       vhost_dev_stop(&s->dev, vdev, true, skip_drain);
- 
-     if (k->set_guest_notifiers(qbus->parent, s->dev.nvqs, false) < 0) {
-         error_report("vhost guest notifier cleanup failed: %d", ret);
-@@ -568,16 +581,6 @@ static struct vhost_dev *vhost_user_blk_get_vhost(VirtIODevice *vdev)
-     return &s->dev;
- }
- 
--static bool vhost_user_blk_inflight_needed(void *opaque)
--{
--    struct VHostUserBlk *s = opaque;
--
--    bool inflight_migration = virtio_has_feature(s->dev.protocol_features,
--                               VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT);
--
--    return inflight_migration;
--}
--
- static const VMStateDescription vmstate_vhost_user_blk_inflight = {
-     .name = "vhost-user-blk/inflight",
-     .version_id = 1,
+In the current version for vhost-user-blk, this feature is enabled using the parameter and further migration of the inflight region will depend on whether the vhost-user has accepted the new protocol feature or not. This creates an inconvenient dependency, because there is no way to disable this feature without reconnecting to the backend.
+This series slightly changes the semantics of the introduced protocol feature VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT. Enabling this feature adds a new parameter for GET_VRING_BASE message - skip_drain, which allows to control drain in-flight requests on the backend.
+
+Thus, user can enable or disable inflight-migration param for vhost-user-blk to maintain compatibility with older versions of QEMU.
+
+Alexandr Moshkov (4):
+  vhost-user.rst: fix typo
+  vhost-user: add skip_drain param to GET_VRING_BASE
+  vhost-user: remove supports_inflight_migration
+  vhost-user-blk: make inflight migration throught skip_drain
+
+ backends/cryptodev-vhost.c     |  2 +-
+ backends/vhost-user.c          |  2 +-
+ docs/interop/vhost-user.rst    |  5 +++--
+ hw/block/vhost-user-blk.c      | 26 ++++++++++++++------------
+ hw/net/vhost_net.c             |  9 +++++----
+ hw/scsi/vhost-scsi-common.c    |  2 +-
+ hw/virtio/vdpa-dev.c           |  2 +-
+ hw/virtio/vhost-user-base.c    |  2 +-
+ hw/virtio/vhost-user-fs.c      |  2 +-
+ hw/virtio/vhost-user-scmi.c    |  2 +-
+ hw/virtio/vhost-user.c         |  3 +--
+ hw/virtio/vhost-vsock-common.c |  2 +-
+ hw/virtio/vhost.c              | 24 +++++++++++++++---------
+ include/hw/virtio/vhost-user.h |  1 -
+ include/hw/virtio/vhost.h      |  7 +++++--
+ 15 files changed, 51 insertions(+), 40 deletions(-)
+
 -- 
 2.34.1
 
