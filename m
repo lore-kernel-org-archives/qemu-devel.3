@@ -4,91 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FE28E9B250
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 11:06:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36707E9B24D
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 11:06:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuqEr-0001fp-Bj; Tue, 24 Feb 2026 06:06:03 -0500
+	id 1vuqF5-0001vG-DA; Tue, 24 Feb 2026 06:06:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1vuqEh-0001b2-8P
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 06:05:51 -0500
-Received: from mail-qv1-xf2e.google.com ([2607:f8b0:4864:20::f2e])
+ id 1vuqF2-0001r7-Ps
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 06:06:13 -0500
+Received: from mail-qv1-xf2b.google.com ([2607:f8b0:4864:20::f2b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1vuqEd-0006mH-An
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 06:05:49 -0500
-Received: by mail-qv1-xf2e.google.com with SMTP id
- 6a1803df08f44-897002b7576so71044166d6.3
- for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 03:05:43 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1771931143; cv=none;
+ id 1vuqF1-0006ni-6E
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 06:06:12 -0500
+Received: by mail-qv1-xf2b.google.com with SMTP id
+ 6a1803df08f44-896fcfc591eso50667226d6.2
+ for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 03:06:09 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1771931169; cv=none;
  d=google.com; s=arc-20240605;
- b=A9D0isXXOWfwtVAIBnK666jfdYwW+eFXZ6LeQWzCyiJNxU20uf7eTHpghiQAFCluIE
- xrMSZsA3wwwF4aduzfAo8D4m/xbwhJtCLbFYpakJt+apQ/D3iKlQXj7W09IgTA2CzX2q
- RiqUhiCAO7j/b1IlkJvLDwxVucnZqWA8VzWKJk/euC880FWFPjwG4xZtbpW5+qn5n+lT
- C/2E4vM0vgAn0YsvU0hZN+D4RW0WNO57rmB63aQyOy5g0CgCRyk34y91Dd7eyZzt4/AX
- FdTVa9MrchIbEsmr+JMXPwGG7v1+yNkgmBHrXJdU80wVbgw6ZxRQvOk1Xm+rrkZVWw4e
- lLtg==
+ b=L2QrrwIqdZXfptBmdE+Ll346gzfuM7CECF8jOTEeaLOacc3LUGbFtH/sigrPleid9r
+ wfASSszD1NMry8DHuwZMPQUh7CqtBYW/642+AWemt2VysPHSNcJ1pE8hhcH66/5SZLRz
+ HnJC6BK/wHr8/NqaXO9JpOzNkSu1RIsXnLaZpLHAWEyrHfs4wNkl2iKh65v+F5/3XOGE
+ gS/esLNlwEk+XJwZHekQ58Blhv7+M/AF7dqb2NPZB/79iLPM/G3VmUR4UtvO6s/Nh6SQ
+ 6AiIsJ/OQ469z65TP7KDNA6OMWg1To7AT6Mbwk8asIXbtmPd1RShi1k05ueXfkxc11zX
+ nxsw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=P7VObRBrTIKmHY6Mq/ISv9kSvW4SBkC7ODol1rClFAg=;
+ bh=KIt74gGqLx6xHaOZXZZjs3Wcebpi4XUkgyZ1ms6/rcQ=;
  fh=9dqpPjrtVfoOV99Cw5UPSTWOClvvkBcwaQUCMmBtLzk=;
- b=GPJz3V3hYDQr6+3l0EiNOG6RwONJlxLTikR+hoZtazLD1VjKowePZyMvmY9oQVDAqM
- jmC6wJMW05jJK3PH1F0MjPJHVh1mSzgF/WUMuDYeg6coKYF1uczfonWdE0Nf68Q8GhXx
- i3TYA9EJwVxBR9uOb5M3gFRgbZRSWH3I7ei7l6R7NN0+81E145auqy7EP0xXHTPKp9OR
- PmlWVWJkDglsK5I0hTOWOP2QVu1mk79wOqL+7OxevsHrSJUHuiMFF3c+DQOV+y/6q2cr
- diZigH5vfi92d8W0eVj+bHrDszwzyFoOatskelg5NMG0QBJo2iNDAQs+trmSxpwkZWKB
- kAFg==; darn=nongnu.org
+ b=CYFhgDMu7iUd/G6+loUcl5zw2JD6DpEiAXMR0sZYtXY3DJCv9zoDM1ypVWceXuzPK9
+ QPK3DJ4d8uPmMGnXbGJI2YAY6mMIBf0lEDuritEbZMPfk/K4gVCsdrRVvU47bH6AkALf
+ Xq3bOIAjbnba7gyMN0dAtmkdu/00sETnrReR2Jrqi/TIWMTbJO0/bEqLnF6f2vzsNmOS
+ W+j3PWPEwysiHtQ0e1vNUiVkhIYxzOweZVHzjZzW7Ff7m5fzq03wHDbZwv7k7i2NssGn
+ fjMj0UB+2JTjL5hZlYSJhqram7r2xeDumA2i3sKj5zxZefzNgPuTzNlChIvz2l0sBV35
+ SCMw==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1771931143; x=1772535943; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1771931169; x=1772535969; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=P7VObRBrTIKmHY6Mq/ISv9kSvW4SBkC7ODol1rClFAg=;
- b=kbVZPLuW4mQ32gsj5qNyAgdFzfb4d9hrQLxrzaU65YZ3gcEWQqr3iCFWD8kvNjGTNd
- Q9BisHFPuCLCApeTaNkaE/9EZom5Bggcg98HbB3JQ/QxHv+4ri9/22wwUorZ16KZIIcx
- wrB0FzHG/0rgHuOzdTeFh/ykRpvbd/F134N6WCFmCUHT/Ah3POO2Vi2JBqxD7Q3AjdcA
- NAf9iwwASAq8PjQ1Y45aZrzWW5oc4qUfUL0YwLKOU8eCu2zhOdBYEF8zFU7ndJ8qf+Tn
- QS/UUSsmJ/stWv7ekH5uqmLAW08gX/MWxyj+wCK8K3bLdeefQaA09duZcin2ssesS1li
- iiVA==
+ bh=KIt74gGqLx6xHaOZXZZjs3Wcebpi4XUkgyZ1ms6/rcQ=;
+ b=C/oW+iiMXltRqS3BXRHXIR1oQslGIFmecYYh8vEKEMJLkVEpdkUA+Uxy5h0/BTN+96
+ 2JaseMseeulgLFpH5c4eefm1/1/yTSfHQQuWyu9dS7VXfffpF45hZhlcooGbyuHYVaxS
+ tVQ4PnSCCW4D9hUcjbUlkAMlXl3CfX1idKWU2Lf2oXYR3OPZQkavGhvNamhobjZrl9pn
+ IoO0WwiIN5LVOU9hvEgDHyPVa/05rfMAU9hJZ/NtRhBdKBwdiXf5uHWEk354l0X/RGnW
+ TW1Y/UAHvBTYO4IBczdGfvFkE2xs4ITljvAaEDXk99zcstgngSLa4hDEr74GRa6LvhiV
+ VGfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771931143; x=1772535943;
+ d=1e100.net; s=20230601; t=1771931169; x=1772535969;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=P7VObRBrTIKmHY6Mq/ISv9kSvW4SBkC7ODol1rClFAg=;
- b=vAL1a+vVzWaMKVAZgPbt2s7kUKGTvpp9omFtprPgDkGvho9e/d3N67TY+YnIICjxnL
- u2jeAup4Z9GiARG5h/j2CYpui8hLkCWEHlwzGhFYmp4kyD2jHJXP1FAW5b9EImODqV9A
- T3Hjb/+ltT8WIxncny/5FHvT0ykDGh6/jIfmHa7ZnfnHLM3BmjbI+PoQK419nOLgHOd1
- b9VdOMVRVxr5uwHulZugJlGQBGNDzVR7+SaOvRKCD+CqQIOYy0AfckVoP1Lh0L9kqI78
- IcIdeAwcXyl3blgAyFgyL4Wfyph0+vf1Fiyn3WSb4b5HIVkbmrFeJe+yhJcBbxDjk6LM
- rpDw==
-X-Gm-Message-State: AOJu0YzWaNnMwmwj7A4KjXT/eDbrtsuziSjpo9t92S1Z5noiozyLxEnZ
- 5XCi1IlKbxf9KIdl92R8NNvMQLmicoy/qm6xLzCp0WD2tStO/gMNh38GFSZx7hMmNcvUQ20xRc2
- D0EmxI/wBhLcXbTIl56wbBCZzLR5QotM=
-X-Gm-Gg: AZuq6aJgqx27S7rVpIbDk9fZHU1eiSpzFQ/6J1S9CEhvgb8l3ERW1yZZjGyUJ/MmJ6U
- 5lHE6aCf3Pn7ORmLaRE6G5U/6FLKB1W843mSAnhBPlU+Vv/fD0C2iQm56oMFCN8P1tl8H8FhACH
- Gcn6Y33xLtFT5WujfQN/QXBcAaVApgA+VXqo4axbpcUMAMCrb/A75TY2yV/KtcMOZrdLdkTP4j1
- qZM9HiRn8tRjsXK8A1bZJMqNWeyp79q95SO35tW5y40EwErVymTkWA5g64heKvLsfAMaUINDcal
- oWgO8dw=
-X-Received: by 2002:a05:622a:1987:b0:4f1:be34:aa09 with SMTP id
- d75a77b69052e-5070bbd9f55mr164062841cf.23.1771931142801; Tue, 24 Feb 2026
- 03:05:42 -0800 (PST)
+ bh=KIt74gGqLx6xHaOZXZZjs3Wcebpi4XUkgyZ1ms6/rcQ=;
+ b=h/u20dNR1iVulzJlOHNGBoyWioniXB1cz+SUE2GNtKEvb3Gnljt5BxzJWglSNDQaUz
+ uTx6FUxh5EBGdV9WJjZ99zN3ES4swjcoVp0IDfyBXCWWmhFw7jQ2GDluBIIGZecpCrsL
+ EU3N9g+RmTnpD19iQhLQChQ+py7mkpdoU0XoSiml3gOf4DEFY3ZhfVHvVJIzUSl8OULv
+ 4R2d+Z0XRAjDutFzldHREjdVKIB9mpt7UQWdrTf75FSqFgAZYncTxDRzCmb7LvtqLiaX
+ mGrJK6oPTMBc9VfuDaj+cpMFu3S0zBPqvLTBOrLVBOMHUdvIGXRiCkKAvJ0mXiyzxQgJ
+ bofA==
+X-Gm-Message-State: AOJu0YzUtjwo/SH7EyRw5Pedt6yXpg7mMRKZ4WytFgupgj1J3lQ2K3oR
+ PwcUyX6jQqlskku4bZgqhw6z5wfQU9Pyy5e8sILI4CKE486J1nqipdL/G9wSxd8WQvRfoTjIe+L
+ +GeRlkKCpciLLNG3ZDuq/ncKAWKpinsk=
+X-Gm-Gg: AZuq6aLhBjMgb3gD4xX7mYs/6Oy4uY7Z+ChPLNl0/UwV4hOuuvHA1EkXzey8YRa/Ezw
+ 4If7F4Tk0eV3Hql6d5+vk/mxBdB/pyBn2MD2IbGvfqjtAH/fciRgANTLKGuWfJmbXUjN56/vu/j
+ j1owe3OcJcXc+XUf6R/k+f50ojuLEwipl04MkTrpAz0eRScjsyn/YCyG1m91QE6O+1mV7Vz2mbI
+ h+7ncH/tyuJv1bp4b7gcZdjdFVxnPGv72+d3kmkL8zYMfcCLbOFisAZfT610QEsyNKJcNLojvoj
+ 34aUS2c=
+X-Received: by 2002:ac8:5e13:0:b0:4e8:b9fd:59f0 with SMTP id
+ d75a77b69052e-5070bcf1dbbmr153774311cf.61.1771931168881; Tue, 24 Feb 2026
+ 03:06:08 -0800 (PST)
 MIME-Version: 1.0
 References: <20260223202512.1308205-1-heifetz@yandex-team.com>
- <20260223202512.1308205-11-heifetz@yandex-team.com>
-In-Reply-To: <20260223202512.1308205-11-heifetz@yandex-team.com>
+ <20260223202512.1308205-5-heifetz@yandex-team.com>
+In-Reply-To: <20260223202512.1308205-5-heifetz@yandex-team.com>
 From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Tue, 24 Feb 2026 12:05:30 +0100
-X-Gm-Features: AaiRm52ZoqZwsjdqDnBiIaIEzNrYt2kbbaZLgdkCWtLP3G79oBIjvnLtl1uHpAc
-Message-ID: <CAJ+F1CJ3tH3woNihc8-3bt8KEFmCqdP4d6WJ-=x7Mx70gaKNew@mail.gmail.com>
-Subject: Re: [PATCH v2 10/10] meson.build: ignore audio drivers when
- configured with --disable-audio
+Date: Tue, 24 Feb 2026 12:05:57 +0100
+X-Gm-Features: AaiRm53U_QkfttI0HX1GOSsVPogC2dPI0wBXlIR9xKOkzjsWbv1JiOmreI5IAGc
+Message-ID: <CAJ+F1C+hQSzQRronXoX=7-pC8mTYLnPbxYTJbeUXAZiE=-txag@mail.gmail.com>
+Subject: Re: [PATCH v2 04/10] hw/audio/pcspk: change PCSPK behaviour with
+ --disable-audio
 To: Sergei Heifetz <heifetz@yandex-team.com>
 Cc: qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>, 
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
@@ -105,15 +105,15 @@ Cc: qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>,
  "Dr. David Alan Gilbert" <dave@treblig.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::f2e;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-qv1-xf2e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::f2b;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-qv1-xf2b.google.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_GMAIL_RCVD=1,
+ FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -132,132 +132,127 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Mon, Feb 23, 2026 at 9:27=E2=80=AFPM Sergei Heifetz <heifetz@yandex-team=
 .com> wrote:
 >
-> When QEMU is configured with `--disable-audio`, we do not need to add the
-> audio drivers list to config_host_data. We also do not need to print this
-> list.
+> PCSPK (PC Speaker) is an embedded audio device. We don't want it to use a=
+udio
+> when QEMU is configured with `--disable-audio`. This is achieved with min=
+imal,
+> non-invasive changes to the code.
+>
+> In essence, the changes ensure that PCSPK does not have a corresponding
+> audio backend, while functioning the same way in non-audio aspects.
 >
 > Signed-off-by: Sergei Heifetz <heifetz@yandex-team.com>
 
+looks ok
+
 Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
 
+
 > ---
->  meson.build | 80 ++++++++++++++++++++++++++++++-----------------------
->  1 file changed, 45 insertions(+), 35 deletions(-)
+>  hw/audio/pcspk.c | 12 +++++++++++-
+>  hw/i386/pc.c     |  2 ++
+>  2 files changed, 13 insertions(+), 1 deletion(-)
 >
-> diff --git a/meson.build b/meson.build
-> index fdb2578447..ae71a0dd91 100644
-> --- a/meson.build
-> +++ b/meson.build
-> @@ -2272,46 +2272,55 @@ endif
->  config_host_data =3D configuration_data()
+> diff --git a/hw/audio/pcspk.c b/hw/audio/pcspk.c
+> index 6b826507ce..54e1882265 100644
+> --- a/hw/audio/pcspk.c
+> +++ b/hw/audio/pcspk.c
+> @@ -48,17 +48,20 @@ struct PCSpkState {
 >
->  config_host_data.set('CONFIG_HAVE_RUST', have_rust)
-> -audio_drivers_selected =3D []
-> -if have_system
-> -  audio_drivers_available =3D {
-> -    'alsa': alsa.found(),
-> -    'coreaudio': coreaudio.found(),
-> -    'dsound': dsound.found(),
-> -    'jack': jack.found(),
-> -    'oss': oss.found(),
-> -    'pa': pulse.found(),
-> -    'pipewire': pipewire.found(),
-> -    'sdl': sdl.found(),
-> -    'sndio': sndio.found(),
-> -  }
-> -  foreach k, v: audio_drivers_available
-> -    config_host_data.set('CONFIG_AUDIO_' + k.to_upper(), v)
-> -  endforeach
-> +config_host_data.set('CONFIG_AUDIO', have_audio)
-> +if have_audio
-> +  audio_drivers_selected =3D []
-> +  if have_system
-> +    audio_drivers_available =3D {
-> +      'alsa': alsa.found(),
-> +      'coreaudio': coreaudio.found(),
-> +      'dsound': dsound.found(),
-> +      'jack': jack.found(),
-> +      'oss': oss.found(),
-> +      'pa': pulse.found(),
-> +      'pipewire': pipewire.found(),
-> +      'sdl': sdl.found(),
-> +      'sndio': sndio.found(),
-> +    }
-> +    foreach k, v: audio_drivers_available
-> +      config_host_data.set('CONFIG_AUDIO_' + k.to_upper(), v)
-> +    endforeach
+>      MemoryRegion ioport;
+>      uint32_t iobase;
+> +    PITCommonState *pit;
+> +#ifdef CONFIG_AUDIO
+>      uint8_t sample_buf[PCSPK_BUF_LEN];
+>      AudioBackend *audio_be;
+>      SWVoiceOut *voice;
+> -    PITCommonState *pit;
+>      unsigned int pit_count;
+>      unsigned int samples;
+>      unsigned int play_pos;
+> +#endif
+>      uint8_t data_on;
+>      uint8_t dummy_refresh_clock;
+>  };
 >
-> -  # Default to native drivers first, OSS second, SDL third
-> -  audio_drivers_priority =3D \
-> -    [ 'pa', 'coreaudio', 'dsound', 'sndio', 'oss' ] + \
-> -    (host_os =3D=3D 'linux' ? [] : [ 'sdl' ])
-> -  audio_drivers_default =3D []
-> -  foreach k: audio_drivers_priority
-> -    if audio_drivers_available[k]
-> -      audio_drivers_default +=3D k
-> -    endif
-> -  endforeach
-> +    # Default to native drivers first, OSS second, SDL third
-> +    audio_drivers_priority =3D \
-> +      [ 'pa', 'coreaudio', 'dsound', 'sndio', 'oss' ] + \
-> +      (host_os =3D=3D 'linux' ? [] : [ 'sdl' ])
-> +    audio_drivers_default =3D []
-> +    foreach k: audio_drivers_priority
-> +      if audio_drivers_available[k]
-> +        audio_drivers_default +=3D k
-> +      endif
-> +    endforeach
+> +#ifdef CONFIG_AUDIO
+>  static const char *s_spk =3D "pcspk";
 >
-> +    foreach k: get_option('audio_drv_list')
-> +      if k =3D=3D 'default'
-> +        audio_drivers_selected +=3D audio_drivers_default
-> +      elif not audio_drivers_available[k]
-> +        error('Audio driver "@0@" not available.'.format(k))
-> +      else
-> +        audio_drivers_selected +=3D k
-> +      endif
-> +    endforeach
-> +  endif
-> +  config_host_data.set('CONFIG_AUDIO_DRIVERS',
-> +                      '"' + '", "'.join(audio_drivers_selected) + '", ')
-> +else
->    foreach k: get_option('audio_drv_list')
-> -    if k =3D=3D 'default'
-> -      audio_drivers_selected +=3D audio_drivers_default
-> -    elif not audio_drivers_available[k]
-> -      error('Audio driver "@0@" not available.'.format(k))
-> -    else
-> -      audio_drivers_selected +=3D k
-> +    if k !=3D 'default'
-> +      error('Audio drivers are not supported because audio is disabled.'=
-)
->      endif
->    endforeach
->  endif
-> -config_host_data.set('CONFIG_AUDIO_DRIVERS',
-> -                     '"' + '", "'.join(audio_drivers_selected) + '", ')
+>  static inline void generate_samples(PCSpkState *s)
+> @@ -130,6 +133,7 @@ static int pcspk_audio_init(PCSpkState *s)
 >
->  have_host_block_device =3D (host_os !=3D 'darwin' or
->      cc.has_header('IOKit/storage/IOMedia.h'))
-> @@ -4684,7 +4693,8 @@ if enable_modules
->    summary_info +=3D {'alternative module path': get_option('module_upgra=
-des')}
->  endif
->  summary_info +=3D {'fuzzing support':   get_option('fuzzing')}
-> -if have_system
-> +summary_info +=3D {'Audio support':     have_audio}
-> +if have_audio
->    summary_info +=3D {'Audio drivers':     ' '.join(audio_drivers_selecte=
-d)}
->  endif
->  summary_info +=3D {'Trace backends':    ','.join(get_option('trace_backe=
-nds'))}
+>      return 0;
+>  }
+> +#endif
+>
+>  static uint64_t pcspk_io_read(void *opaque, hwaddr addr,
+>                                unsigned size)
+> @@ -160,11 +164,13 @@ static void pcspk_io_write(void *opaque, hwaddr add=
+r, uint64_t val,
+>
+>      s->data_on =3D (val >> 1) & 1;
+>      pit_set_gate(s->pit, 2, gate);
+> +#ifdef CONFIG_AUDIO
+>      if (s->voice) {
+>          if (gate) /* restart */
+>              s->play_pos =3D 0;
+>          audio_be_set_active_out(s->audio_be, s->voice, gate & s->data_on=
+);
+>      }
+> +#endif
+>  }
+>
+>  static const MemoryRegionOps pcspk_io_ops =3D {
+> @@ -195,10 +201,12 @@ static void pcspk_realizefn(DeviceState *dev, Error=
+ **errp)
+>
+>      isa_register_ioport(isadev, &s->ioport, s->iobase);
+>
+> +#ifdef CONFIG_AUDIO
+>      if (s->audio_be && audio_be_check(&s->audio_be, errp)) {
+>          pcspk_audio_init(s);
+>          return;
+>      }
+> +#endif
+>  }
+>
+>  static const VMStateDescription vmstate_spk =3D {
+> @@ -213,7 +221,9 @@ static const VMStateDescription vmstate_spk =3D {
+>  };
+>
+>  static const Property pcspk_properties[] =3D {
+> +#ifdef CONFIG_AUDIO
+>      DEFINE_AUDIO_PROPERTIES(PCSpkState, audio_be),
+> +#endif
+
+we could make DEFINE_AUDIO_PROPERTIES compile down to nothing if
+!CONFIG_AUDIO, to avoid ifdefry
+
+>      DEFINE_PROP_UINT32("iobase", PCSpkState, iobase,  0x61),
+>      DEFINE_PROP_LINK("pit", PCSpkState, pit, TYPE_PIT_COMMON, PITCommonS=
+tate *),
+>  };
+> diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+> index 0dd3fd01d9..3992553c2a 100644
+> --- a/hw/i386/pc.c
+> +++ b/hw/i386/pc.c
+> @@ -1679,8 +1679,10 @@ static void pc_machine_initfn(Object *obj)
+>
+>      pc_system_flash_create(pcms);
+>      pcms->pcspk =3D isa_new(TYPE_PC_SPEAKER);
+> +#ifdef CONFIG_AUDIO
+>      object_property_add_alias(OBJECT(pcms), "pcspk-audiodev",
+>                                OBJECT(pcms->pcspk), "audiodev");
+> +#endif
+>      if (pcmc->pci_enabled) {
+>          cxl_machine_init(obj, &pcms->cxl_devices_state);
+>      }
 > --
 > 2.34.1
 >
 >
 
 
---=20
+--
 Marc-Andr=C3=A9 Lureau
 
