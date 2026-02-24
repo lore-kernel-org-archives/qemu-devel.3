@@ -4,106 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D1DFEFB7EA
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 02:44:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA1EEEFB7ED
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 02:49:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuiOU-0007Wh-I6; Mon, 23 Feb 2026 21:43:26 -0500
+	id 1vuiTs-0008HS-Mz; Mon, 23 Feb 2026 21:49:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1vuiOS-0007WW-U5
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 21:43:24 -0500
-Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1vuiTr-0008HG-6R
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 21:48:59 -0500
+Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1vuiOQ-0005JW-9I
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 21:43:24 -0500
-Received: by mail-ed1-x52d.google.com with SMTP id
- 4fb4d7f45d1cf-65be78011c8so6874939a12.3
- for <qemu-devel@nongnu.org>; Mon, 23 Feb 2026 18:43:20 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1771900999; cv=none;
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1vuiTp-0005yC-Nd
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 21:48:58 -0500
+Received: by mail-ed1-x52f.google.com with SMTP id
+ 4fb4d7f45d1cf-65bfc858561so9618374a12.2
+ for <qemu-devel@nongnu.org>; Mon, 23 Feb 2026 18:48:57 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1771901336; cv=none;
  d=google.com; s=arc-20240605;
- b=CUnYsyX3ILtCCLXT0oczPPK5JOm2xzksJjdCP+KP9IdLv4M2+6yC5ySZsaWmI/dmVf
- 26t0bu+rz400ttUROyjrr5IxEnrjwOCxA3rpBL4hfEWpGbnbV/9nv1vh6050nkeWARUa
- f4zgTr0hoLtpqRQQ/wqdQoXX3YT2JtFRWFfoORDBhvvXAANNpWoNB6ZrUGDqfadITW7g
- EWDfZ8cXHbHOS53g28LcK9Br1l1p83B7GfnrWv1feVfMCpX021QgGdEe9nu9qSIlh5sm
- gNe8JNsJHLa7vzZgCsNB0E68f+CCgVsU/qFX7mdtXiPdlrblL+fzDkQ8IJN36FAWNPv6
- /s6A==
+ b=U09PvOfa7Myqt6zmv/oCxgmlraDAlyy+bhESOZKEJSvJcKFDj0qYgMhiVYQSBr/8TX
+ mu+4+VPJfSv2cyMdTC8uHYR0p7UrmniU67JvujUts30cPNo8dXkZ3/Cr3/0fcd7E5BdT
+ 12ZxnjKDagCR8iLnpZdASuzxVIUqwNIGDlgmjOYJ+DIA3TX17SSvSMkfxJIDxLRRQn5F
+ dCqmLZfnEZ8+31PO82DnIa4aKR1skl30OpWgQi/E9nKKcUT/UZHL+Lf6CKowvrWLsqWP
+ OqKeDQCOhJziF1XUn4l/4cI2GIsxi4hadizV8YaokzdxlldRkEWD7yQGu/UiamBDorOe
+ yGUw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=afNVBl3XrVTLOD+fEl7GE2dkMy82gTpmhi08/NSzHhk=;
- fh=2vCTedxg5r0JPg5LnC8s7len6poc60rIFIIE/ngH4cY=;
- b=j31IZjjYAf+cMSTvWP2VNQNcSuR3p8TZuPCuHu2a2lN78PvcsxAo0C9fSIva31MXem
- pt5p+Z2w0fac9h/FzcjI9jtOxwtPDbi6tB0FVH5r96jzWWk4ryeZovqqDym6wtEZxyyG
- 2lualVX5ZOfCckrJKkHGk/G0j11ZtElDYnAqbMGm+xY5GoKu38Xx10hvW1SA5RafuhSY
- ssHmPO+GxJSGeC2/wHxaWhJ1eD+GbpTu+FPyasPbKBWPl4AftOhoNxeiwmSNefy2Wfyw
- OWLS/TFsJhZIn931HyhYbSJGGNfwgRZAeDzqIdM2Nb0t9i2ym04iLw4Uyw2LjHq6FFUK
- P69w==; darn=nongnu.org
+ bh=2Chk4MWAK7MVTWJvjeFqxOqAI5QUuDw3LsU66r1uBNk=;
+ fh=x18+ItHhoMt1uQi9qFsD2UgJewF1CZzzz8hcug2Jd4g=;
+ b=U3quY2h0i+hPlpRgl9JC0DnYEKvQM9as1ckBInyzzOznZ1BxI674SikKKjluuwTVZ3
+ DKcQ5PZ3Nx0TjhTfHNG0qPHf8KQPln8GZNgDnl5QvaWwgFEBvHaRxN3fxtUbwoZ6qnn6
+ sduI6o9S/r2tjunWd+cm3p1uEMoV78dby8eb6X6q/DcAY9EE07BJ28tf0KW+/iCLK6oY
+ wSpa41GfihkefvA//rclmsP+meyfc5f1XMq8pCPuwX7vS6FuOprrfv2Ms2/Qrz0pUTBX
+ z8GzoFmbA5bGs+lxnDF8rBda4iO/yclvk92YvenVlrSAKWP/RPypkC8QBsLW+tqEV6dc
+ X/qQ==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1771900999; x=1772505799; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1771901336; x=1772506136; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=afNVBl3XrVTLOD+fEl7GE2dkMy82gTpmhi08/NSzHhk=;
- b=Tns6/qSEGmEA3tulus0yzFOKB49lL3LWu3cuJGqPk+1yE0ZWpukXGDUJjOs7wHdjZL
- FDAqWe9YEC8y3T6JnbBXMkCvHdjX1QpAoOdl2e3sL2p6lPK/6Irs1eacXvQWYO6wOJL4
- ytJ/GYlxunkkbH1+oDmc9QRxJtJprUhsSNTUBTXO1aXxdY13LjQFqSzMLuzfQeAiOstL
- Ea68/5cTiVaeuXo+tq+Crb4AS2g2wmb4CXloMZ0Ba/sUUGy4DGKvnDL6jy7zr0y8VY8g
- 15bB5KXPvbbVGmvU1d4GtLI+FOY+JR6S9J7cxTcd//CzFF3mEQQ9u5dg/bkVFFTMEZaS
- uqkg==
+ bh=2Chk4MWAK7MVTWJvjeFqxOqAI5QUuDw3LsU66r1uBNk=;
+ b=Yfke6qAQtQPtigt4nGt10W7chVTKWM0KWLA7eQKVhAoyMk4eJhvBm4zXqZ5HespSer
+ AQ1qZ8oGSemUlvWpRQ9SvroDXjfn7g4b6N2l37EKUDy0pVNGMrsO+HQUNxYWr3KMXi38
+ IQauymlOWl7oFHStLlioByzkr9CdNciGnTvpXEytnMgvfpmlQn/zQJiFABu40Br2RVh8
+ 3SxIzUoMXRyX9w82IMA01ySWLkATD7bRlRx/K7272Cfuif/dO0i+ThGqC/b21i8Ai5wk
+ hQlI3P0A13ZpBE0xHviJ1XsDjJYwAzrw49aeAyc62pteKXwOYrbs+YsnJym/Z+Ss/S+w
+ xLSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771900999; x=1772505799;
+ d=1e100.net; s=20230601; t=1771901336; x=1772506136;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=afNVBl3XrVTLOD+fEl7GE2dkMy82gTpmhi08/NSzHhk=;
- b=kTF8TRylwzPaEfTMu2UXXEqS0PDoNsfWHvslr9iMJSJkYo10jbgHYiUqiZGdWjb+uU
- ENZBR1/PXrsp4EtviJhjSRxtVgZaUtEDmyaoj7YN+7JeL/flprCzAhMrzx9Bcr5GewHW
- dg95uXEchkuh8oXwwMuNK+9qD+sOfBhRCY5y82QOanpWwX5ZsokADpX6qQzJgIo3A4rr
- N7LHh7FM0flk8gcm6ttsVTJLWGIR+LOC8dNs7A/B3bvCFY3tZwHn3fXdkuSBW4+S+WC6
- JdPpAyHFQBSAkLff2QUymFEWHPm2EnQTYW8EwjitY15YOqcWBcnUlLxTycfmVoZ7uJji
- VBjQ==
-X-Gm-Message-State: AOJu0Yx6COSFtWgIcqfgdKo8VdXsUtt+F37c08quqGN0Je9rXiYdYQNg
- K7vcDuMxhZNb6h7Vk44MnMX+Vbwyg/wRe+UCT6UBgumY5XwJlrHBAre2RpBUnsKdhINuSq8PMBH
- 7WcTkNsYJRXRC5j0liZIHulIoVJzG7b0=
-X-Gm-Gg: ATEYQzwIMYFzW9MUWHl6YL+bGpNFe3FOnKW9VeCJ3JnpzHhDgh/5guteQ83mrdtpZgq
- rg7LGcBgFFIKYNo1vI88vN1DcJpezgyu1J5EJ/2fzXoVt37TCdJzc2cZ+hukPjU6F4yx4UMdYz0
- 6LvjVLLdZGU4ZW3egctq6ES641sXswg2a/kmmF4NYeVBo3GVJHPxufzJAejhvBZEGoq+LC5Uw5O
- oaG+xfVsLio+LzF7OMRS+zJodAEF8ygvfWI7k0gaFdrC2gC6/tz7euCApWIYEC6PqQJGaP7hRZp
- r8gv7XA=
-X-Received: by 2002:a05:6402:5189:b0:65c:354e:94f0 with SMTP id
- 4fb4d7f45d1cf-65ea4ee7aa1mr6114445a12.8.1771900998958; Mon, 23 Feb 2026
- 18:43:18 -0800 (PST)
+ bh=2Chk4MWAK7MVTWJvjeFqxOqAI5QUuDw3LsU66r1uBNk=;
+ b=VpsKzAFcOf8gAUUd2M9H1RNNSQ3OGJ8qFWYqORaggjWjRKIQimvvIzQEH+Y8T0PzrW
+ ieS/XRFD/+UfZpT73iWWRtRWNBvm6wriS+ib4Ra1VF6qLQD4JkooA2RcWa035iiYqsg4
+ 3rjQYGCr8LbtsUWwfWfYK5YpOwBw2BV7Fn1imbtNI5tvSA9L1xZJxLN2c1ry1q9F0QZE
+ 6g+EjZaTznp/paoGJ+e2bEOIqE30IhiIJe/H7zzMnIvAK82IVlY34W1cuvvazpfCl1+w
+ BROHOWlDnu9MJNEbNJ8ACpoXXRDePkIWI4VoID7s87y8KiUAmaFuUMQCV8Xx0/NV6adQ
+ ChVA==
+X-Gm-Message-State: AOJu0Yz0feW3LOy5nV4YNKcFIQhvTw1Yu/OJ7Y1875X59mao5kAZcJ7H
+ OUgKTFmeOZRA/Zu8oEi3CpBOx/v8T2dGyZLTXeAKNGOY4VbV5vl2PaDMauNmg0IXK6RLTRMX/6n
+ S91yNx1qpw0OZxvIgeMJTb+FEHUkF2mQ=
+X-Gm-Gg: ATEYQzwyKEIGt9n+U+nz1ZDIBV2+LhwCKfrB6kBjX+dBTFpfJXKSzG77GYJgrpCIbhc
+ rA1VaLsaWgF5WcMsiPoIke1Qs0a/F+x953gdsPOXhquGSYNlOQGtJfEAu4+Z7QATiBbqCjL0lvP
+ SAdfMfzDOJ0CoZc3LLwlsDR15DRKk3zPGX3UGXkXchiKqVKlXmhiK8B02ZGc8QIYJLTVpmKeg6G
+ rVCUO/eNc3RjgMJW5xLuef4RPx2EwjCSu/kLouIydVFIIeBY+AJ2V1FywVluilk5XzOxp7LZEv7
+ J7tW/+EGMYK5qnLk/zbLgtRdKNOZbpJ7i+g8S7b9Aa7JP6wq
+X-Received: by 2002:a05:6402:5255:b0:65c:9d6:82b7 with SMTP id
+ 4fb4d7f45d1cf-65ea4ee2ad9mr6197911a12.10.1771901335568; Mon, 23 Feb 2026
+ 18:48:55 -0800 (PST)
 MIME-Version: 1.0
-References: <20260213171622.55629-1-zhangckid@gmail.com>
- <20260213171622.55629-4-zhangckid@gmail.com>
- <87wm0bq047.fsf@pond.sub.org>
-In-Reply-To: <87wm0bq047.fsf@pond.sub.org>
-From: Zhang Chen <zhangckid@gmail.com>
-Date: Tue, 24 Feb 2026 10:42:42 +0800
-X-Gm-Features: AaiRm53nzclE7tYyzUX9fykz8uY-v2FG95vWPxTikaGxQGz2Xc4aJTZRrJARur8
-Message-ID: <CAK3tnvKEJSDMVC4bkEbhfsVXpp7nVbq+Kue9fFVmOrd5f_ugCg@mail.gmail.com>
-Subject: Re: [PATCH V4 4/4] qapi: examine IOThread attachment status via
- query-iothreads
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>,
- "Dr . David Alan Gilbert" <dave@treblig.org>, 
- Eric Blake <eblake@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>, 
- Stefan Hajnoczi <stefanha@redhat.com>
+References: <20260223095905.67709-1-cuiweixie@gmail.com>
+In-Reply-To: <20260223095905.67709-1-cuiweixie@gmail.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Tue, 24 Feb 2026 12:48:28 +1000
+X-Gm-Features: AaiRm53JsPApWIZaXA8VLK58nt5ZH6wZ9ntFtjDB54UdDFZvPXDg1DpFXNicB_w
+Message-ID: <CAKmqyKMo9cg6-=wFXPT+61wEFf80Sd6eZyyCG5TDBrAuNJBaRQ@mail.gmail.com>
+Subject: Re: [PATCH] hw: copy paste bug
+To: Weixie Cui <cuiweixie@gmail.com>
+Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
- envelope-from=zhangckid@gmail.com; helo=mail-ed1-x52d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
+ envelope-from=alistair23@gmail.com; helo=mail-ed1-x52f.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -121,146 +116,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Feb 17, 2026 at 3:51=E2=80=AFPM Markus Armbruster <armbru@redhat.co=
-m> wrote:
+On Mon, Feb 23, 2026 at 11:39=E2=80=AFPM Weixie Cui <cuiweixie@gmail.com> w=
+rote:
 >
-> Zhang Chen <zhangckid@gmail.com> writes:
->
-> > Extend the 'IOThreadInfo' structure to include attachment metrics.
-> > This allows users to monitor how many devices are associated with
-> > a specific IOThread and identify them by their QOM paths.
-> >
-> > New fields added to IOThreadInfo:
-> > - @attached-cnt: An integer representing the number of devices
-> >   currently using this IOThread's AioContext.
-> > - @attached-dev: A string containing a delimited list ("|") of
-> >   QOM paths for the attached devices.
-> >
-> > These fields are also exposed via the Human Monitor Interface (HMP)
-> > command 'info iothreads' to assist with manual debugging and
-> > performance tuning.
-> >
-> > Example QMP output:
-> > {
-> >     "id": "iothread0",
-> >     "thread-id": 3134,
-> >     "attached-cnt": 2,
-> >     "attached-dev": "/machine/peripheral/blk1/virtio-backend | /machine=
-/peripheral/blk0/virtio-backend",
-> >     ...
-> > }
-> >
-> > Signed-off-by: Zhang Chen <zhangckid@gmail.com>
->
-> [...]
->
-> > diff --git a/qapi/misc.json b/qapi/misc.json
-> > index 1f5062df2a..ca53638684 100644
-> > --- a/qapi/misc.json
-> > +++ b/qapi/misc.json
-> > @@ -76,6 +76,19 @@
-> >  #
-> >  # @thread-id: ID of the underlying host thread
-> >  #
-> > +# @attached-cnt: The parameter is a counter indicating how many
-> > +#     active devices are currently associated with this iothread
-> > +#     (e.g. virtio-blk).  In hotplug scenarios, users can
-> > +#     pre-allocate multiple iothread objects to serve as a persistent
-> > +#     thread pool.  When a device is hot-unplugged, the corresponding
-> > +#     IOThread is released but remains available, allowing subsequent
-> > +#     hot-plugged devices to attach to and reuse the existing thread.
-> > +#     (since 11.0)
-> > +#
-> > +# @attached-dev: A list of QOM paths for the devices currently
-> > +#     associated with this IOThread, delimited by " | ".
-> > +#     Returns "none" if no devices are attached. (since 11.0)
->
-> QAPI schema design maxim: do not encode structured data as strings.
-> @attached-devs should be an array of QOM paths instead.
+> Signed-off-by: Weixie Cui <cuiweixie@gmail.com>
 
-OK, will fix in next version.
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
+Alistair
+
+> ---
+>  hw/ssi/xilinx_spips.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
 >
-> Unless I misunderstand your docs, @attached-cnt is the number of QOM
-> paths in @attached-dev, i.e. @attached-dev is redundant.  If this is the
-> case, drop it.  If it isn't, educate me :)
-
-As Stefan's comments, I try to address more specific needs:
-https://mail.gnu.org/archive/html/qemu-devel/2026-02/msg01892.html
-
-
+> diff --git a/hw/ssi/xilinx_spips.c b/hw/ssi/xilinx_spips.c
+> index a4718fb72d..f6e717bc01 100644
+> --- a/hw/ssi/xilinx_spips.c
+> +++ b/hw/ssi/xilinx_spips.c
+> @@ -369,7 +369,7 @@ static void xilinx_spips_reset(DeviceState *d)
+>      memset(s->regs, 0, sizeof(s->regs));
 >
-> We generally avoid abbreviations in the QAPI schema: @attached-count,
-> @attached-devices.
+>      fifo8_reset(&s->rx_fifo);
+> -    fifo8_reset(&s->rx_fifo);
+> +    fifo8_reset(&s->tx_fifo);
+>      /* non zero resets */
+>      s->regs[R_CONFIG] |=3D MODEFAIL_GEN_EN;
+>      s->regs[R_SLAVE_IDLE_COUNT] =3D 0xFF;
+> @@ -397,7 +397,7 @@ static void xlnx_zynqmp_qspips_reset(DeviceState *d)
+>      memset(s->regs, 0, sizeof(s->regs));
 >
-> > +#
-> >  # @poll-max-ns: maximum polling time in ns, 0 means polling is
-> >  #     disabled (since 2.9)
-> >  #
-> > @@ -93,6 +106,8 @@
-> >  { 'struct': 'IOThreadInfo',
-> >    'data': {'id': 'str',
-> >             'thread-id': 'int',
-> > +           'attached-cnt': 'int',
-> > +           'attached-dev': 'str',
-> >             'poll-max-ns': 'int',
-> >             'poll-grow': 'int',
-> >             'poll-shrink': 'int',
-> > @@ -118,6 +133,8 @@
-> >  #              {
-> >  #                 "id":"iothread0",
-> >  #                 "thread-id":3134,
-> > +#                 "attached-cnt":2,
-> > +#                 "attached-dev":/machine/peripheral/blk1/virtio-backe=
-nd | /machine/peripheral/blk0/virtio-backend,
+>      fifo8_reset(&s->rx_fifo_g);
+> -    fifo8_reset(&s->rx_fifo_g);
+> +    fifo8_reset(&s->tx_fifo_g);
+>      fifo32_reset(&s->fifo_g);
+>      s->regs[R_INTR_STATUS] =3D R_INTR_STATUS_RESET;
+>      s->regs[R_GPIO] =3D 1;
+> --
+> 2.39.5 (Apple Git-154)
 >
-> Once again, the example is syntactically incorrect (the value lacks
-> double quotes), and once again I recommend to create example I/O by
-> actually running a test.  Getting tired of this, to be frank.
-
-Sorry for that again. Will fix in next version.
-And I tested this series before send the mail like this:
-
-(qemu) info iothreads
-iothread2:
-  thread_id=3D434428
-  attached-cnt=3D0
-  attached-dev=3Dnone
-  poll-max-ns=3D32768
-  poll-grow=3D0
-  poll-shrink=3D0
-  aio-max-batch=3D0
-iothread1:
-  thread_id=3D434427
-  attached-cnt=3D2
-  attached-dev=3D/machine/peripheral/blk1/virtio-backend |
-/machine/peripheral/blk0/virtio-backend
-  poll-max-ns=3D32768
-  poll-grow=3D0
-  poll-shrink=3D0
-  aio-max-batch=3D0
-
-
->
-> >  #                 "poll-max-ns":32768,
-> >  #                 "poll-grow":0,
-> >  #                 "poll-shrink":0,
-> > @@ -126,6 +143,8 @@
-> >  #              {
-> >  #                 "id":"iothread1",
-> >  #                 "thread-id":3135,
-> > +#                 "attached-cnt":1,
-> > +#                 "attached-dev":/machine/peripheral/blk3/virtio-backe=
-nd,
->
-> Likewise.
-
-Thanks
-Chen
-
->
-> >  #                 "poll-max-ns":32768,
-> >  #                 "poll-grow":0,
-> >  #                 "poll-shrink":0,
 >
 
