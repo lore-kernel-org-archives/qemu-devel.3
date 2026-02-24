@@ -4,123 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97BDBF3C991
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 15:24:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65CA3F3C997
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 15:25:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuuH0-0001GA-Lj; Tue, 24 Feb 2026 10:24:30 -0500
+	id 1vuuHi-0001jv-9z; Tue, 24 Feb 2026 10:25:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vuuGz-0001Fy-VT
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 10:24:29 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1vuuHh-0001jI-1Z
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 10:25:13 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vuuGw-0001uQ-OY
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 10:24:29 -0500
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1vuuHf-0002Jd-1N
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 10:25:12 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771946665;
+ s=mimecast20190719; t=1771946707;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=Yd/o+Bej7VgCNqY6eL4WUDxgFFDYbjkHMYdIvZ/GS8c=;
- b=SVaTZ8TpF5oecveZezUhH40M0OD9bUG+2/RMHP61ojK+ezODEq0Q6Zuvdjb+RIW0pEbA0Y
- 3/qTakTfVksnIwKwYRywGexU4MGkBTXGOWvphy6wBHMwqfQDRzB8fdT9zfab5xdibs13Ny
- RPT6ptnry7wTXB2DcJR9PlD3udSDTjI=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-640-XggGRzkEMgWwmQLz7PfAbQ-1; Tue,
- 24 Feb 2026 10:24:22 -0500
-X-MC-Unique: XggGRzkEMgWwmQLz7PfAbQ-1
-X-Mimecast-MFC-AGG-ID: XggGRzkEMgWwmQLz7PfAbQ_1771946660
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id ADAE61955F23; Tue, 24 Feb 2026 15:24:19 +0000 (UTC)
-Received: from [10.44.32.191] (unknown [10.44.32.191])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id BFDC73003D85; Tue, 24 Feb 2026 15:24:11 +0000 (UTC)
-Message-ID: <6cc22a39-a8de-4795-8ddc-b83caef8a17e@redhat.com>
-Date: Tue, 24 Feb 2026 16:24:10 +0100
+ in-reply-to:in-reply-to:references:references;
+ bh=68cPhAhKsl3l7wlB9i+mu4XwiOvGR96PoAMAkZInQ34=;
+ b=S+Y1C4SxzTQb6MKYd9LB9L+nOWLIQxnmehke9ode6rPfB4jKAwdJagipn4iIbMaBsMVjhF
+ +N7Wsh9fVBzns76e2aFI/EdPpiYglPSiNrqdiP+eZ1AQIDssGrcoP/6PPM8Ra+b1QaZY2D
+ ARqTXXnkXzM5xbYzoN9ibfT+5lCdouY=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-467-xdpVQIv2OSmWMbP9_rKkBA-1; Tue, 24 Feb 2026 10:25:05 -0500
+X-MC-Unique: xdpVQIv2OSmWMbP9_rKkBA-1
+X-Mimecast-MFC-AGG-ID: xdpVQIv2OSmWMbP9_rKkBA_1771946704
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-435ab9ed85dso3736641f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 07:25:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1771946704; x=1772551504; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=68cPhAhKsl3l7wlB9i+mu4XwiOvGR96PoAMAkZInQ34=;
+ b=YNjDZURoVGmi3DVdRQ09NvA/+Lb912Pm5VamyIfSsOLzz56rgiyu3GRYmcjd7RrWvk
+ 1ajV1W2dB7PIu6dkIJShbDWzdmrGk0HYHaqeVhhP6YVSQUHFl8H8WdRx1498q1/HRz02
+ dZ8fPu1Q0O+KiPhyLYKbSkCRWL/diVHILegrEzYejJF8sv+Vq0ntEAUC+BmJOzmgl2nK
+ PT8F/EptrZATakh8HnFS/J6LmdnAtj/AMEbeKi3rpS8C11qWmpRGHRGAvrhjQ3dWgt1k
+ ehHykduUzq6wgCU4i4460g2lKTSmn9XHm9ewtKSI5/gRJvlM6sPuW+JaEPmid+bw0agD
+ NVDw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1771946704; x=1772551504;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=68cPhAhKsl3l7wlB9i+mu4XwiOvGR96PoAMAkZInQ34=;
+ b=bHhKLT1/HdIhUt1W8IIIMGtMVt//LvWlSPIrXtkLTk9PYjpCK3wKRhiaCVdh4+MiiV
+ gzPNUt5ApN/YM5vbfPOGloY65xp+3cgxoJP4T0vEk+HgL6PjBBIBXB1RWBBCzlJj8Kz9
+ 0XOCcPpnWgnXoWIBek5MeITmo2gzOzNis0wEFOJ7G33tjcFuMMODT1DmrbooTFPIM0bk
+ 7B8eFRIZlKSkpblzesyOblMeV+OGJ/eTX/jHbuJCeGFk9yqKagJ7AKCblk1ZSmTF3rDj
+ I5FPkAbDQIxBZp2Zug6fGgyGwlxoiXoa6cWUkNI5J83es1hztj7O4kMvKD9dFuGfryqz
+ 6a/Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWzrUnEIUwA+jiP+BQqC7DQjbD687cXSfHlzkDZbQ2EeBbIU95k6g5fZ5iG3Sh0jsTU0ZGDYJtxzn/0@nongnu.org
+X-Gm-Message-State: AOJu0Yyb/EPlYf7i+GA3Jg8C2lyAg+DkSg8ZSSJ1rffRmZV4OqS9IoPZ
+ 2McC4By47ijalgQbQBlX95Awx9E6fFrerbVz3MsAP7fl7mMMG+CI4nKdGf8Pe9kJ7R/69e6lu8K
+ UGuWZp3r4h1FEbpigcwFbxPfBRkrHBytY4aFmtImcuEwHcu9SjpdHyZsz
+X-Gm-Gg: AZuq6aJBoh4nNUjwCsYZTPSisaDCIE6W5+WlDah106dnj+roCpmqYbVJg80Z9tUWenm
+ WsIpvJWFh8aOQL+5iGicvkN7ns31qmNC+gFMdB240MsQlgwmpAHj2TvYrCzOZRmNyNQrrkJCRv8
+ GpiZrtZcEN2VlfZ2qs0dOFHVq6cF4pyGKXKpDZwpoG/uOrnElUnzQNyxH2WUDaO3DrZypKCur2x
+ JNzIvM25qo2QcD4FLB7EB4khy3de+W+94Akzy5xsPpv4NMMaHvLEw6aTPs2/ZJv6wluJ/KvCiff
+ +rJf993Q/i0q9WE4yK68D9P2MFHiG0fcuIn0vawNH4Ud7MOOareUX2MgqEAgb2bKp3RsEASVvIA
+ /v0Gcx/CXT6C9CDcDirIVy6UiiAdNxzm8Em+LFVKSiWJwkfvkc0WuixIil5C+RlO4Ecz4hZVKUe
+ YSj5tWWnKWk41SLKjRfvbphoqwz+6pCcVbSDf3hYzUIh+j9nKGcpA=
+X-Received: by 2002:a05:600c:37cd:b0:483:6d4a:7e6d with SMTP id
+ 5b1f17b1804b1-483a960604cmr189183215e9.30.1771946703729; 
+ Tue, 24 Feb 2026 07:25:03 -0800 (PST)
+X-Received: by 2002:a05:600c:37cd:b0:483:6d4a:7e6d with SMTP id
+ 5b1f17b1804b1-483a960604cmr189182705e9.30.1771946703280; 
+ Tue, 24 Feb 2026 07:25:03 -0800 (PST)
+Received: from ?IPV6:2003:cf:d737:d0d8:e3c4:2336:3d25:7aa0?
+ (p200300cfd737d0d8e3c423363d257aa0.dip0.t-ipconnect.de.
+ [2003:cf:d737:d0d8:e3c4:2336:3d25:7aa0])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-483b8195f50sm31916325e9.0.2026.02.24.07.24.38
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 24 Feb 2026 07:25:02 -0800 (PST)
+Message-ID: <163144b0-c56f-4582-9d4d-834fe44ed8ad@redhat.com>
+Date: Tue, 24 Feb 2026 16:24:36 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 03/18] hw/southbridge/ich9: Remove
- ICH9_LPC_SMI_F_BROADCAST_BIT definition
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+Subject: Re: [PATCH v11 8/8] deprecate names duplication between qdev,
+ block-node and block-export
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
  qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Cl=C3=A9ment_Mathieu--Drif?=
- <clement.mathieu--drif@eviden.com>, Zhao Liu <zhao1.liu@intel.com>,
- Hanna Reitz <hreitz@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- qemu-block@nongnu.org, Jason Wang <jasowang@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, Ani Sinha <anisinha@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, Yi Liu <yi.l.liu@intel.com>
-References: <20250501210456.89071-1-philmd@linaro.org>
- <20250501210456.89071-4-philmd@linaro.org>
-From: Thomas Huth <thuth@redhat.com>
+Cc: qemu-block@nongnu.org, eduardo@habkost.net, berrange@redhat.com,
+ pbonzini@redhat.com, armbru@redhat.com, eblake@redhat.com,
+ devel@lists.libvirt.org, kwolf@redhat.com
+References: <20260119144941.87936-1-vsementsov@yandex-team.ru>
+ <20260122160113.1147745-1-vsementsov@yandex-team.ru>
 Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20250501210456.89071-4-philmd@linaro.org>
+From: Hanna Czenczek <hreitz@redhat.com>
+In-Reply-To: <20260122160113.1147745-1-vsementsov@yandex-team.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=hreitz@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -10
 X-Spam_score: -1.1
 X-Spam_bar: -
 X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.358, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.659,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -138,110 +130,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 01/05/2025 23.04, Philippe Mathieu-Daudé wrote:
-> The ICH9_LPC_SMI_F_BROADCAST_BIT feature bit was only set
-> in the pc_compat_2_8[] array, via the 'x-smi-broadcast=off'
-> property. We removed all machines using that array, lets remove
-> that property and all the code around it.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+On 22.01.26 17:01, Vladimir Sementsov-Ogievskiy wrote:
+> Now we have blockdev-replace QMP command, which depend on a possibility
+> to select any block parent (block node, block export, or qdev) by one
+> unique name. The command fails, if name is ambiguous (i.e., match
+> several parents of different types). In future we want to rid of this
+> ambiguity.
+>
+> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 > ---
->   include/hw/southbridge/ich9.h |  1 -
->   hw/acpi/ich9.c                |  6 ++----
->   hw/isa/lpc_ich9.c             | 22 +++-------------------
->   3 files changed, 5 insertions(+), 24 deletions(-)
+>
+> v11: rework separate warn_s into one common function
+>       check_existing_parent_id().
+>
+>   block.c                            |  6 ++++++
+>   block/export/export.c              |  6 ++++++
+>   blockdev.c                         | 21 +++++++++++++++++++++
+>   docs/about/deprecated.rst          | 10 ++++++++++
+>   include/block/block-global-state.h |  2 ++
+>   stubs/check-existing-parent-id.c   |  6 ++++++
+>   stubs/meson.build                  |  1 +
+>   system/qdev-monitor.c              | 20 ++++++++++++++++++++
+>   8 files changed, 72 insertions(+)
+>   create mode 100644 stubs/check-existing-parent-id.c
 
-FWIW, this patch seems to break tests/qtest/cpu-plug-test ... I get the 
-error message "cpu hotplug with SMI wasn't enabled by firmware".
-Sounds like the guest has the enable this feature, too, so I assume we 
-cannot simply assume that it is always available now?
+[...]
 
-  Thomas
+> diff --git a/system/qdev-monitor.c b/system/qdev-monitor.c
+> index be18902bb2..ca14135191 100644
+> --- a/system/qdev-monitor.c
+> +++ b/system/qdev-monitor.c
+> @@ -593,6 +593,7 @@ static BusState *qbus_find(const char *path, Error **errp)
+>   const char *qdev_set_id(DeviceState *dev, char *id, Error **errp)
+>   {
+>       ObjectProperty *prop;
+> +    Error *local_err = NULL;
+>   
+>       assert(!dev->id && !dev->realized);
+>   
+> @@ -601,6 +602,18 @@ const char *qdev_set_id(DeviceState *dev, char *id, Error **errp)
+>        * has no parent
+>        */
+>       if (id) {
+> +        g_autofree char *fullpath = g_strdup_printf("/peripheral/%s", id);
+> +
+> +        if (!check_existing_parent_id(id, &local_err)) {
+> +            error_report_err(local_err);
+> +            local_err = NULL;
+> +        }
+> +
+> +        if (!check_existing_parent_id(fullpath, &local_err)) {
+> +            error_report_err(local_err);
+> +            local_err = NULL;
+> +        }
+> +
+>           prop = object_property_try_add_child(qdev_get_peripheral(), id,
+>                                                OBJECT(dev), NULL);
+>           if (prop) {
+> @@ -613,6 +626,13 @@ const char *qdev_set_id(DeviceState *dev, char *id, Error **errp)
+>       } else {
+>           static int anon_count;
+>           gchar *name = g_strdup_printf("device[%d]", anon_count++);
+> +        g_autofree char *fullpath = g_strdup_printf("/peripheral-anon/%s", id);
+> +
+> +        if (!check_existing_parent_id(fullpath, &local_err)) {
+> +            error_report_err(local_err);
+> +            local_err = NULL;
+> +        }
+> +
 
+Node names and block export IDs need to conform to id_wellformed() (or 
+id_generate()), which does not allow slashes. So the paths should never 
+intersect with node names and block export IDs by design.
 
+With these checks removed (or not, if you think we need them, they don’t 
+hurt either), and with the spelling in patch 4 fixed as per Markus’s 
+suggestions, for the series:
 
-> diff --git a/include/hw/southbridge/ich9.h b/include/hw/southbridge/ich9.h
-> index 1e231e89c92..4764c03ac2d 100644
-> --- a/include/hw/southbridge/ich9.h
-> +++ b/include/hw/southbridge/ich9.h
-> @@ -244,7 +244,6 @@ struct ICH9LPCState {
->   #define ICH9_LPC_SMI_NEGOTIATED_FEAT_PROP "x-smi-negotiated-features"
->   
->   /* bit positions used in fw_cfg SMI feature negotiation */
-> -#define ICH9_LPC_SMI_F_BROADCAST_BIT            0
->   #define ICH9_LPC_SMI_F_CPU_HOTPLUG_BIT          1
->   #define ICH9_LPC_SMI_F_CPU_HOT_UNPLUG_BIT       2
->   
-> diff --git a/hw/acpi/ich9.c b/hw/acpi/ich9.c
-> index c7a735bf642..40564605735 100644
-> --- a/hw/acpi/ich9.c
-> +++ b/hw/acpi/ich9.c
-> @@ -477,8 +477,7 @@ void ich9_pm_device_pre_plug_cb(HotplugHandler *hotplug_dev, DeviceState *dev,
->       if (object_dynamic_cast(OBJECT(dev), TYPE_CPU)) {
->           uint64_t negotiated = lpc->smi_negotiated_features;
->   
-> -        if (negotiated & BIT_ULL(ICH9_LPC_SMI_F_BROADCAST_BIT) &&
-> -            !(negotiated & BIT_ULL(ICH9_LPC_SMI_F_CPU_HOTPLUG_BIT))) {
-> +        if (!(negotiated & BIT_ULL(ICH9_LPC_SMI_F_CPU_HOTPLUG_BIT))) {
->               error_setg(errp, "cpu hotplug with SMI wasn't enabled by firmware");
->               error_append_hint(errp, "update machine type to newer than 5.1 "
->                   "and firmware that suppors CPU hotplug with SMM");
-> @@ -526,8 +525,7 @@ void ich9_pm_device_unplug_request_cb(HotplugHandler *hotplug_dev,
->                  !lpc->pm.cpu_hotplug_legacy) {
->           uint64_t negotiated = lpc->smi_negotiated_features;
->   
-> -        if (negotiated & BIT_ULL(ICH9_LPC_SMI_F_BROADCAST_BIT) &&
-> -            !(negotiated & BIT_ULL(ICH9_LPC_SMI_F_CPU_HOT_UNPLUG_BIT))) {
-> +        if (!(negotiated & BIT_ULL(ICH9_LPC_SMI_F_CPU_HOT_UNPLUG_BIT))) {
->               error_setg(errp, "cpu hot-unplug with SMI wasn't enabled "
->                                "by firmware");
->               error_append_hint(errp, "update machine type to a version having "
-> diff --git a/hw/isa/lpc_ich9.c b/hw/isa/lpc_ich9.c
-> index 71afb45b631..c57a06e0dde 100644
-> --- a/hw/isa/lpc_ich9.c
-> +++ b/hw/isa/lpc_ich9.c
-> @@ -400,15 +400,6 @@ static void smi_features_ok_callback(void *opaque)
->       guest_cpu_hotplug_features = guest_features &
->                                    (BIT_ULL(ICH9_LPC_SMI_F_CPU_HOTPLUG_BIT) |
->                                     BIT_ULL(ICH9_LPC_SMI_F_CPU_HOT_UNPLUG_BIT));
-> -    if (!(guest_features & BIT_ULL(ICH9_LPC_SMI_F_BROADCAST_BIT)) &&
-> -        guest_cpu_hotplug_features) {
-> -        /*
-> -         * cpu hot-[un]plug with SMI requires SMI broadcast,
-> -         * leave @features_ok at zero
-> -         */
-> -        return;
-> -    }
-> -
->       if (guest_cpu_hotplug_features ==
->           BIT_ULL(ICH9_LPC_SMI_F_CPU_HOT_UNPLUG_BIT)) {
->           /* cpu hot-unplug is unsupported without cpu-hotplug */
-> @@ -470,14 +461,9 @@ static void ich9_apm_ctrl_changed(uint32_t val, void *arg)
->   
->       /* SMI_EN = PMBASE + 30. SMI control and enable register */
->       if (lpc->pm.smi_en & ICH9_PMIO_SMI_EN_APMC_EN) {
-> -        if (lpc->smi_negotiated_features &
-> -            (UINT64_C(1) << ICH9_LPC_SMI_F_BROADCAST_BIT)) {
-> -            CPUState *cs;
-> -            CPU_FOREACH(cs) {
-> -                cpu_interrupt(cs, CPU_INTERRUPT_SMI);
-> -            }
-> -        } else {
-> -            cpu_interrupt(current_cpu, CPU_INTERRUPT_SMI);
-> +        CPUState *cs;
-> +        CPU_FOREACH(cs) {
-> +            cpu_interrupt(cs, CPU_INTERRUPT_SMI);
->           }
->       }
->   }
-> @@ -830,8 +816,6 @@ static const Property ich9_lpc_properties[] = {
->       DEFINE_PROP_BOOL("noreboot", ICH9LPCState, pin_strap.spkr_hi, false),
->       DEFINE_PROP_BOOL("smm-compat", ICH9LPCState, pm.smm_compat, false),
->       DEFINE_PROP_BOOL("smm-enabled", ICH9LPCState, pm.smm_enabled, false),
-> -    DEFINE_PROP_BIT64("x-smi-broadcast", ICH9LPCState, smi_host_features,
-> -                      ICH9_LPC_SMI_F_BROADCAST_BIT, true),
->       DEFINE_PROP_BIT64("x-smi-cpu-hotplug", ICH9LPCState, smi_host_features,
->                         ICH9_LPC_SMI_F_CPU_HOTPLUG_BIT, true),
->       DEFINE_PROP_BIT64("x-smi-cpu-hotunplug", ICH9LPCState, smi_host_features,
+Reviewed-by: Hanna Czenczek <hreitz@redhat.com>
+
+(I know the discussion around how unique IDs should be is ongoing, but 
+FWIW, having unique IDs across the block layer is good enough for me as 
+a first step. Well, I guess, including block job IDs might be nice, too.)
 
 
