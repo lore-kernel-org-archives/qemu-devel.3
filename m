@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02CDEF4BB6F
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 18:16:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02FA0F4BB70
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 18:16:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuwxK-0003am-Kz; Tue, 24 Feb 2026 13:16:22 -0500
+	id 1vuwwf-00039c-ES; Tue, 24 Feb 2026 13:15:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vuwwi-0003Ae-1q
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 13:15:44 -0500
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vuwwG-00032V-16
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 13:15:19 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vuwwf-0002MF-96
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 13:15:43 -0500
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vuwwC-00025S-2p
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 13:15:14 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771956934;
+ s=mimecast20190719; t=1771956911;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=BB6k1Yuqh8r2auHo9z9gtPD3srjd7Bdv67UXTNWqvGQ=;
- b=HY0lXFYuFfAg/9VjaDh56MReyixxrIXHG4sRKwECZ5bwlHu6xN7hN5xdb64Py67ixcV+r7
- TW0oqfJKk+Cok0WMBifik0ARwszjqPKGmHKf9CE5P9g9CV6kj4uQ0AQvJuHnCOTgXe/gFl
- xgbovArbXgJREcsFwwLn/J74Il+J/9Y=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=Df1pl0Wn1M5kxPr1OtGI4dKTU/iu/ItSA4mTWFCjhG4=;
+ b=ID93jn7OSL+sIv1ppXni9G/5zF+xHOX+/cG2truRiglbFcTm6ykb9m78w4X4S+b295sf/a
+ cuqZlzt+pYFdXc4r7beqknJ/L8977oJTGhdrSajK3grFAGVt9RlviV0z5/g0Zo071ISSoG
+ N1Ser03QJ8gP8YBP2dmWKptpmzi/0KA=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-34-M_j-pofqM4yD2Wq5-ZzS5A-1; Tue,
- 24 Feb 2026 13:15:33 -0500
-X-MC-Unique: M_j-pofqM4yD2Wq5-ZzS5A-1
-X-Mimecast-MFC-AGG-ID: M_j-pofqM4yD2Wq5-ZzS5A_1771956930
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-614-BbeebjONOGq8G1jCgUVrKw-1; Tue,
+ 24 Feb 2026 13:15:07 -0500
+X-MC-Unique: BbeebjONOGq8G1jCgUVrKw-1
+X-Mimecast-MFC-AGG-ID: BbeebjONOGq8G1jCgUVrKw_1771956904
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B4BA918004AD; Tue, 24 Feb 2026 18:15:30 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 99A2E1956079; Tue, 24 Feb 2026 18:15:04 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.89.212])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id DEA831800666; Tue, 24 Feb 2026 18:15:24 +0000 (UTC)
+ id 652501800666; Tue, 24 Feb 2026 18:15:00 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
@@ -64,12 +64,14 @@ Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
  Kevin Wolf <kwolf@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Yonggang Luo <luoyonggang@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL v2 07/19] iotests: tolerate being run outside of pyvenv
-Date: Tue, 24 Feb 2026 13:14:26 -0500
-Message-ID: <20260224181440.832943-8-jsnow@redhat.com>
+Subject: [PULL v2 03/19] python/mkvenv: add 'tooling' and 'functests'
+ dependency groups
+Date: Tue, 24 Feb 2026 13:14:22 -0500
+Message-ID: <20260224181440.832943-4-jsnow@redhat.com>
 In-Reply-To: <20260224181440.832943-1-jsnow@redhat.com>
 References: <20260224181440.832943-1-jsnow@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
@@ -97,68 +99,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Modify the iotests environment preparation so that it can detect when it
-is being run outside of the configure-time virtual environment and give
-a warning to the user, suggesting the use of the meson run script
-instead.
+'tooling' contains depedencies required to run various tools (like
+qmp-shell) as well as dependencies required to run "make check", and as
+such, we promise that these dependencies can be sourced from the user's
+distribution repository or from vendored packages so that "make check"
+can be executed offline in an isolated build environment.
 
-As a bonus, since the test executor itself does not actually rely on
-anything in the configure-time venv in and of itself, it is possible to
-just modify the python executable it uses for launching tests to be the
-correct, configured venv that has access to qemu.qmp and other test
-dependencies.
+In contrast, pygdbmi is only needed for functional tests and not tests
+in general; we do not make the same offline/isolated guarantees for
+functional tests, and this dependency group is allowed to fetch
+dependencies from PyPI at runtime.
 
+For the time being, amend the "check-venv" target to install both
+dependency groups, to avoid a duplicate dependency between them. By the
+end of this series, however, "check-venv" will be eliminated in favor of
+always installing "tooling" at configure time and allowing "functests"
+to be installed on-demand as needed by meson/ninja.
+
+Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 Reviewed-by: Thomas Huth <thuth@redhat.com>
-Tested-by: Thomas Huth <thuth@redhat.com>
-Message-ID: <20260218213416.674483-9-jsnow@redhat.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Message-ID: <20260218213416.674483-5-jsnow@redhat.com>
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- tests/qemu-iotests/testenv.py | 25 ++++++++++++++++++++++++-
- 1 file changed, 24 insertions(+), 1 deletion(-)
+ pythondeps.toml        | 10 +++++++++-
+ tests/Makefile.include |  2 +-
+ 2 files changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/tests/qemu-iotests/testenv.py b/tests/qemu-iotests/testenv.py
-index 29caaa8a349..c357e6ebf50 100644
---- a/tests/qemu-iotests/testenv.py
-+++ b/tests/qemu-iotests/testenv.py
-@@ -20,6 +20,7 @@
- import sys
- import tempfile
- from pathlib import Path
-+import shlex
- import shutil
- import collections
- import contextlib
-@@ -140,7 +141,29 @@ def init_binaries(self) -> None:
-              PYTHON (for bash tests)
-              QEMU_PROG, QEMU_IMG_PROG, QEMU_IO_PROG, QEMU_NBD_PROG, QSD_PROG
-         """
--        self.python = sys.executable
-+        self.python = str(Path(sys.executable).absolute())
-+
-+        # QEMU configure-time venv python executable
-+        venv_python = Path(
-+            os.path.join(self.build_root, "pyvenv", "bin", "python3")
-+        ).absolute()
-+
-+        if self.python != str(venv_python):
-+            runpath = os.path.join(self.build_root, "run")
-+            cmd = ' '.join(shlex.quote(x) for x in sys.argv)
-+            print(
-+                "\n\033[93m\033[1mWARNING\033[0m: "
-+                "iotests is being run from outside of the configure-time "
-+                "python virtual environment\n\n"
-+                f"current python: {self.python}\n"
-+                f"pyvenv python:  {venv_python}\n\n"
-+                "Individual python tests will be executed inside the pyvenv,\n"
-+                "but the test runner will continue to run outside.\n\n"
-+                "\033[1mPlease use the meson run script:\033[0m\n"
-+                f"\t{runpath} {cmd}\n",
-+                file=sys.stderr
-+            )
-+            self.python = str(venv_python)
+diff --git a/pythondeps.toml b/pythondeps.toml
+index 85220a36426..743e2a8848c 100644
+--- a/pythondeps.toml
++++ b/pythondeps.toml
+@@ -31,6 +31,14 @@ meson = { accepted = ">=1.10.0", installed = "1.10.0", canary = "meson" }
+ sphinx = { accepted = ">=3.4.3", installed = "6.2.1", canary = "sphinx-build" }
+ sphinx_rtd_theme = { accepted = ">=0.5", installed = "1.2.2" }
  
-         def root(*names: str) -> str:
-             return os.path.join(self.build_root, *names)
+-[testdeps]
++# This test group is for dependencies required to run various tooling
++# and tests that should always be installed at configure time. It should
++# only include dependencies that can be guaranteed via configure from
++# system packages, or python packages we vendor.
++[tooling]
+ "qemu.qmp" = { accepted = ">=0.0.5", installed = "0.0.5" }
++
++# This test group is for functional tests, and can include dependencies
++# fetched from PyPI.
++[functests]
+ pygdbmi = { accepted = ">=0.11.0.0", installed = "0.11.0.0" }
+diff --git a/tests/Makefile.include b/tests/Makefile.include
+index be3b78fdfb7..76d77545b71 100644
+--- a/tests/Makefile.include
++++ b/tests/Makefile.include
+@@ -108,7 +108,7 @@ quiet-venv-pip = $(quiet-@)$(call quiet-command-run, \
+ 
+ $(TESTS_VENV_TOKEN): $(SRC_PATH)/pythondeps.toml
+ 	$(call quiet-venv-pip,install -e "$(SRC_PATH)/python/")
+-	$(MKVENV_ENSUREGROUP) $< testdeps
++	$(MKVENV_ENSUREGROUP) $< tooling functests
+ 	$(call quiet-command, touch $@)
+ 
+ check-venv: $(TESTS_VENV_TOKEN)
 -- 
 2.53.0
 
