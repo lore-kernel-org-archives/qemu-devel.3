@@ -4,81 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59644EFB7FD
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 05:45:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDBA9EFB800
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 05:45:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vulEB-0003ot-5c; Tue, 24 Feb 2026 00:45:04 -0500
+	id 1vulDm-0003mH-1g; Tue, 24 Feb 2026 00:44:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vulDz-0003ok-75
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 00:44:47 -0500
-Received: from mail-dy1-x132b.google.com ([2607:f8b0:4864:20::132b])
+ id 1vulDk-0003m0-V0
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 00:44:32 -0500
+Received: from mail-dy1-x132c.google.com ([2607:f8b0:4864:20::132c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vulDx-0002IS-4k
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 00:44:46 -0500
-Received: by mail-dy1-x132b.google.com with SMTP id
- 5a478bee46e88-2ba895adfeaso5017399eec.0
- for <qemu-devel@nongnu.org>; Mon, 23 Feb 2026 21:44:43 -0800 (PST)
+ id 1vulDi-0002Hq-TC
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 00:44:32 -0500
+Received: by mail-dy1-x132c.google.com with SMTP id
+ 5a478bee46e88-2bdb17511aaso519211eec.0
+ for <qemu-devel@nongnu.org>; Mon, 23 Feb 2026 21:44:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771911882; x=1772516682; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=7P4L6KRGUfnJuZGklnenZefdnYuPN4EZ2NjRTD5rCHQ=;
- b=U16My6skclzhMY8OQMMcJU53wUCgJ45X0DoqChxGCcY7L/kWiOsnZzZFjHTrzb21fA
- OvqUt5qRoZ0N9lwWhS8Okdpwwd8r64v6en2BOYbJfWCJL0XBQPjFCEQYeRCgkJctzVF2
- Rcx0Aw3acu+/X2ItuIWP0eRWLALEzF3fSyL7LXKOR3e75ZgfWKS3gRCB2cywdxKXDgk2
- PLILSGteLXx/JH0VY3/9TsoCR78S2KyoBXoCCvx4r33gUvHLeWSrRFhBNNbEOURsuMTm
- XKbccG5HV+yLCVjMqWTfEd9sytHmI9lgA2fHheHnNjgPsQI1dpnGWoNGIHhvfSCuCg1u
- kZnQ==
+ d=linaro.org; s=google; t=1771911869; x=1772516669; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=eeKWopagpNH1e7lkMDwqj96MPc3/NtTJh1DDK99PM3A=;
+ b=DJH08qdYySOm5Hz/qIzp7dKXKLRRLNQP9IAT5U1KfYn+qIXTEWaCYiSyml+2JkWBwE
+ NJgD59g3wnHOWkvLdKU2CPYXkd9av1bdrKFugTlD7oK3It7yBONoHVG1S+n8o1VYpvwH
+ upMzInt3EO+6ajHCatUNjaNFL8nZzn7mcsW6swGIxVu/yEsWcFh9yx0B5qzsIKVrboeU
+ BNb+9VhZjYg2863l1We1BSGOHWv2oQ1pYRi2wCbUXVSl86zaMFXEzitZLKCtz7VsWzSF
+ GIZxdU2SbBx0Xez1BJqWuS+y4PTQUwZw2V2TbjtUaDGOUtrsBHWxcIPBFRofLorIAZQO
+ NHfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771911882; x=1772516682;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=7P4L6KRGUfnJuZGklnenZefdnYuPN4EZ2NjRTD5rCHQ=;
- b=Ysb7PKeLgsK6Jo0WXKMp3zicsVPTI8T/cA38vHmfGpnRydJ5RCkMO6MmOhcXGDwiew
- oWWoc4eqPMGelBT/q4ZwakPShqfGT1CGKozjPXY51d/Ktynb9kGzn9CHZZfTz0644b4L
- boam4qPVGMO0foy4MbH/e1Uq1KEXcpySo18G9PA7zzos7xIczMnNsK/BhDu34m7Wnop4
- hu7gXMWopeBqhGTP2oQCeHg2eebNI1bgRb9jhlJm+W+IbgGIbg02DdbXmiwVarC5JKDa
- foBCeRH4OAOncBx2d3w8BgXJ+6tOJFtw8cZBnTD9YQOda4AyJgp+CwPyptuh4YJd5zKs
- teOA==
-X-Gm-Message-State: AOJu0YwXjJpjC0OcIxTzsqKtMRRmKH2HBd9GvqeXMWy64WgaSqRy9jyz
- lDdfB1WECNlsmjyogjIt4a389liQQaBh31xCMwpFNbgO10EAYgxAA+jDsa4qzK6GgXhcrQuXDRI
- oGYE2qLg=
-X-Gm-Gg: ATEYQzxZ9gO4lyMqmBFy+EXlEMxS9M+C2nmffFxy7wHCcCNRsRWdm3GVPvzPoAaNnm4
- YkN5F80JUeKgw7yMXmqzqctXYB0X7tAHIvO4cjjK6bDj+CcG+YTMaA7PAY2GrT8SrUEIRwghYPR
- dWP3N3FjfoUNzjvOU7zpU2oPHarr2yI5gDnSPnrPAscrB1SIzQAKDk2vL0MOoiwNVd7S8OIdd2i
- ZJH4844wqYAjLK1V3FVPffFwp2mP2LKIsGx1IAVdrV2bgrCtgOWRzviRkX/qWMdSvpglS22ctfH
- cjQj34EW+tTef8sbESB2G2IjQbUg18r+LNYuG+OhlC/Z9i0vAB0VByVE5aWocrxgGfCp2hR2qqT
- uZEPEd6Ppc4zONH02gtoycADTGHWGhs2BXm44Ttv0HFbR0HToKelaGR7cJF69D3+Pmo7ufH+At4
- PlA5B6j1+sBOafJGbN5GUBDiBLdevYlMuZsy10J3Zmx9IgV3/xDj7g
-X-Received: by 2002:a05:693c:3944:b0:2ae:5e93:b69 with SMTP id
- 5a478bee46e88-2bd7bd24e03mr4123931eec.29.1771911881868; 
- Mon, 23 Feb 2026 21:44:41 -0800 (PST)
+ d=1e100.net; s=20230601; t=1771911869; x=1772516669;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=eeKWopagpNH1e7lkMDwqj96MPc3/NtTJh1DDK99PM3A=;
+ b=aW1j1JI0jyS4T5awTYPlGh7keuyTvcLZroxvGY+GX2mT2w+2xL7mu7U4z3BY1KJ+CO
+ n50WOYzBk/lQfD3+vWWZZKZZEbh3FYFhr1JQ9way+BaLUMusBK1032jMjAEA/8HU/OgN
+ 2ORk0jMzB5XioLhCOntTypLx66A5VYZNPdjqq813pJi4X6EMZ4Cj9dndibBtLZA7/lK5
+ j7V2P+GV4vuYnp++H3ypubPDyvTPcn8dwlOV2acw5Y+bpFnGlvHOBwA+rbkLrxIUxeGK
+ nonm5+sQ6RNbGqAsORw87+thoaqojKjOHhNdh2QlqKtGMChh0PXn4LRCmZQwkpWk4OHT
+ eUjw==
+X-Gm-Message-State: AOJu0YxKeu69iQ4kLrc926LYOhmMxQnI3J9UfAwbfY+S3KOQ6H0RIUAU
+ FyK6MRdchlsuFTw/m8ghipSSMZI2XZbziEZ/IdIwHHrdeOBPfsHz+C/Hpuw+D4ys9lk8hsiRCf2
+ gyba6R8o=
+X-Gm-Gg: ATEYQzwdrgSDqpl0hUGaV7feem1JbxaHPtfpdGd85YyKnWdUrwrsE2PdGCpY6yLPdXK
+ JSVDYFjt9/Wx1CvVhTWAB1RV5Pxqh7IIllQlBXe3uQhqMSilxQaK9JKyiCw+XEXXJa9xjuzqthm
+ OQO3ePzbFn79/iXihtvUym5BuqOL/dXxggmbQtEdUNzI8KykEgZ9LWV/AMoQ4lhuhgPoqwuUBqy
+ U6lovSlPl1jZGR0U4Sm1Rq0TTY4QbfOkkoMO86YWtdNSR5iyeZLQvgieUmBf5+WTJDfSlsOEw+S
+ wx8PdMBaiJ7/g144N18CVjVzO8Jp73NbozrcQIHVXngxDqnm0Tnl+Rcu8rt2gr8TZPr55V86fjK
+ tUr92BkY/Ldg8cmG8l8/vCLaeN3UQs999v40Htj7nYmBcMVEmfDStvU5eL59+Fpopme5D6wp4mN
+ bM3Aaq74MDBZnQCWbig46FA8Go38GFTFiVd7SDbTiR0s06rDFWOgE8
+X-Received: by 2002:a05:693c:809a:b0:2bd:ad1a:f4e2 with SMTP id
+ 5a478bee46e88-2bdad1b09cemr499851eec.23.1771911869021; 
+ Mon, 23 Feb 2026 21:44:29 -0800 (PST)
 Received: from stoup.. ([172.56.177.223]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-2bd7daa37c7sm5958093eec.12.2026.02.23.21.44.38
+ 5a478bee46e88-2bd7daa37c7sm5958093eec.12.2026.02.23.21.44.25
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 23 Feb 2026 21:44:41 -0800 (PST)
+ Mon, 23 Feb 2026 21:44:28 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Max Chou <max.chou@sifive.com>,
-	Chao Liu <chao.liu.zevorn@gmail.com>
-Subject: [PULL 3/9] target/i386: Fix pseudo-NaN handling in
- FPATAN/FYL2XP1/FYL2X helpers
-Date: Tue, 24 Feb 2026 16:44:11 +1100
-Message-ID: <20260224054417.32430-4-richard.henderson@linaro.org>
+Subject: [PULL 0/9] fpu patch queue
+Date: Tue, 24 Feb 2026 16:44:08 +1100
+Message-ID: <20260224054417.32430-1-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260224054417.32430-1-richard.henderson@linaro.org>
-References: <20260224054417.32430-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::132b;
- envelope-from=richard.henderson@linaro.org; helo=mail-dy1-x132b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::132c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-dy1-x132c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,101 +96,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Max Chou <max.chou@sifive.com>
+The following changes since commit afe653676dc6dfd49f0390239ff90b2f0052c2b8:
 
-According to Intel's x87 FPU specification (Table 8-10, Vol. 1), arithmetic
-operations on operands in unsupported formats (including pseudo-NaNs) must
-return the QNaN floating-point indefinite value.
+  Merge tag 'audio-pull-request' of https://gitlab.com/marcandre.lureau/qemu into staging (2026-02-23 14:03:50 +0000)
 
-The helper functions for FPATAN, FYL2XP1, and FYL2X incorrectly check for
-signaling NaN before checking for invalid encodings. This causes pseudo-NaNs
-to be treated as valid signaling NaNs and silenced, rather than being
-rejected as unsupported formats.
+are available in the Git repository at:
 
-Reorder the checks to test floatx80_invalid_encoding before
-floatx80_is_signaling_nan, matching the correct behavior already
-implemented in helper_fscale.
+  https://gitlab.com/rth7680/qemu.git tags/pull-fpu-20260224
 
-Signed-off-by: Max Chou <max.chou@sifive.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20260204051756.667397-5-max.chou@sifive.com>
----
- target/i386/tcg/fpu_helper.c | 30 +++++++++++++++---------------
- 1 file changed, 15 insertions(+), 15 deletions(-)
+for you to fetch changes up to b5fee33bbf2764e9540ab5e6b6af4c9493f65677:
 
-diff --git a/target/i386/tcg/fpu_helper.c b/target/i386/tcg/fpu_helper.c
-index b3b23823fd..37c83ded38 100644
---- a/target/i386/tcg/fpu_helper.c
-+++ b/target/i386/tcg/fpu_helper.c
-@@ -1377,16 +1377,16 @@ void helper_fpatan(CPUX86State *env)
-     int32_t arg1_exp = extractFloatx80Exp(ST1);
-     bool arg1_sign = extractFloatx80Sign(ST1);
- 
--    if (floatx80_is_signaling_nan(ST0, &env->fp_status)) {
-+    if (floatx80_invalid_encoding(ST0, &env->fp_status) ||
-+        floatx80_invalid_encoding(ST1, &env->fp_status)) {
-+        float_raise(float_flag_invalid, &env->fp_status);
-+        ST1 = floatx80_default_nan(&env->fp_status);
-+    } else if (floatx80_is_signaling_nan(ST0, &env->fp_status)) {
-         float_raise(float_flag_invalid, &env->fp_status);
-         ST1 = floatx80_silence_nan(ST0, &env->fp_status);
-     } else if (floatx80_is_signaling_nan(ST1, &env->fp_status)) {
-         float_raise(float_flag_invalid, &env->fp_status);
-         ST1 = floatx80_silence_nan(ST1, &env->fp_status);
--    } else if (floatx80_invalid_encoding(ST0, &env->fp_status) ||
--               floatx80_invalid_encoding(ST1, &env->fp_status)) {
--        float_raise(float_flag_invalid, &env->fp_status);
--        ST1 = floatx80_default_nan(&env->fp_status);
-     } else if (floatx80_is_any_nan(ST0)) {
-         ST1 = ST0;
-     } else if (floatx80_is_any_nan(ST1)) {
-@@ -2061,16 +2061,16 @@ void helper_fyl2xp1(CPUX86State *env)
-     int32_t arg1_exp = extractFloatx80Exp(ST1);
-     bool arg1_sign = extractFloatx80Sign(ST1);
- 
--    if (floatx80_is_signaling_nan(ST0, &env->fp_status)) {
-+    if (floatx80_invalid_encoding(ST0, &env->fp_status) ||
-+        floatx80_invalid_encoding(ST1, &env->fp_status)) {
-+        float_raise(float_flag_invalid, &env->fp_status);
-+        ST1 = floatx80_default_nan(&env->fp_status);
-+    } else if (floatx80_is_signaling_nan(ST0, &env->fp_status)) {
-         float_raise(float_flag_invalid, &env->fp_status);
-         ST1 = floatx80_silence_nan(ST0, &env->fp_status);
-     } else if (floatx80_is_signaling_nan(ST1, &env->fp_status)) {
-         float_raise(float_flag_invalid, &env->fp_status);
-         ST1 = floatx80_silence_nan(ST1, &env->fp_status);
--    } else if (floatx80_invalid_encoding(ST0, &env->fp_status) ||
--               floatx80_invalid_encoding(ST1, &env->fp_status)) {
--        float_raise(float_flag_invalid, &env->fp_status);
--        ST1 = floatx80_default_nan(&env->fp_status);
-     } else if (floatx80_is_any_nan(ST0)) {
-         ST1 = ST0;
-     } else if (floatx80_is_any_nan(ST1)) {
-@@ -2159,16 +2159,16 @@ void helper_fyl2x(CPUX86State *env)
-     int32_t arg1_exp = extractFloatx80Exp(ST1);
-     bool arg1_sign = extractFloatx80Sign(ST1);
- 
--    if (floatx80_is_signaling_nan(ST0, &env->fp_status)) {
-+    if (floatx80_invalid_encoding(ST0, &env->fp_status) ||
-+        floatx80_invalid_encoding(ST1, &env->fp_status)) {
-+        float_raise(float_flag_invalid, &env->fp_status);
-+        ST1 = floatx80_default_nan(&env->fp_status);
-+    } else if (floatx80_is_signaling_nan(ST0, &env->fp_status)) {
-         float_raise(float_flag_invalid, &env->fp_status);
-         ST1 = floatx80_silence_nan(ST0, &env->fp_status);
-     } else if (floatx80_is_signaling_nan(ST1, &env->fp_status)) {
-         float_raise(float_flag_invalid, &env->fp_status);
-         ST1 = floatx80_silence_nan(ST1, &env->fp_status);
--    } else if (floatx80_invalid_encoding(ST0, &env->fp_status) ||
--               floatx80_invalid_encoding(ST1, &env->fp_status)) {
--        float_raise(float_flag_invalid, &env->fp_status);
--        ST1 = floatx80_default_nan(&env->fp_status);
-     } else if (floatx80_is_any_nan(ST0)) {
-         ST1 = ST0;
-     } else if (floatx80_is_any_nan(ST1)) {
--- 
-2.43.0
+  fpu: Add conversion routines for OCP FP4 E2M1 (2026-02-24 16:21:18 +1100)
 
+----------------------------------------------------------------
+- Reformat NaN classification to share code
+- Fix pseudo-NaN handling in FPATAN/FYL2XP1/FYL2X helpers
+- Add conversion routines for OCP FP8 and FP4 formats
+
+----------------------------------------------------------------
+Max Chou (8):
+      fpu/softfloat: Refactor IEEE format NaN classification to share code
+      fpu/softfloat: Refactor floatx80 format NaN classification to share code
+      target/i386: Fix pseudo-NaN handling in FPATAN/FYL2XP1/FYL2X helpers
+      fpu: Add overflow_raises_invalid to FloatFmt
+      fpu: Add saturate parameter to parts_uncanon
+      fpu: Add conversion routines for OCP FP8 E5M2
+      fpu: Add conversion routines for OCP FP8 E4M3
+      fpu: Add conversion routines for OCP FP4 E2M1
+
+Richard Henderson (1):
+      fpu: Introduce FloatFmtExpMaxKind
+
+ include/fpu/softfloat-types.h  |   7 ++
+ include/fpu/softfloat.h        |  18 ++-
+ fpu/softfloat.c                | 242 +++++++++++++++++++++++++++++++++++-----
+ target/i386/tcg/fpu_helper.c   |  30 ++---
+ fpu/softfloat-parts.c.inc      | 152 +++++++++++++++++--------
+ fpu/softfloat-specialize.c.inc | 245 +++++++++++++++++------------------------
+ 6 files changed, 459 insertions(+), 235 deletions(-)
 
