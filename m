@@ -4,91 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3240E9B251
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 11:07:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38338E9B24D
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 11:07:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuqF1-0001qH-BN; Tue, 24 Feb 2026 06:06:11 -0500
+	id 1vuqFI-0001zE-Ui; Tue, 24 Feb 2026 06:06:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1vuqEw-0001gx-0W
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 06:06:07 -0500
-Received: from mail-qt1-x82c.google.com ([2607:f8b0:4864:20::82c])
+ id 1vuqFH-0001z2-VY
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 06:06:27 -0500
+Received: from mail-qt1-x831.google.com ([2607:f8b0:4864:20::831])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1vuqEu-0006nN-BO
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 06:06:05 -0500
-Received: by mail-qt1-x82c.google.com with SMTP id
- d75a77b69052e-5033387c80aso83651871cf.0
- for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 03:06:03 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1771931162; cv=none;
+ id 1vuqFE-0006p0-TG
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 06:06:27 -0500
+Received: by mail-qt1-x831.google.com with SMTP id
+ d75a77b69052e-506a1b23c05so67978931cf.0
+ for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 03:06:24 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1771931183; cv=none;
  d=google.com; s=arc-20240605;
- b=kk+uQBbGFulX0OVuIJ2BxwBuc1ARlSV/zAA2ZoZaGM+KD83wZwsqa46zCi2mqrjnc1
- TAHw1PI5DKB/qX+eIzbd/1OH4oOo8tu+PGBNw5w2m95JlwugkgEAlrMkJXyoWjcEFwCr
- zkWEyyLjVNCE/JiB+aUBhpitBiUYueZyAzcu0zmq45mUwVQMyuOtrVqNkIN4ip6Zgy4x
- /mTSJYYPzpe82QGBaUl5OShxYSPlWbOJbMz3+3SNaphAIFlmDwM1ZHc+b297JyKpu8ZJ
- k6+l2T0jbSFXigjVXDIWy+6/5wlp86O/5125bt61VW0894S8XGg4Ls0PyLKr+jFPokna
- WpsQ==
+ b=emHH0bDo4p4pgVmndEPia81QFlq7anVuT7sGIeW5PJEyzirQWvneHwX4Vl6dlDmn3q
+ XJonhntBzjAvb2Q6b9+sqOZROgeh4Uqw+BT2GpmCuETNr1weZmtqi7rl3zuH4+/lrZ9R
+ +sD0D+yvOyErM0EXZHahmqo2JPCkogk346lApKQLdudhEpFN/AQA4mfhH6p2JWlsRX4h
+ gpx0bNsnhN0vaILlMq4rQdFo/CnPOd0rzjJfHYqKuBjBZuX3ey+EYiU/yiZTpccTzV5D
+ GE/5y3QDP61L4yiYWvB6qXxfuI0NAZDBTraD+y0zpcPTcVEHgcZ2j0E4upzc9czn5u2K
+ pW4w==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=YdScLTIZ/3JZgbhsowERbAcaVxST5hmbDGoz6g+Ir7s=;
+ bh=NOWds3IlB7Fg0rqYWHR9pYHCZ8zjUuHpShVmAvzvFx0=;
  fh=9dqpPjrtVfoOV99Cw5UPSTWOClvvkBcwaQUCMmBtLzk=;
- b=Lx2jsBtBhYSvoQXc8zfMX+KF4YKWQU2j6cUggI92LOuOd7BYFlVr5YKkpQhZI4sy1x
- fh6InU0dYDKgTyhtUGwcjh6fRo4euRGD86raM4svu3LegnRI9fTVf9EqyVlyRKe4vMwx
- XqdxNUQMZj6+WRH2PrLjjvc+1r5XiRF3m6mlBsvxXhlnwxQIh26uPSAC/7YnDtlaURQf
- B6MRDbnxQbMIv0bPedtyfFPR1KkNjg9BDAc9tYc7nSYnmU8J5grEpkZgLeQgIwjrUAFX
- juo5KdHRRxycA5JdXeBbtBOuqJc3m9Mczg6YSIYmi8c9rryHf+O3xHuaEjUX29XekPVv
- NFig==; darn=nongnu.org
+ b=iRhJmMN3rKCNDjJ6r2+bG71KO5fAqWnpgq1l70q24Gc17sXCYEM3plhX0RGVP7coOX
+ nSXpmyDvfMJTKztp32TtDI0NjHpdEuht/chYHRCMEm+pnCvub3HIyik0+/AO3nuIt0xB
+ u9MYQQsqfwzBFpXBolQ8dM597WKnMXTIZkYmbRXLsH9NpKLrxg1jR/5Rt5wgW+NuNDJN
+ 3SrChxdlM/GmhoK5FlHWBBuMAprxD6dkACCVQgsXx2weiltO+RZIqz4bYFvbkBweyUJE
+ H0fZDQB1etw7j4GIyOWupBnVQBP3m0J7Nj29tDqDhxzd6O9U531KK69T5JSxeuiqgU1S
+ BP6A==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1771931162; x=1772535962; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1771931183; x=1772535983; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=YdScLTIZ/3JZgbhsowERbAcaVxST5hmbDGoz6g+Ir7s=;
- b=ho5u3hVzCKiaatb7/ZBcpZ/NXNQ8p/kajzfLT8O1LKFAipNf3IUdFXtKZIORhiL0Ri
- U26rxlqpu4Jyw2hio/CoUMYeiVfCGWO8b1GZk5E+jCpnT1zq+M5SDU+Z6DVqVPOBa+vg
- xWuUc0VtHQoQ2BGRLllMyfV7jTvzKHI1LPzfpmGJfwUigCKMK/J8bEEYuvmrP8cSuyzv
- URN46uF8YyrfuThu9N6SDet8agAoce9Zkq0Eh6h7CQf/4l3gW+BAAPGiqSs3sX5PafMv
- hSszLmJ0d/qW/pmt8xqtqKxzcn5mZgoB5PwZPbhxaSbHvIqHrlyC7e2ApoyCg+Nlzv86
- jWyg==
+ bh=NOWds3IlB7Fg0rqYWHR9pYHCZ8zjUuHpShVmAvzvFx0=;
+ b=lVG5puymNNYxWbB7BT4Ev9MuGMR+19yaw69yI5m0mATO1kcZwxkabchZml75ukCQXp
+ nnibFkxPp5uBr3o9mEazhSFcUYiAmUH9YW7cnS2uyVDTh19B5OtgPIubEySs7s3+YJJH
+ GWRzpRIbeZVeoHBsraz/JWfWt1y4XcofH5GAHb9E34CpkFjL2nIxYp2rc2SXcq590CUV
+ 3lQDO1IrjjHLi2t4pEi6IQ2IxlFvTOduV4wTWO/ZqFhJgkUsE1oM/cfdyqzaNwQUsG22
+ DxZ5rWQBHjXtNvkZKbC4cBmF9kVEkHIbVErDOL/xAojmhEBKcZVBFScCjv0w1P+TjCjp
+ opdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771931162; x=1772535962;
+ d=1e100.net; s=20230601; t=1771931183; x=1772535983;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=YdScLTIZ/3JZgbhsowERbAcaVxST5hmbDGoz6g+Ir7s=;
- b=Nxdp18d7S6VxlszJWYwR8X0oqwibXHW57kBzjUZqLgLnLFZkquCRqCL7rx/BvnnEfQ
- 99PPjkhpqCKM1ChthO/S7j2CPXAi/oegcxXga8O5hdsqwhYdep+LX8LLe8li+hwZ2Ifo
- G5LhibabOTp+XgZR0BgJrfpQailgHVe0riy2WE3v/muCK/jtfmTkpxIg9WOSTIoLvyL7
- Y5twvWpLPiboCQJPESWKDNvKDH3jl98MDi/UPSLGoxIpL4JeQNnR/66l0LN3Xqi/xzXU
- 9sl7TR6My86IYEs7mdWM2H6GRtfKczsANhPbGZkzwBKwbUY9o3apiGleAun8d/YYjU+R
- TNAA==
-X-Gm-Message-State: AOJu0YwjZjG9PHRULAhGqWpElkClsThrAii7+ex52PiD6/+yv9fWXTm+
- d3La27kdjlFZihsThcKJl8NswnL17DYAd1YiIfmK1EEYlesXy9ZETZU4VEGnmnRRr5nyYV62Fi8
- mXyWQ94Vj/MAsBrYCt1RkxVYPMWBjAHY=
-X-Gm-Gg: AZuq6aK6oLYtsN3y3NjRURM/UJEhe1PGhLQEdyqE4Kk9orbpujNfT3lr5eMDzjWeWBL
- EuItiMPy2N8dcitAzhBt1hL9S9HOFynRref7p2Hj7jJMYB29wXjJ+pAUkC2euWGud+NC4REVW37
- 4+uAJF1nxI6EFGTWg/bdi7fLcvSumrW6uDuY1Mc9jajXek/18imibmuaped43jVJMAZGz737DBW
- teVz487N1zR9+mDWohDmdaKv3W65GQJpKvifqsqxSbQFregGR3QdfRZhBGzxriZ8s3cwigoi8g1
- 42kwdm8=
-X-Received: by 2002:a05:622a:409:b0:501:40b2:453d with SMTP id
- d75a77b69052e-5070c2bec64mr133246341cf.23.1771931162232; Tue, 24 Feb 2026
- 03:06:02 -0800 (PST)
+ bh=NOWds3IlB7Fg0rqYWHR9pYHCZ8zjUuHpShVmAvzvFx0=;
+ b=J6KwDACf5V2c3cNMzL4Z/uNfBsI/PqoQ2kyfwn+eJLmL1Hz3cSxOA1NRoLwIpEeCr2
+ gpABEqE0Kq26pEbasptsO1eS96EoIyZgl+ZfNKtwWFaC7RKHSC/Aw5nwwhdc+ZFxoPdt
+ WrxnLOWhV1k1WqNFE7xAOw599TuBkaxVJEXBN58DstdCX1NegHWwsXrBn8vgwjAN7TU9
+ +ptPsSBMqxviBtEWWQD6wyUvxS9HvTs4NIs6VD8nOpDuKbWWM8N98tGfQ9Vo3g6wbNQc
+ FI3oLdboEho5hbvdgSNhGB/al/3P+16baLNuf0eWZqa7wkX0YCnRzq2m5d11nnVAuz1L
+ LGdw==
+X-Gm-Message-State: AOJu0YyhBs2sPEyaIU6HJk2I/6yCrOSRvLFbEkzlObja1nVzOsyOh5R9
+ OI2/6YJLFVOc4oQ1H6PaT6MAzbjnGb9am6w62LxvKK+FY51jY3JdZUnrgFsn2Om49UVHxjAF4Vw
+ fpjDKBl6RHoPTneZ2j8ndxBXRC0pgiB4=
+X-Gm-Gg: AZuq6aLjPzT8wawzrwBGNa3b9DxKdzKwqSCbmlIXVKAWXFB+P4ClIb2xTBJcIN/SvGt
+ esjuHZlBySoJzPBVgHsHwoQMGQbw6chB3fpLqi6MwkCL2uJIog3EQILHw3CRGA5HMeHsnNncTie
+ QzoPdornfpD1pUnPJ1TVPyYAki6fCWWF6Vp/GYHDo1/h28xsH1PfgwOemBQE7Mnh/3XRmac6cwU
+ LJXbSYyB7BuZpgH5dNpLwauJOXEr2VQa7HDJklKPtxADtp8R0DJCzmyU1ENWR4mSMymaXfh47bz
+ /cSBwCs=
+X-Received: by 2002:a05:622a:4cc:b0:4ef:db28:1f3b with SMTP id
+ d75a77b69052e-5070bbc0f34mr164850161cf.16.1771931183662; Tue, 24 Feb 2026
+ 03:06:23 -0800 (PST)
 MIME-Version: 1.0
 References: <20260223202512.1308205-1-heifetz@yandex-team.com>
- <20260223202512.1308205-4-heifetz@yandex-team.com>
-In-Reply-To: <20260223202512.1308205-4-heifetz@yandex-team.com>
+ <20260223202512.1308205-8-heifetz@yandex-team.com>
+In-Reply-To: <20260223202512.1308205-8-heifetz@yandex-team.com>
 From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Tue, 24 Feb 2026 12:05:50 +0100
-X-Gm-Features: AaiRm53BgT4SD12Z3hn_-iWYEV90YkAwRO-IawU2Pq_ur-vZ5ftIm2-cz7DVimc
-Message-ID: <CAJ+F1CKvBQ4DGAXW16KU9gP5Vo4Y2DJGOqaEE6L_D6Hd8wDFzA@mail.gmail.com>
-Subject: Re: [PATCH v2 03/10] tests/qtest: remove -audio none when configured
- with --disable-audio
+Date: Tue, 24 Feb 2026 12:06:12 +0100
+X-Gm-Features: AaiRm53SoB0TWjWFsrqdjv2Vm9e5CSOa2pCblIbCdy8QG6qcJMTQn2syLjRGEZc
+Message-ID: <CAJ+F1C+Zb-KRBf+bFv2FbVx6Q5P4rKumTZRJ68VC65ZVVWKKNQ@mail.gmail.com>
+Subject: Re: [PATCH v2 07/10] ui/dbus: run without Audio interface when audio
+ is disabled
 To: Sergei Heifetz <heifetz@yandex-team.com>
 Cc: qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>, 
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
@@ -105,8 +105,8 @@ Cc: qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>,
  "Dr. David Alan Gilbert" <dave@treblig.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::82c;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x82c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::831;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x831.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -131,45 +131,50 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Hi
 
-On Mon, Feb 23, 2026 at 9:27=E2=80=AFPM Sergei Heifetz <heifetz@yandex-team=
+On Mon, Feb 23, 2026 at 9:26=E2=80=AFPM Sergei Heifetz <heifetz@yandex-team=
 .com> wrote:
 >
-> It does not matter much whether `-audio none` is passed. In the future,
-> support for `-audio none` with `--disable-audio` will be dropped, so we
-> should remove it beforehand.
+> D-Bus display can be used even when QEMU is configured with
+> `--disable-audio`. In that case, audio interface will not be available
+> on `/org/qemu/Display1/Audio`.
+>
+
+I think it should also disable "audiodev" (from QAPI DisplayDBus etc).
+Or at the minimum, it should return an error if the option is given
+and qemu is compiled with !CONFIG_AUDIO.
+
+
+> (The current handling of the situation when audio is enabled but
+> no D-Bus-compatible audio backend is available is different and
+> hasn=E2=80=99t been changed.)
 >
 > Signed-off-by: Sergei Heifetz <heifetz@yandex-team.com>
-> Reviewed-by: Thomas Huth <thuth@redhat.com>
-
-Tbh, I feel like we could still allow "-audio none" for compatibility
-reasons, even if compiled without CONFIG_AUDIO. But "-audio none" does
-not mean "no audio"! it's actually the "none" backend, so better to
-remove "-audio" altogether indeed. It may be worth explaining that in
-the commit message.
-
-Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-
-
-
-
 > ---
->  tests/qtest/libqtest.c | 2 ++
+>  ui/dbus.c | 2 ++
 >  1 file changed, 2 insertions(+)
 >
-> diff --git a/tests/qtest/libqtest.c b/tests/qtest/libqtest.c
-> index 794d870085..adb968f40e 100644
-> --- a/tests/qtest/libqtest.c
-> +++ b/tests/qtest/libqtest.c
-> @@ -464,7 +464,9 @@ gchar *qtest_qemu_args(const char *extra_args)
->                        "-chardev socket,path=3D%s,id=3Dchar0 "
->                        "-mon chardev=3Dchar0,mode=3Dcontrol "
->                        "-display none "
+> diff --git a/ui/dbus.c b/ui/dbus.c
+> index 905ee6fea7..60c8e0b473 100644
+> --- a/ui/dbus.c
+> +++ b/ui/dbus.c
+> @@ -219,6 +219,7 @@ dbus_display_complete(UserCreatable *uc, Error **errp=
+)
+>          return;
+>      }
+>
 > +#ifdef CONFIG_AUDIO
->                        "-audio none "
+>      {
+>          AudioBackend *audio_be =3D audio_get_default_audio_be(NULL);
+>          if (audio_be && !audio_be_can_set_dbus_server(audio_be)) {
+> @@ -234,6 +235,7 @@ dbus_display_complete(UserCreatable *uc, Error **errp=
+)
+>              return;
+>          }
+>      }
 > +#endif
->                        "%s"
->                        "%s"
->                        " -accel qtest",
+>
+>      consoles =3D g_array_new(FALSE, FALSE, sizeof(guint32));
+>      for (idx =3D 0;; idx++) {
 > --
 > 2.34.1
 >
