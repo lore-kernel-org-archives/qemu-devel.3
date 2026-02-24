@@ -4,113 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 638CAF4BB8E
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 21:46:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0413F5542B
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 23:18:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vv0EC-0001Dm-E8; Tue, 24 Feb 2026 16:46:01 -0500
+	id 1vv1eP-0002dV-9x; Tue, 24 Feb 2026 18:17:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1vv0E7-0001Cp-Os; Tue, 24 Feb 2026 16:45:56 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <prvs=5087e30c2=graf@amazon.de>)
+ id 1vv1eN-0002cY-OD; Tue, 24 Feb 2026 18:17:08 -0500
+Received: from pdx-out-013.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ ([34.218.115.239])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1vv0E3-0007Vq-De; Tue, 24 Feb 2026 16:45:54 -0500
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 61OF4rL8733353; Tue, 24 Feb 2026 21:45:48 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:reply-to:subject:to; s=pp1;
- bh=B7ooQBV1s5FpwK9r0zSAZM5fCCMKGJx/4aieekpReGI=; b=tNH0DDvuI6y3
- dj34dFX1UDgZP4OMlIPPEayvoUd4Xt+gPfSABn4zp6AUOH1qr+7JBcNkjw6rgfKJ
- 6e/ADkN0mOxdRaJBpZDnqIyaf20G5zSCsmZgtsrsuFGzu/BEIwSjkBDKOnj0uTnX
- QswQExSL9hC6QUnhi1kgvr9Wm+vw/tQH4G3ptgl+2gmSnkVPqyrpBODjjnB9/vcM
- T44sYA06U4+GllQCPE6+M+3NrEJ4MZA5Mu5KNbjAYJOeJK70fWkXS3Fi9hgFIU1E
- 3ZpsaMcSwRHJLFXvG2bDa35omlgSl6l4RkTsfRf+UybXpGgEoPEzYPmImZiWTWMR
- 1pFLLxUsJw==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4cf24gd8h9-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 24 Feb 2026 21:45:47 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 61OKVW66013419;
- Tue, 24 Feb 2026 21:45:47 GMT
-Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4cfqdy2u1u-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 24 Feb 2026 21:45:47 +0000
-Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
- [10.241.53.105])
- by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 61OLjjmw30999276
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 24 Feb 2026 21:45:45 GMT
-Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C694E5805D;
- Tue, 24 Feb 2026 21:45:45 +0000 (GMT)
-Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 5D8B558043;
- Tue, 24 Feb 2026 21:45:45 +0000 (GMT)
-Received: from mambor8.rchland.ibm.com (unknown [9.10.239.198])
- by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 24 Feb 2026 21:45:45 +0000 (GMT)
-Message-ID: <68b51c772ce69080e289ad2045a199787193950f.camel@linux.ibm.com>
-Subject: Re: [PATCH] target/ppc/translate: Fix TCG debug assert translating
- CLRBWIBC
-From: Miles Glenn <milesg@linux.ibm.com>
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-Cc: qemu-ppc@nongnu.org, qemu-stable@nongnu.org, Nicholas Piggin
- <npiggin@gmail.com>, Chinmay Rath <rathc@linux.ibm.com>, Richard Henderson
- <richard.henderson@linaro.org>, Harsh Prateek Bora <harshpb@linux.ibm.com>
-Date: Tue, 24 Feb 2026 15:45:45 -0600
-In-Reply-To: <CAFEAcA9B6-egOf9MuYqimWNSjkUEVGSOm8NCM4ObOLsnjRmBfw@mail.gmail.com>
-References: <20260212150753.1749448-1-peter.maydell@linaro.org>
- <CAFEAcA9B6-egOf9MuYqimWNSjkUEVGSOm8NCM4ObOLsnjRmBfw@mail.gmail.com>
-Organization: IBM
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.28.5 (3.28.5-27.el8_10) 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Authority-Analysis: v=2.4 cv=TNRIilla c=1 sm=1 tr=0 ts=699e1c0c cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=IkcTkHD0fZMA:10 a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22 a=KKAkSRfTAAAA:8
- a=69wJf7TsAAAA:8 a=ss9Do0Uowje5AuL3rVEA:9 a=QEXdDO2ut3YA:10
- a=cvBusfyB2V15izCimMoJ:22 a=Fg1AiH1G6rFz08G2ETeA:22
-X-Proofpoint-GUID: neMo-k0iGGAixwhA0vCQokic37R1ROUe
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjI0MDE4OSBTYWx0ZWRfX+K/8rctrvitM
- uMAS2ldRtvNj3yceHG8ECIBEI+qcnw3PO+jwsr8RsKnXZmRmp5Egu7RaShYDWiedlh3Ueo75PD6
- Pg3hMb1IgpUA8/tMsDHWgwmt854SH1HQ8jpPht8wL3aZ8z4bQildzPKv85nINS0+dP6/m0sJUNC
- tiIc94WzAuOL1PztZOQZK3ilgHTmIFJGBTgIewcqk4vdGMX88f8aGW1hVov/xHvgC/aZLd24XRO
- fRXSlHz8nAml7Q5C7o0WhEKQVcCgJqKqYWTQG+EUIXhzv2okg/EiFfndkLaYq7+ew0KLniLzy+O
- QT4XCzJf5CcC/FeY22fhCW8Un98UBf0qoL0YKYZys2X1elUSh9sDwVt2i5lPP35e+oe0r/AStY1
- 4+IuhnwOvjL3S19vrdPWXUCEC6F3ShAoyWYhXZ2hpvRi5YxXDkLsFJsarCW49+R/gi/m/fwEf0m
- QKve+Gsj8KHBGvrlZvA==
-X-Proofpoint-ORIG-GUID: 6t4fQjc7vV9pPQ3K0v6hKLNFPyqkQbc2
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-02-24_03,2026-02-23_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 suspectscore=0 adultscore=0 priorityscore=1501 impostorscore=0
- spamscore=0 clxscore=1015 bulkscore=0 lowpriorityscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2601150000 definitions=main-2602240189
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=milesg@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ (Exim 4.90_1) (envelope-from <prvs=5087e30c2=graf@amazon.de>)
+ id 1vv1eL-0005Gy-F3; Tue, 24 Feb 2026 18:17:07 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=amazon.com; i=@amazon.com; q=dns/txt; s=amazoncorp2;
+ t=1771975025; x=1803511025;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=ViumTtedRb+koefa70wHWBPRlYvfYrXB6Dlp+Uija90=;
+ b=dXo4WjnuCTU/Ti41vpys8Pkek1FK9Tpo7yjlWYYHt+EOJEFnz9AkvPrU
+ p3mSgxEDHSCH3A7yERhovfb7hH+aAsKXB1jIwVaEBpyj698/WxLkecaur
+ h+XgWpqrqWOXEKNHhvAYYXNMHWAwC6O0mEFXChXEMEh/yR6oc0kBX4yCf
+ Cqw3nb2O5F96/YjW3Ov7yi6YP3Kzkpu8kaw26q+4o57DEEjgBrxonULus
+ x9mJyEWm18Vn6gbeJeg7I+RbZ9LipbJ7L5L5O2Piy3NsIYlx96OXJ3k2s
+ CT+8FhQ0KttnkQFyFQHH5TODiVFFY7TrKNPbayd50fO5sXKgyLgruBYFG w==;
+X-CSE-ConnectionGUID: 39pMirYvT3GAfMkTNKDuCw==
+X-CSE-MsgGUID: z+fsWX8XRAu6uYB0K+EC8w==
+X-IronPort-AV: E=Sophos;i="6.21,309,1763424000"; d="scan'208";a="13529305"
+Received: from ip-10-5-9-48.us-west-2.compute.internal (HELO
+ smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.9.48])
+ by internal-pdx-out-013.esa.us-west-2.outbound.mail-perimeter.amazon.com with
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Feb 2026 23:16:56 +0000
+Received: from EX19MTAUWC001.ant.amazon.com [205.251.233.105:8911]
+ by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.44.196:2525]
+ with esmtp (Farcaster)
+ id ce1adf89-aa4a-4dc0-939a-8d2a0bb869b2; Tue, 24 Feb 2026 23:16:56 +0000 (UTC)
+X-Farcaster-Flow-ID: ce1adf89-aa4a-4dc0-939a-8d2a0bb869b2
+Received: from EX19D020UWC004.ant.amazon.com (10.13.138.149) by
+ EX19MTAUWC001.ant.amazon.com (10.250.64.174) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.37;
+ Tue, 24 Feb 2026 23:16:56 +0000
+Received: from [0.0.0.0] (172.19.99.218) by EX19D020UWC004.ant.amazon.com
+ (10.13.138.149) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.37; Tue, 24 Feb 2026
+ 23:16:52 +0000
+Message-ID: <86b8f3b3-4016-460a-bc8d-daa39f344ae4@amazon.com>
+Date: Wed, 25 Feb 2026 00:16:50 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 03/10] accel: Add Nitro Enclaves accelerator
+To: Paolo Bonzini <pbonzini@redhat.com>, <qemu-devel@nongnu.org>
+CC: <qemu-arm@nongnu.org>, Peter Maydell <peter.maydell@linaro.org>, "Thomas
+ Huth" <thuth@redhat.com>, <alex.bennee@linaro.org>, <philmd@linaro.org>,
+ <berrange@redhat.com>, <marcandre.lureau@redhat.com>, Cornelia Huck
+ <cohuck@redhat.com>, <mst@redhat.com>, Dorjoy Chowdhury
+ <dorjoychy111@gmail.com>, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Tyler Fanelli <tfanelli@redhat.com>, <mknaust@amazon.com>,
+ <nh-open-source@amazon.com>
+References: <20260218015151.4052-1-graf@amazon.com>
+ <20260218015151.4052-4-graf@amazon.com>
+ <2be88699-f77b-4236-a959-bc999a3e4caf@redhat.com>
+Content-Language: en-US
+From: Alexander Graf <graf@amazon.com>
+In-Reply-To: <2be88699-f77b-4236-a959-bc999a3e4caf@redhat.com>
+X-Originating-IP: [172.19.99.218]
+X-ClientProxiedBy: EX19D031UWA001.ant.amazon.com (10.13.139.88) To
+ EX19D020UWC004.ant.amazon.com (10.13.138.149)
+Content-Type: text/plain; charset="utf-8"; format="flowed"
+Content-Transfer-Encoding: base64
+Received-SPF: pass client-ip=34.218.115.239;
+ envelope-from=prvs=5087e30c2=graf@amazon.de;
+ helo=pdx-out-013.esa.us-west-2.outbound.mail-perimeter.amazon.com
+X-Spam_score_int: -6
+X-Spam_score: -0.7
+X-Spam_bar: /
+X-Spam_report: (-0.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.25, RCVD_IN_DNSWL_NONE=-0.0001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.358, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.659,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_NONE=0.001, T_SPF_PERMERROR=0.01,
+ UNPARSEABLE_RELAY=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,116 +99,121 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: milesg@linux.ibm.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-+Harsh
-
-Harsh, would you be the right person to do the pull on this PPC TCG
-fix?  If so, maybe we should go ahead and make it official in the
-MAINTAINERS file?
-
-Thanks,
-
-Glenn
-
-On Tue, 2026-02-24 at 11:28 +0000, Peter Maydell wrote:
-> Thanks for the code review -- is anybody going to take this via a
-> PPC pull request? If not, I can take it via target-arm.next as a
-> one-off -- let me know if you'd prefer that.
-> 
-> thanks
-> -- PMM
-> 
-> On Thu, 12 Feb 2026 at 15:07, Peter Maydell <peter.maydell@linaro.org> wrote:
-> > The test case in the ppe42 functional test triggers a TCG debug
-> > assertion, which causes the test to fail in an --enable-debug
-> > build or when the sanitizers are enabled:
-> > 
-> > #6  0x00007ffff4a3b517 in __assert_fail
-> >     (assertion=0x5555562e7589 "!temp_readonly(ots)", file=0x5555562e5b23 "../../tcg/tcg.c", line=4928, function=0x5555562e8900 <__PRETTY_FUNCTION__.23> "tcg_reg_alloc_mov") at ./assert/assert.c:105
-> > #7  0x0000555555cc2189 in tcg_reg_alloc_mov (s=0x7fff60000b70, op=0x7fff600126f8) at ../../tcg/tcg.c:4928
-> > #8  0x0000555555cc74e0 in tcg_gen_code (s=0x7fff60000b70, tb=0x7fffa802f540, pc_start=4294446080) at ../../tcg/tcg.c:6667
-> > #9  0x0000555555d02abe in setjmp_gen_code
-> >     (env=0x555556cbe610, tb=0x7fffa802f540, pc=4294446080, host_pc=0x7fffeea00c00, max_insns=0x7fffee9f9d74, ti=0x7fffee9f9d90)
-> >     at ../../accel/tcg/translate-all.c:257
-> > #10 0x0000555555d02d75 in tb_gen_code (cpu=0x555556cba590, s=...) at ../../accel/tcg/translate-all.c:325
-> > #11 0x0000555555cf5922 in cpu_exec_loop (cpu=0x555556cba590, sc=0x7fffee9f9ee0) at ../../accel/tcg/cpu-exec.c:970
-> > #12 0x0000555555cf5aae in cpu_exec_setjmp (cpu=0x555556cba590, sc=0x7fffee9f9ee0) at ../../accel/tcg/cpu-exec.c:1016
-> > #13 0x0000555555cf5b4b in cpu_exec (cpu=0x555556cba590) at ../../accel/tcg/cpu-exec.c:1042
-> > #14 0x0000555555d1e7ab in tcg_cpu_exec (cpu=0x555556cba590) at ../../accel/tcg/tcg-accel-ops.c:82
-> > #15 0x0000555555d1ff97 in rr_cpu_thread_fn (arg=0x555556cba590) at ../../accel/tcg/tcg-accel-ops-rr.c:285
-> > #16 0x00005555561586c9 in qemu_thread_start (args=0x555556ee3c90) at ../../util/qemu-thread-posix.c:393
-> > #17 0x00007ffff4a9caa4 in start_thread (arg=<optimized out>) at ./nptl/pthread_create.c:447
-> > #18 0x00007ffff4b29c6c in clone3 () at ../sysdeps/unix/sysv/linux/x86_64/clone3.S:78
-> > 
-> > This can be reproduced "by hand":
-> > 
-> >  ./build/clang/qemu-system-ppc -display none -vga none \
-> >     -machine ppe42_machine -serial stdio \
-> >     -device loader,file=$HOME/.cache/qemu/download/03c1ac0fb7f6c025102a02776a93b35101dae7c14b75e4eab36a337e39042ea8 \
-> >     -device loader,addr=0xfff80040,cpu-num=0
-> > 
-> > (assuming you have the image file from the functional test
-> > in your local cache).
-> > 
-> > This happens for this input:
-> > 
-> > IN:
-> > 0xfff80c00:  07436004  .byte    0x07, 0x43, 0x60, 0x04
-> > 
-> > which generates (among other things):
-> > 
-> >  not_i32 $0x80000,$0x80000
-> > 
-> > which the TCG optimization pass turns into:
-> > 
-> >  mov_i32 $0x80000,$0xfff7ffff             dead: 1  pref=0xffff
-> > 
-> > and where we then assert because we tried to write to a constant.
-> > 
-> > This happens for the CLRBWIBC instruction which ends up in
-> > do_mask_branch() with rb_is_gpr false and invert true.  In this case
-> > we will generate code that sets mask to a tcg_constant_tl() but then
-> > uses it as the LHS in tcg_gen_not_tl().
-> > 
-> > Fix the assertion by doing the invert in the translate time C code
-> > for the "mask is constant" case.
-> > 
-> > Cc: qemu-stable@nongnu.org
-> > Fixes: f7ec91c23906 ("target/ppc: Add IBM PPE42 special instructions")
-> > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> > ---
-> >  target/ppc/translate/ppe-impl.c.inc | 12 ++++++++----
-> >  1 file changed, 8 insertions(+), 4 deletions(-)
-> > 
-> > diff --git a/target/ppc/translate/ppe-impl.c.inc b/target/ppc/translate/ppe-impl.c.inc
-> > index 0a0590344e..1c27facb89 100644
-> > --- a/target/ppc/translate/ppe-impl.c.inc
-> > +++ b/target/ppc/translate/ppe-impl.c.inc
-> > @@ -424,11 +424,15 @@ static bool do_mask_branch(DisasContext *ctx, arg_FCB * a, bool invert,
-> >          shift = tcg_temp_new();
-> >          tcg_gen_andi_tl(shift, cpu_gpr[a->rb], 0x1f);
-> >          tcg_gen_shr_tl(mask, tcg_constant_tl(0x80000000), shift);
-> > +        if (invert) {
-> > +            tcg_gen_not_tl(mask, mask);
-> > +        }
-> >      } else {
-> > -        mask = tcg_constant_tl(PPC_BIT32(a->rb));
-> > -    }
-> > -    if (invert) {
-> > -        tcg_gen_not_tl(mask, mask);
-> > +        target_ulong mask_const = PPC_BIT32(a->rb);
-> > +        if (invert) {
-> > +            mask_const = ~mask_const;
-> > +        }
-> > +        mask = tcg_constant_tl(mask_const);
-> >      }
-> > 
-> >      /* apply mask to ra */
-> > --
-> > 2.43.0
-> > 
+Ck9uIDI0LjAyLjI2IDExOjIyLCBQYW9sbyBCb256aW5pIHdyb3RlOgo+IE9uIDIvMTgvMjYgMDI6
+NTEsIEFsZXhhbmRlciBHcmFmIHdyb3RlOgo+PiArLyoKPj4gKyAqIFN0YXJ0IHRoZSBFbmNsYXZl
+LiBUaGlzIGdldHMgY2FsbGVkIHdoZW4gdGhlIGZpcnN0IHZDUFUgMCBlbnRlcnMgCj4+IGl0cyBt
+YWluCj4+ICsgKiBsb29wLiBBdCB0aGlzIHBvaW50IG1lbW9yeSBpcyBzZXQgdXAgYW5kIHRoZSBF
+SUYgaXMgbG9hZGVkLiBUaGlzIAo+PiBmdW5jdGlvbgo+PiArICogZG9uYXRlcyBtZW1vcnksIGFk
+ZHMgdkNQVXMsIGFuZCBzdGFydHMgdGhlIGVuY2xhdmUuCj4+ICsgKi8KPj4gK3N0YXRpYyB2b2lk
+IG5pdHJvX2RvX3N0YXJ0KE5pdHJvQWNjZWxTdGF0ZSAqcykKPj4gK3sKPj4gK8KgwqDCoCBNYWNo
+aW5lU3RhdGUgKm1zID0gTUFDSElORShxZGV2X2dldF9tYWNoaW5lKCkpOwo+PiArwqDCoMKgIGlu
+dCBucl9jcHVzID0gbXMtPnNtcC5jcHVzOwo+PiArwqDCoMKgIGludCBpLCByZXQ7Cj4+ICvCoMKg
+wqAgc3RydWN0IG5lX2VuY2xhdmVfc3RhcnRfaW5mbyBzdGFydF9pbmZvID0gewo+PiArwqDCoMKg
+wqDCoMKgwqAgLmZsYWdzID0gcy0+ZGVidWdfbW9kZSA/IE5FX0VOQ0xBVkVfREVCVUdfTU9ERSA6
+IDAsCj4+ICvCoMKgwqDCoMKgwqDCoCAuZW5jbGF2ZV9jaWQgPSBzLT5lbmNsYXZlX2NpZCwKPj4g
+K8KgwqDCoCB9Owo+PiArCj4+ICvCoMKgwqAgcmV0ID0gcWVtdV9yYW1fZm9yZWFjaF9ibG9jayhu
+aXRyb19kb25hdGVfcmFtX2Jsb2NrLCBzKTsKPj4gK8KgwqDCoCBpZiAocmV0IDwgMCkgewo+PiAr
+wqDCoMKgwqDCoMKgwqAgZXJyb3JfcmVwb3J0KCJuaXRybzogZmFpbGVkIHRvIGRvbmF0ZSBtZW1v
+cnkiKTsKPj4gK8KgwqDCoMKgwqDCoMKgIGV4aXQoMSk7Cj4+ICvCoMKgwqAgfQo+PiArCj4+ICvC
+oMKgwqAgZm9yIChpID0gMDsgaSA8IG5yX2NwdXM7IGkrKykgewo+PiArwqDCoMKgwqDCoMKgwqAg
+dWludDMyX3QgY3B1X2lkID0gMDsKPj4gK8KgwqDCoMKgwqDCoMKgIGlmIChpb2N0bChzLT5lbmNs
+YXZlX2ZkLCBORV9BRERfVkNQVSwgJmNwdV9pZCkgPCAwKSB7Cj4+ICvCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgIGVycm9yX3JlcG9ydCgibml0cm86IE5FX0FERF9WQ1BVIGZhaWxlZDogJXMiLCAKPj4g
+c3RyZXJyb3IoZXJybm8pKTsKPj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqAgZXhpdCgxKTsKPj4g
+K8KgwqDCoMKgwqDCoMKgIH0KPj4gK8KgwqDCoCB9Cj4+ICsKPj4gK8KgwqDCoCByZXQgPSBpb2N0
+bChzLT5lbmNsYXZlX2ZkLCBORV9TVEFSVF9FTkNMQVZFLCAmc3RhcnRfaW5mbyk7Cj4+ICvCoMKg
+wqAgaWYgKHJldCA8IDApIHsKPj4gK8KgwqDCoMKgwqDCoMKgIHN3aXRjaCAoZXJybm8pIHsKPj4g
+K8KgwqDCoMKgwqDCoMKgIGNhc2UgTkVfRVJSX05PX01FTV9SRUdJT05TX0FEREVEOgo+PiArwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoCBlcnJvcl9yZXBvcnQoIm5pdHJvOiBubyBtZW1vcnkgcmVnaW9u
+cyBhZGRlZCIpOwo+PiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBicmVhazsKPj4gK8KgwqDCoMKg
+wqDCoMKgIGNhc2UgTkVfRVJSX05PX1ZDUFVTX0FEREVEOgo+PiArwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoCBlcnJvcl9yZXBvcnQoIm5pdHJvOiBubyB2Q1BVcyBhZGRlZCIpOwo+PiArwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoCBicmVhazsKPj4gK8KgwqDCoMKgwqDCoMKgIGNhc2UgTkVfRVJSX0VOQ0xB
+VkVfTUVNX01JTl9TSVpFOgo+PiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBlcnJvcl9yZXBvcnQo
+Im5pdHJvOiBtZW1vcnkgaXMgYmVsb3cgdGhlIG1pbmltdW0gIgo+PiArwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgICJyZXF1aXJlZCBzaXplLiBUcnkgaW5j
+cmVhc2luZyAtbSIpOwo+PiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBicmVhazsKPj4gK8KgwqDC
+oMKgwqDCoMKgIGNhc2UgTkVfRVJSX0ZVTExfQ09SRVNfTk9UX1VTRUQ6Cj4+ICvCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgIGVycm9yX3JlcG9ydCgibml0cm86IHJlcXVpcmVzIGZ1bGwgQ1BVIGNvcmVz
+LiAiCj4+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAg
+IlRyeSBpbmNyZWFzaW5nIC1zbXAgdG8gYSBtdWx0aXBsZSBvZiAKPj4gdGhyZWFkcyAiCj4+ICvC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgInBlciBjb3Jl
+IG9uIHRoaXMgaG9zdCAoZS5nLiAtc21wIDIpIik7Cj4+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+IGJyZWFrOwo+PiArwqDCoMKgwqDCoMKgwqAgY2FzZSBORV9FUlJfTk9UX0lOX0lOSVRfU1RBVEU6
+Cj4+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIGVycm9yX3JlcG9ydCgibml0cm86IG5vdCBpbiBp
+bml0IHN0YXRlIik7Cj4+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIGJyZWFrOwo+PiArwqDCoMKg
+wqDCoMKgwqAgY2FzZSBORV9FUlJfSU5WQUxJRF9GTEFHX1ZBTFVFOgo+PiArwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoCBlcnJvcl9yZXBvcnQoIm5pdHJvOiBpbnZhbGlkIGZsYWcgdmFsdWUgZm9yIAo+
+PiBORV9TVEFSVF9FTkNMQVZFIik7Cj4+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIGJyZWFrOwo+
+PiArwqDCoMKgwqDCoMKgwqAgY2FzZSBORV9FUlJfSU5WQUxJRF9FTkNMQVZFX0NJRDoKPj4gK8Kg
+wqDCoMKgwqDCoMKgwqDCoMKgwqAgZXJyb3JfcmVwb3J0KCJuaXRybzogaW52YWxpZCBlbmNsYXZl
+IENJRCIpOwo+PiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBicmVhazsKPj4gK8KgwqDCoMKgwqDC
+oMKgIGRlZmF1bHQ6Cj4+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIGVycm9yX3JlcG9ydCgibml0
+cm86IE5FX1NUQVJUX0VOQ0xBVkUgZmFpbGVkOiAlcyAoZXJybm8gCj4+ICVkKSIsCj4+ICvCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgc3RyZXJyb3IoZXJy
+bm8pLCBlcnJubyk7Cj4+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIGJyZWFrOwo+PiArwqDCoMKg
+wqDCoMKgwqAgfQo+PiArwqDCoMKgwqDCoMKgwqAgZXhpdCgxKTsKPj4gK8KgwqDCoCB9Cj4+ICsK
+Pj4gK8KgwqDCoCBzLT5lbmNsYXZlX2NpZCA9IHN0YXJ0X2luZm8uZW5jbGF2ZV9jaWQ7Cj4+ICvC
+oMKgwqAgdHJhY2Vfbml0cm9fZW5jbGF2ZV9zdGFydGVkKHMtPmVuY2xhdmVfY2lkKTsKPj4gKwo+
+PiArwqDCoMKgIC8qCj4+ICvCoMKgwqDCoCAqIFB1c2ggZW5jbGF2ZSBDSUQgdG8gYWxsIGRldmlj
+ZXMgdGhhdCBuZWVkIGl0Lgo+PiArwqDCoMKgwqAgKiBFYWNoIGRldmljZSBoYW5kbGVzIGl0cyBv
+d24gY29ubmVjdGlvbiAoY29uc29sZSwgaGVhcnRiZWF0KS4KPj4gK8KgwqDCoMKgICovCj4+ICvC
+oMKgwqAgewo+PiArwqDCoMKgwqDCoMKgwqAgQnVzU3RhdGUgKnN5c2J1cyA9IHN5c2J1c19nZXRf
+ZGVmYXVsdCgpOwo+PiArwqDCoMKgwqDCoMKgwqAgQnVzQ2hpbGQgKmtpZDsKPj4gKwo+PiArwqDC
+oMKgwqDCoMKgwqAgUVRBSUxRX0ZPUkVBQ0goa2lkLCAmc3lzYnVzLT5jaGlsZHJlbiwgc2libGlu
+Zykgewo+PiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBEZXZpY2VTdGF0ZSAqZGV2ID0ga2lkLT5j
+aGlsZDsKPj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqAgaWYgKG9iamVjdF9wcm9wZXJ0eV9maW5k
+KE9CSkVDVChkZXYpLCAiZW5jbGF2ZS1jaWQiKSkgewo+PiArwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgIG9iamVjdF9wcm9wZXJ0eV9zZXRfdWludChPQkpFQ1QoZGV2KSwgImVuY2xhdmUt
+Y2lkIiwKPj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHMtPmVuY2xhdmVfY2lkLCBOVUxMKTsK
+Pj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqAgfQo+PiArwqDCoMKgwqDCoMKgwqAgfQo+Cj4gSSB0
+aGluayBpdCBtYWtlcyBtb3JlIHNlbnNlIHRvIGhhdmUgYSAibml0cm8gYnVzIiB3aXRoIGl0cyBv
+d24gCj4gc3ViY2xhc3MgYW5kIGFuIGVuY2xhdmVfc3RhcnRlZChOaXRyb0RldmljZSAqZGV2LCBp
+bnQgZW5jbGF2ZV9jaWQsIAo+IEVycm9yICoqZXJycCkgbWV0aG9kLsKgIFByb3BlcnRpZXMgY2Fu
+IGJlIHNldCB3aXRoIC1kZXZpY2UgYW5kIHRoYXQgCj4gZ2V0cyBlaXRoZXIgYXdrd2FyZCBvciBi
+dWdneSBwcmV0dHkgcXVpY2tseS4KCgpJIHRlbmQgdG8gYWdyZWUuIE1heWJlIGV2ZW4gYSAibml0
+cm8gdnNvY2sgYnVzIi4gTGV0IG1lIGNvb2sgb24gdGhhdCBhIGJpdC4KCgo+Cj4+ICvCoMKgwqAg
+fQo+PiArfQo+PiArCj4+ICsvKgo+PiArICogdkNQVSBkdW1teSB0aHJlYWQgZnVuY3Rpb24uIFRo
+ZSByZWFsIHZDUFVzIHJ1biBpbnNpZGUgdGhlIGVuY2xhdmUuCj4+ICsgKgo+PiArICogQmFzZWQg
+b24gZHVtbXlfY3B1X3RocmVhZF9mbigpIGZyb20gYWNjZWwvZHVtbXktY3B1cy5jLgo+PiArICov
+Cj4+ICtzdGF0aWMgdm9pZCAqbml0cm9fdmNwdV90aHJlYWRfZm4odm9pZCAqYXJnKQo+PiArewo+
+PiArwqDCoMKgIENQVVN0YXRlICpjcHUgPSBhcmc7Cj4+ICvCoMKgwqAgTml0cm9BY2NlbFN0YXRl
+ICpzID0gTklUUk9fQUNDRUwoY3VycmVudF9hY2NlbCgpKTsKPj4gK8KgwqDCoCBzaWdzZXRfdCB3
+YWl0c2V0Owo+PiArCj4+ICvCoMKgwqAgcmN1X3JlZ2lzdGVyX3RocmVhZCgpOwo+PiArCj4+ICvC
+oMKgwqAgYnFsX2xvY2soKTsKPj4gK8KgwqDCoCBxZW11X3RocmVhZF9nZXRfc2VsZihjcHUtPnRo
+cmVhZCk7Cj4+ICvCoMKgwqAgY3B1LT50aHJlYWRfaWQgPSBxZW11X2dldF90aHJlYWRfaWQoKTsK
+Pj4gK8KgwqDCoCBjdXJyZW50X2NwdSA9IGNwdTsKPj4gKwo+PiArwqDCoMKgIHNpZ2VtcHR5c2V0
+KCZ3YWl0c2V0KTsKPj4gK8KgwqDCoCBzaWdhZGRzZXQoJndhaXRzZXQsIFNJR19JUEkpOwo+PiAr
+Cj4+ICvCoMKgwqAgY3B1X3RocmVhZF9zaWduYWxfY3JlYXRlZChjcHUpOwo+PiArwqDCoMKgIHFl
+bXVfZ3Vlc3RfcmFuZG9tX3NlZWRfdGhyZWFkX3BhcnQyKGNwdS0+cmFuZG9tX3NlZWQpOwo+PiAr
+Cj4+ICvCoMKgwqAgLyogdkNQVSAwIHN0YXJ0cyB0aGUgZW5jbGF2ZSBvbiBmaXJzdCBlbnRyeSAq
+Lwo+PiArwqDCoMKgIGlmIChjcHUtPmNwdV9pbmRleCA9PSAwKSB7Cj4+ICvCoMKgwqDCoMKgwqDC
+oCBuaXRyb19kb19zdGFydChzKTsKPj4gK8KgwqDCoCB9Cj4KPiBDYW4geW91IHJlcGxhY2UgdGhp
+cyB3aXRoIGFuIGFzeW5jX3J1bl9vbl9jcHUoKSBjYWxsIHdoZW4gdkNQVSAwIGlzIAo+IGNyZWF0
+ZWQgKGluIG5pdHJvX3N0YXJ0X3ZjcHVfdGhyZWFkKSBhbmQganVzdCByZXVzZSAKPiBkdW1teV9j
+cHVfdGhyZWFkX2ZuKCk/Cj4KPiBPciBhbHRlcm5hdGl2ZWx5IHdpdGggYSBtYWNoaW5lIHJlYWR5
+IG5vdGlmaWVyLgoKCkkgbW92ZWQgaXQgaW50byBzZXR1cF9wb3N0KCkgd2hpY2ggaXMgYSBtb3Jl
+IG5hdHVyYWwgcGxhY2UgYW55d2F5LiBUaGF0IAp3YXkgSSBjYW4gYWxzbyBleGNsdXNpdmVseSB1
+c2UgdGhlIGR1bW15IGNwdSB0aHJlYWQuIERlZmluaXRlbHkgbXVjaCAKY2xlYW5lciwgdGhhbmsg
+eW91IDopLgoKCj4KPj4gZGlmZiAtLWdpdCBhL2FjY2VsL3N0dWJzL25pdHJvLXN0dWIuYyBiL2Fj
+Y2VsL3N0dWJzL25pdHJvLXN0dWIuYwo+PiBuZXcgZmlsZSBtb2RlIDEwMDY0NAo+PiBpbmRleCAw
+MDAwMDAwMDAwLi4xODZjODQ0NGY4Cj4+IC0tLSAvZGV2L251bGwKPj4gKysrIGIvYWNjZWwvc3R1
+YnMvbml0cm8tc3R1Yi5jCj4+IEBAIC0wLDAgKzEsMTEgQEAKPj4gKy8qCj4+ICsgKiBOaXRybyBh
+Y2NlbCBzdHVicyBmb3IgUUVNVQo+PiArICoKPj4gKyAqIENvcHlyaWdodCDCqSAyMDI2IEFtYXpv
+bi5jb20sIEluYy4gb3IgaXRzIGFmZmlsaWF0ZXMuIEFsbCBSaWdodHMgCj4+IFJlc2VydmVkLgo+
+PiArICoKPj4gKyAqIFNQRFgtTGljZW5zZS1JZGVudGlmaWVyOiBHUEwtMi4wLW9yLWxhdGVyCj4+
+ICsgKi8KPj4gKwo+PiArI2luY2x1ZGUgInFlbXUvb3NkZXAuaCIKPj4gKwo+PiArYm9vbCBuaXRy
+b19hbGxvd2VkOwo+Cj4gTWF5YmUgYWxsIHRoZXNlICpfYWxsb3dlZCB2YXJpYWJsZXMgc2hvdWxk
+IGJlIGluIGEgLmMgZmlsZSBpbiBhY2NlbC8uCgoKSG0sIG1heWJlLiBCdXQgSSdkIGxpa2UgdG8g
+bGVhdmUgdGhhdCBmb3IgYSBkaWZmZXJlbnQgcGF0Y2ggc2V0IHNvIEkgCmRvbid0IGVuZCB1cCBi
+b2lsaW5nIHRoZSBvY2VhbiA6KQoKCkFsZXgKCgoKCkFtYXpvbiBXZWIgU2VydmljZXMgRGV2ZWxv
+cG1lbnQgQ2VudGVyIEdlcm1hbnkgR21iSApUYW1hcmEtRGFuei1TdHIuIDEzCjEwMjQzIEJlcmxp
+bgpHZXNjaGFlZnRzZnVlaHJ1bmc6IENocmlzdG9mIEhlbGxtaXMsIEFuZHJlYXMgU3RpZWdlcgpF
+aW5nZXRyYWdlbiBhbSBBbXRzZ2VyaWNodCBDaGFybG90dGVuYnVyZyB1bnRlciBIUkIgMjU3NzY0
+IEIKU2l0ejogQmVybGluClVzdC1JRDogREUgMzY1IDUzOCA1OTcK
 
 
