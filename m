@@ -4,84 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EAA7EE9B251
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 11:21:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11BA7E9B24D
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 11:22:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuqTC-0005aN-Qb; Tue, 24 Feb 2026 06:20:50 -0500
+	id 1vuqUq-0007j5-Pa; Tue, 24 Feb 2026 06:22:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vuqT7-0005R8-Af
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 06:20:46 -0500
-Received: from forwardcorp1b.mail.yandex.net
- ([2a02:6b8:c02:900:1:45:d181:df01])
+ (Exim 4.90_1) (envelope-from <paul@xen.org>) id 1vuqUq-0007iw-55
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 06:22:32 -0500
+Received: from mail.xenproject.org ([104.130.215.37])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vuqT4-0002uY-18
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 06:20:44 -0500
-Received: from mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
- [IPv6:2a02:6b8:c24:fa2:0:640:41ee:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 538908850A;
- Tue, 24 Feb 2026 14:20:33 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:448::1:11] (unknown
- [2a02:6bf:8080:448::1:11])
- by mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id UKeWfN7ACKo0-m71xOHou; Tue, 24 Feb 2026 14:20:32 +0300
-Precedence: bulk
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1771932032;
- bh=E+M0ubGZzfuokt30VQMEqhmDw8oKWg/l1YRegknL0PE=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=Kdo3c7O9jq8Ovub/AhJdXU4I36Lm/sM3dmC8drTZABbGtuAwVMYofW3rYEOGqnZQ2
- eMZHCLcCFzvZB38W/eMrDnjrXcSHxfWgytApCdHe86ax//79y963qLidLEkxjt6uSa
- U8/GSo9/HVGOBNTEcA5Q47lN0TIw05mNN+F+Uatk=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <e60e4849-30d7-4ceb-a1a5-9fdc9b579827@yandex-team.ru>
-Date: Tue, 24 Feb 2026 14:20:30 +0300
+ (Exim 4.90_1) (envelope-from <paul@xen.org>) id 1vuqUo-0003Ho-LL
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 06:22:31 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=xen.org;
+ s=20200302mail; h=Content-Transfer-Encoding:MIME-Version:Message-ID:Date:
+ Subject:Cc:To:From; bh=Z/WEq8n0U84heIIePjYpbKXiXE+eAfzjOG2ZP9AjAQ8=; b=LxDte9
+ AmVwnxHifqo1HWZumJFDsho3HOe/q7qZyYj0HHiL/RZADHF+JTkJIEQUgQwSCzsFTEjR9H6mhAC8Q
+ dkY5+/SOgRDHW5b3XTnYWwgVjR7nM/LzSoyZtkJwIQjYINyOy9zwdMGgzPpLp59cNDbVbPjb/aI/A
+ iYlDXU9hJPI=;
+Received: from xenbits.xenproject.org ([104.239.192.120])
+ by mail.xenproject.org with esmtp (Exim 4.96)
+ (envelope-from <paul@xen.org>) id 1vuqUk-007oPx-35;
+ Tue, 24 Feb 2026 11:22:26 +0000
+Received: from [15.248.2.232] (helo=7cf34dd8cfa1.ant.amazon.com)
+ by xenbits.xenproject.org with esmtpsa (TLS1.3) tls
+ TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256 (Exim 4.96)
+ (envelope-from <paul@xen.org>) id 1vuqUk-004AlT-27;
+ Tue, 24 Feb 2026 11:22:26 +0000
+From: Paul Durrant <paul@xen.org>
+To: qemu-devel@nongnu.org,
+	peter.maydell@linaro.org
+Cc: Paul Durrant <pdurrant@amazon.com>
+Subject: [PATCH] MAINTAINERS: remove myself as a Xen maintainer
+Date: Tue, 24 Feb 2026 11:21:36 +0000
+Message-ID: <20260224112215.83355-1-paul@xen.org>
+X-Mailer: git-send-email 2.50.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v11 6/8] net/tap: support local migration with virtio-net
-To: "Chaney, Ben" <bchaney@akamai.com>,
- "jasowang@redhat.com" <jasowang@redhat.com>, "mst@redhat.com"
- <mst@redhat.com>
-Cc: "thuth@redhat.com" <thuth@redhat.com>,
- "armbru@redhat.com" <armbru@redhat.com>,
- "eblake@redhat.com" <eblake@redhat.com>, "farosas@suse.de"
- <farosas@suse.de>, "peterx@redhat.com" <peterx@redhat.com>,
- "zhao1.liu@intel.com" <zhao1.liu@intel.com>,
- "wangyanan55@huawei.com" <wangyanan55@huawei.com>,
- "philmd@linaro.org" <philmd@linaro.org>,
- "marcel.apfelbaum@gmail.com" <marcel.apfelbaum@gmail.com>,
- "eduardo@habkost.net" <eduardo@habkost.net>,
- "davydov-max@yandex-team.ru" <davydov-max@yandex-team.ru>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "yc-core@yandex-team.ru" <yc-core@yandex-team.ru>,
- "leiyang@redhat.com" <leiyang@redhat.com>,
- "raphael.s.norwitz@gmail.com" <raphael.s.norwitz@gmail.com>
-References: <20260219115530.2019498-1-vsementsov@yandex-team.ru>
- <20260219115530.2019498-7-vsementsov@yandex-team.ru>
- <721F62BC-6E5F-4963-BC3A-666F0C0290CA@akamai.com>
-Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <721F62BC-6E5F-4963-BC3A-666F0C0290CA@akamai.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=104.130.215.37; envelope-from=paul@xen.org;
+ helo=mail.xenproject.org
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1.179,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.717, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
+Precedence: list
 List-Id: qemu development <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -93,32 +68,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 24.02.26 00:36, Chaney, Ben wrote:
-> 
-> ﻿On 2/19/26, 6:56 AM, "Vladimir Sementsov-Ogievskiy" <vsementsov@yandex-team.ru <mailto:vsementsov@yandex-team.ru>> wrote:
-> 
->> + if (tap->incoming_fds && (script || downscript)) {
->> + error_setg(errp,
->> + "incoming-fds requires script=no and downscript=no");
->> + return -1;
->> + }
->> +
-> 
-> This conditional will never trigger because we are in an else{} block
-> that implies !tap->incoming_fds. I think we need to handle this case
-> higher up.
+From: Paul Durrant <pdurrant@amazon.com>
 
-Oh, right, will fix.
+I am no longer actively involved in the Xen Project.
 
-> 
-> Other than that, this patch set LGTM. I was able to test it, and the
-> performance was impressive.
-> 
+Signed-off-by: Paul Durrant <pdurrant@amazon.com>
+---
+ MAINTAINERS | 1 -
+ 1 file changed, 1 deletion(-)
 
-Thanks for testing!
-
-
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 233d2a5e71ff..ef805c8ef7a0 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -603,7 +603,6 @@ Guest CPU Cores (Xen)
+ X86 Xen CPUs
+ M: Stefano Stabellini <sstabellini@kernel.org>
+ M: Anthony PERARD <anthony@xenproject.org>
+-M: Paul Durrant <paul@xen.org>
+ M: Edgar E. Iglesias <edgar.iglesias@gmail.com>
+ L: xen-devel@lists.xenproject.org
+ S: Supported
 -- 
-Best regards,
-Vladimir
+2.50.1 (Apple Git-155)
+
 
