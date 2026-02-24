@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3CF8F4BB6C
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 18:16:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33972F4BB6C
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 18:16:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuwxS-0004EJ-MG; Tue, 24 Feb 2026 13:16:30 -0500
+	id 1vuwx9-0003MF-Bi; Tue, 24 Feb 2026 13:16:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vuwxJ-0003dl-KI
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 13:16:22 -0500
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vuwwZ-000391-A6
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 13:15:37 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vuwxH-0002a7-N6
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 13:16:20 -0500
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vuwwQ-0002I4-Hh
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 13:15:27 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771956979;
+ s=mimecast20190719; t=1771956923;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=U4Yxtls0c4Hl6zHuKEiGMtWtOdyTvhgDTplCXgQPhm0=;
- b=NMW1JBYQ21gv2O35Ujk55y+Hu11+WR4p+QREaARXN6omRY++RAckCy1vy1AusdAEeY9zc5
- PiLuXOkODNm9s6CaoRFVnjI9trZ9vze3ozylDo6wRW5etNuPMDU3VjkAjxkw9GZ4yR+COB
- oF5rqqb5sFCwv8N9i1SIg8vuzY3xOyw=
+ bh=cxg4XbDyk9wo7rzoGwJmKfXpjv5zJCDjxCNW8g7xe0g=;
+ b=SLNRm6sTixuYn1dMHNgX8xngz9nwjpABZzLZJOtPneH+BI3s8suXoy3wGWMp6wvkowOLm5
+ Gp/1HRMq4fijYuoISgDAzIoR2cr7K7D7GejTZ4gNp11UmfML9lgO1JkwKqYzkIhm3Xpu16
+ 9TtzlArvKok/+3U9YwTqObMEMGcORKw=
 Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-643-m8_UXlCPNBmKkxmDHXZ8yg-1; Tue,
- 24 Feb 2026 13:16:15 -0500
-X-MC-Unique: m8_UXlCPNBmKkxmDHXZ8yg-1
-X-Mimecast-MFC-AGG-ID: m8_UXlCPNBmKkxmDHXZ8yg_1771956973
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-215-gnT0w1y3P7G6dX7cfuuwzg-1; Tue,
+ 24 Feb 2026 13:15:19 -0500
+X-MC-Unique: gnT0w1y3P7G6dX7cfuuwzg-1
+X-Mimecast-MFC-AGG-ID: gnT0w1y3P7G6dX7cfuuwzg_1771956917
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AD33519560B3; Tue, 24 Feb 2026 18:16:13 +0000 (UTC)
+ id BB70B19560B0; Tue, 24 Feb 2026 18:15:17 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.89.212])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 1F2A51800668; Tue, 24 Feb 2026 18:16:08 +0000 (UTC)
+ id 468971800666; Tue, 24 Feb 2026 18:15:11 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
@@ -64,13 +64,12 @@ Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
  Kevin Wolf <kwolf@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Yonggang Luo <luoyonggang@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL v2 14/19] configure: unconditionally install "tooling" group
-Date: Tue, 24 Feb 2026 13:14:33 -0500
-Message-ID: <20260224181440.832943-15-jsnow@redhat.com>
+Subject: [PULL v2 05/19] meson, mkvenv: add functests custom target
+Date: Tue, 24 Feb 2026 13:14:24 -0500
+Message-ID: <20260224181440.832943-6-jsnow@redhat.com>
 In-Reply-To: <20260224181440.832943-1-jsnow@redhat.com>
 References: <20260224181440.832943-1-jsnow@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
@@ -98,69 +97,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Alongside meson, always ensure our in-tree tooling group and its
-out-of-tree dependency, qemu.qmp, is always installed.
+add the "pyvenv_functests_group" target to meson. This target will
+invoke mkvenv.py to install the associated dependency group to the
+build/pyvenv directory.
 
-As a result, several "check-venv" invocations can be removed from
-various testing scripts.
+A "pyvenv_tooling_group" is not included here as it is the plan to
+always install this group by default, so it will not need an on-demand
+trigger.
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Message-ID: <20260218213416.674483-16-jsnow@redhat.com>
+Message-ID: <20260218213416.674483-7-jsnow@redhat.com>
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- configure                  | 2 +-
- .gitlab-ci.d/buildtest.yml | 2 --
- scripts/device-crash-test  | 3 +--
- 3 files changed, 2 insertions(+), 5 deletions(-)
+ meson.build        |  1 +
+ pyvenv/meson.build | 27 +++++++++++++++++++++++++++
+ 2 files changed, 28 insertions(+)
+ create mode 100644 pyvenv/meson.build
 
-diff --git a/configure b/configure
-index 4b61fd3bbf8..c4837eba2b1 100755
---- a/configure
-+++ b/configure
-@@ -966,7 +966,7 @@ mkvenv="$python ${source_path}/python/scripts/mkvenv.py"
- # Finish preparing the virtual environment using vendored .whl files
- 
- $mkvenv ensuregroup --dir "${source_path}/python/wheels" \
--     ${source_path}/pythondeps.toml meson || exit 1
-+     ${source_path}/pythondeps.toml meson tooling || exit 1
- 
- # At this point, we expect Meson to be installed and available.
- # We expect mkvenv or pip to have created pyvenv/bin/meson for us.
-diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
-index b2db70ff904..1b656b9eb08 100644
---- a/.gitlab-ci.d/buildtest.yml
-+++ b/.gitlab-ci.d/buildtest.yml
-@@ -101,7 +101,6 @@ crash-test-debian:
-     IMAGE: debian
-   script:
-     - cd build
--    - make NINJA=":" check-venv
-     - ./run scripts/device-crash-test -q --tcg-only ./qemu-system-i386
- 
- build-system-fedora:
-@@ -158,7 +157,6 @@ crash-test-fedora:
-     IMAGE: fedora
-   script:
-     - cd build
--    - make NINJA=":" check-venv
-     - ./run scripts/device-crash-test -q ./qemu-system-ppc
-     - ./run scripts/device-crash-test -q ./qemu-system-riscv32
- 
-diff --git a/scripts/device-crash-test b/scripts/device-crash-test
-index 8a91dcaee31..fc86babdf43 100755
---- a/scripts/device-crash-test
-+++ b/scripts/device-crash-test
-@@ -40,8 +40,7 @@ try:
- except ModuleNotFoundError as exc:
-     path = Path(__file__).resolve()
-     print(f"Module '{exc.name}' not found.")
--    print("  Try 'make check-venv' from your build directory,")
--    print("  and then one way to run this script is like so:")
-+    print("  Try running this script like so:")
-     print(f'  > $builddir/run "{path}"')
-     sys.exit(1)
- 
+diff --git a/meson.build b/meson.build
+index 414c8ea7e28..59c8204d881 100644
+--- a/meson.build
++++ b/meson.build
+@@ -4580,6 +4580,7 @@ subdir('scripts')
+ subdir('tools')
+ subdir('pc-bios')
+ subdir('docs')
++subdir('pyvenv')
+ # Tests are disabled on emscripten because they rely on host features that aren't
+ # supported by emscripten (e.g. fork and unix socket).
+ if host_os != 'emscripten'
+diff --git a/pyvenv/meson.build b/pyvenv/meson.build
+new file mode 100644
+index 00000000000..4e7d8d9fcc4
+--- /dev/null
++++ b/pyvenv/meson.build
+@@ -0,0 +1,27 @@
++# Note that this file only controls "optional" dependency groups; groups
++# unconditionally installed at configure time are handled in configure
++# instead; namely: meson, sphinx, and the tooling groups.
++
++# Note that this command may or may not include the "--online" flag
++# based on configuration.
++ensuregroup_cmd = config_host['MKVENV_ENSUREGROUP'].split()
++
++pyvenv_common_deps = files(
++    meson.project_source_root() + '/pythondeps.toml',
++    meson.project_source_root() + '/python/scripts/mkvenv.py'
++)
++pyvenv_wheel_dir = meson.project_source_root() + '/python/wheels'
++
++# This group is allowed to (and must) rely on internet to fetch from
++# PyPI. Force the use of the --online flag here.
++pyvenv_functests_group = custom_target(
++    'pyvenv_functests_group',
++    output: 'functests.group',
++    input: pyvenv_common_deps,
++    command: ensuregroup_cmd + [
++        '--online',
++        '--dir', pyvenv_wheel_dir,
++        '@INPUT0@',
++        'functests',
++    ],
++)
 -- 
 2.53.0
 
