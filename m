@@ -4,63 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C5F5F4BB62
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 17:25:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61743F4BB63
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 17:29:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuwAC-0008Cu-Dn; Tue, 24 Feb 2026 12:25:36 -0500
+	id 1vuwDj-0001Q7-Pt; Tue, 24 Feb 2026 12:29:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vuwA9-0008Ai-3l; Tue, 24 Feb 2026 12:25:33 -0500
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1vuwDd-0001Oz-L7
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 12:29:10 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vuwA6-0001EX-1F; Tue, 24 Feb 2026 12:25:32 -0500
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 562965969F6;
- Tue, 24 Feb 2026 18:25:26 +0100 (CET)
-X-Virus-Scanned: amavis at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id rwa40_B4xNIU; Tue, 24 Feb 2026 18:25:23 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id C76C2596A0B; Tue, 24 Feb 2026 18:25:23 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id C502F5969FD;
- Tue, 24 Feb 2026 18:25:23 +0100 (CET)
-Date: Tue, 24 Feb 2026 18:25:23 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Ruslan Ruslichenko <ruslichenko.r@gmail.com>
-cc: =?ISO-8859-15?Q?Alex_Benn=E9e?= <alex.bennee@linaro.org>, 
- Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
- peter.maydell@linaro.org, artem_mygaiev@epam.com, 
- volodymyr_babchuk@epam.com, takahiro.nakata.wr@renesas.com, 
- "Edgar E . Iglesias" <edgar.iglesias@gmail.com>, 
- Ruslan_Ruslichenko@epam.com, philmd@linaro.org, wangyanan55@huawei.com, 
- zhao1.liu@intel.com, pbonzini@redhat.com, 
- Bernhard Beschow <shentey@gmail.com>
-Subject: Re: [PATCH v2 19/33] hw/core/machine: add '-hw-dtb' option for machine
-In-Reply-To: <CAN-aV1Ezvu1VnQJYiMDrNceaRAG32-DKtV85v2w58R4bpkL=KA@mail.gmail.com>
-Message-ID: <0bfb8cfc-a793-30cd-72c6-98b7a8177d32@eik.bme.hu>
-References: <20260219143332.3316679-1-ruslichenko.r@gmail.com>
- <20260219144901.3317747-1-ruslichenko.r@gmail.com>
- <dd8a92cc-51d6-4404-bd09-75b1798f925a@redhat.com>
- <87y0kj4mr3.fsf@draig.linaro.org>
- <CAN-aV1H0_4LviryDEmDSN0TfdSit-uN31H8g87sRBkJAHYbrdQ@mail.gmail.com>
- <d2d16e2b-d86a-633f-b32a-e063746658d8@eik.bme.hu>
- <CAN-aV1Ezvu1VnQJYiMDrNceaRAG32-DKtV85v2w58R4bpkL=KA@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1vuwDW-0001XR-Iu
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 12:29:08 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1771954135;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=66/kj0p3LqDSHbvWB/4yLzeyq6l4dm9MLx1rsWxqgqQ=;
+ b=Xl/QMr+OxknaMoMSJhRsxT16DzqN3hZO4fGt2eDtECAzR5KW6d4mb7DFesgP6oWMW+Id0N
+ Xa37sP3DJESOvrPu8lmSyDPOxIar1scZxyT/MIU9Ihm3F6Ng5tEZWCw114PNVvMKGI4cHA
+ MfY5S05ciGwsDjkl1de60NEUPqYoqfQ=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-223-kucCFmDBNMigf7gnGeRHTg-1; Tue, 24 Feb 2026 12:28:53 -0500
+X-MC-Unique: kucCFmDBNMigf7gnGeRHTg-1
+X-Mimecast-MFC-AGG-ID: kucCFmDBNMigf7gnGeRHTg_1771954132
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-48372facfedso317055e9.0
+ for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 09:28:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1771954132; x=1772558932; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=66/kj0p3LqDSHbvWB/4yLzeyq6l4dm9MLx1rsWxqgqQ=;
+ b=mGj8zFN/eluW2CpafUlYqNJ21I8yHAiQjKCh6Tanu6mMFI4Kn7ezsBEEQr5JmdWZ+L
+ Pqd7BcyRNvGvybcVDzCFjSZYb0vd7SbMHTI66c4kskmLNuWZ5xfgSvVSWdjIJEfKDGNd
+ fLhkun34PYDAitPDQKBZcgjXygBBTDSernigUKM4lPYs1Hk0kGG5E0G6JzTELjMycnUW
+ rgH53FPj7+R40uvJORKyBa9qtc2VTk0+ywzmqtFnnPhL/ovYDlbwtaV+p02fg2rcbtmF
+ XhmBeqx/EuymLdD/jKD8FpHRtP/GVzYCdoGU02tgJBoGt/N/sUpaZ+AuNNFpqsqDx36X
+ XfrA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1771954132; x=1772558932;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=66/kj0p3LqDSHbvWB/4yLzeyq6l4dm9MLx1rsWxqgqQ=;
+ b=NC3ApDTht1cSQm1WITRjfe4lpUR/s1/DaQjGLOrRXZ7/F+EUECPzN3Z9KRfzH0BTpI
+ 2CZ2WDxahRyp7UYFBrdTj4S7ao/d2DQEeAx61id4bhhrTzmJyEc7Z8zhtPXF7/8dpwaF
+ MOhsVBgdwtaNgyRkEPEMCkXnxzxaMTwt1AH3rkc4SuhofKo8tpIj0GvQFZEiqRfHVGLw
+ zQLXVgyBlo+3RhvDHcFvCS5AzWBYZyFGcKmQJVBXKl6QsbxjyQWAkvt/ebaKLL02G8mB
+ Cy3HSN7Q7VQi342/mIh5G0fNfikwRTiA2BBKo1hjFSHcd8zKs3EZ2jisFaK8rrAEx1yf
+ 8Qzg==
+X-Gm-Message-State: AOJu0YxRSHKoOQJIgyLkteOwbFI0dsFh5dEtPIcs800OdAiuiwBsTLiA
+ Mv0eZCCMMB2V29DE6+07UeLVvbbIDQboSBH2EhFTv/LXMAdyvVEqmShf8Kbh/2JsAY3T+pgryjQ
+ dDe0+F01pXTHww97fvUYVroM1aXRCMLN+7Ij8LfPkEGGSpJi2dqr331Sy
+X-Gm-Gg: AZuq6aL1benCOUvoFIKKxGaK9dDdkvlhJBflSGMvkc5vNvIrvCZ5WNmv1vjFnHskIG3
+ Zy7NnbpPG2HiX82jhwtMNRB79BDJE9FU4O+5MoH16wNWJ7WFLpgHnyEuVSQsb1B34KSGlEPrYiC
+ XNFJmbjqy+pTQtZ9UqBXLC3cL/X8VxjBxPRhuoXoLwgjZ/xaNGerKJGrTXcQ7afBAFs/6NUDKRk
+ 7YpBJqIYbJvnUYUu26N1txChct7YcvdMeTMkfQsbBuqzyw04qnD/e5KUhO/o8NYhSsAx3kRkGTP
+ GUj4N4c57jGoz0gqq8+viu71pdONTG7SxiTO55ebiNZkbEEg0GQ7YoU3Fmkg6Yxyt2oQhWKGwOV
+ O2WLneG9v+kyMHTVADWxozgLbgxyeiyT3N02K2sH3uDqrmLPvyyfnMGbHRPpfUWH6aDYlkyPqYl
+ ekmpMqdiyn8+qfeSpoKxmhwh3qhQQ=
+X-Received: by 2002:a05:600c:818d:b0:47d:6c36:a125 with SMTP id
+ 5b1f17b1804b1-483bd75e25fmr12197995e9.17.1771954131979; 
+ Tue, 24 Feb 2026 09:28:51 -0800 (PST)
+X-Received: by 2002:a05:600c:818d:b0:47d:6c36:a125 with SMTP id
+ 5b1f17b1804b1-483bd75e25fmr12197455e9.17.1771954131167; 
+ Tue, 24 Feb 2026 09:28:51 -0800 (PST)
+Received: from [192.168.10.81] ([151.95.144.138])
+ by smtp.googlemail.com with ESMTPSA id
+ 5b1f17b1804b1-483bd68826asm22295365e9.0.2026.02.24.09.28.50
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 24 Feb 2026 09:28:50 -0800 (PST)
+Message-ID: <e9abc154-9219-4d7e-b711-0a68bfe62845@redhat.com>
+Date: Tue, 24 Feb 2026 18:28:49 +0100
 MIME-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="3866299591-1681850486-1771953923=:78977"
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 00/16] rust: QObject and QAPI bindings
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
+ <marcandre.lureau@redhat.com>, qemu-rust@nongnu.org
+References: <20260108131043.490084-1-pbonzini@redhat.com>
+ <87tsv6z14w.fsf@pond.sub.org>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Content-Language: en-US
+In-Reply-To: <87tsv6z14w.fsf@pond.sub.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.358, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.659,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -76,166 +125,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On 2/24/26 15:06, Markus Armbruster wrote:
+> Paolo Bonzini <pbonzini@redhat.com> writes:
+> 
+>> This adds two related parts of the Rust bindings:
+> 
+> [...]
+> 
+>>   docs/devel/rust.rst                           |   1 +
+>>   meson.build                                   |   4 +-
+>>   include/qobject/qobject.h                     |   5 +-
+>>   rust/util/wrapper.h                           |   8 +
+>>   qapi/meson.build                              |   9 +
+>>   rust/Cargo.lock                               |   2 +
+>>   rust/Cargo.toml                               |   2 +
+>>   rust/meson.build                              |   4 +
+>>   rust/tests/meson.build                        |  21 +-
+>>   rust/tests/tests/integration.rs               |   2 +
+>>   rust/tests/tests/qapi.rs                      | 444 +++++++++++++
+>>   rust/util/Cargo.toml                          |   2 +
+>>   rust/util/meson.build                         |  30 +-
+>>   rust/util/src/lib.rs                          |   4 +
+>>   rust/util/src/qobject/deserialize.rs          | 134 ++++
+>>   rust/util/src/qobject/deserializer.rs         | 371 +++++++++++
+> 
+> Are you sure having two source filenames differ in just one character is
+> a good idea?
+> 
+>>   rust/util/src/qobject/error.rs                |  58 ++
+>>   rust/util/src/qobject/mod.rs                  | 383 ++++++++++++
+>>   rust/util/src/qobject/serialize.rs            |  59 ++
+>>   rust/util/src/qobject/serializer.rs           | 585 ++++++++++++++++++
+> 
+> Likewise.
 
---3866299591-1681850486-1771953923=:78977
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8BIT
+I feel and share your pain...  That's how serde calls the things ("-er" 
+for the struct and verb for the trait) and I cannot really thing of a 
+different naming for files.
 
-On Tue, 24 Feb 2026, Ruslan Ruslichenko wrote:
-> On Tue, Feb 24, 2026 at 12:55 AM BALATON Zoltan <balaton@eik.bme.hu> wrote:
->> On Mon, 23 Feb 2026, Ruslan Ruslichenko wrote:
->>> On Mon, Feb 23, 2026 at 2:23 PM Alex Bennée <alex.bennee@linaro.org> wrote:
->>>>
->>>> Thomas Huth <thuth@redhat.com> writes:
->>>>
->>>>>  Hi!
->>>>>
->>>>> On 19/02/2026 15.48, Ruslan Ruslichenko wrote:
->>>>>> From: Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
->>>>>> Add new '-hw-dtb' command-line option and corresponding
->>>>>> MachineState property.
->>>>>> The 'hw-dtb' option allows to specify a Device tree
->>>>>> binary with hardware description which Qemu should
->>>>>> emulate.
->>>>>> Signed-off-by: Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
->>>>>> ---
->>>>>>   hw/core/machine.c        | 19 +++++++++++++++++++
->>>>>>   include/hw/core/boards.h |  1 +
->>>>>>   qemu-options.hx          |  9 +++++++++
->>>>>>   system/vl.c              |  3 +++
->>>>>>   4 files changed, 32 insertions(+)
->>>>>> diff --git a/hw/core/machine.c b/hw/core/machine.c
->>>>>> index d4ef620c17..affd24cd49 100644
->>>>>> --- a/hw/core/machine.c
->>>>>> +++ b/hw/core/machine.c
->>>>>> @@ -363,6 +363,20 @@ static void machine_set_dtb(Object *obj, const char *value, Error **errp)
->>>>>>       ms->dtb = g_strdup(value);
->>>>>>   }
->>>>>>   +static char *machine_get_hw_dtb(Object *obj, Error **errp)
->>>>>> +{
->>>>>> +    MachineState *ms = MACHINE(obj);
->>>>>> +
->>>>>> +    return g_strdup(ms->hw_dtb);
->>>>>> +}
->>>>>> +
->>>>>> +static void machine_set_hw_dtb(Object *obj, const char *value, Error **errp)
->>>>>> +{
->>>>>> +    MachineState *ms = MACHINE(obj);
->>>>>> +
->>>>>> +    ms->hw_dtb = g_strdup(value);
->>>>>> +}
->>>>>> +
->>>>>>   static char *machine_get_dumpdtb(Object *obj, Error **errp)
->>>>>>   {
->>>>>>       MachineState *ms = MACHINE(obj);
->>>>>> @@ -1145,6 +1159,11 @@ static void machine_class_init(ObjectClass *oc, const void *data)
->>>>>>       object_class_property_set_description(oc, "dtb",
->>>>>>           "Linux kernel device tree file");
->>>>>>   +    object_class_property_add_str(oc, "hw-dtb",
->>>>>> +                            machine_get_hw_dtb, machine_set_hw_dtb);
->>>>>> +    object_class_property_set_description(oc, "hw-dtb",
->>>>>> +                "A device tree binary used to describe the hardware to QEMU");
->>>>>
->>>>> Do the hardware dtbs differ from the ones that are passed to the Linux
->>>>> kernel? If not, I think you likely could use the existing "dtb"
->>>>> property for your new feature?
->>>>
->>>> They have to - the normal DTB cannot define the whole system because its
->>>> only concerned with reporting what the kernel can see to the kernel and
->>>> not defining the whole system including what the firmware sees.
->>>>
->>>
->>> Yes, Indeed.
->>> Normal DTB was explored, but there is not enough information to create
->>> QEMU models from it.
->>> Thus we need to have a separate device tree.
->>
->> What additional data is needed that's not present in dtb from firmware and
->> what if that additional data is passed to the kernel? I think the kernel
->> would just ignore the additional data that it doesn't need so one dtb
->> might be enough even if it has to be more detailed than what the kernel
->> normally gets. If that works we don't need a separate option.
->>
->
-> Here are few specific examples:
->
-> 1. DTS compatibles and QOM type names are all different.
-> Using Linux device tree would require to maintain some massive hardcoded mapping
-> even for devices that otherwise don't require any special handling.
+I thought of renaming serializer.rs to to_qobject.rs, and 
+deserializer.rs to from_qobject.rs.  However, that doesn't work out 
+because I want  "qobject::to_object" to be the function, not the module 
+containing to_qobject() and Serializer.
 
-Bernhard's patches had the same issue and solved it by adding subclasses 
-with names matching the dtb. I think that would not work but a better 
-approach is to allow alias names for devices (we already have machine name 
-aliases I thought something similar for devices) that would solve this 
-issue without too much additional complexity. Then the device would just 
-need an additional line registering an alias name to match the dtb name 
-(or more of different machines have different compatible names).
+serde_json places the struct and trait in the same file (e.g. 
+https://github.com/serde-rs/json/blob/master/src/value/ser.rs).  I can 
+do that if you prefer it that way.
 
-> 2. Object properties. We would probably need to make sure there is no conflicts
-> and all properties are either ignored by Linux drivers or have exactly
-> the same meaning.
->
-> 3. Devices mapped to Secure Firmwares only. Those are not accessible by Linux
-> and trying to initialize them from the Linux kernel would cause memory aborts.
->
-> 4. Connecting devices to backends such as serial, block devices, etc.
-> We need to specify corresponding 'chardev' and 'driver' properties.
+Paolo
 
-This is probably not part of the machine but a specific invocation so 
-these should be specified on the command line and not in the machine 
-definion.
+> These caused a bit of friction in review already...
+> 
+> [...]
+> 
+> 
+> 
 
-> 5. Interrupt wiring. Some hardware lines are transparent to Linux, but need be
-> wired by QEMU. For example, interrupt controllers are wired to CPUs, etc.
-> If we would want to initialize it from dts eventually, this would need to be
-> passed somehow.
->
-> Overall, my understanding is Device models typically need to support
-> booting existing
-> OS images and device trees from regular platform builds.
-> And at least due points 2-4, we cannot use them directly.
-
-Some of the points may be solved other than modifying dtb but some may 
-indeed need extensions so a separate hw-dtb may be needed in more complex 
-cases.
-
-> Since we still need to modify the device tree for QEMU anyway, having support
-> for unified DTS doesn't really make sense.
-
-However it may be worthwile to try keeping the modifications minimal so 
-for simple machines like the e500-ppc that has no secure world or other 
-things not described by the normal dtb it could just use the regular dtb 
-and the hw-dtb option would be optional for more complex machines that 
-need it.
-
->> This series seems to be more complex than Bernhard's e500-fdt experiment
->> (I've linked to that in
->> <https://lists.nongnu.org/archive/html/qemu-devel/2026-01/msg05470.html>)
->> Bernhard's patch only added minimal support for creating devices from fdt
->> and then put additional logic in the devices instead of handling them in
->> generic code. Would such an approach lead to simpler fdt handling? If not
->> why is the additional complexity needed?
->
-> Most devices can be created from generic code. Supporting one common
-> approach to initialize some specific device class would be simpler and more
-> maintainable than writing a custom FDT handler logic within each device model.
-
-I think putting device specific knowledge in generic code is against the 
-object oriented design of QEMU and would be less maintainable because it 
-would not belong to the device maintainers that way. If you have common 
-code for some device classes then those devices probably have a superclass 
-where this code could be put. The problem of mapping property names to 
-device specific properties could also be done easier within a device model 
-which has better knowledge of the device and then we would not need a 
-global table mapping these. So while at first look it may seem more 
-fragmented putting some logic in devices instead of a central place it's 
-better fits the object model and groups device specific logic in the 
-device model which is more maintainable than a global mapping that does 
-not belong to any device but touches several unrelated devices.
-
-Regards,
-BALATON Zoltan
---3866299591-1681850486-1771953923=:78977--
 
