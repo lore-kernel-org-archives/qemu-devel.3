@@ -4,83 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5601F3C9A0
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 15:53:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D166F3C9A1
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 15:54:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuuj8-0003kN-6j; Tue, 24 Feb 2026 10:53:34 -0500
+	id 1vuuj6-0003jQ-Pv; Tue, 24 Feb 2026 10:53:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <adamhet@scaleway.com>)
- id 1vuuj6-0003jc-UI
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 10:53:32 -0500
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ id 1vuuj5-0003i6-4q
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 10:53:31 -0500
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <adamhet@scaleway.com>)
- id 1vuuj3-00087C-Kq
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 10:53:32 -0500
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-4398913af88so575412f8f.2
- for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 07:53:29 -0800 (PST)
+ id 1vuuj2-00086Q-HK
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 10:53:30 -0500
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-4359a16a400so5028909f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 07:53:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=scaleway.com; s=google; t=1771948408; x=1772553208; darn=nongnu.org;
+ d=scaleway.com; s=google; t=1771948407; x=1772553207; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=kj8T6mb1572v2v1TIxJJ9XBRNaQfvElom9Lfk0/2aVA=;
- b=YZbfYuf5HanryEjdzGXFOD1QMv4OPdphQeAJRlbwRzOonEgJQ1iodFz6awcUC/xknZ
- 8OVmHHeuEUp0/yNA8sNkuvY5twfQxSm264oIpFT1Ky8L6V4tHp6q+qkumrjYJkw4729I
- A5oyCL0B1+Ouqk6X+zMnNlxzHoMFzxZTxk2e4l/gobAlwNiuNnw8TSlaCP8bSeBTLnUu
- pSucQ4KLzLrteS/E/h1+UK4dh6QCroA14c2TviBQLwUlYAeCp1Qgmb/Qg1wZ3p+91IJe
- ZbRM4I2Yu2iW7dj2XfF2m68cRIsFwYoD5K3Ph271YM1+bxuVxaEbkFXDy6P1BxYScddj
- Qliw==
+ bh=J99vWbO+OMptFve7tCC13Qkd2jDgRuTvSKUDgtl9bDs=;
+ b=hO+otsLQSi8sSBBSN+ZCa04LIjkcNM9fZCASKUfBScZbQS2srC0c3dbvGfwWyx4Q0E
+ NkfgJmIjqzisSJbJp3NJ1DtUsUpzldsgKQY1IUfIEU/h1e+yL4D1QHpv+hG+/EnxDfHK
+ UxvNE7lfVodcjtjlI63My5vEtbfEGq4s/Xi2jRp+f5WBTpwUhpD2J8Ywf6wov8OVMo7l
+ +EfdtQ+DpVV2NRrXccYw6Dd8jdmgN8/4coeAKAPe/y2E3EXR9J5qVpqdGFWoafmCCdW8
+ fy1n9NSD5RIjswLT0SNKER7x8OQZSWx5odpMMkWs44tk99YUSfIsW2oLOLQsGsvM2qKj
+ kRsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771948408; x=1772553208;
+ d=1e100.net; s=20230601; t=1771948407; x=1772553207;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=kj8T6mb1572v2v1TIxJJ9XBRNaQfvElom9Lfk0/2aVA=;
- b=Vl+LD9bGrpoQC4bnH12jEJgko9MOi5GdLJivMzvBM1LWFa7IDHmv8+iDPlAMTW6mYQ
- gjGhCLD8cOzusd3jKxmhWczD3XaoRYC11PaDeQsk0pRGLuYOJG3A7MpNGMs9Q7oOD1y6
- CxHvE4ispoObYBPPrRmCeUVCS1Qb4O7DCsZLAX93C79EQPSpYh2saQhJhBfgtzzF0Eih
- cix/mSIh6NBIgebOZKgW1fLA4+05Vppr2fszBKyn3MHO0AEVnn6Gq/zZN1JircBDaFHv
- w0B0KtmG1514xhwFbQXd21r2hxD6MEqcG5esmj7Ys3MXqMooygXhG7zvu+GQJMCkSYmx
- xC9w==
-X-Gm-Message-State: AOJu0Yx41/LzcLJOyXzLlOwtbBf0w0Mne5afjWEQnRUM9ufPnPOlBe4C
- EaikHB4fRWOINWHLsWCMigEqwfWukySza541AWIrolS9AilpE1gBkPixQxhQlokDGolbaVAqHuH
- H+Ya9
-X-Gm-Gg: ATEYQzz4zUiQNzbsHXcoPgkhONy0TEGaDFxhMANFg+RMIohYlwrsjuP/6Sa6uTr99Yr
- kt3vD2jG11nQ93IPA/+AfDrbYayj4kz7KsExbi5K4p/Or9FmD0DrImDjZyrMmoYmZxmAfbGUMaM
- 1Jp+2DOCoLfDA5mcbqrbU1g6kluDxFmUV7oYbR5dENJq/ctQbdYF+XQRh/J5JRoDZTv6lBPWnGw
- Kb4OSeO4KlSYPx/3ivfN2jGXZamm8drrFj4phU5q31MfjeYLVXOAdIxRso3uDGEW/T1zprLpHPW
- wLhUzK6f/Qnd1pLJqb4VGBgBAxOTDXsco8JDgCwf0ZNbfq++0/ARZul5TNocmc8tVs9Cjlcaikd
- pbNCxZoxHxlCdZ9yLrkVFVZNoEHSCS/kvUr1b9rV+N7L9GmVcS4Lk7nobwTZpG9SKdZqffEcb8y
- Fz+nqqkugP/Yg0t6e9FZa/2NY=
-X-Received: by 2002:adf:e346:0:b0:437:6efe:94c5 with SMTP id
- ffacd0b85a97d-4396f1564b2mr17444321f8f.2.1771948407951; 
- Tue, 24 Feb 2026 07:53:27 -0800 (PST)
+ bh=J99vWbO+OMptFve7tCC13Qkd2jDgRuTvSKUDgtl9bDs=;
+ b=fyBKF27MUYf9AS1s+ezoyxT75r4zWgiVUOG5TjWY7UT8JeMJuVzFOCqv3SVb7z/Ns+
+ 8XmvpTEITlUaQe/Zzu4ssTOmgaySWwkQqeVi4AkRCw8/Uz5MlqGno4wGTYjEsMa1kpNR
+ 5hlCXXggrSc8Ta2ACs0OS6SG5AE9aiBKKxQ4SHMJ4JZQyKsbPDTpnQk+hIIyzA+d5UWx
+ ltp7MiNt8asm+p+RLwsq94iQexI4XUOVzbTQ+uGH6EUe3DE+kmu32DUmShCbUdcJ7bWp
+ dWrvftrdIL7dKZalmEeREN6BxtCjfBooKarQf8sHNLkfWv+KCUZac3v4cqeemT+v8wkq
+ waaA==
+X-Gm-Message-State: AOJu0YxtXtJwK4qi9EVtq0g13RlHV7XCoSz3fdIxBIgTuqs/eZFPJTHK
+ bL2g1KrfhpbthTIFVNjYxKI3Fw1bYeNr+GDpICiOf2ViPD1rMehRh7C9qkfrIRHClJ/B5EWMN50
+ gZCUh
+X-Gm-Gg: ATEYQzwTd2/raSPAiR0EDQtHZOAkoet4lHMGZ/RTtadwjbfgCnWhwpvdQxntv1cnUKu
+ ND3Vi0exnjFBI7ZVUiZIhLkTm0b1j3dusG1q5mYqdtOd1+5+Q6Vsbw/APDe80COiB6dRiNBzPuy
+ BI6fGoXXDjZe/jjyHpHgZwgqDhWM7030TdFy9EIsWZrstyDNtajdoIKyRvSbrPqoCpzQ9iB6PO3
+ Sk93/2N6Xiw/5UzI0B129adVAeuRPYhFfxLT3c38oiz+B0VMJxSH+YnRE6MdVnmVZYoSzwCPXZu
+ g2YG9RbCZxFuAN7LJUUvdMEGWgtVVdHQiiUmkSQ5kVDvkgXdY/Gj5JKVMWJ93cTIS6yAGLTJ/Cj
+ ZVK1whIz6p09mALux6W2alUxK+AM7EMr7OewRqrgiqs9FrZyfhSXIvRjEqvNK8rW34/C1CauSey
+ jhVfHn9XtK+lTXcUZRVVoQ3I8=
+X-Received: by 2002:a05:6000:3107:b0:436:34d9:4627 with SMTP id
+ ffacd0b85a97d-4396f17baf1mr22792013f8f.37.1771948406945; 
+ Tue, 24 Feb 2026 07:53:26 -0800 (PST)
 Received: from localhost ([2a01:e0a:e9e:c3d0:7a5b:f76a:6cf6:aac2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43970d54c5csm27753096f8f.38.2026.02.24.07.53.27
+ ffacd0b85a97d-43970d4c96csm29621730f8f.30.2026.02.24.07.53.26
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 24 Feb 2026 07:53:27 -0800 (PST)
+ Tue, 24 Feb 2026 07:53:26 -0800 (PST)
 From: Antoine Damhet <adamhet@scaleway.com>
 To: qemu-devel@nongnu.org
 Cc: Antoine Damhet <adamhet@scaleway.com>, qemu-block@nongnu.org,
  Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>
-Subject: [PATCH v2 3/3] block/curl: add support for S3 presigned URLs
-Date: Tue, 24 Feb 2026 16:51:31 +0100
-Message-ID: <20260224155314.1658988-4-adamhet@scaleway.com>
+Subject: [PATCH v2 2/3] qapi: block: Refactor HTTP(s) common arguments
+Date: Tue, 24 Feb 2026 16:51:30 +0100
+Message-ID: <20260224155314.1658988-3-adamhet@scaleway.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260224155314.1658988-1-adamhet@scaleway.com>
 References: <20260224155314.1658988-1-adamhet@scaleway.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=adamhet@scaleway.com; helo=mail-wr1-x42a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=adamhet@scaleway.com; helo=mail-wr1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,262 +102,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-S3 presigned URLs are signed for a specific HTTP method (typically GET
-for our use cases). The curl block driver currently issues a HEAD
-request to discover the web server features and the file size, which
-fails with 'HTTP 403' (forbidden).
+The HTTPs curl block driver is a superset of the HTTP driver, reflect
+that in the QAPI.
 
-Add a 'force-range' option that skips the HEAD request and instead
-issues a minimal GET request (querying 1 byte from the server) to
-extract the file size from the 'Content-Range' response header. To
-achieve this the 'curl_header_cb' is redesigned to generically parse
-HTTP headers.
-
-$ $QEMU -drive driver=https,\
-             'url=https://s3.example.com/some.img?X-Amz-Security-Token=XXX',
-             force-range=true
-
-Enabling the 'force-range' option without the web server specified with
-@url supporting it might cause the server to respond successfully with
-'HTTP 200' and attempt to send the whole file body. With the
-'CURLOPT_NOBODY' option set the libcurl will skip reading after the
-headers and close the connection. QEMU still gracefully detects the
-missing feature. This might waste a small number of TCP packets but is
-otherwise transparent to the user.
-
+Suggested-by: Markus Armbruster <armbru@redhat.com>
 Signed-off-by: Antoine Damhet <adamhet@scaleway.com>
 ---
- block/curl.c                          | 104 ++++++++++++++++++--------
- block/trace-events                    |   1 +
- docs/system/device-url-syntax.rst.inc |   6 ++
- qapi/block-core.json                  |   9 ++-
- 4 files changed, 86 insertions(+), 34 deletions(-)
+ qapi/block-core.json | 13 ++-----------
+ 1 file changed, 2 insertions(+), 11 deletions(-)
 
-diff --git a/block/curl.c b/block/curl.c
-index 6dccf002564e..66aecfb20ec6 100644
---- a/block/curl.c
-+++ b/block/curl.c
-@@ -62,10 +62,12 @@
- #define CURL_BLOCK_OPT_PASSWORD_SECRET "password-secret"
- #define CURL_BLOCK_OPT_PROXY_USERNAME "proxy-username"
- #define CURL_BLOCK_OPT_PROXY_PASSWORD_SECRET "proxy-password-secret"
-+#define CURL_BLOCK_OPT_FORCE_RANGE "force-range"
- 
- #define CURL_BLOCK_OPT_READAHEAD_DEFAULT (256 * 1024)
- #define CURL_BLOCK_OPT_SSLVERIFY_DEFAULT true
- #define CURL_BLOCK_OPT_TIMEOUT_DEFAULT 5
-+#define CURL_BLOCK_OPT_FORCE_RANGE_DEFAULT false
- 
- struct BDRVCURLState;
- struct CURLState;
-@@ -206,27 +208,33 @@ static size_t curl_header_cb(void *ptr, size_t size, size_t nmemb, void *opaque)
- {
-     BDRVCURLState *s = opaque;
-     size_t realsize = size * nmemb;
--    const char *p = ptr;
--    const char *end = p + realsize;
--    const char *t = "accept-ranges : bytes "; /* A lowercase template */
-+    g_autofree char *header = g_strstrip(g_strndup(ptr, realsize));
-+    char *val = strchr(header, ':');
- 
--    /* check if header matches the "t" template */
--    for (;;) {
--        if (*t == ' ') { /* space in t matches any amount of isspace in p */
--            if (p < end && g_ascii_isspace(*p)) {
--                ++p;
--            } else {
--                ++t;
--            }
--        } else if (*t && p < end && *t == g_ascii_tolower(*p)) {
--            ++p, ++t;
--        } else {
--            break;
--        }
-+    if (!val) {
-+        return realsize;
-     }
- 
--    if (!*t && p == end) { /* if we managed to reach ends of both strings */
--        s->accept_range = true;
-+    *val++ = '\0';
-+    g_strchomp(header);
-+    while (g_ascii_isspace(*val)) {
-+        ++val;
-+    }
-+
-+    trace_curl_header_cb(header, val);
-+
-+    if (!g_ascii_strcasecmp(header, "accept-ranges")) {
-+        if (!g_ascii_strcasecmp(val, "bytes")) {
-+            s->accept_range = true;
-+        }
-+    } else if (!g_ascii_strcasecmp(header, "Content-Range")) {
-+        /* Content-Range fmt is `bytes begin-end/full_size` */
-+        val = strchr(val, '/');
-+        if (val) {
-+            if (qemu_strtou64(val + 1, NULL, 10, &s->len) < 0) {
-+                s->len = UINT64_MAX;
-+            }
-+        }
-     }
- 
-     return realsize;
-@@ -668,6 +676,11 @@ static QemuOptsList runtime_opts = {
-             .type = QEMU_OPT_STRING,
-             .help = "ID of secret used as password for HTTP proxy auth",
-         },
-+        {
-+            .name = CURL_BLOCK_OPT_FORCE_RANGE,
-+            .type = QEMU_OPT_BOOL,
-+            .help = "Assume HTTP range requests are supported",
-+        },
-         { /* end of list */ }
-     },
- };
-@@ -690,6 +703,7 @@ static int curl_open(BlockDriverState *bs, QDict *options, int flags,
- #endif
-     const char *secretid;
-     const char *protocol_delimiter;
-+    bool force_range;
-     int ret;
- 
-     bdrv_graph_rdlock_main_loop();
-@@ -807,35 +821,56 @@ static int curl_open(BlockDriverState *bs, QDict *options, int flags,
-     }
- 
-     s->accept_range = false;
-+    s->len = UINT64_MAX;
-+    force_range = qemu_opt_get_bool(opts, CURL_BLOCK_OPT_FORCE_RANGE,
-+                                    CURL_BLOCK_OPT_FORCE_RANGE_DEFAULT);
-+    /*
-+     * When minimal CURL will be bumped to `7.83`, the header callback + manual
-+     * parsing can be replaced by `curl_easy_header` calls
-+     */
-     if (curl_easy_setopt(state->curl, CURLOPT_NOBODY, 1L) ||
-         curl_easy_setopt(state->curl, CURLOPT_HEADERFUNCTION, curl_header_cb) ||
-         curl_easy_setopt(state->curl, CURLOPT_HEADERDATA, s)) {
--        pstrcpy(state->errmsg, CURL_ERROR_SIZE,
--                "curl library initialization failed.");
--        goto out;
-+        goto out_init;
-+    }
-+    if (force_range) {
-+        if (curl_easy_setopt(state->curl, CURLOPT_CUSTOMREQUEST, "GET") ||
-+            curl_easy_setopt(state->curl, CURLOPT_RANGE, "0-0")) {
-+            goto out_init;
-+        }
-     }
-+
-     if (curl_easy_perform(state->curl))
-         goto out;
--    /* CURL 7.55.0 deprecates CURLINFO_CONTENT_LENGTH_DOWNLOAD in favour of
--     * the *_T version which returns a more sensible type for content length.
--     */
-+
-+    if (!force_range) {
-+        /*
-+         * CURL 7.55.0 deprecates CURLINFO_CONTENT_LENGTH_DOWNLOAD in favour of
-+         * the *_T version which returns a more sensible type for content
-+         * length.
-+         */
- #if LIBCURL_VERSION_NUM >= 0x073700
--    if (curl_easy_getinfo(state->curl, CURLINFO_CONTENT_LENGTH_DOWNLOAD_T, &cl)) {
--        goto out;
--    }
-+        if (curl_easy_getinfo(state->curl, CURLINFO_CONTENT_LENGTH_DOWNLOAD_T,
-+                              &cl)) {
-+            goto out;
-+        }
- #else
--    if (curl_easy_getinfo(state->curl, CURLINFO_CONTENT_LENGTH_DOWNLOAD, &cl)) {
--        goto out;
--    }
-+        if (curl_easy_getinfo(state->curl, CURLINFO_CONTENT_LENGTH_DOWNLOAD,
-+                              &cl)) {
-+            goto out;
-+        }
- #endif
--    if (cl < 0) {
-+        if (cl >= 0) {
-+            s->len = cl;
-+        }
-+    }
-+
-+    if (s->len == UINT64_MAX) {
-         pstrcpy(state->errmsg, CURL_ERROR_SIZE,
-                 "Server didn't report file size.");
-         goto out;
-     }
- 
--    s->len = cl;
--
-     if ((!strncasecmp(s->url, "http://", strlen("http://"))
-         || !strncasecmp(s->url, "https://", strlen("https://")))
-         && !s->accept_range) {
-@@ -856,6 +891,9 @@ static int curl_open(BlockDriverState *bs, QDict *options, int flags,
-     qemu_opts_del(opts);
-     return 0;
- 
-+out_init:
-+    pstrcpy(state->errmsg, CURL_ERROR_SIZE,
-+            "curl library initialization failed.");
- out:
-     error_setg(errp, "CURL: Error opening file: %s", state->errmsg);
-     curl_easy_cleanup(state->curl);
-diff --git a/block/trace-events b/block/trace-events
-index c9b4736ff884..d170fc96f15f 100644
---- a/block/trace-events
-+++ b/block/trace-events
-@@ -191,6 +191,7 @@ ssh_server_status(int status) "server status=%d"
- curl_timer_cb(long timeout_ms) "timer callback timeout_ms %ld"
- curl_sock_cb(int action, int fd) "sock action %d on fd %d"
- curl_read_cb(size_t realsize) "just reading %zu bytes"
-+curl_header_cb(const char *key, const char *val) "looking at %s: %s"
- curl_open(const char *file) "opening %s"
- curl_open_size(uint64_t size) "size = %" PRIu64
- curl_setup_preadv(uint64_t bytes, uint64_t start, const char *range) "reading %" PRIu64 " at %" PRIu64 " (%s)"
-diff --git a/docs/system/device-url-syntax.rst.inc b/docs/system/device-url-syntax.rst.inc
-index aae65d138c00..445e2a0a4157 100644
---- a/docs/system/device-url-syntax.rst.inc
-+++ b/docs/system/device-url-syntax.rst.inc
-@@ -179,6 +179,12 @@ These are specified using a special URL syntax.
-       get the size of the image to be downloaded. If not set, the
-       default timeout of 5 seconds is used.
- 
-+   ``force-range``
-+      Assume the HTTP backend supports range requests and avoid doing
-+      an HTTP HEAD request to discover the feature. Typically S3
-+      presigned URLs will only support one method and refuse other
-+      request types.
-+
-    Note that when passing options to qemu explicitly, ``driver`` is the
-    value of <protocol>.
- 
 diff --git a/qapi/block-core.json b/qapi/block-core.json
-index a7871705fa69..50e7078cbec0 100644
+index b82af7425614..a7871705fa69 100644
 --- a/qapi/block-core.json
 +++ b/qapi/block-core.json
-@@ -4582,12 +4582,19 @@
- # @cookie-secret: ID of a QCryptoSecret object providing the cookie
- #     data in a secure way.  See @cookie for the format.  (since 2.10)
+@@ -4595,23 +4595,14 @@
+ # Driver specific block device options for HTTPS connections over the
+ # curl backend.  URLs must start with "https://".
  #
-+# @force-range: Don't issue a HEAD HTTP request to discover if the
-+#     http server supports range requests and rely only on GET
-+#     requests.  This is especially useful for S3 presigned URLs where
-+#     HEAD requests are unauthorized.  Defaults to false.
-+#     (default: false; since 11.0)
-+#
+-# @cookie: List of cookies to set; format is "name1=content1;
+-#     name2=content2;" as explained by CURLOPT_COOKIE(3).  Defaults to
+-#     no cookies.
+-#
+ # @sslverify: Whether to verify the SSL certificate's validity
+ #     (defaults to true)
+ #
+-# @cookie-secret: ID of a QCryptoSecret object providing the cookie
+-#     data in a secure way.  See @cookie for the format.  (since 2.10)
+-#
  # Since: 2.9
  ##
- { 'struct': 'BlockdevOptionsCurlHttp',
-   'base': 'BlockdevOptionsCurlBase',
-   'data': { '*cookie': 'str',
+ { 'struct': 'BlockdevOptionsCurlHttps',
+-  'base': 'BlockdevOptionsCurlBase',
+-  'data': { '*cookie': 'str',
+-            '*sslverify': 'bool',
 -            '*cookie-secret': 'str'} }
-+            '*cookie-secret': 'str',
-+            '*force-range': 'bool'} }
++  'base': 'BlockdevOptionsCurlHttp',
++  'data': { '*sslverify': 'bool'} }
  
  ##
- # @BlockdevOptionsCurlHttps:
+ # @BlockdevOptionsCurlFtp:
 -- 
 2.53.0
 
