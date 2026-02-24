@@ -4,84 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B102FF4BB7F
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 19:23:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B147F4BB7F
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 19:24:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuxzi-0004qN-2Q; Tue, 24 Feb 2026 14:22:54 -0500
+	id 1vuy0s-0005Bk-54; Tue, 24 Feb 2026 14:24:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vuxzY-0004pl-Sd
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 14:22:46 -0500
-Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
+ id 1vuy0n-0005BA-MV
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 14:24:01 -0500
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vuxzX-00074A-D9
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 14:22:44 -0500
-Received: by mail-pf1-x42b.google.com with SMTP id
- d2e1a72fcca58-8230c33f477so2583528b3a.2
- for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 11:22:42 -0800 (PST)
+ id 1vuy0k-00076o-US
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 14:24:01 -0500
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-2aae4816912so40924745ad.2
+ for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 11:23:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771960962; x=1772565762; darn=nongnu.org;
+ d=linaro.org; s=google; t=1771961033; x=1772565833; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=X4kUcOWVAIl3IqUKaunzAVpfcCafFwNv+CwIyGS9m44=;
- b=ILkK93KMrhgYls20MzyRSoybxjkTHKP0vZxPhH+R5VAziD/9RT344ULUS1rtfSpNED
- SS/PZx2cwjfMk+nWgRiPwSzCZZqdpJNH8oW1J3BoVbETQqhHdW+1Zn8OUESzXiLeaQPD
- KdkwnNXnV1BNgVMbAGkBaXooqQ/7FkJl5hacgc9HpFNVpFzxxkEm5ysM9kqsywlSJGtN
- hmwxfcwSmOrarda3enM8L7BLxns1QEw3SnPaY9spg2+GQvW1zyoFFmQpCp0oJGFnLX36
- FUZ2zPkTOQnZnm3CO62yQRAgCvRzOe3fTj7PBhASpSPaaOa/1plZznFI2Qh8hqcCaxG4
- d8/A==
+ bh=w9DCFgZvgaQj0c8LldvL0MBbBGlu4vW2aSWbuBovBUs=;
+ b=I53dqNv8z7eqOFftKD67csps7ZFBgAAEifLeDzunr0uZ6zG4GqML4VCfwj5LxgX96o
+ mOmmdekhJtz9x+M/uAprchEnvKYUw418hdPp/lNWEGQHyeqTcVcWyYrA4zzuMJ1zu5PM
+ oRsSmohioOxp9Lc/k45HezjHT7Jex+in1bECauAspXeWT/Cz2Na5xp62xw6WcQBZNlqf
+ XPA8oUtvtUcG0HyGHJGJN1FzERXrwK9VwGuNRnPSNimbkRSVf5OUHgWECQ9kfA2hQ+zC
+ THhf/tmZJvCL+r9XtL+Ur7IA2ntc07NEFMYxHYwLqgSr5mEoYTo1XaJY96zX+W+p2BR7
+ nFUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771960962; x=1772565762;
+ d=1e100.net; s=20230601; t=1771961033; x=1772565833;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=X4kUcOWVAIl3IqUKaunzAVpfcCafFwNv+CwIyGS9m44=;
- b=PyzukMIQ50F/1w0MNvV8owEJlAZDdiF5s4NdWMuxDe2dfdWgZKF81pdZnx9d7Y18AN
- tXvOBPgeUv9Ot30KU2lpLmOHAOi8OM650wy4xxjIfr5SR2MIUtMbUPQdxpzIigukxWMX
- 81sYJGpe32BdP4faYEluMZl4AdfAAQnYmwPV3w61yLCKkHX06AVvavUlem4xtgnpWP6t
- H4wQEXA3yTk93OrL/pRBbf6YbQl1DfClrHiloLhPfVxl+sVfQ4gRe/C9nRAxowomEroJ
- ZZJoaGxTMaCm1TiVse1tXhgFHKEvxb50meLGlIuEV/MYnXlVtVeTZMr5SoG9W8wB3sAc
- C1jQ==
+ bh=w9DCFgZvgaQj0c8LldvL0MBbBGlu4vW2aSWbuBovBUs=;
+ b=eLVdDeiu1znHIXwKMBqWv66CpMvhWytRiHUA6PG7+cXfgzR32liKxz2AXPDYu13ClQ
+ Daalfuc43BaYp6/VROl2niYdGmK9PlkjFlfxHxS0zjTv/H6JOnaVebU73q7lZcj5Ugo2
+ 96zHBNNj0UfPdUpy5e2dh7wFHAnYcdkbVuSKjmlPV8JBelVlsS0nQfSu7JCijJEKLaBl
+ P6p/UH92iLasAGUloNMJ/556R8heZSb+Gv9f2FB7HhNSFQL9vnYIw1qc2ZB4sTuyPGz1
+ 5Npr26/0B09xxvZd1S+5Xf/MtMXb2otaC7Zb82RC6W/HYj6u8eDWBXSPhP7eE4qAxyuv
+ Q9kg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUVPkPzAdrTs9bp0xJTDPEj09qLvmuPNB3/JJrGj0XR7fGVE+Si6zLnflc/gsqqW7Ymp/yyKokStarD@nongnu.org
-X-Gm-Message-State: AOJu0YxiSveUc5ILs0l7G0neXXVXMGlU00mKY2CaICoT6678R72+K09t
- E99QMiHADI1ppjvPFARGr5AL0ZA9zGEjunE1zTaNnxiG1O6VglRNfHZZD6HbY7GYEYw=
-X-Gm-Gg: ATEYQzzeETtLlQH4Mpav1UKzWbtT4R/jCgNGfzUaPGwEbf2RK00de4raAyvlSizBETL
- XcBQnBLR862i1qmYrcT5yJoV+kS6eAsidvU/Dmq/2i9fhCLT6a9fZa0RJGeY/gn/1/e1nB9Zo6a
- cGnKZ/fI57tzq+YXhafgSfNg9eZk/1ms/yh9RPdLUfpzbP0GEtdv/GuNn2YqY6k/w75j74g8DKk
- cFHC6N/CKkhn71q132PWXEJU16dpK3+MHIB6ER8OPCSd2rgEr7HWChcruon8pQiK8gYsjl1xrBQ
- 0H3WiEtOo9jUNcJWZGNVHeTaLtwMgTu3Q1/3jNSRLkD4tNgXPtDOUesShAPnkeCxG9aiQAhqQYU
- 9NGCqUUciAu/wQXXzCaFyk55fqIS/bTQkbwFN6oJ5n+9DeEtt/gXY67OW7giWfiYUubCv91FIr1
- EdUffl4GUovS4BLVW/yWvd5EhtCntfpjfpOrRFPe0F0dWCmBNZgFpRkJOk3Jkv0BWRgbEA
-X-Received: by 2002:a05:6a00:1acd:b0:81f:9907:e503 with SMTP id
- d2e1a72fcca58-826da9070fbmr9950953b3a.16.1771960961781; 
- Tue, 24 Feb 2026 11:22:41 -0800 (PST)
+ AJvYcCWWAJ+yYGXJlAGRZ9nrBNyYIJdk6V+zcdr5qjnvJ8VkK6Xc0aInSn7PAP/Fo40rIjF52ugrl6Q5WBuY@nongnu.org
+X-Gm-Message-State: AOJu0YzA4q3b6//ELREaQ/gED4l3MaP9kqkfzzgfU8r1OtOy1VNnTscu
+ R69r0gSBuVAy35kIpgKn6oYxrQ0WBsU1j8yaqH0RZp0Kz85vANKiyU/FEXLmWzsODDs=
+X-Gm-Gg: ATEYQzxzC0mByD1fc5xdlV9BtqZ7khdOLotIyLnxu2zqVAQhwS7E+e9H8xgBGuAnmn7
+ iRD+PsxcepvkKGRkuSSNBOnqf7rGzDglQ3/MFl5xSYUYWC2FVpHh3CRFbG0VVqi6WU70q85aUZc
+ bAGduabMLaRMEtsglMCLGu1iQC1dC5lfnbeuIM1e9AOeAjc24h2I75L6hmKBCaaNknMasQxrSKD
+ 4zFJl7s6UdCJ26J/t9BY8a1hA29Mc1pTcegMbd392m1K0B2igcxkL42oF+SmO8Egw/nT8E7WLG8
+ 5kAp54U/xZPc9AeDHVNQsXJvDfUPpf0KEPVkD6mGl1zPvcgMTIs9WlIGPtTVSn7rW/vNDD1suYh
+ +coWM8+xAsg3hqL66Y1+MiwhVQrcUh/XEPIb5De6FZ1/W/E+kIBHj2c8n5OiuT3CnVrCu09ZjNN
+ BUG7Y2+ju9Wha+f3Dx4oviArgF9Cu9uZ1XD5n7EQrv5zaPMjBBqvtAS4FXDaKfaZfNtcGu
+X-Received: by 2002:a17:903:9cc:b0:2ad:b97b:be88 with SMTP id
+ d9443c01a7336-2adb97bc2ecmr15670105ad.32.1771961032642; 
+ Tue, 24 Feb 2026 11:23:52 -0800 (PST)
 Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-826dd8cbb02sm11890643b3a.57.2026.02.24.11.22.41
+ d9443c01a7336-2ad75173903sm108444195ad.81.2026.02.24.11.23.52
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 24 Feb 2026 11:22:41 -0800 (PST)
-Message-ID: <e40d079e-90fc-49b7-bfbd-b8460e7e16f2@linaro.org>
-Date: Tue, 24 Feb 2026 11:22:40 -0800
+ Tue, 24 Feb 2026 11:23:52 -0800 (PST)
+Message-ID: <42588a53-5f23-41da-966e-f6e2c2568162@linaro.org>
+Date: Tue, 24 Feb 2026 11:23:51 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 01/10] meson: Include various directories providing stubs
- before libqemuutil
+Subject: Re: [PATCH 02/10] hw/acpi: Move acpi_send_event() function out of
+ acpi_interface.c
 Content-Language: en-US
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+ Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>
 References: <20260224182017.99865-1-philmd@linaro.org>
- <20260224182017.99865-2-philmd@linaro.org>
+ <20260224182017.99865-3-philmd@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  xsDNBGK9dgwBDACYuRpR31LD+BnJ0M4b5YnPZKbj+gyu82IDN0MeMf2PGf1sux+1O2ryzmnA
@@ -117,11 +116,11 @@ Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  5SYuJaKzCAgNeAy3gUVUUPrUsul1oe2PeWMFUhWKrqko0/Qo4HkwTZY6S16drTMncoUahSAl
  X4Z3BbSPXPq0v1JJBYNBL9qmjULEX+NbtRd3v0OfB5L49sSAC2zIO8S9Cufiibqx3mxZTaJ1
  ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <20260224182017.99865-2-philmd@linaro.org>
+In-Reply-To: <20260224182017.99865-3-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -145,17 +144,17 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2/24/26 10:20 AM, Philippe Mathieu-Daudé wrote:
-> Stubs are provided by libqemuutil. We want to use the generic meson
-> machinery to provide stubs once, instead of per sub-directories. Move
-> the 'subdir' calls earlier so when these directories are processed
-> they can add units to the global stub_ss[] source set.
+> acpi_interface.c should only register QOM interfaces. Move
+> the acpi_send_event() function to core.c with the other
+> event handlers.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   meson.build | 14 +++++++-------
->   1 file changed, 7 insertions(+), 7 deletions(-)
+>   hw/acpi/acpi_interface.c |  9 ---------
+>   hw/acpi/core.c           | 10 ++++++++++
+>   2 files changed, 10 insertions(+), 9 deletions(-)
 > 
 
+Should you move the function declaration to hw/acpi/acpi.h in this case?
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-
 
