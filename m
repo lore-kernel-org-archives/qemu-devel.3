@@ -4,117 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65CA3F3C997
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 15:25:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C921BF3C991
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 15:29:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuuHi-0001jv-9z; Tue, 24 Feb 2026 10:25:14 -0500
+	id 1vuuL5-0003DU-9z; Tue, 24 Feb 2026 10:28:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1vuuHh-0001jI-1Z
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 10:25:13 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1vuuHf-0002Jd-1N
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 10:25:12 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771946707;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=68cPhAhKsl3l7wlB9i+mu4XwiOvGR96PoAMAkZInQ34=;
- b=S+Y1C4SxzTQb6MKYd9LB9L+nOWLIQxnmehke9ode6rPfB4jKAwdJagipn4iIbMaBsMVjhF
- +N7Wsh9fVBzns76e2aFI/EdPpiYglPSiNrqdiP+eZ1AQIDssGrcoP/6PPM8Ra+b1QaZY2D
- ARqTXXnkXzM5xbYzoN9ibfT+5lCdouY=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-467-xdpVQIv2OSmWMbP9_rKkBA-1; Tue, 24 Feb 2026 10:25:05 -0500
-X-MC-Unique: xdpVQIv2OSmWMbP9_rKkBA-1
-X-Mimecast-MFC-AGG-ID: xdpVQIv2OSmWMbP9_rKkBA_1771946704
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-435ab9ed85dso3736641f8f.1
- for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 07:25:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1771946704; x=1772551504; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=68cPhAhKsl3l7wlB9i+mu4XwiOvGR96PoAMAkZInQ34=;
- b=YNjDZURoVGmi3DVdRQ09NvA/+Lb912Pm5VamyIfSsOLzz56rgiyu3GRYmcjd7RrWvk
- 1ajV1W2dB7PIu6dkIJShbDWzdmrGk0HYHaqeVhhP6YVSQUHFl8H8WdRx1498q1/HRz02
- dZ8fPu1Q0O+KiPhyLYKbSkCRWL/diVHILegrEzYejJF8sv+Vq0ntEAUC+BmJOzmgl2nK
- PT8F/EptrZATakh8HnFS/J6LmdnAtj/AMEbeKi3rpS8C11qWmpRGHRGAvrhjQ3dWgt1k
- ehHykduUzq6wgCU4i4460g2lKTSmn9XHm9ewtKSI5/gRJvlM6sPuW+JaEPmid+bw0agD
- NVDw==
+ (Exim 4.90_1) (envelope-from <6yearold@gmail.com>)
+ id 1vuuL1-0003Cy-KR
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 10:28:39 -0500
+Received: from mail-yw1-f169.google.com ([209.85.128.169])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <6yearold@gmail.com>)
+ id 1vuuKz-0002op-Kj
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 10:28:39 -0500
+Received: by mail-yw1-f169.google.com with SMTP id
+ 00721157ae682-7984d31b895so19174307b3.1
+ for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 07:28:34 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771946704; x=1772551504;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=68cPhAhKsl3l7wlB9i+mu4XwiOvGR96PoAMAkZInQ34=;
- b=bHhKLT1/HdIhUt1W8IIIMGtMVt//LvWlSPIrXtkLTk9PYjpCK3wKRhiaCVdh4+MiiV
- gzPNUt5ApN/YM5vbfPOGloY65xp+3cgxoJP4T0vEk+HgL6PjBBIBXB1RWBBCzlJj8Kz9
- 0XOCcPpnWgnXoWIBek5MeITmo2gzOzNis0wEFOJ7G33tjcFuMMODT1DmrbooTFPIM0bk
- 7B8eFRIZlKSkpblzesyOblMeV+OGJ/eTX/jHbuJCeGFk9yqKagJ7AKCblk1ZSmTF3rDj
- I5FPkAbDQIxBZp2Zug6fGgyGwlxoiXoa6cWUkNI5J83es1hztj7O4kMvKD9dFuGfryqz
- 6a/Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWzrUnEIUwA+jiP+BQqC7DQjbD687cXSfHlzkDZbQ2EeBbIU95k6g5fZ5iG3Sh0jsTU0ZGDYJtxzn/0@nongnu.org
-X-Gm-Message-State: AOJu0Yyb/EPlYf7i+GA3Jg8C2lyAg+DkSg8ZSSJ1rffRmZV4OqS9IoPZ
- 2McC4By47ijalgQbQBlX95Awx9E6fFrerbVz3MsAP7fl7mMMG+CI4nKdGf8Pe9kJ7R/69e6lu8K
- UGuWZp3r4h1FEbpigcwFbxPfBRkrHBytY4aFmtImcuEwHcu9SjpdHyZsz
-X-Gm-Gg: AZuq6aJBoh4nNUjwCsYZTPSisaDCIE6W5+WlDah106dnj+roCpmqYbVJg80Z9tUWenm
- WsIpvJWFh8aOQL+5iGicvkN7ns31qmNC+gFMdB240MsQlgwmpAHj2TvYrCzOZRmNyNQrrkJCRv8
- GpiZrtZcEN2VlfZ2qs0dOFHVq6cF4pyGKXKpDZwpoG/uOrnElUnzQNyxH2WUDaO3DrZypKCur2x
- JNzIvM25qo2QcD4FLB7EB4khy3de+W+94Akzy5xsPpv4NMMaHvLEw6aTPs2/ZJv6wluJ/KvCiff
- +rJf993Q/i0q9WE4yK68D9P2MFHiG0fcuIn0vawNH4Ud7MOOareUX2MgqEAgb2bKp3RsEASVvIA
- /v0Gcx/CXT6C9CDcDirIVy6UiiAdNxzm8Em+LFVKSiWJwkfvkc0WuixIil5C+RlO4Ecz4hZVKUe
- YSj5tWWnKWk41SLKjRfvbphoqwz+6pCcVbSDf3hYzUIh+j9nKGcpA=
-X-Received: by 2002:a05:600c:37cd:b0:483:6d4a:7e6d with SMTP id
- 5b1f17b1804b1-483a960604cmr189183215e9.30.1771946703729; 
- Tue, 24 Feb 2026 07:25:03 -0800 (PST)
-X-Received: by 2002:a05:600c:37cd:b0:483:6d4a:7e6d with SMTP id
- 5b1f17b1804b1-483a960604cmr189182705e9.30.1771946703280; 
- Tue, 24 Feb 2026 07:25:03 -0800 (PST)
-Received: from ?IPV6:2003:cf:d737:d0d8:e3c4:2336:3d25:7aa0?
- (p200300cfd737d0d8e3c423363d257aa0.dip0.t-ipconnect.de.
- [2003:cf:d737:d0d8:e3c4:2336:3d25:7aa0])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-483b8195f50sm31916325e9.0.2026.02.24.07.24.38
+ d=1e100.net; s=20230601; t=1771946914; x=1772551714;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=7K0kt0XWx+sJaS9Z1XIo6FK6vRNtzVvgbSbs3yHlf/E=;
+ b=AC4Pe1d+zX+vyKKjw8YKN+Q3yLNk7UydmhlAmwEZG3412mH3V7ZvschYNFYgOADi3f
+ wrmOBt9CfT0EgOV5kLx9cCJEG0S5Q33xGTo3H5lAvApePJZ4WlP3E8Pjs3H1zTF0vIVC
+ 8d62OdUs+8bHzWaT0adnzXOinOHHT1ajtzYFgMItbuGhFO7wYTDqf5IfYsIy3qyMicXB
+ kHXnMefLuHdTDTxhkKzOdb7Y0CzPQWJvL78K2lVf6hvG4ZsReLILYZYiwmdln15b9cjw
+ c5Z8kIMjYxtTzpGDDfwVab5MMEleVS6M8t0/Fg686WJyChWCJHYOCsxwMnx1Uu/x65Lm
+ ejKw==
+X-Gm-Message-State: AOJu0Yy4D9CxWTGgv8iDpeabj6Kni3Tapu989kxpR3to+OaAj88pzzqv
+ H4Rc4oIIEYm8gUBrfjmD1ZrnggvuQQigrZ4zLuS0HOQISNQbfW3Gk1bbj0ojHIkzCKs=
+X-Gm-Gg: ATEYQzyU/iEgJBvEagFQjh8v6Jqd7i9xPWjLiF3iV20KeUFVILel3bTTVhkNj4CWFfE
+ h/JKtudgSSVUyZU17xTVdpo1/e0GPV0lp1NtS/aCe89UY4a9JZ0rIuizwezpIr8QUmiz6U5ez0S
+ T4ScxoP5kfGHYUbD4QpmPpF7j+/s1BVqSizgD78cOae/lVP0lQcxWW0J1xkefYPYylNz7D8lSaq
+ dnM/CPo9Q5SyKrsnqha4nefaXIOW2QqsoyCZX8COpMTJrT+Zw7kXDwjzaWahbwRNrBvqHAiGkVv
+ stGAifFBO8zq6yx6VYO+oPHn7xLBTFiEgtK+FH3IuY1wAxotIiMH8nmTPB4J9fCopgdPgTdWg8Q
+ SwuewizvLETuZXQTjr1xE/8XjmVUd3e9+tmfoOS73CYRSxeaaSsK++rJdmgG6z3OJ2DCwf2EGQj
+ IKy6SVkduo/g5++X8BIPvXK59JkPKZA5NoIvQSdDf4r6zz2x8viF9cJpKqx7Qk3EUGRqrM9mDey
+ 3KYwcwGIwceMwBnTJCfMFBOdwIKkT6yCQbbJ1fcq7K5DpVYJJE3/W6aC4BBvHY2gsRu9PvQrIHT
+ bAMCHrI=
+X-Received: by 2002:a05:690c:4b85:b0:794:fb7:d572 with SMTP id
+ 00721157ae682-798291813c4mr98802147b3.66.1771946913733; 
+ Tue, 24 Feb 2026 07:28:33 -0800 (PST)
+Received: from mail-yw1-f175.google.com (mail-yw1-f175.google.com.
+ [209.85.128.175]) by smtp.gmail.com with ESMTPSA id
+ 00721157ae682-79862083774sm2130547b3.14.2026.02.24.07.28.33
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 24 Feb 2026 07:25:02 -0800 (PST)
-Message-ID: <163144b0-c56f-4582-9d4d-834fe44ed8ad@redhat.com>
-Date: Tue, 24 Feb 2026 16:24:36 +0100
+ Tue, 24 Feb 2026 07:28:33 -0800 (PST)
+Received: by mail-yw1-f175.google.com with SMTP id
+ 00721157ae682-79853c0f5b9so14049637b3.0
+ for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 07:28:33 -0800 (PST)
+X-Received: by 2002:a05:690c:f09:b0:797:afb7:b1eb with SMTP id
+ 00721157ae682-7982902d993mr109445777b3.49.1771946913256; Tue, 24 Feb 2026
+ 07:28:33 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v11 8/8] deprecate names duplication between qdev,
- block-node and block-export
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, eduardo@habkost.net, berrange@redhat.com,
- pbonzini@redhat.com, armbru@redhat.com, eblake@redhat.com,
- devel@lists.libvirt.org, kwolf@redhat.com
-References: <20260119144941.87936-1-vsementsov@yandex-team.ru>
- <20260122160113.1147745-1-vsementsov@yandex-team.ru>
-Content-Language: en-US
-From: Hanna Czenczek <hreitz@redhat.com>
-In-Reply-To: <20260122160113.1147745-1-vsementsov@yandex-team.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=hreitz@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.358, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.659,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20260224-bsd-user-claude-v4-0-8ee5ae17056f@bsdimp.com>
+ <20260224-bsd-user-claude-v4-1-8ee5ae17056f@bsdimp.com>
+In-Reply-To: <20260224-bsd-user-claude-v4-1-8ee5ae17056f@bsdimp.com>
+From: Gleb Popov <arrowd@freebsd.org>
+Date: Tue, 24 Feb 2026 18:28:05 +0300
+X-Gmail-Original-Message-ID: <CALH631=aE1pKxXMNxTP6iWsar=_UDT3pKaPKiYWLH1VDwSwVuw@mail.gmail.com>
+X-Gm-Features: AaiRm522jxSmsWhB3tt_xACoyHth4lncGwyFWMJDS74PmiJmvy0OXZ0HfD1iFWY
+Message-ID: <CALH631=aE1pKxXMNxTP6iWsar=_UDT3pKaPKiYWLH1VDwSwVuw@mail.gmail.com>
+Subject: Re: [PATCH v4 01/24] freebsd: FreeBSD 15 has native inotify
+To: Warner Losh <imp@bsdimp.com>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=209.85.128.169; envelope-from=6yearold@gmail.com;
+ helo=mail-yw1-f169.google.com
+X-Spam_score_int: -5
+X-Spam_score: -0.6
+X-Spam_bar: /
+X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9,
+ FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.25, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.358,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.659, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -130,87 +101,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 22.01.26 17:01, Vladimir Sementsov-Ogievskiy wrote:
-> Now we have blockdev-replace QMP command, which depend on a possibility
-> to select any block parent (block node, block export, or qdev) by one
-> unique name. The command fails, if name is ambiguous (i.e., match
-> several parents of different types). In future we want to rid of this
-> ambiguity.
+On Tue, Feb 24, 2026 at 5:41=E2=80=AFPM Warner Losh <imp@bsdimp.com> wrote:
 >
-> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-> ---
->
-> v11: rework separate warn_s into one common function
->       check_existing_parent_id().
->
->   block.c                            |  6 ++++++
->   block/export/export.c              |  6 ++++++
->   blockdev.c                         | 21 +++++++++++++++++++++
->   docs/about/deprecated.rst          | 10 ++++++++++
->   include/block/block-global-state.h |  2 ++
->   stubs/check-existing-parent-id.c   |  6 ++++++
->   stubs/meson.build                  |  1 +
->   system/qdev-monitor.c              | 20 ++++++++++++++++++++
->   8 files changed, 72 insertions(+)
->   create mode 100644 stubs/check-existing-parent-id.c
+> Check to make sure that we have inotify in libc, before looking for it
+> in libinotify.
 
-[...]
+This is how I solved the same problem in KDE lands (which uses CMake) [1].
+In short, the algorithm is following:
+1. Call into pkg-config to see if there is a .pc module for inotify
+2. Check if /usr/include/sys/inotify.h exists
+3. If there is no pkg-config module and no header -> no inotify
+4. If there is no pkg-config module, but the header exists -> we have
+"native" inotify,
+    no CFLAGS/LDFLAGS manipulation needed
+5. If there is pkg-config module, but no header -> use CFLAGS/LDFLAGS from
+    pkg-config (IIRC, this is handled by the "dependency" function in
+Meson). This
+    case happens on FreeBSD where system and 3rd party headers are separate=
+d
+    (/usr/include vs. /usr/local/include)
+6. If we have both pkg-config module and /usr/include/sys/inotify.h,
+then we need
+    to figure if this header corresponds to libinotify-kqueue, or it
+is a native one.
+    This is done by comparing the installation prefix of the library and "/=
+usr".
 
-> diff --git a/system/qdev-monitor.c b/system/qdev-monitor.c
-> index be18902bb2..ca14135191 100644
-> --- a/system/qdev-monitor.c
-> +++ b/system/qdev-monitor.c
-> @@ -593,6 +593,7 @@ static BusState *qbus_find(const char *path, Error **errp)
->   const char *qdev_set_id(DeviceState *dev, char *id, Error **errp)
->   {
->       ObjectProperty *prop;
-> +    Error *local_err = NULL;
->   
->       assert(!dev->id && !dev->realized);
->   
-> @@ -601,6 +602,18 @@ const char *qdev_set_id(DeviceState *dev, char *id, Error **errp)
->        * has no parent
->        */
->       if (id) {
-> +        g_autofree char *fullpath = g_strdup_printf("/peripheral/%s", id);
-> +
-> +        if (!check_existing_parent_id(id, &local_err)) {
-> +            error_report_err(local_err);
-> +            local_err = NULL;
-> +        }
-> +
-> +        if (!check_existing_parent_id(fullpath, &local_err)) {
-> +            error_report_err(local_err);
-> +            local_err = NULL;
-> +        }
-> +
->           prop = object_property_try_add_child(qdev_get_peripheral(), id,
->                                                OBJECT(dev), NULL);
->           if (prop) {
-> @@ -613,6 +626,13 @@ const char *qdev_set_id(DeviceState *dev, char *id, Error **errp)
->       } else {
->           static int anon_count;
->           gchar *name = g_strdup_printf("device[%d]", anon_count++);
-> +        g_autofree char *fullpath = g_strdup_printf("/peripheral-anon/%s", id);
-> +
-> +        if (!check_existing_parent_id(fullpath, &local_err)) {
-> +            error_report_err(local_err);
-> +            local_err = NULL;
-> +        }
-> +
+Hope that helps.
 
-Node names and block export IDs need to conform to id_wellformed() (or 
-id_generate()), which does not allow slashes. So the paths should never 
-intersect with node names and block export IDs by design.
-
-With these checks removed (or not, if you think we need them, they don’t 
-hurt either), and with the spelling in patch 4 fixed as per Markus’s 
-suggestions, for the series:
-
-Reviewed-by: Hanna Czenczek <hreitz@redhat.com>
-
-(I know the discussion around how unique IDs should be is ongoing, but 
-FWIW, having unique IDs across the block layer is good enough for me as 
-a first step. Well, I guess, including block job IDs might be nice, too.)
-
+[1] https://invent.kde.org/frameworks/extra-cmake-modules/-/merge_requests/=
+566
 
