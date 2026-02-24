@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9AC50EFB80E
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 07:00:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9AFC9EFB80E
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 07:00:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vumLa-0002PB-UB; Tue, 24 Feb 2026 01:56:42 -0500
+	id 1vumLZ-0002NW-17; Tue, 24 Feb 2026 01:56:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1vumLN-0002HV-Es; Tue, 24 Feb 2026 01:56:29 -0500
+ id 1vumLU-0002Js-Oi; Tue, 24 Feb 2026 01:56:36 -0500
 Received: from mail-japaneastazlp170120005.outbound.protection.outlook.com
  ([2a01:111:f403:c405::5] helo=TYPPR03CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1vumLL-0005Mp-4g; Tue, 24 Feb 2026 01:56:29 -0500
+ id 1vumLS-0005Lc-53; Tue, 24 Feb 2026 01:56:36 -0500
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=xnGu45NlCq57H959Q8cmXohyyhZwjk00KbVaw3jGuVx52UUvJRfaRZu7cCOIQMKjKtH+BC3vbzBwnnIust53zEZNoEg6dDfSXzvv9THladpz7WX4XyMp1MvE65e5taEXbEmNHUh07OSZlQTs2B2fIHyqlesW453SOIJOwfe0iEG1ytb75hE4Plkxnu7lvD1JpeAQPEYlv5vx5q0puYWw5SCCDkYDCdeNR162zKtxoci4eIJr057T5BSsRBQ7bKSJ+pk49JCk+L8MPkzdzIRTGuBdqL9ge/WC+ZsVrPjaAzlFS7SbmwkyLEWr0owQH5d8dMH0ATHO+7bLBWcTZ9MsRg==
+ b=LIrIN3YpFsKGF9w0UgBaZzWt2yfwt0Nt8gc7TNgjNUMge1t58mfS9YdD907eElF830iSuuEkvBOQ2p5Ze+CUsQtYVnou5r+mGu4EtEl5ryc8HF12BMeSNf4Cmjaj4XSOmHk5O1QbjqL/mmrieWTSwxI0biFsu7te++64HHf0p32FQ0MN53Xz9At509m39gXGmXwDPtGN1zYyBsxokRrlk++myIhR0J5ta5zFxr+hprLDnuU3dBMby3nsBbH4ZQIN/0CVNsWGev4Nutwrgzek93iRX20CxDxmLHKO0Dvk/pvXAXyvbLsQWjBN+2bYVZ3oA/nWI0G5KQtCwhQT514Swg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=sGTjLDrGUEamsuj6NyG4F+kZKyu2sNTKtUATGzn0C6Q=;
- b=Zem1Zd+mb7mGJ6/s8AlbLrH0Jke0fcOjsNs363t4T3/jwX0gyTEYl7cfTjPkAlfEZEcm/D8L7uIcidVpXBRrKjXmaY80c11XNEDFdHhDDOqFDegL2RvOyDvCnCVw1pI2QRpCU9Mg+/mogNcktAQn8OrmVosDjOntKxZyTxB4Oz0DFUO16HDTX4T+Ux1nVgbhKry9APF7rfKlxK313NOY3JUqY02J6dJeKRPaZG31TBnx+lLdoyMekjCCoAmssvJ3w3jDRBDQ/ausJNF4ppIHg5CxBmmBlzTHQVVci5z6YQtlymSMWNgie4u63KjTLCtCWGHeswvsKdTB3t5LgRSblg==
+ bh=oJN2DxV6emGfvwifwTHf2a9x7ynAuuwY/ZimtnSTUsI=;
+ b=kwciUrPpivm5bP3YOzwZg6BkXwxT10XRIultX5t9IYWOJEvHPTsW7ZislrZYRhK8/O24I5Q/uWVEMMnLCg+O0t3t3B+OH6Nyr0UxoWkBRXQtDyphgEFqIvVWvQUcAJDByqDofNBRJkPolzREFulEDWHgj2cmRCyCn76FeY6lMUZSD9DRG2PNAOA4QliZJduelDSRpyq2PrFRt5sKiDdGDz4FS4ArzVmnwOPJTlkyz9wFJOSNMqfc0g2l+dnNSPnQiJX7Mx32EdMLVOmmlV/Vs/EXHk5Dqjut2DITnG1EGbbsIw/+FcIyWagDtueeiHQSyFDNHPzD/jzlDM5wKm7Syg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
  header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=sGTjLDrGUEamsuj6NyG4F+kZKyu2sNTKtUATGzn0C6Q=;
- b=NL2HrLaPNWoIArmTaqutRl/p0jtCSMmTd+fsePDM1J0golmycmYRMxxKUXEkJrDdaySW0Y2dXiuKoLVRd5D1AyCosjrX6CGixypsLWxERR4oUicraKzqGqa9/ztnPrVJ42UjMrXQcb/7HOj7U6Ek5lrm+xYWUp1YDjMOvMMR1kE/gccdgK9WfjEFApCFrS2xRVteBKz8ufPlYnCNkEHt5yGQKA3DD8ED4gE8+u0weSQTaI20teIcehxjb7LWA5lRwAvpXhG9VTKP28/YYVxfL91SlN2BPYO03kJM8GlH128Zf4zF7pSomTljG7vt2tnP6/hHq4/wH0a7QgESGIxbCw==
+ bh=oJN2DxV6emGfvwifwTHf2a9x7ynAuuwY/ZimtnSTUsI=;
+ b=SJBKn07ih1gSCDJegWTyVBTTPvb/cgv7142WeYX9+ccTGj5XReqFRL7Jg/QPdJRzmodRIcX4TVwIyoa3QplXnbt+CLA6zRzuqR6K0uKg2czvMvIeDfN9FUf+g4qV6OSvY0jqibUwS9PfIzWe3SMNZrGm/E0+bk1leC2bu4Aw4uc7y66RdBgjpv/r7dxSUrIXPRc5orb++cTTzH91epfAqxI22Ocq8pYaCpz1kuZ5WVd+Wyxlu6BfhqUOgea5WV7MWAomcK3XUFYtamGpqx34qgOG/LujLwAAyXvTNCZSF2DJH84eK8vVwn99R2VH6tOffMV+oFOBEpkLV4ViQOiUfw==
 Received: from TYPPR06MB8206.apcprd06.prod.outlook.com (2603:1096:405:383::19)
  by KL1PR06MB6109.apcprd06.prod.outlook.com (2603:1096:820:d1::12)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9632.21; Tue, 24 Feb
- 2026 06:56:05 +0000
+ 2026 06:56:15 +0000
 Received: from TYPPR06MB8206.apcprd06.prod.outlook.com
  ([fe80::e659:1ead:77cb:f6d3]) by TYPPR06MB8206.apcprd06.prod.outlook.com
  ([fe80::e659:1ead:77cb:f6d3%3]) with mapi id 15.20.9632.017; Tue, 24 Feb 2026
- 06:56:05 +0000
+ 06:56:15 +0000
 From: Jamin Lin <jamin_lin@aspeedtech.com>
 To: =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
@@ -54,13 +54,13 @@ To: =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@kaod.org>, Peter Maydell
  <qemu-devel@nongnu.org>, "open list:Block layer core" <qemu-block@nongnu.org>
 CC: Jamin Lin <jamin_lin@aspeedtech.com>, Troy Lee <troy_lee@aspeedtech.com>, 
  Kane Chen <kane_chen@aspeedtech.com>
-Subject: [PATCH v3 05/15] hw/misc/aspeed_scu: Implement SSP reset and power-on
- control via SCU registers
-Thread-Topic: [PATCH v3 05/15] hw/misc/aspeed_scu: Implement SSP reset and
- power-on control via SCU registers
-Thread-Index: AQHcpVqkF6NtmSi/9kOSBx/V8YSe5w==
-Date: Tue, 24 Feb 2026 06:56:04 +0000
-Message-ID: <20260224065556.3847942-6-jamin_lin@aspeedtech.com>
+Subject: [PATCH v3 13/15] hw/ssi/aspeed_smc: Add Data FIFO-based flash access
+ support for AST2700
+Thread-Topic: [PATCH v3 13/15] hw/ssi/aspeed_smc: Add Data FIFO-based flash
+ access support for AST2700
+Thread-Index: AQHcpVqra1q8Jao2sEmkBPdk6Ph9OQ==
+Date: Tue, 24 Feb 2026 06:56:15 +0000
+Message-ID: <20260224065556.3847942-14-jamin_lin@aspeedtech.com>
 References: <20260224065556.3847942-1-jamin_lin@aspeedtech.com>
 In-Reply-To: <20260224065556.3847942-1-jamin_lin@aspeedtech.com>
 Accept-Language: zh-TW, en-US
@@ -71,88 +71,88 @@ authentication-results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=aspeedtech.com;
 x-ms-publictraffictype: Email
 x-ms-traffictypediagnostic: TYPPR06MB8206:EE_|KL1PR06MB6109:EE_
-x-ms-office365-filtering-correlation-id: 24d46b21-ba6d-4127-dce5-08de7371c794
+x-ms-office365-filtering-correlation-id: 35d6ab66-e42c-4d3a-9256-08de7371cdd8
 x-ms-exchange-senderadcheck: 1
 x-ms-exchange-antispam-relay: 0
 x-microsoft-antispam: BCL:0;
  ARA:13230040|1800799024|366016|7416014|376014|921020|38070700021; 
-x-microsoft-antispam-message-info: =?iso-8859-1?Q?n6v2v4PhlCJx7QnRWh29HUeB1qX4q7y7DRFCQ3wK5tAm/frmYhgcf+vLo4?=
- =?iso-8859-1?Q?DD5dk+XoAp0O2TM1tthCb09PYyWHIJ1y/EOxSAFNu2xljA+CiJXT4oE1vT?=
- =?iso-8859-1?Q?oyPtOzkyziO0aCn5KjzWCtg5HYoV716ZZBthH+RZsRlYi0BA8yHDuRDFzM?=
- =?iso-8859-1?Q?FgEitrKQ/vqAr1jC7nOrUHUyq3JvSZq00Wkz3KBiPNexz2FA/LTIN5wOfW?=
- =?iso-8859-1?Q?ppO8vzkmdcY9dLORUtTwI4KEdGyxGXZTeRdnaU2ia/YMh/obU5LHe5w5WO?=
- =?iso-8859-1?Q?HM+1o+WZHzfs8CKB87jN28TnII8vk3/nWkv1pGi/NmHLqNP7+TKuI0z3Wp?=
- =?iso-8859-1?Q?bYFfzIJlwuc8NXD37mWyPlT0XzSQz1WM4S/l5B6O1feTJSw+C+NoSXhXj7?=
- =?iso-8859-1?Q?O30s0ZKRy5X7fvYLYSJpTbiPywrpS0BdcPuL4afH8dv5jifHZKZjOWOkm0?=
- =?iso-8859-1?Q?pM9joEn9jhBAm/ZAg0wmGtL497SMcO8LRQGGunsA8VPRjjJnEeOa21P7xV?=
- =?iso-8859-1?Q?c+4H27cOAHUXewqy6U5Uh5GPwhaqVzSAbOibNRfISrVzSCug1YZnGhGFrs?=
- =?iso-8859-1?Q?dcsTknoeo+xzf7UZBwAXHmUPgyRk+XaBj/2zKYDWOHku11gtA/Tzs93xn6?=
- =?iso-8859-1?Q?UlYdHITKDe4yEj5SUQkS0F7bKq5iICcaa59qWfNhnbgZQOWqSOxAaSbQOz?=
- =?iso-8859-1?Q?eIWmokSwszPIQzfBZ4XmR2A60MXD0cndzvEvwlZsGtDLgwNP8iUfFXCD5j?=
- =?iso-8859-1?Q?4xaeI6apYNPrdsqt7kN8mAq8LCyrluInUT7TwRM3x7lShN3LRxhql7xOwX?=
- =?iso-8859-1?Q?cLoyvjMZPB0iKvcfE/xewYuOkfrKBasMyJiVds8aEbNVBB5rm1Zu8Gq7gK?=
- =?iso-8859-1?Q?CqbD82GmiZo/NzVw1ueyrQFKwOGZ8rw2dGSDLlKe1YVxhlcGYodZNNCxSs?=
- =?iso-8859-1?Q?uuCqOEqtUhBb/LVyKM7UXLiwlXTERsheHD5lFhSn4NJHT2wdtHQnxukhM2?=
- =?iso-8859-1?Q?623i+nbaMF6QADQU8NOH5XwapnbHRtpi0t7y9KospUQSt6kwd3nHbBy/1a?=
- =?iso-8859-1?Q?Nn7qu8A3GyEclvq2GmdswQJlp4LytdRvv6EZbzTHxhRIHM4o6CeJ2Bg/ia?=
- =?iso-8859-1?Q?dyAVhqgePoJz5Qob67lis2R6ihHCj+ZQQQooNZZlYOcmHvccuossV7gC/Y?=
- =?iso-8859-1?Q?D0u5DsCCo3BAFQrBePtjD987YBso5zOuNlk5KrMoVPCicn12sZ3YZYCdrV?=
- =?iso-8859-1?Q?WtelOiIZMwLcVoiYBv8RUaSMvG3Jvky9hmQpeE01KY78+z4fQDj22QaZ+m?=
- =?iso-8859-1?Q?D0uwEuSR7selX4Gjnas5DpJwb5l7PwbC6O6ucZCmPi39AAkv/tG6u8exkf?=
- =?iso-8859-1?Q?TURCd6rkocPOyt7XkV3b7uXYIyMg0dnzEKTISvfKLKc1CMoPPfvXITK97h?=
- =?iso-8859-1?Q?qEY/wo4siotAWjqQ/9w1SK79wZ29RGyVRpZCgbMtTGSxj0DyJT6T2e3gwH?=
- =?iso-8859-1?Q?r+WkYhErYnnEWPKqucKbtPJpV1FU99TvPztbp21KHY8cHLiGsrICkXSQrJ?=
- =?iso-8859-1?Q?78NrZHdKf4YENDBm/3+2CK4GNNbx3UB4Ihyu+lTqIQy50xGksY0ysYQ2U6?=
- =?iso-8859-1?Q?6x/ZhmZKavZl2jFjQNkiVabBWJouJFWb/d+ec6XGhIt5tH7Gs4MTt/5ynU?=
- =?iso-8859-1?Q?4IZELOBPz5r4x6LR/jIg2oKpZM/7aL9DlI5+za82?=
+x-microsoft-antispam-message-info: =?iso-8859-1?Q?GGQQNuMfCaF/I5leSxK6qTFaQJI+uEgD3diQrEdJtNj1ZxuLhx7tOa9U2h?=
+ =?iso-8859-1?Q?FTmMF+bz10Ai3hBhq6KPyRaF+6UFLJcgqMh1fe95IgTPbgvu7iEZTwpXK9?=
+ =?iso-8859-1?Q?9EsmL+KgRuuif1wFzwb2CvFxYKXezw6TWS2xWrHHv4uQWymT3S1RCbtrQI?=
+ =?iso-8859-1?Q?LaNzRU7af7n+OtMoM00ZHPHzwpS2nYlySYaguze7KYgmq8hA41b9Fe21Dp?=
+ =?iso-8859-1?Q?MDOcL/R93Pv476huRvE3T8jXll7BXIJz+SKiesyufoDjxN3SI3PFKtnlAd?=
+ =?iso-8859-1?Q?x6+EwdDF5NkD9UX/g/mIFMU54iorg242WQcqmqRQ6L60+zcLERRGW7GjAU?=
+ =?iso-8859-1?Q?67F+bWtZz5C5G9TJQ/SgyaQm6Rq3pRMT0Jo198EGdhI7s7PluzU8UtXUVC?=
+ =?iso-8859-1?Q?FvzDZaHOecaKPdtsjccHZr7MS4YKpcQJ66D3AmRx0nEAHirrj9WZIgLBvz?=
+ =?iso-8859-1?Q?71b60hmxhVlDSOF9jJs6KuY8MYxFAOJ68MCjiWcs8tO6Gc1OplyYimszCi?=
+ =?iso-8859-1?Q?4E8EkZsGHo/v7kbHY48I52tnwa7fh0opK11EhqlFCFusUEw4agCTfqFMKv?=
+ =?iso-8859-1?Q?G6qCKRZtO0c9bloqZx7kxpbx+4JXeFdquwKbRwipSIBxTfW0jxADEhpOLs?=
+ =?iso-8859-1?Q?OE3RSBoXRygCrDfOEw+ThKY09ngczKuB5Ewtkja2d8FIzzmqgdaWD+QU6/?=
+ =?iso-8859-1?Q?5UC7BD4+chBFDc0rTGQBQFdgPlCRf0kZgeJ5F6Th9C7m+/4vowAw5IGe7o?=
+ =?iso-8859-1?Q?S4t4rV3+A+ql0etVsoFI0F2jrlaf8iixlzmVjD0Sz5zs1Wvdf7sLqKKCDg?=
+ =?iso-8859-1?Q?Gk9UZ2fyL8em1idnt4XVMEtqL5ZcGfq+zrjsv71P1TGdd74kvYBK/xpYJU?=
+ =?iso-8859-1?Q?lOIF2CSfMCOTfGT+Mq3SHytkixxoTDNZfPFIMQQcg+wnW+Y2jjVGepMosY?=
+ =?iso-8859-1?Q?foijseGLS0irAQpR2mqCuwKFtdgUhuthohwxyKdXfi8Y78LyvxWcyOctq+?=
+ =?iso-8859-1?Q?ZYhtj99XmdLgR0cSKcPjWLqRfsW63I6LoRWE40+WTyR7FZrhFnJAUUEJnz?=
+ =?iso-8859-1?Q?DZuBxmsvfazXDByugOalcX8nV9htgEGDGNYa8rT+u9R9TtK/OYJZk9lCzm?=
+ =?iso-8859-1?Q?f1NX1tY8VAycFjotpJb0Y7vHAByJZDfH3dxlZMhw/rUCQUC/6MoJB/z5EF?=
+ =?iso-8859-1?Q?24hOH7XtJC49D6YbX/zFOjHaDw8WaVMsB4RDCo/vJCsr3sS8aduG/GVBlU?=
+ =?iso-8859-1?Q?ajkbCBK1KvnYSPf9CMPs7OjkscGVGv5LLPwySS6RC+nZaDgQGX/jnkPD1M?=
+ =?iso-8859-1?Q?hmhET7KrOCLpy7zFIZQCrMyyWDAFhyQWn7PBBqhwbT1JslsJ/0rqM/HCxE?=
+ =?iso-8859-1?Q?8DBQgqVbMdUwKc48AxZOwfHffcRT/S7+hA/KgEIuoFrVuPKfWaU2EaXzun?=
+ =?iso-8859-1?Q?20dDlBWU6mVdF8cgCpzHzzXMjZgUaegbyB98dudzIoa/o+FI/UVqrYNd0u?=
+ =?iso-8859-1?Q?fBQ9aPm7ne1xJu8t/6WCVcJe9M8516VLbOxr5v5TzpE7kxk2D9z3C9r5Xx?=
+ =?iso-8859-1?Q?Vi2RmFJzHevgg7ygbrXmTILRrqk6iMMnZmVG11Bu8oUMyWvm7XPchpoPVH?=
+ =?iso-8859-1?Q?f0gT2SEc/C2qoTiIuoD2TZStz/BWPX9POsBJlnTc5Sv14mWJ79ajOh/+L4?=
+ =?iso-8859-1?Q?5xsTgO0Wbdu9KGqS8VXK8XlMPeS5G8FyHUE9p6Pt?=
 x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:TYPPR06MB8206.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
  SFS:(13230040)(1800799024)(366016)(7416014)(376014)(921020)(38070700021);
  DIR:OUT; SFP:1102; 
 x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?ayz5X0RKaDBFe4yG955RmuHk8YcrsPsRpXeu1huXTUXtWL8vf1RY+89CSk?=
- =?iso-8859-1?Q?qIZV2yPdfP2Rpd7gugcnQLEmqfOFiM3zvO5GYTxl24FW18zRlkzAO19XC3?=
- =?iso-8859-1?Q?F3ocH/CCS/39qNJZSdRNJnNB66e6+XG4RsdS6NnsJLHz+w/1vIhvUz4/D1?=
- =?iso-8859-1?Q?bSejRiZlQU4y99+LtIc0twvOzGNoiYy0wvolIFJ9yaFLegv9l2Rml7FkHa?=
- =?iso-8859-1?Q?x6YTmywV6jYlXJwKZyuO0HejPG69e7qpzZJXjXgHHCdlbxyK/9McFHrrPT?=
- =?iso-8859-1?Q?qaZ1pL0aI3mNCkR/2UmyouAGQHBXFiSDu7TEFl9cff9+BLZbLU2DVIgXp+?=
- =?iso-8859-1?Q?69xDkqU6XBh++ayiiMcCGBy9z49FxtxP40D4beHN8Iu91QldakcM8Zp7BM?=
- =?iso-8859-1?Q?fgJdsK40ORIIOCGomLPgL6qOP9rjWaQSkSNJf59bA9QSy7Dh3dDVknMAIS?=
- =?iso-8859-1?Q?vaVxazDFUf4Q5wTKsAE2XBPMx47wWCVJLK98gKBLf/70XoVtUmDWh4dXUc?=
- =?iso-8859-1?Q?J6/iiDodhHlN/V14tU9r1GYfZjv4jUowFd//2sOWuuGbnb7Ehm4WEGsiZM?=
- =?iso-8859-1?Q?e7iO+ZlPYWmAdxak8Dl0u+6O1mBFVgRxNvutjAJobxfAMnbWfQMmcRBW+p?=
- =?iso-8859-1?Q?Sd3hXgapUOnXT9yjDuCujOqVqBOie11G+ucQMwx8n2ViXzHVg/OSh1pKqD?=
- =?iso-8859-1?Q?er7jQolKUaGWqCp4YD7kETjiEwBkXosOE/f9i3vKPwqrSWnq7m9brVKtga?=
- =?iso-8859-1?Q?nJqxEZdVtaVh2RsI/FvwP0dlEtlMxvAt2Bc5K4Zzzx2adnVS7hB+Xk13db?=
- =?iso-8859-1?Q?zoANyeGiG8C3+/Nl/7dqUcoP5WkGRGlYgH08XNUlzFYtQaHYWiE4kY7LDp?=
- =?iso-8859-1?Q?oQKq6ztZQv3IBLyDfQ9rVk3hWLG6Bw1A8qhlL4v8+m4mGK8cEUKfXA2E9Y?=
- =?iso-8859-1?Q?00bsJL2lZWdTEHk7CydcM7zcMDEV421/pOAP2fXpbr73gshpmR13qtKXGh?=
- =?iso-8859-1?Q?oksM74oGizcMIn1kHDhHEteE0XdcZKROUICwmJe7rpJxrCRX0vIxkc2Ef4?=
- =?iso-8859-1?Q?ezI+AjhXCuCSd0PaNqal+SiLyq+tGl7ifq+PYyKkKLS1PWSgh7WVwyyDEj?=
- =?iso-8859-1?Q?0I8S7h89kHThmoVh7PZZYHUqG1GM7PKTgJqVdByh9KwBF4SYRTmTmmUuBH?=
- =?iso-8859-1?Q?a9h1JL6nPe4LEyW/hwxi1F+0dQsfOlsIjdDdxeJQjAHyKQcQccQvxd2Qsw?=
- =?iso-8859-1?Q?VpeCJzkGJAp4mx5kKD0NoSv6B7DbFlf9leD7HKpTltJ7XIHBwdNJg7TIRf?=
- =?iso-8859-1?Q?sANNLuhjAuSOe1YBjgEWWWqT2yWizHk4QThO7uiyHq6NPIgjlTkWAR0+ny?=
- =?iso-8859-1?Q?sBieF5R+qp+f8ZlLN7Y3rtIAfb9snz/jrNADBgITqUlBgFYil0DPSyVJcW?=
- =?iso-8859-1?Q?PVeWxGERCfXU+ObIA7zImBC0CykUt/qLZnRJcYJxfCwkwlFa30IwQKpXo2?=
- =?iso-8859-1?Q?yiWfwj+5e9OS2F8Y1nH+WNvbZ7AJU6ijpTt/BJ7UFbPc7V+ds8rpSfqpKK?=
- =?iso-8859-1?Q?LKt75u/Xk5C0PU62CiB9YvE2W9wIEBP48wDL/thtwD81SZdk06rKxX6gr3?=
- =?iso-8859-1?Q?QQj4Ktyp5miT7qT8aLVMC7MxlxHcEdqQiOgp8XGHJVBYhJDxVUPhEgDJla?=
- =?iso-8859-1?Q?lE9xKgIBmy59M2/xoxAnZsj9xvphttspmFuT7JRvZFFLN3vwhL9MBWDpDk?=
- =?iso-8859-1?Q?0ccM41EQswcuvXkt98XzwjJDolR1uIKap8um2QiYDhNjyeJlYumbThoZGs?=
- =?iso-8859-1?Q?wpADinOWEQ=3D=3D?=
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?cN0eFJ2Xv0iisngb3D8nX86ZPEio+fIt5/kYgOpdHKrK0hL58yCy8h+gd4?=
+ =?iso-8859-1?Q?6yypZC8/pvek68jMBaULg4YciiuzYMTxqxtvmytLUjN00ca+fuMaP97EoV?=
+ =?iso-8859-1?Q?pLq0c83TCDcunTfO0LTSeWDZzMQjf6Zdy/T8Kw/72OE5X/FL0Cqo1NEmhz?=
+ =?iso-8859-1?Q?ylsET3bydpKVyN/8huO1dxPua+LKG1y24G37Sw+dcxvsJnXorfphrwul+7?=
+ =?iso-8859-1?Q?/wW1TXgPyToaz1jXzsmeFkja6ftn8xRjD28EzdnXiLE+SxH871nEetJHcV?=
+ =?iso-8859-1?Q?YRZ2Z4BusQwWOY4g3f9PSvJlkYb/O/wPR5P2IXKxVJJA/pxl1S/AqC1m8T?=
+ =?iso-8859-1?Q?PGIcXWydTM7V9adt2Qo3l2/mgQ+c+eaUV/Hq3y77AblcX6PYZeG5qe+OcP?=
+ =?iso-8859-1?Q?2vSX9IVt0hGxsfBHBOV0da/68gYxDAfHQsOxuHLbOWJa3QwDXAiv4F7n8C?=
+ =?iso-8859-1?Q?qtcEdKtgGts7aXxtvRchLRfZG9ikUB3EgJxbZ1kq9az0bqYZUhy4Lx75CS?=
+ =?iso-8859-1?Q?lBZ1nsw1SXLDHgvYGsTFajG1RWoVH+fT4duzNSwHJZIAF5H5ThSmJq3xF0?=
+ =?iso-8859-1?Q?r5xamkiOobxvHbFz6GQU3HpIcmQIuLAWvpvGKelgtn/M9RQGF0MOMLHXP3?=
+ =?iso-8859-1?Q?DEfVwmJuDENJCVFt+sXnKMKZWj0dJtUFZmqYzYhiW3aI2/vNjU+trrUi2F?=
+ =?iso-8859-1?Q?DK4kbsJrJBwzp0uL3xgkWEPdBia1+4bRVWe8fXUm/9+/CjpBGTr7715LDS?=
+ =?iso-8859-1?Q?ArGjtGLVP05SpfBpHEe+mfpQOXgZjucE4rIpzFnU6TKPSU+vX9YxW5iIZ8?=
+ =?iso-8859-1?Q?pu26cqy19DhvMgE2cAPWFpg6an+qeDoaGM++WIm19v8kE+ErK+0WHypS+p?=
+ =?iso-8859-1?Q?rZhYa5s5YoLNFQyIhfcEeYPM2ecNpWqF+lzfU6uYIh62byoFa5qZGD2MXy?=
+ =?iso-8859-1?Q?PECpZIfh/D7mgArF4dyC/BFg+CT1rntTxxO1o6MP042iPYaNeHKH5tcg/i?=
+ =?iso-8859-1?Q?wVEvyta/xdGe34pefogt3t4NTCE9MX3pzplkcy66wKSu7aXah9SEdWsrSe?=
+ =?iso-8859-1?Q?qZgXbR1xqkI+Gjx1SkQnyF98wkhF0zSayVkt3Z7skNb3t++gge9GLK6GsS?=
+ =?iso-8859-1?Q?RjCW0+tK6wbloR1igNr/aqSbRVx6dhyfzfoSG0LiXcRiD6785oeR0LKQGp?=
+ =?iso-8859-1?Q?PImzu8EUMmkymaUQFzHNOB6CaZ2UVE80J4XaYRVFxXs3C81yP1sjJeypVl?=
+ =?iso-8859-1?Q?LEZvyhDOck1hk5kTbQxGQz/X3CGAKjWy/h6fUJ1K97aDMPQwm5PL1rJn2Y?=
+ =?iso-8859-1?Q?BRgrSDN+gwk+WPNsVPs0VQWzPInC20Yu6ytVViDU8gpTpcRiK9XItzw6we?=
+ =?iso-8859-1?Q?w7DIPrUqwYR06MjOgC89+4GNURpDZEkccL4m83CYM0argKzidCh4i6vHC0?=
+ =?iso-8859-1?Q?9O46kLZLbPU+GTxJsavSrhStqjS5ZUk955oT6EM2qqezfbY+VfkveKU9Om?=
+ =?iso-8859-1?Q?kC7DqKrXvGgyAKetZBB5pruMvyeBPd2//x8S4vwZcPKrH2Tv0OdxaQaz+i?=
+ =?iso-8859-1?Q?S9HVKTa2u8ugP+mVgAkfSJxSvsYRoeTEPQqPUUHBsqH8Qu9NIjlq1UELn4?=
+ =?iso-8859-1?Q?vQ/nR9+ujttInxfREddKGHZCCxZNAfPmo8Q2Q2alFaSb+XI6TNN0VXYm1Q?=
+ =?iso-8859-1?Q?eYRLOQCBdIY52qrwdNlXWw2bE4AqLmXTLJANtX/MXzdpXvmvmciufP/7t3?=
+ =?iso-8859-1?Q?Y88JipU7ergH/moPPPp3qUOYbpwzdtL6o4dKkWnNy7jpaBvO3qc8t5miv1?=
+ =?iso-8859-1?Q?h3LtDVvaJQ=3D=3D?=
 Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
 X-OriginatorOrg: aspeedtech.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
 X-MS-Exchange-CrossTenant-AuthSource: TYPPR06MB8206.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 24d46b21-ba6d-4127-dce5-08de7371c794
-X-MS-Exchange-CrossTenant-originalarrivaltime: 24 Feb 2026 06:56:04.3741 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 35d6ab66-e42c-4d3a-9256-08de7371cdd8
+X-MS-Exchange-CrossTenant-originalarrivaltime: 24 Feb 2026 06:56:15.4883 (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: RzLJocFwlCyCIIff2nuVZDSQe/gtNTo0Azqi6mzoeQKhnCl2tccvYX+FWx2ZTUFpxVZejQ3zExV5KJbtTBx8U0GfzdcKTKHDGHGR57Exemo=
+X-MS-Exchange-CrossTenant-userprincipalname: F5YW5JHBdfcVJ8/iChSOdG9e0n1m6u+k9SLZ65A8ZaQPuiQA9EkHeiZyvd5en3IFRBM70y4F55DZtYA1ZGWIiP+/ygSe9ABmTP4MiRxLoMc=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: KL1PR06MB6109
 Received-SPF: pass client-ip=2a01:111:f403:c405::5;
  envelope-from=jamin_lin@aspeedtech.com;
@@ -178,239 +178,309 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch implements SSP reset and power control logic in the SCU for AST2=
-700.=0A=
-It introduces support for the following behavior:=0A=
+AST2700 supports a Data FIFO mode where flash accesses can be performed=0A=
+directly through Data FIFO MMIO offsets. The Data FIFO start offset=0A=
+increments by one for every 16MB of flash address space, allowing the=0A=
+chip select (CS) to be decoded from the Data FIFO offset.=0A=
 =0A=
-1. SSP Reset Trigger (via SCU 0x200):=0A=
-   - SSP reset is triggered by writing 1 to bit 30 (RW1S) of SYS_RESET_CTRL=
-_1.=0A=
+This change adds Data FIFO support to the Aspeed SMC model and introduces=
 =0A=
-2. SSP Reset State and Source Hold (via SCU 0x120):=0A=
-   - Upon reset, bit 8 (RST_RB) is set to indicate the SSP is in reset.=0A=
-   - Bit 10 (RST_SRC_RB) is set to indicate the reset was triggered by an e=
-xternal source.=0A=
-   - Bit 1 (RST) is a software-controlled bit used to request holding SSP i=
-n reset.=0A=
-   - If an external reset source is present and bit 1 is set, bit 9 (RST_HO=
-LD_RB)=0A=
-     will also be asserted to indicate the SSP is being held in reset.=0A=
-   - If bit 1 is cleared, RST_HOLD_RB will be deasserted accordingly.=0A=
+a class callback to translate Data FIFO offsets into CS indices. For=0A=
+AST2700, the Data FIFO offset is matched against the segment start address=
 =0A=
-3. Hold Release and Power-on:=0A=
-   - If RST_HOLD_RB is clear (0), SSP is powered on immediately after reset=
- is deasserted.=0A=
-   - If RST_HOLD_RB is set (1), the user must write ENABLE (bit 0) to SSP_C=
-TRL_0 to release=0A=
-     the hold and power on SSP explicitly.=0A=
-   - Writing ENABLE (bit 0) is a one-shot operation and will auto-clear aft=
-er execution.=0A=
+of each CS to determine the target flash device.=0A=
 =0A=
-4. Reset Status Clear (via SCU 0x204):=0A=
-   - The reset status can be cleared by writing 1 to bit 30 (RW1C) of SYS_R=
-ST_CLR_1,=0A=
-     which will deassert RST_SRC_RB and potentially trigger power-on if no =
-hold is active.=0A=
-=0A=
-5. SSP Power Control Logic:=0A=
-   - `handle_ssp_tsp_on()` clears RST_SRC_RB and RST_RB (if not held), and =
-invokes=0A=
-     `arm_set_cpu_on_and_reset(cpuid)` to power on the SSP core (CPUID 4).=
-=0A=
-   - `handle_ssp_tsp_off()` sets RST_RB and RST_SRC_RB; if RST is active, a=
-lso asserts=0A=
-     RST_HOLD_RB and invokes `arm_set_cpu_off(cpuid)`.=0A=
-=0A=
-6. Register Initialization and Definitions:=0A=
-   - Adds SCU register definitions for SSP_CTRL_0 (0x120), SYS_RST_CTRL_1 (=
-0x200),=0A=
-     and SYS_RST_CLR_1 (0x204).=0A=
-   - Updates the reset values for these registers during SCU initialization=
-.=0A=
-=0A=
-The default values are based on EVB (evaluation board) register dump observ=
-ations.=0A=
-This patch enables proper modeling of SSP lifecycle management across reset=
-,=0A=
-hold, and power-on states for the AST2700 SoC.=0A=
+The SMC register region size (nregs) is also extended dynamically=0A=
+based on the number of supported chip selects to cover all possible=0A=
+Data FIFO regions.=0A=
 =0A=
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>=0A=
 ---=0A=
- hw/misc/aspeed_scu.c | 107 +++++++++++++++++++++++++++++++++++++++++++=0A=
- 1 file changed, 107 insertions(+)=0A=
+ include/hw/ssi/aspeed_smc.h |   3 +-=0A=
+ hw/ssi/aspeed_smc.c         | 111 +++++++++++++++++++++++++++++++++---=0A=
+ 2 files changed, 105 insertions(+), 9 deletions(-)=0A=
 =0A=
-diff --git a/hw/misc/aspeed_scu.c b/hw/misc/aspeed_scu.c=0A=
-index 9bfe132840..56f7e214b9 100644=0A=
---- a/hw/misc/aspeed_scu.c=0A=
-+++ b/hw/misc/aspeed_scu.c=0A=
-@@ -21,6 +21,7 @@=0A=
- #include "qemu/module.h"=0A=
- #include "trace.h"=0A=
- #include "qemu/units.h"=0A=
-+#include "target/arm/arm-powerctl.h"=0A=
+diff --git a/include/hw/ssi/aspeed_smc.h b/include/hw/ssi/aspeed_smc.h=0A=
+index 76831422c6..640efade94 100644=0A=
+--- a/include/hw/ssi/aspeed_smc.h=0A=
++++ b/include/hw/ssi/aspeed_smc.h=0A=
+@@ -47,7 +47,7 @@ struct AspeedSMCFlash {=0A=
+ #define TYPE_ASPEED_SMC "aspeed.smc"=0A=
+ OBJECT_DECLARE_TYPE(AspeedSMCState, AspeedSMCClass, ASPEED_SMC)=0A=
  =0A=
- #define TO_REG(offset) ((offset) >> 2)=0A=
+-#define ASPEED_SMC_R_MAX        (0x100 / 4)=0A=
++#define ASPEED_SMC_R_MAX        (0x300 / 4)=0A=
+ #define ASPEED_SMC_CS_MAX       5=0A=
  =0A=
-@@ -144,6 +145,17 @@=0A=
- #define AST2700_HW_STRAP1_SEC2    TO_REG(0x28)=0A=
- #define AST2700_HW_STRAP1_SEC3    TO_REG(0x2C)=0A=
+ struct AspeedSMCState {=0A=
+@@ -116,6 +116,7 @@ struct AspeedSMCClass {=0A=
+                            AspeedSegments *seg);=0A=
+     void (*dma_ctrl)(AspeedSMCState *s, uint32_t value);=0A=
+     int (*addr_width)(const AspeedSMCState *s);=0A=
++    int (*data_fifo_offset_to_cs)(const AspeedSMCState *s, uint32_t offset=
+);=0A=
+     const MemoryRegionOps *reg_ops;=0A=
+ };=0A=
  =0A=
-+/* SSP TSP */=0A=
-+#define AST2700_SCU_SSP_CTRL_0          TO_REG(0x120)=0A=
-+#define AST2700_SSP_TSP_ENABLE          BIT(0)=0A=
-+#define AST2700_SSP_TSP_RST             BIT(1)=0A=
-+#define AST2700_SSP_TSP_RST_RB          BIT(8)=0A=
-+#define AST2700_SSP_TSP_RST_HOLD_RB     BIT(9)=0A=
-+#define AST2700_SSP_TSP_RST_SRC_RB      BIT(10)=0A=
-+#define AST2700_SCU_SYS_RST_CTRL_1      TO_REG(0x200)=0A=
-+#define AST2700_SCU_SYS_RST_CLR_1       TO_REG(0x204)=0A=
-+#define AST2700_SCU_SYS_RST_SSP         BIT(30)=0A=
+diff --git a/hw/ssi/aspeed_smc.c b/hw/ssi/aspeed_smc.c=0A=
+index b9d5ecba29..ed6cedabcb 100644=0A=
+--- a/hw/ssi/aspeed_smc.c=0A=
++++ b/hw/ssi/aspeed_smc.c=0A=
+@@ -163,6 +163,9 @@=0A=
+ /* Read Timing Compensation Register */=0A=
+ #define R_TIMINGS         (0x94 / 4)=0A=
+ =0A=
++/* Data fifo */=0A=
++#define R_DATA_FIFO       (0x200 / 4)=0A=
 +=0A=
- #define AST2700_SCU_CLK_SEL_1       TO_REG(0x280)=0A=
- #define AST2700_SCU_HPLL_PARAM      TO_REG(0x300)=0A=
- #define AST2700_SCU_HPLL_EXT_PARAM  TO_REG(0x304)=0A=
-@@ -915,6 +927,35 @@ static void aspeed_2700_scu_dram_remap_alias_init(Aspe=
-edSCUState *s,=0A=
+ /* SPI controller registers and bits (AST2400) */=0A=
+ #define R_SPI_CONF        (0x00 / 4)=0A=
+ #define   SPI_CONF_ENABLE_W0   0=0A=
+@@ -212,6 +215,7 @@ static const AspeedSegments aspeed_2500_spi2_segments[]=
+;=0A=
+ #define ASPEED_SMC_FEATURE_DMA_GRANT 0x2=0A=
+ #define ASPEED_SMC_FEATURE_WDT_CONTROL 0x4=0A=
+ #define ASPEED_SMC_FEATURE_DMA_DRAM_ADDR_HIGH 0x08=0A=
++#define ASPEED_SMC_FEATURE_DATA_FIFO 0x10=0A=
+ =0A=
+ static inline bool aspeed_smc_has_dma(const AspeedSMCClass *asc)=0A=
+ {=0A=
+@@ -228,6 +232,11 @@ static inline bool aspeed_smc_has_dma64(const AspeedSM=
+CClass *asc)=0A=
+     return !!(asc->features & ASPEED_SMC_FEATURE_DMA_DRAM_ADDR_HIGH);=0A=
+ }=0A=
+ =0A=
++static inline bool aspeed_smc_has_data_fifo(const AspeedSMCClass *asc)=0A=
++{=0A=
++    return !!(asc->features & ASPEED_SMC_FEATURE_DATA_FIFO);=0A=
++}=0A=
++=0A=
+ #define aspeed_smc_error(fmt, ...)                                      \=
+=0A=
+     qemu_log_mask(LOG_GUEST_ERROR, "%s: " fmt "\n", __func__, ## __VA_ARGS=
+__)=0A=
+ =0A=
+@@ -758,6 +767,7 @@ static uint64_t aspeed_smc_read(void *opaque, hwaddr ad=
+dr, unsigned int size)=0A=
+ {=0A=
+     AspeedSMCState *s =3D ASPEED_SMC(opaque);=0A=
+     AspeedSMCClass *asc =3D ASPEED_SMC_GET_CLASS(opaque);=0A=
++    int cs;=0A=
+ =0A=
+     addr >>=3D 2;=0A=
+ =0A=
+@@ -783,6 +793,18 @@ static uint64_t aspeed_smc_read(void *opaque, hwaddr a=
+ddr, unsigned int size)=0A=
+         trace_aspeed_smc_read(addr << 2, size, s->regs[addr]);=0A=
+ =0A=
+         return s->regs[addr];=0A=
++    } else if (aspeed_smc_has_data_fifo(asc) && addr >=3D R_DATA_FIFO) {=
+=0A=
++        cs =3D asc->data_fifo_offset_to_cs(s, addr << 2);=0A=
++        if (cs >=3D 0) {=0A=
++            /*=0A=
++             * Data fifo mode only supports SPI user mode.=0A=
++             * The flash address is provided by the SPI command/address cy=
+cles,=0A=
++             * the MMIO addr parameter is ignored.=0A=
++             */=0A=
++            return aspeed_smc_flash_read(&s->flashes[cs], 0, size);=0A=
++        }=0A=
++        aspeed_smc_error("Invalid data fifo offset %" HWADDR_PRIx, addr <<=
+ 2);=0A=
++        return -1;=0A=
+     } else {=0A=
+         qemu_log_mask(LOG_UNIMP, "%s: not implemented: 0x%" HWADDR_PRIx "\=
+n",=0A=
+                       __func__, addr);=0A=
+@@ -1156,6 +1178,17 @@ static void aspeed_smc_write(void *opaque, hwaddr ad=
+dr, uint64_t data,=0A=
+     } else if (aspeed_smc_has_dma(asc) && aspeed_smc_has_dma64(asc) &&=0A=
+                addr =3D=3D R_DMA_DRAM_ADDR_HIGH) {=0A=
+         s->regs[addr] =3D DMA_DRAM_ADDR_HIGH(value);=0A=
++    } else if (aspeed_smc_has_data_fifo(asc) && addr >=3D R_DATA_FIFO) {=
+=0A=
++        int cs =3D asc->data_fifo_offset_to_cs(s, addr << 2);=0A=
++        if (cs >=3D 0) {=0A=
++            /*=0A=
++             * Data fifo mode only supports SPI user mode.=0A=
++             * The flash address is provided by the SPI command/address cy=
+cles,=0A=
++             * the MMIO addr parameter is ignored.=0A=
++             */=0A=
++            return aspeed_smc_flash_write(&s->flashes[cs], 0, data, size);=
+=0A=
++        }=0A=
++        aspeed_smc_error("Invalid data fifo offset %" HWADDR_PRIx, addr <<=
+ 2);=0A=
+     } else {=0A=
+         qemu_log_mask(LOG_UNIMP, "%s: not implemented: 0x%" HWADDR_PRIx "\=
+n",=0A=
+                       __func__, addr);=0A=
+@@ -1989,6 +2022,39 @@ static void aspeed_2700_smc_reg_to_segment(const Asp=
+eedSMCState *s,=0A=
      }=0A=
  }=0A=
  =0A=
-+static void handle_2700_ssp_tsp_on(struct AspeedSCUState *s, int cpuid,=0A=
-+                                   int reg)=0A=
-+{=0A=
-+    uint32_t val =3D s->regs[reg];=0A=
-+=0A=
-+    val &=3D ~AST2700_SSP_TSP_RST_SRC_RB;=0A=
-+    if (!(val & AST2700_SSP_TSP_RST_HOLD_RB)) {=0A=
-+        val &=3D ~AST2700_SSP_TSP_RST_RB;=0A=
-+        arm_set_cpu_on_and_reset(cpuid);=0A=
-+    }=0A=
-+=0A=
-+    s->regs[reg] =3D val;=0A=
-+}=0A=
-+=0A=
-+static void handle_2700_ssp_tsp_off(struct AspeedSCUState *s, int cpuid,=
++/*=0A=
++ * Convert a data fifo offset to a chip select (CS).=0A=
++ *=0A=
++ * Data fifo access starts at 0x200. The data fifo offset index is=0A=
++ * calculated by subtracting the data fifo base offset from the MMIO addre=
+ss.=0A=
++ *=0A=
++ * The data fifo offset index increments by 1 for every 16MB of flash addr=
+ess=0A=
++ * space. Each offset step therefore represents a 16MB address decode rang=
+e.=0A=
++ *=0A=
++ * The CS is determined by matching the data fifo offset index against the=
 =0A=
-+                                    int reg)=0A=
++ * segment start address of each CS.=0A=
++ *=0A=
++ * Returns the CS index on success, or -1 if the offset is invalid.=0A=
++ */=0A=
++static int aspeed_2700_smc_data_fifo_offset_to_cs(const AspeedSMCState *s,=
+=0A=
++                                                  uint32_t offset)=0A=
 +{=0A=
-+    uint32_t val =3D s->regs[reg];=0A=
++    AspeedSMCClass *asc =3D ASPEED_SMC_GET_CLASS(s);=0A=
++    uint32_t start_offset;=0A=
++    uint32_t fifo_offset;=0A=
++    int i;=0A=
 +=0A=
-+    val |=3D AST2700_SSP_TSP_RST_RB;=0A=
-+    val |=3D AST2700_SSP_TSP_RST_SRC_RB;=0A=
-+    if (val & AST2700_SSP_TSP_RST) {=0A=
-+        val |=3D AST2700_SSP_TSP_RST_HOLD_RB;=0A=
++    for (i =3D 0; i < asc->cs_num_max; i++) {=0A=
++        start_offset =3D (s->regs[R_SEG_ADDR0 + i] & 0x0000ffff) << 16;=0A=
++        fifo_offset =3D start_offset / 0x1000000;=0A=
++        if (fifo_offset =3D=3D offset - (R_DATA_FIFO << 2)) {=0A=
++            return i;=0A=
++        }=0A=
 +    }=0A=
-+    arm_set_cpu_off(cpuid);=0A=
 +=0A=
-+    s->regs[reg] =3D val;=0A=
++    return -1;=0A=
 +}=0A=
 +=0A=
- static uint64_t aspeed_ast2700_scu_read(void *opaque, hwaddr offset,=0A=
-                                         unsigned size)=0A=
+ static const uint32_t aspeed_2700_fmc_resets[ASPEED_SMC_R_MAX] =3D {=0A=
+     [R_CONF] =3D (CONF_FLASH_TYPE_SPI << CONF_FLASH_TYPE0 |=0A=
+             CONF_FLASH_TYPE_SPI << CONF_FLASH_TYPE1),=0A=
+@@ -2023,6 +2089,27 @@ static const AspeedSegments aspeed_2700_fmc_segments=
+[] =3D {=0A=
+     { 0x0, 0 }, /* disabled */=0A=
+ };=0A=
+ =0A=
++/*=0A=
++ * AST2700 supports data fifo mode with a base data fifo start offset of 0=
+x200.=0A=
++ *=0A=
++ * The data fifo start offset increments by 1 for every 16MB of flash addr=
+ess=0A=
++ * space. Each offset step therefore represents a 16MB address decode rang=
+e.=0A=
++ *=0A=
++ * Assuming each chip select (CS) can use the maximum flash size of 256MB:=
+=0A=
++ *   256MB / 16MB =3D 0x10 offset steps per CS.=0A=
++ *=0A=
++ * Data fifo start offset for CSn:=0A=
++ *   0x200 + (n * 0x10)=0A=
++ *=0A=
++ * Examples:=0A=
++ *   CS0: 0x200=0A=
++ *   CS1: 0x210=0A=
++ *   CS2: 0x220=0A=
++ *   CS3: 0x230=0A=
++ *=0A=
++ * asc->nregs should be set to: 0x200 + (asc->cs_num_max * 0x10)=0A=
++ * to cover all possible data fifo regions.=0A=
++ */=0A=
+ static void aspeed_2700_fmc_class_init(ObjectClass *klass, const void *dat=
+a)=0A=
  {=0A=
-@@ -946,6 +987,9 @@ static void aspeed_ast2700_scu_write(void *opaque, hwad=
-dr offset,=0A=
-     int reg =3D TO_REG(offset);=0A=
-     /* Truncate here so bitwise operations below behave as expected */=0A=
-     uint32_t data =3D data64;=0A=
-+    uint32_t active;=0A=
-+    uint32_t oldval;=0A=
-+    int cpuid;=0A=
- =0A=
-     if (reg >=3D ASPEED_AST2700_SCU_NR_REGS) {=0A=
-         qemu_log_mask(LOG_GUEST_ERROR,=0A=
-@@ -957,6 +1001,63 @@ static void aspeed_ast2700_scu_write(void *opaque, hw=
-addr offset,=0A=
-     trace_aspeed_ast2700_scu_write(offset, size, data);=0A=
- =0A=
-     switch (reg) {=0A=
-+    case AST2700_SCU_SSP_CTRL_0:=0A=
-+        cpuid =3D s->ssp_cpuid;=0A=
-+        if (cpuid < 0) {=0A=
-+            return;=0A=
-+        }=0A=
-+        oldval =3D s->regs[reg];=0A=
-+        data &=3D 0xff;=0A=
-+        active =3D oldval ^ data;=0A=
-+=0A=
-+        /*=0A=
-+         * If reset bit is being released (1 -> 0) and no other reset sour=
-ce=0A=
-+         * is active, clear HOLD_RB and power on the corresponding CPU.=0A=
-+         */=0A=
-+        if ((active & AST2700_SSP_TSP_RST) && !(data & AST2700_SSP_TSP_RST=
-)) {=0A=
-+            s->regs[reg] &=3D ~AST2700_SSP_TSP_RST_HOLD_RB;=0A=
-+            if ((oldval & AST2700_SSP_TSP_RST_RB) &&=0A=
-+                !(oldval & AST2700_SSP_TSP_RST_SRC_RB)) {=0A=
-+                handle_2700_ssp_tsp_on(s, cpuid, reg);=0A=
-+            }=0A=
-+        }=0A=
-+=0A=
-+        /*=0A=
-+         * If ENABLE bit is newly set and reset state is ready,=0A=
-+         * clear HOLD_RB and power on the corresponding CPU.=0A=
-+         */=0A=
-+        if ((active & AST2700_SSP_TSP_ENABLE) &&=0A=
-+            (oldval & AST2700_SSP_TSP_RST_RB) &&=0A=
-+            (oldval & AST2700_SSP_TSP_RST_HOLD_RB) &&=0A=
-+            !(oldval & AST2700_SSP_TSP_RST_SRC_RB)) {=0A=
-+                s->regs[reg] &=3D ~AST2700_SSP_TSP_RST_HOLD_RB;=0A=
-+                handle_2700_ssp_tsp_on(s, cpuid, reg);=0A=
-+        }=0A=
-+=0A=
-+        /* Auto-clear the ENABLE bit (one-shot behavior) */=0A=
-+        data &=3D ~AST2700_SSP_TSP_ENABLE;=0A=
-+        s->regs[reg] =3D (s->regs[reg] & ~0xff) | (data & 0xff);=0A=
-+        return;=0A=
-+    case AST2700_SCU_SYS_RST_CTRL_1:=0A=
-+        if (s->ssp_cpuid < 0) {=0A=
-+            return;=0A=
-+        }=0A=
-+        if (data & AST2700_SCU_SYS_RST_SSP) {=0A=
-+            handle_2700_ssp_tsp_off(s, s->ssp_cpuid, AST2700_SCU_SSP_CTRL_=
-0);=0A=
-+        }=0A=
-+        s->regs[reg] |=3D data;=0A=
-+        return;=0A=
-+    case AST2700_SCU_SYS_RST_CLR_1:=0A=
-+        if (s->ssp_cpuid < 0) {=0A=
-+            return;=0A=
-+        }=0A=
-+        oldval =3D s->regs[AST2700_SCU_SYS_RST_CTRL_1];=0A=
-+        active =3D data & oldval;=0A=
-+        if (active & AST2700_SCU_SYS_RST_SSP) {=0A=
-+            handle_2700_ssp_tsp_on(s, s->ssp_cpuid, AST2700_SCU_SSP_CTRL_0=
-);=0A=
-+        }=0A=
-+        s->regs[AST2700_SCU_SYS_RST_CTRL_1] &=3D ~active;=0A=
-+        return;=0A=
-     default:=0A=
-         qemu_log_mask(LOG_GUEST_ERROR,=0A=
-                       "%s: Unhandled write at offset 0x%" HWADDR_PRIx "\n"=
-,=0A=
-@@ -984,6 +1085,8 @@ static const uint32_t ast2700_a0_resets[ASPEED_AST2700=
-_SCU_NR_REGS] =3D {=0A=
-     [AST2700_HW_STRAP1_SEC1]        =3D 0x000000FF,=0A=
-     [AST2700_HW_STRAP1_SEC2]        =3D 0x00000000,=0A=
-     [AST2700_HW_STRAP1_SEC3]        =3D 0x1000408F,=0A=
-+    [AST2700_SCU_SSP_CTRL_0]        =3D 0x000007FE,=0A=
-+    [AST2700_SCU_SYS_RST_CTRL_1]    =3D 0xFFC37FDC,=0A=
-     [AST2700_SCU_HPLL_PARAM]        =3D 0x0000009f,=0A=
-     [AST2700_SCU_HPLL_EXT_PARAM]    =3D 0x8000004f,=0A=
-     [AST2700_SCU_DPLL_PARAM]        =3D 0x0080009f,=0A=
-@@ -1009,6 +1112,10 @@ static void aspeed_ast2700_scu_reset(DeviceState *de=
-v)=0A=
-     memcpy(s->regs, asc->resets, asc->nr_regs * 4);=0A=
-     s->regs[AST2700_SILICON_REV] =3D s->silicon_rev;=0A=
-     s->regs[AST2700_HW_STRAP1] =3D s->hw_strap1;=0A=
-+=0A=
-+    if (s->ssp_cpuid > 0) {=0A=
-+        arm_set_cpu_off(s->ssp_cpuid);=0A=
-+    }=0A=
+     DeviceClass *dc =3D DEVICE_CLASS(klass);=0A=
+@@ -2042,14 +2129,16 @@ static void aspeed_2700_fmc_class_init(ObjectClass =
+*klass, const void *data)=0A=
+     asc->flash_window_base =3D 0x100000000;=0A=
+     asc->flash_window_size =3D 1 * GiB;=0A=
+     asc->features          =3D ASPEED_SMC_FEATURE_DMA |=0A=
+-                             ASPEED_SMC_FEATURE_DMA_DRAM_ADDR_HIGH;=0A=
++                             ASPEED_SMC_FEATURE_DMA_DRAM_ADDR_HIGH |=0A=
++                             ASPEED_SMC_FEATURE_DATA_FIFO;=0A=
+     asc->dma_flash_mask    =3D 0x2FFFFFFC;=0A=
+     asc->dma_dram_mask     =3D 0xFFFFFFFC;=0A=
+     asc->dma_start_length  =3D 1;=0A=
+-    asc->nregs             =3D ASPEED_SMC_R_MAX;=0A=
++    asc->nregs             =3D 0x200 + (asc->cs_num_max * 0x10);=0A=
+     asc->segment_to_reg    =3D aspeed_2700_smc_segment_to_reg;=0A=
+     asc->reg_to_segment    =3D aspeed_2700_smc_reg_to_segment;=0A=
+     asc->dma_ctrl          =3D aspeed_2600_smc_dma_ctrl;=0A=
++    asc->data_fifo_offset_to_cs =3D aspeed_2700_smc_data_fifo_offset_to_cs=
+;=0A=
+     asc->reg_ops           =3D &aspeed_2700_smc_flash_ops;=0A=
  }=0A=
  =0A=
- static void aspeed_2700_scu_class_init(ObjectClass *klass, const void *dat=
-a)=0A=
+@@ -2083,14 +2172,16 @@ static void aspeed_2700_spi0_class_init(ObjectClass=
+ *klass, const void *data)=0A=
+     asc->flash_window_base =3D 0x180000000;=0A=
+     asc->flash_window_size =3D 1 * GiB;=0A=
+     asc->features          =3D ASPEED_SMC_FEATURE_DMA |=0A=
+-                             ASPEED_SMC_FEATURE_DMA_DRAM_ADDR_HIGH;=0A=
++                             ASPEED_SMC_FEATURE_DMA_DRAM_ADDR_HIGH |=0A=
++                             ASPEED_SMC_FEATURE_DATA_FIFO;=0A=
+     asc->dma_flash_mask    =3D 0x2FFFFFFC;=0A=
+     asc->dma_dram_mask     =3D 0xFFFFFFFC;=0A=
+     asc->dma_start_length  =3D 1;=0A=
+-    asc->nregs             =3D ASPEED_SMC_R_MAX;=0A=
++    asc->nregs             =3D 0x200 + (asc->cs_num_max * 0x10);=0A=
+     asc->segment_to_reg    =3D aspeed_2700_smc_segment_to_reg;=0A=
+     asc->reg_to_segment    =3D aspeed_2700_smc_reg_to_segment;=0A=
+     asc->dma_ctrl          =3D aspeed_2600_smc_dma_ctrl;=0A=
++    asc->data_fifo_offset_to_cs =3D aspeed_2700_smc_data_fifo_offset_to_cs=
+;=0A=
+     asc->reg_ops           =3D &aspeed_2700_smc_flash_ops;=0A=
+ }=0A=
+ =0A=
+@@ -2123,14 +2214,16 @@ static void aspeed_2700_spi1_class_init(ObjectClass=
+ *klass, const void *data)=0A=
+     asc->flash_window_base =3D 0x200000000;=0A=
+     asc->flash_window_size =3D 1 * GiB;=0A=
+     asc->features          =3D ASPEED_SMC_FEATURE_DMA |=0A=
+-                             ASPEED_SMC_FEATURE_DMA_DRAM_ADDR_HIGH;=0A=
++                             ASPEED_SMC_FEATURE_DMA_DRAM_ADDR_HIGH |=0A=
++                             ASPEED_SMC_FEATURE_DATA_FIFO;=0A=
+     asc->dma_flash_mask    =3D 0x2FFFFFFC;=0A=
+     asc->dma_dram_mask     =3D 0xFFFFFFFC;=0A=
+     asc->dma_start_length  =3D 1;=0A=
+-    asc->nregs             =3D ASPEED_SMC_R_MAX;=0A=
++    asc->nregs             =3D 0x200 + (asc->cs_num_max * 0x10);=0A=
+     asc->segment_to_reg    =3D aspeed_2700_smc_segment_to_reg;=0A=
+     asc->reg_to_segment    =3D aspeed_2700_smc_reg_to_segment;=0A=
+     asc->dma_ctrl          =3D aspeed_2600_smc_dma_ctrl;=0A=
++    asc->data_fifo_offset_to_cs =3D aspeed_2700_smc_data_fifo_offset_to_cs=
+;=0A=
+     asc->reg_ops           =3D &aspeed_2700_smc_flash_ops;=0A=
+ }=0A=
+ =0A=
+@@ -2163,14 +2256,16 @@ static void aspeed_2700_spi2_class_init(ObjectClass=
+ *klass, const void *data)=0A=
+     asc->flash_window_base =3D 0x280000000;=0A=
+     asc->flash_window_size =3D 1 * GiB;=0A=
+     asc->features          =3D ASPEED_SMC_FEATURE_DMA |=0A=
+-                             ASPEED_SMC_FEATURE_DMA_DRAM_ADDR_HIGH;=0A=
++                             ASPEED_SMC_FEATURE_DMA_DRAM_ADDR_HIGH |=0A=
++                             ASPEED_SMC_FEATURE_DATA_FIFO;=0A=
+     asc->dma_flash_mask    =3D 0x0FFFFFFC;=0A=
+     asc->dma_dram_mask     =3D 0xFFFFFFFC;=0A=
+     asc->dma_start_length  =3D 1;=0A=
+-    asc->nregs             =3D ASPEED_SMC_R_MAX;=0A=
++    asc->nregs             =3D 0x200 + (asc->cs_num_max * 0x10);=0A=
+     asc->segment_to_reg    =3D aspeed_2700_smc_segment_to_reg;=0A=
+     asc->reg_to_segment    =3D aspeed_2700_smc_reg_to_segment;=0A=
+     asc->dma_ctrl          =3D aspeed_2600_smc_dma_ctrl;=0A=
++    asc->data_fifo_offset_to_cs =3D aspeed_2700_smc_data_fifo_offset_to_cs=
+;=0A=
+     asc->reg_ops           =3D &aspeed_2700_smc_flash_ops;=0A=
+ }=0A=
+ =0A=
 -- =0A=
 2.43.0=0A=
 
