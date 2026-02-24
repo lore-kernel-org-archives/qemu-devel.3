@@ -4,68 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8EE1AF4BB71
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 18:25:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6313CF4BB6F
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 18:34:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vux6A-0008P3-Pn; Tue, 24 Feb 2026 13:25:31 -0500
+	id 1vuxDx-0001uV-Q8; Tue, 24 Feb 2026 13:33:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shiju.jose@huawei.com>)
- id 1vux67-0008Nm-A3
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 13:25:27 -0500
-Received: from frasgout.his.huawei.com ([185.176.79.56])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shiju.jose@huawei.com>)
- id 1vux63-00054t-R8
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 13:25:26 -0500
-Received: from mail.maildlp.com (unknown [172.18.224.150])
- by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4fL5jS4L5fzJ46CD;
- Wed, 25 Feb 2026 02:24:44 +0800 (CST)
-Received: from dubpeml100006.china.huawei.com (unknown [7.214.145.132])
- by mail.maildlp.com (Postfix) with ESMTPS id 8F92440539;
- Wed, 25 Feb 2026 02:25:06 +0800 (CST)
-Received: from dubpeml500008.china.huawei.com (7.214.146.94) by
- dubpeml100006.china.huawei.com (7.214.145.132) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.36; Tue, 24 Feb 2026 18:25:06 +0000
-Received: from dubpeml500008.china.huawei.com ([7.214.146.94]) by
- dubpeml500008.china.huawei.com ([7.214.146.94]) with mapi id 15.02.1544.011;
- Tue, 24 Feb 2026 18:25:05 +0000
-To: Peter Maydell <peter.maydell@linaro.org>, "Michael S. Tsirkin"
- <mst@redhat.com>
-CC: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, Davidlohr Bueso
- <dave@stgolabs.net>, Jonathan Cameron <jonathan.cameron@huawei.com>, Fan Ni
- <fan.ni@samsung.com>
-Subject: RE: [PULL 13/33] hw/cxl: Add support for Maintenance command and Post
- Package Repair (PPR)
-Thread-Topic: [PULL 13/33] hw/cxl: Add support for Maintenance command and
- Post Package Repair (PPR)
-Thread-Index: AQHcpAhOTpwueHMiR0+Cbloy2UBl1LWRrmiAgAB7v3A=
-Date: Tue, 24 Feb 2026 18:25:05 +0000
-Message-ID: <b973578d97a24cdd8b1965f6769adf61@huawei.com>
-References: <cover.1771770471.git.mst@redhat.com>
- <5e5a86bab8308a9d5db09cbfdf12cc3751dce0f7.1771770471.git.mst@redhat.com>
- <CAFEAcA_CsVe4TUVm3o_-BA4hXvi2xAThGX5T97amgTQKW_kiYA@mail.gmail.com>
-In-Reply-To: <CAFEAcA_CsVe4TUVm3o_-BA4hXvi2xAThGX5T97amgTQKW_kiYA@mail.gmail.com>
-Accept-Language: en-GB, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.48.151.189]
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vuxDm-0001u3-3A
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 13:33:23 -0500
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vuxDj-0006eG-Ph
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 13:33:21 -0500
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-48373a4bca3so35787325e9.0
+ for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 10:33:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1771957996; x=1772562796; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=vY+Vb78ClWedqYO21AEBT0yuU4jDxK82HYKheHh2XJ8=;
+ b=PL6T8s04cql67nL6r9zEe2spu8dnFu9T/0qI+yfP/wsd7QxDped3n6K6upAdBZKpkC
+ bgxsqHNuFTmPv1EeCqo+XVxh5brjW7gKb3Y/pLk643BtK42mNOJnhIqnHLy1WVjWxC8M
+ c5sIPDbVZoMq5jbIhC20PqGz4LC/xYhzbYDSPlh2AfnvbqQeRVsTzNjXNoM4oaaNUzMA
+ QwwVK9SAVaA7mxpm/cppo5DfROClUyR/SqUdm2aJ/SV+MFjzLN4dD1ABmvM6/IL+lFLt
+ 8NGKY8dgetfgFCNu9CeEV1QpzwhyZIZat7oTT/OJ/Zfx0G4Rc7wMWPDBJkxh/40FHEJu
+ inzA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1771957996; x=1772562796;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=vY+Vb78ClWedqYO21AEBT0yuU4jDxK82HYKheHh2XJ8=;
+ b=bV3nCpk7xerGp0YjftjWLzb0sAYE0SokwNquCyP/ibRXtIvldqzhGmbPn3MfOLXcWF
+ s7IWhasw9bgLiO9YtrQved1kBIMofjAutRg4mHXUcXSt5PQ7LjowhZ6udFmYqagF0+j/
+ 4p9FDoU6GN+WM7wwz2z+zWc9MYB1FgbeyoCIlJ6uMVnsVzlq3ov9jnjp0b/t01YwvLDx
+ xtGfR8CPnATvKYf2l2FUpKfEOYVmWAKKAvh2lnuGL0Z6Gs2DnM38U5F6n76MnjJUB+F0
+ wzAh5ulKfsSIc+G+o609ev718O60WLtSVv8+1RS09Uu1GT+7B4EaWN8jxzeJFMi7Irky
+ NcGQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWYk+1/++JJNXYLXpdXGjp+DuxDL3Cn4E7sxR/i/ufuRn96mI8Ia4O0daGd9TJcr4DzdNuXCkrshFK/@nongnu.org
+X-Gm-Message-State: AOJu0YxDhu2U7s8iFJtBf5ehVj/yLvDnwxtj3Q4a4J2pgjdkC6k6cPCa
+ hV/u3LIDsEraHXbdet5xEzQbCIjx16FMlgrfAJJtA3NTRjyQeJuY7ktPLp4fc87LtCFM0A44buY
+ yTicwjTY=
+X-Gm-Gg: AZuq6aIyB0RNQA5zNMtmKuHYABgANRiDUikVmqKCISYdEstno2QEf47EDs/9ceumXDK
+ +Gfg87qUgz2o4CP1QwIEtaHU9pUSFZ9zUN4tkeBSsrxHbcUDtCBgwzMKQjBPkZMAwtO5lMGL6Ur
+ 0pk6QPFhA/UlSp5KQk/yRTJHVeiAEsVc9Dq3lmlM0Xw6xP+u8WvzSQPwJHdNSaJPBsfQfJK79xG
+ hEwbXgA9bGP/RohpTMJJssGWlCeoAF8MV4EvfQymvN6j6uQjET1t8NtphxpGSNrqhp8BK2Q/R0+
+ 5GujbXRV5xro3hOSGcL9ZUxcacs2ePRMW/QbwZ1KaFdSbVUPx4hF+NS1lryoQdBBlCmClk05EMZ
+ TbCjDufDYJxJL5x2KGaLpEDLAXt9VghsUN4OIAoAVHi8MqBNtHtLPbmPYcXSMYQ+bnYIPw8c1sJ
+ 1+l+mzY35LWKRuEByFAYn1dKU2kIihwA+kbNP4Ygg0nA8IBorJK+8fqdnHWfm+3xCqZw==
+X-Received: by 2002:a05:600c:3484:b0:483:7f4e:fef6 with SMTP id
+ 5b1f17b1804b1-483a95fa4e7mr175480215e9.26.1771957996014; 
+ Tue, 24 Feb 2026 10:33:16 -0800 (PST)
+Received: from [192.168.69.200] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-483bd7009f5sm12519805e9.4.2026.02.24.10.33.14
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 24 Feb 2026 10:33:15 -0800 (PST)
+Message-ID: <967c35ff-0630-4ca7-847e-04a918c93e7d@linaro.org>
+Date: Tue, 24 Feb 2026 19:33:14 +0100
 MIME-Version: 1.0
-Received-SPF: pass client-ip=185.176.79.56; envelope-from=shiju.jose@huawei.com;
- helo=frasgout.his.huawei.com
-X-Spam_score_int: -31
-X-Spam_score: -3.2
-X-Spam_bar: ---
-X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.358, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.659,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/3] hw/virtio/virtio-access.h: remove target specific code
+Content-Language: en-US
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Stefano Garzarella <sgarzare@redhat.com>, Jason Wang <jasowang@redhat.com>,
+ Nicholas Piggin <npiggin@gmail.com>, stefanha@redhat.com,
+ richard.henderson@linaro.org, "Michael S. Tsirkin" <mst@redhat.com>,
+ BALATON Zoltan <balaton@eik.bme.hu>
+References: <20260212234602.338131-1-pierrick.bouvier@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260212234602.338131-1-pierrick.bouvier@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,101 +104,325 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Shiju Jose <shiju.jose@huawei.com>
-From:  Shiju Jose via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Pi0tLS0tT3JpZ2luYWwgTWVzc2FnZS0tLS0tDQo+RnJvbTogUGV0ZXIgTWF5ZGVsbCA8cGV0ZXIu
-bWF5ZGVsbEBsaW5hcm8ub3JnPg0KPlNlbnQ6IDI0IEZlYnJ1YXJ5IDIwMjYgMTA6NDkNCj5Ubzog
-TWljaGFlbCBTLiBUc2lya2luIDxtc3RAcmVkaGF0LmNvbT4NCj5DYzogcWVtdS1kZXZlbEBub25n
-bnUub3JnOyBEYXZpZGxvaHIgQnVlc28gPGRhdmVAc3Rnb2xhYnMubmV0PjsgU2hpanUgSm9zZQ0K
-PjxzaGlqdS5qb3NlQGh1YXdlaS5jb20+OyBKb25hdGhhbiBDYW1lcm9uDQo+PGpvbmF0aGFuLmNh
-bWVyb25AaHVhd2VpLmNvbT47IEZhbiBOaSA8ZmFuLm5pQHNhbXN1bmcuY29tPg0KPlN1YmplY3Q6
-IFJlOiBbUFVMTCAxMy8zM10gaHcvY3hsOiBBZGQgc3VwcG9ydCBmb3IgTWFpbnRlbmFuY2UgY29t
-bWFuZCBhbmQNCj5Qb3N0IFBhY2thZ2UgUmVwYWlyIChQUFIpDQo+DQo+T24gU3VuLCAyMiBGZWIg
-MjAyNiBhdCAxNDoyOCwgTWljaGFlbCBTLiBUc2lya2luIDxtc3RAcmVkaGF0LmNvbT4gd3JvdGU6
-DQo+Pg0KPj4gRnJvbTogRGF2aWRsb2hyIEJ1ZXNvIDxkYXZlQHN0Z29sYWJzLm5ldD4NCj4+DQo+
-PiBUaGlzIGFkZHMgaW5pdGlhbCBzdXBwb3J0IGZvciB0aGUgTWFpbnRlbmFuY2UgY29tbWFuZCwg
-c3BlY2lmaWNhbGx5DQo+PiB0aGUgc29mdCBhbmQgaGFyZCBQUFIgb3BlcmF0aW9ucyBvbiBhIGRw
-YS4gVGhlIGltcGxlbWVudGF0aW9uIGFsbG93cw0KPj4gdG8gYmUgZXhlY3V0ZWQgYXQgcnVudGlt
-ZSwgdGhlcmVmb3JlIHNlbWFudGljYWxseSwgZGF0YSBpcyByZXRhaW5lZA0KPj4gYW5kIENYTC5t
-ZW0gcmVxdWVzdHMgYXJlIGNvcnJlY3RseSBwcm9jZXNzZWQuDQo+DQo+SGk7IENvdmVyaXR5IGVt
-aXRzIGEgd2FybmluZyBoZXJlIChDSUQgMTY0NTMyNSkgZm9yIHVzZSBvZiBzdHJuY3B5KCk6DQo+
-DQo+PiArc3RhdGljIHZvaWQgY3hsX21ib3hfY3JlYXRlX21lbV9zcGFyaW5nX2V2ZW50X3JlY29y
-ZHMoQ1hMVHlwZTNEZXYNCj4qY3QzZCwNCj4+ICsgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-dWludDhfdCBtYWludF9vcF9jbGFzcywgdWludDhfdCBtYWludF9vcF9zdWJfY2xhc3MsDQo+PiAr
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgIENYTE1haW50ZW5hbmNlICplbnQpIHsNCj4+ICsg
-ICAgQ1hMRXZlbnRTcGFyaW5nIGV2ZW50X3JlYyA9IHt9Ow0KPj4gKw0KPj4gKyAgICBjeGxfYXNz
-aWduX2V2ZW50X2hlYWRlcigmZXZlbnRfcmVjLmhkciwNCj4+ICsgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgJnNwYXJpbmdfdXVpZCwNCj4+ICsgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-KDEgPDwgQ1hMX0VWRU5UX1RZUEVfSU5GTyksDQo+PiArICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgIHNpemVvZihldmVudF9yZWMpLA0KPj4gKyAgICAgICAgICAgICAgICAgICAgICAgICAgICBj
-eGxfZGV2aWNlX2dldF90aW1lc3RhbXAoJmN0M2QtPmN4bF9kc3RhdGUpLA0KPj4gKyAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAxLCBtYWludF9vcF9jbGFzcywgMSwgbWFpbnRfb3Bfc3ViX2Ns
-YXNzLA0KPj4gKyAgICAgICAgICAgICAgICAgICAgICAgICAgICAwLCAwLCAwLCAwKTsNCj4+ICsg
-ICAgaWYgKGVudCkgew0KPj4gKyAgICAgICAgZXZlbnRfcmVjLmZsYWdzID0gMDsNCj4+ICsgICAg
-ICAgIGV2ZW50X3JlYy5yZXN1bHQgPSAwOw0KPj4gKyAgICAgICAgc3R3X2xlX3AoJmV2ZW50X3Jl
-Yy5yZXNfYXZhaWwsIDIpOw0KPj4gKyAgICAgICAgc3R3X2xlX3AoJmV2ZW50X3JlYy52YWxpZGl0
-eV9mbGFncywgZW50LT52YWxpZGl0eV9mbGFncyk7DQo+PiArICAgICAgICBldmVudF9yZWMuY2hh
-bm5lbCA9IGVudC0+Y2hhbm5lbDsNCj4+ICsgICAgICAgIGV2ZW50X3JlYy5yYW5rID0gZW50LT5y
-YW5rOw0KPj4gKyAgICAgICAgc3QyNF9sZV9wKGV2ZW50X3JlYy5uaWJibGVfbWFzaywgZW50LT5u
-aWJibGVfbWFzayk7DQo+PiArICAgICAgICBldmVudF9yZWMuYmFua19ncm91cCA9IGVudC0+YmFu
-a19ncm91cDsNCj4+ICsgICAgICAgIGV2ZW50X3JlYy5iYW5rID0gZW50LT5iYW5rOw0KPj4gKyAg
-ICAgICAgc3QyNF9sZV9wKGV2ZW50X3JlYy5yb3csIGVudC0+cm93KTsNCj4+ICsgICAgICAgIHN0
-d19sZV9wKCZldmVudF9yZWMuY29sdW1uLCBlbnQtPmNvbHVtbik7DQo+PiArICAgICAgICBldmVu
-dF9yZWMuc3ViX2NoYW5uZWwgPSBlbnQtPnN1Yl9jaGFubmVsOw0KPj4gKyAgICAgICAgaWYgKGVu
-dC0+dmFsaWRpdHlfZmxhZ3MgJiBDWExfTVNFUl9WQUxJRF9DT01QX0lEKSB7DQo+PiArICAgICAg
-ICAgICAgc3RybmNweSgoY2hhciAqKWV2ZW50X3JlYy5jb21wb25lbnRfaWQsIChjaGFyICopZW50
-LT5jb21wb25lbnRfaWQsDQo+PiArICAgICAgICAgICAgICAgICAgICBzaXplb2YoZXZlbnRfcmVj
-LmNvbXBvbmVudF9pZCkpOw0KPg0KPlNpbmNlIHRoaXMgZG9lcyBhIHN0cm5jcHkoKSB3aXRoIGEg
-bGVuZ3RoIHBhcmFtZXRlciBlcXVhbCB0byB0aGUgZnVsbCBzaXplIG9mIHRoZQ0KPnN0cnVjdCBh
-cnJheSBmaWVsZDoNCj4NCj4+ICsgICAgdWludDhfdCBjb21wb25lbnRfaWRbQ1hMX0VWRU5UX0dF
-Tl9NRURfQ09NUF9JRF9TSVpFXTsNCj4NCj5pdCBtaWdodCByZXN1bHQgaW4gdGhlcmUgYmVpbmcg
-bm8gTlVMIHRlcm1pbmF0b3Igb24gdGhlIGVuZC4NCj4NCj5JcyB0aGF0IHRoZSBpbnRlbmRlZCBi
-ZWhhdmlvdXIgPw0KDQpUaGFua3MgUGV0ZXIgZm9yIHJlcG9ydGluZy4NCmNvbXBvbmVudF9pZCBp
-cyBmaXhlZCBkYXRhIGxlbmd0aCBvZiAxNiBieXRlcyB3aXRob3V0IE5VTEwgdGVybWluYXRvciAg
-KENYTCBzcGVjIDMuMiBUYWJsZSA4LTU2Lg0KQ29tcG9uZW50IElkZW50aWZpZXIgRm9ybWF0ICks
-ICBidXQgSSB0aGluayBuZWVkIHRvIHVzZSBtZW1jcHkgaW5zdGVhZCAodGVzdGVkIG9rYXkpIHRv
-IGZpeCB0aGlzIHdhcm5pbmc/DQoNCj4NCj5Db252ZXJzZWx5LCBpbiB0aGlzIGZ1bmN0aW9uOg0K
-Pg0KPj4gK3N0YXRpYyB2b2lkIGN4bF9tYWludGVuYW5jZV9pbnNlcnQoQ1hMVHlwZTNEZXYgKmN0
-M2QsIHVpbnQ2NF90IGRwYSwNCj4+ICsgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-IGJvb2wgaGFzX2NoYW5uZWwsIHVpbnQ4X3QgY2hhbm5lbCwNCj4+ICsgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgIGJvb2wgaGFzX3JhbmssIHVpbnQ4X3QgcmFuaywNCj4+ICsgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGJvb2wgaGFzX25pYmJsZV9tYXNrLCB1aW50
-MzJfdCBuaWJibGVfbWFzaywNCj4+ICsgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-IGJvb2wgaGFzX2JhbmtfZ3JvdXAsIHVpbnQ4X3QgYmFua19ncm91cCwNCj4+ICsgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgIGJvb2wgaGFzX2JhbmssIHVpbnQ4X3QgYmFuaywNCj4+
-ICsgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGJvb2wgaGFzX3JvdywgdWludDMy
-X3Qgcm93LA0KPj4gKyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgYm9vbCBoYXNf
-Y29sdW1uLCB1aW50MTZfdCBjb2x1bW4sDQo+PiArICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICBjb25zdCBjaGFyICpjb21wb25lbnRfaWQsDQo+PiArICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICBib29sIGhhc19jb21wX2lkX3BsZG0sIGJvb2wgaXNfY29tcF9pZF9w
-bGRtLA0KPj4gKyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgYm9vbCBoYXNfc3Vi
-X2NoYW5uZWwsIHVpbnQ4X3QNCj4+ICtzdWJfY2hhbm5lbCkgew0KPj4gKyAgICBDWExNYWludGVu
-YW5jZSAqZW50LCAqbTsNCj4+ICsNCj4+ICsgICAgUUxJU1RfRk9SRUFDSChlbnQsICZjdDNkLT5t
-YWludF9saXN0LCBub2RlKSB7DQo+PiArICAgICAgICBpZiAoZHBhID09IGVudC0+ZHBhKSB7DQo+
-PiArICAgICAgICAgICAgcmV0dXJuOw0KPj4gKyAgICAgICAgfQ0KPj4gKyAgICB9DQo+PiArICAg
-IG0gPSBnX25ldzAoQ1hMTWFpbnRlbmFuY2UsIDEpOw0KPj4gKyAgICBtZW1zZXQobSwgMCwgc2l6
-ZW9mKCptKSk7DQo+DQo+KFNpZGUgbm90ZTogdGhpcyBtZW1zZXQoKSBpcyBub3Qgd2FudGVkLCBi
-ZWNhdXNlIGdfbmV3MCgpIGlzIHNwZWNpZmljYWxseSAiYWxsb2NhdGUNCj5hbmQgemVybyB0aGlz
-Ii4pDQo+DQo+PiArICAgIGlmIChjb21wb25lbnRfaWQpIHsNCj4+ICsgICAgICAgIHN0cm5jcHko
-KGNoYXIgKiltLT5jb21wb25lbnRfaWQsIGNvbXBvbmVudF9pZCwNCj4+ICsgICAgICAgICAgICAg
-ICAgc2l6ZW9mKG0tPmNvbXBvbmVudF9pZCkgLSAxKTsNCj4NCj4uLi5oZXJlIHdlIGRvIGxpbWl0
-IHRoZSBzdHJuY3B5IHNpemUgdG8gb25lIGxlc3MgdGhhbiB0aGUgYXJyYXkgc2l6ZSwgd2hpY2gg
-KHRvZ2V0aGVyDQo+d2l0aCB0aGUgZmFjdCB3ZSdyZSBkb2luZyBpdCBpbnRvIHplcm9lZA0KPm1l
-bW9yeSkgbWVhbnMgaXQgd2lsbCBhbHdheXMgYmUgTlVMIHRlcm1pbmF0ZWQuDQpUaGlzIHNob3Vs
-ZCAgY29weSAgQ1hMX0VWRU5UX0dFTl9NRURfQ09NUF9JRF9TSVpFICgxNikgYnl0ZXMgaW5zdGVh
-ZCBvZg0KQ1hMX0VWRU5UX0dFTl9NRURfQ09NUF9JRF9TSVpFIC0gMSBhbmQgYWxzbyBJIHRoaW5r
-IHNob3VsZCB1c2UgbWVtY3B5IGluc3RlYWQNCmFzIGFib3ZlICh0ZXN0ZWQgb2theSk/DQptZW1j
-cHkoKGNoYXIgKiltLT5jb21wb25lbnRfaWQsIGNvbXBvbmVudF9pZCwNCiAgICAgICAgICAgICAg
-ICAgc2l6ZW9mKG0tPmNvbXBvbmVudF9pZCkpOw0KSWYgc28sIHRoaXMgc2hvdWxkIGJlIGZpeGVk
-IGluIG90aGVyIENYTCBldmVudHMgcmVjb3JkcyBhcyB3ZWxsLg0KPg0KPkFyZSB0aGVzZSB0d28g
-dGhpbmdzIHJlYWxseSBzdXBwb3NlZCB0byBiZSBoYW5kbGVkIGRpZmZlcmVudGx5ID8NCj4NCj4+
-ICsgICAgICAgIG0tPnZhbGlkaXR5X2ZsYWdzIHw9IENYTF9NU0VSX1ZBTElEX0NPTVBfSUQ7DQo+
-PiArICAgICAgICBpZiAoaGFzX2NvbXBfaWRfcGxkbSAmJiBpc19jb21wX2lkX3BsZG0pIHsNCj4+
-ICsgICAgICAgICAgICBtLT52YWxpZGl0eV9mbGFncyB8PSBDWExfTVNFUl9WQUxJRF9DT01QX0lE
-X0ZPUk1BVDsNCj4+ICsgICAgICAgIH0NCj4+ICsgICAgfQ0KPj4gKw0KPj4gKyAgICBRTElTVF9J
-TlNFUlRfSEVBRCgmY3QzZC0+bWFpbnRfbGlzdCwgbSwgbm9kZSk7IH0NCj4NCj50aGFua3MNCj4t
-LSBQTU0NCg0KVGhhbmtzLA0KU2hpanUNCg==
+Hi Pierrick,
+
+On 13/2/26 00:45, Pierrick Bouvier wrote:
+> This series eliminates some target specifics in hw/virtio and replace them with
+> runtime functions where needed, to be able to link virtio code in single-binary.
+> After a first try on a series [0] doing this change and making all virtio files
+> common, Richard asked to refactor this part, thus this independent series.
+
+> Pierrick Bouvier (3):
+>    hw/virtio: add virtio_vdev_is_{modern, legacy}
+>    hw/virtio: rename virtio_is_big_endian to virtio_vdev_is_big_endian
+>    hw/virtio: remove virtio_access_is_big_endian
+
+Patch #2 has been merged as commit 6325407f67d.
+
+Since we don't have feedback from the maintainers Cc'ed, I took
+the liberty to rebase your series, trying to address Zoltan's
+concerns on patch #1. Patch #3 is split between the complex and
+trivial changes. The patches look like:
+
+-- >8 --
+commit 817ee1acda278b484b750b6abbba7d829bb124bc
+Author: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Date:   Tue Feb 24 13:00:28 2026 +0100
+
+     hw/virtio: Add virtio_vdev_is_legacy()
+
+     This simplifies code compared to having
+     virtio_vdev_has_feature(vdev, VIRTIO_F_VERSION_1) or
+     !virtio_vdev_has_feature(vdev, VIRTIO_F_VERSION_1).
+
+     Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+     Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
+diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
+index 9dd93cf965a..42d20899390 100644
+--- a/include/hw/virtio/virtio.h
++++ b/include/hw/virtio/virtio.h
+@@ -470,5 +470,10 @@ static inline bool 
+virtio_host_has_feature(VirtIODevice *vdev,
+
++static inline bool virtio_vdev_is_legacy(const VirtIODevice *vdev)
++{
++    return !virtio_vdev_has_feature(vdev, VIRTIO_F_VERSION_1);
++}
++
+  static inline bool virtio_vdev_is_big_endian(const VirtIODevice *vdev)
+  {
+-    if (!virtio_vdev_has_feature(vdev, VIRTIO_F_VERSION_1)) {
++    if (virtio_vdev_is_legacy(vdev)) {
+          assert(vdev->device_endian != VIRTIO_DEVICE_ENDIAN_UNKNOWN);
+diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+index b4cdb7762f9..b9dc4ed13ba 100644
+--- a/hw/virtio/vhost.c
++++ b/hw/virtio/vhost.c
+@@ -1170,10 +1170,8 @@ static inline bool 
+vhost_needs_vring_endian(VirtIODevice *vdev)
+  {
+-    if (virtio_vdev_has_feature(vdev, VIRTIO_F_VERSION_1)) {
+-        return false;
++    if (virtio_vdev_is_legacy(vdev)) {
++        return vdev->device_endian == (HOST_BIG_ENDIAN
++                                       ? VIRTIO_DEVICE_ENDIAN_LITTLE
++                                       : VIRTIO_DEVICE_ENDIAN_BIG);
+      }
+-#if HOST_BIG_ENDIAN
+-    return vdev->device_endian == VIRTIO_DEVICE_ENDIAN_LITTLE;
+-#else
+-    return vdev->device_endian == VIRTIO_DEVICE_ENDIAN_BIG;
+-#endif
++    return false;
+  }
+diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
+index c7b5a79b936..31b566c6ae3 100644
+--- a/hw/virtio/virtio-pci.c
++++ b/hw/virtio/virtio-pci.c
+@@ -1451,7 +1451,7 @@ static bool virtio_pci_queue_enabled(DeviceState 
+*d, int n)
+
+-    if (virtio_vdev_has_feature(vdev, VIRTIO_F_VERSION_1)) {
+-        return proxy->vqs[n].enabled;
++    if (virtio_vdev_is_legacy(vdev)) {
++        return virtio_queue_enabled_legacy(vdev, n);
+      }
+
+-    return virtio_queue_enabled_legacy(vdev, n);
++    return proxy->vqs[n].enabled;
+  }
+diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+index e9d55329525..c0c4599b586 100644
+--- a/hw/virtio/virtio.c
++++ b/hw/virtio/virtio.c
+@@ -2755,3 +2755,3 @@ static bool virtio_device_endian_needed(void *opaque)
+      assert(vdev->device_endian != VIRTIO_DEVICE_ENDIAN_UNKNOWN);
+-    if (!virtio_vdev_has_feature(vdev, VIRTIO_F_VERSION_1)) {
++    if (virtio_vdev_is_legacy(vdev)) {
+          return vdev->device_endian != virtio_default_endian();
+@@ -3462,6 +3462,6 @@ virtio_load(VirtIODevice *vdev, QEMUFile *f, int 
+version_id)
+               */
+-            if (virtio_vdev_has_feature(vdev, VIRTIO_F_VERSION_1)) {
+-                virtio_init_region_cache(vdev, i);
+-            } else {
++            if (virtio_vdev_is_legacy(vdev)) {
+                  virtio_queue_update_rings(vdev, i);
++            } else {
++                virtio_init_region_cache(vdev, i);
+              }
+
+commit 2beb9dea190039355af8a8fa16c389eed45491ca
+Author: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Date:   Tue Feb 24 13:07:02 2026 +0100
+
+     hw/virtio: Simplify virtio_access_is_big_endian()
+
+     Thanks to previous refactoring, we can see more easily it is strictly
+     equivalent to always call virtio_vdev_is_big_endian.
+
+     static inline bool virtio_vdev_is_big_endian(VirtIODevice *vdev)
+     {
+         if (virtio_vdev_is_legacy(vdev)) {
+             assert(vdev->device_endian != VIRTIO_DEVICE_ENDIAN_UNKNOWN);
+             return vdev->device_endian == VIRTIO_DEVICE_ENDIAN_BIG;
+         }
+         /* Devices conforming to VIRTIO 1.0 or later are always LE. */
+         return false;
+     }
+
+     The key is to understand that vdev->device_endian is initialized as
+     expected. It always contains cpu endianness, and not
+     device endianness, ignoring if device is legacy or not.
+
+     By default, it's initialized to vdev->device_endian =
+     virtio_default_endian(), which matches target default endianness.
+     Then, on virtio_reset, it will be initialized with current_cpu
+     endianness (if there is one current_cpu).
+
+     void virtio_reset() {
+         ...
+         if (current_cpu) {
+             /* Guest initiated reset */
+             vdev->device_endian = virtio_current_cpu_endian();
+         } else {
+             /* System reset */
+             vdev->device_endian = virtio_default_endian();
+         }
+
+     Now, we can see how existing virtio_access_is_big_endian is equivalent
+     to virtio_vdev_is_big_endian. Let's break the existing function in 
+its 3
+     variants, and compare that to virtio_vdev_is_big_endian.
+
+     static inline bool virtio_access_is_big_endian(VirtIODevice *vdev)
+     - #if defined(LEGACY_VIRTIO_IS_BIENDIAN)
+         return virtio_vdev_is_big_endian(vdev);
+       This is the exact replacement we did, so equivalent.
+     - #elif TARGET_BIG_ENDIAN
+         if (virtio_vdev_is_modern(vdev)) {
+             return false;
+         }
+         return true;
+
+       we know target_is_big_endian(), so
+       vdev->device_endian == VIRTIO_DEVICE_ENDIAN_BIG.
+       if (virtio_vdev_is_legacy(vdev)) {
+           return VIRTIO_DEVICE_ENDIAN_BIG == VIRTIO_DEVICE_ENDIAN_BIG;
+       }
+       return false;
+       It's written in opposite style compared to existing code (if 
+legacy vs
+       if modern), but it's strictly equivalent.
+     - #else
+         return false;
+       we know !target_is_big_endian(), so
+       vdev->device_endian == VIRTIO_DEVICE_ENDIAN_LITTLE.
+       if virtio_vdev_is_legacy(vdev) {
+         return VIRTIO_DEVICE_ENDIAN_LITTLE == VIRTIO_DEVICE_ENDIAN_BIG;
+       }
+       return false;
+       So it always return false, as expected.
+
+     Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+     Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+     Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
+diff --git a/include/hw/virtio/virtio-access.h 
+b/include/hw/virtio/virtio-access.h
+index b58fb6ed7ea..e3148c23881 100644
+--- a/include/hw/virtio/virtio-access.h
++++ b/include/hw/virtio/virtio-access.h
+@@ -23,19 +23,5 @@
+
+-#if defined(TARGET_PPC64) || defined(TARGET_ARM)
+-#define LEGACY_VIRTIO_IS_BIENDIAN 1
+-#endif
+-
+  static inline bool virtio_access_is_big_endian(VirtIODevice *vdev)
+  {
+-#if defined(LEGACY_VIRTIO_IS_BIENDIAN)
+      return virtio_vdev_is_big_endian(vdev);
+-#elif TARGET_BIG_ENDIAN
+-    if (virtio_vdev_has_feature(vdev, VIRTIO_F_VERSION_1)) {
+-        /* Devices conforming to VIRTIO 1.0 or later are always LE. */
+-        return false;
+-    }
+-    return true;
+-#else
+-    return false;
+-#endif
+  }
+
+commit 8f907ce751e9922ede323af8d63a21c42392a7d1
+Author: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Date:   Thu Feb 12 15:46:02 2026 -0800
+
+     hw/virtio: Inline virtio_access_is_big_endian()
+
+     Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+     Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+     Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
+diff --git a/include/hw/virtio/virtio-access.h 
+b/include/hw/virtio/virtio-access.h
+index e3148c23881..506be642c9f 100644
+--- a/include/hw/virtio/virtio-access.h
++++ b/include/hw/virtio/virtio-access.h
+@@ -23,10 +23,5 @@
+
+-static inline bool virtio_access_is_big_endian(VirtIODevice *vdev)
+-{
+-    return virtio_vdev_is_big_endian(vdev);
+-}
+-
+  static inline void virtio_stw_p(VirtIODevice *vdev, void *ptr, uint16_t v)
+  {
+-    if (virtio_access_is_big_endian(vdev)) {
++    if (virtio_vdev_is_big_endian(vdev)) {
+          stw_be_p(ptr, v);
+@@ -39,3 +34,3 @@ static inline void virtio_stl_p(VirtIODevice *vdev, 
+void *ptr, uint32_t v)
+  {
+-    if (virtio_access_is_big_endian(vdev)) {
++    if (virtio_vdev_is_big_endian(vdev)) {
+          stl_be_p(ptr, v);
+@@ -48,3 +43,3 @@ static inline void virtio_stq_p(VirtIODevice *vdev, 
+void *ptr, uint64_t v)
+  {
+-    if (virtio_access_is_big_endian(vdev)) {
++    if (virtio_vdev_is_big_endian(vdev)) {
+          stq_be_p(ptr, v);
+@@ -57,3 +52,3 @@ static inline int virtio_lduw_p(VirtIODevice *vdev, 
+const void *ptr)
+  {
+-    if (virtio_access_is_big_endian(vdev)) {
++    if (virtio_vdev_is_big_endian(vdev)) {
+          return lduw_be_p(ptr);
+@@ -66,3 +61,3 @@ static inline int virtio_ldl_p(VirtIODevice *vdev, 
+const void *ptr)
+  {
+-    if (virtio_access_is_big_endian(vdev)) {
++    if (virtio_vdev_is_big_endian(vdev)) {
+          return ldl_be_p(ptr);
+@@ -75,3 +70,3 @@ static inline uint64_t virtio_ldq_p(VirtIODevice 
+*vdev, const void *ptr)
+  {
+-    if (virtio_access_is_big_endian(vdev)) {
++    if (virtio_vdev_is_big_endian(vdev)) {
+          return ldq_be_p(ptr);
+@@ -85,5 +80,5 @@ static inline uint16_t virtio_tswap16(VirtIODevice 
+*vdev, uint16_t s)
+  #if HOST_BIG_ENDIAN
+-    return virtio_access_is_big_endian(vdev) ? s : bswap16(s);
++    return virtio_vdev_is_big_endian(vdev) ? s : bswap16(s);
+  #else
+-    return virtio_access_is_big_endian(vdev) ? bswap16(s) : s;
++    return virtio_vdev_is_big_endian(vdev) ? bswap16(s) : s;
+  #endif
+@@ -99,5 +94,5 @@ static inline uint32_t virtio_tswap32(VirtIODevice 
+*vdev, uint32_t s)
+  #if HOST_BIG_ENDIAN
+-    return virtio_access_is_big_endian(vdev) ? s : bswap32(s);
++    return virtio_vdev_is_big_endian(vdev) ? s : bswap32(s);
+  #else
+-    return virtio_access_is_big_endian(vdev) ? bswap32(s) : s;
++    return virtio_vdev_is_big_endian(vdev) ? bswap32(s) : s;
+  #endif
+@@ -113,5 +108,5 @@ static inline uint64_t virtio_tswap64(VirtIODevice 
+*vdev, uint64_t s)
+  #if HOST_BIG_ENDIAN
+-    return virtio_access_is_big_endian(vdev) ? s : bswap64(s);
++    return virtio_vdev_is_big_endian(vdev) ? s : bswap64(s);
+  #else
+-    return virtio_access_is_big_endian(vdev) ? bswap64(s) : s;
++    return virtio_vdev_is_big_endian(vdev) ? bswap64(s) : s;
+  #endif
+diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+index c0c4599b586..22d798e6cdd 100644
+--- a/hw/virtio/virtio.c
++++ b/hw/virtio/virtio.c
+@@ -224,3 +224,3 @@ static inline uint16_t 
+virtio_lduw_phys_cached(VirtIODevice *vdev,
+  {
+-    if (virtio_access_is_big_endian(vdev)) {
++    if (virtio_vdev_is_big_endian(vdev)) {
+          return lduw_be_phys_cached(cache, pa);
+@@ -234,3 +234,3 @@ static inline void 
+virtio_stw_phys_cached(VirtIODevice *vdev,
+  {
+-    if (virtio_access_is_big_endian(vdev)) {
++    if (virtio_vdev_is_big_endian(vdev)) {
+          stw_be_phys_cached(cache, pa, value);
+---
+
+Do you want me to post as v2 for easier review?
+
+Regards,
+
+Phil.
 
