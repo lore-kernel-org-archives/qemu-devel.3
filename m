@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 631ECF4BB70
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 18:16:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 096DCF4BB6F
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 18:16:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuwxY-0004vz-CS; Tue, 24 Feb 2026 13:16:36 -0500
+	id 1vuwxP-0003pj-22; Tue, 24 Feb 2026 13:16:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vuwxX-0004iD-13
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 13:16:35 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vuwww-0003Gz-NM
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 13:16:04 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vuwxS-0002id-TX
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 13:16:34 -0500
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vuwwp-0002P3-NO
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 13:15:56 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771956990;
+ s=mimecast20190719; t=1771956949;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=MEbZPzygtRbKy+znPt/CbSsaSPv/HRs6r5S0zlxfxYU=;
- b=aDAwTcVd21SewFuBzVS4ncWgGcvSrXTP6vAaC3lzbHjPhvJAc53ceD5nmTldlC2JLB/v5b
- 3yilYi0jExEazYlh+mHBFu8CSMteh30SPzCODmK3T5cfPnFyIiEXQuSlYwSdw9mtWNPVKc
- QGGBUj7gWIA538ZdVDTtsXPlvo5tpIk=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=vfgkKftHM4ZH6Uhn6fffL+ZIyG9VVVyTlIHUonXzC+A=;
+ b=fI8ZOQ5VU4+3je0fJlpMwHP4sO6308g0WpQyLhtYk65JcVszJkwDijqa3//f52WDxb7etd
+ RZ1BxlovQan6WRxFf0j1HVJIfeS1XPYtqlk2ZmqC6ylApvha8yzAzs5lezoGxRFzyAWAP2
+ 65AzRwYCTM7cXotaulmvrQrOxfG7EJI=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-106-gMP6UmJbM32_r8hkae7vQg-1; Tue,
- 24 Feb 2026 13:16:26 -0500
-X-MC-Unique: gMP6UmJbM32_r8hkae7vQg-1
-X-Mimecast-MFC-AGG-ID: gMP6UmJbM32_r8hkae7vQg_1771956984
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-187-cV6WguwzOcGaZiCKjlvwRA-1; Tue,
+ 24 Feb 2026 13:15:46 -0500
+X-MC-Unique: cV6WguwzOcGaZiCKjlvwRA-1
+X-Mimecast-MFC-AGG-ID: cV6WguwzOcGaZiCKjlvwRA_1771956943
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9AB9B1800365; Tue, 24 Feb 2026 18:16:24 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9ED921956057; Tue, 24 Feb 2026 18:15:43 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.89.212])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 94B39180066B; Tue, 24 Feb 2026 18:16:19 +0000 (UTC)
+ id 3BA821800668; Tue, 24 Feb 2026 18:15:36 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
@@ -64,24 +64,22 @@ Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
  Kevin Wolf <kwolf@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Yonggang Luo <luoyonggang@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL v2 16/19] scripts: nudge users to use 'run' script for scripts
- that import qemu.qmp
-Date: Tue, 24 Feb 2026 13:14:35 -0500
-Message-ID: <20260224181440.832943-17-jsnow@redhat.com>
+Subject: [PULL v2 09/19] tests/lcitool: update lcitool to latest version
+Date: Tue, 24 Feb 2026 13:14:28 -0500
+Message-ID: <20260224181440.832943-10-jsnow@redhat.com>
 In-Reply-To: <20260224181440.832943-1-jsnow@redhat.com>
 References: <20260224181440.832943-1-jsnow@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -10
 X-Spam_score: -1.1
 X-Spam_bar: -
 X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.358, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.659,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -99,324 +97,1107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Now that qmp has to be installed and isn't local, we can no longer offer
-a simple forwarder for these scripts (nor path hacks) and hope that it
-works. Encourage users to use the 'run' script to use these scripts
-instead.
+Update to latest lcitool master and refresh tests. Fedora is upgraded to
+Fedora 43 and Alpine from 3.21 to 3.23 as a result.
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Message-ID: <20260218213416.674483-18-jsnow@redhat.com>
+This is being done in this series primarily to ensure that MacOS
+installs python-setuptools, which is now separate from the core python
+package, and which is needed for this series to work correctly.
+
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Message-ID: <20260218213416.674483-11-jsnow@redhat.com>
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- scripts/compare-machine-types.py           |  7 ++-----
- scripts/qmp/qemu-ga-client                 | 13 ++++++-------
- scripts/qmp/qmp-shell                      | 13 ++++++-------
- scripts/qmp/qmp-shell-wrap                 | 13 ++++++-------
- scripts/qmp/qom-fuse                       | 13 ++++++-------
- scripts/qmp/qom-get                        | 13 ++++++-------
- scripts/qmp/qom-list                       | 13 ++++++-------
- scripts/qmp/qom-set                        | 13 ++++++-------
- scripts/qmp/qom-tree                       | 13 ++++++-------
- scripts/qmp_helper.py                      |  9 ++-------
- scripts/render_block_graph.py              | 10 +++++++---
- scripts/simplebench/bench_block_job.py     | 10 +++++++---
- tests/migration-stress/guestperf/engine.py | 15 ++++++++++++---
- 13 files changed, 78 insertions(+), 77 deletions(-)
+ .gitlab-ci.d/cirrus/macos-14.vars             |   2 +-
+ tests/docker/dockerfiles/alpine.docker        |   4 +-
+ tests/docker/dockerfiles/centos9.docker       | 240 ++++++++--------
+ .../dockerfiles/fedora-rust-nightly.docker    | 262 +++++++++---------
+ .../dockerfiles/fedora-win64-cross.docker     | 162 +++++------
+ tests/docker/dockerfiles/fedora.docker        | 262 +++++++++---------
+ tests/lcitool/libvirt-ci                      |   2 +-
+ tests/lcitool/refresh                         |   8 +-
+ 8 files changed, 471 insertions(+), 471 deletions(-)
 
-diff --git a/scripts/compare-machine-types.py b/scripts/compare-machine-types.py
-index b4f899082a7..83be361f4f6 100755
---- a/scripts/compare-machine-types.py
-+++ b/scripts/compare-machine-types.py
-@@ -27,19 +27,16 @@
- # along with this program; if not, see <http://www.gnu.org/licenses/>.
+diff --git a/.gitlab-ci.d/cirrus/macos-14.vars b/.gitlab-ci.d/cirrus/macos-14.vars
+index 4701c388e14..def77cfdea5 100644
+--- a/.gitlab-ci.d/cirrus/macos-14.vars
++++ b/.gitlab-ci.d/cirrus/macos-14.vars
+@@ -11,6 +11,6 @@ MAKE='/opt/homebrew/bin/gmake'
+ NINJA='/opt/homebrew/bin/ninja'
+ PACKAGING_COMMAND='brew'
+ PIP3='/opt/homebrew/bin/pip3'
+-PKGS='bash bc bindgen bison bzip2 capstone ccache cmocka coreutils ctags curl dbus diffutils dtc flex gcovr gettext git glib gnu-sed gnutls gtk+3 gtk-vnc jemalloc jpeg-turbo json-c libcbor libepoxy libffi libgcrypt libiscsi libnfs libpng libslirp libssh libtasn1 libusb llvm lzo make meson mtools ncurses nettle ninja pixman pkg-config python3 rpm2cpio rust sdl2 sdl2_image snappy socat sparse spice-protocol swtpm tesseract usbredir vde vte3 vulkan-tools xorriso zlib zstd'
++PKGS='bash bc bindgen bison bzip2 capstone ccache cmocka coreutils ctags curl dbus diffutils dtc flex gcovr gettext git glib gnu-sed gnutls gtk+3 gtk-vnc jemalloc jpeg-turbo json-c libcbor libepoxy libffi libgcrypt libiscsi libnfs libpng libslirp libssh libtasn1 libusb llvm lzo make meson mtools ncurses nettle ninja pixman pkg-config python-setuptools python3 rpm2cpio rust sdl2 sdl2_image snappy socat sparse spice-protocol swtpm tesseract usbredir vde vte3 vulkan-tools xorriso zlib zstd'
+ PYPI_PKGS='PyYAML numpy pillow sphinx sphinx-rtd-theme tomli'
+ PYTHON='/opt/homebrew/bin/python3'
+diff --git a/tests/docker/dockerfiles/alpine.docker b/tests/docker/dockerfiles/alpine.docker
+index 03dd6851f60..76d8dd8cfc7 100644
+--- a/tests/docker/dockerfiles/alpine.docker
++++ b/tests/docker/dockerfiles/alpine.docker
+@@ -1,10 +1,10 @@
+ # THIS FILE WAS AUTO-GENERATED
+ #
+-#  $ lcitool dockerfile --layers all alpine-321 qemu
++#  $ lcitool dockerfile --layers all alpine-323 qemu
+ #
+ # https://gitlab.com/libvirt/libvirt-ci
  
- import sys
--from os import path
- from argparse import ArgumentParser, RawTextHelpFormatter, Namespace
- import pandas as pd
- from contextlib import ExitStack
- from typing import Optional, List, Dict, Generator, Tuple, Union, Any, Set
+-FROM docker.io/library/alpine:3.21
++FROM docker.io/library/alpine:3.23
  
- try:
--    qemu_dir = path.abspath(path.dirname(path.dirname(__file__)))
--    sys.path.append(path.join(qemu_dir, 'python'))
-     from qemu.machine import QEMUMachine
- except ModuleNotFoundError as exc:
--    print(f"Module '{exc.name}' not found.")
--    print("Try export PYTHONPATH=top-qemu-dir/python or run from top-qemu-dir")
-+    print(f"Module '{exc.name}' not found.", file=sys.stderr)
-+    print(f"Try $builddir/run {' '.join(sys.argv)}", file=sys.stderr)
-     sys.exit(1)
+ RUN apk update && \
+     apk upgrade && \
+diff --git a/tests/docker/dockerfiles/centos9.docker b/tests/docker/dockerfiles/centos9.docker
+index 670e22be5ad..90ac1f7fade 100644
+--- a/tests/docker/dockerfiles/centos9.docker
++++ b/tests/docker/dockerfiles/centos9.docker
+@@ -6,126 +6,126 @@
  
+ FROM quay.io/centos/centos:stream9
  
-diff --git a/scripts/qmp/qemu-ga-client b/scripts/qmp/qemu-ga-client
-index 56edd0234a6..7ea01b9a11d 100755
---- a/scripts/qmp/qemu-ga-client
-+++ b/scripts/qmp/qemu-ga-client
-@@ -1,11 +1,10 @@
- #!/usr/bin/env python3
+-RUN dnf distro-sync -y && \
+-    dnf install 'dnf-command(config-manager)' -y && \
+-    dnf config-manager --set-enabled -y crb && \
+-    dnf install -y epel-release && \
+-    dnf install -y epel-next-release && \
+-    dnf install -y \
+-        SDL2-devel \
+-        alsa-lib-devel \
+-        bash \
+-        bc \
+-        bindgen-cli \
+-        bison \
+-        brlapi-devel \
+-        bzip2 \
+-        bzip2-devel \
+-        ca-certificates \
+-        capstone-devel \
+-        ccache \
+-        clang \
+-        compiler-rt \
+-        coreutils-single \
+-        ctags \
+-        cyrus-sasl-devel \
+-        daxctl-devel \
+-        dbus-daemon \
+-        device-mapper-multipath-devel \
+-        diffutils \
+-        findutils \
+-        flex \
+-        fuse3-devel \
+-        gcc \
+-        gettext \
+-        git \
+-        glib2-devel \
+-        glib2-static \
+-        glibc-langpack-en \
+-        glibc-static \
+-        gnutls-devel \
+-        gtk3-devel \
+-        hostname \
+-        jemalloc-devel \
+-        json-c-devel \
+-        libaio-devel \
+-        libasan \
+-        libattr-devel \
+-        libbpf-devel \
+-        libcacard-devel \
+-        libcap-ng-devel \
+-        libcmocka-devel \
+-        libcurl-devel \
+-        libdrm-devel \
+-        libepoxy-devel \
+-        libfdt-devel \
+-        libffi-devel \
+-        libgcrypt-devel \
+-        libiscsi-devel \
+-        libjpeg-devel \
+-        libnfs-devel \
+-        libpmem-devel \
+-        libpng-devel \
+-        librbd-devel \
+-        libseccomp-devel \
+-        libselinux-devel \
+-        libslirp-devel \
+-        libssh-devel \
+-        libtasn1-devel \
+-        libubsan \
+-        liburing-devel \
+-        libusbx-devel \
+-        libxdp-devel \
+-        libzstd-devel \
+-        llvm \
+-        lttng-ust-devel \
+-        lzo-devel \
+-        make \
+-        mesa-libgbm-devel \
+-        meson \
+-        mtools \
+-        ncurses-devel \
+-        nettle-devel \
+-        ninja-build \
+-        nmap-ncat \
+-        numactl-devel \
+-        openssh-clients \
+-        pam-devel \
+-        pcre-static \
+-        pipewire-devel \
+-        pixman-devel \
+-        pkgconfig \
+-        pulseaudio-libs-devel \
+-        python3 \
+-        python3-PyYAML \
+-        python3-numpy \
+-        python3-pillow \
+-        python3-pip \
+-        python3-sphinx \
+-        python3-sphinx_rtd_theme \
+-        python3-tomli \
+-        rdma-core-devel \
+-        rust \
+-        rust-std-static \
+-        sed \
+-        snappy-devel \
+-        socat \
+-        spice-protocol \
+-        swtpm \
+-        systemd-devel \
+-        systemtap-sdt-devel \
+-        tar \
+-        usbredir-devel \
+-        util-linux \
+-        vte291-devel \
+-        vulkan-tools \
+-        which \
+-        xorriso \
+-        zlib-devel \
+-        zlib-static \
+-        zstd && \
+-    dnf autoremove -y && \
+-    dnf clean all -y && \
++RUN dnf --quiet distro-sync -y && \
++    dnf --quiet install 'dnf-command(config-manager)' -y && \
++    dnf --quiet config-manager --set-enabled -y crb && \
++    dnf --quiet install -y epel-release && \
++    dnf --quiet install -y epel-next-release && \
++    dnf --quiet install -y \
++                SDL2-devel \
++                alsa-lib-devel \
++                bash \
++                bc \
++                bindgen-cli \
++                bison \
++                brlapi-devel \
++                bzip2 \
++                bzip2-devel \
++                ca-certificates \
++                capstone-devel \
++                ccache \
++                clang \
++                compiler-rt \
++                coreutils-single \
++                ctags \
++                cyrus-sasl-devel \
++                daxctl-devel \
++                dbus-daemon \
++                device-mapper-multipath-devel \
++                diffutils \
++                findutils \
++                flex \
++                fuse3-devel \
++                gcc \
++                gettext \
++                git \
++                glib2-devel \
++                glib2-static \
++                glibc-langpack-en \
++                glibc-static \
++                gnutls-devel \
++                gtk3-devel \
++                hostname \
++                jemalloc-devel \
++                json-c-devel \
++                libaio-devel \
++                libasan \
++                libattr-devel \
++                libbpf-devel \
++                libcacard-devel \
++                libcap-ng-devel \
++                libcmocka-devel \
++                libcurl-devel \
++                libdrm-devel \
++                libepoxy-devel \
++                libfdt-devel \
++                libffi-devel \
++                libgcrypt-devel \
++                libiscsi-devel \
++                libjpeg-devel \
++                libnfs-devel \
++                libpmem-devel \
++                libpng-devel \
++                librbd-devel \
++                libseccomp-devel \
++                libselinux-devel \
++                libslirp-devel \
++                libssh-devel \
++                libtasn1-devel \
++                libubsan \
++                liburing-devel \
++                libusbx-devel \
++                libxdp-devel \
++                libzstd-devel \
++                llvm \
++                lttng-ust-devel \
++                lzo-devel \
++                make \
++                mesa-libgbm-devel \
++                meson \
++                mtools \
++                ncurses-devel \
++                nettle-devel \
++                ninja-build \
++                nmap-ncat \
++                numactl-devel \
++                openssh-clients \
++                pam-devel \
++                pcre-static \
++                pipewire-devel \
++                pixman-devel \
++                pkgconfig \
++                pulseaudio-libs-devel \
++                python3 \
++                python3-PyYAML \
++                python3-numpy \
++                python3-pillow \
++                python3-pip \
++                python3-sphinx \
++                python3-sphinx_rtd_theme \
++                python3-tomli \
++                rdma-core-devel \
++                rust \
++                rust-std-static \
++                sed \
++                snappy-devel \
++                socat \
++                spice-protocol \
++                swtpm \
++                systemd-devel \
++                systemtap-sdt-devel \
++                tar \
++                usbredir-devel \
++                util-linux \
++                vte291-devel \
++                vulkan-tools \
++                which \
++                xorriso \
++                zlib-devel \
++                zlib-static \
++                zstd && \
++    dnf --quiet autoremove -y && \
++    dnf --quiet clean all -y && \
+     rm -f /usr/lib*/python3*/EXTERNALLY-MANAGED && \
+     rpm -qa | sort > /packages.txt && \
+     mkdir -p /usr/libexec/ccache-wrappers && \
+diff --git a/tests/docker/dockerfiles/fedora-rust-nightly.docker b/tests/docker/dockerfiles/fedora-rust-nightly.docker
+index 8e3b3a9fd90..043b42a0a9b 100644
+--- a/tests/docker/dockerfiles/fedora-rust-nightly.docker
++++ b/tests/docker/dockerfiles/fedora-rust-nightly.docker
+@@ -1,12 +1,12 @@
+ # THIS FILE WAS AUTO-GENERATED
+ #
+-#  $ lcitool dockerfile --layers all fedora-41 qemu
++#  $ lcitool dockerfile --layers all fedora-43 qemu
+ #
+ # https://gitlab.com/libvirt/libvirt-ci
  
--import os
- import sys
+-FROM registry.fedoraproject.org/fedora:41
++FROM registry.fedoraproject.org/fedora:43
  
--sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..', 'python'))
--from qemu.utils import qemu_ga_client
--
--
--if __name__ == '__main__':
--    sys.exit(qemu_ga_client.main())
-+print(
-+    "This script has moved; after running configure,"
-+    " please use '$builddir/run qemu-ga-client [...]' instead.",
-+    file=sys.stderr
-+)
-+sys.exit(1)
-diff --git a/scripts/qmp/qmp-shell b/scripts/qmp/qmp-shell
-index 4a20f97db70..436c4940c26 100755
---- a/scripts/qmp/qmp-shell
-+++ b/scripts/qmp/qmp-shell
-@@ -1,11 +1,10 @@
- #!/usr/bin/env python3
+-RUN dnf install -y nosync && \
++RUN dnf --quiet install -y nosync && \
+     printf '#!/bin/sh\n\
+ if test -d /usr/lib64\n\
+ then\n\
+@@ -16,134 +16,134 @@ else\n\
+ fi\n\
+ exec "$@"\n' > /usr/bin/nosync && \
+     chmod +x /usr/bin/nosync && \
+-    nosync dnf update -y && \
+-    nosync dnf install -y \
+-               SDL2-devel \
+-               SDL2_image-devel \
+-               alsa-lib-devel \
+-               bash \
+-               bc \
+-               bindgen-cli \
+-               bison \
+-               brlapi-devel \
+-               bzip2 \
+-               bzip2-devel \
+-               ca-certificates \
+-               capstone-devel \
+-               ccache \
+-               clang \
+-               compiler-rt \
+-               coreutils \
+-               ctags \
+-               cyrus-sasl-devel \
+-               daxctl-devel \
+-               dbus-daemon \
+-               device-mapper-multipath-devel \
+-               diffutils \
+-               findutils \
+-               flex \
+-               fuse3-devel \
+-               gcc \
+-               gcovr \
+-               gettext \
+-               git \
+-               glib2-devel \
+-               glib2-static \
+-               glibc-langpack-en \
+-               glibc-static \
+-               glusterfs-api-devel \
+-               gnutls-devel \
+-               gtk-vnc2-devel \
+-               gtk3-devel \
+-               hostname \
+-               jemalloc-devel \
+-               json-c-devel \
+-               libaio-devel \
+-               libasan \
+-               libattr-devel \
+-               libbpf-devel \
+-               libcacard-devel \
+-               libcap-ng-devel \
+-               libcbor-devel \
+-               libcmocka-devel \
+-               libcurl-devel \
+-               libdrm-devel \
+-               libepoxy-devel \
+-               libfdt-devel \
+-               libffi-devel \
+-               libgcrypt-devel \
+-               libiscsi-devel \
+-               libjpeg-devel \
+-               libnfs-devel \
+-               libpmem-devel \
+-               libpng-devel \
+-               librbd-devel \
+-               libseccomp-devel \
+-               libselinux-devel \
+-               libslirp-devel \
+-               libssh-devel \
+-               libtasn1-devel \
+-               libubsan \
+-               liburing-devel \
+-               libusbx-devel \
+-               libxdp-devel \
+-               libzstd-devel \
+-               llvm \
+-               lttng-ust-devel \
+-               lzo-devel \
+-               make \
+-               mesa-libgbm-devel \
+-               mtools \
+-               ncurses-devel \
+-               nettle-devel \
+-               ninja-build \
+-               nmap-ncat \
+-               numactl-devel \
+-               openssh-clients \
+-               pam-devel \
+-               pcre2-static \
+-               pipewire-devel \
+-               pixman-devel \
+-               pkgconfig \
+-               pulseaudio-libs-devel \
+-               python3 \
+-               python3-PyYAML \
+-               python3-numpy \
+-               python3-opencv \
+-               python3-pillow \
+-               python3-pip \
+-               python3-setuptools \
+-               python3-sphinx \
+-               python3-sphinx_rtd_theme \
+-               python3-wheel \
+-               rdma-core-devel \
+-               rust \
+-               rust-std-static \
+-               sed \
+-               snappy-devel \
+-               socat \
+-               sparse \
+-               spice-protocol \
+-               spice-server-devel \
+-               swtpm \
+-               systemd-devel \
+-               systemtap-sdt-dtrace \
+-               tar \
+-               tesseract \
+-               tesseract-langpack-eng \
+-               usbredir-devel \
+-               util-linux \
+-               virglrenderer-devel \
+-               vte291-devel \
+-               vulkan-tools \
+-               which \
+-               xen-devel \
+-               xorriso \
+-               zlib-devel \
+-               zlib-static \
+-               zstd && \
+-    nosync dnf autoremove -y && \
+-    nosync dnf clean all -y && \
++    nosync dnf --quiet update -y && \
++    nosync dnf --quiet install -y \
++                       SDL2_image-devel \
++                       alsa-lib-devel \
++                       bash \
++                       bc \
++                       bindgen-cli \
++                       bison \
++                       brlapi-devel \
++                       bzip2 \
++                       bzip2-devel \
++                       ca-certificates \
++                       capstone-devel \
++                       ccache \
++                       clang \
++                       compiler-rt \
++                       coreutils \
++                       ctags \
++                       cyrus-sasl-devel \
++                       daxctl-devel \
++                       dbus-daemon \
++                       device-mapper-multipath-devel \
++                       diffutils \
++                       findutils \
++                       flex \
++                       fuse3-devel \
++                       gcc \
++                       gcovr \
++                       gettext \
++                       git \
++                       glib2-devel \
++                       glib2-static \
++                       glibc-langpack-en \
++                       glibc-static \
++                       glusterfs-api-devel \
++                       gnutls-devel \
++                       gtk-vnc2-devel \
++                       gtk3-devel \
++                       hostname \
++                       jemalloc-devel \
++                       json-c-devel \
++                       libaio-devel \
++                       libasan \
++                       libattr-devel \
++                       libbpf-devel \
++                       libcacard-devel \
++                       libcap-ng-devel \
++                       libcbor-devel \
++                       libcmocka-devel \
++                       libcurl-devel \
++                       libdrm-devel \
++                       libepoxy-devel \
++                       libfdt-devel \
++                       libffi-devel \
++                       libgcrypt-devel \
++                       libiscsi-devel \
++                       libjpeg-devel \
++                       libnfs-devel \
++                       libpmem-devel \
++                       libpng-devel \
++                       librbd-devel \
++                       libseccomp-devel \
++                       libselinux-devel \
++                       libslirp-devel \
++                       libssh-devel \
++                       libtasn1-devel \
++                       libubsan \
++                       liburing-devel \
++                       libusbx-devel \
++                       libxdp-devel \
++                       libzstd-devel \
++                       llvm \
++                       lttng-ust-devel \
++                       lzo-devel \
++                       make \
++                       mesa-libgbm-devel \
++                       mtools \
++                       ncurses-devel \
++                       nettle-devel \
++                       ninja-build \
++                       nmap-ncat \
++                       numactl-devel \
++                       openssh-clients \
++                       pam-devel \
++                       pcre2-static \
++                       pipewire-devel \
++                       pixman-devel \
++                       pkgconfig \
++                       pulseaudio-libs-devel \
++                       python3 \
++                       python3-PyYAML \
++                       python3-numpy \
++                       python3-opencv \
++                       python3-pillow \
++                       python3-pip \
++                       python3-setuptools \
++                       python3-sphinx \
++                       python3-sphinx_rtd_theme \
++                       python3-wheel \
++                       rdma-core-devel \
++                       rust \
++                       rust-std-static \
++                       sdl2-compat-devel \
++                       sed \
++                       snappy-devel \
++                       socat \
++                       sparse \
++                       spice-protocol \
++                       spice-server-devel \
++                       swtpm \
++                       systemd-devel \
++                       systemtap-sdt-dtrace \
++                       tar \
++                       tesseract \
++                       tesseract-langpack-eng \
++                       usbredir-devel \
++                       util-linux \
++                       virglrenderer-devel \
++                       vte291-devel \
++                       vulkan-tools \
++                       which \
++                       xen-devel \
++                       xorriso \
++                       zlib-devel \
++                       zlib-static \
++                       zstd && \
++    nosync dnf --quiet autoremove -y && \
++    nosync dnf --quiet clean all -y && \
+     rm -f /usr/lib*/python3*/EXTERNALLY-MANAGED && \
+     rpm -qa | sort > /packages.txt && \
+     mkdir -p /usr/libexec/ccache-wrappers && \
+diff --git a/tests/docker/dockerfiles/fedora-win64-cross.docker b/tests/docker/dockerfiles/fedora-win64-cross.docker
+index c5e1fcebf51..818485c4ba2 100644
+--- a/tests/docker/dockerfiles/fedora-win64-cross.docker
++++ b/tests/docker/dockerfiles/fedora-win64-cross.docker
+@@ -1,12 +1,12 @@
+ # THIS FILE WAS AUTO-GENERATED
+ #
+-#  $ lcitool dockerfile --layers all --cross-arch mingw64 fedora-41 qemu,qemu-win-installer
++#  $ lcitool dockerfile --layers all --cross-arch mingw64 fedora-43 qemu,qemu-win-installer
+ #
+ # https://gitlab.com/libvirt/libvirt-ci
  
--import os
- import sys
+-FROM registry.fedoraproject.org/fedora:41
++FROM registry.fedoraproject.org/fedora:43
  
--sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..', 'python'))
--from qemu.qmp import qmp_shell
--
--
--if __name__ == '__main__':
--    qmp_shell.main()
-+print(
-+    "This script has moved; after running configure,"
-+    " please use '$builddir/run qmp-shell [...]' instead.",
-+    file=sys.stderr
-+)
-+sys.exit(1)
-diff --git a/scripts/qmp/qmp-shell-wrap b/scripts/qmp/qmp-shell-wrap
-index 9e94da114f5..f63dadad1ed 100755
---- a/scripts/qmp/qmp-shell-wrap
-+++ b/scripts/qmp/qmp-shell-wrap
-@@ -1,11 +1,10 @@
- #!/usr/bin/env python3
+-RUN dnf install -y nosync && \
++RUN dnf --quiet install -y nosync && \
+     printf '#!/bin/sh\n\
+ if test -d /usr/lib64\n\
+ then\n\
+@@ -16,59 +16,59 @@ else\n\
+ fi\n\
+ exec "$@"\n' > /usr/bin/nosync && \
+     chmod +x /usr/bin/nosync && \
+-    nosync dnf update -y && \
+-    nosync dnf install -y \
+-               bash \
+-               bc \
+-               bindgen-cli \
+-               bison \
+-               bzip2 \
+-               ca-certificates \
+-               ccache \
+-               compiler-rt \
+-               coreutils \
+-               ctags \
+-               dbus-daemon \
+-               diffutils \
+-               findutils \
+-               flex \
+-               gcc \
+-               gcovr \
+-               git \
+-               glib2-devel \
+-               glibc-langpack-en \
+-               hostname \
+-               llvm \
+-               make \
+-               mtools \
+-               ninja-build \
+-               nmap-ncat \
+-               openssh-clients \
+-               python3 \
+-               python3-PyYAML \
+-               python3-numpy \
+-               python3-opencv \
+-               python3-pillow \
+-               python3-pip \
+-               python3-setuptools \
+-               python3-sphinx \
+-               python3-sphinx_rtd_theme \
+-               python3-wheel \
+-               rust \
+-               sed \
+-               socat \
+-               sparse \
+-               swtpm \
+-               tar \
+-               tesseract \
+-               tesseract-langpack-eng \
+-               util-linux \
+-               vulkan-tools \
+-               which \
+-               xorriso \
+-               zstd && \
+-    nosync dnf autoremove -y && \
+-    nosync dnf clean all -y && \
++    nosync dnf --quiet update -y && \
++    nosync dnf --quiet install -y \
++                       bash \
++                       bc \
++                       bindgen-cli \
++                       bison \
++                       bzip2 \
++                       ca-certificates \
++                       ccache \
++                       compiler-rt \
++                       coreutils \
++                       ctags \
++                       dbus-daemon \
++                       diffutils \
++                       findutils \
++                       flex \
++                       gcc \
++                       gcovr \
++                       git \
++                       glib2-devel \
++                       glibc-langpack-en \
++                       hostname \
++                       llvm \
++                       make \
++                       mtools \
++                       ninja-build \
++                       nmap-ncat \
++                       openssh-clients \
++                       python3 \
++                       python3-PyYAML \
++                       python3-numpy \
++                       python3-opencv \
++                       python3-pillow \
++                       python3-pip \
++                       python3-setuptools \
++                       python3-sphinx \
++                       python3-sphinx_rtd_theme \
++                       python3-wheel \
++                       rust \
++                       sed \
++                       socat \
++                       sparse \
++                       swtpm \
++                       tar \
++                       tesseract \
++                       tesseract-langpack-eng \
++                       util-linux \
++                       vulkan-tools \
++                       which \
++                       xorriso \
++                       zstd && \
++    nosync dnf --quiet autoremove -y && \
++    nosync dnf --quiet clean all -y && \
+     rm -f /usr/lib*/python3*/EXTERNALLY-MANAGED
  
--import os
- import sys
+ RUN /usr/bin/pip3 install meson==1.8.1
+@@ -79,31 +79,31 @@ ENV MAKE="/usr/bin/make"
+ ENV NINJA="/usr/bin/ninja"
+ ENV PYTHON="/usr/bin/python3"
  
--sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..', 'python'))
--from qemu.qmp import qmp_shell
--
--
--if __name__ == '__main__':
--    qmp_shell.main_wrap()
-+print(
-+    "This script has moved; after running configure,"
-+    " please use '$builddir/run qmp-shell-wrap [...]' instead.",
-+    file=sys.stderr
-+)
-+sys.exit(1)
-diff --git a/scripts/qmp/qom-fuse b/scripts/qmp/qom-fuse
-index d453807b273..7d4724a3710 100755
---- a/scripts/qmp/qom-fuse
-+++ b/scripts/qmp/qom-fuse
-@@ -1,11 +1,10 @@
- #!/usr/bin/env python3
+-RUN nosync dnf install -y \
+-               mingw-w64-tools \
+-               mingw32-nsis \
+-               mingw64-SDL2 \
+-               mingw64-SDL2_image \
+-               mingw64-bzip2 \
+-               mingw64-curl \
+-               mingw64-gcc \
+-               mingw64-gcc-c++ \
+-               mingw64-gettext \
+-               mingw64-glib2 \
+-               mingw64-gnutls \
+-               mingw64-gtk-vnc2 \
+-               mingw64-gtk3 \
+-               mingw64-libepoxy \
+-               mingw64-libfdt \
+-               mingw64-libgcrypt \
+-               mingw64-libjpeg-turbo \
+-               mingw64-libpng \
+-               mingw64-libtasn1 \
+-               mingw64-nettle \
+-               mingw64-pixman \
+-               mingw64-pkg-config \
+-               rust-std-static-x86_64-pc-windows-gnu && \
+-    nosync dnf clean all -y && \
++RUN nosync dnf --quiet install -y \
++                       mingw-w64-tools \
++                       mingw32-nsis \
++                       mingw64-SDL2 \
++                       mingw64-SDL2_image \
++                       mingw64-bzip2 \
++                       mingw64-curl \
++                       mingw64-gcc \
++                       mingw64-gcc-c++ \
++                       mingw64-gettext \
++                       mingw64-glib2 \
++                       mingw64-gnutls \
++                       mingw64-gtk-vnc2 \
++                       mingw64-gtk3 \
++                       mingw64-libepoxy \
++                       mingw64-libfdt \
++                       mingw64-libgcrypt \
++                       mingw64-libjpeg-turbo \
++                       mingw64-libpng \
++                       mingw64-libtasn1 \
++                       mingw64-nettle \
++                       mingw64-pixman \
++                       mingw64-pkg-config \
++                       rust-std-static-x86_64-pc-windows-gnu && \
++    nosync dnf --quiet clean all -y && \
+     rpm -qa | sort > /packages.txt && \
+     mkdir -p /usr/libexec/ccache-wrappers && \
+     ln -s /usr/bin/ccache /usr/libexec/ccache-wrappers/x86_64-w64-mingw32-c++ && \
+diff --git a/tests/docker/dockerfiles/fedora.docker b/tests/docker/dockerfiles/fedora.docker
+index 9278d797693..32aaf01aff4 100644
+--- a/tests/docker/dockerfiles/fedora.docker
++++ b/tests/docker/dockerfiles/fedora.docker
+@@ -1,12 +1,12 @@
+ # THIS FILE WAS AUTO-GENERATED
+ #
+-#  $ lcitool dockerfile --layers all fedora-41 qemu
++#  $ lcitool dockerfile --layers all fedora-43 qemu
+ #
+ # https://gitlab.com/libvirt/libvirt-ci
  
--import os
- import sys
+-FROM registry.fedoraproject.org/fedora:41
++FROM registry.fedoraproject.org/fedora:43
  
--sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..', 'python'))
--from qemu.utils.qom_fuse import QOMFuse
--
--
--if __name__ == '__main__':
--    sys.exit(QOMFuse.entry_point())
-+print(
-+    "This script has moved; after running configure,"
-+    " please use '$builddir/run qom-fuse [...]' instead.",
-+    file=sys.stderr
-+)
-+sys.exit(1)
-diff --git a/scripts/qmp/qom-get b/scripts/qmp/qom-get
-index 04ebe052e82..96363539624 100755
---- a/scripts/qmp/qom-get
-+++ b/scripts/qmp/qom-get
-@@ -1,11 +1,10 @@
- #!/usr/bin/env python3
+-RUN dnf install -y nosync && \
++RUN dnf --quiet install -y nosync && \
+     printf '#!/bin/sh\n\
+ if test -d /usr/lib64\n\
+ then\n\
+@@ -16,134 +16,134 @@ else\n\
+ fi\n\
+ exec "$@"\n' > /usr/bin/nosync && \
+     chmod +x /usr/bin/nosync && \
+-    nosync dnf update -y && \
+-    nosync dnf install -y \
+-               SDL2-devel \
+-               SDL2_image-devel \
+-               alsa-lib-devel \
+-               bash \
+-               bc \
+-               bindgen-cli \
+-               bison \
+-               brlapi-devel \
+-               bzip2 \
+-               bzip2-devel \
+-               ca-certificates \
+-               capstone-devel \
+-               ccache \
+-               clang \
+-               compiler-rt \
+-               coreutils \
+-               ctags \
+-               cyrus-sasl-devel \
+-               daxctl-devel \
+-               dbus-daemon \
+-               device-mapper-multipath-devel \
+-               diffutils \
+-               findutils \
+-               flex \
+-               fuse3-devel \
+-               gcc \
+-               gcovr \
+-               gettext \
+-               git \
+-               glib2-devel \
+-               glib2-static \
+-               glibc-langpack-en \
+-               glibc-static \
+-               glusterfs-api-devel \
+-               gnutls-devel \
+-               gtk-vnc2-devel \
+-               gtk3-devel \
+-               hostname \
+-               jemalloc-devel \
+-               json-c-devel \
+-               libaio-devel \
+-               libasan \
+-               libattr-devel \
+-               libbpf-devel \
+-               libcacard-devel \
+-               libcap-ng-devel \
+-               libcbor-devel \
+-               libcmocka-devel \
+-               libcurl-devel \
+-               libdrm-devel \
+-               libepoxy-devel \
+-               libfdt-devel \
+-               libffi-devel \
+-               libgcrypt-devel \
+-               libiscsi-devel \
+-               libjpeg-devel \
+-               libnfs-devel \
+-               libpmem-devel \
+-               libpng-devel \
+-               librbd-devel \
+-               libseccomp-devel \
+-               libselinux-devel \
+-               libslirp-devel \
+-               libssh-devel \
+-               libtasn1-devel \
+-               libubsan \
+-               liburing-devel \
+-               libusbx-devel \
+-               libxdp-devel \
+-               libzstd-devel \
+-               llvm \
+-               lttng-ust-devel \
+-               lzo-devel \
+-               make \
+-               mesa-libgbm-devel \
+-               mtools \
+-               ncurses-devel \
+-               nettle-devel \
+-               ninja-build \
+-               nmap-ncat \
+-               numactl-devel \
+-               openssh-clients \
+-               pam-devel \
+-               pcre2-static \
+-               pipewire-devel \
+-               pixman-devel \
+-               pkgconfig \
+-               pulseaudio-libs-devel \
+-               python3 \
+-               python3-PyYAML \
+-               python3-numpy \
+-               python3-opencv \
+-               python3-pillow \
+-               python3-pip \
+-               python3-setuptools \
+-               python3-sphinx \
+-               python3-sphinx_rtd_theme \
+-               python3-wheel \
+-               rdma-core-devel \
+-               rust \
+-               rust-std-static \
+-               sed \
+-               snappy-devel \
+-               socat \
+-               sparse \
+-               spice-protocol \
+-               spice-server-devel \
+-               swtpm \
+-               systemd-devel \
+-               systemtap-sdt-dtrace \
+-               tar \
+-               tesseract \
+-               tesseract-langpack-eng \
+-               usbredir-devel \
+-               util-linux \
+-               virglrenderer-devel \
+-               vte291-devel \
+-               vulkan-tools \
+-               which \
+-               xen-devel \
+-               xorriso \
+-               zlib-devel \
+-               zlib-static \
+-               zstd && \
+-    nosync dnf autoremove -y && \
+-    nosync dnf clean all -y && \
++    nosync dnf --quiet update -y && \
++    nosync dnf --quiet install -y \
++                       SDL2_image-devel \
++                       alsa-lib-devel \
++                       bash \
++                       bc \
++                       bindgen-cli \
++                       bison \
++                       brlapi-devel \
++                       bzip2 \
++                       bzip2-devel \
++                       ca-certificates \
++                       capstone-devel \
++                       ccache \
++                       clang \
++                       compiler-rt \
++                       coreutils \
++                       ctags \
++                       cyrus-sasl-devel \
++                       daxctl-devel \
++                       dbus-daemon \
++                       device-mapper-multipath-devel \
++                       diffutils \
++                       findutils \
++                       flex \
++                       fuse3-devel \
++                       gcc \
++                       gcovr \
++                       gettext \
++                       git \
++                       glib2-devel \
++                       glib2-static \
++                       glibc-langpack-en \
++                       glibc-static \
++                       glusterfs-api-devel \
++                       gnutls-devel \
++                       gtk-vnc2-devel \
++                       gtk3-devel \
++                       hostname \
++                       jemalloc-devel \
++                       json-c-devel \
++                       libaio-devel \
++                       libasan \
++                       libattr-devel \
++                       libbpf-devel \
++                       libcacard-devel \
++                       libcap-ng-devel \
++                       libcbor-devel \
++                       libcmocka-devel \
++                       libcurl-devel \
++                       libdrm-devel \
++                       libepoxy-devel \
++                       libfdt-devel \
++                       libffi-devel \
++                       libgcrypt-devel \
++                       libiscsi-devel \
++                       libjpeg-devel \
++                       libnfs-devel \
++                       libpmem-devel \
++                       libpng-devel \
++                       librbd-devel \
++                       libseccomp-devel \
++                       libselinux-devel \
++                       libslirp-devel \
++                       libssh-devel \
++                       libtasn1-devel \
++                       libubsan \
++                       liburing-devel \
++                       libusbx-devel \
++                       libxdp-devel \
++                       libzstd-devel \
++                       llvm \
++                       lttng-ust-devel \
++                       lzo-devel \
++                       make \
++                       mesa-libgbm-devel \
++                       mtools \
++                       ncurses-devel \
++                       nettle-devel \
++                       ninja-build \
++                       nmap-ncat \
++                       numactl-devel \
++                       openssh-clients \
++                       pam-devel \
++                       pcre2-static \
++                       pipewire-devel \
++                       pixman-devel \
++                       pkgconfig \
++                       pulseaudio-libs-devel \
++                       python3 \
++                       python3-PyYAML \
++                       python3-numpy \
++                       python3-opencv \
++                       python3-pillow \
++                       python3-pip \
++                       python3-setuptools \
++                       python3-sphinx \
++                       python3-sphinx_rtd_theme \
++                       python3-wheel \
++                       rdma-core-devel \
++                       rust \
++                       rust-std-static \
++                       sdl2-compat-devel \
++                       sed \
++                       snappy-devel \
++                       socat \
++                       sparse \
++                       spice-protocol \
++                       spice-server-devel \
++                       swtpm \
++                       systemd-devel \
++                       systemtap-sdt-dtrace \
++                       tar \
++                       tesseract \
++                       tesseract-langpack-eng \
++                       usbredir-devel \
++                       util-linux \
++                       virglrenderer-devel \
++                       vte291-devel \
++                       vulkan-tools \
++                       which \
++                       xen-devel \
++                       xorriso \
++                       zlib-devel \
++                       zlib-static \
++                       zstd && \
++    nosync dnf --quiet autoremove -y && \
++    nosync dnf --quiet clean all -y && \
+     rm -f /usr/lib*/python3*/EXTERNALLY-MANAGED && \
+     rpm -qa | sort > /packages.txt && \
+     mkdir -p /usr/libexec/ccache-wrappers && \
+diff --git a/tests/lcitool/libvirt-ci b/tests/lcitool/libvirt-ci
+index caed407a0f1..514b0cd7f63 160000
+--- a/tests/lcitool/libvirt-ci
++++ b/tests/lcitool/libvirt-ci
+@@ -1 +1 @@
+-Subproject commit caed407a0f1dfe3a3293a41c378c382deefbac36
++Subproject commit 514b0cd7f6375d0089f96e749079093906c532a8
+diff --git a/tests/lcitool/refresh b/tests/lcitool/refresh
+index 01a71929542..8f0aa3fa343 100755
+--- a/tests/lcitool/refresh
++++ b/tests/lcitool/refresh
+@@ -215,12 +215,12 @@ try:
+     #
+     # Standard native builds
+     #
+-    generate_dockerfile("alpine", "alpine-321",
++    generate_dockerfile("alpine", "alpine-323",
+                         trailer="".join(alpine_extras))
+     generate_dockerfile("centos9", "centos-stream-9")
+     generate_dockerfile("debian", "debian-13",
+                         trailer="".join(debian13_extras))
+-    generate_dockerfile("fedora", "fedora-41")
++    generate_dockerfile("fedora", "fedora-43")
+     generate_dockerfile("opensuse-leap", "opensuse-leap-15")
+     generate_dockerfile("ubuntu2204", "ubuntu-2204",
+                         trailer="".join(ubuntu2204_rust_extras),
+@@ -230,7 +230,7 @@ try:
+     #
+     # Non-fatal Rust-enabled build
+     #
+-    generate_dockerfile("fedora-rust-nightly", "fedora-41",
++    generate_dockerfile("fedora-rust-nightly", "fedora-43",
+                         trailer="".join(fedora_rustup_nightly_extras))
  
--import os
- import sys
+     #
+@@ -287,7 +287,7 @@ try:
+                         trailer=cross_build("s390x-linux-gnu-",
+                                             "s390x-softmmu,s390x-linux-user"))
  
--sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..', 'python'))
--from qemu.utils.qom import QOMGet
--
--
--if __name__ == '__main__':
--    sys.exit(QOMGet.entry_point())
-+print(
-+    "This script has moved; after running configure,"
-+    " please use '$builddir/run qom-get [...]' instead.",
-+    file=sys.stderr
-+)
-+sys.exit(1)
-diff --git a/scripts/qmp/qom-list b/scripts/qmp/qom-list
-index 853b85a8d3f..e988274d1e7 100755
---- a/scripts/qmp/qom-list
-+++ b/scripts/qmp/qom-list
-@@ -1,11 +1,10 @@
- #!/usr/bin/env python3
- 
--import os
- import sys
- 
--sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..', 'python'))
--from qemu.utils.qom import QOMList
--
--
--if __name__ == '__main__':
--    sys.exit(QOMList.entry_point())
-+print(
-+    "This script has moved; after running configure,"
-+    " please use '$builddir/run qom-list [...]' instead.",
-+    file=sys.stderr
-+)
-+sys.exit(1)
-diff --git a/scripts/qmp/qom-set b/scripts/qmp/qom-set
-index 06820feec42..c2569afdcd7 100755
---- a/scripts/qmp/qom-set
-+++ b/scripts/qmp/qom-set
-@@ -1,11 +1,10 @@
- #!/usr/bin/env python3
- 
--import os
- import sys
- 
--sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..', 'python'))
--from qemu.utils.qom import QOMSet
--
--
--if __name__ == '__main__':
--    sys.exit(QOMSet.entry_point())
-+print(
-+    "This script has moved; after running configure,"
-+    " please use '$builddir/run qom-set [...]' instead.",
-+    file=sys.stderr
-+)
-+sys.exit(1)
-diff --git a/scripts/qmp/qom-tree b/scripts/qmp/qom-tree
-index 760e172277e..b3cd5ab6f82 100755
---- a/scripts/qmp/qom-tree
-+++ b/scripts/qmp/qom-tree
-@@ -1,11 +1,10 @@
- #!/usr/bin/env python3
- 
--import os
- import sys
- 
--sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..', 'python'))
--from qemu.utils.qom import QOMTree
--
--
--if __name__ == '__main__':
--    sys.exit(QOMTree.entry_point())
-+print(
-+    "This script has moved; after running configure,"
-+    " please use '$builddir/run qom-tree [...]' instead.",
-+    file=sys.stderr
-+)
-+sys.exit(1)
-diff --git a/scripts/qmp_helper.py b/scripts/qmp_helper.py
-index c1e7e0fd80c..521612fb946 100755
---- a/scripts/qmp_helper.py
-+++ b/scripts/qmp_helper.py
-@@ -13,17 +13,12 @@
- import sys
- 
- from datetime import datetime
--from os import path as os_path
- 
- try:
--    qemu_dir = os_path.abspath(os_path.dirname(os_path.dirname(__file__)))
--    sys.path.append(os_path.join(qemu_dir, 'python'))
--
-     from qemu.qmp.legacy import QEMUMonitorProtocol
--
- except ModuleNotFoundError as exc:
--    print(f"Module '{exc.name}' not found.")
--    print("Try export PYTHONPATH=top-qemu-dir/python or run from top-qemu-dir")
-+    print(f"Module '{exc.name}' not found.", file=sys.stderr)
-+    print(f"Try $builddir/run {' '.join(sys.argv)}", file=sys.stderr)
-     sys.exit(1)
- 
- from base64 import b64encode
-diff --git a/scripts/render_block_graph.py b/scripts/render_block_graph.py
-index 3e1a2e3fa71..b9079bbed52 100755
---- a/scripts/render_block_graph.py
-+++ b/scripts/render_block_graph.py
-@@ -24,9 +24,13 @@
- import json
- from graphviz import Digraph
- 
--sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'python'))
--from qemu.qmp import QMPError
--from qemu.qmp.legacy import QEMUMonitorProtocol
-+try:
-+    from qemu.qmp import QMPError
-+    from qemu.qmp.legacy import QEMUMonitorProtocol
-+except ModuleNotFoundError as exc:
-+    print(f"Module '{exc.name}' not found.", file=sys.stderr)
-+    print(f"Try $builddir/run {' '.join(sys.argv)}", file=sys.stderr)
-+    sys.exit(1)
- 
- 
- def perm(arr):
-diff --git a/scripts/simplebench/bench_block_job.py b/scripts/simplebench/bench_block_job.py
-index e575a3af10e..541a47e586d 100755
---- a/scripts/simplebench/bench_block_job.py
-+++ b/scripts/simplebench/bench_block_job.py
-@@ -25,9 +25,13 @@
- import socket
- import json
- 
--sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..', 'python'))
--from qemu.machine import QEMUMachine
--from qemu.qmp import ConnectError
-+try:
-+    from qemu.machine import QEMUMachine
-+    from qemu.qmp import ConnectError
-+except ModuleNotFoundError as exc:
-+    print(f"Module '{exc.name}' not found.", file=sys.stderr)
-+    print(f"Try $builddir/run {' '.join(sys.argv)}", file=sys.stderr)
-+    sys.exit(1)
- 
- 
- def bench_block_job(cmd, cmd_args, qemu_args):
-diff --git a/tests/migration-stress/guestperf/engine.py b/tests/migration-stress/guestperf/engine.py
-index d8462db7653..8d2ed757af3 100644
---- a/tests/migration-stress/guestperf/engine.py
-+++ b/tests/migration-stress/guestperf/engine.py
-@@ -27,9 +27,18 @@
- from guestperf.report import Report, ReportResult
- from guestperf.timings import TimingRecord, Timings
- 
--sys.path.append(os.path.join(os.path.dirname(__file__),
--                             '..', '..', '..', 'python'))
--from qemu.machine import QEMUMachine
-+try:
-+    from qemu.machine import QEMUMachine
-+except ModuleNotFoundError as exc:
-+    print(
-+        f"Module '{exc.name}' not found.\n"
-+        "It should be installed as part of the configure-time "
-+        "virtual environment in $builddir/pyvenv.\n"
-+        "Try re-running this script as:\n"
-+        f"> $builddir/run {' '.join(sys.argv)}",
-+        file=sys.stderr
-+    )
-+    sys.exit(1)
- 
- # multifd supported compression algorithms
- MULTIFD_CMP_ALGS = ("zlib", "zstd", "qpl", "uadk")
+-    generate_dockerfile("fedora-win64-cross", "fedora-41",
++    generate_dockerfile("fedora-win64-cross", "fedora-43",
+                         project='qemu,qemu-win-installer',
+                         cross="mingw64",
+                         trailer=cross_build("x86_64-w64-mingw32-",
 -- 
 2.53.0
 
