@@ -4,117 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C236F4BB65
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 17:44:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9851F4BB63
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 17:45:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuwRy-0001Bc-Iy; Tue, 24 Feb 2026 12:43:58 -0500
+	id 1vuwTB-0001xx-9l; Tue, 24 Feb 2026 12:45:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vuwRx-0001BC-6D
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 12:43:57 -0500
-Received: from mail-yx1-xb12c.google.com ([2607:f8b0:4864:20::b12c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vuwRu-0004mV-No
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 12:43:56 -0500
-Received: by mail-yx1-xb12c.google.com with SMTP id
- 956f58d0204a3-64ca1ba0089so659445d50.1
- for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 09:43:54 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1771955033; cv=none;
- d=google.com; s=arc-20240605;
- b=Rz3C+5FhIW72XxK7bcuCdCpe9h2mCNWhSVYSmbZMv+YoPZc7WV5KVHu2Ka2wVfxSZL
- MHpUH+GTBtDkmDgCyCnQRzfapSQkW2cFv+c+NpOM6o+NoRC+FzM9mHqNZI5mnmJxAH2e
- NKJrZXFzzfHcH9YmYf/H5jeY0yNSJVTeWLAhPA9zYkDKUCagN5UJkDNRxD3PJta/Q5Ba
- /YJnvQ2dd0swiRCfY7nB5vkM2AL73MjBtsMWODsqrQdHBoEUGdXTOtYL5dS3DO8PyjDD
- h7X/dUBKgkUQ/tM9C/qwEZ4Y5F8f7fS/IjgyxT4LSoYFaJ0Rjcl3kbf4vxX4+IH94FkD
- L9KQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=bvlXZJbrhd0UjHZmAuDCJh18ioMIHHmNpbs0qCxkYDY=;
- fh=R84pXDYvJznuJb5dunrikqaEeI9MgwuEGgEYHxBIZ1A=;
- b=askScvQtI6VCI7p/hyq/73DReStX7O8uaDqxVs8ejz7R0n9GgAF3VpRXAdG5utDNcO
- ZuaHj1GMdhn0E8OZuPS3dXAf9BI03BKhpQz3ncXMs4P9dewXjVBE4hJY79q7EO2pudTQ
- wnjVgA0GR1JpisCShHxkG4mYAPvJVKIuatV//gHkl76YcZYcKMixoE3YxV30ZC0F+yUA
- WxaYnhCIoqg3xOenWUO/FlN+mTAZW6NzCsSELFo3VEbsxfOWiMTJtA4sbcdqr2o09uQr
- ghSpIn+eytruGIGx6IYiTa3RZ6YBYstry0ujJi3A7wDFFKkIXMeJsI7ePXYfjoHYv7CO
- R8Dg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771955033; x=1772559833; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=bvlXZJbrhd0UjHZmAuDCJh18ioMIHHmNpbs0qCxkYDY=;
- b=q6Gwzop6na32UIGFha/no5yqlLIL0RBSkaoVfILWdr++3Pa/IzDyZ2c5AL7t6dJRpn
- 3w3Gx6GHqqKhYJBGdlkkoKgIuOUcEctIBsVy49ovv2m4UIPCungWDXdGZfmCoMdRmS9M
- 6abHaaYzZq5+lNvMMMSymWBbyOKh8ErKz8fzE9pd7Lq6Jz8Y7l+v079FsdTEJyOOMTrZ
- dRgryh62V3oOPRAEZUM0J2+Bq4K2o9s2Xtau0rUwgNmXTuk/kTG+xq6LJ3Skn9U3VDHM
- rXRFofOJXV5bHWhcdKx+6xaNlFo+/e2hffPt4aTrHmHUZthgD8zOfrRGdmyM07RjMD5j
- pG9A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771955033; x=1772559833;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=bvlXZJbrhd0UjHZmAuDCJh18ioMIHHmNpbs0qCxkYDY=;
- b=kewNxHaecajZMhEasaEWGyyo5MElZbrSb3m3oa9Vpeg9Ex+md/Ptw7ZVE4ZXqJhRrN
- Bp1ST12mfrToP3Jl6Vr250u1j/Fl2YTnFHXJ8gt2XA15W4r8ZnQh+iJJgoGD6kEywdkw
- 1ExIzwkSs0+8Udj+mQy9Em0PnjxBO+vN/GiRruOS+2fQP65/ZwMMMqzQkBCRG3ldi/ba
- L71pWL3vABGP/+dSu/aK62cHZu2wmvtn/Sj0GnGoDSxMHwyK2FNMZt2IgD9PmLAVFii2
- YvEOZJGyn3GSdLA+x1qGFmmiCO0ZbAuvDpZf7cpllnnwZ/PClUvoks152hCMyCqrw/Tc
- Xm7A==
-X-Gm-Message-State: AOJu0YwdZkOYqk/qItww9ikgo9zGzgoKKKONFe6rdpxnfzhlMPkyDuu2
- qxAxWhQYsqL9sSSNkrQmHVyZW6JY/wu/CE6xYGhtaC834WZpEuaqoDGfOKmp4fTmVLAD+b6tjyr
- qKaQkv2dw71VDN29bfWr3KIlKTUMxt2387oozpa5Dhg==
-X-Gm-Gg: ATEYQzzrtOiEGHHs+YmebO+jSjrLvAVZHrzkSeqDcLuMikYmJzclY5HkXYnRITGmkT/
- Yp5A66b9C9/QJWZWkFlMrpYbunNLTBKbgj+I4HsesYsSfLE7SgHhoIxUxm7D0Kmv992hdLXHICg
- s0W+mMEEtXj9bTv120QEiW4INuxht5rWMLHnKy+075Z7DLKhLFACHhxJmc2p7cUUXgaSavkmgVq
- 4vw0IyUhR9idtI+Wz1lzBeaVq2RnMpFYBccUNoJE1rkHBs3hZQSwTDjtW/LyFnjdHL2rWiUj+ze
- XXwOaK/Zt/P+q8Dl05IAKaEwchUsK56knHnyeDLlBy50xFBWUCRA0nfPlNbUjbERPDKATDau5Km
- R5g==
-X-Received: by 2002:a53:cdcb:0:b0:64a:f2dc:2863 with SMTP id
- 956f58d0204a3-64c78e3f4b2mr8694716d50.47.1771955033419; Tue, 24 Feb 2026
- 09:43:53 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vuwT8-0001x9-0L
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 12:45:10 -0500
+Received: from zero.eik.bme.hu ([152.66.115.2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vuwT3-0004t5-1n
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 12:45:09 -0500
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 4000D596A0B;
+ Tue, 24 Feb 2026 18:45:01 +0100 (CET)
+X-Virus-Scanned: amavis at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
+ id U4AiJ3dTDbQP; Tue, 24 Feb 2026 18:44:58 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id D11C25969F4; Tue, 24 Feb 2026 18:44:58 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id CF4165969F6;
+ Tue, 24 Feb 2026 18:44:58 +0100 (CET)
+Date: Tue, 24 Feb 2026 18:44:58 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: Peter Xu <peterx@redhat.com>
+cc: qemu-devel@nongnu.org, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, 
+ Gerd Hoffmann <kraxel@redhat.com>, Max Filippov <jcmvbkbc@gmail.com>, 
+ Peter Maydell <peter.maydell@linaro.org>, 
+ =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
+Subject: Re: [PATCH v4 0/8] memory: Remove most _nomigrate variants
+In-Reply-To: <aZ3CQw2ad5cVc-Mm@x1.local>
+Message-ID: <c8a789fa-8d16-709d-eb3f-8acd6c1d08e8@eik.bme.hu>
+References: <cover.1770253186.git.balaton@eik.bme.hu>
+ <aZ3CQw2ad5cVc-Mm@x1.local>
 MIME-Version: 1.0
-References: <20260219171810.602667-1-alex.bennee@linaro.org>
- <20260219171810.602667-11-alex.bennee@linaro.org>
-In-Reply-To: <20260219171810.602667-11-alex.bennee@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 24 Feb 2026 17:43:41 +0000
-X-Gm-Features: AaiRm52TuCRfIzNNGpZsyRSrbSfYPgjiMv87KBHufhgW597nJjYYrby_ozTNI9w
-Message-ID: <CAFEAcA8gvXGAhTZ+PuegZJucBHa6pYcDPxZYfUJfUjSKBme9TQ@mail.gmail.com>
-Subject: Re: [RFC PATCH v2 10/14] target/arm: remove extraneous cpu_reset from
- realizefn
-To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, Yoshinori Sato <yoshinori.sato@nifty.com>,
- qemu-arm@nongnu.org, 
- Laurent Vivier <laurent@vivier.eu>, Thomas Huth <huth@tuxfamily.org>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
- Aurelien Jarno <aurelien@aurel32.net>, Jim MacArthur <jim.macarthur@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- Bastian Koppelmann <kbastian@rumtueddeln.de>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Aleksandar Rikalo <arikalo@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>, 
- Zhao Liu <zhao1.liu@intel.com>, Jiaxun Yang <jiaxun.yang@flygoat.com>, 
- Yanan Wang <wangyanan55@huawei.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12c;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -8
+X-Spam_score: -0.9
+X-Spam_bar: /
+X-Spam_report: (-0.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.358, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.659,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -130,42 +71,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 19 Feb 2026 at 17:18, Alex Benn=C3=A9e <alex.bennee@linaro.org> wro=
-te:
+On Tue, 24 Feb 2026, Peter Xu wrote:
+> On Thu, Feb 05, 2026 at 02:13:18AM +0100, BALATON Zoltan wrote:
+>> v4:
+>> - separate patch converting Sun machines from memory_region_init_ram_nomigrate
+>> - split helper to init ram into two functions: setup and error_propagate
+>> - also use memory_region_init_io in memory_region_init_ram_device_ptr
+>>
+>> v3:
+>> - rebased on master after some patches were merged
+>> - drop some more line from memory-region-housekeeping.cocci
+>> - added comment to explain what factored out helper does
+>> - some more clean ups included
+>>
+>> BALATON Zoltan (8):
+>>   hw/display/{cg3,tcx}: Do not use memory_region_init_rom_nomigrate()
+>>   memory: Remove memory_region_init_rom_nomigrate()
+>>   sun4m,sun4u,tcx: Do not use memory_region_init_ram_nomigrate()
+>>   memory: Remove memory_region_init_ram_nomigrate()
 >
-> We already have do_cpu_reset called when the system is reset so there
-> is no need to do it here.
->
-> By removing this we now only do (smp*2)-1 calls to cpu_reset. Once per
-> core as part of qemu_system_reset and then once per secondary core as
-> PSCI calls are made to reset them.
->
-> Message-ID: <20260108143423.1378674-12-alex.bennee@linaro.org>
-> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
-> ---
->  target/arm/cpu.c | 1 -
->  1 file changed, 1 deletion(-)
->
-> diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-> index 10f8280eef2..dadc48e06e5 100644
-> --- a/target/arm/cpu.c
-> +++ b/target/arm/cpu.c
-> @@ -2198,7 +2198,6 @@ static void arm_cpu_realizefn(DeviceState *dev, Err=
-or **errp)
->      }
->
->      qemu_init_vcpu(cs);
-> -    cpu_reset(cs);
->
->      acc->parent_realize(dev, errp);
->  }
+> Could you help explain why we need to remove the above two small helpers?
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Ideally we should remove all of the nomigrate variants as there are only 
+about 3 uses left, everything else is already moved to the init_{ram,rom} 
+variants that register the memory region for migration. The is probably 
+one legitimate use that is served by memory_region_init_flags_nomigrate 
+and other 3 uses are the xtfpga which I think is just old code and does 
+not support migration so it will be converted in the second series to 
+memory_region_new as the maintainers did not say anyting to that so far. 
+Then there's one in hw/display/vga but that's gated behind a compatibility 
+switch that's only set in 2.12 (global-vmstate=true) and earlier. This is 
+not active any more but cannot yet be removed as there are eariler compat 
+props still need cleaning up but the last visible machine version is 5.1 
+now so this is long deprecated and not used. And there are these Sun 
+machines that I've converted in the first version but Mark said he'd like 
+to keep the current behaviour until it's the last user left. See: 
+https://patchew.org/QEMU/cover.1769703287.git.balaton@eik.bme.hu/b530cf54609b853c6b34306fd4aa3ce2f8087d05.1769703287.git.balaton@eik.bme.hu/
 
-though it would not surprise me if there was some obscure ordering
-requirement that we run into by removing this. I guess we'll have
-to wait for the bug reports :-)
+> Not saying that we can't remove them, but I don't yet see the point of
+> open-code those readonly=true setup either, or any problem with having the
+> smaller helpers when ram_flags=0.  Small helpers sometimes help readability.
+>
+> Some of them are going backwards againist what the cocci scripts were
+> suggesting previously, like:
+>
+> - memory_region_init_ram_nomigrate(E1, E2, E3, E4, E5);
+> + memory_region_init_rom_nomigrate(E1, E2, E3, E4, E5);
+>  ... WHEN != E1
+> - memory_region_set_readonly(E1, true);
+>
+> So you suggest open-code instead.  Why?
 
-thanks
--- PMM
+This is temporary until the usage in vga is gone with hw_compat_2_12 then 
+the Sun machines will be the last users so they can also be converted to 
+init_{ram,rom} (unless Mark changes his mind and agrees changing these 
+now as was in the first version).
+
+> Is it required for your follow up cleanups?
+
+It makes those simpler as then we don't need to add memory_region_new 
+variants for the nomigrate versions that we would remove later anyway.
+
+Regards,
+BALATON Zoltan
 
