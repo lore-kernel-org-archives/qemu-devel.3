@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8530CF4BB80
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 19:46:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BDA7F4BB83
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 20:13:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuyM2-0001P8-N4; Tue, 24 Feb 2026 14:45:58 -0500
+	id 1vuylv-0000oN-Px; Tue, 24 Feb 2026 15:12:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vuyLz-0001Oy-Jm
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 14:45:57 -0500
-Received: from mail-pg1-x52a.google.com ([2607:f8b0:4864:20::52a])
+ id 1vuylu-0000ms-4Z
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 15:12:42 -0500
+Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vuyLx-0002WN-Tq
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 14:45:55 -0500
-Received: by mail-pg1-x52a.google.com with SMTP id
- 41be03b00d2f7-c7059b9df33so72427a12.0
- for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 11:45:52 -0800 (PST)
+ id 1vuyls-00073J-9O
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 15:12:41 -0500
+Received: by mail-pf1-x42d.google.com with SMTP id
+ d2e1a72fcca58-824adc96ad2so5917693b3a.3
+ for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 12:12:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771962351; x=1772567151; darn=nongnu.org;
+ d=linaro.org; s=google; t=1771963959; x=1772568759; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=x8Tj9JPM4SZeQQb2naxkbpJt2cOVS1WYQn9mlJIOh+M=;
- b=rVHmsAyvXM9gVS9E0R8Ct0lizUqKK5oXgIlKlrOVmWDr+HSdzhYotbqPafdOzseKK7
- Tv4aitdsIyssHkN0odZ3d6oRd07CkTo4mrhSr9f19Glb7w8BDvCV6Fgrx4rUjxNeDxre
- +zsTKssgml4EaSbgaMIwM3c1uXoKn1Qef/hggp+Cg6MLZ1Syd4mvFqoxzNXDcvrMgHqz
- iX+vgQdpXmFrrR1Wj7ZDT2+EDVCK7/gvjtKKyNwJr5KNuraE/qpudFuS9sJD7XArVpxV
- o7LISPLujX3WALeA0rjExMx0KMUiIo0+FeczMCjAzjvpow9b8WjjWkbuuMWLn0nrLlOR
- x/hQ==
+ bh=R+C72cH1o5PNDpIFHgUykoGWgyf528nZA4p7vbGsXBk=;
+ b=R3QAVaE2Wf/+a5q2Z+oMOqnUqVOJCbjzrtC9y/SyYb9OLErXEPXcPdhJ8OlFJ3nu+A
+ URN7M/lmarb3OBHcqhBXNBQsrI2VaFheucQwjL7GoDenSyqMKGVKYO/Mo2BBU7x1/MUn
+ aJEG1bM9nct851hYYJZ/FgoUXe5HwlwfK6Bgi7PGk56xJhru6P/FscckZuOsljCrMPU/
+ XMg20FBLnlZqFtN/PJCNVCn5OEP1ojxp4BSMeI25CRqU9N8O8s1rovnqbiM1EqMbe9hz
+ 8Ct364McHNwMqMYn0+19FSB5x0089Ju/y2tqsmVQHsKPJrZuB3g5GI39zubmKdU5aNTL
+ FS+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771962351; x=1772567151;
+ d=1e100.net; s=20230601; t=1771963959; x=1772568759;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=x8Tj9JPM4SZeQQb2naxkbpJt2cOVS1WYQn9mlJIOh+M=;
- b=USyhSl0QKZa/m6D1ywpGGlRGGIOG7P7nhUaye7b27NU2nizMv51i816H7i8XKLMVGO
- /+n6ShjBsKpRZiWRAUpx8ZLFrTokhGcwveRea0SVrN/c4jqX7Hub6zLLdw6IiHYC78Zf
- vu4tc1d4ZNudtogT4W+r59r2VtWM+SGtQTzyb0BuZEg12EIQod6T6JcXayJVxKWoJ8bW
- urqKNHifCvtfLvgf8bGZZtpPLQ91obNb07MLqyhj+WaJ3RYRke6mGenvssoAUzppTACr
- waP4y55Ioqh1nf5PPHmeV0lvaqZdD3BDZRcOAyVk95knTOD3q6NDl8w1qa2ygDcGHsNZ
- QSwg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUK8KhOopmiNkH0CSN+Q1kqDkcwC8T4BEnkRo4gpYV/J+qFD5nz5K4/GwFjRI36oX6lYOjOlM7ISzok@nongnu.org
-X-Gm-Message-State: AOJu0YxkLoUD4XOsou02eeiPL7DUNdbwVZcHn+i+kMTByk2s6JEwSnfR
- sMhUgzSvAEpDJH3D69FpI6+ULoEDGUAMt7Z6ri0QbX8caVSv8eIrOlJJfQ4BSbibjB8=
-X-Gm-Gg: ATEYQzyGSiqUfVPVQluUxF50BSmZCEl5yGRNY6f/4oQ7/rSN08JVdaBzLhSPTsyMN8M
- +gPjjJYZzfP43JmEzCjXSefqd8h2Ar8DhY/G1AT9PwEWeIemUdaZnkCPJ/XB4Z7dq+w+su/p/ul
- I5VT8XnKYzWssP8CV6sSb8U0LTnEWNHIYIqrT/62NAvD93LjsFzzgO5jlRs0H1mboW3rdMtZ2qm
- FTAJ3Px5Odj+ZOu/8XIhYLbSXOhU56IQdVFtq1EnhfolUSj5CZW6T9ZnsDZEAVXP+DWHTQ5iA2d
- u2gCQfDiVkmxRKUGDIlxHUptkBSUkSikG86Z1IRojQGMm8e8isgPll1sAu1bl3AzASGP0asH9Fg
- FcuFe6wQDFdzDJ7oC6C9Ivd/QTsPRhpEMRFMdhOMT2yyQkdy2zuRYcWXi1+cPj0xfiGgC9uKKZy
- mGTh/glpdsqSnsgzKNdmvC6Aq6DsCyYYX53sfgyvnulsVWRYQI5hBxuGfRyfwdyFQ1/GQj
-X-Received: by 2002:a17:90b:5787:b0:34c:7212:7a67 with SMTP id
- 98e67ed59e1d1-3590382bfabmr751879a91.12.1771962350877; 
- Tue, 24 Feb 2026 11:45:50 -0800 (PST)
+ bh=R+C72cH1o5PNDpIFHgUykoGWgyf528nZA4p7vbGsXBk=;
+ b=dv7UTmdWx4jBLt/8TNCL9+WNS1iZBNAMoFWKx16esvsO+jk8s//BfpS2lQIHB4lsED
+ FYRBgIyfoJqLp03qQt7nDY/PnJmT2h4QzaARZUR5dhAGYP9rNZ6OsZbiTJPDo8UbSM9J
+ yYM33x10SGjtPvnQUq2+w91LNH1kiYvgJRgBuylnVVaJgOlV3x3VmmBZ2B6d+aZLHgsl
+ g9ugHQRRfED+dkhFa94vyZ5DZQfSOt+iDVIrzUlK4L6vYoffgQJKkYxyAB/I5QLFnLkE
+ RNVnskg45aaIoKkVq5iPLba0R1VIMF+TC0jAfQh+DUwouF81XvKo2QF+CfPbPsgagl8+
+ LUKQ==
+X-Gm-Message-State: AOJu0YwgsjEOEQqlOZlIb93mo9Bur234DAh+mu7Jg1cJV234BRuZE3e/
+ RUi+EL5baWx1s/G5gmE6QDLFE/wnH7ovdWnVMs6yQ1U7jX6AxK95zaLWIO5rKOrCBSE=
+X-Gm-Gg: AZuq6aJjnLw6OmC8plaEJcOML5ZafmuI9mkIl+c+jjtW6NtJtPEQEgWUW650eCP9ZHH
+ N9c8umd1OJImpRQl8nTFBfsOhOdANtr6xcXKZ72tpAMneRr3xAn9nqdFeWEAvYc6wVpwOm61FEr
+ Q0vD4JxMZJPTdt8vIaPa6wdgZ9Jf9LPhtmA+sdVTE3Df2UhwCsZ/fWVYMlhEqw/iIiPJzZxB1uY
+ kJsbAG0JV8FkEdirh0dVrls2+ttsBM7NFU3/kSPUO19h96KQ+uJPTwK+1QK7HaCLqg9ZHn8U086
+ PY366Y/8RdemQkoX5ruz+LC6FitGG9xDjQA9mTsDPJNCDPyKoP8A7BluDsxPVFi01JIWiHEs6iF
+ slZO3lLI5uPq39ho+ohCbpavcwj/oFx9YrQ+lCBcsnXM+LYC7tbjuBCeKohr5CEuQzJAfEu+dv2
+ 68Sfz4VhW2mfN7fnTLl5Roa7k66+eGHbzoiQouZZ4JrE438DOMCpq78T/iDDPgtWXHCESED0iOm
+ arCysA=
+X-Received: by 2002:a05:6a21:4d17:b0:366:14ac:e1ef with SMTP id
+ adf61e73a8af0-39545ffbffemr11031343637.65.1771963957326; 
+ Tue, 24 Feb 2026 12:12:37 -0800 (PST)
 Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-35901883a0bsm669233a91.6.2026.02.24.11.45.49
+ 41be03b00d2f7-c70b7269771sm11093878a12.30.2026.02.24.12.12.36
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 24 Feb 2026 11:45:49 -0800 (PST)
-Message-ID: <d15c8cb8-6163-4705-9119-a16e362caff9@linaro.org>
-Date: Tue, 24 Feb 2026 11:45:49 -0800
+ Tue, 24 Feb 2026 12:12:36 -0800 (PST)
+Message-ID: <8cd3610f-c6c2-4b8e-85cc-ad4711deab9b@linaro.org>
+Date: Tue, 24 Feb 2026 12:12:36 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 5/7] page-vary: Build finalize_target_page_bits as
- common code
+Subject: Re: [PATCH v4 3/7] plugins: add PC diversion API function
 Content-Language: en-US
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: philmd@linaro.org
-References: <20260217095106.598486-1-richard.henderson@linaro.org>
- <20260217095106.598486-6-richard.henderson@linaro.org>
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Florian Hofhammer <florian.hofhammer@epfl.ch>
+Cc: qemu-devel@nongnu.org, richard.henderson@linaro.org, laurent@vivier.eu,
+ imp@bsdimp.com, berrange@redhat.com
+References: <909b0a4f-9759-4e27-bba8-997ae2f41bd6@epfl.ch>
+ <33eb2408-b4c3-4ca4-9555-b2015fa38630@epfl.ch>
+ <87wm022fxi.fsf@draig.linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  xsDNBGK9dgwBDACYuRpR31LD+BnJ0M4b5YnPZKbj+gyu82IDN0MeMf2PGf1sux+1O2ryzmnA
@@ -113,11 +114,11 @@ Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  5SYuJaKzCAgNeAy3gUVUUPrUsul1oe2PeWMFUhWKrqko0/Qo4HkwTZY6S16drTMncoUahSAl
  X4Z3BbSPXPq0v1JJBYNBL9qmjULEX+NbtRd3v0OfB5L49sSAC2zIO8S9Cufiibqx3mxZTaJ1
  ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <20260217095106.598486-6-richard.henderson@linaro.org>
+In-Reply-To: <87wm022fxi.fsf@draig.linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52a;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x52a.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -140,18 +141,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/17/26 1:51 AM, Richard Henderson wrote:
-> Use target_info->page_bits_init to merge
-> finalize_target_page_bits_common into
-> finalize_target_page_bits in page-vary-common.c.
+On 2/24/26 9:46 AM, Alex Bennée wrote:
+> Florian Hofhammer <florian.hofhammer@epfl.ch> writes:
 > 
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   include/exec/page-vary.h |  4 ----
->   page-vary-common.c       | 15 +++++++++++----
->   page-vary-target.c       | 12 ------------
->   3 files changed, 11 insertions(+), 20 deletions(-)
+>> This patch adds a plugin API function that allows diverting the program
+>> counter during execution. A potential use case for this functionality is
+>> to skip over parts of the code, e.g., by hooking into a specific
+>> instruction and setting the PC to the next instruction in the callback.
+>>
+>> Link: https://lists.nongnu.org/archive/html/qemu-devel/2025-08/msg00656.html
+>> Signed-off-by: Florian Hofhammer <florian.hofhammer@epfl.ch>
+>> ---
+>>   include/plugins/qemu-plugin.h | 13 +++++++++++++
+>>   plugins/api.c                 | 13 +++++++++++++
+>>   2 files changed, 26 insertions(+)
+>>
+>> diff --git a/include/plugins/qemu-plugin.h b/include/plugins/qemu-plugin.h
+>> index a6ec8e275d..04c884e82b 100644
+>> --- a/include/plugins/qemu-plugin.h
+>> +++ b/include/plugins/qemu-plugin.h
+>> @@ -76,6 +76,7 @@ typedef uint64_t qemu_plugin_id_t;
+>>    *
+>>    * version 6:
+>>    * - changed return value of qemu_plugin_{read,write}_register from int to bool
+>> + * - added qemu_plugin_set_pc
+>>    */
+>>   
+>>   extern QEMU_PLUGIN_EXPORT int qemu_plugin_version;
+>> @@ -1042,6 +1043,18 @@ QEMU_PLUGIN_API
+>>   bool qemu_plugin_write_register(struct qemu_plugin_register *handle,
+>>                                   GByteArray *buf);
+>>   
+>> +/**
+>> + * qemu_plugin_set_pc() - set the program counter for the current vCPU
+>> + *
+>> + * @vaddr: the new virtual (guest) address for the program counter
+>> + *
+>> + * This function sets the program counter for the current vCPU to @vaddr and
+>> + * resumes execution at that address. This function only returns in case of
+>> + * errors.
+>> + */
+>> +QEMU_PLUGIN_API
+>> +void qemu_plugin_set_pc(uint64_t vaddr);
+>> +
+>>   /**
+>>    * qemu_plugin_read_memory_vaddr() - read from memory using a virtual address
+>>    *
+>> diff --git a/plugins/api.c b/plugins/api.c
+>> index e754b7c69c..ca3e93a194 100644
+>> --- a/plugins/api.c
+>> +++ b/plugins/api.c
+>> @@ -41,6 +41,7 @@
+>>   #include "qemu/log.h"
+>>   #include "system/memory.h"
+>>   #include "tcg/tcg.h"
+>> +#include "exec/cpu-common.h"
+>>   #include "exec/gdbstub.h"
+>>   #include "exec/target_page.h"
+>>   #include "exec/translation-block.h"
+>> @@ -466,6 +467,18 @@ bool qemu_plugin_write_register(struct qemu_plugin_register *reg,
+>>       return (gdb_write_register(current_cpu, buf->data, GPOINTER_TO_INT(reg) - 1) > 0);
+>>   }
+>>   
+>> +void qemu_plugin_set_pc(uint64_t vaddr)
+>> +{
+>> +    g_assert(current_cpu);
+>> +
+>> +    if (qemu_plugin_get_cb_flags() != QEMU_PLUGIN_CB_RW_REGS_PC) {
+>> +        return;
+>> +    }
 > 
+> I think its fine to assert() here - we do it elsewhere in the api, if
+> the user is holding it wrong we should exit now rather than leave the
+> plugin more confused in the future.
+>
 
+Agree.
+With the assert instead of return,
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
