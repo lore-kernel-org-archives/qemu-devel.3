@@ -4,45 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D196EF3C9AF
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 16:54:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66171F3C9AF
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 16:55:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuvfz-0001vE-It; Tue, 24 Feb 2026 11:54:23 -0500
+	id 1vuvga-0002tv-2x; Tue, 24 Feb 2026 11:55:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vuvfu-0001op-Pl
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 11:54:19 -0500
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vuvgY-0002qv-4X
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 11:54:58 -0500
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vuvfs-0003LZ-OB
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 11:54:18 -0500
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vuvgW-0003Ps-Va
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 11:54:57 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject
  :Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=+Ryd1ODbZx/ez3J9YtIQBaWQaatNhiPLQc6oVksY4+M=; b=hvgQ7qkmIsAiFQJ
- YayZaK6vznkX66jkVd8+vNzmxiEZM/ZrtshJJtOsvGGd0TrTCwVrEH7/RxG/O+2CntPMfRYuB/EOr
- tGSgQ1gllohJaRayMtlI5XMxnQv7z4U4GMwLsyj7fCbDCjvvvL2J6rmq9jBe0jrGJjQJ4N71d5nKT
- 4I=;
-Date: Tue, 24 Feb 2026 17:57:51 +0100
+ List-Help; bh=82SDBBebHR84NeFoHB4WoLAq2pI7ulIYVsOr4S8YBxo=; b=dYobo064/pE8sXC
+ IdOoSfhivEPfFEsl4sNPSR/yby9+eV3lX/eTLTbxXcKPtv/PsUrmhou/BVc8Q7ao6Q8NpiGiDU/61
+ LLt1U4zZpVojdczqzSBS8QOHgixIBwxx+/+wXE3Srwd2YlrxjKRvuoVXv/4nV7HGqydQOCK2qW6WJ
+ Q8=;
+Date: Tue, 24 Feb 2026 17:58:33 +0100
 To: Taylor Simpson <ltaylorsimpson@gmail.com>
 Cc: qemu-devel@nongnu.org, brian.cain@oss.qualcomm.com, 
  matheus.bernardino@oss.qualcomm.com, sid.manning@oss.qualcomm.com,
  marco.liebel@oss.qualcomm.com, 
  richard.henderson@linaro.org, philmd@linaro.org, ale@rev.ng
-Subject: Re: [PATCH v3 6/8] Hexagon (target/hexagon) Disassembly of invalid
- packets
-Message-ID: <aZ3YhwUierqHWr5t@hive.localdomain>
+Subject: Re: [PATCH v3 8/8] Hexagon (target/hexagon) Remove snprint_a_pkt_debug
+Message-ID: <aZ3Ysoh7OB7Pm2-8@hive.localdomain>
 References: <20260217212245.95321-1-ltaylorsimpson@gmail.com>
- <20260217212245.95321-7-ltaylorsimpson@gmail.com>
+ <20260217212245.95321-9-ltaylorsimpson@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260217212245.95321-7-ltaylorsimpson@gmail.com>
+In-Reply-To: <20260217212245.95321-9-ltaylorsimpson@gmail.com>
 Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
  helo=rev.ng
 X-Spam_score_int: -10
@@ -70,31 +69,13 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 17/02/26, Taylor Simpson wrote:
-> We pass the Hexagon CPU definition to disassemble_hexagon.  This allows
-> decode_packet to know if the opcodes are supported.
+> Function is not used
 > 
-> Note that we print valid instructions in a packet when one or more is
-> invalid.  Rather than this
-> 0x0002128c:  0x1eae4fec	{	<invalid>
-> 0x00021290:  0x1c434c04		<invalid>
-> 0x00021294:  0x1e03edf0		<invalid> }
-> 
-> We print this
-> 0x0002128c:  0x1eae4fec	{	<invalid>
-> 0x00021290:  0x1c434c04		V4.w = vadd(V12.w,V3.w)
-> 0x00021294:  0x1e03edf0		V16 = V13 }
-> 
-> Co-authored-by: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
-> Co-authored-by: Brian Cain <brian.cain@oss.qualcomm.com>
 > Signed-off-by: Taylor Simpson <ltaylorsimpson@gmail.com>
 > ---
->  target/hexagon/cpu_bits.h  |  4 +++-
->  target/hexagon/printinsn.h |  3 ++-
->  disas/hexagon.c            |  3 ++-
->  target/hexagon/cpu.c       |  2 ++
->  target/hexagon/decode.c    | 25 +++++++++++++++++++++----
->  target/hexagon/printinsn.c |  9 +++++++--
->  6 files changed, 37 insertions(+), 9 deletions(-)
+>  target/hexagon/printinsn.h |  1 -
+>  target/hexagon/printinsn.c | 31 -------------------------------
+>  2 files changed, 32 deletions(-)
 
 Reviewed-by: Anton Johansson <anjo@rev.ng>
 
