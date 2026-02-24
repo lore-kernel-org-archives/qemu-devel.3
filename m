@@ -4,72 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D9FCF3C986
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 14:43:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F90AF3C986
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 14:44:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vutbK-0000sY-1i; Tue, 24 Feb 2026 09:41:26 -0500
+	id 1vutbK-0000uu-DW; Tue, 24 Feb 2026 09:41:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1vutau-0000LO-71
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 09:41:01 -0500
-Received: from mail-ot1-x330.google.com ([2607:f8b0:4864:20::330])
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1vutbA-0000kv-DO
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 09:41:18 -0500
+Received: from mail-ot1-x334.google.com ([2607:f8b0:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1vutaq-0001IU-Fe
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 09:40:57 -0500
-Received: by mail-ot1-x330.google.com with SMTP id
- 46e09a7af769-7d4c4b494fcso3250334a34.3
- for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 06:40:56 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1vutb6-0001L8-CC
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 09:41:15 -0500
+Received: by mail-ot1-x334.google.com with SMTP id
+ 46e09a7af769-7d556c1a79eso1991913a34.3
+ for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 06:41:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1771944055; x=1772548855;
+ d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1771944070; x=1772548870;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=9HAHp2eGqV/T6gC1AiqdWHhJeslTmnwP/pOM4ajrSM0=;
- b=k60Fnd9udU8klutUTlfVKhe/+dHmwyofYzi65jEQPuVSNt8uJVA0YDILgcvwFKARGI
- 6d82t9D1HYfW49NH9uM5fAmTJMpA1Bi0X7T2Uk/W3SsHqrBt+S/nEJSDyeA5vmdgq9ov
- 36HuIPxs4ByqeX4yiBbBVFoPmGA+vkszT9NVtOeEkBcpgEEc66hWIb1mIN1POc65KLa6
- taw14DFcSdUNK7C7baHeEHELwaApocbIlD/qOR4M0RpQgtCVmi6b9zi+JhyDLU++OZug
- gOVAxgbltLLWyx1ce0I120hmYfqL4O5AzUQf5Bi5KJ2Ihwiz8GyScQUv7GNBsj546eDZ
- eaPw==
+ :reply-to; bh=nZXQv4gZD+ncGRmcanP3bAVNuvnim3Z+KZJ0IpojcCw=;
+ b=aN0Pbw/VZvNEExCsEyPz0IraDxC9NXKpvWXemsRPfDWmJd76OrI2oIVbmYnm4KMN83
+ 15u/MOJfnCvN1OeWZYiIsA2XF/1gYSMH9ebTls8HVLvknFTqRKMJfXrJWQ8XFQuFXT+a
+ 4XXfsAklwIInGKW6S/EgnvYgxGJJNc80QA2udWp80vi8JibWEMFyzARFnKxyId/CiluE
+ 6NNoC06ZjGIt0zn63DjdQDsZ18oRJZQDQgSFOkJQH9EmuoiLgtbT9TGUN6LKLuTbS7EK
+ WbgqiRNNs+4T11+/1CKI6Ptd9IgEURv1zaHmvmu6ftRNf1Dc49w97n+4cC2vQ9u7vY4h
+ cFhA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771944055; x=1772548855;
+ d=1e100.net; s=20230601; t=1771944070; x=1772548870;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=9HAHp2eGqV/T6gC1AiqdWHhJeslTmnwP/pOM4ajrSM0=;
- b=L3R4UIUbZFRgBDyFaS8WNs57hn4rRgbEij6K2EksuvgVHMZqzY3zgVbr6iiI6cCE8m
- wnAGpZLQUYiJULxTWdbrxDoQ5VF9eFZc0WH4z+tg82YSqvQbxbXNn5T72rLhATE+r1Sz
- BD/9AFOQb9VHmSAzuEbUSzNDdqslWshDx2HanDa0aig61PRgd4otHyNA96GLbv8oMvYm
- 9kPCJLoq1WcbUvWssY31ihBNnQkubTTrXRbk7X0CDxWDgJodSX/L88bgTRn5oqo1NF2T
- sp/DnIqfblCSzmFKITa69WPCUwDDxU4AVw10lNehGtEDLuhQLfHXuD5ncMNz9wqZsiag
- Fl5g==
-X-Gm-Message-State: AOJu0Ywmqd8jTaJM/lex/zmv6cO6vTLazUKBcKiS+Fgo470G43/htyFt
- Gn2eSxbotxvAZLMYspFm+D2WBmjsAqLtYUSZL9AEBFIaHcVrkoDtOXZO7eA6DwYa1FtWSRaYrxg
- NggnBr6o=
-X-Gm-Gg: AZuq6aLMU2thJFqArvZScFKuUabExW+Q0mG0zJIhHkrSJWbtJrGbIuW0v0L56rg/RNX
- AigAN6C/qOoFpvH4wEicmhzTrU8OTOR0fRIngvfuvLtlVJ/CK/TzTUAHinBVg4YpuPvo0RWtMBF
- 4nO5a5J4sh7XeZqzFfiswqEnvJsdUsP0n+jxt9xgfk5A5aBRtzeCikJ0Kh3LAznB7T3yXWQ2ZjW
- U+I7JZ/c1SEFVACe1GWyhuRRkwl1A6/C2U5WrmgSucv7WkAeJchvI9mbvZSiMurtbyDzo7XyEml
- 7dUwGUib1cP1DvPWBe68WKMbRFPnr7/zFtVuUKb6OPB7m56ozo+mUgK3QR3hebNQg+Yd3rZLTkJ
- wivzxhj8PSqrYZlSQDEA4OiM4VRsTP7rxPpDllU2MSXjDhF6h+uECAXGY55QdjQgmBZZlyhi2zF
- UsXmGLffVVxA==
-X-Received: by 2002:a05:6830:2b23:b0:7cf:d58c:37c3 with SMTP id
- 46e09a7af769-7d52bf6bd7amr6214679a34.27.1771944055091; 
- Tue, 24 Feb 2026 06:40:55 -0800 (PST)
+ bh=nZXQv4gZD+ncGRmcanP3bAVNuvnim3Z+KZJ0IpojcCw=;
+ b=a16nYRNprOZY4fgUnJU5E6vmuIliurZdCsssh9PW5tI9sXGw38tNwS/t2LOR1WaEWU
+ qZsTYkVtjW75L7MZ63WQrG5YVV5vwLoPNSSTsXsPXiEkwE2BOWkeW2lrIFwz4Hcc4UJC
+ n6kjSkIR4Tw0Q3Iv56w3X4lZbMrAjy69Yak2G16vK8337uuZ9T1mudo3YO+pCcFWjU3T
+ xMhNTJTMZ8MVKILRWuWsx6HA58oxN2qXF1BN1UTJDdwnBFZi5HK64NGyFXwENneenTD6
+ xaVRJteZpySZ2uZZGQ+qQ1SRctKTZHZIG3hpzZ7NRXSks0iBtSaWgjvfqEgovokgSCAP
+ flhw==
+X-Gm-Message-State: AOJu0YxwC+b69XT1/wgQnsGjzrU5fPEuphTz+QeczbvsBKEB94nLqFDW
+ oq1N49gsL6eIhv/FYVM62/K+kXCRNPQZYQzl52EnndBAIJwoIZ4GJ+hqWF34MV31oMcSdlX8u3s
+ 87zXxWUg=
+X-Gm-Gg: AZuq6aIqTs8n820vhuCkdZ39ZtDOfjs09HdzPxukX5aqbP7QVTCfparS1O7p1H99UzG
+ tVEYddOgVba6f01CGAXzZoD+WlCPzw489jAdMVVgoKLJCS1oPlPqN4ClZ3Dl/N7lo/zCVfu4a7l
+ Go36RmujtGogSF+wgKSyDz1izd99Jev1hwWRTudwztp14LIeBYZXONZh5EFEa0+0AfC5kMtBfM0
+ iLwTnVqbT7XI/KJ8XZFUdckD/DDO2N3GcseYe+FguMSSL1DmIp9J5PFIgiBEZ7AoZyxvUzNNSX+
+ T9q239rRPQHYQGTGPl85pyf6Rhzm8ffmEEo9jdj+NaxAlQ+TbeyE20pkGOAgIZz20DZ1Tr1WQ9t
+ HF2QmbSzMrpCmTPZvx/japr9ZfpaoD3rLNQCEYhbUQBeTPTvCiVVLplBP3jttiQfZZujLID9BsT
+ NCgYy2h2Vu2g==
+X-Received: by 2002:a05:6830:438d:b0:7c7:471:55ff with SMTP id
+ 46e09a7af769-7d52be3dc61mr7553001a34.10.1771944070320; 
+ Tue, 24 Feb 2026 06:41:10 -0800 (PST)
 Received: from rebo.bsdimp.com ([50.253.99.174])
  by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-7d52cfa04dbsm10099393a34.12.2026.02.24.06.40.53
+ 46e09a7af769-7d52cfa04dbsm10099393a34.12.2026.02.24.06.41.09
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 24 Feb 2026 06:40:54 -0800 (PST)
+ Tue, 24 Feb 2026 06:41:09 -0800 (PST)
 From: Warner Losh <imp@bsdimp.com>
-Date: Tue, 24 Feb 2026 07:40:35 -0700
-Subject: [PATCH v4 11/24] bsd-user: Add target_to_host_msqid_ds for msgctl(2)
+Date: Tue, 24 Feb 2026 07:40:48 -0700
+Subject: [PATCH v4 24/24] bsd-user: Add miscellaneous BSD syscall
+ implementations
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260224-bsd-user-claude-v4-11-8ee5ae17056f@bsdimp.com>
+Message-Id: <20260224-bsd-user-claude-v4-24-8ee5ae17056f@bsdimp.com>
 References: <20260224-bsd-user-claude-v4-0-8ee5ae17056f@bsdimp.com>
 In-Reply-To: <20260224-bsd-user-claude-v4-0-8ee5ae17056f@bsdimp.com>
 To: qemu-devel@nongnu.org
@@ -79,28 +80,27 @@ Cc: =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, 
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
  Riku Voipio <riku.voipio@iki.fi>, Warner Losh <imp@bsdimp.com>, 
- Stacey Son <sson@FreeBSD.org>, Brooks Davis <brooks@one-eyed-alien.net>, 
- Sean Bruno <sbruno@FreeBSD.org>, Mikael Urankar <mikael.urankar@gmail.com>, 
+ Stacey Son <sson@FreeBSD.org>, 
  Richard Henderson <richard.henderson@linaro.org>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2003; i=imp@bsdimp.com;
- h=from:subject:message-id; bh=uTQUitK5xISck5snIAEayDZejrsfRER9aFZurjjKZHI=;
- b=owEBbQKS/ZANAwAKAWwc0Sh9sBEAAcsmYgBpnbhnshWejM3I6CuRyChiVxTVmjC6+cU8A3u0L
- MUADG7SH8+JAjMEAAEKAB0WIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCaZ24ZwAKCRBsHNEofbAR
- ABY5D/9q16XWfIW+1ZmzvuesCwFO1yPxGNvaP9sCIgMxPh0Hwh5zAse9phmAWZCUKXARZZ1Q1qt
- M2a9TeAOTUVYsPbpt4xwACg33f/H7Yn3CHpczoPisCMyO0f6nIzRKG/W/gf59U8rvHl2LeL8riy
- oeu/DeBM6JzZHe9S1fEfX5Lo3T764+Dixc3Ea2lOrgfeqWCxqbKLL5mreGgAIhUC0IMRivZRijH
- ZIbbSCOq2o6C9ztD17pU9I367SSuYmBr2s4MgKm77iDhSprwoIU0udjDxCVcuTn5lhCiMbPYtTS
- HAluDMiuTYaMLzh2U2v19wwXOXPz2j6xnH2UXu16bdMO9RmWDqm8idaJWAJEDPJY6D9lFvmi399
- vV9u1lPe3htgQkq7LocaDnzq54H/y4x+TW2iIrWTqfqQX8yuIl/uQrBX0gZdCwvjuLNN3d2BL7y
- 2abfft4EPLmuO7auWEwlpzjr+7xNWRYva3FPkcLqG7KDCRwBd72hDCJCqVo53Yh7MteiHGUuedK
- s9igk3mAYUJ+byD98lOOqApJC03Qfj8o9v1OsVPqgxxkt5eLrjxn33+R2JdUtihxF4nHXbqvKRV
- 2/ye41ehfrs0DYaZ/ttc5hUAhRMerAGnEpOQfax5y3WC1KL4KPQzJTjfHo8dAYOKQ3vgoV05U8G
- YyJVnCTpScNo82g==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1379; i=imp@bsdimp.com;
+ h=from:subject:message-id; bh=5JNtxaB6Hh3wMCs2T5wWom3HT0DjtMFbl/EcUs72mDM=;
+ b=owEBbQKS/ZANAwAKAWwc0Sh9sBEAAcsmYgBpnbhoS+SrTwrCjo9tzTX5Kw/9LZ/+XHpHNpz24
+ 4Q15xedz+CJAjMEAAEKAB0WIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCaZ24aAAKCRBsHNEofbAR
+ ADJYEADk3lpqhNDNZmzIaSVj10zAwtvXHM1Z7rH0E1g7JRYuxCeuZTHC1W/vO0M4qTZXlzpDH5O
+ /l56yR5/XmLuK5RneQQIj4+bvIvqW2Psg18Na+yyV7Jz+jsoeyv5A9GyV8HK5dxIKNO+vcy1aP3
+ jMjSUHTjr4vSbXatg2Z574TEYEjwz+K0FLvV22A0OB1Z1uA8+hGjqom1TRM8VGmIlXt70DMandb
+ ItqusXi2oXBoTg6QuOH8+dr7H5j+tqK5rYcw57ydC6BnANnQQoghGzLcE3eqYyYsVPU9D+8kWYC
+ 50HbahfhM0G8R+RVkcEEHUnCL2rlNnyd5ibgRY1kXe/2wqfuP7AUl6eKTcu0yJW3jDOz5Rr6Jxf
+ LJJLskp5yLKduk1eMKzP28Xm6qwGsTHxsJnyP03JM1+7uWRNfGgSuMNyDJ5GxV4bfbHGshs2FzK
+ HqJK9TdeoJV2ls1QJSZEoNjyobq19Em9pu9LQIwZNbnfjxvG6fcOFqoGsi5Uqk40vU4cwnoMM7s
+ fovFxxv0cOyChEgLVHDgeJlB3s2aWyi5L+YP69ib0wUAXYyLug5X7s/igIGEEAD0jQ//JtmuGpQ
+ XjE2GUDY/MlvQmYjiVdF3aCQOwHIwNQsJIBURsOMik14+lF1Mm4bsMAXT8JIpSJKcdtqF2uvbHA
+ TMNrhxBkQ7dFOIA==
 X-Developer-Key: i=imp@bsdimp.com; a=openpgp;
  fpr=2035F894B00AA3CF7CCDE1B76C1CD1287DB01100
-Received-SPF: none client-ip=2607:f8b0:4864:20::330;
- envelope-from=imp@bsdimp.com; helo=mail-ot1-x330.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::334;
+ envelope-from=imp@bsdimp.com; helo=mail-ot1-x334.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -124,56 +124,46 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Stacey Son <sson@FreeBSD.org>
 
-Add target_to_host_msqid_ds() to convert target struct msqid_ds to host
-format for msgctl(2) IPC_SET operations. Uses memset to zero the struct
-rather than directly accessing kernel-only members. Handles FreeBSD
-64-bit time_t except on i386.
+Wire up the remaining miscellaneous BSD syscalls:
+- quotactl(2): Quota control (stub returning ENOSYS)
+- reboot(2): Reboot system (stub returning ENOSYS)
+- uuidgen(2): Generate UUIDs
+- getdtablesize(2): Get descriptor table size
 
 Signed-off-by: Stacey Son <sson@FreeBSD.org>
-Signed-off-by: Brooks Davis <brooks@one-eyed-alien.net>
-Signed-off-by: Sean Bruno <sbruno@FreeBSD.org>
-Signed-off-by: Mikael Urankar <mikael.urankar@gmail.com>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Warner Losh <imp@bsdimp.com>
 ---
- bsd-user/bsd-misc.c | 27 +++++++++++++++++++++++++++
- 1 file changed, 27 insertions(+)
+ bsd-user/freebsd/os-syscall.c | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-diff --git a/bsd-user/bsd-misc.c b/bsd-user/bsd-misc.c
-index 5b02006313..5e5a590227 100644
---- a/bsd-user/bsd-misc.c
-+++ b/bsd-user/bsd-misc.c
-@@ -136,3 +136,30 @@ abi_long host_to_target_semid_ds(abi_ulong target_addr,
+diff --git a/bsd-user/freebsd/os-syscall.c b/bsd-user/freebsd/os-syscall.c
+index f39e521e42..85e5db19a3 100644
+--- a/bsd-user/freebsd/os-syscall.c
++++ b/bsd-user/freebsd/os-syscall.c
+@@ -933,6 +933,22 @@ static abi_long freebsd_syscall(void *cpu_env, int num, abi_long arg1,
+         ret = do_obreak(arg1);
+         break;
  
-     return 0;
- }
++    case TARGET_FREEBSD_NR_quotactl: /* quotactl(2) */
++        ret = do_bsd_quotactl(arg1, arg2, arg3);
++        break;
 +
-+abi_long target_to_host_msqid_ds(struct msqid_ds *host_md,
-+        abi_ulong target_addr)
-+{
-+    struct target_msqid_ds *target_md;
++    case TARGET_FREEBSD_NR_reboot: /* reboot(2) */
++        ret = do_bsd_reboot(arg1);
++        break;
 +
-+    if (!lock_user_struct(VERIFY_READ, target_md, target_addr, 1)) {
-+        return -TARGET_EFAULT;
-+    }
++    case TARGET_FREEBSD_NR_uuidgen: /* uuidgen(2) */
++        ret = do_bsd_uuidgen(arg1, arg2);
++        break;
 +
-+    memset(host_md, 0, sizeof(struct msqid_ds));
-+    target_to_host_ipc_perm__locked(&host_md->msg_perm,
-+                                    &target_md->msg_perm);
++    case TARGET_FREEBSD_NR_getdtablesize: /* getdtablesize(2) */
++        ret = do_bsd_getdtablesize();
++        break;
 +
-+    /* msg_first and msg_last are not used by IPC_SET/IPC_STAT in kernel. */
-+    __get_user(host_md->msg_cbytes, &target_md->msg_cbytes);
-+    __get_user(host_md->msg_qnum, &target_md->msg_qnum);
-+    __get_user(host_md->msg_qbytes, &target_md->msg_qbytes);
-+    __get_user(host_md->msg_lspid, &target_md->msg_lspid);
-+    __get_user(host_md->msg_lrpid, &target_md->msg_lrpid);
-+    __get_user(host_md->msg_stime, &target_md->msg_stime);
-+    __get_user(host_md->msg_rtime, &target_md->msg_rtime);
-+    __get_user(host_md->msg_ctime, &target_md->msg_ctime);
-+    unlock_user_struct(target_md, target_addr, 0);
-+
-+    return 0;
-+}
+         /*
+          * sys{ctl, arch, call}
+          */
 
 -- 
 2.52.0
