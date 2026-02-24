@@ -4,108 +4,162 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6AA7EF3C985
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 14:42:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A6AFF3C986
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 14:42:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vutbV-0001FZ-4F; Tue, 24 Feb 2026 09:41:38 -0500
+	id 1vutbo-0001ff-7o; Tue, 24 Feb 2026 09:41:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1vutb4-0000UQ-PU
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 09:41:12 -0500
-Received: from mail-ot1-x333.google.com ([2607:f8b0:4864:20::333])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1vutb0-0001Jz-C2
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 09:41:09 -0500
-Received: by mail-ot1-x333.google.com with SMTP id
- 46e09a7af769-7d4c85307b2so3521426a34.0
- for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 06:41:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1771944064; x=1772548864;
- darn=nongnu.org; 
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=6RTbgEs3c5V4D8CxEt1k02IFsk7HyZp1718RRC3UOWw=;
- b=LVBgUS8CuTgDZG7OdrO1kYpGucFMWwz/7f+/wFf/knvxdRHk8Ux0yAR99YJg6As4zx
- 5P+h0crtiiIbULvfit5CFZ+qnMaGY8ESpsvLy+lHtIXjDOiTDIIwrtM5vR/G+/lxLlGD
- 9C9CC9fSpSSaOt9xBG0eok1pKVVGAhah/9ycUaw6o8uG7Q5LaEmZT5Y7Khg6mfGSxNcM
- 8glyG8CCnna50+nIFdytsNC5iMjypfS0sVacWMPUMWISyS8wBmLjHF30hTYlubLme9Lf
- dFUsSLlkrE/Wzl3Gi9hWqyh5giTU2V2s5VBTKZEdpDMQB5VTUsjvcnyaTTN4ciTgDMt2
- pvzA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771944064; x=1772548864;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=6RTbgEs3c5V4D8CxEt1k02IFsk7HyZp1718RRC3UOWw=;
- b=qNPtkaB0r9C20nYxLpiZx/QYel1SsbDAQrtu49cpuQ8KlnJTMCKGAOprP3MGliUOz7
- vmqbe4ATMYJv7Y/9BvxgY3Ty5ZN3cru+0XtwdQdum0Q1tImWFTcm8ZRBkExjl/hq0VDD
- KdcPchf9h0hDz4+gf+GbiAX48rwi2otGjnYdyGJypa2NxM9lkgLbUtZh+c43OopaGrqa
- J5EzsL+PIul5tBHoO7SnxIlRLzYM2agq9v4zE8L1xsaurYHrojzliaw8zfPjj54qILcO
- uyjheqzYrfFHMJMIy8X4n26X3GFo+tQ/9qk4eo8JOkMqPWaXHZnKzVsk40CmOawqB79o
- D8TQ==
-X-Gm-Message-State: AOJu0Yyi3kqwUcP79aU3TKGLw6fP0Rb5N0z/tXoqGQ6c7fQC48nsqOWS
- GPwZ8Rp86czUxp/MRhi7ftV+OMrOILPREJeirnoW2A2hbT2xaFfs8JX5oWYfMlLP0IVXg5KCaCa
- VztnhxE4=
-X-Gm-Gg: AZuq6aItdoPjxhusBNelarFpDOWlV2mkN0HU7udl6j3xz5Q2InrqkKx/zL7vpobrR7T
- vJsvOF7/xP8CHWyRQRz5DkBg1msxSkPFQnRNDGnCaieTwdvv1Lo66uMzRUZp77RDCOjTInt7Wp2
- LYquBF35lnMmCzofIQqMoDXo0vgKtZq+oBBShd1Yd2izPRxwZQ2mY2T4gniZuWWgVLeAt7RCqDT
- mpRQje4zQU62dlUozvfDQ37JsBYHL0LBznnFyGX+LvtIKmXYWXNSfgzJsmbbANcFbVySR5gscas
- EEhfZBdSELdwn6AwixNf8FqQw+jUK4M4M7ypUXadszhZN0QTMGokhDTLJ7hfIROm7zwS2LhUyDU
- J1lRYNg7NLi+A+ruEXGcn/ZrHfJCvHIZKkkMfvpMA91cChCNfUwbfh0vpazG1u+kc3NR9AEsub0
- vEvRUw+28BVg==
-X-Received: by 2002:a05:6830:310f:b0:7cf:d14f:a4aa with SMTP id
- 46e09a7af769-7d52bf53565mr6380021a34.20.1771944064596; 
- Tue, 24 Feb 2026 06:41:04 -0800 (PST)
-Received: from rebo.bsdimp.com ([50.253.99.174])
- by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-7d52cfa04dbsm10099393a34.12.2026.02.24.06.41.03
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 24 Feb 2026 06:41:04 -0800 (PST)
-From: Warner Losh <imp@bsdimp.com>
-Date: Tue, 24 Feb 2026 07:40:43 -0700
-Subject: [PATCH v4 19/24] bsd-user: Add do_bsd_msgctl implementation
+ (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
+ id 1vutbJ-0000sU-Tb; Tue, 24 Feb 2026 09:41:25 -0500
+Received: from mail-westus2azlp170120002.outbound.protection.outlook.com
+ ([2a01:111:f403:c007::2] helo=MW6PR02CU001.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
+ id 1vutbE-0001Lf-Ce; Tue, 24 Feb 2026 09:41:24 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=DVJUuSySLJa7A7ISRXw2e9VOtJsW4uMPPsyJFdPv8HFPG7JK/L6qpGBtFjNGWp0eEqhY2916VjSDneRvw27iQv2vW2LeknTcl8EaT0h0CK92Fey+ffY86xCMfEsLUf7zPl/VgWfO9RG2diosfabO89u8oIwbxhsi0N8VcZSUAMyiVPK8OuInAD7JWJJ7LaHALAe86pqPo2+Qu97n1EP3h69r2Je9BgpJB5FEPSKAEIFVtlxJob1978Q8MNhG1yIvwKWrI9CkDZG6quvgXFUgMTBtPJ2YE6FjO+IQlZn/LGdwGNg3M6ssm3HTLTi+WRO7puIVkOB5h/qHJyszS7aX/Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=FIE5W/p4d3FWsL23DNnDypW79Xeod8AwZM7h4C+bq8k=;
+ b=XvSXRTzVfYXs/RwCoQE3bmkEKu1ue0bla+rBsJ5h0DGJwaRmUXkqngQpPhsOOeksWTLg+kuNKf32XjhU0CXR2vPTsJGp56Wc5JLsIE0OW5x7CbDDDBIy0DFujIZ9WEI/CcWZyP2JW7uccK38l62WeBylmnvUUmJpgraIEVvztdCxZPJWefo9CF8Rmbx6Qq+hPZSJVPC9AWjCLQc2v5+NWvtF9U6OKKH6oJuJ7FkIF3+LBosCF7AciHy8oyyA7Vq5kGosD3BsskH86ZOqGQ+GZiKNwvo7DTihqoiPR82VzWZMaGBvgcR6AC+CP+ZJBD6NG3uHIVXtHDJFE72kyfNPxg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=FIE5W/p4d3FWsL23DNnDypW79Xeod8AwZM7h4C+bq8k=;
+ b=IuzQmyc6NjGr4H5TNxlfmKv/JHC0Hre+pEbYhPO4747eGk213FFydrdkDeGUzhAwDXF3BgOiGsXYtT7XeIH1GA9ubxCI8TN+i+5Jh6knkHDjLvhYvNGcqDFmH6QJF2Bj3BGuZ3VSV8+XnTm3sSpnI6s30d1QScjlIA5NydW/+fmxIIEy4FgSbq9XrvrsMwjWWIhv28XqqIbF0WxQH3HdOAlDRWsgUFopayJipP5zy6V5JzyyZ8vJM0RDxddETOWw56t5EpSyp7YmhTs3TUXLaSWFUxbNkh2++XfzgGy9ksaT86GP83V3XvXn4YoJ1kryjxk1risos3Mox35tTTPTEQ==
+Received: from CH3PR12MB7548.namprd12.prod.outlook.com (2603:10b6:610:144::12)
+ by CH3PR12MB8212.namprd12.prod.outlook.com (2603:10b6:610:120::19)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9632.22; Tue, 24 Feb
+ 2026 14:41:08 +0000
+Received: from CH3PR12MB7548.namprd12.prod.outlook.com
+ ([fe80::b710:d6a1:ab16:76de]) by CH3PR12MB7548.namprd12.prod.outlook.com
+ ([fe80::b710:d6a1:ab16:76de%5]) with mapi id 15.20.9632.017; Tue, 24 Feb 2026
+ 14:41:08 +0000
+From: Shameer Kolothum Thodi <skolothumtho@nvidia.com>
+To: Jonathan Cameron <jonathan.cameron@huawei.com>
+CC: "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>, "eric.auger@redhat.com" <eric.auger@redhat.com>,
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>, Nicolin Chen
+ <nicolinc@nvidia.com>, Nathan Chen <nathanc@nvidia.com>, Matt Ochs
+ <mochs@nvidia.com>, Jiandi An <jan@nvidia.com>, Jason Gunthorpe
+ <jgg@nvidia.com>, "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>,
+ "zhenzhong.duan@intel.com" <zhenzhong.duan@intel.com>, Krishnakant Jaju
+ <kjaju@nvidia.com>
+Subject: RE: [PATCH v7 3/5] hw/arm/smmuv3-accel: Allocate vEVENTQ for
+ accelerated SMMUv3 devices
+Thread-Topic: [PATCH v7 3/5] hw/arm/smmuv3-accel: Allocate vEVENTQ for
+ accelerated SMMUv3 devices
+Thread-Index: AQHcoX5mqsuvOdSY5kmqaAuAN0RYDLWR8NSAgAAAo8A=
+Date: Tue, 24 Feb 2026 14:41:08 +0000
+Message-ID: <CH3PR12MB75483EAD05125D5FD3998474AB74A@CH3PR12MB7548.namprd12.prod.outlook.com>
+References: <20260219090103.33697-1-skolothumtho@nvidia.com>
+ <20260219090103.33697-4-skolothumtho@nvidia.com>
+ <20260224142857.00005fb6@huawei.com>
+In-Reply-To: <20260224142857.00005fb6@huawei.com>
+Accept-Language: en-US, en-GB
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: CH3PR12MB7548:EE_|CH3PR12MB8212:EE_
+x-ms-office365-filtering-correlation-id: 27b630cc-261f-4943-7737-08de73b2bf48
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0; ARA:13230040|366016|1800799024|376014|38070700021;
+x-microsoft-antispam-message-info: =?us-ascii?Q?hcrEAgUyI0qVcYgYQTMr2M7bk3FUg6lHCCu8D2ycYGgBC4x/rzzDyp5LvuY1?=
+ =?us-ascii?Q?g6AqIwp2IY72YGrOpIBUSecu5ZBG10Th4myE5xUm+vOiOzlzwVsKvQqPOxv1?=
+ =?us-ascii?Q?27mjtG/QxUIJzQGkjBj9jhV5AkyN24cYrcvQpkgp9fYXtxdjZ0bMFsN2BH8F?=
+ =?us-ascii?Q?EPKt8FjWvOBsLyX1/HEvDomCenws8jYVNEBNLozF2S5jTWbZmg7IdgWhJ8SJ?=
+ =?us-ascii?Q?YnvOF2J9bMCoRDiQLrw61wLSf0CLE5mTHeiY4iEWxVSDphsJfK1yPzwCTq30?=
+ =?us-ascii?Q?LqYzMy2/whdB+bYBYTsDBg9kGml0n+wYQ8fjWMb6gkSPAEeMb1HVs50kJoCv?=
+ =?us-ascii?Q?RbBWL1+dlWe3PjWgzCBSKFERyAqSoEsULomb5+bdlEYhGveqLalpVZlN0Twk?=
+ =?us-ascii?Q?ITM94Q0uJSkzeGFmwrbn+UnglE1LreM8VFUg/PbTsll8AXqm2pb9+gtUY3LL?=
+ =?us-ascii?Q?o56lfptfyuEx+YrxC3M9ZuUrwVEXv1IrkpDby+feP4FvlOGX0UHbfOaxV5JQ?=
+ =?us-ascii?Q?IFedmz/uwEGTSol0SVismfXgpWIkA0sEO3hEkuEFm8+CihS5A/GaTWoZaXOq?=
+ =?us-ascii?Q?eRelY3AH+lulduY+BoyHfVPhcU1gSsMCOr7vUoGhCW90yLmZegj+9VnjAhrp?=
+ =?us-ascii?Q?/JyqWQJlJscbdcjvUXpmybJeyEppE3uz+ej+z549xQ73Zrk+FHHcCFK0DrS3?=
+ =?us-ascii?Q?d54QMCD+wrB+oROcRPYZP+S7Z0+EC0akXr0B/fF0vhuE2KWbyqIIKumKrEa7?=
+ =?us-ascii?Q?hQGo8fmsPKfRQAswDnVBuLrEkpzDvkVQQ0cLX3Xnd8pY0IJlnQeyr+sOMbKI?=
+ =?us-ascii?Q?1ybt4hI2+opGquvpfUhfBSw/7GJspf31Fv3NjZVp1PLHwTxoUWmbJpJKB+U1?=
+ =?us-ascii?Q?B6OtEGba3ho5/4gTyTKbFBib/jR2bnwYQojhza0t0AWH2GnUIzW9rEM0N/xf?=
+ =?us-ascii?Q?Qo7lgmzF5SXC+UeHc3OkszZZM4+k7BC7bsTUaJaJpCgjy91AOLD30PHdLvbO?=
+ =?us-ascii?Q?UCO3dvWWN+d94FawWwuJpFpSNo2YQ9SlYPcGeEBjMTqueKtupo4IbH49EbxS?=
+ =?us-ascii?Q?QFHDJZkZXb8fZyZyCi/UUs9EBPeI0ltndNRrsYp3KN6xiUC6Yf0Mwzzp1AnA?=
+ =?us-ascii?Q?7mZzCv50kphzhIbPQzIOfGBUksJUqbpa4pY/OUHSUGhxqLKZDuM2GYIrwGGO?=
+ =?us-ascii?Q?pI7IojvnCe9FKuPWvUfQPieOlCTZB+N92vDk5hTGErh/bztfagHxI/Wfggdb?=
+ =?us-ascii?Q?6oiUJMiINm3ZNZpzmiQs3iSiKNx5BavgErpFWnHUFrAyYbDjxN2K+6v6DfHK?=
+ =?us-ascii?Q?m3ZWMCZx52R2FvCP5f8HIbSIGLmejAvCEtaIOyuBmwhQTyOoSUik1Ic7LH5e?=
+ =?us-ascii?Q?cObHM5mE34+7A8hWl/PzxVmUEYylIvfIQZiKoVrT1+2bD5/QHZtI8fRQn9d/?=
+ =?us-ascii?Q?RT4KTzfBDE8CtJzyZQi2xoaJX39u9E+VOQ/7udX4P+pDlv7ToMRg+Tg+IfiT?=
+ =?us-ascii?Q?E6/0ZJzISUKvsT7W0bJmPZgi+2kGqyK5eWXlDpSY436rGmdeycgyPCSFPjAN?=
+ =?us-ascii?Q?YeUVc+V+ThSUtTDmnHIehTk9X8ZTiGDSj9HUCTNlmGZ26RsBpKGaD5+HzfLI?=
+ =?us-ascii?Q?y8ZZroRITMAFUBHgH4UJXSA=3D?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:CH3PR12MB7548.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(1800799024)(376014)(38070700021); DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?JIl9lL70l7GqDjf3WX7fiOz9qeVqPtppLBnP3edTvNviMfTRK0I2tijPg/t1?=
+ =?us-ascii?Q?wi00Hz68wfotlEI7nqKVebRgoOk++vNXoVpZISB8xyRVCoKj+q/Xy3hW4CrP?=
+ =?us-ascii?Q?eOdm0FRGj7zNx+2LNOrTW4FsPLhK3hLJRtjjq8ZJHhDQ87X2/dLt55kySZQe?=
+ =?us-ascii?Q?I6MneumoO7NiSt9zfiOe+tuf7Co74YuG3DXdLm8CSiq/9c1WnSuc4b+lPBQr?=
+ =?us-ascii?Q?46OtFGCRwUOV6JGkrJwHsKEHM+LZ8R8yykuw3OQEKF7J28hpCV+dUEzBdQ5f?=
+ =?us-ascii?Q?EvIlGVywoJg3RBha4cbpWiOpjdZLXJE82eaYmToME+29uy5RRpeCW0kEr8Cc?=
+ =?us-ascii?Q?oNVWjBR8pvnlp/T89oU5/+6LcL3gSc7UyD8b0GlnvxOkfnl8Ipw/ojXqG7Pk?=
+ =?us-ascii?Q?mnm61Gox/PKnstSmuZpPyvm0jXzcj2qw6WvtNRSCwrIZdrRiGh9aDeY0MB1w?=
+ =?us-ascii?Q?FZIYBgjYnwZ0lvm8rhU2VpXTrdMlpnP+6YEB51bwyuckaGJlU3HAOGbBKvJR?=
+ =?us-ascii?Q?IIyJTbJgfXvyQPXAuH+44J6QiyPL3dwe/3OhMi1Iy+F7DLi5yh7xHnHaSX+Y?=
+ =?us-ascii?Q?uPfK0pQSO0cnd4yxRn0g6HKRcOMN/8U/TlqU312G5CZx2GgX1f8R6JGu1yuW?=
+ =?us-ascii?Q?u+ACqvrJaeMJ/PXnZ5KCfDDjHR26OIlYGwd5Ep94D+qcOvcA8bvI140X6WZC?=
+ =?us-ascii?Q?p7AkxRfvkibQ95E8wxkxABwo0gxdr9T0NQWbj0vQe5mc7QwbKbzeYutlQn9P?=
+ =?us-ascii?Q?bDcFQG7YBmTU9uAy0mAscSwNd0mHRREZOIiPyPID24OhtUl/q6U/xhMssnE/?=
+ =?us-ascii?Q?0+r7Ivf9uOeAJi8uY0NkrUxM/DmaFcusjczb02JoeSmKZrWPvXau7aKi4hdI?=
+ =?us-ascii?Q?ZQGe1jZF/grk7FkBmeOFEcTADBydcCQRfZ7ts9PFFjQBd4JH7YHKVNm9jHA+?=
+ =?us-ascii?Q?pjt+Wpp45vlJVDFI/ATGB9LqyI/OytPv+FWizvHsZinJPvh8rmrrS4OSgZ0u?=
+ =?us-ascii?Q?AE7drQHA417WoGD8hr6MglhmW53fzt5hXN5foLS+z5giTb16a8CUIS3H/SuL?=
+ =?us-ascii?Q?maiXCadhrCK4hAKv1iAsDRppClyvvROmawVEYNUnmofLapURen4M8CQ/qbEN?=
+ =?us-ascii?Q?d+JoTu4Lqo5GFTkKi8+XkZKVZH0VYWXIhQt9VIquY1hNPxcm1OC0L7HtjFC+?=
+ =?us-ascii?Q?QpKWYeM3zpCiajj7cRLzyfpm47+GYc1AuowFRFqwMQUy940fESEQ9dl7uUas?=
+ =?us-ascii?Q?mi/IYvq0lRvLVk+VarUI00GYxrDDxucDigMorkSc9ziUolkbMKo3ISa8EL+R?=
+ =?us-ascii?Q?PpcWYV/4xg3oP+pnKDctkuS3qeTbY1/YdUSgFnnRzDfCIVdDw3+DGCPHLt9A?=
+ =?us-ascii?Q?KbE9wuGLhJ8inpvCmUynniHi45Jdg0dZ4viiMD9PwyWMycAZ4nYVxosrpqlZ?=
+ =?us-ascii?Q?of8aV7TM2+5EhHUcv6Zehf4GocNzwG64Y6SZJ4UuQqG3054euKuPkFM4LeWk?=
+ =?us-ascii?Q?dlJTMVBf0GRoybqzq6Z1+VuFAFeYTarV1VdK4M7pX83JukmpufQlzp/RNF4s?=
+ =?us-ascii?Q?36gB316Us3VW5a70SnhmaGaP7JnkYXUOf8sOr0OngrtYsb58BHB82sHTb/rl?=
+ =?us-ascii?Q?TiPIF0VU3IVlLsuw1lw8wL3ZRrFzpWKYKFQ57IFDuTXtDQc7dw/lMwmjHxab?=
+ =?us-ascii?Q?PAAfwaV7UKqHnhWTMVWHwSAtOi+grLsCaf5eTrToiA2pZNSLWRrCyGVQtqNy?=
+ =?us-ascii?Q?c+ItIDAe4w=3D=3D?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260224-bsd-user-claude-v4-19-8ee5ae17056f@bsdimp.com>
-References: <20260224-bsd-user-claude-v4-0-8ee5ae17056f@bsdimp.com>
-In-Reply-To: <20260224-bsd-user-claude-v4-0-8ee5ae17056f@bsdimp.com>
-To: qemu-devel@nongnu.org
-Cc: =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Kyle Evans <kevans@freebsd.org>, 
- =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, 
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
- Riku Voipio <riku.voipio@iki.fi>, Warner Losh <imp@bsdimp.com>, 
- Stacey Son <sson@FreeBSD.org>, 
- Richard Henderson <richard.henderson@linaro.org>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1816; i=imp@bsdimp.com;
- h=from:subject:message-id; bh=+aPWXFlolcJgREkhCBhuuvqaTVfoCu3VHmTRqGie1KA=;
- b=owEBbQKS/ZANAwAKAWwc0Sh9sBEAAcsmYgBpnbho/+zDiyyH7c3C60WR+MF3HuDxnL15STa0q
- AZ1qfLCez2JAjMEAAEKAB0WIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCaZ24aAAKCRBsHNEofbAR
- AC9vD/0Y1l7Mn+7lXbm08foLLpR6WlHwc9QUlZKMOd/TtLf4eKtU71jQI6OZPoiEm32R5F1ceBG
- S8TTXIco2RniUMhwX9cgUX/Fygu0C9aGabx1BhDdZMahIfWheH6E0+dsGDqwRjZLOH3zeWS/ozC
- SUeD3RowCBiaP6Qwpn98+0Onr3/CJulxjzYMrbQZnGflguJovtr/emDze22UVlHhGzl9R3CqQ0V
- BJ9ll0HqCTPpAKBlRIWcjz4ZafjENEDrpUqiUP7Nh45Pb0KIQMdC/j8s5/tdgvM75uv2YC3IcnZ
- J1p9wr0oIRPxgogp+bAWHNPeaPGGJFEDSTGKID7G4AcheIRQnESr2Ap4n0EYxQmeE/Fpx5TPy09
- dIyqQXgxqWZ1JYTcn0mnO2wlnpC9MC1srHl4IioPZMO3wNC6F1Ey4qr/jEhsEBUKQezeIRFUe+Y
- DG5xyb4CofVZPp0ft/21dm9srGMtLIbREmpygUnVTtYXhpa6dULfFhdsC0yFVGo3Q4WzmMf8IPF
- XB4x20ixmLyaRpXcDFu2hIzvePlmIhlUh3LpEOZnMotuxu+T5XX8AW0v0+/s8MeCAwA/ngmAK71
- Z0Uc2pdr0+5xOG+gIXSnduSRXFKMrE8fS5Sr3SF9wE5I9LaRcQI+rng46RWbkhbR+THU//JGGAf
- eqXkiCZ6wl81zbg==
-X-Developer-Key: i=imp@bsdimp.com; a=openpgp;
- fpr=2035F894B00AA3CF7CCDE1B76C1CD1287DB01100
-Received-SPF: none client-ip=2607:f8b0:4864:20::333;
- envelope-from=imp@bsdimp.com; helo=mail-ot1-x333.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB7548.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 27b630cc-261f-4943-7737-08de73b2bf48
+X-MS-Exchange-CrossTenant-originalarrivaltime: 24 Feb 2026 14:41:08.3274 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: D2ihclv5bnSGlRG9FO91bf26csr5oANAmIUFtbTr9A71nbFtncGS/yOF8mODwqnjADLzu3EAkyaAb5qf+ZBj8A==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR12MB8212
+Received-SPF: permerror client-ip=2a01:111:f403:c007::2;
+ envelope-from=skolothumtho@nvidia.com;
+ helo=MW6PR02CU001.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,79 +175,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Stacey Son <sson@FreeBSD.org>
 
-Add implementation of msgctl(2) syscall for System V message queue control
-operations. Handles command translation and structure conversions for
-IPC_STAT/IPC_SET/IPC_RMID operations.
 
-Signed-off-by: Stacey Son <sson@FreeBSD.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Warner Losh <imp@bsdimp.com>
----
- bsd-user/bsd-misc.h | 47 +++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 47 insertions(+)
+> -----Original Message-----
+> From: Jonathan Cameron <jonathan.cameron@huawei.com>
+> Sent: 24 February 2026 14:29
+> To: Shameer Kolothum Thodi <skolothumtho@nvidia.com>
+> Cc: qemu-arm@nongnu.org; qemu-devel@nongnu.org;
+> eric.auger@redhat.com; peter.maydell@linaro.org; Nicolin Chen
+> <nicolinc@nvidia.com>; Nathan Chen <nathanc@nvidia.com>; Matt Ochs
+> <mochs@nvidia.com>; Jiandi An <jan@nvidia.com>; Jason Gunthorpe
+> <jgg@nvidia.com>; zhangfei.gao@linaro.org; zhenzhong.duan@intel.com;
+> Krishnakant Jaju <kjaju@nvidia.com>
+> Subject: Re: [PATCH v7 3/5] hw/arm/smmuv3-accel: Allocate vEVENTQ for
+> accelerated SMMUv3 devices
+>=20
+> External email: Use caution opening links or attachments
+>=20
+>=20
+> On Thu, 19 Feb 2026 09:01:01 +0000
+> Shameer Kolothum <skolothumtho@nvidia.com> wrote:
+>=20
+> > From: Nicolin Chen <nicolinc@nvidia.com>
+> >
+> > When the guest enables the Event Queue and a vIOMMU is present,
+> > allocate a vEVENTQ object so that host-side events related to the
+> > vIOMMU can be received and propagated back to the guest.
+> >
+> > For cold-plugged devices using SMMUv3 acceleration, the vIOMMU is
+> > created before the guest boots. In this case, the vEVENTQ is allocated
+> > when the guest writes to SMMU_CR0 and sets EVENTQEN =3D 1.
+> >
+> > If no cold-plugged device exists at boot (i.e. no vIOMMU initially),
+> > the vEVENTQ is allocated when a vIOMMU is created, i.e. during the
+> > first device hot-plug.
+>=20
+> Why do it differently?
 
-diff --git a/bsd-user/bsd-misc.h b/bsd-user/bsd-misc.h
-index 72b3db0b74..2e9de50ef9 100644
---- a/bsd-user/bsd-misc.h
-+++ b/bsd-user/bsd-misc.h
-@@ -210,6 +210,53 @@ out:
-     return ret;
- }
- 
-+/* msgctl(2) */
-+static inline abi_long do_bsd_msgctl(int msgid, int target_cmd, abi_long ptr)
-+{
-+    struct msqid_ds dsarg;
-+    abi_long ret = -TARGET_EINVAL;
-+    int host_cmd;
-+
-+    switch (target_cmd) {
-+    case TARGET_IPC_STAT:
-+        host_cmd = IPC_STAT;
-+        break;
-+
-+    case TARGET_IPC_SET:
-+        host_cmd = IPC_SET;
-+        break;
-+
-+    case TARGET_IPC_RMID:
-+        host_cmd = IPC_RMID;
-+        break;
-+
-+    default:
-+        return -TARGET_EINVAL;
-+    }
-+
-+    switch (host_cmd) {
-+    case IPC_STAT:
-+    case IPC_SET:
-+        if (target_to_host_msqid_ds(&dsarg, ptr)) {
-+            return -TARGET_EFAULT;
-+        }
-+        ret = get_errno(msgctl(msgid, host_cmd, &dsarg));
-+        if (host_to_target_msqid_ds(ptr, &dsarg)) {
-+            return -TARGET_EFAULT;
-+        }
-+        break;
-+
-+    case IPC_RMID:
-+        ret = get_errno(msgctl(msgid, host_cmd, NULL));
-+        break;
-+
-+    default:
-+        ret = -TARGET_EINVAL;
-+        break;
-+    }
-+    return ret;
-+}
-+
- /* getdtablesize(2) */
- static inline abi_long do_bsd_getdtablesize(void)
- {
+This is because a vEVENTQ must be associated with a vIOMMU, and
+iommufd_backend_alloc_veventq() requires a valid viommu_id.
 
--- 
-2.52.0
+A vIOMMU is only created once at least one vfio-pci device is
+attached. If the VM boots without any cold-plugged devices, no
+vIOMMU exists at that point.
 
+In that case, the vIOMMU is created during the first device
+hot-plug, so we allocate the vEVENTQ at that time instead.
+
+So, the difference in behaviour simply follows when the vIOMMU
+becomes available.
+
+Hope that is clear now.
+
+Thanks,
+Shameer
 
