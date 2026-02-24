@@ -4,129 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A392F4BB7F
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 19:26:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACE9DF4BB7A
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 19:31:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuy30-0007KW-E6; Tue, 24 Feb 2026 14:26:20 -0500
+	id 1vuy82-0001zN-Tg; Tue, 24 Feb 2026 14:31:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vuy2Q-0006xt-8M
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 14:25:42 -0500
-Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vuy7C-0001ow-BJ
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 14:30:43 -0500
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vuy2O-0007si-3i
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 14:25:41 -0500
-Received: by mail-pf1-x432.google.com with SMTP id
- d2e1a72fcca58-8231061d234so4638403b3a.1
- for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 11:25:39 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vuy76-0000n3-Qh
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 14:30:35 -0500
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-4837f27cf2dso50272595e9.2
+ for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 11:30:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771961138; x=1772565938; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=FocgUHifAMHkPkIsUH6B5ZDW1eP0itObBTNdWnGm8Os=;
- b=u2BjfJz6Vj64iuQAmBac6ugz3W0WqIizHritntxk4CsbavtrQI6nbY6+qHXvNd83qn
- 6aaF83P9Hjv5JJDjegUfpDiWILAHINcDXz+qtKNpuvnyX2Px7RzCOiUW9jWHY9gBp7NT
- DC5m3jVycvLxZR8tm9BWfePGp4wHIhwnMhL8D4qE4LmCFsnhfJCY0hTLZ1mAsMphU4pb
- OFCP/9y6Oeyed8uOBT9s7T2DWuGCY7/VnbEVxWhKxVWuo/G+6Zv6spnEwGTXobwKJb/4
- WmC19R8c0FhyQ8MQywuCOSmtLyUDu+CfNUojD2mJmJh3MI2B8UE3GGxaRc4NCYqn7TCS
- WlgA==
+ d=linaro.org; s=google; t=1771961430; x=1772566230; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=ZJvVqQyy5oZSysZTNN5WiY/fDfYfGZ0/GLOLav4S0p0=;
+ b=dMLueoFUkyd5sXhbZWxq2u0onNkQG/x8pVVlB146Kjw+fjTOLJGacrH6e4GM5L21Yp
+ Afpa/6CGnM91j4GWdgSVkXj4IvCGzGNnJ4CoK583KLP7aq2B3P/ckauZiIkxb7kZKBU5
+ IWRsgxkyrzDQW51AWmb+mTxhTGoO7c4/LRMeSeApN4VBy2nicz7PhrX1aLElW3xxEmVZ
+ B9asdROL0GpKbf5jIBAs/B/Wek/x5CaJifeBxx//EhCeK787ADiUkJm5jjOQma5zNIMy
+ ORYQBsY5qnd+qVKEAmqP/NNH91Kkz8nv0yHhAUcc/HuzF9KQY6FSouBK2MxGRKtpN/u8
+ K/1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771961138; x=1772565938;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=FocgUHifAMHkPkIsUH6B5ZDW1eP0itObBTNdWnGm8Os=;
- b=jq5v4rtXQtqXw1X6TaWjFgoZVfMKcjdV1yFqB+CXFi3B4RGC4UnBrXIV/Loy04f/Bh
- rTR8m5imcUoAv1MYanH8cn6pE3R1XLQpmYv56f10h9mwUYM2v5eX+kQI4dIq4aYx4dGJ
- 56rp1CttxQQU9q72s5nTbzUDDABZB/brR5UfeBv6YIwUj2/coYoz+IVtLFW4Q73YZVl+
- RkW8Ltd/atfyDpFcEyETP45lc95oS82yb5zfbxS9BfvTMtJqlJ1uhtkbb2XT7qlGFSSd
- faUr5qAhrNCDNp3G+G7qv0LYaDQs+GhkxkYx6q0S+d50OUmD7n+tw3H1Hvb01TT5cWqa
- rhlw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXWVliLeNcA59MUNjjWKLL+Hm7g1nWx09WOQ44PR2/fxCcMwNNuAIjfJONbBjICGN4uqAD4hBmSP6AL@nongnu.org
-X-Gm-Message-State: AOJu0Yy3e+1AO2a/qWdnNOSYs7nKt/lmcARbD2m+L3dcYERh8Z7xbr84
- bIBB3qnjFry9aTYq8rJPcO/H2Rn8dUHPe5S6reeRuUpbW0Cw96BE4d3vgXUSFvH1rP4=
-X-Gm-Gg: ATEYQzz52VCSEF6vPJmU2iLIRMMJmolX8T+/OqNiDZl3Uwd9DLtBoG6XB1yglFDsKTG
- L0LodFJN47bpIw+KcMc4KDYdkQjZA+75CC7pndmTP+nYaSYoSpoqe9Qsh6katL1HBKXmuE1pli4
- I5lcVirt5xWb9BTR6rgkfdC4ovTa2vBQdMiDUX219K35uFA1b7/V3deV76UQVqN+etOqfYEOhMN
- QFC3JJlEhvTqFlT8Tjt+UqX8V02FxZfgqAzIW0MlWoKBRHUQtLpv6GV6iNv+IXGorVKYhxUq+QK
- L2x2EhH/gdhVmbbbjKWG1S7lrMeYK2z3eGfLiayZS3F+Fc/9gg3zWIVT2ZBRn9feUcqBwfPjvK1
- bdMbZe7XSM0v/RFHk9T6jG1Hc6oQJrvL3JdVccfZNTzkFBcOBCuDG+tQS5vU+ZutKu1QFSmX1ba
- BC779dxrERlopDONsiYP303SWzpqGy/M8zmZLmKbj3fw/C5lcYN7rhDYX9HeNx4NnVhn0X
-X-Received: by 2002:a05:6a00:2451:b0:824:b024:93dc with SMTP id
- d2e1a72fcca58-826da9ee7aemr13748210b3a.35.1771961137797; 
- Tue, 24 Feb 2026 11:25:37 -0800 (PST)
-Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-82719e7ed8asm1713812b3a.5.2026.02.24.11.25.36
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 24 Feb 2026 11:25:37 -0800 (PST)
-Message-ID: <16b5ff27-7c36-4f62-a147-b8c95e428857@linaro.org>
-Date: Tue, 24 Feb 2026 11:25:36 -0800
+ d=1e100.net; s=20230601; t=1771961430; x=1772566230;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ZJvVqQyy5oZSysZTNN5WiY/fDfYfGZ0/GLOLav4S0p0=;
+ b=DjJwV0ivk0suXiafMDsPzyv4oqXlx/C0JnPb4J3XpNEpG1qc3qNz/rmUTkzXgooldP
+ SuG9Y9VQawb9U+weY12qiClwYn5MjCdJua5e/ehjYSgyXFQhhQrSlLGqwdfhQw9Zr9Kf
+ HLsd3ZVN5/KWSH03ECN3zOvcsSilssbQ8aVUHyXXFNpnIitMg9HSFozNoeTtGZ0Zhe1u
+ 6c+jWq6voToOCLPWN6rUW7UOtyNqJdDoYpqnpCJ5PeqG4kbuRyYlgRQX3YUeMxfasIu0
+ WoOfZMbd8WJ/lgGpHa7RqIeoMEJBMD5PwriAM3ILn/G3py9OOzhxwCDs2+cKTRDjXRd/
+ HVPQ==
+X-Gm-Message-State: AOJu0YwsC7tyvBQZhrFjf75oTFuWND3XxSUiuytpc4uAfmtRaIcp/gM2
+ Nb0Lb/aVtScS9i/Wn5ter/aGkBXxVJiRXjDRhF2QW14M/jF8omkAOIcHnXejTToJwV8LtbEt+4P
+ f5akqEBU=
+X-Gm-Gg: AZuq6aKG6jNJ3JRWtV/+Wk68ItNhCkcxN+JSdWYB9r69SDlXJaIy/+9j9iCvqthKpgM
+ WI4YQ7ms/EOs92JnVNYua38jM9K9FCITLVGgT895niQbku/mtHyjjD4DGIfstPjQghF3MzEKo/Y
+ tonlfW9S+fGYM9MnCYBQzknck9utcRinBQr1tykc70JSE9XM0Bei/iJqzwoN04beyAxIa7MVRBM
+ ZEya1rtgpeEBhjYrkB2UA5r9L7N8S2Sl2qUNlse2TEnxbCJyNSMIz4BADlTupmNZRqHcVvw7p2S
+ e6BTVlqiH5oYOmoh9KN0UZX3I2oZdexs6B0dbgaE80u3/RlndtW5iAAuS3ydZ8AxYO5CW0COisk
+ jg5eVYxZxzaE5ywl3z96c92JeY5b2tYj5vcROwl3/ELF1AEyUYKPSq/hndQw9ht7tvbL7wTiX2s
+ UGwSc+UbHtWNwLj+P4FRdnDAi0CfrN4p9fAveSxqiNzhgoHROdAIKgyyqhYDQCEcVKfWQriRWG
+X-Received: by 2002:a05:600c:c166:b0:47a:935f:618e with SMTP id
+ 5b1f17b1804b1-483a960a0e8mr236645985e9.15.1771961430508; 
+ Tue, 24 Feb 2026 11:30:30 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-43970d40004sm28474648f8f.21.2026.02.24.11.30.29
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 24 Feb 2026 11:30:29 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org,
+ qemu-riscv@nongnu.org, qemu-ppc@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [RFC PATCH 0/5] target/tcg: Rename some helpers common to various
+ targets
+Date: Tue, 24 Feb 2026 20:30:22 +0100
+Message-ID: <20260224193028.2370-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.52.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 09/10] fsdev: Build stubs once
-Content-Language: en-US
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Christian Schoenebeck <qemu_oss@crudebyte.com>, Greg Kurz <groug@kaod.org>
-References: <20260224182017.99865-1-philmd@linaro.org>
- <20260224182017.99865-10-philmd@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
- 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
- ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <20260224182017.99865-10-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x432.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -142,16 +102,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/24/26 10:20 AM, Philippe Mathieu-Daudé wrote:
-> Move stubs to the global stub_ss[] source set. These files
-> are now built once for all binaries, instead of one time
-> per system binary.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   fsdev/meson.build | 3 ++-
->   1 file changed, 2 insertions(+), 1 deletion(-)
-> 
+TCG helpers are declared using the DEF_HELPER*() macros
+which imply global symbol scope. Unfortunately when building
+a single binary (containing multiple TCG 'target' frontends)
+these symbols clash.
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+This series takes the dumbest approach, renaming the symbols.
+
+There are still around 20 symbol clashes (usually FPU helpers),
+but this series is good for my proof-of-concept.
+
+Philippe Mathieu-Daudé (5):
+  target/tcg: Rename bitswap() helpers
+  target/tcg: Rename crc32*() helpers
+  target/tcg: Rename unaligned_access() helpers
+  target/tcg: Rename raise_exception() helpers
+  target/tcg: Rename set_rounding_mode() helpers
+
+ target/arm/tcg/helper-a64-defs.h                 |  2 +-
+ target/arm/tcg/helper-defs.h                     |  4 ++--
+ target/hexagon/gen_tcg.h                         |  2 +-
+ target/hexagon/helper.h                          |  2 +-
+ target/i386/helper.h                             |  2 +-
+ target/i386/ops_sse.h                            |  2 +-
+ target/loongarch/tcg/helper.h                    |  8 ++++----
+ target/m68k/helper.h                             |  2 +-
+ target/microblaze/helper.h                       |  4 ++--
+ target/mips/helper.h                             |  6 +++---
+ target/ppc/helper.h                              |  2 +-
+ target/riscv/helper.h                            |  2 +-
+ target/sparc/helper.h                            |  2 +-
+ target/i386/tcg/ops_sse_header.h.inc             |  2 +-
+ target/arm/tcg/arith_helper.c                    |  4 ++--
+ target/arm/tcg/helper-a64.c                      |  4 ++--
+ target/arm/tcg/translate-a64.c                   |  4 ++--
+ target/arm/tcg/translate.c                       |  4 ++--
+ target/hexagon/op_helper.c                       |  2 +-
+ target/hexagon/translate.c                       |  2 +-
+ target/i386/tcg/excp_helper.c                    |  2 +-
+ target/i386/tcg/translate.c                      |  2 +-
+ target/loongarch/tcg/fpu_helper.c                |  2 +-
+ target/loongarch/tcg/op_helper.c                 |  6 +++---
+ target/m68k/op_helper.c                          |  2 +-
+ target/m68k/translate.c                          |  2 +-
+ target/microblaze/helper.c                       |  2 +-
+ target/microblaze/op_helper.c                    |  2 +-
+ target/microblaze/translate.c                    |  4 ++--
+ target/mips/tcg/op_helper.c                      |  6 +++---
+ target/mips/tcg/translate.c                      |  6 +++---
+ target/ppc/tcg-excp_helper.c                     |  2 +-
+ target/ppc/translate.c                           |  6 +++---
+ target/riscv/fpu_helper.c                        |  2 +-
+ target/riscv/translate.c                         |  2 +-
+ target/sparc/helper.c                            |  2 +-
+ target/sparc/translate.c                         |  6 +++---
+ target/i386/tcg/emit.c.inc                       |  2 +-
+ target/loongarch/tcg/insn_trans/trans_bit.c.inc  |  4 ++--
+ .../loongarch/tcg/insn_trans/trans_extra.c.inc   | 16 ++++++++--------
+ target/loongarch/tcg/insn_trans/trans_fmov.c.inc |  2 +-
+ 41 files changed, 71 insertions(+), 71 deletions(-)
+
+-- 
+2.52.0
+
 
