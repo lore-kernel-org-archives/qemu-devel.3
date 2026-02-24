@@ -4,81 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BDA7F4BB83
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 20:13:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 091ECF4BB84
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 20:14:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuylv-0000oN-Px; Tue, 24 Feb 2026 15:12:43 -0500
+	id 1vuynk-0001Rx-IH; Tue, 24 Feb 2026 15:14:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vuylu-0000ms-4Z
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 15:12:42 -0500
-Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
+ id 1vuynh-0001Ro-OR
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 15:14:33 -0500
+Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vuyls-00073J-9O
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 15:12:41 -0500
-Received: by mail-pf1-x42d.google.com with SMTP id
- d2e1a72fcca58-824adc96ad2so5917693b3a.3
- for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 12:12:39 -0800 (PST)
+ id 1vuynf-00078y-GY
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 15:14:33 -0500
+Received: by mail-pf1-x434.google.com with SMTP id
+ d2e1a72fcca58-824b5f015bcso5632932b3a.1
+ for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 12:14:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771963959; x=1772568759; darn=nongnu.org;
+ d=linaro.org; s=google; t=1771964070; x=1772568870; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=R+C72cH1o5PNDpIFHgUykoGWgyf528nZA4p7vbGsXBk=;
- b=R3QAVaE2Wf/+a5q2Z+oMOqnUqVOJCbjzrtC9y/SyYb9OLErXEPXcPdhJ8OlFJ3nu+A
- URN7M/lmarb3OBHcqhBXNBQsrI2VaFheucQwjL7GoDenSyqMKGVKYO/Mo2BBU7x1/MUn
- aJEG1bM9nct851hYYJZ/FgoUXe5HwlwfK6Bgi7PGk56xJhru6P/FscckZuOsljCrMPU/
- XMg20FBLnlZqFtN/PJCNVCn5OEP1ojxp4BSMeI25CRqU9N8O8s1rovnqbiM1EqMbe9hz
- 8Ct364McHNwMqMYn0+19FSB5x0089Ju/y2tqsmVQHsKPJrZuB3g5GI39zubmKdU5aNTL
- FS+w==
+ bh=eKY8PrpcoSdypHR1Kxu3mbhrRQnJKap30Z7g+DcZFl0=;
+ b=hb1BaYjjZfX4BlguFxfFyHEH5aAyFsC7QYBV4nGMdg8icMvxjOc6pIIof3M5N5n9wQ
+ rZlApV/k7li1+uL3W6WpKcgzGrqycY4iI8CBXwVkWo/qliEWJCF4zOsubCSMGW8Rh6LY
+ Rcn6muRBmmcJ0lpmjK6Ag52yozu7iQpvuBjBpGhgoOK7BnRwSdSdMUPI6YCraE1UzLNy
+ wq84JJhIK63XnD0Tq4pKKkojjy3kVsy4QBuimWlVKFIMWGdtCOuPX/12WvzJ1JhdA/yr
+ glCJ7NpvEcUr4BMr25iJB/Cu6Nh7mBrRRQnRLWPRreh1N7smXXBU25ZKCjsEwbuKyNBI
+ n/bQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771963959; x=1772568759;
+ d=1e100.net; s=20230601; t=1771964070; x=1772568870;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=R+C72cH1o5PNDpIFHgUykoGWgyf528nZA4p7vbGsXBk=;
- b=dv7UTmdWx4jBLt/8TNCL9+WNS1iZBNAMoFWKx16esvsO+jk8s//BfpS2lQIHB4lsED
- FYRBgIyfoJqLp03qQt7nDY/PnJmT2h4QzaARZUR5dhAGYP9rNZ6OsZbiTJPDo8UbSM9J
- yYM33x10SGjtPvnQUq2+w91LNH1kiYvgJRgBuylnVVaJgOlV3x3VmmBZ2B6d+aZLHgsl
- g9ugHQRRfED+dkhFa94vyZ5DZQfSOt+iDVIrzUlK4L6vYoffgQJKkYxyAB/I5QLFnLkE
- RNVnskg45aaIoKkVq5iPLba0R1VIMF+TC0jAfQh+DUwouF81XvKo2QF+CfPbPsgagl8+
- LUKQ==
-X-Gm-Message-State: AOJu0YwgsjEOEQqlOZlIb93mo9Bur234DAh+mu7Jg1cJV234BRuZE3e/
- RUi+EL5baWx1s/G5gmE6QDLFE/wnH7ovdWnVMs6yQ1U7jX6AxK95zaLWIO5rKOrCBSE=
-X-Gm-Gg: AZuq6aJjnLw6OmC8plaEJcOML5ZafmuI9mkIl+c+jjtW6NtJtPEQEgWUW650eCP9ZHH
- N9c8umd1OJImpRQl8nTFBfsOhOdANtr6xcXKZ72tpAMneRr3xAn9nqdFeWEAvYc6wVpwOm61FEr
- Q0vD4JxMZJPTdt8vIaPa6wdgZ9Jf9LPhtmA+sdVTE3Df2UhwCsZ/fWVYMlhEqw/iIiPJzZxB1uY
- kJsbAG0JV8FkEdirh0dVrls2+ttsBM7NFU3/kSPUO19h96KQ+uJPTwK+1QK7HaCLqg9ZHn8U086
- PY366Y/8RdemQkoX5ruz+LC6FitGG9xDjQA9mTsDPJNCDPyKoP8A7BluDsxPVFi01JIWiHEs6iF
- slZO3lLI5uPq39ho+ohCbpavcwj/oFx9YrQ+lCBcsnXM+LYC7tbjuBCeKohr5CEuQzJAfEu+dv2
- 68Sfz4VhW2mfN7fnTLl5Roa7k66+eGHbzoiQouZZ4JrE438DOMCpq78T/iDDPgtWXHCESED0iOm
- arCysA=
-X-Received: by 2002:a05:6a21:4d17:b0:366:14ac:e1ef with SMTP id
- adf61e73a8af0-39545ffbffemr11031343637.65.1771963957326; 
- Tue, 24 Feb 2026 12:12:37 -0800 (PST)
+ bh=eKY8PrpcoSdypHR1Kxu3mbhrRQnJKap30Z7g+DcZFl0=;
+ b=dQsJZ8dDsHdUDtd64Pob5zAZj+3oVyEUa03kNj5hs1VmxsTPz5eb8/H48eIa5M9sFd
+ cyJSKOGRTX4iOwkFxtZhJo180C6l3loYiS9QwG4ESSPpm7pQ3NP/g3xCZCdJoXaZhZEe
+ ibsNG35wLTrFW3RwenMjlL7pka+3n6H8JP4ls94nMbdDA5Ns0geNZPzDtsf7PZg05Kza
+ BKZsnGyONMma5AvrJNB1l13AEnjBo91ozPJDKpezApyJWa1TG/odMaYoGWcDinEtIZhA
+ 2ZLDfXlKHSmpSVnlcJFR7R1VXvkGs6KYMEDkvYYyycBF9sVRIU4Rqn4K5M7mCZhb/7Zv
+ UNjA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXQW20jTv19LekqXdktVFDGtKEvLyyoX58GdFAOZcQz0Funi5jAdNTCDQvFUlzn/NhcB3lHGExpg8O8@nongnu.org
+X-Gm-Message-State: AOJu0YzKoRsSCk9atbnlvevXX4NePppwO2akdwXI+R4z+vLGCguonem3
+ bCij3TtPdsiAsoLFUHT8eCkdheVs8qZI+9QIF7RaXgRD6b1vW3/YY1R6OCf0QjoqiZo=
+X-Gm-Gg: ATEYQzzQUPM/ENwzaQIwX6pEixrAJ9hmMip52Iejw6kCpBlkbh8ZzixE5hJCA/5iSly
+ NyUfIbyMrtzWVqqcntacNIE55Nu/bZRuX1JU79dkNz5NrY/3afzBynMe1NKwJhxufTFRBfsFpxz
+ IhLd9N+HoYeYjonHU+sxRl+l6QP6EbRFUsxtcsOOZ6hRggrxxqJ84Z2yOZxnTbqE/7vRUtYRSfy
+ KTnFQYD4v3xpQEzeS39lxXwADHoTdtjayNpCRfAHnJfCiSa6UOeEEl0eT7xjFM6KjXQkdxSd6MV
+ I+P7yU+I2uXkr6eScz3ea7VfdFo1l2hDryKmUkr/0YFaeVNX8m/S7dC45krowdPTZBhYU/FkhOj
+ mq732GOcah8NuGQABTikpDuCfvox3xgLzkKIeTu6p/aHviw+lbzXbOVSH4lqjgGVyjjfb+lUFQW
+ jnmrFWLoxz6EgBD1AwgvY5K7AD2k+V3UxunvB/eToU0+zk+g1E1BtqV/NELvvHsXn7x1vk
+X-Received: by 2002:a05:6a00:4405:b0:81e:f623:b9fe with SMTP id
+ d2e1a72fcca58-826da8c0e12mr11906407b3a.4.1771964069958; 
+ Tue, 24 Feb 2026 12:14:29 -0800 (PST)
 Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c70b7269771sm11093878a12.30.2026.02.24.12.12.36
+ d2e1a72fcca58-826dd64367bsm11683671b3a.4.2026.02.24.12.14.28
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 24 Feb 2026 12:12:36 -0800 (PST)
-Message-ID: <8cd3610f-c6c2-4b8e-85cc-ad4711deab9b@linaro.org>
-Date: Tue, 24 Feb 2026 12:12:36 -0800
+ Tue, 24 Feb 2026 12:14:28 -0800 (PST)
+Message-ID: <6ffd1660-b521-4352-98fc-93a0114b84be@linaro.org>
+Date: Tue, 24 Feb 2026 12:14:28 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 3/7] plugins: add PC diversion API function
+Subject: Re: [PATCH v4 0/7] Enable PC diversion via the plugin API
 Content-Language: en-US
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Florian Hofhammer <florian.hofhammer@epfl.ch>
-Cc: qemu-devel@nongnu.org, richard.henderson@linaro.org, laurent@vivier.eu,
+To: Florian Hofhammer <florian.hofhammer@epfl.ch>, qemu-devel@nongnu.org
+Cc: alex.bennee@linaro.org, richard.henderson@linaro.org, laurent@vivier.eu,
  imp@bsdimp.com, berrange@redhat.com
 References: <909b0a4f-9759-4e27-bba8-997ae2f41bd6@epfl.ch>
- <33eb2408-b4c3-4ca4-9555-b2015fa38630@epfl.ch>
- <87wm022fxi.fsf@draig.linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  xsDNBGK9dgwBDACYuRpR31LD+BnJ0M4b5YnPZKbj+gyu82IDN0MeMf2PGf1sux+1O2ryzmnA
@@ -114,11 +112,11 @@ Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  5SYuJaKzCAgNeAy3gUVUUPrUsul1oe2PeWMFUhWKrqko0/Qo4HkwTZY6S16drTMncoUahSAl
  X4Z3BbSPXPq0v1JJBYNBL9qmjULEX+NbtRd3v0OfB5L49sSAC2zIO8S9Cufiibqx3mxZTaJ1
  ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <87wm022fxi.fsf@draig.linaro.org>
+In-Reply-To: <909b0a4f-9759-4e27-bba8-997ae2f41bd6@epfl.ch>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42d.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -141,82 +139,202 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/24/26 9:46 AM, Alex Bennée wrote:
-> Florian Hofhammer <florian.hofhammer@epfl.ch> writes:
+On 2/24/26 7:46 AM, Florian Hofhammer wrote:
+> Hi,
 > 
->> This patch adds a plugin API function that allows diverting the program
->> counter during execution. A potential use case for this functionality is
->> to skip over parts of the code, e.g., by hooking into a specific
->> instruction and setting the PC to the next instruction in the callback.
->>
->> Link: https://lists.nongnu.org/archive/html/qemu-devel/2025-08/msg00656.html
->> Signed-off-by: Florian Hofhammer <florian.hofhammer@epfl.ch>
->> ---
->>   include/plugins/qemu-plugin.h | 13 +++++++++++++
->>   plugins/api.c                 | 13 +++++++++++++
->>   2 files changed, 26 insertions(+)
->>
->> diff --git a/include/plugins/qemu-plugin.h b/include/plugins/qemu-plugin.h
->> index a6ec8e275d..04c884e82b 100644
->> --- a/include/plugins/qemu-plugin.h
->> +++ b/include/plugins/qemu-plugin.h
->> @@ -76,6 +76,7 @@ typedef uint64_t qemu_plugin_id_t;
->>    *
->>    * version 6:
->>    * - changed return value of qemu_plugin_{read,write}_register from int to bool
->> + * - added qemu_plugin_set_pc
->>    */
->>   
->>   extern QEMU_PLUGIN_EXPORT int qemu_plugin_version;
->> @@ -1042,6 +1043,18 @@ QEMU_PLUGIN_API
->>   bool qemu_plugin_write_register(struct qemu_plugin_register *handle,
->>                                   GByteArray *buf);
->>   
->> +/**
->> + * qemu_plugin_set_pc() - set the program counter for the current vCPU
->> + *
->> + * @vaddr: the new virtual (guest) address for the program counter
->> + *
->> + * This function sets the program counter for the current vCPU to @vaddr and
->> + * resumes execution at that address. This function only returns in case of
->> + * errors.
->> + */
->> +QEMU_PLUGIN_API
->> +void qemu_plugin_set_pc(uint64_t vaddr);
->> +
->>   /**
->>    * qemu_plugin_read_memory_vaddr() - read from memory using a virtual address
->>    *
->> diff --git a/plugins/api.c b/plugins/api.c
->> index e754b7c69c..ca3e93a194 100644
->> --- a/plugins/api.c
->> +++ b/plugins/api.c
->> @@ -41,6 +41,7 @@
->>   #include "qemu/log.h"
->>   #include "system/memory.h"
->>   #include "tcg/tcg.h"
->> +#include "exec/cpu-common.h"
->>   #include "exec/gdbstub.h"
->>   #include "exec/target_page.h"
->>   #include "exec/translation-block.h"
->> @@ -466,6 +467,18 @@ bool qemu_plugin_write_register(struct qemu_plugin_register *reg,
->>       return (gdb_write_register(current_cpu, buf->data, GPOINTER_TO_INT(reg) - 1) > 0);
->>   }
->>   
->> +void qemu_plugin_set_pc(uint64_t vaddr)
->> +{
->> +    g_assert(current_cpu);
->> +
->> +    if (qemu_plugin_get_cb_flags() != QEMU_PLUGIN_CB_RW_REGS_PC) {
->> +        return;
->> +    }
+> This patch series builds on top of the discussion from the thread at
+> https://lore.kernel.org/qemu-devel/e9bcd7c7-2d67-469e-b2f3-d1a68e456b2b@epfl.ch/
+> and adds a plugin API function to set the program counter of the guest,
+> as just writing to it via qemu_plugin_write_register() has no direct
+> effect.
 > 
-> I think its fine to assert() here - we do it elsewhere in the api, if
-> the user is holding it wrong we should exit now rather than leave the
-> plugin more confused in the future.
->
+> Based on the discussion in the above thread, the series also introduces
+> a means to declare registers as read-only from the plugin side, which
+> prevents plugins from writing to them via qemu_plugin_write_register().
+> This for now is only applied to the PC, and finding the PC register is
+> done via some rather hacky strcmp()s. In the above thread, we also
+> discussed encoding the read-only property in a custom attribute in the
+> GDB XMLs, but that would (1) make syncing with GDB harder, (2) not cover
+> all architectures, as there's not an XML description of all
+> architectures available in the gdb-xml/ directory, and (3) require quite
+> some changes to the whole GDB infrastructure in gdbstub/ to even encode
+> the attribute in the correct structs and pass them on over the different
+> layers up into the plugin API.
+> 
+> This version v4 of the patch series is more about small refactorings and
+> cleanups than changes in functionality.
+> 
+> Best regards,
+> Florian
+> 
+> Changes:
+> v4:
+> - switch strcmp out in favor of g_strcmp0
+> - split the patch introducing the qemu_plugin_set_pc() API into three
+>    patches, two for preparing the plugin infrastructure and the syscall
+>    handling code and a third introducing the actual plugin API
+> v3:
+> - make PC registers read-only across architectures
+> - add tests for read-only registers
+> - adjust test structure for qemu_plugin_set_pc() by moving
+>     architecture-specific tests into corresponding directories
+> v2:
+> - add setjmp() in syscall handling path to allow PC redirection from
+>     syscall callbacks (via longjmp(), the cpu_loop()'s setjmp() for
+>     exiting a TB would not be live anymore in syscall handlers)
+> - add flags to ensure the qemu_plugin_set_pc() API is only called from
+>     contexts where the CPU is live
+> - add test for qemu_plugin_set_pc() API
+> v1:
+> - initial version
+> 
+> 
+> Florian Hofhammer (7):
+>    plugins: add flag to specify whether PC is rw
+>    linux-user: make syscall emulation interruptible
+>    plugins: add PC diversion API function
+>    tests/tcg: add test for qemu_plugin_set_pc API
+>    plugins: add read-only property for registers
+>    plugins: prohibit writing to read-only registers
+>    tests/tcg/plugins: test register readonly feature
+> 
+>   include/plugins/qemu-plugin.h                 | 18 +++++
+>   linux-user/aarch64/cpu_loop.c                 |  2 +-
+>   linux-user/alpha/cpu_loop.c                   |  2 +-
+>   linux-user/arm/cpu_loop.c                     |  2 +-
+>   linux-user/hexagon/cpu_loop.c                 |  2 +-
+>   linux-user/hppa/cpu_loop.c                    |  4 ++
+>   linux-user/i386/cpu_loop.c                    |  8 ++-
+>   linux-user/include/special-errno.h            |  8 +++
+>   linux-user/loongarch64/cpu_loop.c             |  5 +-
+>   linux-user/m68k/cpu_loop.c                    |  2 +-
+>   linux-user/microblaze/cpu_loop.c              |  2 +-
+>   linux-user/mips/cpu_loop.c                    |  5 +-
+>   linux-user/or1k/cpu_loop.c                    |  2 +-
+>   linux-user/ppc/cpu_loop.c                     |  6 +-
+>   linux-user/riscv/cpu_loop.c                   |  2 +-
+>   linux-user/s390x/cpu_loop.c                   |  2 +-
+>   linux-user/sh4/cpu_loop.c                     |  2 +-
+>   linux-user/sparc/cpu_loop.c                   |  4 +-
+>   linux-user/syscall.c                          | 16 +++++
+>   linux-user/xtensa/cpu_loop.c                  |  3 +
+>   plugins/api.c                                 | 43 ++++++++++--
+>   plugins/core.c                                | 29 ++++----
+>   tests/tcg/arm/Makefile.target                 |  6 ++
+>   tests/tcg/hexagon/Makefile.target             |  7 ++
+>   tests/tcg/mips/Makefile.target                |  6 +-
+>   tests/tcg/mips64/Makefile.target              | 15 ++++
+>   tests/tcg/mips64el/Makefile.target            | 15 ++++
+>   tests/tcg/mipsel/Makefile.target              | 15 ++++
+>   tests/tcg/multiarch/Makefile.target           | 22 +++++-
+>   .../{ => plugin}/check-plugin-output.sh       |  0
+>   .../{ => plugin}/test-plugin-mem-access.c     |  0
+>   .../plugin/test-plugin-skip-syscalls.c        | 26 +++++++
+>   tests/tcg/plugins/meson.build                 |  1 +
+>   tests/tcg/plugins/registers.c                 | 68 +++++++++++++++++++
+>   tests/tcg/plugins/syscall.c                   |  6 ++
+>   tests/tcg/sparc64/Makefile.target             | 16 +++++
+>   36 files changed, 331 insertions(+), 41 deletions(-)
+>   create mode 100644 tests/tcg/mips64/Makefile.target
+>   create mode 100644 tests/tcg/mips64el/Makefile.target
+>   create mode 100644 tests/tcg/mipsel/Makefile.target
+>   rename tests/tcg/multiarch/{ => plugin}/check-plugin-output.sh (100%)
+>   rename tests/tcg/multiarch/{ => plugin}/test-plugin-mem-access.c (100%)
+>   create mode 100644 tests/tcg/multiarch/plugin/test-plugin-skip-syscalls.c
+>   create mode 100644 tests/tcg/plugins/registers.c
+>   create mode 100644 tests/tcg/sparc64/Makefile.target
+> 
+> 
+> base-commit: afe653676dc6dfd49f0390239ff90b2f0052c2b8
 
-Agree.
-With the assert instead of return,
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+A few small nits reported by checkpatch.
+
+$ ./scripts/checkpatch.pl $(git merge-base upstream/master HEAD)..HEAD
+
+1/8 Checking commit 23b2901d559b (plugins: add flag to specify whether 
+PC is rw)
+2/8 Checking commit cf46ff49010c (linux-user: make syscall emulation 
+interruptible)
+WARNING: Block comments use a leading /* on a separate line
+#217: FILE: linux-user/mips/cpu_loop.c:144:
++                /* Returning from a successful sigreturn syscall or from
+
+WARNING: Block comments use * on subsequent lines
+#218: FILE: linux-user/mips/cpu_loop.c:145:
++                /* Returning from a successful sigreturn syscall or from
++                   control flow diversion in a plugin callback.
+
+WARNING: Block comments use a leading /* on a separate line
+#247: FILE: linux-user/ppc/cpu_loop.c:345:
++                /* Returning from a successful sigreturn syscall or from
+
+WARNING: Block comments use * on subsequent lines
+#248: FILE: linux-user/ppc/cpu_loop.c:346:
++                /* Returning from a successful sigreturn syscall or from
++                   control flow diversion in a plugin callback.
+
+3/8 Checking commit 2bb085851ee5 (plugins: add PC diversion API function)
+4/8 Checking commit 3001ad67e7e5 (tests/tcg: add test for 
+qemu_plugin_set_pc API)
+ERROR: New file 'tests/tcg/mips64/Makefile.target' requires 
+'SPDX-License-Identifier'
+ERROR: New file 'tests/tcg/mips64el/Makefile.target' requires 
+'SPDX-License-Identifier'
+ERROR: New file 'tests/tcg/mipsel/Makefile.target' requires 
+'SPDX-License-Identifier'
+ERROR: open brace '{' following function declarations go on the next line
+#216: FILE: tests/tcg/multiarch/plugin/test-plugin-skip-syscalls.c:15:
++void exit_success(void) {
+
+ERROR: open brace '{' following function declarations go on the next line
+#220: FILE: tests/tcg/multiarch/plugin/test-plugin-skip-syscalls.c:19:
++int main(int argc, char *argv[]) {
+
+ERROR: New file 'tests/tcg/sparc64/Makefile.target' requires 
+'SPDX-License-Identifier'
+
+5/8 Checking commit c85ae80717dc (plugins: add read-only property for 
+registers)
+ERROR: do not use C99 // comments
+#45: FILE: plugins/api.c:413:
++static const char pc_str[] = "pc"; // generic name for program counter
+
+ERROR: do not use C99 // comments
+#46: FILE: plugins/api.c:414:
++static const char eip_str[] = "eip"; // x86 specific name for program 
+counter
+
+ERROR: do not use C99 // comments
+#47: FILE: plugins/api.c:415:
++static const char rip_str[] = "rip"; // x86_64 specific name for 
+program counter
+
+ERROR: do not use C99 // comments
+#48: FILE: plugins/api.c:416:
++static const char pswa_str[] = "pswa"; // s390x specific name for 
+program counter
+
+ERROR: do not use C99 // comments
+#49: FILE: plugins/api.c:417:
++static const char iaoq_str[] = "iaoq"; // HP/PA specific name for 
+program counter
+
+ERROR: do not use C99 // comments
+#50: FILE: plugins/api.c:418:
++static const char rpc_str[] = "rpc"; // microblaze specific name for 
+program counter
+
+
+6/8 Checking commit 156dc74ab9a5 (plugins: prohibit writing to read-only 
+registers)
+7/8 Checking commit dba748c1e46c (tests/tcg/plugins: test register 
+readonly feature)
+ERROR: New file 'tests/tcg/plugins/registers.c' requires 
+'SPDX-License-Identifier'
+ERROR: New file 'tests/tcg/plugins/registers.c' must not have license 
+boilerplate header text, only the SPDX-License-Identifier, unless this 
+file was copied from existing code already having such text.
+
+Regards,
+Pierrick
 
