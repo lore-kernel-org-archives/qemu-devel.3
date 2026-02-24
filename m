@@ -4,44 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9274FEFB7EF
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 03:53:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D37FEFB7F5
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 04:00:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vujTB-0007vP-PL; Mon, 23 Feb 2026 22:52:22 -0500
+	id 1vujau-0000cg-CD; Mon, 23 Feb 2026 23:00:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vujT8-0007uv-OQ
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 22:52:19 -0500
+ id 1vujas-0000Yw-5K
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 23:00:18 -0500
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vujT5-00014F-L3
- for qemu-devel@nongnu.org; Mon, 23 Feb 2026 22:52:18 -0500
+ id 1vujao-0002ke-3k
+ for qemu-devel@nongnu.org; Mon, 23 Feb 2026 23:00:17 -0500
 Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
  (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 61O3puDP016490
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 61O3waqY018807
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Tue, 24 Feb 2026 12:52:05 +0900 (JST)
+ Tue, 24 Feb 2026 13:00:08 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=0pJoN47YVBN+BT6fhTdFWfbo0ifHnBPqDxF0AzfJaNE=; 
+DKIM-Signature: a=rsa-sha256; bh=EmQRl0e+mzV4f7eg6AK40QtUyAgqmljOcRMgTOa82/o=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=Message-ID:Date:Subject:To:From;
- s=rs20250326; t=1771905125; v=1;
- b=k6eeR/0SQOcSJ9W3fSPi/cMDQnYTKQHcSltS78n7VaQNyCgnj83K9W7aLixjDFRh
- JbhaNt+cvLmgMuchcLOEsRqbtFTtFLXaxdvYCgpttssCh3EWCv0gn2KIs+jZl284
- fhiG7KLGidzXMGV6ON665UF8I0uAp7Oo+q8URKFAi8kjhDfrs4c7GFOCML/im2Lb
- kgA3Wmxz0iByn/DV4ja+A/faflWI2IBq/gAqOzuo8bfxf0GIKU4RKxIBeDE5WsWy
- 5jIAkWXlcf/63Dgc9bzymMIXu5V9hYyH2P2vkA5AApXi1MBLZJiRr0GWr/8stDM+
- iHV7BJ/CJ23BN7siMDocTg==
-Message-ID: <aa496278-274c-4fb1-bb47-bfdda7337628@rsg.ci.i.u-tokyo.ac.jp>
-Date: Tue, 24 Feb 2026 12:51:55 +0900
+ s=rs20250326; t=1771905608; v=1;
+ b=qks5KE80LzMg8k3QydgIw8P/fIWUD4J7sBG+IBnOButP9vY2FdYDxqREbZ8mjAvv
+ 6K4zMQo9szn9qrf6B9L8pJVU+YwfNi2uU6pQROtxPXlHeaUff65WDAFkGDSetJBw
+ R/Qt8KrbFCH+zvkHNDaEtk3qGAVnIBfYHNQWWlwjqc6a74Zud2ALE/stoHX7Na0C
+ ZEBE7vNck615T51yQTUZ5hT100TDOTcHBP1yFdVBZOyX4ifgZ/7zauDTiFl4Jd0y
+ jujYECl7+HRt4YGFqJofFxXwCWg7yU88L4Ug14DWX+lYZBgO+cRwxIVYlRawDSAi
+ kIsbia2ateQ8DBTaW4mLEw==
+Message-ID: <829317cc-551b-457d-a27f-9db0fc749c52@rsg.ci.i.u-tokyo.ac.jp>
+Date: Tue, 24 Feb 2026 12:58:36 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 10/10] virtio-gpu-dmabuf: Create dmabuf for blobs
- associated with VFIO devices
+Subject: Re: [PATCH v7 06/10] virtio-gpu-dmabuf: Improve error handling with
+ 'Error **' and err enum
 To: Vivek Kasireddy <vivek.kasireddy@intel.com>, qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -49,10 +49,10 @@ Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  Alex Williamson <alex@shazbot.org>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
  <clg@redhat.com>
 References: <20260223080200.468558-1-vivek.kasireddy@intel.com>
- <20260223080200.468558-11-vivek.kasireddy@intel.com>
+ <20260223080200.468558-7-vivek.kasireddy@intel.com>
 Content-Language: en-US
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20260223080200.468558-11-vivek.kasireddy@intel.com>
+In-Reply-To: <20260223080200.468558-7-vivek.kasireddy@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=49.212.243.89;
@@ -80,21 +80,11 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2026/02/23 17:00, Vivek Kasireddy wrote:
-> In addition to memfd, a blob resource can also have its backing
-> storage in a VFIO device region. Since, there is no effective way
-> to determine where the backing storage is located, we first try to
-> create a dmabuf assuming it is in memfd. If that fails, we try to
-> create a dmabuf assuming it is in VFIO device region.
-> 
-> So, we first call virtio_gpu_create_udmabuf() to check if the blob's
-> backing storage is located in a memfd or not. If it is not, we invoke
-> the vfio_device_create_dmabuf() API which identifies the right VFIO
-> device and eventually creates a dmabuf fd.
-> 
-> Note that in virtio_gpu_remap_dmabuf(), we first try to test if
-> the VFIO dmabuf exporter supports mmap or not. If it doesn't, we
-> fall back to the vfio_device_mmap_dmabuf() API to get a mapping
-> created for the dmabuf.
+> Make the error handling more robust in virtio_gpu_init_udmabuf()
+> by introducing 'Error **' parameter to capture errors and an enum
+> to categorize Guest and Host errors. This allows for better error
+> reporting and handling of errors from virtio_gpu_create_udmabuf()
+> and virtio_gpu_remap_dmabuf().
 > 
 > Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
 > Cc: Alex Bennée <alex.bennee@linaro.org>
@@ -104,134 +94,154 @@ On 2026/02/23 17:00, Vivek Kasireddy wrote:
 > Cc: Cédric Le Goater <clg@redhat.com>
 > Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
 > ---
->   hw/display/meson.build         |  1 +
->   hw/display/vfio-dmabuf-stubs.c | 23 +++++++++++++++++++++++
->   hw/display/virtio-gpu-dmabuf.c | 32 ++++++++++++++++++++++++--------
->   3 files changed, 48 insertions(+), 8 deletions(-)
->   create mode 100644 hw/display/vfio-dmabuf-stubs.c
+>   hw/display/virtio-gpu-dmabuf.c | 65 +++++++++++++++++++++++++---------
+>   1 file changed, 48 insertions(+), 17 deletions(-)
 > 
-> diff --git a/hw/display/meson.build b/hw/display/meson.build
-> index f5f92b1068..7d2bd839cc 100644
-> --- a/hw/display/meson.build
-> +++ b/hw/display/meson.build
-> @@ -70,6 +70,7 @@ if config_all_devices.has_key('CONFIG_VIRTIO_GPU')
->                       if_true: [files('virtio-gpu-base.c', 'virtio-gpu.c'), pixman])
->     if host_os == 'linux'
->       virtio_gpu_ss.add(files('virtio-gpu-dmabuf.c'))
-> +    virtio_gpu_ss.add(when: 'CONFIG_VFIO', if_false: files('vfio-dmabuf-stubs.c'))
->     else
->       virtio_gpu_ss.add(files('virtio-gpu-dmabuf-stubs.c'))
->     endif
-> diff --git a/hw/display/vfio-dmabuf-stubs.c b/hw/display/vfio-dmabuf-stubs.c
-> new file mode 100644
-> index 0000000000..12f016f0c5
-> --- /dev/null
-> +++ b/hw/display/vfio-dmabuf-stubs.c
-> @@ -0,0 +1,23 @@
-> +/*
-> + * Copyright (c) 2026 Intel and/or its affiliates.
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +#include "qemu/error-report.h"
-> +#include "qemu/iov.h"
-> +
-> +bool vfio_device_create_dmabuf(struct iovec *iov, unsigned int iov_cnt,
-> +                               int *fd, Error **errp)
-> +{
-> +    error_setg(errp, "VFIO dmabuf support is not enabled");
-> +    return false;
-> +}
-> +
-> +bool vfio_device_mmap_dmabuf(struct iovec *iov, unsigned int iov_cnt,
-> +                             void **addr, size_t total_size, Error **errp)
-> +{
-> +    error_setg(errp, "VFIO mmap dmabuf support is not enabled");
-> +    return false;
-> +}
-
-This is VFIO's implementation and shouldn't be here. Follow what
-hw/vfio/iommufd-stubs.c, the previously-mentioned example, does.
-
 > diff --git a/hw/display/virtio-gpu-dmabuf.c b/hw/display/virtio-gpu-dmabuf.c
-> index fdcf8e53a2..3f39371de1 100644
+> index 8d67ef7c2a..fdcf8e53a2 100644
 > --- a/hw/display/virtio-gpu-dmabuf.c
 > +++ b/hw/display/virtio-gpu-dmabuf.c
-> @@ -18,6 +18,7 @@
->   #include "ui/console.h"
->   #include "hw/virtio/virtio-gpu.h"
->   #include "hw/virtio/virtio-gpu-pixman.h"
-> +#include "hw/vfio/vfio-device.h"
->   #include "trace.h"
->   #include "system/ramblock.h"
->   #include "system/hostmem.h"
-> @@ -82,13 +83,21 @@ virtio_gpu_create_udmabuf(struct virtio_gpu_simple_resource *res, int *fd,
->   static bool virtio_gpu_remap_dmabuf(struct virtio_gpu_simple_resource *res,
->                                       Error **errp)
->   {
-> +    Error *mmap_err = NULL;
->       void *map;
+> @@ -27,7 +27,17 @@
+>   #include "standard-headers/linux/udmabuf.h"
+>   #include "standard-headers/drm/drm_fourcc.h"
 >   
->       map = mmap(NULL, res->blob_size, PROT_READ, MAP_SHARED, res->dmabuf_fd, 0);
->       if (map == MAP_FAILED) {
-> -        error_setg_errno(errp, errno, "dmabuf mmap failed");
-> +        error_setg_errno(&mmap_err, errno, "dmabuf mmap failed: ");
->           res->remapped = NULL;
-> -        return false;
+> -static void virtio_gpu_create_udmabuf(struct virtio_gpu_simple_resource *res)
+> +typedef enum VirtIOGPUErrorType {
+> +    VIRTIO_GPU_NO_ERROR = 0,
+> +    /* Guest is responsible for this error */
+> +    VIRTIO_GPU_GUEST_ERROR = 1,
+> +    /* Host is at fault for this error */
+> +    VIRTIO_GPU_HOST_ERROR = 2,
+
+include/qapi/error.h says:
+ > - Whenever practical, also return a value that indicates success /
+ >   failure.  This can make the error checking more concise, and can
+ >   avoid useless error object creation and destruction.  Note that
+ >   we still have many functions returning void.  We recommend
+ >   • bool-valued functions return true on success / false on failure,
+ >   • pointer-valued functions return non-null / null pointer, and
+ >   • integer-valued functions return non-negative / negative.
+
+Do what it says. Non-negative if *errp is set. Negative otherwise.
+
+> +} VirtIOGPUErrorType;
 > +
-> +        if (!vfio_device_mmap_dmabuf(res->iov, res->iov_cnt, &map,
-> +                                     res->blob_size, errp)) {
-> +            error_report_err(mmap_err);
-> +            return false;
-> +        }
-> +        error_free(mmap_err);
-> +        mmap_err = NULL;
+> +static VirtIOGPUErrorType
+> +virtio_gpu_create_udmabuf(struct virtio_gpu_simple_resource *res, int *fd,
+> +                          Error **errp)
+>   {
+>       g_autofree struct udmabuf_create_list *list = NULL;
+>       RAMBlock *rb;
+> @@ -36,7 +46,8 @@ static void virtio_gpu_create_udmabuf(struct virtio_gpu_simple_resource *res)
+>   
+>       udmabuf = udmabuf_fd();
+>       if (udmabuf < 0) {
+> -        return;
+> +        error_setg(errp, "udmabuf device not available");
+> +        return VIRTIO_GPU_HOST_ERROR;
 >       }
->       res->remapped = map;
->       return true;
-> @@ -145,7 +154,7 @@ bool virtio_gpu_have_udmabuf(void)
+>   
+>       list = g_malloc0(sizeof(struct udmabuf_create_list) +
+> @@ -45,7 +56,8 @@ static void virtio_gpu_create_udmabuf(struct virtio_gpu_simple_resource *res)
+>       for (i = 0; i < res->iov_cnt; i++) {
+>           rb = qemu_ram_block_from_host(res->iov[i].iov_base, false, &offset);
+>           if (!rb || rb->fd < 0) {
+> -            return;
+> +            error_setg(errp, "Could not find valid ramblock");
+
+It is a valid ramblock even if rb->fd < 0. It is just "incompatible" 
+with udmabuf.
+
+> +            return VIRTIO_GPU_GUEST_ERROR;
+>           }
+>   
+>           list->list[i].memfd  = rb->fd;
+> @@ -56,22 +68,30 @@ static void virtio_gpu_create_udmabuf(struct virtio_gpu_simple_resource *res)
+>       list->count = res->iov_cnt;
+>       list->flags = UDMABUF_FLAGS_CLOEXEC;
+>   
+> -    res->dmabuf_fd = ioctl(udmabuf, UDMABUF_CREATE_LIST, list);
+> -    if (res->dmabuf_fd < 0) {
+> -        warn_report("%s: UDMABUF_CREATE_LIST: %s", __func__,
+> -                    strerror(errno));
+> +    *fd = ioctl(udmabuf, UDMABUF_CREATE_LIST, list);
+> +    if (*fd < 0) {
+> +        error_setg_errno(errp, errno, "UDMABUF_CREATE_LIST: ioctl failed");
+> +        if (errno == EINVAL || errno == EBADFD) {
+> +            return VIRTIO_GPU_GUEST_ERROR;
+> +        }
+> +        return VIRTIO_GPU_HOST_ERROR;
+>       }
+> +    return VIRTIO_GPU_NO_ERROR;
+>   }
+>   
+> -static void virtio_gpu_remap_dmabuf(struct virtio_gpu_simple_resource *res)
+> +static bool virtio_gpu_remap_dmabuf(struct virtio_gpu_simple_resource *res,
+> +                                    Error **errp)
+>   {
+> -    res->remapped = mmap(NULL, res->blob_size, PROT_READ,
+> -                         MAP_SHARED, res->dmabuf_fd, 0);
+> -    if (res->remapped == MAP_FAILED) {
+> -        warn_report("%s: dmabuf mmap failed: %s", __func__,
+> -                    strerror(errno));
+> +    void *map;
+> +
+> +    map = mmap(NULL, res->blob_size, PROT_READ, MAP_SHARED, res->dmabuf_fd, 0);
+> +    if (map == MAP_FAILED) {
+> +        error_setg_errno(errp, errno, "dmabuf mmap failed");
+>           res->remapped = NULL;
+> +        return false;
+>       }
+> +    res->remapped = map;
+> +    return true;
+>   }
+>   
+>   static void virtio_gpu_destroy_dmabuf(struct virtio_gpu_simple_resource *res)
+> @@ -125,19 +145,30 @@ bool virtio_gpu_have_udmabuf(void)
 >   
 >   void virtio_gpu_init_dmabuf(struct virtio_gpu_simple_resource *res)
 >   {
-> -    Error *local_err = NULL;
-> +    Error *local_err = NULL, *vfio_err = NULL;
->       VirtIOGPUErrorType err;
+> +    Error *local_err = NULL;
+> +    VirtIOGPUErrorType err;
 >       void *pdata = NULL;
->       int fd;
-> @@ -158,12 +167,19 @@ void virtio_gpu_init_dmabuf(struct virtio_gpu_simple_resource *res)
->           err = virtio_gpu_create_udmabuf(res, &fd, &local_err);
->           if (err != VIRTIO_GPU_NO_ERROR) {
->               error_prepend(&local_err, "Cannot create dmabuf: ");
-> -            if (err == VIRTIO_GPU_GUEST_ERROR) {
-> -                qemu_log_mask(LOG_GUEST_ERROR,
-> -                              "Cannot create dmabuf: incompatible mem\n");
-> +
-> +            if (!vfio_device_create_dmabuf(res->iov, res->iov_cnt, &fd,
-> +                                           &vfio_err)) {
-> +                if (err == VIRTIO_GPU_GUEST_ERROR) {
-> +                    qemu_log_mask(LOG_GUEST_ERROR,
-> +                                  "Cannot create dmabuf: incompatible mem\n");
+> +    int fd;
+>   
+>       res->dmabuf_fd = -1;
+>       if (res->iov_cnt == 1 &&
+>           res->iov[0].iov_len < 4096) {
+>           pdata = res->iov[0].iov_base;
+>       } else {
+> -        virtio_gpu_create_udmabuf(res);
+> -        if (res->dmabuf_fd < 0) {
+> +        err = virtio_gpu_create_udmabuf(res, &fd, &local_err);
+> +        if (err != VIRTIO_GPU_NO_ERROR) {
+> +            error_prepend(&local_err, "Cannot create dmabuf: ");
+> +            if (err == VIRTIO_GPU_GUEST_ERROR) {
+> +                qemu_log_mask(LOG_GUEST_ERROR,
+> +                              "Cannot create dmabuf: incompatible mem\n");
 
-This logic is faulty. err is not set by vfio_device_create_dmabuf(), so 
-it reports a guest error even when the memory is compatible with 
-vfio_device_create_dmabuf() and it raised an error for a different reason.
+s/mem/memory/
+
+The log is not that long so we can have a full correct spelling.
+
+> +            }
+> +            error_report_err(local_err);
+
+This prints a message even for a guest error.
 
 Regards,
 Akihiko Odaki
 
-> +                }
-> +                error_report_err(local_err);
-> +                error_report_err(vfio_err);
-> +                return;
->               }
-> -            error_report_err(local_err);
-> -            return;
-> +            error_free(local_err);
-> +            local_err = NULL;
+>               return;
 >           }
->   
->           res->dmabuf_fd = fd;
+> -        virtio_gpu_remap_dmabuf(res);
+> -        if (!res->remapped) {
+> +
+> +        res->dmabuf_fd = fd;
+> +        if (!virtio_gpu_remap_dmabuf(res, &local_err)) {
+> +            error_report_err(local_err);
+>               return;
+>           }
+>           pdata = res->remapped;
 
 
