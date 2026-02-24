@@ -4,72 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F4A5F3C985
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 14:43:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91EBDF3C989
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 14:43:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vutbN-00010j-66; Tue, 24 Feb 2026 09:41:29 -0500
+	id 1vutbL-0000xJ-Dp; Tue, 24 Feb 2026 09:41:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1vutb4-0000UR-PU
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 09:41:12 -0500
-Received: from mail-ot1-x32b.google.com ([2607:f8b0:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1vutan-0000IP-CE
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 09:40:55 -0500
+Received: from mail-ot1-x32a.google.com ([2607:f8b0:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1vutay-0001Jj-Q9
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 09:41:07 -0500
-Received: by mail-ot1-x32b.google.com with SMTP id
- 46e09a7af769-7d196a2334fso4672853a34.1
- for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 06:41:04 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1vutal-0001He-Q8
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 09:40:53 -0500
+Received: by mail-ot1-x32a.google.com with SMTP id
+ 46e09a7af769-7d4bc6a8021so4347276a34.3
+ for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 06:40:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1771944063; x=1772548863;
+ d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1771944050; x=1772548850;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=zS7J+qqJPcQ7cLVuNEOG2Jh7oLn/8Y9sYx416nFLD3w=;
- b=1XB82pTYixnnPWPb0Rzo2gzuCJDUR6rmpUr0j77y6y2bjAUL1FnsP3LrAwZuoa/J7N
- Eq/Z+XHVsNmtD5X6l4GOSxwrw1BnYAJoJP4uZGhjNrNSbW3H18s/h4ddJiAcnH2AmWiN
- Y1bgATz+g6e3Q6M//M9+pUnv9EMqba1On0/B9O7i07LOvtGw6jjYjzO/xHeTR+ZEeFyy
- RttNe/XGg1xiowsYTp0XSmreE/7PTYqIM9J8H1rDYhnADTFSMVxckG7m9hGw6lPC99wq
- 9uAwN9PS894+tNYZiCYnjLu287wLPlA+5Z22iKPQrN6iHWOYAQMGE+sokTggDK7uuy+3
- f9jg==
+ :reply-to; bh=1ybcbFI1+bWLheJn1D4q055qQBEYMdVh+FDDr2mQnLA=;
+ b=qsR5pYY8zaXE0beCBtg+QAdol89txktL+sTlYLwHJtSoe4G4DWSBaPZSx8mcSfTgwX
+ 0PYCHPS2iBqFN82Zv6YX2I2GdnsiaSSkLEJhMCTYMymXyQ9nX23/90qpDz5fgk1eo8Ti
+ J2bVkA0xGOQ9xfWFTWm/GShdCGE9UtXVPwGzbFOqapGJn6MIrRfgJeWcZd52TpWwoPkf
+ xxFB8IoWJMME7YBJ+mlQdEqmZTEcvGMIlqVQ+jqG7hyIeZH6XyY3B1a6ytFZee1ZcEjV
+ 1Pv0Di9D8Ou/RHSGr/jbiiN3avaDZPxq3LzGnGKUFu/PjGow4JteI6Ml5GoOOt78mLD/
+ zWxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771944063; x=1772548863;
+ d=1e100.net; s=20230601; t=1771944050; x=1772548850;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=zS7J+qqJPcQ7cLVuNEOG2Jh7oLn/8Y9sYx416nFLD3w=;
- b=vOTMiIYeVVcaGHgksB1kXMkhPRcNP8zsWuoSAnnJyxvTEiwCHe7yQ0uDQdcFfFz7Ku
- I/PtAAKSJlDy49DLbk5bsr9oepz5MpGOQndcNknxUpC5wH8ouX4XTQPyRRAyEIguXnFG
- Dloke8hXmUC8S354ulGJRFCM0RWEWQlQLvMbLW83UcpmkM/m0AXiw/RANLk5EdUbDwRr
- oiNm7aPvMLP0h/JN8bsqlQH4f5VjCWZ2lM+1ABGW0XzcA4riOwBn58HRZmxQATlQJlgE
- +ZufLS17pcpYvVbYOhwXP7DmkAf/fe9a69FmI7OXxIh8gGGbPULjvMvVrWixs0WuLdkx
- 2ldw==
-X-Gm-Message-State: AOJu0Yy+o2pbnJ4WG67Sv5qi74syJnpOFEfovqyeIlV08k40EVyl2oi7
- edZ6NLMttnuAAD//Oblw0tSs1FTfYn6JGlvg1BTSGMl0MDZSi0gioalkI93eqXxr5YHaWs7vDdN
- jaCQOmRc=
-X-Gm-Gg: AZuq6aIppZ3ImbaZJm96OZdWsiLcPqh7GzfxCF2QvmTcIhQumcsYqrQQKnwayXPGnRQ
- 7M4y0D1lUYo4Hh/WAmDickzo44W3VfQQKJHSopmJhHuYobBC3UA/lSdhgEm5dqD9gJL4uBAASXM
- fzMIc1GY1Skyk6Imam74KZ8puPmy7/o8BR3lg7EorbSgVmR3HokgPugRCuPIaF3uTiVYXimMzgm
- wIg8K4YpBq0KjRcezNxF+o/Fcnb1/6BbH3277NjRU7a+4avYhijpr4P6/RQi0Xa4vGIhYrxhU8r
- t0ZF2KNFtfJGcjdloSY6cCZ4xxVpW7p4tt9GE60qa2i8D8d/N0OlQ3sXLihsUaBmZTd7ZWyjUop
- a6wwZf7T3aq+H5aCxJo+PWil8YiBQQOwZxwz3kb0os4POWb/4Fjrc7Nsx53AQ6z4jIXnaRzc1wW
- Ee2bZj7WyiXQ==
-X-Received: by 2002:a05:6830:3784:b0:7cf:d784:5d6 with SMTP id
- 46e09a7af769-7d572f2182fmr108801a34.5.1771944063422; 
- Tue, 24 Feb 2026 06:41:03 -0800 (PST)
+ bh=1ybcbFI1+bWLheJn1D4q055qQBEYMdVh+FDDr2mQnLA=;
+ b=U32aG6RjgL44JvnCjUbRUv8LTq2YIMgNMksm1P/wx2r08rDUbCRQfVpaB/VPMx4ccY
+ Q47O/SjHo8Bk3g+UfWz1QXFe4LWoV8AaU1XTWK/jNdahQlrui3U+Y2IkPZ6lUCvrrFYW
+ nTm9Ci55Z11kKU2GJEfmrCfYj0O+WWhn5By/wUe1GvQJAf2nqREJc6zIGNtsN8kRQNTp
+ qeRwy+g29xindDOk/5wvFfBAQ1FIyvib3O/naADjlNApcC4D6xohRaZXqRaKaKVgTktS
+ fsQwph7bBEA4CKkm0W8Mc6c12pb9m0XiUPTHp7xnXpVrYwN6oc8YFayzvkFgqkM+X10E
+ Mphw==
+X-Gm-Message-State: AOJu0YxgZt9bbNbiYGUohQm1BPf1cErz08QzRuo/1h4v1Uwk/zDYspfq
+ OkLUw7oUYlivRfMG8PQvIvJr72uXcuEVRLqOwfRTcI3BguILIDM+2PCfUIeHM+LccH565ykYuwb
+ 81ujjtYE=
+X-Gm-Gg: AZuq6aI+FGWWREGUOMNbCS+alSoIThrl13X9hczo6qgdXtiun10qd79dAhvk/TCcopi
+ IEDqmdpKc8P0rB4Sxb15j/locy1vl4NzLN+3dicfYFEdAhXgM/8Zb5dTrDeApiNKW8m/DTZgL1k
+ PJNp27RB5vz7mYFvoPSggHY+Tf9JWUAdS/XKHxgMyRoSaNr+oaguiY9NhZr5vQTjY3oxk4QxoB9
+ fvkrQX/on6syj1V1GrdCdmURP+1U6UbE5L5CB/pO5uhf4bYEmCHPkKxdt8JwPeihhou6nAB07ZO
+ FHzQCjFjPdnlHLCOXLIl+ctwb+fSmLOR1b4qr1XlA2PN7gl3VmfePE/BPSaRtGTcyAq+pJOuYSy
+ uZUB3+vrNbWJo4uHvPZgxV0SWAvtX9ZJmab35yDVRZr+o+MxCyALkfsblKs2NvjNuizH8l01d+B
+ iX8JJzYyDQDQ==
+X-Received: by 2002:a05:6830:d13:b0:7c6:cedd:8bf8 with SMTP id
+ 46e09a7af769-7d52bf36eb1mr7352726a34.27.1771944050328; 
+ Tue, 24 Feb 2026 06:40:50 -0800 (PST)
 Received: from rebo.bsdimp.com ([50.253.99.174])
  by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-7d52cfa04dbsm10099393a34.12.2026.02.24.06.41.02
+ 46e09a7af769-7d52cfa04dbsm10099393a34.12.2026.02.24.06.40.49
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 24 Feb 2026 06:41:02 -0800 (PST)
+ Tue, 24 Feb 2026 06:40:49 -0800 (PST)
 From: Warner Losh <imp@bsdimp.com>
-Date: Tue, 24 Feb 2026 07:40:42 -0700
-Subject: [PATCH v4 18/24] bsd-user: Add do_bsd___semctl implementation
+Date: Tue, 24 Feb 2026 07:40:31 -0700
+Subject: [PATCH v4 07/24] bsd-user: Add target_to_host_semarray for
+ semaphore operations
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260224-bsd-user-claude-v4-18-8ee5ae17056f@bsdimp.com>
+Message-Id: <20260224-bsd-user-claude-v4-7-8ee5ae17056f@bsdimp.com>
 References: <20260224-bsd-user-claude-v4-0-8ee5ae17056f@bsdimp.com>
 In-Reply-To: <20260224-bsd-user-claude-v4-0-8ee5ae17056f@bsdimp.com>
 To: qemu-devel@nongnu.org
@@ -80,26 +81,26 @@ Cc: =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
  Riku Voipio <riku.voipio@iki.fi>, Warner Losh <imp@bsdimp.com>, 
  Stacey Son <sson@FreeBSD.org>, 
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
+ Richard Henderson <richard.henderson@linaro.org>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3664; i=imp@bsdimp.com;
- h=from:subject:message-id; bh=8NJRFkWVenCmCN9fl4wq9vrAx8yM1ZCHS2RCnfg5uZg=;
- b=owEBbQKS/ZANAwAKAWwc0Sh9sBEAAcsmYgBpnbho5XQLshfZIPyK4DKp1R18fs3eg6ItrCTV3
- zLB0mAo1h2JAjMEAAEKAB0WIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCaZ24aAAKCRBsHNEofbAR
- AB7pD/wOyC8MGj+K2ejx49igBJYYi6uuHRzk1tLFo/OqQrgO03PHraErx7uffwMdhL8Plgi1kYp
- iRb2NnzGaV9USt3Ft0/ET/G6ogxZUJ+XFsytr2yDKI2Nc6CIBKpDq7GfBbalD2dlY9sctIgzMUS
- QV/NsAA4Og22BHdq6Ei4zMd1ZpBonOhU6nO1e2vNeP6x2MH43tUeOSxQlVcteYhzsgSAt1uVkZN
- MqHex8fp0x74eBnhwWES1FYs2Y9Iwlsi7opTCpmd6fwZRJp9oCD5l/3t++PoKm9AZzQi1cuzp4g
- D1pdLIGaVdVzSKZyoOXnd3Fo22KDyqwOWG2jNjfAyoO8Fa+48YfDqmQZzyxg/INFu00wCsxMeTk
- irSc9Xb9lU434FbBfkcoUnuPvTFyGsbW3XvzjzRSs5CHuOcCm58MT4Fk2IsYldeRhvKYgbScTRn
- 2JoN5GRJtf0ur4ATVgEmMub2UWnweLR1JtSjqtgOrA/yEfTLdWSbq+UPWftRcRZ7/1CmwFtsAi/
- BlVI6cllQExL3x7acRcygKhd8U8qtrKC7OMlVFmhtz4F3XH9nEMTZ7NLmCPOm/PnybUTaFPKAT0
- ZFcXYBG/HtO/qvhy9DRnquZ64hAvTOZtAub7ZkLP9doPUDd78avcBvZgqlocidmt/EKtZRDiZuW
- eUDvJ/d2dO1eBGQ==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1745; i=imp@bsdimp.com;
+ h=from:subject:message-id; bh=eU3/9GcsUmR7R6CZ+cId5a+3Dosb9k3GJT2jhlhOAhM=;
+ b=owEBbQKS/ZANAwAKAWwc0Sh9sBEAAcsmYgBpnbhnGN+YwNESLy8mJMwQDw8EPCVFiMa9plLKn
+ MJ66fajW3uJAjMEAAEKAB0WIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCaZ24ZwAKCRBsHNEofbAR
+ AAMgD/9UbkE1D8oGSSjnHW92+bMITWaw3bKeLfOm5rh9uywdNJ545vR9FzFxgZSmnJPlnWxRUgs
+ eXuXcx3XkHZn5GGKvbpaqLfd0MZ8rG2raklLzSVna9iogVoIXuubDw1QDB1jKhqJ8EzjPZ9Kdr9
+ xgmd1kuEEvtXUx3I1VahyabkvLaHoeZyjUEEs+ZubQ+QiNOcE3UWpU9MuAAe0FN25w2+Ur77/RK
+ YKHitNl4zZkHwF1qBPeUts2GiTSaZ+dOqLlpYDDzbhdRDscbeXsaBe09cs5MUlK/Ybb3rK11hPI
+ krSGd3EZ9P3MFxNg47oWyz7+PRhVynXDXIkbl30rrJ5bOiZzK8PL6GizsRBk6ar9acZM79mCNo9
+ FsNOnt0ZuwOZ8kl0PtOcNV39IxQR4m3nSxbHALhqLPVz9wOOP2tdt5LxeBQCccki8G4qmf6uR7y
+ kE+U1VBh5G3nlrhygC2YBY+Tj+V6L5XLBcGFlHTPPSEh9P2smqOi5xtmPF4wE36/aFgallr8n30
+ uW0Rfr+3NW+R7ssyAR99xMvrxldzKhsmjOM5zzg4QdQYElfepOkCPCGLzx3NDmwxxH9EKOXhi0J
+ eSxbFI0J0m5lsMnUN3eTjCMHCVBDRyD+972M7Ol41qMZz5b1zpWjYaKntZPH8XI5hUJ1v6FDxDU
+ b8I7SEnOq13KhRg==
 X-Developer-Key: i=imp@bsdimp.com; a=openpgp;
  fpr=2035F894B00AA3CF7CCDE1B76C1CD1287DB01100
-Received-SPF: none client-ip=2607:f8b0:4864:20::32b;
- envelope-from=imp@bsdimp.com; helo=mail-ot1-x32b.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::32a;
+ envelope-from=imp@bsdimp.com; helo=mail-ot1-x32a.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -123,139 +124,66 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Stacey Son <sson@FreeBSD.org>
 
-Add implementation of __semctl(2) syscall for System V semaphore control
-operations. Handles command translation, endianness conversion for GETVAL/
-SETVAL, and array/structure conversions for GETALL/SETALL/IPC_STAT/IPC_SET.
+Add target_to_host_semarray() to convert target semaphore array to host
+format for semctl(2) SETALL operations.
 
 Signed-off-by: Stacey Son <sson@FreeBSD.org>
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Warner Losh <imp@bsdimp.com>
 ---
- bsd-user/bsd-misc.h | 111 ++++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 111 insertions(+)
+ bsd-user/bsd-misc.c | 35 +++++++++++++++++++++++++++++++++++
+ 1 file changed, 35 insertions(+)
 
-diff --git a/bsd-user/bsd-misc.h b/bsd-user/bsd-misc.h
-index e1e552b58f..72b3db0b74 100644
---- a/bsd-user/bsd-misc.h
-+++ b/bsd-user/bsd-misc.h
-@@ -99,6 +99,117 @@ static inline abi_long do_bsd_semop(int semid, abi_long ptr, unsigned nsops)
-     return semop(semid, sops, nsops);
- }
+diff --git a/bsd-user/bsd-misc.c b/bsd-user/bsd-misc.c
+index 68b67f37ba..d1645db46b 100644
+--- a/bsd-user/bsd-misc.c
++++ b/bsd-user/bsd-misc.c
+@@ -7,6 +7,11 @@
+  */
+ #include "qemu/osdep.h"
  
-+/* __semctl(2) */
-+static inline abi_long do_bsd___semctl(int semid, int semnum, int target_cmd,
-+                                       abi_ptr un_ptr)
++#define _WANT_SEMUN
++#include <sys/types.h>
++#include <sys/ipc.h>
++#include <sys/msg.h>
++#include <sys/sem.h>
+ #include <sys/uuid.h>
+ 
+ #include "qemu.h"
+@@ -33,3 +38,33 @@ abi_long host_to_target_uuid(abi_ulong target_addr, struct uuid *host_uuid)
+     unlock_user_struct(target_uuid, target_addr, 1);
+     return 0;
+ }
++
++abi_long target_to_host_semarray(int semid, unsigned short **host_array,
++        abi_ulong target_addr)
 +{
-+    void *target_un;
-+    union semun arg;
-+    struct semid_ds dsarg;
-+    unsigned short *array = NULL;
-+    int host_cmd;
-+    abi_long ret = 0;
-+    abi_long err;
-+    abi_ulong target_array, target_buffer;
++    abi_long ret;
++    int nsems, i;
++    unsigned short *array;
++    union semun semun;
++    struct semid_ds semid_ds;
 +
-+    switch (target_cmd) {
-+    case TARGET_GETVAL:
-+        host_cmd = GETVAL;
-+        break;
-+
-+    case TARGET_SETVAL:
-+        host_cmd = SETVAL;
-+        break;
-+
-+    case TARGET_GETALL:
-+        host_cmd = GETALL;
-+        break;
-+
-+    case TARGET_SETALL:
-+        host_cmd = SETALL;
-+        break;
-+
-+    case TARGET_IPC_STAT:
-+        host_cmd = IPC_STAT;
-+        break;
-+
-+    case TARGET_IPC_SET:
-+        host_cmd = IPC_SET;
-+        break;
-+
-+    case TARGET_IPC_RMID:
-+        host_cmd = IPC_RMID;
-+        break;
-+
-+    case TARGET_GETPID:
-+        host_cmd = GETPID;
-+        break;
-+
-+    case TARGET_GETNCNT:
-+        host_cmd = GETNCNT;
-+        break;
-+
-+    case TARGET_GETZCNT:
-+        host_cmd = GETZCNT;
-+        break;
-+
-+    default:
-+        return -TARGET_EINVAL;
++    semun.buf = &semid_ds;
++    ret = semctl(semid, 0, IPC_STAT, semun);
++    if (ret == -1) {
++        return get_errno(ret);
 +    }
-+
-+    /*
-+     * Unlike Linux and the semctl system call, we take a pointer
-+     * to the union arg here.
-+     */
-+    target_un = lock_user(VERIFY_READ, un_ptr, sizeof(union target_semun), 1);
-+
-+    switch (host_cmd) {
-+    case GETVAL:
-+    case SETVAL:
-+        __get_user(arg.val, (abi_int *)target_un);
-+        ret = get_errno(semctl(semid, semnum, host_cmd, arg));
-+        break;
-+
-+    case GETALL:
-+    case SETALL:
-+        __get_user(target_array, (abi_ulong *)target_un);
-+        err = target_to_host_semarray(semid, &array, target_array);
-+        if (is_error(err)) {
-+            goto out;
-+        }
-+        arg.array = array;
-+        ret = get_errno(semctl(semid, semnum, host_cmd, arg));
-+        err = host_to_target_semarray(semid, target_array, &array);
-+        break;
-+
-+    case IPC_STAT:
-+    case IPC_SET:
-+        __get_user(target_buffer, (abi_ulong *)target_un);
-+        err = target_to_host_semid_ds(&dsarg, target_buffer);
-+        if (is_error(err)) {
-+            goto out;
-+        }
-+        arg.buf = &dsarg;
-+        ret = get_errno(semctl(semid, semnum, host_cmd, arg));
-+        err = host_to_target_semid_ds(target_buffer, &dsarg);
-+        break;
-+
-+    case IPC_RMID:
-+    case GETPID:
-+    case GETNCNT:
-+    case GETZCNT:
-+        ret = get_errno(semctl(semid, semnum, host_cmd, NULL));
-+        break;
-+
-+    default:
-+        ret = -TARGET_EINVAL;
-+        break;
++    nsems = semid_ds.sem_nsems;
++    *host_array = g_new(unsigned short, nsems);
++    array = lock_user(VERIFY_READ, target_addr,
++        nsems * sizeof(unsigned short), 1);
++    if (array == NULL) {
++        free(*host_array);
++        return -TARGET_EFAULT;
 +    }
-+out:
-+    unlock_user(target_un, un_ptr, 1);
-+    return ret;
++    for (i = 0; i < nsems; i++) {
++        __get_user((*host_array)[i], array + i);
++    }
++    unlock_user(array, target_addr, 0);
++
++    return 0;
 +}
-+
- /* getdtablesize(2) */
- static inline abi_long do_bsd_getdtablesize(void)
- {
 
 -- 
 2.52.0
