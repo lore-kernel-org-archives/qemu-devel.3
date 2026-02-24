@@ -4,77 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B4E9F3C9A9
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 15:58:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 464EFF3C9A8
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 15:58:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuun1-0006UA-DR; Tue, 24 Feb 2026 10:57:35 -0500
+	id 1vuunB-0006Vv-FI; Tue, 24 Feb 2026 10:57:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1vuumz-0006Tn-6i
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 10:57:33 -0500
-Received: from mail-vk1-xa30.google.com ([2607:f8b0:4864:20::a30])
+ id 1vuun6-0006VE-1d
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 10:57:40 -0500
+Received: from mail-vk1-xa35.google.com ([2607:f8b0:4864:20::a35])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1vuumx-0000nt-Ed
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 10:57:32 -0500
-Received: by mail-vk1-xa30.google.com with SMTP id
- 71dfb90a1353d-5688b639a19so2204347e0c.2
- for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 07:57:29 -0800 (PST)
+ id 1vuun3-0000pw-Uw
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 10:57:39 -0500
+Received: by mail-vk1-xa35.google.com with SMTP id
+ 71dfb90a1353d-56750cb34c8so4713482e0c.0
+ for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 07:57:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1771948647; x=1772553447; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=rm1Joy5Gd6XPfUlX1lJyX5EUsREqGJkWxY0WBpBmIiM=;
- b=XFEN12HVkjr9maoNCJFLMWb5a/gv4ZZ6xK0SadPaW59xkCf/YMQjQUbZ67IogidI72
- 4kanNMmdGb4agqb5PScM0wXtgJ7Z+T3Nzq4GDF4BDR/orV2xRnFnukuwAptv41ppUqj3
- pPVPD9S2AEgcFZ5AjlmGr9qaegxZWbgdehpEdvFndcqiFNFjlrNZN9GOAI1wqEh7Uwrq
- wPDuwyq1xK4TkMfDJ+egjMzLCjheFtspDky+K1A3g9iC8B5FIlb6gw0lsEbr+Z5joKjj
- cRpEhr/rSLRZC+iArt4PUM9mJDHsGDQ9z3ugUbvKKYnBq4d4eD1CXdzMTaJxcFy7jTN8
- 7jTQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771948647; x=1772553447;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1771948656; x=1772553456; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=rm1Joy5Gd6XPfUlX1lJyX5EUsREqGJkWxY0WBpBmIiM=;
- b=BcveEKv2NA8YhjtTXh+KxuZAVXhKoyy6WdguSB/1QHAd8DgpLKBfZizbUMhjEcqjyK
- jRSg5vVDDEjGAxsLAo3XgyMCSNyp2Yb2mvowPohijhSPLDw8I09pTJhiPX9/0FXqbxPq
- Ae0CIaXiHeunsT7S0SQAS2xt/Y9SqUNiz+vdAiy8V2lQOQd+j823uGCY0FBmY+Ay1uJS
- usjhqyOLeeIXH4PG2Q/a4qGy6trt1fXyL+ddiIR9DX2Cqo89PlxMIQdCYdolkVJ40aL2
- nlb238tvfPBcfIa7W/X/bg9w3MeeUxEZnwfczbtOFcmLmv4NDYn5W7ZYRZ/BpGvyQ02O
- mYJQ==
-X-Gm-Message-State: AOJu0YzEyEZr7xfpg4IdT1JYrf03LT+IA++9WVYdSfWBlIMoCCrbIW7w
- FHJ3ev374dao/u5S7AWBREGYX4+gButayLEfu0qKMnTjLaZ4XZMyUwN4zrF9ssdW
-X-Gm-Gg: ATEYQzxm3T7QacH4Ii/CNuSnUNr2IVM8N2WuHx2Wi4OfBx90ZcmyX2RQcX1cUvN7GIG
- APPCMfU7hiuWcx5e31K4ayPozoimzRm3lwXawOhelSlhBENy+PQN0ANR5MZM7vLJzh3TngsHMYG
- E9w1n4r8bi48ovxMKhT+bYYusUrqeVvyo0KL2eADMu+4mJFurzaRfBqzEf+ylzxMaAkhgJ0NbHE
- m5kWSRx3mQHnGCrLVS8R20gYPECoroRw8tsiXVN4Wn7OIU+uYQgr2vtAh4AvzS+xDS//P9tYqIl
- n83qGmipmCHYc6Z+T1/Pdbp60650AA2zJQi+OHfHsaUTjLr3j9nHzfiZ8lIcoOvlgUUDITbp4Qc
- hvItZ27/b+VQGxJFJAVtSWo8I/8TT6WzNMkVxD2VIDbm9OkqvaPeAoIA/TDCpJhxxYPi87y/vhY
- Sff+ZtsrpKjSgf84JeYD/ZWWO4JdfyszpQhVt5xBmGQaNKpPaUWONf6mpUrQ==
-X-Received: by 2002:a05:6102:c4b:b0:5fd:ee19:8b30 with SMTP id
- ada2fe7eead31-5feb30d4a33mr4684882137.35.1771948647462; 
- Tue, 24 Feb 2026 07:57:27 -0800 (PST)
+ bh=XGDY0x1qV7scWCj/d8xZ05T1lEHN+YAZifpPNfg7lYc=;
+ b=eYG8fqpN32mM7zPbUACydWcB7D+/962iqp7UpStLN1BmjxrGIGHRlzbFXndJKz7nxB
+ weILaJtKi+8I2UbU+VZiSREsgHdA3FdgwWm32Yj0b7fU6Dxu0JY020ZwZLrv+UEIO4eb
+ /Dioq+DCbVmergS56T0UnRccArQhTxw6s8gdpJ5d4xNgjXdsECiLHaxMr49Kmtw4iJFb
+ 4PWeMrWxmJM9j6tVTq6hwfL/xaKuOsPfGpjBV97GmYQBzPS7I2ZYAjk1PM5JFccPQ4au
+ +dLqNGuJ1ThQaDyXsZ8eq6o6478NVjjXHnq8odUsTrZNuGHG8CupIj+Mw0peO0FAxiH0
+ pSRw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1771948656; x=1772553456;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=XGDY0x1qV7scWCj/d8xZ05T1lEHN+YAZifpPNfg7lYc=;
+ b=AJpYb4Orm7lUqGMoj00ixzZ98R2eImhMqyjZuMHJb/wLtCJdI6mKnp9eL86RLh8DGE
+ tnke7JXE621IzJCQWOzOYZaiJQVETo5o21eGHH5weHOYb0cvfbHy1VgIJGTkUIbD7g/I
+ kipArNU2fXeBeectaJBX+UhjnDtKdXrchksE7axjzZn49CWdB11nGlxVkB14VIyobSBu
+ Zp3TOcwyIuq142AFbHwfkET7nndpMffFSF9MocWnAU/WS6RwT/m91C9VPaPVGEsxnpkr
+ 5MDRVeJ2/at70hxwd9t9tfQozDoRdzwrhMmOEStSWEXP+w6+WwmW1eJ18hdou4OM7DVG
+ bySQ==
+X-Gm-Message-State: AOJu0YxUQFFFoSV3luUN+sfmlE50Nv5SOOq6JLSCeD5CbB9BUDOC0o1l
+ mWqbHhXYJgvhxP3mUvyPH3cV/9ZhguC8+1hSCei/Q3OMJobv8vJ8LscSht32nCQ/
+X-Gm-Gg: ATEYQzy7Q+zkvqGdCG33qa02V0mwB97cSTZDyIHNeezhjiaqezIbwDgBO7ZLcevAPII
+ d/HZYY/ttkZByBlMyNgmqAWJE9BYkbIHdwA0fQN84zzfttSL4zneI4+ciyGQQXZEilZCZH0L9a6
+ 29lLHtgkGBwOFE75nFsMuYaks73TcajO7Ohp4LShrvlwkGReJXvk87p/ccXxeWrPFXi08xiNmJG
+ z/mB/GL2w9/NEM9emV40JtBHHvAAVBa9vUNqQ7fW0VrnslvCT6m5zuqOpzPcAsibFl+azVQcATV
+ MAHIIMjONFU0Dy/ofM44JLZQaH5csdfDbnl0g3xDtUHW2pmMTdP5+S6BdqCQ24GjqJ8IZSqMuGy
+ sAlX3YrRLsc3r7AhCLiUUUSVixn+Ph0GDn4gWprL7VNTWn+cZanPE0GVQBStQ4Jpk7qbUUCHuYh
+ rZuyzyQbgC5pdk6IfD3pu8UT46oLEOnqIqg2SLyJab5ppNtkVpucmAI90G5+yf0IVV7Flc
+X-Received: by 2002:a05:6122:3a15:b0:567:4576:534e with SMTP id
+ 71dfb90a1353d-568e470ad22mr6287463e0c.1.1771948655905; 
+ Tue, 24 Feb 2026 07:57:35 -0800 (PST)
 Received: from gmail.com (ip190-5-140-142.intercom.com.sv. [190.5.140.142])
  by smtp.gmail.com with ESMTPSA id
- ada2fe7eead31-5feb6204a47sm11185716137.2.2026.02.24.07.57.26
+ 71dfb90a1353d-568e595979dsm13204878e0c.20.2026.02.24.07.57.34
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 24 Feb 2026 07:57:26 -0800 (PST)
+ Tue, 24 Feb 2026 07:57:35 -0800 (PST)
 From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-To: qemu-devel@nongnu.org
+To: qemu-devel@nongnu.org,
+	Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Cc: mst@redhat.com, alex.bennee@linaro.org, bill.mills@linaro.org,
  edgar.iglesias@amd.com
-Subject: [PATCH v2 0/4] virtio: Add the virtio-msg transport
-Date: Tue, 24 Feb 2026 16:57:17 +0100
-Message-ID: <20260224155721.612314-1-edgar.iglesias@gmail.com>
+Subject: [PATCH v2 4/4] docs: Describe virtio-msg-amp-pci
+Date: Tue, 24 Feb 2026 16:57:21 +0100
+Message-ID: <20260224155721.612314-5-edgar.iglesias@gmail.com>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260224155721.612314-1-edgar.iglesias@gmail.com>
+References: <20260224155721.612314-1-edgar.iglesias@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a30;
- envelope-from=edgar.iglesias@gmail.com; helo=mail-vk1-xa30.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a35;
+ envelope-from=edgar.iglesias@gmail.com; helo=mail-vk1-xa35.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -99,100 +103,123 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
 
-This adds virtio-msg, a new virtio transport. Virtio-msg works by
-exchanging messages over a bus and doesn't rely on trapping and emulation
-making it a good fit for a number of applications such as AMP, real-time
-and safety applications.
-
-Together with the new transport, this series adds a PCI device that
-implements an AMP setup much like it could look if two SoC's would
-use virtio-msg across a PCI link.
-
-Current gaps and limitations:
-No support for SHM regions yet.
-Temporarily uses PCI Vendor Xilinx / Device 0x9039.
-
-The virtio-msg draft spec:
-https://github.com/Linaro/virtio-msg-spec/
-
-QEMU with these patches:
-https://github.com/edgarigl/qemu/tree/edgar/virtio-msg-rfc
-
-Linux with virtio-msg support:
-https://github.com/edgarigl/linux/tree/edgari/virtio-msg-6.17
-
-To try it, first build Linux with the following enabled:
-CONFIG_VIRTIO_MSG=y
-CONFIG_VIRTIO_MSG_AMP=y
-CONFIG_VIRTIO_MSG_AMP_PCI=y
-
-Boot linux on QEMU with a virtio-msg-amp-pci device, in this example
-with a virtio-net device attached to it:
-
- -device virtio-msg-amp-pci
- -device virtio-net-device,netdev=n0
- -netdev user,id=n0
-
-If you're running on a QEMU machine that has virtio-mmio enabled, e.g 
-ARM virt, you'll need to specify the virtio-bus for the device, otherwise
-QEMU will connect it to virtio-mmio. For ARM virt machines:
-
- -device virtio-msg-amp-pci
- -device virtio-net-device,netdev=n0,bus=/gpex-pcihost/pcie.0/virtio-msg-amp-pci/fifo0/virtio-msg/bus0/virtio-msg-dev
- -netdev user,id=n0
-
-Cheers,
-Edgar
-
-ChangeLog:
-
-v1 -> v2:
-* Clamp get_features block count.
-* Remove virtio notify_queue in favor of per queue vectors.
-* Enable NOTIFICATION_DATA.
-* Drop unpexpected responses rather than assert.
-* Fix msg handler bounds check.
-* Guard handlers against missing devices.
-* Respond to bus pings.
-* Add BUS_GET_DEVICES.
-* Fix use of uninitialized var in virtio_msg_reset_hold.
-* Fix EVENT_CONFIG message length.
-* amp-pci: Fix fifo offset computation.
-* amp-pci: Don't notify when dropping messages.
-* Document virtio_queue_get_rings.
-* Add virtio-msg-amp-pci.rst to index.rst.
-
-Edgar E. Iglesias (4):
-  virtio: Add virtio_queue_get_rings
-  virtio: Add the virtio-msg transport
-  hw/misc: Add generic virtio-msg AMP PCI device
-  docs: Describe virtio-msg-amp-pci
-
- docs/system/devices/virtio/index.rst          |   1 +
- .../devices/virtio/virtio-msg-amp-pci.rst     |  92 ++
- hw/misc/Kconfig                               |   7 +
- hw/misc/meson.build                           |   1 +
- hw/misc/virtio-msg-amp-pci.c                  | 361 +++++++
- hw/virtio/Kconfig                             |   4 +
- hw/virtio/meson.build                         |   5 +
- hw/virtio/virtio-msg-bus.c                    |  89 ++
- hw/virtio/virtio-msg.c                        | 986 ++++++++++++++++++
- hw/virtio/virtio.c                            |  16 +
- include/hw/virtio/spsc_queue.h                | 213 ++++
- include/hw/virtio/virtio-msg-bus.h            |  95 ++
- include/hw/virtio/virtio-msg-prot.h           | 949 +++++++++++++++++
- include/hw/virtio/virtio-msg.h                |  56 +
- include/hw/virtio/virtio.h                    |  14 +
- 15 files changed, 2889 insertions(+)
+Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
+---
+ docs/system/devices/virtio/index.rst          |  1 +
+ .../devices/virtio/virtio-msg-amp-pci.rst     | 92 +++++++++++++++++++
+ 2 files changed, 93 insertions(+)
  create mode 100644 docs/system/devices/virtio/virtio-msg-amp-pci.rst
- create mode 100644 hw/misc/virtio-msg-amp-pci.c
- create mode 100644 hw/virtio/virtio-msg-bus.c
- create mode 100644 hw/virtio/virtio-msg.c
- create mode 100644 include/hw/virtio/spsc_queue.h
- create mode 100644 include/hw/virtio/virtio-msg-bus.h
- create mode 100644 include/hw/virtio/virtio-msg-prot.h
- create mode 100644 include/hw/virtio/virtio-msg.h
 
+diff --git a/docs/system/devices/virtio/index.rst b/docs/system/devices/virtio/index.rst
+index c292101ade..f2d8c24353 100644
+--- a/docs/system/devices/virtio/index.rst
++++ b/docs/system/devices/virtio/index.rst
+@@ -21,6 +21,7 @@ can also be off-loaded to an external process via :ref:`vhost user
+    :maxdepth: 1
+ 
+    virtio-gpu.rst
++   virtio-msg-amp-pci.rst
+    virtio-pmem.rst
+    virtio-snd.rst
+    vhost-user.rst
+diff --git a/docs/system/devices/virtio/virtio-msg-amp-pci.rst b/docs/system/devices/virtio/virtio-msg-amp-pci.rst
+new file mode 100644
+index 0000000000..3290a75eec
+--- /dev/null
++++ b/docs/system/devices/virtio/virtio-msg-amp-pci.rst
+@@ -0,0 +1,92 @@
++Virtio-msg AMP PCI
++==================
++
++This document explains the setup and usage of the virtio-msg-amp-pci device.
++The virtio-msg-amp-pci is an emulated PCI device that provides a small
++set of features to enable virtio-msg over shared-memory queues.
++
++Overview
++--------
++
++Virtio-msg is a message-based virtio transport: instead of MMIO/PIO accesses
++to discover queues and kick the device, the guest driver exchanges small
++messages with QEMU. The virtio-msg-amp-pci device provides a PCI wrapper for
++an AMP-style shared-memory transport. Each FIFO is a point-to-point message
++channel backed by RAM and a doorbell register for notifications.
++
++QEMU exposes a virtio-msg bus per FIFO. Devices are attached under the
++``virtio-msg-amp-pci`` object and exchange virtio-msg protocol messages over
++the FIFO. MSI-X interrupts are used to notify the guest when QEMU enqueues
++messages for the driver.
++
++Use case
++--------
++
++Virtio-msg is a virtio transport where driver and device communicate over
++messages rather than using memory accesses that get trapped and emulated.
++Virtio-msg depends on a lower level virtio-msg-bus responsible for delivering
++these messages. In this case, we're using the virtio-msg AMP bus which moves
++messages back and forth using a FIFO on top of shared-memory and interrupts.
++
++The virtio-msg-amp-pci device exposes a BAR with RAM and doorbell registers
++so guests can implement the shared-memory FIFO protocol and QEMU implements
++the backend side of it.
++
++Virtio-msg-amp-pci PCI device
++-----------------------------
++
++The virtio-msg-amp-pci device has the following layout:
++
++- BAR 0: Registers (Version, features and notification/doorbell registers)
++- BAR 1: RAM for FIFOs
++- BAR 2: MSI-X table and PBA (created automatically)
++
++Each FIFO gets an MSI-X interrupt reserved for it and a dedicated doorbell
++register::
++
++        REG32(VERSION,  0x00)
++        REG32(FEATURES, 0x04)
++        REG32(NOTIFY0,  0x20)
++        REG32(NOTIFY1,  0x24)
++        REG32(NOTIFY2,  0x28)
++        And so on.
++
++Each FIFO uses a 16 KiB window in BAR 1 with the following layout:
++
++- 0 - 4 KiB: Reserved
++- 4 - 8 KiB: Driver queue
++- 8 - 12 KiB: Device queue
++- 12 - 16 KiB: Reserved
++
++The guest driver writes to the doorbell register to notify QEMU to process
++the driver queue. QEMU posts responses on the device queue and raises the
++FIFO's MSI-X vector to notify the guest.
++
++How Does virtio-msg-amp-pci Compare to virtio-pci Emulation?
++------------------------------------------------------------
++
++Both virtio-msg-amp-pci and virtio-pci emulate PCI devices and allow users
++to plug virtio devices behind them. The main difference is in how the
++guest uses virtio-msg vs virtio-pci to discover and configure the virtio dev.
++
++Virtio-msg-amp-pci Usage
++------------------------
++
++A virtio-msg-amp-pci can be created by adding the following to the QEMU
++command-line::
++
++    -device virtio-msg-amp-pci
++
++Virtio devices can then be attached to the virtio-msg bus with for example
++the following::
++
++    -device virtio-rng-device,bus=/gpex-pcihost/pcie.0/virtio-msg-amp-pci/fifo0/virtio-msg/bus0/virtio-msg-dev
++
++Multiple virtio devices can be connected by using bus1, bus2 and so on.
++
++Device properties
++-----------------
++
++The virtio-msg-amp-pci device can be configured with the following properties:
++
++ * ``num-fifos`` number of FIFOs (default 1, max 8).
 -- 
 2.43.0
 
