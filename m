@@ -4,74 +4,118 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D242E9B248
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 10:04:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5CE9E9B24E
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 10:23:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vupGy-00041j-8T; Tue, 24 Feb 2026 05:04:08 -0500
+	id 1vupZB-000782-RQ; Tue, 24 Feb 2026 05:22:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vupGw-00041M-PD
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 05:04:06 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1vupZ8-00077d-41
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 05:22:55 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vupGt-0004Nz-No
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 05:04:06 -0500
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1vupZ5-0007Bs-P5
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 05:22:53 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771927441;
+ s=mimecast20190719; t=1771928570;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=5HHARSOmTxty/Ap1tfHt3z96ZsFPs29n2S6Oe0KifXY=;
- b=Ez8jXtFa+6c+rt3vkF8+72UCXTrCFUjqwiDuzo+j87y36bEQhuKrWO1GZZy9Mpy0P/pp+F
- AOkoIgfFs1uDK8WwvdfduwWlydKVZJCxIr/ZM5LilvS5w5rt2UtbXMNFywNQdCUKmDNoPl
- 1pl0lMFeTx7TGJe/slbUa04IGDzHh1k=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-652-RSrknTy5Nh-Ia_YG_s3q7g-1; Tue,
- 24 Feb 2026 05:03:59 -0500
-X-MC-Unique: RSrknTy5Nh-Ia_YG_s3q7g-1
-X-Mimecast-MFC-AGG-ID: RSrknTy5Nh-Ia_YG_s3q7g_1771927438
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B7F92195609D; Tue, 24 Feb 2026 10:03:57 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.13])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 06F3B30001BB; Tue, 24 Feb 2026 10:03:56 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 6042521E692D; Tue, 24 Feb 2026 11:03:54 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org,  armbru@redhat.com,  =?utf-8?Q?Marc-Andr=C3=A9?=
- Lureau <marcandre.lureau@redhat.com>,  qemu-rust@nongnu.org,  Zhao Liu
- <zhao1.liu@intel.com>
-Subject: Re: [PATCH v2 01/16] rust/qobject: add basic bindings
-In-Reply-To: <20260108131043.490084-2-pbonzini@redhat.com> (Paolo Bonzini's
- message of "Thu, 8 Jan 2026 14:10:28 +0100")
-References: <20260108131043.490084-1-pbonzini@redhat.com>
- <20260108131043.490084-2-pbonzini@redhat.com>
-Date: Tue, 24 Feb 2026 11:03:54 +0100
-Message-ID: <87jyw24fw5.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ bh=NyTNj0WrUG82kCnVjAgz2sgw9Aar9CWE6bbTe6ra1UY=;
+ b=cY5WinhgLoV4t3f96sWNs7dzfcj9HEsevWJMpHy/FZrAUKQ1ZHei7l49jujkGScb+RZ2kE
+ 0OQbLZdNvb6kkl1mvu5rq8U1ZwgDLFTgAKpmyS0ZfYVO2RiSiUuwaYB0f2iWsrEgvSPpWw
+ iyIk0jjpMbCeNcNXB5qs1jCmOsrNyWE=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-671-2nUx2MHNNy6-7cjh9TVxFA-1; Tue, 24 Feb 2026 05:22:47 -0500
+X-MC-Unique: 2nUx2MHNNy6-7cjh9TVxFA-1
+X-Mimecast-MFC-AGG-ID: 2nUx2MHNNy6-7cjh9TVxFA_1771928566
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-4376ecafb7fso3599752f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 02:22:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1771928566; x=1772533366; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=NyTNj0WrUG82kCnVjAgz2sgw9Aar9CWE6bbTe6ra1UY=;
+ b=tFJadGhIXHN1RaemclisQucb938szJZlvxIKUiNuKCe5ytIRk0qGQalj1BBAUfMxpL
+ 2xJaj7/MvbtOPJ9VJEJXOJ6GeJTiMssWRFAc+IWrAnKyrdqeblwQrle3m7j6R2XGFcqV
+ sv1ZnqCST7I0dmlUcLCrkeswtdpE50WDs7EJFrQbrOb4eKkVdM6Hd8qMzvr636KEjkc2
+ MSF9sw4mV6k6x3uUi2x1TPeSYKhUH/jfGrmFwM0HgLBP8zLBlzcG6Gwf+iO1eVmrS57t
+ BGPq7Jk4hMLlG/FViOC9zECBiwHHMPNQVeDppR+vlYoYkFbPqa8QNu17WAQjC9wQgfep
+ u4QQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1771928566; x=1772533366;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=NyTNj0WrUG82kCnVjAgz2sgw9Aar9CWE6bbTe6ra1UY=;
+ b=o8zDyANg7wGuy9/jnS3k5qT23Io4F18YSjXg326PbHGN98TglmV13blnzGjLWRshsR
+ ObiiCJSkmeprVS3UoHStApgprqGx2TYMjJvnGNjEBp9teUhjJa/67nlZnivzswiW1fBD
+ y6zyn5mtfWlLYSDJvqKfxw3MEZnTvV5sgsAgNH8M2TcFiVuyNdpJK8a9/IJnPdNMCJhr
+ DWLPT5dCkzOl3P9h4CpoQyfdD9kGZ3NR25g9+D64rMh32r/sYapi2vmoZIqRzvfca789
+ QpqBtgx+REVog06necAA8jBV+T/34RBEUUZP1xwoaur98yCWcc0BaAPGOBN5jtSHGqZt
+ I19w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUSTxm0FeAXn6V5vy0LTHhpXrrVOcdgElnOr93Q3RXkd5WPrz7G3Om3FL0GJQahfJ383K8SynTKN7za@nongnu.org
+X-Gm-Message-State: AOJu0YzRWCce820VvXt0PElk2vH9GvcS6/+j3TSn8c6ro4LmwpXrHQNj
+ skHSSt0rNNmJM8EVTxx5PNQt0YKOkrOQbdtIUs7N4MRMKyMBAmZ7QV2QKuN01EkSuoaqGQPYCzf
+ F/vv13M/X17+4xZAbq+GPsszDEbkMab8ZWUDh55xpz4uMYLACLKcO4s/O
+X-Gm-Gg: ATEYQzyK8yhcvZCozqodCgdHUHa+F4G+1xxaLbcID6Sn03P2uY//F6vIO0JpRbPVI7l
+ CFtRXFth+CBHQY4596pqv7UQ3M/KrNZ+jciRJMXE/VnfRzbDuFp3Zmrr1XOx7e4AW0gcDlszL+o
+ duOjgUcNx70fMtDcI8O1YACA0+5CbU1ppfzEqTDEv1o3LFY3XlD/0xyFByoAwxlTn3JNkNYWP9n
+ BDhgjJAy2OH+0jvv3UYnUlFIiCK3yndVOGlqFypDhkk5y0pLUUY5FjWoKRqDexTuV5NyIIHcSuW
+ /c1FDErkap0llCRi71P9iTdmJ8qdy/J5XE2i2xXyNzNvQvNT30itevYRf+ODLVB0gbTP3Hghc+4
+ k1Toor98gCAh7jL4TXxkE5Vjzgdc+SyDoauA01erXPcZG4JKBUz/usx138wiyhFIsZSxglgusxr
+ 7YRxiNvyYyme2iKTtfgqSHaYbfeHo=
+X-Received: by 2002:adf:e7c2:0:b0:439:89e6:9776 with SMTP id
+ ffacd0b85a97d-43989e6980amr1435922f8f.25.1771928566362; 
+ Tue, 24 Feb 2026 02:22:46 -0800 (PST)
+X-Received: by 2002:adf:e7c2:0:b0:439:89e6:9776 with SMTP id
+ ffacd0b85a97d-43989e6980amr1435866f8f.25.1771928565817; 
+ Tue, 24 Feb 2026 02:22:45 -0800 (PST)
+Received: from [192.168.10.81] ([151.95.144.138])
+ by smtp.googlemail.com with ESMTPSA id
+ ffacd0b85a97d-4398bb96b90sm832650f8f.9.2026.02.24.02.22.43
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 24 Feb 2026 02:22:44 -0800 (PST)
+Message-ID: <2be88699-f77b-4236-a959-bc999a3e4caf@redhat.com>
+Date: Tue, 24 Feb 2026 11:22:42 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 03/10] accel: Add Nitro Enclaves accelerator
+To: Alexander Graf <graf@amazon.com>, qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, alex.bennee@linaro.org, philmd@linaro.org,
+ berrange@redhat.com, marcandre.lureau@redhat.com,
+ Cornelia Huck <cohuck@redhat.com>, mst@redhat.com,
+ Dorjoy Chowdhury <dorjoychy111@gmail.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Tyler Fanelli <tfanelli@redhat.com>, mknaust@amazon.com,
+ nh-open-source@amazon.com
+References: <20260218015151.4052-1-graf@amazon.com>
+ <20260218015151.4052-4-graf@amazon.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Content-Language: en-US
+In-Reply-To: <20260218015151.4052-4-graf@amazon.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -1
 X-Spam_score: -0.2
 X-Spam_bar: /
 X-Spam_report: (-0.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1.179, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.717,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -89,455 +133,152 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Paolo Bonzini <pbonzini@redhat.com> writes:
-
-> This is only a basic API, intended to be used by the serde traits.
->
-> Co-authored-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->  include/qobject/qobject.h    |   5 +-
->  rust/util/wrapper.h          |   7 +
->  rust/util/meson.build        |   6 +-
->  rust/util/src/lib.rs         |   4 +
->  rust/util/src/qobject/mod.rs | 331 +++++++++++++++++++++++++++++++++++
->  5 files changed, 350 insertions(+), 3 deletions(-)
->  create mode 100644 rust/util/src/qobject/mod.rs
->
-> diff --git a/include/qobject/qobject.h b/include/qobject/qobject.h
-> index 02f4c6a6eb2..567da7b6c51 100644
-> --- a/include/qobject/qobject.h
-> +++ b/include/qobject/qobject.h
-> @@ -35,7 +35,10 @@
->  #include "qemu/atomic.h"
->  #include "qapi/qapi-builtin-types.h"
->=20=20
-> -/* Not for use outside include/qobject/ */
+On 2/18/26 02:51, Alexander Graf wrote:
 > +/*
-> + * Not for use outside include/qobject/ (and Rust bindings, when they
-> + * have to redo inline functions here).
-
-Suggest "defined here".
-
+> + * Start the Enclave. This gets called when the first vCPU 0 enters its main
+> + * loop. At this point memory is set up and the EIF is loaded. This function
+> + * donates memory, adds vCPUs, and starts the enclave.
 > + */
->  struct QObjectBase_ {
->      QType type;
->      size_t refcnt;
-> diff --git a/rust/util/wrapper.h b/rust/util/wrapper.h
-> index b9ed68a01d8..0907dd59142 100644
-> --- a/rust/util/wrapper.h
-> +++ b/rust/util/wrapper.h
-> @@ -30,3 +30,10 @@ typedef enum memory_order {
->  #include "qemu/log.h"
->  #include "qemu/module.h"
->  #include "qemu/timer.h"
-> +#include "qobject/qnull.h"
-> +#include "qobject/qbool.h"
-> +#include "qobject/qnum.h"
-> +#include "qobject/qstring.h"
-> +#include "qobject/qobject.h"
-> +#include "qobject/qlist.h"
-> +#include "qobject/qdict.h"
-
-Is this file just for bindgen, and never actually fed to the C compiler?
-
-> diff --git a/rust/util/meson.build b/rust/util/meson.build
-> index 98629394afb..28593286134 100644
-> --- a/rust/util/meson.build
-> +++ b/rust/util/meson.build
-> @@ -37,8 +37,10 @@ _util_rs =3D static_library(
->        'src/prelude.rs',
->        'src/timer.rs',
->      ],
-> -    {'.': _util_bindings_inc_rs}
-> -  ),
-> +    {'.': _util_bindings_inc_rs,
-> +    'qobject': [
-> +      'src/qobject/mod.rs',
-> +    ]}),
->    dependencies: [anyhow_rs, libc_rs, foreign_rs, glib_sys_rs, common_rs],
->  )
->=20=20
-> diff --git a/rust/util/src/lib.rs b/rust/util/src/lib.rs
-> index 7d2de3ed811..96334466895 100644
-> --- a/rust/util/src/lib.rs
-> +++ b/rust/util/src/lib.rs
-> @@ -9,6 +9,10 @@
->  // for prelude-like modules
->  #[rustfmt::skip]
->  pub mod prelude;
+> +static void nitro_do_start(NitroAccelState *s)
+> +{
+> +    MachineState *ms = MACHINE(qdev_get_machine());
+> +    int nr_cpus = ms->smp.cpus;
+> +    int i, ret;
+> +    struct ne_enclave_start_info start_info = {
+> +        .flags = s->debug_mode ? NE_ENCLAVE_DEBUG_MODE : 0,
+> +        .enclave_cid = s->enclave_cid,
+> +    };
 > +
-> +#[macro_use]
-> +pub mod qobject;
+> +    ret = qemu_ram_foreach_block(nitro_donate_ram_block, s);
+> +    if (ret < 0) {
+> +        error_report("nitro: failed to donate memory");
+> +        exit(1);
+> +    }
 > +
->  pub mod timer;
->=20=20
->  pub use error::{Error, Result, ResultExt};
-> diff --git a/rust/util/src/qobject/mod.rs b/rust/util/src/qobject/mod.rs
+> +    for (i = 0; i < nr_cpus; i++) {
+> +        uint32_t cpu_id = 0;
+> +        if (ioctl(s->enclave_fd, NE_ADD_VCPU, &cpu_id) < 0) {
+> +            error_report("nitro: NE_ADD_VCPU failed: %s", strerror(errno));
+> +            exit(1);
+> +        }
+> +    }
+> +
+> +    ret = ioctl(s->enclave_fd, NE_START_ENCLAVE, &start_info);
+> +    if (ret < 0) {
+> +        switch (errno) {
+> +        case NE_ERR_NO_MEM_REGIONS_ADDED:
+> +            error_report("nitro: no memory regions added");
+> +            break;
+> +        case NE_ERR_NO_VCPUS_ADDED:
+> +            error_report("nitro: no vCPUs added");
+> +            break;
+> +        case NE_ERR_ENCLAVE_MEM_MIN_SIZE:
+> +            error_report("nitro: memory is below the minimum "
+> +                         "required size. Try increasing -m");
+> +            break;
+> +        case NE_ERR_FULL_CORES_NOT_USED:
+> +            error_report("nitro: requires full CPU cores. "
+> +                         "Try increasing -smp to a multiple of threads "
+> +                         "per core on this host (e.g. -smp 2)");
+> +            break;
+> +        case NE_ERR_NOT_IN_INIT_STATE:
+> +            error_report("nitro: not in init state");
+> +            break;
+> +        case NE_ERR_INVALID_FLAG_VALUE:
+> +            error_report("nitro: invalid flag value for NE_START_ENCLAVE");
+> +            break;
+> +        case NE_ERR_INVALID_ENCLAVE_CID:
+> +            error_report("nitro: invalid enclave CID");
+> +            break;
+> +        default:
+> +            error_report("nitro: NE_START_ENCLAVE failed: %s (errno %d)",
+> +                         strerror(errno), errno);
+> +            break;
+> +        }
+> +        exit(1);
+> +    }
+> +
+> +    s->enclave_cid = start_info.enclave_cid;
+> +    trace_nitro_enclave_started(s->enclave_cid);
+> +
+> +    /*
+> +     * Push enclave CID to all devices that need it.
+> +     * Each device handles its own connection (console, heartbeat).
+> +     */
+> +    {
+> +        BusState *sysbus = sysbus_get_default();
+> +        BusChild *kid;
+> +
+> +        QTAILQ_FOREACH(kid, &sysbus->children, sibling) {
+> +            DeviceState *dev = kid->child;
+> +            if (object_property_find(OBJECT(dev), "enclave-cid")) {
+> +                object_property_set_uint(OBJECT(dev), "enclave-cid",
+> +                                         s->enclave_cid, NULL);
+> +            }
+> +        }
+
+I think it makes more sense to have a "nitro bus" with its own subclass 
+and an enclave_started(NitroDevice *dev, int enclave_cid, Error **errp) 
+method.  Properties can be set with -device and that gets either awkward 
+or buggy pretty quickly.
+
+> +    }
+> +}
+> +
+> +/*
+> + * vCPU dummy thread function. The real vCPUs run inside the enclave.
+> + *
+> + * Based on dummy_cpu_thread_fn() from accel/dummy-cpus.c.
+> + */
+> +static void *nitro_vcpu_thread_fn(void *arg)
+> +{
+> +    CPUState *cpu = arg;
+> +    NitroAccelState *s = NITRO_ACCEL(current_accel());
+> +    sigset_t waitset;
+> +
+> +    rcu_register_thread();
+> +
+> +    bql_lock();
+> +    qemu_thread_get_self(cpu->thread);
+> +    cpu->thread_id = qemu_get_thread_id();
+> +    current_cpu = cpu;
+> +
+> +    sigemptyset(&waitset);
+> +    sigaddset(&waitset, SIG_IPI);
+> +
+> +    cpu_thread_signal_created(cpu);
+> +    qemu_guest_random_seed_thread_part2(cpu->random_seed);
+> +
+> +    /* vCPU 0 starts the enclave on first entry */
+> +    if (cpu->cpu_index == 0) {
+> +        nitro_do_start(s);
+> +    }
+
+Can you replace this with an async_run_on_cpu() call when vCPU 0 is 
+created (in nitro_start_vcpu_thread) and just reuse dummy_cpu_thread_fn()?
+
+Or alternatively with a machine ready notifier.
+
+> diff --git a/accel/stubs/nitro-stub.c b/accel/stubs/nitro-stub.c
 > new file mode 100644
-> index 00000000000..5744870ad1c
+> index 0000000000..186c8444f8
 > --- /dev/null
-> +++ b/rust/util/src/qobject/mod.rs
-> @@ -0,0 +1,331 @@
-> +//! `QObject` bindings
-> +//!
-> +//! This module implements bindings for QEMU's `QObject` data structure.
-> +//! The bindings integrate with `serde`, which take the role of visitors
-> +//! in Rust code.
+> +++ b/accel/stubs/nitro-stub.c
+> @@ -0,0 +1,11 @@
+> +/*
+> + * Nitro accel stubs for QEMU
+> + *
+> + * Copyright © 2026 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
 > +
-> +#![deny(clippy::unwrap_used)]
+> +#include "qemu/osdep.h"
 > +
-> +use std::{
-> +    cell::UnsafeCell,
-> +    ffi::{c_char, CString},
-> +    mem::ManuallyDrop,
-> +    ptr::{addr_of, addr_of_mut},
-> +    sync::atomic::{AtomicUsize, Ordering},
-> +};
-> +
-> +use common::assert_field_type;
-> +
-> +use crate::bindings;
-> +
-> +/// A wrapper for a C `QObject`.
-> +///
-> +/// Because `QObject` is not thread-safe, the safety of these bindings
-> +/// right now hinges on treating them as immutable.  It is part of the
-> +/// contract with the `QObject` constructors that the Rust struct is
-> +/// only built after the contents are stable.
-> +///
-> +/// Only a bare bones API is public; production and consumption of `QObj=
-ect`
-> +/// generally goes through `serde`.
-> +pub struct QObject(&'static UnsafeCell<bindings::QObject>);
-> +
-> +// SAFETY: the QObject API are not thread-safe other than reference coun=
-ting;
-> +// but the Rust struct is only created once the contents are stable, and
-> +// therefore it obeys the aliased XOR mutable invariant.
-> +unsafe impl Send for QObject {}
-> +unsafe impl Sync for QObject {}
-> +
-> +// Since a QObject can be a floating-point value, and potentially a NaN,
-> +// do not implement Eq
-> +impl PartialEq for QObject {
-> +    fn eq(&self, other: &Self) -> bool {
-> +        unsafe { bindings::qobject_is_equal(self.0.get(), other.0.get())=
- }
-> +    }
-> +}
-> +
-> +impl QObject {
-> +    /// Construct a [`QObject`] from a C `QObjectBase` pointer.
+> +bool nitro_allowed;
 
-It's spelled QObjectBase_.  More of the same below, not flagging again.
+Maybe all these *_allowed variables should be in a .c file in accel/.
 
-> +    /// The caller cedes its reference to the returned struct.
-> +    ///
-> +    /// # Safety
-> +    ///
-> +    /// The `QObjectBase` must not be changed from C code while
-> +    /// the Rust `QObject` lives
-> +    const unsafe fn from_base(p: *const bindings::QObjectBase_) -> Self {
-> +        QObject(unsafe { &*p.cast() })
-> +    }
-> +
-> +    /// Construct a [`QObject`] from a C `QObject` pointer.
-> +    /// The caller cedes its reference to the returned struct.
-> +    ///
-> +    /// # Safety
-> +    ///
-> +    /// The `QObject` must not be changed from C code while
-> +    /// the Rust `QObject` lives
-> +    pub const unsafe fn from_raw(p: *const bindings::QObject) -> Self {
-> +        QObject(unsafe { &*p.cast() })
-> +    }
-> +
-> +    /// Obtain a raw C pointer from a reference. `self` is consumed
-> +    /// without decreasing the reference count; therefore, the reference
-> +    /// is transferred to the `*mut bindings::QObject`.
-> +    pub fn into_raw(self) -> *mut bindings::QObject {
-> +        let src =3D ManuallyDrop::new(self);
-> +        src.0.get()
-> +    }
-> +
-> +    /// Construct a [`QObject`] from a C `QObjectBase` pointer.
-> +    /// The caller *does not* cede its reference to the returned struct.
-> +    ///
-> +    /// # Safety
-> +    ///
-> +    /// The `QObjectBase` must not be changed from C code while
-> +    /// the Rust `QObject` lives
-> +    unsafe fn cloned_from_base(p: *const bindings::QObjectBase_) -> Self=
- {
-> +        let orig =3D unsafe { ManuallyDrop::new(QObject::from_base(p)) };
-> +        (*orig).clone()
-> +    }
-> +
-> +    /// Construct a [`QObject`] from a C `QObject` pointer.
-> +    /// The caller *does not* cede its reference to the returned struct.
-> +    ///
-> +    /// # Safety
-> +    ///
-> +    /// The `QObject` must not be changed from C code while
-> +    /// the Rust `QObject` lives
-> +    pub unsafe fn cloned_from_raw(p: *const bindings::QObject) -> Self {
-> +        let orig =3D unsafe { ManuallyDrop::new(QObject::from_raw(p)) };
-> +        (*orig).clone()
-> +    }
-> +
-> +    fn refcnt(&self) -> &AtomicUsize {
-> +        assert_field_type!(bindings::QObjectBase_, refcnt, usize);
-> +        let qobj =3D self.0.get();
-> +        unsafe { AtomicUsize::from_ptr(addr_of_mut!((*qobj).base.refcnt)=
-) }
-> +    }
-> +}
-> +
-> +/// Rust equivalent of the C `QOBJECT` macro; for internal use only, bec=
-ause
-> +/// all access should go through `From` (which already returns [`QObject=
-`]
-> +/// or serde.
-
-(which already returns [`QObject`]),
-
-> +macro_rules! qobject {
-> +    ($qobj:expr) =3D> {{
-> +        let qobj: &bindings::QObjectBase_ =3D &$qobj.base;
-> +        // SAFETY: this `let` guarantees that either $qobj is a reference
-> +        // (not a raw pointer), or we're in an outer unsafe block
-> +        unsafe { QObject::from_base(qobj) }
-> +    }};
-> +}
-> +
-> +impl From<()> for QObject {
-> +    fn from(_null: ()) -> Self {
-> +        // Conversion of the C inline `qnull` function
-> +        unsafe { QObject::cloned_from_base(addr_of!(bindings::qnull_.bas=
-e)) }
-> +    }
-> +}
-
-Could we call C qnull() instead of using qnull_.base?
-
-> +
-> +impl<T> From<Option<T>> for QObject
-> +where
-> +    QObject: From<T>,
-> +{
-> +    fn from(o: Option<T>) -> Self {
-> +        o.map_or_else(|| ().into(), Into::into)
-> +    }
-> +}
-> +
-> +impl From<bool> for QObject {
-> +    fn from(b: bool) -> Self {
-> +        let qobj =3D unsafe { &*bindings::qbool_from_bool(b) };
-> +        qobject!(qobj)
-> +    }
-> +}
-> +
-> +macro_rules! impl_from_return_qnum_int {
-> +    ($t:ty) =3D> {
-> +        impl From<$t> for QObject {
-> +            fn from(n: $t) -> Self {
-> +                let qobj =3D unsafe { &*bindings::qnum_from_int(n.into()=
-) };
-> +                qobject!(qobj)
-> +            }
-> +        }
-> +    };
-> +}
-> +
-> +impl_from_return_qnum_int!(i8);
-> +impl_from_return_qnum_int!(i16);
-> +impl_from_return_qnum_int!(i32);
-> +impl_from_return_qnum_int!(i64);
-> +
-> +macro_rules! impl_from_return_qnum_uint {
-> +    ($t:ty) =3D> {
-> +        impl From<$t> for QObject {
-> +            fn from(n: $t) -> Self {
-> +                let qobj =3D unsafe { &*bindings::qnum_from_uint(n.into(=
-)) };
-> +                qobject!(qobj)
-> +            }
-> +        }
-> +    };
-> +}
-> +
-> +impl_from_return_qnum_uint!(u8);
-> +impl_from_return_qnum_uint!(u16);
-> +impl_from_return_qnum_uint!(u32);
-> +impl_from_return_qnum_uint!(u64);
-> +
-> +macro_rules! impl_from_return_qnum_double {
-> +    ($t:ty) =3D> {
-> +        impl From<$t> for QObject {
-> +            fn from(n: $t) -> Self {
-> +                let qobj =3D unsafe { &*bindings::qnum_from_double(n.int=
-o()) };
-> +                qobject!(qobj)
-> +            }
-> +        }
-> +    };
-> +}
-> +
-> +impl_from_return_qnum_double!(f32);
-> +impl_from_return_qnum_double!(f64);
-> +
-> +impl From<CString> for QObject {
-> +    fn from(s: CString) -> Self {
-> +        let qobj =3D unsafe { &*bindings::qstring_from_str(s.as_ptr()) };
-> +        qobject!(qobj)
-> +    }
-> +}
-> +
-> +impl<A> FromIterator<A> for QObject
-> +where
-> +    Self: From<A>,
-> +{
-> +    fn from_iter<I: IntoIterator<Item =3D A>>(it: I) -> Self {
-> +        let qlist =3D unsafe { &mut *bindings::qlist_new() };
-> +        for elem in it {
-> +            let elem: QObject =3D elem.into();
-> +            let elem =3D elem.into_raw();
-> +            unsafe {
-> +                bindings::qlist_append_obj(qlist, elem);
-> +            }
-> +        }
-> +        qobject!(qlist)
-> +    }
-> +}
-> +
-> +impl<A> FromIterator<(CString, A)> for QObject
-> +where
-> +    Self: From<A>,
-> +{
-> +    fn from_iter<I: IntoIterator<Item =3D (CString, A)>>(it: I) -> Self {
-> +        let qdict =3D unsafe { &mut *bindings::qdict_new() };
-> +        for (key, val) in it {
-> +            let val: QObject =3D val.into();
-> +            let val =3D val.into_raw();
-> +            unsafe {
-> +                bindings::qdict_put_obj(qdict, key.as_ptr().cast::<c_cha=
-r>(), val);
-> +            }
-> +        }
-> +        qobject!(qdict)
-> +    }
-> +}
-> +
-> +impl Clone for QObject {
-> +    fn clone(&self) -> Self {
-> +        self.refcnt().fetch_add(1, Ordering::Acquire);
-> +        QObject(self.0)
-> +    }
-> +}
-> +
-> +impl Drop for QObject {
-> +    fn drop(&mut self) {
-> +        if self.refcnt().fetch_sub(1, Ordering::Release) =3D=3D 1 {
-> +            unsafe {
-> +                bindings::qobject_destroy(self.0.get());
-> +            }
-> +        }
-> +    }
-> +}
-> +
-> +#[allow(unused)]
-> +macro_rules! match_qobject {
-> +    (@internal ($qobj:expr) =3D>
-> +        $(() =3D> $unit:expr,)?
-> +        $(bool($boolvar:tt) =3D> $bool:expr,)?
-> +        $(i64($i64var:tt) =3D> $i64:expr,)?
-> +        $(u64($u64var:tt) =3D> $u64:expr,)?
-> +        $(f64($f64var:tt) =3D> $f64:expr,)?
-> +        $(CStr($cstrvar:tt) =3D> $cstr:expr,)?
-> +        $(QList($qlistvar:tt) =3D> $qlist:expr,)?
-> +        $(QDict($qdictvar:tt) =3D> $qdict:expr,)?
-> +        $(_ =3D> $other:expr,)?
-> +    ) =3D> {
-> +        loop {
-> +            let qobj_ =3D $qobj.0.get();
-> +            match unsafe { &* qobj_ }.base.type_ {
-> +                $($crate::bindings::QTYPE_QNULL =3D> break $unit,)?
-> +                $($crate::bindings::QTYPE_QBOOL =3D> break {
-> +                    let qbool__: *mut $crate::bindings::QBool =3D qobj_.=
-cast();
-> +                    let $boolvar =3D unsafe { (&*qbool__).value };
-> +                    $bool
-> +                },)?
-> +                $crate::bindings::QTYPE_QNUM =3D> {
-> +                    let qnum__: *mut $crate::bindings::QNum =3D qobj_.ca=
-st();
-> +                    let qnum__ =3D unsafe { &*qnum__ };
-> +                    match qnum__.kind {
-> +                        $crate::bindings::QNUM_I64 |
-> +                        $crate::bindings::QNUM_U64 |
-> +                        $crate::bindings::QNUM_DOUBLE =3D> {}
-> +                        _ =3D> {
-> +                            panic!("unreachable");
-> +                        }
-> +                    }
-> +
-> +                    match qnum__.kind {
-> +                        $($crate::bindings::QNUM_I64 =3D> break {
-> +                            let $i64var =3D unsafe { qnum__.u.i64_ };
-> +                            $i64
-> +                        },)?
-> +                        $($crate::bindings::QNUM_U64 =3D> break {
-> +                            let $u64var =3D unsafe { qnum__.u.u64_ };
-> +                            $u64
-> +                        },)?
-> +                        $($crate::bindings::QNUM_DOUBLE =3D> break {
-> +                            let $f64var =3D unsafe { qnum__.u.dbl };
-> +                            $f64
-> +                        },)?
-> +                        _ =3D> {} // evaluate $other
-> +                    }
-> +                },
-> +                $($crate::bindings::QTYPE_QSTRING =3D> break {
-> +                    let qstring__: *mut $crate::bindings::QString =3D qo=
-bj_.cast();
-> +                    let $cstrvar =3D unsafe { ::core::ffi::CStr::from_pt=
-r((&*qstring__).string) };
-> +                    $cstr
-> +                },)?
-> +                $($crate::bindings::QTYPE_QLIST =3D> break {
-> +                    let qlist__: *mut $crate::bindings::QList =3D qobj_.=
-cast();
-> +                    let $qlistvar =3D unsafe { &*qlist__ };
-> +                    $qlist
-> +                },)?
-> +                $($crate::bindings::QTYPE_QDICT =3D> break {
-> +                    let qdict__: *mut $crate::bindings::QDict =3D qobj_.=
-cast();
-> +                    let $qdictvar =3D unsafe { &*qdict__ };
-> +                    $qdict
-> +                },)?
-> +                _ =3D> ()
-> +            };
-> +            $(break $other;)?
-> +            #[allow(unreachable_code)]
-> +            {
-> +                panic!("unreachable");
-> +            }
-> +        }
-> +    };
-> +
-> +    // first cleanup the syntax a bit, checking that there's at least
-> +    // one pattern and always adding a trailing comma
-> +    (($qobj:expr) =3D>
-> +        $($type:tt$(($val:tt))? =3D> $code:expr ),+ $(,)?) =3D> {
-> +            match_qobject!(@internal ($qobj) =3D>
-> +                $($type $(($val))? =3D> $code,)+)
-> +    };
-> +}
-> +#[allow(unused_imports)]
-> +use match_qobject;
+Paolo
 
 
