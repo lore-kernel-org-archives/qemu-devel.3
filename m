@@ -4,90 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2A16E9B250
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 12:11:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68DEAE9B25A
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 12:11:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vurFN-0005b3-4X; Tue, 24 Feb 2026 07:10:38 -0500
+	id 1vurFU-0005cW-3E; Tue, 24 Feb 2026 07:10:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vurFB-0005YP-Pb
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 07:10:25 -0500
-Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
+ id 1vurFF-0005Yw-N0
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 07:10:31 -0500
+Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vurF6-0005sH-8L
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 07:10:24 -0500
-Received: by mail-ej1-x633.google.com with SMTP id
- a640c23a62f3a-b8f92f3db6fso883470766b.0
- for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 04:10:19 -0800 (PST)
+ id 1vurF8-0005sz-8r
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 07:10:28 -0500
+Received: by mail-ed1-x534.google.com with SMTP id
+ 4fb4d7f45d1cf-65a36583ef9so53345a12.0
+ for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 04:10:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771935018; x=1772539818; darn=nongnu.org;
+ d=linaro.org; s=google; t=1771935020; x=1772539820; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=SrVJ9tdMlXwGedNfsdtlslEQzbHBYQL/tzdi3zI1jrg=;
- b=s5U6QSg0UJHkC9tz7eQ/GiNckPtIn5gcxipW+T3yxIxQ1+pMfk0w2iVE3iKTBbnoBB
- czID9cWSASprqB+zd7x49Z5q21Ak4gnGR4RdMC/sLsoccKT9oXiA4DlGXtLLQUMKglpk
- bZOtEH+kl01JrIZE0PEYulVFT4feduiEe6Bd/wMNoDyV1T8Z2LCl4q4dD6REsDbUHWR3
- JGD2lkBWo+7bVkOJEOMcfjscYXG3XdCiNRPXIcQjbXWLlSU+9vVIJE/9RuuEkBlyrFPw
- xSGp5dvapjIrOjQOUNi97jKXixrT6x/QQVv4lDOzhQLI8cvevOuPW5dd5/5jS/LIBQ9Q
- lSQg==
+ bh=2r5F7G6zukd8hzqhZtnhQrq7IzbWlPfcE0ATMILzLqc=;
+ b=zxFXRIFJfskH2xi21BSQOAzQyqeUv1vcxL+5whennNUtt3Sy64u8PEGZ4Uhf9flzaA
+ 2YxAeoxEkEoZeF9mV60qxRb6TGA1IftgNsrzFaJFpTtSSkftTiPUUeNDx2c03vs9qQHN
+ yhHEo2ZlQAeJtpk5hA0MniStH8KBEQhIucSS9c+k+dFgeePEL/jRXZpkO8n5husm06je
+ T2S8Vo0UzWRSwdINKOux6Yfv+o91nyZBFwAVhMrMjhrrvZSBpd9GVK3d2EqCwQXbcBgc
+ h9i8qenAeKIssJAxbeiDwbQDTKQ6C4Go/3XceaD4/b+AcJ8DiBrwajByfHbJI6escQtJ
+ OQBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771935018; x=1772539818;
+ d=1e100.net; s=20230601; t=1771935020; x=1772539820;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=SrVJ9tdMlXwGedNfsdtlslEQzbHBYQL/tzdi3zI1jrg=;
- b=SQh8iQzjHDfSPo1F4HEEmw79G4RKAanZEdtuKJKiHzBBriJwRiUFTBcQKDWL5diXpx
- ztq1U2z/csrXVI2Wqn3UosGcbYjiVtiC8xQP0D45y7p5DDvf9LhoK3vikzwcFcqmHaht
- VMak6VMz5k+2taolWb9UlIniPLhuNTfLNCwnPJrjrII6nr82hctYbIVk87pWX8dFw/d5
- Se69BQqZJm46i9burqlWr5/2cLgXpU7axpPCV5+ohafL1C3S7EWbiltj2x6OtldnjbrJ
- 0L/dEYgCtkWSO2PmgczOE5QZAnTajG2ZHpFJvqea/P76lWsmKCkcyVgJLlFTNnhTiL3K
- oMfQ==
-X-Gm-Message-State: AOJu0YziKIkhGM9mb5CAYo6Ydewyjt1f8qJFDftwZfAp7BWNXb7ggfQT
- 5dJpt8AbSTIOFEoBisQmXtrxIrQ235X721oxnS7HOcnnU6DBgoKr0IehsxKeHhE9x/g=
-X-Gm-Gg: ATEYQzzCJ4IPKM3B465bm5lJiOCVseuVibGx/p0tXCP5RgAGKeD77bVeqZ1KodH9Poh
- deU2jMCXc64T5hwPqXK1Ign+83IS6qqFdEkq7WevNiETF/Qh8hSPsHTmHfgnG9Ho8bycD+fKulb
- UmOt2MS4AbNPqdadMuhBt+r0x7ZS0NtJd0HrNsib9dU+KTSltxGrxYj7tD8l6GXlFU1LyyKVXGj
- syYvJtezqcKNkwJ8b4Fxf2bvQsNAF1oDeu6yO3uw1bn8WKMDADLZiUMqyL2OdXiOaRT6PU+sk+u
- kEBAfrEQZtrcZ7LRzRClbNuS88YW4UjNWq9Tz6nxsbn/7IvAIRQnOIVgcjBjRqdG3o2js7QpLra
- YHb2wE6HEWxw5IR18plUkz2olROpCvgeFrDxh/kP3nsjak+iEWxVCD/zK8fWZcCMXfSlIb0O+UT
- 1eDkHDT69gs847Usu7ZCovM3M=
-X-Received: by 2002:a17:907:3f9a:b0:b73:1634:6d71 with SMTP id
- a640c23a62f3a-b9081a4cbf1mr805748666b.26.1771935017847; 
- Tue, 24 Feb 2026 04:10:17 -0800 (PST)
+ bh=2r5F7G6zukd8hzqhZtnhQrq7IzbWlPfcE0ATMILzLqc=;
+ b=YDw/Wn8xHfZkE2N8HQ/XRf00UxXDVt4E9ak8g/B/+UuKg8hRHTO3EqvZjisELyIGgl
+ Pqo3L2toU2houJknaFcXIdra3VFojzCuvTI1nZQVX4AlAKG1hCoWOJx6YwNSegxZJksw
+ esjOyHur+QR+WUZ226TGDtYULAs8O/5QtH6paf1V3OszD9pUw+8Cwf+nrIGJdaj27GuI
+ Ody7+jzk5TDPb7AtZzpUMbZb0HmKjy6XRxgJ1UajXOcE+sdS6+5qU9H4vsDDrpEyWdIb
+ VzXrFHVfvmptGZ5O8caN8NLUutrxJtlXNag+A4qFLgjf1kFlOSuzTEn7sVYU45NKvgpW
+ q0rQ==
+X-Gm-Message-State: AOJu0YxLHc0GAG62YPO+4IIEjWX0mSv6H0LQZkjoW0kBtnnZDwPCqj6D
+ owChFdBaaxDWG14slHB55fJBHHvJVCQcKLyF4C7q9069AryvfsIVQpspNk0vMXMmjMo=
+X-Gm-Gg: ATEYQzxglQqADnRiQpkjsPIEHFgrArakwCrrwe+GjjmjEgOFQw7pw/wsRb7DvXsPgTj
+ ajpgu1OzgMk3qTj5R80BEuxemtHsWTgg//ETchBwtzuZw+J+6nXFbf5DV735GFyARXw3t+rz1WV
+ XOY+SKq3xupW5XTcFgKn2K5m/F7eBX9JVMsyoG/PJVPxXqmrPF+DmIcbIk5JZmXoxKGP91DRQ58
+ og0B8Jy/RV8aA/GaXfk8zPsx+jutJAbaQD7N15IiWBpIV+KTzA1RzZZnhN+5nuqqWiPh0zjjiuR
+ hYyg7hbbebDbD6S3/axPyp1kHwIfOAsH4/p5pk9GY021F6dcBZ1LT3wpnLksFRi+6Vhw5KGpJHF
+ XCtb5EIMUbMoAIOCbzdB68D92cYEA6u2+QVM7+2/KpXOsn34+iaBwUY7j9aeXet6Wv1S3YnUwrl
+ wREPeJtfZcY2BuhisJPT8aKLc=
+X-Received: by 2002:a05:6402:3581:b0:658:b9d8:1fbb with SMTP id
+ 4fb4d7f45d1cf-65ea4eb4ec6mr7382983a12.10.1771935020411; 
+ Tue, 24 Feb 2026 04:10:20 -0800 (PST)
 Received: from draig.lan ([185.124.0.126]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b9084e8b790sm421996066b.49.2026.02.24.04.10.15
+ 4fb4d7f45d1cf-65eab9a0844sm3531655a12.6.2026.02.24.04.10.16
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 24 Feb 2026 04:10:16 -0800 (PST)
+ Tue, 24 Feb 2026 04:10:18 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id E7BB05F8D0;
- Tue, 24 Feb 2026 12:10:14 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 261C65F8D5;
+ Tue, 24 Feb 2026 12:10:15 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH 4/8] PLAN.md: add plan for the current work
-Date: Tue, 24 Feb 2026 12:10:10 +0000
-Message-ID: <20260224121014.279248-5-alex.bennee@linaro.org>
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ eca <noreply@eca.dev>
+Subject: [PATCH 6/8] tests/tcg/aarch64: Add WFX instructions system test
+Date: Tue, 24 Feb 2026 12:10:12 +0000
+Message-ID: <20260224121014.279248-7-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260224121014.279248-1-alex.bennee@linaro.org>
 References: <20260224121014.279248-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::633;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x633.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::534;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x534.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,110 +104,159 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is entirely generated by ECA/Gemini using the
-gemini-3-flash-preview model. My initial prompt was:
+This commit adds a new system-mode TCG test to verify the behavior of
+WFI, WFE, WFIT, and WFET instructions on AArch64.
 
-  I want to generate a PLAN.md for a piece of development work. Recently
-  support for WFE was added for M-profile but I want to extend that
-  support to A-profile along side proper semantics for WFI, WFE, WFIT
-  and WFET instructions. That includes setting the full ISS fields for
-  the traps (RN and RV fields of the ISS encoding from WF* intructions).
-  See syn_wfx() for where we currently build this up. Keep in mind we
-  want each commit to be kept small and review-able while maintaining
-  bisect-ability. We also should think about how we can test and defend
-  the functionality in QEMU's testing suite.
+The test ensures:
+- WFI correctly wakes on a timer interrupt.
+- WFE returns immediately if the event register is set (via SEV).
+- WFIT and WFET correctly sleep until the specified timeout.
 
-This will form the "guide" for the agents next steps.
+🤖 Generated with [eca](https://eca.dev)
 
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Co-Authored-By: eca <noreply@eca.dev>
+
 ---
- PLAN.md | 77 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 77 insertions(+)
- create mode 100644 PLAN.md
+ajb:
+  - removed an excess setting of QEMU_OPTS in the Makefile
+---
+ tests/tcg/aarch64/system/wfx.c            | 113 ++++++++++++++++++++++
+ tests/tcg/aarch64/Makefile.softmmu-target |   2 +
+ 2 files changed, 115 insertions(+)
+ create mode 100644 tests/tcg/aarch64/system/wfx.c
 
-diff --git a/PLAN.md b/PLAN.md
+diff --git a/tests/tcg/aarch64/system/wfx.c b/tests/tcg/aarch64/system/wfx.c
 new file mode 100644
-index 00000000000..49f330b802d
+index 00000000000..59436c381fd
 --- /dev/null
-+++ b/PLAN.md
-@@ -0,0 +1,77 @@
-+# Plan: Extend WFX Support for A-profile
++++ b/tests/tcg/aarch64/system/wfx.c
+@@ -0,0 +1,113 @@
++/*
++ * WFX Instructions Test (WFI, WFE, WFIT, WFET)
++ *
++ * Copyright (c) 2024 Linaro Ltd
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
 +
-+This document outlines the plan to extend WFE support to A-profile ARM and ensure proper semantics for WFI, WFE, WFIT, and WFET instructions, including full ISS field support for traps.
++#include <stdint.h>
++#include <minilib.h>
 +
-+## 1. Syndrome Enhancements
++#define __stringify_1(x...) #x
++#define __stringify(x...)   __stringify_1(x)
 +
-+### 1.1 Update `syn_wfx` in `target/arm/syndrome.h`
-+- Modify `syn_wfx` to include `rd` (RN) and `rv` (Register Valid) fields.
-+- Ensure the bitfields match the ARM ARM for EC 0x01.
-+- Bit layout:
-+  - ISS[24]: CV
-+  - ISS[23:20]: COND
-+  - ISS[19:15]: RN (rd)
-+  - ISS[14]: RV
-+  - ISS[1:0]: TI
++#define read_sysreg(r) ({                                           \
++            uint64_t __val;                                         \
++            asm volatile("mrs %0, " __stringify(r) : "=r" (__val)); \
++            __val;                                                  \
++})
 +
-+### 1.2 Update WFX Syndrome Construction in Helpers
-+- In `target/arm/tcg/op_helper.c`, update `HELPER(wfi)`, `HELPER(wfit)`, and implement `HELPER(wfet)` to:
-+  - Check `is_a64(env)`.
-+  - For AArch64: Set `cv = 0` and `cond = 0xf`.
-+  - For AArch32: Maintain `cv = 1` and `cond = 0xe` (or pass the actual condition).
-+  - Pass the correct `rd` and `rv` based on the instruction.
++#define write_sysreg(r, v) do {                     \
++        uint64_t __val = (uint64_t)(v);             \
++        asm volatile("msr " __stringify(r) ", %x0"  \
++                 : : "rZ" (__val));                 \
++} while (0)
 +
-+## 2. Instruction Helpers and Translation
++#define isb() asm volatile("isb" : : : "memory")
++#define sev() asm volatile("sev" : : : "memory")
++#define wfi() asm volatile("wfi" : : : "memory")
++#define wfe() asm volatile("wfe" : : : "memory")
++#define wfit(reg) asm volatile("wfit %0" : : "r" (reg) : "memory")
++#define wfet(reg) asm volatile("wfet %0" : : "r" (reg) : "memory")
 +
-+### 2.1 Update `HELPER(wfit)` and `trans_WFIT`
-+- Change `HELPER(wfit)` to accept the register number `rd`.
-+- Update `trans_WFIT` in `target/arm/tcg/translate-a64.c` to pass `a->rd`.
++static void wait_ticks(uint64_t ticks)
++{
++    uint64_t start = read_sysreg(cntvct_el0);
++    while ((read_sysreg(cntvct_el0) - start) < ticks) {
++        /* spin */
++    }
++}
 +
-+### 2.2 Implement `HELPER(wfet)` and update `trans_WFET`
-+- Create `HELPER(wfet)` in `op_helper.c`. It should:
-+  - Check for traps using `check_wfx_trap(env, true, &excp)`.
-+  - If trapped, raise exception with `ti=1` and `rv=true, rd=rd`.
-+  - If not trapped, check `event_register` and timeout.
-+- Update `trans_WFET` to call the new helper instead of just setting `DISAS_WFE`.
++int main(void)
++{
++    uint64_t start, end, elapsed;
++    uint64_t timeout;
 +
-+### 2.3 Refactor `HELPER(wfe)` for A-profile
-+- Update `HELPER(wfe)` to handle A-profile:
-+  - Check for traps using `check_wfx_trap(env, true, &excp)`.
-+  - If trapped, raise exception.
-+  - If not trapped:
-+    - If `env->event_register` is set, clear it and return.
-+    - Otherwise, halt the CPU (`cs->halted = 1`, `cs->exception_index = EXCP_HLT`, `cpu_loop_exit`).
++    ml_printf("WFX Test\n");
 +
-+## 3. Wake-up Logic and Event Register
++    /* 1. Test WFI with timer interrupt */
++    ml_printf("Testing WFI...");
++    /* Setup virtual timer to fire in 100000 ticks (~2ms at 50MHz) */
++    start = read_sysreg(cntvct_el0);
++    write_sysreg(cntv_tval_el0, 100000);
++    write_sysreg(cntv_ctl_el0, 1); /* Enable timer, no mask */
++    isb();
 +
-+### 3.1 Update `HELPER(sev)`
-+- Ensure `event_register` is set for all CPUs, not just M-profile.
-+- Kick all other CPUs to wake them from `EXCP_HLT`.
++    /*
++     * We don't have a full interrupt handler, but WFI should wake up
++     * when the interrupt is pending even if we have it masked at the CPU.
++     * PSTATE.I is set by boot code.
++     */
++    wfi();
++    end = read_sysreg(cntvct_el0);
++    elapsed = end - start;
++    if (elapsed < 100000) {
++        ml_printf("FAILED: WFI woke too early (%ld ticks)\n", elapsed);
++        return 1;
++    }
++    ml_printf("PASSED (elapsed %ld ticks)\n", elapsed);
++    write_sysreg(cntv_ctl_el0, 0); /* Disable timer */
 +
-+### 3.2 Update `arm_cpu_has_work`
-+- Modify `target/arm/cpu.c` to check `event_register` for A-profile CPUs as well.
-+- This ensures that a CPU halted by WFE wakes up when the event register is set.
++    /* 2. Test WFE and SEV */
++    ml_printf("Testing WFE/SEV...");
++    sev(); /* Set event register */
++    start = read_sysreg(cntvct_el0);
++    wfe(); /* Should return immediately */
++    end = read_sysreg(cntvct_el0);
++    elapsed = end - start;
++    if (elapsed > 1000) { /* Should be very fast */
++        ml_printf("FAILED: WFE slept despite SEV (%ld ticks)\n", elapsed);
++        return 1;
++    }
++    ml_printf("PASSED\n");
 +
-+## 4. Testing and Verification
++    /* 3. Test WFIT */
++    ml_printf("Testing WFIT...");
++    start = read_sysreg(cntvct_el0);
++    timeout = start + 200000;
++    wfit(timeout);
++    end = read_sysreg(cntvct_el0);
++    elapsed = end - start;
++    if (elapsed < 200000) {
++        ml_printf("FAILED: WFIT woke too early (%ld ticks)\n", elapsed);
++        return 1;
++    }
++    ml_printf("PASSED (elapsed %ld ticks)\n", elapsed);
 +
-+### 4.1 TCG Tests
-+- Add a new test case in `tests/tcg/aarch64` that:
-+  - Executes WFI, WFE, WFIT, WFET.
-+  - Verifies that WFE/WFI halt the CPU and can be woken up.
-+  - (Optional) Exercises traps by running at EL0 with SCTLR_EL1.nTWE/nTWI = 0 and verifying the syndrome in a signal handler or a small EL1 kernel.
++    /* 4. Test WFET */
++    ml_printf("Testing WFET...");
++    start = read_sysreg(cntvct_el0);
++    timeout = start + 200000;
++    wfet(timeout);
++    end = read_sysreg(cntvct_el0);
++    elapsed = end - start;
++    if (elapsed < 200000) {
++        ml_printf("FAILED: WFET woke too early (%ld ticks)\n", elapsed);
++        return 1;
++    }
++    ml_printf("PASSED (elapsed %ld ticks)\n", elapsed);
 +
-+### 4.2 Regression Testing
-+- Ensure no regressions for M-profile WFE.
-+- Run `make check-qtest` and `make check-tcg`.
++    ml_printf("ALL WFX TESTS PASSED\n");
++    return 0;
++}
+diff --git a/tests/tcg/aarch64/Makefile.softmmu-target b/tests/tcg/aarch64/Makefile.softmmu-target
+index f7a7d2b800f..84342c52cd7 100644
+--- a/tests/tcg/aarch64/Makefile.softmmu-target
++++ b/tests/tcg/aarch64/Makefile.softmmu-target
+@@ -102,6 +102,8 @@ run-pauth-3:
+ 	$(call skip-test, "RUN of pauth-3", "not built")
+ endif
+ 
++wfx: CFLAGS += -march=armv8.7-a
 +
-+## Commit Breakdown (Proposed)
-+
-+1. `target/arm: Update syn_wfx to include RN and RV`
-+2. `target/arm: Update HELPER(wfi) to use correct CV/COND for AArch64`
-+3. `target/arm: Update HELPER(wfit) to accept rd and use correct syndrome`
-+4. `target/arm: Implement HELPER(wfet) and update trans_WFET`
-+5. `target/arm: Update HELPER(wfe) to implement proper A-profile semantics`
-+6. `target/arm: Update HELPER(sev) and arm_cpu_has_work for A-profile event register`
-+7. `tests/tcg/aarch64: Add tests for WFX instructions`
-+
-+🤖 Generated with [eca](https://eca.dev)
+ ifneq ($(CROSS_CC_HAS_ARMV8_MTE),)
+ QEMU_MTE_ENABLED_MACHINE=-M virt,mte=on -cpu max -display none
+ QEMU_OPTS_WITH_MTE_ON = $(QEMU_MTE_ENABLED_MACHINE) $(QEMU_BASE_ARGS) -kernel
 -- 
 2.47.3
 
