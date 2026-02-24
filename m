@@ -4,93 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 042FBE9B24E
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9F68E9B24D
 	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 11:21:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuqRh-0004PT-D3; Tue, 24 Feb 2026 06:19:17 -0500
+	id 1vuqTF-0005sj-HJ; Tue, 24 Feb 2026 06:20:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vuqRa-0004Ja-Ou
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 06:19:12 -0500
-Received: from mail-yx1-xb133.google.com ([2607:f8b0:4864:20::b133])
+ id 1vuqTD-0005eo-73
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 06:20:51 -0500
+Received: from mail-yx1-xb135.google.com ([2607:f8b0:4864:20::b135])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vuqRW-0002NE-Po
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 06:19:10 -0500
-Received: by mail-yx1-xb133.google.com with SMTP id
- 956f58d0204a3-64ad019bbd4so4910399d50.0
- for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 03:19:06 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1771931945; cv=none;
+ id 1vuqTB-0002yR-EW
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 06:20:50 -0500
+Received: by mail-yx1-xb135.google.com with SMTP id
+ 956f58d0204a3-64ad8435f46so4848340d50.1
+ for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 03:20:49 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1771932048; cv=none;
  d=google.com; s=arc-20240605;
- b=XhrkW7nV6zPfIUDof87SeCG1b2SnklhjkuEYqpaywIL2PpIdt8yo/VFNoB0gIFr7oh
- hykN3A8wa50gY30RNQZtKAZeUHam9okb8vWB4tuXEDCvoW/MeWanvq5RU5Bm9t81FbGV
- oVaGZMWbHMXTLRrJvAq3lGkRbINHlvD+QnycQwl/P7RSigzeL87LuYbj2vOHkFi8UOrl
- yZozuos+DYMLUWvqgybhFMqMFCBSsk8P4Jqoa/J13ZRFB+DPqebVwcsf4eMHzZWRxDUT
- MdP1yWaG8CbWEzRxQgqdUGNu47hLMbEh/YpWCbPnmJ7ruIsQV/vawlXN9QMw+VvmehQU
- GgFQ==
+ b=KiWzJxOnvd1izEV9TYvIDyfJQ+sk2T65nRCNpUtRUIhaMU+AOoeNVs+sJAHpSym2KB
+ aifLVWuNKDE5BHK6fngqMo0L0vd3zcKpDbcauKaJp75zU0oUK4uAIDimv7xta2Ok6btp
+ 52XFGlSPLnTWGxMMb7hy23S6AEXhDU4Dnjp07wwAKpofRI5d9iYcA0M1NipYZI0D3s1r
+ PCyoXH7J3+1jjDBa3blKml9KFQuq8MA8rb2hBY7fPeccJSACHc8zoXzGNzymxm95mvpv
+ Zs8uVZyQMNX0WMet05HK7ake7J4+1rUYuOHBbaE9FheANdCXFmKphu2T0JOdevCPIH2q
+ GYjA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=fXYhvyDAiOB/gOJXVnRH5ArU8/halpbC2KbQVxyDFoo=;
- fh=x18+ItHhoMt1uQi9qFsD2UgJewF1CZzzz8hcug2Jd4g=;
- b=giOH+kYiNeTiizRvP/HhbETFdY5SYv7SWRbpzNv8n3fOVo8Oj5qJbHjGrTK41gs3qK
- P9X1rvunoFQtYT+0osc3FE9GdlNrI6scCXG2KC2GAYmeFyKGt/Th6vw1K5IGHi8DuGnN
- jYMPkahKVfK66V9AkTnwJXLg2tN2iVfWYr25bNEo9wedS1vf3GtDwPmQC1q6Qd38yCHP
- 1p3nR+41cEPpNUeafBjEEO9xoy6Uxyr3ESDrd8tY/yvjIkqwEsbJytDuazEb3Jnyx/jM
- S3buvVG/9h7eQKi/BWEYNqyGPg3VYHC+dWHnddLV+ekMjlxY9grlDAjD4Al/+opC1lVB
- f8JA==; darn=nongnu.org
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=Iu0tbVQseP/ba2U+BTwo7uXn9iBtyXOY7Am9eLC7jcM=;
+ fh=ub/zH6y+WPJijJytJEhlCd5PKbYleOIQ1GJXfRlIPlM=;
+ b=eneA0gxJbZj96Tetmkl8jM9irdCnl9OFazOe+ECF5bbKsjnPUdV4Exko2/zT6W8N6o
+ Ptjw9KVJb29GGXK3shE1stwLlHkh3DnT6K+AaJE6ChKd+ewfMYl7Ykyyh4hExsgX3Fk7
+ O39kwXEZCmuQyO4/MOaoXnX6ZVdjETzjL31C5AyHDyWwMa4/Dv4WO5jLE1SQ411Nd4G8
+ q35YQ2BdrbQKAF4CGSmnGi78OSw6tjM1WfpM8G85toEJB/uulOk+szf4EdFKgnVvef00
+ Mi/y3Hm6kZJ4b9c4IYD9LMQN8Mntr90mu1GofIraLuB7qSlpcW+eAmmG/pyXsvbD3Y0j
+ ArzA==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771931945; x=1772536745; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=fXYhvyDAiOB/gOJXVnRH5ArU8/halpbC2KbQVxyDFoo=;
- b=l7LMZAgF8N+ZFiEko3QQSM0X/caCakO+T3mU/AOMMamLSE2YRHzP1P5q7mUeugCFPz
- qEXqH5Lp6mF+DiwWROMwV/dcr6NC1F/Vtn6fGNWvlyPxYNKMAvMtg4g7vpqQ4DUniygu
- /34bG16zoHtbd/maXQTnRE74gNtHJZiJ0yQUERqf1jOju+gqAQccuZHqDp1EGE/5pE4y
- ZV1Z3bPokSEv1eXRhM4LsKwVTKP4/yWxRpoG3hR0xMBa4nje03Gf0I+ftlckTK4sTexZ
- DFGwLE9yQik9+00MvRfpENXv/HpEZ1Sue9tKL7tA14uQVjRNHmAH9lW9YVdk3AFieKkQ
- Gc7Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771931945; x=1772536745;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1771932048; x=1772536848; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=fXYhvyDAiOB/gOJXVnRH5ArU8/halpbC2KbQVxyDFoo=;
- b=cIo3ISQU8JQxNXFriQDv1720DK8NYo+NEJVcB4akPftM8zG3lk2xkqmqw1QzdA9Xbx
- kqrQlPQ4yIyVoDVaaE3Fg4S4hHolUg8LCtCIeZ8GyISlCFZ4Ii4cJDkV0fEOkqZvloEN
- +FY8X/xisHXxCIOBBDFqdEYg1lFqL7paGY6IAS3t1WUtbjhKNBOMJy+78hrmR45Tvghv
- mRunESofKU4qQNw6yG+VUcIJfvG2gbzbzVV3jKqRXFViVBxsN1weBUKX4gp3ln555oJi
- 2QC5J6fmtD3cpScGDEKtO6JadJQnrCt65l02GM3iv3EYmyhVV2jtw6dYLcUbQYoXVYN4
- Kvjw==
-X-Gm-Message-State: AOJu0YwyoF4XK/besc9er79TQw615NGkWH0EO//YTaHeBU1VFuGW9P9Z
- efzg626029ymJyqsLTuMwd9RH6x6oV+uuRvqLvLeRS9NjMp4CqDzRohMDd0PLN3PsNhIPr5WtlM
- 4ojG7Cs/ls9c4NwNm9ji4DeHs3O8tLsko20r4UQDVZw==
-X-Gm-Gg: ATEYQzwQPms8lPSWEf20VGH0veGOzD7xOkCGICgM1cEIZjkJrCWx86Rg++BTqmN9oMu
- qez6wm1duyW+iH6f0VNPiYN4AL2IZ0j7YfC16wHQ1gA83M2bapB5EkOpGB+VMRfl0nkfPx8FEjw
- 4oD0krH2ZnsaSgepf5K/DWAV95ScuJqWP9iWEb4So1fnMCHDOPkST5F5eLHv1ZVcTfBDS5XXDxE
- fLdAHwA38qX6kJc0DCcZ4iiHpX7FBEOD1jYI+JudznRgcnZNG6vlAqY/sNJJBV97y2wSSOwy4il
- Vbzq1rC9AQGS7Z04FGjl8AhyY7aNZPcGVFLT0cQsY24/zgiQ7dx3YiEfjhGRHhr1mG4=
-X-Received: by 2002:a05:690e:dc8:b0:649:b31e:8f59 with SMTP id
- 956f58d0204a3-64c78ad6e05mr9520591d50.35.1771931945561; Tue, 24 Feb 2026
- 03:19:05 -0800 (PST)
+ bh=Iu0tbVQseP/ba2U+BTwo7uXn9iBtyXOY7Am9eLC7jcM=;
+ b=FSPYKOz2qQmigG8aBcCyaGpkGRrmn89IIifhdFr0A1LGm1lW1jXh0yaAvLxFVGY7th
+ Uduav72rH45sdiqobp0PCF3+8Kcti4DNLu/cWtOPl+AeKisqDepCN7DY4GU4Jh5RSIyz
+ NySNpI9JyFcdXT+xDXDzyvFTr2yhNDir3oOnj8HW95R1KTUGz+P5/GqnOHMUPAaXA39z
+ UHal6hfIueWjHD41Uf20pXni9R/7/u76ijeP7iTCgTaFFRaUWY1zD82istVaQfyr9Dgd
+ OgdYZJP7ZRgEc2TAq8JP3anoIhwMKNYSQeSibts45oPQAz4KciFsJQbfMUokyNBgsyTh
+ 7oYw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1771932048; x=1772536848;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=Iu0tbVQseP/ba2U+BTwo7uXn9iBtyXOY7Am9eLC7jcM=;
+ b=AWbHBQhWhpMFeH9dRAwY2pUWkFNpCJEL1ZiLGXiWwRLYkqMAjGKzfdGQm1iyN52Tmp
+ BQBR1hBpJYD0BFBAqxqAPXqsm3SJuIFluUAov4inxnWG9iVHvNyJU3N+ndOAaOE5IfUW
+ dgoakET6cuglQqxlybPc379KL40NwMRF/9X/qtlM3xsA0BtzFc5hChZEeZ09wYEsjZDV
+ azH4k50cAlDZqvec1NqtEACLQK59vxDuZxB5bkr1XOzzUlouL4cVWj4EZHGlz6hDrnwL
+ dpb4SoPq2FsUzFsEtcKBScJtQLl7QbmBFZ/pSEfnQ9+EGBLRB2DN3NSAU98et+AHGVy+
+ 3SVg==
+X-Gm-Message-State: AOJu0YzgF9+8UZv6YlHI3jjYlq++LHoDGQafGKhuWQUGklx6kL3DpWMS
+ 6zqiiJL+efVgRaXoO7B7egQLYYFywIA6dJMgQY4mePzqoPbdGk6LFkBL2nUlZzKSH3SwzRdXGGw
+ NdxMbTaQYcldgInZ+rWHETqowsq1E0juMhLELDC5Ihw==
+X-Gm-Gg: ATEYQzyRl5pP9yxOlGRLdX9vEWDEGzCy6w8wyNujB0LwhXr5Sw83BWOdMcJlm+4biha
+ /vg3h0HV3Z0JU0CLCJoOpEYhG1tELxbymuJa0nv2seG4BFyOtECfrqgnWiyDpIOZyPIWzraBAmX
+ EXFShsATrMHNhk5IihwFxTwjUthDq0B+nLtFSfY3l8Gh2s1UsF1hXD3+Ngt9eHJDd1y4dxgbykx
+ KSw3SFQ8tQ7h4UUNLyuo7h8lQmXohwhqUYy1BXUngqMIyMepKbCKQrPZv44ogGGkZlX5BIgm6MG
+ 929rbehMG1W8UajpzBiTrdxYWUaaRhW5mFhx9cmktqNjjz9CYpcFt7RB03B6bmOBjVs=
+X-Received: by 2002:a05:690e:b42:b0:64c:a0c6:da8e with SMTP id
+ 956f58d0204a3-64ca0c6e1b2mr707107d50.29.1771932048203; Tue, 24 Feb 2026
+ 03:20:48 -0800 (PST)
 MIME-Version: 1.0
-References: <20260223095905.67709-1-cuiweixie@gmail.com>
-In-Reply-To: <20260223095905.67709-1-cuiweixie@gmail.com>
+References: <20260220171945.1065102-1-alex.bennee@linaro.org>
+In-Reply-To: <20260220171945.1065102-1-alex.bennee@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 24 Feb 2026 11:18:53 +0000
-X-Gm-Features: AaiRm50ZiJwzN6_YO2HwKJYAQVkgfidkEpemKXOonTpRgvAOEJRWiPSYmktuSgo
-Message-ID: <CAFEAcA_kOBAb2CB8GMD83RbybPsnH29awP_n3hSiO+MC8UxHCw@mail.gmail.com>
-Subject: Re: [PATCH] hw: copy paste bug
-To: Weixie Cui <cuiweixie@gmail.com>
-Cc: qemu-devel@nongnu.org
+Date: Tue, 24 Feb 2026 11:20:36 +0000
+X-Gm-Features: AaiRm53ORj6AJMwhJVxXCQsyYwC4uwXebvfspEo9Df4aMCGz7EyGf1oI8zBQFfc
+Message-ID: <CAFEAcA_rhRnJWQoC501HimdutMKessVbAF3VV=J6tFFvHMzriQ@mail.gmail.com>
+Subject: Re: [PATCH] target/arm: set the correct TI bits for WFIT traps
+To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, "open list:ARM TCG CPUs" <qemu-arm@nongnu.org>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b133;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb133.google.com
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b135;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb135.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -113,17 +115,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 23 Feb 2026 at 13:38, Weixie Cui <cuiweixie@gmail.com> wrote:
+On Fri, 20 Feb 2026 at 17:19, Alex Benn=C3=A9e <alex.bennee@linaro.org> wro=
+te:
 >
-> Signed-off-by: Weixie Cui <cuiweixie@gmail.com>
+> The WFIT trap should be reported as 0b10.
+>
+> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
 > ---
->  hw/ssi/xilinx_spips.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
+>  target/arm/tcg/op_helper.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/target/arm/tcg/op_helper.c b/target/arm/tcg/op_helper.c
+> index 4d708635068..aa14f15eb62 100644
+> --- a/target/arm/tcg/op_helper.c
+> +++ b/target/arm/tcg/op_helper.c
+> @@ -448,7 +448,7 @@ void HELPER(wfit)(CPUARMState *env, uint64_t timeout)
+>
+>      if (target_el) {
+>          env->pc -=3D 4;
+> -        raise_exception(env, excp, syn_wfx(1, 0xe, 0, false), target_el)=
+;
+> +        raise_exception(env, excp, syn_wfx(1, 0xe, 2, false), target_el)=
+;
+>      }
+
+It would be nice to also report the register number in the
+syndrome (especially since KVM will use it if it's there),
+but that is architecturally optional, and getting the TI bits
+right is a bug fix.
 
 
 
-Applied to target-arm.next with an updated commit message,
-thanks.
+Applied to target-arm.next, thanks.
 
 -- PMM
 
