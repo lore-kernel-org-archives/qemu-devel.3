@@ -4,65 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74C31F4BB82
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 19:32:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6ACDF4BB7F
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 19:32:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuy8Q-0002Zk-Ap; Tue, 24 Feb 2026 14:32:00 -0500
+	id 1vuy8b-0002nj-F6; Tue, 24 Feb 2026 14:32:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vuy7H-0001qL-Nv
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 14:31:07 -0500
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vuy7b-0001sZ-CU
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 14:31:09 -0500
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vuy7D-0000ng-SP
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 14:30:43 -0500
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-4806cc07ce7so56659575e9.1
- for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 11:30:38 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vuy7U-0000pA-Lx
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 14:31:02 -0500
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-483bd7354efso4195155e9.2
+ for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 11:30:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771961437; x=1772566237; darn=nongnu.org;
+ d=linaro.org; s=google; t=1771961452; x=1772566252; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Wz4xwsVedpRdwPffxWHKLrRmmOeokKoi4JBBPga8kag=;
- b=C1Fh9JgEN/AxYmKQMXFKU3mjD+45t0qX29ozGLdjvYMIw7oHnL7ebBAeOLsMXz9V9p
- pC0eupxQmhv5631DkQE2Pqk0zUoaH8xSamQKoRxD9uKH11l7N0G+C+3xbzqA5hQ54Bbd
- EO+U0pxiPuDSKb55BwB167cXWrrWncz6c+IvxUEoFdIfyvcizgGwRE1E5FEt1rkKtZwh
- DmthWiXNrMjh+MSRVq7rIWOw3k8qv3Y38YcU8DVqj+VxrRbUVu1Y3wAFIs+5eqhf4Ptw
- 4Ny+CUYgaUL68x1AI7mni0Kx5S/HRYXhknGLlwbDWAROdoMg6kWDkcv1MT69g3CKIbK6
- rMew==
+ bh=g2xKkJpEboPawLV+v3FvCyWeGhL4Wa6PCRD9MvOpmIE=;
+ b=wMTkAKblyz59mxDWTn14kqMdOfanzI1WbeGzPExnqAaf2TReEPRlc9tpG/yoiPYyGZ
+ UERsUW8kqbdZqvHV8X6LcIWJp5SN0Of6kF5Eyrl4B38b44BVHuUeAwWBNC3aETdoelnz
+ KEfOzlUAAnrSxi9pw1lgHGV1yN8QLHfS0mkLTWVyH0V5ybV3APiLMCofQJC87WtipCUc
+ pVXERt08r0amMUHFZZFp98pgHdPx4CntdijjRtoPjF6ykTNmRoZGQIFOz7YGC5k2C/v6
+ z/8SICR7tQgC3QKqM221cIZZC9j2i7vEkRWOomDwY9FwwbsPgbZMNW5tY321pppjWdZm
+ B9Tw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771961437; x=1772566237;
+ d=1e100.net; s=20230601; t=1771961452; x=1772566252;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=Wz4xwsVedpRdwPffxWHKLrRmmOeokKoi4JBBPga8kag=;
- b=jqP9yoOx+rWqfjL+nmQ90pBaSk0nW54wFSXt3iq/VVvRLwUlg3yDBo3/DzL/Sd38j4
- r0OJziQ6DO+w/ua72Z5ZTxTT3IpNRoB1uc/XN6pl5X9qFXt0MpdsiQEhjGMhCgMaXwOZ
- 5Yu9NYXysn+g5IYP6FlokTxuPmkDytMw4aBqKj6Lxcn3Ru/cv74f68iS90Ei3F8XEkCs
- MMgVrMDQhdSkBg6iPQ+ojtR5sYoIZnlGpZw9dywC5KJKiaOH/FS2ywMUTGafR72IPmXy
- i6WTq//syjb9fuYKjsA7pg799eVkKVT/KlmhRZ2UVQaA9p5cPGvE9cj2uwr7bD3Fh0sE
- bUDg==
-X-Gm-Message-State: AOJu0YzV/uwuU4AkZHRAI9u4cnERK31elTwQiiRQA294/L0/hodv70eX
- 9y2FnG7ikIqfv+jZa5t1Wab2DXBwL4J2xn00hQEwsdiQozBsyCP4tMD838mWpo603dGeABt0D3k
- 17DhOsAo=
-X-Gm-Gg: AZuq6aJceL6Jzkk/ErIbnoHZQoKqXS58Y/jMga/PwrVyoxHk/gl/ERuwtdOE3oWNwEj
- 8MudTNY1vz3Jr/TGFNy8rwCX9CO5eJG6J1TmVMtZG0x6iADvCSNVB7pNpMH4VbiyVUbs9vTVkGz
- +VT2pNtdTUfp6F03qPMQohWLBRiUOJZXww4lsLNj2GVx9HRJ9pYOvCQMky2Qsdne+WGosQdVDsU
- 58pV7f+OVyFfvbl4DWgPFDLFxEHO7G1iZcYP+FPA79N5/oojBo0rmtVbVzcouOSIIm7TYhKNXGv
- O0JctbKXbdIbbxShilabRljoMwxrccfojhxb2VlNnuFcDF7b+4KEAlnUgMN5eSNiodqyfbTsCOu
- XFvkCmd3LWMQlvYoDcqmnxQ+iN8JK9NXWeJM+YChxhCxQ1/aV2vTDlL7V4e/f1NW3gFnxtSzCyX
- pZFaRROt90G/rquN7qN9wJVrolYz/mctvsvn5i2iXxgauYMLrkRAimhDGgqkUyMIG1Cq574aCI
-X-Received: by 2002:a05:600c:821b:b0:483:71f7:2794 with SMTP id
- 5b1f17b1804b1-483a95c9e73mr240437805e9.15.1771961437464; 
- Tue, 24 Feb 2026 11:30:37 -0800 (PST)
+ bh=g2xKkJpEboPawLV+v3FvCyWeGhL4Wa6PCRD9MvOpmIE=;
+ b=JFKzUbV1H3yfVyCu+avTYieGP2MSRCjl3kmk+zrTHGxVO7ED9ZvBHJUy+1DQseAhwj
+ hyGuT+lfxV5zVNn13i4k+EPomhRV9PeHERMsbE0RYU31CvPkd75BS8nov83A6hrkRjK2
+ SHb3y5TXnaN4nEnqcD8m9w+aaKGHUvhAh8XUQkSH+l/9SoWmnYF5vEvepKQgYguDigkW
+ +d2qluAu4E+n98lqfdfpF2Vr4i+sjledktZNRthdjwtOEELZh/EP194qe0gHv8wwhCci
+ z5efjLV+OOdYGAr0dwGGlm7FkYa2HUzRRa2sGUvp45Ytn6FQBuWtuf+tUdztgSFS3z+P
+ LlFQ==
+X-Gm-Message-State: AOJu0YzS3NDTJWRxZjMF7eZ+SVWP9kxeY/20fyeoxLrdamh7iq+/unEq
+ OWmwu8unG/fZr68sBFPlzhDbPrqWnkrg+9E1DVH95OnpPWt7pMQQMxQW79boBDsjWaF1QKzvdsQ
+ bpIDzxvg=
+X-Gm-Gg: AZuq6aJyxuBoMSYm0lqOewvW/QqsaPxyBM6cQLpEVNQVpY43uawMBBD/bW/5Jdu+5+n
+ GFyxrcJEb8RvqQBVZ1YdGg6QjcDmqqy8LMM6GdkYRO9MYS9nXnoE07McTmhAoY9gbTuua2C0NSo
+ azKHTgFTurdVlsY2Qq0yfgPQjmEZWhxEf5x155CK/GbEZoBFt0JiRoYopKSO3XDREvP6FUMs7Zm
+ ZvVlLltOFBjfTTXjtprgqPPn9py97xBI8GvcHXhaIc2A3BXr29I2wk6Jt0alT8i1/PDEunRJz5t
+ VKAxwL7Mjiy/Sy8g10KJ7uuoG8E/UKMUFy+LvH2BOEnoVWE1SmS3i160w39Bpm+3s2FveTMaOHG
+ BU1BEe2mJYYpuIYsK+E2Oqjt1s18IIbvljgw0VL1UNILaYmQFmP1fMa71Oobp613zg6DQz70g6i
+ 2bfymMLiRYu09txrVh0yi1WH5TGoTKjVepeCoojSy4KIml7nFPH633Q4qFgU6pM6p4GIGnUD0JG
+ 8g8j8k6z2o=
+X-Received: by 2002:a05:600c:c4ac:b0:477:a219:cdb7 with SMTP id
+ 5b1f17b1804b1-483a95a3822mr226754315e9.0.1771961452425; 
+ Tue, 24 Feb 2026 11:30:52 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-483bd6f2f88sm20099555e9.2.2026.02.24.11.30.36
+ ffacd0b85a97d-43986aa2f84sm6184578f8f.7.2026.02.24.11.30.50
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 24 Feb 2026 11:30:36 -0800 (PST)
+ Tue, 24 Feb 2026 11:30:51 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
@@ -71,20 +72,18 @@ Cc: Peter Maydell <peter.maydell@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org,
  qemu-riscv@nongnu.org, qemu-ppc@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Song Gao <gaosong@loongson.cn>, Aurelien Jarno <aurelien@aurel32.net>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Aleksandar Rikalo <arikalo@gmail.com>
-Subject: [RFC PATCH 1/5] target/tcg: Rename bitswap() helpers
-Date: Tue, 24 Feb 2026 20:30:23 +0100
-Message-ID: <20260224193028.2370-2-philmd@linaro.org>
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+Subject: [RFC PATCH 3/5] target/tcg: Rename unaligned_access() helpers
+Date: Tue, 24 Feb 2026 20:30:25 +0100
+Message-ID: <20260224193028.2370-4-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260224193028.2370-1-philmd@linaro.org>
 References: <20260224193028.2370-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -113,94 +112,96 @@ the target name.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/loongarch/tcg/helper.h                   | 2 +-
- target/mips/helper.h                            | 2 +-
- target/loongarch/tcg/op_helper.c                | 2 +-
- target/mips/tcg/op_helper.c                     | 2 +-
- target/mips/tcg/translate.c                     | 2 +-
- target/loongarch/tcg/insn_trans/trans_bit.c.inc | 4 ++--
- 6 files changed, 7 insertions(+), 7 deletions(-)
+ target/arm/tcg/helper-a64-defs.h | 2 +-
+ target/microblaze/helper.h       | 2 +-
+ target/arm/tcg/helper-a64.c      | 4 ++--
+ target/arm/tcg/translate-a64.c   | 4 ++--
+ target/microblaze/helper.c       | 2 +-
+ target/microblaze/translate.c    | 2 +-
+ 6 files changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/target/loongarch/tcg/helper.h b/target/loongarch/tcg/helper.h
-index 8a6c62f1161..e36dd2f5de3 100644
---- a/target/loongarch/tcg/helper.h
-+++ b/target/loongarch/tcg/helper.h
-@@ -7,7 +7,7 @@ DEF_HELPER_2(raise_exception, noreturn, env, i32)
+diff --git a/target/arm/tcg/helper-a64-defs.h b/target/arm/tcg/helper-a64-defs.h
+index b6008b5a3ac..b329d7eb6a6 100644
+--- a/target/arm/tcg/helper-a64-defs.h
++++ b/target/arm/tcg/helper-a64-defs.h
+@@ -113,7 +113,7 @@ DEF_HELPER_FLAGS_2(ldgm, TCG_CALL_NO_WG, i64, env, i64)
+ DEF_HELPER_FLAGS_3(stgm, TCG_CALL_NO_WG, void, env, i64, i64)
+ DEF_HELPER_FLAGS_3(stzgm_tags, TCG_CALL_NO_WG, void, env, i64, i64)
  
- DEF_HELPER_FLAGS_1(bitrev_w, TCG_CALL_NO_RWG_SE, tl, tl)
- DEF_HELPER_FLAGS_1(bitrev_d, TCG_CALL_NO_RWG_SE, tl, tl)
--DEF_HELPER_FLAGS_1(bitswap, TCG_CALL_NO_RWG_SE, tl, tl)
-+DEF_HELPER_FLAGS_1(loongarch_bitswap, TCG_CALL_NO_RWG_SE, tl, tl)
+-DEF_HELPER_FLAGS_4(unaligned_access, TCG_CALL_NO_WG,
++DEF_HELPER_FLAGS_4(arm_unaligned_access, TCG_CALL_NO_WG,
+                    noreturn, env, i64, i32, i32)
  
- DEF_HELPER_FLAGS_3(asrtle_d, TCG_CALL_NO_WG, void, env, tl, tl)
- DEF_HELPER_FLAGS_3(asrtgt_d, TCG_CALL_NO_WG, void, env, tl, tl)
-diff --git a/target/mips/helper.h b/target/mips/helper.h
-index b6cd53c8538..1c9f76f0c9c 100644
---- a/target/mips/helper.h
-+++ b/target/mips/helper.h
-@@ -16,7 +16,7 @@ DEF_HELPER_3(lld, tl, env, tl, int)
- #endif
- #endif
- 
--DEF_HELPER_FLAGS_1(bitswap, TCG_CALL_NO_RWG_SE, tl, tl)
-+DEF_HELPER_FLAGS_1(mips_bitswap, TCG_CALL_NO_RWG_SE, tl, tl)
- #ifdef TARGET_MIPS64
- DEF_HELPER_FLAGS_1(dbitswap, TCG_CALL_NO_RWG_SE, tl, tl)
- #endif
-diff --git a/target/loongarch/tcg/op_helper.c b/target/loongarch/tcg/op_helper.c
-index 16ac0d43bc9..6b4fe535300 100644
---- a/target/loongarch/tcg/op_helper.c
-+++ b/target/loongarch/tcg/op_helper.c
-@@ -32,7 +32,7 @@ target_ulong helper_bitrev_d(target_ulong rj)
-     return revbit64(rj);
+ DEF_HELPER_3(setp, void, env, i32, i32)
+diff --git a/target/microblaze/helper.h b/target/microblaze/helper.h
+index 01eba592b26..1429c1727ef 100644
+--- a/target/microblaze/helper.h
++++ b/target/microblaze/helper.h
+@@ -27,7 +27,7 @@ DEF_HELPER_FLAGS_3(put, TCG_CALL_NO_RWG, void, i32, i32, i32)
+ #ifndef CONFIG_USER_ONLY
+ DEF_HELPER_FLAGS_3(mmu_read, TCG_CALL_NO_RWG, i32, env, i32, i32)
+ DEF_HELPER_FLAGS_4(mmu_write, TCG_CALL_NO_RWG, void, env, i32, i32, i32)
+-DEF_HELPER_FLAGS_2(unaligned_access, TCG_CALL_NO_WG, noreturn, env, i64)
++DEF_HELPER_FLAGS_2(microblaze_unaligned_access, TCG_CALL_NO_WG, noreturn, env, i64)
+ DEF_HELPER_FLAGS_2(lbuea, TCG_CALL_NO_WG, i32, env, i64)
+ DEF_HELPER_FLAGS_2(lhuea_be, TCG_CALL_NO_WG, i32, env, i64)
+ DEF_HELPER_FLAGS_2(lhuea_le, TCG_CALL_NO_WG, i32, env, i64)
+diff --git a/target/arm/tcg/helper-a64.c b/target/arm/tcg/helper-a64.c
+index 2dec587d386..f824c662a3a 100644
+--- a/target/arm/tcg/helper-a64.c
++++ b/target/arm/tcg/helper-a64.c
+@@ -835,8 +835,8 @@ void HELPER(dc_zva)(CPUARMState *env, uint64_t vaddr_in)
+     clear_helper_retaddr();
  }
  
--target_ulong helper_bitswap(target_ulong v)
-+target_ulong helper_loongarch_bitswap(target_ulong v)
+-void HELPER(unaligned_access)(CPUARMState *env, uint64_t addr,
+-                              uint32_t access_type, uint32_t mmu_idx)
++void HELPER(arm_unaligned_access)(CPUARMState *env, uint64_t addr,
++                                  uint32_t access_type, uint32_t mmu_idx)
  {
-     v = ((v >> 1) & (target_ulong)0x5555555555555555ULL) |
-         ((v & (target_ulong)0x5555555555555555ULL) << 1);
-diff --git a/target/mips/tcg/op_helper.c b/target/mips/tcg/op_helper.c
-index 4502ae2b5be..83c340e38e0 100644
---- a/target/mips/tcg/op_helper.c
-+++ b/target/mips/tcg/op_helper.c
-@@ -45,7 +45,7 @@ target_ulong helper_dbitswap(target_ulong rt)
- }
- #endif
+     arm_cpu_do_unaligned_access(env_cpu(env), addr, access_type,
+                                 mmu_idx, GETPC());
+diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
+index 5d261a5e32b..c17ddf9e70e 100644
+--- a/target/arm/tcg/translate-a64.c
++++ b/target/arm/tcg/translate-a64.c
+@@ -381,8 +381,8 @@ static void check_lse2_align(DisasContext *s, int rn, int imm,
  
--target_ulong helper_bitswap(target_ulong rt)
-+target_ulong helper_mips_bitswap(target_ulong rt)
+     type = is_write ? MMU_DATA_STORE : MMU_DATA_LOAD,
+     mmu_idx = get_mem_index(s);
+-    gen_helper_unaligned_access(tcg_env, addr, tcg_constant_i32(type),
+-                                tcg_constant_i32(mmu_idx));
++    gen_helper_arm_unaligned_access(tcg_env, addr, tcg_constant_i32(type),
++                                    tcg_constant_i32(mmu_idx));
+ 
+     gen_set_label(over_label);
+ 
+diff --git a/target/microblaze/helper.c b/target/microblaze/helper.c
+index a1857b72172..24a9b50183d 100644
+--- a/target/microblaze/helper.c
++++ b/target/microblaze/helper.c
+@@ -69,7 +69,7 @@ void mb_cpu_do_unaligned_access(CPUState *cs, vaddr addr,
+ 
+ #ifndef CONFIG_USER_ONLY
+ 
+-void HELPER(unaligned_access)(CPUMBState *env, uint64_t addr)
++void HELPER(microblaze_unaligned_access)(CPUMBState *env, uint64_t addr)
  {
-     return (int32_t)bitswap(rt);
+     mb_unaligned_access_internal(env_cpu(env), addr, GETPC());
  }
-diff --git a/target/mips/tcg/translate.c b/target/mips/tcg/translate.c
-index 54849e9ff1a..a63aa67808e 100644
---- a/target/mips/tcg/translate.c
-+++ b/target/mips/tcg/translate.c
-@@ -4839,7 +4839,7 @@ static void gen_bitswap(DisasContext *ctx, int opc, int rd, int rt)
-     gen_load_gpr(t0, rt);
-     switch (opc) {
-     case OPC_BITSWAP:
--        gen_helper_bitswap(cpu_gpr[rd], t0);
-+        gen_helper_mips_bitswap(cpu_gpr[rd], t0);
-         break;
- #if defined(TARGET_MIPS64)
-     case OPC_DBITSWAP:
-diff --git a/target/loongarch/tcg/insn_trans/trans_bit.c.inc b/target/loongarch/tcg/insn_trans/trans_bit.c.inc
-index ee5fa003ce0..76d6ba742d5 100644
---- a/target/loongarch/tcg/insn_trans/trans_bit.c.inc
-+++ b/target/loongarch/tcg/insn_trans/trans_bit.c.inc
-@@ -194,8 +194,8 @@ TRANS(revb_2w, 64, gen_rr, EXT_NONE, EXT_NONE, gen_revb_2w)
- TRANS(revb_d, 64, gen_rr, EXT_NONE, EXT_NONE, tcg_gen_bswap64_i64)
- TRANS(revh_2w, 64, gen_rr, EXT_NONE, EXT_NONE, gen_revh_2w)
- TRANS(revh_d, 64, gen_rr, EXT_NONE, EXT_NONE, gen_revh_d)
--TRANS(bitrev_4b, ALL, gen_rr, EXT_ZERO, EXT_SIGN, gen_helper_bitswap)
--TRANS(bitrev_8b, 64, gen_rr, EXT_NONE, EXT_NONE, gen_helper_bitswap)
-+TRANS(bitrev_4b, ALL, gen_rr, EXT_ZERO, EXT_SIGN, gen_helper_loongarch_bitswap)
-+TRANS(bitrev_8b, 64, gen_rr, EXT_NONE, EXT_NONE, gen_helper_loongarch_bitswap)
- TRANS(bitrev_w, ALL, gen_rr, EXT_NONE, EXT_SIGN, gen_helper_bitrev_w)
- TRANS(bitrev_d, 64, gen_rr, EXT_NONE, EXT_NONE, gen_helper_bitrev_d)
- TRANS(maskeqz, ALL, gen_rrr, EXT_NONE, EXT_NONE, EXT_NONE, gen_maskeqz)
+diff --git a/target/microblaze/translate.c b/target/microblaze/translate.c
+index 2af67beecec..8b896abf0e5 100644
+--- a/target/microblaze/translate.c
++++ b/target/microblaze/translate.c
+@@ -689,7 +689,7 @@ static void gen_alignment_check_ea(DisasContext *dc, TCGv_i64 ea, int rb,
+         record_unaligned_ess(dc, rd, size, store);
+ 
+         tcg_gen_brcondi_i64(TCG_COND_TSTEQ, ea, (1 << size) - 1, over);
+-        gen_helper_unaligned_access(tcg_env, ea);
++        gen_helper_microblaze_unaligned_access(tcg_env, ea);
+         gen_set_label(over);
+     }
+ }
 -- 
 2.52.0
 
