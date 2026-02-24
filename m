@@ -4,123 +4,120 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0A21E9B247
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 09:49:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BCB63E9B245
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 09:50:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vup2u-0007RJ-S2; Tue, 24 Feb 2026 04:49:36 -0500
+	id 1vup3W-0007ts-10; Tue, 24 Feb 2026 04:50:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vup2r-0007R3-TB
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 04:49:33 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1vup3E-0007ge-B1
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 04:50:00 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vup2p-0001dU-Kc
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 04:49:33 -0500
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1vup3C-0001gW-Qo
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 04:49:56 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771926570;
+ s=mimecast20190719; t=1771926594;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=3sYFMuG7L47Av+zWgaienkldQ4vr07hB9YYaSUaM74k=;
- b=gELj4LHrBO2t6Zx2I1nheyFsrI1INmLtIVQ1jDpwdvA2etXZLvDoD6Wof3khL6YRUQ2n2V
- 2paJHJlfEQooCgAjR1Nq9kD5SD5t2FMokwY/DSnjAzE+jtY20bM2f+sUctPmaqnYI8i/UK
- iLeFlPTsDE9lq1HzRMzpFZt7FsJzpkk=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-19-2iQX3q56NzWzm3U-pgX9lA-1; Tue,
- 24 Feb 2026 04:49:26 -0500
-X-MC-Unique: 2iQX3q56NzWzm3U-pgX9lA-1
-X-Mimecast-MFC-AGG-ID: 2iQX3q56NzWzm3U-pgX9lA_1771926564
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EB9691956068; Tue, 24 Feb 2026 09:49:23 +0000 (UTC)
-Received: from [10.44.32.191] (unknown [10.44.32.191])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 20A131800348; Tue, 24 Feb 2026 09:49:12 +0000 (UTC)
-Message-ID: <ed6f8484-b8cd-4faa-a540-21f63bcafaf8@redhat.com>
-Date: Tue, 24 Feb 2026 10:49:10 +0100
+ in-reply-to:in-reply-to:references:references;
+ bh=uhxTsbAesUA1nm5SPUbyvobRkjU0nYscevHqbN6i+jM=;
+ b=ff56ztKHGRw+MwGwkoapyPp0wPOggHSGQuq0wokQ01N1LmPDMwUOxxAc/k7ns9PiVXZ8Vv
+ LLQfFT8624pDonzqvIz2pLdRWmgecXpYMZZp+NUYumraNSqSkX/ICwC5IbiFXVmne5OKB0
+ Uecihvl3hOI3QH8dKfXgRpHB01Qkyhs=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-454-YBC4xmSTNqSGBYWRNt5x1Q-1; Tue, 24 Feb 2026 04:49:50 -0500
+X-MC-Unique: YBC4xmSTNqSGBYWRNt5x1Q-1
+X-Mimecast-MFC-AGG-ID: YBC4xmSTNqSGBYWRNt5x1Q_1771926590
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-437700715ddso3221177f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 01:49:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1771926590; x=1772531390; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=uhxTsbAesUA1nm5SPUbyvobRkjU0nYscevHqbN6i+jM=;
+ b=q+NY+wwX3PFVxUaLA3+uvPq3F0Lo9gi6moOh5HiAwnbTtIwspzIzKF71PqC6/y2GOA
+ tfjWbuc6G/g3xBNoDRZub39oYrBL0GMMjwVv+isgis+jsG3jmRDbL5fpDDdjO70SqGFc
+ LiGTHRLmXGFsrNjS8CbSUvXXl9ckSgzdvtuEF4vnX6+GQwPJs+yfwqYDFBrsWon82eSo
+ /vIFK1vuddF+cmQRNeC/Y7unu8l9Kg4KizKhG3fuDyM1TyjIo2sVRyKyj1UUrWLisOZI
+ 98O/EPsIlZtRkBJSxZwdi8ZP+pzKNdZj0gge1KdXrKYIZ5joRm6p/PQyIz7YIck3Mlkz
+ klwg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1771926590; x=1772531390;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=uhxTsbAesUA1nm5SPUbyvobRkjU0nYscevHqbN6i+jM=;
+ b=BCb4UButxhgBmTSpRr2dh5I/LiYVjmkZctqMhzyLFCVduItEkmf0NzpBogc/6ZO1VF
+ hrcsoBs8oyJoRAarvwl8VyC6+8y8Tb6+VRmxQMPAc6EdnGTVO/yu1NIQ18a0A/P39Q4I
+ 1H1PLwKfhSdLOvBpQPWwCwovzJi7f4AGzfHp5ShiLJ2l+/dyoQ+d1xayAl57tRvwYKBg
+ 714p1e14T2LeuEbrAU7TRyjIGjxEOZ1Q3sy9FxBoLCkXxjSfqAGDwp1pHKavYJC3bSdZ
+ meuSsqz8yS/NXsPDGX/x1YHAgKy78KQKcO28Ce/at8GMvqBKci+RjJ3xTqiICj2dpn1z
+ d1Jg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVQwzxK71TU5H5IGD3mbasP1SLxVS5GuxVZ9pLX3u/2bPYmC1Oxdx0znxwxwFPVOxe3jBDnqELRYnwU@nongnu.org
+X-Gm-Message-State: AOJu0YypQZk4QOdKROslUtQMiRokj/eV+V2dYuwRs+RFaJA+4x7tlRFN
+ db6j/FDA+Sl3RzZ6QMBhW9h67CuRAJu7/Dh/paiFCFSjSeIgV32GtbhLjlGutlkkDS5UmTkQ8IH
+ OCI7af1lzfa16WpLKWgPYO049QZUHo1nO1GnfnyvUhqh+HSyx8xQTcIw9
+X-Gm-Gg: ATEYQzzIpBGfuGrWTSb4lrsUuEDfqc4KTsxiwtj1sRIjOL0v6Ghtd0Cv+FK5WNwhfxF
+ SmzqZkByvwkfZj5WuIsQvjMb0muTzGuiWV21vS7z7Wed05o0G6v/xfOH+bO6nlaoma/4x9DNODI
+ SmqjzHtRdEp21BxCAgdpl07kvDqSPkRyg6uSqxzOWojqgjkErlJZFBCtdxzsLfYito42QNw6LJn
+ Lz7RfrCV3W80i+5zM7XjsZUcJ+F/nfjl5cl9vIUW5kqF+371Cf2LEaMfRLDibHYPy2oFpuF/tVm
+ buQsQPJft1+dyrrjZGwUHxyI45BZ4pHfVSm++qaKgDX7kaFEs4h/WEASBOLcfw9l/Yo7JzGyPan
+ ukivooks3mKzl3XVmkiqP/xTId69PWO8CEpJmpQl+ZY4b2ZXWrw3vykkab5uFOdmqYS+MpnQelF
+ qHVxSL9ruyisyqGPhB86FTCV/2RnY=
+X-Received: by 2002:a5d:53d1:0:b0:439:879f:f8d7 with SMTP id
+ ffacd0b85a97d-439879ffbb8mr1507206f8f.9.1771926589610; 
+ Tue, 24 Feb 2026 01:49:49 -0800 (PST)
+X-Received: by 2002:a5d:53d1:0:b0:439:879f:f8d7 with SMTP id
+ ffacd0b85a97d-439879ffbb8mr1507174f8f.9.1771926589108; 
+ Tue, 24 Feb 2026 01:49:49 -0800 (PST)
+Received: from [192.168.10.81] ([151.95.144.138])
+ by smtp.googlemail.com with ESMTPSA id
+ ffacd0b85a97d-4398a292babsm1690416f8f.37.2026.02.24.01.49.47
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 24 Feb 2026 01:49:48 -0800 (PST)
+Message-ID: <b0297c7a-70d1-458c-8ae4-39a6583f6a41@redhat.com>
+Date: Tue, 24 Feb 2026 10:49:44 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 06/18] hw/block/pflash: Remove
- PFlashCFI01::old_multiple_chip_handling field
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Cl=C3=A9ment_Mathieu--Drif?=
- <clement.mathieu--drif@eviden.com>, Zhao Liu <zhao1.liu@intel.com>,
- Hanna Reitz <hreitz@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- qemu-block@nongnu.org, Jason Wang <jasowang@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, Ani Sinha <anisinha@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, Yi Liu <yi.l.liu@intel.com>
-References: <20250501210456.89071-1-philmd@linaro.org>
- <20250501210456.89071-7-philmd@linaro.org>
-From: Thomas Huth <thuth@redhat.com>
+Subject: Re: [PATCH v6 25/28] whpx: i386: inject exceptions
+To: Mohamed Mediouni <mohamed@unpredictable.fr>, qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Magnus Kulke <magnuskulke@linux.microsoft.com>,
+ Bernhard Beschow <shentey@gmail.com>, Cameron Esfahani <dirty@apple.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Phil Dennis-Jordan <phil@philjordan.eu>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Pedro Barbuda <pbarbuda@microsoft.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Wei Liu <wei.liu@kernel.org>,
+ Roman Bolshakov <rbolshakov@ddn.com>
+References: <20260223233950.96076-1-mohamed@unpredictable.fr>
+ <20260223233950.96076-26-mohamed@unpredictable.fr>
+From: Paolo Bonzini <pbonzini@redhat.com>
 Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20250501210456.89071-7-philmd@linaro.org>
+In-Reply-To: <20260223233950.96076-26-mohamed@unpredictable.fr>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -1
 X-Spam_score: -0.2
 X-Spam_bar: /
 X-Spam_report: (-0.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=1.179, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.717,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -138,68 +135,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 01/05/2025 23.04, Philippe Mathieu-Daudé wrote:
-> The PFlashCFI01::old_multiple_chip_handling boolean was only set
-> in the hw_compat_2_8[] array, via the 'old-multiple-chip-handling=on'
-> property. We removed all machines using that array, lets remove that
-
-Nit: s/lets/let's/
-
-Apart from that:
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-
-> property and all the code around it.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+On 2/24/26 00:39, Mohamed Mediouni wrote:
+> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
 > ---
->   hw/block/pflash_cfi01.c | 14 +++-----------
->   1 file changed, 3 insertions(+), 11 deletions(-)
+>   target/i386/whpx/whpx-all.c | 22 ++++++++++++++++++++++
+>   1 file changed, 22 insertions(+)
 > 
-> diff --git a/hw/block/pflash_cfi01.c b/hw/block/pflash_cfi01.c
-> index 168101d8dfe..bba099a0c9e 100644
-> --- a/hw/block/pflash_cfi01.c
-> +++ b/hw/block/pflash_cfi01.c
-> @@ -84,7 +84,6 @@ struct PFlashCFI01 {
->       char *name;
->       void *storage;
->       VMChangeStateEntry *vmstate;
-> -    bool old_multiple_chip_handling;
->   
->       /* block update buffer */
->       unsigned char *blk_bytes;
-> @@ -703,13 +702,8 @@ static void pflash_cfi01_fill_cfi_table(PFlashCFI01 *pfl)
->        * in the cfi_table[].
->        */
->       num_devices = pfl->device_width ? (pfl->bank_width / pfl->device_width) : 1;
-> -    if (pfl->old_multiple_chip_handling) {
-> -        blocks_per_device = pfl->nb_blocs / num_devices;
-> -        sector_len_per_device = pfl->sector_len;
-> -    } else {
-> -        blocks_per_device = pfl->nb_blocs;
-> -        sector_len_per_device = pfl->sector_len / num_devices;
-> -    }
-> +    blocks_per_device = pfl->nb_blocs;
-> +    sector_len_per_device = pfl->sector_len / num_devices;
->       device_len = sector_len_per_device * blocks_per_device;
->   
->       /* Hardcoded CFI table */
-> @@ -765,7 +759,7 @@ static void pflash_cfi01_fill_cfi_table(PFlashCFI01 *pfl)
->           pfl->cfi_table[0x2A] = 0x0B;
+> diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
+> index 561a48206c..0259782a82 100644
+> --- a/target/i386/whpx/whpx-all.c
+> +++ b/target/i386/whpx/whpx-all.c
+> @@ -1506,6 +1506,26 @@ static void whpx_vcpu_process_async_events(CPUState *cpu)
 >       }
->       pfl->writeblock_size = 1 << pfl->cfi_table[0x2A];
-> -    if (!pfl->old_multiple_chip_handling && num_devices > 1) {
-> +    if (num_devices > 1) {
->           pfl->writeblock_size *= num_devices;
->       }
+>   }
 >   
-> @@ -930,8 +924,6 @@ static const Property pflash_cfi01_properties[] = {
->       DEFINE_PROP_UINT16("id2", PFlashCFI01, ident2, 0),
->       DEFINE_PROP_UINT16("id3", PFlashCFI01, ident3, 0),
->       DEFINE_PROP_STRING("name", PFlashCFI01, name),
-> -    DEFINE_PROP_BOOL("old-multiple-chip-handling", PFlashCFI01,
-> -                     old_multiple_chip_handling, false),
->   };
->   
->   static void pflash_cfi01_class_init(ObjectClass *klass, const void *data)
+> +static void whpx_inject_exceptions(CPUState* cpu)
+> +{
+> +    X86CPU *x86_cpu = X86_CPU(cpu);
+> +    CPUX86State *env = &x86_cpu->env;
+> +
+> +    if (env->exception_injected) {
+> +        env->exception_injected = 0;
+> +        WHV_REGISTER_VALUE reg = {};
+> +        reg.ExceptionEvent.EventPending = 1;
+> +        reg.ExceptionEvent.EventType = WHvX64PendingEventException;
+> +        reg.ExceptionEvent.DeliverErrorCode = 1;
+
+I can't find very good documentation of the WHPX API, but does this need 
+to be limited to: 1) #DF/#TS/#NP/#SS/#GP/#PF/#AC vectors; 2) CR0.PE=1?
+
+Thanks,
+
+Paolo
 
 
