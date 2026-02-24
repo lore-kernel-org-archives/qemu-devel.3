@@ -4,96 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 450EFF4BB62
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 17:29:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E36B2F4BB67
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 17:37:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuwE5-0001cp-Gn; Tue, 24 Feb 2026 12:29:37 -0500
+	id 1vuwKz-0006vr-9t; Tue, 24 Feb 2026 12:36:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vuwE2-0001cH-TL
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 12:29:34 -0500
-Received: from mail-yx1-xb134.google.com ([2607:f8b0:4864:20::b134])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vuwKq-0006vW-QY
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 12:36:37 -0500
+Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vuwDz-00027E-77
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 12:29:33 -0500
-Received: by mail-yx1-xb134.google.com with SMTP id
- 956f58d0204a3-64ae222d978so5513734d50.1
- for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 09:29:29 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1771954169; cv=none;
- d=google.com; s=arc-20240605;
- b=I8nCOz1pF5wa9NRKZn4oO2naVa2DGksnjRj5EDpqS+k5Bswr20KMpLeHOl5O06Jm84
- l0QHox4iuk3cOM6WMYnx3D9UTPv1ASIoXO8QZaM9W1JBhOVqpBhYn5f8oP+afWDxo3vC
- u+5JhbwqWD+GtWrcdR0K6N/LVgi8ybv5H8McTyh2uCGbmjIQOobsVCL2SPfs4ixBAye2
- UoGLpYH7J9IBjwmZCTsZHzj5xYxF9SDisiZ59en9zcPz302plBwZ71ZUGL3xnA83GnlX
- VkgPfyyIB9B9frP/CnIF2KKXGlpQVHJQm8e0UmTxuCJ8LFlgs3O1x1sK4zqOrn7rC9XE
- bZTg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=ejiXFy9YoJnWq2/0W8dVVZceAhBkskx0yZnYLil7Y1I=;
- fh=GI2e/SBiq4MTIPc9mHou6R6WJe3VvhdDMWKbaXflkfU=;
- b=kL8Oalz++gUORRlbohCj/X8V6CmR6Q/EtxJoJhSrAPfJzd4eo0Mp0zdXxA5sFQkptF
- Hqb7EyMMn1SF2KBNqedg1awEada4UQRucpEi0un31n30h7l0yDUffOdVbJjNOzuywIXi
- 9I4N67X7crnaUhL/vUt3NDka2ribwIc1opTEU0NO/P3BlvpSY9GAk2Wp8U+c9X94bQ6W
- KbaI1pUuG4gu/2k1G1J7622n9w+j3iwoUdnAoqszIgtdek74H0c+9v84kqaqCuT/SCTB
- aQ5mK/K9G+nKAEuFs+44ja8+vLGg1irZRdYFM+gmO6CBcxQe9TaJUlBR8C28vRGmbuGj
- GleA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vuwKo-0003kL-OB
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 12:36:36 -0500
+Received: by mail-ed1-x533.google.com with SMTP id
+ 4fb4d7f45d1cf-65f812e0c83so234337a12.2
+ for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 09:36:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771954169; x=1772558969; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=ejiXFy9YoJnWq2/0W8dVVZceAhBkskx0yZnYLil7Y1I=;
- b=yyz4zVr+h8vGHdIPyY9tRiAuu0jj87V0An0x5I6VudSHzy/zBwq7FnXaTu+2ZAaXf0
- S1Wgsu1qrLrdBeZCkUZPXMdAkE0q9ijbuWU4Ja6e6W0mVMOCWTk1gMkmFufV0MzGx7w2
- NoenLYLtT3b8/Jq5bIdNEm6gxCpKet0f90lnfCSlTCG0p8EavrazplKPJA0LMlYkATzL
- wShTB2RMamB395TOmz1n5ZwIgV+Coiks796cn9FkgzTJU1XPgBSGdh3Xpypaa0P2Yit2
- SIK74DStGJT4OfKl/qaCOTCSd+p988DmoRkP7x400EhYY9NkkODnZegvWgjQ1N6Xt/o3
- 9/rg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771954169; x=1772558969;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1771954593; x=1772559393; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ejiXFy9YoJnWq2/0W8dVVZceAhBkskx0yZnYLil7Y1I=;
- b=MCy18HDYHCs5VDo9pDGZu1fQtZ3wcVXZj5+VYdczEXxm4q3ZXfBVGBr99FoO+25av6
- 5dB3pA//sF4eImTgRfstMf927wuhuAqnJ9IYTwg0P/3bqPtfaryl8S30ccwbeppBPcS0
- q6SGPE6o/VojOY0s7qhNmk1gx0uJFpl2hphj+MbSrsarzzyA94Eoensab6ypOybBPWge
- TjXcklSE2Duclvez+6q5s/YcyU6i9/Lm1Dq2DtAYZ6osygX2eDXNE611wLl80TWhB5ww
- 8SgOjpNKo9OLXsU4Ox5YkCJzrYn/Z4zCk7dPhgMUs8hylWSNMLa0AbM9WD+URLxKucF1
- oong==
-X-Gm-Message-State: AOJu0YyNU4HSATh4jf1KFY+frI2ySBSTDSmRNEk15bg1duwp95mit0Yf
- UrcvorxEUDoWbnakGJVRWAqbc3F9bC+NOYor5Ezl+fNxMHio20fXoSiwlOvMCT+otRssY0x+/W7
- j3Y4/MkM/TpPX4Ld/6ReMiAItE3sQtT3Ip4toFLzxAA==
-X-Gm-Gg: ATEYQzyV5LI1FJJqgA5tC76353aphzVkNXLwa/fMyUQmqwhRIxNWgTYWLbwk3loRZFR
- W+djX1Af3gnkT41h0vF/lpTt3AUtj4KdkORS+pKucp015JAfavE4p6wO6CG1lsPMWj/+hjN7mgN
- iMIbqIF9mrx9+DqhNd+sa1ao4ZKKYxqdMOyGX2fROrze2lbCIJv0/PBr1AwxZN4bLR8Y7nJgDMH
- 685LbsMISsriBxhBSy0cSYpa8dGzmlNk0Dk+Hcc9ZQVrAcxVIGy2tHOyxZbcDZJsummrO4zLehY
- YKgVwTcYuS1Q5B+T5++xgFNsJI+cE0FtH1huF66zqYmZMZwKTxOJ6AJFXffQwRPIWPEe2yebjIF
- sXQ==
-X-Received: by 2002:a05:690e:2511:20b0:644:2e5b:410a with SMTP id
- 956f58d0204a3-64c78f67477mr7690815d50.71.1771954168817; Tue, 24 Feb 2026
- 09:29:28 -0800 (PST)
+ bh=V8Mb7JJ31wJsv3i9pLvO2NVdO67ZDNDABuR6kkDT74s=;
+ b=WjA+Y+kuq9Hf6+mso1JjK3ZeHd3MDVSTzjPnX5rQPqP8oE4tS5VKA1TqN52jQtBQcu
+ I9oCORxiSagXjU4vd7q98BeoJzqcL+2ZnS5jcvYRF3rXZmvOy37rxr0/DiPLgpzTVRWs
+ HWW0XoZuaGFRPT9YgZtLPFgS4krVhgRq/O+LC8ATsEh2YVoq48ctKp/CrbFwnG4D78H2
+ trRZtmrqQK4BxtZuzbaYKu26Cy8VrxCKf2RHVpVx04C6KpJkcAQfxn/7V0mz/8btFzd/
+ FdWwK/SDCE6Tn9D2Pc9GEVi5gaN/zI5OsQC+mJd0y7s6Bqi8r8uFv3PZzR7h9N8MFu6c
+ myRQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1771954593; x=1772559393;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=V8Mb7JJ31wJsv3i9pLvO2NVdO67ZDNDABuR6kkDT74s=;
+ b=Vw0Fkx+QamOJxDDbfoXyjeKB8pPSHay1/R3eIrybzymRD0Baq3qEBRpKcn7oUk4ySb
+ 10I8sHJ+9N4wMHiLIq4eEWNdjERh0uqpQdPK0OS4EdG6qZc6Cf3ZqJGQI/jxzWUn4bYg
+ GUygyTIRttW9y5iRVxEruBmwVl8vQBCfkF/EPLFT/0/WEBUMqW3bpTk0TZK6dlvPztZj
+ sDaC0WggcEO4MygrmiJtP8RBWWd8+xyb7HTvGJaB/GCyp9uHhY/r0hIC6DrkvbxHHuvf
+ IhvjF69wzyb3QSjE9ZGro70ehS7TIF/3KLFHds1d6s4ubTIIfcfJA1swXrSIhYvnLrbp
+ eZcQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXtDS2NF74QiLpFWUb8JYrHN4DvFCsxIYwZxmwxezxnx1OO7NUx2e/qa5NM2u0D363s9U9n1FqKOTrh@nongnu.org
+X-Gm-Message-State: AOJu0Yw61gVdSHJ/hNJgGpvjwoGTEJTiM1tARLFNgffJRTI8eGY3Ww43
+ g9dRUOMe2m5vl5/4xY61dGCY+dfEzDoaz0+b0XNoQVPrS/ZcJj+LXyY0vZz4QODf1F4=
+X-Gm-Gg: AZuq6aJ/a4xGXKL1DLcu0cFU0saZTcdvQZjkXDQLMVdQisCtF0clS0T8dn4jLM+7vSn
+ vnlpZOFUXrdTneUE8j2MRHUG7szSWSQL6q/L/aeRSlGwee4K6v4DNR5BnojJQPflk1MZJ469xUR
+ /6fo3rqscX8/a2qOQPrTWcEgn/Cs20B13XlmaefW6oRGWx+hmG762FBBKaXS/XGlgE6H0J/J1sT
+ SFn/jtkb8XT0UVDvP4jeuUmv/J76jpor/+0IKwYOM9KW9ttbgHGdChE8JNce9ky87pWF6x1gCgD
+ jUtXYODzysTqMVKqZwPjauu0/5oJZP7UH+b/yvAuLVYIM4m6jnzh+P3WBwdbuPT8w34xweGfgUx
+ qGjixAVzofL2wbBv2WahBASUMzc2NHLEAyK7ZgUd14eV/2ddOK2O95Dpwkysw8w32YNfzOkTLj8
+ gCeTYb0CeOn0PR3MTo1LowXIo=
+X-Received: by 2002:a17:907:9620:b0:b88:9760:2df9 with SMTP id
+ a640c23a62f3a-b90819717edmr791318966b.11.1771954592522; 
+ Tue, 24 Feb 2026 09:36:32 -0800 (PST)
+Received: from draig.lan ([185.124.0.126]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-b9084a4d6e1sm447803266b.0.2026.02.24.09.36.31
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 24 Feb 2026 09:36:31 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 0712A5F7B4;
+ Tue, 24 Feb 2026 17:36:31 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: =?utf-8?Q?Kr=C3=B6ning?= Martin <martin.kroening@eonerc.rwth-aachen.de>
+Cc: Peter Maydell <peter.maydell@linaro.org>,  Philippe =?utf-8?Q?Mathieu-?=
+ =?utf-8?Q?Daud=C3=A9?=
+ <philmd@linaro.org>,  "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Subject: Re: [PATCH 1/2] include/exec: Provide the cpu_tswap() functions
+In-Reply-To: <0DF0CF94-9EA0-4AE7-A0BD-49D4217C6837@eonerc.rwth-aachen.de>
+ (=?utf-8?Q?Kr=C3=B6ning's?= message of "Tue, 24 Feb 2026 16:07:58 +0000")
+References: <20260106-semihosting-cpu-tswap-v1-0-646576c25f56@eonerc.rwth-aachen.de>
+ <20260106-semihosting-cpu-tswap-v1-1-646576c25f56@eonerc.rwth-aachen.de>
+ <ee9a0216-0a1a-46ec-b647-64045c892af3@linaro.org>
+ <FDDAA4F9-C389-4E63-8DEB-B0FBE38FE5CE@eonerc.rwth-aachen.de>
+ <CAFEAcA-P2xqNO21rMyt2VA_tRf9yzWh8qtJFggGr4Mn-AWjj5g@mail.gmail.com>
+ <00BB587B-792D-4725-A42C-AE87A201C2E2@eonerc.rwth-aachen.de>
+ <0DF0CF94-9EA0-4AE7-A0BD-49D4217C6837@eonerc.rwth-aachen.de>
+User-Agent: mu4e 1.14.0-pre1; emacs 30.1
+Date: Tue, 24 Feb 2026 17:36:30 +0000
+Message-ID: <878qci3uxt.fsf@draig.linaro.org>
 MIME-Version: 1.0
-References: <20260216034432.23912-1-richard.henderson@linaro.org>
- <20260216034432.23912-13-richard.henderson@linaro.org>
-In-Reply-To: <20260216034432.23912-13-richard.henderson@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 24 Feb 2026 17:29:16 +0000
-X-Gm-Features: AaiRm51toGyaV8QpiF9drkrrXmwvZGBDoL_0xdpP2yAJwRpAY2ySIiGDkNtbGDY
-Message-ID: <CAFEAcA9wgaQ=RHmWL-BaDo7ZKt93Wp5J7YvkOsJzd59HU7z=QQ@mail.gmail.com>
-Subject: Re: [RFC PATCH 12/13] target/arm: Add SME state to kvm_arch_{get,
- put}_registers
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b134;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb134.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::533;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x533.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -116,21 +113,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 16 Feb 2026 at 03:46, Richard Henderson
-<richard.henderson@linaro.org> wrote:
+Kr=C3=B6ning, Martin <martin.kroening@eonerc.rwth-aachen.de> writes:
+
+>> On 22.01.26, 14:16, Martin Kr=C3=B6ning wrote:
+>>=20
+>> On 19.01.26, 10:39, Peter Maydell wrote:
+>>=20
+>> > On (2):
+>> >=20
+>> > > Alex was worried about expanding the use of `virtio_is_big_endian`:
+>> > >
+>> > > > Hmm looking at the description:
+>> > > >
+>> > > > /**
+>> > > > * @virtio_is_big_endian: Callback to return %true if a CPU which s=
+upports
+>> > > > * runtime configurable endianness is currently big-endian.
+>> > > > * Non-configurable CPUs can use the default implementation of this=
+ method.
+>> > > > * This method should not be used by any callers other than the pre=
+-1.0
+>> > > > * virtio devices.
+>> > > > */
+>> > > > bool (*virtio_is_big_endian)(CPUState *cpu);
+>> > > >
+>> > > > I'm not sure if we want to expand the usage of this hack. I think
+>> > > > Philippe is hoping to get rid of these warts eventually. Of course=
+ we
+>> > > > could rename the method and just provide a way to get the current
+>> > > > systems endianess.
+>> > >
+>> > > While not being very familiar with QEMU's source code, something lik=
+e this
+>> > > seems necessary to me. I can rename `virtio_is_big_endian` to `is_bi=
+g_endian`
+>> > > and `cpu_virtio_is_big_endian` to `cpu_is_big_endian` if you prefer =
+that.
+>> >=20
+>> > The reason for naming these functions the way we have now is
+>> > that we really didn't want them to be a "this looks like the
+>> > right function to use for my purpose" general name like
+>> > "is_big_endian". Almost nothing in QEMU outside the CPU itself
+>> > should need to know about the data endianness of the CPU,
+>> > because in real hardware the devices can't tell what the CPU
+>> > is set up as, they just get/send data. The exceptions are
+>> > legacy virtio (which is a mistake that was made because nobody
+>> > was thinking about it in the original virtio device design)
+>> > and some oddball interfaces like semihosting. So the name is
+>> > intended to push people away from using it (and towards e.g.
+>> > target_big_endian()).
+>>=20
+>> That makes sense. How about something like `internal_is_big_endian` and=
+=20
+>> `cpu_internal_is_big_endian`, then? I am just making things up, though.
+>> Given my limited experience with QEMU internals, I am not really qualifi=
+ed
+>> to choose any name.
 >
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->  target/arm/kvm.c | 104 ++++++++++++++++++++++++++++++++++++++++++++++-
->  1 file changed, 102 insertions(+), 2 deletions(-)
+> Is there anything I can do to help move this forward?
+> Should I send a new series that also changes the names to
+> `internal_is_big_endian`?
 
-The (currently proposed) KVM ABI imposes some not-necessarily-obvious
-restrictions on what order it is OK to write various things in (e.g.
-SMCR.SM and other things affecting vector length need to be
-put before the vectors themselves). We should have a comment
-explaining this so we don't accidentally refactor and
-break the ordering requirements later.
+Sounds like a plan, also make it clear the very limited use cases for
+using this helper.
 
-thanks
--- PMM
+> To me it sounded like the technical details are fine to all of you.
+> If this needs further internal discussions, though, I am happy to wait, o=
+f course.
+>
+> Cheers,
+> Martin
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
