@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E307F4BB6F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A590F4BB6C
 	for <qemu-devel@archiver.kernel.org>; Tue, 24 Feb 2026 18:16:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vuwwI-00032E-4U; Tue, 24 Feb 2026 13:15:27 -0500
+	id 1vuwwn-0003Bo-VY; Tue, 24 Feb 2026 13:15:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vuww3-000311-Sa
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 13:15:04 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vuwwa-00039E-SU
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 13:15:37 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vuww2-00024X-5a
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 13:15:03 -0500
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vuwwQ-0002JC-Jr
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 13:15:29 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771956901;
+ s=mimecast20190719; t=1771956924;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=YP37idpAtkaeBPY9BY3rrBP/pVE3ULl+YFuGLN+GakM=;
- b=FZSue1sOUQvQ8PL+z5yf+pd2j8KfGNzS1cFa54HFAc9VoHRonSJqTwDMzVQJxNcM4OuXhH
- nl8Ad9XI4PiHbe6MxG/diDcjzq8LrVAhRQ9wZ7hlsPG78HoUlWBspiGjSKXwRSh37++uf1
- Z+gH3F1WSMPRwTUB+Au7PdcYWgnjDCc=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=A8Jn0yMcBwEzyMs58lSknWJcgq5eOazfgHuIFhiIiiE=;
+ b=bsVBF3c+hzvUUpW9bOZstw2J5LR0f7wzm0oD/Z8oT6Dcfwel78vhCS/9QY1B/oTR+8vlUQ
+ vBPgeLqEuM5goaFSBF9d0VAhWvo+/JpvjINTJeIjgR/me2l3phBEza8qdKgMWV7m8fnNi+
+ btrkzkrQYKgkfPxMF6qjc++CdhhwL+c=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-336-42zGFCcpOsOU8pGgETQ2Sg-1; Tue,
- 24 Feb 2026 13:14:57 -0500
-X-MC-Unique: 42zGFCcpOsOU8pGgETQ2Sg-1
-X-Mimecast-MFC-AGG-ID: 42zGFCcpOsOU8pGgETQ2Sg_1771956895
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-433-S7Z_zR7dNjG0VuMPNkAdjA-1; Tue,
+ 24 Feb 2026 13:15:14 -0500
+X-MC-Unique: S7Z_zR7dNjG0VuMPNkAdjA-1
+X-Mimecast-MFC-AGG-ID: S7Z_zR7dNjG0VuMPNkAdjA_1771956912
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AE3621955F3B; Tue, 24 Feb 2026 18:14:54 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B5DA91800365; Tue, 24 Feb 2026 18:15:11 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.89.212])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C5F6F180066D; Tue, 24 Feb 2026 18:14:47 +0000 (UTC)
+ id 04E141800666; Tue, 24 Feb 2026 18:15:04 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
@@ -64,23 +64,23 @@ Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
  Kevin Wolf <kwolf@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Yonggang Luo <luoyonggang@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL v2 01/19] python/mkvenv: create timestamp file for each group
- "ensured"
-Date: Tue, 24 Feb 2026 13:14:20 -0500
-Message-ID: <20260224181440.832943-2-jsnow@redhat.com>
+Subject: [PULL v2 04/19] python/mkvenv: add mechanism to install local
+ package(s)
+Date: Tue, 24 Feb 2026 13:14:23 -0500
+Message-ID: <20260224181440.832943-5-jsnow@redhat.com>
 In-Reply-To: <20260224181440.832943-1-jsnow@redhat.com>
 References: <20260224181440.832943-1-jsnow@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -10
 X-Spam_score: -1.1
 X-Spam_bar: -
 X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.358, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.659,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -98,34 +98,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Each group ensured by the mkvenv script will create an empty timestamp
-file named {groupname}.group which can be used to conditionally trigger
-dependency installation from various scripts and build machinery.
+Currently, we "implicitly" install the local 'qemu' python package for
+'make check-venv' with some logic inside tests/Makefile.include. I would
+like to make this installation explicit in pythondeps.toml instead.
+
+This patch adds a path constraint that can be used in lieu of version
+constraints to specify that a package should be installed from the
+source tree instead of from PyPI or vendored packages. This is done to
+allow us to install the python packages hosted inside of the tree while
+also processing dependencies; i.e. so that our "qemu" package can
+specify that it needs "qemu.qmp", which soon will not be included in
+qemu.git.
+
+This also has the benefit of being able to specify in a declarative
+configuration file that our pyvenv environment *will* have our local
+python packages installed and available without any PYTHONPATH hacks,
+which should simplify iotests, device-crash-test and functional tests
+without needing to manage local inclusion paths in environment
+variables.
+
+On the downsides, installing packages through mkvenv/ensuregroup means
+that there are extra steps we need to take in order to install a local
+package *offline*; namely we must disable build isolation (so we have
+access to setuptools) and we must also include python3-wheel in QEMU's
+build dependencies in order for "make check" to run successfully when in
+an offline, isolated environment. These extra dependencies are handled
+in a forthcoming commit; for now, nothing is utilizing this new pathway.
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
-Message-ID: <20260218213416.674483-3-jsnow@redhat.com>
+Message-ID: <20260218213416.674483-6-jsnow@redhat.com>
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- python/scripts/mkvenv.py | 6 ++++++
- 1 file changed, 6 insertions(+)
+ python/scripts/mkvenv.py | 37 +++++++++++++++++++++++++++++++------
+ 1 file changed, 31 insertions(+), 6 deletions(-)
 
 diff --git a/python/scripts/mkvenv.py b/python/scripts/mkvenv.py
-index 5cba5770d22..b4662d33e6e 100644
+index b4662d33e6e..8ed6a354505 100644
 --- a/python/scripts/mkvenv.py
 +++ b/python/scripts/mkvenv.py
-@@ -838,6 +838,12 @@ def ensure_group(
-             raise Ouch(result[0])
-         raise SystemExit(f"\n{result[0]}\n\n")
- 
-+    if inside_a_venv():
-+        for group in groups:
-+            path = Path(sys.prefix).joinpath(f"{group}.group")
-+            with open(path, "w", encoding="UTF8"):
-+                pass
-+
- 
- def post_venv_setup() -> None:
+@@ -662,6 +662,7 @@ def pip_install(
+     args: Sequence[str],
+     online: bool = False,
+     wheels_dir: Optional[Union[str, Path]] = None,
++    env: Optional[Dict[str, str]] = None,
+ ) -> None:
      """
+     Use pip to install a package or package(s) as specified in @args.
+@@ -687,6 +688,7 @@ def pip_install(
+     full_args += list(args)
+     subprocess.run(
+         full_args,
++        env=env,
+         check=True,
+     )
+ 
+@@ -733,9 +735,14 @@ def _do_ensure(
+     :param wheels_dir: If specified, search this path for packages.
+     """
+     absent = []
++    local_packages = []
+     present = []
+     canary = None
+     for name, info in group.items():
++        if "path" in info:
++            pkgpath = Path(__file__).parents[2].joinpath(info["path"])
++            local_packages.append(str(pkgpath))
++            continue
+         constraint = _make_version_constraint(info, False)
+         matcher = Matcher(name + constraint)
+         print(f"mkvenv: checking for {matcher}", file=sys.stderr)
+@@ -770,15 +777,33 @@ def _do_ensure(
+             print(f"mkvenv: installing {', '.join(absent)}", file=sys.stderr)
+             try:
+                 pip_install(args=absent, online=online, wheels_dir=wheels_dir)
+-                return None
++                absent = []
+             except subprocess.CalledProcessError:
+                 pass
+ 
+-        return diagnose(
+-            absent[0],
+-            online,
+-            wheels_dir,
+-            canary,
++        if absent:
++            return diagnose(
++                absent[0],
++                online,
++                wheels_dir,
++                canary,
++            )
++
++    # Handle local packages separately and last so we can use different
++    # installation arguments (-e), and so that any dependencies that may
++    # be covered above will be handled according to the depfile
++    # specifications.
++    if local_packages:
++        print(f"mkvenv: installing {', '.join(local_packages)}",
++              file=sys.stderr)
++        env = dict(os.environ)
++        env['PIP_CONFIG_SETTINGS'] = "editable_mode=compat"
++        pip_install(
++            args=["--no-build-isolation",
++                  "-e"] + local_packages,
++            online=online,
++            wheels_dir=wheels_dir,
++            env=env,
+         )
+ 
+     return None
 -- 
 2.53.0
 
