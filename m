@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D147CFD376A
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 17:04:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB90FFD3774
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 17:04:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvIFm-0008K1-7j; Wed, 25 Feb 2026 12:00:50 -0500
+	id 1vvIJN-0001s6-Mo; Wed, 25 Feb 2026 12:04:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vvIFi-0008Hd-IB
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 12:00:47 -0500
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ id 1vvIJM-0001r4-Jo
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 12:04:32 -0500
+Received: from mail-pg1-x52c.google.com ([2607:f8b0:4864:20::52c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vvIFg-0005AX-Ot
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 12:00:46 -0500
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-2ab232cc803so34355025ad.3
- for <qemu-devel@nongnu.org>; Wed, 25 Feb 2026 09:00:43 -0800 (PST)
+ id 1vvIJK-0005Wv-4M
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 12:04:31 -0500
+Received: by mail-pg1-x52c.google.com with SMTP id
+ 41be03b00d2f7-c70bfef17a4so2458815a12.2
+ for <qemu-devel@nongnu.org>; Wed, 25 Feb 2026 09:04:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772038842; x=1772643642; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=K0b/EFHi0YUG5Z8njjU5r4LfNjQ5YJ3RoxQQjHgIq4Q=;
- b=i8/zOF+UGc/4wlLlwPHz3z+Np5SitqEiIdGeNRnGex4nugtKc1iaEJljJHmlfszILh
- WUmG/gClTUmsHhrm8/ocqluR3YSSsPe6Y5EmfC4oJcoKp9jejclPN+w1hz4mtlZbligP
- 86lWl9ZYcqCjzQgMyqsoh2qoaMVA0VGGZHfawHiOx4pGzJYSIVMpPXPNwdS8ezuzfpop
- mQ18ZuxR6ywEfr6oIBs6CXu1QIJGpUSrPzl7mpZvx+U8fD7WETrEG4q8NygfwQpY4TdD
- quJKDCEZgTH5J1+wXK2UzZDYrklZbIhAepVOUEwDHXfE/B5ERiAkDtT9kQYuAOz3Zz1i
- pyLA==
+ d=linaro.org; s=google; t=1772039068; x=1772643868; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=IDQncYvTe1hfWYzs24nQr9jeT6wwIfSVjc7tiIOU2f0=;
+ b=RLRieQNpWzPoHGxMGCj3vanyoJuPR9iVpDAj7HbdyihP8+9iWhvpwv5G1LP0IZ4iZU
+ 7aIWFEaiMlphK6K82mpuIDYDZbg20dH90liPlfV0De9WO4EqwASj9ciVnmVprqhimVif
+ uI0l4oaEpA88gnu3Vx6VwaHxIZye3V1+sPUIFIu3qEwVElYqcIKmnec3LCQOBixGz0+o
+ 7lAmsFjvj5uT9U3a8z3fAFikc29igUGm/UaxXr05cjdHu/C8u6UtwEhTSyd6qrjoIiNb
+ jrEEF263BwR09fXfU9SGW3Nxy9dnOARSsGwuBJRYiZqWbNT/GNX2Zlxvf6Hlh1taaImy
+ 89cQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772038842; x=1772643642;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=K0b/EFHi0YUG5Z8njjU5r4LfNjQ5YJ3RoxQQjHgIq4Q=;
- b=WBB4NHuWCRX+HGaZJtzWUYYnrfZwHFc+SNSZa1csEEo6WTcDB/2I4KPJmFOeZ+20ut
- nwv8l74FjtBAmkkhU0mtti+vUJ5KM+bqyEybTZ8QzuzmeHP8Dk7HCtqSju3lTh5k8F1H
- l1JLq7Z27eB29jAM+sGWoniqBhSKN2NVX7Nn88gFgV4wIei2SOSj0Fmnf4t3wQbRAT29
- ZMOIYdIJ7w2N3oZpyt/1tpggmFt1NF3hXmmf9v0uZfhBngOQlCUQ8hnfITHLtdPYcpvb
- lVWPMduAoGE3J9ouUIIWKbSC4qI32su/cfPoDdpUHn0i/zxeB5g9LS0WaXBM3OYV3jE6
- bxYw==
+ d=1e100.net; s=20230601; t=1772039068; x=1772643868;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=IDQncYvTe1hfWYzs24nQr9jeT6wwIfSVjc7tiIOU2f0=;
+ b=r8mWWKhm/r0S0RXPWrFVQNFbvjfjdpHIdVapiZUxXY0zfPyA6joZQgfqcBzSgrvT63
+ 4+u4eIOG9tDXLUJSh4gHi3Wbav8dU9+kZMgKV5hsT17BQ+WatNpcIdiXSbvkS7Igasw5
+ 4/RPZ1w2JwkBTZQnyCNllk3pS4mbXx5iljMPYJEozj0aYaJn/bvG/3dcsrS9cPJNBkg/
+ 7ddeRikm+v8YCYLByXDtM+Ht2eeLoEo0B+De81Wivs4/fhhbIEPFBHcZ8aT1reD54VSs
+ H0KghGHEbonj22SjmMw4abBcIXxbzzMNWKtICW31TcqzioGtqFmOD2ADeACvi0F1TMVc
+ 9UHA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVmCWRtx83RZjys3SSgS6gmdGmpjuT4XZ6S8YKFF6HrtN247iAgWnHnmuoFJUC2PC+DgZ+HPOJ92GHj@nongnu.org
-X-Gm-Message-State: AOJu0YyDLOZ8zJ7ESwsbTZ1Xtx/OVX7M4gBKMvCqfYeftug6PzGOdhHn
- z/fPJmqKSwBKMF+YytsO/NACh6DXA/CeczJ0lBUQrR119LWEoY0Z/HgnugOvOomesi0=
-X-Gm-Gg: ATEYQzyMy+gGYsgsPHu651SD1/AgJgZeYKK3fulLIqdarGxv7ISiNJJ3GxgVqYwJT/P
- EwyOvBes5O/SNeb2kli+GAr+XkjmSKbNlj5cI+XHiFTrefwpJys6dkC7fsdXMDHA8rrwE7YoXSg
- AnBmn47OLTQbZVQoRvp7J9t7wtzl8Bc+exESxexzVEaQVDzr4/3yIwUqVEjELaU/lkXWdCMalR4
- 6RhEooVcSI9F8pksHOOawER4UzG/FlfU4Y0JWHlARXQ4i4yH+EOnzOfaZKGl7VbUAxPLWEuC+Wu
- Gk5LPBFdsfHPa+AkBa+mG/amFSQ+P90GHeCV1wlppPFt2YAmvdEUYdvvfRkk61LB3xWa4Jy4rtU
- 3G1yeauNnDf/HTMUuNu8pI2JlBuMYUXcadpOaQf+RkpE1C9DQ518BHZB6RmUJf/fePGDrfsf6N+
- k7RHKm95m6GCBMW9OqqCQtoFzzWxyhuufwdpbuxe0w/IXXh14bvI4HdaFp8jSRMuFWODFZ
-X-Received: by 2002:a17:903:41ca:b0:295:560a:e499 with SMTP id
- d9443c01a7336-2ade99a62f3mr8215325ad.5.1772038841808; 
- Wed, 25 Feb 2026 09:00:41 -0800 (PST)
+ AJvYcCVj9k1KUZ7zA7lsLTd5oSRJ6v7ASj+qj0clCafTXEgtLr4yg2E/Jo4kGgvvkCJ1Y4seeQ8AMk6kwTOR@nongnu.org
+X-Gm-Message-State: AOJu0Ywn+Qe8cDrc7UaYqNhxH0lqttsAaCEiMaTqCPTtVIgZDGuMgu9o
+ vwthVYt0yH1LrWU4uySiK6/Iw9DsVW3gWcq5xRy9+BYjXZiNfAFKkHa5ESGUbBf43Y0=
+X-Gm-Gg: ATEYQzwQ3L/y4t2xkK1GoUqmy2CuJt8IpejfvOne8naoA4XR3yPWrK0Ik1pz8Ra66Ui
+ STLFhOwN0xOfs0iezsUkHtMP0IxfGwjAu7qx5y0YfVyhDUk6aQnVlEbDkZTEukNxCB+djL8XmnZ
+ RnafnAgfk6P/fmF1uT51+KrHADQLa61y36pjTI6UKNUTDTVKdTvBn+FDz5itrTYBAmylm9VWrpU
+ GhNJRntZgYlzQbXTW6xC4KuzjywA5LqUv7fi8XjWDQQkMd74Q6DMQIOIEOSAVmgAtCBvn8S1FWo
+ mnsBBN/FuKKlaLjw1G2XmxZFeAbDZCB9isiKOi8CYKsx+BWNbV8vAbLyw0Bt+y3nFSg3E6TDVWn
+ gBK4jV634aCw5rSvKNoX7x4yD70ZMcOlqPR5zBHdWxrcB3LvXaAWPO6vsUxK0E3O3Azs6NxelDB
+ hhqVv8MH+wW0+3AphGgu5KjHLrWODfWs4c3xhihmUXBwwHgXiE469qRch/XZm0JunW4soC
+X-Received: by 2002:a05:6a21:1309:b0:394:f972:43ca with SMTP id
+ adf61e73a8af0-395ad20cff5mr926149637.54.1772039067786; 
+ Wed, 25 Feb 2026 09:04:27 -0800 (PST)
 Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2ad75027641sm180404985ad.64.2026.02.25.09.00.40
+ d9443c01a7336-2ad7500e189sm144377395ad.57.2026.02.25.09.04.27
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 25 Feb 2026 09:00:41 -0800 (PST)
-Message-ID: <c39a8ca6-f727-4684-9c20-cade239e627c@linaro.org>
-Date: Wed, 25 Feb 2026 09:00:40 -0800
+ Wed, 25 Feb 2026 09:04:27 -0800 (PST)
+Message-ID: <6484080a-4570-478c-ab48-dce2ca054f1a@linaro.org>
+Date: Wed, 25 Feb 2026 09:04:25 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 2/7] linux-user: make syscall emulation interruptible
+Subject: Re: [PATCH v4 4/7] tests/tcg: add test for qemu_plugin_set_pc API
+Content-Language: en-US
 To: Florian Hofhammer <florian.hofhammer@epfl.ch>, qemu-devel@nongnu.org
 Cc: alex.bennee@linaro.org, richard.henderson@linaro.org, laurent@vivier.eu,
  imp@bsdimp.com, berrange@redhat.com
 References: <909b0a4f-9759-4e27-bba8-997ae2f41bd6@epfl.ch>
- <8096590c-bf13-4e5e-8167-ab38a37180bc@epfl.ch>
- <538ada16-07b8-403c-b1fa-f42db7cfc195@linaro.org>
- <1b6eef52-d6d0-4b11-a91c-6d8b43f4e3f8@epfl.ch>
+ <2ccc79ee-48ab-4097-a9cc-4d2b79ab9a8a@epfl.ch>
+ <7615cede-426b-4547-8878-c57ec08e8ba1@linaro.org>
+ <a3233b9f-0200-4e76-83a0-9c9852a85348@epfl.ch>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Content-Language: en-US
 Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  xsDNBGK9dgwBDACYuRpR31LD+BnJ0M4b5YnPZKbj+gyu82IDN0MeMf2PGf1sux+1O2ryzmnA
  eOiRCUY9l7IbtPYPHN5YVx+7W3vo6v89I7mL940oYAW8loPZRSMbyCiUeSoiN4gWPXetoNBg
@@ -115,11 +115,11 @@ Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  5SYuJaKzCAgNeAy3gUVUUPrUsul1oe2PeWMFUhWKrqko0/Qo4HkwTZY6S16drTMncoUahSAl
  X4Z3BbSPXPq0v1JJBYNBL9qmjULEX+NbtRd3v0OfB5L49sSAC2zIO8S9Cufiibqx3mxZTaJ1
  ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <1b6eef52-d6d0-4b11-a91c-6d8b43f4e3f8@epfl.ch>
+In-Reply-To: <a3233b9f-0200-4e76-83a0-9c9852a85348@epfl.ch>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x635.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52c;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x52c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -142,113 +142,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/25/26 12:02 AM, Florian Hofhammer wrote:
-> On 24/02/2026 22:05, Pierrick Bouvier wrote:
->> On 2/24/26 7:50 AM, Florian Hofhammer wrote:
->>> The syscall emulation code previously wasn't interruptible via
->>> cpu_loop_exit(), as this construct relies on a longjmp target that is not
->>> live anymore in the syscall handling code. Consequently, longjmp() would
->>> operate on a (potentially overwritten) stale jump buffer. This patch adds an additional
->>> setjmp and the necessary handling around it to make longjmp() (and by
->>> proxy cpu_loop_exit() safe to call even within a syscall context.
+On 2/25/26 6:58 AM, Florian Hofhammer wrote:
+> On 24/02/2026 21:24, Pierrick Bouvier wrote:
+>> On 2/24/26 7:52 AM, Florian Hofhammer wrote:
+>>> The test executes a non-existent syscall, which the syscall plugin
+>>> intercepts and redirects to a clean exit.
+>>> Due to architecture-specific quirks, the architecture-specific Makefiles
+>>> require setting specific compiler and linker flags in some cases.
 >>>
 >>> Signed-off-by: Florian Hofhammer <florian.hofhammer@epfl.ch>
 >>> ---
->>>    linux-user/aarch64/cpu_loop.c      |  2 +-
->>>    linux-user/alpha/cpu_loop.c        |  2 +-
->>>    linux-user/arm/cpu_loop.c          |  2 +-
->>>    linux-user/hexagon/cpu_loop.c      |  2 +-
->>>    linux-user/hppa/cpu_loop.c         |  4 ++++
->>>    linux-user/i386/cpu_loop.c         |  8 +++++---
->>>    linux-user/include/special-errno.h |  8 ++++++++
->>>    linux-user/loongarch64/cpu_loop.c  |  5 +++--
->>>    linux-user/m68k/cpu_loop.c         |  2 +-
->>>    linux-user/microblaze/cpu_loop.c   |  2 +-
->>>    linux-user/mips/cpu_loop.c         |  5 +++--
->>>    linux-user/or1k/cpu_loop.c         |  2 +-
->>>    linux-user/ppc/cpu_loop.c          |  6 ++++--
->>>    linux-user/riscv/cpu_loop.c        |  2 +-
->>>    linux-user/s390x/cpu_loop.c        |  2 +-
->>>    linux-user/sh4/cpu_loop.c          |  2 +-
->>>    linux-user/sparc/cpu_loop.c        |  4 +++-
->>>    linux-user/syscall.c               | 16 ++++++++++++++++
->>>    linux-user/xtensa/cpu_loop.c       |  3 +++
->>>    19 files changed, 59 insertions(+), 20 deletions(-)
+>>>    tests/tcg/arm/Makefile.target                 |  6 +++++
+>>>    tests/tcg/hexagon/Makefile.target             |  7 +++++
+>>>    tests/tcg/mips/Makefile.target                |  6 ++++-
+>>>    tests/tcg/mips64/Makefile.target              | 15 +++++++++++
+>>>    tests/tcg/mips64el/Makefile.target            | 15 +++++++++++
+>>>    tests/tcg/mipsel/Makefile.target              | 15 +++++++++++
+>>>    tests/tcg/multiarch/Makefile.target           | 22 ++++++++++++++--
+>>>    .../{ => plugin}/check-plugin-output.sh       |  0
+>>>    .../{ => plugin}/test-plugin-mem-access.c     |  0
+>>>    .../plugin/test-plugin-skip-syscalls.c        | 26 +++++++++++++++++++
+>>>    tests/tcg/plugins/syscall.c                   |  6 +++++
+>>>    tests/tcg/sparc64/Makefile.target             | 16 ++++++++++++
+>>>    12 files changed, 131 insertions(+), 3 deletions(-)
+>>>    create mode 100644 tests/tcg/mips64/Makefile.target
+>>>    create mode 100644 tests/tcg/mips64el/Makefile.target
+>>>    create mode 100644 tests/tcg/mipsel/Makefile.target
+>>>    rename tests/tcg/multiarch/{ => plugin}/check-plugin-output.sh (100%)
+>>>    rename tests/tcg/multiarch/{ => plugin}/test-plugin-mem-access.c (100%)
+>>>    create mode 100644 tests/tcg/multiarch/plugin/test-plugin-skip-syscalls.c
+>>>    create mode 100644 tests/tcg/sparc64/Makefile.target
 >>>
->>> diff --git a/linux-user/sparc/cpu_loop.c b/linux-user/sparc/cpu_loop.c
->>> index 7391e2add8..f054316dce 100644
->>> --- a/linux-user/sparc/cpu_loop.c
->>> +++ b/linux-user/sparc/cpu_loop.c
->>> @@ -229,7 +229,9 @@ void cpu_loop (CPUSPARCState *env)
->>>                                  env->regwptr[2], env->regwptr[3],
->>>                                  env->regwptr[4], env->regwptr[5],
->>>                                  0, 0);
->>> -            if (ret == -QEMU_ERESTARTSYS || ret == -QEMU_ESIGRETURN) {
->>> +            if (ret == -QEMU_ERESTARTSYS
->>> +                    || ret == -QEMU_ESIGRETURN
->>> +                    || ret == -QEMU_ESETPC) {
->>>                    break;
->>>                }
->>
->> Just a style nit:
->> if (ret == -QEMU_ERESTARTSYS ||
->>      ret == -QEMU_ESIGRETURN ||
->>      ret == -QEMU_ESETPC) {
->>
->>>                if ((abi_ulong)ret >= (abi_ulong)(-515)) {
->>> diff --git a/linux-user/syscall.c b/linux-user/syscall.c
->>> index d466d0e32f..99e1ed97d9 100644
->>> --- a/linux-user/syscall.c
->>> +++ b/linux-user/syscall.c
->>> @@ -43,6 +43,7 @@
->>>    #include <linux/capability.h>
->>>    #include <sched.h>
->>>    #include <sys/timex.h>
->>> +#include <setjmp.h>
->>>    #include <sys/socket.h>
->>>    #include <linux/sockios.h>
->>>    #include <sys/un.h>
->>> @@ -600,6 +601,9 @@ const char *target_strerror(int err)
->>>        if (err == QEMU_ESIGRETURN) {
->>>            return "Successful exit from sigreturn";
->>>        }
->>> +    if (err == QEMU_ESETPC) {
->>> +        return "Successfully redirected control flow";
->>> +    }
->>>          return strerror(target_to_host_errno(err));
->>>    }
->>> @@ -14410,6 +14414,18 @@ abi_long do_syscall(CPUArchState *cpu_env, int num, abi_long arg1,
->>>            return -QEMU_ESIGRETURN;
->>>        }
->>>    +    /*
->>> +     * Set up a longjmp target here so that we can call cpu_loop_exit to
->>> +     * redirect control flow back to the main loop even from within
->>> +     * syscall-related plugin callbacks.
->>> +     * For other types of callbacks or longjmp call sites, the longjmp target
->>> +     * is set up in the cpu loop itself but in syscalls the target is not live
->>> +     * anymore.
->>> +     */
->>> +    if (unlikely(sigsetjmp(cpu->jmp_env, 0) != 0)) {
->>> +        return -QEMU_ESETPC;
->>> +    }
+>>> diff --git a/tests/tcg/mips/Makefile.target b/tests/tcg/mips/Makefile.target
+>>> index 5d17c1706e..d08138f17b 100644
+>>> --- a/tests/tcg/mips/Makefile.target
+>>> +++ b/tests/tcg/mips/Makefile.target
+>>> @@ -9,11 +9,15 @@ MIPS_SRC=$(SRC_PATH)/tests/tcg/mips
+>>>    VPATH         += $(MIPS_SRC)
+>>>      # hello-mips is 32 bit only
+>>> -ifeq ($(findstring 64,$(TARGET_NAME)),)
+>>>    MIPS_TESTS=hello-mips
+>>>      TESTS += $(MIPS_TESTS)
+>>>      hello-mips: CFLAGS+=-mno-abicalls -fno-PIC -fno-stack-protector -mabi=32
+>>>    hello-mips: LDFLAGS+=-nostdlib
 >>> +
+>>> +ifeq ($(CONFIG_PLUGIN),y)
+>>> +# qemu-mips(el) returns ENOSYS without triggering syscall plugin callbacks
+>>> +run-plugin-test-plugin-skip-syscalls-with-libsyscall.so:
+>>> +    $(call skip-test, $<, "qemu-mips does not execute invalid syscalls")
 >>
->> Makes sense, and I guess you found that when running the series test.
+>> I ran into this while pulling syscall filter API recently, and found 4096 as syscall number, which seems to make all architectures happy.
 >>
->> Do you need all the new QEMU_FALLTHROUGH introduced here? Is it for removing warnings?
+>> See 948ffdd79b78702239aace2d32d4f581913299b3 for more details.
 > 
-> I think they're not strictly necessary, but if I recall correctly, I had
-> warnings otherwise.
-> I can remove them if you prefer but I think making the fallthrough
-> explicit encodes the intent better.
->
+> Please correct me if I'm wrong, but is this really sane? The comment in
+> the referenced commit says that 4096 isn't used in any ISA, but on the
+> MIPS O32 ABI, syscall numbers start at 4000. 4096 therefore corresponds
+> to getpriority, which would be shadowed by using this syscall number.
 
-If that compiles warning-free without it, you can remove it. Else, leave 
-it as it is.
+I would definitely not recommend using this value in a general purpose 
+plugin to implement "hypercalls", it would not be sane.
 
-Fallthrough attribute is precisely used to silence warning compiler, and 
-not to document code, even though it can help with that.
+That said, for the current limited test context where we now this 
+syscall is not called, I would say it's ok. And if it should get broken 
+in the future, we would catch it and could find another magic number.
+Of course, if you have a better idea of syscall number, I would be very 
+happy to follow another rationale, as mine was mostly try and error. :)
 
-Thanks,
+Regards,
 Pierrick
 
