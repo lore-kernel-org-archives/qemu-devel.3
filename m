@@ -4,82 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9764CF55452
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 03:58:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FFA4F55449
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 03:58:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vv62l-0005LG-0o; Tue, 24 Feb 2026 22:58:35 -0500
+	id 1vv62s-00063g-37; Tue, 24 Feb 2026 22:58:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vv62j-0005Ay-IU
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 22:58:33 -0500
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vv62r-0005y9-4Q
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 22:58:41 -0500
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vv62h-0001k2-P1
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 22:58:33 -0500
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-48069a48629so63033605e9.0
- for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 19:58:31 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vv62p-0001kU-KJ
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 22:58:40 -0500
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-43638a33157so5771984f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 19:58:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771991910; x=1772596710; darn=nongnu.org;
+ d=linaro.org; s=google; t=1771991917; x=1772596717; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=HDJ5oHwDTFTnvPyF5W9FqXaNWmX1XA5vkYpeXUcd/XE=;
- b=WHo06NClfBAJmFaMFWt/4be22Y+VDIKPQ1lRqITMbqibdQEeaxnCplD+q8IeaU/UGw
- SJGtx/IiTZtRw0kuCj2geN3nkDxq2tnCyZNZcRnbAuyIg9BhS7SmISeIPUjAW0YlpL0l
- +Zz7lKRbS1m++yT09NW+4VLZ1VzD7IF45DsX3h3c9M2nt5Rm4XZRoI8ETuRjtvgFBUo+
- 55Lb+Xc8Vlt9lvEWk/7WDmUGwBNVZ9aEpoYgrTu2kvaSKpyebZbJKD0eZiz5EmZxxo9Q
- A5+Y7JIP5misHHnSljbNngWWTCXmIesQnsd4quNCLIewviCU9FgL/qDcQmMCBZMDglcL
- bDMQ==
+ bh=G++ekt1tyxiyUhg7le24RmM1GrxLPzT5JlqPAGDaPjQ=;
+ b=BEbZKpUxnkQ+SszyjPC1IPCys7QJrPjSBsE2qh9jllA8konZg+HFteDyWDn9G9I4LD
+ Q2cFVjV0qBVTyjtP/IauqaukvBXSs8VU54RUXwTIdj6KafIV8RWVy+50aCt73NsYY2dL
+ hpdIOQNe268Tcnmk3xR104oayA6sw0jLnrYqBuQVEuQsX4UMn6imygtGgS/71KpnAk6C
+ ERjKkkKOnu828+a0wUHlxkWPv74M4qb99GwQ293eWakv1ODVrRwthjLHYQaUwRmt6FGS
+ 9+1QTkc2xnL1ZEpLXYy/vMyw89emwWT2oMk9FNnZCY2u5VorQj37QuoPphyKoleHK6W3
+ 2OjA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771991910; x=1772596710;
+ d=1e100.net; s=20230601; t=1771991917; x=1772596717;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=HDJ5oHwDTFTnvPyF5W9FqXaNWmX1XA5vkYpeXUcd/XE=;
- b=DW9kkdkPHBlw+OVNEu79t+NbCh4vtXpWACf+jxf7E7vxbKk8PEoOxPwLrjy5tiYdAk
- cE+M8X/L81O2FhGlJf2TiDafRRY3Jz6L1wZ3sHiIeSLSmzlfKzBTR1/ZK01g0m0gMN+O
- h4J0/oxS6QVAIJTJHPYfQXUPxqVjCkolNkQayc/nWiBMj69DMQ/HUoVbpPj3bdZWYz1V
- yJrr7V98wabOvegodKSJIhTsjgDHES3nmvbOQ02OI9lM8WEGxYyeflL/z+8TuBEQltAY
- xELbFD9hT3Ru2EmfoIFpSfkiTf6AIiA0Jalaf3VCyFXK/gavaDF6/7Q4oaqKATWM16eZ
- mIug==
-X-Gm-Message-State: AOJu0YwQS4RKEcUOl+5OhZ3hSHQHK/1ddAywMTqL0pyazwbI1vqjqLhM
- frp7cvnI62VWDJpNRE7uu+JY7NIqUA4C4Oaiy9Pb9W7DjuUbipgZhmA5BjAQ9NZh15ghWNN9hi7
- acr0WiC4=
-X-Gm-Gg: ATEYQzzHrYoxaGNYZYmqyhOikZVgI+FGqIHJEO0TEdK+DJojU44HkYyuaM/Gx5CWqCo
- YSmX7Bjngm8MsimTqcK9RBQGtEuVcRkZdlnkzgsCMj+nge4ZtKLi2EIhGcuBihECmnZ3iORDfmx
- qzZpttIV0I0sYvIrPa5yHA3dPBuQegEvL107mHCXFYvkQe+3FHNVPhNnIeqwvgime+aecE2NxR2
- S4OxPL12JVcJE6T+ll0IJhXOWaX19Gs5I3u07hYKRLHHTSUUnJR8IjBl/hE0Dkjl4I9vPm2rg25
- QQeAMnm1GuYGQhzue203yMBCnL3qnlwknviefhZizNCUupBO4hE2n6i71WEPzvEqDU7uPYaQB31
- /O3t+cNCkSFWIfDJJH4ZeF4J3oVHp/bo2V6hLhGMMwrpbZ/Nd0/L7yRSz9ZzTKf2aCZqPncUS+P
- Aq+dX9uvwgvvBodADnlYVDgbSEzC5ojgUjjJgULIDEpagLI86wrfk4r/+WuVUYkjXjB/kxLNVp
-X-Received: by 2002:a05:600c:1e28:b0:477:5af7:6fa with SMTP id
- 5b1f17b1804b1-483a95fe96bmr212018145e9.32.1771991909793; 
- Tue, 24 Feb 2026 19:58:29 -0800 (PST)
+ bh=G++ekt1tyxiyUhg7le24RmM1GrxLPzT5JlqPAGDaPjQ=;
+ b=cqAmW2K+oS5fp0aMFSfdwqY79J473w8erXSaGUltNTeQlLdVmgAQsEvUglfaQipTdf
+ If9etK1MyHY8kBCL/WYpcwHC0iMb7BBlwTlwMP5xasOxz/HGmnh51XCLwOLeznMUxwGB
+ EJtzsEyuTMi9qe6KLlxpQiErTfHZ5acGlzw8MbMqUx6I2IG1KGfOPtNJ3emEBE3IIz+W
+ I18eE66o9ETAA2PchvzdvlxQDOA69XomAgLolMWFHpqawQSqlaGybeiIOKn8pcK7pJiJ
+ t0cqGEhDlmYcOkcxVud8T2NXk51fF3FvqEX+olcbN6sbf7LtKE3nQutjO0f9cqkNJCQ1
+ ui/w==
+X-Gm-Message-State: AOJu0YwEUlb0KBzCmGWmWCd2h+eqyy8EzMYDVZcx4ogoW/E2on194vyp
+ l7KsfVwCuVsYWLsFlBkRkqJ6x/4/ELENBMktA+9NpjxMlJmW5xo3At3WN1OS1ezMWhDGE2QXM0b
+ urOjoAd8=
+X-Gm-Gg: ATEYQzxKLPEAF+xA3rSrXVWvM5O55CVyKDS0T/TSMr7hdUTifvkYjLdWeNwx4/kjfpg
+ 5Jxz690kN0VgPK4WkM/T9fUNXunNnbyj710jdKPnjQDIgOmGnRNPmCpKYajO16KHfTLSpDM1SEW
+ QKkpWN3jqOph6QFOau63fwyClLDbXplt6kdaAMUXEQPiJ4Ex5dg3V/37DQhGimEdwJVqEHbVz2s
+ UcheDvBO99AK3n6wWgcEtfWGEV4hfmR2eGSYkke7eSZ5ronf7kiHElW4E23wHPL7TJBc19SeUo5
+ BOJCeIbIGo7aMRf6Ptaz+f8v5iwICFpc0ffWQ7VOaTUdEcOd/H4iULlAiTbHeqXYUFHVQ/vcpRG
+ Znag3CIVIsdHPDG//h47T309ouXz+nnXOFYwUJCwr3ZBbd5w9BT8RvurQvtrF+2JSjUNfLJGK9s
+ atP88ZqLIhkhMH4tkVttmQXlBW37Fw/WMVq7MnWU0rzxCZSQyxiFW9Ui3r70GgrmxQEyjpxoct
+X-Received: by 2002:a05:6000:4283:b0:435:e451:39d4 with SMTP id
+ ffacd0b85a97d-4396f17b99emr26735307f8f.44.1771991917426; 
+ Tue, 24 Feb 2026 19:58:37 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-483bd6f19d6sm42005695e9.2.2026.02.24.19.58.28
+ ffacd0b85a97d-43970d3fc12sm28923172f8f.24.2026.02.24.19.58.35
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 24 Feb 2026 19:58:29 -0800 (PST)
+ Tue, 24 Feb 2026 19:58:35 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
  Igor Mammedov <imammedo@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 07/11] hw/display: Build stubs once
-Date: Wed, 25 Feb 2026 04:57:35 +0100
-Message-ID: <20260225035739.42848-8-philmd@linaro.org>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Jason Wang <jasowang@redhat.com>
+Subject: [PATCH v2 08/11] hw/net: Build stubs once
+Date: Wed, 25 Feb 2026 04:57:36 +0100
+Message-ID: <20260225035739.42848-9-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260225035739.42848-1-philmd@linaro.org>
 References: <20260225035739.42848-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,91 +107,34 @@ Move stubs to the global stub_ss[] source set. These files
 are now built once for all binaries, instead of one time
 per system binary.
 
+qmp-norocker.c only contains stubs, rename it accordingly.
+
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- hw/display/acpi-vga-stub.c |  1 +
- hw/display/meson.build     | 19 ++++++++-----------
- 2 files changed, 9 insertions(+), 11 deletions(-)
+ hw/net/rocker/{qmp-norocker.c => rocker-stubs.c} | 0
+ hw/net/meson.build                               | 3 ++-
+ 2 files changed, 2 insertions(+), 1 deletion(-)
+ rename hw/net/rocker/{qmp-norocker.c => rocker-stubs.c} (100%)
 
-diff --git a/hw/display/acpi-vga-stub.c b/hw/display/acpi-vga-stub.c
-index a9b0ecf76d0..ee0fbf8175d 100644
---- a/hw/display/acpi-vga-stub.c
-+++ b/hw/display/acpi-vga-stub.c
-@@ -1,4 +1,5 @@
- #include "qemu/osdep.h"
-+#undef CONFIG_PIXMAN
- #include "hw/acpi/acpi_aml_interface.h"
- #include "vga_int.h"
+diff --git a/hw/net/rocker/qmp-norocker.c b/hw/net/rocker/rocker-stubs.c
+similarity index 100%
+rename from hw/net/rocker/qmp-norocker.c
+rename to hw/net/rocker/rocker-stubs.c
+diff --git a/hw/net/meson.build b/hw/net/meson.build
+index 913eaedbc52..4ee09143165 100644
+--- a/hw/net/meson.build
++++ b/hw/net/meson.build
+@@ -67,7 +67,8 @@ system_ss.add(when: 'CONFIG_ROCKER', if_true: files(
+   'rocker/rocker_fp.c',
+   'rocker/rocker_of_dpa.c',
+   'rocker/rocker_world.c',
+-), if_false: files('rocker/qmp-norocker.c'))
++))
++stub_ss.add(files('rocker/rocker-stubs.c'))
+ system_ss.add(files('rocker/rocker-hmp-cmds.c'))
  
-diff --git a/hw/display/meson.build b/hw/display/meson.build
-index 90e6c041bdb..e730c289b15 100644
---- a/hw/display/meson.build
-+++ b/hw/display/meson.build
-@@ -3,7 +3,8 @@ hw_display_modules = {}
- system_ss.add(when: 'CONFIG_DDC', if_true: files('i2c-ddc.c'))
- system_ss.add(when: 'CONFIG_EDID', if_true: files('edid-generate.c', 'edid-region.c'))
- 
--system_ss.add(when: 'CONFIG_FW_CFG_DMA', if_true: files('ramfb.c'), if_false: files('ramfb-stubs.c'))
-+system_ss.add(when: 'CONFIG_FW_CFG_DMA', if_true: files('ramfb.c'))
-+stub_ss.add(files('ramfb-stubs.c'))
- system_ss.add(when: 'CONFIG_FW_CFG_DMA', if_true: files('ramfb-standalone.c'))
- 
- system_ss.add(when: 'CONFIG_VGA_CIRRUS', if_true: files('cirrus_vga.c'))
-@@ -36,21 +37,20 @@ system_ss.add(when: 'CONFIG_VGA', if_true: files('vga.c'))
- system_ss.add(when: 'CONFIG_VIRTIO', if_true: files('virtio-dmabuf.c'))
- system_ss.add(when: 'CONFIG_DM163', if_true: files('dm163.c'))
- 
-+stub_ss.add([files('acpi-vga-stub.c'), pixman])
- if (config_all_devices.has_key('CONFIG_VGA_CIRRUS') or
-     config_all_devices.has_key('CONFIG_VGA_PCI') or
-     config_all_devices.has_key('CONFIG_VMWARE_VGA') or
-     config_all_devices.has_key('CONFIG_ATI_VGA')
-    )
--  system_ss.add(when: 'CONFIG_ACPI', if_true: files('acpi-vga.c'),
--                                      if_false: files('acpi-vga-stub.c'))
-+  system_ss.add(when: 'CONFIG_ACPI', if_true: files('acpi-vga.c'))
- endif
- 
- if config_all_devices.has_key('CONFIG_QXL')
-   qxl_ss = ss.source_set()
-   qxl_ss.add(when: 'CONFIG_QXL', if_true: [files('qxl.c', 'qxl-logger.c', 'qxl-render.c'),
-                                            pixman, spice])
--  qxl_ss.add(when: 'CONFIG_ACPI', if_true: files('acpi-vga.c'),
--                                  if_false: files('acpi-vga-stub.c'))
-+  qxl_ss.add(when: 'CONFIG_ACPI', if_true: files('acpi-vga.c'))
-   hw_display_modules += {'qxl': qxl_ss}
- endif
- 
-@@ -119,16 +119,14 @@ if config_all_devices.has_key('CONFIG_VIRTIO_VGA')
-                     if_true: [files('virtio-vga.c'), pixman])
-   virtio_vga_ss.add(when: 'CONFIG_VHOST_USER_VGA',
-                     if_true: files('vhost-user-vga.c'))
--  virtio_vga_ss.add(when: 'CONFIG_ACPI', if_true: files('acpi-vga.c'),
--                                         if_false: files('acpi-vga-stub.c'))
-+  virtio_vga_ss.add(when: 'CONFIG_ACPI', if_true: files('acpi-vga.c'))
-   hw_display_modules += {'virtio-vga': virtio_vga_ss}
- 
-   if virgl.found() and opengl.found()
-     virtio_vga_gl_ss = ss.source_set()
-     virtio_vga_gl_ss.add(when: ['CONFIG_VIRTIO_VGA', virgl, opengl],
-                          if_true: [files('virtio-vga-gl.c'), pixman])
--    virtio_vga_gl_ss.add(when: 'CONFIG_ACPI', if_true: files('acpi-vga.c'),
--                                              if_false: files('acpi-vga-stub.c'))
-+    virtio_vga_gl_ss.add(when: 'CONFIG_ACPI', if_true: files('acpi-vga.c'))
-     hw_display_modules += {'virtio-vga-gl': virtio_vga_gl_ss}
-   endif
- 
-@@ -136,8 +134,7 @@ if config_all_devices.has_key('CONFIG_VIRTIO_VGA')
-     virtio_vga_rutabaga_ss = ss.source_set()
-     virtio_vga_rutabaga_ss.add(when: ['CONFIG_VIRTIO_VGA', rutabaga],
-                                if_true: [files('virtio-vga-rutabaga.c'), pixman])
--    virtio_vga_rutabaga_ss.add(when: 'CONFIG_ACPI', if_true: files('acpi-vga.c'),
--                                                    if_false: files('acpi-vga-stub.c'))
-+    virtio_vga_rutabaga_ss.add(when: 'CONFIG_ACPI', if_true: files('acpi-vga.c'))
-     hw_display_modules += {'virtio-vga-rutabaga': virtio_vga_rutabaga_ss}
-   endif
- endif
+ subdir('can')
 -- 
 2.52.0
 
