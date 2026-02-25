@@ -4,74 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F410FD45F0
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 20:19:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21C3CFD45EF
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 20:19:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvLLK-0006my-0d; Wed, 25 Feb 2026 15:18:46 -0500
+	id 1vvLLZ-0006zw-Ic; Wed, 25 Feb 2026 15:19:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vvLLG-0006lP-Hu
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 15:18:42 -0500
-Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
+ id 1vvLLX-0006vL-Ow
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 15:18:59 -0500
+Received: from mail-pf1-x444.google.com ([2607:f8b0:4864:20::444])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vvLLC-0000ZD-KV
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 15:18:41 -0500
-Received: by mail-pj1-x1035.google.com with SMTP id
- 98e67ed59e1d1-3549bba5302so4550371a91.1
- for <qemu-devel@nongnu.org>; Wed, 25 Feb 2026 12:18:37 -0800 (PST)
+ id 1vvLLV-0000e4-VU
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 15:18:59 -0500
+Received: by mail-pf1-x444.google.com with SMTP id
+ d2e1a72fcca58-824b05d2786so118192b3a.2
+ for <qemu-devel@nongnu.org>; Wed, 25 Feb 2026 12:18:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772050716; x=1772655516; darn=nongnu.org;
+ d=linaro.org; s=google; t=1772050736; x=1772655536; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=ZNlQFwMqMuLFiV6Ec6fch2th8mXUyy2BNv0FX7a27Ys=;
- b=Ov6vdMOn5Gj0Y2ULijbHFHwE7VdMfUzXjnJmZHrKIVKh1wqTqsZXzT4scvvKzl1zm3
- JBQl5mfsX21uuICBxwWFlQbZVu251jY3BR3T9/QHy9mv/Qhowrz8nJhXbQ7P2dBnxbnN
- mCL4bqdGbO26X5sSMoBgIbXuSOYM11AVZHPoSuSsodoNcgZj/TZpjFbK/YWregSHY5nb
- bGiowpKjHOetbKeXK8Nbre6URmIVF+lea/dxWKogqQSM2hnMcwYKe76y7S5cuiPFa9Ye
- z1Tbcqj3OFzmzpxy4jTiTvYnTOlqlYONr8nyYAqcpyrvaw9KD6/u8or+da1N5tSJaEHY
- ATEw==
+ bh=jda7zHRKjThhiz18NXvJBRCCi0Rzs4wa3znSf/899jE=;
+ b=lKgozPjJ7uHXN4fe/ntHayt3ZjZZWGCpA9fmJIypeejVKn7Wd54Yv7rtZa3Nqiuo5N
+ AvlvSLi+IG4TOpbsj4xaSPyol00UVavx/UQIIITUCAAF/5qhbyX4JEurXRVLZSW3FQNH
+ wRbQZKX/n1F6juIU+1MdNZOmr+kXf9rLHVDzIQPUTSPoN5Y04+BO9IHKamo5HnkSlEs8
+ q+x+4xV/sbZPYtMRK1yJijnNnuY5GxhKIKlxpyDg9tCrU5QJIHmsHxDpC+JJ69Gda6qj
+ 4pKn2dXZ4cwMRV2a7Bk7Vh4CbPf/8pIPpUL3v/kcL+qBNSxOwk64Y1rKZjA2RyY9eZpt
+ w5zg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772050716; x=1772655516;
+ d=1e100.net; s=20230601; t=1772050736; x=1772655536;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=ZNlQFwMqMuLFiV6Ec6fch2th8mXUyy2BNv0FX7a27Ys=;
- b=knqrazBygcuRmtl+zB0UQglfttsJFvTNSe6h/ZsVkJFywPrWW7CbNsh6ts84w92qag
- Oaexi18w1kqO5qECQjoBviCdCaWXFYDq80PWllm3mtT8yPzwQu0MlyY7NvJQjbB5q6bi
- k0xA8UKpVVF0naMJUSVYQLXfTMLLU+3wmD8lA1WW2Sf50ry8WX8OpZRKp9AuDZm9GmVe
- 1TscL+afu6+CUw1vFFeTQ305E0CCvahlUmunTdZSjpIzzxX3j/YrHsDbtm6iRCROuOo9
- 4h3/lUd0Bz5Z8pEiWrD7gEcLmrPrflV8ntD76JOA7UHJQWp8wClVgDlWNTBbzExnQGOM
- PDag==
-X-Gm-Message-State: AOJu0YzS6dXoadhn9yy+09A5Rpjtu9MjGlG5ged3JhopQUFFcHS0cpoJ
- BaiHFn1FRvxA2koYPrvKL1EbCz70ElIYiPsbiMmHwcVxnCp1CK9F2c1kmyYWvt+xMsI=
-X-Gm-Gg: ATEYQzxenwhUw9wKwm9UOo5cQxOaNIewAPqX4NIm3gHvbMld8v/eD9nGuvD9W9hepV0
- hfY7QVtyusM5I3ElclCQ6do96EoXTIkBFi8/hYHq5feGZjYVV6XuUHOiOTUelIcAAH8dmdkj0yj
- 3U5TThbAyRMcHFMbBJVHWKFJGC1YxCzvBcDb2s4DzQEOw0c7RmA6fo+34Ii5F1D7caJyjlntv9q
- RioT48dlRFHK8cpkQwfvGOFvb3Wzbcn6UZhAWT7Limf1ZKZ/0OyjubIg90y0K8McwrxGWUel1vs
- HZ7ZXv7KyU6vxEtKx7rUC10LrJT7YMSmnUtZ9ZYj6HnmCESLnail1YjfXpBD0D0l+odH51KiJ5j
- bRuqV23KLE7IneDVakin42M4mUKV2VM6Ais5KIbDSyoqPGn7leuy1O1cwsWsAt9d8SHM+xRULdI
- H0KQaEMMdcVKMJefeLaHwnDHUfm+z3T1F38JJzpFLsm8J4461EJL3NIxpa1WrzhsoQ0Avogdts5
- 7aa+c4=
-X-Received: by 2002:a17:90b:4b11:b0:356:24c8:229d with SMTP id
- 98e67ed59e1d1-358ae8a48b4mr13746414a91.21.1772050715977; 
- Wed, 25 Feb 2026 12:18:35 -0800 (PST)
+ bh=jda7zHRKjThhiz18NXvJBRCCi0Rzs4wa3znSf/899jE=;
+ b=trDPgvdNZZDKLmPk4IVRAwWce1mZQCyxY9CZVDHIlTguYXiFJsXNST03Je1F1zjyQu
+ ok6dAXheNCJ2mJ6tTprE/AbZI0qkVTemtfeueC4PZcbBJobYYoa5HIrIpwQGPMV1knU9
+ EjPTFkJqY2+n0XRAogaJiXn7SMUomD6ouyQ654Eg/JZcPp9zNKTibQ0VrEZaNdOvJ+Vz
+ M6EBaJqgmul4qF3vsFh5boTe15LAkQUzO1EzmTICGHyzzk+e7KAv8lplfR4/2S5RIw+L
+ pTzNDSki2Okh3+mcjzB2/ZRqQAQ7xZnQCXB3DX+7j+Wq7CMCC/9EusftGaSn73U1jG+C
+ n08g==
+X-Gm-Message-State: AOJu0YzTISZjdDjH7xawRzkP/Y6BUb6LRK7+Hti1j3oFQKl719EjSYW4
+ ft3WXl9nsbgRfwu7GZ64p7lGMfGn1m4puhDCO5L7JSoBEAuFGNDReP1aXCjXKy6mVjY=
+X-Gm-Gg: ATEYQzzjStZGLwv6WJpRtuQj+44jt5SfbzW1ZFSEF7y/udxS1ESix9WzKyKWMnEQkwf
+ oC3s4+fJU+kXxMnYVyu1u1Tyzl2YGPevtBkOZcV1CCSsEancZ+2tYbqoy/pFHoRsiQibTDQYS/o
+ 5eoZ2G8bv9NqOLIpgm9Snjv+h1EQRATVYVFTQXbklJNj4Dtz+l431p/0xfkq57MC4tkD4zLbNWb
+ XA4wUHlJmJ2oNnNyBTdVao45pdSjIgufyvAjycoWp2coOAA+Pk7PLJEiumHaOrj/G3bDOVbmhi5
+ HpfUNYIX7w5JZuQz7GDarlvXjKPcgaSi/RmDiL7xjHKccrWvhfhzahzhy007f5Sb9iJqfK3WYTr
+ Jt45CyOIDTvMuxn2fPx69Np+ezlOW8hHqp0XRWfZVCtBa5ODa1kmLoiG1yai80cXJ547yecUK57
+ JRabMxK26FE9/JzVUkQBuKuR/L8RFU0RE+eZ/fJ/sckGGY3oLSrhUvwU71jQHcFI/ZIrlqpC+r7
+ CWgTgg=
+X-Received: by 2002:a05:6a00:3990:b0:81e:af19:34bc with SMTP id
+ d2e1a72fcca58-826da9ee72amr16723808b3a.36.1772050736498; 
+ Wed, 25 Feb 2026 12:18:56 -0800 (PST)
 Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-359134938ccsm1121419a91.13.2026.02.25.12.18.35
+ d2e1a72fcca58-8273a054b49sm90586b3a.53.2026.02.25.12.18.55
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 25 Feb 2026 12:18:35 -0800 (PST)
-Message-ID: <01a2c1ad-1240-42b9-b94a-7b8cf1ab864b@linaro.org>
-Date: Wed, 25 Feb 2026 12:18:34 -0800
+ Wed, 25 Feb 2026 12:18:56 -0800 (PST)
+Message-ID: <61bceebb-6e21-4a9b-8191-40a07abc1f5e@linaro.org>
+Date: Wed, 25 Feb 2026 12:18:55 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC v4 01/31] hw/arm/smmuv3-common: Fix incorrect reserved mask
- for SMMU CR0 register
+Subject: Re: [RFC v4 02/31] hw/arm/smmuv3: Correct SMMUEN field name in CR0
 Content-Language: en-US
 To: Tao Tang <tangtao1634@phytium.com.cn>, Eric Auger
  <eric.auger@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
@@ -82,7 +81,7 @@ Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Mostafa Saleh <smostafa@google.com>, Chao Liu <chao.liu.zevorn@gmail.com>
 References: <20260221100250.2976287-1-tangtao1634@phytium.com.cn>
- <20260221100250.2976287-2-tangtao1634@phytium.com.cn>
+ <20260221100250.2976287-3-tangtao1634@phytium.com.cn>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  xsDNBGK9dgwBDACYuRpR31LD+BnJ0M4b5YnPZKbj+gyu82IDN0MeMf2PGf1sux+1O2ryzmnA
@@ -118,18 +117,18 @@ Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  5SYuJaKzCAgNeAy3gUVUUPrUsul1oe2PeWMFUhWKrqko0/Qo4HkwTZY6S16drTMncoUahSAl
  X4Z3BbSPXPq0v1JJBYNBL9qmjULEX+NbtRd3v0OfB5L49sSAC2zIO8S9Cufiibqx3mxZTaJ1
  ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <20260221100250.2976287-2-tangtao1634@phytium.com.cn>
+In-Reply-To: <20260221100250.2976287-3-tangtao1634@phytium.com.cn>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1035;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1035.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::444;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x444.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -146,28 +145,21 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2/21/26 2:02 AM, Tao Tang wrote:
-> The current definition of the SMMU_CR0_RESERVED mask is incorrect.
-> It mistakenly treats bit 10 (DPT_WALK_EN) as a reserved bit while
-> treating bit 9 (RES0) as an implemented bit.
+> The FIELD macro for the SMMU enable bit in the CR0 register was
+> incorrectly named SMMU_ENABLE.
 > 
-> According to the SMMU architecture specification, the layout for CR0 is:
-> | 31:11| RES0           |
-> | 10   | DPT_WALK_EN    |
-> | 9    | RES0           |
-> | 8:6  | VMW            |
-> | 5    | RES0           |
-> | 4    | ATSCHK         |
-> | 3    | CMDQEN         |
-> | 2    | EVENTQEN       |
-> | 1    | PRIQEN         |
-> | 0    | SMMUEN         |
+> The ARM SMMUv3 Architecture Specification (both older IHI 0070.E.a and
+> newer IHI 0070.G.b) consistently refers to the SMMU enable bit as SMMUEN.
+> 
+> This change makes our implementation consistent with the manual.
 > 
 > Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
 > Reviewed-by: Eric Auger <eric.auger@redhat.com>
-> Link: https://lists.gnu.org/archive/html/qemu-arm/2025-06/msg00088.html
+> Link: https://lists.nongnu.org/archive/html/qemu-arm/2025-09/msg01270.html
 > ---
+>   hw/arm/smmuv3-internal.h       | 2 +-
 >   include/hw/arm/smmuv3-common.h | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+>   2 files changed, 2 insertions(+), 2 deletions(-)
 > 
 
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
