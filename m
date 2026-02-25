@@ -4,99 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB6F6F5545D
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 05:56:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B72BE9B25A
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 05:59:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vv7ry-0000c2-W8; Wed, 25 Feb 2026 00:55:35 -0500
+	id 1vv7vb-0001DZ-Rg; Wed, 25 Feb 2026 00:59:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vv7rs-0000bl-Dy
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 00:55:28 -0500
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vv7rq-0000wQ-ED
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 00:55:28 -0500
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-4833115090dso60918625e9.3
- for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 21:55:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771998923; x=1772603723; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Ay4rJ04gFVAifpGDRyPu3Ebu6YW+EHNMxzhbOIOXHO4=;
- b=OrYRc5n+6RlBroS0ReAIUXaWcvXdMO571bFO3TEizAtDa3WLJOOb8QeW24uin7Fzu2
- K4YbIOgIK2VjAW9zJHfXxfnYrt2MCBkP5ZYzgn728O/HUznxErPWEG6M4kKMAfaIy50s
- tf3sRKsZLU2OerKTZiu853QxZUPOggQcvNNgEQKkb+g7KBCZZRPskMa9heGNfBZGL/nA
- wote5kEXt4p1Bgl3AxcP1dlesdTLvIDgL279+4HYX2ndxcKDiaO7/VZQmYv5DY7oLHkP
- S1zvam2tKRhS92ZxLP5P1lpXUuJdrzJYH8tDXQU83gOVoeYtP3Cxj5mraSIqf1R3DEq/
- 3ErQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771998923; x=1772603723;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Ay4rJ04gFVAifpGDRyPu3Ebu6YW+EHNMxzhbOIOXHO4=;
- b=awpH3IiFr4KGGY+VqxOVJZ6PiKGZzGhxEfqM3ecw4BZyB4hOYNF/SXV0rEISIYR74u
- lfcoaOPb3YztLw3ITktlNC0yvJLB4z6v2iOwYQ5riL0ACYUETbONG2ZFxuByX04hAP5l
- VNn7GrZHXTq0455BNSbm7PgakeEeHwIc90S69/XIh1amHNKtVVWosSrqPbQL1jpUwWQi
- JqGlA0rJao0ZxSWY3ophL+d4JlrwBbiZ97U7XPchNkhYjO80XnEBkMYO3ZJbMKBwzbqR
- 5Qemmulid4WWjc2qVeuqMa2OUr3mCXb7eXU5ALf97JD6FmJcizh1PM+wV9T1fvXfXZAD
- ckjQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWLHkfYgMO4bEGfknEsLK6JwwXpWzUHw8T7hys6B3dtqFJljoQlPRzWpZcSFkJlpz2oh5BrVWb83Srt@nongnu.org
-X-Gm-Message-State: AOJu0YwFhzqKp6oiqEObcyWIvDrqf3XVJKlQ5VS+ai8+pms/Ty2Acheu
- pThqLH1gZ1pL6QaNjxovtmM85r6BJVD4trTC/YqlkC/tltlX+HTImbHdmtZdu2WwdFwPLWKXwAS
- QfxnrE80=
-X-Gm-Gg: ATEYQzyakfeioWLjcDZvA6t5tF+WXV3a7RO1Sby8SKyeT4HEvCOjKKgpxbeeLbaUUuE
- PtbiWdC2wgIG+YmyizZhR5RusQ5whVgOB0Z1LcfVfU/rzsEC9wts05aj08KTpSs2f4CWY5YUjcI
- Q8CerJAAn80EhIC8lkXxne7c3brjwbGHNRdP7YWi+tycsidL7w3kGEIfLd5YffPAOF2F/+C9BGW
- IKcrPI1bowKCi7rlv+E4ove+UPPIS22S2h0XsSttTXH2RQ5HdPoP3EQZJz6oMJOBhY/EHuTi1zE
- K7qqbwywasfGZePCSp0MJczM26dg/uvO8LE+saV1QUhrIdmqVoMJTvFKBuElZHEU0bIjsgCQsjb
- djbhn6DjVu8HRdFRKwieQauwyYkoxf3+j5uRPFGPYO+6huw7jQ5kzvDwqrW7WGi/bH54u6VU67A
- 5ghGsrKTBu0aIJ4CMVI5QvE948czGLl+cdoQaqYz3fSnvLZImC/ej8ZgLJsKLFnTXEuw==
-X-Received: by 2002:a05:600c:821b:b0:483:71f7:2794 with SMTP id
- 5b1f17b1804b1-483a95c9e73mr264579975e9.15.1771998923334; 
- Tue, 24 Feb 2026 21:55:23 -0800 (PST)
-Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-483bfcbf8b6sm3960675e9.20.2026.02.24.21.55.21
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 24 Feb 2026 21:55:22 -0800 (PST)
-Message-ID: <0fef1895-b8dd-4091-a4af-6bcb5a974e32@linaro.org>
-Date: Wed, 25 Feb 2026 06:55:21 +0100
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1vv7va-0001DI-Ec; Wed, 25 Feb 2026 00:59:18 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1vv7vY-00013Q-LO; Wed, 25 Feb 2026 00:59:18 -0500
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 61OKPSmZ3207066; Wed, 25 Feb 2026 05:59:15 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=v6W+26
+ 1N5z1RPnDJYqBL/lTCtJBqSQBpVe60v5Lr4zo=; b=CBGqaQNxZ/gIR83jiJvnad
+ 3ye0VNkLOAsOOBwCnifxXPy7MWkcDnAkxz23L+uOOpCjherh5dG1ZrmP9mjAbcnG
+ c4FXXpi56tICJVAcbdZi1/Ug8TU56RAZHtyeKGptASb0Smsq791SIVRHzgsV4mzx
+ sXVwIeTytB/cVdF8oDHrr/4xQd/VoiwqppQtTLBPBMY27sN1RIKoXLzvUvYHXHkZ
+ zz+l4mibeIMaJ4jndiA/Z4bDxxOzEpPSeNjro0K4SBdrjfOM4q56PzlscRi30Cwn
+ KHY95HNSLMkBJfkV2R7Wqi962syQePs2WmLnIjliSf1yhMTibm99PCly9FQzFCmg
+ ==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4cf24ged5r-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 25 Feb 2026 05:59:14 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 61P30T0v002215;
+ Wed, 25 Feb 2026 05:59:14 GMT
+Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4cfr1n42gn-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 25 Feb 2026 05:59:14 +0000
+Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com
+ [10.39.53.228])
+ by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 61P5xCNI18154120
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 25 Feb 2026 05:59:12 GMT
+Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id B82175804B;
+ Wed, 25 Feb 2026 05:59:12 +0000 (GMT)
+Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 86EA758055;
+ Wed, 25 Feb 2026 05:59:08 +0000 (GMT)
+Received: from [9.124.208.177] (unknown [9.124.208.177])
+ by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Wed, 25 Feb 2026 05:59:08 +0000 (GMT)
+Message-ID: <753f9d96-2901-483b-8148-04bc97d3d122@linux.ibm.com>
+Date: Wed, 25 Feb 2026 11:29:06 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH] hw/core: Avoid attaching qdevs to /machine/unattached
- if they have a bus
-Content-Language: en-US
-To: Mark Cave-Ayland <mark.caveayland@nutanix.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Bernhard Beschow <shentey@gmail.com>
-Cc: Markus Armbruster <armbru@redhat.com>, Thomas Huth <thuth@redhat.com>,
- qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>, Mark Burton <mburton@qti.qualcomm.com>
-References: <20260217164049.543975-1-thuth@redhat.com>
- <874ind5da6.fsf@pond.sub.org> <aZ1zsoyKcD1ChK--@redhat.com>
- <CAFEAcA-30xkboF_mt2HD+9TG+j9W7k2FCuSHGSVk9H=gbXnx2A@mail.gmail.com>
- <ef1aeb7f-d79c-446f-be58-28245b84ccfa@nutanix.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <ef1aeb7f-d79c-446f-be58-28245b84ccfa@nutanix.com>
+Subject: Re: [PATCH v2 2/3] ppc/pnv: Add unimplemented quad and core regs
+Content-Language: en-GB
+To: Caleb Schlossin <calebs@linux.ibm.com>, qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, npiggin@gmail.com, adityag@linux.ibm.com,
+ milesg@linux.ibm.com, chalapathi.v@linux.ibm.com
+References: <20260210134647.2050821-1-calebs@linux.ibm.com>
+ <20260210134647.2050821-3-calebs@linux.ibm.com>
+From: Harsh Prateek Bora <harshpb@linux.ibm.com>
+In-Reply-To: <20260210134647.2050821-3-calebs@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Authority-Analysis: v=2.4 cv=TNRIilla c=1 sm=1 tr=0 ts=699e8fb3 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=IkcTkHD0fZMA:10 a=HzLeVaNsDn8A:10 a=f7IdgyKtn90A:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22
+ a=VnNF1IyMAAAA:8 a=c5OLUQTj0YHlXaN6L28A:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: qSBmLuOqSNV_cgzZ7LQ219zdPdnHT8c5
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjI1MDA1MyBTYWx0ZWRfXzFGR/Z4W/BmZ
+ 6zzAuJ2qKrLebZu8ZqslMyWId2Dguqij8SiAxmpHIjfMuxbNwHEWhZulbUXRXYK46SiEHbd5iPG
+ YvMg1D24cbFyj4GsLaVXcr15/IdPY9SExK22dCf1V6OOJfD5oNu5AiocMKHmujTqhUftT38cwS9
+ 32HgbFkx2RUBV5DjVBGME5zxHyS5OALcdDFhMTG95zEtzvqNhuT1s7tm6/e51GFLYSP8bMAG+0k
+ i3vQMpUQvOZBD1H8McLKzmlKvqVOa+gjcNjX3iIpqLWWavFnUKqjU6ZpeNtQTvLuqruD/yR1lI6
+ /bHbEuuj/SfkMToZcgW5Avky88wMDD7yo2+VUX0IsmWUki6SklWySRcvRCDQGqBZKBmRCWhd26d
+ Ze4pwTIwve/9W11RRgXGhOT+QFtMpp1sADtYCga/Hb9SpHOSzYRE7+ZWCRFWihDzc+6zghS1UiS
+ pNdxdh2WL6ejW1O3bpA==
+X-Proofpoint-ORIG-GUID: sLNvYO_FZ5r8mWMgplvwA2BLGX5Ev1vM
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-02-24_03,2026-02-23_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 suspectscore=0 adultscore=0 priorityscore=1501 impostorscore=0
+ spamscore=0 clxscore=1015 bulkscore=0 lowpriorityscore=0 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2601150000 definitions=main-2602250053
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=harshpb@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.358, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.659,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,138 +123,189 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-+Bernhard
 
-On 24/2/26 13:22, Mark Cave-Ayland wrote:
-> On 24/02/2026 11:10, Peter Maydell wrote:
-> 
->> On Tue, 24 Feb 2026 at 09:48, Daniel P. Berrangé <berrange@redhat.com> 
->> wrote:
->>> IMHO, it is slightly more subtle - people believe they are already
->>> adding children.
->>>
->>> Consider this code.
->>>
->>>      port92 = isa_create_simple(isa_bus, TYPE_PORT92);
->>>
->>> my reading of that is that I'm creating a "port92" device that is a
->>> child of "isa_bus". Why would I need to tell QEMU that it is a child
->>> for a second time ?
->>>
->>> If I trace calls through isa_create_simple I get to a call to:
->>>
->>>     qdev_realize_and_unref(dev, parent, errp);
->>>
->>> and once I again I'm left wondering why I would need to tell
->>> QEMU 'dev' is a child of 'parent' a second time.
->>>
->>> Of course I know the answer. We need to give a name for the
->>> child and it isn't trivial to "do the right thing" to invent
->>> an automatic name.
->>>
->>> Still, overall I'm inclined to largely blame our API designs for
->>> not guiding people into doing the right thing.
->>>
->>>
->>> Picking another random unattached set of objects "smbus-eeprom"
->>> I again find they've being created with qdev_realize_and_unref.
->>>
->>> Pick another unattached device 'i8259_init_chip', and again
->>> we end up calling into qdev_realize_and_unref()
->>>
->>>
->>> It feels like qdev_realize_and_unref() is a common point of
->>> blame in unattached devices. IMHO it ought to be taking a
->>> "const char *name" parameter.
->>
->> I think that is because this is the function that is used
->> in older code that predates the "everything should be in
->> the QOM tree" model. Newer code doesn't use it, I think;
->> and it's not surprising that old pre-QOM code doesn't do
->> anything to put objects into the QOM tree.
->>
->> The two patterns are:
->>
->>   dev = qdev_new(...);
->>   ...
->>   qdev_realize_and_unref(dev, bus, errp);
->>
->> and
->>
->>   object_initialize_child(...);
->>   ...
->>   qdev_realize(dev, bus, errp);
->>
->> This also is somewhat tangled up with the question of whether you want:
->>
->>   * call a function which allocates memory and initializes it
->>     with an object of this type
->>   * I have the memory here, init the object in-place
->>
->> If we could come to a definite conclusion on what we want then
->> we would probably be in a better position to try to enforce it.
 
-I recall a previous discussion where we said in-place allocation
-does not scale with dynamic machines (data driven config), and IIRC
-Bernhard said by switching to dynamic heap allocation we'd use more
-QOM cast macros and lose compiler safety type checks. Can't find it
-now in the archives.
+On 10/02/26 7:16 pm, Caleb Schlossin wrote:
+> This commit adds the read/write functionality for few core and
+> quad registers for Power Hypervisor development.
+> 
+> Reviewed-by: Chalapathi V <chalapathi.v@linux.ibm.com
+> Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
+> Reviewed-by: Aditya Gupta <adityag@linux.ibm.com>
+> Signed-off-by: Chalapathi V <chalapathi.v@linux.ibm.com>
+> Signed-off-by: Caleb Schlossin <calebs@linux.ibm.com>
+> ---
+>   hw/ppc/pnv_core.c | 87 +++++++++++++++++++++++++++++++++++++++++++++++
+>   1 file changed, 87 insertions(+)
+> 
+> diff --git a/hw/ppc/pnv_core.c b/hw/ppc/pnv_core.c
+> index 8939515c2c..a95934710f 100644
+> --- a/hw/ppc/pnv_core.c
+> +++ b/hw/ppc/pnv_core.c
+> @@ -183,12 +183,22 @@ static const MemoryRegionOps pnv_core_power9_xscom_ops = {
+>   
+>   /*
+>    * POWER10 core controls
+> + *   Adding additional SCOM register support needed by the
+> + *   Power Hypervisor team for their development
 
-We have some model declension where we allocate in-place $MAX members
-and expose a QOM property to initialize up to that number (or worst,
-de-initialize and unparent what is left!) in the DeviceRealize handler.
-Not "in-place" could simplify this.
+.. needed for Power Hypervisor development ?
 
-> Exactly this! I think what tends to happen is that we get stuck in 
-> situations where someone suggests an improvement, but then we get hung 
-> up trying to work out the corner-cases where it doesn't work and then 
-> things don't progress.
-> 
-> The approach I believe we need to take is to work out what we want the 
-> API and QOM tree to look like first, and then work backwards from there.
-> 
-> I tend to be in agreement with Akihiko's argument that we want to 
-> deprecate in-place initialisation with object_initialize_child() and 
-> simply use refcounting everywhere because then we don't hit any lifcycle 
-> issues if something retains a reference to the internal object (memory 
-> regions!).
-> 
-> The questions I think we need to answer as a starting point:
-> 
->    1. Which API shall we converge on: qdev or QOM? Can we come up with a
->       code sample(s) showing what we want object/device initialisation to
->       look lie? Longer term can we unify the QOM and qdev trees?
-> 
->    2. Should we convert to use external object allocation with
->       refcounting?
-> 
->    3. How do we handle memory regions? With Akihiko's recent refcount
->       fixes then Zoltan's memory region changes could work: I don't agree
->       with the motivation of simplifying devices as I think it's i)
->       subjective and ii) harder to debug if we lose the pointer to the
->       memory region, but I can see how it fixes the RCU-thread doing an
->       unref after the owner device has already been destroyed issue.
-> 
-> As several people have already pointed out in this thread, we do have a 
-> poor track record of API conversions but the introduction of memory 
-> regions shows how this can be done successfully.
-> 
-> Given that we already have multiple ways of doing the same thing, I tend 
-> to lean against not introducing yet-another-API unless we can come up 
-> with a long-term strategy for its use. In particular this causes 
-> problems in review where e.g. one reviewer may want to use QOM to setup 
-> a device whilst another may want to use qdev which is confusing for 
-> everyone, including the code submitter.
-> 
-> If we can at least get an answer to 1) then I'd be willing to have a go 
-> at writing some kind of specification document and put it out for 
-> feedback...
-> 
-> 
-> ATB,
-> 
-> Mark.
-> 
-> 
+>    */
+>   
+> +#define PNV10_XSCOM_EC_IMA_EVENT_MASK       0x400
+>   #define PNV10_XSCOM_EC_CORE_THREAD_STATE    0x412
+>   #define PNV10_XSCOM_EC_CORE_THREAD_INFO     0x413
+> +#define PNV10_XSCOM_EC_CORE_FIRMASK         0x443
+> +#define PNV10_XSCOM_EC_CORE_FIRMASK_AND     0x444
+> +#define PNV10_XSCOM_EC_CORE_FIRMASK_OR      0x445
+>   #define PNV10_XSCOM_EC_CORE_DIRECT_CONTROLS 0x449
+>   #define PNV10_XSCOM_EC_CORE_RAS_STATUS      0x454
+> +#define PNV10_XSCOM_EC_SPATTN_OR            0x497
+> +#define PNV10_XSCOM_EC_SPATTN_AND           0x498
+> +#define PNV10_XSCOM_EC_SPATTN               0x499
+> +#define PNV10_XSCOM_EC_SPATTN_MASK          0x49A
+>   
+>   static uint64_t pnv_core_power10_xscom_read(void *opaque, hwaddr addr,
+>                                              unsigned int width)
+> @@ -224,6 +234,19 @@ static uint64_t pnv_core_power10_xscom_read(void *opaque, hwaddr addr,
+>               }
+>           }
+>           break;
+> +    case PNV10_XSCOM_EC_IMA_EVENT_MASK:
+> +    case PNV10_XSCOM_EC_CORE_FIRMASK:
+> +        return 0;
+> +    case PNV10_XSCOM_EC_CORE_FIRMASK_OR:
+> +    case PNV10_XSCOM_EC_CORE_FIRMASK_AND:
+> +    case PNV10_XSCOM_EC_SPATTN_OR:
+> +    case PNV10_XSCOM_EC_SPATTN_AND:
+> +        qemu_log_mask(LOG_GUEST_ERROR, "%s: Write only register, ignoring "
+> +                              "xscom read at 0x%08x\n", __func__, offset);
+> +        break;
+> +    case PNV10_XSCOM_EC_SPATTN:
+> +    case PNV10_XSCOM_EC_SPATTN_MASK:
+> +        return 0;
+
+These two registers could be clubbed alongwith previous two regs case
+returning 0. A single line comment with the reasoning for same would be
+appropriate.
+
+
+>       default:
+>           qemu_log_mask(LOG_UNIMP, "%s: unimp read 0x%08x\n", __func__,
+>                         offset);
+> @@ -284,6 +307,19 @@ static void pnv_core_power10_xscom_write(void *opaque, hwaddr addr,
+>           }
+>           break;
+>   
+> +    /*
+> +     * Allow writes to these SCOMs for Power Hypervisor development.
+> +     * Behavior is not needed, just to allow writes to these SCOMs.
+> +     */
+> +    case PNV10_XSCOM_EC_IMA_EVENT_MASK:
+> +    case PNV10_XSCOM_EC_CORE_FIRMASK:
+> +    case PNV10_XSCOM_EC_CORE_FIRMASK_OR:
+> +    case PNV10_XSCOM_EC_CORE_FIRMASK_AND:
+> +    case PNV10_XSCOM_EC_SPATTN_OR:
+> +    case PNV10_XSCOM_EC_SPATTN_AND:
+> +    case PNV10_XSCOM_EC_SPATTN:
+> +    case PNV10_XSCOM_EC_SPATTN_MASK:
+> +        break;
+>       default:
+>           qemu_log_mask(LOG_UNIMP, "%s: unimp write 0x%08x\n", __func__,
+>                         offset);
+> @@ -579,6 +615,23 @@ static const MemoryRegionOps pnv_quad_power9_xscom_ops = {
+>    * POWER10 Quads
+>    */
+>   
+> +#define P10_XSCOM_EQ3_MODE_REG1         0x1160a
+> +#define P10_XSCOM_EQ3_NCU_SPEC_BAR_REG  0x11650
+> +#define P10_XSCOM_EQ3_HTM_MODE          0x11680
+> +#define P10_XSCOM_EQ3_HTM_IMA_PDBAR     0x1168b
+> +#define P10_XSCOM_EQ2_MODE_REG1         0x1260a
+> +#define P10_XSCOM_EQ2_NCU_SPEC_BAR_REG  0x12650
+> +#define P10_XSCOM_EQ2_HTM_MODE          0x12680
+> +#define P10_XSCOM_EQ2_HTM_IMA_PDBAR     0x1268b
+> +#define P10_XSCOM_EQ1_MODE_REG1         0x1460a
+> +#define P10_XSCOM_EQ1_NCU_SPEC_BAR_REG  0x14650
+> +#define P10_XSCOM_EQ1_HTM_MODE          0x14680
+> +#define P10_XSCOM_EQ1_HTM_IMA_PDBAR     0x1468b
+> +#define P10_XSCOM_EQ0_MODE_REG1         0x1860a
+> +#define P10_XSCOM_EQ0_NCU_SPEC_BAR_REG  0x18650
+> +#define P10_XSCOM_EQ0_HTM_MODE          0x18680
+> +#define P10_XSCOM_EQ0_HTM_IMA_PDBAR     0x1868b
+> +
+
+I think it's time to probably move all macro definitions to 
+include/hw/ppc/pnv/pnv_core.h ? Preferably, a separate patch to move the 
+existing macros first, and then this patch can add new ones there.
+
+>   static uint64_t pnv_quad_power10_xscom_read(void *opaque, hwaddr addr,
+>                                               unsigned int width)
+>   {
+> @@ -586,6 +639,23 @@ static uint64_t pnv_quad_power10_xscom_read(void *opaque, hwaddr addr,
+>       uint64_t val = -1;
+>   
+>       switch (offset) {
+> +    case P10_XSCOM_EQ0_MODE_REG1:
+> +    case P10_XSCOM_EQ0_NCU_SPEC_BAR_REG:
+> +    case P10_XSCOM_EQ0_HTM_MODE:
+> +    case P10_XSCOM_EQ0_HTM_IMA_PDBAR:
+> +    case P10_XSCOM_EQ1_MODE_REG1:
+> +    case P10_XSCOM_EQ1_NCU_SPEC_BAR_REG:
+> +    case P10_XSCOM_EQ1_HTM_MODE:
+> +    case P10_XSCOM_EQ1_HTM_IMA_PDBAR:
+> +    case P10_XSCOM_EQ2_MODE_REG1:
+> +    case P10_XSCOM_EQ2_NCU_SPEC_BAR_REG:
+> +    case P10_XSCOM_EQ2_HTM_MODE:
+> +    case P10_XSCOM_EQ2_HTM_IMA_PDBAR:
+> +    case P10_XSCOM_EQ3_MODE_REG1:
+> +    case P10_XSCOM_EQ3_NCU_SPEC_BAR_REG:
+> +    case P10_XSCOM_EQ3_HTM_MODE:
+> +    case P10_XSCOM_EQ3_HTM_IMA_PDBAR:
+
+a comment for the rationale behind this change would be helpful.
+
+> +        return 0;
+>       default:
+>           qemu_log_mask(LOG_UNIMP, "%s: unimp read 0x%08x\n", __func__,
+>                         offset);
+> @@ -600,6 +670,23 @@ static void pnv_quad_power10_xscom_write(void *opaque, hwaddr addr,
+>       uint32_t offset = addr >> 3;
+>   
+>       switch (offset) {
+> +    case P10_XSCOM_EQ0_MODE_REG1:
+> +    case P10_XSCOM_EQ0_NCU_SPEC_BAR_REG:
+> +    case P10_XSCOM_EQ0_HTM_MODE:
+> +    case P10_XSCOM_EQ0_HTM_IMA_PDBAR:
+> +    case P10_XSCOM_EQ1_MODE_REG1:
+> +    case P10_XSCOM_EQ1_NCU_SPEC_BAR_REG:
+> +    case P10_XSCOM_EQ1_HTM_MODE:
+> +    case P10_XSCOM_EQ1_HTM_IMA_PDBAR:
+> +    case P10_XSCOM_EQ2_MODE_REG1:
+> +    case P10_XSCOM_EQ2_NCU_SPEC_BAR_REG:
+> +    case P10_XSCOM_EQ2_HTM_MODE:
+> +    case P10_XSCOM_EQ2_HTM_IMA_PDBAR:
+> +    case P10_XSCOM_EQ3_MODE_REG1:
+> +    case P10_XSCOM_EQ3_NCU_SPEC_BAR_REG:
+> +    case P10_XSCOM_EQ3_HTM_MODE:
+> +    case P10_XSCOM_EQ3_HTM_IMA_PDBAR:
+> +        break;
+
+ditto for comment providing rationale.
+
+BTW, I am still not sure if we really need this patch upstream at the
+moment in case a behaviour change would be needed again for some of
+these regs until the full PowerVM support is ready to be upstreamed.
+However, since the change appears safe (has been vetted by multiple
+reviewers already), we can consider it along with above minor comments
+addressed.
+
+regards,
+Harsh
+
+>       default:
+>           qemu_log_mask(LOG_UNIMP, "%s: unimp write 0x%08x\n", __func__,
+>                         offset);
 
 
