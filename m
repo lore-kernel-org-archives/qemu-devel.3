@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70947FD45FC
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 23:23:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56D0CFD45F1
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 23:23:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvOAH-0007Fc-NS; Wed, 25 Feb 2026 18:19:33 -0500
+	id 1vvOCD-000855-GF; Wed, 25 Feb 2026 18:21:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vvOA8-0007Aj-PK
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 18:19:26 -0500
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vvOCB-00084n-U4
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 18:21:31 -0500
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vvOA7-0003SD-A8
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 18:19:24 -0500
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-4327790c4e9so154418f8f.2
- for <qemu-devel@nongnu.org>; Wed, 25 Feb 2026 15:19:22 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vvOCA-0004Lq-4u
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 18:21:31 -0500
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-436309f1ad7so167182f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 25 Feb 2026 15:21:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772061561; x=1772666361; darn=nongnu.org;
+ d=linaro.org; s=google; t=1772061688; x=1772666488; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=lMJ2aUNCM5aUuy6BHxWLWg+FGSreU8pqwVtxyYC+Q9A=;
- b=Vfhw0j++lzmNvR/9QaWET/mC3lODwlQc9co8s42BJ1UjS/bIR4ePt7OHNl5Y76AMrD
- z96jseDIeLQvYkaOu8aDuJYZZZtLqeoFwV75jRnWZjhqu2QvRxo/OR875gC26VKFcvwJ
- 9Bvsu9i/Lm4n59T3QYLPSpoiMouk9NRP0gQ/m+t0oYtPkBpwai80RPG2C48oI5jz1Fxk
- K5EkhJJE1Y6sYP+gAEawKXPfi2DSfz4lI/7iHZslrpsErJXona/cLFzq769RbL5WvNBd
- vA/g9rp/lLD7M74dOVf6NO2EX5XVafOz/d+CDnbHulqIhzu7tvvJtoYUZyqObO+OhrJ2
- 560w==
+ :reply-to; bh=dM94jWZifp9IDQaSplzseZaqejpVI8KTowyEc2hsd/c=;
+ b=RG8dTG99BBVLgLplTSmrnWxsBT6XN2PMQOjMYfI+SHow4RtB2ALloqmI5XIcJaLmaU
+ Psxj6yePt/t989hp7k4UheOwdBrA8pAChTyihpSxl4EfFPIjUjG1PY6Fv3dBpTYFEDz6
+ j2rfds54em6rKCxdN3ENZGUL71oU3I9wqh4MN9zWhcBsJP0tuE0FL3ehrLJxuAQpR8xB
+ pZHQ9GAHgZa8n0FhGivkAFz/LcTdlh6obW+Sd/H6Tu8/Tsj50uZGGGoX6UVUqJWnaag6
+ k38fHAXPAiiodE4OD5PJfxnWFNVMdZpB9n+BW0xjEUSgquA4hzK2FfT1+HJz2inTz1g0
+ +DPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772061561; x=1772666361;
+ d=1e100.net; s=20230601; t=1772061688; x=1772666488;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=lMJ2aUNCM5aUuy6BHxWLWg+FGSreU8pqwVtxyYC+Q9A=;
- b=OQI+Au8P9W7rl8aXn3lx7fRJzyfIkhHj2jASVt1vL4h0EJZ36pjWTi2KXMB+ptV4jN
- JfMKo1e2Cs+W63dq40zCWKN1s48T0GhNefMkP2M2DIt6CCjLkLyDe+a/ce0AK06WPdeV
- gbn4WM3dmtUnW4mPPgJ853RTooDc6lbdiy5pEgRc8RQwjGcbyczEGBGfUKcj4QYSSeoJ
- i2Fkp3MrA8SA7l690pdbHq1ZX8N+SQVNvD4I5HIpA/crCFwgbHAa1376TPiH9+pwjWbK
- jEGI1DuygkKj+xX940G49z3swOKh2l+WFvfX4tegcH3hakGEVHELwdhPzG/R6ARQrAnf
- 8PGg==
-X-Gm-Message-State: AOJu0YwNzYX6bGUkrvx2igm9SWx2huc3q52VcYXMpSjNGkiUFQBHvz1h
- bVDNxpM2CbcLtktdz+JxCXLQfJ3ovVyukpZrr+ZXYKoEjPCYa8Ld9p/5Yk4L3HT0g4l5iFIzQ0c
- w6uF3Nm8=
-X-Gm-Gg: ATEYQzxU5vWpenBp6rl+0AaUyAFku3cZrvT2Q+/ty2z05rNVp5rLyvwRP+A3a0O1zZK
- YGgoHjBZGqIfekxxvG49fynDLbDOspDZbGaCvRNSj0u+1MuCMVyx5x0i9nd6G3zS3mtF06yVufh
- dvDMRbXoTj69skn2tJYLxaD4t5GreulkEJ5c1i93uHON2m0fUr+TlmcslELuK/LIZUIBqlR5vh+
- 0lqH2Ppwai7BHEmg0TLvzPaxejTnLFYBeXIxhrqEVkHUqkum41iXz4ihCPj1i1EKBJVVQSVPFb+
- lIC/6OCy5XoNOe9S15+eYs6mZmg69pobDtfpYq/GU1NmTSz8KhrSeso8huRafVALvZcqysDijt6
- yHuCl2Jmq5CCcq/vaLu49U8HBq2OREKWU6LePHLYy5GqielMM3QPmfprpAg3NKGdxF8pMx1o7uc
- pFPy2fuzOKdP5cJkofHXUxbFB2XjBtBqDX+zPqlO5SfmrlffskNitFNtcMXSZwa5RSdQ3Hwdfj
-X-Received: by 2002:a05:6000:2508:b0:439:8f32:8668 with SMTP id
- ffacd0b85a97d-4398f32883amr8251675f8f.58.1772061561184; 
- Wed, 25 Feb 2026 15:19:21 -0800 (PST)
+ bh=dM94jWZifp9IDQaSplzseZaqejpVI8KTowyEc2hsd/c=;
+ b=nqHx9zAKYzW24wZisP8lVJ4p1l5r9osYxeEf6KeogAOTYyp3UJ1bONOc6RNEfnSgmX
+ e+i9lHTFWhdN8Eny9vJxQlpAEb0a+u6Q7K2OM7MqtzHCDgr5KzB2bf/4DcwUIJX3ald6
+ txucRmxbuwV3Xq3BeNd/jkW1jIkMjRxVd9nLGDaQr4K5ydKlhFVuR0PgpP3/G0eAsPbh
+ RBqv/EfuLcPjmyQGT2HeSb9rSFYBM0LYtm7GZ7u5UB7qty3RtAZsUhJa73T9zVshzAuF
+ tRDjpCvhS2V0cIcM7HnBRl9TInlVbYRpmOo/iZEQDmnU1Mw7fjoujKA8YlaC8AgHKe6i
+ WHLA==
+X-Gm-Message-State: AOJu0YyugRljgurREH8QSd0sCPCAfGq70posZuWfxJXngEsc/e4t3X1N
+ WvY8AiuXqDaXVAkntoKpueiCZOi0OBWFQjXopue2rCuICOQifNHKC8QcfyfvhHtLVwjfSFFIwHw
+ yk4Vj+OE=
+X-Gm-Gg: ATEYQzy92Mkl+obCQTvAYJdvJkWg6fEVBPznnY6HG0+MwaYpEgUpzpmLhOpcBtN5cml
+ ObvzYI9M5zP/u9rbbyzjt62ZhH7ROUrQOw6u7pOa3wmSBNRJ9tWR0y76xHP/5W3XIMHUhG/tT99
+ c9aEll3BtM6mNjLaqAE156woGSGJRuUtrmuzwvUCeVUieYZ6xinfOnd1pn/yCzBde7W0s9wwGFf
+ ecmSsA4Ar8F0yAFKJSZ5N0kk6QQ1xZ/9Mon3UysU+BSFSus1mXQrC87m6FPpqz2IP/vsGrdxqI3
+ gq+rOGqQae+bkSzFiqqSy0n8t/vI7yT9tor+r+7FCE6Sb81u+jfEmSuZu44yDCq7BqLrg76hn86
+ e5IZaroHOGrEX4unfncsM5PBDncEYvtGyWFgB2rNzhoal8MHMBIkjYs69XIsMHEZRFgCwUF+o5Z
+ yG7M3Lh02RgffbyFlskgMkR41uYsjTe9Q4TdgGfYPhirTwmzNlFqvGHFcA0Ai1jx4jIH37df9M
+X-Received: by 2002:a5d:64c6:0:b0:435:b755:c67e with SMTP id
+ ffacd0b85a97d-439942fbd3cmr4320378f8f.49.1772061688069; 
+ Wed, 25 Feb 2026 15:21:28 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43970d3ff1csm35875932f8f.20.2026.02.25.15.19.20
+ ffacd0b85a97d-43970d4c95dsm41138838f8f.33.2026.02.25.15.21.27
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 25 Feb 2026 15:19:20 -0800 (PST)
+ Wed, 25 Feb 2026 15:21:27 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 45/70] gdbstub/helpers: Convert gdb_get_regl() macro to inlined
- helper
-Date: Thu, 26 Feb 2026 00:13:45 +0100
-Message-ID: <20260225231411.96482-46-philmd@linaro.org>
+Subject: [PULL 64/70] meson: don't access 'cxx' object without checking cpp
+ lang
+Date: Thu, 26 Feb 2026 00:14:04 +0100
+Message-ID: <20260225231411.96482-65-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260225231411.96482-1-philmd@linaro.org>
 References: <20260225231411.96482-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,54 +99,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Rather than checking TARGET_LONG_BITS at build time,
-check target_long_bits() at runtime.
+From: Daniel P. Berrangé <berrange@redhat.com>
 
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Acked-by: Paolo Bonzini <pbonzini@redhat.com>
+Message-ID: <20260210173355.776365-1-berrange@redhat.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20260219191955.83815-38-philmd@linaro.org>
 ---
- include/gdbstub/helpers.h | 22 ++++++++++++++--------
- 1 file changed, 14 insertions(+), 8 deletions(-)
+ meson.build | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/gdbstub/helpers.h b/include/gdbstub/helpers.h
-index 402514716d7..b2f41d6d280 100644
---- a/include/gdbstub/helpers.h
-+++ b/include/gdbstub/helpers.h
-@@ -88,6 +88,20 @@ static inline int gdb_get_zeroes(GByteArray *array, size_t len)
-     return len;
- }
+diff --git a/meson.build b/meson.build
+index 4eeef552748..d9a17eeefd3 100644
+--- a/meson.build
++++ b/meson.build
+@@ -3200,7 +3200,7 @@ if host_os == 'windows'
+ endif
  
-+/**
-+ * gdb_get_regl: append @val in @buf using 32 or 64-bit, depending on target
-+ *
-+ * This function is legacy and deprecated, thus should not be used in new code.
-+ */
-+static inline int gdb_get_regl(GByteArray *buf, uint64_t val)
-+{
-+    if (target_long_bits() == 64) {
-+        return gdb_get_reg64(buf, val);
-+    } else {
-+        return gdb_get_reg32(buf, val);
-+    }
-+}
-+
- /**
-  * gdb_get_reg_ptr: get pointer to start of last element
-  * @len: length of element
-@@ -101,12 +115,4 @@ static inline uint8_t *gdb_get_reg_ptr(GByteArray *buf, int len)
-     return buf->data + buf->len - len;
- }
- 
--#ifdef COMPILING_PER_TARGET
--#if TARGET_LONG_BITS == 64
--#define gdb_get_regl(buf, val) gdb_get_reg64(buf, val)
--#else
--#define gdb_get_regl(buf, val) gdb_get_reg32(buf, val)
--#endif
--#endif /* COMPILING_PER_TARGET */
--
- #endif /* _GDBSTUB_HELPERS_H_ */
+ # Detect if ConvertStringToBSTR has been defined in _com_util namespace
+-if host_os == 'windows'
++if host_os == 'windows' and 'cpp' in all_languages
+   has_convert_string_to_bstr = cxx.links('''
+     #include <comutil.h>
+     int main() {
 -- 
 2.52.0
 
