@@ -4,108 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD4B7FCEE8A
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 11:39:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40C51FCEE8A
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 11:39:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvDEC-000713-Li; Wed, 25 Feb 2026 06:38:52 -0500
+	id 1vvDF7-0008AO-2R; Wed, 25 Feb 2026 06:39:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1vvDEB-00070i-Jo
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 06:38:51 -0500
-Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1vvDE9-0008LL-Hb
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 06:38:51 -0500
-Received: by mail-ed1-x532.google.com with SMTP id
- 4fb4d7f45d1cf-65f9a875eabso539766a12.0
- for <qemu-devel@nongnu.org>; Wed, 25 Feb 2026 03:38:49 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772019528; cv=none;
- d=google.com; s=arc-20240605;
- b=Zd3WW1QY7Am1GcGFvtQs6lFVoewox29PzbYkVxZpVGy9YDQuhqPbHQoPHn1A8jFyxL
- Bcp7ozpZ+EDyNOYxzj+QEFe0vXMOZzgd+8LgEmc7DpxA1MX8BLKGbreCjpJQSRaxQwat
- t4yTy/dvySnFETx5ijV3QxYonGQwtVtMAcUsNG622Ie8za0wGAETjchTKy+bRoD0XPXO
- JLD5UCA2BhhVp0HsWuZqbvC4rmYIXS24xriedL1FxsAOAN8hLhpVn2J4WESFpyOTl9Tx
- n/Bax0XquWi3mqhSeZweyYLQ6b9+FvYN5JY+lPdz9xKfK1SkIRxBafh6pj4hFph5z+CM
- 0+qA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=c2f46g0r/403OHRPfAI6BUM+n1xC0eON63LuCM9szSc=;
- fh=aYT0Dte32zScO0z23mE8usKARXq3g0LPBKVr7DfkjMg=;
- b=jv3NWBMFYoUQUrjC3S4bcGuvj20n9QBae96zFQlPokCSONvT7Oky5BZV6Q4uEJzNKb
- X4erVwFb3I9goFfvj3VUZGVmRr1svFS61Uqu7gJAJr532Uzv/OkyapCtoz6RUkOOJtbd
- u+lc+b3+p8g/mwcvR1Nf0uw9a39BFoLH5I4tChf3AmPWsJoa6RdeBaUpEWZMaxiFqZb0
- V3WcguxNFfPLAniHjoxYK0mH61l+Pbio3J33y5C0imG6dlOSx+WQn5NbHaTjarHkcleP
- w2uzw+BLPZQOI9af+ER4GW6dc9/HnK3ooWhcZ2LR234FmNjP6GfecodxqaRMsLR/x5ky
- HJOA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1772019528; x=1772624328; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=c2f46g0r/403OHRPfAI6BUM+n1xC0eON63LuCM9szSc=;
- b=c6o5E8JuNYgr2x+Jmp4Jmuz7j7Bmu/jGos/NpKExXGWpQ4gQrzBXdWkflj3OdvxvpI
- Ugpw6gg1E9lny7Sz0Dn0CVXx5EU4SQxFfMUG7FSJaBNehvZ7b/i5fus/VnTlerlKkdql
- yp+P2Ye1X0szthmed82kztPHopVDhGwpnJcdiR2T1/QtzPOn/buavbjs+WhhWU1T5hho
- P+s5EV1+H2QYaEynULegW7oVWmTqN1fEh5KqzPiGeirDn05gV2TUcnt2kNXNJEve2wSK
- StwpYFWPARE3ZGHaRDxTxaYiXGEPhupHlPdBpZVd7yuzy+K6zk3qrJlhClQAE+MnIMBE
- 1CwA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772019528; x=1772624328;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=c2f46g0r/403OHRPfAI6BUM+n1xC0eON63LuCM9szSc=;
- b=xHbxmaBzzib+TiDZ4CLnMwGcxuh2yCpVRvWPryezrD5j2qb+2JMz0m2GbCg0o43Fjn
- p8940YvANwDiuTRKZznDsNzaqb6M4cvKZ3vL9WcQLmIoyDwcbyFGh2TZ+EaYzizGz2G8
- 9kunpZD/ucsYy+Z1hMxaJbSIYDSKmeHByZYoPJy/HAVNRLZp4ErvJXg4ZFapCnJ0n6Zb
- DPh9cc2gNw+76FM32xWasgoztO7sWx47aoBdHkZiCkokMenc6rJKBslqbsoT54BLQQKK
- L8Xn1twy9Xsov32TGr/pMVC86mN3fwapisUpaBWFz2Zo5JDmgH2zKbbj/IkXedqs7Zpu
- eObA==
-X-Gm-Message-State: AOJu0YyBmERcjJMyYroMK1I69MjKf1j3805RxTX0fcurE+2in00iyxpp
- NYZUlRY6OQhOMNFRIQKSRRTxneIwSUDh4TyxYPWpY+8UwpQasF2zAPSkstHhKqfKbi4Y+w7NK4X
- hM/Q4gZdJzpFvpqJtEBMEqgAotwm/jPg=
-X-Gm-Gg: ATEYQzxDNBCyznY9bT9ZpRnTmdQ5cUQCSn/QenIlHph1j16F3NzQ2kQkZ8a6WQx3Y1/
- i2M4VOK3HMOxnqSU/c3OBKM0aPzXLkZ2mOdJG4Y9pL+lX/FmcIDsQWWPobAMsEzvKSxAfJoa9dV
- jqpcB7GnkDMncNFP4gU2rAprSjWbRp0lvh0cRB7vwHDuCzeBPxbpKwUU/ovQTUZkV8Fj7o3zqHE
- uWfs/FbwrNVZCrvLF1HVWc6YPtlbdi48v9cZa/uZrnAh+dcQCkP6WPJiOeCtru+6ftBU9iJ41OE
- dNM83CdK
-X-Received: by 2002:a05:6402:3547:b0:658:191a:31b9 with SMTP id
- 4fb4d7f45d1cf-65ea4efb7dfmr8824815a12.27.1772019527547; Wed, 25 Feb 2026
- 03:38:47 -0800 (PST)
-MIME-Version: 1.0
-References: <20260213171622.55629-1-zhangckid@gmail.com>
- <20260213171622.55629-2-zhangckid@gmail.com>
- <20260218205328.GB620422@fedora>
-In-Reply-To: <20260218205328.GB620422@fedora>
-From: Zhang Chen <zhangckid@gmail.com>
-Date: Wed, 25 Feb 2026 19:38:10 +0800
-X-Gm-Features: AaiRm535cX7LMLDOvQ9w3PbirdDQzzhvXqou0Rdx5sLw9CC6g2HKrqvXrUBA1rI
-Message-ID: <CAK3tnvKB+ZQPXjts2LZqji5v2fgbM0AcQfE=WS3eSTPnuVW3hg@mail.gmail.com>
-Subject: Re: [PATCH V4 2/4] iothread: introduce iothread_ref/unref to track
- attached devices
-To: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>,
- "Dr . David Alan Gilbert" <dave@treblig.org>, 
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>, 
- "Michael S . Tsirkin" <mst@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1vvDEx-000863-F1
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 06:39:39 -0500
+Received: from qs-2003c-snip4-11.eps.apple.com ([57.103.86.33]
+ helo=outbound.qs.icloud.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1vvDEt-0008Na-Mr
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 06:39:37 -0500
+Received: from outbound.qs.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-east-2d-100-percent-8 (Postfix) with ESMTPS id
+ DFA0118009C4; Wed, 25 Feb 2026 11:39:28 +0000 (UTC)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; t=1772019570; x=1774611570;
+ bh=He53tVLVknMUuhasVxGCzNxBBlTiXUYgGHinnT94OOw=;
+ h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
+ b=ZmVXbQC+2BQ5CJ+fQYkoRFFRYiBaYaGxdxja6hx808Gl3CzJOzTunvgxbYjRk94iPAtnN1ljE+u+kRJmpgmWyreDW1JUvf7bib4HpCjZCYMWxRbjiWQPQYJmPj0rRARKsR0kehh3mWveQaZW0Y2mt4hlWtt7KyEsj9qeEAuQ134vGBQSjieA0323ol1QmHLEAPuVdiIdJgIMrdU4267w9QSRKXjgm2hLkCvgmvLlOi+U+lUqVNlMx/3E1zjYkjmPxscKNyjSwTFXOzXrPkp0r6celLXL8PTqcIv2HUvtZMGYfUKuNmGmhJJYDz7axdXqPNdRWIXq5tp/qi/wcJuyyQ==
+mail-alias-created-date: 1752046281608
+Received: from smtpclient.apple (unknown [17.57.155.37])
+ by p00-icloudmta-asmtp-us-east-2d-100-percent-8 (Postfix) with ESMTPSA id
+ E03A11800109; Wed, 25 Feb 2026 11:39:26 +0000 (UTC)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.400.21\))
+Subject: Re: [PATCH v2 00/16] Add RISC-V big-endian target support
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+In-Reply-To: <20260225102016.200654-1-djordje.todorovic@htecgroup.com>
+Date: Wed, 25 Feb 2026 12:39:14 +0100
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>,
+ "cfu@mips.com" <cfu@mips.com>, "mst@redhat.com" <mst@redhat.com>,
+ "marcel.apfelbaum@gmail.com" <marcel.apfelbaum@gmail.com>,
+ "dbarboza@ventanamicro.com" <dbarboza@ventanamicro.com>,
+ "philmd@linaro.org" <philmd@linaro.org>,
+ "alistair23@gmail.com" <alistair23@gmail.com>,
+ "thuth@redhat.com" <thuth@redhat.com>
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::532;
- envelope-from=zhangckid@gmail.com; helo=mail-ed1-x532.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Message-Id: <A02120BF-779D-4B2C-B29D-A9CB044EA895@unpredictable.fr>
+References: <20260225102016.200654-1-djordje.todorovic@htecgroup.com>
+To: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>
+X-Mailer: Apple Mail (2.3864.400.21)
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjI1MDExNCBTYWx0ZWRfX16qQDRJhMd0T
+ /hBwBkXGf0DZYv1mfMxucAPwCi1Q3Vog6EGw/wriBRXS4ZNJbgtgUIvU7whvYzWH2tjaDQczvxJ
+ qUWWWTQWr42nVnpZrnfoDJzBlBwnqKWag8d8qtDpdM0QJKTQg0seK9fLx6xP2rHuQwG1nBkuDuR
+ p5fMnoVEb+MUEI5WEhndapJXfh/CJ5WTaugNTWJwZ6wcZJAR1D72rTAf9gPyl5mSKIsplTaPfae
+ dip2/Wl+DQz/FJP7rrWLFGKuOgy2cOsXuUQepejRschO4+oY6d1gwoH2bXoEmkU0Y6r6FfhpkFF
+ 2T8S1SZHmm4oafr2HZe2Gt+dcCXL9gJ5hKkw8sasUg0hjO+VER+wpDfECUABHU=
+X-Proofpoint-GUID: XZMMc7uxqRGvOVn98DmeyLFQSVbUyJtp
+X-Authority-Info-Out: v=2.4 cv=bPkb4f+Z c=1 sm=1 tr=0 ts=699edf71
+ cx=c_apl:c_apl_out:c_pps a=bsP7O+dXZ5uKcj+dsLqiMw==:117
+ a=bsP7O+dXZ5uKcj+dsLqiMw==:17 a=IkcTkHD0fZMA:10 a=HzLeVaNsDn8A:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22
+ a=gPJu0pBYAAAA:8 a=ALku5c8DAAAA:8 a=vQKd5WLVvRtLwYuElykA:9 a=QEXdDO2ut3YA:10
+ a=AlIIF0cMT2hfDT4axODj:22 a=Skunnq644UPbuD6fT1yj:22
+X-Proofpoint-ORIG-GUID: XZMMc7uxqRGvOVn98DmeyLFQSVbUyJtp
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-02-24_03,2026-02-23_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=656
+ bulkscore=0 adultscore=0 clxscore=1030 spamscore=0
+ phishscore=0
+ lowpriorityscore=0 mlxscore=0 malwarescore=0 suspectscore=0 classifier=spam
+ authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
+ definitions=main-2602250114
+X-JNJ: AAAAAAABEj9o1BtwdD924VPJeHlSPs7xVPKUQJmx5MOKl4K8s0RiXjg+z2EhQfHSjVU9cn99/GA/Uo5EH+NCJ/IYv48qYu0ViMgA/s7Pir/S8C/MZGPl8SSoz7I1O2sZaE5LOJX+4+FCALV7uWmsRWeAKnZ1E94H+0c+Xz91Q4M9FohVI1kmtSjcHfHojwlyxwm0yosKN//aT/yqtJ4QfT3Ua7U1Q21A8QGUhe/16oVHVoVvLidcmnTRHDpkT19iDhLlKuCoCQNFC6RbU6vIN8YaGJzg91p4akCXwq/x4pM+5gU6rsGznufLzky/jh88Jf7+V94oZ97eAFZDkiJvw6GxiysADCPz76U708/wSkraQJm1/Lu0qcRDLuKSUhtQdfFtzTzGzOOKG8qIMxsVN1bVKF4f/ToOxsomPrJm/utrO3iF6Nkx9X4oCKj3ZLG+82hbgiFFG53fQZfSCZmtitim0WYLDqEQMyHcmmAvwh6McDWuuwIAarq7GXIjpm2cR2ewBOWWbFWwUE1i+jXfo4lyYhoOQwh+/CiW6cAt+w2MAx8CRtQJeVfHeNQaDaVL9dPMhi7ngQZcsfUq93lGxQqc6eqRAEI/ZIEqjyrQylspULR4nMnxTHAnEJ7cIrxvl8CNeOdUXccjOjSr05PALwBI3Hx/BZvRG5LJ0ObX/EVlat72Mk+Us9QZG1eiertSYmc5rwRzcG+sZK5tuBsWzY4kSj3CdbiyguMpiDLP+YAJ28fEFah86EWSmO5dfC1JwX3uGnvcsHRejeoc+Sk=
+Received-SPF: pass client-ip=57.103.86.33;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.qs.icloud.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.358, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.659,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,180 +102,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Feb 19, 2026 at 4:53=E2=80=AFAM Stefan Hajnoczi <stefanha@redhat.co=
-m> wrote:
->
-> On Sat, Feb 14, 2026 at 01:16:20AM +0800, Zhang Chen wrote:
-> > Currently, IOThreads do not maintain a record of which devices are
-> > associated with them. This makes it difficult to monitor the
-> > workload distribution of IOThreads, especially in complex
-> > hotplug scenarios involving multiple virtio-blk or virtio-scsi devices.
-> >
-> > This patch introduces a reference counting and tracking mechanism
-> > within the IOThread object:
-> >
-> > - iothread_ref(): Increments the attachment counter and prepends the
-> >   device's QOM path to a list. Note: The IOThread takes ownership of
-> >   the passed 'holder' string.
-> > - iothread_unref(): Searches for the device path using a custom
-> >   string comparison (g_strcmp0), decrements the counter, and
-> >   releases the associated memory upon a successful match.
-> > - attached_cnt: Tracks the number of active device attachments.
-> > - attached_dev: A GList storing the QOM paths of attached devices
-> >   for runtime introspection.
-> >
-> > This infrastructure allows management tools and QMP commands to
-> > query the attachment status of IOThreads.
-> >
-> > Signed-off-by: Zhang Chen <zhangckid@gmail.com>
-> > ---
-> >  include/system/iothread.h |  4 ++++
-> >  iothread.c                | 35 +++++++++++++++++++++++++++++++++++
-> >  2 files changed, 39 insertions(+)
-> >
-> > diff --git a/include/system/iothread.h b/include/system/iothread.h
-> > index e26d13c6c7..4a2ffdb9bd 100644
-> > --- a/include/system/iothread.h
-> > +++ b/include/system/iothread.h
-> > @@ -33,6 +33,8 @@ struct IOThread {
-> >      bool stopping;              /* has iothread_stop() been called? */
-> >      bool running;               /* should iothread_run() continue? */
-> >      int thread_id;
-> > +    int attached_cnt;
->
-> Is this field necessary given that the user can see the list of holders?
-
-Will remove it in next version.
-
->
-> > +    GList *attached_dev;
->
-> IOThreads are general eventloop concept in QEMU and not limited to
-> device emulation. Non-device code may also wish to add itself (e.g.
-> block/export/export.c). Please call this GList *holders.
-
-OK, will change the name next version.
 
 
->
-> This raises questions:
-> - Is it mandatory for users of the IOThread's AioContext to add
->   themselves?
-> - How does it relate to object_ref()/object_unref()?
->
-> I would prefer to set things up as follows:
->
-> It is mandatory for users of the IOThread's AioContext to add
-> themselves. This is enforced by modifying iothread_get_aio_context() to
-> take a string argument with the name of the holder.
->
-> iothread_get_aio_context() is also extended to call
-> object_ref(OBJECT(iothread)). This guarantees that the IOThread and its
-> AioContext remain alive as long as there is a holder. (Some users
-> already do this themselves, so I think it makes sense to build this
-> behavior into the API so that all users get it automatically.)
->
-> A new iothread_put_aio_context() function is introduced to remove the
-> hold and object_unref(OBJECT(iothread)).
->
-> All existing callers of iothread_get_aio_context() need to be updated to
-> pass in their QOM object path as the name of the holder, remove their own
-> object_ref() call (if present), and call iothread_put_aio_context() at
-> the appropriate point.
+> On 25. Feb 2026, at 11:20, Djordje Todorovic =
+<Djordje.Todorovic@htecgroup.com> wrote:
+>=20
+> This series adds big-endian (BE) RISC-V target support to QEMU,
+> covering both softmmu and linux-user emulation for riscv32be and
+> riscv64be.
+Hello,
 
-Make sense, I will implement it in next version.
+There=E2=80=99s no Linux RISC-V big endian. Maybe the right thing to do =
+is to not
+support it unless we=E2=80=99re sure that it can get to Linux upstream =
+(for the linux-user mode)?
 
->
-> >
-> >      /* AioContext poll parameters */
-> >      int64_t poll_max_ns;
-> > @@ -48,6 +50,8 @@ char *iothread_get_id(IOThread *iothread);
-> >  IOThread *iothread_by_id(const char *id);
-> >  AioContext *iothread_get_aio_context(IOThread *iothread);
-> >  GMainContext *iothread_get_g_main_context(IOThread *iothread);
-> > +void iothread_ref(IOThread *iothread, const char* holder);
-> > +void iothread_unref(IOThread *iothread, const char* holder);
-> >
-> >  /*
-> >   * Helpers used to allocate iothreads for internal use.  These
-> > diff --git a/iothread.c b/iothread.c
-> > index caf68e0764..b869637497 100644
-> > --- a/iothread.c
-> > +++ b/iothread.c
-> > @@ -36,6 +36,41 @@
-> >  #define IOTHREAD_POLL_MAX_NS_DEFAULT 0ULL
-> >  #endif
-> >
-> > +/*
-> > + * Increment iothread's reference count,
-> > + * and add holder device path to the list.
-> > + */
-> > +void iothread_ref(IOThread *iothread, const char *holder)
-> > +{
-> > +    iothread->attached_cnt++;
-> > +    iothread->attached_dev =3D g_list_prepend(iothread->attached_dev,
-> > +                                           (gpointer)holder);
->
-> It's safer to g_strdup(holder) so the caller doesn't need to worry about
-> the lifetime of the argument. This is not a performance-critical code
-> path so the cost of the strdup is acceptable.
+Thank you,
+-Mohamed=20
+>=20
+> The RISC-V ISA supports big-endian operation via the mstatus =
+SBE/MBE/UBE
+> bits. While instructions are always little-endian, data accesses =
+follow
+> the configured endianness. This series implements the necessary QEMU
+> infrastructure.
+>=20
+> Furthermore, MIPS announced cores with BE configuration:
+>  https://mips.com/products/hardware/i8500/
+>=20
+> Patches 01-03: Build system and config for new BE targets
+> Patches 04-07: Core emulation fixes (instruction fetch, boot ROM, ELF
+>               loading, fw_dynamic endianness)
+> Patches 08-11: Linux-user BE targets and vDSO handling
+> Patch  12:     Set SBE/MBE mstatus bits at CPU reset
+> Patch  13:     Fix PTE A/D atomic update endianness in page table =
+walker
+> Patch  14:     Clean up instruction fetch to use MO_LE directly
+> Patch  15:     Fix virtio-mmio legacy device register endianness
+> Patch  16:     Add riscv32be and riscv64be to SysEmuTarget
+>=20
+> Djordje Todorovic (9):
+>  meson: Add BE RISCV targets
+>  config/targets: Add BE RISCV softmmu targets
+>  config/devices: Add BE riscv configs
+>  target/riscv: Ensure LE instruction fetching
+>  hw/riscv: Ensure bootrom has correct endianess
+>  hw/riscv: Ensure proper ELF endian expectation
+>  hw/riscv: Check endianness for fw_dynamic fields
+>  config/targets: Add RISC-V userspace targets
+>  arch/riscv: Set UBE bit on BE target
+>=20
+> djtodoro (7):
+>  config/targets: Add missing fields to BE linux-user targets
+>  linux-user/riscv: Disable vDSO for big-endian targets
+>  target/riscv: Set SBE and MBE bits at CPU reset for BE targets
+>  target/riscv: Fix PTE A/D atomic update endianness
+>  target/riscv: Use MO_LE for instruction fetch
+>  hw/virtio: Use DEVICE_LITTLE_ENDIAN for virtio-mmio legacy ops
+>  qapi: Add riscv32be and riscv64be to SysEmuTarget
+>=20
+> configs/devices/riscv32be-softmmu/default.mak | 15 +++++++
+> configs/devices/riscv64be-softmmu/default.mak | 16 ++++++++
+> configs/targets/riscv32be-linux-user.mak      | 11 +++++
+> configs/targets/riscv32be-softmmu.mak         |  8 ++++
+> configs/targets/riscv64be-linux-user.mak      | 11 +++++
+> configs/targets/riscv64be-softmmu.mak         |  8 ++++
+> hw/riscv/boot.c                               | 41 ++++++++++++++++---
+> hw/virtio/virtio-mmio.c                       |  2 +-
+> include/hw/riscv/boot.h                       |  5 +++
+> linux-user/riscv/target_elf.h                 | 10 ++++-
+> meson.build                                   |  7 +++-
+> qapi/machine.json                             |  3 +-
+> target/riscv/cpu.c                            |  3 ++
+> target/riscv/cpu_bits.h                       |  2 +
+> target/riscv/cpu_helper.c                     |  9 ++--
+> target/riscv/translate.c                      | 16 ++++----
+> 16 files changed, 145 insertions(+), 22 deletions(-)
+> create mode 100644 configs/devices/riscv32be-softmmu/default.mak
+> create mode 100644 configs/devices/riscv64be-softmmu/default.mak
+> create mode 100644 configs/targets/riscv32be-linux-user.mak
+> create mode 100644 configs/targets/riscv32be-softmmu.mak
+> create mode 100644 configs/targets/riscv64be-linux-user.mak
+> create mode 100644 configs/targets/riscv64be-softmmu.mak
+>=20
+> --=20
+> 2.34.1
+>=20
 
-OK.
-
->
-> > +}
-> > +
-> > +/*
-> > + * Decrement iothread's reference count,
-> > + * and delete holder device path from the list.
-> > + */
-> > +void iothread_unref(IOThread *iothread, const char *holder)
-> > +{
-> > +    if (iothread->attached_cnt > 0) {
-> > +        GList *link =3D g_list_find_custom(iothread->attached_dev,
-> > +                                         holder, (GCompareFunc)g_strcm=
-p0);
-> > +
-> > +        if (link) {
-> > +            g_free(link->data);
->
-> iothread_ref() originally took a _const_ char * so it must not free the
-> pointer here. The reason why the compiler didn't complain was because
-> iothread_ref() cast the pointer to non-const gpointer. In any case, as
-> mentioned above, it's probably best to use g_strdup() and avoid placing
-> constraints on the lifetime of the caller's string.
-
-OK, will use the g_strdup() in ref side next version.
-
->
-> > +            iothread->attached_dev =3D g_list_delete_link(iothread->at=
-tached_dev,
-> > +                                                        link);
-> > +            iothread->attached_cnt--;
-> > +        } else {
-> > +            error_report("iohtread_unref can't find device. attached_d=
-ev=3D%s",
->
-> "iohtread" typo here and in the line below.
-
-Good catch.
-
-Thanks
-Chen
-
->
-> > +                        holder);
-> > +        }
-> > +    } else {
-> > +        error_report("iohtread_unref counter error. attached_dev=3D%s"=
-, holder);
-> > +    }
-> > +}
-> > +
-> >  static void *iothread_run(void *opaque)
-> >  {
-> >      IOThread *iothread =3D opaque;
-> > --
-> > 2.49.0
-> >
 
