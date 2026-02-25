@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBC6EFD3760
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 14:46:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 180D5FD3762
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 14:47:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvG9H-0008T1-QN; Wed, 25 Feb 2026 09:45:59 -0500
+	id 1vvGA6-0000ZW-Ht; Wed, 25 Feb 2026 09:46:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=509822c20=graf@amazon.de>)
- id 1vvG9D-0008Rg-UP; Wed, 25 Feb 2026 09:45:57 -0500
-Received: from pdx-out-015.esa.us-west-2.outbound.mail-perimeter.amazon.com
- ([50.112.246.219])
+ id 1vvGA1-0000WO-RX; Wed, 25 Feb 2026 09:46:45 -0500
+Received: from pdx-out-004.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ ([44.246.77.92])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=509822c20=graf@amazon.de>)
- id 1vvG98-00070x-KP; Wed, 25 Feb 2026 09:45:54 -0500
+ id 1vvG9z-00075w-58; Wed, 25 Feb 2026 09:46:44 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazoncorp2;
- t=1772030750; x=1803566750;
+ t=1772030803; x=1803566803;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=yGwpH6mNXADUzH7l283Vcqo8pTgMS9qPjwIVA1ZPJ58=;
- b=SgZk/x9MQjtHC4oirTipotTthYzkOrC7QTsLJAmS081rOjF6HEQs3/H6
- 81COs1nGeipfpR4c1t2ixjkmqbqYttog2AqvqWPRbsUH+D63hIn6ChsJu
- 3lU8VLtx9X6jqwUFhyB0+irQ2zPvsY04neAxJt2bfVfIA2j6E5L6TmVeM
- tR7uRizJ5Ill038B27GybTgJxUxEtvjoSPrtgZWs7UA+yjfu+VVupmhSC
- NSVMHtgRoGtnx0gkPIqmy6lO8XVOFfWT5Sqz+PJYf0wOdCfgrZa7g8XvI
- 2ZFXiykPr+4JjQWfqn5XICm7IGtpDAwKMKgtu33QqCCulu6VbgDt10Ioi A==;
-X-CSE-ConnectionGUID: Sjs9eNzIT1+i6SzUtSu9Gg==
-X-CSE-MsgGUID: xiIIL/D6T0mFLUIehKrBIw==
-X-IronPort-AV: E=Sophos;i="6.21,310,1763424000"; d="scan'208";a="13594409"
-Received: from ip-10-5-12-219.us-west-2.compute.internal (HELO
- smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.12.219])
- by internal-pdx-out-015.esa.us-west-2.outbound.mail-perimeter.amazon.com with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Feb 2026 14:45:45 +0000
-Received: from EX19MTAUWA001.ant.amazon.com [205.251.233.182:11341]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.36.66:2525]
+ bh=ehsU0Bf5A0MlZP4W91d1tbV1iHCoQYnxLfebYzHP7Dw=;
+ b=XtCVJbutN/CJulC7awMlnszn1VKxOnc9lWcFRK92vUnRWvfd4/YIE/ax
+ aQdUOfroxBT8zg9/H07xgoOLBmckUjD8Wnnt9eyX1gQbjd6+GD0MRN8a1
+ 9V8gpmK4RS9AiN5AKCaFdFgwEuXAoI3FnDMO8uIxOdQ5o1zzXAIi8DjPq
+ hq6ovg8St0TinvD+giCzfvjmp7GGPJs3WBKa1+giAThjWvcD+mh6kQ020
+ dZ6nj9skKYx1dkA5x1RMR6BOSNhtZTfTQ8yHlXI8u6/6v9h6EESYTN+2c
+ CU82UMm6jg/tpAsSXTC90Vf/5zVVbIW/bBOql4QEi0o7+dcdkHSeE7znc w==;
+X-CSE-ConnectionGUID: T9Qu1Kt7SySACzMSi0lEKQ==
+X-CSE-MsgGUID: p0lPaIVqR82RzWauRkk7fg==
+X-IronPort-AV: E=Sophos;i="6.21,310,1763424000"; d="scan'208";a="13761460"
+Received: from ip-10-5-6-203.us-west-2.compute.internal (HELO
+ smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.6.203])
+ by internal-pdx-out-004.esa.us-west-2.outbound.mail-perimeter.amazon.com with
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Feb 2026 14:46:38 +0000
+Received: from EX19MTAUWC001.ant.amazon.com [205.251.233.105:23511]
+ by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.58.220:2525]
  with esmtp (Farcaster)
- id b508d004-cad6-4920-b63f-957dd459c2e8; Wed, 25 Feb 2026 14:45:45 +0000 (UTC)
-X-Farcaster-Flow-ID: b508d004-cad6-4920-b63f-957dd459c2e8
+ id caa56ec1-bc1c-4648-a433-fc39859787a7; Wed, 25 Feb 2026 14:46:38 +0000 (UTC)
+X-Farcaster-Flow-ID: caa56ec1-bc1c-4648-a433-fc39859787a7
 Received: from EX19D020UWC004.ant.amazon.com (10.13.138.149) by
- EX19MTAUWA001.ant.amazon.com (10.250.64.218) with Microsoft SMTP Server
+ EX19MTAUWC001.ant.amazon.com (10.250.64.174) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.37;
- Wed, 25 Feb 2026 14:45:43 +0000
+ Wed, 25 Feb 2026 14:46:37 +0000
 Received: from ip-10-253-83-51.amazon.com (172.19.99.218) by
  EX19D020UWC004.ant.amazon.com (10.13.138.149) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.37;
- Wed, 25 Feb 2026 14:45:41 +0000
+ Wed, 25 Feb 2026 14:46:35 +0000
 From: Alexander Graf <graf@amazon.com>
 To: <qemu-devel@nongnu.org>
 CC: <qemu-arm@nongnu.org>, Peter Maydell <peter.maydell@linaro.org>, "Thomas
@@ -60,21 +60,21 @@ CC: <qemu-arm@nongnu.org>, Peter Maydell <peter.maydell@linaro.org>, "Thomas
  <dorjoychy111@gmail.com>, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, Tyler Fanelli <tfanelli@redhat.com>,
  <mknaust@amazon.com>, <nh-open-source@amazon.com>
-Subject: [PATCH v2 02/11] linux-headers: Add nitro_enclaves.h
-Date: Wed, 25 Feb 2026 14:45:21 +0000
-Message-ID: <20260225144532.84673-3-graf@amazon.com>
+Subject: [PATCH v2 06/11] hw/nitro: Introduce Nitro Enclave Heartbeat device
+Date: Wed, 25 Feb 2026 14:45:25 +0000
+Message-ID: <20260225144532.84673-7-graf@amazon.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20260225144532.84673-1-graf@amazon.com>
 References: <20260225144532.84673-1-graf@amazon.com>
 MIME-Version: 1.0
 X-Originating-IP: [172.19.99.218]
-X-ClientProxiedBy: EX19D041UWA004.ant.amazon.com (10.13.139.9) To
+X-ClientProxiedBy: EX19D035UWA001.ant.amazon.com (10.13.139.101) To
  EX19D020UWC004.ant.amazon.com (10.13.138.149)
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=50.112.246.219;
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+Received-SPF: pass client-ip=44.246.77.92;
  envelope-from=prvs=509822c20=graf@amazon.de;
- helo=pdx-out-015.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ helo=pdx-out-004.esa.us-west-2.outbound.mail-perimeter.amazon.com
 X-Spam_score_int: -1
 X-Spam_score: -0.2
 X-Spam_bar: /
@@ -99,393 +99,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-QEMU is learning to drive the /dev/nitro_enclaves device node. Include
-its UAPI header into our local copy of kernel headers so it has all
-defines we need to drive it.
-
-Signed-off-by: Alexander Graf <graf@amazon.com>
----
- .../standard-headers/linux/nitro_enclaves.h   | 359 ++++++++++++++++++
- 1 file changed, 359 insertions(+)
- create mode 100644 include/standard-headers/linux/nitro_enclaves.h
-
-diff --git a/include/standard-headers/linux/nitro_enclaves.h b/include/standard-headers/linux/nitro_enclaves.h
-new file mode 100644
-index 0000000000..5545267dd9
---- /dev/null
-+++ b/include/standard-headers/linux/nitro_enclaves.h
-@@ -0,0 +1,359 @@
-+/* SPDX-License-Identifier: GPL-2.0 WITH Linux-syscall-note */
-+/*
-+ * Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
-+ */
-+
-+#ifndef _LINUX_NITRO_ENCLAVES_H_
-+#define _LINUX_NITRO_ENCLAVES_H_
-+
-+#include "standard-headers/linux/types.h"
-+
-+/**
-+ * DOC: Nitro Enclaves (NE) Kernel Driver Interface
-+ */
-+
-+/**
-+ * NE_CREATE_VM - The command is used to create a slot that is associated with
-+ *		  an enclave VM.
-+ *		  The generated unique slot id is an output parameter.
-+ *		  The ioctl can be invoked on the /dev/nitro_enclaves fd, before
-+ *		  setting any resources, such as memory and vCPUs, for an
-+ *		  enclave. Memory and vCPUs are set for the slot mapped to an enclave.
-+ *		  A NE CPU pool has to be set before calling this function. The
-+ *		  pool can be set after the NE driver load, using
-+ *		  /sys/module/nitro_enclaves/parameters/ne_cpus.
-+ *		  Its format is the detailed in the cpu-lists section:
-+ *		  https://www.kernel.org/doc/html/latest/admin-guide/kernel-parameters.html
-+ *		  CPU 0 and its siblings have to remain available for the
-+ *		  primary / parent VM, so they cannot be set for enclaves. Full
-+ *		  CPU core(s), from the same NUMA node, need(s) to be included
-+ *		  in the CPU pool.
-+ *
-+ * Context: Process context.
-+ * Return:
-+ * * Enclave file descriptor		- Enclave file descriptor used with
-+ *					  ioctl calls to set vCPUs and memory
-+ *					  regions, then start the enclave.
-+ * *  -1				- There was a failure in the ioctl logic.
-+ * On failure, errno is set to:
-+ * * EFAULT				- copy_to_user() failure.
-+ * * ENOMEM				- Memory allocation failure for internal
-+ *					  bookkeeping variables.
-+ * * NE_ERR_NO_CPUS_AVAIL_IN_POOL	- No NE CPU pool set / no CPUs available
-+ *					  in the pool.
-+ * * Error codes from get_unused_fd_flags() and anon_inode_getfile().
-+ * * Error codes from the NE PCI device request.
-+ */
-+#define NE_CREATE_VM			_IOR(0xAE, 0x20, uint64_t)
-+
-+/**
-+ * NE_ADD_VCPU - The command is used to set a vCPU for an enclave. The vCPU can
-+ *		 be auto-chosen from the NE CPU pool or it can be set by the
-+ *		 caller, with the note that it needs to be available in the NE
-+ *		 CPU pool. Full CPU core(s), from the same NUMA node, need(s) to
-+ *		 be associated with an enclave.
-+ *		 The vCPU id is an input / output parameter. If its value is 0,
-+ *		 then a CPU is chosen from the enclave CPU pool and returned via
-+ *		 this parameter.
-+ *		 The ioctl can be invoked on the enclave fd, before an enclave
-+ *		 is started.
-+ *
-+ * Context: Process context.
-+ * Return:
-+ * * 0					- Logic successfully completed.
-+ * *  -1				- There was a failure in the ioctl logic.
-+ * On failure, errno is set to:
-+ * * EFAULT				- copy_from_user() / copy_to_user() failure.
-+ * * ENOMEM				- Memory allocation failure for internal
-+ *					  bookkeeping variables.
-+ * * EIO				- Current task mm is not the same as the one
-+ *					  that created the enclave.
-+ * * NE_ERR_NO_CPUS_AVAIL_IN_POOL	- No CPUs available in the NE CPU pool.
-+ * * NE_ERR_VCPU_ALREADY_USED		- The provided vCPU is already used.
-+ * * NE_ERR_VCPU_NOT_IN_CPU_POOL	- The provided vCPU is not available in the
-+ *					  NE CPU pool.
-+ * * NE_ERR_VCPU_INVALID_CPU_CORE	- The core id of the provided vCPU is invalid
-+ *					  or out of range.
-+ * * NE_ERR_NOT_IN_INIT_STATE		- The enclave is not in init state
-+ *					  (init = before being started).
-+ * * NE_ERR_INVALID_VCPU		- The provided vCPU is not in the available
-+ *					  CPUs range.
-+ * * Error codes from the NE PCI device request.
-+ */
-+#define NE_ADD_VCPU			_IOWR(0xAE, 0x21, uint32_t)
-+
-+/**
-+ * NE_GET_IMAGE_LOAD_INFO - The command is used to get information needed for
-+ *			    in-memory enclave image loading e.g. offset in
-+ *			    enclave memory to start placing the enclave image.
-+ *			    The image load info is an input / output parameter.
-+ *			    It includes info provided by the caller - flags -
-+ *			    and returns the offset in enclave memory where to
-+ *			    start placing the enclave image.
-+ *			    The ioctl can be invoked on the enclave fd, before
-+ *			    an enclave is started.
-+ *
-+ * Context: Process context.
-+ * Return:
-+ * * 0				- Logic successfully completed.
-+ * *  -1			- There was a failure in the ioctl logic.
-+ * On failure, errno is set to:
-+ * * EFAULT			- copy_from_user() / copy_to_user() failure.
-+ * * NE_ERR_NOT_IN_INIT_STATE	- The enclave is not in init state (init =
-+ *				  before being started).
-+ * * NE_ERR_INVALID_FLAG_VALUE	- The value of the provided flag is invalid.
-+ */
-+#define NE_GET_IMAGE_LOAD_INFO		_IOWR(0xAE, 0x22, struct ne_image_load_info)
-+
-+/**
-+ * NE_SET_USER_MEMORY_REGION - The command is used to set a memory region for an
-+ *			       enclave, given the allocated memory from the
-+ *			       userspace. Enclave memory needs to be from the
-+ *			       same NUMA node as the enclave CPUs.
-+ *			       The user memory region is an input parameter. It
-+ *			       includes info provided by the caller - flags,
-+ *			       memory size and userspace address.
-+ *			       The ioctl can be invoked on the enclave fd,
-+ *			       before an enclave is started.
-+ *
-+ * Context: Process context.
-+ * Return:
-+ * * 0					- Logic successfully completed.
-+ * *  -1				- There was a failure in the ioctl logic.
-+ * On failure, errno is set to:
-+ * * EFAULT				- copy_from_user() failure.
-+ * * EINVAL				- Invalid physical memory region(s) e.g.
-+ *					  unaligned address.
-+ * * EIO				- Current task mm is not the same as
-+ *					  the one that created the enclave.
-+ * * ENOMEM				- Memory allocation failure for internal
-+ *					  bookkeeping variables.
-+ * * NE_ERR_NOT_IN_INIT_STATE		- The enclave is not in init state
-+ *					  (init = before being started).
-+ * * NE_ERR_INVALID_MEM_REGION_SIZE	- The memory size of the region is not
-+ *					  multiple of 2 MiB.
-+ * * NE_ERR_INVALID_MEM_REGION_ADDR	- Invalid user space address given.
-+ * * NE_ERR_UNALIGNED_MEM_REGION_ADDR	- Unaligned user space address given.
-+ * * NE_ERR_MEM_REGION_ALREADY_USED	- The memory region is already used.
-+ * * NE_ERR_MEM_NOT_HUGE_PAGE		- The memory region is not backed by
-+ *					  huge pages.
-+ * * NE_ERR_MEM_DIFFERENT_NUMA_NODE	- The memory region is not from the same
-+ *					  NUMA node as the CPUs.
-+ * * NE_ERR_MEM_MAX_REGIONS		- The number of memory regions set for
-+ *					  the enclave reached maximum.
-+ * * NE_ERR_INVALID_PAGE_SIZE		- The memory region is not backed by
-+ *					  pages multiple of 2 MiB.
-+ * * NE_ERR_INVALID_FLAG_VALUE		- The value of the provided flag is invalid.
-+ * * Error codes from get_user_pages().
-+ * * Error codes from the NE PCI device request.
-+ */
-+#define NE_SET_USER_MEMORY_REGION	_IOW(0xAE, 0x23, struct ne_user_memory_region)
-+
-+/**
-+ * NE_START_ENCLAVE - The command is used to trigger enclave start after the
-+ *		      enclave resources, such as memory and CPU, have been set.
-+ *		      The enclave start info is an input / output parameter. It
-+ *		      includes info provided by the caller - enclave cid and
-+ *		      flags - and returns the cid (if input cid is 0).
-+ *		      The ioctl can be invoked on the enclave fd, after an
-+ *		      enclave slot is created and resources, such as memory and
-+ *		      vCPUs are set for an enclave.
-+ *
-+ * Context: Process context.
-+ * Return:
-+ * * 0					- Logic successfully completed.
-+ * *  -1				- There was a failure in the ioctl logic.
-+ * On failure, errno is set to:
-+ * * EFAULT				- copy_from_user() / copy_to_user() failure.
-+ * * NE_ERR_NOT_IN_INIT_STATE		- The enclave is not in init state
-+ *					  (init = before being started).
-+ * * NE_ERR_NO_MEM_REGIONS_ADDED	- No memory regions are set.
-+ * * NE_ERR_NO_VCPUS_ADDED		- No vCPUs are set.
-+ * *  NE_ERR_FULL_CORES_NOT_USED	- Full core(s) not set for the enclave.
-+ * * NE_ERR_ENCLAVE_MEM_MIN_SIZE	- Enclave memory is less than minimum
-+ *					  memory size (64 MiB).
-+ * * NE_ERR_INVALID_FLAG_VALUE		- The value of the provided flag is invalid.
-+ * *  NE_ERR_INVALID_ENCLAVE_CID	- The provided enclave CID is invalid.
-+ * * Error codes from the NE PCI device request.
-+ */
-+#define NE_START_ENCLAVE		_IOWR(0xAE, 0x24, struct ne_enclave_start_info)
-+
-+/**
-+ * DOC: NE specific error codes
-+ */
-+
-+/**
-+ * NE_ERR_VCPU_ALREADY_USED - The provided vCPU is already used.
-+ */
-+#define NE_ERR_VCPU_ALREADY_USED		(256)
-+/**
-+ * NE_ERR_VCPU_NOT_IN_CPU_POOL - The provided vCPU is not available in the
-+ *				 NE CPU pool.
-+ */
-+#define NE_ERR_VCPU_NOT_IN_CPU_POOL		(257)
-+/**
-+ * NE_ERR_VCPU_INVALID_CPU_CORE - The core id of the provided vCPU is invalid
-+ *				  or out of range of the NE CPU pool.
-+ */
-+#define NE_ERR_VCPU_INVALID_CPU_CORE		(258)
-+/**
-+ * NE_ERR_INVALID_MEM_REGION_SIZE - The user space memory region size is not
-+ *				    multiple of 2 MiB.
-+ */
-+#define NE_ERR_INVALID_MEM_REGION_SIZE		(259)
-+/**
-+ * NE_ERR_INVALID_MEM_REGION_ADDR - The user space memory region address range
-+ *				    is invalid.
-+ */
-+#define NE_ERR_INVALID_MEM_REGION_ADDR		(260)
-+/**
-+ * NE_ERR_UNALIGNED_MEM_REGION_ADDR - The user space memory region address is
-+ *				      not aligned.
-+ */
-+#define NE_ERR_UNALIGNED_MEM_REGION_ADDR	(261)
-+/**
-+ * NE_ERR_MEM_REGION_ALREADY_USED - The user space memory region is already used.
-+ */
-+#define NE_ERR_MEM_REGION_ALREADY_USED		(262)
-+/**
-+ * NE_ERR_MEM_NOT_HUGE_PAGE - The user space memory region is not backed by
-+ *			      contiguous physical huge page(s).
-+ */
-+#define NE_ERR_MEM_NOT_HUGE_PAGE		(263)
-+/**
-+ * NE_ERR_MEM_DIFFERENT_NUMA_NODE - The user space memory region is backed by
-+ *				    pages from different NUMA nodes than the CPUs.
-+ */
-+#define NE_ERR_MEM_DIFFERENT_NUMA_NODE		(264)
-+/**
-+ * NE_ERR_MEM_MAX_REGIONS - The supported max memory regions per enclaves has
-+ *			    been reached.
-+ */
-+#define NE_ERR_MEM_MAX_REGIONS			(265)
-+/**
-+ * NE_ERR_NO_MEM_REGIONS_ADDED - The command to start an enclave is triggered
-+ *				 and no memory regions are added.
-+ */
-+#define NE_ERR_NO_MEM_REGIONS_ADDED		(266)
-+/**
-+ * NE_ERR_NO_VCPUS_ADDED - The command to start an enclave is triggered and no
-+ *			   vCPUs are added.
-+ */
-+#define NE_ERR_NO_VCPUS_ADDED			(267)
-+/**
-+ * NE_ERR_ENCLAVE_MEM_MIN_SIZE - The enclave memory size is lower than the
-+ *				 minimum supported.
-+ */
-+#define NE_ERR_ENCLAVE_MEM_MIN_SIZE		(268)
-+/**
-+ * NE_ERR_FULL_CORES_NOT_USED - The command to start an enclave is triggered and
-+ *				full CPU cores are not set.
-+ */
-+#define NE_ERR_FULL_CORES_NOT_USED		(269)
-+/**
-+ * NE_ERR_NOT_IN_INIT_STATE - The enclave is not in init state when setting
-+ *			      resources or triggering start.
-+ */
-+#define NE_ERR_NOT_IN_INIT_STATE		(270)
-+/**
-+ * NE_ERR_INVALID_VCPU - The provided vCPU is out of range of the available CPUs.
-+ */
-+#define NE_ERR_INVALID_VCPU			(271)
-+/**
-+ * NE_ERR_NO_CPUS_AVAIL_IN_POOL - The command to create an enclave is triggered
-+ *				  and no CPUs are available in the pool.
-+ */
-+#define NE_ERR_NO_CPUS_AVAIL_IN_POOL		(272)
-+/**
-+ * NE_ERR_INVALID_PAGE_SIZE - The user space memory region is not backed by pages
-+ *			      multiple of 2 MiB.
-+ */
-+#define NE_ERR_INVALID_PAGE_SIZE		(273)
-+/**
-+ * NE_ERR_INVALID_FLAG_VALUE - The provided flag value is invalid.
-+ */
-+#define NE_ERR_INVALID_FLAG_VALUE		(274)
-+/**
-+ * NE_ERR_INVALID_ENCLAVE_CID - The provided enclave CID is invalid, either
-+ *				being a well-known value or the CID of the
-+ *				parent / primary VM.
-+ */
-+#define NE_ERR_INVALID_ENCLAVE_CID		(275)
-+
-+/**
-+ * DOC: Image load info flags
-+ */
-+
-+/**
-+ * NE_EIF_IMAGE - Enclave Image Format (EIF)
-+ */
-+#define NE_EIF_IMAGE			(0x01)
-+
-+#define NE_IMAGE_LOAD_MAX_FLAG_VAL	(0x02)
-+
-+/**
-+ * struct ne_image_load_info - Info necessary for in-memory enclave image
-+ *			       loading (in / out).
-+ * @flags:		Flags to determine the enclave image type
-+ *			(e.g. Enclave Image Format - EIF) (in).
-+ * @memory_offset:	Offset in enclave memory where to start placing the
-+ *			enclave image (out).
-+ */
-+struct ne_image_load_info {
-+	uint64_t	flags;
-+	uint64_t	memory_offset;
-+};
-+
-+/**
-+ * DOC: User memory region flags
-+ */
-+
-+/**
-+ * NE_DEFAULT_MEMORY_REGION - Memory region for enclave general usage.
-+ */
-+#define NE_DEFAULT_MEMORY_REGION	(0x00)
-+
-+#define NE_MEMORY_REGION_MAX_FLAG_VAL	(0x01)
-+
-+/**
-+ * struct ne_user_memory_region - Memory region to be set for an enclave (in).
-+ * @flags:		Flags to determine the usage for the memory region (in).
-+ * @memory_size:	The size, in bytes, of the memory region to be set for
-+ *			an enclave (in).
-+ * @userspace_addr:	The start address of the userspace allocated memory of
-+ *			the memory region to set for an enclave (in).
-+ */
-+struct ne_user_memory_region {
-+	uint64_t	flags;
-+	uint64_t	memory_size;
-+	uint64_t	userspace_addr;
-+};
-+
-+/**
-+ * DOC: Enclave start info flags
-+ */
-+
-+/**
-+ * NE_ENCLAVE_PRODUCTION_MODE - Start enclave in production mode.
-+ */
-+#define NE_ENCLAVE_PRODUCTION_MODE	(0x00)
-+/**
-+ * NE_ENCLAVE_DEBUG_MODE - Start enclave in debug mode.
-+ */
-+#define NE_ENCLAVE_DEBUG_MODE		(0x01)
-+
-+#define NE_ENCLAVE_START_MAX_FLAG_VAL	(0x02)
-+
-+/**
-+ * struct ne_enclave_start_info - Setup info necessary for enclave start (in / out).
-+ * @flags:		Flags for the enclave to start with (e.g. debug mode) (in).
-+ * @enclave_cid:	Context ID (CID) for the enclave vsock device. If 0 as
-+ *			input, the CID is autogenerated by the hypervisor and
-+ *			returned back as output by the driver (in / out).
-+ */
-+struct ne_enclave_start_info {
-+	uint64_t	flags;
-+	uint64_t	enclave_cid;
-+};
-+
-+#endif /* _LINUX_NITRO_ENCLAVES_H_ */
--- 
-2.47.1
-
-
-
-
-Amazon Web Services Development Center Germany GmbH
-Tamara-Danz-Str. 13
-10243 Berlin
-Geschaeftsfuehrung: Christof Hellmis, Andreas Stieger
-Eingetragen am Amtsgericht Charlottenburg unter HRB 257764 B
-Sitz: Berlin
-Ust-ID: DE 365 538 597
+Tml0cm8gRW5jbGF2ZXMgZXhwZWN0IHRoZSBwYXJlbnQgaW5zdGFuY2UgdG8gaG9zdCBhIHZzb2Nr
+IGhlYXJ0YmVhdCBsaXN0ZW5lcgphdCBwb3J0IDkwMDAuIFRvIGhvc3QgYSBOaXRybyBFbmNsYXZl
+IHdpdGggdGhlIG5pdHJvIGFjY2VsIGluIFFFTVUsIGFkZApzdWNoIGEgaGVhcnRiZWF0IGxpc3Rl
+bmVyIGFzIGRldmljZSBtb2RlbCwgc28gdGhhdCB0aGUgbWFjaGluZSBjYW4KZWFzaWx5IGluc3Rh
+bnRpYXRlIGl0LgoKU2lnbmVkLW9mZi1ieTogQWxleGFuZGVyIEdyYWYgPGdyYWZAYW1hem9uLmNv
+bT4KCi0tLQoKdjEgLT4gdjI6CgogIC0gQ29udmVydCB0byBuaXRyby12c29jay1kZXZpY2UKLS0t
+CiBody9uaXRyby9LY29uZmlnICAgICAgICAgICAgIHwgICA0ICsrCiBody9uaXRyby9oZWFydGJl
+YXQuYyAgICAgICAgIHwgMTE1ICsrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrCiBo
+dy9uaXRyby9tZXNvbi5idWlsZCAgICAgICAgIHwgICAxICsKIGh3L25pdHJvL3RyYWNlLWV2ZW50
+cyAgICAgICAgfCAgIDQgKysKIGluY2x1ZGUvaHcvbml0cm8vaGVhcnRiZWF0LmggfCAgMjQgKysr
+KysrKysKIDUgZmlsZXMgY2hhbmdlZCwgMTQ4IGluc2VydGlvbnMoKykKIGNyZWF0ZSBtb2RlIDEw
+MDY0NCBody9uaXRyby9oZWFydGJlYXQuYwogY3JlYXRlIG1vZGUgMTAwNjQ0IGluY2x1ZGUvaHcv
+bml0cm8vaGVhcnRiZWF0LmgKCmRpZmYgLS1naXQgYS9ody9uaXRyby9LY29uZmlnIGIvaHcvbml0
+cm8vS2NvbmZpZwppbmRleCBjZTI0YzA5YzIxLi5kM2ZiYzdiNjgzIDEwMDY0NAotLS0gYS9ody9u
+aXRyby9LY29uZmlnCisrKyBiL2h3L25pdHJvL0tjb25maWcKQEAgLTQsMyArNCw3IEBAIGNvbmZp
+ZyBOSVRST19WU09DS19CVVMKIGNvbmZpZyBOSVRST19TRVJJQUxfVlNPQ0sKICAgICBib29sCiAg
+ICAgZGVwZW5kcyBvbiBOSVRST19WU09DS19CVVMKKworY29uZmlnIE5JVFJPX0hFQVJUQkVBVAor
+ICAgIGJvb2wKKyAgICBkZXBlbmRzIG9uIE5JVFJPX1ZTT0NLX0JVUwpkaWZmIC0tZ2l0IGEvaHcv
+bml0cm8vaGVhcnRiZWF0LmMgYi9ody9uaXRyby9oZWFydGJlYXQuYwpuZXcgZmlsZSBtb2RlIDEw
+MDY0NAppbmRleCAwMDAwMDAwMDAwLi5kYzQxMzIzMjY2Ci0tLSAvZGV2L251bGwKKysrIGIvaHcv
+bml0cm8vaGVhcnRiZWF0LmMKQEAgLTAsMCArMSwxMTUgQEAKKy8qCisgKiBOaXRybyBFbmNsYXZl
+IEhlYXJ0YmVhdCBkZXZpY2UKKyAqCisgKiBDb3B5cmlnaHQgwqkgMjAyNiBBbWF6b24uY29tLCBJ
+bmMuIG9yIGl0cyBhZmZpbGlhdGVzLiBBbGwgUmlnaHRzIFJlc2VydmVkLgorICoKKyAqIEF1dGhv
+cnM6CisgKiAgIEFsZXhhbmRlciBHcmFmIDxncmFmQGFtYXpvbi5jb20+CisgKgorICogVGhlIE5p
+dHJvIEVuY2xhdmUgaW5pdCBwcm9jZXNzIHNlbmRzIGEgaGVhcnRiZWF0IGJ5dGUgKDB4QjcpIHRv
+CisgKiBDSUQgMyAocGFyZW50KSBwb3J0IDkwMDAgb24gYm9vdCB0byBzaWduYWwgaXQgcmVhY2hl
+ZCBpbml0cmFtZnMuCisgKiBUaGUgcGFyZW50IG11c3QgYWNjZXB0IHRoZSBjb25uZWN0aW9uLCBy
+ZWFkIHRoZSBieXRlLCBhbmQgZWNobyBpdAorICogYmFjay4gSWYgdGhlIGVuY2xhdmUgaW5pdCBj
+YW5ub3QgcmVhY2ggdGhlIGxpc3RlbmVyLCBpdCBleGl0cy4KKyAqCisgKiBTUERYLUxpY2Vuc2Ut
+SWRlbnRpZmllcjogR1BMLTIuMC1vci1sYXRlcgorICovCisKKyNpbmNsdWRlICJxZW11L29zZGVw
+LmgiCisjaW5jbHVkZSAicWFwaS9lcnJvci5oIgorI2luY2x1ZGUgImNoYXJkZXYvY2hhci5oIgor
+I2luY2x1ZGUgImNoYXJkZXYvY2hhci1mZS5oIgorI2luY2x1ZGUgImh3L25pdHJvL2hlYXJ0YmVh
+dC5oIgorI2luY2x1ZGUgInRyYWNlLmgiCisKKyNkZWZpbmUgSEVBUlRCRUFUX1BPUlQgICAgICA5
+MDAwCisjZGVmaW5lIFZNQUREUl9DSURfQU5ZX1NUUiAgIjQyOTQ5NjcyOTUiCisKK3N0YXRpYyBp
+bnQgbml0cm9faGVhcnRiZWF0X2Nhbl9yZWFkKHZvaWQgKm9wYXF1ZSkKK3sKKyAgICBOaXRyb0hl
+YXJ0YmVhdFN0YXRlICpzID0gb3BhcXVlOworCisgICAgLyogT25lLXNob3QgcHJvdG9jb2w6IHN0
+b3AgcmVhZGluZyBhZnRlciB0aGUgZmlyc3QgaGVhcnRiZWF0ICovCisgICAgcmV0dXJuIHMtPmRv
+bmUgPyAwIDogMTsKK30KKworc3RhdGljIHZvaWQgbml0cm9faGVhcnRiZWF0X3JlYWQodm9pZCAq
+b3BhcXVlLCBjb25zdCB1aW50OF90ICpidWYsIGludCBzaXplKQoreworICAgIE5pdHJvSGVhcnRi
+ZWF0U3RhdGUgKnMgPSBvcGFxdWU7CisKKyAgICBpZiAocy0+ZG9uZSB8fCBzaXplIDwgMSkgewor
+ICAgICAgICByZXR1cm47CisgICAgfQorCisgICAgLyogRWNobyB0aGUgaGVhcnRiZWF0IGJ5dGUg
+YmFjayBhbmQgZGlzY29ubmVjdCAqLworICAgIHFlbXVfY2hyX2ZlX3dyaXRlX2FsbCgmcy0+dnNv
+Y2ssIGJ1ZiwgMSk7CisgICAgcy0+ZG9uZSA9IHRydWU7CisgICAgcWVtdV9jaHJfZmVfZGVpbml0
+KCZzLT52c29jaywgdHJ1ZSk7CisKKyAgICB0cmFjZV9uaXRyb19oZWFydGJlYXRfZG9uZSgpOwor
+fQorCitzdGF0aWMgdm9pZCBuaXRyb19oZWFydGJlYXRfZXZlbnQodm9pZCAqb3BhcXVlLCBRRU1V
+Q2hyRXZlbnQgZXZlbnQpCit7CisgICAgdHJhY2Vfbml0cm9faGVhcnRiZWF0X2V2ZW50KGV2ZW50
+KTsKK30KKworc3RhdGljIHZvaWQgbml0cm9faGVhcnRiZWF0X3JlYWxpemUoRGV2aWNlU3RhdGUg
+KmRldiwgRXJyb3IgKiplcnJwKQoreworICAgIE5pdHJvSGVhcnRiZWF0U3RhdGUgKnMgPSBOSVRS
+T19IRUFSVEJFQVQoZGV2KTsKKyAgICBnX2F1dG9mcmVlIGNoYXIgKmNoYXJkZXZfaWQgPSBOVUxM
+OworICAgIENoYXJkZXYgKmNocjsKKyAgICBDaGFyZGV2QmFja2VuZCAqYmFja2VuZDsKKyAgICBD
+aGFyZGV2U29ja2V0ICpzb2NrOworCisgICAgY2hhcmRldl9pZCA9IGdfc3RyZHVwX3ByaW50Zigi
+bml0cm8taGVhcnRiZWF0Iik7CisKKyAgICBiYWNrZW5kID0gZ19uZXcwKENoYXJkZXZCYWNrZW5k
+LCAxKTsKKyAgICBiYWNrZW5kLT50eXBlID0gQ0hBUkRFVl9CQUNLRU5EX0tJTkRfU09DS0VUOwor
+ICAgIHNvY2sgPSBiYWNrZW5kLT51LnNvY2tldC5kYXRhID0gZ19uZXcwKENoYXJkZXZTb2NrZXQs
+IDEpOworICAgIHNvY2stPmFkZHIgPSBnX25ldzAoU29ja2V0QWRkcmVzc0xlZ2FjeSwgMSk7Cisg
+ICAgc29jay0+YWRkci0+dHlwZSA9IFNPQ0tFVF9BRERSRVNTX1RZUEVfVlNPQ0s7CisgICAgc29j
+ay0+YWRkci0+dS52c29jay5kYXRhID0gZ19uZXcwKFZzb2NrU29ja2V0QWRkcmVzcywgMSk7Cisg
+ICAgc29jay0+YWRkci0+dS52c29jay5kYXRhLT5jaWQgPSBnX3N0cmR1cChWTUFERFJfQ0lEX0FO
+WV9TVFIpOworICAgIHNvY2stPmFkZHItPnUudnNvY2suZGF0YS0+cG9ydCA9IGdfc3RyZHVwX3By
+aW50ZigiJXUiLCBIRUFSVEJFQVRfUE9SVCk7CisgICAgc29jay0+c2VydmVyID0gdHJ1ZTsKKyAg
+ICBzb2NrLT5oYXNfc2VydmVyID0gdHJ1ZTsKKyAgICBzb2NrLT53YWl0ID0gZmFsc2U7CisgICAg
+c29jay0+aGFzX3dhaXQgPSB0cnVlOworCisgICAgY2hyID0gcWVtdV9jaGFyZGV2X25ldyhjaGFy
+ZGV2X2lkLCBUWVBFX0NIQVJERVZfU09DS0VULAorICAgICAgICAgICAgICAgICAgICAgICAgICAg
+YmFja2VuZCwgTlVMTCwgZXJycCk7CisgICAgaWYgKCFjaHIpIHsKKyAgICAgICAgcmV0dXJuOwor
+ICAgIH0KKworICAgIGlmICghcWVtdV9jaHJfZmVfaW5pdCgmcy0+dnNvY2ssIGNociwgZXJycCkp
+IHsKKyAgICAgICAgcmV0dXJuOworICAgIH0KKworICAgIHFlbXVfY2hyX2ZlX3NldF9oYW5kbGVy
+cygmcy0+dnNvY2ssCisgICAgICAgICAgICAgICAgICAgICAgICAgICAgIG5pdHJvX2hlYXJ0YmVh
+dF9jYW5fcmVhZCwKKyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgbml0cm9faGVhcnRiZWF0
+X3JlYWQsCisgICAgICAgICAgICAgICAgICAgICAgICAgICAgIG5pdHJvX2hlYXJ0YmVhdF9ldmVu
+dCwKKyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgTlVMTCwgcywgTlVMTCwgdHJ1ZSk7Cit9
+CisKK3N0YXRpYyB2b2lkIG5pdHJvX2hlYXJ0YmVhdF9jbGFzc19pbml0KE9iamVjdENsYXNzICpv
+YywgY29uc3Qgdm9pZCAqZGF0YSkKK3sKKyAgICBEZXZpY2VDbGFzcyAqZGMgPSBERVZJQ0VfQ0xB
+U1Mob2MpOworCisgICAgZGMtPnJlYWxpemUgPSBuaXRyb19oZWFydGJlYXRfcmVhbGl6ZTsKK30K
+Kworc3RhdGljIGNvbnN0IFR5cGVJbmZvIG5pdHJvX2hlYXJ0YmVhdF9pbmZvID0geworICAgIC5u
+YW1lID0gVFlQRV9OSVRST19IRUFSVEJFQVQsCisgICAgLnBhcmVudCA9IFRZUEVfTklUUk9fVlNP
+Q0tfREVWSUNFLAorICAgIC5pbnN0YW5jZV9zaXplID0gc2l6ZW9mKE5pdHJvSGVhcnRiZWF0U3Rh
+dGUpLAorICAgIC5jbGFzc19pbml0ID0gbml0cm9faGVhcnRiZWF0X2NsYXNzX2luaXQsCit9Owor
+CitzdGF0aWMgdm9pZCBuaXRyb19oZWFydGJlYXRfcmVnaXN0ZXIodm9pZCkKK3sKKyAgICB0eXBl
+X3JlZ2lzdGVyX3N0YXRpYygmbml0cm9faGVhcnRiZWF0X2luZm8pOworfQorCit0eXBlX2luaXQo
+bml0cm9faGVhcnRiZWF0X3JlZ2lzdGVyKTsKZGlmZiAtLWdpdCBhL2h3L25pdHJvL21lc29uLmJ1
+aWxkIGIvaHcvbml0cm8vbWVzb24uYnVpbGQKaW5kZXggNzYzOTlkNDI2NS4uMzgxYzFlZTZjMSAx
+MDA2NDQKLS0tIGEvaHcvbml0cm8vbWVzb24uYnVpbGQKKysrIGIvaHcvbml0cm8vbWVzb24uYnVp
+bGQKQEAgLTEsMiArMSwzIEBACiBzeXN0ZW1fc3MuYWRkKHdoZW46ICdDT05GSUdfTklUUk9fVlNP
+Q0tfQlVTJywgaWZfdHJ1ZTogZmlsZXMoJ25pdHJvLXZzb2NrLWJ1cy5jJykpCiBzeXN0ZW1fc3Mu
+YWRkKHdoZW46ICdDT05GSUdfTklUUk9fU0VSSUFMX1ZTT0NLJywgaWZfdHJ1ZTogZmlsZXMoJ3Nl
+cmlhbC12c29jay5jJykpCitzeXN0ZW1fc3MuYWRkKHdoZW46ICdDT05GSUdfTklUUk9fSEVBUlRC
+RUFUJywgaWZfdHJ1ZTogZmlsZXMoJ2hlYXJ0YmVhdC5jJykpCmRpZmYgLS1naXQgYS9ody9uaXRy
+by90cmFjZS1ldmVudHMgYi9ody9uaXRyby90cmFjZS1ldmVudHMKaW5kZXggMjA2MTdhMDI0YS4u
+MzExYWI3OGU2OSAxMDA2NDQKLS0tIGEvaHcvbml0cm8vdHJhY2UtZXZlbnRzCisrKyBiL2h3L25p
+dHJvL3RyYWNlLWV2ZW50cwpAQCAtMiwzICsyLDcgQEAKIAogIyBzZXJpYWwtdnNvY2suYwogbml0
+cm9fc2VyaWFsX3Zzb2NrX2V2ZW50KGludCBldmVudCkgImV2ZW50ICVkIgorCisjIGhlYXJ0YmVh
+dC5jCituaXRyb19oZWFydGJlYXRfZXZlbnQoaW50IGV2ZW50KSAiZXZlbnQgJWQiCituaXRyb19o
+ZWFydGJlYXRfZG9uZSh2b2lkKSAiZW5jbGF2ZSBoZWFydGJlYXQgcmVjZWl2ZWQiCmRpZmYgLS1n
+aXQgYS9pbmNsdWRlL2h3L25pdHJvL2hlYXJ0YmVhdC5oIGIvaW5jbHVkZS9ody9uaXRyby9oZWFy
+dGJlYXQuaApuZXcgZmlsZSBtb2RlIDEwMDY0NAppbmRleCAwMDAwMDAwMDAwLi42YjkyNzFhNDdk
+Ci0tLSAvZGV2L251bGwKKysrIGIvaW5jbHVkZS9ody9uaXRyby9oZWFydGJlYXQuaApAQCAtMCww
+ICsxLDI0IEBACisvKgorICogTml0cm8gSGVhcnRiZWF0IGRldmljZQorICoKKyAqIFNQRFgtTGlj
+ZW5zZS1JZGVudGlmaWVyOiBHUEwtMi4wLW9yLWxhdGVyCisgKi8KKworI2lmbmRlZiBIV19NSVND
+X05JVFJPX0hFQVJUQkVBVF9ICisjZGVmaW5lIEhXX01JU0NfTklUUk9fSEVBUlRCRUFUX0gKKwor
+I2luY2x1ZGUgImh3L25pdHJvL25pdHJvLXZzb2NrLWJ1cy5oIgorI2luY2x1ZGUgImNoYXJkZXYv
+Y2hhci1mZS5oIgorI2luY2x1ZGUgInFvbS9vYmplY3QuaCIKKworI2RlZmluZSBUWVBFX05JVFJP
+X0hFQVJUQkVBVCAibml0cm8taGVhcnRiZWF0IgorT0JKRUNUX0RFQ0xBUkVfU0lNUExFX1RZUEUo
+Tml0cm9IZWFydGJlYXRTdGF0ZSwgTklUUk9fSEVBUlRCRUFUKQorCitzdHJ1Y3QgTml0cm9IZWFy
+dGJlYXRTdGF0ZSB7CisgICAgTml0cm9Wc29ja0RldmljZSBwYXJlbnRfb2JqOworCisgICAgQ2hh
+ckZyb250ZW5kIHZzb2NrOyAgICAgLyogdnNvY2sgc2VydmVyIGNoYXJkZXYgZm9yIGhlYXJ0YmVh
+dCAqLworICAgIGJvb2wgZG9uZTsKK307CisKKyNlbmRpZiAvKiBIV19NSVNDX05JVFJPX0hFQVJU
+QkVBVF9IICovCi0tIAoyLjQ3LjEKCgoKCkFtYXpvbiBXZWIgU2VydmljZXMgRGV2ZWxvcG1lbnQg
+Q2VudGVyIEdlcm1hbnkgR21iSApUYW1hcmEtRGFuei1TdHIuIDEzCjEwMjQzIEJlcmxpbgpHZXNj
+aGFlZnRzZnVlaHJ1bmc6IENocmlzdG9mIEhlbGxtaXMsIEFuZHJlYXMgU3RpZWdlcgpFaW5nZXRy
+YWdlbiBhbSBBbXRzZ2VyaWNodCBDaGFybG90dGVuYnVyZyB1bnRlciBIUkIgMjU3NzY0IEIKU2l0
+ejogQmVybGluClVzdC1JRDogREUgMzY1IDUzOCA1OTcK
 
 
