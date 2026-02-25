@@ -4,75 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41537E9B25A
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 05:40:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF36EF5545F
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 05:41:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vv7d5-0005AV-Qo; Wed, 25 Feb 2026 00:40:11 -0500
+	id 1vv7dd-0005IO-Ox; Wed, 25 Feb 2026 00:40:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vv7d3-0005AN-Sm
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 00:40:10 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vv7d1-0007SF-6L
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 00:40:09 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771998005;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=FxS379o7r+4yfEJ82c2Qi0MQdCRLN+3GOza9T1cyYLA=;
- b=UqvvI+pXgt8CW9TKBqKHdjLy0r8eGFZJ2Q8wmZ04G/G2v3+2p+A/SqpcSl6SzwyjQUOYz6
- v/SZQzX/mwZPTSREjyNlNsfKybTGtQei5AAbZgZb8AzwUj9GHmOobWrDUDvfb2YVmBo4vd
- TppG94FK70L0iye+MFh95Fde1KCqZ6A=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-413-CEKfmimjN7WuGZB7L8hZhQ-1; Wed,
- 25 Feb 2026 00:40:03 -0500
-X-MC-Unique: CEKfmimjN7WuGZB7L8hZhQ-1
-X-Mimecast-MFC-AGG-ID: CEKfmimjN7WuGZB7L8hZhQ_1771998002
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1A9B618004A9; Wed, 25 Feb 2026 05:40:02 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.13])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 954161800465; Wed, 25 Feb 2026 05:40:01 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 2CDB421E692D; Wed, 25 Feb 2026 06:39:59 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: David Hamilton <dahamilt0@gmail.com>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH 1/2] hw/misc/ivshmem-pci: Handle error from
- kvm_irqchip_add_irqfd_notifier_gsi()
-In-Reply-To: <20260224190004.84187-2-dahamilt0@gmail.com> (David Hamilton's
- message of "Tue, 24 Feb 2026 14:00:03 -0500")
-References: <20260224190004.84187-1-dahamilt0@gmail.com>
- <20260224190004.84187-2-dahamilt0@gmail.com>
-Date: Wed, 25 Feb 2026 06:39:59 +0100
-Message-ID: <87qzq9xtxs.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vv7dX-0005Db-Hr
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 00:40:41 -0500
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vv7dS-0007Sf-Sq
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 00:40:36 -0500
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-4362197d174so3986235f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 21:40:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1771998032; x=1772602832; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=jim4xbJXz7SnPUKKC3DwQmgpGa8NWT0hYvcF+MMYZfM=;
+ b=j/byASj8Ln4qu5ga7y41B9ZopLeFNV84O1hSwirVn5PMH/fG7nE6k6cMh7lmastYYg
+ btRpnGm0DNSpU7767eXA8EhHGebRTq365tWxj4WFoV12bZ6Vf4rbPvYMonL7txuhN4B1
+ SQgOiOk9up2pIv3Tb2W0/Ue44qwFN+0H19MEjWwygi3kYPNi3wqUC49Pdy+Wg14ydVHg
+ Pp/ujoi26s3ya+TnrIAYsiZXrWvGGusSWVQdaIH9IHuKMfYM0ghmdx6dpOd0jG6sQAN7
+ EIMJHvX9cVvib0w6tfvQ9XO3J8aormWmbFoMCed3YU6eLT/+2qHhOqvUagM2ioMfCBRg
+ iJ+w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1771998032; x=1772602832;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=jim4xbJXz7SnPUKKC3DwQmgpGa8NWT0hYvcF+MMYZfM=;
+ b=GemVRXoHC+NeuVjOAaEtr+oVZhgJoxPt33QQifU2X4UQaTGZNiZy23ef0FBKyTcbqR
+ Xgle1s0PnCL/0JyKDDuLsSFHWPvtutTPDtO7+X8TYS8IprIIBzf9U2zKUkwFcotEMuyg
+ X/iwSqee2fft7C2b4cIVO+of4H5ck2TC5lE2JGDrfBVV++HzTLJ2qQhKBO6DKPfzLnf3
+ 9QHJrkqwTxD5ESa4PuxxHMaOD2StGQw5djbbT0aKyQBW5yKgEhbgMXKbQnbAhtxGQovF
+ I0+FFJVK1g9Coc9Lsk/rkl/XlEYCNuWevyGVDAZqh2IWOirx0JNxoeDWxOPoflzz8z6Q
+ b7Ag==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU299aSGuB77sJNPnTObJsmRwl360ifKBQ3ETWx2CpMapOe4bkx3+xpndxGtTTIV8d91yqLgcf6j+8H@nongnu.org
+X-Gm-Message-State: AOJu0YxbBH9W62Ha98CWCnpn1L3V6K9kiEr/D7SE5BEoSf6uTIkdxBGt
+ haxCvsbhiej1rC6GwAKo8Rs2uvAnJZuWaD+XPq6CKyQfLFN/pJxqkYG7+ZNVsEDEfOI=
+X-Gm-Gg: ATEYQzwX6Q6UWl4TCX40okwmmj8SKBUBNTEy36zFrNVbzp5qwUDwAQ3MdvMVLGtAER7
+ TrRnDWN+MO+uJiJi0yX+gxgn8aP93O6/fFbfqRbwLItvrvWENipSFZzMCf/HN7vYllj9Xane6br
+ t8uRll5zh8WRwQghb5ze6ZIQrOqfztIkk4Bxxk16gm9LpsnomWH7JwYtbPqqldRsifgrFnQgXY0
+ Wzf3TVk7QDF/YaavifBtM571Xwr34trh+xVAA/DKmg6NvUfbi3DoX1cAwdi0jhDTuIFKuI9w9Jp
+ 2TImr1cXJ+HwAn3ZNg5zcC1Sekis+Ts1j/h57wXiBfyiX3Joc4qCY98vPV/VyKJy8GiRieaLLh1
+ b4lB/yJpuB1VvKhVWcWYWDEA9dciAlayS4/HIJA7zOh3XDsRM+B4wGI6sVnAnDRjdc4mXJf+kqz
+ TilwNyHJ4WWVmh87LXoG4oZMaUZwiKNqIsBreevtiOFeBSKvrv5aSE8R6io+vMATVTog==
+X-Received: by 2002:a05:6000:230b:b0:435:8f18:9539 with SMTP id
+ ffacd0b85a97d-4396f153a29mr26591891f8f.9.1771998031732; 
+ Tue, 24 Feb 2026 21:40:31 -0800 (PST)
+Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-43970bf9fb2sm32107733f8f.1.2026.02.24.21.40.30
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 24 Feb 2026 21:40:30 -0800 (PST)
+Message-ID: <54f05e9d-ba1b-480b-b4de-103b33471efe@linaro.org>
+Date: Wed, 25 Feb 2026 06:40:30 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.358, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.659,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 0/7] page-vary: Build once
+Content-Language: en-US
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+References: <20260217095106.598486-1-richard.henderson@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260217095106.598486-1-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,67 +101,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-David Hamilton <dahamilt0@gmail.com> writes:
+On 17/2/26 10:50, Richard Henderson wrote:
 
-> The return value of kvm_irqchip_add_irqfd_notifier_gsi() was being
-> ignored. Propagate the error to the caller via errp.
->
-> Resolves the TODO comment at the call site.
->
-> Signed-off-by: David Hamilton <dahamilt0@gmail.com>
-> ---
->  hw/misc/ivshmem-pci.c | 9 +++++++--
->  1 file changed, 7 insertions(+), 2 deletions(-)
->
-> diff --git a/hw/misc/ivshmem-pci.c b/hw/misc/ivshmem-pci.c
-> index a3a43f53bd..45b0e20363 100644
-> --- a/hw/misc/ivshmem-pci.c
-> +++ b/hw/misc/ivshmem-pci.c
-> @@ -449,6 +449,7 @@ static void setup_interrupt(IVShmemState *s, int vect=
-or, Error **errp)
->          ivshmem_has_feature(s, IVSHMEM_MSI);
->      PCIDevice *pdev =3D PCI_DEVICE(s);
->      Error *err =3D NULL;
-> +    int ret;
->=20=20
->      IVSHMEM_DPRINTF("setting up interrupt for vector: %d\n", vector);
->=20=20
-> @@ -464,9 +465,13 @@ static void setup_interrupt(IVShmemState *s, int vec=
-tor, Error **errp)
->          }
->=20=20
->          if (!msix_is_masked(pdev, vector)) {
-> -            kvm_irqchip_add_irqfd_notifier_gsi(kvm_state, n, NULL,
-> +            ret =3D kvm_irqchip_add_irqfd_notifier_gsi(kvm_state, n, NUL=
-L,
->                                                 s->msi_vectors[vector].vi=
-rq);
-> -            /* TODO handle error */
-> +            if (ret < 0) {
-> +                error_setg(errp, "Failed to configure irqfd notifier"
-> +                            " for vector %d, vector");
+> Philippe Mathieu-Daudé (1):
+>    page-vary: Expose TARGET_PAGE_BITS_MIN definition
+> 
+> Richard Henderson (6):
+>    target-info: Add page_bits_{init,vary}
+>    target-info: Move TARGET_PAGE_BITS sanity check
+>    page-vary: Build set_preferred_target_page_bits as common code
+>    page-vary: Build finalize_target_page_bits as common code
+>    page-vary: Build migration_legacy_page_bits as common code
 
-Scratch ", vector".
-
-> +                return;
-> +            }
->          }
->      } else {
->          /* it will be delayed until msix is enabled, in write_config */
-
-qapi/error.h:
-
- * - Whenever practical, also return a value that indicates success /
- *   failure.  This can make the error checking more concise, and can
- *   avoid useless error object creation and destruction.  Note that
- *   we still have many functions returning void.  We recommend
- *   =E2=80=A2 bool-valued functions return true on success / false on fail=
-ure,
- *   =E2=80=A2 pointer-valued functions return non-null / null pointer, and
- *   =E2=80=A2 integer-valued functions return non-negative / negative.
-
-Please make the function return false on error, true on success.
-
-This will simplify the next patch.
+Queuing patches 1-6, thanks for the help!
 
 
