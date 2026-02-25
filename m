@@ -4,93 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB05EFD3779
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 17:40:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC8CEFD377C
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 17:44:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvIrf-0007Bp-Aa; Wed, 25 Feb 2026 12:39:59 -0500
+	id 1vvIvc-0000jD-FB; Wed, 25 Feb 2026 12:44:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vvIrc-00079P-6L
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 12:39:56 -0500
-Received: from mail-yw1-x112a.google.com ([2607:f8b0:4864:20::112a])
+ id 1vvIva-0000i9-QF
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 12:44:02 -0500
+Received: from mail-yx1-xb12f.google.com ([2607:f8b0:4864:20::b12f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vvIra-0003gj-Lz
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 12:39:55 -0500
-Received: by mail-yw1-x112a.google.com with SMTP id
- 00721157ae682-7986e0553bdso6679947b3.2
- for <qemu-devel@nongnu.org>; Wed, 25 Feb 2026 09:39:54 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772041194; cv=none;
+ id 1vvIvW-00056y-3m
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 12:44:00 -0500
+Received: by mail-yx1-xb12f.google.com with SMTP id
+ 956f58d0204a3-64cb577e79cso201222d50.0
+ for <qemu-devel@nongnu.org>; Wed, 25 Feb 2026 09:43:57 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1772041437; cv=none;
  d=google.com; s=arc-20240605;
- b=a6zDPSGbweQXi3vnPwSdAnWJoYxIa28a4rO/485+IOGYuMMKl9UEQI3qVqekeD3FVy
- T1IkkqJndDjHEFuH5aVu4SwDg8wS+3gCLizbdMpebGTiktbZNnO4zUSNYMfi9jClVV/O
- jlG+bzexPtjcwSgLR5UZ3iEAfnIA23yTaTXjKfnaS3OfzoCXTVdHAYGfOsK9yzZ78Gql
- GUMeQ2E3WSGo3cVqSBN3BbMid17Hy47jDhdRqqE++PjVgCxeNpV0GgQIhVVkmkThmaCy
- 1a6JPrjj5rhHX37Vapbfx4X/DMh0x7ElxTQHnAtqU2wNWw4qfq1mqWggbRuaaav0+SKK
- e+YA==
+ b=fNtMJ3k9IvMc9LT2/hF2pr25MmfO0XUA0CbAB6S6yWHU8tjgxoJMx5awGna7wFSg0i
+ dYO7EyTZ9bEAReUs2mFKUx0aHTgmHPvNSxbL7H6TOBxiKtyFvdU2RrHle2lC2jo+QkXb
+ /rQehXD9j0m7qYmTFXpnO7FOGfOqCNlmrdvRVaAAybaN9cRjJ2oLB4Gz86z9Ksx2VNmI
+ KPEpazYt4cbvPQCgoJBBKnqV1Uszn/ylGDqIvTCeMA/v3Jtz5cxGHHM1QLubJb3lcKJ3
+ cC0a8ecDXQldrk4Bd2MlneBHnxn5WOEQzHUuwHQ4RlRugaQs3x6QcIv/4jltuBhKH53D
+ hn+g==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=bdRGZOqeEOBOacNi4xKQxNU7losX1c7ejXBpAXBJYSs=;
+ bh=5c9lLHsvBwzYZYUkReN6JIA4gRPe+xJCWEDelO7ofkI=;
  fh=5Q281T3cc8WUg4epsyFmyhkHOeoXoHkugv2URdONmqQ=;
- b=M7TlgavHunud2uLbnltQte+EhvLYrbo8gh+77hedeC9aqinClHrvj3oE2Yj6fATuqW
- /KxY1ov1+rpIErmcVhfwML95oD1gCYHAudHrkydZsV85RfW8KYo73GUW9UYWweUAito6
- iyUsLaceaFFHah/aBDMeBTwk/Kxy1nliFrdvNoTHZKiOhwWpADD6nJMIMFJpQ8+GkiP5
- bA/ATgZKcrL5y/HmSFDpj/AH/hzjIyQYDx9f/Vq48Cz/KV0Vl+l1GrPD3PV2XeancY3E
- sWOOq8+Ag3w8l4mySKVeWaj0OYN3ZPPSX719u9EPDTXw3NWVzZeHZlGpDomv/0P2CNdD
- 1BeQ==; darn=nongnu.org
+ b=CIqDFmja+T3Vs7i7gWaUGWwJwhRTMHEhl01xXc+DDjrr472mZeT3zofJP1R5IgdUVG
+ 2pHaobUC7uPuprvWsaA5UJOxufbbHZ3EsZzS8hH0Thm8tlm/3h3wy+31gi6YiqNRlw8b
+ Q/2SI8mpuXAZjwY3sQOrhmrsVbxJE7Y+oCQIYxcHekhmDyca635UtMo4C4RRedNRlcwh
+ iGfM4YCNMZQ0ZrgWudrxU1qp2hy5cKU/sx1E+cAjSJ+XGxjv+osdoDcf6uqrut/rO0dc
+ o3ua5z9pBxkq47Aex6NurvXRMwhnnVR2okfQ3s5wzQsCuf9hlqwLeP7jL8jmqO7fstkW
+ zkTQ==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772041194; x=1772645994; darn=nongnu.org;
+ d=linaro.org; s=google; t=1772041437; x=1772646237; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=bdRGZOqeEOBOacNi4xKQxNU7losX1c7ejXBpAXBJYSs=;
- b=NS9Fs5wG1W5c5ydgRjEWYtGRfC4xu9M3I1vTMwX0V6CIzHkzpM+IrTyHEgoQQGFew3
- SJRWTAfiqwhG8AitXxVSpitmbqGCk6Z70tJ3rzMyz9KxnozYzgVf/do7pgs3jDDNGDBW
- XyBPuUsj3b7rAcz5BniSQt7bbv/gKVYVnJtTnnDGEj36C/RqG8rKBF2ndS9auA2yUJLU
- OSHmDguzY5aYq4cZdA8UHnM4dG5kB0r4VpE935DdsmOxdIHnAJVWgWEWWMX2ZE8MV9sw
- TqN8r6GehuweWwPFfCuZtoebZDuxFnuoJN2iYD74lHNM6EW8OIuHbsBYenOxxMmlSMRy
- cEuA==
+ bh=5c9lLHsvBwzYZYUkReN6JIA4gRPe+xJCWEDelO7ofkI=;
+ b=ja5+HRDKkXXQLoLDmSwx1o1j8qowck53kdLyu8Ub7K+d+XvXQUlmRjJz5tL/Zmj7Te
+ XwsmNyQ9/8FbhSG54q0ExA7iLH9it6WvgRYOAM31JLHeuJj3gyR8w7/uXwginyp1xRrF
+ MmFI9pLbta1eGlkc8punicC5Su8aJuXB+CD1XRDniq+EoXyJYjgFrBSl8fkc7qs2HGAI
+ cXDCl6R0nuV0hlErUUz+kQm2HGT3vemR5/VGwcZM7UGcrPWu0RdmwAUoZ/UnpvVDrQI/
+ 65kuOh4CcYYymDwbwJgopLXV1Q7SNW+qnZfM/EHJ425lcNvrsZnIijUeR1XbrOO++2b4
+ twpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772041194; x=1772645994;
+ d=1e100.net; s=20230601; t=1772041437; x=1772646237;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=bdRGZOqeEOBOacNi4xKQxNU7losX1c7ejXBpAXBJYSs=;
- b=NmVbcPTWnVnKpqYQzd9Rl/CETHv9/dLVIzOGKd/Ocqqz5sFnqrYvbdGFgaP/QjVZXf
- Y7ouWMszczllRg5RjyAV9Yg3dtlEugV7i+vVyw4DVPrJKmEUPMHJeOUriaDOp/VqEMr2
- ornooHBBzCeSYnJrr7JbL/CENoUm5pxOc8Uhh5rR3W6F4qQuH4tbWTGckpBQbguIU/F9
- 6lSJv3ffoMbBQgO6X7mqFLkDh3zoSUxI8y7hdSgbZoyKhIU6qhTNtjeAXNgDD/1LEWDd
- r69vQ/aPvl8n/TwOolNxd3Un+HIlOc/uSwea7qfLuDanTpwtIowMeqKkeB3cpkz7FltO
- JK8g==
-X-Gm-Message-State: AOJu0Yx2KeA55SxoEzJlY7J2I8uEdWurQQEHwj4j/1IoY5P5+NxMG1/T
- QoMBNRy8c+rpNhR7GUgucko8f4t5dhp0YuuMku3ORKQAePOXcIpzcxLy37t+ciSNObnVlG/CdJi
- qMnldV4+055vfO0EgocbB+alhMNUELp0O5h/BhOthig==
-X-Gm-Gg: ATEYQzz9h4b6Ith2ihavYAsfFbhYZ/5F6ZF2AzssT1+vdleW5q1KtSVtWeEBx5Ru+Ir
- Xq0Gl3RVwan7S9O8IewKiRMK8uBqpASn7/G2mEkxuAPnxtld4p7Bl7iSM/gN9nqPSHgYsCczt58
- KM/NYlZB/lW0X2pJvqlI3GtAUqPxgOxjJwVeiRMyi1MuaAxrvJsa4rB+vq3cT3QtZqa8PQK7jpC
- +BX3+tq2Cp8I9fecIkjJdfg89Dv7Pyu2Xb4S2wplhFETkMEw1Q9unaRrXKdL4N/C4k5yjQXE9fZ
- kqrklbZ1Vso748KlCnDl+iawCAWprcffZbIfDq/phtozqA/PY9Hk6vB3wLale1fcZcM=
-X-Received: by 2002:a05:690c:e3ed:b0:794:d4c3:3152 with SMTP id
- 00721157ae682-79828fc1d2amr153513077b3.31.1772041193583; Wed, 25 Feb 2026
- 09:39:53 -0800 (PST)
+ bh=5c9lLHsvBwzYZYUkReN6JIA4gRPe+xJCWEDelO7ofkI=;
+ b=ud1CftyBiHH7WgmmtSQe0qTvP+O7g/o1yQeQBO7IK4zB9Mb4a7aOqK6yZdOySOmFmO
+ st3p5NNQva/xQchBA7iMb9msaljokEnAloRjXf1y5KKQpwOWWsNma705Kk7cEt8Q3vHi
+ tcOs80z4cLIGZA0bM7rJGpIDrs9PvXf82pKnDs2yuL1BBNJ+17CZ4MQbJnS4P5SpGrZ8
+ pKaie5/NUZsOuoq20sz7vKDvuEdBaXtB6cVJZMsflLUPvF2jBwngzsbam81qx89KdafE
+ UXy6YQCJc9hKSs0qmGzXApQJNRp94NU2j0X+WIltqnK4O/HpxNqf7LlS608EglBM6vH/
+ u5/Q==
+X-Gm-Message-State: AOJu0Yxk6+c8nBWGGO/9zzthVS2IsgZQQ1S3TBshb6MBNLXgcxEI8CDV
+ afL0C2EXRd8ZDV/7bhCjt6lznUPNh3+FFzOU01pPcuxueixAYitrLtSbZEj+cpmfCPpn+dbzko2
+ vOtluK4NViBpLWgqBsyY1FpSZJ6Py6nCwP10QlL20QQ==
+X-Gm-Gg: ATEYQzyKmNqFcwKgNzRkzgK8esxGJn8AClAMIv6mJzpyAe6vo/FxC4grNhtPMXuTt5c
+ 9G3+qi3s5C0OWKEeRZCCbw2ioNjQSQjXv0HBye5hYPpZradSqS0sSKStcWxAn4nlOd7eDkdvjPG
+ YyRsTXgTCwHily+RvMibOAMl2UJmSRbWinRL1Mr/MlaOvToZNKlv3PCdKWWU0VQ8C3BvZ47QnYV
+ KzT3p17NIMNiTYrMHX0B1JXBgv7Bv8BMX8ePwoXYaiufaUoSPPTGCdHI3zBaG62ZZvzSvuzEPJg
+ Ny1erUeEkhUOwcn8YUJoY6Uhx045NMIC+rJGl871EIiVmbA0VTFKzkw+VVLPbIVHN6dDh+kc5iv
+ DMQ==
+X-Received: by 2002:a53:bb0d:0:b0:64c:20f7:b018 with SMTP id
+ 956f58d0204a3-64c78d3fd9amr9854081d50.62.1772041436782; Wed, 25 Feb 2026
+ 09:43:56 -0800 (PST)
 MIME-Version: 1.0
 References: <20260211152508.732487-1-berrange@redhat.com>
- <20260211152508.732487-27-berrange@redhat.com>
- <CAFEAcA-08J-_dn22s858QtUPV32VM4OuAEgBV-WdmGGxvJSu0w@mail.gmail.com>
- <aZ8jpGpOWXf_lByk@redhat.com>
-In-Reply-To: <aZ8jpGpOWXf_lByk@redhat.com>
+ <20260211152508.732487-26-berrange@redhat.com>
+ <CAFEAcA-6XMp6B-V2X+=25Q7XKwy5JuOpGj9RNpN+mTNxm71wpQ@mail.gmail.com>
+ <aZ8lfQ8fqVAYTLAa@redhat.com>
+In-Reply-To: <aZ8lfQ8fqVAYTLAa@redhat.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Wed, 25 Feb 2026 17:39:42 +0000
-X-Gm-Features: AaiRm52YXMf8w8v_OhOSDj2SrQrNPERXD2CrvWxsg1JskEemlg1rXj4AiPeS3kA
-Message-ID: <CAFEAcA8sCi2HD33JuMY+JzsCFobOVhy9T9hPuizPhTfr8YXRqA@mail.gmail.com>
-Subject: Re: [PATCH v6 26/27] util: add support for formatting thread info in
- messages
+Date: Wed, 25 Feb 2026 17:43:45 +0000
+X-Gm-Features: AaiRm51xgmrcjKgxjgq3Dloq5w3hZ2jhHc7pFBS1iFwF_gOmzb_MJIy57ELM9I4
+Message-ID: <CAFEAcA-AgvQESekxEYr_Y85qPzRQAfWvZwbM-WjemEU+tOmBdA@mail.gmail.com>
+Subject: Re: [PATCH v6 25/27] util: add support for formatting a program name
+ in messages
 To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
 Cc: qemu-devel@nongnu.org, 
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
@@ -106,15 +107,15 @@ Cc: qemu-devel@nongnu.org,
  Richard Henderson <richard.henderson@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112a;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -130,56 +131,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 25 Feb 2026 at 16:30, Daniel P. Berrang=C3=A9 <berrange@redhat.com>=
+On Wed, 25 Feb 2026 at 16:38, Daniel P. Berrang=C3=A9 <berrange@redhat.com>=
  wrote:
 >
-> On Thu, Feb 19, 2026 at 10:29:56AM +0000, Peter Maydell wrote:
-> > On Wed, 11 Feb 2026 at 15:29, Daniel P. Berrang=C3=A9 <berrange@redhat.=
-com> wrote:
-> > > After:
-> > >
-> > >   # qemu-system-x86_64 -object tls-creds-x509,id=3Dt0,dir=3Dfish -d '=
-trace:qcrypto*'
-> > >   qemu-system-x86_64: (772366:main): qcrypto_tls_creds_x509_load TLS =
-creds x509 load creds=3D0x560db818e080 dir=3Dfish
-> > >   qemu-system-x86_64: (772366:main): qcrypto_tls_creds_get_path TLS c=
-reds path creds=3D0x560db818e080 filename=3Dca-cert.pem path=3D<none>
-> > >   qemu-system-x86_64: (772366:main): Unable to access credentials fis=
-h/ca-cert.pem: No such file or directory
-> >
-> > Even more output enabled by default that is pretty useless for most
-> > uses of tracepoints and debug logging :-(
+> On Thu, Feb 19, 2026 at 10:23:36AM +0000, Peter Maydell wrote:
+> > Why do we care about the qemu_log output matching the
+> > error-report output? The logs are expected to be
+> > quite frequent, to only be there if you've explicitly
+> > turned them on, and to be usually directed to a log file.
 >
-> Getting the thread info in qemu log output was the original primary
-> motivating factor in this series. This short example doesn't show
-> it, but when debugging/tracing QEMU it is pretty important to
-> understand which messages are coming from different threads, so we
-> can correctly interpret the control flow. Pretty much every logging
-> framework these days will include some thread identifier by default,
-> and IMHO it is reasonable to do this by default in QEMU too.
+> Personally I never use the log-to-file facility. Instead typical use
+> case is relying on the trace points 'log' facility as illustrated in
+> the commit message example to dump to stderr for simple debugging,
+> and having consistent formatting between the logs & errors is useful
+> there.
 
-I have basically never found that I wanted to know in QEMU
-tracing which thread was involved, so I would dispute its
-importance in the general case.
+Do you not find that the tracepoint output is often just too big
+to be manageable via stderr? (To take a random example, the last
+thing I did with tracepoint logging produced a file 196MB large
+for a not very long run of the guest.)
 
-There's plenty of other things that would be more interesting to
-me to log by default: for instance in pretty much all our
-tracepoints in devices we don't have any indication of which
-device of possibly several instantiated in the system is the
-one producing this log output; having an easy way to have the
-tracepoints include e.g. the QOM path of the device involved
-would be nice.
-
-I don't object to providing optional logging of the host
-thread for people and cases where it's useful. But it's
-pretty useless to me, and if we always enable by default
-all the optional stuff that might be useful to somebody
-then the trace lines end up being a mile long and trace log
-files can become huge. Why can't we have this be something like
- -d thread-ids,trace:qcrypto*
-so people who want it can turn it on and people who don't
-want it don't get it?
-
-thanks
 -- PMM
 
