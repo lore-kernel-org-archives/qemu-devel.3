@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45A0FFD45FA
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 23:23:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 710A8FD45FB
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 23:23:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvO9K-0004bf-Tm; Wed, 25 Feb 2026 18:18:34 -0500
+	id 1vvO8H-0002oM-8B; Wed, 25 Feb 2026 18:17:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vvO91-00049l-M9
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 18:18:17 -0500
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vvO8D-0002FP-Qc
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 18:17:25 -0500
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vvO90-0003Ay-2i
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 18:18:15 -0500
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-4836f363d0dso2335045e9.3
- for <qemu-devel@nongnu.org>; Wed, 25 Feb 2026 15:18:13 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vvO8B-0002wt-Vr
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 18:17:25 -0500
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-4806ce0f97bso2372155e9.0
+ for <qemu-devel@nongnu.org>; Wed, 25 Feb 2026 15:17:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772061492; x=1772666292; darn=nongnu.org;
+ d=linaro.org; s=google; t=1772061442; x=1772666242; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=58SjvSBdSY2N/SByegBRN693qynS9JIU0XpdNhP0eoo=;
- b=jO6waNomeUIib6erL1hNPytYeqyY0+JgL9mxdRhCfsk+DNBJBH/cySSjOaODqDHjaO
- iRAFyl/aXC56fZMtbL7FQiRSn8nF8KZnYcCrNJRiI9eg/LeIwe6vOTKuV3aaxT4QtcAX
- zLiQo5CwWJJd49iooGAu4ItnqWzW8NDsuFqkU6Tbux9FyGcyU2ZQK5MUunVrd7fUjTEl
- w2MeGhEZRyK8yE0DyIIp67Iu0hDk2UiIfwDMmfVVv1XD9j4gyO4yKYjbbHGmFmJDBieb
- ehfgPHU/xaHB2U48vIN0nbDqjCWQYretQO4d4QhLkZ4vX7cy80imOMB/cgHywvY9pqRE
- +K7g==
+ :reply-to; bh=nV/6P4k/wYGcsUX8qZDzsKQHMcwpvKFH9KhkcfgGdBU=;
+ b=MSxc6BOUxPLKpXGdiFqF1/mc9OVeqjvtrMDrVDje2UyJe3UhaSD0BBjbrbs0dmbYV1
+ 5toRcOJgJN71rx0sb9RkgD32sb8MyVoNq5mphkZ4+3A+S/0eszVt5ICpqb/lXuIK4Rsz
+ wZp0NFExn2BMaP/Py8jL81lJqUp9fJdpDD3Np/U1qtUicuVkzTrCHC/2yehVVkBXDI9L
+ dqvCh894WjBNZ9wj+9frHXTx8Uj1hNG+pzf2fg1QpwTGu121DEFcJMGR0Bgt1s/YErt4
+ 3HxhYXS+7WmmLKmzJhuRqoWuez2aXng6i/npj6cbrvCSIQt1CdOemMGpsHOG07ivEBsJ
+ G+rg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772061492; x=1772666292;
+ d=1e100.net; s=20230601; t=1772061442; x=1772666242;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=58SjvSBdSY2N/SByegBRN693qynS9JIU0XpdNhP0eoo=;
- b=t2vI/2dA7cyYPX6Sw5SfvnxTaHQ5fqst8/MCN3NXVKb46avQ+O2AXCOrIJVAVbKKKQ
- u95FYTHSXuOgYTAuEOT9KW4oko8t+uqNeJ9g84QQI5P/hsGh+ZAVGPlITZ068K3usDl4
- k8ymVA4BuZtA+AgVABlEENOOHpmuyKRFSk+xz3T4GVlXeo+RupoS68nKTqSdQrYVWG8j
- olYP1WBUHrPA+KYuGWgoDLNKvmCBFxHYmJZ2q0mWrbJq4AZEUAwrUibcyihEPL50/HCP
- duIVSM/iiFmC8hO8oZev+TTnyveHcqqWP0E6RghdcWHvSB7SIhZcI2dW9Wm16hMK1yfj
- wHfA==
-X-Gm-Message-State: AOJu0YyTTszSiNypZGzRLLDNCITjTsD58WrsZZfvtUzFihiknNywwfb1
- cEEhlCIm/QkldSHeLW8uSzhEfoMn/Hkp/qOZXoAek1cMoCeZ8RIfENhKx8yV36hcsLNGbOZ+gU1
- Chvgof3E=
-X-Gm-Gg: ATEYQzynnj3GegJAyQX+kZKId+l2kmrkMSFc1Il6MAtwf1hZdazGW2rvdqIF4SN55s9
- yhaSHavdBt4sGVREgdcD6eI50ZSwuMVCJXn4PzRs5zFC/0gMAuIYNzFmDDk57w6qI3Xlc/UFCRf
- 9aigQKzWS8yYFBn0FYawFVf35+TZ1k6VLoByve6bzJPsEAMEUP+hG2i09pQmsk2QtrLgbgxQbge
- HhA7+gATR3njc6EowkxH+70s5YcHhDYf2tmsTy5WoniOAABLS2aF7la6Sl+zdRwsi5b9hVlzvO0
- qQPK0Bw2KuxpxLcAJcDO3XD/qbI/YtciGRNI1k5LDdQf993VhmmEfZHsqbUS6fkpcbjeD82KP+r
- KAqU0YbTXGNiCYuI1OxykFIItjTXOyb5KGDONTC8cjzVjXg5Jpkf9412GX2PRDqIRUOye3HwXjX
- gRIw6n8tTl4OE9W1SrU0vv8AEnRQ6ai92pMdU9UocTX3KQMval3hjv4J9V0RgKIPjLBabZco9f
-X-Received: by 2002:a05:600c:5397:b0:483:56c4:73ac with SMTP id
- 5b1f17b1804b1-483c216bf67mr35719615e9.7.1772061491982; 
- Wed, 25 Feb 2026 15:18:11 -0800 (PST)
+ bh=nV/6P4k/wYGcsUX8qZDzsKQHMcwpvKFH9KhkcfgGdBU=;
+ b=BM5riWSltuk1SPxhiPUWP8UXmATacZUCjrAuipsIj/gks1kITSnTvHjKqO+u+R9q7Y
+ lRs+MrygnzQX7cfLxX0RnT8m0OWNECXBt/jYbqXMsCQHAnMakp6gP6JvAuLVPkp8hpKq
+ 2lyS19sDWoJuoezIKBHl/2UNQA8m/oYcGF4RfBRtMpA2dioTmjkc7CW7bHFaB1bvDear
+ IWqMu6yHlk5uzAc9A/9Wz88qILIH2IscU7FAwM46LdXpLZHA4DZNKv3LzSX2+jvwkr4k
+ l/nJSGnWaZx3KJdNNl1Bdf+8pnvGeHReWuWSmph7C21G/hPKPEgqosYsgN5o2VmxUcYM
+ TYsQ==
+X-Gm-Message-State: AOJu0YxsvJBDThv2agNIlGOVlIjvVMqLo2+Fi4LLTcvFQN9JcfcKYdSw
+ lHV9Fzn7RZzJZJT3xkGG37wstXThBgPgPFMoZP6gOJvryREw1rPmGVCGyi/xtNT+V0YQKP99aF9
+ XHRy0SK8=
+X-Gm-Gg: ATEYQzxVyGLjo+j3L1QNGgBp+MgdBImPUdzrv/QxwB2hlpsX1mjdP5NqcJ3/1OxdoUT
+ gDy5XnD3Wyv9/NO4kMpxV1kvcVUJRtGuib8B4hjGNp6pzSnKjxAsnPU6f8mjgSM0JadoItmTzqw
+ ZgHp6MkxW+JpsIr3h6WHU18zwwT+OAxdIHFQKQQ9kbSJ1pasdvh8MEXXDbLdDxrpGZjjRjobs91
+ EbPwy2xkWnVszqcmg27aPg97hkM2yy81cv6xYFRrIsb4xcMhuZqx4znINTXGxQTr2F3Eg3U2RqZ
+ BXo3vRbSsKKpZ2t8LyJFefl7JWpQOTZrZAcYuxj6YkR8A3QV+IBzfjoYwTYvtmlk5hol6smbvTI
+ PxwCxf82bTcVoVmAS16jrElVzChSTxA3uvCQFgzfviV8qv/MBltHCH0oiG/SInvYf2RvBu4IIMn
+ m3xfWL3ou684taK5Cdg40K4zSMtfeAwH/FxIgficlr8R+Ac1yneVQlv8MdrR2T82CX3H6z5FPe
+X-Received: by 2002:a05:600c:1913:b0:45d:d97c:236c with SMTP id
+ 5b1f17b1804b1-483c3de9bdemr1170575e9.21.1772061441970; 
+ Wed, 25 Feb 2026 15:17:21 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-483bd7507adsm109214175e9.9.2026.02.25.15.18.09
+ 5b1f17b1804b1-483bfb87030sm21685805e9.10.2026.02.25.15.17.20
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 25 Feb 2026 15:18:11 -0800 (PST)
+ Wed, 25 Feb 2026 15:17:21 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 35/70] target/riscv: Replace ldtul_p() -> ldn_p()
-Date: Thu, 26 Feb 2026 00:13:35 +0100
-Message-ID: <20260225231411.96482-36-philmd@linaro.org>
+Subject: [PULL 28/70] target/ppc: Remove MonitorDef register entries available
+ via gdbstub
+Date: Thu, 26 Feb 2026 00:13:28 +0100
+Message-ID: <20260225231411.96482-29-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260225231411.96482-1-philmd@linaro.org>
 References: <20260225231411.96482-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,74 +99,167 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Prefer ldn_p(riscv_cpu_is_32bit) over target-specific ldtul_p().
+All these registers are already provided by via gdbstub parsed XML
+and handler by the gdb_get_register() helper in the monitor/hmp.c
+file. Remove as now unreachable code.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
-Message-ID: <20260219191955.83815-28-philmd@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20260219191955.83815-21-philmd@linaro.org>
 ---
- target/riscv/gdbstub.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ target/ppc/ppc-qmp-cmds.c | 132 --------------------------------------
+ 1 file changed, 132 deletions(-)
 
-diff --git a/target/riscv/gdbstub.c b/target/riscv/gdbstub.c
-index 1934f919c01..f89b20ea84a 100644
---- a/target/riscv/gdbstub.c
-+++ b/target/riscv/gdbstub.c
-@@ -191,14 +191,15 @@ static int riscv_gdb_set_csr(CPUState *cs, uint8_t *mem_buf, int n)
+diff --git a/target/ppc/ppc-qmp-cmds.c b/target/ppc/ppc-qmp-cmds.c
+index 7022564604f..66c3bcb2c38 100644
+--- a/target/ppc/ppc-qmp-cmds.c
++++ b/target/ppc/ppc-qmp-cmds.c
+@@ -33,54 +33,6 @@
+ #include "cpu-models.h"
+ #include "cpu-qom.h"
+ 
+-static target_long monitor_get_ccr(Monitor *mon, const struct MonitorDef *md,
+-                                   int val)
+-{
+-    CPUArchState *env = mon_get_cpu_env(mon);
+-    unsigned int u;
+-
+-    u = ppc_get_cr(env);
+-
+-    return u;
+-}
+-
+-static target_long monitor_get_xer(Monitor *mon, const struct MonitorDef *md,
+-                                   int val)
+-{
+-    CPUArchState *env = mon_get_cpu_env(mon);
+-    return cpu_read_xer(env);
+-}
+-
+-static target_long monitor_get_decr(Monitor *mon, const struct MonitorDef *md,
+-                                    int val)
+-{
+-    CPUArchState *env = mon_get_cpu_env(mon);
+-    if (!env->tb_env) {
+-        return 0;
+-    }
+-    return cpu_ppc_load_decr(env);
+-}
+-
+-static target_long monitor_get_tbu(Monitor *mon, const struct MonitorDef *md,
+-                                   int val)
+-{
+-    CPUArchState *env = mon_get_cpu_env(mon);
+-    if (!env->tb_env) {
+-        return 0;
+-    }
+-    return cpu_ppc_load_tbu(env);
+-}
+-
+-static target_long monitor_get_tbl(Monitor *mon, const struct MonitorDef *md,
+-                                   int val)
+-{
+-    CPUArchState *env = mon_get_cpu_env(mon);
+-    if (!env->tb_env) {
+-        return 0;
+-    }
+-    return cpu_ppc_load_tbl(env);
+-}
+-
+ void hmp_info_tlb(Monitor *mon, const QDict *qdict)
  {
-     RISCVCPU *cpu = RISCV_CPU(cs);
-     CPURISCVState *env = &cpu->env;
-+    const unsigned regsz = riscv_cpu_is_32bit(cpu) ? 4 : 8;
- 
-     if (n < CSR_TABLE_SIZE) {
--        target_ulong val = ldtul_p(mem_buf);
-+        target_ulong val = ldn_p(mem_buf, regsz);
-         int result;
- 
-         result = riscv_csrrw_debug(env, n, NULL, val, -1);
-         if (result == RISCV_EXCP_NONE) {
--            return sizeof(target_ulong);
-+            return regsz;
-         }
-     }
-     return 0;
-@@ -225,11 +226,12 @@ static int riscv_gdb_get_virtual(CPUState *cs, GByteArray *buf, int n)
- static int riscv_gdb_set_virtual(CPUState *cs, uint8_t *mem_buf, int n)
- {
-     if (n == 0) {
--#ifndef CONFIG_USER_ONLY
-         RISCVCPU *cpu = RISCV_CPU(cs);
-+        const unsigned regsz = riscv_cpu_is_32bit(cpu) ? 4 : 8;
-+#ifndef CONFIG_USER_ONLY
-         CPURISCVState *env = &cpu->env;
- 
--        target_ulong new_priv = ldtul_p(mem_buf) & 0x3;
-+        target_ulong new_priv = ldn_p(mem_buf, regsz) & 0x3;
-         bool new_virt = 0;
- 
-         if (new_priv == PRV_RESERVED) {
-@@ -237,7 +239,7 @@ static int riscv_gdb_set_virtual(CPUState *cs, uint8_t *mem_buf, int n)
-         }
- 
-         if (new_priv != PRV_M) {
--            new_virt = (ldtul_p(mem_buf) & BIT(2)) >> 2;
-+            new_virt = (ldn_p(mem_buf, regsz) & BIT(2)) >> 2;
-         }
- 
-         if (riscv_has_ext(env, RVH) && new_virt != env->virt_enabled) {
-@@ -246,7 +248,7 @@ static int riscv_gdb_set_virtual(CPUState *cs, uint8_t *mem_buf, int n)
- 
-         riscv_cpu_set_mode(env, new_priv, new_virt);
- #endif
--        return sizeof(target_ulong);
-+        return regsz;
-     }
-     return 0;
+     CPUArchState *env1 = mon_get_cpu_env(mon);
+@@ -92,90 +44,6 @@ void hmp_info_tlb(Monitor *mon, const QDict *qdict)
+     dump_mmu(env1);
  }
+ 
+-const MonitorDef monitor_defs[] = {
+-    { "fpscr", offsetof(CPUPPCState, fpscr) },
+-    /* Next instruction pointer */
+-    { "nip|pc", offsetof(CPUPPCState, nip) },
+-    { "lr", offsetof(CPUPPCState, lr) },
+-    { "ctr", offsetof(CPUPPCState, ctr) },
+-    { "decr", 0, &monitor_get_decr, },
+-    { "ccr|cr", 0, &monitor_get_ccr, },
+-    /* Machine state register */
+-    { "xer", 0, &monitor_get_xer },
+-    { "msr", offsetof(CPUPPCState, msr) },
+-    { "tbu", 0, &monitor_get_tbu, },
+-#if defined(TARGET_PPC64)
+-    { "tb", 0, &monitor_get_tbl, },
+-#else
+-    { "tbl", 0, &monitor_get_tbl, },
+-#endif
+-    { NULL },
+-};
+-
+-const MonitorDef *target_monitor_defs(void)
+-{
+-    return monitor_defs;
+-}
+-
+-static int ppc_cpu_get_reg_num(const char *numstr, int maxnum, int *pregnum)
+-{
+-    int regnum;
+-    char *endptr = NULL;
+-
+-    if (!*numstr) {
+-        return false;
+-    }
+-
+-    regnum = strtoul(numstr, &endptr, 10);
+-    if (*endptr || (regnum >= maxnum)) {
+-        return false;
+-    }
+-    *pregnum = regnum;
+-
+-    return true;
+-}
+-
+-int target_get_monitor_def(CPUState *cs, const char *name, uint64_t *pval)
+-{
+-    int i, regnum;
+-    CPUPPCState *env = cpu_env(cs);
+-
+-    /* General purpose registers */
+-    if ((qemu_tolower(name[0]) == 'r') &&
+-        ppc_cpu_get_reg_num(name + 1, ARRAY_SIZE(env->gpr), &regnum)) {
+-        *pval = env->gpr[regnum];
+-        return 0;
+-    }
+-
+-    /* Floating point registers */
+-    if ((qemu_tolower(name[0]) == 'f') &&
+-        ppc_cpu_get_reg_num(name + 1, 32, &regnum)) {
+-        *pval = *cpu_fpr_ptr(env, regnum);
+-        return 0;
+-    }
+-
+-    /* Special purpose registers */
+-    for (i = 0; i < ARRAY_SIZE(env->spr_cb); ++i) {
+-        ppc_spr_t *spr = &env->spr_cb[i];
+-
+-        if (spr->name && (strcasecmp(name, spr->name) == 0)) {
+-            *pval = env->spr[i];
+-            return 0;
+-        }
+-    }
+-
+-    /* Segment registers */
+-#if !defined(CONFIG_USER_ONLY)
+-    if ((strncasecmp(name, "sr", 2) == 0) &&
+-        ppc_cpu_get_reg_num(name + 2, ARRAY_SIZE(env->sr), &regnum)) {
+-        *pval = env->sr[regnum];
+-        return 0;
+-    }
+-#endif
+-
+-    return -EINVAL;
+-}
+-
+ CpuModelExpansionInfo *
+ qmp_query_cpu_model_expansion(CpuModelExpansionType type,
+                               CpuModelInfo *model,
 -- 
 2.52.0
 
