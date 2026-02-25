@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F23FAFD45F1
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 23:24:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49C43FD45FB
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 23:24:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvOBL-0007i2-UQ; Wed, 25 Feb 2026 18:20:39 -0500
+	id 1vvOCo-0008Ll-1H; Wed, 25 Feb 2026 18:22:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vvOBL-0007hi-0W
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 18:20:39 -0500
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vvOCh-0008DQ-SK
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 18:22:04 -0500
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vvOBJ-0004B4-Ed
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 18:20:38 -0500
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-483a233819aso2867875e9.3
- for <qemu-devel@nongnu.org>; Wed, 25 Feb 2026 15:20:37 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vvOCg-0004Po-AL
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 18:22:03 -0500
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-43994aa265eso123688f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 25 Feb 2026 15:22:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772061635; x=1772666435; darn=nongnu.org;
+ d=linaro.org; s=google; t=1772061720; x=1772666520; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=ff9I3GrkxCkld69uvBI9OtuF0RjJQ635EGlKJt6w3dc=;
- b=aymUelaLwZkWtk1RBKz+XWdEHXR1EJ7hvV9trnoVYpIvJxBZEePrMftjGAUAQ4Ou8c
- CKUtOg7LZ0RLFKiOygF8BBbqtOtmwEk5lSS0O/LE06wKc1mF2s5Fz1p1BjyfdNAmIAXD
- eOvwjMyXJhcME7Gv/EweKmzKFY/zNlKybrdLOjjV9WL6bLDkqXXJyGgBEepwfdsc364x
- zHbSjn/kP2Gr7Wexn0kT78N/e45+Kpmufg8uC72/4AL2lZzWpdzJskgi+NOOY7Uxamps
- 3X+VGSWfxMLBRraUU5UDBgRUZ3wqSErWUihRMPYTkmmsampy5TRrgVuJD/kxfakkUtHZ
- RHdw==
+ :reply-to; bh=yUHHzNLW9fNVWSnAmzyP6tdjio2zMgW5rP98YdRZAU8=;
+ b=F4/nZRTh5tPSMFFY8ucLqr0+PUAZ0ujGVkFplLNbCsT3d7UVZD1TWaNA/ebBH6N+2T
+ /HjRtVPbo7BTCf+XW2aSuJq1W2WCEdEnX2mr0cmxFv3DKcq9jlobrg613yvIuLM0wg95
+ hLRgmZHhfFF/Y/2ScdfzFiwxVmy4SX1E9trKOu2KpOm8Rp32GWMbw/IOu18AQEgxJNmY
+ ostgdix0vZgvD31PN7U1l1ePVePRu4QdvY85na99B0FaEKApVTSUeP+UkIYXusZ5YxSQ
+ elT157vsbhJK4BOhu8Gsycs/+7Jcijnyj1DDBVa9kimXvbFlea8rG2g0ELDPSoT2Vqes
+ m4fA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772061635; x=1772666435;
+ d=1e100.net; s=20230601; t=1772061720; x=1772666520;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=ff9I3GrkxCkld69uvBI9OtuF0RjJQ635EGlKJt6w3dc=;
- b=FiyJssnrCvwqJO4bHWyiTW1m40J+krwgJDH9dv/qltfTwE8Lu1PEL+pjXPkh4cJUqH
- sxYd7jL0Vn7I2ki6DD1vj9Fi3g/DBjHDg7ZZ9sdMrp+D0CQCbRz8IiFhSbnM6QxU2A/Q
- 87RE0/5i3LDYPLRE/hexLVmkd5B4VEUsXw4kHljzrzxeNI1vA9VAJjM6FaNKbPYiBDBj
- dqdebf+D/AfwFZO2aOtETgXCgIAXHrUY80xJAjZhn6Js0rDyKv7asmOLLtaOUsKAXKHT
- SxVvzRpmilxzteS5R/m5Gseur6ykCWZ5Bcohr0x5H30Cq62J99d9JKABmW2+yhCJoeVT
- QB0Q==
-X-Gm-Message-State: AOJu0Yz4u/Otoe4/0pX5sJwNzDZz5d6ccRTNz7HOke3kD+luLFiYbqU7
- L8ys4uYCa6VbFwNbVMBdCXceD7GJ5oWVsW/tH+r0cLheTS04xE2rLjjEfKQUzQqEBh36mwCKChe
- HkZ5c3HI=
-X-Gm-Gg: ATEYQzwaMl2Is+K+CsSd9IiJVLJQZ3t8AcTUcSLPXPPTlUGBlY4PRCxQ5FrwoeRvpAN
- zs2LmWU9L0TQC+eqDnBDPU1EhpEArKO4SeDJ8i/v2/mFon4//uyOEkLwd5twpkCKbj7X1+xZGQw
- WwYkNOqQyjNIYQF9KqzTRfxzeYEDfR1M21Tl/coFZr3b28Rdzi26IAe6JSq6HrJntYQ09830gyQ
- 71O9LzbseUyRlJXQzgjNVtHkpWPWaMfJK2hlEYAWJTEWkxzKbBY+G3T3cTMc7kdhID5jK1+1ZMq
- aJ0iDZ+QGJL5BqNp9rvl4YbMWPjdZfYSqadyI/P15jgPU7Um74V/52ibY5ozOOM0Sm3Hk1SDr/l
- cCcYsvE1zMbglnPVW60uTvNlInyeR1rbTSEYbQrCOiFPibohDh0lXuKXhozMV91QRBLbIHH9ioq
- Xho4CWvVyhf1JzfCJpofibVHel0bOdlBRoQmMyG8ih8Af6hLhC85C0+0WwFC281wP4PJ7ZuScn
-X-Received: by 2002:a05:600c:3b14:b0:483:c35d:3662 with SMTP id
- 5b1f17b1804b1-483c3dd6fc6mr1499055e9.18.1772061635422; 
- Wed, 25 Feb 2026 15:20:35 -0800 (PST)
+ bh=yUHHzNLW9fNVWSnAmzyP6tdjio2zMgW5rP98YdRZAU8=;
+ b=gAonXFXMSEkcYSfwYSRrYExVPIczx4mXHHMl9hE2puqzSJOMEgocZzhHsNg/DUoFMf
+ jtaWIZZ6Nv9OsSItYLTDjIvlKreQ9rNXTANtjuI+EMpmdknXOd0tZV10vvyLjziF5Zhd
+ N9ayf4XrTYxFe8CHPpQ73zNg4+ZCe28Qpg2kKKN8jCq6M2QtrPXFqUGycyN00NGyLY6m
+ j8YCvLLBO4UIH1vk9rboGogUVB2JPnRahHNqbZHuYHh4lj44M5aODQVB2eziGojXHbWH
+ qLu1YulUlnMEdW3b2m+NBY7KtvU8O0j0zn2eNghNZZZNm7iLf44vfdaMXMEI/kARmmo7
+ iWBw==
+X-Gm-Message-State: AOJu0YyFhc7ZSScxhAWbkb9OumKPo3jKr225Ep0xY2695VdNhdr0wZWg
+ nQolGkn8u78HAhJkpT4xGzLXMrmddrZIyEcPXVJTCXNi1ZNBsTRGYa+K7ruE8n11A3440Ep3VnK
+ 5MUCl7kk=
+X-Gm-Gg: ATEYQzxN0sBVwF1ejiYvlVVXcgArNS/on2ixbNQP7goq1W7ewaQzWcaCfwM/Zsmk6cR
+ 8bMG4U7LmEw91DS4NOzJuM52T/Ols02P6zqWx9AC/Miuh++bPjcbQys6gCReMxgagdCGknOq/3f
+ +oyMJiMNurOLtAxdT0i5iyrervZ+HaOYmsXTuQI84OYPIs8SXhy6HKhH/BGrDe+N31RBg61cmVL
+ Z9R5arrA9pSPpozzFO4vbwn0k/IgWQFc3LSePVtziFKuIfza+YtBVSSPU0JTm7d9+JaBjWot9Eg
+ q8T0OoznJb1NYPs3GMZe/y2zqblJSSGRaycM92WX9T/zjDVGtEB791bAtlsAX2wewMEHnLK744j
+ axlCRLzDjh0d4EW1D6uYa0uVx8LcMmx6KdIHDsuIXzz6EDddhYBysQDO/35PKWyVCLcyqwH7OY2
+ gAulJQqBNTqKACAPgENwuRun5hj2oPpMBh/2piXoF/QMsz9lyaare1S7U5KZaLkwj3z3jV5HJG
+X-Received: by 2002:a05:6000:290f:b0:437:6efe:94d2 with SMTP id
+ ffacd0b85a97d-43997eda581mr539069f8f.4.1772061720376; 
+ Wed, 25 Feb 2026 15:22:00 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-483bd6f3124sm100631855e9.1.2026.02.25.15.20.34
+ ffacd0b85a97d-43970d3ff27sm38839465f8f.22.2026.02.25.15.21.59
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 25 Feb 2026 15:20:34 -0800 (PST)
+ Wed, 25 Feb 2026 15:21:59 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 56/70] target/s390x: Build 'gdbstub.c' once for system single
- binary
-Date: Thu, 26 Feb 2026 00:13:56 +0100
-Message-ID: <20260225231411.96482-57-philmd@linaro.org>
+Subject: [PULL 69/70] page-vary: Build finalize_target_page_bits as common code
+Date: Thu, 26 Feb 2026 00:14:09 +0100
+Message-ID: <20260225231411.96482-70-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260225231411.96482-1-philmd@linaro.org>
 References: <20260225231411.96482-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,44 +98,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-There is a single qemu-system-s390x binary, but by moving
-'gdbstub.c' in the target_common_system_arch[] source set
-the resulting object can be linked into a single qemu-sytem
-binary.
+From: Richard Henderson <richard.henderson@linaro.org>
 
+Use target_info->page_bits_init to merge
+finalize_target_page_bits_common into
+finalize_target_page_bits in page-vary-common.c.
+
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Message-ID: <20260217095106.598486-6-richard.henderson@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20260219191955.83815-49-philmd@linaro.org>
 ---
- target/s390x/meson.build | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ include/exec/page-vary.h |  4 ----
+ page-vary-common.c       | 15 +++++++++++----
+ page-vary-target.c       | 12 ------------
+ 3 files changed, 11 insertions(+), 20 deletions(-)
 
-diff --git a/target/s390x/meson.build b/target/s390x/meson.build
-index 096b7dcc42e..6f98ce34d73 100644
---- a/target/s390x/meson.build
-+++ b/target/s390x/meson.build
-@@ -3,7 +3,6 @@ s390x_ss.add(files(
-   'cpu.c',
-   'cpu_features.c',
-   'cpu_models.c',
--  'gdbstub.c',
-   'interrupt.c',
-   'cpu-dump.c',
- ))
-@@ -34,11 +33,13 @@ s390x_common_system_ss.add(files(
-   'sigp.c',
-   'cpu-system.c',
-   'cpu_models_system.c',
-+  'gdbstub.c',
- ))
+diff --git a/include/exec/page-vary.h b/include/exec/page-vary.h
+index c4dc56634bc..f2d735bec2f 100644
+--- a/include/exec/page-vary.h
++++ b/include/exec/page-vary.h
+@@ -40,10 +40,6 @@ typedef struct {
+     uint64_t mask;
+ } TargetPageBits;
  
- s390x_user_ss = ss.source_set()
- s390x_user_ss.add(files(
-   'cpu_models_user.c',
-+  'gdbstub.c',
- ))
+-#ifdef IN_PAGE_VARY
+-void finalize_target_page_bits_common(int min);
+-#endif
+-
+ /**
+  * set_preferred_target_page_bits:
+  * @bits: number of bits needed to represent an address within the page
+diff --git a/page-vary-common.c b/page-vary-common.c
+index b41137c644d..ddd08633788 100644
+--- a/page-vary-common.c
++++ b/page-vary-common.c
+@@ -50,11 +50,18 @@ bool set_preferred_target_page_bits(int bits)
+     return true;
+ }
  
- subdir('tcg')
+-void finalize_target_page_bits_common(int min)
++void finalize_target_page_bits(void)
+ {
+-    if (target_page.bits == 0) {
+-        target_page.bits = min;
++    int bits = target_page.bits;
++
++    if (bits == 0) {
++        const TargetInfo *ti = target_info();
++
++        bits = ti->page_bits_init;
++        assert(bits != 0);
++        target_page.bits = bits;
+     }
+-    target_page.mask = -1ull << target_page.bits;
++
++    target_page.mask = -1ull << bits;
+     target_page.decided = true;
+ }
+diff --git a/page-vary-target.c b/page-vary-target.c
+index d388c5c3d64..bc4d8931b68 100644
+--- a/page-vary-target.c
++++ b/page-vary-target.c
+@@ -38,15 +38,3 @@ int migration_legacy_page_bits(void)
+ #endif
+ }
+ #endif
+-
+-void finalize_target_page_bits(void)
+-{
+-#ifndef TARGET_PAGE_BITS_VARY
+-    finalize_target_page_bits_common(TARGET_PAGE_BITS);
+-#elif defined(CONFIG_USER_ONLY)
+-    assert(target_page.bits != 0);
+-    finalize_target_page_bits_common(target_page.bits);
+-#else
+-    finalize_target_page_bits_common(TARGET_PAGE_BITS_LEGACY);
+-#endif
+-}
 -- 
 2.52.0
 
