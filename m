@@ -4,72 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52C75FD45F8
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 22:13:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9895FD45F6
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 22:21:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvN8E-00055X-PM; Wed, 25 Feb 2026 17:13:22 -0500
+	id 1vvNFZ-0007WV-9T; Wed, 25 Feb 2026 17:20:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vvN8B-00054q-D2
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 17:13:20 -0500
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ id 1vvNFT-0007Ve-GN
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 17:20:52 -0500
+Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vvN89-0001bQ-Qp
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 17:13:19 -0500
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-2adc1d9ec56so944945ad.0
- for <qemu-devel@nongnu.org>; Wed, 25 Feb 2026 14:13:17 -0800 (PST)
+ id 1vvNFN-0002uR-Iz
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 17:20:50 -0500
+Received: by mail-pf1-x432.google.com with SMTP id
+ d2e1a72fcca58-823081bb15fso112872b3a.3
+ for <qemu-devel@nongnu.org>; Wed, 25 Feb 2026 14:20:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772057596; x=1772662396; darn=nongnu.org;
+ d=linaro.org; s=google; t=1772058044; x=1772662844; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=fG3ZMck3tutu8gzYB6jA5+sgxse1QWQnySAlejIbIh4=;
- b=vB+1b8dzpWkweLLD96tbhGqLZ7JOqiVokdZxiAfX5OOeVDbXaAF0NbSMiRAHOjb6fO
- Q01/8Ok9dqwoUHuU6LAVPH2WD9SvmsN2hrNPx7Nl8ErDJKhcPTDKVpq2oT/IRXZeJg6h
- /d/Y57lhe5kKq1qp83z9U7qqZIy00Mzt+doJyvBDAR1pGD3xHXmfh5Jgxy2hbBNnDEro
- Q5G2LiMcBrfU77zJPq9HKm2momEpQKXaVFtVnaKFG/ZgX4kHGSV5qcf/FyvyxGzP8R00
- ErHacSEgpqb5dF1Tja1chlLnD0qUoI0tnDMpz2pi0avgF7HnFX835P/sfNMUTR7fikII
- fmBQ==
+ bh=1vWa7CnUvujg0yoe1yp8elE7dC19mmcCbsyTDutROek=;
+ b=vwjqcs67gew7VIEjftP7/QH5PArNBCjcR9EYf6T8PrT7bl58maT4f6nlcj+gX/2xFB
+ 1v54tyJp7DlUDq72ce6xCNaD8pSAyhAf7t7qDfPtbyWqJzAKhpwKNYMa2LCtEwgTmtwz
+ G/BhXSK0k308ywylmrYXbk5ilU6kzkaRkUDM04XlSTXy7Sw46TWOUS71hQjWSSjfO6ym
+ Ma1RtUFGIv4iF0RjYrhoe8lhidrm4cyC7np39ZrGgyFs4kjUD4rdAZ0OiCMj7SoDZpKp
+ f7dOofcphlYkJy96sHV9zdUvrt3A4a+DKC9eucdRRPOHLsao+ed5nCMup6Lg5Z4XB6wG
+ wj3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772057596; x=1772662396;
+ d=1e100.net; s=20230601; t=1772058044; x=1772662844;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=fG3ZMck3tutu8gzYB6jA5+sgxse1QWQnySAlejIbIh4=;
- b=pQyBFZqm4Z1SdiAz3u9GQnlC63h51z86AU71l1hpaNV4/v2pCOCgQergdkcFfEygwj
- s/BxCJCQk+f44+x5HpEkTj9YeJeJCrD0EmfsA9VsirXSkKJ+jK4Fx0qHCwuGzowu/NxU
- ujfDKRT9YS3bS175MpmpPdHnmzI+DYXx8lRf2ZaHWj6jfP70kHJbI/9BXBgRihX9VM8X
- mSoujPzOtlfeQ6pfVJY7UU2hauNmo4TRdbXiQN9PxEcVT58heunyBAtKyaUakdydIcNb
- 8tjflAycPXrfGVmkxNMdIFYkYtTlNOm/KUlrSN3dD3cWF+xmFraD2FvvVVp7T+Po+n0c
- 04Bg==
-X-Gm-Message-State: AOJu0Ywl1Y23A8gJaBq8lKIHMmd5H9rWbgcUFq1rE0iCEzhniLxWQjGn
- wR6mQiPq3n5WNqzZj7cwtCPckGwNsXI/oa9k78IFA82iwNXn/OgRqhKwKf8B0bGS4L4=
-X-Gm-Gg: ATEYQzyEJi7WTeVBWz/T5fmSM9TZnqaeUaf5owiaVdprwtlMkK6Njdk4BlqlVO/VwkY
- CzHnT9c05Lv4xRVsnpXOCl2wPpLwpdVQSPp+wl1NzYz7DoIM1Tz5Cpyt8FMeuLfOcomdvZxBOEA
- Os0Q+vRd8lRApDjw3gi3JCavniYzR0PgB/DcGSmmyrZeL/EYTNGVPV9LWD7mB7c4OpZP50DqELG
- tBji4i8X4hPM5/Np40CjQE1y/qwPQDbkpkM0Qe6pBIrsEzZboSUsdFHWwmDnH/GEuKawcUQcFWW
- L5G3bNBza1Q8Gsw018C2fn/Lf72mrFRATmepjtdjRS+D2/vqbS0hkTyEFZnCaNZ0GCoSEP9Alqy
- g8lY8HrIY8uLgjW2+dU7gTPvFQ1ZaXuHR5b5YC9K4u7x3EdccmS8k3ldXvA++unik5Mg6FP9U+C
- WrBWbTh+0MZ8wapPZaajL2mfOB1AyGKdl5EhwKfliDVPWkmzI9+VKWFapimAOB2cp5MXhp
-X-Received: by 2002:a17:902:ce84:b0:2ad:ba04:40d2 with SMTP id
- d9443c01a7336-2adba0442b6mr53343615ad.25.1772057596324; 
- Wed, 25 Feb 2026 14:13:16 -0800 (PST)
+ bh=1vWa7CnUvujg0yoe1yp8elE7dC19mmcCbsyTDutROek=;
+ b=vW+Cw8QbJN8Vlw9i3CfyOOcm2wWOtRrH4mM6F4zlfCLJ7a06XeVjSV9c22mMWbdmLI
+ 7lt3tALnPgyOY3MQOp70GuRF5g67GL3gxAexCEBLIgOMVQpDn96Aw1FR1k4eqp8G3rmf
+ VaOb2XqIql1Hc9SeJ/UCr+sQP1/xs/37dDk53uO1gh/r2AOdZUfcmEJ9JS+Z18t91a2/
+ +aE24e7wRqjkAdSagt4iOQ7c+8pTWOogvZqTUAxwoBU/ogo3HnKczsWdrqUjheh7lOsi
+ grWGNelTglgQgLCrcrcefNWHZfVHbJm9Pht66UnJqJs9n8u86olIZ+6eumG0Su6LgNIs
+ gKtg==
+X-Gm-Message-State: AOJu0Yyy6gMyj7ZaCo3g72S0F2T2ILeEUSTVnkFdQ/nOKJv8E2Q9o6JY
+ MhVQjys5X6omV8zR/+iTYMj0fGnqcFb3YiI1/VChzDn24dOwBroIrAeSas/QoLBgG2Q=
+X-Gm-Gg: ATEYQzxWiKvV5jaJb3ViF7bmjE7YMPTZTOfaBam38kDleDAmAc5O46MpXaqwB/kXk6w
+ /H6HttjsUaAnKATYaPLC7iFKymmQPciyXL1pl2wtqawJV1At1RYrEOMUhwvtLi+nY/c+40oRdZS
+ RkCR64B4ejbsKbTyHsKg2UivcBojOBHbgvTofCHt5MfR1EjB6CRiAULycbFN/fzNc7/swD+L4Mb
+ /9bkkmnxTOsGPIpkMhmeo/PaIVljhk4VNHbJw8u1h4tqDXVUatMW+xEcqOjsfwzpIbwNyRrdsYS
+ httaSSFuWJtQggZ4jbgCOjB3uv2mDoDrlbcNmEKT14jdbd69tdAF1leSaq1A0TijTX3fnl/a33O
+ /XZWUICyFMZdQqq5Xo+CaNnFhex3aMtty0n0o9lJ7Jy+b3UARKqQr7izjaSCU/h7WCwNrXq+47x
+ tnT8FB0GTlcyBeGpzF3b+wKxbZBYZFBdqFiXE3j5OtPlVxAnIkv0DRw7BccslrYKZeNZyf
+X-Received: by 2002:a05:6a20:1f28:b0:350:fa56:3f45 with SMTP id
+ adf61e73a8af0-395ad1cf753mr1594747637.35.1772058043751; 
+ Wed, 25 Feb 2026 14:20:43 -0800 (PST)
 Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2adfb5b22d4sm2489765ad.14.2026.02.25.14.13.15
+ 41be03b00d2f7-c70fa8302absm33747a12.29.2026.02.25.14.20.42
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 25 Feb 2026 14:13:15 -0800 (PST)
-Message-ID: <9c0d7a06-dce3-4b79-8ab9-4c255f60f4b7@linaro.org>
-Date: Wed, 25 Feb 2026 14:13:15 -0800
+ Wed, 25 Feb 2026 14:20:43 -0800 (PST)
+Message-ID: <831335ed-7463-4020-847a-b65518875376@linaro.org>
+Date: Wed, 25 Feb 2026 14:20:42 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC v4 29/31] hw/arm/smmuv3: Initialize the secure register bank
+Subject: Re: [RFC v4 30/31] hw/arm/smmuv3: Add secure bank migration and
+ secure-impl property
 Content-Language: en-US
 To: Tao Tang <tangtao1634@phytium.com.cn>, Eric Auger
  <eric.auger@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
@@ -80,7 +81,7 @@ Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Mostafa Saleh <smostafa@google.com>, Chao Liu <chao.liu.zevorn@gmail.com>
 References: <20260221100250.2976287-1-tangtao1634@phytium.com.cn>
- <20260221101918.2997679-1-tangtao1634@phytium.com.cn>
+ <20260221101926.2997959-1-tangtao1634@phytium.com.cn>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  xsDNBGK9dgwBDACYuRpR31LD+BnJ0M4b5YnPZKbj+gyu82IDN0MeMf2PGf1sux+1O2ryzmnA
@@ -116,18 +117,18 @@ Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  5SYuJaKzCAgNeAy3gUVUUPrUsul1oe2PeWMFUhWKrqko0/Qo4HkwTZY6S16drTMncoUahSAl
  X4Z3BbSPXPq0v1JJBYNBL9qmjULEX+NbtRd3v0OfB5L49sSAC2zIO8S9Cufiibqx3mxZTaJ1
  ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <20260221101918.2997679-1-tangtao1634@phytium.com.cn>
+In-Reply-To: <20260221101926.2997959-1-tangtao1634@phytium.com.cn>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -144,22 +145,129 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2/21/26 2:19 AM, Tao Tang wrote:
-> Initialize the secure register bank (SMMU_SEC_SID_S) with sane default
-> values during the SMMU's reset sequence.
+> Add a secure-impl device property and advertise it through
+> S_IDR1.SECURE_IMPL.
 > 
-> This change ensures that key fields, such as the secure ID registers,
-> GBPA reset value, and queue entry sizes, are set to a known-good state.
-> The SECURE_IMPL attribute of the S_IDR1 register will be introduced
-> later via device properties.
+> Usage:
+>      -global arm-smmuv3,secure-impl=true
 > 
-> This is a necessary step to prevent undefined behavior when secure SMMU
-> features are subsequently enabled and used by software.
+> Add the smmuv3/bank_s migration subsection for the secure register bank.
+> Serialize secure bank state including GBPA, IRQ config, stream table and
+> queue state.
 > 
 > Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
 > ---
->   hw/arm/smmuv3.c | 27 ++++++++++++++++++++++++++-
->   1 file changed, 26 insertions(+), 1 deletion(-)
+>   hw/arm/smmuv3.c         | 56 +++++++++++++++++++++++++++++++++++++++++
+>   include/hw/arm/smmuv3.h |  2 ++
+>   2 files changed, 58 insertions(+)
 > 
+> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
+> index f0fbc5fc96b..678cbd584e2 100644
+> --- a/hw/arm/smmuv3.c
+> +++ b/hw/arm/smmuv3.c
+> @@ -327,6 +327,7 @@ static void smmuv3_init_id_regs(SMMUv3State *s)
+>       memset(sbk->idr, 0, sizeof(sbk->idr));
+>       sbk->idr[0] = FIELD_DP32(bk->idr[0], S_IDR0, STALL_MODEL, 1); /* No stall */
+>       sbk->idr[1] = FIELD_DP32(sbk->idr[1], S_IDR1, S_SIDSIZE, SMMU_IDR1_SIDSIZE);
+> +    sbk->idr[1] = FIELD_DP32(sbk->idr[1], S_IDR1, SECURE_IMPL, s->secure_impl);
+>       smmuv3_accel_idr_override(s);
+>   }
+>   
+> @@ -2632,6 +2633,54 @@ static const VMStateDescription vmstate_smmuv3_queue = {
+>       },
+>   };
+>   
+> +static const VMStateDescription vmstate_smmuv3_secure_bank = {
+> +    .name = "smmuv3_secure_bank",
+> +    .version_id = 1,
+> +    .minimum_version_id = 1,
+> +    .fields = (const VMStateField[]) {
+> +        VMSTATE_UINT32(features, SMMUv3RegBank),
+> +        VMSTATE_UINT8(sid_split, SMMUv3RegBank),
+> +        VMSTATE_UINT32_ARRAY(cr, SMMUv3RegBank, 3),
+> +        VMSTATE_UINT32(cr0ack, SMMUv3RegBank),
+> +        VMSTATE_UINT32(gbpa, SMMUv3RegBank),
+> +        VMSTATE_UINT32(irq_ctrl, SMMUv3RegBank),
+> +        VMSTATE_UINT32(gerror, SMMUv3RegBank),
+> +        VMSTATE_UINT32(gerrorn, SMMUv3RegBank),
+> +        VMSTATE_UINT64(gerror_irq_cfg0, SMMUv3RegBank),
+> +        VMSTATE_UINT32(gerror_irq_cfg1, SMMUv3RegBank),
+> +        VMSTATE_UINT32(gerror_irq_cfg2, SMMUv3RegBank),
+> +        VMSTATE_UINT64(strtab_base, SMMUv3RegBank),
+> +        VMSTATE_UINT32(strtab_base_cfg, SMMUv3RegBank),
+> +        VMSTATE_UINT64(eventq_irq_cfg0, SMMUv3RegBank),
+> +        VMSTATE_UINT32(eventq_irq_cfg1, SMMUv3RegBank),
+> +        VMSTATE_UINT32(eventq_irq_cfg2, SMMUv3RegBank),
+> +        VMSTATE_STRUCT(cmdq, SMMUv3RegBank, 0,
+> +                       vmstate_smmuv3_queue, SMMUQueue),
+> +        VMSTATE_STRUCT(eventq, SMMUv3RegBank, 0,
+> +                       vmstate_smmuv3_queue, SMMUQueue),
+> +        VMSTATE_END_OF_LIST(),
+> +    },
+> +};
+> +
+> +static bool smmuv3_secure_bank_needed(void *opaque)
+> +{
+> +    SMMUv3State *s = opaque;
+> +
+> +    return s->secure_impl;
+> +}
+> +
+> +static const VMStateDescription vmstate_smmuv3_bank_s = {
+> +    .name = "smmuv3/bank_s",
+> +    .version_id = 1,
+> +    .minimum_version_id = 1,
+> +    .needed = smmuv3_secure_bank_needed,
+> +    .fields = (const VMStateField[]) {
+> +        VMSTATE_STRUCT(bank[SMMU_SEC_SID_S], SMMUv3State, 0,
+> +                       vmstate_smmuv3_secure_bank, SMMUv3RegBank),
+> +        VMSTATE_END_OF_LIST(),
+> +    },
+> +};
+> +
+>   static bool smmuv3_gbpa_needed(void *opaque)
+>   {
+>       SMMUv3State *s = opaque;
+> @@ -2686,6 +2735,7 @@ static const VMStateDescription vmstate_smmuv3 = {
+>       },
+>       .subsections = (const VMStateDescription * const []) {
+>           &vmstate_gbpa,
+> +        &vmstate_smmuv3_bank_s,
+>           NULL
+>       }
+>   };
+> @@ -2707,6 +2757,12 @@ static const Property smmuv3_properties[] = {
+>       DEFINE_PROP_BOOL("ats", SMMUv3State, ats, false),
+>       DEFINE_PROP_UINT8("oas", SMMUv3State, oas, 44),
+>       DEFINE_PROP_UINT8("ssidsize", SMMUv3State, ssidsize, 0),
+> +    /*
+> +     * SECURE_IMPL field in S_IDR1 register.
+> +     * Indicates whether secure state is implemented.
+> +     * Defaults to false (0)
+> +     */
+> +    DEFINE_PROP_BOOL("secure-impl", SMMUv3State, secure_impl, false),
+>   };
+>
+
+As mentioned before, should we enable it automatically in case 
+secure-memory address space is available at realize time?
+
+>   static void smmuv3_instance_init(Object *obj)
+> diff --git a/include/hw/arm/smmuv3.h b/include/hw/arm/smmuv3.h
+> index d07bdfa1f27..79ce7c754c4 100644
+> --- a/include/hw/arm/smmuv3.h
+> +++ b/include/hw/arm/smmuv3.h
+> @@ -78,6 +78,8 @@ struct SMMUv3State {
+>       bool ats;
+>       uint8_t oas;
+>       uint8_t ssidsize;
+> +
+> +    bool secure_impl;
+>   };
+>   
+>   typedef enum {
+
+Otherwise, congrats for the great series!
 
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
