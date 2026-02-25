@@ -4,105 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6EF59EFD207
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 08:11:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17426EFD207
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 08:14:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vv9yp-0007fQ-R0; Wed, 25 Feb 2026 03:10:48 -0500
+	id 1vvA1s-0000Gp-3X; Wed, 25 Feb 2026 03:13:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shivangu@linux.ibm.com>)
- id 1vv9yi-0007f4-9u; Wed, 25 Feb 2026 03:10:40 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1vvA1q-0000G7-8F
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 03:13:54 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shivangu@linux.ibm.com>)
- id 1vv9yg-0001WP-Hg; Wed, 25 Feb 2026 03:10:40 -0500
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 61OKHSkn2615756; Wed, 25 Feb 2026 08:10:35 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=pp1; bh=8wwEFJ8VpyDDqnS/ord2au6YQrydNb81+Zw7+hIB5
- 84=; b=U2ij4mVt4kqqjUIgwE++V16lDpYHBcJQMhEYl8+yRraBCB+RXtvK+8vVS
- 7aeoQ/CKtx6JIHVbQlp7RAthQloPcZkRN+346X+Jm3gKftjs/mKnVOfnt6OypeAH
- qZ9p3xrduG93fVWkeQR1rxeVEIveqkiX8dzmvC4OQlHe4ih+35a4/o02NiMESUra
- PBYUiFuhww66ERUXMexzc/GGXuQomtgc5lWgS2Sh9LJzWUCN/Z4rv4n1DflOSguP
- BzCMDyOvr3DhKB7fMx/oPtDd+Zo02wjCbEIGACf8TIYPbF9etS8o9YRlj9o5cVMw
- wgVqttFOzAKTLp7bieSMlru+mfKxQ==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4cf471yb7m-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 25 Feb 2026 08:10:34 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 61P7nmda015750;
- Wed, 25 Feb 2026 08:10:33 GMT
-Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4cfq1smja9-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 25 Feb 2026 08:10:33 +0000
-Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
- [10.20.54.102])
- by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 61P8AU2X46268684
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 25 Feb 2026 08:10:30 GMT
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 0E8BE20043;
- Wed, 25 Feb 2026 08:10:30 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id DFA9F2004D;
- Wed, 25 Feb 2026 08:10:27 +0000 (GMT)
-Received: from shivang.com (unknown [9.39.31.166])
- by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 25 Feb 2026 08:10:27 +0000 (GMT)
-From: Shivang Upadhyay <shivangu@linux.ibm.com>
-To: qemu-ppc@nongnu.org
-Cc: npiggin@gmail.com, adityag@linux.ibm.com, milesg@linux.ibm.com,
- qemu-devel@nongnu.org, Shivang Upadhyay <shivangu@linux.ibm.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>
-Subject: [PATCH] ppc/pnv: fix dumpdtb option
-Date: Wed, 25 Feb 2026 13:40:37 +0530
-Message-ID: <20260225081037.21990-1-shivangu@linux.ibm.com>
-X-Mailer: git-send-email 2.52.0
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1vvA1o-0001mM-Eu
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 03:13:54 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1772007231;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=IQS3Y5nMTKw5gDI6HAbJElvI3dA9SdUjFn0c8BGqiT4=;
+ b=YjWVrfAeHWfJIsPnor3BZza6hIgM/A9lZHCAIULCzoA8uQb18XC44OuCFO51d1pWIc4kH/
+ 0pLpfcGVynHp49vCnRtUXS1ySgEYM6vBYkofiMLUQXkAxC7ZbvZP2c/7RefK8v3BBvBx+O
+ K9+NGYFJ3IjNTd8x0KQjpV8LM7FFgE8=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-147-dtAGnXt3NmeR-MLCzSwpzg-1; Wed,
+ 25 Feb 2026 03:13:46 -0500
+X-MC-Unique: dtAGnXt3NmeR-MLCzSwpzg-1
+X-Mimecast-MFC-AGG-ID: dtAGnXt3NmeR-MLCzSwpzg_1772007225
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 19BE219560B7; Wed, 25 Feb 2026 08:13:45 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.120])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id D43761800465; Wed, 25 Feb 2026 08:13:43 +0000 (UTC)
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Stefan Hajnoczi <stefanha@redhat.com>, qemu-block@nongnu.org,
+ Kevin Wolf <kwolf@redhat.com>, Fam Zheng <fam@euphon.net>,
+ Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH v2 1/4] iothread: create AioContext in iothread_run()
+Date: Wed, 25 Feb 2026 16:13:33 +0800
+Message-ID: <20260225081336.1639325-2-stefanha@redhat.com>
+In-Reply-To: <20260225081336.1639325-1-stefanha@redhat.com>
+References: <20260225081336.1639325-1-stefanha@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-ORIG-GUID: 9Xz2GNg-ZkwQ27ZKJT5PgUjcYezOL_G7
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjI1MDA3OSBTYWx0ZWRfX/XJeo06qzCOu
- CT3eDQV7vs3mzsUO7vteuhO8QFhp1RchJ+KyFep5oMsUoETBcfbioRpOLmA7heCn143oqT7gYTX
- qwiBfTFJleUpPilmbdJr6KDd05vyll1SJTFUETRKnyY1PFfeNbiZe8lu1Y6W3/GkB6lCrddIim/
- EkKh4MZYvY0jxPDIr95Z76Fo48j3luEpQrZIs1PLgSxIw/7aXgVJ5efwGiVfIfVYAKYktXCGqZQ
- FL6Q1bHtZi0W7wUkON/CCgeot6U+fwX+oE/TaGRrO4Aep1hH92hiixCYvOU0pAF2bzbnPW/qiaa
- 5Ar7Kb1Uxf2lCpyzlgXqdS/hcN1peEX3AeqYruQkVAm5l6wNkFIkYqiAIFOOyDEKW3hRXSsWgbj
- PiJ6i5I1cjrMgEuLpQNFAf/j7iHW29PZxhoUizud5vhj3tvG1OWNq6IJTBUyTbavFX/5AMDKDcE
- /3LKnXAtFWJZOxMtWwA==
-X-Authority-Analysis: v=2.4 cv=R7wO2NRX c=1 sm=1 tr=0 ts=699eae7b cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22 a=Mpw57Om8IfrbqaoTuvik:22
- a=GgsMoib0sEa3-_RKJdDe:22 a=VwQbUJbxAAAA:8 a=KKAkSRfTAAAA:8 a=VnNF1IyMAAAA:8
- a=Zd13O3uLRLaom6fN6REA:9 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-GUID: HOC0fTSEINE06bNluFkr9-od9B1nn5I5
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-02-24_03,2026-02-23_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 clxscore=1011 impostorscore=0 phishscore=0 spamscore=0
- suspectscore=0 malwarescore=0 bulkscore=0 adultscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2601150000 definitions=main-2602250079
-Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=shivangu@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
 X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.358, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.659,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,36 +85,238 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The '-machine dumpdtb' command line option stopped working on
-PowerPC/pnv systems after recent design change [1].
+The IOThread's AioContext is currently created in iothread_init() where
+it's easy to propagate errors before spawning the thread that runs
+iothread_run(). However, this means that aio_context_new() is called
+from the main loop thread rather than from the IOThread.
 
-Fixing this by generating fdt blob in `pnv_init`.
+In order to use Linux io_uring's IORING_SETUP_SINGLE_ISSUER feature in
+the next commit, only one thread can use the io_uring context and
+therefore iothread.c must call aio_context_new() from iothread_run()
+instead of iothread_init().
 
-[1] https://lore.kernel.org/qemu-devel/20250206151214.2947842-1-peter.maydell@linaro.org/
+Extract the iothread_run() arguments into an IOThreadRunArgs struct
+where an Error *error field can be used to report back initialization
+errors. This works pretty well thanks to the init_done_sem semaphore
+that is already used by iothread_init() to wait for iothread_run() to
+initialize.
 
-Cc: Aditya Gupta <adityag@linux.ibm.com>
-Cc: Harsh Prateek Bora <harshpb@linux.ibm.com>
-Signed-off-by: Shivang Upadhyay <shivangu@linux.ibm.com>
+Move iothread_run() further down for proximity with iothread_init() and
+to avoid adding a function prototype for
+iothread_set_aio_context_params().
+
+Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
 ---
- hw/ppc/pnv.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ include/system/iothread.h |   1 -
+ iothread.c                | 140 +++++++++++++++++++++-----------------
+ 2 files changed, 78 insertions(+), 63 deletions(-)
 
-diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
-index 1513575b8f..9861714ad5 100644
---- a/hw/ppc/pnv.c
-+++ b/hw/ppc/pnv.c
-@@ -1261,6 +1261,10 @@ static void pnv_init(MachineState *machine)
-     if (pmc->i2c_init) {
-         pmc->i2c_init(pnv);
+diff --git a/include/system/iothread.h b/include/system/iothread.h
+index e26d13c6c7..9c70c7fa0b 100644
+--- a/include/system/iothread.h
++++ b/include/system/iothread.h
+@@ -29,7 +29,6 @@ struct IOThread {
+     bool run_gcontext;          /* whether we should run gcontext */
+     GMainContext *worker_context;
+     GMainLoop *main_loop;
+-    QemuSemaphore init_done_sem; /* is thread init done? */
+     bool stopping;              /* has iothread_stop() been called? */
+     bool running;               /* should iothread_run() continue? */
+     int thread_id;
+diff --git a/iothread.c b/iothread.c
+index caf68e0764..6e79c02d02 100644
+--- a/iothread.c
++++ b/iothread.c
+@@ -36,46 +36,6 @@
+ #define IOTHREAD_POLL_MAX_NS_DEFAULT 0ULL
+ #endif
+ 
+-static void *iothread_run(void *opaque)
+-{
+-    IOThread *iothread = opaque;
+-
+-    rcu_register_thread();
+-    /*
+-     * g_main_context_push_thread_default() must be called before anything
+-     * in this new thread uses glib.
+-     */
+-    g_main_context_push_thread_default(iothread->worker_context);
+-    qemu_set_current_aio_context(iothread->ctx);
+-    iothread->thread_id = qemu_get_thread_id();
+-    qemu_sem_post(&iothread->init_done_sem);
+-
+-    while (iothread->running) {
+-        /*
+-         * Note: from functional-wise the g_main_loop_run() below can
+-         * already cover the aio_poll() events, but we can't run the
+-         * main loop unconditionally because explicit aio_poll() here
+-         * is faster than g_main_loop_run() when we do not need the
+-         * gcontext at all (e.g., pure block layer iothreads).  In
+-         * other words, when we want to run the gcontext with the
+-         * iothread we need to pay some performance for functionality.
+-         */
+-        aio_poll(iothread->ctx, true);
+-
+-        /*
+-         * We must check the running state again in case it was
+-         * changed in previous aio_poll()
+-         */
+-        if (iothread->running && qatomic_read(&iothread->run_gcontext)) {
+-            g_main_loop_run(iothread->main_loop);
+-        }
+-    }
+-
+-    g_main_context_pop_thread_default(iothread->worker_context);
+-    rcu_unregister_thread();
+-    return NULL;
+-}
+-
+ /* Runs in iothread_run() thread */
+ static void iothread_stop_bh(void *opaque)
+ {
+@@ -104,7 +64,6 @@ static void iothread_instance_init(Object *obj)
+ 
+     iothread->poll_max_ns = IOTHREAD_POLL_MAX_NS_DEFAULT;
+     iothread->thread_id = -1;
+-    qemu_sem_init(&iothread->init_done_sem, 0);
+     /* By default, we don't run gcontext */
+     qatomic_set(&iothread->run_gcontext, 0);
+ }
+@@ -135,7 +94,6 @@ static void iothread_instance_finalize(Object *obj)
+         g_main_loop_unref(iothread->main_loop);
+         iothread->main_loop = NULL;
      }
-+
-+    if (!machine->fdt) {
-+        machine->fdt = pnv_dt_create(machine);
-+    }
+-    qemu_sem_destroy(&iothread->init_done_sem);
  }
  
- /*
+ static void iothread_init_gcontext(IOThread *iothread, const char *thread_name)
+@@ -176,47 +134,105 @@ static void iothread_set_aio_context_params(EventLoopBase *base, Error **errp)
+                                        base->thread_pool_max, errp);
+ }
+ 
++typedef struct {
++    IOThread *iothread;
++    const char *thread_name;
++    QemuSemaphore init_done_sem; /* is thread init done? */
++    Error *error; /* filled in before init_done_sem is posted */
++} IOThreadRunArgs;
+ 
+-static void iothread_init(EventLoopBase *base, Error **errp)
++static void *iothread_run(void *opaque)
+ {
+-    Error *local_error = NULL;
+-    IOThread *iothread = IOTHREAD(base);
+-    g_autofree char *thread_name = NULL;
++    IOThreadRunArgs *args = opaque;
++    IOThread *iothread = args->iothread;
+ 
+-    iothread->stopping = false;
+-    iothread->running = true;
+-    iothread->ctx = aio_context_new(errp);
++    rcu_register_thread();
++
++    iothread->ctx = aio_context_new(&args->error);
+     if (!iothread->ctx) {
+-        return;
++        goto out;
+     }
+ 
+-    thread_name = g_strdup_printf("IO %s",
+-                        object_get_canonical_path_component(OBJECT(base)));
++    iothread_set_aio_context_params(EVENT_LOOP_BASE(iothread), &args->error);
++    if (args->error) {
++        aio_context_unref(iothread->ctx);
++        iothread->ctx = NULL;
++        goto out;
++    }
+ 
+     /*
+      * Init one GMainContext for the iothread unconditionally, even if
+      * it's not used
+      */
+-    iothread_init_gcontext(iothread, thread_name);
++    iothread_init_gcontext(iothread, args->thread_name);
+ 
+-    iothread_set_aio_context_params(base, &local_error);
+-    if (local_error) {
+-        error_propagate(errp, local_error);
+-        aio_context_unref(iothread->ctx);
+-        iothread->ctx = NULL;
+-        return;
++    /*
++     * g_main_context_push_thread_default() must be called before anything
++     * in this new thread uses glib.
++     */
++    g_main_context_push_thread_default(iothread->worker_context);
++    qemu_set_current_aio_context(iothread->ctx);
++
++    iothread->stopping = false;
++    iothread->running = true;
++
++    iothread->thread_id = qemu_get_thread_id();
++    qemu_sem_post(&args->init_done_sem);
++
++    while (iothread->running) {
++        /*
++         * Note: from functional-wise the g_main_loop_run() below can
++         * already cover the aio_poll() events, but we can't run the
++         * main loop unconditionally because explicit aio_poll() here
++         * is faster than g_main_loop_run() when we do not need the
++         * gcontext at all (e.g., pure block layer iothreads).  In
++         * other words, when we want to run the gcontext with the
++         * iothread we need to pay some performance for functionality.
++         */
++        aio_poll(iothread->ctx, true);
++
++        /*
++         * We must check the running state again in case it was
++         * changed in previous aio_poll()
++         */
++        if (iothread->running && qatomic_read(&iothread->run_gcontext)) {
++            g_main_loop_run(iothread->main_loop);
++        }
+     }
+ 
++    g_main_context_pop_thread_default(iothread->worker_context);
++out:
++    rcu_unregister_thread();
++    return NULL;
++}
++
++static void iothread_init(EventLoopBase *base, Error **errp)
++{
++    IOThread *iothread = IOTHREAD(base);
++    g_autofree char *thread_name = NULL;
++    IOThreadRunArgs args = {
++        .iothread = iothread,
++    };
++
++    qemu_sem_init(&args.init_done_sem, 0);
++
++    thread_name = g_strdup_printf("IO %s",
++                        object_get_canonical_path_component(OBJECT(base)));
++    args.thread_name = thread_name;
++
+     /* This assumes we are called from a thread with useful CPU affinity for us
+      * to inherit.
+      */
+-    qemu_thread_create(&iothread->thread, thread_name, iothread_run,
+-                       iothread, QEMU_THREAD_JOINABLE);
++    qemu_thread_create(&iothread->thread, thread_name, iothread_run, &args,
++                       QEMU_THREAD_JOINABLE);
+ 
+     /* Wait for initialization to complete */
+     while (iothread->thread_id == -1) {
+-        qemu_sem_wait(&iothread->init_done_sem);
++        qemu_sem_wait(&args.init_done_sem);
+     }
++
++    qemu_sem_destroy(&args.init_done_sem);
++    error_propagate(errp, args.error);
+ }
+ 
+ typedef struct {
 -- 
-2.52.0
+2.53.0
 
 
