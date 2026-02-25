@@ -4,164 +4,164 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09E74EFD205
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 08:05:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C46D9EFD205
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 08:05:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vv9tC-0005DM-St; Wed, 25 Feb 2026 03:04:58 -0500
+	id 1vv9tC-0005DH-T9; Wed, 25 Feb 2026 03:04:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <florian.hofhammer@epfl.ch>)
- id 1vv9t3-0005Cc-Cv
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 03:04:50 -0500
+ id 1vv9t0-0005C7-1W
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 03:04:46 -0500
 Received: from
  mail-switzerlandnorthazlp170100000.outbound.protection.outlook.com
  ([2a01:111:f403:c213::] helo=ZRAP278CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <florian.hofhammer@epfl.ch>)
- id 1vv9t1-0000eE-J5
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 03:04:49 -0500
+ id 1vv9sx-0000eE-52
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 03:04:45 -0500
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=k2+VT+1Oh8EdrfIQjH4+VN86A2SdrnjZfYaO4IvwxviumzAICEqxmRuZBGQrVoc7EeTyxaimylhmbtAAT0ulqL7Vb00RuxC1e2Acw/y2DUDZ71xB1HtNRQO4q55aLdcjk9Gupghxx5RWTtFv/19IFALPPHcOI5h8VuU/tP+w8Ia89+7R799y/Rr11LQxxAV8RdMGfwa0vn2gXcHiwJwMe2LZgC3nU3Glia55Sy8XaVDSkiFd4HMVGFBnNFYO4DOANxGwMIaaY49X6nwqfxSK4jP5GAj+ykUXv2hLdMVFQ4TAaQGZnP7yN46kK1oxq2hTlfYjTkVtLQ84srb0t95grQ==
+ b=ZR6T9FrVCWcrZ7BU92uXBmtrGVbIpSJ4sSxEZFqk97NS2ZP3vUV6HE8UIAU9ccfVRUMrXKG/ncIeKE/bq5Pr0f75gLyigiI1X8AQ9tXbvYQxVM98NbIAaU2QZ+DHHqdBOxYPyRunUr9nk5zDkkXjRJi8R8jrZqs1hJ6xfQ1xwcc3O9hi8HOXIQpEM9SkV5e6ayr7vvHFhUEb/nRYsxARSMzmcIvEDcNcGkgfZb3H9LmkPKqQt7S30mJ2zRbZD62SIwanCxs3ccQ0BCfiW4ukkTo60Tz30YXAuCb/uvoVtzumsoummfyAPBxe6VEZgNw8jzd8HrJ2JK+BnvVIl/k2Zg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=HcYyamdBhVDPyQVQK/UMCL+bjgd9fBd0L34Dg0x55tI=;
- b=TPe0Z8TlkFncYUYdbYB6+uDDZcpOG3fdkqEFtBqvNnlVPn3tx0CDwGcjQNLVVSHranEamYfaGOWy2MdLQDnkcsPaXlLz+BQocff76mpweviPsLIEp+ztNx4QY/jQXRRKOCZyPNCuPq/U4McqvXsCMybW3gm6tg4WQE0WisjHrkP7nCKjNNL9HLdq4oyuYmGG6uWCY+cNg/wuKyqB2yMzcAqSMfZRT+8v+Yov1jjcFSbzEDL7la4aEstY1Qkf7nbXpaYRImZQRpsuwk1RYVOIeAalDfpuMZeg0QMUEGclfOBb0fN6OhRlLs2erK2pm7iVF+VoBcKIZJ+BgSsNE6b0QQ==
+ bh=yh3q3DJaWbtvPL9hzoYAuvtiKUf8lKW17hKRtw/4n04=;
+ b=bqAo/dMpizpLykjQeCdeq2HH318HOOm8d33BkHHfrjuOz3qGVOBpHDXXCEjM9klQWGS3WCJ/kigcxqlSW2qwNrzjonwnvAryJwyI6d5crku5Wlg5Ggxg0N+zZlUrbg4GGPAomHIuAfmh/xiqVBAfVMkUrIRG0Ixn9usOivbomVyxWZfmf0BWuEBIhL6bxvymeZ6HFl7JP2GifwrU+x/wzjCHGm8ljYnfAvogDQaYcPAPx6/Wwx+RjUvu0MYFWvuRSdzEbWdf2DpZTcU8OfGiMEMkmFVAYAAPXwWm259zXUZt2ztuFPVeRr3bi2h27r4vcrq9NJDIsvODwpLrOOMAlA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=epfl.ch; dmarc=pass action=none header.from=epfl.ch; dkim=pass
  header.d=epfl.ch; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=epfl.ch; s=selector1; 
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=HcYyamdBhVDPyQVQK/UMCL+bjgd9fBd0L34Dg0x55tI=;
- b=d5pDRaOmBC2sRV9uTdELA/K1kU3Ey0NovUC9tLW2PaOyA32P0A55oUl/9YHFkShL2Hlslpj8M/6D+zwUSN0+/tDyDc6nzBQ5eeStn8AeM2oxael9SwEouJWc173XUaqg5HjzISjjcQ4Wy922fsnSrlMZHnddW9ypzZqjGM+yM4I=
+ bh=yh3q3DJaWbtvPL9hzoYAuvtiKUf8lKW17hKRtw/4n04=;
+ b=mYy8F8m9P042k/mM/D1UthJnXfS0hrICr+A0Tm6YPfuAXbwEnFD0dofguVS259ulPXK4hQsxzQRQMY8dbG3MD/Sm8AjuseS3vP1zp/xnKs590ly6r/krQhXWup1zIyFT2Xkq/jK4QCGrPZdOLjtoe1nlzUYVK9ID3Ko77XyEf00=
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=epfl.ch;
 Received: from ZRH2PFAD84B9AF9.CHEP278.PROD.OUTLOOK.COM (2603:10a6:918::220)
  by ZR3P278MB1238.CHEP278.PROD.OUTLOOK.COM (2603:10a6:910:73::6) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9632.23; Wed, 25 Feb
- 2026 08:04:30 +0000
+ 2026 08:04:29 +0000
 Received: from ZRH2PFAD84B9AF9.CHEP278.PROD.OUTLOOK.COM
  ([fe80::80ea:3d03:40bf:998c]) by ZRH2PFAD84B9AF9.CHEP278.PROD.OUTLOOK.COM
  ([fe80::80ea:3d03:40bf:998c%6]) with mapi id 15.20.9632.017; Wed, 25 Feb 2026
- 08:04:30 +0000
-Message-ID: <5e129cf8-6498-44a1-b09f-41551ee11974@epfl.ch>
-Date: Wed, 25 Feb 2026 09:03:52 +0100
+ 08:04:29 +0000
+Message-ID: <1b6eef52-d6d0-4b11-a91c-6d8b43f4e3f8@epfl.ch>
+Date: Wed, 25 Feb 2026 09:02:56 +0100
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 4/7] tests/tcg: add test for qemu_plugin_set_pc API
+Subject: Re: [PATCH v4 2/7] linux-user: make syscall emulation interruptible
 To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
 Cc: alex.bennee@linaro.org, richard.henderson@linaro.org, laurent@vivier.eu,
  imp@bsdimp.com, berrange@redhat.com
 References: <909b0a4f-9759-4e27-bba8-997ae2f41bd6@epfl.ch>
- <2ccc79ee-48ab-4097-a9cc-4d2b79ab9a8a@epfl.ch>
- <e39a559d-337a-48a5-8e68-27d494ad1ec8@linaro.org>
+ <8096590c-bf13-4e5e-8167-ab38a37180bc@epfl.ch>
+ <538ada16-07b8-403c-b1fa-f42db7cfc195@linaro.org>
 Content-Language: en-US
 From: Florian Hofhammer <florian.hofhammer@epfl.ch>
-In-Reply-To: <e39a559d-337a-48a5-8e68-27d494ad1ec8@linaro.org>
+In-Reply-To: <538ada16-07b8-403c-b1fa-f42db7cfc195@linaro.org>
 Content-Type: multipart/signed; protocol="application/pkcs7-signature";
- micalg=sha-256; boundary="------------ms060000040904060508090200"
+ micalg=sha-256; boundary="------------ms020407030705050204060908"
 X-ClientProxiedBy: GV0P278CA0072.CHEP278.PROD.OUTLOOK.COM
  (2603:10a6:710:2a::23) To ZRH2PFAD84B9AF9.CHEP278.PROD.OUTLOOK.COM
  (2603:10a6:918::220)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: ZRH2PFAD84B9AF9:EE_|ZR3P278MB1238:EE_
-X-MS-Office365-Filtering-Correlation-Id: d5f72f41-822e-4ed3-dc29-08de744480cd
+X-MS-Office365-Filtering-Correlation-Id: 53d18067-a03a-49db-e0bd-08de74448065
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
  ARA:13230040|376014|19092799006|366016|786006|1800799024; 
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?RmIyZXdQNWlvU1N6Zm1nYkRRdjBzbXI4OUlyRGNaV3poUDUyMWFZNU14cytu?=
- =?utf-8?B?eDhMbXViTWdNQUJZSzQrWWgxOEF4cU15bFBDMmI2WDNUWTkvb2pka3dBWWlI?=
- =?utf-8?B?clNSMTN2ZEVzbGUvQ1dJQ1lZVnhaVGUzeFg5L29LeGdNUGozb2JDMGZkbEdM?=
- =?utf-8?B?eTNEazhxbFI2cE94bEZKeHk4d2ZFWDRPMU9HK0JGVTVGV1RTK1NOK0FCVlFa?=
- =?utf-8?B?K1pZcWxkaXNzMk94L0NMVGFmdlZGd2NWS1RmQTlEZDh2cVgyUmZVTjZqM3BD?=
- =?utf-8?B?NWhheDVmeFlITTBqbW0rUUdnZGpCVUQ5OW5Na2MyT2FtSzdOb1UycSs4ZXFE?=
- =?utf-8?B?Z3IzQ2dKWGJuYVpXd1FhakIrSzdmQmliZ3RsZVpBU2JRTHd1dFJ4UmlNRFpl?=
- =?utf-8?B?am1IVUFlWTQzKzlwemZka2dJVThBRCtlSjFCQWt4Vmd3akZsUVdsOHRkVjFk?=
- =?utf-8?B?UFJnUWp3RW9KYTZOVnh3YlhNYWtmWXovVSsybWt0YzUyQk1lVkx5TUdCcGNQ?=
- =?utf-8?B?NFBlMU9YbXJCdForellnTXJ2clR4UmJEeTJiZ2dud1R6QlR4VWhUcFpYWXhk?=
- =?utf-8?B?WTBHd0VqT2NKTWNzc2NRMzhOS2ZSZGhCVkJqV3FudERMczg2TWI4dVhLdkJr?=
- =?utf-8?B?bXpjNGpPZnZaUjBSSzl3UGFPbGVJRjN6dEt3MXAxZTBIV09veVNJNXRJNnNj?=
- =?utf-8?B?ZHF4RkRuUDA0N0JkR1RaOVpPZXdXekw2cUpzbmVma3RjcUFEVnJmNXRzSmh4?=
- =?utf-8?B?ZWt6U0VqMlArVWZ4enRZVkdCSEQ3S1ZCeEFzcGdEY3JSTTgyOU91Z1hNdUJj?=
- =?utf-8?B?SS9wSlZHVjJHb1VUNFI2UW5BdDFNTmtZSlBoOTZkYXVxVkpkbVA1MXdwWmtw?=
- =?utf-8?B?dkJPREQ4T2lmb2x4U1FBS2thL3YxOG1tc0NjN0l4N1FTemdhUCt5UzRMRHo4?=
- =?utf-8?B?T3RkTERhUi9TUDNJdmZNM1BmeHVWMnZpanJEMkJNWWdQald5NTFiMXh2NitE?=
- =?utf-8?B?bGlNekg2RUtOYk5DWWc5aUk4UTAyMXlwa0xLbzZwTWU2VmZMS1VudUpHaUF6?=
- =?utf-8?B?bVhqZ2NUSHZCanY1Qzh2RXJ6T3BCVFJ1eVJpbmd5L0YxcVFGWjlpak5xNEtw?=
- =?utf-8?B?U0RzVG9aSDVPb0tZUW5RcHJ0eUtWU0Y3L1h6eDBHNWYzelFSS0lXRWJ4dlRv?=
- =?utf-8?B?eFlBUG4zZVVMRWd1NFdaaEE4elVRNGlUcWw5MVNzMXVieDdrejVGek45N2Nt?=
- =?utf-8?B?aUlWcG40MGNlMVdIcG9SbGs3WWFxRUdVSlJhTWdoMTF2N1c2Zy9LR2NoUnlF?=
- =?utf-8?B?TE0wRVREd3ZORkdwaW9XQTJIZ3ZSUVc4TmRlVmo4djZRdGJUUnBvS0M0M1Vx?=
- =?utf-8?B?dzFNL0k3T21BNUd3Tk94R2ZhVHNDOUFpZE5CdVJKSHdpR09DcGdPeDdkMTVI?=
- =?utf-8?B?UjZKOEZmczNwKzE3ZHY1dFpNQmI3UzkzUVFGMnI2aEJFVXF4aEFQeG1LekpQ?=
- =?utf-8?B?L3JkWVdwazBDazRIU0xUQVZTaHFvak51eDhBRGc0UjhnbFdtYWQvVFRRNWpR?=
- =?utf-8?B?R3hYWG8yaUxZSnhQRDlFa3R1QjVDek1hZkJmTmNKWDhsK3F3bE9lL3F3LzMw?=
- =?utf-8?B?QzhaUU5jaTdPV1NZcTF3RE5aTUl4MUZpWmpHN2pZR2Y2LzNHcVhvRGlhaTEw?=
- =?utf-8?B?d1pac05FdHNqUHpyOG00a243NVVOWkxHVFR5ZGJ0WnpRcTMyU1B5aEVWQUdO?=
- =?utf-8?B?WGRJUUs3M1ZtbG5ab2NKSnBNdC9PM3FnRlUxZEV3SlR0amZoRE1EbUZTNGNY?=
- =?utf-8?B?cXAyTHU2ZE8xUUZ1OE9raXJXSzQ2Mkl0Nm5ReG4xRjEvL1VzYVdOZTJDenJQ?=
- =?utf-8?B?ZFJwWjVzazhtSTZiUDh3Kzc3VlkvQUpHYktYSTdHYVhCNTdXYTB5N09FWCta?=
- =?utf-8?B?Wnd1WXg0ZDhWTzNtWEYrQjNnaWFoOHRSeVBzTFVsTS9TNVdmclAySUM1dWU1?=
- =?utf-8?B?S0JzQ3RkU29BT2ZkRkhqUzcrek9adFBrREFiOWhRazlmTWk3SEllelF6RHQz?=
- =?utf-8?B?N01QV1JWaC9tUjlxYzQwRHJ1ZnRiNDMwVFdRTkFxNUJzY2JVa01XZTNGcTBT?=
- =?utf-8?Q?yRpc=3D?=
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?OExHeEZDMkswbFhpZ0MxY0crY0VUcWQzNm1TV0I2V2NzZ2VFbTNheWdVN2th?=
+ =?utf-8?B?UitOVTAySlBYWUF4M1NaSjVTUjNSeHdSZStZN1crOS91Z0U4Wkhoc1FDZjda?=
+ =?utf-8?B?RjU4NDZmSUpibXIxK1AwRmMxMjNLeDZRWHFhNVZCL2J2SVpmKy9nNldDakxI?=
+ =?utf-8?B?Z3BzaC9BNCtWdUxFMTVJTmRIMDIzNHVWeDFBMSs4aElSZGh6SzdwaGlLQUNJ?=
+ =?utf-8?B?WndzYnlQOThaeFpLU0NYUmpoVTNGbS9XY0JMSDJYQVVwYUM2WFExS21Xamhn?=
+ =?utf-8?B?c3V5RGNObGk1cHZUL3RxVm1rSlJwN0xUUGc0SDhuWnVoS1llaEs5ZHc5SjRz?=
+ =?utf-8?B?OHdYbmY3T3doV2huUUtnWThhTXE5KzFmSHoxRWpuenJTTWJIUUlpNWk4QXow?=
+ =?utf-8?B?SWRWUlh0RlN5VVRWbFJXTzBPaGpHYzRRZUZMNFhoSVBvQTI4czNtbzJaWnJW?=
+ =?utf-8?B?MGlYM1M2TGNlVEQ4UjhZRndYRUo3NUZORU8yZFFpczAxdDJRbGxyOTU3Umwx?=
+ =?utf-8?B?MG9NV2ZPNzJxTDNSRmFldnMrVjB4NURUbGlGYXYwZG5QZkJTem1Kai9LRjNO?=
+ =?utf-8?B?bWx0bVQ2YUcyT2lDVmlGWW1JVmt6L3JXZEg5ajM2dXJuRkF2RXFtc3NUNm9q?=
+ =?utf-8?B?OW43MjlldS9DUGgxNmJYcW9QUkVCUVY1L056cTh1RFU0eVZ3anI0OCs3cVdu?=
+ =?utf-8?B?Y2YxSEJidEZOaEJXem8yQ3ZpV1FOQm11d1RqazdXTmxGcy9vTXB6blJBVk9x?=
+ =?utf-8?B?Y3kxSEtqMnduTk4xS3VpeVpoeFBYM09XM3FyaUFRbUp2MTdQTjNnZTgyK3RH?=
+ =?utf-8?B?d0FIQzdyVC9KSEp1Z3orL0dDejRhVjBnRVJvd3RtaFhqdHA4aHBsZXNDWmJO?=
+ =?utf-8?B?Vm1RVXhmYUY1SjdsS0V4ZHFRbmZoYTZXakVmZ1kzWVk2c0R3RFRwa3RPYnR6?=
+ =?utf-8?B?dHpjQWsxN2VjK25xRkJhQ2NEb0F0U3hOSW83K3dvdGVkdVRkSldkc0ZWdmNt?=
+ =?utf-8?B?Y3RsR0h2Z2tpRWJ0c0pISk5tQzZNbit3S0pxN1QwRjNqQURiMlg3UDlkakdQ?=
+ =?utf-8?B?dzcrbGRPWWpxUC9wdnNmV2NxcnZnR3ByYnh6WmR5UlJTalkxUXlPVjFTWkJy?=
+ =?utf-8?B?QnhWRkFWaWJKRTU1SmxpZDkxdVBmNWpxWVc0K0FJeVVXWXBpRERJQlVnello?=
+ =?utf-8?B?cVBmSUVsbkV6MlpXaXhGOGY5Y3lRd09TN1VBME81am11N3hNb3BZRk5OMysw?=
+ =?utf-8?B?OXRkcTduNWMza3JTYk9PV1ZGei81S2RjYlV2RDBPYzFBUytsdEVVZTdBWVJC?=
+ =?utf-8?B?SXpYZkZjc09tT0tKK2FqZWlVd1VrME40R01qR3BpYWJnZEJCUnZaRHI3MkE3?=
+ =?utf-8?B?NTZ0VmxFUHpITk0wUUF6K3p1Und3VFcxUms0azQ5Uy9JS2wwSUd3K1N3YkJy?=
+ =?utf-8?B?eGUwcjY1eUZiYnIxdmFPMkl1Nkx1ekduV0UybW4ycnpYakl0WmhoVVFxNWpV?=
+ =?utf-8?B?bUUrRWoxSFJkdDhPMkVtdjQxdUJIRmZkRnRCcWJabVBpN3k1RVEwaVdhVWFo?=
+ =?utf-8?B?ejY0emJqMVNOMWQrM3BuSjd1Mm1DN3AwWHFMZkRMZ2puZFgvQVl2aFZyeHlQ?=
+ =?utf-8?B?Y2F3V0UxQWkrWlJhVW5RMURLaSthZzVCL2VhbUwrRHp2ZjNwOThMdkF4M0kx?=
+ =?utf-8?B?NjYyYjY1Si9IY04vVjlUcml5aWtYYjBGM1NDQ0dPZC8zdFdacklHcEJFQVN0?=
+ =?utf-8?B?blkrSU9HRDBGdmViM0ZoOHZlbmx6RXRiaTRYRkFlLzFwaHVHZDhyTXVMYUlT?=
+ =?utf-8?B?WkVZU0NyMVZRYjl4T0dZVG5zUkdra2EwUWZRQ0w5R1lHYzlLNUJFSGpSTS9p?=
+ =?utf-8?B?L2J5eGhOaU54SC82NVRnc2Q1Tm5qZEFYUUg1Q3hlZVBSWWpEYjkyT1JBSjAr?=
+ =?utf-8?B?VnhnUVJCdTNYL1JOZUh4b0lHMTUwN0h5QTltU2NEcituQVhGY2NYelRNRUVL?=
+ =?utf-8?B?RHRDaE1TR09kU20xU2hHK1NUdUE0UzlCSWlXRldBMThTVmQweVg5UGhQS0Vt?=
+ =?utf-8?B?WHE5bXNiN0VYeldrdlhWMHJXYW5UOFJrQjdBc2ZQREE4NllUWllBRW9SOUVY?=
+ =?utf-8?Q?hqRM=3D?=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:ZRH2PFAD84B9AF9.CHEP278.PROD.OUTLOOK.COM; PTR:; CAT:NONE;
  SFS:(13230040)(376014)(19092799006)(366016)(786006)(1800799024); DIR:OUT;
  SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?bi9zaFo3Ukw4dWgreVNhVjMzYjVBN1hQbi9BS1NGQ3pUNmt0VHF0eWtkQ3p4?=
- =?utf-8?B?NCtBbVJVQkZZY3JYcWxuc1lFVE4zZUYrOVAwb2p5UkxqdC9WaUdPN2lPZVlq?=
- =?utf-8?B?QjFDQXlXRGh2aDEvdVRtWXJ3QkJBSm1YdU9UREpRbG9UQVNTdDJ1ZWRQUWhy?=
- =?utf-8?B?QUpSOWlqMUllS01XY1VEejFLdjlIQloxcFRaZDJjRDY1bytEZEJGT24zUm4x?=
- =?utf-8?B?WE5HZmZiZE9XMlY1eExuSFd6amxpanhnSmhldFJwTFlNbWx3ZGF6aXIvZWhL?=
- =?utf-8?B?c0o4MUVDeWtFUjZBNzFiNStCa1I2USs2OXhjQ0g2bTJ3VExJaXgzaTBKOWhm?=
- =?utf-8?B?M25GMXJUWThpQnV6ajNjdmc5a0srLzR4SVc3Z3ZMMjFEK0FCR0NuM0lPN3NZ?=
- =?utf-8?B?RTdqMUIxMUgvUEZFMkh1Tk1lMVVYVUtaSmh0UlFGNDRWcTY1TUlDYTdCbk5o?=
- =?utf-8?B?dG9wL3pMUnltb3ozNmdHdmJkOEtPaHVNOXA5SzBnK3M2VWZYNHBIcElzWlMv?=
- =?utf-8?B?SzZQUVBKV01kNXdRbGtLR1FGaFpnMEN3WHowSnNnYzk3WElVcHVqL0NnL2hO?=
- =?utf-8?B?WHlkSWYvaUoybkNQNXdkRUYvbVFIWDJTZ0ZkUVI5WEtpRDh5UVFHQmprTGxz?=
- =?utf-8?B?RyszeEFmdE55ZWt4N2hPOHRxU2pkcVM4bGZyNUwvM2pKb1BVSWpmZUFiQmxM?=
- =?utf-8?B?VkV6Wk1hc2x0N2x3SmFCWGR2eUlpUkZmYUNSOHRlOFNDRCtjNVlzVnVOYVFC?=
- =?utf-8?B?aEsrcDM2QVFVTnBoSXNWVGRYVEV3Slk5a085V2RUYm9tV09MbThXd2o5aUpt?=
- =?utf-8?B?UXVFYU5NVjZ6WWlLK3lSVWFSOGVJc25JaGNJZzhFbzhIR0NCaEhLTzhQZTY3?=
- =?utf-8?B?V2RTWFFjWTdhckg4c0FqSDZYNytIOCs4YnNjcG9udTN3TlJyTFpyTFJYR1d5?=
- =?utf-8?B?UlVYenA0N21iQkpsbDlBcy96L1RXVS80akdPcHEvODU1MTFrWXdhQUhmM3dO?=
- =?utf-8?B?NmQzYVhVWEZtRjZaVWhIM3JhQWNPOXVBQW50NWVLdS92MVcweDNLVEk4eHFN?=
- =?utf-8?B?SThJeUxsaklyQzQ3aGxvSTAvNlcxSlM3L2xqdXJhYURWNVBPd2taRDk4RHdt?=
- =?utf-8?B?K1pFQm15Qng0dkpJS0JyUHY5RW1oMlRuV2ZVVjNmdURZY29VMGFWc09UZUJO?=
- =?utf-8?B?TzZ1Y0FDNFdZVVVSODBsb0hlcFgzTVVXaEdlYWl2T0c2N3BoZW1qNnJLWFlG?=
- =?utf-8?B?MExKMjAwNHJ6cC8yWGs3aE5OOFpBWWRoV2diUE9GWVFya2czZnJEM01BRGQz?=
- =?utf-8?B?UWV1dTUyVy95VUo5VXpJSHRZK0lFUUpYMVlERGVsVHlNQnQ5cE9KZVhYYWZ6?=
- =?utf-8?B?WXpGK004TzhrUFlDdU1JVExIbVlQOVZnbGZSeHg5WnppY3V1b2RSR0xjK1F3?=
- =?utf-8?B?SWttVjRVWXYrUFpYNkZYdi9ZM2JEUEJ5MkxReHJ3a29jcXhqdDFHcitpZGxl?=
- =?utf-8?B?cUVsRUN5VURHTFV3bGNtblF1ZG02YnpPay8vblM4aVl5Q0ZXV3BmUWdJTG1k?=
- =?utf-8?B?eExQL1UwamE4RWg4QWxWOUlFZXI2UGtpRHZUMXZvQnZqcDJoVkgvMEVZa3dF?=
- =?utf-8?B?OHcvMVREV25hNDB1VHppUVFoWTA1NXFNMU8rb2J0UDg4RlB1WTgyR0x6MkZI?=
- =?utf-8?B?V1ZXeDh3MzUyT29jcDlYajZrYkdYSTNTcHM0VFFhcWl6ZGFnTWNaVVZsM29m?=
- =?utf-8?B?WVNKUDBseU9Nc3R3a2s5NkVwOHIxMGJXaEtXMk92NXYxTnFacytFd0pGVE9j?=
- =?utf-8?B?Y21EL0FVdHJSdkxYdmRUb1ZoYmtraUROTUhDdDVhMyt6aWR4MzIzZkdWTXJH?=
- =?utf-8?B?eDhVUU0wTUFRejZZUDNDOUdUckhXdHNNQzN4Qzk0NzIxZG85eDFVSEpyOEJ0?=
- =?utf-8?B?TnZWb1RBYmdHUUZjSVBUaGJYTmdRei9aN1gyeWxXSjgzV05GTDhIcGtvOXRo?=
- =?utf-8?B?dUhrQnRqYVhDVlNBMnZlVkcyKzJtdUgwcUxyeTVSVWprNFRHc1VEMDFjMUcv?=
- =?utf-8?B?QU9OOVlSOGwybzAvbFFlNFYrTFdYYkRpT0g4MEhVejdoV213bXRjK1UzQXBs?=
- =?utf-8?B?elVDcnVZbzFJTHVlU3hScUdsNVI0cVdFU3NiSm9qTjVYNFRNVFBYbmVnWXgw?=
- =?utf-8?B?RHcvdDFhbmVWVG5vV2wrczdVaGM4OVNIdXlsQ0xwNndZZ2dROEhvMG12UDYz?=
- =?utf-8?B?YjBTN0c4R21SbzE0YW1zeTlFSklsME85MXBGNjhZU20wajFmSDE5NzZSd2Nw?=
- =?utf-8?B?UUYzV29VdURpZXRxdzFxOTJPRzVXZTVuMmFiZ1IyS21VZEJWWmY1Zz09?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?a0IxN2RBa2F6Z3M0Wm91eDMxdDdSTktBUTM4ZlR2a1ByV3JPZHg2TGlob2p2?=
+ =?utf-8?B?QlM5SDR4R0IyRVlrWG9ZblF5bUNRN1laSzE5SzJ6SVl1NjNEbkxCRFhXTlFm?=
+ =?utf-8?B?WVp4TldKdTRlQUZ2T0xRbTB1ZHZORi83SGp2ZnpMMjM1cVJna282SFM3KzA5?=
+ =?utf-8?B?aThJTlFDZThRMFJnY2pzZHcydFU5NUhIZHMzeUNQZVRSZ1NaeVBVTlpNMysv?=
+ =?utf-8?B?TUlnYlh6M1M2QjVJOUdSZGtTM2tLajlYMzBCU0pPRmlBT3RwK0Q4cytvOG5K?=
+ =?utf-8?B?RGRxckhlT0hIaU5iR2U5NHVVRG5sTDA1VFhIQk1zWnlaME5nWWthVHBld2Jm?=
+ =?utf-8?B?K0NUVXovRmtmcnZueFpFMis3U1VOUEE3ZEpHcEpJSHY5Zy9Wa3NXV21aRzRZ?=
+ =?utf-8?B?bVBXdno4Um1zMU9lWHFmVGtkVTlVWEp6eTgwQUhPWVhHcVFIUkY3aEszeFBM?=
+ =?utf-8?B?RXUyNGl0WCtZQUQ2VlRBT1RiUDBJKzJOTkhhT3ZtRnlZNjFkbVppYkQzSnNv?=
+ =?utf-8?B?cUk1V2xhR2lJTFpDSDFoYmt2cWNpM3FGRERqN3laWkVBUkl1Z21sbHNhRThK?=
+ =?utf-8?B?ZVAxWDMwb1pLTkd6ZVRlRTN3Vk9ZZituR1YrV2Q0R1ZnWmw4a2RrZTVqWWpZ?=
+ =?utf-8?B?T0liVDlreHp2U29RY0xwVWQ2bkptQW55N3Zid21kUTRkQUc1QnJFUzc1cnZ6?=
+ =?utf-8?B?WldCMmE0VzVsRVVmOHU0L0RiM2tTbHJDeTZMVlZCZEhKNTNlNnpqQ2xqeFE1?=
+ =?utf-8?B?YU1kWGpLRk9DQ0pPQ2tJMzI4OTZBWGZYckhFSU05WE9jeThNRkkxWkpwNnBS?=
+ =?utf-8?B?TG14L0EwMldwRjZXR0hOZmtmMWVMY2lDblpCa2NNZUdvQ3pkdkNsdDVyNTJt?=
+ =?utf-8?B?M2NJNUpQaklUYnNlQStPeUNCTXp3MmZEN3B4NEwwc3kyK2dkVGQvZEtVM0Y3?=
+ =?utf-8?B?RS9lZ1o5clZ5SkhsVlV2ZnBmSURtV2N4ZkphRlAzLysrTXJJL1V1dFk5WGVt?=
+ =?utf-8?B?dGxmUXM2R010Mm9oY1ZTdkRVOUIzOXNHNkF1eEJRWFVhWkl6RU5BcFA1ZHlY?=
+ =?utf-8?B?SmRjcXdRNVVGN0ltUkRCWFVyV2x2RldXbE1UakxxMUFacXpkZC9nMmRIQ3FT?=
+ =?utf-8?B?WklpK25hYnFURXFFWi8yNnJqRlRkaTVJZVlONHREZGhGNzFoWnc2ZVFMWGJZ?=
+ =?utf-8?B?YTJZYUhiMmJ4aFN3L2d4cnlnQXl4SWRSZ004RVNiYXhGeUVBM3gzcDRXUHpm?=
+ =?utf-8?B?NTRIVTNGS1dIOXdPT1dnYkZCNGZ2ZDcvb2pXc2kzcXZBSGlhVmVmOWlyb0dz?=
+ =?utf-8?B?QW9rSXpVbDZTWTlhQnZrTnFNYzd1YjRBWHh5S2pPQU1ETHhKbXZ1VWphQ0t5?=
+ =?utf-8?B?V25qcXcvRDBEdkg2eENBc3d4Nk8rUTFFYzFjcnhNV0I4OFE2Uk1LSXpJWFpo?=
+ =?utf-8?B?STdYYXhwdSs2Tzd3dFozVjhIWU9jNUtKeHoxbk9NVmpjZEVqUTZFc1dKZTh5?=
+ =?utf-8?B?eCs5aG5YdE81QUpxMG9pZndNemVxc0d4em96VTNDVUlkeWJOd2x2UFJoVjZX?=
+ =?utf-8?B?YTljNFhXU3ZvSndvOVllN29yaFVLVnhuUDFnQ0trRERJT2F6d3l0cGVjNVZt?=
+ =?utf-8?B?OE5PcVRvYUJONTBpaFFtRklPcWZTUHVZekhWQ045MzFjTldwYkMyTTZwMFpM?=
+ =?utf-8?B?U0Y5N0pmVGpKRnQ3WGZXbXg2NnQ4c1o1akZ3b3gvcGFDVWNlWnkwKzIxcS9R?=
+ =?utf-8?B?NWoxM3ozWUNPWGVyUGU2RnFrc0IzeW9qMFBXNHFLY0tYS0lCZ2JFSHE5NnJo?=
+ =?utf-8?B?MnJGdlo0ay9lbHNWTGJVY1NKM2lRMW9aWUNrczkwbFZVTE1xQThWNU5scExx?=
+ =?utf-8?B?WG9aNjF6Qk1ua2llTUFuNnBlSmlkYk0xOGsxRjRxOU5jUWNndHd0RklrbUxB?=
+ =?utf-8?B?aHJXdHd4MmVGS1lueDVWbzgycDJkRDVOK2xTbytnSXF0dVA5TVUvY294VHNa?=
+ =?utf-8?B?c2U0ZERtVmxCQUpyZFdreGVWalE5WXV6eSs5K1lJT005b3Z1RHd2Y3dEekhM?=
+ =?utf-8?B?THF1Q3F0NndoTkJIN2ZUUUJ4Z0FCaHZndE96aytYR3hrRE0wdUpPSVlsWGJK?=
+ =?utf-8?B?RmhBVUxydmx6MjFKMW5PaHhVN1p5aVBCT3BVVGxJZGEyQk1ISFFRRzM0a2lL?=
+ =?utf-8?B?NnUxUVQ0UjNjQndrbGN2eG5icGNSUFBuaGFJZjV3UVhBa3l5YzROV3dXMmlB?=
+ =?utf-8?B?V0cxUGo4OGpBRFVaQjQ3TzVFb2ZRSnRlb3NKYmlRWkpWZnBiV2cvWVVTaWVU?=
+ =?utf-8?B?TEFNYVNjTzhSeWlGcTZiTGhXYTRhMlJJdUZaTi9KcGN0L3Fxa0RHUT09?=
 X-OriginatorOrg: epfl.ch
-X-MS-Exchange-CrossTenant-Network-Message-Id: d5f72f41-822e-4ed3-dc29-08de744480cd
+X-MS-Exchange-CrossTenant-Network-Message-Id: 53d18067-a03a-49db-e0bd-08de74448065
 X-MS-Exchange-CrossTenant-AuthSource: ZRH2PFAD84B9AF9.CHEP278.PROD.OUTLOOK.COM
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Feb 2026 08:04:30.2564 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Feb 2026 08:04:29.5507 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: f6c2556a-c4fb-4ab1-a2c7-9e220df11c43
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: p0DnyGvM3M1+ogzUMzcRZzvThBPlwPlMnz0RMgFCbPiKoitchDl83CxYryrhAprV10sV0IswDbgwpEKoKqzkBoj1ZDWLzIUtEANfwL2qmtM=
+X-MS-Exchange-CrossTenant-UserPrincipalName: qGf4GeqC0tgbiNjOUG244Te50NE9Z4JQSPRwyfCjp+yr8+XVex81gOjJGk2Otb9i3ZBmoHhmAMm0S/67bR+XeXcHzvhEWqjRMuVQeqBrB5A=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: ZR3P278MB1238
 Received-SPF: pass client-ip=2a01:111:f403:c213::;
  envelope-from=florian.hofhammer@epfl.ch;
@@ -187,126 +187,123 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---------------ms060000040904060508090200
+--------------ms020407030705050204060908
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
 
-On 24/02/2026 22:28, Pierrick Bouvier wrote:
-> On 2/24/26 7:52 AM, Florian Hofhammer wrote:
->> The test executes a non-existent syscall, which the syscall plugin
->> intercepts and redirects to a clean exit.
->> Due to architecture-specific quirks, the architecture-specific Makefil=
-es
->> require setting specific compiler and linker flags in some cases.
+On 24/02/2026 22:05, Pierrick Bouvier wrote:
+> On 2/24/26 7:50 AM, Florian Hofhammer wrote:
+>> The syscall emulation code previously wasn't interruptible via
+>> cpu_loop_exit(), as this construct relies on a longjmp target that is =
+not
+>> live anymore in the syscall handling code. Consequently, longjmp() wou=
+ld
+>> operate on a (potentially overwritten) stale jump buffer. This patch a=
+dds an additional
+>> setjmp and the necessary handling around it to make longjmp() (and by
+>> proxy cpu_loop_exit() safe to call even within a syscall context.
 >>
 >> Signed-off-by: Florian Hofhammer <florian.hofhammer@epfl.ch>
 >> ---
->>   tests/tcg/arm/Makefile.target                 |  6 +++++
->>   tests/tcg/hexagon/Makefile.target             |  7 +++++
->>   tests/tcg/mips/Makefile.target                |  6 ++++-
->>   tests/tcg/mips64/Makefile.target              | 15 +++++++++++
->>   tests/tcg/mips64el/Makefile.target            | 15 +++++++++++
->>   tests/tcg/mipsel/Makefile.target              | 15 +++++++++++
->>   tests/tcg/multiarch/Makefile.target           | 22 ++++++++++++++--
->>   .../{ =3D> plugin}/check-plugin-output.sh       |  0
->>   .../{ =3D> plugin}/test-plugin-mem-access.c     |  0
->>   .../plugin/test-plugin-skip-syscalls.c        | 26 +++++++++++++++++=
-++
->>   tests/tcg/plugins/syscall.c                   |  6 +++++
->>   tests/tcg/sparc64/Makefile.target             | 16 ++++++++++++
->>   12 files changed, 131 insertions(+), 3 deletions(-)
->>   create mode 100644 tests/tcg/mips64/Makefile.target
->>   create mode 100644 tests/tcg/mips64el/Makefile.target
->>   create mode 100644 tests/tcg/mipsel/Makefile.target
->>   rename tests/tcg/multiarch/{ =3D> plugin}/check-plugin-output.sh (10=
-0%)
->>   rename tests/tcg/multiarch/{ =3D> plugin}/test-plugin-mem-access.c (=
-100%)
->>   create mode 100644 tests/tcg/multiarch/plugin/test-plugin-skip-sysca=
-lls.c
->>   create mode 100644 tests/tcg/sparc64/Makefile.target
+>>   linux-user/aarch64/cpu_loop.c      |  2 +-
+>>   linux-user/alpha/cpu_loop.c        |  2 +-
+>>   linux-user/arm/cpu_loop.c          |  2 +-
+>>   linux-user/hexagon/cpu_loop.c      |  2 +-
+>>   linux-user/hppa/cpu_loop.c         |  4 ++++
+>>   linux-user/i386/cpu_loop.c         |  8 +++++---
+>>   linux-user/include/special-errno.h |  8 ++++++++
+>>   linux-user/loongarch64/cpu_loop.c  |  5 +++--
+>>   linux-user/m68k/cpu_loop.c         |  2 +-
+>>   linux-user/microblaze/cpu_loop.c   |  2 +-
+>>   linux-user/mips/cpu_loop.c         |  5 +++--
+>>   linux-user/or1k/cpu_loop.c         |  2 +-
+>>   linux-user/ppc/cpu_loop.c          |  6 ++++--
+>>   linux-user/riscv/cpu_loop.c        |  2 +-
+>>   linux-user/s390x/cpu_loop.c        |  2 +-
+>>   linux-user/sh4/cpu_loop.c          |  2 +-
+>>   linux-user/sparc/cpu_loop.c        |  4 +++-
+>>   linux-user/syscall.c               | 16 ++++++++++++++++
+>>   linux-user/xtensa/cpu_loop.c       |  3 +++
+>>   19 files changed, 59 insertions(+), 20 deletions(-)
 >>
->> +++ b/tests/tcg/multiarch/plugin/test-plugin-skip-syscalls.c
->> @@ -0,0 +1,26 @@
->> +/*
->> + * SPDX-License-Identifier: GPL-2.0-or-later
->> + *
->> + * This test attempts to execute an invalid syscall. The syscall test=
- plugin
->> + * should intercept this.
->> + */
->> +#include <stdint.h>
->> +#include <stdio.h>
->> +#include <stdlib.h>
->> +#include <unistd.h>
->> +
->> +void exit_success(void) __attribute__((section(".redirect"), noinline=
-,
->> +                                       noreturn, used));
->> +
->> +void exit_success(void) {
->> +    _exit(EXIT_SUCCESS);
->> +}
->> +
->> +int main(int argc, char *argv[]) {
->> +    long ret =3D syscall(0xc0deUL);
->> +    if (ret !=3D 0L) {
->> +        perror("");
+>> diff --git a/linux-user/sparc/cpu_loop.c b/linux-user/sparc/cpu_loop.c=
+
+>> index 7391e2add8..f054316dce 100644
+>> --- a/linux-user/sparc/cpu_loop.c
+>> +++ b/linux-user/sparc/cpu_loop.c
+>> @@ -229,7 +229,9 @@ void cpu_loop (CPUSPARCState *env)
+>>                                 env->regwptr[2], env->regwptr[3],
+>>                                 env->regwptr[4], env->regwptr[5],
+>>                                 0, 0);
+>> -            if (ret =3D=3D -QEMU_ERESTARTSYS || ret =3D=3D -QEMU_ESIG=
+RETURN) {
+>> +            if (ret =3D=3D -QEMU_ERESTARTSYS
+>> +                    || ret =3D=3D -QEMU_ESIGRETURN
+>> +                    || ret =3D=3D -QEMU_ESETPC) {
+>>                   break;
+>>               }
+>=20
+> Just a style nit:
+> if (ret =3D=3D -QEMU_ERESTARTSYS ||
+>     ret =3D=3D -QEMU_ESIGRETURN ||
+>     ret =3D=3D -QEMU_ESETPC) {
+>=20
+>>               if ((abi_ulong)ret >=3D (abi_ulong)(-515)) {
+>> diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+>> index d466d0e32f..99e1ed97d9 100644
+>> --- a/linux-user/syscall.c
+>> +++ b/linux-user/syscall.c
+>> @@ -43,6 +43,7 @@
+>>   #include <linux/capability.h>
+>>   #include <sched.h>
+>>   #include <sys/timex.h>
+>> +#include <setjmp.h>
+>>   #include <sys/socket.h>
+>>   #include <linux/sockios.h>
+>>   #include <sys/un.h>
+>> @@ -600,6 +601,9 @@ const char *target_strerror(int err)
+>>       if (err =3D=3D QEMU_ESIGRETURN) {
+>>           return "Successful exit from sigreturn";
+>>       }
+>> +    if (err =3D=3D QEMU_ESETPC) {
+>> +        return "Successfully redirected control flow";
 >> +    }
->> +    /* We should never get here */
->> +    return EXIT_FAILURE;
->> +}
-> After reviewing patch 2, I think it could be nice to test also the path=
- redirecting pc not from a syscall, in addition to what this test already=
- does.
+>>         return strerror(target_to_host_errno(err));
+>>   }
+>> @@ -14410,6 +14414,18 @@ abi_long do_syscall(CPUArchState *cpu_env, in=
+t num, abi_long arg1,
+>>           return -QEMU_ESIGRETURN;
+>>       }
+>>   +    /*
+>> +     * Set up a longjmp target here so that we can call cpu_loop_exit=
+ to
+>> +     * redirect control flow back to the main loop even from within
+>> +     * syscall-related plugin callbacks.
+>> +     * For other types of callbacks or longjmp call sites, the longjm=
+p target
+>> +     * is set up in the cpu loop itself but in syscalls the target is=
+ not live
+>> +     * anymore.
+>> +     */
+>> +    if (unlikely(sigsetjmp(cpu->jmp_env, 0) !=3D 0)) {
+>> +        return -QEMU_ESETPC;
+>> +    }
+>> +
 >=20
-> You can reuse syscall mechanic to communicate with plugin to share addr=
-ess that should crash and which destination it should reach instead.
->=20
-> And while at it, you can add the same thing from a signal handler (reus=
-ing syscall trick), so it should cover most of "special" cases.
->=20
-> You can merge all test cases in a single test.c.
-> Also, you can create a new set_pc plugin combining all this, because ot=
-her test cases don't really belong to tests/tcg/plugins/syscall.c.
->=20
-> test.c:
-> int main(int argc, char *argv[]) {
->   syscall(..., &&skip, &&dest);
-> error:
->   g_assert_not_reached();
-> dest:
->   return EXIT_SUCCESS;
-> }
->=20
-> plugin.c:
-> static void* error;
-> static void* dest;
->=20
-> void on_syscall(num, a1, a2) {
->   if (num =3D=3D magic) {
->     error =3D a1;
->     dest =3D a2;
->   }
->   return true;
-> }
->=20
-> void insn_exec(..., void* pc) {
->   if (pc =3D=3D error) {
->     qemu_plugin_set_pc(dest);
->   }
-> }
->=20
-> Regards,
-> Pierrick
+> Makes sense, and I guess you found that when running the series test.
+>
+> Do you need all the new QEMU_FALLTHROUGH introduced here? Is it for rem=
+oving warnings?
 
-Makes sense, I'll factor that out and add additional tests for the
-functionality.
+I think they're not strictly necessary, but if I recall correctly, I had
+warnings otherwise.
+I can remove them if you prefer but I think making the fallthrough
+explicit encodes the intent better.
 
-Best regards,
-Florian
+>=20
+> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
---------------ms060000040904060508090200
+--------------ms020407030705050204060908
 Content-Type: application/pkcs7-signature; name="smime.p7s"
 Content-Transfer-Encoding: base64
 Content-Disposition: attachment; filename="smime.p7s"
@@ -374,8 +371,8 @@ rCfngiHZcAQakPkQrlrZCxMhlIKvDMunATaICyjnHizEC+1qzJsdvJgSC8sOzLxiEjlx3MRe
 CswFMYIEezCCBHcCAQEwdjBiMQswCQYDVQQGEwJVUzEXMBUGA1UEChMORGlnaUNlcnQsIElu
 Yy4xOjA4BgNVBAMTMURpZ2lDZXJ0IEFzc3VyZWQgRzIgU01JTUUgUlNBNDA5NiBTSEEzODQg
 MjAyNCBDQTECEAIILYp8ejiSyjOBVc7TclkwDQYJYIZIAWUDBAIBBQCgggLWMBgGCSqGSIb3
-DQEJAzELBgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkFMQ8XDTI2MDIyNTA4MDM1MlowLwYJKoZI
-hvcNAQkEMSIEIO94ckSXfRpOE7RjIq8U/Ro4mMiZ/rv9HfmLHvFPBiSJMIGFBgkrBgEEAYI3
+DQEJAzELBgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkFMQ8XDTI2MDIyNTA4MDI1NlowLwYJKoZI
+hvcNAQkEMSIEIAdb3OtnaImUS+Gedlqj32V0NF7YfaNAH+wKLUNDNGFdMIGFBgkrBgEEAYI3
 EAQxeDB2MGIxCzAJBgNVBAYTAlVTMRcwFQYDVQQKEw5EaWdpQ2VydCwgSW5jLjE6MDgGA1UE
 AxMxRGlnaUNlcnQgQXNzdXJlZCBHMiBTTUlNRSBSU0E0MDk2IFNIQTM4NCAyMDI0IENBMQIQ
 Aggtinx6OJLKM4FVztNyWTCBhwYLKoZIhvcNAQkQAgsxeKB2MGIxCzAJBgNVBAYTAlVTMRcw
@@ -387,12 +384,12 @@ BwYFKw4DAhowCwYJYIZIAWUDBAIBMAsGCWCGSAFlAwQCAjALBglghkgBZQMEAgMwCwYJYIZI
 AWUDBAIEMAsGCWCGSAFlAwQCBzALBglghkgBZQMEAggwCwYJYIZIAWUDBAIJMAsGCWCGSAFl
 AwQCCjALBgkqhkiG9w0BAQEwCwYJK4EFEIZIPwACMAgGBiuBBAELADAIBgYrgQQBCwEwCAYG
 K4EEAQsCMAgGBiuBBAELAzALBgkrgQUQhkg/AAMwCAYGK4EEAQ4AMAgGBiuBBAEOATAIBgYr
-gQQBDgIwCAYGK4EEAQ4DMA0GCSqGSIb3DQEBAQUABIIBAMNLOOyWgWKiE6amSSudq1P8K6hf
-xXkk5UxZer+wVVXYN7p1bfX1lsEr1RgQi6h3DpAnOdE0IwNRsT3EFg5d7KYCPjfUo0iS3iOc
-QHksg64Q3Gb/z20aGGR1w6p4sFXNSkA4Oh3/q55/9olgPvYrvFRZgDvW8nlTbR0YLYRkJvcv
-jCbmaUNJ2mP7GlyGUGLFmw83yY5btuXoAhear2/iMOhl7ysh8rwxlY85iW0roHTMwr3Z9WXs
-+391Cv/sI7VbBPfxQIYSyjO6DgYarxZ7F77abv0bQAqv/QvM2FpNh5v3G2uLYCkPcU6e3FVm
-zcjjMdvu+03PQ4GtcDd9qsX6yh4AAAAAAAA=
+gQQBDgIwCAYGK4EEAQ4DMA0GCSqGSIb3DQEBAQUABIIBAM9UYLGz/Ye6Z5miwY9f+e2U+7z/
+EmXUoCm2f/s+WGueaUuWnwsmu/AtodxX6RdoNnMgzGgujcqWH7erHdjr4JIvD6Maj2R3dLPy
+FCFiHKWRYA0V6gLz/x7PRQv/vB/1M9H/Z+Yq5DVKUwRsLvvE7vAl8GmYIoLdQQtRkaPoW56S
+w1PublOQYiXeZGkUxRA6C+vr38EXfCiIQ6Ry8Z9AduvraeRISQY9ThW4oQcFXP1rhPhVDmQP
+pud9t5iMuFUkeoJN37fE/b4Zuzpmxx7ij52a405zothhmDzpiNsS4FC+HbOzfgYSId6TV4u8
+GLLHuDfpsGVLXOsdGCoJRlVOVxEAAAAAAAA=
 
---------------ms060000040904060508090200--
+--------------ms020407030705050204060908--
 
