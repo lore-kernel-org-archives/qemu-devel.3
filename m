@@ -4,72 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6E67EFD209
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 08:33:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C7F5EFD209
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 08:45:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvAJt-0005vY-Ov; Wed, 25 Feb 2026 03:32:33 -0500
+	id 1vvAVv-0000mf-Ou; Wed, 25 Feb 2026 03:45:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vvAJr-0005uf-19
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 03:32:31 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vvAVt-0000m3-Hl
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 03:44:58 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vvAJj-0004uR-FC
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 03:32:26 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vvAVp-00064j-0j
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 03:44:56 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772008338;
+ s=mimecast20190719; t=1772009081;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=vUWCjVpDyEb31j/plPeG31w09E9+irjHP0hsKczQ1DE=;
- b=XNLeeRJs73JJrOi135w5XWSbDD5tlH3s/LO5Sl3MFik6UB3X+oZGzp8IsDRsL6jTtZb7oM
- TTEYUSSRZdHEY2OfvC4olvUxG4F0yaZTXv+icGzcxJfPHChHwE0c68hQy8tBQNHLFOtHuB
- KqOfW6i6hOZdtofUd3AbL0VsAHC0KPU=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=HuGUyiDycW/Vnee9LZdiuJ5H/qpylEqd2MesRVPuTRI=;
+ b=K3+bwWAEbfC75+XaSX3CSGC5kvZpYMfIhmcSpJ2QDMBnu0mibBM59AEmkbdKBELPZLHt7N
+ dbLKMenjLMvNNRpGP4kxgCA3otSys/ItGIU1ZjaJBj8W5qBQt2hwjcrl7Oxo0+iMOOOtCz
+ lwU/C4qyCSchXYDSMWS97oSR0x86KRI=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-595-59Zf58FJMYmWJmHhTza6gg-1; Wed,
- 25 Feb 2026 03:32:16 -0500
-X-MC-Unique: 59Zf58FJMYmWJmHhTza6gg-1
-X-Mimecast-MFC-AGG-ID: 59Zf58FJMYmWJmHhTza6gg_1772008335
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-316-oWjwELn9MJSdqblYVU0LNQ-1; Wed,
+ 25 Feb 2026 03:44:40 -0500
+X-MC-Unique: oWjwELn9MJSdqblYVU0LNQ-1
+X-Mimecast-MFC-AGG-ID: oWjwELn9MJSdqblYVU0LNQ_1772009079
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8F8AB1800259; Wed, 25 Feb 2026 08:32:15 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E8B731956089; Wed, 25 Feb 2026 08:44:38 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.45.242.13])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4D8921800666; Wed, 25 Feb 2026 08:32:15 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 86CE13003D88; Wed, 25 Feb 2026 08:44:38 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 0184221E692D; Wed, 25 Feb 2026 09:32:12 +0100 (CET)
+ id 1069D21E692D; Wed, 25 Feb 2026 09:44:36 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
 To: Paolo Bonzini <pbonzini@redhat.com>
 Cc: qemu-devel@nongnu.org,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
  <marcandre.lureau@redhat.com>, qemu-rust@nongnu.org
-Subject: Re: [PATCH v2 11/16] scripts/qapi: pull c_name from camel_to_upper
- to caller
-In-Reply-To: <20260108131043.490084-12-pbonzini@redhat.com> (Paolo Bonzini's
- message of "Thu, 8 Jan 2026 14:10:38 +0100")
+Subject: Re: [PATCH v2 10/16] scripts/qapi: add QAPISchemaType.is_predefined
+In-Reply-To: <21b5e0ec-d03d-4e39-a3bf-deada48243b7@redhat.com> (Paolo
+ Bonzini's message of "Wed, 25 Feb 2026 09:01:15 +0100")
 References: <20260108131043.490084-1-pbonzini@redhat.com>
- <20260108131043.490084-12-pbonzini@redhat.com>
-Date: Wed, 25 Feb 2026 09:32:12 +0100
-Message-ID: <87wm01w7eb.fsf@pond.sub.org>
+ <20260108131043.490084-11-pbonzini@redhat.com>
+ <87bjhdxooi.fsf@pond.sub.org>
+ <21b5e0ec-d03d-4e39-a3bf-deada48243b7@redhat.com>
+Date: Wed, 25 Feb 2026 09:44:36 +0100
+Message-ID: <87ldghw6tn.fsf@pond.sub.org>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -10
 X-Spam_score: -1.1
 X-Spam_bar: -
 X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.358, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.659,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -89,73 +90,56 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Paolo Bonzini <pbonzini@redhat.com> writes:
 
-> Allow using it for other languages too.
+> On 2/25/26 08:33, Markus Armbruster wrote:
+>> Paolo Bonzini <pbonzini@redhat.com> writes:
+>> 
+>>> It is impossible to call is_implicit on an enum type from the visitor, because
+>>> the QAPISchemaEnumType has already been exploded into its costituent fields.
+>> 
+>> constituent
+>> 
+>> Passing selected attributes instead of the entire object to its visitor
+>> method limits what the visitor can do.  This is both good and bad.
+>> We've run into "bad" a couple of times.  It's never been bad enough to
+>> change the interface, though.
+>> 
+>> Thoughts?
 >
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->  scripts/qapi/common.py | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
+> I think that applies here, is_predefined() is a reasonable addition.
 >
-> diff --git a/scripts/qapi/common.py b/scripts/qapi/common.py
-> index 14d5dd259c4..c75396a01b5 100644
-> --- a/scripts/qapi/common.py
-> +++ b/scripts/qapi/common.py
-> @@ -61,7 +61,7 @@ def camel_to_upper(value: str) -> str:
->          ret += ch
->          upc = ch.isupper()
->  
-> -    return c_name(ret.upper()).lstrip('_')
-> +    return ret.upper()
->  
->  
->  def c_enum_const(type_name: str,
-> @@ -75,7 +75,7 @@ def c_enum_const(type_name: str,
->      :param prefix: Optional, prefix that overrides the type_name.
->      """
->      if prefix is None:
-> -        prefix = camel_to_upper(type_name)
-> +        prefix = c_name(camel_to_upper(type_name)).lstrip('_')
->      return prefix + '_' + c_name(const_name, False).upper()
+>>> The Rust backend is also not modular (yet?) so it is not possible to filter
+>>> out the builtin module;
+>> 
+>> Really?
+>> 
+>> The visitors are all based on QAPISchemaVisitor.  Protocol:
+>> 
+>>      .visit_begin()
+>>      for all modules:
+>>          .visit_module()
+>>          for all entities:
+>>              if .visit_needed():
+>>                  .visit_FOO()
+>>      .visit_end()
+>> 
+>> QAPISchemaModularCVisitor implements .visit_module() to generate code
+>> per module.  Its .write() skips builtin modules unless opt_builtins.
+>
+> ... because its .write() already builds multiple QAPIGen{C,H,Trace}, one 
+> per module.  Here instead there is just one QAPIGenRs.
+>
+> Using multiple QAPIGenRs instances, one per module, would be hackish. 
 
-No change in behavior, because this is the only use of camel_to_upper().
+I was thinking of having .visit_module() save .is_builtin_module(name)
+in self.in_builtin_module, then use that to recognize built-ins.
 
-The move of c_name() out of camel_to_upper() is clearly wanted to make
-it usable for other languages.
+> I'd rather just go modular instead of that.  I can take a look, since 
+> this series will be (early) 11.1 material anyway.
 
-What about .lstrip('_')?  I wonder why we even have it.  Goes back all
-the way to commit 6299659f544 (qapi script: code move for
-generate_enum_name()) from 2014.  It seems to affect just
-tests/qapi-schema/qapi-schema-test.json's
+Modular C code generation reduces incremental build time massively.
+Before, we suffered from "touch the schema, recompile the world".  If
+Rust would similarly profit, then I'm all for going modular.
 
-    { 'enum': '__org.qemu_x-Enum', 'data': [ '__org.qemu_x-value' ] }
-
-This tests a downstream extension prefix __RFQDN_.
-
-As is, we generate
-
-    typedef enum __org_qemu_x_Enum {
-        ORG_QEMU_X_ENUM___ORG_QEMU_X_VALUE,
-        ORG_QEMU_X_ENUM__MAX,
-    } __org_qemu_x_Enum;
-
-Without the .lstrip('_'), we'd generate
-
-    typedef enum __org_qemu_x_Enum {
-        __ORG_QEMU_X_ENUM___ORG_QEMU_X_VALUE,
-        __ORG_QEMU_X_ENUM__MAX,
-    } __org_qemu_x_Enum;
-
-Meh.
-
-Turns out this isn't on purpose.  Back then, the loop to map camel to
-upper worked differently, and produced unwanted leading '_'.  For
-instance, it mapped 'AbraCadabra' to '_ABRA_CADABRA'.  The .lstrip()
-made the function produce 'ABRA_CADABRA'.  It also makes it eat
-downstream extensions' leading '__'.  Oopsie.
-
-By moving it, we insulate Rust from this accident.  Okay.
-
-We could delete it instead.  Might inconvenience downstreams.  Not a
-demand; you may wish to keep this series focused on Rust.
+[...]
 
 
