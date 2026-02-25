@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22FC7FD45F1
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 23:23:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45A0FFD45FA
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 23:23:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvOA7-00079N-AY; Wed, 25 Feb 2026 18:19:26 -0500
+	id 1vvO9K-0004bf-Tm; Wed, 25 Feb 2026 18:18:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vvO9p-00074E-DK
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 18:19:05 -0500
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vvO91-00049l-M9
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 18:18:17 -0500
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vvO9n-0003Qs-M4
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 18:19:05 -0500
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-483487335c2so2365305e9.2
- for <qemu-devel@nongnu.org>; Wed, 25 Feb 2026 15:19:03 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vvO90-0003Ay-2i
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 18:18:15 -0500
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-4836f363d0dso2335045e9.3
+ for <qemu-devel@nongnu.org>; Wed, 25 Feb 2026 15:18:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772061542; x=1772666342; darn=nongnu.org;
+ d=linaro.org; s=google; t=1772061492; x=1772666292; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=PEa1I4PUq5js8xe3wd/G3RCIRdUkaAjJuHmk8sEwGKA=;
- b=jqpBROlwz4091UHV+/osz/QsULh6aMflqtDRGnaN7l1wLBi5rGfhwpO35iI7NCaET4
- NvUEwlNOOIL0aKSO58lOEYFN4+3Sl4ojnt81VMVskv+j1CbztDnVlVtWr3RhHrj7z5rf
- CgLCcrjW9RvGWQFBDJBdMCd03O3/V/0Q7lHAT47B52TiFHq5qGurX07m+2tonX4cqS48
- 0gfwnbl4uds85udWtmBl3jU6VtfenyVVaLZb3UoRgXe1wanujhpC+KzmGj3LRjbsdovQ
- MWrhX1rinjlgg923FrYdaw8AXcxTgtj+tiCRqTS7//u0AWppATSZGPw7zchcpyOgaC0V
- cAcA==
+ :reply-to; bh=58SjvSBdSY2N/SByegBRN693qynS9JIU0XpdNhP0eoo=;
+ b=jO6waNomeUIib6erL1hNPytYeqyY0+JgL9mxdRhCfsk+DNBJBH/cySSjOaODqDHjaO
+ iRAFyl/aXC56fZMtbL7FQiRSn8nF8KZnYcCrNJRiI9eg/LeIwe6vOTKuV3aaxT4QtcAX
+ zLiQo5CwWJJd49iooGAu4ItnqWzW8NDsuFqkU6Tbux9FyGcyU2ZQK5MUunVrd7fUjTEl
+ w2MeGhEZRyK8yE0DyIIp67Iu0hDk2UiIfwDMmfVVv1XD9j4gyO4yKYjbbHGmFmJDBieb
+ ehfgPHU/xaHB2U48vIN0nbDqjCWQYretQO4d4QhLkZ4vX7cy80imOMB/cgHywvY9pqRE
+ +K7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772061542; x=1772666342;
+ d=1e100.net; s=20230601; t=1772061492; x=1772666292;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=PEa1I4PUq5js8xe3wd/G3RCIRdUkaAjJuHmk8sEwGKA=;
- b=RKr09OO1uxe3/yqkP/XKjcek4SdV/zdDIPfKsrqgXbr0lQ3lUgBNADFX03p6IExbje
- 4Zt8uCPbi6GKd3euSyijOgRZtTkoLG9saigAQ5xeSrnHuBeISQ6H5Qt9fVvG/v6kwQI/
- OoQf85CRNLKm84qWUEK0sxJM11HujVk91kkW2DYOFrBvAZ6/0AZO1Y95weJes69FdB26
- em5b7fGtTsY5STRDxenOXsnLJjHd3TlU2W2p3wwHBV35VXxu7Q1tQhf4AhKpV/L+W/9d
- ywvLih+zadUPmk5WsQlW1tRx7Y18THf1pk9EfHXCz6B1FWu7VF40qnjU2xcyFH21WLrq
- WJEA==
-X-Gm-Message-State: AOJu0YzHSUK2xmitgazK7UBSbttX0UFftJdT/WY3ph39XOG8ctBRSBd7
- mpNx/lhNEgCGUdGRqxlvUZl+kMbo2vAMM5h5JejucAFbURkShlet/WnUboDj8HivEseYP2AiuNb
- jTkLAMz0=
-X-Gm-Gg: ATEYQzxmuAWUmQqChjLk9qtdarMFC6rE/WTszIrpqSMjMG2G1sasi5EhyN9ZHPhx4p+
- tl65N6MY9fEb3zy+WEF36FnUn795r0lH8DCfAKg8m0vsHg2YQKm0+PC06/cyaldktgEX05bi4kP
- NFvKxikeqKvkYiJAN4UXr5hTaM3kz1p87Z5KTYHq+v3+XlXOVuYC8H3oBMwoBGV5FhxuBsipvG0
- xBRqk+xd/R10bhRIEzlyIAX/ZAWY55NHo3WLFEN4hmQJiX3//IkbHWcPwANvidVl+is9ziYrYjf
- qDypsuWbeFTC1e433b8LABjLhuoua8kXFyy0fYjZI23J9pRlVT84GJeqveqItQmAB8CqMt79Q4W
- dxzbtf0r702FwD2PbjuaRaEHX2So1/RhtgHqUWCF8yimjL/iVpcYWVktyCdu7ie6PQ+FF4N9gj0
- n+c0Mt1hNLze94yICgPekCcfDIuxr/qk3hOHa22Bji5pF9lEzlhjUokyD08v+sU1JW84nE9g+j
-X-Received: by 2002:a05:600c:3e05:b0:477:7f4a:44b4 with SMTP id
- 5b1f17b1804b1-483a95b3df6mr295360655e9.1.1772061541619; 
- Wed, 25 Feb 2026 15:19:01 -0800 (PST)
+ bh=58SjvSBdSY2N/SByegBRN693qynS9JIU0XpdNhP0eoo=;
+ b=t2vI/2dA7cyYPX6Sw5SfvnxTaHQ5fqst8/MCN3NXVKb46avQ+O2AXCOrIJVAVbKKKQ
+ u95FYTHSXuOgYTAuEOT9KW4oko8t+uqNeJ9g84QQI5P/hsGh+ZAVGPlITZ068K3usDl4
+ k8ymVA4BuZtA+AgVABlEENOOHpmuyKRFSk+xz3T4GVlXeo+RupoS68nKTqSdQrYVWG8j
+ olYP1WBUHrPA+KYuGWgoDLNKvmCBFxHYmJZ2q0mWrbJq4AZEUAwrUibcyihEPL50/HCP
+ duIVSM/iiFmC8hO8oZev+TTnyveHcqqWP0E6RghdcWHvSB7SIhZcI2dW9Wm16hMK1yfj
+ wHfA==
+X-Gm-Message-State: AOJu0YyTTszSiNypZGzRLLDNCITjTsD58WrsZZfvtUzFihiknNywwfb1
+ cEEhlCIm/QkldSHeLW8uSzhEfoMn/Hkp/qOZXoAek1cMoCeZ8RIfENhKx8yV36hcsLNGbOZ+gU1
+ Chvgof3E=
+X-Gm-Gg: ATEYQzynnj3GegJAyQX+kZKId+l2kmrkMSFc1Il6MAtwf1hZdazGW2rvdqIF4SN55s9
+ yhaSHavdBt4sGVREgdcD6eI50ZSwuMVCJXn4PzRs5zFC/0gMAuIYNzFmDDk57w6qI3Xlc/UFCRf
+ 9aigQKzWS8yYFBn0FYawFVf35+TZ1k6VLoByve6bzJPsEAMEUP+hG2i09pQmsk2QtrLgbgxQbge
+ HhA7+gATR3njc6EowkxH+70s5YcHhDYf2tmsTy5WoniOAABLS2aF7la6Sl+zdRwsi5b9hVlzvO0
+ qQPK0Bw2KuxpxLcAJcDO3XD/qbI/YtciGRNI1k5LDdQf993VhmmEfZHsqbUS6fkpcbjeD82KP+r
+ KAqU0YbTXGNiCYuI1OxykFIItjTXOyb5KGDONTC8cjzVjXg5Jpkf9412GX2PRDqIRUOye3HwXjX
+ gRIw6n8tTl4OE9W1SrU0vv8AEnRQ6ai92pMdU9UocTX3KQMval3hjv4J9V0RgKIPjLBabZco9f
+X-Received: by 2002:a05:600c:5397:b0:483:56c4:73ac with SMTP id
+ 5b1f17b1804b1-483c216bf67mr35719615e9.7.1772061491982; 
+ Wed, 25 Feb 2026 15:18:11 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-483bfb776a3sm31172885e9.7.2026.02.25.15.18.58
+ 5b1f17b1804b1-483bd7507adsm109214175e9.9.2026.02.25.15.18.09
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 25 Feb 2026 15:18:59 -0800 (PST)
+ Wed, 25 Feb 2026 15:18:11 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 42/70] target/rx: Expand gdb_get_regl() -> gdb_get_reg32()
-Date: Thu, 26 Feb 2026 00:13:42 +0100
-Message-ID: <20260225231411.96482-43-philmd@linaro.org>
+Subject: [PULL 35/70] target/riscv: Replace ldtul_p() -> ldn_p()
+Date: Thu, 26 Feb 2026 00:13:35 +0100
+Message-ID: <20260225231411.96482-36-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260225231411.96482-1-philmd@linaro.org>
 References: <20260225231411.96482-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,62 +98,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The Renesas RX target is only built as 32-bit:
+Prefer ldn_p(riscv_cpu_is_32bit) over target-specific ldtul_p().
 
-  $ git grep TARGET_LONG_BITS configs/targets/rx*
-  configs/targets/rx-softmmu.mak:5:TARGET_LONG_BITS=32
-
-Mechanically replace:
-
-  gdb_get_regl() -> gdb_get_reg32()
-
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20260219191955.83815-35-philmd@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
+Message-ID: <20260219191955.83815-28-philmd@linaro.org>
 ---
- target/rx/gdbstub.c | 20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+ target/riscv/gdbstub.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/target/rx/gdbstub.c b/target/rx/gdbstub.c
-index 30074c9da7b..8be5141f5bc 100644
---- a/target/rx/gdbstub.c
-+++ b/target/rx/gdbstub.c
-@@ -25,25 +25,25 @@ int rx_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
+diff --git a/target/riscv/gdbstub.c b/target/riscv/gdbstub.c
+index 1934f919c01..f89b20ea84a 100644
+--- a/target/riscv/gdbstub.c
++++ b/target/riscv/gdbstub.c
+@@ -191,14 +191,15 @@ static int riscv_gdb_set_csr(CPUState *cs, uint8_t *mem_buf, int n)
+ {
+     RISCVCPU *cpu = RISCV_CPU(cs);
+     CPURISCVState *env = &cpu->env;
++    const unsigned regsz = riscv_cpu_is_32bit(cpu) ? 4 : 8;
  
-     switch (n) {
-     case 0 ... 15:
--        return gdb_get_regl(mem_buf, env->regs[n]);
-+        return gdb_get_reg32(mem_buf, env->regs[n]);
-     case 16:
--        return gdb_get_regl(mem_buf, (env->psw_u) ? env->regs[0] : env->usp);
-+        return gdb_get_reg32(mem_buf, (env->psw_u) ? env->regs[0] : env->usp);
-     case 17:
--        return gdb_get_regl(mem_buf, (!env->psw_u) ? env->regs[0] : env->isp);
-+        return gdb_get_reg32(mem_buf, (!env->psw_u) ? env->regs[0] : env->isp);
-     case 18:
--        return gdb_get_regl(mem_buf, rx_cpu_pack_psw(env));
-+        return gdb_get_reg32(mem_buf, rx_cpu_pack_psw(env));
-     case 19:
--        return gdb_get_regl(mem_buf, env->pc);
-+        return gdb_get_reg32(mem_buf, env->pc);
-     case 20:
--        return gdb_get_regl(mem_buf, env->intb);
-+        return gdb_get_reg32(mem_buf, env->intb);
-     case 21:
--        return gdb_get_regl(mem_buf, env->bpsw);
-+        return gdb_get_reg32(mem_buf, env->bpsw);
-     case 22:
--        return gdb_get_regl(mem_buf, env->bpc);
-+        return gdb_get_reg32(mem_buf, env->bpc);
-     case 23:
--        return gdb_get_regl(mem_buf, env->fintv);
-+        return gdb_get_reg32(mem_buf, env->fintv);
-     case 24:
--        return gdb_get_regl(mem_buf, env->fpsw);
-+        return gdb_get_reg32(mem_buf, env->fpsw);
-     case 25:
-         return 0;
+     if (n < CSR_TABLE_SIZE) {
+-        target_ulong val = ldtul_p(mem_buf);
++        target_ulong val = ldn_p(mem_buf, regsz);
+         int result;
+ 
+         result = riscv_csrrw_debug(env, n, NULL, val, -1);
+         if (result == RISCV_EXCP_NONE) {
+-            return sizeof(target_ulong);
++            return regsz;
+         }
      }
+     return 0;
+@@ -225,11 +226,12 @@ static int riscv_gdb_get_virtual(CPUState *cs, GByteArray *buf, int n)
+ static int riscv_gdb_set_virtual(CPUState *cs, uint8_t *mem_buf, int n)
+ {
+     if (n == 0) {
+-#ifndef CONFIG_USER_ONLY
+         RISCVCPU *cpu = RISCV_CPU(cs);
++        const unsigned regsz = riscv_cpu_is_32bit(cpu) ? 4 : 8;
++#ifndef CONFIG_USER_ONLY
+         CPURISCVState *env = &cpu->env;
+ 
+-        target_ulong new_priv = ldtul_p(mem_buf) & 0x3;
++        target_ulong new_priv = ldn_p(mem_buf, regsz) & 0x3;
+         bool new_virt = 0;
+ 
+         if (new_priv == PRV_RESERVED) {
+@@ -237,7 +239,7 @@ static int riscv_gdb_set_virtual(CPUState *cs, uint8_t *mem_buf, int n)
+         }
+ 
+         if (new_priv != PRV_M) {
+-            new_virt = (ldtul_p(mem_buf) & BIT(2)) >> 2;
++            new_virt = (ldn_p(mem_buf, regsz) & BIT(2)) >> 2;
+         }
+ 
+         if (riscv_has_ext(env, RVH) && new_virt != env->virt_enabled) {
+@@ -246,7 +248,7 @@ static int riscv_gdb_set_virtual(CPUState *cs, uint8_t *mem_buf, int n)
+ 
+         riscv_cpu_set_mode(env, new_priv, new_virt);
+ #endif
+-        return sizeof(target_ulong);
++        return regsz;
+     }
+     return 0;
+ }
 -- 
 2.52.0
 
