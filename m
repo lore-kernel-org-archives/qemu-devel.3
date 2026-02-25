@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81E6EFD45FB
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 23:17:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03B8FFD45FA
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 23:17:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvO6A-0005BH-80; Wed, 25 Feb 2026 18:15:18 -0500
+	id 1vvO84-0000wL-Hv; Wed, 25 Feb 2026 18:17:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vvO63-00055X-FJ
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 18:15:12 -0500
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vvO7u-0000Pa-8l
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 18:17:07 -0500
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vvO61-0002mB-R9
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 18:15:11 -0500
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-482f454be5bso13403975e9.0
- for <qemu-devel@nongnu.org>; Wed, 25 Feb 2026 15:15:09 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vvO7r-0002vT-EX
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 18:17:05 -0500
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-4398913af88so193372f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 25 Feb 2026 15:17:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772061308; x=1772666108; darn=nongnu.org;
+ d=linaro.org; s=google; t=1772061422; x=1772666222; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=NZbo8084LvFt6DRJ0xDf9VJEW+VJ0Qd7W0M/EfR1IrA=;
- b=T0BCGYYNWm4Q/FklFR2BGowpjbjcKmBRPZVw1J9/OduvVkP5RuXlj+3AwOic93mPVL
- STet/6ZZDCzXEjpj/pNSthtHXpBBon60V3pxjg5pLwKaki5pTtWJKZDccpKuEbXvvdoL
- yl6Kpp9FXokFn+3NDJbEbNyBvKxcyEGpoxPdZEsrFWR7bI1ApPAq5UV38NJeOyoMJX1h
- Ez5VqxF3CQw/DksxzgHUsndx/l7LAnlgk8Vnwjhccpr9ND7NaSyLZPF5KeFkulVFzLny
- 7PUpnqtxiQDN0VQjn7K+ex49mHrjFlW+C7841J0hL/xwopeKAQ/2YN6GrJ6/KyU5afub
- YMsA==
+ :reply-to; bh=lSNlwJuPXGszeQdnTHeG7EmOBqF5JmRNaaxT9HlYMjc=;
+ b=RJ4+XRZFo+iMferKtM1YZCI/A920HK44hHKIOsVTm01eGypXrSDshnHT5dIK4BihAM
+ HZPqb0gwWKICoG6Av75ULMQwyNPfQXKHDTal3Cbe1X0THUWYC0pGHdOZvjiD1NIMyze6
+ TkZUWmWIkC1gBgUGIaT1pilJ1ILweZNruD0qO4XN1uovNvYv7CYtxP1aMFx/iFc1h1Bk
+ cMWnxxOxTu9T/gP3UGxKRnZDf6MpIUUfTPwmuP7neY/kO4CMPewCaYfHjykmSMikIrk/
+ hLEdUJssXN+XXMg78Q0sTZmA9Am4lvf/MjzMvnVhL87cxeI8ubLwcn2gaA9pK7elXBNJ
+ tFSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772061308; x=1772666108;
+ d=1e100.net; s=20230601; t=1772061422; x=1772666222;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=NZbo8084LvFt6DRJ0xDf9VJEW+VJ0Qd7W0M/EfR1IrA=;
- b=STqgivta7BTpUICET84KwxQdRMAfGwrswRUQomTdHAF/HZqbxwmmchqLkzACDlO+aH
- GZwLjS7AFkMQsB0dSgnnz/bP3crZ1aeuomWSyXuq/6jiUQyqWCY1pzsaJ7eHj5G85Uzn
- ZF5isBAtF/pg4qXuMC/K1/KGISBg2ObNrvBb9eOT7VMYAcup6yO0dazYbyytwxzpWHDL
- jqnBmNA+axTdqjdSTrN9aqRZfBm5bTe0ygTIudNrqxTyf3ep/LjSMKo1sFsYHrGMggVP
- ZomysNvioMk3oAuE4m33lGWyPJMCfc0KTWPBneBGDkarakbRfvfzpuSYrIZvKmZCeOzO
- NzZA==
-X-Gm-Message-State: AOJu0Yw3hO+m8Fvq6ihR7vDGgU+sYziwubD+pYruIJ8uW8DmpbobE1cH
- 03VBHdTl/xI3OTo2VR5bg4gO8ryZ6o9lv2JoZEXgls6K/TmZOQhuMAAHDrZGWoouFKfkuJEmCcc
- elUPbA/g=
-X-Gm-Gg: ATEYQzz1BbJywzHsCTAq4k3+j/oHRzPJqZTplY4C27FWJC/v0LGVJZ7V4PePLavYQga
- chNRKvvE5G9t9ZEa8+b3PLnhBv7pXaWi4UDkdCUeRJVCEz+NiGwGi9OOXUnhWb8SUjW/j4FY1/r
- I67U9jGOY6qpTC0PKXioPwqUJbH/Pvl3Go1hNgAPPMMaq/ns3p6GVTRl7/vV5JbjmNXHD5QD4cR
- DcECfaEyTalRoVr91CwWiPCRVwHduRZmly4LBeuqqQdgGVTH35rrGg/vOn7ayfczUkn/1J/5LLt
- igz32ArQR5HKEjG1lxfB9xC9RyD8gNLcqFEhi/l7+iOYCmk7UZRCkehNvX/y+3uRJY5AxOGWLAW
- p4ZAg0Z4ZpUE+jH6LpbpJuZu5qlu0vTgs4LLvvKcrXVLHD5jeHnDUz0WgbFH37t2icDv8tmb+Ds
- g6XqkE8k4kEfTMdQbSo1gIAlUpM6YecrOxOQbLLUBsKRBkq8svkAMhcDh2lYG/t7b4TL4eJGHz
-X-Received: by 2002:a05:600c:5289:b0:483:7b99:131d with SMTP id
- 5b1f17b1804b1-483c33d6b0fmr13614715e9.16.1772061307784; 
- Wed, 25 Feb 2026 15:15:07 -0800 (PST)
+ bh=lSNlwJuPXGszeQdnTHeG7EmOBqF5JmRNaaxT9HlYMjc=;
+ b=n49W8pV8gO2R7mjJ6bCd4CV7MI73fmePCZ7l0X0Y3Sx/BNgsMJ17AhNliXlrsk003F
+ Gs4zSB73MxNfiUAG6p5yZ/0gnEpKtLdliB1CKvPa1/+eY/6fFkSGqKgk8w127mRnYRLq
+ 6IoU9aIDsoWefHlM62nsLSdjudgfTG7dSFuOFJZYotE371u77cGnCACoIsArJcNnaMUJ
+ ++5SQMlb6yPgzNMATO/s6FD1kRAi9NLOsbSTDu9Vg2wLKrKupsmLVYMnAiicjtsvu+n8
+ qV0cprAw7DwcLBH9pJ1nsAaKO4FJr3grPg199Zgd+sWn35mIO5kx1r1iRg213JU3//wT
+ Obqg==
+X-Gm-Message-State: AOJu0Yw9nEzDiRaR9xJDqd1bxXZ0dXMJpT1zfvQlG15NwFezSpBkV1Gr
+ wHrTXCVX6DeWq8ZFe6EL8e5qWT0udmpj+izBofEQL9UzwAA1T0WTeHjH8KrYxCIo1yHeeWwuJLZ
+ +J+7YU3w=
+X-Gm-Gg: ATEYQzz0gE2NFpkXLuHUWTNby661EMqDxT+vkFe0+mnzFHiuVsOvkiGbz1eInuM029G
+ o1yVQI5vCECvfZq4AF9Z77Uk0O/+JJxqPjRyJwx4PmDIYH7z/f7cG7TD3e7OzFz/d50bTMQwXJG
+ t7F5mEVM/wBT254CrcZHwHXfjjGdLjW54HP3evqBDX40Yghoqs5EPGbFb8IntQ7Gk/ZS+s0rowu
+ UNiYdwozQuTY4raJKXkUrljzKaMI5A8YQAviMFTESAiTp6fHM2+4pUkqq8V8y+qbRSeLYjoF7SI
+ Rfn3KPWg4NEPBAcNaKMW935BS4CsLwIadASy0e5njMK+u0lK8BKQxh3VO0XBhi4r3CIhUzTO6wC
+ 3d+rowRRNh76qIgnGL68R/8vMOrXDMCMSzxwrJtKZ9iURIULzVEeIGVibFkWNEYIdrK3ZuhwZ9c
+ Sbc6+u8LFmE54vdPXqUmzIktFm1vuMJeh/uhLQWh7xpe31ni8debli1wZ/Kt3zovBGdkUCCiSH
+X-Received: by 2002:a05:6000:228a:b0:436:38a4:2423 with SMTP id
+ ffacd0b85a97d-439942a847dmr4056806f8f.22.1772061421559; 
+ Wed, 25 Feb 2026 15:17:01 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-483c3addb3asm4443415e9.0.2026.02.25.15.15.07
+ ffacd0b85a97d-43970c00768sm35490761f8f.10.2026.02.25.15.17.00
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 25 Feb 2026 15:15:07 -0800 (PST)
+ Wed, 25 Feb 2026 15:17:00 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 08/70] target/ppc: Move user_only_helper.c to
- target_user_arch[] source set
-Date: Thu, 26 Feb 2026 00:13:08 +0100
-Message-ID: <20260225231411.96482-9-philmd@linaro.org>
+Subject: [PULL 25/70] target/sparc: Remove MonitorDef register entries
+ available via gdbstub
+Date: Thu, 26 Feb 2026 00:13:25 +0100
+Message-ID: <20260225231411.96482-26-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260225231411.96482-1-philmd@linaro.org>
 References: <20260225231411.96482-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,39 +99,144 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since commit 46369b50ee3 ("meson: Introduce meson_user_arch
-source set for arch-specific user-mode") using target_user_arch[] is
-preferred because clearer, and no need to filter on CONFIG_USER_ONLY.
+All these registers are already provided by via gdbstub parsed XML
+and handler by the gdb_get_register() helper in the monitor/hmp.c
+file. Remove as now unreachable code.
 
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20260219191955.83815-2-philmd@linaro.org>
+Message-ID: <20260219191955.83815-18-philmd@linaro.org>
 ---
- target/ppc/meson.build | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ target/sparc/monitor.c | 107 -----------------------------------------
+ 1 file changed, 107 deletions(-)
 
-diff --git a/target/ppc/meson.build b/target/ppc/meson.build
-index 8eed1fa40ca..b0d708bb519 100644
---- a/target/ppc/meson.build
-+++ b/target/ppc/meson.build
-@@ -31,7 +31,10 @@ gen = [
- ]
- ppc_ss.add(when: 'CONFIG_TCG', if_true: gen)
+diff --git a/target/sparc/monitor.c b/target/sparc/monitor.c
+index 73f15aa272d..a60671a60a4 100644
+--- a/target/sparc/monitor.c
++++ b/target/sparc/monitor.c
+@@ -39,114 +39,8 @@ void hmp_info_tlb(Monitor *mon, const QDict *qdict)
+     dump_mmu(env1);
+ }
  
--ppc_ss.add(when: 'CONFIG_USER_ONLY', if_true: files('user_only_helper.c'))
-+ppc_user_ss = ss.source_set()
-+ppc_user_ss.add(files(
-+  'user_only_helper.c',
-+))
- 
- ppc_system_ss = ss.source_set()
- ppc_system_ss.add(files(
-@@ -57,4 +60,5 @@ ppc_system_ss.add(when: 'TARGET_PPC64', if_true: files(
- ))
- 
- target_arch += {'ppc': ppc_ss}
-+target_user_arch += {'ppc': ppc_user_ss}
- target_system_arch += {'ppc': ppc_system_ss}
+-#ifndef TARGET_SPARC64
+-static target_long monitor_get_psr(Monitor *mon, const struct MonitorDef *md,
+-                                   int val)
+-{
+-    CPUArchState *env = mon_get_cpu_env(mon);
+-
+-    return cpu_get_psr(env);
+-}
+-#endif
+-
+-static target_long monitor_get_reg(Monitor *mon, const struct MonitorDef *md,
+-                                   int val)
+-{
+-    CPUArchState *env = mon_get_cpu_env(mon);
+-    return env->regwptr[val];
+-}
+-
+ const MonitorDef monitor_defs[] = {
+-    { "g0", offsetof(CPUSPARCState, gregs[0]) },
+-    { "g1", offsetof(CPUSPARCState, gregs[1]) },
+-    { "g2", offsetof(CPUSPARCState, gregs[2]) },
+-    { "g3", offsetof(CPUSPARCState, gregs[3]) },
+-    { "g4", offsetof(CPUSPARCState, gregs[4]) },
+-    { "g5", offsetof(CPUSPARCState, gregs[5]) },
+-    { "g6", offsetof(CPUSPARCState, gregs[6]) },
+-    { "g7", offsetof(CPUSPARCState, gregs[7]) },
+-    { "o0", 0, monitor_get_reg },
+-    { "o1", 1, monitor_get_reg },
+-    { "o2", 2, monitor_get_reg },
+-    { "o3", 3, monitor_get_reg },
+-    { "o4", 4, monitor_get_reg },
+-    { "o5", 5, monitor_get_reg },
+-    { "o6", 6, monitor_get_reg },
+-    { "o7", 7, monitor_get_reg },
+-    { "l0", 8, monitor_get_reg },
+-    { "l1", 9, monitor_get_reg },
+-    { "l2", 10, monitor_get_reg },
+-    { "l3", 11, monitor_get_reg },
+-    { "l4", 12, monitor_get_reg },
+-    { "l5", 13, monitor_get_reg },
+-    { "l6", 14, monitor_get_reg },
+-    { "l7", 15, monitor_get_reg },
+-    { "i0", 16, monitor_get_reg },
+-    { "i1", 17, monitor_get_reg },
+-    { "i2", 18, monitor_get_reg },
+-    { "i3", 19, monitor_get_reg },
+-    { "i4", 20, monitor_get_reg },
+-    { "i5", 21, monitor_get_reg },
+-    { "i6", 22, monitor_get_reg },
+-    { "i7", 23, monitor_get_reg },
+-    { "pc", offsetof(CPUSPARCState, pc) },
+-    { "npc", offsetof(CPUSPARCState, npc) },
+-    { "y", offsetof(CPUSPARCState, y) },
+-#ifndef TARGET_SPARC64
+-    { "psr", 0, &monitor_get_psr, },
+-    { "wim", offsetof(CPUSPARCState, wim) },
+-#endif
+-    { "tbr", offsetof(CPUSPARCState, tbr) },
+-    { "fsr", offsetof(CPUSPARCState, fsr) },
+-    { "f0", offsetof(CPUSPARCState, fpr[0].l.upper) },
+-    { "f1", offsetof(CPUSPARCState, fpr[0].l.lower) },
+-    { "f2", offsetof(CPUSPARCState, fpr[1].l.upper) },
+-    { "f3", offsetof(CPUSPARCState, fpr[1].l.lower) },
+-    { "f4", offsetof(CPUSPARCState, fpr[2].l.upper) },
+-    { "f5", offsetof(CPUSPARCState, fpr[2].l.lower) },
+-    { "f6", offsetof(CPUSPARCState, fpr[3].l.upper) },
+-    { "f7", offsetof(CPUSPARCState, fpr[3].l.lower) },
+-    { "f8", offsetof(CPUSPARCState, fpr[4].l.upper) },
+-    { "f9", offsetof(CPUSPARCState, fpr[4].l.lower) },
+-    { "f10", offsetof(CPUSPARCState, fpr[5].l.upper) },
+-    { "f11", offsetof(CPUSPARCState, fpr[5].l.lower) },
+-    { "f12", offsetof(CPUSPARCState, fpr[6].l.upper) },
+-    { "f13", offsetof(CPUSPARCState, fpr[6].l.lower) },
+-    { "f14", offsetof(CPUSPARCState, fpr[7].l.upper) },
+-    { "f15", offsetof(CPUSPARCState, fpr[7].l.lower) },
+-    { "f16", offsetof(CPUSPARCState, fpr[8].l.upper) },
+-    { "f17", offsetof(CPUSPARCState, fpr[8].l.lower) },
+-    { "f18", offsetof(CPUSPARCState, fpr[9].l.upper) },
+-    { "f19", offsetof(CPUSPARCState, fpr[9].l.lower) },
+-    { "f20", offsetof(CPUSPARCState, fpr[10].l.upper) },
+-    { "f21", offsetof(CPUSPARCState, fpr[10].l.lower) },
+-    { "f22", offsetof(CPUSPARCState, fpr[11].l.upper) },
+-    { "f23", offsetof(CPUSPARCState, fpr[11].l.lower) },
+-    { "f24", offsetof(CPUSPARCState, fpr[12].l.upper) },
+-    { "f25", offsetof(CPUSPARCState, fpr[12].l.lower) },
+-    { "f26", offsetof(CPUSPARCState, fpr[13].l.upper) },
+-    { "f27", offsetof(CPUSPARCState, fpr[13].l.lower) },
+-    { "f28", offsetof(CPUSPARCState, fpr[14].l.upper) },
+-    { "f29", offsetof(CPUSPARCState, fpr[14].l.lower) },
+-    { "f30", offsetof(CPUSPARCState, fpr[15].l.upper) },
+-    { "f31", offsetof(CPUSPARCState, fpr[15].l.lower) },
+ #ifdef TARGET_SPARC64
+-    { "f32", offsetof(CPUSPARCState, fpr[16]) },
+-    { "f34", offsetof(CPUSPARCState, fpr[17]) },
+-    { "f36", offsetof(CPUSPARCState, fpr[18]) },
+-    { "f38", offsetof(CPUSPARCState, fpr[19]) },
+-    { "f40", offsetof(CPUSPARCState, fpr[20]) },
+-    { "f42", offsetof(CPUSPARCState, fpr[21]) },
+-    { "f44", offsetof(CPUSPARCState, fpr[22]) },
+-    { "f46", offsetof(CPUSPARCState, fpr[23]) },
+-    { "f48", offsetof(CPUSPARCState, fpr[24]) },
+-    { "f50", offsetof(CPUSPARCState, fpr[25]) },
+-    { "f52", offsetof(CPUSPARCState, fpr[26]) },
+-    { "f54", offsetof(CPUSPARCState, fpr[27]) },
+-    { "f56", offsetof(CPUSPARCState, fpr[28]) },
+-    { "f58", offsetof(CPUSPARCState, fpr[29]) },
+-    { "f60", offsetof(CPUSPARCState, fpr[30]) },
+-    { "f62", offsetof(CPUSPARCState, fpr[31]) },
+     { "asi", offsetof(CPUSPARCState, asi) },
+     { "pstate", offsetof(CPUSPARCState, pstate) },
+     { "cansave", offsetof(CPUSPARCState, cansave) },
+@@ -154,7 +48,6 @@ const MonitorDef monitor_defs[] = {
+     { "otherwin", offsetof(CPUSPARCState, otherwin) },
+     { "wstate", offsetof(CPUSPARCState, wstate) },
+     { "cleanwin", offsetof(CPUSPARCState, cleanwin) },
+-    { "fprs", offsetof(CPUSPARCState, fprs), NULL, MD_I32 },
+ #endif
+     { NULL },
+ };
 -- 
 2.52.0
 
