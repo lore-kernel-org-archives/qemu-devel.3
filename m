@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5F5AEFD211
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 09:21:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B839FEFD214
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 09:21:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvB5B-0000a6-KQ; Wed, 25 Feb 2026 04:21:25 -0500
+	id 1vvB5N-0000e4-Hf; Wed, 25 Feb 2026 04:21:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vvB56-0000Zb-Te
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 04:21:22 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vvB5D-0000aj-8Q
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 04:21:27 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vvB55-0003TX-Gq
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 04:21:20 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vvB5B-0003Tl-MC
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 04:21:27 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772011278;
+ s=mimecast20190719; t=1772011285;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=vhFqZCSRzyqDfiCQOCa4JossEFhmnOQD274/TiSN1yM=;
- b=AYaiuryCYVn2maEpkNqJpoKZcMczuI6CyMGkUFq5+By8Xivn+gDJQsKz9CA0oKlm2BV6AM
- N5/2UARX9E2Hh9+G+QUyHt657hpHgOD63ryMLUxYUUO4YarmmaWAg/arokC0jNsereaBhI
- oCoHSBiTA57+b+WfCS9eOWDrXtFqeH4=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=IBx/rHsB1bfNKKNgPsQof/kgKPm1sZ6HoC0ZHGL5giQ=;
+ b=GfctKbBqa+iIyM0wOkMwfFfV4VLRB679q2mXQWRxsNumQ776Qcyq61R/P/Tj1QF/dz9/0W
+ 3b7OrziHmOyjQRZM+UJfeNL/UXxYMQVsCY4kaLAHaSG6Pyf0Dd1HEpBs31e9BSDnNyICJp
+ pQ/NSWUKIvVex1RyzAX3gvDTzoOW9uU=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-662-L49LYUrmPu2wuhEzpdKr-g-1; Wed,
- 25 Feb 2026 04:21:14 -0500
-X-MC-Unique: L49LYUrmPu2wuhEzpdKr-g-1
-X-Mimecast-MFC-AGG-ID: L49LYUrmPu2wuhEzpdKr-g_1772011273
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-686-hCp1fE2qN6GpPhRVLmG5PQ-1; Wed,
+ 25 Feb 2026 04:21:20 -0500
+X-MC-Unique: hCp1fE2qN6GpPhRVLmG5PQ-1
+X-Mimecast-MFC-AGG-ID: hCp1fE2qN6GpPhRVLmG5PQ_1772011278
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A76D518002C1; Wed, 25 Feb 2026 09:21:12 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 197C11956050; Wed, 25 Feb 2026 09:21:18 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.45.224.158])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 8875819560A2; Wed, 25 Feb 2026 09:21:07 +0000 (UTC)
+ id 2636E19560B6; Wed, 25 Feb 2026 09:21:12 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
  Igor Mammedov <imammedo@redhat.com>,
@@ -55,9 +55,10 @@ Cc: Eduardo Habkost <eduardo@habkost.net>, Yanan Wang <wangyanan55@huawei.com>,
  Yi Liu <yi.l.liu@intel.com>,
  =?UTF-8?q?Cl=C3=A9ment=20Mathieu--Drif?= <clement.mathieu--drif@eviden.com>,
  Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>
-Subject: [PATCH v2 06/16] hw/pci/pcie: Remove QEMU_PCIE_EXTCAP_INIT definition
-Date: Wed, 25 Feb 2026 10:20:14 +0100
-Message-ID: <20260225092024.794595-7-thuth@redhat.com>
+Subject: [PATCH v2 07/16] hw/virtio/virtio-pci: Remove
+ VIRTIO_PCI_FLAG_INIT_DEVERR definition
+Date: Wed, 25 Feb 2026 10:20:15 +0100
+Message-ID: <20260225092024.794595-8-thuth@redhat.com>
 In-Reply-To: <20260225092024.794595-1-thuth@redhat.com>
 References: <20260225092024.794595-1-thuth@redhat.com>
 MIME-Version: 1.0
@@ -91,64 +92,69 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-QEMU_PCIE_EXTCAP_INIT was only used by the hw_compat_2_8[]
-array, via the 'x-pcie-extcap-init=off' property. We removed
-all machines using that array, let's remove all the code around
-QEMU_PCIE_EXTCAP_INIT.
+VIRTIO_PCI_FLAG_INIT_DEVERR was only used by the hw_compat_2_8[]
+array, via the 'x-pcie-deverr-init=off' property. We removed all
+machines using that array, lets remove all the code around
+VIRTIO_PCI_FLAG_INIT_DEVERR (see commit 9a4c0e220d8 for similar
+VIRTIO_PCI_FLAG_* enum removal).
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20250501210456.89071-8-philmd@linaro.org>
-[thuth: Don't remove pci_set_long(), execute it always instead]
+Message-ID: <20250501210456.89071-9-philmd@linaro.org>
+Reviewed-by: Igor Mammedov <imammedo@redhat.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- include/hw/pci/pci.h | 2 --
- hw/pci/pci.c         | 2 --
- hw/pci/pcie.c        | 6 ++----
- 3 files changed, 2 insertions(+), 8 deletions(-)
+ include/hw/virtio/virtio-pci.h | 4 ----
+ hw/virtio/virtio-pci.c         | 8 ++------
+ 2 files changed, 2 insertions(+), 10 deletions(-)
 
-diff --git a/include/hw/pci/pci.h b/include/hw/pci/pci.h
-index d9835dfd0dd..64141e92fec 100644
---- a/include/hw/pci/pci.h
-+++ b/include/hw/pci/pci.h
-@@ -219,8 +219,6 @@ enum {
-     /* Link active status in endpoint capability is always set */
- #define QEMU_PCIE_LNKSTA_DLLLA_BITNR 8
-     QEMU_PCIE_LNKSTA_DLLLA = (1 << QEMU_PCIE_LNKSTA_DLLLA_BITNR),
--#define QEMU_PCIE_EXTCAP_INIT_BITNR 9
--    QEMU_PCIE_EXTCAP_INIT = (1 << QEMU_PCIE_EXTCAP_INIT_BITNR),
- #define QEMU_PCIE_CXL_BITNR 10
-     QEMU_PCIE_CAP_CXL = (1 << QEMU_PCIE_CXL_BITNR),
- #define QEMU_PCIE_ERR_UNC_MASK_BITNR 11
-diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-index 90d6d71efdc..6399ebd41cb 100644
---- a/hw/pci/pci.c
-+++ b/hw/pci/pci.c
-@@ -84,8 +84,6 @@ static const Property pci_props[] = {
-                     QEMU_PCI_CAP_MULTIFUNCTION_BITNR, false),
-     DEFINE_PROP_BIT("x-pcie-lnksta-dllla", PCIDevice, cap_present,
-                     QEMU_PCIE_LNKSTA_DLLLA_BITNR, true),
--    DEFINE_PROP_BIT("x-pcie-extcap-init", PCIDevice, cap_present,
--                    QEMU_PCIE_EXTCAP_INIT_BITNR, true),
-     DEFINE_PROP_STRING("failover_pair_id", PCIDevice,
-                        failover_pair_id),
-     DEFINE_PROP_UINT32("acpi-index",  PCIDevice, acpi_index, 0),
-diff --git a/hw/pci/pcie.c b/hw/pci/pcie.c
-index cae5061e69c..4622c75e48c 100644
---- a/hw/pci/pcie.c
-+++ b/hw/pci/pcie.c
-@@ -250,10 +250,8 @@ int pcie_cap_init(PCIDevice *dev, uint8_t offset,
+diff --git a/include/hw/virtio/virtio-pci.h b/include/hw/virtio/virtio-pci.h
+index 581bb830b79..405e33a3165 100644
+--- a/include/hw/virtio/virtio-pci.h
++++ b/include/hw/virtio/virtio-pci.h
+@@ -35,7 +35,6 @@ enum {
+     VIRTIO_PCI_FLAG_MODERN_PIO_NOTIFY_BIT,
+     VIRTIO_PCI_FLAG_PAGE_PER_VQ_BIT,
+     VIRTIO_PCI_FLAG_ATS_BIT,
+-    VIRTIO_PCI_FLAG_INIT_DEVERR_BIT,
+     VIRTIO_PCI_FLAG_INIT_LNKCTL_BIT,
+     VIRTIO_PCI_FLAG_INIT_PM_BIT,
+     VIRTIO_PCI_FLAG_INIT_FLR_BIT,
+@@ -63,9 +62,6 @@ enum {
+ /* address space translation service */
+ #define VIRTIO_PCI_FLAG_ATS (1 << VIRTIO_PCI_FLAG_ATS_BIT)
  
-     pci_set_word(dev->wmask + pos + PCI_EXP_DEVCTL2, PCI_EXP_DEVCTL2_EETLPPB);
+-/* Init error enabling flags */
+-#define VIRTIO_PCI_FLAG_INIT_DEVERR (1 << VIRTIO_PCI_FLAG_INIT_DEVERR_BIT)
+-
+ /* Init Link Control register */
+ #define VIRTIO_PCI_FLAG_INIT_LNKCTL (1 << VIRTIO_PCI_FLAG_INIT_LNKCTL_BIT)
  
--    if (dev->cap_present & QEMU_PCIE_EXTCAP_INIT) {
--        /* read-only to behave like a 'NULL' Extended Capability Header */
--        pci_set_long(dev->wmask + PCI_CONFIG_SPACE_SIZE, 0);
--    }
-+    /* read-only to behave like a 'NULL' Extended Capability Header */
-+    pci_set_long(dev->wmask + PCI_CONFIG_SPACE_SIZE, 0);
+diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
+index c7b5a79b936..91d736d71c1 100644
+--- a/hw/virtio/virtio-pci.c
++++ b/hw/virtio/virtio-pci.c
+@@ -2307,10 +2307,8 @@ static void virtio_pci_realize(PCIDevice *pci_dev, Error **errp)
+             proxy->last_pcie_cap_offset += PCI_ERR_SIZEOF;
+         }
  
-     return pos;
- }
+-        if (proxy->flags & VIRTIO_PCI_FLAG_INIT_DEVERR) {
+-            /* Init error enabling flags */
+-            pcie_cap_deverr_init(pci_dev);
+-        }
++        /* Init error enabling flags */
++        pcie_cap_deverr_init(pci_dev);
+ 
+         if (proxy->flags & VIRTIO_PCI_FLAG_INIT_LNKCTL) {
+             /* Init Link Control Register */
+@@ -2446,8 +2444,6 @@ static const Property virtio_pci_properties[] = {
+                     VIRTIO_PCI_FLAG_ATS_BIT, false),
+     DEFINE_PROP_BIT("x-ats-page-aligned", VirtIOPCIProxy, flags,
+                     VIRTIO_PCI_FLAG_ATS_PAGE_ALIGNED_BIT, true),
+-    DEFINE_PROP_BIT("x-pcie-deverr-init", VirtIOPCIProxy, flags,
+-                    VIRTIO_PCI_FLAG_INIT_DEVERR_BIT, true),
+     DEFINE_PROP_BIT("x-pcie-lnkctl-init", VirtIOPCIProxy, flags,
+                     VIRTIO_PCI_FLAG_INIT_LNKCTL_BIT, true),
+     DEFINE_PROP_BIT("x-pcie-pm-init", VirtIOPCIProxy, flags,
 -- 
 2.53.0
 
