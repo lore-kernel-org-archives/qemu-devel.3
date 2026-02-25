@@ -4,79 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 400A9EFD216
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 09:33:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F123DEFD210
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 09:34:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvBGa-0002BO-Rh; Wed, 25 Feb 2026 04:33:12 -0500
+	id 1vvBHf-0002KN-3s; Wed, 25 Feb 2026 04:34:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vvBGX-0002BB-EX
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 04:33:11 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1vvBHP-0002IO-IE
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 04:34:04 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vvBGP-0005BB-Tr
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 04:33:03 -0500
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1vvBHL-0005Hl-Mh
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 04:34:01 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772011979;
+ s=mimecast20190719; t=1772012038;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=fz7DUIMZhSyLpmz8iR9M49jdiPuZ5ipIS81yAb06D2s=;
- b=d9LFAFU2sOAl7XL2B3IP+1hLgC+vvd6KtgHM/3rM+rEVfW8NvhsxvEFkQqg2k7bubGVnNp
- 90saWP7ZxhbQ8aGTcIHhbbZv0lL+xmj4Lz1PvK2JOfMCJeohltBTx6cLC3aBX3K2cH4Mf2
- mwpw41mXeFp8jbmnHp3rmtFi/fi2vH0=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=0clAZJTl2shOgEGG1XvRrxH6BNkbNFn2M4RdpEvsF9E=;
+ b=IsQ9UYCuTiIVPgp4JpHiZ6z5GaCfQUZ9pxnBM7MadPkszxGZnEhhAxpvAz7z1C6UeMRi8A
+ Ez8mKB76yB4aWN7hyqYCoLRSD93HDgbgp6S6J2pDZIlep+34T7HI7fSeaBxe0NCO+4cbOj
+ Rrvc1EedE1fM3gqktgaZIFx5VVzA3SQ=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-694-_rIOraWVMdGgjZ0TBded_w-1; Wed,
- 25 Feb 2026 04:32:55 -0500
-X-MC-Unique: _rIOraWVMdGgjZ0TBded_w-1
-X-Mimecast-MFC-AGG-ID: _rIOraWVMdGgjZ0TBded_w_1772011974
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-695-mJIWLE42NN6Kn3PsioPaRw-1; Wed,
+ 25 Feb 2026 04:33:54 -0500
+X-MC-Unique: mJIWLE42NN6Kn3PsioPaRw-1
+X-Mimecast-MFC-AGG-ID: mJIWLE42NN6Kn3PsioPaRw_1772012034
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 921D61800473; Wed, 25 Feb 2026 09:32:54 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.13])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 48F2A1800352; Wed, 25 Feb 2026 09:32:54 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id DAB4C21E692D; Wed, 25 Feb 2026 10:32:51 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Prasad Pandit <ppandit@redhat.com>,  Ani Sinha <anisinha@redhat.com>,
- Peter Xu <peterx@redhat.com>,  Fabiano Rosas <farosas@suse.de>,
- kraxel@redhat.com,  pbonzini@redhat.com,  ani@anisinha.ca,  Prasad Pandit
- <pjp@fedoraproject.org>,  qemu-devel@nongnu.org
-Subject: Re: [PATCH v6 35/35] migration: return EEXIST when trying to add
- the same migration blocker
-In-Reply-To: <aZ670CAG40j1r2PJ@redhat.com> ("Daniel P. =?utf-8?Q?Berrang?=
- =?utf-8?Q?=C3=A9=22's?= message of
- "Wed, 25 Feb 2026 09:07:28 +0000")
-References: <20260225035000.385950-1-anisinha@redhat.com>
- <20260225035000.385950-36-anisinha@redhat.com>
- <CAE8KmOyjB1NEtBVQ2QDiDZrPoem3eTWEi-Ht_mJZQNa-H=5iNQ@mail.gmail.com>
- <aZ670CAG40j1r2PJ@redhat.com>
-Date: Wed, 25 Feb 2026 10:32:51 +0100
-Message-ID: <87342pw4l8.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 676991955F3B; Wed, 25 Feb 2026 09:33:53 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.120])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 582571955F43; Wed, 25 Feb 2026 09:33:51 +0000 (UTC)
+Date: Wed, 25 Feb 2026 17:33:49 +0800
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Jens Axboe <axboe@kernel.dk>
+Cc: qemu-block@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
+ Fam Zheng <fam@euphon.net>, qemu-devel@nongnu.org
+Subject: Re: [PATCH v2 3/4] aio-posix: enable IORING_SETUP_COOP_TASKRUN |
+ IORING_SETUP_TASKRUN_FLAG
+Message-ID: <20260225093349.GA1653802@fedora>
+References: <20260225081336.1639325-1-stefanha@redhat.com>
+ <20260225081336.1639325-4-stefanha@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="zimaJ5iwlIoeIkOO"
+Content-Disposition: inline
+In-Reply-To: <20260225081336.1639325-4-stefanha@redhat.com>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -10
 X-Spam_score: -1.1
 X-Spam_bar: -
 X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.358, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.659,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -94,76 +87,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
-> On Wed, Feb 25, 2026 at 11:35:15AM +0530, Prasad Pandit wrote:
->> On Wed, 25 Feb 2026 at 09:23, Ani Sinha <anisinha@redhat.com> wrote:
->> > Currently the code that adds a migration blocker does not check if the=
- same
->> > blocker already exists. Return an EEXIST error code if there is an att=
-empt to
->> > add the same migration blocker again. This way the same migration bloc=
-ker will
->> > not get added twice.
->> >
->> > Suggested-by: Prasad Pandit <pjp@fedoraproject.org>
->> > Signed-off-by: Ani Sinha <anisinha@redhat.com>
->> > ---
->> >  migration/migration.c | 4 ++++
->> >  1 file changed, 4 insertions(+)
->> >
->> > diff --git a/migration/migration.c b/migration/migration.c
->> > index a5b0465ed3..1eb75fb7fb 100644
->> > --- a/migration/migration.c
->> > +++ b/migration/migration.c
->> > @@ -1702,6 +1702,10 @@ static int add_blockers(Error **reasonp, unsign=
-ed modes, Error **errp)
->
-> This method has an  '**errp' parameter.....
->
->> >  {
->> >      for (MigMode mode =3D 0; mode < MIG_MODE__MAX; mode++) {
->> >          if (modes & BIT(mode)) {
->> > +            if (g_slist_index(migration_blockers[mode],
->> > +                                 *reasonp) >=3D 0) {
->> > +                return -EEXIST;
->
-> .... so using  -errno for return values is not appropriate - it must
-> set 'errp' and return -1.
+--zimaJ5iwlIoeIkOO
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Yes, it must set @errp on failure.  Returning -1 would be wrong,
-because:
+On Wed, Feb 25, 2026 at 04:13:35PM +0800, Stefan Hajnoczi wrote:
+> The IORING_SETUP_COOP_TASKRUN flag reduces interprocessor interrupts
+> when an io_uring event occurs on a different CPU. The idea is that the
+> QEMU thread will wait for a CQE anyway, so there is no need to interrupt
+> the CPU that it is on.
+>=20
+> The IORING_SETUP_TASKRUN_FLAG ensures that QEMU's io_uring CQ ring
+> polling still works with COOP_TASKRUN. The kernel will set a flag in the
+> SQ ring (this is not a typo, the flag is located in the SQ ring even
+> though it pertains to the CQ ring) that can be polled from userspace.
+>=20
+> Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+> ---
+>  util/fdmon-io_uring.c | 17 ++++++++++++++---
+>  1 file changed, 14 insertions(+), 3 deletions(-)
 
-    int migrate_add_blocker_modes(Error **reasonp, unsigned modes, Error **=
-errp)
-    {
-        if (is_only_migratable(reasonp, modes, errp)) {
-            return -EACCES;
-        } else if (is_busy(reasonp, errp)) {
-            return -EBUSY;
-        }
-        return add_blockers(reasonp, modes, errp);
-    }
+Hi Jens,
+I noticed liburing's io_uring_cq_ready() does not check the
+IORING_SQ_TASKRUN flag. Maybe QEMU's fdmon_io_uring_gsource_check()
+needs to check it here so that io_uring_enter(2) will be called with
+IORING_ENTER_GETEVENTS in the glib event loop?
 
-If callers don't actually care for error codes, the entire nest of
-functions could be simplified to return 0/-1 or true/false.
+(This is a similar idea to your recent patch but needed when
+IORING_SETUP_TASKRUN_FLAG is enabled.)
 
->> > +            }
->> >              migration_blockers[mode] =3D g_slist_prepend(migration_bl=
-ockers[mode],
->> >                                                         *reasonp);
->> >          }
->>=20
->> * Looks okay.
->> Reviewed-by: Prasad Pandit <pjp@fedoraproject.org>
->>=20
->> Thank you.
->> ---
->>   - Prasad
->>=20
->>=20
->
-> With regards,
-> Daniel
+I tried to benchmark this but couldn't observe a difference in IOPS:
+
+diff --git a/util/fdmon-io_uring.c b/util/fdmon-io_uring.c
+index 652d269e03..ef4257924b 100644
+--- a/util/fdmon-io_uring.c
++++ b/util/fdmon-io_uring.c
+@@ -356,7 +356,8 @@ static bool fdmon_io_uring_gsource_check(AioContext *ct=
+x)
+      * the main loop can miss completions and sleep in ppoll() until the
+      * next timer fires.
+      */
+-    return io_uring_cq_ready(&ctx->fdmon_io_uring);
++    return io_uring_cq_ready(&ctx->fdmon_io_uring) ||
++           (IO_URING_READ_ONCE(*ctx->fdmon_io_uring.sq.kflags) & IORING_SQ=
+_TASKRUN);
+ }
+
+ /* Dispatch CQE handlers that are ready */
+
+--zimaJ5iwlIoeIkOO
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmmewf0ACgkQnKSrs4Gr
+c8js8wf/SBVwExoSRqEB9D/yFxm2dUyui4SWKM9wA9odyplgdiYV1yrJS/lZ9tbp
+S2d7zuKzOEaRjFWYwxQvwEqY8IX8iL2mz+dsM/gYSB6bw5CzH8rnoP3lsMEmXOOp
+dpJOgwDXJ1ZXGz0O8lvE6Ck9YJ/HxuT4eLmkz45PVSwF5smaDHZIs/Rdfui4bHAT
+npaCsMwVaWxlLpfuqYRZfxhUNQn/V3qPWwBIk7/2vrhfDUGb2mFcP4tnzhcBrz/H
+U1hJWU8D7muw/fuKyy6uR8E7ZGa7VUWACn+GF02/t5fz5snAL4zGPMl5MUajejy2
+XA/KZF5M+CCAFMYUOxpJ0BEepzXn1Q==
+=/Zx8
+-----END PGP SIGNATURE-----
+
+--zimaJ5iwlIoeIkOO--
 
 
