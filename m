@@ -4,98 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6688FD374E
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 12:26:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4359FD374E
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 12:27:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvDxd-0001Te-RN; Wed, 25 Feb 2026 07:25:49 -0500
+	id 1vvDzW-0002Az-6K; Wed, 25 Feb 2026 07:27:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vvDxc-0001TP-3B
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 07:25:48 -0500
-Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vvDxZ-00073M-Vz
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 07:25:47 -0500
-Received: by mail-ej1-x631.google.com with SMTP id
- a640c23a62f3a-b8f9568e074so1138105966b.0
- for <qemu-devel@nongnu.org>; Wed, 25 Feb 2026 04:25:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772022344; x=1772627144; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=U7/JSI+3sJkzgTe7hifC7lrID3/kE9/q5nZl6uVmzkc=;
- b=XG1figZ4OoG65KTtGRqsu5E1CtozLw9yO87D6SDQ09WeIUgQNboPXYAJR5YzzTNRPo
- UDgqWKg/YoRP2NKUV7Ec9eNigv/3uyAoP8GCEgnA/Gd/oYpMeArh3Zp2EvDlekjnCoyI
- llxihuf1oDYTlfl0k/x4OFrvma0NlJKjga+tPR1V1PWBxKpolwUKpAZM95dQGXKd6XYs
- JFqpeTUn/n/Wbwovxkj1esS7m3aBwW1o1Kw1lQv/YI/Km53TeCiuMJm1hFBZ7GPlBHlR
- 8b//LMDm5xRkJgOmhgCnoXdWfntn/hAnlbtqDdEMruQqrYrUcAgCNxQXHb+FEP08p9Tl
- EH6A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772022344; x=1772627144;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=U7/JSI+3sJkzgTe7hifC7lrID3/kE9/q5nZl6uVmzkc=;
- b=ezBKDwjshs2pBni92PY9ForijdNdBfTlqr5X2tNKGvaeEH2Nm0zRKpWLTibqgoKEhd
- QYHVx3LeaOnxbBv2ushPXP2e5MjOft4+jRDgZoJM32DkCDyyYQhCYrxSRAbNe2a2waZ3
- BKufDTlEH3zirApwtMiCLbODkil/qtlf1lYCw4oh+53ZPOpGXVuA+DyBSGGxvpK2q7/J
- 6QJ8pskzd4ZsVVKrN/8NwWYp7IjsJYFsS8WOjgdhR/BdQW8GWAEM0NViFJqhkTdzosib
- BuO6xp5Ds8srPuTPfm4mjM3WkoGMtAfhuXFR6UUNexM1CPK82qL+QY95w07YH1xUTX4I
- 1mHg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWbMFcnqsv82k1Am66Y39UhffG5e5i0t62CVhRwUwbRuuhfzrS4ikmV6IoSzG+XkAVgoGURMFARI7ai@nongnu.org
-X-Gm-Message-State: AOJu0YwxvOEqDSTPc9yuiGYZXYenElBbl6Yaaq1GEforhoF4YcPjgf5x
- sxWkg5qpoBD0g+Otg0EZsQjEuZfUa/RoCTmDAHiOKa8ssB1HSCL3yViKlrJCcdiTdSI=
-X-Gm-Gg: ATEYQzyoUSHWXyQyUvHEAE4DTi5VFpVbZt80huicYsnJhw2XVR4hBD4UsvYRFCAcOnY
- ReiFK+MolTSCj6wu/tIguLOoAtpkwoWUrLoTnIQE/hEjqimf64GddxE+Dhcjmlak7CI3RXpD646
- gFjgdhshiEbKV/6bUpU6KuxTJuCobG+TBGPNRN6GiAbZPj9fMTJ/SsbYYuJYMRVqY3vFumv9d75
- JTSiP+u+OkKJ7IZIB8nhjTTFli6BSfLAdRPPNgb5tPTI/Yu797NoF45QwxS/LwuvC5gxFJaZ1Wv
- V2cO3ZvAI46S1ef66xj6vnTpNo1DSV2Oerg6LHYOwXOTGA75IzN/1LGHM9cKDy3ylqYhDCVv6+j
- GYEmYJitWMTw2XmIxy7THq7j4+aPyPissXrFL1QugIVBRM+DK2b32mEBpDSKoRj3wy21qcKKBfY
- gJYv1qYr/PBOSK++O+S9UKuyY=
-X-Received: by 2002:a17:907:84b:b0:b88:6542:86a0 with SMTP id
- a640c23a62f3a-b93517e2cb1mr1817366b.54.1772022344081; 
- Wed, 25 Feb 2026 04:25:44 -0800 (PST)
-Received: from draig.lan ([185.124.0.126]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b9084c5de7esm503991066b.1.2026.02.25.04.25.43
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 25 Feb 2026 04:25:43 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 7D2095F87E;
- Wed, 25 Feb 2026 12:25:42 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Florian Hofhammer <florian.hofhammer@epfl.ch>
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,  qemu-devel@nongnu.org,
- richard.henderson@linaro.org,  laurent@vivier.eu,  imp@bsdimp.com,
- berrange@redhat.com
-Subject: Re: [PATCH v4 2/7] linux-user: make syscall emulation interruptible
-In-Reply-To: <ef465a2b-d790-406e-a1fa-a7a5f95c18eb@epfl.ch> (Florian
- Hofhammer's message of "Wed, 25 Feb 2026 10:29:03 +0100")
-References: <909b0a4f-9759-4e27-bba8-997ae2f41bd6@epfl.ch>
- <8096590c-bf13-4e5e-8167-ab38a37180bc@epfl.ch>
- <538ada16-07b8-403c-b1fa-f42db7cfc195@linaro.org>
- <874in52mzy.fsf@draig.linaro.org>
- <ef465a2b-d790-406e-a1fa-a7a5f95c18eb@epfl.ch>
-User-Agent: mu4e 1.14.0-pre1; emacs 30.1
-Date: Wed, 25 Feb 2026 12:25:42 +0000
-Message-ID: <87jyw1103d.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1vvDzQ-0002AV-B5
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 07:27:40 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1vvDzO-0007FF-CG
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 07:27:39 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1772022457;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=l2ZNL6XTQtkekEoL06X6qsxgD2q8IN8Rl6IJGbmn9eE=;
+ b=HiQpof7t1S/VDpPDylIfdZ4i274k+Zrc6wE9kVsSvXvkUA9YsdMiDX861+NYlQpzp/e1II
+ ac8TcO1xjUlT57IO2c2rH3vrIT2YGdWeH2uwfzo3XpuXwo4fAftDAGJVw3+hr/z81RyqlT
+ YqpH58TpaI5nuREU6FBS6Ngn/HAjRNs=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-195-1l8aGhGQPMGtgiDFsLBuKw-1; Wed,
+ 25 Feb 2026 07:27:28 -0500
+X-MC-Unique: 1l8aGhGQPMGtgiDFsLBuKw-1
+X-Mimecast-MFC-AGG-ID: 1l8aGhGQPMGtgiDFsLBuKw_1772022446
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9B15B180061C; Wed, 25 Feb 2026 12:27:26 +0000 (UTC)
+Received: from redhat.com (unknown [10.45.225.165])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6BA141955F26; Wed, 25 Feb 2026 12:27:23 +0000 (UTC)
+Date: Wed, 25 Feb 2026 12:27:19 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>,
+ "cfu@mips.com" <cfu@mips.com>, "mst@redhat.com" <mst@redhat.com>,
+ "marcel.apfelbaum@gmail.com" <marcel.apfelbaum@gmail.com>,
+ "dbarboza@ventanamicro.com" <dbarboza@ventanamicro.com>,
+ "philmd@linaro.org" <philmd@linaro.org>,
+ "alistair23@gmail.com" <alistair23@gmail.com>,
+ "thuth@redhat.com" <thuth@redhat.com>
+Subject: Re: [PATCH v2 01/16] meson: Add BE RISCV targets
+Message-ID: <aZ7qp05kxbU7diac@redhat.com>
+References: <20260225102016.200654-1-djordje.todorovic@htecgroup.com>
+ <20260225102016.200654-2-djordje.todorovic@htecgroup.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::631;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x631.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Disposition: inline
+In-Reply-To: <20260225102016.200654-2-djordje.todorovic@htecgroup.com>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -5
+X-Spam_score: -0.6
+X-Spam_bar: /
+X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.734, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.78,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,90 +89,52 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Florian Hofhammer <florian.hofhammer@epfl.ch> writes:
+On Wed, Feb 25, 2026 at 10:20:25AM +0000, Djordje Todorovic wrote:
+> Add options to compile riscv64be-softmmu and riscv32be-softmmu
+> ---
+>  meson.build | 7 ++++++-
+>  1 file changed, 6 insertions(+), 1 deletion(-)
+> 
+> diff --git a/meson.build b/meson.build
+> index 8c6c0a9a32..41ad38d184 100644
+> --- a/meson.build
+> +++ b/meson.build
+> @@ -55,6 +55,11 @@ supported_cpus = ['ppc64', 's390x', 'riscv64', 'x86_64',
+>  
+>  cpu = host_machine.cpu_family()
+>  
+> +# Unify riscv64be to riscv64.
+> +if cpu == 'riscv64be'
+> +  cpu = 'riscv64'
+> +endif
+> +
+>  target_dirs = config_host['TARGET_DIRS'].split()
+>  
+>  # type of binaries to build
+> @@ -281,7 +286,7 @@ elif cpu == 'ppc64'
+>  elif cpu == 'mips64'
+>    kvm_targets = ['mips-softmmu', 'mipsel-softmmu', 'mips64-softmmu', 'mips64el-softmmu']
+>  elif cpu == 'riscv64'
+> -  kvm_targets = ['riscv64-softmmu']
+> +  kvm_targets = ['riscv32-softmmu', 'riscv64-softmmu', 'riscv32be-softmmu', 'riscv64be-softmmu']
 
-> On 25/02/2026 10:25, Alex Benn=C3=A9e wrote:
->> Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
->>=20
->>> On 2/24/26 7:50 AM, Florian Hofhammer wrote:
->>>> The syscall emulation code previously wasn't interruptible via
->>>> cpu_loop_exit(), as this construct relies on a longjmp target that is =
-not
->>>> live anymore in the syscall handling code. Consequently, longjmp() wou=
-ld
->>>> operate on a (potentially overwritten) stale jump buffer. This patch a=
-dds an additional
->>>> setjmp and the necessary handling around it to make longjmp() (and by
->>>> proxy cpu_loop_exit() safe to call even within a syscall context.
->>>> Signed-off-by: Florian Hofhammer <florian.hofhammer@epfl.ch>
->>>> ---
->>>>   linux-user/aarch64/cpu_loop.c      |  2 +-
->>>>   linux-user/alpha/cpu_loop.c        |  2 +-
->>>>   linux-user/arm/cpu_loop.c          |  2 +-
->>>>   linux-user/hexagon/cpu_loop.c      |  2 +-
->>>>   linux-user/hppa/cpu_loop.c         |  4 ++++
->>>>   linux-user/i386/cpu_loop.c         |  8 +++++---
->>>>   linux-user/include/special-errno.h |  8 ++++++++
->>>>   linux-user/loongarch64/cpu_loop.c  |  5 +++--
->>>>   linux-user/m68k/cpu_loop.c         |  2 +-
->>>>   linux-user/microblaze/cpu_loop.c   |  2 +-
->>>>   linux-user/mips/cpu_loop.c         |  5 +++--
->>>>   linux-user/or1k/cpu_loop.c         |  2 +-
->>>>   linux-user/ppc/cpu_loop.c          |  6 ++++--
->>>>   linux-user/riscv/cpu_loop.c        |  2 +-
->>>>   linux-user/s390x/cpu_loop.c        |  2 +-
->>>>   linux-user/sh4/cpu_loop.c          |  2 +-
->>>>   linux-user/sparc/cpu_loop.c        |  4 +++-
->>>>   linux-user/syscall.c               | 16 ++++++++++++++++
->>>>   linux-user/xtensa/cpu_loop.c       |  3 +++
->>>>   19 files changed, 59 insertions(+), 20 deletions(-)
->>>> diff --git a/linux-user/sparc/cpu_loop.c
->>>> b/linux-user/sparc/cpu_loop.c
->>>> index 7391e2add8..f054316dce 100644
->>>> --- a/linux-user/sparc/cpu_loop.c
->>>> +++ b/linux-user/sparc/cpu_loop.c
->>>> @@ -229,7 +229,9 @@ void cpu_loop (CPUSPARCState *env)
->>>>                                 env->regwptr[2], env->regwptr[3],
->>>>                                 env->regwptr[4], env->regwptr[5],
->>>>                                 0, 0);
->>>> -            if (ret =3D=3D -QEMU_ERESTARTSYS || ret =3D=3D -QEMU_ESIG=
-RETURN) {
->>>> +            if (ret =3D=3D -QEMU_ERESTARTSYS
->>>> +                    || ret =3D=3D -QEMU_ESIGRETURN
->>>> +                    || ret =3D=3D -QEMU_ESETPC) {
->>>>                   break;
->>>>               }
->>>
->>> Just a style nit:
->>> if (ret =3D=3D -QEMU_ERESTARTSYS ||
->>>     ret =3D=3D -QEMU_ESIGRETURN ||
->>>     ret =3D=3D -QEMU_ESETPC) {
->>=20
->> I was hopping the ret test could be wrapped up into a helper but it
->> seems sparc and x86 have enough variation in handled ret codes to make
->> that difficult.
->
-> It's not just x86 and sparc, there generally seems to not be consensus
-> on whether return codes are checked via a single conditional check (as
-> is the case with sparc), dedicated conditional checks for each possible
-> error value, or via switch statements. I think moving that into a helper
-> would require a bit of refactoring across architectures.
-> I could check that out for a follow-up patch set if you think this makes
-> sense.
+The suibject says its adding "BE" targets, but this is also adding
+a 32-bit little endian target.
 
-I think we can live with it for now:
-
-Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+Does KVM, actually support running riscv32 guests on a riscv64
+host ?  If so, this change to add 32-bit KVM should likely be
+done as its own commit separate from this big endian series.
 
 
->
-> Best regards,
-> Florian
+With regards,
+Daniel
+-- 
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
