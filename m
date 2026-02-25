@@ -4,78 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DF89FD3764
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 14:26:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26751FD3762
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 14:35:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvFpn-0002p7-Kf; Wed, 25 Feb 2026 09:25:51 -0500
+	id 1vvFy8-0005IL-Og; Wed, 25 Feb 2026 09:34:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vvFpf-0002m3-Ib
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 09:25:45 -0500
-Received: from qs-2005i-snip4-8.eps.apple.com ([57.103.86.219]
- helo=outbound.qs.icloud.com)
+ (Exim 4.90_1) (envelope-from
+ <bounce-md_30504962.699f03f1.v1-03d8c58766eb4205ae529e497ec5d511@bounce.vates.tech>)
+ id 1vvFxx-0005HH-Co
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 09:34:18 -0500
+Received: from mail186-12.suw21.mandrillapp.com ([198.2.186.12])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vvFpc-0003di-I8
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 09:25:43 -0500
-Received: from outbound.qs.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-east-2d-100-percent-15 (Postfix) with ESMTPS id
- 840E31800142; Wed, 25 Feb 2026 14:25:38 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1772029539; x=1774621539;
- bh=Ch5IRT2Vcu7OGpHja7L/D+jNMc6Vs/OVDRML8OqTxWQ=;
- h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
- b=FagX1Fx49JrxErXJjn1DyL1JuMHGY+BQNTRO4/N65IwzEFgF8CvJv+o74O7Qsvd5PmBZ+SAAou0xPN5XG9TfM93gIE3QmqBtlBnAQzne2KbHk9+ggXXO90tjddBcb+zDRSDtfIdFH71waXlJR3t0825DR37N/KvmOHWTzSw3PiMoJgHlIe5YUYqc1NxCSVWX8FHRt1aPhAHxHw678yz1GBihq9F7cT4C+EP+nJIOyGsn9sZ9kh9K/xH3CQAesbDjhPaAIpQCE5JQYDcsL92o74vwjg9X877B/fquVmSJ0Mrluu5PA+hBviC4aDDj71R0Vmu+HMNAP03ihk3Enu+3pA==
-mail-alias-created-date: 1752046281608
-Received: from localhost.localdomain (unknown [17.57.155.37])
- by p00-icloudmta-asmtp-us-east-2d-100-percent-15 (Postfix) with ESMTPSA id
- 3296618000A8; Wed, 25 Feb 2026 14:25:37 +0000 (UTC)
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
-To: qemu-devel@nongnu.org
-Cc: Pedro Barbuda <pbarbuda@microsoft.com>,
- Mohamed Mediouni <mohamed@unpredictable.fr>,
- Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH] whpx: i386: apic: bring closer to MSHV code path
-Date: Wed, 25 Feb 2026 15:25:34 +0100
-Message-ID: <20260225142534.5471-1-mohamed@unpredictable.fr>
-X-Mailer: git-send-email 2.50.1
+ (Exim 4.90_1) (envelope-from
+ <bounce-md_30504962.699f03f1.v1-03d8c58766eb4205ae529e497ec5d511@bounce.vates.tech>)
+ id 1vvFxv-0004qz-MQ
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 09:34:17 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mandrillapp.com;
+ s=mte1; t=1772028913; x=1772298913;
+ bh=JGWN5jkvYY71URPpUEe8IqNYzfuwlhJJo5SoK8DxtuE=;
+ h=From:Subject:To:Cc:Message-Id:References:In-Reply-To:Feedback-ID:
+ Date:MIME-Version:Content-Type:Content-Transfer-Encoding:CC:Date:
+ Subject:From;
+ b=mrQYZ+wLz3+s8KQfcz1wlvRqwPY2981AKwC5KfmyCxtxLLBEWuSKhx9f08TbbkDq1
+ NfCSFzyiuwObIT3eL2UWvi8przDLX3Mx5rWiy8Vm9IvxmVXwW9AXdeQVbITL7HxC3+
+ y2kFoO7OS9kGPJ0iaTgNigdjwvvMyUOcReCLts+Gkfo1yls+lGxrCDjYlnvL/YUTai
+ QWx1fu5KWOeqW7PueZgH+AYVj4WAQUMhQgH3JO8tI8qYLRtgr+iiLoCcAOxhiiyUSZ
+ cSNF5PZdvcOrDYyKbsS8Em3H3k1bAJrHEDVbT0v5ObehW43sBC2AuSHEAvI2Mv2Bm1
+ 8tJXBz6pyh92g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vates.tech; s=mte1;
+ t=1772028913; x=1772289413; i=anthony.perard@vates.tech;
+ bh=JGWN5jkvYY71URPpUEe8IqNYzfuwlhJJo5SoK8DxtuE=;
+ h=From:Subject:To:Cc:Message-Id:References:In-Reply-To:Feedback-ID:
+ Date:MIME-Version:Content-Type:Content-Transfer-Encoding:CC:Date:
+ Subject:From;
+ b=AcQKiMCxQUIAeBH7dfLDpDZq/kNVQUxxH+imVfuCGpYYGYnOA0XEj6Y/0gE8frYsC
+ JraFLRnt5w8o+slNa6aqblHfTyK8m4DQWFTemrAnLSgTPLPojmiw/ZKzgrynbRo2De
+ 5mys8E34LNI8ee3Lrj0FWf0pyfJqKg/DE2j4Df4T96XUmstTOBCGkbdIpCfEb8fjhG
+ Esbnxy0zrFDpZUO7CmLWwdf5xlWKU695JzuDxkwjoKbFBgT6JemD2PsCVhcTZ1N9FK
+ HZerd7EA+dDIetd8cS52ITLEWdbIVF0AJfJnOhkp4sPytYG/oh0AqWmAYJApDUxZH8
+ whUbyP6XOadAw==
+Received: from pmta10.mandrill.prod.suw01.rsglab.com (localhost [127.0.0.1])
+ by mail186-12.suw21.mandrillapp.com (Mailchimp) with ESMTP id
+ 4fLc755b0Sz705b0b
+ for <qemu-devel@nongnu.org>; Wed, 25 Feb 2026 14:15:13 +0000 (GMT)
+From: "Anthony PERARD" <anthony.perard@vates.tech>
+Subject: =?utf-8?Q?Re:=20[PATCH=205/5]=20accel/xen:=20Build=20without=20target-specific=20knowledge?=
+Received: from [37.26.189.201] by mandrillapp.com id
+ 03d8c58766eb4205ae529e497ec5d511; Wed, 25 Feb 2026 14:15:13 +0000
+X-Bm-Disclaimer: Yes
+X-Bm-Milter-Handled: 4ffbd6c1-ee69-4e1b-aabd-f977039bd3e2
+X-Bm-Transport-Timestamp: 1772028911983
+To: "=?utf-8?Q?Philippe=20Mathieu-Daud=C3=A9?=" <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org,
+ "Pierrick Bouvier" <pierrick.bouvier@linaro.org>,
+ "Paolo Bonzini" <pbonzini@redhat.com>, xen-devel@lists.xenproject.org,
+ "Stefano Stabellini" <sstabellini@kernel.org>,
+ "Anthony PERARD" <anthony@xenproject.org>, "Paul Durrant" <paul@xen.org>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+Message-Id: <aZ8D77iyFtqyGF18@l14>
+References: <20260225051303.91614-1-philmd@linaro.org>
+ <20260225051303.91614-6-philmd@linaro.org>
+In-Reply-To: <20260225051303.91614-6-philmd@linaro.org>
+X-Native-Encoded: 1
+X-Report-Abuse: =?UTF-8?Q?Please=20forward=20a=20copy=20of=20this=20message,
+ =20including=20all=20headers,
+ =20to=20abuse@mandrill.com.=20You=20can=20also=20report=20abuse=20here:=20https://mandrillapp.com/contact/abuse=3Fid=3D30504962.03d8c58766eb4205ae529e497ec5d511?=
+X-Mandrill-User: md_30504962
+Feedback-ID: 30504962:30504962.20260225:md
+Date: Wed, 25 Feb 2026 14:15:13 +0000
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjI1MDEzOCBTYWx0ZWRfX4jti65wC7v1Y
- NSFEGbU6FheclOoE8ARcJ9xabUiFHHBri5Z3o3p4aE55oJUwxXFFzDY/V358tv03qkzPodC77Py
- tPakkCmUPWTo4owpORuBfJi5GgxUl6wNvKvyDZ8NxwDHiboylqyIYJX7dTbQhDb7IiYChoGPgqb
- DVGawJBkEiDoBwrP++iI7ZBWqEasFXmBO0JG6uM1p6dpeuCfUM0wBCCl8gAeCX/AyLuuKkW3K15
- EsPi7wMq8EPouUtB10x0DmTVgTQaTN/GP5ZSb0rUbhqHjIGWbnqRIDT9jE8i+t6aa3BX6190hYz
- 4k8ZNZblcWLa3bf2TRrJylqqmdQwl6/4UJjeDEa6RgFpEfkTxpuNpuQz9ENgtQ=
-X-Authority-Info-Out: v=2.4 cv=KtpAGGWN c=1 sm=1 tr=0 ts=699f0662
- cx=c_apl:c_apl_out:c_pps a=bsP7O+dXZ5uKcj+dsLqiMw==:117
- a=bsP7O+dXZ5uKcj+dsLqiMw==:17 a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22 a=a_U1oVfrAAAA:8
- a=yMhMjlubAAAA:8 a=nfi25ZJz4WSbdH3KjXAA:9
-X-Proofpoint-ORIG-GUID: lL7wkx2_5zKj-9ik8JLH1-zjtmvR3djB
-X-Proofpoint-GUID: lL7wkx2_5zKj-9ik8JLH1-zjtmvR3djB
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-02-25_01,2026-02-25_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
- mlxlogscore=999 mlxscore=0 clxscore=1030 lowpriorityscore=0 suspectscore=0
- adultscore=0 malwarescore=0 spamscore=0 phishscore=0 classifier=spam
- authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
- definitions=main-2602250138
-X-JNJ: AAAAAAABKqhqzX51pMCthWQFFZvyxzQjehvTfYJUV+CkuCoFXSWba42HYBHbecq3kmLsHRVxAskvZhOwUSqDE4rqNr1JsDrhPVyXFxsnQE40QPQOUPsHWTSMPaMNtgIyCryi0g2daheqLayooHf//YHyz9yRYeS0VKNmxAnEjxNv6FSG2eHwwj5uadwWS5Cx6tWX1STVUpt+9jmFTPnXW4CxuuFku36zZd+mEogabUyD/Ei0lHYlnKXslepT4/H90c5XA1oB1s/m2yFUDGgGUc8WRdXvTgAeuX6AL9UFBZZHG5TVQeHvX75LcLksI1hgHRL/0rK8D5gU/YRwFC+dZlOV/K7HkEILzKzoLnDI3tAEjhk8w0FqmD9cIwIi130HbPs44MJXBz3JfeDNG81AoM+g0Wust0sgRbPGA7cBVvJFNaSgBmepJH+JZ87dTEUvdS7Xzmwk+YBpcqAXJG/HLBffVmyQEq0gNINWb4+2UKKknmNQDrtgPIDOCeJlLMy4mjaA08NaU0GjkrNy59Gl4Y4NAmM0/Ibuc/tF2VKvspUCxLVG9IyN4CibNt1ZpyEhhSC1OXWIirYlMXQqD94vKthwKxQBJrH5mKeTkuV9jhY+k2HyUq+EBrsEkoIL/1l26iHxQpkCu17sCm2GiQ==
-Received-SPF: pass client-ip=57.103.86.219;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.qs.icloud.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=198.2.186.12;
+ envelope-from=bounce-md_30504962.699f03f1.v1-03d8c58766eb4205ae529e497ec5d511@bounce.vates.tech;
+ helo=mail186-12.suw21.mandrillapp.com
 X-Spam_score_int: -5
 X-Spam_score: -0.6
 X-Spam_bar: /
-X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.734, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.78,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.734,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.78, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,519 +104,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-MSHV doesn't have a dedicated apic_type and uses the common class. Make WHPX do the same thing.
+On Wed, Feb 25, 2026 at 06:13:03AM +0100, Philippe Mathieu-Daud=C3=A9 wrote=
+:
+> Code in accel/ aims to be target-agnostic. Enforce that
+> by moving the MSHV file units to system_ss[], which is
 
-As VM save/restore isn't currently supported anyway, this doesn't break functionality.
+You mean Xen    ^ here ?
 
-Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
----
- hw/intc/apic.c                 |   9 ++
- include/system/whpx-internal.h |   2 -
- target/i386/cpu-apic.c         |   3 -
- target/i386/whpx/irq.c         |  76 +++++++++
- target/i386/whpx/irq.h         |   8 +
- target/i386/whpx/meson.build   |   2 +-
- target/i386/whpx/whpx-all.c    |  15 --
- target/i386/whpx/whpx-apic.c   | 286 ---------------------------------
- 8 files changed, 94 insertions(+), 307 deletions(-)
- create mode 100644 target/i386/whpx/irq.c
- create mode 100644 target/i386/whpx/irq.h
- delete mode 100644 target/i386/whpx/whpx-apic.c
+> target-agnostic.
+> 
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 
-diff --git a/hw/intc/apic.c b/hw/intc/apic.c
-index 8766ed00b9..4920043063 100644
---- a/hw/intc/apic.c
-+++ b/hw/intc/apic.c
-@@ -28,6 +28,8 @@
- #include "qemu/host-utils.h"
- #include "system/kvm.h"
- #include "system/mshv.h"
-+#include "system/whpx.h"
-+#include "whpx/irq.h"
- #include "trace.h"
- #include "hw/i386/apic-msidef.h"
- #include "exec/cpu-common.h"
-@@ -915,6 +917,13 @@ static void apic_send_msi(MSIMessage *msi)
-                                dest_mode, trigger_mode);
-         return;
-     }
-+#endif
-+#ifdef CONFIG_WHPX
-+    if (whpx_enabled() && whpx_irqchip_in_kernel()) {
-+        whpx_request_interrupt(delivery, vector, dest,
-+                               dest_mode, trigger_mode);
-+        return;
-+    }
- #endif
-     apic_deliver_irq(dest, dest_mode, delivery, vector, trigger_mode);
- }
-diff --git a/include/system/whpx-internal.h b/include/system/whpx-internal.h
-index 7a1c9871f1..a1f8502155 100644
---- a/include/system/whpx-internal.h
-+++ b/include/system/whpx-internal.h
-@@ -4,7 +4,6 @@
- 
- #include <windows.h>
- #include <winhvplatform.h>
--#include "hw/i386/apic.h"
- #include "exec/vaddr.h"
- 
- typedef enum WhpxBreakpointState {
-@@ -45,7 +44,6 @@ struct whpx_state {
- };
- 
- extern struct whpx_state whpx_global;
--void whpx_apic_get(APICCommonState *s);
- 
- #define WHV_E_UNKNOWN_CAPABILITY 0x80370300L
- 
-diff --git a/target/i386/cpu-apic.c b/target/i386/cpu-apic.c
-index eaa10ad2a3..77073ad455 100644
---- a/target/i386/cpu-apic.c
-+++ b/target/i386/cpu-apic.c
-@@ -33,10 +33,7 @@ APICCommonClass *apic_get_class(Error **errp)
-         apic_type = "kvm-apic";
-     } else if (xen_enabled()) {
-         apic_type = "xen-apic";
--    } else if (whpx_irqchip_in_kernel()) {
--        apic_type = "whpx-apic";
-     }
--
-     return APIC_COMMON_CLASS(object_class_by_name(apic_type));
- }
- 
-diff --git a/target/i386/whpx/irq.c b/target/i386/whpx/irq.c
-new file mode 100644
-index 0000000000..b33876a1db
---- /dev/null
-+++ b/target/i386/whpx/irq.c
-@@ -0,0 +1,76 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+#include "qemu/osdep.h"
-+#include "qemu/error-report.h"
-+#include "cpu.h"
-+#include "hw/i386/apic_internal.h"
-+#include "hw/i386/apic-msidef.h"
-+#include "hw/pci/msi.h"
-+#include "system/hw_accel.h"
-+#include "system/whpx.h"
-+#include "system/whpx-internal.h"
-+#include "irq.h"
-+#include "system/whpx-accel-ops.h"
-+#include "system/whpx-all.h"
-+#include "system/whpx-common.h"
-+
-+/* Structure definition from Hyper-V, to keep unaltered */
-+typedef struct _HV_X64_INTERRUPT_CONTROLLER_STATE
-+{
-+    UINT32 ApicId;
-+    UINT32 ApicVersion;
-+    UINT32 ApicLdr;
-+    UINT32 ApicDfr;
-+    UINT32 ApicSpurious;
-+    UINT32 ApicIsr[8];
-+    UINT32 ApicTmr[8];
-+    UINT32 ApicIrr[8];
-+    UINT32 ApicEsr;
-+    UINT32 ApicIcrHigh;
-+    UINT32 ApicIcrLow;
-+    UINT32 ApicLvtTimer;
-+    UINT32 ApicLvtThermal;
-+    UINT32 ApicLvtPerfmon;
-+    UINT32 ApicLvtLint0;
-+    UINT32 ApicLvtLint1;
-+    UINT32 ApicLvtError;
-+    UINT32 ApicLvtCmci;
-+    UINT32 ApicErrorStatus;
-+    UINT32 ApicInitialCount;
-+    UINT32 ApicCounterValue;
-+    UINT32 ApicDivideConfiguration;
-+    UINT32 ApicRemoteRead;
-+
-+} HV_X64_INTERRUPT_CONTROLLER_STATE, *PHV_X64_INTERRUPT_CONTROLLER_STATE;
-+
-+int whpx_request_interrupt(uint32_t interrupt_type, uint32_t vector,
-+                           uint32_t vp_index, bool logical_dest_mode,
-+                           bool level_triggered)
-+{
-+    HRESULT hr;
-+
-+    if (vector == 0) {
-+        warn_report("Ignoring request for interrupt vector 0");
-+        return 0;
-+    }
-+
-+    WHV_INTERRUPT_CONTROL interrupt = {
-+        .Type = interrupt_type,
-+        .DestinationMode = logical_dest_mode ?
-+            WHvX64InterruptDestinationModeLogical :
-+            WHvX64InterruptDestinationModePhysical,
-+
-+        .TriggerMode = level_triggered ?
-+            WHvX64InterruptTriggerModeLevel : WHvX64InterruptTriggerModeEdge,
-+        .Reserved = 0,
-+        .Vector = vector,
-+        .Destination = vp_index,
-+    };
-+
-+    hr = whp_dispatch.WHvRequestInterrupt(whpx_global.partition,
-+                     &interrupt, sizeof(interrupt));
-+    if (FAILED(hr)) {
-+        error_report("Failed to request interrupt");
-+        return -errno;
-+    }
-+    return 0;
-+}
-diff --git a/target/i386/whpx/irq.h b/target/i386/whpx/irq.h
-new file mode 100644
-index 0000000000..1ffaab69eb
---- /dev/null
-+++ b/target/i386/whpx/irq.h
-@@ -0,0 +1,8 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+#ifndef QEMU_X86_WHPX_H
-+#define QEMU_X86_WHPX_H
-+
-+int whpx_request_interrupt(uint32_t interrupt_type, uint32_t vector,
-+                           uint32_t vp_index, bool logical_dest_mode,
-+                           bool level_triggered);
-+#endif /* QEMU_X86_WHPX_H */
-diff --git a/target/i386/whpx/meson.build b/target/i386/whpx/meson.build
-index c3aaaff9fd..5c13274b77 100644
---- a/target/i386/whpx/meson.build
-+++ b/target/i386/whpx/meson.build
-@@ -1,4 +1,4 @@
- i386_system_ss.add(when: 'CONFIG_WHPX', if_true: files(
-   'whpx-all.c',
--  'whpx-apic.c',
-+  'irq.c'
- ))
-diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
-index d98619face..ce3019bf4f 100644
---- a/target/i386/whpx/whpx-all.c
-+++ b/target/i386/whpx/whpx-all.c
-@@ -619,17 +619,6 @@ void whpx_get_registers(CPUState *cpu, WHPXStateLevel level)
-                      hr);
-     }
- 
--    if (level > WHPX_LEVEL_FAST_RUNTIME_STATE && whpx_irqchip_in_kernel()) {
--        /*
--         * Fetch the TPR value from the emulated APIC. It may get overwritten
--         * below with the value from CR8 returned by
--         * WHvGetVirtualProcessorRegisters().
--         */
--        whpx_apic_get(x86_cpu->apic_state);
--        vcpu->tpr = whpx_apic_tpr_to_cr8(
--            cpu_get_apic_tpr(x86_cpu->apic_state));
--    }
--
-     idx = 0;
- 
-     /* Indexes for first 16 registers match between HV and QEMU definitions */
-@@ -762,10 +751,6 @@ void whpx_get_registers(CPUState *cpu, WHPXStateLevel level)
- 
-     assert(idx == RTL_NUMBER_OF(whpx_register_names));
- 
--    if (level > WHPX_LEVEL_FAST_RUNTIME_STATE && whpx_irqchip_in_kernel()) {
--        whpx_apic_get(x86_cpu->apic_state);
--    }
--
-     x86_update_hflags(env);
- }
- 
-diff --git a/target/i386/whpx/whpx-apic.c b/target/i386/whpx/whpx-apic.c
-deleted file mode 100644
-index f26ecaf6e8..0000000000
---- a/target/i386/whpx/whpx-apic.c
-+++ /dev/null
-@@ -1,286 +0,0 @@
--/*
-- * WHPX platform APIC support
-- *
-- * Copyright (c) 2011 Siemens AG
-- *
-- * Authors:
-- *  Jan Kiszka          <jan.kiszka@siemens.com>
-- *  John Starks         <jostarks@microsoft.com>
-- *
-- * This work is licensed under the terms of the GNU GPL version 2.
-- * See the COPYING file in the top-level directory.
-- */
--#include "qemu/osdep.h"
--#include "qemu/error-report.h"
--#include "cpu.h"
--#include "hw/i386/apic_internal.h"
--#include "hw/i386/apic-msidef.h"
--#include "hw/pci/msi.h"
--#include "system/hw_accel.h"
--#include "system/whpx.h"
--#include "system/whpx-internal.h"
--
--struct whpx_lapic_state {
--    struct {
--        uint32_t data;
--        uint32_t padding[3];
--    } fields[256];
--};
--
--static void whpx_put_apic_state(APICCommonState *s,
--                                struct whpx_lapic_state *kapic)
--{
--    int i;
--
--    memset(kapic, 0, sizeof(*kapic));
--    kapic->fields[0x2].data = s->id << 24;
--    kapic->fields[0x3].data = s->version | ((APIC_LVT_NB - 1) << 16);
--    kapic->fields[0x8].data = s->tpr;
--    kapic->fields[0xd].data = s->log_dest << 24;
--    kapic->fields[0xe].data = s->dest_mode << 28 | 0x0fffffff;
--    kapic->fields[0xf].data = s->spurious_vec;
--    for (i = 0; i < 8; i++) {
--        kapic->fields[0x10 + i].data = s->isr[i];
--        kapic->fields[0x18 + i].data = s->tmr[i];
--        kapic->fields[0x20 + i].data = s->irr[i];
--    }
--
--    kapic->fields[0x28].data = s->esr;
--    kapic->fields[0x30].data = s->icr[0];
--    kapic->fields[0x31].data = s->icr[1];
--    for (i = 0; i < APIC_LVT_NB; i++) {
--        kapic->fields[0x32 + i].data = s->lvt[i];
--    }
--
--    kapic->fields[0x38].data = s->initial_count;
--    kapic->fields[0x3e].data = s->divide_conf;
--}
--
--static void whpx_get_apic_state(APICCommonState *s,
--                                struct whpx_lapic_state *kapic)
--{
--    int i, v;
--
--    s->id = kapic->fields[0x2].data >> 24;
--    s->tpr = kapic->fields[0x8].data;
--    s->arb_id = kapic->fields[0x9].data;
--    s->log_dest = kapic->fields[0xd].data >> 24;
--    s->dest_mode = kapic->fields[0xe].data >> 28;
--    s->spurious_vec = kapic->fields[0xf].data;
--    for (i = 0; i < 8; i++) {
--        s->isr[i] = kapic->fields[0x10 + i].data;
--        s->tmr[i] = kapic->fields[0x18 + i].data;
--        s->irr[i] = kapic->fields[0x20 + i].data;
--    }
--
--    s->esr = kapic->fields[0x28].data;
--    s->icr[0] = kapic->fields[0x30].data;
--    s->icr[1] = kapic->fields[0x31].data;
--    for (i = 0; i < APIC_LVT_NB; i++) {
--        s->lvt[i] = kapic->fields[0x32 + i].data;
--    }
--
--    s->initial_count = kapic->fields[0x38].data;
--    s->divide_conf = kapic->fields[0x3e].data;
--
--    v = (s->divide_conf & 3) | ((s->divide_conf >> 1) & 4);
--    s->count_shift = (v + 1) & 7;
--
--    s->initial_count_load_time = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
--    apic_next_timer(s, s->initial_count_load_time);
--}
--
--static int whpx_apic_set_base(APICCommonState *s, uint64_t val)
--{
--    s->apicbase = val;
--    return 0;
--}
--
--static void whpx_put_apic_base(CPUState *cpu, uint64_t val)
--{
--    HRESULT hr;
--    WHV_REGISTER_VALUE reg_value = {.Reg64 = val};
--    WHV_REGISTER_NAME reg_name = WHvX64RegisterApicBase;
--
--    hr = whp_dispatch.WHvSetVirtualProcessorRegisters(
--             whpx_global.partition,
--             cpu->cpu_index,
--             &reg_name, 1,
--             &reg_value);
--
--    if (FAILED(hr)) {
--        error_report("WHPX: Failed to set MSR APIC base, hr=%08lx", hr);
--    }
--}
--
--static void whpx_apic_set_tpr(APICCommonState *s, uint8_t val)
--{
--    s->tpr = val;
--}
--
--static uint8_t whpx_apic_get_tpr(APICCommonState *s)
--{
--    return s->tpr;
--}
--
--static void whpx_apic_vapic_base_update(APICCommonState *s)
--{
--    /* not implemented yet */
--}
--
--static void whpx_apic_put(CPUState *cs, run_on_cpu_data data)
--{
--    APICCommonState *s = data.host_ptr;
--    struct whpx_lapic_state kapic;
--    HRESULT hr;
--
--    whpx_put_apic_base(CPU(s->cpu), s->apicbase);
--    whpx_put_apic_state(s, &kapic);
--
--    hr = whp_dispatch.WHvSetVirtualProcessorInterruptControllerState2(
--        whpx_global.partition,
--        cs->cpu_index,
--        &kapic,
--        sizeof(kapic));
--    if (FAILED(hr)) {
--        fprintf(stderr,
--            "WHvSetVirtualProcessorInterruptControllerState failed: %08lx\n",
--             hr);
--
--        abort();
--    }
--}
--
--void whpx_apic_get(APICCommonState *s)
--{
--    CPUState *cpu = CPU(s->cpu);
--    struct whpx_lapic_state kapic;
--
--    HRESULT hr = whp_dispatch.WHvGetVirtualProcessorInterruptControllerState2(
--        whpx_global.partition,
--        cpu->cpu_index,
--        &kapic,
--        sizeof(kapic),
--        NULL);
--    if (FAILED(hr)) {
--        fprintf(stderr,
--            "WHvSetVirtualProcessorInterruptControllerState failed: %08lx\n",
--            hr);
--
--        abort();
--    }
--
--    whpx_get_apic_state(s, &kapic);
--}
--
--static void whpx_apic_post_load(APICCommonState *s)
--{
--    run_on_cpu(CPU(s->cpu), whpx_apic_put, RUN_ON_CPU_HOST_PTR(s));
--}
--
--static void whpx_apic_external_nmi(APICCommonState *s)
--{
--}
--
--static void whpx_send_msi(MSIMessage *msg)
--{
--    uint64_t addr = msg->address;
--    uint32_t data = msg->data;
--    uint8_t dest = (addr & MSI_ADDR_DEST_ID_MASK) >> MSI_ADDR_DEST_ID_SHIFT;
--    uint8_t vector = (data & MSI_DATA_VECTOR_MASK) >> MSI_DATA_VECTOR_SHIFT;
--    uint8_t dest_mode = (addr >> MSI_ADDR_DEST_MODE_SHIFT) & 0x1;
--    uint8_t trigger_mode = (data >> MSI_DATA_TRIGGER_SHIFT) & 0x1;
--    uint8_t delivery = (data >> MSI_DATA_DELIVERY_MODE_SHIFT) & 0x7;
--
--    if (vector == 0) {
--        warn_report("Ignoring request for interrupt vector 0");
--        return;
--    }
--
--    WHV_INTERRUPT_CONTROL interrupt = {
--        /* Values correspond to delivery modes */
--        .Type = delivery,
--        .DestinationMode = dest_mode ?
--            WHvX64InterruptDestinationModeLogical :
--            WHvX64InterruptDestinationModePhysical,
--
--        .TriggerMode = trigger_mode ?
--            WHvX64InterruptTriggerModeLevel : WHvX64InterruptTriggerModeEdge,
--        .Reserved = 0,
--        .Vector = vector,
--        .Destination = dest,
--    };
--    HRESULT hr = whp_dispatch.WHvRequestInterrupt(whpx_global.partition,
--                     &interrupt, sizeof(interrupt));
--    if (FAILED(hr)) {
--        fprintf(stderr, "whpx: injection failed, MSI (%llx, %x) delivery: %d, "
--                "dest_mode: %d, trigger mode: %d, vector: %d, lost (%08lx)\n",
--                addr, data, delivery, dest_mode, trigger_mode, vector, hr);
--    }
--}
--
--static uint64_t whpx_apic_mem_read(void *opaque, hwaddr addr,
--                                   unsigned size)
--{
--    return ~(uint64_t)0;
--}
--
--static void whpx_apic_mem_write(void *opaque, hwaddr addr,
--                                uint64_t data, unsigned size)
--{
--    MSIMessage msg = { .address = addr, .data = data };
--    whpx_send_msi(&msg);
--}
--
--static const MemoryRegionOps whpx_apic_io_ops = {
--    .read = whpx_apic_mem_read,
--    .write = whpx_apic_mem_write,
--    .endianness = DEVICE_LITTLE_ENDIAN,
--};
--
--static void whpx_apic_reset(APICCommonState *s)
--{
--    /* Not used by WHPX. */
--    s->wait_for_sipi = 0;
--
--    run_on_cpu(CPU(s->cpu), whpx_apic_put, RUN_ON_CPU_HOST_PTR(s));
--}
--
--static void whpx_apic_realize(DeviceState *dev, Error **errp)
--{
--    APICCommonState *s = APIC_COMMON(dev);
--
--    memory_region_init_io(&s->io_memory, OBJECT(s), &whpx_apic_io_ops, s,
--                          "whpx-apic-msi", APIC_SPACE_SIZE);
--
--    msi_nonbroken = true;
--}
--
--static void whpx_apic_class_init(ObjectClass *klass, const void *data)
--{
--    APICCommonClass *k = APIC_COMMON_CLASS(klass);
--
--    k->realize = whpx_apic_realize;
--    k->reset = whpx_apic_reset;
--    k->set_base = whpx_apic_set_base;
--    k->set_tpr = whpx_apic_set_tpr;
--    k->get_tpr = whpx_apic_get_tpr;
--    k->post_load = whpx_apic_post_load;
--    k->vapic_base_update = whpx_apic_vapic_base_update;
--    k->external_nmi = whpx_apic_external_nmi;
--    k->send_msi = whpx_send_msi;
--}
--
--static const TypeInfo whpx_apic_info = {
--    .name = "whpx-apic",
--    .parent = TYPE_APIC_COMMON,
--    .instance_size = sizeof(APICCommonState),
--    .class_init = whpx_apic_class_init,
--};
--
--static void whpx_apic_register_types(void)
--{
--    type_register_static(&whpx_apic_info);
--}
--
--type_init(whpx_apic_register_types)
--- 
-2.50.1 (Apple Git-155)
+In anycase, it seems to works fine for me:
+Acked-by: Anthony PERARD <anthony.perard@vates.tech>
+
+Thanks,
+
+
+--
+Anthony Perard | Vates XCP-ng Developer
+
+XCP-ng & Xen Orchestra - Vates solutions
+
+web: https://vates.tech
+
 
 
