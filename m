@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4AF53FD45F1
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 23:16:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00FEEFD45FA
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 23:16:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvO6o-0006zw-37; Wed, 25 Feb 2026 18:15:59 -0500
+	id 1vvO6H-0005WO-KC; Wed, 25 Feb 2026 18:15:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vvO6V-0006h9-PF
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 18:15:39 -0500
-Received: from mail-wr1-x444.google.com ([2a00:1450:4864:20::444])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vvO6E-0005PV-Pa
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 18:15:23 -0500
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vvO6T-0002nX-WF
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 18:15:39 -0500
-Received: by mail-wr1-x444.google.com with SMTP id
- ffacd0b85a97d-43767807da6so148727f8f.2
- for <qemu-devel@nongnu.org>; Wed, 25 Feb 2026 15:15:37 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vvO69-0002mM-4V
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 18:15:19 -0500
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-48069a48629so2848675e9.0
+ for <qemu-devel@nongnu.org>; Wed, 25 Feb 2026 15:15:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772061335; x=1772666135; darn=nongnu.org;
+ d=linaro.org; s=google; t=1772061315; x=1772666115; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=mgh3pXx3/FXyu63G+DeVDmfrgJg//6Ux80N4glwlmy4=;
- b=QgtRles+SnU/LmZswTMolNARJvOtuITTHWrlcjGKHHaN4CTeUnHdumLZQVy3TxmISX
- Kw3wk9dQZUrj7UGl126go/tO/bi56i36Js4AH/xyseczMmodhn7MZahvxNyA3aYrHbPI
- ZWUtkp7r8zUQoCo4D16+9kst3kBlwCQ67Bpcv17J3TQ5mqzjANknTzM/MA2TOj44oYca
- Cr1GHUc4TWbA5NokbsOD8x+ZpputTZrf+B8FWgsYLaf2vQL5EtMDz/Z7JTu9PeFt2kFU
- ngD+IIW0tHR3rV88Gi7qwyAPo9hd6VtXXfo7u8g/UoddcYCxeFpZDFTt8dcgUp/GmqmG
- iDiQ==
+ :reply-to; bh=EM47/YJFZDKPoa7DcAX8k/MOHo1afw3n6fjicCOcopM=;
+ b=vzqOYYdx7QWGXaaw/YES2si16wJMrY61p9HBoHV4Z0j2EpLABMiRMwH+pfMmn+7+gi
+ funzF/OFBa2KzPr47y0+7AJFH8rX1zs6fCVvfJjqyPeLhXwQkqxpD32XtFFCDNQAQYX3
+ M46jCmS0iEbOPYbu5cSPa2nU88kNNR+Qkp/G+j7pGNa/MHoTyvQ/TOnmB/xsgPQrHmxj
+ 3oQeXCyZE9mJzOuVfL2RivSJeBMiME/XexNpPtL4IUDi/k4RBswYab9/YSDlbkOu6Z3D
+ KlEoEocI94UU+W6UIxUV6+n3UJHv542kEW1X95jB6D36qt8esAR0GOT7gKaxyDJEWWYo
+ NiQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772061335; x=1772666135;
+ d=1e100.net; s=20230601; t=1772061315; x=1772666115;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=mgh3pXx3/FXyu63G+DeVDmfrgJg//6Ux80N4glwlmy4=;
- b=hf2gVzdpUZr2EvkidNQvbHcte1fnHg5C1jHsc3AIgCZ/MRn5+fIlLu0uz6M1FosZNT
- pwN/TzoBJSBQ5hCvjYDSttRgKwHUMIUSDC1naMfF+tEXK3+o7x0B0FLcjU+QWE0f3AMJ
- iWlouaklq4X8f7BIcCozG5QU1jBoSvI+215UuNpI0j9zf8XpUnWZVl4YLbMDnk6ETj1h
- iXfm5ejLTGleLLOzFkos2QdYVT8nYtUAwitgEJGJNGeC+Ih6O9ohtsAkKHgTeo82xmnb
- I9KJUFt8OO5caOlNFZO4/nZ6rz9NmhmJ3+jZz7g76AJeIkhxqbnfxsEAEqy6zZoQNPi/
- x0tQ==
-X-Gm-Message-State: AOJu0YwEtFgdQ0/REuFVni4xYkRlFfTpDClun3wOz+TY2YILaa3ZjGS2
- j1+fqmU1O5gxuZywzcQ9tHG686gEyqsWZma12dtmoMP7b582QAeSFJglCp8IZ0m2ssXT6zwOi55
- e6oHUx7nZVA==
-X-Gm-Gg: ATEYQzwj2ZcmaNE6R+RGxMAIFmrdwntCZ/LPohpBoITPupGDI1VJFcPL/DrUybWdh+Q
- NYVktl2rQu0fG+KH8qplNEsiaDMOm88NW6+2Ky51xp+U171emhldALBKZkYDVn831gomwU+rKZ8
- 8qdmgNjwARGBJANM3AsYR2Sp4VuuJ8XeHVchHejXlALzByWBm2aNdm6kIvrUzUZiIOXVWOFmi2q
- 1Yw7Qk+JCsropkMNcCp2WdA4GmT8yCPeAA7PITOkGiVmUgkKTlZMfJMwDKOTnLzFKNsh0dwJXM6
- PcHbcGgQQd4QQDvuUExcNE86f7AT+Zghk5gjLwvzmlceSdAZPd+Dxs3mZRMv829tBgtH+f4e0K5
- 18cCaVETAeVvqYSDR8h4GImF3sMPt2QXOvzG7002bzTG7Vlx0Ea7GR1ymlr8n7YNMWPttqzZiAv
- i/QbSM47jJfheLTr6T56K4bYx1tuDr7NBoN28/yS2LQw17e93Cx+4AR5HHgTpRJ99n/8oMiGkc
-X-Received: by 2002:a05:6000:290f:b0:436:2f66:5d1a with SMTP id
- ffacd0b85a97d-43997eda5d9mr616441f8f.8.1772061335463; 
- Wed, 25 Feb 2026 15:15:35 -0800 (PST)
+ bh=EM47/YJFZDKPoa7DcAX8k/MOHo1afw3n6fjicCOcopM=;
+ b=Ca4SBNSmlMpfr6KDaoLuhTMRfgRlO9klbzpJjUOC8Pc77R7ewu0/VAExsOvIBYxhLt
+ LUsZ7WYRAQqHL52q4MiddGA2QeUXWht7tRUK7KtTa9wlORKsCAEg01P4C7PDQMt5sjtV
+ nTUsV7xEbkheECNtdM0PRNRnKEOBVzuANP1FLLb5gyAvQRn+T5xr8Z5CoTkgo+dZzus6
+ kCzsoxICZC7/X8kGQVOvdPPka5EssM8cxXgwIv48nQbSaiCdsJjc7EOfwVYTgROscBZb
+ e6etimMuieLxQ4Jhcw70l70/H8QKRAC8uBJfSRwiItmqLdpHVpGqzlMi3p9eAjtuau2R
+ 49NQ==
+X-Gm-Message-State: AOJu0YyvwHDRBcelM+SWImPIwQsrEIDOm/zgi2Vu3KVKBhrdzGbYwRvs
+ Y1hdQ1d8EcrMk/D67ZIWdCaoTXxI6DpnktGD3x5V3mrdw2ghJI17c345AwsC6qpauzKgcEAXonr
+ gzuNyYo8=
+X-Gm-Gg: ATEYQzzHCDpXvb6FawnntVHnjmCSO2GWry5z3XtCGHSaotk5AuQsJt4fr7rRhPkA0Sr
+ vZIGlGWi87EPAK5w26Jbuc6fkm8wftwYLHlTj80Yemul/FKsguKf2JQCoO9BphoGFW3wuBBrNul
+ 7NlAkjIC2hSHk01VYSS2L8Zd+HGnKNJL/0FQdHxPbVcg4WuYpXVyCqA+/m+IQCyzeCRJ4N0E6hk
+ 00wV/tT+ho+iHiRcobeviXfxMfj4w7rlzAqWVvPYllysmvWySFdh3PLbv8sQ0UlUwLYJ9QVFLY1
+ q2Ok0H7eDxuSh+IUo6Z+YHdWga/aALhYaob67WHBCR6q556miTnVZUqRmtvweRlfcY4xCoECGY1
+ t8qM1IMfWUCY0fag3zO2Nv48PpT8t5F+e/A8AfMlOHx9CuiajRdttOIwuMgYkENeWCW6Vtqu7pC
+ 3mY8QsQeddNk7F4LIJUhD+28ZlCCNgSXQL7C/T415dF29CQsFB6CCkOCWvfVVo9OWXNuCN4CTw
+X-Received: by 2002:a05:600c:620c:b0:483:43d8:8d68 with SMTP id
+ 5b1f17b1804b1-483a95f8988mr277904665e9.28.1772061314986; 
+ Wed, 25 Feb 2026 15:15:14 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43970d4c982sm36934910f8f.31.2026.02.25.15.15.34
+ 5b1f17b1804b1-483bfbb6d16sm30045995e9.5.2026.02.25.15.15.13
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 25 Feb 2026 15:15:34 -0800 (PST)
+ Wed, 25 Feb 2026 15:15:13 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 12/70] target/alpha: Document gdbstub register indexes
-Date: Thu, 26 Feb 2026 00:13:12 +0100
-Message-ID: <20260225231411.96482-13-philmd@linaro.org>
+Subject: [PULL 09/70] target/ppc: Remove PPC_DEBUG_SPR left-over comment
+Date: Thu, 26 Feb 2026 00:13:09 +0100
+Message-ID: <20260225231411.96482-10-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260225231411.96482-1-philmd@linaro.org>
 References: <20260225231411.96482-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::444;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x444.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,75 +98,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Follow GDB XML comments. Re-order switch cases for clarity.
+The PPC_DEBUG_SPR definition was fully removed in commit
+61135639821 ("target/ppc: Clean up _spr_register et al").
 
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20260219191955.83815-6-philmd@linaro.org>
+Message-ID: <20260219191955.83815-3-philmd@linaro.org>
 ---
- target/alpha/gdbstub.c | 25 ++++++++++++-------------
- 1 file changed, 12 insertions(+), 13 deletions(-)
+ target/ppc/cpu_init.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/target/alpha/gdbstub.c b/target/alpha/gdbstub.c
-index a7110e8d1eb..7722eb46806 100644
---- a/target/alpha/gdbstub.c
-+++ b/target/alpha/gdbstub.c
-@@ -31,6 +31,9 @@ int alpha_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
-     case 0 ... 30:
-         val = cpu_alpha_load_gr(env, n);
-         break;
-+    case 31: /* zero register */
-+        val = 0;
-+        break;
-     case 32 ... 62:
-         d.d = env->fir[n - 32];
-         val = d.ll;
-@@ -41,15 +44,12 @@ int alpha_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
-     case 64:
-         val = env->pc;
-         break;
--    case 66:
--        val = env->unique;
--        break;
--    case 31:
--    case 65:
--        /* 31 really is the zero register; 65 is unassigned in the
--           gdb protocol, but is still required to occupy 8 bytes. */
-+    case 65: /* former Virtual Register (reserved as unassigned) */
-         val = 0;
-         break;
-+    case 66: /* PALcode Memory Slot */
-+        val = env->unique;
-+        break;
-     default:
-         return 0;
-     }
-@@ -66,6 +66,8 @@ int alpha_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
-     case 0 ... 30:
-         cpu_alpha_store_gr(env, n, tmp);
-         break;
-+    case 31: /* zero register */
-+        break;
-     case 32 ... 62:
-         d.ll = tmp;
-         env->fir[n - 32] = d.d;
-@@ -76,13 +78,10 @@ int alpha_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
-     case 64:
-         env->pc = tmp;
-         break;
--    case 66:
--        env->unique = tmp;
-+    case 65: /* former Virtual Register (reserved as unassigned) */
-         break;
--    case 31:
--    case 65:
--        /* 31 really is the zero register; 65 is unassigned in the
--           gdb protocol, but is still required to occupy 8 bytes. */
-+    case 66: /* PALcode Memory Slot */
-+        env->unique = tmp;
-         break;
-     default:
-         return 0;
+diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
+index c36fd118a99..c809c1f4d89 100644
+--- a/target/ppc/cpu_init.c
++++ b/target/ppc/cpu_init.c
+@@ -52,7 +52,6 @@
+ #endif
+ 
+ #include "cpu_init.h"
+-/* #define PPC_DEBUG_SPR */
+ /* #define USE_APPLE_GDB */
+ 
+ static const Property powerpc_cpu_properties[] = {
 -- 
 2.52.0
 
