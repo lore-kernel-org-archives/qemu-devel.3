@@ -4,81 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 162BBF4BB9A
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 10:55:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 988ABF4BB9F
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 11:09:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvCXu-0004Bx-E1; Wed, 25 Feb 2026 05:55:10 -0500
+	id 1vvClN-0007vz-29; Wed, 25 Feb 2026 06:09:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vvCXo-0004Bd-Is
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 05:55:08 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vvCXk-0000ue-Az
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 05:55:04 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772016899;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=ECrzQKuRTVP8rIxsh1wBi6ZL45U8oEQ4dQNbIfOE5LI=;
- b=aWF6v+NsAdJqA9PIG7xGhBVlvXPJYDMBSFIKHkLHCU6Y9DLOjJsWzByEhsJgrNDuP9Q1jV
- Y8ioa2CimEgP8JS9DUoIjdl5xgiXbEbnnXS8ojwMAT+fmPqumuuq1/X/SGTUsdl6l95xl0
- +3vD73PbWfmAZkG3SySHrkOLlTJTMWo=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-344-6CpSe_DfMaaqOcYkot43ZQ-1; Wed,
- 25 Feb 2026 05:54:57 -0500
-X-MC-Unique: 6CpSe_DfMaaqOcYkot43ZQ-1
-X-Mimecast-MFC-AGG-ID: 6CpSe_DfMaaqOcYkot43ZQ_1772016896
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 559FF18004A9; Wed, 25 Feb 2026 10:54:56 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.13])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C9D5319560A2; Wed, 25 Feb 2026 10:54:55 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 7234421E692D; Wed, 25 Feb 2026 11:54:53 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Zhang Chen <zhangckid@gmail.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>,  "Dr . David Alan Gilbert"
- <dave@treblig.org>,  Eric Blake <eblake@redhat.com>,  "Michael S .
- Tsirkin" <mst@redhat.com>,  Stefan Hajnoczi <stefanha@redhat.com>
-Subject: Re: [PATCH V4 4/4] qapi: examine IOThread attachment status via
- query-iothreads
-In-Reply-To: <CAK3tnvJ=_rp-JjkrgMA6cf+WXc0oHFJeQ5CsQsLf-fEd1ikGgw@mail.gmail.com>
- (Zhang Chen's message of "Wed, 25 Feb 2026 18:29:29 +0800")
-References: <20260213171622.55629-1-zhangckid@gmail.com>
- <20260213171622.55629-4-zhangckid@gmail.com>
- <87wm0bq047.fsf@pond.sub.org>
- <CAK3tnvKEJSDMVC4bkEbhfsVXpp7nVbq+Kue9fFVmOrd5f_ugCg@mail.gmail.com>
- <874in65y7r.fsf@pond.sub.org>
- <CAK3tnvJ=_rp-JjkrgMA6cf+WXc0oHFJeQ5CsQsLf-fEd1ikGgw@mail.gmail.com>
-Date: Wed, 25 Feb 2026 11:54:53 +0100
-Message-ID: <87jyw1um82.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
+ id 1vvClM-0007ve-55
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 06:09:04 -0500
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
+ id 1vvClK-0003gh-0q
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 06:09:03 -0500
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-2aaecf9c325so5241965ad.1
+ for <qemu-devel@nongnu.org>; Wed, 25 Feb 2026 03:09:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=sifive.com; s=google; t=1772017740; x=1772622540; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=qjuwdpdQeEsHuCFiNGe8ard4PSb9WYSbM0q1xrkNAdU=;
+ b=YfruUqahVQE3VwFtMCIA9bvpFgIDplXOn1FuVJtIX0S+xzt4RKFUYXYiTtX0ut5GKX
+ NHZ+182usBOR3JZbp46ad0HaJhLVoG5SgU1OPjAx+XQuIVltnBcX92wiC92IbQMFh25x
+ ZvJhWKFBpLYNYdD2PGr6rhqLtx7ZYYQy6OLVr0lHs/8Rw27NfJqXIXhINo4IQ+xPnD/9
+ mdLyUA6rh6WiyWOdNRDQLZQVrzmqoIkiFVmR90VH/aEQsDxakvyceooN2dAgJHn9pNai
+ iVYOX3msfPMPqPmDa0ViBAPw1S4547rJHyEOpgaKs3v2UsLnruh19PxVkorMXR86KylY
+ xIug==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1772017740; x=1772622540;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=qjuwdpdQeEsHuCFiNGe8ard4PSb9WYSbM0q1xrkNAdU=;
+ b=U1IQlgrcz1pFT5SVSYntPD5zY/Hyeb1fmJDWQc69OTRY/ZFks0VGClYdPGPxj3ba/Z
+ OHFgRYoQ/Ut9dNDSF/ZKeALL+KLsPsYOrPEZYhHz2DdoeiQKUGQ21IbLGJ+XfbpFYfx5
+ z19ip7UHZurPimRzEu67a1gKyPXUKJdvZgrXzHS2j7pznLNy6coqQD1MK9lscD15Gk6D
+ lnLISZfSboxJFBro9waq06Td/4WrEHJwAK5mkcKjHYU3RKeCu/x3ds4ZGuoH++Iz5b2n
+ adYV21/A2nTL3EQx6wuNhOBEY1/exJ9QqZXTU6g7jDdkQ/jGKrHUIAgmZMsdEEqbfro7
+ J/uw==
+X-Gm-Message-State: AOJu0YzIy7SoFrssqZgaKrPmff4Hl2RSm/SWrOeeHrvTWcp0ielwirM0
+ oxr1tYaUbq5nMNSRrdai3pTdAOqIo/YEynksUyjW5KfUE0qJT4hrHN05ncRlouH1ufyPZ1dxtTr
+ sjSDXH495/ZMtqr+em6ASgzsa0Ayxe46CG2THXG/Ybp6j7K1f/96Ow//lJ7xn9MVuv4JGWKkh4s
+ kEOKstQmQP/Jdc06/XWv3fGhF2Acn1xWi1IcLRU9F7BdHq
+X-Gm-Gg: ATEYQzzkKDsOYkjzQDjdVewfP6QLXN2tjsZ4z3EaWGTOpVy1MAsr05MY4iFx2IUVPV5
+ vFXYvcaFg95T6W4uly/nBOfeRCPkdk8smTxDObsBYmaZEgx9lJsZg74XcZJU5cSA4E2BfDii0sU
+ 9JXBbq4QkFG5cln8iJ+JC19ZvntWU/y28wJjDAcjPBZjvTXEUFuChQbbQ2TDAmyKGPH1/pFZefN
+ u+5GEOao/LVErNe92yaqnY8paK5HvrW/aStiLcjvuWTOB5W4/XPu22MySVvGyAWCQeBDZ4jTz6b
+ T60Z+a2cUT7OurJ0kCcNtgfllXzIMFrQnZc585hPIic5OrgimYHTcdvEKfssBcNZMjmaFqe73Tj
+ 67q7qJQXieKr0eiwZ3K5CEN0RvDeWnVmVQn/lvKFTDvmcDrO5EqcMPK+0mIWz/adSELjej7N+33
+ 8FaQy82N//HHJM3g8m+a1Ihd5W26w4E/PeYcZtmvchtlKFionkGTP+sMDEJiIDM5FEEG+orbCMB
+ S6+t/X7bFIErC/vfYYB3KiyauDLlkJtlDAqEA==
+X-Received: by 2002:a17:903:2350:b0:2aa:e238:e20c with SMTP id
+ d9443c01a7336-2adbdcd8822mr34166335ad.19.1772017739483; 
+ Wed, 25 Feb 2026 03:08:59 -0800 (PST)
+Received: from duncan.localdomain (114-35-142-126.hinet-ip.hinet.net.
+ [114.35.142.126]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2ad74e35133sm140452665ad.9.2026.02.25.03.08.57
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 25 Feb 2026 03:08:59 -0800 (PST)
+From: Max Chou <max.chou@sifive.com>
+To: qemu-devel@nongnu.org,
+	qemu-riscv@nongnu.org
+Cc: Aurelien Jarno <aurelien@aurel32.net>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ richard.henderson@linaro.org, Max Chou <max.chou@sifive.com>
+Subject: [PATCH 2/3] fpu: Fix unexpected exception flags when converting
+ infinity to OCP E4M3
+Date: Wed, 25 Feb 2026 19:08:01 +0800
+Message-ID: <20260225110802.1217946-3-max.chou@sifive.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260225110802.1217946-1-max.chou@sifive.com>
+References: <20260225110802.1217946-1-max.chou@sifive.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.358, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.659,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=max.chou@sifive.com; helo=mail-pl1-x635.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,101 +107,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Zhang Chen <zhangckid@gmail.com> writes:
+Infinity is a special case distinct from numeric overflow:
+- Numeric overflow: finite value exceeds format's max normal
+  -> overflow|inexact
+- Infinity conversion: input is already infinite
+  -> no flags
 
-> On Tue, Feb 24, 2026 at 4:42=E2=80=AFPM Markus Armbruster <armbru@redhat.=
-com> wrote:
->>
->> Zhang Chen <zhangckid@gmail.com> writes:
->>
->> > On Tue, Feb 17, 2026 at 3:51=E2=80=AFPM Markus Armbruster <armbru@redh=
-at.com> wrote:
->> >>
->> >> Zhang Chen <zhangckid@gmail.com> writes:
->> >>
->> >> > Extend the 'IOThreadInfo' structure to include attachment metrics.
->> >> > This allows users to monitor how many devices are associated with
->> >> > a specific IOThread and identify them by their QOM paths.
->> >> >
->> >> > New fields added to IOThreadInfo:
->> >> > - @attached-cnt: An integer representing the number of devices
->> >> >   currently using this IOThread's AioContext.
->> >> > - @attached-dev: A string containing a delimited list ("|") of
->> >> >   QOM paths for the attached devices.
->> >> >
->> >> > These fields are also exposed via the Human Monitor Interface (HMP)
->> >> > command 'info iothreads' to assist with manual debugging and
->> >> > performance tuning.
->> >> >
->> >> > Example QMP output:
->> >> > {
->> >> >     "id": "iothread0",
->> >> >     "thread-id": 3134,
->> >> >     "attached-cnt": 2,
->> >> >     "attached-dev": "/machine/peripheral/blk1/virtio-backend | /mac=
-hine/peripheral/blk0/virtio-backend",
->> >> >     ...
->> >> > }
->> >> >
->> >> > Signed-off-by: Zhang Chen <zhangckid@gmail.com>
->> >>
->> >> [...]
->> >>
->> >> > diff --git a/qapi/misc.json b/qapi/misc.json
->> >> > index 1f5062df2a..ca53638684 100644
->> >> > --- a/qapi/misc.json
->> >> > +++ b/qapi/misc.json
->> >> > @@ -76,6 +76,19 @@
->> >> >  #
->> >> >  # @thread-id: ID of the underlying host thread
->> >> >  #
->> >> > +# @attached-cnt: The parameter is a counter indicating how many
->> >> > +#     active devices are currently associated with this iothread
->> >> > +#     (e.g. virtio-blk).  In hotplug scenarios, users can
->> >> > +#     pre-allocate multiple iothread objects to serve as a persist=
-ent
->> >> > +#     thread pool.  When a device is hot-unplugged, the correspond=
-ing
->> >> > +#     IOThread is released but remains available, allowing subsequ=
-ent
->> >> > +#     hot-plugged devices to attach to and reuse the existing thre=
-ad.
->> >> > +#     (since 11.0)
->> >> > +#
->> >> > +# @attached-dev: A list of QOM paths for the devices currently
->> >> > +#     associated with this IOThread, delimited by " | ".
->> >> > +#     Returns "none" if no devices are attached. (since 11.0)
+This commit fixes the unexpect exception flags by relocating the float
+exception flag update flow to be outside the uncanon_e4m3_overflow.
+And raising the overflow|inexact for numeric overflow in uncanon_normal.
 
-[...]
+Fixes: 27e989f99c ("fpu: Add conversion routines for OCP FP8 E4M3")
+Signed-off-by: Max Chou <max.chou@sifive.com>
+---
+ fpu/softfloat-parts.c.inc | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
->> >>
->> >> QAPI schema design maxim: do not encode structured data as strings.
->> >> @attached-devs should be an array of QOM paths instead.
->> >
->> > OK, will fix in next version.
->>
->> Thanks!
->>
->> >> Unless I misunderstand your docs, @attached-cnt is the number of QOM
->> >> paths in @attached-dev, i.e. @attached-dev is redundant.  If this is =
-the
->> >> case, drop it.  If it isn't, educate me :)
->> >
->> > As Stefan's comments, I try to address more specific needs:
->> > https://mail.gnu.org/archive/html/qemu-devel/2026-02/msg01892.html
->>
->> As far as I can tell, Stefan asked for the QOM paths of attached
->> devices.  @attached-dev provides it.  Good.  Why have @attached-cnt as
->> well?
->>
->
-> Users can obtain the quantity more conveniently, avoiding the need to
-> count the number of @attached-dev.
-> If you think the @attached-cnt is redundant, I will remove it in next ver=
-sion.
-
-Please do.
-
-[...]
+diff --git a/fpu/softfloat-parts.c.inc b/fpu/softfloat-parts.c.inc
+index a738758aee..3c323c0cec 100644
+--- a/fpu/softfloat-parts.c.inc
++++ b/fpu/softfloat-parts.c.inc
+@@ -277,7 +277,6 @@ static void partsN(uncanon_e4m3_overflow)(FloatPartsN *p, float_status *s,
+                                           const FloatFmt *fmt, bool saturate)
+ {
+     assert(N == 64);
+-    float_raise(float_flag_overflow | float_flag_inexact, s);
+     if (saturate) {
+         p->exp = fmt->exp_max;
+         p->frac_hi = E4M3_NORMAL_FRAC_MAX;
+@@ -388,6 +387,7 @@ static void partsN(uncanon_normal)(FloatPartsN *p, float_status *s,
+                 if (exp > exp_max || p->frac_hi > E4M3_NORMAL_FRAC_MAX) {
+                     partsN(uncanon_e4m3_overflow)(p, s, fmt, overflow_norm);
+                     exp = p->exp;
++                    flags |= (float_flag_overflow | float_flag_inexact);
+                 }
+                 break;
+ 
+-- 
+2.52.0
 
 
