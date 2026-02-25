@@ -4,125 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE047E9B25A
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 05:45:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB6F6F5545D
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 05:56:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vv7i2-0006ad-I2; Wed, 25 Feb 2026 00:45:18 -0500
+	id 1vv7ry-0000c2-W8; Wed, 25 Feb 2026 00:55:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lulu@redhat.com>) id 1vv7i0-0006aL-BJ
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 00:45:17 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lulu@redhat.com>) id 1vv7hy-0000Do-D6
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 00:45:15 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771998312;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=CKn5XRBiwMVdACVkaCl23uWqRe5UhyUswUjPxenekEo=;
- b=TPf3ocUfDAy4jwAsVcKJl4Uv4xV2SVN3b65OO596TJ8xk1k1jpEMC+852+VFU3TY37ggQ8
- bXANpglyMytfuQNfATFq6yrllGGqAPwrt2Ib+j7zS6DqqTs85FNKiS8Y6HK3K5oUzJp+6l
- 68k8ICGOSRAiIrpYV+sEV5zuEEr0S64=
-Received: from mail-vs1-f69.google.com (mail-vs1-f69.google.com
- [209.85.217.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-651-1fqhn7B9PpWmo9HEhK7bAw-1; Wed, 25 Feb 2026 00:45:10 -0500
-X-MC-Unique: 1fqhn7B9PpWmo9HEhK7bAw-1
-X-Mimecast-MFC-AGG-ID: 1fqhn7B9PpWmo9HEhK7bAw_1771998310
-Received: by mail-vs1-f69.google.com with SMTP id
- ada2fe7eead31-5ff0eb3ff4cso29304137.3
- for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 21:45:10 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1771998310; cv=none;
- d=google.com; s=arc-20240605;
- b=E1B8jBLzSF2ionm2Jo8CjZ3dxb1O9ll32uQmlAHd+bMI3m4ddGvYl0rEJJQzeTkGZ3
- V9S8ADWBbrDWIC8INAGeG8CjiLkzXWr/oLuVhhlb/ay7FleopC0QEKdOibhS0MptSd04
- fhmty/Eh5zvFq2P+Z6iTN4DxCGnZoDJR7Zg+P+d91MeMDwnWX7Wtas9sQisDOtuLGfn3
- IcaUxyzyhRBDVVDRAkTzTwgw/OmfGI5E/JWlT6+7RbMxoyslvVtJTZvTqGwJYidAp6os
- 7mIe5CwIoecZFTnGvnbLIliVcDi5lhh7+sKHFWtwFtmZnklq7BDkO4piavsQG4RUT9St
- kULw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=CKn5XRBiwMVdACVkaCl23uWqRe5UhyUswUjPxenekEo=;
- fh=J1wMMtsO9VCSlRPTqWUaaMyTY3TLpaVYPKZnAUHbFM4=;
- b=DNF92mY2c+v8E3AerkpNV7bQVJbU7NNv2bU4yC+4Nt1dL2zmmx8dB6oGSD0NcyXHVb
- Wntf4EMjYswECqFdrIX+RenHTeu9ielzMZ3eMesONwplbt0EFNxhEzAk5YlFJAEP83Y5
- 3bkDLfjkjb1CV8lUj/ebArcqQC2bl6y6uK7GsGgw/zh8nm+FGUp8/Um5Jvs94X8b+qsB
- kb81tybrO2QN1ikN4kps01HRSvSPBPe6+3s7Nd2XqG3yc/kkY6x16/xH4+1pn1x2WRCE
- a4qKumGT61GZuHEe+LF6LUrSYwEvcbYAQEb4psch3cLXcu5wTZKfH3hJZvtr8EZDs8xR
- u6oA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vv7rs-0000bl-Dy
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 00:55:28 -0500
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vv7rq-0000wQ-ED
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 00:55:28 -0500
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-4833115090dso60918625e9.3
+ for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 21:55:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1771998310; x=1772603110; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=CKn5XRBiwMVdACVkaCl23uWqRe5UhyUswUjPxenekEo=;
- b=BtDcwxv5n/7AoCw74txmOOcs3P7BIsEcwVuQrghM/eJTnE4rsVZxsfYUb/vc10xgRe
- 2KdT0rUDYsceBFPqDswhzz+WNrANgBGXsj9fywgA0lMdQH9CUfgDaXRUXGDxg5o5g6V9
- OdMd2Ame5yWpgIWAZXl6aM1sRea9cbSuLC30BTKPJzFLKmxea+GgIKW2csv8C5T69ts5
- B1Nzo7mui6CAAj5XtERHTXrOxbh3DGUw7oT0aUFhBMnWwEPSH1TDs6mMwSUzfa9TUE40
- KRrOVfqgVCLz23whfHI6w2OJAYLTzZL/hKVVHTf9MGo5mRyqTkHBKQLkTgn2UsevVuv0
- GQug==
+ d=linaro.org; s=google; t=1771998923; x=1772603723; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Ay4rJ04gFVAifpGDRyPu3Ebu6YW+EHNMxzhbOIOXHO4=;
+ b=OrYRc5n+6RlBroS0ReAIUXaWcvXdMO571bFO3TEizAtDa3WLJOOb8QeW24uin7Fzu2
+ K4YbIOgIK2VjAW9zJHfXxfnYrt2MCBkP5ZYzgn728O/HUznxErPWEG6M4kKMAfaIy50s
+ tf3sRKsZLU2OerKTZiu853QxZUPOggQcvNNgEQKkb+g7KBCZZRPskMa9heGNfBZGL/nA
+ wote5kEXt4p1Bgl3AxcP1dlesdTLvIDgL279+4HYX2ndxcKDiaO7/VZQmYv5DY7oLHkP
+ S1zvam2tKRhS92ZxLP5P1lpXUuJdrzJYH8tDXQU83gOVoeYtP3Cxj5mraSIqf1R3DEq/
+ 3ErQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771998310; x=1772603110;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=CKn5XRBiwMVdACVkaCl23uWqRe5UhyUswUjPxenekEo=;
- b=kPcHH5+SzOV5Ztt++dUBoyybsE+Rd/HDbdl7wxwr0rHzZicIUgJ/eEGmzT7r/oHqHx
- ogoCohk4kOvkkJqEYxEwUNzHkEPL1uLGPul9QOMuU7/NsKZ/kOFouRdNe+OPY5O3ElYF
- rTRL23ApyVGPqVjt1aRFbUa1BtJHPM1exemVI+9ol8vXn5f71Vkpa2W+d/+OMy33BkwP
- VAaFz2Lcy+fhQOYwsIibmvgKtKkRkyUhrvcvpEoh+mOvCZOAtdgt5jwJcC1b32FpCU4o
- uRBFVDSQYSJW+GIIr+r4XeJYozKN/YZTd8qPO5fIzAWyoYlcmmqe93ddaUD37EXhZjvZ
- +NtA==
+ d=1e100.net; s=20230601; t=1771998923; x=1772603723;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Ay4rJ04gFVAifpGDRyPu3Ebu6YW+EHNMxzhbOIOXHO4=;
+ b=awpH3IiFr4KGGY+VqxOVJZ6PiKGZzGhxEfqM3ecw4BZyB4hOYNF/SXV0rEISIYR74u
+ lfcoaOPb3YztLw3ITktlNC0yvJLB4z6v2iOwYQ5riL0ACYUETbONG2ZFxuByX04hAP5l
+ VNn7GrZHXTq0455BNSbm7PgakeEeHwIc90S69/XIh1amHNKtVVWosSrqPbQL1jpUwWQi
+ JqGlA0rJao0ZxSWY3ophL+d4JlrwBbiZ97U7XPchNkhYjO80XnEBkMYO3ZJbMKBwzbqR
+ 5Qemmulid4WWjc2qVeuqMa2OUr3mCXb7eXU5ALf97JD6FmJcizh1PM+wV9T1fvXfXZAD
+ ckjQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWRxo5mVrNRtS+g9D5WmrSLeX3fy4CuvzzgVqFBDigQiSkn01lo8CCAfk6gBcNhqN5sku18Ko7Rs3bQ@nongnu.org
-X-Gm-Message-State: AOJu0YwWt9WCad5Mq6RktIWRvGMIURshgvRUf9h/Y4ifQmcpbJeRL/ij
- 3R7MduKM/6UesUffnsdzCYC/6AqhVHq5MREjWJZCm13AVspLubFnaN8XqLBTCnwmvhiVNCNPWnI
- VtexxP17xD3tFZhuDGJaI2YC78eGZqlurj9cfaOAiGIFp9+l3sJrFrGuKx2iglAX5YHKX8/1naj
- Y49EOUWrD91agJFo8cmiuABnIdO+07IPM=
-X-Gm-Gg: ATEYQzy3CzdyHXoVbDQpTPI6etSx3bpqxWc+5HH20JusBM0z2LOUn8Bz9quW26AU+YO
- v6TDwcVhwlE1UV8IcYUDUODRzg3USbzOT+SvV2jFcJf+8HFRen2ROShhcw3BpuLuevPRWAhlJgD
- xq9cQ131rWr0lH/I3wJeORaUbduNDPbBNjmQbemuf7nztj7OtkszULWdEite5eeY/9QuSdWxvGg
- dx7jJ4=
-X-Received: by 2002:a05:6102:3913:b0:5db:3d11:c8d6 with SMTP id
- ada2fe7eead31-5feb2e63d27mr4635542137.5.1771998309879; 
- Tue, 24 Feb 2026 21:45:09 -0800 (PST)
-X-Received: by 2002:a05:6102:3913:b0:5db:3d11:c8d6 with SMTP id
- ada2fe7eead31-5feb2e63d27mr4635535137.5.1771998309503; Tue, 24 Feb 2026
- 21:45:09 -0800 (PST)
+ AJvYcCWLHkfYgMO4bEGfknEsLK6JwwXpWzUHw8T7hys6B3dtqFJljoQlPRzWpZcSFkJlpz2oh5BrVWb83Srt@nongnu.org
+X-Gm-Message-State: AOJu0YwFhzqKp6oiqEObcyWIvDrqf3XVJKlQ5VS+ai8+pms/Ty2Acheu
+ pThqLH1gZ1pL6QaNjxovtmM85r6BJVD4trTC/YqlkC/tltlX+HTImbHdmtZdu2WwdFwPLWKXwAS
+ QfxnrE80=
+X-Gm-Gg: ATEYQzyakfeioWLjcDZvA6t5tF+WXV3a7RO1Sby8SKyeT4HEvCOjKKgpxbeeLbaUUuE
+ PtbiWdC2wgIG+YmyizZhR5RusQ5whVgOB0Z1LcfVfU/rzsEC9wts05aj08KTpSs2f4CWY5YUjcI
+ Q8CerJAAn80EhIC8lkXxne7c3brjwbGHNRdP7YWi+tycsidL7w3kGEIfLd5YffPAOF2F/+C9BGW
+ IKcrPI1bowKCi7rlv+E4ove+UPPIS22S2h0XsSttTXH2RQ5HdPoP3EQZJz6oMJOBhY/EHuTi1zE
+ K7qqbwywasfGZePCSp0MJczM26dg/uvO8LE+saV1QUhrIdmqVoMJTvFKBuElZHEU0bIjsgCQsjb
+ djbhn6DjVu8HRdFRKwieQauwyYkoxf3+j5uRPFGPYO+6huw7jQ5kzvDwqrW7WGi/bH54u6VU67A
+ 5ghGsrKTBu0aIJ4CMVI5QvE948czGLl+cdoQaqYz3fSnvLZImC/ej8ZgLJsKLFnTXEuw==
+X-Received: by 2002:a05:600c:821b:b0:483:71f7:2794 with SMTP id
+ 5b1f17b1804b1-483a95c9e73mr264579975e9.15.1771998923334; 
+ Tue, 24 Feb 2026 21:55:23 -0800 (PST)
+Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-483bfcbf8b6sm3960675e9.20.2026.02.24.21.55.21
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 24 Feb 2026 21:55:22 -0800 (PST)
+Message-ID: <0fef1895-b8dd-4091-a4af-6bcb5a974e32@linaro.org>
+Date: Wed, 25 Feb 2026 06:55:21 +0100
 MIME-Version: 1.0
-References: <20260213071042.3733239-1-lulu@redhat.com>
- <CAK3tnvLBSB=sKKwjMai5Pw_AGq8sLzuaQkEoonJ-AaHgn3EwVw@mail.gmail.com>
-In-Reply-To: <CAK3tnvLBSB=sKKwjMai5Pw_AGq8sLzuaQkEoonJ-AaHgn3EwVw@mail.gmail.com>
-From: Cindy Lu <lulu@redhat.com>
-Date: Wed, 25 Feb 2026 13:44:22 +0800
-X-Gm-Features: AaiRm52cPAlVsQxaodvttpaw5WyIyyKO-J5QqbZ4KOpWDll7PaWqHw80wqDANKs
-Message-ID: <CACLfguVUOaMJn2nQpbnnh1kxsPTpKhhtuvdQcbe48nt6V1VNPg@mail.gmail.com>
-Subject: Re: [RFC 0/5] net/filter-redirector: Add AF_PACKET support for
- vhost-net
-To: Zhang Chen <zhangckid@gmail.com>
-Cc: mst@redhat.com, jasowang@redhat.com, lizhijian@fujitsu.com, 
- qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=lulu@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.358, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.659,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH] hw/core: Avoid attaching qdevs to /machine/unattached
+ if they have a bus
+Content-Language: en-US
+To: Mark Cave-Ayland <mark.caveayland@nutanix.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Bernhard Beschow <shentey@gmail.com>
+Cc: Markus Armbruster <armbru@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>, Mark Burton <mburton@qti.qualcomm.com>
+References: <20260217164049.543975-1-thuth@redhat.com>
+ <874ind5da6.fsf@pond.sub.org> <aZ1zsoyKcD1ChK--@redhat.com>
+ <CAFEAcA-30xkboF_mt2HD+9TG+j9W7k2FCuSHGSVk9H=gbXnx2A@mail.gmail.com>
+ <ef1aeb7f-d79c-446f-be58-28245b84ccfa@nutanix.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <ef1aeb7f-d79c-446f-be58-28245b84ccfa@nutanix.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -138,75 +112,138 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Feb 14, 2026 at 11:05=E2=80=AFAM Zhang Chen <zhangckid@gmail.com> w=
-rote:
->
-> On Fri, Feb 13, 2026 at 3:10=E2=80=AFPM Cindy Lu <lulu@redhat.com> wrote:
-> >
-> > This series extends filter-redirector to support vhost-net backends by
-> > introducing AF_PACKET based packet capture and injection.
-> >
->
-> Very happy to see this series~
->
-thanks :)
-> > TODO
-> > =3D=3D=3D=3D=3D=3D=3D=3D
-> > This series introduces basic support for filter-redirector, enabling
-> > simple mirroring of VM1's ingress traffic to VM2's mirror port.
-> > Additional functionality including filter_buffer and other filter featu=
-res
-> > will be added in following versions.
-> >
-> > Example Usage
-> > =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> > Primary VM (mirror incoming packets to secondary via chardev socket):
-> >
-> >   -netdev tap,id=3Dnet0,vhost=3Don,...
-> >   -chardev socket,id=3Dmirror0,host=3D...,port=3D...,server=3Don,wait=
-=3Doff
-> >   -object filter-redirector,id=3Dvm1redir,netdev=3Dnet0,in_netdev=3Dnet=
-0,outdev=3Dmirror0
-> >
-> > Secondary VM (receive mirrored packets):
-> >
-> >   -chardev socket,id=3Dred0,host=3D...,port=3D...,reconnect-ms=3D1000
-> >   -object filter-redirector,id=3Dvm2redir,netdev=3Dnet0,indev=3Dred0,ou=
-t_netdev=3Dnet0
->
-> Whether the receive side need the same setup the  "-netdev
-> tap,id=3Dnet0,vhost=3Don" or not?
->
-> Thanks
-> Chen
->
-Hi Chen,
++Bernhard
 
-Yes, the receive side still requires the -netdev tap,id=3Dnet0,vhost=3Don
-setup. I will make this clearer in the next version of the series.
+On 24/2/26 13:22, Mark Cave-Ayland wrote:
+> On 24/02/2026 11:10, Peter Maydell wrote:
+> 
+>> On Tue, 24 Feb 2026 at 09:48, Daniel P. Berrangé <berrange@redhat.com> 
+>> wrote:
+>>> IMHO, it is slightly more subtle - people believe they are already
+>>> adding children.
+>>>
+>>> Consider this code.
+>>>
+>>>      port92 = isa_create_simple(isa_bus, TYPE_PORT92);
+>>>
+>>> my reading of that is that I'm creating a "port92" device that is a
+>>> child of "isa_bus". Why would I need to tell QEMU that it is a child
+>>> for a second time ?
+>>>
+>>> If I trace calls through isa_create_simple I get to a call to:
+>>>
+>>>     qdev_realize_and_unref(dev, parent, errp);
+>>>
+>>> and once I again I'm left wondering why I would need to tell
+>>> QEMU 'dev' is a child of 'parent' a second time.
+>>>
+>>> Of course I know the answer. We need to give a name for the
+>>> child and it isn't trivial to "do the right thing" to invent
+>>> an automatic name.
+>>>
+>>> Still, overall I'm inclined to largely blame our API designs for
+>>> not guiding people into doing the right thing.
+>>>
+>>>
+>>> Picking another random unattached set of objects "smbus-eeprom"
+>>> I again find they've being created with qdev_realize_and_unref.
+>>>
+>>> Pick another unattached device 'i8259_init_chip', and again
+>>> we end up calling into qdev_realize_and_unref()
+>>>
+>>>
+>>> It feels like qdev_realize_and_unref() is a common point of
+>>> blame in unattached devices. IMHO it ought to be taking a
+>>> "const char *name" parameter.
+>>
+>> I think that is because this is the function that is used
+>> in older code that predates the "everything should be in
+>> the QOM tree" model. Newer code doesn't use it, I think;
+>> and it's not surprising that old pre-QOM code doesn't do
+>> anything to put objects into the QOM tree.
+>>
+>> The two patterns are:
+>>
+>>   dev = qdev_new(...);
+>>   ...
+>>   qdev_realize_and_unref(dev, bus, errp);
+>>
+>> and
+>>
+>>   object_initialize_child(...);
+>>   ...
+>>   qdev_realize(dev, bus, errp);
+>>
+>> This also is somewhat tangled up with the question of whether you want:
+>>
+>>   * call a function which allocates memory and initializes it
+>>     with an object of this type
+>>   * I have the memory here, init the object in-place
+>>
+>> If we could come to a definite conclusion on what we want then
+>> we would probably be in a better position to try to enforce it.
 
-Best regards,
-Cindy Lu
-> >
-> > Testing
-> > =3D=3D=3D=3D=3D=3D=3D
-> > - Tested with vhost=3Don/off TAP netdev on x86_64
-> >
-> > Cindy Lu (5):
-> >   net/filter: Allow redirector on vhost backends
-> >   net/filter-redirector: add in/out_netdev properties
-> >   net/filter-redirector: Add AF_PACKET sockets initialization
-> >   net/filter-redirector: add AF_PACKET redirect datapath
-> >   qapi: add in/out_netdev to filter-redirector
-> >
-> >  net/filter-mirror.c | 460 +++++++++++++++++++++++++++++++++++++++++---
-> >  net/filter.c        |   6 +-
-> >  qapi/qom.json       |  19 +-
-> >  3 files changed, 459 insertions(+), 26 deletions(-)
-> >
-> > --
-> > 2.52.0
-> >
->
+I recall a previous discussion where we said in-place allocation
+does not scale with dynamic machines (data driven config), and IIRC
+Bernhard said by switching to dynamic heap allocation we'd use more
+QOM cast macros and lose compiler safety type checks. Can't find it
+now in the archives.
+
+We have some model declension where we allocate in-place $MAX members
+and expose a QOM property to initialize up to that number (or worst,
+de-initialize and unparent what is left!) in the DeviceRealize handler.
+Not "in-place" could simplify this.
+
+> Exactly this! I think what tends to happen is that we get stuck in 
+> situations where someone suggests an improvement, but then we get hung 
+> up trying to work out the corner-cases where it doesn't work and then 
+> things don't progress.
+> 
+> The approach I believe we need to take is to work out what we want the 
+> API and QOM tree to look like first, and then work backwards from there.
+> 
+> I tend to be in agreement with Akihiko's argument that we want to 
+> deprecate in-place initialisation with object_initialize_child() and 
+> simply use refcounting everywhere because then we don't hit any lifcycle 
+> issues if something retains a reference to the internal object (memory 
+> regions!).
+> 
+> The questions I think we need to answer as a starting point:
+> 
+>    1. Which API shall we converge on: qdev or QOM? Can we come up with a
+>       code sample(s) showing what we want object/device initialisation to
+>       look lie? Longer term can we unify the QOM and qdev trees?
+> 
+>    2. Should we convert to use external object allocation with
+>       refcounting?
+> 
+>    3. How do we handle memory regions? With Akihiko's recent refcount
+>       fixes then Zoltan's memory region changes could work: I don't agree
+>       with the motivation of simplifying devices as I think it's i)
+>       subjective and ii) harder to debug if we lose the pointer to the
+>       memory region, but I can see how it fixes the RCU-thread doing an
+>       unref after the owner device has already been destroyed issue.
+> 
+> As several people have already pointed out in this thread, we do have a 
+> poor track record of API conversions but the introduction of memory 
+> regions shows how this can be done successfully.
+> 
+> Given that we already have multiple ways of doing the same thing, I tend 
+> to lean against not introducing yet-another-API unless we can come up 
+> with a long-term strategy for its use. In particular this causes 
+> problems in review where e.g. one reviewer may want to use QOM to setup 
+> a device whilst another may want to use qdev which is confusing for 
+> everyone, including the code submitter.
+> 
+> If we can at least get an answer to 1) then I'd be willing to have a go 
+> at writing some kind of specification document and put it out for 
+> feedback...
+> 
+> 
+> ATB,
+> 
+> Mark.
+> 
+> 
 
 
