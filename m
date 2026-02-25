@@ -4,99 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBD9CF55449
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 03:53:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE362F55449
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 03:53:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vv5wJ-0003OP-LE; Tue, 24 Feb 2026 22:51:56 -0500
+	id 1vv5wa-0004FW-LR; Tue, 24 Feb 2026 22:52:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1vv5wG-0003Jx-8D
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 22:51:52 -0500
+ id 1vv5wY-00048P-Pd
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 22:52:10 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1vv5wE-0008Do-Es
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 22:51:51 -0500
+ id 1vv5wX-0008G3-5R
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 22:52:10 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771991509;
+ s=mimecast20190719; t=1771991528;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=bSI26ec30q+LRwqH4eGYpPIQO82uWHXpsee53xL/4Nc=;
- b=bwMREnADm6eHqmFk5CeXY5FqfCdSiwFlS3xZB+VDIhwim2wa4eicxNFZ0Qh6lbRxxJ4GlV
- g7tADdRbVjyZDJBxLMIiFI336INWGuJvzlUOAd1hhEpziqS436WcX6h8WGlZ76R3RqPhLO
- CKYTJttHcAAahJ/q4a4qVNxMGxUT1Es=
-Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
- [209.85.216.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=jxPupLKXKRysmyGd91VNxhdP4T2DZ/YUYcNzsqzSqOs=;
+ b=amyKjSGRm/JFN5X3LOlmIADij0YzG2TwAD1Anmm0b2YHAORAm4SK+GEWnkSJbtWqboesaV
+ fcImNd/XE+YFvPv8rBKhkh49omx0QJMniMFtVoPXTwdEOdq+hoUvKI5fMfKaji5y9jHTlu
+ 3nK8rYBggTiR6IhtpKM63vPye0KLEyM=
+Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com
+ [209.85.214.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-395-JPlpzmUfM2mQ38_1IvZS8w-1; Tue, 24 Feb 2026 22:51:48 -0500
-X-MC-Unique: JPlpzmUfM2mQ38_1IvZS8w-1
-X-Mimecast-MFC-AGG-ID: JPlpzmUfM2mQ38_1IvZS8w_1771991507
-Received: by mail-pj1-f72.google.com with SMTP id
- 98e67ed59e1d1-358dc09b43eso1476738a91.2
- for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 19:51:48 -0800 (PST)
+ us-mta-117-3RljwQBuN9-EwX3llBnsEg-1; Tue, 24 Feb 2026 22:52:05 -0500
+X-MC-Unique: 3RljwQBuN9-EwX3llBnsEg-1
+X-Mimecast-MFC-AGG-ID: 3RljwQBuN9-EwX3llBnsEg_1771991524
+Received: by mail-pl1-f197.google.com with SMTP id
+ d9443c01a7336-2a77040ede0so71136085ad.2
+ for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 19:52:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1771991507; x=1772596307; darn=nongnu.org;
+ d=redhat.com; s=google; t=1771991524; x=1772596324; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=bSI26ec30q+LRwqH4eGYpPIQO82uWHXpsee53xL/4Nc=;
- b=JuRIHF3QM7+OPXC5bKrWglnjk1+sUs9bOyNIZ1GvtBvr3codQXCRgtzpkPYxpCuMVM
- EikbtLa7U4u6MGV1S+o2rlrtPhAS/sz+diqCw9Y3t7JlI0k+ax/MRkarQuuCHz4p0Ztd
- x13PPzwhwKQoDrEOSFReAbKpMCx6zUQeArcAIo+vM04K0zvtykzDiSGUUL/eu9QRLMyH
- ekyvFCUdnkGvCXMVw5LEqVMq9JKEmXf2rwn+FJmPOqcwx5W+FzOHOqYmxBWoAADQurWS
- iSM6rHmoETYH+3zUX3JUKQSsBZqrWKoQbRmCzwC6Mhr58T1FVon+fDa7m1tXyxqnx7mh
- 4Ong==
+ bh=jxPupLKXKRysmyGd91VNxhdP4T2DZ/YUYcNzsqzSqOs=;
+ b=FdFq3yDnD27qFnX8eH3WiPGrhMzKxQh0aEBSkIO0DHDJRVVpZvBmkvIqd+26gpZsvj
+ ftgNDioo8iAJTzJpPc0oMRGvR/DUCX/ujSP6PBfJvTRg4lgK+kXs7/gb4xJD9Ted486N
+ 6Dq495fQ0AiyES/scdFE+8wqfqJYuRtD0QsaOXTsv+8EMKPZNYBATgWcMlQn4If2TvrF
+ xArr3ekFbuOnZxCCvt8LWYM1Ak+6s+Vf6lm/HG1a3At9c0Q/pTQUeJT6KcZfg3mEtCfU
+ uVGVoN0Y1xt9n0ADAB4YaCFdpshmsqB49msYo7kwMSzfLuPsbSYlU6QRhrXGbt9aH0CE
+ 0Wzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771991507; x=1772596307;
+ d=1e100.net; s=20230601; t=1771991524; x=1772596324;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=bSI26ec30q+LRwqH4eGYpPIQO82uWHXpsee53xL/4Nc=;
- b=vjhNSuLp+wFz9WTZCC4vSzBTipuiEAZDllk2oIdo8JZmiJRkbe6qm9pgDmSH9kiWJd
- n1Q/xU6LJmvpCNzk7oQ8FNry6HS3blN+dwk4LyuePEU4h73y+nzV8G0RjhL/FlLs4mIK
- G6LYWZOVJkEhS4ZiM0NqDsIYDk6q6zp57h0cw0MKWdyFWeoCmTFYRkVndwWnpHcegtx6
- G6dHEhxWjGARfot4vmPCPhZBRGzedV9hSuAAW9wdg3TfSQ3ytVP6FE+gUWHs2g9uNUBj
- 6K6NxDLtBqac7kzAUNUg1tv+Peju+ufP6pUY+xyEpY7uK9cUF3XfB7b5tU5SHONm1F9A
- bpvg==
+ bh=jxPupLKXKRysmyGd91VNxhdP4T2DZ/YUYcNzsqzSqOs=;
+ b=q8aqcaOUqTEhf0Adp6sIRegU60uIjGpLDpW5i6EBqTpNJGHSn+3KbLfnEXakyNumI3
+ 7sn6IuCSe6VSxuR0tPEqwzb/aWHSabU2QTJLuN7hngkfHLAruNNLKe+3Z+9mmrDXCFVY
+ bLqlNy0kUUYFRcj6YDVn+V+Iz0tgoXG8vJYENWRXuUPjOyO7GBH05DLBP3qPYrEjf3zh
+ wTxWZx+xxB7WpdJDUqrc63LCXV2LpB/SSTYo3/RyhpfE9zj1OVulty7A5OjxShl52oor
+ aWQ05mUjyqjCxX8LMz5LrKrdT0tZb3PD21bnI93sStSbPz/dcAKK6TyRgeg+z5HI3uCn
+ PV/g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXIBeiqcbWT1mukOXE21dZjj7pcmr6mMQv9xUbY4XmCFLCqJuh+YlSpRiNnLtfjPljjymZMCyhI2mOJ@nongnu.org
-X-Gm-Message-State: AOJu0YysVdQawOOfLxgbRpTDwkF09rYp0ClreDb9eDw6xWl6i8eHoJkx
- xxX6FsES78FnUZt5TGBdFq3dyHO6tqdNRWue8ATwdDTFsrgLtOB4Cf3kzohY5HvfzuE+nwQzd7D
- H01+Nq0f8qtB/ULhhZNfQl2VXNYUP50k5shwwsQf0dyeoBz3wOtU2/2KbDrn0cT97
-X-Gm-Gg: ATEYQzy/Ru1o6qZgn7IlaBu3bpdLhXufLN1JyMkaiaGOXXB9Phv/D6rk1sX286wnrUT
- k3HJTepS4j56PNZJt8VPNwT0GSP9GPInIdBdR9vY2eQSCCGrPRixNNhybHUg+rJBSRbKr8EuKH9
- HiRLrwL4sQ9U38+ueH+6HiSXh5kGtLMkNlkS0iYLRu6w1KPVTwSsyNAMmcTYzSC+hPeVBw4n5Xc
- siOPK1rPcvnGgoxmtEtXSeosr6hJZoI7pUquI9dKIxCsFT1icgJYIpZg9L/O3zFvvsvKZ8g02wj
- mGDjsZkz0rsSsHVjGSq2YcY6ep0EfVDioAZDAhkOMqtzpb889SOulrvb5GXZltccE2uIuBTGkcR
- AVpHdvu+7aJOR/EGEmjxxrs1+rywQ9nPnkRVPMuDgTvC5uWG4U4o1KII=
-X-Received: by 2002:a17:90b:540e:b0:34e:63c1:4a08 with SMTP id
- 98e67ed59e1d1-3590f13bac6mr925327a91.20.1771991506835; 
- Tue, 24 Feb 2026 19:51:46 -0800 (PST)
-X-Received: by 2002:a17:90b:540e:b0:34e:63c1:4a08 with SMTP id
- 98e67ed59e1d1-3590f13bac6mr925314a91.20.1771991506450; 
- Tue, 24 Feb 2026 19:51:46 -0800 (PST)
+ AJvYcCVTtTs/K9tVLD/5IUqY0YC6nzECR8QrT7J7r/W57wnWGzHENUkvoO2Bb/zz0ECGl50alw/6qXHRovGi@nongnu.org
+X-Gm-Message-State: AOJu0Yw++NDAsgvRLxHuogy8MunAQgvZtPnc6WfQlvU2fYDWBZz4uTl7
+ 3i6pTyhHmUV6M62UxockbKIgoMXbkv1hUC/KuzGce8ehZRJYmtgfmlJeWeIGhQBwGWq/FXOhTeD
+ 0TM2RYxT77Zc++bmpXpuyUDcO7hqSRnt3ZeKE0Jy7Gt+ioZP4ZMwl+c37
+X-Gm-Gg: ATEYQzxEosEOVfg9dp7epDim4zIKhZPMzaMzZoD0E9Lwn7+oj8fLY8vzH65EYMiegh7
+ GHOWFfIfymSMVecmJZ2JTbe/BoyteZ9BVfmyd+fl5rB8UqMYrfzUDvdELAKR4SOihfsgsydsN3Q
+ lRpymYG+orQK9V+4wfI/sztrxJfL+EBRLFif4UQ447o1KXPiWEQieMkKxUqtxcP/qnqOhNyR/Lg
+ s3MvPQWR9fBFw100ZyXCOzqUVkBoI9lcNdjGtJrnflANLDMvM/CHwIFNzx5z8AsEUcFX+Yh0TuP
+ ybwapp1bz01qva2xPWnrD0aFRQe0SpafX/kwc3Q0Ns+Fg4Dm8PDT7v+7Jb0zqRXzFridll+tcjC
+ fTvh/Nxbb5BmyYSz2yb/B6nXoB+CHBPX6/mkDJemrz79YcfUJIsfhO64=
+X-Received: by 2002:a05:6a21:681:b0:393:c4d:be49 with SMTP id
+ adf61e73a8af0-39545e1b364mr11114167637.2.1771991524541; 
+ Tue, 24 Feb 2026 19:52:04 -0800 (PST)
+X-Received: by 2002:a05:6a21:681:b0:393:c4d:be49 with SMTP id
+ adf61e73a8af0-39545e1b364mr11114136637.2.1771991524092; 
+ Tue, 24 Feb 2026 19:52:04 -0800 (PST)
 Received: from rhel9-box.lan ([122.176.129.56])
  by smtp.googlemail.com with ESMTPSA id
- 98e67ed59e1d1-359018838b2sm1186006a91.5.2026.02.24.19.51.43
+ 98e67ed59e1d1-359018838b2sm1186006a91.5.2026.02.24.19.52.00
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 24 Feb 2026 19:51:46 -0800 (PST)
+ Tue, 24 Feb 2026 19:52:03 -0800 (PST)
 From: Ani Sinha <anisinha@redhat.com>
-To: Bernhard Beschow <shentey@gmail.com>
-Cc: Ani Sinha <anisinha@redhat.com>, kraxel@redhat.com, pbonzini@redhat.com,
- ani@anisinha.ca, qemu-ppc@nongnu.org, qemu-devel@nongnu.org
-Subject: [PATCH v6 29/35] ppc/openpic: create a new openpic device and
- reattach mem region on coco reset
-Date: Wed, 25 Feb 2026 09:19:34 +0530
-Message-ID: <20260225035000.385950-30-anisinha@redhat.com>
+To: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>, Eric Blake <eblake@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>
+Cc: Ani Sinha <anisinha@redhat.com>, kraxel@redhat.com, ani@anisinha.ca,
+ qemu-devel@nongnu.org
+Subject: [PATCH v6 34/35] qom: add 'confidential-guest-reset' property for x86
+ confidential vms
+Date: Wed, 25 Feb 2026 09:19:39 +0530
+Message-ID: <20260225035000.385950-35-anisinha@redhat.com>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20260225035000.385950-1-anisinha@redhat.com>
 References: <20260225035000.385950-1-anisinha@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=anisinha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -123,171 +127,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-For confidential guests during the reset process, the old KVM VM file
-descriptor is closed and a new one is created. When a new file descriptor is
-created, a new openpic device needs to be created against this new KVM VM file
-descriptor as well. Additionally, existing memory region needs to be reattached
-to this new openpic device and proper CPU attributes set associating new file
-descriptor. This change makes this happen with the help of a callback handler
-that gets called when the KVM VM file descriptor changes as a part of the
-confidential guest reset process.
+Through the new 'confidential-guest-reset' property, control plane should be
+able to detect if the hypervisor supports x86 confidential guest resets. Older
+hypervisors that do not support resets will not have this property populated.
 
-Reviewed-by: Bernhard Beschow <shentey@gmail.com>
+Suggested-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Markus Armbruster <armbru@redhat.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 Signed-off-by: Ani Sinha <anisinha@redhat.com>
 ---
- hw/intc/openpic_kvm.c | 112 +++++++++++++++++++++++++++++++++---------
- 1 file changed, 88 insertions(+), 24 deletions(-)
+ qapi/qom.json | 16 ++++++++++++++--
+ 1 file changed, 14 insertions(+), 2 deletions(-)
 
-diff --git a/hw/intc/openpic_kvm.c b/hw/intc/openpic_kvm.c
-index fbf0bdbe07..b099da20eb 100644
---- a/hw/intc/openpic_kvm.c
-+++ b/hw/intc/openpic_kvm.c
-@@ -49,6 +49,7 @@ struct KVMOpenPICState {
-     uint32_t fd;
-     uint32_t model;
-     hwaddr mapped;
-+    NotifierWithReturn vmfd_change_notifier;
- };
+diff --git a/qapi/qom.json b/qapi/qom.json
+index 6f5c9de0f0..c653248f85 100644
+--- a/qapi/qom.json
++++ b/qapi/qom.json
+@@ -1009,13 +1009,19 @@
+ #     designated guest firmware page for measured boot with -kernel
+ #     (default: false) (since 6.2)
+ #
++# Features:
++#
++# @confidential-guest-reset: If present, the hypervisor supports
++#     confidential guest resets (since 11.0).
++#
+ # Since: 9.1
+ ##
+ { 'struct': 'SevCommonProperties',
+   'data': { '*sev-device': 'str',
+             '*cbitpos': 'uint32',
+             'reduced-phys-bits': 'uint32',
+-            '*kernel-hashes': 'bool' } }
++            '*kernel-hashes': 'bool' },
++  'features': ['confidential-guest-reset']}
  
- static void kvm_openpic_set_irq(void *opaque, int n_IRQ, int level)
-@@ -114,6 +115,88 @@ static const MemoryRegionOps kvm_openpic_mem_ops = {
-     },
- };
+ ##
+ # @SevGuestProperties:
+@@ -1136,6 +1142,11 @@
+ #     it, the guest will not be able to get a TD quote for
+ #     attestation.
+ #
++# Features:
++#
++# @confidential-guest-reset: If present, the hypervisor supports
++#     confidential guest resets (since 11.0).
++#
+ # Since: 10.1
+ ##
+ { 'struct': 'TdxGuestProperties',
+@@ -1144,7 +1155,8 @@
+             '*mrconfigid': 'str',
+             '*mrowner': 'str',
+             '*mrownerconfig': 'str',
+-            '*quote-generation-socket': 'SocketAddress' } }
++            '*quote-generation-socket': 'SocketAddress' },
++   'features': ['confidential-guest-reset']}
  
-+static int kvm_openpic_setup(KVMOpenPICState *opp, Error **errp)
-+{
-+    int kvm_openpic_model;
-+    struct kvm_create_device cd = {0};
-+    KVMState *s = kvm_state;
-+    int ret;
-+
-+    switch (opp->model) {
-+    case OPENPIC_MODEL_FSL_MPIC_20:
-+        kvm_openpic_model = KVM_DEV_TYPE_FSL_MPIC_20;
-+        break;
-+
-+    case OPENPIC_MODEL_FSL_MPIC_42:
-+        kvm_openpic_model = KVM_DEV_TYPE_FSL_MPIC_42;
-+        break;
-+
-+    default:
-+        error_setg(errp, "Unsupported OpenPIC model %" PRIu32, opp->model);
-+        return -1;
-+    }
-+
-+    cd.type = kvm_openpic_model;
-+    ret = kvm_vm_ioctl(s, KVM_CREATE_DEVICE, &cd);
-+    if (ret < 0) {
-+        error_setg(errp, "Can't create device %d: %s",
-+                   cd.type, strerror(errno));
-+        return -1;
-+    }
-+    opp->fd = cd.fd;
-+
-+    return 0;
-+}
-+
-+static int kvm_openpic_handle_vmfd_change(NotifierWithReturn *notifier,
-+                                          void *data, Error **errp)
-+{
-+    KVMOpenPICState *opp = container_of(notifier, KVMOpenPICState,
-+                                        vmfd_change_notifier);
-+    uint64_t reg_base;
-+    struct kvm_device_attr attr;
-+    CPUState *cs;
-+    int ret;
-+
-+    /* we are not interested in pre vmfd change notification */
-+    if (((VmfdChangeNotifier *)data)->pre) {
-+        return 0;
-+    }
-+
-+    /* close the old descriptor */
-+    close(opp->fd);
-+
-+    if (kvm_openpic_setup(opp, errp) < 0) {
-+        return -1;
-+    }
-+
-+    if (!opp->mapped) {
-+        return 0;
-+    }
-+
-+    reg_base = opp->mapped;
-+    attr.group = KVM_DEV_MPIC_GRP_MISC;
-+    attr.attr = KVM_DEV_MPIC_BASE_ADDR;
-+    attr.addr = (uint64_t)(unsigned long)&reg_base;
-+
-+    ret = ioctl(opp->fd, KVM_SET_DEVICE_ATTR, &attr);
-+    if (ret < 0) {
-+        error_setg(errp, "%s: %s %" PRIx64, __func__,
-+                   strerror(errno), reg_base);
-+        return -1;
-+    }
-+
-+    CPU_FOREACH(cs) {
-+        ret = kvm_vcpu_enable_cap(cs, KVM_CAP_IRQ_MPIC, 0, opp->fd,
-+                                   kvm_arch_vcpu_id(cs));
-+        if (ret < 0) {
-+            return ret;
-+        }
-+    }
-+
-+    return 0;
-+}
-+
- static void kvm_openpic_region_add(MemoryListener *listener,
-                                    MemoryRegionSection *section)
- {
-@@ -197,36 +280,14 @@ static void kvm_openpic_realize(DeviceState *dev, Error **errp)
-     SysBusDevice *d = SYS_BUS_DEVICE(dev);
-     KVMOpenPICState *opp = KVM_OPENPIC(dev);
-     KVMState *s = kvm_state;
--    int kvm_openpic_model;
--    struct kvm_create_device cd = {0};
--    int ret, i;
-+    int i;
- 
-     if (!kvm_check_extension(s, KVM_CAP_DEVICE_CTRL)) {
-         error_setg(errp, "Kernel is lacking Device Control API");
-         return;
-     }
- 
--    switch (opp->model) {
--    case OPENPIC_MODEL_FSL_MPIC_20:
--        kvm_openpic_model = KVM_DEV_TYPE_FSL_MPIC_20;
--        break;
--
--    case OPENPIC_MODEL_FSL_MPIC_42:
--        kvm_openpic_model = KVM_DEV_TYPE_FSL_MPIC_42;
--        break;
--
--    default:
--        error_setg(errp, "Unsupported OpenPIC model %" PRIu32, opp->model);
--        return;
--    }
--
--    cd.type = kvm_openpic_model;
--    ret = kvm_vm_ioctl(s, KVM_CREATE_DEVICE, &cd);
--    if (ret < 0) {
--        error_setg_errno(errp, errno, "Can't create device %d", cd.type);
--        return;
--    }
--    opp->fd = cd.fd;
-+    kvm_openpic_setup(opp, errp);
- 
-     sysbus_init_mmio(d, &opp->mem);
-     qdev_init_gpio_in(dev, kvm_openpic_set_irq, OPENPIC_MAX_IRQ);
-@@ -235,6 +296,9 @@ static void kvm_openpic_realize(DeviceState *dev, Error **errp)
-     opp->mem_listener.region_del = kvm_openpic_region_del;
-     opp->mem_listener.name = "openpic-kvm";
-     memory_listener_register(&opp->mem_listener, &address_space_memory);
-+    opp->vmfd_change_notifier.notify =
-+        kvm_openpic_handle_vmfd_change;
-+    kvm_vmfd_add_change_notifier(&opp->vmfd_change_notifier);
- 
-     /* indicate pic capabilities */
-     msi_nonbroken = true;
+ ##
+ # @ThreadContextProperties:
 -- 
 2.42.0
 
