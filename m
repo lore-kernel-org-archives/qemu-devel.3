@@ -4,126 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF829EF5862
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 06:20:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57F04E9B25A
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 06:35:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vv8Ff-0007f3-O0; Wed, 25 Feb 2026 01:20:03 -0500
+	id 1vv8Tf-0005c6-BL; Wed, 25 Feb 2026 01:34:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lulu@redhat.com>) id 1vv8Fc-0007eB-3t
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 01:20:00 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vv8Td-0005bt-Fq
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 01:34:29 -0500
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lulu@redhat.com>) id 1vv8FZ-0003NK-2c
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 01:19:59 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772000395;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=pmsq/4IzSa6slfXoYPqpq5H9JcIwv00j/sRc/swtVUE=;
- b=gbPyr9SSG7OLAOvbBA1ejz08tyNlcA4c6EYi01qWOEg1KG09ZpLkkSde5ayEpadaIonwcc
- Alm3l8gL7CY+VA4EYBraUjw3VmVlY0QCV3pQBUkmsnk2WW5Qed6utgBm7bNj2YwY03nyW4
- 3dIyASuWO6jZekybKXJpZBntss2pDv8=
-Received: from mail-ua1-f72.google.com (mail-ua1-f72.google.com
- [209.85.222.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-515-R871MuW9Ocq8j8hnT3dnEA-1; Wed, 25 Feb 2026 01:19:53 -0500
-X-MC-Unique: R871MuW9Ocq8j8hnT3dnEA-1
-X-Mimecast-MFC-AGG-ID: R871MuW9Ocq8j8hnT3dnEA_1772000393
-Received: by mail-ua1-f72.google.com with SMTP id
- a1e0cc1a2514c-94de3e732f6so5432814241.1
- for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 22:19:53 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772000393; cv=none;
- d=google.com; s=arc-20240605;
- b=P7ikG+g4nVoMyhXQc7g4w6ngs+32274E8lDhAfw4XXuQNKSvYap0YY7tSpC++y/4qB
- OeMzUrH5vKfgDDeW8uS38zhnt0q0vMT/4uUQHXI3pWdTD628YOyI592ZtzLg8gFIUtQS
- 7tblDNtKnru6UsDLHPJksDXeEm+rVHo4mTnmD39EnGyFjx2IlNJFODpfxwVlA1BJ51/S
- MxkDkx480u229Npj98y6Pz12G/jjP1BtYJm2+DBiqZypn3j/T+Sx+CUi8mP+foiXflwR
- zUwaeGmlE/AlRKK3dhzPF7dFxigk0Hlx1tBddJjetJIExqo2ToFobiUxaZWnjbJDDzoe
- BX9g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=pmsq/4IzSa6slfXoYPqpq5H9JcIwv00j/sRc/swtVUE=;
- fh=41u6wkwhhWtXJ4kXPqknfOC7tvwWmAhOzst29ZF90dA=;
- b=O5ApwzEtwWOEVp5GQlcxF8pn/0AGn2VUDe/WIblWvNpFzL2Txe9rkVkgU2avispT7O
- lNMO638QcaGfjil83e3aMMwoiDvL2DXL4jktCap/xAUffbC0Ko0d1GT9VDRy/YC0gJ3e
- OIyXDAPFNDQMoiFnIRh+ctt657H3a5IlxVLDXlrM1CaCUIH54cxSOAF5lWkuQHE9HWV7
- 7M4RRNtqACKjekk58gqd2kFZCG4OEAF4lzz421Vwg8zWjhFWBMunTHG41pFdPxTQimFd
- a/Yzt005kcNG//0JuzuydAOj7mxwm38Ti4t+DRFAS6NmpPGHDG+5Dqm8ZNuiIOj5qTg3
- 3KkQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1772000393; x=1772605193; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=pmsq/4IzSa6slfXoYPqpq5H9JcIwv00j/sRc/swtVUE=;
- b=pRqhCz64xTikXDvSXa5MkIVB9BrVwiyRyIO5rv4ofNn+spD0qWDhb8JHbytkhJ+n+A
- JOHqlceV2KfGEbv3KirBA27yCw/b+tmcjHfV4aKi0j9n3W0zC/8PivQaCE5g8rO3pWHU
- zIsfsDCswS9hNd8nsM5pA+WWVua/sfvXCOmtw9aPw6n20ZMFcYl7Y9oFuHHsjprMiptU
- V74YcygMx9IwRAJi3cHRKMa31r7+KUNY4WM0nwx9EX2s9JabBw5487qTSvI0wHI61ilD
- uzJwWliuY+m/qxSR3lmLHl0DYaF2/GkiLuqekIJv+QYSMiVRShB5QJMdxbe51u7OXING
- +Sgw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772000393; x=1772605193;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=pmsq/4IzSa6slfXoYPqpq5H9JcIwv00j/sRc/swtVUE=;
- b=ViWQmwa5OouiZfIRgBbh+v72sENtA8CGqqLzpcvRF1aGwitkml3yNrR76RHA+bJQXe
- V2zvrZiXa3wS9FNEMUz0IfLIG1iTeQ9DTpMuN31PF06cMMh6d5ErXviGVEP9wqGjuXDq
- GY50V6O6pmVCw7eBUjO7vy+IaMq0Uh+Qo2uMmVlfhx73BkkQnB2+Nmx8QFe+bsvDmfx/
- Ymt41O4kaw9I75CfLtqWlc4dVkHifHYADWkXT7oz/4CTkXOHI5l5GJbu1ScHtJWFMwws
- 0dHX/4iq6JjxTNmXd9mgFLXBFf1PZ58VMo4/J4m0/ZVqPnxnFvTozNyeziF7d7VxUZDq
- Xazw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU/5Hee379ctwUyJdPQKKb4KJ3y7vHuRlpMq/SQX8PheKxYor1OqgG+wbsN1v9M4D+SsBLjkiLS8MMv@nongnu.org
-X-Gm-Message-State: AOJu0Ywopxgx1ygl1gqeFPTaG6fACE+xNH4j7x+BklWXzwEprqJQKABF
- Hep3hpYOGH59HSKZVgU8M9opsmDEs94mucGO0YW2IHDUT04eZ6XdmgOIf4omQqjTEPOkfgxazuo
- eJS/9G9s+vfB08WfwbaxmeYReiBaTSmP6Qd4kP7P9Eswpu5Vp8UUbz5HWYghjSosvZt30kAnVu7
- 6N3S9wwxVb2AU2qHHEbrLSKs8IXS6ffyo=
-X-Gm-Gg: ATEYQzw+R0jylqXFM4vEAhVOdRaIJbJOyKfO8YfRFiVLTMi2OF7OFIpn0FSTFLhruzD
- Hu1rXiTqgBFoGUcBs90/m6+j7pRq0+YmQYB+O36Ir1ww1T3gJhVbbb/n6VxuwEVCLMMhJv/b/ps
- M9TL66BG5j8UTi2phKJj1rO9MRHqVoV99JD5Cqnd9qYCoSTDOw765fHOV2nTxb2zwSZsg1jRxHQ
- 3cI6jg=
-X-Received: by 2002:a05:6102:a4c:b0:5fd:e97c:e40e with SMTP id
- ada2fe7eead31-5feb307ab69mr7554439137.22.1772000392817; 
- Tue, 24 Feb 2026 22:19:52 -0800 (PST)
-X-Received: by 2002:a05:6102:a4c:b0:5fd:e97c:e40e with SMTP id
- ada2fe7eead31-5feb307ab69mr7554428137.22.1772000392418; Tue, 24 Feb 2026
- 22:19:52 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vv8Ta-0005lN-Bh
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 01:34:29 -0500
+Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 61P6XrR6036492
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Wed, 25 Feb 2026 15:34:17 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=qi3HrN52qF/lSc7ilqzZSUySCUiydWvckGyYxQ2rTzU=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=From:Message-ID:To:Subject:Date;
+ s=rs20250326; t=1772001258; v=1;
+ b=IhFhUvvSqwBwIycGpDOTEaPKsEZOljLz0nDZ1gNzbcK8x8/CG7K/QaX7YuHTpKM4
+ sfQy9HheyVyRrat4IxOH/KJE0dZvANsMDxmdZFMA33udd1IuxmhMWx69HOlm5Rcg
+ 3zgqtdmbgq4NixqJZHUQDru5+qznpVLQtY66irZNVlUSiF3IT/j+OhMuSFoX3f+I
+ OniV8lP43SQhorsMhY4UO9z2br9LQ8ulx9kqoINWc9hI4uzCDAIdarrX8jaALLQU
+ 6HzGnJjeayAl0qeZnTG9V9NLTfrdnb0WTSHiqntZgZelsMupQj4/Til76b2DPPXS
+ jw6b+rRKkvFc4TZcocci+A==
+Message-ID: <4581f48a-5cc0-4584-a01d-0615c3bd5a71@rsg.ci.i.u-tokyo.ac.jp>
+Date: Wed, 25 Feb 2026 15:33:52 +0900
 MIME-Version: 1.0
-References: <20260207134728.1495932-1-lulu@redhat.com>
- <20260207134728.1495932-2-lulu@redhat.com>
- <CAK3tnvKxsumtqbF6z6_3v5jWWwAeUg4sdYsXNY9Jha9tXYR6ag@mail.gmail.com>
-In-Reply-To: <CAK3tnvKxsumtqbF6z6_3v5jWWwAeUg4sdYsXNY9Jha9tXYR6ag@mail.gmail.com>
-From: Cindy Lu <lulu@redhat.com>
-Date: Wed, 25 Feb 2026 14:18:59 +0800
-X-Gm-Features: AaiRm51Vo7WIwLRYI_wpetucxLlxSiOjojY5ecDLLe7JoJ0bBv1UoiFP9SNcRZY
-Message-ID: <CACLfguV53qhomyXffUQU2PACs3+EwYnPXCgnQcNdsFbgYnooTA@mail.gmail.com>
-Subject: Re: [PATCH 02/12] net/filter-mirror: add enable_when_stopped option
- for filter-redirector
-To: Zhang Chen <zhangckid@gmail.com>
-Cc: mst@redhat.com, jasowang@redhat.com, lizhijian@fujitsu.com, 
- qemu-devel@nongnu.org, Juraj Marcin <jmarcin@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=lulu@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.358, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.659,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v7 06/10] virtio-gpu-dmabuf: Improve error handling with
+ 'Error **' and err enum
+To: "Kasireddy, Vivek" <vivek.kasireddy@intel.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Alex Williamson <alex@shazbot.org>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@redhat.com>
+References: <20260223080200.468558-1-vivek.kasireddy@intel.com>
+ <20260223080200.468558-7-vivek.kasireddy@intel.com>
+ <829317cc-551b-457d-a27f-9db0fc749c52@rsg.ci.i.u-tokyo.ac.jp>
+ <IA0PR11MB718522807D0371785F93337CF875A@IA0PR11MB7185.namprd11.prod.outlook.com>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <IA0PR11MB718522807D0371785F93337CF875A@IA0PR11MB7185.namprd11.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -6
+X-Spam_score: -0.7
+X-Spam_bar: /
+X-Spam_report: (-0.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.358,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.659, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -139,313 +82,227 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Feb 14, 2026 at 10:46=E2=80=AFAM Zhang Chen <zhangckid@gmail.com> w=
-rote:
->
-> On Sat, Feb 7, 2026 at 9:47=E2=80=AFPM Cindy Lu <lulu@redhat.com> wrote:
-> >
-> > From: Jason Wang <jasowang@redhat.com>
-> >
-> > Add a QAPI option 'enable_when_stopped' for filter-redirector that
-> > allows it to continue receiving data from netdev when VM is stopped.
-> >
-> > When enabled, a VM state change handler activates the netdev's
-> > read_poll() when VM stops, allowing the netdev to continue reading
-> > data and passing it through filter-redirector to the chardev output.
-> >
-> > This is useful for scenarios where filter-redirector needs to
-> > process network traffic even when the VM is paused.
-> >
-> > Usage:
-> >   -object filter-redirector,id=3Df0,netdev=3Dnet0,queue=3Dtx,\
-> >           outdev=3Dchardev0,enable_when_stopped=3Dtrue
-> >
->
-> It seems this series is trying to address previous VM migration network
-> related issues that Juraj Marcin mentioned.
-> Add CC to him.
->
-> I've taken a quick look, and this series lacks support for
-> filter-reply and filter-rewriter.
-> Could there be a reason for this?
->
-> Thanks
-> Chen
->
-Hi Chen
-For this RFC, filter-reply and filter-rewriter is not need, I will add
-support for them later.
-Thanks
-cindy
-> .
->
->
->
->
-> > Signed-off-by: Jason Wang <jasowang@redhat.com>
-> > Signed-off-by: Cindy Lu <lulu@redhat.com>
-> > ---
-> >  net/filter-mirror.c                  |  38 ++++++++++
-> >  qapi/qom.json                        |   7 +-
-> >  tests/qtest/test-filter-redirector.c | 106 +++++++++++++++++++++++++++
-> >  3 files changed, 150 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/net/filter-mirror.c b/net/filter-mirror.c
-> > index aa2ab452fd..e1a0650abd 100644
-> > --- a/net/filter-mirror.c
-> > +++ b/net/filter-mirror.c
-> > @@ -21,6 +21,7 @@
-> >  #include "qemu/iov.h"
-> >  #include "qemu/sockets.h"
-> >  #include "block/aio-wait.h"
-> > +#include "system/runstate.h"
-> >
-> >  #define TYPE_FILTER_MIRROR "filter-mirror"
-> >  typedef struct MirrorState MirrorState;
-> > @@ -41,6 +42,8 @@ struct MirrorState {
-> >      CharFrontend chr_out;
-> >      SocketReadState rs;
-> >      bool vnet_hdr;
-> > +    bool enable_when_stopped;
-> > +    VMChangeStateEntry *vmsentry;
-> >  };
-> >
-> >  typedef struct FilterSendCo {
-> > @@ -251,6 +254,7 @@ static void filter_redirector_cleanup(NetFilterStat=
-e *nf)
-> >
-> >      qemu_chr_fe_deinit(&s->chr_in, false);
-> >      qemu_chr_fe_deinit(&s->chr_out, false);
-> > +    qemu_del_vm_change_state_handler(s->vmsentry);
-> >  }
-> >
-> >  static void filter_mirror_setup(NetFilterState *nf, Error **errp)
-> > @@ -282,6 +286,18 @@ static void redirector_rs_finalize(SocketReadState=
- *rs)
-> >      redirector_to_filter(nf, rs->buf, rs->packet_len);
-> >  }
-> >
-> > +static void filter_redirector_vm_state_change(void *opaque, bool runni=
-ng,
-> > +                                              RunState state)
-> > +{
-> > +    NetFilterState *nf =3D opaque;
-> > +    MirrorState *s =3D FILTER_REDIRECTOR(nf);
-> > +    NetClientState *nc =3D nf->netdev;
-> > +
-> > +    if (!running && s->enable_when_stopped && nc->info->read_poll) {
-> > +        nc->info->read_poll(nc, true);
-> > +    }
-> > +}
-> > +
-> >  static void filter_redirector_setup(NetFilterState *nf, Error **errp)
-> >  {
-> >      MirrorState *s =3D FILTER_REDIRECTOR(nf);
-> > @@ -331,6 +347,9 @@ static void filter_redirector_setup(NetFilterState =
-*nf, Error **errp)
-> >              return;
-> >          }
-> >      }
-> > +
-> > +    s->vmsentry =3D qemu_add_vm_change_state_handler(
-> > +        filter_redirector_vm_state_change, nf);
-> >  }
-> >
-> >  static void filter_redirector_status_changed(NetFilterState *nf, Error=
- **errp)
-> > @@ -437,6 +456,22 @@ static void filter_redirector_set_vnet_hdr(Object =
-*obj,
-> >      s->vnet_hdr =3D value;
-> >  }
-> >
-> > +static bool filter_redirector_get_enable_when_stopped(Object *obj, Err=
-or **errp)
-> > +{
-> > +    MirrorState *s =3D FILTER_REDIRECTOR(obj);
-> > +
-> > +    return s->enable_when_stopped;
-> > +}
-> > +
-> > +static void filter_redirector_set_enable_when_stopped(Object *obj,
-> > +                                                      bool value,
-> > +                                                      Error **errp)
-> > +{
-> > +    MirrorState *s =3D FILTER_REDIRECTOR(obj);
-> > +
-> > +    s->enable_when_stopped =3D value;
-> > +}
-> > +
-> >  static void filter_mirror_class_init(ObjectClass *oc, const void *data=
-)
-> >  {
-> >      NetFilterClass *nfc =3D NETFILTER_CLASS(oc);
-> > @@ -463,6 +498,9 @@ static void filter_redirector_class_init(ObjectClas=
-s *oc, const void *data)
-> >      object_class_property_add_bool(oc, "vnet_hdr_support",
-> >                                     filter_redirector_get_vnet_hdr,
-> >                                     filter_redirector_set_vnet_hdr);
-> > +    object_class_property_add_bool(oc, "enable_when_stopped",
-> > +                                   filter_redirector_get_enable_when_s=
-topped,
-> > +                                   filter_redirector_set_enable_when_s=
-topped);
-> >
-> >      nfc->setup =3D filter_redirector_setup;
-> >      nfc->cleanup =3D filter_redirector_cleanup;
-> > diff --git a/qapi/qom.json b/qapi/qom.json
-> > index 6f5c9de0f0..b1fe55944c 100644
-> > --- a/qapi/qom.json
-> > +++ b/qapi/qom.json
-> > @@ -488,13 +488,18 @@
-> >  # @vnet_hdr_support: if true, vnet header support is enabled
-> >  #     (default: false)
-> >  #
-> > +# @enable_when_stopped: if true, activate netdev's read poll when VM
-> > +#     stops to allow filter-redirector to continue receiving data
-> > +#     (default: false)
-> > +#
-> >  # Since: 2.6
-> >  ##
-> >  { 'struct': 'FilterRedirectorProperties',
-> >    'base': 'NetfilterProperties',
-> >    'data': { '*indev': 'str',
-> >              '*outdev': 'str',
-> > -            '*vnet_hdr_support': 'bool' } }
-> > +            '*vnet_hdr_support': 'bool',
-> > +            '*enable_when_stopped': 'bool' } }
-> >
-> >  ##
-> >  # @FilterRewriterProperties:
-> > diff --git a/tests/qtest/test-filter-redirector.c b/tests/qtest/test-fi=
-lter-redirector.c
-> > index 5540c232c0..fa958bb0a5 100644
-> > --- a/tests/qtest/test-filter-redirector.c
-> > +++ b/tests/qtest/test-filter-redirector.c
-> > @@ -385,6 +385,110 @@ static void test_redirector_init_status_off(void)
-> >      qtest_quit(qts);
-> >  }
-> >
-> > +/*
-> > + * Test filter-redirector works when VM is stopped (TX direction).
-> > + *
-> > + * This test verifies that when VM is stopped, the filter-redirector
-> > + * can still receive data from the netdev because the VM state change
-> > + * handler activates the netdev's read_poll(). Data flows from netdev
-> > + * to filter-redirector and out through the chardev.
-> > + *
-> > + * Data flow: backend_sock -> netdev (read_poll) -> filter-redirector =
--> chardev
-> > + */
-> > +static void test_redirector_with_vm_stop(void)
-> > +{
-> > +    int backend_sock[2], recv_sock;
-> > +    uint32_t ret =3D 0, len =3D 0;
-> > +    char send_buf[] =3D "Hello!!";
-> > +    char sock_path0[] =3D "filter-redirector0.XXXXXX";
-> > +    char *recv_buf;
-> > +    uint32_t size =3D sizeof(send_buf);
-> > +    size =3D htonl(size);
-> > +    QTestState *qts;
-> > +    struct timeval tv;
-> > +    fd_set rfds;
-> > +
-> > +    ret =3D socketpair(PF_UNIX, SOCK_STREAM, 0, backend_sock);
-> > +    g_assert_cmpint(ret, !=3D, -1);
-> > +
-> > +    ret =3D mkstemp(sock_path0);
-> > +    g_assert_cmpint(ret, !=3D, -1);
-> > +
-> > +    /*
-> > +     * Setup TX path: netdev -> filter-redirector -> chardev
-> > +     * Data sent to backend_sock[0] will be read by the netdev,
-> > +     * passed through filter-redirector, and output to sock_path0.
-> > +     * Enable enable_when_stopped to activate read_poll when VM stops.
-> > +     */
-> > +    qts =3D qtest_initf(
-> > +        "-nic socket,id=3Dqtest-bn0,fd=3D%d "
-> > +        "-chardev socket,id=3Dredirector0,path=3D%s,server=3Don,wait=
-=3Doff "
-> > +        "-object filter-redirector,id=3Dqtest-f0,netdev=3Dqtest-bn0,"
-> > +        "queue=3Dtx,outdev=3Dredirector0,enable_when_stopped=3Dtrue ",
-> > +        backend_sock[1], sock_path0);
-> > +
-> > +    recv_sock =3D unix_connect(sock_path0, NULL);
-> > +    g_assert_cmpint(recv_sock, !=3D, -1);
-> > +
-> > +    /* Ensure connection is established */
-> > +    qtest_qmp_assert_success(qts, "{ 'execute' : 'query-status'}");
-> > +
-> > +    struct iovec iov[] =3D {
-> > +        {
-> > +            .iov_base =3D &size,
-> > +            .iov_len =3D sizeof(size),
-> > +        }, {
-> > +            .iov_base =3D send_buf,
-> > +            .iov_len =3D sizeof(send_buf),
-> > +        },
-> > +    };
-> > +
-> > +    /*
-> > +     * Stop the VM - this triggers our vm_state_change handler
-> > +     * which should activate the netdev's read_poll()
-> > +     */
-> > +    qtest_qmp_assert_success(qts, "{ 'execute' : 'stop'}");
-> > +
-> > +    /* Wait for VM to actually stop */
-> > +    qtest_qmp_eventwait(qts, "STOP");
-> > +
-> > +    /*
-> > +     * Send data to backend socket while VM is stopped.
-> > +     * The netdev should still read the data (because read_poll is
-> > +     * activated by our vm_state_change handler), pass it through
-> > +     * filter-redirector, and output to the chardev.
-> > +     */
-> > +    ret =3D iov_send(backend_sock[0], iov, 2, 0, sizeof(size) + sizeof=
-(send_buf));
-> > +    g_assert_cmpint(ret, =3D=3D, sizeof(send_buf) + sizeof(size));
-> > +
-> > +    /*
-> > +     * Data should arrive at recv_sock even with VM stopped,
-> > +     * because read_poll is activated.
-> > +     */
-> > +    FD_ZERO(&rfds);
-> > +    FD_SET(recv_sock, &rfds);
-> > +    tv.tv_sec =3D 5;
-> > +    tv.tv_usec =3D 0;
-> > +    ret =3D select(recv_sock + 1, &rfds, NULL, NULL, &tv);
-> > +    g_assert_cmpint(ret, =3D=3D, 1);  /* Data should arrive */
-> > +
-> > +    ret =3D recv(recv_sock, &len, sizeof(len), 0);
-> > +    g_assert_cmpint(ret, =3D=3D, sizeof(len));
-> > +    len =3D ntohl(len);
-> > +
-> > +    g_assert_cmpint(len, =3D=3D, sizeof(send_buf));
-> > +    recv_buf =3D g_malloc(len);
-> > +    ret =3D recv(recv_sock, recv_buf, len, 0);
-> > +    g_assert_cmpint(ret, =3D=3D, len);
-> > +    g_assert_cmpstr(recv_buf, =3D=3D, send_buf);
-> > +
-> > +    g_free(recv_buf);
-> > +    close(recv_sock);
-> > +    close(backend_sock[0]);
-> > +    unlink(sock_path0);
-> > +    qtest_quit(qts);
-> > +}
-> > +
-> >  static void test_redirector_rx_event_opened(void)
-> >  {
-> >      int backend_sock[2], send_sock;
-> > @@ -489,5 +593,7 @@ int main(int argc, char **argv)
-> >                     test_redirector_init_status_off);
-> >      qtest_add_func("/netfilter/redirector_rx_event_opened",
-> >                     test_redirector_rx_event_opened);
-> > +    qtest_add_func("/netfilter/redirector_with_vm_stop",
-> > +                   test_redirector_with_vm_stop);
-> >      return g_test_run();
-> >  }
-> > --
-> > 2.52.0
-> >
->
+On 2026/02/25 15:04, Kasireddy, Vivek wrote:
+> Hi Akihiko,
+> 
+>> Subject: Re: [PATCH v7 06/10] virtio-gpu-dmabuf: Improve error
+>> handling with 'Error **' and err enum
+>>
+>> On 2026/02/23 17:00, Vivek Kasireddy wrote:
+>>> Make the error handling more robust in virtio_gpu_init_udmabuf()
+>>> by introducing 'Error **' parameter to capture errors and an enum
+>>> to categorize Guest and Host errors. This allows for better error
+>>> reporting and handling of errors from virtio_gpu_create_udmabuf()
+>>> and virtio_gpu_remap_dmabuf().
+>>>
+>>> Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
+>>> Cc: Alex Bennée <alex.bennee@linaro.org>
+>>> Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+>>> Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+>>> Cc: Alex Williamson <alex@shazbot.org>
+>>> Cc: Cédric Le Goater <clg@redhat.com>
+>>> Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
+>>> ---
+>>>    hw/display/virtio-gpu-dmabuf.c | 65 +++++++++++++++++++++++++---
+>> ------
+>>>    1 file changed, 48 insertions(+), 17 deletions(-)
+>>>
+>>> diff --git a/hw/display/virtio-gpu-dmabuf.c b/hw/display/virtio-gpu-
+>> dmabuf.c
+>>> index 8d67ef7c2a..fdcf8e53a2 100644
+>>> --- a/hw/display/virtio-gpu-dmabuf.c
+>>> +++ b/hw/display/virtio-gpu-dmabuf.c
+>>> @@ -27,7 +27,17 @@
+>>>    #include "standard-headers/linux/udmabuf.h"
+>>>    #include "standard-headers/drm/drm_fourcc.h"
+>>>
+>>> -static void virtio_gpu_create_udmabuf(struct
+>> virtio_gpu_simple_resource *res)
+>>> +typedef enum VirtIOGPUErrorType {
+>>> +    VIRTIO_GPU_NO_ERROR = 0,
+>>> +    /* Guest is responsible for this error */
+>>> +    VIRTIO_GPU_GUEST_ERROR = 1,
+>>> +    /* Host is at fault for this error */
+>>> +    VIRTIO_GPU_HOST_ERROR = 2,
+>>
+>> include/qapi/error.h says:
+>>   > - Whenever practical, also return a value that indicates success /
+>>   >   failure.  This can make the error checking more concise, and can
+>>   >   avoid useless error object creation and destruction.  Note that
+>>   >   we still have many functions returning void.  We recommend
+>>   >   . bool-valued functions return true on success / false on failure,
+>>   >   . pointer-valued functions return non-null / null pointer, and
+>>   >   . integer-valued functions return non-negative / negative.
+>>
+>> Do what it says. Non-negative if *errp is set. Negative otherwise.
+> Ok, I'll change the values in the following way:
+> typedef enum VirtIOGPUErrorType {
+>      VIRTIO_GPU_NO_ERROR = 1,
+>      /* Guest is responsible for this error */
+>      VIRTIO_GPU_GUEST_ERROR = -1,
+>      /* Host is at fault for this error */
+>      VIRTIO_GPU_HOST_ERROR = -2,
+> } VirtIOGPUErrorType;
+> 
+>>
+>>> +} VirtIOGPUErrorType;
+>>> +
+>>> +static VirtIOGPUErrorType
+>>> +virtio_gpu_create_udmabuf(struct virtio_gpu_simple_resource *res,
+>> int *fd,
+>>> +                          Error **errp)
+>>>    {
+>>>        g_autofree struct udmabuf_create_list *list = NULL;
+>>>        RAMBlock *rb;
+>>> @@ -36,7 +46,8 @@ static void virtio_gpu_create_udmabuf(struct
+>> virtio_gpu_simple_resource *res)
+>>>
+>>>        udmabuf = udmabuf_fd();
+>>>        if (udmabuf < 0) {
+>>> -        return;
+>>> +        error_setg(errp, "udmabuf device not available");
+>>> +        return VIRTIO_GPU_HOST_ERROR;
+>>>        }
+>>>
+>>>        list = g_malloc0(sizeof(struct udmabuf_create_list) +
+>>> @@ -45,7 +56,8 @@ static void virtio_gpu_create_udmabuf(struct
+>> virtio_gpu_simple_resource *res)
+>>>        for (i = 0; i < res->iov_cnt; i++) {
+>>>            rb = qemu_ram_block_from_host(res->iov[i].iov_base, false,
+>> &offset);
+>>>            if (!rb || rb->fd < 0) {
+>>> -            return;
+>>> +            error_setg(errp, "Could not find valid ramblock");
+>>
+>> It is a valid ramblock even if rb->fd < 0. It is just "incompatible"
+>> with udmabuf.
+> Does "IOV memory address incompatible with udmabuf " sound better?
+> 
+>>
+>>> +            return VIRTIO_GPU_GUEST_ERROR;
+>>>            }
+>>>
+>>>            list->list[i].memfd  = rb->fd;
+>>> @@ -56,22 +68,30 @@ static void virtio_gpu_create_udmabuf(struct
+>> virtio_gpu_simple_resource *res)
+>>>        list->count = res->iov_cnt;
+>>>        list->flags = UDMABUF_FLAGS_CLOEXEC;
+>>>
+>>> -    res->dmabuf_fd = ioctl(udmabuf, UDMABUF_CREATE_LIST, list);
+>>> -    if (res->dmabuf_fd < 0) {
+>>> -        warn_report("%s: UDMABUF_CREATE_LIST: %s", __func__,
+>>> -                    strerror(errno));
+>>> +    *fd = ioctl(udmabuf, UDMABUF_CREATE_LIST, list);
+>>> +    if (*fd < 0) {
+>>> +        error_setg_errno(errp, errno, "UDMABUF_CREATE_LIST: ioctl
+>> failed");
+>>> +        if (errno == EINVAL || errno == EBADFD) {
+>>> +            return VIRTIO_GPU_GUEST_ERROR;
+>>> +        }
+>>> +        return VIRTIO_GPU_HOST_ERROR;
+>>>        }
+>>> +    return VIRTIO_GPU_NO_ERROR;
+>>>    }
+>>>
+>>> -static void virtio_gpu_remap_dmabuf(struct
+>> virtio_gpu_simple_resource *res)
+>>> +static bool virtio_gpu_remap_dmabuf(struct
+>> virtio_gpu_simple_resource *res,
+>>> +                                    Error **errp)
+>>>    {
+>>> -    res->remapped = mmap(NULL, res->blob_size, PROT_READ,
+>>> -                         MAP_SHARED, res->dmabuf_fd, 0);
+>>> -    if (res->remapped == MAP_FAILED) {
+>>> -        warn_report("%s: dmabuf mmap failed: %s", __func__,
+>>> -                    strerror(errno));
+>>> +    void *map;
+>>> +
+>>> +    map = mmap(NULL, res->blob_size, PROT_READ, MAP_SHARED,
+>> res->dmabuf_fd, 0);
+>>> +    if (map == MAP_FAILED) {
+>>> +        error_setg_errno(errp, errno, "dmabuf mmap failed");
+>>>            res->remapped = NULL;
+>>> +        return false;
+>>>        }
+>>> +    res->remapped = map;
+>>> +    return true;
+>>>    }
+>>>
+>>>    static void virtio_gpu_destroy_dmabuf(struct
+>> virtio_gpu_simple_resource *res)
+>>> @@ -125,19 +145,30 @@ bool virtio_gpu_have_udmabuf(void)
+>>>
+>>>    void virtio_gpu_init_dmabuf(struct virtio_gpu_simple_resource *res)
+>>>    {
+>>> +    Error *local_err = NULL;
+>>> +    VirtIOGPUErrorType err;
+>>>        void *pdata = NULL;
+>>> +    int fd;
+>>>
+>>>        res->dmabuf_fd = -1;
+>>>        if (res->iov_cnt == 1 &&
+>>>            res->iov[0].iov_len < 4096) {
+>>>            pdata = res->iov[0].iov_base;
+>>>        } else {
+>>> -        virtio_gpu_create_udmabuf(res);
+>>> -        if (res->dmabuf_fd < 0) {
+>>> +        err = virtio_gpu_create_udmabuf(res, &fd, &local_err);
+>>> +        if (err != VIRTIO_GPU_NO_ERROR) {
+>>> +            error_prepend(&local_err, "Cannot create dmabuf: ");
+>>> +            if (err == VIRTIO_GPU_GUEST_ERROR) {
+>>> +                qemu_log_mask(LOG_GUEST_ERROR,
+>>> +                              "Cannot create dmabuf: incompatible mem\n");
+>>
+>> s/mem/memory/
+>>
+>> The log is not that long so we can have a full correct spelling.
+> It was going over the 80 char limit and I was reluctant to split it
+> across lines.
+
+scripts/checkpatch.pl explicitly allows to have a longer line for string 
+literals. Priotize the user-visible behavior than keeping the code tidy.
+
+> 
+>>
+>>> +            }
+>>> +            error_report_err(local_err);
+>>
+>> This prints a message even for a guest error.
+> This is intentional. My thinking is that if the user did not enable logging
+> then it will fail silently in the case of Guest error. So, I thought it makes
+> sense to print an error regardless of the type of error.
+
+Do not locally override the behavior of the codebase-wide 
+infrastructure. If you think a guest error needs to be logged by 
+default, you should make a change to the logging infrastructure.
+
+I also think the decision of the logging infrastructure not logging 
+guest errors by default makes sense since, if you log guest errors by 
+default, it will allow the guest to spam the output and can cause 
+security and reliability issues.
+
+Regards,
+Akihiko Odaki
+
+> 
+> Thanks,
+> Vivek
+> 
+>>
+>> Regards,
+>> Akihiko Odaki
+>>
+>>>                return;
+>>>            }
+>>> -        virtio_gpu_remap_dmabuf(res);
+>>> -        if (!res->remapped) {
+>>> +
+>>> +        res->dmabuf_fd = fd;
+>>> +        if (!virtio_gpu_remap_dmabuf(res, &local_err)) {
+>>> +            error_report_err(local_err);
+>>>                return;
+>>>            }
+>>>            pdata = res->remapped;
+> 
 
 
