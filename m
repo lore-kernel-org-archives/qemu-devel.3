@@ -4,60 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 711F1FD374E
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 13:21:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D815FFD375D
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 13:27:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvEoi-0007nH-D1; Wed, 25 Feb 2026 08:20:40 -0500
+	id 1vvEuj-0001u4-HH; Wed, 25 Feb 2026 08:26:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vvEod-0007mg-Uv
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 08:20:36 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vvEui-0001tp-5I
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 08:26:52 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vvEoc-00007T-3Z
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 08:20:35 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vvEug-00013O-OH
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 08:26:51 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772025633;
+ s=mimecast20190719; t=1772026009;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=hI986VH1FQe86su7H+1dxO7fuiGZfSFhntLITGuBoLE=;
- b=Qkgd53SL33lafnYhy043QHg3IgYZYiIUgfommENLhw/M8x4yZdekUKStXdcMqw0pstu1Lu
- Al/zdpYaLRL3BTlwmoKmB+rJEqxSbUqCZlVmfi6qX7R4ZpanGVwh9kVn5eSJw13K+LWNT8
- 0tEQvZmyBeEf5nSsqa/5AGklIzTBP6I=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=v31ygCb6/5ZGgQ2PBur8PqIyK0Mz3HOuhIrw0iXaCxI=;
+ b=RBz7IblsVz2DWj5Hq+1axCjhqgk5q6frTIMl86MnAYxEQGjR3DgYxgSq1pxURO3YgKRjdU
+ NtXKQ7ovy9CqxLSLPVrgYpLCwnscXgaUnA1xEmVR+cK4U9NFRZT5y56ihxNIs99tqoDDDZ
+ 2vxa6+sH/AHNb7fRCEVutpR/5AoTsP4=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-68-r6-Ji_ifPKuoESJ_F5oS-A-1; Wed,
- 25 Feb 2026 08:20:30 -0500
-X-MC-Unique: r6-Ji_ifPKuoESJ_F5oS-A-1
-X-Mimecast-MFC-AGG-ID: r6-Ji_ifPKuoESJ_F5oS-A_1772025629
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-668-WMYM642aNE-isa1QOrc3rg-1; Wed,
+ 25 Feb 2026 08:26:45 -0500
+X-MC-Unique: WMYM642aNE-isa1QOrc3rg-1
+X-Mimecast-MFC-AGG-ID: WMYM642aNE-isa1QOrc3rg_1772026004
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7AB941956089; Wed, 25 Feb 2026 13:20:29 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D44A51956096; Wed, 25 Feb 2026 13:26:44 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.45.242.13])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E402E3003D88; Wed, 25 Feb 2026 13:20:28 +0000 (UTC)
+ id 724E23003D88; Wed, 25 Feb 2026 13:26:44 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id CF83121E692D; Wed, 25 Feb 2026 14:20:25 +0100 (CET)
+ id 0CF6021E692D; Wed, 25 Feb 2026 14:26:42 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
-To: Antoine Damhet <adamhet@scaleway.com>
-Cc: qemu-devel@nongnu.org,  qemu-block@nongnu.org,  Kevin Wolf
- <kwolf@redhat.com>,  Hanna Reitz <hreitz@redhat.com>,  Pierrick Bouvier
- <pierrick.bouvier@linaro.org>,  Eric Blake <eblake@redhat.com>
-Subject: Re: [PATCH v2 3/3] block/curl: add support for S3 presigned URLs
-In-Reply-To: <20260224155314.1658988-4-adamhet@scaleway.com> (Antoine Damhet's
- message of "Tue, 24 Feb 2026 16:51:31 +0100")
-References: <20260224155314.1658988-1-adamhet@scaleway.com>
- <20260224155314.1658988-4-adamhet@scaleway.com>
-Date: Wed, 25 Feb 2026 14:20:25 +0100
-Message-ID: <871pi9m02u.fsf@pond.sub.org>
+To: David Hamilton <dahamilt0@gmail.com>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [PATCH v2 2/2] hw/misc/ivshmem-pci: Check error after
+ setup_interrupt() in process_msg_connect()
+In-Reply-To: <20260225121323.5395-3-dahamilt0@gmail.com> (David Hamilton's
+ message of "Wed, 25 Feb 2026 07:13:23 -0500")
+References: <20260225121323.5395-1-dahamilt0@gmail.com>
+ <20260225121323.5395-3-dahamilt0@gmail.com>
+Date: Wed, 25 Feb 2026 14:26:42 +0100
+Message-ID: <87a4wxkl7x.fsf@pond.sub.org>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -87,83 +86,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Antoine Damhet <adamhet@scaleway.com> writes:
+David Hamilton <dahamilt0@gmail.com> writes:
 
-> S3 presigned URLs are signed for a specific HTTP method (typically GET
-> for our use cases). The curl block driver currently issues a HEAD
-> request to discover the web server features and the file size, which
-> fails with 'HTTP 403' (forbidden).
+> setup_interrupt() can fail and report via errp, but
+> process_msg_connect() was ignoring the error and continuing
+> to ivshmem_add_eventfd(). Check the bool return to avoid
+> operating on a vector whose interrupt setup failed.
 >
-> Add a 'force-range' option that skips the HEAD request and instead
-> issues a minimal GET request (querying 1 byte from the server) to
-> extract the file size from the 'Content-Range' response header. To
-> achieve this the 'curl_header_cb' is redesigned to generically parse
-> HTTP headers.
+> Resolves the TODO comment at the call site.
 >
-> $ $QEMU -drive driver=https,\
->              'url=https://s3.example.com/some.img?X-Amz-Security-Token=XXX',
->              force-range=true
+> Signed-off-by: David Hamilton <dahamilt0@gmail.com>
+> ---
+>  hw/misc/ivshmem-pci.c | 5 +++--
+>  1 file changed, 3 insertions(+), 2 deletions(-)
 >
-> Enabling the 'force-range' option without the web server specified with
-> @url supporting it might cause the server to respond successfully with
-> 'HTTP 200' and attempt to send the whole file body. With the
-> 'CURLOPT_NOBODY' option set the libcurl will skip reading after the
-> headers and close the connection. QEMU still gracefully detects the
-> missing feature. This might waste a small number of TCP packets but is
-> otherwise transparent to the user.
->
-> Signed-off-by: Antoine Damhet <adamhet@scaleway.com>
-
-[...]
-
-> diff --git a/docs/system/device-url-syntax.rst.inc b/docs/system/device-url-syntax.rst.inc
-> index aae65d138c00..445e2a0a4157 100644
-> --- a/docs/system/device-url-syntax.rst.inc
-> +++ b/docs/system/device-url-syntax.rst.inc
-> @@ -179,6 +179,12 @@ These are specified using a special URL syntax.
->        get the size of the image to be downloaded. If not set, the
->        default timeout of 5 seconds is used.
+> diff --git a/hw/misc/ivshmem-pci.c b/hw/misc/ivshmem-pci.c
+> index c987eebb98..f1262fa5f7 100644
+> --- a/hw/misc/ivshmem-pci.c
+> +++ b/hw/misc/ivshmem-pci.c
+> @@ -553,8 +553,9 @@ static void process_msg_connect(IVShmemState *s, uint16_t posn, int fd,
+>      }
 >  
-> +   ``force-range``
-> +      Assume the HTTP backend supports range requests and avoid doing
-> +      an HTTP HEAD request to discover the feature. Typically S3
-> +      presigned URLs will only support one method and refuse other
-> +      request types.
-> +
+>      if (posn == s->vm_id) {
+> -        setup_interrupt(s, vector, errp);
+> -        /* TODO do we need to handle the error? */
+> +        if (!setup_interrupt(s, vector, errp)) {
 
-Similar to the description in qapi/block-core.json.  I find the latter
-clearer.  Perhaps you'd like to use it here.  Entirely up to you.
+Any cleanup needed here?  Error returns above close(fd).
 
->     Note that when passing options to qemu explicitly, ``driver`` is the
->     value of <protocol>.
+> +            return;
+> +        }
+>      }
 >  
-> diff --git a/qapi/block-core.json b/qapi/block-core.json
-> index a7871705fa69..50e7078cbec0 100644
-> --- a/qapi/block-core.json
-> +++ b/qapi/block-core.json
-> @@ -4582,12 +4582,19 @@
->  # @cookie-secret: ID of a QCryptoSecret object providing the cookie
->  #     data in a secure way.  See @cookie for the format.  (since 2.10)
->  #
-> +# @force-range: Don't issue a HEAD HTTP request to discover if the
-> +#     http server supports range requests and rely only on GET
-> +#     requests.  This is especially useful for S3 presigned URLs where
-> +#     HEAD requests are unauthorized.  Defaults to false.
-> +#     (default: false; since 11.0)
-> +#
->  # Since: 2.9
->  ##
->  { 'struct': 'BlockdevOptionsCurlHttp',
->    'base': 'BlockdevOptionsCurlBase',
->    'data': { '*cookie': 'str',
-> -            '*cookie-secret': 'str'} }
-> +            '*cookie-secret': 'str',
-> +            '*force-range': 'bool'} }
->  
->  ##
->  # @BlockdevOptionsCurlHttps:
-
-QAPI schema
-Acked-by: Markus Armbruster <armbru@redhat.com>
+>      if (ivshmem_has_feature(s, IVSHMEM_IOEVENTFD)) {
 
 
