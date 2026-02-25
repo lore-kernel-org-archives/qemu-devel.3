@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 723D5FD45F9
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 22:09:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBC41FD45F9
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 22:10:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvN4X-0007SK-0d; Wed, 25 Feb 2026 17:09:34 -0500
+	id 1vvN4h-00080Y-Kw; Wed, 25 Feb 2026 17:09:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=509822c20=graf@amazon.de>)
- id 1vvN4M-0007Fj-7Q; Wed, 25 Feb 2026 17:09:22 -0500
-Received: from pdx-out-005.esa.us-west-2.outbound.mail-perimeter.amazon.com
- ([52.13.214.179])
+ id 1vvN4L-0007Dq-TE; Wed, 25 Feb 2026 17:09:22 -0500
+Received: from pdx-out-013.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ ([34.218.115.239])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=509822c20=graf@amazon.de>)
- id 1vvN4J-00011h-ES; Wed, 25 Feb 2026 17:09:21 -0500
+ id 1vvN4J-00011j-LM; Wed, 25 Feb 2026 17:09:21 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazoncorp2;
  t=1772057359; x=1803593359;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=c/NejmK1x/oFC32QyVn6pWsLyl8z6texd9tR/MOfMxE=;
- b=sTnaocncLlTeZwd3IhkTHNSHLpfsBD6aSqmfzaQk8L34uOaSYNCIX26D
- 9Uedz2rVpjW9VmuAIqt7544QGWYbW6+FBB4Y0RQ+y5Z+6AfGAcqnzYFtX
- kygyVkUOhOxoFXNt/wTTNMMw7P9lzLBvusApe3TGwZM+w+jMnEeFHmwSO
- cmPRrREfjj5bwuN3TlkLCCSdY8QNiH4bykzWD1zT6OwJWrm40yclqCeIf
- 81Fa+ELzpLRGSwhEPcXvdXMRPKC77VkPJbuPoXlXj9PFftjEpSWjmkXxI
- Cx+PVk69JyNr5S2XWuktgAkmsnZF/Hza/CCGA73/ulfYDPUHJ7i9rpede w==;
-X-CSE-ConnectionGUID: j5tToAKWRdKUs3PL3PuxPA==
-X-CSE-MsgGUID: n0cVhQ7XR3eQOxvqbI0rUw==
-X-IronPort-AV: E=Sophos;i="6.21,311,1763424000"; d="scan'208";a="13804800"
-Received: from ip-10-5-12-219.us-west-2.compute.internal (HELO
- smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.12.219])
- by internal-pdx-out-005.esa.us-west-2.outbound.mail-perimeter.amazon.com with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Feb 2026 22:09:17 +0000
-Received: from EX19MTAUWA002.ant.amazon.com [205.251.233.234:21966]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.24.86:2525]
+ bh=uVNVDznm7NxQ+bwTqP9jZD0VXeg2067NIquqLqqPp8k=;
+ b=U5mC9BK+iVMdimumMT2zakxt78h5+790ESM4wmRxiUrPm2T5+6ks5T1x
+ k0C5yvo2NaFe0KjkGzeHNnitL1maf6HWxRJ55qCx+zYqs7tmlgZ2U5yYA
+ d7dq/iqpcY7ZK5nIM360PIoBgWScNKUMbuEwb9lFGcyrlAt5+7zN6SUi9
+ kSjOyszmcYeaSF5KHytolo1F64G9b23IIAKptQOwWx/m6FEJWPY+PXA9k
+ sp0MY5PVZO1BQ3SJJze5JGEej3eva9jdNRxlua+dO5k0XX9gxSA6fSipm
+ AqkdGKEJnVslt0iVzMGCSBOS+L6hQny+BZYFJFTE3QUGyzj27sJmFnhqY g==;
+X-CSE-ConnectionGUID: IeaVlMmDS7WNUWMK1MkrWQ==
+X-CSE-MsgGUID: Z7efPULUSA+SjoWLVIEdmw==
+X-IronPort-AV: E=Sophos;i="6.21,311,1763424000"; d="scan'208";a="13613953"
+Received: from ip-10-5-9-48.us-west-2.compute.internal (HELO
+ smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.9.48])
+ by internal-pdx-out-013.esa.us-west-2.outbound.mail-perimeter.amazon.com with
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Feb 2026 22:09:15 +0000
+Received: from EX19MTAUWB002.ant.amazon.com [205.251.233.48:17534]
+ by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.50.69:2525]
  with esmtp (Farcaster)
- id a5d4ee64-c068-4470-b43a-be9010092460; Wed, 25 Feb 2026 22:09:17 +0000 (UTC)
-X-Farcaster-Flow-ID: a5d4ee64-c068-4470-b43a-be9010092460
+ id 5dba8a24-f6f6-41a1-9f16-3a76b3f38820; Wed, 25 Feb 2026 22:09:15 +0000 (UTC)
+X-Farcaster-Flow-ID: 5dba8a24-f6f6-41a1-9f16-3a76b3f38820
 Received: from EX19D020UWC004.ant.amazon.com (10.13.138.149) by
- EX19MTAUWA002.ant.amazon.com (10.250.64.202) with Microsoft SMTP Server
+ EX19MTAUWB002.ant.amazon.com (10.250.64.231) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.37;
- Wed, 25 Feb 2026 22:09:15 +0000
+ Wed, 25 Feb 2026 22:09:13 +0000
 Received: from ip-10-253-83-51.amazon.com (172.19.99.218) by
  EX19D020UWC004.ant.amazon.com (10.13.138.149) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.37;
- Wed, 25 Feb 2026 22:09:13 +0000
+ Wed, 25 Feb 2026 22:09:10 +0000
 From: Alexander Graf <graf@amazon.com>
 To: <qemu-devel@nongnu.org>
 CC: <qemu-arm@nongnu.org>, Peter Maydell <peter.maydell@linaro.org>, "Thomas
@@ -60,9 +60,9 @@ CC: <qemu-arm@nongnu.org>, Peter Maydell <peter.maydell@linaro.org>, "Thomas
  <dorjoychy111@gmail.com>, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, Tyler Fanelli <tfanelli@redhat.com>,
  <mknaust@amazon.com>, <nh-open-source@amazon.com>
-Subject: [PATCH v3 08/11] hw/nitro: Add nitro machine
-Date: Wed, 25 Feb 2026 22:08:02 +0000
-Message-ID: <20260225220807.33092-9-graf@amazon.com>
+Subject: [PATCH v3 07/11] target/arm/cpu64: Allow -host for nitro
+Date: Wed, 25 Feb 2026 22:08:01 +0000
+Message-ID: <20260225220807.33092-8-graf@amazon.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20260225220807.33092-1-graf@amazon.com>
 References: <20260225220807.33092-1-graf@amazon.com>
@@ -70,11 +70,11 @@ MIME-Version: 1.0
 X-Originating-IP: [172.19.99.218]
 X-ClientProxiedBy: EX19D036UWB001.ant.amazon.com (10.13.139.133) To
  EX19D020UWC004.ant.amazon.com (10.13.138.149)
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-Received-SPF: pass client-ip=52.13.214.179;
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=34.218.115.239;
  envelope-from=prvs=509822c20=graf@amazon.de;
- helo=pdx-out-005.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ helo=pdx-out-013.esa.us-west-2.outbound.mail-perimeter.amazon.com
 X-Spam_score_int: -1
 X-Spam_score: -0.2
 X-Spam_bar: /
@@ -99,147 +99,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-QWRkIGEgbWFjaGluZSBtb2RlbCB0byBzcGF3biBhIE5pdHJvIEVuY2xhdmUuIFVubGlrZSB0aGUg
-ZXhpc3RpbmcgLU0Kbml0cm8tZW5jbGF2ZSwgdGhpcyBtYWNoaW5lIG1vZGVsIHdvcmtzIGV4Y2x1
-c2l2ZWx5IHdpdGggdGhlIC1hY2NlbApuaXRybyBhY2NlbGVyYXRvciB0byBkcml2ZSByZWFsIE5p
-dHJvIEVuY2xhdmUgY3JlYXRpb24uIEl0IHN1cHBvcnRzCm1lbW9yeSBhbGxvY2F0aW9uLCBudW1i
-ZXIgb2YgQ1BVIHNlbGVjdGlvbiwgYm90aCB4ODZfNjQgYXMgd2VsbCBhcwphYXJjaDY0LCBpbXBs
-ZW1lbnRzIHRoZSBFbmNsYXZlIGhlYXJ0YmVhdCBsb2dpYyBhbmQgZGVidWcgc2VyaWFsCmNvbnNv
-bGUuCgpUbyB1c2UgaXQsIGNyZWF0ZSBhbiBFSUYgZmlsZSBhbmQgcnVuCgogICQgcWVtdS1zeXN0
-ZW0teDg2XzY0IC1hY2NlbCBuaXRybyxkZWJ1Zy1tb2RlPW9uIC1NIG5pdHJvIC1ub2dyYXBoaWMg
-XAogICAgICAgICAgICAgICAgICAgICAgIC1rZXJuZWwgdGVzdC5laWYKCm9yCgogICQgcWVtdS1z
-eXN0ZW0tYWFyY2g2NCAtYWNjZWwgbml0cm8sZGVidWctbW9kZT1vbiAtTSBuaXRybyAtbm9ncmFw
-aGljIFwKICAgICAgICAgICAgICAgICAgICAgICAgLWtlcm5lbCB0ZXN0LmVpZgoKU2lnbmVkLW9m
-Zi1ieTogQWxleGFuZGVyIEdyYWYgPGdyYWZAYW1hem9uLmNvbT4KCi0tLQoKdjEgLT4gdjI6Cgog
-IC0gc3VwcG9ydCAtbm9kZWZhdWx0cwogIC0gc3Bhd24gbml0cm8tdnNvY2stYnJpZGdlIGZvciBu
-aXRybyB2c29jayBkZXZpY2VzCiAgLSB1c2Ugbml0cm8gdnNvY2sgZGV2aWNlcyBpbnN0ZWFkIG9m
-IHRoZWlyIG9sZCBzeXNidXMgZXF1aXZhbGVudHMKICAtIHJlbW92ZSB2Y3B1IGNyZWF0aW9uCi0t
-LQogaHcvbml0cm8vS2NvbmZpZyAgICAgICAgICAgfCAgIDggKysKIGh3L25pdHJvL21hY2hpbmUu
-YyAgICAgICAgIHwgMTYxICsrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysKIGh3
-L25pdHJvL21lc29uLmJ1aWxkICAgICAgIHwgICAxICsKIGluY2x1ZGUvaHcvbml0cm8vbWFjaGlu
-ZS5oIHwgIDIwICsrKysrCiA0IGZpbGVzIGNoYW5nZWQsIDE5MCBpbnNlcnRpb25zKCspCiBjcmVh
-dGUgbW9kZSAxMDA2NDQgaHcvbml0cm8vbWFjaGluZS5jCiBjcmVhdGUgbW9kZSAxMDA2NDQgaW5j
-bHVkZS9ody9uaXRyby9tYWNoaW5lLmgKCmRpZmYgLS1naXQgYS9ody9uaXRyby9LY29uZmlnIGIv
-aHcvbml0cm8vS2NvbmZpZwppbmRleCBkM2ZiYzdiNjgzLi5jZmFlODU5MjBhIDEwMDY0NAotLS0g
-YS9ody9uaXRyby9LY29uZmlnCisrKyBiL2h3L25pdHJvL0tjb25maWcKQEAgLTgsMyArOCwxMSBA
-QCBjb25maWcgTklUUk9fU0VSSUFMX1ZTT0NLCiBjb25maWcgTklUUk9fSEVBUlRCRUFUCiAgICAg
-Ym9vbAogICAgIGRlcGVuZHMgb24gTklUUk9fVlNPQ0tfQlVTCisKK2NvbmZpZyBOSVRST19NQUNI
-SU5FCisgICAgYm9vbAorICAgIGRlZmF1bHQgeQorICAgIGRlcGVuZHMgb24gTklUUk8KKyAgICBz
-ZWxlY3QgTklUUk9fVlNPQ0tfQlVTCisgICAgc2VsZWN0IE5JVFJPX0hFQVJUQkVBVAorICAgIHNl
-bGVjdCBOSVRST19TRVJJQUxfVlNPQ0sKZGlmZiAtLWdpdCBhL2h3L25pdHJvL21hY2hpbmUuYyBi
-L2h3L25pdHJvL21hY2hpbmUuYwpuZXcgZmlsZSBtb2RlIDEwMDY0NAppbmRleCAwMDAwMDAwMDAw
-Li5lMjhjOGU5YmY1Ci0tLSAvZGV2L251bGwKKysrIGIvaHcvbml0cm8vbWFjaGluZS5jCkBAIC0w
-LDAgKzEsMTYxIEBACisvKgorICogTml0cm8gRW5jbGF2ZXMgKGFjY2VsKSBtYWNoaW5lCisgKgor
-ICogQ29weXJpZ2h0IMKpIDIwMjYgQW1hem9uLmNvbSwgSW5jLiBvciBpdHMgYWZmaWxpYXRlcy4g
-QWxsIFJpZ2h0cyBSZXNlcnZlZC4KKyAqCisgKiBBdXRob3JzOgorICogICBBbGV4YW5kZXIgR3Jh
-ZiA8Z3JhZkBhbWF6b24uY29tPgorICoKKyAqIE5pdHJvIEVuY2xhdmVzIG1hY2hpbmUgbW9kZWwg
-Zm9yIC1hY2NlbCBuaXRyby4gVGhpcyBtYWNoaW5lIGJlaGF2ZXMKKyAqIGxpa2UgdGhlIG5pdHJv
-LWVuY2xhdmUgbWFjaGluZSwgYnV0IHVzZXMgdGhlIHJlYWwgTml0cm8gRW5jbGF2ZXMKKyAqIGJh
-Y2tlbmQgdG8gbGF1bmNoIHRoZSB2aXJ0dWFsIG1hY2hpbmUuIEl0IHJlcXVpcmVzIHVzZSBvZiB0
-aGUgLWFjY2VsCisgKiBuaXRyby4KKyAqCisgKiBTUERYLUxpY2Vuc2UtSWRlbnRpZmllcjogR1BM
-LTIuMC1vci1sYXRlcgorICovCisKKyNpbmNsdWRlICJxZW11L29zZGVwLmgiCisjaW5jbHVkZSAi
-cWVtdS9lcnJvci1yZXBvcnQuaCIKKyNpbmNsdWRlICJxYXBpL2Vycm9yLmgiCisjaW5jbHVkZSAi
-cW9tL29iamVjdF9pbnRlcmZhY2VzLmgiCisjaW5jbHVkZSAiY2hhcmRldi9jaGFyLmgiCisjaW5j
-bHVkZSAiaHcvY29yZS9ib2FyZHMuaCIKKyNpbmNsdWRlICJody9jb3JlL2NwdS5oIgorI2luY2x1
-ZGUgImh3L2NvcmUvcWRldi1wcm9wZXJ0aWVzLXN5c3RlbS5oIgorI2luY2x1ZGUgImh3L25pdHJv
-L2hlYXJ0YmVhdC5oIgorI2luY2x1ZGUgImh3L25pdHJvL21hY2hpbmUuaCIKKyNpbmNsdWRlICJo
-dy9uaXRyby9uaXRyby12c29jay1idXMuaCIKKyNpbmNsdWRlICJody9uaXRyby9zZXJpYWwtdnNv
-Y2suaCIKKyNpbmNsdWRlICJzeXN0ZW0vYWRkcmVzcy1zcGFjZXMuaCIKKyNpbmNsdWRlICJzeXN0
-ZW0vaG9zdG1lbS5oIgorI2luY2x1ZGUgInN5c3RlbS9zeXN0ZW0uaCIKKyNpbmNsdWRlICJzeXN0
-ZW0vbml0cm8tYWNjZWwuaCIKKyNpbmNsdWRlICJxZW11L2FjY2VsLmgiCisjaW5jbHVkZSAiaHcv
-YXJtL21hY2hpbmVzLXFvbS5oIgorCisjZGVmaW5lIEVJRl9MT0FEX0FERFIgICAoOCAqIDEwMjQg
-KiAxMDI0KQorCitzdGF0aWMgdm9pZCBuaXRyb19tYWNoaW5lX2luaXQoTWFjaGluZVN0YXRlICpt
-YWNoaW5lKQoreworICAgIGNvbnN0IGNoYXIgKmVpZl9wYXRoID0gbWFjaGluZS0+a2VybmVsX2Zp
-bGVuYW1lOworICAgIGNvbnN0IGNoYXIgKmNwdV90eXBlID0gbWFjaGluZS0+Y3B1X3R5cGU7Cisg
-ICAgZ19hdXRvZnJlZSBjaGFyICplaWZfZGF0YSA9IE5VTEw7CisgICAgZ3NpemUgZWlmX3NpemU7
-CisKKyAgICBpZiAoIW5pdHJvX2VuYWJsZWQoKSkgeworICAgICAgICBlcnJvcl9yZXBvcnQoIlRo
-ZSAnbml0cm8nIG1hY2hpbmUgcmVxdWlyZXMgLWFjY2VsIG5pdHJvIik7CisgICAgICAgIGV4aXQo
-MSk7CisgICAgfQorCisgICAgaWYgKCFjcHVfdHlwZSkgeworICAgICAgICBPYmplY3RDbGFzcyAq
-b2MgPSBjcHVfY2xhc3NfYnlfbmFtZSh0YXJnZXRfY3B1X3R5cGUoKSwgImhvc3QiKTsKKworICAg
-ICAgICBpZiAoIW9jKSB7CisgICAgICAgICAgICBlcnJvcl9yZXBvcnQoIm5pdHJvOiBubyAnaG9z
-dCcgQ1BVIGF2YWlsYWJsZSIpOworICAgICAgICAgICAgZXhpdCgxKTsKKyAgICAgICAgfQorICAg
-ICAgICBjcHVfdHlwZSA9IG9iamVjdF9jbGFzc19nZXRfbmFtZShvYyk7CisgICAgfQorCisgICAg
-aWYgKCFlaWZfcGF0aCkgeworICAgICAgICBlcnJvcl9yZXBvcnQoIm5pdHJvOiAta2VybmVsIDxl
-aWYtZmlsZT4gaXMgcmVxdWlyZWQiKTsKKyAgICAgICAgZXhpdCgxKTsKKyAgICB9CisKKyAgICAv
-KiBFeHBvc2UgbWVtb3J5IGFzIG5vcm1hbCBRRU1VIFJBTS4gTmVlZHMgdG8gYmUgaHVnZSBwYWdl
-IGJhY2tlZC4gKi8KKyAgICBtZW1vcnlfcmVnaW9uX2FkZF9zdWJyZWdpb24oZ2V0X3N5c3RlbV9t
-ZW1vcnkoKSwgMCwgbWFjaGluZS0+cmFtKTsKKworICAgIC8qCisgICAgICogTG9hZCBFSUYgKC1r
-ZXJuZWwpIGFzIHJhdyBibG9iIGF0IHRoZSBFSUZfTE9BRF9BRERSIGludG8gZ3Vlc3QgUkFNLgor
-ICAgICAqIFRoZSBOaXRybyBIeXBlcnZpc29yIHdpbGwgZXh0cmFjdCBpdHMgY29udGVudHMgYW5k
-IGJvb3RzdHJhcCB0aGUKKyAgICAgKiBFbmNsYXZlIGZyb20gaXQuCisgICAgICovCisgICAgaWYg
-KCFnX2ZpbGVfZ2V0X2NvbnRlbnRzKGVpZl9wYXRoLCAmZWlmX2RhdGEsICZlaWZfc2l6ZSwgTlVM
-TCkpIHsKKyAgICAgICAgZXJyb3JfcmVwb3J0KCJuaXRybzogZmFpbGVkIHRvIHJlYWQgRUlGICcl
-cyciLCBlaWZfcGF0aCk7CisgICAgICAgIGV4aXQoMSk7CisgICAgfQorICAgIGFkZHJlc3Nfc3Bh
-Y2Vfd3JpdGUoJmFkZHJlc3Nfc3BhY2VfbWVtb3J5LCBFSUZfTE9BRF9BRERSLAorICAgICAgICAg
-ICAgICAgICAgICAgICAgTUVNVFhBVFRSU19VTlNQRUNJRklFRCwgZWlmX2RhdGEsIGVpZl9zaXpl
-KTsKKworICAgIGlmIChkZWZhdWx0c19lbmFibGVkKCkpIHsKKyAgICAgICAgTml0cm9Wc29ja0Jy
-aWRnZSAqYnJpZGdlID0gbml0cm9fdnNvY2tfYnJpZGdlX2NyZWF0ZSgpOworCisgICAgICAgIC8q
-IE5pdHJvIEVuY2xhdmVzIHJlcXVpcmUgYSBoZWFydGJlYXQgZGV2aWNlLiBQcm92aWRlIG9uZS4g
-Ki8KKyAgICAgICAgcWRldl9yZWFsaXplKHFkZXZfbmV3KFRZUEVfTklUUk9fSEVBUlRCRUFUKSwK
-KyAgICAgICAgICAgICAgICAgICAgIEJVUygmYnJpZGdlLT5idXMpLCAmZXJyb3JfZmF0YWwpOwor
-CisgICAgICAgIC8qCisgICAgICAgICAqIEluIGRlYnVnIG1vZGUsIE5pdHJvIEVuY2xhdmVzIGV4
-cG9zZSB0aGUgZ3Vlc3QncyBzZXJpYWwgb3V0cHV0IHZpYQorICAgICAgICAgKiB2c29jay4gV2hl
-biB0aGUgYWNjZWwgaXMgaW4gZGVidWcgbW9kZSwgd2lyZSB0aGUgdnNvY2sgc2VyaWFsIHRvCisg
-ICAgICAgICAqIHRoZSBtYWNoaW5lJ3Mgc2VyaWFsIHBvcnQgc28gdGhhdCAtbm9ncmFwaGljIGF1
-dG9tYXRpY2FsbHkgd29ya3MKKyAgICAgICAgICovCisgICAgICAgIGlmIChvYmplY3RfcHJvcGVy
-dHlfZ2V0X2Jvb2woT0JKRUNUKGN1cnJlbnRfYWNjZWwoKSksICJkZWJ1Zy1tb2RlIiwgTlVMTCkp
-IHsKKyAgICAgICAgICAgIENoYXJkZXYgKmNociA9IHNlcmlhbF9oZCgwKTsKKworICAgICAgICAg
-ICAgaWYgKGNocikgeworICAgICAgICAgICAgICAgIERldmljZVN0YXRlICpkZXYgPSBxZGV2X25l
-dyhUWVBFX05JVFJPX1NFUklBTF9WU09DSyk7CisKKyAgICAgICAgICAgICAgICBxZGV2X3Byb3Bf
-c2V0X2NocihkZXYsICJjaGFyZGV2IiwgY2hyKTsKKyAgICAgICAgICAgICAgICBxZGV2X3JlYWxp
-emUoZGV2LCBCVVMoJmJyaWRnZS0+YnVzKSwgJmVycm9yX2ZhdGFsKTsKKyAgICAgICAgICAgIH0K
-KyAgICAgICAgfQorICAgIH0KK30KKworc3RhdGljIGJvb2wgbml0cm9fY3JlYXRlX21lbWZkX2Jh
-Y2tlbmQoTWFjaGluZVN0YXRlICptcywgY29uc3QgY2hhciAqcGF0aCwKKyAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgIEVycm9yICoqZXJycCkKK3sKKyAgICBNYWNoaW5lQ2xh
-c3MgKm1jID0gTUFDSElORV9HRVRfQ0xBU1MobXMpOworICAgIE9iamVjdCAqcm9vdCA9IG9iamVj
-dF9nZXRfb2JqZWN0c19yb290KCk7CisgICAgT2JqZWN0ICpvYmo7CisgICAgYm9vbCByID0gZmFs
-c2U7CisKKyAgICBvYmogPSBvYmplY3RfbmV3KFRZUEVfTUVNT1JZX0JBQ0tFTkRfTUVNRkQpOwor
-CisgICAgLyogTml0cm8gRW5jbGF2ZXMgcmVxdWlyZSBodWdlIHBhZ2UgYmFja2luZyAqLworICAg
-IGlmICghb2JqZWN0X3Byb3BlcnR5X3NldF9pbnQob2JqLCAic2l6ZSIsIG1zLT5yYW1fc2l6ZSwg
-ZXJycCkgfHwKKyAgICAgICAgIW9iamVjdF9wcm9wZXJ0eV9zZXRfYm9vbChvYmosICJodWdldGxi
-IiwgdHJ1ZSwgZXJycCkpIHsKKyAgICAgICAgZ290byBvdXQ7CisgICAgfQorCisgICAgb2JqZWN0
-X3Byb3BlcnR5X2FkZF9jaGlsZChyb290LCBtYy0+ZGVmYXVsdF9yYW1faWQsIG9iaik7CisKKyAg
-ICBpZiAoIXVzZXJfY3JlYXRhYmxlX2NvbXBsZXRlKFVTRVJfQ1JFQVRBQkxFKG9iaiksIGVycnAp
-KSB7CisgICAgICAgIGdvdG8gb3V0OworICAgIH0KKyAgICByID0gb2JqZWN0X3Byb3BlcnR5X3Nl
-dF9saW5rKE9CSkVDVChtcyksICJtZW1vcnktYmFja2VuZCIsIG9iaiwgZXJycCk7CisKK291dDoK
-KyAgICBvYmplY3RfdW5yZWYob2JqKTsKKyAgICByZXR1cm4gcjsKK30KKworc3RhdGljIHZvaWQg
-bml0cm9fbWFjaGluZV9jbGFzc19pbml0KE9iamVjdENsYXNzICpvYywgY29uc3Qgdm9pZCAqZGF0
-YSkKK3sKKyAgICBNYWNoaW5lQ2xhc3MgKm1jID0gTUFDSElORV9DTEFTUyhvYyk7CisKKyAgICBt
-Yy0+ZGVzYyA9ICJOaXRybyBFbmNsYXZlIjsKKyAgICBtYy0+aW5pdCA9IG5pdHJvX21hY2hpbmVf
-aW5pdDsKKyAgICBtYy0+Y3JlYXRlX2RlZmF1bHRfbWVtZGV2ID0gbml0cm9fY3JlYXRlX21lbWZk
-X2JhY2tlbmQ7CisgICAgbWMtPmRlZmF1bHRfcmFtX2lkID0gInJhbSI7CisgICAgbWMtPm1heF9j
-cHVzID0gNDA5NjsKK30KKworc3RhdGljIGNvbnN0IFR5cGVJbmZvIG5pdHJvX21hY2hpbmVfaW5m
-byA9IHsKKyAgICAubmFtZSA9IFRZUEVfTklUUk9fTUFDSElORSwKKyAgICAucGFyZW50ID0gVFlQ
-RV9NQUNISU5FLAorICAgIC5pbnN0YW5jZV9zaXplID0gc2l6ZW9mKE5pdHJvTWFjaGluZVN0YXRl
-KSwKKyAgICAuY2xhc3NfaW5pdCA9IG5pdHJvX21hY2hpbmVfY2xhc3NfaW5pdCwKKyAgICAuaW50
-ZXJmYWNlcyA9IChjb25zdCBJbnRlcmZhY2VJbmZvW10pIHsKKyAgICAgICAgLyogeDg2XzY0IGFu
-ZCBhYXJjaDY0IG9ubHkgKi8KKyAgICAgICAgeyBUWVBFX1RBUkdFVF9BQVJDSDY0X01BQ0hJTkUg
-fSwKKyAgICAgICAgeyB9CisgICAgfSwKK307CisKK3N0YXRpYyB2b2lkIG5pdHJvX21hY2hpbmVf
-cmVnaXN0ZXIodm9pZCkKK3sKKyAgICB0eXBlX3JlZ2lzdGVyX3N0YXRpYygmbml0cm9fbWFjaGlu
-ZV9pbmZvKTsKK30KKwordHlwZV9pbml0KG5pdHJvX21hY2hpbmVfcmVnaXN0ZXIpOwpkaWZmIC0t
-Z2l0IGEvaHcvbml0cm8vbWVzb24uYnVpbGQgYi9ody9uaXRyby9tZXNvbi5idWlsZAppbmRleCAz
-ODFjMWVlNmMxLi5lM2YxODk1ODkwIDEwMDY0NAotLS0gYS9ody9uaXRyby9tZXNvbi5idWlsZAor
-KysgYi9ody9uaXRyby9tZXNvbi5idWlsZApAQCAtMSwzICsxLDQgQEAKIHN5c3RlbV9zcy5hZGQo
-d2hlbjogJ0NPTkZJR19OSVRST19WU09DS19CVVMnLCBpZl90cnVlOiBmaWxlcygnbml0cm8tdnNv
-Y2stYnVzLmMnKSkKIHN5c3RlbV9zcy5hZGQod2hlbjogJ0NPTkZJR19OSVRST19TRVJJQUxfVlNP
-Q0snLCBpZl90cnVlOiBmaWxlcygnc2VyaWFsLXZzb2NrLmMnKSkKIHN5c3RlbV9zcy5hZGQod2hl
-bjogJ0NPTkZJR19OSVRST19IRUFSVEJFQVQnLCBpZl90cnVlOiBmaWxlcygnaGVhcnRiZWF0LmMn
-KSkKK3N5c3RlbV9zcy5hZGQod2hlbjogJ0NPTkZJR19OSVRST19NQUNISU5FJywgaWZfdHJ1ZTog
-ZmlsZXMoJ21hY2hpbmUuYycpKQpkaWZmIC0tZ2l0IGEvaW5jbHVkZS9ody9uaXRyby9tYWNoaW5l
-LmggYi9pbmNsdWRlL2h3L25pdHJvL21hY2hpbmUuaApuZXcgZmlsZSBtb2RlIDEwMDY0NAppbmRl
-eCAwMDAwMDAwMDAwLi5kNzhiYTdkNmRjCi0tLSAvZGV2L251bGwKKysrIGIvaW5jbHVkZS9ody9u
-aXRyby9tYWNoaW5lLmgKQEAgLTAsMCArMSwyMCBAQAorLyoKKyAqIE5pdHJvIEVuY2xhdmVzIChh
-Y2NlbCkgbWFjaGluZQorICoKKyAqIFNQRFgtTGljZW5zZS1JZGVudGlmaWVyOiBHUEwtMi4wLW9y
-LWxhdGVyCisgKi8KKworI2lmbmRlZiBIV19OSVRST19NQUNISU5FX0gKKyNkZWZpbmUgSFdfTklU
-Uk9fTUFDSElORV9ICisKKyNpbmNsdWRlICJody9jb3JlL2JvYXJkcy5oIgorI2luY2x1ZGUgInFv
-bS9vYmplY3QuaCIKKworI2RlZmluZSBUWVBFX05JVFJPX01BQ0hJTkUgTUFDSElORV9UWVBFX05B
-TUUoIm5pdHJvIikKK09CSkVDVF9ERUNMQVJFX1NJTVBMRV9UWVBFKE5pdHJvTWFjaGluZVN0YXRl
-LCBOSVRST19NQUNISU5FKQorCitzdHJ1Y3QgTml0cm9NYWNoaW5lU3RhdGUgeworICAgIE1hY2hp
-bmVTdGF0ZSBwYXJlbnQ7Cit9OworCisjZW5kaWYgLyogSFdfTklUUk9fTUFDSElORV9IICovCi0t
-IAoyLjQ3LjEKCgoKCkFtYXpvbiBXZWIgU2VydmljZXMgRGV2ZWxvcG1lbnQgQ2VudGVyIEdlcm1h
-bnkgR21iSApUYW1hcmEtRGFuei1TdHIuIDEzCjEwMjQzIEJlcmxpbgpHZXNjaGFlZnRzZnVlaHJ1
-bmc6IENocmlzdG9mIEhlbGxtaXMsIEFuZHJlYXMgU3RpZWdlcgpFaW5nZXRyYWdlbiBhbSBBbXRz
-Z2VyaWNodCBDaGFybG90dGVuYnVyZyB1bnRlciBIUkIgMjU3NzY0IEIKU2l0ejogQmVybGluClVz
-dC1JRDogREUgMzY1IDUzOCA1OTcK
+The nitro accel does not actually make use of CPU emulation or details:
+It always uses the host CPU regardless of configuration. Machines for
+the nitro accel select the host CPU type as default to have a clear
+statement of the above and to have a unified cpu type across all
+supported architectures.
+
+The arm64 logic on Linux currently only allows -cpu host for KVM based
+virtual machines. Add a special case for nitro so that when the nitro
+accel is active, it allows use of the host cpu type.
+
+Signed-off-by: Alexander Graf <graf@amazon.com>
+---
+ target/arm/cpu64.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
+index 5d7c6b7fbb..c01051f038 100644
+--- a/target/arm/cpu64.c
++++ b/target/arm/cpu64.c
+@@ -765,6 +765,14 @@ static void aarch64_a53_initfn(Object *obj)
+ static void aarch64_host_initfn(Object *obj)
+ {
+     ARMCPU *cpu = ARM_CPU(obj);
++
++#if defined(CONFIG_NITRO)
++    if (nitro_enabled()) {
++        /* The nitro accel uses -cpu host, but does not actually consume it */
++        return;
++    }
++#endif
++
+ #if defined(CONFIG_KVM)
+     kvm_arm_set_cpu_features_from_host(cpu);
+     if (arm_feature(&cpu->env, ARM_FEATURE_AARCH64)) {
+-- 
+2.47.1
+
+
+
+
+Amazon Web Services Development Center Germany GmbH
+Tamara-Danz-Str. 13
+10243 Berlin
+Geschaeftsfuehrung: Christof Hellmis, Andreas Stieger
+Eingetragen am Amtsgericht Charlottenburg unter HRB 257764 B
+Sitz: Berlin
+Ust-ID: DE 365 538 597
 
 
