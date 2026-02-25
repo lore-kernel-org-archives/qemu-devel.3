@@ -4,72 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19547FD3773
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 16:54:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 159AFFD3773
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 16:55:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvI9c-0005DH-Sz; Wed, 25 Feb 2026 11:54:28 -0500
+	id 1vvIAH-0005fF-8G; Wed, 25 Feb 2026 11:55:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vvI9Y-0005Cn-Gh
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 11:54:24 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vvI9U-0004L4-Sd
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 11:54:23 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772038457;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=JG91Nxy22Hi6wFYqugvHph9J0CVx2lk4fv1iQ5kwL1w=;
- b=JipkpKuUNZKJe3Y+/7ScaquzWflJTjcxFXhowRTX1ba9idU1GamxxhDChYhz0j0TmjbvsL
- Y/b2POskKEpTznnd1FjfZ39w8cbRhD9cszbYLngzMs/ZlpEZ2LwHs6c8SkPRicsz5Pv4cb
- VgIB57JLdF+WtVYBQf8l6WJt6QfVnr8=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-686-7tiERrHyMaun-GbTbeqBhQ-1; Wed,
- 25 Feb 2026 11:54:10 -0500
-X-MC-Unique: 7tiERrHyMaun-GbTbeqBhQ-1
-X-Mimecast-MFC-AGG-ID: 7tiERrHyMaun-GbTbeqBhQ_1772038445
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 591571800259; Wed, 25 Feb 2026 16:54:05 +0000 (UTC)
-Received: from toolbx.redhat.com (unknown [10.45.225.165])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id AF88C1800348; Wed, 25 Feb 2026 16:54:02 +0000 (UTC)
-From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Eduardo Habkost <eduardo@habkost.net>,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH] hw/i386: drop unused PC_CPU_MODEL_IDS macro
-Date: Wed, 25 Feb 2026 16:54:00 +0000
-Message-ID: <20260225165400.605941-1-berrange@redhat.com>
+ (Exim 4.90_1) (envelope-from <gourry@gourry.net>) id 1vvIAF-0005eY-JY
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 11:55:07 -0500
+Received: from mail-qt1-x832.google.com ([2607:f8b0:4864:20::832])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <gourry@gourry.net>) id 1vvIAD-0004Z3-W8
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 11:55:07 -0500
+Received: by mail-qt1-x832.google.com with SMTP id
+ d75a77b69052e-506a747448dso57849711cf.0
+ for <qemu-devel@nongnu.org>; Wed, 25 Feb 2026 08:55:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gourry.net; s=google; t=1772038504; x=1772643304; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=uICZUx9FRs67zj6Fwdi31378fhveR48w7JtSzkOE5cE=;
+ b=Fjkris1ZbgB8E7xq63boJn9Y+T77+N2v4dByOOu0oH6afhEUlz75OCySyuQUXBre5j
+ z3IiQG+WQeklBSYM+B+eG3YiNiykjTht6XuCg4LLXC8NfP6DEUQ0QAcovq0kHKR4B4GU
+ /KSB1F6vnTDlE2gpyCbeITm8AQWvp/+kubkC7AZ7YdR7ne/sJI9z/uS7k4YuPanuiHOw
+ CYsq/5t+sHrBiREXxGXHQUPxQdJxuIiv70l4qjluaBTwxCMPZSYjWlWqBna+AJmkDdL6
+ hBcTL2DV88L03CmfJxJ9Ek55jCLqlp+aFx4b51Tg/R5p0ikfXu9EkEV/j3fL9POds1Se
+ Mj6A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1772038504; x=1772643304;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=uICZUx9FRs67zj6Fwdi31378fhveR48w7JtSzkOE5cE=;
+ b=pjqjSkG8fVxa4Yj1Nq7XgpqkyIb9q4DjlZgKLYoj6Ogl/OYDGdgb0Ig5Ag8Aw1uFy2
+ dSFC5dVY0ecXXPjVsowe3Ucurf970cevTzmS7uqsl2b8KOUivjTKVT1BlAowLxp8zqRO
+ K2DVG9GsGocuvyiEXN12WCd8XuN1x6+/qZcuJ8Ga9t9X9mbsnQPkoltTp2ZxkFEnVusD
+ NAAr9hNqcr8f7AslEbGEzZtglTp/l3b+D/esCmWC5/Ic0bWI2AJmBf6y+xh+aqcwtyqu
+ e9gxSIG1lpLZqyKo1gftECuynvq9kj4mMFgPttrUW86oKFZz4lwX5cJIR/rWQM6w9Sr7
+ hHrw==
+X-Gm-Message-State: AOJu0Yydrdvl86aUFcidlWtMQrjyJxE28MilsOu3wjg/bLwSoIwxkYgI
+ jRqcW5grN3aAk+itR5pL3ABslh5qhUgdY0Vh5yRLgPD1fbmb1zb/162RDHPiAWHA/8c=
+X-Gm-Gg: ATEYQzzqFOixqEOiwEX5f7c2UMsxv8lFjiPyfQ4eofzreeC3TSCDgPsomhi8yerEFsL
+ VGi6/HpxVyOQFxgO2w2bdRRYeSpxtNKbdSYc03jPDogjXUv3bW43qh+hlV4Vij6Ippt6WDPkcNT
+ z7U0nhNmk/RZTXcLkdlWaJpAveFEbWubL3A+G0Ekni+pb3+ALxtx2eQOERHo87Y98MtnWq6pbyv
+ /P4v6iwnpEb+3xfqZsiwklA8JSr0kJKsM2pqWXLwTHFI4nMtyDgbrLZ3QG2Jeuy0lnEReTl1K/8
+ E9lmggNrnFyKShqACdsEDLTpsl345zL/WWU6XtBfBvghw9cRFGLeEqXYAKA/LnASR+Ky/ChCu2v
+ QAinfFWuXuVbMCsv1YbViNOweYKZHTeWf/2eS9tnzsOTo2dFtYIPiZMryS1vVugTHVuOnGhwepW
+ fHMFjH2pHk3futYvoIAuV/T940ABrRJsr7+dNANge/UWLUW3vKzWxFlCiseqiHTZfA41ynueJ1x
+ FxOjfRptg==
+X-Received: by 2002:ac8:5a4c:0:b0:502:9f6b:a3b3 with SMTP id
+ d75a77b69052e-50741f9ac2emr13911191cf.37.1772038504223; 
+ Wed, 25 Feb 2026 08:55:04 -0800 (PST)
+Received: from gourry-fedora-PF4VCD3F
+ (pool-96-255-20-138.washdc.ftas.verizon.net. [96.255.20.138])
+ by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-5070d6df762sm126765311cf.29.2026.02.25.08.55.03
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 25 Feb 2026 08:55:03 -0800 (PST)
+Date: Wed, 25 Feb 2026 11:55:01 -0500
+From: Gregory Price <gourry@gourry.net>
+To: Alireza Sanaee <alireza.sanaee@huawei.com>
+Cc: qemu-devel@nongnu.org, anisa.su887@gmail.com, armbru@redhat.com,
+ david@kernel.org, imammedo@redhat.com, jonathan.cameron@huawei.com,
+ linuxarm@huawei.com, lizhijian@fujitsu.com, mst@redhat.com,
+ nifan.cxl@gmail.com, peterx@redhat.com, philmd@linaro.org,
+ ppbonzini@redhat.com, venkataravis@micron.com, xiaoguangrong.eric@gmail.com
+Subject: Re: [PATCH v4 0/3] hw/cxl: Add a performant (and correct) path for
+ the non interleaved cases
+Message-ID: <aZ8pZXR5Jv4_uB4q@gourry-fedora-PF4VCD3F>
+References: <20260225151916.390-1-alireza.sanaee@huawei.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -5
-X-Spam_score: -0.6
-X-Spam_bar: /
-X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.734, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.78,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260225151916.390-1-alireza.sanaee@huawei.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::832;
+ envelope-from=gourry@gourry.net; helo=mail-qt1-x832.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,35 +103,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is redundant since the 2.4 machine types were dropped.
+On Wed, Feb 25, 2026 at 03:19:12PM +0000, Alireza Sanaee wrote:
+> Hey everyone,
+> 
+> This is v4 of performant CXL type 3 regions set:
+> 
+> v3 -> v4: 1) Tear down path changed, given that it is done differently than
+>           setup.
+>           2) Dropped Gregory's tested-by tag due to tear down changes.
+> v2 -> v3: Addressing Zhijian Li. Thanks for the feedback.
+> v1 -> v2: Mainly rebase.
+> 
+> Base: 6593154e7d65f61d8f9dbeb98224731b7137c53e
+> 
 
-Fixes: 4c82e7b34b1bf35d97e026196f5bf10ea916512c
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
----
- hw/i386/pc.c | 9 ---------
- 1 file changed, 9 deletions(-)
+slight oddity - i should be able to pull this in with b4 shazam directly
+on top of this base commit, but i had to give it a merge-base manually
+with this commit to get it to fixup conflicts.
 
-diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-index 0dd3fd01d9..2066181b65 100644
---- a/hw/i386/pc.c
-+++ b/hw/i386/pc.c
-@@ -73,15 +73,6 @@
- #include "hw/xen/xen-bus.h"
- #endif
- 
--/*
-- * Helper for setting model-id for CPU models that changed model-id
-- * depending on QEMU versions up to QEMU 2.4.
-- */
--#define PC_CPU_MODEL_IDS(v) \
--    { "qemu32-" TYPE_X86_CPU, "model-id", "QEMU Virtual CPU version " v, },\
--    { "qemu64-" TYPE_X86_CPU, "model-id", "QEMU Virtual CPU version " v, },\
--    { "athlon-" TYPE_X86_CPU, "model-id", "QEMU Virtual CPU version " v, },
--
- GlobalProperty pc_compat_10_2[] = {};
- const size_t pc_compat_10_2_len = G_N_ELEMENTS(pc_compat_10_2);
- 
--- 
-2.53.0
+I would not have expected conflicts if this is the actual merge base,
+you might want to double check that.
 
+~Gregory
 
