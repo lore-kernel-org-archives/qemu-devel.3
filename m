@@ -4,63 +4,132 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1719DFD45EF
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 20:18:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F410FD45F0
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 20:19:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvLKz-0006Mm-Fc; Wed, 25 Feb 2026 15:18:25 -0500
+	id 1vvLLK-0006my-0d; Wed, 25 Feb 2026 15:18:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vvLKo-0006MA-Gv; Wed, 25 Feb 2026 15:18:15 -0500
-Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vvLKl-0000Xj-3T; Wed, 25 Feb 2026 15:18:13 -0500
-Received: from mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
- [IPv6:2a02:6b8:c0c:bf1f:0:640:c739:0])
- by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 4EE298075C;
- Wed, 25 Feb 2026 23:18:04 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:d64::1:26] (unknown
- [2a02:6bf:8080:d64::1:26])
- by mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id 2IoGgK7AseA0-WffUwfHU; Wed, 25 Feb 2026 23:18:03 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1772050683;
- bh=pf4L7GDhoFiEw2TF1YgCSDcyeXzsmh5PGMapXdrBZds=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=JlVPJLjIyprB1dz/skY3vKS34p7QMpNCQNmHc4qe/ZrUuinlD8drr+f+4ZFaDQC3+
- cW0wOVK+GK5kDa7HvPcIltPLNkP+FEfCvs//gcigaEbezkspxSjGLU/4J+WqzWmTUp
- HHq4f+Blt7DRIrDbYhiFaiemUiTrBdXtATHMQzes=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <2a294c9c-fd5d-4c57-a43d-4ba08e24fe48@yandex-team.ru>
-Date: Wed, 25 Feb 2026 23:18:02 +0300
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vvLLG-0006lP-Hu
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 15:18:42 -0500
+Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vvLLC-0000ZD-KV
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 15:18:41 -0500
+Received: by mail-pj1-x1035.google.com with SMTP id
+ 98e67ed59e1d1-3549bba5302so4550371a91.1
+ for <qemu-devel@nongnu.org>; Wed, 25 Feb 2026 12:18:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1772050716; x=1772655516; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=ZNlQFwMqMuLFiV6Ec6fch2th8mXUyy2BNv0FX7a27Ys=;
+ b=Ov6vdMOn5Gj0Y2ULijbHFHwE7VdMfUzXjnJmZHrKIVKh1wqTqsZXzT4scvvKzl1zm3
+ JBQl5mfsX21uuICBxwWFlQbZVu251jY3BR3T9/QHy9mv/Qhowrz8nJhXbQ7P2dBnxbnN
+ mCL4bqdGbO26X5sSMoBgIbXuSOYM11AVZHPoSuSsodoNcgZj/TZpjFbK/YWregSHY5nb
+ bGiowpKjHOetbKeXK8Nbre6URmIVF+lea/dxWKogqQSM2hnMcwYKe76y7S5cuiPFa9Ye
+ z1Tbcqj3OFzmzpxy4jTiTvYnTOlqlYONr8nyYAqcpyrvaw9KD6/u8or+da1N5tSJaEHY
+ ATEw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1772050716; x=1772655516;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=ZNlQFwMqMuLFiV6Ec6fch2th8mXUyy2BNv0FX7a27Ys=;
+ b=knqrazBygcuRmtl+zB0UQglfttsJFvTNSe6h/ZsVkJFywPrWW7CbNsh6ts84w92qag
+ Oaexi18w1kqO5qECQjoBviCdCaWXFYDq80PWllm3mtT8yPzwQu0MlyY7NvJQjbB5q6bi
+ k0xA8UKpVVF0naMJUSVYQLXfTMLLU+3wmD8lA1WW2Sf50ry8WX8OpZRKp9AuDZm9GmVe
+ 1TscL+afu6+CUw1vFFeTQ305E0CCvahlUmunTdZSjpIzzxX3j/YrHsDbtm6iRCROuOo9
+ 4h3/lUd0Bz5Z8pEiWrD7gEcLmrPrflV8ntD76JOA7UHJQWp8wClVgDlWNTBbzExnQGOM
+ PDag==
+X-Gm-Message-State: AOJu0YzS6dXoadhn9yy+09A5Rpjtu9MjGlG5ged3JhopQUFFcHS0cpoJ
+ BaiHFn1FRvxA2koYPrvKL1EbCz70ElIYiPsbiMmHwcVxnCp1CK9F2c1kmyYWvt+xMsI=
+X-Gm-Gg: ATEYQzxenwhUw9wKwm9UOo5cQxOaNIewAPqX4NIm3gHvbMld8v/eD9nGuvD9W9hepV0
+ hfY7QVtyusM5I3ElclCQ6do96EoXTIkBFi8/hYHq5feGZjYVV6XuUHOiOTUelIcAAH8dmdkj0yj
+ 3U5TThbAyRMcHFMbBJVHWKFJGC1YxCzvBcDb2s4DzQEOw0c7RmA6fo+34Ii5F1D7caJyjlntv9q
+ RioT48dlRFHK8cpkQwfvGOFvb3Wzbcn6UZhAWT7Limf1ZKZ/0OyjubIg90y0K8McwrxGWUel1vs
+ HZ7ZXv7KyU6vxEtKx7rUC10LrJT7YMSmnUtZ9ZYj6HnmCESLnail1YjfXpBD0D0l+odH51KiJ5j
+ bRuqV23KLE7IneDVakin42M4mUKV2VM6Ais5KIbDSyoqPGn7leuy1O1cwsWsAt9d8SHM+xRULdI
+ H0KQaEMMdcVKMJefeLaHwnDHUfm+z3T1F38JJzpFLsm8J4461EJL3NIxpa1WrzhsoQ0Avogdts5
+ 7aa+c4=
+X-Received: by 2002:a17:90b:4b11:b0:356:24c8:229d with SMTP id
+ 98e67ed59e1d1-358ae8a48b4mr13746414a91.21.1772050715977; 
+ Wed, 25 Feb 2026 12:18:35 -0800 (PST)
+Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-359134938ccsm1121419a91.13.2026.02.25.12.18.35
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 25 Feb 2026 12:18:35 -0800 (PST)
+Message-ID: <01a2c1ad-1240-42b9-b94a-7b8cf1ab864b@linaro.org>
+Date: Wed, 25 Feb 2026 12:18:34 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] [for-10.1] block-jobs: add final flush
-To: Kevin Wolf <kwolf@redhat.com>
-Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, hreitz@redhat.com,
- jsnow@redhat.com, den@openvz.org
-References: <20250402083715.391059-1-vsementsov@yandex-team.ru>
- <aZ8leLFRoF4J7s6a@redhat.com>
+Subject: Re: [RFC v4 01/31] hw/arm/smmuv3-common: Fix incorrect reserved mask
+ for SMMU CR0 register
 Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <aZ8leLFRoF4J7s6a@redhat.com>
+To: Tao Tang <tangtao1634@phytium.com.cn>, Eric Auger
+ <eric.auger@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ Chen Baozi <chenbaozi@phytium.com.cn>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Mostafa Saleh <smostafa@google.com>, Chao Liu <chao.liu.zevorn@gmail.com>
+References: <20260221100250.2976287-1-tangtao1634@phytium.com.cn>
+ <20260221100250.2976287-2-tangtao1634@phytium.com.cn>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
+ 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
+ ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
+In-Reply-To: <20260221100250.2976287-2-tangtao1634@phytium.com.cn>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=178.154.239.200;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
-X-Spam_score_int: -5
-X-Spam_score: -0.6
-X-Spam_bar: /
-X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1035;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1035.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.734, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.78,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -76,240 +145,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 25.02.26 19:38, Kevin Wolf wrote:
-> Am 02.04.2025 um 10:37 hat Vladimir Sementsov-Ogievskiy geschrieben:
->> Actually block job is not completed without the final flush. It's
->> rather unexpected to have broken target when job was successfully
->> completed long ago and now we fail to flush or process just
->> crashed/killed.
->>
->> Mirror job already has mirror_flush() for this. So, it's OK.
->>
->> Do this for stream, commit and backup jobs too.
->>
->> Note that jobs behave a bit different around IGNORE action:
->> backup and commit just retry the operation, when stream skip
->> failed operation and store the error to report later. Keep
->> these different behaviors for final flush too.
->>
->> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
->> ---
->>
->> v2 was old "[PATCH v2 0/3] block-jobs: add final flush"[1]
->> v3: follow Kevin's suggestion to introduce block_job_handle_error()
->>     (still, it's not obvious how to rewrite commit and stream operation
->>     loops reusing this helper, not making things more complicated..
->>     I decided too keep them as is, using new helper only for final flush.)
->>
->> [1] https://patchew.org/QEMU/20240626145038.458709-1-vsementsov@yandex-team.ru/
->> Supersedes: <20240626145038.458709-1-vsementsov@yandex-team.ru>
->>
->>   block/backup.c           |  8 ++++++++
->>   block/commit.c           |  6 +++++-
->>   block/stream.c           |  8 ++++++--
->>   blockjob.c               | 34 ++++++++++++++++++++++++++++++++++
->>   include/block/blockjob.h |  9 +++++++++
->>   5 files changed, 62 insertions(+), 3 deletions(-)
->>
->> diff --git a/block/backup.c b/block/backup.c
->> index 79652bf57b..13fcdaa320 100644
->> --- a/block/backup.c
->> +++ b/block/backup.c
->> @@ -221,6 +221,14 @@ static int coroutine_fn backup_loop(BackupBlockJob *job)
->>       }
->>   
->>   out:
->> +    if (ret == 0) {
->> +        do {
->> +            WITH_GRAPH_RDLOCK_GUARD() {
->> +                ret = bdrv_co_flush(job->target_bs);
->> +            }
->> +        } while (block_job_handle_error(&job->common, ret, job->on_target_error,
->> +                                        true, true));
->> +    }
+On 2/21/26 2:02 AM, Tao Tang wrote:
+> The current definition of the SMMU_CR0_RESERVED mask is incorrect.
+> It mistakenly treats bit 10 (DPT_WALK_EN) as a reserved bit while
+> treating bit 9 (RES0) as an implemented bit.
 > 
-> Backup doesn't flush if there was already an error before. This makes
-> sense to me because then the job won't complete successfully anyway.
+> According to the SMMU architecture specification, the layout for CR0 is:
+> | 31:11| RES0           |
+> | 10   | DPT_WALK_EN    |
+> | 9    | RES0           |
+> | 8:6  | VMW            |
+> | 5    | RES0           |
+> | 4    | ATSCHK         |
+> | 3    | CMDQEN         |
+> | 2    | EVENTQEN       |
+> | 1    | PRIQEN         |
+> | 0    | SMMUEN         |
 > 
-> is_read=true feels wrong for a flush. (Same in all three jobs.)
-
-Oops, right.
-
-> 
-> retry_on_ignore=true means that this is a potential tight loop that will
-> keep the process at 100% CPU if the request fails repeatedly. (In
-> file-posix, flush failing once means that it will keep failing forever.)
-> I wonder if we shouldn't use retry_on_ignore=false for all end-of-job
-> flushes because there isn't really a chance to retry successfully later.
+> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
+> Reviewed-by: Eric Auger <eric.auger@redhat.com>
+> Link: https://lists.gnu.org/archive/html/qemu-arm/2025-06/msg00088.html
+> ---
+>   include/hw/arm/smmuv3-common.h | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
 
-Ok, agree that endless retrying for "ignore" action is too much for final
-flush.
-
->>       block_copy_call_free(s);
->>       job->bg_bcs_call = NULL;
->>       return ret;
->> diff --git a/block/commit.c b/block/commit.c
->> index 5df3d05346..711093504f 100644
->> --- a/block/commit.c
->> +++ b/block/commit.c
->> @@ -201,7 +201,11 @@ static int coroutine_fn commit_run(Job *job, Error **errp)
->>           }
->>       }
->>   
->> -    return 0;
->> +    do {
->> +        ret = blk_co_flush(s->base);
->> +    } while (block_job_handle_error(&s->common, ret, s->on_error, true, true));
-> 
-> Why does commit still flush even if we return an error?
-
-Hmm. We are on success path here, we do flush where "return 0;" was.
-
-> 
->> +    return ret;
->>   }
->>   
->>   static const BlockJobDriver commit_job_driver = {
->> diff --git a/block/stream.c b/block/stream.c
->> index 999d9e56d4..3d374094f5 100644
->> --- a/block/stream.c
->> +++ b/block/stream.c
->> @@ -160,6 +160,7 @@ static int coroutine_fn stream_run(Job *job, Error **errp)
->>       int64_t offset = 0;
->>       int error = 0;
->>       int64_t n = 0; /* bytes */
->> +    int ret = -1;
->>   
->>       WITH_GRAPH_RDLOCK_GUARD() {
->>           unfiltered_bs = bdrv_skip_filters(s->target_bs);
->> @@ -177,7 +178,6 @@ static int coroutine_fn stream_run(Job *job, Error **errp)
->>   
->>       for ( ; offset < len; offset += n) {
->>           bool copy;
->> -        int ret = -1;
->>   
->>           /* Note that even when no rate limit is applied we need to yield
->>            * with no pending I/O here so that bdrv_drain_all() returns.
-> 
-> These two hunks looked suspicious because ret is now set only once
-> instead of in each loop iteration. However, it doesn't matter, the
-> initialisation was dead code anyway and the value was never read.
-> 
-> Of course, it is still dead code, and -1 isn't a good return code
-> anyway (it should be -errno), so maybe remove the initialisation?
-
-Will do
-
-> 
->> @@ -235,8 +235,12 @@ static int coroutine_fn stream_run(Job *job, Error **errp)
->>           }
->>       }
->>   
->> +    do {
->> +        ret = blk_co_flush(s->blk);
->> +    } while (block_job_handle_error(&s->common, ret, s->on_error, true, false));
-> 
-> Same here about flushing even on error.
-
-Here I keep the behavior of stream: for "ignore" action, it continues streaming,
-but in the end return failure. It's documented in QAPI, and I note it in commit
-message.
-
-If we continue writes after failure, I assume we still need these writes, so,
-why not flush them?
-
-As far as I understand semantics of "ignore", it means "ignore errors, but still
-try to do as much progress as possible". And it seems strange that other jobs do
-endless retry in case of "ignore" action..
-
-> 
->> +
->>       /* Do not remove the backing file if an error was there but ignored. */
->> -    return error;
->> +    return error ?: ret;
->>   }
->>   
->>   static const BlockJobDriver stream_job_driver = {
->> diff --git a/blockjob.c b/blockjob.c
->> index 32007f31a9..70a7af2077 100644
->> --- a/blockjob.c
->> +++ b/blockjob.c
->> @@ -626,3 +626,37 @@ AioContext *block_job_get_aio_context(BlockJob *job)
->>       GLOBAL_STATE_CODE();
->>       return job->job.aio_context;
->>   }
->> +
->> +bool coroutine_fn
->> +block_job_handle_error(BlockJob *job, int ret, BlockdevOnError on_err,
->> +                       bool is_read, bool retry_on_ignore)
->> +{
->> +    assert(ret >= 0);
->> +
->> +    if (ret == 0) {
->> +        return false;
->> +    }
->> +
->> +    if (job_is_cancelled(&job->job)) {
->> +        return false;
->> +    }
->> +
->> +    BlockErrorAction action =
->> +        block_job_error_action(job, on_err, is_read, -ret);
->> +    switch (action) {
->> +    case BLOCK_ERROR_ACTION_REPORT:
->> +        return false;
->> +    case BLOCK_ERROR_ACTION_IGNORE:
->> +        if (!retry_on_ignore) {
->> +            return false;
->> +        }
->> +        /* fallthrough */
-> 
-> What is the idea behind having a pause point for "ignore"? Is it to at
-> least avoid QEMU hanging completely if it goes into an infinite loop
-> with retry_on_ignore?
-
-Yes, just to have a pause point on every iteration of retrying loop,
-like we do it in data-copying iterations of block jobs.
-
-> 
->> +    case BLOCK_ERROR_ACTION_STOP:
->> +        job_pause_point(&job->job);
->> +        break;
->> +    default:
->> +        abort();
->> +    }
->> +
->> +    return true;
->> +}
->> diff --git a/include/block/blockjob.h b/include/block/blockjob.h
->> index 7061ab7201..8362143ed7 100644
->> --- a/include/block/blockjob.h
->> +++ b/include/block/blockjob.h
->> @@ -235,4 +235,13 @@ bool block_job_is_internal(BlockJob *job);
->>    */
->>   const BlockJobDriver *block_job_driver(BlockJob *job);
->>   
->> +/**
->> + * block_job_handle_error:
->> + *
->> + * Return, wherter the operation should be retried.
-> 
-> s/wherter/whether/
-> 
->> + */
->> +bool coroutine_fn
->> +block_job_handle_error(BlockJob *job, int ret, BlockdevOnError on_err,
->> +                       bool is_read, bool retry_on_ignore);
->> +
->>   #endif
-> 
-> Kevin
-> 
-
-
-
--- 
-Best regards,
-Vladimir
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
