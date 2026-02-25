@@ -4,81 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1215CF5545B
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 05:14:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E779DF5545B
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 05:14:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vv7D4-0006vC-6r; Wed, 25 Feb 2026 00:13:18 -0500
+	id 1vv7DR-00071J-1j; Wed, 25 Feb 2026 00:13:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vv7D2-0006uq-Uc
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 00:13:16 -0500
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vv7DO-00070l-OW
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 00:13:38 -0500
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vv7D1-00046U-Hq
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 00:13:16 -0500
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-483bd7354efso8442475e9.2
- for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 21:13:14 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vv7DN-00047E-4j
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 00:13:38 -0500
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-483487335c2so55862295e9.2
+ for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 21:13:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771996393; x=1772601193; darn=nongnu.org;
+ d=linaro.org; s=google; t=1771996415; x=1772601215; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=yqrb1njuSeGzwFOqvJshYg5hho1sLouIHptMUptf6Ks=;
- b=AWQXZazXmeZbOmU0Y0CsT9IY9SxA0pkL+tQhrC7tRQOq3XsrswJL/HqYS4nl4pFu0+
- j7Bgdtq77BTXj/Ww0iwshQqylbKNxiQ7h1P/PvU3xlc0DLEJYGa4Cw3N3X67hhNFm9qj
- 2HfaPKwkfJTwSf69j3yb+J790jUaCnj4z47XeI2vxkazTqn4LpGm4AfLqwncraNN2pQ8
- +VoqCAU108H/02LhIr9n5P2f7utMI6s9q7SxAfA3JeE2CwWPrCyx1JKEZOfGLtdBUCvr
- ypDzAhunCQqr8kLVI2GjabqyXOcOzxI95IvSt907EyxwhEtl+uZNNIA2ljMLCiOlT4vl
- Vsgg==
+ bh=9Fom4TdZ27OaWdE48V/WCmqpd1vRN9dFVw46MQX66F4=;
+ b=SzUj1ZOdysSEqa03R+mse1JYG3/R2vcetUQDBNSE4/AlIHye8BXknbUHH3cdWFe3kI
+ jUO73Jv+x3J0YfYf53S5Oi8a/fwkeRfrGvWvcUXyRKqkpmHBJt+VXZK142lgWbA0+GhX
+ +94Upc9gJOSFa/uJhw9ezLd+tkN6tRhRZssIhi10T2caz7/xOblDJQXE7auW+eTHxFhc
+ A6Dk1a8dWPheGPHEFwIlbGJ+VPWsQQ/fMEqQKLuTX+5XERlV7ISUDlWOSerpGguVqLsF
+ 6kOaSKG+tx3P/HE7I8l6rvBY3XY/yygXHysEMP2uG1Nr43HtiKWpgyOx+v3hcYBbVW+x
+ O7bA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771996393; x=1772601193;
+ d=1e100.net; s=20230601; t=1771996415; x=1772601215;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=yqrb1njuSeGzwFOqvJshYg5hho1sLouIHptMUptf6Ks=;
- b=l7NsLdnm6HrZLuUkw8ANSiCoynaQPl3qnKx5uvB5jj2lXwGR0x99sEsm9IXnf/tNq/
- iM1ix9+oTJe5KcqmgEWfqUcBFq1/ymqALBSdSZrL7+N8jXrOsti3qCDN8F9mz9adKOnH
- VigBFiSHzPYreFYuqDb52fxWPox+BwQSwDC49U1aIfzOxys0bSDHdXWeAyVcFw/Eodza
- eyYuvhNLEUsNQr8/0xLzrkcKcUbBwShjBvjPqP2HD8F3WHEdKeuqPUTGpcQzh0qTiNd+
- 3iSJQe0hHR8JtXKp/9XnJ/00pr7eojBDHbzfMBxCuekAa9kM4uLL6upPxCPRJ9dvXeMV
- Fjpg==
-X-Gm-Message-State: AOJu0YzNhtnQ1SMzF0F9YntRQ6EfvkogF7jpbLSkPkPotGO/QEW56jGc
- Hwhh2AnTYXSCNt+x1OLiBcbfyky7hxM74CrXH5SGwcjoUwagkcfE2L2ekAwIpI0WFpqHEzfC73A
- /U3ed2ts=
-X-Gm-Gg: ATEYQzz4TGirt4Mgss51AebAAp9ywbgo733pLAvxd0zuUQVgGyQxvv+fISspjWUeM+X
- y1RGBQP3GOvJRUhVu7NYOjG/ADuc46ICV28RPkZ7vzgyJyGHHZusKliyNKk/eYDshYhqm9XXzt/
- ZbQPGSMiBnTLWkEdF74fokY+4ZIOZkc5Or2c8ILu5+BT94YF7FQlnIurtGQEUykCRNRyGVMn6P2
- PFt3oO56R0arYrkh9necLQrRqMddSnnzK3Q6X/76j1/B/qPIG5sxzToHyNt+BycYOfccUxZBQuV
- gkVpi2C/LJ6qLhHgIJ09y01uIRppbDbrPr+kcdEJeueaqxUEOeueYRs1A349MO1+SBG+6aDafSZ
- H5OBjOL3gEB27Bgr+cB0s76HpfLVYrHMBFhcvtmu3PntBLEjA9E20B3NJilRPI+yqbFlk3QFdyO
- Yb9ZO5ahuDnJuwpPsXIs65kgpce7S5TSZUWK/2JO/i4OkpRGvR8xFwbLwL//w99Zta6buthRFC
-X-Received: by 2002:a05:600c:4692:b0:483:6d42:25c6 with SMTP id
- 5b1f17b1804b1-483bef54059mr19754265e9.23.1771996393138; 
- Tue, 24 Feb 2026 21:13:13 -0800 (PST)
+ bh=9Fom4TdZ27OaWdE48V/WCmqpd1vRN9dFVw46MQX66F4=;
+ b=UVuhqfGaNgpgsZ1E6AD/tfux1khs4j+j3xfIPIu1npjBNYZEsJFkxQyVtvqpHEt2W8
+ Ddk0k2qx9TD20r9nM2W7nqjjaw+tfbIskJr4wC0eO/3Hcd30dIpWy6yr4s/6D1psb/Pi
+ Vcwl6gxnjiJih8c9b88pri5HnPGcf4j/UpGR2jT+cwqMLkHt+7yhggwLA8boaNS+8uGg
+ D0H+O1GueJGl/dqBN1deCweJvmmZxrrlqHbIJftuC/EE/y+OuWubxGyI84zIH5XBhJQO
+ rRjPTSlweZWCsxNrY4dGVRPV//q4zMMT9lTnFCoqBmzdcLvd+vZyBfSMHjOasS2xxaaS
+ LCiw==
+X-Gm-Message-State: AOJu0YwKXWnJLHBooZFJnNq3pIfuD2oqk/aNaiKv4lNbDSjS89FLarrv
+ 3URStRnzRDqMJ+7gTeu4nEozGhWVa96WQuasSSTLQy2Ervyogd/CyCbURmozHBEIYs65YvkAxp2
+ 247Wtywc=
+X-Gm-Gg: ATEYQzzdYapTDnApkNJhbTkQ85kANXqxM9ZbBuEsxfjQ+tybI+Fqi0V7eGm/QqX3U3C
+ eTKJ+l1uMeRckeZF+Y3ww5NRY7QXPpbEB4OfGACGUiuxea2atbEAJ1vuD19UVO22TpVXQ6M8AQV
+ Cm+TvM61dYFe8hU0xTneRbpM+aRrgcqLWMfHT2e/YpiGnsCw1zCZxRf1umXuVLrcqUf69Pcp+8i
+ 2WmgNNANt4Go3bSkZGlKnBpGoNTh7pLIqndFPWywCDxByzS89i+duSYlPIleZcCWEaBU5s8U4IG
+ COU+NyHI51RTlQMEaxJHKg36hJZjdGebiS6WXXS1Zdm55I8uOUo7xXGsNBj0xn5rzB5rJFL5v6z
+ z6C3URJxjeBSi8sm3EeS1JL8rf/EC9Qb4TeXkvExoUUfJP29dro2N9uwFbWeCb5C3oyoY70BFAR
+ Mqy8qGpwAZse9nMh0xHwWRESx5dica0JnuneTqYLRS+nkIzOVPI9vSc+70TFpqf/ZaJ26sL3rH
+X-Received: by 2002:a05:6000:2406:b0:436:1872:63d0 with SMTP id
+ ffacd0b85a97d-4396f15ce72mr27807237f8f.2.1771996415096; 
+ Tue, 24 Feb 2026 21:13:35 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-483bfcbf894sm2825775e9.16.2026.02.24.21.13.11
+ ffacd0b85a97d-43970d401aasm30576270f8f.23.2026.02.24.21.13.33
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 24 Feb 2026 21:13:12 -0800 (PST)
+ Tue, 24 Feb 2026 21:13:34 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: kvm@vger.kernel.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, xen-devel@lists.xenproject.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 1/5] accel/kvm: Include missing 'exec/cpu-common.h' header
-Date: Wed, 25 Feb 2026 06:12:59 +0100
-Message-ID: <20260225051303.91614-2-philmd@linaro.org>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Cameron Esfahani <dirty@apple.com>, Roman Bolshakov <rbolshakov@ddn.com>,
+ Phil Dennis-Jordan <phil@philjordan.eu>
+Subject: [PATCH 4/5] accel/hvf: Build without target-specific knowledge
+Date: Wed, 25 Feb 2026 06:13:02 +0100
+Message-ID: <20260225051303.91614-5-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260225051303.91614-1-philmd@linaro.org>
 References: <20260225051303.91614-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,32 +103,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-kvm-accel-ops.c uses EXCP_DEBUG, itself defined in
-"exec/cpu-common.h". Include it explicitly, otherwise
-we get when modifying unrelated headers:
-
-  ../accel/kvm/kvm-accel-ops.c: In function ‘kvm_vcpu_thread_fn’:
-  ../accel/kvm/kvm-accel-ops.c:54:22: error: ‘EXCP_DEBUG’ undeclared (first use in this function)
-     54 |             if (r == EXCP_DEBUG) {
-        |                      ^~~~~~~~~~
+Code in accel/ aims to be target-agnostic. Enforce that
+by moving the MSHV file units to system_ss[], which is
+target-agnostic.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- accel/kvm/kvm-accel-ops.c | 1 +
- 1 file changed, 1 insertion(+)
+ accel/hvf/meson.build | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
-diff --git a/accel/kvm/kvm-accel-ops.c b/accel/kvm/kvm-accel-ops.c
-index 8ed6945c2f7..6d9140e549f 100644
---- a/accel/kvm/kvm-accel-ops.c
-+++ b/accel/kvm/kvm-accel-ops.c
-@@ -16,6 +16,7 @@
- #include "qemu/osdep.h"
- #include "qemu/error-report.h"
- #include "qemu/main-loop.h"
-+#include "exec/cpu-common.h"
- #include "accel/accel-cpu-ops.h"
- #include "system/kvm.h"
- #include "system/kvm_int.h"
+diff --git a/accel/hvf/meson.build b/accel/hvf/meson.build
+index fc52cb78433..6e2dcc4a5f0 100644
+--- a/accel/hvf/meson.build
++++ b/accel/hvf/meson.build
+@@ -1,7 +1,4 @@
+-hvf_ss = ss.source_set()
+-hvf_ss.add(files(
++system_ss.add(when: 'CONFIG_HVF', if_true: files(
+   'hvf-all.c',
+   'hvf-accel-ops.c',
+ ))
+-
+-specific_ss.add_all(when: 'CONFIG_HVF', if_true: hvf_ss)
 -- 
 2.52.0
 
