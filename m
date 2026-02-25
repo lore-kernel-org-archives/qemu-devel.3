@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7183FD45FA
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 23:15:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E53E1FD45F1
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 23:15:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvO5z-00050x-OS; Wed, 25 Feb 2026 18:15:07 -0500
+	id 1vvO6M-0005pN-Mq; Wed, 25 Feb 2026 18:15:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vvO5x-00050T-Sq
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 18:15:05 -0500
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vvO6I-0005aR-Ib
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 18:15:27 -0500
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vvO5v-0002at-Fr
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 18:15:05 -0500
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-43767807cf3so146201f8f.1
- for <qemu-devel@nongnu.org>; Wed, 25 Feb 2026 15:15:03 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vvO6G-0002mb-DV
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 18:15:25 -0500
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-483703e4b08so1939195e9.1
+ for <qemu-devel@nongnu.org>; Wed, 25 Feb 2026 15:15:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772061301; x=1772666101; darn=nongnu.org;
+ d=linaro.org; s=google; t=1772061321; x=1772666121; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=AOnr4qaJdaK1kJiZweSuzTjxuUU2NRSI0QvsVn5psy8=;
- b=FEoGVmZQ8SyEbjevNkWj3Mqxem2W7kWVfTvanuguTALqIPgP047eFPyJdEKcNEqbd8
- C7K+Wjm4/afVRlYRPWFZVFpLht0YYut1hsudS9B2SNRtLl93aVGm8wtqK4Mxwq+O3T75
- FtRXQSsp/EQFYAOR27Y6LmYnJMxwKIb1NzFVrjXrKw8nDmgbPIx/uWJCRPTlbxf34/LU
- VmVA8MtnWSkxPTEnb34nmvVZlXOn5P+r9lfyBpaydIIZM0TByXcGLVu19tbe5wB3EWUD
- SqtSjW+vJqdawgLNdww1HEslCfO1R0nCraYol9DiNvwD+hwKKZNdLnRaKBbNNuE+AIDI
- ZaVg==
+ :reply-to; bh=ochzk25lzH1ImDnhbj8ucTrQgzHw3TTu+SZR7L/V3nE=;
+ b=QZ1KcTROcKJ+rCPMIm5tq+134oYvYFV2y6wPzP7oYEEaELwyW7nnRFIzoolLR+0HDa
+ ZISDwh0tciadcgAUUydY2uU9i1JCNdtlZv06GPn53SBp1ewPJeMbz7z/dGdjEWdRYm56
+ WIgSMssFCzIn7raAEtbL03wDm+ufvEs4bXxtYZg/5VkUVAeT/t21i7tqAv/De28HgO2C
+ 8PYeXvErAE5DjolXZVZIKs+gCt4u/kMGkvrQWs2KX7qkE2TEJTNwaHrL7OTayTYpGBhr
+ UejHFS+4RmP8RyRIr4vMnojHPW6PMMx0IgZQsZpGCUd9FnIHL0CnHzP+gycyj8NndIdQ
+ 3n4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772061301; x=1772666101;
+ d=1e100.net; s=20230601; t=1772061321; x=1772666121;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=AOnr4qaJdaK1kJiZweSuzTjxuUU2NRSI0QvsVn5psy8=;
- b=sfPDUKlawRIBMTfszRu8ytWtyMXT5ru7dQQuJNTsC87/CovA2ekL1ozPk1NYlH+6Mu
- jS1HptO83/RQS+NpiiaSM5EkSisRw3tmpJO3fzbP2Qm/M6+mTS8DghwDqzpJ9flXagks
- Ffpwml+ISVGjbbATjWXYstkH7+CQvKcYWyQ7rsa7Y7svjCjge6lcPQo/ASeWhXTeYIRK
- Gy6gD8nC+AiQC+j5ZuM/cIHnsQwOSj6ZzxBVdDppZcZ+Z7uhpmlziknsAqhx9R9vl1w4
- jf1panr2nlsTGAuCO20afWK7/dw8BURHZmTO407jsRLLsw2lczGFxu4RV2I58D8I62lM
- eRzA==
-X-Gm-Message-State: AOJu0YzXI8/4GS73RJVHbubk0XZCjS4DL0k4WQxWo/CSlwN2bzE3tPQ6
- jRfUhU7W9s0COTm/uPjjVDGKBIZPXhzgkb4hqhohbcLmixn7yEekuysFrZJVoTCujXE/rrANIqh
- 2Li5xq6U=
-X-Gm-Gg: ATEYQzzh3ZgE+7w3pbCOmlfHG8oif4fKRzrVU/Ls83LFxqgUwmHM6umphpMdbJI3Dz+
- uI/tDYhnonlVL6glrioMvqW2cyG4oPWS50ZwG/zBJO4kZimIoFzBK6MPBgTtEwvZIKQ6IxNg9g7
- 0Qmmq+MiI4vmX+5r9MBY9OkZXa5ZcL/B82w9UbnnLFcmTmuxtMl6WPd5HtUaXq9qIORmkKyTRPt
- UGHNxuwKRzMC+8Ta5g97KnkwY2c+XXzmwCOfmYYdhGNJq7DLmDdldytYHM1rlVbugf8O93EhhvH
- mk/yGwLXfgC9S/yrkI3r+gFXwMRl3XJwEyD+5tnsxF0sJTmGCn5ujlRYAHNsbF75ftUzjLdfi0c
- oFJVQozdRRB6IrZ1pY0NQWubIZF9E7jQWd+SBtHwLUvNQ/02F0WswCtMTE8iIsclpsFUF+McOMq
- zIoRwmtRWhk0bJJkqY0ISwy1cOl3GHt5t79hOz3lWsnpKLZJjwVom5YOTUjIXzjzAr4hOsCJo8
-X-Received: by 2002:a5d:5d85:0:b0:430:f742:fbc7 with SMTP id
- ffacd0b85a97d-439942aa2bcmr4199223f8f.14.1772061301333; 
- Wed, 25 Feb 2026 15:15:01 -0800 (PST)
+ bh=ochzk25lzH1ImDnhbj8ucTrQgzHw3TTu+SZR7L/V3nE=;
+ b=Rx7rM3a394UWmq0IDOmVOGdGELpoEAZwrEInkj1+bIIpaPHHaiq2fiHztkdw8Fk4UK
+ 3Fl3/v9Rb2euPdpaGDFlgZUumogZIoUJ4MVgHXZ6iGY62OXRjPLIMH532ntF/yiNQDom
+ DumNZ597r7pOfv1Dl5BHtriCOcq89TkgyOgy2jgBLt4Zes9kTXDMp0oEQC+CEgTrMYMP
+ FLOvoCcM7RnMKBchgUJwJrdmS0mz1B2b5x3bFk/cwo+Znc4OZibH44GUvtLq0eYn91eH
+ N8vuiepimtsivc6X8w4IqOIcZ69pKrIGbjwX1BDPaSvHzSZYUMwWa95AHWPd9GftoVP+
+ lMmA==
+X-Gm-Message-State: AOJu0Yzd+XvWePC0mJ12s6Wpwg7AzcNzfhDvaF7u3uxsEtzW8IiHoQOU
+ xUojTPKm5SyVmn2xmI3Or0isvmees4mij4bA190jK2NdiDo9dDC091jc5QqcO1kkWdmYmGx5Gj4
+ 0hEzWqhM=
+X-Gm-Gg: ATEYQzxUFHstQquAu7newA5KD4MuHI8b7cxEddaxVhgnGtgHEL9cQd1nAS/HAJTeToU
+ PSMqrWkUJwLy06aPIAnhKV8HYG+aLNrtVi5143BnZx6Lb//t2LBqT8O92X6t9Auh5ozLiyu/8dE
+ S03CtXNWvrCNusswG8897y2tPBo+7EWwHa3Z4Ya2yTQTLGHOT9xBAn6pdOU/23ekylSS1lLA+Zq
+ RdhQbzpI8zvjJzTlg8Ya/mHVW+q/1bsFj4G580Hr9f+RVcspA/+MnUFl+bpwF4QG1Ns8DTHMbSU
+ LnA8YxD5JBkaOEtp6CtWOU5vIIsSZ9EdMmtfMs+s7eRFKa+kQF17Rj4BlqbXFIgk7yqgGxc4swL
+ AtH1v1sRwSbK/Gch3DlsY/eVuSAkUKBRTlhNJG67i5VSLL+peZWMvrNu9o0GM4bou3FptnloN78
+ ffGQX6365Qe2Tlc3xf0hwZzYNbctrwwMHgfRhoK7uc5CWJZe8rvTLa/Ljjq2+xS+OrH5f6iGVV
+X-Received: by 2002:a05:600c:5583:b0:47d:52ef:c572 with SMTP id
+ 5b1f17b1804b1-483c33c1d04mr10824785e9.1.1772061321493; 
+ Wed, 25 Feb 2026 15:15:21 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4398a292babsm13296868f8f.37.2026.02.25.15.14.59
+ 5b1f17b1804b1-483bfccad8esm21484675e9.22.2026.02.25.15.15.20
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 25 Feb 2026 15:15:00 -0800 (PST)
+ Wed, 25 Feb 2026 15:15:21 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 07/70] exec: Drop TARGET_PHYS_ADDR_SPACE_BITS
-Date: Thu, 26 Feb 2026 00:13:07 +0100
-Message-ID: <20260225231411.96482-8-philmd@linaro.org>
+Subject: [PULL 10/70] target/i386: Inline GDB_FORCE_64 definition
+Date: Thu, 26 Feb 2026 00:13:10 +0100
+Message-ID: <20260225231411.96482-11-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260225231411.96482-1-philmd@linaro.org>
 References: <20260225231411.96482-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,328 +98,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Anton Johansson <anjo@rev.ng>
+Directly checking TARGET_LONG_BITS allows to remove GDB_FORCE_64.
 
-The macro is no longer in use and can safely be dropped.
-
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Brian Cain <brian.cain@oss.qualcomm.com>
-Signed-off-by: Anton Johansson <anjo@rev.ng>
-Message-ID: <20260218-phys_addr-v6-7-a603bf363218@rev.ng>
-[PMD: Keep TARGET_PHYS_ADDR_SPACE_BITS poisoned]
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20260219191955.83815-4-philmd@linaro.org>
 ---
- include/exec/cpu-defs.h       | 3 ---
- target/alpha/cpu-param.h      | 3 ---
- target/arm/cpu-param.h        | 2 --
- target/avr/cpu-param.h        | 1 -
- target/hexagon/cpu-param.h    | 1 -
- target/hppa/cpu-param.h       | 3 ---
- target/i386/cpu-param.h       | 2 --
- target/loongarch/cpu-param.h  | 1 -
- target/m68k/cpu-param.h       | 1 -
- target/microblaze/cpu-param.h | 2 --
- target/mips/cpu-param.h       | 2 --
- target/or1k/cpu-param.h       | 1 -
- target/ppc/cpu-param.h        | 7 -------
- target/riscv/cpu-param.h      | 2 --
- target/rx/cpu-param.h         | 1 -
- target/s390x/cpu-param.h      | 1 -
- target/sh4/cpu-param.h        | 1 -
- target/sparc/cpu-param.h      | 2 --
- target/tricore/cpu-param.h    | 1 -
- target/xtensa/cpu-param.h     | 1 -
- 20 files changed, 38 deletions(-)
+ target/i386/gdbstub.c | 8 +-------
+ 1 file changed, 1 insertion(+), 7 deletions(-)
 
-diff --git a/include/exec/cpu-defs.h b/include/exec/cpu-defs.h
-index e01acb7c906..141b5a99292 100644
---- a/include/exec/cpu-defs.h
-+++ b/include/exec/cpu-defs.h
-@@ -28,9 +28,6 @@
- #ifndef TARGET_LONG_BITS
- # error TARGET_LONG_BITS must be defined in cpu-param.h
- #endif
--#ifndef TARGET_PHYS_ADDR_SPACE_BITS
--# error TARGET_PHYS_ADDR_SPACE_BITS must be defined in cpu-param.h
+diff --git a/target/i386/gdbstub.c b/target/i386/gdbstub.c
+index be41601cffc..291d56b8e13 100644
+--- a/target/i386/gdbstub.c
++++ b/target/i386/gdbstub.c
+@@ -79,15 +79,9 @@ static const int gpr_map32[8] = { 0, 1, 2, 3, 4, 5, 6, 7 };
+ #define IDX_CTL_CR8_REG     (IDX_CTL_REGS + 4)
+ #define IDX_CTL_EFER_REG    (IDX_CTL_REGS + 5)
+ 
+-#ifdef TARGET_X86_64
+-#define GDB_FORCE_64 1
+-#else
+-#define GDB_FORCE_64 0
 -#endif
- #ifndef TARGET_VIRT_ADDR_SPACE_BITS
- # error TARGET_VIRT_ADDR_SPACE_BITS must be defined in cpu-param.h
- #endif
-diff --git a/target/alpha/cpu-param.h b/target/alpha/cpu-param.h
-index c9da620ab3e..f87b36fe873 100644
---- a/target/alpha/cpu-param.h
-+++ b/target/alpha/cpu-param.h
-@@ -8,9 +8,6 @@
- #ifndef ALPHA_CPU_PARAM_H
- #define ALPHA_CPU_PARAM_H
- 
--/* ??? EV4 has 34 phys addr bits, EV5 has 40, EV6 has 44.  */
--#define TARGET_PHYS_ADDR_SPACE_BITS  44
 -
- #ifdef CONFIG_USER_ONLY
- /*
-  * Allow user-only to vary page size.  Real hardware allows only 8k and 64k,
-diff --git a/target/arm/cpu-param.h b/target/arm/cpu-param.h
-index 7de0099cbfa..f67e7b34606 100644
---- a/target/arm/cpu-param.h
-+++ b/target/arm/cpu-param.h
-@@ -9,10 +9,8 @@
- #define ARM_CPU_PARAM_H
- 
- #ifdef TARGET_AARCH64
--# define TARGET_PHYS_ADDR_SPACE_BITS  52
- # define TARGET_VIRT_ADDR_SPACE_BITS  52
- #else
--# define TARGET_PHYS_ADDR_SPACE_BITS  40
- # define TARGET_VIRT_ADDR_SPACE_BITS  32
- #endif
- 
-diff --git a/target/avr/cpu-param.h b/target/avr/cpu-param.h
-index ea7887919a7..130768db51f 100644
---- a/target/avr/cpu-param.h
-+++ b/target/avr/cpu-param.h
-@@ -22,7 +22,6 @@
- #define AVR_CPU_PARAM_H
- 
- #define TARGET_PAGE_BITS 10
--#define TARGET_PHYS_ADDR_SPACE_BITS 24
- #define TARGET_VIRT_ADDR_SPACE_BITS 24
- 
- #endif
-diff --git a/target/hexagon/cpu-param.h b/target/hexagon/cpu-param.h
-index 45ee7b46409..1f0f22a7968 100644
---- a/target/hexagon/cpu-param.h
-+++ b/target/hexagon/cpu-param.h
-@@ -20,7 +20,6 @@
- 
- #define TARGET_PAGE_BITS 16     /* 64K pages */
- 
--#define TARGET_PHYS_ADDR_SPACE_BITS 36
- #define TARGET_VIRT_ADDR_SPACE_BITS 32
- 
- #endif
-diff --git a/target/hppa/cpu-param.h b/target/hppa/cpu-param.h
-index e0b2c7c9157..3763bca1252 100644
---- a/target/hppa/cpu-param.h
-+++ b/target/hppa/cpu-param.h
-@@ -9,11 +9,8 @@
- #define HPPA_CPU_PARAM_H
- 
- #if defined(CONFIG_USER_ONLY) && defined(TARGET_ABI32)
--# define TARGET_PHYS_ADDR_SPACE_BITS  32
- # define TARGET_VIRT_ADDR_SPACE_BITS  32
- #else
--/* ??? PA-8000 through 8600 have 40 bits; PA-8700 and 8900 have 44 bits. */
--# define TARGET_PHYS_ADDR_SPACE_BITS  40
- # define TARGET_VIRT_ADDR_SPACE_BITS  64
- #endif
- 
-diff --git a/target/i386/cpu-param.h b/target/i386/cpu-param.h
-index 909bc027923..5915ef6266c 100644
---- a/target/i386/cpu-param.h
-+++ b/target/i386/cpu-param.h
-@@ -9,7 +9,6 @@
- #define I386_CPU_PARAM_H
- 
- #ifdef TARGET_X86_64
--# define TARGET_PHYS_ADDR_SPACE_BITS  52
- /*
-  * ??? This is really 48 bits, sign-extended, but the only thing
-  * accessible to userland with bit 48 set is the VSYSCALL, and that
-@@ -17,7 +16,6 @@
-  */
- # define TARGET_VIRT_ADDR_SPACE_BITS  47
- #else
--# define TARGET_PHYS_ADDR_SPACE_BITS  36
- # define TARGET_VIRT_ADDR_SPACE_BITS  32
- #endif
- #define TARGET_PAGE_BITS 12
-diff --git a/target/loongarch/cpu-param.h b/target/loongarch/cpu-param.h
-index 071567712b3..3bcf77b3755 100644
---- a/target/loongarch/cpu-param.h
-+++ b/target/loongarch/cpu-param.h
-@@ -8,7 +8,6 @@
- #ifndef LOONGARCH_CPU_PARAM_H
- #define LOONGARCH_CPU_PARAM_H
- 
--#define TARGET_PHYS_ADDR_SPACE_BITS 48
- #define TARGET_VIRT_ADDR_SPACE_BITS 48
- 
- #define TARGET_PAGE_BITS 12
-diff --git a/target/m68k/cpu-param.h b/target/m68k/cpu-param.h
-index 7afbf6d302d..59e04d85ff9 100644
---- a/target/m68k/cpu-param.h
-+++ b/target/m68k/cpu-param.h
-@@ -14,7 +14,6 @@
-  * use the smallest one
-  */
- #define TARGET_PAGE_BITS 12
--#define TARGET_PHYS_ADDR_SPACE_BITS 32
- #define TARGET_VIRT_ADDR_SPACE_BITS 32
- 
- #endif
-diff --git a/target/microblaze/cpu-param.h b/target/microblaze/cpu-param.h
-index 6a0714bb3d7..0b13f219c2a 100644
---- a/target/microblaze/cpu-param.h
-+++ b/target/microblaze/cpu-param.h
-@@ -17,10 +17,8 @@
-  * of address space.
-  */
- #ifdef CONFIG_USER_ONLY
--#define TARGET_PHYS_ADDR_SPACE_BITS 32
- #define TARGET_VIRT_ADDR_SPACE_BITS 32
- #else
--#define TARGET_PHYS_ADDR_SPACE_BITS 64
- #define TARGET_VIRT_ADDR_SPACE_BITS 64
- #endif
- 
-diff --git a/target/mips/cpu-param.h b/target/mips/cpu-param.h
-index a71e7383d24..122193b0db3 100644
---- a/target/mips/cpu-param.h
-+++ b/target/mips/cpu-param.h
-@@ -8,10 +8,8 @@
- #define MIPS_CPU_PARAM_H
- 
- #ifdef TARGET_ABI_MIPSN64
--#define TARGET_PHYS_ADDR_SPACE_BITS 48
- #define TARGET_VIRT_ADDR_SPACE_BITS 48
- #else
--#define TARGET_PHYS_ADDR_SPACE_BITS 40
- # ifdef CONFIG_USER_ONLY
- #  define TARGET_VIRT_ADDR_SPACE_BITS 31
- # else
-diff --git a/target/or1k/cpu-param.h b/target/or1k/cpu-param.h
-index 3011bf5fcca..1ff89d523f1 100644
---- a/target/or1k/cpu-param.h
-+++ b/target/or1k/cpu-param.h
-@@ -9,7 +9,6 @@
- #define OPENRISC_CPU_PARAM_H
- 
- #define TARGET_PAGE_BITS 13
--#define TARGET_PHYS_ADDR_SPACE_BITS 32
- #define TARGET_VIRT_ADDR_SPACE_BITS 32
- 
- #endif
-diff --git a/target/ppc/cpu-param.h b/target/ppc/cpu-param.h
-index ca7602d8983..5e211d10b0b 100644
---- a/target/ppc/cpu-param.h
-+++ b/target/ppc/cpu-param.h
-@@ -9,12 +9,6 @@
- #define PPC_CPU_PARAM_H
- 
- #ifdef TARGET_PPC64
--/*
-- * Note that the official physical address space bits is 62-M where M
-- * is implementation dependent.  I've not looked up M for the set of
-- * cpus we emulate at the system level.
-- */
--#define TARGET_PHYS_ADDR_SPACE_BITS 62
- /*
-  * Note that the PPC environment architecture talks about 80 bit virtual
-  * addresses, with segmentation.  Obviously that's not all visible to a
-@@ -26,7 +20,6 @@
- #  define TARGET_VIRT_ADDR_SPACE_BITS 64
- # endif
- #else
--# define TARGET_PHYS_ADDR_SPACE_BITS 36
- # define TARGET_VIRT_ADDR_SPACE_BITS 32
- #endif
- 
-diff --git a/target/riscv/cpu-param.h b/target/riscv/cpu-param.h
-index 039e877891a..ddb76a5300f 100644
---- a/target/riscv/cpu-param.h
-+++ b/target/riscv/cpu-param.h
-@@ -9,10 +9,8 @@
- #define RISCV_CPU_PARAM_H
- 
- #if defined(TARGET_RISCV64)
--# define TARGET_PHYS_ADDR_SPACE_BITS 56 /* 44-bit PPN */
- # define TARGET_VIRT_ADDR_SPACE_BITS 48 /* sv48 */
- #elif defined(TARGET_RISCV32)
--# define TARGET_PHYS_ADDR_SPACE_BITS 34 /* 22-bit PPN */
- # define TARGET_VIRT_ADDR_SPACE_BITS 32 /* sv32 */
- #endif
- #define TARGET_PAGE_BITS 12 /* 4 KiB Pages */
-diff --git a/target/rx/cpu-param.h b/target/rx/cpu-param.h
-index ef1970a09e9..3806f41b2fe 100644
---- a/target/rx/cpu-param.h
-+++ b/target/rx/cpu-param.h
-@@ -21,7 +21,6 @@
- 
- #define TARGET_PAGE_BITS 12
- 
--#define TARGET_PHYS_ADDR_SPACE_BITS 32
- #define TARGET_VIRT_ADDR_SPACE_BITS 32
- 
- #endif
-diff --git a/target/s390x/cpu-param.h b/target/s390x/cpu-param.h
-index a5f798eeae7..caef5a0e5c8 100644
---- a/target/s390x/cpu-param.h
-+++ b/target/s390x/cpu-param.h
-@@ -9,7 +9,6 @@
- #define S390_CPU_PARAM_H
- 
- #define TARGET_PAGE_BITS 12
--#define TARGET_PHYS_ADDR_SPACE_BITS 64
- #define TARGET_VIRT_ADDR_SPACE_BITS 64
- 
- #endif
-diff --git a/target/sh4/cpu-param.h b/target/sh4/cpu-param.h
-index 2b6e11dd0ac..c3b8114e538 100644
---- a/target/sh4/cpu-param.h
-+++ b/target/sh4/cpu-param.h
-@@ -9,7 +9,6 @@
- #define SH4_CPU_PARAM_H
- 
- #define TARGET_PAGE_BITS 12  /* 4k */
--#define TARGET_PHYS_ADDR_SPACE_BITS  32
- #ifdef CONFIG_USER_ONLY
- # define TARGET_VIRT_ADDR_SPACE_BITS 31
- #else
-diff --git a/target/sparc/cpu-param.h b/target/sparc/cpu-param.h
-index 6e8e2a51469..7ec4ac84dbb 100644
---- a/target/sparc/cpu-param.h
-+++ b/target/sparc/cpu-param.h
-@@ -9,7 +9,6 @@
- 
- #ifdef TARGET_SPARC64
- # define TARGET_PAGE_BITS 13 /* 8k */
--# define TARGET_PHYS_ADDR_SPACE_BITS  41
- # ifdef TARGET_ABI32
- #  define TARGET_VIRT_ADDR_SPACE_BITS 32
- # else
-@@ -17,7 +16,6 @@
- # endif
- #else
- # define TARGET_PAGE_BITS 12 /* 4k */
--# define TARGET_PHYS_ADDR_SPACE_BITS 36
- # define TARGET_VIRT_ADDR_SPACE_BITS 32
- #endif
- 
-diff --git a/target/tricore/cpu-param.h b/target/tricore/cpu-param.h
-index 790242ef3d2..7a5f67fe15e 100644
---- a/target/tricore/cpu-param.h
-+++ b/target/tricore/cpu-param.h
-@@ -9,7 +9,6 @@
- #define TRICORE_CPU_PARAM_H
- 
- #define TARGET_PAGE_BITS 14
--#define TARGET_PHYS_ADDR_SPACE_BITS 32
- #define TARGET_VIRT_ADDR_SPACE_BITS 32
- 
- #endif
-diff --git a/target/xtensa/cpu-param.h b/target/xtensa/cpu-param.h
-index 06d85218b84..1a9cdcefb49 100644
---- a/target/xtensa/cpu-param.h
-+++ b/target/xtensa/cpu-param.h
-@@ -9,7 +9,6 @@
- #define XTENSA_CPU_PARAM_H
- 
- #define TARGET_PAGE_BITS 12
--#define TARGET_PHYS_ADDR_SPACE_BITS 32
- #ifdef CONFIG_USER_ONLY
- #define TARGET_VIRT_ADDR_SPACE_BITS 30
- #else
+ static int gdb_read_reg_cs64(uint32_t hflags, GByteArray *buf, target_ulong val)
+ {
+-    if ((hflags & HF_CS64_MASK) || GDB_FORCE_64) {
++    if ((hflags & HF_CS64_MASK) || TARGET_LONG_BITS == 64) {
+         return gdb_get_reg64(buf, val);
+     }
+     return gdb_get_reg32(buf, val);
 -- 
 2.52.0
 
