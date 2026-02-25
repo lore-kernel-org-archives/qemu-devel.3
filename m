@@ -4,116 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42567F357DA
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 10:31:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02D38EFD23D
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 10:36:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvCAE-000520-9y; Wed, 25 Feb 2026 05:30:43 -0500
+	id 1vvCFJ-0006xt-NP; Wed, 25 Feb 2026 05:35:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vvCA8-00050U-H5
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 05:30:36 -0500
-Received: from 7.mo548.mail-out.ovh.net ([46.105.33.25])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vvCA2-0005jL-2V
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 05:30:33 -0500
-Received: from mxplan5.mail.ovh.net (unknown [10.109.254.158])
- by mo548.mail-out.ovh.net (Postfix) with ESMTPS id 4fLW7g1PKKz5w1C;
- Wed, 25 Feb 2026 10:30:22 +0000 (UTC)
-Received: from kaod.org (37.59.142.105) by DAG14EX2.mxp5.local (172.16.2.142)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.37; Wed, 25 Feb
- 2026 11:30:22 +0100
-Authentication-Results: garm.ovh; auth=pass
- (GARM-105G006c23c229e-9077-476b-85a3-281f38707c13,
- C59C41ABD0014BFD9FF8970E1C3D3014408A4F94) smtp.auth=clg@kaod.org
-X-OVh-ClientIp: 82.66.77.115
-Message-ID: <445c5b2b-d35e-4cea-9c2e-d5c1270e3ef4@kaod.org>
-Date: Wed, 25 Feb 2026 11:30:21 +0100
+ (Exim 4.90_1) (envelope-from <jean.christian.cirstea@gmail.com>)
+ id 1vvCFD-0006vN-Oj
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 05:35:56 -0500
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <jean.christian.cirstea@gmail.com>)
+ id 1vvCFC-0006vD-4h
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 05:35:51 -0500
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-483a233819aso63827565e9.3
+ for <qemu-devel@nongnu.org>; Wed, 25 Feb 2026 02:35:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1772015748; x=1772620548; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=inMBkKt77By2B2/2NRVmTl3MIU1MB0hU7n87s7QsHxE=;
+ b=TV+dwGXwBfgquR92nxbn9j4jXBQQchF5phQTzwH6QSetC+pCckBslaNHgwBhfr/MZn
+ 7iCsf/QqEfyCABb6/QXfcdv1ZXTRfGUzYiEw1gsLEyamXkTv7YfuEqiJlWl5oQlv2Cmv
+ 3/mtO5rd9JlF6HBwJ+9aIcZGs6hfagxgvVcqIDPqr2GDubH03SJ1z+sFgvFELDpSXuIT
+ 4Z4jrhcTj4XnC1ORHq491tvXm/FtteUXIIDIqk2xTTkoZKuFiJkqUcCKu+xdsln0svsq
+ tRW2ksXUGiOuz8AQKwrF0WeBKUspqaPhcN6wpLPB9wXaJn5nwbtatqxvjbDm+B8zZDes
+ Lztw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1772015748; x=1772620548;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=inMBkKt77By2B2/2NRVmTl3MIU1MB0hU7n87s7QsHxE=;
+ b=IPYSFNfYj34xFGUzkuaziqv6luk0bc834ogyt68W05KoWDnEsj+dmcK0YJUXiFng8d
+ VQVB9uvEF1/74O7vq9AUh/L6l4eLWtLUEhsRfzEZH0SlgzVsceVZCSyUG9KMBhhEjW/i
+ 9Kx5+XMpau7ZoqmGkg+oVUjZUp4Lu5uy6pDigd5Q3X9G5HYHVJFjsznkudp9sjRMoM1S
+ sc3wAyv6neZNGDovjfyv+jh8TXxkqXSw/lvFwRqJBFZMMVywjuOrvgNql9f4dKwDbexa
+ UbcmLsR5PvmujItTPUVQo+Uef5++p4pvVQgGRwgIwo2l1No3SiuuQlBTQbRRBDWb0hM3
+ NuNA==
+X-Gm-Message-State: AOJu0YzKzYJzlcDOufQS2Nn+5cP1TxbD+NH7ifS91Vw4lBBX63Rz9Wti
+ jcge15abVLr5k5HkEfuS33MgszOieywHyPLl/VFWY2kEZ4a1+4kgx05FOVafbQ==
+X-Gm-Gg: ATEYQzx8RpxhaB1ZUE3GucB/m0zIK4zL363gmVT16z3/PB9k7A4/R7kgl16vNWu+2K/
+ ifLVENprV8u7nGTThoscgAtJ69dG368ZKtKyJQgnVxV3iVEdtCo2OYlZ8hlS0HzA9l522dzAjn+
+ vce9KYbB9S+61qXFz21cNI6Kd8O/PyDZnOd7uyWbwUseuPf31ERShaukV66gn17t1XMaxfKOLWr
+ aT+WnxB82fTcgeSqGC23N1EPxAubLLQhqRfBohRNdkDcFqD5tID/4V0ds/oqOyfw6X7ALDgdSE8
+ +VKszyf9ZGyp4o6eLUyCGMvbW0hfwuRuXxfI1jY+djPKGqhjpu1Janh5DkIzSmO5B4UX6zKTjWd
+ die16JZ3YyVLsBq4KB9QwYjj9mcPFIUAmeIRvgRQA0SRWVuCUIUyhacbr2rT3c0E9jHdewHllHN
+ DAp87O4uLbpf6vofUzMpSo+q5A3pVoElB1GGIJqQ==
+X-Received: by 2002:a05:600c:8b48:b0:483:c12b:fe4a with SMTP id
+ 5b1f17b1804b1-483c12c0071mr9084305e9.11.1772015747947; 
+ Wed, 25 Feb 2026 02:35:47 -0800 (PST)
+Received: from tuf-gaming ([82.78.167.197]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-483bd7507adsm69943505e9.9.2026.02.25.02.35.47
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 25 Feb 2026 02:35:47 -0800 (PST)
+From: =?UTF-8?q?Jean-Christian=20C=C3=8ERSTEA?=
+ <jean.christian.cirstea@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: laurent@vivier.eu
+Subject: Re: [PATCH v2] linux-user/strace: fix printing of file offsets
+Date: Wed, 25 Feb 2026 12:35:45 +0200
+Message-ID: <20260225103545.170204-1-jean.christian.cirstea@gmail.com>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20251226173521.1957025-1-jean.christian.cirstea@gmail.com>
+References: <20251226173521.1957025-1-jean.christian.cirstea@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1] hw/i2c/aspeed_i2c: Fix DMA64 address handling
-To: Jamin Lin <jamin_lin@aspeedtech.com>, Peter Maydell
- <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
- <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, Joel
- Stanley <joel@jms.id.au>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-CC: Troy Lee <troy_lee@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>
-References: <20260224073207.985162-1-jamin_lin@aspeedtech.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <20260224073207.985162-1-jamin_lin@aspeedtech.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [37.59.142.105]
-X-ClientProxiedBy: DAG16EX1.mxp5.local (172.16.2.161) To DAG14EX2.mxp5.local
- (172.16.2.142)
-X-Ovh-Tracer-GUID: 343e6764-3da7-4005-9d14-52bb9abbddab
-X-Ovh-Tracer-Id: 14933373416625834930
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTFKoKHKTCBtjTLiIrF40QWVr9oRrebG3wgo8c+Ibd8XTY4ogIaNAR/W1ku3Ii+jZ5/+FkzOKrnjx/sPYB1vqzXOPashtgRyjRnVdz8/AVyFTKibDqJSbWlBSLM6aAeOjja4Oj4DQIY1JbxG8u5aGh+c/8Jzr2he3+KF6NbQix447Qm2OHrWIJWfjcdD7A7pbYD2cNrH2fmlWZK3EwZB6lsPnjdEQJzzcl54JhUd+V0VaMlXr6q5SkXf6Kq2bHVYOxhQBfhC0vgUm9G3NClGKFgzAIQkngQ04wDLE2qlU/xZeldFcni1WjRgr/9BPvZMSswTiHiOOvk4C3mJNIpZvOS8h+bAVM7jfH0qd84+LBcmgqQyqfS5F0u2cVNESCK40DhRfAdsrLpqqufGjBDTPUOr8TpKeJOeSYrZAsk0kCBTy/kqw7p7po+vEOZtLDrkQoPJB7XOVjwoA1Nb6054V31HDfyaXRtQ9UyIvwEhR7Fc85wR/ial8IEMYP5ydHMbs08GyhWnAnMj7MoFWAhbiDfm1pZo5YYniExxoTpUHbx+BInsRXbjJ4yWQteyj1GmPWgGacQqHWE240/v7dwX+7zM5pCB4BbVw2qvOrj9xtiM/0Iv398LFqWM3JvyR7Y7d9wCM1/hRCmucbgYBlwFVtlxCxZN+8EifE5kGmAn87QGxw
-DKIM-Signature: a=rsa-sha256; bh=Z57FymAnn8BAwdHaBF6fDH7x5JbsCf4ho9cAF7BsNXU=; 
- c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1772015424; v=1;
- b=AGAZqAtWDzmSZ/SP0yxkpo2AFWbxlkIwlnn5bT+FVv37P5UdEK9z9rWnqw5eJHI0JfAJB7M6
- PphVjcIZ9gIFdlYpi5bpNQrsIRK/AiGM351zf0NetIYMD7tuKv5/cxp6VDHzDKKBFF1oaOYipSl
- I1Zkc2McrA6ZgmiHT9/Qt4IbWAnZzt6zb27K0txGjb57lOFz13QaUfkn2laxV3yPhjmtdduw7rY
- euNbgSy9+ZmNVAPWe7Sgr5hYAUyP0UT8JdwpR7imF5fJd8x7X5G6NM6IfZZjPlveGjuQIr4Ynfp
- WI4zr+QHJcP8ySziVHMvhKlSjN0p6ttrwD6oz6YAzbu1A==
-Received-SPF: pass client-ip=46.105.33.25; envelope-from=clg@kaod.org;
- helo=7.mo548.mail-out.ovh.net
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.358,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.659, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=jean.christian.cirstea@gmail.com; helo=mail-wm1-x333.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -129,51 +99,5 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/24/26 08:32, Jamin Lin wrote:
-> The current code updates the upper 32 bits of dma_dram_offset only when
-> aic->has_dma64 is false, which is incorrect.
-> 
-> If aic->has_dma64 is true, the controller supports 64-bit DMA addressing
-> and the upper 32-bit DMA address register must be used to update the
-> dma_dram_offset accordingly.
-> 
-> Fix the condition so that the upper 32 bits are updated only when
-> 64-bit DMA is supported.
-> 
-> Fixes: efea7ddb4689a1ac4bce63a9ddb32887c7f3ac50 ("hw/i2c/aspeed_i2c: Fix DMA moving data into incorrect address")
-> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-> ---
->   hw/i2c/aspeed_i2c.c | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/hw/i2c/aspeed_i2c.c b/hw/i2c/aspeed_i2c.c
-> index 122bfdd63d..8022938f34 100644
-> --- a/hw/i2c/aspeed_i2c.c
-> +++ b/hw/i2c/aspeed_i2c.c
-> @@ -237,7 +237,7 @@ static void aspeed_i2c_set_tx_dma_dram_offset(AspeedI2CBus *bus)
->           bus->dma_dram_offset =
->               deposit64(bus->dma_dram_offset, 0, 32,
->                         FIELD_EX32(value, I2CM_DMA_TX_ADDR, ADDR));
-> -        if (!aic->has_dma64) {
-> +        if (aic->has_dma64) {
->               value = bus->regs[R_I2CM_DMA_TX_ADDR_HI];
->               bus->dma_dram_offset =
->                   deposit64(bus->dma_dram_offset, 32, 32,
-> @@ -262,7 +262,7 @@ static void aspeed_i2c_set_rx_dma_dram_offset(AspeedI2CBus *bus)
->           bus->dma_dram_offset =
->               deposit64(bus->dma_dram_offset, 0, 32,
->                         FIELD_EX32(value, I2CM_DMA_RX_ADDR, ADDR));
-> -        if (!aic->has_dma64) {
-> +        if (aic->has_dma64) {
->               value = bus->regs[R_I2CM_DMA_RX_ADDR_HI];
->               bus->dma_dram_offset =
->                   deposit64(bus->dma_dram_offset, 32, 32,
-
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-
-Thanks,
-
-C.
-
-
+Are there any outstanding issues with this patch?
 
