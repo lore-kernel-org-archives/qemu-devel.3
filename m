@@ -4,25 +4,25 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90BBEFD3764
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 15:00:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF9F6FD3760
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 15:00:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvGN4-00015N-D8; Wed, 25 Feb 2026 10:00:16 -0500
+	id 1vvGNA-0001JU-7n; Wed, 25 Feb 2026 10:00:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <guix@demindiro.com>)
- id 1vvGMj-000108-52
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 09:59:53 -0500
+ id 1vvGMj-00010A-Ox
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 09:59:54 -0500
 Received: from mail.salt-inc.org ([104.244.79.104] helo=vm0.salt-inc.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <guix@demindiro.com>)
- id 1vvGMc-0008MU-JC
+ id 1vvGMd-0008MX-3T
  for qemu-devel@nongnu.org; Wed, 25 Feb 2026 09:59:50 -0500
 Received: from localhost (209.60-130-109.adsl-dyn.isp.belgacom.be
  [109.130.60.209])
- by vm0.salt-inc.org (Postfix) with ESMTPSA id 6BEBCFF01C;
+ by vm0.salt-inc.org (Postfix) with ESMTPSA id EB14CFF028;
  Wed, 25 Feb 2026 15:58:32 +0100 (CET)
 From: David Hoppenbrouwers <qemu@demindiro.com>
 To: qemu-devel@nongnu.org
@@ -33,11 +33,12 @@ Cc: Eduardo Habkost <eduardo@habkost.net>,
  Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
  Sairaj Kodilkar <sarunkod@amd.com>,
  David Hoppenbrouwers <qemu@demindiro.com>
-Subject: [PATCH 0/2] hw/i386/amd_iommu: fix incorrect page_size hugepages
-Date: Wed, 25 Feb 2026 15:58:29 +0100
-Message-ID: <20260225145831.28275-1-qemu@demindiro.com>
+Subject: [PATCH 1/2] hw/i386/amd_iommu.c: trace page walk in fetch_pte()
+Date: Wed, 25 Feb 2026 15:58:30 +0100
+Message-ID: <20260225145831.28275-2-qemu@demindiro.com>
 X-Mailer: git-send-email 2.52.0
-Content-Type: text/plain; charset="utf-8"
+In-Reply-To: <20260225145831.28275-1-qemu@demindiro.com>
+References: <20260225145831.28275-1-qemu@demindiro.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=104.244.79.104; envelope-from=guix@demindiro.com;
@@ -63,21 +64,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-I have observed the IOMMU using the page size for the next level instead of
-the current level for hugepages, e.g. using 4K for what should be 2M pages.
+This is necessary to demonstrate the issue in the next commit.
+It is also useful when developing drivers.
 
-The issue can be observed under Linux, but only with specific settings as
-Linux tends to set NextLevel=7, which directly sets the page size after
-the walk.
+Signed-off-by: David Hoppenbrouwers <qemu@demindiro.com>
+---
+ hw/i386/amd_iommu.c  | 8 ++++++++
+ hw/i386/trace-events | 4 ++++
+ 2 files changed, 12 insertions(+)
 
-David Hoppenbrouwers (2):
-  hw/i386/amd_iommu.c: trace page walk in fetch_pte()
-  hw/i386/amd_iommu.c: fix incorrect page_size for hugepages
-
- hw/i386/amd_iommu.c  | 21 ++++++++++++++++++---
- hw/i386/trace-events |  4 ++++
- 2 files changed, 22 insertions(+), 3 deletions(-)
-
+diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
+index 789e09d6f2..29999fd776 100644
+--- a/hw/i386/amd_iommu.c
++++ b/hw/i386/amd_iommu.c
+@@ -667,6 +667,8 @@ static uint64_t fetch_pte(AMDVIAddressSpace *as, hwaddr address, uint64_t dte,
+     uint8_t level, mode;
+     uint64_t pte_addr;
+ 
++    trace_amdvi_fetch_pte_translate(address);
++
+     *pte = dte;
+     *page_size = 0;
+ 
+@@ -691,7 +693,11 @@ static uint64_t fetch_pte(AMDVIAddressSpace *as, hwaddr address, uint64_t dte,
+         return -AMDVI_FR_PT_ROOT_INV;
+     }
+ 
++    trace_amdvi_fetch_pte_root(level, *pte);
++
+     do {
++        trace_amdvi_fetch_pte_walk(level, *pte, PTE_NEXT_LEVEL(*pte), *page_size);
++
+         level -= 1;
+ 
+         /* Update the page_size */
+@@ -750,6 +756,8 @@ static uint64_t fetch_pte(AMDVIAddressSpace *as, hwaddr address, uint64_t dte,
+         *page_size = large_pte_page_size(*pte);
+     }
+ 
++    trace_amdvi_fetch_pte_found(level, *pte, PTE_NEXT_LEVEL(*pte), *page_size);
++
+     return 0;
+ }
+ 
+diff --git a/hw/i386/trace-events b/hw/i386/trace-events
+index 5fa5e93b68..5e7d7ba30d 100644
+--- a/hw/i386/trace-events
++++ b/hw/i386/trace-events
+@@ -118,6 +118,10 @@ amdvi_ir_intctl(uint8_t val) "int_ctl 0x%"PRIx8
+ amdvi_ir_target_abort(const char *str) "%s"
+ amdvi_ir_delivery_mode(const char *str) "%s"
+ amdvi_ir_irte_ga_val(uint64_t hi, uint64_t lo) "hi 0x%"PRIx64" lo 0x%"PRIx64
++amdvi_fetch_pte_translate(uint64_t address) "0x%016"PRIx64
++amdvi_fetch_pte_root(uint8_t level, uint64_t pte) "level=%d pte=%016"PRIx64
++amdvi_fetch_pte_walk(uint8_t level, uint64_t pte, uint8_t nextlevel, uint64_t page_size) "level=%d pte=%016"PRIx64" NextLevel=%d page_size=0x%"PRIx64
++amdvi_fetch_pte_found(uint8_t level, uint64_t pte, uint8_t nextlevel, uint64_t page_size) "level=%d pte=%016"PRIx64" NextLevel=%d page_size=0x%"PRIx64
+ 
+ # vmport.c
+ vmport_register(unsigned char command, void *func, void *opaque) "command: 0x%02x func: %p opaque: %p"
 -- 
 2.52.0
 
