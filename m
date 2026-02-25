@@ -4,112 +4,129 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D645FD377E
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 18:38:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11929F4BB9C
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 19:09:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvJlr-000219-Mx; Wed, 25 Feb 2026 13:38:03 -0500
+	id 1vvKFA-0006gb-8F; Wed, 25 Feb 2026 14:08:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vvJlq-000211-JH
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 13:38:02 -0500
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vvKF0-0006gI-NG
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 14:08:10 -0500
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vvJlo-00084J-Rv
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 13:38:02 -0500
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 5711A5C236;
- Wed, 25 Feb 2026 18:37:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1772044674; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=1euMDP8A44lA/oYDLZBrTkE1nc3WUd+vo6n3V4QQ12A=;
- b=2TEmJhBZrXILM81Hi8xLTcmQSbsbpnU1KO1qBvI6VLilIxzlRUnvdyJuyKFtHEqVe8wfLR
- viHvv7+tmC94lMZ5fwj81tXmMS4PxmM9yn2pccHlEklAjyTMaA6PCNwkisempKipuHJgML
- MdH4wcTQJRQBb7Ifflr/SpId7RvIH5Q=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1772044674;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=1euMDP8A44lA/oYDLZBrTkE1nc3WUd+vo6n3V4QQ12A=;
- b=QbMg4pDFHD99hVoGI3Iotxe6T7cc0Z2OLy9z/9mew7BPPCMTl9J8C1GOQ7+jKN856e4D8N
- hR0oQkPo4cXXFPCw==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1772044674; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=1euMDP8A44lA/oYDLZBrTkE1nc3WUd+vo6n3V4QQ12A=;
- b=2TEmJhBZrXILM81Hi8xLTcmQSbsbpnU1KO1qBvI6VLilIxzlRUnvdyJuyKFtHEqVe8wfLR
- viHvv7+tmC94lMZ5fwj81tXmMS4PxmM9yn2pccHlEklAjyTMaA6PCNwkisempKipuHJgML
- MdH4wcTQJRQBb7Ifflr/SpId7RvIH5Q=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1772044674;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=1euMDP8A44lA/oYDLZBrTkE1nc3WUd+vo6n3V4QQ12A=;
- b=QbMg4pDFHD99hVoGI3Iotxe6T7cc0Z2OLy9z/9mew7BPPCMTl9J8C1GOQ7+jKN856e4D8N
- hR0oQkPo4cXXFPCw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id C51313EA65;
- Wed, 25 Feb 2026 18:37:53 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id OOEXIoFBn2lzXAAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 25 Feb 2026 18:37:53 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org, "Edgar E.
- Iglesias" <edgar.iglesias@gmail.com>
-Cc: devel@lists.libvirt.org, Alex =?utf-8?Q?Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>, Eric Blake
- <eblake@redhat.com>, Zhao
- Liu <zhao1.liu@intel.com>, Eduardo Habkost <eduardo@habkost.net>, Markus
- Armbruster <armbru@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Alexandre Iooss <erdnaxe@crans.org>, Mahmoud Mandour
- <ma.mandourr@gmail.com>, Djordje Todorovic
- <Djordje.Todorovic@htecgroup.com>
-Subject: Re: [PATCH 2/4] tests/qtest: Remove the microblazeel target from
- the qtests
-In-Reply-To: <20260225161823.1438850-3-thuth@redhat.com>
-References: <20260225161823.1438850-1-thuth@redhat.com>
- <20260225161823.1438850-3-thuth@redhat.com>
-Date: Wed, 25 Feb 2026 15:37:50 -0300
-Message-ID: <878qcg3c01.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vvKEz-0005eQ-5J
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 14:08:10 -0500
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-2ad617d5b80so44879715ad.1
+ for <qemu-devel@nongnu.org>; Wed, 25 Feb 2026 11:08:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1772046487; x=1772651287; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=4Y7QN0rNTrVhECeL8dd1spBsA6Ge0JT/XISGobRBSzU=;
+ b=BVPIQFbYX46bWRyXrHgb8FbFkA7BfS9tWUr4eFm1Hei2GbJncZ16IZkn+hqTnydvy3
+ pPYiKyCeCSA1lM8z8pz+nCWDaHwW8BGOtLleuPUXuQm8IUeb9vTqCMLy0mvYl1hZXzlZ
+ PMbqN0BjI0Qdyd87kq9OQD85/NYbmNHudSywzQSs0hkd/Z1Nqjg/pXNo6e434FeZkaEx
+ VOuvWH2Bna+e9QK8I7+mt3hIUrwfzTl22HdtkOrE3hV2FkMdn9/2X/AfXSSc9kVCR9O+
+ m9FOMe/woHdRWxz8WDxZZBcoUf8P34oJ2eQfPvws7CjmR9KYBHNcol2EU9x2sQs2yJfU
+ TUZA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1772046487; x=1772651287;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=4Y7QN0rNTrVhECeL8dd1spBsA6Ge0JT/XISGobRBSzU=;
+ b=pkxxCTxHpTPpvnWzGiu4zWNH90ySfkfG+3WSXyJgNY3ZPdFuUMs+3YWovdX0M3RulT
+ Lr2aABCw+pEBEN2P++rqivF8DrANomAM3uyZblvI7eOaPhlTlOHUU5N6PrUSQtU4ne6I
+ kbMYbdhHv8WEbYiW71h3K43E4RFJVE+QP1jUBMFvlGlbtqlmIP/4e8hYeMP38foCW5GM
+ WmXGSU8QD2PKcGoP01nO5JKSvVRyY6hJbU/mQ7Q+euiGp8T6AV12WyCW/fQUAyFpSr22
+ 2gzRcrBYiuLXJhWpptf+Yz4WfczN/AjW4MD+JFqhdBiDsrP4UGd2l5Z7AE493c8fR7E9
+ guDg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWAZkFr7Oeadm9R6IpDQesw4i2Ujnf2MeewOLrva42A+KiOqJD5HaUl3IrN343amMmLsUCOlHjdAMFq@nongnu.org
+X-Gm-Message-State: AOJu0YwKeBk7ZnHTu74YztjDJE4o1DT957hkxejPSJvYYBR/cQHTpdya
+ cxhPZK7/EEkSO2BstD9kGmmxJ6xU/8TPLE3JH0txTqcfuhXRZKxajltC8IY1/+mHWLY=
+X-Gm-Gg: ATEYQzzjG/95Wr5cvI0fLrHAyI8mLdbeAnyJuxPJhIxKIF/LdNaJ0mUlnc234S26U5L
+ GqJtYtSTN/gesxHjzMJxGk5TUSkzPaXpur+w8UbGvAcq0FXK0Img/xKT69aYKYkMjQSQeC4re6r
+ b80bw4jez2zW2ourxxMYvozjIAx51/HpxRcAC4Zl3/WX1UACGNwa0mn+qH/wh7l97ghVX0t3qWM
+ 2OUZOqWWM1Q8wGIDWtZ1m4Jvui6gxrehZBPeNzAZvkdVRdxGVjuolwDT672ZJsjJqjhLbI/fusa
+ fKMyWrDUXNuDh1/eHLEvi6cO41F/6obtIrFjpAuSzIjeBKPVV1H2SXOkqWq4seCYaAfHr8Te8mL
+ CrCJ7Ilv5W2EkHSAT7leoEgDvWa9Jms0dTCpUyzDkYBGwAHxB3QgrzzToPWrcexnrKdzdWlaF6M
+ R5vYbedXMD/pX7dR1tZQSSrMmIfjZPu9eCHvmFWo9J85NhV8/FMMzNGFmmlNk4hbb/irashsczB
+ Gxa5FI=
+X-Received: by 2002:a17:902:d549:b0:2ad:dd69:76a2 with SMTP id
+ d9443c01a7336-2addd6977f9mr28789665ad.31.1772046487432; 
+ Wed, 25 Feb 2026 11:08:07 -0800 (PST)
+Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2ad75027b0asm152620115ad.67.2026.02.25.11.08.06
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 25 Feb 2026 11:08:07 -0800 (PST)
+Message-ID: <d995ea70-fded-40a0-9e82-55c9e9438488@linaro.org>
+Date: Wed, 25 Feb 2026 11:08:06 -0800
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- SUSPICIOUS_RECIPS(1.50)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- RCVD_TLS_ALL(0.00)[]; ARC_NA(0.00)[];
- FREEMAIL_ENVRCPT(0.00)[gmail.com]; RCVD_VIA_SMTP_AUTH(0.00)[];
- FUZZY_RATELIMITED(0.00)[rspamd.com]; MISSING_XM_UA(0.00)[];
- RCPT_COUNT_TWELVE(0.00)[14]; MIME_TRACE(0.00)[0:+];
- TAGGED_RCPT(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
- TO_DN_SOME(0.00)[]; FROM_HAS_DN(0.00)[];
- FREEMAIL_CC(0.00)[lists.libvirt.org,linaro.org,redhat.com,intel.com,habkost.net,crans.org,gmail.com,htecgroup.com];
- FREEMAIL_TO(0.00)[redhat.com,nongnu.org,gmail.com];
- FROM_EQ_ENVFROM(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,suse.de:email]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] accel/qtest: Build once as common object
+Content-Language: en-US
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+References: <20260225053408.18426-1-philmd@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
+ 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
+ ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
+In-Reply-To: <20260225053408.18426-1-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -126,59 +143,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Thomas Huth <thuth@redhat.com> writes:
-
-> From: Thomas Huth <thuth@redhat.com>
->
-> The "petalogix-ml605" boot-serial-test can be run with the
-> "microblaze" target. The remaining tests can simply be dropped
-> now that we are going to remove the "microblazeel" target.
->
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
+On 2/24/26 9:34 PM, Philippe Mathieu-Daudé wrote:
+> No code within qtest.c uses target-specific knowledge:
+> build it once as target-agnostic common unit.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->  tests/qtest/boot-serial-test.c  | 2 +-
->  tests/qtest/machine-none-test.c | 1 -
->  tests/qtest/meson.build         | 2 --
->  3 files changed, 1 insertion(+), 4 deletions(-)
->
-> diff --git a/tests/qtest/boot-serial-test.c b/tests/qtest/boot-serial-test.c
-> index a05d26ee996..bcd0a9c50e7 100644
-> --- a/tests/qtest/boot-serial-test.c
-> +++ b/tests/qtest/boot-serial-test.c
-> @@ -186,7 +186,7 @@ static const testdef_t tests[] = {
->      { "m68k", "next-cube", "", "TT", sizeof(bios_nextcube), 0, bios_nextcube },
->      { "microblaze", "petalogix-s3adsp1800", "", "TT",
->        sizeof(kernel_pls3adsp1800), kernel_pls3adsp1800 },
-> -    { "microblazeel", "petalogix-ml605", "", "TT",
-> +    { "microblaze", "petalogix-ml605", "", "TT",
->        sizeof(kernel_plml605), kernel_plml605 },
->      { "arm", "raspi2b", "", "TT", sizeof(bios_raspi2), 0, bios_raspi2 },
->      { "aarch64", "virt", "-cpu max", "TT", sizeof(kernel_aarch64),
-> diff --git a/tests/qtest/machine-none-test.c b/tests/qtest/machine-none-test.c
-> index b6a87d27edb..c1e22dcecc7 100644
-> --- a/tests/qtest/machine-none-test.c
-> +++ b/tests/qtest/machine-none-test.c
-> @@ -32,7 +32,6 @@ static struct arch2cpu cpus_map[] = {
->      { "alpha", "ev67" },
->      { "m68k", "m5206" },
->      { "microblaze", "any" },
-> -    { "microblazeel", "any" },
->      { "mips", "4Kc" },
->      { "mipsel", "I7200" },
->      { "mips64", "20Kc" },
-> diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-> index 25fdbc79801..ba9f59d2f8f 100644
-> --- a/tests/qtest/meson.build
-> +++ b/tests/qtest/meson.build
-> @@ -159,8 +159,6 @@ qtests_m68k = ['boot-serial-test'] + \
->  qtests_microblaze = ['boot-serial-test'] + \
->    qtests_filter
->  
-> -qtests_microblazeel = qtests_microblaze
-> -
->  qtests_mips = \
->    qtests_filter + \
->    (config_all_devices.has_key('CONFIG_ISA_TESTDEV') ? ['endianness-test'] : []) +            \
+>   meson.build             | 3 ---
+>   accel/qtest/meson.build | 5 ++++-
+>   2 files changed, 4 insertions(+), 4 deletions(-)
+> 
 
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
+It seems like it was not needed to have it per target indeed.
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
