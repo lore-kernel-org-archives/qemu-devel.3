@@ -4,109 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03BB9F55449
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 03:54:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4134F55449
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 03:54:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vv5wI-0003N9-B1; Tue, 24 Feb 2026 22:51:54 -0500
+	id 1vv5w2-00021e-Ts; Tue, 24 Feb 2026 22:51:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1vv5wE-0003C3-Ju
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 22:51:50 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1vv5w0-0001oJ-Kd
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 22:51:36 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1vv5wC-0008DR-St
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 22:51:50 -0500
+ id 1vv5vz-0008Bv-0n
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 22:51:36 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771991508;
+ s=mimecast20190719; t=1771991494;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=M5fiyO5toFV4jV0KLoqJkMTJePRwiukufXlV5ZgaA7k=;
- b=PCKNnNpuinNn0tyFtF56jhmWMgsNgFkn52S0JNcMlDYw/jZuAM7s3W+RNC75roJ2BpVoHs
- Dmvp6ov5UTc092OWJ1Ax+fGOTq6NuRibD85Wj/n5QCveicLhNYAkwSUMR1V4XgfADJdesj
- f+/L31eknYZ7ZldpPGc5Lra0w0aj2Tc=
+ bh=UZjupKNTcRQ4mvrXCw54dQwnzt6+1apWExSeFIvKWxA=;
+ b=Siin+S3ec67fInZyuQp1UkjYE3Zx+secoXXqb5SZCOOheoyG+uUx1UYpix6gJy0ibSdk7i
+ Q7VE9WzpE+0KSiRv2gp4VWeYzOKMNAMEpBnm4X8n3TYXBH3cO645alasRfUYY37QeTH1mh
+ mFBkbte8630we/PibVtDN72XxKnizXc=
 Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
  [209.85.216.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-319-EA_gmIPfMWKRSf4lCysq_A-1; Tue, 24 Feb 2026 22:51:44 -0500
-X-MC-Unique: EA_gmIPfMWKRSf4lCysq_A-1
-X-Mimecast-MFC-AGG-ID: EA_gmIPfMWKRSf4lCysq_A_1771991504
+ us-mta-610-CGAA8TnON96MFGKGSSEiCA-1; Tue, 24 Feb 2026 22:51:31 -0500
+X-MC-Unique: CGAA8TnON96MFGKGSSEiCA-1
+X-Mimecast-MFC-AGG-ID: CGAA8TnON96MFGKGSSEiCA_1771991490
 Received: by mail-pj1-f70.google.com with SMTP id
- 98e67ed59e1d1-358e79b4ca6so1140829a91.1
- for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 19:51:44 -0800 (PST)
+ 98e67ed59e1d1-35301003062so43389430a91.2
+ for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 19:51:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1771991503; x=1772596303; darn=nongnu.org;
+ d=redhat.com; s=google; t=1771991490; x=1772596290; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=M5fiyO5toFV4jV0KLoqJkMTJePRwiukufXlV5ZgaA7k=;
- b=dDwrxOCf4UYVO1Mx4qjx+OYKFC0OSjhnlsVM4+uj9HAWwmXbpogaSvKCt9yNnKNkTi
- Zu9EqU97/JL7HRVU/+BPC07Dn+VRhm1gjLmemy2RcpoE/JnxcdQ62S+H09q9aV33LoL6
- iMjbV49+7ctt9qPOoqZoGOV0mwcQOCDwVrqFyI13l9S3a5PZsa//ePZmmROfFyxLOsBu
- SlJhX3jtsiw9gM5axm3VVwg2YihQDeArXL1YafsJLwMr/9bEtMATuawoS3auSOgf8mF1
- n1ndlmKERSjjyS+rP7iIp8jhBSW/+4LrDipJwrprvoLzpcet0j/v48VMlzwu33Wea/kd
- 0YQA==
+ bh=UZjupKNTcRQ4mvrXCw54dQwnzt6+1apWExSeFIvKWxA=;
+ b=mFEJsfjiylQj7WJzekNbbKL1RvJvi/lXFZfM1fvkpzQE8nkynyQcMK7/DhkpUW7EtC
+ iLrolcGyWi7ilUAR7solSCm/eOc0kTDzGM3DdSVSdFkSk20+FGsJ9g/kLkPdMpG8Lpdz
+ skkHzweV0YEdSP3er5IH+azeON7zxZH9D3pyYRlZx5g3CVyPVlftvdI/JUw4WYvW8BeZ
+ XfTCx/ZjPFRSmyCER7G7JM9NBt30+shVFscIXlH5kNsumy1/6CDt3Gq4l43C0Spgx/jm
+ QxQeJ3hf58Gz7EVjFsX1K/cCVn/bJuUsdbq74Vc90CeSuEaf7vTkcda29QsePCkeyBG5
+ QZPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771991503; x=1772596303;
+ d=1e100.net; s=20230601; t=1771991490; x=1772596290;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=M5fiyO5toFV4jV0KLoqJkMTJePRwiukufXlV5ZgaA7k=;
- b=AhqSpCuPQ/HNI1BI3OdGggUHWNPRafn8ZKXbeXOllV/ySUe/Pvofzy9Kc43dZmFqG2
- rNHRfbVUp+uWx1JXSKLYMWZoCTjh4smBTtCcnG0mSLT6Fu//Zj2GQJfjw9j7+WMNTS1r
- 0T+Xkuy1agcOIiYWJaHIAVbs3ey+5wdFhGKg0UdIFspnwuNRdms7nZwO0pbaYTvU8F4b
- p/YYazNSfGjBKnBK1gbfVSLsFDQH59C736hitofuF24Cu3aKjGf/2VqShFYgXZXzwjRH
- q32zBOigqLqvHZmE6XkUIz+GlN3taRAFKlEZbdxcd8Lpj+WSZp96tdrDrm+KT/kRN9L8
- TrWQ==
+ bh=UZjupKNTcRQ4mvrXCw54dQwnzt6+1apWExSeFIvKWxA=;
+ b=mojTKDozEiU8jbBYf02r/ppiSwig32EMVRrY2M9LZVANC1qneyNZYSIG85Hjgn/EaD
+ Rk4IrLVjdDygw641fgZz1GJ9K8uqixVR6e7bKOjQ16QJsCJfZnQ5BOm8QScO/2DLJraS
+ 3VDZWgGJaMA1o4iQNPtvYJHqM3fuKwqRBfll1D9SYk75oO3D4XpPMlWVfJ6vE1t303mL
+ 4ITF8lupr1mM+9LkItNVSMJFo6I//ER2IbGNx9uCLg9SeBV7IJkOuc/OzDXv6zgJjnSH
+ 2mFR1yXMkba/B988r+l0Ehv96Z/ZaJfbSZPv0RLYHIIdujc4vZ/aFenf3zl2nmt87/XZ
+ 1Z2w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUvzrtCIt7yTZstBJN7CNv8JFpNVEuzWaWtlRWvZHH/jK4gg/b4HHBprdx+UkyP9n/soo+RVGLkzH4/@nongnu.org
-X-Gm-Message-State: AOJu0YxZ+yLvHUa+4Ba2C75of199xR2bzaG2tfow7F4fmFlqlxPbm+FY
- xuixTNInvnDvaQc8XdXJKfXRbICaLFW11/3iwrS6JvD4gNLC/84UFkc6dVOPfJ8Y8uUczI8b3AC
- T+lTMyowv+4VeU/40Wt2nbXqmfaT5E/Nx2BCPJuqX1kFeCL8oIS+3FaUA
-X-Gm-Gg: ATEYQzxUwEATQ4cM2HAlyk9c3qDHIj7AZfI5T6ukax3M1xztx5zNGYfaeHkW3GpcHrJ
- u5TbKvmy9s/L8A6/1cVhbnbxjSW8R5FLWLOeBE1+T8kPNFpBW1OTab0na26sHu5qO96WEnkfna3
- Zm04gzCUfYjXvvusCu34WT5KwM2g4c1DCb92hmnAsY96gbquYtC1Wp1cjGHj3PsZar3wxbZ3KaY
- 9/Q589RovpVF2lWFvwqHo1DqgJggauJfWZ4Pq/VQ0ADIwMn13iZ84/5guNyCAFs+U8kFKDkZ7px
- qt8E1jRUuSRohLYmTz2sBDwyuxHdG+zB8HXoax56WDKhOpD1O1r1vG0R6IScNYoOIXCu444P7yX
- lmOJSCg4FKp2da2hMBuPZ1774DD+GbBobnd2iYcDtbckCZCM+gu756Yw=
-X-Received: by 2002:a17:90b:5185:b0:340:b912:536 with SMTP id
- 98e67ed59e1d1-3590f1f3c09mr822866a91.31.1771991503579; 
- Tue, 24 Feb 2026 19:51:43 -0800 (PST)
-X-Received: by 2002:a17:90b:5185:b0:340:b912:536 with SMTP id
- 98e67ed59e1d1-3590f1f3c09mr822856a91.31.1771991503196; 
- Tue, 24 Feb 2026 19:51:43 -0800 (PST)
+ AJvYcCUSWpUKfp8cQSF6+G/sjyLs1Ww0sWyLueLn8e3iscQKEoLzt89IEBrvEnEtKgkbLunwNJe+8mgsNoZS@nongnu.org
+X-Gm-Message-State: AOJu0Yz/qlP7xHsZIAfmfAWR4giytlqRlV1EnwNJQFKajuu8o5P1t4y2
+ T3XyolBLyYj2EBBsw2UuAsDBMEK7zluOwzFjxeQJMLc7xIiuyxrALD2WvUjlcLZpr+E98VaRDCu
+ DaW3jdNyk+6K//OozOrz/dOV2uz/VC49BGHy4J3a0/yXkhhQjJCNOKioY
+X-Gm-Gg: ATEYQzwetO1NvPhdUPO0oWPn0OsgbmYJZ3mmBnbdvv6v9fAsPq+UMB5o81EJhybhUHO
+ TFTiQXc7kAXvroN9Xa1ZLaxcB/dgBmgd+ABYvJg2eezmEwki3XnQnRveyS3w+Y6AlNBmj4P2wzV
+ dDBO7/jGzfKpCED9JBKW+XYgkHn29pw/x2MJtorSORjmtn6SfYKam9LlzKkIOtGgAoRom75CAh8
+ WoaLcX5rUj+riQeFXZX2OW9IoLD3vyLxLg7Gc41TgOm2gcKyuEXCC/GwqWZxnAS+aADc08ziCxR
+ pBWQjRc10bxtkQokQvTQ1PDvdUcwznNKB7wKoBCKxn+XTO73WXODAYwzz7V07SASHdDYt62M70D
+ 0emcaJZX2iJ/zhxpsc1I57osDKtcdpxNeInfAiOtflpnYoxkWFq2MfKY=
+X-Received: by 2002:a17:90b:1d03:b0:32e:7270:9499 with SMTP id
+ 98e67ed59e1d1-3590eedda59mr905258a91.0.1771991489853; 
+ Tue, 24 Feb 2026 19:51:29 -0800 (PST)
+X-Received: by 2002:a17:90b:1d03:b0:32e:7270:9499 with SMTP id
+ 98e67ed59e1d1-3590eedda59mr905243a91.0.1771991489482; 
+ Tue, 24 Feb 2026 19:51:29 -0800 (PST)
 Received: from rhel9-box.lan ([122.176.129.56])
  by smtp.googlemail.com with ESMTPSA id
- 98e67ed59e1d1-359018838b2sm1186006a91.5.2026.02.24.19.51.39
+ 98e67ed59e1d1-359018838b2sm1186006a91.5.2026.02.24.19.51.26
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 24 Feb 2026 19:51:42 -0800 (PST)
+ Tue, 24 Feb 2026 19:51:29 -0800 (PST)
 From: Ani Sinha <anisinha@redhat.com>
-To: David Woodhouse <dwmw2@infradead.org>, Paul Durrant <paul@xen.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>
+To: "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>
 Cc: Ani Sinha <anisinha@redhat.com>, kraxel@redhat.com, ani@anisinha.ca,
- kvm@vger.kernel.org, qemu-devel@nongnu.org
-Subject: [PATCH v6 28/35] kvm/xen-emu: re-initialize capabilities during
- confidential guest reset
-Date: Wed, 25 Feb 2026 09:19:33 +0530
-Message-ID: <20260225035000.385950-29-anisinha@redhat.com>
+ qemu-devel@nongnu.org
+Subject: [PATCH v6 24/35] kvm/i8254: refactor pit initialization into a helper
+Date: Wed, 25 Feb 2026 09:19:29 +0530
+Message-ID: <20260225035000.385950-25-anisinha@redhat.com>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20260225035000.385950-1-anisinha@redhat.com>
 References: <20260225035000.385950-1-anisinha@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=anisinha@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=anisinha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -10
 X-Spam_score: -1.1
 X-Spam_bar: -
 X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.358, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.659,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -124,94 +126,106 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On confidential guests KVM virtual machine file descriptor changes as a
-part of the guest reset process. Xen capabilities needs to be re-initialized in
-KVM against the new file descriptor.
+The initialization code will be used again by VM file descriptor change
+notifier callback in a subsequent change. So refactor common code into a new
+helper function.
 
 Signed-off-by: Ani Sinha <anisinha@redhat.com>
 ---
- target/i386/kvm/xen-emu.c | 38 +++++++++++++++++++++++++++++++++++++-
- 1 file changed, 37 insertions(+), 1 deletion(-)
+ hw/i386/kvm/i8254.c | 68 +++++++++++++++++++++++++--------------------
+ 1 file changed, 38 insertions(+), 30 deletions(-)
 
-diff --git a/target/i386/kvm/xen-emu.c b/target/i386/kvm/xen-emu.c
-index 52de019834..29364a9279 100644
---- a/target/i386/kvm/xen-emu.c
-+++ b/target/i386/kvm/xen-emu.c
-@@ -44,9 +44,12 @@
+diff --git a/hw/i386/kvm/i8254.c b/hw/i386/kvm/i8254.c
+index 81e742f866..255047458a 100644
+--- a/hw/i386/kvm/i8254.c
++++ b/hw/i386/kvm/i8254.c
+@@ -60,6 +60,43 @@ struct KVMPITClass {
+     DeviceRealize parent_realize;
+ };
  
- #include "xen-compat.h"
- 
-+NotifierWithReturn xen_vmfd_change_notifier;
-+static uint32_t xen_msr;
- static void xen_vcpu_singleshot_timer_event(void *opaque);
- static void xen_vcpu_periodic_timer_event(void *opaque);
- static int vcpuop_stop_singleshot_timer(CPUState *cs);
-+static int do_initialize_xen_caps(KVMState *s, uint32_t hypercall_msr);
- 
- #ifdef TARGET_X86_64
- #define hypercall_compat32(longmode) (!(longmode))
-@@ -54,6 +57,23 @@ static int vcpuop_stop_singleshot_timer(CPUState *cs);
- #define hypercall_compat32(longmode) (false)
- #endif
- 
-+static int xen_handle_vmfd_change(NotifierWithReturn *n,
-+                                  void *data, Error** errp)
++static void do_pit_initialize(KVMPITState *s, Error **errp)
 +{
++    struct kvm_pit_config config = {
++        .flags = 0,
++    };
 +    int ret;
 +
-+    /* we are not interested in pre vmfd change notification */
-+    if (((VmfdChangeNotifier *)data)->pre) {
-+        return 0;
-+    }
-+
-+    ret = do_initialize_xen_caps(kvm_state, xen_msr);
++    ret = kvm_vm_ioctl(kvm_state, KVM_CREATE_PIT2, &config);
 +    if (ret < 0) {
-+        return ret;
++        error_setg(errp, "Create kernel PIC irqchip failed: %s",
++                   strerror(-ret));
++        return;
 +    }
-+    return 0;
++    switch (s->lost_tick_policy) {
++    case LOST_TICK_POLICY_DELAY:
++        break; /* enabled by default */
++    case LOST_TICK_POLICY_DISCARD:
++        if (kvm_check_extension(kvm_state, KVM_CAP_REINJECT_CONTROL)) {
++            struct kvm_reinject_control control = { .pit_reinject = 0 };
++
++            ret = kvm_vm_ioctl(kvm_state, KVM_REINJECT_CONTROL, &control);
++            if (ret < 0) {
++                error_setg(errp,
++                           "Can't disable in-kernel PIT reinjection: %s",
++                           strerror(-ret));
++                return;
++            }
++        }
++        break;
++    default:
++        error_setg(errp, "Lost tick policy not supported.");
++        return;
++    }
++
++    return;
 +}
 +
- static bool kvm_gva_to_gpa(CPUState *cs, uint64_t gva, uint64_t *gpa,
-                            size_t *len, bool is_write)
+ static void kvm_pit_update_clock_offset(KVMPITState *s)
  {
-@@ -111,7 +131,7 @@ static inline int kvm_copy_to_gva(CPUState *cs, uint64_t gva, void *buf,
-     return kvm_gva_rw(cs, gva, buf, sz, true);
- }
+     int64_t offset, clock_offset;
+@@ -241,42 +278,13 @@ static void kvm_pit_realizefn(DeviceState *dev, Error **errp)
+     PITCommonState *pit = PIT_COMMON(dev);
+     KVMPITClass *kpc = KVM_PIT_GET_CLASS(dev);
+     KVMPITState *s = KVM_PIT(pit);
+-    struct kvm_pit_config config = {
+-        .flags = 0,
+-    };
+-    int ret;
  
--int kvm_xen_init(KVMState *s, uint32_t hypercall_msr)
-+static int do_initialize_xen_caps(KVMState *s, uint32_t hypercall_msr)
- {
-     const int required_caps = KVM_XEN_HVM_CONFIG_HYPERCALL_MSR |
-         KVM_XEN_HVM_CONFIG_INTERCEPT_HCALL | KVM_XEN_HVM_CONFIG_SHARED_INFO;
-@@ -143,6 +163,19 @@ int kvm_xen_init(KVMState *s, uint32_t hypercall_msr)
-                      strerror(-ret));
-         return ret;
+     if (!kvm_check_extension(kvm_state, KVM_CAP_PIT_STATE2) ||
+         !kvm_check_extension(kvm_state, KVM_CAP_PIT2)) {
+         error_setg(errp, "In-kernel PIT not available");
      }
-+    return xen_caps;
-+}
-+
-+int kvm_xen_init(KVMState *s, uint32_t hypercall_msr)
-+{
-+    int xen_caps;
-+
-+    xen_caps = do_initialize_xen_caps(s, hypercall_msr);
-+    if (xen_caps < 0) {
-+        return xen_caps;
-+    }
-+
-+    xen_msr = hypercall_msr;
  
-     /* If called a second time, don't repeat the rest of the setup. */
-     if (s->xen_caps) {
-@@ -185,6 +218,9 @@ int kvm_xen_init(KVMState *s, uint32_t hypercall_msr)
-     xen_primary_console_reset();
-     xen_xenstore_reset();
+-    ret = kvm_vm_ioctl(kvm_state, KVM_CREATE_PIT2, &config);
+-    if (ret < 0) {
+-        error_setg(errp, "Create kernel PIC irqchip failed: %s",
+-                   strerror(-ret));
+-        return;
+-    }
+-    switch (s->lost_tick_policy) {
+-    case LOST_TICK_POLICY_DELAY:
+-        break; /* enabled by default */
+-    case LOST_TICK_POLICY_DISCARD:
+-        if (kvm_check_extension(kvm_state, KVM_CAP_REINJECT_CONTROL)) {
+-            struct kvm_reinject_control control = { .pit_reinject = 0 };
+-
+-            ret = kvm_vm_ioctl(kvm_state, KVM_REINJECT_CONTROL, &control);
+-            if (ret < 0) {
+-                error_setg(errp,
+-                           "Can't disable in-kernel PIT reinjection: %s",
+-                           strerror(-ret));
+-                return;
+-            }
+-        }
+-        break;
+-    default:
+-        error_setg(errp, "Lost tick policy not supported.");
+-        return;
+-    }
++    do_pit_initialize(s, errp);
  
-+    xen_vmfd_change_notifier.notify = xen_handle_vmfd_change;
-+    kvm_vmfd_add_change_notifier(&xen_vmfd_change_notifier);
-+
-     return 0;
- }
+     memory_region_init_io(&pit->ioports, OBJECT(dev), NULL, NULL, "kvm-pit", 4);
  
 -- 
 2.42.0
