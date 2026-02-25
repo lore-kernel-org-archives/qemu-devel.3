@@ -4,93 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D0A3FD3763
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 14:24:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DF89FD3764
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 14:26:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvFnN-0001oE-Vf; Wed, 25 Feb 2026 09:23:22 -0500
+	id 1vvFpn-0002p7-Kf; Wed, 25 Feb 2026 09:25:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1vvFnL-0001nt-Lr
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 09:23:19 -0500
-Received: from mail-dl1-x1241.google.com ([2607:f8b0:4864:20::1241])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1vvFnH-0003AL-KI
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 09:23:19 -0500
-Received: by mail-dl1-x1241.google.com with SMTP id
- a92af1059eb24-126ea4b77adso8261935c88.1
- for <qemu-devel@nongnu.org>; Wed, 25 Feb 2026 06:23:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1772029394; x=1772634194; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=juYoEm78xCL2QYOylmbVKBz615aWeLZ4f99sM1Riy/c=;
- b=BSDWpWHRwbTsfXgEfZzvLgok5+bC/sxc7UriYlgrZZj7FZbTOm8kYEtzFt6LNdlXu8
- +H7guX7o22V1iKCfIfqATsAX9JDo6ZdrTYUzae23epj2EY019zrXFrH6dSS01pTkQ9CU
- lfq5Hsnsrfg375XnFbmzOjamSLtEtj1tYkypx8viJ02i+jc+rj3UvBpx6stJbBRxOi69
- HOMO7INF+kJ4RBTCglCPZsznaFzgk3Cdkrn6he+VHjOKWfbrr5npNnkJG+YwqYY/2wIQ
- lpZ36V510nEa6OtXIWByXcxtyL5kdCz6dh1aUpBYVc1zxi9BwzXlSyDtpQ3a+LadPlob
- 7toQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772029394; x=1772634194;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=juYoEm78xCL2QYOylmbVKBz615aWeLZ4f99sM1Riy/c=;
- b=rEH3lXQCvYV7CQFnge5o+cZnS3DXdW9E95DhZDa2TKgJK4QwCIu2LhCIqofkO2bJtr
- Lk7FEZr/Yv9C7Ws4YDKLX/XztE6eeD37C91xd0ukFs3KWoBSA0Sjn1kr8+UWw/u9RrnK
- bQNAmf9UMbRORnIce7M/GJ8BQrP3L/FIMoHiIGudhs0NZRzUgNboUTaiAxwcdcA/X30y
- P/DCkAZY1Xahwm2TTlHDegIHIwCxnKEht6amzQsPaKeiQ5Whw4hPs2wfFy0tmRVor81l
- Ii2DyDm4fnMJygfAwL6S2Ef2sxNpMTlPaNoz1wO1QJZ75Ue+pF4PimRORI2C91dt8tZ6
- K0/g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWI1qhiEo+lVTMZOk5zyX+iR5oplQO9OFsw7bnyBtIX9MeUoicpQeSzDL5C+Lsr6mNBUGelMDpB05z0@nongnu.org
-X-Gm-Message-State: AOJu0Yx5J/P4GhTVy/GbwuTMYp4zrhsTIVFjid76VB8ZyG6xuyL3sKG+
- CN5Zci0QLOCOs8Dd+qXoNs5+1TjOEQj+DJWrn2pMyr5IfDs1Z+NDwnv+lSNDOWRiYlw=
-X-Gm-Gg: ATEYQzz2IVz0jJnk11RfvOBn5YmOyzNluFJoKKuWNA2asz2NZ6xeMIO0nUMabPLgvFK
- iPOqkSwoMSWVpyeaWOF/TzAIZvdDnvb0sJq/fhxSLsHCA4OwJZv5V0nBJxYizBZ7+Cs3BNYXh5u
- 4r4EnXpLgxNqhWsPS2IOS0bNKFZOlWDpzYTll7lnVS9vcVT1kt+K+yH/z3Xw+SFfEJ+GC/wcnxL
- OaC/cxcAG6cScEqArwa4kL3L+qrOJBuFPp66ok0J3UQnRMBR9LfI9y23Fy8qplrLp7wm4eiJbnU
- W/i0QjAyM/zGq5NbPVv2MrOlm6c2egteRg0M0qE7kbXOOgolc0989pFOBnaq4XxUNg76XIffmKK
- nQQTiIxpqV05dlIxoTFKG8gtirClZdy7uE7MQ0menni8yQvdaeGA+K9HZe7PdqCfJMWOSL4ts6n
- 9YIrebyL7yZZrjGytx0uotvmfS2V2xrYXGYPPgTNC1bNoA61/qpJbsf04tNxQ7nRh8WbzZRj75U
- 17dO4o572zD3sZWBjw7nQ7e52wmmns=
-X-Received: by 2002:a05:7022:404:b0:127:3f2a:af21 with SMTP id
- a92af1059eb24-1276acbe0efmr5224579c88.15.1772029393586; 
- Wed, 25 Feb 2026 06:23:13 -0800 (PST)
-Received: from ZEVORN-PC.localdomain ([38.95.120.198])
- by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-1276af7ad65sm11817360c88.11.2026.02.25.06.23.07
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 25 Feb 2026 06:23:12 -0800 (PST)
-Date: Wed, 25 Feb 2026 22:23:14 +0800
-From: Chao Liu <chao.liu.zevorn@gmail.com>
-To: Tao Tang <tangtao1634@phytium.com.cn>
-Cc: Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- Chen Baozi <chenbaozi@phytium.com.cn>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: Re: [RFC 1/2] tests/qtest: Support for memory access with
- secure/space attr
-Message-ID: <aZ8ABZwi_RVQUEj8@ZEVORN-PC.localdomain>
-References: <20260222082529.491384-1-tangtao1634@phytium.com.cn>
- <20260222082529.491384-2-tangtao1634@phytium.com.cn>
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1vvFpf-0002m3-Ib
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 09:25:45 -0500
+Received: from qs-2005i-snip4-8.eps.apple.com ([57.103.86.219]
+ helo=outbound.qs.icloud.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1vvFpc-0003di-I8
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 09:25:43 -0500
+Received: from outbound.qs.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-east-2d-100-percent-15 (Postfix) with ESMTPS id
+ 840E31800142; Wed, 25 Feb 2026 14:25:38 +0000 (UTC)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; t=1772029539; x=1774621539;
+ bh=Ch5IRT2Vcu7OGpHja7L/D+jNMc6Vs/OVDRML8OqTxWQ=;
+ h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
+ b=FagX1Fx49JrxErXJjn1DyL1JuMHGY+BQNTRO4/N65IwzEFgF8CvJv+o74O7Qsvd5PmBZ+SAAou0xPN5XG9TfM93gIE3QmqBtlBnAQzne2KbHk9+ggXXO90tjddBcb+zDRSDtfIdFH71waXlJR3t0825DR37N/KvmOHWTzSw3PiMoJgHlIe5YUYqc1NxCSVWX8FHRt1aPhAHxHw678yz1GBihq9F7cT4C+EP+nJIOyGsn9sZ9kh9K/xH3CQAesbDjhPaAIpQCE5JQYDcsL92o74vwjg9X877B/fquVmSJ0Mrluu5PA+hBviC4aDDj71R0Vmu+HMNAP03ihk3Enu+3pA==
+mail-alias-created-date: 1752046281608
+Received: from localhost.localdomain (unknown [17.57.155.37])
+ by p00-icloudmta-asmtp-us-east-2d-100-percent-15 (Postfix) with ESMTPSA id
+ 3296618000A8; Wed, 25 Feb 2026 14:25:37 +0000 (UTC)
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+To: qemu-devel@nongnu.org
+Cc: Pedro Barbuda <pbarbuda@microsoft.com>,
+ Mohamed Mediouni <mohamed@unpredictable.fr>,
+ Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>
+Subject: [PATCH] whpx: i386: apic: bring closer to MSHV code path
+Date: Wed, 25 Feb 2026 15:25:34 +0100
+Message-ID: <20260225142534.5471-1-mohamed@unpredictable.fr>
+X-Mailer: git-send-email 2.50.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260222082529.491384-2-tangtao1634@phytium.com.cn>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1241;
- envelope-from=chao.liu.zevorn@gmail.com; helo=mail-dl1-x1241.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- WEIRD_QUOTING=0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjI1MDEzOCBTYWx0ZWRfX4jti65wC7v1Y
+ NSFEGbU6FheclOoE8ARcJ9xabUiFHHBri5Z3o3p4aE55oJUwxXFFzDY/V358tv03qkzPodC77Py
+ tPakkCmUPWTo4owpORuBfJi5GgxUl6wNvKvyDZ8NxwDHiboylqyIYJX7dTbQhDb7IiYChoGPgqb
+ DVGawJBkEiDoBwrP++iI7ZBWqEasFXmBO0JG6uM1p6dpeuCfUM0wBCCl8gAeCX/AyLuuKkW3K15
+ EsPi7wMq8EPouUtB10x0DmTVgTQaTN/GP5ZSb0rUbhqHjIGWbnqRIDT9jE8i+t6aa3BX6190hYz
+ 4k8ZNZblcWLa3bf2TRrJylqqmdQwl6/4UJjeDEa6RgFpEfkTxpuNpuQz9ENgtQ=
+X-Authority-Info-Out: v=2.4 cv=KtpAGGWN c=1 sm=1 tr=0 ts=699f0662
+ cx=c_apl:c_apl_out:c_pps a=bsP7O+dXZ5uKcj+dsLqiMw==:117
+ a=bsP7O+dXZ5uKcj+dsLqiMw==:17 a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22 a=a_U1oVfrAAAA:8
+ a=yMhMjlubAAAA:8 a=nfi25ZJz4WSbdH3KjXAA:9
+X-Proofpoint-ORIG-GUID: lL7wkx2_5zKj-9ik8JLH1-zjtmvR3djB
+X-Proofpoint-GUID: lL7wkx2_5zKj-9ik8JLH1-zjtmvR3djB
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-02-25_01,2026-02-25_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
+ mlxlogscore=999 mlxscore=0 clxscore=1030 lowpriorityscore=0 suspectscore=0
+ adultscore=0 malwarescore=0 spamscore=0 phishscore=0 classifier=spam
+ authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
+ definitions=main-2602250138
+X-JNJ: AAAAAAABKqhqzX51pMCthWQFFZvyxzQjehvTfYJUV+CkuCoFXSWba42HYBHbecq3kmLsHRVxAskvZhOwUSqDE4rqNr1JsDrhPVyXFxsnQE40QPQOUPsHWTSMPaMNtgIyCryi0g2daheqLayooHf//YHyz9yRYeS0VKNmxAnEjxNv6FSG2eHwwj5uadwWS5Cx6tWX1STVUpt+9jmFTPnXW4CxuuFku36zZd+mEogabUyD/Ei0lHYlnKXslepT4/H90c5XA1oB1s/m2yFUDGgGUc8WRdXvTgAeuX6AL9UFBZZHG5TVQeHvX75LcLksI1hgHRL/0rK8D5gU/YRwFC+dZlOV/K7HkEILzKzoLnDI3tAEjhk8w0FqmD9cIwIi130HbPs44MJXBz3JfeDNG81AoM+g0Wust0sgRbPGA7cBVvJFNaSgBmepJH+JZ87dTEUvdS7Xzmwk+YBpcqAXJG/HLBffVmyQEq0gNINWb4+2UKKknmNQDrtgPIDOCeJlLMy4mjaA08NaU0GjkrNy59Gl4Y4NAmM0/Ibuc/tF2VKvspUCxLVG9IyN4CibNt1ZpyEhhSC1OXWIirYlMXQqD94vKthwKxQBJrH5mKeTkuV9jhY+k2HyUq+EBrsEkoIL/1l26iHxQpkCu17sCm2GiQ==
+Received-SPF: pass client-ip=57.103.86.219;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.qs.icloud.com
+X-Spam_score_int: -5
+X-Spam_score: -0.6
+X-Spam_bar: /
+X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.734, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.78,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,1309 +91,519 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Tao,
+MSHV doesn't have a dedicated apic_type and uses the common class. Make WHPX do the same thing.
 
-Some additional comments on top of Peter's review:
+As VM save/restore isn't currently supported anyway, this doesn't break functionality.
 
-On Sun, Feb 22, 2026 at 04:25:28PM +0800, Tao Tang wrote:
-> Introduce `*_secure` and `*_space` commands to the qtest protocol and
-> libqtest API. This allows testing devices that behave differently based
-> on security state (e.g., ARM TrustZone/CCA or x86 SMM).
-> 
-> - `*_secure` commands specify the SECURE parameter (0 or 1) and are
->   compatible with x86 and ARM.
-> - `*_space` commands specify the ARM security space (0-3) and are
->   ARM-specific.
-> 
-> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
-> ---
->  system/qtest.c                | 482 ++++++++++++++++++++++++++++++++++
->  tests/qtest/libqtest-single.h | 133 ++++++++++
->  tests/qtest/libqtest.c        | 249 ++++++++++++++++++
->  tests/qtest/libqtest.h        | 281 ++++++++++++++++++++
->  4 files changed, 1145 insertions(+)
-> 
-> diff --git a/system/qtest.c b/system/qtest.c
-> index e42b83ce67..2140aaac99 100644
-> --- a/system/qtest.c
-> +++ b/system/qtest.c
-> @@ -217,6 +217,60 @@ static void *qtest_server_send_opaque;
->   * B64_DATA is an arbitrarily long base64 encoded string.
->   * If the sizes do not match, the data will be truncated.
->   *
-> + * Memory access with MemTxAttrs:
-> + * """"""""""""""""""""""""""""""
-> + *
-> + * The following commands allow specifying memory transaction attributes,
-> + * which is useful for testing devices that behave differently based on
-> + * security state (e.g., ARM TrustZone/CCA or System Management Mode in x86).
-> + *
-> + * Two variants are available:
-> + *
-> + * 1. ``*_secure`` commands: Available on x86 and ARM.
-> + * Only specifies the SECURE parameter (0 or 1).
-> + * When SECURE=1, uses the secure AddressSpace. The asidx argument to
-> + * cpu_get_address_space() can only be 1 on x86 (SMM mode, X86ASIdx_SMM) and
-> + * ARM (Secure state, ARMASIdx_S); all other targets always use 0 for the asidx
-> + * parameter. When issuing ``*_secure`` commands, we assert that the secure
-> + * AddressSpace must exist.
-> + *
-> + * 2. ``*_space`` commands: ARM-specific.
-> + * Only specifies the SPACE parameter (0-3).
-> + * SECURE is auto-derived: secure=1 for Secure(0)/Root(2), secure=0 for
-> + * NonSecure(1)/Realm(3), following ARM's arm_space_is_secure() semantics.
-> + *
-> + * Secure variants with .secure attribute (x86/ARM):
-> + * ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-> + *
-> + * .. code-block:: none
-> + *
-> + *  > writeb_secure ADDR VALUE SECURE
-> + *  < OK
-> + *  > readb_secure ADDR SECURE
-> + *  < OK VALUE
-> + *  > read_secure ADDR SIZE SECURE
-> + *  < OK DATA
-> + *  > write_secure ADDR SIZE DATA SECURE
-> + *  < OK
-> + *  > memset_secure ADDR SIZE VALUE SECURE
-> + *  < OK
-> + *
-> + * Space variants with .space attribute (ARM-specific):
-> + * ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-> + *
-> + * .. code-block:: none
-> + *
-> + *  > writeb_space ADDR VALUE SPACE
-> + *  < OK
-> + *  > readb_space ADDR SPACE
-> + *  < OK VALUE
-> + *  > read_space ADDR SIZE SPACE
-> + *  < OK DATA
-> + *  > write_space ADDR SIZE DATA SPACE
-> + *  < OK
-> + *  > memset_space ADDR SIZE VALUE SPACE
-> + *  < OK
-> + *
->   * IRQ management:
->   * """""""""""""""
->   *
-> @@ -668,6 +722,434 @@ static void qtest_process_command(CharFrontend *chr, gchar **words)
->              g_free(data);
->          }
->  
-> +        qtest_send(chr, "OK\n");
-> +    } else if (strcmp(words[0], "writeb_secure") == 0 ||
-> +               strcmp(words[0], "writew_secure") == 0 ||
-> +               strcmp(words[0], "writel_secure") == 0 ||
-> +               strcmp(words[0], "writeq_secure") == 0) {
-> +        /*
-> +         * *_secure commands: x86/ARM compatible.
-> +         * Only specifies SECURE parameter.
-> +         */
-> +        uint64_t addr, value, secure;
-> +        MemTxAttrs attrs;
-MemTxAttrs is declared on the stack without initialization here.
-This struct has many fields (user, memory, debug, requester_id,
-unspecified, etc.) that will all contain garbage values. This
-happens in every single new command handler (all 12 branches).
+Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+---
+ hw/intc/apic.c                 |   9 ++
+ include/system/whpx-internal.h |   2 -
+ target/i386/cpu-apic.c         |   3 -
+ target/i386/whpx/irq.c         |  76 +++++++++
+ target/i386/whpx/irq.h         |   8 +
+ target/i386/whpx/meson.build   |   2 +-
+ target/i386/whpx/whpx-all.c    |  15 --
+ target/i386/whpx/whpx-apic.c   | 286 ---------------------------------
+ 8 files changed, 94 insertions(+), 307 deletions(-)
+ create mode 100644 target/i386/whpx/irq.c
+ create mode 100644 target/i386/whpx/irq.h
+ delete mode 100644 target/i386/whpx/whpx-apic.c
 
-You need either:
+diff --git a/hw/intc/apic.c b/hw/intc/apic.c
+index 8766ed00b9..4920043063 100644
+--- a/hw/intc/apic.c
++++ b/hw/intc/apic.c
+@@ -28,6 +28,8 @@
+ #include "qemu/host-utils.h"
+ #include "system/kvm.h"
+ #include "system/mshv.h"
++#include "system/whpx.h"
++#include "whpx/irq.h"
+ #include "trace.h"
+ #include "hw/i386/apic-msidef.h"
+ #include "exec/cpu-common.h"
+@@ -915,6 +917,13 @@ static void apic_send_msi(MSIMessage *msi)
+                                dest_mode, trigger_mode);
+         return;
+     }
++#endif
++#ifdef CONFIG_WHPX
++    if (whpx_enabled() && whpx_irqchip_in_kernel()) {
++        whpx_request_interrupt(delivery, vector, dest,
++                               dest_mode, trigger_mode);
++        return;
++    }
+ #endif
+     apic_deliver_irq(dest, dest_mode, delivery, vector, trigger_mode);
+ }
+diff --git a/include/system/whpx-internal.h b/include/system/whpx-internal.h
+index 7a1c9871f1..a1f8502155 100644
+--- a/include/system/whpx-internal.h
++++ b/include/system/whpx-internal.h
+@@ -4,7 +4,6 @@
+ 
+ #include <windows.h>
+ #include <winhvplatform.h>
+-#include "hw/i386/apic.h"
+ #include "exec/vaddr.h"
+ 
+ typedef enum WhpxBreakpointState {
+@@ -45,7 +44,6 @@ struct whpx_state {
+ };
+ 
+ extern struct whpx_state whpx_global;
+-void whpx_apic_get(APICCommonState *s);
+ 
+ #define WHV_E_UNKNOWN_CAPABILITY 0x80370300L
+ 
+diff --git a/target/i386/cpu-apic.c b/target/i386/cpu-apic.c
+index eaa10ad2a3..77073ad455 100644
+--- a/target/i386/cpu-apic.c
++++ b/target/i386/cpu-apic.c
+@@ -33,10 +33,7 @@ APICCommonClass *apic_get_class(Error **errp)
+         apic_type = "kvm-apic";
+     } else if (xen_enabled()) {
+         apic_type = "xen-apic";
+-    } else if (whpx_irqchip_in_kernel()) {
+-        apic_type = "whpx-apic";
+     }
+-
+     return APIC_COMMON_CLASS(object_class_by_name(apic_type));
+ }
+ 
+diff --git a/target/i386/whpx/irq.c b/target/i386/whpx/irq.c
+new file mode 100644
+index 0000000000..b33876a1db
+--- /dev/null
++++ b/target/i386/whpx/irq.c
+@@ -0,0 +1,76 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++#include "qemu/osdep.h"
++#include "qemu/error-report.h"
++#include "cpu.h"
++#include "hw/i386/apic_internal.h"
++#include "hw/i386/apic-msidef.h"
++#include "hw/pci/msi.h"
++#include "system/hw_accel.h"
++#include "system/whpx.h"
++#include "system/whpx-internal.h"
++#include "irq.h"
++#include "system/whpx-accel-ops.h"
++#include "system/whpx-all.h"
++#include "system/whpx-common.h"
++
++/* Structure definition from Hyper-V, to keep unaltered */
++typedef struct _HV_X64_INTERRUPT_CONTROLLER_STATE
++{
++    UINT32 ApicId;
++    UINT32 ApicVersion;
++    UINT32 ApicLdr;
++    UINT32 ApicDfr;
++    UINT32 ApicSpurious;
++    UINT32 ApicIsr[8];
++    UINT32 ApicTmr[8];
++    UINT32 ApicIrr[8];
++    UINT32 ApicEsr;
++    UINT32 ApicIcrHigh;
++    UINT32 ApicIcrLow;
++    UINT32 ApicLvtTimer;
++    UINT32 ApicLvtThermal;
++    UINT32 ApicLvtPerfmon;
++    UINT32 ApicLvtLint0;
++    UINT32 ApicLvtLint1;
++    UINT32 ApicLvtError;
++    UINT32 ApicLvtCmci;
++    UINT32 ApicErrorStatus;
++    UINT32 ApicInitialCount;
++    UINT32 ApicCounterValue;
++    UINT32 ApicDivideConfiguration;
++    UINT32 ApicRemoteRead;
++
++} HV_X64_INTERRUPT_CONTROLLER_STATE, *PHV_X64_INTERRUPT_CONTROLLER_STATE;
++
++int whpx_request_interrupt(uint32_t interrupt_type, uint32_t vector,
++                           uint32_t vp_index, bool logical_dest_mode,
++                           bool level_triggered)
++{
++    HRESULT hr;
++
++    if (vector == 0) {
++        warn_report("Ignoring request for interrupt vector 0");
++        return 0;
++    }
++
++    WHV_INTERRUPT_CONTROL interrupt = {
++        .Type = interrupt_type,
++        .DestinationMode = logical_dest_mode ?
++            WHvX64InterruptDestinationModeLogical :
++            WHvX64InterruptDestinationModePhysical,
++
++        .TriggerMode = level_triggered ?
++            WHvX64InterruptTriggerModeLevel : WHvX64InterruptTriggerModeEdge,
++        .Reserved = 0,
++        .Vector = vector,
++        .Destination = vp_index,
++    };
++
++    hr = whp_dispatch.WHvRequestInterrupt(whpx_global.partition,
++                     &interrupt, sizeof(interrupt));
++    if (FAILED(hr)) {
++        error_report("Failed to request interrupt");
++        return -errno;
++    }
++    return 0;
++}
+diff --git a/target/i386/whpx/irq.h b/target/i386/whpx/irq.h
+new file mode 100644
+index 0000000000..1ffaab69eb
+--- /dev/null
++++ b/target/i386/whpx/irq.h
+@@ -0,0 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++#ifndef QEMU_X86_WHPX_H
++#define QEMU_X86_WHPX_H
++
++int whpx_request_interrupt(uint32_t interrupt_type, uint32_t vector,
++                           uint32_t vp_index, bool logical_dest_mode,
++                           bool level_triggered);
++#endif /* QEMU_X86_WHPX_H */
+diff --git a/target/i386/whpx/meson.build b/target/i386/whpx/meson.build
+index c3aaaff9fd..5c13274b77 100644
+--- a/target/i386/whpx/meson.build
++++ b/target/i386/whpx/meson.build
+@@ -1,4 +1,4 @@
+ i386_system_ss.add(when: 'CONFIG_WHPX', if_true: files(
+   'whpx-all.c',
+-  'whpx-apic.c',
++  'irq.c'
+ ))
+diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
+index d98619face..ce3019bf4f 100644
+--- a/target/i386/whpx/whpx-all.c
++++ b/target/i386/whpx/whpx-all.c
+@@ -619,17 +619,6 @@ void whpx_get_registers(CPUState *cpu, WHPXStateLevel level)
+                      hr);
+     }
+ 
+-    if (level > WHPX_LEVEL_FAST_RUNTIME_STATE && whpx_irqchip_in_kernel()) {
+-        /*
+-         * Fetch the TPR value from the emulated APIC. It may get overwritten
+-         * below with the value from CR8 returned by
+-         * WHvGetVirtualProcessorRegisters().
+-         */
+-        whpx_apic_get(x86_cpu->apic_state);
+-        vcpu->tpr = whpx_apic_tpr_to_cr8(
+-            cpu_get_apic_tpr(x86_cpu->apic_state));
+-    }
+-
+     idx = 0;
+ 
+     /* Indexes for first 16 registers match between HV and QEMU definitions */
+@@ -762,10 +751,6 @@ void whpx_get_registers(CPUState *cpu, WHPXStateLevel level)
+ 
+     assert(idx == RTL_NUMBER_OF(whpx_register_names));
+ 
+-    if (level > WHPX_LEVEL_FAST_RUNTIME_STATE && whpx_irqchip_in_kernel()) {
+-        whpx_apic_get(x86_cpu->apic_state);
+-    }
+-
+     x86_update_hflags(env);
+ }
+ 
+diff --git a/target/i386/whpx/whpx-apic.c b/target/i386/whpx/whpx-apic.c
+deleted file mode 100644
+index f26ecaf6e8..0000000000
+--- a/target/i386/whpx/whpx-apic.c
++++ /dev/null
+@@ -1,286 +0,0 @@
+-/*
+- * WHPX platform APIC support
+- *
+- * Copyright (c) 2011 Siemens AG
+- *
+- * Authors:
+- *  Jan Kiszka          <jan.kiszka@siemens.com>
+- *  John Starks         <jostarks@microsoft.com>
+- *
+- * This work is licensed under the terms of the GNU GPL version 2.
+- * See the COPYING file in the top-level directory.
+- */
+-#include "qemu/osdep.h"
+-#include "qemu/error-report.h"
+-#include "cpu.h"
+-#include "hw/i386/apic_internal.h"
+-#include "hw/i386/apic-msidef.h"
+-#include "hw/pci/msi.h"
+-#include "system/hw_accel.h"
+-#include "system/whpx.h"
+-#include "system/whpx-internal.h"
+-
+-struct whpx_lapic_state {
+-    struct {
+-        uint32_t data;
+-        uint32_t padding[3];
+-    } fields[256];
+-};
+-
+-static void whpx_put_apic_state(APICCommonState *s,
+-                                struct whpx_lapic_state *kapic)
+-{
+-    int i;
+-
+-    memset(kapic, 0, sizeof(*kapic));
+-    kapic->fields[0x2].data = s->id << 24;
+-    kapic->fields[0x3].data = s->version | ((APIC_LVT_NB - 1) << 16);
+-    kapic->fields[0x8].data = s->tpr;
+-    kapic->fields[0xd].data = s->log_dest << 24;
+-    kapic->fields[0xe].data = s->dest_mode << 28 | 0x0fffffff;
+-    kapic->fields[0xf].data = s->spurious_vec;
+-    for (i = 0; i < 8; i++) {
+-        kapic->fields[0x10 + i].data = s->isr[i];
+-        kapic->fields[0x18 + i].data = s->tmr[i];
+-        kapic->fields[0x20 + i].data = s->irr[i];
+-    }
+-
+-    kapic->fields[0x28].data = s->esr;
+-    kapic->fields[0x30].data = s->icr[0];
+-    kapic->fields[0x31].data = s->icr[1];
+-    for (i = 0; i < APIC_LVT_NB; i++) {
+-        kapic->fields[0x32 + i].data = s->lvt[i];
+-    }
+-
+-    kapic->fields[0x38].data = s->initial_count;
+-    kapic->fields[0x3e].data = s->divide_conf;
+-}
+-
+-static void whpx_get_apic_state(APICCommonState *s,
+-                                struct whpx_lapic_state *kapic)
+-{
+-    int i, v;
+-
+-    s->id = kapic->fields[0x2].data >> 24;
+-    s->tpr = kapic->fields[0x8].data;
+-    s->arb_id = kapic->fields[0x9].data;
+-    s->log_dest = kapic->fields[0xd].data >> 24;
+-    s->dest_mode = kapic->fields[0xe].data >> 28;
+-    s->spurious_vec = kapic->fields[0xf].data;
+-    for (i = 0; i < 8; i++) {
+-        s->isr[i] = kapic->fields[0x10 + i].data;
+-        s->tmr[i] = kapic->fields[0x18 + i].data;
+-        s->irr[i] = kapic->fields[0x20 + i].data;
+-    }
+-
+-    s->esr = kapic->fields[0x28].data;
+-    s->icr[0] = kapic->fields[0x30].data;
+-    s->icr[1] = kapic->fields[0x31].data;
+-    for (i = 0; i < APIC_LVT_NB; i++) {
+-        s->lvt[i] = kapic->fields[0x32 + i].data;
+-    }
+-
+-    s->initial_count = kapic->fields[0x38].data;
+-    s->divide_conf = kapic->fields[0x3e].data;
+-
+-    v = (s->divide_conf & 3) | ((s->divide_conf >> 1) & 4);
+-    s->count_shift = (v + 1) & 7;
+-
+-    s->initial_count_load_time = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
+-    apic_next_timer(s, s->initial_count_load_time);
+-}
+-
+-static int whpx_apic_set_base(APICCommonState *s, uint64_t val)
+-{
+-    s->apicbase = val;
+-    return 0;
+-}
+-
+-static void whpx_put_apic_base(CPUState *cpu, uint64_t val)
+-{
+-    HRESULT hr;
+-    WHV_REGISTER_VALUE reg_value = {.Reg64 = val};
+-    WHV_REGISTER_NAME reg_name = WHvX64RegisterApicBase;
+-
+-    hr = whp_dispatch.WHvSetVirtualProcessorRegisters(
+-             whpx_global.partition,
+-             cpu->cpu_index,
+-             &reg_name, 1,
+-             &reg_value);
+-
+-    if (FAILED(hr)) {
+-        error_report("WHPX: Failed to set MSR APIC base, hr=%08lx", hr);
+-    }
+-}
+-
+-static void whpx_apic_set_tpr(APICCommonState *s, uint8_t val)
+-{
+-    s->tpr = val;
+-}
+-
+-static uint8_t whpx_apic_get_tpr(APICCommonState *s)
+-{
+-    return s->tpr;
+-}
+-
+-static void whpx_apic_vapic_base_update(APICCommonState *s)
+-{
+-    /* not implemented yet */
+-}
+-
+-static void whpx_apic_put(CPUState *cs, run_on_cpu_data data)
+-{
+-    APICCommonState *s = data.host_ptr;
+-    struct whpx_lapic_state kapic;
+-    HRESULT hr;
+-
+-    whpx_put_apic_base(CPU(s->cpu), s->apicbase);
+-    whpx_put_apic_state(s, &kapic);
+-
+-    hr = whp_dispatch.WHvSetVirtualProcessorInterruptControllerState2(
+-        whpx_global.partition,
+-        cs->cpu_index,
+-        &kapic,
+-        sizeof(kapic));
+-    if (FAILED(hr)) {
+-        fprintf(stderr,
+-            "WHvSetVirtualProcessorInterruptControllerState failed: %08lx\n",
+-             hr);
+-
+-        abort();
+-    }
+-}
+-
+-void whpx_apic_get(APICCommonState *s)
+-{
+-    CPUState *cpu = CPU(s->cpu);
+-    struct whpx_lapic_state kapic;
+-
+-    HRESULT hr = whp_dispatch.WHvGetVirtualProcessorInterruptControllerState2(
+-        whpx_global.partition,
+-        cpu->cpu_index,
+-        &kapic,
+-        sizeof(kapic),
+-        NULL);
+-    if (FAILED(hr)) {
+-        fprintf(stderr,
+-            "WHvSetVirtualProcessorInterruptControllerState failed: %08lx\n",
+-            hr);
+-
+-        abort();
+-    }
+-
+-    whpx_get_apic_state(s, &kapic);
+-}
+-
+-static void whpx_apic_post_load(APICCommonState *s)
+-{
+-    run_on_cpu(CPU(s->cpu), whpx_apic_put, RUN_ON_CPU_HOST_PTR(s));
+-}
+-
+-static void whpx_apic_external_nmi(APICCommonState *s)
+-{
+-}
+-
+-static void whpx_send_msi(MSIMessage *msg)
+-{
+-    uint64_t addr = msg->address;
+-    uint32_t data = msg->data;
+-    uint8_t dest = (addr & MSI_ADDR_DEST_ID_MASK) >> MSI_ADDR_DEST_ID_SHIFT;
+-    uint8_t vector = (data & MSI_DATA_VECTOR_MASK) >> MSI_DATA_VECTOR_SHIFT;
+-    uint8_t dest_mode = (addr >> MSI_ADDR_DEST_MODE_SHIFT) & 0x1;
+-    uint8_t trigger_mode = (data >> MSI_DATA_TRIGGER_SHIFT) & 0x1;
+-    uint8_t delivery = (data >> MSI_DATA_DELIVERY_MODE_SHIFT) & 0x7;
+-
+-    if (vector == 0) {
+-        warn_report("Ignoring request for interrupt vector 0");
+-        return;
+-    }
+-
+-    WHV_INTERRUPT_CONTROL interrupt = {
+-        /* Values correspond to delivery modes */
+-        .Type = delivery,
+-        .DestinationMode = dest_mode ?
+-            WHvX64InterruptDestinationModeLogical :
+-            WHvX64InterruptDestinationModePhysical,
+-
+-        .TriggerMode = trigger_mode ?
+-            WHvX64InterruptTriggerModeLevel : WHvX64InterruptTriggerModeEdge,
+-        .Reserved = 0,
+-        .Vector = vector,
+-        .Destination = dest,
+-    };
+-    HRESULT hr = whp_dispatch.WHvRequestInterrupt(whpx_global.partition,
+-                     &interrupt, sizeof(interrupt));
+-    if (FAILED(hr)) {
+-        fprintf(stderr, "whpx: injection failed, MSI (%llx, %x) delivery: %d, "
+-                "dest_mode: %d, trigger mode: %d, vector: %d, lost (%08lx)\n",
+-                addr, data, delivery, dest_mode, trigger_mode, vector, hr);
+-    }
+-}
+-
+-static uint64_t whpx_apic_mem_read(void *opaque, hwaddr addr,
+-                                   unsigned size)
+-{
+-    return ~(uint64_t)0;
+-}
+-
+-static void whpx_apic_mem_write(void *opaque, hwaddr addr,
+-                                uint64_t data, unsigned size)
+-{
+-    MSIMessage msg = { .address = addr, .data = data };
+-    whpx_send_msi(&msg);
+-}
+-
+-static const MemoryRegionOps whpx_apic_io_ops = {
+-    .read = whpx_apic_mem_read,
+-    .write = whpx_apic_mem_write,
+-    .endianness = DEVICE_LITTLE_ENDIAN,
+-};
+-
+-static void whpx_apic_reset(APICCommonState *s)
+-{
+-    /* Not used by WHPX. */
+-    s->wait_for_sipi = 0;
+-
+-    run_on_cpu(CPU(s->cpu), whpx_apic_put, RUN_ON_CPU_HOST_PTR(s));
+-}
+-
+-static void whpx_apic_realize(DeviceState *dev, Error **errp)
+-{
+-    APICCommonState *s = APIC_COMMON(dev);
+-
+-    memory_region_init_io(&s->io_memory, OBJECT(s), &whpx_apic_io_ops, s,
+-                          "whpx-apic-msi", APIC_SPACE_SIZE);
+-
+-    msi_nonbroken = true;
+-}
+-
+-static void whpx_apic_class_init(ObjectClass *klass, const void *data)
+-{
+-    APICCommonClass *k = APIC_COMMON_CLASS(klass);
+-
+-    k->realize = whpx_apic_realize;
+-    k->reset = whpx_apic_reset;
+-    k->set_base = whpx_apic_set_base;
+-    k->set_tpr = whpx_apic_set_tpr;
+-    k->get_tpr = whpx_apic_get_tpr;
+-    k->post_load = whpx_apic_post_load;
+-    k->vapic_base_update = whpx_apic_vapic_base_update;
+-    k->external_nmi = whpx_apic_external_nmi;
+-    k->send_msi = whpx_send_msi;
+-}
+-
+-static const TypeInfo whpx_apic_info = {
+-    .name = "whpx-apic",
+-    .parent = TYPE_APIC_COMMON,
+-    .instance_size = sizeof(APICCommonState),
+-    .class_init = whpx_apic_class_init,
+-};
+-
+-static void whpx_apic_register_types(void)
+-{
+-    type_register_static(&whpx_apic_info);
+-}
+-
+-type_init(whpx_apic_register_types)
+-- 
+2.50.1 (Apple Git-155)
 
-```
-    MemTxAttrs attrs = {};
-```
-
-or build on top of MEMTXATTRS_UNSPECIFIED and then set the
-specific fields you need. As-is this is a real bug that could
-cause unpredictable behavior depending on what garbage ends up
-in the other attribute fields.
-
-> +        AddressSpace *as;
-> +        int ret;
-> +
-> +        g_assert(words[1] && words[2] && words[3]);
-> +        ret = qemu_strtou64(words[1], NULL, 0, &addr);
-> +        g_assert(ret == 0);
-> +        ret = qemu_strtou64(words[2], NULL, 0, &value);
-> +        g_assert(ret == 0);
-> +        ret = qemu_strtou64(words[3], NULL, 0, &secure);
-> +        g_assert(ret == 0);
-> +
-> +        attrs.secure = secure & 1;
-> +
-> +        if (attrs.secure) {
-> +            as = cpu_get_address_space(first_cpu, 1);
-> +            /* Secure AddressSpace must be available when issuing secure commands */
-> +            g_assert(as);
-> +        } else {
-> +            as = first_cpu->as;
-> +        }
-> +
-As Peter already pointed out, hardcoding asidx=1 is wrong. But I
-want to add: once you properly initialize attrs, you can unify the
-AS lookup for both *_secure and *_space into a single helper:
-
-```
-    static AddressSpace *qtest_get_as_for_attrs(MemTxAttrs attrs)
-    {
-        int asidx = cpu_asidx_from_attrs(first_cpu, attrs);
-        AddressSpace *as = cpu_get_address_space(first_cpu, asidx);
-        g_assert(as);
-        return as;
-    }
-```
-
-This eliminates the duplicated if/else AS lookup in every branch.
-
-Also, the *_secure commands have no architecture guard at all. If
-someone runs `readb_secure ADDR 1` on RISC-V or MIPS (which only
-have one address space), cpu_get_address_space(first_cpu, 1) will
-return NULL and hit the g_assert. You should either add a guard
-similar to what *_space does, or (better) rely on
-cpu_asidx_from_attrs() which will naturally return 0 for
-architectures that don't understand the secure attribute.
-
-> +        if (words[0][5] == 'b') {
-> +            uint8_t data = value;
-> +            address_space_write(as, addr, attrs, &data, 1);
-> +        } else if (words[0][5] == 'w') {
-> +            uint16_t data = value;
-> +            tswap16s(&data);
-> +            address_space_write(as, addr, attrs, &data, 2);
-> +        } else if (words[0][5] == 'l') {
-> +            uint32_t data = value;
-> +            tswap32s(&data);
-> +            address_space_write(as, addr, attrs, &data, 4);
-> +        } else if (words[0][5] == 'q') {
-> +            uint64_t data = value;
-> +            tswap64s(&data);
-> +            address_space_write(as, addr, attrs, &data, 8);
-> +        }
-This byte-swap + address_space_write block is copy-pasted verbatim
-from the existing writeb/writew/writel/writeq handler, and then
-duplicated again for *_space. Same for the read side. Please
-extract a common helper, e.g.:
-
-```
-    static void qtest_do_typed_write(AddressSpace *as, MemTxAttrs attrs,
-                                     uint64_t addr, uint64_t value,
-                                     char size_char)
-```
-
-This would let the existing non-secure commands share the same
-code path too, which aligns with Peter's suggestion of extending
-the existing commands with optional parameters.
-
-> +        qtest_send(chr, "OK\n");
-> +    } else if (strcmp(words[0], "readb_secure") == 0 ||
-> +               strcmp(words[0], "readw_secure") == 0 ||
-> +               strcmp(words[0], "readl_secure") == 0 ||
-> +               strcmp(words[0], "readq_secure") == 0) {
-> +        uint64_t addr, secure;
-> +        uint64_t value = UINT64_C(-1);
-> +        MemTxAttrs attrs;
-> +        AddressSpace *as;
-> +        int ret;
-> +
-> +        g_assert(words[1] && words[2]);
-> +        ret = qemu_strtou64(words[1], NULL, 0, &addr);
-> +        g_assert(ret == 0);
-> +        ret = qemu_strtou64(words[2], NULL, 0, &secure);
-> +        g_assert(ret == 0);
-> +
-> +        attrs.secure = secure & 1;
-> +
-> +        if (attrs.secure) {
-> +            as = cpu_get_address_space(first_cpu, 1);
-> +            g_assert(as);
-> +        } else {
-> +            as = first_cpu->as;
-> +        }
-> +
-> +        if (words[0][4] == 'b') {
-> +            uint8_t data;
-> +            address_space_read(as, addr, attrs, &data, 1);
-> +            value = data;
-> +        } else if (words[0][4] == 'w') {
-> +            uint16_t data;
-> +            address_space_read(as, addr, attrs, &data, 2);
-> +            value = tswap16(data);
-> +        } else if (words[0][4] == 'l') {
-> +            uint32_t data;
-> +            address_space_read(as, addr, attrs, &data, 4);
-> +            value = tswap32(data);
-> +        } else if (words[0][4] == 'q') {
-> +            address_space_read(as, addr, attrs, &value, 8);
-> +            tswap64s(&value);
-> +        }
-> +        qtest_sendf(chr, "OK 0x%016" PRIx64 "\n", value);
-> +    } else if (strcmp(words[0], "read_secure") == 0) {
-> +        g_autoptr(GString) enc = NULL;
-> +        uint64_t addr, len, secure;
-> +        uint8_t *data;
-> +        MemTxAttrs attrs;
-> +        AddressSpace *as;
-> +        int ret;
-> +
-> +        g_assert(words[1] && words[2] && words[3]);
-> +        ret = qemu_strtou64(words[1], NULL, 0, &addr);
-> +        g_assert(ret == 0);
-> +        ret = qemu_strtou64(words[2], NULL, 0, &len);
-> +        g_assert(ret == 0);
-> +        ret = qemu_strtou64(words[3], NULL, 0, &secure);
-> +        g_assert(ret == 0);
-> +        g_assert(len);
-> +
-> +        attrs.secure = secure & 1;
-> +
-> +        if (attrs.secure) {
-> +            as = cpu_get_address_space(first_cpu, 1);
-> +            g_assert(as);
-> +        } else {
-> +            as = first_cpu->as;
-> +        }
-> +
-> +        data = g_malloc(len);
-> +        address_space_read(as, addr, attrs, data, len);
-> +
-> +        enc = qemu_hexdump_line(NULL, data, len, 0, 0);
-> +        qtest_sendf(chr, "OK 0x%s\n", enc->str);
-> +        g_free(data);
-> +    } else if (strcmp(words[0], "write_secure") == 0) {
-> +        uint64_t addr, len, i, secure;
-> +        uint8_t *data;
-> +        size_t data_len;
-> +        MemTxAttrs attrs;
-> +        AddressSpace *as;
-> +        int ret;
-> +
-> +        g_assert(words[1] && words[2] && words[3] && words[4]);
-> +        ret = qemu_strtou64(words[1], NULL, 0, &addr);
-> +        g_assert(ret == 0);
-> +        ret = qemu_strtou64(words[2], NULL, 0, &len);
-> +        g_assert(ret == 0);
-> +        ret = qemu_strtou64(words[4], NULL, 0, &secure);
-> +        g_assert(ret == 0);
-> +
-> +        data_len = strlen(words[3]);
-> +        if (data_len < 3) {
-> +            qtest_send(chr, "ERR invalid argument size\n");
-> +            return;
-> +        }
-> +
-> +        attrs.secure = secure & 1;
-> +
-> +        if (attrs.secure) {
-> +            as = cpu_get_address_space(first_cpu, 1);
-> +            g_assert(as);
-> +        } else {
-> +            as = first_cpu->as;
-> +        }
-> +
-> +        data = g_malloc(len);
-> +        for (i = 0; i < len; i++) {
-> +            if ((i * 2 + 4) <= data_len) {
-> +                data[i] = hex2nib(words[3][i * 2 + 2]) << 4;
-> +                data[i] |= hex2nib(words[3][i * 2 + 3]);
-> +            } else {
-> +                data[i] = 0;
-> +            }
-> +        }
-> +        address_space_write(as, addr, attrs, data, len);
-> +        g_free(data);
-> +
-> +        qtest_send(chr, "OK\n");
-> +    } else if (strcmp(words[0], "memset_secure") == 0) {
-> +        uint64_t addr, len, secure;
-> +        uint8_t *data;
-> +        unsigned long pattern;
-> +        MemTxAttrs attrs;
-> +        AddressSpace *as;
-> +        int ret;
-> +
-> +        g_assert(words[1] && words[2] && words[3] && words[4]);
-> +        ret = qemu_strtou64(words[1], NULL, 0, &addr);
-> +        g_assert(ret == 0);
-> +        ret = qemu_strtou64(words[2], NULL, 0, &len);
-> +        g_assert(ret == 0);
-> +        ret = qemu_strtoul(words[3], NULL, 0, &pattern);
-> +        g_assert(ret == 0);
-> +        ret = qemu_strtou64(words[4], NULL, 0, &secure);
-> +        g_assert(ret == 0);
-> +
-> +        attrs.secure = secure & 1;
-> +
-> +        if (attrs.secure) {
-> +            as = cpu_get_address_space(first_cpu, 1);
-> +            g_assert(as);
-> +        } else {
-> +            as = first_cpu->as;
-> +        }
-> +
-> +        if (len) {
-> +            data = g_malloc(len);
-> +            memset(data, pattern, len);
-> +            address_space_write(as, addr, attrs, data, len);
-> +            g_free(data);
-> +        }
-> +
-> +        qtest_send(chr, "OK\n");
-> +    } else if (strcmp(words[0], "writeb_space") == 0 ||
-> +               strcmp(words[0], "writew_space") == 0 ||
-> +               strcmp(words[0], "writel_space") == 0 ||
-> +               strcmp(words[0], "writeq_space") == 0) {
-> +        /* *_space commands: ARM-specific. */
-> +        uint64_t addr, value, space;
-> +        MemTxAttrs attrs;
-> +        AddressSpace *as;
-> +        int ret;
-> +
-> +        if (!target_arm() && !target_aarch64()) {
-> +            qtest_send(chr, "ERR *_space commands are ARM-specific\n");
-> +            return;
-> +        }
-> +
-> +        g_assert(words[1] && words[2] && words[3]);
-> +        ret = qemu_strtou64(words[1], NULL, 0, &addr);
-> +        g_assert(ret == 0);
-> +        ret = qemu_strtou64(words[2], NULL, 0, &value);
-> +        g_assert(ret == 0);
-> +        ret = qemu_strtou64(words[3], NULL, 0, &space);
-> +        g_assert(ret == 0);
-> +
-> +        attrs.space = space & 3;
-> +        attrs.secure = (attrs.space == 0 || attrs.space == 2) ? 1 : 0;
-> +
-> +        if (attrs.secure) {
-> +            as = cpu_get_address_space(first_cpu, 1);
-> +            g_assert(as);
-> +        } else {
-> +            as = first_cpu->as;
-> +        }
-> +
-> +        if (words[0][5] == 'b') {
-> +            uint8_t data = value;
-> +            address_space_write(as, addr, attrs, &data, 1);
-> +        } else if (words[0][5] == 'w') {
-> +            uint16_t data = value;
-> +            tswap16s(&data);
-> +            address_space_write(as, addr, attrs, &data, 2);
-> +        } else if (words[0][5] == 'l') {
-> +            uint32_t data = value;
-> +            tswap32s(&data);
-> +            address_space_write(as, addr, attrs, &data, 4);
-> +        } else if (words[0][5] == 'q') {
-> +            uint64_t data = value;
-> +            tswap64s(&data);
-> +            address_space_write(as, addr, attrs, &data, 8);
-> +        }
-> +        qtest_send(chr, "OK\n");
-> +    } else if (strcmp(words[0], "readb_space") == 0 ||
-> +               strcmp(words[0], "readw_space") == 0 ||
-> +               strcmp(words[0], "readl_space") == 0 ||
-> +               strcmp(words[0], "readq_space") == 0) {
-> +        uint64_t addr, space;
-> +        uint64_t value = UINT64_C(-1);
-> +        MemTxAttrs attrs;
-> +        AddressSpace *as;
-> +        int ret;
-> +
-> +        if (!target_arm() && !target_aarch64()) {
-> +            qtest_send(chr, "ERR *_space commands are ARM-specific\n");
-> +            return;
-> +        }
-> +
-> +        g_assert(words[1] && words[2]);
-> +        ret = qemu_strtou64(words[1], NULL, 0, &addr);
-> +        g_assert(ret == 0);
-> +        ret = qemu_strtou64(words[2], NULL, 0, &space);
-> +        g_assert(ret == 0);
-> +
-> +        attrs.space = space & 3;
-> +        attrs.secure = (attrs.space == 0 || attrs.space == 2) ? 1 : 0;
-> +
-Two issues here:
-
-1. If the user passes space=5, it gets silently truncated to 1
-   (NonSecure) via `& 3`. You should validate space <= 3 before
-   masking and return an error for out-of-range values.
-
-2. As Peter noted, you should use arm_space_is_secure() from
-   include/hw/arm/arm-security.h instead of open-coding the
-   mapping. That header is safe to include in compiled-once code.
-
-More broadly, the *_space commands are defined as "ARM-specific"
-with hardcoded numeric values 0-3 mapping to ARM security spaces.
-But other architectures may have analogous concepts in the future
-(e.g., RISC-V has Machine/Supervisor/User privilege levels and
-PMP-based memory isolation). Baking ARM's specific space encoding
-into the qtest protocol makes it harder to extend later.
-
-This is another reason Peter's suggestion of using optional named
-parameters on existing commands is a better design:
-
-    readb ADDR space=realm     # ARM
-    readb ADDR secure          # generic secure bit
-
-Named parameters are self-documenting, architecture-neutral at the
-protocol level, and trivially extensible for new architectures
-without inventing new command families each time.
-
-Thanks,
-Chao
-> +        if (attrs.secure) {
-> +            as = cpu_get_address_space(first_cpu, 1);
-> +            g_assert(as);
-> +        } else {
-> +            as = first_cpu->as;
-> +        }
-> +
-> +        if (words[0][4] == 'b') {
-> +            uint8_t data;
-> +            address_space_read(as, addr, attrs, &data, 1);
-> +            value = data;
-> +        } else if (words[0][4] == 'w') {
-> +            uint16_t data;
-> +            address_space_read(as, addr, attrs, &data, 2);
-> +            value = tswap16(data);
-> +        } else if (words[0][4] == 'l') {
-> +            uint32_t data;
-> +            address_space_read(as, addr, attrs, &data, 4);
-> +            value = tswap32(data);
-> +        } else if (words[0][4] == 'q') {
-> +            address_space_read(as, addr, attrs, &value, 8);
-> +            tswap64s(&value);
-> +        }
-> +        qtest_sendf(chr, "OK 0x%016" PRIx64 "\n", value);
-> +    } else if (strcmp(words[0], "read_space") == 0) {
-> +        g_autoptr(GString) enc = NULL;
-> +        uint64_t addr, len, space;
-> +        uint8_t *data;
-> +        MemTxAttrs attrs;
-> +        AddressSpace *as;
-> +        int ret;
-> +
-> +        if (!target_arm() && !target_aarch64()) {
-> +            qtest_send(chr, "ERR *_space commands are ARM-specific\n");
-> +            return;
-> +        }
-> +
-> +        g_assert(words[1] && words[2] && words[3]);
-> +        ret = qemu_strtou64(words[1], NULL, 0, &addr);
-> +        g_assert(ret == 0);
-> +        ret = qemu_strtou64(words[2], NULL, 0, &len);
-> +        g_assert(ret == 0);
-> +        ret = qemu_strtou64(words[3], NULL, 0, &space);
-> +        g_assert(ret == 0);
-> +        g_assert(len);
-> +
-> +        attrs.space = space & 3;
-> +        attrs.secure = (attrs.space == 0 || attrs.space == 2) ? 1 : 0;
-> +
-> +        if (attrs.secure) {
-> +            as = cpu_get_address_space(first_cpu, 1);
-> +            g_assert(as);
-> +        } else {
-> +            as = first_cpu->as;
-> +        }
-> +
-> +        data = g_malloc(len);
-> +        address_space_read(as, addr, attrs, data, len);
-> +
-> +        enc = qemu_hexdump_line(NULL, data, len, 0, 0);
-> +        qtest_sendf(chr, "OK 0x%s\n", enc->str);
-> +        g_free(data);
-> +    } else if (strcmp(words[0], "write_space") == 0) {
-> +        uint64_t addr, len, i, space;
-> +        uint8_t *data;
-> +        size_t data_len;
-> +        MemTxAttrs attrs;
-> +        AddressSpace *as;
-> +        int ret;
-> +
-> +        if (!target_arm() && !target_aarch64()) {
-> +            qtest_send(chr, "ERR *_space commands are ARM-specific\n");
-> +            return;
-> +        }
-> +
-> +        g_assert(words[1] && words[2] && words[3] && words[4]);
-> +        ret = qemu_strtou64(words[1], NULL, 0, &addr);
-> +        g_assert(ret == 0);
-> +        ret = qemu_strtou64(words[2], NULL, 0, &len);
-> +        g_assert(ret == 0);
-> +        ret = qemu_strtou64(words[4], NULL, 0, &space);
-> +        g_assert(ret == 0);
-> +
-> +        data_len = strlen(words[3]);
-> +        if (data_len < 3) {
-> +            qtest_send(chr, "ERR invalid argument size\n");
-> +            return;
-> +        }
-> +
-> +        attrs.space = space & 3;
-> +        attrs.secure = (attrs.space == 0 || attrs.space == 2) ? 1 : 0;
-> +
-> +        if (attrs.secure) {
-> +            as = cpu_get_address_space(first_cpu, 1);
-> +            g_assert(as);
-> +        } else {
-> +            as = first_cpu->as;
-> +        }
-> +
-> +        data = g_malloc(len);
-> +        for (i = 0; i < len; i++) {
-> +            if ((i * 2 + 4) <= data_len) {
-> +                data[i] = hex2nib(words[3][i * 2 + 2]) << 4;
-> +                data[i] |= hex2nib(words[3][i * 2 + 3]);
-> +            } else {
-> +                data[i] = 0;
-> +            }
-> +        }
-> +        address_space_write(as, addr, attrs, data, len);
-> +        g_free(data);
-> +
-> +        qtest_send(chr, "OK\n");
-> +    } else if (strcmp(words[0], "memset_space") == 0) {
-> +        uint64_t addr, len, space;
-> +        uint8_t *data;
-> +        unsigned long pattern;
-> +        MemTxAttrs attrs;
-> +        AddressSpace *as;
-> +        int ret;
-> +
-> +        if (!target_arm() && !target_aarch64()) {
-> +            qtest_send(chr, "ERR *_space commands are ARM-specific\n");
-> +            return;
-> +        }
-> +
-> +        g_assert(words[1] && words[2] && words[3] && words[4]);
-> +        ret = qemu_strtou64(words[1], NULL, 0, &addr);
-> +        g_assert(ret == 0);
-> +        ret = qemu_strtou64(words[2], NULL, 0, &len);
-> +        g_assert(ret == 0);
-> +        ret = qemu_strtoul(words[3], NULL, 0, &pattern);
-> +        g_assert(ret == 0);
-> +        ret = qemu_strtou64(words[4], NULL, 0, &space);
-> +        g_assert(ret == 0);
-> +
-> +        attrs.space = space & 3;
-> +        attrs.secure = (attrs.space == 0 || attrs.space == 2) ? 1 : 0;
-> +
-> +        if (attrs.secure) {
-> +            as = cpu_get_address_space(first_cpu, 1);
-> +            g_assert(as);
-> +        } else {
-> +            as = first_cpu->as;
-> +        }
-> +
-> +        if (len) {
-> +            data = g_malloc(len);
-> +            memset(data, pattern, len);
-> +            address_space_write(as, addr, attrs, data, len);
-> +            g_free(data);
-> +        }
-> +
->          qtest_send(chr, "OK\n");
->      }  else if (strcmp(words[0], "b64write") == 0) {
->          uint64_t addr, len;
-> diff --git a/tests/qtest/libqtest-single.h b/tests/qtest/libqtest-single.h
-> index 851724cbcb..d7c89154e3 100644
-> --- a/tests/qtest/libqtest-single.h
-> +++ b/tests/qtest/libqtest-single.h
-> @@ -291,6 +291,139 @@ static inline void memwrite(uint64_t addr, const void *data, size_t size)
->      qtest_memwrite(global_qtest, addr, data, size);
->  }
->  
-> +/*
-> + * *_secure commands: only available with x86/ARM.
-> + */
-> +
-> +static inline void writeb_secure(uint64_t addr, uint8_t value,
-> +                                 unsigned secure)
-> +{
-> +    qtest_writeb_secure(global_qtest, addr, value, secure);
-> +}
-> +
-> +static inline void writew_secure(uint64_t addr, uint16_t value,
-> +                                 unsigned secure)
-> +{
-> +    qtest_writew_secure(global_qtest, addr, value, secure);
-> +}
-> +
-> +static inline void writel_secure(uint64_t addr, uint32_t value,
-> +                                 unsigned secure)
-> +{
-> +    qtest_writel_secure(global_qtest, addr, value, secure);
-> +}
-> +
-> +static inline void writeq_secure(uint64_t addr, uint64_t value,
-> +                                 unsigned secure)
-> +{
-> +    qtest_writeq_secure(global_qtest, addr, value, secure);
-> +}
-> +
-> +static inline uint8_t readb_secure(uint64_t addr, unsigned secure)
-> +{
-> +    return qtest_readb_secure(global_qtest, addr, secure);
-> +}
-> +
-> +static inline uint16_t readw_secure(uint64_t addr, unsigned secure)
-> +{
-> +    return qtest_readw_secure(global_qtest, addr, secure);
-> +}
-> +
-> +static inline uint32_t readl_secure(uint64_t addr, unsigned secure)
-> +{
-> +    return qtest_readl_secure(global_qtest, addr, secure);
-> +}
-> +
-> +static inline uint64_t readq_secure(uint64_t addr, unsigned secure)
-> +{
-> +    return qtest_readq_secure(global_qtest, addr, secure);
-> +}
-> +
-> +static inline void memread_secure(uint64_t addr, void *data, size_t size,
-> +                                  unsigned secure)
-> +{
-> +    qtest_memread_secure(global_qtest, addr, data, size, secure);
-> +}
-> +
-> +static inline void memwrite_secure(uint64_t addr, const void *data,
-> +                                   size_t size, unsigned secure)
-> +{
-> +    qtest_memwrite_secure(global_qtest, addr, data, size, secure);
-> +}
-> +
-> +static inline void memset_secure(uint64_t addr, uint8_t pattern,
-> +                                 size_t size, unsigned secure)
-> +{
-> +    qtest_memset_secure(global_qtest, addr, pattern, size, secure);
-> +}
-> +
-> +/**
-> + * *_space commands: ARM-specific.
-> + * Only specifies SPACE parameter, SECURE is auto-derived using
-> + * arm_space_is_secure-like semantics.
-> + */
-> +static inline void writeb_space(uint64_t addr, uint8_t value,
-> +                                unsigned space)
-> +{
-> +    qtest_writeb_space(global_qtest, addr, value, space);
-> +}
-> +
-> +static inline void writew_space(uint64_t addr, uint16_t value,
-> +                                unsigned space)
-> +{
-> +    qtest_writew_space(global_qtest, addr, value, space);
-> +}
-> +
-> +static inline void writel_space(uint64_t addr, uint32_t value,
-> +                                unsigned space)
-> +{
-> +    qtest_writel_space(global_qtest, addr, value, space);
-> +}
-> +
-> +static inline void writeq_space(uint64_t addr, uint64_t value,
-> +                                unsigned space)
-> +{
-> +    qtest_writeq_space(global_qtest, addr, value, space);
-> +}
-> +
-> +static inline uint8_t readb_space(uint64_t addr, unsigned space)
-> +{
-> +    return qtest_readb_space(global_qtest, addr, space);
-> +}
-> +
-> +static inline uint16_t readw_space(uint64_t addr, unsigned space)
-> +{
-> +    return qtest_readw_space(global_qtest, addr, space);
-> +}
-> +
-> +static inline uint32_t readl_space(uint64_t addr, unsigned space)
-> +{
-> +    return qtest_readl_space(global_qtest, addr, space);
-> +}
-> +
-> +static inline uint64_t readq_space(uint64_t addr, unsigned space)
-> +{
-> +    return qtest_readq_space(global_qtest, addr, space);
-> +}
-> +
-> +static inline void memread_space(uint64_t addr, void *data, size_t size,
-> +                                 unsigned space)
-> +{
-> +    qtest_memread_space(global_qtest, addr, data, size, space);
-> +}
-> +
-> +static inline void memwrite_space(uint64_t addr, const void *data,
-> +                                  size_t size, unsigned space)
-> +{
-> +    qtest_memwrite_space(global_qtest, addr, data, size, space);
-> +}
-> +
-> +static inline void memset_space(uint64_t addr, uint8_t pattern,
-> +                                size_t size, unsigned space)
-> +{
-> +    qtest_memset_space(global_qtest, addr, pattern, size, space);
-> +}
-> +
->  /**
->   * clock_step_next:
->   *
-> diff --git a/tests/qtest/libqtest.c b/tests/qtest/libqtest.c
-> index 794d870085..308428829b 100644
-> --- a/tests/qtest/libqtest.c
-> +++ b/tests/qtest/libqtest.c
-> @@ -1447,6 +1447,255 @@ void qtest_memset(QTestState *s, uint64_t addr, uint8_t pattern, size_t size)
->      qtest_rsp(s);
->  }
->  
-> +/**
-> + * qtest_*_secure commands: only available with x86/ARM.
-> + */
-> +static void qtest_write_secure(QTestState *s, const char *cmd, uint64_t addr,
-> +                               uint64_t value, unsigned secure)
-> +{
-> +    qtest_sendf(s, "%s 0x%" PRIx64 " 0x%" PRIx64 " %u\n",
-> +                cmd, addr, value, secure);
-> +    qtest_rsp(s);
-> +}
-> +
-> +static uint64_t qtest_read_secure(QTestState *s, const char *cmd,
-> +                                  uint64_t addr, unsigned secure)
-> +{
-> +    gchar **args;
-> +    int ret;
-> +    uint64_t value;
-> +
-> +    qtest_sendf(s, "%s 0x%" PRIx64 " %u\n", cmd, addr, secure);
-> +    args = qtest_rsp_args(s, 2);
-> +    ret = qemu_strtou64(args[1], NULL, 0, &value);
-> +    g_assert(!ret);
-> +    g_strfreev(args);
-> +
-> +    return value;
-> +}
-> +
-> +void qtest_writeb_secure(QTestState *s, uint64_t addr, uint8_t value,
-> +                         unsigned secure)
-> +{
-> +    qtest_write_secure(s, "writeb_secure", addr, value, secure);
-> +}
-> +
-> +void qtest_writew_secure(QTestState *s, uint64_t addr, uint16_t value,
-> +                         unsigned secure)
-> +{
-> +    qtest_write_secure(s, "writew_secure", addr, value, secure);
-> +}
-> +
-> +void qtest_writel_secure(QTestState *s, uint64_t addr, uint32_t value,
-> +                         unsigned secure)
-> +{
-> +    qtest_write_secure(s, "writel_secure", addr, value, secure);
-> +}
-> +
-> +void qtest_writeq_secure(QTestState *s, uint64_t addr, uint64_t value,
-> +                         unsigned secure)
-> +{
-> +    qtest_write_secure(s, "writeq_secure", addr, value, secure);
-> +}
-> +
-> +uint8_t qtest_readb_secure(QTestState *s, uint64_t addr, unsigned secure)
-> +{
-> +    return qtest_read_secure(s, "readb_secure", addr, secure);
-> +}
-> +
-> +uint16_t qtest_readw_secure(QTestState *s, uint64_t addr, unsigned secure)
-> +{
-> +    return qtest_read_secure(s, "readw_secure", addr, secure);
-> +}
-> +
-> +uint32_t qtest_readl_secure(QTestState *s, uint64_t addr, unsigned secure)
-> +{
-> +    return qtest_read_secure(s, "readl_secure", addr, secure);
-> +}
-> +
-> +uint64_t qtest_readq_secure(QTestState *s, uint64_t addr, unsigned secure)
-> +{
-> +    return qtest_read_secure(s, "readq_secure", addr, secure);
-> +}
-> +
-> +void qtest_memread_secure(QTestState *s, uint64_t addr, void *data,
-> +                          size_t size, unsigned secure)
-> +{
-> +    uint8_t *ptr = data;
-> +    gchar **args;
-> +    size_t i;
-> +
-> +    if (!size) {
-> +        return;
-> +    }
-> +
-> +    qtest_sendf(s, "read_secure 0x%" PRIx64 " 0x%zx %u\n", addr, size, secure);
-> +    args = qtest_rsp_args(s, 2);
-> +
-> +    for (i = 0; i < size; i++) {
-> +        ptr[i] = hex2nib(args[1][2 + (i * 2)]) << 4;
-> +        ptr[i] |= hex2nib(args[1][2 + (i * 2) + 1]);
-> +    }
-> +
-> +    g_strfreev(args);
-> +}
-> +
-> +void qtest_memwrite_secure(QTestState *s, uint64_t addr, const void *data,
-> +                           size_t size, unsigned secure)
-> +{
-> +    const uint8_t *ptr = data;
-> +    size_t i;
-> +    char *enc;
-> +
-> +    if (!size) {
-> +        return;
-> +    }
-> +
-> +    enc = g_malloc(2 * size + 1);
-> +
-> +    for (i = 0; i < size; i++) {
-> +        sprintf(&enc[i * 2], "%02x", ptr[i]);
-> +    }
-> +
-> +    qtest_sendf(s, "write_secure 0x%" PRIx64 " 0x%zx 0x%s %u\n",
-> +                addr, size, enc, secure);
-> +    qtest_rsp(s);
-> +    g_free(enc);
-> +}
-> +
-> +void qtest_memset_secure(QTestState *s, uint64_t addr, uint8_t pattern,
-> +                         size_t size, unsigned secure)
-> +{
-> +    qtest_sendf(s, "memset_secure 0x%" PRIx64 " 0x%zx 0x%02x %u\n",
-> +                addr, size, pattern, secure);
-> +    qtest_rsp(s);
-> +}
-> +
-> +/**
-> + * *_space commands: ARM-specific
-> + */
-> +
-> +static void qtest_write_space(QTestState *s, const char *cmd,
-> +                              uint64_t addr, uint64_t value, unsigned space)
-> +{
-> +    qtest_sendf(s, "%s 0x%" PRIx64 " 0x%" PRIx64 " %u\n",
-> +                cmd, addr, value, space);
-> +    qtest_rsp(s);
-> +}
-> +
-> +static uint64_t qtest_read_space(QTestState *s, const char *cmd,
-> +                                 uint64_t addr, unsigned space)
-> +{
-> +    gchar **args;
-> +    int ret;
-> +    uint64_t value;
-> +
-> +    qtest_sendf(s, "%s 0x%" PRIx64 " %u\n", cmd, addr, space);
-> +    args = qtest_rsp_args(s, 2);
-> +    ret = qemu_strtou64(args[1], NULL, 0, &value);
-> +    g_assert(!ret);
-> +    g_strfreev(args);
-> +
-> +    return value;
-> +}
-> +
-> +void qtest_writeb_space(QTestState *s, uint64_t addr, uint8_t value,
-> +                        unsigned space)
-> +{
-> +    qtest_write_space(s, "writeb_space", addr, value, space);
-> +}
-> +
-> +void qtest_writew_space(QTestState *s, uint64_t addr, uint16_t value,
-> +                        unsigned space)
-> +{
-> +    qtest_write_space(s, "writew_space", addr, value, space);
-> +}
-> +
-> +void qtest_writel_space(QTestState *s, uint64_t addr, uint32_t value,
-> +                        unsigned space)
-> +{
-> +    qtest_write_space(s, "writel_space", addr, value, space);
-> +}
-> +
-> +void qtest_writeq_space(QTestState *s, uint64_t addr, uint64_t value,
-> +                        unsigned space)
-> +{
-> +    qtest_write_space(s, "writeq_space", addr, value, space);
-> +}
-> +
-> +uint8_t qtest_readb_space(QTestState *s, uint64_t addr, unsigned space)
-> +{
-> +    return qtest_read_space(s, "readb_space", addr, space);
-> +}
-> +
-> +uint16_t qtest_readw_space(QTestState *s, uint64_t addr, unsigned space)
-> +{
-> +    return qtest_read_space(s, "readw_space", addr, space);
-> +}
-> +
-> +uint32_t qtest_readl_space(QTestState *s, uint64_t addr, unsigned space)
-> +{
-> +    return qtest_read_space(s, "readl_space", addr, space);
-> +}
-> +
-> +uint64_t qtest_readq_space(QTestState *s, uint64_t addr, unsigned space)
-> +{
-> +    return qtest_read_space(s, "readq_space", addr, space);
-> +}
-> +
-> +void qtest_memread_space(QTestState *s, uint64_t addr, void *data,
-> +                         size_t size, unsigned space)
-> +{
-> +    uint8_t *ptr = data;
-> +    gchar **args;
-> +    size_t i;
-> +
-> +    if (!size) {
-> +        return;
-> +    }
-> +
-> +    qtest_sendf(s, "read_space 0x%" PRIx64 " 0x%zx %u\n", addr, size, space);
-> +    args = qtest_rsp_args(s, 2);
-> +
-> +    for (i = 0; i < size; i++) {
-> +        ptr[i] = hex2nib(args[1][2 + (i * 2)]) << 4;
-> +        ptr[i] |= hex2nib(args[1][2 + (i * 2) + 1]);
-> +    }
-> +
-> +    g_strfreev(args);
-> +}
-> +
-> +void qtest_memwrite_space(QTestState *s, uint64_t addr, const void *data,
-> +                          size_t size, unsigned space)
-> +{
-> +    const uint8_t *ptr = data;
-> +    size_t i;
-> +    char *enc;
-> +
-> +    if (!size) {
-> +        return;
-> +    }
-> +
-> +    enc = g_malloc(2 * size + 1);
-> +
-> +    for (i = 0; i < size; i++) {
-> +        sprintf(&enc[i * 2], "%02x", ptr[i]);
-> +    }
-> +
-> +    qtest_sendf(s, "write_space 0x%" PRIx64 " 0x%zx 0x%s %u\n",
-> +                addr, size, enc, space);
-> +    qtest_rsp(s);
-> +    g_free(enc);
-> +}
-> +
-> +void qtest_memset_space(QTestState *s, uint64_t addr, uint8_t pattern,
-> +                        size_t size, unsigned space)
-> +{
-> +    qtest_sendf(s, "memset_space 0x%" PRIx64 " 0x%zx 0x%02x %u\n",
-> +                addr, size, pattern, space);
-> +    qtest_rsp(s);
-> +}
-> +
->  QDict *qtest_vqmp_assert_failure_ref(QTestState *qts,
->                                       const char *fmt, va_list args)
->  {
-> diff --git a/tests/qtest/libqtest.h b/tests/qtest/libqtest.h
-> index 9c118c89ca..57d6be7ca8 100644
-> --- a/tests/qtest/libqtest.h
-> +++ b/tests/qtest/libqtest.h
-> @@ -705,6 +705,287 @@ void qtest_bufwrite(QTestState *s, uint64_t addr,
->   */
->  void qtest_memset(QTestState *s, uint64_t addr, uint8_t patt, size_t size);
->  
-> +/*
-> + * qtest_*_secure commands: only available with x86/ARM.
-> + */
-> +
-> +/**
-> + * qtest_writeb_secure:
-> + * @s: #QTestState instance to operate on.
-> + * @addr: Guest address to write to.
-> + * @value: Value being written.
-> + * @secure: 1 for secure access, 0 for non-secure.
-> + *
-> + * Writes an 8-bit value to memory with secure attribute (x86/ARM).
-> + */
-> +void qtest_writeb_secure(QTestState *s, uint64_t addr, uint8_t value,
-> +                         unsigned secure);
-> +
-> +/**
-> + * qtest_writew_secure:
-> + * @s: #QTestState instance to operate on.
-> + * @addr: Guest address to write to.
-> + * @value: Value being written.
-> + * @secure: 1 for secure access, 0 for non-secure.
-> + *
-> + * Writes a 16-bit value to memory with secure attribute (x86/ARM).
-> + */
-> +void qtest_writew_secure(QTestState *s, uint64_t addr, uint16_t value,
-> +                         unsigned secure);
-> +
-> +/**
-> + * qtest_writel_secure:
-> + * @s: #QTestState instance to operate on.
-> + * @addr: Guest address to write to.
-> + * @value: Value being written.
-> + * @secure: 1 for secure access, 0 for non-secure.
-> + *
-> + * Writes a 32-bit value to memory with secure attribute (x86/ARM).
-> + */
-> +void qtest_writel_secure(QTestState *s, uint64_t addr, uint32_t value,
-> +                         unsigned secure);
-> +
-> +/**
-> + * qtest_writeq_secure:
-> + * @s: #QTestState instance to operate on.
-> + * @addr: Guest address to write to.
-> + * @value: Value being written.
-> + * @secure: 1 for secure access, 0 for non-secure.
-> + *
-> + * Writes a 64-bit value to memory with secure attribute (x86/ARM).
-> + */
-> +void qtest_writeq_secure(QTestState *s, uint64_t addr, uint64_t value,
-> +                         unsigned secure);
-> +
-> +/**
-> + * qtest_readb_secure:
-> + * @s: #QTestState instance to operate on.
-> + * @addr: Guest address to read from.
-> + * @secure: 1 for secure access, 0 for non-secure.
-> + *
-> + * Reads an 8-bit value from memory with secure attribute (x86/ARM).
-> + *
-> + * Returns: Value read.
-> + */
-> +uint8_t qtest_readb_secure(QTestState *s, uint64_t addr, unsigned secure);
-> +
-> +/**
-> + * qtest_readw_secure:
-> + * @s: #QTestState instance to operate on.
-> + * @addr: Guest address to read from.
-> + * @secure: 1 for secure access, 0 for non-secure.
-> + *
-> + * Reads a 16-bit value from memory with secure attribute (x86/ARM).
-> + *
-> + * Returns: Value read.
-> + */
-> +uint16_t qtest_readw_secure(QTestState *s, uint64_t addr, unsigned secure);
-> +
-> +/**
-> + * qtest_readl_secure:
-> + * @s: #QTestState instance to operate on.
-> + * @addr: Guest address to read from.
-> + * @secure: 1 for secure access, 0 for non-secure.
-> + *
-> + * Reads a 32-bit value from memory with secure attribute (x86/ARM).
-> + *
-> + * Returns: Value read.
-> + */
-> +uint32_t qtest_readl_secure(QTestState *s, uint64_t addr, unsigned secure);
-> +
-> +/**
-> + * qtest_readq_secure:
-> + * @s: #QTestState instance to operate on.
-> + * @addr: Guest address to read from.
-> + * @secure: 1 for secure access, 0 for non-secure.
-> + *
-> + * Reads a 64-bit value from memory with secure attribute (x86/ARM).
-> + *
-> + * Returns: Value read.
-> + */
-> +uint64_t qtest_readq_secure(QTestState *s, uint64_t addr, unsigned secure);
-> +
-> +/**
-> + * qtest_memread_secure:
-> + * @s: #QTestState instance to operate on.
-> + * @addr: Guest address to read from.
-> + * @data: Pointer to where memory contents will be stored.
-> + * @size: Number of bytes to read.
-> + * @secure: 1 for secure access, 0 for non-secure.
-> + *
-> + * Read guest memory into a buffer with secure attribute (x86/ARM).
-> + */
-> +void qtest_memread_secure(QTestState *s, uint64_t addr, void *data,
-> +                          size_t size, unsigned secure);
-> +
-> +/**
-> + * qtest_memwrite_secure:
-> + * @s: #QTestState instance to operate on.
-> + * @addr: Guest address to write to.
-> + * @data: Pointer to the bytes that will be written to guest memory.
-> + * @size: Number of bytes to write.
-> + * @secure: 1 for secure access, 0 for non-secure.
-> + *
-> + * Write a buffer to guest memory with secure attribute (x86/ARM).
-> + */
-> +void qtest_memwrite_secure(QTestState *s, uint64_t addr, const void *data,
-> +                           size_t size, unsigned secure);
-> +
-> +/**
-> + * qtest_memset_secure:
-> + * @s: #QTestState instance to operate on.
-> + * @addr: Guest address to write to.
-> + * @patt: Byte pattern to fill the guest memory region with.
-> + * @size: Number of bytes to write.
-> + * @secure: 1 for secure access, 0 for non-secure.
-> + *
-> + * Write a pattern to guest memory with secure attribute (x86/ARM).
-> + */
-> +void qtest_memset_secure(QTestState *s, uint64_t addr, uint8_t patt,
-> +                         size_t size, unsigned secure);
-> +
-> +
-> +/*
-> + * qtest_*_space commands: ARM-specific.
-> + * Only specifies SPACE parameter, SECURE is auto-derived using
-> + * arm_space_is_secure-like semantics.
-> + */
-> +
-> +/**
-> + * qtest_writeb_space:
-> + * @s: #QTestState instance to operate on.
-> + * @addr: Guest address to write to.
-> + * @value: Value being written.
-> + * @space: Security space (0=Secure, 1=NonSecure, 2=Root, 3=Realm).
-> + *
-> + * Writes an 8-bit value to memory with ARM security space (ARM-specific).
-> + */
-> +void qtest_writeb_space(QTestState *s, uint64_t addr, uint8_t value,
-> +                        unsigned space);
-> +
-> +/**
-> + * qtest_writew_space:
-> + * @s: #QTestState instance to operate on.
-> + * @addr: Guest address to write to.
-> + * @value: Value being written.
-> + * @space: Security space (0=Secure, 1=NonSecure, 2=Root, 3=Realm).
-> + *
-> + * Writes a 16-bit value to memory with ARM security space (ARM-specific).
-> + */
-> +void qtest_writew_space(QTestState *s, uint64_t addr, uint16_t value,
-> +                        unsigned space);
-> +
-> +/**
-> + * qtest_writel_space:
-> + * @s: #QTestState instance to operate on.
-> + * @addr: Guest address to write to.
-> + * @value: Value being written.
-> + * @space: Security space (0=Secure, 1=NonSecure, 2=Root, 3=Realm).
-> + *
-> + * Writes a 32-bit value to memory with ARM security space (ARM-specific).
-> + */
-> +void qtest_writel_space(QTestState *s, uint64_t addr, uint32_t value,
-> +                        unsigned space);
-> +
-> +/**
-> + * qtest_writeq_space:
-> + * @s: #QTestState instance to operate on.
-> + * @addr: Guest address to write to.
-> + * @value: Value being written.
-> + * @space: Security space (0=Secure, 1=NonSecure, 2=Root, 3=Realm).
-> + *
-> + * Writes a 64-bit value to memory with ARM security space (ARM-specific).
-> + */
-> +void qtest_writeq_space(QTestState *s, uint64_t addr, uint64_t value,
-> +                        unsigned space);
-> +
-> +/**
-> + * qtest_readb_space:
-> + * @s: #QTestState instance to operate on.
-> + * @addr: Guest address to read from.
-> + * @space: Security space (0=Secure, 1=NonSecure, 2=Root, 3=Realm).
-> + *
-> + * Reads an 8-bit value from memory with ARM security space (ARM-specific).
-> + *
-> + * Returns: Value read.
-> + */
-> +uint8_t qtest_readb_space(QTestState *s, uint64_t addr, unsigned space);
-> +
-> +/**
-> + * qtest_readw_space:
-> + * @s: #QTestState instance to operate on.
-> + * @addr: Guest address to read from.
-> + * @space: Security space (0=Secure, 1=NonSecure, 2=Root, 3=Realm).
-> + *
-> + * Reads a 16-bit value from memory with ARM security space (ARM-specific).
-> + *
-> + * Returns: Value read.
-> + */
-> +uint16_t qtest_readw_space(QTestState *s, uint64_t addr, unsigned space);
-> +
-> +/**
-> + * qtest_readl_space:
-> + * @s: #QTestState instance to operate on.
-> + * @addr: Guest address to read from.
-> + * @space: Security space (0=Secure, 1=NonSecure, 2=Root, 3=Realm).
-> + *
-> + * Reads a 32-bit value from memory with ARM security space (ARM-specific).
-> + *
-> + * Returns: Value read.
-> + */
-> +uint32_t qtest_readl_space(QTestState *s, uint64_t addr, unsigned space);
-> +
-> +/**
-> + * qtest_readq_space:
-> + * @s: #QTestState instance to operate on.
-> + * @addr: Guest address to read from.
-> + * @space: Security space (0=Secure, 1=NonSecure, 2=Root, 3=Realm).
-> + *
-> + * Reads a 64-bit value from memory with ARM security space (ARM-specific).
-> + *
-> + * Returns: Value read.
-> + */
-> +uint64_t qtest_readq_space(QTestState *s, uint64_t addr, unsigned space);
-> +
-> +/**
-> + * qtest_memread_space:
-> + * @s: #QTestState instance to operate on.
-> + * @addr: Guest address to read from.
-> + * @data: Pointer to where memory contents will be stored.
-> + * @size: Number of bytes to read.
-> + * @space: Security space (0=Secure, 1=NonSecure, 2=Root, 3=Realm).
-> + *
-> + * Read guest memory into a buffer with ARM security space (ARM-specific).
-> + */
-> +void qtest_memread_space(QTestState *s, uint64_t addr, void *data,
-> +                         size_t size, unsigned space);
-> +
-> +/**
-> + * qtest_memwrite_space:
-> + * @s: #QTestState instance to operate on.
-> + * @addr: Guest address to write to.
-> + * @data: Pointer to the bytes that will be written to guest memory.
-> + * @size: Number of bytes to write.
-> + * @space: Security space (0=Secure, 1=NonSecure, 2=Root, 3=Realm).
-> + *
-> + * Write a buffer to guest memory with ARM security space (ARM-specific).
-> + */
-> +void qtest_memwrite_space(QTestState *s, uint64_t addr, const void *data,
-> +                          size_t size, unsigned space);
-> +
-> +/**
-> + * qtest_memset_space:
-> + * @s: #QTestState instance to operate on.
-> + * @addr: Guest address to write to.
-> + * @patt: Byte pattern to fill the guest memory region with.
-> + * @size: Number of bytes to write.
-> + * @space: Security space (0=Secure, 1=NonSecure, 2=Root, 3=Realm).
-> + *
-> + * Write a pattern to guest memory with ARM security space (ARM-specific).
-> + */
-> +void qtest_memset_space(QTestState *s, uint64_t addr, uint8_t patt,
-> +                        size_t size, unsigned space);
-> +
->  /**
->   * qtest_clock_step_next:
->   * @s: #QTestState instance to operate on.
-> -- 
-> 2.34.1
-> 
 
