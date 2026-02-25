@@ -4,94 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF4CAF55452
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 04:42:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D593FF55456
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 04:42:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vv6iV-0006Kz-P9; Tue, 24 Feb 2026 23:41:43 -0500
+	id 1vv6jM-0006pK-Mb; Tue, 24 Feb 2026 23:42:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vv6iT-0006JH-2D
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 23:41:41 -0500
-Received: from mail-oo1-xc29.google.com ([2607:f8b0:4864:20::c29])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vv6jI-0006p8-KG
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 23:42:33 -0500
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vv6iR-00085M-I1
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 23:41:40 -0500
-Received: by mail-oo1-xc29.google.com with SMTP id
- 006d021491bc7-6786b13984fso4332576eaf.2
- for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 20:41:38 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vv6jH-00087J-4Z
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 23:42:32 -0500
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-48371bb515eso77426815e9.1
+ for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 20:42:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771994498; x=1772599298; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=a/Nom+KVULqQvD4Ii/ACL9Vg2BTAkzCkrmfpSSlipP8=;
- b=mNSkc+S+zMxBJX1yUoUeZYPwM3nFgp7VlGOtXGFOl9orVbryP1W3SgjCKLQkyCOhyv
- 0Ygmz2h0ndvrNZW4qGqBdf/cahVwwEKf55vfX1BbAyDmj9OjOm+V8a16Uwfx0uVq6Cm3
- qPPNM35luQ4NX3jmL1+5BBIHAH8NJeiSJtiYpa4KbNfKICJT0RmEZG8yjufhtz4RTqjk
- brOnz5+f6ngwiWhZlffurbmqlnTxQTSeI4/PKKrLhRtu2YodVfbJZZaqyXYQ6zTGuj7C
- ps404C5r2N2fAQELXMNU16J8u46Y65Xb/EXIlVtAhecwZdKg6tTg81JblbgaGlmkSfSZ
- dZjA==
+ d=linaro.org; s=google; t=1771994547; x=1772599347; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=RJKcGpI3BWQkykwv/8dSycfPJcSPcUWs0ocwwh7tSYQ=;
+ b=larLSVR+Ag613KyyrkrRvaoLCTVQcH5F1j7aWTZPv+vpCFsoXUZ+DFfAveIVssfglV
+ qkbsdNdzfj3Jeb28FCzlN+7VUu820zqg7UhHGmgO4yfcLA0Ua0s58lJJZz+nvpaC4qOd
+ msr/UyJrehrz40zPJ7BghRk52n3qE+4ALKyv0HOrl2UekOtIHJCZQB1WfLN2xdZej5/N
+ ID1oFyHGDs2qPFfMgkR1CJe+KkNKydQm2vc74IQbANgkpQDCohmpxauAL/AMtqDLfBrT
+ yNWLnbtPKJ+/FFfDt1904cF31hK2+toFiQnIor6fQpHIqySYs0pkwDnDm2YTYFuGgTM7
+ OA9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771994498; x=1772599298;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=a/Nom+KVULqQvD4Ii/ACL9Vg2BTAkzCkrmfpSSlipP8=;
- b=VqrH9KqPM9tRIHT2hSEuMP7VWvAzv25byzrUZqcgXuwzt/DY8CRS2KmBF7o1pj93vf
- YOJPNeZCJ7dvxY3qmy0lj7Cks5Pa/6KyZMiwWAG1fDGd2Xw0VlwPtq7VUt7Cdk4yNEFL
- vdw0sj2S28vNpb0GmgH7SwNvD2Lw2BZZGkwBthpKPZPjMRiOSvra7dhEbFGSHJWY08W4
- slU3+OjvaRMKtKkBY8TArWMjGn6c7rUZfFg8L1k1di2iNTOzQ4qhf8nYAa7rnOh9Eo2l
- B6B+qhTLPz4cMgDk/tJq3Qg0qX2gpUXOetlM6WsK9CJMjv4Hmz8n3kAM9OK0LKRgtvKR
- 60Hw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXqjDNtnq2+ycPBy6BTE6tpuSoVuR8RBmSDl5ipezoCvCsatFVirrdrhoMx7iwLJhdCZmKIzZR/V+/A@nongnu.org
-X-Gm-Message-State: AOJu0YyQpN8nppaPmFbuGPKqtkfo85a3/ohTp3SNMmbCvgsUQKrLECH0
- TNw5Ugkes9ybBF4So3xz/FW/qZQt+UvomF1/46RbjkboDZW5ZH9H7Wk8LG4HlYRfNls=
-X-Gm-Gg: ATEYQzyxbOLPYiGTAW7avQ13tfkZw3KOGuPeX+kpNNR7QnBMdonBJmemZ4dX8Y9tcx1
- 6Cgtv6Hqgcw0cqpsLO3wm+Za4wUypCPedaP3d+Q17myTP1nuVGaD+W0dEJlHkIXojkJDvy3s2rT
- g47v2eAmVTgBpu0UbaehMPAXAAASaQk8hAwXRnE3LF0kKn9k3yi8uYovWsPnyOwfy2PdVRPacMZ
- gPUhOlqz4cCzqIOEkHDKmWnwuLSgt7s7od19otJ92FrSG2MvK/tL1eUg6rL+CY4xXSMAMFDZ7E7
- rmjlueDFpsUz5e+ZVds/IpZ4fVrjCKlMpDztXuLbVVJbO3LAKHirO/MTXj8c3n6wmzPv2cAKL8v
- TOdnz/djgCBDkgYDZa/aQ4a4aT42R3LYA4v63G3VNcazQ6XxCQB+jC2keUJ9ujQRzIpVTsfsjvp
- H9/Qx1z7WoQmT+gyQlxMOchuuCNC3bSlOogcy2jW+HYeOR1hajUTTj7KuvOdmODAgs1j+OyLcvF
- IBpcGol46lQo6US4qr1KdHlsOGFUg==
-X-Received: by 2002:a05:6820:134e:b0:672:b25f:dfd6 with SMTP id
- 006d021491bc7-679c4646732mr7645371eaf.2.1771994497660; 
- Tue, 24 Feb 2026 20:41:37 -0800 (PST)
-Received: from [10.34.149.227] ([172.59.192.107])
- by smtp.gmail.com with ESMTPSA id
- 006d021491bc7-679c5630a56sm10429471eaf.1.2026.02.24.20.41.33
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 24 Feb 2026 20:41:37 -0800 (PST)
-Message-ID: <0578ac95-15cc-442c-bb1c-d1a23dc488d1@linaro.org>
-Date: Wed, 25 Feb 2026 15:41:29 +1100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/cpu: Build a15mpcore.c once as common object
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ d=1e100.net; s=20230601; t=1771994547; x=1772599347;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=RJKcGpI3BWQkykwv/8dSycfPJcSPcUWs0ocwwh7tSYQ=;
+ b=OtAAS/2fK3slxe3cwlD4oQJKexcLWYpY6tZ/kfmcHutQVrs3oHQxt2miSJeIdRDN8p
+ VSvllpzw7VllV8OxKfdpsaEpxoh5z/w6DLKLrhCh6IoirePsbZphA0ozzhpP/TKBEjlX
+ /nCtuKqIXXqHua7s/GJ/qUnn/GCmo9FEtlKBi2C3pPqOi7g+GQ1iHd7r1hEdjR48xKUI
+ 2ezsR4FelPEbCVUxx95UcoxfR8GRn/hiTrTL7yLGC6Rn7ffKLbXVaNI58ZO8Mv9+i3jV
+ op9PZ3WZmyT8j34X2ej+sNVxK2O3Horm0JHmNGEro9Qz6W7pOE4g+yz9yzZL4M3spZ1c
+ 0Ttw==
+X-Gm-Message-State: AOJu0YyjRXV6eeCoLqcEYCrVutYD2mmHKi/8gGMPC5eiV1fg8vPJbXMQ
+ xFoWW0QwX4z98uAVmbD8Q0470q2m8PEIG2V7z/m2bit1eCtMJjEaRNnTjIMOiutDm5NArY6bL0n
+ Mrwp3cMk=
+X-Gm-Gg: ATEYQzy7T4h/KMIJV/I1YTLfDVndHtDMUCtnxibVH3dILVYqZi8Q7NGIgEHudL95OAw
+ 2yj0AcRkFmee05Jgj/0VulmJcbzG/2kG22Oh98J+zwiDLUwktQlYamdyxmjF2L3xDomRzeDEkpJ
+ Gg4z0ZQrTzMYfxF0oS18K09/LGJ9B7wVrJozhkW3jwQxLyCHJzvgW9vdKYLEg0GSHsn6EPjVQlI
+ 4CFrE4Vi0Gn3GwvYceVK22cftQxm13t4NuJx3mUfGWf5Soli1LFCBYzm98gps4j00HRShjG0myi
+ d3FWxCKpmPpXj1QspS9P0rsNncAT/cI97Mut+e26P0zgzR1nfzCzZ1KYmttsHc2tfZ9fH5naiUW
+ Ou6Un9RgpyNfSomJf6Qy2UAiJDUQjCHdz/welvEcVs7Sj8BVs2OecOuDN4awG5zB1AJlu2XfAQu
+ jgssnzo3cosFZ9LR4XiZlJJZtEPbkUEq5xYBEGwo+TgGjAlaW088a0tf/XlYRzQvQyTLjkwDJN
+X-Received: by 2002:a05:600c:4fd5:b0:483:498f:7963 with SMTP id
+ 5b1f17b1804b1-483a9637a61mr204412185e9.26.1771994547150; 
+ Tue, 24 Feb 2026 20:42:27 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-483bfb2c5a8sm3420335e9.0.2026.02.24.20.42.26
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 24 Feb 2026 20:42:26 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-References: <20260225034451.41338-1-philmd@linaro.org>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260225034451.41338-1-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Subject: [PATCH] accel: Build stubs once
+Date: Wed, 25 Feb 2026 05:42:25 +0100
+Message-ID: <20260225044225.64059-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.52.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c29;
- envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc29.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,45 +100,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/25/26 14:44, Philippe Mathieu-Daudé wrote:
-> a15mpcore.c doesn't need to include the target-specific 'kvm_arm.h'
-> header, it only lacks the qemu_get_cpu() declaration which comes
-> from 'hw/core/cpu.h'. Include the latter and build as common object.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   hw/cpu/a15mpcore.c | 2 +-
->   hw/cpu/meson.build | 2 +-
->   2 files changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/hw/cpu/a15mpcore.c b/hw/cpu/a15mpcore.c
-> index 28cc4b3a4bd..28cda55ccf8 100644
-> --- a/hw/cpu/a15mpcore.c
-> +++ b/hw/cpu/a15mpcore.c
-> @@ -22,10 +22,10 @@
->   #include "qapi/error.h"
->   #include "qemu/module.h"
->   #include "hw/cpu/a15mpcore.h"
-> +#include "hw/core/cpu.h"
->   #include "hw/core/irq.h"
->   #include "hw/core/qdev-properties.h"
->   #include "system/kvm.h"
-> -#include "kvm_arm.h"
->   #include "target/arm/gtimer.h"
->   
->   static void a15mp_priv_set_irq(void *opaque, int irq, int level)
-> diff --git a/hw/cpu/meson.build b/hw/cpu/meson.build
-> index 9d36bf8ae2c..9c1535ca325 100644
-> --- a/hw/cpu/meson.build
-> +++ b/hw/cpu/meson.build
-> @@ -4,4 +4,4 @@ system_ss.add(when: 'CONFIG_CPU_CLUSTER', if_true: files('cluster.c'))
->   system_ss.add(when: 'CONFIG_ARM11MPCORE', if_true: files('arm11mpcore.c'))
->   system_ss.add(when: 'CONFIG_REALVIEW', if_true: files('realview_mpcore.c'))
->   system_ss.add(when: 'CONFIG_A9MPCORE', if_true: files('a9mpcore.c'))
-> -specific_ss.add(when: 'CONFIG_A15MPCORE', if_true: files('a15mpcore.c'))
-> +system_ss.add(when: 'CONFIG_A15MPCORE', if_true: files('a15mpcore.c'))
+Move stubs to the global stub_ss[] source set. These files
+are now built once for all binaries, instead of one time
+per system binary.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Inspired-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ meson.build             |  2 +-
+ accel/stubs/meson.build | 19 +++++++++----------
+ 2 files changed, 10 insertions(+), 11 deletions(-)
 
-r~
+diff --git a/meson.build b/meson.build
+index db051a1b87b..5fecd6103a6 100644
+--- a/meson.build
++++ b/meson.build
+@@ -3731,6 +3731,7 @@ subdir('io')
+ subdir('chardev')
+ subdir('fsdev')
+ subdir('dump')
++subdir('accel')
+ 
+ if have_system
+   subdir('hw')
+@@ -3849,7 +3850,6 @@ subdir('replay')
+ subdir('stats')
+ subdir('tcg')
+ subdir('fpu')
+-subdir('accel')
+ subdir('plugins')
+ subdir('ebpf')
+ 
+diff --git a/accel/stubs/meson.build b/accel/stubs/meson.build
+index 48eccd1b861..fd5b8b0da5a 100644
+--- a/accel/stubs/meson.build
++++ b/accel/stubs/meson.build
+@@ -1,10 +1,9 @@
+-system_stubs_ss = ss.source_set()
+-system_stubs_ss.add(when: 'CONFIG_XEN', if_false: files('xen-stub.c'))
+-system_stubs_ss.add(when: 'CONFIG_KVM', if_false: files('kvm-stub.c'))
+-system_stubs_ss.add(when: 'CONFIG_TCG', if_false: files('tcg-stub.c'))
+-system_stubs_ss.add(when: 'CONFIG_HVF', if_false: files('hvf-stub.c'))
+-system_stubs_ss.add(when: 'CONFIG_NVMM', if_false: files('nvmm-stub.c'))
+-system_stubs_ss.add(when: 'CONFIG_WHPX', if_false: files('whpx-stub.c'))
+-system_stubs_ss.add(when: 'CONFIG_MSHV', if_false: files('mshv-stub.c'))
+-
+-specific_ss.add_all(when: ['CONFIG_SYSTEM_ONLY'], if_true: system_stubs_ss)
++stub_ss.add(files(
++  'hvf-stub.c',
++  'kvm-stub.c',
++  'mshv-stub.c',
++  'nvmm-stub.c',
++  'tcg-stub.c',
++  'whpx-stub.c',
++  'xen-stub.c',
++))
+-- 
+2.52.0
+
 
