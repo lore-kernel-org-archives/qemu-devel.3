@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21B9AFD45F1
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 23:24:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E60C1FD45FA
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 23:24:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvOAW-0007QH-7G; Wed, 25 Feb 2026 18:19:48 -0500
+	id 1vvOD0-0000Py-UM; Wed, 25 Feb 2026 18:22:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vvOAT-0007PO-Sa
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 18:19:45 -0500
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vvOCp-0008SE-FD
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 18:22:12 -0500
+Received: from mail-wm1-x341.google.com ([2a00:1450:4864:20::341])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vvOAS-0003Tw-AG
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 18:19:45 -0500
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-48371119eacso2917875e9.2
- for <qemu-devel@nongnu.org>; Wed, 25 Feb 2026 15:19:43 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vvOCn-0004QN-DJ
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 18:22:11 -0500
+Received: by mail-wm1-x341.google.com with SMTP id
+ 5b1f17b1804b1-483bd7354efso3566795e9.2
+ for <qemu-devel@nongnu.org>; Wed, 25 Feb 2026 15:22:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772061582; x=1772666382; darn=nongnu.org;
+ d=linaro.org; s=google; t=1772061727; x=1772666527; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=txwgsK6qnNhvJOsrDFmGGS9GEAd+UggP9g1V6IJl2ds=;
- b=BzF2xfjhERh0+RGyS0QAMEnlYjk/LMz5XHL1hwyC5npgjEP5/3kHo+/6tZCaTjLCnm
- 4foW6aKTbXL2ZWf77fIhyvHk43RmyjB7/XVyY4nlRCTv6/TKvabve2RAiEm4kZGEtmF5
- NRdqBo0PtFz+m51EXh8rycuxEca2g/bDJJ8b/NDGCJ0rfnmiiqv/JQKce68OAhKxKOM/
- uFEd5EPMMqjIAtK8OwXTItp1hCqxumWgMkTHCvCEM92VjLbl4ln/GsdBoAYbNrqH9b8Z
- OGnTQPCdZtA36rbguiOsTXJhi2C8EVZim6oiEhvsyMeOxoe/qXpQ9mxV55nRredkAvB5
- ywGw==
+ :reply-to; bh=rJR3a7jse2k+zOTTCK+12aHFKULfyak6qBcfUAT3KG4=;
+ b=Xj6mMcusY/4GPqWxQYMWru2oUso2pLc9ysbPZNUZG4AuJ5I3JM6kF39z7udgpztZEf
+ MJrGhJaIIm/YiEe9monfwHajo2ljdRpZwZbbmbBvGAnBO3I28Tn4d9qmtjepbGXtBlz6
+ sVGHCboF30CEKdCjFTUHd53IGv+7MM9ljU+stlRXEQSVkq7z7IUBWhSP5y/eWRz7neWE
+ prC784rkqIwsjc8bzZjS6VmmSe2N3jFviZP7HYyAXxCii+f2N768IKdQw0b+TrDOFBwU
+ 6o5l3d2jD8Qs5DkxExz2oQrTAijakqO2ZqYIPKbp2h+HnpJ2rLTcj3o4fGFlvISEalKF
+ kMVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772061582; x=1772666382;
+ d=1e100.net; s=20230601; t=1772061727; x=1772666527;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=txwgsK6qnNhvJOsrDFmGGS9GEAd+UggP9g1V6IJl2ds=;
- b=j5iqOIyMWqRo4vHitBW+AqnZB9rOyoC9yJbZla091mq21QEuzaydDFzOso0y08RCh6
- XI60R9ZnZJMCmM3Fa/mEes2ZtkOPd3lOlJfqVZFT5iJksa0CMEUyPy+wKo79ifXX3STT
- zvELUxANZdOAfRDEvW4PDuSs4Eq5Rjn0gfpTYQJXExoS3RmmlG+7oE7Eqyfpa0QAUwwz
- rUAj9Wt+0RKaKiY87v83Kex8N08nqBjPPwe2oQus8CRTeKd3vd0m9t+3preSdfh3hzcg
- yx+ifLQb8V3CtWDDBoPbXtwzFxw96wCwxq9GfXPpDjqnvlEuT9YttNnT6gXVlnd8rXZ7
- QZdw==
-X-Gm-Message-State: AOJu0YyGpCZN4cpL9/qkq/q5H/YaPQpNUlTSx/XUmWKeQRJjTOD9HuPd
- +RWdL3E3Oi448jaz6k8RMcqV7X2O0UsITOh5t4Sghn9yGeASkIeS8f0hPIV9DheRcF5va6lxbIO
- 0m70O21A=
-X-Gm-Gg: ATEYQzyVrMlJsSBe6jcHInNdeKsK+go6oe87PYQxrRzzRJrwAIe/lHqAxH4F/kYycJt
- TcnOH+ByFBY08SXoEmMMqMXmi1IIcN0xC5bfVXZLdbGqCO8rqTVcLUnekuBGUTC5VGD5E9tHMR2
- +3bJYctvmsjPrQsqX/oBQdQpvnuRB5dcWEbb38xzlakk7kmrZlU3nGg/56ji4ZJcf+Mw+ct/sF/
- +TK9VDTv5YfH1gxw7nHIDSF/0XErFoVp+nqsxdriyWQYRXuQxM07g+P7HXzDZgfu7rRWmLAGSjZ
- wBa0Gw4yCGHxL/CtuBS0l/LXBkfCVjtD/JSRQOaVcsCd5NyxZHIKmDB7e8upMVPV+cUQzsWldt+
- 3az7DfuPMn4zQNzV4Jps54rGI57p+OAy5Gy/hRt04h9zTBKt69YCxzN4wR8yOlEKZOWpuAprdhQ
- haCHjIcr6xI3em1w9fuRC4YuVYFYCVhpZIdnZbX3w7GE3AWjT4uwX/zh/IYUqfVmUezKDCwyTW
-X-Received: by 2002:a05:600c:348f:b0:47e:e91d:73c0 with SMTP id
- 5b1f17b1804b1-483c3dd7806mr1308575e9.19.1772061582382; 
- Wed, 25 Feb 2026 15:19:42 -0800 (PST)
+ bh=rJR3a7jse2k+zOTTCK+12aHFKULfyak6qBcfUAT3KG4=;
+ b=fOCQglL8dmbm4V2DGldWDQJwZfszMw8gxin1EzSMbGN6w0JPwnYAdMwv4O/eIxRcLv
+ XMkTP7/zd9lvE9FE0DTyGu07QV5nVcSDFnJPaKuOBA9qGFCRTNy6eF8WQR3eyfWzU7dE
+ r+gPQCEC4RA3pcH1MEMi0ZA//e1XdoZ/jlU+KRGP4pb+lFaTG2u3t/+VUR4qTeyTKqi0
+ UQnsyYp7b65kGKGDR3CAWFpPMJVJ/mgC8AuZieX0vsORCEDfS6M5UEyXNMD/A5E0C7Hw
+ G/5M3J9vqzbZuGyy2drdk/gDkwWI7755XoLIC8JVtzJm0zNr7yOmfmhlMOotm+tZAqgH
+ x6MA==
+X-Gm-Message-State: AOJu0YyWUlRjUNC5gGQZO25vIEPA4INeGimuL/W7F0FM55DnNKa8NOVV
+ QdyNvPfwY6zYcMm9GWj5nF0oqI/8si6v+pbzmsFd2iwg7/pkAbmUGA/FdrVBt5qcjTBdDqHOswp
+ ltCoD4ks=
+X-Gm-Gg: ATEYQzz3Iom7chh/aT9Cmcd4V5BeeApm0dMuFkBtjRNdJJj+B6Ln3AbSdcxDgkynNgq
+ Q7Sjz7bDiksWlrADUiyipqpyFrhs0tQJ3c643FK0zQWVwX3Qw25k3wPTkxkv4QlBlA2QQdZjMzl
+ mQq9u2TcCCOYwLkcxWWD+H6wxF/pCT8zq0wnnSxz3EU/aWWVCo5vlsfphn+XFi29MAC8Dg3J99y
+ HVTpy1UQk+/vkmBI3U3yw55sSw2iD3aaYBIkip0aqi7jmEnIjh3glaMp1mC9AMBLyjBq5RvpqEB
+ firGTdUmcoNdXJoWO7vnuq7s42X0/Rpky0G2tj/8M4JxEFX8vAG3344K1HBCBgEWpqr5fLOOwdE
+ ve1TLpMa9g48kiobz7BZhKrm4js8ajuq3Ni/VyMvc44/PzGibSV88yLeayvlmOanH1HLKkXQYNi
+ BCwWjuMFc7BZSnf+kyb5APTRCLaHUoYBYrh4+5gUH9NqVOuubObUEJzwaXWHk7RyZh2giTewkp
+X-Received: by 2002:a05:600c:3b8c:b0:483:43da:6c87 with SMTP id
+ 5b1f17b1804b1-483c21aa451mr36064515e9.33.1772061726799; 
+ Wed, 25 Feb 2026 15:22:06 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-483c3b84023sm4020995e9.12.2026.02.25.15.19.41
+ 5b1f17b1804b1-483bd6f26d7sm111074775e9.3.2026.02.25.15.22.06
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 25 Feb 2026 15:19:41 -0800 (PST)
+ Wed, 25 Feb 2026 15:22:06 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 48/70] target/sh4: Build 'gdbstub.c' once for system binaries
-Date: Thu, 26 Feb 2026 00:13:48 +0100
-Message-ID: <20260225231411.96482-49-philmd@linaro.org>
+Subject: [PULL 70/70] page-vary: Build migration_legacy_page_bits as common
+ code
+Date: Thu, 26 Feb 2026 00:14:10 +0100
+Message-ID: <20260225231411.96482-71-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260225231411.96482-1-philmd@linaro.org>
 References: <20260225231411.96482-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::341;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x341.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,42 +99,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-'gdbstub.c' can now be built once for all qemu-system-sh4*
-binaries.
+From: Richard Henderson <richard.henderson@linaro.org>
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Use target_info->page_bits_init to implement
+migration_legacy_page_bits.  Because this is the last
+function within the file, rename page-vary-target.c
+to page-vary-system.c and build once for system mode.
+
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20260217095106.598486-7-richard.henderson@linaro.org>
+[PMD: Update MAINTAINERS]
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20260219191955.83815-41-philmd@linaro.org>
 ---
- target/sh4/meson.build | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ MAINTAINERS                              |  2 +-
+ meson.build                              |  2 +-
+ page-vary-target.c => page-vary-system.c | 19 ++++++-------------
+ 3 files changed, 8 insertions(+), 15 deletions(-)
+ rename page-vary-target.c => page-vary-system.c (74%)
 
-diff --git a/target/sh4/meson.build b/target/sh4/meson.build
-index 1327507dfc8..3861d9b194a 100644
---- a/target/sh4/meson.build
-+++ b/target/sh4/meson.build
-@@ -1,7 +1,6 @@
- sh4_ss = ss.source_set()
- sh4_ss.add(files(
-   'cpu.c',
--  'gdbstub.c',
-   'helper.c',
-   'op_helper.c',
-   'translate.c',
-@@ -9,8 +8,13 @@ sh4_ss.add(files(
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 8da0b357fbb..606b16762cf 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -159,7 +159,7 @@ M: Richard Henderson <richard.henderson@linaro.org>
+ R: Paolo Bonzini <pbonzini@redhat.com>
+ S: Maintained
+ F: system/watchpoint.c
+-F: page-vary-target.c
++F: page-vary-system.c
+ F: page-vary-common.c
+ F: accel/tcg/
+ F: accel/stubs/tcg-stub.c
+diff --git a/meson.build b/meson.build
+index d9a17eeefd3..3cd1d8dbc66 100644
+--- a/meson.build
++++ b/meson.build
+@@ -3833,7 +3833,7 @@ if get_option('b_lto')
+   pagevary = declare_dependency(link_with: pagevary)
+ endif
+ common_ss.add(pagevary)
+-specific_ss.add(files('page-vary-target.c'))
++system_ss.add(files('page-vary-system.c'))
  
- sh4_common_system_ss = ss.source_set()
- sh4_common_system_ss.add(files(
-+  'gdbstub.c',
-   'monitor.c',
- ))
+ common_ss.add(files('target-info.c'))
+ system_ss.add(files('target-info-qom.c'))
+diff --git a/page-vary-target.c b/page-vary-system.c
+similarity index 74%
+rename from page-vary-target.c
+rename to page-vary-system.c
+index bc4d8931b68..6c49c10e23b 100644
+--- a/page-vary-target.c
++++ b/page-vary-system.c
+@@ -1,5 +1,5 @@
+ /*
+- * Variable page size handling -- target specific part.
++ * Variable page size handling -- system specific part.
+  *
+  *  Copyright (c) 2003 Fabrice Bellard
+  *
+@@ -17,24 +17,17 @@
+  * License along with this library; if not, see <http://www.gnu.org/licenses/>.
+  */
  
-+sh4_user_ss = ss.source_set()
-+sh4_user_ss.add(files('gdbstub.c'))
+-#define IN_PAGE_VARY 1
+-
+ #include "qemu/osdep.h"
+ #include "exec/page-vary.h"
+-#include "exec/target_page.h"
+-
+-#ifndef CONFIG_USER_ONLY
+ #include "exec/tlb-flags.h"
++#include "qemu/target-info-impl.h"
+ 
+ QEMU_BUILD_BUG_ON(TLB_FLAGS_MASK & ((1u < TARGET_PAGE_BITS_MIN) - 1));
+ 
+ int migration_legacy_page_bits(void)
+ {
+-#ifdef TARGET_PAGE_BITS_VARY
+-    QEMU_BUILD_BUG_ON(TARGET_PAGE_BITS_LEGACY < TARGET_PAGE_BITS_MIN);
+-    return TARGET_PAGE_BITS_LEGACY;
+-#else
+-    return TARGET_PAGE_BITS;
+-#endif
++    const TargetInfo *ti = target_info();
 +
- target_arch += {'sh4': sh4_ss}
-+target_user_arch += {'sh4': sh4_user_ss}
- target_common_system_arch += {'sh4': sh4_common_system_ss}
++    assert(ti->page_bits_init >= TARGET_PAGE_BITS_MIN);
++    return ti->page_bits_init;
+ }
+-#endif
 -- 
 2.52.0
 
