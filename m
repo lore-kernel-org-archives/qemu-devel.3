@@ -4,113 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8E56F55452
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 03:54:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D61D4F55449
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 03:57:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vv5wR-0003sb-Ce; Tue, 24 Feb 2026 22:52:03 -0500
+	id 1vv61z-0003xq-8I; Tue, 24 Feb 2026 22:57:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1vv5wP-0003ki-3f
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 22:52:01 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1vv5wN-0008Ed-3J
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 22:52:00 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771991518;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=ampkMXpvZM0Uh9Dio1wYKLx68wPyoO/FMFpvVez+X64=;
- b=bwerOYFkJzKjeudnaRkewPBmzU5jN45ocCJwaJm0eOtDSwk57p5cJY6MQgpkE4Qrlqu98G
- i8SDy1VslDamgYuPWYlchhxVo2lvBBJLrwB3FRDBJadniyQxQ3oXdhZPsqR9FkAGBNr3vx
- 9bTAaZW9bPQeyfBEXuHdNLxmAwDAJrs=
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
- [209.85.216.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-468-9Rmu0fscPLGiKXNs1uh8cw-1; Tue, 24 Feb 2026 22:51:54 -0500
-X-MC-Unique: 9Rmu0fscPLGiKXNs1uh8cw-1
-X-Mimecast-MFC-AGG-ID: 9Rmu0fscPLGiKXNs1uh8cw_1771991514
-Received: by mail-pj1-f70.google.com with SMTP id
- 98e67ed59e1d1-354c0234c1fso5708641a91.2
- for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 19:51:54 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vv61x-0003xi-R8
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 22:57:45 -0500
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vv61w-0001hF-7N
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 22:57:45 -0500
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-4834826e5a0so76464835e9.2
+ for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 19:57:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1771991514; x=1772596314; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ampkMXpvZM0Uh9Dio1wYKLx68wPyoO/FMFpvVez+X64=;
- b=t5/xpXNzvEODGIS4YIFg2qh/ejOU1slqs/3RIMNDtTzyq6Xpk+4oltXvNUHzIJA4jM
- rBI1a6PGaa7NtYqSMvphc3C3Sy8KjYUZeFKz5oc2IcEOLrmeUSQp8s96eB6D02XcO86A
- rMTmvWvghRCLrDsC9K5fjtD6ZdAPs0YXBuZEyMSu8pY9a1udcf0sbaVgxC/R/TIoSGpE
- b6q2C5L7obLXK/lceD6d+Xo2dc4vUgSNHm1EzrMix7+YCumSiEKvEnBFmA8ppvgYca71
- TodnOW/WDKEspp7JJtOqlnf7/9Lo+vBczx71E7ls8P+2Iv0uiDsKS4yL5NbgEJRtQfK4
- xFkA==
+ d=linaro.org; s=google; t=1771991862; x=1772596662; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=ukzxCsnUD20tsJiQHHLFwK5qahbxJbMxKECzqGh9PP4=;
+ b=fdXB/WfeXpo4UY9JjC2LlhT1NB9lpGjqNaRPmdqxhHEJoovtnIrpwR8yLfL2+ytJcN
+ Sm/PLW/1Cq371XIDC/Kjn5nZ0RcucEt1NXIYHPwIWnWnKTfNR7Jn1rwCd7dDRLTVEhq9
+ aC1t71vBWtQ+m22B/z4iv1/DodIixddFd8XjStjS5Iq8M7VZK+ywQXNaCe+Dsa3IG6Gi
+ ofkMP/MNECTaX4ECc6L/azfuJbhtoKbeMVritge5r5K6K3Lv2+Hu0RnEIT7qa23sfQhv
+ Jt81lwe7fT1NNFLA22rpMYAM+nqAfDIc82m2i2iUna0svuIw9WvYVDoAnNXPCTxb8cjR
+ mdRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771991514; x=1772596314;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=ampkMXpvZM0Uh9Dio1wYKLx68wPyoO/FMFpvVez+X64=;
- b=PIrT3i2/BshprY8vpcSZqDTSTQyHndPBy2wNG55OoYoMCyIrX53tACEvQuW1HXDHvN
- JGWPmnjoc37Qua56gJOIydbVFFrBRBv92Fq4Iz2tuyqkrZvkBWF/HLgc4UU/YIG6Z65t
- gRZVcZJ4TelBOHZfpgdba8PjEwEye6venDAXAdmcVB+YjPoYqXOVwTDImULyEuxuB+1C
- gxqj+mprptB09tvVvcWboUmPBqFrFaNFJzBqyneTbccg1s9gUKeIbTeWQCV/SLAj7myy
- Wc8/MiE68MG2zdXveCJj4iq5yMSveTuOOJpH7SohHqCKlkp5e4zKgIyKPyKqtZ8bgk9k
- nHXA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVXvDGWkJsH1eft3xY0SrJEfwd4qyVZ9irllUewkeHCx4kRimkG3QpmNSJnL8J8wpaM4zqqDwlgL10r@nongnu.org
-X-Gm-Message-State: AOJu0Yw94hya2Jv+YOAXURthm0AqccIbP/vT7lPd/0WICe07lEzpfprm
- Ecnd1A8cZN29WkFIRWDQTBX+GeUA43C6x2sfUaM4FOmDAUeq559MMa4DVZDeYh4wGzv5I9VP5yc
- x6XInpxmzWi8uEZqSgHv/LIGElsU4CiD/pNf3yOYLOdbj3dwKMEDFbttL
-X-Gm-Gg: ATEYQzz1oTYmaLPbydSD5JZIbVLcoCPTlCIiMccdMPg1TXmfpIY8QQFSwyVnXUZN8hX
- q5kbU7B5bHQtRHxfcJRYXZSiifdBNJqna9dSsffS8mSjl4O2AWSqAtJhljnDplyNLdQ8iq3Ca19
- krTCYZPEpoqEIHG6QYmWga4RZZh1tqbki0rRQBjbXjm5MgxagaPVxw0smEP5cDTkkzFPHMT/Fft
- e4pEKG0ovEKo7F4lihMUauu0GlI0zm6TctmlzIdM40Ri6wI2qhqZzAhyvkqS4U3Uh6vg8mRlRpT
- SMk5NMe8TusIczds7ccRfMoGFiDTQQAjFIGYTq+7MIZCOCuWtsZy7MQW1+y1lBRgXVw1etjRC+Z
- SdtBdoDfHG2LCU22kw0c8mRXj9K4rAuSGEyGI+3X5ufwbWsFnPt1HNIo=
-X-Received: by 2002:a05:6a20:3c89:b0:364:be7:6fe9 with SMTP id
- adf61e73a8af0-3959f2f33b9mr1066196637.32.1771991513569; 
- Tue, 24 Feb 2026 19:51:53 -0800 (PST)
-X-Received: by 2002:a05:6a20:3c89:b0:364:be7:6fe9 with SMTP id
- adf61e73a8af0-3959f2f33b9mr1066175637.32.1771991513199; 
- Tue, 24 Feb 2026 19:51:53 -0800 (PST)
-Received: from rhel9-box.lan ([122.176.129.56])
- by smtp.googlemail.com with ESMTPSA id
- 98e67ed59e1d1-359018838b2sm1186006a91.5.2026.02.24.19.51.49
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 24 Feb 2026 19:51:52 -0800 (PST)
-From: Ani Sinha <anisinha@redhat.com>
-To: "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>
-Cc: Ani Sinha <anisinha@redhat.com>, kraxel@redhat.com, ani@anisinha.ca,
- qemu-devel@nongnu.org
-Subject: [PATCH v6 31/35] kvm/clock: add support for confidential guest reset
-Date: Wed, 25 Feb 2026 09:19:36 +0530
-Message-ID: <20260225035000.385950-32-anisinha@redhat.com>
-X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20260225035000.385950-1-anisinha@redhat.com>
-References: <20260225035000.385950-1-anisinha@redhat.com>
+ d=1e100.net; s=20230601; t=1771991862; x=1772596662;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ukzxCsnUD20tsJiQHHLFwK5qahbxJbMxKECzqGh9PP4=;
+ b=JJm7iXsC0hI1/c4Zzy4YY1FQSgSioCUHmhtZwampmPAvqF7+0eg0cPpJdhF83bSWvo
+ m9b4reuFUbL5c8/mVx3A8qHDXL6XuNClVOIjY4ICgMLq4wnfv5fs4woicdwfqrMAKWWI
+ 5/ABIvwVEArr+hcszimggdIu1scsOELObdOGoXkUFf+2D9Wbz2UcCTdLlb+q2ShWY8Dt
+ fa7zyskbgCS1b69uNl+DNXYuviOpBmsHzLsLug2qJkit2ZitWwaLzK4rFWVNf1C2WZhE
+ ChSGVax034fbKxipGURJK01A99uMopvni50TdTeu4k482tERQJ4gX/gSd/gJKVSsSATk
+ Fi+g==
+X-Gm-Message-State: AOJu0YyopP/j74MD4XYxfaeM/6XWZmTTaefPN5XwOFDymKPiVKwEe7Cw
+ GbbxMR8r9M4bao8kBy3OtY91wMNXr7PXU+FrN7MJJWocWJapcF3S8CrIZTGcowrkBPw9VZQtwRf
+ fZ21cPCY=
+X-Gm-Gg: ATEYQzwu8BKQFDrOai30mZLFWyo1rHX+yZIkqs6aEWqIl4B3+TiA1e+KyfUq5+5rWD1
+ mYO5gQ6lny4hwdgrooORzFMohO8TpWGv+taPELzPzjPix+BwVZUBTtqEqC3FuPnvuOr14jK8zry
+ Pby9Kuthl4occOCspTznuJlsK/0I5KsmiSztNjCkpJ/YbVCp8MlpJvFT6MoHJVxogYCOr9uyc7S
+ bYMoXWs/3DX6iY6AGJvEKkRUOuwQHgJAsuhLacWG443NFy9DiYLrv5BpqBxlBNTmsnEybE+vr5i
+ eCifK0WSe9r0ZhBCVW/o249ZgmSXpNtgjyGik06gn9F5FOsVK87UTrflMrl1HgY6PiE3k4pox5Y
+ h/9eMWXDVzDRVEqmTkPcwUuT5V1Tn5eA7kD78ShK++eEFAg9u3mNx693WpuZOwwgkJmo7aYs+N7
+ B6jfaP7lVeC5E6Gs4FGKX7YxA719Rv0TFIvKnK9P7gthJoA9/mlqcYuEpQ4RvwfOroIb7BYVgY
+X-Received: by 2002:a05:600c:c167:b0:480:3a72:524a with SMTP id
+ 5b1f17b1804b1-483a95e9643mr207069835e9.19.1771991861606; 
+ Tue, 24 Feb 2026 19:57:41 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-483bfb789efsm2424045e9.2.2026.02.24.19.57.40
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 24 Feb 2026 19:57:40 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v2 00/11] buildsys: Build most stubs once
+Date: Wed, 25 Feb 2026 04:57:28 +0100
+Message-ID: <20260225035739.42848-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.52.0
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=anisinha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.358, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.659,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,111 +99,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Confidential guests change the KVM VM file descriptor upon reset and also create
-new VCPU file descriptors against the new KVM VM file descriptor. We need to
-save the clock state from kvm before KVM VM file descriptor changes and restore
-it after. Also after VCPU file descriptors changed, we must call
-KVM_KVMCLOCK_CTRL on the VCPU file descriptor to inform KVM that the VCPU is
-in paused state.
+Missing review: #5
 
-Signed-off-by: Ani Sinha <anisinha@redhat.com>
----
- hw/i386/kvm/clock.c | 59 +++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 59 insertions(+)
+v2: Move acpi_send_event() declaration
 
-diff --git a/hw/i386/kvm/clock.c b/hw/i386/kvm/clock.c
-index aba6842a22..10d34254f0 100644
---- a/hw/i386/kvm/clock.c
-+++ b/hw/i386/kvm/clock.c
-@@ -50,6 +50,9 @@ struct KVMClockState {
-     /* whether the 'clock' value was obtained in a host with
-      * reliable KVM_GET_CLOCK */
-     bool clock_is_reliable;
-+
-+    NotifierWithReturn kvmclock_vcpufd_change_notifier;
-+    NotifierWithReturn kvmclock_vmfd_change_notifier;
- };
- 
- struct pvclock_vcpu_time_info {
-@@ -63,6 +66,9 @@ struct pvclock_vcpu_time_info {
-     uint8_t    pad[2];
- } __attribute__((__packed__)); /* 32 bytes */
- 
-+static int kvmclock_set_clock(NotifierWithReturn *notifier,
-+                              void *data, Error** errp);
-+
- static uint64_t kvmclock_current_nsec(KVMClockState *s)
- {
-     CPUState *cpu = first_cpu;
-@@ -219,6 +225,54 @@ static void kvmclock_vm_state_change(void *opaque, bool running,
-     }
- }
- 
-+static int kvmclock_save_clock(NotifierWithReturn *notifier,
-+                               void *data, Error** errp)
-+{
-+    if (!((VmfdChangeNotifier *)data)->pre) {
-+        return 0;
-+    }
-+    KVMClockState *s = container_of(notifier, KVMClockState,
-+                                    kvmclock_vmfd_change_notifier);
-+    kvm_update_clock(s);
-+    return 0;
-+}
-+
-+static int kvmclock_set_clock(NotifierWithReturn *notifier,
-+                              void *data, Error** errp)
-+{
-+    struct kvm_clock_data clock_data = {};
-+    CPUState *cpu;
-+    int ret;
-+    KVMClockState *s = container_of(notifier, KVMClockState,
-+                                    kvmclock_vcpufd_change_notifier);
-+    int cap_clock_ctrl = kvm_check_extension(kvm_state, KVM_CAP_KVMCLOCK_CTRL);
-+
-+    if (!s->clock_is_reliable) {
-+        uint64_t pvclock_via_mem = kvmclock_current_nsec(s);
-+        /* saved clock value before vmfd change is not reliable */
-+        if (pvclock_via_mem) {
-+            s->clock = pvclock_via_mem;
-+        }
-+    }
-+
-+    clock_data.clock = s->clock;
-+    ret = kvm_vm_ioctl(kvm_state, KVM_SET_CLOCK, &clock_data);
-+    if (ret < 0) {
-+        fprintf(stderr, "KVM_SET_CLOCK failed: %s\n", strerror(-ret));
-+        abort();
-+    }
-+
-+    if (!cap_clock_ctrl) {
-+        return 0;
-+    }
-+    CPU_FOREACH(cpu) {
-+        run_on_cpu(cpu, do_kvmclock_ctrl, RUN_ON_CPU_NULL);
-+    }
-+
-+    return 0;
-+}
-+
-+
- static void kvmclock_realize(DeviceState *dev, Error **errp)
- {
-     KVMClockState *s = KVM_CLOCK(dev);
-@@ -230,7 +284,12 @@ static void kvmclock_realize(DeviceState *dev, Error **errp)
- 
-     kvm_update_clock(s);
- 
-+    s->kvmclock_vcpufd_change_notifier.notify = kvmclock_set_clock;
-+    s->kvmclock_vmfd_change_notifier.notify = kvmclock_save_clock;
-+
-     qemu_add_vm_change_state_handler(kvmclock_vm_state_change, s);
-+    kvm_vcpufd_add_change_notifier(&s->kvmclock_vcpufd_change_notifier);
-+    kvm_vmfd_add_change_notifier(&s->kvmclock_vmfd_change_notifier);
- }
- 
- static bool kvmclock_clock_is_reliable_needed(void *opaque)
+Use meson magical machinery to build stubs once,
+instead of one time per qemu-system-FOO binary.
+
+Philippe Mathieu-Daudé (11):
+  meson: Include various directories providing stubs before libqemuutil
+  hw/acpi: Move acpi_send_event() function out of acpi_interface.c
+  hw/acpi: Move qbus_build_aml() function out of acpi_interface.c
+  hw/acpi: Always link QOM interfaces with system binaries
+  hw/nvram: Build fw_cfg-acpi.c once
+  hw/acpi: Build stubs once
+  hw/display: Build stubs once
+  hw/net: Build stubs once
+  hw/*: Build stubs once
+  fsdev: Build stubs once
+  semihosting: Build stubs once
+
+ meson.build                                   | 14 +++++-----
+ include/hw/acpi/acpi.h                        |  1 +
+ include/hw/acpi/acpi_dev_interface.h          |  2 --
+ hw/acpi/acpi_interface.c                      | 19 -------------
+ hw/acpi/aml-build.c                           | 11 ++++++++
+ hw/acpi/core.c                                | 10 +++++++
+ hw/display/acpi-vga-stub.c                    |  1 +
+ .../rocker/{qmp-norocker.c => rocker-stubs.c} |  0
+ fsdev/meson.build                             |  3 +-
+ hw/acpi/meson.build                           | 28 ++++++++++---------
+ hw/cxl/meson.build                            |  4 +--
+ hw/display/meson.build                        | 19 ++++++-------
+ hw/i386/kvm/meson.build                       |  5 +---
+ hw/mem/meson.build                            |  4 +--
+ hw/net/meson.build                            |  3 +-
+ hw/nvram/meson.build                          |  4 +--
+ hw/pci/meson.build                            |  2 +-
+ hw/smbios/meson.build                         | 10 +++----
+ hw/usb/meson.build                            |  3 +-
+ hw/virtio/meson.build                         |  9 ++----
+ semihosting/meson.build                       |  9 +++---
+ 21 files changed, 80 insertions(+), 81 deletions(-)
+ rename hw/net/rocker/{qmp-norocker.c => rocker-stubs.c} (100%)
+
 -- 
-2.42.0
+2.52.0
 
 
