@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D815FFD375D
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 13:27:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 421C1FD374E
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 13:28:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvEuj-0001u4-HH; Wed, 25 Feb 2026 08:26:53 -0500
+	id 1vvEvm-0002Lz-UO; Wed, 25 Feb 2026 08:28:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vvEui-0001tp-5I
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 08:26:52 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vvEvj-0002Lh-Gm
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 08:27:55 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vvEug-00013O-OH
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 08:26:51 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vvEvh-0001Az-2b
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 08:27:54 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772026009;
+ s=mimecast20190719; t=1772026071;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=v31ygCb6/5ZGgQ2PBur8PqIyK0Mz3HOuhIrw0iXaCxI=;
- b=RBz7IblsVz2DWj5Hq+1axCjhqgk5q6frTIMl86MnAYxEQGjR3DgYxgSq1pxURO3YgKRjdU
- NtXKQ7ovy9CqxLSLPVrgYpLCwnscXgaUnA1xEmVR+cK4U9NFRZT5y56ihxNIs99tqoDDDZ
- 2vxa6+sH/AHNb7fRCEVutpR/5AoTsP4=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=Mq+TtfRN7NEOBAs4fuYxfUcHiilcK9tC68dy+otkKt4=;
+ b=jRVpwUkpnpoeClzW06vWpIqSSyTexu7SBBYq+9EZ1kU3qEiKOGrqP2F5ltLsueDKdkrdoI
+ i1qj6wVHoB9MkzDwgOveE3MdJIeCznZlBwYfz6vhustLzerCpR2wYaI1K+LctU1DaBHWRj
+ GViH8E9aqHxlRHkLyfIGa+nbfSdg57w=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-668-WMYM642aNE-isa1QOrc3rg-1; Wed,
- 25 Feb 2026 08:26:45 -0500
-X-MC-Unique: WMYM642aNE-isa1QOrc3rg-1
-X-Mimecast-MFC-AGG-ID: WMYM642aNE-isa1QOrc3rg_1772026004
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-352-zGFSYVMNO9mI0UnZOgLB8g-1; Wed,
+ 25 Feb 2026 08:27:47 -0500
+X-MC-Unique: zGFSYVMNO9mI0UnZOgLB8g-1
+X-Mimecast-MFC-AGG-ID: zGFSYVMNO9mI0UnZOgLB8g_1772026067
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D44A51956096; Wed, 25 Feb 2026 13:26:44 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A1B631800615; Wed, 25 Feb 2026 13:27:46 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.45.242.13])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 724E23003D88; Wed, 25 Feb 2026 13:26:44 +0000 (UTC)
+ id 63F5F3003D88; Wed, 25 Feb 2026 13:27:46 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 0CF6021E692D; Wed, 25 Feb 2026 14:26:42 +0100 (CET)
+ id 1C84621E692D; Wed, 25 Feb 2026 14:27:44 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
 To: David Hamilton <dahamilt0@gmail.com>
 Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH v2 2/2] hw/misc/ivshmem-pci: Check error after
- setup_interrupt() in process_msg_connect()
-In-Reply-To: <20260225121323.5395-3-dahamilt0@gmail.com> (David Hamilton's
- message of "Wed, 25 Feb 2026 07:13:23 -0500")
+Subject: Re: [PATCH v2 1/2] hw/misc/ivshmem-pci: Handle error from
+ kvm_irqchip_add_irqfd_notifier_gsi()
+In-Reply-To: <20260225121323.5395-2-dahamilt0@gmail.com> (David Hamilton's
+ message of "Wed, 25 Feb 2026 07:13:22 -0500")
 References: <20260225121323.5395-1-dahamilt0@gmail.com>
- <20260225121323.5395-3-dahamilt0@gmail.com>
-Date: Wed, 25 Feb 2026 14:26:42 +0100
-Message-ID: <87a4wxkl7x.fsf@pond.sub.org>
+ <20260225121323.5395-2-dahamilt0@gmail.com>
+Date: Wed, 25 Feb 2026 14:27:44 +0100
+Message-ID: <875x7lkl67.fsf@pond.sub.org>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -88,36 +88,16 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 David Hamilton <dahamilt0@gmail.com> writes:
 
-> setup_interrupt() can fail and report via errp, but
-> process_msg_connect() was ignoring the error and continuing
-> to ivshmem_add_eventfd(). Check the bool return to avoid
-> operating on a vector whose interrupt setup failed.
+> The return value of kvm_irqchip_add_irqfd_notifier_gsi() was being
+> ignored. Propagate the error to the caller via errp.
+>
+> Also change setup_interrupt() to return bool to follow QEMU error
+> handling conventions, making error checks at call sites simpler.
 >
 > Resolves the TODO comment at the call site.
 >
 > Signed-off-by: David Hamilton <dahamilt0@gmail.com>
-> ---
->  hw/misc/ivshmem-pci.c | 5 +++--
->  1 file changed, 3 insertions(+), 2 deletions(-)
->
-> diff --git a/hw/misc/ivshmem-pci.c b/hw/misc/ivshmem-pci.c
-> index c987eebb98..f1262fa5f7 100644
-> --- a/hw/misc/ivshmem-pci.c
-> +++ b/hw/misc/ivshmem-pci.c
-> @@ -553,8 +553,9 @@ static void process_msg_connect(IVShmemState *s, uint16_t posn, int fd,
->      }
->  
->      if (posn == s->vm_id) {
-> -        setup_interrupt(s, vector, errp);
-> -        /* TODO do we need to handle the error? */
-> +        if (!setup_interrupt(s, vector, errp)) {
 
-Any cleanup needed here?  Error returns above close(fd).
-
-> +            return;
-> +        }
->      }
->  
->      if (ivshmem_has_feature(s, IVSHMEM_IOEVENTFD)) {
+Reviewed-by: Markus Armbruster <armbru@redhat.com>
 
 
