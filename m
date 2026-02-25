@@ -4,99 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49DD1F55449
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 03:51:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25897F55452
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 03:51:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vv5vS-00081C-Ns; Tue, 24 Feb 2026 22:51:02 -0500
+	id 1vv5vZ-00089a-7y; Tue, 24 Feb 2026 22:51:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1vv5vQ-0007tX-Nb
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 22:51:00 -0500
+ id 1vv5vX-00088O-HO
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 22:51:07 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1vv5vO-00088o-Vq
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 22:51:00 -0500
+ id 1vv5vW-00089N-1e
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 22:51:07 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1771991457;
+ s=mimecast20190719; t=1771991465;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=U8ysoIKaFAhpJTu9HD8Mj/a1enqePFAzbIF/YGXHVKg=;
- b=N4H7AsKBNp7ZA9Dqr/IdxgT62j3JYadANj29/vN+AuCKpDDg9OJ5FcUfL4xNvI/kD539K4
- LRABzPaLI9CZ20FhY9X+zBCq28F8H7bD5QYJS+iuUPdhJRFJkUW80YbYJUBlOAf2AoGq6f
- T3RTDpM+ph2KotoNHdmvkd4zBeHliKc=
-Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com
- [209.85.214.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=r0oM0RRyjLelkT0G5RoaNy8SGcq/Mnkz7KKwnwr3WCA=;
+ b=Tqwe2TzUoSHIz0I1qyOhGn28yqT5+SC67/XZZyks47Ed3qVfQkae3gZPzrkEci1eBaUF84
+ n7NBMarXQ65H6U0nXUadRiO/mBzNH3ZHQjNkuUJX8HLKhD93CxZPeSa6b8mKrFM5eNepPW
+ Ste3mKZyt3dZaKrSP5PwWM1vz7iS1Ps=
+Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
+ [209.85.216.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-586-HvpKwjpPNn2C35t9h52hMQ-1; Tue, 24 Feb 2026 22:50:53 -0500
-X-MC-Unique: HvpKwjpPNn2C35t9h52hMQ-1
-X-Mimecast-MFC-AGG-ID: HvpKwjpPNn2C35t9h52hMQ_1771991449
-Received: by mail-pl1-f198.google.com with SMTP id
- d9443c01a7336-2aad60525deso411715095ad.1
- for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 19:50:51 -0800 (PST)
+ us-mta-288-7-Q9WRdXOlGsZTb3vdH9bg-1; Tue, 24 Feb 2026 22:51:03 -0500
+X-MC-Unique: 7-Q9WRdXOlGsZTb3vdH9bg-1
+X-Mimecast-MFC-AGG-ID: 7-Q9WRdXOlGsZTb3vdH9bg_1771991462
+Received: by mail-pj1-f72.google.com with SMTP id
+ 98e67ed59e1d1-356236ae3c1so411632a91.1
+ for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 19:51:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1771991448; x=1772596248; darn=nongnu.org;
+ d=redhat.com; s=google; t=1771991462; x=1772596262; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=U8ysoIKaFAhpJTu9HD8Mj/a1enqePFAzbIF/YGXHVKg=;
- b=H+gDURnmco1BzxEgdHJ+wo/4OiSGHROMhWT8U247lwh/E2CsFK7BWJsONHsLBG45h0
- +s/VLOFmY49MCe07C0yfb/flwVV/cUj/t3Xjp4mJl1RodB+T2Z2wg/+uWxxgleOFOKEL
- fQCAT1ZvagCP7J/UjLEWVzu2TdnFrM0ZXtvw0se5rYN/fwkjqVoq3lza3PPLZoxsICk3
- 9x+ld1x3aWimsyu1OTf2DWZnsgqqpPD2CPaBe7S+4jUVU9rbjruBjrVLXtuiuKgHQL3S
- Edss3ZWKwO7ZwSKgt+CYKLDhRFcbykBhiNBlYmwZR530npFPwNgB2uAYjEWxgAbHGxHI
- p+Mg==
+ bh=r0oM0RRyjLelkT0G5RoaNy8SGcq/Mnkz7KKwnwr3WCA=;
+ b=k+L28aTKxPcA5J5Hgzyik5HrUdcu3faVAhmCdgWAnZXlRs/wrBaZu6SM+iMU5o+slP
+ y4nfDlZv4UeQ5TUcypwmlmYF1t4l6K3k1j/4b3fNtY9oqbpfgT1ebvkhSxcLdAZ7o4Ii
+ bgO7BcbrlmGJG2eWufuwORcBN4YcbI4hESyWCO/1Q3sSDgqP3C6PgfiNO+93ZKS3jdPu
+ ol07tjOcWEO3c8vrGwUnhJP2PqYduNiYeUOqNZAFhjZdR56A/qLx7K6MxPhQulH5gYB+
+ A7xiPst0fbA8PU4KjG47yiKhmdWGZyHh0a2DICMh9kQCPffGOCm1tSdERji+w1QIqoP2
+ +0/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771991448; x=1772596248;
+ d=1e100.net; s=20230601; t=1771991462; x=1772596262;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=U8ysoIKaFAhpJTu9HD8Mj/a1enqePFAzbIF/YGXHVKg=;
- b=Z61gaWT/dForrTfyKpBSJLYHzSQAu+5PHaZKsOO2CHzCJN90GrlYO8NOLli6H71VZo
- ckTZ8fdMs7jK9V9KeExVorNk0aGaefthNU8t1dXUhhcNP3R+xTmiA8K3NM68hUFB/wnR
- yQ/AUmMxyHxYPUmGQry/zlSGKFLrQW9dzkUpiXl5PaBGWB7hcumAnwsTo009hBWAU3pa
- 9felE4k1rC6yYOjyxw8/7nyCnQwn8obJXxQWhVvKcRMG7viZvh/Bfk+j6YJSPO9A74O+
- AwZ0rSr3Ltcv9Y0ZABOwo08UlP3nfBnRVX3k33zo6uNUZEtfYSbcJ4JUoPKqbczLkHBR
- 6HeA==
+ bh=r0oM0RRyjLelkT0G5RoaNy8SGcq/Mnkz7KKwnwr3WCA=;
+ b=Ycp4+DXg10MBXnmbXXXKBJVVz+brW9c0EmbOb86n3ptoAM7uJ+0y3tDfPQzwBfV5Vx
+ SEvIObzbxwAzPZRL2Z7ih1eaZQyrXdg0+1n1xhuqQGRoZXA0C8HZEJmtaNq8Z8U+V0qi
+ VuBALs3hoHDAmROoRXm0FsoElgzN/lGhrrnOEPmmM+UTThSmNoQ+K5MfI+ec7ktZOtpo
+ EpnlsmI6oTF26B7dNpfDyg1ag6gshTz4dd0ZHmntbZyyntrlvQyXJvLVD+T8d7AVFVED
+ V4yBpqkJPqwpnOo/wZQCRqm5SBMO9mwOzc+t1NEsXdyR8e+fB9kCl6lGwWyf8ATdK9xS
+ 67fg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXf/Tn9WoUxibFJS7fbE/THutpB1SfTa0XdeUeJFZ2e2YB1ACp4dOsYxAPAjbolOzhw4rr5/gkmrZgl@nongnu.org
-X-Gm-Message-State: AOJu0YwPnTi7VX7X2aQ/eJrSVRhgtFiW7BbJ6QB10x4X/jcNzqiIYkML
- +uZYEFG6I7D8wD4Dkrj7aHrcXqj9yP5psfUG/sugqPcgdDP7xzMMEUvrITR1nSBBOO7mLAqtWm3
- Bw+EcYuqjCnaP8EgKbcdVXWwKsCCfv/Tc15hIFnJDVXeGU5CZvb3B7iPu
-X-Gm-Gg: ATEYQzyrEKjPw6tVOuGVsC2JO+HPm2v/JEvM628w/h5qR1v28Oblq5dM9BmDIcibki4
- MXQgffJNfXxkbJyxlWl0TZ2b0Y1nQViPcuTsPJmd4Wos9yIH2wvXEzJ4wEQM+F2pDvfZ46CoK8l
- zkTjJZUx0m/Jby9k04FOS7Qz9K60Wxm/kFGkfSSoxeXXroahXSmVE1op3wQCCkDU2S1d/WBkRZC
- baGKbi3MiG10OXYxWckp2Pank+id/yr7muL+99wKc57Q3kUeMVew6+Sb6swtF+rLP3/HnogMpnK
- CXQ6zKGq1aplHFhpCPmQ67opo+NOtQLL+1hzw9atg+XC5wH2KUG0iCe4X9PJ51y4jbelCR1gAE2
- W9q5H9LGEu/O2vGSoo0ot44j4HC7Ku7FjV8ilUsvLeSZOPZ2/M6vLKXQ=
-X-Received: by 2002:a17:903:1b4d:b0:29f:2f40:76c4 with SMTP id
- d9443c01a7336-2ad744e05demr139398005ad.34.1771991448549; 
- Tue, 24 Feb 2026 19:50:48 -0800 (PST)
-X-Received: by 2002:a17:903:1b4d:b0:29f:2f40:76c4 with SMTP id
- d9443c01a7336-2ad744e05demr139397875ad.34.1771991448239; 
- Tue, 24 Feb 2026 19:50:48 -0800 (PST)
+ AJvYcCVNL4hkaV6n3EfSBQLYbbOBcdcyfLGAwvPscxYuAvIedz7rXf3bWvtiFxF+Ri15Ib5iMAR9ruZKbXJU@nongnu.org
+X-Gm-Message-State: AOJu0YwPyI4XkvVw7DG/w7VNmv9gHjVkK/Vi3JYo8xDlhLWhAazHs1Bo
+ mIysYclf5t/Cf19Xx36hhFItGd1/hGQml2HFlcQXpob/ftnEunBAeFQe+PXCikq7Lm+/ZTK3bh0
+ iKHP7I+k4mCwQPUsqXGCKqwtiGqy2YTz41tfm6vkujGnG9At/fUWgEX08KOeu0V7y
+X-Gm-Gg: ATEYQzwmgFYjooPp0KCsVwgDC2clBv6FgxUj+2kiMBaQwVH2+ls0I3zvvPYR57XBkLK
+ 4/sV/mcphN/rrTE45FNj23yZEZkO/RF9XCcWhp2qYqXLILjscG2EmwvIC1jjEbh/vl/IX3eeiLS
+ pkQ7qQCS8CEfu5z5GJ/x1xvt5Z+rhztRZmZwcYJm1pRBCU+H+HKuf5RBgYKqwTcUXxY3IoinPZH
+ 8JmTJjez6XOpzMK9fAln+Jel5ecnRW9qT9mVwZ8a7ZyEPfTvtZZaVwdAr+uAGOwxS2x60LccHjk
+ deHs+yRonWATIWZnAZLRhUoI8mpG7q3cT0udI62JrHgV/estKHUFZyttrLriV1Y3ml7LIYJVsxD
+ 9e8AVBQaCK5Cpx81WNbHFMUhKOkW8KM9e6JS82YlX96KlM4ioZN+JYTM=
+X-Received: by 2002:a17:90b:4a51:b0:356:24c8:2291 with SMTP id
+ 98e67ed59e1d1-359008bd1e4mr1891321a91.0.1771991462099; 
+ Tue, 24 Feb 2026 19:51:02 -0800 (PST)
+X-Received: by 2002:a17:90b:4a51:b0:356:24c8:2291 with SMTP id
+ 98e67ed59e1d1-359008bd1e4mr1891299a91.0.1771991461744; 
+ Tue, 24 Feb 2026 19:51:01 -0800 (PST)
 Received: from rhel9-box.lan ([122.176.129.56])
  by smtp.googlemail.com with ESMTPSA id
- 98e67ed59e1d1-359018838b2sm1186006a91.5.2026.02.24.19.50.44
+ 98e67ed59e1d1-359018838b2sm1186006a91.5.2026.02.24.19.50.58
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 24 Feb 2026 19:50:47 -0800 (PST)
+ Tue, 24 Feb 2026 19:51:01 -0800 (PST)
 From: Ani Sinha <anisinha@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+To: Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>
 Cc: Ani Sinha <anisinha@redhat.com>, kraxel@redhat.com, ani@anisinha.ca,
- qemu-devel@nongnu.org
-Subject: [PATCH v6 12/35] hw/i386: refactor x86_bios_rom_init for reuse in
- confidential guest reset
-Date: Wed, 25 Feb 2026 09:19:17 +0530
-Message-ID: <20260225035000.385950-13-anisinha@redhat.com>
+ kvm@vger.kernel.org, qemu-devel@nongnu.org
+Subject: [PATCH v6 16/35] i386/tdx: refactor TDX firmware memory
+ initialization code into a new function
+Date: Wed, 25 Feb 2026 09:19:21 +0530
+Message-ID: <20260225035000.385950-17-anisinha@redhat.com>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20260225035000.385950-1-anisinha@redhat.com>
 References: <20260225035000.385950-1-anisinha@redhat.com>
@@ -127,102 +123,111 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-For confidential guests, bios image must be reinitialized upon reset. This
-is because bios memory is encrypted and hence once the old confidential
-kvm context is destroyed, it cannot be decrypted. It needs to be reinitilized.
-Towards that, this change refactors x86_bios_rom_init() code so that
-parts of it can be called during confidential guest reset.
-No functional chnage.
+A new helper function is introduced that refactors all firmware memory
+initialization code into a separate function. No functional change.
 
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Ani Sinha <anisinha@redhat.com>
 ---
- hw/i386/x86-common.c | 50 ++++++++++++++++++++++++++++++++------------
- 1 file changed, 37 insertions(+), 13 deletions(-)
+ target/i386/kvm/tdx.c | 73 ++++++++++++++++++++++++-------------------
+ 1 file changed, 40 insertions(+), 33 deletions(-)
 
-diff --git a/hw/i386/x86-common.c b/hw/i386/x86-common.c
-index de4cd7650a..c98abaf368 100644
---- a/hw/i386/x86-common.c
-+++ b/hw/i386/x86-common.c
-@@ -1020,17 +1020,11 @@ void x86_isa_bios_init(MemoryRegion *isa_bios, MemoryRegion *isa_memory,
-     memory_region_set_readonly(isa_bios, read_only);
+diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
+index a3e81e1c0c..fd8e3de969 100644
+--- a/target/i386/kvm/tdx.c
++++ b/target/i386/kvm/tdx.c
+@@ -295,14 +295,51 @@ static void tdx_post_init_vcpus(void)
+     }
  }
  
--void x86_bios_rom_init(X86MachineState *x86ms, const char *default_firmware,
--                       MemoryRegion *rom_memory, bool isapc_ram_fw)
-+static int get_bios_size(X86MachineState *x86ms,
-+                         const char *bios_name, char *filename)
+-static void tdx_finalize_vm(Notifier *notifier, void *unused)
++static void tdx_init_fw_mem_region(void)
  {
--    const char *bios_name;
--    char *filename;
-     int bios_size;
--    ssize_t ret;
+     TdxFirmware *tdvf = &tdx_guest->tdvf;
+     TdxFirmwareEntry *entry;
+-    RAMBlock *ram_block;
+     Error *local_err = NULL;
+     int r;
  
--    /* BIOS load */
--    bios_name = MACHINE(x86ms)->firmware ?: default_firmware;
--    filename = qemu_find_file(QEMU_FILE_TYPE_BIOS, bios_name);
-     if (filename) {
-         bios_size = get_image_size(filename, NULL);
-     } else {
-@@ -1040,6 +1034,21 @@ void x86_bios_rom_init(X86MachineState *x86ms, const char *default_firmware,
-         (bios_size % 65536) != 0) {
-         goto bios_error;
-     }
++    for_each_tdx_fw_entry(tdvf, entry) {
++        struct kvm_tdx_init_mem_region region;
++        uint32_t flags;
 +
-+    return bios_size;
++        region = (struct kvm_tdx_init_mem_region) {
++            .source_addr = (uintptr_t)entry->mem_ptr,
++            .gpa = entry->address,
++            .nr_pages = entry->size >> 12,
++        };
 +
-+ bios_error:
-+    fprintf(stderr, "qemu: could not load PC BIOS '%s'\n", bios_name);
-+    exit(1);
++        flags = entry->attributes & TDVF_SECTION_ATTRIBUTES_MR_EXTEND ?
++                KVM_TDX_MEASURE_MEMORY_REGION : 0;
++
++        do {
++            error_free(local_err);
++            local_err = NULL;
++            r = tdx_vcpu_ioctl(first_cpu, KVM_TDX_INIT_MEM_REGION, flags,
++                               &region, &local_err);
++        } while (r == -EAGAIN || r == -EINTR);
++        if (r < 0) {
++            error_report_err(local_err);
++            exit(1);
++        }
++
++        if (entry->type == TDVF_SECTION_TYPE_TD_HOB ||
++            entry->type == TDVF_SECTION_TYPE_TEMP_MEM) {
++            qemu_ram_munmap(-1, entry->mem_ptr, entry->size);
++            entry->mem_ptr = NULL;
++        }
++    }
 +}
 +
-+static void load_bios_from_file(X86MachineState *x86ms, const char *bios_name,
-+                                char *filename, int bios_size,
-+                                bool isapc_ram_fw)
++static void tdx_finalize_vm(Notifier *notifier, void *unused)
 +{
-+    ssize_t ret;
++    TdxFirmware *tdvf = &tdx_guest->tdvf;
++    TdxFirmwareEntry *entry;
++    RAMBlock *ram_block;
 +
-+    /* BIOS load */
-     if (machine_require_guest_memfd(MACHINE(x86ms))) {
-         memory_region_init_ram_guest_memfd(&x86ms->bios, NULL, "pc.bios",
-                                            bios_size, &error_fatal);
-@@ -1068,7 +1077,26 @@ void x86_bios_rom_init(X86MachineState *x86ms, const char *default_firmware,
-             goto bios_error;
-         }
-     }
--    g_free(filename);
-+
-+    return;
-+
-+ bios_error:
-+    fprintf(stderr, "qemu: could not load PC BIOS '%s'\n", bios_name);
-+    exit(1);
-+}
-+
-+void x86_bios_rom_init(X86MachineState *x86ms, const char *default_firmware,
-+                       MemoryRegion *rom_memory, bool isapc_ram_fw)
-+{
-+    int bios_size;
-+    const char *bios_name;
-+    g_autofree char *filename;
-+
-+    bios_name = MACHINE(x86ms)->firmware ?: default_firmware;
-+    filename = qemu_find_file(QEMU_FILE_TYPE_BIOS, bios_name);
-+
-+    bios_size = get_bios_size(x86ms, bios_name, filename);
-+    load_bios_from_file(x86ms, bios_name, filename, bios_size, isapc_ram_fw);
+     tdx_init_ram_entries();
  
-     if (!machine_require_guest_memfd(MACHINE(x86ms))) {
-         /* map the last 128KB of the BIOS in ISA space */
-@@ -1081,8 +1109,4 @@ void x86_bios_rom_init(X86MachineState *x86ms, const char *default_firmware,
-                                 (uint32_t)(-bios_size),
-                                 &x86ms->bios);
-     return;
+     for_each_tdx_fw_entry(tdvf, entry) {
+@@ -339,37 +376,7 @@ static void tdx_finalize_vm(Notifier *notifier, void *unused)
+     tdvf_hob_create(tdx_guest, tdx_get_hob_entry(tdx_guest));
+ 
+     tdx_post_init_vcpus();
 -
--bios_error:
--    fprintf(stderr, "qemu: could not load PC BIOS '%s'\n", bios_name);
--    exit(1);
- }
+-    for_each_tdx_fw_entry(tdvf, entry) {
+-        struct kvm_tdx_init_mem_region region;
+-        uint32_t flags;
+-
+-        region = (struct kvm_tdx_init_mem_region) {
+-            .source_addr = (uintptr_t)entry->mem_ptr,
+-            .gpa = entry->address,
+-            .nr_pages = entry->size >> 12,
+-        };
+-
+-        flags = entry->attributes & TDVF_SECTION_ATTRIBUTES_MR_EXTEND ?
+-                KVM_TDX_MEASURE_MEMORY_REGION : 0;
+-
+-        do {
+-            error_free(local_err);
+-            local_err = NULL;
+-            r = tdx_vcpu_ioctl(first_cpu, KVM_TDX_INIT_MEM_REGION, flags,
+-                               &region, &local_err);
+-        } while (r == -EAGAIN || r == -EINTR);
+-        if (r < 0) {
+-            error_report_err(local_err);
+-            exit(1);
+-        }
+-
+-        if (entry->type == TDVF_SECTION_TYPE_TD_HOB ||
+-            entry->type == TDVF_SECTION_TYPE_TEMP_MEM) {
+-            qemu_ram_munmap(-1, entry->mem_ptr, entry->size);
+-            entry->mem_ptr = NULL;
+-        }
+-    }
++    tdx_init_fw_mem_region();
+ 
+     /*
+      * TDVF image has been copied into private region above via
 -- 
 2.42.0
 
