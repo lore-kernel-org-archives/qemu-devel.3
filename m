@@ -4,75 +4,119 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CB74F357D5
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 07:39:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6151AF357DA
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 07:40:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vv9US-0006TU-0d; Wed, 25 Feb 2026 02:39:24 -0500
+	id 1vv9VP-00070L-4f; Wed, 25 Feb 2026 02:40:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <heifetz@yandex-team.com>)
- id 1vv9UQ-0006TI-Ih
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 02:39:22 -0500
-Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vv9V8-0006wz-GK
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 02:40:10 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <heifetz@yandex-team.com>)
- id 1vv9UO-0005dy-Co
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 02:39:22 -0500
-Received: from mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
- [IPv6:2a02:6b8:c37:8aa5:0:640:e6ae:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id ED609808A9;
- Wed, 25 Feb 2026 10:39:16 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:55b::1:1] (unknown [2a02:6bf:8080:55b::1:1])
- by mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id EdbTAM7An8c0-KUqmQBPA; Wed, 25 Feb 2026 10:39:16 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.com;
- s=default; t=1772005156;
- bh=QaQh5iMiXmJog/kDCntmOvBOndb0Vif1vRPL+kUgHHY=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=23MrIacxydA0peDdM+utYv6r5cNLe2wXqI9Mtamse+0tRN05S1tRfQvO/Q+knddrB
- t2aWbBS17F/05/oEjNT/wOR6LZJSO1i+BPoyQ7L0NNzj3y5KMqM929u3po9j/zus0g
- tGkpdS0ppAQW+fTrg76fQapU0+wijjs+jBawJ7T8=
-Authentication-Results: mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.com
-Message-ID: <fdf9519d-9382-442e-8ae9-260fdd1d4c69@yandex-team.com>
-Date: Wed, 25 Feb 2026 12:39:14 +0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vv9V6-0005pv-Kx
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 02:40:05 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1772005203;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=o6h0Hhu1sNdBpt2nJSnoUXxzXe+HGIfd8VulLcvNUpY=;
+ b=KzLFZai0enMKWVHQsTqJ1vMlmzMmCX+JHVk8DvmCVbbJpMKFzG4XCA1TEyNmf2hSOTPgjK
+ 23iiIT3gZJHiTq/N7OuvhGklImWYRtai/V8LF4+j+XqjH3dYC3to2PcL+iXvEQve42vRZn
+ DnbLXA75ExbowZiWv2YjtucTLwdqpuc=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-208-oKtDXJcFPjiLujWWCxvU6Q-1; Wed,
+ 25 Feb 2026 02:39:59 -0500
+X-MC-Unique: oKtDXJcFPjiLujWWCxvU6Q-1
+X-Mimecast-MFC-AGG-ID: oKtDXJcFPjiLujWWCxvU6Q_1772005198
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 13CC11956080; Wed, 25 Feb 2026 07:39:58 +0000 (UTC)
+Received: from [10.45.224.158] (unknown [10.45.224.158])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id AEDF83003D88; Wed, 25 Feb 2026 07:39:54 +0000 (UTC)
+Message-ID: <f8cd2193-3621-4155-9c7c-e0badb21a551@redhat.com>
+Date: Wed, 25 Feb 2026 08:39:52 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 06/10] system/vl: remove audio and audiodev options
- when audio is disabled
-To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@gmail.com>
-Cc: qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>, Thomas Huth <thuth@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Eric Blake <eblake@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Richard Henderson <richard.henderson@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>, Markus Armbruster
- <armbru@redhat.com>, "Dr. David Alan Gilbert" <dave@treblig.org>
-References: <20260223202512.1308205-1-heifetz@yandex-team.com>
- <20260223202512.1308205-7-heifetz@yandex-team.com>
- <CAJ+F1CKEjT741GHZP5HJSKYSW93K7iROmAiVS-oPJmL+J3Bujw@mail.gmail.com>
+Subject: Re: [PATCH v2 4/4] tests/functional/ppc64: Remove custom migration
+ routine
+To: Aditya Gupta <adityag@linux.ibm.com>, Fabiano Rosas <farosas@suse.de>,
+ qemu-devel@nongnu.org
+Cc: berrange@redhat.com, peterx@redhat.com,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>
+References: <20260204172332.21367-1-farosas@suse.de>
+ <20260204172332.21367-5-farosas@suse.de>
+ <a42777cc-6c4c-4746-a505-e98c6fec3791@linux.ibm.com>
+From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
-From: Sergei Heifetz <heifetz@yandex-team.com>
-In-Reply-To: <CAJ+F1CKEjT741GHZP5HJSKYSW93K7iROmAiVS-oPJmL+J3Bujw@mail.gmail.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <a42777cc-6c4c-4746-a505-e98c6fec3791@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.154.239.136;
- envelope-from=heifetz@yandex-team.com; helo=forwardcorp1b.mail.yandex.net
+Content-Transfer-Encoding: 7bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -10
 X-Spam_score: -1.1
 X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.358, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.659,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,74 +132,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/24/26 16:06, Marc-André Lureau wrote:
-> Hi
->
-> On Mon, Feb 23, 2026 at 9:26 PM Sergei Heifetz <heifetz@yandex-team.com> wrote:
->> Remove the audio and audiodev runtime options when QEMU is configured
->> with `--disable-audio`.
->>
->> Signed-off-by: Sergei Heifetz <heifetz@yandex-team.com>
-> This change should also modify qemu-options.hx
-Oh, yes, of course. I somehow forgot about this.
+On 25/02/2026 08.23, Aditya Gupta wrote:
+> Hello all,
+> 
+> Just a ping, the issue still exists with functional tests for ppc64 failing 
+> when run in parallel.
+> 
+> Can we get this merged ?
 
-Thank you for all the feedback.
->
->> ---
->>   system/vl.c | 6 ++++++
->>   1 file changed, 6 insertions(+)
->>
->> diff --git a/system/vl.c b/system/vl.c
->> index 3e341142a0..1034a4688f 100644
->> --- a/system/vl.c
->> +++ b/system/vl.c
->> @@ -2248,7 +2248,9 @@ static int global_init_func(void *opaque, QemuOpts *opts, Error **errp)
->>   static bool is_qemuopts_group(const char *group)
->>   {
->>       if (g_str_equal(group, "object") ||
->> +#ifdef CONFIG_AUDIO
->>           g_str_equal(group, "audiodev") ||
->> +#endif
->>           g_str_equal(group, "machine") ||
->>           g_str_equal(group, "smp-opts") ||
->>           g_str_equal(group, "boot-opts")) {
->> @@ -2265,6 +2267,7 @@ static void qemu_record_config_group(const char *group, QDict *dict,
->>           object_option_add_visitor(v);
->>           visit_free(v);
->>
->> +#ifdef CONFIG_AUDIO
->>       } else if (g_str_equal(group, "audiodev")) {
->>           Audiodev *dev = NULL;
->>           Visitor *v = qobject_input_visitor_new_keyval(QOBJECT(dict));
->> @@ -2272,6 +2275,7 @@ static void qemu_record_config_group(const char *group, QDict *dict,
->>               audio_add_audiodev(dev);
->>           }
->>           visit_free(v);
->> +#endif
->>
->>       } else if (g_str_equal(group, "machine")) {
->>           /*
->> @@ -3057,6 +3061,7 @@ void qemu_init(int argc, char **argv)
->>                   }
->>                   break;
->>   #endif
->> +#ifdef CONFIG_AUDIO
->>               case QEMU_OPTION_audiodev:
->>                   default_audio = 0;
->>                   audio_parse_option(optarg);
->> @@ -3097,6 +3102,7 @@ void qemu_init(int argc, char **argv)
->>                   }
->>                   break;
->>               }
->> +#endif
->>               case QEMU_OPTION_h:
->>                   help(0);
->>                   break;
->> --
->> 2.34.1
->>
->>
->
-> --
-> Marc-André Lureau
+There were suggestions for improvements that were not addressed:
+
+  https://lore.kernel.org/qemu-devel/eedee23c-39dd-4c1a-94e4-d7f1eb0c9d2e@redhat.com/
+
+I don't insist on that change, but I think we should at least have a common 
+understanding on whether we want it or not. Fabiano, could you please 
+comment on that?
+
+  Thomas
+
 
