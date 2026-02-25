@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D227DF357DA
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 10:24:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9D4BF357D5
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 10:24:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvC17-0004Ij-EZ; Wed, 25 Feb 2026 05:21:17 -0500
+	id 1vvC0y-000499-Ko; Wed, 25 Feb 2026 05:21:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <Djordje.Todorovic@htecgroup.com>)
- id 1vvC0h-00043j-KR; Wed, 25 Feb 2026 05:20:51 -0500
+ id 1vvC0b-000402-2Q; Wed, 25 Feb 2026 05:20:45 -0500
 Received: from mail-francecentralazlp170130007.outbound.protection.outlook.com
  ([2a01:111:f403:c20a::7] helo=PA4PR04CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <Djordje.Todorovic@htecgroup.com>)
- id 1vvC0e-0002v7-BL; Wed, 25 Feb 2026 05:20:49 -0500
+ id 1vvC0Z-0002v7-IR; Wed, 25 Feb 2026 05:20:44 -0500
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=I81+U2OtfMS7PVMWuzjhbPRMrrVrz3PHr0QsDq9wjr8O+mPZIlRB4ITCkxkHlZ+//24rhTsLuN0sg/Us/xWc3iA1f/jazT6MQU9EAQyLmwu7sJ453gdQ/zV+DYvj3cj9H1i05zMYbq6HMTU1Lfs8/DQsFtOZ6PqpXFFBpkw8tQ8hw44KDywlrOqRYbbvM3GuVBJFCGUuckCdQb+dq+Gmq5JgwyBkQvP0wItHIaS+9ezYWcPLH17oORmiLe46mQoQWG3nHztI2DBDHxMIdQ8BTXJ+PJqjd9F4oXQUA+Vp5vwyd9pkNA8dcsOW6rVaXA3EUh1BGk83pWz7lhKMTooOHQ==
+ b=ViWSON1Tz7AX10rrQJm63ffUU5i6HGUi8tkWtjLhWxSC4dZ+h9fRMUmkiuNHP9iRIE4E90fvlliM0YbvElhHtQ1Iwvt29CL7Z06siOGiDWGyyCq9m9jkX8lsXKHBNFuTwNWgJMx2NgEyxtOudskDD3EqAsoXvi1SeC1WT2K3qXCNQetE/LIgmv65LI8wpod1X2rJSrmw4QSPT51jUpA0kj9hddCGanIWa/4hkNzlr2um8ZwkPq2DQ8xkG+9PZe2/jxnixgSp14JFQl7R/08zr6NZrvx4VP56IucYmg4SZs7tzhp8RtSI1kKpLYeD3E3vHgkCKTNuxE2qXU60YSwiwQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=nw30E9Q/F230bpadcDbbSmbHRVXr0qE+5TtCegIauk0=;
- b=aw6/vXggMj44NG13AXzFkci50Fi8zUrLPhqSXM4u6Akvrtf3PDjvdPh8w/Wcg6gd3iEB3hF4J7C16Xi59f7lB/ksIxY0biLEOZDb1jV1B3H8z0yLNsG5T6MK+UuZ5+mqEHXHsFBYLqnj+UJOz+IkahyKSaKKZGMwPLK0xmNe8VXjJ2ccnpjE2GDCN7OYYA8msNTBIzN/4aL2O21oO7tUrMY8/GXkktnfDARopr2jObHuYt1m0zFHd01gVLNy6Bm9sllwGCMwnR2ewJwT5ax1OqmcU1LSkgyu1mBUW8OAliD/5eKkdu3D81UzwMgIrXM0hNUBw4F0T4JcpnxdnhXMIw==
+ bh=qnygywpNtxwy/qpmT+A96vOTmU31bBLEX7D0YfYupXc=;
+ b=kV0zjxAHXHZ2+5lZDI5CB062MPFpXkcIUkHOIp0wNH2aSymH+v39ACoFRnu6t4nFOi+qbrHl9lCOf45JrWO5IRjLvhFKNMHZJQvRg2f31fwSeBQ6H/J4HgTvVtBZr+Fz/dcoMOd3SUpXrYeTwH/jTdeqC5nmL7RfKwNzRhd8mvoSw3CGzaQQti8eTFfs6ed14V2D+/fCMNuaAhkSOM8PNUUxQez4vqjnw28QvNS9d5ed0pVWJLsnIzoiEh8/OGH9pJxoF1KUg/Cg6cBx7UzklFp+Vkl68TaLbRjjKx3EMOBaDLTK2r21nGgj9woymWK55+m/LPX99+iOn0MfENXsDQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=htecgroup.com; dmarc=pass action=none
  header.from=htecgroup.com; dkim=pass header.d=htecgroup.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=htecgroup.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=nw30E9Q/F230bpadcDbbSmbHRVXr0qE+5TtCegIauk0=;
- b=RQ7oRXvJUvSAmDyNJz3/Usb3Nitg08C9qpFGy1oiCv5x7rARqEKo6rf8L/Ml1w7CbGByn6x9na8GnF8BuXWIP1jWANr3JiP9+8we9rNM/XlYLA8Zh73sp0lZX1qEmXKzxL01LnScHTNYfAJ94AQ7rL65TLQHNPxkLvMupMosWsA8W/ZWdyV9Zphpi4LqaOQcggxTRxrVknmWcWAZpIfMjjPeNlGIOF87Mi4FfM3+eKlJxgTfXk1PU5LIC52hI8MithvfGtb6KFPTuLZCSSsZZgYByuv8xzIZEYEV1t+1/rJFZ+TkSFqw4ysE3EvShjX7H8DIB1k8ovBaPoLPLz8ALQ==
+ bh=qnygywpNtxwy/qpmT+A96vOTmU31bBLEX7D0YfYupXc=;
+ b=LO4U18MLA8RjJTWurnhYcVs1mwX5MS2TTOHN7bYH2KIWrWvuPbqbE+JoKzTJoMeD/wBLQqjEBLkN1qMi4MrrLaMmTS2/BkYWEr1z2GIClCudNjOF9ZxUJM7eHimMcv+fD4tOt3h3+Y7eklNN3dYjUW7jG+TyqMSbpYo18q5ZxxyoLSX8z72qp7V7ixshd2sCtv1T3BeiPZ4NnTJkL1llea1H92vfEpF+1TQ10+VTrIK/4ua/pASs4rcA7FVH3rpWILTqCd23omm1A4EOyiPv2k1HfL5Ng/jtXMNIHCvuJGyRbvFU9wxPhi/YZOVF9H4buxsU3eOVZIQ2TNMCEmQ5ew==
 Received: from GV2PR09MB8755.eurprd09.prod.outlook.com (2603:10a6:150:358::6)
  by PA1PR09MB7406.eurprd09.prod.outlook.com (2603:10a6:102:466::14)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9654.11; Wed, 25 Feb
- 2026 10:20:29 +0000
+ 2026 10:20:28 +0000
 Received: from GV2PR09MB8755.eurprd09.prod.outlook.com
  ([fe80::939c:95df:4890:ce63]) by GV2PR09MB8755.eurprd09.prod.outlook.com
  ([fe80::939c:95df:4890:ce63%3]) with mapi id 15.20.9632.017; Wed, 25 Feb 2026
- 10:20:29 +0000
+ 10:20:28 +0000
 From: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>
 To: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
 CC: "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>, "cfu@mips.com"
@@ -52,11 +52,11 @@ CC: "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>, "cfu@mips.com"
  <philmd@linaro.org>, "alistair23@gmail.com" <alistair23@gmail.com>,
  "thuth@redhat.com" <thuth@redhat.com>, Djordje Todorovic
  <Djordje.Todorovic@htecgroup.com>
-Subject: [PATCH v2 07/16] hw/riscv: Check endianness for fw_dynamic fields
-Thread-Topic: [PATCH v2 07/16] hw/riscv: Check endianness for fw_dynamic fields
-Thread-Index: AQHcpkBczKoEJQ7DMU+0E21ygRJVpQ==
-Date: Wed, 25 Feb 2026 10:20:27 +0000
-Message-ID: <20260225102016.200654-8-djordje.todorovic@htecgroup.com>
+Subject: [PATCH v2 03/16] config/devices: Add BE riscv configs
+Thread-Topic: [PATCH v2 03/16] config/devices: Add BE riscv configs
+Thread-Index: AQHcpkBbaJjoVQ8m+EmyGR3wfSmZmQ==
+Date: Wed, 25 Feb 2026 10:20:25 +0000
+Message-ID: <20260225102016.200654-4-djordje.todorovic@htecgroup.com>
 References: <20260225102016.200654-1-djordje.todorovic@htecgroup.com>
 In-Reply-To: <20260225102016.200654-1-djordje.todorovic@htecgroup.com>
 Accept-Language: en-US
@@ -67,58 +67,58 @@ authentication-results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=htecgroup.com;
 x-ms-publictraffictype: Email
 x-ms-traffictypediagnostic: GV2PR09MB8755:EE_|PA1PR09MB7406:EE_
-x-ms-office365-filtering-correlation-id: a374ffc6-0910-4587-2296-08de7457805d
+x-ms-office365-filtering-correlation-id: 8d713b97-ab34-40e5-6fc9-08de74577f93
 x-ms-exchange-senderadcheck: 1
 x-ms-exchange-antispam-relay: 0
 x-microsoft-antispam: BCL:0; ARA:13230040|1800799024|376014|366016|38070700021;
-x-microsoft-antispam-message-info: eXfCRo0BVWT8PlyahaKpHFNDAP6zn/+W5luTNHA9mp5Z0zgsvJr2YU+EKFZ+gVopuve7oXDZNdtJLdPRa2WlrgTKIR4XZKYnN5ob/EIwqCzrj+39G5cYvkunf1uI7XNH8q7VJenN79nCmUJCYoXwws6eiooEPhdPzMZPG0++bTZ7zB20X0VJYeq03a/rLlD5O41Bt/ekoscGhkzLgXk3LHQxpEua2jYD+2U7CldKkjKM0wztGtJQbmtKM7xL8n56tJoklY7+i/beasslAVrSFNdDIt0uaztDYiGTkRUxNboo3GrbCBUEPynqp1SHw/qP8SnL1UYOjRtwUtsk1qZWHxTKIWPoueFiEuxhphZDjXWtbiYKPI6xHjIZ0oVkvopiFaaLp5h/vYAOyI0/TRWL4gIgxvaEhCUnXnkrVI2Y2s77EpGOnCIGXS2kyclxCQ9Mc77ykuiJAvnZrCEmxlVzrYLybxfjOVqJm/SVGXNmOEomY1m7rKPcEgMTbjSKtlA6UP/2Oux67l9opECjvPHVto4QmpcOUnOZdHhxnRLcOXbH0Lb/crNhr/w4XZldyUnEs4hoc8o//z4+NPNLvs+FEVIeVexEUiAIYhT88KaQbfDvHSVdDti2CAwxtmRgqGDlhUMi+f+uWuVi05MuSPlbqIJIrz3ewO91HTsp5Grl/xbGFGPON/UZ16pvq7H/t3I1+SHhxixBbZIdhFTopFzM73IlsOlWNuhyYW+zXiAKFmpX1Jz0WL/FpaaGwZ7FTDiCxrgFJxsJJIVA5fTZK7agFKs5vdggS3b5M7RzeGBsVSs=
+x-microsoft-antispam-message-info: bi8VRIjOnXbVdFhY//phg+lRBdEp+arG8rc71Fh/5jBUcgO9lCTq5qfb+LQE6n7c6O1lcsYAWY8LG3ZAnuO9efPHs6dFHgWbaOwDwZe03JoULNwsKNTIwNuH+7l9WkzcnHMUw5HoEb6ruBdoHytGOP2xiSTetZtKudyGNSYaWVvulbGInixinCYfQVrVUjKyEeNO2eKSrlZ+18RKJLCOLFxyZJPFrmoBQ3haBxUh7UoFoSgoYYyxYd6LFb73caYBorCQk7Amn/SKGigXsIhMdxtSsNTyeIzQF/EIYjkBEUcc64uFJdoqBt0IkuDudOSTBSP7j4ospQ+a7Ew/LTftCdCB8mymEDkH4G9iU0R/J/aWBq8bcGbxO1Adadgm7blGb5H801ITPvxjRW76DXlMXX4jtz40XGBG8xbyZDL21g8E3LopNAt//+SbC6zWYLtJ6e+5Vu4DElqB/UTPwdV21Kv4MAu7AOwTAfts1ZJ2XEXRMF8nr+emr+vTLc3u8w3IdA6ZbvyMwIkXTkVbVMQSw2MrVcRLzW5a3tJcCH3tHb9pEDeOT9T+3fXedc7xg352Djt0F+i+yrmnj6FD4Pagu6mc5d7wlpD4BPGpZOtztjxNDICqo1G+DOOB8hTa5JaAb69ULZgG4WcJbCGZ0jqeil/GRia058aoWKzYAe5nsDKOtscdZ27Rix4UpPFOdtMDrbijlGPYW66N4yJgohcTparxOZMhkA5histT6DGu/MqJo17iGdmDHUXP1rEOzLO5WQM6mkMD9AJOECNhzSlHQ0XNBT96dYlctRgvuwRYRXI=
 x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:GV2PR09MB8755.eurprd09.prod.outlook.com; PTR:; CAT:NONE;
  SFS:(13230040)(1800799024)(376014)(366016)(38070700021); DIR:OUT; SFP:1102; 
 x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?yMLV8fKCrrzmTCokZA/CDtg8kserFLWCjT++Bn+nh1xaKGSAIXvUbARdGd?=
- =?iso-8859-1?Q?Rxce0pCYQL29rGPuKQsvDgHSSABwzHpze3moxjWwNl0RzjKNshnZAObTIz?=
- =?iso-8859-1?Q?KdUen1RpywoSHz4B3fnNSiE3ZMz49J8N0FI5uqRJicdjS9zRBgD5PY5tCS?=
- =?iso-8859-1?Q?25a4kwDPQf3rURdF7RRtIDJ8jjee8LSXvXpzfe1MSjI9HMmzg7Y+FkzeWe?=
- =?iso-8859-1?Q?0hq/rWXvzxIdC3VZjWKWkooGakzbp4So2nIzInU4VboGK2rpiR+TPneuuT?=
- =?iso-8859-1?Q?3Oo5z1O6veTzFISqv869VlmrO8pNTyVg9tl/wqV3CcLoff3SLiSwtejy8y?=
- =?iso-8859-1?Q?AY5yt0hi55IvkP/mc7ykHxypUn63iRFtxJCD4k5aCNUfkKd9aZlxwKZHHC?=
- =?iso-8859-1?Q?L8INrLV8LvpXYVZSPs7a/NnLYluYMSkU6+gcdoR+QAQuB5ckc9dUpNxspn?=
- =?iso-8859-1?Q?sY1U+aJm/SvTmuZwPSZd6/iDApDK0QcTp3AAlpmVz64eoppAfB6K8KsaiB?=
- =?iso-8859-1?Q?PdDiZG/jOgDv40pH7hcM4XTd5vRXHEv/k5MWt2+Mt3uhuf+nW8fVuFeK+n?=
- =?iso-8859-1?Q?vnWsTSGOU7y5z3UGofE3FTTpHPDpWH10a3hF+w8GImExigMcCWci4s2tFO?=
- =?iso-8859-1?Q?FA2DrkdtflvkOug03il84qMEM4aT7k3FDtcI4/fBx8mtzD509UFSL14uLf?=
- =?iso-8859-1?Q?/iA0N8Vi+w815fQX0SdjyxCq5aaaxnhU0y5qAHWm+hYCBJM0G770TdpW3S?=
- =?iso-8859-1?Q?NMUW16zgopN1j/3ODuZktOt0KKSi4V5kprwLoKEjh0bDJeBdc+09sDpFy4?=
- =?iso-8859-1?Q?PHuDZhhqQVWIzLphZgjzPTVCqMHfjRZ1KSisD2ImtBQH8MjVVSfzjqC4QD?=
- =?iso-8859-1?Q?m2uz1mVDsh73t/kEq64DV5mEk5D6+fQ9VBTwDqSVtMdBSu+oNyEqnvO5rb?=
- =?iso-8859-1?Q?+YrPALxbU8soL2Kj9kaQnzqmOnwLcvda/gwCwC8pzbqOLDNfgrcXODujcv?=
- =?iso-8859-1?Q?nqXYZ+ngYaPWVi0OPpfYyw6mAsKWDAgdlulLDrWlYf4Lnr6VmyzHO/iwOG?=
- =?iso-8859-1?Q?NkoCO7BvixxiusAQ1RFeAz2RdD3rcF+Cs+T+1Q5irsZ5P3dfypnNUjR/V0?=
- =?iso-8859-1?Q?mFe4wX3MAn6886i8keB3kEt0tGBJIixO1OC4ygVHsTsgEWK1duVKhmgSnm?=
- =?iso-8859-1?Q?lYljOThjBCuZrHjiG28RMK57YYgJrzZv9a2eq/wUP/xkXSIN1dJCaBD1ON?=
- =?iso-8859-1?Q?4B95xjk8sSnsj+aCSArD+F9nAgLmdGLf7oCa7m+T1RF3mTHtxGJZbCsx2G?=
- =?iso-8859-1?Q?YEMIj6KiEzcKipd31KTiiDxItxRZhn5GR3mtR2WZNe0ENlQ2mND/ew/EpK?=
- =?iso-8859-1?Q?Quw6qp7Vd2ZESwBcDkJY8PueHgVwL7aVn+Erymn+nz4km/RoTx5ud+uuMX?=
- =?iso-8859-1?Q?sqUZLEo2aGgYWr8omYTRoHOsCQ+oeA3kUHVG5jum7vaUde+S2rng6OrN6+?=
- =?iso-8859-1?Q?RS8DwguaH+HnsUf+hD0lfUUtl+1Wr+CP/kfeGEh1puao/OikJuDlZppjJv?=
- =?iso-8859-1?Q?wPMaNMVRw2E5NDi3wTgcVOInw0XQ75sWUshRnHwfoW6nO205N9bUOWc0BO?=
- =?iso-8859-1?Q?heCbdEMCTm2Ab4gQXJTMCEoX6pEpSo030w31pLqa5Vtm/RG8+1OVIembLb?=
- =?iso-8859-1?Q?0qVx9iu+9YzJP/bAwD8EsBmxyAELUnwqfbgwaMeUTDeh2mHEx5SmoKb/U/?=
- =?iso-8859-1?Q?k/sSUnWzxCq/eFgnBnZfDaJpM1fUH468JSgwBZVn9bw2+SOR3XiCmCEcC5?=
- =?iso-8859-1?Q?tO84BajW0LjR5X/i7okjvaTZ9jfXgm2kbUR3WImixTJfHVnNTuLI?=
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?ut4pNto8xoGDONNnmXX//CeixW22HUssbU1SiRhawqcxAofr8LlzZPiQ3S?=
+ =?iso-8859-1?Q?riLh62NwQeSEn+0XJYzfyR5GMtpIPhSpF2nmDCaK5jBHBp4FOkSGTPg/uG?=
+ =?iso-8859-1?Q?7TsF2u5xeF7JmheFzWSvNRjQQ2SD2sn8AvFOm96L8qMns0ZTaoc9Utpjth?=
+ =?iso-8859-1?Q?OEXAyy1Y5nzOVIo+m5BNAw9Yais5rap65TS0agscNIKuQB3U5JSOOwq2dW?=
+ =?iso-8859-1?Q?1UkSthecco8CzCDgGiO5FLoWj7LqwTTV7slNY7E4G0AqYMj5CHB1GF806t?=
+ =?iso-8859-1?Q?H69VxUk4JI21FE4+2ocGjjh8I/13nXFnW+bkAPIEA+3l1gpxqE9CbCTQQ6?=
+ =?iso-8859-1?Q?EUPJN44cGF1Z62FT8HRf3s+yhgEu42mZhuM2q8QhbSNYVr701VUpJApKCn?=
+ =?iso-8859-1?Q?g7y+Az3u9VxpFZrX2/WtL+guvk3RVwRmYuERWV3/cIs+cAjc7wDBSyxxSt?=
+ =?iso-8859-1?Q?faaOT/aA5fLM4vUpEC72JoRwgo/6Ss+3CF8EUilTK7umZtmf3eKYQmHcJo?=
+ =?iso-8859-1?Q?bS3+EpNRLGK3m6WpLl/q2bScef+L8URWxwXb77CvQdKNzwvORRIrK8AG+a?=
+ =?iso-8859-1?Q?KVr9pQZAR7TIctTJUoncRF090fLxyFskvWag1qiMY/AsyZ+CDlWVOBGZGY?=
+ =?iso-8859-1?Q?l8OwqSPcbo4+aPSETdQ/dZpZ2QehHVIWfyTLjyoIsa46HcemXN+iy47vwi?=
+ =?iso-8859-1?Q?MrTyFHt+vAnyM88OZD8Qa0MbC6E+dUbNUi14vxqA5YpYj/lqXwaRcTpwDc?=
+ =?iso-8859-1?Q?U+7Rh7Fy9s0hNY6nh8AbwHiIPa7IhzBpfvSOs0x/0Ji80We8DKzkhGubvh?=
+ =?iso-8859-1?Q?uC5lvVbJOY5nQTb++RZqFcxdn+BwoSBe6Oi1Iqotl2M1p26Ue7GxiEDUER?=
+ =?iso-8859-1?Q?UZhtfHYLuwBmCYWdBUV24PGbHPwabWpaf48DuFZ0IMpQGQYeI5Jf6IrQ9w?=
+ =?iso-8859-1?Q?CqvTb/7mT0wNvyz8jl65YmySk0Gwd34A7qz51szd8bD7b4AuYKQDCI4QtW?=
+ =?iso-8859-1?Q?eYMq2PA4hYFQsNEFWIKxfe59Rb6ZHHUvb3z4FNRcuOqJXM0nrLtiEO1N8n?=
+ =?iso-8859-1?Q?Me2XNXf+Qc9UAB8z74wTTBMj+fd+uiF72Ab7U3PHqxefOE6mCopgbtdNEP?=
+ =?iso-8859-1?Q?rVqsDdfep0FRQw7wg+HszTgPhrCCd8ZtuRneylexf4YaHp6z6SmDw/hjiT?=
+ =?iso-8859-1?Q?6cZ7oZa41n3JEvkF0YnLae3rIdqf8hoIWzESLGoEp8AiQgrucdXOuILAot?=
+ =?iso-8859-1?Q?5YaTWO5dw/SF81AD2Jf16hDOovxdIMK81C5feGYIMsMnRJv/4u668ddHXO?=
+ =?iso-8859-1?Q?u2Rm2aLv7ZBUwBS4FB1+TXsTega9UJ4W3ZxyQw9B5idFp7MUg0kZv40wW0?=
+ =?iso-8859-1?Q?PRnVGtyD4p2k5u8I3v8WLNmToQ1f7xeUSLBz//7ky1Ec10Q/CFn3QQ+avD?=
+ =?iso-8859-1?Q?y6djm9UZDrE43x8Lf8ohGJTgH+BRpNOKst4mbpfScDGpQ8qu/pr7Gi3qin?=
+ =?iso-8859-1?Q?vhXwRwDeI17d4cQ0hEkNvk0IClLmuvJEOG/9MuRx9bsSZ4O2ErLHAaktLL?=
+ =?iso-8859-1?Q?318tKy186hg83bgM/k88grEINm4f5yqtIYnt9t8fMeBKNYGFLjA+5Z+MPT?=
+ =?iso-8859-1?Q?OkHJkgKDbTsY0S9bDiaSJZ5rj0ECB9wof/S83/pLxm83uhXL8Fo9WKzHoq?=
+ =?iso-8859-1?Q?woVoW57TkxdrFr4F0kbX2qSUlFWCOaJ63bT+7TngiSujcmaJ8Hor3/2wMs?=
+ =?iso-8859-1?Q?GRbCUu7NX5oSn6ryX0ni1K6/5/ZmAS1bxd1cxPIWL4Re7aXfIlzv1U8ujc?=
+ =?iso-8859-1?Q?VmybATqHfJ/njGltAJxerNUJcysH2DcLR6TqMgvszpAdKLvhY6C+?=
 Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
 X-OriginatorOrg: htecgroup.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
 X-MS-Exchange-CrossTenant-AuthSource: GV2PR09MB8755.eurprd09.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: a374ffc6-0910-4587-2296-08de7457805d
-X-MS-Exchange-CrossTenant-originalarrivaltime: 25 Feb 2026 10:20:27.2060 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 8d713b97-ab34-40e5-6fc9-08de74577f93
+X-MS-Exchange-CrossTenant-originalarrivaltime: 25 Feb 2026 10:20:25.9887 (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 9f85665b-7efd-4776-9dfe-b6bfda2565ee
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: UcIwM1X35eWSafXB1gJXWJ+/ABWnfhFK6iDkbPBwOqIPcq5PcpgUsirTqm7lTNaZk+l6xaid9exFWhGqjfXyetkpddV+Pk5WkyrDrkuREJI=
+X-MS-Exchange-CrossTenant-userprincipalname: IywOAWTP3SNAkozlXnvbZQT4FgH3MZ8FP/f5eANZHIN/XJEJOCYgspBCR2iropfNg7QaGWTzUZ6+M+Nkyx7EiLTlRRnt7t8p0J5HNPM6ezI=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: PA1PR09MB7406
 Received-SPF: pass client-ip=2a01:111:f403:c20a::7;
  envelope-from=Djordje.Todorovic@htecgroup.com;
@@ -145,70 +145,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-For riscvbe target, the fields for OpenSBI's fw_payload
-need to be in target endian.
+Add new configs for BE RISCV softmmu targets.
 ---
- hw/riscv/boot.c         | 14 ++++++++++++++
- include/hw/riscv/boot.h |  5 +++++
- 2 files changed, 19 insertions(+)
+ configs/devices/riscv32be-softmmu/default.mak | 15 +++++++++++++++
+ configs/devices/riscv64be-softmmu/default.mak | 16 ++++++++++++++++
+ 2 files changed, 31 insertions(+)
+ create mode 100644 configs/devices/riscv32be-softmmu/default.mak
+ create mode 100644 configs/devices/riscv64be-softmmu/default.mak
 
-diff --git a/hw/riscv/boot.c b/hw/riscv/boot.c
-index 6dab521a6b..f13264a87f 100644
---- a/hw/riscv/boot.c
-+++ b/hw/riscv/boot.c
-@@ -396,19 +396,33 @@ void riscv_rom_copy_firmware_info(MachineState *machi=
-ne,
-     size_t dinfo_len;
-=20
-     if (riscv_is_32bit(harts)) {
-+#if TARGET_BIG_ENDIAN
-+        dinfo32.magic =3D cpu_to_be32(FW_DYNAMIC_INFO_MAGIC_VALUE);
-+        dinfo32.version =3D cpu_to_be32(FW_DYNAMIC_INFO_VERSION);
-+        dinfo32.next_mode =3D cpu_to_be32(FW_DYNAMIC_INFO_NEXT_MODE_S);
-+        dinfo32.next_addr =3D cpu_to_be32(kernel_entry);
-+#else
-         dinfo32.magic =3D cpu_to_le32(FW_DYNAMIC_INFO_MAGIC_VALUE);
-         dinfo32.version =3D cpu_to_le32(FW_DYNAMIC_INFO_VERSION);
-         dinfo32.next_mode =3D cpu_to_le32(FW_DYNAMIC_INFO_NEXT_MODE_S);
-         dinfo32.next_addr =3D cpu_to_le32(kernel_entry);
-+#endif
-         dinfo32.options =3D 0;
-         dinfo32.boot_hart =3D 0;
-         dinfo_ptr =3D &dinfo32;
-         dinfo_len =3D sizeof(dinfo32);
-     } else {
-+#if TARGET_BIG_ENDIAN
-+        dinfo64.magic =3D cpu_to_be64(FW_DYNAMIC_INFO_MAGIC_VALUE);
-+        dinfo64.version =3D cpu_to_be64(FW_DYNAMIC_INFO_VERSION);
-+        dinfo64.next_mode =3D cpu_to_be64(FW_DYNAMIC_INFO_NEXT_MODE_S);
-+        dinfo64.next_addr =3D cpu_to_be64(kernel_entry);
-+#else
-         dinfo64.magic =3D cpu_to_le64(FW_DYNAMIC_INFO_MAGIC_VALUE);
-         dinfo64.version =3D cpu_to_le64(FW_DYNAMIC_INFO_VERSION);
-         dinfo64.next_mode =3D cpu_to_le64(FW_DYNAMIC_INFO_NEXT_MODE_S);
-         dinfo64.next_addr =3D cpu_to_le64(kernel_entry);
-+#endif
-         dinfo64.options =3D 0;
-         dinfo64.boot_hart =3D 0;
-         dinfo_ptr =3D &dinfo64;
-diff --git a/include/hw/riscv/boot.h b/include/hw/riscv/boot.h
-index f00b3ca122..6a6b796eee 100644
---- a/include/hw/riscv/boot.h
-+++ b/include/hw/riscv/boot.h
-@@ -24,8 +24,13 @@
- #include "hw/core/loader.h"
- #include "hw/riscv/riscv_hart.h"
-=20
-+#if TARGET_BIG_ENDIAN
-+#define RISCV32_BIOS_BIN    "opensbi-riscv32be-generic-fw_dynamic.bin"
-+#define RISCV64_BIOS_BIN    "opensbi-riscv64be-generic-fw_dynamic.bin"
-+#else
- #define RISCV32_BIOS_BIN    "opensbi-riscv32-generic-fw_dynamic.bin"
- #define RISCV64_BIOS_BIN    "opensbi-riscv64-generic-fw_dynamic.bin"
-+#endif
-=20
- typedef struct RISCVBootInfo {
-     ssize_t kernel_size;
+diff --git a/configs/devices/riscv32be-softmmu/default.mak b/configs/device=
+s/riscv32be-softmmu/default.mak
+new file mode 100644
+index 0000000000..d847bd5692
+--- /dev/null
++++ b/configs/devices/riscv32be-softmmu/default.mak
+@@ -0,0 +1,15 @@
++# Default configuration for riscv32-softmmu
++
++# Uncomment the following lines to disable these optional devices:
++#
++#CONFIG_PCI_DEVICES=3Dn
++CONFIG_SEMIHOSTING=3Dy
++CONFIG_ARM_COMPATIBLE_SEMIHOSTING=3Dy
++
++# Boards:
++#
++CONFIG_SPIKE=3Dy
++CONFIG_SIFIVE_E=3Dy
++CONFIG_SIFIVE_U=3Dy
++CONFIG_RISCV_VIRT=3Dy
++CONFIG_OPENTITAN=3Dy
+diff --git a/configs/devices/riscv64be-softmmu/default.mak b/configs/device=
+s/riscv64be-softmmu/default.mak
+new file mode 100644
+index 0000000000..bc69301fa4
+--- /dev/null
++++ b/configs/devices/riscv64be-softmmu/default.mak
+@@ -0,0 +1,16 @@
++# Default configuration for riscv64-softmmu
++
++# Uncomment the following lines to disable these optional devices:
++#
++#CONFIG_PCI_DEVICES=3Dn
++CONFIG_SEMIHOSTING=3Dy
++CONFIG_ARM_COMPATIBLE_SEMIHOSTING=3Dy
++
++# Boards:
++#
++CONFIG_SPIKE=3Dy
++CONFIG_SIFIVE_E=3Dy
++CONFIG_SIFIVE_U=3Dy
++CONFIG_RISCV_VIRT=3Dy
++CONFIG_MICROCHIP_PFSOC=3Dy
++CONFIG_SHAKTI_C=3Dy
 --=20
 2.34.1
 
