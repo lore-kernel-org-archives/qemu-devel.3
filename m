@@ -4,110 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0861FD3758
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 13:08:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 711F1FD374E
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 13:21:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvEcK-0002zx-Ef; Wed, 25 Feb 2026 08:07:52 -0500
+	id 1vvEoi-0007nH-D1; Wed, 25 Feb 2026 08:20:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1vvEcI-0002za-NW; Wed, 25 Feb 2026 08:07:50 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vvEod-0007mg-Uv
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 08:20:36 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1vvEcH-0005bA-1L; Wed, 25 Feb 2026 08:07:50 -0500
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 61PALXTK2089891; Wed, 25 Feb 2026 13:07:47 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=lXna2y
- XXKQXa4/ac6couCL18v+ugxPYiQjHsEVt9j7k=; b=mFda9bYN0pQwm1v9O+yldm
- xDNK60LFf5Tds2ADNDhwKZpCTvIvLwrwSRXZsyEmAPNkVZ5o0bKBIFIYiYHA6BSS
- A2Fx8xwnEkicexiP4cBe78cSMtTdPrlDuUv3OAiNR2DD1evpE01h76D1hKDvPjSZ
- ib3bIvQOopaYe/5WZkHoHH6meqZwRNlsgvumQM+eN9qg2sVdoZWaU8fILGQdFckx
- QGGeTniFxxvRMKOu9y/Dj9WIy6DK33s6GoBT+131lyn5pIh7SNzd1AUJpUOFuTwz
- zAiGM0XgnUOESRpczNmr6tTKyhpjdxAD2JEZ9vDUTzq9Re+iHO/+Rh8/Ngha2cnA
- ==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4cf4cr08t9-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 25 Feb 2026 13:07:46 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 61P9LFaE027812;
- Wed, 25 Feb 2026 13:07:45 GMT
-Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4cfsr1w4g0-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 25 Feb 2026 13:07:45 +0000
-Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
- [10.20.54.105])
- by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 61PD7fPW29688214
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 25 Feb 2026 13:07:41 GMT
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B983620049;
- Wed, 25 Feb 2026 13:07:41 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id CD00620040;
- Wed, 25 Feb 2026 13:07:39 +0000 (GMT)
-Received: from [9.124.222.235] (unknown [9.124.222.235])
- by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 25 Feb 2026 13:07:39 +0000 (GMT)
-Message-ID: <fa672226-0d73-4b38-9104-0ccb826e7c0a@linux.ibm.com>
-Date: Wed, 25 Feb 2026 18:37:37 +0530
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vvEoc-00007T-3Z
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 08:20:35 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1772025633;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=hI986VH1FQe86su7H+1dxO7fuiGZfSFhntLITGuBoLE=;
+ b=Qkgd53SL33lafnYhy043QHg3IgYZYiIUgfommENLhw/M8x4yZdekUKStXdcMqw0pstu1Lu
+ Al/zdpYaLRL3BTlwmoKmB+rJEqxSbUqCZlVmfi6qX7R4ZpanGVwh9kVn5eSJw13K+LWNT8
+ 0tEQvZmyBeEf5nSsqa/5AGklIzTBP6I=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-68-r6-Ji_ifPKuoESJ_F5oS-A-1; Wed,
+ 25 Feb 2026 08:20:30 -0500
+X-MC-Unique: r6-Ji_ifPKuoESJ_F5oS-A-1
+X-Mimecast-MFC-AGG-ID: r6-Ji_ifPKuoESJ_F5oS-A_1772025629
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7AB941956089; Wed, 25 Feb 2026 13:20:29 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.13])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E402E3003D88; Wed, 25 Feb 2026 13:20:28 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id CF83121E692D; Wed, 25 Feb 2026 14:20:25 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Antoine Damhet <adamhet@scaleway.com>
+Cc: qemu-devel@nongnu.org,  qemu-block@nongnu.org,  Kevin Wolf
+ <kwolf@redhat.com>,  Hanna Reitz <hreitz@redhat.com>,  Pierrick Bouvier
+ <pierrick.bouvier@linaro.org>,  Eric Blake <eblake@redhat.com>
+Subject: Re: [PATCH v2 3/3] block/curl: add support for S3 presigned URLs
+In-Reply-To: <20260224155314.1658988-4-adamhet@scaleway.com> (Antoine Damhet's
+ message of "Tue, 24 Feb 2026 16:51:31 +0100")
+References: <20260224155314.1658988-1-adamhet@scaleway.com>
+ <20260224155314.1658988-4-adamhet@scaleway.com>
+Date: Wed, 25 Feb 2026 14:20:25 +0100
+Message-ID: <871pi9m02u.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] ppc/pnv: fix dumpdtb option
-To: Shivang Upadhyay <shivangu@linux.ibm.com>, qemu-ppc@nongnu.org
-Cc: npiggin@gmail.com, milesg@linux.ibm.com, qemu-devel@nongnu.org,
- Harsh Prateek Bora <harshpb@linux.ibm.com>
-References: <20260225081037.21990-1-shivangu@linux.ibm.com>
-Content-Language: en-US
-From: Aditya Gupta <adityag@linux.ibm.com>
-In-Reply-To: <20260225081037.21990-1-shivangu@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-ORIG-GUID: mBR6dO6UGUJe3uTalTeq6-vXSCIKfiDz
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjI1MDEyMyBTYWx0ZWRfX/8Gop6GqhoLa
- rnCWhTL7YU+LbMyGCIPA6cWncJR98RpWnWIwNwohYbaHrnSgvMoyxrX/JgtgG0du+ldQCEhJ1r7
- K6IFd8q6KoKSsNOKadMpiZJMCiQRiDvH9yjfbTT1u88OjrawhIv+dAhvdJTTntb7GSkhjnZ/yAY
- TjCtTxt7o8Rz/hWNptji6aESxKZLdCkiINqP5Eh6qkqLNcSifXsiRSxqbpUoXi9gX8TlM5N+4Dc
- lU9va9O3txgUwwWuwLB/XB2ISZ1oyRvf7AjQkQXnjmLQiyw9DcdowJwOA5zJpNsLNcsGv72D9dj
- 8Y2hqqfjoEz5dhaqDhYeZ6hZd63kv+DxtOsFb88hahcq9DWNt5BHeVQqboduQjUhUkq7EbfxOKz
- JjBrdzLY0YyRQ/0tit3xxH1FgdVQy+5wc2IELxbEzqFqI+Bm/m9lbjWxU/f89May25/7ZssSgLl
- K7vqUxcZbegy6+55t2w==
-X-Proofpoint-GUID: Tx4AOQeHjgRQVgUsJe_ZgLwtlbKpcv2l
-X-Authority-Analysis: v=2.4 cv=bbBmkePB c=1 sm=1 tr=0 ts=699ef422 cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=IkcTkHD0fZMA:10 a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22 a=VwQbUJbxAAAA:8
- a=KKAkSRfTAAAA:8 a=VnNF1IyMAAAA:8 a=QEMjK0bNoiwVexijJm0A:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-02-24_03,2026-02-25_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 bulkscore=0 adultscore=0 impostorscore=0 lowpriorityscore=0
- priorityscore=1501 suspectscore=0 clxscore=1015 phishscore=0 spamscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2601150000 definitions=main-2602250123
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=adityag@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -11
-X-Spam_score: -1.2
-X-Spam_bar: -
-X-Spam_report: (-1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -5
+X-Spam_score: -0.6
+X-Spam_bar: /
+X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.734, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.78,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,50 +87,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 25/02/26 13:40, Shivang Upadhyay wrote:
+Antoine Damhet <adamhet@scaleway.com> writes:
 
-> The '-machine dumpdtb' command line option stopped working on
-> PowerPC/pnv systems after recent design change [1].
+> S3 presigned URLs are signed for a specific HTTP method (typically GET
+> for our use cases). The curl block driver currently issues a HEAD
+> request to discover the web server features and the file size, which
+> fails with 'HTTP 403' (forbidden).
 >
-> Fixing this by generating fdt blob in `pnv_init`.
-
-Thanks for fixing this Shivang.
-
-The generated dtb is same as the dtb qemu passes to OPAL, which is good:
-
-     # diff original.dts dumpdtb.dts
-     Files original.dts and dumpdtb.dts are identical
-
-Reviewed-by: Aditya Gupta <adityag@linux.ibm.com>
-
-
-Thanks,
-
-- Aditya G
-
+> Add a 'force-range' option that skips the HEAD request and instead
+> issues a minimal GET request (querying 1 byte from the server) to
+> extract the file size from the 'Content-Range' response header. To
+> achieve this the 'curl_header_cb' is redesigned to generically parse
+> HTTP headers.
 >
-> [1] https://lore.kernel.org/qemu-devel/20250206151214.2947842-1-peter.maydell@linaro.org/
+> $ $QEMU -drive driver=https,\
+>              'url=https://s3.example.com/some.img?X-Amz-Security-Token=XXX',
+>              force-range=true
 >
-> Cc: Aditya Gupta <adityag@linux.ibm.com>
-> Cc: Harsh Prateek Bora <harshpb@linux.ibm.com>
-> Signed-off-by: Shivang Upadhyay <shivangu@linux.ibm.com>
-> ---
->   hw/ppc/pnv.c | 4 ++++
->   1 file changed, 4 insertions(+)
+> Enabling the 'force-range' option without the web server specified with
+> @url supporting it might cause the server to respond successfully with
+> 'HTTP 200' and attempt to send the whole file body. With the
+> 'CURLOPT_NOBODY' option set the libcurl will skip reading after the
+> headers and close the connection. QEMU still gracefully detects the
+> missing feature. This might waste a small number of TCP packets but is
+> otherwise transparent to the user.
 >
-> diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
-> index 1513575b8f..9861714ad5 100644
-> --- a/hw/ppc/pnv.c
-> +++ b/hw/ppc/pnv.c
-> @@ -1261,6 +1261,10 @@ static void pnv_init(MachineState *machine)
->       if (pmc->i2c_init) {
->           pmc->i2c_init(pnv);
->       }
+> Signed-off-by: Antoine Damhet <adamhet@scaleway.com>
+
+[...]
+
+> diff --git a/docs/system/device-url-syntax.rst.inc b/docs/system/device-url-syntax.rst.inc
+> index aae65d138c00..445e2a0a4157 100644
+> --- a/docs/system/device-url-syntax.rst.inc
+> +++ b/docs/system/device-url-syntax.rst.inc
+> @@ -179,6 +179,12 @@ These are specified using a special URL syntax.
+>        get the size of the image to be downloaded. If not set, the
+>        default timeout of 5 seconds is used.
+>  
+> +   ``force-range``
+> +      Assume the HTTP backend supports range requests and avoid doing
+> +      an HTTP HEAD request to discover the feature. Typically S3
+> +      presigned URLs will only support one method and refuse other
+> +      request types.
 > +
-> +    if (!machine->fdt) {
-> +        machine->fdt = pnv_dt_create(machine);
-> +    }
->   }
->   
->   /*
+
+Similar to the description in qapi/block-core.json.  I find the latter
+clearer.  Perhaps you'd like to use it here.  Entirely up to you.
+
+>     Note that when passing options to qemu explicitly, ``driver`` is the
+>     value of <protocol>.
+>  
+> diff --git a/qapi/block-core.json b/qapi/block-core.json
+> index a7871705fa69..50e7078cbec0 100644
+> --- a/qapi/block-core.json
+> +++ b/qapi/block-core.json
+> @@ -4582,12 +4582,19 @@
+>  # @cookie-secret: ID of a QCryptoSecret object providing the cookie
+>  #     data in a secure way.  See @cookie for the format.  (since 2.10)
+>  #
+> +# @force-range: Don't issue a HEAD HTTP request to discover if the
+> +#     http server supports range requests and rely only on GET
+> +#     requests.  This is especially useful for S3 presigned URLs where
+> +#     HEAD requests are unauthorized.  Defaults to false.
+> +#     (default: false; since 11.0)
+> +#
+>  # Since: 2.9
+>  ##
+>  { 'struct': 'BlockdevOptionsCurlHttp',
+>    'base': 'BlockdevOptionsCurlBase',
+>    'data': { '*cookie': 'str',
+> -            '*cookie-secret': 'str'} }
+> +            '*cookie-secret': 'str',
+> +            '*force-range': 'bool'} }
+>  
+>  ##
+>  # @BlockdevOptionsCurlHttps:
+
+QAPI schema
+Acked-by: Markus Armbruster <armbru@redhat.com>
+
 
