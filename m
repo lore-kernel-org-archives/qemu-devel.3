@@ -4,94 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F09B2F55452
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 04:46:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26724F55452
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 04:47:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vv6mj-0008ES-II; Tue, 24 Feb 2026 23:46:05 -0500
+	id 1vv6nQ-0000jb-Hz; Tue, 24 Feb 2026 23:46:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vv6mc-0008DN-5K
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 23:46:00 -0500
-Received: from mail-yw1-x1134.google.com ([2607:f8b0:4864:20::1134])
+ (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
+ id 1vv6nJ-0000jA-U8
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 23:46:42 -0500
+Received: from mail-dl1-x1244.google.com ([2607:f8b0:4864:20::1244])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vv6ma-0008Qj-Qg
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 23:45:57 -0500
-Received: by mail-yw1-x1134.google.com with SMTP id
- 00721157ae682-798374d0f44so7355227b3.0
- for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 20:45:56 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
+ id 1vv6nI-00004x-Ad
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 23:46:41 -0500
+Received: by mail-dl1-x1244.google.com with SMTP id
+ a92af1059eb24-124a635476fso5947740c88.0
+ for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 20:46:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771994756; x=1772599556; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=AyipU4OmPeui2N0CWDqKa9srG/l4ukP3kBQTNtLYz8I=;
- b=Go5/oOB+YehHyMp3/r8CURwrpm8B91c2yy83B9BZjzFyz4glMPvIX0jcm7NYlgHLTD
- 2cVO9RbeluMfBkslaqQ/JNx/EAd+2YGdf0GhMaSf/TIHy2v6Gbw7WQ18NZQyLV64IdAX
- iY6o44yBKhCo6cggsNBmlPxNJ3Tf216pojcoQJnmI0iFVPSnui8Z76BhzBDVrxBXDFZ5
- kNcLq0KeqN39xh5teIs9+KIHW9LeLwBIIrgrp1vvg+7Xt7OxnKTXVF9SFuG6cQXDw7Bs
- E3JoIL4YA/sS1X1nNP+OWiRdYDAvCS78UUvcKhjH4DoYhm64Ka9PFC/8alZLqkdE3PG5
- /jIA==
+ d=gmail.com; s=20230601; t=1771994799; x=1772599599; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=vVGwXbKj2pTzXr05Aoq+1QeXKYJ/6G8XT2HUq7/dGb0=;
+ b=Tod2a2FI6/P7pKNDvTZQnJv6p7x4HAjkZNcBKGb8HQ4k1+UPCtUUQ+GQMky+5HOKtg
+ Rv1NADjmuGQ+9qIlPjHF1Asm9yDLYgZ19zJajAbHLt0xlGdzayhflH4O4+nLXnTN4g8I
+ TxL7XpHmILxeHyuc7EGQ1m3OumC+OqXjHnHgHOcwCP3RQadshxEnObUEUyyfNNZfVl6d
+ I5mecCN9c/JVNYHPH0jRMWIboS/qjyEa/jyMMhdBpmTsqjBou8/qBo5e6cxdaWZh+Dp+
+ SEd8DX7GBfmCt1jBJ5kHVppFjM3DD3D8N0EcKExNuQk/5FFwEe+qlbCDabeR12Rz82fl
+ Eh6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771994756; x=1772599556;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=AyipU4OmPeui2N0CWDqKa9srG/l4ukP3kBQTNtLYz8I=;
- b=oOKcDMa+iKy5nCKuxkb1CtZDVjqJ2f/N7EyU/DysFoYYtWRxYQVeW9uaePpjZAnR7o
- afiIkC4KNuUtTxeUcIDUvjehxTafoT4Thw063DzqjsoEXFmEc6ipMilV2Cihl5Ygbvgc
- Q78BkSznmlwn5GOd+9Ra1zM70kVQcprFqxNhR4OXlMkifyf/JR4C7SOAY0K0Line8ZDP
- ZzZToxiE0V5cxjpqpKZYkEvTjL4iSL7XWajnhfz3OFT/E3VInXe8MjKrZtI4gsUTGCT5
- HwXv7dP2I6Rv9bMOqzFOBnilcoS8lmdIslQysFGN5s7C4P8g5aK711HsD/RK4uEUpXS2
- C+MA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVYFq4LrW3iyVrI1VfZmuYq0xAV1jU/H0tJGwWCxQDDanO5BQN/9lbde23y/lXUvo5iPSZN2BErhJvw@nongnu.org
-X-Gm-Message-State: AOJu0YxXe6rCqXc6V6kDvBIYbxiqwbZjALsnqECzhk6FfHqNk2YcV2HW
- gteQQPbHqINfluUnzw5fOf3EkyDc88MTPp5eqylD7v4OPk9K5YRKsDhF5fh3gBKnb1E=
-X-Gm-Gg: ATEYQzwU1OH6mNAbmwHVDheRTquBVevwA4S1j4vjV3tuTs6B16j6kyB7brOXYvklWSA
- vBtAhRrVw0+jJvNpoc2IFNotig39nEe7FzycMLnOQDZG+GTYReDG3UqUafYYh5vZqKvDPViDxJM
- ACJ/vdIXbrfq+PoRA7908LHHArRUMzLbwu7LY4YQl5df8qTUoG/9ZVnveOzDD8GHL5PZv7g12Jr
- m49c/Wq6ef4drDEpPibudk/cnZqEE1kW6+6bPCGaG7lUYo62113sc1RS8Q93wvo7OO6WUy/9Yzh
- P4exr+Yfu5VyVSkCWzEQJ3+NZBgojNvp8nnejkclB7ySGFslr7rbKSS3XnkF9Xe8dHOjp+3Ah+t
- YbgTv8cGHiY2Mh3K39CvEwok+NRFxhI2cSUZQpPHb5MO+pHYykR+ZVU/fnrRJm7A5IEHoNJDQbN
- 8AUMgDtYGEUheOon13L3mU2/tYF1hE+vGHGedToKxSfZEZup6Tcsx7Wq3j9BY3a7YsBMbm8qJLW
- aqt6okPdUzE/QPUVq8=
-X-Received: by 2002:a05:690c:9a85:b0:796:3f8a:9607 with SMTP id
- 00721157ae682-79865094422mr23378667b3.30.1771994755701; 
- Tue, 24 Feb 2026 20:45:55 -0800 (PST)
-Received: from [10.34.149.227] ([172.59.192.107])
+ d=1e100.net; s=20230601; t=1771994799; x=1772599599;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=vVGwXbKj2pTzXr05Aoq+1QeXKYJ/6G8XT2HUq7/dGb0=;
+ b=uhZMsulOOaAz5PkVxEEUrjfRtJZ7kmfbehhO8MWP0jpqVuAbScn832I31kqst+5aHS
+ edQV/ro7y3pqdvHw85RKefaTs+dCE7KjCWGXgb2I9NWZHUQTA0kcRRuTFw8JJwPrMej3
+ +OxwEDwFXZZorGliRkzyxyH/SaDFeAdO81fvYUVWKU5PTGctLZxQVKmWIBQYWjrkkH/5
+ SzbcKxLlTLDLHva70LUn/2lVdgKldpjBQnK5fH8wKGHua6GmbtzdKLd7q3XZmKmLeA7T
+ nUmv5NvBpV6kTJUbobhbvu8WaZUdsoPHCVMTNe52WtAmEDWymXzaEXifecVogO8QXKn9
+ ZKvA==
+X-Gm-Message-State: AOJu0YxKlZ2rBCxfSu/fN1UlYE9OOCzlInp8Fh+sDcLZSLDiUD95wG96
+ BtVEWSwIAuOF0D/lEAqhmYuRZkW0+8BMsTBADcxBkFeWaik6Rkm7ELwz
+X-Gm-Gg: ATEYQzyvFHAFc3QKimeEp/SB3wgOVreQUDl8a2IbZx5cTamdcB38UVVFxUMI02VBpPf
+ y3GcqzjetJ3VT9+gF7qLPgj2M4FgoFtXWbaqJzy1TqKDjPj0y2MmiQfBjKwGqaCM64PpFuNjojh
+ gOS98uYXBI0xBpWIuX1P3bBVUI+o9ugPPErFTiK/bAtX5n0R0iJ0/ZlHZfouowjVZqmG6mEK8hT
+ /KkfH2VkPOR57Aq++M6UKDRsB925Rf2gwDTUcpDLjGJIz8w56zDhl5zqBY/mfVctFxLfjVIWcUB
+ RnPLvRBnhdtp4rjnXOTN8OTjZCY00yvbnT6pnRZjTIZxeJvNtrCLwyqNbU3ccnkbOT8UMnkJoJT
+ m2i5Vz7J55P1pyfQ2sOQ2cpP/5zpkx0jtHkRobF29Exty2+o8P/VXTpzjBKWTgb1JfmDVNeA/wg
+ rlMrMlDgG/QLnvtzkJL9VwISDryy9JpUZauLSIgGYuSFCZk++YQ6QZ353pqQ6p/AKggdmSyS4VE
+ 0qPf67KG9hrXNp2FUFISynatb6+Njo=
+X-Received: by 2002:a05:7022:160a:b0:127:366f:8bb7 with SMTP id
+ a92af1059eb24-1276ad11b26mr6067082c88.25.1771994798835; 
+ Tue, 24 Feb 2026 20:46:38 -0800 (PST)
+Received: from ZEVORN-PC.localdomain ([38.95.120.198])
  by smtp.gmail.com with ESMTPSA id
- 00721157ae682-7982ddccc24sm52341097b3.40.2026.02.24.20.45.51
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 24 Feb 2026 20:45:55 -0800 (PST)
-Message-ID: <2e9125f8-b764-4397-9b55-d18cb0806cd5@linaro.org>
-Date: Wed, 25 Feb 2026 15:45:47 +1100
+ a92af1059eb24-1276af2edd7sm13234004c88.8.2026.02.24.20.46.33
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 24 Feb 2026 20:46:38 -0800 (PST)
+Date: Wed, 25 Feb 2026 12:45:41 +0800
+From: Chao Liu <chao.liu.zevorn@gmail.com>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
+ Richard Henderson <richard.henderson@linaro.org>, qemu-s390x@nongnu.org, 
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>, qemu-riscv@nongnu.org,
+ qemu-ppc@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+Subject: Re: [PATCH v2 28/50] target/riscv: Remove unnecessary target_ulong
+ type uses
+Message-ID: <aZ5-aDM57y03C8tz@ZEVORN-PC.localdomain>
+References: <20260219191955.83815-1-philmd@linaro.org>
+ <20260219191955.83815-29-philmd@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] accel: Build stubs once
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-References: <20260225044225.64059-1-philmd@linaro.org>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260225044225.64059-1-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1134;
- envelope-from=richard.henderson@linaro.org; helo=mail-yw1-x1134.google.com
+In-Reply-To: <20260219191955.83815-29-philmd@linaro.org>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1244;
+ envelope-from=chao.liu.zevorn@gmail.com; helo=mail-dl1-x1244.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -109,19 +110,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/25/26 15:42, Philippe Mathieu-DaudÃ© wrote:
-> Move stubs to the global stub_ss[] source set. These files
-> are now built once for all binaries, instead of one time
-> per system binary.
-> 
-> Inspired-by: Pierrick Bouvier<pierrick.bouvier@linaro.org>
-> Signed-off-by: Philippe Mathieu-DaudÃ©<philmd@linaro.org>
+On Thu, Feb 19, 2026 at 08:19:30PM +0100, Philippe Mathieu-Daudé wrote:
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   meson.build             |  2 +-
->   accel/stubs/meson.build | 19 +++++++++----------
->   2 files changed, 10 insertions(+), 11 deletions(-)
+>  target/riscv/gdbstub.c | 8 ++++----
+>  1 file changed, 4 insertions(+), 4 deletions(-)
+> 
+> diff --git a/target/riscv/gdbstub.c b/target/riscv/gdbstub.c
+> index f89b20ea84a..a053009ccd3 100644
+> --- a/target/riscv/gdbstub.c
+> +++ b/target/riscv/gdbstub.c
+> @@ -52,7 +52,7 @@ int riscv_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
+>      RISCVCPUClass *mcc = RISCV_CPU_GET_CLASS(cs);
+>      RISCVCPU *cpu = RISCV_CPU(cs);
+>      CPURISCVState *env = &cpu->env;
+> -    target_ulong tmp;
+> +    uint64_t tmp;
+>  
+>      if (n < 32) {
+>          tmp = env->gpr[n];
+> @@ -80,7 +80,7 @@ int riscv_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
+>      RISCVCPU *cpu = RISCV_CPU(cs);
+>      CPURISCVState *env = &cpu->env;
+>      int length = 0;
+> -    target_ulong tmp;
+> +    uint64_t tmp;
+>  
+>      switch (mcc->def->misa_mxl_max) {
+>      case MXL_RV32:
+> @@ -194,7 +194,7 @@ static int riscv_gdb_set_csr(CPUState *cs, uint8_t *mem_buf, int n)
+>      const unsigned regsz = riscv_cpu_is_32bit(cpu) ? 4 : 8;
+>  
+>      if (n < CSR_TABLE_SIZE) {
+> -        target_ulong val = ldn_p(mem_buf, regsz);
+> +        uint64_t val = ldn_p(mem_buf, regsz);
+>          int result;
+>  
+>          result = riscv_csrrw_debug(env, n, NULL, val, -1);
+> @@ -215,7 +215,7 @@ static int riscv_gdb_get_virtual(CPUState *cs, GByteArray *buf, int n)
+>          CPURISCVState *env = &cpu->env;
+>  
+>          /* Per RiscV debug spec v1.0.0 rc4 */
+> -        target_ulong vbit = (env->virt_enabled) ? BIT(2) : 0;
+> +        uint32_t vbit = (env->virt_enabled) ? BIT(2) : 0;
+>  
+>          return gdb_get_regl(buf, env->priv | vbit);
+>  #endif
+> -- 
+> 2.52.0
+> 
+> 
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
 
-r~
+Thanks,
+Chao
 
