@@ -4,105 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60972FCEE92
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 11:51:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0B68FCEE91
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 12:05:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvDPv-0004Kq-Mr; Wed, 25 Feb 2026 06:50:59 -0500
+	id 1vvDe9-0007Bi-8N; Wed, 25 Feb 2026 07:05:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vvDPp-0004FY-EU
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 06:50:55 -0500
-Received: from mail-yx1-xb12a.google.com ([2607:f8b0:4864:20::b12a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vvDPn-0001bt-Up
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 06:50:53 -0500
-Received: by mail-yx1-xb12a.google.com with SMTP id
- 956f58d0204a3-64acd19e1dfso5662310d50.0
- for <qemu-devel@nongnu.org>; Wed, 25 Feb 2026 03:50:49 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772020248; cv=none;
- d=google.com; s=arc-20240605;
- b=TbGNK6HLdk/c583UL45N/UUsAF3FqacL3rA6xfcZGVgw9gdlw947gq0UDUhc7f9lPf
- oEtL5DKpBOANzhViqqklOBVIolEQO2ic7ZB548cBZiOb7T3csjRsolaox9wv4hIez5Kg
- p7OTYXAhe3/oxmnuVhfMxNIfgApb2wmA5OcWaOkNSaETEuRHX8CoMP2NSaMisYcfnFSW
- R8sF2f5tf29934RKjYe4pligrX0a4A920aAV7J41D/nCchS8UTux2jxP7EjjDCbMoFtQ
- uCM5tOpfH+YK4lj9Bi4gZlLi4YMWubdaPnkOcgzr33oTCyF3Z5DYs2yCr/vt66OukfrP
- gbug==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=8/XNbwJeKQIwo7t1QhyL97lwvQNgw7U+AJxYLlMiTZ4=;
- fh=qDEitYY2TPRRMZ4OARbMiUT09q8rCCMKzcZWPtML1Tk=;
- b=PxMOEJUAqlxdRbdnLSuvy6LGOuWmEiHzy5JZ54IF+pmX1TD9vMqFK8sf8PYR/6nO/L
- MJ/kck05H7IfYUqM53ZtYIjz2DaAARNXfKHUyMyRU4ZpQIeoWNKKhaHkm/vbZnYBu0aM
- uGOVjUq+tpHC81xOuAi4rHT5zRGHAWKJN29zmbriLJiL276WW30aW2RUkRADeGNK3amC
- M11iDzrTqxUqxCT470wWNL0P/1PVj4MHxH285GGlFRAhPNmx6/SUtCD/WlwBfBxYQrFo
- l/fvY2U2w2SMbU3xI2qpfyH8FisF4mVI14Yah7bblzsTvNpGjrA+DZIgwocO+FJfVmYY
- r1rg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772020248; x=1772625048; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=8/XNbwJeKQIwo7t1QhyL97lwvQNgw7U+AJxYLlMiTZ4=;
- b=d9KIQ2rUWorIuNAppVdokwj0cHPaWY3yKbTGYR7MJWQSWlSTpy+T7ygWEUbbqd8tI0
- Ice1L5+PH0r6XZj4G4Mm9voq+szwCzChkLTdnnq9vLzLJGipzxfFc1pGyGMeQUrXcVcf
- gZUTb0jGKI2uS+6+JSkeZniqZz8R+6aCjyzEGF8IwapyB6wcR0CD/Tki8s+PerwSpNVJ
- cC2mmca8DZ3EYl98hv2Gum9zTK0QzA1ca/rxv5ilGEBUv51dQODZ/Ks+VhD7DfIAHUIX
- AsPisDbj8pQM8ce1oescYgOSSmetW/wnNwqCEBGIF3Tw1iPgP3waihWc+TCT9v7i5fv/
- UTIA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772020248; x=1772625048;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=8/XNbwJeKQIwo7t1QhyL97lwvQNgw7U+AJxYLlMiTZ4=;
- b=RhiuxS4MfAq2gKKVOM6UC8stvv3+QUBxuCm4mUP2HqiQezeBRPw04T0OGY/72FXqZC
- iX+KFjKgU5fZahaML7LUQi0/i1ejFdBpcxzeA9oFPcAZH0MRODJsAl23jRBB9qmHsRuJ
- +AgWVe8AkFmQhzT6O40o0vfQQxmFz/Zd1iL5WxoVxTuyifW+nlYT1OcGRr4BGxp/cTfF
- 6a7aCRFZeQk+MgAbunpqQ6cc52iAGjUTbmt2o3np48d0lkybnflfTAXXPyGIdztjyWl1
- m9I9hnduP4TbFCzRqWHwPuz9TkkXJz8usYL8AvaG7v5ezRyNj4vnjQQUmNsqOgCSlXpN
- 133g==
-X-Gm-Message-State: AOJu0YyxMH4Wx4OVWGuXewPfb/BAxNoqYZeIs3h8IIGknEF+S2gEMZLN
- JYLDjDl3FKxzLent+HzFiDQnmwZBFTlIg0407kSkSG1Dq13Ru8k1qY7CAj9LaGcYlSXPQri1VDP
- KXtDPZMVohNzouzf0pr218jZDGqoCxT0Y8luGzH7GFw==
-X-Gm-Gg: ATEYQzzY/zgMbzAUwVbC3g4bbklPyPm6WH5m9gR3NXSQkqpEMrv+sUTROBTS3zmd8sL
- G0r5mH0AGv3jULoTeVn8L+Rw5Nw3qi+rTswC3BswmyFZPCogNyehp2xGvgNkrHkzarHrtWMET/Y
- Q3RIRQT//8dNxcB8mVPILwz/vKYe1QlHMLJl34bX9RnXOxAHR9FrXf5UFIUAlvrFfMKIXyd06j0
- LoB8LrzK87pzZ2RUsSbhgYars2Y88abTkwPp94WipLn48bHIhPuIBP/IpGoyE9x3mSheZw88Gyi
- 2Uo7clm92X1HM2paXt/ACZTjo65m/n45Ut52LwB/FT22BsXyZKx2uGPVia2cTzkaBxo=
-X-Received: by 2002:a53:d014:0:b0:649:45c2:6d62 with SMTP id
- 956f58d0204a3-64c787d512fmr11859925d50.5.1772020248437; Wed, 25 Feb 2026
- 03:50:48 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1vvDe0-00079b-7m
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 07:05:33 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1vvDdy-0003in-AS
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 07:05:31 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1772021129;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=RXYnbdQyIwBONsl+rO+1NpKwtNwPjj8Hi2z+cNrS7zU=;
+ b=AgUgtoe9mkkuzMqfNkfZ44tkXpjWV/1vjvxsRN7WHK1BVZullI7rIBXgsvSYvzh5sv9Umk
+ 0HT3moM3AzFKbR7XRDFAy30tQ7vWJ2vu2FzhPSWDP8X9M3m7Wos42/gd2YDD18w0fVbaAI
+ KOjUjI7WeV8yFjFhyGB8ITHeYIHaGBc=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-159-eoDNW9MdOIuJ05rBkZ-rRA-1; Wed,
+ 25 Feb 2026 07:05:26 -0500
+X-MC-Unique: eoDNW9MdOIuJ05rBkZ-rRA-1
+X-Mimecast-MFC-AGG-ID: eoDNW9MdOIuJ05rBkZ-rRA_1772021124
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C25C41800464; Wed, 25 Feb 2026 12:05:24 +0000 (UTC)
+Received: from localhost (unknown [10.48.1.67])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id A38B51800348; Wed, 25 Feb 2026 12:05:23 +0000 (UTC)
+From: marcandre.lureau@redhat.com
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Alex Williamson <alex@shazbot.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ David Hildenbrand <david@kernel.org>, Mark Kanda <mark.kanda@oracle.com>,
+ kvm@vger.kernel.org,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Peter Xu <peterx@redhat.com>, Ben Chaney <bchaney@akamai.com>,
+ Fabiano Rosas <farosas@suse.de>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
+Subject: [PATCH v2 09/14] system/ram-discard-manager: implement replay via
+ is_populated iteration
+Date: Wed, 25 Feb 2026 13:04:50 +0100
+Message-ID: <20260225120456.3170057-10-marcandre.lureau@redhat.com>
+In-Reply-To: <20260225120456.3170057-1-marcandre.lureau@redhat.com>
+References: <20260225120456.3170057-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
-References: <20260224121014.279248-1-alex.bennee@linaro.org>
- <20260224121014.279248-6-alex.bennee@linaro.org>
- <CAFEAcA--YmCZ2+BBy1kM_VjeER4vbX8VMBbSA1aqUQ9-jWp5tQ@mail.gmail.com>
- <87pl5t130f.fsf@draig.linaro.org>
-In-Reply-To: <87pl5t130f.fsf@draig.linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Wed, 25 Feb 2026 11:50:37 +0000
-X-Gm-Features: AaiRm53GhKc5smmSp8HXA-t5xPP_5ljN99Y8dDIIxoq5Itzm3qbAcj3pVShiRnA
-Message-ID: <CAFEAcA9fg-yikxCoX5HWHh77Sk_5APXAgNrwZWPQMRQFLad6-Q@mail.gmail.com>
-Subject: Re: [PATCH 5/8] target/arm: extend WFX support for A-profile
-To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12a;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=marcandre.lureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -5
+X-Spam_score: -0.6
+X-Spam_bar: /
+X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.734, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.78,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,50 +94,156 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 25 Feb 2026 at 11:22, Alex Benn=C3=A9e <alex.bennee@linaro.org> wro=
-te:
->
-> Peter Maydell <peter.maydell@linaro.org> writes:
-> > Also, this doesn't change any of the places that it needs to
-> > change to implement the places that architecturally set the
-> > event register (see R_XRZRK in the Arm ARM),
->
-> I was having trouble finding that but searching for just XRZRK finds the
-> subscript text:
->
->   The Event Register for a PE is set by any of the following:
->     - A Send Event instruction, SEV, executed by any PE in the system.
->     - A Send Event Local instruction, SEVL, executed by the PE
->     - An exception return.
->
-> These seem easy enough
->
->     - The clearing of the global monitor for the PE
->
-> Is this the LSTREX monitor?
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Yes (see Arm ARM section B2.12.2). Note that as "global" implies,
-this is cross-CPU, not just internal to this one.
+Replace the source-level replay wrappers with a new
+replay_by_populated_state() helper that iterates the section at
+min-granularity, calls is_populated() for each chunk, and aggregates
+consecutive chunks of the same state before invoking the callback.
 
->   - An event from a Generic Timer event stream, see Event streams.
->
-> So this looks like sub-timer events that trigger events but aren't timer
-> expiry events? I shall have a look to see if the kernel uses this.
+This moves the iteration logic from individual sources into the manager,
+preparing for multi-source aggregation where the manager must combine
+state from multiple sources anyway.
 
-It will both use it internally and also exposes it to userspace
-(in the sense of providing a hwcap that says "we generate an
-event stream so you can rely on WFE waking up after a while").
-The kernel config symbol is ARM_ARCH_TIMER_EVTSTREAM.
-For internal use, see for instance arch/arm64/lib/delay.c :
-if the CPU has event streams but not WFIT/WFET then it will
-use the event stream to implement the delay.
+The replay_populated/replay_discarded vtable entries in
+RamDiscardSourceClass are no longer called but remain in the interface
+for now; they will be removed in follow-up commits along with the
+now-dead source implementations.
 
->   - An event sent by some IMPLEMENTATION DEFINED mechanism.
->
-> I assume we don't need to care about IMPDEF cases for our current CPU mod=
-els?
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+---
+ system/ram-discard-manager.c | 85 ++++++++++++++++++++++++++----------
+ 1 file changed, 61 insertions(+), 24 deletions(-)
 
-Yes, we don't need to worry about this part.
+diff --git a/system/ram-discard-manager.c b/system/ram-discard-manager.c
+index 1c9ff7fda58..25beb052a1e 100644
+--- a/system/ram-discard-manager.c
++++ b/system/ram-discard-manager.c
+@@ -27,26 +27,65 @@ static bool ram_discard_source_is_populated(const RamDiscardSource *rds,
+     return rdsc->is_populated(rds, section);
+ }
+ 
+-static int ram_discard_source_replay_populated(const RamDiscardSource *rds,
+-                                               const MemoryRegionSection *section,
+-                                               ReplayRamDiscardState replay_fn,
+-                                               void *opaque)
++/*
++ * Iterate the section at source granularity, aggregating consecutive chunks
++ * with matching populated state, and call replay_fn for each run.
++ */
++static int replay_by_populated_state(const RamDiscardManager *rdm,
++                                     const MemoryRegionSection *section,
++                                     bool replay_populated,
++                                     ReplayRamDiscardState replay_fn,
++                                     void *opaque)
+ {
+-    RamDiscardSourceClass *rdsc = RAM_DISCARD_SOURCE_GET_CLASS(rds);
++    uint64_t granularity, offset, size, end, pos, run_start;
++    bool in_run = false;
++    int ret = 0;
+ 
+-    g_assert(rdsc->replay_populated);
+-    return rdsc->replay_populated(rds, section, replay_fn, opaque);
+-}
++    granularity = ram_discard_source_get_min_granularity(rdm->rds, rdm->mr);
++    offset = section->offset_within_region;
++    size = int128_get64(section->size);
++    end = offset + size;
++
++    /* Align iteration to granularity boundaries */
++    pos = QEMU_ALIGN_DOWN(offset, granularity);
++
++    for (; pos < end; pos += granularity) {
++        MemoryRegionSection chunk = {
++            .mr = section->mr,
++            .offset_within_region = pos,
++            .size = int128_make64(granularity),
++        };
++        bool populated = ram_discard_source_is_populated(rdm->rds, &chunk);
++
++        if (populated == replay_populated) {
++            if (!in_run) {
++                run_start = pos;
++                in_run = true;
++            }
++        } else if (in_run) {
++            MemoryRegionSection tmp = *section;
++
++            if (memory_region_section_intersect_range(&tmp, run_start,
++                                                      pos - run_start)) {
++                ret = replay_fn(&tmp, opaque);
++                if (ret) {
++                    return ret;
++                }
++            }
++            in_run = false;
++        }
++    }
+ 
+-static int ram_discard_source_replay_discarded(const RamDiscardSource *rds,
+-                                               const MemoryRegionSection *section,
+-                                               ReplayRamDiscardState replay_fn,
+-                                               void *opaque)
+-{
+-    RamDiscardSourceClass *rdsc = RAM_DISCARD_SOURCE_GET_CLASS(rds);
++    if (in_run) {
++        MemoryRegionSection tmp = *section;
+ 
+-    g_assert(rdsc->replay_discarded);
+-    return rdsc->replay_discarded(rds, section, replay_fn, opaque);
++        if (memory_region_section_intersect_range(&tmp, run_start,
++                                                  pos - run_start)) {
++            ret = replay_fn(&tmp, opaque);
++        }
++    }
++
++    return ret;
+ }
+ 
+ RamDiscardManager *ram_discard_manager_new(MemoryRegion *mr,
+@@ -78,8 +117,7 @@ int ram_discard_manager_replay_populated(const RamDiscardManager *rdm,
+                                          ReplayRamDiscardState replay_fn,
+                                          void *opaque)
+ {
+-    return ram_discard_source_replay_populated(rdm->rds, section,
+-                                               replay_fn, opaque);
++    return replay_by_populated_state(rdm, section, true, replay_fn, opaque);
+ }
+ 
+ int ram_discard_manager_replay_discarded(const RamDiscardManager *rdm,
+@@ -87,8 +125,7 @@ int ram_discard_manager_replay_discarded(const RamDiscardManager *rdm,
+                                          ReplayRamDiscardState replay_fn,
+                                          void *opaque)
+ {
+-    return ram_discard_source_replay_discarded(rdm->rds, section,
+-                                               replay_fn, opaque);
++    return replay_by_populated_state(rdm, section, false, replay_fn, opaque);
+ }
+ 
+ static void ram_discard_manager_initfn(Object *obj)
+@@ -182,8 +219,8 @@ void ram_discard_manager_register_listener(RamDiscardManager *rdm,
+     rdl->section = memory_region_section_new_copy(section);
+     QLIST_INSERT_HEAD(&rdm->rdl_list, rdl, next);
+ 
+-    ret = ram_discard_source_replay_populated(rdm->rds, rdl->section,
+-                                              rdm_populate_cb, rdl);
++    ret = ram_discard_manager_replay_populated(rdm, rdl->section,
++                                               rdm_populate_cb, rdl);
+     if (ret) {
+         error_report("%s: Replaying populated ranges failed: %s", __func__,
+                      strerror(-ret));
+@@ -208,8 +245,8 @@ int ram_discard_manager_replay_populated_to_listeners(RamDiscardManager *rdm)
+     int ret = 0;
+ 
+     QLIST_FOREACH(rdl, &rdm->rdl_list, next) {
+-        ret = ram_discard_source_replay_populated(rdm->rds, rdl->section,
+-                                                  rdm_populate_cb, rdl);
++        ret = ram_discard_manager_replay_populated(rdm, rdl->section,
++                                                   rdm_populate_cb, rdl);
+         if (ret) {
+             break;
+         }
+-- 
+2.53.0
 
--- PMM
 
