@@ -4,81 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E000FD3764
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 15:11:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C12ADFD3767
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 15:17:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvGXs-0005jH-NK; Wed, 25 Feb 2026 10:11:24 -0500
+	id 1vvGcm-0006Sd-Dm; Wed, 25 Feb 2026 10:16:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vvGXo-0005j2-IY
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 10:11:20 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vvGXm-0001Yf-VA
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 10:11:20 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772032278;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=aNS7viuxZLyLSMYl7cQhDZMqcgZMhcQb1s5QPzXwrnU=;
- b=YDpM9s+It8lhCRvq2xg7VP3ljUDu87tB/SVWhbj5rMRuE25EVHzM+RVCN7UA3FRc5EReVg
- Viva7D8OoP259SmnKDepDjIMB8cdsdFR7PmwtKJCcklSrTjYVkLmHqOZZCNbztHwXsilKJ
- M9tzGPg3ZF5/+KMXPpjdM5jBkxoLXc4=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-568-ui0QQ09_OAqKlwPFTrA6sg-1; Wed,
- 25 Feb 2026 10:11:13 -0500
-X-MC-Unique: ui0QQ09_OAqKlwPFTrA6sg-1
-X-Mimecast-MFC-AGG-ID: ui0QQ09_OAqKlwPFTrA6sg_1772032271
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 533B31956063; Wed, 25 Feb 2026 15:11:11 +0000 (UTC)
-Received: from redhat.com (unknown [10.45.225.165])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5067119560A2; Wed, 25 Feb 2026 15:11:07 +0000 (UTC)
-Date: Wed, 25 Feb 2026 15:11:03 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Igor Mammedov <imammedo@redhat.com>, qemu-devel@nongnu.org,
- mst@redhat.com, anisinha@redhat.com, pbonzini@redhat.com,
- shannon.zhaosl@gmail.com, philmd@linaro.org, zhao1.liu@intel.com,
- rad@semihalf.com, leif.lindholm@oss.qualcomm.com
-Subject: Re: [PATCH 08/11] arm: virt: create GWDT watchdog paired with WDAT
- ACPI table
-Message-ID: <aZ8RByaj4h6i2OXt@redhat.com>
-References: <20260206131438.1857182-1-imammedo@redhat.com>
- <20260206131438.1857182-9-imammedo@redhat.com>
- <CAFEAcA_QO_Pm5qKy2xOer+VmyMZ6KZ1KdUpf_ETV9fQu4YmaHg@mail.gmail.com>
- <20260219131751.4e4e4e0e@imammedo>
- <CAFEAcA-qaSRM9MJDk2nhDQKWoP7odcou2DXff-fuYPNEE=g6vg@mail.gmail.com>
- <20260219155538.6e0b5a4f@imammedo>
- <CAFEAcA_v4Y5NEiYZsTyQPt=orc8gxGJ_PWu55T_0mAt+iY4OQA@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
+ id 1vvGcj-0006SM-4D
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 10:16:25 -0500
+Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
+ id 1vvGch-0002Ir-8d
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 10:16:24 -0500
+Received: by mail-ej1-x635.google.com with SMTP id
+ a640c23a62f3a-b8f992167dcso811291066b.1
+ for <qemu-devel@nongnu.org>; Wed, 25 Feb 2026 07:16:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1772032581; x=1772637381; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=HcyiiZc3MDvBei4ioUi0u03mWjRG/uRH4U3lirZ78f8=;
+ b=rdf5yg+eUl7keADJcc1uQfulkD+g5G4zLiPaWqCxFB3vUg2rARr/O1klVJASaMzXKO
+ M1llBC+NGDcdj4uwkwLX8L+wbW31d7/1nKzMAbl6aqBf/OKGZZ4tF8IAM3+vJdUdqKwn
+ LMKpFB/u6/1cGIbD7UajtgY7zGKFDMQcO6WnbUOa1siGWAZjwDEPt4XDCE0G6sB1/qmL
+ BgKZ+fpoQ8iPfAicbdAMdF0PeQORTSfSPpapc/4b3K/YDOav2Ys+ZcObGuKpGxCm5HL/
+ u1G7fHTjMnXxFSg/Tr4yYtI2jHwzt9FRKGPf2c+k0hTO19hCO0wmtMQijsFEzmrcR5Tf
+ PHxA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1772032581; x=1772637381;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=HcyiiZc3MDvBei4ioUi0u03mWjRG/uRH4U3lirZ78f8=;
+ b=LZcA0wFtwG1Cq9NhxOCjbLhRY9SZOCa9ZN99bEV05bvIHJtFPA77u3Wp9grY4+odnU
+ 6dBA2ip5e0zXbjM1b70DbpTEc5k56FlMi15ayXLmjn/l9Ckl67o6GEpjh56sXdIfp0I+
+ CKWfsHpwrsvpEaITqgmZ2MYg8qdWWtIspFXkRvJ5t5DxSt54IlAHAMoOBJ1ojyt4V86S
+ 59Ya00PurwBlCNiCGlKOXSs8b7MbF1QjPtgVrI/J5nGS7DJL5JWZOeUuA6ozuzONHqEm
+ N87l60b9brnwp43ByQadN8RrFlt2CU5okeVTsdGuHI/+6GTT1gTnIqRzAbPBHgVBXAR+
+ Z/sA==
+X-Gm-Message-State: AOJu0YxGjmuhkIyolV18TkGSbf4fTL4T/xYl30jgHfBFJ4v51Be3f98t
+ qVll5UoWJnKOlfDNSMBU7oF4e0Umn2SzXk2p8gRiqWZCxvIefaQOeWjvDCFqbZ7o5rWlgr254qq
+ JFpPd
+X-Gm-Gg: ATEYQzwkaFpdulq7dFWcA1NkqPhrysZ2BJBJ6pvJ77jR+2z5p7xDio9FnqPpmEjyhe4
+ vIK0Vxm+H3DEH4+AsPX6XK5L6OSIW7QqyG48OggtNcKPrYHm9eoO9bCzvjdzuL3b9BgRXkoH1M2
+ jcrB9ibAwkYykVxmKWkG5RbdpLNUNZKFSu6o1/EwmLE0dxKOdnwppr+E/mDeWfMqIdkEfpzXpY2
+ Ezdl82Uop4RIenRIkIpk8fmamqEi+cXQGjFMBd3RAR07bJeytxtVfLTVA90Bjmg716c5o6QtUDj
+ DPx1jxIR6c2GmbQ3vQ6b+x7hYOjCSys7Jr7KEdvQIxYtWArYHfdPOZkJeR32PcRuNF3Mr2/tISh
+ haQ2vQAtkGxl4vtgg0tLJfrsx0ERzlZZASL8cmdMuZEyzeOHd3LWDbf1BOVfNKMz3U2ObIb4cD0
+ lNCwI0DYKiGihGcr/mNewoWY8mAw/qwQL2m5W+
+X-Received: by 2002:a17:907:944d:b0:b8f:b8e:4ad9 with SMTP id
+ a640c23a62f3a-b9081953593mr1153755466b.10.1772032581170; 
+ Wed, 25 Feb 2026 07:16:21 -0800 (PST)
+Received: from linaro.org ([2a10:d582:31e:0:506c:58b9:ee75:9229])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-b9084e4bfe6sm528430666b.44.2026.02.25.07.16.20
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 25 Feb 2026 07:16:20 -0800 (PST)
+Date: Wed, 25 Feb 2026 15:16:19 +0000
+From: Jim MacArthur <jim.macarthur@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH v2 5/6] tcg: target-dependent lowering of extract to
+ shr/and
+Message-ID: <aZ8SQ1Bz6aaDG6gv@linaro.org>
+References: <20260204052456.970605-1-richard.henderson@linaro.org>
+ <20260204052456.970605-6-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAFEAcA_v4Y5NEiYZsTyQPt=orc8gxGJ_PWu55T_0mAt+iY4OQA@mail.gmail.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -5
-X-Spam_score: -0.6
-X-Spam_bar: /
-X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.734, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.78,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+In-Reply-To: <20260204052456.970605-6-richard.henderson@linaro.org>
+Received-SPF: pass client-ip=2a00:1450:4864:20::635;
+ envelope-from=jim.macarthur@linaro.org; helo=mail-ej1-x635.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,81 +99,19 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Feb 19, 2026 at 04:04:37PM +0000, Peter Maydell wrote:
-> On Thu, 19 Feb 2026 at 14:55, Igor Mammedov <imammedo@redhat.com> wrote:
-> >
-> > On Thu, 19 Feb 2026 13:00:13 +0000
-> > Peter Maydell <peter.maydell@linaro.org> wrote:
-> >
-> > > On Thu, 19 Feb 2026 at 12:17, Igor Mammedov <imammedo@redhat.com> wrote:
-> > > >
-> > > > On Wed, 18 Feb 2026 19:08:36 +0000
-> > > > Peter Maydell <peter.maydell@linaro.org> wrote:
-> > >
-> > > > > Please can you also add support for exposing this device
-> > > > > in the device tree ?
-> > > >
-> > > > It's possible,
-> > > > but we probably should not enable it if acpi variant was requested,
-> > > > to avoid confusion on guest side.
-> > >
-> > > Why? Almost every other device on this board we advertise
-> > > via DTB for device tree guests and via ACPI for ACPI guests.
+On Wed, Feb 04, 2026 at 03:24:55PM +1000, Richard Henderson wrote:
+> From: Paolo Bonzini <pbonzini@redhat.com>
 > 
-> > If we expose both guest may try to load both drivers causing conflict or misbehavior.
+> Instead of assuming only small immediates are available for AND,
+> consult the backend in order to decide between SHL/SHR and SHR/AND.
 > 
-> Huh? A guest will do one of:
->  1 read the ACPI tables, and load the driver based on the ACPI data
->  2 read the DTB, and load the driver based on the DTB
-> 
-> Nothing tries to read both at once, or it would get totally
-> confused.
-> 
-> > I can try and see what arm kernel would do in presence if both
-> > but that's not the point.
-> 
-> We know already that this works fine, because almost every
-> piece of hardware in the virt board is described in both
-> the dtb and the ACPI tables.
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> [rth: Split from a larger patch]
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 
-The watchdog is different though as the ACPI WDAT table is not
-describing the underlying piece of hardware. Instead it is
-describing an interface for controlling watchdog functionality,
-such that the guest does not have any awareness of what the
-underlying physical impl is.
-
-This feels like a pretty awful characteristic of the ACPI WDAT
-design, as it forces guests to do hacks like the quirk added to
-iTCO :-(
-
-If such hacks aren't possible then it forces the even worse
-behaviour of QEMU mgmt apps needing to decide between multiple
-different watchdog configs depending on what they know about
-guest OS support :-(
-
-Bit of a no-win scenario.
-
-> > One should consider plain GWDT whatchdog as a different device
-> > when compared to WDAT one.
-> > The later one is basically an synthetic watchdog with it's own driver.
-> > From guest pov they are different devices (using the same registers/irqs).
-> 
-> But there is only one piece of hardware here, right?
-
-QEMU knows that, but the guest OS does not. It cloud be one piece of
-hardware in which case only 1 exposed device can be activated, or it
-could be two distinct pieces of hardware both of which can be used
-independently.
-
-With regards,
-Daniel
--- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+Reviewed-by: Jim MacArthur <jim.macarthur@linaro.org>
 
 
