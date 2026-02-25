@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81B81FD45FA
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 23:24:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59FB0FD45F1
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 23:24:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvOAJ-0007K8-3l; Wed, 25 Feb 2026 18:19:35 -0500
+	id 1vvO8v-0003n8-3u; Wed, 25 Feb 2026 18:18:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vvOAH-0007Fr-2E
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 18:19:33 -0500
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vvO8e-0003Yj-U0
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 18:17:56 -0500
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vvOAF-0003SW-H5
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 18:19:32 -0500
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-483770e0b25so2521525e9.0
- for <qemu-devel@nongnu.org>; Wed, 25 Feb 2026 15:19:30 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vvO8d-00039M-38
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 18:17:52 -0500
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-4375d4fb4d4so144830f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 25 Feb 2026 15:17:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772061569; x=1772666369; darn=nongnu.org;
+ d=linaro.org; s=google; t=1772061469; x=1772666269; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=LYYfPvBKJeHUWebt5+j9ST6av3ymDgSZUVvb01/rGEE=;
- b=iXAIEQ+EBQm+b4vzvQClAtF9RJHEhQV2mgtxMVWK/yPBCJGzbHXB8xQbC0eS8dXV2o
- Qdf5SsVHoeMhnwHRz//BRceJZloddReYvbL6ZLYhDhxFIUBSd9jEigtPtwc62vm19T3f
- J1tN5JkwkEIduKe4UnpzRq1tVi321wVkVcQ2rULINpE+agaAO3Xoph2ZB3U1MlJ9wqHu
- pqYd4XGRLWf1NoBzY7hbl2FCJSxM3y2kl2CgE2oybEG7wrzOFDGhJAatiW5GViKWtdjP
- b1KWUtn95DrxlG9R6ZixLtU+uNFt7dF5YWgq6me1BwDEdp0M8Qa/ay9ByaiBNmK+fgQb
- vHcw==
+ :reply-to; bh=KwFBaOjwYWri1oyotMlqElEX9mt5n22sEObHgA60FZc=;
+ b=kfBroIyrsVj8rKZBMSJKHyIKpC9Jy+HiOK1j8JOG7nw4ojzSp+G5D89Xy1Xw1znURl
+ sWUfDeaZM5nXkk8MKRJ9LxyA1/LbH6/fOQYJaJybHkkG0xR/0iJbDN/4dDc6y4IzS+ZS
+ vbqC7aP3GlZPhmm74boma4Vw5M1UPanXoctYJnuG4+RtX//LDBZ17L/ddUKnsSYYjYuU
+ xkODlAY+NcyKQeV8SDsZ93nTcUMjb089+a/8cq3lgJq3wylUXarPs1Jx/blCetjKRpG+
+ 9iJ9RaU/k2cgdYNC8EXf6lz62TrYCjpzxlkY7Z5aTV5CSbCy38nfOQlcoTV4emTxn6Bq
+ Du7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772061569; x=1772666369;
+ d=1e100.net; s=20230601; t=1772061469; x=1772666269;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=LYYfPvBKJeHUWebt5+j9ST6av3ymDgSZUVvb01/rGEE=;
- b=dz5j5GUOUmOSuUJi8LaB2KTAEJ35AJUChJm0tjs+6BTHIEVkurrE3deJz6aS0uvUKC
- s9HEI78xee0JxSRCTQ79LoD2+I2QS9CNmHdAP6Fu3Nztr8aqErrEP/Egb5r+IKBGI3wW
- ZBBVXGrW+ZFOFrhkC0Omi6rg8jMgAck3Gh/fReNr8yevdqzlP2RVMolq5WhEldCGGqRa
- zpghS9CnvVHC+7Mdphn7O858+Hy6GYNArA4NAT31wei/6pQL3YZTyBEF/Dbm+WbRIWiU
- 0JUcsmXEuS0HAOnSo+pMyg/2WcP7ZRXj3W4bXs7gX8ary4ZJqRZo6jPqR8bvxKETi4nq
- 0ocA==
-X-Gm-Message-State: AOJu0YwYydVBwiRcveizExqHJ4ie4VIOYOLRmO2RwQI2ncgyANB5/zju
- jX6SZ8Vaj8mqwb7RnKn9Ng8Cpeem5SoBJ6fRIEa2fhqSPHorKWJr6V+qWbpLlySwSaRxQ2Kmy79
- yJf0Eir0=
-X-Gm-Gg: ATEYQzzm1NHztN01b8rflXpDBD3ZvfTiaoP8rZJ4hJ2qdpCnwyxTCp/GRBxHWSNgueG
- MC0ZAmnS6FKN2Tmep7rkG5+LcCyKJkrDmWxgKYtum1a0MAC2KqVTxakOBXjrrPkkfDXcLwse1+f
- z0vea6t/GYvxKf7+KRZxClWSkGj2R/yLyNzHWIs/NlvF53MgxpEgV1DuGEib2g1d1DAbPxV/z47
- fzj41KbbFFbAxMpuj+RpJZz+4K2Q0rl92Q6lxaIovc2+PrVJ2LYJDT0PVdWX2X//XeCcWB29Zea
- B/RS5AA4DwDxJVpho88djp1JneYUVH+c62HN13oAxcwLPrmk+MGzFxkWsBO2X+Cu97eG6bX6CB4
- qbtqdWolWjkbGGKJGgv/dYKNcAK4yBQ6FOfHEUXc00TBL9UpHE7Xe+eBJvqA1bO5pVw1TAsre1/
- IZESoU4LcXmkeBgmSx+aB1cFOXJZWxZwvY8HZ4ZgGHeuLl37QifaBEKFgLg6cAHaidj+5pvMUw
-X-Received: by 2002:a05:600c:4057:b0:483:c12b:fe46 with SMTP id
- 5b1f17b1804b1-483c12bff6cmr36169825e9.10.1772061569374; 
- Wed, 25 Feb 2026 15:19:29 -0800 (PST)
+ bh=KwFBaOjwYWri1oyotMlqElEX9mt5n22sEObHgA60FZc=;
+ b=U008rgEzVvRI2PsiYQGr/QRKFq6p1+psnxebbFVB8Jg/I0v6qTzx1OCZ5lam5IEiZo
+ d23Xl5NjzQRByRS+V8uEZbFNXfOOc4h0kk6FvBEhwKrHrmR0dUg1DagD8JviP/5R1Lt8
+ OYIURxI++wp15Um+NBtDAq1knOKMBz5ZBCPnalUvS5QIGmh/G7ofbedvt6DXuKPEOeXA
+ T7fAYFZnEuH74n7BJ0ymophsAwYkGkQnTWWh83/0G/fsoWDPW59LxZWoEcLZYoL/bwY7
+ 6t5gMoZlo9NBEIPX9DxxAwj47F5SCo1V9zes7y41HIFkqb6WN1opQcrubac1DW8289KD
+ jcog==
+X-Gm-Message-State: AOJu0YyVIGzAz1MDz/Er4Jzj4mxevEn0v3iFMEfAS4j5dzUfjPOyEONb
+ qeIkgj5poDGjcQ4s9ok2F+RU5eADSXoEeq74m3/NMvW3C5CZ5K/Gc0SmX7bgp1ImJwUcokH84rv
+ Smh/d6hY=
+X-Gm-Gg: ATEYQzzB17Jdk//VTjEADoFHqbn0N0HReW47ouMKlnvxXCMlx6neDdE0FmgpRhyxay4
+ qCONdyh9rEOJu/0FUSdYIajsNxhlvQ/CuG8m5GoxSk4zUBRb/YsZsw25mLdso+TcQlBkhI0x9kV
+ VxevjDxiD5QViCGxfDAnHtRyFfRwqZk3Qa3DT/hTKIqoNwaBai9FPXt2ur+ntyHDV1IjbJJGu6n
+ YF19WSJ8r8I06kLE91CaPHsdMtaXvrr4S1mBsdGnn+3jHAqQEluo1D0oPDp0l3mNAGb3k3AxwIy
+ gNAzmwfbBXtfxYr3Zv3uNkb2u75x4QvR6XV5h4BMhF8U7Flri8KFQPBGJwE4Y2eMzWW8A9FvcN0
+ 51oyDerlVcBKGEfuOcnzy6nzodANTBi0K3mCsj7lfXWbb2ahVqgXqVl6Y/ocnrXJV3eG8g804cA
+ vTOP3d/ZRodhKRVzV0kp1R3+Xrq/dhm3xCERsa5NixP+tbriwlLbJ3fwr03V7bzaNtS/C2i0bE
+X-Received: by 2002:a05:6000:2212:b0:439:8dd7:18b5 with SMTP id
+ ffacd0b85a97d-43997f34140mr596222f8f.37.1772061468919; 
+ Wed, 25 Feb 2026 15:17:48 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-483bfccff00sm22773025e9.25.2026.02.25.15.19.27
+ ffacd0b85a97d-43995fb04e5sm2327545f8f.6.2026.02.25.15.17.48
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 25 Feb 2026 15:19:28 -0800 (PST)
+ Wed, 25 Feb 2026 15:17:48 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 46/70] target/microblaze: Build 'gdbstub.c' once for system
- binaries
-Date: Thu, 26 Feb 2026 00:13:46 +0100
-Message-ID: <20260225231411.96482-47-philmd@linaro.org>
+Subject: [PULL 32/70] target/sparc: Factor sparc_cpu_gdb_write_register() out
+Date: Thu, 26 Feb 2026 00:13:32 +0100
+Message-ID: <20260225231411.96482-33-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260225231411.96482-1-philmd@linaro.org>
 References: <20260225231411.96482-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,47 +98,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-'gdbstub.c' can now be built once for all qemu-system-microblaze*
-binaries.
+Factor sparc_cpu_gdb_write_register() out.
+
+Prefer ldn_p(target_long_bits/8) over target-specific ldtul_p().
 
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20260219191955.83815-39-philmd@linaro.org>
+Message-ID: <20260219191955.83815-25-philmd@linaro.org>
 ---
- target/microblaze/meson.build | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ target/sparc/gdbstub.c | 27 +++++++++++++--------------
+ 1 file changed, 13 insertions(+), 14 deletions(-)
 
-diff --git a/target/microblaze/meson.build b/target/microblaze/meson.build
-index b30b8f70ace..b86b37d9238 100644
---- a/target/microblaze/meson.build
-+++ b/target/microblaze/meson.build
-@@ -4,12 +4,17 @@ microblaze_ss = ss.source_set()
- microblaze_ss.add(gen)
- microblaze_ss.add(files(
-   'cpu.c',
--  'gdbstub.c',
-   'helper.c',
-   'op_helper.c',
-   'translate.c',
- ))
+diff --git a/target/sparc/gdbstub.c b/target/sparc/gdbstub.c
+index ed52e521dcc..d19819cd1a9 100644
+--- a/target/sparc/gdbstub.c
++++ b/target/sparc/gdbstub.c
+@@ -124,19 +124,22 @@ static int sparc_cp0_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
+     return 0;
+ }
  
-+microblaze_user_ss = ss.source_set()
-+microblaze_user_ss.add(files('gdbstub.c'))
++static unsigned sparc_gdb_register_bytes(void)
++{
++#ifdef CONFIG_USER_ONLY
++# if defined(TARGET_ABI32)
++    return 4;
++# endif
++#endif
++    return target_long_bits() / 8;
++}
 +
-+microblaze_common_system_ss = ss.source_set()
-+microblaze_common_system_ss.add(files('gdbstub.c'))
-+
- microblaze_system_ss = ss.source_set()
- microblaze_system_ss.add(files(
-   'mmu.c',
-@@ -17,4 +22,6 @@ microblaze_system_ss.add(files(
- ))
+ int sparc_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
+ {
+     SPARCCPU *cpu = SPARC_CPU(cs);
+     CPUSPARCState *env = &cpu->env;
+-#if defined(TARGET_ABI32)
+-    uint32_t tmp;
+-
+-    tmp = ldl_p(mem_buf);
+-#else
+-    target_ulong tmp;
+-
+-    tmp = ldtul_p(mem_buf);
+-#endif
++    const unsigned regsz = sparc_gdb_register_bytes();
++    uint64_t tmp = ldn_p(mem_buf, regsz);
  
- target_arch += {'microblaze': microblaze_ss}
--target_common_system_arch += {'microblaze': microblaze_system_ss}
-+target_user_arch += {'microblaze': microblaze_user_ss}
-+target_system_arch += {'microblaze': microblaze_system_ss}
-+target_common_system_arch += {'microblaze': microblaze_common_system_ss}
+     if (n < 8) {
+         /* g0..g7 */
+@@ -145,11 +148,7 @@ int sparc_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
+         /* register window */
+         env->regwptr[n - 8] = tmp;
+     }
+-#if defined(TARGET_ABI32) || !defined(TARGET_SPARC64)
+-    return 4;
+-#else
+-    return 8;
+-#endif
++    return regsz;
+ }
+ 
+ static int sparc_fpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
 -- 
 2.52.0
 
