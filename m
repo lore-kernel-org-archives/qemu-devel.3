@@ -4,61 +4,123 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B039FD377A
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 18:09:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B58FFD377A
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 18:13:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvJJn-0001nF-Ow; Wed, 25 Feb 2026 13:09:03 -0500
+	id 1vvJNV-0003U1-Jz; Wed, 25 Feb 2026 13:12:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
- id 1vvJJm-0001n3-RG
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 13:09:02 -0500
-Received: from frasgout.his.huawei.com ([185.176.79.56])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vvJNU-0003TR-2C
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 13:12:52 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
- id 1vvJJk-00020H-O4
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 13:09:02 -0500
-Received: from mail.maildlp.com (unknown [172.18.224.83])
- by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4fLjJ10G5FzHnGgd;
- Thu, 26 Feb 2026 02:08:17 +0800 (CST)
-Received: from dubpeml500005.china.huawei.com (unknown [7.214.145.207])
- by mail.maildlp.com (Postfix) with ESMTPS id 5FB8B40086;
- Thu, 26 Feb 2026 02:08:59 +0800 (CST)
-Received: from a2303103017.china.huawei.com (10.203.177.99) by
- dubpeml500005.china.huawei.com (7.214.145.207) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.11; Wed, 25 Feb 2026 18:08:58 +0000
-To: <qemu-devel@nongnu.org>
-CC: <anisa.su887@gmail.com>, <armbru@redhat.com>, <david@kernel.org>,
- <gourry@gourry.net>, <imammedo@redhat.com>, <jonathan.cameron@huawei.com>,
- <linuxarm@huawei.com>, <lizhijian@fujitsu.com>, <mst@redhat.com>,
- <nifan.cxl@gmail.com>, <peterx@redhat.com>, <philmd@linaro.org>,
- <ppbonzini@redhat.com>, <venkataravis@micron.com>,
- <xiaoguangrong.eric@gmail.com>
-Subject: [PATCH v5 3/3] hw/cxl: Add a performant (and correct) path for the
- non interleaved cases
-Date: Wed, 25 Feb 2026 18:07:18 +0000
-Message-ID: <20260225180718.480-4-alireza.sanaee@huawei.com>
-X-Mailer: git-send-email 2.51.0.windows.2
-In-Reply-To: <20260225180718.480-1-alireza.sanaee@huawei.com>
-References: <20260225180718.480-1-alireza.sanaee@huawei.com>
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vvJNS-0002pn-LN
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 13:12:51 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1772043168;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=eM0qZSwq8q6kf3S+bMH82Ur4fOzh8VoD5Ooqhlc95Ic=;
+ b=YuN5GJX9R52fVvExe7XrgRH0FGs+6zmms6Idkd72ythL1tlvdTQ1KWkgOHeWDN9mOsktYB
+ nJo43Vbql4fVR6MmXpONgouCuykIGhLans7oc9ZDX+0gLg0vDkfBhKhSFvnkP1zLDl4pVF
+ 2w6yyZ9r53zqGpS40n+XAetGUsX2+ug=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-458-JwA1psq9PxK9Fb2Fdjd9vw-1; Wed,
+ 25 Feb 2026 13:12:47 -0500
+X-MC-Unique: JwA1psq9PxK9Fb2Fdjd9vw-1
+X-Mimecast-MFC-AGG-ID: JwA1psq9PxK9Fb2Fdjd9vw_1772043165
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id F203A1956068; Wed, 25 Feb 2026 18:12:44 +0000 (UTC)
+Received: from [10.45.224.158] (unknown [10.45.224.158])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id EB4AD1955F43; Wed, 25 Feb 2026 18:12:38 +0000 (UTC)
+Message-ID: <7a7291d4-8611-4d88-a781-9d22717119d1@redhat.com>
+Date: Wed, 25 Feb 2026 19:12:36 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 4/4] Remove the qemu-system-microblazeel target from the
+ build
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org, "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+Cc: devel@lists.libvirt.org, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, Eric Blake <eblake@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Markus Armbruster <armbru@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Paolo Bonzini <pbonzini@redhat.com>, Alexandre Iooss <erdnaxe@crans.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Djordje Todorovic <Djordje.Todorovic@htecgroup.com>
+References: <20260225161823.1438850-1-thuth@redhat.com>
+ <20260225161823.1438850-5-thuth@redhat.com>
+ <19b6002e-564f-4297-aad1-499a869c7d3f@linaro.org>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <19b6002e-564f-4297-aad1-499a869c7d3f@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.203.177.99]
-X-ClientProxiedBy: lhrpeml500012.china.huawei.com (7.191.174.4) To
- dubpeml500005.china.huawei.com (7.214.145.207)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=alireza.sanaee@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -5
+X-Spam_score: -0.6
+X-Spam_bar: /
+X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.734, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.78,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -71,308 +133,51 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Alireza Sanaee <alireza.sanaee@huawei.com>
-From:  Alireza Sanaee via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The CXL address to device decoding logic is complex because of the need to
-correctly decode fine grained interleave. The current implementation
-prevents use with KVM where executed instructions may reside in that memory
-and gives very slow performance even in TCG.
+On 25/02/2026 17.33, Philippe Mathieu-Daudé wrote:
+> Hi Thomas,
+> 
+> On 25/2/26 17:18, Thomas Huth wrote:
+>> From: Thomas Huth <thuth@redhat.com>
+>>
+>> It's been deprecated since two releases, so it should be fine to
+>> remove this now. Users can use the qemu-system-microblaze binary
+>> instead that can handle both endiannesses now.
+>>
+>> Signed-off-by: Thomas Huth <thuth@redhat.com>
+>> ---
+>>   MAINTAINERS                                      |  4 ++--
+>>   docs/about/deprecated.rst                        | 13 -------------
+>>   docs/about/removed-features.rst                  | 14 ++++++++++++++
+>>   configs/devices/microblazeel-softmmu/default.mak |  6 ------
+>>   configs/targets/microblazeel-softmmu.mak         |  6 ------
+>>   qapi/machine.json                                |  2 +-
+>>   tests/tcg/plugins/syscall.c                      |  1 -
+>>   7 files changed, 17 insertions(+), 29 deletions(-)
+>>   delete mode 100644 configs/devices/microblazeel-softmmu/default.mak
+>>   delete mode 100644 configs/targets/microblazeel-softmmu.mak
+> 
+> 
+>> diff --git a/tests/tcg/plugins/syscall.c b/tests/tcg/plugins/syscall.c
+>> index 5658f830879..624836dec62 100644
+>> --- a/tests/tcg/plugins/syscall.c
+>> +++ b/tests/tcg/plugins/syscall.c
+>> @@ -40,7 +40,6 @@ static const struct SyscallInfo arch_syscall_info[] = {
+>>       { "loongarch64", -1 },
+>>       { "m68k", 4 },
+>>       { "microblaze", 4 },
+>> -    { "microblazeel", 4 },
+>>       { "mips", 1 },
+>>       { "mips64", 1 },
+>>       { "mips64el", 1 },
+> 
+> Isn't this to test the qemu-microblazeel user-mode binary?
 
-In many real cases non interleaved memory configurations are useful and for
-those we can use a more conventional memory region alias allowing similar
-performance to other memory in the system.
+Oops, yes, I guess so ... so this hunk has to be removed from the patch, 
+thanks for spotting it!
 
-Whether this fast path is applicable can be established once the full set
-of HDM decoders has been committed (in whatever order the guest decides to
-commit them). As such a check is performed on each commit/uncommit of HDM
-decoder to establish if the alias should be added or removed.
-
-Co-developed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
-Signed-off-by: Jonathan Cameron <jonathan.cameron@huawei.com>
-Signed-off-by: Alireza Sanaee <alireza.sanaee@huawei.com>
----
- hw/cxl/cxl-component-utils.c |   6 ++
- hw/cxl/cxl-host.c            | 189 +++++++++++++++++++++++++++++++++++
- hw/mem/cxl_type3.c           |   4 +
- include/hw/cxl/cxl.h         |   1 +
- include/hw/cxl/cxl_device.h  |   4 +
- 5 files changed, 204 insertions(+)
-
-diff --git a/hw/cxl/cxl-component-utils.c b/hw/cxl/cxl-component-utils.c
-index 07aabe331c..a624357978 100644
---- a/hw/cxl/cxl-component-utils.c
-+++ b/hw/cxl/cxl-component-utils.c
-@@ -143,6 +143,12 @@ static void dumb_hdm_handler(CXLComponentState *cxl_cstate, hwaddr offset,
-         value = FIELD_DP32(value, CXL_HDM_DECODER0_CTRL, COMMITTED, 0);
-     }
-     stl_le_p((uint8_t *)cache_mem + offset, value);
-+
-+    if (should_commit) {
-+        cfmws_update_non_interleaved(true);
-+    } else if (should_uncommit) {
-+        cfmws_update_non_interleaved(false);
-+    }
- }
- 
- static void bi_handler(CXLComponentState *cxl_cstate, hwaddr offset,
-diff --git a/hw/cxl/cxl-host.c b/hw/cxl/cxl-host.c
-index 2dc9f77007..d51a4dc201 100644
---- a/hw/cxl/cxl-host.c
-+++ b/hw/cxl/cxl-host.c
-@@ -264,6 +264,195 @@ static PCIDevice *cxl_cfmws_find_device(CXLFixedWindow *fw, hwaddr addr,
-     return d;
- }
- 
-+typedef struct CXLDirectPTState {
-+    CXLType3Dev *ct3d;
-+    hwaddr decoder_base;
-+    hwaddr decoder_size;
-+    hwaddr dpa_base;
-+    unsigned int hdm_decoder_idx;
-+} CXLDirectPTState;
-+
-+static void cxl_fmws_direct_passthrough_setup(CXLDirectPTState *state,
-+                                              CXLFixedWindow *fw)
-+{
-+    CXLType3Dev *ct3d = state->ct3d;
-+    MemoryRegion *mr = NULL;
-+    uint64_t vmr_size = 0, pmr_size = 0, offset = 0;
-+    MemoryRegion *direct_mr;
-+    g_autofree char *direct_mr_name;
-+    unsigned int idx = state->hdm_decoder_idx;
-+
-+    if (ct3d->hostvmem) {
-+        MemoryRegion *vmr = host_memory_backend_get_memory(ct3d->hostvmem);
-+
-+        vmr_size = memory_region_size(vmr);
-+        if (state->dpa_base < vmr_size) {
-+            mr = vmr;
-+            offset = state->dpa_base;
-+        }
-+    }
-+    if (!mr && ct3d->hostpmem) {
-+        MemoryRegion *pmr = host_memory_backend_get_memory(ct3d->hostpmem);
-+
-+        pmr_size = memory_region_size(pmr);
-+        if (state->dpa_base - vmr_size < pmr_size) {
-+            mr = pmr;
-+            offset = state->dpa_base - vmr_size;
-+        }
-+    }
-+    if (!mr) {
-+        return;
-+    }
-+
-+    if (ct3d->direct_mr_fw[idx]) {
-+        return;
-+    }
-+
-+    direct_mr = &ct3d->direct_mr[idx];
-+    direct_mr_name = g_strdup_printf("cxl-direct-mapping-alias-%u", idx);
-+    if (!direct_mr_name) {
-+        return;
-+    }
-+
-+    memory_region_init_alias(direct_mr, OBJECT(ct3d), direct_mr_name, mr,
-+                             offset, state->decoder_size);
-+    memory_region_add_subregion(&fw->mr,
-+                                state->decoder_base - fw->base, direct_mr);
-+    ct3d->direct_mr_fw[idx] = fw;
-+}
-+
-+static void cxl_fmws_direct_passthrough_remove(CXLType3Dev *ct3d,
-+                                               uint64_t decoder_base,
-+                                               unsigned int idx)
-+{
-+    CXLFixedWindow *owner_fw = ct3d->direct_mr_fw[idx];
-+    MemoryRegion *direct_mr = &ct3d->direct_mr[idx];
-+
-+    if (!owner_fw) {
-+        return;
-+    }
-+
-+    if (!memory_region_is_mapped(direct_mr)) {
-+        return;
-+    }
-+
-+    if (cxl_cfmws_find_device(owner_fw, decoder_base, false)) {
-+        return;
-+    }
-+
-+    memory_region_del_subregion(&owner_fw->mr, direct_mr);
-+    ct3d->direct_mr_fw[idx] = NULL;
-+}
-+
-+static int cxl_fmws_direct_passthrough(Object *obj, void *opaque)
-+{
-+    CXLDirectPTState *state = opaque;
-+    CXLFixedWindow *fw;
-+
-+    if (!object_dynamic_cast(obj, TYPE_CXL_FMW)) {
-+        return 0;
-+    }
-+
-+    fw = CXL_FMW(obj);
-+
-+    /* Verify not interleaved */
-+    if (!cxl_cfmws_find_device(fw, state->decoder_base, false)) {
-+        return 0;
-+    }
-+
-+    cxl_fmws_direct_passthrough_setup(state, fw);
-+
-+    return 0;
-+}
-+
-+static int update_non_interleaved(Object *obj, void *opaque)
-+{
-+    const int hdm_inc = R_CXL_HDM_DECODER1_BASE_LO - R_CXL_HDM_DECODER0_BASE_LO;
-+    bool commit = *(bool *)opaque;
-+    CXLType3Dev *ct3d;
-+    uint32_t *cache_mem;
-+    unsigned int hdm_count, i;
-+    uint32_t cap;
-+    uint64_t dpa_base = 0;
-+
-+    if (!object_dynamic_cast(obj, TYPE_CXL_TYPE3)) {
-+        return 0;
-+    }
-+
-+    ct3d = CXL_TYPE3(obj);
-+    cache_mem = ct3d->cxl_cstate.crb.cache_mem_registers;
-+    cap = ldl_le_p(cache_mem + R_CXL_HDM_DECODER_CAPABILITY);
-+    hdm_count = cxl_decoder_count_dec(FIELD_EX32(cap,
-+                                                 CXL_HDM_DECODER_CAPABILITY,
-+                                                 DECODER_COUNT));
-+    for (i = 0; i < hdm_count; i++) {
-+        uint64_t decoder_base, decoder_size, skip;
-+        uint32_t hdm_ctrl, low, high;
-+        int iw, committed;
-+
-+        hdm_ctrl = ldl_le_p(cache_mem + R_CXL_HDM_DECODER0_CTRL + i * hdm_inc);
-+        committed = FIELD_EX32(hdm_ctrl, CXL_HDM_DECODER0_CTRL, COMMITTED);
-+
-+        /*
-+         * Optimization: Looking for a fully committed path; if the type 3 HDM
-+         * decoder is not commmitted, it cannot lie on such a path.
-+         */
-+        if (commit && !committed) {
-+            return 0;
-+        }
-+
-+        low = ldl_le_p(cache_mem + R_CXL_HDM_DECODER0_DPA_SKIP_LO +
-+                       i * hdm_inc);
-+        high = ldl_le_p(cache_mem + R_CXL_HDM_DECODER0_DPA_SKIP_HI +
-+                        i * hdm_inc);
-+        skip = ((uint64_t)high << 32) | (low & 0xf0000000);
-+        dpa_base += skip;
-+
-+        low = ldl_le_p(cache_mem + R_CXL_HDM_DECODER0_SIZE_LO + i * hdm_inc);
-+        high = ldl_le_p(cache_mem + R_CXL_HDM_DECODER0_SIZE_HI + i * hdm_inc);
-+        decoder_size = ((uint64_t)high << 32) | (low & 0xf0000000);
-+
-+        low = ldl_le_p(cache_mem + R_CXL_HDM_DECODER0_BASE_LO + i * hdm_inc);
-+        high = ldl_le_p(cache_mem + R_CXL_HDM_DECODER0_BASE_HI + i * hdm_inc);
-+        decoder_base = ((uint64_t)high << 32) | (low & 0xf0000000);
-+
-+        iw = FIELD_EX32(hdm_ctrl, CXL_HDM_DECODER0_CTRL, IW);
-+
-+        if (iw == 0) {
-+            if (!commit) {
-+                cxl_fmws_direct_passthrough_remove(ct3d, decoder_base, i);
-+            } else {
-+                CXLDirectPTState state = {
-+                    .ct3d = ct3d,
-+                    .decoder_base = decoder_base,
-+                    .decoder_size = decoder_size,
-+                    .dpa_base = dpa_base,
-+                    .hdm_decoder_idx = i,
-+                };
-+
-+                object_child_foreach_recursive(object_get_root(),
-+                                               cxl_fmws_direct_passthrough,
-+                                               &state);
-+            }
-+        }
-+        dpa_base += decoder_size / cxl_interleave_ways_dec(iw, &error_fatal);
-+    }
-+
-+    return false;
-+}
-+
-+bool cfmws_update_non_interleaved(bool commit)
-+{
-+    /*
-+     * Walk endpoints to find both committed and uncommitted decoders,
-+     * then check if they are not interleaved (but the path is fully set up).
-+     */
-+    object_child_foreach_recursive(object_get_root(),
-+                                   update_non_interleaved, &commit);
-+
-+    return false;
-+}
-+
- static MemTxResult cxl_read_cfmws(void *opaque, hwaddr addr, uint64_t *data,
-                                   unsigned size, MemTxAttrs attrs)
- {
-diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-index 4739239da3..d9fc0bec8f 100644
---- a/hw/mem/cxl_type3.c
-+++ b/hw/mem/cxl_type3.c
-@@ -427,6 +427,8 @@ static void hdm_decoder_commit(CXLType3Dev *ct3d, int which)
-     ctrl = FIELD_DP32(ctrl, CXL_HDM_DECODER0_CTRL, COMMITTED, 1);
- 
-     stl_le_p(cache_mem + R_CXL_HDM_DECODER0_CTRL + which * hdm_inc, ctrl);
-+
-+    cfmws_update_non_interleaved(true);
- }
- 
- static void hdm_decoder_uncommit(CXLType3Dev *ct3d, int which)
-@@ -442,6 +444,8 @@ static void hdm_decoder_uncommit(CXLType3Dev *ct3d, int which)
-     ctrl = FIELD_DP32(ctrl, CXL_HDM_DECODER0_CTRL, COMMITTED, 0);
- 
-     stl_le_p(cache_mem + R_CXL_HDM_DECODER0_CTRL + which * hdm_inc, ctrl);
-+
-+    cfmws_update_non_interleaved(false);
- }
- 
- static int ct3d_qmp_uncor_err_to_cxl(CxlUncorErrorType qmp_err)
-diff --git a/include/hw/cxl/cxl.h b/include/hw/cxl/cxl.h
-index 998f495a98..931f5680bd 100644
---- a/include/hw/cxl/cxl.h
-+++ b/include/hw/cxl/cxl.h
-@@ -71,4 +71,5 @@ CXLComponentState *cxl_usp_to_cstate(CXLUpstreamPort *usp);
- typedef struct CXLDownstreamPort CXLDownstreamPort;
- DECLARE_INSTANCE_CHECKER(CXLDownstreamPort, CXL_DSP, TYPE_CXL_DSP)
- 
-+bool cfmws_update_non_interleaved(bool commit);
- #endif
-diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
-index 393f312217..ba551fa5f9 100644
---- a/include/hw/cxl/cxl_device.h
-+++ b/include/hw/cxl/cxl_device.h
-@@ -685,6 +685,8 @@ typedef struct CXLSetFeatureInfo {
-     size_t data_size;
- } CXLSetFeatureInfo;
- 
-+typedef struct CXLFixedWindow CXLFixedWindow;
-+
- struct CXLSanitizeInfo;
- 
- typedef struct CXLAlertConfig {
-@@ -712,6 +714,8 @@ struct CXLType3Dev {
-     uint64_t sn;
- 
-     /* State */
-+    MemoryRegion direct_mr[CXL_HDM_DECODER_COUNT];
-+    CXLFixedWindow *direct_mr_fw[CXL_HDM_DECODER_COUNT];
-     AddressSpace hostvmem_as;
-     AddressSpace hostpmem_as;
-     CXLComponentState cxl_cstate;
--- 
-2.43.0
+  Thomas
 
 
