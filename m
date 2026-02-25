@@ -4,88 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DAD3CF5545F
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 05:34:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41537E9B25A
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 05:40:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vv7XM-0003la-6U; Wed, 25 Feb 2026 00:34:16 -0500
+	id 1vv7d5-0005AV-Qo; Wed, 25 Feb 2026 00:40:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vv7XK-0003lK-N5
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 00:34:14 -0500
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vv7XJ-0006lg-1F
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 00:34:14 -0500
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-483bd7354efso8573415e9.2
- for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 21:34:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771997651; x=1772602451; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=iBo1lTvpEzWtV/3g95qoBlTwp9cVcmS6JAj5uUNf/qo=;
- b=FtVkVw8bW26f//XaH5NAXpVFcVTmRMEZaIsGxmPfJ4Z9N3jh9ulyyolZ0oxy+ywCaP
- nyxJcCqmIB+IrwWEnzeHwE4tlEsDbIXQYjxcyiXItwP9faEN6IMBQ9vqzzqua+gFtgsR
- 0sJ5f67GHfgGS8UkoBWfRzGafk66q09DvpcJF8pzN4TjXyatxaXYUtj4Qwm/xHZYoyEN
- Vss93nMB35zR63ClnzX0QxKBEBNEp96yls+5yJN4w2S/HPuUWUE+uHZMXFwxemoIq/kK
- CUj/u1b0+acqeFWcl0g8DPDPCGP5oH/r8OTV4BPWS2cZj9LCZV4BSAizx1SxR0FOouNJ
- wWIg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771997651; x=1772602451;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=iBo1lTvpEzWtV/3g95qoBlTwp9cVcmS6JAj5uUNf/qo=;
- b=RHTgPPLtg+aHbE6/lXq5RY1+USBlSvq2IKMSWisOdaUOLDP6btb+sYcIh9UQLgArLE
- whCKoPXUW6l5h1t0JlJNpKGekqUH4ouYCTSy5caKnKw2Mrl91fL0oS6enOfOONnCwAz2
- TyeFJac/JqOzomrHQRKwxqss5TKWvX7nSL+/Pe9kNx9uPI7k7W0uEmEr9sLfEA23JmEG
- qC4WVGu5muYkFZyK4K2oit9ymmDApVAPQekdSrzMl2FeDiy48ulT+GQ7C6N2LOdTSDxO
- 0TGLWRQJobVl+XCPtYSYXzsPa0pqQdv1fXtgwywjo+XN7OXL6cSJkNLzdfhaakgMrjRj
- 2vkw==
-X-Gm-Message-State: AOJu0YwiMpZbh+Wo8ClrBQy+aYISvEywMWrrdi2CRfi/z6SkejJWrDNG
- qO+l8cavfU+1NO3j88qaA22gkbX5Ii7L9aSzS1W7+dLYTwmDOQCf/gD6J1rsrv847Qp+YUY5pWU
- RsGkUOJ0=
-X-Gm-Gg: ATEYQzwL9oNHqTOEtZkqJ1VLczWfhfx6OKiAGn4LpZHTHMbTwArddbjSzanhL/Das7D
- VZZ8UpTUmyafWmDeVDknL7PkVBijE3bK+7cvdlgxT8koDMSzz+67uuSNnWXkpyDrLMnhX031ZeJ
- GPT+Roo21lIFsLDoAgoHS1RxwjnnJj1kGJ7LFJBhNRKX4ySB0IS2oLRJkFJj3mMcdXvpTVh9lWR
- pn8xP6doKQXrU+wfy7Yjr4CFs24SJF9OcjvuZ2st7ROgE3ewc83t67romAQ2bDW37aMfGKjmkKm
- yp+ib/Bc5ZkN3wl7NQMUAIEO+yH3FxavQHG8hrIQR23dZRmo3pRLycVJspag5xzUDbM04mFH0Sm
- 7lMucVwZLH9JVaH3SRnj6LxQEdVPHXR5YLiw5omoZBIwe8p/ScPEMz9BSGoxCjcxIuFW+xd5J8L
- Qy2Jiex7kRtP4QZb80HdZ+cRXZoUCf2XaSsMnnp2hplO/Pv9Y78tN92wUQZEI2aEzLiW6j5k3z
-X-Received: by 2002:a05:600c:8506:b0:47d:3ead:7440 with SMTP id
- 5b1f17b1804b1-483bef62a9cmr16282105e9.32.1771997650872; 
- Tue, 24 Feb 2026 21:34:10 -0800 (PST)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43970d54760sm31296177f8f.35.2026.02.24.21.34.08
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 24 Feb 2026 21:34:10 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PATCH] accel/qtest: Build once as common object
-Date: Wed, 25 Feb 2026 06:34:07 +0100
-Message-ID: <20260225053408.18426-1-philmd@linaro.org>
-X-Mailer: git-send-email 2.52.0
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vv7d3-0005AN-Sm
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 00:40:10 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vv7d1-0007SF-6L
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 00:40:09 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1771998005;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=FxS379o7r+4yfEJ82c2Qi0MQdCRLN+3GOza9T1cyYLA=;
+ b=UqvvI+pXgt8CW9TKBqKHdjLy0r8eGFZJ2Q8wmZ04G/G2v3+2p+A/SqpcSl6SzwyjQUOYz6
+ v/SZQzX/mwZPTSREjyNlNsfKybTGtQei5AAbZgZb8AzwUj9GHmOobWrDUDvfb2YVmBo4vd
+ TppG94FK70L0iye+MFh95Fde1KCqZ6A=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-413-CEKfmimjN7WuGZB7L8hZhQ-1; Wed,
+ 25 Feb 2026 00:40:03 -0500
+X-MC-Unique: CEKfmimjN7WuGZB7L8hZhQ-1
+X-Mimecast-MFC-AGG-ID: CEKfmimjN7WuGZB7L8hZhQ_1771998002
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1A9B618004A9; Wed, 25 Feb 2026 05:40:02 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.13])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 954161800465; Wed, 25 Feb 2026 05:40:01 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 2CDB421E692D; Wed, 25 Feb 2026 06:39:59 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: David Hamilton <dahamilt0@gmail.com>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [PATCH 1/2] hw/misc/ivshmem-pci: Handle error from
+ kvm_irqchip_add_irqfd_notifier_gsi()
+In-Reply-To: <20260224190004.84187-2-dahamilt0@gmail.com> (David Hamilton's
+ message of "Tue, 24 Feb 2026 14:00:03 -0500")
+References: <20260224190004.84187-1-dahamilt0@gmail.com>
+ <20260224190004.84187-2-dahamilt0@gmail.com>
+Date: Wed, 25 Feb 2026 06:39:59 +0100
+Message-ID: <87qzq9xtxs.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.358, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.659,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,40 +88,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-No code within qtest.c uses target-specific knowledge:
-build it once as target-agnostic common unit.
+David Hamilton <dahamilt0@gmail.com> writes:
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- meson.build             | 3 ---
- accel/qtest/meson.build | 5 ++++-
- 2 files changed, 4 insertions(+), 4 deletions(-)
+> The return value of kvm_irqchip_add_irqfd_notifier_gsi() was being
+> ignored. Propagate the error to the caller via errp.
+>
+> Resolves the TODO comment at the call site.
+>
+> Signed-off-by: David Hamilton <dahamilt0@gmail.com>
+> ---
+>  hw/misc/ivshmem-pci.c | 9 +++++++--
+>  1 file changed, 7 insertions(+), 2 deletions(-)
+>
+> diff --git a/hw/misc/ivshmem-pci.c b/hw/misc/ivshmem-pci.c
+> index a3a43f53bd..45b0e20363 100644
+> --- a/hw/misc/ivshmem-pci.c
+> +++ b/hw/misc/ivshmem-pci.c
+> @@ -449,6 +449,7 @@ static void setup_interrupt(IVShmemState *s, int vect=
+or, Error **errp)
+>          ivshmem_has_feature(s, IVSHMEM_MSI);
+>      PCIDevice *pdev =3D PCI_DEVICE(s);
+>      Error *err =3D NULL;
+> +    int ret;
+>=20=20
+>      IVSHMEM_DPRINTF("setting up interrupt for vector: %d\n", vector);
+>=20=20
+> @@ -464,9 +465,13 @@ static void setup_interrupt(IVShmemState *s, int vec=
+tor, Error **errp)
+>          }
+>=20=20
+>          if (!msix_is_masked(pdev, vector)) {
+> -            kvm_irqchip_add_irqfd_notifier_gsi(kvm_state, n, NULL,
+> +            ret =3D kvm_irqchip_add_irqfd_notifier_gsi(kvm_state, n, NUL=
+L,
+>                                                 s->msi_vectors[vector].vi=
+rq);
+> -            /* TODO handle error */
+> +            if (ret < 0) {
+> +                error_setg(errp, "Failed to configure irqfd notifier"
+> +                            " for vector %d, vector");
 
-diff --git a/meson.build b/meson.build
-index 5fecd6103a6..033d8cc1a0a 100644
---- a/meson.build
-+++ b/meson.build
-@@ -3867,9 +3867,6 @@ subdir('linux-user')
- subdir('tests/qtest/libqos')
- subdir('tests/qtest/fuzz')
- 
--# accel modules
--target_modules += { 'accel' : { 'qtest': qtest_module_ss }}
--
- ##############################################
- # Internal static_libraries and dependencies #
- ##############################################
-diff --git a/accel/qtest/meson.build b/accel/qtest/meson.build
-index 2018de8a05d..e1b089e02c7 100644
---- a/accel/qtest/meson.build
-+++ b/accel/qtest/meson.build
-@@ -1 +1,4 @@
--qtest_module_ss.add(when: ['CONFIG_SYSTEM_ONLY'], if_true: files('qtest.c'))
-+qtest_module_ss = ss.source_set()
-+qtest_module_ss.add(files('qtest.c'))
-+
-+modules += {'accel': {'qtest': qtest_module_ss}}
--- 
-2.52.0
+Scratch ", vector".
+
+> +                return;
+> +            }
+>          }
+>      } else {
+>          /* it will be delayed until msix is enabled, in write_config */
+
+qapi/error.h:
+
+ * - Whenever practical, also return a value that indicates success /
+ *   failure.  This can make the error checking more concise, and can
+ *   avoid useless error object creation and destruction.  Note that
+ *   we still have many functions returning void.  We recommend
+ *   =E2=80=A2 bool-valued functions return true on success / false on fail=
+ure,
+ *   =E2=80=A2 pointer-valued functions return non-null / null pointer, and
+ *   =E2=80=A2 integer-valued functions return non-negative / negative.
+
+Please make the function return false on error, true on success.
+
+This will simplify the next patch.
 
 
