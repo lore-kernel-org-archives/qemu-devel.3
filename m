@@ -4,83 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E779DF5545B
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 05:14:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3528F5545A
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 05:14:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vv7DR-00071J-1j; Wed, 25 Feb 2026 00:13:41 -0500
+	id 1vv7DX-00072O-5X; Wed, 25 Feb 2026 00:13:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vv7DO-00070l-OW
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 00:13:38 -0500
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vv7DV-00071s-AA
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 00:13:45 -0500
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vv7DN-00047E-4j
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 00:13:38 -0500
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-483487335c2so55862295e9.2
- for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 21:13:36 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vv7DT-00047j-UW
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 00:13:45 -0500
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-4398d1f06caso804566f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 21:13:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771996415; x=1772601215; darn=nongnu.org;
+ d=linaro.org; s=google; t=1771996422; x=1772601222; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=9Fom4TdZ27OaWdE48V/WCmqpd1vRN9dFVw46MQX66F4=;
- b=SzUj1ZOdysSEqa03R+mse1JYG3/R2vcetUQDBNSE4/AlIHye8BXknbUHH3cdWFe3kI
- jUO73Jv+x3J0YfYf53S5Oi8a/fwkeRfrGvWvcUXyRKqkpmHBJt+VXZK142lgWbA0+GhX
- +94Upc9gJOSFa/uJhw9ezLd+tkN6tRhRZssIhi10T2caz7/xOblDJQXE7auW+eTHxFhc
- A6Dk1a8dWPheGPHEFwIlbGJ+VPWsQQ/fMEqQKLuTX+5XERlV7ISUDlWOSerpGguVqLsF
- 6kOaSKG+tx3P/HE7I8l6rvBY3XY/yygXHysEMP2uG1Nr43HtiKWpgyOx+v3hcYBbVW+x
- O7bA==
+ bh=CGvKgLHeevLALbSBED4Jn7ttMmQ4t+uZlwFqVihbumU=;
+ b=ahfm1W4ZuHeuih9cz7By+oS5ETKMCVKyWwocWd3RHrRwlb6W5RYzfdLJrxMQmYWhDx
+ 0Uv2OCmd8kGZLkSTE96P7Pee9qtlLv7+iWcnG/HsZfjS9/PLab1WynMfNgE+hNVuoKPa
+ z9zrdnTVg6jPzg2JIfPxEKbD3S78vyHy141GkRBaV54I/3UJEeMzcFTsvy7zgBQ/biHm
+ pdwjfATHu5veMwg7NaOaE1BSMN/rK1PgcIBTmOIkWYbmMXrJL9A8k0KrfxI7Gl+vdvtQ
+ cIkX9671icaM0l1gNEhtZJpxpEuE1HX2Uem2B/oBudKKcghI7ytXojfmttiFjnl57Wi2
+ QcwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771996415; x=1772601215;
+ d=1e100.net; s=20230601; t=1771996422; x=1772601222;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=9Fom4TdZ27OaWdE48V/WCmqpd1vRN9dFVw46MQX66F4=;
- b=UVuhqfGaNgpgsZ1E6AD/tfux1khs4j+j3xfIPIu1npjBNYZEsJFkxQyVtvqpHEt2W8
- Ddk0k2qx9TD20r9nM2W7nqjjaw+tfbIskJr4wC0eO/3Hcd30dIpWy6yr4s/6D1psb/Pi
- Vcwl6gxnjiJih8c9b88pri5HnPGcf4j/UpGR2jT+cwqMLkHt+7yhggwLA8boaNS+8uGg
- D0H+O1GueJGl/dqBN1deCweJvmmZxrrlqHbIJftuC/EE/y+OuWubxGyI84zIH5XBhJQO
- rRjPTSlweZWCsxNrY4dGVRPV//q4zMMT9lTnFCoqBmzdcLvd+vZyBfSMHjOasS2xxaaS
- LCiw==
-X-Gm-Message-State: AOJu0YwKXWnJLHBooZFJnNq3pIfuD2oqk/aNaiKv4lNbDSjS89FLarrv
- 3URStRnzRDqMJ+7gTeu4nEozGhWVa96WQuasSSTLQy2Ervyogd/CyCbURmozHBEIYs65YvkAxp2
- 247Wtywc=
-X-Gm-Gg: ATEYQzzdYapTDnApkNJhbTkQ85kANXqxM9ZbBuEsxfjQ+tybI+Fqi0V7eGm/QqX3U3C
- eTKJ+l1uMeRckeZF+Y3ww5NRY7QXPpbEB4OfGACGUiuxea2atbEAJ1vuD19UVO22TpVXQ6M8AQV
- Cm+TvM61dYFe8hU0xTneRbpM+aRrgcqLWMfHT2e/YpiGnsCw1zCZxRf1umXuVLrcqUf69Pcp+8i
- 2WmgNNANt4Go3bSkZGlKnBpGoNTh7pLIqndFPWywCDxByzS89i+duSYlPIleZcCWEaBU5s8U4IG
- COU+NyHI51RTlQMEaxJHKg36hJZjdGebiS6WXXS1Zdm55I8uOUo7xXGsNBj0xn5rzB5rJFL5v6z
- z6C3URJxjeBSi8sm3EeS1JL8rf/EC9Qb4TeXkvExoUUfJP29dro2N9uwFbWeCb5C3oyoY70BFAR
- Mqy8qGpwAZse9nMh0xHwWRESx5dica0JnuneTqYLRS+nkIzOVPI9vSc+70TFpqf/ZaJ26sL3rH
-X-Received: by 2002:a05:6000:2406:b0:436:1872:63d0 with SMTP id
- ffacd0b85a97d-4396f15ce72mr27807237f8f.2.1771996415096; 
- Tue, 24 Feb 2026 21:13:35 -0800 (PST)
+ bh=CGvKgLHeevLALbSBED4Jn7ttMmQ4t+uZlwFqVihbumU=;
+ b=Tchu6JKQAz1zO5f2G7dUMbj727k4ESNNtisOq3xhftJYo9rDeE4JF5oGP9I4+3EoTx
+ nf8Z+8FMPvtl0I6gO2crgOyk2nW6Tu/rPXCvIYA6zYNlioYJESKcNNDBd8S37xYqveZf
+ SCLQYfVv4XHhJx/synBsB9Hxy4Mk4dcNflQA0JuYAscs67cxIaDzDuaW9JHLjBtJP6Ls
+ Gor3adbdhOGz79um1Ls1ZVqsxOZ3/m9TVD/PUFDcPl0q2p2uP4/bqCp1W5EvnpNVj//4
+ lpaSEoElRfeOIKUnsnkrXWgBWZVy7lXM9dMmWsgNOl4NE+bU/7/qYqQXgMvqHL5mj9b6
+ M2Pw==
+X-Gm-Message-State: AOJu0YwqYX5mQKyW5Ih2bDxGKAd67O63NiHx4HZ7jdwHDnzhHPNp9PFB
+ h5K2ED9KxQJDoO5veMIudlBn5xJXQwtjdeCQFhAX57PjMsAnW4vWntcQwJZlchRC+QRl6OQgpwv
+ U6dgGzPc=
+X-Gm-Gg: ATEYQzyUblVDTBBEZnlNPmKH2MexGSfaPfI/3VZsg1nl/YzeY1F4faZROZ4MVF0uSpg
+ LexX5UJdUNTE3R0id+kAocBtsxtcNU//JoXytKJesU3IzTZduJlwlL9YkYVHzLPGVvASmiUNcL6
+ 4tMUPw2XU2Y8/v/vmxX8K0wTKYC959w4V/pwfQgbwY8JuQ8zLQLfkixAh+dekKERdi6sFxz6D6U
+ gR8bSNup8o+mIAQIG9sUzzDjjCiI/txQp752sbsC3XEbMqt2Yy+W3qFq23asHmK/4h9K9a36vPw
+ PzwvshnIfNexTttONQOa5vCzux72wIt1QAba8vHvwAlPAfu7cNoNVdTA8EK6PCCv1+nBY3sR86B
+ Zjt1XVE16k+5iO2MxIbWliMpFgr/NrhvxMRc7O5JeLNMTQakXY1Wz9+oSN1dAibOWzD6ax9nc4B
+ rgqOo0pHJZLmSkFvt/GDq2n4Hp6zVSTK8LU5SXXxBNH0x/4tM0lRijKY9OLNi0EWiFK26cWmmV
+X-Received: by 2002:a05:6000:26c3:b0:437:6758:ce70 with SMTP id
+ ffacd0b85a97d-4398fa70637mr1467991f8f.26.1771996422125; 
+ Tue, 24 Feb 2026 21:13:42 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43970d401aasm30576270f8f.23.2026.02.24.21.13.33
+ ffacd0b85a97d-43970d4bf89sm29682387f8f.29.2026.02.24.21.13.40
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 24 Feb 2026 21:13:34 -0800 (PST)
+ Tue, 24 Feb 2026 21:13:41 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: kvm@vger.kernel.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, xen-devel@lists.xenproject.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Cameron Esfahani <dirty@apple.com>, Roman Bolshakov <rbolshakov@ddn.com>,
- Phil Dennis-Jordan <phil@philjordan.eu>
-Subject: [PATCH 4/5] accel/hvf: Build without target-specific knowledge
-Date: Wed, 25 Feb 2026 06:13:02 +0100
-Message-ID: <20260225051303.91614-5-philmd@linaro.org>
+ Stefano Stabellini <sstabellini@kernel.org>,
+ Anthony PERARD <anthony@xenproject.org>, Paul Durrant <paul@xen.org>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+Subject: [PATCH 5/5] accel/xen: Build without target-specific knowledge
+Date: Wed, 25 Feb 2026 06:13:03 +0100
+Message-ID: <20260225051303.91614-6-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260225051303.91614-1-philmd@linaro.org>
 References: <20260225051303.91614-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,22 +110,16 @@ target-agnostic.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- accel/hvf/meson.build | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ accel/xen/meson.build | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/accel/hvf/meson.build b/accel/hvf/meson.build
-index fc52cb78433..6e2dcc4a5f0 100644
---- a/accel/hvf/meson.build
-+++ b/accel/hvf/meson.build
-@@ -1,7 +1,4 @@
--hvf_ss = ss.source_set()
--hvf_ss.add(files(
-+system_ss.add(when: 'CONFIG_HVF', if_true: files(
-   'hvf-all.c',
-   'hvf-accel-ops.c',
- ))
--
--specific_ss.add_all(when: 'CONFIG_HVF', if_true: hvf_ss)
+diff --git a/accel/xen/meson.build b/accel/xen/meson.build
+index 002bdb03c62..455ad5d6be4 100644
+--- a/accel/xen/meson.build
++++ b/accel/xen/meson.build
+@@ -1 +1 @@
+-specific_ss.add(when: 'CONFIG_XEN', if_true: files('xen-all.c'))
++system_ss.add(when: 'CONFIG_XEN', if_true: files('xen-all.c'))
 -- 
 2.52.0
 
