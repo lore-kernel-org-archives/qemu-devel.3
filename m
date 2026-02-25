@@ -4,73 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DDFAFD45F7
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 21:40:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1FCCFD45F1
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 21:40:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvMcG-0002hF-6h; Wed, 25 Feb 2026 16:40:20 -0500
+	id 1vvMcV-0002sp-6A; Wed, 25 Feb 2026 16:40:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vvMcD-0002gZ-U2
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 16:40:17 -0500
-Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
+ id 1vvMcT-0002re-6R
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 16:40:33 -0500
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vvMcC-0004OW-Ae
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 16:40:17 -0500
-Received: by mail-pf1-x42b.google.com with SMTP id
- d2e1a72fcca58-826c49b7628so117921b3a.0
- for <qemu-devel@nongnu.org>; Wed, 25 Feb 2026 13:40:15 -0800 (PST)
+ id 1vvMcR-0004RW-Nd
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 16:40:32 -0500
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-2adff872068so142755ad.1
+ for <qemu-devel@nongnu.org>; Wed, 25 Feb 2026 13:40:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772055614; x=1772660414; darn=nongnu.org;
+ d=linaro.org; s=google; t=1772055630; x=1772660430; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=JC3GKdsB/67HjMM0x+xM5DPdiXVg4HvrguWrnUX/u2M=;
- b=Kmy14jtPyywq6dwChmiwPD74tkSPZbvTk703DYEggRrbJ+0bFv4EhSqbZ3i9uIzuOD
- jGpgQZhEU2rzeserNPA178I6bKqfoE0Jym3N3cRxYH3rr1qpOf5LjSu8DCQ1FwIuqjy6
- 3VFmkzKXj24KJjlqx9B4Da4k/QYH2ukOoZNChfCyGyiqWuuJzJlMkNb1sDUDAf6at4cC
- FduMF6vUQRBnDWdZugNsSecxb0+wGlVHslNr+9qynABZ6a2A2c1p/s+I2YtKCqr+AUvr
- xJbbRP5gohTxNg1iObx5/0ampVTq1MwYJYM4vtFbt2Z2IE5fDrNtSc1gu3o+FVj64k63
- wiGw==
+ bh=jzUHQe/3bZXXU3luwKhL0L8k0oQVcJqaT4DGZBaYs+8=;
+ b=PZfvMx682YrmWW60+OWy820BvM/xg8vhFixT4VUmtb1Ff//GGgHNDL6VBJ6lYBlYo1
+ tOXUKE12z0fG8YplWpiev8gL5hY9Mza5+3rY1B7h2orYOS/SHUzGnpmOy5z11+t4H4Sh
+ J855b0sc7mc4/F6JCM26j5Hne5ij5VXOSOgu+BKvh7V1tFiy3lK8R0OzhJi0OZKqIGJr
+ f2vkuFt27YYoF+OWvXXO+sk9VoNNHn7BEXESId6AZHdD0SktquBZWAsW3Y5JxSILJ7PF
+ LyS+lLK+IO8d0xyhP3ABY1Tb+GlEwRL7cOwFc9MKAhnDxztyrej5lFKowrX7e8KG6Gcx
+ Wx5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772055614; x=1772660414;
+ d=1e100.net; s=20230601; t=1772055630; x=1772660430;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=JC3GKdsB/67HjMM0x+xM5DPdiXVg4HvrguWrnUX/u2M=;
- b=wk2ZE7JNk5o693PvGEPwyv82mIpECb5A2GvW1JJU10IHXDCsOoGv6V0ehjp9CV7B0J
- MuNq4HXxrmGMa7f2D/O5GQmxJTF8Orf9ntvdy4ilv/rNsx3LvXZDHKIO5ScLPDrmjAum
- z/zzYpxsd8lTaHPYAfa/IWqjXKt47EH3hvmK0BcQ0WL8Pvaxzp83/RuBEIlTOy67eMzj
- HbB1Km/l7+Svz0hlCLUyWBqP4xZu+fCUaxHGqz2P5jDYP0zsu90nz5VocuKluP3xXB3E
- DQoTE90GW2HwaVOPxzLPz9aq8jB8ZBK2kekdAuxFmLhK5q5WSlYHwhnWEeX7AFjEZB8Q
- xI4A==
-X-Gm-Message-State: AOJu0YzuYSqZ0Ea38bSWYO2r2zBXBJzaffkOXbe91i5Sg1QjQsKSCt6v
- ypBaA6J8SarDOc2WARxREg488rzNG59Qbe1WiWyWYT8cpcysACqA3/BKfc6oufND7IE=
-X-Gm-Gg: ATEYQzwQVF2tBPd88iF1kkrAMMmawHxrJMTw+KnARU60OBSQPLLOQSklBQnJsrkzr81
- a8YFpOY+cTp/hXmTpjBcj1RS4wCjhgSWjBeYA1wEWIGB3diMZw9NMDeTYom9o8oOjGCnuIF/j3a
- Tm64DIgSu8Iwsv58sqCm9n1nUuxtkQQFJMltND37fqwYGTaG4YZ3+6ujG6YjFG4HK+hwJQ3GGwQ
- TQZsWWmw4R1xH3XO/h8Sc0x8Pq0nF2g28YlcTCGZQUFy5PpPoZTBqETKaTOt9jfI4CxCs+zq986
- rjRkbwzTjsU2vpGke5hqkYnkAYT+hSqt1YVOcDaU9DkhWW3J6xFzFWCGwUyYPuDsRDiP4UZhYXp
- WPdv41AdpITRZkGfMItzzdRjFbLA4jgl1JVmgdOY2BfErBBkzdaYh4bWIX+hQo4kI+WX4RAPk2o
- 8OT9j2neB0FLNrH2939DG0YBY6kvFLcV9s5wLT0IpNCIfxq2HG+Svss6yARrmxjAnOmMlxOQbgJ
- 78J7+Q=
-X-Received: by 2002:a17:902:eccd:b0:2a9:5c0b:e5e9 with SMTP id
- d9443c01a7336-2ade9a60f18mr14010365ad.35.1772055614468; 
- Wed, 25 Feb 2026 13:40:14 -0800 (PST)
+ bh=jzUHQe/3bZXXU3luwKhL0L8k0oQVcJqaT4DGZBaYs+8=;
+ b=V20p6EOhnDwTOx/9cYWrY0hOIAfL17MMms+3mhlk7M/FkNuZl7sKcKiLF85mwp7it5
+ 9tZsjjpkQMh/e/axrsbzAr+xSoPCvk+QjvWt3bnB19AC4yeKA8ZLN8YraNrjoAIDsRdW
+ 9S0gYXG0vmvfu6F4YGtSUH6t0oMPAHuW+fBneX8LLT66fOdqJDKDqvL9rlzkv/DosekH
+ l7+V4A2vj6rlbC7xOJssXiC05SRE4vgYiZKsn7W9+/U5QBEHhO5fH2P1vFexkRAeRW6y
+ F8s9fsNfoE4Fcctze5hBCmMwEOQFft6cyjgXIZpq6EZcfvxWQhfBzNhnOL9DcAwVxDZ0
+ qpnw==
+X-Gm-Message-State: AOJu0YwpKQM58Rmeb74Ovd6yNwfgiwpZsv/eAwpexB/hmiVvybzjo6m+
+ wjzDx37JUE13uK3d+l6MC4bmtwXhQIYirWsz4t4vxiQ7Tatef62UZIxkrbisV2xZPOA=
+X-Gm-Gg: ATEYQzzQvPNH9AsR81pNQXGolH0lPnWEsM7VUVCXvyF44sBn7EhQ/7emAIA1AKG1LNj
+ +AfDTkViDMtzIZmRqQ8bIn19IMmT1JpUAtCkb7Rvi46FLZ4grp9tg3qV+muh7jIjVywCPZHepIt
+ oIB4tpTc9Iz/C7usDhCTJSKD3Mqr+AZ7//KT6WZigMgpROpof8qCKEgnhkYWjEreuze3jdZSe6p
+ bMOKYquRP0yNy2desozwqa/2lmiiNBhHvGWsnKCJVwMrdlrB+HRbyVARYnasg+7CuIc0bWrNfdf
+ 0zEN+6bY8WbWP1PQTClbXpJav64A7VXn+LYGd9UYnflFPVYyXm12BNIMERYlK7G1cQ2b5gU5lgn
+ oKqyP/mC89mp7/5AjXU0BsP7WOfc0sBoO21EJAElGT+e4MHn6x3ktwDWfzKPIViDYXU3X2l4WI0
+ ACMwz0zOkKU0OewAWtn9UFzMuqEIfwZ7Mpx/wsqFI9vO+jBfCzHJEXwi2Dl9Ta+nNVAbR95SDYg
+ WE2cuA=
+X-Received: by 2002:a17:903:1b6d:b0:2aa:d5e8:f4e2 with SMTP id
+ d9443c01a7336-2ade99bec80mr16982785ad.18.1772055630235; 
+ Wed, 25 Feb 2026 13:40:30 -0800 (PST)
 Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2adfb5b22e7sm1921625ad.3.2026.02.25.13.40.13
+ d9443c01a7336-2adfb5e1174sm1903025ad.41.2026.02.25.13.40.29
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 25 Feb 2026 13:40:13 -0800 (PST)
-Message-ID: <d09ecbc1-3ded-4e75-9488-617dab41e69b@linaro.org>
-Date: Wed, 25 Feb 2026 13:40:13 -0800
+ Wed, 25 Feb 2026 13:40:29 -0800 (PST)
+Message-ID: <d573d2a3-17ba-457e-85a5-a5b5022c086a@linaro.org>
+Date: Wed, 25 Feb 2026 13:40:29 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC v4 18/31] hw/arm/smmuv3: Make evtq producer use SEC_SID
+Subject: Re: [RFC v4 19/31] hw/arm/smmuv3: Fix CFGI_CD handling when stage-1
+ is unsupported
 Content-Language: en-US
 To: Tao Tang <tangtao1634@phytium.com.cn>, Eric Auger
  <eric.auger@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
@@ -81,7 +82,7 @@ Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Mostafa Saleh <smostafa@google.com>, Chao Liu <chao.liu.zevorn@gmail.com>
 References: <20260221100250.2976287-1-tangtao1634@phytium.com.cn>
- <20260221101723.2994751-1-tangtao1634@phytium.com.cn>
+ <20260221101733.2995020-1-tangtao1634@phytium.com.cn>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  xsDNBGK9dgwBDACYuRpR31LD+BnJ0M4b5YnPZKbj+gyu82IDN0MeMf2PGf1sux+1O2ryzmnA
@@ -117,11 +118,11 @@ Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  5SYuJaKzCAgNeAy3gUVUUPrUsul1oe2PeWMFUhWKrqko0/Qo4HkwTZY6S16drTMncoUahSAl
  X4Z3BbSPXPq0v1JJBYNBL9qmjULEX+NbtRd3v0OfB5L49sSAC2zIO8S9Cufiibqx3mxZTaJ1
  ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <20260221101723.2994751-1-tangtao1634@phytium.com.cn>
+In-Reply-To: <20260221101733.2995020-1-tangtao1634@phytium.com.cn>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -145,17 +146,15 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2/21/26 2:17 AM, Tao Tang wrote:
-> The event queue producer path wrote entries through address_space_memory
-> with MEMTXATTRS_UNSPECIFIED, so produced entries did not use the
-> sec_sid-selected DMA context.
+> Add a STAGE1_SUPPORTED check in the CMD_CFGI_CD and CMD_CFGI_CD_ALL path
+> and return CERROR_ILL when stage-1 translation is not implemented,
+> matching the architecture requirement (IHI 0070G.b, page 176).
 > 
-> Pass AddressSpace and MemTxAttrs to queue_write() from sec_sid, and
-> assert that the selected AddressSpace exists before producing entries.
-> 
+> Fixes: 32cfd7f39e08 ("hw/arm/smmuv3: Cache/invalidate config data")
 > Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
 > ---
->   hw/arm/smmuv3.c | 13 +++++++++----
->   1 file changed, 9 insertions(+), 4 deletions(-)
+>   hw/arm/smmuv3.c | 9 +++++++++
+>   1 file changed, 9 insertions(+)
 > 
 
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
