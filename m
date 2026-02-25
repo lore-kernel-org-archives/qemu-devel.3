@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB3F4F55437
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 02:15:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72913F55437
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 02:15:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vv4Nz-0003KA-UH; Tue, 24 Feb 2026 21:12:23 -0500
+	id 1vv4OQ-0003ik-Fm; Tue, 24 Feb 2026 21:12:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1vv4Nx-0003JC-Ov; Tue, 24 Feb 2026 21:12:21 -0500
-Received: from mail-japaneastazlp170130007.outbound.protection.outlook.com
- ([2a01:111:f403:c405::7] helo=TYDPR03CU002.outbound.protection.outlook.com)
+ id 1vv4OL-0003d9-40; Tue, 24 Feb 2026 21:12:46 -0500
+Received: from mail-japanwestazlp170120003.outbound.protection.outlook.com
+ ([2a01:111:f403:c406::3] helo=OS8PR02CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1vv4Nv-0008Ty-4G; Tue, 24 Feb 2026 21:12:21 -0500
+ id 1vv4OI-0000T6-JZ; Tue, 24 Feb 2026 21:12:44 -0500
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=BJlxObE4vqjeInst5TqidBF7FKKgGxBpz9ImuviF3PHW8mcnjCUMiYdbOVONfpT3/+XbPr508R+Mu2QzdEYYvak9JJu72c5mD4xZ4D2sb9b7ATEEN7IsEHHRg0/sak+JxMgi2A4LqaZ2pvlyfWaLI0bILUbQeAuFDDcRhbd5xs0yS4LJXzPcsgVHoJ0hpBtUQMyIvAoEmPnH+xBE2vCclJTIlZ/1qUIfsPj5E5tEVULUP/qhrymJRbCMo8tBA8pV1CU0AuxsQPcgHy+SgTA0DtoSJkz/J+bsvI78JmS2W4LIXprwyIfcHBr3SnsKl3EVIjPTnqwJQhEv71gMkFUFmg==
+ b=XsEoJcZ0CmV57UbyiGD9Qqumf9d8fSLGgGfsHkDPvaiipRXwvYijsgiYSBsNzSVBwCw9lAind3nNcQ3Qh2jzVQjgeVkT9qYmBSFOQusUioccJoq5i7av0nlDlv0tSFs5YUaHRt17fV2UPmOdx9sZSIEDkJszlr6CGcleA/7Yq/OJK7XI7IWlil9O+Uc73f4eyHu5JeV775QDh0gcZxLhx4wrmSGbmUUrENnFeht66orTs6FatiFa9JmQ3GCStfc7oaxc+Lkc5QcKRT+LGyAL/btJJulTkDf5tor2/jiRImJ51lzFete31Ql3rxx0XiWwL2jgdd3EidrLapUqSj0xPg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=SoPzQTejXFTqYoC2Du+97jQIn228t1ReBuQeEWAjZR0=;
- b=HsG7mLTFoB5IZjRn0JqTPksGTUlBrkJi7MyWwr7HIWs3dYZKfeZCPZT9Jrz1HnyazrpK5G76JzuxpC+pf2FT5emGL2wTAcPh6C6f9LmYTOtOhTNwau0jG6GCGI2CBBk5NUI7BLds2mMRZCV0+6mY+RYB/d8/VO/aJE6O72p/p8N4vW9T0JUF7tidmRYkI9ccdN1JXgdyWMMH7h4ArJpl2gNzPZx0AFT+wtqaX0hrpjaeW/vgecB1tLmvrqrojtS8w2BcgK3pT8uEY8I87Dl5AUJC0Rcb5pbBhKu9o6nBwTaQ6ltoSr1a7xUhwMEB3jOam/Fhxoe7rl4H/yrHQKdjgg==
+ bh=GZjFS/hdvT8y2d1p3xi33JUio+UqLSU4JtKs354VCAg=;
+ b=ks0Vn18wNOMcVS2UXp8vsrB+NF+KKuLVBThDoyxv+2y/sP/fKVa9UcS6mBgnx2CYJTWltFh1tRECq0t0YQSvOg+QF7S67sSAeDGqStB+wFQAI+ObJ0eB2zmHPMTEr3whD4PpdhiRoZcUkaPGoz9WQg9nWwJRv+WUBiqS84zPeynMG1FzRXhHVojUWWXzqCGjhXHMcoM0mKZNgPQ7jTOinVagnTxJUgGz2oJ4tfnH2+pgNYD/DD5zkPA7VLKr5GNrIjJAFUwbJ01ZvSPHUadotaF06dfkrQ/tZU++X9bmSvIf+kHeFm4nRCeET78OpOtVj3Q5Baz0sYk9ZyUAh3Bzlw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
  header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=SoPzQTejXFTqYoC2Du+97jQIn228t1ReBuQeEWAjZR0=;
- b=Ad7KM5OXX5S6hoxTDrjD5ByopiJrgUMLOeSOqaoI9qx+mByCTJgf6DNLrwmQP6umkV41SLD9sGAwYVZ3lSu2MBMd67oTFF8ICv+MGuG7NTJYuOM6DIL/IrVXHhRrSZC5wkg8G124USy63qdeq+E8r/Y09XLoag8X+AEgfVA3GyCFvD+nqGT60+ZYpboWiC+Uq+lPix8mPzGknV6pcJtx0d0Ri3ahQAz6knTNwLdNhzw9iFnFydOxqH2FJUN2MqScasElBVdPfesGcbQEi7aMzlKsqvdGvvMqWyYDX9GxcfFbA2ORaL/fH7pWa4yCyRlFZg4Svn5EK1YYac8DM205lQ==
+ bh=GZjFS/hdvT8y2d1p3xi33JUio+UqLSU4JtKs354VCAg=;
+ b=Gbhyi1mTUveGsDTpqBaVRUMkZrsLF9ilb83dF2rb84p6BOM6fTa4j69TNzr9QZsdcLqd77vuN6RXiKJ+Gkysi1ro15NJchWOzHhJYf478LaOFfdHVFTdy98M6ofQGhQ10CfqRXxOhrbH6+ZH152wWDAvdW/zmQP3yrojcWcEl6sSbatMGFuwi6wQOBTz84JXTM60bSJaoeDLViyxMKoK1lecR5P6v5i+Z6RZSHw0uxJ4dWfOIbRtZLIHypqBEh/UmjIVxrUZcQv6MjobMzfZ5D5Y9KptwKQwij5tiDwJYnBKtn6YiJx+ToQ5cZ3q4XVnAHKF1DW8kWrtLbwjU3A6aA==
 Received: from TYPPR06MB8206.apcprd06.prod.outlook.com (2603:1096:405:383::19)
- by OSNPR06MB8468.apcprd06.prod.outlook.com (2603:1096:604:487::23)
+ by SEZPR06MB5118.apcprd06.prod.outlook.com (2603:1096:101:38::10)
  with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9632.23; Wed, 25 Feb
- 2026 02:12:07 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9632.22; Wed, 25 Feb
+ 2026 02:12:33 +0000
 Received: from TYPPR06MB8206.apcprd06.prod.outlook.com
  ([fe80::e659:1ead:77cb:f6d3]) by TYPPR06MB8206.apcprd06.prod.outlook.com
  ([fe80::e659:1ead:77cb:f6d3%3]) with mapi id 15.20.9632.017; Wed, 25 Feb 2026
- 02:12:07 +0000
+ 02:12:33 +0000
 From: Jamin Lin <jamin_lin@aspeedtech.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, Peter Maydell
  <peter.maydell@linaro.org>, =?iso-8859-1?Q?C=E9dric_Le_Goater?=
@@ -55,12 +55,13 @@ To: Paolo Bonzini <pbonzini@redhat.com>, Peter Maydell
  "open list:ARM TCG CPUs" <qemu-arm@nongnu.org>
 CC: Jamin Lin <jamin_lin@aspeedtech.com>, Troy Lee <troy_lee@aspeedtech.com>, 
  Kane Chen <kane_chen@aspeedtech.com>, "nabihestefan@google.com"
- <nabihestefan@google.com>, "komlodi@google.com" <komlodi@google.com>
-Subject: [PATCH v7 04/22] hw/i3c: Split DesignWare I3C out of Aspeed I3C
-Thread-Topic: [PATCH v7 04/22] hw/i3c: Split DesignWare I3C out of Aspeed I3C
-Thread-Index: AQHcpfwjxZ5D+z2y20amrG4fdngulA==
-Date: Wed, 25 Feb 2026 02:12:06 +0000
-Message-ID: <20260225021158.1586584-5-jamin_lin@aspeedtech.com>
+ <nabihestefan@google.com>, "komlodi@google.com" <komlodi@google.com>, Titus
+ Rwantare <titusr@google.com>, Patrick Venture <venture@google.com>
+Subject: [PATCH v7 18/22] hw/i3c: Add Mock target
+Thread-Topic: [PATCH v7 18/22] hw/i3c: Add Mock target
+Thread-Index: AQHcpfwz6dtr4P+XREmLu/9O1ZNFdA==
+Date: Wed, 25 Feb 2026 02:12:33 +0000
+Message-ID: <20260225021158.1586584-19-jamin_lin@aspeedtech.com>
 References: <20260225021158.1586584-1-jamin_lin@aspeedtech.com>
 In-Reply-To: <20260225021158.1586584-1-jamin_lin@aspeedtech.com>
 Accept-Language: zh-TW, en-US
@@ -70,93 +71,93 @@ X-MS-TNEF-Correlator:
 authentication-results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=aspeedtech.com;
 x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: TYPPR06MB8206:EE_|OSNPR06MB8468:EE_
-x-ms-office365-filtering-correlation-id: 5580ccf8-c996-4d3a-16a2-08de74134684
+x-ms-traffictypediagnostic: TYPPR06MB8206:EE_|SEZPR06MB5118:EE_
+x-ms-office365-filtering-correlation-id: 36161bec-2d3f-4506-ec15-08de74135626
 x-ms-exchange-senderadcheck: 1
 x-ms-exchange-antispam-relay: 0
 x-microsoft-antispam: BCL:0;
- ARA:13230040|376014|7416014|1800799024|366016|38070700021|921020; 
-x-microsoft-antispam-message-info: =?iso-8859-1?Q?PcUW+8ygDkjnD1q2awu9Yuqu807wpe5FbPK9uNhOQPmpTIc3pW7j7nUpLr?=
- =?iso-8859-1?Q?76Qfn48Cs3XevUuCCGy0pBdfeJkYC9CNeYGp8LFA17WLA5C5AC5YmGj3+A?=
- =?iso-8859-1?Q?mvYBEaUwDS31MjRM2Sx2M5McE6V1ASkdzzEZgdJ86aAyIJ7OHAeUzPl1bu?=
- =?iso-8859-1?Q?GSm0pVEiSK5i0xUu5VDfMJIC2d8kFXZadP9yqLVqTKRpxgdBamE7xioner?=
- =?iso-8859-1?Q?z+4aRl2tVQSZHPDV8oE7EAQL1HzvwqQ6K9FGukKe+MGoMPjx1TrQmY+eKc?=
- =?iso-8859-1?Q?hLngEKE9nfrz95TdgfxK2iUosnwKgKN/7IOD2kpKDSYfny1mQTtSxQScJ0?=
- =?iso-8859-1?Q?JG7zL3z8IDVDpsR2qdckRUObmTs2VPXuzEjO8lT3+Xknqvy4Pe88x4/4o9?=
- =?iso-8859-1?Q?RCAT469W6MRNUQpf36BpjItelNfkfIFF+ACQQl6KJSXyufHSuDhRu6UF6R?=
- =?iso-8859-1?Q?i72e5/VxNsKh/mTTyFLqvAq+tl49QqfsiniG0yuHo2z0IGp77Ha7bbBQ+m?=
- =?iso-8859-1?Q?PgNOJix8/Ox/67G/Vw42OuVY71daGbRg/WbSpLRTHZN9xevim520FTU5Lh?=
- =?iso-8859-1?Q?mv+ZNrdAuzWTF34xMHVwbCtjBKSlwlr2YAqcIxN8bWA7ryIHqCWci5onow?=
- =?iso-8859-1?Q?vn2AllIwfQHXONKI77SUX/l9yg3tJMTbHxiaWOvhvpo/Z6lgiA8frZK5Yh?=
- =?iso-8859-1?Q?c+yOwem6hslxcmoveIhe8hRg3y4/KQrBm2A9d3uuLRXqajj3kR6x4c5COA?=
- =?iso-8859-1?Q?y0Dk2sw8zhD7g5XLXZ+Dl2iS9vqNYMjcMwhbdT7CQNOGDmcZY4C+2WNEQX?=
- =?iso-8859-1?Q?CZBBfaUapRz8h5Nb345zi2auOjQ+ivzzcyMmnJ9i639BfbcH+T5LSh1D9f?=
- =?iso-8859-1?Q?dDxuMgD16xFMVpKWYQyp1ACXRt8O5dSD7LIAeevA4THsIhAvtoqul3ms69?=
- =?iso-8859-1?Q?bEnaaM8tNFN71FSW8aCm/q5nKqa7m3iS4tWf2cJI7Fh6oOh25UqJHl/nro?=
- =?iso-8859-1?Q?60gaQDr0fwdIdJPXZWyJtPkUwLi7TSTu5R8t/QR+7hwfNvaja4ytk4A6dM?=
- =?iso-8859-1?Q?M6K9aKzgvehO0rkJH/79vKZHwOWnhHvGl/KPLWUlEVYtU1QgFtmlMpp1ub?=
- =?iso-8859-1?Q?AvrLfXnX4Td4f5lCzwmXWLb47Z2+b7RqcjuKge0MQYfokMaoLK4d7bO9FM?=
- =?iso-8859-1?Q?jKsa9XTjGxL2kqUEwx4U5G8SQPP+qBa1jfMG+DSp/gnsufQgltS/2dNAp0?=
- =?iso-8859-1?Q?T7hj2oygTbju11QFOLJnyRLUeF4taG9gmosl7jiVT7FelGkkactj3ZFVqD?=
- =?iso-8859-1?Q?hNmnIq+M9270CB6N48R1LvDG40CVJ2MesxW1wUjMMskUkVbybPHy/N0KLV?=
- =?iso-8859-1?Q?XHILZRxQ2nWH1aPm9UmwfFmkq/u5ZLi91qjb1DCfCLCcpUuTDQtYrAKkoc?=
- =?iso-8859-1?Q?SRt2MXo+AuJFwLmC3bXignU1x+KiA/jNEKNqdp0SQiK7kghcbKnnjsQX55?=
- =?iso-8859-1?Q?P/9fK+xqr6yFo56uHZo/OlNI6GXwakFUskikcU/gfHB8qLw+4Pe8pnJft9?=
- =?iso-8859-1?Q?/wSTtN50+9BZbTeAKDvxMCNe5JsI2t4I3MsjCJuoIkawXPbvZPF4Am9Abk?=
- =?iso-8859-1?Q?RUNklATayJ/1ZyJ4+/eetvwz9i39b6tzP4ZGljviKfNwlLAOjsd0O+tnGK?=
- =?iso-8859-1?Q?upuEkp6S/1KRcgvdDDU=3D?=
+ ARA:13230040|366016|1800799024|7416014|376014|38070700021|921020; 
+x-microsoft-antispam-message-info: =?iso-8859-1?Q?7nnGWWv+je53cMP7//Vr+5i41qNp6PQyBRxcWHQQfywml1vBw+S2uC0V8v?=
+ =?iso-8859-1?Q?DVbRTo+kelRQ1qKqelDRvNs8zX9nvZ5Tqv+vd0ZzvwaJ/aPCLOeY+deQQw?=
+ =?iso-8859-1?Q?eKeZwnqeJwyWepl0QALgDDyf8dR0lzWaIRT9lLPAznyV0Cn2p3TTY0RdxP?=
+ =?iso-8859-1?Q?LmQEhxFIM6EP2oSv9iI7lFCObs32NoUECMsYMy0q5R8o43m0tRxYJuQ585?=
+ =?iso-8859-1?Q?eCaZ1xcqBD34OR2M8YU4pFzIXHCK1dD7t9kPXf8eXTsfvFdabmi7Miffgn?=
+ =?iso-8859-1?Q?3LEnt2bzToWqnNkn3VtHU7JpIf5LTPnQsiOT83q8dZOy3moJLQN4bCg1cT?=
+ =?iso-8859-1?Q?XkVJLJ2Ajx2iVA7Th8/lKuTy8TLF6o8pjQRz7kAySvboU4HwJ2tm/zWhHM?=
+ =?iso-8859-1?Q?fxvShRsb87u4BGDa9e8mCxXvpXLsfCCjlofPm52pKsSQ0SFZHEZVwGi9Bz?=
+ =?iso-8859-1?Q?oUQXFUkuLPI5gbE1TRB6cs0MXl5I0/EOOf6APhPvsZ8EcqsOpNmqcZcZRr?=
+ =?iso-8859-1?Q?2h+556eoCioVhUCVENQtdBJtZlGH8ExTJZSOlBp4NulckDOWxDrDKRpY/E?=
+ =?iso-8859-1?Q?QPyWicaeuiiZRcVGaOZSkldwcSB+Dh4FUhDqBjechrgwFeM5rLHkdnG2O8?=
+ =?iso-8859-1?Q?v5LlMBwdkk/k5RX/CLpCVVFwxuq6q1AtmRcArvS2B7a+UfuT3KiFmJaLKs?=
+ =?iso-8859-1?Q?LbJYEIksv8gcTVGiCGsYB2rGkZFYtr2RDwWO8zo/fWsvyLarKB+gd7Y3pd?=
+ =?iso-8859-1?Q?vIQ/gIp+0npZ3iWHDUkQO7mIMLMvfr5nQkzL+8lEuxKiJ8btXyebF2T8uP?=
+ =?iso-8859-1?Q?7PfavzeoxsOS1ONHtY1AeV2mABmrE6PK0CookDVX7HgljfKe8+x+mFFSfR?=
+ =?iso-8859-1?Q?eIbLBAOxZl+9TcjDWFILVxsLrWiKWQwsEWyi9fmeUUE2bvV8a8S9Yb3T7o?=
+ =?iso-8859-1?Q?TwXl/xM6MzQ2vo32zS92UtErQ8bm6RwVci0RUsPkGdqbHys12Gs4Ty/Lgb?=
+ =?iso-8859-1?Q?bpVPew8hD5ud7Q50269QzuaWQ5SqV31dqUXrPkHTyYRve5hDDOriZgFUNb?=
+ =?iso-8859-1?Q?2SOGAB7sHcVKkyN4r8d3ef9Yrh0muLpoRxSR+GkI6i0fw1cH9sy6nn8z+A?=
+ =?iso-8859-1?Q?PuuX97cGPcIoVgrO1aCTKk+HRmh6WplBsigvvFc44yWYK3azCC8KB0drvV?=
+ =?iso-8859-1?Q?nYZCbwXpo/wNHYnMqhCZrGyzTJwSx1Cxuv7J20ZfgrwvCUKSm27PDE6QMc?=
+ =?iso-8859-1?Q?cgYW8K1GQ4Bbxrl48wzBIAOmsYz1A/EXDhF60j6LEGtpxo+e436AhuJTh+?=
+ =?iso-8859-1?Q?mA0E5rC5yCutmqzb7z6oMs8Wnm+Nf/wO8FZgGfZ7QJKdDuLPk2MDV+hXn8?=
+ =?iso-8859-1?Q?Sj45USQ1yen6fgnmtrNpgelzI/5dpzGvgTZEul4PTWQeOAD0UAz5jElwMB?=
+ =?iso-8859-1?Q?lb2z/pCUw5xARI40B69d/256Omod3yCRP7dYqM/3GsPCOHwmHaJVDXn5ZR?=
+ =?iso-8859-1?Q?/j9y/5w/ThcRFUi18p51QIfE9UtVhRsIFbg/zlGimAhBABBziNZ9C9SbPp?=
+ =?iso-8859-1?Q?XXQs7tffkLfXepukeRIenZjAtAXJrgC/oR2inp5fjTIE/A8tQmO8RzoH8O?=
+ =?iso-8859-1?Q?b4QA3AacvlALrOhoA8hb+b1Ic/QfkdvA19sgFNj+k+Vhca1XXyVonA8oai?=
+ =?iso-8859-1?Q?Hnfz0nTdQ7xDwIwrDKPVmBuSTd0pLEqw4cV9dTuN?=
 x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:TYPPR06MB8206.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(7416014)(1800799024)(366016)(38070700021)(921020);
+ SFS:(13230040)(366016)(1800799024)(7416014)(376014)(38070700021)(921020);
  DIR:OUT; SFP:1102; 
 x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?XtcTRCAo5kX7O0wEo3uqnMnFAw3jjgn1kKhn5R7paeo1U7Of7imtnmrcfo?=
- =?iso-8859-1?Q?VPvhzgsa5SYHkJmNy56eLfvk0ksBGLaEq7lC6hIizL5Pu6gg1mCPa4vlwJ?=
- =?iso-8859-1?Q?nPQW5807g83GaMhvdyb7wIV+uJuervcged+3bPBAuCFD+sshnkNIt5bBFv?=
- =?iso-8859-1?Q?kMgjtsJTFGi4cYBafCnH1/cEiADHpvSabHECCL/6FPnaFGTFXrAjkQzdeU?=
- =?iso-8859-1?Q?c7Ogv2e4f4owYlBFmDElw7Gg/9ygg21TQCZpxjTxeJngsgK3+KQK/qMWYZ?=
- =?iso-8859-1?Q?sGqOAlFTK/5wSNCY+Lb1KzFKyc6lmgevh1UuiVfwIqkdwmwUrqQ/BqYRap?=
- =?iso-8859-1?Q?su52IE5TlRIS2Gztzc71KlHdP05XpDjtUwVLzp7bAN1FCyq7K5swUY/1EW?=
- =?iso-8859-1?Q?h3eudcAgwheHgSWioOzGJJom/xXJX/iOYEjh9dHCmirweTEx4XvlwtcMiq?=
- =?iso-8859-1?Q?tdvT9MNIf4y9y2VffEJiN+G/psTavI4JCKSLlD6/YwPreR43EHbtgCadH0?=
- =?iso-8859-1?Q?+7ZC636ry7JTfKTBdUmWSovUkNcOeooj540C4cZMWpguIDQEnn8HmMfmFA?=
- =?iso-8859-1?Q?IM+MOT2vXovbguQ1ZB80AbwmJIXvssVppYBdFJk7/5LxDsQVtY3ngZVG3s?=
- =?iso-8859-1?Q?z0Mb1n3TO2AiJ15k8b4Wo6+fHXoom3NlFS8vFxl6tQSMqxrwoinSA8mlrC?=
- =?iso-8859-1?Q?LtAgfXgfEqVvA5x5iNf/pYUXN+yvcbrFpgezTBcEhMpG+7IyCSwLfKJ8wh?=
- =?iso-8859-1?Q?y6NARzu5iuW7K36txoql+wyZK1YciwQsv/OXuuhWdyw4L7Au1XNXbsd8gE?=
- =?iso-8859-1?Q?Tzd8qx6zp0asSvW/G7zc1lSTLVvOnjs6013dENLB/Uu4VTvtHa3Iw9sFJD?=
- =?iso-8859-1?Q?+P8LuMeHDel6CdJPTziRCNBsaDjQKOQ2pRsN59/HJQXnG9+qXI+d1wob9M?=
- =?iso-8859-1?Q?V8qNe6IDaZv1XxR2pe+EYIt5jL5tshxYZUZAdW0nrjDQzIO0UW/drdL++t?=
- =?iso-8859-1?Q?pS3i9h7TRRD54F6htRIYVZt3m9XzwMZWWCYDrasr8WePZwIGUKTZdjuo4L?=
- =?iso-8859-1?Q?6jxncQOZQApArcGKtPKA6JeZAjYzPSkIKT2gEAFdoJyULuBhcQPuU78nkW?=
- =?iso-8859-1?Q?SYWJ/lWeTs1PDFe4FhqIIqzKj7idxe+MUtzeBAjdDoBIfJqI0qGrvVf9bj?=
- =?iso-8859-1?Q?4s1k0l43ieNWASYhvhmDYJSGBRPN48mkDSGex4+BsTlCJkdBxpABiCSXev?=
- =?iso-8859-1?Q?Yntfqfd8NPt7svXijIbp5RGN4VO5X0m5pbJKVdFO2u57ql9a+WVWF0Dsu5?=
- =?iso-8859-1?Q?sSzaXdwpb4dgsvj6jMUWsc0KjWdW2jeZXsL/0c2srpfqjlbH3W6Tv3c09i?=
- =?iso-8859-1?Q?v2QgJQfYgVRQPcbt9Bml6kX5kp7/93enNylJ0ST84fhF+x+UFtdew/doIQ?=
- =?iso-8859-1?Q?O7Hs80vsVIhnKqerezl41WcrUgwxSFHs+q48RvZ/KAusMn/K3J4kGQF5JN?=
- =?iso-8859-1?Q?hz0gFEYzCJUPdWuye7oezxEAyQn0dC4EWMVIorJnhQJqj9j6hNHWr2MtNK?=
- =?iso-8859-1?Q?yoExeOuhczZeQSQAg6BUoPssQI5x/lYM5PkmPAUm6eFGIziYX/mMmjS9oA?=
- =?iso-8859-1?Q?KQEeGYr39OpxDd1MJqHlb2x2dFg3YKB6s251slreqt0xLkG0KqHB9rmjJB?=
- =?iso-8859-1?Q?f6cYUVFZrlEfLQnbN6LrkfCO+T35Ejjq7g3RsAJhD0ap6cheV9d3tqaswA?=
- =?iso-8859-1?Q?NtQL4IbcOvyi36vkm53QyA7SV5q+vJlXLyR1s6cpCHPgwBHg+qPGPEJMTo?=
- =?iso-8859-1?Q?+2p2ZN3GrA=3D=3D?=
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?44uXnRm6TClxBG5QQwtGTHVdLt6iqYHJ3PvrPqR9BCuSyK+1MCYSEVICLA?=
+ =?iso-8859-1?Q?tc6/Aqth3PUl+4FiYWR6jfZnx9yLlU0SRRHOOlj+hvKJwZKe65YZv/Ey99?=
+ =?iso-8859-1?Q?zU4IkZv6pit3XW3EegIMBUCvipRF+X8ewBeDOfZjqUrY7FzB+CmJP2XBpU?=
+ =?iso-8859-1?Q?JmApWw543FIO70NcJ10H7L75KsPK2f7n2TmB7bHf0gU49lPAQ8rKmo72i3?=
+ =?iso-8859-1?Q?/ztci1yXy8JcVQzEooZmcxBUiybanFpmypuyEtvmXV4D0XvnGXmCAkpQ5y?=
+ =?iso-8859-1?Q?24i3AegKpOUooqg3+qvrpSSf6U58QxSHVic17unKjqBzuwcQgZeQ9q8WiN?=
+ =?iso-8859-1?Q?+S/fquk99zmWxAFJ9BPQ3uSrvq3bTJb8P6+utugAOdVcqCSd6UC8yOhIv4?=
+ =?iso-8859-1?Q?0XxZgsiIqTBUz/KQ2l95/i7YzmpfTn4SnZ/QAxeDT8JZbKPfXMbZtQsPh/?=
+ =?iso-8859-1?Q?nc37+hQBH1aiw+Pzl6JPG+egvGd6pL2tjXMn79EPefv+7cHs56nZsu0a5h?=
+ =?iso-8859-1?Q?Nz0N8J2piHGYjIQ2xTGankz05erC0c7xcBaz6EgJZ235oDQu7oMuV5NLe1?=
+ =?iso-8859-1?Q?8+vtDKl0BvmpMSihFcvW42KHBuXu6fFcQPMSX8hR7UuOwfKe4+Kp+U9ggc?=
+ =?iso-8859-1?Q?YuN6DuICFe8gPgp7pjAAGxkN805xMltrte2ARP0naFCVxYEKFkRu3419gd?=
+ =?iso-8859-1?Q?N7Yqt4LlFwODW9e8mRbhX4rl4JDMqDJHffqMVWde+bxnWPypEE74P4cb0W?=
+ =?iso-8859-1?Q?ltsQugvbtEXn+/hFYNjJr9EJCrC4BctNnVT5fB8oZrsmBVUGfuGWrQJafj?=
+ =?iso-8859-1?Q?skrnIV5/AF0W/rUudbgB/gas234ivIqMrNSfgjNTqMcZw2Bb1zguY3anID?=
+ =?iso-8859-1?Q?vGaIznqGV3b0O+FTCObjtnwecqN6U16nAj18SA3EvFldrM6jwgRwSY3ZBj?=
+ =?iso-8859-1?Q?6bv0qOy1gB1wP3QXcSwwB5zPwtimVbqOCkOoFn/GLacOQt/GSQ+aafQ0Ej?=
+ =?iso-8859-1?Q?3p7gKp/AhMJRtARyPIjX+r+83ffXznfc+5Bpq2SEgQUp/mHq2STmfFHHl3?=
+ =?iso-8859-1?Q?UlQuM4mgAecjgTr894aOnW9pDa/DXtLvqT3rYIytS8JvCDbPPyvI3SV1x5?=
+ =?iso-8859-1?Q?cSiV/freAWs6Zt9s1G/4SBp0VGvWpD1d47S/jP2obWoPovCWqD3VZD1c2m?=
+ =?iso-8859-1?Q?U0R/BXMoc+uEFTuR8MHFU3DF+4fywwlBMA92s8r854ddijMdg44tjI7Mp6?=
+ =?iso-8859-1?Q?LbmdCDhxIDsf0pBvhp2QnPDiqbz3ltVl8bsMG6KlNqphjscaWCLxlB/30B?=
+ =?iso-8859-1?Q?8Sc/uZvEm3ox0u4WfeuEQRZXExwk6pCaMROE9N9Gk9A1McWhzToX4AszNX?=
+ =?iso-8859-1?Q?UGDK1Bw3Fqpm+G1JhtNMeZ+3x4JlIh3oB595jT9txqFx6XOZBWvWgdr57v?=
+ =?iso-8859-1?Q?w8rV7MZZ+zRAtzsm87CQzY3bJRZv+GoV+sKDHt8o0cdhmKTIwiBB6lhZZO?=
+ =?iso-8859-1?Q?d0wTOsHVFr6bGakpGPBPh9sCsYhj2b+cjazD6h2oUQBnhgFAZV1x9zyXV7?=
+ =?iso-8859-1?Q?f96raKu+yHwCjpLOAT+zE0EPV9ZiMXEGOf07Bes2U89Bp6yu9qvVnb7kUS?=
+ =?iso-8859-1?Q?Z6qreIDrGC8Jn/7TL9iKz5/B06cQhQEZnxF7o4QXUfwwWJoEX4TQiM5UCe?=
+ =?iso-8859-1?Q?M5oarFtvkpWdYjGXN1s/52XI3yWbLYIQ56VIAIELImGgITWHirLw7DXkju?=
+ =?iso-8859-1?Q?nWRtny7cllK7z3Vy8PNz1ft2vWpDljJB/md2P8214KAqDLeZ9o82xxjR7m?=
+ =?iso-8859-1?Q?I/DWacDjCw=3D=3D?=
 Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
 X-OriginatorOrg: aspeedtech.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
 X-MS-Exchange-CrossTenant-AuthSource: TYPPR06MB8206.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 5580ccf8-c996-4d3a-16a2-08de74134684
-X-MS-Exchange-CrossTenant-originalarrivaltime: 25 Feb 2026 02:12:06.8621 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 36161bec-2d3f-4506-ec15-08de74135626
+X-MS-Exchange-CrossTenant-originalarrivaltime: 25 Feb 2026 02:12:33.1321 (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: KCpbK6+sIATdnFBTyt6doCVOjunHXczdpT69J6UwjE0Fb8mtNst6IFaglb+7VogXPCMUB+YV4yDDDd4begHdeJ+y2ZZu6pohQ0FlCzO88TE=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: OSNPR06MB8468
-Received-SPF: pass client-ip=2a01:111:f403:c405::7;
+X-MS-Exchange-CrossTenant-userprincipalname: 7A7lZLmFVhawgTxdxX4yo4jqX5YQxWzG61Or7sJ3DkKny+Qje1qgM/yYXBcBPkYg3gKcL42g4p2aMJX1GJAsN1zrddBfuKBB4kBp1t+CWpU=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SEZPR06MB5118
+Received-SPF: pass client-ip=2a01:111:f403:c406::3;
  envelope-from=jamin_lin@aspeedtech.com;
- helo=TYDPR03CU002.outbound.protection.outlook.com
+ helo=OS8PR02CU002.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -178,613 +179,467 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The Aspeed I3C IP block is technically an Aspeed IP block that manages=0A=
-6 DW I3C controllers.=0A=
+Adds a simple i3c device to be used for testing in lieu of a real=0A=
+device.=0A=
 =0A=
-To help reflect this better and to make it easier for other SoCs to use=0A=
-the DW I3C model, we'll split out the DW portion from the Aspeed=0A=
-portion.=0A=
+The mock target supports the following features:=0A=
+- A buffer that users can read and write to.=0A=
+- CCC support for commonly used CCCs when probing devices on an I3C bus.=0A=
+- IBI sending upon receiving a user-defined byte.=0A=
 =0A=
 Signed-off-by: Joe Komlodi <komlodi@google.com>=0A=
+Reviewed-by: Titus Rwantare <titusr@google.com>=0A=
+Reviewed-by: Patrick Venture <venture@google.com>=0A=
 Reviewed-by: Jamin Lin <jamin_lin@aspeedtech.com>=0A=
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>=0A=
 ---=0A=
- include/hw/i3c/aspeed_i3c.h |  17 +--=0A=
- include/hw/i3c/dw-i3c.h     |  33 ++++++=0A=
- hw/i3c/aspeed_i3c.c         | 181 +-------------------------------=0A=
- hw/i3c/dw-i3c.c             | 202 ++++++++++++++++++++++++++++++++++++=0A=
- hw/arm/Kconfig              |   1 +=0A=
- hw/i3c/Kconfig              |   3 +=0A=
- hw/i3c/meson.build          |   1 +=0A=
- hw/i3c/trace-events         |   6 +-=0A=
- 8 files changed, 250 insertions(+), 194 deletions(-)=0A=
- create mode 100644 include/hw/i3c/dw-i3c.h=0A=
- create mode 100644 hw/i3c/dw-i3c.c=0A=
+ include/hw/i3c/mock-i3c-target.h |  52 ++++++=0A=
+ hw/i3c/mock-i3c-target.c         | 298 +++++++++++++++++++++++++++++++=0A=
+ hw/i3c/Kconfig                   |  10 ++=0A=
+ hw/i3c/meson.build               |   1 +=0A=
+ hw/i3c/trace-events              |  10 ++=0A=
+ 5 files changed, 371 insertions(+)=0A=
+ create mode 100644 include/hw/i3c/mock-i3c-target.h=0A=
+ create mode 100644 hw/i3c/mock-i3c-target.c=0A=
 =0A=
-diff --git a/include/hw/i3c/aspeed_i3c.h b/include/hw/i3c/aspeed_i3c.h=0A=
-index bd0ffc84ea..ade5c42d39 100644=0A=
---- a/include/hw/i3c/aspeed_i3c.h=0A=
-+++ b/include/hw/i3c/aspeed_i3c.h=0A=
-@@ -10,27 +10,15 @@=0A=
- #ifndef ASPEED_I3C_H=0A=
- #define ASPEED_I3C_H=0A=
- =0A=
-+#include "hw/i3c/dw-i3c.h"=0A=
- #include "hw/core/sysbus.h"=0A=
- =0A=
- #define TYPE_ASPEED_I3C "aspeed.i3c"=0A=
--#define TYPE_ASPEED_I3C_DEVICE "aspeed.i3c.device"=0A=
- OBJECT_DECLARE_TYPE(AspeedI3CState, AspeedI3CClass, ASPEED_I3C)=0A=
- =0A=
- #define ASPEED_I3C_NR_REGS (0x70 >> 2)=0A=
--#define ASPEED_I3C_DEVICE_NR_REGS (0x300 >> 2)=0A=
- #define ASPEED_I3C_NR_DEVICES 6=0A=
- =0A=
--OBJECT_DECLARE_SIMPLE_TYPE(AspeedI3CDevice, ASPEED_I3C_DEVICE)=0A=
--struct AspeedI3CDevice {=0A=
--    SysBusDevice parent_obj;=0A=
--=0A=
--    MemoryRegion mr;=0A=
--    qemu_irq irq;=0A=
--=0A=
--    uint8_t id;=0A=
--    uint32_t regs[ASPEED_I3C_DEVICE_NR_REGS];=0A=
--};=0A=
--=0A=
- struct AspeedI3CState {=0A=
-     SysBusDevice parent_obj;=0A=
- =0A=
-@@ -39,6 +27,7 @@ struct AspeedI3CState {=0A=
-     qemu_irq irq;=0A=
- =0A=
-     uint32_t regs[ASPEED_I3C_NR_REGS];=0A=
--    AspeedI3CDevice devices[ASPEED_I3C_NR_DEVICES];=0A=
-+    DWI3C devices[ASPEED_I3C_NR_DEVICES];=0A=
-+    uint8_t id;=0A=
- };=0A=
- #endif /* ASPEED_I3C_H */=0A=
-diff --git a/include/hw/i3c/dw-i3c.h b/include/hw/i3c/dw-i3c.h=0A=
+diff --git a/include/hw/i3c/mock-i3c-target.h b/include/hw/i3c/mock-i3c-tar=
+get.h=0A=
 new file mode 100644=0A=
-index 0000000000..7143e8ca7a=0A=
+index 0000000000..8c6003ae8b=0A=
 --- /dev/null=0A=
-+++ b/include/hw/i3c/dw-i3c.h=0A=
-@@ -0,0 +1,33 @@=0A=
++++ b/include/hw/i3c/mock-i3c-target.h=0A=
+@@ -0,0 +1,52 @@=0A=
++#ifndef MOCK_I3C_TARGET_H_=0A=
++#define MOCK_I3C_TARGET_H_=0A=
++=0A=
 +/*=0A=
-+ * DesignWare I3C Controller=0A=
++ * Mock I3C Device=0A=
 + *=0A=
-+ * Copyright (C) 2021 ASPEED Technology Inc.=0A=
-+ * Copyright (C) 2025 Google, LLC.=0A=
++ * Copyright (c) 2025 Google LLC=0A=
++ *=0A=
++ * The mock I3C device can be thought of as a simple EEPROM. It has a buff=
+er,=0A=
++ * and the pointer in the buffer is reset to 0 on an I3C STOP.=0A=
++ * To write to the buffer, issue a private write and send data.=0A=
++ * To read from the buffer, issue a private read.=0A=
++ *=0A=
++ * The mock target also supports sending target interrupt IBIs.=0A=
++ * To issue an IBI, set the 'ibi-magic-num' property to a non-zero number,=
+ and=0A=
++ * send that number in a private transaction. The mock target will issue a=
+n IBI=0A=
++ * after 1 second.=0A=
++ *=0A=
++ * It also supports a handful of CCCs that are typically used when probing=
+ I3C=0A=
++ * devices.=0A=
 + *=0A=
 + * SPDX-License-Identifier: GPL-2.0-or-later=0A=
 + */=0A=
 +=0A=
-+#ifndef DW_I3C_H=0A=
-+#define DW_I3C_H=0A=
++#include "qemu/osdep.h"=0A=
++#include "qemu/timer.h"=0A=
++#include "hw/i3c/i3c.h"=0A=
 +=0A=
-+#include "hw/core/sysbus.h"=0A=
++#define TYPE_MOCK_I3C_TARGET "mock-i3c-target"=0A=
++OBJECT_DECLARE_SIMPLE_TYPE(MockI3cTargetState, MOCK_I3C_TARGET)=0A=
 +=0A=
-+#define TYPE_DW_I3C "dw.i3c"=0A=
-+OBJECT_DECLARE_SIMPLE_TYPE(DWI3C, DW_I3C)=0A=
++struct MockI3cTargetState {=0A=
++    I3CTarget parent_obj;=0A=
 +=0A=
-+#define DW_I3C_NR_REGS (0x300 >> 2)=0A=
++    /* General device state */=0A=
++    bool can_ibi;=0A=
++    QEMUTimer qtimer;=0A=
++    size_t p_buf;=0A=
++    uint8_t *buf;=0A=
 +=0A=
-+struct DWI3C {=0A=
-+    SysBusDevice parent_obj;=0A=
++    /* For Handing CCCs. */=0A=
++    bool in_ccc;=0A=
++    I3CCCC curr_ccc;=0A=
++    uint8_t ccc_byte_offset;=0A=
 +=0A=
-+    MemoryRegion mr;=0A=
-+    qemu_irq irq;=0A=
-+=0A=
-+    uint8_t id;=0A=
-+    uint32_t regs[DW_I3C_NR_REGS];=0A=
++    struct {=0A=
++        uint32_t buf_size;=0A=
++        uint8_t ibi_magic;=0A=
++    } cfg;=0A=
 +};=0A=
 +=0A=
-+/* Extern for other controllers that use DesignWare I3C. */=0A=
-+extern const VMStateDescription vmstate_dw_i3c;=0A=
-+=0A=
-+#endif /* DW_I3C_H */=0A=
-diff --git a/hw/i3c/aspeed_i3c.c b/hw/i3c/aspeed_i3c.c=0A=
-index e7cdfbfdbd..647074d181 100644=0A=
---- a/hw/i3c/aspeed_i3c.c=0A=
-+++ b/hw/i3c/aspeed_i3c.c=0A=
-@@ -2,6 +2,7 @@=0A=
-  * ASPEED I3C Controller=0A=
-  *=0A=
-  * Copyright (C) 2021 ASPEED Technology Inc.=0A=
-+ * Copyright (C) 2025 Google, LLC.=0A=
-  *=0A=
-  * This code is licensed under the GPL version 2 or later.  See=0A=
-  * the COPYING file in the top-level directory.=0A=
-@@ -43,162 +44,6 @@ REG32(I3C6_REG1, 0x64)=0A=
-     FIELD(I3C6_REG1, I2C_MODE,  0,  1)=0A=
-     FIELD(I3C6_REG1, SA_EN,     15, 1)=0A=
- =0A=
--/* I3C Device Registers */=0A=
--REG32(DEVICE_CTRL,                  0x00)=0A=
--REG32(DEVICE_ADDR,                  0x04)=0A=
--REG32(HW_CAPABILITY,                0x08)=0A=
--REG32(COMMAND_QUEUE_PORT,           0x0c)=0A=
--REG32(RESPONSE_QUEUE_PORT,          0x10)=0A=
--REG32(RX_TX_DATA_PORT,              0x14)=0A=
--REG32(IBI_QUEUE_STATUS,             0x18)=0A=
--REG32(IBI_QUEUE_DATA,               0x18)=0A=
--REG32(QUEUE_THLD_CTRL,              0x1c)=0A=
--REG32(DATA_BUFFER_THLD_CTRL,        0x20)=0A=
--REG32(IBI_QUEUE_CTRL,               0x24)=0A=
--REG32(IBI_MR_REQ_REJECT,            0x2c)=0A=
--REG32(IBI_SIR_REQ_REJECT,           0x30)=0A=
--REG32(RESET_CTRL,                   0x34)=0A=
--REG32(SLV_EVENT_CTRL,               0x38)=0A=
--REG32(INTR_STATUS,                  0x3c)=0A=
--REG32(INTR_STATUS_EN,               0x40)=0A=
--REG32(INTR_SIGNAL_EN,               0x44)=0A=
--REG32(INTR_FORCE,                   0x48)=0A=
--REG32(QUEUE_STATUS_LEVEL,           0x4c)=0A=
--REG32(DATA_BUFFER_STATUS_LEVEL,     0x50)=0A=
--REG32(PRESENT_STATE,                0x54)=0A=
--REG32(CCC_DEVICE_STATUS,            0x58)=0A=
--REG32(DEVICE_ADDR_TABLE_POINTER,    0x5c)=0A=
--    FIELD(DEVICE_ADDR_TABLE_POINTER, DEPTH, 16, 16)=0A=
--    FIELD(DEVICE_ADDR_TABLE_POINTER, ADDR,  0,  16)=0A=
--REG32(DEV_CHAR_TABLE_POINTER,       0x60)=0A=
--REG32(VENDOR_SPECIFIC_REG_POINTER,  0x6c)=0A=
--REG32(SLV_MIPI_PID_VALUE,           0x70)=0A=
--REG32(SLV_PID_VALUE,                0x74)=0A=
--REG32(SLV_CHAR_CTRL,                0x78)=0A=
--REG32(SLV_MAX_LEN,                  0x7c)=0A=
--REG32(MAX_READ_TURNAROUND,          0x80)=0A=
--REG32(MAX_DATA_SPEED,               0x84)=0A=
--REG32(SLV_DEBUG_STATUS,             0x88)=0A=
--REG32(SLV_INTR_REQ,                 0x8c)=0A=
--REG32(DEVICE_CTRL_EXTENDED,         0xb0)=0A=
--REG32(SCL_I3C_OD_TIMING,            0xb4)=0A=
--REG32(SCL_I3C_PP_TIMING,            0xb8)=0A=
--REG32(SCL_I2C_FM_TIMING,            0xbc)=0A=
--REG32(SCL_I2C_FMP_TIMING,           0xc0)=0A=
--REG32(SCL_EXT_LCNT_TIMING,          0xc8)=0A=
--REG32(SCL_EXT_TERMN_LCNT_TIMING,    0xcc)=0A=
--REG32(BUS_FREE_TIMING,              0xd4)=0A=
--REG32(BUS_IDLE_TIMING,              0xd8)=0A=
--REG32(I3C_VER_ID,                   0xe0)=0A=
--REG32(I3C_VER_TYPE,                 0xe4)=0A=
--REG32(EXTENDED_CAPABILITY,          0xe8)=0A=
--REG32(SLAVE_CONFIG,                 0xec)=0A=
--=0A=
--static const uint32_t ast2600_i3c_device_resets[ASPEED_I3C_DEVICE_NR_REGS]=
- =3D {=0A=
--    [R_HW_CAPABILITY]               =3D 0x000e00bf,=0A=
--    [R_QUEUE_THLD_CTRL]             =3D 0x01000101,=0A=
--    [R_I3C_VER_ID]                  =3D 0x3130302a,=0A=
--    [R_I3C_VER_TYPE]                =3D 0x6c633033,=0A=
--    [R_DEVICE_ADDR_TABLE_POINTER]   =3D 0x00080280,=0A=
--    [R_DEV_CHAR_TABLE_POINTER]      =3D 0x00020200,=0A=
--    [A_VENDOR_SPECIFIC_REG_POINTER] =3D 0x000000b0,=0A=
--    [R_SLV_MAX_LEN]                 =3D 0x00ff00ff,=0A=
--};=0A=
--=0A=
--static uint64_t aspeed_i3c_device_read(void *opaque, hwaddr offset,=0A=
--                                       unsigned size)=0A=
--{=0A=
--    AspeedI3CDevice *s =3D ASPEED_I3C_DEVICE(opaque);=0A=
--    uint32_t addr =3D offset >> 2;=0A=
--    uint64_t value;=0A=
--=0A=
--    switch (addr) {=0A=
--    case R_COMMAND_QUEUE_PORT:=0A=
--        value =3D 0;=0A=
--        break;=0A=
--    default:=0A=
--        value =3D s->regs[addr];=0A=
--        break;=0A=
--    }=0A=
--=0A=
--    trace_aspeed_i3c_device_read(s->id, offset, value);=0A=
--=0A=
--    return value;=0A=
--}=0A=
--=0A=
--static void aspeed_i3c_device_write(void *opaque, hwaddr offset,=0A=
--                                    uint64_t value, unsigned size)=0A=
--{=0A=
--    AspeedI3CDevice *s =3D ASPEED_I3C_DEVICE(opaque);=0A=
--    uint32_t addr =3D offset >> 2;=0A=
--=0A=
--    trace_aspeed_i3c_device_write(s->id, offset, value);=0A=
--=0A=
--    switch (addr) {=0A=
--    case R_HW_CAPABILITY:=0A=
--    case R_RESPONSE_QUEUE_PORT:=0A=
--    case R_IBI_QUEUE_DATA:=0A=
--    case R_QUEUE_STATUS_LEVEL:=0A=
--    case R_PRESENT_STATE:=0A=
--    case R_CCC_DEVICE_STATUS:=0A=
--    case R_DEVICE_ADDR_TABLE_POINTER:=0A=
--    case R_VENDOR_SPECIFIC_REG_POINTER:=0A=
--    case R_SLV_CHAR_CTRL:=0A=
--    case R_SLV_MAX_LEN:=0A=
--    case R_MAX_READ_TURNAROUND:=0A=
--    case R_I3C_VER_ID:=0A=
--    case R_I3C_VER_TYPE:=0A=
--    case R_EXTENDED_CAPABILITY:=0A=
--        qemu_log_mask(LOG_GUEST_ERROR,=0A=
--                      "%s: write to readonly register[0x%02" HWADDR_PRIx=
-=0A=
--                      "] =3D 0x%08" PRIx64 "\n",=0A=
--                      __func__, offset, value);=0A=
--        break;=0A=
--    case R_RX_TX_DATA_PORT:=0A=
--        break;=0A=
--    case R_RESET_CTRL:=0A=
--        break;=0A=
--    default:=0A=
--        s->regs[addr] =3D value;=0A=
--        break;=0A=
--    }=0A=
--}=0A=
--=0A=
--static const VMStateDescription aspeed_i3c_device_vmstate =3D {=0A=
--    .name =3D TYPE_ASPEED_I3C,=0A=
--    .version_id =3D 1,=0A=
--    .minimum_version_id =3D 1,=0A=
--    .fields =3D (const VMStateField[]){=0A=
--        VMSTATE_UINT32_ARRAY(regs, AspeedI3CDevice, ASPEED_I3C_DEVICE_NR_R=
-EGS),=0A=
--        VMSTATE_END_OF_LIST(),=0A=
--    }=0A=
--};=0A=
--=0A=
--static const MemoryRegionOps aspeed_i3c_device_ops =3D {=0A=
--    .read =3D aspeed_i3c_device_read,=0A=
--    .write =3D aspeed_i3c_device_write,=0A=
--    .endianness =3D DEVICE_LITTLE_ENDIAN,=0A=
--};=0A=
--=0A=
--static void aspeed_i3c_device_reset(DeviceState *dev)=0A=
--{=0A=
--    AspeedI3CDevice *s =3D ASPEED_I3C_DEVICE(dev);=0A=
--=0A=
--    memcpy(s->regs, ast2600_i3c_device_resets, sizeof(s->regs));=0A=
--}=0A=
--=0A=
--static void aspeed_i3c_device_realize(DeviceState *dev, Error **errp)=0A=
--{=0A=
--    AspeedI3CDevice *s =3D ASPEED_I3C_DEVICE(dev);=0A=
--    g_autofree char *name =3D g_strdup_printf(TYPE_ASPEED_I3C_DEVICE ".%d"=
-,=0A=
--                                            s->id);=0A=
--=0A=
--    sysbus_init_irq(SYS_BUS_DEVICE(dev), &s->irq);=0A=
--=0A=
--    memory_region_init_io(&s->mr, OBJECT(s), &aspeed_i3c_device_ops,=0A=
--                          s, name, ASPEED_I3C_DEVICE_NR_REGS << 2);=0A=
--}=0A=
--=0A=
- static uint64_t aspeed_i3c_read(void *opaque, hwaddr addr, unsigned int si=
-ze)=0A=
- {=0A=
-     AspeedI3CState *s =3D ASPEED_I3C(opaque);=0A=
-@@ -275,7 +120,7 @@ static void aspeed_i3c_instance_init(Object *obj)=0A=
- =0A=
-     for (i =3D 0; i < ASPEED_I3C_NR_DEVICES; ++i) {=0A=
-         object_initialize_child(obj, "device[*]", &s->devices[i],=0A=
--                TYPE_ASPEED_I3C_DEVICE);=0A=
-+                TYPE_DW_I3C);=0A=
-     }=0A=
- }=0A=
- =0A=
-@@ -323,20 +168,6 @@ static void aspeed_i3c_realize(DeviceState *dev, Error=
- **errp)=0A=
- =0A=
- }=0A=
- =0A=
--static const Property aspeed_i3c_device_properties[] =3D {=0A=
--    DEFINE_PROP_UINT8("device-id", AspeedI3CDevice, id, 0),=0A=
--};=0A=
--=0A=
--static void aspeed_i3c_device_class_init(ObjectClass *klass, const void *d=
-ata)=0A=
--{=0A=
--    DeviceClass *dc =3D DEVICE_CLASS(klass);=0A=
--=0A=
--    dc->desc =3D "Aspeed I3C Device";=0A=
--    dc->realize =3D aspeed_i3c_device_realize;=0A=
--    device_class_set_legacy_reset(dc, aspeed_i3c_device_reset);=0A=
--    device_class_set_props(dc, aspeed_i3c_device_properties);=0A=
--}=0A=
--=0A=
- static const VMStateDescription vmstate_aspeed_i3c =3D {=0A=
-     .name =3D TYPE_ASPEED_I3C,=0A=
-     .version_id =3D 1,=0A=
-@@ -344,7 +175,7 @@ static const VMStateDescription vmstate_aspeed_i3c =3D =
-{=0A=
-     .fields =3D (const VMStateField[]) {=0A=
-         VMSTATE_UINT32_ARRAY(regs, AspeedI3CState, ASPEED_I3C_NR_REGS),=0A=
-         VMSTATE_STRUCT_ARRAY(devices, AspeedI3CState, ASPEED_I3C_NR_DEVICE=
-S, 1,=0A=
--                             aspeed_i3c_device_vmstate, AspeedI3CDevice),=
-=0A=
-+                             vmstate_dw_i3c, DWI3C),=0A=
-         VMSTATE_END_OF_LIST(),=0A=
-     }=0A=
- };=0A=
-@@ -367,12 +198,6 @@ static const TypeInfo aspeed_i3c_types[] =3D {=0A=
-         .instance_size =3D sizeof(AspeedI3CState),=0A=
-         .class_init =3D aspeed_i3c_class_init,=0A=
-     },=0A=
--    {=0A=
--        .name =3D TYPE_ASPEED_I3C_DEVICE,=0A=
--        .parent =3D TYPE_SYS_BUS_DEVICE,=0A=
--        .instance_size =3D sizeof(AspeedI3CDevice),=0A=
--        .class_init =3D aspeed_i3c_device_class_init,=0A=
--    },=0A=
- };=0A=
- =0A=
- DEFINE_TYPES(aspeed_i3c_types)=0A=
-diff --git a/hw/i3c/dw-i3c.c b/hw/i3c/dw-i3c.c=0A=
++#endif=0A=
+diff --git a/hw/i3c/mock-i3c-target.c b/hw/i3c/mock-i3c-target.c=0A=
 new file mode 100644=0A=
-index 0000000000..6cadc59191=0A=
+index 0000000000..875cd7c7d0=0A=
 --- /dev/null=0A=
-+++ b/hw/i3c/dw-i3c.c=0A=
-@@ -0,0 +1,202 @@=0A=
++++ b/hw/i3c/mock-i3c-target.c=0A=
+@@ -0,0 +1,298 @@=0A=
 +/*=0A=
-+ * DesignWare I3C Controller=0A=
++ * Mock I3C Device=0A=
 + *=0A=
-+ * Copyright (C) 2021 ASPEED Technology Inc.=0A=
-+ * Copyright (C) 2025 Google, LLC=0A=
++ * Copyright (c) 2025 Google LLC=0A=
++ *=0A=
++ * The mock I3C device can be thought of as a simple EEPROM. It has a buff=
+er,=0A=
++ * and the pointer in the buffer is reset to 0 on an I3C STOP.=0A=
++ * To write to the buffer, issue a private write and send data.=0A=
++ * To read from the buffer, issue a private read.=0A=
++ *=0A=
++ * The mock target also supports sending target interrupt IBIs.=0A=
++ * To issue an IBI, set the 'ibi-magic-num' property to a non-zero number,=
+ and=0A=
++ * send that number in a private transaction. The mock target will issue a=
+n IBI=0A=
++ * after 1 second.=0A=
++ *=0A=
++ * It also supports a handful of CCCs that are typically used when probing=
+ I3C=0A=
++ * devices.=0A=
 + *=0A=
 + * SPDX-License-Identifier: GPL-2.0-or-later=0A=
 + */=0A=
 +=0A=
 +#include "qemu/osdep.h"=0A=
 +#include "qemu/log.h"=0A=
-+#include "qemu/error-report.h"=0A=
++#include "trace.h"=0A=
 +#include "hw/i3c/i3c.h"=0A=
-+#include "hw/i3c/dw-i3c.h"=0A=
-+#include "hw/core/registerfields.h"=0A=
++#include "hw/i3c/mock-i3c-target.h"=0A=
++#include "hw/core/irq.h"=0A=
 +#include "hw/core/qdev-properties.h"=0A=
 +#include "qapi/error.h"=0A=
-+#include "migration/vmstate.h"=0A=
-+#include "trace.h"=0A=
++#include "qemu/module.h"=0A=
 +=0A=
-+REG32(DEVICE_CTRL,                  0x00)=0A=
-+REG32(DEVICE_ADDR,                  0x04)=0A=
-+REG32(HW_CAPABILITY,                0x08)=0A=
-+REG32(COMMAND_QUEUE_PORT,           0x0c)=0A=
-+REG32(RESPONSE_QUEUE_PORT,          0x10)=0A=
-+REG32(RX_TX_DATA_PORT,              0x14)=0A=
-+REG32(IBI_QUEUE_STATUS,             0x18)=0A=
-+REG32(IBI_QUEUE_DATA,               0x18)=0A=
-+REG32(QUEUE_THLD_CTRL,              0x1c)=0A=
-+REG32(DATA_BUFFER_THLD_CTRL,        0x20)=0A=
-+REG32(IBI_QUEUE_CTRL,               0x24)=0A=
-+REG32(IBI_MR_REQ_REJECT,            0x2c)=0A=
-+REG32(IBI_SIR_REQ_REJECT,           0x30)=0A=
-+REG32(RESET_CTRL,                   0x34)=0A=
-+REG32(SLV_EVENT_CTRL,               0x38)=0A=
-+REG32(INTR_STATUS,                  0x3c)=0A=
-+REG32(INTR_STATUS_EN,               0x40)=0A=
-+REG32(INTR_SIGNAL_EN,               0x44)=0A=
-+REG32(INTR_FORCE,                   0x48)=0A=
-+REG32(QUEUE_STATUS_LEVEL,           0x4c)=0A=
-+REG32(DATA_BUFFER_STATUS_LEVEL,     0x50)=0A=
-+REG32(PRESENT_STATE,                0x54)=0A=
-+REG32(CCC_DEVICE_STATUS,            0x58)=0A=
-+REG32(DEVICE_ADDR_TABLE_POINTER,    0x5c)=0A=
-+    FIELD(DEVICE_ADDR_TABLE_POINTER, DEPTH, 16, 16)=0A=
-+    FIELD(DEVICE_ADDR_TABLE_POINTER, ADDR,  0,  16)=0A=
-+REG32(DEV_CHAR_TABLE_POINTER,       0x60)=0A=
-+REG32(VENDOR_SPECIFIC_REG_POINTER,  0x6c)=0A=
-+REG32(SLV_MIPI_PID_VALUE,           0x70)=0A=
-+REG32(SLV_PID_VALUE,                0x74)=0A=
-+REG32(SLV_CHAR_CTRL,                0x78)=0A=
-+REG32(SLV_MAX_LEN,                  0x7c)=0A=
-+REG32(MAX_READ_TURNAROUND,          0x80)=0A=
-+REG32(MAX_DATA_SPEED,               0x84)=0A=
-+REG32(SLV_DEBUG_STATUS,             0x88)=0A=
-+REG32(SLV_INTR_REQ,                 0x8c)=0A=
-+REG32(DEVICE_CTRL_EXTENDED,         0xb0)=0A=
-+REG32(SCL_I3C_OD_TIMING,            0xb4)=0A=
-+REG32(SCL_I3C_PP_TIMING,            0xb8)=0A=
-+REG32(SCL_I2C_FM_TIMING,            0xbc)=0A=
-+REG32(SCL_I2C_FMP_TIMING,           0xc0)=0A=
-+REG32(SCL_EXT_LCNT_TIMING,          0xc8)=0A=
-+REG32(SCL_EXT_TERMN_LCNT_TIMING,    0xcc)=0A=
-+REG32(BUS_FREE_TIMING,              0xd4)=0A=
-+REG32(BUS_IDLE_TIMING,              0xd8)=0A=
-+REG32(I3C_VER_ID,                   0xe0)=0A=
-+REG32(I3C_VER_TYPE,                 0xe4)=0A=
-+REG32(EXTENDED_CAPABILITY,          0xe8)=0A=
-+REG32(SLAVE_CONFIG,                 0xec)=0A=
++#define IBI_DELAY_NS (1 * 1000 * 1000)=0A=
 +=0A=
-+static const uint32_t dw_i3c_resets[DW_I3C_NR_REGS] =3D {=0A=
-+    [R_HW_CAPABILITY]               =3D 0x000e00bf,=0A=
-+    [R_QUEUE_THLD_CTRL]             =3D 0x01000101,=0A=
-+    [R_I3C_VER_ID]                  =3D 0x3130302a,=0A=
-+    [R_I3C_VER_TYPE]                =3D 0x6c633033,=0A=
-+    [R_DEVICE_ADDR_TABLE_POINTER]   =3D 0x00080280,=0A=
-+    [R_DEV_CHAR_TABLE_POINTER]      =3D 0x00020200,=0A=
-+    [A_VENDOR_SPECIFIC_REG_POINTER] =3D 0x000000b0,=0A=
-+    [R_SLV_MAX_LEN]                 =3D 0x00ff00ff,=0A=
-+};=0A=
-+=0A=
-+static uint64_t dw_i3c_read(void *opaque, hwaddr offset, unsigned size)=0A=
++static uint32_t mock_i3c_target_rx(I3CTarget *i3c, uint8_t *data,=0A=
++                                   uint32_t num_to_read)=0A=
 +{=0A=
-+    DWI3C *s =3D DW_I3C(opaque);=0A=
-+    uint32_t addr =3D offset >> 2;=0A=
-+    uint64_t value;=0A=
++    MockI3cTargetState *s =3D MOCK_I3C_TARGET(i3c);=0A=
++    uint32_t i;=0A=
 +=0A=
-+    switch (addr) {=0A=
-+    case R_COMMAND_QUEUE_PORT:=0A=
-+        value =3D 0;=0A=
++    /* Bounds check. */=0A=
++    if (s->p_buf =3D=3D s->cfg.buf_size) {=0A=
++        return 0;=0A=
++    }=0A=
++=0A=
++    for (i =3D 0; i < num_to_read; i++) {=0A=
++        data[i] =3D s->buf[s->p_buf];=0A=
++        trace_mock_i3c_target_rx(data[i]);=0A=
++        s->p_buf++;=0A=
++        if (s->p_buf =3D=3D s->cfg.buf_size) {=0A=
++            break;=0A=
++        }=0A=
++    }=0A=
++=0A=
++    /* Return the number of bytes we're sending to the controller. */=0A=
++    return i;=0A=
++}=0A=
++=0A=
++static void mock_i3c_target_ibi_timer_start(MockI3cTargetState *s)=0A=
++{=0A=
++    int64_t now =3D qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);=0A=
++    timer_mod(&s->qtimer, now + IBI_DELAY_NS);=0A=
++}=0A=
++=0A=
++static int mock_i3c_target_tx(I3CTarget *i3c, const uint8_t *data,=0A=
++                              uint32_t num_to_send, uint32_t *num_sent)=0A=
++{=0A=
++    MockI3cTargetState *s =3D MOCK_I3C_TARGET(i3c);=0A=
++    int ret;=0A=
++    uint32_t to_write;=0A=
++=0A=
++    if (s->cfg.ibi_magic && num_to_send =3D=3D 1 && s->cfg.ibi_magic =3D=
+=3D *data) {=0A=
++        mock_i3c_target_ibi_timer_start(s);=0A=
++        return 0;=0A=
++    }=0A=
++=0A=
++    /* Bounds check. */=0A=
++    if (num_to_send + s->p_buf > s->cfg.buf_size) {=0A=
++        to_write =3D s->cfg.buf_size - s->p_buf;=0A=
++        ret =3D -1;=0A=
++    } else {=0A=
++        to_write =3D num_to_send;=0A=
++        ret =3D 0;=0A=
++    }=0A=
++    for (uint32_t i =3D 0; i < to_write; i++) {=0A=
++        trace_mock_i3c_target_tx(data[i]);=0A=
++        s->buf[s->p_buf] =3D data[i];=0A=
++        s->p_buf++;=0A=
++    }=0A=
++    return ret;=0A=
++}=0A=
++=0A=
++static int mock_i3c_target_event(I3CTarget *i3c, enum I3CEvent event)=0A=
++{=0A=
++    MockI3cTargetState *s =3D MOCK_I3C_TARGET(i3c);=0A=
++=0A=
++    trace_mock_i3c_target_event(event);=0A=
++    if (event =3D=3D I3C_STOP) {=0A=
++        s->in_ccc =3D false;=0A=
++        s->curr_ccc =3D 0;=0A=
++        s->ccc_byte_offset =3D 0;=0A=
++        s->p_buf =3D 0;=0A=
++    }=0A=
++=0A=
++    return 0;=0A=
++}=0A=
++=0A=
++static int mock_i3c_target_handle_ccc_read(I3CTarget *i3c, uint8_t *data,=
+=0A=
++                                           uint32_t num_to_read,=0A=
++                                           uint32_t *num_read)=0A=
++{=0A=
++    MockI3cTargetState *s =3D MOCK_I3C_TARGET(i3c);=0A=
++=0A=
++    switch (s->curr_ccc) {=0A=
++    case I3C_CCCD_GETMXDS:=0A=
++        /* Default data rate for I3C. */=0A=
++        while (s->ccc_byte_offset < num_to_read) {=0A=
++            if (s->ccc_byte_offset >=3D 2) {=0A=
++                break;=0A=
++            }=0A=
++            data[s->ccc_byte_offset] =3D 0;=0A=
++            *num_read =3D s->ccc_byte_offset;=0A=
++            s->ccc_byte_offset++;=0A=
++        }=0A=
++        break;=0A=
++    case I3C_CCCD_GETCAPS:=0A=
++        /* Support I3C version 1.1.x, no other features. */=0A=
++        while (s->ccc_byte_offset < num_to_read) {=0A=
++            if (s->ccc_byte_offset >=3D 2) {=0A=
++                break;=0A=
++            }=0A=
++            if (s->ccc_byte_offset =3D=3D 0) {=0A=
++                data[s->ccc_byte_offset] =3D 0;=0A=
++            } else {=0A=
++                data[s->ccc_byte_offset] =3D 0x01;=0A=
++            }=0A=
++            *num_read =3D s->ccc_byte_offset;=0A=
++            s->ccc_byte_offset++;=0A=
++        }=0A=
++        break;=0A=
++    case I3C_CCCD_GETMWL:=0A=
++    case I3C_CCCD_GETMRL:=0A=
++        /* MWL/MRL is MSB first. */=0A=
++        while (s->ccc_byte_offset < num_to_read) {=0A=
++            if (s->ccc_byte_offset >=3D 2) {=0A=
++                break;=0A=
++            }=0A=
++            data[s->ccc_byte_offset] =3D (s->cfg.buf_size &=0A=
++                                        (0xff00 >> (s->ccc_byte_offset * 8=
+))) >>=0A=
++                                        (8 - (s->ccc_byte_offset * 8));=0A=
++            s->ccc_byte_offset++;=0A=
++            *num_read =3D num_to_read;=0A=
++        }=0A=
++        break;=0A=
++    case I3C_CCC_ENTDAA:=0A=
++    case I3C_CCCD_GETPID:=0A=
++    case I3C_CCCD_GETBCR:=0A=
++    case I3C_CCCD_GETDCR:=0A=
++        /* Nothing to do. */=0A=
 +        break;=0A=
 +    default:=0A=
-+        value =3D s->regs[addr];=0A=
-+        break;=0A=
++        qemu_log_mask(LOG_GUEST_ERROR, "Unhandled CCC 0x%.2x\n", s->curr_c=
+cc);=0A=
++        return -1;=0A=
 +    }=0A=
 +=0A=
-+    trace_dw_i3c_read(s->id, offset, value);=0A=
-+=0A=
-+    return value;=0A=
++    trace_mock_i3c_target_handle_ccc_read(*num_read, num_to_read);=0A=
++    return 0;=0A=
 +}=0A=
 +=0A=
-+static void dw_i3c_write(void *opaque, hwaddr offset, uint64_t value,=0A=
-+                         unsigned size)=0A=
++static int mock_i3c_target_handle_ccc_write(I3CTarget *i3c, const uint8_t =
+*data,=0A=
++                                            uint32_t num_to_send,=0A=
++                                            uint32_t *num_sent)=0A=
 +{=0A=
-+    DWI3C *s =3D DW_I3C(opaque);=0A=
-+    uint32_t addr =3D offset >> 2;=0A=
++    MockI3cTargetState *s =3D MOCK_I3C_TARGET(i3c);=0A=
 +=0A=
-+    trace_dw_i3c_write(s->id, offset, value);=0A=
++    if (!s->curr_ccc) {=0A=
++        s->in_ccc =3D true;=0A=
++        s->curr_ccc =3D *data;=0A=
++        trace_mock_i3c_target_new_ccc(s->curr_ccc);=0A=
++    }=0A=
 +=0A=
-+    switch (addr) {=0A=
-+    case R_HW_CAPABILITY:=0A=
-+    case R_RESPONSE_QUEUE_PORT:=0A=
-+    case R_IBI_QUEUE_DATA:=0A=
-+    case R_QUEUE_STATUS_LEVEL:=0A=
-+    case R_PRESENT_STATE:=0A=
-+    case R_CCC_DEVICE_STATUS:=0A=
-+    case R_DEVICE_ADDR_TABLE_POINTER:=0A=
-+    case R_VENDOR_SPECIFIC_REG_POINTER:=0A=
-+    case R_SLV_CHAR_CTRL:=0A=
-+    case R_SLV_MAX_LEN:=0A=
-+    case R_MAX_READ_TURNAROUND:=0A=
-+    case R_I3C_VER_ID:=0A=
-+    case R_I3C_VER_TYPE:=0A=
-+    case R_EXTENDED_CAPABILITY:=0A=
-+        qemu_log_mask(LOG_GUEST_ERROR,=0A=
-+                      "%s: write to readonly register[0x%02" HWADDR_PRIx=
-=0A=
-+                      "] =3D 0x%08" PRIx64 "\n",=0A=
-+                      __func__, offset, value);=0A=
++    *num_sent =3D 1;=0A=
++    switch (s->curr_ccc) {=0A=
++    case I3C_CCC_ENEC:=0A=
++    case I3C_CCCD_ENEC:=0A=
++        s->can_ibi =3D true;=0A=
 +        break;=0A=
-+    case R_RX_TX_DATA_PORT:=0A=
++    case I3C_CCC_DISEC:=0A=
++    case I3C_CCCD_DISEC:=0A=
++        s->can_ibi =3D false;=0A=
 +        break;=0A=
-+    case R_RESET_CTRL:=0A=
++    case I3C_CCC_ENTDAA:=0A=
++    case I3C_CCC_SETAASA:=0A=
++    case I3C_CCC_RSTDAA:=0A=
++    case I3C_CCCD_SETDASA:=0A=
++    case I3C_CCCD_GETPID:=0A=
++    case I3C_CCCD_GETBCR:=0A=
++    case I3C_CCCD_GETDCR:=0A=
++    case I3C_CCCD_GETMWL:=0A=
++    case I3C_CCCD_GETMRL:=0A=
++    case I3C_CCCD_GETMXDS:=0A=
++    case I3C_CCCD_GETCAPS:=0A=
++        /* Nothing to do. */=0A=
 +        break;=0A=
 +    default:=0A=
-+        s->regs[addr] =3D value;=0A=
-+        break;=0A=
++        qemu_log_mask(LOG_GUEST_ERROR, "Unhandled CCC 0x%.2x\n", s->curr_c=
+cc);=0A=
++        return -1;=0A=
++    }=0A=
++=0A=
++    trace_mock_i3c_target_handle_ccc_write(*num_sent, num_to_send);=0A=
++    return 0;=0A=
++}=0A=
++=0A=
++static void mock_i3c_target_do_ibi(MockI3cTargetState *s)=0A=
++{=0A=
++    if (!s->can_ibi) {=0A=
++        return;=0A=
++    }=0A=
++=0A=
++    trace_mock_i3c_target_do_ibi(s->parent_obj.address, true);=0A=
++    int nack =3D i3c_target_send_ibi(&s->parent_obj, s->parent_obj.address=
+,=0A=
++                                   /*is_recv=3D*/true);=0A=
++    /* Getting NACKed isn't necessarily an error, just print it out. */=0A=
++    if (nack) {=0A=
++        trace_mock_i3c_target_do_ibi_nack("sending");=0A=
++    }=0A=
++    nack =3D i3c_target_ibi_finish(&s->parent_obj, 0x00);=0A=
++    if (nack) {=0A=
++        trace_mock_i3c_target_do_ibi_nack("finishing");=0A=
 +    }=0A=
 +}=0A=
 +=0A=
-+const VMStateDescription vmstate_dw_i3c =3D {=0A=
-+    .name =3D TYPE_DW_I3C,=0A=
-+    .version_id =3D 1,=0A=
-+    .minimum_version_id =3D 1,=0A=
-+    .fields =3D (VMStateField[]){=0A=
-+        VMSTATE_UINT32_ARRAY(regs, DWI3C, DW_I3C_NR_REGS),=0A=
-+        VMSTATE_END_OF_LIST(),=0A=
-+    }=0A=
-+};=0A=
-+=0A=
-+static const MemoryRegionOps dw_i3c_ops =3D {=0A=
-+    .read =3D dw_i3c_read,=0A=
-+    .write =3D dw_i3c_write,=0A=
-+    .endianness =3D DEVICE_LITTLE_ENDIAN,=0A=
-+};=0A=
-+=0A=
-+static void dw_i3c_reset_enter(Object *obj, ResetType type)=0A=
++static void mock_i3c_target_timer_elapsed(void *opaque)=0A=
 +{=0A=
-+    DWI3C *s =3D DW_I3C(obj);=0A=
-+=0A=
-+    memcpy(s->regs, dw_i3c_resets, sizeof(s->regs));=0A=
++    MockI3cTargetState *s =3D MOCK_I3C_TARGET(opaque);=0A=
++    timer_del(&s->qtimer);=0A=
++    mock_i3c_target_do_ibi(s);=0A=
 +}=0A=
 +=0A=
-+static void dw_i3c_realize(DeviceState *dev, Error **errp)=0A=
++static void mock_i3c_target_reset(I3CTarget *i3c)=0A=
 +{=0A=
-+    DWI3C *s =3D DW_I3C(dev);=0A=
-+    g_autofree char *name =3D g_strdup_printf(TYPE_DW_I3C ".%d", s->id);=
++    MockI3cTargetState *s =3D MOCK_I3C_TARGET(i3c);=0A=
++    s->can_ibi =3D false;=0A=
++}=0A=
++=0A=
++static void mock_i3c_target_realize(DeviceState *dev, Error **errp)=0A=
++{=0A=
++    MockI3cTargetState *s =3D MOCK_I3C_TARGET(dev);=0A=
++    s->buf =3D g_new0(uint8_t, s->cfg.buf_size);=0A=
++    mock_i3c_target_reset(&s->parent_obj);=0A=
++}=0A=
++=0A=
++static void mock_i3c_target_init(Object *obj)=0A=
++{=0A=
++    MockI3cTargetState *s =3D MOCK_I3C_TARGET(obj);=0A=
++    s->can_ibi =3D false;=0A=
++=0A=
++    /* For IBIs. */=0A=
++    timer_init_ns(&s->qtimer, QEMU_CLOCK_VIRTUAL, mock_i3c_target_timer_el=
+apsed,=0A=
++                  s);=0A=
++}=0A=
++=0A=
++static const Property remote_i3c_props[] =3D {=0A=
++    /* The size of the internal buffer. */=0A=
++    DEFINE_PROP_UINT32("buf-size", MockI3cTargetState, cfg.buf_size, 0x100=
+),=0A=
++    /*=0A=
++     * If the mock target receives this number, it will issue an IBI after=
 =0A=
-+=0A=
-+    sysbus_init_irq(SYS_BUS_DEVICE(dev), &s->irq);=0A=
-+=0A=
-+    memory_region_init_io(&s->mr, OBJECT(s), &dw_i3c_ops, s, name,=0A=
-+                          DW_I3C_NR_REGS << 2);=0A=
-+    sysbus_init_mmio(SYS_BUS_DEVICE(dev), &s->mr);=0A=
-+}=0A=
-+=0A=
-+static const Property dw_i3c_properties[] =3D {=0A=
-+    DEFINE_PROP_UINT8("device-id", DWI3C, id, 0),=0A=
++     * 1 second. Disabled if the IBI magic number is 0.=0A=
++     */=0A=
++    DEFINE_PROP_UINT8("ibi-magic-num", MockI3cTargetState, cfg.ibi_magic, =
+0x00),=0A=
 +};=0A=
 +=0A=
-+static void dw_i3c_class_init(ObjectClass *klass, const void *data)=0A=
++static void mock_i3c_target_class_init(ObjectClass *klass, const void *dat=
+a)=0A=
 +{=0A=
 +    DeviceClass *dc =3D DEVICE_CLASS(klass);=0A=
-+    ResettableClass *rc =3D RESETTABLE_CLASS(klass);=0A=
++    I3CTargetClass *k =3D I3C_TARGET_CLASS(klass);=0A=
 +=0A=
-+    rc->phases.enter =3D dw_i3c_reset_enter;=0A=
++    dc->realize =3D mock_i3c_target_realize;=0A=
++    k->event =3D mock_i3c_target_event;=0A=
++    k->recv =3D mock_i3c_target_rx;=0A=
++    k->send =3D mock_i3c_target_tx;=0A=
++    k->handle_ccc_read =3D mock_i3c_target_handle_ccc_read;=0A=
++    k->handle_ccc_write =3D mock_i3c_target_handle_ccc_write;=0A=
 +=0A=
-+    dc->desc =3D "DesignWare I3C Controller";=0A=
-+    dc->realize =3D dw_i3c_realize;=0A=
-+    dc->vmsd =3D &vmstate_dw_i3c;=0A=
-+    device_class_set_props(dc, dw_i3c_properties);=0A=
++    device_class_set_props(dc, remote_i3c_props);=0A=
 +}=0A=
 +=0A=
-+static const TypeInfo dw_i3c_types[] =3D {=0A=
++static const TypeInfo mock_i3c_target_types[] =3D {=0A=
 +    {=0A=
-+        .name =3D TYPE_DW_I3C,=0A=
-+        .parent =3D TYPE_SYS_BUS_DEVICE,=0A=
-+        .instance_size =3D sizeof(DWI3C),=0A=
-+        .class_init =3D dw_i3c_class_init,=0A=
++        .name          =3D TYPE_MOCK_I3C_TARGET,=0A=
++        .parent        =3D TYPE_I3C_TARGET,=0A=
++        .instance_size =3D sizeof(MockI3cTargetState),=0A=
++        .instance_init =3D mock_i3c_target_init,=0A=
++        .class_init    =3D mock_i3c_target_class_init,=0A=
 +    },=0A=
 +};=0A=
 +=0A=
-+DEFINE_TYPES(dw_i3c_types)=0A=
++DEFINE_TYPES(mock_i3c_target_types)=0A=
 +=0A=
-diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig=0A=
-index 8344b9769f..d545ecd712 100644=0A=
---- a/hw/arm/Kconfig=0A=
-+++ b/hw/arm/Kconfig=0A=
-@@ -546,6 +546,7 @@ config ASPEED_SOC=0A=
-     select FTGMAC100=0A=
-     select I2C=0A=
-     select I3C=0A=
-+    select DW_I3C=0A=
-     select DPS310=0A=
-     select PCA9552=0A=
-     select PCA9554=0A=
 diff --git a/hw/i3c/Kconfig b/hw/i3c/Kconfig=0A=
-index e07fe445c6..ecec77d6fc 100644=0A=
+index ecec77d6fc..d5c6d4049b 100644=0A=
 --- a/hw/i3c/Kconfig=0A=
 +++ b/hw/i3c/Kconfig=0A=
-@@ -1,2 +1,5 @@=0A=
- config I3C=0A=
+@@ -3,3 +3,13 @@ config I3C=0A=
+ =0A=
+ config DW_I3C=0A=
      bool=0A=
 +=0A=
-+config DW_I3C=0A=
++config I3C_DEVICES=0A=
++    # Device group for i3c devices which can reasonably be user-plugged to=
+ any=0A=
++    # board's i3c bus.=0A=
 +    bool=0A=
++=0A=
++config MOCK_I3C_TARGET=0A=
++    bool=0A=
++    select I3C=0A=
++    default y if I3C_DEVICES=0A=
 diff --git a/hw/i3c/meson.build b/hw/i3c/meson.build=0A=
-index fb127613fe..83d75e7d5c 100644=0A=
+index 83d75e7d5c..e614b18712 100644=0A=
 --- a/hw/i3c/meson.build=0A=
 +++ b/hw/i3c/meson.build=0A=
-@@ -1,4 +1,5 @@=0A=
- i3c_ss =3D ss.source_set()=0A=
+@@ -2,4 +2,5 @@ i3c_ss =3D ss.source_set()=0A=
  i3c_ss.add(when: 'CONFIG_I3C', if_true: files('core.c'))=0A=
  i3c_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files('aspeed_i3c.c'))=0A=
-+i3c_ss.add(when: 'CONFIG_DW_I3C', if_true: files('dw-i3c.c'))=0A=
+ i3c_ss.add(when: 'CONFIG_DW_I3C', if_true: files('dw-i3c.c'))=0A=
++i3c_ss.add(when: 'CONFIG_MOCK_I3C_TARGET', if_true: files('mock-i3c-target=
+.c'))=0A=
  system_ss.add_all(when: 'CONFIG_I3C', if_true: i3c_ss)=0A=
 diff --git a/hw/i3c/trace-events b/hw/i3c/trace-events=0A=
-index cdf7cb07f6..2d944387db 100644=0A=
+index 39f33d9a50..9e58edec99 100644=0A=
 --- a/hw/i3c/trace-events=0A=
 +++ b/hw/i3c/trace-events=0A=
-@@ -3,8 +3,10 @@=0A=
- # aspeed_i3c.c=0A=
- aspeed_i3c_read(uint64_t offset, uint64_t data) "I3C read: offset 0x%" PRI=
-x64 " data 0x%" PRIx64=0A=
- aspeed_i3c_write(uint64_t offset, uint64_t data) "I3C write: offset 0x%" P=
-RIx64 " data 0x%" PRIx64=0A=
--aspeed_i3c_device_read(uint32_t deviceid, uint64_t offset, uint64_t data) =
-"I3C Dev[%u] read: offset 0x%" PRIx64 " data 0x%" PRIx64=0A=
--aspeed_i3c_device_write(uint32_t deviceid, uint64_t offset, uint64_t data)=
- "I3C Dev[%u] write: offset 0x%" PRIx64 " data 0x%" PRIx64=0A=
+@@ -36,3 +36,13 @@ legacy_i2c_recv(uint8_t byte) "Legacy I2C recv 0x%" PRIx=
+8=0A=
+ legacy_i2c_send(uint8_t byte) "Legacy I2C send 0x%" PRIx8=0A=
+ legacy_i2c_start_transfer(uint8_t address, bool is_recv) "Legacy I2C START=
+ with address 0x%" PRIx8 " is_recv=3D%d"=0A=
+ legacy_i2c_end_transfer(void) "Legacy I2C STOP"=0A=
 +=0A=
-+# dw-i3c,c=0A=
-+dw_i3c_read(uint32_t deviceid, uint64_t offset, uint64_t data) "I3C Dev[%u=
-] read: offset 0x%" PRIx64 " data 0x%" PRIx64=0A=
-+dw_i3c_write(uint32_t deviceid, uint64_t offset, uint64_t data) "I3C Dev[%=
-u] write: offset 0x%" PRIx64 " data 0x%" PRIx64=0A=
- =0A=
- # core.c=0A=
- i3c_target_event(uint8_t address, uint8_t event) "I3C target 0x%" PRIx8 " =
-event 0x%" PRIx8=0A=
++# mock-target.c=0A=
++mock_i3c_target_rx(uint8_t byte) "I3C mock target read 0x%" PRIx8=0A=
++mock_i3c_target_tx(uint8_t byte) "I3C mock target write 0x%" PRIx8=0A=
++mock_i3c_target_event(uint8_t event) "I3C mock target event 0x%" PRIx8=0A=
++mock_i3c_target_handle_ccc_read(uint32_t num_read, uint32_t num_to_read) "=
+I3C mock target read %" PRId32 "/%" PRId32 " bytes"=0A=
++mock_i3c_target_new_ccc(uint8_t ccc) "I3C mock target handle CCC 0x%" PRIx=
+8=0A=
++mock_i3c_target_handle_ccc_write(uint32_t num_sent, uint32_t num_to_send) =
+"I3C mock target send %" PRId32 "/%" PRId32 " bytes"=0A=
++mock_i3c_target_do_ibi(uint8_t address, bool is_recv) "I3C mock target IBI=
+ with address 0x%" PRIx8 " RnW=3D%d"=0A=
++mock_i3c_target_do_ibi_nack(const char *reason) "NACKed from controller wh=
+en %s target interrupt"=0A=
 -- =0A=
 2.43.0=0A=
 
