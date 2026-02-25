@@ -4,79 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D61D4F55449
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 03:57:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DCD0F55449
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 03:58:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vv61z-0003xq-8I; Tue, 24 Feb 2026 22:57:47 -0500
+	id 1vv625-0003yW-SP; Tue, 24 Feb 2026 22:57:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vv61x-0003xi-R8
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 22:57:45 -0500
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vv625-0003yO-0N
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 22:57:53 -0500
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vv61w-0001hF-7N
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 22:57:45 -0500
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-4834826e5a0so76464835e9.2
- for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 19:57:43 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vv623-0001hk-4h
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 22:57:52 -0500
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-483a233819aso60573065e9.3
+ for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 19:57:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771991862; x=1772596662; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=ukzxCsnUD20tsJiQHHLFwK5qahbxJbMxKECzqGh9PP4=;
- b=fdXB/WfeXpo4UY9JjC2LlhT1NB9lpGjqNaRPmdqxhHEJoovtnIrpwR8yLfL2+ytJcN
- Sm/PLW/1Cq371XIDC/Kjn5nZ0RcucEt1NXIYHPwIWnWnKTfNR7Jn1rwCd7dDRLTVEhq9
- aC1t71vBWtQ+m22B/z4iv1/DodIixddFd8XjStjS5Iq8M7VZK+ywQXNaCe+Dsa3IG6Gi
- ofkMP/MNECTaX4ECc6L/azfuJbhtoKbeMVritge5r5K6K3Lv2+Hu0RnEIT7qa23sfQhv
- Jt81lwe7fT1NNFLA22rpMYAM+nqAfDIc82m2i2iUna0svuIw9WvYVDoAnNXPCTxb8cjR
- mdRQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771991862; x=1772596662;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1771991869; x=1772596669; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ukzxCsnUD20tsJiQHHLFwK5qahbxJbMxKECzqGh9PP4=;
- b=JJm7iXsC0hI1/c4Zzy4YY1FQSgSioCUHmhtZwampmPAvqF7+0eg0cPpJdhF83bSWvo
- m9b4reuFUbL5c8/mVx3A8qHDXL6XuNClVOIjY4ICgMLq4wnfv5fs4woicdwfqrMAKWWI
- 5/ABIvwVEArr+hcszimggdIu1scsOELObdOGoXkUFf+2D9Wbz2UcCTdLlb+q2ShWY8Dt
- fa7zyskbgCS1b69uNl+DNXYuviOpBmsHzLsLug2qJkit2ZitWwaLzK4rFWVNf1C2WZhE
- ChSGVax034fbKxipGURJK01A99uMopvni50TdTeu4k482tERQJ4gX/gSd/gJKVSsSATk
- Fi+g==
-X-Gm-Message-State: AOJu0YyopP/j74MD4XYxfaeM/6XWZmTTaefPN5XwOFDymKPiVKwEe7Cw
- GbbxMR8r9M4bao8kBy3OtY91wMNXr7PXU+FrN7MJJWocWJapcF3S8CrIZTGcowrkBPw9VZQtwRf
- fZ21cPCY=
-X-Gm-Gg: ATEYQzwu8BKQFDrOai30mZLFWyo1rHX+yZIkqs6aEWqIl4B3+TiA1e+KyfUq5+5rWD1
- mYO5gQ6lny4hwdgrooORzFMohO8TpWGv+taPELzPzjPix+BwVZUBTtqEqC3FuPnvuOr14jK8zry
- Pby9Kuthl4occOCspTznuJlsK/0I5KsmiSztNjCkpJ/YbVCp8MlpJvFT6MoHJVxogYCOr9uyc7S
- bYMoXWs/3DX6iY6AGJvEKkRUOuwQHgJAsuhLacWG443NFy9DiYLrv5BpqBxlBNTmsnEybE+vr5i
- eCifK0WSe9r0ZhBCVW/o249ZgmSXpNtgjyGik06gn9F5FOsVK87UTrflMrl1HgY6PiE3k4pox5Y
- h/9eMWXDVzDRVEqmTkPcwUuT5V1Tn5eA7kD78ShK++eEFAg9u3mNx693WpuZOwwgkJmo7aYs+N7
- B6jfaP7lVeC5E6Gs4FGKX7YxA719Rv0TFIvKnK9P7gthJoA9/mlqcYuEpQ4RvwfOroIb7BYVgY
-X-Received: by 2002:a05:600c:c167:b0:480:3a72:524a with SMTP id
- 5b1f17b1804b1-483a95e9643mr207069835e9.19.1771991861606; 
- Tue, 24 Feb 2026 19:57:41 -0800 (PST)
+ bh=i/9SkafDQ7ZtmnOiSLZrHFDCEI0mCaP1Z+TZ4BeyaOk=;
+ b=QXk4wB9FU0j4wOWzg2GcazAoqnSKm9AUQSxNgT5e5FaP46Z9XXHCR53WwLik48KLQU
+ Q0rhA/iFFCmnfIpdAorQvXmLuC8W9BpkTN2n2CoIwuGbXWU8VtuPJZBLQ8RXDxb2ucLn
+ mBFF2ZCz2Xn7xRCoO3NKf1ewC/0v7DrOU8fiQ/qlvklCkWIUqS3FuKk+NHAb65ZQvfvs
+ Oo5iCmstMf0pje4nYAuboBizM01UuUo8EkTGrkI2jFdhAQVsjNHwl/gUaW2+I1DRL/om
+ rJ6zhZQf9RdoFa9eB6BrE0FsCfINIuW81xkxPjkB4yv2UBUXv8JoZR9uYOEGDRzONd4G
+ x/Xg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1771991869; x=1772596669;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=i/9SkafDQ7ZtmnOiSLZrHFDCEI0mCaP1Z+TZ4BeyaOk=;
+ b=Q3hISZceTj3EvWRWKZ6YwQaUMzUf3Bvc2CpfaX6FM6wb7kRcu0eAeDx+8UrrgyjRlk
+ f7nIyXnaw7vX1biqYWc3PPn3Clu8LePap7eesZWSvhXAy7g9q01+t3fJDvI0+3UAsnCp
+ nirghAK2vJJ8E/395MNf9xEU/Jejxn7hLhamtNVQHVhW7vRjyG01n4sKI9Wf7bBTAcsG
+ 4OXYSUazQ68dRvWmfzIZX/Or8rQiEgehLSjPfgDqgsO9kIQHeBv7jZ3xLIcPzVOELDFF
+ Xz66Drf+44ymhKFNNrx6suf4spivdGScsgzQNNKbbLAFhz0L0iz4/wt0fWaPALH/tLbe
+ oH9Q==
+X-Gm-Message-State: AOJu0YyGMVP5i7UbNel6UvhFbAgsfbwAzMizp+46fTGcNi4E1X2Gvikf
+ TT38aodJXS0Pp7JYrrCl7aKEMWZkXBDYwZf8UYx0xGPyc4sV5RrmLBtTfn2qTYr/N/x+LUtUrOd
+ AlEM3ui4=
+X-Gm-Gg: ATEYQzztTT3TEQ/QyPD4pU8uxCLjr0x/nEeEnD9Vk+JbmpZP77pE6PCLWfgy6ufWFiX
+ UCCXVsB/jjTrwG3j6HZdYRktt5Vybskvu50GAXtoB8+NLZC4pVI2qDxr9RNa7e93n2afsbjZcXU
+ WW9Rbk3un6pSv2QJMjFUAldw6akKksf892w3lY8PEfu40ZC3mUoYaGPwC7PeGCjpkjTTHdZrTVB
+ yz1AxXQ6Qt89CZp+wKjIOu84YxqMsI5E/HfGEGSmVi4/McoWlJMcakO0A5djknWiEk6MiPsYbzV
+ VCTbinLoc9m6O6wzxdkbJ/cnd4E7DJp7LxY/9kOIkPbozUyrSbawbZtMoy1w41JmED36iofgD4q
+ U/fOFhsPeyDSjOFT5TOg88sMzqw8WjGJ7goKeYKApIFqKDjGDy2j4/XDKfrMaqZGJrC/GH/EOF2
+ 6E9s4RdniDFGVJSmvacz4W+cMlHo+SaT3U3kbyW98hvff/wDWjMLDPogUhC+kZL1gxAaTglibN
+X-Received: by 2002:a05:600c:4e8a:b0:47e:e91d:73c0 with SMTP id
+ 5b1f17b1804b1-483a962e37emr230339405e9.19.1771991868608; 
+ Tue, 24 Feb 2026 19:57:48 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-483bfb789efsm2424045e9.2.2026.02.24.19.57.40
+ 5b1f17b1804b1-483bd6f19f5sm98226335e9.1.2026.02.24.19.57.47
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 24 Feb 2026 19:57:40 -0800 (PST)
+ Tue, 24 Feb 2026 19:57:47 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
  Igor Mammedov <imammedo@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 00/11] buildsys: Build most stubs once
-Date: Wed, 25 Feb 2026 04:57:28 +0100
-Message-ID: <20260225035739.42848-1-philmd@linaro.org>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH v2 01/11] meson: Include various directories providing stubs
+ before libqemuutil
+Date: Wed, 25 Feb 2026 04:57:29 +0100
+Message-ID: <20260225035739.42848-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20260225035739.42848-1-philmd@linaro.org>
+References: <20260225035739.42848-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,50 +105,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Missing review: #5
+Stubs are provided by libqemuutil. We want to use the generic meson
+machinery to provide stubs once, instead of per sub-directories. Move
+the 'subdir' calls earlier so when these directories are processed
+they can add units to the global stub_ss[] source set.
 
-v2: Move acpi_send_event() declaration
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+---
+ meson.build | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-Use meson magical machinery to build stubs once,
-instead of one time per qemu-system-FOO binary.
-
-Philippe Mathieu-Daudé (11):
-  meson: Include various directories providing stubs before libqemuutil
-  hw/acpi: Move acpi_send_event() function out of acpi_interface.c
-  hw/acpi: Move qbus_build_aml() function out of acpi_interface.c
-  hw/acpi: Always link QOM interfaces with system binaries
-  hw/nvram: Build fw_cfg-acpi.c once
-  hw/acpi: Build stubs once
-  hw/display: Build stubs once
-  hw/net: Build stubs once
-  hw/*: Build stubs once
-  fsdev: Build stubs once
-  semihosting: Build stubs once
-
- meson.build                                   | 14 +++++-----
- include/hw/acpi/acpi.h                        |  1 +
- include/hw/acpi/acpi_dev_interface.h          |  2 --
- hw/acpi/acpi_interface.c                      | 19 -------------
- hw/acpi/aml-build.c                           | 11 ++++++++
- hw/acpi/core.c                                | 10 +++++++
- hw/display/acpi-vga-stub.c                    |  1 +
- .../rocker/{qmp-norocker.c => rocker-stubs.c} |  0
- fsdev/meson.build                             |  3 +-
- hw/acpi/meson.build                           | 28 ++++++++++---------
- hw/cxl/meson.build                            |  4 +--
- hw/display/meson.build                        | 19 ++++++-------
- hw/i386/kvm/meson.build                       |  5 +---
- hw/mem/meson.build                            |  4 +--
- hw/net/meson.build                            |  3 +-
- hw/nvram/meson.build                          |  4 +--
- hw/pci/meson.build                            |  2 +-
- hw/smbios/meson.build                         | 10 +++----
- hw/usb/meson.build                            |  3 +-
- hw/virtio/meson.build                         |  9 ++----
- semihosting/meson.build                       |  9 +++---
- 21 files changed, 80 insertions(+), 81 deletions(-)
- rename hw/net/rocker/{qmp-norocker.c => rocker-stubs.c} (100%)
-
+diff --git a/meson.build b/meson.build
+index 4ffbb96fe49..db051a1b87b 100644
+--- a/meson.build
++++ b/meson.build
+@@ -3725,6 +3725,13 @@ subdir('authz')
+ subdir('crypto')
+ subdir('ui')
+ subdir('gdbstub')
++subdir('semihosting')
++subdir('audio')
++subdir('io')
++subdir('chardev')
++subdir('fsdev')
++subdir('dump')
++
+ if have_system
+   subdir('hw')
+ else
+@@ -3770,12 +3777,6 @@ if have_system or have_user
+   subdir('target')
+ endif
+ 
+-subdir('audio')
+-subdir('io')
+-subdir('chardev')
+-subdir('fsdev')
+-subdir('dump')
+-
+ if have_block
+   block_ss.add(files(
+     'block.c',
+@@ -3845,7 +3846,6 @@ subdir('migration')
+ subdir('monitor')
+ subdir('net')
+ subdir('replay')
+-subdir('semihosting')
+ subdir('stats')
+ subdir('tcg')
+ subdir('fpu')
 -- 
 2.52.0
 
