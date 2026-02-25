@@ -4,94 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59E84F55454
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 04:45:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F09B2F55452
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 04:46:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vv6mM-00087p-PL; Tue, 24 Feb 2026 23:45:42 -0500
+	id 1vv6mj-0008ES-II; Tue, 24 Feb 2026 23:46:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1vv6mK-00087A-6o
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 23:45:41 -0500
-Received: from mail-dl1-x1242.google.com ([2607:f8b0:4864:20::1242])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vv6mc-0008DN-5K
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 23:46:00 -0500
+Received: from mail-yw1-x1134.google.com ([2607:f8b0:4864:20::1134])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1vv6mH-0008Nj-MP
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 23:45:39 -0500
-Received: by mail-dl1-x1242.google.com with SMTP id
- a92af1059eb24-124afd03fd1so9004642c88.0
- for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 20:45:33 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vv6ma-0008Qj-Qg
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 23:45:57 -0500
+Received: by mail-yw1-x1134.google.com with SMTP id
+ 00721157ae682-798374d0f44so7355227b3.0
+ for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 20:45:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1771994732; x=1772599532; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=A3yJFLV1pMZQ7A7LbEe2fUs1hCMPhtC17uzqzQOOVrI=;
- b=KsXyk9Usuj6pzZQXcS3apKkg3urp3ZotHVIbFnuQ1cJb3BwJhYm7TrQbXzHZcO2uWK
- +ft46jY1FWZ9dm0AhVTuHb00+3XzSH4z3iPwqg0QkhEJDLWHfJxivShTXyNobvpREGWc
- 5/5fsJtTixSdP5JTwVIqWE25W+S2CTm9gJjHSDfcZBnb8fOxhzMPksRWwwzYR4PwQ7Qt
- 2r2YTz2uj8bd9hu2dPCnMT8jgRHS5BwcPHJSimC4xo25oh/pbGx7Ac2BFOC7ZUq4VLzJ
- AA0PmMC34r0N3IgzxgrMU/oqo4TJXx3Ce23MFcDWZYQQhzIXVF0+5JyfALw5qIb1Nt+l
- K9YA==
+ d=linaro.org; s=google; t=1771994756; x=1772599556; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=AyipU4OmPeui2N0CWDqKa9srG/l4ukP3kBQTNtLYz8I=;
+ b=Go5/oOB+YehHyMp3/r8CURwrpm8B91c2yy83B9BZjzFyz4glMPvIX0jcm7NYlgHLTD
+ 2cVO9RbeluMfBkslaqQ/JNx/EAd+2YGdf0GhMaSf/TIHy2v6Gbw7WQ18NZQyLV64IdAX
+ iY6o44yBKhCo6cggsNBmlPxNJ3Tf216pojcoQJnmI0iFVPSnui8Z76BhzBDVrxBXDFZ5
+ kNcLq0KeqN39xh5teIs9+KIHW9LeLwBIIrgrp1vvg+7Xt7OxnKTXVF9SFuG6cQXDw7Bs
+ E3JoIL4YA/sS1X1nNP+OWiRdYDAvCS78UUvcKhjH4DoYhm64Ka9PFC/8alZLqkdE3PG5
+ /jIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771994732; x=1772599532;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=A3yJFLV1pMZQ7A7LbEe2fUs1hCMPhtC17uzqzQOOVrI=;
- b=Qaa07uuoM8Wk5V5k/QFqKnzKrLsFXIbkZSLgQsUBZ5m4roumxBN5g4OgbiDgeVyex5
- 3WdsVsmx/QNeGC86xdxA30Od7B2l+f2H8anyJMbsgznCXNHwD1yGZJaLAuk5Uo3Vhm7u
- zuWEQEv3Sb/LBUBu1ouR4r0Bfg6TBM8etfagjKI0HfyESfLmyCU7E40maHtekHORCAHy
- lUlZdtTfqmGnEkDxABVyDx+nAxBFfRlMroH94K0MYvdVXVmHYXTRmZdzL1oj1JYVbsAB
- LpI7iK5BCuC9AJ6QkRFIrrsgY4LlJqXAAY7c4uTeCxyH+iao+WMb1OAH01uTwwBTyCyO
- bXRQ==
-X-Gm-Message-State: AOJu0Yx65oyTuBCiIit+sikFdfUQNWnTlKvkrSHUPw0J2Bx+NjJ4oh13
- bqa40mELdqYff3dux+gK6HyUTvAut5G+ewY6ZcY1ek8gkaZs8+Ro5s2A
-X-Gm-Gg: ATEYQzwfltxcpPgMOvEyGLK2lrq6bm19dm5qhly6zudUmepvY8R6J9/LVg2QGsMEKc9
- 3AnAOPcZAek03CcaKFlpd1eNdipYEhDRye5fFtzAroxSVuxyxONxyvhYGLsmm2yNMEN5/5pLzEQ
- KaV6ZiM7lSb+cbY+w3/NwPlgVQCbF81M7/LjcBFN5KI5qvG/h2JoAe1Wxlh4+p1KoTXcpIovCY2
- lvJ6CUveq3wTvvmlucsPHhgwM56KZqTb2OVwNTuRGHdzLsVlNUVuj1F8lC4j6GApUP8fw7lWkrB
- B0g1AJnETeKZURw2hCByM4zTDYNTLBkMrRzx3NgtYiWHM+Qux6j9MaaVPjmOC5SmQm+ZoR4QU1d
- jzzSOKv7f4HrFnvVyKHayV7hYi2QYz12VgTQ5M9xqhf1feB3ibFnkyz7ekwMoj7oJMp2lwfWVC8
- SAnTYaLUX7hgfWlzq4vgf4Pf8kbyoOMTBpnsgD8ycU66EMPvkNjTztZvWaGsuFgsY0ZkauC7nGp
- xJnK8vnflrexvy948C6/+LSqSwN3jI=
-X-Received: by 2002:a05:7022:6983:b0:127:7893:b1e6 with SMTP id
- a92af1059eb24-12781e8fb65mr381201c88.30.1771994732081; 
- Tue, 24 Feb 2026 20:45:32 -0800 (PST)
-Received: from ZEVORN-PC.localdomain ([38.95.120.198])
+ d=1e100.net; s=20230601; t=1771994756; x=1772599556;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=AyipU4OmPeui2N0CWDqKa9srG/l4ukP3kBQTNtLYz8I=;
+ b=oOKcDMa+iKy5nCKuxkb1CtZDVjqJ2f/N7EyU/DysFoYYtWRxYQVeW9uaePpjZAnR7o
+ afiIkC4KNuUtTxeUcIDUvjehxTafoT4Thw063DzqjsoEXFmEc6ipMilV2Cihl5Ygbvgc
+ Q78BkSznmlwn5GOd+9Ra1zM70kVQcprFqxNhR4OXlMkifyf/JR4C7SOAY0K0Line8ZDP
+ ZzZToxiE0V5cxjpqpKZYkEvTjL4iSL7XWajnhfz3OFT/E3VInXe8MjKrZtI4gsUTGCT5
+ HwXv7dP2I6Rv9bMOqzFOBnilcoS8lmdIslQysFGN5s7C4P8g5aK711HsD/RK4uEUpXS2
+ C+MA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVYFq4LrW3iyVrI1VfZmuYq0xAV1jU/H0tJGwWCxQDDanO5BQN/9lbde23y/lXUvo5iPSZN2BErhJvw@nongnu.org
+X-Gm-Message-State: AOJu0YxXe6rCqXc6V6kDvBIYbxiqwbZjALsnqECzhk6FfHqNk2YcV2HW
+ gteQQPbHqINfluUnzw5fOf3EkyDc88MTPp5eqylD7v4OPk9K5YRKsDhF5fh3gBKnb1E=
+X-Gm-Gg: ATEYQzwU1OH6mNAbmwHVDheRTquBVevwA4S1j4vjV3tuTs6B16j6kyB7brOXYvklWSA
+ vBtAhRrVw0+jJvNpoc2IFNotig39nEe7FzycMLnOQDZG+GTYReDG3UqUafYYh5vZqKvDPViDxJM
+ ACJ/vdIXbrfq+PoRA7908LHHArRUMzLbwu7LY4YQl5df8qTUoG/9ZVnveOzDD8GHL5PZv7g12Jr
+ m49c/Wq6ef4drDEpPibudk/cnZqEE1kW6+6bPCGaG7lUYo62113sc1RS8Q93wvo7OO6WUy/9Yzh
+ P4exr+Yfu5VyVSkCWzEQJ3+NZBgojNvp8nnejkclB7ySGFslr7rbKSS3XnkF9Xe8dHOjp+3Ah+t
+ YbgTv8cGHiY2Mh3K39CvEwok+NRFxhI2cSUZQpPHb5MO+pHYykR+ZVU/fnrRJm7A5IEHoNJDQbN
+ 8AUMgDtYGEUheOon13L3mU2/tYF1hE+vGHGedToKxSfZEZup6Tcsx7Wq3j9BY3a7YsBMbm8qJLW
+ aqt6okPdUzE/QPUVq8=
+X-Received: by 2002:a05:690c:9a85:b0:796:3f8a:9607 with SMTP id
+ 00721157ae682-79865094422mr23378667b3.30.1771994755701; 
+ Tue, 24 Feb 2026 20:45:55 -0800 (PST)
+Received: from [10.34.149.227] ([172.59.192.107])
  by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-1276af207d6sm13322801c88.5.2026.02.24.20.45.27
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 24 Feb 2026 20:45:31 -0800 (PST)
-Date: Wed, 25 Feb 2026 12:44:35 +0800
-From: Chao Liu <chao.liu.zevorn@gmail.com>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
- Richard Henderson <richard.henderson@linaro.org>, qemu-s390x@nongnu.org, 
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>, qemu-riscv@nongnu.org,
- qemu-ppc@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, 
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-Subject: Re: [PATCH v2 27/50] target/riscv: Replace ldtul_p() -> ldn_p()
-Message-ID: <aZ5-Iow28DgQob_B@ZEVORN-PC.localdomain>
-References: <20260219191955.83815-1-philmd@linaro.org>
- <20260219191955.83815-28-philmd@linaro.org>
+ 00721157ae682-7982ddccc24sm52341097b3.40.2026.02.24.20.45.51
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 24 Feb 2026 20:45:55 -0800 (PST)
+Message-ID: <2e9125f8-b764-4397-9b55-d18cb0806cd5@linaro.org>
+Date: Wed, 25 Feb 2026 15:45:47 +1100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] accel: Build stubs once
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+References: <20260225044225.64059-1-philmd@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260225044225.64059-1-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260219191955.83815-28-philmd@linaro.org>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1242;
- envelope-from=chao.liu.zevorn@gmail.com; helo=mail-dl1-x1242.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1134;
+ envelope-from=richard.henderson@linaro.org; helo=mail-yw1-x1134.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -109,76 +109,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Feb 19, 2026 at 08:19:29PM +0100, Philippe Mathieu-Daudé wrote:
-> Prefer ldn_p(riscv_cpu_is_32bit) over target-specific ldtul_p().
+On 2/25/26 15:42, Philippe Mathieu-DaudÃ© wrote:
+> Move stubs to the global stub_ss[] source set. These files
+> are now built once for all binaries, instead of one time
+> per system binary.
 > 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Inspired-by: Pierrick Bouvier<pierrick.bouvier@linaro.org>
+> Signed-off-by: Philippe Mathieu-DaudÃ©<philmd@linaro.org>
 > ---
->  target/riscv/gdbstub.c | 14 ++++++++------
->  1 file changed, 8 insertions(+), 6 deletions(-)
-> 
-> diff --git a/target/riscv/gdbstub.c b/target/riscv/gdbstub.c
-> index 1934f919c01..f89b20ea84a 100644
-> --- a/target/riscv/gdbstub.c
-> +++ b/target/riscv/gdbstub.c
-> @@ -191,14 +191,15 @@ static int riscv_gdb_set_csr(CPUState *cs, uint8_t *mem_buf, int n)
->  {
->      RISCVCPU *cpu = RISCV_CPU(cs);
->      CPURISCVState *env = &cpu->env;
-> +    const unsigned regsz = riscv_cpu_is_32bit(cpu) ? 4 : 8;
->  
->      if (n < CSR_TABLE_SIZE) {
-> -        target_ulong val = ldtul_p(mem_buf);
-> +        target_ulong val = ldn_p(mem_buf, regsz);
->          int result;
->  
->          result = riscv_csrrw_debug(env, n, NULL, val, -1);
->          if (result == RISCV_EXCP_NONE) {
-> -            return sizeof(target_ulong);
-> +            return regsz;
->          }
->      }
->      return 0;
-> @@ -225,11 +226,12 @@ static int riscv_gdb_get_virtual(CPUState *cs, GByteArray *buf, int n)
->  static int riscv_gdb_set_virtual(CPUState *cs, uint8_t *mem_buf, int n)
->  {
->      if (n == 0) {
-> -#ifndef CONFIG_USER_ONLY
->          RISCVCPU *cpu = RISCV_CPU(cs);
-> +        const unsigned regsz = riscv_cpu_is_32bit(cpu) ? 4 : 8;
-> +#ifndef CONFIG_USER_ONLY
->          CPURISCVState *env = &cpu->env;
->  
-> -        target_ulong new_priv = ldtul_p(mem_buf) & 0x3;
-> +        target_ulong new_priv = ldn_p(mem_buf, regsz) & 0x3;
->          bool new_virt = 0;
->  
->          if (new_priv == PRV_RESERVED) {
-> @@ -237,7 +239,7 @@ static int riscv_gdb_set_virtual(CPUState *cs, uint8_t *mem_buf, int n)
->          }
->  
->          if (new_priv != PRV_M) {
-> -            new_virt = (ldtul_p(mem_buf) & BIT(2)) >> 2;
-> +            new_virt = (ldn_p(mem_buf, regsz) & BIT(2)) >> 2;
->          }
->  
->          if (riscv_has_ext(env, RVH) && new_virt != env->virt_enabled) {
-> @@ -246,7 +248,7 @@ static int riscv_gdb_set_virtual(CPUState *cs, uint8_t *mem_buf, int n)
->  
->          riscv_cpu_set_mode(env, new_priv, new_virt);
->  #endif
-> -        return sizeof(target_ulong);
-> +        return regsz;
->      }
->      return 0;
->  }
-> -- 
-> 2.52.0
-> 
-> 
+>   meson.build             |  2 +-
+>   accel/stubs/meson.build | 19 +++++++++----------
+>   2 files changed, 10 insertions(+), 11 deletions(-)
 
-Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-Thanks,
-Chao
+r~
 
