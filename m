@@ -4,79 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 100E5FCEE95
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 12:07:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 354D8FCEEAD
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 12:12:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvDeD-0007Cd-5m; Wed, 25 Feb 2026 07:05:45 -0500
+	id 1vvDkT-0006KY-2e; Wed, 25 Feb 2026 07:12:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vvDe5-0007BK-Er
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 07:05:37 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vvDkR-0006Jn-6b
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 07:12:11 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vvDe2-0003ji-Gz
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 07:05:36 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vvDkP-0005QX-5k
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 07:12:10 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772021133;
+ s=mimecast20190719; t=1772021527;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=RaPxp1WEdRt0jnZCBSLHJX1sxKAQNNgjpbASlQsTY/o=;
- b=Z4S35KuQ+HmCCrJSXonNtefNzE5mmP6JxwdI5BuqILXtxUDTiKTEW7OosFwJHg5NsWLE6f
- pps4YUulja01T9orejmdq8K0LV7D3gIIB+UdEB3cmDge2zDx4DJYpCAR+BvnVH7ohjDa4C
- ACjtYxNk2ZkCd/jbj4zMLVIEk24Eu8k=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=g1vvfEcfKlKR5YJmMjDab6u3KVHfsqMk7Wxiz7JaetI=;
+ b=DcDcwb70oAqITz8Tzp2z2fz2Diq840I4hGo9hWG1FOdYcETkGoX/jzZ/pIajLPZbyiKZnz
+ 8SqKX9Gh95B2LmJqawTrzDCkDRFPl1FcRZ4neC0uCc4pw4feKl5fXR6cPG84ef1NSmLKjX
+ tOCMGyF+WWqrmXbEWRoq9p3iT9L1bmM=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-694-UhbaNF1kO8OIerHXDyerwA-1; Wed,
- 25 Feb 2026 07:05:30 -0500
-X-MC-Unique: UhbaNF1kO8OIerHXDyerwA-1
-X-Mimecast-MFC-AGG-ID: UhbaNF1kO8OIerHXDyerwA_1772021129
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-501-5CzsIybJNSa9ECRgzHLScQ-1; Wed,
+ 25 Feb 2026 07:12:04 -0500
+X-MC-Unique: 5CzsIybJNSa9ECRgzHLScQ-1
+X-Mimecast-MFC-AGG-ID: 5CzsIybJNSa9ECRgzHLScQ_1772021523
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3225A19560A2; Wed, 25 Feb 2026 12:05:29 +0000 (UTC)
-Received: from localhost (unknown [10.48.1.67])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id B82E21955F43; Wed, 25 Feb 2026 12:05:27 +0000 (UTC)
-From: marcandre.lureau@redhat.com
-To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Alex Williamson <alex@shazbot.org>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- David Hildenbrand <david@kernel.org>, Mark Kanda <mark.kanda@oracle.com>,
- kvm@vger.kernel.org,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Xu <peterx@redhat.com>, Ben Chaney <bchaney@akamai.com>,
- Fabiano Rosas <farosas@suse.de>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PATCH v2 11/14] system/ram-discard-manager: drop replay from source
- interface
-Date: Wed, 25 Feb 2026 13:04:52 +0100
-Message-ID: <20260225120456.3170057-12-marcandre.lureau@redhat.com>
-In-Reply-To: <20260225120456.3170057-1-marcandre.lureau@redhat.com>
-References: <20260225120456.3170057-1-marcandre.lureau@redhat.com>
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4368A195606B; Wed, 25 Feb 2026 12:12:03 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.13])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B46CD19560B6; Wed, 25 Feb 2026 12:12:02 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 54A2F21E692D; Wed, 25 Feb 2026 13:12:00 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Antoine Damhet <adamhet@scaleway.com>
+Cc: qemu-devel@nongnu.org,  qemu-block@nongnu.org,  Kevin Wolf
+ <kwolf@redhat.com>,  Hanna Reitz <hreitz@redhat.com>,  Eric Blake
+ <eblake@redhat.com>
+Subject: Re: [PATCH v2 2/3] qapi: block: Refactor HTTP(s) common arguments
+In-Reply-To: <20260224155314.1658988-3-adamhet@scaleway.com> (Antoine Damhet's
+ message of "Tue, 24 Feb 2026 16:51:30 +0100")
+References: <20260224155314.1658988-1-adamhet@scaleway.com>
+ <20260224155314.1658988-3-adamhet@scaleway.com>
+Date: Wed, 25 Feb 2026 13:12:00 +0100
+Message-ID: <875x7lm38v.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=marcandre.lureau@redhat.com;
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -5
 X-Spam_score: -0.6
 X-Spam_bar: /
 X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.734, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.78,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -94,260 +87,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+Antoine Damhet <adamhet@scaleway.com> writes:
 
-Remove replay_populated and replay_discarded from RamDiscardSourceClass
-now that the RamDiscardManager handles replay iteration internally via
-is_populated.
+> The HTTPs curl block driver is a superset of the HTTP driver, reflect
+> that in the QAPI.
+>
+> Suggested-by: Markus Armbruster <armbru@redhat.com>
+> Signed-off-by: Antoine Damhet <adamhet@scaleway.com>
+> ---
+>  qapi/block-core.json | 13 ++-----------
+>  1 file changed, 2 insertions(+), 11 deletions(-)
+>
+> diff --git a/qapi/block-core.json b/qapi/block-core.json
+> index b82af7425614..a7871705fa69 100644
+> --- a/qapi/block-core.json
+> +++ b/qapi/block-core.json
+> @@ -4595,23 +4595,14 @@
+>  # Driver specific block device options for HTTPS connections over the
+>  # curl backend.  URLs must start with "https://".
+>  #
+> -# @cookie: List of cookies to set; format is "name1=content1;
+> -#     name2=content2;" as explained by CURLOPT_COOKIE(3).  Defaults to
+> -#     no cookies.
+> -#
+>  # @sslverify: Whether to verify the SSL certificate's validity
+>  #     (defaults to true)
+>  #
+> -# @cookie-secret: ID of a QCryptoSecret object providing the cookie
+> -#     data in a secure way.  See @cookie for the format.  (since 2.10)
+> -#
+>  # Since: 2.9
+>  ##
+>  { 'struct': 'BlockdevOptionsCurlHttps',
+> -  'base': 'BlockdevOptionsCurlBase',
+> -  'data': { '*cookie': 'str',
+> -            '*sslverify': 'bool',
+> -            '*cookie-secret': 'str'} }
+> +  'base': 'BlockdevOptionsCurlHttp',
+> +  'data': { '*sslverify': 'bool'} }
+>  
+>  ##
+>  # @BlockdevOptionsCurlFtp:
 
-Remove the now-dead replay methods, helpers, and
-for_each_populated/discarded_section() from ram-block-attributes, which
-was the last source still carrying this code.
-
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
----
- include/system/ram-discard-manager.h |  52 +++--------
- system/ram-block-attributes.c        | 130 ---------------------------
- 2 files changed, 10 insertions(+), 172 deletions(-)
-
-diff --git a/include/system/ram-discard-manager.h b/include/system/ram-discard-manager.h
-index b188e09a30f..b5dbcb4a82d 100644
---- a/include/system/ram-discard-manager.h
-+++ b/include/system/ram-discard-manager.h
-@@ -77,8 +77,8 @@ static inline void ram_discard_listener_init(RamDiscardListener *rdl,
- /**
-  * typedef ReplayRamDiscardState:
-  *
-- * The callback handler for #RamDiscardSourceClass.replay_populated/
-- * #RamDiscardSourceClass.replay_discarded to invoke on populated/discarded
-+ * The callback handler used by ram_discard_manager_replay_populated() and
-+ * ram_discard_manager_replay_discarded() to invoke on populated/discarded
-  * parts.
-  *
-  * @section: the #MemoryRegionSection of populated/discarded part
-@@ -134,42 +134,6 @@ struct RamDiscardSourceClass {
-      */
-     bool (*is_populated)(const RamDiscardSource *rds,
-                          const MemoryRegionSection *section);
--
--    /**
--     * @replay_populated:
--     *
--     * Call the #ReplayRamDiscardState callback for all populated parts within
--     * the #MemoryRegionSection via the #RamDiscardSource.
--     *
--     * In case any call fails, no further calls are made.
--     *
--     * @rds: the #RamDiscardSource
--     * @section: the #MemoryRegionSection
--     * @replay_fn: the #ReplayRamDiscardState callback
--     * @opaque: pointer to forward to the callback
--     *
--     * Returns 0 on success, or a negative error if any notification failed.
--     */
--    int (*replay_populated)(const RamDiscardSource *rds,
--                            const MemoryRegionSection *section,
--                            ReplayRamDiscardState replay_fn, void *opaque);
--
--    /**
--     * @replay_discarded:
--     *
--     * Call the #ReplayRamDiscardState callback for all discarded parts within
--     * the #MemoryRegionSection via the #RamDiscardSource.
--     *
--     * @rds: the #RamDiscardSource
--     * @section: the #MemoryRegionSection
--     * @replay_fn: the #ReplayRamDiscardState callback
--     * @opaque: pointer to forward to the callback
--     *
--     * Returns 0 on success, or a negative error if any notification failed.
--     */
--    int (*replay_discarded)(const RamDiscardSource *rds,
--                            const MemoryRegionSection *section,
--                            ReplayRamDiscardState replay_fn, void *opaque);
- };
- 
- /**
-@@ -226,8 +190,10 @@ bool ram_discard_manager_is_populated(const RamDiscardManager *rdm,
- /**
-  * ram_discard_manager_replay_populated:
-  *
-- * A wrapper to call the #RamDiscardSourceClass.replay_populated callback
-- * of the #RamDiscardSource sources.
-+ * Iterate the given #MemoryRegionSection at minimum granularity, calling
-+ * #RamDiscardSourceClass.is_populated for each chunk, and invoke @replay_fn
-+ * for each contiguous populated range. In case any call fails, no further
-+ * calls are made.
-  *
-  * @rdm: the #RamDiscardManager
-  * @section: the #MemoryRegionSection
-@@ -244,8 +210,10 @@ int ram_discard_manager_replay_populated(const RamDiscardManager *rdm,
- /**
-  * ram_discard_manager_replay_discarded:
-  *
-- * A wrapper to call the #RamDiscardSourceClass.replay_discarded callback
-- * of the #RamDiscardSource sources.
-+ * Iterate the given #MemoryRegionSection at minimum granularity, calling
-+ * #RamDiscardSourceClass.is_populated for each chunk, and invoke @replay_fn
-+ * for each contiguous discarded range. In case any call fails, no further
-+ * calls are made.
-  *
-  * @rdm: the #RamDiscardManager
-  * @section: the #MemoryRegionSection
-diff --git a/system/ram-block-attributes.c b/system/ram-block-attributes.c
-index e921e09f5b3..718c7075cec 100644
---- a/system/ram-block-attributes.c
-+++ b/system/ram-block-attributes.c
-@@ -32,106 +32,6 @@ ram_block_attributes_get_block_size(void)
-     return qemu_real_host_page_size();
- }
- 
--typedef int (*ram_block_attributes_section_cb)(MemoryRegionSection *s,
--                                               void *arg);
--
--static int
--ram_block_attributes_for_each_populated_section(const RamBlockAttributes *attr,
--                                                const MemoryRegionSection *section,
--                                                void *arg,
--                                                ram_block_attributes_section_cb cb)
--{
--    unsigned long first_bit, last_bit;
--    uint64_t offset, size;
--    const size_t block_size = ram_block_attributes_get_block_size();
--    int ret = 0;
--
--    first_bit = section->offset_within_region / block_size;
--    first_bit = find_next_bit(attr->bitmap, attr->bitmap_size,
--                              first_bit);
--
--    while (first_bit < attr->bitmap_size) {
--        MemoryRegionSection tmp = *section;
--
--        offset = first_bit * block_size;
--        last_bit = find_next_zero_bit(attr->bitmap, attr->bitmap_size,
--                                      first_bit + 1) - 1;
--        size = (last_bit - first_bit + 1) * block_size;
--
--        if (!memory_region_section_intersect_range(&tmp, offset, size)) {
--            break;
--        }
--
--        ret = cb(&tmp, arg);
--        if (ret) {
--            error_report("%s: Failed to notify RAM discard listener: %s",
--                         __func__, strerror(-ret));
--            break;
--        }
--
--        first_bit = find_next_bit(attr->bitmap, attr->bitmap_size,
--                                  last_bit + 2);
--    }
--
--    return ret;
--}
--
--static int
--ram_block_attributes_for_each_discarded_section(const RamBlockAttributes *attr,
--                                                const MemoryRegionSection *section,
--                                                void *arg,
--                                                ram_block_attributes_section_cb cb)
--{
--    unsigned long first_bit, last_bit;
--    uint64_t offset, size;
--    const size_t block_size = ram_block_attributes_get_block_size();
--    int ret = 0;
--
--    first_bit = section->offset_within_region / block_size;
--    first_bit = find_next_zero_bit(attr->bitmap, attr->bitmap_size,
--                                   first_bit);
--
--    while (first_bit < attr->bitmap_size) {
--        MemoryRegionSection tmp = *section;
--
--        offset = first_bit * block_size;
--        last_bit = find_next_bit(attr->bitmap, attr->bitmap_size,
--                                 first_bit + 1) - 1;
--        size = (last_bit - first_bit + 1) * block_size;
--
--        if (!memory_region_section_intersect_range(&tmp, offset, size)) {
--            break;
--        }
--
--        ret = cb(&tmp, arg);
--        if (ret) {
--            error_report("%s: Failed to notify RAM discard listener: %s",
--                         __func__, strerror(-ret));
--            break;
--        }
--
--        first_bit = find_next_zero_bit(attr->bitmap,
--                                       attr->bitmap_size,
--                                       last_bit + 2);
--    }
--
--    return ret;
--}
--
--
--typedef struct RamBlockAttributesReplayData {
--    ReplayRamDiscardState fn;
--    void *opaque;
--} RamBlockAttributesReplayData;
--
--static int ram_block_attributes_rds_replay_cb(MemoryRegionSection *section,
--                                              void *arg)
--{
--    RamBlockAttributesReplayData *data = arg;
--
--    return data->fn(section, data->opaque);
--}
--
- /* RamDiscardSource interface implementation */
- static uint64_t
- ram_block_attributes_rds_get_min_granularity(const RamDiscardSource *rds,
-@@ -159,34 +59,6 @@ ram_block_attributes_rds_is_populated(const RamDiscardSource *rds,
-     return first_discarded_bit > last_bit;
- }
- 
--static int
--ram_block_attributes_rds_replay_populated(const RamDiscardSource *rds,
--                                          const MemoryRegionSection *section,
--                                          ReplayRamDiscardState replay_fn,
--                                          void *opaque)
--{
--    RamBlockAttributes *attr = RAM_BLOCK_ATTRIBUTES(rds);
--    RamBlockAttributesReplayData data = { .fn = replay_fn, .opaque = opaque };
--
--    g_assert(section->mr == attr->ram_block->mr);
--    return ram_block_attributes_for_each_populated_section(attr, section, &data,
--                                                           ram_block_attributes_rds_replay_cb);
--}
--
--static int
--ram_block_attributes_rds_replay_discarded(const RamDiscardSource *rds,
--                                          const MemoryRegionSection *section,
--                                          ReplayRamDiscardState replay_fn,
--                                          void *opaque)
--{
--    RamBlockAttributes *attr = RAM_BLOCK_ATTRIBUTES(rds);
--    RamBlockAttributesReplayData data = { .fn = replay_fn, .opaque = opaque };
--
--    g_assert(section->mr == attr->ram_block->mr);
--    return ram_block_attributes_for_each_discarded_section(attr, section, &data,
--                                                           ram_block_attributes_rds_replay_cb);
--}
--
- static bool
- ram_block_attributes_is_valid_range(RamBlockAttributes *attr, uint64_t offset,
-                                     uint64_t size)
-@@ -346,6 +218,4 @@ static void ram_block_attributes_class_init(ObjectClass *klass,
- 
-     rdsc->get_min_granularity = ram_block_attributes_rds_get_min_granularity;
-     rdsc->is_populated = ram_block_attributes_rds_is_populated;
--    rdsc->replay_populated = ram_block_attributes_rds_replay_populated;
--    rdsc->replay_discarded = ram_block_attributes_rds_replay_discarded;
- }
--- 
-2.53.0
+Reviewed-by: Markus Armbruster <armbru@redhat.com>
 
 
