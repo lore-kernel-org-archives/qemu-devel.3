@@ -4,166 +4,164 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04C17EFD206
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 08:05:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 588A2EFD205
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 08:05:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vv9t2-0005CI-LW; Wed, 25 Feb 2026 03:04:50 -0500
+	id 1vv9t8-0005DA-QF; Wed, 25 Feb 2026 03:04:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <florian.hofhammer@epfl.ch>)
- id 1vv9st-0005Bm-As
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 03:04:40 -0500
+ id 1vv9sw-0005By-Pb
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 03:04:42 -0500
 Received: from
  mail-switzerlandnorthazlp170100000.outbound.protection.outlook.com
  ([2a01:111:f403:c213::] helo=ZRAP278CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <florian.hofhammer@epfl.ch>)
- id 1vv9sp-0000eE-EJ
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 03:04:38 -0500
+ id 1vv9su-0000eE-Eq
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 03:04:41 -0500
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=OtiwQ5TCUJY4E6ew7JJgtbQ1SN57Nf1hTKTUpK4kwE/cI1wFRS1KwTR79kNwoEH6fz/pwgaEQtgiRD3Q6PotV7os/r1EvtkKv8R3Bxxue4XKrVQalAbS8TNMZN44QZ87K+WPsLEFd4z6o504fqxAkI9rtcln5dJgv/QcpMj478SWs+k+ePCph3u2SjrDIpwR5C8AZpaGTR8yoKgITN9kOMDzWRq3Blg31g0eUexfiRqsd91LTxLesZ7fUFCFD697xsY18FqF3yeDZ+8GPbfWu8ex3uoB6e1y2g2SxdsGPIiCWWv8O+QH/8GUdhMaqi6cz8qxFMZ4eDNRg3mPPKi6tw==
+ b=V9D2Hg7QF2NOH7Vu5+Z67SbiF2FdfrVnbCAaaNeoKt/kau26C8khrLUe9SS0XfbXTI0t3H0b3f7OgzGLOEo0TdwUlCtqNxcOsAs/j+3QP9e1ybjVMr9qqA5xl44mEqGEMeljxJRm8n2ZISzi2K15LKjrSZgxEKz3PJ6VbW45kaLJh1LANmwiEz7ZA+nNfMYFYQqp5djNNQKnnWPupk8mLToEmzqqsDZBlEVqwspqrrwTc18ViK4EgNdlaCvAzPMk8gH4GfSE5B7wzJndNw3o984ab2ZPbI5LMfAXGXvvaZy3q3kXrALJIL48Y89Ud55I5iBy6gfwk0f2fFlcvd99oA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=vcuVG/fmQuxTypzkpxuKhlejODf7/AXPYjfdTfOKFNM=;
- b=IbVbTJ/+grQ2zMoB7OuPGPdp1NY8WQ8u2oUIfyY3kOBTNITUSOjHPb6z5lOe65zvGxJy8z+bIrXRl7Js0dcyF982JMvfzpaZAVYmlsyxvoOZ22sFES6P7HbW9zT2p32vPpF0kezu39AS4DPejD22wnfjaGiAAK5tvgpEDmFw4m41eu6ymn1o04Fl6A474GczA9V/MKbNnIdKHoGOnENHeBlYn/jIEc8ytN29d2WB3RCVijjCnFvPr9teHv85LJW/XqIgfLOnrzLQoAiFbPkoDDk1iRd+AvtUMwkCXHNvQqKDKrt3wGZFWu9dQWDC9CVf6hCgt0BmRUCBHXSwMID3Ew==
+ bh=5rOCNhBQRJDbdB6t77F88jsX/CZWQWQiXr6Ilj6u/oQ=;
+ b=NVbFmudKPLeN7MP9LT7S3NF3Z4h3Ibon5SkuOQkmKMxFIT4zsDDIZZWoHHGbwrgiuNK/sH15GFOunjtBq/HJSevePISzVkjm0l81/+9H1bD3HjyCy59Rk4s/PBGnAXjAUqhmVJmWpW2BQSXgX1gzMet73gg+j8Lu/o5I++dCbQw4hMGy0jA97c7YO/Ekx58re4LZyZCUu48WRt95RILUnr1ipGLIoJH37qxm8tP4n5Zc/TdFy0kE5yDPuE2xYXvxEDuvKRl3e3k0ag36g/HYj1w2VyMJuufp/8d2Y4GevZNYdW0oWB9FnacZ1IACVruTgben0kSW/da3iwpvk1YIcQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=epfl.ch; dmarc=pass action=none header.from=epfl.ch; dkim=pass
  header.d=epfl.ch; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=epfl.ch; s=selector1; 
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=vcuVG/fmQuxTypzkpxuKhlejODf7/AXPYjfdTfOKFNM=;
- b=aV17JAWOyJNEBItzIQcsec/9sbjrFfSyBcKz8U69ADTxcpik3vQkFNyVPkVSBeRFoJPTu0HM5wRuucOgyLCexc+gAADBD3U3vrUC7PaoapiLAhf0k4yrzHlaASpmv/uHhX4MDQxNKd/oHXvDqxGES3MV2LiPZ+hIRDoABVEexB4=
+ bh=5rOCNhBQRJDbdB6t77F88jsX/CZWQWQiXr6Ilj6u/oQ=;
+ b=ZXLRFhdovUzVveRxjud+HbhRJAYPRStxVwbim7tmDipDFPF3XLTd97DKdlxqd5b0zk0DnX2Zz/e8nbNLYvTUz2UHMGv7qBf5RV/PFvsKKXyTUoD/ZZJGkvRwY6PFG3/zB0dgsVfzKGto247S5PDKwmE8y69UsIm+xjqohsoP8t0=
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=epfl.ch;
 Received: from ZRH2PFAD84B9AF9.CHEP278.PROD.OUTLOOK.COM (2603:10a6:918::220)
  by ZR3P278MB1238.CHEP278.PROD.OUTLOOK.COM (2603:10a6:910:73::6) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9632.23; Wed, 25 Feb
- 2026 08:04:28 +0000
+ 2026 08:04:29 +0000
 Received: from ZRH2PFAD84B9AF9.CHEP278.PROD.OUTLOOK.COM
  ([fe80::80ea:3d03:40bf:998c]) by ZRH2PFAD84B9AF9.CHEP278.PROD.OUTLOOK.COM
  ([fe80::80ea:3d03:40bf:998c%6]) with mapi id 15.20.9632.017; Wed, 25 Feb 2026
  08:04:28 +0000
-Message-ID: <ca11b212-e824-4e34-92ac-c6e2af505c0c@epfl.ch>
-Date: Wed, 25 Feb 2026 08:55:25 +0100
+Message-ID: <317b95ed-f4cc-44b0-afae-64fd45ac8792@epfl.ch>
+Date: Wed, 25 Feb 2026 08:59:39 +0100
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 3/7] plugins: add PC diversion API function
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, richard.henderson@linaro.org, laurent@vivier.eu,
+Subject: Re: [PATCH v4 4/7] tests/tcg: add test for qemu_plugin_set_pc API
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Cc: alex.bennee@linaro.org, richard.henderson@linaro.org, laurent@vivier.eu,
  imp@bsdimp.com, berrange@redhat.com
 References: <909b0a4f-9759-4e27-bba8-997ae2f41bd6@epfl.ch>
- <33eb2408-b4c3-4ca4-9555-b2015fa38630@epfl.ch>
- <87wm022fxi.fsf@draig.linaro.org>
- <8cd3610f-c6c2-4b8e-85cc-ad4711deab9b@linaro.org>
+ <2ccc79ee-48ab-4097-a9cc-4d2b79ab9a8a@epfl.ch>
+ <193c4274-c79e-4b76-8502-312dd3ebeb64@linaro.org>
 Content-Language: en-US
 From: Florian Hofhammer <florian.hofhammer@epfl.ch>
-In-Reply-To: <8cd3610f-c6c2-4b8e-85cc-ad4711deab9b@linaro.org>
+In-Reply-To: <193c4274-c79e-4b76-8502-312dd3ebeb64@linaro.org>
 Content-Type: multipart/signed; protocol="application/pkcs7-signature";
- micalg=sha-256; boundary="------------ms040105010909010904010408"
+ micalg=sha-256; boundary="------------ms050008050307070704030205"
 X-ClientProxiedBy: GV0P278CA0072.CHEP278.PROD.OUTLOOK.COM
  (2603:10a6:710:2a::23) To ZRH2PFAD84B9AF9.CHEP278.PROD.OUTLOOK.COM
  (2603:10a6:918::220)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: ZRH2PFAD84B9AF9:EE_|ZR3P278MB1238:EE_
-X-MS-Office365-Filtering-Correlation-Id: f3bfa2d2-5687-4d63-1629-08de74447f82
+X-MS-Office365-Filtering-Correlation-Id: 40484a57-fbbd-4e4f-3d65-08de74447ff2
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
  ARA:13230040|376014|19092799006|366016|786006|1800799024; 
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?c092YnNoVTFRQVNXYlVUL3hoM0JYTnlsZm1YSHlFMFBwdFN6Z21wa2hPTUJK?=
- =?utf-8?B?RDQ0YmRUazRaS2ptR055UE9HaTg3UUVhM1ZDS3Z5R3ZTOTBJd2xGMVgvRk5i?=
- =?utf-8?B?VEZ6RFBmQmVoOXk2Yi9PdFMxM1A1ODRVRFRhVThWSW9EclpoSWV5WWtBVHVH?=
- =?utf-8?B?cEYxbW1VL0xJT0NudUZ4dUQ4WlcrVnBVR0hmakl6OUNuZmt0YjdJMWlSK2JV?=
- =?utf-8?B?YzBMR0FzbkRiblBNb0FuTG1yZWJKeUNsYVBoOUpIcnM4N0ZzeFBWUXFZZkdT?=
- =?utf-8?B?V1l5NE1lL0V4dnMyR2p5ZlBVL3Z5aXI1cDM2UkVzSGxEUWZ1VXRLNEtjdVJm?=
- =?utf-8?B?R0FBSVdWUVFTTGU4WnBEbHVBT1BFMTA5ODhSeVVncDYxOUIyRW1mTENLS3hu?=
- =?utf-8?B?Qiszek5RbmZQd3Q4VkhmRHkwWTNzMFRzbHhWQXVSZ09RSm03clgvVE42M05P?=
- =?utf-8?B?S0Y1NmN2dUcyT3RNMGFvYlVKcGVYWDJsUTZ5Y3FRYTdkUnJOUEFORlVmMDlW?=
- =?utf-8?B?MG5JMEtYeGJobE81SFN5cEd2RU11NUpla0FVeGd0WTduQm9qZjNQWGIwRi93?=
- =?utf-8?B?MmFEaVNaVzNOcStHWFpvc0pIRFAxY1dGSXpqSTRRbzREZksyOWlrOElFc3pt?=
- =?utf-8?B?VDVrMVVjVFVuTTVwcFVremluWkRpU0F4VlpoSllGYkJnQVNLODRmWStYVURY?=
- =?utf-8?B?MTZzM2pHQ05wK0lSZnJBT2F2c2dRNjdGUHBkVUFVeTEyaXU2d3hGRE9KVG9P?=
- =?utf-8?B?bHlSMmhLT0YzQnZQRkpUZFVNNXQvZ0lhRmxzT3h1Yk5hUEFxSGR3bWZmUDBI?=
- =?utf-8?B?ZncrRVVCbU5tK21sWWR3eGt3aEpwNDgvTHA5Q2hJa3ZUWmkxYWtlRzVzc0xz?=
- =?utf-8?B?elI4K3lDQ0I4bFhDOUVhaUNnUThoZE5EaGpzNnFwdkRCZit1NzRCaVpuY1JS?=
- =?utf-8?B?cE90UUZSN1B0aEZ2QThIYjZIdVlMNUZFZThKNkJyWXVuRXNMWStHQnRhYS9T?=
- =?utf-8?B?bjFjS09MSzROTkh1Q1hPaDNkMy9PK3hIU2lOeFpUSzM0TVpFdmxPSFNOWDkx?=
- =?utf-8?B?SkgvMENWR29vdHJieDBWcjluUjQ4Ly9mVlYwcFhYZTlKek52NHRKSGVGSld0?=
- =?utf-8?B?dWgxQ09YS2N0VDZiWUZOYWdFNjRmVUszeVV0ZGp6ak5RWHN6SW1KRGZucEY4?=
- =?utf-8?B?cWdjeHA4VHlnc01WaXRyaEg1MytHTmVoNE5aanNIWkhqVUFsWTRtWjNQZlBX?=
- =?utf-8?B?RFpTQ2NvMk5RUFpDVlE2amxZeG1GbHFmTEY5cHFZRU9xaHJnWFdja2pNVm42?=
- =?utf-8?B?QkRIZ0liLzhROHJYUSszdjZWYXA1R25UU09YTUcydUsyNFIrd3lvTWdNdU4x?=
- =?utf-8?B?a2IwaXo4ZTA0SklNUDM4REhaVkp5VlBHNTR4cEJmd2FCLzJoQXpnYUMrSFVm?=
- =?utf-8?B?alJ5bUlJY2RuZ0xGQkZtVUFNZXpxSGh1QytHdXRpYThZUTNvQWp1U1hCbno5?=
- =?utf-8?B?ZTB0UUpBQTNmTldVa2RhTHEwa0NVV3cwZGZlWGNHWUFCb3lnWEI4NzhyMEhS?=
- =?utf-8?B?T1IvT0FHZnNrN2hQb1JaRGZRVHZmd2ZiOW01SWpsc2pqTTFvMUJXQkZrT1BR?=
- =?utf-8?B?ZmpoenNDRXJhVHNLWWlGSjcwMDBUdlFxb3VtOTNEaStYUG1tc2JoL1J1M0NM?=
- =?utf-8?B?aU5WcEhVWTFVSmpsRS8wdVJRTlZFRzU2eFJOM2h3bXdpQXBHTzJxZmpRUTJv?=
- =?utf-8?B?eGdBZTNBalYxekFMVFJDMlBZTTI4SGxlV0RnYXFZYWdzenR6WjI5ZmFCVXYr?=
- =?utf-8?B?cHlvOGJhaS9jUzBSRUtJNWRTbWVHRHppcmliNUY1MzVRR0pFbnBQM25iR2t0?=
- =?utf-8?B?dGRkVXo4a0tjbStwN0d3MFJSclRQY0l4eWJJbCtlQWRvbm0zbzhEODdKR0s0?=
- =?utf-8?B?cWFuVkNnekRmWGcyOFM3TnI2aWpobFRqbjRZWko5c1YxRVFSNEZIaXYzbGE5?=
- =?utf-8?B?Ty9XSEZYTjJVZUJjRnNjaWFmeEVJR3dPait3M1lMMXBuQ2E1SmdYYTFPa0tU?=
- =?utf-8?B?TFl0Zk0yaFE0OEJUUkJnL08zMUxCU3pCRURDV1d5bUVob0RLQW1WdWx2c0VE?=
- =?utf-8?Q?o/0A=3D?=
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?UzVqK29zYUxWRHRPZFVyUlRtMEZnYzhRbUNwZXNRVnhuN1VzQjcvTi9ma0Rn?=
+ =?utf-8?B?M1pJUzRLZW03SytvZG5wVmp0cjh0QUZMYjdlaG53VzZ6RW8yZ1NTNnoyNmpG?=
+ =?utf-8?B?MjdGQVhPUnhGWEVsY2JOWEUyV1lIeVY1dVdyUDJyTVFuQnFpdEh1aFg4djNx?=
+ =?utf-8?B?cFJNeW8waVQ1UllYKzhJUVBZTENqL052RC9UazBWbSs3NFBUakNPZ1dEN3J3?=
+ =?utf-8?B?T01tZnlsNjQrTllWL0F3Vjc4UDNPTERoM016RTNzeml4OWgrempLV3Foc3pS?=
+ =?utf-8?B?dUc5cnV5OGZyMXlXck1MajE2TGpEMmxNQVd2NWVWdi9nb2NpMVR1R3VBTG1O?=
+ =?utf-8?B?aGZNWUpSUjNzQW1hWGVCZitHeXl2b3JHVHJhRnlNOTk1aC9XUUcrQUIvdEh2?=
+ =?utf-8?B?anFZZGNSelgvYW1ZcnRTRHBHOVg4NnkxcFB0QVFUWVZjdmxUcnphSlQrZDBw?=
+ =?utf-8?B?YkR6SERDZU5xejNYWURrdS9iZGdETGJ0TEpVWHZWRGoweWFaR3lBemk5SGVY?=
+ =?utf-8?B?akNxcmRtRVdjNUFHVTYwYjRHVEFmVTlLVHpoTWVMZzZ0UTdYWTR0Y0lPZXli?=
+ =?utf-8?B?ajA5KzdRKzgxL1djZXhrb2JWVVJLT1RXOWJZRG9lK1VDRVlGYjU4ZUcwWDBE?=
+ =?utf-8?B?REwrRk1aMGI1eHA3RU81UTJaWTBjZUFPUkhuc0FFam5ia3VDckhUK3lNSys5?=
+ =?utf-8?B?MXA0Wms2NWM4NGFOT3JLTi9kMGlIdzdMRzJNRjJQb2xUUjJKdzRHMWkyM3FT?=
+ =?utf-8?B?Vmk4MUVna0ZIaXNUVGk2aFVIVklPSXROVjRHUUxOL1V6dWhMTXZXN1c3S3c0?=
+ =?utf-8?B?VjlGM1FqRExtNmFkanBnTE1XV2xkS21KYmFsa2JSdjlxc3V5SzRqdlJHdUxa?=
+ =?utf-8?B?cFhIVkpKK3VWdDVWcmZ1VG5iOWF0MUNDclNiTmh1UXdKcGJlcW11dVkxV09u?=
+ =?utf-8?B?QkxiNTdLWW94WE1oQTRJTm9TbC82Y0paZGV0NlFUcmpUblEydnNhZ1RFTzIv?=
+ =?utf-8?B?WEJNcXRaYVFNVHN1aisrZnJGYWdINkdiejFMRnkzMEFJQ2NKQm1hNE8zK2hE?=
+ =?utf-8?B?UCtjRzZ1Y0tSZHJNN3F3ZUt4MzlZbTFyNHhRVnRqQ1ovNkRacGg1RkRXZTlI?=
+ =?utf-8?B?QVN0OENBdlk2UGEvS2o4V1lTZC9mTUxQK09adWRuNG42UVp2MW9pditUTFRo?=
+ =?utf-8?B?TE1ZNDdCeHhFVGRncWp3UHFnQlg1MEdZM2RHdGwwYitqbHFYTlFFMFJ1Tm1P?=
+ =?utf-8?B?alBRVTJURDg4NTBnNHQ2OXRNZWIrNXV5a2FDMnNQRkdCRjl4N2VueDFIN2Z5?=
+ =?utf-8?B?VjJCR0xEREJ1MVd5ZXdDcjU3V1F2b21tYkYyclQ1SmVZTlNPWlJaRjExNWwy?=
+ =?utf-8?B?ZWp2SGM1Ri9KZ2h0SXM5VnlKRDFhWGxldjlpaTkrbEttNllHc2hEcTZsVVFi?=
+ =?utf-8?B?SVFPMURDQzhEbWJMM3JMSHAvLytQMU5qTi9TMDROTkZyMHY0YUFTNDhOclRs?=
+ =?utf-8?B?N0c0OWhOL0VQbnkycURuTVpONm4ybXJOVGhyanFnckdEd3BUR1dGOXltcFcz?=
+ =?utf-8?B?L0c4Znh5Y1BwbGtXQ1kwZUhNaTFOUzUzQ2xsM2xVWDZtNmptOG5pV0JzOGkv?=
+ =?utf-8?B?VUUvM3FmUkJucTlPMnpqL1laaTQ3SzgwZGwyVFhDZ3N1NGxibUNZRkRNenM5?=
+ =?utf-8?B?M1VoZUYyYWRIQVhSTmppamNFUmhZVFJqRHAzM0JYQzg3YjRJYjRWWFk2V1Yz?=
+ =?utf-8?B?WVZLQVg3U2o5NTJEcWhLMWs5RDJRR2ZHaGhUYmNhR3dTUVcvaGNjN1ZQYXFZ?=
+ =?utf-8?B?VkhxS2d4VERpVm9seFo2YUdiUnVOOXlGUnFZUWNselZZalpvSDVFWHcwNml3?=
+ =?utf-8?B?d2RYYjJxODhmWmNUeGpLNm5pZGhMUHRUcE11OFl0TUpiNFhZd0Y3YnhJNEdX?=
+ =?utf-8?B?Sm82MUlVZllJVGsrdlJtRnZwaDdzSDRvaW9hTDBienJ4TWRHTGtBSFpkdkkw?=
+ =?utf-8?B?NFhWNjRudDBadWdqeXlEcTFyOURkaHZoVC9aK0Q3QVluVWxJRjd4TUpoNk9o?=
+ =?utf-8?B?T0JiNWhNbEJjTmEzdmVRZWJrN25obVI3Slg3N08xMHJHWkZhelVjVE1DQ3Yx?=
+ =?utf-8?Q?HBV4=3D?=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:ZRH2PFAD84B9AF9.CHEP278.PROD.OUTLOOK.COM; PTR:; CAT:NONE;
  SFS:(13230040)(376014)(19092799006)(366016)(786006)(1800799024); DIR:OUT;
  SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?SkhFQzN0SkF1NzlxalREMzRkbmtVaXRCbWNBVGJIZmZPZy85ZG5DVzZMNDlH?=
- =?utf-8?B?RlAzN3RKNitMblhmekJpTVo5NGZsVWt5VHhMcTdBT2lzVXVpNVVBb0hmdU5V?=
- =?utf-8?B?Mzl5MHJzSWQ1RlN1U0pIelR5ZkJFZHVzUGs4VmpxakpUSThiYU1BaFprWWFm?=
- =?utf-8?B?dFdPdjBWNzJHNUJGeUVmZXl4Mkl5VnpsQWUzTmpwaEJITjRNcUdyaTBDbzNt?=
- =?utf-8?B?MWx2TEtwb0dJSE1nYnJKamNMUWdvY3VzcHZWajFKWTk3dk94VnppOEtxRmtz?=
- =?utf-8?B?ajFUT2g5dFQwb0szL3NkOEpCVTMycWpGaTVwMGtjL0JjcjliMXNGQkh6cE1m?=
- =?utf-8?B?Z3RrZkdmSEFRd3lQRkt5Z0xMT1QvRDVxNlIvK2tQdFI4UmFKNFprWWIzdFFi?=
- =?utf-8?B?enkwYTlVRzlKWkhzZmk0VFFkQlVzZVNmbVV0SitrM0t0R2hqb0Q3eWJRa0Ny?=
- =?utf-8?B?eDhUcTRWOEdBbkxTQ1hVVTh6UmhXVVNrOFUyY1NjY2laOXFMVm1TMW9Gak4r?=
- =?utf-8?B?T0RYb2l1REVwcnpQQzBlWU5WZU9JS3hpQ05ua2ExOS9vcU5BZHRod0VBb2tL?=
- =?utf-8?B?RC9yR1FtQWpoQWJidHJUcFFTc253TTRJckxBVkVFNm1pQmFib2NuQ1FIenBa?=
- =?utf-8?B?K0pxQzUzWjl1d2lOY3l3blVjMHU1bzFQTjRuYjBBckxSdTdEeGY1QVFCdHZh?=
- =?utf-8?B?MS9KeWxZcUtGL2grSWdKLzhRZk95MzhZbjJhdTQwSW5PMHJBK3pKcDB1Q0hq?=
- =?utf-8?B?MW1uVjZUMmZ4KzllTWpLWW1MRDFVYUtBSEdYZXR3dWRoVDIrcExsSTJRNFlm?=
- =?utf-8?B?RjJzOFIwY3NHeW1rVi9IR2tFekRYU0lxSTFmMXdyenZudWpkRTlUdm56ZnRR?=
- =?utf-8?B?L0NPNlNNU0VJRm9ia0R2REQwQWJaZDRsMzI4WFhNbEUxYkRSRHZHdWM0VEJa?=
- =?utf-8?B?K3FXMk9Xc2pWeEcyaHJ4L0tDS0RPOTY3c3ltRUt6eVowQ0IxSUZxaVJMZHRN?=
- =?utf-8?B?WW03cUI0cVVYK0Vmc3c4Rk82UFhBWlpxSzRudE5iSXNmdkN0VElycDliTUI3?=
- =?utf-8?B?czhmWjdkeDk5dlNLdW1qY0tCSkphK09VenpLVG1QQ2ovNG9CNVZhK3dXMG9u?=
- =?utf-8?B?bjdRUFVUaXlKVURvOGhzRVlpZFowNkZVTDBic2xBeUtodTJsRU1wV21pRG9k?=
- =?utf-8?B?ZFdrK3J6akhYMlZwTlF6bUQwRFlTN2RKbmx5VGxwOC9kckpsWnJySk5XWEs3?=
- =?utf-8?B?UkI0M3ZUckpTRXc0ZCs2YkgxWmFCNExZZllJYXZoOTFUcDl6Z3F5SU5ZVU1v?=
- =?utf-8?B?TUxQWDQvN2VZQlN2U1V0SnpycFA4Zk9CNy9WbmpsQ3M2ZUJWN1REM1dqaHcw?=
- =?utf-8?B?VFZiRFVQdGxWWGowMFFsQXBQUFBGTXNMZlJyMGROTUIyOWhacldacnpGenJl?=
- =?utf-8?B?eFVReHV3cWxIRU1FaTRtVmlaZEl6MWJLeXRHbnJERkZXbFZWUkdRckZheDFW?=
- =?utf-8?B?SjNoUjFheDdZTUduTWQ0QjlaZWFOWTJqSzhZeGVYM01NeEx3SGxGTFVSNEd3?=
- =?utf-8?B?L1U3T245MmtHM1IyOVczVjRmbGZPOUtMTm1UNUpUUWduOXZBWXd0YTZ5bkFW?=
- =?utf-8?B?TmdDMDUybTlXNW9pV2pIOXJ4SFBRMlU5eFd6cWp6VHJ1THNwQnNNZjBZSkx1?=
- =?utf-8?B?L1NKa3lDZ1g3QnlsQVRvZlNad0xQOERSc2VrUGQ3N0ozL05NNUs1dGJnaHFU?=
- =?utf-8?B?eXdXOFErL0JBRTdnSS9pN1d0ZlJjT0pJelVQN0lOdklkU1hEOFhrSE55VEhx?=
- =?utf-8?B?VW96Vk9YVEhpdXk2R2xGL1RwaHpKR2g4N2RtdWc1TGJiZUdPK1Y1SkxTQ1A2?=
- =?utf-8?B?V1BpRVNWY3NYOHNvYW5vYTlKTmRPNUEvRi95a1Z3L3Fnb0tiSHI1VlVwUzVv?=
- =?utf-8?B?VXU0NEV3S29Vb0tteFJady85dWcwNm1PRmpLeTF2YnhLOUc5ZGUrZHFEMVFr?=
- =?utf-8?B?NVd5ekJKUzJhMnFEbzByYmFOMGw2cWpDQ0hpZkdPSFZYSjFtQlN5a2pneTgx?=
- =?utf-8?B?WHJVMWx0YVc3K1pIT05KdnZhRk5oUHBYL2dCR0p3QjlQUlNLWGVqZzhTd1JI?=
- =?utf-8?B?VEJQdkhGL0FGZmVaTFBMajNhWGN6VzZOa3RtVk9VVkdOVi9BUEJXUFVKaUJx?=
- =?utf-8?B?cmdqdEt5cE9hT1FkYUVlL0NZL1BnQXdLZE83TmJBU2FQWW56U04zcGQ4bnk5?=
- =?utf-8?B?S2ZpOXJhVWFsNDFlRFNwdWFqd3hrTXRYK1RHQ2NydzZySFF1TWRqMFBsN0x5?=
- =?utf-8?B?STRwNTZ0bGRsM2ljM1hTU2hYbEJkOVBLV1d4MWc0TktKSnpadVpFUT09?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?aTlNS2NVQ0I4VmJ0cGswU3BwNzVnYjdvQlk3R25mQzd3QkJoL3EwdGJTUS9m?=
+ =?utf-8?B?ZTU1SXFCakwyaWZPNk45dWdmb0tnb1JDb05iQm9mMUpIRGxqVHBDUlRsZXl1?=
+ =?utf-8?B?eDljOC9vUFkrOVRRVEdnUEtWUGdvK0xSRlZKNkdFUVkwUzkvMURmWThZejho?=
+ =?utf-8?B?WDAyWkpzTEUzcEkxM00rZFE0ZTFPM3U5S1dsdysvNVJXdk5JbTNDUHRqSlpE?=
+ =?utf-8?B?eEJ2b1B5QTcxSmYySTMxbkVTUjlyMWoxRktOUU1EUmxwaGVqbWp0dGVuN01m?=
+ =?utf-8?B?cFZBUmM1Sld5NGNZTXFTRkZIN05wUnpUUzBRZTNBTVJwVldDQms0U05aODQ2?=
+ =?utf-8?B?Z2pOLzhwWTc1RXVpaFBBVTlmNmVyc0dQclVEYU5UZWgrR3ZOM3FhTjUyMlhM?=
+ =?utf-8?B?NlJmS0pzSVBSN2VrOUl1UWFjYmlCT2ZTaEFYR3J0RjdmNVpmNkJMdVN4SytL?=
+ =?utf-8?B?T3VMMGQ5cFoxelNJejdiWDJGc1JlK2doNTVCUGVOZWNweHBhcmgvUmlEQzMz?=
+ =?utf-8?B?ODlKOXNOZkptZENZSXBNMThzSGlyNUkzRTdOWVNCdkppL2ZaTXRBcW85T3Ba?=
+ =?utf-8?B?TENDNWQzMkJmSWR0RVRvVVNLdWU0S2hZN3VSWGY0cTh4L1RuUng0ZkVQSjZn?=
+ =?utf-8?B?eDcxbll5aWl5dVJvTVY5d1pJcmlBU2RFYXFOb21hbDhwdTU1WlU1U2hLUmoy?=
+ =?utf-8?B?OFpDNXZRYVg0QXFyQnY1bUZjMkYyckh5NVN0WHJrT1h0K1I5aStsQ0hxZmND?=
+ =?utf-8?B?eW5DazVrZ1ozMVVuemNHbyt4aHhJYld1SUdSYmtQUG80T1pKd3kwNDJsN3V3?=
+ =?utf-8?B?Nml2Q3F0SnMwLzk5L3JZNDY0REg4bUFZVDBzV0pwVThtb0JtSTYzdjZJS3M1?=
+ =?utf-8?B?MkhBQ0g1R2JEK1I4czYzZGVGNjE2cFkwb1Niem83TEpnSVg3QkRxdW1Nb25W?=
+ =?utf-8?B?VDdxbTdWNVlnNjEvS0xQM2NkeFBvV0ZLaERCU01nT2hGYUUwdDFjOEpvcHly?=
+ =?utf-8?B?MDhZa0xacDZKOHN1MkhtRU5lTkxOQmRsQldrN0NtNm1UcmRSamV2eWhoOTZJ?=
+ =?utf-8?B?clJzOFRZaWFqOEk2eDQzOHFTdFJSbDQxOExweG0rd0ZXbU9jdGlmaFBpUTMy?=
+ =?utf-8?B?OHdjdEJEU0FmTVRMdXJLVmo1YkZWOU1uaElsdnFmZ3hiMGVaT2pIRmpSOXp6?=
+ =?utf-8?B?dWNKS3NFUEZHT3pVK09jL3VxdUxtYzJYNmQ1cEVMNWkvV2xrY1JRUldjR3Vn?=
+ =?utf-8?B?eW9jVXJkVHl2N01iTHIwejZBUnpQRm1QU0E5T0oyME1FdFR2UTNiL3cwWHQx?=
+ =?utf-8?B?NEtiL2tETlhuTEJkTEVnY01WQ1NtN1lLdTlaZzE4SjVHeFc4Z2hLdU9jeHFV?=
+ =?utf-8?B?ckRSQmxIQjNIYWNUajRQZ2oxUXFUWGIwOGQwTlNKMXNDNGQrU2pBbXdFRUpX?=
+ =?utf-8?B?VUlqUk5pc1l3Z1VyMHVoWFcxSGNPY0JLVW5oUUxSc0lFcVIyMnJ5S0VLbGhI?=
+ =?utf-8?B?cFJEUmxKNU1oSnM3M0ZzNS9mdWRnMisvNnZXYU41eTZQUWpFYnZ4R3MwQkU2?=
+ =?utf-8?B?WDR1MTRJMGR1VmlNOHI4T1JkQWhPZlJGNmQrcUNJem1GdXJyYk1lQ2tWRU5C?=
+ =?utf-8?B?aHNFd3I2Yng4OGhiUFZ4OGt4VC8ybTZ3YVhBT2RmTEpjRGd0azJuRUlBNFpl?=
+ =?utf-8?B?M0cvdysybkx6cU1RdWtFb0dlT004WVFEVzh1ejNMRGc5ZGs1WTJKODFWM1VE?=
+ =?utf-8?B?bFA5YzlycSs1R2dmWGpmcUlLYnVzQ0kvL1R3NHFxcElLSEhKNzdiVmRVWDhE?=
+ =?utf-8?B?WFZIWWN4Z2RFTUxtVEwySGxxQUJpVTh3TmY5dWRnbWJzeFZKSmlXSElSTUpi?=
+ =?utf-8?B?TXhqNWF0RWxOZGF5NlVreS80M3hnUWYrS1ZGM3JuWFhVbi9rdzEzMmJwN2ZC?=
+ =?utf-8?B?R0hXeFJqczFlTjNTY0hqUjkvL0d0LzVmcGRxa1JNdlIzM2toVVB6M1BTWERn?=
+ =?utf-8?B?WE00MGFHT2srQld3blJvejcxUzJTRXRPQVhZcklIYUxiVDdacTkzdGJZa2k5?=
+ =?utf-8?B?NlB5YnJlakVHb2tSSzE1Y2VxYjdkWDhDOWN2ajlCOHcrQTd3TUtQUDV1RmY3?=
+ =?utf-8?B?UHlPN1U1RzNJa3dERjF2dTEvY1phbVdFbWJyRlJvdzh3Qm9OMy9JRnZXMmts?=
+ =?utf-8?B?SG5xTjVxQURCRU9uNktQRnZKOGtteTFYdE1NSTB4azJacEt6SGFEdXdnUWp1?=
+ =?utf-8?B?OThjaVE2dTlqMFNDMFA2Qm80TUZ2R1Y5TkdEdXJySnVmUWdrV0JOeU5sVEJ2?=
+ =?utf-8?B?UlQyVGFLR3NJVTM3SFByLzY4bXQ3b2k5N1BZYjVuQ1R6ZE0yQVFFZz09?=
 X-OriginatorOrg: epfl.ch
-X-MS-Exchange-CrossTenant-Network-Message-Id: f3bfa2d2-5687-4d63-1629-08de74447f82
+X-MS-Exchange-CrossTenant-Network-Message-Id: 40484a57-fbbd-4e4f-3d65-08de74447ff2
 X-MS-Exchange-CrossTenant-AuthSource: ZRH2PFAD84B9AF9.CHEP278.PROD.OUTLOOK.COM
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Feb 2026 08:04:28.1434 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Feb 2026 08:04:28.8441 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: f6c2556a-c4fb-4ab1-a2c7-9e220df11c43
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: zh8QlRTYzHgE93eXZGEkCC0EIz8xg8wBZO1lC6HU598kkZO3m9OZ+lfiWVdt/FaQG718kdyN/F3ErTVdKEP8xgBcmTWMyifEu8xn3lgHZhU=
+X-MS-Exchange-CrossTenant-UserPrincipalName: KQwjT7rpOw7V/dV0MyHc58m9MU5M3a5o9Ex4iQMdT4rkfaoW7szz38x0jhgAO37oITJ4PbZHgexKB6XIah1G05euQoq+I7zFwdwbtPh0TUY=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: ZR3P278MB1238
 Received-SPF: pass client-ip=2a01:111:f403:c213::;
  envelope-from=florian.hofhammer@epfl.ch;
@@ -189,104 +187,120 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---------------ms040105010909010904010408
+--------------ms050008050307070704030205
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
 
-On 24/02/2026 21:12, Pierrick Bouvier wrote:
-> On 2/24/26 9:46 AM, Alex Benn=C3=A9e wrote:
->> Florian Hofhammer <florian.hofhammer@epfl.ch> writes:
+On 24/02/2026 21:35, Pierrick Bouvier wrote:
+> On 2/24/26 7:52 AM, Florian Hofhammer wrote:
+>> The test executes a non-existent syscall, which the syscall plugin
+>> intercepts and redirects to a clean exit.
+>> Due to architecture-specific quirks, the architecture-specific Makefil=
+es
+>> require setting specific compiler and linker flags in some cases.
 >>
->>> This patch adds a plugin API function that allows diverting the progr=
-am
->>> counter during execution. A potential use case for this functionality=
- is
->>> to skip over parts of the code, e.g., by hooking into a specific
->>> instruction and setting the PC to the next instruction in the callbac=
-k.
->>>
->>> Link: https://lists.nongnu.org/archive/html/qemu-devel/2025-08/msg006=
-56.html
->>> Signed-off-by: Florian Hofhammer <florian.hofhammer@epfl.ch>
->>> ---
->>>   include/plugins/qemu-plugin.h | 13 +++++++++++++
->>>   plugins/api.c                 | 13 +++++++++++++
->>>   2 files changed, 26 insertions(+)
->>>
->>> diff --git a/include/plugins/qemu-plugin.h b/include/plugins/qemu-plu=
-gin.h
->>> index a6ec8e275d..04c884e82b 100644
->>> --- a/include/plugins/qemu-plugin.h
->>> +++ b/include/plugins/qemu-plugin.h
->>> @@ -76,6 +76,7 @@ typedef uint64_t qemu_plugin_id_t;
->>>    *
->>>    * version 6:
->>>    * - changed return value of qemu_plugin_{read,write}_register from=
- int to bool
->>> + * - added qemu_plugin_set_pc
->>>    */
->>>     extern QEMU_PLUGIN_EXPORT int qemu_plugin_version;
->>> @@ -1042,6 +1043,18 @@ QEMU_PLUGIN_API
->>>   bool qemu_plugin_write_register(struct qemu_plugin_register *handle=
+>> Signed-off-by: Florian Hofhammer <florian.hofhammer@epfl.ch>
+>> ---
+>>   tests/tcg/arm/Makefile.target                 |  6 +++++
+>>   tests/tcg/hexagon/Makefile.target             |  7 +++++
+>>   tests/tcg/mips/Makefile.target                |  6 ++++-
+>>   tests/tcg/mips64/Makefile.target              | 15 +++++++++++
+>>   tests/tcg/mips64el/Makefile.target            | 15 +++++++++++
+>>   tests/tcg/mipsel/Makefile.target              | 15 +++++++++++
+>>   tests/tcg/multiarch/Makefile.target           | 22 ++++++++++++++--
+>>   .../{ =3D> plugin}/check-plugin-output.sh       |  0
+>>   .../{ =3D> plugin}/test-plugin-mem-access.c     |  0
+>>   .../plugin/test-plugin-skip-syscalls.c        | 26 +++++++++++++++++=
+++
+>>   tests/tcg/plugins/syscall.c                   |  6 +++++
+>>   tests/tcg/sparc64/Makefile.target             | 16 ++++++++++++
+>>   12 files changed, 131 insertions(+), 3 deletions(-)
+>>   create mode 100644 tests/tcg/mips64/Makefile.target
+>>   create mode 100644 tests/tcg/mips64el/Makefile.target
+>>   create mode 100644 tests/tcg/mipsel/Makefile.target
+>>   rename tests/tcg/multiarch/{ =3D> plugin}/check-plugin-output.sh (10=
+0%)
+>>   rename tests/tcg/multiarch/{ =3D> plugin}/test-plugin-mem-access.c (=
+100%)
+>>   create mode 100644 tests/tcg/multiarch/plugin/test-plugin-skip-sysca=
+lls.c
+>>   create mode 100644 tests/tcg/sparc64/Makefile.target
+>> +++ b/tests/tcg/multiarch/plugin/test-plugin-skip-syscalls.c
+>> @@ -0,0 +1,26 @@
+>> +/*
+>> + * SPDX-License-Identifier: GPL-2.0-or-later
+>> + *
+>> + * This test attempts to execute an invalid syscall. The syscall test=
+ plugin
+>> + * should intercept this.
+>> + */
+>> +#include <stdint.h>
+>> +#include <stdio.h>
+>> +#include <stdlib.h>
+>> +#include <unistd.h>
+>> +
+>> +void exit_success(void) __attribute__((section(".redirect"), noinline=
 ,
->>>                                   GByteArray *buf);
->>>   +/**
->>> + * qemu_plugin_set_pc() - set the program counter for the current vC=
-PU
->>> + *
->>> + * @vaddr: the new virtual (guest) address for the program counter
->>> + *
->>> + * This function sets the program counter for the current vCPU to @v=
-addr and
->>> + * resumes execution at that address. This function only returns in =
-case of
->>> + * errors.
->>> + */
->>> +QEMU_PLUGIN_API
->>> +void qemu_plugin_set_pc(uint64_t vaddr);
->>> +
->>>   /**
->>>    * qemu_plugin_read_memory_vaddr() - read from memory using a virtu=
-al address
->>>    *
->>> diff --git a/plugins/api.c b/plugins/api.c
->>> index e754b7c69c..ca3e93a194 100644
->>> --- a/plugins/api.c
->>> +++ b/plugins/api.c
->>> @@ -41,6 +41,7 @@
->>>   #include "qemu/log.h"
->>>   #include "system/memory.h"
->>>   #include "tcg/tcg.h"
->>> +#include "exec/cpu-common.h"
->>>   #include "exec/gdbstub.h"
->>>   #include "exec/target_page.h"
->>>   #include "exec/translation-block.h"
->>> @@ -466,6 +467,18 @@ bool qemu_plugin_write_register(struct qemu_plug=
-in_register *reg,
->>>       return (gdb_write_register(current_cpu, buf->data, GPOINTER_TO_=
-INT(reg) - 1) > 0);
->>>   }
->>>   +void qemu_plugin_set_pc(uint64_t vaddr)
->>> +{
->>> +    g_assert(current_cpu);
->>> +
->>> +    if (qemu_plugin_get_cb_flags() !=3D QEMU_PLUGIN_CB_RW_REGS_PC) {=
+>> +                                       noreturn, used));
+>> +
+>> +void exit_success(void) {
+>> +    _exit(EXIT_SUCCESS);
+>> +}
+>> +
+>> +int main(int argc, char *argv[]) {
+>> +    long ret =3D syscall(0xc0deUL);
+>> +    if (ret !=3D 0L) {
+>> +        perror("");
+>> +    }
+>> +    /* We should never get here */
+>> +    return EXIT_FAILURE;
+>> +}
+>> diff --git a/tests/tcg/plugins/syscall.c b/tests/tcg/plugins/syscall.c=
 
->>> +        return;
->>> +    }
->>
->> I think its fine to assert() here - we do it elsewhere in the api, if
->> the user is holding it wrong we should exit now rather than leave the
->> plugin more confused in the future.
->>
+>> index 5658f83087..b68e3cadf4 100644
+>> --- a/tests/tcg/plugins/syscall.c
+>> +++ b/tests/tcg/plugins/syscall.c
+>> @@ -148,6 +148,12 @@ static void vcpu_syscall(qemu_plugin_id_t id, uns=
+igned int vcpu_index,
+>>               fprintf(stderr, "Error reading memory from vaddr %"PRIu6=
+4"\n", a2);
+>>           }
+>>       }
+>> +
+>> +    if (num =3D=3D 0xc0deUL) {
+>> +        /* Special syscall to test the control flow redirection funct=
+ionality. */
+>> +        qemu_plugin_outs("Marker syscall detected, jump to clean exit=
+\n");
+>> +        qemu_plugin_set_pc(0x20000);
 >=20
-> Agree.
-> With the assert instead of return,
-> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> An even better alternative is to use a value label, which is a gcc exte=
+nsion, and you would not even need another function. Just pass it as firs=
+t parameter of syscall, and jump to this address directly from syscall fi=
+lter.
+>=20
+> int main(int argc, char *argv[]) {
+>     long ret =3D syscall(0xc0deUL, &&set_pc_dest);
+>     /* We should never get here */
+>     return EXIT_FAILURE;
+> set_pc_dest:
+>     return EXIT_SUCCESS;
+> }
+>=20
+> More details:
+> https://www.amulettechnologies.com/boosting-bytecode-efficiency-the-pow=
+er-of-gccs-label-as-value/
+> https://gcc.gnu.org/onlinedocs/gcc/Labels-as-Values.html
+>=20
+> Regards,
+> Pierrick
 
-Ack, will update the patch accordingly. Thanks for the feedback!
+Thanks for the idea, I didn't think about this. I'll check it out!
 
---------------ms040105010909010904010408
+Best regards,
+Florian
+
+--------------ms050008050307070704030205
 Content-Type: application/pkcs7-signature; name="smime.p7s"
 Content-Transfer-Encoding: base64
 Content-Disposition: attachment; filename="smime.p7s"
@@ -354,8 +368,8 @@ rCfngiHZcAQakPkQrlrZCxMhlIKvDMunATaICyjnHizEC+1qzJsdvJgSC8sOzLxiEjlx3MRe
 CswFMYIEezCCBHcCAQEwdjBiMQswCQYDVQQGEwJVUzEXMBUGA1UEChMORGlnaUNlcnQsIElu
 Yy4xOjA4BgNVBAMTMURpZ2lDZXJ0IEFzc3VyZWQgRzIgU01JTUUgUlNBNDA5NiBTSEEzODQg
 MjAyNCBDQTECEAIILYp8ejiSyjOBVc7TclkwDQYJYIZIAWUDBAIBBQCgggLWMBgGCSqGSIb3
-DQEJAzELBgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkFMQ8XDTI2MDIyNTA3NTUyNVowLwYJKoZI
-hvcNAQkEMSIEIEmVd0PhjqtgROJCgZsBlNdWfW5U7eUBbpRiFmU9+e+KMIGFBgkrBgEEAYI3
+DQEJAzELBgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkFMQ8XDTI2MDIyNTA3NTkzOVowLwYJKoZI
+hvcNAQkEMSIEIEtzLFbz/i08PdkWw3/AQ18UGK6dPdggTeptgIZyYKMfMIGFBgkrBgEEAYI3
 EAQxeDB2MGIxCzAJBgNVBAYTAlVTMRcwFQYDVQQKEw5EaWdpQ2VydCwgSW5jLjE6MDgGA1UE
 AxMxRGlnaUNlcnQgQXNzdXJlZCBHMiBTTUlNRSBSU0E0MDk2IFNIQTM4NCAyMDI0IENBMQIQ
 Aggtinx6OJLKM4FVztNyWTCBhwYLKoZIhvcNAQkQAgsxeKB2MGIxCzAJBgNVBAYTAlVTMRcw
@@ -367,12 +381,12 @@ BwYFKw4DAhowCwYJYIZIAWUDBAIBMAsGCWCGSAFlAwQCAjALBglghkgBZQMEAgMwCwYJYIZI
 AWUDBAIEMAsGCWCGSAFlAwQCBzALBglghkgBZQMEAggwCwYJYIZIAWUDBAIJMAsGCWCGSAFl
 AwQCCjALBgkqhkiG9w0BAQEwCwYJK4EFEIZIPwACMAgGBiuBBAELADAIBgYrgQQBCwEwCAYG
 K4EEAQsCMAgGBiuBBAELAzALBgkrgQUQhkg/AAMwCAYGK4EEAQ4AMAgGBiuBBAEOATAIBgYr
-gQQBDgIwCAYGK4EEAQ4DMA0GCSqGSIb3DQEBAQUABIIBAATWW5dG61ZUPzPPR21oHsOQxxjQ
-kKmKKc2DIM75VS/gHm8SLJijvFcrYwhiQACv/OZn7/zxq/bb++pqEbkS1b9ESBurIp2wVYZA
-o7Yy+kaWTZQtKn5czPnOwltSRCpT4/gbZN3TI7Xew/Fuof+uNV7jm9xQvdF5Go+h+cpMWo/n
-tsV6XyL7IPmYQyHMlY3m8Q70zrKpTaHbebautMl6l4g7jaGHpzSHb0goVIZ3XpGP451Bk6Gw
-sueInPJDFsSpL8RgGc0jQKx1tE4m7tJfD/norBihFZMQXG5mH2Ojp74wCktnvfBM0WjNm8F1
-fRvgnGNCewe13QeSot2almUCR0AAAAAAAAA=
+gQQBDgIwCAYGK4EEAQ4DMA0GCSqGSIb3DQEBAQUABIIBALN20t90SRP8vwCclhaTSw5Ah4fc
+Uooj96WPaK4scBrXu3yqLb98SaHaDrFDhO2TjRog7wWMKs5E0cfneZRpNGk0HV4/mEbRdjyj
+Qq+jFLOvjIk/SrreDipZ6yGXeL/TZVS2vvok5hqFZKVXl3G8WptT/ofEu9b7U47fd8JFtYP1
+Is9sgg2uSatDYuY9F0zNh6N3tTjeLgDJHuYPsX1PDEOb9v/5q5r/a1byc5ONIh7WMAiM7NsH
+gxVNaVQm5E4NteaeOhnzPM0mk4fRJtbeC2k34e5vlKJSdCncp96RVaJhs3V9OTn7baME3tXh
+xr66N5A6AhVod+PfDdVJ5uA21VIAAAAAAAA=
 
---------------ms040105010909010904010408--
+--------------ms050008050307070704030205--
 
