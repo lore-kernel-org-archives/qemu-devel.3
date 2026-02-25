@@ -4,47 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1231AF357DA
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 07:36:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CB74F357D5
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 07:39:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vv9R3-0004tN-VK; Wed, 25 Feb 2026 02:35:53 -0500
+	id 1vv9US-0006TU-0d; Wed, 25 Feb 2026 02:39:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <heifetz@yandex-team.com>)
- id 1vv9R2-0004tD-Lo
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 02:35:52 -0500
-Received: from forwardcorp1b.mail.yandex.net
- ([2a02:6b8:c02:900:1:45:d181:df01])
+ id 1vv9UQ-0006TI-Ih
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 02:39:22 -0500
+Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <heifetz@yandex-team.com>)
- id 1vv9R0-0005C3-GG
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 02:35:52 -0500
+ id 1vv9UO-0005dy-Co
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 02:39:22 -0500
 Received: from mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
  [IPv6:2a02:6b8:c37:8aa5:0:640:e6ae:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 088D180671;
- Wed, 25 Feb 2026 10:35:47 +0300 (MSK)
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id ED609808A9;
+ Wed, 25 Feb 2026 10:39:16 +0300 (MSK)
 Received: from [IPV6:2a02:6bf:8080:55b::1:1] (unknown [2a02:6bf:8080:55b::1:1])
  by mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id iZbf3M7Au4Y0-BVashg4A; Wed, 25 Feb 2026 10:35:46 +0300
+ ESMTPSA id EdbTAM7An8c0-KUqmQBPA; Wed, 25 Feb 2026 10:39:16 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.com;
- s=default; t=1772004946;
- bh=9TYDpoesOEc62xZZuvi6taN7y5FA0s9muCfBixPpLeM=;
+ s=default; t=1772005156;
+ bh=QaQh5iMiXmJog/kDCntmOvBOndb0Vif1vRPL+kUgHHY=;
  h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=QfWgodSvAzA4Z7w+rIEdFoyaSMoXAPRD9mP4XcO+lLgyC2Kh6Vvr9nsRkqiaANPsc
- oEF02KkjHOB5NOEIIwBMiPy9oMW2xu/UcTotKjCnq1IUmsNDJyN22RTtNPqwIpG2HR
- p2vJM/41RTXbxM2fMHkpbcqa8LRW1d39HX/qbo/8=
+ b=23MrIacxydA0peDdM+utYv6r5cNLe2wXqI9Mtamse+0tRN05S1tRfQvO/Q+knddrB
+ t2aWbBS17F/05/oEjNT/wOR6LZJSO1i+BPoyQ7L0NNzj3y5KMqM929u3po9j/zus0g
+ tGkpdS0ppAQW+fTrg76fQapU0+wijjs+jBawJ7T8=
 Authentication-Results: mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.com
-Message-ID: <f2908136-eaea-4760-8711-93cd93e90c81@yandex-team.com>
-Date: Wed, 25 Feb 2026 12:35:44 +0500
+Message-ID: <fdf9519d-9382-442e-8ae9-260fdd1d4c69@yandex-team.com>
+Date: Wed, 25 Feb 2026 12:39:14 +0500
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 07/10] ui/dbus: run without Audio interface when audio
- is disabled
+Subject: Re: [PATCH v2 06/10] system/vl: remove audio and audiodev options
+ when audio is disabled
 To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@gmail.com>
 Cc: qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
@@ -58,21 +57,22 @@ Cc: qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>,
  "Michael S. Tsirkin" <mst@redhat.com>, Markus Armbruster
  <armbru@redhat.com>, "Dr. David Alan Gilbert" <dave@treblig.org>
 References: <20260223202512.1308205-1-heifetz@yandex-team.com>
- <20260223202512.1308205-8-heifetz@yandex-team.com>
- <CAJ+F1C+Zb-KRBf+bFv2FbVx6Q5P4rKumTZRJ68VC65ZVVWKKNQ@mail.gmail.com>
+ <20260223202512.1308205-7-heifetz@yandex-team.com>
+ <CAJ+F1CKEjT741GHZP5HJSKYSW93K7iROmAiVS-oPJmL+J3Bujw@mail.gmail.com>
 Content-Language: en-US
 From: Sergei Heifetz <heifetz@yandex-team.com>
-In-Reply-To: <CAJ+F1C+Zb-KRBf+bFv2FbVx6Q5P4rKumTZRJ68VC65ZVVWKKNQ@mail.gmail.com>
+In-Reply-To: <CAJ+F1CKEjT741GHZP5HJSKYSW93K7iROmAiVS-oPJmL+J3Bujw@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
+Received-SPF: pass client-ip=178.154.239.136;
  envelope-from=heifetz@yandex-team.com; helo=forwardcorp1b.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.358, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.659,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,44 +92,65 @@ On 2/24/26 16:06, Marc-André Lureau wrote:
 > Hi
 >
 > On Mon, Feb 23, 2026 at 9:26 PM Sergei Heifetz <heifetz@yandex-team.com> wrote:
->> D-Bus display can be used even when QEMU is configured with
->> `--disable-audio`. In that case, audio interface will not be available
->> on `/org/qemu/Display1/Audio`.
->>
-> I think it should also disable "audiodev" (from QAPI DisplayDBus etc).
-> Or at the minimum, it should return an error if the option is given
-> and qemu is compiled with !CONFIG_AUDIO.
-OK, I’ll remove `audiodev`, then.
->
->> (The current handling of the situation when audio is enabled but
->> no D-Bus-compatible audio backend is available is different and
->> hasn’t been changed.)
+>> Remove the audio and audiodev runtime options when QEMU is configured
+>> with `--disable-audio`.
 >>
 >> Signed-off-by: Sergei Heifetz <heifetz@yandex-team.com>
+> This change should also modify qemu-options.hx
+Oh, yes, of course. I somehow forgot about this.
+
+Thank you for all the feedback.
+>
 >> ---
->>   ui/dbus.c | 2 ++
->>   1 file changed, 2 insertions(+)
+>>   system/vl.c | 6 ++++++
+>>   1 file changed, 6 insertions(+)
 >>
->> diff --git a/ui/dbus.c b/ui/dbus.c
->> index 905ee6fea7..60c8e0b473 100644
->> --- a/ui/dbus.c
->> +++ b/ui/dbus.c
->> @@ -219,6 +219,7 @@ dbus_display_complete(UserCreatable *uc, Error **errp)
->>           return;
->>       }
+>> diff --git a/system/vl.c b/system/vl.c
+>> index 3e341142a0..1034a4688f 100644
+>> --- a/system/vl.c
+>> +++ b/system/vl.c
+>> @@ -2248,7 +2248,9 @@ static int global_init_func(void *opaque, QemuOpts *opts, Error **errp)
+>>   static bool is_qemuopts_group(const char *group)
+>>   {
+>>       if (g_str_equal(group, "object") ||
+>> +#ifdef CONFIG_AUDIO
+>>           g_str_equal(group, "audiodev") ||
+>> +#endif
+>>           g_str_equal(group, "machine") ||
+>>           g_str_equal(group, "smp-opts") ||
+>>           g_str_equal(group, "boot-opts")) {
+>> @@ -2265,6 +2267,7 @@ static void qemu_record_config_group(const char *group, QDict *dict,
+>>           object_option_add_visitor(v);
+>>           visit_free(v);
 >>
 >> +#ifdef CONFIG_AUDIO
->>       {
->>           AudioBackend *audio_be = audio_get_default_audio_be(NULL);
->>           if (audio_be && !audio_be_can_set_dbus_server(audio_be)) {
->> @@ -234,6 +235,7 @@ dbus_display_complete(UserCreatable *uc, Error **errp)
->>               return;
+>>       } else if (g_str_equal(group, "audiodev")) {
+>>           Audiodev *dev = NULL;
+>>           Visitor *v = qobject_input_visitor_new_keyval(QOBJECT(dict));
+>> @@ -2272,6 +2275,7 @@ static void qemu_record_config_group(const char *group, QDict *dict,
+>>               audio_add_audiodev(dev);
 >>           }
->>       }
+>>           visit_free(v);
 >> +#endif
 >>
->>       consoles = g_array_new(FALSE, FALSE, sizeof(guint32));
->>       for (idx = 0;; idx++) {
+>>       } else if (g_str_equal(group, "machine")) {
+>>           /*
+>> @@ -3057,6 +3061,7 @@ void qemu_init(int argc, char **argv)
+>>                   }
+>>                   break;
+>>   #endif
+>> +#ifdef CONFIG_AUDIO
+>>               case QEMU_OPTION_audiodev:
+>>                   default_audio = 0;
+>>                   audio_parse_option(optarg);
+>> @@ -3097,6 +3102,7 @@ void qemu_init(int argc, char **argv)
+>>                   }
+>>                   break;
+>>               }
+>> +#endif
+>>               case QEMU_OPTION_h:
+>>                   help(0);
+>>                   break;
 >> --
 >> 2.34.1
 >>
