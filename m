@@ -4,115 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB8B9F55452
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 04:14:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50BD1F55449
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 04:20:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vv6HM-0002t1-0u; Tue, 24 Feb 2026 23:13:40 -0500
+	id 1vv6NQ-00059u-7K; Tue, 24 Feb 2026 23:19:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1vv6HJ-0002qo-GA; Tue, 24 Feb 2026 23:13:37 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1vv6HH-0003m5-Jh; Tue, 24 Feb 2026 23:13:37 -0500
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 61OL3Q3d2632518; Wed, 25 Feb 2026 04:13:31 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=9Ap2Pg
- XImWgvrJiD7ygQY+1hgoGqVE7R+JbLhqVglAA=; b=f8THaXu2UJNO9d99pATMHJ
- UYggyOjgj0r8Iznkt0CHMuKEvGD1cnxE0zLCeshKU9c77YL1r0BxdUvBb1Kp8dOF
- pF1rUaWHPmNXi7mHxPneptUklSVx3lDJ3f0EedVEBVuh8sEKsFLoYXoGkQae0Uvt
- dqgHatSA7Q8eyCaltstgR4StYLiMtZV/1InIFdbXTS71CpIBjElVZJUhfV0CRcKs
- xUNuwcdUsx4vvtfMNOKGJmHb0cDEmhJXCmKy49Bxe3tPLGNLyncmYEdZwmmMhGUj
- YBKmE6arjhOFI72QKoJza+7VageIasYFXMXrffjqErI1vQA8Su6fyo/79HFB1uJg
- ==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4cf4brww6c-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 25 Feb 2026 04:13:30 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 61P30ThN002215;
- Wed, 25 Feb 2026 04:13:30 GMT
-Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4cfr1n3sww-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 25 Feb 2026 04:13:30 +0000
-Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com
- [10.39.53.233])
- by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 61P4DSue27460156
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 25 Feb 2026 04:13:29 GMT
-Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id ABD2F58054;
- Wed, 25 Feb 2026 04:13:28 +0000 (GMT)
-Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C53095803F;
- Wed, 25 Feb 2026 04:13:25 +0000 (GMT)
-Received: from [9.124.209.219] (unknown [9.124.209.219])
- by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 25 Feb 2026 04:13:25 +0000 (GMT)
-Message-ID: <3c577aa7-5364-402d-bd46-f9c22ceef066@linux.ibm.com>
-Date: Wed, 25 Feb 2026 09:43:23 +0530
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vv6NO-00058K-4O
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 23:19:54 -0500
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vv6NM-0004Ws-AO
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 23:19:53 -0500
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-4806cc07ce7so59701555e9.1
+ for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 20:19:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1771993190; x=1772597990; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=zTxZiDwMO3Sc4Z2rZk6deISwKYqSQPecO7LzPMbzDvw=;
+ b=EIy9DjD7sq4sHCjjVgX1MYaKKtX1h4j4rNYXKOzdk5kZRZN39TiPDwR9FfwQlcjHxe
+ p+QxGuINsEtajJz8deaKgfCLLAzBgAeFKfeknj/hRfWhGtzIaNrdsaJTiy9aQLNWLNHg
+ WTChEKKdlSrNEn2PezQNTMXHMk3O1vP6tUKvJpziiE3on4JaQEb/Q2UT4RBx/SG687KZ
+ YiML1gKNuG+srvWGa2prUNsDF5QB4FGfLDa9B9vpksWIFF3KvFoH3/kQDpwkncZvfA26
+ k4m6By1m2hFFu8gEeavKGfM9g4cvHNd6MoNPikqHk2Y9hR2XyTGXc+mf6PSv12U/FeT4
+ Shrg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1771993190; x=1772597990;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=zTxZiDwMO3Sc4Z2rZk6deISwKYqSQPecO7LzPMbzDvw=;
+ b=qwacmL6cWih2ydsAl8dp9/sikYNXbD/9iTPH8h/GKn+7JEK0/+1vLUPSZZG/hOvuOp
+ FV58ueXQkMOyECGnDu+XGiuM0z7Gv+4qBOXstnuNpzSwaulGwq7tbq3YFinbsvt75qal
+ hBEqoRm7cLktyIY1VIo8hirc+fjOYmhUaxwhrJ7FbE/Blbtx9Wa2SV2PgVxxeex2bmCF
+ 5JxFZ0C0evm0GI5syAjgZ5D9I7h1xqa/Opy5tmYEHV95TzV+X7LmzPv2hqsEeVDvWBfj
+ qZP0kBoOtoCY3IYQjEiqSIcV80sgwonKIpLXkNCCbE+H8WOrsy6wDvqgGyBFeuNoucs4
+ 83Jw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWZ/aoYuQjjKE6SFLrOck9nGAWd9TSJJZQmCSZooE/dNMw4ZQWLwN7b0aZHQ+QxvC+BRj5b4aN4tthh@nongnu.org
+X-Gm-Message-State: AOJu0YyYa6A0Sl6x8cfhG1Bu8Jz1m33oEKuqB6RqbSmejVJVvHDbe/De
+ 3EqMefAkwMkYsMtq6vYRr4hKjRmPxkiazNjgP/RbhaApm9OIdv5gH2cA1fAVGtCPVaw=
+X-Gm-Gg: ATEYQzz7ZKGHg20J1fn7VqGPHW0R5dPevz6W3iE59KrvveD/Z4OuEN5Khag/1En9n53
+ fBlAeZCnGy8sPzmNmu6UleNiWP8YYHtaIqCB/ZTFBCNbJ9mgHuBfRRKE9kkl1oIlFndXqm5T/SK
+ DoLr+JQ+IBE7lwuoIAMiU+Nz/bc7j47Ezw/a4KJfgsKjyHSBW7YVqwNLjS2xSfK9VMilV+9Ec/r
+ 6kWEr7TnDgqtymJQglkv0/I04jNSIApMvzbu1R/1XYPg7joFxRHIqdDm/e690vjrWo8E3t3kPmz
+ ieVYEWy6OREdCOxRIsUI1Urvti6qUq/jlVacv2Qi0LKmy39VLUL2yrCfM7bnb/aCYVvvppYN3jv
+ O2pBnIAH0G2hKo3FoUzVLgCleV+zEaVot+CS9S8jeTVnwYqvIPPEwXsX5RbCkweT6eEKHQQl5Wh
+ soM+8FMGHhi79/vu7SnWOC5iNa51AmgDV7jICqUY8rgX6r5edFdLRckM+VjKhHXuIlf3rz8c8C
+X-Received: by 2002:a05:600c:1e1d:b0:483:456a:514b with SMTP id
+ 5b1f17b1804b1-483a95befe5mr244952055e9.12.1771993190240; 
+ Tue, 24 Feb 2026 20:19:50 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-483bfbb6d16sm2535505e9.5.2026.02.24.20.19.48
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 24 Feb 2026 20:19:49 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: Stefan Hajnoczi <stefanha@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, BALATON Zoltan <balaton@eik.bme.hu>,
+ Jason Wang <jasowang@redhat.com>, Stefano Garzarella <sgarzare@redhat.com>,
+ Fam Zheng <fam@euphon.net>, Hanna Reitz <hreitz@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Christian Schoenebeck <qemu_oss@crudebyte.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-block@nongnu.org,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Greg Kurz <groug@kaod.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v2 0/6] hw/virtio/virtio-access.h: remove target specific code
+Date: Wed, 25 Feb 2026 05:19:41 +0100
+Message-ID: <20260225041948.52929-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.52.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/ppc/translate: Fix TCG debug assert translating
- CLRBWIBC
-To: milesg@linux.ibm.com, Peter Maydell <peter.maydell@linaro.org>,
- qemu-devel@nongnu.org
-Cc: qemu-ppc@nongnu.org, qemu-stable@nongnu.org,
- Nicholas Piggin <npiggin@gmail.com>, Chinmay Rath <rathc@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>
-References: <20260212150753.1749448-1-peter.maydell@linaro.org>
- <CAFEAcA9B6-egOf9MuYqimWNSjkUEVGSOm8NCM4ObOLsnjRmBfw@mail.gmail.com>
- <68b51c772ce69080e289ad2045a199787193950f.camel@linux.ibm.com>
-Content-Language: en-GB
-From: Harsh Prateek Bora <harshpb@linux.ibm.com>
-In-Reply-To: <68b51c772ce69080e289ad2045a199787193950f.camel@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-ORIG-GUID: BQ_clQeK5eDKQZD5XOhTLLdO7rDW-9D2
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjI1MDAzNyBTYWx0ZWRfXw8lB0P7C+NQ6
- /zXBDIJj/hlKeZTsAWVrlLw1xM+4t47DBFp3njONlBfmzpWREw5+nEtbwGN5pgKKsI+i0CKI/N2
- s6o5ckRs0rhLRgJafBajSpeqABVx9+z1eZUvYqXMkGuOw6AIf86tjvx5xIzEf1rYfWQ4ibRvX6k
- yD79VToQKMhFIrDvEVXgiUtjUm2Cb9cFUBMOl7gCbacszaiB4cGUBCpLFb/4c7o++o5eIQx6M8A
- lWWsFYcgjNuZI572G0D46Kqaj852hNL08FgE2ET97tgpZpnNHb8D5FMZsbczdE3PYlN/ykSrYWC
- aZpHA5VabDkUlYAGkB6WDTxLIvR7/efprBlpSzAosME1B103rl4aPLRwv2IXzOO4ppzGqGfXTXE
- r0H2xC9xn9PilZAves4g35oLbYmUxW04NKVmf2RStIDo+qwopKplfN7x9NhGAGotBbL3wX81WtX
- bwccd9knCmUiUIzb9HQ==
-X-Authority-Analysis: v=2.4 cv=eNceTXp1 c=1 sm=1 tr=0 ts=699e76eb cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=IkcTkHD0fZMA:10 a=HzLeVaNsDn8A:10 a=f7IdgyKtn90A:10
- a=VkNPw1HP01LnGYTKEx00:22 a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22
- a=KKAkSRfTAAAA:8 a=69wJf7TsAAAA:8 a=zUekQDGrqC48hgAzKbwA:9 a=QEXdDO2ut3YA:10
- a=cvBusfyB2V15izCimMoJ:22 a=Fg1AiH1G6rFz08G2ETeA:22
-X-Proofpoint-GUID: n0P-D-1ZtU5uvBn_5hRI6AyNHf6d5hG6
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-02-24_03,2026-02-23_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1011 priorityscore=1501 phishscore=0 suspectscore=0 adultscore=0
- bulkscore=0 lowpriorityscore=0 malwarescore=0 impostorscore=0 spamscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2601150000 definitions=main-2602250037
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=harshpb@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.358, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.659,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -128,130 +107,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Glenn, Peter,
+v2:
+- Rebased
+- Removed virtio_vdev_is_modern (Zoltan, myself)
+- Include Stefan's Acked-by tag
+- Include "make compilation unit common" patches from [3]
 
-Thanks for the reminder on this.
-I have been planning to prepare next pull-req for 11.0 by this weekend
-and shall take care of this fix as well.
+This series eliminates some target specifics in hw/virtio and replace them with
+runtime functions where needed, to be able to link virtio code in single-binary.
+After a first try on a series [0] doing this change and making all virtio files
+common, Richard asked to refactor this part, thus this independent series.
 
-On 25/02/26 3:15 am, Miles Glenn wrote:
-> +Harsh
-> 
-> Harsh, would you be the right person to do the pull on this PPC TCG
-> fix?  If so, maybe we should go ahead and make it official in the
-> MAINTAINERS file?
-> 
+By diving into virtio initialization, I noticed that device_endian is always
+storing endianness of cpu associated on device reset. The root issue, is when
+dealing with target who dynamically change their endianness during execution.
+ppc64 is the main use case, as cpu always boot in BE and most of OS use LE. arm
+use case is more limited, as big endian systems are mostly dead nowadays.
 
-Yeh, I have been thinking about it, will add myself as a reviewer for 
-powernv, tcg to enable listing via get_maintainers.pl to be CC'ed.
+Because of this, initialization is tricky, and goes through different hoops to
+have the expected value. My first approach has been to try to change this, by
+simply setting endianness on the first access. However, it fell flat, because
+current_cpu is not always available at this time.
+A second approach was to set endianness to LE by default, and change it only
+when setting device features, and potentially discovering it's a legacy virtio
+device. It brought other issues, that showed that current initialization code,
+even though it's complex, does the right thing.
+Thus, I focused on refactoring virtio_access_is_big_endian, and noticed that it
+was not even needed at this point.
 
-Glenn,
-Would you be willing to volunteer as a reviewer for ppc tcg as well? Thanks!
+Patches 1 and 2 are refactoring names to clear some confusion.
+Patch 3 eliminates virtio_access_is_big_endian, with a lenghty commit message
+explaining the change. By doing this, we remove target specifics from
+hw/virtio/virtio-access.h.
 
-regards,
-Harsh
+Of course, performance has been tested, and it is on par with upstream/master.
 
-> Thanks,
-> 
-> Glenn
-> 
-> On Tue, 2026-02-24 at 11:28 +0000, Peter Maydell wrote:
->> Thanks for the code review -- is anybody going to take this via a
->> PPC pull request? If not, I can take it via target-arm.next as a
->> one-off -- let me know if you'd prefer that.
->>
->> thanks
->> -- PMM
->>
->> On Thu, 12 Feb 2026 at 15:07, Peter Maydell <peter.maydell@linaro.org> wrote:
->>> The test case in the ppe42 functional test triggers a TCG debug
->>> assertion, which causes the test to fail in an --enable-debug
->>> build or when the sanitizers are enabled:
->>>
->>> #6  0x00007ffff4a3b517 in __assert_fail
->>>      (assertion=0x5555562e7589 "!temp_readonly(ots)", file=0x5555562e5b23 "../../tcg/tcg.c", line=4928, function=0x5555562e8900 <__PRETTY_FUNCTION__.23> "tcg_reg_alloc_mov") at ./assert/assert.c:105
->>> #7  0x0000555555cc2189 in tcg_reg_alloc_mov (s=0x7fff60000b70, op=0x7fff600126f8) at ../../tcg/tcg.c:4928
->>> #8  0x0000555555cc74e0 in tcg_gen_code (s=0x7fff60000b70, tb=0x7fffa802f540, pc_start=4294446080) at ../../tcg/tcg.c:6667
->>> #9  0x0000555555d02abe in setjmp_gen_code
->>>      (env=0x555556cbe610, tb=0x7fffa802f540, pc=4294446080, host_pc=0x7fffeea00c00, max_insns=0x7fffee9f9d74, ti=0x7fffee9f9d90)
->>>      at ../../accel/tcg/translate-all.c:257
->>> #10 0x0000555555d02d75 in tb_gen_code (cpu=0x555556cba590, s=...) at ../../accel/tcg/translate-all.c:325
->>> #11 0x0000555555cf5922 in cpu_exec_loop (cpu=0x555556cba590, sc=0x7fffee9f9ee0) at ../../accel/tcg/cpu-exec.c:970
->>> #12 0x0000555555cf5aae in cpu_exec_setjmp (cpu=0x555556cba590, sc=0x7fffee9f9ee0) at ../../accel/tcg/cpu-exec.c:1016
->>> #13 0x0000555555cf5b4b in cpu_exec (cpu=0x555556cba590) at ../../accel/tcg/cpu-exec.c:1042
->>> #14 0x0000555555d1e7ab in tcg_cpu_exec (cpu=0x555556cba590) at ../../accel/tcg/tcg-accel-ops.c:82
->>> #15 0x0000555555d1ff97 in rr_cpu_thread_fn (arg=0x555556cba590) at ../../accel/tcg/tcg-accel-ops-rr.c:285
->>> #16 0x00005555561586c9 in qemu_thread_start (args=0x555556ee3c90) at ../../util/qemu-thread-posix.c:393
->>> #17 0x00007ffff4a9caa4 in start_thread (arg=<optimized out>) at ./nptl/pthread_create.c:447
->>> #18 0x00007ffff4b29c6c in clone3 () at ../sysdeps/unix/sysv/linux/x86_64/clone3.S:78
->>>
->>> This can be reproduced "by hand":
->>>
->>>   ./build/clang/qemu-system-ppc -display none -vga none \
->>>      -machine ppe42_machine -serial stdio \
->>>      -device loader,file=$HOME/.cache/qemu/download/03c1ac0fb7f6c025102a02776a93b35101dae7c14b75e4eab36a337e39042ea8 \
->>>      -device loader,addr=0xfff80040,cpu-num=0
->>>
->>> (assuming you have the image file from the functional test
->>> in your local cache).
->>>
->>> This happens for this input:
->>>
->>> IN:
->>> 0xfff80c00:  07436004  .byte    0x07, 0x43, 0x60, 0x04
->>>
->>> which generates (among other things):
->>>
->>>   not_i32 $0x80000,$0x80000
->>>
->>> which the TCG optimization pass turns into:
->>>
->>>   mov_i32 $0x80000,$0xfff7ffff             dead: 1  pref=0xffff
->>>
->>> and where we then assert because we tried to write to a constant.
->>>
->>> This happens for the CLRBWIBC instruction which ends up in
->>> do_mask_branch() with rb_is_gpr false and invert true.  In this case
->>> we will generate code that sets mask to a tcg_constant_tl() but then
->>> uses it as the LHS in tcg_gen_not_tl().
->>>
->>> Fix the assertion by doing the invert in the translate time C code
->>> for the "mask is constant" case.
->>>
->>> Cc: qemu-stable@nongnu.org
->>> Fixes: f7ec91c23906 ("target/ppc: Add IBM PPE42 special instructions")
->>> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
->>> ---
->>>   target/ppc/translate/ppe-impl.c.inc | 12 ++++++++----
->>>   1 file changed, 8 insertions(+), 4 deletions(-)
->>>
->>> diff --git a/target/ppc/translate/ppe-impl.c.inc b/target/ppc/translate/ppe-impl.c.inc
->>> index 0a0590344e..1c27facb89 100644
->>> --- a/target/ppc/translate/ppe-impl.c.inc
->>> +++ b/target/ppc/translate/ppe-impl.c.inc
->>> @@ -424,11 +424,15 @@ static bool do_mask_branch(DisasContext *ctx, arg_FCB * a, bool invert,
->>>           shift = tcg_temp_new();
->>>           tcg_gen_andi_tl(shift, cpu_gpr[a->rb], 0x1f);
->>>           tcg_gen_shr_tl(mask, tcg_constant_tl(0x80000000), shift);
->>> +        if (invert) {
->>> +            tcg_gen_not_tl(mask, mask);
->>> +        }
->>>       } else {
->>> -        mask = tcg_constant_tl(PPC_BIT32(a->rb));
->>> -    }
->>> -    if (invert) {
->>> -        tcg_gen_not_tl(mask, mask);
->>> +        target_ulong mask_const = PPC_BIT32(a->rb);
->>> +        if (invert) {
->>> +            mask_const = ~mask_const;
->>> +        }
->>> +        mask = tcg_constant_tl(mask_const);
->>>       }
->>>
->>>       /* apply mask to ra */
->>> --
->>> 2.43.0
->>>
-> 
+Results are on 20 runs and expressed in kIOPS:
+reference: mean=239.2 std_dev=3.48
+with_series: mean=238.1 std_dev=3.56
+
+---
+
+Performance has been measured with this automated fio benchmark [1], with
+original instructions from Stefan [2].
+
+Download artifacts and run benchmark with:
+$ wget https://github.com/pbo-linaro/qemu-linux-stack/releases/download/build/x86_64_io_benchmark-a55f2d6.tar.xz
+$ tar xvf x86_64_io_benchmark-a55f2d6.tar.xz
+$ ./run.sh /path/to/qemu-system-x86_64
+
+[0] https://lore.kernel.org/qemu-devel/20260206221908.1451528-1-pierrick.bouvier@linaro.org/
+[1] https://github.com/pbo-linaro/qemu-linux-stack/tree/x86_64_io_benchmark
+[2] https://lore.kernel.org/qemu-devel/20260202185233.GC405548@fedora/
+[3] https://lore.kernel.org/qemu-devel/20260206221908.1451528-1-pierrick.bouvier@linaro.org/
+
+Pierrick Bouvier (6):
+  hw/virtio: Add virtio_vdev_is_legacy()
+  hw/virtio: Simplify virtio_access_is_big_endian()
+  hw/virtio: Inline virtio_access_is_big_endian()
+  hw/virtio/vhost-user: make compilation unit common
+  hw/virtio/virtio-qmp: make compilation unit common
+  hw/virtio/: make all compilation units common
+
+ include/hw/virtio/virtio-access.h | 43 ++++++-------------
+ include/hw/virtio/virtio.h        |  7 +++-
+ hw/virtio/vhost-user.c            | 11 ++---
+ hw/virtio/vhost.c                 | 12 +++---
+ hw/virtio/virtio-pci.c            |  6 +--
+ hw/virtio/virtio-qmp.c            | 70 -------------------------------
+ hw/virtio/virtio.c                | 12 +++---
+ hw/9pfs/meson.build               |  2 +-
+ hw/block/meson.build              |  4 +-
+ hw/char/meson.build               |  2 +-
+ hw/net/meson.build                |  2 +-
+ hw/scsi/meson.build               |  6 +--
+ hw/virtio/meson.build             | 17 ++++----
+ 13 files changed, 50 insertions(+), 144 deletions(-)
+
+-- 
+2.52.0
 
 
