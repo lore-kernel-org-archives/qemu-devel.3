@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D3FDFD45FA
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 23:24:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 202DEFD45F1
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 23:25:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvOBZ-0007nE-Ev; Wed, 25 Feb 2026 18:20:53 -0500
+	id 1vvO94-00048y-JM; Wed, 25 Feb 2026 18:18:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vvOBX-0007mj-Rk
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 18:20:51 -0500
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vvO8t-0003nO-B3
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 18:18:08 -0500
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vvOBW-0004Cg-Bx
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 18:20:51 -0500
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-4398f8403edso181806f8f.1
- for <qemu-devel@nongnu.org>; Wed, 25 Feb 2026 15:20:49 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vvO8r-0003Af-Mc
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 18:18:07 -0500
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-48370174e18so1470365e9.2
+ for <qemu-devel@nongnu.org>; Wed, 25 Feb 2026 15:18:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772061649; x=1772666449; darn=nongnu.org;
+ d=linaro.org; s=google; t=1772061484; x=1772666284; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=tMA4cs9evprWNErV/UApWIVyy7rlCFYo2HAw8z1Xw3M=;
- b=ML7l7pHp+S4t93wF86XfHtPWdxGzS1jp9/xim6iq8eeXUB1Qb3v8eq9kulQSLmPAYR
- VWKrtuEBswIXfEYmRHvBWbEmTTTqdX0QZQSUD0PJdhr1Hva88fEt0iWUzYNBGHoHXgPu
- WKiizdEnHfKywxZPHZpafay3aq1osORrwEC45mBRydWh+ph8W1zE87WKSD8bDawEEgvZ
- MTXf2BMVxi0Z2FzhDDYOChA1Ri7ezt7s4BWYQXjQw8UcFCl2F5b9HZfR1pLhJxb6ZzSW
- aq9vWz9CH3wJ9uV4jgqLNpJiquSNlMv32aeOmNIvJJ3bAFh/cdg9RP8lza4O1SNjJYaI
- frFA==
+ :reply-to; bh=+6sM91w2bCKDd02R0x9+LUldc1Xf848frIT1oZOkaR4=;
+ b=a1sL+wP4VrRcg+onIzrJzYOBi0WfvpLFhD2B/YB9Ax5pqs51ROmgc2uL0DV8FTFf0r
+ VrYn/grIXEJ/6TnON0DYleg88OLPqLFKaXiljUBu006T3tnJivP3rNR8iMDQiuPpBzLl
+ VtVKcMIDgJtRQsS6AX2kzNVTEQ1kGed5ve5f5yAbkmlGI/sk/3+paVzwQH+lzBEmFGRt
+ xct3eypg4HhpiFugowy6yJBE8Uw3JvP/ql05YMGrYFll+6xgD73ye+Ai9PPGHXkDW4as
+ /RADPnX13Z6XjLNGWQdruD6YT8HDwOjduTyrrtvrwDaDM+ropoMG2OPT+31MZ6VaO9Sw
+ DP6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772061649; x=1772666449;
+ d=1e100.net; s=20230601; t=1772061484; x=1772666284;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=tMA4cs9evprWNErV/UApWIVyy7rlCFYo2HAw8z1Xw3M=;
- b=O/f4hX4TqFhsz6m019hXJ7AHaSlZckLJ9fdJRHdPqhy/pSGfSwlIJLSt5LwDS4qLn1
- T9oUUE7frcOqPhho9GZUuprsOe0DPFa7HGTYdZTGggV4Uq1vbomUDYpD/TBNGWQXOcbC
- bf+4XCzZZP0kmvtI/1nkHcW8/jvQ+JKU/fEfUGZb+0Vcu02/A4vtLs8G8ItlA9Nv/5Pm
- CYU4NkNY6YG7IBrF1+PrGX54isYkJUyc3wdlQ/isdtu4r8zyiQpOqzEJHEpSZjF2K0SW
- sczXaeoeTJ2WAHJFKN8qfXMLXHQjmxYX90aCyM4wcWssu8MTb4c1WIVSXz8dfoYqPfRL
- xQrg==
-X-Gm-Message-State: AOJu0Yzi8ec7C790dUGFygGWC1Q9myIyN5Fgs9QBxXEqbltftwqWad47
- DJOmKMLOtJQdi5LhMzfqpPOzlu7GI8iWuNho42TqFXR1aWfCDJ5qM0mny1HpmEM09FLFololjsz
- pBz/4CDU=
-X-Gm-Gg: ATEYQzzqR0MF7NI0ZKCwMmPYlGV1RZDPfcW3tmbjdwXmdMrOBKcn6QYV9dxlBi1JZ7c
- km8nSoot3dlbo3BjASEzGsjKAObIMco81XkY/SNQ5acygEQr48z7nGjWVccnNvqonWkS53rhT0P
- l29UEVUXe/i2485XufEXeFHFYFNakngxvac3oO1YCOYoSyJZpQcfmn9kqOLdV1lbNa/JkkW1U5X
- kUaJrqWP4QXHx5Gz0fjOpYWcZBkJc3NqyphdS50c7ftqwuCxof1xwPG2Wet4MV1Ce4ZKshU4xC0
- NKQ6+BQfxs4BBJ0uYjIb1BrLih63Dw/kjhIqNUyBH16rdZKU+mzimrj1ykqs0IPoz00vVb4HQht
- MR0yf7I1qrwYCURZWz8oHtiSwO3zJHz0DP/3IkhEynEHP5zzbSgyOCzuYC1c+PGbRzb4dOp7KD+
- VOH6mR5ifaVDKZAUytUoyIyu0h/NBE5v6ythoeWJsb/FOisGjNs81Rrth7N9s75SBiLjyvbkRM
-X-Received: by 2002:a05:6000:2c11:b0:435:ab90:6f34 with SMTP id
- ffacd0b85a97d-439942a83b8mr3948060f8f.16.1772061648524; 
- Wed, 25 Feb 2026 15:20:48 -0800 (PST)
+ bh=+6sM91w2bCKDd02R0x9+LUldc1Xf848frIT1oZOkaR4=;
+ b=q45mdGCmRrjgNPZCVfEnAtGB5PAmAkRc9849tXq3I68VHbej39nStbYV8JNZSxZ3XO
+ LFN6Vj9eTkbDspEzNDMXOqQI1Q3515qUVbbUtqC7Cqdx0NZEA/cU626Rw0D4/Vwn9kaE
+ sfIxdyWhNwEWDw643uHLMRWqvuQn1Fmo+375kY5j4DERboxk4KzvdP0kWHtLXx4Orldg
+ wrgIfr5NpDEgo3sPwUNwraSi0SI/yRMIvA648emxhwsgqKYh4BfmmhQiaMyDL5CH54x5
+ C1+tBFoZ9epruuQJApS/bvpIPOsY6Tp1Ai5qPWj9HSIDQ0xmXieBNzWWWOzuUftjOKvL
+ qE0A==
+X-Gm-Message-State: AOJu0YzFv8/MIPaELfgqxrfFO4P47m505rrUyb1Db88PQpwmjVNTv6d3
+ k4XTFd1+QqqT8CXh1xY2ArkaQ0/CiPQDcf+9lX6ISPSnVVdKVPSkC+ZbsXpZN+COVeBfbFcA/Ud
+ FMDskCso=
+X-Gm-Gg: ATEYQzy0JzUHcl/IUICAChp5BYFDDFApGPZeccTglyTcyk20OYDjkFtrVMbp0e/eQXV
+ qWX9kPBKZptuHPo0sjW4nJ9+UwUy4Ry+p40Rsyx6Vwku0Tv4KN7UWtsPMDbmUTeLg4uTVj2c2PQ
+ bYekon1ouLtGfKUgsFD6f92vzeIbGBGvd4eDdL8rDCi8Q43H1mXB+CS8/Hzip95pT0ixKxpIbxZ
+ agq6H5hglb75v+iOXHmKTa9v6GPOHwDwagUVzxgP2ZkKP5JEdjRHct7olu1qYLlfYz17PGGtHtz
+ 6JAvapKdw5ofRoySoRLQO0tnmtp8fTGZds+orYvs+JIRCjxpH/m/TvYvQ+q7WdoYkYck1BHVkdo
+ qwqPVlLqsS4RlkIp3t04eW3g6a8EL0BSF4cMVnzok/SQeFsbTs97Fd26ImjaGiJMhzAHp4Qt37H
+ 1NECfyrBZfu9fJBDHZncJgTNP8awe0qU+cGRMPK9QJXDnuXeIn2jhor2IDIe50aXE929Q8JmNr3
+ 9WM3kefozU=
+X-Received: by 2002:a05:600c:6098:b0:480:4b5d:9ec with SMTP id
+ 5b1f17b1804b1-483c21b31b0mr35153755e9.33.1772061483833; 
+ Wed, 25 Feb 2026 15:18:03 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4398bb96b90sm12900141f8f.9.2026.02.25.15.20.47
+ 5b1f17b1804b1-483bfccd7b6sm20812405e9.24.2026.02.25.15.18.01
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 25 Feb 2026 15:20:48 -0800 (PST)
+ Wed, 25 Feb 2026 15:18:02 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 58/70] target/m68k: clean-up includes in cpu.c
-Date: Thu, 26 Feb 2026 00:13:58 +0100
-Message-ID: <20260225231411.96482-59-philmd@linaro.org>
+Subject: [PULL 34/70] target/mips: Replace ldtul_p() -> ldn_p()
+Date: Thu, 26 Feb 2026 00:13:34 +0100
+Message-ID: <20260225231411.96482-35-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260225231411.96482-1-philmd@linaro.org>
 References: <20260225231411.96482-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,49 +99,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alex Bennée <alex.bennee@linaro.org>
+Prefer ldn_p(target_long_bits/8) over target-specific ldtul_p().
 
-We don't need translation-block.h as the TB flags are local and the
-only bits needed come from cpu-ops.h. The vmstate is a system only
-concerns so we can guard against including it for linux-user.
+Use deposit64() in gdb_write_register(), allowing to remove
+'target_ulong' type uses.
 
-Finally tidy up the order to keep things together with the local cpu.h
-kept at the end.
-
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Reviewed-by: Thomas Huth <huth@tuxfamily.org>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Message-ID: <20260219171810.602667-2-alex.bennee@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20260219191955.83815-27-philmd@linaro.org>
 ---
- target/m68k/cpu.c | 13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ target/mips/gdbstub.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/target/m68k/cpu.c b/target/m68k/cpu.c
-index c721a23b966..d849a4a90fc 100644
---- a/target/m68k/cpu.c
-+++ b/target/m68k/cpu.c
-@@ -19,12 +19,15 @@
+diff --git a/target/mips/gdbstub.c b/target/mips/gdbstub.c
+index 169d47416a6..8e0b08a096c 100644
+--- a/target/mips/gdbstub.c
++++ b/target/mips/gdbstub.c
+@@ -18,6 +18,7 @@
+  * License along with this library; if not, see <http://www.gnu.org/licenses/>.
   */
- 
  #include "qemu/osdep.h"
--#include "qapi/error.h"
--#include "cpu.h"
--#include "migration/vmstate.h"
--#include "fpu/softfloat.h"
--#include "exec/translation-block.h"
- #include "accel/tcg/cpu-ops.h"
-+#include "fpu/softfloat.h"
-+#include "qapi/error.h"
-+
-+#ifndef CONFIG_USER_ONLY
-+#include "migration/vmstate.h"
-+#endif
-+
-+#include "cpu.h"
++#include "qemu/bitops.h"
+ #include "cpu.h"
+ #include "internal.h"
+ #include "gdbstub/helpers.h"
+@@ -77,14 +78,15 @@ int mips_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
  
- static void m68k_cpu_set_pc(CPUState *cs, vaddr value)
+ int mips_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
  {
++    const unsigned regsz = target_long_bits() / 8;
+     CPUMIPSState *env = cpu_env(cs);
+-    target_ulong tmp;
++    uint64_t tmp;
+ 
+-    tmp = ldtul_p(mem_buf);
++    tmp = ldn_p(mem_buf, regsz);
+ 
+     if (n < 32) {
+         env->active_tc.gpr[n] = tmp;
+-        return sizeof(target_ulong);
++        return regsz;
+     }
+     if (env->CP0_Config1 & (1 << CP0C1_FP) && n >= 38 && n < 72) {
+         switch (n) {
+@@ -104,7 +106,7 @@ int mips_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
+             }
+             break;
+         }
+-        return sizeof(target_ulong);
++        return regsz;
+     }
+     switch (n) {
+     case 32:
+@@ -127,7 +129,7 @@ int mips_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
+ #endif
+         break;
+     case 37:
+-        env->active_tc.PC = tmp & ~(target_ulong)1;
++        env->active_tc.PC = deposit64(tmp, 63, 1, 0);
+         if (tmp & 1) {
+             env->hflags |= MIPS_HFLAG_M16;
+         } else {
+@@ -144,5 +146,5 @@ int mips_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
+         break;
+     }
+ 
+-    return sizeof(target_ulong);
++    return regsz;
+ }
 -- 
 2.52.0
 
