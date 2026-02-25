@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F12F3EFD214
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 09:21:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5F5AEFD211
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 09:21:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvB4w-0000Lq-7R; Wed, 25 Feb 2026 04:21:10 -0500
+	id 1vvB5B-0000a6-KQ; Wed, 25 Feb 2026 04:21:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vvB4u-0000LN-NE
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 04:21:08 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vvB56-0000Zb-Te
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 04:21:22 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vvB4t-0003SR-6D
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 04:21:08 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vvB55-0003TX-Gq
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 04:21:20 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772011266;
+ s=mimecast20190719; t=1772011278;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=atUyOXq/ndB56PYRrYWogkTmutwY7ae7cotwzCQtdys=;
- b=QEBt4uNUeveKSO6TZU6xVO1Y+sGfDLqhBpEQE01/+fEAtC+iEKBifcDOJwLoVLXq2x2M9u
- HwUC2jZc8udB2UBH7s/danxuKbJhM7aNwweT88FAYvlp/7hUooovLYaoXAHfpHJyaQMC/6
- eCeXWCfjbNLGfto8kpEanEc8C30xOyE=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=vhFqZCSRzyqDfiCQOCa4JossEFhmnOQD274/TiSN1yM=;
+ b=AYaiuryCYVn2maEpkNqJpoKZcMczuI6CyMGkUFq5+By8Xivn+gDJQsKz9CA0oKlm2BV6AM
+ N5/2UARX9E2Hh9+G+QUyHt657hpHgOD63ryMLUxYUUO4YarmmaWAg/arokC0jNsereaBhI
+ oCoHSBiTA57+b+WfCS9eOWDrXtFqeH4=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-516-PAfmYGCFNGuFk1yb9_DGEQ-1; Wed,
- 25 Feb 2026 04:21:02 -0500
-X-MC-Unique: PAfmYGCFNGuFk1yb9_DGEQ-1
-X-Mimecast-MFC-AGG-ID: PAfmYGCFNGuFk1yb9_DGEQ_1772011260
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-662-L49LYUrmPu2wuhEzpdKr-g-1; Wed,
+ 25 Feb 2026 04:21:14 -0500
+X-MC-Unique: L49LYUrmPu2wuhEzpdKr-g-1
+X-Mimecast-MFC-AGG-ID: L49LYUrmPu2wuhEzpdKr-g_1772011273
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6B3C01956094; Wed, 25 Feb 2026 09:21:00 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A76D518002C1; Wed, 25 Feb 2026 09:21:12 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.45.224.158])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 4113019560B6; Wed, 25 Feb 2026 09:20:54 +0000 (UTC)
+ id 8875819560A2; Wed, 25 Feb 2026 09:21:07 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
  Igor Mammedov <imammedo@redhat.com>,
@@ -55,9 +55,9 @@ Cc: Eduardo Habkost <eduardo@habkost.net>, Yanan Wang <wangyanan55@huawei.com>,
  Yi Liu <yi.l.liu@intel.com>,
  =?UTF-8?q?Cl=C3=A9ment=20Mathieu--Drif?= <clement.mathieu--drif@eviden.com>,
  Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>
-Subject: [PATCH v2 04/16] hw/core/machine: Remove hw_compat_2_8[] array
-Date: Wed, 25 Feb 2026 10:20:12 +0100
-Message-ID: <20260225092024.794595-5-thuth@redhat.com>
+Subject: [PATCH v2 06/16] hw/pci/pcie: Remove QEMU_PCIE_EXTCAP_INIT definition
+Date: Wed, 25 Feb 2026 10:20:14 +0100
+Message-ID: <20260225092024.794595-7-thuth@redhat.com>
 In-Reply-To: <20260225092024.794595-1-thuth@redhat.com>
 References: <20260225092024.794595-1-thuth@redhat.com>
 MIME-Version: 1.0
@@ -91,55 +91,64 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-The hw_compat_2_8[] array was only used by the pc-q35-2.8 and
-pc-i440fx-2.8 machines, which got removed. Remove it.
+QEMU_PCIE_EXTCAP_INIT was only used by the hw_compat_2_8[]
+array, via the 'x-pcie-extcap-init=off' property. We removed
+all machines using that array, let's remove all the code around
+QEMU_PCIE_EXTCAP_INIT.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20250501210456.89071-6-philmd@linaro.org>
-Reviewed-by: Igor Mammedov <imammedo@redhat.com>
+Message-ID: <20250501210456.89071-8-philmd@linaro.org>
+[thuth: Don't remove pci_set_long(), execute it always instead]
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- include/hw/core/boards.h |  3 ---
- hw/core/machine.c        | 14 --------------
- 2 files changed, 17 deletions(-)
+ include/hw/pci/pci.h | 2 --
+ hw/pci/pci.c         | 2 --
+ hw/pci/pcie.c        | 6 ++----
+ 3 files changed, 2 insertions(+), 8 deletions(-)
 
-diff --git a/include/hw/core/boards.h b/include/hw/core/boards.h
-index edbe8d03e56..71d6b234f68 100644
---- a/include/hw/core/boards.h
-+++ b/include/hw/core/boards.h
-@@ -880,7 +880,4 @@ extern const size_t hw_compat_2_10_len;
- extern GlobalProperty hw_compat_2_9[];
- extern const size_t hw_compat_2_9_len;
+diff --git a/include/hw/pci/pci.h b/include/hw/pci/pci.h
+index d9835dfd0dd..64141e92fec 100644
+--- a/include/hw/pci/pci.h
++++ b/include/hw/pci/pci.h
+@@ -219,8 +219,6 @@ enum {
+     /* Link active status in endpoint capability is always set */
+ #define QEMU_PCIE_LNKSTA_DLLLA_BITNR 8
+     QEMU_PCIE_LNKSTA_DLLLA = (1 << QEMU_PCIE_LNKSTA_DLLLA_BITNR),
+-#define QEMU_PCIE_EXTCAP_INIT_BITNR 9
+-    QEMU_PCIE_EXTCAP_INIT = (1 << QEMU_PCIE_EXTCAP_INIT_BITNR),
+ #define QEMU_PCIE_CXL_BITNR 10
+     QEMU_PCIE_CAP_CXL = (1 << QEMU_PCIE_CXL_BITNR),
+ #define QEMU_PCIE_ERR_UNC_MASK_BITNR 11
+diff --git a/hw/pci/pci.c b/hw/pci/pci.c
+index 90d6d71efdc..6399ebd41cb 100644
+--- a/hw/pci/pci.c
++++ b/hw/pci/pci.c
+@@ -84,8 +84,6 @@ static const Property pci_props[] = {
+                     QEMU_PCI_CAP_MULTIFUNCTION_BITNR, false),
+     DEFINE_PROP_BIT("x-pcie-lnksta-dllla", PCIDevice, cap_present,
+                     QEMU_PCIE_LNKSTA_DLLLA_BITNR, true),
+-    DEFINE_PROP_BIT("x-pcie-extcap-init", PCIDevice, cap_present,
+-                    QEMU_PCIE_EXTCAP_INIT_BITNR, true),
+     DEFINE_PROP_STRING("failover_pair_id", PCIDevice,
+                        failover_pair_id),
+     DEFINE_PROP_UINT32("acpi-index",  PCIDevice, acpi_index, 0),
+diff --git a/hw/pci/pcie.c b/hw/pci/pcie.c
+index cae5061e69c..4622c75e48c 100644
+--- a/hw/pci/pcie.c
++++ b/hw/pci/pcie.c
+@@ -250,10 +250,8 @@ int pcie_cap_init(PCIDevice *dev, uint8_t offset,
  
--extern GlobalProperty hw_compat_2_8[];
--extern const size_t hw_compat_2_8_len;
--
- #endif
-diff --git a/hw/core/machine.c b/hw/core/machine.c
-index d4ef620c178..848d0dc83d7 100644
---- a/hw/core/machine.c
-+++ b/hw/core/machine.c
-@@ -272,20 +272,6 @@ GlobalProperty hw_compat_2_9[] = {
- };
- const size_t hw_compat_2_9_len = G_N_ELEMENTS(hw_compat_2_9);
+     pci_set_word(dev->wmask + pos + PCI_EXP_DEVCTL2, PCI_EXP_DEVCTL2_EETLPPB);
  
--GlobalProperty hw_compat_2_8[] = {
--    { "fw_cfg_mem", "x-file-slots", "0x10" },
--    { "fw_cfg_io", "x-file-slots", "0x10" },
--    { "pflash_cfi01", "old-multiple-chip-handling", "on" },
--    { "pci-bridge", "shpc", "on" },
--    { TYPE_PCI_DEVICE, "x-pcie-extcap-init", "off" },
--    { "virtio-pci", "x-pcie-deverr-init", "off" },
--    { "virtio-pci", "x-pcie-lnkctl-init", "off" },
--    { "virtio-pci", "x-pcie-pm-init", "off" },
--    { "cirrus-vga", "vgamem_mb", "8" },
--    { "isa-cirrus-vga", "vgamem_mb", "8" },
--};
--const size_t hw_compat_2_8_len = G_N_ELEMENTS(hw_compat_2_8);
--
- MachineState *current_machine;
+-    if (dev->cap_present & QEMU_PCIE_EXTCAP_INIT) {
+-        /* read-only to behave like a 'NULL' Extended Capability Header */
+-        pci_set_long(dev->wmask + PCI_CONFIG_SPACE_SIZE, 0);
+-    }
++    /* read-only to behave like a 'NULL' Extended Capability Header */
++    pci_set_long(dev->wmask + PCI_CONFIG_SPACE_SIZE, 0);
  
- static char *machine_get_kernel(Object *obj, Error **errp)
+     return pos;
+ }
 -- 
 2.53.0
 
