@@ -4,115 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AF10EFD205
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 08:05:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6EF59EFD207
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 08:11:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vv9ti-0005lO-FL; Wed, 25 Feb 2026 03:05:30 -0500
+	id 1vv9yp-0007fQ-R0; Wed, 25 Feb 2026 03:10:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vv9tg-0005iW-NP
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 03:05:28 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <shivangu@linux.ibm.com>)
+ id 1vv9yi-0007f4-9u; Wed, 25 Feb 2026 03:10:40 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vv9tf-0000sy-02
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 03:05:28 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772006725;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=2Ikyzkts721L5JCueYlPHhLJIrBzi/Gft4KsIokRrZY=;
- b=jGTSMDs61A37vXsX+DvAuG9xq2X6gZ7izzEumHuaOhmWOl6pZxYkLO9xt2UO/vgMkbbUAp
- zm/nCL3TMNQYrothV5Chzc1iAKQTVqbbUGjLPIwDDDK9qJ+FVOIdGFA11IpX3W3KseTmdv
- x5Udv0QxwxiM8Eos0L3dJPlhSWtIw9c=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-207-1WsfPybyOd2wNrI95nMcew-1; Wed, 25 Feb 2026 03:05:23 -0500
-X-MC-Unique: 1WsfPybyOd2wNrI95nMcew-1
-X-Mimecast-MFC-AGG-ID: 1WsfPybyOd2wNrI95nMcew_1772006723
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-48378c4a79fso47550575e9.0
- for <qemu-devel@nongnu.org>; Wed, 25 Feb 2026 00:05:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1772006723; x=1772611523; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=2Ikyzkts721L5JCueYlPHhLJIrBzi/Gft4KsIokRrZY=;
- b=Ui831Axd1ZnIWX3P3ALl8zcU0l6WX0YYQXH/6v/c00BhR+yHUt4y/ZWKtzVGW3xm8Q
- 7QYQpSowtNsUWOJXfWDHo+sztlGL10dMluaYDVCGy6Y/qNnYf9PQZXzEYXdTmJ5XSO7j
- gqr0mVgopub0XOcCVT5WQjVXu62zPUpV7aD1wZyOqsdKPdjIfTM1Y76Cx/EvQCPSI8FC
- d8HczVmd9gWL8nQFCJl6sDEVkJWyRbjRk7tZW9/XAPBzSoJTJFDPiGGtbjc3eOewKLEZ
- Fom/dchii0Z7Pitqh8GjhHG/OpZ2VSJ56P3nvPBGSZr1hGbWWq1LQB4QjThmFiKI306x
- QBgQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772006723; x=1772611523;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=2Ikyzkts721L5JCueYlPHhLJIrBzi/Gft4KsIokRrZY=;
- b=JHogY1I8DWOdtCKjiqs6q01mN5BTyR4TY/DbSMXko8mpfjG68wfQE65eKTBFnPjlWB
- afEI3mna0QxXz27pqJ5YOAJOm6KlIrXonJfvQK32ol3HD8nswUPJXoR4ZWgb+06HDOXz
- 0I8fAOAg415lRiABFT7vDSFui4Wmd1lmA5Kx05OWP+ovFCjEdjB1RYsdhwt+FcH7OeVu
- I5dIH75HCH+sQXbTQxRE8xRThfvAkfdIlXBEOe4VsU2vIaU2JDONiklnMFnGwilE0PG5
- 0UStbU5uTpfB8BFDcfTCMmypoqLxpHnnGPhgd6r8XIGwLTQ/lZKVP+6v53vCcxouE8Hh
- iW7w==
-X-Gm-Message-State: AOJu0YwrZWQ2QDrXSHvJQ3CryJx+GFxm8kXXr89kktNs3IzSICj35Udd
- V9FOqmmvpZJwytRGsgwacGQgWVKZJz1oUm36syzCW24WnNzf/hKTAOnDViLtahPqCqk41hXOa2Z
- ZQlCunglDNJ2c5MY9N2ScaLmU8awJnE+vSUrnY8ilF9+Hhlfl1QKO35h5
-X-Gm-Gg: ATEYQzx46zkDpGSYMP/KwM1USFVzjtpHMRdYGZJ0bgr0r/eBlCKz2lS1Dluvl7eJpQ7
- R6FX0S9ml0Y3yRIqI0uESv5YuVpLCeOa/dkLh5KqOj44Ft0qrCn1nbr8uajJgCGEIYp+3+WnTCV
- uFwnHinbunHZK2YOoSkXu3OPXS2az3yt6sHVPGdT0Sh5WsZnECLVizqjlIJUMnbBYmIxQuxqy4x
- wauD33xl1Dvsb8ACTTrV9+2Yx1XedUddfmJPx8h1UPYJg4qxL1nzJCvdcNA2/sk/x7ZnNuQ5/84
- JUBji7Sa8wFzA0EDnokKTrK9HKOyqnUK9FWxRkNiisBNyITbl0k2OQh8JA8EFNnEANhFbuinYEJ
- GRKm5+1VsN6Tyrkrf5ueqtf0ohR5WnO1us5MOoKn/7xBv60YNC+11Liu9HGWE51RUU65ZvN24zk
- jIH8+mJNRlXuzKVwRT5FccgIamxII=
-X-Received: by 2002:a05:600c:5289:b0:480:1b65:b744 with SMTP id
- 5b1f17b1804b1-483bef5c44fmr23389845e9.28.1772006722610; 
- Wed, 25 Feb 2026 00:05:22 -0800 (PST)
-X-Received: by 2002:a05:600c:5289:b0:480:1b65:b744 with SMTP id
- 5b1f17b1804b1-483bef5c44fmr23389235e9.28.1772006722035; 
- Wed, 25 Feb 2026 00:05:22 -0800 (PST)
-Received: from [192.168.10.81] ([151.95.144.138])
- by smtp.googlemail.com with ESMTPSA id
- 5b1f17b1804b1-483bfb296bfsm8894595e9.0.2026.02.25.00.05.21
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 25 Feb 2026 00:05:21 -0800 (PST)
-Message-ID: <e88e3a0f-6b15-4967-8e9c-613ecf537b5e@redhat.com>
-Date: Wed, 25 Feb 2026 09:05:20 +0100
+ (Exim 4.90_1) (envelope-from <shivangu@linux.ibm.com>)
+ id 1vv9yg-0001WP-Hg; Wed, 25 Feb 2026 03:10:40 -0500
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 61OKHSkn2615756; Wed, 25 Feb 2026 08:10:35 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=pp1; bh=8wwEFJ8VpyDDqnS/ord2au6YQrydNb81+Zw7+hIB5
+ 84=; b=U2ij4mVt4kqqjUIgwE++V16lDpYHBcJQMhEYl8+yRraBCB+RXtvK+8vVS
+ 7aeoQ/CKtx6JIHVbQlp7RAthQloPcZkRN+346X+Jm3gKftjs/mKnVOfnt6OypeAH
+ qZ9p3xrduG93fVWkeQR1rxeVEIveqkiX8dzmvC4OQlHe4ih+35a4/o02NiMESUra
+ PBYUiFuhww66ERUXMexzc/GGXuQomtgc5lWgS2Sh9LJzWUCN/Z4rv4n1DflOSguP
+ BzCMDyOvr3DhKB7fMx/oPtDd+Zo02wjCbEIGACf8TIYPbF9etS8o9YRlj9o5cVMw
+ wgVqttFOzAKTLp7bieSMlru+mfKxQ==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4cf471yb7m-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 25 Feb 2026 08:10:34 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 61P7nmda015750;
+ Wed, 25 Feb 2026 08:10:33 GMT
+Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4cfq1smja9-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 25 Feb 2026 08:10:33 +0000
+Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
+ [10.20.54.102])
+ by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 61P8AU2X46268684
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 25 Feb 2026 08:10:30 GMT
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 0E8BE20043;
+ Wed, 25 Feb 2026 08:10:30 +0000 (GMT)
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id DFA9F2004D;
+ Wed, 25 Feb 2026 08:10:27 +0000 (GMT)
+Received: from shivang.com (unknown [9.39.31.166])
+ by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Wed, 25 Feb 2026 08:10:27 +0000 (GMT)
+From: Shivang Upadhyay <shivangu@linux.ibm.com>
+To: qemu-ppc@nongnu.org
+Cc: npiggin@gmail.com, adityag@linux.ibm.com, milesg@linux.ibm.com,
+ qemu-devel@nongnu.org, Shivang Upadhyay <shivangu@linux.ibm.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>
+Subject: [PATCH] ppc/pnv: fix dumpdtb option
+Date: Wed, 25 Feb 2026 13:40:37 +0530
+Message-ID: <20260225081037.21990-1-shivangu@linux.ibm.com>
+X-Mailer: git-send-email 2.52.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 01/16] rust/qobject: add basic bindings
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
- <marcandre.lureau@redhat.com>, qemu-rust@nongnu.org,
- Zhao Liu <zhao1.liu@intel.com>
-References: <20260108131043.490084-1-pbonzini@redhat.com>
- <20260108131043.490084-2-pbonzini@redhat.com> <87jyw24fw5.fsf@pond.sub.org>
- <58720d10-5613-4235-b47f-939e9a8d3096@redhat.com>
- <87y0ki1d21.fsf@pond.sub.org>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Content-Language: en-US
-In-Reply-To: <87y0ki1d21.fsf@pond.sub.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-ORIG-GUID: 9Xz2GNg-ZkwQ27ZKJT5PgUjcYezOL_G7
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjI1MDA3OSBTYWx0ZWRfX/XJeo06qzCOu
+ CT3eDQV7vs3mzsUO7vteuhO8QFhp1RchJ+KyFep5oMsUoETBcfbioRpOLmA7heCn143oqT7gYTX
+ qwiBfTFJleUpPilmbdJr6KDd05vyll1SJTFUETRKnyY1PFfeNbiZe8lu1Y6W3/GkB6lCrddIim/
+ EkKh4MZYvY0jxPDIr95Z76Fo48j3luEpQrZIs1PLgSxIw/7aXgVJ5efwGiVfIfVYAKYktXCGqZQ
+ FL6Q1bHtZi0W7wUkON/CCgeot6U+fwX+oE/TaGRrO4Aep1hH92hiixCYvOU0pAF2bzbnPW/qiaa
+ 5Ar7Kb1Uxf2lCpyzlgXqdS/hcN1peEX3AeqYruQkVAm5l6wNkFIkYqiAIFOOyDEKW3hRXSsWgbj
+ PiJ6i5I1cjrMgEuLpQNFAf/j7iHW29PZxhoUizud5vhj3tvG1OWNq6IJTBUyTbavFX/5AMDKDcE
+ /3LKnXAtFWJZOxMtWwA==
+X-Authority-Analysis: v=2.4 cv=R7wO2NRX c=1 sm=1 tr=0 ts=699eae7b cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22 a=Mpw57Om8IfrbqaoTuvik:22
+ a=GgsMoib0sEa3-_RKJdDe:22 a=VwQbUJbxAAAA:8 a=KKAkSRfTAAAA:8 a=VnNF1IyMAAAA:8
+ a=Zd13O3uLRLaom6fN6REA:9 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-GUID: HOC0fTSEINE06bNluFkr9-od9B1nn5I5
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-02-24_03,2026-02-23_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 clxscore=1011 impostorscore=0 phishscore=0 spamscore=0
+ suspectscore=0 malwarescore=0 bulkscore=0 adultscore=0 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2601150000 definitions=main-2602250079
+Received-SPF: pass client-ip=148.163.156.1;
+ envelope-from=shivangu@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
 X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.358, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.659,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -128,51 +118,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/24/26 14:33, Markus Armbruster wrote:
-> Paolo Bonzini <pbonzini@redhat.com> writes:
-> 
->> On 2/24/26 11:03, Markus Armbruster wrote:
->>>> diff --git a/rust/util/wrapper.h b/rust/util/wrapper.h
->>>> index b9ed68a01d8..0907dd59142 100644
->>>> --- a/rust/util/wrapper.h
->>>> +++ b/rust/util/wrapper.h
->>>> @@ -30,3 +30,10 @@ typedef enum memory_order {
->>>>   #include "qemu/log.h"
->>>>   #include "qemu/module.h"
->>>>   #include "qemu/timer.h"
->>>> +#include "qobject/qnull.h"
->>>> +#include "qobject/qbool.h"
->>>> +#include "qobject/qnum.h"
->>>> +#include "qobject/qstring.h"
->>>> +#include "qobject/qobject.h"
->>>> +#include "qobject/qlist.h"
->>>> +#include "qobject/qdict.h"
->>>
->>> Is this file just for bindgen, and never actually fed to the C compiler?
->>
->> Yes.
-> 
-> Thanks!
-> 
->>>> +impl From<()> for QObject {
->>>> +    fn from(_null: ()) -> Self {
->>>> +        // Conversion of the C inline `qnull` function
->>>> +        unsafe { QObject::cloned_from_base(addr_of!(bindings::qnull_.base)) }
->>>> +    }
->>>> +}
->>>
->>> Could we call C qnull() instead of using qnull_.base?
->>
->> See v1 review - no, because qnull() is inline.  I can make it not
->> inline, of course.
-> 
-> I feel making it inline was a bit silly.  Perhaps I had a non-silly
-> reason back then, but I can't see it anymore.
+The '-machine dumpdtb' command line option stopped working on
+PowerPC/pnv systems after recent design change [1].
 
-Maybe it was, but qnull_ is also used by tests/unit/check-qnull.c; and 
-it would also be silly to make qnull() extern while keeping the global 
-qnull_.  In doubt, I'd leave it as is.
+Fixing this by generating fdt blob in `pnv_init`.
 
-Paolo
+[1] https://lore.kernel.org/qemu-devel/20250206151214.2947842-1-peter.maydell@linaro.org/
+
+Cc: Aditya Gupta <adityag@linux.ibm.com>
+Cc: Harsh Prateek Bora <harshpb@linux.ibm.com>
+Signed-off-by: Shivang Upadhyay <shivangu@linux.ibm.com>
+---
+ hw/ppc/pnv.c | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
+index 1513575b8f..9861714ad5 100644
+--- a/hw/ppc/pnv.c
++++ b/hw/ppc/pnv.c
+@@ -1261,6 +1261,10 @@ static void pnv_init(MachineState *machine)
+     if (pmc->i2c_init) {
+         pmc->i2c_init(pnv);
+     }
++
++    if (!machine->fdt) {
++        machine->fdt = pnv_dt_create(machine);
++    }
+ }
+ 
+ /*
+-- 
+2.52.0
 
 
