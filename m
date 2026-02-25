@@ -4,78 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 393E4FD45F1
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 23:22:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E1C8FD45FA
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 23:22:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvOAP-0007OP-NS; Wed, 25 Feb 2026 18:19:41 -0500
+	id 1vvOBv-0007ss-2F; Wed, 25 Feb 2026 18:21:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vvOAN-0007O3-HM
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 18:19:39 -0500
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vvOBt-0007sJ-Hd
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 18:21:13 -0500
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vvOAL-0003TW-QT
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 18:19:39 -0500
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-43996323357so109916f8f.0
- for <qemu-devel@nongnu.org>; Wed, 25 Feb 2026 15:19:37 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vvOBr-0004HP-3V
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 18:21:13 -0500
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-4837f27cf2dso2467675e9.2
+ for <qemu-devel@nongnu.org>; Wed, 25 Feb 2026 15:21:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772061576; x=1772666376; darn=nongnu.org;
+ d=linaro.org; s=google; t=1772061669; x=1772666469; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=nVIDYsjJNo00V4RXjiOYkAXaiezQ6gZ368AnaXXRDiU=;
- b=Tot1qQGmku+j+nnnbKE3XN6Ccse5a8Lym8GLNftgF4NrOUfj9dqdsVC3gVVVhwn6ad
- s8t5prGrUEItW4xfhLoh4t0cDebgbwTZVIxT/dyeRcwwt0rDWHhhpRRawyXeVwuSKvro
- Mi4VQHrsThu9Y1Vg+9TW78dTh1iCN4XLo364t6N8jxOkQG1j5VsQQXQQvoab9TAMNHo6
- uzfAUygX7WVn6+lkFqEYBF9Lm4pgNG8Vxn5arKCzcnjAXmmj8qlZNqQjtLGWExHvgJxx
- RLV9+uLHU+rAUYC1GErJIPpYx91LoP5f8rUVtSQcf0VgSMJrn0KvuBe/Plc+L4vQLaYG
- hwsg==
+ :reply-to; bh=FUy747eLUsQzKmOZLXCMVSBXog85AzJ+ezaKKEhkr98=;
+ b=IHRRz9grziJozDNN7Ya07cF2ujDl1199QW8yD9gQUon++OUB4QtwKP10VuiT0sLBqk
+ Z27hF6aa51pC9Y7REMskZ4f2i+QXMusZeJ+2I2ZyJFYAAvOzFvZhqkmaDnJ8H5HFRE7d
+ QXqhEHDpg0PV9p1gIkwMRFokCuE4W97r3YWpT5QZ4rmcwoe0xrBkthf1hOuK5bqWwmS5
+ 2P0Bo5WU7WHceLqby/8N/9QEtJUDhKnPa5stwwNrBhewEdjhAxPBkgWwTMCRgu5i7WKv
+ GhlGdzHROUJQmUdnoujCr88rixHXe6vcuDpnRyb7bIsDjvdBUZkf9UiqSkP+6LLdGuAd
+ JAFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772061576; x=1772666376;
+ d=1e100.net; s=20230601; t=1772061669; x=1772666469;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=nVIDYsjJNo00V4RXjiOYkAXaiezQ6gZ368AnaXXRDiU=;
- b=S7Mm4tSX9dKuzWSnvx0/Fl3ovkXMYxgEXNYvvqihPwA7buwW6Ispo/TqaG3QXJcqg6
- EPrYmjpdOEgUQcCb6VsDjvgrk4oRWAbuD9ak+4dN9agRd0HrzhXyRbftvkBXOq8eXd71
- mk6/o52WDCbCIUYSn9J82aeliGVh1R7waiS9XhW/swHsTU5KZn60qM94SsS6liZPduP1
- hS4A8Pw0Ga9paBOot4AHeBfdwW/zrRN42IMzf73i+MW2T6VFam9M6qBclI5AE5MdDQup
- qcDDLmVWpWzt8kHr1PCJJTsTWHnilIAShoVwJkb9k9Gq9bKhYQQo2g6Vp8wMEtZz018K
- Pgpw==
-X-Gm-Message-State: AOJu0YxxeuCH/ZoP2o64sYdJ1hhB57Gpxr2mVEPuEI6pUb74Gmo6zIeE
- ZqdR2iBN+n3Pffsb9zXmSAvoE1GvxE50l8DUlLzABKcpRKwikZy2W4tNHujc6q4XkOrdxb/Al4K
- 8iK5g9Ho=
-X-Gm-Gg: ATEYQzwprLui2+36HL3aTQLdnYcwZ6oqTcKYLcZNzkGva71rUzglD37AE9IpLOsqLj2
- IAcSdjnXubNN0piaar4IPV5hNtZ/eSakscnwGn/7c3VuOYcHA7FH1TXLzbHUBE2VW40dGUSMuh0
- I9A/1ldOK3DA07nRQ6NJKUfsnlpiQZ4QqEAjoz06Y51FWwp7VveYZJWdIMLQxRnkEKxEcW/p6sX
- YOiPH9WyGuvQV9QNd9Xt6nvatd7J77JC66thIdmAusCYb4/9n8cyMBlVIzkqRQMRlUTrcxXPKlV
- Co7V7n1L0rcNe6BiGU3cNGK8zVUoycrjXK3UNJ15FOiO3UFWPMeN9ua39XhpFPuoe6zcadm5fqx
- XbCF/gt6PUz3wDFK/kgI5FtuXjRjK5uEpjuEg8iGIGm9gf7qa+ceRC3CwU9xyrswuFTCeR6Lavf
- iw7s3UZ/R4GVS2mCw2hfH0f3+/kbj8ZAMgReARjPg/LEYsJKHq+XBhbTZHxRv1Alxh6qxZNTBA
-X-Received: by 2002:a05:6000:2086:b0:437:70d3:44e7 with SMTP id
- ffacd0b85a97d-4396f182eafmr31539809f8f.30.1772061575845; 
- Wed, 25 Feb 2026 15:19:35 -0800 (PST)
+ bh=FUy747eLUsQzKmOZLXCMVSBXog85AzJ+ezaKKEhkr98=;
+ b=lRJuix+/qbFRXbQ2W0NDDcFV01S6cU5gr+9cGhZQKfHA31JMJ4g0mUJRyZqWxvKFto
+ zxZxiKKcL4YhRmnG5O8EiEmyNgrkyHFV4SJLQne0p5TKEHQJueREMikLFioATa3b722L
+ nSVJXY3T0+OGFZqVP/424sHtnI48rLl1ZQR2vdscKlHvMEuDVMygBPq40tSJDtfyr/qu
+ E8WOIGNlXd99XIuMJLGZ363IJw6VtnSKgl4sT6PKHFWFYkSlhVfDeYcq9YDpotHhtVxw
+ ReIkZSnDMjdIPXzpkJlSP6Hm2girqPQvNsp7YMX/J4U5fkm6AeMbqeo9TgWhLALQ9aJi
+ SSDg==
+X-Gm-Message-State: AOJu0YxzSsv69VDGzXOl71CiM2iBk61/WJBDfyMxNPi351vkOeTSePHM
+ TnrJ/7p16ochSf2tSFxK26Uzmn6N4fKTfKUKfjLBaxhEjv6os3s0AT4D8aJ5bS/Ao6RUAZCQs9l
+ qJ0QOzFU=
+X-Gm-Gg: ATEYQzy5o+euqmmlqIpJATFQslFqA9SRihRUoEIlaIgWAvndcSTTYQr0WNRdezqsQzy
+ 09Q9uUiRyRwNctD+fpM/GE4+2qEc+Q4UGTzkIMYEqCuP+jsJv4iT2Goh0dbexjdodarplH31D//
+ XgYsyyCFsG0KCB34NqM66WNPo4ZCMcs7UCT5KTvyMA3n8NTVbVgihlJnHZowhvyQAkDXBR1N7CS
+ rlThPXZZvU/pqFtx/xKl4lBHVv6J9Z8n8MgfWMCyNKJ6qNVYOqP7RYfhZ8LYtd/ho20L/omzY/N
+ ZbKWhwqn5j4rB0CNeO7XhlxOBM4bcvjCD2o70mYmzAnlX/4OsCtbEeEL4QJ4O0C/Vre/IQAmSft
+ HHeSOi1zGx4em+hNm/5lSrMPYhX/BxpBfinOwngTLOe9phjgttTNtUW+TsD6eprAwowNYwCmXXE
+ AbABIo+iWUU19xdUOTbrFkhT/KARxZZPMmhGBK/xCUFKDLHVqj70ouxg3/84o9N7X09/CSUyRdC
+ L/mARTTUvs=
+X-Received: by 2002:a05:600c:6094:b0:47e:e8de:7420 with SMTP id
+ 5b1f17b1804b1-483a962f0c5mr282797695e9.22.1772061668856; 
+ Wed, 25 Feb 2026 15:21:08 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43970c09897sm38194494f8f.17.2026.02.25.15.19.35
+ 5b1f17b1804b1-483c3b346ccsm4329665e9.2.2026.02.25.15.21.08
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 25 Feb 2026 15:19:35 -0800 (PST)
+ Wed, 25 Feb 2026 15:21:08 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 47/70] target/sh4: Build 'monitor.c' once for system binaries
-Date: Thu, 26 Feb 2026 00:13:47 +0100
-Message-ID: <20260225231411.96482-48-philmd@linaro.org>
+Subject: [PULL 61/70] hw/scsi/disk: Prefer target_s390x() over
+ qemu_arch_available()
+Date: Thu, 26 Feb 2026 00:14:01 +0100
+Message-ID: <20260225231411.96482-62-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260225231411.96482-1-philmd@linaro.org>
 References: <20260225231411.96482-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,33 +100,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-'monitor.c' can be built once for all qemu-system-sh4* binaries.
+qemu_arch_available() is used to check if a broadly available
+feature should be exposed to a particular set of target
+architectures. Here we only want to check something that is
+specific to s390x: the target_s390x() helper is more adapted.
+Besides, it will allow to reduce qemu_arch_available() scope.
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20260219191955.83815-40-philmd@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Message-Id: <20260213175032.32121-4-philmd@linaro.org>
 ---
- target/sh4/meson.build | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ hw/scsi/scsi-disk.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/target/sh4/meson.build b/target/sh4/meson.build
-index 221700bcf8c..1327507dfc8 100644
---- a/target/sh4/meson.build
-+++ b/target/sh4/meson.build
-@@ -7,8 +7,10 @@ sh4_ss.add(files(
-   'translate.c',
- ))
+diff --git a/hw/scsi/scsi-disk.c b/hw/scsi/scsi-disk.c
+index 2f400f5b778..a5201855352 100644
+--- a/hw/scsi/scsi-disk.c
++++ b/hw/scsi/scsi-disk.c
+@@ -27,13 +27,13 @@
+ #include "qemu/module.h"
+ #include "qemu/hw-version.h"
+ #include "qemu/memalign.h"
++#include "qemu/target-info.h"
+ #include "hw/scsi/scsi.h"
+ #include "migration/misc.h"
+ #include "migration/qemu-file-types.h"
+ #include "migration/vmstate.h"
+ #include "hw/scsi/emulation.h"
+ #include "scsi/constants.h"
+-#include "system/arch_init.h"
+ #include "system/block-backend.h"
+ #include "system/blockdev.h"
+ #include "hw/block/block.h"
+@@ -3180,7 +3180,7 @@ static void scsi_property_add_specifics(DeviceClass *dc)
+     ObjectClass *oc = OBJECT_CLASS(dc);
  
--sh4_system_ss = ss.source_set()
--sh4_system_ss.add(files('monitor.c'))
-+sh4_common_system_ss = ss.source_set()
-+sh4_common_system_ss.add(files(
-+  'monitor.c',
-+))
- 
- target_arch += {'sh4': sh4_ss}
--target_common_system_arch += {'sh4': sh4_system_ss}
-+target_common_system_arch += {'sh4': sh4_common_system_ss}
+     /* The loadparm property is only supported on s390x */
+-    if (qemu_arch_available(QEMU_ARCH_S390X)) {
++    if (target_s390x()) {
+         object_class_property_add_str(oc, "loadparm",
+                                       scsi_property_get_loadparm,
+                                       scsi_property_set_loadparm);
 -- 
 2.52.0
 
